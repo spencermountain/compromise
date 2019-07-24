@@ -15,7 +15,7 @@ const corrections = function(doc) {
   fixVerb(doc)
   fixAdjective(doc)
   fixValue(doc)
-  // fixDates(doc)
+  fixDates(doc)
   fixMisc(doc)
   return doc
 }

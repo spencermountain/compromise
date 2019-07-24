@@ -1,98 +1,22 @@
 //mostly pos-corections here
 const miscCorrection = function(doc) {
-  //ambig prepositions/conjunctions
-  if (doc.has('so')) {
-    //so funny
-    doc.match('[so] #Adjective').tag('Adverb', 'so-adv')
-    //so the
-    doc.match('[so] #Noun').tag('Conjunction', 'so-conj')
-    //do so
-    doc.match('do [so]').tag('Noun', 'so-noun')
-  }
-
-  if (doc.has('all')) {
-    //all students
-    doc.match('[all] #Determiner? #Noun').tag('Adjective', 'all-noun')
-    //it all fell apart
-    doc.match('[all] #Verb').tag('Adverb', 'all-verb')
-  }
-
-  //the ambiguous word 'that' and 'which'
-  if (doc.has('(that|which)')) {
-    //remind john that
-    doc.match('#Verb #Adverb? #Noun [(that|which)]').tag('Preposition', 'that-prep')
-
-    //that car goes
-    doc.match('that #Noun [#Verb]').tag('Determiner', 'that-determiner')
-
-    //work, which has been done.
-    doc.match('#Comma [which] (#Pronoun|#Verb)').tag('Preposition', 'which-copula')
-
-    //things that provide
-    // doc.match('#Plural (that|which) #Adverb? #Verb').term(1).tag('Preposition', 'noun-that');
-  }
-
-  //like
-  if (doc.has('like')) {
-    doc.match('just [like]').tag('Preposition', 'like-preposition')
-    //folks like her
-    doc.match('#Noun [like] #Noun').tag('Preposition', 'noun-like')
-    //look like
-    doc.match('#Verb [like]').tag('Adverb', 'verb-like')
-    //exactly like
-    doc
-      .match('#Adverb like')
-      .notIf('(really|generally|typically|usually|sometimes|often) [like]')
-      .tag('Adverb', 'adverb-like')
-  }
-
-  if (doc.has('#TitleCase')) {
-    //FitBit Inc
-    doc.match('#TitleCase (ltd|co|inc|dept|assn|bros)').tag('Organization', 'org-abbrv')
-    //Foo District
-    doc
-      .match('#TitleCase+ (district|region|province|county|prefecture|municipality|territory|burough|reservation)')
-      .tag('Region', 'foo-district')
-    //District of Foo
-    doc
-      .match('(district|region|province|municipality|territory|burough|state) of #TitleCase')
-      .tag('Region', 'district-of-Foo')
-  }
-
-  if (doc.has('#Hyphenated')) {
-    //air-flow
-    doc
-      .match('#Hyphenated #Hyphenated')
-      .match('#Noun #Verb')
-      .tag('Noun', 'hyphen-verb')
-    let hyphen = doc.match('#Hyphenated+')
-    if (hyphen.has('#Expression')) {
-      //ooh-wee
-      hyphen.tag('Expression', 'ooh-wee')
-    }
-  }
-
-  if (doc.has('#Place')) {
-    //West Norforlk
-    doc.match('(west|north|south|east|western|northern|southern|eastern)+ #Place').tag('Region', 'west-norfolk')
-    //some us-state acronyms (exlude: al, in, la, mo, hi, me, md, ok..)
-    doc
-      .match('#City [#Acronym]')
-      .match('(al|ak|az|ar|ca|ct|dc|fl|ga|id|il|nv|nh|nj|ny|oh|or|pa|sc|tn|tx|ut|vt|pr)')
-      .tag('Region', 'us-state')
-  }
-
   //misc:
   //foot/feet
   doc.match('(foot|feet)').tag('Noun', 'foot-noun')
-  doc
-    .match('#Value (foot|feet)')
-    .term(1)
-    .tag('Unit', 'foot-unit')
-
+  //3 feet
+  doc.match('#Value [(foot|feet)]').tag('Unit', 'foot-unit')
   //'u' as pronoun
   doc.match('#Conjunction [u]').tag('Pronoun', 'u-pronoun-2')
-
+  //6 am
+  doc.match('#Holiday (day|eve)').tag('Holiday', 'holiday-day')
+  //timezones
+  doc.match('(standard|daylight|summer|eastern|pacific|central|mountain) standard? time').tag('Time', 'timezone')
+  //about to go
+  doc.match('[about to] #Adverb? #Verb').tag(['Auxiliary', 'Verb'], 'about-to')
+  //right of way
+  doc.match('(right|rights) of .').tag('Noun', 'right-of')
+  // u r cool
+  doc.match('u r').tag('Pronoun #Copula')
   //swear-words as non-expression POS
   //nsfw
   doc.match('holy (shit|fuck|hell)').tag('Expression', 'swears-expression')
@@ -103,19 +27,92 @@ const miscCorrection = function(doc) {
     .not('#Copula')
     .tag('Adjective', 'swears-adjective')
 
-  //6 am
-  doc.match('#Holiday (day|eve)').tag('Holiday', 'holiday-day')
+  //ambig prepositions/conjunctions
+  let so = doc.if('so')
+  if (so.found === true) {
+    //so funny
+    so.match('[so] #Adjective').tag('Adverb', 'so-adv')
+    //so the
+    so.match('[so] #Noun').tag('Conjunction', 'so-conj')
+    //do so
+    so.match('do [so]').tag('Noun', 'so-noun')
+  }
 
-  //timezones
-  doc.match('(standard|daylight|summer|eastern|pacific|central|mountain) standard? time').tag('Time', 'timezone')
+  let all = doc.if('all')
+  if (all.found === true) {
+    //all students
+    all.match('[all] #Determiner? #Noun').tag('Adjective', 'all-noun')
+    //it all fell apart
+    all.match('[all] #Verb').tag('Adverb', 'all-verb')
+  }
 
-  //about to go
-  doc.match('[about to] #Adverb? #Verb').tag(['Auxiliary', 'Verb'], 'about-to')
+  //the ambiguous word 'that' and 'which'
+  let which = doc.if('which')
+  if (which.found === true) {
+    //remind john that
+    which.match('#Verb #Adverb? #Noun [(that|which)]').tag('Preposition', 'that-prep')
+    //that car goes
+    which.match('that #Noun [#Verb]').tag('Determiner', 'that-determiner')
+    //work, which has been done.
+    which.match('#Comma [which] (#Pronoun|#Verb)').tag('Preposition', 'which-copula')
+    //things that provide
+    // doc.match('#Plural (that|which) #Adverb? #Verb').term(1).tag('Preposition', 'noun-that');
+  }
 
-  //right of way
-  doc.match('(right|rights) of .').tag('Noun', 'right-of')
-  // u r cool
-  doc.match('u r').tag('Pronoun #Copula')
+  //like
+  let like = doc.if('like')
+  if (like.found === true) {
+    like.match('just [like]').tag('Preposition', 'like-preposition')
+    //folks like her
+    like.match('#Noun [like] #Noun').tag('Preposition', 'noun-like')
+    //look like
+    like.match('#Verb [like]').tag('Adverb', 'verb-like')
+    //exactly like
+    like
+      .match('#Adverb like')
+      .notIf('(really|generally|typically|usually|sometimes|often) [like]')
+      .tag('Adverb', 'adverb-like')
+  }
+
+  let title = doc.if('#TitleCase')
+  if (title.found === true) {
+    //FitBit Inc
+    title.match('#TitleCase (ltd|co|inc|dept|assn|bros)').tag('Organization', 'org-abbrv')
+    //Foo District
+    title
+      .match('#TitleCase+ (district|region|province|county|prefecture|municipality|territory|burough|reservation)')
+      .tag('Region', 'foo-district')
+    //District of Foo
+    title
+      .match('(district|region|province|municipality|territory|burough|state) of #TitleCase')
+      .tag('Region', 'district-of-Foo')
+  }
+
+  let hyph = doc.if('#Hyphenated')
+  if (hyph.found === true) {
+    //air-flow
+    hyph
+      .match('#Hyphenated #Hyphenated')
+      .match('#Noun #Verb')
+      .tag('Noun', 'hyphen-verb')
+    //connect hyphenated expressions - 'ooh-wee'
+    hyph
+      .match('#Hyphenated+')
+      .if('#Expression')
+      .tag('Expression', 'ooh-wee')
+  }
+
+  let place = doc.if('#Place')
+  if (place.found === true) {
+    //West Norforlk
+    place.match('(west|north|south|east|western|northern|southern|eastern)+ #Place').tag('Region', 'west-norfolk')
+    //some us-state acronyms (exlude: al, in, la, mo, hi, me, md, ok..)
+    place
+      .match('#City [#Acronym]')
+      .match('(al|ak|az|ar|ca|ct|dc|fl|ga|id|il|nv|nh|nj|ny|oh|or|pa|sc|tn|tx|ut|vt|pr)')
+      .tag('Region', 'us-state')
+  }
+
   return doc
 }
 

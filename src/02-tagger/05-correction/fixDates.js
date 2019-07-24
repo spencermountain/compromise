@@ -3,6 +3,9 @@ const preps = '(in|by|before|during|on|until|after|of|within|all)'
 const thisNext = '(last|next|this|previous|current|upcoming|coming)'
 const sections = '(start|end|middle|starting|ending|midpoint|beginning)'
 const seasons = '(spring|summer|winter|fall|autumn)'
+const people = '(january|april|may|june|summer|autumn|jan|sep)'
+const verbs = '(may|march)'
+const units = '(hundred|thousand|million|billion|trillion|quadrillion|quintillion|sextillion|septillion)'
 
 //ensure a year is approximately typical for common years
 //please change in one thousand years
@@ -35,207 +38,222 @@ const fixDates = function(doc) {
   doc.match('(#Value|#Time) (am|pm)').tag('Time', 'value-ampm')
 
   //ambiguous month - person forms
-  let people = '(january|april|may|june|summer|autumn|jan|sep)'
-  if (doc.has(people)) {
+  let person = doc.if(people)
+  if (person.found === true) {
     //give to april
-    doc.match(`#Infinitive #Determiner? #Adjective? #Noun? (to|for) [${people}]`).tag('Person', 'ambig-person')
+    person.match(`#Infinitive #Determiner? #Adjective? #Noun? (to|for) [${people}]`).tag('Person', 'ambig-person')
     //remind june
-    doc.match(`#Infinitive [${people}]`).tag('Person', 'infinitive-person')
+    person.match(`#Infinitive [${people}]`).tag('Person', 'infinitive-person')
     //may waits for
-    doc.match(`[${people}] #PresentTense (to|for)`).tag('Person', 'ambig-active')
+    person.match(`[${people}] #PresentTense (to|for)`).tag('Person', 'ambig-active')
     //april will
-    doc.match(`[${people}] #Modal`).tag('Person', 'ambig-modal')
+    person.match(`[${people}] #Modal`).tag('Person', 'ambig-modal')
     //would april
-    doc.match(`#Modal [${people}]`).tag('Person', 'modal-ambig')
+    person.match(`#Modal [${people}]`).tag('Person', 'modal-ambig')
     //with april
-    doc.match(`(that|with|for) [${people}]`).tag('Person', 'that-month')
+    person.match(`(that|with|for) [${people}]`).tag('Person', 'that-month')
     //it is may
-    doc.match(`#Copula [${people}]`).tag('Person', 'is-may')
+    person.match(`#Copula [${people}]`).tag('Person', 'is-may')
     //may is
-    doc.match(`[${people}] #Copula`).tag('Person', 'may-is')
+    person.match(`[${people}] #Copula`).tag('Person', 'may-is')
     //april the 5th
-    doc.match(`[${people}] the? #Value`).tag('Month', 'person-value')
+    person.match(`[${people}] the? #Value`).tag('Month', 'person-value')
     //wednesday april
-    doc.match(`#Date [${people}]`).tag('Month', 'correction-may')
+    person.match(`#Date [${people}]`).tag('Month', 'correction-may')
     //may 5th
-    doc.match(`[${people}] the? #Value`).tag('Month', 'may-5th')
+    person.match(`[${people}] the? #Value`).tag('Month', 'may-5th')
     //5th of may
-    doc.match(`#Value of [${people}]`).tag('Month', '5th-of-may')
+    person.match(`#Value of [${people}]`).tag('Month', '5th-of-may')
     //by april
-    doc
+    person
       .match(`${preps} ${people}`)
       .ifNo('#Holiday')
       .term(1)
       .tag('Month', 'preps-month')
     //this april
-    doc.match(`(next|this|last) [${people}]`).tag('Month', 'correction-may') //maybe not 'this'
+    person.match(`(next|this|last) [${people}]`).tag('Month', 'correction-may') //maybe not 'this'
   }
 
   //ambiguous month - verb-forms
-  let verbs = '(may|march)'
-  if (doc.has(verbs)) {
+  let verb = doc.if(verbs)
+  if (verb.found === true) {
     //quickly march
-    doc
+    verb
       .match(`#Adverb ${verbs}`)
       .lastTerm()
       .tag('Infinitive', 'ambig-verb')
-    doc
+    verb
       .match(`${verbs} #Adverb`)
       .lastTerm()
       .tag('Infinitive', 'ambig-verb')
     //all march
-    doc
+    verb
       .match(`${preps} ${verbs}`)
       .lastTerm()
       .tag('Month', 'in-month')
     //this march
-    doc
+    verb
       .match(`(next|this|last) ${verbs}`)
       .lastTerm()
       .tag('Month', 'this-month')
     //with date
-    doc
+    verb
       .match(`${verbs} the? #Value`)
       .firstTerm()
       .tag('Month', 'march-5th')
-    doc
+    verb
       .match(`#Value of? ${verbs}`)
       .lastTerm()
       .tag('Month', '5th-of-march')
     //nearby
-    doc
+    verb
       .match(`[${verbs}] .? #Date`)
       .lastTerm()
       .tag('Month', 'march-and-feb')
-    doc
+    verb
       .match(`#Date .? [${verbs}]`)
       .lastTerm()
       .tag('Month', 'feb-and-march')
 
-    if (doc.has('march')) {
+    let march = doc.if('march')
+    if (march.found === true) {
       //march to
-      doc.match('[march] (up|down|back|to|toward)').tag('Infinitive', 'march-to')
+      march.match('[march] (up|down|back|to|toward)').tag('Infinitive', 'march-to')
       //must march
-      doc.match('#Modal [march]').tag('Infinitive', 'must-march')
+      march.match('#Modal [march]').tag('Infinitive', 'must-march')
     }
   }
   //sun 5th
-  if (doc.has('sun')) {
+  let sun = doc.if('sun')
+  if (sun.found === true) {
     //sun feb 2
-    doc.match('[sun] #Date').tag('WeekDay', 'sun-feb')
+    sun.match('[sun] #Date').tag('WeekDay', 'sun-feb')
     //sun the 5th
-    doc
+    sun
       .match('sun the #Ordinal')
       .tag('Date')
       .firstTerm()
       .tag('WeekDay', 'sun-the-5th')
     //the sun
-    doc.match('#Determiner [sun]').tag('Singular', 'the-sun')
+    sun.match('#Determiner [sun]').tag('Singular', 'the-sun')
   }
+
   //sat, nov 5th
-  if (doc.has('sat')) {
+  let sat = doc.if('sat')
+  if (sat.found) {
     //sat november
-    doc.match('[sat] #Date').tag('WeekDay', 'sat-feb')
+    sat.match('[sat] #Date').tag('WeekDay', 'sat-feb')
     //this sat
-    doc.match(`${preps} [sat]`).tag('WeekDay', 'sat')
+    sat.match(`${preps} [sat]`).tag('WeekDay', 'sat')
   }
 
   //months:
-  if (doc.has('#Month')) {
+  let month = doc.if('#Month')
+  if (month.found === true) {
     //June 5-7th
-    doc.match(`#Month #DateRange+`).tag('Date', 'correction-numberRange')
+    month.match(`#Month #DateRange+`).tag('Date', 'correction-numberRange')
     //5th of March
-    doc.match('#Value of #Month').tag('Date', 'value-of-month')
+    month.match('#Value of #Month').tag('Date', 'value-of-month')
     //5 March
-    doc.match('#Cardinal #Month').tag('Date', 'cardinal-month')
+    month.match('#Cardinal #Month').tag('Date', 'cardinal-month')
     //march 5 to 7
-    doc.match('#Month #Value to #Value').tag('Date', 'value-to-value')
+    month.match('#Month #Value to #Value').tag('Date', 'value-to-value')
     //march the 12th
-    doc.match('#Month the #Value').tag('Date', 'month-the-value')
+    month.match('#Month the #Value').tag('Date', 'month-the-value')
   }
 
   //months:
-  if (doc.has('#Value')) {
-    //for 4 months
-    doc.match('for #Value #Duration').tag('Date', 'for-x-duration')
+  let val = doc.if('#Value')
+  if (val.found === true) {
     //values
-    doc.match('#Value #Abbreviation').tag('Value', 'value-abbr')
+    val.match('#Value #Abbreviation').tag('Value', 'value-abbr')
     //seven point five
-    doc.match('#Value (point|decimal) #Value').tag('Value', 'value-point-value')
-    //for four days
-    doc.match(`${preps}? #Value #Duration`).tag('Date', 'value-duration')
-    //two days before
-    doc.match('#Value #Duration #Conjunction').tag('Date', 'val-duration-conjunction')
-    //two years old
-    doc.match('#Value #Duration old').unTag('Date', 'val-years-old')
+    val.match('#Value (point|decimal) #Value').tag('Value', 'value-point-value')
     //minus 7
-    doc.match('(minus|negative) #Value').tag('Value', 'minus-value')
+    val.match('(minus|negative) #Value').tag('Value', 'minus-value')
     // ten grand
-    doc.match('#Value grand').tag('Value', 'value-grand')
+    val.match('#Value grand').tag('Value', 'value-grand')
     //quarter million
-    doc.match('(a|the) [(half|quarter)] #Ordinal').tag('Value', 'half-ordinal')
-
-    doc
-      .match('a #Value')
-      .if('(hundred|thousand|million|billion|trillion|quadrillion|quintillion|sextillion|septillion)')
-      .tag('Value', 'a-value')
-    // ts.match('#Ordinal (half|quarter)').tag('Value', 'ordinal-half');//not ready
-    doc
-      .match('(hundred|thousand|million|billion|trillion|quadrillion|quintillion|sextillion|septillion) and #Value')
-      .tag('Value', 'magnitude-and-value')
-
-    doc
+    val.match('(a|the) [(half|quarter)] #Ordinal').tag('Value', 'half-ordinal')
+    //june 7
+    val
       .match('(#WeekDay|#Month) #Value')
       .ifNo('#Money')
       .tag('Date', 'date-value')
 
-    doc
+    //7 june
+    val
       .match('#Value (#WeekDay|#Month)')
       .ifNo('#Money')
       .tag('Date', 'value-date')
 
     //may twenty five
-    let vs = doc.match('#TextValue #TextValue')
-    if (vs.found && vs.has('#Date')) {
-      vs.tag('#Date', 'textvalue-date')
+    val
+      .match('#TextValue #TextValue')
+      .if('#Date')
+      .tag('#Date', 'textvalue-date')
+
+    //eg 'year'
+    let duration = val.if('#Duration')
+    if (duration.found === true) {
+      //for 4 months
+      duration.match('for #Value #Duration').tag('Date', 'for-x-duration')
+      //two days before
+      duration.match('#Value #Duration #Conjunction').tag('Date', 'val-duration-conjunction')
+      //for four days
+      duration.match(`${preps}? #Value #Duration`).tag('Date', 'value-duration')
+      //two years old
+      duration.match('#Value #Duration old').unTag('Date', 'val-years-old')
+    }
+    //eg 'trillion'
+    let mult = val.if(units)
+    if (mult.found === true) {
+      mult.match('a #Value').tag('Value', 'a-value')
+      // mult.match('#Ordinal (half|quarter)').tag('Value', 'ordinal-half');//not ready
+      mult.match(`${units} and #Value`).tag('Value', 'magnitude-and-value')
     }
   }
 
   //seasons
-  if (doc.has(seasons)) {
-    doc.match(`${preps}? ${thisNext} ${seasons}`).tag('Date', 'thisNext-season')
-    doc.match(`the? ${sections} of ${seasons}`).tag('Date', 'section-season')
+  let season = doc.if(seasons)
+  if (season.found === true) {
+    season.match(`${preps}? ${thisNext} ${seasons}`).tag('Date', 'thisNext-season')
+    season.match(`the? ${sections} of ${seasons}`).tag('Date', 'section-season')
   }
 
   //rest-dates
-  if (doc.has('#Date')) {
+  let date = doc.if('#Date')
+  if (date.found === true) {
     //june the 5th
-    doc.match('#Date the? #Ordinal').tag('Date', 'correction-date')
+    date.match('#Date the? #Ordinal').tag('Date', 'correction')
     //last month
-    doc.match(`${thisNext} #Date`).tag('Date', 'thisNext-date')
+    date.match(`${thisNext} #Date`).tag('Date', 'thisNext')
     //by 5 March
-    doc.match('due? (by|before|after|until) #Date').tag('Date', 'by-date')
+    date.match('due? (by|before|after|until) #Date').tag('Date', 'by')
     //next feb
-    doc.match('(last|next|this|previous|current|upcoming|coming|the) #Date').tag('Date', 'next-feb')
-    //feb to june
-    doc.match('#Date (#Preposition|to) #Date').tag('Date', 'date-prep-date')
+    date.match('(last|next|this|previous|current|upcoming|coming|the) #Date').tag('Date', 'next-feb')
     //start of june
-    doc.match(`the? ${sections} of #Date`).tag('Date', 'section-of-date')
+    date.match(`the? ${sections} of #Date`).tag('Date', 'section-of')
     //fifth week in 1998
-    doc.match('#Ordinal #Duration in #Date').tag('Date', 'duration-in-date')
+    date.match('#Ordinal #Duration in #Date').tag('Date', 'duration-in')
     //early in june
-    doc.match('(early|late) (at|in)? the? #Date').tag('Time', 'early-evening')
+    date.match('(early|late) (at|in)? the? #Date').tag('Time', 'early-evening')
     //tomorrow before 3
-    doc
+    date
       .match('#Date (by|before|after|at|@|about) #Cardinal')
       .not('^#Date')
       .tag('Time', 'date-before-Cardinal')
     //saturday am
-    doc
+    date
       .match('#Date [(am|pm)]')
       .unTag('Verb')
       .unTag('Copula')
       .tag('Time', 'date-am')
+    //feb to june
+    date
+      .match('#Date (#Preposition|to) #Date')
+      .ifNo('#Duration')
+      .tag('Date', 'date-prep-date')
   }
 
   //year/cardinal tagging
@@ -272,28 +290,21 @@ const fixDates = function(doc) {
     // tagYearSafer(v, 'year-unsafe')
   }
 
-  //another pass at dates..
-  if (doc.has('#Date')) {
-    //time:
-    if (doc.has('#Time')) {
-      //by 6pm
-      doc.match('(by|before|after|at|@|about) #Time').tag('Time', 'preposition-time')
-      //7 7pm
-      doc
-        .match('#Cardinal #Time')
-        .not('#Year')
-        .tag('Time', 'value-time')
-      //2pm est
-      doc
-        .match('#Time (eastern|pacific|central|mountain)')
-        .term(1)
-        .tag('Time', 'timezone')
-      //6pm est
-      doc
-        .match('#Time (est|pst|gmt)')
-        .term(1)
-        .tag('Time', 'timezone abbr')
-    }
+  let time = doc.if('#Time')
+  if (time.found === true) {
+    //by 6pm
+    time.match('(by|before|after|at|@|about) #Time').tag('Time', 'preposition-time')
+    //7 7pm
+    time
+      .match('#Cardinal #Time')
+      .not('#Year')
+      .tag('Time', 'value-time')
+    //2pm est
+    time.match('#Time [(eastern|pacific|central|mountain)]').tag('Time', 'timezone')
+    //6pm est
+    time.match('#Time [(est|pst|gmt)]').tag('Time', 'timezone abbr')
   }
+
+  return doc
 }
 module.exports = fixDates

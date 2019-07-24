@@ -1305,8 +1305,13 @@ const syntax = function(str) {
 };
 var syntax_1 = syntax;
 
+let count = 0;
+setTimeout(() => {
+  console.log('\nmatchALL: ' + count);
+}, 1000);
 /**  returns a simple array of arrays */
 const matchAll = function(p, regs, matchOne = false) {
+  count += 1;
   //if we forgot to parse it..
   if (typeof regs === 'string') {
     regs = syntax_1(regs);
@@ -6258,44 +6263,35 @@ const miscCorrection = function(doc) {
   //ambig prepositions/conjunctions
   if (doc.has('so')) {
     //so funny
-    doc
-      .match('so #Adjective')
-      .match('so')
-      .tag('Adverb', 'so-adv');
+    doc.match('[so] #Adjective').tag('Adverb', 'so-adv');
     //so the
-    doc
-      .match('so #Noun')
-      .match('so')
-      .tag('Conjunction', 'so-conj');
+    doc.match('[so] #Noun').tag('Conjunction', 'so-conj');
     //do so
-    doc
-      .match('do so')
-      .match('so')
-      .tag('Noun', 'so-noun');
+    doc.match('do [so]').tag('Noun', 'so-noun');
   }
+
   if (doc.has('all')) {
     //all students
     doc.match('[all] #Determiner? #Noun').tag('Adjective', 'all-noun');
     //it all fell apart
     doc.match('[all] #Verb').tag('Adverb', 'all-verb');
   }
+
   //the ambiguous word 'that' and 'which'
   if (doc.has('(that|which)')) {
     //remind john that
-    doc
-      .match('#Verb #Adverb? #Noun (that|which)')
-      .lastTerm()
-      .tag('Preposition', 'that-prep');
+    doc.match('#Verb #Adverb? #Noun [(that|which)]').tag('Preposition', 'that-prep');
+
     //that car goes
-    doc
-      .match('that #Noun #Verb')
-      .firstTerm()
-      .tag('Determiner', 'that-determiner');
+    doc.match('that #Noun [#Verb]').tag('Determiner', 'that-determiner');
+
     //work, which has been done.
     doc.match('#Comma [which] (#Pronoun|#Verb)').tag('Preposition', 'which-copula');
+
     //things that provide
     // doc.match('#Plural (that|which) #Adverb? #Verb').term(1).tag('Preposition', 'noun-that');
   }
+
   //like
   if (doc.has('like')) {
     doc.match('just [like]').tag('Preposition', 'like-preposition');
@@ -6306,8 +6302,7 @@ const miscCorrection = function(doc) {
     //exactly like
     doc
       .match('#Adverb like')
-      .notIf('(really|generally|typically|usually|sometimes|often) like')
-      .lastTerm()
+      .notIf('(really|generally|typically|usually|sometimes|often) [like]')
       .tag('Adverb', 'adverb-like');
   }
 
@@ -6346,6 +6341,7 @@ const miscCorrection = function(doc) {
       .match('(al|ak|az|ar|ca|ct|dc|fl|ga|id|il|nv|nh|nj|ny|oh|or|pa|sc|tn|tx|ut|vt|pr)')
       .tag('Region', 'us-state');
   }
+
   //misc:
   //foot/feet
   doc.match('(foot|feet)').tag('Noun', 'foot-noun');
@@ -6353,40 +6349,28 @@ const miscCorrection = function(doc) {
     .match('#Value (foot|feet)')
     .term(1)
     .tag('Unit', 'foot-unit');
+
   //'u' as pronoun
   doc.match('#Conjunction [u]').tag('Pronoun', 'u-pronoun-2');
-  //'a/an' can mean 1 - "a hour"
-  doc
-    .match('(a|an) (#Duration|hundred|thousand|million|billion|trillion|quadrillion|quintillion|sextillion|septillion)')
-    .ifNo('#Plural')
-    .term(0)
-    .tag('Value', 'a-is-one');
+
   //swear-words as non-expression POS
   //nsfw
   doc.match('holy (shit|fuck|hell)').tag('Expression', 'swears-expression');
-  doc
-    .match('#Determiner (shit|damn|hell)')
-    .term(1)
-    .tag('Noun', 'swears-noun');
-  doc
-    .match('(shit|damn|fuck) (#Determiner|#Possessive|them)')
-    .term(0)
-    .tag('Verb', 'swears-verb');
+  doc.match('#Determiner [(shit|damn|hell)]').tag('Noun', 'swears-noun');
+  doc.match('[(shit|damn|fuck)] (#Determiner|#Possessive|them)').tag('Verb', 'swears-verb');
   doc
     .match('#Copula fucked up?')
     .not('#Copula')
     .tag('Adjective', 'swears-adjective');
+
   //6 am
   doc.match('#Holiday (day|eve)').tag('Holiday', 'holiday-day');
+
   //timezones
   doc.match('(standard|daylight|summer|eastern|pacific|central|mountain) standard? time').tag('Time', 'timezone');
-  //canadian dollar, Brazilian pesos
-  doc.match('#Demonym #Currency').tag('Currency', 'demonym-currency');
+
   //about to go
-  doc
-    .match('about to #Adverb? #Verb')
-    .match('about to')
-    .tag(['Auxiliary', 'Verb'], 'about-to');
+  doc.match('[about to] #Adverb? #Verb').tag(['Auxiliary', 'Verb'], 'about-to');
 
   //right of way
   doc.match('(right|rights) of .').tag('Noun', 'right-of');
@@ -6399,105 +6383,121 @@ var fixMisc = miscCorrection;
 
 //Determiner-signals
 const fixThe = function(doc) {
-  if (doc.has('#Determiner')) {
+  let det = doc.if('#Determiner');
+  if (det.found === true) {
     //the wait to vote
-    doc.match('(the|this) [#Verb] #Preposition .').tag('Noun', 'correction-determiner1');
-    //the swim
-    doc
-      .match('(the|those|these) (#Infinitive|#PresentTense|#PastTense)')
-      .term(1)
-      .tag('Noun', 'correction-determiner2');
-    //a staggering cost
-    doc.match('(a|an) [#Gerund]').tag('Adjective', 'correction-a|an');
-    doc
-      .match('(a|an) #Adjective (#Infinitive|#PresentTense)')
-      .term(2)
-      .tag('Noun', 'correction-a|an2');
+    det.match('(the|this) [#Verb] #Preposition .').tag('Noun', 'correction-determiner1');
+    //the nice swim
+    det.match('(the|this|those|these) #Adjective [#Verb]').tag('Noun', 'the-adj-verb');
+    //the truly nice swim
+    det.match('(the|this|those|these) #Adverb #Adjective [#Verb]').tag('Noun', 'correction-determiner4');
+    //a stream runs
+    det.match('(the|this|a|an) [#Infinitive] #Adverb? #Verb').tag('Noun', 'correction-determiner5');
     //some pressing issues
-    doc.match('some [#Verb] #Plural').tag('Noun', 'correction-determiner6');
+    det.match('some [#Verb] #Plural').tag('Noun', 'correction-determiner6');
+    //the orange is
+    det.match('#Determiner [#Adjective] (#Copula|#PastTense|#Auxiliary)').tag('Noun', 'the-adj-2');
+    //a sense of
+    det.match('#Determiner [#Verb] of').tag('Noun', 'the-verb-of');
+    //the threat of force
+    det.match('#Determiner #Noun of [#Verb]').tag('Noun', 'noun-of-noun');
+    //a close
+    det.match('#Determiner #Adverb? [close]').tag('Adjective', 'a-close');
     //the test string
-    doc.match('#Determiner [#Infinitive] #Noun').tag('Noun', 'correction-determiner7');
+    det.match('#Determiner [#Infinitive] #Noun').tag('Noun', 'correction-determiner7');
+    //by a bear.
+    det.match('#Determiner [#Infinitive]$').tag('Noun', 'a-inf');
+    //the western line
+    det.match('#Determiner [(western|eastern|northern|southern|central)] #Noun').tag('Noun', 'western-line');
+    //the swim
+    det.match('(the|those|these) [(#Infinitive|#PresentTense|#PastTense)]').tag('Noun', 'correction-determiner2');
     //the orange.
-    doc
+    det
       .match('#Determiner #Adjective$')
       .notIf('(#Comparative|#Superlative)')
       .term(1)
       .tag('Noun', 'the-adj-1');
-    //the orange is
-    doc.match('#Determiner [#Adjective] (#Copula|#PastTense|#Auxiliary)').tag('Noun', 'the-adj-2');
-    //the nice swim
-    doc.match('(the|this|those|these) #Adjective [#Verb]').tag('Noun', 'the-adj-verb');
-    //the truly nice swim
-    doc.match('(the|this|those|these) #Adverb #Adjective [#Verb]').tag('Noun', 'correction-determiner4');
-    //a stream runs
-    doc.match('(the|this|a|an) [#Infinitive] #Adverb? #Verb').tag('Noun', 'correction-determiner5');
-    //a sense of
-    doc.match('#Determiner [#Verb] of').tag('Noun', 'the-verb-of');
-    //the threat of force
-    doc.match('#Determiner #Noun of [#Verb]').tag('Noun', 'noun-of-noun');
-    //a close
-    doc.match('#Determiner #Adverb? [close]').tag('Adjective', 'a-close');
-    //did a 900, paid a 20
-    doc.match('#Verb (a|an) [#Value]').tag('Singular', 'a-value');
-    //a tv show
-    doc.match('(a|an) #Noun [#Infinitive]').tag('Noun', 'a-noun-inf');
   }
+
+  let an = doc.if('(a|an)');
+  if (an.found === true) {
+    //a staggering cost
+    an.match('(a|an) [#Gerund]').tag('Adjective', 'correction-a|an');
+    //did a 900, paid a 20
+    an.match('#Verb (a|an) [#Value]').tag('Singular', 'a-value');
+    //a tv show
+    an.match('(a|an) #Noun [#Infinitive]').tag('Noun', 'a-noun-inf');
+    //a great run
+    an.match('(a|an) #Adjective (#Infinitive|#PresentTense)')
+      .term(2)
+      .tag('Noun', 'correction-a|an2');
+    //'a/an' can mean 1 - "a hour"
+    an.match('[(a|an)] (#Duration|hundred|thousand|million|billion|trillion)')
+      .ifNo('#Plural')
+      .tag('Value', 'a-is-one');
+  }
+
   return doc
 };
 var fixThe_1 = fixThe;
 
 //
 const fixNouns = function(doc) {
-  //'more' is not always an adverb
-  doc.match('more #Noun').tag('Noun', 'more-noun');
-  //the word 'second'
-  doc
-    .match('[second] #Noun')
-    .notIf('#Honorific')
-    .unTag('Unit')
-    .tag('Ordinal', 'second-noun');
-  //he quickly foo
-  doc.match('#Noun #Adverb [#Noun]').tag('Verb', 'correction');
-  //fix for busted-up phrasalVerbs
-  doc.match('#Noun [#Particle]').tag('Preposition', 'repair-noPhrasal');
-  //John & Joe's
-  doc.match('#Noun (&|n) #Noun').tag('Organization', 'Noun-&-Noun');
-  //Aircraft designer
-  doc.match('#Noun #Actor').tag('Actor', 'thing-doer');
-  //this rocks
-  doc.match('(this|that) [#Plural]').tag('PresentTense', 'this-verbs');
-  //by a bear.
-  doc
-    .match('#Determiner #Infinitive$')
-    .lastTerm()
-    .tag('Noun', 'a-inf');
-  //the western line
-  doc.match('#Determiner [(western|eastern|northern|southern|central)] #Noun').tag('Noun', 'western-line');
-  doc
-    .match('(#Determiner|#Value) [(linear|binary|mobile|lexical|technical|computer|scientific|formal)] #Noun')
-    .tag('Noun', 'technical-noun');
-  //organization
-  if (doc.has('#Organization')) {
-    doc.match('#Organization of the? #TitleCase').tag('Organization', 'org-of-place');
-    doc.match('#Organization #Country').tag('Organization', 'org-country');
-    doc.match('(world|global|international|national|#Demonym) #Organization').tag('Organization', 'global-org');
+  let noun = doc.if('#Noun');
+  if (noun.found === true) {
+    //'more' is not always an adverb
+    noun.match('more #Noun').tag('Noun', 'more-noun');
+    //he quickly foo
+    noun.match('#Noun #Adverb [#Noun]').tag('Verb', 'correction');
+    //fix for busted-up phrasalVerbs
+    noun.match('#Noun [#Particle]').tag('Preposition', 'repair-noPhrasal');
+    //John & Joe's
+    noun.match('#Noun (&|n) #Noun').tag('Organization', 'Noun-&-Noun');
+    //Aircraft designer
+    noun.match('#Noun #Actor').tag('Actor', 'thing-doer');
+    //this rocks
+    noun.match('(this|that) [#Plural]').tag('PresentTense', 'this-verbs');
+    //j.k Rowling
+    doc.match('#Noun van der? #Noun').tagSafe('#Person', 'von der noun');
+    //king of spain
+    doc.match('(king|queen|prince|saint|lady) of? #Noun').tagSafe('#Person', 'king-of-noun');
+    //the word 'second'
+    noun
+      .match('[second] #Noun')
+      .notIf('#Honorific')
+      .unTag('Unit')
+      .tag('Ordinal', 'second-noun');
+    //linear algebra
+    noun
+      .match('(#Determiner|#Value) [(linear|binary|mobile|lexical|technical|computer|scientific|formal)] #Noun')
+      .tag('Noun', 'technical-noun');
+
+    //organization
+    let org = noun.if('#Organization');
+    if (org.found === true) {
+      org.match('#Organization of the? #TitleCase').tag('Organization', 'org-of-place');
+      org.match('#Organization #Country').tag('Organization', 'org-country');
+      org.match('(world|global|international|national|#Demonym) #Organization').tag('Organization', 'global-org');
+    }
   }
-  if (doc.has('#Possessive')) {
+
+  let poss = doc.if('#Possessive');
+  if (poss.found === true) {
     //my buddy
-    doc.match('#Possessive [#FirstName]').unTag('Person', 'possessive-name');
+    poss.match('#Possessive [#FirstName]').unTag('Person', 'possessive-name');
     //spencer kelly's
-    doc
+    poss
       .match('#FirstName #Acronym? #Possessive')
       .ifNo('#Comma')
       .match('#FirstName #Acronym? #LastName')
       .tag('Possessive');
     //Super Corp's fundraiser
-    doc
+    poss
       .match('#Organization+ #Possessive')
       .ifNo('#Comma')
       .tag('Possessive');
     //Los Angeles's fundraiser
-    doc
+    poss
       .match('#Place+ #Possessive')
       .ifNo('#Comma')
       .tag('Possessive');
@@ -6506,451 +6506,417 @@ const fixNouns = function(doc) {
 };
 var fixNouns_1 = fixNouns;
 
+const maybeNoun =
+  '(rose|robin|dawn|ray|holly|bill|joy|viola|penny|sky|violet|daisy|melody|kelvin|hope|mercedes|olive|jewel|faith|van|charity|miles|lily|summer|dolly|rod|dick|cliff|lane|reed|kitty|art|jean|trinity)';
+const maybeVerb = '(pat|wade|ollie|will|rob|buck|bob|mark|jack)';
+const maybeAdj = '(misty|rusty|dusty|rich|randy)';
+const maybeDate = '(april|june|may|jan|august|eve)';
+const maybePlace = '(paris|alexandria|houston|kobe|salvador|sydney)';
+
 const fixPerson = function(doc) {
-  // 'john E rockefeller'
-  doc.match('#FirstName [/^[^aiurck]$/]').tag(['Acronym', 'Person'], 'john-e');
-
-  //Doctor john smith jr
-  doc.match('#Honorific #Person').tag('Person', 'honorific-person');
-  doc.match('#Person (jr|sr|md)').tag('Person', 'person-honorific');
-
-  //mr Putin
-  doc.match('(mr|mrs|ms|dr) (#TitleCase|#Possessive)+').tag('#Person', 'mr-putin');
-
-  //a bunch of ambiguous first names
-  let maybeNoun =
-    '(rose|robin|dawn|ray|holly|bill|joy|viola|penny|sky|violet|daisy|melody|kelvin|hope|mercedes|olive|jewel|faith|van|charity|miles|lily|summer|dolly|rod|dick|cliff|lane|reed|kitty|art|jean|trinity)';
-  if (doc.has(maybeNoun)) {
-    doc.match('(#Determiner|#Adverb|#Pronoun|#Possessive) [' + maybeNoun + ']').tag('Noun', 'the-ray');
-    doc
-      .match(maybeNoun + ' (#Person|#Acronym|#TitleCase)')
-      .canBe('#Person')
-      .tag('Person', 'ray-smith');
-  }
-  //verbs or people-names
-  let maybeVerb = '(pat|wade|ollie|will|rob|buck|bob|mark|jack)';
-  if (doc.has(maybeVerb)) {
-    doc.match('(#Modal|#Adverb) [' + maybeVerb + ']').tag('Verb', 'would-mark');
-    doc.match(maybeVerb + ' (#Person|#TitleCase)').tag('Person', 'rob-smith');
-  }
-  //adjectives or people-names
-  let maybeAdj = '(misty|rusty|dusty|rich|randy)';
-  if (doc.has(maybeAdj)) {
-    doc.match('#Adverb [' + maybeAdj + ']').tag('Adjective', 'really-rich');
-    doc.match(maybeAdj + ' (#Person|#TitleCase)').tag('Person', 'randy-smith');
-  }
-  //dates as people names
-  let maybeDate = '(april|june|may|jan|august|eve)';
-  if (doc.has(maybeDate)) {
-    doc
-      .match(String(maybeDate) + ' (#Person|#TitleCase)')
-      .canBe('#Person')
-      .tag('Person', 'june-smith');
-    doc
-      .match('(in|during|on|by|before|#Date) [' + maybeDate + ']')
-      .canBe('#Date')
-      .tag('Date', 'in-june');
-    doc
-      .match(maybeDate + ' (#Date|#Value)')
-      .canBe('#Date')
-      .tag('Date', 'june-5th');
-  }
-  //place-names as people-names
-  let maybePlace = '(paris|alexandria|houston|kobe|salvador|sydney)';
-  if (doc.has(maybePlace)) {
-    doc
-      .match('(in|near|at|from|to|#Place) [' + maybePlace + ']')
-      .canBe('#Place')
-      .tag('Place', 'in-paris');
-    doc
-      .match('[' + maybePlace + '] #Place')
-      .canBe('#Place')
-      .tag('Place', 'paris-france');
-    doc
-      .match('[' + maybePlace + '] #Person')
-      .canBe('#Person')
-      .tag('Person', 'paris-hilton');
-  }
-  //this one is tricky
-  if (doc.match('al')) {
-    doc
-      .match('al (#Person|#TitleCase)')
-      .canBe('#Person')
-      .tag('#Person', 'al-borlen');
-    doc
-      .match('#TitleCase al #TitleCase')
-      .canBe('#Person')
-      .tag('#Person', 'arabic-al-arabic');
-  }
-  //ambiguous honorifics
-  doc
-    .match('(private|general|major|corporal|lord|lady|secretary|premier) #Honorific? #Person')
-    .terms(0)
-    .tag('Honorific', 'ambg-honorifics');
-  //first general..
-  doc
-    .match('(1st|2nd|first|second) #Honorific')
-    .terms(0)
-    .tag('Honorific', 'ordinal-honorific');
-
-  //methods requiring a firstname match
-  if (doc.has('#FirstName')) {
-    // Firstname x (dangerous)
-    let tmp = doc
-      .match('#FirstName (#Noun|#TitleCase)')
-      .ifNo('^#Possessive')
-      .ifNo('#ClauseEnd .');
-    tmp.lastTerm().tag('#LastName', 'firstname-noun');
-    //ferdinand de almar
-    doc.match('#FirstName de #Noun').tag('#Person', 'firstname-de-noun');
-    //Osama bin Laden
-    doc.match('#FirstName (bin|al) #Noun').tag('#Person', 'firstname-al-noun');
-    //John L. Foo
-    doc.match('#FirstName #Acronym #TitleCase').tag('Person', 'firstname-acronym-titlecase');
-    //Andrew Lloyd Webber
-    doc.match('#FirstName #FirstName #TitleCase').tag('Person', 'firstname-firstname-titlecase');
-    //Mr Foo
-    doc.match('#Honorific #FirstName? #TitleCase').tag('Person', 'Honorific-TitleCase');
-    //John Foo
-    doc
-      .match('#FirstName #TitleCase #TitleCase?')
-      .match('#Noun+')
-      .tag('Person', 'firstname-titlecase');
-    //peter the great
-    doc.match('#FirstName the #Adjective').tag('Person', 'correction-determiner5');
-    //very common-but-ambiguous lastnames
-    doc.match('#FirstName (green|white|brown|hall|young|king|hill|cook|gray|price)').tag('#Person', 'firstname-maybe');
-    //Joe K. Sombrero
-    doc
-      .match('#FirstName #Acronym #Noun')
-      .ifNo('#Date')
-      .tag('#Person', 'n-acro-noun')
-      .lastTerm()
-      .tag('#LastName', 'n-acro-noun');
-    // Dwayne 'the rock' Johnson
-    doc
-      .match('#FirstName [#Determiner #Noun] #LastName')
-      .tag('#NickName', 'first-noun-last')
-      .tag('#Person', 'first-noun-last');
-
-    //john bodego's
-    doc
-      .match('#FirstName (#Singular|#Possessive)')
-      .ifNo('#Date')
-      .ifNo('#NickName')
-      .tag('#Person', 'first-possessive')
-      .lastTerm()
-      .tag('#LastName', 'first-possessive');
-  }
-
-  //methods requiring a lastname match
-  if (doc.has('#LastName')) {
-    // x Lastname
-    doc
-      .match('#Noun #LastName')
-      .firstTerm()
-      .canBe('#FirstName')
-      .tag('#FirstName', 'noun-lastname');
-    //ambiguous-but-common firstnames
-    doc
-      .match('(will|may|april|june|said|rob|wade|ray|rusty|drew|miles|jack|chuck|randy|jan|pat|cliff|bill) #LastName')
-      .firstTerm()
-      .tag('#FirstName', 'maybe-lastname');
-    //Jani K. Smith
-    doc
-      .match('#TitleCase #Acronym? #LastName')
-      .ifNo('#Date')
-      .tag('#Person', 'title-acro-noun')
-      .lastTerm()
-      .tag('#LastName', 'title-acro-noun');
-    //is foo Smith
-    doc
-      .match('#Copula (#Noun|#PresentTense) #LastName')
-      .term(1)
-      .tag('#FirstName', 'copula-noun-lastname');
+  // clues from honorifics
+  let hon = doc.if('#Honorific');
+  if (hon.found === true) {
+    //mr Putin
+    doc.match('(mr|mrs|ms|dr) (#TitleCase|#Possessive)+').tag('#Person', 'mr-putin');
+    //mr X
+    hon.match('#Honorific #Acronym').tag('Person', 'Honorific-TitleCase');
+    //remove single 'mr'
+    hon.match('^#Honorific$').unTag('Person', 'single-honorific');
+    //first general..
+    hon.match('[(1st|2nd|first|second)] #Honorific').tag('Honorific', 'ordinal-honorific');
   }
 
   //methods requiring a titlecase
-  if (doc.has('#TitleCase')) {
-    doc
-      .match('#Acronym #TitleCase')
-      .canBe('#Person')
-      .tag('#Person', 'acronym-titlecase');
+  let titleCase = doc.if('#TitleCase');
+  if (titleCase.found === true) {
+    titleCase.match('#Acronym #TitleCase').tagSafe('#Person', 'acronym-titlecase');
     //ludwig van beethovan
-    doc
-      .match('#TitleCase (van|al|bin) #TitleCase')
-      .canBe('#Person')
-      .tag('Person', 'correction-titlecase-van-titlecase');
-    doc
-      .match('#TitleCase (de|du) la? #TitleCase')
-      .canBe('#Person')
-      .tag('Person', 'correction-titlecase-van-titlecase');
-    //Morgan Shlkjsfne
-    doc
-      .match('#Person #TitleCase')
-      .match('#TitleCase #Noun')
-      .canBe('#Person')
-      .tag('Person', 'correction-person-titlecase');
+    titleCase.match('#TitleCase (van|al|bin) #TitleCase').tagSafe('Person', 'titlecase-van-titlecase');
+    //jose de Sucre
+    titleCase.match('#TitleCase (de|du) la? #TitleCase').tagSafe('Person', 'titlecase-van-titlecase');
+
     //pope francis
-    doc
+    titleCase
       .match('(lady|queen|sister) #TitleCase')
       .ifNo('#Date')
       .ifNo('#Honorific')
       .tag('#FemaleName', 'lady-titlecase');
-    doc
+    titleCase
       .match('(king|pope|father) #TitleCase')
       .ifNo('#Date')
-      .tag('#MaleName', 'correction-poe');
+      .tag('#MaleName', 'poe');
   }
 
-  //j.k Rowling
-  doc
-    .match('#Noun van der? #Noun')
-    .canBe('#Person')
-    .tag('#Person', 'von der noun');
-  //king of spain
-  doc
-    .match('(king|queen|prince|saint|lady) of? #Noun')
-    .canBe('#Person')
-    .tag('#Person', 'king-of-noun');
-  //mr X
-  doc.match('#Honorific #Acronym').tag('Person', 'Honorific-TitleCase');
-  //peter II
-  doc.match('#Person #Person the? #RomanNumeral').tag('Person', 'correction-roman-numeral');
+  let person = doc.if('#Person');
+  if (person.found === true) {
+    //Frank jr
+    person.match('#Person (jr|sr|md)').tag('Person', 'person-honorific');
+    //peter II
+    person.match('#Person #Person the? #RomanNumeral').tag('Person', 'roman-numeral');
+    //'Professor Fink', 'General McCarthy'
+    person.match('#Honorific #Person').tag('Person', 'Honorific-Person');
+    // 'john E rockefeller'
+    person.match('#FirstName [/^[^aiurck]$/]').tag(['Acronym', 'Person'], 'john-e');
+    //Doctor john smith jr
+    person.match('#Honorific #Person').tag('Person', 'honorific-person');
+    //general pearson
+    person
+      .match('[(private|general|major|corporal|lord|lady|secretary|premier)] #Honorific? #Person')
+      .tag('Honorific', 'ambg-honorifics');
+    //Morgan Shlkjsfne
+    titleCase
+      .match('#Person #TitleCase')
+      .match('#TitleCase #Noun')
+      .tagSafe('Person', 'person-titlecase');
+    //a bunch of ambiguous first names
 
-  //'Professor Fink', 'General McCarthy'
-  doc.match('#Honorific #Person').tag('Person', 'Honorific-Person');
+    //Nouns: 'viola' or 'sky'
+    let ambigNoun = person.if(maybeNoun);
+    if (ambigNoun.found === true) {
+      ambigNoun.match('(#Determiner|#Adverb|#Pronoun|#Possessive) [' + maybeNoun + ']').tag('Noun', 'the-ray');
+      ambigNoun.match(maybeNoun + ' (#Person|#Acronym|#TitleCase)').tagSafe('Person', 'ray-smith');
+    }
 
-  //remove single 'mr'
-  doc.match('^#Honorific$').unTag('Person', 'single-honorific');
+    //Verbs: 'pat' or 'wade'
+    let ambigVerb = person.if(maybeVerb);
+    if (ambigVerb === true) {
+      ambigVerb.match('(#Modal|#Adverb) [' + maybeVerb + ']').tag('Verb', 'would-mark');
+      ambigVerb.match(maybeVerb + ' (#Person|#TitleCase)').tag('Person', 'rob-smith');
+    }
+
+    //Adjectives: 'rusty' or 'rich'
+    let ambigAdj = person.if(maybeAdj);
+    if (ambigAdj.found === true) {
+      ambigAdj.match('#Adverb [' + maybeAdj + ']').tag('Adjective', 'really-rich');
+      ambigAdj.match(maybeAdj + ' (#Person|#TitleCase)').tag('Person', 'randy-smith');
+    }
+
+    //Dates: 'june' or 'may'
+    let ambigDate = person.if(maybeDate);
+    if (ambigDate.found === true) {
+      ambigDate.match(String(maybeDate) + ' (#Person|#TitleCase)').tagSafe('Person', 'june-smith');
+      ambigDate.match('(in|during|on|by|before|#Date) [' + maybeDate + ']').tagSafe('Date', 'in-june');
+      ambigDate.match(maybeDate + ' (#Date|#Value)').tagSafe('Date', 'june-5th');
+    }
+
+    //Places: paris or syndey
+    let ambigPlace = person.if(maybePlace);
+    if (ambigPlace.found === true) {
+      ambigPlace.match('(in|near|at|from|to|#Place) [' + maybePlace + ']').tagSafe('Place', 'in-paris');
+      ambigPlace.match('[' + maybePlace + '] #Place').tagSafe('Place', 'paris-france');
+      ambigPlace.match('[' + maybePlace + '] #Person').tagSafe('Person', 'paris-hilton');
+    }
+
+    //this one is tricky
+    let al = person.if('al');
+    if (al.found === true) {
+      al.match('al (#Person|#TitleCase)').tagSafe('#Person', 'al-borlen');
+      al.match('#TitleCase al #TitleCase').tagSafe('#Person', 'arabic-al-arabic');
+    }
+
+    let firstName = person.if('#FirstName');
+    if (firstName.found === true) {
+      //ferdinand de almar
+      firstName.match('#FirstName de #Noun').tag('#Person', 'firstname-de-noun');
+      //Osama bin Laden
+      firstName.match('#FirstName (bin|al) #Noun').tag('#Person', 'firstname-al-noun');
+      //John L. Foo
+      firstName.match('#FirstName #Acronym #TitleCase').tag('Person', 'firstname-acronym-titlecase');
+      //Andrew Lloyd Webber
+      firstName.match('#FirstName #FirstName #TitleCase').tag('Person', 'firstname-firstname-titlecase');
+      //Mr Foo
+      firstName.match('#Honorific #FirstName? #TitleCase').tag('Person', 'Honorific-TitleCase');
+      //peter the great
+      firstName.match('#FirstName the #Adjective').tag('Person', 'determiner5');
+
+      //very common-but-ambiguous lastnames
+      firstName
+        .match('#FirstName (green|white|brown|hall|young|king|hill|cook|gray|price)')
+        .tag('#Person', 'firstname-maybe');
+
+      //John Foo
+      firstName
+        .match('#FirstName #TitleCase #TitleCase?')
+        .match('#Noun+')
+        .tag('Person', 'firstname-titlecase');
+      //Joe K. Sombrero
+      firstName
+        .match('#FirstName #Acronym #Noun')
+        .ifNo('#Date')
+        .tag('#Person', 'n-acro-noun')
+        .lastTerm()
+        .tag('#LastName', 'n-acro-noun');
+
+      // Dwayne 'the rock' Johnson
+      firstName
+        .match('#FirstName [#Determiner #Noun] #LastName')
+        .tag('#NickName', 'first-noun-last')
+        .tag('#Person', 'first-noun-last');
+
+      //john bodego's
+      firstName
+        .match('#FirstName (#Singular|#Possessive)')
+        .ifNo('#Date')
+        .ifNo('#NickName')
+        .tag('#Person', 'first-possessive')
+        .lastTerm()
+        .tag('#LastName', 'first-possessive');
+
+      // Firstname x (dangerous)
+      let tmp = firstName
+        .match('#FirstName (#Noun|#TitleCase)')
+        .ifNo('^#Possessive')
+        .ifNo('#ClauseEnd .');
+      tmp.lastTerm().tag('#LastName', 'firstname-noun');
+    }
+
+    let lastName = person.if('#LastName');
+    if (lastName === true) {
+      //is foo Smith
+      lastName.match('#Copula [(#Noun|#PresentTense)] #LastName').tag('#FirstName', 'copula-noun-lastname');
+      // x Lastname
+      lastName
+        .match('[#Noun] #LastName')
+        .canBe('#FirstName')
+        .tag('#FirstName', 'noun-lastname');
+      //ambiguous-but-common firstnames
+      lastName
+        .match(
+          '[(will|may|april|june|said|rob|wade|ray|rusty|drew|miles|jack|chuck|randy|jan|pat|cliff|bill)] #LastName'
+        )
+        .tag('#FirstName', 'maybe-lastname');
+
+      //Jani K. Smith
+      lastName
+        .match('#TitleCase #Acronym? #LastName')
+        .ifNo('#Date')
+        .tag('#Person', 'title-acro-noun')
+        .lastTerm()
+        .tag('#LastName', 'title-acro-noun');
+    }
+  }
+
   return doc
 };
 var fixPerson_1 = fixPerson;
 
 //
 const fixVerb = function(doc) {
-  //still make
-  doc.match('[still] #Verb').tag('Adverb', 'still-verb');
-  //'u' as pronoun
-  doc.match('[u] #Verb').tag('Pronoun', 'u-pronoun-1');
-  //is no walk
-  doc.match('is no [#Verb]').tag('Noun', 'is-no-verb');
-  //different views than
-  doc.match('[#Verb] than').tag('Noun', 'correction');
-  //her polling
-  doc.match('#Possessive [#Verb]').tag('Noun', 'correction-possessive');
-  //there are reasons
-  doc.match('there (are|were) #Adjective? [#PresentTense]').tag('Plural', 'there-are');
-  //jack seems guarded
-  doc.match('#Singular (seems|appears) #Adverb? [#PastTense$]').tag('Adjective', 'seems-filled');
+  let vb = doc.if('#Verb');
+  if (vb.found) {
+    //still make
+    vb.match('[still] #Verb').tag('Adverb', 'still-verb');
+    //'u' as pronoun
+    vb.match('[u] #Verb').tag('Pronoun', 'u-pronoun-1');
+    //is no walk
+    vb.match('is no [#Verb]').tag('Noun', 'is-no-verb');
+    //different views than
+    vb.match('[#Verb] than').tag('Noun', 'correction');
+    //her polling
+    vb.match('#Possessive [#Verb]').tag('Noun', 'correction-possessive');
+    //there are reasons
+    vb.match('there (are|were) #Adjective? [#PresentTense]').tag('Plural', 'there-are');
+    //jack seems guarded
+    vb.match('#Singular (seems|appears) #Adverb? [#PastTense$]').tag('Adjective', 'seems-filled');
+    //fall over
+    vb.match('#PhrasalVerb [#PhrasalVerb]').tag('Particle', 'phrasal-particle');
+    //went to sleep
+    // vb.match('#Verb to #Verb').lastTerm().tag('Noun', 'verb-to-verb');
 
-  if (doc.has('(who|what|where|why|how|when)')) {
+    let copula = vb.if('#Copula');
+    if (copula.found === true) {
+      //is mark hughes
+      copula.match('#Copula [#Infinitive] #Noun').tag('Noun', 'is-pres-noun');
+      //
+      copula.match('[#Infinitive] #Copula').tag('Noun', 'inf-copula');
+      //sometimes not-adverbs
+      copula.match('#Copula [(just|alone)$]').tag('Adjective', 'not-adverb');
+      //jack is guarded
+      copula.match('#Singular is #Adverb? [#PastTense$]').tag('Adjective', 'is-filled');
+      //is eager to go
+      copula
+        .match('#Copula #Adjective to #Verb')
+        .match('#Adjective to')
+        .tag('Verb', 'correction');
+
+      //sometimes adverbs - 'pretty good','well above'
+      copula
+        .match('#Copula (pretty|dead|full|well) (#Adjective|#Noun)')
+        .ifNo('#Comma')
+        .tag('#Copula #Adverb #Adjective', 'sometimes-adverb');
+    }
+
+    //Gerund - 'walking'
+    let gerund = vb.if('#Gerund');
+    if (gerund.found === true) {
+      //walking is cool
+      gerund
+        .match('#Gerund #Adverb? not? #Copula')
+        .firstTerm()
+        .tag('Activity', 'gerund-copula');
+      //walking should be fun
+      gerund
+        .match('#Gerund #Modal')
+        .firstTerm()
+        .tag('Activity', 'gerund-modal');
+      //running-a-show
+      gerund.match('#Gerund #Determiner [#Infinitive]').tag('Noun', 'running-a-show');
+      //setting records
+      // doc.match('#Gerund [#PresentTense]').tag('Plural', 'setting-records');
+    }
+
+    //'will be'
+    let willBe = vb.if('will #Adverb? not? #Adverb? be');
+    if (willBe.found === true) {
+      //will be running (not copula
+      if (willBe.has('will #Adverb? not? #Adverb? be #Gerund') === false) {
+        //tag it all
+        willBe.match('will not? be').tag('Copula', 'will-be-copula');
+        //for more complex forms, just tag 'be'
+        willBe
+          .match('will #Adverb? not? #Adverb? be #Adjective')
+          .match('be')
+          .tag('Copula', 'be-copula');
+      }
+    }
+  }
+
+  //question words
+  let m = doc.if('(who|what|where|why|how|when)');
+  if (m.found) {
     //the word 'how'
-    doc
-      .match('^how')
-      .tag('QuestionWord', 'how-question')
-      .tag('QuestionWord', 'how-question');
-    doc
-      .match('how (#Determiner|#Copula|#Modal|#PastTense)')
-      .term(0)
-      .tag('QuestionWord', 'how-is');
+    m.match('^how').tag('QuestionWord', 'how-question');
+    m.match('[how] (#Determiner|#Copula|#Modal|#PastTense)').tag('QuestionWord', 'how-is');
     // //the word 'which'
-    doc
-      .match('^which')
-      .tag('QuestionWord', 'which-question')
-      .tag('QuestionWord', 'which-question');
-    doc
-      .match('which . (#Noun)+ #Pronoun')
-      .term(0)
-      .tag('QuestionWord', 'which-question2');
-    doc.match('which').tag('QuestionWord', 'which-question3');
-    //where
+    m.match('^which').tag('QuestionWord', 'which-question');
+    m.match('[which] . (#Noun)+ #Pronoun').tag('QuestionWord', 'which-question2');
+    m.match('which').tag('QuestionWord', 'which-question3');
 
     //how he is driving
-    let word = doc.match('#QuestionWord #Noun #Copula #Adverb? (#Verb|#Adjective)').firstTerm();
-    word.unTag('QuestionWord').tag('Conjunction', 'how-he-is-x');
+    m.match('[#QuestionWord] #Noun #Copula #Adverb? (#Verb|#Adjective)')
+      .unTag('QuestionWord')
+      .tag('Conjunction', 'how-he-is-x');
+
     //when i go fishing
-    word = doc.match('#QuestionWord #Noun #Adverb? #Infinitive not? #Gerund').firstTerm();
-    word.unTag('QuestionWord').tag('Conjunction', 'when i go fishing');
+    m.match('#QuestionWord #Noun #Adverb? #Infinitive not? #Gerund')
+      .unTag('QuestionWord')
+      .tag('Conjunction', 'when i go fishing');
   }
 
-  if (doc.has('#Copula')) {
-    //is eager to go
-    doc
-      .match('#Copula #Adjective to #Verb')
-      .match('#Adjective to')
-      .tag('Verb', 'correction');
-    //is mark hughes
-    doc.match('#Copula [#Infinitive] #Noun').tag('Noun', 'is-pres-noun');
-
-    doc.match('[#Infinitive] #Copula').tag('Noun', 'infinitive-copula');
-    //sometimes adverbs - 'pretty good','well above'
-    doc
-      .match('#Copula (pretty|dead|full|well) (#Adjective|#Noun)')
-      .ifNo('#Comma')
-      .tag('#Copula #Adverb #Adjective', 'sometimes-adverb');
-    //sometimes not-adverbs
-    doc.match('#Copula [(just|alone)$]').tag('Adjective', 'not-adverb');
-    //jack is guarded
-    doc.match('#Singular is #Adverb? [#PastTense$]').tag('Adjective', 'is-filled');
-  }
-  //went to sleep
-  // doc.match('#Verb to #Verb').lastTerm().tag('Noun', 'verb-to-verb');
   //support a splattering of auxillaries before a verb
-  let advb = '(#Adverb|not)+?';
-  if (doc.has(advb)) {
+  let advb = doc.if('(#Adverb|not)+?');
+  if (advb.found === true) {
     //had walked
-    doc
+    advb
       .match(`(has|had) ${advb} #PastTense`)
       .not('#Verb$')
       .tag('Auxiliary', 'had-walked');
     //was walking
-    doc
+    advb
       .match(`#Copula ${advb} #Gerund`)
       .not('#Verb$')
       .tag('Auxiliary', 'copula-walking');
     //been walking
-    doc
+    advb
       .match(`(be|been) ${advb} #Gerund`)
       .not('#Verb$')
       .tag('Auxiliary', 'be-walking');
     //would walk
-    doc
+    advb
       .match(`(#Modal|did) ${advb} #Verb`)
       .not('#Verb$')
       .tag('Auxiliary', 'modal-verb');
     //would have had
-    doc
+    advb
       .match(`#Modal ${advb} have ${advb} had ${advb} #Verb`)
       .not('#Verb$')
       .tag('Auxiliary', 'would-have');
     //would be walking
-    doc
+    advb
       .match(`(#Modal) ${advb} be ${advb} #Verb`)
       .not('#Verb$')
       .tag('Auxiliary', 'would-be');
     //would been walking
-    doc
+    advb
       .match(`(#Modal|had|has) ${advb} been ${advb} #Verb`)
       .not('#Verb$')
       .tag('Auxiliary', 'would-be');
     //infinitive verbs suggest plural nouns - 'XYZ walk to the store'
     // r.match(`#Singular+ #Infinitive`).match('#Singular+').tag('Plural', 'infinitive-make-plural');
   }
-  //fall over
-  doc
-    .match('#PhrasalVerb #PhrasalVerb')
-    .lastTerm()
-    .tag('Particle', 'phrasal-particle');
-  if (doc.has('#Gerund')) {
-    //walking is cool
-    doc
-      .match('#Gerund #Adverb? not? #Copula')
-      .firstTerm()
-      .tag('Activity', 'gerund-copula');
-    //walking should be fun
-    doc
-      .match('#Gerund #Modal')
-      .firstTerm()
-      .tag('Activity', 'gerund-modal');
-    //running-a-show
-    doc.match('#Gerund #Determiner [#Infinitive]').tag('Noun', 'running-a-show');
-    //setting records
-    // doc.match('#Gerund [#PresentTense]').tag('Plural', 'setting-records');
-  }
-  //will be cool -> Copula
-  if (doc.has('will #Adverb? not? #Adverb? be')) {
-    //will be running (not copula
-    if (doc.has('will #Adverb? not? #Adverb? be #Gerund') === false) {
-      //tag it all
-      doc.match('will not? be').tag('Copula', 'will-be-copula');
-      //for more complex forms, just tag 'be'
-      doc
-        .match('will #Adverb? not? #Adverb? be #Adjective')
-        .match('be')
-        .tag('Copula', 'be-copula');
-    }
-  }
+
   return doc
 };
 var fixVerb_1 = fixVerb;
 
 //
 const fixAdjective = function(doc) {
-  //still good
-  doc
-    .match('still #Adjective')
-    .match('still')
-    .tag('Adverb', 'still-advb');
-  //barely even walk
-  doc.match('(barely|hardly) even').tag('#Adverb', 'barely-even');
-  //big dreams, critical thinking
-  doc.match('#Adjective [#PresentTense]').tag('Noun', 'adj-presentTense');
-  //will secure our
-  doc.match('will [#Adjective]').tag('Verb', 'will-adj');
-  //cheering hard - dropped -ly's
-  doc
-    .match('#PresentTense (hard|quick|long|bright|slow)')
-    .lastTerm()
-    .tag('Adverb', 'lazy-ly');
-  //his fine
-  doc.match('(his|her|its) [#Adjective]').tag('Noun', 'his-fine');
-  //
-  doc.match('#Noun #Adverb? [left]').tag('PastTense', 'left-verb');
+  let adj = doc.if('#Adjective');
+  if (adj.found) {
+    //still good
+    adj.match('[still] #Adjective').tag('Adverb', 'still-advb');
+    //barely even walk
+    adj.match('(barely|hardly) even').tag('#Adverb', 'barely-even');
+    //big dreams, critical thinking
+    adj.match('#Adjective [#PresentTense]').tag('Noun', 'adj-presentTense');
+    //will secure our
+    adj.match('will [#Adjective]').tag('Verb', 'will-adj');
+    //cheering hard - dropped -ly's
+    adj.match('#PresentTense [(hard|quick|long|bright|slow)]').tag('Adverb', 'lazy-ly');
+    //his fine
+    adj.match('(his|her|its) [#Adjective]').tag('Noun', 'his-fine');
+    //he left
+    adj.match('#Noun #Adverb? [left]').tag('PastTense', 'left-verb');
+  }
   return doc
 };
 var fixAdjective_1 = fixAdjective;
 
 //
 const fixValue = function(doc) {
-  //half a million
-  doc.match('half a? #Value').tag('Value', 'half-a-value'); //(quarter not ready)
-  //five and a half
-  doc.match('#Value and a (half|quarter)').tag('Value', 'value-and-a-half');
+  //canadian dollar, Brazilian pesos
+  doc.match('#Demonym #Currency').tag('Currency', 'demonym-currency');
 
-  //all values are either ordinal or cardinal
-  // doc.match('#Value').match('!#Ordinal').tag('#Cardinal', 'not-ordinal');
+  let val = doc.if('#Value');
+  if (val.found === true) {
+    //half a million
+    val.match('half a? #Value').tag('Value', 'half-a-value'); //(quarter not ready)
+    //five and a half
+    val.match('#Value and a (half|quarter)').tag('Value', 'value-and-a-half');
+    //one hundred and seven dollars
+    val.match('#Money and #Money #Currency?').tag('Money', 'money-and-money');
+    //1 800 PhoneNumber
+    val.match('1 #Value #PhoneNumber').tag('PhoneNumber', '1-800-Value');
+    //(454) 232-9873
+    val.match('#NumericValue #PhoneNumber').tag('PhoneNumber', '(800) PhoneNumber');
+    //all values are either ordinal or cardinal
+    // doc.match('#Value').match('!#Ordinal').tag('#Cardinal', 'not-ordinal');
+    //money
+    val
+      .match('#Value+ #Currency')
+      .tag('Money', 'value-currency')
+      .lastTerm()
+      .tag('Unit', 'money-unit');
 
-  //money
-  doc
-    .match('#Value+ #Currency')
-    .tag('Money', 'value-currency')
-    .lastTerm()
-    .tag('Unit', 'money-unit');
-  doc.match('#Money and #Money #Currency?').tag('Money', 'money-and-money');
-
-  //1 800 PhoneNumber
-  doc.match('1 #Value #PhoneNumber').tag('PhoneNumber', '1-800-Value');
-  //(454) 232-9873
-  doc.match('#NumericValue #PhoneNumber').tag('PhoneNumber', '(800) PhoneNumber');
-
-  //two hundredth
-  doc
-    .match('#TextValue+')
-    .match('#Cardinal+ #Ordinal')
-    .tag('Ordinal', 'two-hundredth');
+    //two hundredth
+    val
+      .match('#TextValue+')
+      .match('#Cardinal+ #Ordinal')
+      .tag('Ordinal', 'two-hundredth');
+  }
   return doc
 };
 var fixValue_1 = fixValue;
 
 //sequence of match-tag statements to correct mis-tags
 const corrections = function(doc) {
-  if (doc.has('#Determiner')) {
-    fixThe_1(doc);
-  }
-  if (doc.has('#Noun')) {
-    fixNouns_1(doc);
-    fixPerson_1(doc);
-  }
-  if (doc.has('#Verb')) {
-    fixVerb_1(doc);
-  }
-  if (doc.has('#Adjective')) {
-    fixAdjective_1(doc);
-  }
-  if (doc.has('#Value')) {
-    fixValue_1(doc);
-  }
+  fixThe_1(doc);
+  fixNouns_1(doc);
+  fixPerson_1(doc);
+  fixVerb_1(doc);
+  fixAdjective_1(doc);
+  fixValue_1(doc);
   // fixDates(doc)
   fixMisc(doc);
   return doc

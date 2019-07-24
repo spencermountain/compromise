@@ -12,6 +12,10 @@ exports.terms = function(n) {
     }
     let term = this.pool.get(id)
     terms.push(term)
+    //return this one?
+    if (n !== undefined && n === i) {
+      return terms[n]
+    }
   }
   if (n !== undefined) {
     return terms[n]
@@ -45,9 +49,22 @@ exports.lastTerm = function() {
 }
 
 /** quick lookup for a term id */
-exports.hasId = function(id) {
-  let terms = this.terms()
-  return terms.find(t => t.id === id) !== undefined
+exports.hasId = function(wantId) {
+  if (this.length === 0 || !wantId) {
+    return false
+  }
+  if (this.start === wantId) {
+    return true
+  }
+  let lastId = this.start
+  for (let i = 0; i < this.length - 1; i += 1) {
+    let term = this.pool.get(lastId)
+    if (term.next === wantId) {
+      return true
+    }
+    lastId = term.next
+  }
+  return false
 }
 
 /** produce output in the given format */

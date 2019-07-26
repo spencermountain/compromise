@@ -21,6 +21,7 @@ exports.delete = function(doc) {
 }
 
 exports.replace = function(newPhrase, doc) {
+  // console.log(this.out(), ' -> ' + newPhrase.out())
   //add it do the end
   let firstLength = this.length
   append(this, newPhrase, doc)

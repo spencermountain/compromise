@@ -34,6 +34,7 @@ const stretchAll = function(doc, id, len) {
   let phrase = doc.list.find(p => p.hasId(id))
   phrase.length += len
 
+  //FIXME: inside .map() it stretches parent too far
   let parents = doc.parents()
   parents.forEach(parent => {
     phrase = parent.list.find(p => p.hasId(id))

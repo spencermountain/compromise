@@ -2,9 +2,14 @@ var nlp = require('./src/index')
 // nlp.verbose(true)
 nlp.extend(require('./plugins/numbers/src'))
 
-nlp('231 234')
-  .match('#Value+ cool? fun?')
-  .debug()
+let res = nlp('and').map(d => {
+  return d.replaceWith('or')
+})
+// res.debug()
+// .debug()
+// .numbers()
+// .add(2)
+// .debug()
 
 // console.time('one')
 // let doc = nlp('hello world')

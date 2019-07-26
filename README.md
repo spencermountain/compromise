@@ -28,6 +28,7 @@ stopped parsing `#NumberRange`
 
 improved handling of slashed terms - like `he is/was fun.`
 
+* map/reduce/foreach/etc all loop over proper `Doc` objects, instead of an internal object
 ---
 
 **non-breaking changes**

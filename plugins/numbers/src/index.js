@@ -5,25 +5,35 @@ const numOrdinal = require('./toOrdinal/numOrdinal')
 const textOrdinal = require('./toOrdinal/textOrdinal')
 
 //business-logic for converting a cardinal-number to other forms
-const makeNumber = function(num, isText, isOrdinal) {
+const makeNumber = function(obj, isText, isOrdinal) {
+  let num = obj.num
   if (isText) {
     if (isOrdinal) {
-      return textOrdinal(num)
+      //ordinal-text
+      num = textOrdinal(obj.num)
+    } else {
+      //cardinal-text
+      num = toText(obj.num)
     }
-    return toText(num)
+  } else if (isOrdinal) {
+    //ordinal-number
+    return numOrdinal(obj.num)
+  } else {
+    //cardinal-number
+    num = String(obj.num)
   }
-  //make a number
-  if (isOrdinal) {
-    return numOrdinal(num)
-  }
-  return String(num)
+  return `${obj.prefix || ''}${num}${obj.suffix || ''}`
 }
 
 // get a numeric value from this phrase
-const getNumber = function(p) {
+const parseNumber = function(p) {
   let str = p.normal()
-  str = str.replace(/[a-z]+$/, '') //remove units like '5kg'
-  return toNumber(str)
+  let arr = str.split(/^([^0-9]*)([0-9]*)([^0-9]*)$/)
+  return {
+    prefix: arr[1] || '',
+    num: toNumber(arr[2] || ''),
+    suffix: arr[3] || '',
+  }
 }
 
 /** adds .numbers() method */
@@ -44,16 +54,16 @@ const addMethod = function(Doc) {
     }
     toNumber() {
       this.forEach(val => {
-        let num = getNumber(val)
-        let str = makeNumber(num, false, val.has('#Ordinal'))
+        let obj = parseNumber(val)
+        let str = makeNumber(obj, false, val.has('#Ordinal'))
         this.replaceWith(str)
       })
       return this
     }
     toText() {
       this.forEach(val => {
-        let num = getNumber(val)
-        let str = makeNumber(num, true, val.has('#Ordinal'))
+        let obj = parseNumber(val)
+        let str = makeNumber(obj, true, val.has('#Ordinal'))
         this.replaceWith(str)
       })
       return this
@@ -61,8 +71,8 @@ const addMethod = function(Doc) {
     toCardinal() {
       let m = this.if('#Ordinal')
       m.forEach(val => {
-        let num = getNumber(val)
-        let str = makeNumber(num, val.has('#TextNumber'), false)
+        let obj = parseNumber(val)
+        let str = makeNumber(obj, val.has('#TextNumber'), false)
         this.replaceWith(str)
       })
       return this
@@ -70,37 +80,60 @@ const addMethod = function(Doc) {
     toOrdinal() {
       let m = this.if('#Cardinal')
       m.forEach(val => {
-        let num = getNumber(val)
-        let str = makeNumber(num, val.has('#TextNumber'), true)
+        let obj = parseNumber(val)
+        let str = makeNumber(obj, val.has('#TextNumber'), true)
         this.replaceWith(str)
       })
       return this
     }
-    // greaterThan() {}
+    greaterThan(n) {
+      return this.filter(val => {
+        let num = parseNumber(val).num
+        return num > n
+      })
+    }
     // lessThan() {}
     // between() {}
     add(n) {
       if (!n) {
-        return this
+        return this // don't bother
+      }
+      return this.map(val => {
+        let obj = parseNumber(val)
+        obj.num += n
+        let str = makeNumber(obj, val.has('#TextNumber'), val.has('#Ordinal'))
+        // console.log(val, str)
+        return val.replaceWith(str)
+      })
+    }
+    subtract(n) {
+      if (!n) {
+        return this // don't bother
       }
       this.forEach(val => {
-        let num = getNumber(val)
-        num += n
-        let str = makeNumber(num, val.has('#TextNumber'), val.has('#Ordinal'))
+        let obj = parseNumber(val)
+        obj.num -= n
+        let str = makeNumber(obj, val.has('#TextNumber'), val.has('#Ordinal'))
         this.replaceWith(str)
       })
       return this
     }
-    // subtract() {}
-    // increment() {}
-    // decrement() {}
+    increment() {
+      this.add(1)
+    }
+    decrement() {
+      this.subtract(1)
+    }
   }
+  //aliases
+  Numbers.prototype.plus = Numbers.prototype.add
+  Numbers.prototype.minus = Numbers.prototype.subtract
 
   Doc.prototype.numbers = function(n) {
     let match = findNumbers(this, n)
     return new Numbers(match.list, this, this.world)
   }
-  // alias
+  // alias for reverse-compatibility
   Doc.prototype.values = Doc.prototype.numbers
   return Doc
 }

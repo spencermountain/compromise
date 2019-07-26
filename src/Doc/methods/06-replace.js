@@ -4,6 +4,7 @@ const build = require('../../01-tokenizer')
 exports.replaceWith = function(replace) {
   this.list.forEach(p => {
     let newPhrases = build.fromText(replace, this.pool())
+    //tag the new phrases
     let tmpDoc = this.buildFrom(newPhrases)
     tmpDoc.tagger()
     p.replace(newPhrases[0], this) //TODO: support multi-sentence replacements

@@ -1,4 +1,4 @@
-const build = require('./01-tokenizer')
+const tokenize = require('./01-tokenizer')
 const version = require('./_version')
 const World = require('./World/World')
 const Doc = require('./Doc/Doc')
@@ -8,7 +8,7 @@ let world = new World()
 
 /** parse and tag text into a compromise object  */
 const nlp = function(text = '') {
-  let list = build.fromText(text)
+  let list = tokenize.fromText(text)
   let doc = new Doc(list, null, world)
   doc.tagger()
   return doc
@@ -16,7 +16,7 @@ const nlp = function(text = '') {
 
 /** parse text into a compromise object, without running POS-tagging */
 nlp.tokenize = function(text = '') {
-  let list = build.fromText(text)
+  let list = tokenize.fromText(text)
   let doc = new Doc(list, null, world)
   return doc
 }
@@ -34,7 +34,7 @@ nlp.clone = function() {
 
 /** re-generate a Doc object from .json() results */
 nlp.fromJSON = function(json) {
-  let list = build.fromJSON(json)
+  let list = tokenize.fromJSON(json)
   return new Doc(list, null, world)
 }
 

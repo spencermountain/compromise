@@ -2,11 +2,8 @@ var nlp = require('./src/index')
 // nlp.verbose(true)
 nlp.extend(require('./plugins/numbers/src'))
 
-let doc = nlp('the 23 asdf')
-  .numbers()
-  .toOrdinal()
-  .toNumber()
-  .all()
+nlp('231')
+  .match('#Value+ #Unit?')
   .debug()
 
 // console.time('one')

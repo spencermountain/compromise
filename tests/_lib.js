@@ -1,9 +1,17 @@
+const addPlugins = function(nlp) {
+  let name = 'numbers'
+  nlp.extend(require(`../plugins/${name}/src/index.js`))
+}
+
 if (typeof process !== undefined && typeof module !== undefined) {
+  let nlp
   if (process.env.TESTENV === 'prod') {
     console.warn('== production build test 🚀 ==')
     // module.exports = require('../../builds/efrt');
-    module.exports = require('../builds/compromise')
+    nlp = require('../builds/compromise')
   } else {
-    module.exports = require('../src')
+    nlp = require('../src')
   }
+  addPlugins(nlp)
+  module.exports = nlp
 }

@@ -19,6 +19,12 @@ const addLinks = terms => {
 
 /** turn a string into an array of Phrase objects */
 const fromText = function(text = '', pool) {
+  //a bit of validation, first
+  if (typeof text !== 'string') {
+    if (typeof text === 'number') {
+      text = String(text)
+    }
+  }
   //tokenize into words
   let sentences = splitSentences(text)
   sentences = sentences.map(str => splitTerms(str))
@@ -31,7 +37,6 @@ const fromText = function(text = '', pool) {
       pool.add(term)
       return term
     })
-
     //add next/previous ids
     addLinks(terms)
 

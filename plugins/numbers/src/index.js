@@ -4,6 +4,28 @@ const findNumbers = require('./find')
 const numOrdinal = require('./toOrdinal/numOrdinal')
 const textOrdinal = require('./toOrdinal/textOrdinal')
 
+//business-logic for converting a cardinal-number to other forms
+const makeNumber = function(num, isText, isOrdinal) {
+  if (isText) {
+    if (isOrdinal) {
+      return textOrdinal(num)
+    }
+    return toText(num)
+  }
+  //make a number
+  if (isOrdinal) {
+    return numOrdinal(num)
+  }
+  return String(num)
+}
+
+// get a numeric value from this phrase
+const getNumber = function(p) {
+  let str = p.normal()
+  str = str.replace(/[a-z]+$/, '') //remove units like '5kg'
+  return toNumber(str)
+}
+
 /** adds .numbers() method */
 const addMethod = function(Doc) {
   /** a list of number values, and their units */
@@ -22,60 +44,53 @@ const addMethod = function(Doc) {
     }
     toNumber() {
       this.forEach(val => {
-        let num = toNumber(val.normal())
-        if (val.has('#Ordinal')) {
-          let str = numOrdinal(num)
-          this.replaceWith(str)
-        } else {
-          this.replaceWith(num)
-        }
+        let num = getNumber(val)
+        let str = makeNumber(num, false, val.has('#Ordinal'))
+        this.replaceWith(str)
       })
       return this
     }
     toText() {
       this.forEach(val => {
-        let num = toNumber(val.normal())
-        if (val.has('#Ordinal')) {
-          let str = textOrdinal(num)
-          this.replaceWith(str)
-        } else {
-          let str = toText(num)
-          this.replaceWith(str)
-        }
+        let num = getNumber(val)
+        let str = makeNumber(num, true, val.has('#Ordinal'))
+        this.replaceWith(str)
       })
       return this
     }
     toCardinal() {
       let m = this.if('#Ordinal')
       m.forEach(val => {
-        let num = toNumber(val.normal())
-        if (val.has('#TextNumber')) {
-          let str = toText(num)
-          this.replaceWith(str)
-        } else {
-          this.replaceWith(num)
-        }
+        let num = getNumber(val)
+        let str = makeNumber(num, val.has('#TextNumber'), false)
+        this.replaceWith(str)
       })
       return this
     }
     toOrdinal() {
       let m = this.if('#Cardinal')
       m.forEach(val => {
-        let num = toNumber(val.normal())
-        if (val.has('#TextNumber')) {
-          let str = textOrdinal(num)
-          this.replaceWith(str)
-        } else {
-          let str = numOrdinal(num)
-          this.replaceWith(str)
-        }
+        let num = getNumber(val)
+        let str = makeNumber(num, val.has('#TextNumber'), true)
+        this.replaceWith(str)
       })
       return this
     }
     // greaterThan() {}
     // lessThan() {}
     // between() {}
-    // add() {}
+    add(n) {
+      if (!n) {
+        return this
+      }
+      this.forEach(val => {
+        let num = getNumber(val)
+        num += n
+        let str = makeNumber(num, val.has('#TextNumber'), val.has('#Ordinal'))
+        this.replaceWith(str)
+      })
+      return this
+    }
     // subtract() {}
     // increment() {}
     // decrement() {}

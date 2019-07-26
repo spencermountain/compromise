@@ -36,7 +36,15 @@ const tryHere = function(terms, regs) {
   // we must satisfy each rule in 'regs'
   for (let r = 0; r < regs.length; r += 1) {
     let reg = regs[r]
+
+    //should we fail here?
     if (!terms[t]) {
+      //are all remaining regs optional?
+      const hasNeeds = regs.slice(r).some(remain => !remain.optional)
+      if (hasNeeds === false) {
+        break
+      }
+      // have unmet needs
       return false
     }
 

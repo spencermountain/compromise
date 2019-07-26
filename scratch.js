@@ -2,8 +2,8 @@ var nlp = require('./src/index')
 // nlp.verbose(true)
 nlp.extend(require('./plugins/numbers/src'))
 
-nlp('231')
-  .match('#Value+ #Unit?')
+nlp('231 234')
+  .match('#Value+ cool? fun?')
   .debug()
 
 // console.time('one')

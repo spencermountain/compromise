@@ -14,6 +14,7 @@ class Doc {
     Object.defineProperty(this, 'from', {
       enumerable: false,
       value: from,
+      writable: true,
     })
     //borrow some missing data from parent
     if (world === undefined && from !== undefined) {

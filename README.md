@@ -14,6 +14,8 @@ hmmm:
 
 * results of `.canbe()` are more like `.match()`
 
+* `.map()` `.forEach()` `.reduce()` etc all return full **Doc** objects of length 1
+
 more consistent behaviour for `.replace('foo [bar]', 'baz')`
 
 some cases like `.canbe()` where v11 results were mutable, but v12 are not mutating

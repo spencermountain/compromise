@@ -5,19 +5,26 @@ const addWords = require('./01-addWords')
 const addConjugations = require('./02-conjugations')
 const addPlurals = require('./03-plurals')
 const addTags = require('./04-addTags')
+let lex = require('./misc')
 
-let startLexicon = require('./misc')
+//these behaviours are configurable & shared across some plugins
+const transforms = {
+  verbs: require('./transforms/verbs'),
+  adjectives: require('./transforms/adjectives'),
+  nouns: require('./transforms/nouns'),
+}
 
 let isVerbose = false
 
 /** all configurable linguistic data */
 class World {
   constructor() {
-    this.lexicon = startLexicon
+    this.lexicon = lex
     this.plurals = {}
     this.conjugations = {}
     this.hasCompound = {}
     this.compounds = {}
+    this.transforms = transforms
     this.tags = Object.assign({}, defaultTags)
     this.plugin(defaultData)
     this.cache = {}

@@ -1,6 +1,20 @@
+// turn 'would not really walk up' into parts
+const parseVerb = function(vb) {
+  return {
+    adverb: vb.match('#Adverb+'), // 'really'
+    negative: vb.match('#Negative'), // 'not'
+    auxiliary: vb.match('#Auxiliary'), // 'will' of 'will go'
+    particle: vb.match('#Particle'), // 'up' of 'pull up'
+    verb: vb.match('#Verb').not('(#Adverb|#Negative|#Auxiliary|#Particle)'),
+  }
+}
+
 const addMethod = function(Doc) {
   /**  */
   class Verbs extends Doc {
+    constructor(list, from, world) {
+      super(list, from, world)
+    }
     // conjugation(){}
     // conjugate(){}
     // isPlural(){}
@@ -9,7 +23,22 @@ const addMethod = function(Doc) {
     // isPositive(){}
     // toNegative(){}
     // toPositive(){}
-    // toPastTense(){}
+    toPastTense() {
+      let transforms = this.world.transforms
+      return this.map(vb => {
+        let verb = parseVerb(vb).verb
+        let str = verb.out('normal')
+        let past = transforms.verbs(str).PastTense
+        if (past) {
+          let p = vb.list[0]
+          // console.log(p.buildFrom)
+          // let p = vb.buildP
+          // console.log(vb.list[0].replace(past))
+          return vb //.replaceWith(past, this)
+        }
+        return vb
+      })
+    }
     // toPresentTense(){}
     // toFutureTense(){}
     // toInfinitive(){}
@@ -20,13 +49,14 @@ const addMethod = function(Doc) {
   Doc.prototype.verbs = function(n) {
     let match = this.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+')
     match = match.splitAfter('#Comma')
-    match.list.forEach(ts => {
-      ts.terms.forEach(t => {
-        if (t.whitespace.before.match('/')) {
-          match.splitOn(t.normal)
-        }
-      })
-    })
+    //handle slashes
+    // match.list.forEach(ts => {
+    //   ts.terms.forEach(t => {
+    //     if (t.whitespace.before.match('/')) {
+    //       match.splitOn(t.normal)
+    //     }
+    //   })
+    // })
     match = match.if('#Verb') //this should be (much) smarter
 
     //grab (n)th result

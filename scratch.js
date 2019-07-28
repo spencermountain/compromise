@@ -1,16 +1,24 @@
 var nlp = require('./src/index')
 // nlp.verbose(true)
-nlp.extend(require('./plugins/numbers/src'))
+// nlp.extend(require('./plugins/verbs/src'))
 
+// let doc = nlp('hello').match('.')
+// doc.from = null
+// console.log(doc.from)
+// console.log(doc.parents())
+
+// bug!
 let res = nlp('and').map(d => {
   return d.replaceWith('or')
 })
-// res.debug()
-// .debug()
-// .numbers()
-// .add(2)
-// .debug()
+res.debug()
 
+// nlp('i will walk')
+//   .verbs()
+//   .toPastTense()
+//   .debug()
+
+//----------
 // console.time('one')
 // let doc = nlp('hello world')
 // console.log(doc.has('#Klkj'))

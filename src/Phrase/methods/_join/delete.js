@@ -2,11 +2,13 @@
 const shrinkAll = function(doc, id, deleteLength, after) {
   //find our phrase to shrink
   let phrase = doc.list.find(p => p.hasId(id))
-  phrase.length -= deleteLength
+  if (phrase !== undefined) {
+    phrase.length -= deleteLength
 
-  //does it start with this soon-removed word?
-  if (phrase.start === id) {
-    phrase.start = after.id
+    //does it start with this soon-removed word?
+    if (phrase.start === id) {
+      phrase.start = after.id
+    }
   }
   if (doc.from) {
     shrinkAll(doc.from, id, deleteLength, after)

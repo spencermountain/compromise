@@ -8,6 +8,15 @@ exports.map = function(fn) {
   return this.buildFrom(list)
 }
 
+/* grab nth result */
+exports.eq = function(n) {
+  let p = this.list[n]
+  if (p === undefined) {
+    return this.buildFrom([])
+  }
+  return this.buildFrom([p])
+}
+
 /** run a function on each phrase */
 exports.forEach = function(fn) {
   this.list.forEach((ts, i) => {
@@ -25,27 +34,37 @@ exports.filter = function(fn) {
     doc.from = null //it's not a child/parent
     return fn(doc, i)
   })
-  return new Text(list, this.world)
+  return this.buildFrom(list)
 }
 
 /** combine each phrase into a new data-structure */
-exports.reduce = function(fn, h) {
-  return this.list.reduce((_h, ts) => {
-    let doc = this.buildFrom([ts])
-    doc.from = null //it's not a child/parent
-    return fn(_h, doc)
-  }, h)
-}
+// exports.reduce = function(fn, h) {
+//   let list = this.list.reduce((_h, ts) => {
+//     let doc = this.buildFrom([ts])
+//     doc.from = null //it's not a child/parent
+//     return fn(_h, doc)
+//   }, h)
+//   return this.buildFrom(list)
+// }
 
 /** return a document with only the first phrase that matches */
 exports.find = function(fn) {
-  for (let i = 0; i < this.list.length; i++) {
-    let ts = this.list[i]
+  let list = this.list.find((ts, i) => {
     let doc = this.buildFrom([ts])
     doc.from = null //it's not a child/parent
-    if (fn(doc)) {
-      return doc
-    }
+    return fn(doc, i)
+  })
+  if (list) {
+    return this.buildFrom([list])
   }
   return undefined
+}
+
+/** return true or false if there is one matching phrase */
+exports.some = function(fn) {
+  return this.list.some((ts, i) => {
+    let doc = this.buildFrom([ts])
+    doc.from = null //it's not a child/parent
+    return fn(doc, i)
+  })
 }

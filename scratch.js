@@ -7,11 +7,16 @@ var nlp = require('./src/index')
 // console.log(doc.from)
 // console.log(doc.parents())
 
+nlp('one two three. three four five.')
+  .terms()
+  .find(p => p.has('four'))
+  .debug()
+
 // bug!
-let res = nlp('and').map(d => {
-  return d.replaceWith('or')
-})
-res.debug()
+// let res = nlp('and').map(d => {
+//   return d.replaceWith('or')
+// })
+// res.debug()
 
 // nlp('i will walk')
 //   .verbs()

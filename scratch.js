@@ -1,16 +1,24 @@
 var nlp = require('./src/index')
 // nlp.verbose(true)
-// nlp.extend(require('./plugins/verbs/src'))
+nlp.extend(require('./plugins/numbers/src'))
 
 // let doc = nlp('hello').match('.')
 // doc.from = null
 // console.log(doc.from)
 // console.log(doc.parents())
 
-nlp('one two three. three four five.')
-  .terms()
-  .find(p => p.has('four'))
-  .debug()
+let doc = nlp('i was third. I jumped 3rd')
+console.log(
+  doc.json({
+    text: true,
+  })
+)
+
+// nlp('i was third. I jumped 3rd')
+//   .numbers()
+//   .minus(2)
+//   .all()
+//   .debug()
 
 // bug!
 // let res = nlp('and').map(d => {

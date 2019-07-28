@@ -37,16 +37,6 @@ exports.filter = function(fn) {
   return this.buildFrom(list)
 }
 
-/** combine each phrase into a new data-structure */
-// exports.reduce = function(fn, h) {
-//   let list = this.list.reduce((_h, ts) => {
-//     let doc = this.buildFrom([ts])
-//     doc.from = null //it's not a child/parent
-//     return fn(_h, doc)
-//   }, h)
-//   return this.buildFrom(list)
-// }
-
 /** return a document with only the first phrase that matches */
 exports.find = function(fn) {
   let list = this.list.find((ts, i) => {
@@ -68,3 +58,13 @@ exports.some = function(fn) {
     return fn(doc, i)
   })
 }
+
+/** combine each phrase into a new data-structure */
+// exports.reduce = function(fn, h) {
+//   let list = this.list.reduce((_h, ts) => {
+//     let doc = this.buildFrom([ts])
+//     doc.from = null //it's not a child/parent
+//     return fn(_h, doc)
+//   }, h)
+//   return this.buildFrom(list)
+// }

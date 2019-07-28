@@ -38,3 +38,5 @@ exports.out = function(method) {
   }
   return this.text()
 }
+//aliases
+exports.data = exports.json

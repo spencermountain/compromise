@@ -6,33 +6,45 @@ const textOrdinal = require('./toOrdinal/textOrdinal')
 
 //business-logic for converting a cardinal-number to other forms
 const makeNumber = function(obj, isText, isOrdinal) {
-  let num = obj.num
+  let num = String(obj.num)
   if (isText) {
     if (isOrdinal) {
       //ordinal-text
-      num = textOrdinal(obj.num)
+      num = textOrdinal(num)
     } else {
       //cardinal-text
-      num = toText(obj.num)
+      num = toText(num)
     }
   } else if (isOrdinal) {
     //ordinal-number
-    return numOrdinal(obj.num)
-  } else {
-    //cardinal-number
-    num = String(obj.num)
+    return numOrdinal(num)
   }
   return `${obj.prefix || ''}${num}${obj.suffix || ''}`
 }
 
 // get a numeric value from this phrase
 const parseNumber = function(p) {
-  let str = p.normal()
+  let str = p.root()
+  //parse a numeric-number (easy)
   let arr = str.split(/^([^0-9]*)([0-9]*)([^0-9]*)$/)
+  if (arr[2]) {
+    let num = parseFloat(arr[2] || str)
+    //ensure that num is an actual number
+    if (typeof num !== 'number') {
+      num = null
+    }
+    return {
+      prefix: arr[1] || '',
+      num: num,
+      suffix: arr[3] || '',
+    }
+  }
+  //parse a text-numer (harder)
+  let num = toNumber(str)
   return {
-    prefix: arr[1] || '',
-    num: toNumber(arr[2] || ''),
-    suffix: arr[3] || '',
+    prefix: '',
+    num: num,
+    suffix: '',
   }
 }
 
@@ -100,29 +112,20 @@ const addMethod = function(Doc) {
       }
       return this.map(val => {
         let obj = parseNumber(val)
+        console.log(obj)
         obj.num += n
         let str = makeNumber(obj, val.has('#TextNumber'), val.has('#Ordinal'))
-        // console.log(val, str)
         return val.replaceWith(str)
       })
     }
     subtract(n) {
-      if (!n) {
-        return this // don't bother
-      }
-      this.forEach(val => {
-        let obj = parseNumber(val)
-        obj.num -= n
-        let str = makeNumber(obj, val.has('#TextNumber'), val.has('#Ordinal'))
-        this.replaceWith(str)
-      })
-      return this
+      return this.add(n * -1)
     }
     increment() {
       this.add(1)
     }
     decrement() {
-      this.subtract(1)
+      this.add(-1)
     }
   }
   //aliases

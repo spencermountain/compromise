@@ -1,5 +1,6 @@
 const init = require('./01-init')
 const fallbacks = require('./02-fallbacks')
+const preContraction = require('./03-contractions/_pre-contraction')
 const contractions = require('./03-contractions')
 const inference = require('./04-inference')
 const corrections = require('./05-correction')
@@ -14,6 +15,7 @@ const tagger = function(doc) {
   doc = fallbacks(doc, terms)
 
   // support "didn't" & "spencer's"
+  doc = preContraction(doc)
   doc = contractions(doc)
 
   // deduce more specific tags - singular/plurals/quotations...

@@ -2,8 +2,8 @@ var nlp = require('./src/index')
 // nlp.verbose(true)
 nlp.extend(require('./plugins/numbers/src'))
 
-nlp('so ralf and really eats the glue')
-  .match('* [eats the]')
+nlp(' ralf really, really eats the glue')
+  .match('[#Adverb+] eats')
   .debug()
 
 // nlp('i will walk')

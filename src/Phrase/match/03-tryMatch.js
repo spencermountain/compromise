@@ -96,7 +96,7 @@ const tryHere = function(terms, regs) {
   if (captures.length > 0) {
     //make sure the array is the full-length we'd return anyways
     let arr = terms.slice(captures[0], captures[captures.length - 1] + 1)
-    //make sure the array is t-length
+    //make sure the array is t-length (so we skip ahead full-length)
     for (let tmp = 0; tmp < t; tmp++) {
       arr[tmp] = arr[tmp] || null
     }

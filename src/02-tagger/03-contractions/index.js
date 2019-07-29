@@ -25,16 +25,6 @@ const createPhrase = function(found, doc) {
 }
 
 const contractions = function(doc) {
-  //disambiguate complex apostrophe-s situations
-  let m = doc.if(`/'s$/`)
-  if (m.found) {
-    // fix for 'jamie's bite' mis-tagging
-    let fix = m.match(`/'s$/ #Adverb? #Adjective? #Infinitive`)
-    fix.firstTerm().tagSafe('#Possessive', 'poss-inf')
-    fix.lastTerm().tagSafe('#Noun', 'poss-inf')
-    // rocket's red glare
-    m.match(`[/'s$/] #Adverb? #Adjective? #Noun`).tagSafe('Possessive')
-  }
   let world = doc.world
   doc.list.forEach(p => {
     let terms = p.terms()

@@ -41,13 +41,15 @@ const matchAll = function(p, regs, matchOne = false) {
     // console.log('- #' + i);
     let match = tryMatch(terms.slice(i), regs)
     if (match !== false && match.length > 0) {
+      //zoom forward!
+      i += match.length - 1
+      //[capture-groups] return some null responses
+      match = match.filter(m => m)
       matches.push(match)
       //ok, maybe that's enough?
       if (matchOne === true) {
         return matches
       }
-      //zoom forward!
-      i += match.length - 1
     }
   }
   return matches

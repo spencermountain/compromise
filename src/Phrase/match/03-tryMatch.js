@@ -94,7 +94,13 @@ const tryHere = function(terms, regs) {
   //we got to the end of the regs, and haven't failed!
   //try to only return our [captured] segment
   if (captures.length > 0) {
-    return terms.slice(captures[0], captures[captures.length - 1] + 1)
+    //make sure the array is the full-length we'd return anyways
+    let arr = terms.slice(captures[0], captures[captures.length - 1] + 1)
+    //make sure the array is t-length
+    for (let tmp = 0; tmp < t; tmp++) {
+      arr[tmp] = arr[tmp] || null
+    }
+    return arr
   }
   //return our result
   return terms.slice(0, t)

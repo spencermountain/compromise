@@ -3,7 +3,8 @@ const defaultTags = require('./tags')
 const unpack = require('efrt-unpack')
 const addWords = require('./addWords')
 
-let misc = require('./misc')
+let misc = require('./data/misc')
+let plurals = require('./data/plurals')
 
 //these behaviours are configurable & shared across some plugins
 const transforms = {
@@ -18,14 +19,14 @@ let isVerbose = false
 class World {
   constructor() {
     this.lexicon = misc
-    this.plurals = {}
-    this.conjugations = {}
     this.hasCompound = {}
-    this.compounds = {}
     this.transforms = transforms
+    this.irregular = {
+      plurals: plurals,
+      conjugations: {},
+    }
     this.tags = Object.assign({}, defaultTags)
     this.unpackWords(lexData)
-    this.cache = {}
   }
   /** more logs for debugging */
   verbose(bool) {
@@ -47,9 +48,9 @@ class World {
   stats() {
     return {
       words: Object.keys(this.lexicon).length,
-      plurals: Object.keys(this.plurals).length,
-      conjugations: Object.keys(this.conjugations).length,
-      compounds: Object.keys(this.compounds).length,
+      plurals: Object.keys(this.irregular.plurals).length,
+      conjugations: Object.keys(this.irregular.conjugations).length,
+      compounds: Object.keys(this.hasCompound).length,
     }
   }
 }

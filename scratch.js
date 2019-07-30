@@ -2,7 +2,7 @@ var nlp = require('./src/index')
 // nlp.verbose(true)
 nlp.extend(require('./plugins/numbers/src'))
 
-let doc = nlp('ralf eats the glue. he is nice')
+let doc = nlp('ralf eats the glue').debug()
 
 // nlp('i will walk')
 //   .verbs()
@@ -32,5 +32,6 @@ let doc = nlp('ralf eats the glue. he is nice')
 
 // nlp('drink Salty Dogs').debug()
 
-console.log(doc.world.lexicon['ages'])
+console.log(doc.world.lexicon['eats'])
+// console.log(doc.world.hasCompound['duran'])
 // -----

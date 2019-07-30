@@ -10,13 +10,14 @@ const addWord = function(word, tag, lex) {
   }
 }
 
+// blast-out more forms for some given words
 const addMore = function(word, tag, world) {
   let lexicon = world.lexicon
   let transform = world.transforms
 
   // cache multi-words
   let words = word.split(' ')
-  if (words.length === 1) {
+  if (words.length > 1) {
     //cache the beginning word
     world.hasCompound[words[0]] = true
   }
@@ -57,6 +58,7 @@ const addMore = function(word, tag, world) {
   }
 }
 
+// throw a bunch of words in our lexicon
 const addWords = function(words, tag, world) {
   let lexicon = world.lexicon
   for (let i = 0; i < words.length; i++) {

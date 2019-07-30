@@ -49,5 +49,5 @@ module.exports = [
   [/^[0-9][0-9,\.]*(st|nd|rd|r?th)$/, ['NumericValue', 'Ordinal']], //like 5th
   [/[0-9]\+$/, ['Cardinal', 'NumericValue']], //10+
   [/^[0-9]+(st|nd|rd|th)$/, 'Ordinal'], //like 5th
-  [/^[0-9]+([a-z]{1,2})$/, 'Value'], //like 5kg
+  [/^[0-9]+([a-z]{1,4})$/, 'Value'], //like 5tbsp
 ]

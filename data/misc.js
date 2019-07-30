@@ -8,11 +8,11 @@ module.exports = {
   here: 'Noun',
   'no doubt': 'Noun',
 
-  is: 'Copula',
-  are: 'Copula',
-  was: 'Copula',
-  were: 'Copula',
+  was: ['Copula', 'PastTense'],
+  is: ['Copula', 'PresentTense'],
+  were: ['Copula', 'PastTense'],
   am: 'Copula',
+  are: 'Copula',
 
   if: 'Condition',
   unless: 'Condition',
@@ -34,10 +34,10 @@ module.exports = {
   developing: 'Gerund',
   staining: 'Gerund',
 
-  not: 'Negative',
+  no: 'Negative',
   non: 'Negative',
   never: 'Negative',
-  no: 'Negative',
+  not: ['Negative', 'Verb'],
 
   where: 'QuestionWord',
   why: 'QuestionWord',
@@ -49,4 +49,16 @@ module.exports = {
   which: 'QuestionWord',
   "how's": 'QuestionWord',
   'how come': 'QuestionWord',
+
+  //misc
+  records: 'Plural',
+  '&': 'Conjunction',
+
+  //pronouns
+  i: ['Pronoun', 'Singular'],
+  he: ['Pronoun', 'Singular'],
+  she: ['Pronoun', 'Singular'],
+  it: ['Pronoun', 'Singular'],
+  they: ['Pronoun', 'Plural'],
+  we: ['Pronoun', 'Plural'],
 }

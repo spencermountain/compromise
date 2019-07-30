@@ -18,7 +18,8 @@ const addLinks = terms => {
 }
 
 /** turn a string into an array of Phrase objects */
-const fromText = function(text = '', pool) {
+const fromText = function(text = '', world) {
+  console.log(world.stats())
   //a bit of validation, first
   if (typeof text !== 'string') {
     if (typeof text === 'number') {
@@ -30,7 +31,7 @@ const fromText = function(text = '', pool) {
   sentences = sentences.map(str => splitTerms(str))
 
   //turn them into proper objects
-  pool = pool || new Pool()
+  let pool = new Pool()
   let phrases = sentences.map(terms => {
     terms = terms.map(str => {
       let term = new Term(str)

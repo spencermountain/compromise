@@ -724,7 +724,6 @@ module.exports = [
   'joyce',
   'juana',
   'juanita',
-  'jude',
   'judith',
   'judy',
   'julia',

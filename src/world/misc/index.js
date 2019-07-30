@@ -6,7 +6,7 @@
 const misc = require('./misc')
 
 //period-abbreviations, like 'blvd'
-const abbreviations = require('../../01-tokenizer/lib/abbreviations')
+const abbreviations = require('../../../data/abbreviations')
 
 //organization forms, like 'academy'
 const orgWords = require('../../02-tagger/04-inference/data/orgWords')

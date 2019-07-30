@@ -12,19 +12,4 @@ module.exports = {
   q2: 'Date',
   q3: 'Date',
   q4: 'Date',
-
-  //misc
-  records: 'Plural',
-  '&': 'Conjunction',
-  was: ['Copula', 'PastTense'],
-  is: ['Copula', 'PresentTense'],
-  not: ['Negative', 'Verb'],
-
-  //pronouns
-  i: ['Pronoun', 'Singular'],
-  he: ['Pronoun', 'Singular'],
-  she: ['Pronoun', 'Singular'],
-  it: ['Pronoun', 'Singular'],
-  they: ['Pronoun', 'Plural'],
-  we: ['Pronoun', 'Plural'],
 }

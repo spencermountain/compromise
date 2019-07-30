@@ -13,6 +13,7 @@ module.exports = [
   'jamie',
   'jammie',
   'jessie',
+  'jude',
   'kasey',
   'kelsey',
   'kenyatta',

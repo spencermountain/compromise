@@ -9,9 +9,9 @@ let lex = require('./misc')
 
 //these behaviours are configurable & shared across some plugins
 const transforms = {
-  verbs: require('./transforms/verbs'),
-  adjectives: require('./transforms/adjectives'),
-  nouns: require('./transforms/nouns'),
+  verbs: require('../transforms/verbs'),
+  adjectives: require('../transforms/adjectives'),
+  nouns: require('../transforms/nouns'),
 }
 
 let isVerbose = false

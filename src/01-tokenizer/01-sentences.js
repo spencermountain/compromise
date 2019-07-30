@@ -1,7 +1,14 @@
 //(Rule-based sentence boundary segmentation) - chop given text into its proper sentences.
 // Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
 // @spencermountain 2017 MIT
-const abbreviations = Object.keys(require('./lib/abbreviations'))
+// const abbreviations = Object.keys(require('../../data/lexicon/abbreviations'))
+
+//proper nouns with exclamation marks
+const exclamation = {
+  yahoo: true,
+  joomla: true,
+  jeopardy: true,
+}
 
 //regs-
 const abbrev_reg = new RegExp('\\b(' + abbreviations.join('|') + ')[.!?\u203D\u2E18\u203C\u2047-\u2049] *$', 'i')

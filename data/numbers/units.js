@@ -27,7 +27,7 @@ module.exports = [
   'dl',
   'deciliter',
   'deciliters',
-  'cl',
+  // 'cl',
   'centiliter',
   'centiliters',
   'ml',
@@ -84,7 +84,7 @@ module.exports = [
   'mi',
   'mile',
   'miles',
-  'ft',
+  'ft', //ambiguous
   'yd',
   'yard',
   'yards',

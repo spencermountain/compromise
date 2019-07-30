@@ -1,6 +1,6 @@
-const nounFns = require('./transforms/nouns')
-const verbFns = require('./transforms/verbs')
-const adjFns = require('./transforms/adjectives')
+const nounFns = require('../transforms/nouns')
+const verbFns = require('../transforms/verbs')
+const adjFns = require('../transforms/adjectives')
 
 //takes a basic wordlist and expands it into more words, using science
 const doOneWord = function(str, pos, world) {

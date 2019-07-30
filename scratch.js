@@ -4,7 +4,6 @@ nlp.extend(require('./plugins/numbers/src'))
 
 let doc = nlp('ralf eats the glue. he is nice')
 
-console.log(doc.data())
 // nlp('i will walk')
 //   .verbs()
 //   .toPastTense()

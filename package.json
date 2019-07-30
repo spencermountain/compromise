@@ -42,7 +42,7 @@
     "@babel/core": "7.5.5",
     "@babel/preset-env": "7.5.5",
     "amble": "0.0.7",
-    "compromise-plugin": "0.0.9",
+    "efrt": "2.2.1",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.0.1",
     "rollup-plugin-json": "^4.0.0",

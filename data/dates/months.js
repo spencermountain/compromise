@@ -9,16 +9,5 @@ module.exports = [
   'october',
   'november',
   'december',
-  'jan',
-  'feb',
-  'mar',
-  'apr',
-  'jun',
-  'jul',
-  'aug',
-  'sep',
-  'oct',
-  'nov',
-  'dec',
-  'sept',
+  //abbreviations are elsewhere
 ]

@@ -97,7 +97,6 @@ module.exports = [
   'henderson',
   'hernandez',
   'hitchcock',
-  'hitler',
   'hoang',
   'hoffmann',
   'horvat',

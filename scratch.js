@@ -1,8 +1,8 @@
 var nlp = require('./src/index')
-nlp.verbose(true)
+// nlp.verbose(true)
 // nlp.extend(require('./plugins/numbers/src'))
 
-let doc = nlp('it was early').debug()
+let doc = nlp('it was early. Mr. Smith ate dinner.').debug()
 
 // nlp('i will walk')
 //   .verbs()
@@ -32,6 +32,6 @@ let doc = nlp('it was early').debug()
 
 // nlp('drink Salty Dogs').debug()
 
-console.log(doc.world.lexicon['was'])
+// console.log(doc.world.lexicon['was'])
 // console.log(doc.world.hasCompound['pulled'])
 // -----

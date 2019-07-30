@@ -4,7 +4,7 @@
 // const abbreviations = Object.keys(require('../../data/lexicon/abbreviations'))
 
 //proper nouns with exclamation marks
-const exclamation = {
+const blacklist = {
   yahoo: true,
   joomla: true,
   jeopardy: true,
@@ -36,10 +36,37 @@ const naiive_split = function(text) {
   return all
 }
 
+//
+const isSentence = function(c, abbrevs) {
+  // check for 'F.B.I.'
+  if (acronym_reg.test(c) === true) {
+    return false
+  }
+  //check for '...'
+  if (ellipses_reg.test(c) === true) {
+    return false
+  }
+  // must have a letter
+  if (letter_regex.test(c) === false) {
+    return false
+  }
+
+  let str = c.replace(/[.!?\u203D\u2E18\u203C\u2047-\u2049] *$/, '')
+  let words = str.split(' ')
+  let lastWord = words[words.length - 1].toLowerCase()
+  // check for 'Mr.'
+  if (abbrevs.hasOwnProperty(lastWord)) {
+    return false
+  }
+  // //check for jeopardy!
+  // if (blacklist.hasOwnProperty(lastWord)) {
+  //   return false
+  // }
+  return true
+}
+
 const splitSentences = function(text, world) {
   let abbrevs = world.cache.abbreviations
-  abbrevs = Object.keys(abbrevs).join('|')
-  const abbrev_reg = new RegExp('\\b(' + abbrevs + ')[.!?\u203D\u2E18\u203C\u2047-\u2049] *$', 'i')
 
   text = text || ''
   text = String(text)
@@ -79,7 +106,7 @@ const splitSentences = function(text, world) {
   for (let i = 0; i < chunks.length; i++) {
     let c = chunks[i]
     //should this chunk be combined with the next one?
-    if (chunks[i + 1] && letter_regex.test(c) && (abbrev_reg.test(c) || acronym_reg.test(c) || ellipses_reg.test(c))) {
+    if (chunks[i + 1] && isSentence(c, abbrevs) === false) {
       chunks[i + 1] = c + (chunks[i + 1] || '')
     } else if (c && c.length > 0 && letter_regex.test(c)) {
       //this chunk is a proper sentence..

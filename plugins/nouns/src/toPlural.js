@@ -1,4 +1,2 @@
-const toPlural = function() {
-  console.log('jo')
-}
+const toPlural = function() {}
 module.exports = toPlural

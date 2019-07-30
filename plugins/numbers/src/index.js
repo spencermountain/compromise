@@ -112,7 +112,6 @@ const addMethod = function(Doc) {
       }
       return this.map(val => {
         let obj = parseNumber(val)
-        console.log(obj)
         obj.num += n
         let str = makeNumber(obj, val.has('#TextNumber'), val.has('#Ordinal'))
         return val.replaceWith(str)

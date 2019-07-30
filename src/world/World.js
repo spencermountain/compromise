@@ -58,7 +58,7 @@ class World {
     Object.defineProperty(this, 'cache', {
       enumerable: false,
       value: {
-        abbreviations: this.getByTag('#Abbreviation'),
+        abbreviations: this.getByTag('Abbreviation'),
       },
     })
   }

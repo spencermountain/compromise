@@ -50,6 +50,8 @@ const addMore = function(word, tag, world) {
     let conj = transform.verbs(words[0])
     let tags = Object.keys(conj)
     for (let i = 0; i < tags.length; i++) {
+      //add it to our cache
+      world.hasCompound[conj[tags[i]]] = true
       //first + last words
       let w = conj[tags[i]] + ' ' + words[1]
       addWord(w, tags[i], lexicon)

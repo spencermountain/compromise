@@ -14,6 +14,7 @@ const mapping = {
   act: 'Actor',
 }
 
+// '_' in conjugations is the infinitive form
 let conjugations = {
   act: {
     act: '_or',
@@ -675,19 +676,22 @@ let conjugations = {
     pst: 'wrote',
   },
 }
-//flip the short-keys to full tag names
+
+//uncompress our ad-hoc compression scheme
 let keys = Object.keys(conjugations)
 for (let i = 0; i < keys.length; i++) {
   const inf = keys[i]
   let final = {}
   Object.keys(conjugations[inf]).forEach(key => {
     let str = conjugations[inf][key]
+    //swap-in infinitives for '_'
     str = str.replace('_', inf)
+
     let full = mapping[key]
     final[full] = str
   })
   //over-write original
   conjugations[inf] = final
 }
-console.log(conjugations)
+
 module.exports = conjugations

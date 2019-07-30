@@ -9,9 +9,7 @@ const exclamation = {
   joomla: true,
   jeopardy: true,
 }
-const abbreviations = [] //FIXME:
 //regs-
-const abbrev_reg = new RegExp('\\b(' + abbreviations.join('|') + ')[.!?\u203D\u2E18\u203C\u2047-\u2049] *$', 'i')
 const acronym_reg = /[ .][A-Z]\.? *$/i
 const ellipses_reg = /(?:\u2026|\.{2,}) *$/
 
@@ -38,7 +36,11 @@ const naiive_split = function(text) {
   return all
 }
 
-const splitSentences = function(text) {
+const splitSentences = function(text, world) {
+  let abbrevs = world.getByTag('Abbreviation')
+  abbrevs = Object.keys(abbrevs).join('|')
+  const abbrev_reg = new RegExp('\\b(' + abbrevs + ')[.!?\u203D\u2E18\u203C\u2047-\u2049] *$', 'i')
+
   text = text || ''
   text = String(text)
   let sentences = []

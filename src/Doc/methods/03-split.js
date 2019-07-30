@@ -1,9 +1,8 @@
-const build = require('../../01-tokenizer')
+const tokenize = require('../../01-tokenizer')
 
 /** add these new terms to the front*/
 exports.prepend = function(str) {
-  this.unfreeze()
-  let phrase = build.fromText(str, this.pool())[0] //assume it's one sentence, for now
+  let phrase = tokenize.fromText(str, this.world, this.pool())[0] //assume it's one sentence, for now
   this.list.forEach(p => {
     p.prepend(phrase, this)
   })
@@ -14,7 +13,7 @@ exports.insertBefore = exports.prepend
 /** add these new terms to the end*/
 exports.append = function(str) {
   this.unfreeze()
-  let phrase = build.fromText(str, this.pool())[0] //assume it's one sentence, for now
+  let phrase = tokenize.fromText(str, this.world, this.pool())[0] //assume it's one sentence, for now
   this.list.forEach(p => {
     p.append(phrase, this)
   })
@@ -31,7 +30,7 @@ exports.concat = function() {
     let arg = arguments[i]
     //support a fresh string
     if (typeof arg === 'string') {
-      let arr = build.fromText(arg)
+      let arr = tokenize.fromText(arg, this.world)
       //TODO: phrase.tagger()?
       list = list.concat(arr)
     } else if (arg.isA === 'Doc') {

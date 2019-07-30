@@ -2,9 +2,15 @@ const lexData = require('./_data')
 const defaultTags = require('./tags')
 const unpack = require('efrt-unpack')
 const addWords = require('./addWords')
+const addIrregulars = require('./addIrregulars')
 
 let misc = require('./data/misc')
-let plurals = require('./data/plurals')
+
+//these let users change inflection / verb conjugation
+const irregulars = {
+  nouns: require('./data/plurals'),
+  verbs: require('./data/conjugations'),
+}
 
 //these behaviours are configurable & shared across some plugins
 const transforms = {
@@ -18,16 +24,37 @@ let isVerbose = false
 /** all configurable linguistic data */
 class World {
   constructor() {
-    this.lexicon = misc
-    this.hasCompound = {}
-    this.transforms = transforms
-    this.irregular = {
-      plurals: plurals,
-      conjugations: {},
-    }
-    this.tags = Object.assign({}, defaultTags)
+    // quiet these properties from a console.log
+    Object.defineProperty(this, 'lexicon', {
+      enumerable: false,
+      value: misc,
+      writable: true,
+    })
+    Object.defineProperty(this, 'hasCompound', {
+      enumerable: false,
+      value: {},
+      writable: true,
+    })
+    Object.defineProperty(this, 'irregulars', {
+      enumerable: false,
+      value: irregulars,
+      writable: true,
+    })
+    Object.defineProperty(this, 'tags', {
+      enumerable: false,
+      value: Object.assign({}, defaultTags),
+      writable: true,
+    })
+    Object.defineProperty(this, 'transforms', {
+      enumerable: false,
+      value: transforms,
+    })
+    // add our irregulars to lexicon
+    this.addIrregulars()
+    // add our compressed data to lexicon
     this.unpackWords(lexData)
   }
+
   /** more logs for debugging */
   verbose(bool) {
     isVerbose = bool
@@ -36,6 +63,24 @@ class World {
   isVerbose() {
     return isVerbose
   }
+
+  /** get all terms in our lexicon with this tag */
+  getByTag(tag) {
+    let lex = this.lexicon
+    let res = {}
+    let words = Object.keys(lex)
+    for (let i = 0; i < words.length; i++) {
+      if (typeof lex[words[i]] === 'string') {
+        if (lex[words[i]] === tag) {
+          res[words[i]] = true
+        }
+      } else if (lex[words[i]].some(t => t === tag)) {
+        res[words[i]] = true
+      }
+    }
+    return res
+  }
+
   /** augment our lingustic data with new data */
   unpackWords(lex) {
     let tags = Object.keys(lex)
@@ -44,6 +89,11 @@ class World {
       addWords(words, tags[i], this)
     }
   }
+  addIrregulars() {
+    addIrregulars(this)
+    return this
+  }
+
   /** helper method for logging + debugging */
   stats() {
     return {

@@ -1,9 +1,9 @@
-const build = require('../../01-tokenizer')
+const tokenize = require('../../01-tokenizer')
 
 /** substitute-in new content */
 exports.replaceWith = function(replace) {
   this.list.forEach(p => {
-    let newPhrases = build.fromText(replace, this.pool())
+    let newPhrases = tokenize.fromText(replace, this.world, this.pool())
     //tag the new phrases
     let tmpDoc = this.buildFrom(newPhrases)
     tmpDoc.tagger()

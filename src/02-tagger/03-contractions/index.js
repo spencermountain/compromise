@@ -3,12 +3,12 @@ const checkApostrophe = require('./02-simple')
 const checkIrregulars = require('./03-irregulars')
 const checkPossessive = require('./04-possessive')
 const checkPerfect = require('./05-perfectTense')
-const build = require('../../01-tokenizer')
+const tokenize = require('../../01-tokenizer')
 const checkLexicon = require('../01-init/01-lexicon')
 
 const createPhrase = function(found, doc) {
   //create phrase from ['would', 'not']
-  let phrase = build.fromText(found.join(' '), doc.pool())[0]
+  let phrase = tokenize.fromText(found.join(' '), doc.world, doc.pool())[0]
   //tag it
   let terms = phrase.terms()
   checkLexicon(terms, doc.world)

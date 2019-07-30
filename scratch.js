@@ -32,5 +32,5 @@ let doc = nlp('ralf eats the glue. he is nice')
 
 // nlp('drink Salty Dogs').debug()
 
-// console.log(doc.world.lexicon['ms'])
+console.log(doc.world.lexicon['wiped out'])
 // -----

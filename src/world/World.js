@@ -1,11 +1,9 @@
-const defaultData = require('./_data')
+const lexData = require('./_data')
 const defaultTags = require('./tags')
-const efrt = require('efrt-unpack')
-const addWords = require('./01-addWords')
-const addConjugations = require('./02-conjugations')
-const addPlurals = require('./03-plurals')
-const addTags = require('./04-addTags')
-let lex = require('./misc')
+const unpack = require('efrt-unpack')
+const addWords = require('./addWords')
+
+let misc = require('./misc')
 
 //these behaviours are configurable & shared across some plugins
 const transforms = {
@@ -19,14 +17,14 @@ let isVerbose = false
 /** all configurable linguistic data */
 class World {
   constructor() {
-    this.lexicon = lex
+    this.lexicon = misc
     this.plurals = {}
     this.conjugations = {}
     this.hasCompound = {}
     this.compounds = {}
     this.transforms = transforms
     this.tags = Object.assign({}, defaultTags)
-    this.plugin(defaultData)
+    this.unpackWords(lexData)
     this.cache = {}
   }
   /** more logs for debugging */
@@ -37,28 +35,12 @@ class World {
   isVerbose() {
     return isVerbose
   }
-
   /** augment our lingustic data with new data */
-  plugin(x) {
-    let obj = x
-    if (typeof x === 'string') {
-      obj = JSON.parse(x)
-    }
-    if (obj.words) {
-      let words = efrt(obj.words)
-      addWords(this, words)
-    }
-    if (obj.plurals) {
-      let plurals = addPlurals(obj.plurals, this.lexicon)
-      this.plurals = Object.assign(this.plurals, plurals)
-    }
-    if (obj.conjugations) {
-      let conjugations = addConjugations(obj.conjugations, this.lexicon)
-      this.conjugations = Object.assign(this.conjugations, conjugations) //merge this one properly
-    }
-    if (obj.tags) {
-      let tags = addTags(obj.tags)
-      this.tags = Object.assign(this.tags, tags)
+  unpackWords(lex) {
+    let tags = Object.keys(lex)
+    for (let i = 0; i < tags.length; i++) {
+      let words = Object.keys(unpack(lex[tags[i]]))
+      addWords(words, tags[i], this)
     }
   }
   /** helper method for logging + debugging */

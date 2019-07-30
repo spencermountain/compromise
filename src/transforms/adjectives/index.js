@@ -13,29 +13,29 @@ const conjugate = function(w) {
   // 'greatness'
   let noun = fns.toNoun(w)
   if (noun) {
-    res[noun] = 'Noun'
+    res.Noun = noun
   }
   // 'greatest'
   let sup = fns.toSuperlative(w)
   if (sup) {
-    res[sup] = 'Superlative'
+    res.Superlative = sup
   }
   // 'greater'
   let comp = fns.toComparative(w)
   if (comp) {
-    res[comp] = 'Comparative'
+    res.Comparative = comp
   }
   // 'greatly'
   let adv = fns.toAdverb(w)
   if (adv) {
-    res[adv] = 'Adverb'
+    res.Adverb = adv
   }
   // 'greaten' :/
   let vb = fns.toVerb(w)
   if (vb) {
-    res[vb] = 'Verb'
+    res.Verb = vb
   }
-  res[w] = 'Adjective'
+  // res.Adjective = w
   return res
 }
 module.exports = conjugate

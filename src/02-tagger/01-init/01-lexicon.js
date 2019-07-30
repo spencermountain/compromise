@@ -1,20 +1,20 @@
 /** match a word-sequence, like 'super bowl' in the lexicon */
 const tryMultiple = function(terms, t, world) {
-  let compounds = world.compounds
+  let lex = world.lexicon
   //try a two-word version
   let txt = terms[t].normal + ' ' + terms[t + 1].normal
-  if (compounds[txt] !== undefined && compounds.hasOwnProperty(txt) === true) {
-    terms[t].tag(compounds[txt], 'lexicon-two', world)
-    terms[t + 1].tag(compounds[txt], 'lexicon-two', world)
+  if (lex[txt] !== undefined && lex.hasOwnProperty(txt) === true) {
+    terms[t].tag(lex[txt], 'lexicon-two', world)
+    terms[t + 1].tag(lex[txt], 'lexicon-two', world)
     return 1
   }
   //try a three-word version?
   if (t + 2 < terms.length) {
     txt += ' ' + terms[t + 2].normal
-    if (compounds[txt] !== undefined && compounds.hasOwnProperty(txt) === true) {
-      terms[t].tag(compounds[txt], 'lexicon-three', world)
-      terms[t + 1].tag(compounds[txt], 'lexicon-three', world)
-      terms[t + 2].tag(compounds[txt], 'lexicon-three', world)
+    if (lex[txt] !== undefined && lex.hasOwnProperty(txt) === true) {
+      terms[t].tag(lex[txt], 'lexicon-three', world)
+      terms[t + 1].tag(lex[txt], 'lexicon-three', world)
+      terms[t + 2].tag(lex[txt], 'lexicon-three', world)
       return 2
     }
   }

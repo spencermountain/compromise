@@ -9,7 +9,7 @@ const exclamation = {
   joomla: true,
   jeopardy: true,
 }
-
+const abbreviations = [] //FIXME:
 //regs-
 const abbrev_reg = new RegExp('\\b(' + abbreviations.join('|') + ')[.!?\u203D\u2E18\u203C\u2047-\u2049] *$', 'i')
 const acronym_reg = /[ .][A-Z]\.? *$/i

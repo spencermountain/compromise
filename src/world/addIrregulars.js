@@ -14,12 +14,13 @@ const addIrregulars = function(world) {
   let keys = Object.keys(verbs)
   for (let i = 0; i < keys.length; i++) {
     const inf = keys[i]
-    world.lexicon[inf] = 'Infinitive'
+    //add only if it it's safe...
+    world.lexicon[inf] = world.lexicon[inf] || 'Infinitive'
     let forms = world.transforms.verbs(inf)
     forms = Object.assign(forms, verbs[inf])
     //add the others
     Object.keys(forms).forEach(tag => {
-      world.lexicon[forms[tag]] = tag
+      world.lexicon[forms[tag]] = world.lexicon[forms[tag]] || tag
     })
   }
 }

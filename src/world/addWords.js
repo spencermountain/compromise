@@ -24,14 +24,15 @@ const addMore = function(word, tag, world) {
   // inflect our nouns
   if (tag === 'Singular') {
     let plural = transform.nouns(word)
-    addWord(plural, 'Plural', lexicon)
+    lexicon[plural] = lexicon[plural] || 'Plural' // only if it's safe
   }
   //conjugate our verbs
   if (tag === 'Infinitive') {
     let conj = transform.verbs(word)
     let tags = Object.keys(conj)
     for (let i = 0; i < tags.length; i++) {
-      addWord(conj[tags[i]], tags[i], lexicon)
+      let w = conj[tags[i]]
+      lexicon[w] = lexicon[w] || tags[i] // only if it's safe
     }
   }
   //derive more adjective forms
@@ -39,7 +40,8 @@ const addMore = function(word, tag, world) {
     let conj = transform.adjectives(word)
     let tags = Object.keys(conj)
     for (let i = 0; i < tags.length; i++) {
-      addWord(conj[tags[i]], tags[i], lexicon)
+      let w = conj[tags[i]]
+      lexicon[w] = lexicon[w] || tags[i] // only if it's safe
     }
   }
   //conjugate phrasal-verbs

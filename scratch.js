@@ -2,7 +2,7 @@ var nlp = require('./src/index')
 nlp.verbose(true)
 // nlp.extend(require('./plugins/numbers/src'))
 
-let doc = nlp('china pulled out of ').debug()
+let doc = nlp('it was early').debug()
 
 // nlp('i will walk')
 //   .verbs()
@@ -32,6 +32,6 @@ let doc = nlp('china pulled out of ').debug()
 
 // nlp('drink Salty Dogs').debug()
 
-// console.log(doc.world.lexicon['eats'])
-console.log(doc.world.hasCompound['pulled'])
+console.log(doc.world.lexicon['was'])
+// console.log(doc.world.hasCompound['pulled'])
 // -----

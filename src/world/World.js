@@ -49,10 +49,18 @@ class World {
       enumerable: false,
       value: transforms,
     })
-    // add our irregulars to lexicon
-    this.addIrregulars()
     // add our compressed data to lexicon
     this.unpackWords(lexData)
+    // add our irregulars to lexicon
+    this.addIrregulars()
+
+    // cache our abbreviations for our sentence-parser
+    Object.defineProperty(this, 'cache', {
+      enumerable: false,
+      value: {
+        abbreviations: this.getByTag('#Abbreviation'),
+      },
+    })
   }
 
   /** more logs for debugging */

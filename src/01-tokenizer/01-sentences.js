@@ -37,7 +37,7 @@ const naiive_split = function(text) {
 }
 
 const splitSentences = function(text, world) {
-  let abbrevs = world.getByTag('Abbreviation')
+  let abbrevs = world.cache.abbreviations
   abbrevs = Object.keys(abbrevs).join('|')
   const abbrev_reg = new RegExp('\\b(' + abbrevs + ')[.!?\u203D\u2E18\u203C\u2047-\u2049] *$', 'i')
 

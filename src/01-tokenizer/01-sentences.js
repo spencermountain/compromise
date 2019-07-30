@@ -1,34 +1,33 @@
 //(Rule-based sentence boundary segmentation) - chop given text into its proper sentences.
 // Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
 // @spencermountain 2017 MIT
-// const abbreviations = Object.keys(require('../../data/lexicon/abbreviations'))
 
 //proper nouns with exclamation marks
-const blacklist = {
-  yahoo: true,
-  joomla: true,
-  jeopardy: true,
-}
+// const blacklist = {
+//   yahoo: true,
+//   joomla: true,
+//   jeopardy: true,
+// }
+
 //regs-
-const acronym_reg = /[ .][A-Z]\.? *$/i
-const ellipses_reg = /(?:\u2026|\.{2,}) *$/
+const initSplit = /(\S.+?[.!?\u203D\u2E18\u203C\u2047-\u2049])(?=\s+|$)/g
+const hasSomething = /\S/
 
-// Match different formats of new lines. (Mac: \r, Linux: \n, Windows: \r\n)
-const new_line = /((?:\r?\n|\r)+)/
-const naiive_sentence_split = /(\S.+?[.!?\u203D\u2E18\u203C\u2047-\u2049])(?=\s+|$)/g
+const isAcronym = /[ .][A-Z]\.? *$/i
+const hasEllipse = /(?:\u2026|\.{2,}) *$/
+const newLine = /((?:\r?\n|\r)+)/ // Match different new-line formats
+const hasLetter = /[a-z\u00C0-\u00FF]/i
 
-const letter_regex = /[a-z\u00C0-\u00FF]/i
-const not_ws_regex = /\S/
 const startWhitespace = /^\s+/
 
 // Start with a regex:
 const naiive_split = function(text) {
   let all = []
   //first, split by newline
-  let lines = text.split(new_line)
+  let lines = text.split(newLine)
   for (let i = 0; i < lines.length; i++) {
     //split by period, question-mark, and exclamation-mark
-    let arr = lines[i].split(naiive_sentence_split)
+    let arr = lines[i].split(initSplit)
     for (let o = 0; o < arr.length; o++) {
       all.push(arr[o])
     }
@@ -36,23 +35,23 @@ const naiive_split = function(text) {
   return all
 }
 
-//
-const isSentence = function(c, abbrevs) {
+/** does this look like a sentence? */
+const isSentence = function(str, abbrevs) {
   // check for 'F.B.I.'
-  if (acronym_reg.test(c) === true) {
+  if (isAcronym.test(str) === true) {
     return false
   }
   //check for '...'
-  if (ellipses_reg.test(c) === true) {
+  if (hasEllipse.test(str) === true) {
     return false
   }
   // must have a letter
-  if (letter_regex.test(c) === false) {
+  if (hasLetter.test(str) === false) {
     return false
   }
 
-  let str = c.replace(/[.!?\u203D\u2E18\u203C\u2047-\u2049] *$/, '')
-  let words = str.split(' ')
+  let txt = str.replace(/[.!?\u203D\u2E18\u203C\u2047-\u2049] *$/, '')
+  let words = txt.split(' ')
   let lastWord = words[words.length - 1].toLowerCase()
   // check for 'Mr.'
   if (abbrevs.hasOwnProperty(lastWord)) {
@@ -74,7 +73,7 @@ const splitSentences = function(text, world) {
   // First do a greedy-split..
   let chunks = []
   // Ensure it 'smells like' a sentence
-  if (!text || typeof text !== 'string' || not_ws_regex.test(text) === false) {
+  if (!text || typeof text !== 'string' || hasSomething.test(text) === false) {
     return sentences
   }
   // Start somewhere:
@@ -86,7 +85,7 @@ const splitSentences = function(text, world) {
       continue
     }
     //this is meaningful whitespace
-    if (not_ws_regex.test(s) === false) {
+    if (hasSomething.test(s) === false) {
       //add it to the last one
       if (chunks[chunks.length - 1]) {
         chunks[chunks.length - 1] += s
@@ -108,7 +107,7 @@ const splitSentences = function(text, world) {
     //should this chunk be combined with the next one?
     if (chunks[i + 1] && isSentence(c, abbrevs) === false) {
       chunks[i + 1] = c + (chunks[i + 1] || '')
-    } else if (c && c.length > 0 && letter_regex.test(c)) {
+    } else if (c && c.length > 0 && hasLetter.test(c)) {
       //this chunk is a proper sentence..
       sentences.push(c)
       chunks[i] = ''

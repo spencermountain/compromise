@@ -50,11 +50,12 @@ const tryHere = function(terms, regs) {
 
     //support 'unspecific greedy' properly
     if (reg.anything === true && reg.greedy === true) {
-      let goto = greedyTo(terms, t, regs[r + 1])
-      if (goto === null) {
+      let skipto = greedyTo(terms, t, regs[r + 1])
+      //TODO: support [*] properly
+      if (skipto === null) {
         return false //couldn't find it
       }
-      t = goto
+      t = skipto
       continue
     }
 

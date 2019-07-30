@@ -2,10 +2,9 @@ var nlp = require('./src/index')
 // nlp.verbose(true)
 nlp.extend(require('./plugins/numbers/src'))
 
-nlp(' ralf really, really eats the glue')
-  .match('[#Adverb+] eats')
-  .debug()
+let doc = nlp('ralf eats the glue. he is nice')
 
+console.log(doc.data())
 // nlp('i will walk')
 //   .verbs()
 //   .toPastTense()

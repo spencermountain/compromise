@@ -26,7 +26,7 @@ var softMapping = {
   UH: 'Expression',
   VB: 'Verb',
   VBD: 'Verb',
-  VBG: 'Verb',
+  VBG: 'Gerund',
   VBN: 'Verb', // past participle
   VBP: 'Verb', // non-3rd person singular present
   VBZ: 'Verb', // 3rd person singular present

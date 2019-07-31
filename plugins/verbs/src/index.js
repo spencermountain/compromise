@@ -1,3 +1,5 @@
+const conjugate = require('./conjugate')
+
 // turn 'would not really walk up' into parts
 const parseVerb = function(vb) {
   return {
@@ -16,7 +18,15 @@ const addMethod = function(Doc) {
       super(list, from, world)
     }
     // conjugation(){}
-    // conjugate(){}
+    conjugations() {
+      let result = []
+      this.forEach(vb => {
+        let parsed = parseVerb(vb)
+        let forms = conjugate(parsed, this.world)
+        result.push(forms)
+      })
+      return result
+    }
     // isPlural(){}
     // isSingular(){}
     // isNegative(){}

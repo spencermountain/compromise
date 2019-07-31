@@ -3,8 +3,19 @@ const genericFill = require('./02-generic')
 
 //we run this on every verb in the lexicon, so please keep it fast
 //we assume the input word is a proper infinitive
-const fastConjucate = function(str = '') {
-  let found = checkSuffix(str)
+const fastConjugate = function(str = '', world) {
+  let found = {}
+  // 1. look at irregulars
+  //the lexicon doesn't pass this in
+  if (world && world.irregulars) {
+    if (world.irregulars.verbs.hasOwnProperty(str) === true) {
+      found = Object.assign({}, world.irregulars.verbs[str])
+    }
+  }
+  //2. rule-based regex
+  found = Object.assign({}, found, checkSuffix(str))
+
+  //3. generic transformations
   //'buzzing'
   if (found.Gerund === undefined) {
     found.Gerund = genericFill.Gerund(str)
@@ -19,4 +30,4 @@ const fastConjucate = function(str = '') {
   }
   return found
 }
-module.exports = fastConjucate
+module.exports = fastConjugate

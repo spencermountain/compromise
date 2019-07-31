@@ -1,13 +1,14 @@
 var nlp = require('./src/index')
 // nlp.verbose(true)
-// nlp.extend(require('./plugins/numbers/src'))
+nlp.extend(require('./plugins/verbs/src'))
 
-let doc = nlp('it was early. Mr. Smith ate dinner.').debug()
+// let doc = nlp('it was early. Mr. Smith ate dinner.').debug()
 
-// nlp('i will walk')
-//   .verbs()
-//   .toPastTense()
-//   .debug()
+let doc = nlp('asdfs')
+  .tag('#Verb')
+  .verbs()
+doc.debug()
+console.log(doc.conjugations())
 
 //----------
 // console.time('one')

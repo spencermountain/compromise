@@ -1,5 +1,5 @@
-const rules = require('./rules')
-const fromTense = require('./fromTense')
+const rules = require('./_rules')
+const fromTense = require('./pickTense')
 
 const toInfinitive = function(parsed, world) {
   let verb = parsed.verb

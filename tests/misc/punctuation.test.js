@@ -13,7 +13,7 @@ test('normalize question mark', function(t) {
   var str = `hello, Spencęr???`
   var doc = nlp(str)
   t.equal(doc.text(), str, 'text out')
-  t.equal(doc.normal(), 'hello, spencer?', 'normal out')
+  t.equal(doc.normal(), 'hello spencer?', 'normal out')
   t.end()
 })
 

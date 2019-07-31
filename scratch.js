@@ -4,9 +4,7 @@ nlp.extend(require('./plugins/verbs/src'))
 
 // let doc = nlp('it was early. Mr. Smith ate dinner.').debug()
 
-let doc = nlp('asdfs')
-  .tag('#Verb')
-  .verbs()
+let doc = nlp('hello world. i think.').verbs()
 doc.debug()
 console.log(doc.conjugations())
 

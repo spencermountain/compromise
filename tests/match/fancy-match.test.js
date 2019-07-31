@@ -33,7 +33,7 @@ test('greedy-capture', function(t) {
   t.equal(m.out('normal'), 'eats', 'one-captures')
 
   m = nlp('so ralf really, really eats the glue').match('[#Adverb+] eats the')
-  t.equal(m.out('normal'), 'really, really', 'greedy-capture')
+  t.equal(m.out('normal'), 'really really', 'greedy-capture')
 
   m = nlp('so ralf and really eats the glue').match('* [eats the]')
   t.equal(m.out('normal'), 'eats the', 'two-captures')

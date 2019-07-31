@@ -1,13 +1,20 @@
 const toInfinitive = require('../toInfinitive')
+const toBe = require('./toBe')
 
 const conjugate = function(parsed, world) {
-  const isNegative = parsed.negative.found
+  let verb = parsed.verb
+
+  //special handling of 'is', 'will be', etc.
+  if (verb.has('#Copula') || (verb.out('normal') === 'be' && parsed.auxiliary.has('will'))) {
+    return toBe(parsed, world)
+  }
 
   let infinitive = toInfinitive(parsed, world)
   let forms = world.transforms.verbs(infinitive, world)
   forms.Infinitive = infinitive
 
   //apply negative
+  const isNegative = parsed.negative.found
   if (isNegative) {
     forms.PastTense = 'did not ' + forms.Infinitive
     forms.PresentTense = 'does not ' + forms.Infinitive

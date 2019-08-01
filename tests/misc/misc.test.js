@@ -40,3 +40,11 @@ test('normalize whitespace', function(t) {
   t.equal(doc.text(), `it's coöl, (i think). He is cool; i said.`, 'normalize-whitespace')
   t.end()
 })
+
+test('normalize parentheses', function(t) {
+  let doc = nlp.tokenize(` it's   coöl, (i think) .    He is   cool;  i said .`)
+  let options = only({ parentheses: true })
+  doc.normalize(options)
+  t.equal(doc.text(), ` it's   coöl, i think .    He is   cool;  i said .`, 'normalize-parentheses')
+  t.end()
+})

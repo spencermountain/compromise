@@ -2,16 +2,12 @@ var nlp = require('./src/index')
 // nlp.verbose(true)
 nlp.extend(require('./plugins/verbs/src'))
 
-// let doc = nlp('it was early. Mr. Smith ate dinner.').debug()
-
-let doc = nlp.tokenize(`it's (i think) he (said)`)
-
-doc.parentheses().debug()
+let doc = nlp(`i think it's cool`)
 
 // console.log(JSON.stringify(doc.json(), null, 2))
-// doc.normalize({ parentheses: true })
+doc.normalize({ contractions: true })
 
-// console.log('|' + doc.text() + '|')
+console.log('|' + doc.text() + '|')
 
 /* 
  'text' -

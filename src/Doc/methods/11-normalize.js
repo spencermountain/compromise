@@ -57,6 +57,10 @@ exports.normalize = function(options = {}) {
   if (options.parentheses) {
     this.parentheses().unwrap()
   }
+  // `isn't` -> 'is not'
+  if (options.contractions) {
+    this.contractions().expand()
+  }
   // remove "" punctuation
   if (options.quotations || options.quotes) {
     termList.forEach(t => {

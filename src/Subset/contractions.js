@@ -5,10 +5,20 @@ const addMethod = function(Doc) {
       super(list, from, world)
       this.contracted = null
     }
-    // expand() {}
-    // contract() {}
-    // expanded() {}
-    // contracted() {}
+    expand() {
+      console.log('hi')
+      this.list.forEach(p => {
+        p.terms().forEach(t => {
+          console.log(t)
+          t.text = t.implicit || t.text
+        })
+      })
+      return this
+    }
+    contract() {}
+
+    isExpanded() {}
+    isContracted() {}
   }
 
   //find contractable, expanded-contractions
@@ -21,28 +31,30 @@ const addMethod = function(Doc) {
     return m
   }
 
-  Doc.prototype.acronyms = function(n) {
+  Doc.prototype.contractions = function(n) {
+    // this.debug()
     //find currently-contracted
     let found = this.match('#Contraction #Contraction #Contraction?')
-    found.list = found.list.map(ts => {
-      let c = new Contractions(ts.terms, ts.world, ts.refText, ts.refTerms)
-      c.contracted = true
-      return c
-    })
+    // found.list = found.list.map(ts => {
+    //   // let c = new Contractions(ts.terms, ts.world, ts.refText, ts.refTerms)
+    //   c.contracted = true
+    //   return c
+    // })
     //find currently-expanded
-    let expanded = findExpanded(this)
-    expanded.list.forEach(ts => {
-      let c = new Contractions(ts.terms, ts.world, ts.refText, ts.refTerms)
-      c.contracted = false
-      found.list.push(c)
-    })
-    found.sort('chronological')
+    // let expanded = findExpanded(this)
+    // found.concat(expanded)
+
+    // found.sort('chronological')
     //get nth element
     if (typeof n === 'number') {
       found = found.get(n)
     }
     return new Contractions(found.list, this, this.world)
   }
+
+  //aliases
+  Doc.prototype.expanded = Doc.prototype.isExpanded
+  Doc.prototype.contracted = Doc.prototype.isContracted
   return Doc
 }
 module.exports = addMethod

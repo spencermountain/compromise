@@ -2,14 +2,18 @@ const open = /\(/
 const close = /\)/
 
 const addMethod = function(Doc) {
-  /**  */
+  /** anything between (these things) */
   class Parentheses extends Doc {
+    /** remove the parentheses characters */
     unwrap() {
+      this.list.forEach(p => {
+        let first = p.terms(0)
+        first.pre = first.pre.replace(open, '')
+        let last = p.lastTerm()
+        last.post = last.post.replace(close, '')
+      })
       return this
     }
-    // addPeriods() {
-    //   return this
-    // }
   }
 
   Doc.prototype.parentheses = function(n) {
@@ -32,8 +36,18 @@ const addMethod = function(Doc) {
         }
       }
     })
+    //support nth result
+    if (typeof n === 'number') {
+      if (list[n]) {
+        list = [list[n]]
+      } else {
+        list = []
+      }
+      return new Parentheses(list, this, this.world)
+    }
     return new Parentheses(list, this, this.world)
   }
+
   return Doc
 }
 module.exports = addMethod

@@ -1,6 +1,5 @@
 const isPunct = /[\[\]{}⟨⟩:,،、‒–—―…‹›«»‐\-;\/⁄·*\•^†‡°¡¿※№÷×ºª%‰=‱¶§~|‖¦©℗®℠™¤₳฿]/g
 const quotes = /['‘’“”"′″‴]+/g
-const whitespace = /\W/g //not whitespace
 const killUnicode = require('../../Term/clean/unicode')
 /*
   case: true,
@@ -23,17 +22,23 @@ const defaults = {}
 /** common ways to clean-up the document, and reduce noise */
 exports.normalize = function(options = {}) {
   options = Object.assign({}, defaults, options)
-  // let termArr = this.list.map(ts => ts.terms())
-  let termList = this.termList()
+  let termArr = this.list.map(ts => ts.terms())
 
   //whitespace
   if (options.whitespace) {
-    termList.forEach(t => {
-      t.postText = t.postText.replace(whitespace, '')
-      t.preText = t.preText.replace(whitespace, '')
-      // t.preText += ' '
+    termArr.forEach(terms => {
+      terms.forEach((t, i) => {
+        console.log(t.postText.match(/w/))
+        t.postText = t.postText.replace(/\s/g, '')
+        t.preText = t.preText.replace(/\s/g, '')
+        if (i !== 0) {
+          t.preText += ' '
+        }
+      })
     })
   }
+
+  let termList = this.termList()
   //punctuation - keep sentence punctation, quotes, parenths
   if (options.punctuation) {
     termList.forEach(t => {

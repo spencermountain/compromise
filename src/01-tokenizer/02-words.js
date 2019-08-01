@@ -1,5 +1,6 @@
 const wordlike = /\S/
 const isBoundary = /^[!?.]+$/
+const naiiveSplit = /(\S+)/
 
 const notWord = {
   '.': true,
@@ -8,6 +9,7 @@ const notWord = {
   '—': true, //em-dash
   '--': true,
   '...': true,
+  '/': true, // 'one / two'
 }
 
 const hasHyphen = function(str) {
@@ -28,6 +30,20 @@ const hasHyphen = function(str) {
   return false
 }
 
+const splitHyphens = function(word) {
+  let arr = []
+  //support multiple-hyphenated-terms
+  const hyphens = word.split(/[-–—]/)
+  for (let o = 0; o < hyphens.length; o++) {
+    if (o === hyphens.length - 1) {
+      arr.push(hyphens[o])
+    } else {
+      arr.push(hyphens[o] + '-')
+    }
+  }
+  return arr
+}
+
 //turn a string into an array of terms (naiive for now, lumped later)
 const splitWords = function(str) {
   let result = []
@@ -37,36 +53,34 @@ const splitWords = function(str) {
   if (typeof str === 'number') {
     str = String(str)
   }
-  const firstSplit = str.split(/(\S+)/)
-  for (let i = 0; i < firstSplit.length; i++) {
-    const word = firstSplit[i]
-    if (hasHyphen(word) === true) {
-      //support multiple-hyphenated-terms
-      const hyphens = word.split(/[-–—]/)
-      for (let o = 0; o < hyphens.length; o++) {
-        if (o === hyphens.length - 1) {
-          arr.push(hyphens[o])
-        } else {
-          arr.push(hyphens[o] + '-')
-        }
-      }
-    } else {
-      arr.push(word)
+
+  const words = str.split(naiiveSplit)
+  for (let i = 0; i < words.length; i++) {
+    //split 'one-two'
+    if (hasHyphen(words[i]) === true) {
+      arr = arr.concat(splitHyphens(words[i]))
+      continue
     }
+    arr.push(words[i])
   }
+
   //greedy merge whitespace+arr to the right
   let carry = ''
   for (let i = 0; i < arr.length; i++) {
+    let word = arr[i]
     //if it's more than a whitespace
-    if (
-      wordlike.test(arr[i]) === true &&
-      notWord.hasOwnProperty(arr[i]) === false &&
-      isBoundary.test(arr[i]) === false
-    ) {
-      result.push(carry + arr[i])
+    if (wordlike.test(word) === true && notWord.hasOwnProperty(word) === false && isBoundary.test(word) === false) {
+      //put whitespace on end of previous term, if possible
+      if (result.length > 0) {
+        result[result.length - 1] += carry
+        result.push(word)
+      } else {
+        //otherwise, but whitespace before
+        result.push(carry + word)
+      }
       carry = ''
     } else {
-      carry += arr[i]
+      carry += word
     }
   }
   //handle last one

@@ -4,12 +4,13 @@ nlp.extend(require('./plugins/verbs/src'))
 
 // let doc = nlp('it was early. Mr. Smith ate dinner.').debug()
 
-let doc = nlp.tokenize(` it's   'coöl', (i think) .    He is   cool;  i said .`)
+// let doc = nlp.tokenize(` it's   'coöl', (i think) .    He is   cool;  i said .`)
+let doc = nlp.tokenize(`some word-order.   I am fun / cool.`)
 
-console.log(doc.json(0))
+// console.log(JSON.stringify(doc.json(), null, 2))
 // doc.normalize({ whitespace: true })
 
-// console.log(doc.text())
+console.log(doc.text())
 
 /* 
  'text' -

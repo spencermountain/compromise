@@ -33,6 +33,8 @@ stopped parsing `#NumberRange`
 improved handling of slashed terms - like `he is/was fun.`
 
 * map/reduce/foreach/etc all loop over proper `Doc` objects, instead of an internal object
+
+* the internal compromise api has changed considerably. If you were 'reaching in' to the internal Text object in v11, you'll see many changes.
 ---
 
 **non-breaking changes**

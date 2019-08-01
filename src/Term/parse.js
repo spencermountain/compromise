@@ -1,4 +1,5 @@
 const normalize = require('./clean')
+// basically, tokenize for terms.
 
 //all punctuation marks, from https://en.wikipedia.org/wiki/Punctuation
 //we have slightly different rules for start/end - like #hashtags.

@@ -1,5 +1,5 @@
-//
-exports.out = function(options) {
+/** return various text formats of this term */
+exports.textOut = function(options) {
   let word = this.text
   let before = this.preText
   let after = this.postText
@@ -27,12 +27,17 @@ exports.out = function(options) {
 }
 
 /** return various metadata for this term */
-exports.json = function() {
-  let result = {
-    text: this.text,
-    tags: Object.keys(this.tags),
-    preText: this.preText,
-    postText: this.postText,
+exports.json = function(options) {
+  let result = {}
+  if (options.text) {
+    result.text = this.text
+  }
+  if (options.tags) {
+    result.tags = Object.keys(this.tags)
+  }
+  if (options.whitespace) {
+    result.preText = this.preText
+    result.postText = this.postText
   }
   return result
 }

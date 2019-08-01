@@ -1,39 +1,50 @@
 const debug = require('./_debug')
+const jsonDefaults = { text: true, terms: { text: true, tags: true, whitespace: true } }
 
-// output
+/** return the document as text */
 exports.text = function(options = {}) {
-  // let doc = this.clone()
-  // doc = doc.normalize(options)
+  if (typeof options === 'string') {
+    if (options === 'normal') {
+      options = {
+        punctuation: true,
+        whitespace: true,
+        unicode: true,
+      }
+    }
+    options = {}
+  }
+  return this.list.reduce((str, p) => str + p.text(options), '')
+}
 
-  return this.list.reduce((str, p) => str + p.out(options), '')
-}
-exports.normal = function(options = {}) {
-  options.normal = true
-  return this.list.map(p => p.out(options)).join(' ')
-}
+/** pull out desired metadata from the document */
 exports.json = function(options = {}) {
+  //support json(3) format
+  if (typeof options === 'number') {
+    return this.list[options].json(jsonDefaults)
+  }
+  options = Object.assign({}, jsonDefaults, options)
   return this.list.map(p => p.json(options))
 }
-exports.array = function(options = {}) {
-  return this.list.map(p => p.out(options).trim())
-}
+
+/** pretty-print the current document and its tags */
 exports.debug = function() {
   debug(this)
   return this
 }
-//in v7-style - doc.out('text')
+
+/** some named output formats */
 exports.out = function(method) {
   if (method === 'text') {
     return this.text()
   }
   if (method === 'normal') {
-    return this.normal()
+    return this.text('normal')
   }
   if (method === 'json') {
     return this.json()
   }
   if (method === 'array') {
-    return this.array()
+    return this.json({ text: true, terms: false }).map(obj => obj.text)
   }
   if (method === 'debug') {
     debug(this)
@@ -41,5 +52,6 @@ exports.out = function(method) {
   }
   return this.text()
 }
+
 //aliases
 exports.data = exports.json

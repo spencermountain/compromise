@@ -66,17 +66,3 @@ exports.hasId = function(wantId) {
   }
   return false
 }
-
-/** produce output in the given format */
-exports.out = function(options = {}) {
-  let terms = this.terms()
-  return terms.reduce((str, t, i) => {
-    options.last = i === terms.length - 1
-    return str + t.out(options)
-  }, '')
-}
-
-/** return json metadata for this phrase */
-exports.json = function(options = {}) {
-  return this.terms().map(t => t.json(options))
-}

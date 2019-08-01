@@ -27,21 +27,3 @@ exports.hasElipses = function() {
 exports.hasSemicolon = function() {
   return this.postText.includes(';')
 }
-
-/** clopper any atypical whitespace */
-exports.normalizeWhitespace = function() {
-  let punct = this.punctuation() || ''
-  this.preText = ' '
-  this.postText = punct
-  return this
-}
-
-/** return any expected forms of trailing punctuation */
-exports.punctuation = function() {
-  let str = this.postText.trim()
-  let m = str.match(/[\.,\?\!]/)
-  if (m !== null) {
-    return m[0]
-  }
-  return null
-}

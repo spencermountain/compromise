@@ -22,8 +22,8 @@ test('prepend children', function(t) {
   let m2 = m1.match('four')
   m2.prepend('two three')
 
-  t.equal(m1.normal(), 'one two three four', 'prepended in child 1')
-  t.equal(m2.normal(), 'two three four', 'prepended in child 2')
+  t.equal(m1.text(), 'one two three four', 'prepended in child 1')
+  t.equal(m2.text(), 'two three four', 'prepended in child 2')
   t.equal(doc.text(), 'one two three four five six.', 'prepended in parent')
   t.end()
 })

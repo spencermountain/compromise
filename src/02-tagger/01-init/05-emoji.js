@@ -38,19 +38,16 @@ const tagEmoji = (term, world) => {
   if (isCommaEmoji(term) === true) {
     term.tag('Emoji', 'comma-emoji', world)
     term.text = term.raw
-    term.normalizeWhitespace()
   }
   //test for unicode emojis
   if (term.text.match(emojiReg)) {
     term.tag('Emoji', 'unicode-emoji', world)
     term.text = term.raw
-    term.normalizeWhitespace()
   }
   //test for emoticon ':)' emojis
   if (isEmoticon(term) === true) {
     term.tag('Emoji', 'emoticon-emoji', world)
     term.text = term.raw
-    term.normalizeWhitespace()
   }
 }
 module.exports = tagEmoji

@@ -5,13 +5,13 @@ test('map-stuff', function(t) {
   let doc = nlp('and').map(d => {
     return d.replaceWith('or')
   })
-  t.equal(doc.normal(), 'or', 'replace-with')
+  t.equal(doc.text(), 'or', 'replace-with')
 
   doc = nlp('one two three. three four five.').map(d => {
     return d.match('three')
   })
-  t.equal(doc.eq(0).normal(), 'three.', 'match-one')
-  t.equal(doc.eq(1).normal(), 'three', 'match-two')
+  t.equal(doc.eq(0).text(), 'three.', 'match-one')
+  t.equal(doc.eq(1).text(), 'three', 'match-two')
 
   t.end()
 })

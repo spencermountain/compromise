@@ -59,7 +59,7 @@ const tryHere = function(terms, regs) {
       continue
     }
 
-    //looks like a match, continue
+    //if it looks like a match, continue
     if (reg.anything === true || terms[t].doesMatch(reg) === true) {
       let startAt = t
       //advance to the next term!

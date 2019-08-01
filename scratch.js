@@ -4,9 +4,14 @@ nlp.extend(require('./plugins/verbs/src'))
 
 // let doc = nlp('it was early. Mr. Smith ate dinner.').debug()
 
-let doc = nlp('hello world. i think.').verbs()
-doc.debug()
-console.log(doc.conjugations())
+let doc = nlp.tokenize('hello world. what i really think about is.')
+
+let m = doc.match('think about')
+
+doc.match(m).debug()
+
+// doc.debug()
+// console.log(doc.conjugations())
 
 //----------
 // console.time('one')

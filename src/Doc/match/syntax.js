@@ -54,33 +54,49 @@ const postProcess = function(tokens) {
   return tokens
 }
 
+const fromDoc = function(doc) {
+  if (!doc || !doc.list || !doc.list[0]) {
+    return []
+  }
+  return doc.list[0].terms().map(t => {
+    return {
+      id: t.id,
+    }
+  })
+}
+
 /** parse a match-syntax string into json */
-const syntax = function(str) {
+const syntax = function(input) {
   // fail-fast
-  if (str === null || str === undefined || str === '') {
+  if (input === null || input === undefined || input === '') {
     return []
   }
   //try to support a ton of different formats:
-  if (typeof str === 'object') {
-    if (isArray(str)) {
-      if (str.length === 0 || !str[0]) {
+  if (typeof input === 'object') {
+    if (isArray(input)) {
+      if (input.length === 0 || !input[0]) {
         return []
       }
+
       //is it a pre-parsed reg-list?
-      if (typeof str[0] === 'object') {
-        return str
+      if (typeof input[0] === 'object') {
+        return input
       }
       //support a flat array of normalized words
-      if (typeof str[0] === 'string') {
-        return byArray(str)
+      if (typeof input[0] === 'string') {
+        return byArray(input)
       }
+    }
+    //support passing-in a compromise object as a match
+    if (input && input.isA === 'Doc') {
+      return fromDoc(input)
     }
     return []
   }
-  if (typeof str === 'number') {
-    str = String(str) //go for it?
+  if (typeof input === 'number') {
+    input = String(input) //go for it?
   }
-  let tokens = byParentheses(str)
+  let tokens = byParentheses(input)
   tokens = byWords(tokens)
   tokens = tokens.map(parseToken)
   //clean up anything weird

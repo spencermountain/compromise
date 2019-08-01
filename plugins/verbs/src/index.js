@@ -58,7 +58,9 @@ const addMethod = function(Doc) {
 
   Doc.prototype.verbs = function(n) {
     let match = this.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+')
-    match = match.splitAfter('#Comma')
+    // match.debug()
+    // handle commas
+    // match = match.splitAfter('#Comma')
     //handle slashes
     // match.list.forEach(ts => {
     //   ts.terms.forEach(t => {
@@ -73,7 +75,10 @@ const addMethod = function(Doc) {
     if (typeof n === 'number') {
       match = match.get(n)
     }
-    return new Verbs(match.list, this, this.world)
+    let vb = new Verbs(match.list, this, this.world)
+
+    this.debug()
+    return vb
   }
   return Doc
 }

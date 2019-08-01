@@ -1,5 +1,9 @@
 /** ignore optional/greedy logic, straight-up term match*/
 const doesMatch = function(t, reg) {
+  // support id matches
+  if (reg.id === t.id) {
+    return true
+  }
   // support '.'
   if (reg.anything === true) {
     return true

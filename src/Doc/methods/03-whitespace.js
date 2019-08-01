@@ -11,10 +11,10 @@ exports.hyphenate = function() {
     //remove whitespace
     terms.forEach((t, i) => {
       if (i !== 0) {
-        t.preText = ''
+        t.pre = ''
       }
       if (terms[i + 1]) {
-        t.postText = '-'
+        t.post = '-'
       }
     })
   })
@@ -29,8 +29,8 @@ exports.dehyphenate = function() {
     let terms = p.terms()
     //remove whitespace
     terms.forEach(t => {
-      if (hasHyphen.test(t.postText)) {
-        t.postText = ' '
+      if (hasHyphen.test(t.post)) {
+        t.post = ' '
       }
     })
   })

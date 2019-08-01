@@ -10,8 +10,8 @@ class Term {
     this.text = obj.text || ''
     this.normal = obj.normal || ''
     this.implicit = obj.implicit || null
-    this.preText = obj.preText || ''
-    this.postText = obj.postText || ''
+    this.pre = obj.pre || ''
+    this.post = obj.post || ''
     this.raw = text.trim()
     this.tags = {}
     this.prev = null
@@ -24,8 +24,8 @@ class Term {
 /** create a deep-copy of this term */
 Term.prototype.clone = function() {
   let term = new Term(this.text)
-  term.preText = this.preText
-  term.postText = this.postText
+  term.pre = this.pre
+  term.post = this.post
   term.tags = Object.assign({}, term.tags)
   return term
 }

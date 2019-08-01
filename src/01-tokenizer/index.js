@@ -56,8 +56,8 @@ const fromJSON = function(data) {
     //create Term objects
     terms = terms.map(obj => {
       let term = new Term(obj.text)
-      term.preText = obj.preText
-      term.postText = obj.postText
+      term.pre = obj.pre
+      term.post = obj.post
       term.tags = obj.tags.reduce((h, tag) => {
         h[tag] = true
         return h

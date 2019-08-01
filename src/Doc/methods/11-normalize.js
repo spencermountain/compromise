@@ -28,11 +28,11 @@ exports.normalize = function(options = {}) {
   if (options.whitespace) {
     termArr.forEach(terms => {
       terms.forEach((t, i) => {
-        console.log(t.postText.match(/w/))
-        t.postText = t.postText.replace(/\s/g, '')
-        t.preText = t.preText.replace(/\s/g, '')
+        console.log(t.post.match(/w/))
+        t.post = t.post.replace(/\s/g, '')
+        t.pre = t.pre.replace(/\s/g, '')
         if (i !== 0) {
-          t.preText += ' '
+          t.pre += ' '
         }
       })
     })
@@ -42,8 +42,8 @@ exports.normalize = function(options = {}) {
   //punctuation - keep sentence punctation, quotes, parenths
   if (options.punctuation) {
     termList.forEach(t => {
-      t.postText = t.postText.replace(isPunct, '')
-      t.preText = t.preText.replace(isPunct, '')
+      t.post = t.post.replace(isPunct, '')
+      t.pre = t.pre.replace(isPunct, '')
     })
   }
   // é -> e
@@ -55,8 +55,8 @@ exports.normalize = function(options = {}) {
   // remove "" punctuation
   if (options.quotations || options.quotes) {
     termList.forEach(t => {
-      t.postText = t.postText.replace(quotes, '')
-      t.preText = t.preText.replace(quotes, '')
+      t.post = t.post.replace(quotes, '')
+      t.pre = t.pre.replace(quotes, '')
     })
   }
   return this

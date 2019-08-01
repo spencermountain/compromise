@@ -18,7 +18,7 @@ const createPhrase = function(found, doc) {
     t.text = ''
     // remove whitespace for implicit terms
     if (i > 0) {
-      t.preText = ''
+      t.pre = ''
     }
   })
   return phrase

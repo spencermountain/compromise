@@ -8,14 +8,14 @@ const addWhitespace = function(original, newPhrase, newTerms) {
   if (term.prev) {
     //add our space ahead of our new terms
     let firstWord = newTerms[0]
-    if (hasSpace.test(firstWord.preText) === false) {
-      firstWord.preText = ' ' + firstWord.preText
+    if (hasSpace.test(firstWord.pre) === false) {
+      firstWord.pre = ' ' + firstWord.pre
     }
     return
   }
   //otherwise, add our space to the start of original
-  if (hasSpace.test(term.preText) === false) {
-    term.preText = ' ' + term.preText
+  if (hasSpace.test(term.pre) === false) {
+    term.pre = ' ' + term.pre
   }
   return
 }

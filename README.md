@@ -88,8 +88,8 @@ type hints
   ---term-formats--
     `text` : true
     `tags` : true
-    `preText` : true
-    `postText` : true
+    `pre` : true
+    `post` : true
     `normal` : false
     `clean` : false
     `simple` : false
@@ -119,7 +119,7 @@ type hints
   {
     text:'i am cool',
     terms:[
-      {text:'i', preText:'', postText:'', tags}
+      {text:'i', pre:'', post:'', tags}
     ]
   }
 ]

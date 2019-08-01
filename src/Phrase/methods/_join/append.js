@@ -3,8 +3,8 @@ const hasSpace = / /
 //add whitespace to the start of the second bit
 const addWhitespace = function(two) {
   let firstWord = two[0]
-  if (hasSpace.test(firstWord.preText) === false) {
-    firstWord.preText = ' ' + firstWord.preText
+  if (hasSpace.test(firstWord.pre) === false) {
+    firstWord.pre = ' ' + firstWord.pre
   }
 }
 

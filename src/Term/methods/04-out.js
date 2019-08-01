@@ -1,8 +1,8 @@
 /** return various text formats of this term */
 exports.textOut = function(options) {
   let word = this.text
-  let before = this.preText
-  let after = this.postText
+  let before = this.pre
+  let after = this.post
   if (options.normal === true) {
     word = this.normal
     before = ''
@@ -36,8 +36,8 @@ exports.json = function(options) {
     result.tags = Object.keys(this.tags)
   }
   if (options.whitespace) {
-    result.preText = this.preText
-    result.postText = this.postText
+    result.pre = this.pre
+    result.post = this.post
   }
   return result
 }

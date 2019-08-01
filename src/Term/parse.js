@@ -11,26 +11,26 @@ let endings = /[ \.’'\[\](){}⟨⟩:,،、‒–—―…!.‹›«»‐\-?‘
  * seperate the 'meat' of the word from the whitespace+punctuation
  */
 const parseTerm = str => {
-  let preText = ''
-  let postText = ''
+  let pre = ''
+  let post = ''
   str = str.replace(startings, found => {
-    preText = found
+    pre = found
     return ''
   })
   str = str.replace(endings, found => {
-    postText = found
+    post = found
     return ''
   })
   //we went too far..
   if (str === '') {
-    str = preText.replace(/[.?!]/, '') //.trim(); //huh?
-    preText = ''
+    str = pre.replace(/[.?!]/, '') //.trim(); //huh?
+    pre = ''
   }
   return {
     text: str,
     normal: normalize(str),
-    preText: preText,
-    postText: postText,
+    pre: pre,
+    post: post,
   }
 }
 module.exports = parseTerm

@@ -27,9 +27,9 @@ exports.toCamelCase = function() {
     //remove whitespace
     p.terms().forEach((t, i) => {
       if (i !== 0) {
-        t.preText = ''
+        t.pre = ''
       }
-      t.postText = ''
+      t.post = ''
     })
   })
   this.tag('#CamelCase', 'toCamelCase')

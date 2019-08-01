@@ -3,12 +3,30 @@ var nlp = require('./src/index')
 nlp.extend(require('./plugins/verbs/src'))
 
 // let doc = nlp('it was early. Mr. Smith ate dinner.').debug()
+const corpus = require('./stress/node_modules/nlp-corpus')
+let txt = corpus.sotu.array()[8]
+let one = nlp.tokenize(txt)
 
-let doc = nlp.tokenize('hello world. what i really think about is.')
+let two = one.clone()
 
-let m = doc.match('think about')
+// one.debug()
+// two.debug()
+/* 
+ 'text' -
+ 'normal' - case, whitespace, unicode
+ 'clean' - += (non-sentence) punctuation
+ 'simple' - += contractions
+ 'reduced' - += no adverbs, emoji, parentheses, quotations
+ 'root' - += infinitive verbs, singular nouns
+*/
 
-doc.match(m).debug()
+// console.log(
+//   doc.text({
+//     case: true,
+//     whitespace: true,
+//     unicode: true,
+//   })
+// )
 
 // doc.debug()
 // console.log(doc.conjugations())

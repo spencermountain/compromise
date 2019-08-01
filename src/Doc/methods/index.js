@@ -6,5 +6,6 @@ module.exports = Object.assign(
   require('./04-loops'),
   require('./05-output'),
   require('./06-replace'),
-  require('./07-freeze')
+  require('./07-freeze'),
+  require('./08-clone')
 )

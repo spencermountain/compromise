@@ -10,6 +10,8 @@ hmmm:
 ---
 ### Breaking changes:
  
+* `.text()` input parameter changes
+  
 * remove `.flatten()` (anti-pattern)
 
 * results of `.canbe()` are more like `.match()`
@@ -54,6 +56,19 @@ type hints
 `tsc --allowJs --checkJs --noEmit --target ES6 src/*.js`
 
 
+### Normalisation levels:
+working version:
+**'text'** -
+
+**'normal'** - whitespace, unicode
+
+**'clean'** - += (non-sentence) punctuation
+
+**'simple'** - += contractions
+
+**'reduced'** - += no adverbs, emoji, parentheses, quotations
+
+**'root'** - += infinitive verbs, singular nouns
 
 
 ## Subsets

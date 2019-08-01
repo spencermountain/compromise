@@ -11,17 +11,17 @@ exports.out = function(options) {
       after = ''
     }
     //normalized end punctuation
-    // if (this.hasPeriod() === true) {
-    //   after = '.' + after
-    // } else if (this.hasQuestionMark() === true) {
-    //   after = '?' + after
-    // } else if (this.hasExclamation() === true) {
-    //   after = '!' + after
-    // } else if (this.hasComma() === true) {
-    //   after = ',' + after
-    // } else if (this.hasElipses() === true) {
-    //   after = '...' + after
-    // }
+    if (this.hasPeriod() === true) {
+      after = '.' + after
+    } else if (this.hasQuestionMark() === true) {
+      after = '?' + after
+    } else if (this.hasExclamation() === true) {
+      after = '!' + after
+    } else if (this.hasComma() === true) {
+      after = ',' + after
+    } else if (this.hasElipses() === true) {
+      after = '...' + after
+    }
   }
   return before + word + after
 }

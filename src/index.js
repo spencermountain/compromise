@@ -4,9 +4,7 @@ const World = require('./World/World')
 const Doc = require('./Doc/Doc')
 
 //blast-out our word-lists, just once
-console.time('world')
 let world = new World()
-console.timeEnd('world')
 
 /** parse and tag text into a compromise object  */
 const nlp = function(text = '') {

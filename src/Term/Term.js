@@ -26,7 +26,7 @@ Term.prototype.clone = function() {
   let term = new Term(this.text)
   term.preText = this.preText
   term.postText = this.postText
-  term.tags = this.tags.slice(0)
+  term.tags = Object.assign({}, term.tags)
   return term
 }
 

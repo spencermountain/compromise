@@ -2,6 +2,8 @@ const debug = require('./_debug')
 
 // output
 exports.text = function(options = {}) {
+  let doc = this.clone()
+
   return this.list.reduce((str, p) => str + p.out(options), '')
 }
 exports.normal = function(options = {}) {

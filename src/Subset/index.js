@@ -1,4 +1,4 @@
-const selections = [require('./acronyms'), require('./contractions')]
+const selections = [require('./acronyms'), require('./contractions'), require('./parentheses')]
 
 const extend = function(Doc) {
   selections.forEach(addFn => addFn(Doc))

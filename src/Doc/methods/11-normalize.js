@@ -26,14 +26,15 @@ exports.normalize = function(options = {}) {
 
   //whitespace
   if (options.whitespace) {
-    termArr.forEach(terms => {
+    termArr.forEach((terms, o) => {
       terms.forEach((t, i) => {
-        console.log(t.post.match(/w/))
-        t.post = t.post.replace(/\s/g, '')
         t.pre = t.pre.replace(/\s/g, '')
-        if (i !== 0) {
-          t.pre += ' '
+        t.post = t.post.replace(/\s/g, '')
+        //last word? ensure there's a next sentence.
+        if (terms.length - 1 === i && !termArr[o + 1]) {
+          return
         }
+        t.post += ' '
       })
     })
   }
@@ -51,6 +52,10 @@ exports.normalize = function(options = {}) {
     termList.forEach(t => {
       t.text = killUnicode(t.text)
     })
+  }
+  // '(word)' -> 'word'
+  if (options.parentheses) {
+    this.parentheses().unwrap()
   }
   // remove "" punctuation
   if (options.quotations || options.quotes) {

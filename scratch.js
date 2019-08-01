@@ -3,14 +3,15 @@ var nlp = require('./src/index')
 nlp.extend(require('./plugins/verbs/src'))
 
 // let doc = nlp('it was early. Mr. Smith ate dinner.').debug()
-const corpus = require('./stress/node_modules/nlp-corpus')
-let txt = corpus.sotu.array()[8]
-let one = nlp.tokenize(txt)
 
-let two = one.clone()
+let doc = nlp.tokenize(` it's   coöl (i think) .`)
 
-// one.debug()
-// two.debug()
+console.log(doc.json())
+
+// doc.normalize({ case: true, whitespace: true, unicode: true })
+
+// console.log(doc.out('text'))
+
 /* 
  'text' -
  'normal' - case, whitespace, unicode

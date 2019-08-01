@@ -1,4 +1,4 @@
-const normalize = require('./normalize')
+const normalize = require('./clean')
 
 //all punctuation marks, from https://en.wikipedia.org/wiki/Punctuation
 //we have slightly different rules for start/end - like #hashtags.

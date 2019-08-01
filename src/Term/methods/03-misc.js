@@ -1,6 +1,6 @@
 const doesMatch = require('./_match')
 const out = require('./04-out')
-const isAcronym = require('../normalize/isAcronym')
+const isAcronym = require('../clean/isAcronym')
 
 // these tags aren't juicy-enough
 const boring = {

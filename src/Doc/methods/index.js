@@ -1,11 +1,14 @@
 module.exports = Object.assign(
   {},
+  require('./04-tag'),
   require('./01-utils'),
-  require('./02-misc'),
-  require('./03-split'),
-  require('./04-loops'),
-  require('./05-output'),
+  require('./03-whitespace'),
+  require('./02-case'),
+  require('./05-loops'),
   require('./06-replace'),
   require('./07-freeze'),
-  require('./08-clone')
+  require('./08-clone'),
+  require('./09-output'),
+  require('./10-split'),
+  require('./11-normalize')
 )

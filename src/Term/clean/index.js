@@ -3,7 +3,7 @@ const isAcronym = require('./isAcronym')
 const hasSlash = /[a-z\u00C0-\u00FF] ?\/ ?[a-z\u00C0-\u00FF]/
 
 /** some basic operations on a string to reduce noise */
-const normalize = function(str) {
+const clean = function(str) {
   str = str || ''
   str = str.toLowerCase()
   str = str.trim()
@@ -58,5 +58,5 @@ const normalize = function(str) {
   return str
 }
 
-module.exports = normalize
+module.exports = clean
 // console.log(normalize('Dr. V Cooper'));

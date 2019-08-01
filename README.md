@@ -57,6 +57,72 @@ type hints
 
 
 ### Normalisation levels:
+
+* .text({})
+    `case` : true,
+    `whitespace` : true,
+    `unicode` : true,
+    `punctuation` : true,
+
+    `contractions`:  true,
+
+    `adverbs` : true,
+    `emoji` : true,
+    `parentheses` : true,
+    `quotations` : true,
+
+    `verbs` : true,
+    `nouns` : true,
+
+* .json({})
+  ---text-formats per phrase--
+    `text` : true
+    `normal` : false
+    `clean` : false
+    `simple` : false
+    `reduced` : false
+    `root` : false
+
+  ---term-formats--
+    `text` : true
+    `tags` : true
+    `preText` : true
+    `postText` : true
+    `normal` : false
+    `clean` : false
+    `simple` : false
+    `root` : false
+    `bestTag`: false
+
+
+* .out('')
+  `text`
+  `json`
+    --support text formats--
+  `normal`
+  `clean`
+  `simple`
+  `reduced`
+  `root`
+   --named formats--
+  `array`
+  `terms`
+  `tsv` - like stanford  -https://nlp.stanford.edu/software/pos-tagger-faq.html#f
+  `xml`
+  `jsonl` - like spacy
+  `iob` - chunking - https://en.wikipedia.org/wiki/Inside%E2%80%93outside%E2%80%93beginning_(tagging)
+
+```
+[
+  {
+    text:'i am cool',
+    terms:[
+      {text:'i', preText:'', postText:'', tags}
+    ]
+  }
+]
+```
+
 working version:
 **'text'** -
 

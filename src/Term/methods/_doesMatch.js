@@ -1,3 +1,6 @@
+//declare it up here
+let wrapMatch = function() {}
+
 /** ignore optional/greedy logic, straight-up term match*/
 const doesMatch = function(t, reg) {
   // support id matches
@@ -32,17 +35,17 @@ const doesMatch = function(t, reg) {
   if (reg.regex !== undefined) {
     return reg.regex.test(t.clean)
   }
-  //support (one}two)
+  //support (one|two)
   if (reg.choices !== undefined) {
     //recursion alert
-    let foundOne = reg.choices.find(r => doesMatch(t, r))
+    let foundOne = reg.choices.find(r => wrapMatch(t, r))
     return foundOne !== undefined
   }
   return false
 }
 
-// wrap for !negative match logic
-const wrapMatch = function(t, reg) {
+// wrap result for !negative match logic
+wrapMatch = function(t, reg) {
   let result = doesMatch(t, reg)
   if (reg.negative === true) {
     return !result

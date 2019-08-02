@@ -2,11 +2,12 @@ var nlp = require('./src/index')
 // nlp.verbose(true)
 // nlp.extend(require('./plugins/verbs/src'))
 
+// let doc = nlp(`i am so, much better and faster`)
+
+// doc.match('(rich|!@hasComma)').debug()
+
 let doc = nlp(`i am much, much better and faster`)
-
-doc = doc.match('and !faster')
-doc.debug()
-
+doc.match('(foo|!@hasComma)').debug()
 // doc
 //   .contractions()
 //   .expand()
@@ -15,7 +16,7 @@ doc.debug()
 // console.log(JSON.stringify(doc.json(), null, 2))
 // doc.normalize({ contractions: true })
 
-console.log('|' + doc.text() + '|')
+// console.log('|' + doc.text() + '|')
 
 /* 
  'text' -

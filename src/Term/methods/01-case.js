@@ -1,3 +1,5 @@
+const titleCase = /^[A-Z][a-z'\u00C0-\u00FF]/
+
 /** convert all text to uppercase */
 exports.toUpperCase = function(world) {
   this.text = this.text.toUpperCase()
@@ -20,4 +22,9 @@ exports.toTitleCase = function(world) {
   this.text = this.text.replace(/^ *[a-z\u00C0-\u00FF]/, x => x.toUpperCase()) //support unicode?
   this.tag('#TitleCase', 'toTitleCase', world)
   return this
+}
+
+/** if the first letter is uppercase, and the rest are lowercase */
+exports.isTitleCase = function() {
+  return titleCase.test(this.text)
 }

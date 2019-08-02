@@ -5,18 +5,31 @@ const addMethod = function(Doc) {
       super(list, from, world)
       this.contracted = null
     }
+    /** turn didn't into 'did not' */
     expand() {
       this.list.forEach(p => {
-        p.terms().forEach(t => {
+        let terms = p.terms()
+        //change the case?
+        let isTitlecase = terms[0].isTitleCase()
+
+        terms.forEach((t, i) => {
+          //use the implicit text
+          // console.log(t.clean)
           t.text = t.implicit || t.text
+          t.implicit = undefined
+
+          //add whitespace
+          if (i < terms.length - 1) {
+            t.post += ' '
+          }
         })
+        //set titlecase
+        if (isTitlecase) {
+          terms[0].toTitleCase()
+        }
       })
       return this
     }
-    contract() {}
-
-    isExpanded() {}
-    isContracted() {}
   }
 
   //find contractable, expanded-contractions
@@ -31,13 +44,8 @@ const addMethod = function(Doc) {
 
   Doc.prototype.contractions = function(n) {
     //find currently-contracted
-    let found = []
-    // let matches = this.match('@hasContraction')
-    // matches.list.forEach(p => {
-    //   let pool = p.pool
-    //   console.log(pool)
-    // })
-
+    let found = this.match('@hasContraction+')
+    //todo: split consecutive contractions
     if (typeof n === 'number') {
       found = found.get(n)
     }

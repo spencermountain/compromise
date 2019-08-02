@@ -1,5 +1,5 @@
 const debug = require('./_debug')
-const jsonDefaults = { text: true, terms: { text: true, tags: true, whitespace: true } }
+const jsonDefaults = { text: true, terms: { text: true, tags: true, whitespace: true, implicit: true } }
 
 /** return the document as text */
 exports.text = function(options = {}) {

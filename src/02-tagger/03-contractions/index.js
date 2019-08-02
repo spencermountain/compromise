@@ -16,10 +16,10 @@ const createPhrase = function(found, doc) {
   terms.forEach((t, i) => {
     t.implicit = t.text
     t.text = ''
+    t.clean = ''
     // remove whitespace for implicit terms
-    if (i > 0) {
-      t.pre = ''
-    }
+    t.pre = ''
+    t.post = ''
   })
   return phrase
 }
@@ -41,7 +41,6 @@ const contractions = function(doc) {
         //set text as contraction
         let firstTerm = newPhrase.terms(0)
         firstTerm.text = term.text
-        // firstTerm.tag('Contraction')
         //grab sub-phrase to remove
         let match = p.buildFrom(term.id, 1, doc.pool())
         match.replace(newPhrase, doc)

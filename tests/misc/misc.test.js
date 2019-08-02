@@ -61,6 +61,22 @@ test('match contractions/possessives', function(t) {
   t.end()
 })
 
+test('contraction whitespace', function(t) {
+  let doc = nlp(`i didn't know.`)
+  t.equal(t.text(), `i didn't know.`, 'init-whitespace')
+
+  doc.contractions().expand()
+  t.equal(t.text(), `i did not know.`, 'expanded-whitespace')
+
+  doc = nlp(`i didn't.`)
+  t.equal(t.text(), `i didn't.`, 'init-period')
+
+  doc.contractions().expand()
+  t.equal(t.text(), `i did not.`, 'expanded-period')
+
+  t.end()
+})
+
 test('match @functions', function(t) {
   let doc = nlp(`jamie's much, much better.`)
 

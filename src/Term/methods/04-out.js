@@ -32,6 +32,12 @@ exports.json = function(options) {
   if (options.text) {
     result.text = this.text
   }
+  if (options.clean) {
+    result.clean = this.clean
+  }
+  if (options.implicit && this.implicit !== undefined) {
+    result.implicit = this.implicit
+  }
   if (options.tags) {
     result.tags = Object.keys(this.tags)
   }

@@ -1,11 +1,13 @@
 const hasSpace = / /
 
 //add whitespace to the start of the second bit
-const addWhitespace = function(two) {
-  let firstWord = two[0]
-  if (hasSpace.test(firstWord.pre) === false) {
-    firstWord.pre = ' ' + firstWord.pre
-  }
+const addWhitespace = function(newTerms, beforeTerms) {
+  // let firstWord = newTerms[0]
+  // if (hasSpace.test(firstWord.post) === false) {
+  // firstWord.post += ' '
+  // }
+  let lastTerm = newTerms[newTerms.length - 1]
+  lastTerm.post = beforeTerms[0].post
 }
 
 //insert this segment into the linked-list
@@ -44,13 +46,13 @@ const stretchAll = function(doc, id, len) {
 
 //append one phrase onto another
 const joinPhrase = function(main, newPhrase, doc) {
-  let firstTerms = main.terms()
+  let beforeTerms = main.terms()
   //spruce-up the whitespace issues
-  addWhitespace(newPhrase.terms())
+  addWhitespace(newPhrase.terms(), beforeTerms)
   //insert this segment into the linked-list
   stitchIn(main, newPhrase)
   //increase the length of our phrases
-  stretchAll(doc, firstTerms[0].id, newPhrase.length)
+  stretchAll(doc, beforeTerms[0].id, newPhrase.length)
   return main
 }
 module.exports = joinPhrase

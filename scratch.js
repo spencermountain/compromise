@@ -6,17 +6,16 @@ var nlp = require('./src/index')
 
 // doc.match('(rich|!@hasComma)').debug()
 
-let doc = nlp(`i am much, much better and faster`)
-doc.match('(foo|!@hasComma)').debug()
-// doc
-//   .contractions()
-//   .expand()
-//   .debug()
+let doc = nlp(`Didn't he?`)
+
+// console.log(doc.json({ terms: { text: true, clean: true } })[0])
+doc.debug()
+// doc.contractions().expand()
 
 // console.log(JSON.stringify(doc.json(), null, 2))
 // doc.normalize({ contractions: true })
 
-// console.log('|' + doc.text() + '|')
+console.log('|' + doc.text() + '|')
 
 /* 
  'text' -

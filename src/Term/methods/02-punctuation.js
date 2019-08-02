@@ -27,3 +27,13 @@ exports.hasElipses = function() {
 exports.hasSemicolon = function() {
   return this.post.includes(';')
 }
+
+/** is there a slash after this word? */
+exports.hasSlash = function() {
+  return this.post.includes('/')
+}
+
+/** is it multiple words combinded */
+exports.hasContraction = function() {
+  return Boolean(this.implicit)
+}

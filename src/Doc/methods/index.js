@@ -8,7 +8,7 @@ module.exports = Object.assign(
   require('./06-replace'),
   require('./07-freeze'),
   require('./08-clone'),
-  require('./09-output'),
+  require('./09-out'),
   require('./10-split'),
   require('./11-normalize')
 )

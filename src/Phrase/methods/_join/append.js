@@ -1,13 +1,10 @@
-const hasSpace = / /
-
 //add whitespace to the start of the second bit
-const addWhitespace = function(newTerms, beforeTerms) {
-  // let firstWord = newTerms[0]
-  // if (hasSpace.test(firstWord.post) === false) {
-  // firstWord.post += ' '
-  // }
-  let lastTerm = newTerms[newTerms.length - 1]
-  lastTerm.post = beforeTerms[0].post
+const addWhitespace = function(afterTerms, beforeTerms) {
+  //add any existing end-whitespace to end of our new terms
+  let lastTerm = afterTerms[afterTerms.length - 1]
+  lastTerm.post = beforeTerms[beforeTerms.length - 1].post
+  //before ←[space]  - after
+  beforeTerms[beforeTerms.length - 1].post += ' '
 }
 
 //insert this segment into the linked-list

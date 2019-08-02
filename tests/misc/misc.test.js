@@ -7,6 +7,7 @@ const only = function(options) {
     whitespace: false,
     unicode: false,
     punctuation: false,
+    contraction: false,
   }
   return Object.assign({}, none, options)
 }
@@ -49,6 +50,28 @@ test('normalize parentheses', function(t) {
   t.end()
 })
 
+test('normalize contractions', function(t) {
+  let doc = nlp.tokenize(` it's   coöl, (i think) .    He is   cool;  i said .`)
+  let options = only({ contractions: true })
+  doc.normalize(options)
+  t.equal(doc.text(), ` it is   coöl, (i think) .    He is   cool;  i said .`, 'normalize-contractions')
+  t.end()
+})
+
+// -----
+
+test('root-text vs match-text', function(t) {
+  let str = `  paper, scissors, rock. I run with scissors.`
+  let doc = nlp(str)
+    .match('*')
+    .all()
+  t.equal(doc.text(), str, 'perfect-root-text')
+
+  let m = doc.match('scissors')
+  t.equal(m.text(), 'scissors, scissors', 'match-text')
+  t.end()
+})
+
 // -------------
 
 test('match contractions/possessives', function(t) {
@@ -63,16 +86,16 @@ test('match contractions/possessives', function(t) {
 
 test('contraction whitespace', function(t) {
   let doc = nlp(`i didn't know.`)
-  t.equal(t.text(), `i didn't know.`, 'init-whitespace')
+  t.equal(doc.text(), `i didn't know.`, 'init-whitespace')
 
   doc.contractions().expand()
-  t.equal(t.text(), `i did not know.`, 'expanded-whitespace')
+  t.equal(doc.text(), `i did not know.`, 'expanded-whitespace')
 
   doc = nlp(`i didn't.`)
-  t.equal(t.text(), `i didn't.`, 'init-period')
+  t.equal(doc.text(), `i didn't.`, 'init-period')
 
   doc.contractions().expand()
-  t.equal(t.text(), `i did not.`, 'expanded-period')
+  t.equal(doc.text(), `i did not.`, 'expanded-period')
 
   t.end()
 })

@@ -1,8 +1,9 @@
 /** return various text formats of this term */
-exports.textOut = function(options) {
+exports.textOut = function(options, first, last) {
   let word = this.text
   let before = this.pre
   let after = this.post
+
   if (options.normal === true) {
     word = this.clean
     before = ''
@@ -23,6 +24,12 @@ exports.textOut = function(options) {
       after = '...' + after
     }
   }
+  if (first === true) {
+    before = ''
+  }
+  if (last === true) {
+    after = ''
+  }
   return before + word + after
 }
 
@@ -35,7 +42,7 @@ exports.json = function(options) {
   if (options.clean) {
     result.clean = this.clean
   }
-  if (options.implicit && this.implicit !== undefined) {
+  if (options.implicit && this.implicit !== null) {
     result.implicit = this.implicit
   }
   if (options.tags) {

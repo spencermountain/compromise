@@ -2,20 +2,12 @@ var nlp = require('./src/index')
 // nlp.verbose(true)
 // nlp.extend(require('./plugins/verbs/src'))
 
-// let doc = nlp(`i am so, much better and faster`)
-
-// doc.match('(rich|!@hasComma)').debug()
-
-let doc = nlp(`Didn't he?`)
-
-// console.log(doc.json({ terms: { text: true, clean: true } })[0])
+let doc = nlp('the dog sat').insertAfter('patiently')
 doc.debug()
-// doc.contractions().expand()
+console.log(doc.out() + '|')
 
-// console.log(JSON.stringify(doc.json(), null, 2))
-// doc.normalize({ contractions: true })
-
-console.log('|' + doc.text() + '|')
+// let m = doc.match('scissors')
+// console.log(m.text())
 
 /* 
  'text' -

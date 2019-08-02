@@ -2,7 +2,12 @@ const tokenize = require('../../01-tokenizer')
 
 /** add these new terms to the front*/
 exports.prepend = function(str) {
+  //build it
   let phrase = tokenize.fromText(str, this.world, this.pool())[0] //assume it's one sentence, for now
+  //tag it
+  let tmpDoc = this.buildFrom([phrase])
+  tmpDoc.tagger()
+  //add it in
   this.list.forEach(p => {
     p.prepend(phrase, this)
   })
@@ -12,14 +17,19 @@ exports.insertBefore = exports.prepend
 
 /** add these new terms to the end*/
 exports.append = function(str) {
-  this.unfreeze()
+  //build it
   let phrase = tokenize.fromText(str, this.world, this.pool())[0] //assume it's one sentence, for now
+  //tag it
+  let tmpDoc = this.buildFrom([phrase])
+  tmpDoc.tagger()
+  //add it in
   this.list.forEach(p => {
     p.append(phrase, this)
   })
   return this
 }
 exports.insertAfter = exports.append
+exports.insertAt = exports.append
 
 /** add these new things to the end*/
 exports.concat = function() {

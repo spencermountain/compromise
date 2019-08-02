@@ -1,5 +1,5 @@
 const debug = require('./_debug')
-const jsonDefaults = { text: true, terms: { text: true, tags: true, whitespace: true, implicit: true } }
+const jsonDefaults = { text: true, trim: true, terms: { text: true, tags: true, whitespace: true, implicit: true } }
 
 /** return the document as text */
 exports.text = function(options = {}) {
@@ -13,7 +13,9 @@ exports.text = function(options = {}) {
     }
     options = {}
   }
-  return this.list.reduce((str, p) => str + p.text(options), '')
+  return this.list.reduce((str, p) => {
+    return str + p.text(options)
+  }, '')
 }
 
 /** pull out desired metadata from the document */
@@ -23,7 +25,9 @@ exports.json = function(options = {}) {
     return this.list[options].json(jsonDefaults)
   }
   options = Object.assign({}, jsonDefaults, options)
-  return this.list.map(p => p.json(options))
+  return this.list.map(p => {
+    return p.json(options)
+  })
 }
 
 /** pretty-print the current document and its tags */
@@ -46,11 +50,25 @@ exports.out = function(method) {
   if (method === 'array') {
     return this.json({ text: true, terms: false }).map(obj => obj.text)
   }
+  if (method === 'terms') {
+    let list = []
+    this.json({ text: false, terms: { text: true } }).forEach(obj => {
+      let terms = obj.terms.map(t => t.text)
+      terms = terms.filter(t => t)
+      list = list.concat(terms)
+    })
+    return list
+  }
   if (method === 'debug') {
     debug(this)
     return this
   }
   return this.text()
+}
+
+/** normalized text -  out('normal') */
+exports.normal = function() {
+  return this.out('normal')
 }
 
 //aliases

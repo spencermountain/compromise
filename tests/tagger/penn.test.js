@@ -42,17 +42,19 @@ test('pennTreebank-test:', function(t) {
 
     let doc = nlp(sentence.text)
     t.equal(doc.length, 1, 'one sentence #' + index)
-    let terms = doc.json()[0]
+    let terms = doc.json(0).terms
     t.equal(terms.length, sentence.tags.length, 'tokenize#' + index)
 
     for (var i = 0; i < sentence.tags.length; i++) {
       var want = softMapping[sentence.tags[i]]
+      if (!terms[i]) {
+        t.ok(false, sentence.text)
+      }
       let found = terms[i].tags.some(tag => tag === want)
       let msg = `'` + sentence.text.substr(0, 20) + `'..   -  `
       msg += `'${terms[i].text}' missing #${want}`
       t.equal(found, true, msg)
     }
-    // t.ok(equal, msg + ' - "' + sentence.text + '"')
   })
   t.end()
 })

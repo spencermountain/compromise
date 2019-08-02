@@ -117,12 +117,11 @@ test('pos-basic-tag:', function(t) {
     ['spring 1980', ['Date', 'Year']],
     ['summer of 1999', ['Date', 'Date', 'Year']],
   ].forEach(function(a) {
-    var termList = nlp(a[0])
-      .terms()
-      .json()
-    termList[0].forEach((term, i) => {
+    var terms = nlp(a[0]).json(0).terms
+    terms.forEach((term, i) => {
       let tag = a[1][i]
-      t.equal(term.tags.some(tg => tg === tag), true, term.text + ' ' + tag)
+      let found = term.tags.some(tg => tg === tag)
+      t.equal(found, true, term.text + ' ' + tag)
     })
   })
   t.end()

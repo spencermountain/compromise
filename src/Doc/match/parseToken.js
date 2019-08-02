@@ -1,6 +1,6 @@
 /* break-down a match expression into this:
 {
-  normal:'',
+  clean:'',
   tag:'',
   regex:'',
 
@@ -108,7 +108,7 @@ const token = function(w) {
   }
   if (w) {
     //somehow handle encoded-chars?
-    obj.normal = w.toLowerCase()
+    obj.word = w.toLowerCase()
   }
   return obj
 }

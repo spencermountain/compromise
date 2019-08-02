@@ -9,13 +9,13 @@ const doesMatch = function(t, reg) {
     return true
   }
   //support a text match
-  if (reg.normal !== undefined) {
+  if (reg.word !== undefined) {
     //match contractions
-    if (t.implicit !== null && t.text === reg.normal) {
+    if (t.implicit !== null && t.text === reg.word) {
       return true
     }
     //match either .clean or .text
-    return reg.normal === t.clean || reg.normal === t.text
+    return reg.word === t.clean || reg.word === t.text
   }
   //support #Tag
   if (reg.tag !== undefined) {

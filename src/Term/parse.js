@@ -28,7 +28,7 @@ const parseTerm = str => {
   }
   return {
     text: str,
-    normal: clean(str),
+    clean: clean(str),
     pre: pre,
     post: post,
   }

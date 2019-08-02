@@ -32,7 +32,7 @@ const byArray = function(arr) {
     {
       choices: arr.map(s => {
         return {
-          normal: s,
+          word: s,
         }
       }),
     },

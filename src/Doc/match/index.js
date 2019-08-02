@@ -1,15 +1,10 @@
 const parseSyntax = require('./syntax')
-const doMatch = require('./cacheLookup')
 
 /** return a new Doc, with this one as a parent */
 exports.match = function(reg) {
   //parse-up the input expression
   let regs = parseSyntax(reg)
   if (regs.length === 0) {
-    return this.buildFrom([])
-  }
-  //try to fail-fast from a cache-lookup
-  if (doMatch(this, regs) === false) {
     return this.buildFrom([])
   }
   //try expression on each phrase
@@ -37,10 +32,6 @@ exports.not = function(reg) {
 /** return only the first match */
 exports.matchOne = function(reg) {
   let regs = parseSyntax(reg)
-  //try to fail-fast from a cache-lookup
-  if (doMatch(this, regs) === false) {
-    return this.buildFrom([])
-  }
   for (let i = 0; i < this.list.length; i++) {
     let match = this.list[i].match(regs)
     return this.buildFrom(match)
@@ -143,20 +134,12 @@ exports.splitBefore = function(reg) {
 /**Return a boolean if this match exists */
 exports.has = function(reg) {
   let regs = parseSyntax(reg)
-  //try to fail-fast from a cache-lookup
-  if (doMatch(this, regs) === false) {
-    return false
-  }
   return this.list.some(p => p.has(regs) === true)
 }
 
 /** return each current phrase, only if it contains this match */
 exports.if = function(reg) {
   let regs = parseSyntax(reg)
-  //try to fail-fast from a cache-lookup
-  if (doMatch(this, regs) === false) {
-    return this.buildFrom([])
-  }
   let found = this.list.filter(p => p.match(regs).length > 0)
   return this.buildFrom(found)
 }

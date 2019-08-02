@@ -46,6 +46,17 @@ improved handling of slashed terms - like `he is/was fun.`
 * adds `.matchOne()`
 * adds `.freeze()`
 
+* adds `@function` syntax to match queries:
+* *  hasComma
+* *  hasPeriod
+* *  hasExclamation
+* *  hasQuestionMark
+* *  hasElipses
+* *  hasSemicolon
+* *  isAcronym
+* *  isKnown
+
+---
 
 jsdoc output:
 `jsdoc src/** -t templates/haruki -d console`

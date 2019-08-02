@@ -39,7 +39,9 @@ const contractions = function(doc) {
       if (found !== null) {
         let newPhrase = createPhrase(found, doc)
         //set text as contraction
-        newPhrase.terms(0).text = term.text
+        let firstTerm = newPhrase.terms(0)
+        firstTerm.text = term.text
+        // firstTerm.tag('Contraction')
         //grab sub-phrase to remove
         let match = p.buildFrom(term.id, 1, doc.pool())
         match.replace(newPhrase, doc)

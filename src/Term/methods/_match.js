@@ -21,6 +21,13 @@ const doesMatch = function(t, reg) {
   if (reg.tag !== undefined) {
     return t.tags[reg.tag] === true
   }
+  //support @method
+  if (reg.method !== undefined) {
+    if (typeof t[reg.method] === 'function' && t[reg.method]() === true) {
+      return true
+    }
+    return false
+  }
   //support /reg/
   if (reg.regex !== undefined) {
     return reg.regex.test(t.clean)

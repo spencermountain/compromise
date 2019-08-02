@@ -60,14 +60,11 @@ const checkPossessive = function(term, phrase, world) {
   //the rest of 's
   let found = term.text.match(hasApostropheS)
   if (found !== null) {
-    console.log(term.clean)
-
     //spencer's thing vs spencer-is
     if (isPossessive(term, phrase.pool) === true) {
       term.tag('#Possessive', 'isPossessive', world)
       return null
     }
-    console.log('  +', term.clean)
     //'spencer is'
     if (found !== null) {
       if (isHas(term, phrase)) {

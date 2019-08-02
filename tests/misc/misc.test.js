@@ -60,3 +60,17 @@ test('match contractions/possessives', function(t) {
   t.equal(doc.has(`it'll`), false, 'not false-positive-2')
   t.end()
 })
+
+test('match @functions', function(t) {
+  let doc = nlp(`jamie's much, much better.`)
+
+  let m = doc.match('@hasComma')
+  t.test(m.text(), 'much', 'hasComma')
+
+  m = doc.match('(@hasPeriod|cool)')
+  t.test(m.text(), 'better', 'hasPeriod')
+
+  m = doc.match('(@hasSemicolon|better)')
+  t.test(m.text(), 'better', 'false-positive')
+  t.end()
+})

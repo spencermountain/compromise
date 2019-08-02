@@ -95,6 +95,11 @@ const token = function(w) {
     obj.tag = stripStart(w)
     return obj
   }
+  //dynamic function on a term object
+  if (start(w) === '@') {
+    obj.method = stripStart(w)
+    return obj
+  }
   if (w === '.') {
     obj.anything = true
     return obj

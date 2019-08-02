@@ -1,10 +1,15 @@
 var nlp = require('./src/index')
-nlp.verbose(true)
-nlp.extend(require('./plugins/verbs/src'))
+// nlp.verbose(true)
+// nlp.extend(require('./plugins/verbs/src'))
 
-let doc = nlp(`jamie's much better`)
+let doc = nlp(`jamie's much, better`)
 
-doc.debug()
+doc.match('(@hasComma|cool)').debug()
+
+// doc
+//   .contractions()
+//   .expand()
+//   .debug()
 
 // console.log(JSON.stringify(doc.json(), null, 2))
 // doc.normalize({ contractions: true })

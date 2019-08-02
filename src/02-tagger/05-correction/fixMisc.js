@@ -15,6 +15,11 @@ const miscCorrection = function(doc) {
   doc.match('[about to] #Adverb? #Verb').tag(['Auxiliary', 'Verb'], 'about-to')
   //right of way
   doc.match('(right|rights) of .').tag('Noun', 'right-of')
+  // a bit
+  doc.match('[much] #Adjective').tag('Adverb')
+  doc.match('a [bit]').tag('Noun')
+  doc.match('a bit much').tag('Determiner Adverb Adjective')
+  doc.match('too much').tag('Adverb Adjective')
   // u r cool
   doc.match('u r').tag('Pronoun #Copula')
   //swear-words as non-expression POS

@@ -2,7 +2,7 @@ var nlp = require('./src/index')
 nlp.verbose(true)
 nlp.extend(require('./plugins/verbs/src'))
 
-let doc = nlp(`jamie's bite`)
+let doc = nlp(`jamie's much better`)
 
 doc.debug()
 

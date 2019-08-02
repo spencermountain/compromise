@@ -11,7 +11,7 @@ const checkPunctuation = function(terms, i, world) {
 
   //an end-tick (trailing apostrophe) - flanders', or Carlos'
   if (apostrophes.test(term.post) && !apostrophes.test(term.pre)) {
-    let endChar = term.normal[term.normal.length - 1]
+    let endChar = term.clean[term.clean.length - 1]
     //flanders'
     if (endChar === 's') {
       term.tag(['Possessive', 'Noun'], 'end-tick', world)

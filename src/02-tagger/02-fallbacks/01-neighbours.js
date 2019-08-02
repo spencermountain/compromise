@@ -14,9 +14,9 @@ const checkNeighbours = function(terms, world) {
     let lastTerm = terms[i - 1]
     if (lastTerm) {
       // 'foobar term'
-      if (markov.afterThisWord.hasOwnProperty(lastTerm.normal) === true) {
-        let tag = markov.afterThisWord[lastTerm.normal]
-        term.tag(tag, 'after-' + lastTerm.normal, world)
+      if (markov.afterThisWord.hasOwnProperty(lastTerm.clean) === true) {
+        let tag = markov.afterThisWord[lastTerm.clean]
+        term.tag(tag, 'after-' + lastTerm.clean, world)
         continue
       }
       // 'Tag term'
@@ -33,9 +33,9 @@ const checkNeighbours = function(terms, world) {
     let nextTerm = terms[i + 1]
     if (nextTerm) {
       // 'term foobar'
-      if (markov.beforeThisWord.hasOwnProperty(nextTerm.normal) === true) {
-        let tag = markov.beforeThisWord[nextTerm.normal]
-        term.tag(tag, 'before-' + nextTerm.normal, world)
+      if (markov.beforeThisWord.hasOwnProperty(nextTerm.clean) === true) {
+        let tag = markov.beforeThisWord[nextTerm.clean]
+        term.tag(tag, 'before-' + nextTerm.clean, world)
         continue
       }
       // 'term Tag'

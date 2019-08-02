@@ -2,8 +2,8 @@ const hasPerfect = /[a-z\u00C0-\u00FF]'d$/
 
 /** split `i'd` into 'i had', or 'i would' */
 const checkPerfect = function(term, phrase) {
-  if (hasPerfect.test(term.normal)) {
-    let root = term.normal.replace(/'d$/, '')
+  if (hasPerfect.test(term.clean)) {
+    let root = term.clean.replace(/'d$/, '')
     //look at the next few words
     let terms = phrase.terms()
     let index = terms.indexOf(term)

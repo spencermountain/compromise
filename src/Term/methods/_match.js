@@ -14,7 +14,8 @@ const doesMatch = function(t, reg) {
     if (t.implicit !== null && t.text === reg.normal) {
       return true
     }
-    return reg.normal === t.normal
+    //match either .clean or .text
+    return reg.normal === t.clean || reg.normal === t.text
   }
   //support #Tag
   if (reg.tag !== undefined) {
@@ -22,7 +23,7 @@ const doesMatch = function(t, reg) {
   }
   //support /reg/
   if (reg.regex !== undefined) {
-    return reg.regex.test(t.normal)
+    return reg.regex.test(t.clean)
   }
   //support (one}two)
   if (reg.choices !== undefined) {

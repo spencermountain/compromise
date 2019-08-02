@@ -8,7 +8,7 @@ exports.freeze = function() {
   // let terms = this.termList()
   // for (let i = 0; i < terms.length; i++) {
   //   //cache word
-  //   cache.words[terms[i].normal] = true
+  //   cache.words[terms[i].clean] = true
   //   //cache tags
   //   Object.assign(cache.tags, terms[i].tags)
   // }

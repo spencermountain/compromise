@@ -47,12 +47,12 @@ const doAint = function(term, phrase) {
 //
 const checkIrregulars = function(term, phrase) {
   //this word needs it's own logic:
-  if (term.normal === `ain't` || term.normal === 'aint') {
+  if (term.clean === `ain't` || term.clean === 'aint') {
     return doAint(term, phrase)
   }
   //check white-list
-  if (irregulars.hasOwnProperty(term.normal)) {
-    return irregulars[term.normal]
+  if (irregulars.hasOwnProperty(term.clean)) {
+    return irregulars[term.clean]
   }
   return null
 }

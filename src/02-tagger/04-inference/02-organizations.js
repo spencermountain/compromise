@@ -21,7 +21,7 @@ const tagOrgs = function(doc, termArr) {
   termArr.forEach(terms => {
     for (let i = 0; i < terms.length; i += 1) {
       let t = terms[i]
-      if (orgWords[t.normal] !== undefined && orgWords.hasOwnProperty(t.normal) === true) {
+      if (orgWords[t.clean] !== undefined && orgWords.hasOwnProperty(t.clean) === true) {
         // look-backward - eg. 'Toronto University'
         let lastTerm = terms[i - 1]
         if (lastTerm !== undefined && maybeOrg(lastTerm) === true) {
@@ -31,7 +31,7 @@ const tagOrgs = function(doc, termArr) {
         }
         //look-forward - eg. University of Toronto
         let nextTerm = terms[i + 1]
-        if (nextTerm !== undefined && nextTerm.normal === 'of') {
+        if (nextTerm !== undefined && nextTerm.clean === 'of') {
           if (terms[i + 2] && maybeOrg(terms[i + 2])) {
             t.tag('Organization', 'org-of-word-1', doc.world)
             nextTerm.tag('Organization', 'org-of-word-2', doc.world)

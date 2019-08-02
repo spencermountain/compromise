@@ -14,12 +14,12 @@ const irregulars = {
 
 const checkNegative = function(term) {
   //check named-ones
-  if (irregulars.hasOwnProperty(term.normal) === true) {
-    return irregulars[term.normal]
+  if (irregulars.hasOwnProperty(term.clean) === true) {
+    return irregulars[term.clean]
   }
   //try it normally
-  if (hasNegative.test(term.normal) === true) {
-    let main = term.normal.replace(hasNegative, '')
+  if (hasNegative.test(term.clean) === true) {
+    let main = term.clean.replace(hasNegative, '')
     return [main, 'not']
   }
   return null

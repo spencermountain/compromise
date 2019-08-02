@@ -65,7 +65,7 @@ const addMethod = function(Doc) {
     // match.list.forEach(ts => {
     //   ts.terms.forEach(t => {
     //     if (t.whitespace.before.match('/')) {
-    //       match.splitOn(t.normal)
+    //       match.splitOn(t.clean)
     //     }
     //   })
     // })

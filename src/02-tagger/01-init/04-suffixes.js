@@ -2,7 +2,7 @@ const regexes = require('./suffixes/regex')
 const suffixList = require('./suffixes/suffixList')
 
 const suffixRegexes = function(term, world) {
-  let str = term.normal
+  let str = term.clean
   let char = str[str.length - 1]
   if (regexes.hasOwnProperty(char) === true) {
     let regs = regexes[char]
@@ -17,13 +17,13 @@ const suffixRegexes = function(term, world) {
 
 //sweep-through all suffixes
 const knownSuffixes = function(term, world) {
-  const len = term.normal.length
+  const len = term.clean.length
   let max = 7
   if (len <= max) {
     max = len - 1
   }
   for (let i = max; i > 1; i -= 1) {
-    let str = term.normal.substr(len - i, len)
+    let str = term.clean.substr(len - i, len)
     if (suffixList[str.length].hasOwnProperty(str) === true) {
       let tag = suffixList[str.length][str]
       term.tagSafe(tag, 'suffix -' + str, world)

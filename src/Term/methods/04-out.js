@@ -4,7 +4,7 @@ exports.textOut = function(options) {
   let before = this.pre
   let after = this.post
   if (options.normal === true) {
-    word = this.normal
+    word = this.clean
     before = ''
     after = ' '
     if (options.last === true) {

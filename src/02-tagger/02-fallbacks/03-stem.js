@@ -10,9 +10,9 @@ const checkPrefix = function(terms, world) {
       return
     }
     //does it start with 'un|re'
-    if (hasPrefix.test(term.normal) === true) {
+    if (hasPrefix.test(term.clean) === true) {
       // look for the root word in the lexicon:
-      let stem = term.normal.replace(prefix, '')
+      let stem = term.clean.replace(prefix, '')
       if (lex[stem] !== undefined && lex.hasOwnProperty(stem) === true) {
         term.tag(lex[stem], 'stem-' + stem, world)
       }

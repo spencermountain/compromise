@@ -1,4 +1,4 @@
-//these are regexes applied to t.text, instead of t.normal
+//these are regexes applied to t.text, instead of t.clean
 // order matters.
 module.exports = [
   //phone numbers

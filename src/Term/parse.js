@@ -1,4 +1,4 @@
-const normalize = require('./clean')
+const clean = require('./clean')
 // basically, tokenize for terms.
 
 //all punctuation marks, from https://en.wikipedia.org/wiki/Punctuation
@@ -28,7 +28,7 @@ const parseTerm = str => {
   }
   return {
     text: str,
-    normal: normalize(str),
+    normal: clean(str),
     pre: pre,
     post: post,
   }

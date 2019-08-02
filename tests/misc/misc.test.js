@@ -48,3 +48,15 @@ test('normalize parentheses', function(t) {
   t.equal(doc.text(), ` it's   coöl, i think .    He is   cool;  i said .`, 'normalize-parentheses')
   t.end()
 })
+
+// -------------
+
+test('match contractions/possessives', function(t) {
+  let doc = nlp(`i think it's spencer's`)
+  t.equal(doc.has('it'), true, 'has it')
+  t.equal(doc.has('spencer'), true, 'has spencer')
+  t.equal(doc.has(`spencer's`), true, "has spencer's")
+  t.equal(doc.has(`i'm`), false, 'not false-positive')
+  t.equal(doc.has(`it'll`), false, 'not false-positive-2')
+  t.end()
+})

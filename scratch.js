@@ -2,10 +2,12 @@ var nlp = require('./src/index')
 // nlp.verbose(true)
 nlp.extend(require('./plugins/verbs/src'))
 
-let doc = nlp(`i think it's cool`)
+let doc = nlp(`i think it's spencer's`)
+
+doc.debug()
 
 // console.log(JSON.stringify(doc.json(), null, 2))
-doc.normalize({ contractions: true })
+// doc.normalize({ contractions: true })
 
 console.log('|' + doc.text() + '|')
 

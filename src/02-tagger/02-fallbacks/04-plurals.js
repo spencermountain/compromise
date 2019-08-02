@@ -7,7 +7,7 @@ const notSingular = [/i$/, /ae$/, /men$/, /tia$/]
 /** turn nouns into singular/plural */
 const checkPlural = function(t, world) {
   if (t.tags.Noun) {
-    let str = t.normal
+    let str = t.clean
     //skip existing tags, fast
     if (t.tags.Singular || t.tags.Plural) {
       return

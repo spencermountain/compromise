@@ -43,6 +43,9 @@ const clean = function(str) {
     str = str.replace(/['",\.!:;\?\)]+$/g, '')
     str = str.replace(/^['"\(]+/g, '')
   }
+  //remove possessives
+  str = str.replace(/['’]s$/, '')
+
   //do this again..
   str = str.trim()
   //oh shucks,

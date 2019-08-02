@@ -106,4 +106,10 @@ module.exports = [
   'courier',
   'frontier',
   'pier',
+
+  //..tive
+  'detective',
+  'executive',
+  'prerogative',
+  'objective',
 ]

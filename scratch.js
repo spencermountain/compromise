@@ -1,10 +1,10 @@
 var nlp = require('./src/index')
-// nlp.verbose(true)
+nlp.verbose(true)
 nlp.extend(require('./plugins/verbs/src'))
 
-let doc = nlp(`i think it's spencer's`)
+let doc = nlp(`spencer's formative years`)
 
-doc.match('it').debug()
+doc.debug()
 
 // console.log(JSON.stringify(doc.json(), null, 2))
 // doc.normalize({ contractions: true })

@@ -4,7 +4,11 @@ const blacklist = {
   that: true,
   there: true,
 }
-const isPossessive = (term, nextTerm) => {
+const isPossessive = (term, pool) => {
+  // if we already know it
+  if (term.tags.Possessive) {
+    return true
+  }
   //a pronoun can't be possessive - "he's house"
   if (term.tags.Pronoun || term.tags.QuestionWord) {
     return false
@@ -13,6 +17,7 @@ const isPossessive = (term, nextTerm) => {
     return false
   }
   //if end of sentence, it is possessive - "was spencer's"
+  let nextTerm = pool.get(term.next)
   if (!nextTerm) {
     return true
   }
@@ -48,11 +53,10 @@ const checkPossessive = function(term, phrase, world) {
   //the rest of 's
   let found = term.text.match(hasApostropheS)
   if (found !== null) {
-    let nextTerm = phrase.pool.get(term.next)
     console.log(term.clean)
 
     //spencer's thing vs spencer-is
-    if (term.tags.Possessive || isPossessive(term, nextTerm) === true) {
+    if (isPossessive(term, phrase.pool) === true) {
       term.tag('#Possessive', 'isPossessive', world)
       return null
     }

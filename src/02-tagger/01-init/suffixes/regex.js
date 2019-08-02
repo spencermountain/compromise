@@ -40,7 +40,7 @@ module.exports = {
     [/.[aeiou]te$/, Inf],
     [/.[^aeiou][ai]ble$/, Adj],
     [/.[^aeiou]eable$/, Adj],
-    [/.[^aeiou]ive$/, Adj],
+    [/.[ts]ive$/, Adj],
   ],
   h: [
     [/.[^aeiouf]ish$/, Adj],
@@ -54,12 +54,7 @@ module.exports = {
   k: [
     [/^(k)+$/, Exp], //kkkk
   ],
-  l: [
-    [/.[gl]ial$/, Adj],
-    [/.[^aeiou]ful$/, Adj],
-    [/.[nrtumcd]al$/, Adj],
-    [/.[^aeiou][ei]al$/, Adj],
-  ],
+  l: [[/.[gl]ial$/, Adj], [/.[^aeiou]ful$/, Adj], [/.[nrtumcd]al$/, Adj], [/.[^aeiou][ei]al$/, Adj]],
   m: [
     [/.[^aeiou]ium$/, Sing],
     [/[^aeiou]ism$/, Sing],
@@ -72,18 +67,8 @@ module.exports = {
     [/^(yo)+$/, Exp], //yoyo
     [/^woo+[pt]?$/, Exp], //woo
   ],
-  r: [
-    [/.[ilk]er$/, 'Comparative'],
-    [/[aeiou][pns]er$/, Sing],
-    [/[^i]fer$/, Inf],
-    [/.[^aeiou][ao]pher$/, Actor],
-  ],
-  t: [
-    [/.[di]est$/, 'Superlative'],
-    [/.[icldtgrv]ent$/, Adj],
-    [/[aeiou].*ist$/, Adj],
-    [/^[a-z]et$/, Verb],
-  ],
+  r: [[/.[ilk]er$/, 'Comparative'], [/[aeiou][pns]er$/, Sing], [/[^i]fer$/, Inf], [/.[^aeiou][ao]pher$/, Actor]],
+  t: [[/.[di]est$/, 'Superlative'], [/.[icldtgrv]ent$/, Adj], [/[aeiou].*ist$/, Adj], [/^[a-z]et$/, Verb]],
   s: [
     [/.[rln]ates$/, Pres],
     [/.[^z]ens$/, Verb],

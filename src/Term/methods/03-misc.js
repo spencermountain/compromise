@@ -1,4 +1,4 @@
-const doesMatch = require('./_match')
+const doesMatch = require('./_doesMatch')
 const isAcronym = require('../clean/isAcronym')
 
 // these tags aren't juicy-enough

@@ -2,9 +2,10 @@ var nlp = require('./src/index')
 // nlp.verbose(true)
 // nlp.extend(require('./plugins/verbs/src'))
 
-let doc = nlp(`jamie's much, better`)
+let doc = nlp(`i am much, much better and faster`)
 
-doc.match('(@hasComma|cool)').debug()
+doc = doc.match('and !faster')
+doc.debug()
 
 // doc
 //   .contractions()

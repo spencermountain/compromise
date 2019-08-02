@@ -40,4 +40,14 @@ const doesMatch = function(t, reg) {
   }
   return false
 }
-module.exports = doesMatch
+
+// wrap for !negative match logic
+const wrapMatch = function(t, reg) {
+  let result = doesMatch(t, reg)
+  if (reg.negative === true) {
+    return !result
+  }
+  return result
+}
+
+module.exports = wrapMatch

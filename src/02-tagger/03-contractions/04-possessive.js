@@ -23,6 +23,10 @@ const isPossessive = (term, pool) => {
   }
   //a gerund suggests 'is walking'
   if (nextTerm.tags.Verb) {
+    //fix 'jamie's bite'
+    if (nextTerm.tags.Infinitive) {
+      return true
+    }
     return false
   }
 
@@ -30,12 +34,15 @@ const isPossessive = (term, pool) => {
   if (nextTerm.tags.Noun) {
     return true
   }
-  //an adjective suggests 'is good'
+  //rocket's red glare
+  let twoTerm = pool.get(nextTerm.next)
+  if (twoTerm && twoTerm.tags.Noun) {
+    return true
+  }
+  //othwerwise, an adjective suggests 'is good'
   if (nextTerm.tags.Adjective || nextTerm.tags.Adverb || nextTerm.tags.Verb) {
     return false
   }
-  // fix for 'jamie's bite'
-  // rocket's red glare
   return false
 }
 

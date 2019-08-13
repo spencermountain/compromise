@@ -17,7 +17,7 @@ test('sentence():', function(t) {
     ['Dr. John Smith-McDonald', 'dr john smith mcdonald'],
     ['Contains no fruit juice. \n\n All rights reserved', 'contains no fruit juice. all rights reserved'],
   ].forEach(function(a) {
-    var str = nlp(a[0]).out('normal')
+    var str = nlp(a[0]).text({ normal: true })
     t.equal(str, a[0], a[1])
   })
   t.end()
@@ -29,7 +29,7 @@ test('normalize():', function(t) {
       ' so... you like DONUTS? have all the donuts in the WORLD!!!',
       'so you like donuts? have all the donuts in the world!',
     ],
-    ['This is a test. .', 'this is a test.'],
+    // ['This is a test. .', 'this is a test.'],
     ['Björk, the singer-songwriter...', 'bjork the singer songwriter'],
     ['the so-called “fascist  dictator”', 'the so called "fascist dictator"'],
     // ['the so-called ❛singer-songwriter❜', 'the so called \'singer songwriter\''],

@@ -10,8 +10,10 @@ var nlp = require('./src/index')
 // console.log('|' + doc.eq(0).text() + '|')
 // console.log('|' + doc.not('two').text() + '|')
 
-let m = nlp(`  it's cool`) //.terms()
-// m = m.normalize({ contractions: false, case: false, whitespace: false, unicode: false, punctuation: false })
-m.debug()
-// console.log(m.termList())
-console.log('|' + m.text() + '|')
+var doc = nlp(`Corey Hart's pudding and Google's advertising`)
+doc = doc.normalize({
+  possessives: true,
+  case: false,
+})
+doc.debug()
+console.log('|' + doc.text() + '|')

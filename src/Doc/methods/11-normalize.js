@@ -13,6 +13,7 @@ const killUnicode = require('../../Term/clean/unicode')
   emoji: false,
   parentheses: false,
   quotations: false,
+  possessives: false,
 
   verbs: false,
   nouns: false,
@@ -59,6 +60,10 @@ exports.normalize = function(options = {}) {
   // `isn't` -> 'is not'
   if (options.contraction || options.contractions) {
     this.contractions().expand()
+  }
+  // `cory hart's -> cory hart'
+  if (options.possessive || options.possessives) {
+    this.possessives().strip()
   }
   // remove "" punctuation
   if (options.quotations || options.quotes) {

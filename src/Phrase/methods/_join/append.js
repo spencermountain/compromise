@@ -1,5 +1,8 @@
 //add whitespace to the start of the second bit
 const addWhitespace = function(beforeTerms, newTerms) {
+  // add any existing pre-whitespace to beginning
+  newTerms[0].pre = beforeTerms[0].pre
+
   //add any existing end-whitespace to end of our new terms
   let newTerm = newTerms[newTerms.length - 1]
   newTerm.post = beforeTerms[beforeTerms.length - 1].post

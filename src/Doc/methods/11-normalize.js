@@ -23,7 +23,6 @@ const defaults = {}
 exports.normalize = function(options = {}) {
   options = Object.assign({}, defaults, options)
   let termArr = this.list.map(ts => ts.terms())
-
   //whitespace
   if (options.whitespace) {
     termArr.forEach((terms, o) => {

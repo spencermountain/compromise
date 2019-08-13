@@ -10,8 +10,9 @@ exports.text = function(options = {}) {
         whitespace: true,
         unicode: true,
       }
+    } else {
+      options = {}
     }
-    options = {}
   }
   //are we showing every phrase?
   let showFull = false
@@ -75,7 +76,7 @@ exports.out = function(method) {
 
 /** normalized text -  out('normal') */
 exports.normal = function() {
-  return this.out('normal')
+  return this.text('normal')
 }
 
 //aliases

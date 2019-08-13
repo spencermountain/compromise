@@ -16,7 +16,7 @@ const checkRegex = function(term, world) {
   // do some more!
   //roman numberals - XVII
   if (term.text.length >= 2 && romanNumeral.test(str) && romanNumValid.test(str)) {
-    term.tagSafe('RomanNumeral', 'xvii', world)
+    term.tag('RomanNumeral', 'xvii', world)
   }
 }
 module.exports = checkRegex

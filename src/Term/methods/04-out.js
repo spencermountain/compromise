@@ -4,13 +4,17 @@ exports.textOut = function(options, showPre, showPost) {
   let before = this.pre
   let after = this.post
 
-  if (options.normal === true) {
+  if (options.unicode === true) {
     word = this.clean
+  }
+  if (options.whitespace === true) {
     before = ''
     after = ' '
-    if (options.last === true) {
+    if (options.last) {
       after = ''
     }
+  }
+  if (options.punctuation === true) {
     //normalized end punctuation
     if (this.hasPeriod() === true) {
       after = '.' + after

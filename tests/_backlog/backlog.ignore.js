@@ -106,3 +106,11 @@ test('replace-capture-group', function(t) {
 //   })
 //   t.end()
 // })
+
+// test('normalize quotes ', function(t) {
+//   var str = `،one’ «two» ‘three’ “four” 'five' "six."`
+//   var doc = nlp(str)
+//   t.equal(doc.text(), str, 'text out-3')
+//   t.equal(doc.text(), 'one two three four five six.', 'normal out-3')
+//   t.end()
+// })

@@ -14,7 +14,7 @@ const doesMatch = function(t, reg) {
   //support a text match
   if (reg.word !== undefined) {
     //match contractions
-    if (t.implicit !== null && t.text === reg.word) {
+    if (t.implicit !== null && t.implicit === reg.word) {
       return true
     }
     //match either .clean or .text

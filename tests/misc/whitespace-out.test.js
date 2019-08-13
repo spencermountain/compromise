@@ -8,7 +8,7 @@ test('whitespace-out', function(t) {
   t.equal(doc.out(), str, 'original-okay') // ✅
 
   // some phrases, but full-phrases
-  // t.equal(doc.eq(0).text(), 'one, two three.', '.eq(0) okay') // ❌
+  t.equal(doc.eq(0).text(), 'one, two three.', '.eq(0) okay') // ✅
   t.equal(doc.eq(1).text(), 'One, two, four?', '.eq(1) okay') // ✅
 
   t.equal(doc.match('four').text(), 'four', 'one match') // ✅

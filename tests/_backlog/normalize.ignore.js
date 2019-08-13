@@ -1,9 +1,8 @@
-var test = require('tape');
+var test = require('tape')
 var nlp = require('../_lib')
-var str_test = require('../lib/fns').str_test;
 
 test('sentence():', function(t) {
-  [
+  ;[
     ['he is good', 'he is good'],
     ['Jack and Jill went up the hill.', 'jack and jill went up the hill.'],
     ['Mr. Clinton did so.', 'mr clinton did so.'],
@@ -16,17 +15,20 @@ test('sentence():', function(t) {
     ['four', 'four'],
     ['john smith', 'john smith'],
     ['Dr. John Smith-McDonald', 'dr john smith mcdonald'],
-    ['Contains no fruit juice. \n\n All rights reserved', 'contains no fruit juice. all rights reserved']
+    ['Contains no fruit juice. \n\n All rights reserved', 'contains no fruit juice. all rights reserved'],
   ].forEach(function(a) {
-    var str = nlp(a[0]).out('normal');
-    str_test(str, a[0], a[1], t);
-  });
-  t.end();
-});
+    var str = nlp(a[0]).out('normal')
+    t.equal(str, a[0], a[1])
+  })
+  t.end()
+})
 
 test('normalize():', function(t) {
-  [
-    [' so... you like DONUTS? have all the donuts in the WORLD!!!', 'so you like donuts? have all the donuts in the world!'],
+  ;[
+    [
+      ' so... you like DONUTS? have all the donuts in the WORLD!!!',
+      'so you like donuts? have all the donuts in the world!',
+    ],
     ['This is a test. .', 'this is a test.'],
     ['Björk, the singer-songwriter...', 'bjork the singer songwriter'],
     ['the so-called “fascist  dictator”', 'the so called "fascist dictator"'],
@@ -34,21 +36,23 @@ test('normalize():', function(t) {
     // ['the so-called ❛group of seven❜', 'the so called \'group of 7\''],
     ['Director of the F.B.I.', 'director of the fbi'],
   ].forEach(function(a) {
-    var str = nlp(a[0]).normalize().out('text');
-    str_test(str, a[0], a[1], t);
-  });
-  t.end();
-});
+    var str = nlp(a[0])
+      .normalize()
+      .out('text')
+    t.equal(str, a[0], a[1])
+  })
+  t.end()
+})
 
 test('possessives', function(t) {
-  var doc = nlp(`Corey Hart's pudding and Google's advertising`);
+  var doc = nlp(`Corey Hart's pudding and Google's advertising`)
   doc = doc.normalize({
     possessives: true,
-    case: false
-  });
-  t.equal(doc.out(), 'Corey Hart pudding and Google advertising', 'normalize possessives');
-  t.end();
-});
+    case: false,
+  })
+  t.equal(doc.out(), 'Corey Hart pudding and Google advertising', 'normalize possessives')
+  t.end()
+})
 
 test('optional params', function(t) {
   var doc = nlp(`John Smith bought automobiles (for us)`).normalize({
@@ -57,49 +61,45 @@ test('optional params', function(t) {
     parentheses: true,
     // plurals: true,
     verbs: true,
-  });
-  t.equal(doc.out(), 'john smith buy automobiles', 'many-on');
-  t.end();
-});
+  })
+  t.equal(doc.out(), 'john smith buy automobiles', 'many-on')
+  t.end()
+})
 
-test.only('optional param - verbs and plurals together', function(t) {
-  var plurals = [
-    ['batmobiles', 'batmobile'],
-  ];
-  var verbs = [
-    ['I was walking', 'i walk'],
-  ];
+test('optional param - verbs and plurals together', function(t) {
+  var plurals = [['batmobiles', 'batmobile']]
+  var verbs = [['I was walking', 'i walk']]
 
   // good
-  plurals.forEach((a) => {
-    var doc = nlp(a[0]);
+  plurals.forEach(a => {
+    var doc = nlp(a[0])
     var pluralsOn = doc.normalize({
       plurals: true,
-    });
-    t.equal(pluralsOn.out(), a[1], a[0]);
-  });
+    })
+    t.equal(pluralsOn.out(), a[1], a[0])
+  })
 
   // good
-  verbs.forEach((a) => {
-    var doc = nlp(a[0]);
+  verbs.forEach(a => {
+    var doc = nlp(a[0])
     var verbsOn = doc.normalize({
       verbs: true,
-    });
-    t.equal(verbsOn.out(), a[1], a[0]);
-  });
+    })
+    t.equal(verbsOn.out(), a[1], a[0])
+  })
 
   // bad
-  plurals.concat(verbs).forEach((a) => {
-    var doc = nlp(a[0]);
+  plurals.concat(verbs).forEach(a => {
+    var doc = nlp(a[0])
     var bothOn = doc.normalize({
       plurals: true,
       verbs: true,
-    });
-    t.equal(bothOn.out(), a[1], a[0]);
-  });
+    })
+    t.equal(bothOn.out(), a[1], a[0])
+  })
 
-  t.end();
-});
+  t.end()
+})
 
 test('honorifics', function(t) {
   var tests = [
@@ -118,44 +118,44 @@ test('honorifics', function(t) {
     ['Second lieutenant Semore Hirthman', 'semore hirthman'],
     ['first lady Michelle obama', 'michelle obama'],
     ['prime minister Stephen Hawking', 'stephen hawking'],
-  //no names
-  // ['first lieutenant', '1st lieutenant'],
-  // ['Sergeant', 'sergeant'],
-  ];
-  tests.forEach((a) => {
-    var doc = nlp(a[0]);
+    //no names
+    // ['first lieutenant', '1st lieutenant'],
+    // ['Sergeant', 'sergeant'],
+  ]
+  tests.forEach(a => {
+    var doc = nlp(a[0])
     doc = doc.normalize({
       honorifics: true,
-      case: true
-    });
-    t.equal(doc.out('normal'), a[1], a[0]);
-  });
-  t.end();
-});
+      case: true,
+    })
+    t.equal(doc.out('normal'), a[1], a[0])
+  })
+  t.end()
+})
 
 test('elipses-whitespace:', function(t) {
-  var doc = nlp('about this ...').normalize();
-  t.equal(doc.out('text'), 'about this', 'normalize seperate elipses');
+  var doc = nlp('about this ...').normalize()
+  t.equal(doc.out('text'), 'about this', 'normalize seperate elipses')
 
-  doc = nlp('about this ...').toLowerCase();
-  t.equal(doc.out('text'), 'about this ...', 'lowercase elipses');
+  doc = nlp('about this ...').toLowerCase()
+  t.equal(doc.out('text'), 'about this ...', 'lowercase elipses')
 
-  doc = nlp('about this...').normalize();
-  t.equal(doc.out('text'), 'about this', 'normalize attatched elipses');
-  t.end();
-});
+  doc = nlp('about this...').normalize()
+  t.equal(doc.out('text'), 'about this', 'normalize attatched elipses')
+  t.end()
+})
 
 test('more-normalize:', function(t) {
-  var doc = nlp(`i saw first lady michelle obama`);
+  var doc = nlp(`i saw first lady michelle obama`)
   doc.normalize({
-    honorifics: true
-  });
-  t.equal(doc.out('text'), 'i saw michelle obama', 'normalize honorifics');
+    honorifics: true,
+  })
+  t.equal(doc.out('text'), 'i saw michelle obama', 'normalize honorifics')
 
-  doc = nlp(`google's tax return`);
+  doc = nlp(`google's tax return`)
   doc.normalize({
-    possessives: true
-  });
-  t.equal(doc.out('text'), 'google tax return', 'normalize possessives');
-  t.end();
-});
+    possessives: true,
+  })
+  t.equal(doc.out('text'), 'google tax return', 'normalize possessives')
+  t.end()
+})

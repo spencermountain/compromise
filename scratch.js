@@ -1,10 +1,8 @@
 var nlp = require('./src/index')
-// nlp.verbose(true)
+nlp.verbose(true)
 // nlp.extend(require('./plugins/verbs/src'))
 
-let doc = nlp('the dog sat').insertAfter('patiently')
-doc.debug()
-console.log(doc.out() + '|')
+let doc = nlp('jack cheered').debug()
 
 // let m = doc.match('scissors')
 // console.log(m.text())

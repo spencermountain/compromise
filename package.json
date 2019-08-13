@@ -5,6 +5,7 @@
   "version": "0.0.0",
   "main": "./builds/compromise.js",
   "unpkg": "./builds/compromise.min.js",
+  "module": "./builds/compromise.mjs",
   "types": "types",
   "repository": {
     "type": "git",

@@ -2,6 +2,7 @@ import commonjs from 'rollup-plugin-commonjs'
 import json from 'rollup-plugin-json'
 import { terser } from 'rollup-plugin-terser'
 import resolve from 'rollup-plugin-node-resolve'
+import babel from 'rollup-plugin-babel'
 
 export default [
   {
@@ -24,7 +25,15 @@ export default [
         name: 'nlp',
       },
     ],
-    plugins: [resolve(), json(), commonjs()],
+    plugins: [
+      resolve(),
+      json(),
+      commonjs(),
+      babel({
+        babelrc: false,
+        presets: ['@babel/preset-env'],
+      }),
+    ],
   },
   {
     input: 'src/index.js',
@@ -35,6 +44,15 @@ export default [
         name: 'nlp',
       },
     ],
-    plugins: [resolve(), json(), commonjs(), terser()],
+    plugins: [
+      resolve(),
+      json(),
+      commonjs(),
+      babel({
+        babelrc: false,
+        presets: ['@babel/preset-env'],
+      }),
+      terser(),
+    ],
   },
 ]

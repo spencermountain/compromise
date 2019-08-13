@@ -1,3 +1,4 @@
+const hasSpace = /[ -]/
 /** return various text formats of this term */
 exports.textOut = function(options, showPre, showPost) {
   let word = this.text
@@ -10,7 +11,7 @@ exports.textOut = function(options, showPre, showPost) {
   if (options.whitespace === true) {
     before = ''
     after = ' '
-    if (!this.post || options.last) {
+    if (hasSpace.test(this.post) === false || options.last) {
       after = ''
     }
   }

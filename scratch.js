@@ -10,7 +10,7 @@ var nlp = require('./src/index')
 // console.log('|' + doc.eq(0).text() + '|')
 // console.log('|' + doc.not('two').text() + '|')
 
-let m = nlp('super cool work') //.terms()
+let m = nlp(`super-cool work`) //.terms()
 
 m.debug()
 console.log('|' + m.out('normal') + '|')

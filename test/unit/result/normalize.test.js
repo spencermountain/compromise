@@ -62,6 +62,45 @@ test('optional params', function(t) {
   t.end();
 });
 
+test.only('optional param - verbs and plurals together', function(t) {
+  var plurals = [
+    ['batmobiles', 'batmobile'],
+  ];
+  var verbs = [
+    ['I was walking', 'i walk'],
+  ];
+
+  // good
+  plurals.forEach((a) => {
+    var doc = nlp(a[0]);
+    var pluralsOn = doc.normalize({
+      plurals: true,
+    });
+    t.equal(pluralsOn.out(), a[1], a[0]);
+  });
+
+  // good
+  verbs.forEach((a) => {
+    var doc = nlp(a[0]);
+    var verbsOn = doc.normalize({
+      verbs: true,
+    });
+    t.equal(verbsOn.out(), a[1], a[0]);
+  });
+
+  // bad
+  plurals.concat(verbs).forEach((a) => {
+    var doc = nlp(a[0]);
+    var bothOn = doc.normalize({
+      plurals: true,
+      verbs: true,
+    });
+    t.equal(bothOn.out(), a[1], a[0]);
+  });
+
+  t.end();
+});
+
 test('honorifics', function(t) {
   var tests = [
     ['rear admiral Smith', 'smith'],

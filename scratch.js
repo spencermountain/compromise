@@ -10,6 +10,6 @@ var nlp = require('./src/index')
 // console.log('|' + doc.eq(0).text() + '|')
 // console.log('|' + doc.not('two').text() + '|')
 
-let m = nlp('it was just')
-m.match('was [(just|cool)]$').debug()
+let m = nlp('summer of 1999')
+m.debug()
 console.log(m.out())

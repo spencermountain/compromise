@@ -23,14 +23,16 @@ const parseTerm = str => {
   })
   //we went too far..
   if (str === '') {
-    str = pre.replace(/[.?!]/, '') //.trim(); //huh?
+    str = pre.replace(/[.?!]/, '').trim()
     pre = ''
+    post = ' '
   }
-  return {
+  const parsed = {
     text: str,
     clean: clean(str),
     pre: pre,
     post: post,
   }
+  return parsed
 }
 module.exports = parseTerm

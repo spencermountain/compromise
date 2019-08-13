@@ -100,11 +100,11 @@ test('misc methods', function(t) {
 
   //filter string
   var small = m.if('#Emoji')
-  t.equal(small.out('normal'), 'this cookie <3 💯 so good. yes it is <3', 'nlp.filter string')
+  t.equal(small.text(), 'this :cookie: <3 💯 so good. yes it is <3', 'nlp.filter string')
 
   //filter method
   small = m.ifNo('#Emoji')
-  t.equal(small.out('normal'), 'it is really nice.', 'nlp.filter method')
+  t.equal(small.text(), 'It is really nice.', 'nlp.filter method')
 
   t.end()
 })

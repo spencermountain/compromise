@@ -7,7 +7,7 @@ test('canBe', function(t) {
   let canBeNoun = doc.canBe('Noun')
   t.equal(canBeNoun.length, 2, 'two results')
   t.equal(canBeNoun.terms(0).text('normal'), 'spencer', 'first result')
-  t.equal(canBeNoun.terms(1).text('normal'), 'he', 'first result')
+  t.equal(canBeNoun.terms(1).text(), 'He', 'first result')
 
   let canBeVerb = nlp('spencer kelly').canBe('Verb')
   t.equal(canBeVerb.length, 0, 'no results')

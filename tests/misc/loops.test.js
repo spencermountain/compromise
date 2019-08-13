@@ -10,7 +10,7 @@ test('map-stuff', function(t) {
   doc = nlp('one two three. three four five.').map(d => {
     return d.match('three')
   })
-  t.equal(doc.eq(0).text(), 'three.', 'match-one')
+  t.equal(doc.eq(0).text(), 'three', 'match-one')
   t.equal(doc.eq(1).text(), 'three', 'match-two')
 
   t.end()

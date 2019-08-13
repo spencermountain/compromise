@@ -25,11 +25,11 @@ exports.toCamelCase = function() {
   this.toTitleCase()
   this.list.forEach(p => {
     //remove whitespace
-    p.terms().forEach((t, i) => {
-      if (i !== 0) {
-        t.pre = ''
+    let terms = p.terms()
+    terms.forEach((t, i) => {
+      if (i !== terms.length - 1) {
+        t.post = ''
       }
-      t.post = ''
     })
   })
   this.tag('#CamelCase', 'toCamelCase')

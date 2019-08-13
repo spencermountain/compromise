@@ -38,6 +38,8 @@ const tagEmoji = (term, world) => {
   if (isCommaEmoji(term) === true) {
     term.tag('Emoji', 'comma-emoji', world)
     term.text = term.raw
+    term.pre = term.pre.replace(':', '')
+    term.post = term.post.replace(':', '')
   }
   //test for unicode emojis
   if (term.text.match(emojiReg)) {

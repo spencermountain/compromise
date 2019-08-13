@@ -160,6 +160,7 @@ const fixPerson = function(doc) {
         .match('#FirstName (#Noun|#TitleCase)')
         .ifNo('^#Possessive')
         .ifNo('#ClauseEnd .')
+        .ifNo('#Pronoun')
       tmp.lastTerm().tag('#LastName', 'firstname-noun')
     }
 

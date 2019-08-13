@@ -15,6 +15,8 @@ const fixValue = function(doc) {
     val.match('1 #Value #PhoneNumber').tag('PhoneNumber', '1-800-Value')
     //(454) 232-9873
     val.match('#NumericValue #PhoneNumber').tag('PhoneNumber', '(800) PhoneNumber')
+    //three trains
+    val.match('#Value [#PresentTense]').tag('Plural', 'value-presentTense')
     //all values are either ordinal or cardinal
     // doc.match('#Value').match('!#Ordinal').tag('#Cardinal', 'not-ordinal');
     //money

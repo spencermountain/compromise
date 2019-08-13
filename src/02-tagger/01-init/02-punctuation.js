@@ -22,5 +22,10 @@ const checkPunctuation = function(terms, i, world) {
       term.tag(['Gerund'], 'chillin', world)
     }
   }
+  // NASA
+  if (term.isAcronym()) {
+    term.tag('Acronym', 'acronym-step', world)
+    term.tag('Noun', 'acronym-infer', world)
+  }
 }
 module.exports = checkPunctuation

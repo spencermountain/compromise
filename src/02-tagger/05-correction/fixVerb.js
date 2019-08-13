@@ -60,7 +60,7 @@ const fixVerb = function(doc) {
       //
       copula.match('[#Infinitive] #Copula').tag('Noun', 'inf-copula')
       //sometimes not-adverbs
-      copula.match('#Copula [(just|alone)$]').tag('Adjective', 'not-adverb')
+      copula.match('#Copula [(just|alone)]$').tag('Adjective', 'not-adverb')
       //jack is guarded
       copula.match('#Singular is #Adverb? [#PastTense$]').tag('Adjective', 'is-filled')
       //is eager to go

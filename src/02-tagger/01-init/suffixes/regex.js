@@ -27,6 +27,7 @@ module.exports = {
     [/.[ia]sed$/, Adj],
     [/.[gt]led$/, Adj],
     [/.[aeiou][td]ed$/, Past],
+    [/.[aeiou]red$/, Past],
     [/.[^aeiou]led$/, Past], //rumbled
     [/[^aeiou]ard$/, Sing],
     [/[aeiou][^aeiou]id$/, Adj],

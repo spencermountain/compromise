@@ -22,8 +22,8 @@ test('not-basic :', function(t) {
   t.equal(m.out('text'), 'spencer cool', 'three-not')
   t.equal(m.length, 2, 'two-results-4')
 
-  m = nlp('spencer is really cool. John is really nice.').not('#Adverb')
-  t.equal(m.out('text'), 'spencer is cool. John is nice.', 'two-terms-matches')
+  m = nlp('spencer is really cool. John is really nice').not('#Adverb')
+  t.equal(m.out('text'), 'spencer is cool. John is nice', 'two-terms-matches')
   t.equal(m.length, 4, 'four-results')
 
   m = nlp('spencer is really cool. John is really nice.').not('pardon me, #Adverb')

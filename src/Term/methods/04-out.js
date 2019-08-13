@@ -10,7 +10,7 @@ exports.textOut = function(options, showPre, showPost) {
   if (options.whitespace === true) {
     before = ''
     after = ' '
-    if (options.last) {
+    if (!this.post || options.last) {
       after = ''
     }
   }

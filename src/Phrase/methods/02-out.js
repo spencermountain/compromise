@@ -11,9 +11,7 @@ exports.text = function(options = {}, isFirst, isLast) {
     isFull = true
   }
   let text = terms.reduce((str, t, i) => {
-    options.last = i === terms.length - 1
-    // let showPre = isFull === true && i !== 0
-    // let showPost = isFull === true && i !== terms.length - 1
+    options.last = isLast && i === terms.length - 1
     let showPre = true
     let showPost = true
     if (isFull === false) {
@@ -25,7 +23,6 @@ exports.text = function(options = {}, isFirst, isLast) {
       if (i === terms.length - 1 && isLast) {
         showPost = false
       }
-      // console.log(t.text, showPost)
     }
     return str + t.textOut(options, showPre, showPost)
   }, '')

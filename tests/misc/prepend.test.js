@@ -10,9 +10,9 @@ test('prepend parent start', function(t) {
 
 test('prepend middle', function(t) {
   let doc = nlp(`one two four five`)
-  let m = doc.match('four').prepend('[three]')
-  t.equal(m.text().trim(), '[three] four', 'prepended in child')
-  t.equal(doc.text(), 'one two [three] four five', 'prepended in parent')
+  let m = doc.match('four').prepend('three')
+  t.equal(m.text().trim(), 'three four', 'prepended in child')
+  t.equal(doc.text(), 'one two three four five', 'prepended in parent')
   t.end()
 })
 

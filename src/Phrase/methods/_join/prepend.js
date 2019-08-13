@@ -2,21 +2,29 @@ const hasSpace = / /
 
 //a new space needs to be added, either on the new phrase, or the old one
 // '[new] [◻old]'   -or-   '[old] [◻new] [old]'
-const addWhitespace = function(original, newPhrase, newTerms) {
-  //is there a word before our entry-point?
-  let term = original.pool.get(original.start)
-  if (term.prev) {
-    //add our space ahead of our new terms
-    let firstWord = newTerms[0]
-    if (hasSpace.test(firstWord.pre) === false) {
-      firstWord.post += ' '
-    }
-    return
+const addWhitespace = function(newTerms, original) {
+  //add a space before our new text?
+
+  // add a space after our text
+  let lastTerm = newTerms[newTerms.length - 1]
+  if (hasSpace.test(lastTerm.post) === false) {
+    lastTerm.post += ' '
   }
+
+  // let term = original.pool.get(original.start)
+  // if (term.prev) {
+  //   //add our space ahead of our new terms
+  //   let firstWord = newTerms[0]
+  //   if (hasSpace.test(firstWord.post) === false) {
+  //     firstWord.post += ' '
+  //   }
+  //   return
+  // }
+
   //otherwise, add our space to the start of original
-  if (hasSpace.test(term.pre) === false) {
-    term.pre = ' ' + term.pre
-  }
+  // if (hasSpace.test(term.pre) === false) {
+  //   term.pre = ' ' + term.pre
+  // }
   return
 }
 
@@ -62,7 +70,7 @@ const joinPhrase = function(original, newPhrase, doc) {
   let newTerms = newPhrase.terms()
   let oldStart = original.start
   //spruce-up the whitespace issues
-  addWhitespace(original, newPhrase, newTerms)
+  addWhitespace(newTerms, original)
   //insert this segment into the linked-list
   stitchIn(original, newPhrase, newTerms)
   //increase the length of our phrases

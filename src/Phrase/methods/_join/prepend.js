@@ -9,7 +9,7 @@ const addWhitespace = function(original, newPhrase, newTerms) {
     //add our space ahead of our new terms
     let firstWord = newTerms[0]
     if (hasSpace.test(firstWord.pre) === false) {
-      firstWord.pre = ' ' + firstWord.pre
+      firstWord.post += ' '
     }
     return
   }
@@ -40,32 +40,33 @@ const stitchIn = function(main, newPhrase, newTerms) {
 }
 
 //recursively increase the length of all parent phrases
-const stretchAll = function(doc, original, newPhrase) {
+const stretchAll = function(doc, oldStart, newPhrase) {
   //find our phrase to stretch
-  let phrase = doc.list.find(p => p.hasId(original.start))
+  let phrase = doc.list.find(p => p.hasId(oldStart) || p.hasId(newPhrase.start))
   if (phrase === undefined) {
-    console.error('compromise error: Prepend missing start - ' + original.start)
+    console.error('compromise error: Prepend missing start - ' + oldStart)
     return
   }
   //should we update the phrase's starting?
-  if (phrase.start === original.start) {
+  if (phrase.start === oldStart) {
     phrase.start = newPhrase.start
   }
   phrase.length += newPhrase.length
   if (doc.from) {
-    stretchAll(doc.from, original, newPhrase)
+    stretchAll(doc.from, oldStart, newPhrase)
   }
 }
 
 //append one phrase onto another
 const joinPhrase = function(original, newPhrase, doc) {
   let newTerms = newPhrase.terms()
+  let oldStart = original.start
   //spruce-up the whitespace issues
   addWhitespace(original, newPhrase, newTerms)
   //insert this segment into the linked-list
   stitchIn(original, newPhrase, newTerms)
   //increase the length of our phrases
-  stretchAll(doc, original, newPhrase)
+  stretchAll(doc, oldStart, newPhrase)
   return original
 }
 module.exports = joinPhrase

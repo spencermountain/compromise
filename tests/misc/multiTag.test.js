@@ -13,9 +13,9 @@ test('tag-sequence:', function(t) {
 test('multiple-tags:', function(t) {
   var doc = nlp('it was cold')
   doc.tag(['#One', '#Two', '#Three'])
-  t.equal(doc.match('#One').normal(), 'it was cold', 'all have #One')
-  t.equal(doc.match('#Two').normal(), 'it was cold', 'all have #Two')
-  t.equal(doc.match('#Three').normal(), 'it was cold', 'all have #Three')
+  t.equal(doc.match('#One').normal(), 'it was cold', 'multi- all have #One')
+  t.equal(doc.match('#Two').normal(), 'it was cold', 'multi- all have #Two')
+  t.equal(doc.match('#Three').normal(), 'it was cold', 'multi- all have #Three')
   t.end()
 })
 
@@ -32,9 +32,9 @@ test('tag-sequence-skip:', function(t) {
 test('multiple-tags-skip:', function(t) {
   var doc = nlp('it was cold')
   doc.tag(['.', '#Two', '.'])
-  t.equal(doc.match('#One').found, false, 'none have #One')
-  t.equal(doc.match('#Two').normal(), 'it was cold', 'all have #Two')
-  t.equal(doc.match('#Three').found, false, 'none have #Three')
-  t.equal(doc.match('#.').found, false, 'none have #dot')
+  t.equal(doc.match('#One').found, false, 'skip - none have #One')
+  t.equal(doc.match('#Two').normal(), 'it was cold', 'skip - all have #Two')
+  t.equal(doc.match('#Three').found, false, 'skip - none have #Three')
+  t.equal(doc.match('#.').found, false, 'skip - none have #dot')
   t.end()
 })

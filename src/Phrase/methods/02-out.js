@@ -1,5 +1,9 @@
+const trimEnd = function(str) {
+  return str.replace(/ +$/, '')
+}
+
 /** produce output in the given format */
-exports.text = function(options = {}) {
+exports.text = function(options = {}, isFirst, isLast) {
   let terms = this.terms()
   //this this phrase a complete sentence?
   let isFull = false
@@ -8,10 +12,27 @@ exports.text = function(options = {}) {
   }
   let text = terms.reduce((str, t, i) => {
     options.last = i === terms.length - 1
-    let skipFront = isFull === false && i === 0
-    let skipEnd = isFull === false && i === terms.length - 1
-    return str + t.textOut(options, skipFront, skipEnd)
+    // let showPre = isFull === true && i !== 0
+    // let showPost = isFull === true && i !== terms.length - 1
+    let showPre = true
+    let showPost = true
+    if (isFull === false) {
+      // dont show beginning whitespace
+      if (i === 0 && isFirst) {
+        showPre = false
+      }
+      // dont show end-whitespace
+      if (i === terms.length - 1 && isLast) {
+        showPost = false
+      }
+      // console.log(t.text, showPost)
+    }
+    return str + t.textOut(options, showPre, showPost)
   }, '')
+  //full-phrases show punctuation, but not whitespace
+  if (isFull === true && isLast) {
+    text = trimEnd(text)
+  }
   return text
 }
 

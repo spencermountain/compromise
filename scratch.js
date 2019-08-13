@@ -1,55 +1,15 @@
 var nlp = require('./src/index')
-nlp.verbose(true)
+// nlp.verbose(true)
 // nlp.extend(require('./plugins/verbs/src'))
 
-let doc = nlp('jack cheered').debug()
+// var doc = nlp('one, two three.   blah blah. One, two, five. ')
+// console.log(doc.out())
+// console.log(doc.match('.').out())
+// console.log(doc.not('two').out())
 
-// let m = doc.match('scissors')
-// console.log(m.text())
+// console.log('|' + doc.eq(0).text() + '|')
+// console.log('|' + doc.not('two').text() + '|')
 
-/* 
- 'text' -
- 'normal' - case, whitespace, unicode
- 'clean' - += (non-sentence) punctuation
- 'simple' - += contractions
- 'reduced' - += no adverbs, emoji, parentheses, quotations
- 'root' - += infinitive verbs, singular nouns
-*/
-
-// console.log(
-//   doc.text({
-//     case: true,
-//     whitespace: true,
-//     unicode: true,
-//   })
-// )
-
-// doc.debug()
-// console.log(doc.conjugations())
-
-//----------
-// console.time('one')
-// let doc = nlp('hello world')
-// console.log(doc.has('#Klkj'))
-// console.timeEnd('one')
-
-// console.time('two')
-// let doc2 = nlp('i am the very model of a modern major seven general. I am animal vegetable and mineral.')
-// console.timeEnd('two')
-
-// console.time('three')
-// let doc3 = nlp('one and spensdfcer and two three fosdfur five. tewo and spenssdfcer and fiffve and six')
-// console.timeEnd('three')
-
-// const corpus = require('./stress/node_modules/nlp-corpus')
-// let txt = corpus.sotu.array()[8]
-// console.time('sotu')
-// let main = nlp(txt)
-// console.timeEnd('sotu')
-// -----
-
-// nlp('drink Salty Dogs').debug()
-
-// console.log(doc.world.lexicon['was'])
-// console.log(doc.world.hasCompound['pulled'])
-// -----
+let m = nlp('the dog sat')
+m.match('sat').insertAfter('oooooooo')
+console.log('|' + m.out() + '|')

@@ -13,9 +13,12 @@ const tagYear = (m, reason) => {
   if (m.found !== true) {
     return
   }
-  let num = parseInt(m.out('normal'), 10)
-  if (num && num > 1000 && num < 3000) {
-    m.tag('Year', reason)
+  let term = m.termList()[0]
+  if (term) {
+    let num = parseInt(term.clean, 10)
+    if (num && num > 1000 && num < 3000) {
+      m.tag('Year', reason)
+    }
   }
 }
 //same, but for less-confident values
@@ -23,9 +26,12 @@ const tagYearSafe = (m, reason) => {
   if (m.found !== true) {
     return
   }
-  let num = parseInt(m.out('normal'), 10)
-  if (num && num > 1900 && num < 2030) {
-    m.tag('Year', reason)
+  let term = m.termList()[0]
+  if (term) {
+    let num = parseInt(term.clean, 10)
+    if (num && num > 1900 && num < 2030) {
+      m.tag('Year', reason)
+    }
   }
 }
 

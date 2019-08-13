@@ -1,5 +1,5 @@
 /** return various text formats of this term */
-exports.textOut = function(options, first, last) {
+exports.textOut = function(options, showPre, showPost) {
   let word = this.text
   let before = this.pre
   let after = this.post
@@ -24,10 +24,10 @@ exports.textOut = function(options, first, last) {
       after = '...' + after
     }
   }
-  if (first === true) {
+  if (showPre !== true) {
     before = ''
   }
-  if (last === true) {
+  if (showPost !== true) {
     after = ''
   }
   return before + word + after

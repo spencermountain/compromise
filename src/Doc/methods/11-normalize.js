@@ -58,7 +58,7 @@ exports.normalize = function(options = {}) {
     this.parentheses().unwrap()
   }
   // `isn't` -> 'is not'
-  if (options.contractions) {
+  if (options.contraction || options.contractions) {
     this.contractions().expand()
   }
   // remove "" punctuation

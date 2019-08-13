@@ -15,7 +15,7 @@ const addMethod = function(Doc) {
         terms.forEach((t, i) => {
           //use the implicit text
           // console.log(t.clean)
-          t.text = t.implicit || t.text
+          t.set(t.implicit || t.text)
           t.implicit = undefined
 
           //add whitespace

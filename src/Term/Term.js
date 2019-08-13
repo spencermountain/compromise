@@ -19,6 +19,13 @@ class Term {
     this.id = makeId(this.clean)
     this.isA = 'Term' // easier than .constructor...
   }
+  /** set the text of the Term to something else*/
+  set(str) {
+    let obj = parseTerm(str)
+    this.text = obj.text
+    this.clean = obj.clean
+    return this
+  }
 }
 
 /** create a deep-copy of this term */

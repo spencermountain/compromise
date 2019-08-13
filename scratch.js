@@ -10,7 +10,8 @@ var nlp = require('./src/index')
 // console.log('|' + doc.eq(0).text() + '|')
 // console.log('|' + doc.not('two').text() + '|')
 
-let m = nlp(`super-cool work`) //.terms()
-
+let m = nlp(` it's cool`) //.terms()
+m = m.normalize({ contractions: true, case: false, whitespace: false, unicode: false, punctuation: false })
 m.debug()
-console.log('|' + m.out('normal') + '|')
+// console.log(m.termList())
+console.log('|' + m.text() + '|')

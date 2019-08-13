@@ -43,7 +43,7 @@ test('normalize whitespace', function(t) {
 })
 
 test('normalize parentheses', function(t) {
-  let doc = nlp.tokenize(` it's   coöl, (i think) .    He is   cool;  i said .`)
+  let doc = nlp(` it's   coöl, (i think) .    He is   cool;  i said .`)
   let options = only({ parentheses: true })
   doc.normalize(options)
   t.equal(doc.text(), ` it's   coöl, i think .    He is   cool;  i said .`, 'normalize-parentheses')
@@ -51,7 +51,7 @@ test('normalize parentheses', function(t) {
 })
 
 test('normalize contractions', function(t) {
-  let doc = nlp.tokenize(` it's   coöl, (i think) .    He is   cool;  i said .`)
+  let doc = nlp(` it's   coöl, (i think) .    He is   cool;  i said .`)
   let options = only({ contractions: true })
   doc.normalize(options)
   t.equal(doc.text(), ` it is   coöl, (i think) .    He is   cool;  i said .`, 'normalize-contractions')

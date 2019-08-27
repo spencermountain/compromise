@@ -30,7 +30,7 @@
   "files": [
     "builds/",
     "docs/",
-    "compromise.d.ts"
+    "types/index.d.ts"
   ],
   "prettier": {
     "trailingComma": "none",

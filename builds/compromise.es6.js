@@ -1,4 +1,4 @@
-/* compromise v11.14.2
+/* compromise v11.14.3
    http://compromise.cool
    MIT
 */
@@ -11,7 +11,7 @@ module.exports={
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "11.14.2",
+  "version": "11.14.3",
   "main": "./builds/compromise.js",
   "unpkg": "./builds/compromise.min.js",
   "types": "types",
@@ -39,7 +39,7 @@ module.exports={
   "files": [
     "builds/",
     "docs/",
-    "compromise.d.ts"
+    "types/index.d.ts"
   ],
   "prettier": {
     "trailingComma": "none",
@@ -57,17 +57,17 @@ module.exports={
     "amble": "0.0.7",
     "babelify": "10.0.0",
     "babili": "0.1.4",
-    "browserify": "16.3.0",
+    "browserify": "16.5.0",
     "chalk": "2.4.2",
     "codecov": "3.5.0",
     "compromise-plugin": "0.0.9",
     "derequire": "2.0.6",
-    "dtslint": "0.9.0",
+    "dtslint": "0.9.3",
     "nyc": "14.1.1",
     "shelljs": "0.8.3",
     "tap-dancer": "0.2.0",
     "tape": "4.11.0",
-    "terser": "4.1.2"
+    "terser": "4.2.1"
   },
   "license": "MIT"
 }

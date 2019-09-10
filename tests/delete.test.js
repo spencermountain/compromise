@@ -1,5 +1,5 @@
 var test = require('tape')
-var nlp = require('../_lib')
+var nlp = require('./_lib')
 
 test('remove-basic :', function(t) {
   var m = nlp('the brown cat played')

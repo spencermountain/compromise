@@ -1,5 +1,5 @@
 var test = require('tape')
-var nlp = require('../_lib')
+var nlp = require('./_lib')
 
 test('normalize elipses', function(t) {
   var str = `[hello] spencęr…`

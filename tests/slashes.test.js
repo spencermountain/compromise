@@ -1,5 +1,5 @@
 var test = require('tape')
-var nlp = require('../_lib')
+var nlp = require('./_lib')
 
 test('slashes-basic', function(t) {
   let doc = nlp(`spencer is/was trying.`)

@@ -1,5 +1,5 @@
 var test = require('tape')
-var nlp = require('../_lib')
+var nlp = require('./_lib')
 
 test('whitespace-out', function(t) {
   let str = 'one, two three. One, two, four?'

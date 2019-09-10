@@ -1,5 +1,5 @@
 var test = require('tape')
-var nlp = require('../_lib')
+var nlp = require('./_lib')
 
 test('hyphen-tokenize', function(t) {
   var r = nlp('super-cool work')

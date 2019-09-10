@@ -1,5 +1,5 @@
 var test = require('tape')
-var nlp = require('../_lib')
+var nlp = require('./_lib')
 
 test('map-stuff', function(t) {
   let doc = nlp('and').map(d => {

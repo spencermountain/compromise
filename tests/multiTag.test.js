@@ -1,5 +1,5 @@
 var test = require('tape')
-var nlp = require('../_lib')
+var nlp = require('./_lib')
 
 test('tag-sequence:', function(t) {
   var doc = nlp('it was cold')

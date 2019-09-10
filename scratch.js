@@ -9,9 +9,12 @@ var nlp = require('./src/index')
     ✖ flatten
 */
 
-var doc = nlp('one. two, two. three, three, three.')
-  .words()
-  .sort('freq')
-  .debug()
-
-// console.log('|' + doc.text() + '|')
+var doc = nlp('one. two, two.    Three,   three, three.').words()
+// .sort('freq')
+// .debug()
+console.log(
+  doc.text({
+    case: true,
+  })
+)
+// console.log('|' + doc.text('clean') + '|')

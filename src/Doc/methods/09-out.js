@@ -10,6 +10,13 @@ exports.text = function(options = {}) {
         whitespace: true,
         unicode: true,
       }
+    } else if (options === 'clean') {
+      options = {
+        case: true,
+        punctuation: true,
+        whitespace: true,
+        unicode: true,
+      }
     } else {
       options = {}
     }

@@ -66,3 +66,8 @@ exports.hasId = function(wantId) {
   }
   return false
 }
+
+/** how many seperate, non-empty words is it? */
+exports.wordCount = function() {
+  return this.terms().filter(t => t.text !== '').length
+}

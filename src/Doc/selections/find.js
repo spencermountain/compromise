@@ -8,7 +8,7 @@ exports.terms = function(n) {
   }
   return r
 }
-// exports.term = exports.terms
+exports.words = exports.terms
 
 /** split-up results into multi-term phrases */
 exports.clauses = function(n) {

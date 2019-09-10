@@ -81,3 +81,12 @@ exports.termList = function() {
   }
   return arr
 }
+
+/** how many seperate terms does the document have? */
+exports.wordCount = function() {
+  return this.list.reduce((count, p) => {
+    count += p.wordCount
+    return count
+  }, 0)
+}
+exports.wordcount = exports.wordCount

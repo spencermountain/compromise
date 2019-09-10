@@ -34,16 +34,16 @@ module.exports = {
     returns: 'Text',
     example: "nlp(' Lenny and Carl ').people().trim().out()\n//['Lenny', 'Carl']",
   },
-  getPunctuation: {
-    desc: 'get an array of trailing-punctuation for the results',
-    returns: 'Array',
-    example: "nlp('my bubbly, longnecked, beechwood aged lover').adjectives().eq(1).getPunctuation()\n//[',']",
-  },
-  setPunctuation: {
-    desc: 'overwrite the trailing punctuation',
-    returns: 'Text',
-    example: "nlp('there\\'s a new mexico?').sentences().setPunctuation('!??').out()\n//there's a new mexico!??",
-  },
+  // getPunctuation: {
+  //   desc: 'get an array of trailing-punctuation for the results',
+  //   returns: 'Array',
+  //   example: "nlp('my bubbly, longnecked, beechwood aged lover').adjectives().eq(1).getPunctuation()\n//[',']",
+  // },
+  // setPunctuation: {
+  //   desc: 'overwrite the trailing punctuation',
+  //   returns: 'Text',
+  //   example: "nlp('there\\'s a new mexico?').sentences().setPunctuation('!??').out()\n//there's a new mexico!??",
+  // },
   insertBefore: {
     desc: 'append a word (or words) before each match',
     mutative: true,
@@ -62,13 +62,13 @@ module.exports = {
     returns: 'Text',
     example: "nlp('so you are from Africa?').insertAt(2, 'like,').all().out()\n//so you are like, from africa?",
   },
-  lump: {
-    desc: 'merge matches into one term, with shared tags.',
-    mutative: true,
-    returns: 'Text',
-    example:
-      "nlp('Keanu Reeves said whoa').match('#Person+').lump().all().out('terms')\n//['Keanu Reeves', 'said', 'whoa']",
-  },
+  // lump: {
+  //   desc: 'merge matches into one term, with shared tags.',
+  //   mutative: true,
+  //   returns: 'Text',
+  //   example:
+  //     "nlp('Keanu Reeves said whoa').match('#Person+').lump().all().out('terms')\n//['Keanu Reeves', 'said', 'whoa']",
+  // },
   replaceWith: {
     desc:
       'turn the current selection into something else. Essentially just delete() -> insertAt(). The second param says whether to keep original tags around.',

@@ -153,6 +153,9 @@ exports.ifNo = function(reg) {
 
 /** return only the terms that can be this tag*/
 exports.canBe = function(tag) {
+  if (!tag) {
+    return this
+  }
   let world = this.world
   let matches = this.list.reduce((arr, p) => {
     return arr.concat(p.canBe(tag, world))

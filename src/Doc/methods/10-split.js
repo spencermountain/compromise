@@ -2,6 +2,9 @@ const tokenize = require('../../01-tokenizer')
 
 /** add these new terms to the front*/
 exports.prepend = function(str) {
+  if (!str) {
+    return this
+  }
   //build it
   let phrase = tokenize.fromText(str, this.world, this.pool())[0] //assume it's one sentence, for now
   //tag it
@@ -17,6 +20,9 @@ exports.insertBefore = exports.prepend
 
 /** add these new terms to the end*/
 exports.append = function(str) {
+  if (!str) {
+    return this
+  }
   //build it
   let phrase = tokenize.fromText(str, this.world, this.pool())[0] //assume it's one sentence, for now
   //tag it
@@ -33,7 +39,6 @@ exports.insertAt = exports.append
 
 /** add these new things to the end*/
 exports.concat = function() {
-  this.unfreeze()
   let list = this.list.slice(0)
   //repeat for any number of params
   for (let i = 0; i < arguments.length; i++) {

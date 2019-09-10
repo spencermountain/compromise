@@ -3,11 +3,12 @@ module.exports = {
     desc: 'return a handy array of meta-data for this subset. Default subset is sentences, but it can be anything.',
     example:
       "nlp('The stage was set for the Alan Parsons Project! Which I believe was some sort of hovercraft.').data()\n//[{normal:'the stage was set...'}]",
-    returns: 'array',
+    returns: 'Array',
   },
   found: {
     desc: 'is the match empty or not',
-    returns: 'bool',
+    getter: true,
+    returns: 'Boolean',
     example: "nlp('oh say can you see?').match('see').found\n//true",
   },
   all: {
@@ -27,11 +28,11 @@ module.exports = {
     example:
       "nlp('you might say there’s a little Uter in all of us').match('#Adjective uter').out('html')\n//<span><span class=\"nl-Adjective\">little</span>&nbsp;<span class=\"nl-Person nl-FirstName\">Uter</span></span>",
   },
-  whitespace: {
-    desc: 'set before or after whitespace on each match',
-    returns: 'Doc',
-    example: "nlp('We like Roy! We like Roy!').whitespace.before('   ').out()\n//We like Roy!   We like Roy!",
-  },
+  // whitespace: {
+  //   desc: 'set before or after whitespace on each match',
+  //   returns: 'Doc',
+  //   example: "nlp('We like Roy! We like Roy!').whitespace.before('   ').out()\n//We like Roy!   We like Roy!",
+  // },
   normalize: {
     desc:
       'transforms whitespace, case, punctuation, contractions and values, so that they are more standard and workable',
@@ -41,7 +42,8 @@ module.exports = {
   },
   length: {
     desc: 'how many individual matches in the result',
-    returns: 'int',
+    getter: true,
+    returns: 'Number',
     example: "nlp('jackie kennedy and aristotle onassis').people().length\n//2",
   },
   random: {
@@ -57,29 +59,40 @@ module.exports = {
   },
   forEach: {
     desc: 'do something on each result independently',
+    params: ['Function'],
     returns: 'Doc',
     example:
       "nlp('Larry, Curly, and Moe').people().forEach((m,i)=> m.people().toLowerCase() )\n//curly\n//larry\n//moe",
   },
   map: {
     desc: 'create a new array from these results',
+    params: ['Function'],
     returns: 'Doc',
     example: "nlp('Larry, Curly, and Moe').people().map((m)=> m.out('normal'))\n// ['curly', 'larry', 'moe']",
   },
   filter: {
     desc: 'select only the results that return true for some function',
+    params: ['Function'],
     returns: 'Doc',
     example: "nlp('Larry, Curly, and Moe').people().filter(m => m.out('normal')==='larry' ).length\n//1",
   },
   find: {
     desc: 'select only the first result that returns true',
+    params: ['Function'],
     returns: 'Doc',
     example: "nlp('Larry, Curly, and Moe').people().find(m => m.out('normal')==='larry' ).out()\n//\"Larry,\"",
   },
-  reduce: {
-    desc: 'combine the results of a function into one thing',
-    returns: 'Doc',
-    example:
-      "nlp('Larry, Curly, and Moe').people().reduce((h,m) => {\n  var str=m.out('normal');\n  h[str]=true;\n  return h }, {})\n//{larry:true, curly:true, moe:true}",
+  some: {
+    desc: 'return true or false if there is one matching phrase ',
+    params: ['Function'],
+    returns: 'Boolean',
+    example: "nlp('Larry, Curly, and Moe').people().some(m => m.out('normal')==='larry' )\n//true",
   },
+  // reduce: {
+  //   desc: 'combine the results of a function into one thing',
+  //   params: ['any', 'Function'],
+  //   returns: 'Doc',
+  //   example:
+  //     "nlp('Larry, Curly, and Moe').people().reduce((h,m) => {\n  var str=m.out('normal');\n  h[str]=true;\n  return h }, {})\n//{larry:true, curly:true, moe:true}",
+  // },
 }

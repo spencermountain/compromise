@@ -79,11 +79,6 @@ module.exports = {
     },
   },
 
-
-
-
-
-
   people: {
     data: {
       desc: 'return a handy array of meta-data of people mentioned in the text',
@@ -108,7 +103,6 @@ module.exports = {
     },
   },
 
-  
   acronyms: {
     stripPeriods: {
       desc: "turn 'FBI' into 'F.B.I.'",
@@ -199,8 +193,7 @@ module.exports = {
   parentheses: {
     data: {
       desc: 'return a list of phrases between ( ) brackets.',
-      example:
-        "nlp('Use a pointed stick (a pencil) or a similar tool').parentheses().data()\n//[{text:'a pencil'}..]",
+      example: "nlp('Use a pointed stick (a pencil) or a similar tool').parentheses().data()\n//[{text:'a pencil'}..]",
       returns: 'array',
     },
   },
@@ -228,8 +221,7 @@ module.exports = {
   terms: {
     data: {
       desc: 'split all words into individual results, and return their metadata',
-      example:
-        "nlp('we should all be more like little Ruttiger').terms().data()\n//[{text:'we'}, {text:'should'}...]",
+      example: "nlp('we should all be more like little Ruttiger').terms().data()\n//[{text:'we'}, {text:'should'}...]",
       returns: 'array',
     },
   },
@@ -255,5 +247,4 @@ module.exports = {
       returns: 'array',
     },
   },
-},
 }

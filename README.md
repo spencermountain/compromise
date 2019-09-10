@@ -9,6 +9,10 @@ hmmm:
 
 ---
 ### Breaking changes:
+
+removed methods:
+* 
+
  
 * `.text()` input parameter changes
   

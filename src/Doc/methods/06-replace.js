@@ -20,7 +20,6 @@ exports.replace = function(match, replace) {
 
 /** fully remove these terms from the document */
 exports.delete = function(match) {
-  this.unfreeze()
   let toRemove = this
   if (match) {
     toRemove = this.match(match)

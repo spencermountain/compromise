@@ -1,5 +1,5 @@
 var nlp = require('./src/index')
-nlp.verbose(true)
+// nlp.verbose(true)
 nlp.extend(require('./plugins/verbs/src'))
 nlp.extend(require('./plugins/sentences/src'))
 
@@ -10,9 +10,8 @@ nlp.extend(require('./plugins/sentences/src'))
     ✖ flatten
 */
 
-var doc = nlp('iraqis are great.')
-
-doc.sentences().prepend('really')
+var doc = nlp('He is cool.')
+doc.sentences().prepend('so i think')
 
 // doc.match('spencer').append('really')
 // doc.match('spencer').prepend('really')

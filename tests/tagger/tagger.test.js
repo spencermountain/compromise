@@ -116,6 +116,10 @@ test('pos-basic-tag:', function(t) {
     ['q2 2009', ['Date', 'Year']],
     ['spring 1980', ['Date', 'Year']],
     ['summer of 1999', ['Date', 'Date', 'Year']],
+    ['germans are nice', ['Demonym', 'Verb', 'Adjective']],
+    ['Iraqis are nice', ['Plural', 'Copula', 'Adjective']],
+    ['canadians are nice', ['ProperNoun', 'Verb', 'Adjective']],
+    ['thom is smart', ['ProperNoun', 'Verb', 'Adjective']],
   ].forEach(function(a) {
     var terms = nlp(a[0]).json(0).terms
     terms.forEach((term, i) => {

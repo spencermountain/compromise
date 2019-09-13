@@ -60,6 +60,11 @@ const addMore = function(word, tag, world) {
       addWord(w, 'PhrasalVerb', lexicon)
     }
   }
+  // inflect our demonyms - 'germans'
+  if (tag === 'Demonym') {
+    let plural = transform.nouns(word)
+    lexicon[plural] = lexicon[plural] || ['Demonym', 'Plural'] // only if it's safe
+  }
 }
 
 // throw a bunch of words in our lexicon

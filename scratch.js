@@ -1,6 +1,7 @@
 var nlp = require('./src/index')
-// nlp.verbose(true)
+nlp.verbose(true)
 nlp.extend(require('./plugins/verbs/src'))
+nlp.extend(require('./plugins/sentences/src'))
 
 /*
     ✖ sort
@@ -9,12 +10,15 @@ nlp.extend(require('./plugins/verbs/src'))
     ✖ flatten
 */
 
-var doc = nlp('spencer is really great! Spencer really, really was superb.')
-// doc.append('really')
-// doc.verbs().toNegative()
-doc
-  .verbs()
-  .adverbs()
-  .remove()
+var doc = nlp('iraqis are great.')
 
-doc.out()
+doc.sentences().prepend('really')
+
+// doc.match('spencer').append('really')
+// doc.match('spencer').prepend('really')
+// doc.verbs().toNegative()
+doc.debug()
+
+// var doc = nlp('spencer is nice, warm and tired.')
+// doc.lists().add('CRAAZY')
+// console.log(doc.out())

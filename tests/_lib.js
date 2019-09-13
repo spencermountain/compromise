@@ -1,6 +1,8 @@
 const addPlugins = function(nlp) {
-  let name = 'numbers'
-  nlp.extend(require(`../plugins/${name}/src/index.js`))
+  let names = ['numbers', 'verbs']
+  names.forEach(name => {
+    nlp.extend(require(`../plugins/${name}/src/index.js`))
+  })
 }
 
 if (typeof process !== undefined && typeof module !== undefined) {

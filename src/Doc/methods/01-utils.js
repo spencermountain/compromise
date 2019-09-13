@@ -70,13 +70,17 @@ exports.random = function(n) {
 }
 
 /** return a flat array of term objects */
-exports.termList = function() {
+exports.termList = function(num) {
   let arr = []
   //'reduce' but faster
   for (let i = 0; i < this.list.length; i++) {
     let terms = this.list[i].terms()
     for (let o = 0; o < terms.length; o++) {
       arr.push(terms[o])
+      //support .termList(4)
+      if (num !== undefined && arr[num] !== undefined) {
+        return arr[num]
+      }
     }
   }
   return arr

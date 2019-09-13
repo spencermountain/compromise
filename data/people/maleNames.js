@@ -864,6 +864,7 @@ module.exports = [
   'theo',
   'theodore',
   'thiago',
+  'thom',
   'thomas',
   'tim',
   'timmy',

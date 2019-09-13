@@ -11,7 +11,8 @@ module.exports = {
 
   // -- people
   Person: {
-    isA: 'Singular',
+    isA: 'ProperNoun',
+    also: 'Singular',
   },
   FirstName: {
     isA: 'Person',
@@ -35,18 +36,22 @@ module.exports = {
   // -- places
   Country: {
     isA: 'Place',
+    also: 'ProperNoun',
   },
   City: {
     isA: 'Place',
+    also: 'ProperNoun',
   },
   Region: {
     isA: 'Place',
+    also: 'ProperNoun',
   },
   Address: {
     isA: 'Place',
   },
   Organization: {
     isA: 'Singular',
+    also: 'ProperNoun',
   },
   SportsTeam: {
     isA: 'Organization',
@@ -84,6 +89,7 @@ module.exports = {
   //'Canadians'
   Demonym: {
     isA: 'Noun',
+    also: 'ProperNoun',
   },
   //`john's`
   Possessive: {

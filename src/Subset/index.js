@@ -3,6 +3,7 @@ const selections = [
   require('./contractions'),
   require('./parentheses'),
   require('./possessives'),
+  require('./lists'),
 ]
 
 const extend = function(Doc) {

@@ -15,8 +15,18 @@ const addMethod = function(Doc) {
     isPassive() {}
     isQuestion() {}
 
-    prepend() {}
-    append() {}
+    /** add a word to the start of this sentence */
+    prepend(str) {
+      // repair the titlecase
+      let firstTerms = this.match('^.').debug()
+      firstTerms.not('#ProperNoun').toLowerCase()
+      // actually add the word
+      firstTerms.prepend(str)
+      // add a titlecase
+      firstTerms.terms(0).toTitleCase()
+    }
+    /** add a word to the end of this sentence */
+    append(str) {}
 
     toExclamation() {}
     toQuestion() {}

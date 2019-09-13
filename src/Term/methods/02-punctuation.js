@@ -37,3 +37,13 @@ exports.hasSlash = function() {
 exports.hasContraction = function() {
   return Boolean(this.implicit)
 }
+
+/** try to sensibly put this punctuation mark into the term */
+exports.addPunctuation = function(punct) {
+  // dont add doubles
+  if (punct === ',' || punct === ';') {
+    this.post = this.post.replace(punct, '')
+  }
+  this.post = punct + this.post
+  return this
+}

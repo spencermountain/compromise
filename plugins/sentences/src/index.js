@@ -37,13 +37,15 @@ const addMethod = function(Doc) {
 
     /** add a word to the start of this sentence */
     prepend(str) {
-      // repair the titlecase
-      let firstTerms = this.match('^.')
-      firstTerms.not('#ProperNoun').toLowerCase()
-      // actually add the word
-      firstTerms.prepend(str)
-      // add a titlecase
-      firstTerms.terms(0).toTitleCase()
+      this.forEach(doc => {
+        // repair the titlecase
+        let firstTerms = doc.match('^.')
+        firstTerms.not('#ProperNoun').toLowerCase()
+        // actually add the word
+        firstTerms.prepend(str)
+        // add a titlecase
+        firstTerms.terms(0).toTitleCase()
+      })
     }
 
     /** add a word to the end of this sentence */

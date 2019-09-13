@@ -59,6 +59,7 @@ const stretchAll = function(doc, oldStart, newPhrase) {
   if (phrase.start === oldStart) {
     phrase.start = newPhrase.start
   }
+  // console.log(newPhrase)
   phrase.length += newPhrase.length
   if (doc.from) {
     stretchAll(doc.from, oldStart, newPhrase)

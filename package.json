@@ -19,8 +19,8 @@
     "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer",
     "filesize": "node ./scripts/filesize.js",
     "watch": "amble ./scratch.js",
-    "stress": "node ./stress/stress.js",
-    "speed": "node ./stress/speed.js",
+    "stress": "node ./scripts/stress-test/stress.js",
+    "speed": "node ./scripts/stress-test/speed.js",
     "demo": "python -m SimpleHTTPServer 8888",
     "lint": "eslint ./src/"
   },

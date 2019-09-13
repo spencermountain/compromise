@@ -3,21 +3,16 @@ var nlp = require('./src/index')
 nlp.extend(require('./plugins/verbs/src'))
 nlp.extend(require('./plugins/sentences/src'))
 
-/*
-    ✖ sort
-    ✖ replaceWith
-    ✖ splitOn
-    ✖ flatten
-*/
+var doc = nlp('cool')
+doc.sentences().prepend('so')
+doc.debug()
 
-let doc = nlp('one two. one two')
-doc.append('ooooooooo')
-// doc.debug()
-// doc.match('two').append('ooooooooo')
-
+// console.log(doc.list)
+// console.log(doc.terms())
+// console.log(doc.text())
 // doc.verbs().toNegative()
 
 // var doc = nlp('spencer is nice, warm and tired.')
 // doc.lists().add('CRAAZY')
-doc.replaceWith()
-console.log(doc.out())
+// doc.replaceWith()
+// console.log(doc.out())

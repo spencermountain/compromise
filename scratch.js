@@ -1,6 +1,6 @@
 var nlp = require('./src/index')
 // nlp.verbose(true)
-// nlp.extend(require('./plugins/verbs/src'))
+nlp.extend(require('./plugins/verbs/src'))
 
 /*
     ✖ sort
@@ -9,12 +9,12 @@ var nlp = require('./src/index')
     ✖ flatten
 */
 
-var doc = nlp('one. two, two.    Three,   three, three.').words()
-// .sort('freq')
-// .debug()
-console.log(
-  doc.text({
-    case: true,
-  })
-)
-// console.log('|' + doc.text('clean') + '|')
+var doc = nlp('spencer is really great! Spencer really, really was superb.')
+// doc.append('really')
+// doc.verbs().toNegative()
+doc
+  .verbs()
+  .adverbs()
+  .remove()
+
+doc.out()

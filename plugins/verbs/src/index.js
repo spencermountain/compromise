@@ -1,4 +1,5 @@
 const conjugate = require('./conjugate')
+const toNegative = require('./toNegative')
 
 // turn 'would not really walk up' into parts
 const parseVerb = function(vb) {
@@ -17,7 +18,21 @@ const addMethod = function(Doc) {
     constructor(list, from, world) {
       super(list, from, world)
     }
+
+    /** grab the adverbs describing these verbs */
+    adverbs() {
+      let list = []
+      this.forEach(vb => {
+        let advb = parseVerb(vb).adverb
+        if (advb.found) {
+          list = list.concat(advb.list)
+        }
+      })
+      return this.buildFrom(list)
+    }
+    /** */
     // conjugation(){}
+    /** */
     conjugations() {
       let result = []
       this.forEach(vb => {
@@ -27,12 +42,32 @@ const addMethod = function(Doc) {
       })
       return result
     }
+    /** */
     // isPlural(){}
+    /** */
     // isSingular(){}
-    // isNegative(){}
-    // isPositive(){}
-    // toNegative(){}
-    // toPositive(){}
+
+    /** return only verbs with 'not'*/
+    isNegative() {
+      return this.if('#Negative')
+    }
+    /**  return only verbs without 'not'*/
+    isPositive() {
+      return this.ifNo('#Negative')
+    }
+    /** add a 'not' to these verbs */
+    toNegative() {
+      this.forEach(vb => {
+        let parsed = parseVerb(vb)
+        toNegative(parsed, this.world)
+      })
+      return this
+    }
+    /** remove 'not' from these verbs */
+    toPositive() {
+      return this.remove('#Negative')
+    }
+    /** */
     toPastTense() {
       let transforms = this.world.transforms
       return this.map(vb => {
@@ -49,35 +84,31 @@ const addMethod = function(Doc) {
         return vb
       })
     }
+    /** */
     // toPresentTense(){}
+    /** */
     // toFutureTense(){}
+    /** */
     // toInfinitive(){}
+    /** */
     // toGerund(){}
+    /** */
     // asAdjective(){}
   }
 
   Doc.prototype.verbs = function(n) {
     let match = this.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+')
-    // match.debug()
     // handle commas
-    // match = match.splitAfter('#Comma')
-    //handle slashes
-    // match.list.forEach(ts => {
-    //   ts.terms.forEach(t => {
-    //     if (t.whitespace.before.match('/')) {
-    //       match.splitOn(t.clean)
-    //     }
-    //   })
-    // })
-    match = match.if('#Verb') //this should be (much) smarter
-
+    // match = match.splitAfter('!#Adverb @hasComma')
+    //handle slashes?
+    // match = match.splitAfter('@hasSlash')
+    //ensure there's actually a verb
+    match = match.if('#Verb') //this could be smarter
     //grab (n)th result
     if (typeof n === 'number') {
       match = match.get(n)
     }
     let vb = new Verbs(match.list, this, this.world)
-
-    this.debug()
     return vb
   }
   return Doc

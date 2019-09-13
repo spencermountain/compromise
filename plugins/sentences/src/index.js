@@ -1,7 +1,26 @@
 const addMethod = function(Doc) {
   /**  */
   class Sentences extends Doc {
-    // function()
+    constructor(list, from, world) {
+      super(list, from, world)
+    }
+    toPastTense() {}
+    toPresentTense() {}
+    toFutureTense() {}
+    toContinuous() {}
+
+    toNegative() {}
+    toPositive() {}
+
+    isPassive() {}
+    isQuestion() {}
+
+    prepend() {}
+    append() {}
+
+    toExclamation() {}
+    toQuestion() {}
+    toStatement() {}
   }
 
   Doc.prototype.sentences = function(n) {

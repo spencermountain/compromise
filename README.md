@@ -140,18 +140,6 @@ type hints
 ]
 ```
 
-working version:
-**'text'** -
-
-**'normal'** - whitespace, unicode
-
-**'clean'** - += (non-sentence) punctuation
-
-**'simple'** - += contractions
-
-**'reduced'** - += no adverbs, emoji, parentheses, quotations
-
-**'root'** - += infinitive verbs, singular nouns
 
 
 ## Subsets

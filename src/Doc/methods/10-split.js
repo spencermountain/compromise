@@ -56,3 +56,11 @@ exports.concat = function() {
   }
   return this.buildFrom(list)
 }
+
+// /** turn these matches into one match */
+// exports.flatten = function() {
+//   this.list.forEach( p => {
+
+//   })
+//   return this
+// }

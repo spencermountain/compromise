@@ -4,6 +4,24 @@ const trimEnd = function(str) {
 
 /** produce output in the given format */
 exports.text = function(options = {}, isFirst, isLast) {
+  if (typeof options === 'string') {
+    if (options === 'normal') {
+      options = {
+        punctuation: true,
+        whitespace: true,
+        unicode: true,
+      }
+    } else if (options === 'clean') {
+      options = {
+        lowercase: true,
+        punctuation: true,
+        whitespace: true,
+        unicode: true,
+      }
+    } else {
+      options = {}
+    }
+  }
   let terms = this.terms()
   //this this phrase a complete sentence?
   let isFull = false

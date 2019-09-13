@@ -27,3 +27,5 @@ exports.delete = function(match) {
   toRemove.list.forEach(phrase => phrase.delete(this))
   return this
 }
+// aliases
+exports.remove = exports.delete

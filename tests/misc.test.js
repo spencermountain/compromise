@@ -18,6 +18,16 @@ const only = function(options) {
 //   t.end()
 // })
 
+test('verbs.adverbs', function(t) {
+  var doc = nlp('spencer is really great! Spencer really, really was superb.')
+  doc
+    .verbs()
+    .adverbs()
+    .remove()
+  t.equal(doc.out(), 'spencer is great! Spencer was superb.', 'no-adverbs')
+  t.end()
+})
+
 test('normalize unicode', function(t) {
   let doc = nlp.tokenize(` it's   coöl, (i think) .    He is   cool;  i said .`)
   let options = only({ unicode: true })

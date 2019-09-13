@@ -3,24 +3,6 @@ const jsonDefaults = { text: true, trim: true, terms: { text: true, tags: true, 
 
 /** return the document as text */
 exports.text = function(options = {}) {
-  if (typeof options === 'string') {
-    if (options === 'normal') {
-      options = {
-        punctuation: true,
-        whitespace: true,
-        unicode: true,
-      }
-    } else if (options === 'clean') {
-      options = {
-        case: true,
-        punctuation: true,
-        whitespace: true,
-        unicode: true,
-      }
-    } else {
-      options = {}
-    }
-  }
   //are we showing every phrase?
   let showFull = false
   if (this.parents().length === 0) {

@@ -15,6 +15,9 @@ exports.textOut = function(options, showPre, showPost) {
       after = ''
     }
   }
+  if (options.lowercase === true) {
+    word = word.toLowerCase()
+  }
   if (options.punctuation === true) {
     //normalized end punctuation
     if (this.hasPeriod() === true) {

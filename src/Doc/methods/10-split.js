@@ -5,13 +5,14 @@ exports.prepend = function(str) {
   if (!str) {
     return this
   }
-  //build it
-  let phrase = tokenize.fromText(str, this.world, this.pool())[0] //assume it's one sentence, for now
-  //tag it
-  let tmpDoc = this.buildFrom([phrase])
-  tmpDoc.tagger()
-  //add it in
+  //add it to start of every phrase
   this.list.forEach(p => {
+    //build it
+    let phrase = tokenize.fromText(str, this.world, this.pool())[0] //assume it's one sentence, for now
+    //tag it
+    let tmpDoc = this.buildFrom([phrase])
+    tmpDoc.tagger()
+    // add it to the start
     p.prepend(phrase, this)
   })
   return this
@@ -23,13 +24,14 @@ exports.append = function(str) {
   if (!str) {
     return this
   }
-  //build it
-  let phrase = tokenize.fromText(str, this.world, this.pool())[0] //assume it's one sentence, for now
-  //tag it
-  let tmpDoc = this.buildFrom([phrase])
-  tmpDoc.tagger()
-  //add it in
+  //add it to end of every phrase
   this.list.forEach(p => {
+    //build it
+    let phrase = tokenize.fromText(str, this.world, this.pool())[0] //assume it's one sentence, for now
+    //tag it
+    let tmpDoc = this.buildFrom([phrase])
+    tmpDoc.tagger()
+    // push it onto the end
     p.append(phrase, this)
   })
   return this

@@ -2,6 +2,9 @@ const tokenize = require('../../01-tokenizer')
 
 /** substitute-in new content */
 exports.replaceWith = function(replace) {
+  if (!replace) {
+    return this.delete()
+  }
   this.list.forEach(p => {
     let newPhrases = tokenize.fromText(replace, this.world, this.pool())
     //tag the new phrases

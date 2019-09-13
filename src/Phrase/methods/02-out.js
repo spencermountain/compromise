@@ -25,7 +25,7 @@ exports.text = function(options = {}, isFirst, isLast) {
   let terms = this.terms()
   //this this phrase a complete sentence?
   let isFull = false
-  if (terms[0].prev === null && terms[terms.length - 1].next === null) {
+  if (terms[0] && terms[0].prev === null && terms[terms.length - 1].next === null) {
     isFull = true
   }
   let text = terms.reduce((str, t, i) => {

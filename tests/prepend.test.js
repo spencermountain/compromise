@@ -16,6 +16,13 @@ test('prepend middle', function(t) {
   t.end()
 })
 
+test('prepend multi', function(t) {
+  let doc = nlp('one two. three four')
+  doc.prepend('oooo')
+  t.equal(doc.text(), 'oooo one two. oooo three four')
+  t.end()
+})
+
 test('prepend children', function(t) {
   let doc = nlp(`one four five six.`)
   let m1 = doc.match('one four')

@@ -2,14 +2,17 @@
 const addWhitespace = function(beforeTerms, newTerms) {
   // add any existing pre-whitespace to beginning
   newTerms[0].pre = beforeTerms[0].pre
+  let lastTerm = beforeTerms[beforeTerms.length - 1]
 
-  //add any existing end-whitespace to end of our new terms
+  //add any existing punctuation to end of our new terms
   let newTerm = newTerms[newTerms.length - 1]
-  newTerm.post = beforeTerms[beforeTerms.length - 1].post
+  newTerm.post = lastTerm.post
+  // remove existing punctuation
+  lastTerm.post = ''
 
   //before ←[space]  - after
-  if (beforeTerms[beforeTerms.length - 1].post === '') {
-    beforeTerms[beforeTerms.length - 1].post += ' '
+  if (lastTerm.post === '') {
+    lastTerm.post += ' '
   }
 }
 

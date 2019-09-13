@@ -208,4 +208,4 @@ exports.after = function(reg) {
 }
 
 //aliases
-// methods.splitOn = methods.split
+exports.splitOn = exports.split

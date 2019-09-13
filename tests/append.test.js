@@ -16,6 +16,13 @@ test('append one child', function(t) {
   t.end()
 })
 
+test('append multi', function(t) {
+  let doc = nlp('one two. three four')
+  doc.append('oooo')
+  t.equal(doc.text(), 'one two oooo. three four oooo')
+  t.end()
+})
+
 test('append two children', function(t) {
   let doc = nlp(`one two three`)
   let m = doc.match('two three')

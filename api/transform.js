@@ -128,10 +128,10 @@ module.exports = {
     returns: 'Text',
     example: "nlp('My name is Otto').concat('and i love to get blotto').sentences().length\n//1",
   },
-  flatten: {
-    desc: 'turn a list of results into one result',
-    mutative: false,
-    returns: 'Text',
-    example: "nlp('sex cauldron? I thought they closed that place down.').flatten().length\n//1",
-  },
+  // flatten: {
+  //   desc: 'turn a list of results into one result',
+  //   mutative: false,
+  //   returns: 'Text',
+  //   example: "nlp('sex cauldron? I thought they closed that place down.').flatten().length\n//1",
+  // },
 }

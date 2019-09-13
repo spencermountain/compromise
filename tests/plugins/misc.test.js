@@ -22,6 +22,16 @@ test('sentence prepend', function(t) {
   t.end()
 })
 
+test('sentence filters', function(t) {
+  var doc = nlp('He is cool? I think not. Yipeee!').sentences()
+
+  t.equal(doc.isExclamation().length, 1, 'has-exclamation')
+  t.equal(doc.isQuestion().length, 1, 'has-question')
+  t.equal(doc.isStatement().length, 1, 'has-statement')
+
+  t.end()
+})
+
 test('sentence append', function(t) {
   let doc = nlp('Spencer is cool.')
   doc.sentences().append('i think')

@@ -75,16 +75,14 @@ exports.parentheses = function(n) {
 
 /** return any sentences that ask a question */
 exports.questions = function(doc) {
-  let list = doc.sentences().list.filter(p => {
-    return p.lastTerm().hasQuestionMark()
-  })
-  return doc.buildFrom(list)
+  return doc.sentences().isQuestion()
 }
 
-/** return any sentences that are not a question */
+/** return any sentences that are not a question or exclamation*/
 exports.statements = function(doc) {
-  let list = doc.sentences().list.filter(p => {
-    return p.lastTerm().hasQuestionMark() === false
-  })
-  return doc.buildFrom(list)
+  return doc.sentences().isStatement()
+}
+/** return any sentences that are not a question */
+exports.exclamations = function(doc) {
+  return doc.sentences().isExclamation()
 }

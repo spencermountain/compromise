@@ -10,13 +10,11 @@ nlp.extend(require('./plugins/sentences/src'))
     ✖ flatten
 */
 
-var doc = nlp('He is cool.')
-doc.sentences().prepend('so i think')
-
-// doc.match('spencer').append('really')
-// doc.match('spencer').prepend('really')
-// doc.verbs().toNegative()
+let doc = nlp('spencer is cool. Spencer is nice')
+doc.match('is').prepend('really')
 doc.debug()
+
+// doc.verbs().toNegative()
 
 // var doc = nlp('spencer is nice, warm and tired.')
 // doc.lists().add('CRAAZY')

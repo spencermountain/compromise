@@ -20,13 +20,13 @@ exports.textOut = function(options, showPre, showPost) {
   }
   if (options.punctuation === true) {
     //normalized end punctuation
-    if (this.hasPeriod() === true) {
+    if (this.hasPost('.') === true) {
       after = '.' + after
-    } else if (this.hasQuestionMark() === true) {
+    } else if (this.hasPost('?') === true) {
       after = '?' + after
-    } else if (this.hasExclamation() === true) {
+    } else if (this.hasPost('!') === true) {
       after = '!' + after
-    } else if (this.hasComma() === true) {
+    } else if (this.hasPost(',') === true) {
       after = ',' + after
     } else if (this.hasElipses() === true) {
       after = '...' + after

@@ -1,34 +1,52 @@
+const getGrams = require('./getGrams')
+const startGrams = require('./startGrams')
+const tokenize = require('./tokenize')
+const sort = require('./sort')
+
 const addMethod = function(Doc) {
-  /**  */
-  class Gram extends Doc {
-    constructor(list, from, world) {
-      super(list, from, world)
-      //string to sort/uniq by
-      this.key = this.out('normal')
-      //bigram/trigram/etc
-      this.size = list.length
-      //number of occurances
-      this.count = 1
-    }
-    // function()
+  /** list all repeating sub-phrases, by word-count */
+  Doc.prototype.ngrams = function(obj) {
+    let list = tokenize(this)
+    let arr = getGrams(list, obj || {})
+    arr = sort(arr)
+    return arr
   }
 
-  Doc.prototype.ngrams = function(n, obj) {
-    let match = this.match('.')
-    //grab (n)th result
-    if (typeof n === 'number') {
-      match = match.get(n)
-    }
-    return new Gram(match.list, this, this.world)
-  }
-
+  /** n-grams with one word */
   Doc.prototype.unigrams = function(n) {
-    let match = this.match('.')
+    let arr = getGrams(tokenize(this), { max: 1, min: 1 })
+    arr = sort(arr)
     if (typeof n === 'number') {
-      match = match.get(n)
+      arr = arr[n]
     }
-    return new Gram(match.list, this, this.world)
+    return arr
   }
-  return Doc
+
+  /** n-grams with two words */
+  Doc.prototype.bigrams = function(n) {
+    let arr = getGrams(tokenize(this), { max: 2, min: 2 })
+    arr = sort(arr)
+    if (typeof n === 'number') {
+      arr = arr[n]
+    }
+    return arr
+  }
+  /** n-grams with two words */
+  Doc.prototype.trigrams = function(n) {
+    let arr = getGrams(tokenize(this), { max: 3, min: 3 })
+    arr = sort(arr)
+    if (typeof n === 'number') {
+      arr = arr[n]
+    }
+    return arr
+  }
+
+  /** list all repeating sub-phrases, using the first word */
+  Doc.prototype.startgrams = function(obj) {
+    let list = tokenize(this)
+    let arr = startGrams(list, obj || {})
+    arr = sort(arr)
+    return arr
+  }
 }
 module.exports = addMethod

@@ -12,8 +12,8 @@ exports.map = function(fn) {
   if (!fn) {
     return this
   }
-  let list = this.list.map((ts, i) => {
-    let doc = this.buildFrom([ts])
+  let list = this.list.map((p, i) => {
+    let doc = this.buildFrom([p])
     doc.from = null //it's not a child/parent
     return fn(doc, i).list[0]
   })
@@ -25,8 +25,8 @@ exports.forEach = function(fn) {
   if (!fn) {
     return this
   }
-  this.list.forEach((ts, i) => {
-    let doc = this.buildFrom([ts])
+  this.list.forEach((p, i) => {
+    let doc = this.buildFrom([p])
     doc.from = null //it's not a child/parent
     fn(doc, i)
   })
@@ -38,8 +38,8 @@ exports.filter = function(fn) {
   if (!fn) {
     return this
   }
-  let list = this.list.filter((ts, i) => {
-    let doc = this.buildFrom([ts])
+  let list = this.list.filter((p, i) => {
+    let doc = this.buildFrom([p])
     doc.from = null //it's not a child/parent
     return fn(doc, i)
   })
@@ -51,8 +51,8 @@ exports.find = function(fn) {
   if (!fn) {
     return this
   }
-  let list = this.list.find((ts, i) => {
-    let doc = this.buildFrom([ts])
+  let list = this.list.find((p, i) => {
+    let doc = this.buildFrom([p])
     doc.from = null //it's not a child/parent
     return fn(doc, i)
   })
@@ -67,8 +67,8 @@ exports.some = function(fn) {
   if (!fn) {
     return this
   }
-  return this.list.some((ts, i) => {
-    let doc = this.buildFrom([ts])
+  return this.list.some((p, i) => {
+    let doc = this.buildFrom([p])
     doc.from = null //it's not a child/parent
     return fn(doc, i)
   })

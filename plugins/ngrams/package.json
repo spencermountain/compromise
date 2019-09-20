@@ -40,7 +40,7 @@
     "rollup-plugin-node-resolve": "^5.1.0",
     "rollup-plugin-terser": "^5.0.0",
     "tap-dancer": "0.2.0",
-    "tape": "4.10.2"
+    "tape": "4.11.0"
   },
   "license": "MIT"
 }

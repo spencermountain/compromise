@@ -1,11 +1,11 @@
 
-# remove/cleanup nlp-plugin
+[] .text() steps
 
-# .values()
+[] .values()
   - .greaterThan()
   - cleanup tags/method names
 
-## .sort()
-
-# .sentences()
+[] .sort()
+[] .lists()
+[] .sentences()
 

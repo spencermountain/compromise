@@ -17,10 +17,10 @@ var nlp = require('./_lib')
 // })
 
 // test('add', function(t) {
-// var doc = nlp('spencer is nice, warm and tired.')
-// doc.lists().add('CRAAZY')
-// t.equal(doc.text(), 'spencer is nice, warm, CRAZY and tired.', 'without no-oxford')
-// t.end()
+//   var doc = nlp('spencer is nice, warm and tired.')
+//   doc.lists().add('CRAAZY')
+//   t.equal(doc.text(), 'spencer is nice, warm, CRAZY and tired.', 'without no-oxford')
+//   t.end()
 // })
 
 test('hasOxfordComma', function(t) {

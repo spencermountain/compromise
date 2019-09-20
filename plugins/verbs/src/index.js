@@ -57,9 +57,11 @@ const addMethod = function(Doc) {
     }
     /** add a 'not' to these verbs */
     toNegative() {
-      this.forEach(vb => {
-        let parsed = parseVerb(vb)
-        toNegative(parsed, this.world)
+      // not native forEach!
+      this.list.forEach(p => {
+        let doc = this.buildFrom([p])
+        let parsed = parseVerb(doc)
+        toNegative(parsed, doc.world)
       })
       return this
     }

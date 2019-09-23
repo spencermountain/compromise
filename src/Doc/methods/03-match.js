@@ -39,12 +39,6 @@ exports.matchOne = function(reg) {
   return this.buildFrom([])
 }
 
-/**Return a boolean if this match exists */
-exports.has = function(reg) {
-  let regs = parseSyntax(reg)
-  return this.list.some(p => p.has(regs) === true)
-}
-
 /** return each current phrase, only if it contains this match */
 exports.if = function(reg) {
   let regs = parseSyntax(reg)
@@ -59,16 +53,10 @@ exports.ifNo = function(reg) {
   return this.buildFrom(found)
 }
 
-/** return only the terms that can be this tag*/
-exports.canBe = function(tag) {
-  if (!tag) {
-    return this
-  }
-  let world = this.world
-  let matches = this.list.reduce((arr, p) => {
-    return arr.concat(p.canBe(tag, world))
-  }, [])
-  return this.buildFrom(matches)
+/**Return a boolean if this match exists */
+exports.has = function(reg) {
+  let regs = parseSyntax(reg)
+  return this.list.some(p => p.has(regs) === true)
 }
 
 /** return all terms before a match, in each phrase */

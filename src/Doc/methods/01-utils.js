@@ -39,3 +39,11 @@ exports.wordCount = function() {
   }, 0)
 }
 exports.wordcount = exports.wordCount
+
+/** turn on logging for decision-debugging */
+exports.verbose = function(bool) {
+  if (bool === undefined) {
+    bool = true
+  }
+  this.world.verbose = bool
+}

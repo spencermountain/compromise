@@ -26,10 +26,14 @@ exports.unTag = function(tags, why) {
   return this
 }
 
-/** turn on logging for decision-debugging */
-exports.verbose = function(bool) {
-  if (bool === undefined) {
-    bool = true
+/** return only the terms that can be this tag*/
+exports.canBe = function(tag) {
+  if (!tag) {
+    return this
   }
-  this.world.verbose = bool
+  let world = this.world
+  let matches = this.list.reduce((arr, p) => {
+    return arr.concat(p.canBe(tag, world))
+  }, [])
+  return this.buildFrom(matches)
 }

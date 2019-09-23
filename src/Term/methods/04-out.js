@@ -28,7 +28,7 @@ exports.textOut = function(options, showPre, showPost) {
       after = '!' + after
     } else if (this.hasPost(',') === true) {
       after = ',' + after
-    } else if (this.hasElipses() === true) {
+    } else if (this.hasEllipses() === true) {
       after = '...' + after
     }
   }

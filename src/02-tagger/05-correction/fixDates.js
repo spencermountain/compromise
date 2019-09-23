@@ -70,7 +70,7 @@ const fixDates = function(doc) {
     person
       .match(`${preps} ${people}`)
       .ifNo('#Holiday')
-      .term(1)
+      .terms(1)
       .tag('Month', 'preps-month')
     //this april
     person.match(`(next|this|last) [${people}]`).tag('Month', 'correction-may') //maybe not 'this'

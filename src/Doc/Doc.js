@@ -98,7 +98,7 @@ extend(Doc)
 
 //aliases
 const aliases = {
-  unTag: 'untag',
+  untag: 'unTag',
   and: 'match',
   notIf: 'ifNo',
   only: 'if',

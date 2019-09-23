@@ -26,7 +26,7 @@ exports.hasQuestionMark = function() {
 }
 
 /** is there a ... at the end? */
-exports.hasElipses = function() {
+exports.hasEllipses = function() {
   return this.hasPost('..') || this.hasPost('…')
 }
 

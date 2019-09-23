@@ -63,7 +63,7 @@
 ### Tag
 * **tag**  -  Give all terms the given tag
 * **tagSafe**  -  Only apply tag to terms if it is consistent with current tags
-* **untag**  -  Remove this term from the given terms
+* **unTag**  -  Remove this term from the given terms
 * **canBe**  -  return only the terms that can be this tag
 
 
@@ -88,15 +88,6 @@
 * **statements**  -  return any sentences that are not a question or exclamation
 * **exclamations**  -  return any sentences that are not a question
 
-
-### json:
-  * text
-  * normal
-  * offset
-  * terms
-    * text
-    * tags
-    * normal
   
 ### text:
   * **text**  -  
@@ -108,6 +99,24 @@
   * **chron**  -  the 'chronological', or original document sort order 
   * **byFreq**  -  sort by # of duplicates in the document
 
+### match:
+  * **@hasComma**  -  does it have a comma?
+  * **@hasPeriod**  -  does it end in a period?
+  * **@hasExclamation**  -  does it end in an exclamation
+  * **@hasQuestionMark**  -  does it end with a question mark?
+  * **@hasEllipses**  -  is there a ... at the end?
+  * **@hasSemicolon**  -  is there a semicolon after this word?
+  * **@hasSlash**  -  is there a slash after this word?
+  * **@hasContraction**  -  is it multiple words combined?
+  * **@isAcronym**  -  does this term look like an acronym?
+  * **@isKnown**  -  does the term have at least one good tag?
  
-
+### json:
+  * text
+  * normal
+  * offset
+  * terms
+    * text
+    * tags
+    * normal
 

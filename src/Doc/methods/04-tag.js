@@ -19,7 +19,7 @@ exports.tagSafe = function(tags, why) {
 }
 
 /** Remove this term from the given terms */
-exports.untag = function(tags, why) {
+exports.unTag = function(tags, why) {
   this.list.forEach(p => {
     p.terms().forEach(t => t.unTag(tags, why, this.world))
   })

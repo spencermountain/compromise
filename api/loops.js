@@ -3,7 +3,7 @@ module.exports = {
     desc: 'do something on each result independently',
     params: ['Function'],
     returns: 'Doc',
-    example: `nlp('Oh, no! Bette Midler!').match('#Person+').forEach((m,i)=> console.log(m.out()))
+    example: `nlp('Oh, no! Bette Midler!').match('#Person+').forEach((m,i)=> m.out())  //(console.log)
     //Bette Midler!`,
   },
   map: {

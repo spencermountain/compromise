@@ -7,7 +7,10 @@ const Doc = require('./Doc/Doc')
 let world = new World()
 
 /** parse and tag text into a compromise object  */
-const nlp = function(text = '') {
+const nlp = function(text = '', lexicon) {
+  if (lexicon) {
+    world.addWords(lexicon)
+  }
   let list = tokenize.fromText(text, world)
   let doc = new Doc(list, null, world)
   doc.tagger()
@@ -15,7 +18,10 @@ const nlp = function(text = '') {
 }
 
 /** parse text into a compromise object, without running POS-tagging */
-nlp.tokenize = function(text = '') {
+nlp.tokenize = function(text = '', lexicon) {
+  if (lexicon) {
+    world.addWords(lexicon)
+  }
   let list = tokenize.fromText(text, world)
   let doc = new Doc(list, null, world)
   return doc

@@ -68,12 +68,15 @@ const addMore = function(word, tag, world) {
 }
 
 // throw a bunch of words in our lexicon
-const addWords = function(words, tag, world) {
-  let lexicon = world.lexicon
-  for (let i = 0; i < words.length; i++) {
-    addWord(words[i], tag, lexicon)
-    // do some fancier stuff
-    addMore(words[i], tag, world)
-  }
+// const doWord = function(words, tag, world) {
+//   let lexicon = world.lexicon
+//   for (let i = 0; i < words.length; i++) {
+//     addWord(words[i], tag, lexicon)
+//     // do some fancier stuff
+//     addMore(words[i], tag, world)
+//   }
+// }
+module.exports = {
+  addWord: addWord,
+  addMore: addMore,
 }
-module.exports = addWords

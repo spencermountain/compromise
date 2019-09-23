@@ -3,10 +3,9 @@ var nlp = require('./src/index')
 // nlp.extend(require('./plugins/verbs/src'))
 // nlp.extend(require('./plugins/ngrams/src'))
 
-// var doc = nlp('i am in houston texas. i am a good person. so i think he is a good person.')
-// let arr = doc.endgrams({ size: 2 })
-// console.log(arr)
-
-nlp('Hey, Laura. Dr. Tongue has arrived')
-  .match('#Person+')
-  .forEach((m, i) => console.log(m.toLowerCase().out('normal')))
+var lexicon = {
+  'bed bath and beyond': 'Organization',
+}
+nlp('shopping at Bed Bath and Beyond the store', lexicon).debug()
+// var str = r.organizations().out('normal')
+// console.log(str)

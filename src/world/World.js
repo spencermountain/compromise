@@ -1,7 +1,7 @@
 const lexData = require('./_data')
 const defaultTags = require('./tags')
 const unpack = require('efrt-unpack')
-const addWords = require('./addWords')
+const addLex = require('./addWords')
 const addIrregulars = require('./addIrregulars')
 
 let misc = require('./data/misc')
@@ -94,9 +94,24 @@ class World {
     let tags = Object.keys(lex)
     for (let i = 0; i < tags.length; i++) {
       let words = Object.keys(unpack(lex[tags[i]]))
-      addWords(words, tags[i], this)
+      for (let w = 0; w < words.length; w++) {
+        addLex.addWord(words[w], tags[i], this.lexicon)
+        // do some fancier stuff
+        addLex.addMore(words[w], tags[i], this)
+      }
     }
   }
+  /** put new words into our lexicon, properly */
+  addWords(obj) {
+    let keys = Object.keys(obj)
+    for (let i = 0; i < keys.length; i++) {
+      let word = keys[i].toLowerCase()
+      addLex.addWord(word, obj[keys[i]], this.lexicon)
+      // do some fancier stuff
+      addLex.addMore(word, obj[keys[i]], this)
+    }
+  }
+
   addIrregulars() {
     addIrregulars(this)
     return this

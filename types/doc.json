@@ -1,0 +1,1374 @@
+{
+  "docs": [
+    {
+      "comment": "/**  */",
+      "meta": {
+        "range": [
+          8,
+          101
+        ],
+        "filename": "01-utils.js",
+        "lineno": 2,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100000003",
+          "name": "exports.wordCount",
+          "type": "FunctionExpression",
+          "paramnames": []
+        }
+      },
+      "name": "wordCount",
+      "longname": "wordCount",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000002",
+      "___s": true
+    },
+    {
+      "comment": "/** create a Doc from the first Term of each phrase */",
+      "meta": {
+        "range": [
+          158,
+          331
+        ],
+        "filename": "01-utils.js",
+        "lineno": 7,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100000017",
+          "name": "exports.term",
+          "type": "FunctionExpression",
+          "paramnames": [
+            "n"
+          ]
+        },
+        "vars": {
+          "list": "term~list",
+          "": null
+        }
+      },
+      "description": "create a Doc from the first Term of each phrase",
+      "name": "term",
+      "longname": "term",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000003",
+      "___s": true
+    },
+    {
+      "comment": "/**  */",
+      "meta": {
+        "range": [
+          341,
+          401
+        ],
+        "filename": "01-utils.js",
+        "lineno": 16,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100000064",
+          "name": "exports.firstTerm",
+          "type": "FunctionExpression",
+          "paramnames": []
+        }
+      },
+      "name": "firstTerm",
+      "longname": "firstTerm",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000006",
+      "___s": true
+    },
+    {
+      "comment": "/**  */",
+      "meta": {
+        "range": [
+          410,
+          469
+        ],
+        "filename": "01-utils.js",
+        "lineno": 20,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100000077",
+          "name": "exports.lastTerm",
+          "type": "FunctionExpression",
+          "paramnames": []
+        }
+      },
+      "name": "lastTerm",
+      "longname": "lastTerm",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000007",
+      "___s": true
+    },
+    {
+      "comment": "/** use only the first result(s) */",
+      "meta": {
+        "range": [
+          506,
+          615
+        ],
+        "filename": "01-utils.js",
+        "lineno": 24,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100000090",
+          "name": "exports.first",
+          "type": "FunctionExpression",
+          "paramnames": [
+            "n"
+          ]
+        }
+      },
+      "description": "use only the first result(s)",
+      "name": "first",
+      "longname": "first",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000008",
+      "___s": true
+    },
+    {
+      "comment": "/** use only the last result(s) */",
+      "meta": {
+        "range": [
+          651,
+          815
+        ],
+        "filename": "01-utils.js",
+        "lineno": 31,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100000116",
+          "name": "exports.last",
+          "type": "FunctionExpression",
+          "paramnames": [
+            "n"
+          ]
+        },
+        "vars": {
+          "end": "last~end"
+        }
+      },
+      "description": "use only the last result(s)",
+      "name": "last",
+      "longname": "last",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000009",
+      "___s": true
+    },
+    {
+      "comment": "/** grab a subset of the results*/",
+      "meta": {
+        "range": [
+          852,
+          963
+        ],
+        "filename": "01-utils.js",
+        "lineno": 40,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100000158",
+          "name": "exports.slice",
+          "type": "FunctionExpression",
+          "paramnames": [
+            "start",
+            "end"
+          ]
+        },
+        "vars": {
+          "list": "slice~list"
+        }
+      },
+      "description": "grab a subset of the results",
+      "name": "slice",
+      "longname": "slice",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000011",
+      "___s": true
+    },
+    {
+      "comment": "/** use only the nth result*/",
+      "meta": {
+        "range": [
+          994,
+          1184
+        ],
+        "filename": "01-utils.js",
+        "lineno": 45,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100000184",
+          "name": "exports.get",
+          "type": "FunctionExpression",
+          "paramnames": [
+            "n"
+          ]
+        },
+        "vars": {
+          "list": "get~list"
+        }
+      },
+      "description": "use only the nth result",
+      "name": "get",
+      "longname": "get",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000013",
+      "___s": true
+    },
+    {
+      "comment": "/** sample a subset of the results */",
+      "meta": {
+        "range": [
+          1224,
+          1591
+        ],
+        "filename": "01-utils.js",
+        "lineno": 55,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100000228",
+          "name": "exports.random",
+          "type": "FunctionExpression",
+          "paramnames": [
+            "n"
+          ]
+        },
+        "vars": {
+          "r": "random~r",
+          "list": "random~list"
+        }
+      },
+      "description": "sample a subset of the results",
+      "name": "random",
+      "longname": "random",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000015",
+      "___s": true
+    },
+    {
+      "comment": "/** return a flat array of term objects */",
+      "meta": {
+        "range": [
+          1636,
+          2006
+        ],
+        "filename": "01-utils.js",
+        "lineno": 73,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100000316",
+          "name": "exports.termList",
+          "type": "FunctionExpression",
+          "paramnames": [
+            "num"
+          ]
+        },
+        "vars": {
+          "arr": "termList~arr",
+          "i": "termList~i",
+          "terms": "termList~terms",
+          "o": "termList~o"
+        }
+      },
+      "description": "return a flat array of term objects",
+      "name": "termList",
+      "longname": "termList",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000020",
+      "___s": true
+    },
+    {
+      "comment": "/** how many seperate terms does the document have? */",
+      "meta": {
+        "range": [
+          2063,
+          2189
+        ],
+        "filename": "01-utils.js",
+        "lineno": 90,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100000392",
+          "name": "exports.wordCount",
+          "type": "FunctionExpression",
+          "paramnames": []
+        },
+        "vars": {
+          "": null
+        }
+      },
+      "description": "how many seperate terms does the document have?",
+      "name": "wordCount",
+      "longname": "wordCount",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000025",
+      "___s": true
+    },
+    {
+      "comment": "/** turn every letter of every term to lower-cse */",
+      "meta": {
+        "range": [
+          201,
+          276
+        ],
+        "filename": "02-case.js",
+        "lineno": 10,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100000469",
+          "name": "exports.toLowerCase",
+          "type": "FunctionExpression",
+          "paramnames": []
+        }
+      },
+      "description": "turn every letter of every term to lower-cse",
+      "name": "toLowerCase",
+      "longname": "toLowerCase",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000030",
+      "___s": true
+    },
+    {
+      "comment": "/** turn every letter of every term to upper case */",
+      "meta": {
+        "range": [
+          331,
+          406
+        ],
+        "filename": "02-case.js",
+        "lineno": 15,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100000481",
+          "name": "exports.toUpperCase",
+          "type": "FunctionExpression",
+          "paramnames": []
+        }
+      },
+      "description": "turn every letter of every term to upper case",
+      "name": "toUpperCase",
+      "longname": "toUpperCase",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000031",
+      "___s": true
+    },
+    {
+      "comment": "/** upper-case the first letter of each term */",
+      "meta": {
+        "range": [
+          456,
+          531
+        ],
+        "filename": "02-case.js",
+        "lineno": 20,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100000493",
+          "name": "exports.toTitleCase",
+          "type": "FunctionExpression",
+          "paramnames": []
+        }
+      },
+      "description": "upper-case the first letter of each term",
+      "name": "toTitleCase",
+      "longname": "toTitleCase",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000032",
+      "___s": true
+    },
+    {
+      "comment": "/** remove whitespace and title-case each term */",
+      "meta": {
+        "range": [
+          582,
+          876
+        ],
+        "filename": "02-case.js",
+        "lineno": 24,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100000505",
+          "name": "exports.toCamelCase",
+          "type": "FunctionExpression",
+          "paramnames": []
+        },
+        "vars": {
+          "": null
+        }
+      },
+      "description": "remove whitespace and title-case each term",
+      "name": "toCamelCase",
+      "longname": "toCamelCase",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000033",
+      "___s": true
+    },
+    {
+      "comment": "/** remove start and end whitespace */",
+      "meta": {
+        "range": [
+          39,
+          125
+        ],
+        "filename": "03-whitespace.js",
+        "lineno": 2,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100000569",
+          "name": "exports.trim",
+          "type": "FunctionExpression",
+          "paramnames": []
+        },
+        "vars": {
+          "this.list": null,
+          "": null
+        }
+      },
+      "description": "remove start and end whitespace",
+      "name": "trim",
+      "longname": "trim",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000036",
+      "___s": true
+    },
+    {
+      "comment": "/** connect words with hyphen, and remove whitespace */",
+      "meta": {
+        "range": [
+          183,
+          492
+        ],
+        "filename": "03-whitespace.js",
+        "lineno": 8,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100000595",
+          "name": "exports.hyphenate",
+          "type": "FunctionExpression",
+          "paramnames": []
+        },
+        "vars": {
+          "": null
+        }
+      },
+      "description": "connect words with hyphen, and remove whitespace",
+      "name": "hyphenate",
+      "longname": "hyphenate",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000038",
+      "___s": true
+    },
+    {
+      "comment": "/** remove hyphens between words, and set whitespace */",
+      "meta": {
+        "range": [
+          550,
+          850
+        ],
+        "filename": "03-whitespace.js",
+        "lineno": 26,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100000661",
+          "name": "exports.dehyphenate",
+          "type": "FunctionExpression",
+          "paramnames": []
+        },
+        "vars": {
+          "hasHyphen": "dehyphenate~hasHyphen",
+          "": null
+        }
+      },
+      "description": "remove hyphens between words, and set whitespace",
+      "name": "dehyphenate",
+      "longname": "dehyphenate",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000042",
+      "___s": true
+    },
+    {
+      "comment": "/** Give all terms the given tag */",
+      "meta": {
+        "range": [
+          70,
+          189
+        ],
+        "filename": "04-tag.js",
+        "lineno": 4,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100000729",
+          "name": "exports.tag",
+          "type": "FunctionExpression",
+          "paramnames": [
+            "tags",
+            "why"
+          ]
+        }
+      },
+      "description": "Give all terms the given tag",
+      "name": "tag",
+      "longname": "tag",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000047",
+      "___s": true
+    },
+    {
+      "comment": "/** Only apply tag to terms if it is consistent with current tags */",
+      "meta": {
+        "range": [
+          260,
+          382
+        ],
+        "filename": "04-tag.js",
+        "lineno": 13,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100000753",
+          "name": "exports.tagSafe",
+          "type": "FunctionExpression",
+          "paramnames": [
+            "tags",
+            "why"
+          ]
+        }
+      },
+      "description": "Only apply tag to terms if it is consistent with current tags",
+      "name": "tagSafe",
+      "longname": "tagSafe",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000048",
+      "___s": true
+    },
+    {
+      "comment": "/** Remove this term from the given terms */",
+      "meta": {
+        "range": [
+          429,
+          573
+        ],
+        "filename": "04-tag.js",
+        "lineno": 22,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100000777",
+          "name": "exports.untag",
+          "type": "FunctionExpression",
+          "paramnames": [
+            "tags",
+            "why"
+          ]
+        },
+        "vars": {
+          "": null
+        }
+      },
+      "description": "Remove this term from the given terms",
+      "name": "untag",
+      "longname": "untag",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000049",
+      "___s": true
+    },
+    {
+      "comment": "/** turn on logging for decision-debugging */",
+      "meta": {
+        "range": [
+          621,
+          733
+        ],
+        "filename": "04-tag.js",
+        "lineno": 30,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100000817",
+          "name": "exports.verbose",
+          "type": "FunctionExpression",
+          "paramnames": [
+            "bool"
+          ]
+        },
+        "vars": {
+          "bool": "verbose~bool",
+          "this.world.verbose": "world.verbose"
+        }
+      },
+      "description": "turn on logging for decision-debugging",
+      "name": "verbose",
+      "longname": "verbose",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000050",
+      "___s": true
+    },
+    {
+      "comment": "/** run a function on each phrase */",
+      "meta": {
+        "range": [
+          517,
+          730
+        ],
+        "filename": "05-loops.js",
+        "lineno": 24,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100000935",
+          "name": "exports.forEach",
+          "type": "FunctionExpression",
+          "paramnames": [
+            "fn"
+          ]
+        },
+        "vars": {
+          "": null
+        }
+      },
+      "description": "run a function on each phrase",
+      "name": "forEach",
+      "longname": "forEach",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000059",
+      "___s": true
+    },
+    {
+      "comment": "/** return only the phrases that return true */",
+      "meta": {
+        "range": [
+          780,
+          1025
+        ],
+        "filename": "05-loops.js",
+        "lineno": 37,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100000982",
+          "name": "exports.filter",
+          "type": "FunctionExpression",
+          "paramnames": [
+            "fn"
+          ]
+        },
+        "vars": {
+          "list": "filter~list",
+          "": null
+        }
+      },
+      "description": "return only the phrases that return true",
+      "name": "filter",
+      "longname": "filter",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000062",
+      "___s": true
+    },
+    {
+      "comment": "/** return a document with only the first phrase that matches */",
+      "meta": {
+        "range": [
+          1092,
+          1374
+        ],
+        "filename": "05-loops.js",
+        "lineno": 50,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100001035",
+          "name": "exports.find",
+          "type": "FunctionExpression",
+          "paramnames": [
+            "fn"
+          ]
+        },
+        "vars": {
+          "list": "find~list",
+          "": null
+        }
+      },
+      "description": "return a document with only the first phrase that matches",
+      "name": "find",
+      "longname": "find",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000066",
+      "___s": true
+    },
+    {
+      "comment": "/** return true or false if there is one matching phrase */",
+      "meta": {
+        "range": [
+          1436,
+          1643
+        ],
+        "filename": "05-loops.js",
+        "lineno": 66,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100001094",
+          "name": "exports.some",
+          "type": "FunctionExpression",
+          "paramnames": [
+            "fn"
+          ]
+        },
+        "vars": {
+          "": null
+        }
+      },
+      "description": "return true or false if there is one matching phrase",
+      "name": "some",
+      "longname": "some",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000070",
+      "___s": true
+    },
+    {
+      "comment": "/** substitute-in new content */",
+      "meta": {
+        "range": [
+          81,
+          459
+        ],
+        "filename": "06-replace.js",
+        "lineno": 4,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100001147",
+          "name": "exports.replaceWith",
+          "type": "FunctionExpression",
+          "paramnames": [
+            "replace"
+          ]
+        },
+        "vars": {
+          "": null
+        }
+      },
+      "description": "substitute-in new content",
+      "name": "replaceWith",
+      "longname": "replaceWith",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000074",
+      "___s": true
+    },
+    {
+      "comment": "/** search and replace match with new content */",
+      "meta": {
+        "range": [
+          510,
+          611
+        ],
+        "filename": "06-replace.js",
+        "lineno": 19,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100001213",
+          "name": "exports.replace",
+          "type": "FunctionExpression",
+          "paramnames": [
+            "match",
+            "replace"
+          ]
+        }
+      },
+      "description": "search and replace match with new content",
+      "name": "replace",
+      "longname": "replace",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000077",
+      "___s": true
+    },
+    {
+      "comment": "/** fully remove these terms from the document */",
+      "meta": {
+        "range": [
+          663,
+          842
+        ],
+        "filename": "06-replace.js",
+        "lineno": 25,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100001234",
+          "name": "exports.delete",
+          "type": "FunctionExpression",
+          "paramnames": [
+            "match"
+          ]
+        },
+        "vars": {
+          "toRemove": "delete~toRemove",
+          "": null
+        }
+      },
+      "description": "fully remove these terms from the document",
+      "name": "delete",
+      "longname": "delete",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000078",
+      "___s": true
+    },
+    {
+      "comment": "/** alphabetical order */",
+      "meta": {
+        "range": [
+          48,
+          237
+        ],
+        "filename": "07-sort.js",
+        "lineno": 3,
+        "columnno": 2,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100001286",
+          "name": "alpha",
+          "type": "ArrowFunctionExpression"
+        },
+        "vars": {
+          "left": "methods.alpha~left",
+          "right": "methods.alpha~right"
+        }
+      },
+      "description": "alphabetical order",
+      "name": "alpha",
+      "longname": "methods.alpha",
+      "kind": "function",
+      "memberof": "methods",
+      "scope": "static",
+      "___id": "T000002R000083",
+      "___s": true
+    },
+    {
+      "comment": "/** the 'chronological', or original document sort order */",
+      "meta": {
+        "range": [
+          304,
+          479
+        ],
+        "filename": "07-sort.js",
+        "lineno": 16,
+        "columnno": 2,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100001324",
+          "name": "chron",
+          "type": "ArrowFunctionExpression"
+        },
+        "vars": {
+          "left": "methods.chron~left",
+          "right": "methods.chron~right"
+        }
+      },
+      "description": "the 'chronological', or original document sort order",
+      "name": "chron",
+      "longname": "methods.chron",
+      "kind": "function",
+      "memberof": "methods",
+      "scope": "static",
+      "___id": "T000002R000086",
+      "___s": true
+    },
+    {
+      "comment": "/** count the # of characters of each match */",
+      "meta": {
+        "range": [
+          533,
+          737
+        ],
+        "filename": "07-sort.js",
+        "lineno": 29,
+        "columnno": 2,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100001360",
+          "name": "length",
+          "type": "ArrowFunctionExpression"
+        },
+        "vars": {
+          "left": "methods.length~left",
+          "right": "methods.length~right"
+        }
+      },
+      "description": "count the # of characters of each match",
+      "name": "length",
+      "longname": "methods.length",
+      "kind": "function",
+      "memberof": "methods",
+      "scope": "static",
+      "___id": "T000002R000089",
+      "___s": true
+    },
+    {
+      "comment": "/** count the # of terms in each match */",
+      "meta": {
+        "range": [
+          786,
+          975
+        ],
+        "filename": "07-sort.js",
+        "lineno": 42,
+        "columnno": 2,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100001406",
+          "name": "wordCount",
+          "type": "ArrowFunctionExpression"
+        },
+        "vars": {
+          "left": "methods.wordCount~left",
+          "right": "methods.wordCount~right"
+        }
+      },
+      "description": "count the # of terms in each match",
+      "name": "wordCount",
+      "longname": "methods.wordCount",
+      "kind": "function",
+      "memberof": "methods",
+      "scope": "static",
+      "___id": "T000002R000092",
+      "___s": true
+    },
+    {
+      "comment": "/** sort by # of duplicates in the document*/",
+      "meta": {
+        "range": [
+          1032,
+          1567
+        ],
+        "filename": "07-sort.js",
+        "lineno": 56,
+        "columnno": 6,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100001443",
+          "name": "byFreq",
+          "type": "FunctionExpression"
+        },
+        "vars": {
+          "counts": "byFreq~counts",
+          "options": "byFreq~options",
+          "": null
+        }
+      },
+      "description": "sort by # of duplicates in the document",
+      "name": "byFreq",
+      "longname": "byFreq",
+      "kind": "function",
+      "scope": "global",
+      "params": [],
+      "___id": "T000002R000095",
+      "___s": true
+    },
+    {
+      "comment": "/** re-arrange the order of the matches (in place) */",
+      "meta": {
+        "range": [
+          1777,
+          2143
+        ],
+        "filename": "07-sort.js",
+        "lineno": 92,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100001587",
+          "name": "exports.sort",
+          "type": "FunctionExpression",
+          "paramnames": [
+            "input"
+          ]
+        },
+        "vars": {
+          "input": "sort~input",
+          "this.list": null
+        }
+      },
+      "description": "re-arrange the order of the matches (in place)",
+      "name": "sort",
+      "longname": "sort",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000111",
+      "___s": true
+    },
+    {
+      "comment": "/** deep-copy the document, so that no references remain */",
+      "meta": {
+        "range": [
+          60,
+          181
+        ],
+        "filename": "08-clone.js",
+        "lineno": 2,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100001650",
+          "name": "exports.clone",
+          "type": "FunctionExpression",
+          "paramnames": []
+        },
+        "vars": {
+          "list": "clone~list",
+          "": null,
+          "tmp": "clone~tmp"
+        }
+      },
+      "description": "deep-copy the document, so that no references remain",
+      "name": "clone",
+      "longname": "clone",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000115",
+      "___s": true
+    },
+    {
+      "comment": "/** return the document as text */",
+      "meta": {
+        "range": [
+          187,
+          551
+        ],
+        "filename": "09-out.js",
+        "lineno": 5,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100001708",
+          "name": "exports.text",
+          "type": "FunctionExpression",
+          "paramnames": [
+            "options"
+          ]
+        },
+        "vars": {
+          "showFull": "text~showFull",
+          "": null
+        }
+      },
+      "description": "return the document as text",
+      "name": "text",
+      "longname": "text",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000127",
+      "___s": true
+    },
+    {
+      "comment": "/** pull out desired metadata from the document */",
+      "meta": {
+        "range": [
+          604,
+          877
+        ],
+        "filename": "09-out.js",
+        "lineno": 19,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100001783",
+          "name": "exports.json",
+          "type": "FunctionExpression",
+          "paramnames": [
+            "options"
+          ]
+        },
+        "vars": {
+          "options": "json~options",
+          "": null
+        }
+      },
+      "description": "pull out desired metadata from the document",
+      "name": "json",
+      "longname": "json",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000132",
+      "___s": true
+    },
+    {
+      "comment": "/** pretty-print the current document and its tags */",
+      "meta": {
+        "range": [
+          933,
+          991
+        ],
+        "filename": "09-out.js",
+        "lineno": 31,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100001835",
+          "name": "exports.debug",
+          "type": "FunctionExpression",
+          "paramnames": []
+        }
+      },
+      "description": "pretty-print the current document and its tags",
+      "name": "debug",
+      "longname": "debug",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000134",
+      "___s": true
+    },
+    {
+      "comment": "/** some named output formats */",
+      "meta": {
+        "range": [
+          1026,
+          1677
+        ],
+        "filename": "09-out.js",
+        "lineno": 37,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100001848",
+          "name": "exports.out",
+          "type": "FunctionExpression",
+          "paramnames": [
+            "method"
+          ]
+        },
+        "vars": {
+          "": null,
+          "list": "out~list"
+        }
+      },
+      "description": "some named output formats",
+      "name": "out",
+      "longname": "out",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000135",
+      "___s": true
+    },
+    {
+      "comment": "/** normalized text -  out('normal') */",
+      "meta": {
+        "range": [
+          1719,
+          1779
+        ],
+        "filename": "09-out.js",
+        "lineno": 67,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100001987",
+          "name": "exports.normal",
+          "type": "FunctionExpression",
+          "paramnames": []
+        }
+      },
+      "description": "normalized text -  out('normal')",
+      "name": "normal",
+      "longname": "normal",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000145",
+      "___s": true
+    },
+    {
+      "comment": "/** add these new terms to the front*/",
+      "meta": {
+        "range": [
+          87,
+          487
+        ],
+        "filename": "10-split.js",
+        "lineno": 4,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100002016",
+          "name": "exports.prepend",
+          "type": "FunctionExpression",
+          "paramnames": [
+            "str"
+          ]
+        },
+        "vars": {
+          "": null
+        }
+      },
+      "description": "add these new terms to the front",
+      "name": "prepend",
+      "longname": "prepend",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000148",
+      "___s": true
+    },
+    {
+      "comment": "/** add these new terms to the end*/",
+      "meta": {
+        "range": [
+          565,
+          962
+        ],
+        "filename": "10-split.js",
+        "lineno": 23,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100002088",
+          "name": "exports.append",
+          "type": "FunctionExpression",
+          "paramnames": [
+            "str"
+          ]
+        },
+        "vars": {
+          "": null
+        }
+      },
+      "description": "add these new terms to the end",
+      "name": "append",
+      "longname": "append",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000152",
+      "___s": true
+    },
+    {
+      "comment": "/** add these new things to the end*/",
+      "meta": {
+        "range": [
+          1073,
+          1593
+        ],
+        "filename": "10-split.js",
+        "lineno": 43,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100002168",
+          "name": "exports.concat",
+          "type": "FunctionExpression",
+          "paramnames": []
+        },
+        "vars": {
+          "list": "concat~list",
+          "i": "concat~i",
+          "arg": "concat~arg",
+          "arr": "concat~arr"
+        }
+      },
+      "description": "add these new things to the end",
+      "name": "concat",
+      "longname": "concat",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000157",
+      "___s": true
+    },
+    {
+      "comment": "/** common ways to clean-up the document, and reduce noise */",
+      "meta": {
+        "range": [
+          489,
+          1894
+        ],
+        "filename": "11-normalize.js",
+        "lineno": 24,
+        "columnno": 0,
+        "path": "/Users/spencer/mountain/compromise/src/Doc/methods",
+        "code": {
+          "id": "astnode100002285",
+          "name": "exports.normalize",
+          "type": "FunctionExpression",
+          "paramnames": [
+            "options"
+          ]
+        },
+        "vars": {
+          "options": "normalize~options",
+          "termArr": "normalize~termArr",
+          "": null,
+          "termList": "normalize~termList"
+        }
+      },
+      "description": "common ways to clean-up the document, and reduce noise",
+      "name": "normalize",
+      "longname": "normalize",
+      "kind": "function",
+      "scope": "global",
+      "___id": "T000002R000168",
+      "___s": true
+    },
+    {
+      "kind": "package",
+      "longname": "package:undefined",
+      "files": [
+        "/Users/spencer/mountain/compromise/src/Doc/methods/01-utils.js",
+        "/Users/spencer/mountain/compromise/src/Doc/methods/02-case.js",
+        "/Users/spencer/mountain/compromise/src/Doc/methods/03-whitespace.js",
+        "/Users/spencer/mountain/compromise/src/Doc/methods/04-tag.js",
+        "/Users/spencer/mountain/compromise/src/Doc/methods/05-loops.js",
+        "/Users/spencer/mountain/compromise/src/Doc/methods/06-replace.js",
+        "/Users/spencer/mountain/compromise/src/Doc/methods/07-sort.js",
+        "/Users/spencer/mountain/compromise/src/Doc/methods/08-clone.js",
+        "/Users/spencer/mountain/compromise/src/Doc/methods/09-out.js",
+        "/Users/spencer/mountain/compromise/src/Doc/methods/10-split.js",
+        "/Users/spencer/mountain/compromise/src/Doc/methods/11-normalize.js",
+        "/Users/spencer/mountain/compromise/src/Doc/methods/index.js"
+      ],
+      "___id": "T000002R000181",
+      "___s": true
+    }
+  ]
+}

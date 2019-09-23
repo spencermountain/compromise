@@ -5,7 +5,7 @@ test('normalize elipses', function(t) {
   var str = `[hello] spencęr…`
   var doc = nlp(str)
   t.equal(doc.text(), str, 'text out-1')
-  t.equal(doc.normal(), 'hello spencer...', 'normal out-1')
+  t.equal(doc.text('normal'), 'hello spencer...', 'normal out-1')
   t.end()
 })
 
@@ -13,7 +13,7 @@ test('normalize question mark', function(t) {
   var str = `hello, Spencęr???`
   var doc = nlp(str)
   t.equal(doc.text(), str, 'text out-2')
-  t.equal(doc.normal(), 'hello, spencer?', 'normal out-2')
+  t.equal(doc.text('normal'), 'hello, spencer?', 'normal out-2')
   t.end()
 })
 

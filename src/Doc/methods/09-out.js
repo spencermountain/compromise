@@ -63,10 +63,5 @@ exports.out = function(method) {
   return this.text()
 }
 
-/** normalized text -  out('normal') */
-exports.normal = function() {
-  return this.text('normal')
-}
-
 //aliases
 exports.data = exports.json

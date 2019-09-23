@@ -6,7 +6,7 @@
   "main": "./builds/compromise.js",
   "unpkg": "./builds/compromise.min.js",
   "module": "./builds/compromise.mjs",
-  "types": "types",
+  "types": "types/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git://github.com/spencermountain/compromise.git"
@@ -23,6 +23,7 @@
     "plugins": "node ./scripts/plugin-check.js",
     "speed": "node ./scripts/stress-test/speed.js",
     "demo": "python -m SimpleHTTPServer 8888",
+    "test:types": "ts-node ./types/types.test.ts | tap-dancer",
     "lint": "eslint ./src/"
   },
   "files": [

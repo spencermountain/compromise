@@ -7,7 +7,7 @@ export default [
     input: 'src/index.js',
     output: [
       {
-        file: 'builds/compromise-values.mjs',
+        file: 'builds/compromise-numbers.mjs',
         format: 'esm',
       },
     ],
@@ -17,7 +17,7 @@ export default [
     input: 'src/index.js',
     output: [
       {
-        file: 'builds/compromise-values.min.js',
+        file: 'builds/compromise-numbers.min.js',
         format: 'cjs',
       },
     ],

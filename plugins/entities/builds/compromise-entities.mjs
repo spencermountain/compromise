@@ -70,7 +70,7 @@ const addMethods = function(Doc) {
   methods.forEach(fn => fn(Doc));
 
   //combine them with .topics() method
-  Doc.prototype.topics = function(n) {
+  Doc.prototype.things = function(n) {
     let r = this.clauses();
     // Find people, places, and organizations
     let yup = r.people();
@@ -86,8 +86,9 @@ const addMethods = function(Doc) {
     }
     return yup
   };
-  //alias
-  Doc.prototype.entities = Doc.prototype.topics;
+  //aliases
+  Doc.prototype.entities = Doc.prototype.things;
+  Doc.prototype.topics = Doc.prototype.things;
 };
 
 var src = addMethods;

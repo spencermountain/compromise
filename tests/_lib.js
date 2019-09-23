@@ -1,19 +1,19 @@
-const addPlugins = function(nlp) {
-  let names = ['nouns', 'numbers', 'sentences', 'verbs']
-  names.forEach(name => {
-    nlp.extend(require(`../plugins/${name}/src/index.js`))
-  })
-}
+const plugins = ['entities', 'ngrams', 'nouns', 'numbers', 'sentences', 'syllables', 'verbs']
 
 if (typeof process !== undefined && typeof module !== undefined) {
   let nlp
   if (process.env.TESTENV === 'prod') {
     console.warn('== production build test 🚀 ==')
-    // module.exports = require('../../builds/efrt');
     nlp = require('../builds/compromise')
+    plugins.forEach(name => {
+      nlp.extend(require(`../plugins/${name}`))
+    })
   } else {
     nlp = require('../src')
+    plugins.forEach(name => {
+      nlp.extend(require(`../plugins/${name}/src/index.js`))
+    })
   }
-  addPlugins(nlp)
+
   module.exports = nlp
 }

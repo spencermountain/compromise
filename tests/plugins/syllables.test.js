@@ -1,5 +1,5 @@
 var test = require('tape')
-var nlp = require('./_lib')
+var nlp = require('../../plugins/syllables/tests/_lib')
 
 let words = [
   'sud den ly',

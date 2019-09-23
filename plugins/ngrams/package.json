@@ -10,8 +10,6 @@
     "url": "git://github.com/nlp-compromise/compromise-ngrams.git"
   },
   "scripts": {
-    "test": "tape \"./tests/**/*.test.js\" | tap-dancer",
-    "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-spec",
     "watch": "amble ./scratch.js",
     "build": "rollup -c"
   },
@@ -33,14 +31,11 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "amble": "0.0.7",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.0.0",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "^5.1.0",
-    "rollup-plugin-terser": "^5.0.0",
-    "tap-dancer": "0.2.0",
-    "tape": "4.11.0"
+    "rollup-plugin-terser": "^5.0.0"
   },
   "license": "MIT"
 }

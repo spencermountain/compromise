@@ -31,6 +31,11 @@ const oneSize = function(list, size) {
 }
 
 const startGrams = function(list, options) {
+  // support {size:2} syntax
+  if (options.size) {
+    options.min = options.size
+    options.max = options.size
+  }
   let max = options.max || defaults.max
   let min = options.min || defaults.min
   let arr = []

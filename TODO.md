@@ -9,3 +9,8 @@
 [] .lists()
 [] .sentences()
 
+
+// ????
+// firstTerm(): Document
+// lastTerm(): Document
+// termList(): Document

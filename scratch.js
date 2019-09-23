@@ -3,6 +3,6 @@ var nlp = require('./src/index')
 // nlp.extend(require('./plugins/verbs/src'))
 nlp.extend(require('./plugins/ngrams/src'))
 
-var doc = nlp('i am in houston texas. i am a good person. so i think.')
-let arr = doc.startgrams({})
+var doc = nlp('i am in houston texas. i am a good person. so i think he is a good person.')
+let arr = doc.endgrams({ size: 2 })
 console.log(arr)

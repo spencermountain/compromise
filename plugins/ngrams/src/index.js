@@ -1,5 +1,6 @@
 const getGrams = require('./getGrams')
 const startGrams = require('./startGrams')
+const endGrams = require('./endGrams')
 const tokenize = require('./tokenize')
 const sort = require('./sort')
 
@@ -45,6 +46,13 @@ const addMethod = function(Doc) {
   Doc.prototype.startgrams = function(obj) {
     let list = tokenize(this)
     let arr = startGrams(list, obj || {})
+    arr = sort(arr)
+    return arr
+  }
+  /** list all repeating sub-phrases, connected to the last word of each phrase */
+  Doc.prototype.endgrams = function(obj) {
+    let list = tokenize(this)
+    let arr = endGrams(list, obj || {})
     arr = sort(arr)
     return arr
   }

@@ -7,8 +7,9 @@ const oneSize = function(list, size) {
   let grams = {}
   // count each instance
   list.forEach(terms => {
+    let len = terms.length
     for (let i = 0; i < terms.length; i += 1) {
-      let slice = terms.slice(i, i + size)
+      let slice = terms.slice(len - i, len)
       if (slice.length === size) {
         let str = slice.join(' ')
         if (grams.hasOwnProperty(str)) {
@@ -30,7 +31,7 @@ const oneSize = function(list, size) {
   return arr
 }
 
-const allGrams = function(list, options) {
+const endGrams = function(list, options) {
   // support {size:2} syntax
   if (options.size) {
     options.min = options.size
@@ -39,9 +40,9 @@ const allGrams = function(list, options) {
   let max = options.max || defaults.max
   let min = options.min || defaults.min
   let arr = []
-  for (let size = min; size <= max; size += 1) {
+  for (let size = min; size <= max; size++) {
     arr = arr.concat(oneSize(list, size))
   }
   return arr
 }
-module.exports = allGrams
+module.exports = endGrams

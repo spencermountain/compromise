@@ -49,7 +49,7 @@ test('sentence append', function(t) {
 
 test('misc ngrams', function(t) {
   let doc = nlp(`quickly, suddenly`)
-  t.equal(doc.ngrams().length, 0, 'found no ngrams')
+  t.equal(doc.ngrams().length, 3, 'found three ngrams')
 
   doc = nlp(`john, bill, joe`)
   t.equal(doc.unigrams().length, 3, 'found three unigrams')
@@ -59,6 +59,12 @@ test('misc ngrams', function(t) {
 
   doc = nlp(`john, bill, joe`)
   t.equal(doc.trigrams().length, 1, 'found 1 trigrams')
+
+  doc = nlp('i am in houston texas. i am a good person. so i think he is a good person.')
+  let arr = doc.endgrams({ size: 2 })
+  t.equal(arr.length, 2, 'found 2 endgrams of size-2')
+  t.equal(arr[0].normal, 'good person', 'found good person')
+  t.equal(arr[0].count, 2, 'found 2 good person results')
   t.end()
 })
 
@@ -66,7 +72,7 @@ test('misc nouns', function(t) {
   let doc = nlp(`quickly, suddenly`)
   t.equal(doc.nouns().length, 0, 'found no nouns')
 
-  doc = nlp(`john, bill, joe`)
+  doc = nlp(`john smith, and then Google Inc in Flordia`)
   t.equal(doc.nouns().length, 3, 'found three nouns')
   t.end()
 })
@@ -82,7 +88,7 @@ test('misc values', function(t) {
 
 test('misc sentences', function(t) {
   let doc = nlp(`quickly, suddenly`)
-  t.equal(doc.sentences().length, 0, 'found no nouns')
+  t.equal(doc.sentences().length, 1, 'found one sentence')
 
   doc = nlp(`john, bill, and joe. Here we go. Must be three now.`)
   t.equal(doc.sentences().length, 3, 'found three sentences')

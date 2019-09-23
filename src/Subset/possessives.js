@@ -9,7 +9,7 @@ const addMethod = function(Doc) {
     strip() {
       this.list.forEach(p => {
         let terms = p.terms()
-        terms.forEach((t, i) => {
+        terms.forEach(t => {
           let str = t.text.replace(/'s$/, '')
           t.set(str || t.text)
         })

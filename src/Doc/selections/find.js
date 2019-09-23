@@ -18,14 +18,6 @@ exports.clauses = function(n) {
   }
   return r
 }
-/** return anything tagged as a hashtag*/
-exports.hashTags = function(n) {
-  let r = this.match('#HashTag').terms()
-  if (typeof n === 'number') {
-    r = r.get(n)
-  }
-  return r
-}
 /** return anything tagged as an organization*/
 exports.organizations = function(n) {
   let r = this.splitAfter('#Comma')
@@ -48,15 +40,6 @@ exports.phoneNumbers = function(n) {
 exports.places = function(n) {
   let r = this.splitAfter('#Comma')
   r = r.match('#Place+')
-  if (typeof n === 'number') {
-    r = r.get(n)
-  }
-  return r
-}
-
-/** return anything tagged as a URL*/
-exports.urls = function(n) {
-  let r = this.match('#Url')
   if (typeof n === 'number') {
     r = r.get(n)
   }

@@ -1,4 +1,13 @@
-let doc = Object.assign({}, require('./doc'), require('./transform'), require('./match'))
+let doc = Object.assign(
+  {},
+  require('./insert'),
+  require('./loops'),
+  require('./match'),
+  require('./out'),
+  require('./tag'),
+  require('./transform'),
+  require('./utils')
+)
 
 let plugins = Object.assign({}, require('./plugins'))
 plugins.numbers = require('./plugins/numbers')

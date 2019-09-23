@@ -1,12 +1,29 @@
+### Constructor
+* **tokenize** - parse text into a compromise object, without running POS-tagging
+* **extend** - mix in a compromise-plugin
+* **clone** - make a deep-copy of the library state
+* **fromJSON** - re-generate a Doc object from .json() results
+* **verbose**  -  log our decision-making for debugging
+* **version**  -  current semver version of the library
+
 ### Utils
-* **found** - is this document empty?
 * **all** - return the whole original document ('zoom out')
-* **wordCount**  -  count the # of terms in each match
-* **length**  -  count the # of characters of each match
+* **found** - is this document empty? \[getter\]
 * **clone**  -  deep-copy the document, so that no references remain
+* **wordCount**  -  count the # of terms in each match
+* **length**  - count the # of characters of each match  (string length)
 * **debug**  -  pretty-print the current document and its tags
-* **verbose**  -  turn on logging for decision-debugging
-  
+
+### Accessors
+* **get**  -  use only the nth result
+* **first**  -  use only the first result(s)
+* **last**  -  use only the last result(s)
+* **slice**  -  grab a subset of the results
+<!-- * **firstTerms**  -  undefined 
+* **lastTerms**  -  undefined
+* **termList**  -  return a flat array of term objects
+-->
+
 ### Output
 * **text**  -  return the document as text
 * **json**  -  pull out desired metadata from the document
@@ -30,15 +47,12 @@
 * **split**  -  return a Document with three parts for every match ('splitOn')
 * **splitAfter**  -  separate everything before the word, as a new phrase
 * **splitBefore**  -  separate everything after the match as a new phrase
-* **slice**  -  grab a subset of the results
 * **concat**  -  add these new things to the end
 * **replaceWith**  -  substitute-in new content
 * **replace**  -  search and replace match with new content
 * **delete**  -  fully remove these terms from the document
 
-
 ### Loops
-
 * **forEach**  -  run a function on each phrase, as an individual document
 * **map** - run each phrase through a function, and create a new document
 * **filter**  -  return only the phrases that return true
@@ -47,9 +61,7 @@
 * **sort**  -  re-arrange the order of the matches (in place)
 * **random**  -  sample a subset of the results
 
-
 ### Match
-
 * **match**  -  return a new Doc, with this one as a parent
 * **not**  -  return all results except for this
 * **matchOne**  -  return only the first match
@@ -59,21 +71,11 @@
 * **before**  -  return all terms before a match, in each phrase
 * **after**  -  return all terms after a match, in each phrase
 
-
 ### Tag
 * **tag**  -  Give all terms the given tag
 * **tagSafe**  -  Only apply tag to terms if it is consistent with current tags
 * **unTag**  -  Remove this term from the given terms
 * **canBe**  -  return only the terms that can be this tag
-
-
-#### ????
-* **firstTerm**  -  undefined
-* **lastTerm**  -  undefined
-* **first**  -  use only the first result(s)
-* **last**  -  use only the last result(s)
-* **termList**  -  return a flat array of term objects
-* **get**  -  use only the nth result
 
 ### Helpers
 * **terms**  -  split-up results by each individual term
@@ -88,7 +90,8 @@
 * **statements**  -  return any sentences that are not a question or exclamation
 * **exclamations**  -  return any sentences that are not a question
 
-  
+---
+
 ### text:
   * **text**  -  
   * **normal**  -  
@@ -99,7 +102,7 @@
   * **chron**  -  the 'chronological', or original document sort order 
   * **byFreq**  -  sort by # of duplicates in the document
 
-### match:
+### match-methods:
   * **@hasComma**  -  does it have a comma?
   * **@hasPeriod**  -  does it end in a period?
   * **@hasExclamation**  -  does it end in an exclamation
@@ -114,6 +117,7 @@
 ### json:
   * text
   * normal
+  * wordCount
   * offset
   * terms
     * text

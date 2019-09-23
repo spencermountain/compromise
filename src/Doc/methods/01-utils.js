@@ -1,11 +1,3 @@
-/**  */
-exports.firstTerm = function() {
-  return this.match('^.')
-}
-/**  */
-exports.lastTerm = function() {
-  return this.match('.$')
-}
 /** use only the first result(s) */
 exports.first = function(n) {
   if (n === undefined) {
@@ -21,7 +13,6 @@ exports.last = function(n) {
   let end = this.list.length
   return this.slice(end - n, end)
 }
-
 /** grab a subset of the results*/
 exports.slice = function(start, end) {
   let list = this.list.slice(start, end)
@@ -35,6 +26,15 @@ exports.get = function(n) {
   }
   let list = [this.list[n]]
   return this.buildFrom(list)
+}
+
+/** grab term[0] for every match */
+exports.firstTerm = function() {
+  return this.match('^.')
+}
+/** grab the last term for every match  */
+exports.lastTerm = function() {
+  return this.match('.$')
 }
 
 /** sample a subset of the results */

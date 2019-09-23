@@ -9,10 +9,20 @@
 ### Utils
 * **all** - return the whole original document ('zoom out')
 * **found** - is this document empty? \[getter\]
+* **parent** - return the previous result
+* **parents** - return all of the previous results
+* **tagger** - (re-)run the part-of-speech tagger on this document
 * **clone**  -  deep-copy the document, so that no references remain
 * **wordCount**  -  count the # of terms in each match
 * **length**  - count the # of characters of each match  (string length)
 * **debug**  -  pretty-print the current document and its tags
+<!-- 
+**pool** - 
+**from** - 
+**buildFrom** - 
+**extend** - 
+-->
+
 
 ### Accessors
 * **get**  -  use only the nth result
@@ -23,12 +33,6 @@
 * **lastTerms**  -  undefined
 * **termList**  -  return a flat array of term objects
 -->
-
-### Output
-* **text**  -  return the document as text
-* **json**  -  pull out desired metadata from the document
-* **out**  -  some named output formats
-* **normal**  -  normalized text -  out('normal')
 
 ### Case
 * **toLowerCase**  -  turn every letter of every term to lower-cse
@@ -52,6 +56,12 @@
 * **replace**  -  search and replace match with new content
 * **delete**  -  fully remove these terms from the document
 
+### Output
+* **text**  -  return the document as text
+* **json**  -  pull out desired metadata from the document
+* **out**  -  some named output formats
+* **normal**  -  normalized text -  out('normal')
+  
 ### Loops
 * **forEach**  -  run a function on each phrase, as an individual document
 * **map** - run each phrase through a function, and create a new document
@@ -65,8 +75,8 @@
 * **match**  -  return a new Doc, with this one as a parent
 * **not**  -  return all results except for this
 * **matchOne**  -  return only the first match
-* **if**  -  return each current phrase, only if it contains this match
-* **ifNo**  -  Filter-out any current phrases that have this match
+* **if**  -  return each current phrase, only if it contains this match ('only')
+* **ifNo**  -  Filter-out any current phrases that have this match ('notIf')
 * **has**  -  Return a boolean if this match exists
 * **before**  -  return all terms before a match, in each phrase
 * **after**  -  return all terms after a match, in each phrase

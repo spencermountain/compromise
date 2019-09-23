@@ -1,14 +1,15 @@
 module.exports = Object.assign(
   {},
-  require('./04-tag'),
   require('./01-utils'),
-  require('./03-whitespace'),
-  require('./02-case'),
-  require('./05-loops'),
-  require('./06-replace'),
-  require('./07-sort'),
-  require('./08-clone'),
-  require('./09-out'),
-  require('./10-split'),
-  require('./11-normalize')
+  require('./02-accessors'),
+  require('./03-match'),
+  require('./04-case'),
+  require('./05-whitespace'),
+  require('./06-tag'),
+  require('./07-loops'),
+  require('./08-replace'),
+  require('./09-insert'),
+  require('./10-sort'),
+  require('./11-out'),
+  require('./12-normalize')
 )

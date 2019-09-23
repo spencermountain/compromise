@@ -1,4 +1,4 @@
-const parseSyntax = require('./syntax')
+const parseSyntax = require('./match/syntax')
 
 /** return a new Doc, with this one as a parent */
 exports.match = function(reg) {
@@ -37,98 +37,6 @@ exports.matchOne = function(reg) {
     return this.buildFrom(match)
   }
   return this.buildFrom([])
-}
-
-/** return a Document with three parts for every match
- * seperate everything before the word, as a new phrase
- */
-exports.split = function(reg) {
-  let regs = parseSyntax(reg)
-  let matches = []
-  this.list.forEach(p => {
-    let allFound = p.match(regs)
-    //no match, keep it going
-    if (allFound.length === 0) {
-      matches.push(p)
-    }
-    allFound.forEach(found => {
-      // do it again, at the end
-      let last = matches.pop() || p
-      let results = last.splitOn(found) //splits into three parts
-      if (results.before) {
-        matches.push(results.before)
-      }
-      if (results.match) {
-        matches.push(results.match)
-      }
-      if (results.after) {
-        matches.push(results.after)
-      }
-    })
-  })
-  return this.buildFrom(matches)
-}
-
-/** return a Document with two parts for every match
- * seperate everything after the word, as a new phrase
- */
-exports.splitAfter = function(reg) {
-  let regs = parseSyntax(reg)
-  let matches = []
-  this.list.forEach(p => {
-    let allFound = p.match(regs)
-    //no match, return whole phrase
-    if (allFound.length === 0) {
-      matches.push(p)
-    }
-    allFound.forEach(found => {
-      // apply it to the end, recursively
-      let last = matches.pop() || p
-      let results = last.splitOn(found) //splits into three parts
-      //merge first and second parts
-      if (results.before && results.match) {
-        results.before.length += results.match.length
-        matches.push(results.before)
-      } else if (results.match) {
-        matches.push(results.match)
-      }
-      // add third part, if it exists
-      if (results.after) {
-        matches.push(results.after)
-      }
-    })
-  })
-  return this.buildFrom(matches)
-}
-
-/** return a Document with two parts for every match */
-exports.splitBefore = function(reg) {
-  let regs = parseSyntax(reg)
-  let matches = []
-  this.list.forEach(p => {
-    let allFound = p.match(regs)
-    //no match, keep it going
-    if (allFound.length === 0) {
-      matches.push(p)
-    }
-    allFound.forEach(found => {
-      // do it again, at the end
-      let last = matches.pop() || p
-      let results = last.splitOn(found) //splits into three parts
-      //support multiple-matches per phrase
-      if (results.before) {
-        matches.push(results.before)
-      }
-      //merge 'match' and 'after'
-      if (results.match && results.after) {
-        results.match.length += results.after.length
-        matches.push(results.match)
-      } else if (results.match) {
-        matches.push(results.match)
-      }
-    })
-  })
-  return this.buildFrom(matches)
 }
 
 /**Return a boolean if this match exists */
@@ -206,6 +114,3 @@ exports.after = function(reg) {
   befores = befores.filter(p => p !== null)
   return this.buildFrom(befores)
 }
-
-//aliases
-exports.splitOn = exports.split

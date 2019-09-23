@@ -1,6 +1,5 @@
 const methods = {
   misc: require('./methods'),
-  match: require('./match'),
   selections: require('./selections'),
 }
 const tagger = require('../02-tagger')
@@ -51,32 +50,6 @@ class Doc {
     }
     return this.all().list[0].pool
   }
-
-  /** return the previous result */
-  parent() {
-    if (this.from) {
-      return this.from
-    }
-    return this
-  }
-
-  /**  return a list of all previous results */
-  parents() {
-    let arr = []
-    const addParent = function(doc) {
-      if (doc.from) {
-        arr.push(doc.from)
-        addParent(doc.from)
-      }
-    }
-    addParent(this)
-    return arr.reverse()
-  }
-
-  /** return the root, first document */
-  all() {
-    return this.parents()[0] || this
-  }
 }
 
 /** create a new Document object */
@@ -89,9 +62,8 @@ Doc.prototype.extend = function(fn) {
   return this
 }
 
-Object.assign(Doc.prototype, methods.match)
-Object.assign(Doc.prototype, methods.selections)
 Object.assign(Doc.prototype, methods.misc)
+Object.assign(Doc.prototype, methods.selections)
 
 //add sub-classes
 extend(Doc)

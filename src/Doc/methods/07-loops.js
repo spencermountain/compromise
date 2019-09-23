@@ -74,6 +74,24 @@ exports.some = function(fn) {
   })
 }
 
+/** sample a subset of the results */
+exports.random = function(n) {
+  if (!this.found) {
+    return this
+  }
+  let r = Math.floor(Math.random() * this.list.length)
+  if (n === undefined) {
+    let list = [this.list[r]]
+    return this.buildFrom(list)
+  }
+  //prevent it from going over the end
+  if (r + n > this.length) {
+    r = this.length - n
+    r = r < 0 ? 0 : r
+  }
+  return this.slice(r, r + n)
+}
+
 /** combine each phrase into a new data-structure */
 // exports.reduce = function(fn, h) {
 //   let list = this.list.reduce((_h, ts) => {

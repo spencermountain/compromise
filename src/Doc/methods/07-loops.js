@@ -1,12 +1,3 @@
-/* grab nth result */
-exports.eq = function(n) {
-  let p = this.list[n]
-  if (p === undefined) {
-    return this.buildFrom([])
-  }
-  return this.buildFrom([p])
-}
-
 /* run each phrase through a function, and create a new document */
 exports.map = function(fn) {
   if (!fn) {
@@ -15,7 +6,11 @@ exports.map = function(fn) {
   let list = this.list.map((p, i) => {
     let doc = this.buildFrom([p])
     doc.from = null //it's not a child/parent
-    return fn(doc, i).list[0]
+    let res = fn(doc, i)
+    if (res.list && res.list[0]) {
+      return res.list[0]
+    }
+    return res
   })
   return this.buildFrom(list)
 }

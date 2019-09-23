@@ -18,6 +18,19 @@ test('document methods exist', function(t) {
       t.doesNotThrow(() => doc[k](), k)
     }
   })
+  t.end()
+})
 
+test('document methods eval', function(t) {
+  Object.keys(api.doc).forEach(k => {
+    if (skip[k] === true) {
+      return
+    }
+    let code = `(function(){
+      ${api.doc[k].example}
+    })()`
+    eval(code)
+    t.ok(true, 'eval ' + k)
+  })
   t.end()
 })

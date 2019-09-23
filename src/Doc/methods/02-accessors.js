@@ -21,15 +21,15 @@ exports.slice = function(start, end) {
   return this.buildFrom(list)
 }
 
-/** use only the nth result*/
-exports.get = function(n) {
-  //return an empty result
-  if ((!n && n !== 0) || !this.list[n]) {
+/* grab nth result */
+exports.eq = function(n) {
+  let p = this.list[n]
+  if (p === undefined) {
     return this.buildFrom([])
   }
-  let list = [this.list[n]]
-  return this.buildFrom(list)
+  return this.buildFrom([p])
 }
+exports.get = exports.eq
 
 /** grab term[0] for every match */
 exports.firstTerm = function() {

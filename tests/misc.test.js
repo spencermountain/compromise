@@ -18,6 +18,14 @@ const only = function(options) {
 //   t.end()
 // })
 
+test('tag-multiples:', function(t) {
+  var r = nlp('twas brillig in the doofgafoof.')
+  r.match('brillig').tag(['Foo', 'Barr'])
+  t.ok(r.match('#Foo').found, 'tagged-foo')
+  t.ok(r.match('#Barr').found, 'tagged-barr')
+  t.end()
+})
+
 test('normalize unicode', function(t) {
   let doc = nlp.tokenize(` it's   coöl, (i think) .    He is   cool;  i said .`)
   let options = only({ unicode: true })

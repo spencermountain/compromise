@@ -12,7 +12,7 @@ declare module nlp {
     text(str?: string): string
 
     /**the page this redirects to */
-    redirectTo(): Document
+    random(): Document
   }
 }
 

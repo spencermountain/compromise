@@ -32,7 +32,7 @@ const fixThe = function(doc) {
     det
       .match('#Determiner #Adjective$')
       .notIf('(#Comparative|#Superlative)')
-      .term(1)
+      .terms(1)
       .tag('Noun', 'the-adj-1')
   }
 
@@ -46,7 +46,7 @@ const fixThe = function(doc) {
     an.match('(a|an) #Noun [#Infinitive]').tag('Noun', 'a-noun-inf')
     //a great run
     an.match('(a|an) #Adjective (#Infinitive|#PresentTense)')
-      .term(2)
+      .terms(2)
       .tag('Noun', 'correction-a|an2')
     //'a/an' can mean 1 - "a hour"
     an.match('[(a|an)] (#Duration|hundred|thousand|million|billion|trillion)')

@@ -1,18 +1,4 @@
 /**  */
-exports.wordCount = function() {
-  return this.terms().length //TODO: remove implicit terms
-}
-
-/** create a Doc from the first Term of each phrase */
-exports.term = function(n) {
-  let list = this.list.map(p => {
-    let term = p.terms(n)
-    return p.buildFrom(term.id, 1, this.pool())
-  })
-  return this.buildFrom(list)
-}
-
-/**  */
 exports.firstTerm = function() {
   return this.match('^.')
 }

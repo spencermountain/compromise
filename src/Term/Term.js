@@ -18,6 +18,10 @@ class Term {
     this.next = null
     this.id = makeId(this.clean)
     this.isA = 'Term' // easier than .constructor...
+    // support alternative matches
+    if (obj.alias) {
+      this.alias = obj.alias
+    }
   }
   /** set the text of the Term to something else*/
   set(str) {

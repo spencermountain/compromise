@@ -17,6 +17,10 @@ const doesMatch = function(t, reg) {
     if (t.implicit !== null && t.implicit === reg.word) {
       return true
     }
+    // term aliases for slashes and things
+    if (t.alias !== undefined && t.alias.hasOwnProperty(reg.word)) {
+      return true
+    }
     //match either .clean or .text
     return reg.word === t.clean || reg.word === t.text
   }

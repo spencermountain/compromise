@@ -1,7 +1,7 @@
 const wordlike = /\S/
 const isBoundary = /^[!?.]+$/
 const naiiveSplit = /(\S+)/
-const hasSlash = /\//
+const isSlash = /\/\W*$/
 
 const notWord = {
   '.': true,
@@ -34,12 +34,10 @@ const hasHyphen = function(str) {
 // 'he / she' should be one word
 const combineSlashes = function(arr) {
   for (let i = 1; i < arr.length - 1; i++) {
-    if (hasSlash.test(arr[i])) {
+    if (isSlash.test(arr[i])) {
       arr[i - 1] += arr[i] + arr[i + 1]
       arr[i] = null
       arr[i + 1] = null
-      // arr = arr.splice(i - 1, 2)
-      // console.log(arr)
     }
   }
   return arr

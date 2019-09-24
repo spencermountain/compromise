@@ -5,14 +5,14 @@ var nlp = require('./src/index')
 
 // nlp('jean jacket. jean Slkje').debug()
 
-let str = '.('
-let doc = nlp(str).debug()
-// console.log(doc.termList())
-console.log(doc.out() === str)
-
-// let str = 'left  his  /  her  backpack'
-// let doc = nlp(str).debug()
+let str = 'left  his/her  backpack'
+let doc = nlp(str)
 // console.log(str === doc.out())
 // console.log(doc.termList())
-// console.log(doc.match('@hasSlash').out())
+console.log(
+  doc
+    .match('his')
+    .debug()
+    .out()
+)
 //   .debug()

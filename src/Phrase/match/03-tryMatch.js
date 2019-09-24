@@ -27,6 +27,11 @@ const getGreedy = function(terms, t, reg, until) {
 const greedyTo = function(terms, t, nextReg) {
   //if there's no next one, just go off the end!
   if (!nextReg) {
+    // // don't go over the max
+    // if (reg.max !== undefined) {
+    //   let len = t + reg.max
+    //   return len < terms.length ? len : terms.length
+    // }
     return terms.length
   }
   //otherwise, we're looking for the next one
@@ -60,7 +65,16 @@ const tryHere = function(terms, regs) {
 
     //support 'unspecific greedy' .* properly
     if (reg.anything === true && reg.greedy === true) {
-      let skipto = greedyTo(terms, t, regs[r + 1])
+      let skipto = greedyTo(terms, t, regs[r + 1], reg)
+      // ensure it's long enough
+      if (reg.min !== undefined && skipto - t < reg.min) {
+        return false
+      }
+      // reduce it back, if it's too long
+      if (reg.max !== undefined && skipto - t > reg.max) {
+        t = t + reg.max
+        continue
+      }
       //TODO: support [*] properly
       if (skipto === null) {
         return false //couldn't find it

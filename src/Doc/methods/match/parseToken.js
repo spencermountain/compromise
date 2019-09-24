@@ -15,6 +15,12 @@
   choices:[],
 }
 */
+const hasMinMax = /\{([0-9]+,?[0-9]*)\}/
+
+const titleCase = str => {
+  return str.charAt(0).toUpperCase() + str.substr(1)
+}
+
 const end = function(str) {
   return str[str.length - 1]
 }
@@ -89,10 +95,30 @@ const token = function(w) {
       return obj
     }
   }
+  // support #Tag{0,9}
+  if (hasMinMax.test(w) === true) {
+    w = w.replace(hasMinMax, (a, b) => {
+      let arr = b.split(/,/g)
+      if (arr.length === 1) {
+        // '{3}'	Exactly three times
+        obj.min = arr[0]
+        obj.max = arr[0]
+      } else {
+        // '{2,4}' Two to four times
+        // '{3,}' Three or more times
+        obj.min = Number(arr[0])
+        obj.max = Number(arr[1] || 999)
+      }
+      obj.greedy = true
+      console.log(obj)
+      return ''
+    })
+  }
 
   //do the actual token content
   if (start(w) === '#') {
     obj.tag = stripStart(w)
+    obj.tag = titleCase(obj.tag)
     return obj
   }
   //dynamic function on a term object

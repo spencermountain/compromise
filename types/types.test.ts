@@ -5,7 +5,7 @@
 // npm install --no-save @types/tape @types/node
 // npm run test:types
 
-import * as test from 'tape'
+const test = require('tape')
 import nlp from '../'
 
 test('typefile smoketest', (t: any) => {

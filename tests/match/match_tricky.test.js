@@ -2,7 +2,7 @@ var test = require('tape')
 var nlp = require('../_lib')
 
 test('fancy match', function(t) {
-  ;[
+  let arr = [
     //misc
     ['doug is good', '', 0],
     ['doug is good', '.', 3],
@@ -98,7 +98,8 @@ test('fancy match', function(t) {
     //this isn't working
     ['the canadian senate', 'the (united states|canadian) senate', 3],
     ['the canadian senate', '(canadian|united states|british)', 1],
-  ].forEach(function(a) {
+  ]
+  arr.forEach(function(a) {
     var r =
       nlp(a[0])
         .match(a[1])

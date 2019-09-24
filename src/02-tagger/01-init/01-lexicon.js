@@ -18,6 +18,17 @@ const tryMultiple = function(terms, t, world) {
       return 2
     }
   }
+  //try a four-word version?
+  if (t + 3 < terms.length) {
+    txt += ' ' + terms[t + 3].clean
+    if (lex[txt] !== undefined && lex.hasOwnProperty(txt) === true) {
+      terms[t].tag(lex[txt], 'lexicon-four', world)
+      terms[t + 1].tag(lex[txt], 'lexicon-four', world)
+      terms[t + 2].tag(lex[txt], 'lexicon-four', world)
+      terms[t + 3].tag(lex[txt], 'lexicon-four', world)
+      return 3
+    }
+  }
   return 0
 }
 

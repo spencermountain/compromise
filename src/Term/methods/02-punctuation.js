@@ -37,7 +37,7 @@ exports.hasSemicolon = function() {
 
 /** is there a slash after this word? */
 exports.hasSlash = function() {
-  return this.hasPost('/')
+  return this.hasPost('/') || /\//.test(this.text)
 }
 
 /** is it multiple words combinded */

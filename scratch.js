@@ -5,14 +5,5 @@ var nlp = require('./src/index')
 
 // nlp('jean jacket. jean Slkje').debug()
 
-let str = 'left  his/her  backpack'
-let doc = nlp(str)
-// console.log(str === doc.out())
-// console.log(doc.termList())
-console.log(
-  doc
-    .match('his')
-    .debug()
-    .out()
-)
-//   .debug()
+var r = nlp('425-1231').debug()
+// r.match('\\*').debug()

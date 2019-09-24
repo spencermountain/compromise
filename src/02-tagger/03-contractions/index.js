@@ -1,10 +1,12 @@
+const checkLexicon = require('../01-init/01-lexicon')
+const tokenize = require('../../01-tokenizer')
 const checkNegative = require('./01-negative')
 const checkApostrophe = require('./02-simple')
 const checkIrregulars = require('./03-irregulars')
 const checkPossessive = require('./04-possessive')
 const checkPerfect = require('./05-perfectTense')
-const tokenize = require('../../01-tokenizer')
-const checkLexicon = require('../01-init/01-lexicon')
+const checkRange = require('./06-ranges')
+const isNumber = /^[0-9]+$/
 
 const createPhrase = function(found, doc) {
   //create phrase from ['would', 'not']
@@ -13,13 +15,18 @@ const createPhrase = function(found, doc) {
   let terms = phrase.terms()
   checkLexicon(terms, doc.world)
   //make these terms implicit
-  terms.forEach((t, i) => {
+  terms.forEach(t => {
     t.implicit = t.text
     t.text = ''
     t.clean = ''
     // remove whitespace for implicit terms
     t.pre = ''
     t.post = ''
+    // tag number-ranges
+    if (isNumber.test(t.implicit)) {
+      t.tags.Number = true
+      t.tags.Cardinal = true
+    }
   })
   return phrase
 }
@@ -35,6 +42,7 @@ const contractions = function(doc) {
       found = found || checkIrregulars(term, p)
       found = found || checkPossessive(term, p, world)
       found = found || checkPerfect(term, p)
+      found = found || checkRange(term, p)
       //add them in
       if (found !== null) {
         let newPhrase = createPhrase(found, doc)

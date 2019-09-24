@@ -49,7 +49,7 @@ const token = function(w) {
       obj.greedy = true
       w = stripEnd(w)
     }
-    if (w !== '*' && end(w) === '*') {
+    if (w !== '*' && end(w) === '*' && w !== '\\*') {
       obj.greedy = true
       w = stripEnd(w)
     }
@@ -138,6 +138,8 @@ const token = function(w) {
   }
   if (w) {
     //somehow handle encoded-chars?
+    w = w.replace('\\*', '*')
+    w = w.replace('\\.', '.')
     obj.word = w.toLowerCase()
   }
   return obj

@@ -34,22 +34,19 @@ test('people:', function(t) {
   arr = doc
     .people()
     .toLowerCase()
-    .out('array')
-  t.deepEqual(arr, ['rod l macdonald'], 'the-rod-2')
+    .out('text')
+  t.deepEqual(arr, 'rod l. macdonald', 'the-rod-2')
 
   doc = nlp("Matt 'the doctor' Smith lasted three seasons.")
   arr = doc
     .people()
     .toLowerCase()
-    .out('array')
-  t.deepEqual(arr, ['matt the doctor smith'], 'nickname-1')
+    .out()
+  t.deepEqual(arr, "matt 'the doctor' smith", 'nickname-1')
 
   doc = nlp("Randal Kieth Orton and Dwayne 'the rock' Johnson had a really funny fight.")
-  arr = doc
-    .people()
-    .toLowerCase()
-    .out('array')
-  t.deepEqual(arr, ['randal kieth orton', 'dwayne the rock johnson'], 'nickname-2')
+  t.equal(doc.people(0).out('normal'), 'randal kieth orton', 'nickname-2a')
+  t.equal(doc.people(1).out('normal'), 'dwayne the rock johnson', 'nickname-2b')
 
   t.end()
 })

@@ -40,13 +40,13 @@ const fixPerson = function(doc) {
       .tag('#MaleName', 'poe')
 
     // jean Foobar
-    titleCase.match(maybeNoun + ' #TitleCase').tagSafe('Person', 'ray-smith')
+    titleCase.match(maybeNoun + ' #Acronym? #TitleCase').tagSafe('Person', 'ray-smith')
     // rob Foobar
-    titleCase.match(maybeVerb + ' #TitleCase').tag('Person', 'rob-smith')
+    titleCase.match(maybeVerb + ' #Acronym? #TitleCase').tag('Person', 'rob-smith')
     // rusty Foobar
-    titleCase.match(maybeAdj + ' #TitleCase').tag('Person', 'rusty-smith')
+    titleCase.match(maybeAdj + ' #Acronym? #TitleCase').tag('Person', 'rusty-smith')
     // june Foobar
-    titleCase.match(maybeDate + ' #TitleCase').tagSafe('Person', 'june-smith')
+    titleCase.match(maybeDate + ' #Acronym? #TitleCase').tagSafe('Person', 'june-smith')
   }
 
   let person = doc.if('#Person')

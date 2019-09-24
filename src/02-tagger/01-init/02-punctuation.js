@@ -1,4 +1,10 @@
 const apostrophes = /[\'‘’‛‵′`´]/
+const oneLetterAcronym = /^[A-Z]('s|,)?$/
+
+const oneLetterWord = {
+  I: true,
+  A: true,
+}
 
 //
 const checkPunctuation = function(terms, i, world) {
@@ -26,6 +32,9 @@ const checkPunctuation = function(terms, i, world) {
   if (term.isAcronym()) {
     term.tag('Acronym', 'acronym-step', world)
     term.tag('Noun', 'acronym-infer', world)
+  } else if (!oneLetterWord.hasOwnProperty(term.text) && oneLetterAcronym.test(term.text)) {
+    term.tag('Acronym', 'one-letter-acronym', world)
+    term.tag('Noun', 'one-letter-infer', world)
   }
 }
 module.exports = checkPunctuation

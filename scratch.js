@@ -4,14 +4,15 @@ var nlp = require('./src/index')
 // nlp.extend(require('./plugins/ngrams/src'))
 
 // nlp('jean jacket. jean Slkje').debug()
-// let str = '.('
+
+let str = '.('
+let doc = nlp(str).debug()
+// console.log(doc.termList())
+console.log(doc.out() === str)
+
+// let str = 'left  his  /  her  backpack'
 // let doc = nlp(str).debug()
-// console.log(doc.out(), doc.out() === str)
-
-nlp(`he's nice`)
-  .match(`he's nice`)
-  .debug()
-
-// nlp('tornado/hurricane')
-//   .match('@hasSlash')
+// console.log(str === doc.out())
+// console.log(doc.termList())
+// console.log(doc.match('@hasSlash').out())
 //   .debug()

@@ -131,6 +131,31 @@ test('match @functions', function(t) {
   t.end()
 })
 
+test('slash whitespace', function(t) {
+  let str = 'left his / her backpack '
+  let doc = nlp(str)
+  t.equal(doc.out(), str, 'slash with normal spaces')
+
+  str = 'left   his/her  backpack '
+  doc = nlp(str)
+  t.equal(doc.out(), str, 'slash with no spaces')
+
+  str = 'left  his  /  her  backpack'
+  doc = nlp(str)
+  t.equal(doc.out(), str, 'slash with lots of spaces')
+  t.end()
+})
+
+test('barely a term', function(t) {
+  let str = '.('
+  let doc = nlp(str)
+  t.equal(doc.out(), str, 'barely-term-no-space')
+  str = '.( '
+  doc = nlp(str)
+  t.equal(doc.out(), str, 'barely-term-with-space')
+  t.end()
+})
+
 test('match min-max', function(t) {
   let doc = nlp('hello1 one hello2').match('#Value{7,9}')
   t.equal(doc.out(), '', 'match was too short')
@@ -144,7 +169,7 @@ test('match min-max', function(t) {
   doc = nlp('hello1 one two three four five hello2').match('#Value{3,}')
   t.equal(doc.out(), 'one two three four five', 'minimum three')
 
-  nlp('hello1 one two three four five hello2').match('hello1 .{3}')
+  doc = nlp('hello1 one two three four five hello2').match('hello1 .{3}')
   t.equal(doc.out(), 'hello1 one two three', 'unspecific greedy exact length')
 
   doc = nlp('hello1 one two').match('hello1 .{3}')

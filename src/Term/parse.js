@@ -11,6 +11,7 @@ let endings = /[ \.’'\[\](){}⟨⟩:,،、‒–—―…!.‹›«»‐\-?‘
  * seperate the 'meat' of the word from the whitespace+punctuation
  */
 const parseTerm = str => {
+  let original = str
   let pre = ''
   let post = ''
   str = str.replace(startings, found => {
@@ -23,9 +24,14 @@ const parseTerm = str => {
   })
   //we went too far..
   if (str === '') {
-    str = pre.replace(/[.?!]/, '').trim()
+    // do a very mild parse, and hope for the best.
+    original = original.replace(/ *$/, after => {
+      post = after || ''
+      return ''
+    })
+    str = original
     pre = ''
-    post = ' '
+    post = post
   }
   const parsed = {
     text: str,

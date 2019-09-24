@@ -24,10 +24,10 @@ const hasHyphen = function(str) {
     return true
   }
   //support weird number-emdash combo '2010–2011'
-  let reg2 = /^([0-9]+)(–|—)([0-9].*)/i
-  if (reg2.test(str)) {
-    return true
-  }
+  // let reg2 = /^([0-9]+)(–|—)([0-9].*)/i
+  // if (reg2.test(str)) {
+  //   return true
+  // }
   return false
 }
 

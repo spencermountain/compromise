@@ -94,7 +94,7 @@ test('tricky lexicon:', function(t) {
   var str = r.organizations().out('normal')
   t.equal(str, 'bed bath and beyond', 'four-word')
 
-  r = nlp('shopping at Bed, Bath, and-beyond the store', lexicon)
+  r = nlp('shopping at Bed Bath and-beyond the store', lexicon)
   str = r.organizations().out('normal')
   t.equal(str, 'bed bath and beyond', 'partially-hyphenated-word')
 

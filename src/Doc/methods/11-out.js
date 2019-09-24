@@ -1,5 +1,4 @@
 const debug = require('./_debug')
-const jsonDefaults = { text: true, trim: true, terms: { text: true, tags: true, whitespace: true, implicit: true } }
 
 /** return the document as text */
 exports.text = function(options = {}) {
@@ -13,18 +12,6 @@ exports.text = function(options = {}) {
     const trimPost = !showFull && i === this.list.length - 1
     return str + p.text(options, trimPre, trimPost)
   }, '')
-}
-
-/** pull out desired metadata from the document */
-exports.json = function(options = {}) {
-  //support json(3) format
-  if (typeof options === 'number') {
-    return this.list[options].json(jsonDefaults)
-  }
-  options = Object.assign({}, jsonDefaults, options)
-  return this.list.map(p => {
-    return p.json(options, this.world)
-  })
 }
 
 /** pretty-print the current document and its tags */
@@ -45,7 +32,7 @@ exports.out = function(method) {
     return this.json()
   }
   if (method === 'array') {
-    return this.json({ text: true, terms: false }).map(obj => obj.text)
+    return this.json({ terms: false }).map(obj => obj.text)
   }
   if (method === 'terms') {
     let list = []
@@ -62,6 +49,3 @@ exports.out = function(method) {
   }
   return this.text()
 }
-
-//aliases
-exports.data = exports.json

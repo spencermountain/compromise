@@ -41,26 +41,11 @@ module.exports = {
   Contraction: {},
 
   TitleCase: {},
-  CamelCase: {},
-  UpperCase: {},
   Hyphenated: {},
   Acronym: {},
-  ClauseEnd: {},
 
   // Quotes
   Quotation: {},
-  StartQuotation: {
-    isA: 'Quotation',
-  },
-  EndQuotation: {
-    isA: 'Quotation',
-  },
   //parentheses
   Parentheses: {},
-  EndBracket: {
-    isA: 'Parentheses',
-  },
-  StartBracket: {
-    isA: 'Parentheses',
-  },
 }

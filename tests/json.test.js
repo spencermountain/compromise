@@ -15,6 +15,16 @@ test('json out default', function(t) {
   t.end()
 })
 
+test('json out trim', function(t) {
+  let doc = nlp('who are you? what is this?')
+  let json = doc.json({ trim: false, terms: false })
+  t.equal(json.length, 2, 'json-len')
+  t.equal(json[0].text, 'who are you? ', 'json-text')
+  t.equal(json[1].text, 'what is this?', 'json-text')
+  t.equal(json[1].terms, undefined, 'json-no-terms')
+  t.end()
+})
+
 test('json out implicit', function(t) {
   let str = `he isn't`
   let doc = nlp(str)

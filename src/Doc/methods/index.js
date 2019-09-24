@@ -11,5 +11,6 @@ module.exports = Object.assign(
   require('./09-insert'),
   require('./10-sort'),
   require('./11-out'),
-  require('./12-normalize')
+  require('./12-normalize'),
+  require('./13-json')
 )

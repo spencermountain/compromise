@@ -18,6 +18,7 @@ exports.json = function(options, world) {
   options = options || {}
   options = Object.assign({}, jsonDefault, options)
   let result = {}
+
   // default on
   if (options.text) {
     result.text = this.text
@@ -25,12 +26,13 @@ exports.json = function(options, world) {
   if (options.tags) {
     result.tags = Object.keys(this.tags)
   }
+
   // default off
-  if (options.id) {
-    result.id = this.id
-  }
   if (options.clean) {
     result.clean = this.clean
+  }
+  if (options.id || options.offset) {
+    result.id = this.id
   }
   if (options.normal) {
     result.normal = this.normal
@@ -48,5 +50,6 @@ exports.json = function(options, world) {
   if (options.bestTag) {
     result.bestTag = rankTags(this, world)[0]
   }
+
   return result
 }

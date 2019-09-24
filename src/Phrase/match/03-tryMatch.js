@@ -1,12 +1,22 @@
 //found a match? it's greedy? keep going!
 const getGreedy = function(terms, t, reg, until) {
+  let start = t
   for (; t < terms.length; t += 1) {
     //stop for next-reg match
     if (until && terms[t].doesMatch(until)) {
       return t
     }
+    let count = t - start + 1
+    // is it max-length now?
+    if (reg.max !== undefined && count === reg.max) {
+      return t
+    }
     //stop here
     if (terms[t].doesMatch(reg) === false) {
+      // is it too short?
+      if (reg.min !== undefined && count < reg.min) {
+        return null
+      }
       return t
     }
   }
@@ -48,7 +58,7 @@ const tryHere = function(terms, regs) {
       return false
     }
 
-    //support 'unspecific greedy' properly
+    //support 'unspecific greedy' .* properly
     if (reg.anything === true && reg.greedy === true) {
       let skipto = greedyTo(terms, t, regs[r + 1])
       //TODO: support [*] properly
@@ -74,6 +84,9 @@ const tryHere = function(terms, regs) {
       //try keep it going!
       if (reg.greedy === true) {
         t = getGreedy(terms, t, reg, regs[r + 1])
+        if (t === null) {
+          return false //greedy was too short
+        }
       }
       if (reg.capture) {
         captures.push(startAt)

@@ -7,8 +7,8 @@ var nlp = require('./src/index')
 // {2,4}	Two to four times	\d{2,4}	156
 // {3,}	Three or more times
 
-nlp('one two two three')
-  .match('one #Value{1,4} three')
+nlp('hello1 one two three four five hello2')
+  .match('#Value{3}')
   .debug()
 
 // nlp('jean jacket. jean Slkje').debug()

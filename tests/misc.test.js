@@ -130,3 +130,19 @@ test('match @functions', function(t) {
 
   t.end()
 })
+
+test('match min-max', function(t) {
+  let doc = nlp('hello1 one hello2').match('#Value{7,9}')
+  t.equal(doc.out(), '', 'match was too short')
+
+  doc = nlp('hello1 one two three four five hello2').match('#Value{3}')
+  t.equal(doc.out(), 'one two three', 'exactly three')
+
+  doc = nlp('hello1 one two three four five hello2').match('#Value{3,3}')
+  t.equal(doc.out(), 'one two three', 'still exactly three')
+
+  doc = nlp('hello1 one two three four five hello2').match('#Value{3,}')
+  t.equal(doc.out(), 'one two three four five', 'minimum three')
+
+  t.end()
+})

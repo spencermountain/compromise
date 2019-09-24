@@ -101,8 +101,8 @@ const token = function(w) {
       let arr = b.split(/,/g)
       if (arr.length === 1) {
         // '{3}'	Exactly three times
-        obj.min = arr[0]
-        obj.max = arr[0]
+        obj.min = Number(arr[0])
+        obj.max = Number(arr[0])
       } else {
         // '{2,4}' Two to four times
         // '{3,}' Three or more times
@@ -110,7 +110,6 @@ const token = function(w) {
         obj.max = Number(arr[1] || 999)
       }
       obj.greedy = true
-      console.log(obj)
       return ''
     })
   }

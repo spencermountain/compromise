@@ -17,6 +17,10 @@ exports.replaceWith = function(replace) {
 
 /** search and replace match with new content */
 exports.replace = function(match, replace) {
+  // if there's no 2nd param, use replaceWith
+  if (replace === undefined) {
+    return this.replaceWith(match)
+  }
   this.match(match).replaceWith(replace)
   return this
 }

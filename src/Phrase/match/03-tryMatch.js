@@ -86,6 +86,11 @@ const tryHere = function(terms, regs) {
     //if it looks like a match, continue
     if (reg.anything === true || terms[t].doesMatch(reg) === true) {
       let startAt = t
+      // okay, it was a match, but if it optional too,
+      // we should check the next reg too, to skip it?
+      if (reg.optional && regs[r + 1] && terms[t].doesMatch(regs[r + 1]) === true) {
+        r += 1
+      }
       //advance to the next term!
       t += 1
       //check any ending '$' flags

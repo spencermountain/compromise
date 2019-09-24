@@ -30,7 +30,8 @@ test('fancy match', function(t) {
 
     //optional miss
     ['doug is good', 'doug is really? good', 3],
-    ['doug is good', 'doug is .? good', 3], //tricky 'greedy optional' bug
+    ['doug is good', 'doug is good? good', 3],
+    ['doug is good', 'doug is .? good', 3], //tricky 'anything optional' bug
     ['doug is good', 'doug is #Adverb? good', 3],
     //optional has
     ['doug is really good', 'doug is really? good', 4],

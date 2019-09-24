@@ -52,7 +52,7 @@ exports.text = function(options = {}, isFirst, isLast) {
 }
 
 /** return json metadata for this phrase */
-exports.json = function(options = {}) {
+exports.json = function(options = {}, world) {
   let res = {}
   // text data
   if (options.text) {
@@ -70,7 +70,10 @@ exports.json = function(options = {}) {
   }
   // terms data
   if (options.terms) {
-    res.terms = this.terms().map(t => t.json(options.terms))
+    if (options.terms === true) {
+      options.terms = {}
+    }
+    res.terms = this.terms().map(t => t.json(options.terms, world))
   }
   return res
 }

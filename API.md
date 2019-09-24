@@ -134,4 +134,6 @@
     * text
     * tags
     * normal
+    * offset
+    * id
 

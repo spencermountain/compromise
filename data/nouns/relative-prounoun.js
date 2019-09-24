@@ -1,12 +1,8 @@
 module.exports = [
-  // 'that',
   'whatever',
   'whatsoever',
-  // 'when',
-  // 'which',
   'whichever',
   'whichsoever',
-  // 'who',
   'whoever',
   'whom',
   'whomever',
@@ -14,4 +10,8 @@ module.exports = [
   'whose',
   'whosesoever',
   'whosoever',
+  // 'that',
+  // 'when',
+  // 'which',
+  // 'who',
 ]

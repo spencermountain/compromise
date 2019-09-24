@@ -23,7 +23,7 @@ exports.json = function(options = {}) {
   }
   options = Object.assign({}, jsonDefaults, options)
   return this.list.map(p => {
-    return p.json(options)
+    return p.json(options, this.world)
   })
 }
 

@@ -1,6 +1,8 @@
 const hasSpace = /[ -]/
+
 /** return various text formats of this term */
 exports.textOut = function(options, showPre, showPost) {
+  options = options || {}
   let word = this.text
   let before = this.pre
   let after = this.post
@@ -39,26 +41,4 @@ exports.textOut = function(options, showPre, showPost) {
     after = ''
   }
   return before + word + after
-}
-
-/** return various metadata for this term */
-exports.json = function(options) {
-  let result = {}
-  if (options.text) {
-    result.text = this.text
-  }
-  if (options.clean) {
-    result.clean = this.clean
-  }
-  if (options.implicit && this.implicit !== null) {
-    result.implicit = this.implicit
-  }
-  if (options.tags) {
-    result.tags = Object.keys(this.tags)
-  }
-  if (options.whitespace) {
-    result.pre = this.pre
-    result.post = this.post
-  }
-  return result
 }

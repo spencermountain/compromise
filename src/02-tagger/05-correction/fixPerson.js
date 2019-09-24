@@ -38,6 +38,15 @@ const fixPerson = function(doc) {
       .match('(king|pope|father) #TitleCase')
       .ifNo('#Date')
       .tag('#MaleName', 'poe')
+
+    // jean Foobar
+    titleCase.match(maybeNoun + ' #TitleCase').tagSafe('Person', 'ray-smith')
+    // rob Foobar
+    titleCase.match(maybeVerb + ' #TitleCase').tag('Person', 'rob-smith')
+    // rusty Foobar
+    titleCase.match(maybeAdj + ' #TitleCase').tag('Person', 'rusty-smith')
+    // june Foobar
+    titleCase.match(maybeDate + ' #TitleCase').tagSafe('Person', 'june-smith')
   }
 
   let person = doc.if('#Person')
@@ -66,28 +75,28 @@ const fixPerson = function(doc) {
     //Nouns: 'viola' or 'sky'
     let ambigNoun = person.if(maybeNoun)
     if (ambigNoun.found === true) {
-      ambigNoun.match('(#Determiner|#Adverb|#Pronoun|#Possessive) [' + maybeNoun + ']').tag('Noun', 'the-ray')
-      ambigNoun.match(maybeNoun + ' (#Person|#Acronym|#TitleCase)').tagSafe('Person', 'ray-smith')
+      // ambigNoun.match('(#Determiner|#Adverb|#Pronoun|#Possessive) [' + maybeNoun + ']').tag('Noun', 'the-ray')
+      ambigNoun.match(maybeNoun + ' #Person').tagSafe('Person', 'ray-smith')
     }
 
     //Verbs: 'pat' or 'wade'
     let ambigVerb = person.if(maybeVerb)
     if (ambigVerb === true) {
       ambigVerb.match('(#Modal|#Adverb) [' + maybeVerb + ']').tag('Verb', 'would-mark')
-      ambigVerb.match(maybeVerb + ' (#Person|#TitleCase)').tag('Person', 'rob-smith')
+      ambigVerb.match(maybeVerb + ' #Person').tag('Person', 'rob-smith')
     }
 
     //Adjectives: 'rusty' or 'rich'
     let ambigAdj = person.if(maybeAdj)
     if (ambigAdj.found === true) {
       ambigAdj.match('#Adverb [' + maybeAdj + ']').tag('Adjective', 'really-rich')
-      ambigAdj.match(maybeAdj + ' (#Person|#TitleCase)').tag('Person', 'randy-smith')
+      ambigAdj.match(maybeAdj + ' #Person').tag('Person', 'randy-smith')
     }
 
     //Dates: 'june' or 'may'
     let ambigDate = person.if(maybeDate)
     if (ambigDate.found === true) {
-      ambigDate.match(String(maybeDate) + ' (#Person|#TitleCase)').tagSafe('Person', 'june-smith')
+      ambigDate.match(String(maybeDate) + ' #Person').tagSafe('Person', 'june-smith')
       ambigDate.match('(in|during|on|by|before|#Date) [' + maybeDate + ']').tagSafe('Date', 'in-june')
       ambigDate.match(maybeDate + ' (#Date|#Value)').tagSafe('Date', 'june-5th')
     }
@@ -97,7 +106,7 @@ const fixPerson = function(doc) {
     if (ambigPlace.found === true) {
       ambigPlace.match('(in|near|at|from|to|#Place) [' + maybePlace + ']').tagSafe('Place', 'in-paris')
       ambigPlace.match('[' + maybePlace + '] #Place').tagSafe('Place', 'paris-france')
-      ambigPlace.match('[' + maybePlace + '] #Person').tagSafe('Person', 'paris-hilton')
+      // ambigPlace.match('[' + maybePlace + '] #Person').tagSafe('Person', 'paris-hilton')
     }
 
     //this one is tricky

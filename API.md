@@ -123,6 +123,7 @@
   * **@hasContraction**  -  is it multiple words combined?
   * **@isAcronym**  -  does this term look like an acronym?
   * **@isKnown**  -  does the term have at least one good tag?
+  * **@isImplicit**  -  is this term implied by a contraction?
  
 ### json:
   * text

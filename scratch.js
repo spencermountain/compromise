@@ -3,16 +3,15 @@ var nlp = require('./src/index')
 // nlp.extend(require('./plugins/verbs/src'))
 // nlp.extend(require('./plugins/ngrams/src'))
 
-nlp('doug is good')
-  .match('doug is good? good')
-  .debug()
-
 // nlp('jean jacket. jean Slkje').debug()
 // let str = '.('
 // let doc = nlp(str).debug()
 // console.log(doc.out(), doc.out() === str)
 
-// let str = 'tornado/hurricane'
-// let doc = nlp(str)
+nlp(`he's nice`)
+  .match(`he's nice`)
+  .debug()
+
+// nlp('tornado/hurricane')
 //   .match('@hasSlash')
 //   .debug()

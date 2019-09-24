@@ -1,3 +1,5 @@
+// i formally apologize for how complicated this is.
+
 //found a match? it's greedy? keep going!
 const getGreedy = function(terms, t, reg, until) {
   let start = t
@@ -27,11 +29,6 @@ const getGreedy = function(terms, t, reg, until) {
 const greedyTo = function(terms, t, nextReg) {
   //if there's no next one, just go off the end!
   if (!nextReg) {
-    // // don't go over the max
-    // if (reg.max !== undefined) {
-    //   let len = t + reg.max
-    //   return len < terms.length ? len : terms.length
-    // }
     return terms.length
   }
   //otherwise, we're looking for the next one
@@ -120,6 +117,14 @@ const tryHere = function(terms, regs) {
     //bah, who cares, keep going
     if (reg.optional === true) {
       continue
+    }
+    // should we skip-over an implicit word?
+    if (terms[t].isImplicit() && regs[r - 1] && terms[t + 1]) {
+      // does the next one match?
+      if (terms[t + 1].doesMatch(reg)) {
+        t += 2
+        continue
+      }
     }
     // console.log('   ❌\n\n')
     return false

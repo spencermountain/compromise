@@ -23,6 +23,11 @@ exports.isAcronym = function() {
   return isAcronym(this.text)
 }
 
+/** is this term implied by a contraction? */
+exports.isImplicit = function() {
+  return this.text === '' && this.implicit
+}
+
 /** does the term have at least one good tag? */
 exports.isKnown = function() {
   return Object.keys(this.tags).some(t => boring[t] !== true)

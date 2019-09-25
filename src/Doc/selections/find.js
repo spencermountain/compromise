@@ -27,10 +27,17 @@ exports.hyphenated = function(n) {
   }
   return r
 }
-
+/** return anything tagged as a phone number */
+exports.phoneNumbers = function(n) {
+  let r = this.splitAfter('#Comma')
+  r = r.match('#PhoneNumber+')
+  if (typeof n === 'number') {
+    r = r.get(n)
+  }
+  return r
+}
 // /** return anything inside parentheses */
 // exports.parentheses = function(n) {
-//
 //   let r = this.match('#Parentheses+')
 //   //split-up consecutive ones
 //   r = r.splitAfter('#EndBracket')
@@ -48,15 +55,7 @@ exports.organizations = function(n) {
   }
   return r
 }
-/** return anything tagged as a phone number */
-exports.phoneNumbers = function(n) {
-  let r = this.splitAfter('#Comma')
-  r = r.match('#PhoneNumber+')
-  if (typeof n === 'number') {
-    r = r.get(n)
-  }
-  return r
-}
+
 /** return anything tagged as a Place*/
 exports.places = function(n) {
   let r = this.splitAfter('#Comma')
@@ -68,15 +67,15 @@ exports.places = function(n) {
 }
 
 /** return any sentences that ask a question */
-exports.questions = function(doc) {
-  return doc.sentences().isQuestion()
-}
+// exports.questions = function(doc) {
+//   return doc.sentences().isQuestion()
+// }
 
-/** return any sentences that are not a question or exclamation*/
-exports.statements = function(doc) {
-  return doc.sentences().isStatement()
-}
+// /** return any sentences that are not a question or exclamation*/
+// exports.statements = function(doc) {
+//   return doc.sentences().isStatement()
+// }
 /** return any sentences that are not a question */
-exports.exclamations = function(doc) {
-  return doc.sentences().isExclamation()
-}
+// exports.exclamations = function(doc) {
+//   return doc.sentences().isExclamation()
+// }

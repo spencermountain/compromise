@@ -5,3 +5,4 @@
 * .lump()
 * .getPunctuation()
 * .setPunctuation()
+* .insertAt()

@@ -5,6 +5,7 @@ module.exports = {
     returns: 'Doc',
     example: `nlp('Michael Apple ate a delicious apple.').match('#FirstName apple').tag('Person').people().out()\n//Michael Apple`,
   },
+  tagSafe: {},
   unTag: {
     desc: `remove a particular tag for all these terms. Passing in a '*' removes all the current tags.`,
     returns: 'Doc',

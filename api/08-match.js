@@ -10,6 +10,7 @@ module.exports = {
     returns: 'Doc',
     example: `nlp('wait, there’s a new mexico?').places().not('new').out()\n//mexico`,
   },
+  matchOne: {},
   if: {
     desc: 'returns only the sets which contain this match. Like a Array.filter() method, for your results',
     returns: 'Doc',

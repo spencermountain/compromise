@@ -15,6 +15,7 @@
 * **clone**  -  deep-copy the document, so that no references remain
 * **wordCount**  -  count the # of terms in each match
 * **length**  - count the # of characters of each match  (string length)
+* **normalize** - clean-up the document to a given standard
 * **debug**  -  pretty-print the current document and its tags
 <!-- 
 **pool** - 
@@ -49,18 +50,16 @@
 * **append**  -  add these new terms to the end (insertAfter)
 * **prepend**  -  add these new terms to the front (insertBefore)
 * **split**  -  return a Document with three parts for every match ('splitOn')
-* **splitAfter**  -  separate everything before the word, as a new phrase
 * **splitBefore**  -  separate everything after the match as a new phrase
+* **splitAfter**  -  separate everything before the word, as a new phrase
 * **concat**  -  add these new things to the end
-* **replaceWith**  -  substitute-in new content
 * **replace**  -  search and replace match with new content
+* **replaceWith**  -  substitute-in new content
 * **delete**  -  fully remove these terms from the document
 
 ### Output
 * **text**  -  return the document as text
 * **json**  -  pull out desired metadata from the document
-* **out**  -  some named output formats
-* **normal**  -  normalized text -  out('normal')
   
 ### Loops
 * **forEach**  -  run a function on each phrase, as an individual document

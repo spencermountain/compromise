@@ -95,8 +95,6 @@ declare module nlp {
     text(options?: any): String
     /**  pull out desired metadata from the document */
     json(options?: any): any
-    /**  some named output formats */
-    out(options?: any): any
 
     // Loops
     /**  run a function on each phrase, as an individual document */

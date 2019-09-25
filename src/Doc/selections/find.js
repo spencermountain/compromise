@@ -10,14 +10,35 @@ exports.terms = function(n) {
 }
 exports.words = exports.terms
 
-/** split-up results into multi-term phrases */
+// /** split-up results into multi-term phrases */
 exports.clauses = function(n) {
-  let r = this.splitAfter('#ClauseEnd')
+  let r = this.splitAfter('#ClauseEnd') //TODO:make this
   if (typeof n === 'number') {
     r = r.get(n)
   }
   return r
 }
+
+/** all terms connected with a hyphen or dash */
+exports.hyphenated = function(n) {
+  let r = this.match('@hasHyphen .').debug()
+  if (typeof n === 'number') {
+    r = r.get(n)
+  }
+  return r
+}
+
+// /** return anything inside parentheses */
+// exports.parentheses = function(n) {
+//
+//   let r = this.match('#Parentheses+')
+//   //split-up consecutive ones
+//   r = r.splitAfter('#EndBracket')
+//   if (typeof n === 'number') {
+//     r = r.get(n)
+//   }
+//   return r
+// }
 /** return anything tagged as an organization*/
 exports.organizations = function(n) {
   let r = this.splitAfter('#Comma')
@@ -40,16 +61,6 @@ exports.phoneNumbers = function(n) {
 exports.places = function(n) {
   let r = this.splitAfter('#Comma')
   r = r.match('#Place+')
-  if (typeof n === 'number') {
-    r = r.get(n)
-  }
-  return r
-}
-/** return anything inside parentheses */
-exports.parentheses = function(n) {
-  let r = this.match('#Parentheses+')
-  //split-up consecutive ones
-  r = r.splitAfter('#EndBracket')
   if (typeof n === 'number') {
     r = r.get(n)
   }

@@ -184,6 +184,16 @@ test('barely a term', function(t) {
   t.end()
 })
 
+test('hyphenated', function(t) {
+  let doc = nlp(`super-cool and hunky-dory. Connected with-a-dash.`)
+  let arr = doc.match('@hasHyphen+ .').out('array')
+  t.equal(arr.length, 3, 'three found')
+  t.equal(arr[0], 'super-cool', 'first found')
+  t.equal(arr[1], 'hunky-dory.', 'second found')
+  t.equal(arr[2], 'with-a-dash', 'third found')
+  t.end()
+})
+
 test('match min-max', function(t) {
   let doc = nlp('hello1 one hello2').match('#Value{7,9}')
   t.equal(doc.out(), '', 'match was too short')

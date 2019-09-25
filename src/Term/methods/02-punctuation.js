@@ -35,9 +35,15 @@ exports.hasSemicolon = function() {
   return this.hasPost(';')
 }
 
-/** is there a slash after this word? */
+/** is there a slash in this word? */
 exports.hasSlash = function() {
-  return this.hasPost('/') || /\//.test(this.text)
+  return /\//.test(this.text)
+}
+
+/** is there a hyphen, or dash after this word? */
+exports.hasHyphen = function() {
+  const hyphen = /(-|–|—)/
+  return hyphen.test(this.post) || hyphen.test(this.pre)
 }
 
 /** is it multiple words combinded */

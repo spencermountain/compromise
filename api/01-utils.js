@@ -35,6 +35,6 @@ module.exports = {
   debug: {
     desc: 'pretty-print the current selection to the console',
     returns: 'Doc',
-    example: `nlp('wayne’s world, party time, excellent- weeeyooweeeyoo!').out()`,
+    example: `nlp('wayne’s world, party time, excellent- weeeyooweeeyoo!')//.debug()`,
   },
 }

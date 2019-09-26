@@ -101,7 +101,7 @@ const syntax = function(input) {
   tokens = tokens.map(parseToken)
   //clean up anything weird
   tokens = postProcess(tokens)
-  // console.log(tokens)
+  // console.log(JSON.stringify(tokens, null, 2))
   return tokens
 }
 module.exports = syntax

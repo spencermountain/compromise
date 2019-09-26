@@ -41,9 +41,13 @@ const doesMatch = function(t, reg) {
   }
   //support (one|two)
   if (reg.choices !== undefined) {
-    //recursion alert
-    let foundOne = reg.choices.find(r => wrapMatch(t, r))
-    return foundOne !== undefined
+    // try to support && operator
+    if (reg.operator === 'and') {
+      // must match them all
+      return reg.choices.every(r => wrapMatch(t, r))
+    }
+    // or must match one
+    return reg.choices.some(r => wrapMatch(t, r))
   }
   return false
 }

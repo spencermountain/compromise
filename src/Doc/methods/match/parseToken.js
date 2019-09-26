@@ -16,6 +16,7 @@
 }
 */
 const hasMinMax = /\{([0-9]+,?[0-9]*)\}/
+const andSign = /&&/
 
 const titleCase = str => {
   return str.charAt(0).toUpperCase() + str.substr(1)
@@ -72,11 +73,20 @@ const token = function(w) {
     }
     //wrapped-flags
     if (start(w) === '(' && end(w) === ')') {
-      obj.choices = w.split('|')
+      // support (one && two)
+      if (andSign.test(w)) {
+        obj.choices = w.split(andSign)
+        obj.operator = 'and'
+      } else {
+        obj.choices = w.split('|')
+        obj.operator = 'or'
+      }
       //remove '(' and ')'
       obj.choices[0] = stripStart(obj.choices[0])
       let last = obj.choices.length - 1
       obj.choices[last] = stripEnd(obj.choices[last])
+      // clean up the results
+      obj.choices = obj.choices.map(s => s.trim())
       obj.choices = obj.choices.filter(s => s)
       //recursion alert!
       obj.choices = obj.choices.map(token)

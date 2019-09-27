@@ -61,7 +61,11 @@ class Doc {
 
 /** create a new Document object */
 Doc.prototype.buildFrom = function(list) {
-  return new Doc(list, this, this.world)
+  let doc = new Doc(list, this, this.world)
+  if (this._cache !== null) {
+    doc._cache = this._cache
+  }
+  return doc
 }
 /** add new subclass methods */
 Doc.prototype.extend = function(fn) {

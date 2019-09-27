@@ -5,9 +5,11 @@ const tagTerms = function(tag, doc, safe, reason) {
     tagList = tag.split(' ')
   }
   // invalidate cache
-  // doc.parents().forEach(d => {
-  //   d._cache = null
-  // })
+  // if (doc._cache && doc._cache.tags) {
+  //   doc.parents().forEach(d => {
+  //     d._cache.tags = null
+  //   })
+  // }
   //   d.list.forEach( p => {
   // if (p.cache) {
   //   p.cache.tags = null

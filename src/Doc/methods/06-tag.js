@@ -1,4 +1,4 @@
-const setTag = require('./_tag')
+const setTag = require('./_setTag')
 
 /** Give all terms the given tag */
 exports.tag = function(tags, why) {

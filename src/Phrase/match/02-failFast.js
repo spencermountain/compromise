@@ -26,6 +26,13 @@ const failFast = function(p, terms, regs) {
         return true
       }
 
+      // if (p.cache && p.cache.words) {
+      // if (reg.word && !reg.optional && !reg.negative && !p.cache.words[reg.word]) {
+      // console.log('uncached ' + reg.word)
+      // return true
+      // console.log(p.cache)
+      // }
+      // }
       // check tag cache
       // if (reg.tag !== undefined && !reg.negative && p.cache && p.cache.tags) {
       //   if (p.cache.tags[regs[i].tag] !== true) {

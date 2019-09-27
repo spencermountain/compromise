@@ -8,6 +8,15 @@ const cacheDoc = function(doc, options) {
   //   p.cache = p.cache || {}
   //   p.cache.tags = tags
   // })
+  // cache words - on phrases
+  // doc.list.forEach(p => {
+  //   let words = {}
+  //   p.terms().forEach(t => {
+  //     words[t.clean] = true
+  //   })
+  //   p.cache = p.cache || {}
+  //   p.cache.words = words
+  // })
 
   // cache tags
   // let tags = {}
@@ -17,17 +26,17 @@ const cacheDoc = function(doc, options) {
   //   })
   // })
 
-  // cache words
-  let words = {}
-  doc.list.forEach(p => {
-    p.terms().forEach(t => {
-      words[t.clean] = true
-    })
-  })
-  doc._cache = {
-    // tags: tags,
-    words: words,
-  }
+  // // cache words
+  // let words = {}
+  // doc.list.forEach(p => {
+  //   p.terms().forEach(t => {
+  //     words[t.clean] = true
+  //   })
+  // })
+  // doc._cache = {
+  //   tags: tags,
+  //   words: words,
+  // }
   return doc
 }
 module.exports = cacheDoc

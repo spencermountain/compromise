@@ -1,5 +1,10 @@
 /** return a flat array of Term objects */
 exports.terms = function(n) {
+  // use our cached version, if we have one...
+  if (this.cache !== null) {
+    // console.log('skipped')
+    return this.cache
+  }
   let terms = [this.pool.get(this.start)]
   if (this.length === 0) {
     return []
@@ -19,6 +24,11 @@ exports.terms = function(n) {
   }
   if (n !== undefined) {
     return terms[n]
+  }
+  // cache it, for next time?
+  if (this.cache === null) {
+    this.cache = terms
+    // console.log('once')
   }
   return terms
 }

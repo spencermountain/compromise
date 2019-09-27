@@ -1025,6 +1025,9 @@
 
   /** return a flat array of Term objects */
   var terms = function terms(n) {
+    // use our cached version, if we have one...
+    if (this.cache !== null) ;
+
     var terms = [this.pool.get(this.start)];
 
     if (this.length === 0) {
@@ -1049,7 +1052,10 @@
 
     if (n !== undefined) {
       return terms[n];
-    }
+    } // cache it, for next time?
+
+
+    if (this.cache === null) ;
 
     return terms;
   };
@@ -1545,7 +1551,7 @@
   var methods$1 = Object.assign({}, _01Utils, _02Out, _03Change, _04Split, _05Json$1);
 
   // try to avoid doing the match
-  var failFast = function failFast(terms, regs) {
+  var failFast = function failFast(p, terms, regs) {
     if (regs.length === 0) {
       return true;
     }
@@ -1575,7 +1581,21 @@
 
         if (reg.choices && reg.choices.length === 0) {
           return true;
-        }
+        } // if (p.cache && p.cache.words) {
+        // if (reg.word && !reg.optional && !reg.negative && !p.cache.words[reg.word]) {
+        // console.log('uncached ' + reg.word)
+        // return true
+        // console.log(p.cache)
+        // }
+        // }
+        // check tag cache
+        // if (reg.tag !== undefined && !reg.negative && p.cache && p.cache.tags) {
+        //   if (p.cache.tags[regs[i].tag] !== true) {
+        //     // console.log('cache-miss ' + regs[i].tag)
+        //     return true
+        //   }
+        // }
+
       }
     }
 
@@ -2075,7 +2095,7 @@
 
     var terms = p.terms(); //try to dismiss it, at-once
 
-    if (_02FailFast(terms, regs) === true) {
+    if (_02FailFast(p, terms, regs) === true) {
       return [];
     } //any match needs to be this long, at least
 
@@ -2247,6 +2267,11 @@
       enumerable: false,
       writable: true,
       value: pool
+    });
+    Object.defineProperty(this, 'cache', {
+      enumerable: false,
+      writable: true,
+      value: null
     });
   };
   /** create a new Phrase object from an id and length */
@@ -5111,6 +5136,48 @@
   	return module = { exports: {} }, fn(module, module.exports), module.exports;
   }
 
+  var cacheDoc = function cacheDoc(doc, options) {
+    // cache tags - on phrases
+    // doc.list.forEach(p => {
+    //   let tags = {}
+    //   p.terms().forEach(t => {
+    //     tags = Object.assign(tags, t.tags)
+    //   })
+    //   p.cache = p.cache || {}
+    //   p.cache.tags = tags
+    // })
+    // cache words - on phrases
+    // doc.list.forEach(p => {
+    //   let words = {}
+    //   p.terms().forEach(t => {
+    //     words[t.clean] = true
+    //   })
+    //   p.cache = p.cache || {}
+    //   p.cache.words = words
+    // })
+    // cache tags
+    // let tags = {}
+    // doc.list.forEach(p => {
+    //   p.terms().forEach(t => {
+    //     tags = Object.assign(tags, t.tags)
+    //   })
+    // })
+    // // cache words
+    // let words = {}
+    // doc.list.forEach(p => {
+    //   p.terms().forEach(t => {
+    //     words[t.clean] = true
+    //   })
+    // })
+    // doc._cache = {
+    //   tags: tags,
+    //   words: words,
+    // }
+    return doc;
+  };
+
+  var _setCache = cacheDoc;
+
   var _01Utils$1 = createCommonjsModule(function (module, exports) {
     /** return the root, first document */
     exports.all = function () {
@@ -5172,6 +5239,12 @@
 
       this.world.verbose = bool;
     };
+    /** freeze the current state of the document, for speed-purposes*/
+
+
+    exports.cache = function (options) {
+      return _setCache(this);
+    };
   });
   var _01Utils_1 = _01Utils$1.all;
   var _01Utils_2 = _01Utils$1.parent;
@@ -5180,6 +5253,7 @@
   var _01Utils_5 = _01Utils$1.wordCount;
   var _01Utils_6 = _01Utils$1.wordcount;
   var _01Utils_7 = _01Utils$1.verbose;
+  var _01Utils_8 = _01Utils$1.cache;
 
   var _02Accessors = createCommonjsModule(function (module, exports) {
     /** use only the first result(s) */
@@ -5263,13 +5337,47 @@
   var _02Accessors_7 = _02Accessors.lastTerm;
   var _02Accessors_8 = _02Accessors.termList;
 
+  var checkCache = function checkCache(doc, regs) {
+    // check tags
+    if (doc._cache) {
+      for (var i = 0; i < regs.length; i++) {
+        var reg = regs[i];
+
+        if (doc._cache.tags) {
+          var hasTags = doc._cache.tags;
+
+          if (reg.tag && !reg.optional && !reg.negative && !hasTags[reg.tag]) {
+            // miss-cache
+            // console.log('miss tag - ' + reg.tag)
+            return false;
+          }
+        }
+
+        if (doc._cache.words) {
+          var hasWords = doc._cache.words;
+
+          if (reg.word && !reg.optional && !reg.negative && !hasWords[reg.word]) {
+            // miss-cache
+            // console.log('miss term - ' + reg.word)
+            return false;
+          }
+        }
+      }
+    } //
+
+
+    return true;
+  };
+
+  var checkCache_1 = checkCache;
+
   /** return a new Doc, with this one as a parent */
 
   var match$1 = function match(reg) {
     //parse-up the input expression
     var regs = syntax_1(reg);
 
-    if (regs.length === 0) {
+    if (regs.length === 0 || checkCache_1(this, regs) === false) {
       return this.buildFrom([]);
     } //try expression on each phrase
 
@@ -5516,7 +5624,20 @@
 
     if (typeof tag === 'string') {
       tagList = tag.split(' ');
-    } //do indepenent tags for each term:
+    } // invalidate cache
+    // if (doc._cache && doc._cache.tags) {
+    //   doc.parents().forEach(d => {
+    //     d._cache.tags = null
+    //   })
+    // }
+    //   d.list.forEach( p => {
+    // if (p.cache) {
+    //   p.cache.tags = null
+    // }
+    //   })
+    // })
+    // console.log(doc.parents().length)
+    //do indepenent tags for each term:
 
 
     doc.list.forEach(function (p) {
@@ -5543,7 +5664,7 @@
     return;
   };
 
-  var _tag = tagTerms;
+  var _setTag = tagTerms;
 
   /** Give all terms the given tag */
 
@@ -5552,7 +5673,7 @@
       return this;
     }
 
-    _tag(tags, this, false, why);
+    _setTag(tags, this, false, why);
     return this;
   };
   /** Only apply tag to terms if it is consistent with current tags */
@@ -5563,7 +5684,7 @@
       return this;
     }
 
-    _tag(tags, this, true, why);
+    _setTag(tags, this, true, why);
     return this;
   };
   /** Remove this term from the given terms */
@@ -9034,7 +9155,7 @@
     doc = _03Contractions(doc); // deduce more specific tags - singular/plurals/quotations...
 
     doc = _04Inference(doc); //set our cache, to speed things up
-    // doc.freeze()
+    // doc.cache()
     // wiggle-around the results, so they make more sense
 
     doc = _05Correction(doc); //remove our cache?
@@ -9431,7 +9552,14 @@
 
       Object.defineProperty(this, 'world', {
         enumerable: false,
-        value: world
+        value: world // writable: true, //todo: add me?
+
+      }); //fast-scans for our data
+
+      Object.defineProperty(this, '_cache', {
+        enumerable: false,
+        value: null,
+        writable: true
       }); //'found' getter
 
       Object.defineProperty(this, 'found', {
@@ -9479,7 +9607,13 @@
 
 
   Doc.prototype.buildFrom = function (list) {
-    return new Doc(list, this, this.world);
+    var doc = new Doc(list, this, this.world);
+
+    if (this._cache !== null) {
+      doc._cache = this._cache;
+    }
+
+    return doc;
   };
   /** add new subclass methods */
 

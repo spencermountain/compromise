@@ -42,8 +42,8 @@
     "efrt-unpack": "2.2.0"
   },
   "devDependencies": {
-    "@babel/core": "7.6.0",
-    "@babel/preset-env": "7.6.0",
+    "@babel/core": "7.6.2",
+    "@babel/preset-env": "7.6.2",
     "amble": "0.0.7",
     "efrt": "2.2.1",
     "rollup": "^1.21.4",

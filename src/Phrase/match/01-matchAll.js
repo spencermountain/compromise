@@ -33,7 +33,6 @@ const matchAll = function(p, regs, matchOne = false) {
       break
     }
     //try it!
-    // console.log('- #' + i);
     let match = tryMatch(terms.slice(i), regs)
     if (match !== false && match.length > 0) {
       //zoom forward!

@@ -5,5 +5,5 @@ var nlp = require('./src/index')
 
 // let doc = nlp('june and today cool')
 // doc.match('(#Place .{2,3})').debug()
-let doc = nlp('toronto and montreal. Sydney and Paris.')
-doc.match('(#Place  | and )').debug()
+let doc = nlp('toronto and montreal and Sydney and Paris.')
+doc.match('(toronto and | foobar joe | and paris)').debug()

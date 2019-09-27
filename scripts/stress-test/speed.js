@@ -2,8 +2,8 @@ const corpus = require('nlp-corpus')
 
 const paths = {
   v11: '/Users/spencer/Desktop/compromise/src/index.js',
-  v12: '../src',
-  v12build: '../builds/compromise.min.js',
+  v12: '../../src',
+  v12build: '../../builds/compromise.min.js',
 }
 
 function test(build) {

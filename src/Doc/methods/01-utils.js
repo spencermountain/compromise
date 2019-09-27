@@ -1,3 +1,4 @@
+const cache = require('./_cache')
 /** return the root, first document */
 exports.all = function() {
   return this.parents()[0] || this
@@ -46,4 +47,10 @@ exports.verbose = function(bool) {
     bool = true
   }
   this.world.verbose = bool
+}
+
+/** freeze the current state of the document, for speed-purposes*/
+exports.cache = function() {
+  cache(this)
+  return this
 }

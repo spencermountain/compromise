@@ -4,6 +4,16 @@ const tagTerms = function(tag, doc, safe, reason) {
   if (typeof tag === 'string') {
     tagList = tag.split(' ')
   }
+  // invalidate cache
+  doc.parents().forEach(d => {
+    d.list.forEach(p => {
+      if (p.cache) {
+        p.cache.tags = null
+      }
+    })
+  })
+
+  // console.log(doc.parents().length)
   //do indepenent tags for each term:
   doc.list.forEach(p => {
     let terms = p.terms()

@@ -11,7 +11,7 @@ const matchAll = function(p, regs, matchOne = false) {
 
   let terms = p.terms()
   //try to dismiss it, at-once
-  if (failFast(terms, regs) === true) {
+  if (failFast(p, terms, regs) === true) {
     return []
   }
   //any match needs to be this long, at least

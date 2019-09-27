@@ -14,9 +14,9 @@ test('or-match-basic', function(t) {
   t.end()
 })
 
-test('or-match-multi', function(t) {
-  let doc = nlp('toronto and montreal. Sydney and Paris')
-  let m = doc.match('(#Place  and montreal )')
-  t.equal(m.out(), 'toronto and montreal', 'whitespace-or')
-  t.end()
-})
+// test('or-match-multi', function(t) {
+//   let doc = nlp('toronto and montreal. Sydney and Paris')
+//   let m = doc.match('(#Place  and montreal )')
+//   t.equal(m.out(), 'toronto and montreal', 'whitespace-or')
+//   t.end()
+// })

@@ -35,9 +35,9 @@ test('and-match-more', function(t) {
   t.end()
 })
 
-test('and-match-multi', function(t) {
-  let doc = nlp('toronto and montreal. Sydney and Paris.')
-  let m = doc.match('(#Place and && toronto .)')
-  t.equal(m.out(), 'toronto and', 'found one multi')
-  t.end()
-})
+// test('and-match-multi', function(t) {
+//   let doc = nlp('toronto and montreal. Sydney and Paris.')
+//   let m = doc.match('(#Place and && toronto .)')
+//   t.equal(m.out(), 'toronto and', 'found one multi')
+//   t.end()
+// })

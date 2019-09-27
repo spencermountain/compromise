@@ -20,7 +20,7 @@ const tagger = function(doc) {
   doc = inference(doc)
 
   //set our cache, to speed things up
-  // doc.freeze()
+  doc.cache()
 
   // wiggle-around the results, so they make more sense
   doc = corrections(doc)

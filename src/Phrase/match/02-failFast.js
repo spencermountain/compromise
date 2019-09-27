@@ -1,5 +1,5 @@
 // try to avoid doing the match
-const failFast = function(terms, regs) {
+const failFast = function(p, terms, regs) {
   if (regs.length === 0) {
     return true
   }
@@ -24,6 +24,14 @@ const failFast = function(terms, regs) {
       //empty choices
       if (reg.choices && reg.choices.length === 0) {
         return true
+      }
+
+      // check tag cache
+      if (reg.tag !== undefined && !reg.negative && p.cache && p.cache.tags) {
+        if (p.cache.tags[regs[i].tag] !== true) {
+          // console.log('cache-miss ' + regs[i].tag)
+          return true
+        }
       }
     }
   }

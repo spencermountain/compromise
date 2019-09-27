@@ -26,11 +26,11 @@ class Doc {
       // writable: true, //todo: add me?
     })
     //fast-scans for our data
-    Object.defineProperty(this, '_cache', {
-      enumerable: false,
-      value: null,
-      writable: true,
-    })
+    // Object.defineProperty(this, '_cache', {
+    //   enumerable: false,
+    //   value: null,
+    //   writable: true,
+    // })
     //'found' getter
     Object.defineProperty(this, 'found', {
       get: () => this.list.length > 0,
@@ -62,9 +62,9 @@ class Doc {
 /** create a new Document object */
 Doc.prototype.buildFrom = function(list) {
   let doc = new Doc(list, this, this.world)
-  if (this._cache !== null) {
-    doc._cache = this._cache
-  }
+  // if (this._cache !== null) {
+  //   doc._cache = this._cache
+  // }
   return doc
 }
 /** add new subclass methods */

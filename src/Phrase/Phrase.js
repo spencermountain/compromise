@@ -11,11 +11,11 @@ class Phrase {
       writable: true,
       value: pool,
     })
-    Object.defineProperty(this, 'cache', {
-      enumerable: false,
-      writable: true,
-      value: null,
-    })
+    // Object.defineProperty(this, 'cache', {
+    //   enumerable: false,
+    //   writable: true,
+    //   value: null,
+    // })
   }
 }
 

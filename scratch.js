@@ -1,5 +1,5 @@
 var nlp = require('./src/index')
-nlp.verbose(true)
+// nlp.verbose(true)
 // nlp.extend(require('./plugins/verbs/src'))
 // nlp.extend(require('./plugins/entities/src'))
 
@@ -13,8 +13,7 @@ nlp.verbose(true)
 // var r = nlp('lkjsdf lkjsdf')
 // r.tag('#Foo')
 // r.match('#Foo').debug()
-let doc = nlp('the shit keeps piling up').debug()
-console.log(doc.list[0].cache)
+let doc = nlp('the shit keeps piling up')
 doc.match('the #Noun').debug()
 
 // r.match('^.').tag('#Date')

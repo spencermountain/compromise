@@ -27,12 +27,12 @@ const failFast = function(p, terms, regs) {
       }
 
       // check tag cache
-      if (reg.tag !== undefined && !reg.negative && p.cache && p.cache.tags) {
-        if (p.cache.tags[regs[i].tag] !== true) {
-          // console.log('cache-miss ' + regs[i].tag)
-          return true
-        }
-      }
+      // if (reg.tag !== undefined && !reg.negative && p.cache && p.cache.tags) {
+      //   if (p.cache.tags[regs[i].tag] !== true) {
+      //     // console.log('cache-miss ' + regs[i].tag)
+      //     return true
+      //   }
+      // }
     }
   }
   return false

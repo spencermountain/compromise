@@ -1,10 +1,11 @@
 const parseSyntax = require('./match/syntax')
+const checkCache = require('./match/checkCache')
 
 /** return a new Doc, with this one as a parent */
 exports.match = function(reg) {
   //parse-up the input expression
   let regs = parseSyntax(reg)
-  if (regs.length === 0) {
+  if (regs.length === 0 || checkCache(this, regs) === false) {
     return this.buildFrom([])
   }
   //try expression on each phrase

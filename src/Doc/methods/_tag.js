@@ -6,12 +6,14 @@ const tagTerms = function(tag, doc, safe, reason) {
   }
   // invalidate cache
   doc.parents().forEach(d => {
-    d.list.forEach(p => {
-      if (p.cache) {
-        p.cache.tags = null
-      }
-    })
+    d._cache = null
   })
+  //   d.list.forEach( p => {
+  // if (p.cache) {
+  //   p.cache.tags = null
+  // }
+  //   })
+  // })
 
   // console.log(doc.parents().length)
   //do indepenent tags for each term:

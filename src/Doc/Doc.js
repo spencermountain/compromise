@@ -23,6 +23,13 @@ class Doc {
     Object.defineProperty(this, 'world', {
       enumerable: false,
       value: world,
+      // writable: true, //todo: add me?
+    })
+    //fast-scans for our data
+    Object.defineProperty(this, '_cache', {
+      enumerable: false,
+      value: null,
+      writable: true,
     })
     //'found' getter
     Object.defineProperty(this, 'found', {

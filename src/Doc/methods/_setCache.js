@@ -1,5 +1,5 @@
 const cacheDoc = function(doc, options) {
-  // cache tags
+  // cache tags - on phrases
   // doc.list.forEach(p => {
   //   let tags = {}
   //   p.terms().forEach(t => {
@@ -8,14 +8,25 @@ const cacheDoc = function(doc, options) {
   //   p.cache = p.cache || {}
   //   p.cache.tags = tags
   // })
-  let tags = {}
+
+  // cache tags
+  // let tags = {}
+  // doc.list.forEach(p => {
+  //   p.terms().forEach(t => {
+  //     tags = Object.assign(tags, t.tags)
+  //   })
+  // })
+
+  // cache words
+  let words = {}
   doc.list.forEach(p => {
     p.terms().forEach(t => {
-      tags = Object.assign(tags, t.tags)
+      words[t.clean] = true
     })
   })
   doc._cache = {
-    tags: tags,
+    // tags: tags,
+    words: words,
   }
   return doc
 }

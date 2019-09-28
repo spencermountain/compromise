@@ -27,14 +27,14 @@ const failFast = function(p, terms, regs) {
       }
     }
     // check our cache
-    if (p.cache.tags && reg.tag && !reg.optional && !reg.negative && !p.cache.tags[reg.tag]) {
-      // console.log('skip-tag')
-      // return true
-    }
-    if (p.cache.words && reg.word && !reg.optional && !reg.negative && !p.cache.words[reg.word]) {
-      // console.log('skip-word')
-      // return true
-    }
+    // if (p.cache.tags && reg.tag && !reg.optional && !reg.negative && !p.cache.tags[reg.tag]) {
+    // console.log('skip-tag')
+    // return true
+    // }
+    // if (p.cache.words && reg.word && !reg.optional && !reg.negative && !p.cache.words[reg.word]) {
+    // console.log('skip-word')
+    // return true
+    // }
   }
   return false
 }

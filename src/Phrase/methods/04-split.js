@@ -5,26 +5,26 @@ const deletePhrase = require('./_join/delete')
 
 /** put this text at the end */
 exports.append = function(newPhrase, doc) {
-  this.cache.terms = null
+  // this.cache.terms = null
   append(this, newPhrase, doc)
   return this
 }
 
 /** add this text to the beginning */
 exports.prepend = function(newPhrase, doc) {
-  this.cache.terms = null
+  // this.cache.terms = null
   prepend(this, newPhrase, doc)
   return this
 }
 
 exports.delete = function(doc) {
-  this.cache.terms = null
+  // this.cache.terms = null
   deletePhrase(this, doc)
   return this
 }
 
 exports.replace = function(newPhrase, doc) {
-  this.cache.terms = null
+  // this.cache.terms = null
   //add it do the end
   let firstLength = this.length
   append(this, newPhrase, doc)

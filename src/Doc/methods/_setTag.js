@@ -14,16 +14,16 @@ const tagTerms = function(tag, doc, safe, reason) {
       terms = terms.filter(t => t.canBe(tag, doc.world))
     }
     // set tags in our cache
-    if (terms.length > 0) {
-      p.cache = p.cache || {}
-      p.cache.tags = p.cache.tags || {}
-      p.cache.tags[tag] = true
+    // if (terms.length > 0) {
+    //   p.cache = p.cache || {}
+    //   p.cache.tags = p.cache.tags || {}
+    //   p.cache.tags[tag] = true
 
-      if (p.parent) {
-        p.parent.cache = p.parent.cache || { tags: {} }
-        p.parent.cache.tags[tag] = true
-      }
-    }
+    //   if (p.parent) {
+    //     p.parent.cache = p.parent.cache || { tags: {} }
+    //     p.parent.cache.tags[tag] = true
+    //   }
+    // }
     terms.forEach((t, i) => {
       //fancy version:
       if (tagList.length > 1) {

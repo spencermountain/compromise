@@ -23,10 +23,10 @@ class Phrase {
 Phrase.prototype.buildFrom = function(id, length) {
   let p = new Phrase(id, length, this.pool)
   p.parent = this
-  if (this.cache) {
-    p.cache = this.cache
-    p.cache.terms = null
-  }
+  // if (this.cache) {
+  //   p.cache = this.cache
+  //   p.cache.terms = null
+  // }
   return p
 }
 

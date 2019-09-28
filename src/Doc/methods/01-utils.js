@@ -54,6 +54,28 @@ exports.verbose = function(bool) {
 // exports.cache = function(options) {
 //   return cache(this, options)
 // }
+exports.freeze = function() {
+  this.list.forEach(p => {
+    let words = {}
+    // cache all the terms
+    p.terms().forEach(t => {
+      words[t.clean] = true
+      if (t.implicit) {
+        words[t.implicit] = true
+      }
+      if (t.alias) {
+        words = Object.assign(words, t.alias)
+      }
+    })
+    p.cache.words = words
+  })
+  return this
+}
+exports.unfreeze = function() {
+  this.list.forEach(p => {
+    p.cache = {}
+  })
+}
 // exports.blow = function() {
 //   if (this.found && this.list.length > 0) {
 //     console.log('\n\n======!!====\n\n')

@@ -22,6 +22,8 @@ const tagger = function(doc) {
   doc = contractions(doc)
   // console.timeEnd('contractions')
 
+  doc.freeze()
+
   // deduce more specific tags - singular/plurals/quotations...
   // console.time('inference')
   doc = inference(doc)
@@ -34,6 +36,7 @@ const tagger = function(doc) {
   // console.time('corrections')
   doc = corrections(doc)
   // console.timeEnd('corrections')
+  doc.unfreeze()
 
   //remove our cache?
   // doc.unfreeze()

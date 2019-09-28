@@ -9,13 +9,14 @@ const matchAll = function(p, regs, matchOne = false) {
     regs = syntax(regs)
   }
 
-  let terms = p.terms()
   //try to dismiss it, at-once
-  if (failFast(p, terms, regs) === true) {
+  if (failFast(p, regs) === true) {
     return []
   }
+
   //any match needs to be this long, at least
   const minLength = regs.filter(r => r.optional !== true).length
+  let terms = p.terms()
   let matches = []
 
   //optimisation for '^' start logic

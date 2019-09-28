@@ -1,20 +1,33 @@
 var nlp = require('./src/index')
 const corpus = require('nlp-corpus')
-nlp.verbose(true)
+// nlp.verbose(true)
 // nlp.extend(require('./plugins/verbs/src'))
 // nlp.extend(require('./plugins/entities/src'))
-// let arr = corpus.sotu.array().slice(0, 10)
-let arr = corpus.sotu.array().slice(0, 1)
+let arr = corpus.sotu.array().slice(0, 10)
+// let arr = corpus.sotu.array().slice(0, 1)
+// let arr = [
+//   corpus.sotu
+//     .array()
+//     .slice(0, 4)
+//     .join(' '),
+// ]
 
-// txt = ' critical thinking'
-// console.time('parse')
-// arr.forEach(txt => {
-//   let doc = nlp(txt)
-// })
-// console.timeEnd('parse')
+console.time('parse')
+arr.forEach(txt => {
+  let doc = nlp(txt)
+  // console.time('m')
+  // doc
+  //   .if('#Country')
+  //   .match('(hi|b|c|d|e|F|G|young) people of #Country')
+  //   .debug()
+  // console.timeEnd('m')
+})
+console.timeEnd('parse')
 
-let doc = nlp('said march and feb.').debug()
-// doc.match('(hello foo)').debug()
+// let doc = nlp('in toronto')
+// .match('^in toronto')
+// .debug()
+// doc.match('(hello|foo|dog) #Person').debug()
 // doc.debug()
 
 // let obj = {}

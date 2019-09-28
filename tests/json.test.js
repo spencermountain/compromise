@@ -52,11 +52,15 @@ test('json terms out', function(t) {
   t.equal(json.length, 1, 'json-len')
   t.equal(json[0].text, undefined, 'json-text')
   t.equal(json[0].terms.length, 3, 'json-terms-length')
-  t.equal(json[0].terms[0].bestTag, 'Pronoun', 'json-terms-bestTag')
-  t.equal(json[0].terms[1].bestTag, 'Copula', 'json-terms-bestTag1')
-  t.equal(json[0].terms[2].bestTag, 'Negative', 'json-terms-bestTag2')
-  t.equal(json[0].terms[2].raw, 'not', 'json-terms-raw')
-  t.equal(json[0].terms[1].pre, '', 'json-terms-whitespace-pre')
-  t.equal(json[0].terms[1].post, ' ', 'json-terms-whitespace-post')
+  let t0 = json[0].terms[0] || {}
+  t.equal(t0.bestTag, 'Pronoun', 'json-terms-bestTag')
+  let t1 = json[0].terms[1] || {}
+  t.equal(t1.bestTag, 'Copula', 'json-terms-bestTag1')
+  let t2 = json[0].terms[2] || {}
+  t.equal(t2.bestTag, 'Negative', 'json-terms-bestTag2')
+  t.equal(t2.raw, 'not', 'json-terms-raw')
+
+  t.equal(t1.pre, '', 'json-terms-whitespace-pre')
+  t.equal(t1.post, ' ', 'json-terms-whitespace-post')
   t.end()
 })

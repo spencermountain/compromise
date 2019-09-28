@@ -3,6 +3,9 @@ exports.terms = function(n) {
   // use our cached version, if we have one...
   if (this.cache && this.cache.terms) {
     // console.log('skipped-terms')
+    if (n !== undefined) {
+      return this.cache.terms[n]
+    }
     return this.cache.terms
   }
   let terms = [this.pool.get(this.start)]

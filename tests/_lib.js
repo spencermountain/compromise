@@ -4,7 +4,7 @@ if (typeof process !== undefined && typeof module !== undefined) {
   let nlp
   if (process.env.TESTENV === 'prod') {
     console.warn('== production build test 🚀 ==')
-    nlp = require('../builds/compromise')
+    nlp = require('../builds/basic')
     plugins.forEach(name => {
       nlp.extend(require(`../plugins/${name}`))
     })

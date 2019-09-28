@@ -49,6 +49,7 @@ test('pennTreebank-test:', function(t) {
       var want = softMapping[sentence.tags[i]]
       if (!terms[i]) {
         t.ok(false, sentence.text)
+        return
       }
       let found = terms[i].tags.some(tag => tag === want)
       let msg = `'` + sentence.text.substr(0, 20) + `'..   -  `

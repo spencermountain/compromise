@@ -48,7 +48,7 @@ test('filter-stuff', function(t) {
 
 test('find-stuff', function(t) {
   let doc = nlp('one two three. three four five.').find(m => m.has('four'))
-  t.equal(doc.out('normal'), 'three four five.', 'found four')
+  t.equal(doc && doc.out('normal') === 'three four five.', true, 'found four')
 
   doc = nlp('one two three. three four five.').find(m => m.has('asdf'))
   t.equal(doc, undefined, 'undefined find result')

@@ -827,8 +827,7 @@ var Term_1 = Term;
 var terms = function(n) {
   // use our cached version, if we have one...
   if (this.cache && this.cache.terms) {
-    // console.log('skipped')
-    // console.log(this.cache.terms)
+    // console.log('skipped-terms')
     return this.cache.terms
   }
   let terms = [this.pool.get(this.start)];
@@ -852,9 +851,7 @@ var terms = function(n) {
     return terms[n]
   }
   // cache it, for next time?
-
-  if (this.cache === null) {
-    this.cache = this.cache || {};
+  if (!this.cache.words) {
     this.cache.words = terms.reduce((h, t) => {
       h[t.clean] = true;
       return h
@@ -1918,6 +1915,7 @@ Phrase.prototype.buildFrom = function(id, length) {
   p.parent = this;
   if (this.cache) {
     p.cache = this.cache;
+    p.cache.terms = null;
   }
   return p
 };

@@ -54,7 +54,7 @@ exports.verbose = function(bool) {
 // exports.cache = function(options) {
 //   return cache(this, options)
 // }
-exports.freeze = function() {
+exports.cache = function() {
   this.list.forEach(p => {
     let words = {}
     p.cache.terms = p.terms()
@@ -72,7 +72,7 @@ exports.freeze = function() {
   })
   return this
 }
-exports.unfreeze = function() {
+exports.uncache = function() {
   this.list.forEach(p => {
     p.cache = {}
   })

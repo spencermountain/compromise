@@ -19,35 +19,35 @@ const fixDates = require('./fixDates')
 //sequence of match-tag statements to correct mis-tags
 const corrections = function(doc) {
   // console.time('det')
-  fixDeterminer(doc)
+  fixDeterminer(doc) //27
   // console.timeEnd('det')
 
   // console.time('nouns')
-  fixNouns(doc)
-  // console.timeEnd('nouns')
+  fixNouns(doc) //30
+  // // console.timeEnd('nouns')
 
-  // console.time('person')
-  fixPerson(doc)
-  // console.timeEnd('person')
+  // // console.time('person')
+  fixPerson(doc) //58
+  // // console.timeEnd('person')
 
-  // console.time('verb')
-  fixVerb(doc)
-  // console.timeEnd('verb')
+  // // console.time('verb')
+  fixVerb(doc) //50
+  // // console.timeEnd('verb')
 
-  // console.time('adj')
-  fixAdjective(doc)
-  // console.timeEnd('adj')
+  // // console.time('adj')
+  fixAdjective(doc) //8
+  // // console.timeEnd('adj')
 
-  // console.time('value')
-  fixValue(doc)
-  // console.timeEnd('value')
+  // // console.time('value')
+  fixValue(doc) //12
+  // // console.timeEnd('value')
 
-  // console.time('dates')
-  fixDates(doc)
-  // console.timeEnd('dates')
+  // // console.time('dates')
+  fixDates(doc) //92
+  // // console.timeEnd('dates')
 
-  // console.time('misc')
-  fixMisc(doc)
+  // // console.time('misc')
+  fixMisc(doc) //43
   // console.timeEnd('misc')
   return doc
 }

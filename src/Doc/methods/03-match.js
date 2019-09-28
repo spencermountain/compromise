@@ -1,5 +1,4 @@
 const parseSyntax = require('./match/syntax')
-// const checkCache = require('./match/checkCache')
 
 /** return a new Doc, with this one as a parent */
 exports.match = function(reg) {
@@ -8,10 +7,6 @@ exports.match = function(reg) {
   if (regs.length === 0) {
     return this.buildFrom([])
   }
-  // if (!checkCache(this, regs)) {
-  //   console.log('skipped')
-  //   return this.buildFrom([])
-  // }
   //try expression on each phrase
   let matches = this.list.reduce((arr, p) => {
     return arr.concat(p.match(regs))

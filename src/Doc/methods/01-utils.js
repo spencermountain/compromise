@@ -57,8 +57,9 @@ exports.verbose = function(bool) {
 exports.freeze = function() {
   this.list.forEach(p => {
     let words = {}
+    p.cache.terms = p.terms()
     // cache all the terms
-    p.terms().forEach(t => {
+    p.cache.terms.forEach(t => {
       words[t.clean] = true
       if (t.implicit) {
         words[t.implicit] = true

@@ -36,10 +36,10 @@ const tagger = function(doc) {
   // console.time('corrections')
   doc = corrections(doc)
   // console.timeEnd('corrections')
-  doc.unfreeze()
+  // doc.unfreeze()
 
   //remove our cache?
-  // doc.unfreeze()
+  doc.unfreeze()
   return doc
 }
 module.exports = tagger

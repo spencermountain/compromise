@@ -25,7 +25,7 @@ Phrase.prototype.buildFrom = function(id, length) {
   p.parent = this
   if (this.cache) {
     p.cache = this.cache
-    // p.cache.terms = null
+    p.cache.terms = null
   }
   return p
 }

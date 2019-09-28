@@ -16,7 +16,7 @@ const matchAll = function(p, regs, matchOne = false) {
 
   //any match needs to be this long, at least
   const minLength = regs.filter(r => r.optional !== true).length
-  let terms = p.terms()
+  let terms = p.cache.terms || p.terms()
   let matches = []
 
   //optimisation for '^' start logic

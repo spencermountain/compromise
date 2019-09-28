@@ -826,10 +826,13 @@ var Term_1 = Term;
 /** return a flat array of Term objects */
 var terms = function(n) {
   // use our cached version, if we have one...
-  if (this.cache && this.cache.terms) {
-    // console.log('skipped-terms')
-    return this.cache.terms
-  }
+  // if (this.cache && this.cache.terms) {
+  // console.log('skipped-terms')
+  // if (n !== undefined) {
+  // return this.cache.terms[n]
+  // }
+  // return this.cache.terms
+  // }
   let terms = [this.pool.get(this.start)];
   if (this.length === 0) {
     return []
@@ -847,18 +850,18 @@ var terms = function(n) {
       return terms[n]
     }
   }
+  // cache it, for next time?
+  // if (!this.cache.words) {
+  //   this.cache.words = terms.reduce((h, t) => {
+  //     h[t.clean] = true
+  //     return h
+  //   }, {})
+  // }
+  // if (!this.cache.terms) {
+  //   this.cache.terms = terms
+  // }
   if (n !== undefined) {
     return terms[n]
-  }
-  // cache it, for next time?
-  if (!this.cache.words) {
-    this.cache.words = terms.reduce((h, t) => {
-      h[t.clean] = true;
-      return h
-    }, {});
-  }
-  if (!this.cache.terms) {
-    this.cache.terms = terms;
   }
   return terms
 };
@@ -1190,26 +1193,26 @@ var _delete = deletePhrase;
 
 /** put this text at the end */
 var append_1 = function(newPhrase, doc) {
-  this.cache.terms = null;
+  // this.cache.terms = null
   append(this, newPhrase, doc);
   return this
 };
 
 /** add this text to the beginning */
 var prepend_1 = function(newPhrase, doc) {
-  this.cache.terms = null;
+  // this.cache.terms = null
   prepend(this, newPhrase, doc);
   return this
 };
 
 var delete_1 = function(doc) {
-  this.cache.terms = null;
+  // this.cache.terms = null
   _delete(this, doc);
   return this
 };
 
 var replace = function(newPhrase, doc) {
-  this.cache.terms = null;
+  // this.cache.terms = null
   //add it do the end
   let firstLength = this.length;
   append(this, newPhrase, doc);
@@ -1300,43 +1303,39 @@ var methods$1 = Object.assign(
 );
 
 // try to avoid doing the match
-const failFast = function(p, terms, regs) {
+const failFast = function(p, regs) {
   if (regs.length === 0) {
     return true
   }
   for (let i = 0; i < regs.length; i += 1) {
     let reg = regs[i];
-    //logical quick-ones
-    if (reg.optional !== true) {
-      //this is not possible
-      if (reg.anything === true && reg.negative === true) {
-        return true
-      }
+
+    //   //logical quick-ones
+    if (reg.optional !== true && reg.negative !== true) {
       //start/end impossibilites
       if (reg.start === true && i > 0) {
         return true
       }
-      if (reg.end === true && i < regs.length - 1) {
-        return true
-      }
-      if (reg.start === true && reg.end === true && terms.length > 1) {
-        return true
-      }
-      //empty choices
-      if (reg.choices && reg.choices.length === 0) {
+      // has almost no effect
+      if (p.cache.words !== undefined && reg.word !== undefined && p.cache.words[reg.word] !== true) {
+        // console.log('skip')
         return true
       }
     }
-    // check our cache
-    if (p.cache.tags && reg.tag && !reg.optional && !reg.negative && !p.cache.tags[reg.tag]) {
-      // console.log('skip-tag')
-      return true
-    }
-    if (p.cache.words && reg.word && !reg.optional && !reg.negative && !p.cache.words[reg.word]) {
-      // console.log('skip-word')
+    //this is not possible
+    if (reg.anything === true && reg.negative === true) {
       return true
     }
   }
+  // check our cache
+  // if (p.cache.tags && reg.tag && !reg.optional && !reg.negative && !p.cache.tags[reg.tag]) {
+  // console.log('skip-tag')
+  // return true
+  // }
+  // if (p.cache.words && reg.word && !reg.optional && !reg.negative && !p.cache.words[reg.word]) {
+  // console.log('skip-word')
+  // return true
+  // }
   return false
 };
 var _02FailFast = failFast;
@@ -1759,13 +1758,14 @@ const matchAll = function(p, regs, matchOne = false) {
     regs = syntax_1(regs);
   }
 
-  let terms = p.terms();
   //try to dismiss it, at-once
-  if (_02FailFast(p, terms, regs) === true) {
+  if (_02FailFast(p, regs) === true) {
     return []
   }
+
   //any match needs to be this long, at least
   const minLength = regs.filter(r => r.optional !== true).length;
+  let terms = p.cache.terms || p.terms();
   let matches = [];
 
   //optimisation for '^' start logic
@@ -4716,6 +4716,29 @@ exports.verbose = function(bool) {
 // exports.cache = function(options) {
 //   return cache(this, options)
 // }
+exports.freeze = function() {
+  this.list.forEach(p => {
+    let words = {};
+    p.cache.terms = p.terms();
+    // cache all the terms
+    p.cache.terms.forEach(t => {
+      words[t.clean] = true;
+      if (t.implicit) {
+        words[t.implicit] = true;
+      }
+      if (t.alias) {
+        words = Object.assign(words, t.alias);
+      }
+    });
+    p.cache.words = words;
+  });
+  return this
+};
+exports.unfreeze = function() {
+  this.list.forEach(p => {
+    p.cache = {};
+  });
+};
 // exports.blow = function() {
 //   if (this.found && this.list.length > 0) {
 //     console.log('\n\n======!!====\n\n')
@@ -4731,6 +4754,8 @@ var _01Utils_4 = _01Utils$1.clone;
 var _01Utils_5 = _01Utils$1.wordCount;
 var _01Utils_6 = _01Utils$1.wordcount;
 var _01Utils_7 = _01Utils$1.verbose;
+var _01Utils_8 = _01Utils$1.freeze;
+var _01Utils_9 = _01Utils$1.unfreeze;
 
 var _02Accessors = createCommonjsModule(function (module, exports) {
 /** use only the first result(s) */
@@ -5028,16 +5053,16 @@ const tagTerms = function(tag, doc, safe, reason) {
       terms = terms.filter(t => t.canBe(tag, doc.world));
     }
     // set tags in our cache
-    if (terms.length > 0) {
-      p.cache = p.cache || {};
-      p.cache.tags = p.cache.tags || {};
-      p.cache.tags[tag] = true;
+    // if (terms.length > 0) {
+    //   p.cache = p.cache || {}
+    //   p.cache.tags = p.cache.tags || {}
+    //   p.cache.tags[tag] = true
 
-      if (p.parent) {
-        p.parent.cache = p.parent.cache || { tags: {} };
-        p.parent.cache.tags[tag] = true;
-      }
-    }
+    //   if (p.parent) {
+    //     p.parent.cache = p.parent.cache || { tags: {} }
+    //     p.parent.cache.tags[tag] = true
+    //   }
+    // }
     terms.forEach((t, i) => {
       //fancy version:
       if (tagList.length > 1) {
@@ -8283,15 +8308,9 @@ const fixVerb = function(doc) {
     let gerund = vb.if('#Gerund');
     if (gerund.found === true) {
       //walking is cool
-      gerund
-        .match('#Gerund #Adverb? not? #Copula')
-        .firstTerm()
-        .tag('Activity', 'gerund-copula');
+      gerund.match('[#Gerund] #Adverb? not? #Copula').tag('Activity', 'gerund-copula');
       //walking should be fun
-      gerund
-        .match('#Gerund #Modal')
-        .firstTerm()
-        .tag('Activity', 'gerund-modal');
+      gerund.match('[#Gerund] #Modal').tag('Activity', 'gerund-modal');
       //running-a-show
       gerund.match('#Gerund #Determiner [#Infinitive]').tag('Noun', 'running-a-show');
       //setting records
@@ -8402,9 +8421,9 @@ const fixValue = function(doc) {
 var fixValue_1 = fixValue;
 
 //ambiguous 'may' and 'march'
-const preps = '(in|by|before|during|on|until|after|of|within|all)';
-const thisNext = '(last|next|this|previous|current|upcoming|coming)';
-const sections = '(start|end|middle|starting|ending|midpoint|beginning)';
+const preps = '(in|by|before|during|on|until|after|of|within|all)'; //6
+const thisNext = '(last|next|this|previous|current|upcoming|coming)'; //2
+const sections = '(start|end|middle|starting|ending|midpoint|beginning)'; //2
 const seasons = '(spring|summer|winter|fall|autumn)';
 const people = '(january|april|may|june|summer|autumn|jan|sep)';
 const verbs$3 = '(may|march)';
@@ -8471,9 +8490,8 @@ const fixDates = function(doc) {
     person.match(`#Value of [${people}]`).tag('Month', '5th-of-may');
     //by april
     person
-      .match(`${preps} ${people}`)
+      .match(`${preps} [${people}]`)
       .ifNo('#Holiday')
-      .terms(1)
       .tag('Month', 'preps-month');
     //this april
     person.match(`(next|this|last) [${people}]`).tag('Month', 'correction-may'); //maybe not 'this'
@@ -8483,42 +8501,18 @@ const fixDates = function(doc) {
   let verb = doc.if(verbs$3);
   if (verb.found === true) {
     //quickly march
-    verb
-      .match(`#Adverb ${verbs$3}`)
-      .lastTerm()
-      .tag('Infinitive', 'ambig-verb');
-    verb
-      .match(`${verbs$3} #Adverb`)
-      .lastTerm()
-      .tag('Infinitive', 'ambig-verb');
+    verb.match(`#Adverb [${verbs$3}]`).tag('Infinitive', 'ambig-verb');
+    verb.match(`${verbs$3} [#Adverb]`).tag('Infinitive', 'ambig-verb');
     //all march
-    verb
-      .match(`${preps} ${verbs$3}`)
-      .lastTerm()
-      .tag('Month', 'in-month');
+    verb.match(`${preps} [${verbs$3}]`).tag('Month', 'in-month');
     //this march
-    verb
-      .match(`(next|this|last) ${verbs$3}`)
-      .lastTerm()
-      .tag('Month', 'this-month');
+    verb.match(`(next|this|last) [${verbs$3}]`).tag('Month', 'this-month');
     //with date
-    verb
-      .match(`${verbs$3} the? #Value`)
-      .firstTerm()
-      .tag('Month', 'march-5th');
-    verb
-      .match(`#Value of? ${verbs$3}`)
-      .lastTerm()
-      .tag('Month', '5th-of-march');
+    verb.match(`[${verbs$3}] the? #Value`).tag('Month', 'march-5th');
+    verb.match(`#Value of? [${verbs$3}]`).tag('Month', '5th-of-march');
     //nearby
-    verb
-      .match(`[${verbs$3}] .? #Date`)
-      .lastTerm()
-      .tag('Month', 'march-and-feb');
-    verb
-      .match(`#Date .? [${verbs$3}]`)
-      .lastTerm()
-      .tag('Month', 'feb-and-march');
+    verb.match(`[${verbs$3}] .? #Date`).tag('Month', 'march-and-feb');
+    verb.match(`#Date .? [${verbs$3}]`).tag('Month', 'feb-and-march');
 
     let march = doc.if('march');
     if (march.found === true) {
@@ -8613,7 +8607,7 @@ const fixDates = function(doc) {
     //eg 'trillion'
     let mult = val.if(units);
     if (mult.found === true) {
-      mult.match('a #Value').tag('Value', 'a-value');
+      mult.match('a #Value').tag('Value', 'a-value'); //?
       // mult.match('#Ordinal (half|quarter)').tag('Value', 'ordinal-half');//not ready
       mult.match(`${units} and #Value`).tag('Value', 'magnitude-and-value');
     }
@@ -8779,6 +8773,8 @@ const tagger = function(doc) {
   doc = _03Contractions(doc);
   // console.timeEnd('contractions')
 
+  doc.freeze();
+
   // deduce more specific tags - singular/plurals/quotations...
   // console.time('inference')
   doc = _04Inference(doc);
@@ -8791,9 +8787,10 @@ const tagger = function(doc) {
   // console.time('corrections')
   doc = _05Correction(doc);
   // console.timeEnd('corrections')
+  // doc.unfreeze()
 
   //remove our cache?
-  // doc.unfreeze()
+  doc.unfreeze();
   return doc
 };
 var _02Tagger = tagger;

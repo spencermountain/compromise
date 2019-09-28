@@ -7,36 +7,20 @@ const failFast = function(p, regs) {
     let reg = regs[i]
 
     //   //logical quick-ones
-    if (reg.optional !== true) {
-      //     //this is not possible
-      //     if (reg.anything === true && reg.negative === true) {
-      //       return true
-      //     }
+    if (reg.optional !== true && reg.negative !== true) {
       //start/end impossibilites
       if (reg.start === true && i > 0) {
         return true
       }
       // has almost no effect
-      if (p.cache.words && reg.word && !p.cache.words[reg.word]) {
+      if (p.cache.words !== undefined && reg.word !== undefined && p.cache.words[reg.word] !== true) {
         // console.log('skip')
         return true
-        // console.log(p.cache.terms)
-        //   let found = terms.some(t => t.clean === reg.word)
-        //   if (!found) {
-        //     return false
-        //   }
       }
-
-      //     if (reg.end === true && i < regs.length - 1) {
-      //       return true
-      //     }
-      //     if (reg.start === true && reg.end === true && terms.length > 1) {
-      //       return true
-      //     }
-      //     //empty choices
-      //     if (reg.choices && reg.choices.length === 0) {
-      //       return true
-      //     }
+    }
+    //this is not possible
+    if (reg.anything === true && reg.negative === true) {
+      return true
     }
   }
   // check our cache

@@ -22,7 +22,7 @@ const rankTags = function(term, world) {
     if (tagSet[a].downward.length > tagSet[b].downward.length) {
       return 1
     }
-    return 0
+    return -1
   })
   return tags
 }

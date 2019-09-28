@@ -8,7 +8,7 @@ class Term {
     text = String(text)
     let obj = parseTerm(text)
     this.text = obj.text || ''
-    this.clean = obj.clean || ''
+    this.clean = obj.clean
     this.implicit = obj.implicit || null
     this.pre = obj.pre || ''
     this.post = obj.post || ''
@@ -16,7 +16,7 @@ class Term {
     this.tags = {}
     this.prev = null
     this.next = null
-    this.id = makeId(this.clean)
+    this.id = makeId(obj.clean)
     this.isA = 'Term' // easier than .constructor...
     // support alternative matches
     if (obj.alias) {

@@ -21,40 +21,50 @@ const fixVerb = function(doc) {
     vb.match('#PhrasalVerb [#PhrasalVerb]').tag('Particle', 'phrasal-particle')
     //went to sleep
     // vb.match('#Verb to #Verb').lastTerm().tag('Noun', 'verb-to-verb');
-
-    //support a splattering of auxillaries before a verb
-    vb.match(`(has|had) ${advb} #PastTense`)
-      .not('#Verb$')
-      .tag('Auxiliary', 'had-walked')
-    //was walking
-    vb.match(`#Copula ${advb} #Gerund`)
-      .not('#Verb$')
-      .tag('Auxiliary', 'copula-walking')
     //been walking
     vb.match(`(be|been) ${advb} #Gerund`)
       .not('#Verb$')
       .tag('Auxiliary', 'be-walking')
-    //would walk
-    vb.match(`(#Modal|did) ${advb} #Verb`)
-      .not('#Verb$')
-      .tag('Auxiliary', 'modal-verb')
-    //would have had
-    vb.match(`#Modal ${advb} have ${advb} had ${advb} #Verb`)
-      .not('#Verb$')
-      .tag('Auxiliary', 'would-have')
-    //would be walking
-    vb.match(`(#Modal) ${advb} be ${advb} #Verb`)
-      .not('#Verb$')
-      .tag('Auxiliary', 'would-be')
-    //would been walking
-    vb.match(`(#Modal|had|has) ${advb} been ${advb} #Verb`)
-      .not('#Verb$')
-      .tag('Auxiliary', 'would-be')
+
     //infinitive verbs suggest plural nouns - 'XYZ walk to the store'
     // r.match(`#Singular+ #Infinitive`).match('#Singular+').tag('Plural', 'infinitive-make-plural');
 
+    let modal = vb.if('(#Modal|did|had|has)')
+    if (modal.found === true) {
+      //support a splattering of auxillaries before a verb
+      modal
+        .match(`(has|had) ${advb} #PastTense`)
+        .not('#Verb$')
+        .tag('Auxiliary', 'had-walked')
+      //would walk
+      modal
+        .match(`(#Modal|did) ${advb} #Verb`)
+        .not('#Verb$')
+        .tag('Auxiliary', 'modal-verb')
+      //would have had
+      modal
+        .match(`#Modal ${advb} have ${advb} had ${advb} #Verb`)
+        .not('#Verb$')
+        .tag('Auxiliary', 'would-have')
+      //would be walking
+      modal
+        .match(`#Modal ${advb} be ${advb} #Verb`)
+        .not('#Verb$')
+        .tag('Auxiliary', 'would-be')
+      //would been walking
+      modal
+        .match(`(#Modal|had|has) ${advb} been ${advb} #Verb`)
+        .not('#Verb$')
+        .tag('Auxiliary', 'would-be')
+    }
+
     let copula = vb.if('#Copula')
     if (copula.found === true) {
+      //was walking
+      copula
+        .match(`#Copula ${advb} #Gerund`)
+        .not('#Verb$')
+        .tag('Auxiliary', 'copula-walking')
       //is mark hughes
       copula.match('#Copula [#Infinitive] #Noun').tag('Noun', 'is-pres-noun')
       //

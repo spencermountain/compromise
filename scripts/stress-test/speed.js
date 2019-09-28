@@ -5,6 +5,8 @@ const paths = {
   v12: '../../src',
   // sept2: '/Users/spencer/Desktop/aug-2-start.js',
   // v12build: '../../builds/compromise.min.js',
+  // start: '/Users/spencer/mountain/compromise/builds/aug-2-start.js',
+  // two: '/Users/spencer/mountain/compromise/builds/aug-2-2.js',
   // start: '/Users/spencer/Desktop/aug-2-start.js',
   // two: '/Users/spencer/Desktop/aug-2-2.js',
   // ive: '/Users/spencer/Desktop/aug-2-ive.js',

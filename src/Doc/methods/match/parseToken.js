@@ -1,6 +1,6 @@
 /* break-down a match expression into this:
 {
-  clean:'',
+  word:'',
   tag:'',
   regex:'',
 

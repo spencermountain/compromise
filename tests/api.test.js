@@ -29,8 +29,12 @@ test('document methods eval', function(t) {
     let code = `(function(){
       ${api.doc[k].example}
     })()`
-    eval(code)
-    t.ok(true, 'eval ' + k)
+    try {
+      eval(code)
+      t.ok(true, 'eval ' + k)
+    } catch (e) {
+      t.ok(false, 'eval ' + k)
+    }
   })
   t.end()
 })

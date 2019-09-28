@@ -1,4 +1,4 @@
-const cache = require('./_setCache')
+// const cache = require('./_setCache')
 
 /** return the root, first document */
 exports.all = function() {
@@ -51,6 +51,6 @@ exports.verbose = function(bool) {
 }
 
 /** freeze the current state of the document, for speed-purposes*/
-exports.cache = function(options) {
-  return cache(this, options)
-}
+// exports.cache = function(options) {
+//   return cache(this, options)
+// }

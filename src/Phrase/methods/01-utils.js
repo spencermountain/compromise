@@ -4,9 +4,9 @@ exports.terms = function(n) {
   if (this.cache && this.cache.terms) {
     // console.log('skipped-terms')
     if (n !== undefined) {
-      return this.cache.terms[n]
+      // return this.cache.terms[n]
     }
-    return this.cache.terms
+    // return this.cache.terms
   }
   let terms = [this.pool.get(this.start)]
   if (this.length === 0) {
@@ -25,9 +25,6 @@ exports.terms = function(n) {
       return terms[n]
     }
   }
-  if (n !== undefined) {
-    return terms[n]
-  }
   // cache it, for next time?
   if (!this.cache.words) {
     this.cache.words = terms.reduce((h, t) => {
@@ -37,6 +34,9 @@ exports.terms = function(n) {
   }
   if (!this.cache.terms) {
     this.cache.terms = terms
+  }
+  if (n !== undefined) {
+    return terms[n]
   }
   return terms
 }

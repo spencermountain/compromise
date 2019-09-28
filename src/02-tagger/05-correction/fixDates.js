@@ -1,7 +1,7 @@
 //ambiguous 'may' and 'march'
-const preps = '(in|by|before|during|on|until|after|of|within|all)'
-const thisNext = '(last|next|this|previous|current|upcoming|coming)'
-const sections = '(start|end|middle|starting|ending|midpoint|beginning)'
+const preps = '(in|by|before|during|on|until|after|of|within|all)' //6
+const thisNext = '(last|next|this|previous|current|upcoming|coming)' //2
+const sections = '(start|end|middle|starting|ending|midpoint|beginning)' //2
 const seasons = '(spring|summer|winter|fall|autumn)'
 const people = '(january|april|may|june|summer|autumn|jan|sep)'
 const verbs = '(may|march)'
@@ -68,9 +68,8 @@ const fixDates = function(doc) {
     person.match(`#Value of [${people}]`).tag('Month', '5th-of-may')
     //by april
     person
-      .match(`${preps} ${people}`)
+      .match(`${preps} [${people}]`)
       .ifNo('#Holiday')
-      .terms(1)
       .tag('Month', 'preps-month')
     //this april
     person.match(`(next|this|last) [${people}]`).tag('Month', 'correction-may') //maybe not 'this'
@@ -80,42 +79,18 @@ const fixDates = function(doc) {
   let verb = doc.if(verbs)
   if (verb.found === true) {
     //quickly march
-    verb
-      .match(`#Adverb ${verbs}`)
-      .lastTerm()
-      .tag('Infinitive', 'ambig-verb')
-    verb
-      .match(`${verbs} #Adverb`)
-      .lastTerm()
-      .tag('Infinitive', 'ambig-verb')
+    verb.match(`#Adverb [${verbs}]`).tag('Infinitive', 'ambig-verb')
+    verb.match(`${verbs} [#Adverb]`).tag('Infinitive', 'ambig-verb')
     //all march
-    verb
-      .match(`${preps} ${verbs}`)
-      .lastTerm()
-      .tag('Month', 'in-month')
+    verb.match(`${preps} [${verbs}]`).tag('Month', 'in-month')
     //this march
-    verb
-      .match(`(next|this|last) ${verbs}`)
-      .lastTerm()
-      .tag('Month', 'this-month')
+    verb.match(`(next|this|last) [${verbs}]`).tag('Month', 'this-month')
     //with date
-    verb
-      .match(`${verbs} the? #Value`)
-      .firstTerm()
-      .tag('Month', 'march-5th')
-    verb
-      .match(`#Value of? ${verbs}`)
-      .lastTerm()
-      .tag('Month', '5th-of-march')
+    verb.match(`[${verbs}] the? #Value`).tag('Month', 'march-5th')
+    verb.match(`#Value of? [${verbs}]`).tag('Month', '5th-of-march')
     //nearby
-    verb
-      .match(`[${verbs}] .? #Date`)
-      .lastTerm()
-      .tag('Month', 'march-and-feb')
-    verb
-      .match(`#Date .? [${verbs}]`)
-      .lastTerm()
-      .tag('Month', 'feb-and-march')
+    verb.match(`[${verbs}] .? #Date`).tag('Month', 'march-and-feb')
+    verb.match(`#Date .? [${verbs}]`).tag('Month', 'feb-and-march')
 
     let march = doc.if('march')
     if (march.found === true) {
@@ -210,7 +185,7 @@ const fixDates = function(doc) {
     //eg 'trillion'
     let mult = val.if(units)
     if (mult.found === true) {
-      mult.match('a #Value').tag('Value', 'a-value')
+      mult.match('a #Value').tag('Value', 'a-value') //?
       // mult.match('#Ordinal (half|quarter)').tag('Value', 'ordinal-half');//not ready
       mult.match(`${units} and #Value`).tag('Value', 'magnitude-and-value')
     }

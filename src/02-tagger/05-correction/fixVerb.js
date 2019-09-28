@@ -90,15 +90,9 @@ const fixVerb = function(doc) {
     let gerund = vb.if('#Gerund')
     if (gerund.found === true) {
       //walking is cool
-      gerund
-        .match('#Gerund #Adverb? not? #Copula')
-        .firstTerm()
-        .tag('Activity', 'gerund-copula')
+      gerund.match('[#Gerund] #Adverb? not? #Copula').tag('Activity', 'gerund-copula')
       //walking should be fun
-      gerund
-        .match('#Gerund #Modal')
-        .firstTerm()
-        .tag('Activity', 'gerund-modal')
+      gerund.match('[#Gerund] #Modal').tag('Activity', 'gerund-modal')
       //running-a-show
       gerund.match('#Gerund #Determiner [#Infinitive]').tag('Noun', 'running-a-show')
       //setting records

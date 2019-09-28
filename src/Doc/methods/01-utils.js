@@ -54,3 +54,10 @@ exports.verbose = function(bool) {
 // exports.cache = function(options) {
 //   return cache(this, options)
 // }
+// exports.blow = function() {
+//   if (this.found && this.list.length > 0) {
+//     console.log('\n\n======!!====\n\n')
+//     process.exit()
+//   }
+//   return this
+// }

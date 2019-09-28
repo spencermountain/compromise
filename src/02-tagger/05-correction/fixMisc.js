@@ -16,12 +16,12 @@ const miscCorrection = function(doc) {
   //right of way
   doc.match('(right|rights) of .').tag('Noun', 'right-of')
   // a bit
-  doc.match('[much] #Adjective').tag('Adverb')
-  doc.match('a [bit]').tag('Noun')
-  doc.match('a bit much').tag('Determiner Adverb Adjective')
-  doc.match('too much').tag('Adverb Adjective')
+  doc.match('[much] #Adjective').tag('Adverb', 'bit-1')
+  doc.match('a [bit]').tag('Noun', 'bit-2')
+  doc.match('a bit much').tag('Determiner Adverb Adjective', 'bit-3')
+  doc.match('too much').tag('Adverb Adjective', 'bit-4')
   // u r cool
-  doc.match('u r').tag('Pronoun #Copula')
+  doc.match('u r').tag('Pronoun #Copula', 'u r')
   //swear-words as non-expression POS
   //nsfw
   doc.match('holy (shit|fuck|hell)').tag('Expression', 'swears-expression')

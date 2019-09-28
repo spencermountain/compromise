@@ -18,37 +18,37 @@ const fixDates = require('./fixDates')
 
 //sequence of match-tag statements to correct mis-tags
 const corrections = function(doc) {
-  console.time('det')
+  // console.time('det')
   fixDeterminer(doc)
-  console.timeEnd('det')
+  // console.timeEnd('det')
 
-  console.time('nouns')
+  // console.time('nouns')
   fixNouns(doc)
-  console.timeEnd('nouns')
+  // console.timeEnd('nouns')
 
-  console.time('person')
+  // console.time('person')
   fixPerson(doc)
-  console.timeEnd('person')
+  // console.timeEnd('person')
 
-  console.time('verb')
+  // console.time('verb')
   fixVerb(doc)
-  console.timeEnd('verb')
+  // console.timeEnd('verb')
 
-  console.time('adj')
+  // console.time('adj')
   fixAdjective(doc)
-  console.timeEnd('adj')
+  // console.timeEnd('adj')
 
-  console.time('value')
+  // console.time('value')
   fixValue(doc)
-  console.timeEnd('value')
+  // console.timeEnd('value')
 
-  console.time('dates')
+  // console.time('dates')
   fixDates(doc)
-  console.timeEnd('dates')
+  // console.timeEnd('dates')
 
-  console.time('misc')
+  // console.time('misc')
   fixMisc(doc)
-  console.timeEnd('misc')
+  // console.timeEnd('misc')
   return doc
 }
 module.exports = corrections

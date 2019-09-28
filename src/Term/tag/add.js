@@ -2,6 +2,7 @@ const fns = require('./fns')
 
 /** add a tag, and its descendents, to a term */
 const addTag = function(t, tag, reason, world) {
+  // process.tagged.push(reason)
   if (!world) {
     console.warn('World not found - ' + reason)
   }

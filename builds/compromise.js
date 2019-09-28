@@ -777,6 +777,7 @@
   /** add a tag, and its descendents, to a term */
 
   var addTag = function addTag(t, tag, reason, world) {
+    // process.tagged.push(reason)
     if (!world) {
       console.warn('World not found - ' + reason);
     } //support '.' or '-' notation for skipping the tag
@@ -977,7 +978,7 @@
       text = String(text);
       var obj = parse(text);
       this.text = obj.text || '';
-      this.clean = obj.clean || '';
+      this.clean = obj.clean;
       this.implicit =  null;
       this.pre = obj.pre || '';
       this.post = obj.post || '';
@@ -985,7 +986,7 @@
       this.tags = {};
       this.prev = null;
       this.next = null;
-      this.id = _id(this.clean);
+      this.id = _id(obj.clean);
       this.isA = 'Term'; // easier than .constructor...
       // support alternative matches
 
@@ -1026,7 +1027,11 @@
   /** return a flat array of Term objects */
   var terms = function terms(n) {
     // use our cached version, if we have one...
-    if (this.cache !== null) ;
+    if (this.cache && this.cache.terms) {
+      // console.log('skipped')
+      // console.log(this.cache.terms)
+      return this.cache.terms;
+    }
 
     var terms = [this.pool.get(this.start)];
 
@@ -1055,7 +1060,17 @@
     } // cache it, for next time?
 
 
-    if (this.cache === null) ;
+    if (this.cache === null) {
+      this.cache = this.cache || {};
+      this.cache.words = terms.reduce(function (h, t) {
+        h[t.clean] = true;
+        return h;
+      }, {});
+    }
+
+    if (!this.cache.terms) {
+      this.cache.terms = terms;
+    }
 
     return terms;
   };
@@ -1432,6 +1447,7 @@
   /** put this text at the end */
 
   var append_1 = function append_1(newPhrase, doc) {
+    this.cache.terms = null;
     append(this, newPhrase, doc);
     return this;
   };
@@ -1439,17 +1455,20 @@
 
 
   var prepend_1 = function prepend_1(newPhrase, doc) {
+    this.cache.terms = null;
     prepend(this, newPhrase, doc);
     return this;
   };
 
   var delete_1 = function delete_1(doc) {
+    this.cache.terms = null;
     _delete(this, doc);
     return this;
   };
 
   var replace = function replace(newPhrase, doc) {
-    //add it do the end
+    this.cache.terms = null; //add it do the end
+
     var firstLength = this.length;
     append(this, newPhrase, doc); //delete original terms
 
@@ -1581,21 +1600,18 @@
 
         if (reg.choices && reg.choices.length === 0) {
           return true;
-        } // if (p.cache && p.cache.words) {
-        // if (reg.word && !reg.optional && !reg.negative && !p.cache.words[reg.word]) {
-        // console.log('uncached ' + reg.word)
-        // return true
-        // console.log(p.cache)
-        // }
-        // }
-        // check tag cache
-        // if (reg.tag !== undefined && !reg.negative && p.cache && p.cache.tags) {
-        //   if (p.cache.tags[regs[i].tag] !== true) {
-        //     // console.log('cache-miss ' + regs[i].tag)
-        //     return true
-        //   }
-        // }
+        }
+      } // check our cache
 
+
+      if (p.cache.tags && reg.tag && !reg.optional && !reg.negative && !p.cache.tags[reg.tag]) {
+        // console.log('skip-tag')
+        return true;
+      }
+
+      if (p.cache.words && reg.word && !reg.optional && !reg.negative && !p.cache.words[reg.word]) {
+        // console.log('skip-word')
+        return true;
       }
     }
 
@@ -1777,7 +1793,7 @@
 
   /* break-down a match expression into this:
   {
-    clean:'',
+    word:'',
     tag:'',
     regex:'',
 
@@ -2271,14 +2287,21 @@
     Object.defineProperty(this, 'cache', {
       enumerable: false,
       writable: true,
-      value: null
+      value: {}
     });
   };
   /** create a new Phrase object from an id and length */
 
 
   Phrase.prototype.buildFrom = function (id, length) {
-    return new Phrase(id, length, this.pool);
+    var p = new Phrase(id, length, this.pool);
+    p.parent = this;
+
+    if (this.cache) {
+      p.cache = this.cache;
+    }
+
+    return p;
   }; //apply methods
 
 
@@ -5136,49 +5159,9 @@
   	return module = { exports: {} }, fn(module, module.exports), module.exports;
   }
 
-  var cacheDoc = function cacheDoc(doc, options) {
-    // cache tags - on phrases
-    // doc.list.forEach(p => {
-    //   let tags = {}
-    //   p.terms().forEach(t => {
-    //     tags = Object.assign(tags, t.tags)
-    //   })
-    //   p.cache = p.cache || {}
-    //   p.cache.tags = tags
-    // })
-    // cache words - on phrases
-    // doc.list.forEach(p => {
-    //   let words = {}
-    //   p.terms().forEach(t => {
-    //     words[t.clean] = true
-    //   })
-    //   p.cache = p.cache || {}
-    //   p.cache.words = words
-    // })
-    // cache tags
-    // let tags = {}
-    // doc.list.forEach(p => {
-    //   p.terms().forEach(t => {
-    //     tags = Object.assign(tags, t.tags)
-    //   })
-    // })
-    // // cache words
-    // let words = {}
-    // doc.list.forEach(p => {
-    //   p.terms().forEach(t => {
-    //     words[t.clean] = true
-    //   })
-    // })
-    // doc._cache = {
-    //   tags: tags,
-    //   words: words,
-    // }
-    return doc;
-  };
-
-  var _setCache = cacheDoc;
-
   var _01Utils$1 = createCommonjsModule(function (module, exports) {
+    // const cache = require('./_setCache')
+
     /** return the root, first document */
     exports.all = function () {
       return this.parents()[0] || this;
@@ -5240,11 +5223,17 @@
       this.world.verbose = bool;
     };
     /** freeze the current state of the document, for speed-purposes*/
+    // exports.cache = function(options) {
+    //   return cache(this, options)
+    // }
+    // exports.blow = function() {
+    //   if (this.found && this.list.length > 0) {
+    //     console.log('\n\n======!!====\n\n')
+    //     process.exit()
+    //   }
+    //   return this
+    // }
 
-
-    exports.cache = function (options) {
-      return _setCache(this);
-    };
   });
   var _01Utils_1 = _01Utils$1.all;
   var _01Utils_2 = _01Utils$1.parent;
@@ -5253,7 +5242,6 @@
   var _01Utils_5 = _01Utils$1.wordCount;
   var _01Utils_6 = _01Utils$1.wordcount;
   var _01Utils_7 = _01Utils$1.verbose;
-  var _01Utils_8 = _01Utils$1.cache;
 
   var _02Accessors = createCommonjsModule(function (module, exports) {
     /** use only the first result(s) */
@@ -5337,49 +5325,19 @@
   var _02Accessors_7 = _02Accessors.lastTerm;
   var _02Accessors_8 = _02Accessors.termList;
 
-  var checkCache = function checkCache(doc, regs) {
-    // check tags
-    if (doc._cache) {
-      for (var i = 0; i < regs.length; i++) {
-        var reg = regs[i];
-
-        if (doc._cache.tags) {
-          var hasTags = doc._cache.tags;
-
-          if (reg.tag && !reg.optional && !reg.negative && !hasTags[reg.tag]) {
-            // miss-cache
-            // console.log('miss tag - ' + reg.tag)
-            return false;
-          }
-        }
-
-        if (doc._cache.words) {
-          var hasWords = doc._cache.words;
-
-          if (reg.word && !reg.optional && !reg.negative && !hasWords[reg.word]) {
-            // miss-cache
-            // console.log('miss term - ' + reg.word)
-            return false;
-          }
-        }
-      }
-    } //
-
-
-    return true;
-  };
-
-  var checkCache_1 = checkCache;
-
   /** return a new Doc, with this one as a parent */
 
   var match$1 = function match(reg) {
     //parse-up the input expression
     var regs = syntax_1(reg);
 
-    if (regs.length === 0 || checkCache_1(this, regs) === false) {
+    if (regs.length === 0) {
       return this.buildFrom([]);
-    } //try expression on each phrase
+    } // if (!checkCache(this, regs)) {
+    //   console.log('skipped')
+    //   return this.buildFrom([])
+    // }
+    //try expression on each phrase
 
 
     var matches = this.list.reduce(function (arr, p) {
@@ -5624,19 +5582,7 @@
 
     if (typeof tag === 'string') {
       tagList = tag.split(' ');
-    } // invalidate cache
-    // if (doc._cache && doc._cache.tags) {
-    //   doc.parents().forEach(d => {
-    //     d._cache.tags = null
-    //   })
-    // }
-    //   d.list.forEach( p => {
-    // if (p.cache) {
-    //   p.cache.tags = null
-    // }
-    //   })
-    // })
-    // console.log(doc.parents().length)
+    } // console.log(doc.parents().length)
     //do indepenent tags for each term:
 
 
@@ -5647,6 +5593,20 @@
         terms = terms.filter(function (t) {
           return t.canBe(tag, doc.world);
         });
+      } // set tags in our cache
+
+
+      if (terms.length > 0) {
+        p.cache = p.cache || {};
+        p.cache.tags = p.cache.tags || {};
+        p.cache.tags[tag] = true;
+
+        if (p.parent) {
+          p.parent.cache = p.parent.cache || {
+            tags: {}
+          };
+          p.parent.cache.tags[tag] = true;
+        }
       }
 
       terms.forEach(function (t, i) {
@@ -8318,12 +8278,12 @@
 
     doc.match('(right|rights) of .').tag('Noun', 'right-of'); // a bit
 
-    doc.match('[much] #Adjective').tag('Adverb');
-    doc.match('a [bit]').tag('Noun');
-    doc.match('a bit much').tag('Determiner Adverb Adjective');
-    doc.match('too much').tag('Adverb Adjective'); // u r cool
+    doc.match('[much] #Adjective').tag('Adverb', 'bit-1');
+    doc.match('a [bit]').tag('Noun', 'bit-2');
+    doc.match('a bit much').tag('Determiner Adverb Adjective', 'bit-3');
+    doc.match('too much').tag('Adverb Adjective', 'bit-4'); // u r cool
 
-    doc.match('u r').tag('Pronoun #Copula'); //swear-words as non-expression POS
+    doc.match('u r').tag('Pronoun #Copula', 'u r'); //swear-words as non-expression POS
     //nsfw
 
     doc.match('holy (shit|fuck|hell)').tag('Expression', 'swears-expression');
@@ -8416,34 +8376,44 @@
     var det = doc["if"]('#Determiner');
 
     if (det.found === true) {
-      //the wait to vote
-      det.match('(the|this) [#Verb] #Preposition .').tag('Noun', 'correction-determiner1'); //the nice swim
+      var adj = det["if"]('#Adjective');
 
-      det.match('(the|this|those|these) #Adjective [#Verb]').tag('Noun', 'the-adj-verb'); //the truly nice swim
+      if (adj.found) {
+        //the nice swim
+        adj.match('(the|this|those|these) #Adjective [#Verb]').tag('Noun', 'the-adj-verb'); // the truly nice swim
 
-      det.match('(the|this|those|these) #Adverb #Adjective [#Verb]').tag('Noun', 'correction-determiner4'); //a stream runs
+        adj.match('(the|this|those|these) #Adverb #Adjective [#Verb]').tag('Noun', 'correction-determiner4'); //the orange is
 
-      det.match('(the|this|a|an) [#Infinitive] #Adverb? #Verb').tag('Noun', 'correction-determiner5'); //some pressing issues
+        adj.match('#Determiner [#Adjective] (#Copula|#PastTense|#Auxiliary)').tag('Noun', 'the-adj-2'); //the orange.
 
-      det.match('some [#Verb] #Plural').tag('Noun', 'correction-determiner6'); //the orange is
+        adj.match('#Determiner #Adjective$').notIf('(#Comparative|#Superlative)').terms(1).tag('Noun', 'the-adj-1');
+      }
 
-      det.match('#Determiner [#Adjective] (#Copula|#PastTense|#Auxiliary)').tag('Noun', 'the-adj-2'); //a sense of
+      var inf = det["if"]('#Infinitive');
+
+      if (inf.found) {
+        // a stream runs
+        inf.match('(the|this|a|an) [#Infinitive] #Adverb? #Verb').tag('Noun', 'correction-determiner5'); //the test string
+
+        inf.match('#Determiner [#Infinitive] #Noun').tag('Noun', 'correction-determiner7'); //by a bear.
+
+        inf.match('#Determiner [#Infinitive]$').tag('Noun', 'a-inf');
+      } //the wait to vote
+
+
+      det.match('(the|this) [#Verb] #Preposition .').tag('Noun', 'correction-determiner1'); //some pressing issues
+
+      det.match('some [#Verb] #Plural').tag('Noun', 'correction-determiner6'); //a sense of
 
       det.match('#Determiner [#Verb] of').tag('Noun', 'the-verb-of'); //the threat of force
 
       det.match('#Determiner #Noun of [#Verb]').tag('Noun', 'noun-of-noun'); //a close
 
-      det.match('#Determiner #Adverb? [close]').tag('Adjective', 'a-close'); //the test string
-
-      det.match('#Determiner [#Infinitive] #Noun').tag('Noun', 'correction-determiner7'); //by a bear.
-
-      det.match('#Determiner [#Infinitive]$').tag('Noun', 'a-inf'); //the western line
+      det.match('#Determiner #Adverb? [close]').tag('Adjective', 'a-close'); //the western line
 
       det.match('#Determiner [(western|eastern|northern|southern|central)] #Noun').tag('Noun', 'western-line'); //the swim
 
-      det.match('(the|those|these) [(#Infinitive|#PresentTense|#PastTense)]').tag('Noun', 'correction-determiner2'); //the orange.
-
-      det.match('#Determiner #Adjective$').notIf('(#Comparative|#Superlative)').terms(1).tag('Noun', 'the-adj-1');
+      det.match('(the|those|these) [(#Infinitive|#PresentTense|#PastTense)]').tag('Noun', 'correction-determiner2');
     }
 
     var an = doc["if"]('(a|an)');
@@ -8710,27 +8680,32 @@
 
       vb.match('#PhrasalVerb [#PhrasalVerb]').tag('Particle', 'phrasal-particle'); //went to sleep
       // vb.match('#Verb to #Verb').lastTerm().tag('Noun', 'verb-to-verb');
-      //support a splattering of auxillaries before a verb
+      //been walking
 
-      vb.match("(has|had) ".concat(advb, " #PastTense")).not('#Verb$').tag('Auxiliary', 'had-walked'); //was walking
-
-      vb.match("#Copula ".concat(advb, " #Gerund")).not('#Verb$').tag('Auxiliary', 'copula-walking'); //been walking
-
-      vb.match("(be|been) ".concat(advb, " #Gerund")).not('#Verb$').tag('Auxiliary', 'be-walking'); //would walk
-
-      vb.match("(#Modal|did) ".concat(advb, " #Verb")).not('#Verb$').tag('Auxiliary', 'modal-verb'); //would have had
-
-      vb.match("#Modal ".concat(advb, " have ").concat(advb, " had ").concat(advb, " #Verb")).not('#Verb$').tag('Auxiliary', 'would-have'); //would be walking
-
-      vb.match("(#Modal) ".concat(advb, " be ").concat(advb, " #Verb")).not('#Verb$').tag('Auxiliary', 'would-be'); //would been walking
-
-      vb.match("(#Modal|had|has) ".concat(advb, " been ").concat(advb, " #Verb")).not('#Verb$').tag('Auxiliary', 'would-be'); //infinitive verbs suggest plural nouns - 'XYZ walk to the store'
+      vb.match("(be|been) ".concat(advb, " #Gerund")).not('#Verb$').tag('Auxiliary', 'be-walking'); //infinitive verbs suggest plural nouns - 'XYZ walk to the store'
       // r.match(`#Singular+ #Infinitive`).match('#Singular+').tag('Plural', 'infinitive-make-plural');
+
+      var modal = vb["if"]('(#Modal|did|had|has)');
+
+      if (modal.found === true) {
+        //support a splattering of auxillaries before a verb
+        modal.match("(has|had) ".concat(advb, " #PastTense")).not('#Verb$').tag('Auxiliary', 'had-walked'); //would walk
+
+        modal.match("(#Modal|did) ".concat(advb, " #Verb")).not('#Verb$').tag('Auxiliary', 'modal-verb'); //would have had
+
+        modal.match("#Modal ".concat(advb, " have ").concat(advb, " had ").concat(advb, " #Verb")).not('#Verb$').tag('Auxiliary', 'would-have'); //would be walking
+
+        modal.match("#Modal ".concat(advb, " be ").concat(advb, " #Verb")).not('#Verb$').tag('Auxiliary', 'would-be'); //would been walking
+
+        modal.match("(#Modal|had|has) ".concat(advb, " been ").concat(advb, " #Verb")).not('#Verb$').tag('Auxiliary', 'would-be');
+      }
 
       var copula = vb["if"]('#Copula');
 
       if (copula.found === true) {
-        //is mark hughes
+        //was walking
+        copula.match("#Copula ".concat(advb, " #Gerund")).not('#Verb$').tag('Auxiliary', 'copula-walking'); //is mark hughes
+
         copula.match('#Copula [#Infinitive] #Noun').tag('Noun', 'is-pres-noun'); //
 
         copula.match('[#Infinitive] #Copula').tag('Noun', 'inf-copula'); //sometimes not-adverbs
@@ -9129,15 +9104,40 @@
 
   var fixDates_1 = fixDates;
 
+  // verb: 100.828ms
+  // dates: 80.874ms
+  // person: 66.054ms
+  // nouns: 51.340ms
+  // adj: 19.760ms
+  // value: 12.950ms
+  // misc: 43.359ms
+  //sequence of match-tag statements to correct mis-tags
+
   var corrections = function corrections(doc) {
-    fixThe_1(doc);
-    fixNouns_1(doc);
-    fixPerson_1(doc);
-    fixVerb_1(doc);
-    fixAdjective_1(doc);
-    fixValue_1(doc);
-    fixDates_1(doc);
-    fixMisc(doc);
+    // console.time('det')
+    fixThe_1(doc); // console.timeEnd('det')
+    // console.time('nouns')
+
+    fixNouns_1(doc); // console.timeEnd('nouns')
+    // console.time('person')
+
+    fixPerson_1(doc); // console.timeEnd('person')
+    // console.time('verb')
+
+    fixVerb_1(doc); // console.timeEnd('verb')
+    // console.time('adj')
+
+    fixAdjective_1(doc); // console.timeEnd('adj')
+    // console.time('value')
+
+    fixValue_1(doc); // console.timeEnd('value')
+    // console.time('dates')
+
+    fixDates_1(doc); // console.timeEnd('dates')
+    // console.time('misc')
+
+    fixMisc(doc); // console.timeEnd('misc')
+
     return doc;
   };
 
@@ -9146,19 +9146,29 @@
   /** POS-tag all terms in this document */
 
   var tagger = function tagger(doc) {
-    var terms = doc.termList(); // check against any known-words
+    var terms = doc.termList(); // console.time('init')
+    // check against any known-words
 
-    doc = _01Init(doc); // everything has gotta be something. ¯\_(:/)_/¯
+    doc = _01Init(doc); // console.timeEnd('init')
+    // everything has gotta be something. ¯\_(:/)_/¯
+    // console.time('fallbacks')
 
-    doc = _02Fallbacks(doc); // support "didn't" & "spencer's"
+    doc = _02Fallbacks(doc); // console.timeEnd('fallbacks')
+    // support "didn't" & "spencer's"
+    // console.time('contractions')
 
-    doc = _03Contractions(doc); // deduce more specific tags - singular/plurals/quotations...
+    doc = _03Contractions(doc); // console.timeEnd('contractions')
+    // deduce more specific tags - singular/plurals/quotations...
+    // console.time('inference')
 
-    doc = _04Inference(doc); //set our cache, to speed things up
+    doc = _04Inference(doc); // console.timeEnd('inference')
+    //set our cache, to speed things up
     // doc.cache()
     // wiggle-around the results, so they make more sense
+    // console.time('corrections')
 
-    doc = _05Correction(doc); //remove our cache?
+    doc = _05Correction(doc); // console.timeEnd('corrections')
+    //remove our cache?
     // doc.unfreeze()
 
     return doc;
@@ -9555,12 +9565,7 @@
         value: world // writable: true, //todo: add me?
 
       }); //fast-scans for our data
-
-      Object.defineProperty(this, '_cache', {
-        enumerable: false,
-        value: null,
-        writable: true
-      }); //'found' getter
+      //'found' getter
 
       Object.defineProperty(this, 'found', {
         get: function get() {
@@ -9608,11 +9613,6 @@
 
   Doc.prototype.buildFrom = function (list) {
     var doc = new Doc(list, this, this.world);
-
-    if (this._cache !== null) {
-      doc._cache = this._cache;
-    }
-
     return doc;
   };
   /** add new subclass methods */

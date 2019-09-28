@@ -1,9 +1,9 @@
 /** return a flat array of Term objects */
 exports.terms = function(n) {
   // use our cached version, if we have one...
-  if (this.cache !== null) {
-    // console.log('skipped')
-    // return this.cache
+  if (this.cache && this.cache.terms) {
+    // console.log('skipped-terms')
+    return this.cache.terms
   }
   let terms = [this.pool.get(this.start)]
   if (this.length === 0) {
@@ -26,9 +26,14 @@ exports.terms = function(n) {
     return terms[n]
   }
   // cache it, for next time?
-  if (this.cache === null) {
-    this.cache = terms
-    // console.log('once')
+  if (!this.cache.words) {
+    this.cache.words = terms.reduce((h, t) => {
+      h[t.clean] = true
+      return h
+    }, {})
+  }
+  if (!this.cache.terms) {
+    this.cache.terms = terms
   }
   return terms
 }

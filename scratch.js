@@ -3,16 +3,18 @@ const corpus = require('nlp-corpus')
 // nlp.verbose(true)
 // nlp.extend(require('./plugins/verbs/src'))
 // nlp.extend(require('./plugins/entities/src'))
-process.tagged = []
-let txt = corpus.sotu
-  .array()
-  .slice(0, 5)
-  .join(' ')
+let arr = corpus.sotu.array().slice(0, 10)
 
 // txt = ' critical thinking'
 console.time('parse')
-let doc = nlp(txt)
+arr.forEach(txt => {
+  let doc = nlp(txt)
+})
 console.timeEnd('parse')
+
+// let doc = nlp('hello foo there')
+// doc.match('foo').tag('MaleName')
+// doc.debug()
 
 // let obj = {}
 // process.tagged.forEach(tag => {

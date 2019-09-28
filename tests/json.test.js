@@ -2,7 +2,7 @@ var test = require('tape')
 var nlp = require('./_lib')
 
 const hasTag = function(term, want) {
-  if (!term) {
+  if (!term || !term.tags) {
     return false
   }
   return term.tags.some(tag => tag === want)
@@ -35,11 +35,14 @@ test('json out implicit', function(t) {
   t.equal(json.length, 1, 'json-len')
   t.equal(json[0].text, str, 'json-text')
   t.equal(json[0].terms.length, 3, 'json-three-terms')
-  t.equal(json[0].terms[0].implicit, undefined, 'has-no-implicit')
-  t.equal(hasTag(json[0].terms[1], 'Copula'), true, 'json-has-tag')
-  t.equal(json[0].terms[1].implicit, 'is', 'has-implicit1')
+  let t0 = json[0].terms[0] || {}
+  t.equal(t0.implicit, undefined, 'has-no-implicit')
+  let t1 = json[0].terms[1] || {}
+  t.equal(hasTag(t1, 'Copula'), true, 'json-has-tag')
+  t.equal(t1.implicit, 'is', 'has-implicit1')
   t.equal(hasTag(json[0].terms[2], 'Negative'), true, 'json-has-tag2')
-  t.equal((json[0].terms[2] || {}).implicit, 'not', 'has-implicit2')
+  let t2 = json[0].terms[2] || {}
+  t.equal(t2.implicit, 'not', 'has-implicit2')
   t.end()
 })
 

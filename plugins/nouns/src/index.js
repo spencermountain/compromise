@@ -6,7 +6,13 @@ const addMethod = function(Doc) {
     isPlural() {}
     hasPlural() {}
     toPlural() {
-      return toPlural(this)
+      let transform = this.world.transforms
+      return this.map(noun => {
+        let str = noun.out('normal').trim()
+        let plural = transform.nouns(str)
+        return noun.replaceWith(plural)
+      })
+      // return toPlural(this)
     }
     toSingular() {}
     toPossessive() {}
@@ -23,6 +29,8 @@ const addMethod = function(Doc) {
     // //allow possessives like "spencer's", but not generic ones like,
     match = match.not('(my|our|your|their|her|his)')
     match = match.not('(of|for|by|the)$')
+
+    // match = match.splitAfter('@hasComma')
 
     if (typeof n === 'number') {
       match = match.get(n)

@@ -67,25 +67,29 @@ exports.split = function(reg) {
   let regs = parseSyntax(reg)
   let matches = []
   this.list.forEach(p => {
-    let allFound = p.match(regs)
-    //no match, keep it going
-    if (allFound.length === 0) {
+    let foundEm = p.match(regs)
+    //no match, add full sentence
+    if (foundEm.length === 0) {
       matches.push(p)
+      return
     }
-    allFound.forEach(found => {
-      // do it again, at the end
-      let last = matches.pop() || p
-      let results = last.splitOn(found) //splits into three parts
-      if (results.before) {
-        matches.push(results.before)
+    // we found something here.
+    let carry = p
+    foundEm.forEach(found => {
+      let parts = carry.splitOn(found)
+      // add em in
+      if (parts.before) {
+        matches.push(parts.before)
       }
-      if (results.match) {
-        matches.push(results.match)
+      if (parts.match) {
+        matches.push(parts.match)
       }
-      if (results.after) {
-        matches.push(results.after)
-      }
+      // only add this one if it's at the end
+      carry = parts.after
     })
+    if (carry) {
+      matches.push(carry)
+    }
   })
   return this.buildFrom(matches)
 }
@@ -107,6 +111,10 @@ exports.splitAfter = function(reg) {
       // apply it to the end, recursively
       let last = matches.pop() || p
       let results = last.splitOn(found) //splits into three parts
+      // if (results.match) {
+      //   last = matches.pop() || p
+      //   results = last.splitOn(found) //splits into three parts
+      // }
       //merge first and second parts
       if (results.before && results.match) {
         results.before.length += results.match.length

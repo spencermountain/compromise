@@ -45,6 +45,7 @@ module.exports = [
   'purpose',
   'question mark',
   'room',
+  'rose',
   'sky',
   'student',
   'stuff',

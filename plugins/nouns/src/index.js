@@ -7,8 +7,9 @@ const addMethod = function(Doc) {
     hasPlural() {}
     toPlural() {
       let transform = this.world.transforms
-      return this.map(noun => {
-        let str = noun.out('normal').trim()
+      this.list.map(noun => {
+        console.log(noun.replace)
+        let str = noun.text('normal').trim()
         let plural = transform.nouns(str)
         return noun.replaceWith(plural)
       })

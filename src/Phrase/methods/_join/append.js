@@ -43,6 +43,7 @@ const stretchAll = function(doc, id, len) {
   phrase.length += len
 
   let parents = doc.parents()
+  // console.log(parents.map(d => d.text()))
   parents.forEach(parent => {
     phrase = parent.list.find(p => p.hasId(id))
     phrase.length += len
@@ -50,7 +51,10 @@ const stretchAll = function(doc, id, len) {
 }
 
 //append one phrase onto another
-const joinPhrase = function(main, newPhrase, doc) {
+const appendPhrase = function(main, newPhrase, doc) {
+  // console.log(main.text(), '  |  ', newPhrase.text())
+  // let toAdd = newPhrase.length - main.length
+  // console.log(toAdd)
   let beforeTerms = main.terms()
   //spruce-up the whitespace issues
   addWhitespace(beforeTerms, newPhrase.terms())
@@ -60,4 +64,4 @@ const joinPhrase = function(main, newPhrase, doc) {
   stretchAll(doc, beforeTerms[0].id, newPhrase.length)
   return main
 }
-module.exports = joinPhrase
+module.exports = appendPhrase

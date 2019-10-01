@@ -16,14 +16,20 @@ exports.map = function(fn) {
 }
 
 /** run a function on each phrase */
-exports.forEach = function(fn) {
+exports.forEach = function(fn, detachParent) {
   if (!fn) {
     return this
   }
   this.list.forEach((p, i) => {
-    let doc = this.buildFrom([p])
-    doc.from = null //it's not a child/parent
-    fn(doc, i)
+    let sub = this.buildFrom([p])
+    // if we're doing fancy insertions, we may want to skip updating the parent each time.
+    if (detachParent === true) {
+      // sub.from = null //
+    }
+    // let len
+    // console.log(sub.from.list[0].length)
+    fn(sub, i)
+    // console.log(sub.from.list[0].length)
   })
   return this
 }

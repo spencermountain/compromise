@@ -1,13 +1,5 @@
 /** return a flat array of Term objects */
 exports.terms = function(n) {
-  // use our cached version, if we have one...
-  // if (this.cache && this.cache.terms) {
-  // console.log('skipped-terms')
-  // if (n !== undefined) {
-  // return this.cache.terms[n]
-  // }
-  // return this.cache.terms
-  // }
   let terms = [this.pool.get(this.start)]
   if (this.length === 0) {
     return []
@@ -15,7 +7,8 @@ exports.terms = function(n) {
   for (let i = 0; i < this.length - 1; i += 1) {
     let id = terms[terms.length - 1].next
     if (id === null) {
-      console.warn('linked-list broken')
+      // throw new Error('linked-list broken')
+      console.error("Compromise error: Linked list broken in phrase '" + this.start + "'")
       break
     }
     let term = this.pool.get(id)
@@ -25,16 +18,6 @@ exports.terms = function(n) {
       return terms[n]
     }
   }
-  // cache it, for next time?
-  // if (!this.cache.words) {
-  //   this.cache.words = terms.reduce((h, t) => {
-  //     h[t.clean] = true
-  //     return h
-  //   }, {})
-  // }
-  // if (!this.cache.terms) {
-  //   this.cache.terms = terms
-  // }
   if (n !== undefined) {
     return terms[n]
   }
@@ -77,6 +60,12 @@ exports.hasId = function(wantId) {
   let lastId = this.start
   for (let i = 0; i < this.length - 1; i += 1) {
     let term = this.pool.get(lastId)
+    if (term === undefined) {
+      console.error(`Compromise error: Linked list broken. Missing term '${lastId}' in phrase '${this.start}'\n`)
+      // console.log(this)
+      // throw new Error('linked List error')
+      return false
+    }
     if (term.next === wantId) {
       return true
     }

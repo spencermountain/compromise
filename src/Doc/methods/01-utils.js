@@ -50,6 +50,36 @@ exports.verbose = function(bool) {
   this.world.verbose = bool
 }
 
+/** todo: */
+exports.pre = function(str) {
+  let p = this.list[0]
+  let terms = p.terms(0)
+  if (str === undefined) {
+    return terms[0].pre
+  }
+  terms[0].pre = str
+  return this
+}
+
+/** todo: */
+exports.post = function(str) {
+  // return array of post strings
+  if (str === undefined) {
+    return this.list.map(p => {
+      let terms = p.terms()
+      let term = terms[terms.length - 1]
+      return term.post
+    })
+  }
+  // set post string on all ends
+  this.list.forEach(p => {
+    let terms = p.terms()
+    let term = terms[terms.length - 1]
+    term.post = str
+  })
+  return this
+}
+
 /** freeze the current state of the document, for speed-purposes*/
 // exports.cache = function(options) {
 //   return cache(this, options)

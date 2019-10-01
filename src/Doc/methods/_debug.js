@@ -58,6 +58,7 @@ const debug = function(doc) {
       if (t.implicit) {
         text = '[' + t.implicit + ']'
       }
+      text = text.replace(/\W/g, '')
       if (typeof module !== undefined) {
         text = colors.yellow(text)
       }

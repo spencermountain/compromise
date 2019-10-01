@@ -11,5 +11,5 @@ nlp.extend(require('./plugins/nouns/src'))
 // let doc = nlp('before before match, after after.')
 // doc.splitOn('@hasComma').debug()
 
-let doc = nlp('before before match, after after. then over here')
-let m = doc.splitOn('match').debug()
+let doc = nlp('before1 before2 match, after after. then over here')
+let m = doc.splitBefore('match').debug()

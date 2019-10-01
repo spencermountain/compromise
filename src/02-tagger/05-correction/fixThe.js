@@ -31,8 +31,6 @@ const fixThe = function(doc) {
 
     //the wait to vote
     det.match('(the|this) [#Verb] #Preposition .').tag('Noun', 'correction-determiner1')
-    //some pressing issues
-    det.match('some [#Verb] #Plural').tag('Noun', 'correction-determiner6')
     //a sense of
     det.match('#Determiner [#Verb] of').tag('Noun', 'the-verb-of')
     //the threat of force

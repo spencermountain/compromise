@@ -60,8 +60,6 @@ const miscCorrection = function(doc) {
     which.match('that #Noun [#Verb]').tag('Determiner', 'that-determiner')
     //work, which has been done.
     which.match('#Comma [which] (#Pronoun|#Verb)').tag('Preposition', 'which-copula')
-    //things that provide
-    // doc.match('#Plural (that|which) #Adverb? #Verb').term(1).tag('Preposition', 'noun-that');
   }
 
   //like
@@ -93,17 +91,17 @@ const miscCorrection = function(doc) {
       .tag('Region', 'district-of-Foo')
   }
 
-  let hyph = doc.if('#Hyphenated')
+  let hyph = doc.if('@hasHyphen')
   if (hyph.found === true) {
     //air-flow
     hyph
-      .match('#Hyphenated #Hyphenated')
+      .match('@hasHyphen @hasHyphen')
       .match('#Noun #Verb')
       .tag('Noun', 'hyphen-verb')
     //connect hyphenated expressions - 'ooh-wee'
     hyph
-      .match('#Hyphenated+')
       .if('#Expression')
+      .match('#@hasHyphen+')
       .tag('Expression', 'ooh-wee')
   }
 

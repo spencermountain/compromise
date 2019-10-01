@@ -11,8 +11,7 @@ const fixVerb = function(doc) {
     vb.match('is no [#Verb]').tag('Noun', 'is-no-verb')
     //different views than
     vb.match('[#Verb] than').tag('Noun', 'correction')
-    //her polling
-    vb.match('#Possessive [#Verb]').tag('Noun', 'correction-possessive')
+
     //there are reasons
     vb.match('there (are|were) #Adjective? [#PresentTense]').tag('Plural', 'there-are')
     //jack seems guarded

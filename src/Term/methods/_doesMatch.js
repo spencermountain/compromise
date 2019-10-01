@@ -48,6 +48,11 @@ const doesMatch = function(t, reg) {
     }
     // or must match one
     return reg.choices.some(r => wrapMatch(t, r))
+    // for (let i = 0; i < reg.choices.length; i++) {
+    //   if (wrapMatch(t, reg.choices[i]) === true) {
+    //     return true
+    //   }
+    // }
   }
   return false
 }

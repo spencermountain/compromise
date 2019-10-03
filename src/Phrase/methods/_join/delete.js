@@ -22,11 +22,13 @@ const deletePhrase = function(phrase, doc) {
   let pool = doc.pool()
   let terms = phrase.terms()
 
+  // console.log(doc)
+
   //grab both sides of the chain,
   let prev = pool.get(terms[0].prev) || {}
   let after = pool.get(terms[terms.length - 1].next) || {}
 
-  //first, change phrase lengths
+  // //first, change phrase lengths
   shrinkAll(doc, phrase.start, phrase.length, after)
 
   // connect [prev]->[after]
@@ -39,7 +41,7 @@ const deletePhrase = function(phrase, doc) {
   }
   // lastly, actually delete the terms from the pool
   for (let i = 0; i < terms.length; i++) {
-    // pool.remove(terms[i].id)
+    // pool.remove(terms[i].id) //TODO: add this optimization
   }
 }
 module.exports = deletePhrase

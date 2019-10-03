@@ -29,7 +29,7 @@ test('foreach replace', function(t) {
   doc = nlp('the end')
   doc.match('end').forEach(p => {
     p.replaceWith('more words')
-  }, true)
+  })
   t.equal(doc.text(), 'the more words', 'loop-replace-expand-end')
 
   t.end()

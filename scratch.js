@@ -12,7 +12,9 @@ nlp.extend(require('./plugins/sentences/src'))
 let doc = nlp('in the end')
 doc.match('end').forEach(p => {
   p.replaceWith('more words here')
-}, true)
+})
+// console.log(doc.terms())
+// console.log(doc.terms())
 doc.debug()
 
 // var doc = nlp('He is cool.')

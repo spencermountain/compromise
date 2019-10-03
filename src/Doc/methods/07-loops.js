@@ -24,12 +24,12 @@ exports.forEach = function(fn, detachParent) {
     let sub = this.buildFrom([p])
     // if we're doing fancy insertions, we may want to skip updating the parent each time.
     if (detachParent === true) {
-      // sub.from = null //
+      sub.from = null //
     }
     // let len
-    // console.log(sub.from.list[0].length)
+    // console.log(sub.from.list[0].text())
     fn(sub, i)
-    // console.log(sub.from.list[0].length)
+    // console.log(sub.from.list[0].text())
   })
   return this
 }

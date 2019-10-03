@@ -39,13 +39,24 @@ const stitchIn = function(main, newPhrase) {
 
 //recursively increase the length of all parent phrases
 const stretchAll = function(doc, id, len) {
+  if (len <= 0) {
+    return
+  }
+  // console.log(doc.list[0].hasId('sdf'))
   let phrase = doc.list.find(p => p.hasId(id))
+  // console.log(phrase)
   phrase.length += len
-
+  // console.log('here')
   let parents = doc.parents()
+  // parents = [].concat(parents)
+  // parents.shift()
+  // console.log(doc.text())
+  // console.log(parents)
   // console.log(parents.map(d => d.text()))
   parents.forEach(parent => {
+    // console.log('adding ' + len + " to '" + parent.text() + "'")
     phrase = parent.list.find(p => p.hasId(id))
+    // console.log('\n', phrase, len, '\n\n')
     phrase.length += len
   })
 }
@@ -53,8 +64,8 @@ const stretchAll = function(doc, id, len) {
 //append one phrase onto another
 const appendPhrase = function(main, newPhrase, doc) {
   // console.log(main.text(), '  |  ', newPhrase.text())
-  // let toAdd = newPhrase.length - main.length
-  // console.log(toAdd)
+  let toAdd = newPhrase.length - main.length
+  // console.log(toAdd + '\n\n')
   let beforeTerms = main.terms()
   //spruce-up the whitespace issues
   addWhitespace(beforeTerms, newPhrase.terms())

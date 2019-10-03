@@ -22,7 +22,7 @@ class Phrase {
 /** create a new Phrase object from an id and length */
 Phrase.prototype.buildFrom = function(id, length) {
   let p = new Phrase(id, length, this.pool)
-  p.parent = this
+  // p.parent = this
   if (this.cache) {
     p.cache = this.cache
     p.cache.terms = null

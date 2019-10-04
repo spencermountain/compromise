@@ -48,34 +48,58 @@ const stitchIn = function(main, newPhrase, newTerms) {
 }
 
 //recursively increase the length of all parent phrases
-const stretchAll = function(doc, oldStart, newPhrase) {
-  //find our phrase to stretch
-  let phrase = doc.list.find(p => p.hasId(oldStart) || p.hasId(newPhrase.start))
-  if (phrase === undefined) {
-    console.error('compromise error: Prepend missing start - ' + oldStart)
-    return
-  }
-  //should we update the phrase's starting?
-  if (phrase.start === oldStart) {
-    phrase.start = newPhrase.start
-  }
-  // console.log(newPhrase)
-  phrase.length += newPhrase.length
-  if (doc.from) {
-    stretchAll(doc.from, oldStart, newPhrase)
-  }
+// const stretchAll = function(doc, oldStart, newPhrase) {
+//   //find our phrase to stretch
+//   let phrase = doc.list.find(p => p.hasId(oldStart) || p.hasId(newPhrase.start))
+//   if (phrase === undefined) {
+//     console.error('compromise error: Prepend missing start - ' + oldStart)
+//     return
+//   }
+//   //should we update the phrase's starting?
+//   if (phrase.start === oldStart) {
+//     phrase.start = newPhrase.start
+//   }
+//   // console.log(newPhrase)
+//   phrase.length += newPhrase.length
+//   if (doc.from) {
+//     stretchAll(doc.from, oldStart, newPhrase)
+//   }
+// }
+const unique = function(list) {
+  return list.filter((o, i) => {
+    return list.indexOf(o) === i
+  })
 }
 
 //append one phrase onto another
 const joinPhrase = function(original, newPhrase, doc) {
+  const starterId = original.start
   let newTerms = newPhrase.terms()
-  let oldStart = original.start
   //spruce-up the whitespace issues
   addWhitespace(newTerms, original)
   //insert this segment into the linked-list
   stitchIn(original, newPhrase, newTerms)
   //increase the length of our phrases
-  stretchAll(doc, oldStart, newPhrase)
+  let toStretch = [original]
+  let docs = [doc]
+  docs = docs.concat(doc.parents())
+  docs.forEach(d => {
+    // only the phrases that should change
+    let shouldChange = d.list.filter(p => {
+      return p.hasId(starterId)
+    })
+    toStretch = toStretch.concat(shouldChange)
+  })
+  // don't double-count
+  toStretch = unique(toStretch)
+  // stretch these phrases
+  toStretch.forEach(p => {
+    p.length += newPhrase.length
+    // change the start too, if necessary
+    if (p.start === starterId) {
+      p.start = newPhrase.start
+    }
+  })
   return original
 }
 module.exports = joinPhrase

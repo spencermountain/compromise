@@ -17,6 +17,7 @@
     "version": "node ./scripts/version.js",
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer",
     "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer",
+    "test:spec": "tape \"./tests/**/*.test.js\" | tap-spec",
     "filesize": "node ./scripts/filesize.js",
     "watch": "amble ./scratch.js",
     "stress": "node ./scripts/stress-test/stress.js",

@@ -27,7 +27,6 @@ exports.replace = function(newPhrase, doc) {
   //delete original terms
   let tmp = this.buildFrom(this.start, this.length)
   tmp.length = firstLength
-  // console.log(tmp.text())
   deletePhrase(tmp, doc)
   return this
 }

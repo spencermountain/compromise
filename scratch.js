@@ -16,10 +16,14 @@ nlp.extend(require('./plugins/sentences/src'))
 let doc = nlp('at the end time')
 let m = doc.match('end')
 m.forEach(p => {
-  p.replaceWith('more words here')
+  p.prepend('more words here')
 })
-// m.debug() //m is broken
-doc.debug() // doc is not
+m.debug() //m is broken
+// doc.debug() // doc is not
+
+// var doc = nlp('He is cool.')
+// doc.sentences().prepend('so i think')
+// console.log(doc.text())
 
 // var doc = nlp('He is cool.')
 // doc.forEach(d => {

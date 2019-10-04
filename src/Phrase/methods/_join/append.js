@@ -39,23 +39,6 @@ const stitchIn = function(main, newPhrase) {
   // main.length += newPhrase.length
 }
 
-//recursively increase the length of all parent phrases
-const stretchAll = function(doc, id, len) {
-  if (len <= 0) {
-    return
-  }
-  let phrase = doc.list.find(p => p.hasId(id))
-  phrase.length += len
-  let parents = doc.parents()
-  // console.log(parents.map(d => d.text()))
-  parents.forEach(parent => {
-    // console.log('adding ' + len + " to '" + parent.text() + "'")
-    phrase = parent.list.find(p => p.hasId(id))
-    // console.log('\n', phrase, len, '\n\n')
-    phrase.length += len
-  })
-}
-
 const unique = function(list) {
   return list.filter((o, i) => {
     return list.indexOf(o) === i
@@ -69,31 +52,25 @@ const appendPhrase = function(main, newPhrase, doc) {
   addWhitespace(beforeTerms, newPhrase.terms())
   //insert this segment into the linked-list
   stitchIn(main, newPhrase)
+
   // stretch!
+  // make each effected phrase longer
   let toStretch = [main]
   let hasId = main.start
   let docs = [doc]
-  docs = docs.concat(doc.parents())
+  docs = docs.concat(doc.parents()) // find them all!
   docs.forEach(parent => {
+    // only the phrases that should change
     let shouldChange = parent.list.filter(p => {
       return p.hasId(hasId)
     })
     toStretch = toStretch.concat(shouldChange)
   })
+  // don't double-count a phrase
   toStretch = unique(toStretch)
-  // console.log(toStretch[0] == toStretch[3])
-  // stretch it
-  // console.log(toStretch)
-  // console.log(newPhrase.length)
   toStretch.forEach(p => {
     p.length += newPhrase.length
   })
-  // console.log(newPhrase.length)
-  // console.log('--')
-  // console.log(toStretch)
-  // console.log('--')
-  //increase the length of our phrases
-  // stretchAll(doc, beforeTerms[0].id, newPhrase.length)
   return main
 }
 module.exports = appendPhrase

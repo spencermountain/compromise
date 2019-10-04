@@ -62,7 +62,6 @@ exports.hasId = function(wantId) {
     let term = this.pool.get(lastId)
     if (term === undefined) {
       console.error(`Compromise error: Linked list broken. Missing term '${lastId}' in phrase '${this.start}'\n`)
-      // console.log(this)
       // throw new Error('linked List error')
       return false
     }

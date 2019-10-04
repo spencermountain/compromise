@@ -86,7 +86,7 @@ const joinPhrase = function(original, newPhrase, doc) {
   docs.forEach(d => {
     // only the phrases that should change
     let shouldChange = d.list.filter(p => {
-      return p.hasId(starterId)
+      return p.hasId(starterId) || p.hasId(newPhrase.start)
     })
     toStretch = toStretch.concat(shouldChange)
   })

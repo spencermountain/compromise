@@ -1,7 +1,7 @@
 const append = require('./_join/append')
 const prepend = require('./_join/prepend')
 const deletePhrase = require('./_join/delete')
-// const build = require('../../tokenizer')
+// const tokenize = require('../../01-tokenizer')
 
 /** put this text at the end */
 exports.append = function(newPhrase, doc) {
@@ -21,6 +21,10 @@ exports.delete = function(doc) {
 }
 
 exports.replace = function(newPhrase, doc) {
+  // console.log(tokenize.fromText)
+  if (typeof newPhrase === 'string') {
+    // console.log(build(newPhrase))
+  }
   //add it do the end
   let firstLength = this.length
   append(this, newPhrase, doc)

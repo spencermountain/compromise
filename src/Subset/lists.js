@@ -37,7 +37,7 @@ const addMethod = function(Doc) {
       return this
     }
     /** remove any matching unit from the list */
-    remove(str) {
+    remove() {
       return this
     }
 

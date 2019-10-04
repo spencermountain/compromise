@@ -2,7 +2,7 @@ const hasSpace = / /
 
 //a new space needs to be added, either on the new phrase, or the old one
 // '[new] [◻old]'   -or-   '[old] [◻new] [old]'
-const addWhitespace = function(newTerms, original) {
+const addWhitespace = function(newTerms) {
   //add a space before our new text?
 
   // add a space after our text

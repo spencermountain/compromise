@@ -8,10 +8,10 @@ const addMethod = function(Doc) {
     toPlural() {
       let transform = this.world.transforms
       this.list.map(noun => {
-        console.log(noun.replace)
         let str = noun.text('normal').trim()
         let plural = transform.nouns(str)
-        return noun.replaceWith(plural)
+        let phrase = this.fromText(plural).list[0]
+        return noun.replace(phrase, this)
       })
       // return toPlural(this)
     }

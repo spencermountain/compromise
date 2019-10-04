@@ -1,5 +1,6 @@
 const methods = require('./methods')
 const matchMethods = require('./match')
+// const tokenize = require('../01-tokenizer')
 
 class Phrase {
   constructor(id, length, pool) {
@@ -29,6 +30,10 @@ Phrase.prototype.buildFrom = function(id, length) {
   }
   return p
 }
+// Phrase.prototype.fromString = function(str) {
+//   console.log(tokenize)
+//   return tokenize.fromText(str)
+// }
 
 //apply methods
 Object.assign(Phrase.prototype, matchMethods)

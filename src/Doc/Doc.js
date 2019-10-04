@@ -3,6 +3,7 @@ const methods = {
   selections: require('./selections'),
 }
 const tagger = require('../02-tagger')
+const tokenize = require('../01-tokenizer')
 const extend = require('../Subset')
 
 /** a parsed text object */
@@ -59,6 +60,10 @@ class Doc {
 Doc.prototype.buildFrom = function(list) {
   let doc = new Doc(list, this, this.world)
   return doc
+}
+Doc.prototype.fromText = function(str) {
+  let list = tokenize.fromText(str, this.world, this.pool())
+  return this.buildFrom(list)
 }
 /** add new subclass methods */
 Doc.prototype.extend = function(fn) {

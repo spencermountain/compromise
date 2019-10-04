@@ -9,13 +9,17 @@ nlp.extend(require('./plugins/sentences/src'))
 // arr.forEach(txt => nlp(txt) })
 // console.timeEnd('parse')
 
-let doc = nlp('in the end')
-doc.match('end').forEach(p => {
+// let doc = nlp('ignore me. at the end')
+// doc.match('end').replaceWith('some more words')
+// doc.debug()
+
+let doc = nlp('at the end time')
+let m = doc.match('end')
+m.forEach(p => {
   p.replaceWith('more words here')
 })
-// console.log(doc.terms())
-// console.log(doc.terms())
-doc.debug()
+// m.debug() //m is broken
+doc.debug() // doc is not
 
 // var doc = nlp('He is cool.')
 // doc.forEach(d => {

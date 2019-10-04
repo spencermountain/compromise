@@ -18,6 +18,7 @@ const addWhitespace = function(beforeTerms, newTerms) {
 
 //insert this segment into the linked-list
 const stitchIn = function(main, newPhrase) {
+  // console.log(main.text(), newPhrase.text())
   let afterId = main.lastTerm().next
   //connect ours in (main → newPhrase)
   main.lastTerm().next = newPhrase.start
@@ -35,6 +36,7 @@ const stitchIn = function(main, newPhrase) {
     let newTerm = newPhrase.terms(0)
     newTerm.prev = beforeId
   }
+  // main.length += newPhrase.length
 }
 
 //recursively increase the length of all parent phrases
@@ -42,16 +44,9 @@ const stretchAll = function(doc, id, len) {
   if (len <= 0) {
     return
   }
-  // console.log(doc.list[0].hasId('sdf'))
   let phrase = doc.list.find(p => p.hasId(id))
-  // console.log(phrase)
   phrase.length += len
-  // console.log('here')
   let parents = doc.parents()
-  // parents = [].concat(parents)
-  // parents.shift()
-  // console.log(doc.text())
-  // console.log(parents)
   // console.log(parents.map(d => d.text()))
   parents.forEach(parent => {
     // console.log('adding ' + len + " to '" + parent.text() + "'")
@@ -61,18 +56,44 @@ const stretchAll = function(doc, id, len) {
   })
 }
 
+const unique = function(list) {
+  return list.filter((o, i) => {
+    return list.indexOf(o) === i
+  })
+}
+
 //append one phrase onto another
 const appendPhrase = function(main, newPhrase, doc) {
-  // console.log(main.text(), '  |  ', newPhrase.text())
-  let toAdd = newPhrase.length - main.length
-  // console.log(toAdd + '\n\n')
   let beforeTerms = main.terms()
   //spruce-up the whitespace issues
   addWhitespace(beforeTerms, newPhrase.terms())
   //insert this segment into the linked-list
   stitchIn(main, newPhrase)
+  // stretch!
+  let toStretch = [main]
+  let hasId = main.start
+  let docs = [doc]
+  docs = docs.concat(doc.parents())
+  docs.forEach(parent => {
+    let shouldChange = parent.list.filter(p => {
+      return p.hasId(hasId)
+    })
+    toStretch = toStretch.concat(shouldChange)
+  })
+  toStretch = unique(toStretch)
+  // console.log(toStretch[0] == toStretch[3])
+  // stretch it
+  // console.log(toStretch)
+  // console.log(newPhrase.length)
+  toStretch.forEach(p => {
+    p.length += newPhrase.length
+  })
+  // console.log(newPhrase.length)
+  // console.log('--')
+  // console.log(toStretch)
+  // console.log('--')
   //increase the length of our phrases
-  stretchAll(doc, beforeTerms[0].id, newPhrase.length)
+  // stretchAll(doc, beforeTerms[0].id, newPhrase.length)
   return main
 }
 module.exports = appendPhrase

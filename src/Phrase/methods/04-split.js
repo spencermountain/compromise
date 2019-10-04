@@ -24,10 +24,10 @@ exports.replace = function(newPhrase, doc) {
   //add it do the end
   let firstLength = this.length
   append(this, newPhrase, doc)
-  doc.terms()
   //delete original terms
   let tmp = this.buildFrom(this.start, this.length)
   tmp.length = firstLength
+  // console.log(tmp.text())
   deletePhrase(tmp, doc)
   return this
 }

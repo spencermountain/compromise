@@ -36,7 +36,7 @@ exports.clone = function() {
 /** how many seperate terms does the document have? */
 exports.wordCount = function() {
   return this.list.reduce((count, p) => {
-    count += p.wordCount
+    count += p.wordCount()
     return count
   }, 0)
 }

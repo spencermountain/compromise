@@ -1,0 +1,27 @@
+var test = require('tape')
+var nlp = require('./_lib')
+
+test('term-unique', function(t) {
+  let doc = nlp(`him and her and him`)
+  doc = doc.terms().unique()
+  t.equal(doc.text(), 'him and her')
+  t.end()
+})
+
+test('sentence-unique', function(t) {
+  let doc = nlp(`him and her. in toronto. him and her. him.`)
+  doc = doc.unique()
+  t.equal(doc.text(), 'him and her. in toronto. him.')
+  t.end()
+})
+
+test('unique-normalize', function(t) {
+  let doc = nlp(`SPENCER's house (spencer)`)
+  doc = doc.terms().unique()
+  t.equal(doc.text(), "SPENCER's house", 'normalize-posessive')
+
+  doc = nlp(`is not isn't`)
+  doc = doc.terms().unique()
+  t.equal(doc.text(), 'is not', 'normalize-contraction')
+  t.end()
+})

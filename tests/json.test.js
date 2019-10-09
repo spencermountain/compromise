@@ -64,3 +64,21 @@ test('json terms out', function(t) {
   t.equal(t1.post, ' ', 'json-terms-whitespace-post')
   t.end()
 })
+
+test('out-custom:', function(t) {
+  var doc = nlp('The competent drum work of Don Brewer?')
+  var arr = doc.json({
+    terms: {
+      text: true,
+      normal: false,
+      tags: true,
+      sdf: true,
+      root: true,
+    },
+  })[0].terms
+  t.equal(arr[0].text, 'The', 'has text')
+  // t.equal(arr[5].root, 'don', 'has root')
+  t.equal(arr[5].sdf, undefined, 'has no sdf')
+  t.equal(arr[0].tags.some(tag => tag === 'Determiner'), true, 'has tags')
+  t.end()
+})

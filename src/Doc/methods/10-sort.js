@@ -103,3 +103,25 @@ exports.sort = function(input) {
   }
   return this
 }
+
+/** reverse the order of the matches, but not the words */
+exports.reverse = function() {
+  let list = [].concat(this.list)
+  list = list.reverse()
+  return this.buildFrom(list)
+}
+
+/** remove any duplicate matches */
+exports.unique = function() {
+  let list = [].concat(this.list)
+  let obj = {}
+  list = list.filter(p => {
+    let str = p.text('normal').trim()
+    if (obj.hasOwnProperty(str) === true) {
+      return false
+    }
+    obj[str] = true
+    return true
+  })
+  return this.buildFrom(list)
+}

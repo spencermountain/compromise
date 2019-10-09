@@ -31,10 +31,15 @@ const oneSize = function(list, size) {
 };
 
 const allGrams = function(list, options) {
+  // support {size:2} syntax
+  if (options.size) {
+    options.min = options.size;
+    options.max = options.size;
+  }
   let max = options.max || defaults.max;
   let min = options.min || defaults.min;
   let arr = [];
-  for (let size = min; size <= max; size++) {
+  for (let size = min; size <= max; size += 1) {
     arr = arr.concat(oneSize(list, size));
   }
   return arr
@@ -74,6 +79,11 @@ const oneSize$1 = function(list, size) {
 };
 
 const startGrams = function(list, options) {
+  // support {size:2} syntax
+  if (options.size) {
+    options.min = options.size;
+    options.max = options.size;
+  }
   let max = options.max || defaults$1.max;
   let min = options.min || defaults$1.min;
   let arr = [];
@@ -83,6 +93,55 @@ const startGrams = function(list, options) {
   return arr
 };
 var startGrams_1 = startGrams;
+
+const defaults$2 = {
+  max: 4,
+  min: 1,
+};
+
+const oneSize$2 = function(list, size) {
+  let grams = {};
+  // count each instance
+  list.forEach(terms => {
+    let len = terms.length;
+    for (let i = 0; i < terms.length; i += 1) {
+      let slice = terms.slice(len - i, len);
+      if (slice.length === size) {
+        let str = slice.join(' ');
+        if (grams.hasOwnProperty(str)) {
+          grams[str].count += 1;
+        } else {
+          grams[str] = {
+            size: size,
+            count: 1,
+          };
+        }
+      }
+    }
+  });
+  // turn them into an array
+  let arr = Object.keys(grams).map(k => {
+    grams[k].normal = k;
+    return grams[k]
+  });
+  return arr
+};
+
+const endGrams = function(list, options) {
+  // support {size:2} syntax
+  if (options.size) {
+    options.min = options.size;
+    options.max = options.size;
+  }
+  let max = options.max || defaults$2.max;
+  let min = options.min || defaults$2.min;
+  let arr = [];
+  for (let size = min; size <= max; size++) {
+    arr = arr.concat(oneSize$2(list, size));
+  }
+  return arr
+};
+var endGrams_1 = endGrams;
 
 // tokenize by term
 const tokenize = function(doc) {
@@ -157,6 +216,13 @@ const addMethod = function(Doc) {
   Doc.prototype.startgrams = function(obj) {
     let list = tokenize_1(this);
     let arr = startGrams_1(list, obj || {});
+    arr = sort_1(arr);
+    return arr
+  };
+  /** list all repeating sub-phrases, connected to the last word of each phrase */
+  Doc.prototype.endgrams = function(obj) {
+    let list = tokenize_1(this);
+    let arr = endGrams_1(list, obj || {});
     arr = sort_1(arr);
     return arr
   };

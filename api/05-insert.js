@@ -35,7 +35,7 @@ module.exports = {
     desc: 'combine two results into one',
     mutative: false,
     returns: 'Text',
-    example: `nlp('My name is Otto').concat('and i love to get blotto').sentences().length\n//1`,
+    example: `nlp('My name is Otto').concat('and i love to get blotto').all().length\n//1`,
   },
 
   replace: {

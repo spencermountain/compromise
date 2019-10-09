@@ -56,13 +56,13 @@ test('test-infinite-loop', function(t) {
 
   var str = 'And you are?. Marshal'
   var have = nlp(str)
-    .sentences()
+    .all()
     .out()
   t.equal(have, str, 'regression #1')
 
   str = `- where is she.Oh.  you guys don't know?`
   have = nlp(str)
-    .sentences()
+    .all()
     .out()
   t.equal(have, str, 'regression #2')
 

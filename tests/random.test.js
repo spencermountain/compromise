@@ -57,7 +57,7 @@ test('random', function(t) {
 test('random-null', function(t) {
   var r = nlp('toronto')
   var arr = r
-    .people()
+    .match('#Person')
     .random(5)
     .out('array')
   t.equal(arr.length, 0, 'random can be empty')

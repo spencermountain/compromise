@@ -12,6 +12,6 @@ module.exports = {
   trim: {
     desc: 'remove leading and trailing whitespace from each match',
     returns: 'Text',
-    example: `nlp(' Lenny and Carl ').people().trim().out()\n//['Lenny', 'Carl']`,
+    example: `nlp(' Lenny and Carl ').match('#Person').trim().out()\n//['Lenny', 'Carl']`,
   },
 }

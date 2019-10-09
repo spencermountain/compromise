@@ -163,8 +163,8 @@ var clean_1 = clean;
 
 //all punctuation marks, from https://en.wikipedia.org/wiki/Punctuation
 //we have slightly different rules for start/end - like #hashtags.
-const startings = /^[ \.’'\[\](){}⟨⟩:,،、‒–—―…!.‹›«»‐\-?‘’“”'";\/⁄·\&*\•^†‡°”¡¿※№÷×ºª%‰+−=‱¶′″‴§~|‖¦©℗®℠™¤₳฿]+/;
-const endings = /[ \.’'\[\](){}⟨⟩:,،、‒–—―…!.‹›«»‐\-?‘’“”'";\/⁄·\&*@\•^†‡°”¡¿※#№÷×ºª%‰+−=‱¶′″‴§~|‖¦©℗®℠™¤₳฿]+$/;
+const startings = /^[ \n\t\.’'\[\](){}⟨⟩:,،、‒–—―…!.‹›«»‐\-?‘’“”'";\/⁄·\&*\•^†‡°”¡¿※№÷×ºª%‰+−=‱¶′″‴§~|‖¦©℗®℠™¤₳฿]+/;
+const endings = /[ \n\t\.’'\[\](){}⟨⟩:,،、‒–—―…!.‹›«»‐\-?‘’“”'";\/⁄·\&*@\•^†‡°”¡¿※#№÷×ºª%‰+−=‱¶′″‴§~|‖¦©℗®℠™¤₳฿]+$/;
 //money = ₵¢₡₢$₫₯֏₠€ƒ₣₲₴₭₺₾ℳ₥₦₧₱₰£៛₽₹₨₪৳₸₮₩¥
 const hasSlash$1 = /\//;
 
@@ -376,6 +376,11 @@ const doesMatch = function(t, reg) {
     }
     // or must match one
     return reg.choices.some(r => wrapMatch(t, r))
+    // for (let i = 0; i < reg.choices.length; i++) {
+    //   if (wrapMatch(t, reg.choices[i]) === true) {
+    //     return true
+    //   }
+    // }
   }
   return false
 };
@@ -503,7 +508,7 @@ const rankTags = function(term, world) {
     if (tagSet[a].downward.length > tagSet[b].downward.length) {
       return 1
     }
-    return 0
+    return -1
   });
   return tags
 };
@@ -825,14 +830,6 @@ var Term_1 = Term;
 
 /** return a flat array of Term objects */
 var terms = function(n) {
-  // use our cached version, if we have one...
-  // if (this.cache && this.cache.terms) {
-  // console.log('skipped-terms')
-  // if (n !== undefined) {
-  // return this.cache.terms[n]
-  // }
-  // return this.cache.terms
-  // }
   let terms = [this.pool.get(this.start)];
   if (this.length === 0) {
     return []
@@ -840,7 +837,8 @@ var terms = function(n) {
   for (let i = 0; i < this.length - 1; i += 1) {
     let id = terms[terms.length - 1].next;
     if (id === null) {
-      console.warn('linked-list broken');
+      // throw new Error('linked-list broken')
+      console.error("Compromise error: Linked list broken in phrase '" + this.start + "'");
       break
     }
     let term = this.pool.get(id);
@@ -850,16 +848,6 @@ var terms = function(n) {
       return terms[n]
     }
   }
-  // cache it, for next time?
-  // if (!this.cache.words) {
-  //   this.cache.words = terms.reduce((h, t) => {
-  //     h[t.clean] = true
-  //     return h
-  //   }, {})
-  // }
-  // if (!this.cache.terms) {
-  //   this.cache.terms = terms
-  // }
   if (n !== undefined) {
     return terms[n]
   }
@@ -902,6 +890,11 @@ var hasId = function(wantId) {
   let lastId = this.start;
   for (let i = 0; i < this.length - 1; i += 1) {
     let term = this.pool.get(lastId);
+    if (term === undefined) {
+      console.error(`Compromise error: Linked list broken. Missing term '${lastId}' in phrase '${this.start}'\n`);
+      // throw new Error('linked List error')
+      return false
+    }
     if (term.next === wantId) {
       return true
     }
@@ -976,7 +969,7 @@ var text = function(options = {}, isFirst, isLast) {
   return text
 };
 
-var _02Out = {
+var _02Text = {
 	text: text
 };
 
@@ -1017,6 +1010,7 @@ const addWhitespace = function(beforeTerms, newTerms) {
 
 //insert this segment into the linked-list
 const stitchIn = function(main, newPhrase) {
+  // console.log(main.text(), newPhrase.text())
   let afterId = main.lastTerm().next;
   //connect ours in (main → newPhrase)
   main.lastTerm().next = newPhrase.start;
@@ -1034,38 +1028,50 @@ const stitchIn = function(main, newPhrase) {
     let newTerm = newPhrase.terms(0);
     newTerm.prev = beforeId;
   }
+  // main.length += newPhrase.length
 };
 
-//recursively increase the length of all parent phrases
-const stretchAll = function(doc, id, len) {
-  let phrase = doc.list.find(p => p.hasId(id));
-  phrase.length += len;
-
-  let parents = doc.parents();
-  parents.forEach(parent => {
-    phrase = parent.list.find(p => p.hasId(id));
-    phrase.length += len;
-  });
+const unique = function(list) {
+  return list.filter((o, i) => {
+    return list.indexOf(o) === i
+  })
 };
 
 //append one phrase onto another
-const joinPhrase = function(main, newPhrase, doc) {
+const appendPhrase = function(main, newPhrase, doc) {
   let beforeTerms = main.terms();
   //spruce-up the whitespace issues
   addWhitespace(beforeTerms, newPhrase.terms());
   //insert this segment into the linked-list
   stitchIn(main, newPhrase);
-  //increase the length of our phrases
-  stretchAll(doc, beforeTerms[0].id, newPhrase.length);
+
+  // stretch!
+  // make each effected phrase longer
+  let toStretch = [main];
+  let hasId = main.start;
+  let docs = [doc];
+  docs = docs.concat(doc.parents()); // find them all!
+  docs.forEach(parent => {
+    // only the phrases that should change
+    let shouldChange = parent.list.filter(p => {
+      return p.hasId(hasId)
+    });
+    toStretch = toStretch.concat(shouldChange);
+  });
+  // don't double-count a phrase
+  toStretch = unique(toStretch);
+  toStretch.forEach(p => {
+    p.length += newPhrase.length;
+  });
   return main
 };
-var append = joinPhrase;
+var append = appendPhrase;
 
 const hasSpace$1 = / /;
 
 //a new space needs to be added, either on the new phrase, or the old one
 // '[new] [◻old]'   -or-   '[old] [◻new] [old]'
-const addWhitespace$1 = function(newTerms, original) {
+const addWhitespace$1 = function(newTerms) {
   //add a space before our new text?
 
   // add a space after our text
@@ -1111,37 +1117,61 @@ const stitchIn$1 = function(main, newPhrase, newTerms) {
 };
 
 //recursively increase the length of all parent phrases
-const stretchAll$1 = function(doc, oldStart, newPhrase) {
-  //find our phrase to stretch
-  let phrase = doc.list.find(p => p.hasId(oldStart) || p.hasId(newPhrase.start));
-  if (phrase === undefined) {
-    console.error('compromise error: Prepend missing start - ' + oldStart);
-    return
-  }
-  //should we update the phrase's starting?
-  if (phrase.start === oldStart) {
-    phrase.start = newPhrase.start;
-  }
-  // console.log(newPhrase)
-  phrase.length += newPhrase.length;
-  if (doc.from) {
-    stretchAll$1(doc.from, oldStart, newPhrase);
-  }
+// const stretchAll = function(doc, oldStart, newPhrase) {
+//   //find our phrase to stretch
+//   let phrase = doc.list.find(p => p.hasId(oldStart) || p.hasId(newPhrase.start))
+//   if (phrase === undefined) {
+//     console.error('compromise error: Prepend missing start - ' + oldStart)
+//     return
+//   }
+//   //should we update the phrase's starting?
+//   if (phrase.start === oldStart) {
+//     phrase.start = newPhrase.start
+//   }
+//   // console.log(newPhrase)
+//   phrase.length += newPhrase.length
+//   if (doc.from) {
+//     stretchAll(doc.from, oldStart, newPhrase)
+//   }
+// }
+const unique$1 = function(list) {
+  return list.filter((o, i) => {
+    return list.indexOf(o) === i
+  })
 };
 
 //append one phrase onto another
-const joinPhrase$1 = function(original, newPhrase, doc) {
+const joinPhrase = function(original, newPhrase, doc) {
+  const starterId = original.start;
   let newTerms = newPhrase.terms();
-  let oldStart = original.start;
   //spruce-up the whitespace issues
   addWhitespace$1(newTerms);
   //insert this segment into the linked-list
   stitchIn$1(original, newPhrase, newTerms);
   //increase the length of our phrases
-  stretchAll$1(doc, oldStart, newPhrase);
+  let toStretch = [original];
+  let docs = [doc];
+  docs = docs.concat(doc.parents());
+  docs.forEach(d => {
+    // only the phrases that should change
+    let shouldChange = d.list.filter(p => {
+      return p.hasId(starterId) || p.hasId(newPhrase.start)
+    });
+    toStretch = toStretch.concat(shouldChange);
+  });
+  // don't double-count
+  toStretch = unique$1(toStretch);
+  // stretch these phrases
+  toStretch.forEach(p => {
+    p.length += newPhrase.length;
+    // change the start too, if necessary
+    if (p.start === starterId) {
+      p.start = newPhrase.start;
+    }
+  });
   return original
 };
-var prepend = joinPhrase$1;
+var prepend = joinPhrase;
 
 //recursively decrease the length of all the parent phrases
 const shrinkAll = function(doc, id, deleteLength, after) {
@@ -1167,11 +1197,13 @@ const deletePhrase = function(phrase, doc) {
   let pool = doc.pool();
   let terms = phrase.terms();
 
+  // console.log(doc)
+
   //grab both sides of the chain,
   let prev = pool.get(terms[0].prev) || {};
   let after = pool.get(terms[terms.length - 1].next) || {};
 
-  //first, change phrase lengths
+  // //first, change phrase lengths
   shrinkAll(doc, phrase.start, phrase.length, after);
 
   // connect [prev]->[after]
@@ -1184,42 +1216,37 @@ const deletePhrase = function(phrase, doc) {
   }
   // lastly, actually delete the terms from the pool
   for (let i = 0; i < terms.length; i++) {
-    // pool.remove(terms[i].id)
+    // pool.remove(terms[i].id) //TODO: add this optimization
   }
 };
 var _delete = deletePhrase;
 
-// const build = require('../../tokenizer')
+// const tokenize = require('../../01-tokenizer')
 
 /** put this text at the end */
 var append_1 = function(newPhrase, doc) {
-  // this.cache.terms = null
   append(this, newPhrase, doc);
   return this
 };
 
 /** add this text to the beginning */
 var prepend_1 = function(newPhrase, doc) {
-  // this.cache.terms = null
   prepend(this, newPhrase, doc);
   return this
 };
 
 var delete_1 = function(doc) {
-  // this.cache.terms = null
   _delete(this, doc);
   return this
 };
 
 var replace = function(newPhrase, doc) {
-  // this.cache.terms = null
   //add it do the end
   let firstLength = this.length;
   append(this, newPhrase, doc);
   //delete original terms
   let tmp = this.buildFrom(this.start, this.length);
   tmp.length = firstLength;
-
   _delete(tmp, doc);
   return this
 };
@@ -1296,7 +1323,7 @@ var _05Json$1 = {
 var methods$1 = Object.assign(
   {},
   _01Utils,
-  _02Out,
+  _02Text,
   _03Change,
   _04Split,
   _05Json$1
@@ -1327,15 +1354,6 @@ const failFast = function(p, regs) {
       return true
     }
   }
-  // check our cache
-  // if (p.cache.tags && reg.tag && !reg.optional && !reg.negative && !p.cache.tags[reg.tag]) {
-  // console.log('skip-tag')
-  // return true
-  // }
-  // if (p.cache.words && reg.word && !reg.optional && !reg.negative && !p.cache.words[reg.word]) {
-  // console.log('skip-word')
-  // return true
-  // }
   return false
 };
 var _02FailFast = failFast;
@@ -1891,6 +1909,8 @@ var match = {
 	canBe: canBe$1
 };
 
+// const tokenize = require('../01-tokenizer')
+
 class Phrase {
   constructor(id, length, pool) {
     this.start = id;
@@ -1912,13 +1932,17 @@ class Phrase {
 /** create a new Phrase object from an id and length */
 Phrase.prototype.buildFrom = function(id, length) {
   let p = new Phrase(id, length, this.pool);
-  p.parent = this;
+  // p.parent = this
   if (this.cache) {
     p.cache = this.cache;
     p.cache.terms = null;
   }
   return p
 };
+// Phrase.prototype.fromString = function(str) {
+//   console.log(tokenize)
+//   return tokenize.fromText(str)
+// }
 
 //apply methods
 Object.assign(Phrase.prototype, match);
@@ -2309,7 +2333,7 @@ var _data={
   "Plural": "true¦records",
   "Conjunction": "true¦&,aEbAcuz,how8in caDno7o6p4supposing,t1vers5wh0yet;eth8ile;h0o;eref9o0;!uC;l0rovided that;us;r,therwi6; matt1r;!ev0;er;e0ut;cau1f0;ore;se;lthou1nd,s 0;far as,if;gh",
   "Pronoun": "true¦'em,elle,h4i3me,ourselves,she5th1us,we,you0;!rself;e0ou;m,y;!l,t;e0im;!'s",
-  "Singular": "true¦0:0W;1:0Z;a0Vb0Jc0Ad03e01fWgRhNici1jel0kitty,lMmInHoGpCquestion mark,rBs7t4u2womV;nc0Qs 2;doll0Cst0E; rex,a3h2ic,ragedy,v show;ere,i1;l0x return;ist0Oky,omeone,t2uper bowl,yst0V;ep3ri1u2;de0Off;faLmoL;al0i1oom;a4i0Jr3u2;dLrpoD;erogaVobl0O;rt,te0I;bjSceGthers;othi1umb0E;a4ee04o2;del,m2nopo0th0C;!my;n,yf0;i0unch;ead start,o2;l0me3u2;se;! run;adf0entlem5irlZlaci04od,rand3u2;l0y; slam,fa2mo2;th01;an;a5ella,ly,ol0r3un2;di1;iTo2;ntiWsN;mi0thV;conomy,gg,ner5veWx2;ampQecu7;ad7e4innSo2ragonf0ude;cumentFg2i0l0or;gy;ath,t2;ec2;tive;!dy;a8eili1h6i4o2redit card;ttage,u2;riJsin;ty,vil w2;ar;andeliGocol2;ate;n2rD;ary;aAel0lesHo6r4u2;n2tterf0;ti1;eakfast,o2;!th8;dy,tt4y2;!fri2;end;le;nki1r2;ri2;er;d4l0noma0u2;nt;ly; homin4verti2;si1;ng;em",
+  "Singular": "true¦0:0X;1:10;a0Wb0Kc0Bd04e02fXgShOici1jel0kitty,lNmJnIoHpDquestion mark,rBs7t4u2womW;nc0Rs 2;doll0Dst0F; rex,a3h2ic,ragedy,v show;ere,i1;l0x return;ist0Pky,omeone,t2uper bowl,yst0W;ep3ri1u2;de0Pff;faMmoM;al0i1o2;om,se;a4i0Jr3u2;dLrpoD;erogaVobl0O;rt,te0I;bjSceGthers;othi1umb0E;a4ee04o2;del,m2nopo0th0C;!my;n,yf0;i0unch;ead start,o2;l0me3u2;se;! run;adf0entlem5irlZlaci04od,rand3u2;l0y; slam,fa2mo2;th01;an;a5ella,ly,ol0r3un2;di1;iTo2;ntiWsN;mi0thV;conomy,gg,ner5veWx2;ampQecu7;ad7e4innSo2ragonf0ude;cumentFg2i0l0or;gy;ath,t2;ec2;tive;!dy;a8eili1h6i4o2redit card;ttage,u2;riJsin;ty,vil w2;ar;andeliGocol2;ate;n2rD;ary;aAel0lesHo6r4u2;n2tterf0;ti1;eakfast,o2;!th8;dy,tt4y2;!fri2;end;le;nki1r2;ri2;er;d4l0noma0u2;nt;ly; homin4verti2;si1;ng;em",
   "Actor": "true¦aJbGcFdCengineIfAgardenIh9instructPjournalLlawyIm8nurse,opeOp5r3s1t0;echnCherapK;ailNcientJoldiGu0;pervKrgeon;e0oofE;ceptionGsearC;hotographClumbColi1r0sychologF;actitionBogrammB;cem6t5;echanic,inist9us4;airdress8ousekeep8;arm7ire0;fight6m2;eputy,iet0;ici0;an;arpent2lerk;ricklay1ut0;ch0;er;ccoun6d2ge7r0ssis6ttenda7;chitect,t0;ist;minist1v0;is1;rat0;or;ta0;nt",
   "Honorific": "true¦a03b00cSdReQfiLgKhon,jr,king,lJmEoDp8queen,r4s0taoiseach,vice7;e1fc,gt,ir,r,u0;ltTpt,rg;c0nDrgeaL;ond liJretary;abbi,e0;ar1pAs,v0;!erend; admirY;astPhd,r0vt;esideEi1of0;!essN;me mini5nce0;!ss;fficOp,rd;a3essrs,i2lle,me,r1s0;!tr;!s;stK;gistrate,j,r6yF;i3lb,t;en,ov;eld mar3rst l0;ady,i0;eutena0;nt;shG;sq,xcellency;et,oct6r,utchess;apt6hance4mdr,o0pl;lonel,m2ngress0unci3;m0wom0;an;dr,mand5;ll0;or;!ain;ldg,rig0;!adi0;er;d0sst,tty,yatullah;j,m0v;!ir0;al",
   "SportsTeam": "true¦0:1A;1:1H;2:1G;a1Eb16c0Td0Kfc dallas,g0Ihouston 0Hindiana0Gjacksonville jagua0k0El0Bm01newToQpJqueens parkIreal salt lake,sAt5utah jazz,vancouver whitecaps,w3yW;ashington 3est ham0Rh10;natio1Oredski2wizar0W;ampa bay 6e5o3;ronto 3ttenham hotspur;blue ja0Mrapto0;nnessee tita2xasC;buccanee0ra0K;a7eattle 5heffield0Kporting kansas0Wt3;. louis 3oke0V;c1Frams;marine0s3;eah15ounG;cramento Rn 3;antonio spu0diego 3francisco gJjose earthquak1;char08paA; ran07;a8h5ittsburgh 4ortland t3;imbe0rail blaze0;pirat1steele0;il3oenix su2;adelphia 3li1;eagl1philNunE;dr1;akland 3klahoma city thunder,rlando magic;athle0Mrai3;de0; 3castle01;england 7orleans 6york 3;city fc,g4je0FknXme0Fred bul0Yy3;anke1;ian0D;pelica2sain0C;patrio0Brevolut3;ion;anchester Be9i3ontreal impact;ami 7lwaukee b6nnesota 3;t4u0Fvi3;kings;imberwolv1wi2;rewe0uc0K;dolphi2heat,marli2;mphis grizz3ts;li1;cXu08;a4eicesterVos angeles 3;clippe0dodDla9; galaxy,ke0;ansas city 3nE;chiefs,roya0E; pace0polis colU;astr06dynamo,rockeTtexa2;olden state warrio0reen bay pac3;ke0;.c.Aallas 7e3i05od5;nver 5troit 3;lio2pisto2ti3;ge0;broncZnuggeM;cowbo4maver3;ic00;ys; uQ;arCelKh8incinnati 6leveland 5ol3;orado r3umbus crew sc;api5ocki1;brow2cavalie0india2;bengaWre3;ds;arlotte horAicago 3;b4cubs,fire,wh3;iteB;ea0ulR;diff3olina panthe0; c3;ity;altimore 9lackburn rove0oston 5rooklyn 3uffalo bilN;ne3;ts;cel4red3; sox;tics;rs;oriol1rave2;rizona Ast8tlanta 3;brav1falco2h4u3;nited;aw9;ns;es;on villa,r3;os;c5di3;amondbac3;ks;ardi3;na3;ls",
@@ -4712,11 +4736,41 @@ exports.verbose = function(bool) {
   this.world.verbose = bool;
 };
 
+/** todo: */
+exports.pre = function(str) {
+  let p = this.list[0];
+  let terms = p.terms(0);
+  if (str === undefined) {
+    return terms[0].pre
+  }
+  terms[0].pre = str;
+  return this
+};
+
+/** todo: */
+exports.post = function(str) {
+  // return array of post strings
+  if (str === undefined) {
+    return this.list.map(p => {
+      let terms = p.terms();
+      let term = terms[terms.length - 1];
+      return term.post
+    })
+  }
+  // set post string on all ends
+  this.list.forEach(p => {
+    let terms = p.terms();
+    let term = terms[terms.length - 1];
+    term.post = str;
+  });
+  return this
+};
+
 /** freeze the current state of the document, for speed-purposes*/
 // exports.cache = function(options) {
 //   return cache(this, options)
 // }
-exports.freeze = function() {
+exports.cache = function() {
   this.list.forEach(p => {
     let words = {};
     p.cache.terms = p.terms();
@@ -4734,7 +4788,7 @@ exports.freeze = function() {
   });
   return this
 };
-exports.unfreeze = function() {
+exports.uncache = function() {
   this.list.forEach(p => {
     p.cache = {};
   });
@@ -4754,8 +4808,10 @@ var _01Utils_4 = _01Utils$1.clone;
 var _01Utils_5 = _01Utils$1.wordCount;
 var _01Utils_6 = _01Utils$1.wordcount;
 var _01Utils_7 = _01Utils$1.verbose;
-var _01Utils_8 = _01Utils$1.freeze;
-var _01Utils_9 = _01Utils$1.unfreeze;
+var _01Utils_8 = _01Utils$1.pre;
+var _01Utils_9 = _01Utils$1.post;
+var _01Utils_10 = _01Utils$1.cache;
+var _01Utils_11 = _01Utils$1.uncache;
 
 var _02Accessors = createCommonjsModule(function (module, exports) {
 /** use only the first result(s) */
@@ -4826,8 +4882,6 @@ var _02Accessors_6 = _02Accessors.firstTerm;
 var _02Accessors_7 = _02Accessors.lastTerm;
 var _02Accessors_8 = _02Accessors.termList;
 
-// const checkCache = require('./match/checkCache')
-
 /** return a new Doc, with this one as a parent */
 var match$1 = function(reg) {
   //parse-up the input expression
@@ -4835,10 +4889,6 @@ var match$1 = function(reg) {
   if (regs.length === 0) {
     return this.buildFrom([])
   }
-  // if (!checkCache(this, regs)) {
-  //   console.log('skipped')
-  //   return this.buildFrom([])
-  // }
   //try expression on each phrase
   let matches = this.list.reduce((arr, p) => {
     return arr.concat(p.match(regs))
@@ -5142,14 +5192,20 @@ var map = function(fn) {
 };
 
 /** run a function on each phrase */
-var forEach = function(fn) {
+var forEach = function(fn, detachParent) {
   if (!fn) {
     return this
   }
   this.list.forEach((p, i) => {
-    let doc = this.buildFrom([p]);
-    doc.from = null; //it's not a child/parent
-    fn(doc, i);
+    let sub = this.buildFrom([p]);
+    // if we're doing fancy insertions, we may want to skip updating the parent each time.
+    if (detachParent === true) {
+      sub.from = null; //
+    }
+    // let len
+    // console.log(sub.from.list[0].text())
+    fn(sub, i);
+    // console.log(sub.from.list[0].text())
   });
   return this
 };
@@ -5341,25 +5397,30 @@ exports.split = function(reg) {
   let regs = syntax_1(reg);
   let matches = [];
   this.list.forEach(p => {
-    let allFound = p.match(regs);
-    //no match, keep it going
-    if (allFound.length === 0) {
+    let foundEm = p.match(regs);
+    //no match here, add full sentence
+    if (foundEm.length === 0) {
       matches.push(p);
+      return
     }
-    allFound.forEach(found => {
-      // do it again, at the end
-      let last = matches.pop() || p;
-      let results = last.splitOn(found); //splits into three parts
-      if (results.before) {
-        matches.push(results.before);
+    // we found something here.
+    let carry = p;
+    foundEm.forEach(found => {
+      let parts = carry.splitOn(found);
+      // add em in
+      if (parts.before) {
+        matches.push(parts.before);
       }
-      if (results.match) {
-        matches.push(results.match);
+      if (parts.match) {
+        matches.push(parts.match);
       }
-      if (results.after) {
-        matches.push(results.after);
-      }
+      // start matching now on the end
+      carry = parts.after;
     });
+    // add that last part
+    if (carry) {
+      matches.push(carry);
+    }
   });
   return this.buildFrom(matches)
 };
@@ -5372,27 +5433,31 @@ exports.splitAfter = function(reg) {
   let regs = syntax_1(reg);
   let matches = [];
   this.list.forEach(p => {
-    let allFound = p.match(regs);
-    //no match, return whole phrase
-    if (allFound.length === 0) {
+    let foundEm = p.match(regs);
+    //no match here, add full sentence
+    if (foundEm.length === 0) {
       matches.push(p);
+      return
     }
-    allFound.forEach(found => {
-      // apply it to the end, recursively
-      let last = matches.pop() || p;
-      let results = last.splitOn(found); //splits into three parts
-      //merge first and second parts
-      if (results.before && results.match) {
-        results.before.length += results.match.length;
-        matches.push(results.before);
-      } else if (results.match) {
-        matches.push(results.match);
+    // we found something here.
+    let carry = p;
+    foundEm.forEach(found => {
+      let parts = carry.splitOn(found);
+      // add em in
+      if (parts.before && parts.match) {
+        // merge these two together
+        parts.before.length += parts.match.length;
+        matches.push(parts.before);
+      } else if (parts.match) {
+        matches.push(parts.match);
       }
-      // add third part, if it exists
-      if (results.after) {
-        matches.push(results.after);
-      }
+      // start matching now on the end
+      carry = parts.after;
     });
+    // add that last part
+    if (carry) {
+      matches.push(carry);
+    }
   });
   return this.buildFrom(matches)
 };
@@ -5402,27 +5467,31 @@ exports.splitBefore = function(reg) {
   let regs = syntax_1(reg);
   let matches = [];
   this.list.forEach(p => {
-    let allFound = p.match(regs);
-    //no match, keep it going
-    if (allFound.length === 0) {
+    let foundEm = p.match(regs);
+    //no match here, add full sentence
+    if (foundEm.length === 0) {
       matches.push(p);
+      return
     }
-    allFound.forEach(found => {
-      // do it again, at the end
-      let last = matches.pop() || p;
-      let results = last.splitOn(found); //splits into three parts
-      //support multiple-matches per phrase
-      if (results.before) {
-        matches.push(results.before);
+    // we found something here.
+    let carry = p;
+    foundEm.forEach(found => {
+      let parts = carry.splitOn(found);
+      // add before part in
+      if (parts.before) {
+        matches.push(parts.before);
       }
-      //merge 'match' and 'after'
-      if (results.match && results.after) {
-        results.match.length += results.after.length;
-        matches.push(results.match);
-      } else if (results.match) {
-        matches.push(results.match);
+      // merge match+after
+      if (parts.match && parts.after) {
+        parts.match.length += parts.after.length;
       }
+      // start matching now on the end
+      carry = parts.match;
     });
+    // add that last part
+    if (carry) {
+      matches.push(carry);
+    }
   });
   return this.buildFrom(matches)
 };
@@ -6016,6 +6085,7 @@ const debug = function(doc) {
       if (t.implicit) {
         text = '[' + t.implicit + ']';
       }
+      text = text.replace(/\W/g, '');
       {
         text = colors.yellow(text);
       }
@@ -7800,8 +7870,6 @@ const miscCorrection = function(doc) {
     which.match('that #Noun [#Verb]').tag('Determiner', 'that-determiner');
     //work, which has been done.
     which.match('#Comma [which] (#Pronoun|#Verb)').tag('Preposition', 'which-copula');
-    //things that provide
-    // doc.match('#Plural (that|which) #Adverb? #Verb').term(1).tag('Preposition', 'noun-that');
   }
 
   //like
@@ -7833,17 +7901,17 @@ const miscCorrection = function(doc) {
       .tag('Region', 'district-of-Foo');
   }
 
-  let hyph = doc.if('#Hyphenated');
+  let hyph = doc.if('@hasHyphen');
   if (hyph.found === true) {
     //air-flow
     hyph
-      .match('#Hyphenated #Hyphenated')
+      .match('@hasHyphen @hasHyphen')
       .match('#Noun #Verb')
       .tag('Noun', 'hyphen-verb');
     //connect hyphenated expressions - 'ooh-wee'
     hyph
-      .match('#Hyphenated+')
       .if('#Expression')
+      .match('#@hasHyphen+')
       .tag('Expression', 'ooh-wee');
   }
 
@@ -7896,8 +7964,6 @@ const fixThe = function(doc) {
 
     //the wait to vote
     det.match('(the|this) [#Verb] #Preposition .').tag('Noun', 'correction-determiner1');
-    //some pressing issues
-    det.match('some [#Verb] #Plural').tag('Noun', 'correction-determiner6');
     //a sense of
     det.match('#Determiner [#Verb] of').tag('Noun', 'the-verb-of');
     //the threat of force
@@ -7946,8 +8012,6 @@ const fixNouns = function(doc) {
     noun.match('#Noun (&|n) #Noun').tag('Organization', 'Noun-&-Noun');
     //Aircraft designer
     noun.match('#Noun #Actor').tag('Actor', 'thing-doer');
-    //this rocks
-    noun.match('(this|that) [#Plural]').tag('PresentTense', 'this-verbs');
     //j.k Rowling
     doc.match('#Noun van der? #Noun').tagSafe('#Person', 'von der noun');
     //king of spain
@@ -7969,6 +8033,15 @@ const fixNouns = function(doc) {
       org.match('#Organization of the? #TitleCase').tag('Organization', 'org-of-place');
       org.match('#Organization #Country').tag('Organization', 'org-country');
       org.match('(world|global|international|national|#Demonym) #Organization').tag('Organization', 'global-org');
+    }
+
+    let plural = noun.if('#Plural');
+    if (plural.found === true) {
+      //some pressing issues
+      plural.match('some [#Verb] #Plural').tag('Noun', 'correction-determiner6');
+
+      //this rocks
+      noun.match('(this|that) [#Plural]').tag('PresentTense', 'this-verbs');
     }
   }
 
@@ -8006,6 +8079,8 @@ const fixNouns = function(doc) {
       .match('#Place+ #Possessive')
       .ifNo('#Comma')
       .tag('Possessive');
+    //her polling
+    poss.match('#Possessive [#Verb]').tag('Noun', 'correction-possessive');
   }
   return doc
 };
@@ -8229,8 +8304,7 @@ const fixVerb = function(doc) {
     vb.match('is no [#Verb]').tag('Noun', 'is-no-verb');
     //different views than
     vb.match('[#Verb] than').tag('Noun', 'correction');
-    //her polling
-    vb.match('#Possessive [#Verb]').tag('Noun', 'correction-possessive');
+
     //there are reasons
     vb.match('there (are|were) #Adjective? [#PresentTense]').tag('Plural', 'there-are');
     //jack seems guarded
@@ -8721,35 +8795,35 @@ var fixDates_1 = fixDates;
 //sequence of match-tag statements to correct mis-tags
 const corrections = function(doc) {
   // console.time('det')
-  fixThe_1(doc);
+  fixThe_1(doc); //27
   // console.timeEnd('det')
 
   // console.time('nouns')
-  fixNouns_1(doc);
-  // console.timeEnd('nouns')
+  fixNouns_1(doc); //30
+  // // console.timeEnd('nouns')
 
-  // console.time('person')
-  fixPerson_1(doc);
-  // console.timeEnd('person')
+  // // console.time('person')
+  fixPerson_1(doc); //58
+  // // console.timeEnd('person')
 
-  // console.time('verb')
-  fixVerb_1(doc);
-  // console.timeEnd('verb')
+  // // console.time('verb')
+  fixVerb_1(doc); //50
+  // // console.timeEnd('verb')
 
-  // console.time('adj')
-  fixAdjective_1(doc);
-  // console.timeEnd('adj')
+  // // console.time('adj')
+  fixAdjective_1(doc); //8
+  // // console.timeEnd('adj')
 
-  // console.time('value')
-  fixValue_1(doc);
-  // console.timeEnd('value')
+  // // console.time('value')
+  fixValue_1(doc); //12
+  // // console.timeEnd('value')
 
-  // console.time('dates')
-  fixDates_1(doc);
-  // console.timeEnd('dates')
+  // // console.time('dates')
+  fixDates_1(doc); //92
+  // // console.timeEnd('dates')
 
-  // console.time('misc')
-  fixMisc(doc);
+  // // console.time('misc')
+  fixMisc(doc); //43
   // console.timeEnd('misc')
   return doc
 };
@@ -8773,24 +8847,21 @@ const tagger = function(doc) {
   doc = _03Contractions(doc);
   // console.timeEnd('contractions')
 
-  doc.freeze();
+  //set our cache, to speed things up
+  doc.cache();
 
   // deduce more specific tags - singular/plurals/quotations...
   // console.time('inference')
   doc = _04Inference(doc);
   // console.timeEnd('inference')
 
-  //set our cache, to speed things up
-  // doc.cache()
-
   // wiggle-around the results, so they make more sense
   // console.time('corrections')
   doc = _05Correction(doc);
   // console.timeEnd('corrections')
-  // doc.unfreeze()
 
   //remove our cache?
-  doc.unfreeze();
+  doc.uncache();
   return doc
 };
 var _02Tagger = tagger;
@@ -9014,7 +9085,7 @@ const addMethod$4 = function(Doc) {
       return this
     }
     /** remove any matching unit from the list */
-    remove(str) {
+    remove() {
       return this
     }
 
@@ -9059,6 +9130,7 @@ const methods$5 = {
   misc: methods$3,
   selections: selections,
 };
+
 
 
 
@@ -9116,6 +9188,10 @@ class Doc {
 Doc.prototype.buildFrom = function(list) {
   let doc = new Doc(list, this, this.world);
   return doc
+};
+Doc.prototype.fromText = function(str) {
+  let list = _01Tokenizer.fromText(str, this.world, this.pool());
+  return this.buildFrom(list)
 };
 /** add new subclass methods */
 Doc.prototype.extend = function(fn) {

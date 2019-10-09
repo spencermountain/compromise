@@ -12,7 +12,7 @@ module.exports = {
   toTitleCase: {
     desc: 'set the first letter of each term as a capital',
     returns: 'Text',
-    example: `nlp('jupiter, pluto and mars').nouns().toTitleCase().all().out()\n//Jupiter, Pluto and Mars.`,
+    example: `nlp('jupiter, pluto and mars').match('#Noun').toTitleCase().all().out()\n//Jupiter, Pluto and Mars.`,
   },
   toCamelCase: {
     desc: 'remove whitespace and titlecase the words',

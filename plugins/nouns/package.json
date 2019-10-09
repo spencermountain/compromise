@@ -27,7 +27,7 @@
     "printWidth": 100
   },
   "peerDependencies": {
-    "compromise": "^11.*.*"
+    "compromise": "^12.*.*"
   },
   "dependencies": {},
   "devDependencies": {

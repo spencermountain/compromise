@@ -30,7 +30,7 @@
     "builds/*.js"
   ],
   "peerDependencies": {
-    "compromise": "^11.*.*"
+    "compromise": "^12.*.*"
   },
   "dependencies": {
     "rollup": "^1.21.4",

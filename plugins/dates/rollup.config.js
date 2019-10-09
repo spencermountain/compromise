@@ -3,7 +3,7 @@ import json from 'rollup-plugin-json'
 import { terser } from 'rollup-plugin-terser'
 import resolve from 'rollup-plugin-node-resolve'
 import babel from 'rollup-plugin-babel'
-const name = 'compromise-nouns'
+const name = 'compromise-dates'
 
 export default [
   {

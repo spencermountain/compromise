@@ -5,7 +5,7 @@ const addMethods = function(Doc) {
   methods.forEach(fn => fn(Doc))
 
   //combine them with .topics() method
-  Doc.prototype.things = function(n) {
+  Doc.prototype.entities = function(n) {
     let r = this.clauses()
     // Find people, places, and organizations
     let yup = r.people()
@@ -22,8 +22,8 @@ const addMethods = function(Doc) {
     return yup
   }
   //aliases
-  Doc.prototype.entities = Doc.prototype.things
-  Doc.prototype.topics = Doc.prototype.things
+  Doc.prototype.things = Doc.prototype.entities
+  Doc.prototype.topics = Doc.prototype.entities
 }
 
 module.exports = addMethods

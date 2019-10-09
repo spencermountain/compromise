@@ -1,7 +1,7 @@
-var test = require('tape')
-var nlp = require('../_lib')
+const test = require('tape')
+const nlp = require('./_lib')
 
-let words = [
+const words = [
   'sud den ly',
   'con sti pa tion',
   'di a bo lic',

@@ -5,11 +5,14 @@
   "version": "0.0.1",
   "main": "./builds/compromise-nouns.js",
   "unpkg": "./builds/compromise-nouns.min.js",
+  "module": "./builds/compromise-nouns.mjs",
   "repository": {
     "type": "git",
     "url": "git://github.com/nlp-compromise/compromise-nouns.git"
   },
   "scripts": {
+    "test": "tape \"./tests/**/*.test.js\" | tap-dancer",
+    "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer",
     "watch": "amble ./scratch.js",
     "build": "rollup -c"
   },
@@ -33,7 +36,9 @@
     "rollup-plugin-commonjs": "^10.0.0",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "^5.1.0",
-    "rollup-plugin-terser": "^5.0.0"
+    "rollup-plugin-terser": "^5.0.0",
+    "tap-dancer": "0.2.0",
+    "tape": "4.11.0"
   },
   "eslintIgnore": [
     "builds/*.js"

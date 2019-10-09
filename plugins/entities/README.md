@@ -4,12 +4,12 @@
   <div>named-entities recognition plugin for <a href="https://github.com/spencermountain/compromise/">compromise</a></div>
   
   <!-- npm version -->
-  <a href="https://npmjs.org/package/compromise-things">
+  <a href="https://npmjs.org/package/compromise-entities">
     <img src="https://img.shields.io/npm/v/compromise-things.svg?style=flat-square" />
   </a>
   
   <!-- file size -->
-  <a href="https://unpkg.com/spacetime/builds/compromise-things.min.js">
+  <a href="https://unpkg.com/spacetime/builds/compromise-entities.min.js">
     <img src="https://badge-size.herokuapp.com/spencermountain/compromise-things/master/builds/compromise-entities.min.js" />
   </a>
    <hr/>
@@ -21,10 +21,10 @@
 
 ```js
 const nlp = require('compromise')
-nlp.extend(require('compromise-things'))
+nlp.extend(require('compromise-entities'))
 
 let doc = nlp('The Children are right to laugh at you, Ralph')
-doc.things().debug()
+doc.entities().debug()
 // 'Ralf'
 ```
 

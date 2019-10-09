@@ -1,15 +1,18 @@
 {
-  "name": "compromise-things",
+  "name": "compromise-entities",
   "description": "plugin for nlp-compromise",
   "version": "0.0.1",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "main": "./builds/compromise-entities.js",
   "unpkg": "./builds/compromise-entities.min.js",
+  "module": "./builds/compromise-entities.mjs",
   "repository": {
     "type": "git",
     "url": "git://github.com/nlp-compromise/compromise-entities.git"
   },
   "scripts": {
+    "test": "tape \"./tests/**/*.test.js\" | tap-dancer",
+    "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer",
     "watch": "amble ./scratch.js",
     "build": "rollup -c"
   },
@@ -35,7 +38,9 @@
     "rollup-plugin-commonjs": "^10.0.0",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "^5.1.0",
-    "rollup-plugin-terser": "^5.0.0"
+    "rollup-plugin-terser": "^5.0.0",
+    "tap-dancer": "0.2.0",
+    "tape": "4.11.0"
   },
   "devDependencies": {},
   "license": "MIT"

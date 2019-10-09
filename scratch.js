@@ -1,10 +1,11 @@
 const nlp = require('./src/index')
 // const corpus = require('nlp-corpus')
 // nlp.verbose(true)
-nlp.extend(require('./plugins/nouns/src'))
+nlp.extend(require('./plugins/output/src'))
 // nlp.extend(require('./plugins/sentences/src'))
 
-let doc = nlp(`is not isn't. it sure is.`)
+let doc = nlp(`is not isn't. it sure is`)
 // doc = doc.terms().unique()
 // doc.debug()
 console.log(doc.wordCount())
+console.log(doc.hash())

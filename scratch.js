@@ -1,4 +1,4 @@
-var nlp = require('./src/index')
+const nlp = require('./src/index')
 // const corpus = require('nlp-corpus')
 // nlp.verbose(true)
 nlp.extend(require('./plugins/nouns/src'))

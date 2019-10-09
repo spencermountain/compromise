@@ -121,7 +121,7 @@ test('pos-basic-tag:', function(t) {
     ['canadians are nice', ['ProperNoun', 'Verb', 'Adjective']],
     ['thom is smart', ['ProperNoun', 'Verb', 'Adjective']],
   ].forEach(function(a) {
-    var terms = nlp(a[0]).json(0).terms
+    let terms = nlp(a[0]).json(0).terms
     terms.forEach((term, i) => {
       let tag = a[1][i]
       let found = term.tags.some(tg => tg === tag)

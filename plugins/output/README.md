@@ -29,7 +29,7 @@ let doc = nlp('The Children are right to laugh at you, Ralph')
 doc.hash()
 // 'KD83KH3L2B39_UI3N1X'
 
-// create sanitized html from document
+// create a html rendering of the document
 doc.html({Person:'red'})
 /*
 <div>
@@ -48,11 +48,62 @@ It can though, be used successfully to compare two documents, without looping th
 let docA = nlp('hello there')
 let docB = nlp('hello there')
 console.log(docA.hash() === docB.hash())
-// same!
+// true
 
 docB.match('hello').tag('Greeting')
 console.log(docA.hash() === docB.hash())
 // false
+```
+
+if you're looking for insensitivity to punctuation, or case, you can normalize or transform your document before making the hash.
+```js
+let doc = nlp(`He isn't... working  `)
+doc.normalize({
+  case:true,
+  punctuation:true,
+  contractions:true
+})
+
+nlp('he is not working').hash() === doc.hash()
+// true
+```
+
+### .html(options)
+this turns the document into easily-to-display html output.
+
+Special html characters within the document get escaped, in a simple way. Be extra careful when rendering untrusted input, against XSS and other forms of sneaky-html. This library is not considered a battle-tested guard against these security vulnerabilities.
+```js
+let doc = nlp('i <3 you')
+doc.html()
+// <div>i &lt;3 you</div>
+```
+
+you can pass-in a mapping of tags to html classes, so that document metadata can be styled by css.
+```js
+let doc = nlp('made by Spencer Kelly')
+doc.html({
+  '#Person+':'red'
+})
+// <div>made by <span class="red">Spencer Kelly</span></div>
+```
+
+by default, whitespace and punctuation are *outside* the html tag. This is sometimes awkward, and not-ideal.
+
+You may want to loop through the document, and create the html yourself:
+```js
+let doc = nlp(`are you saying 'boo', or 'boo-urns'?`)
+let html = ''
+doc.terms().forEach(t=>{
+  html+=`<span>${t.text()}</span>`
+})
+```
+
+
+the method returns html-strings by default, but the library uses [Jason Miller's htm library](https://github.com/developit/htm) so you can return React Components, or anything:
+```js
+doc.html({
+  bind:React.createElement
+})
 ```
 
 MIT

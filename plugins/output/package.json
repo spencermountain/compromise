@@ -33,7 +33,9 @@
     "compromise": "^12.*.*"
   },
   "dependencies": {
-    "pure-md5": "^0.1.9"
+    "htm": "^2.2.1",
+    "pure-md5": "^0.1.9",
+    "vhtml": "^2.1.0"
   },
   "devDependencies": {
     "rollup": "^1.21.4",

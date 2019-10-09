@@ -1,9 +1,9 @@
-var test = require('tape')
-var nlp = require('../_lib')
+const test = require('tape')
+const nlp = require('../_lib')
 //nsfw!
 
 test('swears:', function(t) {
-  var m = nlp('shit, i am tired').match('^#Expression')
+  let m = nlp('shit, i am tired').match('^#Expression')
   t.ok(m.found, 'swear-1')
 
   m = nlp('the shit keeps piling up').match('the #Noun')

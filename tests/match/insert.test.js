@@ -1,8 +1,8 @@
-var test = require('tape')
-var nlp = require('../_lib')
+const test = require('tape')
+const nlp = require('../_lib')
 
 test('insert-basic :', function(t) {
-  var m = nlp('the dog sat').insertBefore('and')
+  let m = nlp('the dog sat').insertBefore('and')
   t.equal(m.out('text'), 'and the dog sat', 'and-dog')
 
   m = nlp('the dog sat').insertAfter('patiently')
@@ -28,8 +28,8 @@ test('insert-basic :', function(t) {
 })
 
 test('insert-subset-include :', function(t) {
-  var m = nlp('the dog is nice')
-  var sub = m.match('is')
+  let m = nlp('the dog is nice')
+  let sub = m.match('is')
   sub.insertAfter('really')
   t.equal(sub.out('normal'), 'is really', 'is-really')
   t.equal(m.out('normal'), 'the dog is really nice', 'dog-is-really-nice')

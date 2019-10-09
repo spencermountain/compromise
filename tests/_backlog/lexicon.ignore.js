@@ -1,16 +1,16 @@
-var test = require('tape')
-var nlp = require('./_lib')
+const test = require('tape')
+const nlp = require('./_lib')
 
-var lexicon = {
+const lexicon = {
   'Jardas al Abid': 'Place',
   'Umm Ar Rizam': 'Place',
   Tobruk: 'Place',
 }
 
 test('user-lex-with-hyphenation:', function(t) {
-  var sentence =
+  const sentence =
     'A suicide attack hit the centre of Jardas-al-Abid killing one person (and the attacker) and injuring more than twenty.'
-  var found =
+  const found =
     nlp(sentence, lexicon)
       .places()
       .data()[0] || {}
@@ -20,9 +20,9 @@ test('user-lex-with-hyphenation:', function(t) {
 })
 
 test('user-lex-with-possessive form:', function(t) {
-  var sentence =
+  const sentence =
     "A suicide attack hit Jardas al Abid's center killing one person (and the attacker) and injuring more than twenty."
-  var found =
+  const found =
     nlp(sentence, lexicon)
       .places()
       .data()[0] || {}
@@ -32,9 +32,9 @@ test('user-lex-with-possessive form:', function(t) {
 })
 
 test('user-lex-with-proper name in front:', function(t) {
-  var sentence =
+  const sentence =
     "A suicide attack hit Lybia's Jardas al Abid city killing one person (and the attacker) and injuring more than twenty."
-  var found =
+  const found =
     nlp(sentence, lexicon)
       .places()
       .data()[0] || {}
@@ -44,9 +44,9 @@ test('user-lex-with-proper name in front:', function(t) {
 })
 
 test('user-lex-with-punctuation:', function(t) {
-  var sentence =
+  const sentence =
     'A suicide attack hit Jardas al Abid, which killed one person (and the attacker) and injured more than twenty.'
-  var found =
+  const found =
     nlp(sentence, lexicon)
       .places()
       .data()[0] || {}

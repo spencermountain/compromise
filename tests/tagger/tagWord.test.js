@@ -1,9 +1,9 @@
-var test = require('tape')
-var nlp = require('../_lib')
+const test = require('tape')
+const nlp = require('../_lib')
 
 //test a word from each file in ./data/**
 test('pos from-lexicon', function(t) {
-  var arr = [
+  const arr = [
     ['toronto', 'City'],
     ['mexico', 'Country'],
     ['Jamaica', 'Country'],
@@ -70,7 +70,7 @@ test('pos from-lexicon', function(t) {
     ['MDMA', 'Acronym'],
   ]
   arr.forEach(function(a) {
-    var term = nlp(a[0]).termList()[0]
+    const term = nlp(a[0]).termList()[0]
     t.equal(term.tags[a[1]], true, a[0])
   })
   t.end()

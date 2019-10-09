@@ -1,9 +1,9 @@
-var test = require('tape')
-var nlp = require('./_lib')
+const test = require('tape')
+const nlp = require('./_lib')
 
 test('sanity-check case:', function(t) {
-  var str = 'John xoo, John fredman'
-  var r = nlp(str)
+  let str = 'John xoo, John fredman'
+  let r = nlp(str)
   str = r.toUpperCase().out('text')
   t.equal(str, 'JOHN XOO, JOHN FREDMAN', 'uppercase')
 
@@ -16,8 +16,8 @@ test('sanity-check case:', function(t) {
 })
 
 test('tricky case:', function(t) {
-  var str = 'i am spencer kelly here with Amy Adams.'
-  var r = nlp(str)
+  let str = 'i am spencer kelly here with Amy Adams.'
+  let r = nlp(str)
   r.match('#Person').toUpperCase()
   str = r.out('text')
   t.equal(str, 'i am SPENCER KELLY here with AMY ADAMS.', 'tricky-uppercase')

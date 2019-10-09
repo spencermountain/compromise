@@ -1,5 +1,5 @@
-var test = require('tape')
-var nlp = require('./_lib')
+const test = require('tape')
+const nlp = require('./_lib')
 
 test('splitAfter', function(t) {
   ;[
@@ -19,8 +19,8 @@ test('splitAfter', function(t) {
     ['john paul george ringo', '.', ['john', 'paul', 'george', 'ringo']],
     ['doug is really nice', 'is', ['doug is', 'really nice']],
   ].forEach(function(a) {
-    var want = a[2]
-    var got = nlp(a[0])
+    const want = a[2]
+    const got = nlp(a[0])
       .splitAfter(a[1])
       .out('array')
     t.deepEqual(got, want, a[0])
@@ -42,8 +42,8 @@ test('splitOn', function(t) {
     ['x x a b c', 'x', ['x', 'x', 'a b c']],
     ['a x b x', 'x', ['a', 'x', 'b', 'x']],
   ].forEach(function(a) {
-    var want = a[2]
-    var got = nlp(a[0])
+    const want = a[2]
+    const got = nlp(a[0])
       .splitOn(a[1])
       .out('array')
     t.deepEqual(got, want, a[0])
@@ -65,8 +65,8 @@ test('splitBefore', function(t) {
     ['x x a b c', 'x', ['x', 'x a b c']],
     ['a x b x', 'x', ['a', 'x b', 'x']],
   ].forEach(function(a) {
-    var want = a[2]
-    var got = nlp(a[0])
+    const want = a[2]
+    const got = nlp(a[0])
       .splitBefore(a[1])
       .out('array')
     t.deepEqual(got, want, a[0])

@@ -1,11 +1,11 @@
-var test = require('tape')
-var nlp = require('../_lib')
+const test = require('tape')
+const nlp = require('../_lib')
 
 test('inline tagging linear:', function(t) {
-  var r = nlp('one two three four')
+  let r = nlp('one two three four')
 
   r.match('one two three').tag('. #Person .')
-  var found = r.match('#Person').out('normal')
+  let found = r.match('#Person').out('normal')
   t.equal(found, 'two', 'skip-tag-skip')
 
   r.match('one two three').tag('#FooBar .')
@@ -21,8 +21,8 @@ test('inline tagging linear:', function(t) {
 })
 
 test('compound tags from lexicon:', function(t) {
-  var doc = nlp('it was cold')
-  var arr = doc.match('#Verb+')
+  const doc = nlp('it was cold')
+  const arr = doc.match('#Verb+')
   t.equal(arr.length, 1, 'one verb')
   t.equal(arr.has('#PastTense'), true, 'past-tense')
   t.end()

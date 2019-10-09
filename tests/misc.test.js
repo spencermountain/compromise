@@ -1,5 +1,5 @@
-var test = require('tape')
-var nlp = require('./_lib')
+const test = require('tape')
+const nlp = require('./_lib')
 
 const only = function(options) {
   const none = {
@@ -19,7 +19,7 @@ const only = function(options) {
 // })
 
 test('tag-multiples:', function(t) {
-  var r = nlp('twas brillig in the doofgafoof.')
+  const r = nlp('twas brillig in the doofgafoof.')
   r.match('brillig').tag(['Foo', 'Barr'])
   t.ok(r.match('#Foo').found, 'tagged-foo')
   t.ok(r.match('#Barr').found, 'tagged-barr')

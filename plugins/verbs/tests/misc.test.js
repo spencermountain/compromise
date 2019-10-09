@@ -1,8 +1,8 @@
-var test = require('tape')
-var nlp = require('./_lib')
+const test = require('tape')
+const nlp = require('./_lib')
 
 test('verbs.adverbs', function(t) {
-  var doc = nlp('spencer is really great! Spencer really, really was superb.')
+  const doc = nlp('spencer is really great! Spencer really, really was superb.')
   doc
     .verbs()
     .adverbs()

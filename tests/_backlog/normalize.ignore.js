@@ -1,5 +1,5 @@
-var test = require('tape')
-var nlp = require('../_lib')
+const test = require('tape')
+const nlp = require('../_lib')
 
 test('sentence():', function(t) {
   ;[
@@ -17,7 +17,7 @@ test('sentence():', function(t) {
     ['Dr. John Smith-McDonald', 'dr john smith mcdonald'],
     ['Contains no fruit juice. \n\n All rights reserved', 'contains no fruit juice. all rights reserved'],
   ].forEach(function(a) {
-    var str = nlp(a[0]).text({ normal: true })
+    const str = nlp(a[0]).text({ normal: true })
     t.equal(str, a[0], a[1])
   })
   t.end()
@@ -36,7 +36,7 @@ test('normalize():', function(t) {
     // ['the so-called ❛group of seven❜', 'the so called \'group of 7\''],
     ['Director of the F.B.I.', 'director of the fbi'],
   ].forEach(function(a) {
-    var str = nlp(a[0])
+    const str = nlp(a[0])
       .normalize()
       .out('text')
     t.equal(str, a[0], a[1])
@@ -45,7 +45,7 @@ test('normalize():', function(t) {
 })
 
 test('possessives', function(t) {
-  var doc = nlp(`Corey Hart's pudding and Google's advertising`)
+  const doc = nlp(`Corey Hart's pudding and Google's advertising`)
   doc = doc.normalize({
     possessives: true,
     case: false,
@@ -55,7 +55,7 @@ test('possessives', function(t) {
 })
 
 test('optional params', function(t) {
-  var doc = nlp(`John Smith bought automobiles (for us)`).normalize({
+  const doc = nlp(`John Smith bought automobiles (for us)`).normalize({
     case: true,
     possessives: true,
     parentheses: true,
@@ -67,13 +67,13 @@ test('optional params', function(t) {
 })
 
 test('optional param - verbs and plurals together', function(t) {
-  var plurals = [['batmobiles', 'batmobile']]
-  var verbs = [['I was walking', 'i walk']]
+  const plurals = [['batmobiles', 'batmobile']]
+  const verbs = [['I was walking', 'i walk']]
 
   // good
   plurals.forEach(a => {
-    var doc = nlp(a[0])
-    var pluralsOn = doc.normalize({
+    const doc = nlp(a[0])
+    const pluralsOn = doc.normalize({
       plurals: true,
     })
     t.equal(pluralsOn.out(), a[1], a[0])
@@ -81,8 +81,8 @@ test('optional param - verbs and plurals together', function(t) {
 
   // good
   verbs.forEach(a => {
-    var doc = nlp(a[0])
-    var verbsOn = doc.normalize({
+    const doc = nlp(a[0])
+    const verbsOn = doc.normalize({
       verbs: true,
     })
     t.equal(verbsOn.out(), a[1], a[0])
@@ -90,8 +90,8 @@ test('optional param - verbs and plurals together', function(t) {
 
   // bad
   plurals.concat(verbs).forEach(a => {
-    var doc = nlp(a[0])
-    var bothOn = doc.normalize({
+    const doc = nlp(a[0])
+    const bothOn = doc.normalize({
       plurals: true,
       verbs: true,
     })
@@ -102,7 +102,7 @@ test('optional param - verbs and plurals together', function(t) {
 })
 
 test('honorifics', function(t) {
-  var tests = [
+  const tests = [
     ['rear admiral Smith', 'smith'],
     ['Lieutenant John Smith', 'john smith'],
     // ['Admiral Davis Jr', 'davis jr'],
@@ -123,7 +123,7 @@ test('honorifics', function(t) {
     // ['Sergeant', 'sergeant'],
   ]
   tests.forEach(a => {
-    var doc = nlp(a[0])
+    const doc = nlp(a[0])
     doc = doc.normalize({
       honorifics: true,
       case: true,
@@ -134,7 +134,7 @@ test('honorifics', function(t) {
 })
 
 test('elipses-whitespace:', function(t) {
-  var doc = nlp('about this ...').normalize()
+  const doc = nlp('about this ...').normalize()
   t.equal(doc.out('text'), 'about this', 'normalize seperate elipses')
 
   doc = nlp('about this ...').toLowerCase()
@@ -146,7 +146,7 @@ test('elipses-whitespace:', function(t) {
 })
 
 test('more-normalize:', function(t) {
-  var doc = nlp(`i saw first lady michelle obama`)
+  const doc = nlp(`i saw first lady michelle obama`)
   doc.normalize({
     honorifics: true,
   })

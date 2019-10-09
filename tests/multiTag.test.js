@@ -1,8 +1,8 @@
-var test = require('tape')
-var nlp = require('./_lib')
+const test = require('tape')
+const nlp = require('./_lib')
 
 test('tag-sequence:', function(t) {
-  var doc = nlp('it was cold')
+  const doc = nlp('it was cold')
   doc.tag('#One #Two #Three')
   t.equal(doc.match('#One').text(), 'it', 'one')
   t.equal(doc.match('#Two').text(), 'was', 'two')
@@ -11,7 +11,7 @@ test('tag-sequence:', function(t) {
 })
 
 test('multiple-tags:', function(t) {
-  var doc = nlp('it was cold')
+  const doc = nlp('it was cold')
   doc.tag(['#One', '#Two', '#Three'])
   t.equal(doc.match('#One').text(), 'it was cold', 'multi- all have #One')
   t.equal(doc.match('#Two').text(), 'it was cold', 'multi- all have #Two')
@@ -20,7 +20,7 @@ test('multiple-tags:', function(t) {
 })
 
 test('tag-sequence-skip:', function(t) {
-  var doc = nlp('it was cold')
+  const doc = nlp('it was cold')
   doc.tag('#One . #Three')
   t.equal(doc.match('#One').text(), 'it', 'one')
   t.equal(doc.match('#Two').text(), '', 'no-two')
@@ -30,7 +30,7 @@ test('tag-sequence-skip:', function(t) {
 })
 
 test('multiple-tags-skip:', function(t) {
-  var doc = nlp('it was cold')
+  const doc = nlp('it was cold')
   doc.tag(['.', '#Two', '.'])
   t.equal(doc.match('#One').found, false, 'skip - none have #One')
   t.equal(doc.match('#Two').text(), 'it was cold', 'skip - all have #Two')

@@ -1,8 +1,8 @@
-var test = require('tape')
-var nlp = require('../_lib')
+const test = require('tape')
+const nlp = require('../_lib')
 
 // test('match-from-object :', function(t) {
-//   var m = nlp('spencer is really cool').match({
+//   const m = nlp('spencer is really cool').match({
 //     spencer: true,
 //   })
 //   t.equal(m.out('normal'), 'spencer', 'just-spencer')
@@ -12,7 +12,7 @@ var nlp = require('../_lib')
 
 /*
 test('replace-capture-group', function(t) {
-  var m = nlp('John eats glue').replace('john [#Verb]', 'sniffs')
+  const m = nlp('John eats glue').replace('john [#Verb]', 'sniffs')
   t.equal(m.out('text'), 'John sniffs glue', 'capture-2-simple')
   //
   //   m = nlp('John eats glue. john is fun.').replace('[john]', '$1 smith');
@@ -33,8 +33,8 @@ test('replace-capture-group', function(t) {
 
 //test object-form
 // test('not-from-object :', function(t) {
-//   var m = nlp('spencer is not really cool.')
-//   var r = m.not({
+//   const m = nlp('spencer is not really cool.')
+//   const r = m.not({
 //     not: true,
 //     really: true,
 //   })
@@ -48,13 +48,13 @@ test('replace-capture-group', function(t) {
 //   t.equal(m.out('normal'), 'is cool. i said hi to', 'not-everyone')
 
 //   m = nlp('spencer is really, secretly, very cool.')
-//   var adv = m.match('#Adverb').not({
+//   const adv = m.match('#Adverb').not({
 //     really: true,
 //   })
 //   t.equal(adv.out('normal'), 'secretly very', 'not-subset')
 //   t.equal(adv.length, 2, 'one-result-obj')
 
-//   var adv2 = m.match('#Adverb').not('secretly')
+//   const adv2 = m.match('#Adverb').not('secretly')
 //   t.equal(adv2.out('normal'), 'really very', 'not-subset2')
 //   t.equal(adv2.length, 2, 'two-results-obj')
 
@@ -62,8 +62,8 @@ test('replace-capture-group', function(t) {
 // })
 
 // test('normalize quotes ', function(t) {
-//   var str = `،one’ «two» ‘three’ “four” 'five' "six."`
-//   var doc = nlp(str)
+//   const str = `،one’ «two» ‘three’ “four” 'five' "six."`
+//   const doc = nlp(str)
 //   t.equal(doc.text(), str, 'text out-3')
 //   t.equal(doc.text(), 'one two three four five six.', 'normal out-3')
 //   t.end()

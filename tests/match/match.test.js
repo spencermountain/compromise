@@ -1,8 +1,8 @@
-var test = require('tape')
-var nlp = require('../_lib')
+const test = require('tape')
+const nlp = require('../_lib')
 
 test('term-match :', function(t) {
-  ;[
+  let arr = [
     ['quick', 'quick', true],
     ['Quick', 'Quick', true],
     ['quick', 's', false],
@@ -10,16 +10,17 @@ test('term-match :', function(t) {
     ['quick', '#Noun', false],
     ['quick', '(fun|nice|quick|cool)', true],
     ['quick', '(fun|nice|good)', false],
-  ].forEach(function(a) {
-    var m = nlp(a[0]).match(a[1])
-    var msg = a[0] + ' matches ' + a[1] + ' ' + a[2]
+  ]
+  arr.forEach(function(a) {
+    const m = nlp(a[0]).match(a[1])
+    const msg = a[0] + ' matches ' + a[1] + ' ' + a[2]
     t.equal(m.found, a[2], msg)
   })
   t.end()
 })
 
 test('sentence-match:', function(t) {
-  ;[
+  let arr = [
     ['the dog played', 'the dog', 'the dog'],
     ['the dog played', 'the dog played', 'the dog played'],
     ['the dog played', 'the #Noun', 'the dog'],
@@ -69,12 +70,13 @@ test('sentence-match:', function(t) {
     // [`i dunno`, `do not`, `dunno`],
     //bugs
     // [`really remind me to buy`, '#Adverb? #Infinitive (me|us) (to|for)', `really remind me to`],
-  ].forEach(function(a) {
-    var m = nlp(a[0]).match(a[1])
+  ]
+  arr.forEach(function(a) {
+    const m = nlp(a[0]).match(a[1])
     if (!m.found) {
       t.equal(a[2], '', 'no-match: ' + a[0] + ' - -' + a[1])
     } else {
-      var msg = "'" + a[0] + "'  - " + a[1] + " - - have : '" + m.out('normal') + "'"
+      const msg = "'" + a[0] + "'  - " + a[1] + " - - have : '" + m.out('normal') + "'"
       t.equal(m.out('normal'), a[2], msg)
     }
   })
@@ -82,24 +84,24 @@ test('sentence-match:', function(t) {
 })
 
 test('tag-match-tag :', function(t) {
-  var m = nlp('apple is cool')
+  const m = nlp('apple is cool')
   m.match(['apple', 'susan']).tag('Person')
-  var p = m.match('#Person')
+  const p = m.match('#Person')
   t.equal(p.out('normal'), 'apple', 'apple-tagged')
   t.equal(m.length, 1, 'one-result')
   t.end()
 })
 
 test('misc methods', function(t) {
-  var text = 'this :cookie: <3 💯 so good. It is really nice. Yes it is <3'
+  const text = 'this :cookie: <3 💯 so good. It is really nice. Yes it is <3'
 
   //has method
-  var m = nlp(text)
+  const m = nlp(text)
   t.equal(m.match('#Emoji').found, true, 'nlp.has positive')
   t.equal(m.match('#SportsTeam').found, false, 'nlp.has neg')
 
   //filter string
-  var small = m.if('#Emoji')
+  let small = m.if('#Emoji')
   t.equal(small.text(), 'this :cookie: <3 💯 so good. Yes it is <3', 'nlp.filter string')
 
   //filter method

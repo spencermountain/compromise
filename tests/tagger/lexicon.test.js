@@ -1,5 +1,5 @@
-var test = require('tape')
-var nlp = require('../_lib')
+const test = require('tape')
+const nlp = require('../_lib')
 
 test('default lexicon:', function(t) {
   let arr = [
@@ -17,7 +17,7 @@ test('default lexicon:', function(t) {
     ['google', 'Organization'],
   ]
   arr.forEach(function(a) {
-    var doc = nlp(a[0])
+    const doc = nlp(a[0])
     t.equal(doc.has('#' + a[1]), true, a[0])
   })
   t.end()
@@ -45,7 +45,7 @@ test('root-in-lexicon:', function(t) {
     ['repeat', 'Infinitive'],
   ]
   arr.forEach(function(a) {
-    var doc = nlp(a[0])
+    const doc = nlp(a[0])
     t.equal(doc.has('#' + a[1]), true, a[0])
   })
   t.end()
@@ -53,45 +53,45 @@ test('root-in-lexicon:', function(t) {
 
 test('adjusted lexicon:', function(t) {
   //place new words
-  var lexicon = {
+  let lexicon = {
     paris: 'Person',
     lkjj: 'Adjective',
     'donkey kong': 'City',
   }
 
-  var arr = [
+  const arr = [
     ['paris is nice', '#Person #Copula #Adjective'],
     ['he is lkjj', '#Pronoun #Copula #Adjective'],
     ['donkey kong wins the award', '#City #City #Verb #Determiner #Noun'],
   ]
   arr.forEach(function(a) {
-    var doc = nlp(a[0], lexicon)
+    const doc = nlp(a[0], lexicon)
     t.equal(doc.has(a[1]), true, a[0])
   })
   //
   //set gender from lexicon
-  var doc = nlp('Kelly', lexicon)
+  const doc = nlp('Kelly', lexicon)
   t.equal(doc.has('#FemaleName'), true, 'kelly-female')
   //set as male:
   lexicon = {
     kelly: 'MaleName',
   }
-  var doc2 = nlp('Kelly', lexicon)
+  const doc2 = nlp('Kelly', lexicon)
   t.equal(doc2.has('#MaleName'), true, 'kelly-male')
 
   //gender follows lumping
-  var doc3 = nlp('Kelly Gruber', lexicon)
+  const doc3 = nlp('Kelly Gruber', lexicon)
   t.equal(doc3.has('#MaleName #LastName'), true, 'kelly-gruber')
 
   t.end()
 })
 
 test('tricky lexicon:', function(t) {
-  var lexicon = {
+  let lexicon = {
     'bed bath and beyond': 'Organization',
   }
-  var r = nlp('shopping at Bed Bath and Beyond, the store', lexicon)
-  var str = r.organizations().out('normal')
+  let r = nlp('shopping at Bed Bath and Beyond, the store', lexicon)
+  let str = r.organizations().out('normal')
   t.equal(str, 'bed bath and beyond', 'four-word')
 
   r = nlp('shopping at Bed Bath and-beyond the store', lexicon)

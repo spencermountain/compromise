@@ -1,9 +1,9 @@
-var test = require('tape')
-var nlp = require('./_lib')
+const test = require('tape')
+const nlp = require('./_lib')
 
 test('whitespace-out', function(t) {
   let str = 'one, two three. One, two, four?'
-  var doc = nlp(str)
+  const doc = nlp(str)
 
   t.equal(doc.out(), str, 'original-okay') // ✅
 

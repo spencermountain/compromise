@@ -1,8 +1,8 @@
-var test = require('tape')
-var nlp = require('../_lib')
+const test = require('tape')
+const nlp = require('../_lib')
 
 test('remove-basic :', function(t) {
-  var m = nlp('the brown cat played')
+  let m = nlp('the brown cat played')
     .match('brown')
     .delete()
     .all()
@@ -30,7 +30,7 @@ test('remove-basic :', function(t) {
 })
 
 test('remove-match :', function(t) {
-  var m = nlp('the brown cat played').delete('brown')
+  let m = nlp('the brown cat played').delete('brown')
   t.equal(m.out('text'), 'the cat played', 'brown-cat')
 
   m = nlp('the brown cat played. The brown dog sat down.').delete('brown')
@@ -49,7 +49,7 @@ test('remove-match :', function(t) {
 })
 
 test('remove-logic :', function(t) {
-  var m = nlp('spencer kelly is here')
+  let m = nlp('spencer kelly is here')
     .match('spencer kelly')
     .delete('spencer')
   t.equal(m.out('normal'), 'kelly', 'remove(reg) returns this')

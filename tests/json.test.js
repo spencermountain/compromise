@@ -1,5 +1,5 @@
-var test = require('tape')
-var nlp = require('./_lib')
+const test = require('tape')
+const nlp = require('./_lib')
 
 const hasTag = function(term, want) {
   if (!term || !term.tags) {
@@ -66,8 +66,8 @@ test('json terms out', function(t) {
 })
 
 test('out-custom:', function(t) {
-  var doc = nlp('The competent drum work of Don Brewer?')
-  var arr = doc.json({
+  const doc = nlp('The competent drum work of Don Brewer?')
+  const arr = doc.json({
     terms: {
       text: true,
       normal: false,

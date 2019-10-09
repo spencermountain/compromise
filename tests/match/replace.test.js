@@ -1,8 +1,8 @@
-var test = require('tape')
-var nlp = require('../_lib')
+const test = require('tape')
+const nlp = require('../_lib')
 
 test('replace-basic :', function(t) {
-  var m = nlp('the dog played')
+  let m = nlp('the dog played')
     .match('dog')
     .replace('cat')
     .all()
@@ -43,10 +43,10 @@ test('match-replace :', function(t) {
     ['the boy and the girl', 'the #Noun', 'the house', 'the house and the house'],
     ['the boy and the girl', 'the cat', 'the house', 'the boy and the girl'],
   ].forEach(function(a) {
-    var str = nlp(a[0])
+    const str = nlp(a[0])
       .replace(a[1], a[2])
       .out('text')
-    var msg = str + ' -- ' + a[3]
+    const msg = str + ' -- ' + a[3]
     t.equal(str, a[3], msg)
   })
 
@@ -54,8 +54,8 @@ test('match-replace :', function(t) {
 })
 
 test('replace-with-punctuation', function(t) {
-  var doc = nlp('Simon, how is Pamela and Jason?')
-  var str = doc
+  const doc = nlp('Simon, how is Pamela and Jason?')
+  const str = doc
     .match('#Person')
     .replace('PERSON')
     .all()
@@ -65,13 +65,13 @@ test('replace-with-punctuation', function(t) {
 })
 
 test('structured-object-replace :', function(t) {
-  var r = nlp('fun times in cool town')
-  var term = r.match('times')
+  let r = nlp('fun times in cool town')
+  const term = r.match('times')
   r.replace(term, 'day')
   t.equal(r.out(), 'fun day in cool town', 'structured-replace')
 
   r = nlp('fun times in cool town')
-  var terms = r.match('cool town')
+  const terms = r.match('cool town')
   r.replace(terms, 'shitsville')
   t.equal(r.out(), 'fun times in shitsville', 'structured-replace-multi')
   t.end()

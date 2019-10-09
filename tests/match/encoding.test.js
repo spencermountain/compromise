@@ -1,9 +1,9 @@
-var test = require('tape')
-var nlp = require('../_lib')
+const test = require('tape')
+const nlp = require('../_lib')
 
 test('encoding-match:', function(t) {
-  var r = nlp('it is * nice')
-  var str = r
+  const r = nlp('it is * nice')
+  const str = r
     .match('is \\*')
     .trim()
     .out()
@@ -17,7 +17,7 @@ test('encoding-match:', function(t) {
 })
 
 test('reserved-word-in-src:', function(t) {
-  var r = nlp('buy eggs constructor yeah prototype')
+  const r = nlp('buy eggs constructor yeah prototype')
   t.equal(r.has(`backburner`), false, 'single')
   t.equal(r.has(`#Foo`), false, 'tag')
   t.equal(r.has(`(upcoming|backburner)`), false, 'anyOf')
@@ -27,7 +27,7 @@ test('reserved-word-in-src:', function(t) {
 })
 
 test('reserved-word-in-match:', function(t) {
-  var r = nlp('fo foo fulala repeat')
+  const r = nlp('fo foo fulala repeat')
   t.equal(r.has(`constructor`), false, 'single')
   t.equal(r.has(`#constructor`), false, 'tag')
   t.equal(r.has(`(upcoming|constructor)`), false, 'anyOf')
@@ -37,7 +37,7 @@ test('reserved-word-in-match:', function(t) {
 })
 
 test('test-infinite-loop', function(t) {
-  var weirdDoc = nlp('^ ? * . + $')
+  const weirdDoc = nlp('^ ? * . + $')
   weirdDoc.match('is?')
   weirdDoc.match('.?')
   weirdDoc.match('*')
@@ -54,8 +54,8 @@ test('test-infinite-loop', function(t) {
   weirdDoc.not('? * . +')
   t.ok(true, 'didnt regress')
 
-  var str = 'And you are?. Marshal'
-  var have = nlp(str)
+  let str = 'And you are?. Marshal'
+  let have = nlp(str)
     .all()
     .out()
   t.equal(have, str, 'regression #1')

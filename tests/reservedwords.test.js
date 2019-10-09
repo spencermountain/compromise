@@ -1,8 +1,8 @@
-var test = require('tape')
-var nlp = require('./_lib')
+const test = require('tape')
+const nlp = require('./_lib')
 
 test('reserved words:', function(t) {
-  var reserved = [
+  const reserved = [
     'abstract',
     'boolean',
     'break',
@@ -91,8 +91,8 @@ test('reserved words:', function(t) {
     '#!^@#$',
     '..(',
   ]
-  var str = reserved.join(' ')
-  var r = nlp(str)
+  const str = reserved.join(' ')
+  const r = nlp(str)
   t.equal(r.out('text'), str, 'reserved-words-are-printed')
   t.equal(r.terms().length, reserved.length, 'reserved-length')
   t.ok(r.contractions().data(), 'runs contractions subset')
@@ -104,7 +104,7 @@ test('reserved words:', function(t) {
 })
 
 test('co-erce reserved words', function(t) {
-  var r = nlp('constructor prototype')
+  const r = nlp('constructor prototype')
   r.tag('Verb')
   t.ok(r.match('#Verb').data(), 'runs tag/match')
   r.tag('Adjective')

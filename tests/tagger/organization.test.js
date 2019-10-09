@@ -1,8 +1,8 @@
-var test = require('tape')
-var nlp = require('../_lib')
+const test = require('tape')
+const nlp = require('../_lib')
 
 test('organization test', function(t) {
-  var arr = [
+  const arr = [
     'google',
     'google inc',
     'Capital One',
@@ -16,9 +16,9 @@ test('organization test', function(t) {
     // 'Johnson & Johnson LLC',
   ]
   arr.forEach(function(str) {
-    var r = nlp(str)
-    var orgs = r.organizations()
-    var msg = orgs.out('text') + '  -  ' + str
+    const r = nlp(str)
+    const orgs = r.organizations()
+    const msg = orgs.out('text') + '  -  ' + str
     t.equal(orgs.out('text'), str, msg)
   })
   t.end()

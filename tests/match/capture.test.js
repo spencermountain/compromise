@@ -1,8 +1,8 @@
-var test = require('tape')
-var nlp = require('../_lib')
+const test = require('tape')
+const nlp = require('../_lib')
 
 test('match-capture-group', function(t) {
-  var m = nlp('John eats glue').match('[john]')
+  let m = nlp('John eats glue').match('[john]')
   t.equal(m.out('text'), 'John', 'capture-group-simple')
 
   m = nlp('John Smith eats glue').match('[#Person+]')

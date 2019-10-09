@@ -1,9 +1,9 @@
-var test = require('tape')
-var nlp = require('../_lib')
+const test = require('tape')
+const nlp = require('../_lib')
 
 test('if-basic:', function(t) {
-  var r = nlp('spencer is here')
-  var m = r.if('asdf')
+  let r = nlp('spencer is here')
+  let m = r.if('asdf')
   t.equal(m.out('text'), '', 'if-negative')
 
   m = r.if('spencer')
@@ -17,9 +17,8 @@ test('if-basic:', function(t) {
 })
 
 test('ifNo:', function(t) {
-  var r = nlp('spencer is here')
-  //ifNo
-  var m = r.ifNo('spencer')
+  let r = nlp('spencer is here')
+  let m = r.ifNo('spencer')
   t.equal(m.out('text'), '', 'ifNo-positive')
 
   m = r.ifNo('asdf')

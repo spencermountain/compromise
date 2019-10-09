@@ -1,9 +1,9 @@
-var test = require('tape')
-var nlp = require('../_lib')
+const test = require('tape')
+const nlp = require('../_lib')
 
 test('regex-match:', function(t) {
-  var doc = nlp('it is waaaay cool')
-  var m = doc.match('/aaa/')
+  let doc = nlp('it is waaaay cool')
+  let m = doc.match('/aaa/')
   t.equal(m.out('normal'), 'waaaay', 'basic-match')
 
   m = doc.match('/[ao]{2}/')

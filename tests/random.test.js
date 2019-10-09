@@ -1,9 +1,9 @@
-var test = require('tape')
-var nlp = require('./_lib')
+const test = require('tape')
+const nlp = require('./_lib')
 
 test('random', function(t) {
-  var r = nlp('one two three four five six')
-  var arr = r
+  const r = nlp('one two three four five six')
+  let arr = r
     .terms()
     .random()
     .out('array')
@@ -55,8 +55,8 @@ test('random', function(t) {
 })
 
 test('random-null', function(t) {
-  var r = nlp('toronto')
-  var arr = r
+  const r = nlp('toronto')
+  let arr = r
     .match('#Person')
     .random(5)
     .out('array')

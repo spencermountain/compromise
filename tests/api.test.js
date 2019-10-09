@@ -1,6 +1,6 @@
-var test = require('tape')
-var nlp = require('./_lib')
-var api = require('../api')
+const test = require('tape')
+const nlp = require('./_lib')
+const api = require('../api')
 
 const skip = {
   debug: true,

@@ -1,16 +1,16 @@
-var test = require('tape')
-var nlp = require('./_lib')
+const test = require('tape')
+const nlp = require('./_lib')
 
 test('result methods', function(t) {
-  var text = 'this :cookie: <3 💯 so good. It is really nice. Yes it is <3'
+  const text = 'this :cookie: <3 💯 so good. It is really nice. Yes it is <3'
 
   //has method
-  var m = nlp(text)
+  const m = nlp(text)
   t.equal(m.match('#Emoji').found, true, 'nlp.has positive')
   t.equal(m.match('#SportsTeam').found, false, 'nlp.has neg')
 
   //filter string
-  var small = m.if('#Emoji')
+  let small = m.if('#Emoji')
   t.equal(small.out('text'), 'this :cookie: <3 💯 so good. Yes it is <3', 'nlp.filter string')
 
   //filter method

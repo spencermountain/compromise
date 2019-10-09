@@ -1,5 +1,5 @@
-var test = require('tape')
-var nlp = require('../_lib')
+const test = require('tape')
+const nlp = require('../_lib')
 
 test('matchOne', function(t) {
   let doc = nlp('one two three four five. one three four')
@@ -10,7 +10,7 @@ test('matchOne', function(t) {
 })
 
 test('match-from-array :', function(t) {
-  var m = nlp('spencer is really cool').match(['spencer'])
+  let m = nlp('spencer is really cool').match(['spencer'])
   t.equal(m.out('normal'), 'spencer', 'just-spencer')
   t.equal(m.length, 1, 'one-result')
 
@@ -19,7 +19,7 @@ test('match-from-array :', function(t) {
   t.equal(m.length, 0, 'zero-results')
 
   m = nlp('spencer is really cool')
-  var r = m.match(['spencer', 'really']).toUpperCase()
+  let r = m.match(['spencer', 'really']).toUpperCase()
   t.equal(r.out('text'), 'SPENCER REALLY', 'match-spencer-really')
   t.equal(r.length, 2, 'two-results')
 

@@ -1,5 +1,5 @@
-var test = require('tape')
-var nlp = require('../_lib')
+const test = require('tape')
+const nlp = require('../_lib')
 
 test('fancy match', function(t) {
   let arr = [
@@ -101,11 +101,11 @@ test('fancy match', function(t) {
     ['the canadian senate', '(canadian|united states|british)', 1],
   ]
   arr.forEach(function(a) {
-    var r =
+    const r =
       nlp(a[0])
         .match(a[1])
         .terms() || []
-    var msg = "'" + a[0] + "' - - - '" + a[1] + "' - - got:" + r.length + '  want:' + a[2]
+    const msg = "'" + a[0] + "' - - - '" + a[1] + "' - - got:" + r.length + '  want:' + a[2]
     t.equal(r.length, a[2], msg)
   })
   t.end()
@@ -118,10 +118,10 @@ test('tricky-case', function(t) {
 })
 
 test('text-as-input', function(t) {
-  var doc = nlp('he is from Phoenix AZ')
-  var m = doc.match('#City')
-  var matchWith = doc.match(m).out('normal')
-  var without = doc.not(m).out('text')
+  const doc = nlp('he is from Phoenix AZ')
+  const m = doc.match('#City')
+  const matchWith = doc.match(m).out('normal')
+  const without = doc.not(m).out('text')
   t.equal(matchWith, 'phoenix', 'text-as-match')
   t.equal(without, 'he is from AZ', 'text-as-not')
   t.end()

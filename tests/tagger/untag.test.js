@@ -1,11 +1,11 @@
-var test = require('tape')
-var nlp = require('../_lib')
+const test = require('tape')
+const nlp = require('../_lib')
 
 test('tag inference:', function(t) {
-  var m = nlp('aasdf2')
+  let m = nlp('aasdf2')
     .unTag('Noun')
     .unTag('NounPhrase')
-  var term = m.list[0].terms(0)
+  let term = m.list[0].terms(0)
   t.equal(Object.keys(term.tags).length, 0, 'aasdf2 has no tags')
   //give it a specific tag-
   m.tag('SportsTeam')
@@ -21,9 +21,9 @@ test('tag inference:', function(t) {
 })
 
 test('untag inference:', function(t) {
-  var m = nlp('aasdf')
+  let m = nlp('aasdf')
   m.tag('FemaleName')
-  var term = m.list[0].terms(0)
+  let term = m.list[0].terms(0)
   t.equal(term.tags.FemaleName, true, 'aasdf first has FemaleName')
   t.equal(term.tags.Person, true, 'aasdf first has person')
   t.equal(term.tags.Noun, true, 'aasdf first has noun')
@@ -36,8 +36,8 @@ test('untag inference:', function(t) {
 })
 
 test('tag idempodence:', function(t) {
-  var m = nlp('walk').tag('Verb')
-  var term = m.list[0].terms(0)
+  const m = nlp('walk').tag('Verb')
+  const term = m.list[0].terms(0)
   t.equal(term.tags.Verb, true, 'walk has Verb')
   t.equal(term.tags.Value, undefined, 'walk has no Value')
   //untag irrelevant stuff
@@ -51,22 +51,22 @@ test('tag idempodence:', function(t) {
 })
 
 test('tags are self-removing', function(t) {
-  var terms = ['Person', 'Place', 'PastTense', 'FemaleName', 'Infinitive', 'HashTag', 'Month']
+  const terms = ['Person', 'Place', 'PastTense', 'FemaleName', 'Infinitive', 'HashTag', 'Month']
   terms.forEach(function(tag) {
-    var m = nlp('aasdf')
+    const m = nlp('aasdf')
       .tag(tag)
       .unTag(tag)
-    var t0 = m.list[0].terms(0)
+    const t0 = m.list[0].terms(0)
     t.equal(t0.tags[tag], undefined, 'tag removes self ' + tag)
   })
   t.end()
 })
 
 test('untag wildcard', function(t) {
-  var r = nlp('we live in Toronto Canada and it is cold')
+  const r = nlp('we live in Toronto Canada and it is cold')
   r.match('#Place+').unTag('*')
   t.equal(r.match('#Place').found, false, 'place-tag-is-gone')
-  var term = r.list[0].terms(3) || {}
+  const term = r.list[0].terms(3) || {}
   t.equal(Object.keys(term.tags || {}).length, 0, 'toronto-has-no-tags-now')
   t.end()
 })

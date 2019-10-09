@@ -1,8 +1,8 @@
-var test = require('tape')
-var nlp = require('../_lib')
-var penn = require('../_pennSample')
+const test = require('tape')
+const nlp = require('../_lib')
+const penn = require('../_pennSample')
 
-var softMapping = {
+const softMapping = {
   CC: 'Conjunction',
   CD: 'Cardinal',
   DT: 'Determiner',
@@ -45,8 +45,8 @@ test('pennTreebank-test:', function(t) {
     let terms = doc.json(0).terms
     t.equal(terms.length, sentence.tags.length, 'tokenize#' + index)
 
-    for (var i = 0; i < sentence.tags.length; i++) {
-      var want = softMapping[sentence.tags[i]]
+    for (let i = 0; i < sentence.tags.length; i++) {
+      const want = softMapping[sentence.tags[i]]
       if (!terms[i]) {
         t.ok(false, sentence.text)
         return

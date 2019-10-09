@@ -1,9 +1,9 @@
-var test = require('tape')
-var nlp = require('../_lib')
+const test = require('tape')
+const nlp = require('../_lib')
 
 test('prefix/infix/suffix basic', function(t) {
-  var r = nlp('it is funny and weird')
-  var m = r.match('/nny$/', true)
+  let r = nlp('it is funny and weird')
+  let m = r.match('/nny$/', true)
   t.equal(m.out('normal'), 'funny', 'suffix-match')
   m = r.match('/^fu/', true)
   t.equal(m.out('normal'), 'funny', 'prefix_match')

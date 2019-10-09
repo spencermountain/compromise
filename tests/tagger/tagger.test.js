@@ -1,6 +1,6 @@
-var test = require('tape')
-var nlp = require('../_lib')
-// var pos_test = require('../_lib').pos_test
+const test = require('tape')
+const nlp = require('../_lib')
+// const pos_test = require('../_lib').pos_test
 
 test('pos-basic-tag:', function(t) {
   ;[

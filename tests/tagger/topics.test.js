@@ -1,8 +1,8 @@
-var test = require('tape')
-var nlp = require('../_lib')
+const test = require('tape')
+const nlp = require('../_lib')
 
 test('proper-nouns', function(t) {
-  var arr = [
+  const arr = [
     ['I met John Smith in Toronto', ['john smith', 'toronto']],
     ['Toronto and Vancouver Canada', ['toronto', 'vancouver canada']],
     // ['we ate shellfish at 23 Main st.', []],
@@ -10,7 +10,7 @@ test('proper-nouns', function(t) {
     ['the doctor and his brother see the mayor of france', ['france']],
   ]
   arr.forEach(a => {
-    var out = nlp(a[0])
+    const out = nlp(a[0])
       .match('#ProperNoun+')
       .toLowerCase()
       .out('array')
@@ -21,7 +21,7 @@ test('proper-nouns', function(t) {
 
 //after we change pos, untag propernoun
 test('remove-proper-nouns', function(t) {
-  var doc = nlp('do what Theresa May')
+  const doc = nlp('do what Theresa May')
   t.equal(doc.match('may').has('#ProperNoun'), true, 'propernoun-init')
   doc.match('may').tag('Verb')
   t.equal(doc.match('may').has('#ProperNoun'), false, 'propernoun-missing')

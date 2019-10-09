@@ -1,8 +1,8 @@
-var test = require('tape')
-var nlp = require('../_lib')
+const test = require('tape')
+const nlp = require('../_lib')
 
 test('not-basic :', function(t) {
-  var m = nlp('spencer is really cool').not('brown')
+  let m = nlp('spencer is really cool').not('brown')
   t.equal(m.out('text'), 'spencer is really cool', 'missing-not')
   t.equal(m.length, 1, 'one-result')
 
@@ -34,7 +34,7 @@ test('not-basic :', function(t) {
 })
 
 test('not-from-array :', function(t) {
-  var m = nlp('spencer is really cool').not(['spencer'])
+  let m = nlp('spencer is really cool').not(['spencer'])
   t.equal(m.out('normal'), 'is really cool', 'not-spencer')
   t.equal(m.length, 1, 'one-results')
 

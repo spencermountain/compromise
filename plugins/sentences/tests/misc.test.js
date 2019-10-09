@@ -1,5 +1,5 @@
-var test = require('tape')
-var nlp = require('./_lib')
+const test = require('tape')
+const nlp = require('./_lib')
 
 test('misc sentences', function(t) {
   let doc = nlp(`quickly, suddenly`)
@@ -11,7 +11,7 @@ test('misc sentences', function(t) {
 })
 
 test('sentence prepend', function(t) {
-  var doc = nlp('He is cool.')
+  let doc = nlp('He is cool.')
   doc.sentences().prepend('so i think')
   t.equal(doc.text(), 'So i think he is cool.', 'reset titlecase')
 
@@ -22,7 +22,7 @@ test('sentence prepend', function(t) {
 })
 
 test('sentence filters', function(t) {
-  var doc = nlp('He is cool? I think not. Yipeee!').sentences()
+  let doc = nlp('He is cool? I think not. Yipeee!').sentences()
 
   t.equal(doc.isExclamation().length, 1, 'has-exclamation')
   t.equal(doc.isQuestion().length, 1, 'has-question')

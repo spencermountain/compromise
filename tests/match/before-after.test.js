@@ -1,5 +1,5 @@
-var test = require('tape')
-var nlp = require('../_lib')
+const test = require('tape')
+const nlp = require('../_lib')
 
 test('before-basic', function(t) {
   let doc = nlp('one two three four five. one three four')
@@ -17,7 +17,7 @@ test('before-basic', function(t) {
 })
 
 test('before-match:', function(t) {
-  var r = nlp('one two three four five').before('two')
+  let r = nlp('one two three four five').before('two')
   t.equal(r.out('normal'), 'one', 'before-two')
 
   r = nlp('one two three four five').before('three . five')
@@ -30,7 +30,7 @@ test('before-match:', function(t) {
   // t.equal(r.out('normal'), '', 'before-any');
 
   r = nlp('one two three four. No, not here. He said two days a week.').before('two')
-  var arr = r.out('array')
+  let arr = r.out('array')
   t.equal(arr[0], 'one', 'before-twice-1')
   t.equal(arr[1], 'He said', 'before-twice-2')
 
@@ -41,7 +41,7 @@ test('before-match:', function(t) {
 })
 
 test('after-match:', function(t) {
-  var r = nlp('one two three four five').after('two')
+  let r = nlp('one two three four five').after('two')
   t.equal(r.out('normal'), 'three four five', 'after-one')
 
   r = nlp('one two three four five').after('one . three')
@@ -54,7 +54,7 @@ test('after-match:', function(t) {
   t.equal(r.out('normal'), 'two three four', 'after-any')
 
   r = nlp('one two three four. No, not here. He said two days a week.').after('two')
-  var arr = r.out('array')
+  let arr = r.out('array')
   t.equal(arr[0], 'three four.', 'after-twice-1')
   t.equal(arr[1], 'days a week.', 'after-twice-2')
 

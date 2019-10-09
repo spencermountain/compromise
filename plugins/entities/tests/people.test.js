@@ -1,9 +1,9 @@
-var test = require('tape')
-var nlp = require('../../../tests/_lib')
+const test = require('tape')
+const nlp = require('../../../tests/_lib')
 
 test('people:', function(t) {
-  var doc = nlp('Mary is in the boat. Nancy is in the boat. Fred is in the boat. Jack is too.')
-  var arr = doc
+  let doc = nlp('Mary is in the boat. Nancy is in the boat. Fred is in the boat. Jack is too.')
+  let arr = doc
     .people()
     .toLowerCase()
     .out('array')

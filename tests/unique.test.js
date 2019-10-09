@@ -3,15 +3,18 @@ var nlp = require('./_lib')
 
 test('term-unique', function(t) {
   let doc = nlp(`him and her and him`)
-  doc = doc.terms().unique()
-  t.equal(doc.text(), 'him and her')
+  let m = doc.terms().unique()
+  t.equal(m.text(), 'him and her', 'terms-unique')
+  t.equal(doc.text(), `him and her and him`, 'original-has-duplicates')
   t.end()
 })
 
 test('sentence-unique', function(t) {
-  let doc = nlp(`him and her. in toronto. him and her. him.`)
-  doc = doc.unique()
-  t.equal(doc.text(), 'him and her. in toronto. him.')
+  let str = `him and her. in toronto. him and her. him.`
+  let doc = nlp(str)
+  let uniq = doc.unique()
+  t.equal(uniq.text(), 'him and her. in toronto. him.', 'remove dup sentences')
+  t.equal(doc.text(), str, 'keep dup sentences')
   t.end()
 })
 

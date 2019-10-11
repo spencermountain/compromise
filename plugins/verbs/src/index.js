@@ -1,22 +1,21 @@
-const conjugate = require('./conjugate')
-const toNegative = require('./toNegative')
+const parseVerb = require('./parse')
 
-// turn 'would not really walk up' into parts
-const parseVerb = function(vb) {
-  return {
-    adverb: vb.match('#Adverb+'), // 'really'
-    negative: vb.match('#Negative'), // 'not'
-    auxiliary: vb.match('#Auxiliary'), // 'will' of 'will go'
-    particle: vb.match('#Particle'), // 'up' of 'pull up'
-    verb: vb.match('#Verb').not('(#Adverb|#Negative|#Auxiliary|#Particle)'),
-  }
-}
+const methods = [
+  require('./negative/methods'),
+  require('./plural/methods'),
+  require('./tense/methods'),
+]
 
 const addMethod = function(Doc) {
   /**  */
   class Verbs extends Doc {
     constructor(list, from, world) {
       super(list, from, world)
+    }
+
+    /** overload the original json with conjugation information */
+    json() {
+      return this.json()
     }
 
     /** grab the adverbs describing these verbs */
@@ -30,73 +29,11 @@ const addMethod = function(Doc) {
       })
       return this.buildFrom(list)
     }
-    /** */
-    // conjugation(){}
-    /** */
-    conjugations() {
-      let result = []
-      this.forEach(vb => {
-        let parsed = parseVerb(vb)
-        let forms = conjugate(parsed, this.world)
-        result.push(forms)
-      })
-      return result
-    }
-    /** */
-    // isPlural(){}
-    /** */
-    // isSingular(){}
-
-    /** return only verbs with 'not'*/
-    isNegative() {
-      return this.if('#Negative')
-    }
-    /**  return only verbs without 'not'*/
-    isPositive() {
-      return this.ifNo('#Negative')
-    }
-    /** add a 'not' to these verbs */
-    toNegative() {
-      // not native forEach!
-      this.list.forEach(p => {
-        let doc = this.buildFrom([p])
-        let parsed = parseVerb(doc)
-        toNegative(parsed, doc.world)
-      })
-      return this
-    }
-    /** remove 'not' from these verbs */
-    toPositive() {
-      return this.remove('#Negative')
-    }
-    /** */
-    toPastTense() {
-      let transforms = this.world.transforms
-      return this.map(vb => {
-        let verb = parseVerb(vb).verb
-        let str = verb.out('normal')
-        let past = transforms.verbs(str).PastTense
-        if (past) {
-          let p = vb.list[0]
-          // console.log(p.buildFrom)
-          // let p = vb.buildP
-          // console.log(vb.list[0].replace(past))
-          return vb //.replaceWith(past, this)
-        }
-        return vb
-      })
-    }
-    /** */
-    // toPresentTense(){}
-    /** */
-    // toFutureTense(){}
-    /** */
-    // toInfinitive(){}
-    /** */
-    // toGerund(){}
-    /** */
-    // asAdjective(){}
   }
+
+  // add-in our methods
+  methods.forEach(obj => Object.assign(Verbs.prototype, obj))
+
   // aliases
   Verbs.prototype.negate = Verbs.prototype.toNegative
 

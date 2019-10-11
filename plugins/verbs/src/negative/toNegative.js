@@ -1,5 +1,5 @@
-const toInfinitive = require('../toInfinitive')
-const isPlural = require('../isPlural')
+const toInfinitive = require('../tense/toInfinitive')
+const isPlural = require('../plural/isPlural')
 // #Modal : would walk    -> 'would not walk'
 // #Copula : is           -> 'is not'
 // #PastTense : walked    -> did not walk

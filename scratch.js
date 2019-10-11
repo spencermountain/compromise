@@ -14,6 +14,9 @@ nlp.extend(require('./plugins/verbs/src'))
 // let doc = nlp(str).join()
 // console.log(doc.text() + '|')
 
-let doc = nlp(`so i really walk to the store`).debug()
-doc.verbs().negate()
+let doc = nlp(`i walked. he does walk. we will walk.`)
+doc
+  .verbs()
+  .isPlural()
+  .debug()
 console.log(doc.text())

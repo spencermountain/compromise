@@ -3,10 +3,10 @@ exports.json = function(options = {}, world) {
   let res = {}
   // text data
   if (options.text) {
-    res.text = this.text()
-    if (options.trim) {
-      res.text = res.text.trim()
-    }
+    res.text = this.text(options)
+    // if (options.trim) {
+    // res.text = res.text.trim()
+    // }
   }
   if (options.normal) {
     res.normal = this.text({

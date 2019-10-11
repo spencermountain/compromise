@@ -1,7 +1,5 @@
-var sh = require('shelljs')
-sh.exec('tape "./tests/**/*.test.js" | tap-dancer --color always')
+const sh = require('shelljs')
 
-sh.ls('./plugins').forEach(plugin => {
-  // console.log('\n' + plugin + ':')
-  sh.exec(`tape "./plugins/${plugin}/tests/**/*.test.js" | tap-dancer --color always`)
-})
+sh.exec('tape "./tests/**/*.test.js" | tap-dancer --color always')
+console.log('-plugins-')
+sh.exec(`tape "./plugins/*/tests/**/*.test.js" | tap-dancer --color always`)

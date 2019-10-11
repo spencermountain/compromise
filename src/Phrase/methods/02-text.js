@@ -48,5 +48,8 @@ exports.text = function(options = {}, isFirst, isLast) {
   if (isFull === true && isLast) {
     text = trimEnd(text)
   }
+  if (options.trim) {
+    text = text.trim()
+  }
   return text
 }

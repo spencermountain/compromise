@@ -5,7 +5,14 @@ const nlp = require('./src/index')
 // nlp.extend(require('./plugins/paragraphs/src'))
 // nlp.extend(require('./plugins/sentences/src'))
 
-let str = `left side. middle part one. two middle part two. right side.`
-let doc = nlp(str)
-doc.if('middle').join()
-doc.debug()
+// let str = `What's with these homies dissin' my girl? Why do they gotta front?
+
+// What did we ever do to these guys that made them so violent?
+
+// `
+// let doc = nlp(str).join()
+// console.log(doc.text() + '|')
+
+let doc = nlp(`is not isn't`)
+doc = doc.terms().unique()
+console.log(doc.text())

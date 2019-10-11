@@ -10,6 +10,7 @@ exports.text = function(options = {}, isFirst, isLast) {
         punctuation: true,
         whitespace: true,
         unicode: true,
+        implicit: true,
       }
     } else if (options === 'clean') {
       options = {
@@ -17,6 +18,7 @@ exports.text = function(options = {}, isFirst, isLast) {
         punctuation: true,
         whitespace: true,
         unicode: true,
+        implicit: true,
       }
     } else {
       options = {}

@@ -1,3 +1,5 @@
+const toInfinitive = require('../toInfinitive')
+const isPlural = require('../isPlural')
 // #Modal : would walk    -> 'would not walk'
 // #Copula : is           -> 'is not'
 // #PastTense : walked    -> did not walk
@@ -6,6 +8,7 @@
 // #Infinitive : walk     -> do not walk
 
 const toNegative = function(parsed, world) {
+  let vb = parsed.verb
   // if it's already negative...
   if (parsed.negative.found) {
     return
@@ -17,9 +20,31 @@ const toNegative = function(parsed, world) {
     return
   }
   // is walking -> is not walking
-  if (parsed.verb.has('#Copula')) {
-    parsed.verb.append('not')
+  if (vb.has('(#Copula|will|has|had|do)')) {
+    vb.append('not')
     return
   }
+  // walked -> did not walk
+  if (vb.has('#PastTense')) {
+    let inf = toInfinitive(parsed, world)
+    vb.replace(inf)
+    vb.prepend('did not')
+    return
+  }
+  //walking -> not walking
+  if (vb.has('#Gerund')) {
+    let inf = toInfinitive(parsed, world)
+    vb.replace(inf)
+    vb.prepend('not')
+    return
+  }
+
+  //fallback 1:  walk -> does not walk
+  if (isPlural(parsed, world)) {
+    vb.prepend('does not')
+  }
+  //fallback 2:  walk -> do not walk
+  vb.prepend('do not')
+  return
 }
 module.exports = toNegative

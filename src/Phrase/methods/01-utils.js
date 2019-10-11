@@ -24,8 +24,13 @@ exports.terms = function(n) {
   return terms
 }
 
-/** return a deep-copy of this phrse  */
+/** return a shallow-copy of this phrase  */
 exports.clone = function() {
+  return this.buildFrom(this.start, this.length)
+}
+
+/** return a deep-copy, with Terms and Pool cloned  */
+exports.deepClone = function() {
   //how do we clone part of the pool?
   let terms = this.terms()
   let newTerms = terms.map(t => t.clone())

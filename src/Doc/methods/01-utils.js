@@ -14,7 +14,7 @@ exports.parent = function() {
 }
 
 /**  return a list of all previous results */
-exports.parents = function() {
+exports.parents = function(n) {
   let arr = []
   const addParent = function(doc) {
     if (doc.from) {
@@ -23,12 +23,16 @@ exports.parents = function() {
     }
   }
   addParent(this)
-  return arr.reverse()
+  arr = arr.reverse()
+  if (typeof n === 'number') {
+    return arr[n]
+  }
+  return arr
 }
 
 /** deep-copy the document, so that no references remain */
 exports.clone = function() {
-  let list = this.list.map(ts => ts.clone())
+  let list = this.list.map(ts => ts.deepClone())
   let tmp = this.buildFrom(list)
   return tmp
 }
@@ -81,9 +85,6 @@ exports.post = function(str) {
 }
 
 /** freeze the current state of the document, for speed-purposes*/
-// exports.cache = function(options) {
-//   return cache(this, options)
-// }
 exports.cache = function() {
   this.list.forEach(p => {
     let words = {}
@@ -102,15 +103,10 @@ exports.cache = function() {
   })
   return this
 }
+
+/** un-freezes the current state of the document, so it may be transformed */
 exports.uncache = function() {
   this.list.forEach(p => {
     p.cache = {}
   })
 }
-// exports.blow = function() {
-//   if (this.found && this.list.length > 0) {
-//     console.log('\n\n======!!====\n\n')
-//     process.exit()
-//   }
-//   return this
-// }

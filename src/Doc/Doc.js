@@ -58,9 +58,12 @@ class Doc {
 
 /** create a new Document object */
 Doc.prototype.buildFrom = function(list) {
+  list = list.map(p => p.clone())
   let doc = new Doc(list, this, this.world)
   return doc
 }
+
+/** create a new Document from plaintext. */
 Doc.prototype.fromText = function(str) {
   let list = tokenize.fromText(str, this.world, this.pool())
   return this.buildFrom(list)

@@ -3,7 +3,12 @@ const conjugate = require('./conjugate')
 const toInfinitive = require('./toInfinitive')
 
 /**  */
-exports.conjugations = function() {
+// exports.tenses = function() {
+// }
+//
+
+/**  */
+exports.conjugate = function() {
   let result = []
   this.forEach(vb => {
     let parsed = parseVerb(vb)

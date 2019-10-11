@@ -15,8 +15,9 @@ nlp.extend(require('./plugins/verbs/src'))
 // console.log(doc.text() + '|')
 
 let doc = nlp(`i walked. he does walk. we will walk.`)
-doc
-  .verbs()
-  .isPlural()
-  .debug()
-console.log(doc.text())
+console.log(doc.verbs().json())
+// doc
+//   .verbs()
+//   .isPlural()
+//   .debug()
+// console.log(doc.text())

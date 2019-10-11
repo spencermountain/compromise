@@ -1,4 +1,5 @@
 const parseVerb = require('./parse')
+const conjugations = require('./tense/conjugate')
 
 const methods = [
   require('./negative/methods'),
@@ -13,9 +14,22 @@ const addMethod = function(Doc) {
       super(list, from, world)
     }
 
-    /** overload the original json with conjugation information */
-    json() {
-      return this.json()
+    /** overload the original json with verb information */
+    json(options) {
+      options = options || { text: true, normal: true, trim: true, terms: true }
+      let res = []
+      this.forEach(p => {
+        let json = p.json(options)[0]
+        let parsed = parseVerb(p)
+        json.parts = {}
+        Object.keys(parsed).forEach(k => {
+          json.parts[k] = parsed[k].text('normal')
+        })
+        json.isNegative = p.has('#Negative')
+        json.conjugations = conjugations(parsed, this.world)
+        res.push(json)
+      })
+      return res
     }
 
     /** grab the adverbs describing these verbs */

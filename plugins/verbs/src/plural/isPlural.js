@@ -1,7 +1,7 @@
 //sometimes you can tell if a verb is plural/singular, just by the verb
 // i am / we were
 // othertimes you need its subject 'we walk' vs 'i walk'
-const isPlural = function(parsed, world) {
+const isPlural = function(parsed) {
   let vb = parsed.verb
   if (vb.match('(are|were|does)').found) {
     return true

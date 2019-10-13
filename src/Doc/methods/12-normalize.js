@@ -1,6 +1,6 @@
 const isPunct = /[\[\]{}⟨⟩:,،、‒–—―…‹›«»‐\-;\/⁄·*\•^†‡°¡¿※№÷×ºª%‰=‱¶§~|‖¦©℗®℠™¤₳฿]/g
 const quotes = /['‘’“”"′″‴]+/g
-const killUnicode = require('../../Term/clean/unicode')
+const killUnicode = require('../../Term/normalize/unicode')
 /*
   case: true,
   whitespace: true,

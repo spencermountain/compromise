@@ -34,7 +34,7 @@ const a_regexs = [
 
 const makeArticle = function(doc) {
   //no 'the john smith', but 'a london hotel'
-  if (doc.has('#Person')) {
+  if (doc.has('#Person') || doc.has('#Place')) {
     return ''
   }
   //no a/an if it's plural

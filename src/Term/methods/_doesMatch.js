@@ -22,7 +22,7 @@ const doesMatch = function(t, reg) {
       return true
     }
     //match either .clean or .text
-    return reg.word === t.clean || reg.word === t.text
+    return reg.word === t.clean || reg.word === t.text || reg.word === t.reduced
   }
   //support #Tag
   if (reg.tag !== undefined) {

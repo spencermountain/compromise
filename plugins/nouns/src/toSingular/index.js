@@ -9,7 +9,7 @@ const toSingular = function(doc, irregulars) {
   let str = doc.text('normal').trim()
   // check irregulars list
   if (irregulars.hasOwnProperty(str)) {
-    doc.replace(irregulars[str])
+    doc.replaceWith(irregulars[str])
     return doc
   }
 
@@ -17,7 +17,7 @@ const toSingular = function(doc, irregulars) {
   for (let i = 0; i < rules.length; i++) {
     if (rules[i][0].test(str) === true) {
       str = str.replace(rules[i][0], rules[i][1])
-      doc.replace(str)
+      doc.replaceWith(str)
       return doc
     }
   }

@@ -7,9 +7,13 @@ class Term {
   constructor(text = '') {
     text = String(text)
     let obj = parseTerm(text)
+    // the various forms of our text
     this.text = obj.text || ''
     this.clean = obj.clean
+    this.reduced = obj.reduced
+    this.root = obj.root
     this.implicit = obj.implicit || null
+
     this.pre = obj.pre || ''
     this.post = obj.post || ''
     this.raw = text.trim()

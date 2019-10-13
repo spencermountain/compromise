@@ -59,6 +59,18 @@ exports.has = function(reg) {
   return this.list.some(p => p.has(regs) === true)
 }
 
+/** match any terms after our matches, within the sentence */
+exports.lookAhead = function(reg) {
+  let regs = parseSyntax(reg)
+  let matches = []
+  this.list.forEach(p => {
+    matches = matches.concat(p.lookAhead(regs))
+  })
+  matches = matches.filter(p => p)
+  return this.buildFrom(matches)
+}
+
+/** match any terms before our matches, within the sentence */
 exports.lookBehind = function(reg) {
   let regs = parseSyntax(reg)
   let matches = []

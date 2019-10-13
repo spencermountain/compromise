@@ -12,10 +12,10 @@ nlp.extend(require('./plugins/nouns/src'))
 3. .swap()
 */
 
-let doc = nlp(`i walked to a store. the store was very nice`)
+let doc = nlp(`i walked to a store today. the store was very nice`)
 doc
   .match('store')
-  .lookBehind('#Determiner')
+  .lookAhead('.')
   .debug()
 // doc.nouns().toPlural()
 // doc.nouns().toSingular()

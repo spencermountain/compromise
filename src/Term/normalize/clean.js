@@ -40,12 +40,9 @@ const clean = function(str) {
   //strip leading & trailing grammatical punctuation
   if (/^[:;]/.test(str) === false) {
     str = str.replace(/\.{3,}$/g, '')
-    str = str.replace(/['",\.!:;\?\)]+$/g, '')
+    str = str.replace(/[",\.!:;\?\)]+$/g, '')
     str = str.replace(/^['"\(]+/g, '')
   }
-  //remove possessives
-  // str = str.replace(/['’]s$/, '')
-
   //do this again..
   str = str.trim()
   //oh shucks,

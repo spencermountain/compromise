@@ -8,6 +8,7 @@ const startings = /^[ \n\t\.’'\[\](){}⟨⟩:,،、‒–—―…!.‹›«»
 const endings = /[ \n\t\.’'\[\](){}⟨⟩:,،、‒–—―…!.‹›«»‐\-?‘’“”'";\/⁄·\&*@\•^†‡°”¡¿※#№÷×ºª%‰+−=‱¶′″‴§~|‖¦©℗®℠™¤₳฿]+$/
 //money = ₵¢₡₢$₫₯֏₠€ƒ₣₲₴₭₺₾ℳ₥₦₧₱₰£៛₽₹₨₪৳₸₮₩¥
 const hasSlash = /\//
+const hasApostrophe = /['’]/
 
 /** turn given text into a parsed-up object
  * seperate the 'meat' of the word from the whitespace+punctuation
@@ -22,6 +23,11 @@ const parseTerm = str => {
   })
   str = str.replace(endings, found => {
     post = found
+    // keep s-apostrophe - "flanders'"
+    if (hasApostrophe.test(found) && /s['’]$/.test(original) && hasApostrophe.test(pre) === false) {
+      post = post.replace(hasApostrophe, '')
+      return `'`
+    }
     return ''
   })
   //we went too far..

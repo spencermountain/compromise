@@ -4,8 +4,8 @@ const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'.s
 //generates a unique id for this term
 function makeId(str) {
   str = str || '_';
-  var text = str + '-';
-  for (var i = 0; i < 7; i++) {
+  let text = str + '-';
+  for (let i = 0; i < 7; i++) {
     text += chars[Math.floor(Math.random() * chars.length)];
   }
   return text
@@ -447,6 +447,9 @@ var textOut = function(options, showPre, showPost) {
   if (options.unicode === true) {
     word = this.clean;
   }
+  if (options.implicit === true && this.implicit) {
+    word = this.implicit;
+  }
   if (options.whitespace === true) {
     before = '';
     after = ' ';
@@ -854,8 +857,13 @@ var terms = function(n) {
   return terms
 };
 
-/** return a deep-copy of this phrse  */
+/** return a shallow-copy of this phrase  */
 var clone = function() {
+  return this.buildFrom(this.start, this.length)
+};
+
+/** return a deep-copy, with Terms and Pool cloned  */
+var deepClone = function() {
   //how do we clone part of the pool?
   let terms = this.terms();
   let newTerms = terms.map(t => t.clone());
@@ -911,6 +919,7 @@ var wordCount = function() {
 var _01Utils = {
 	terms: terms,
 	clone: clone,
+	deepClone: deepClone,
 	lastTerm: lastTerm,
 	hasId: hasId,
 	wordCount: wordCount
@@ -928,6 +937,7 @@ var text = function(options = {}, isFirst, isLast) {
         punctuation: true,
         whitespace: true,
         unicode: true,
+        implicit: true,
       };
     } else if (options === 'clean') {
       options = {
@@ -935,6 +945,7 @@ var text = function(options = {}, isFirst, isLast) {
         punctuation: true,
         whitespace: true,
         unicode: true,
+        implicit: true,
       };
     } else {
       options = {};
@@ -965,6 +976,9 @@ var text = function(options = {}, isFirst, isLast) {
   //full-phrases show punctuation, but not whitespace
   if (isFull === true && isLast) {
     text = trimEnd(text);
+  }
+  if (options.trim) {
+    text = text.trim();
   }
   return text
 };
@@ -1294,10 +1308,10 @@ var json$1 = function(options = {}, world) {
   let res = {};
   // text data
   if (options.text) {
-    res.text = this.text();
-    if (options.trim) {
-      res.text = res.text.trim();
-    }
+    res.text = this.text(options);
+    // if (options.trim) {
+    // res.text = res.text.trim()
+    // }
   }
   if (options.normal) {
     res.normal = this.text({
@@ -1932,7 +1946,6 @@ class Phrase {
 /** create a new Phrase object from an id and length */
 Phrase.prototype.buildFrom = function(id, length) {
   let p = new Phrase(id, length, this.pool);
-  // p.parent = this
   if (this.cache) {
     p.cache = this.cache;
     p.cache.terms = null;
@@ -4700,7 +4713,7 @@ exports.parent = function() {
 };
 
 /**  return a list of all previous results */
-exports.parents = function() {
+exports.parents = function(n) {
   let arr = [];
   const addParent = function(doc) {
     if (doc.from) {
@@ -4709,12 +4722,16 @@ exports.parents = function() {
     }
   };
   addParent(this);
-  return arr.reverse()
+  arr = arr.reverse();
+  if (typeof n === 'number') {
+    return arr[n]
+  }
+  return arr
 };
 
 /** deep-copy the document, so that no references remain */
 exports.clone = function() {
-  let list = this.list.map(ts => ts.clone());
+  let list = this.list.map(ts => ts.deepClone());
   let tmp = this.buildFrom(list);
   return tmp
 };
@@ -4722,7 +4739,7 @@ exports.clone = function() {
 /** how many seperate terms does the document have? */
 exports.wordCount = function() {
   return this.list.reduce((count, p) => {
-    count += p.wordCount;
+    count += p.wordCount();
     return count
   }, 0)
 };
@@ -4767,9 +4784,6 @@ exports.post = function(str) {
 };
 
 /** freeze the current state of the document, for speed-purposes*/
-// exports.cache = function(options) {
-//   return cache(this, options)
-// }
 exports.cache = function() {
   this.list.forEach(p => {
     let words = {};
@@ -4788,18 +4802,13 @@ exports.cache = function() {
   });
   return this
 };
+
+/** un-freezes the current state of the document, so it may be transformed */
 exports.uncache = function() {
   this.list.forEach(p => {
     p.cache = {};
   });
 };
-// exports.blow = function() {
-//   if (this.found && this.list.length > 0) {
-//     console.log('\n\n======!!====\n\n')
-//     process.exit()
-//   }
-//   return this
-// }
 });
 var _01Utils_1 = _01Utils$1.all;
 var _01Utils_2 = _01Utils$1.parent;
@@ -5389,112 +5398,6 @@ exports.concat = function() {
   }
   return this.buildFrom(list)
 };
-
-/** return a Document with three parts for every match
- * seperate everything before the word, as a new phrase
- */
-exports.split = function(reg) {
-  let regs = syntax_1(reg);
-  let matches = [];
-  this.list.forEach(p => {
-    let foundEm = p.match(regs);
-    //no match here, add full sentence
-    if (foundEm.length === 0) {
-      matches.push(p);
-      return
-    }
-    // we found something here.
-    let carry = p;
-    foundEm.forEach(found => {
-      let parts = carry.splitOn(found);
-      // add em in
-      if (parts.before) {
-        matches.push(parts.before);
-      }
-      if (parts.match) {
-        matches.push(parts.match);
-      }
-      // start matching now on the end
-      carry = parts.after;
-    });
-    // add that last part
-    if (carry) {
-      matches.push(carry);
-    }
-  });
-  return this.buildFrom(matches)
-};
-exports.splitOn = exports.split;
-
-/** return a Document with two parts for every match
- * seperate everything after the word, as a new phrase
- */
-exports.splitAfter = function(reg) {
-  let regs = syntax_1(reg);
-  let matches = [];
-  this.list.forEach(p => {
-    let foundEm = p.match(regs);
-    //no match here, add full sentence
-    if (foundEm.length === 0) {
-      matches.push(p);
-      return
-    }
-    // we found something here.
-    let carry = p;
-    foundEm.forEach(found => {
-      let parts = carry.splitOn(found);
-      // add em in
-      if (parts.before && parts.match) {
-        // merge these two together
-        parts.before.length += parts.match.length;
-        matches.push(parts.before);
-      } else if (parts.match) {
-        matches.push(parts.match);
-      }
-      // start matching now on the end
-      carry = parts.after;
-    });
-    // add that last part
-    if (carry) {
-      matches.push(carry);
-    }
-  });
-  return this.buildFrom(matches)
-};
-
-/** return a Document with two parts for every match */
-exports.splitBefore = function(reg) {
-  let regs = syntax_1(reg);
-  let matches = [];
-  this.list.forEach(p => {
-    let foundEm = p.match(regs);
-    //no match here, add full sentence
-    if (foundEm.length === 0) {
-      matches.push(p);
-      return
-    }
-    // we found something here.
-    let carry = p;
-    foundEm.forEach(found => {
-      let parts = carry.splitOn(found);
-      // add before part in
-      if (parts.before) {
-        matches.push(parts.before);
-      }
-      // merge match+after
-      if (parts.match && parts.after) {
-        parts.match.length += parts.after.length;
-      }
-      // start matching now on the end
-      carry = parts.match;
-    });
-    // add that last part
-    if (carry) {
-      matches.push(carry);
-    }
-  });
-  return this.buildFrom(matches)
-};
 });
 var _09Insert_1 = _09Insert.append;
 var _09Insert_2 = _09Insert.insertAfter;
@@ -5502,10 +5405,6 @@ var _09Insert_3 = _09Insert.insertAt;
 var _09Insert_4 = _09Insert.prepend;
 var _09Insert_5 = _09Insert.insertBefore;
 var _09Insert_6 = _09Insert.concat;
-var _09Insert_7 = _09Insert.split;
-var _09Insert_8 = _09Insert.splitOn;
-var _09Insert_9 = _09Insert.splitAfter;
-var _09Insert_10 = _09Insert.splitBefore;
 
 const methods$2 = {
   /** alphabetical order */
@@ -5613,8 +5512,32 @@ var sort = function(input) {
   return this
 };
 
+/** reverse the order of the matches, but not the words */
+var reverse = function() {
+  let list = [].concat(this.list);
+  list = list.reverse();
+  return this.buildFrom(list)
+};
+
+/** remove any duplicate matches */
+var unique$2 = function() {
+  let list = [].concat(this.list);
+  let obj = {};
+  list = list.filter(p => {
+    let str = p.text('normal').trim();
+    if (obj.hasOwnProperty(str) === true) {
+      return false
+    }
+    obj[str] = true;
+    return true
+  });
+  return this.buildFrom(list)
+};
+
 var _10Sort = {
-	sort: sort
+	sort: sort,
+	reverse: reverse,
+	unique: unique$2
 };
 
 //list of inconsistent parts-of-speech
@@ -6284,6 +6207,164 @@ exports.data = exports.json;
 var _13Json_1 = _13Json.json;
 var _13Json_2 = _13Json.data;
 
+var _14Split = createCommonjsModule(function (module, exports) {
+/** return a Document with three parts for every match
+ * seperate everything before the word, as a new phrase
+ */
+exports.splitOn = function(reg) {
+  let regs = syntax_1(reg);
+  let matches = [];
+  this.list.forEach(p => {
+    let foundEm = p.match(regs);
+    //no match here, add full sentence
+    if (foundEm.length === 0) {
+      matches.push(p);
+      return
+    }
+    // we found something here.
+    let carry = p;
+    foundEm.forEach(found => {
+      let parts = carry.splitOn(found);
+      // add em in
+      if (parts.before) {
+        matches.push(parts.before);
+      }
+      if (parts.match) {
+        matches.push(parts.match);
+      }
+      // start matching now on the end
+      carry = parts.after;
+    });
+    // add that last part
+    if (carry) {
+      matches.push(carry);
+    }
+  });
+  return this.buildFrom(matches)
+};
+
+/** return a Document with two parts for every match
+ * seperate everything after the word, as a new phrase
+ */
+exports.splitAfter = function(reg) {
+  let regs = syntax_1(reg);
+  let matches = [];
+  this.list.forEach(p => {
+    let foundEm = p.match(regs);
+    //no match here, add full sentence
+    if (foundEm.length === 0) {
+      matches.push(p);
+      return
+    }
+    // we found something here.
+    let carry = p;
+    foundEm.forEach(found => {
+      let parts = carry.splitOn(found);
+      // add em in
+      if (parts.before && parts.match) {
+        // merge these two together
+        parts.before.length += parts.match.length;
+        matches.push(parts.before);
+      } else if (parts.match) {
+        matches.push(parts.match);
+      }
+      // start matching now on the end
+      carry = parts.after;
+    });
+    // add that last part
+    if (carry) {
+      matches.push(carry);
+    }
+  });
+  return this.buildFrom(matches)
+};
+exports.split = exports.splitAfter; //i guess?
+
+/** return a Document with two parts for every match */
+exports.splitBefore = function(reg) {
+  let regs = syntax_1(reg);
+  let matches = [];
+  this.list.forEach(p => {
+    let foundEm = p.match(regs);
+    //no match here, add full sentence
+    if (foundEm.length === 0) {
+      matches.push(p);
+      return
+    }
+    // we found something here.
+    let carry = p;
+    foundEm.forEach(found => {
+      let parts = carry.splitOn(found);
+      // add before part in
+      if (parts.before) {
+        matches.push(parts.before);
+      }
+      // merge match+after
+      if (parts.match && parts.after) {
+        parts.match.length += parts.after.length;
+      }
+      // start matching now on the end
+      carry = parts.match;
+    });
+    // add that last part
+    if (carry) {
+      matches.push(carry);
+    }
+  });
+  return this.buildFrom(matches)
+};
+});
+var _14Split_1 = _14Split.splitOn;
+var _14Split_2 = _14Split.splitAfter;
+var _14Split_3 = _14Split.split;
+var _14Split_4 = _14Split.splitBefore;
+
+/** make all phrases into one phrase */
+var join = function(str) {
+  // make one large phrase - 'main'
+  let main = this.list[0];
+  let before = main.length;
+  let removed = {};
+  for (let i = 1; i < this.list.length; i++) {
+    const p = this.list[i];
+    removed[p.start] = true;
+    let term = main.lastTerm();
+    // add whitespace between them
+    if (str) {
+      term.post += str;
+    }
+    //  main -> p
+    term.next = p.start;
+    // main <- p
+    p.terms(0).prev = term.id;
+    main.length += p.length;
+  }
+
+  // parents are bigger than than their children.
+  // when we increase a child, we increase their parent too.
+  let increase = main.length - before;
+  this.parents().forEach(doc => {
+    // increase length on each effected phrase
+    doc.list.forEach(p => {
+      let terms = p.terms();
+      for (let i = 0; i < terms.length; i++) {
+        if (terms[i].id === main.start) {
+          p.length += increase;
+          break
+        }
+      }
+    });
+    // remove redundant phrases now
+    doc.list = doc.list.filter(p => removed[p.start] !== true);
+  });
+  // return one major phrase
+  return this.buildFrom([main])
+};
+
+var _15Join = {
+	join: join
+};
+
 var methods$3 = Object.assign(
   {},
   _01Utils$1,
@@ -6298,7 +6379,9 @@ var methods$3 = Object.assign(
   _10Sort,
   _11Out,
   _12Normalize,
-  _13Json
+  _13Json,
+  _14Split,
+  _15Join
 );
 
 var find$1 = createCommonjsModule(function (module, exports) {
@@ -9186,9 +9269,12 @@ class Doc {
 
 /** create a new Document object */
 Doc.prototype.buildFrom = function(list) {
+  list = list.map(p => p.clone());
   let doc = new Doc(list, this, this.world);
   return doc
 };
+
+/** create a new Document from plaintext. */
 Doc.prototype.fromText = function(str) {
   let list = _01Tokenizer.fromText(str, this.world, this.pool());
   return this.buildFrom(list)

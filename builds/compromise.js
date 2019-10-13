@@ -586,6 +586,10 @@
       word = this.clean;
     }
 
+    if (options.implicit === true && this.implicit) {
+      word = this.implicit;
+    }
+
     if (options.whitespace === true) {
       before = '';
       after = ' ';
@@ -1059,10 +1063,16 @@
 
     return terms;
   };
-  /** return a deep-copy of this phrse  */
+  /** return a shallow-copy of this phrase  */
 
 
   var clone = function clone() {
+    return this.buildFrom(this.start, this.length);
+  };
+  /** return a deep-copy, with Terms and Pool cloned  */
+
+
+  var deepClone = function deepClone() {
     var _this = this;
 
     //how do we clone part of the pool?
@@ -1136,6 +1146,7 @@
   var _01Utils = {
     terms: terms,
     clone: clone,
+    deepClone: deepClone,
     lastTerm: lastTerm,
     hasId: hasId,
     wordCount: wordCount
@@ -1157,14 +1168,16 @@
         options = {
           punctuation: true,
           whitespace: true,
-          unicode: true
+          unicode: true,
+          implicit: true
         };
       } else if (options === 'clean') {
         options = {
           lowercase: true,
           punctuation: true,
           whitespace: true,
-          unicode: true
+          unicode: true,
+          implicit: true
         };
       } else {
         options = {};
@@ -1201,6 +1214,10 @@
 
     if (isFull === true && isLast) {
       text = trimEnd(text);
+    }
+
+    if (options.trim) {
+      text = text.trim();
     }
 
     return text;
@@ -1552,11 +1569,9 @@
     var res = {}; // text data
 
     if (options.text) {
-      res.text = this.text();
-
-      if (options.trim) {
-        res.text = res.text.trim();
-      }
+      res.text = this.text(options); // if (options.trim) {
+      // res.text = res.text.trim()
+      // }
     }
 
     if (options.normal) {
@@ -2294,7 +2309,7 @@
 
 
   Phrase.prototype.buildFrom = function (id, length) {
-    var p = new Phrase(id, length, this.pool); // p.parent = this
+    var p = new Phrase(id, length, this.pool);
 
     if (this.cache) {
       p.cache = this.cache;
@@ -5183,7 +5198,7 @@
     /**  return a list of all previous results */
 
 
-    exports.parents = function () {
+    exports.parents = function (n) {
       var arr = [];
 
       var addParent = function addParent(doc) {
@@ -5194,14 +5209,20 @@
       };
 
       addParent(this);
-      return arr.reverse();
+      arr = arr.reverse();
+
+      if (typeof n === 'number') {
+        return arr[n];
+      }
+
+      return arr;
     };
     /** deep-copy the document, so that no references remain */
 
 
     exports.clone = function () {
       var list = this.list.map(function (ts) {
-        return ts.clone();
+        return ts.deepClone();
       });
       var tmp = this.buildFrom(list);
       return tmp;
@@ -5211,7 +5232,7 @@
 
     exports.wordCount = function () {
       return this.list.reduce(function (count, p) {
-        count += p.wordCount;
+        count += p.wordCount();
         return count;
       }, 0);
     };
@@ -5262,9 +5283,6 @@
       return this;
     };
     /** freeze the current state of the document, for speed-purposes*/
-    // exports.cache = function(options) {
-    //   return cache(this, options)
-    // }
 
 
     exports.cache = function () {
@@ -5287,19 +5305,14 @@
       });
       return this;
     };
+    /** un-freezes the current state of the document, so it may be transformed */
+
 
     exports.uncache = function () {
       this.list.forEach(function (p) {
         p.cache = {};
       });
-    }; // exports.blow = function() {
-    //   if (this.found && this.list.length > 0) {
-    //     console.log('\n\n======!!====\n\n')
-    //     process.exit()
-    //   }
-    //   return this
-    // }
-
+    };
   });
   var _01Utils_1 = _01Utils$1.all;
   var _01Utils_2 = _01Utils$1.parent;
@@ -6023,123 +6036,6 @@
 
       return this.buildFrom(list);
     };
-    /** return a Document with three parts for every match
-     * seperate everything before the word, as a new phrase
-     */
-
-
-    exports.split = function (reg) {
-      var regs = syntax_1(reg);
-      var matches = [];
-      this.list.forEach(function (p) {
-        var foundEm = p.match(regs); //no match here, add full sentence
-
-        if (foundEm.length === 0) {
-          matches.push(p);
-          return;
-        } // we found something here.
-
-
-        var carry = p;
-        foundEm.forEach(function (found) {
-          var parts = carry.splitOn(found); // add em in
-
-          if (parts.before) {
-            matches.push(parts.before);
-          }
-
-          if (parts.match) {
-            matches.push(parts.match);
-          } // start matching now on the end
-
-
-          carry = parts.after;
-        }); // add that last part
-
-        if (carry) {
-          matches.push(carry);
-        }
-      });
-      return this.buildFrom(matches);
-    };
-
-    exports.splitOn = exports.split;
-    /** return a Document with two parts for every match
-     * seperate everything after the word, as a new phrase
-     */
-
-    exports.splitAfter = function (reg) {
-      var regs = syntax_1(reg);
-      var matches = [];
-      this.list.forEach(function (p) {
-        var foundEm = p.match(regs); //no match here, add full sentence
-
-        if (foundEm.length === 0) {
-          matches.push(p);
-          return;
-        } // we found something here.
-
-
-        var carry = p;
-        foundEm.forEach(function (found) {
-          var parts = carry.splitOn(found); // add em in
-
-          if (parts.before && parts.match) {
-            // merge these two together
-            parts.before.length += parts.match.length;
-            matches.push(parts.before);
-          } else if (parts.match) {
-            matches.push(parts.match);
-          } // start matching now on the end
-
-
-          carry = parts.after;
-        }); // add that last part
-
-        if (carry) {
-          matches.push(carry);
-        }
-      });
-      return this.buildFrom(matches);
-    };
-    /** return a Document with two parts for every match */
-
-
-    exports.splitBefore = function (reg) {
-      var regs = syntax_1(reg);
-      var matches = [];
-      this.list.forEach(function (p) {
-        var foundEm = p.match(regs); //no match here, add full sentence
-
-        if (foundEm.length === 0) {
-          matches.push(p);
-          return;
-        } // we found something here.
-
-
-        var carry = p;
-        foundEm.forEach(function (found) {
-          var parts = carry.splitOn(found); // add before part in
-
-          if (parts.before) {
-            matches.push(parts.before);
-          } // merge match+after
-
-
-          if (parts.match && parts.after) {
-            parts.match.length += parts.after.length;
-          } // start matching now on the end
-
-
-          carry = parts.match;
-        }); // add that last part
-
-        if (carry) {
-          matches.push(carry);
-        }
-      });
-      return this.buildFrom(matches);
-    };
   });
   var _09Insert_1 = _09Insert.append;
   var _09Insert_2 = _09Insert.insertAfter;
@@ -6147,10 +6043,6 @@
   var _09Insert_4 = _09Insert.prepend;
   var _09Insert_5 = _09Insert.insertBefore;
   var _09Insert_6 = _09Insert.concat;
-  var _09Insert_7 = _09Insert.split;
-  var _09Insert_8 = _09Insert.splitOn;
-  var _09Insert_9 = _09Insert.splitAfter;
-  var _09Insert_10 = _09Insert.splitBefore;
 
   var methods$2 = {
     /** alphabetical order */
@@ -6274,9 +6166,37 @@
 
     return this;
   };
+  /** reverse the order of the matches, but not the words */
+
+
+  var reverse = function reverse() {
+    var list = [].concat(this.list);
+    list = list.reverse();
+    return this.buildFrom(list);
+  };
+  /** remove any duplicate matches */
+
+
+  var unique$2 = function unique() {
+    var list = [].concat(this.list);
+    var obj = {};
+    list = list.filter(function (p) {
+      var str = p.text('normal').trim();
+
+      if (obj.hasOwnProperty(str) === true) {
+        return false;
+      }
+
+      obj[str] = true;
+      return true;
+    });
+    return this.buildFrom(list);
+  };
 
   var _10Sort = {
-    sort: sort
+    sort: sort,
+    reverse: reverse,
+    unique: unique$2
   };
 
   //list of inconsistent parts-of-speech
@@ -6953,7 +6873,181 @@
   var _13Json_1 = _13Json.json;
   var _13Json_2 = _13Json.data;
 
-  var methods$3 = Object.assign({}, _01Utils$1, _02Accessors, _03Match, _04Case, _05Whitespace, _06Tag, _07Loops, _08Replace, _09Insert, _10Sort, _11Out, _12Normalize, _13Json);
+  var _14Split = createCommonjsModule(function (module, exports) {
+    /** return a Document with three parts for every match
+     * seperate everything before the word, as a new phrase
+     */
+    exports.splitOn = function (reg) {
+      var regs = syntax_1(reg);
+      var matches = [];
+      this.list.forEach(function (p) {
+        var foundEm = p.match(regs); //no match here, add full sentence
+
+        if (foundEm.length === 0) {
+          matches.push(p);
+          return;
+        } // we found something here.
+
+
+        var carry = p;
+        foundEm.forEach(function (found) {
+          var parts = carry.splitOn(found); // add em in
+
+          if (parts.before) {
+            matches.push(parts.before);
+          }
+
+          if (parts.match) {
+            matches.push(parts.match);
+          } // start matching now on the end
+
+
+          carry = parts.after;
+        }); // add that last part
+
+        if (carry) {
+          matches.push(carry);
+        }
+      });
+      return this.buildFrom(matches);
+    };
+    /** return a Document with two parts for every match
+     * seperate everything after the word, as a new phrase
+     */
+
+
+    exports.splitAfter = function (reg) {
+      var regs = syntax_1(reg);
+      var matches = [];
+      this.list.forEach(function (p) {
+        var foundEm = p.match(regs); //no match here, add full sentence
+
+        if (foundEm.length === 0) {
+          matches.push(p);
+          return;
+        } // we found something here.
+
+
+        var carry = p;
+        foundEm.forEach(function (found) {
+          var parts = carry.splitOn(found); // add em in
+
+          if (parts.before && parts.match) {
+            // merge these two together
+            parts.before.length += parts.match.length;
+            matches.push(parts.before);
+          } else if (parts.match) {
+            matches.push(parts.match);
+          } // start matching now on the end
+
+
+          carry = parts.after;
+        }); // add that last part
+
+        if (carry) {
+          matches.push(carry);
+        }
+      });
+      return this.buildFrom(matches);
+    };
+
+    exports.split = exports.splitAfter; //i guess?
+
+    /** return a Document with two parts for every match */
+
+    exports.splitBefore = function (reg) {
+      var regs = syntax_1(reg);
+      var matches = [];
+      this.list.forEach(function (p) {
+        var foundEm = p.match(regs); //no match here, add full sentence
+
+        if (foundEm.length === 0) {
+          matches.push(p);
+          return;
+        } // we found something here.
+
+
+        var carry = p;
+        foundEm.forEach(function (found) {
+          var parts = carry.splitOn(found); // add before part in
+
+          if (parts.before) {
+            matches.push(parts.before);
+          } // merge match+after
+
+
+          if (parts.match && parts.after) {
+            parts.match.length += parts.after.length;
+          } // start matching now on the end
+
+
+          carry = parts.match;
+        }); // add that last part
+
+        if (carry) {
+          matches.push(carry);
+        }
+      });
+      return this.buildFrom(matches);
+    };
+  });
+  var _14Split_1 = _14Split.splitOn;
+  var _14Split_2 = _14Split.splitAfter;
+  var _14Split_3 = _14Split.split;
+  var _14Split_4 = _14Split.splitBefore;
+
+  /** make all phrases into one phrase */
+  var join = function join(str) {
+    // make one large phrase - 'main'
+    var main = this.list[0];
+    var before = main.length;
+    var removed = {};
+
+    for (var i = 1; i < this.list.length; i++) {
+      var p = this.list[i];
+      removed[p.start] = true;
+      var term = main.lastTerm(); // add whitespace between them
+
+      if (str) {
+        term.post += str;
+      } //  main -> p
+
+
+      term.next = p.start; // main <- p
+
+      p.terms(0).prev = term.id;
+      main.length += p.length;
+    } // parents are bigger than than their children.
+    // when we increase a child, we increase their parent too.
+
+
+    var increase = main.length - before;
+    this.parents().forEach(function (doc) {
+      // increase length on each effected phrase
+      doc.list.forEach(function (p) {
+        var terms = p.terms();
+
+        for (var _i = 0; _i < terms.length; _i++) {
+          if (terms[_i].id === main.start) {
+            p.length += increase;
+            break;
+          }
+        }
+      }); // remove redundant phrases now
+
+      doc.list = doc.list.filter(function (p) {
+        return removed[p.start] !== true;
+      });
+    }); // return one major phrase
+
+    return this.buildFrom([main]);
+  };
+
+  var _15Join = {
+    join: join
+  };
+
+  var methods$3 = Object.assign({}, _01Utils$1, _02Accessors, _03Match, _04Case, _05Whitespace, _06Tag, _07Loops, _08Replace, _09Insert, _10Sort, _11Out, _12Normalize, _13Json, _14Split, _15Join);
 
   var find$1 = createCommonjsModule(function (module, exports) {
     //these are selections that don't require their own subclasses/methods
@@ -9708,9 +9802,14 @@
 
 
   Doc.prototype.buildFrom = function (list) {
+    list = list.map(function (p) {
+      return p.clone();
+    });
     var doc = new Doc(list, this, this.world);
     return doc;
   };
+  /** create a new Document from plaintext. */
+
 
   Doc.prototype.fromText = function (str) {
     var list = _01Tokenizer.fromText(str, this.world, this.pool());

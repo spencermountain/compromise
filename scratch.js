@@ -5,19 +5,19 @@ const nlp = require('./src/index')
 nlp.extend(require('./plugins/verbs/src'))
 nlp.extend(require('./plugins/nouns/src'))
 // nlp.extend(require('./plugins/paragraphs/src'))
-// nlp.extend(require('./plugins/sentences/src'))
 
-// let str = `What's with these homies dissin' my girl? Why do they gotta front?
+/*
+1. .before()
+2. ~walk~ match
+3. .swap()
+*/
 
-// What did we ever do to these guys that made them so violent?
-
-// `
-// let doc = nlp(str).join()
-// console.log(doc.text() + '|')
-
-let doc = nlp(`the donkeys' hotel`).debug()
-console.log(doc.list[0].terms(0))
-doc.nouns().toPlural()
+let doc = nlp(`i walked to a store. the store was very nice`)
+doc
+  .match('store')
+  .lookBehind('#Determiner')
+  .debug()
+// doc.nouns().toPlural()
 // doc.nouns().toSingular()
 // console.log(doc.nouns().json())
 // doc

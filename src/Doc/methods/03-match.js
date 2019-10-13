@@ -59,6 +59,16 @@ exports.has = function(reg) {
   return this.list.some(p => p.has(regs) === true)
 }
 
+exports.lookBehind = function(reg) {
+  let regs = parseSyntax(reg)
+  let matches = []
+  this.list.forEach(p => {
+    matches = matches.concat(p.lookBehind(regs))
+  })
+  matches = matches.filter(p => p)
+  return this.buildFrom(matches)
+}
+
 /** return all terms before a match, in each phrase */
 exports.before = function(reg) {
   let regs = parseSyntax(reg)

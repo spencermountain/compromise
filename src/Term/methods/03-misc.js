@@ -32,3 +32,16 @@ exports.isImplicit = function() {
 exports.isKnown = function() {
   return Object.keys(this.tags).some(t => boring[t] !== true)
 }
+
+/** cache the root property of the term */
+exports.setRoot = function(world) {
+  let transform = world.transforms
+  let str = this.clean
+  if (this.tags.Plural) {
+    str = transform.toSingular(str)
+  }
+  if (this.tags.Verb && !this.tags.Infinitive) {
+    // str = transform.toInfinitive(str)
+  }
+  this.root = str
+}

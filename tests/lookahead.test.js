@@ -34,3 +34,14 @@ test('look-behind', function(t) {
 
   t.end()
 })
+
+test('look-behind-last', function(t) {
+  let doc = nlp(`a priest walked into a bar`)
+  let m = doc
+    .match('bar')
+    .lookBehind('a')
+    .last()
+  m.replace('the')
+  t.equal(doc.text(), `a priest walked into the bar`, 'lookbehind most-recent')
+  t.end()
+})

@@ -16,7 +16,7 @@ const addIrregulars = function(world) {
     const inf = keys[i]
     //add only if it it's safe...
     world.lexicon[inf] = world.lexicon[inf] || 'Infinitive'
-    let forms = world.transforms.verbs(inf)
+    let forms = world.transforms.conjugate(inf)
     forms = Object.assign(forms, verbs[inf])
     //add the others
     Object.keys(forms).forEach(tag => {

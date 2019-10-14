@@ -1,7 +1,6 @@
 const hasPlural = require('./hasPlural')
 const getArticle = require('./getArticle')
 const toPlural = require('./toPlural')
-const toSingular = require('./toSingular')
 const toPossessive = require('./toPossessive')
 
 const invertObj = function(obj) {

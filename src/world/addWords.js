@@ -23,12 +23,12 @@ const addMore = function(word, tag, world) {
   }
   // inflect our nouns
   if (tag === 'Singular') {
-    let plural = transform.nouns(word)
+    let plural = transform.toPlural(word)
     lexicon[plural] = lexicon[plural] || 'Plural' // only if it's safe
   }
   //conjugate our verbs
   if (tag === 'Infinitive') {
-    let conj = transform.verbs(word)
+    let conj = transform.conjugate(word)
     let tags = Object.keys(conj)
     for (let i = 0; i < tags.length; i++) {
       let w = conj[tags[i]]
@@ -49,7 +49,7 @@ const addMore = function(word, tag, world) {
     //add original form
     addWord(word, 'Infinitive', lexicon)
     //conjugate first word
-    let conj = transform.verbs(words[0])
+    let conj = transform.conjugate(words[0])
     let tags = Object.keys(conj)
     for (let i = 0; i < tags.length; i++) {
       //add it to our cache
@@ -62,7 +62,7 @@ const addMore = function(word, tag, world) {
   }
   // inflect our demonyms - 'germans'
   if (tag === 'Demonym') {
-    let plural = transform.nouns(word)
+    let plural = transform.toPlural(word)
     lexicon[plural] = lexicon[plural] || ['Demonym', 'Plural'] // only if it's safe
   }
 }

@@ -104,6 +104,13 @@ const token = function(w) {
       obj.regex = new RegExp(w)
       return obj
     }
+    //soft-match
+    if (start(w) === '~' && end(w) === '~') {
+      w = stripBoth(w)
+      obj.soft = true
+      obj.word = w
+      return obj
+    }
   }
   // support #Tag{0,9}
   if (hasMinMax.test(w) === true) {

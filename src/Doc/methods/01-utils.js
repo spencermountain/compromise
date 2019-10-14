@@ -85,7 +85,8 @@ exports.post = function(str) {
 }
 
 /** freeze the current state of the document, for speed-purposes*/
-exports.cache = function() {
+exports.cache = function(options) {
+  options = options || { words: true }
   this.list.forEach(p => {
     let words = {}
     p.cache.terms = p.terms()
@@ -98,8 +99,13 @@ exports.cache = function() {
       if (t.alias) {
         words = Object.assign(words, t.alias)
       }
+      if (options.root) {
+        t.setRoot(this.world)
+      }
     })
-    p.cache.words = words
+    if (options.words === true) {
+      p.cache.words = words
+    }
   })
   return this
 }

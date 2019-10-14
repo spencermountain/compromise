@@ -8,7 +8,7 @@ const toPlural = function(doc) {
   // convert it
   let transform = doc.world.transforms
   let str = doc.text('normal').trim()
-  let plural = transform.nouns(str)
+  let plural = transform.toPlural(str)
   return doc.replaceWith(plural)
 }
 module.exports = toPlural

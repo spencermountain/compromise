@@ -14,9 +14,10 @@ const irregulars = {
 
 //these behaviours are configurable & shared across some plugins
 const transforms = {
-  verbs: require('../transforms/verbs'),
+  conjugate: require('../transforms/conjugate'),
   adjectives: require('../transforms/adjectives'),
-  nouns: require('../transforms/nouns'),
+  toPlural: require('../transforms/toPlural'),
+  toSingular: require('../transforms/toSingular'),
 }
 
 let isVerbose = false

@@ -21,6 +21,10 @@ const doesMatch = function(t, reg) {
     if (t.alias !== undefined && t.alias.hasOwnProperty(reg.word)) {
       return true
     }
+    // support ~ match
+    if (reg.soft === true && reg.word === t.root) {
+      return true
+    }
     //match either .clean or .text
     return reg.word === t.clean || reg.word === t.text || reg.word === t.reduced
   }

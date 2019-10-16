@@ -1,10 +1,10 @@
 const selections = [
-  require('./acronyms'),
-  require('./adjectives'),
-  require('./contractions'),
-  require('./parentheses'),
-  require('./possessives'),
-  require('./lists'),
+  require('./Acronyms'),
+  require('./Adjectives'),
+  require('./Contractions'),
+  require('./Parentheses'),
+  require('./Possessives'),
+  require('./Lists'),
 ]
 
 const extend = function(Doc) {

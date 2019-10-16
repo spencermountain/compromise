@@ -1,6 +1,20 @@
 const addMethod = function(Doc) {
   /** simple transformations of adjectives*/
   class Adjectives extends Doc {
+    conjugate(n) {
+      let transform = this.world.transforms.adjectives
+      let arr = []
+      this.forEach(doc => {
+        let obj = transform(doc.text('reduced'))
+        arr.push(obj)
+      })
+      //support nth result
+      if (typeof n === 'number') {
+        return arr[n]
+      }
+      return arr
+    }
+
     toSuperlative() {
       let transform = this.world.transforms.adjectives
       this.forEach(doc => {
@@ -17,11 +31,19 @@ const addMethod = function(Doc) {
       })
       return this
     }
-    toVerb() {
+    toAdverb() {
       let transform = this.world.transforms.adjectives
       this.forEach(doc => {
         let obj = transform(doc.text('reduced'))
         doc.replaceWith(obj.Adverb)
+      })
+      return this
+    }
+    toVerb() {
+      let transform = this.world.transforms.adjectives
+      this.forEach(doc => {
+        let obj = transform(doc.text('reduced'))
+        doc.replaceWith(obj.Verb)
       })
       return this
     }

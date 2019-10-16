@@ -7,7 +7,7 @@ const oneSize = function(list, size) {
   let grams = {}
   // count each instance
   list.forEach(terms => {
-    for (let i = 0; i < terms.length; i += 1) {
+    for (let i = 0; i <= terms.length; i += 1) {
       let slice = terms.slice(0, i)
       if (slice.length === size) {
         let str = slice.join(' ')

@@ -12,6 +12,7 @@ const addMethod = function(Doc) {
     arr = sort(arr)
     return arr
   }
+  Doc.prototype.nGrams = Doc.prototype.ngrams
 
   /** n-grams with one word */
   Doc.prototype.unigrams = function(n) {
@@ -22,6 +23,7 @@ const addMethod = function(Doc) {
     }
     return arr
   }
+  Doc.prototype.uniGrams = Doc.prototype.unigrams
 
   /** n-grams with two words */
   Doc.prototype.bigrams = function(n) {
@@ -32,6 +34,8 @@ const addMethod = function(Doc) {
     }
     return arr
   }
+  Doc.prototype.biGrams = Doc.prototype.bigrams
+
   /** n-grams with two words */
   Doc.prototype.trigrams = function(n) {
     let arr = getGrams(tokenize(this), { max: 3, min: 3 })
@@ -41,6 +45,7 @@ const addMethod = function(Doc) {
     }
     return arr
   }
+  Doc.prototype.triGrams = Doc.prototype.trigrams
 
   /** list all repeating sub-phrases, using the first word */
   Doc.prototype.startgrams = function(obj) {
@@ -49,6 +54,8 @@ const addMethod = function(Doc) {
     arr = sort(arr)
     return arr
   }
+  Doc.prototype.startGrams = Doc.prototype.startgrams
+
   /** list all repeating sub-phrases, connected to the last word of each phrase */
   Doc.prototype.endgrams = function(obj) {
     let list = tokenize(this)
@@ -56,5 +63,6 @@ const addMethod = function(Doc) {
     arr = sort(arr)
     return arr
   }
+  Doc.prototype.endGrams = Doc.prototype.endgrams
 }
 module.exports = addMethod

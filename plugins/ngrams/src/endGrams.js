@@ -8,7 +8,7 @@ const oneSize = function(list, size) {
   // count each instance
   list.forEach(terms => {
     let len = terms.length
-    for (let i = 0; i < terms.length; i += 1) {
+    for (let i = 0; i <= terms.length; i += 1) {
       let slice = terms.slice(len - i, len)
       if (slice.length === size) {
         let str = slice.join(' ')

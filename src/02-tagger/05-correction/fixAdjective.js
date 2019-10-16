@@ -16,6 +16,8 @@ const fixAdjective = function(doc) {
     adj.match('(his|her|its) [#Adjective]').tag('Noun', 'his-fine')
     //he left
     adj.match('#Noun #Adverb? [left]').tag('PastTense', 'left-verb')
+    //he disguised the thing
+    adj.match('#Pronoun [#Adjective] #Determiner #Adjective? #Noun').tag('Verb', 'he-adj-the')
   }
   return doc
 }

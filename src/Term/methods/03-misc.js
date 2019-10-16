@@ -41,7 +41,19 @@ exports.setRoot = function(world) {
     str = transform.toSingular(str)
   }
   if (this.tags.Verb && !this.tags.Negative && !this.tags.Infinitive) {
-    str = transform.toInfinitive(str)
+    let tense = null
+    if (this.tags.PastTense) {
+      tense = 'PastTense'
+    } else if (this.tags.Gerund) {
+      tense = 'Gerund'
+    } else if (this.tags.PresentTense) {
+      tense = 'PresentTense'
+    } else if (this.tags.Participle) {
+      tense = 'Participle'
+    } else if (this.tags.Actor) {
+      tense = 'Actor'
+    }
+    str = transform.toInfinitive(str, world, tense)
   }
   this.root = str
 }

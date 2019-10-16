@@ -1,6 +1,4 @@
-const rules = require('./_rules')
-const fromTense = require('./pickTense')
-
+// walked => walk  - turn a verb into it's root form
 const toInfinitive = function(parsed, world) {
   let verb = parsed.verb
 
@@ -9,30 +7,20 @@ const toInfinitive = function(parsed, world) {
   if (verb.has('#Infinitive')) {
     return str
   }
-  //2. look at known irregulars
-  if (world.lexicon.hasOwnProperty(str) === true) {
-    let irregs = world.irregulars.verbs
-    let keys = Object.keys(irregs)
-    for (let i = 0; i < keys.length; i++) {
-      let forms = Object.keys(irregs[keys[i]])
-      for (let o = 0; o < forms.length; o++) {
-        if (str === irregs[keys[i]][forms[o]]) {
-          return keys[i]
-        }
-      }
-    }
+
+  // 2. world transform does the heavy-lifting
+  let tense = null
+  if (verb.has('#PastTense')) {
+    tense = 'PastTense'
+  } else if (verb.has('#Gerund')) {
+    tense = 'Gerund'
+  } else if (verb.has('#PresentTense')) {
+    tense = 'PresentTense'
+  } else if (verb.has('#Participle')) {
+    tense = 'Participle'
+  } else if (verb.has('#Actor')) {
+    tense = 'Actor'
   }
-  //3. look at our rules
-  let tense = fromTense(verb)
-  if (tense && rules[tense]) {
-    for (let i = 0; i < rules[tense].length; i++) {
-      const rule = rules[tense][i]
-      if (rule.reg.test(str) === true) {
-        return str.replace(rule.reg, rule.to)
-      }
-    }
-  }
-  // fallback
-  return str
+  return world.transforms.toInfinitive(str, world, tense)
 }
 module.exports = toInfinitive

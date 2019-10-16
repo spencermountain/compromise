@@ -36,7 +36,7 @@ const isPossessive = (term, pool) => {
   }
   //rocket's red glare
   let twoTerm = pool.get(nextTerm.next)
-  if (twoTerm && twoTerm.tags.Noun) {
+  if (twoTerm && twoTerm.tags.Noun && !twoTerm.tags.Pronoun) {
     return true
   }
   //othwerwise, an adjective suggests 'is good'

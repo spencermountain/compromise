@@ -1,4 +1,4 @@
-const apostrophes = /[\'‘’‛‵′`´]/
+const apostrophes = /[\'‘’‛‵′`´]$/
 const oneLetterAcronym = /^[A-Z]('s|,)?$/
 
 const oneLetterWord = {
@@ -16,16 +16,18 @@ const checkPunctuation = function(terms, i, world) {
   // }
 
   //an end-tick (trailing apostrophe) - flanders', or Carlos'
-  if (apostrophes.test(term.post) && !apostrophes.test(term.pre)) {
-    let endChar = term.clean[term.clean.length - 1]
-    //flanders'
-    if (endChar === 's') {
-      term.tag(['Possessive', 'Noun'], 'end-tick', world)
-      return
-    }
-    //chillin'
-    if (endChar === 'n') {
-      term.tag(['Gerund'], 'chillin', world)
+  if (apostrophes.test(term.text)) {
+    if (!apostrophes.test(term.pre) && !apostrophes.test(term.post) && term.clean.length > 2) {
+      let endChar = term.clean[term.clean.length - 2]
+      //flanders'
+      if (endChar === 's') {
+        term.tag(['Possessive', 'Noun'], 'end-tick', world)
+        return
+      }
+      //chillin'
+      if (endChar === 'n') {
+        term.tag(['Gerund'], 'chillin', world)
+      }
     }
   }
   // NASA

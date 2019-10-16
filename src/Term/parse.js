@@ -23,8 +23,8 @@ const parseTerm = str => {
   })
   str = str.replace(endings, found => {
     post = found
-    // keep s-apostrophe - "flanders'"
-    if (hasApostrophe.test(found) && /s['’]$/.test(original) && hasApostrophe.test(pre) === false) {
+    // keep s-apostrophe - "flanders'" or "chillin'"
+    if (hasApostrophe.test(found) && /[sn]['’]$/.test(original) && hasApostrophe.test(pre) === false) {
       post = post.replace(hasApostrophe, '')
       return `'`
     }

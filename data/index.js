@@ -1,9 +1,9 @@
 //directory of files to pack with `node scripts/pack.js`
 //they are stored in compressed form
-var lex = require('./misc')
+const lex = require('./misc')
 
 //add-in the generic, flat word-lists
-var data = [
+const data = [
   //nouns
   [require('./nouns/singulars'), 'Singular'],
   [require('./nouns/professions'), 'Actor'],
@@ -59,9 +59,9 @@ var data = [
   [require('./misc/determiners'), 'Determiner'],
   [require('./misc/conjunctions'), 'Conjunction'],
 ]
-for (var i = 0; i < data.length; i++) {
-  var list = data[i][0]
-  for (var o = 0; o < list.length; o++) {
+for (let i = 0; i < data.length; i++) {
+  const list = data[i][0]
+  for (let o = 0; o < list.length; o++) {
     //log duplicates
     // if (lex[list[o]]) {
     //   console.log(list[o] + '  ' + lex[list[o]] + ' ' + data[i][1])

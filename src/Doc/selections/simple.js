@@ -1,6 +1,6 @@
 // allow helper methods like .adjectives() and .adverbs()
 const arr = [
-  ['adjectives', '#Adjective'],
+  // ['adjectives', '#Adjective'],
   ['hashTags', '#HashTag'],
   ['emails', '#Email'],
   ['atMentions', '#AtMention'],

@@ -17,9 +17,8 @@ nlp.extend(require('./plugins/verbs/src'))
 // console.log(doc.text('root') + '|')
 
 let r = nlp("i'm good")
-r.match('am').replaceWith('newwww')
+// r.adjectives().toVerb()
 r.debug()
-console.log(r.text())
 
 //  .isPlural()
 // .debug()

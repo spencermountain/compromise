@@ -1,5 +1,6 @@
 const selections = [
   require('./acronyms'),
+  require('./adjectives'),
   require('./contractions'),
   require('./parentheses'),
   require('./possessives'),

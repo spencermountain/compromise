@@ -174,6 +174,13 @@ test('slash match', function(t) {
   t.end()
 })
 
+test('replace over implict', function(t) {
+  let doc = nlp("i'm good")
+  doc.match('am').replaceWith('was')
+  t.equal(doc.text(), 'i was good', 'replace over implicit')
+  t.end()
+})
+
 test('barely a term', function(t) {
   let str = '.('
   let doc = nlp(str)

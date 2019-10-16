@@ -18,6 +18,7 @@ const transforms = {
   adjectives: require('../transforms/adjectives'),
   toPlural: require('../transforms/toPlural'),
   toSingular: require('../transforms/toSingular'),
+  toInfinitive: require('../transforms/toInfinitive'),
 }
 
 let isVerbose = false

@@ -10,6 +10,9 @@ exports.textOut = function(options, showPre, showPost) {
   if (options.unicode === true) {
     word = this.clean
   }
+  if (options.root === true) {
+    word = this.root
+  }
   if (options.implicit === true && this.implicit) {
     word = this.implicit
   }

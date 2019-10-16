@@ -36,12 +36,12 @@ exports.isKnown = function() {
 /** cache the root property of the term */
 exports.setRoot = function(world) {
   let transform = world.transforms
-  let str = this.clean
+  let str = this.implicit || this.clean
   if (this.tags.Plural) {
     str = transform.toSingular(str)
   }
-  if (this.tags.Verb && !this.tags.Infinitive) {
-    // str = transform.toInfinitive(str)
+  if (this.tags.Verb && !this.tags.Negative && !this.tags.Infinitive) {
+    str = transform.toInfinitive(str)
   }
   this.root = str
 }

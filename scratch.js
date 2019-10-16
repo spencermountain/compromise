@@ -11,7 +11,14 @@ nlp.extend(require('./plugins/nouns/src'))
 3. .swap()
 */
 
-let doc = nlp(`a priest walked into the bars`)
-doc.cache({ root: true })
-// doc.match('~walking~').debug()
-doc.match('~bar~').debug()
+// let doc = nlp(`A priest walked into the bars.`)
+// doc.cache({ root: true })
+// doc.match('~walk~').debug()
+// doc.match('~bar~').debug()
+// console.log(doc.text('root') + '|')
+
+const doc = nlp('he is from Phoenix AZ')
+const m = doc.match('#City')
+const matchWith = doc.match(m).out('normal')
+// console.log(doc.not(m).out('text'))
+console.log(matchWith)

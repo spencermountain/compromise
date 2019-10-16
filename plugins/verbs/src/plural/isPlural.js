@@ -1,3 +1,8 @@
+const findNoun = function(vb) {
+  let noun = vb.lookBehind('#Noun+').last()
+  return noun
+}
+
 //sometimes you can tell if a verb is plural/singular, just by the verb
 // i am / we were
 // othertimes you need its subject 'we walk' vs 'i walk'
@@ -9,17 +14,17 @@ const isPlural = function(parsed) {
   if (vb.match('(is|am|do|was)').found) {
     return false
   }
-  // console.log(vb.before())
   //consider its prior noun
-  // let noun = vb.getNoun();
-  // if (noun && noun.found) {
-  //   if (noun.match('#Plural').found) {
-  //     return true;
-  //   }
-  //   if (noun.match('#Singular').found) {
-  //     return false;
-  //   }
-  // }
+  let noun = findNoun(vb)
+  if (noun.match('(i|we|they|you)').found) {
+    return true
+  }
+  if (noun.match('#Plural').found) {
+    return true
+  }
+  if (noun.match('#Singular').found) {
+    return false
+  }
   return null
 }
 module.exports = isPlural

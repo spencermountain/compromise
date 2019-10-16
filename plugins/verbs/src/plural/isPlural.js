@@ -1,3 +1,4 @@
+// the most-recent noun-phrase, before this verb.
 const findNoun = function(vb) {
   let noun = vb.lookBehind('#Noun+').last()
   return noun

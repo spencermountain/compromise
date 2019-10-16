@@ -16,10 +16,10 @@ nlp.extend(require('./plugins/verbs/src'))
 // doc.match('~walk~').debug()
 // console.log(doc.text('root') + '|')
 
-let r = nlp('i look at')
-
-r.verbs().toPresentTense()
+let r = nlp("i'm good")
+r.match('am').replaceWith('newwww')
 r.debug()
+console.log(r.text())
 
 //  .isPlural()
 // .debug()

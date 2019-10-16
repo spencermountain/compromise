@@ -21,10 +21,6 @@ exports.delete = function(doc) {
 }
 
 exports.replace = function(newPhrase, doc) {
-  // console.log(tokenize.fromText)
-  if (typeof newPhrase === 'string') {
-    // console.log(build(newPhrase))
-  }
   //add it do the end
   let firstLength = this.length
   append(this, newPhrase, doc)

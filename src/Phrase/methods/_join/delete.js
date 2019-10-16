@@ -28,6 +28,11 @@ const deletePhrase = function(phrase, doc) {
   let prev = pool.get(terms[0].prev) || {}
   let after = pool.get(terms[terms.length - 1].next) || {}
 
+  if (terms[0].implicit && prev.implicit) {
+    prev.set(prev.implicit)
+    prev.post += ' '
+  }
+
   // //first, change phrase lengths
   shrinkAll(doc, phrase.start, phrase.length, after)
 
@@ -41,7 +46,7 @@ const deletePhrase = function(phrase, doc) {
   }
   // lastly, actually delete the terms from the pool
   for (let i = 0; i < terms.length; i++) {
-    // pool.remove(terms[i].id) //TODO: add this optimization
+    pool.remove(terms[i].id)
   }
 }
 module.exports = deletePhrase

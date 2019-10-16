@@ -2,6 +2,7 @@ module.exports = [
   //famous people with names that are hard to recognize independendtly
   //male
   'hitler',
+  'ronaldo',
   'ashton kutcher',
   'barack obama',
   'cardinal wolsey',

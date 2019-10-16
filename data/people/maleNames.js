@@ -20,6 +20,7 @@ module.exports = [
   'adama',
   'adan',
   'adolfo',
+  'adolf',
   'adrian',
   'advik',
   'agustin',

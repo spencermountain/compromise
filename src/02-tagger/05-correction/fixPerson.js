@@ -174,7 +174,7 @@ const fixPerson = function(doc) {
     }
 
     let lastName = person.if('#LastName')
-    if (lastName === true) {
+    if (lastName.found === true) {
       //is foo Smith
       lastName.match('#Copula [(#Noun|#PresentTense)] #LastName').tag('#FirstName', 'copula-noun-lastname')
       // x Lastname
@@ -188,10 +188,9 @@ const fixPerson = function(doc) {
           '[(will|may|april|june|said|rob|wade|ray|rusty|drew|miles|jack|chuck|randy|jan|pat|cliff|bill)] #LastName'
         )
         .tag('#FirstName', 'maybe-lastname')
-
       //Jani K. Smith
       lastName
-        .match('#TitleCase #Acronym? #LastName')
+        .match('(#TitleCase|#Singular) #Acronym? #LastName')
         .ifNo('#Date')
         .tag('#Person', 'title-acro-noun')
         .lastTerm()

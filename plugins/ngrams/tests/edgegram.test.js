@@ -19,8 +19,14 @@ test('edgegram-sizes:', function(t) {
   arr = r.endGrams({ size: 3 })
   t.equal(arr.length, 3, 'found-3-endgram')
 
+  arr = r.nGrams({ size: 5 })
+  t.equal(arr.length, 0, 'zerp-5-ngram')
   arr = r.nGrams({ size: 4 })
   t.equal(arr.length, 1, 'one-4-ngram')
+  arr = r.nGrams({ size: 3 })
+  t.equal(arr.length, 4, 'four-3-ngrams')
+  arr = r.nGrams({ size: 2 })
+  t.equal(arr.length, 6, 'six-2-ngrams')
 
   t.end()
 })

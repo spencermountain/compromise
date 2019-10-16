@@ -37,7 +37,7 @@ module.exports = {
   no: 'Negative',
   non: 'Negative',
   never: 'Negative',
-  not: ['Negative', 'Verb'],
+  not: ['Negative'], //, 'Verb'
 
   where: 'QuestionWord',
   why: 'QuestionWord',

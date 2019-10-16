@@ -16,6 +16,11 @@ const addMethod = function(Doc) {
 
     /** overload the original json with verb information */
     json(options) {
+      let n = null
+      if (typeof options === 'number') {
+        n = options
+        options = null
+      }
       options = options || { text: true, normal: true, trim: true, terms: true }
       let res = []
       this.forEach(p => {
@@ -29,6 +34,9 @@ const addMethod = function(Doc) {
         json.conjugations = conjugations(parsed, this.world)
         res.push(json)
       })
+      if (n !== null) {
+        return res[n]
+      }
       return res
     }
 
@@ -54,7 +62,7 @@ const addMethod = function(Doc) {
   Doc.prototype.verbs = function(n) {
     let match = this.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+')
     // handle commas
-    // match = match.splitAfter('!#Adverb @hasComma')
+    match = match.splitAfter('@hasComma')
     //handle slashes?
     // match = match.splitAfter('@hasSlash')
     //ensure there's actually a verb

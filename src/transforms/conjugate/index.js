@@ -3,7 +3,7 @@ const genericFill = require('./02-generic')
 
 //we run this on every verb in the lexicon, so please keep it fast
 //we assume the input word is a proper infinitive
-const fastConjugate = function(str = '', world) {
+const conjugate = function(str = '', world) {
   let found = {}
   // 1. look at irregulars
   //the lexicon doesn't pass this in
@@ -13,7 +13,7 @@ const fastConjugate = function(str = '', world) {
     }
   }
   //2. rule-based regex
-  found = Object.assign({}, found, checkSuffix(str))
+  found = Object.assign({}, checkSuffix(str), found)
 
   //3. generic transformations
   //'buzzing'
@@ -30,4 +30,4 @@ const fastConjugate = function(str = '', world) {
   }
   return found
 }
-module.exports = fastConjugate
+module.exports = conjugate

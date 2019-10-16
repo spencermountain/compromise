@@ -11,15 +11,21 @@ nlp.extend(require('./plugins/verbs/src'))
 3. .swap()
 */
 
-let doc = nlp(`A priest walked into the bars.`)
-doc.cache({ root: true })
-doc.match('~walk~').debug()
-// doc.match('~bar~').debug()
+// let doc = nlp(`A priest walked into the bars.`)
+// doc.cache({ root: true })
+// doc.match('~walk~').debug()
 // console.log(doc.text('root') + '|')
 
-// let doc = nlp(`he disguised the carrot`).debug()
+// {
+//   Infinitive: 'age',
+//   PresentTense: 'ages',
+//   PastTense: 'aged',
+//   Gerund: 'ageing',
+// },
+
+let doc = nlp(`shed`).debug()
 // let doc = nlp(`walking`).debug()
-// console.log(doc.verbs().conjugate(0))
+console.log(doc.verbs().conjugate(0))
 // doc = doc.terms().unique()
 // console.log(doc.termList())
 // console.log(doc.text('reduced'))

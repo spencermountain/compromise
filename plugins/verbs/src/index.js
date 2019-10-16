@@ -63,6 +63,7 @@ const addMethod = function(Doc) {
     let match = this.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+')
     // handle commas
     match = match.splitAfter('@hasComma')
+    // match = match.clauses()
     //handle slashes?
     // match = match.splitAfter('@hasSlash')
     //ensure there's actually a verb

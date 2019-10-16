@@ -9,21 +9,21 @@ const findNoun = function(vb) {
 // othertimes you need its subject 'we walk' vs 'i walk'
 const isPlural = function(parsed) {
   let vb = parsed.verb
-  if (vb.match('(are|were|does)').found) {
+  if (vb.has('(are|were|does)') || parsed.auxiliary.has('(are|were|does)')) {
     return true
   }
-  if (vb.match('(is|am|do|was)').found) {
+  if (vb.has('(is|am|do|was)') || parsed.auxiliary.has('(is|am|do|was)')) {
     return false
   }
   //consider its prior noun
   let noun = findNoun(vb)
-  if (noun.match('(i|we|they|you)').found) {
+  if (noun.has('(i|we|they|you)')) {
     return true
   }
-  if (noun.match('#Plural').found) {
+  if (noun.has('#Plural')) {
     return true
   }
-  if (noun.match('#Singular').found) {
+  if (noun.has('#Singular')) {
     return false
   }
   return null

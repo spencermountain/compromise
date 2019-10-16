@@ -13,9 +13,10 @@ nlp.extend(require('./plugins/verbs/src'))
 // doc.match('~walk~').debug()
 // console.log(doc.text('root') + '|')
 
-const doc = nlp("they're good").debug()
+const doc = nlp('lkjsdf does eat bugs')
 doc
   .verbs()
-  .toPastTense()
+  .isPlural()
   .debug()
-console.log(doc.text())
+
+// doc.debug()

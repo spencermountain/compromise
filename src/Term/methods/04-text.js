@@ -10,6 +10,9 @@ exports.textOut = function(options, showPre, showPost) {
   if (options.unicode === true) {
     word = this.clean
   }
+  if (options.reduced === true) {
+    word = this.reduced
+  }
   if (options.root === true) {
     word = this.root
   }

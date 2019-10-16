@@ -19,5 +19,5 @@ const nlp = require('./src/index')
 
 let doc = nlp(`SPENCER's house (spencer)`)
 doc = doc.terms().unique()
-console.log(doc.termList())
-console.log(doc.text())
+// console.log(doc.termList())
+console.log(doc.text('reduced'))

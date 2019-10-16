@@ -1,8 +1,9 @@
-'use strict'
+const isPlural = require('../../plural/isPlural')
+
 /** too many special cases for is/was/will be*/
 const toBe = parsed => {
   let isI = false
-  let isPlural = false
+  let plural = isPlural(parsed)
   let isNegative = parsed.negative.found
   //account for 'i is' -> 'i am' irregular
   // if (vb.parent && vb.parent.has('i #Adverb? #Copula')) {
@@ -24,7 +25,7 @@ const toBe = parsed => {
     obj.PresentTense = 'am'
     obj.Infinitive = 'am'
   }
-  if (isPlural) {
+  if (plural) {
     obj.PastTense = 'were'
     obj.PresentTense = 'are'
     obj.Infinitive = 'are'

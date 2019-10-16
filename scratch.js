@@ -1,7 +1,7 @@
 const nlp = require('./src/index')
 // const corpus = require('nlp-corpus')
 // nlp.verbose(true)
-nlp.extend(require('./plugins/entities/src'))
+nlp.extend(require('./plugins/verbs/src'))
 
 /*
 2. ~walk~ match
@@ -13,5 +13,9 @@ nlp.extend(require('./plugins/entities/src'))
 // doc.match('~walk~').debug()
 // console.log(doc.text('root') + '|')
 
-const r = nlp(`Sardinia F Jones`).debug()
-r.people().debug()
+const doc = nlp("they're good").debug()
+doc
+  .verbs()
+  .toPastTense()
+  .debug()
+console.log(doc.text())

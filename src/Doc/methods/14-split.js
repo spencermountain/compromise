@@ -105,3 +105,28 @@ exports.splitBefore = function(reg) {
   })
   return this.buildFrom(matches)
 }
+
+/** split a document into labeled sections */
+exports.segment = function(regs, options) {
+  options = options || { text: true }
+  let doc = this
+  let keys = Object.keys(regs)
+  // split em
+  keys.forEach(k => {
+    doc = doc.splitOn(k)
+  })
+  //add labels for each section
+  doc.list.forEach(p => {
+    for (let i = 0; i < keys.length; i += 1) {
+      if (p.has(keys[i])) {
+        p.segment = regs[keys[i]]
+        return
+      }
+    }
+  })
+  return doc.list.map(p => {
+    let res = p.json(options)
+    res.segment = p.segment || null
+    return res
+  })
+}

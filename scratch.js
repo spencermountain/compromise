@@ -1,7 +1,7 @@
 const nlp = require('./src/index')
 // const corpus = require('nlp-corpus')
 // nlp.verbose(true)
-nlp.extend(require('./plugins/nouns/src'))
+// nlp.extend(require('./plugins/nouns/src'))
 
 /*
 2. ~walk~ match
@@ -13,7 +13,13 @@ nlp.extend(require('./plugins/nouns/src'))
 // doc.match('~walk~').debug()
 // console.log(doc.text('root') + '|')
 
-const doc = nlp('i eat bugs')
-doc.nouns().toPlural()
-
-console.log(doc.text())
+const doc = nlp('i really eat bugs. i once ate a cow. i will sometimes eat a horse')
+// doc.nouns().toPlural()
+// doc.debug()
+console.log(
+  doc.segment({
+    'a #Noun': 'Thing',
+    '#Plural': 'More',
+    '(eat|ate)': 'Did',
+  })
+)

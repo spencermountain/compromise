@@ -1,15 +1,20 @@
 const rules = require('./_rules')
 
-const toSingular = function(str) {
-  // does it even inflect, in the first place?
-  // if (hasPlural(doc) === false) {
-  //   return doc
-  // }
-  // let str = doc.text('normal').trim()
+const invertObj = function(obj) {
+  return Object.keys(obj).reduce((h, k) => {
+    h[obj[k]] = k
+    return h
+  }, {})
+}
+
+const toSingular = function(str, world) {
+  let irregulars = world.irregulars.nouns
+  let invert = invertObj(irregulars)
+
   // check irregulars list
-  // if (irregulars.hasOwnProperty(str)) {
-  //   return irregulars[str]
-  // }
+  if (invert.hasOwnProperty(str)) {
+    return invert[str]
+  }
 
   // go through our regexes
   for (let i = 0; i < rules.length; i++) {

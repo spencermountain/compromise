@@ -1,7 +1,7 @@
 const nlp = require('./src/index')
 // const corpus = require('nlp-corpus')
 // nlp.verbose(true)
-nlp.extend(require('./plugins/verbs/src'))
+nlp.extend(require('./plugins/nouns/src'))
 
 /*
 2. ~walk~ match
@@ -13,10 +13,7 @@ nlp.extend(require('./plugins/verbs/src'))
 // doc.match('~walk~').debug()
 // console.log(doc.text('root') + '|')
 
-const doc = nlp('lkjsdf does eat bugs')
-doc
-  .verbs()
-  .isPlural()
-  .debug()
+const doc = nlp('i eat bugs')
+doc.nouns().toPlural()
 
-// doc.debug()
+console.log(doc.text())

@@ -1,14 +1,7 @@
 const hasPlural = require('./hasPlural')
 const getArticle = require('./getArticle')
-const toPlural = require('./toPlural')
+// const toPlural = require('./toPlural')
 const toPossessive = require('./toPossessive')
-
-const invertObj = function(obj) {
-  return Object.keys(obj).reduce((h, k) => {
-    h[obj[k]] = k
-    return h
-  }, {})
-}
 
 const addMethod = function(Doc) {
   /**  */
@@ -32,16 +25,30 @@ const addMethod = function(Doc) {
       return this.filter(d => hasPlural(d))
     }
     toPlural() {
-      return this.map(d => toPlural(d))
+      let toPlural = this.world.transforms.toPlural
+      this.forEach(doc => {
+        if (doc.has('#Plural') || hasPlural(doc) === false) {
+          return
+        }
+        let str = toPlural(doc.text(), this.world)
+        doc.replace(str)
+      })
+      return this
     }
     toSingular() {
-      let invert = invertObj(this.world.irregulars.nouns) // create singular->plural mapping
-      return this.map(d => toSingular(d, invert))
+      let toSingular = this.world.transforms.toSingular
+      this.forEach(doc => {
+        if (doc.has('#Plural') || hasPlural(doc) === false) {
+          return
+        }
+        let str = toSingular(doc.text(), this.world)
+        doc.replace(str)
+      })
+      return this
     }
     toPossessive() {
       return this.map(d => toPossessive(d))
     }
-    // articles() {} //?
   }
 
   Doc.prototype.nouns = function(n) {

@@ -23,7 +23,7 @@ const addMore = function(word, tag, world) {
   }
   // inflect our nouns
   if (tag === 'Singular') {
-    let plural = transform.toPlural(word)
+    let plural = transform.toPlural(word, world)
     lexicon[plural] = lexicon[plural] || 'Plural' // only if it's safe
   }
   //conjugate our verbs
@@ -62,7 +62,7 @@ const addMore = function(word, tag, world) {
   }
   // inflect our demonyms - 'germans'
   if (tag === 'Demonym') {
-    let plural = transform.toPlural(word)
+    let plural = transform.toPlural(word, world)
     lexicon[plural] = lexicon[plural] || ['Demonym', 'Plural'] // only if it's safe
   }
 }

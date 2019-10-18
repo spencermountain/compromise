@@ -38,7 +38,7 @@ exports.setRoot = function(world) {
   let transform = world.transforms
   let str = this.implicit || this.clean
   if (this.tags.Plural) {
-    str = transform.toSingular(str)
+    str = transform.toSingular(str, world)
   }
   if (this.tags.Verb && !this.tags.Negative && !this.tags.Infinitive) {
     let tense = null

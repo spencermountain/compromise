@@ -8,11 +8,12 @@
 * .insertAt()
 
 
-### Refactored
+### New Behaviour
 * data/out -> .json() .text()
 * .html()
 * ngrams()
 * offsets
+* removed #Quotation, #Comma, #ClauseEnd tags
 
 
 ### New Methods:

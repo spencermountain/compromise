@@ -22,8 +22,6 @@ const pairs = {
 }
 
 const hasOpen = RegExp('(' + Object.keys(pairs).join('|') + ')')
-let closes = Object.keys(pairs).map(k => pairs[k])
-const hasClose = RegExp('(' + closes.join('|') + ')')
 
 const addMethod = function(Doc) {
   /** "these things" */

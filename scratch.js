@@ -9,6 +9,7 @@ nlp.extend(require('./plugins/verbs/src'))
 */
 
 // let r = nlp(`i said “don't have a cow, man”.`)
-let r = nlp(`i said ＂don't have a cow, man＂.`)
+let r = nlp(`he is \u2E42really good\u201D`)
 r.debug()
 r.quotations().debug()
+console.log(r.text())

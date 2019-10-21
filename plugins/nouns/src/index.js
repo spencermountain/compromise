@@ -2,6 +2,7 @@ const hasPlural = require('./hasPlural')
 const getArticle = require('./getArticle')
 const isPlural = require('./isPlural')
 const toPossessive = require('./toPossessive')
+const parse = require('./parse')
 
 const addMethod = function(Doc) {
   /**  */
@@ -31,12 +32,13 @@ const addMethod = function(Doc) {
           return
         }
         // double-check it isn't an un-tagged plural
-        let str = doc.text()
-        if (!doc.has('#Singular') && isPlural(str) === true) {
+        let main = parse(doc).main
+        let str = main.text()
+        if (!main.has('#Singular') && isPlural(str) === true) {
           return
         }
         str = toPlural(str, this.world)
-        doc.replace(str).tag('#Plural')
+        main.replace(str).tag('#Plural')
       })
       return this
     }
@@ -47,12 +49,13 @@ const addMethod = function(Doc) {
           return
         }
         // double-check it isn't an un-tagged plural
-        let str = doc.text()
-        if (!doc.has('#Plural') && isPlural(str) !== true) {
+        let main = parse(doc).main
+        let str = main.text()
+        if (!main.has('#Plural') && isPlural(str) !== true) {
           return
         }
         str = toSingular(str, this.world)
-        doc.replace(str).tag('#Singular')
+        main.replace(str).tag('#Singular')
       })
       return this
     }

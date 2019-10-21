@@ -158,8 +158,7 @@ const fixPerson = function(doc) {
       //john bodego's
       firstName
         .match('#FirstName (#Singular|#Possessive)')
-        .ifNo('#Date')
-        .ifNo('#NickName')
+        .ifNo('(#Date|#Pronoun|#NickName)')
         .tag('#Person', 'first-possessive')
         .lastTerm()
         .tag('#LastName', 'first-possessive')

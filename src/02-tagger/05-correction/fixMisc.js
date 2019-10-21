@@ -95,13 +95,13 @@ const miscCorrection = function(doc) {
   if (hyph.found === true) {
     //air-flow
     hyph
-      .match('@hasHyphen @hasHyphen')
+      .match('@hasHyphen .')
       .match('#Noun #Verb')
       .tag('Noun', 'hyphen-verb')
     //connect hyphenated expressions - 'ooh-wee'
     hyph
       .if('#Expression')
-      .match('#@hasHyphen+')
+      .match('@hasHyphen+')
       .tag('Expression', 'ooh-wee')
   }
 

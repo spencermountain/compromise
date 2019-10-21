@@ -13,7 +13,7 @@ const checkPrefix = function(terms, world) {
     if (hasPrefix.test(term.clean) === true) {
       // look for the root word in the lexicon:
       let stem = term.clean.replace(prefix, '')
-      if (lex[stem] !== undefined && lex.hasOwnProperty(stem) === true) {
+      if (stem && stem.length > 3 && lex[stem] !== undefined && lex.hasOwnProperty(stem) === true) {
         term.tag(lex[stem], 'stem-' + stem, world)
       }
     }

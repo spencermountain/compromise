@@ -1,4 +1,4 @@
-const hasSpace = /[ -]/
+const hasSpace = /[\s-]/
 
 /** return various text formats of this term */
 exports.textOut = function(options, showPre, showPost) {

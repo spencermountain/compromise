@@ -8,10 +8,10 @@ nlp.extend(require('./plugins/nouns/src'))
 3. .swap()
 */
 
-nlp(`gas`)
-  // .tag('Singular')
-  // .nouns()
-  // .toPlural()
-  .debug()
+let doc = nlp(`the Knight	of`) //.nouns(0)
+console.log(doc.termList())
+// .toPlural()
+// .debug()
 
-// console.log(doc.text())
+// console.log(doc.text('text'))
+console.log(doc.text('normal'))

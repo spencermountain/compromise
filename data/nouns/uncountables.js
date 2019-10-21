@@ -33,6 +33,7 @@ module.exports = [
   'conduct',
   'confusion',
   'cotton',
+  'cold war',
   'currency',
   'darts',
   'diabetes',

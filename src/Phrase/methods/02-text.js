@@ -12,6 +12,14 @@ exports.text = function(options = {}, isFirst, isLast) {
         unicode: true,
         implicit: true,
       }
+    } else if (options === 'clean') {
+      options = {
+        lowercase: true,
+        punctuation: true,
+        whitespace: true,
+        unicode: true,
+        implicit: true,
+      }
     } else if (options === 'reduced') {
       options = {
         lowercase: true,
@@ -29,14 +37,6 @@ exports.text = function(options = {}, isFirst, isLast) {
         unicode: true,
         implicit: true,
         root: true,
-      }
-    } else if (options === 'clean') {
-      options = {
-        lowercase: true,
-        punctuation: true,
-        whitespace: true,
-        unicode: true,
-        implicit: true,
       }
     } else {
       options = {}

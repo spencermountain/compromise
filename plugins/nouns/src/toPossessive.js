@@ -15,7 +15,7 @@ const exceptions = {
 
 // turn "David" to "David's"
 const toPossessive = function(doc) {
-  let str = doc.text('normal').trim()
+  let str = doc.text('text').trim()
   // exceptions
   if (exceptions.hasOwnProperty(str)) {
     doc.replaceWith(exceptions[str])

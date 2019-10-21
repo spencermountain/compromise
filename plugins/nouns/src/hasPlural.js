@@ -1,4 +1,5 @@
-const noPlural = '(#Pronoun|#Place|#Value|#Person|#Uncountable|#Month|#WeekDay|#Holiday)'
+const noPlural =
+  '(#Pronoun|#Place|#Value|#Person|#Uncountable|#Month|#WeekDay|#Holiday|#Possessive)'
 
 //certain words can't be plural, like 'peace'
 const hasPlural = function(doc) {

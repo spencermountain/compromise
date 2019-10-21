@@ -8,16 +8,16 @@ exports.textOut = function(options, showPre, showPost) {
   let after = this.post
 
   if (options.unicode === true) {
-    word = this.clean
+    word = this.clean || ''
   }
   if (options.reduced === true) {
-    word = this.reduced
+    word = this.reduced || ''
   }
   if (options.root === true) {
-    word = this.root
+    word = this.root || ''
   }
   if (options.implicit === true && this.implicit) {
-    word = this.implicit
+    word = this.implicit || ''
   }
   if (options.whitespace === true) {
     before = ''

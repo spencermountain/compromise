@@ -1,6 +1,6 @@
 const hasPlural = require('./hasPlural')
 const getArticle = require('./getArticle')
-// const toPlural = require('./toPlural')
+const isPlural = require('./isPlural')
 const toPossessive = require('./toPossessive')
 
 const addMethod = function(Doc) {
@@ -19,7 +19,7 @@ const addMethod = function(Doc) {
     }
 
     isPlural() {
-      return this.if('#Plural')
+      return this.if('#Plural') //assume tagger has run?
     }
     hasPlural() {
       return this.filter(d => hasPlural(d))
@@ -30,24 +30,37 @@ const addMethod = function(Doc) {
         if (doc.has('#Plural') || hasPlural(doc) === false) {
           return
         }
-        let str = toPlural(doc.text(), this.world)
-        doc.replace(str)
+        // double-check it isn't an un-tagged plural
+        let str = doc.text()
+        if (!doc.has('#Singular') && isPlural(str) === true) {
+          return
+        }
+        str = toPlural(str, this.world)
+        doc.replace(str).tag('#Plural')
       })
       return this
     }
     toSingular() {
       let toSingular = this.world.transforms.toSingular
       this.forEach(doc => {
-        if (doc.has('#Plural') || hasPlural(doc) === false) {
+        if (doc.has('#Singular') || hasPlural(doc) === false) {
           return
         }
-        let str = toSingular(doc.text(), this.world)
-        doc.replace(str)
+        // double-check it isn't an un-tagged plural
+        let str = doc.text()
+        if (!doc.has('#Plural') && isPlural(str) !== true) {
+          return
+        }
+        str = toSingular(str, this.world)
+        doc.replace(str).tag('#Singular')
       })
       return this
     }
     toPossessive() {
-      return this.map(d => toPossessive(d))
+      this.forEach(d => {
+        toPossessive(d)
+      })
+      return this
     }
   }
 

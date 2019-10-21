@@ -1,13 +1,13 @@
-const suffixes = require('./01-suffixes')
+const rules = require('./_rules')
 const addE = /(x|ch|sh|s|z)$/
 
 const trySuffix = function(str) {
   let c = str[str.length - 1]
-  if (suffixes.hasOwnProperty(c) === true) {
-    for (let i = 0; i < suffixes[c].length; i += 1) {
-      let reg = suffixes[c][i][0]
+  if (rules.hasOwnProperty(c) === true) {
+    for (let i = 0; i < rules[c].length; i += 1) {
+      let reg = rules[c][i][0]
       if (reg.test(str) === true) {
-        return str.replace(reg, suffixes[c][i][1])
+        return str.replace(reg, rules[c][i][1])
       }
     }
   }

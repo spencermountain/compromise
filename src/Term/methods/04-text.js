@@ -22,7 +22,7 @@ exports.textOut = function(options, showPre, showPost) {
   if (options.whitespace === true) {
     before = ''
     after = ' '
-    if (hasSpace.test(this.post) === false || options.last) {
+    if ((hasSpace.test(this.post) === false || options.last) && !this.implicit) {
       after = ''
     }
   }

@@ -1,3 +1,6 @@
+// spencer walks -> singular
+// we walk -> plural
+
 // the most-recent noun-phrase, before this verb.
 const findNoun = function(vb) {
   let noun = vb.lookBehind('#Noun+').last()
@@ -17,7 +20,7 @@ const isPlural = function(parsed) {
   }
   //consider its prior noun
   let noun = findNoun(vb)
-  if (noun.has('(i|we|they|you)')) {
+  if (noun.has('(we|they|you)')) {
     return true
   }
   if (noun.has('#Plural')) {

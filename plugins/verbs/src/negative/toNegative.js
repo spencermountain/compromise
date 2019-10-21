@@ -16,7 +16,7 @@ const toNegative = function(parsed, world) {
 
   // would walk -> would not walk
   if (parsed.auxiliary.found) {
-    parsed.auxiliary.append('not')
+    parsed.auxiliary.eq(0).append('not')
     return
   }
   // is walking -> is not walking

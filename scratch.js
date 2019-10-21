@@ -1,17 +1,16 @@
 const nlp = require('./src/index')
 // const corpus = require('nlp-corpus')
 // nlp.verbose(true)
-nlp.extend(require('./plugins/nouns/src'))
+nlp.extend(require('./plugins/verbs/src'))
 
 /*
 2. ~walk~ match
 3. .swap()
 */
 
-let doc = nlp(`the Knight	of`) //.nouns(0)
-console.log(doc.termList())
-// .toPlural()
-// .debug()
-
-// console.log(doc.text('text'))
-console.log(doc.text('normal'))
+let r = nlp(`i didn't want to`)
+r.verbs()
+  .debug()
+  .toNegative()
+  .debug()
+console.log(r.text('text'))

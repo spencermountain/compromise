@@ -2,7 +2,7 @@ const test = require('tape')
 const nlp = require('./_lib')
 
 test('verb-to-negative:', function(t) {
-  ;[
+  let arr = [
     [`he is nice`, 'is not'],
     [`she was nice`, 'was not'],
 
@@ -37,11 +37,12 @@ test('verb-to-negative:', function(t) {
     ['we play', 'do not play'],
     // futureTense -
     ['we will play', 'will not play'],
-  ].forEach(function(a) {
+  ]
+  arr.forEach(function(a) {
     const vb = nlp(a[0])
       .verbs()
       .toNegative()
-    const str = vb.out('normal')
+    const str = vb.out('text')
     t.equal(str, a[1], "'" + str + "' - - want: " + a[1])
   })
   t.end()

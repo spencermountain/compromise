@@ -8,9 +8,7 @@ nlp.extend(require('./plugins/verbs/src'))
 3. .swap()
 */
 
-let r = nlp(`i didn't want to`)
-r.verbs()
-  .debug()
-  .toNegative()
-  .debug()
-console.log(r.text('text'))
+// let r = nlp(`i said “don't have a cow, man”.`)
+let r = nlp(`i said ＂don't have a cow, man＂.`)
+r.debug()
+r.quotations().debug()

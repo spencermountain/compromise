@@ -5,6 +5,7 @@ const selections = [
   require('./Parentheses'),
   require('./Possessives'),
   require('./Lists'),
+  require('./Quotations'),
 ]
 
 const extend = function(Doc) {

@@ -30,7 +30,7 @@ const addMethod = function(Doc) {
 
   Doc.prototype.possessives = function(n) {
     //find currently-contracted
-    let found = this.match('#Possessive')
+    let found = this.match('#Noun+? #Possessive')
     //todo: split consecutive contractions
     if (typeof n === 'number') {
       found = found.get(n)

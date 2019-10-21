@@ -1,16 +1,14 @@
 const nlp = require('./src/index')
 // const corpus = require('nlp-corpus')
 // nlp.verbose(true)
-nlp.extend(require('./plugins/verbs/src'))
+nlp.extend(require('./plugins/entities/src'))
 
 /*
 2. ~walk~ match
 3. .swap()
 */
 
-// let r = nlp(`i said “don't have a cow, man”.`)
-let r = nlp(`'twas so`)
-r.debug()
+let doc = nlp("hello. spencer is spencer's house. Spencer is.")
 
-r.quotations().debug()
-console.log(r.text())
+const arr = doc.terms().json({ reduced: true })
+console.log(arr)

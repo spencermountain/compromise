@@ -23,7 +23,7 @@ exports.text = function(options = {}, isFirst, isLast) {
     } else if (options === 'reduced') {
       options = {
         lowercase: true,
-        punctuation: true,
+        punctuation: false, //FIXME: reversed
         whitespace: true,
         unicode: true,
         implicit: true,

@@ -31,8 +31,14 @@ exports.out = function(method) {
   if (method === 'json') {
     return this.json()
   }
+  if (method === 'offset' || method === 'offsets') {
+    return this.json({ offset: true })
+  }
   if (method === 'array') {
     return this.json({ terms: false }).map(obj => obj.text)
+  }
+  if (method === 'freq') {
+    return this.json({ count: true, terms: false, reduced: true })
   }
   if (method === 'terms') {
     let list = []

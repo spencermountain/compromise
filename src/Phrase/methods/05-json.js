@@ -3,10 +3,10 @@ exports.json = function(options = {}, world) {
   let res = {}
   // text data
   if (options.text) {
-    res.text = this.text(options)
-    // if (options.trim) {
-    // res.text = res.text.trim()
-    // }
+    res.text = this.text()
+  }
+  if (options.reduced) {
+    res.reduced = this.text('reduced')
   }
   if (options.normal) {
     res.normal = this.text({
@@ -14,6 +14,17 @@ exports.json = function(options = {}, world) {
       whitespace: true,
       unicode: true,
     })
+  }
+  if (options.trim) {
+    if (res.text) {
+      res.text = res.text.trim()
+    }
+    if (res.normal) {
+      res.normal = res.normal.trim()
+    }
+    if (res.reduced) {
+      res.reduced = res.reduced.trim()
+    }
   }
   // terms data
   if (options.terms) {

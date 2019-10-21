@@ -9,8 +9,8 @@ const addMethods = function(Doc) {
     let r = this.clauses()
     // Find people, places, and organizations
     let yup = r.people()
-    yup.concat(r.places())
-    yup.concat(r.organizations())
+    yup = yup.concat(r.places())
+    yup = yup.concat(r.organizations())
     let ignore = ['someone', 'man', 'woman', 'mother', 'brother', 'sister', 'father']
     yup = yup.not(ignore)
     //return them to normal ordering

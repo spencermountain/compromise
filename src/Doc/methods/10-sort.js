@@ -12,19 +12,6 @@ const methods = {
     return 0
   },
 
-  /** the 'chronological', or original document sort order */
-  chron: (a, b) => {
-    let left = a.text()
-    let right = b.text()
-    if (left < right) {
-      return 1
-    }
-    if (left > right) {
-      return -1
-    }
-    return 0
-  },
-
   /** count the # of characters of each match */
   length: (a, b) => {
     let left = a.text().trim().length
@@ -66,7 +53,6 @@ const byFreq = function(doc) {
     counts[str] = counts[str] || 0
     counts[str] += 1
   })
-  console.log(counts)
   // sort by freq
   doc.list.sort((a, b) => {
     let left = counts[a.text(options)]
@@ -75,6 +61,23 @@ const byFreq = function(doc) {
       return 1
     }
     if (left > right) {
+      return -1
+    }
+    return 0
+  })
+  return doc
+}
+
+// order results 'chronologically', or document-order
+const byOffset = function(doc) {
+  let order = {}
+  doc.json({ terms: { offset: true } }).forEach(o => {
+    order[o.terms[0].id] = o.terms[0].offset.start
+  })
+  doc.list = doc.list.sort((a, b) => {
+    if (order[a.start] > order[b.start]) {
+      return 1
+    } else if (order[a.start] < order[b.start]) {
       return -1
     }
     return 0
@@ -91,11 +94,15 @@ methods.index = methods.chron
 /** re-arrange the order of the matches (in place) */
 exports.sort = function(input) {
   input = input || 'alpha'
-  input = methods[input] || input
   //do this one up-front
   if (input === 'freq' || input === 'frequency' || input === 'topk') {
     return byFreq(this)
   }
+  if (input === 'chron' || input === 'chronological') {
+    return byOffset(this)
+  }
+
+  input = methods[input] || input
   // apply sort method on each phrase
   if (typeof input === 'function') {
     this.list = this.list.sort(input)

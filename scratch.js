@@ -1,14 +1,20 @@
 const nlp = require('./src/index')
 // const corpus = require('nlp-corpus')
 // nlp.verbose(true)
-nlp.extend(require('./plugins/entities/src'))
+nlp.extend(require('./plugins/numbers/src'))
 
 /*
 2. ~walk~ match
 3. .swap()
 */
 
-let doc = nlp("hello. spencer is spencer's house. Spencer is.")
+let doc = nlp('500th')
 
-const arr = doc.terms().json({ reduced: true })
-console.log(arr)
+// doc.debug()
+
+doc
+  .numbers()
+  .toText()
+  .debug()
+
+console.log(doc.text())

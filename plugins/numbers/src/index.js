@@ -24,7 +24,7 @@ const makeNumber = function(obj, isText, isOrdinal) {
 
 // get a numeric value from this phrase
 const parseNumber = function(p) {
-  let str = p.root()
+  let str = p.text('reduced')
   //parse a numeric-number (easy)
   let arr = str.split(/^([^0-9]*)([0-9]*)([^0-9]*)$/)
   if (arr[2]) {
@@ -33,10 +33,14 @@ const parseNumber = function(p) {
     if (typeof num !== 'number') {
       num = null
     }
+    let suffix = arr[3] || ''
+    if (suffix === 'st' || suffix === 'nd' || suffix === 'rd' || suffix === 'th') {
+      suffix = ''
+    }
     return {
       prefix: arr[1] || '',
       num: num,
-      suffix: arr[3] || '',
+      suffix: suffix,
     }
   }
   //parse a text-numer (harder)
@@ -68,7 +72,7 @@ const addMethod = function(Doc) {
       this.forEach(val => {
         let obj = parseNumber(val)
         let str = makeNumber(obj, false, val.has('#Ordinal'))
-        this.replaceWith(str)
+        val.replaceWith(str)
       })
       return this
     }
@@ -76,7 +80,7 @@ const addMethod = function(Doc) {
       this.forEach(val => {
         let obj = parseNumber(val)
         let str = makeNumber(obj, true, val.has('#Ordinal'))
-        this.replaceWith(str)
+        val.replaceWith(str)
       })
       return this
     }
@@ -85,7 +89,7 @@ const addMethod = function(Doc) {
       m.forEach(val => {
         let obj = parseNumber(val)
         let str = makeNumber(obj, val.has('#TextNumber'), false)
-        this.replaceWith(str)
+        val.replaceWith(str)
       })
       return this
     }
@@ -94,7 +98,7 @@ const addMethod = function(Doc) {
       m.forEach(val => {
         let obj = parseNumber(val)
         let str = makeNumber(obj, val.has('#TextNumber'), true)
-        this.replaceWith(str)
+        val.replaceWith(str)
       })
       return this
     }
@@ -104,18 +108,29 @@ const addMethod = function(Doc) {
         return num > n
       })
     }
-    // lessThan() {}
-    // between() {}
+    lessThan(n) {
+      return this.filter(val => {
+        let num = parseNumber(val).num
+        return num < n
+      })
+    }
+    between(a, b) {
+      return this.filter(val => {
+        let num = parseNumber(val).num
+        return num > a && num < b
+      })
+    }
     add(n) {
       if (!n) {
         return this // don't bother
       }
-      return this.map(val => {
+      this.forEach(val => {
         let obj = parseNumber(val)
         obj.num += n
         let str = makeNumber(obj, val.has('#TextNumber'), val.has('#Ordinal'))
-        return val.replaceWith(str)
+        val.replaceWith(str)
       })
+      return this
     }
     subtract(n) {
       return this.add(n * -1)

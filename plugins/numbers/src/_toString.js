@@ -5,7 +5,12 @@ const numToString = function(n) {
   if (n < 1000000) {
     return String(n)
   }
-  var str = n.toFixed(0)
+  let str
+  if (typeof n === 'number') {
+    str = n.toFixed(0)
+  } else {
+    str = n
+  }
   if (str.indexOf('e+') === -1) {
     return str
   }

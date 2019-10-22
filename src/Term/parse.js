@@ -10,6 +10,7 @@ const endings = /[ \n\t\.’'\[\](){}⟨⟩:,،、‒–—―…!.‹›«»‐
 //money = ₵¢₡₢$₫₯֏₠€ƒ₣₲₴₭₺₾ℳ₥₦₧₱₰£៛₽₹₨₪৳₸₮₩¥
 const hasSlash = /\//
 const hasApostrophe = /['’]/
+const minusNumber = /^-[0-9\.,]+$/
 
 /** turn given text into a parsed-up object
  * seperate the 'meat' of the word from the whitespace+punctuation
@@ -20,6 +21,11 @@ const parseTerm = str => {
   let post = ''
   str = str.replace(startings, found => {
     pre = found
+    // support '-40'
+    if (pre === '-' && minusNumber.test(str)) {
+      pre = ''
+      return found
+    }
     return ''
   })
   str = str.replace(endings, found => {

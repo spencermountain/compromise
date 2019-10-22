@@ -8,13 +8,5 @@ nlp.extend(require('./plugins/numbers/src'))
 3. .swap()
 */
 
-let doc = nlp('500th')
-
-// doc.debug()
-
-doc
-  .numbers()
-  .toText()
-  .debug()
-
-console.log(doc.text())
+let r = nlp('two hundred and fifty times six')
+r.values().debug()

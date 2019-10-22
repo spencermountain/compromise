@@ -9,17 +9,17 @@ const findNumbers = function(doc, n) {
   //"50 83"
   if (match.has('#NumericValue #NumericValue')) {
     //a comma may mean two numbers
-    if (match.has('#Value #Comma #Value')) {
-      match.splitAfter('#Comma')
+    if (match.has('#Value @hasComma #Value')) {
+      match.splitAfter('@hasComma')
     } else {
-      match.splitAfter('#NumericValue')
+      match = match.splitAfter('#NumericValue')
     }
   }
   //three-length
   if (match.has('#Value #Value #Value') && !match.has('#Multiple')) {
     //twenty-five-twenty
     if (match.has('(' + tens + ') #Cardinal #Cardinal')) {
-      match.splitAfter('(' + tens + ') #Cardinal')
+      match = match.splitAfter('(' + tens + ') #Cardinal')
     }
   }
 
@@ -27,11 +27,11 @@ const findNumbers = function(doc, n) {
   if (match.has('#Value #Value')) {
     //june 21st 1992 is two seperate values
     if (match.has('#NumericValue #NumericValue')) {
-      match.splitOn('#Year')
+      match = match.splitOn('#Year')
     }
     //sixty fifteen
     if (match.has('(' + tens + ') (' + teens + ')')) {
-      match.splitAfter('(' + tens + ')')
+      match = match.splitAfter('(' + tens + ')')
     }
     //"72 82"
     let double = match.match('#Cardinal #Cardinal')
@@ -40,7 +40,7 @@ const findNumbers = function(doc, n) {
       if (!double.has('#Cardinal (#Multiple|point|decimal)')) {
         //one proper way, 'twenty one', or 'hundred one'
         if (!double.has('(' + tens + ') #Cardinal') && !double.has('#Multiple #Value')) {
-          match.splitAfter(double.terms(0).out('normal'))
+          match = match.splitAfter(double.terms(0).out('normal'))
         }
       }
     }
@@ -48,21 +48,21 @@ const findNumbers = function(doc, n) {
     if (match.match('#Ordinal #Ordinal').match('#TextValue').found && !match.has('#Multiple')) {
       //the one proper way, 'twenty first'
       if (!match.has('(' + tens + ') #Ordinal')) {
-        match.splitAfter('#Ordinal')
+        match = match.splitAfter('#Ordinal')
       }
     }
     //fifth five
     if (match.has('#Ordinal #Cardinal')) {
-      match.splitBefore('#Cardinal+')
+      match = match.splitBefore('#Cardinal+')
     }
     //five 2017 (support '5 hundred', and 'twenty 5'
     if (match.has('#TextValue #NumericValue') && !match.has('(' + tens + '|#Multiple)')) {
-      match.splitBefore('#NumericValue+')
+      match = match.splitBefore('#NumericValue+')
     }
   }
   //5-8
   if (match.has('#NumberRange')) {
-    match.splitAfter('#NumberRange')
+    match = match.splitAfter('#NumberRange')
   }
 
   //grab (n)th result

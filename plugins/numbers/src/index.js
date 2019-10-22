@@ -137,9 +137,11 @@ const addMethod = function(Doc) {
     }
     increment() {
       this.add(1)
+      return this
     }
     decrement() {
       this.add(-1)
+      return this
     }
   }
   //aliases

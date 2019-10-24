@@ -51,6 +51,11 @@ class World {
       enumerable: false,
       value: transforms,
     })
+
+    Object.defineProperty(this, 'taggers', {
+      enumerable: false,
+      value: [],
+    })
     // add our compressed data to lexicon
     this.unpackWords(lexData)
     // add our irregulars to lexicon
@@ -116,6 +121,17 @@ class World {
 
   addIrregulars() {
     addIrregulars(this)
+    return this
+  }
+
+  /** extend the compromise tagset */
+  addTags(tags) {
+    Object.assign(this.tags, tags)
+    return this
+  }
+  /** call methods after tagger runs */
+  postProcess(fn) {
+    this.taggers.push(fn)
     return this
   }
 

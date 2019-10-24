@@ -9,12 +9,10 @@ const addDownward = require('./addDownward')
 //used for pretty-printing on the server-side
 const colors = {
   Noun: 'blue',
-  // NounPhrase: 'blue',
 
   Verb: 'green',
   Auxiliary: 'green',
   Negative: 'green',
-  // VerbPhrase: 'green',
 
   Date: 'red',
   Value: 'red',
@@ -25,7 +23,6 @@ const colors = {
   Conjunction: 'cyan',
   Determiner: 'cyan',
   Adverb: 'cyan',
-  // Condition: 'cyan',
 }
 
 //extend tagset with new tags

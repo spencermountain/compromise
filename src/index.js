@@ -29,7 +29,7 @@ nlp.tokenize = function(text = '', lexicon) {
 
 /** mix in a compromise-plugin */
 nlp.extend = function(fn) {
-  fn(Doc)
+  fn(Doc, world)
 }
 
 /** make a deep-copy of the library state */

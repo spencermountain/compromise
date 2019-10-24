@@ -1,4 +1,11 @@
-const addMethods = function(Doc) {
+const addMethods = function(Doc, world) {
+  world.addTags({
+    FinancialQuarter: {
+      // isA: 'Date',
+      notA: 'Foo',
+    },
+  })
+
   /**  */
   class Dates extends Doc {
     longForm() {}

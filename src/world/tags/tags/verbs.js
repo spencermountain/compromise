@@ -9,7 +9,7 @@ module.exports = {
   },
   // neutral form - 'walk'
   Infinitive: {
-    isA: 'Verb',
+    isA: 'PresentTense',
     notA: ['PastTense'],
   },
   // walking

@@ -268,11 +268,12 @@
   //all punctuation marks, from https://en.wikipedia.org/wiki/Punctuation
   //we have slightly different rules for start/end - like #hashtags.
 
-  var startings = /^[ \n\t\.’'\[\](){}⟨⟩:,،、‒–—―…!.‹›«»‐\-?‘’“”'";\/⁄·\&*\•^†‡°”¡¿※№÷×ºª%‰+−=‱¶′″‴§~|‖¦©℗®℠™¤₳฿]+/;
-  var endings = /[ \n\t\.’'\[\](){}⟨⟩:,،、‒–—―…!.‹›«»‐\-?‘’“”'";\/⁄·\&*@\•^†‡°”¡¿※#№÷×ºª%‰+−=‱¶′″‴§~|‖¦©℗®℠™¤₳฿]+$/; //money = ₵¢₡₢$₫₯֏₠€ƒ₣₲₴₭₺₾ℳ₥₦₧₱₰£៛₽₹₨₪৳₸₮₩¥
+  var startings = /^[ \n\t\.’'\[\](){}⟨⟩:,،、‒–—―…!.‹›«»‐\-?‘’;\/⁄·\&*\•^†‡°¡¿※№÷×ºª%‰+−=‱¶′″‴§~|‖¦©℗®℠™¤₳฿\u0022|\uFF02|\u0027|\u201C|\u2018|\u201F|\u201B|\u201E|\u2E42|\u201A|\u00AB|\u2039|\u2035|\u2036|\u2037|\u301D|\u0060|\u301F]+/;
+  var endings = /[ \n\t\.’'\[\](){}⟨⟩:,،、‒–—―…!.‹›«»‐\-?‘’;\/⁄·\&*@\•^†‡°¡¿※#№÷×ºª%‰+−=‱¶′″‴§~|‖¦©℗®℠™¤₳฿\u0022|\uFF02|\u0027|\u201D|\u2019|\u201D|\u2019|\u201D|\u201D|\u2019|\u00BB|\u203A|\u2032|\u2033|\u2034|\u301E|\u00B4|\u301E]+$/; //money = ₵¢₡₢$₫₯֏₠€ƒ₣₲₴₭₺₾ℳ₥₦₧₱₰£៛₽₹₨₪৳₸₮₩¥
 
   var hasSlash$1 = /\//;
   var hasApostrophe = /['’]/;
+  var minusNumber = /^-[0-9\.,]+$/;
   /** turn given text into a parsed-up object
    * seperate the 'meat' of the word from the whitespace+punctuation
    */
@@ -282,7 +283,13 @@
     var pre = '';
     var post = '';
     str = str.replace(startings, function (found) {
-      pre = found;
+      pre = found; // support '-40'
+
+      if (pre === '-' && minusNumber.test(str)) {
+        pre = '';
+        return found;
+      }
+
       return '';
     });
     str = str.replace(endings, function (found) {
@@ -332,18 +339,15 @@
   var titleCase = /^[A-Z][a-z'\u00C0-\u00FF]/;
   /** convert all text to uppercase */
 
-  var toUpperCase = function toUpperCase(world) {
+  var toUpperCase = function toUpperCase() {
     this.text = this.text.toUpperCase();
-    this.tag('#UpperCase', 'toUpperCase', world);
     return this;
   };
   /** convert all text to lowercase */
 
 
-  var toLowerCase = function toLowerCase(world) {
+  var toLowerCase = function toLowerCase() {
     this.text = this.text.toLowerCase();
-    this.unTag('#TitleCase', world);
-    this.unTag('#UpperCase', world);
     return this;
   };
   /** only set the first letter to uppercase
@@ -351,12 +355,11 @@
    */
 
 
-  var toTitleCase = function toTitleCase(world) {
+  var toTitleCase = function toTitleCase() {
     this.text = this.text.replace(/^ *[a-z\u00C0-\u00FF]/, function (x) {
       return x.toUpperCase();
     }); //support unicode?
 
-    this.tag('#TitleCase', 'toTitleCase', world);
     return this;
   };
   /** if the first letter is uppercase, and the rest are lowercase */
@@ -374,10 +377,25 @@
   };
 
   // these methods are called with '@hasComma' in the match syntax
-
+  // various unicode quotation-mark formats
+  var startQuote = "(\"|\uFF02|'|\u201C|\u2018|\u201F|\u201B|\u201E|\u2E42|\u201A|\xAB|\u2039|\u2035|\u2036|\u2037|\u301D|`|\u301F)";
+  var endQuote = "(\"|\uFF02|'|\u201D|\u2019|\u201D|\u2019|\u201D|\u201D|\u2019|\xBB|\u203A|\u2032|\u2033|\u2034|\u301E|\xB4|\u301E)";
   /** search the term's 'post' punctuation  */
+
   var hasPost = function hasPost(punct) {
-    return this.post.includes(punct);
+    return this.post.indexOf(punct) !== -1;
+  };
+  /** search the term's 'pre' punctuation  */
+
+
+  var hasPre = function hasPre(punct) {
+    return this.pre.indexOf(punct) !== -1;
+  };
+  /** does it have a quotation symbol?  */
+
+
+  var hasQuote = function hasQuote() {
+    return startQuote.test(this.pre) || endQuote.test(this.post);
   };
   /** does it have a comma?  */
 
@@ -449,6 +467,8 @@
 
   var _02Punctuation = {
     hasPost: hasPost,
+    hasPre: hasPre,
+    hasQuote: hasQuote,
     hasComma: hasComma,
     hasPeriod: hasPeriod,
     hasExclamation: hasExclamation,
@@ -596,7 +616,7 @@
     var str = this.implicit || this.clean;
 
     if (this.tags.Plural) {
-      str = transform.toSingular(str);
+      str = transform.toSingular(str, world);
     }
 
     if (this.tags.Verb && !this.tags.Negative && !this.tags.Infinitive) {
@@ -628,7 +648,7 @@
     setRoot: setRoot
   };
 
-  var hasSpace = /[ -]/;
+  var hasSpace = /[\s-]/;
   /** return various text formats of this term */
 
   var textOut = function textOut(options, showPre, showPost) {
@@ -638,26 +658,26 @@
     var after = this.post;
 
     if (options.unicode === true) {
-      word = this.clean;
+      word = this.clean || '';
     }
 
     if (options.reduced === true) {
-      word = this.reduced;
+      word = this.reduced || '';
     }
 
     if (options.root === true) {
-      word = this.root;
+      word = this.root || '';
     }
 
     if (options.implicit === true && this.implicit) {
-      word = this.implicit;
+      word = this.implicit || '';
     }
 
     if (options.whitespace === true) {
       before = '';
       after = ' ';
 
-      if (hasSpace.test(this.post) === false || options.last) {
+      if ((hasSpace.test(this.post) === false || options.last) && !this.implicit) {
         after = '';
       }
     }
@@ -719,7 +739,7 @@
       } // then sort by #of parent tags (most-specific tags first)
 
 
-      if (tagSet[a].downward.length > tagSet[b].downward.length) {
+      if (tagSet[a].lineage.length > tagSet[b].lineage.length) {
         return 1;
       }
 
@@ -728,7 +748,7 @@
     return tags;
   };
 
-  var _rankTags = rankTags;
+  var _bestTag = rankTags;
 
   var jsonDefault = {
     text: true,
@@ -783,7 +803,7 @@
     }
 
     if (options.bestTag) {
-      result.bestTag = _rankTags(this, world)[0];
+      result.bestTag = _bestTag(this, world)[0];
     }
 
     return result;
@@ -848,11 +868,7 @@
   /** add a tag, and its descendents, to a term */
 
   var addTag = function addTag(t, tag, reason, world) {
-    // process.tagged.push(reason)
-    if (!world) {
-      console.warn('World not found - ' + reason);
-    } //support '.' or '-' notation for skipping the tag
-
+    var tagset = world.tags; //support '.' or '-' notation for skipping the tag
 
     if (tag === '' || tag === '.' || tag === '-') {
       return;
@@ -866,9 +882,12 @@
 
     if (t.tags[tag] === true) {
       return;
-    }
+    } // log it?
 
-    if (world !== undefined && world.isVerbose() === true) {
+
+    var isVerbose = world.isVerbose();
+
+    if (isVerbose === true) {
       fns.logTag(t, tag, reason);
     } //add tag
 
@@ -876,27 +895,17 @@
     t.tags[tag] = true; //whee!
     //check tagset for any additional things to do...
 
-    if (world !== undefined && world.tags !== undefined) {
-      var tagset = world.tags;
+    if (tagset.hasOwnProperty(tag) === true) {
+      //add parent Tags
+      tagset[tag].isA.forEach(function (down) {
+        t.tags[down] = true;
 
-      if (tagset.hasOwnProperty(tag) === true) {
-        //add parent Tags
-        if (tagset[tag].isA !== undefined) {
-          var parentTag = tagset[tag].isA;
-          addTag(t, parentTag, '→', world); //recursive
-        } //add these extra ones, too
-
-
-        if (tagset[tag].also !== undefined) {
-          var alsoTag = tagset[tag].also;
-          addTag(t, alsoTag, '→', world); //recursive
-        } //remove any contrary tags
-
-
-        if (typeof tagset[tag].notA !== 'undefined') {
-          t.unTag(tagset[tag].notA, '←', world);
+        if (isVerbose === true) {
+          fns.logTag(t, '→ ' + down);
         }
-      }
+      }); //remove any contrary tags
+
+      t.unTag(tagset[tag].notA, '←', world);
     }
   };
   /** support an array of tags */
@@ -917,7 +926,8 @@
   /** remove this tag, and its descentents from the term */
 
   var unTag = function unTag(t, tag, reason, world) {
-    //support '*' for removing all tags
+    var isVerbose = world.isVerbose(); //support '*' for removing all tags
+
     if (tag === '*') {
       t.tags = {};
       return t;
@@ -927,21 +937,25 @@
     if (t.tags[tag] === true && t.tags.hasOwnProperty(tag) === true) {
       delete t.tags[tag]; //log in verbose-mode
 
-      if (world !== undefined && world.isVerbose() === true) {
+      if (isVerbose === true) {
         fns.logUntag(t, tag, reason);
       }
     } //delete downstream tags too
 
 
-    if (world) {
-      //TODO: properly support Term calling itself directly
-      var tagset = world.tags;
+    var tagset = world.tags;
 
-      if (tagset[tag]) {
-        var also = tagset[tag].downward;
+    if (tagset[tag]) {
+      var lineage = tagset[tag].lineage;
 
-        for (var i = 0; i < also.length; i++) {
-          unTag(t, also[i], ' - -   - ', world); //recursive
+      for (var i = 0; i < lineage.length; i++) {
+        // unTag(t, also[i], ' - -   - ', world) //recursive
+        if (t.tags[lineage[i]] === true) {
+          delete t.tags[lineage[i]];
+
+          if (isVerbose === true) {
+            fns.logUntag(t, ' - ' + lineage[i]);
+          }
         }
       }
     }
@@ -1237,10 +1251,19 @@
           unicode: true,
           implicit: true
         };
-      } else if (options === 'reduced') {
+      } else if (options === 'clean') {
         options = {
           lowercase: true,
           punctuation: true,
+          whitespace: true,
+          unicode: true,
+          implicit: true
+        };
+      } else if (options === 'reduced') {
+        options = {
+          lowercase: true,
+          punctuation: false,
+          //FIXME: reversed
           whitespace: true,
           unicode: true,
           implicit: true,
@@ -1254,14 +1277,6 @@
           unicode: true,
           implicit: true,
           root: true
-        };
-      } else if (options === 'clean') {
-        options = {
-          lowercase: true,
-          punctuation: true,
-          whitespace: true,
-          unicode: true,
-          implicit: true
         };
       } else {
         options = {};
@@ -1658,9 +1673,11 @@
     var res = {}; // text data
 
     if (options.text) {
-      res.text = this.text(options); // if (options.trim) {
-      // res.text = res.text.trim()
-      // }
+      res.text = this.text();
+    }
+
+    if (options.reduced) {
+      res.reduced = this.text('reduced');
     }
 
     if (options.normal) {
@@ -1669,6 +1686,20 @@
         whitespace: true,
         unicode: true
       });
+    }
+
+    if (options.trim) {
+      if (res.text) {
+        res.text = res.text.trim();
+      }
+
+      if (res.normal) {
+        res.normal = res.normal.trim();
+      }
+
+      if (res.reduced) {
+        res.reduced = res.reduced.trim();
+      }
     } // terms data
 
 
@@ -2938,7 +2969,7 @@
     "Actor": "true¦aJbGcFdCengineIfAgardenIh9instructPjournalLlawyIm8nurse,opeOp5r3s1t0;echnCherapK;ailNcientJoldiGu0;pervKrgeon;e0oofE;ceptionGsearC;hotographClumbColi1r0sychologF;actitionBogrammB;cem6t5;echanic,inist9us4;airdress8ousekeep8;arm7ire0;fight6m2;eputy,iet0;ici0;an;arpent2lerk;ricklay1ut0;ch0;er;ccoun6d2ge7r0ssis6ttenda7;chitect,t0;ist;minist1v0;is1;rat0;or;ta0;nt",
     "Honorific": "true¦a03b00cSdReQfiLgKhon,jr,king,lJmEoDp8queen,r4s0taoiseach,vice7;e1fc,gt,ir,r,u0;ltTpt,rg;c0nDrgeaL;ond liJretary;abbi,e0;ar1pAs,v0;!erend; admirY;astPhd,r0vt;esideEi1of0;!essN;me mini5nce0;!ss;fficOp,rd;a3essrs,i2lle,me,r1s0;!tr;!s;stK;gistrate,j,r6yF;i3lb,t;en,ov;eld mar3rst l0;ady,i0;eutena0;nt;shG;sq,xcellency;et,oct6r,utchess;apt6hance4mdr,o0pl;lonel,m2ngress0unci3;m0wom0;an;dr,mand5;ll0;or;!ain;ldg,rig0;!adi0;er;d0sst,tty,yatullah;j,m0v;!ir0;al",
     "SportsTeam": "true¦0:1A;1:1H;2:1G;a1Eb16c0Td0Kfc dallas,g0Ihouston 0Hindiana0Gjacksonville jagua0k0El0Bm01newToQpJqueens parkIreal salt lake,sAt5utah jazz,vancouver whitecaps,w3yW;ashington 3est ham0Rh10;natio1Oredski2wizar0W;ampa bay 6e5o3;ronto 3ttenham hotspur;blue ja0Mrapto0;nnessee tita2xasC;buccanee0ra0K;a7eattle 5heffield0Kporting kansas0Wt3;. louis 3oke0V;c1Frams;marine0s3;eah15ounG;cramento Rn 3;antonio spu0diego 3francisco gJjose earthquak1;char08paA; ran07;a8h5ittsburgh 4ortland t3;imbe0rail blaze0;pirat1steele0;il3oenix su2;adelphia 3li1;eagl1philNunE;dr1;akland 3klahoma city thunder,rlando magic;athle0Mrai3;de0; 3castle01;england 7orleans 6york 3;city fc,g4je0FknXme0Fred bul0Yy3;anke1;ian0D;pelica2sain0C;patrio0Brevolut3;ion;anchester Be9i3ontreal impact;ami 7lwaukee b6nnesota 3;t4u0Fvi3;kings;imberwolv1wi2;rewe0uc0K;dolphi2heat,marli2;mphis grizz3ts;li1;cXu08;a4eicesterVos angeles 3;clippe0dodDla9; galaxy,ke0;ansas city 3nE;chiefs,roya0E; pace0polis colU;astr06dynamo,rockeTtexa2;olden state warrio0reen bay pac3;ke0;.c.Aallas 7e3i05od5;nver 5troit 3;lio2pisto2ti3;ge0;broncZnuggeM;cowbo4maver3;ic00;ys; uQ;arCelKh8incinnati 6leveland 5ol3;orado r3umbus crew sc;api5ocki1;brow2cavalie0india2;bengaWre3;ds;arlotte horAicago 3;b4cubs,fire,wh3;iteB;ea0ulR;diff3olina panthe0; c3;ity;altimore 9lackburn rove0oston 5rooklyn 3uffalo bilN;ne3;ts;cel4red3; sox;tics;rs;oriol1rave2;rizona Ast8tlanta 3;brav1falco2h4u3;nited;aw9;ns;es;on villa,r3;os;c5di3;amondbac3;ks;ardi3;na3;ls",
-    "Uncountable": "true¦0:1C;a1Jb1Bc13d10e0Tf0Ng0Jh0Ei0Aj09knowled1Il04mWnews,oVpSrNsBt6vi5w1;a3ea07i2oo1;d,l;ldlife,ne;rmth,t0;neg8ol08tae;e4h3oothpaste,r1una;affRou1;ble,sers,t;ermod1Fund0;a,nnis;aAcene06eri0Qh9il8kittl0Qnow,o7p5t3u1;g1nshi0J;ar;ati1De1;am,el;ace16e1;ci0Ked;ap,cc0;k,v0;eep,ingl0H;d05fe10l1nd;m0St;a4e2ic1;e,ke0E;c1laxa0Asearch;ogni09rea09;bi0Ain;aKe2hys10last6o1ressW;lit0Zrk,w0;a0Vtrol;bstetr0Xil,xygen;a6e4ilk,o3u1;mps,s1;ic;nHo0A;a1chan0S;sl00t;chine1il,themat0Q; learn05ry;aught0e3i2ogi0Nu1;ck,g0C;ce,ghtn02ngui0LteratI;a1isH;th0;ewel8usti0G;ce,mp1nformaPtself;a1ortan0E;ti1;en0C;a4isto3o1;ck1mework,n1spitali06;ey;ry;ir,libut,ppi8;en01o2r1um,ymna08;a7ound;l1ssip;d,f;i5lour,o2urnit1;ure;od,rgive1uri0wl;ne1;ss;c7sh;conomZduca6lectr5n3quip4thZvery1;body,o1thE;ne;joy1tertain1;ment;iciNonU;tiF;ar2iabet1raugh2;es;ts;a7elcius,h3ivPl2o1urrency;al,nfusiAttA;assNoth3;aos,e1;e2w1;ing;se;r5sh;a5eef,i2lood,owls,read,utt0;er;lliar2s1;on;ds;g1ss;ga1;ge;c7dvi6ero4ir3mnes2rt,thl1;et8;ty;craft;b5d1naut5;ynam4;ce;id,ou1;st1;ics",
+    "Uncountable": "true¦a1Ib1Ac11d0Ye0Rf0Lg0Hh0Ci08j07knowled1Hl02mUnews,oTpQrLsAt5vi4w0;a2ea05i1oo0;d,l;ldlife,ne;rmth,t17;neg0Yol06tae;e3h2oothpaste,r0una;affPou0;ble,sers,t;ermod1Eund12;a,nnis;a8cene04eri0Oh7il6kittl0Onow,o5p3t1u0;g0Rnshi0H;ati1De0;am,el;ace16e0;ci0Jed;ap,cc0U;k,v0T;eep,ingl0G;d04fe10l0nd;m0St;a3e1ic0;e,ke0D;c0laxa09search;ogni08rea08;bi09in;aJe1hys10last5o0ressV;lit0Zrk,w0J;a0Vtrol;bstetr0Xil,xygen;a5e3ilk,o2u0;mps,s0;ic;nGo0A;a0chan0S;slZt;chine0il,themat0Q; learn05ry;aught08e2i1ogi0Nu0;ck,g0C;ce,ghtn02ngui0LteratH;a0isG;th04;ewel7usti0G;ce,mp0nformaOtself;a0ortan0E;ti0;en0C;a3isto2o0;ck0mework,n0spitali06;ey;ry;ir,libut,ppi7;en01o1r0um,ymna08;a6ound;l0ssip;d,f;i4lour,o1urnit0;ure;od,rgive0uriNwl;ne0;ss;c6sh;conomZduca5lectr4n2quip3thZvery0;body,o0thE;ne;joy0tertain0;ment;iciNonU;tiF;ar1iabet0raugh1;es;ts;a7elcius,h3ivPl2o0urrency;al,ld w0nfusiAttA;ar;assMoth2;aos,e0;e1w0;ing;se;r4sh;a4eef,i1lood,owls,read,utt0;er;lliar1s0;on;ds;g0ss;ga0;ge;c6dvi5ero3ir2mnes1rt,thl0;et7;ty;craft;b4d0naut4;ynam3;ce;id,ou0;st0;ics",
     "Infinitive": "true¦0:6I;1:6W;2:56;3:6T;4:6U;5:5X;6:65;7:6S;8:6O;9:6G;A:6Q;B:6N;C:6B;D:6X;a68b5Xc4Zd47e3Rf3Eg37h30i2Nj2Lk2Jl2Am20n1Xo1Tp1Eques3Fr0Ms01tTuPvMwFyE;awn,ield;aHe1Thist6iGoEre61;nd0rE;k,ry;pe,sh,th0;lk,nFrEsh,tCve;n,raD;d0t;aFiEo7;ew,sB;l69ry;nFpEr3se;gra4Kli3X;dEi7lo5P;er48o;aKeJhIoHrFuEwi8;ne,rn;aEe0Ki5Lu8y;de,in,nsf0p,v5D;r2WuC;ank,reat2L;nd,st;lk,rg1Ms7;aXcUeThRi49kip,lQmPnee3Io4XpOtHuEwitC;bmBck,ff0gge8ppFrEspe5;ge,pri1rou4Uvi4;ly,o33;aJeIoHrFuE;dy,mb6;a4OeEi4;ngth2Bss,tC;p,re;m,p;in,ke,r0Oy;la51oil,rink6;e1Vi6o3G;am,ip;a2iv0oE;ck,ut;arCem,le5n1r4tt6;aFo2rE;atCew;le,re;il,ve;a03eGisk,oFuE;in,le,sh;am,ll;aZcXdu9fWgVje5lSmRnt,pOquNsItHvEwa5M;eEiew,o33;al,l,rE;se,t;a42i2u3Z;eHi8oGtE;!o2rE;i5uc1X;l4rt;mb6nt,r4;e8i2;air,eFlEo3YreseD;a9y;at;a3Semb0i3Uo4;aFeEi4y;a1nt;te,x;a54r0F;act1Ver,le5u1;a0Zei4k5GoEyc6;gni29nci6rd;ch,li28s5E;i1nE;ge,k;aRerQiPlMoKrGuE;b1Yll,mp,rEsh;cha1s4H;ai1eGiDoE;cEdu9greAhibBmi1te8vi2S;eAlaim;di5pa2ss,veD;iDp,rtr3XsEur;e,t;aFuE;g,n3;n,y;ck,le;fo2ZmBsi8;ck,iDrt4Dss,u1;bGccur,ff0pera7utweFverEwe;co3Ylap,ta1Zu1whelm;igh;ser4ta2Z;eFotE;e,i9;ed,gle5;aJeIiGoFuE;ltip3Brd0;nit11ve;nErr10;d,g6us;asu2lt,n0Nr3ssa3;inta2Pna3rFtE;ch,t0;ch,kEry;et;aKeJiGoEu1B;aEck,ok,ve;d,n;ft,ke,mBnFstEve;!en;e,k;a2Cc0Dt;b0Mck,uE;gh,nC;iEno2X;ck,ll,ss;am,o2AuE;d3mp;gno2mOnEss3A;cMdica7flu0LhLsItGvE;eEol4;nt,st;erErodu9;a5fe2;i8tE;aEru5;ll;abBibB;lu1Dr1B;agi21pE;lemeDo1Zro4;aIeGi2oFuE;nt,rry;n01pe,st;aElp;d,t;nd6ppErm,te;en;aJloAoIrGuE;arEeAi12;ant31d;aEip,umb6;b,sp;es,ve1G;in,th0ze;aOeaNiLlJoGracFuncE;ti3A;tu2;cus,lFrE;ce,eca8m,s2S;d,l1W;a1ToE;at,od,w;gu2lEni1Rx;e,l;r,tu2;il,vE;or;a11cho,le5mQnNstLvalua7xE;a08cJerIi8pEte15;a14eFla12oEreA;rt,se;ct,riE;en9;ci1t;el,han3;abEima7;li1D;ab6couVdFfor9ga3han9j01riCsu2t0vE;isi2Ny;!u2;body,er3pE;hasiEow0;ze;a04eSiJoIrFuE;mp;aFeAiE;ft;g,in;d3ubt;ff0p,re5sFvE;iWor9;aIcFliEmiApl13tingui0Y;ke;oEuA;uEv0;ra3;gr1QppE;ear,ro4;cLem,fJliv0ma0Bny,pIsFterE;mi0C;cribe,er4iFtrE;oy;gn,re;a07e06i5osB;eEi07y;at,ct;iGlFrE;ea1;a2i03;de;ma3n9re,te;a08e07h04i7l02oHrE;aFeEoAu0Dy;a7dB;ck,ve;llXmQnFok,py,uEv0;gh,nt;ceNdu5fKsItGvE;eEin9;rt,y;aNin0PrE;a8ibu7ol;iEtitu7;d0st;iFoEroD;rm;gu2rm;rn;biJfoImaHpE;a2laE;in;re;nd;rt;ne;ap1e5;aEip,o1;im,w;aFeE;at,ck,w;llen3n3r3se;a1nt0;ll,ncFrEt0u1;e,ry;el;aNeKloJoHruGuE;lEry;ly;sh;a8mb,o8rrEth0un9;ow;ck;ar,lFnefBtrE;ay;ie4ong;ng,se;band0Hc09d04ffo03gr02id,lZmu1nWppRrOsIttEvoid,waB;acGeFra5;ct;m0Dnd;h,k;k,sE;eGiFocia7uE;me;gn,st;mb6rt;le;chFgEri4;ue;!i4;eaHlGroE;aCve;ch;aud,y;l,r;noun9sw0tE;icipa7;ce;lFt0;er;e3ow;ee;rd;aPdGju8mBoP;it;st;!reA;ss;cHhie4knowled3tiva7;te;ge;ve;eGouDu1;se;nt;pt;on",
     "Unit": "true¦0:16;a11b0Zc0Ld0Ke0If0Dg09h06in0Ejoule0k00lYmNnMoLpIqHsqCt7volts,w6y4z3°2µ1;g,s;c,f,n;b,e2;a0Kb,d0Qears old,o1;tt0E;att0b;able4b3e2on1sp;!ne0;a2r0A;!l,sp;spo01; ft,uare 1;c0Fd0Ef3i0Ckilo0Gm1ya0B;e0Jil1;e0li0E;eet0o0A;t,uart0;ascals,e2i1ou0Mt;c0Jnt0;rcent,tZ;hms,uVz;an0GewtQ;/s,b,e7g,i3l,m2p1²,³;h,s;!²;!/h,cro3l1;e1li05;! DsC²;g05s0A;gPter1;! 2s1;! 1;per second;b,iZm,u1x;men0x0;b,elvin0g,ilo2m1nQ;!/h,ph,²;byYgWmeter1;! 2s1;! 1;per hour;e1g,z;ct1rtz0;aXogQ;al2b,igAra1;in0m0;!l1;on0;a4emtPl2t1;²,³; oz,uid ou1;nce0;hrenheit0rad0;b,x1;abyH;eciCg,l,mA;arat0eAg,m9oulomb0u1;bic 1p0;c5d4fo3i2meAya1;rd0;nch0;ot0;eci2;enti1;me4;!²,³;lsius0nti1;g2li1me1;ter0;ram0;bl,y1;te0;c4tt1;os1;eco1;nd0;re0;!s",
     "Organization": "true¦0:46;a3Ab2Qc2Ad21e1Xf1Tg1Lh1Gi1Dj19k17l13m0Sn0Go0Dp07qu06rZsStFuBv8w3y1;amaha,m0Xou1w0X;gov,tu2S;a3e1orld trade organizati41;lls fargo,st1;fie22inghou16;l1rner br3D;-m11gree31l street journ25m11;an halNeriz3Wisa,o1;dafo2Gl1;kswagLvo;bs,kip,n2ps,s1;a tod2Rps;es35i1;lev2Xted natio2Uv; mobi2Kaco bePd bMeAgi frida9h3im horto2Tmz,o1witt2W;shiba,y1;ota,s r Y;e 1in lizzy;b3carpen33daily ma2Xguess w2holli0rolling st1Ms1w2;mashing pumpki2Ouprem0;ho;ea1lack eyed pe3Fyrds;ch bo1tl0;ys;l2s1;co,la m12;efoni07us;a6e4ieme2Gnp,o2pice gir5ta1ubaru;rbucks,to2N;ny,undgard1;en;a2Rx pisto1;ls;few25insbu26msu1X;.e.m.,adiohead,b6e3oyal 1yan2X;b1dutch she4;ank;/max,aders dige1Ed 1vl32;bu1c1Uhot chili peppe2Klobst28;ll;c,s;ant2Vizno2F;an5bs,e3fiz24hilip morrBi2r1;emier27octer & gamb1Rudenti14;nk floyd,zza hut;psi28tro1uge08;br2Qchina,n2Q; 2ason1Xda2G;ld navy,pec,range juli2xf1;am;us;a9b8e5fl,h4i3o1sa,wa;kia,tre dame,vart1;is;ke,ntendo,ss0K;l,s;c,st1Etflix,w1; 1sweek;kids on the block,york08;a,c;nd1Us2t1;ional aca2Fo,we0Q;a,cYd0O;aAcdonald9e5i3lb,o1tv,yspace;b1Nnsanto,ody blu0t1;ley crue,or0O;crosoft,t1;as,subisO;dica3rcedes2talli1;ca;!-benz;id,re;'s,s;c's milk,tt13z1Y;'ore09a3e1g,ittle caesa1Ktd;novo,x1;is,mark; pres5-z-boy,bour party;atv,fc,kk,m1od1K;art;iffy lu0Lo3pmorgan1sa;! cha1;se;hnson & johns1Sy d1R;bm,hop,n1tv;c,g,te1;l,rpol; & m,asbro,ewlett-packaTi3o1sbc,yundai;me dep1n1J;ot;tac1zbollah;hi;eneral 6hq,l5mb,o2reen d0Iu1;cci,ns n ros0;ldman sachs,o1;dye1g0B;ar;axo smith kliZencore;electr0Im1;oto0V;a3bi,da,edex,i1leetwood mac,oGrito-l0A;at,nancial1restoV; tim0;cebook,nnie mae;b06sa,u3xxon1; m1m1;ob0H;!rosceptics;aiml0Ae5isney,o3u1;nkin donuts,po0Wran dur1;an;j,w j1;on0;a,f leppa3ll,p2r spiegZstiny's chi1;ld;eche mode,t;rd;aEbc,hBi9nn,o3r1;aigsli5eedence clearwater reviv1ossra05;al;!ca c5l4m1o0Ast05;ca2p1;aq;st;dplMgate;ola;a,sco1tigroup;! systems;ev2i1;ck fil-a,na daily;r0Hy;dbury,pital o1rl's jr;ne;aGbc,eCfAl6mw,ni,o2p,r1;exiteeWos;ei3mbardiJston 1;glo1pizza;be;ng;ack & deckFo2ue c1;roX;ckbuster video,omingda1;le; g1g1;oodriN;cht3e ge0n & jer2rkshire hathaw1;ay;ryH;el;nana republ3s1xt5y5;f,kin robbi1;ns;ic;bXcSdidRerosmith,ig,lLmFnheuser-busEol,ppleAr7s3t&t,v2y1;er;is,on;hland2s1;n,ociated F; o1;il;by4g2m1;co;os; compu2bee1;'s;te1;rs;ch;c,d,erican3t1;!r1;ak; ex1;pre1;ss; 4catel2t1;air;!-luce1;nt;jazeera,qae1;da;as;/dc,a3er,t1;ivisi1;on;demy of scienc0;es;ba,c",
@@ -2975,31 +3006,14 @@
     "Determiner": "true¦aAboth,d8e5few,l3mu7neiCown,plenty,some,th2various,wh0;at0ich0;evB;at,e3is,ose;a,e0;!ast,s;a1i6l0nough,very;!se;ch;e0u;!s;!n0;!o0y;th0;er"
   };
 
-  //list of inconsistent parts-of-speech
-  var conflicts = [//top-level pos are all inconsistent
-  ['Noun', 'Verb', 'Adjective', 'Adverb', 'Determiner', 'Conjunction', 'Preposition', 'QuestionWord', 'Expression', 'Url', 'PhoneNumber', 'Email', 'Emoji'], //exlusive-nouns
-  ['Person', 'Organization', 'Value', 'Place', 'Actor', 'Demonym', 'Pronoun'], //acronyms
-  ['Acronym', 'Pronoun', 'Actor', 'Unit', 'Address'], ['Acronym', 'Plural'], //things that can't be plural
-  ['Plural', 'Singular'], //exlusive-people
-  ['MaleName', 'FemaleName'], ['FirstName', 'LastName', 'Honorific'], //adjectives
-  ['Comparative', 'Superlative'], //values
-  ['Value', 'Verb', 'Adjective'], ['Ordinal', 'Cardinal'], ['TextValue', 'NumericValue'], ['NiceNumber', 'TextValue'], ['Ordinal', 'Currency'], //$5.50th
-  //verbs
-  ['PastTense', 'PresentTense', 'FutureTense'], ['Pluperfect', 'Copula', 'Modal', 'Participle', 'Infinitive', 'Gerund', 'FuturePerfect', 'PerfectTense'], ['Auxiliary', 'Noun', 'Value'], //date
-  ['Month', 'WeekDay', 'Year', 'Duration', 'Holiday'], ['Particle', 'Conjunction', 'Adverb', 'Preposition', 'Date'], ['Date', 'Verb', 'Adjective', 'Person'], ['Date', 'Money', 'RomanNumeral', 'Fraction'], //a/an -> 1
-  ['Value', 'Determiner'], ['Url', 'Value', 'HashTag', 'PhoneNumber', 'Emoji'], //roman numerals
-  ['RomanNumeral', 'Fraction', 'NiceNumber'], ['RomanNumeral', 'Money', 'Acronym'], //cases
-  ['UpperCase', 'TitleCase', 'CamelCase'], //phrases
-  ['Verb', 'Noun', 'Adjective', 'Value'], //VerbPhrase',
-  //QuestionWord
-  ['QuestionWord', 'Verb'], //acronyms
-  ['Acronym', 'Verb']];
-
   var nouns = {
-    Noun: {},
+    Noun: {
+      notA: ['Verb', 'Adjective', 'Adverb', 'Value']
+    },
     // - singular
     Singular: {
-      isA: 'Noun'
+      isA: 'Noun',
+      notA: 'Plural'
     },
     //a specific thing that's capitalized
     ProperNoun: {
@@ -3007,46 +3021,50 @@
     },
     // -- people
     Person: {
-      isA: 'ProperNoun',
-      also: 'Singular'
+      isA: ['ProperNoun', 'Singular'],
+      notA: ['Place', 'Organization']
     },
     FirstName: {
       isA: 'Person'
     },
     MaleName: {
-      isA: 'FirstName'
+      isA: 'FirstName',
+      notA: ['FemaleName', 'LastName']
     },
     FemaleName: {
-      isA: 'FirstName'
+      isA: 'FirstName',
+      notA: ['MaleName', 'LastName']
     },
     LastName: {
-      isA: 'Person'
+      isA: 'Person',
+      notA: ['FirstName']
     },
     Honorific: {
       isA: 'Noun'
     },
-    Place: {
-      isA: 'Singular'
-    },
     // -- places
+    Place: {
+      isA: 'Singular',
+      notA: ['Person', 'Organization']
+    },
     Country: {
-      isA: 'Place',
-      also: 'ProperNoun'
+      isA: ['Place', 'ProperNoun'],
+      notA: ['City']
     },
     City: {
-      isA: 'Place',
-      also: 'ProperNoun'
+      isA: ['Place', 'ProperNoun'],
+      notA: ['Country']
     },
     Region: {
-      isA: 'Place',
-      also: 'ProperNoun'
+      isA: ['Place', 'ProperNoun']
     },
     Address: {
       isA: 'Place'
     },
+    //---Orgs---
     Organization: {
-      isA: 'Singular',
-      also: 'ProperNoun'
+      isA: ['Singular', 'ProperNoun'],
+      notA: ['Person', 'Place']
     },
     SportsTeam: {
       isA: 'Organization'
@@ -3059,7 +3077,8 @@
     },
     // - plural
     Plural: {
-      isA: 'Noun'
+      isA: 'Noun',
+      notA: 'Singular'
     },
     Uncountable: {
       //(not plural or singular)
@@ -3082,8 +3101,7 @@
     },
     //'Canadians'
     Demonym: {
-      isA: 'Noun',
-      also: 'ProperNoun'
+      isA: ['Noun', 'ProperNoun']
     },
     //`john's`
     Possessive: {
@@ -3092,68 +3110,81 @@
   };
 
   var verbs = {
-    Verb: {// isA: 'VerbPhrase',
+    Verb: {
+      notA: ['Noun', 'Adjective', 'Adverb', 'Value']
     },
+    // walks
     PresentTense: {
-      isA: 'Verb'
+      isA: 'Verb',
+      notA: ['PastTense', 'Copula']
     },
+    // neutral form - 'walk'
     Infinitive: {
-      isA: 'PresentTense'
+      isA: 'Verb',
+      notA: ['PastTense']
     },
+    // walking
     Gerund: {
       isA: 'PresentTense'
     },
+    // walked
     PastTense: {
       isA: 'Verb'
     },
     PerfectTense: {
       isA: 'Verb'
     },
-    FuturePerfect: {
-      isA: 'Verb'
-    },
     Pluperfect: {
       isA: 'Verb'
     },
+    // is
     Copula: {
       isA: 'Verb'
     },
+    // would have
     Modal: {
       isA: 'Verb'
     },
+    // shown
     Participle: {
       isA: 'Verb'
     },
-    Particle: {
-      isA: 'Verb'
-    },
+    // show up
     PhrasalVerb: {
       isA: 'Verb'
+    },
+    //'up' part
+    Particle: {
+      isA: 'PhrasalVerb'
     }
   };
 
   var values = {
-    Value: {},
+    Value: {
+      notA: ['Noun', 'Verb', 'Adjective', 'Adverb']
+    },
     Ordinal: {
-      isA: 'Value'
+      isA: 'Value',
+      notA: ['Cardinal']
     },
     Cardinal: {
-      isA: 'Value'
+      isA: 'Value',
+      notA: ['Ordinal']
     },
-    // Multiple: {
-    //   isA: 'Value',
-    // },
     RomanNumeral: {
-      isA: 'Cardinal'
+      isA: 'Cardinal',
+      notA: ['Ordinal']
     },
     Fraction: {
       isA: 'Value'
     },
     TextValue: {
-      isA: 'Value'
+      isA: 'Value',
+      notA: ['NumericValue']
     },
     NumericValue: {
-      isA: 'Value'
+      isA: 'Value',
+      notA: ['TextValue']
     },
     Money: {//isA: 'Cardinal'
     },
@@ -3166,156 +3197,230 @@
     Date: {},
     //not a noun, but usually is
     Month: {
-      isA: 'Date',
-      also: 'Singular'
+      isA: ['Date', 'Singular']
     },
     WeekDay: {
-      isA: 'Date',
-      also: 'Noun'
-    },
-    RelativeDay: {
-      isA: 'Date'
+      isA: ['Date', 'Noun']
     },
     Year: {
-      isA: 'Date'
+      isA: ['Date']
     },
     Duration: {
-      isA: 'Date',
-      also: 'Noun'
+      isA: ['Date', 'Noun']
     },
     Time: {
-      isA: 'Date',
-      also: 'Noun'
+      isA: ['Date', 'Noun']
     },
     Holiday: {
-      isA: 'Date',
-      also: 'Noun'
+      isA: ['Date', 'Noun']
     }
   };
 
+  var anything = ['Noun', 'Verb', 'Adjective', 'Adverb', 'Value'];
   var misc = {
-    Adjective: {},
+    //--Adjectives--
+    Adjective: {
+      notA: ['Noun', 'Verb', 'Adverb', 'Value']
+    },
+    // adjectives that can conjugate
     Comparable: {
-      isA: 'Adjective'
+      isA: ['Adjective']
     },
+    // better
     Comparative: {
-      isA: 'Adjective'
+      isA: ['Adjective']
     },
+    // best
     Superlative: {
-      isA: 'Adjective'
+      isA: ['Adjective'],
+      notA: ['Comparative']
     },
     NumberRange: {
-      isA: 'Contraction'
+      isA: ['Contraction']
     },
-    Adverb: {},
-    Currency: {},
+    Adverb: {
+      notA: ['Noun', 'Verb', 'Adjective', 'Value']
+    },
     //glue
-    Determiner: {},
-    Conjunction: {},
-    Preposition: {},
+    Determiner: {
+      notA: anything
+    },
+    Conjunction: {
+      notA: anything
+    },
+    Preposition: {
+      notA: anything
+    },
     QuestionWord: {},
     RelativeProunoun: {
-      isA: 'Pronoun'
+      isA: ['Pronoun']
     },
+    Currency: {},
     Expression: {},
     Abbreviation: {},
     Url: {},
     PhoneNumber: {},
     HashTag: {},
     AtMention: {
-      isA: 'Noun'
+      isA: ['Noun']
     },
     Emoji: {},
     Email: {},
     //non-exclusive
     Auxiliary: {},
-    Negative: {},
-    Contraction: {},
-    TitleCase: {},
-    Hyphenated: {},
-    Acronym: {},
-    // Quotes
-    Quotation: {},
-    //parentheses
-    Parentheses: {}
+    Negative: {}
   };
 
-  //add 'downward' tags (that immediately depend on this one)
-  var addDownword = function addDownword(tags) {
-    var keys = Object.keys(tags);
-    keys.forEach(function (k) {
-      tags[k].downward = []; //look for tags with this as parent
-
-      for (var i = 0; i < keys.length; i++) {
-        if (tags[keys[i]].isA && tags[keys[i]].isA === k) {
-          tags[k].downward.push(keys[i]);
-        }
-      }
-    });
-  };
-
-  var addDownward = addDownword;
-
-  var colors = {
+  // i just made these up
+  var colorMap = {
     Noun: 'blue',
-    // NounPhrase: 'blue',
     Verb: 'green',
-    Auxiliary: 'green',
     Negative: 'green',
-    // VerbPhrase: 'green',
     Date: 'red',
     Value: 'red',
     Adjective: 'magenta',
     Preposition: 'cyan',
     Conjunction: 'cyan',
     Determiner: 'cyan',
-    Adverb: 'cyan' // Condition: 'cyan',
+    Adverb: 'cyan'
+  };
+  /** add a debug color to some tags */
 
-  }; //extend tagset with new tags
+  var addColors = function addColors(tags) {
+    Object.keys(tags).forEach(function (k) {
+      if (colorMap[k]) {
+        tags[k].color = colorMap[k];
+        return;
+      }
+
+      tags[k].isA.some(function (t) {
+        if (colorMap[t]) {
+          tags[k].color = colorMap[t];
+          return true;
+        }
+
+        return false;
+      });
+    });
+    return tags;
+  };
+
+  var _color = addColors;
+
+  var unique$2 = function unique(arr) {
+    return arr.filter(function (v, i, a) {
+      return a.indexOf(v) === i;
+    });
+  }; //add 'downward' tags (that immediately depend on this one)
+
+
+  var inferIsA = function inferIsA(tags) {
+    Object.keys(tags).forEach(function (k) {
+      var tag = tags[k];
+      var len = tag.isA.length;
+
+      for (var i = 0; i < len; i++) {
+        var down = tag.isA[i];
+
+        if (tags[down]) {
+          tag.isA = tag.isA.concat(tags[down].isA);
+        }
+      } // clean it up
+
+
+      tag.isA = unique$2(tag.isA);
+    });
+    return tags;
+  };
+
+  var _isA = inferIsA;
+
+  var unique$3 = function unique(arr) {
+    return arr.filter(function (v, i, a) {
+      return a.indexOf(v) === i;
+    });
+  }; // crawl the tag-graph and infer any conflicts
+  // faster than doing this at tag-time
+
+
+  var inferNotA = function inferNotA(tags) {
+    Object.keys(tags).forEach(function (k) {
+      var tag = tags[k];
+      tag.notA = tag.notA || [];
+      tag.isA.forEach(function (down) {
+        if (tags[down] && tags[down].notA) {
+          // borrow its conflicts
+          var notA = typeof tags[down].notA === 'string' ? [tags[down].isA] : tags[down].notA || [];
+          tag.notA = tag.notA.concat(notA);
+        }
+      }); // clean it up
+
+      tag.notA = unique$3(tag.notA);
+    });
+    return tags;
+  };
+
+  var _notA = inferNotA;
+
+  // a lineage is all 'incoming' tags that have this as 'isA'
+  var inferLineage = function inferLineage(tags) {
+    var keys = Object.keys(tags);
+    keys.forEach(function (k) {
+      var tag = tags[k];
+      tag.lineage = []; // find all tags with it in their 'isA' set
+
+      for (var i = 0; i < keys.length; i++) {
+        if (tags[keys[i]].isA.indexOf(k) !== -1) {
+          tag.lineage.push(keys[i]);
+        }
+      }
+    });
+    return tags;
+  };
+
+  var _lineage = inferLineage;
+
+  var validate = function validate(tags) {
+    // cleanup format
+    Object.keys(tags).forEach(function (k) {
+      var tag = tags[k]; // ensure isA is an array
+
+      tag.isA = tag.isA || [];
+
+      if (typeof tag.isA === 'string') {
+        tag.isA = [tag.isA];
+      } // ensure notA is an array
+
+
+      tag.notA = tag.notA || [];
+
+      if (typeof tag.notA === 'string') {
+        tag.notA = [tag.notA];
+      }
+    });
+    return tags;
+  }; // build-out the tag-graph structure
+
+
+  var inferTags = function inferTags(tags) {
+    // validate data
+    tags = validate(tags); // build its 'down tags'
+
+    tags = _isA(tags); // infer the conflicts
+
+    tags = _notA(tags); // debug tag color
+
+    tags = _color(tags); // find incoming links
+
+    tags = _lineage(tags);
+    return tags;
+  };
+
+  var inference = inferTags;
 
   var addIn = function addIn(obj, tags) {
     Object.keys(obj).forEach(function (k) {
       tags[k] = obj[k];
-    });
-  }; //add tags to remove when tagging this one
-
-
-  var addConflicts = function addConflicts(tags) {
-    Object.keys(tags).forEach(function (k) {
-      tags[k].notA = {};
-
-      for (var i = 0; i < conflicts.length; i++) {
-        var arr = conflicts[i];
-
-        if (arr.indexOf(k) !== -1) {
-          arr = arr.filter(function (a) {
-            return a !== k;
-          });
-          arr.forEach(function (e) {
-            tags[k].notA[e] = true;
-          });
-        }
-      }
-
-      tags[k].notA = Object.keys(tags[k].notA);
-    });
-  };
-
-  var addColors = function addColors(tags) {
-    Object.keys(tags).forEach(function (k) {
-      if (colors[k]) {
-        tags[k].color = colors[k];
-        return;
-      }
-
-      if (tags[k].isA && colors[tags[k].isA]) {
-        tags[k].color = colors[tags[k].isA];
-        return;
-      }
-
-      if (tags[k].isA && tags[tags[k].isA].color) {
-        tags[k].color = tags[tags[k].isA].color;
-      }
     });
   };
 
@@ -3325,13 +3430,9 @@
     addIn(verbs, tags);
     addIn(values, tags);
     addIn(dates, tags);
-    addIn(misc, tags); //downstream
+    addIn(misc, tags); // do the graph-stuff
 
-    addDownward(tags); //add enemies
-
-    addConflicts(tags); //for nice-logging
-
-    addColors(tags);
+    tags = inference(tags);
     return tags;
   };
 
@@ -3483,7 +3584,7 @@
 
 
     if (tag === 'Singular') {
-      var plural = transform.toPlural(word);
+      var plural = transform.toPlural(word, world);
       lexicon[plural] = lexicon[plural] || 'Plural'; // only if it's safe
     } //conjugate our verbs
 
@@ -3532,7 +3633,7 @@
 
 
     if (tag === 'Demonym') {
-      var _plural = transform.toPlural(word);
+      var _plural = transform.toPlural(word, world);
 
       lexicon[_plural] = lexicon[_plural] || ['Demonym', 'Plural']; // only if it's safe
     }
@@ -5127,19 +5228,19 @@
     y: [[/([^aeiouy]|qu)y$/i, '$1ies']],
     z: [[/(quiz)$/i, '$1zes']]
   };
-  var _01Suffixes$1 = suffixes$1;
+  var _rules = suffixes$1;
 
   var addE = /(x|ch|sh|s|z)$/;
 
   var trySuffix = function trySuffix(str) {
     var c = str[str.length - 1];
 
-    if (_01Suffixes$1.hasOwnProperty(c) === true) {
-      for (var i = 0; i < _01Suffixes$1[c].length; i += 1) {
-        var reg = _01Suffixes$1[c][i][0];
+    if (_rules.hasOwnProperty(c) === true) {
+      for (var i = 0; i < _rules[c].length; i += 1) {
+        var reg = _rules[c][i][0];
 
         if (reg.test(str) === true) {
-          return str.replace(reg, _01Suffixes$1[c][i][1]);
+          return str.replace(reg, _rules[c][i][1]);
         }
       }
     }
@@ -5153,7 +5254,14 @@
 
   var pluralize = function pluralize() {
     var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-    //we have some rules to try-out
+    var world = arguments.length > 1 ? arguments[1] : undefined;
+    var irregulars = world.irregulars.nouns; // check irregulars list
+
+    if (irregulars.hasOwnProperty(str)) {
+      return irregulars[str];
+    } //we have some rules to try-out
+
+
     var plural = trySuffix(str);
 
     if (plural !== null) {
@@ -5172,23 +5280,28 @@
   var toPlural = pluralize;
 
   //patterns for turning 'dwarves' to 'dwarf'
-  var _rules = [[/([^v])ies$/i, '$1y'], [/ises$/i, 'isis'], [/(kn|[^o]l|w)ives$/i, '$1ife'], [/^((?:ca|e|ha|(?:our|them|your)?se|she|wo)l|lea|loa|shea|thie)ves$/i, '$1f'], [/^(dwar|handkerchie|hoo|scar|whar)ves$/i, '$1f'], [/(antenn|formul|nebul|vertebr|vit)ae$/i, '$1a'], [/(octop|vir|radi|nucle|fung|cact|stimul)(i)$/i, '$1us'], [/(buffal|tomat|tornad)(oes)$/i, '$1o'], // [/(analy|diagno|parenthe|progno|synop|the)ses$/i, '$1sis'],
+  var _rules$1 = [[/([^v])ies$/i, '$1y'], [/ises$/i, 'isis'], [/(kn|[^o]l|w)ives$/i, '$1ife'], [/^((?:ca|e|ha|(?:our|them|your)?se|she|wo)l|lea|loa|shea|thie)ves$/i, '$1f'], [/^(dwar|handkerchie|hoo|scar|whar)ves$/i, '$1f'], [/(antenn|formul|nebul|vertebr|vit)ae$/i, '$1a'], [/(octop|vir|radi|nucle|fung|cact|stimul)(i)$/i, '$1us'], [/(buffal|tomat|tornad)(oes)$/i, '$1o'], // [/(analy|diagno|parenthe|progno|synop|the)ses$/i, '$1sis'],
   [/(..[aeiou]s)es$/i, '$1'], [/(vert|ind|cort)(ices)$/i, '$1ex'], [/(matr|append)(ices)$/i, '$1ix'], [/(x|ch|ss|sh|z|o)es$/i, '$1'], [/men$/i, 'man'], [/(n)ews$/i, '$1ews'], [/([ti])a$/i, '$1um'], [/([^aeiouy]|qu)ies$/i, '$1y'], [/(s)eries$/i, '$1eries'], [/(m)ovies$/i, '$1ovie'], [/([m|l])ice$/i, '$1ouse'], [/(cris|ax|test)es$/i, '$1is'], [/(alias|status)es$/i, '$1'], [/(ss)$/i, '$1'], [/(ics)$/i, '$1'], [/s$/i, '']];
 
-  var toSingular = function toSingular(str) {
-    // does it even inflect, in the first place?
-    // if (hasPlural(doc) === false) {
-    //   return doc
-    // }
-    // let str = doc.text('normal').trim()
-    // check irregulars list
-    // if (irregulars.hasOwnProperty(str)) {
-    //   return irregulars[str]
-    // }
-    // go through our regexes
-    for (var i = 0; i < _rules.length; i++) {
-      if (_rules[i][0].test(str) === true) {
-        str = str.replace(_rules[i][0], _rules[i][1]);
+  var invertObj = function invertObj(obj) {
+    return Object.keys(obj).reduce(function (h, k) {
+      h[obj[k]] = k;
+      return h;
+    }, {});
+  };
+
+  var toSingular = function toSingular(str, world) {
+    var irregulars = world.irregulars.nouns;
+    var invert = invertObj(irregulars); // check irregulars list
+
+    if (invert.hasOwnProperty(str)) {
+      return invert[str];
+    } // go through our regexes
+
+
+    for (var i = 0; i < _rules$1.length; i++) {
+      if (_rules$1[i][0].test(str) === true) {
+        str = str.replace(_rules$1[i][0], _rules$1[i][1]);
         return str;
       }
     }
@@ -5487,6 +5600,10 @@
       Object.defineProperty(this, 'transforms', {
         enumerable: false,
         value: transforms$4
+      });
+      Object.defineProperty(this, 'taggers', {
+        enumerable: false,
+        value: []
       }); // add our compressed data to lexicon
 
       this.unpackWords(_data); // add our irregulars to lexicon
@@ -5573,6 +5690,24 @@
       value: function addIrregulars() {
         addIrregulars_1(this);
 
+        return this;
+      }
+      /** extend the compromise tagset */
+
+    }, {
+      key: "addTags",
+      value: function addTags(tags) {
+        Object.assign({}, this.tags, tags); // calculate graph implications for the new tags
+
+        tags = inference(tags);
+        return this;
+      }
+      /** call methods after tagger runs */
+
+    }, {
+      key: "postProcess",
+      value: function postProcess(fn) {
+        this.taggers.push(fn);
         return this;
       }
       /** helper method for logging + debugging */
@@ -6540,22 +6675,6 @@
       return 0;
     },
 
-    /** the 'chronological', or original document sort order */
-    chron: function chron(a, b) {
-      var left = a.text();
-      var right = b.text();
-
-      if (left < right) {
-        return 1;
-      }
-
-      if (left > right) {
-        return -1;
-      }
-
-      return 0;
-    },
-
     /** count the # of characters of each match */
     length: function length(a, b) {
       var left = a.text().trim().length;
@@ -6602,8 +6721,7 @@
       var str = p.text(options);
       counts[str] = counts[str] || 0;
       counts[str] += 1;
-    });
-    console.log(counts); // sort by freq
+    }); // sort by freq
 
     doc.list.sort(function (a, b) {
       var left = counts[a.text(options)];
@@ -6620,6 +6738,28 @@
       return 0;
     });
     return doc;
+  }; // order results 'chronologically', or document-order
+
+
+  var byOffset = function byOffset(doc) {
+    var order = {};
+    doc.json({
+      terms: {
+        offset: true
+      }
+    }).forEach(function (o) {
+      order[o.terms[0].id] = o.terms[0].offset.start;
+    });
+    doc.list = doc.list.sort(function (a, b) {
+      if (order[a.start] > order[b.start]) {
+        return 1;
+      } else if (order[a.start] < order[b.start]) {
+        return -1;
+      }
+
+      return 0;
+    });
+    return doc;
   }; //aliases
 
 
@@ -6630,13 +6770,17 @@
   /** re-arrange the order of the matches (in place) */
 
   var sort = function sort(input) {
-    input = input || 'alpha';
-    input = methods$2[input] || input; //do this one up-front
+    input = input || 'alpha'; //do this one up-front
 
     if (input === 'freq' || input === 'frequency' || input === 'topk') {
       return byFreq(this);
-    } // apply sort method on each phrase
+    }
 
+    if (input === 'chron' || input === 'chronological') {
+      return byOffset(this);
+    }
+
+    input = methods$2[input] || input; // apply sort method on each phrase
 
     if (typeof input === 'function') {
       this.list = this.list.sort(input);
@@ -6656,7 +6800,7 @@
   /** remove any duplicate matches */
 
 
-  var unique$2 = function unique() {
+  var unique$4 = function unique() {
     var list = [].concat(this.list);
     var obj = {};
     list = list.filter(function (p) {
@@ -6675,34 +6819,17 @@
   var _10Sort = {
     sort: sort,
     reverse: reverse,
-    unique: unique$2
+    unique: unique$4
   };
 
-  //list of inconsistent parts-of-speech
-  var conflicts$1 = [//top-level pos are all inconsistent
-  ['Noun', 'Verb', 'Adjective', 'Adverb', 'Determiner', 'Conjunction', 'Preposition', 'QuestionWord', 'Expression', 'Url', 'PhoneNumber', 'Email', 'Emoji'], //exlusive-nouns
-  ['Person', 'Organization', 'Value', 'Place', 'Actor', 'Demonym', 'Pronoun'], //acronyms
-  ['Acronym', 'Pronoun', 'Actor', 'Unit', 'Address'], ['Acronym', 'Plural'], //things that can't be plural
-  ['Plural', 'Singular'], //exlusive-people
-  ['MaleName', 'FemaleName'], ['FirstName', 'LastName', 'Honorific'], //adjectives
-  ['Comparative', 'Superlative'], //values
-  ['Value', 'Verb', 'Adjective'], ['Ordinal', 'Cardinal'], ['TextValue', 'NumericValue'], ['NiceNumber', 'TextValue'], ['Ordinal', 'Currency'], //$5.50th
-  //verbs
-  ['PastTense', 'PresentTense', 'FutureTense'], ['Pluperfect', 'Copula', 'Modal', 'Participle', 'Infinitive', 'Gerund', 'FuturePerfect', 'PerfectTense'], ['Auxiliary', 'Noun', 'Value'], //date
-  ['Month', 'WeekDay', 'Year', 'Duration', 'Holiday'], ['Particle', 'Conjunction', 'Adverb', 'Preposition', 'Date'], ['Date', 'Verb', 'Adjective', 'Person'], ['Date', 'Money', 'RomanNumeral', 'Fraction'], //a/an -> 1
-  ['Value', 'Determiner'], ['Url', 'Value', 'HashTag', 'PhoneNumber', 'Emoji'], //roman numerals
-  ['RomanNumeral', 'Fraction', 'NiceNumber'], ['RomanNumeral', 'Money', 'Acronym'], //cases
-  ['UpperCase', 'TitleCase', 'CamelCase'], //phrases
-  ['Verb', 'Noun', 'Adjective', 'Value'], //VerbPhrase',
-  //QuestionWord
-  ['QuestionWord', 'Verb'], //acronyms
-  ['Acronym', 'Verb']];
-
   var nouns$1 = {
-    Noun: {},
+    Noun: {
+      notA: ['Verb', 'Adjective', 'Adverb', 'Value']
+    },
     // - singular
     Singular: {
-      isA: 'Noun'
+      isA: 'Noun',
+      notA: 'Plural'
     },
     //a specific thing that's capitalized
     ProperNoun: {
@@ -6710,46 +6837,50 @@
     },
     // -- people
     Person: {
-      isA: 'ProperNoun',
-      also: 'Singular'
+      isA: ['ProperNoun', 'Singular'],
+      notA: ['Place', 'Organization']
     },
     FirstName: {
       isA: 'Person'
     },
     MaleName: {
-      isA: 'FirstName'
+      isA: 'FirstName',
+      notA: ['FemaleName', 'LastName']
     },
     FemaleName: {
-      isA: 'FirstName'
+      isA: 'FirstName',
+      notA: ['MaleName', 'LastName']
     },
     LastName: {
-      isA: 'Person'
+      isA: 'Person',
+      notA: ['FirstName']
     },
     Honorific: {
       isA: 'Noun'
     },
-    Place: {
-      isA: 'Singular'
-    },
     // -- places
+    Place: {
+      isA: 'Singular',
+      notA: ['Person', 'Organization']
+    },
     Country: {
-      isA: 'Place',
-      also: 'ProperNoun'
+      isA: ['Place', 'ProperNoun'],
+      notA: ['City']
     },
     City: {
-      isA: 'Place',
-      also: 'ProperNoun'
+      isA: ['Place', 'ProperNoun'],
+      notA: ['Country']
     },
     Region: {
-      isA: 'Place',
-      also: 'ProperNoun'
+      isA: ['Place', 'ProperNoun']
     },
     Address: {
       isA: 'Place'
     },
+    //---Orgs---
     Organization: {
-      isA: 'Singular',
-      also: 'ProperNoun'
+      isA: ['Singular', 'ProperNoun'],
+      notA: ['Person', 'Place']
     },
     SportsTeam: {
       isA: 'Organization'
@@ -6762,7 +6893,8 @@
     },
     // - plural
     Plural: {
-      isA: 'Noun'
+      isA: 'Noun',
+      notA: 'Singular'
     },
     Uncountable: {
       //(not plural or singular)
@@ -6785,8 +6917,7 @@
     },
     //'Canadians'
     Demonym: {
-      isA: 'Noun',
-      also: 'ProperNoun'
+      isA: ['Noun', 'ProperNoun']
     },
     //`john's`
     Possessive: {
@@ -6795,68 +6926,81 @@
   };
 
   var verbs$1 = {
-    Verb: {// isA: 'VerbPhrase',
+    Verb: {
+      notA: ['Noun', 'Adjective', 'Adverb', 'Value']
     },
+    // walks
     PresentTense: {
-      isA: 'Verb'
+      isA: 'Verb',
+      notA: ['PastTense', 'Copula']
     },
+    // neutral form - 'walk'
     Infinitive: {
-      isA: 'PresentTense'
+      isA: 'Verb',
+      notA: ['PastTense']
     },
+    // walking
     Gerund: {
       isA: 'PresentTense'
     },
+    // walked
     PastTense: {
       isA: 'Verb'
     },
     PerfectTense: {
       isA: 'Verb'
     },
-    FuturePerfect: {
-      isA: 'Verb'
-    },
     Pluperfect: {
       isA: 'Verb'
     },
+    // is
     Copula: {
       isA: 'Verb'
     },
+    // would have
     Modal: {
       isA: 'Verb'
     },
+    // shown
     Participle: {
       isA: 'Verb'
     },
-    Particle: {
-      isA: 'Verb'
-    },
+    // show up
     PhrasalVerb: {
       isA: 'Verb'
+    },
+    //'up' part
+    Particle: {
+      isA: 'PhrasalVerb'
     }
   };
 
   var values$1 = {
-    Value: {},
+    Value: {
+      notA: ['Noun', 'Verb', 'Adjective', 'Adverb']
+    },
     Ordinal: {
-      isA: 'Value'
+      isA: 'Value',
+      notA: ['Cardinal']
     },
     Cardinal: {
-      isA: 'Value'
+      isA: 'Value',
+      notA: ['Ordinal']
     },
-    // Multiple: {
-    //   isA: 'Value',
-    // },
     RomanNumeral: {
-      isA: 'Cardinal'
+      isA: 'Cardinal',
+      notA: ['Ordinal']
     },
     Fraction: {
       isA: 'Value'
     },
     TextValue: {
-      isA: 'Value'
+      isA: 'Value',
+      notA: ['NumericValue']
     },
     NumericValue: {
-      isA: 'Value'
+      isA: 'Value',
+      notA: ['TextValue']
     },
     Money: {//isA: 'Cardinal'
     },
@@ -6869,156 +7013,230 @@
     Date: {},
     //not a noun, but usually is
     Month: {
-      isA: 'Date',
-      also: 'Singular'
+      isA: ['Date', 'Singular']
     },
     WeekDay: {
-      isA: 'Date',
-      also: 'Noun'
-    },
-    RelativeDay: {
-      isA: 'Date'
+      isA: ['Date', 'Noun']
     },
     Year: {
-      isA: 'Date'
+      isA: ['Date']
     },
     Duration: {
-      isA: 'Date',
-      also: 'Noun'
+      isA: ['Date', 'Noun']
     },
     Time: {
-      isA: 'Date',
-      also: 'Noun'
+      isA: ['Date', 'Noun']
     },
     Holiday: {
-      isA: 'Date',
-      also: 'Noun'
+      isA: ['Date', 'Noun']
     }
   };
 
+  var anything$1 = ['Noun', 'Verb', 'Adjective', 'Adverb', 'Value'];
   var misc$2 = {
-    Adjective: {},
+    //--Adjectives--
+    Adjective: {
+      notA: ['Noun', 'Verb', 'Adverb', 'Value']
+    },
+    // adjectives that can conjugate
     Comparable: {
-      isA: 'Adjective'
+      isA: ['Adjective']
     },
+    // better
     Comparative: {
-      isA: 'Adjective'
+      isA: ['Adjective']
     },
+    // best
     Superlative: {
-      isA: 'Adjective'
+      isA: ['Adjective'],
+      notA: ['Comparative']
     },
     NumberRange: {
-      isA: 'Contraction'
+      isA: ['Contraction']
     },
-    Adverb: {},
-    Currency: {},
+    Adverb: {
+      notA: ['Noun', 'Verb', 'Adjective', 'Value']
+    },
     //glue
-    Determiner: {},
-    Conjunction: {},
-    Preposition: {},
+    Determiner: {
+      notA: anything$1
+    },
+    Conjunction: {
+      notA: anything$1
+    },
+    Preposition: {
+      notA: anything$1
+    },
     QuestionWord: {},
     RelativeProunoun: {
-      isA: 'Pronoun'
+      isA: ['Pronoun']
     },
+    Currency: {},
     Expression: {},
     Abbreviation: {},
     Url: {},
     PhoneNumber: {},
     HashTag: {},
     AtMention: {
-      isA: 'Noun'
+      isA: ['Noun']
     },
     Emoji: {},
     Email: {},
     //non-exclusive
     Auxiliary: {},
-    Negative: {},
-    Contraction: {},
-    TitleCase: {},
-    Hyphenated: {},
-    Acronym: {},
-    // Quotes
-    Quotation: {},
-    //parentheses
-    Parentheses: {}
+    Negative: {}
   };
 
-  //add 'downward' tags (that immediately depend on this one)
-  var addDownword$1 = function addDownword(tags) {
-    var keys = Object.keys(tags);
-    keys.forEach(function (k) {
-      tags[k].downward = []; //look for tags with this as parent
-
-      for (var i = 0; i < keys.length; i++) {
-        if (tags[keys[i]].isA && tags[keys[i]].isA === k) {
-          tags[k].downward.push(keys[i]);
-        }
-      }
-    });
-  };
-
-  var addDownward$1 = addDownword$1;
-
-  var colors$1 = {
+  // i just made these up
+  var colorMap$1 = {
     Noun: 'blue',
-    // NounPhrase: 'blue',
     Verb: 'green',
-    Auxiliary: 'green',
     Negative: 'green',
-    // VerbPhrase: 'green',
     Date: 'red',
     Value: 'red',
     Adjective: 'magenta',
     Preposition: 'cyan',
     Conjunction: 'cyan',
     Determiner: 'cyan',
-    Adverb: 'cyan' // Condition: 'cyan',
+    Adverb: 'cyan'
+  };
+  /** add a debug color to some tags */
 
-  }; //extend tagset with new tags
+  var addColors$1 = function addColors(tags) {
+    Object.keys(tags).forEach(function (k) {
+      if (colorMap$1[k]) {
+        tags[k].color = colorMap$1[k];
+        return;
+      }
+
+      tags[k].isA.some(function (t) {
+        if (colorMap$1[t]) {
+          tags[k].color = colorMap$1[t];
+          return true;
+        }
+
+        return false;
+      });
+    });
+    return tags;
+  };
+
+  var _color$1 = addColors$1;
+
+  var unique$5 = function unique(arr) {
+    return arr.filter(function (v, i, a) {
+      return a.indexOf(v) === i;
+    });
+  }; //add 'downward' tags (that immediately depend on this one)
+
+
+  var inferIsA$1 = function inferIsA(tags) {
+    Object.keys(tags).forEach(function (k) {
+      var tag = tags[k];
+      var len = tag.isA.length;
+
+      for (var i = 0; i < len; i++) {
+        var down = tag.isA[i];
+
+        if (tags[down]) {
+          tag.isA = tag.isA.concat(tags[down].isA);
+        }
+      } // clean it up
+
+
+      tag.isA = unique$5(tag.isA);
+    });
+    return tags;
+  };
+
+  var _isA$1 = inferIsA$1;
+
+  var unique$6 = function unique(arr) {
+    return arr.filter(function (v, i, a) {
+      return a.indexOf(v) === i;
+    });
+  }; // crawl the tag-graph and infer any conflicts
+  // faster than doing this at tag-time
+
+
+  var inferNotA$1 = function inferNotA(tags) {
+    Object.keys(tags).forEach(function (k) {
+      var tag = tags[k];
+      tag.notA = tag.notA || [];
+      tag.isA.forEach(function (down) {
+        if (tags[down] && tags[down].notA) {
+          // borrow its conflicts
+          var notA = typeof tags[down].notA === 'string' ? [tags[down].isA] : tags[down].notA || [];
+          tag.notA = tag.notA.concat(notA);
+        }
+      }); // clean it up
+
+      tag.notA = unique$6(tag.notA);
+    });
+    return tags;
+  };
+
+  var _notA$1 = inferNotA$1;
+
+  // a lineage is all 'incoming' tags that have this as 'isA'
+  var inferLineage$1 = function inferLineage(tags) {
+    var keys = Object.keys(tags);
+    keys.forEach(function (k) {
+      var tag = tags[k];
+      tag.lineage = []; // find all tags with it in their 'isA' set
+
+      for (var i = 0; i < keys.length; i++) {
+        if (tags[keys[i]].isA.indexOf(k) !== -1) {
+          tag.lineage.push(keys[i]);
+        }
+      }
+    });
+    return tags;
+  };
+
+  var _lineage$1 = inferLineage$1;
+
+  var validate$1 = function validate(tags) {
+    // cleanup format
+    Object.keys(tags).forEach(function (k) {
+      var tag = tags[k]; // ensure isA is an array
+
+      tag.isA = tag.isA || [];
+
+      if (typeof tag.isA === 'string') {
+        tag.isA = [tag.isA];
+      } // ensure notA is an array
+
+
+      tag.notA = tag.notA || [];
+
+      if (typeof tag.notA === 'string') {
+        tag.notA = [tag.notA];
+      }
+    });
+    return tags;
+  }; // build-out the tag-graph structure
+
+
+  var inferTags$1 = function inferTags(tags) {
+    // validate data
+    tags = validate$1(tags); // build its 'down tags'
+
+    tags = _isA$1(tags); // infer the conflicts
+
+    tags = _notA$1(tags); // debug tag color
+
+    tags = _color$1(tags); // find incoming links
+
+    tags = _lineage$1(tags);
+    return tags;
+  };
+
+  var inference$1 = inferTags$1;
 
   var addIn$1 = function addIn(obj, tags) {
     Object.keys(obj).forEach(function (k) {
       tags[k] = obj[k];
-    });
-  }; //add tags to remove when tagging this one
-
-
-  var addConflicts$1 = function addConflicts(tags) {
-    Object.keys(tags).forEach(function (k) {
-      tags[k].notA = {};
-
-      for (var i = 0; i < conflicts$1.length; i++) {
-        var arr = conflicts$1[i];
-
-        if (arr.indexOf(k) !== -1) {
-          arr = arr.filter(function (a) {
-            return a !== k;
-          });
-          arr.forEach(function (e) {
-            tags[k].notA[e] = true;
-          });
-        }
-      }
-
-      tags[k].notA = Object.keys(tags[k].notA);
-    });
-  };
-
-  var addColors$1 = function addColors(tags) {
-    Object.keys(tags).forEach(function (k) {
-      if (colors$1[k]) {
-        tags[k].color = colors$1[k];
-        return;
-      }
-
-      if (tags[k].isA && colors$1[tags[k].isA]) {
-        tags[k].color = colors$1[tags[k].isA];
-        return;
-      }
-
-      if (tags[k].isA && tags[tags[k].isA].color) {
-        tags[k].color = tags[tags[k].isA].color;
-      }
     });
   };
 
@@ -7028,13 +7246,9 @@
     addIn$1(verbs$1, tags);
     addIn$1(values$1, tags);
     addIn$1(dates$1, tags);
-    addIn$1(misc$2, tags); //downstream
+    addIn$1(misc$2, tags); // do the graph-stuff
 
-    addDownward$1(tags); //add enemies
-
-    addConflicts$1(tags); //for nice-logging
-
-    addColors$1(tags);
+    tags = inference$1(tags);
     return tags;
   };
 
@@ -7055,7 +7269,7 @@
     }; //cheaper than requiring chalk
 
 
-    var colors = {
+    var cli = {
       green: function green(str) {
         return '\x1b[32m' + str + reset;
       },
@@ -7086,16 +7300,16 @@
         }
 
         var c = tags$1[tag].color || 'blue';
-        return colors[c](tag);
+        return cli[c](tag);
       });
       return tags.join(', ');
     }; //output some helpful stuff to the console
 
 
     var debug = function debug(doc) {
-      console.log(colors.blue('====='));
+      console.log(cli.blue('====='));
       doc.list.forEach(function (p) {
-        console.log(colors.blue('  -----'));
+        console.log(cli.blue('  -----'));
         p.terms().forEach(function (t) {
           var tags = Object.keys(t.tags);
           var text = t.text || '-';
@@ -7105,12 +7319,12 @@
           }
 
           {
-            text = colors.yellow(text);
+            text = cli.yellow(text);
           }
 
           var word = "'" + text + "'";
           word = padEnd(word, 18);
-          var str = colors.blue('  ｜ ') + word + '  - ' + tagString(tags);
+          var str = cli.blue('  ｜ ') + word + '  - ' + tagString(tags);
           console.log(str);
         });
       });
@@ -7163,11 +7377,25 @@
       return this.json();
     }
 
+    if (method === 'offset' || method === 'offsets') {
+      return this.json({
+        offset: true
+      });
+    }
+
     if (method === 'array') {
       return this.json({
         terms: false
       }).map(function (obj) {
         return obj.text;
+      });
+    }
+
+    if (method === 'freq') {
+      return this.json({
+        count: true,
+        terms: false,
+        reduced: true
       });
     }
 
@@ -7328,16 +7556,41 @@
       }
 
       options = Object.assign({}, jsonDefaults, options);
+
+      if (options.offset) {
+        options.terms = options.terms === true ? {} : options.terms;
+        options.terms.offset = true;
+      }
+
       var result = this.list.map(function (p) {
         return p.json(options, _this.world);
       }); // add offset data for each term
 
-      if (options.terms.offset) {
+      if (options.terms.offset || options.offset) {
         var offsets = termOffsets(this.all());
         result.forEach(function (o) {
           o.terms.forEach(function (t) {
             t.offset = offsets[t.id] || {};
           });
+          var len = o.terms.reduce(function (n, t) {
+            n += t.offset.length || 0;
+            return n;
+          }, 0);
+          o.offset = o.terms[0].offset;
+          o.offset.length = len;
+        });
+      } // add frequency #s
+
+
+      if (options.frequency || options.freq || options.count) {
+        var obj = {};
+        this.list.forEach(function (p) {
+          var str = p.text('reduced');
+          obj[str] = obj[str] || 0;
+          obj[str] += 1;
+        });
+        this.list.forEach(function (p, i) {
+          result[i].count = obj[p.text('reduced')];
         });
       }
 
@@ -7467,11 +7720,40 @@
       });
       return this.buildFrom(matches);
     };
+    /** split a document into labeled sections */
+
+
+    exports.segment = function (regs, options) {
+      options = options || {
+        text: true
+      };
+      var doc = this;
+      var keys = Object.keys(regs); // split em
+
+      keys.forEach(function (k) {
+        doc = doc.splitOn(k);
+      }); //add labels for each section
+
+      doc.list.forEach(function (p) {
+        for (var i = 0; i < keys.length; i += 1) {
+          if (p.has(keys[i])) {
+            p.segment = regs[keys[i]];
+            return;
+          }
+        }
+      });
+      return doc.list.map(function (p) {
+        var res = p.json(options);
+        res.segment = p.segment || null;
+        return res;
+      });
+    };
   });
   var _14Split_1 = _14Split.splitOn;
   var _14Split_2 = _14Split.splitAfter;
   var _14Split_3 = _14Split.split;
   var _14Split_4 = _14Split.splitBefore;
+  var _14Split_5 = _14Split.segment;
 
   /** make all phrases into one phrase */
   var join = function join(str) {
@@ -8306,7 +8588,7 @@
     //36%
     Modal: 'Noun',
     //38%
-    PluperfectTense: 'Noun',
+    Pluperfect: 'Noun',
     //40%
     PerfectTense: 'Verb' //32%
 
@@ -8414,10 +8696,18 @@
 
   var _02Case = checkCase;
 
-  //these tags don't have plurals
-  var noPlurals = ['Uncountable', 'Pronoun', 'Place', 'Value', 'Person', 'Month', 'WeekDay', 'RelativeDay', 'Holiday'];
-  var notPlural = [/ss$/, /sis$/, /[uo]s$/];
-  var notSingular = [/i$/, /ae$/, /men$/, /tia$/];
+  //similar to plural/singularize rules, but not the same
+  var isPlural = [/(^v)ies$/i, /ises$/i, /ives$/i, /(antenn|formul|nebul|vertebr|vit)ae$/i, /(octop|vir|radi|nucle|fung|cact|stimul)i$/i, /(buffal|tomat|tornad)oes$/i, /(analy|ba|diagno|parenthe|progno|synop|the)ses$/i, /(vert|ind|cort)ices$/i, /(matr|append)ices$/i, /(x|ch|ss|sh|s|z|o)es$/i, /is$/i, /men$/i, /news$/i, /.tia$/i, /(^f)ves$/i, /(lr)ves$/i, /(^aeiouy|qu)ies$/i, /(m|l)ice$/i, /(cris|ax|test)es$/i, /(alias|status)es$/i, /ics$/i]; //similar to plural/singularize rules, but not the same
+
+  var isSingular = [/(ax|test)is$/i, /(octop|vir|radi|nucle|fung|cact|stimul)us$/i, /(octop|vir)i$/i, /(rl)f$/i, /(alias|status)$/i, /(bu)s$/i, /(al|ad|at|er|et|ed|ad)o$/i, /(ti)um$/i, /(ti)a$/i, /sis$/i, /(?:(^f)fe|(lr)f)$/i, /hive$/i, /(^aeiouy|qu)y$/i, /(x|ch|ss|sh|z)$/i, /(matr|vert|ind|cort)(ix|ex)$/i, /(m|l)ouse$/i, /(m|l)ice$/i, /(antenn|formul|nebul|vertebr|vit)a$/i, /.sis$/i, /^(?!talis|.*hu)(.*)man$/i];
+  var isPlural_1 = {
+    isSingular: isSingular,
+    isPlural: isPlural
+  };
+
+  var noPlurals = ['Uncountable', 'Pronoun', 'Place', 'Value', 'Person', 'Month', 'WeekDay', 'Holiday'];
+  var notPlural = [/ss$/, /sis$/, /[^aeiou][uo]s$/, /'s$/];
+  var notSingular = [/i$/, /ae$/];
   /** turn nouns into singular/plural */
 
   var checkPlural = function checkPlural(t, world) {
@@ -8429,7 +8719,8 @@
       } //too short
 
 
-      if (str.length <= 2) {
+      if (str.length <= 3) {
+        t.tag('Singular', 'short-singular', world);
         return;
       } //is it impossible to be plural?
 
@@ -8438,7 +8729,23 @@
         return t.tags[tag];
       })) {
         return;
-      } // finally, fallback 'looks check plural' rules..
+      } // isPlural suffix rules
+
+
+      if (isPlural_1.isPlural.find(function (reg) {
+        return reg.test(str);
+      })) {
+        t.tag('Plural', 'plural-rules', world);
+        return;
+      } // isSingular suffix rules
+
+
+      if (isPlural_1.isSingular.find(function (reg) {
+        return reg.test(str);
+      })) {
+        t.tag('Singular', 'singular-rules', world);
+        return;
+      } // finally, fallback 'looks plural' rules..
 
 
       if (/s$/.test(str) === true) {
@@ -8483,7 +8790,7 @@
         // look for the root word in the lexicon:
         var stem = term.clean.replace(prefix, '');
 
-        if (lex[stem] !== undefined && lex.hasOwnProperty(stem) === true) {
+        if (stem && stem.length > 3 && lex[stem] !== undefined && lex.hasOwnProperty(stem) === true) {
           term.tag(lex[stem], 'stem-' + stem, world);
         }
       }
@@ -8904,7 +9211,7 @@
 
   var _01Organizations = tagOrgs;
 
-  var inference = function inference(doc) {
+  var inference$2 = function inference(doc) {
     var termArr = doc.list.map(function (p) {
       return p.terms();
     });
@@ -8912,7 +9219,7 @@
     return doc;
   };
 
-  var _04Inference = inference;
+  var _04Inference = inference$2;
 
   //mostly pos-corections here
   var miscCorrection = function miscCorrection(doc) {
@@ -9005,9 +9312,9 @@
 
     if (hyph.found === true) {
       //air-flow
-      hyph.match('@hasHyphen @hasHyphen').match('#Noun #Verb').tag('Noun', 'hyphen-verb'); //connect hyphenated expressions - 'ooh-wee'
+      hyph.match('@hasHyphen .').match('#Noun #Verb').tag('Noun', 'hyphen-verb'); //connect hyphenated expressions - 'ooh-wee'
 
-      hyph["if"]('#Expression').match('#@hasHyphen+').tag('Expression', 'ooh-wee');
+      hyph["if"]('#Expression').match('@hasHyphen+').tag('Expression', 'ooh-wee');
     }
 
     var place = doc["if"]('#Place');
@@ -9292,7 +9599,7 @@
 
         firstName.match('#FirstName [#Determiner #Noun] #LastName').tag('#NickName', 'first-noun-last').tag('#Person', 'first-noun-last'); //john bodego's
 
-        firstName.match('#FirstName (#Singular|#Possessive)').ifNo('#Date').ifNo('#NickName').tag('#Person', 'first-possessive').lastTerm().tag('#LastName', 'first-possessive'); // Firstname x (dangerous)
+        firstName.match('#FirstName (#Singular|#Possessive)').ifNo('(#Date|#Pronoun|#NickName)').tag('#Person', 'first-possessive').lastTerm().tag('#LastName', 'first-possessive'); // Firstname x (dangerous)
 
         var tmp = firstName.match('#FirstName (#Noun|#TitleCase)').ifNo('^#Possessive').ifNo('#ClauseEnd .').ifNo('#Pronoun');
         tmp.lastTerm().tag('#LastName', 'firstname-noun');
@@ -9323,7 +9630,8 @@
     var vb = doc["if"]('#Verb');
 
     if (vb.found) {
-      //still make
+      vb.match('[(do|does|will|have|had)] (not|#Adverb)? #Verb').tag('Auxiliary', 'have-had'); //still make
+
       vb.match('[still] #Verb').tag('Adverb', 'still-verb'); //'u' as pronoun
 
       vb.match('[u] #Verb').tag('Pronoun', 'u-pronoun-1'); //is no walk
@@ -9840,9 +10148,13 @@
     // console.time('corrections')
 
     doc = _05Correction(doc); // console.timeEnd('corrections')
-    //remove our cache?
+    //remove our cache
 
-    doc.uncache();
+    doc.uncache(); // run any user-given tagger functions
+
+    doc.world.taggers.forEach(function (fn) {
+      doc = fn(doc);
+    });
     return doc;
   };
 
@@ -10179,7 +10491,7 @@
 
     Doc.prototype.possessives = function (n) {
       //find currently-contracted
-      var found = this.match('#Possessive'); //todo: split consecutive contractions
+      var found = this.match('#Noun+? #Possessive'); //todo: split consecutive contractions
 
       if (typeof n === 'number') {
         found = found.get(n);
@@ -10297,7 +10609,119 @@
 
   var Lists = addMethod$5;
 
-  var selections$1 = [Acronyms, Adjectives, Contractions, Parentheses, Possessives, Lists];
+  var pairs = {
+    "\"": "\"",
+    // 'StraightDoubleQuotes'
+    "\uFF02": "\uFF02",
+    // 'StraightDoubleQuotesWide'
+    "'": "'",
+    // 'StraightSingleQuotes'
+    "\u201C": "\u201D",
+    // 'CommaDoubleQuotes'
+    "\u2018": "\u2019",
+    // 'CommaSingleQuotes'
+    "\u201F": "\u201D",
+    // 'CurlyDoubleQuotesReversed'
+    "\u201B": "\u2019",
+    // 'CurlySingleQuotesReversed'
+    "\u201E": "\u201D",
+    // 'LowCurlyDoubleQuotes'
+    "\u2E42": "\u201D",
+    // 'LowCurlyDoubleQuotesReversed'
+    "\u201A": "\u2019",
+    // 'LowCurlySingleQuotes'
+    "\xAB": "\xBB",
+    // 'AngleDoubleQuotes'
+    "\u2039": "\u203A",
+    // 'AngleSingleQuotes'
+    // Prime 'non quotation'
+    "\u2035": "\u2032",
+    // 'PrimeSingleQuotes'
+    "\u2036": "\u2033",
+    // 'PrimeDoubleQuotes'
+    "\u2037": "\u2034",
+    // 'PrimeTripleQuotes'
+    // Prime 'quotation' variation
+    "\u301D": "\u301E",
+    // 'PrimeDoubleQuotes'
+    "`": "\xB4",
+    // 'PrimeSingleQuotes'
+    "\u301F": "\u301E" // 'LowPrimeDoubleQuotesReversed'
+
+  };
+  var hasOpen = RegExp('(' + Object.keys(pairs).join('|') + ')');
+
+  var addMethod$6 = function addMethod(Doc) {
+    /** "these things" */
+    var Quotations =
+    /*#__PURE__*/
+    function (_Doc) {
+      _inherits(Quotations, _Doc);
+
+      function Quotations() {
+        _classCallCheck(this, Quotations);
+
+        return _possibleConstructorReturn(this, _getPrototypeOf(Quotations).apply(this, arguments));
+      }
+
+      _createClass(Quotations, [{
+        key: "unwrap",
+
+        /** remove the quote characters */
+        value: function unwrap() {
+          return this;
+        }
+      }]);
+
+      return Quotations;
+    }(Doc);
+
+    Doc.prototype.quotations = function (n) {
+      var list = [];
+      this.list.forEach(function (p) {
+        var terms = p.terms(); //look for opening quotes
+
+        for (var i = 0; i < terms.length; i += 1) {
+          var t = terms[i];
+
+          if (hasOpen.test(t.pre)) {
+            var _char = (t.pre.match(hasOpen) || [])[0];
+            var want = pairs[_char]; // if (!want) {
+            //   console.warn('missing quote char ' + char)
+            // }
+            //look for the closing bracket..
+
+            for (var o = i; o < terms.length; o += 1) {
+              if (terms[o].post.indexOf(want) !== -1) {
+                var len = o - i + 1;
+                list.push(p.buildFrom(t.id, len));
+                i = o;
+                break;
+              }
+            }
+          }
+        }
+      }); //support nth result
+
+      if (typeof n === 'number') {
+        if (list[n]) {
+          list = [list[n]];
+        } else {
+          list = [];
+        }
+
+        return new Quotations(list, this, this.world);
+      }
+
+      return new Quotations(list, this, this.world);
+    };
+
+    return Doc;
+  };
+
+  var Quotations = addMethod$6;
+
+  var selections$1 = [Acronyms, Adjectives, Contractions, Parentheses, Possessives, Lists, Quotations];
 
   var extend = function extend(Doc) {
     selections$1.forEach(function (addFn) {
@@ -10460,7 +10884,7 @@
 
 
   nlp.extend = function (fn) {
-    fn(Doc_1);
+    fn(Doc_1, world);
   };
   /** make a deep-copy of the library state */
 

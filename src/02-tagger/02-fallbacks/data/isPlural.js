@@ -37,6 +37,7 @@ const isSingular = [
   /sis$/i,
   /(?:(^f)fe|(lr)f)$/i,
   /hive$/i,
+  /s[aeiou]+ns$/i, // sans, siens
   /(^aeiouy|qu)y$/i,
   /(x|ch|ss|sh|z)$/i,
   /(matr|vert|ind|cort)(ix|ex)$/i,

@@ -3,23 +3,26 @@ const nlp = require('./src/index')
 nlp.verbose(true)
 // nlp.extend(require('./plugins/dates/src'))
 
-nlp.extend(function(Doc, world) {
-  /** add some tags */
-  world.addTags({
-    Character: {
-      isA: ['Fiction', 'FemaleName'],
-      notA: 'Adjective',
-    },
-  })
-})
+// nlp.extend(function(Doc, world) {
+//   /** add some tags */
+//   world.addTags({
+//     Character: {
+//       isA: ['Fiction', 'FemaleName'],
+//       notA: 'Adjective',
+//     },
+//   })
+// })
 
 /*
 2. ~walk~ match
 3. .swap()
 */
 
-let m = nlp('john smith was really working')
-m.debug()
+// let doc = nlp('Yeargin won widespread local support.')
+let doc = nlp('Saint Saens')
+
+doc.match('(king|queen|prince|saint|lady) of? #Noun').tagSafe('#Person', 'king-of-noun')
+doc.debug()
 
 // let doc = nlp
 //   .tokenize('jeff')
@@ -27,6 +30,7 @@ m.debug()
 //   .tag('Comparable')
 //   .debug()
 
+// console.log('Character:', doc.world.tags.Character)
 // console.log('Person:', doc.world.tags.Person)
 // console.log('')
 // console.log('MaleName:', doc.world.tags.MaleName)

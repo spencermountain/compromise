@@ -127,7 +127,8 @@ class World {
 
   /** extend the compromise tagset */
   addTags(tags) {
-    Object.assign({}, this.tags, tags)
+    tags = Object.assign({}, tags)
+    this.tags = Object.assign(this.tags, tags)
     // calculate graph implications for the new tags
     tags = inferTagSet(tags)
     return this

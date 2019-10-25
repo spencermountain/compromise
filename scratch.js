@@ -1,7 +1,6 @@
 const nlp = require('./src/index')
-// const corpus = require('nlp-corpus')
-nlp.verbose(true)
-// nlp.extend(require('./plugins/dates/src'))
+// nlp.verbose(true)
+nlp.extend(require('./plugins/numbers/src'))
 
 // nlp.extend(function(Doc, world) {
 //   /** add some tags */
@@ -13,24 +12,13 @@ nlp.verbose(true)
 //   })
 // })
 
-/*
-2. ~walk~ match
-3. .swap()
-*/
+// const str = nlp('five hundred')
+//   .values()
+//   .toText()
+//   .text()
+// console.log(str)
 
-let doc = nlp('Yeargin won widespread local support.')
-// let doc = nlp('Saint Saens').forEach(e => lksdfj)
-
-doc.match('(king|queen|prince|saint|lady) of? #Noun').tagSafe('#Person', 'king-of-noun')
-doc.debug()
-
-// let doc = nlp
-//   .tokenize('jeff')
-//   .tag('Person')
-//   .tag('Comparable')
-//   .debug()
-
-// console.log('Character:', doc.world.tags.Character)
-// console.log('Person:', doc.world.tags.Person)
-// console.log('')
-// console.log('MaleName:', doc.world.tags.MaleName)
+let doc = nlp(`Water, milk, tea, buttermilk and honey`)
+let m = doc.match('(milk|buttermilk)')
+// m.debug()
+doc.splitAfter(m).debug()

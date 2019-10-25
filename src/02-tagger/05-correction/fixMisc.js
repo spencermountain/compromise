@@ -3,6 +3,11 @@ const miscCorrection = function(doc) {
   //misc:
   //foot/feet
   doc.match('(foot|feet)').tag('Noun', 'foot-noun')
+  // blood, sweat, and tears
+  doc
+    .if('@hasComma')
+    .match('#Noun #Noun (and|or) [#PresentTense]')
+    .tag('#Noun', 'noun-list')
   //3 feet
   doc.match('#Value [(foot|feet)]').tag('Unit', 'foot-unit')
   //'u' as pronoun

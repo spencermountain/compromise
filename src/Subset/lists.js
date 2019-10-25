@@ -17,22 +17,21 @@ const addMethod = function(Doc) {
     conjunctions() {
       return this.match('(and|or)')
     }
-    /** remove conjunctions */
+    /** split-up by list object */
+    parts() {
+      return this.splitAfter('(@hasComma|#Conjunction)')
+    }
+    /** remove the conjunction */
     things() {
-      let arr = []
-      this.forEach(p => {
-        let things = parse(p).things
-        arr = arr.concat(things.list)
-      })
-      return this.buildFrom(arr)
+      return this.parts().notIf('#Conjunction')
     }
     /** add a new unit to the list */
     add(str) {
       this.forEach(p => {
         let beforeLast = parse(p).beforeLast
+        beforeLast.append(str)
         //add a comma to it
         beforeLast.termList(0).addPunctuation(',')
-        beforeLast.append(str)
       })
       return this
     }
@@ -54,11 +53,20 @@ const addMethod = function(Doc) {
   }
 
   Doc.prototype.lists = function(n) {
-    let match = this.match('@hasComma+ .? (and|or) not? .') // '... and Don Smith'?
+    let m = this.if('@hasComma+ .? (and|or) not? .')
+
+    // person-list
+    let nounList = m.match('(#Noun|#Adjective)+ #Conjunction not? #Adjective? #Noun+')
+    let adjList = m.match('(#Adjective|#Adverb)+ #Conjunction not? #Adverb? #Adjective+')
+    let verbList = m.match('(#Verb|#Adverb)+ #Conjunction not? #Adverb? #Verb+')
+    let result = nounList.concat(adjList)
+    result = result.concat(verbList)
+    result = result.if('@hasComma')
+
     if (typeof n === 'number') {
-      match = match.get(n)
+      result = m.get(n)
     }
-    return new Lists(match.list, this, this.world)
+    return new Lists(result.list, this, this.world)
   }
   return Doc
 }

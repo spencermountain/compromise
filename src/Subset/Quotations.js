@@ -68,6 +68,8 @@ const addMethod = function(Doc) {
     }
     return new Quotations(list, this, this.world)
   }
+  // alias
+  Doc.prototype.quotes = Doc.prototype.quotations
 
   return Doc
 }

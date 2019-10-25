@@ -10,15 +10,6 @@ exports.terms = function(n) {
 }
 exports.words = exports.terms
 
-// /** split-up results into multi-term phrases */
-exports.clauses = function(n) {
-  let r = this.splitAfter('#ClauseEnd') //TODO:make this
-  if (typeof n === 'number') {
-    r = r.get(n)
-  }
-  return r
-}
-
 /** all terms connected with a hyphen or dash */
 exports.hyphenated = function(n) {
   let r = this.match('@hasHyphen .').debug()

@@ -2669,7 +2669,7 @@ var verbs = {
   },
   // neutral form - 'walk'
   Infinitive: {
-    isA: 'Verb',
+    isA: 'PresentTense',
     notA: ['PastTense'],
   },
   // walking
@@ -5289,7 +5289,8 @@ class World {
 
   /** extend the compromise tagset */
   addTags(tags) {
-    Object.assign({}, this.tags, tags);
+    tags = Object.assign({}, tags);
+    this.tags = Object.assign(this.tags, tags);
     // calculate graph implications for the new tags
     tags = inference(tags);
     return this
@@ -6331,7 +6332,7 @@ var verbs$1 = {
   },
   // neutral form - 'walk'
   Infinitive: {
-    isA: 'Verb',
+    isA: 'PresentTense',
     notA: ['PastTense'],
   },
   // walking
@@ -8026,6 +8027,7 @@ const isSingular = [
   /sis$/i,
   /(?:(^f)fe|(lr)f)$/i,
   /hive$/i,
+  /s[aeiou]+ns$/i, // sans, siens
   /(^aeiouy|qu)y$/i,
   /(x|ch|ss|sh|z)$/i,
   /(matr|vert|ind|cort)(ix|ex)$/i,

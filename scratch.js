@@ -5,7 +5,7 @@ nlp.verbose(true)
 
 // nlp.extend(function(Doc, world) {
 //   /** add some tags */
-//   world.addTags({
+//   world.addTags({;
 //     Character: {
 //       isA: ['Fiction', 'FemaleName'],
 //       notA: 'Adjective',
@@ -18,8 +18,8 @@ nlp.verbose(true)
 3. .swap()
 */
 
-// let doc = nlp('Yeargin won widespread local support.')
-let doc = nlp('Saint Saens')
+let doc = nlp('Yeargin won widespread local support.')
+// let doc = nlp('Saint Saens').forEach(e => lksdfj)
 
 doc.match('(king|queen|prince|saint|lady) of? #Noun').tagSafe('#Person', 'king-of-noun')
 doc.debug()

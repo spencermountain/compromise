@@ -3,6 +3,7 @@ const defaultTags = require('./tags')
 const unpack = require('efrt-unpack')
 const addLex = require('./addWords')
 const addIrregulars = require('./addIrregulars')
+const inferTagSet = require('./tags/inference')
 
 let misc = require('./data/misc')
 
@@ -126,7 +127,9 @@ class World {
 
   /** extend the compromise tagset */
   addTags(tags) {
-    Object.assign(this.tags, tags)
+    Object.assign({}, this.tags, tags)
+    // calculate graph implications for the new tags
+    tags = inferTagSet(tags)
     return this
   }
   /** call methods after tagger runs */

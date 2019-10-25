@@ -35,8 +35,14 @@ const tagger = function(doc) {
   doc = corrections(doc)
   // console.timeEnd('corrections')
 
-  //remove our cache?
+  //remove our cache
   doc.uncache()
+
+  // run any user-given tagger functions
+  doc.world.taggers.forEach(fn => {
+    doc = fn(doc)
+  })
+
   return doc
 }
 module.exports = tagger

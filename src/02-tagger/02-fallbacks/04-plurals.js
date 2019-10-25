@@ -1,5 +1,5 @@
 //these tags don't have plurals
-const noPlurals = ['Uncountable', 'Pronoun', 'Place', 'Value', 'Person', 'Month', 'WeekDay', 'RelativeDay', 'Holiday']
+const noPlurals = ['Uncountable', 'Pronoun', 'Place', 'Value', 'Person', 'Month', 'WeekDay', 'Holiday']
 const rules = require('./data/isPlural')
 const notPlural = [/ss$/, /sis$/, /[^aeiou][uo]s$/, /'s$/]
 const notSingular = [/i$/, /ae$/]

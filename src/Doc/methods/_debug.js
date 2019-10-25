@@ -12,7 +12,7 @@ const padEnd = function(str, width) {
 }
 
 //cheaper than requiring chalk
-const colors = {
+const cli = {
   green: function(str) {
     return '\x1b[32m' + str + reset
   },
@@ -42,16 +42,16 @@ const tagString = function(tags) {
       return tag
     }
     const c = tagset[tag].color || 'blue'
-    return colors[c](tag)
+    return cli[c](tag)
   })
   return tags.join(', ')
 }
 
 //output some helpful stuff to the console
 const debug = function(doc) {
-  console.log(colors.blue('====='))
+  console.log(cli.blue('====='))
   doc.list.forEach(p => {
-    console.log(colors.blue('  -----'))
+    console.log(cli.blue('  -----'))
     p.terms().forEach(t => {
       let tags = Object.keys(t.tags)
       let text = t.text || '-'
@@ -59,11 +59,11 @@ const debug = function(doc) {
         text = '[' + t.implicit + ']'
       }
       if (typeof module !== undefined) {
-        text = colors.yellow(text)
+        text = cli.yellow(text)
       }
       let word = "'" + text + "'"
       word = padEnd(word, 18)
-      let str = colors.blue('  ｜ ') + word + '  - ' + tagString(tags)
+      let str = cli.blue('  ｜ ') + word + '  - ' + tagString(tags)
       console.log(str)
     })
   })

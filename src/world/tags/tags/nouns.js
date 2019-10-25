@@ -1,8 +1,11 @@
 module.exports = {
-  Noun: {},
+  Noun: {
+    notA: ['Verb', 'Adjective', 'Adverb', 'Value'],
+  },
   // - singular
   Singular: {
     isA: 'Noun',
+    notA: 'Plural',
   },
   //a specific thing that's capitalized
   ProperNoun: {
@@ -11,47 +14,52 @@ module.exports = {
 
   // -- people
   Person: {
-    isA: 'ProperNoun',
-    also: 'Singular',
+    isA: ['ProperNoun', 'Singular'],
+    notA: ['Place', 'Organization'],
   },
   FirstName: {
     isA: 'Person',
   },
   MaleName: {
     isA: 'FirstName',
+    notA: ['FemaleName', 'LastName'],
   },
   FemaleName: {
     isA: 'FirstName',
+    notA: ['MaleName', 'LastName'],
   },
   LastName: {
     isA: 'Person',
+    notA: ['FirstName'],
   },
   Honorific: {
     isA: 'Noun',
   },
-  Place: {
-    isA: 'Singular',
-  },
 
   // -- places
+  Place: {
+    isA: 'Singular',
+    notA: ['Person', 'Organization'],
+  },
   Country: {
-    isA: 'Place',
-    also: 'ProperNoun',
+    isA: ['Place', 'ProperNoun'],
+    notA: ['City'],
   },
   City: {
-    isA: 'Place',
-    also: 'ProperNoun',
+    isA: ['Place', 'ProperNoun'],
+    notA: ['Country'],
   },
   Region: {
-    isA: 'Place',
-    also: 'ProperNoun',
+    isA: ['Place', 'ProperNoun'],
   },
   Address: {
     isA: 'Place',
   },
+
+  //---Orgs---
   Organization: {
-    isA: 'Singular',
-    also: 'ProperNoun',
+    isA: ['Singular', 'ProperNoun'],
+    notA: ['Person', 'Place'],
   },
   SportsTeam: {
     isA: 'Organization',
@@ -66,6 +74,7 @@ module.exports = {
   // - plural
   Plural: {
     isA: 'Noun',
+    notA: 'Singular',
   },
   Uncountable: {
     //(not plural or singular)
@@ -88,8 +97,7 @@ module.exports = {
   },
   //'Canadians'
   Demonym: {
-    isA: 'Noun',
-    also: 'ProperNoun',
+    isA: ['Noun', 'ProperNoun'],
   },
   //`john's`
   Possessive: {

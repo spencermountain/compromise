@@ -15,6 +15,8 @@
 * offsets
 * removed #Quotation, #Comma, #ClauseEnd tags
 
+### Plugin scheme
+  * .extend()
 
 ### New Methods:
 * .reverse()

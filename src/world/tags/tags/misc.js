@@ -1,36 +1,54 @@
+const anything = ['Noun', 'Verb', 'Adjective', 'Adverb', 'Value']
+
 module.exports = {
-  Adjective: {},
+  //--Adjectives--
+  Adjective: {
+    notA: ['Noun', 'Verb', 'Adverb', 'Value'],
+  },
+  // adjectives that can conjugate
   Comparable: {
-    isA: 'Adjective',
+    isA: ['Adjective'],
   },
+  // better
   Comparative: {
-    isA: 'Adjective',
+    isA: ['Adjective'],
   },
+  // best
   Superlative: {
-    isA: 'Adjective',
+    isA: ['Adjective'],
+    notA: ['Comparative'],
   },
 
   NumberRange: {
-    isA: 'Contraction',
+    isA: ['Contraction'],
   },
-  Adverb: {},
+  Adverb: {
+    notA: ['Noun', 'Verb', 'Adjective', 'Value'],
+  },
 
-  Currency: {},
   //glue
-  Determiner: {},
-  Conjunction: {},
-  Preposition: {},
+  Determiner: {
+    notA: anything,
+  },
+  Conjunction: {
+    notA: anything,
+  },
+  Preposition: {
+    notA: anything,
+  },
+
   QuestionWord: {},
   RelativeProunoun: {
-    isA: 'Pronoun',
+    isA: ['Pronoun'],
   },
+  Currency: {},
   Expression: {},
   Abbreviation: {},
   Url: {},
   PhoneNumber: {},
   HashTag: {},
   AtMention: {
-    isA: 'Noun',
+    isA: ['Noun'],
   },
   Emoji: {},
   Email: {},
@@ -38,14 +56,4 @@ module.exports = {
   //non-exclusive
   Auxiliary: {},
   Negative: {},
-  Contraction: {},
-
-  TitleCase: {},
-  Hyphenated: {},
-  Acronym: {},
-
-  // Quotes
-  Quotation: {},
-  //parentheses
-  Parentheses: {},
 }

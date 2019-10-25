@@ -1,25 +1,29 @@
 module.exports = {
-  Value: {},
+  Value: {
+    notA: ['Noun', 'Verb', 'Adjective', 'Adverb'],
+  },
   Ordinal: {
     isA: 'Value',
+    notA: ['Cardinal'],
   },
   Cardinal: {
     isA: 'Value',
+    notA: ['Ordinal'],
   },
-  // Multiple: {
-  //   isA: 'Value',
-  // },
   RomanNumeral: {
     isA: 'Cardinal',
+    notA: ['Ordinal'],
   },
   Fraction: {
     isA: 'Value',
   },
   TextValue: {
     isA: 'Value',
+    notA: ['NumericValue'],
   },
   NumericValue: {
     isA: 'Value',
+    notA: ['TextValue'],
   },
   Money: {
     //isA: 'Cardinal'

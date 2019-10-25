@@ -1,4 +1,4 @@
-const rankTags = require('./_rankTags')
+const rankTags = require('./_bestTag')
 
 const jsonDefault = {
   text: true,

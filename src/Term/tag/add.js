@@ -2,10 +2,7 @@ const fns = require('./fns')
 
 /** add a tag, and its descendents, to a term */
 const addTag = function(t, tag, reason, world) {
-  // process.tagged.push(reason)
-  if (!world) {
-    console.warn('World not found - ' + reason)
-  }
+  let tagset = world.tags
   //support '.' or '-' notation for skipping the tag
   if (tag === '' || tag === '.' || tag === '-') {
     return
@@ -18,31 +15,25 @@ const addTag = function(t, tag, reason, world) {
   if (t.tags[tag] === true) {
     return
   }
-  if (world !== undefined && world.isVerbose() === true) {
+  // log it?
+  const isVerbose = world.isVerbose()
+  if (isVerbose === true) {
     fns.logTag(t, tag, reason)
   }
   //add tag
   t.tags[tag] = true //whee!
 
   //check tagset for any additional things to do...
-  if (world !== undefined && world.tags !== undefined) {
-    let tagset = world.tags
-    if (tagset.hasOwnProperty(tag) === true) {
-      //add parent Tags
-      if (tagset[tag].isA !== undefined) {
-        let parentTag = tagset[tag].isA
-        addTag(t, parentTag, '→', world) //recursive
+  if (tagset.hasOwnProperty(tag) === true) {
+    //add parent Tags
+    tagset[tag].isA.forEach(down => {
+      t.tags[down] = true
+      if (isVerbose === true) {
+        fns.logTag(t, '→ ' + down)
       }
-      //add these extra ones, too
-      if (tagset[tag].also !== undefined) {
-        let alsoTag = tagset[tag].also
-        addTag(t, alsoTag, '→', world) //recursive
-      }
-      //remove any contrary tags
-      if (typeof tagset[tag].notA !== 'undefined') {
-        t.unTag(tagset[tag].notA, '←', world)
-      }
-    }
+    })
+    //remove any contrary tags
+    t.unTag(tagset[tag].notA, '←', world)
   }
 }
 

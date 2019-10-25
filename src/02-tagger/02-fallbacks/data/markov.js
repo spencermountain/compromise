@@ -59,7 +59,7 @@ let beforeThisPOS = {
   PastTense: 'Noun', //33% //spencer walked
   Conjunction: 'Noun', //36%
   Modal: 'Noun', //38%
-  PluperfectTense: 'Noun', //40%
+  Pluperfect: 'Noun', //40%
   PerfectTense: 'Verb', //32%
 }
 module.exports = {

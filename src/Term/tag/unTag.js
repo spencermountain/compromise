@@ -2,6 +2,7 @@ const fns = require('./fns')
 
 /** remove this tag, and its descentents from the term */
 const unTag = function(t, tag, reason, world) {
+  const isVerbose = world.isVerbose()
   //support '*' for removing all tags
   if (tag === '*') {
     t.tags = {}
@@ -11,18 +12,21 @@ const unTag = function(t, tag, reason, world) {
   if (t.tags[tag] === true && t.tags.hasOwnProperty(tag) === true) {
     delete t.tags[tag]
     //log in verbose-mode
-    if (world !== undefined && world.isVerbose() === true) {
+    if (isVerbose === true) {
       fns.logUntag(t, tag, reason)
     }
   }
   //delete downstream tags too
-  if (world) {
-    //TODO: properly support Term calling itself directly
-    const tagset = world.tags
-    if (tagset[tag]) {
-      let also = tagset[tag].downward
-      for (let i = 0; i < also.length; i++) {
-        unTag(t, also[i], ' - -   - ', world) //recursive
+  const tagset = world.tags
+  if (tagset[tag]) {
+    let lineage = tagset[tag].lineage
+    for (let i = 0; i < lineage.length; i++) {
+      // unTag(t, also[i], ' - -   - ', world) //recursive
+      if (t.tags[lineage[i]] === true) {
+        delete t.tags[lineage[i]]
+        if (isVerbose === true) {
+          fns.logUntag(t, ' - ' + lineage[i])
+        }
       }
     }
   }

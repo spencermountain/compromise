@@ -19,7 +19,7 @@ const rankTags = function(term, world) {
       return 1
     }
     // then sort by #of parent tags (most-specific tags first)
-    if (tagSet[a].downward.length > tagSet[b].downward.length) {
+    if (tagSet[a].lineage.length > tagSet[b].lineage.length) {
       return 1
     }
     return -1

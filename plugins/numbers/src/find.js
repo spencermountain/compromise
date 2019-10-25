@@ -40,7 +40,7 @@ const findNumbers = function(doc, n) {
       if (!double.has('#Cardinal (#Multiple|point|decimal)')) {
         //one proper way, 'twenty one', or 'hundred one'
         if (!double.has('(' + tens + ') #Cardinal') && !double.has('#Multiple #Value')) {
-          match = match.splitAfter(double.terms(0).out('normal'))
+          match = match.splitAfter(double)
         }
       }
     }

@@ -1,7 +1,7 @@
 /** use only the first result(s) */
 exports.first = function(n) {
   if (n === undefined) {
-    return this.get(n)
+    return this.get(0)
   }
   return this.slice(0, n)
 }

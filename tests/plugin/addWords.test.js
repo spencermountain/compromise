@@ -1,5 +1,5 @@
 const test = require('tape')
-const nlp = require('./_lib')
+const nlp = require('../_lib')
 
 test('persistent-lexicon-change', function(t) {
   let nlp2 = nlp.clone()

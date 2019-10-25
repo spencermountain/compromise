@@ -1,5 +1,5 @@
 const test = require('tape')
-const nlp = require('./_lib')
+const nlp = require('../_lib')
 
 const myPlugin = function(Doc, world) {
   /** add a method */

@@ -1,5 +1,5 @@
 const test = require('tape')
-const nlp = require('./_lib')
+const nlp = require('../_lib')
 
 test('one split, one sentence', function(t) {
   let doc = nlp('before before match, after after.')

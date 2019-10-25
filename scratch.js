@@ -12,18 +12,9 @@ nlp.extend(require('./plugins/numbers/src'))
 //   })
 // })
 
-// const str = nlp('five hundred')
-//   .values()
-//   .toText()
-//   .text()
-// console.log(str)
-
-const lexicon = {
-  abid: 'Place',
-}
-
-const sentence = "Abid's"
-const found = nlp(sentence, lexicon)
-
-console.log(found.termList())
-found.match('#Place').debug()
+const str = nlp('one two')
+  .values()
+  .toNumber()
+  .debug()
+  .out('normal')
+console.log(str)

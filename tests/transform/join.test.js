@@ -1,5 +1,5 @@
 const test = require('tape')
-const nlp = require('./_lib')
+const nlp = require('../_lib')
 
 test('join-basic', function(t) {
   let str = `What's with these homies dissin' my girl? Why do they gotta front? 
@@ -22,6 +22,5 @@ test('join-parents', function(t) {
   t.equal(doc.length, 3, 'three parts now')
   t.equal(doc.all().length, 3, 'three sentences now')
   t.equal(doc.text(), str, 'original text unchanged')
-
   t.end()
 })

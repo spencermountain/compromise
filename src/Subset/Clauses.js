@@ -7,6 +7,7 @@ const addMethod = function(Doc) {
       .notIf('@hasComma . .? (and|or) .') //cool, and fun
       .notIf('(#City && @hasComma) #Country') //'toronto, canada'
       .notIf('(#Date && @hasComma) #Year') //'july 6, 1992'
+      .notIf('@hasComma (too|also)$') //at end of sentence
       .match('@hasComma')
     let found = this.splitAfter(commas)
 
@@ -15,6 +16,19 @@ const addMethod = function(Doc) {
 
     let parentheses = found.parentheses()
     found = found.splitOn(parentheses)
+
+    // it is cool and it is ..
+    let conjunctions = found.if('#Copula #Adjective #Conjunction (#Pronoun|#Determiner) #Verb').match('#Conjunction')
+    found = found.splitBefore(conjunctions)
+
+    // if it is this then that
+    let condition = found.if('if .{2,9} then .').match('then')
+    found = found.splitBefore(condition)
+
+    // misc clause partitions
+    found = found.splitBefore('as well as .')
+    found = found.splitBefore('such as .')
+    found = found.splitBefore('in addition to .')
 
     if (typeof n === 'number') {
       found = found.get(n)

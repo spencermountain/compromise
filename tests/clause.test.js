@@ -32,6 +32,14 @@ test('clauses-condition:', function(t) {
   t.end()
 })
 
+test('clauses-conjunction:', function(t) {
+  let m = nlp(`it is cool but it is not`).clauses()
+  t.equal(m.length, 2, 'found 2 clauses')
+  t.equal(m.eq(0).text(), 'it is cool', 'clause 1')
+  t.equal(m.eq(1).text(), `but it is not`, 'clause 2')
+  t.end()
+})
+
 test('clauses-list:', function(t) {
   let m = nlp('he is nice, cool and fun.').clauses()
   t.equal(m.length, 1, 'found 1 clause')

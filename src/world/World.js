@@ -146,6 +146,7 @@ class World {
       plurals: Object.keys(this.irregular.plurals).length,
       conjugations: Object.keys(this.irregular.conjugations).length,
       compounds: Object.keys(this.hasCompound).length,
+      postProcessors: this.taggers.length,
     }
   }
 }
@@ -158,11 +159,15 @@ const clone = function(obj) {
 /** produce a deep-copy of all lingustic data */
 World.prototype.clone = function() {
   let w2 = new World()
-  //who really knows about this one:
-  w2.lexicon = clone(this.lexicon)
-  w2.plurals = clone(this.plurals)
-  w2.conjugations = clone(this.conjugations)
+  // these are simple to copy:
+  w2.lexicon = Object.assign({}, this.lexicon)
+  w2.hasCompound = Object.assign({}, this.hasCompound)
+  //these ones are nested:
+  w2.irregulars = clone(this.irregulars)
   w2.tags = clone(this.tags)
+  // these are functions
+  w2.transforms = this.transforms
+  w2.taggers = this.taggers
   return w2
 }
 module.exports = World

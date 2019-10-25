@@ -2,7 +2,7 @@
 const tryMultiple = function(terms, t, world) {
   let lex = world.lexicon
   //try a two-word version
-  let txt = terms[t].clean + ' ' + terms[t + 1].clean
+  let txt = terms[t].reduced + ' ' + terms[t + 1].reduced
   if (lex[txt] !== undefined && lex.hasOwnProperty(txt) === true) {
     terms[t].tag(lex[txt], 'lexicon-two', world)
     terms[t + 1].tag(lex[txt], 'lexicon-two', world)
@@ -10,7 +10,7 @@ const tryMultiple = function(terms, t, world) {
   }
   //try a three-word version?
   if (t + 2 < terms.length) {
-    txt += ' ' + terms[t + 2].clean
+    txt += ' ' + terms[t + 2].reduced
     if (lex[txt] !== undefined && lex.hasOwnProperty(txt) === true) {
       terms[t].tag(lex[txt], 'lexicon-three', world)
       terms[t + 1].tag(lex[txt], 'lexicon-three', world)
@@ -20,7 +20,7 @@ const tryMultiple = function(terms, t, world) {
   }
   //try a four-word version?
   if (t + 3 < terms.length) {
-    txt += ' ' + terms[t + 3].clean
+    txt += ' ' + terms[t + 3].reduced
     if (lex[txt] !== undefined && lex.hasOwnProperty(txt) === true) {
       terms[t].tag(lex[txt], 'lexicon-four', world)
       terms[t + 1].tag(lex[txt], 'lexicon-four', world)
@@ -35,7 +35,7 @@ const tryMultiple = function(terms, t, world) {
 /** look at each word in our list of known-words */
 const checkLexicon = function(terms, world) {
   let lex = world.lexicon
-  let hasCompound = world.hasCompound
+  let hasCompound = world.hasCompound // use reduced?
   //go through each term, and check the lexicon
   for (let t = 0; t < terms.length; t += 1) {
     let str = terms[t].clean
@@ -50,6 +50,10 @@ const checkLexicon = function(terms, world) {
     //try one-word lexicon
     if (lex[str] !== undefined && lex.hasOwnProperty(str) === true) {
       terms[t].tag(lex[str], 'lexicon', world)
+    }
+    // look at reduced version of term, too
+    if (str !== terms[t].reduced && lex.hasOwnProperty(terms[t].reduced) === true) {
+      terms[t].tag(lex[terms[t].reduced], 'lexicon', world)
     }
   }
   return terms

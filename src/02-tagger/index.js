@@ -40,7 +40,7 @@ const tagger = function(doc) {
 
   // run any user-given tagger functions
   doc.world.taggers.forEach(fn => {
-    doc = fn(doc)
+    fn(doc)
   })
 
   return doc

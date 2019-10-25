@@ -67,3 +67,61 @@ test('plugin post-process tagger', function(t) {
   t.equal(doc.has('#Verb the #Plural'), true, 'post-tagger ran')
   t.end()
 })
+
+// test('extend-tagset-flat', function(t) {
+//   const tagSet = {
+//     Color: {},
+//   }
+//   const lexicon = {
+//     'mother of pearl': 'Color',
+//   }
+//   nlp.addTags(tagSet)
+//   var m = nlp('it is mother of pearl', lexicon).match('#Color+')
+//   t.equal(m.out('normal'), 'mother of pearl', 'text found')
+//   t.ok(m.has('#Noun'), 'it does not get in the way of the tagger')
+//   t.end()
+// })
+
+test('extend-tagset-nested', function(t) {
+  const tagSet = {
+    Color: {},
+    OffWhite: {
+      isA: 'Color',
+    },
+  }
+  nlp.extend((Doc, world) => {
+    world.addTags(tagSet)
+  })
+  const lexicon = {
+    'mother of pearl': 'OffWhite',
+  }
+  const m = nlp('it is mother of pearl', lexicon).match('#OffWhite')
+  t.equal(m.out('normal'), 'mother of pearl', 'text found')
+  // t.equal(m.has('#Noun'), true, 'it does not get in the way of the tagger')
+  t.equal(m.has('#Color'), true, 'has isA tag, too')
+  t.end()
+})
+
+test('basic-plugin', function(t) {
+  nlp.extend((Doc, world) => {
+    world.addWords({
+      trex: 'Dinosaur',
+    })
+    world.addTags({
+      Dinosaur: {
+        isA: 'Animal',
+      },
+      Animal: {
+        isA: 'Noun',
+      },
+    })
+    world.postProcess(d => {
+      d.match('/uuu/').tag('Exaggeration')
+    })
+  })
+  const doc = nlp('i saw a HUUUUGE trex')
+  t.equal(doc.match('#Exaggeration').out('normal'), 'huuuuge', 'regex-works')
+  t.equal(doc.match('#Dinosaur').out('normal'), 'trex', 'lexicon-works')
+  t.equal(doc.match('#Animal').out('normal'), 'trex', 'tagset-works')
+  t.end()
+})

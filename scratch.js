@@ -1,5 +1,5 @@
 const nlp = require('./src/index')
-nlp.verbose(true)
+// nlp.verbose(true)
 nlp.extend(require('./plugins/numbers/src'))
 
 // nlp.extend(function(Doc, world) {
@@ -18,9 +18,12 @@ nlp.extend(require('./plugins/numbers/src'))
 //   .text()
 // console.log(str)
 
-console.time('doc')
-let doc = nlp(`Characters drink Salty Dogs, whistle Johnny B. Goode and watch Bugs Bunny reruns.`)
-console.timeEnd('doc')
-// doc.toTitleCase()
-// doc.debug()
-// doc.clauses().debug()
+const lexicon = {
+  abid: 'Place',
+}
+
+const sentence = "Abid's"
+const found = nlp(sentence, lexicon)
+
+console.log(found.termList())
+found.match('#Place').debug()

@@ -58,11 +58,13 @@ const fromDoc = function(doc) {
   if (!doc || !doc.list || !doc.list[0]) {
     return []
   }
-  return doc.list[0].terms().map(t => {
-    return {
-      id: t.id,
-    }
+  let ids = []
+  doc.list.forEach(p => {
+    p.terms().forEach(t => {
+      ids.push({ id: t.id })
+    })
   })
+  return [{ choices: ids, greedy: true }]
 }
 
 /** parse a match-syntax string into json */

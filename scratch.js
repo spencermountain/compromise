@@ -1,5 +1,5 @@
 const nlp = require('./src/index')
-// nlp.verbose(true)
+nlp.verbose(true)
 nlp.extend(require('./plugins/numbers/src'))
 
 // nlp.extend(function(Doc, world) {
@@ -18,7 +18,9 @@ nlp.extend(require('./plugins/numbers/src'))
 //   .text()
 // console.log(str)
 
-let doc = nlp(`Water, milk, tea, buttermilk and honey`)
-let m = doc.match('(milk|buttermilk)')
-// m.debug()
-doc.splitAfter(m).debug()
+console.time('doc')
+let doc = nlp(`Characters drink Salty Dogs, whistle Johnny B. Goode and watch Bugs Bunny reruns.`)
+console.timeEnd('doc')
+// doc.toTitleCase()
+// doc.debug()
+// doc.clauses().debug()

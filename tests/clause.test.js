@@ -12,6 +12,18 @@ test('clauses-parentheses:', function(t) {
   t.end()
 })
 
+test('clauses-commas:', function(t) {
+  let doc = nlp(`in Toronto, Canada`).clauses()
+  t.equal(doc.length, 1, 'place-comma')
+
+  doc = nlp(`July 4, 1776`).clauses()
+  t.equal(doc.length, 1, 'date-comma')
+
+  doc = nlp(`“You have a spider on your nose!” my friend yelled.`).clauses()
+  t.equal(doc.length, 2, 'found 2 clauses')
+  t.end()
+})
+
 test('clauses-condition:', function(t) {
   let m = nlp('if you must, go to the basement').clauses()
   t.equal(m.length, 2, 'found 2 clauses')

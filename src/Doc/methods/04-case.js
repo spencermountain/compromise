@@ -18,6 +18,7 @@ exports.toUpperCase = function() {
 
 /** upper-case the first letter of each term */
 exports.toTitleCase = function() {
+  this.tag('TitleCase')
   return eachTerm(this, 'toTitleCase')
 }
 /** remove whitespace and title-case each term */

@@ -1,5 +1,5 @@
 const nlp = require('./src/index')
-// nlp.verbose(true)
+nlp.verbose(true)
 nlp.extend(require('./plugins/sentences/src'))
 
 // nlp.extend(function(Doc, world) {
@@ -12,7 +12,14 @@ nlp.extend(require('./plugins/sentences/src'))
 //   })
 // })
 
-const doc = nlp.tokenize('if he is hungry, spencer eats bananas in the kitchen.') //.clauses()
+// let doc = nlp.tokenize('matt does matthew not')
+// doc.terms(0).tag('Person')
+// doc.terms(2).tag('Person')
+// let m = doc.match('(^#Person|#Person$)')
+// m.debug()
 
-doc.ifNo('!(if|cool)')
-doc.debug()
+nlp
+  .tokenize('one hundred')
+  .tag('#Value')
+  .match('(#Value|#Time) (am|pm)')
+  .debug()

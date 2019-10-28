@@ -2,7 +2,7 @@
 let wrapMatch = function() {}
 
 /** ignore optional/greedy logic, straight-up term match*/
-const doesMatch = function(t, reg) {
+const doesMatch = function(t, reg, index, length) {
   // support id matches
   if (reg.id === t.id) {
     return true
@@ -10,6 +10,14 @@ const doesMatch = function(t, reg) {
   // support '.'
   if (reg.anything === true) {
     return true
+  }
+  // support '^' (in parentheses)
+  if (reg.start === true && index !== 0) {
+    return false
+  }
+  // support '$' (in parentheses)
+  if (reg.end === true && index !== length - 1) {
+    return false
   }
   //support a text match
   if (reg.word !== undefined) {
@@ -48,22 +56,17 @@ const doesMatch = function(t, reg) {
     // try to support && operator
     if (reg.operator === 'and') {
       // must match them all
-      return reg.choices.every(r => wrapMatch(t, r))
+      return reg.choices.every(r => wrapMatch(t, r, index, length))
     }
     // or must match one
-    return reg.choices.some(r => wrapMatch(t, r))
-    // for (let i = 0; i < reg.choices.length; i++) {
-    //   if (wrapMatch(t, reg.choices[i]) === true) {
-    //     return true
-    //   }
-    // }
+    return reg.choices.some(r => wrapMatch(t, r, index, length))
   }
   return false
 }
 
 // wrap result for !negative match logic
-wrapMatch = function(t, reg) {
-  let result = doesMatch(t, reg)
+wrapMatch = function(t, reg, index, length) {
+  let result = doesMatch(t, reg, index, length)
   if (reg.negative === true) {
     return !result
   }

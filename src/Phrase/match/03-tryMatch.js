@@ -1,11 +1,11 @@
 // i formally apologize for how complicated this is.
 
 //found a match? it's greedy? keep going!
-const getGreedy = function(terms, t, reg, until) {
+const getGreedy = function(terms, t, reg, until, index, length) {
   let start = t
   for (; t < terms.length; t += 1) {
     //stop for next-reg match
-    if (until && terms[t].doesMatch(until)) {
+    if (until && terms[t].doesMatch(until, index + t, length)) {
       return t
     }
     let count = t - start + 1
@@ -14,7 +14,7 @@ const getGreedy = function(terms, t, reg, until) {
       return t
     }
     //stop here
-    if (terms[t].doesMatch(reg) === false) {
+    if (terms[t].doesMatch(reg, index + t, length) === false) {
       // is it too short?
       if (reg.min !== undefined && count < reg.min) {
         return null
@@ -26,14 +26,14 @@ const getGreedy = function(terms, t, reg, until) {
 }
 
 //'unspecific greedy' is a weird situation.
-const greedyTo = function(terms, t, nextReg) {
+const greedyTo = function(terms, t, nextReg, index, length) {
   //if there's no next one, just go off the end!
   if (!nextReg) {
     return terms.length
   }
   //otherwise, we're looking for the next one
   for (; t < terms.length; t += 1) {
-    if (terms[t].doesMatch(nextReg) === true) {
+    if (terms[t].doesMatch(nextReg, index + t, length) === true) {
       return t
     }
   }
@@ -42,7 +42,7 @@ const greedyTo = function(terms, t, nextReg) {
 }
 
 /** tries to match a sequence of terms, starting from here */
-const tryHere = function(terms, regs) {
+const tryHere = function(terms, regs, index, length) {
   let captures = []
   let t = 0
   // we must satisfy each rule in 'regs'
@@ -62,7 +62,7 @@ const tryHere = function(terms, regs) {
 
     //support 'unspecific greedy' .* properly
     if (reg.anything === true && reg.greedy === true) {
-      let skipto = greedyTo(terms, t, regs[r + 1], reg)
+      let skipto = greedyTo(terms, t, regs[r + 1], reg, index, length)
       // ensure it's long enough
       if (reg.min !== undefined && skipto - t < reg.min) {
         return false
@@ -81,11 +81,11 @@ const tryHere = function(terms, regs) {
     }
 
     //if it looks like a match, continue
-    if (reg.anything === true || terms[t].doesMatch(reg) === true) {
+    if (reg.anything === true || terms[t].doesMatch(reg, index + t, length) === true) {
       let startAt = t
       // okay, it was a match, but if it optional too,
       // we should check the next reg too, to skip it?
-      if (reg.optional && regs[r + 1] && terms[t].doesMatch(regs[r + 1]) === true) {
+      if (reg.optional && regs[r + 1] && terms[t].doesMatch(regs[r + 1], index + t, length) === true) {
         r += 1
       }
       //advance to the next term!
@@ -99,7 +99,7 @@ const tryHere = function(terms, regs) {
       }
       //try keep it going!
       if (reg.greedy === true) {
-        t = getGreedy(terms, t, reg, regs[r + 1])
+        t = getGreedy(terms, t, reg, regs[r + 1], index, length)
         if (t === null) {
           return false //greedy was too short
         }
@@ -121,7 +121,7 @@ const tryHere = function(terms, regs) {
     // should we skip-over an implicit word?
     if (terms[t].isImplicit() && regs[r - 1] && terms[t + 1]) {
       // does the next one match?
-      if (terms[t + 1].doesMatch(reg)) {
+      if (terms[t + 1].doesMatch(reg, index + t, length)) {
         t += 2
         continue
       }

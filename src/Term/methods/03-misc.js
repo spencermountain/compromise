@@ -14,8 +14,8 @@ const boring = {
 }
 
 /** check a match object against this term */
-exports.doesMatch = function(reg) {
-  return doesMatch(this, reg)
+exports.doesMatch = function(reg, index, length) {
+  return doesMatch(this, reg, index, length)
 }
 
 /** does this term look like an acryonym? */

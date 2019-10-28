@@ -21,7 +21,7 @@ const matchAll = function(p, regs, matchOne = false) {
 
   //optimisation for '^' start logic
   if (regs[0].start === true) {
-    let match = tryMatch(terms, regs)
+    let match = tryMatch(terms, regs, 0, terms.length)
     if (match !== false && match.length > 0) {
       matches.push(match)
     }
@@ -34,7 +34,9 @@ const matchAll = function(p, regs, matchOne = false) {
       break
     }
     //try it!
-    let match = tryMatch(terms.slice(i), regs)
+
+    // console.log(terms.slice(i)[0].text, regs, i, terms.length)
+    let match = tryMatch(terms.slice(i), regs, i, terms.length)
     if (match !== false && match.length > 0) {
       //zoom forward!
       i += match.length - 1

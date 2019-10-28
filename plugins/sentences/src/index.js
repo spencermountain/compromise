@@ -1,9 +1,32 @@
+const parse = require('./parse')
+
 const addMethod = function(Doc) {
   /**  */
   class Sentences extends Doc {
     constructor(list, from, world) {
       super(list, from, world)
     }
+
+    /** overload the original json with noun information */
+    json(options) {
+      options = options || { text: true, normal: true, trim: true, terms: true }
+      let res = []
+      this.forEach(doc => {
+        let json = doc.json(options)[0]
+        json = Object.assign(parse(doc), json)
+        res.push(json)
+      })
+      return res
+    }
+
+    /** the main noun of the sentence */
+    subjects() {
+      return this.map(doc => {
+        let res = parse(doc)
+        return res.subject
+      })
+    }
+
     toPastTense() {}
     toPresentTense() {}
     toFutureTense() {}
@@ -12,7 +35,9 @@ const addMethod = function(Doc) {
     toNegative() {}
     toPositive() {}
 
-    isPassive() {}
+    isPassive() {
+      return this.has('was #Adverb? #PastTense #Adverb? by') //haha
+    }
     /** return sentences ending with '?' */
     isQuestion() {
       return this.filter(doc => {

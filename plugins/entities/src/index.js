@@ -26,7 +26,7 @@ const addMethods = function(Doc, world) {
 
   //combine them with .topics() method
   Doc.prototype.entities = function(n) {
-    let r = this.clauses()
+    let r = this.splitAfter('@hasComma')
     // Find people, places, and organizations
     let yup = r.people()
     yup = yup.concat(r.places())

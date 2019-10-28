@@ -151,7 +151,7 @@ test('celebrity names:', function(t) {
   Object.keys(tests).forEach(function(k) {
     const str = nlp(k)
       .people()
-      .text({ trim: true })
+      .text()
     const msg = "'" + k + "' is a person - - have: '" + str + "'"
     t.equal(str, k, msg)
   })

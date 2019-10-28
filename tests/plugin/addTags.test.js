@@ -75,7 +75,7 @@ test('tagset-remove-downward', function(t) {
   //remove one in the middle..
   doc.match('george').unTag('Person')
   t.ok(doc.has('#Person') === false, 'person-tag-gone')
-  t.ok(doc.has('#Doctor') === false, 'doctor-tag-gone')
+  t.ok(doc.has('#Doctor') === false, 'doctor-tag-gone1')
   t.ok(doc.has('#Surgeon') === false, 'Surgeon-tag-gone')
   t.end()
 })
@@ -97,7 +97,7 @@ test('tagset-remove-half-downward', function(t) {
   //remove one just under the top..
   doc.match('george').unTag('Doctor')
   t.ok(doc.has('#Person') === true, 'person-tag-there')
-  t.ok(doc.has('#Doctor') === false, 'doctor-tag-gone')
+  t.ok(doc.has('#Doctor') === false, 'doctor-tag-gone2')
   t.ok(doc.has('#Surgeon') === false, 'Surgeon-tag-gone')
   t.end()
 })

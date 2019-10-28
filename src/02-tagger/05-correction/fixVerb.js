@@ -12,6 +12,10 @@ const fixVerb = function(doc) {
     vb.match('is no [#Verb]').tag('Noun', 'is-no-verb')
     //different views than
     vb.match('[#Verb] than').tag('Noun', 'correction')
+    // smoked poutine is
+    vb.match('[#PastTense] #Singular is').tag('#Adjective', 'smoked-poutine')
+    // baked onions are
+    vb.match('[#PastTense] #Plural are').tag('#Adjective', 'baked-onions')
 
     //there are reasons
     vb.match('there (are|were) #Adjective? [#PresentTense]').tag('Plural', 'there-are')

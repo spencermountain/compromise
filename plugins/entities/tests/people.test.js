@@ -1,5 +1,5 @@
 const test = require('tape')
-const nlp = require('../../../tests/_lib')
+const nlp = require('./_lib')
 
 test('people:', function(t) {
   let doc = nlp('Mary is in the boat. Nancy is in the boat. Fred is in the boat. Jack is too.')

@@ -1,6 +1,6 @@
 const nlp = require('./src/index')
-nlp.verbose(true)
-nlp.extend(require('./plugins/sentences/src'))
+// nlp.verbose(true)
+nlp.extend(require('./plugins/numbers/src'))
 
 // nlp.extend(function(Doc, world) {
 //   /** add some tags */
@@ -12,8 +12,11 @@ nlp.extend(require('./plugins/sentences/src'))
 //   })
 // })
 
-let doc = nlp('Every night before I go').sentences()
-// .debug()
+let doc = nlp(`one two`)
+console.log(doc.values().json({ terms: false }))
 
-// console.log(doc.sentences().json(0))
-console.log(doc.world.tags.Demonym)
+// let doc = nlp(txt)
+// let doc = nlp('baked poutine is delicious')
+// doc.splitAfter('#Noun .* #Verb .* #Noun+').debug()
+// doc.clauses().debug()
+// console.log(doc.sentences().json({ terms: false }))

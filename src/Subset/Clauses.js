@@ -30,6 +30,17 @@ const addMethod = function(Doc) {
     found = found.splitBefore('such as .')
     found = found.splitBefore('in addition to .')
 
+    // semicolons, dashes
+    found = found.splitAfter('@hasSemicolon')
+    found = found.splitAfter('@hasDash')
+
+    // does there appear to have relative/subordinate clause still?
+    let tooLong = found.filter(d => d.wordCount() > 5 && d.match('#Verb+').length >= 2)
+    if (tooLong.found) {
+      let m = tooLong.splitAfter('#Noun .* #Verb .* #Noun+')
+      found = found.splitOn(m.eq(0))
+    }
+
     if (typeof n === 'number') {
       found = found.get(n)
     }

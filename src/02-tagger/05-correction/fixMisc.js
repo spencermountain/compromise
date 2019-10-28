@@ -11,6 +11,8 @@ const miscCorrection = function(doc) {
   doc.match('#Conjunction [u]').tag('Pronoun', 'u-pronoun-2')
   //6 am
   doc.match('#Holiday (day|eve)').tag('Holiday', 'holiday-day')
+  // the captain who
+  doc.match('#Noun [(who|whom)]').tag('Determiner', 'captain-who')
   //timezones
   doc.match('(standard|daylight|summer|eastern|pacific|central|mountain) standard? time').tag('Time', 'timezone')
   //about to go

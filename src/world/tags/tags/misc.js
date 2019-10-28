@@ -37,7 +37,9 @@ module.exports = {
     notA: anything,
   },
 
-  QuestionWord: {},
+  QuestionWord: {
+    notA: ['Determiner'],
+  },
   RelativeProunoun: {
     isA: ['Pronoun'],
   },

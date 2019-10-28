@@ -10,7 +10,7 @@ const addMethod = function(Doc) {
   }
 
   Doc.prototype.people = function(n) {
-    let match = this.clauses()
+    let match = this.splitAfter('@hasComma')
     match = match.match('#Person+')
 
     //grab (n)th result

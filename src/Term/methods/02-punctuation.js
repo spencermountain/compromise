@@ -54,9 +54,14 @@ exports.hasSlash = function() {
   return /\//.test(this.text)
 }
 
-/** is there a hyphen, or dash after this word? */
+/** a hyphen connects two words like-this */
 exports.hasHyphen = function() {
   const hyphen = /(-|–|—)/
+  return hyphen.test(this.post) || hyphen.test(this.pre)
+}
+/** a dash seperates words - like that */
+exports.hasDash = function() {
+  const hyphen = / (-|–|—) /
   return hyphen.test(this.post) || hyphen.test(this.pre)
 }
 

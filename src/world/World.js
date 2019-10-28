@@ -130,7 +130,7 @@ class World {
     tags = Object.assign({}, tags)
     this.tags = Object.assign(this.tags, tags)
     // calculate graph implications for the new tags
-    tags = inferTagSet(tags)
+    this.tags = inferTagSet(this.tags)
     return this
   }
   /** call methods after tagger runs */

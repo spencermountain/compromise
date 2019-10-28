@@ -20,13 +20,13 @@ test('clauses-commas:', function(t) {
   t.equal(doc.length, 1, 'date-comma')
 
   doc = nlp(`“You have a spider on your nose!” my friend yelled.`).clauses()
-  t.equal(doc.length, 2, 'found 2 clauses')
+  t.equal(doc.length, 2, 'found 2 clauses-1')
   t.end()
 })
 
 test('clauses-condition:', function(t) {
   let m = nlp('if you must, go to the basement').clauses()
-  t.equal(m.length, 2, 'found 2 clauses')
+  t.equal(m.length, 2, 'found 2 clauses2')
   t.equal(m.eq(0).text(), 'if you must', 'clause 1')
   t.equal(m.eq(1).text(), `go to the basement`, 'clause 2')
   t.end()
@@ -34,7 +34,7 @@ test('clauses-condition:', function(t) {
 
 test('clauses-conjunction:', function(t) {
   let m = nlp(`it is cool but it is not`).clauses()
-  t.equal(m.length, 2, 'found 2 clauses')
+  t.equal(m.length, 2, 'found 2 clauses3')
   t.equal(m.eq(0).text(), 'it is cool', 'clause 1')
   t.equal(m.eq(1).text(), `but it is not`, 'clause 2')
   t.end()

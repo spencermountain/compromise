@@ -27,10 +27,10 @@ const fixValue = function(doc) {
       .tag('Unit', 'money-unit')
 
     //two hundredth
-    val
-      .match('#TextValue+')
-      .match('#Cardinal+ #Ordinal')
-      .tag('Ordinal', 'two-hundredth')
+    // val
+    //   .match('#TextValue+')
+    //   .match('#Cardinal+ #Ordinal')
+    //   .tag('Ordinal', 'two-hundredth')
   }
   return doc
 }

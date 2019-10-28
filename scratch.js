@@ -12,8 +12,9 @@ nlp.extend(require('./plugins/numbers/src'))
 //   })
 // })
 
-let doc = nlp(`one two`)
-console.log(doc.values().json({ terms: false }))
+let doc = nlp(`12, 34, 56`)
+
+const str = doc.values().debug()
 
 // let doc = nlp(txt)
 // let doc = nlp('baked poutine is delicious')

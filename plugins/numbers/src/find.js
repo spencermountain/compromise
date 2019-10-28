@@ -4,8 +4,6 @@ const teens = 'eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eightee
 const findNumbers = function(doc, n) {
   let match = doc.match('#Value+ #Unit?')
 
-  // r = r.match('#Value+ #Unit?');
-
   //"50 83"
   if (match.has('#NumericValue #NumericValue')) {
     //a comma may mean two numbers
@@ -40,7 +38,10 @@ const findNumbers = function(doc, n) {
       if (!double.has('#Cardinal (#Multiple|point|decimal)')) {
         //one proper way, 'twenty one', or 'hundred one'
         if (!double.has('(' + tens + ') #Cardinal') && !double.has('#Multiple #Value')) {
-          match = match.splitAfter(double)
+          // double = double.firstTerm()
+          double.terms().forEach(d => {
+            match = match.splitOn(d)
+          })
         }
       }
     }
@@ -64,7 +65,6 @@ const findNumbers = function(doc, n) {
   if (match.has('#NumberRange')) {
     match = match.splitAfter('#NumberRange')
   }
-
   //grab (n)th result
   if (typeof n === 'number') {
     match = match.get(n)

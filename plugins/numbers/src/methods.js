@@ -57,7 +57,7 @@ module.exports = {
       if (obj.num === null) {
         return
       }
-      let str = makeNumber(obj, val.has('#TextNumber'), false)
+      let str = makeNumber(obj, val.has('#TextValue'), false)
       val.replaceWith(str)
     })
     return this
@@ -69,7 +69,7 @@ module.exports = {
       if (obj.num === null) {
         return
       }
-      let str = makeNumber(obj, val.has('#TextNumber'), true)
+      let str = makeNumber(obj, val.has('#TextValue'), true)
       val.replaceWith(str)
     })
     return this
@@ -102,7 +102,7 @@ module.exports = {
         return
       }
       obj.num += n
-      let str = makeNumber(obj, val.has('#TextNumber'), val.has('#Ordinal'))
+      let str = makeNumber(obj, val.has('#TextValue'), val.has('#Ordinal'))
       val.replaceWith(str)
     })
     return this

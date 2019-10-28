@@ -44,8 +44,8 @@ const data = [
   [require('./adjectives/adjectives'), 'Adjective'],
   [require('./adjectives/comparables'), 'Comparable'],
   //numbers
-  [require('./numbers/ordinals'), ['TextNumber', 'Ordinal']],
-  [require('./numbers/cardinals'), ['TextNumber', 'Cardinal']],
+  [require('./numbers/ordinals'), ['TextValue', 'Ordinal']],
+  [require('./numbers/cardinals'), ['TextValue', 'Cardinal']],
   //abbreviations
   [require('./abbreviations/nouns'), ['Abbreviation', 'Noun']],
   [require('./abbreviations/honorifics'), ['Abbreviation', 'Honorific']],

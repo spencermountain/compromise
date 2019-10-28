@@ -1,3 +1,5 @@
+const entity = ['Person', 'Place', 'Organization']
+
 module.exports = {
   Noun: {
     notA: ['Verb', 'Adjective', 'Adverb', 'Value'],
@@ -34,6 +36,7 @@ module.exports = {
   },
   Honorific: {
     isA: 'Noun',
+    notA: ['FirstName', 'LastName'],
   },
 
   // -- places
@@ -52,9 +55,6 @@ module.exports = {
   Region: {
     isA: ['Place', 'ProperNoun'],
   },
-  Address: {
-    isA: 'Place',
-  },
 
   //---Orgs---
   Organization: {
@@ -64,43 +64,43 @@ module.exports = {
   SportsTeam: {
     isA: 'Organization',
   },
-  Company: {
-    isA: 'Organization',
-  },
-  School: {
-    isA: 'Organization',
-  },
 
   // - plural
   Plural: {
     isA: 'Noun',
-    notA: 'Singular',
+    notA: ['Singular'],
   },
+  //(not plural or singular)
   Uncountable: {
-    //(not plural or singular)
     isA: 'Noun',
   },
   Pronoun: {
     isA: 'Noun',
+    notA: entity,
   },
   //a word for someone doing something -'plumber'
   Actor: {
     isA: 'Noun',
+    notA: entity,
   },
   //a gerund-as-noun - 'swimming'
   Activity: {
     isA: 'Noun',
+    notA: ['Person', 'Place'],
   },
   //'kilograms'
   Unit: {
     isA: 'Noun',
+    notA: entity,
   },
   //'Canadians'
   Demonym: {
     isA: ['Noun', 'ProperNoun'],
+    notA: entity,
   },
   //`john's`
   Possessive: {
     isA: 'Noun',
+    // notA: 'Pronoun',
   },
 }

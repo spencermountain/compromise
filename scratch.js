@@ -12,8 +12,8 @@ nlp.extend(require('./plugins/sentences/src'))
 //   })
 // })
 
-let doc = nlp('Every night before I go')
-  .sentences()
-  .debug()
+let doc = nlp('Every night before I go').sentences()
+// .debug()
 
-console.log(doc.sentences().json(0))
+// console.log(doc.sentences().json(0))
+console.log(doc.world.tags.Demonym)

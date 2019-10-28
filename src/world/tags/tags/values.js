@@ -12,7 +12,7 @@ module.exports = {
   },
   RomanNumeral: {
     isA: 'Cardinal',
-    notA: ['Ordinal'],
+    notA: ['Ordinal', 'TextValue'],
   },
   Fraction: {
     isA: 'Value',
@@ -26,7 +26,7 @@ module.exports = {
     notA: ['TextValue'],
   },
   Money: {
-    //isA: 'Cardinal'
+    isA: 'Cardinal',
   },
   Percent: {
     isA: 'Value',

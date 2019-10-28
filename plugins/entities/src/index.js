@@ -1,7 +1,27 @@
 const methods = [require('./people'), require('./place'), require('./organization')]
 
 //add them all in
-const addMethods = function(Doc) {
+const addMethods = function(Doc, world) {
+  //
+  world.addTags({
+    Address: {
+      isA: 'Place',
+    },
+    School: {
+      isA: 'Organization',
+    },
+    Company: {
+      isA: 'Organization',
+    },
+  })
+  //
+  world.postProcess(doc => {
+    // addresses
+    doc.match('#Value #Noun (st|street|rd|road|crescent|way)').tag('Address')
+    // schools
+    doc.match('#Noun+ (public|private) school').tag('School')
+  })
+
   methods.forEach(fn => fn(Doc))
 
   //combine them with .topics() method

@@ -63,6 +63,13 @@ module.exports = {
   },
 
   //non-exclusive
-  Auxiliary: {},
-  Negative: {},
+  Auxiliary: {
+    notA: ['Noun', 'Adjective', 'Value'],
+  },
+  Acronym: {
+    notA: 'Plural',
+  },
+  Negative: {
+    notA: ['Noun', 'Adjective', 'Value'],
+  },
 }

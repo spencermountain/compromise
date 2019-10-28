@@ -4,12 +4,15 @@ const nlp = require('./_lib')
 test('svo parser', function(t) {
   let arr = [
     ['My dog loves pizza crusts.', 'my dog', 'loves'],
+    ['My grey dog loves pizza crusts.', 'my grey dog', 'loves'],
+    ['if i can recall, my grey dog loves pizza crusts.', 'my grey dog', 'loves'],
+
     ['I remember what you said yesterday.', 'i', 'remember'],
     ['I eat bananas in the kitchen.', 'i', 'eat'],
     ['I thought what she wore was so chic.', 'i', 'thought'],
 
     //
-    ['In the kitchen, I eat.', 'i', 'eat'],
+    ['In the kitchen, I eat', 'i', 'eat'],
     ['Every night before I go to bed, I eat bananas.', 'i', 'eat'],
 
     ['The boy who you saw at the store committed a robbery.', 'the boy', 'committed'],
@@ -26,6 +29,11 @@ test('svo parser', function(t) {
     ],
     ['Once Adam smashed the spider, he ran into the bathroom', 'he', 'ran'],
   ]
-
+  arr.forEach(a => {
+    let doc = nlp(a[0])
+    let obj = doc.sentences().json(0)
+    t.equal(obj.subject.normal, a[1], 'subject: ' + a[1])
+    t.equal(obj.verb.normal, a[2], 'verb: ' + a[2])
+  })
   t.end()
 })

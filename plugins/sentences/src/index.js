@@ -9,13 +9,24 @@ const addMethod = function(Doc) {
 
     /** overload the original json with noun information */
     json(options) {
+      let n = null
+      if (typeof options === 'number') {
+        n = options
+        options = null
+      }
       options = options || { text: true, normal: true, trim: true, terms: true }
       let res = []
       this.forEach(doc => {
         let json = doc.json(options)[0]
-        json = Object.assign(parse(doc), json)
+        let obj = parse(doc)
+        json.subject = obj.subject.json(options)[0]
+        json.verb = obj.verb.json(options)[0]
+        json.object = obj.object.json(options)[0]
         res.push(json)
       })
+      if (n !== null) {
+        return res[n]
+      }
       return res
     }
 

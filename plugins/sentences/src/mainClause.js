@@ -12,10 +12,12 @@ const mainClause = function(m) {
   m = m.ifNo('^rather than')
   m = m.ifNo('^provided that')
   m = m.ifNo(relative)
-  m.debug()
   if (m.length === 1) {
     return m
   }
+  // if there's no verb?
+  m = m.if('#Verb')
+
   // choose the first one?
   return m.eq(0)
 }

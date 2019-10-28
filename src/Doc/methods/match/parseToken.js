@@ -41,7 +41,7 @@ const stripBoth = function(str) {
 }
 
 //
-const token = function(w) {
+const parseToken = function(w) {
   let obj = {}
   //collect any flags (do it twice)
   for (let i = 0; i < 2; i += 1) {
@@ -89,7 +89,7 @@ const token = function(w) {
       obj.choices = obj.choices.map(s => s.trim())
       obj.choices = obj.choices.filter(s => s)
       //recursion alert!
-      obj.choices = obj.choices.map(token)
+      obj.choices = obj.choices.map(parseToken)
       w = ''
     }
     //capture group (this one can span multiple-terms)
@@ -161,4 +161,4 @@ const token = function(w) {
   }
   return obj
 }
-module.exports = token
+module.exports = parseToken

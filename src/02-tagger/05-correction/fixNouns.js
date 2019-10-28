@@ -5,7 +5,7 @@ const fixNouns = function(doc) {
     //'more' is not always an adverb
     noun.match('more #Noun').tag('Noun', 'more-noun')
     //he quickly foo
-    noun.match('#Noun #Adverb [#Noun]').tag('Verb', 'correction')
+    noun.match('#Noun #Adverb [#Noun]').tag('Verb', 'quickly-foo')
     //fix for busted-up phrasalVerbs
     noun.match('#Noun [#Particle]').tag('Preposition', 'repair-noPhrasal')
     //John & Joe's

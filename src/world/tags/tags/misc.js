@@ -1,4 +1,5 @@
 const anything = ['Noun', 'Verb', 'Adjective', 'Adverb', 'Value']
+const maybeNoun = ['Verb', 'Adjective', 'Adverb', 'Value']
 
 module.exports = {
   //--Adjectives--
@@ -44,14 +45,22 @@ module.exports = {
   Currency: {},
   Expression: {},
   Abbreviation: {},
-  Url: {},
-  PhoneNumber: {},
+  Url: {
+    notA: maybeNoun,
+  },
+  PhoneNumber: {
+    notA: maybeNoun,
+  },
   HashTag: {},
   AtMention: {
     isA: ['Noun'],
   },
-  Emoji: {},
-  Email: {},
+  Emoji: {
+    notA: maybeNoun,
+  },
+  Email: {
+    notA: maybeNoun,
+  },
 
   //non-exclusive
   Auxiliary: {},

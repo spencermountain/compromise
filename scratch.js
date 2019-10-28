@@ -12,14 +12,8 @@ nlp.extend(require('./plugins/sentences/src'))
 //   })
 // })
 
-// let doc = nlp.tokenize('matt does matthew not')
-// doc.terms(0).tag('Person')
-// doc.terms(2).tag('Person')
-// let m = doc.match('(^#Person|#Person$)')
-// m.debug()
-
-nlp
-  .tokenize('one hundred')
-  .tag('#Value')
-  .match('(#Value|#Time) (am|pm)')
+let doc = nlp('Every night before I go')
+  .sentences()
   .debug()
+
+console.log(doc.sentences().json(0))

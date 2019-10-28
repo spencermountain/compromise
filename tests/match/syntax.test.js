@@ -20,12 +20,20 @@ test('negative parentheses', function(t) {
   t.end()
 })
 
-test('start parentheses', function(t) {
-  let doc = nlp.tokenize("matt does but matthew doesn't")
+test('start-end parentheses', function(t) {
+  let doc = nlp("matt does but matthew doesn't")
   let m = doc.match('^(/matt/|frank) .')
   t.equals(m.out('normal'), 'matt does', 'choice-start')
 
   m = doc.match('(^#Person|#Person$)')
   t.equals(m.out('normal'), 'matt', 'matt-start')
+
+  doc = nlp("now matt doesn't but yes for matthew")
+  m = doc.match('(^#Person|#Person$)')
+  t.equals(m.out('normal'), 'matthew', 'matthew-end')
+
+  doc = nlp("now matt doesn't but yes for matthew")
+  m = doc.match('(woo|#Person)$')
+  t.equals(m.out('normal'), 'matthew', 'matthew-end-outside')
   t.end()
 })

@@ -74,10 +74,7 @@ const fixVerb = function(doc) {
       //jack is guarded
       copula.match('#Singular is #Adverb? [#PastTense$]').tag('Adjective', 'is-filled')
       //is eager to go
-      copula
-        .match('#Copula #Adjective to #Verb')
-        .match('#Adjective to')
-        .tag('Verb', 'correction')
+      copula.match('#Copula [#Adjective to] #Verb').tag('Verb', 'adj-to')
 
       //sometimes adverbs - 'pretty good','well above'
       copula

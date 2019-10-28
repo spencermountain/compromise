@@ -1,5 +1,5 @@
 const nlp = require('./src/index')
-// nlp.verbose(true)
+nlp.verbose(true)
 nlp.extend(require('./plugins/numbers/src'))
 
 // nlp.extend(function(Doc, world) {
@@ -12,9 +12,8 @@ nlp.extend(require('./plugins/numbers/src'))
 //   })
 // })
 
-let doc = nlp(`12, 34, 56`)
-
-const str = doc.values().debug()
+let doc = nlp('zero').debug()
+console.log(doc.values().json())
 
 // let doc = nlp(txt)
 // let doc = nlp('baked poutine is delicious')

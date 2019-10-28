@@ -10,28 +10,36 @@ module.exports = {
   // neutral form - 'walk'
   Infinitive: {
     isA: 'PresentTense',
-    notA: ['PastTense'],
+    notA: ['PastTense', 'Gerund'],
   },
   // walking
   Gerund: {
     isA: 'PresentTense',
+    notA: ['PastTense', 'Copula'],
   },
   // walked
   PastTense: {
     isA: 'Verb',
   },
-  PerfectTense: {
+  // will walk
+  FutureTense: {
     isA: 'Verb',
   },
-  Pluperfect: {
-    isA: 'Verb',
-  },
+
   // is
   Copula: {
     isA: 'Verb',
   },
   // would have
   Modal: {
+    isA: 'Verb',
+  },
+  // had walked
+  PerfectTense: {
+    isA: 'Verb',
+    notA: 'Gerund',
+  },
+  Pluperfect: {
     isA: 'Verb',
   },
   // shown

@@ -11,7 +11,7 @@ module.exports = {
     notA: ['Ordinal'],
   },
   RomanNumeral: {
-    isA: 'Cardinal',
+    isA: 'Cardinal', //can be a person, too
     notA: ['Ordinal', 'TextValue'],
   },
   Fraction: {

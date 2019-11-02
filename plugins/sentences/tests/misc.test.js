@@ -45,3 +45,14 @@ test('sentence append', function(t) {
   t.equal(doc.text(), 'Spencer is cool i think!', 'move exclamation-mark')
   t.end()
 })
+
+test('sentence append - change', function(t) {
+  let doc = nlp('i am cool. it is raining!')
+  doc.sentences().append('right?')
+  t.equal(doc.text(), 'i am cool right? it is raining right?', 'change ending')
+
+  doc = nlp('it is cool? it is raining?')
+  doc.sentences(0).append('for sure.  ')
+  t.equal(doc.text(), 'it is cool for sure.   it is raining?', 'change ending 2')
+  t.end()
+})

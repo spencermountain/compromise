@@ -1,4 +1,9 @@
+/** match any terms after this phrase */
 exports.lookAhead = function(regs) {
+  // if empty match string, return everything after
+  if (!regs) {
+    regs = '.*'
+  }
   let pool = this.pool
   // get a list of all terms preceding our start
   let terms = []
@@ -12,8 +17,9 @@ exports.lookAhead = function(regs) {
       getAfter(term.next) //recursion
     }
   }
-  let term = pool.get(this.start)
-  getAfter(term.next)
+  let all = this.terms()
+  let lastTerm = all[all.length - 1]
+  getAfter(lastTerm.next)
   if (terms.length === 0) {
     return []
   }
@@ -22,7 +28,12 @@ exports.lookAhead = function(regs) {
   return p.match(regs)
 }
 
+/** match any terms before this phrase */
 exports.lookBehind = function(regs) {
+  // if empty match string, return everything before
+  if (!regs) {
+    regs = '.*'
+  }
   let pool = this.pool
   // get a list of all terms preceding our start
   let terms = []

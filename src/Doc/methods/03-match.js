@@ -61,6 +61,10 @@ exports.has = function(reg) {
 
 /** match any terms after our matches, within the sentence */
 exports.lookAhead = function(reg) {
+  // find everything afterwards, by default
+  if (!reg) {
+    reg = '.*'
+  }
   let regs = parseSyntax(reg)
   let matches = []
   this.list.forEach(p => {
@@ -72,6 +76,10 @@ exports.lookAhead = function(reg) {
 
 /** match any terms before our matches, within the sentence */
 exports.lookBehind = function(reg) {
+  // find everything afterwards, by default
+  if (!reg) {
+    reg = '.*'
+  }
   let regs = parseSyntax(reg)
   let matches = []
   this.list.forEach(p => {

@@ -5,7 +5,20 @@ const textOrdinal = require('./toOrdinal/textOrdinal')
 const symbols = require('./_symbols')
 const prefixes = symbols.prefixes
 const suffixes = symbols.suffixes
-
+const isCurrency = {
+  usd: true,
+  eur: true,
+  jpy: true,
+  gbp: true,
+  cad: true,
+  aud: true,
+  chf: true,
+  cny: true,
+  hkd: true,
+  nzd: true,
+  kr: true,
+  rub: true,
+}
 // convert $ to 'dollars', etc
 const prefixToText = function(obj) {
   // turn 5% to 'five percent'
@@ -15,7 +28,11 @@ const prefixToText = function(obj) {
   }
   //turn 5km to 'five kilometres'
   if (suffixes.hasOwnProperty(obj.suffix)) {
-    obj.suffix = prefixes[obj.suffix]
+    obj.suffix = suffixes[obj.suffix]
+  }
+  //uppercase lost case for 'USD', etc
+  if (isCurrency.hasOwnProperty(obj.suffix)) {
+    obj.suffix = obj.suffix.toUpperCase()
   }
   // add a space, if it exists
   if (obj.suffix) {

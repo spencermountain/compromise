@@ -1,3 +1,15 @@
+const endOfSentence = /[.?!]\s*$/
+
+// replacing a 'word.' with a 'word!'
+const combinePost = function(before, after) {
+  //only transfer the whitespace
+  if (endOfSentence.test(after)) {
+    let whitespace = before.match(/\s*$/)
+    return after + whitespace
+  }
+  return before
+}
+
 //add whitespace to the start of the second bit
 const addWhitespace = function(beforeTerms, newTerms) {
   // add any existing pre-whitespace to beginning
@@ -6,7 +18,7 @@ const addWhitespace = function(beforeTerms, newTerms) {
 
   //add any existing punctuation to end of our new terms
   let newTerm = newTerms[newTerms.length - 1]
-  newTerm.post = lastTerm.post
+  newTerm.post = combinePost(lastTerm.post, newTerm.post)
   // remove existing punctuation
   lastTerm.post = ''
 

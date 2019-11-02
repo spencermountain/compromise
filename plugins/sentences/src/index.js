@@ -38,7 +38,14 @@ const addMethod = function(Doc) {
       })
     }
 
-    toPastTense() {}
+    toPastTense() {
+      this.forEach(doc => {
+        let res = parse(doc)
+        doc.match(res.verb).replaceWith('was')
+        // return doc
+      })
+      return this
+    }
     toPresentTense() {}
     toFutureTense() {}
     toContinuous() {}
@@ -86,10 +93,14 @@ const addMethod = function(Doc) {
 
     /** add a word to the end of this sentence */
     append(str) {
+      let hasEnd = /[.?!]\s*$/.test(str)
       this.forEach(doc => {
         let end = doc.match('.$')
         let lastTerm = end.termList(0)
         let punct = lastTerm.post
+        if (hasEnd === true) {
+          punct = ''
+        }
         // add punctuation to the end
         end.append(str + punct)
         // remove punctuation from the former last-term

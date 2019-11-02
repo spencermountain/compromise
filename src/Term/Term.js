@@ -42,6 +42,8 @@ Term.prototype.clone = function() {
   term.pre = this.pre
   term.post = this.post
   term.tags = Object.assign({}, this.tags)
+  //use the old id, so it can be matched with .match(doc)
+  // term.id = this.id
   return term
 }
 

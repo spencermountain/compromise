@@ -31,8 +31,8 @@ exports.parents = function(n) {
 }
 
 /** deep-copy the document, so that no references remain */
-exports.clone = function() {
-  let list = this.list.map(ts => ts.deepClone())
+exports.clone = function(doShallow) {
+  let list = this.list.map(ts => ts.clone(doShallow))
   let tmp = this.buildFrom(list)
   return tmp
 }

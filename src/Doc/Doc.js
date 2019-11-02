@@ -58,7 +58,7 @@ class Doc {
 
 /** create a new Document object */
 Doc.prototype.buildFrom = function(list) {
-  list = list.map(p => p.clone())
+  list = list.map(p => p.clone(true))
   let doc = new Doc(list, this, this.world)
   return doc
 }

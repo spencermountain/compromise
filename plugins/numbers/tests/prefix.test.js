@@ -24,11 +24,11 @@ test('suffix:', function(t) {
 
   doc = nlp('i ran 25km uphill')
   doc.values().toText()
-  t.equals(doc.text(), 'i ran twenty five kilometres uphil', '25km')
+  t.equals(doc.text(), 'i ran twenty five kilometres uphill', '25km')
 
   doc = nlp('it was 400s!')
   doc.values().toText()
-  t.equals(doc.text(), 'it was almost four hundred seconds!', '400s!')
+  t.equals(doc.text(), 'it was four hundred seconds!', '400s!')
 
   t.end()
 })

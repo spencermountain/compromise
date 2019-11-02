@@ -8,7 +8,6 @@ const matchAll = function(p, regs, matchOne = false) {
   if (typeof regs === 'string') {
     regs = syntax(regs)
   }
-
   //try to dismiss it, at-once
   if (failFast(p, regs) === true) {
     return []

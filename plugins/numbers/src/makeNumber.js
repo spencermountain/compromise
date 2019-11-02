@@ -58,7 +58,10 @@ const makeNumber = function(obj, isText, isOrdinal) {
   }
   //ordinal-number
   if (isOrdinal) {
-    return numOrdinal(num)
+    num = numOrdinal(num)
+    // support '5th percent'
+    obj = prefixToText(obj)
+    return `${obj.prefix || ''}${num}${obj.suffix || ''}`
   }
   // cardinal-number
   num = toString(num) // support very large numbers

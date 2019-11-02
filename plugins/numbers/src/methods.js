@@ -1,27 +1,7 @@
-const toText = require('./toText')
 const parseNumber = require('./parse')
-const numOrdinal = require('./toOrdinal/numOrdinal')
-const textOrdinal = require('./toOrdinal/textOrdinal')
+const makeNumber = require('./makeNumber')
 
-//business-logic for converting a cardinal-number to other forms
-const makeNumber = function(obj, isText, isOrdinal) {
-  let num = String(obj.num)
-  if (isText) {
-    if (isOrdinal) {
-      //ordinal-text
-      num = textOrdinal(num)
-    } else {
-      //cardinal-text
-      num = toText(num)
-    }
-  } else if (isOrdinal) {
-    //ordinal-number
-    return numOrdinal(num)
-  }
-  return `${obj.prefix || ''}${num}${obj.suffix || ''}`
-}
-
-module.exports = {
+let methods = {
   /** overload the original json with noun information */
   json: function(options) {
     let n = null
@@ -66,6 +46,19 @@ module.exports = {
     })
     return this
   },
+  // toNumber, but with some commas
+  toLocaleString: function() {
+    this.forEach(val => {
+      let obj = parseNumber(val)
+      if (obj.num === null) {
+        return
+      }
+      obj.num = obj.num.toLocaleString()
+      let str = makeNumber(obj, false, val.has('#Ordinal'))
+      val.replaceWith(str)
+    })
+    return this
+  },
   toText: function() {
     this.forEach(val => {
       let obj = parseNumber(val)
@@ -89,6 +82,7 @@ module.exports = {
     })
     return this
   },
+
   toOrdinal: function() {
     let m = this.if('#Cardinal')
     m.forEach(val => {
@@ -152,3 +146,10 @@ module.exports = {
     return this
   },
 }
+// aliases
+methods.toNice = methods.toLocaleString
+methods.minus = methods.subtract
+methods.plus = methods.add
+methods.equals = methods.isEqual
+
+module.exports = methods

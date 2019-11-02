@@ -77,5 +77,5 @@ module.exports = {
   tuxedo: 'tuxedos',
   vertebra: 'vertebrae',
   // virus: 'viri',
-  zero: 'zeros',
+  // zero: 'zeros',
 }

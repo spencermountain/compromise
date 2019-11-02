@@ -2,7 +2,7 @@
 module.exports = {
   // numbers
   '20th century fox': 'Organization',
-  '3m': 'Organization',
+  // '3m': 'Organization',
   '7 eleven': 'Organization',
   '7-eleven': 'Organization',
   g8: 'Organization',

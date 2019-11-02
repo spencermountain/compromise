@@ -65,7 +65,7 @@ test('pos from-lexicon', function(t) {
     [`chillin'`, 'Gerund'],
     [`'cool'`, 'Adjective'],
     ['MMMCMXXIII', 'RomanNumeral'],
-    ['MIMMCMXXIII', 'Acronym'],
+    ['MIMMCMXXIII', 'Acronym'], //invalid roman numeral
     ['c.e.o', 'Acronym'],
     ['MDMA', 'Acronym'],
   ]

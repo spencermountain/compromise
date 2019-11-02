@@ -6,8 +6,9 @@ module.exports = [
   [/^[0-9]{3}[ -]?[0-9]{3}-[0-9]{4}$/, 'PhoneNumber'], //632-589-3809
 
   //money
-  [/^[-+]?[$€¥£][0-9]+(.[0-9]{1,2})?$/, ['Money', 'Value']], //like $5.30
+  [/^[-+]?[$€¥£][0-9]+(.[0-9]{1,2})?([a-z]{1,4})?$/, ['Money', 'Value']], //like $5.30
   [/^[-+]?[$€¥£][0-9]{1,3}(,[0-9]{3})+(.[0-9]{1,2})?$/, ['Money', 'Value']], //like $5,231.30
+  [/^[-+]?[0-9]([0-9,.]+)?(usd|eur|jpy|gbp|cad|aud|chf|cny|hkd|nzd|kr|rub)$/i, ['Money', 'Value']], //like 400usd
 
   //web tags
   [/^\w+@\w+\.[a-z]{2,3}$/, 'Email'], //not fancy
@@ -49,5 +50,5 @@ module.exports = [
   [/^[0-9][0-9,\.]*(st|nd|rd|r?th)$/, ['NumericValue', 'Ordinal']], //like 5th
   [/[0-9]\+$/, ['Cardinal', 'NumericValue']], //10+
   [/^[0-9]+(st|nd|rd|th)$/, 'Ordinal'], //like 5th
-  [/^[0-9]+([a-z]{1,4})$/, 'Value'], //like 5tbsp
+  [/^[0-9\.]+([a-z]{1,4})$/, 'Value'], //like 5tbsp
 ]

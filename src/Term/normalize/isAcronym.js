@@ -1,6 +1,6 @@
 const periodAcronym = /([A-Z]\.)+[A-Z]?,?$/
 const oneLetterAcronym = /^[A-Z]\.,?$/
-const noPeriodAcronym = /[A-Z]{2}('s|,)?$/
+const noPeriodAcronym = /[A-Z]{2,}('s|,)?$/
 const lowerCaseAcronym = /([a-z]\.){2,}[a-z]\.?$/
 
 const isAcronym = function(str) {

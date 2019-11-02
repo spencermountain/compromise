@@ -80,3 +80,16 @@ test('replace-capture-group', function(t) {
 //   t.equal(questions.length, 0, 'no questions here')
 //   t.end()
 // })
+
+// let r = nlp('Homer, have you been eating that sandwich again?')
+// .terms()
+// .slice(0, 3)
+// t.equal(r.out('text'), 'Homer, have you', 'result.slice')
+
+// str = 'men go'
+// m = nlp(str)
+// .sentences()
+// .toPastTense()
+// .nouns()
+// .toSingular()
+// t.equal(m.out('normal'), 'a man went', str)

@@ -112,7 +112,7 @@ const to_text = function(num) {
   //big numbers, north of sextillion, aren't gonna work well..
   //keep them small..
   if (num > 1e21) {
-    return String(num)
+    num = toString(num)
   }
   let arr = []
   //handle negative numbers

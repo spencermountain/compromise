@@ -1,4 +1,6 @@
 const textValue = require('../toText')
+// const toString = require('../_toString')
+
 const irregulars = {
   one: 'first',
   two: 'second',

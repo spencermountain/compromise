@@ -2,7 +2,7 @@
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "0.0.0",
+  "version": "12.0.0-beta.0",
   "main": "./builds/compromise.js",
   "unpkg": "./builds/compromise.min.js",
   "module": "./builds/compromise.mjs",
@@ -13,6 +13,7 @@
   },
   "scripts": {
     "build": "npm run version && rollup -c && npm run filesize",
+    "build:all": "node ./scripts/buildAll.js && npm run build",
     "pack": "node ./scripts/pack.js",
     "version": "node ./scripts/version.js",
     "test": "node ./scripts/testAll.js",

@@ -73,232 +73,25 @@
     return _assertThisInitialized(self);
   }
 
-  //rules for turning a verb into infinitive form
-  var rules = {
-    Participle: [{
-      reg: /own$/i,
-      to: 'ow'
-    }, {
-      reg: /(.)un([g|k])$/i,
-      to: '$1in$2'
-    }],
-    Actor: [{
-      reg: /(er)er$/i,
-      to: '$1'
-    }],
-    PresentTense: [{
-      reg: /(..)(ies)$/i,
-      to: '$1y'
-    }, {
-      reg: /(tch|sh)es$/i,
-      to: '$1'
-    }, {
-      reg: /(ss|zz)es$/i,
-      to: '$1'
-    }, {
-      reg: /([tzlshicgrvdnkmu])es$/i,
-      to: '$1e'
-    }, {
-      reg: /(n[dtk]|c[kt]|[eo]n|i[nl]|er|a[ytrl])s$/i,
-      to: '$1'
-    }, {
-      reg: /(ow)s$/i,
-      to: '$1'
-    }, {
-      reg: /(op)s$/i,
-      to: '$1'
-    }, {
-      reg: /([eirs])ts$/i,
-      to: '$1t'
-    }, {
-      reg: /(ll)s$/i,
-      to: '$1'
-    }, {
-      reg: /(el)s$/i,
-      to: '$1'
-    }, {
-      reg: /(ip)es$/i,
-      to: '$1e'
-    }, {
-      reg: /ss$/i,
-      to: 'ss'
-    }, {
-      reg: /s$/i,
-      to: ''
-    }],
-    Gerund: [{
-      reg: /pping$/i,
-      to: 'p'
-    }, {
-      reg: /lling$/i,
-      to: 'll'
-    }, {
-      reg: /tting$/i,
-      to: 't'
-    }, {
-      reg: /dding$/i,
-      to: 'd'
-    }, {
-      reg: /ssing$/i,
-      to: 'ss'
-    }, {
-      reg: /(..)gging$/i,
-      to: '$1g'
-    }, {
-      reg: /([^aeiou])ying$/i,
-      to: '$1y'
-    }, {
-      reg: /([^ae]i.)ing$/i,
-      to: '$1e'
-    }, {
-      reg: /(ea.)ing$/i,
-      to: '$1'
-    }, {
-      reg: /(u[rtcb]|[bdtpkg]l|n[cg]|a[gdkvtc]|[ua]s|[dr]g|yz|o[rlsp]|cre)ing$/i,
-      to: '$1e'
-    }, {
-      reg: /(ch|sh)ing$/i,
-      to: '$1'
-    }, {
-      reg: /(..)ing$/i,
-      to: '$1'
-    }],
-    PastTense: [{
-      reg: /(ued)$/i,
-      to: 'ue'
-    }, {
-      reg: /a([^aeiouy])ed$/i,
-      to: 'a$1e'
-    }, {
-      reg: /([aeiou]zz)ed$/i,
-      to: '$1'
-    }, {
-      reg: /(e|i)lled$/i,
-      to: '$1ll'
-    }, {
-      reg: /(.)(sh|ch)ed$/i,
-      to: '$1$2'
-    }, {
-      reg: /(tl|gl)ed$/i,
-      to: '$1e'
-    }, {
-      reg: /(um?pt?)ed$/i,
-      to: '$1'
-    }, {
-      reg: /(ss)ed$/i,
-      to: '$1'
-    }, {
-      reg: /pped$/i,
-      to: 'p'
-    }, {
-      reg: /tted$/i,
-      to: 't'
-    }, {
-      reg: /(..)gged$/i,
-      to: '$1g'
-    }, {
-      reg: /(..)lked$/i,
-      to: '$1lk'
-    }, {
-      reg: /([^aeiouy][aeiou])ked$/i,
-      to: '$1ke'
-    }, {
-      reg: /(.[aeiou])led$/i,
-      to: '$1l'
-    }, {
-      reg: /(..)(h|ion|n[dt]|ai.|[cs]t|pp|all|ss|tt|int|ail|ld|en|oo.|er|k|pp|w|ou.|rt|ght|rm)ed$/i,
-      to: '$1$2'
-    }, {
-      reg: /(.ut)ed$/i,
-      to: '$1e'
-    }, {
-      reg: /(.pt)ed$/i,
-      to: '$1'
-    }, {
-      reg: /(us)ed$/i,
-      to: '$1e'
-    }, {
-      reg: /(..[^aeiouy])ed$/i,
-      to: '$1e'
-    }, {
-      reg: /(..)ied$/i,
-      to: '$1y'
-    }, {
-      reg: /(.o)ed$/i,
-      to: '$1o'
-    }, {
-      reg: /(..i)ed$/i,
-      to: '$1'
-    }, {
-      reg: /(.a[^aeiou])ed$/i,
-      to: '$1'
-    }, {
-      reg: /([rl])ew$/i,
-      to: '$1ow'
-    }, {
-      reg: /([pl])t$/i,
-      to: '$1t'
-    }]
-  };
-  var _rules = rules;
-
-  var guessVerb = {
-    Gerund: ['ing'],
-    Actor: ['erer'],
-    Infinitive: ['ate', 'ize', 'tion', 'rify', 'then', 'ress', 'ify', 'age', 'nce', 'ect', 'ise', 'ine', 'ish', 'ace', 'ash', 'ure', 'tch', 'end', 'ack', 'and', 'ute', 'ade', 'ock', 'ite', 'ase', 'ose', 'use', 'ive', 'int', 'nge', 'lay', 'est', 'ain', 'ant', 'ent', 'eed', 'er', 'le', 'own', 'unk', 'ung', 'en'],
-    PastTense: ['ed', 'lt', 'nt', 'pt', 'ew', 'ld'],
-    PresentTense: ['rks', 'cks', 'nks', 'ngs', 'mps', 'tes', 'zes', 'ers', 'les', 'acks', 'ends', 'ands', 'ocks', 'lays', 'eads', 'lls', 'els', 'ils', 'ows', 'nds', 'ays', 'ams', 'ars', 'ops', 'ffs', 'als', 'urs', 'lds', 'ews', 'ips', 'es', 'ts', 'ns']
-  }; //flip it into a lookup object
-
-  guessVerb = Object.keys(guessVerb).reduce(function (h, k) {
-    guessVerb[k].forEach(function (a) {
-      return h[a] = k;
-    });
-    return h;
-  }, {});
-  var _guess = guessVerb;
-
-  /** it helps to know what we're conjugating from */
-
-  var pickTense = function pickTense(verb) {
-    // 1. decide from known-tags
-    if (verb.has('#PastTense')) {
-      return 'PastTense';
-    } else if (verb.has('#Gerund')) {
-      return 'Gerund';
-    } else if (verb.has('#PresentTense')) {
-      return 'PresentTense';
-    } else if (verb.has('#Participle')) {
-      return 'Participle';
-    } else if (verb.has('#Actor')) {
-      return 'Actor';
-    } // 2. guess a little-bit
-
-
-    var str = verb.out('normal');
-    var three = str.substr(str.length - 3);
-
-    if (_guess.hasOwnProperty(three) === true) {
-      return _guess[three];
-    }
-
-    var two = str.substr(str.length - 2);
-
-    if (_guess.hasOwnProperty(two === true)) {
-      return _guess[two];
-    }
-
-    var one = str.substr(str.length - 1);
-
-    if (one === 's') {
-      return 'PresentTense';
-    }
-
-    return null;
+  // turn 'would not really walk up' into parts
+  var parseVerb = function parseVerb(vb) {
+    var parsed = {
+      adverb: vb.match('#Adverb+'),
+      // 'really'
+      negative: vb.match('#Negative'),
+      // 'not'
+      auxiliary: vb.match('#Auxiliary').not('(#Negative|#Adverb)'),
+      // 'will' of 'will go'
+      particle: vb.match('#Particle'),
+      // 'up' of 'pull up'
+      verb: vb.match('#Verb').not('(#Adverb|#Negative|#Auxiliary|#Particle)')
+    };
+    return parsed;
   };
 
-  var pickTense_1 = pickTense;
+  var parse = parseVerb;
 
+  // walked => walk  - turn a verb into it's root form
   var toInfinitive = function toInfinitive(parsed, world) {
     var verb = parsed.verb; //1. if it's already infinitive
 
@@ -306,46 +99,74 @@
 
     if (verb.has('#Infinitive')) {
       return str;
-    } //2. look at known irregulars
+    } // 2. world transform does the heavy-lifting
 
 
-    if (world.lexicon.hasOwnProperty(str) === true) {
-      var irregs = world.irregulars.verbs;
-      var keys = Object.keys(irregs);
+    var tense = null;
 
-      for (var i = 0; i < keys.length; i++) {
-        var forms = Object.keys(irregs[keys[i]]);
+    if (verb.has('#PastTense')) {
+      tense = 'PastTense';
+    } else if (verb.has('#Gerund')) {
+      tense = 'Gerund';
+    } else if (verb.has('#PresentTense')) {
+      tense = 'PresentTense';
+    } else if (verb.has('#Participle')) {
+      tense = 'Participle';
+    } else if (verb.has('#Actor')) {
+      tense = 'Actor';
+    }
 
-        for (var o = 0; o < forms.length; o++) {
-          if (str === irregs[keys[i]][forms[o]]) {
-            return keys[i];
-          }
-        }
-      }
-    } //3. look at our rules
-
-
-    var tense = pickTense_1(verb);
-
-    if (tense && _rules[tense]) {
-      for (var _i = 0; _i < _rules[tense].length; _i++) {
-        var rule = _rules[tense][_i];
-
-        if (rule.reg.test(str) === true) {
-          return str.replace(rule.reg, rule.to);
-        }
-      }
-    } // fallback
-
-
-    return str;
+    return world.transforms.toInfinitive(str, world, tense);
   };
 
   var toInfinitive_1 = toInfinitive;
 
+  // spencer walks -> singular
+  // we walk -> plural
+  // the most-recent noun-phrase, before this verb.
+  var findNoun = function findNoun(vb) {
+    var noun = vb.lookBehind('#Noun+').last();
+    return noun;
+  }; //sometimes you can tell if a verb is plural/singular, just by the verb
+  // i am / we were
+  // othertimes you need its subject 'we walk' vs 'i walk'
+
+
+  var isPlural = function isPlural(parsed) {
+    var vb = parsed.verb;
+
+    if (vb.has('(are|were|does)') || parsed.auxiliary.has('(are|were|does)')) {
+      return true;
+    }
+
+    if (vb.has('(is|am|do|was)') || parsed.auxiliary.has('(is|am|do|was)')) {
+      return false;
+    } //consider its prior noun
+
+
+    var noun = findNoun(vb);
+
+    if (noun.has('(we|they|you)')) {
+      return true;
+    }
+
+    if (noun.has('#Plural')) {
+      return true;
+    }
+
+    if (noun.has('#Singular')) {
+      return false;
+    }
+
+    return null;
+  };
+
+  var isPlural_1 = isPlural;
+
   /** too many special cases for is/was/will be*/
 
   var toBe = function toBe(parsed) {
+    var plural = isPlural_1(parsed);
     var isNegative = parsed.negative.found; //account for 'i is' -> 'i am' irregular
     // if (vb.parent && vb.parent.has('i #Adverb? #Copula')) {
     //   isI = true;
@@ -361,6 +182,12 @@
       PerfectTense: 'been',
       Pluperfect: 'been'
     }; //"i is" -> "i am"
+
+    if (plural) {
+      obj.PastTense = 'were';
+      obj.PresentTense = 'are';
+      obj.Infinitive = 'are';
+    }
 
     if (isNegative) {
       obj.PastTense += ' not';
@@ -384,8 +211,9 @@
       return toBe_1(parsed);
     }
 
-    var infinitive = toInfinitive_1(parsed, world);
-    var forms = world.transforms.verbs(infinitive, world);
+    var infinitive = toInfinitive_1(parsed, world); // console.log(infinitive)
+
+    var forms = world.transforms.conjugate(infinitive, world);
     forms.Infinitive = infinitive; //apply negative
 
     var isNegative = parsed.negative.found;
@@ -414,46 +242,249 @@
 
   var conjugate_1 = conjugate;
 
-  // #Modal : would walk    -> 'would not walk'
   // #Copula : is           -> 'is not'
   // #PastTense : walked    -> did not walk
   // #PresentTense : walks  -> does not walk
   // #Gerund : walking:     -> not walking
   // #Infinitive : walk     -> do not walk
+
   var toNegative = function toNegative(parsed, world) {
-    // if it's already negative...
+    var vb = parsed.verb; // if it's already negative...
+
     if (parsed.negative.found) {
       return;
     } // would walk -> would not walk
 
 
     if (parsed.auxiliary.found) {
-      parsed.auxiliary.append('not');
+      parsed.auxiliary.eq(0).append('not');
       return;
     } // is walking -> is not walking
 
 
-    if (parsed.verb.has('#Copula')) {
-      parsed.verb.append('not');
+    if (vb.has('(#Copula|will|has|had|do)')) {
+      vb.append('not');
       return;
-    }
+    } // walked -> did not walk
+
+
+    if (vb.has('#PastTense')) {
+      var inf = toInfinitive_1(parsed, world);
+      vb.replace(inf);
+      vb.prepend('did not');
+      return;
+    } // walks -> does not walk
+
+
+    if (vb.has('#PresentTense')) {
+      var _inf = toInfinitive_1(parsed, world);
+
+      vb.replace(_inf);
+
+      if (isPlural_1(parsed)) {
+        vb.prepend('do not');
+      } else {
+        vb.prepend('does not');
+      }
+
+      return;
+    } //walking -> not walking
+
+
+    if (vb.has('#Gerund')) {
+      var _inf2 = toInfinitive_1(parsed, world);
+
+      vb.replace(_inf2);
+      vb.prepend('not');
+      return;
+    } //fallback 1:  walk -> does not walk
+
+
+    if (isPlural_1(parsed)) {
+      vb.prepend('does not');
+      return;
+    } //fallback 2:  walk -> do not walk
+
+
+    vb.prepend('do not');
+    return;
   };
 
   var toNegative_1 = toNegative;
 
-  var parseVerb = function parseVerb(vb) {
-    return {
-      adverb: vb.match('#Adverb+'),
-      // 'really'
-      negative: vb.match('#Negative'),
-      // 'not'
-      auxiliary: vb.match('#Auxiliary'),
-      // 'will' of 'will go'
-      particle: vb.match('#Particle'),
-      // 'up' of 'pull up'
-      verb: vb.match('#Verb').not('(#Adverb|#Negative|#Auxiliary|#Particle)')
-    };
+  /** return only verbs with 'not'*/
+
+  var isNegative = function isNegative() {
+    return this["if"]('#Negative');
   };
+  /**  return only verbs without 'not'*/
+
+
+  var isPositive = function isPositive() {
+    return this.ifNo('#Negative');
+  };
+  /** add a 'not' to these verbs */
+
+
+  var toNegative_1$1 = function toNegative_1$1() {
+    var _this = this;
+
+    this.list.forEach(function (p) {
+      var doc = _this.buildFrom([p]);
+
+      var parsed = parse(doc);
+      toNegative_1(parsed, doc.world);
+    });
+    return this;
+  };
+  /** remove 'not' from these verbs */
+
+
+  var toPositive = function toPositive() {
+    return this.remove('#Negative');
+  };
+
+  var methods = {
+    isNegative: isNegative,
+    isPositive: isPositive,
+    toNegative: toNegative_1$1,
+    toPositive: toPositive
+  };
+
+  /** */
+
+  var isPlural_1$1 = function isPlural_1$1() {
+    var _this = this;
+
+    var list = [];
+    this.forEach(function (vb) {
+      var parsed = parse(vb);
+
+      if (isPlural_1(parsed, _this.world) === true) {
+        list.push(vb.list[0]);
+      }
+    });
+    return this.buildFrom(list);
+  };
+  /** */
+
+
+  var isSingular = function isSingular() {
+    var _this2 = this;
+
+    var list = [];
+    this.forEach(function (vb) {
+      var parsed = parse(vb);
+
+      if (isPlural_1(parsed, _this2.world) === false) {
+        list.push(vb.list[0]);
+      }
+    });
+    return this.buildFrom(list);
+  };
+
+  var methods$1 = {
+    isPlural: isPlural_1$1,
+    isSingular: isSingular
+  };
+
+  /**  */
+  // exports.tenses = function() {
+  // }
+  //
+
+  /**  */
+
+  var conjugate_1$1 = function conjugate_1$1() {
+    var _this = this;
+
+    var result = [];
+    this.forEach(function (vb) {
+      var parsed = parse(vb);
+      var forms = conjugate_1(parsed, _this.world);
+      result.push(forms);
+    });
+    return result;
+  };
+  /** */
+
+
+  var toPastTense = function toPastTense() {
+    var _this2 = this;
+
+    this.forEach(function (vb) {
+      var parsed = parse(vb);
+      var str = conjugate_1(parsed, _this2.world).PastTense;
+      vb.replace(str);
+    });
+    return this;
+  };
+  /** */
+
+
+  var toPresentTense = function toPresentTense() {
+    var _this3 = this;
+
+    this.forEach(function (vb) {
+      var parsed = parse(vb);
+      var str = conjugate_1(parsed, _this3.world).PresentTense;
+      vb.replace(str);
+    });
+    return this;
+  };
+  /** */
+
+
+  var toFutureTense = function toFutureTense() {
+    var _this4 = this;
+
+    this.forEach(function (vb) {
+      var parsed = parse(vb);
+      var inf = toInfinitive_1(parsed, _this4.world);
+      vb.replace('will ' + inf); //not smart.
+    });
+    return this;
+  };
+  /** */
+
+
+  var toInfinitive_1$1 = function toInfinitive_1$1() {
+    var _this5 = this;
+
+    this.forEach(function (vb) {
+      var parsed = parse(vb);
+      var inf = toInfinitive_1(parsed, _this5.world);
+      vb.replace(inf);
+    });
+    return this;
+  };
+  /** */
+
+
+  var toGerund = function toGerund() {
+    var _this6 = this;
+
+    this.forEach(function (vb) {
+      var parsed = parse(vb);
+      var str = conjugate_1(parsed, _this6.world).Gerund;
+      vb.replace(str);
+    });
+    return this;
+  };
+  /** */
+  // exports.asAdjective=function(){}
+
+
+  var methods$2 = {
+    conjugate: conjugate_1$1,
+    toPastTense: toPastTense,
+    toPresentTense: toPresentTense,
+    toFutureTense: toFutureTense,
+    toInfinitive: toInfinitive_1$1,
+    toGerund: toGerund
+  };
+
+  var methods$3 = [methods, methods$1, methods$2];
 
   var addMethod = function addMethod(Doc) {
     /**  */
@@ -467,15 +498,54 @@
 
         return _possibleConstructorReturn(this, _getPrototypeOf(Verbs).call(this, list, from, world));
       }
-      /** grab the adverbs describing these verbs */
+      /** overload the original json with verb information */
 
 
       _createClass(Verbs, [{
+        key: "json",
+        value: function json(options) {
+          var _this = this;
+
+          var n = null;
+
+          if (typeof options === 'number') {
+            n = options;
+            options = null;
+          }
+
+          options = options || {
+            text: true,
+            normal: true,
+            trim: true,
+            terms: true
+          };
+          var res = [];
+          this.forEach(function (p) {
+            var json = p.json(options)[0];
+            var parsed = parse(p);
+            json.parts = {};
+            Object.keys(parsed).forEach(function (k) {
+              json.parts[k] = parsed[k].text('normal');
+            });
+            json.isNegative = p.has('#Negative');
+            json.conjugations = conjugate_1(parsed, _this.world);
+            res.push(json);
+          });
+
+          if (n !== null) {
+            return res[n];
+          }
+
+          return res;
+        }
+        /** grab the adverbs describing these verbs */
+
+      }, {
         key: "adverbs",
         value: function adverbs() {
           var list = [];
           this.forEach(function (vb) {
-            var advb = parseVerb(vb).adverb;
+            var advb = parse(vb).adverb;
 
             if (advb.found) {
               list = list.concat(advb.list);
@@ -483,113 +553,22 @@
           });
           return this.buildFrom(list);
         }
-        /** */
-        // conjugation(){}
-
-        /** */
-
-      }, {
-        key: "conjugations",
-        value: function conjugations() {
-          var _this = this;
-
-          var result = [];
-          this.forEach(function (vb) {
-            var parsed = parseVerb(vb);
-            var forms = conjugate_1(parsed, _this.world);
-            result.push(forms);
-          });
-          return result;
-        }
-        /** */
-        // isPlural(){}
-
-        /** */
-        // isSingular(){}
-
-        /** return only verbs with 'not'*/
-
-      }, {
-        key: "isNegative",
-        value: function isNegative() {
-          return this["if"]('#Negative');
-        }
-        /**  return only verbs without 'not'*/
-
-      }, {
-        key: "isPositive",
-        value: function isPositive() {
-          return this.ifNo('#Negative');
-        }
-        /** add a 'not' to these verbs */
-
-      }, {
-        key: "toNegative",
-        value: function toNegative() {
-          var _this2 = this;
-
-          // not native forEach!
-          this.list.forEach(function (p) {
-            var doc = _this2.buildFrom([p]);
-
-            var parsed = parseVerb(doc);
-
-            toNegative_1(parsed, doc.world);
-          });
-          return this;
-        }
-        /** remove 'not' from these verbs */
-
-      }, {
-        key: "toPositive",
-        value: function toPositive() {
-          return this.remove('#Negative');
-        }
-        /** */
-
-      }, {
-        key: "toPastTense",
-        value: function toPastTense() {
-          var transforms = this.world.transforms;
-          return this.map(function (vb) {
-            var verb = parseVerb(vb).verb;
-            var str = verb.out('normal');
-            var past = transforms.verbs(str).PastTense;
-
-            if (past) {
-              var p = vb.list[0]; // console.log(p.buildFrom)
-              // let p = vb.buildP
-              // console.log(vb.list[0].replace(past))
-
-              return vb; //.replaceWith(past, this)
-            }
-
-            return vb;
-          });
-        }
-        /** */
-        // toPresentTense(){}
-
-        /** */
-        // toFutureTense(){}
-
-        /** */
-        // toInfinitive(){}
-
-        /** */
-        // toGerund(){}
-
-        /** */
-        // asAdjective(){}
-
       }]);
 
       return Verbs;
-    }(Doc);
+    }(Doc); // add-in our methods
+
+
+    methods$3.forEach(function (obj) {
+      return Object.assign(Verbs.prototype, obj);
+    }); // aliases
+
+    Verbs.prototype.negate = Verbs.prototype.toNegative;
 
     Doc.prototype.verbs = function (n) {
       var match = this.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+'); // handle commas
-      // match = match.splitAfter('!#Adverb @hasComma')
+
+      match = match.splitAfter('@hasComma'); // match = match.clauses()
       //handle slashes?
       // match = match.splitAfter('@hasSlash')
       //ensure there's actually a verb
@@ -601,7 +580,8 @@
         match = match.get(n);
       }
 
-      var vb = new Verbs(match.list, this, this.world);
+      var vb = new Verbs(match.list, this, this.world); // this.before(match).debug()
+
       return vb;
     };
 

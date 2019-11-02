@@ -73,8 +73,15 @@
     return _assertThisInitialized(self);
   }
 
-  var addMethods = function addMethods(Doc) {
+  var addMethods = function addMethods(Doc, world) {
+    world.addTags({
+      FinancialQuarter: {
+        // isA: 'Date',
+        notA: 'Foo'
+      }
+    });
     /**  */
+
     var Dates =
     /*#__PURE__*/
     function (_Doc) {

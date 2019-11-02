@@ -10,7 +10,7 @@ const addMethod = function(Doc) {
   }
 
   Doc.prototype.people = function(n) {
-    let match = this.clauses();
+    let match = this.splitAfter('@hasComma');
     match = match.match('#Person+');
 
     //grab (n)th result
@@ -29,15 +29,15 @@ const addMethod$1 = function(Doc) {
     // regions(){}
   }
 
-  Doc.prototype.organizations = function(n) {
-    let match = this.clauses();
-    match = match.match('#Place+');
+  Doc.prototype.places = function(n) {
+    let m = this.splitAfter('@hasComma');
+    m = m.match('#Place+');
 
     //grab (n)th result
     if (typeof n === 'number') {
-      match = match.get(n);
+      m = m.get(n);
     }
-    return new Places(match.list, this, this.world)
+    return new Places(m.list, this, this.world)
   };
   return Doc
 };
@@ -66,16 +66,36 @@ var organization = addMethod$2;
 const methods = [people, place, organization];
 
 //add them all in
-const addMethods = function(Doc) {
+const addMethods = function(Doc, world) {
+  //
+  world.addTags({
+    Address: {
+      isA: 'Place',
+    },
+    School: {
+      isA: 'Organization',
+    },
+    Company: {
+      isA: 'Organization',
+    },
+  });
+  //
+  world.postProcess(doc => {
+    // addresses
+    doc.match('#Value #Noun (st|street|rd|road|crescent|way)').tag('Address');
+    // schools
+    doc.match('#Noun+ (public|private) school').tag('School');
+  });
+
   methods.forEach(fn => fn(Doc));
 
   //combine them with .topics() method
   Doc.prototype.entities = function(n) {
-    let r = this.clauses();
+    let r = this.splitAfter('@hasComma');
     // Find people, places, and organizations
     let yup = r.people();
-    yup.concat(r.places());
-    yup.concat(r.organizations());
+    yup = yup.concat(r.places());
+    yup = yup.concat(r.organizations());
     let ignore = ['someone', 'man', 'woman', 'mother', 'brother', 'sister', 'father'];
     yup = yup.not(ignore);
     //return them to normal ordering

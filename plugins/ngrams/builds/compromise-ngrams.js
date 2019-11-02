@@ -67,7 +67,7 @@
     var grams = {}; // count each instance
 
     list.forEach(function (terms) {
-      for (var i = 0; i < terms.length; i += 1) {
+      for (var i = 0; i <= terms.length; i += 1) {
         var slice = terms.slice(0, i);
 
         if (slice.length === size) {
@@ -123,7 +123,7 @@
     list.forEach(function (terms) {
       var len = terms.length;
 
-      for (var i = 0; i < terms.length; i += 1) {
+      for (var i = 0; i <= terms.length; i += 1) {
         var slice = terms.slice(len - i, len);
 
         if (slice.length === size) {
@@ -220,8 +220,9 @@
       arr = sort_1(arr);
       return arr;
     };
-    /** n-grams with one word */
 
+    Doc.prototype.nGrams = Doc.prototype.ngrams;
+    /** n-grams with one word */
 
     Doc.prototype.unigrams = function (n) {
       var arr = getGrams(tokenize_1(this), {
@@ -236,8 +237,9 @@
 
       return arr;
     };
-    /** n-grams with two words */
 
+    Doc.prototype.uniGrams = Doc.prototype.unigrams;
+    /** n-grams with two words */
 
     Doc.prototype.bigrams = function (n) {
       var arr = getGrams(tokenize_1(this), {
@@ -252,8 +254,9 @@
 
       return arr;
     };
-    /** n-grams with two words */
 
+    Doc.prototype.biGrams = Doc.prototype.bigrams;
+    /** n-grams with two words */
 
     Doc.prototype.trigrams = function (n) {
       var arr = getGrams(tokenize_1(this), {
@@ -268,8 +271,9 @@
 
       return arr;
     };
-    /** list all repeating sub-phrases, using the first word */
 
+    Doc.prototype.triGrams = Doc.prototype.trigrams;
+    /** list all repeating sub-phrases, using the first word */
 
     Doc.prototype.startgrams = function (obj) {
       var list = tokenize_1(this);
@@ -277,8 +281,9 @@
       arr = sort_1(arr);
       return arr;
     };
-    /** list all repeating sub-phrases, connected to the last word of each phrase */
 
+    Doc.prototype.startGrams = Doc.prototype.startgrams;
+    /** list all repeating sub-phrases, connected to the last word of each phrase */
 
     Doc.prototype.endgrams = function (obj) {
       var list = tokenize_1(this);
@@ -286,6 +291,8 @@
       arr = sort_1(arr);
       return arr;
     };
+
+    Doc.prototype.endGrams = Doc.prototype.endgrams;
   };
 
   var src = addMethod;

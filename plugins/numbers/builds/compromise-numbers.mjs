@@ -1,3 +1,78 @@
+const tens = 'twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|fourty';
+const teens = 'eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen';
+
+const findNumbers = function(doc, n) {
+  let match = doc.match('#Value+ #Unit?');
+
+  //"50 83"
+  if (match.has('#NumericValue #NumericValue')) {
+    //a comma may mean two numbers
+    if (match.has('#Value @hasComma #Value')) {
+      match.splitAfter('@hasComma');
+    } else {
+      match = match.splitAfter('#NumericValue');
+    }
+  }
+  //three-length
+  if (match.has('#Value #Value #Value') && !match.has('#Multiple')) {
+    //twenty-five-twenty
+    if (match.has('(' + tens + ') #Cardinal #Cardinal')) {
+      match = match.splitAfter('(' + tens + ') #Cardinal');
+    }
+  }
+
+  //two-length ones
+  if (match.has('#Value #Value')) {
+    //june 21st 1992 is two seperate values
+    if (match.has('#NumericValue #NumericValue')) {
+      match = match.splitOn('#Year');
+    }
+    //sixty fifteen
+    if (match.has('(' + tens + ') (' + teens + ')')) {
+      match = match.splitAfter('(' + tens + ')');
+    }
+    //"72 82"
+    let double = match.match('#Cardinal #Cardinal');
+    if (double.found && !match.has('(point|decimal)')) {
+      //not 'two hundred'
+      if (!double.has('#Cardinal (#Multiple|point|decimal)')) {
+        //one proper way, 'twenty one', or 'hundred one'
+        if (!double.has('(' + tens + ') #Cardinal') && !double.has('#Multiple #Value')) {
+          // double = double.firstTerm()
+          double.terms().forEach(d => {
+            match = match.splitOn(d);
+          });
+        }
+      }
+    }
+    //seventh fifth
+    if (match.match('#Ordinal #Ordinal').match('#TextValue').found && !match.has('#Multiple')) {
+      //the one proper way, 'twenty first'
+      if (!match.has('(' + tens + ') #Ordinal')) {
+        match = match.splitAfter('#Ordinal');
+      }
+    }
+    //fifth five
+    if (match.has('#Ordinal #Cardinal')) {
+      match = match.splitBefore('#Cardinal+');
+    }
+    //five 2017 (support '5 hundred', and 'twenty 5'
+    if (match.has('#TextValue #NumericValue') && !match.has('(' + tens + '|#Multiple)')) {
+      match = match.splitBefore('#NumericValue+');
+    }
+  }
+  //5-8
+  if (match.has('#NumberRange')) {
+    match = match.splitAfter('#NumberRange');
+  }
+  //grab (n)th result
+  if (typeof n === 'number') {
+    match = match.get(n);
+  }
+  return match
+};
+var find = findNumbers;
+
 //support global multipliers, like 'half-million' by doing 'million' then multiplying by 0.5
 const findModifiers = str => {
   const mults = [
@@ -306,6 +381,47 @@ const parse = function(str) {
 
 var toNumber = parse;
 
+// get a numeric value from this phrase
+const parseNumber = function(p) {
+  let str = p.text('reduced');
+  //parse a numeric-number (easy)
+  let arr = str.split(/^([^0-9]*)([0-9.,]*)([^0-9]*)$/);
+  if (arr && arr[2] && p.terms().length < 2) {
+    let num = parseFloat(arr[2] || str);
+    //ensure that num is an actual number
+    if (typeof num !== 'number') {
+      num = null;
+    }
+    // strip an ordinal off the suffix
+    let suffix = arr[3] || '';
+    if (suffix === 'st' || suffix === 'nd' || suffix === 'rd' || suffix === 'th') {
+      suffix = '';
+    }
+    // support M for million, k for thousand
+    if (suffix === 'm' || suffix === 'M') {
+      num *= 1000000;
+      suffix = '';
+    }
+    if (suffix === 'k' || suffix === 'k') {
+      num *= 1000;
+      suffix = '';
+    }
+    return {
+      prefix: arr[1] || '',
+      num: num,
+      suffix: suffix,
+    }
+  }
+  //parse a text-numer (harder)
+  let num = toNumber(str);
+  return {
+    prefix: '',
+    num: num,
+    suffix: '',
+  }
+};
+var parse$1 = parseNumber;
+
 /**
  * turn big numbers, like 2.3e+22, into a string with a ton of trailing 0's
  * */
@@ -313,7 +429,12 @@ const numToString = function(n) {
   if (n < 1000000) {
     return String(n)
   }
-  var str = n.toFixed(0);
+  let str;
+  if (typeof n === 'number') {
+    str = n.toFixed(0);
+  } else {
+    str = n;
+  }
   if (str.indexOf('e+') === -1) {
     return str
   }
@@ -365,10 +486,15 @@ const ones_mapping = [
 
 const sequence = [
   [1e24, 'septillion'],
+  [1e20, 'hundred sextillion'],
   [1e21, 'sextillion'],
+  [1e20, 'hundred quintillion'],
   [1e18, 'quintillion'],
+  [1e17, 'hundred quadrillion'],
   [1e15, 'quadrillion'],
+  [1e14, 'hundred trillion'],
   [1e12, 'trillion'],
+  [1e11, 'hundred billion'],
   [1e9, 'billion'],
   [1e8, 'hundred million'],
   [1e6, 'million'],
@@ -439,7 +565,7 @@ const to_text = function(num) {
   //big numbers, north of sextillion, aren't gonna work well..
   //keep them small..
   if (num > 1e21) {
-    return String(num)
+    num = _toString(num);
   }
   let arr = [];
   //handle negative numbers
@@ -474,81 +600,6 @@ const to_text = function(num) {
 
 var toText = to_text;
 
-const tens = 'twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|fourty';
-const teens = 'eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen';
-
-const findNumbers = function(doc, n) {
-  let match = doc.match('#Value+ #Unit?');
-
-  // r = r.match('#Value+ #Unit?');
-
-  //"50 83"
-  if (match.has('#NumericValue #NumericValue')) {
-    //a comma may mean two numbers
-    if (match.has('#Value #Comma #Value')) {
-      match.splitAfter('#Comma');
-    } else {
-      match.splitAfter('#NumericValue');
-    }
-  }
-  //three-length
-  if (match.has('#Value #Value #Value') && !match.has('#Multiple')) {
-    //twenty-five-twenty
-    if (match.has('(' + tens + ') #Cardinal #Cardinal')) {
-      match.splitAfter('(' + tens + ') #Cardinal');
-    }
-  }
-
-  //two-length ones
-  if (match.has('#Value #Value')) {
-    //june 21st 1992 is two seperate values
-    if (match.has('#NumericValue #NumericValue')) {
-      match.splitOn('#Year');
-    }
-    //sixty fifteen
-    if (match.has('(' + tens + ') (' + teens + ')')) {
-      match.splitAfter('(' + tens + ')');
-    }
-    //"72 82"
-    let double = match.match('#Cardinal #Cardinal');
-    if (double.found && !match.has('(point|decimal)')) {
-      //not 'two hundred'
-      if (!double.has('#Cardinal (#Multiple|point|decimal)')) {
-        //one proper way, 'twenty one', or 'hundred one'
-        if (!double.has('(' + tens + ') #Cardinal') && !double.has('#Multiple #Value')) {
-          match.splitAfter(double.terms(0).out('normal'));
-        }
-      }
-    }
-    //seventh fifth
-    if (match.match('#Ordinal #Ordinal').match('#TextValue').found && !match.has('#Multiple')) {
-      //the one proper way, 'twenty first'
-      if (!match.has('(' + tens + ') #Ordinal')) {
-        match.splitAfter('#Ordinal');
-      }
-    }
-    //fifth five
-    if (match.has('#Ordinal #Cardinal')) {
-      match.splitBefore('#Cardinal+');
-    }
-    //five 2017 (support '5 hundred', and 'twenty 5'
-    if (match.has('#TextValue #NumericValue') && !match.has('(' + tens + '|#Multiple)')) {
-      match.splitBefore('#NumericValue+');
-    }
-  }
-  //5-8
-  if (match.has('#NumberRange')) {
-    match.splitAfter('#NumberRange');
-  }
-
-  //grab (n)th result
-  if (typeof n === 'number') {
-    match = match.get(n);
-  }
-  return match
-};
-var find = findNumbers;
-
 /**
  * turn a number like 5 into an ordinal like 5th
  */
@@ -579,6 +630,8 @@ const numOrdinal = function(num) {
 };
 
 var numOrdinal_1 = numOrdinal;
+
+// const toString = require('../_toString')
 
 const irregulars = {
   one: 'first',
@@ -616,130 +669,277 @@ const textOrdinal = num => {
 
 var textOrdinal_1 = textOrdinal;
 
+const prefixes = {
+  '¢': 'cents',
+  $: 'dollars',
+  '£': 'pounds',
+  '¥': 'yen',
+  '€': 'euros',
+  '₡': 'colón',
+  '฿': 'baht',
+  '₭': 'kip',
+  '₩': 'won',
+  '₹': 'rupees',
+  '₽': 'ruble',
+  '₺': 'liras',
+};
+const suffixes = {
+  '%': 'percent',
+  s: 'seconds',
+  cm: 'centimetres',
+  km: 'kilometres',
+};
+var _symbols = {
+  prefixes: prefixes,
+  suffixes: suffixes,
+};
+
+const prefixes$1 = _symbols.prefixes;
+const suffixes$1 = _symbols.suffixes;
+
+const isCurrency = {
+  usd: true,
+  eur: true,
+  jpy: true,
+  gbp: true,
+  cad: true,
+  aud: true,
+  chf: true,
+  cny: true,
+  hkd: true,
+  nzd: true,
+  kr: true,
+  rub: true,
+};
+// convert $ to 'dollars', etc
+const prefixToText = function(obj) {
+  // turn 5% to 'five percent'
+  if (prefixes$1.hasOwnProperty(obj.prefix)) {
+    obj.suffix += prefixes$1[obj.prefix];
+    obj.prefix = '';
+  }
+  //turn 5km to 'five kilometres'
+  if (suffixes$1.hasOwnProperty(obj.suffix)) {
+    obj.suffix = suffixes$1[obj.suffix];
+  }
+  //uppercase lost case for 'USD', etc
+  if (isCurrency.hasOwnProperty(obj.suffix)) {
+    obj.suffix = obj.suffix.toUpperCase();
+  }
+  // add a space, if it exists
+  if (obj.suffix) {
+    obj.suffix = ' ' + obj.suffix;
+  }
+  return obj
+};
+
 //business-logic for converting a cardinal-number to other forms
 const makeNumber = function(obj, isText, isOrdinal) {
   let num = String(obj.num);
   if (isText) {
+    obj = prefixToText(obj);
     if (isOrdinal) {
       //ordinal-text
       num = textOrdinal_1(num);
-    } else {
-      //cardinal-text
-      num = toText(num);
+      return `${obj.prefix || ''}${num}${obj.suffix || ''}`
     }
-  } else if (isOrdinal) {
-    //ordinal-number
-    return numOrdinal_1(num)
+    //cardinal-text
+    num = toText(num);
+    return `${obj.prefix || ''}${num}${obj.suffix || ''}`
   }
+  //ordinal-number
+  if (isOrdinal) {
+    num = numOrdinal_1(num);
+    // support '5th percent'
+    obj = prefixToText(obj);
+    return `${obj.prefix || ''}${num}${obj.suffix || ''}`
+  }
+  // cardinal-number
+  num = _toString(num); // support very large numbers
   return `${obj.prefix || ''}${num}${obj.suffix || ''}`
 };
+var makeNumber_1 = makeNumber;
 
-// get a numeric value from this phrase
-const parseNumber = function(p) {
-  let str = p.root();
-  //parse a numeric-number (easy)
-  let arr = str.split(/^([^0-9]*)([0-9]*)([^0-9]*)$/);
-  if (arr[2]) {
-    let num = parseFloat(arr[2] || str);
-    //ensure that num is an actual number
-    if (typeof num !== 'number') {
-      num = null;
+let methods = {
+  /** overload the original json with noun information */
+  json: function(options) {
+    let n = null;
+    if (typeof options === 'number') {
+      n = options;
+      options = null;
     }
-    return {
-      prefix: arr[1] || '',
-      num: num,
-      suffix: arr[3] || '',
+    options = options || { text: true, normal: true, trim: true, terms: true };
+    let res = [];
+    this.forEach(doc => {
+      let json = doc.json(options)[0];
+      let obj = parse$1(doc);
+      json.prefix = obj.prefix;
+      json.number = obj.num;
+      json.suffix = obj.suffix;
+      json.cardinal = makeNumber_1(obj, false, false);
+      json.ordinal = makeNumber_1(obj, false, true);
+      json.textCardinal = makeNumber_1(obj, true, false);
+      json.textOrdinal = makeNumber_1(obj, true, true);
+      res.push(json);
+    });
+    if (n !== null) {
+      return res[n]
     }
-  }
-  //parse a text-numer (harder)
-  let num = toNumber(str);
-  return {
-    prefix: '',
-    num: num,
-    suffix: '',
-  }
+    return res
+  },
+
+  isOrdinal: function() {
+    return this.if('#Ordinal')
+  },
+  isCardinal: function() {
+    return this.if('#Cardinal')
+  },
+  toNumber: function() {
+    this.forEach(val => {
+      let obj = parse$1(val);
+      if (obj.num === null) {
+        return
+      }
+      let str = makeNumber_1(obj, false, val.has('#Ordinal'));
+      val.replaceWith(str);
+    });
+    return this
+  },
+  // toNumber, but with some commas
+  toLocaleString: function() {
+    this.forEach(val => {
+      let obj = parse$1(val);
+      if (obj.num === null) {
+        return
+      }
+      obj.num = obj.num.toLocaleString();
+      let str = makeNumber_1(obj, false, val.has('#Ordinal'));
+      val.replaceWith(str);
+    });
+    return this
+  },
+  toText: function() {
+    this.forEach(val => {
+      let obj = parse$1(val);
+      if (obj.num === null) {
+        return
+      }
+      let str = makeNumber_1(obj, true, val.has('#Ordinal'));
+      val.replaceWith(str);
+    });
+    return this
+  },
+  toCardinal: function() {
+    let m = this.if('#Ordinal');
+    m.forEach(val => {
+      let obj = parse$1(val);
+      if (obj.num === null) {
+        return
+      }
+      let str = makeNumber_1(obj, val.has('#TextValue'), false);
+      val.replaceWith(str);
+    });
+    return this
+  },
+
+  toOrdinal: function() {
+    let m = this.if('#Cardinal');
+    m.forEach(val => {
+      let obj = parse$1(val);
+      if (obj.num === null) {
+        return
+      }
+      let str = makeNumber_1(obj, val.has('#TextValue'), true);
+      val.replaceWith(str);
+    });
+    return this
+  },
+  isEqual: function(n) {
+    return this.filter(val => {
+      let num = parse$1(val).num;
+      return num === n
+    })
+  },
+  greaterThan: function(n) {
+    return this.filter(val => {
+      let num = parse$1(val).num;
+      return num > n
+    })
+  },
+  lessThan: function(n) {
+    return this.filter(val => {
+      let num = parse$1(val).num;
+      return num < n
+    })
+  },
+  between: function(a, b) {
+    return this.filter(val => {
+      let num = parse$1(val).num;
+      return num > a && num < b
+    })
+  },
+  add: function(n) {
+    if (!n) {
+      return this // don't bother
+    }
+    this.forEach(val => {
+      let obj = parse$1(val);
+      if (obj.num === null) {
+        return
+      }
+      obj.num += n;
+      let str = makeNumber_1(obj, val.has('#TextValue'), val.has('#Ordinal'));
+      val.replaceWith(str);
+    });
+    return this
+  },
+  subtract: function(n) {
+    return this.add(n * -1)
+  },
+  increment: function() {
+    this.add(1);
+    return this
+  },
+  decrement: function() {
+    this.add(-1);
+    return this
+  },
 };
+// aliases
+methods.toNice = methods.toLocaleString;
+methods.minus = methods.subtract;
+methods.plus = methods.add;
+methods.equals = methods.isEqual;
+
+var methods_1 = methods;
+
+const tagger = function(doc) {
+  doc
+    .match(
+      '(hundred|thousand|million|billion|trillion|quadrillion|quintillion|sextillion|septillion)'
+    )
+    .tag('#Multiple');
+  //  in the 400s
+  doc.match('the [/[0-9]+s$/]').tag('#Plural');
+};
+var tagger_1 = tagger;
 
 /** adds .numbers() method */
-const addMethod = function(Doc) {
+const addMethod = function(Doc, world) {
+  // additional tagging before running the number-parser
+  world.postProcess(tagger_1);
+
   /** a list of number values, and their units */
   class Numbers extends Doc {
-    constructor(list, from, world) {
-      super(list, from, world);
+    constructor(list, from, w) {
+      super(list, from, w);
       this.unit = this.match('#Unit+$');
       let numbers = this.not('#Unit+$');
       this.list = numbers.list;
     }
-    isOrdinal() {
-      return this.if('#Ordinal')
-    }
-    isCardinal() {
-      return this.if('#Cardinal')
-    }
-    toNumber() {
-      this.forEach(val => {
-        let obj = parseNumber(val);
-        let str = makeNumber(obj, false, val.has('#Ordinal'));
-        this.replaceWith(str);
-      });
-      return this
-    }
-    toText() {
-      this.forEach(val => {
-        let obj = parseNumber(val);
-        let str = makeNumber(obj, true, val.has('#Ordinal'));
-        this.replaceWith(str);
-      });
-      return this
-    }
-    toCardinal() {
-      let m = this.if('#Ordinal');
-      m.forEach(val => {
-        let obj = parseNumber(val);
-        let str = makeNumber(obj, val.has('#TextNumber'), false);
-        this.replaceWith(str);
-      });
-      return this
-    }
-    toOrdinal() {
-      let m = this.if('#Cardinal');
-      m.forEach(val => {
-        let obj = parseNumber(val);
-        let str = makeNumber(obj, val.has('#TextNumber'), true);
-        this.replaceWith(str);
-      });
-      return this
-    }
-    greaterThan(n) {
-      return this.filter(val => {
-        let num = parseNumber(val).num;
-        return num > n
-      })
-    }
-    // lessThan() {}
-    // between() {}
-    add(n) {
-      if (!n) {
-        return this // don't bother
-      }
-      return this.map(val => {
-        let obj = parseNumber(val);
-        obj.num += n;
-        let str = makeNumber(obj, val.has('#TextNumber'), val.has('#Ordinal'));
-        return val.replaceWith(str)
-      })
-    }
-    subtract(n) {
-      return this.add(n * -1)
-    }
-    increment() {
-      this.add(1);
-    }
-    decrement() {
-      this.add(-1);
-    }
   }
   //aliases
+  Object.assign(Numbers.prototype, methods_1);
   Numbers.prototype.plus = Numbers.prototype.add;
   Numbers.prototype.minus = Numbers.prototype.subtract;
 

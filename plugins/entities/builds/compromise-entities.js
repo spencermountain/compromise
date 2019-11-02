@@ -74,7 +74,7 @@
     }(Doc);
 
     Doc.prototype.people = function (n) {
-      var match = this.clauses();
+      var match = this.splitAfter('@hasComma');
       match = match.match('#Person+'); //grab (n)th result
 
       if (typeof n === 'number') {
@@ -105,15 +105,15 @@
       return Places;
     }(Doc);
 
-    Doc.prototype.organizations = function (n) {
-      var match = this.clauses();
-      match = match.match('#Place+'); //grab (n)th result
+    Doc.prototype.places = function (n) {
+      var m = this.splitAfter('@hasComma');
+      m = m.match('#Place+'); //grab (n)th result
 
       if (typeof n === 'number') {
-        match = match.get(n);
+        m = m.get(n);
       }
 
-      return new Places(match.list, this, this.world);
+      return new Places(m.list, this, this.world);
     };
 
     return Doc;
@@ -155,17 +155,36 @@
 
   var methods = [people, place, organization]; //add them all in
 
-  var addMethods = function addMethods(Doc) {
+  var addMethods = function addMethods(Doc, world) {
+    //
+    world.addTags({
+      Address: {
+        isA: 'Place'
+      },
+      School: {
+        isA: 'Organization'
+      },
+      Company: {
+        isA: 'Organization'
+      }
+    }); //
+
+    world.postProcess(function (doc) {
+      // addresses
+      doc.match('#Value #Noun (st|street|rd|road|crescent|way)').tag('Address'); // schools
+
+      doc.match('#Noun+ (public|private) school').tag('School');
+    });
     methods.forEach(function (fn) {
       return fn(Doc);
     }); //combine them with .topics() method
 
     Doc.prototype.entities = function (n) {
-      var r = this.clauses(); // Find people, places, and organizations
+      var r = this.splitAfter('@hasComma'); // Find people, places, and organizations
 
       var yup = r.people();
-      yup.concat(r.places());
-      yup.concat(r.organizations());
+      yup = yup.concat(r.places());
+      yup = yup.concat(r.organizations());
       var ignore = ['someone', 'man', 'woman', 'mother', 'brother', 'sister', 'father'];
       yup = yup.not(ignore); //return them to normal ordering
 

@@ -73,6 +73,73 @@
     return _assertThisInitialized(self);
   }
 
+  // if a clause starts with these, it's not a main clause
+  var subordinate = "(after|although|as|because|before|if|since|than|that|though|when|whenever|where|whereas|wherever|whether|while|why|unless|until|once)";
+  var relative = "(that|which|whichever|who|whoever|whom|whose|whomever)"; //try to remove secondary clauses
+
+  var mainClause = function mainClause(og) {
+    var m = og.clone(true);
+
+    if (m.length === 1) {
+      return m;
+    } // if there's no verb?
+
+
+    m = m["if"]('#Verb');
+
+    if (m.length === 1) {
+      return m;
+    } // this is a signal for subordinate-clauses
+
+
+    m = m.ifNo(subordinate);
+    m = m.ifNo('^even (if|though)');
+    m = m.ifNo('^so that');
+    m = m.ifNo('^rather than');
+    m = m.ifNo('^provided that');
+
+    if (m.length === 1) {
+      return m;
+    } // relative clauses
+
+
+    m = m.ifNo(relative);
+
+    if (m.length === 1) {
+      return m;
+    }
+
+    m = m.ifNo('(despite|during|before|through|throughout)');
+
+    if (m.length === 1) {
+      return m;
+    } // did we go too far?
+
+
+    if (m.length === 0) {
+      m = og;
+    } // choose the first one?
+
+
+    return m.eq(0);
+  };
+
+  var mainClause_1 = mainClause;
+
+  var parse = function parse(doc) {
+    var clauses = doc.clauses();
+    var main = mainClause_1(clauses);
+    var nouns = main.match('#Determiner? (#Noun|#Adjective)+')["if"]('#Noun');
+    var verb = main.match('#Verb+').eq(0);
+    return {
+      subject: nouns.eq(0),
+      verb: verb,
+      object: verb.lookAhead('.*')
+    };
+  };
+
+  var parse_1 = parse;
+
   var addMethod = function addMethod(Doc) {
     /**  */
     var Sentences =
@@ -85,10 +152,60 @@
 
         return _possibleConstructorReturn(this, _getPrototypeOf(Sentences).call(this, list, from, world));
       }
+      /** overload the original json with noun information */
+
 
       _createClass(Sentences, [{
+        key: "json",
+        value: function json(options) {
+          var n = null;
+
+          if (typeof options === 'number') {
+            n = options;
+            options = null;
+          }
+
+          options = options || {
+            text: true,
+            normal: true,
+            trim: true,
+            terms: true
+          };
+          var res = [];
+          this.forEach(function (doc) {
+            var json = doc.json(options)[0];
+            var obj = parse_1(doc);
+            json.subject = obj.subject.json(options)[0];
+            json.verb = obj.verb.json(options)[0];
+            json.object = obj.object.json(options)[0];
+            res.push(json);
+          });
+
+          if (n !== null) {
+            return res[n];
+          }
+
+          return res;
+        }
+        /** the main noun of the sentence */
+
+      }, {
+        key: "subjects",
+        value: function subjects() {
+          return this.map(function (doc) {
+            var res = parse_1(doc);
+            return res.subject;
+          });
+        }
+      }, {
         key: "toPastTense",
-        value: function toPastTense() {}
+        value: function toPastTense() {
+          this.forEach(function (doc) {
+            var res = parse_1(doc);
+            doc.match(res.verb).replaceWith('was'); // return doc
+          });
+          return this;
+        }
       }, {
         key: "toPresentTense",
         value: function toPresentTense() {}
@@ -106,7 +223,9 @@
         value: function toPositive() {}
       }, {
         key: "isPassive",
-        value: function isPassive() {}
+        value: function isPassive() {
+          return this.has('was #Adverb? #PastTense #Adverb? by'); //haha
+        }
         /** return sentences ending with '?' */
 
       }, {
@@ -157,10 +276,16 @@
       }, {
         key: "append",
         value: function append(str) {
+          var hasEnd = /[.?!]\s*$/.test(str);
           this.forEach(function (doc) {
             var end = doc.match('.$');
             var lastTerm = end.termList(0);
-            var punct = lastTerm.post; // add punctuation to the end
+            var punct = lastTerm.post;
+
+            if (hasEnd === true) {
+              punct = '';
+            } // add punctuation to the end
+
 
             end.append(str + punct); // remove punctuation from the former last-term
 

@@ -38,10 +38,15 @@ const ones_mapping = [
 
 const sequence = [
   [1e24, 'septillion'],
+  [1e20, 'hundred sextillion'],
   [1e21, 'sextillion'],
+  [1e20, 'hundred quintillion'],
   [1e18, 'quintillion'],
+  [1e17, 'hundred quadrillion'],
   [1e15, 'quadrillion'],
+  [1e14, 'hundred trillion'],
   [1e12, 'trillion'],
+  [1e11, 'hundred billion'],
   [1e9, 'billion'],
   [1e8, 'hundred million'],
   [1e6, 'million'],

@@ -1,7 +1,7 @@
 const nlp = require('./src/index')
 // nlp.verbose(true)
-nlp.extend(require('./plugins/sentences/src'))
-nlp.extend(require('./plugins/verbs/src'))
+nlp.extend(require('./plugins/numbers/src'))
+// nlp.extend(require('./plugins/verbs/src'))
 
 // let doc = nlp('234.0%')
 // console.log(doc.termList())
@@ -9,10 +9,9 @@ nlp.extend(require('./plugins/verbs/src'))
 // console.log(doc.values().json())
 // let doc = nlp('39%')
 
-let doc = nlp('it is raining tomorrow and today')
-doc
-  .match('raining')
-  .lookAhead('')
+let doc = nlp('two hundred quintillion')
+  .values()
+  .toOrdinal()
   .debug()
-
-// console.log(doc.sentences().json())
+  .toNice()
+console.log(doc.text())

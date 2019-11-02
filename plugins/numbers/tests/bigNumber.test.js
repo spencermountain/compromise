@@ -26,27 +26,35 @@ test('a very large cardinal', function(t) {
 
 test('number ordinal', function(t) {
   t.equal(
-    nlp('two hundred sextillion')
+    nlp('two hundred trillion')
       .values()
-      .json()[0].niceOrdinal,
-    '200,000,000,000,000,000,000,000th'
+      .toOrdinal()
+      .toNice()
+      .text(),
+    '200,000,000,000,000th'
   )
   t.equal(
     nlp('thirty seven quadrillion and two hundred')
       .values()
-      .json()[0].niceOrdinal,
+      .toOrdinal()
+      .toNice()
+      .text(),
     '37,000,000,000,000,200th'
   )
   t.equal(
     nlp('thirty seven quadrillion, two thousand')
       .values()
-      .json()[0].niceOrdinal,
+      .toOrdinal()
+      .toNice()
+      .text(),
     '37,000,000,000,002,000th'
   )
   t.equal(
     nlp('ninety nine quadrillion, two hundred thousand')
       .values()
-      .json()[0].niceOrdinal,
+      .toOrdinal()
+      .toNice()
+      .text(),
     '99,000,000,000,200,000th'
   )
   //javascript math can't do this.

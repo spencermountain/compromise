@@ -5,6 +5,7 @@ const textOrdinal = require('./toOrdinal/textOrdinal')
 const symbols = require('./_symbols')
 const prefixes = symbols.prefixes
 const suffixes = symbols.suffixes
+
 const isCurrency = {
   usd: true,
   eur: true,

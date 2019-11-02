@@ -26,6 +26,7 @@
     "plugins": "node ./scripts/plugin-check.js",
     "speed": "node ./scripts/stress-test/speed.js",
     "demo": "python -m SimpleHTTPServer 8888",
+    "coverage": "nyc --reporter=html tape \"./tests/**/*.test.js\" | tap-dancer --color always",
     "test:types": "ts-node ./types/types.test.ts | tap-dancer",
     "lint": "eslint ./src/"
   },
@@ -45,11 +46,11 @@
     "efrt-unpack": "2.2.0"
   },
   "devDependencies": {
-    "@babel/core": "7.6.2",
-    "@babel/preset-env": "7.6.2",
+    "@babel/core": "7.6.4",
+    "@babel/preset-env": "7.6.3",
     "amble": "0.0.7",
     "efrt": "2.2.1",
-    "rollup": "1.21.4",
+    "rollup": "1.26.3",
     "rollup-plugin-babel": "4.3.3",
     "rollup-plugin-commonjs": "10.1.0",
     "rollup-plugin-json": "4.0.0",

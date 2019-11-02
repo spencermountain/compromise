@@ -2,7 +2,7 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
   (global = global || self, global.nlp = factory());
-}(this, function () { 'use strict';
+}(this, (function () { 'use strict';
 
   var defaults = {
     max: 4,
@@ -299,5 +299,5 @@
 
   return src;
 
-}));
+})));
 //# sourceMappingURL=compromise-ngrams.js.map

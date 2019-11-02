@@ -14,5 +14,6 @@ module.exports = Object.assign(
   require('./12-normalize'),
   require('./13-json'),
   require('./14-split'),
-  require('./15-join')
+  require('./15-join'),
+  require('./16-export')
 )

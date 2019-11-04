@@ -2,12 +2,12 @@ const test = require('tape')
 const nlp = require('../_lib')
 
 test('and-match', function(t) {
-  let doc = nlp('june and today cool')
-  let m = doc.match('(#Date && today)')
-  t.equal(m.out(), 'today', 'found today')
+  let doc = nlp('june and july cool')
+  let m = doc.match('(#Date && july)')
+  t.equal(m.out(), 'july', 'found july')
 
-  m = doc.match('(#Date && !today)')
-  t.equal(m.out(), 'june', 'found not today')
+  m = doc.match('(#Date && !july)')
+  t.equal(m.out(), 'june', 'found not july')
 
   m = doc.match('(and && !foo && #Conjunction && .)')
   t.equal(m.out(), 'and', 'three-match')

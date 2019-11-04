@@ -3,6 +3,6 @@ const nlp = require('./src/index')
 nlp.extend(require('./plugins/numbers/src'))
 // nlp.extend(require('./plugins/verbs/src'))
 
-let doc = nlp('two hundred quintillion apples. even more raddish')
+let doc = nlp(`July 4, 1776`).debug()
 let json = doc.export()
 console.log(JSON.stringify(json, null, 2))

@@ -10,17 +10,7 @@ module.exports = {
   WeekDay: {
     isA: ['Date', 'Noun'],
   },
-  Year: {
-    isA: ['Date'],
-    notA: 'RomanNumeral',
-  },
-  Duration: {
-    isA: ['Date', 'Noun'],
-  },
-  Time: {
-    isA: ['Date', 'Noun'],
-    notA: 'Value',
-  },
+
   Holiday: {
     isA: ['Date', 'Noun'],
   },

@@ -1,10 +1,12 @@
+const tagger = require('./tagger')
+const tags = require('./tags')
+const words = require('./data')
+
 const addMethods = function(Doc, world) {
-  world.addTags({
-    FinancialQuarter: {
-      // isA: 'Date',
-      notA: 'Foo',
-    },
-  })
+  // add info for the date plugin
+  world.addWords(words)
+  world.addTags(tags)
+  world.postProcess(tagger)
 
   /**  */
   class Dates extends Doc {

@@ -11,13 +11,13 @@ const mapping = {
   fut: 'FuturePerfect',
   pres: 'PresentTense',
   pluperf: 'Pluperfect',
-  act: 'Actor',
+  a: 'Actor',
 }
 
 // '_' in conjugations is the infinitive form
 let conjugations = {
   act: {
-    act: '_or',
+    a: '_or',
   },
   age: {
     g: 'ageing',
@@ -25,7 +25,7 @@ let conjugations = {
     pres: 'ages',
   },
   aim: {
-    act: '_er',
+    a: '_er',
     g: '_ing',
     pst: '_ed',
   },
@@ -34,23 +34,23 @@ let conjugations = {
     pst: 'arose',
   },
   babysit: {
-    act: '_ter',
+    a: '_ter',
     pst: 'babysat',
   },
   ban: {
-    act: '',
+    a: '',
     g: '_ning',
     pst: '_ned',
   },
   be: {
-    act: '',
+    a: '',
     g: 'am',
     prt: 'been',
     pst: 'was',
     pres: 'is',
   },
   beat: {
-    act: '_er',
+    a: '_er',
     g: '_ing',
     prt: '_en',
   },
@@ -71,7 +71,7 @@ let conjugations = {
     prt: 'bent',
   },
   bet: {
-    act: '_ter',
+    a: '_ter',
     prt: '_',
   },
   bind: {
@@ -91,7 +91,7 @@ let conjugations = {
     pst: 'blew',
   },
   boil: {
-    act: '_er',
+    a: '_er',
   },
   brake: {
     prt: 'broken',
@@ -127,7 +127,7 @@ let conjugations = {
     pst: 'bought',
   },
   can: {
-    act: '',
+    a: '',
     fut: '_',
     g: '',
     pst: 'could',
@@ -151,7 +151,7 @@ let conjugations = {
     pst: 'came',
   },
   compete: {
-    act: 'competitor',
+    a: 'competitor',
     g: 'competing',
     pst: '_d',
   },
@@ -169,7 +169,7 @@ let conjugations = {
     pst: '_t',
   },
   develop: {
-    act: '_er',
+    a: '_er',
     g: '_ing',
     pst: '_ed',
   },
@@ -210,7 +210,7 @@ let conjugations = {
     pst: '_ped',
   },
   eat: {
-    act: '_er',
+    a: '_er',
     g: '_ing',
     prt: '_en',
     pst: 'ate',
@@ -230,7 +230,7 @@ let conjugations = {
     pst: 'fed',
   },
   feel: {
-    act: '_er',
+    a: '_er',
     pst: 'felt',
   },
   fight: {
@@ -265,7 +265,7 @@ let conjugations = {
     pst: 'forgave',
   },
   free: {
-    act: '',
+    a: '',
     g: '_ing',
   },
   freeze: {
@@ -328,7 +328,7 @@ let conjugations = {
     pres: 'implies',
   },
   is: {
-    act: '',
+    a: '',
     g: 'being',
     pst: 'was',
     pres: '_',
@@ -388,7 +388,7 @@ let conjugations = {
     pst: '_t',
   },
   meet: {
-    act: '_er',
+    a: '_er',
     g: '_ing',
     prt: 'met',
     pst: 'met',
@@ -561,7 +561,7 @@ let conjugations = {
     pst: 'stood',
   },
   steal: {
-    act: '_er',
+    a: '_er',
     pst: 'stole',
   },
   stick: {
@@ -575,7 +575,7 @@ let conjugations = {
     pst: 'stunk',
   },
   stream: {
-    act: '_er',
+    a: '_er',
   },
   strew: {
     prt: '_n',
@@ -585,7 +585,7 @@ let conjugations = {
     pst: 'struck',
   },
   suit: {
-    act: '_er',
+    a: '_er',
     g: '_ing',
     pst: '_ed',
   },
@@ -641,7 +641,7 @@ let conjugations = {
     prt: '_',
   },
   wait: {
-    act: '_er',
+    a: '_er',
     g: '_ing',
     pst: '_ed',
   },

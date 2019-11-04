@@ -22,12 +22,8 @@ const data = [
   [require('./places/places'), 'Place'],
   [require('./places/cities'), 'City'],
   //dates
-  [require('./dates/days'), 'WeekDay'],
-  [require('./dates/dates'), ['Date', 'Noun']],
-  [require('./dates/holidays'), 'Holiday'],
+  [require('./dates/weekdays'), 'WeekDay'],
   [require('./dates/months'), 'Month'],
-  [require('./dates/durations'), 'Duration'],
-  [require('./dates/times'), 'Time'],
   //people
   [require('./people/firstnames'), 'FirstName'],
   [require('./people/lastnames'), 'LastName'],

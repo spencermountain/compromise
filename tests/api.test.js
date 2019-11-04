@@ -56,3 +56,22 @@ test('constructor methods eval', function(t) {
   })
   t.end()
 })
+
+test('subclass methods eval', function(t) {
+  Object.keys(api.subclass).forEach(k => {
+    let sub = api.subclass[k]
+    Object.keys(sub).forEach(fn => {
+      let code = `(function(){
+      ${api.subclass[k][fn].example}
+    })()`
+      try {
+        eval(code)
+        t.ok(true, `eval ${k}().${fn}()`)
+      } catch (e) {
+        console.log(e)
+        t.ok(false, `eval ${k}().${fn}()`)
+      }
+    })
+  })
+  t.end()
+})

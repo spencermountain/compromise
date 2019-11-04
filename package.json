@@ -32,7 +32,6 @@
   },
   "files": [
     "builds/",
-    "docs/",
     "types/index.d.ts"
   ],
   "prettier": {

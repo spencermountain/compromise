@@ -16,7 +16,7 @@ let doc = Object.assign(
 // plugins.numbers = require('./plugins/numbers')
 // plugins.sentences = require('./plugins/sentences')
 
-let plugins = {
+let subclass = {
   contractions: require('./11-contractions'),
   nouns: require('./12-nouns'),
   verbs: require('./13-verbs'),
@@ -24,6 +24,6 @@ let plugins = {
 
 module.exports = {
   doc: doc,
-  plugins: plugins,
+  subclass: subclass,
   main: require('./_constructor'),
 }

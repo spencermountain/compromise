@@ -1,7 +1,10 @@
+api
 data
 demo
+plugins
 scripts
 src
+tests
 .eslintrc
 .babelrc
 .gitignore

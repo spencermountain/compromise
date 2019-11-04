@@ -20,33 +20,33 @@ const fixPerson = function(doc) {
   }
 
   //methods requiring a titlecase
-  let titleCase = doc.if('#TitleCase')
-  if (titleCase.found === true) {
-    titleCase.match('#Acronym #TitleCase').tagSafe('#Person', 'acronym-titlecase')
+  let title = doc.if('#TitleCase')
+  if (title.found === true) {
+    title.match('#Acronym #TitleCase').tagSafe('#Person', 'acronym-titlecase')
     //ludwig van beethovan
-    titleCase.match('#TitleCase (van|al|bin) #TitleCase').tagSafe('Person', 'titlecase-van-titlecase')
+    title.match('#TitleCase (van|al|bin) #TitleCase').tagSafe('Person', 'titlecase-van-titlecase')
     //jose de Sucre
-    titleCase.match('#TitleCase (de|du) la? #TitleCase').tagSafe('Person', 'titlecase-van-titlecase')
+    title.match('#TitleCase (de|du) la? #TitleCase').tagSafe('Person', 'titlecase-van-titlecase')
 
     //pope francis
-    titleCase
+    title
       .match('(lady|queen|sister) #TitleCase')
       .ifNo('#Date')
       .ifNo('#Honorific')
       .tag('#FemaleName', 'lady-titlecase')
-    titleCase
+    title
       .match('(king|pope|father) #TitleCase')
       .ifNo('#Date')
       .tag('#MaleName', 'poe')
 
     // jean Foobar
-    titleCase.match(maybeNoun + ' #Acronym? #TitleCase').tagSafe('Person', 'ray-smith')
+    title.match(maybeNoun + ' #Acronym? #TitleCase').tagSafe('Person', 'ray-smith')
     // rob Foobar
-    titleCase.match(maybeVerb + ' #Acronym? #TitleCase').tag('Person', 'rob-smith')
+    title.match(maybeVerb + ' #Acronym? #TitleCase').tag('Person', 'rob-smith')
     // rusty Foobar
-    titleCase.match(maybeAdj + ' #Acronym? #TitleCase').tag('Person', 'rusty-smith')
+    title.match(maybeAdj + ' #Acronym? #TitleCase').tag('Person', 'rusty-smith')
     // june Foobar
-    titleCase.match(maybeDate + ' #Acronym? #TitleCase').tagSafe('Person', 'june-smith')
+    title.match(maybeDate + ' #Acronym? #TitleCase').tagSafe('Person', 'june-smith')
   }
 
   let person = doc.if('#Person')
@@ -66,7 +66,7 @@ const fixPerson = function(doc) {
       .match('[(private|general|major|corporal|lord|lady|secretary|premier)] #Honorific? #Person')
       .tag('Honorific', 'ambg-honorifics')
     //Morgan Shlkjsfne
-    titleCase
+    title
       .match('#Person #TitleCase')
       .match('#TitleCase #Noun')
       .tagSafe('Person', 'person-titlecase')

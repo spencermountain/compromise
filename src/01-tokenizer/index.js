@@ -48,33 +48,37 @@ const fromText = function(text = '', world, pool) {
   return phrases
 }
 
+// parse the compressed format '3,2|2,4'
+const parseTags = function(text, tagList) {
+  return text.split('|').map(str => {
+    let numList = str.split(',')
+    numList = numList.map(n => parseInt(n, 10))
+    // convert a list pf numbers into an array of tag names
+    return numList.map(num => {
+      if (!tagList[num]) {
+        console.warn('Compromise import: missing tag at index ' + num)
+      }
+      return tagList[num]
+    })
+  })
+}
+
 /** create a word-pool and Phrase objects from .export() json*/
-const fromJSON = function(json) {
+const fromJSON = function(json, world) {
   if (typeof json === 'string') {
     json = JSON.parse(json)
   }
   let pool = new Pool()
   //create Phrase objects
   let phrases = json.list.map(o => {
-    // unpack the tag data
-    let tagArr = o[1].split('|').map(str => {
-      let numList = str.split(',')
-      numList = numList.map(n => parseInt(n, 10))
-      // convert a list pf numbers into an array of tag names
-      return numList.reduce((h, num) => {
-        if (!json.tags[num]) {
-          console.warn('Compromise import: missing tag at index ' + num)
-        } else {
-          h[json.tags[num]] = true
-        }
-        return h
-      }, {})
-    })
+    // tokenize words from sentence text
     let terms = splitTerms(o[0])
+    // unpack the tag data for each term
+    let tagArr = parseTags(o[1], json.tags)
     //create Term objects
     terms = terms.map((str, i) => {
       let term = new Term(str)
-      term.tags = tagArr[i]
+      tagArr[i].forEach(tag => term.tag(tag, '', world))
       pool.add(term)
       return term
     })

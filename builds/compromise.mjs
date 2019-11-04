@@ -4335,83 +4335,11 @@ const conjugate = function(str = '', world) {
 };
 var conjugate_1 = conjugate;
 
-//convert 'cute' to 'cuteness'
-const irregulars = {
-  clean: 'cleanliness',
-  naivety: 'naivety',
-  hurt: 'hurt',
-};
-
-const transforms = [
-  {
-    reg: /y$/,
-    repl: 'iness',
-  },
-  {
-    reg: /le$/,
-    repl: 'ility',
-  },
-  {
-    reg: /ial$/,
-    repl: 'y',
-  },
-  {
-    reg: /al$/,
-    repl: 'ality',
-  },
-  {
-    reg: /ting$/,
-    repl: 'ting',
-  },
-  {
-    reg: /ring$/,
-    repl: 'ring',
-  },
-  {
-    reg: /bing$/,
-    repl: 'bingness',
-  },
-  {
-    reg: /sing$/,
-    repl: 'se',
-  },
-  {
-    reg: /ing$/,
-    repl: 'ment',
-  },
-  {
-    reg: /ess$/,
-    repl: 'essness',
-  },
-  {
-    reg: /ous$/,
-    repl: 'ousness',
-  },
-];
-
-const to_noun = function(w) {
-  if (irregulars.hasOwnProperty(w)) {
-    return irregulars[w]
-  }
-  const lastChar = w.charAt(w.length - 1);
-  if (lastChar === 'w' || lastChar === 's') {
-    return null
-  }
-  for (let i = 0; i < transforms.length; i++) {
-    if (transforms[i].reg.test(w) === true) {
-      return w.replace(transforms[i].reg, transforms[i].repl)
-    }
-  }
-  return w + 'ness'
-};
-
-var toNoun = to_noun;
-
 //turn 'quick' into 'quickest'
 const do_rules = [/ght$/, /nge$/, /ough$/, /ain$/, /uel$/, /[au]ll$/, /ow$/, /oud$/, /...p$/];
 const dont_rules = [/ary$/];
 
-const irregulars$1 = {
+const irregulars = {
   nice: 'nicest',
   late: 'latest',
   hard: 'hardest',
@@ -4425,7 +4353,7 @@ const irregulars$1 = {
   large: 'largest',
 };
 
-const transforms$1 = [
+const transforms = [
   {
     reg: /y$/i,
     repl: 'iest',
@@ -4450,13 +4378,13 @@ const transforms$1 = [
 
 const to_superlative = function(str) {
   //irregulars
-  if (irregulars$1.hasOwnProperty(str)) {
-    return irregulars$1[str]
+  if (irregulars.hasOwnProperty(str)) {
+    return irregulars[str]
   }
   //known transforms
-  for (let i = 0; i < transforms$1.length; i++) {
-    if (transforms$1[i].reg.test(str)) {
-      return str.replace(transforms$1[i].reg, transforms$1[i].repl)
+  for (let i = 0; i < transforms.length; i++) {
+    if (transforms[i].reg.test(str)) {
+      return str.replace(transforms[i].reg, transforms[i].repl)
     }
   }
   //dont-rules
@@ -4483,7 +4411,7 @@ var toSuperlative = to_superlative;
 const do_rules$1 = [/ght$/, /nge$/, /ough$/, /ain$/, /uel$/, /[au]ll$/, /ow$/, /old$/, /oud$/, /e[ae]p$/];
 const dont_rules$1 = [/ary$/, /ous$/];
 
-const irregulars$2 = {
+const irregulars$1 = {
   grey: 'greyer',
   gray: 'grayer',
   green: 'greener',
@@ -4496,7 +4424,7 @@ const irregulars$2 = {
   big: 'bigger',
 };
 
-const transforms$2 = [
+const transforms$1 = [
   {
     reg: /y$/i,
     repl: 'ier',
@@ -4517,13 +4445,13 @@ const transforms$2 = [
 
 const to_comparative = function(str) {
   //known-irregulars
-  if (irregulars$2.hasOwnProperty(str)) {
-    return irregulars$2[str]
+  if (irregulars$1.hasOwnProperty(str)) {
+    return irregulars$1[str]
   }
   //known-transforms
-  for (let i = 0; i < transforms$2.length; i++) {
-    if (transforms$2[i].reg.test(str) === true) {
-      return str.replace(transforms$2[i].reg, transforms$2[i].repl)
+  for (let i = 0; i < transforms$1.length; i++) {
+    if (transforms$1[i].reg.test(str) === true) {
+      return str.replace(transforms$1[i].reg, transforms$1[i].repl)
     }
   }
   //dont-patterns
@@ -4547,157 +4475,14 @@ const to_comparative = function(str) {
 
 var toComparative = to_comparative;
 
-//turn 'quick' into 'quickly'
-const not_matches = [/airs$/, /ll$/, /ee.$/, /ile$/, /y$/];
-
-const irregulars$3 = {
-  bad: 'badly',
-  good: 'well',
-  icy: 'icily',
-  idle: 'idly',
-  male: 'manly',
-  public: 'publicly',
-  simple: 'simply',
-  single: 'singly',
-  special: 'especially',
-  straight: 'straight',
-  vague: 'vaguely',
-  whole: 'wholly',
-};
-const dontChange = ['best', 'early', 'hard', 'fast', 'wrong', 'well', 'late', 'latter', 'little', 'long', 'low'].reduce(
-  (h, c) => {
-    h[c] = true;
-    return h
-  },
-  {}
-);
-
-const transforms$3 = [
-  {
-    reg: /al$/i,
-    repl: 'ally',
-  },
-  {
-    reg: /ly$/i,
-    repl: 'ly',
-  },
-  {
-    reg: /(.{3})y$/i,
-    repl: '$1ily',
-  },
-  {
-    reg: /que$/i,
-    repl: 'quely',
-  },
-  {
-    reg: /ue$/i,
-    repl: 'uly',
-  },
-  {
-    reg: /ic$/i,
-    repl: 'ically',
-  },
-  {
-    reg: /ble$/i,
-    repl: 'bly',
-  },
-  {
-    reg: /l$/i,
-    repl: 'ly',
-  },
-];
-
-const adj_to_adv = function(str) {
-  if (irregulars$3.hasOwnProperty(str) === true) {
-    return irregulars$3[str]
-  }
-  if (dontChange.hasOwnProperty(str) === true) {
-    return str
-  }
-  for (let i = 0; i < not_matches.length; i++) {
-    if (not_matches[i].test(str) === true) {
-      return null
-    }
-  }
-  for (let i = 0; i < transforms$3.length; i++) {
-    if (transforms$3[i].reg.test(str) === true) {
-      return str.replace(transforms$3[i].reg, transforms$3[i].repl)
-    }
-  }
-  return str + 'ly'
-};
-
-var toAdverb = adj_to_adv;
-
-//turn an adjective like 'soft' into a verb like 'soften'
-//(don't do words like 'green' -> 'greenen')
-
-//these are suffices that are usually too weird
-let dontDo = ['c', 'e', 'g', 'l', 'n', 'r', 'w', 'y'].reduce((h, c) => {
-  h[c] = true;
-  return h
-}, {});
-
-const dontDoTwo = { ed: true, nt: true };
-
-const blacklist = {
-  random: true,
-  wild: true,
-};
-
-const irregulars$4 = {
-  bored: 'bore',
-  red: 'redden',
-  sad: 'sadden',
-  fat: 'fatten',
-  small: 'shrink',
-  full: 'fill',
-  tired: 'tire',
-};
-
-const toVerb = str => {
-  if (irregulars$4.hasOwnProperty(str) === true) {
-    return irregulars$4[str]
-  }
-  //don't bother with these:
-  if (str.length <= 3) {
-    return null
-  }
-  if (blacklist.hasOwnProperty(str) === true) {
-    return null
-  }
-  //suffixes to avoid
-  if (dontDo.hasOwnProperty(str[str.length - 1])) {
-    return null
-  }
-  let suffix = str.substr(str.length - 2);
-  if (dontDoTwo.hasOwnProperty(suffix) === true) {
-    return null
-  }
-
-  if (/e$/.test(str) === true) {
-    return str + 'n'
-  }
-  return str + 'en'
-};
-var toVerb_1 = toVerb;
-
 const fns$1 = {
-  toNoun: toNoun,
   toSuperlative: toSuperlative,
   toComparative: toComparative,
-  toAdverb: toAdverb,
-  toVerb: toVerb_1,
 };
 
 /** conjugate an adjective into other forms */
 const conjugate$1 = function(w) {
   let res = {};
-  // 'greatness'
-  let noun = fns$1.toNoun(w);
-  if (noun) {
-    res.Noun = noun;
-  }
   // 'greatest'
   let sup = fns$1.toSuperlative(w);
   if (sup) {
@@ -4708,17 +4493,6 @@ const conjugate$1 = function(w) {
   if (comp) {
     res.Comparative = comp;
   }
-  // 'greatly'
-  let adv = fns$1.toAdverb(w);
-  if (adv) {
-    res.Adverb = adv;
-  }
-  // 'greaten' :/
-  let vb = fns$1.toVerb(w);
-  if (vb) {
-    res.Verb = vb;
-  }
-  // res.Adjective = w
   return res
 };
 var adjectives = conjugate$1;
@@ -5231,13 +5005,13 @@ const toInfinitive = function(str, world, tense) {
 var toInfinitive_1 = toInfinitive;
 
 //these let users change inflection / verb conjugation
-const irregulars$5 = {
+const irregulars$2 = {
   nouns: plurals,
   verbs: conjugations_1,
 };
 
 //these behaviours are configurable & shared across some plugins
-const transforms$4 = {
+const transforms$2 = {
   conjugate: conjugate_1,
   adjectives: adjectives,
   toPlural: toPlural,
@@ -5263,7 +5037,7 @@ class World {
     });
     Object.defineProperty(this, 'irregulars', {
       enumerable: false,
-      value: irregulars$5,
+      value: irregulars$2,
       writable: true,
     });
     Object.defineProperty(this, 'tags', {
@@ -5273,7 +5047,7 @@ class World {
     });
     Object.defineProperty(this, 'transforms', {
       enumerable: false,
-      value: transforms$4,
+      value: transforms$2,
     });
 
     Object.defineProperty(this, 'taggers', {
@@ -8197,7 +7971,7 @@ var _02Fallbacks = fallbacks;
 
 const hasNegative = /n't$/;
 
-const irregulars$6 = {
+const irregulars$3 = {
   "won't": ['will', 'not'],
   wont: ['will', 'not'],
   "can't": ['can', 'not'],
@@ -8211,8 +7985,8 @@ const irregulars$6 = {
 
 const checkNegative = function(term) {
   //check named-ones
-  if (irregulars$6.hasOwnProperty(term.clean) === true) {
-    return irregulars$6[term.clean]
+  if (irregulars$3.hasOwnProperty(term.clean) === true) {
+    return irregulars$3[term.clean]
   }
   //try it normally
   if (hasNegative.test(term.clean) === true) {
@@ -8246,7 +8020,7 @@ const checkApostrophe = function(term) {
 };
 var _02Simple = checkApostrophe;
 
-const irregulars$7 = {
+const irregulars$4 = {
   wanna: ['want', 'to'],
   gonna: ['going', 'to'],
   im: ['i', 'am'],
@@ -8299,8 +8073,8 @@ const checkIrregulars = function(term, phrase) {
     return doAint(term, phrase)
   }
   //check white-list
-  if (irregulars$7.hasOwnProperty(term.clean)) {
-    return irregulars$7[term.clean]
+  if (irregulars$4.hasOwnProperty(term.clean)) {
+    return irregulars$4[term.clean]
   }
   return null
 };
@@ -8308,7 +8082,7 @@ var _03Irregulars = checkIrregulars;
 
 const hasApostropheS = /([a-z\u00C0-\u00FF]+)'s$/i;
 
-const blacklist$1 = {
+const blacklist = {
   that: true,
   there: true,
 };
@@ -8321,7 +8095,7 @@ const isPossessive = (term, pool) => {
   if (term.tags.Pronoun || term.tags.QuestionWord) {
     return false
   }
-  if (blacklist$1.hasOwnProperty(term.clean)) {
+  if (blacklist.hasOwnProperty(term.clean)) {
     return false
   }
   //if end of sentence, it is possessive - "was spencer's"
@@ -9692,80 +9466,6 @@ const addMethod = function(Doc) {
 var Acronyms = addMethod;
 
 const addMethod$1 = function(Doc) {
-  /** simple transformations of adjectives*/
-  class Adjectives extends Doc {
-    conjugate(n) {
-      let transform = this.world.transforms.adjectives;
-      let arr = [];
-      this.forEach(doc => {
-        let obj = transform(doc.text('reduced'));
-        arr.push(obj);
-      });
-      //support nth result
-      if (typeof n === 'number') {
-        return arr[n]
-      }
-      return arr
-    }
-
-    toSuperlative() {
-      let transform = this.world.transforms.adjectives;
-      this.forEach(doc => {
-        let obj = transform(doc.text('reduced'));
-        doc.replaceWith(obj.Superlative);
-      });
-      return this
-    }
-    toComparative() {
-      let transform = this.world.transforms.adjectives;
-      this.forEach(doc => {
-        let obj = transform(doc.text('reduced'));
-        doc.replaceWith(obj.Comparative);
-      });
-      return this
-    }
-    toAdverb() {
-      let transform = this.world.transforms.adjectives;
-      this.forEach(doc => {
-        let obj = transform(doc.text('reduced'));
-        doc.replaceWith(obj.Adverb);
-      });
-      return this
-    }
-    toVerb() {
-      let transform = this.world.transforms.adjectives;
-      this.forEach(doc => {
-        let obj = transform(doc.text('reduced'));
-        doc.replaceWith(obj.Verb);
-      });
-      return this
-    }
-    toNoun() {
-      let transform = this.world.transforms.adjectives;
-      this.forEach(doc => {
-        let obj = transform(doc.text('reduced'));
-        doc.replaceWith(obj.Noun);
-      });
-      return this
-    }
-  }
-
-  // simple lookup
-  Doc.prototype.adjectives = function(n) {
-    let list = this.match('#Adjective').list;
-    //support nth result
-    if (typeof n === 'number') {
-      list = list[n];
-      list = [list].filter(a => a);
-    }
-    return new Adjectives(list, this, this.world)
-  };
-
-  return Doc
-};
-var Adjectives = addMethod$1;
-
-const addMethod$2 = function(Doc) {
   /** split into approximate sub-sentence phrases */
   Doc.prototype.clauses = function(n) {
     // an awkward way to disambiguate a comma use
@@ -9815,9 +9515,9 @@ const addMethod$2 = function(Doc) {
   };
   return Doc
 };
-var Clauses = addMethod$2;
+var Clauses = addMethod$1;
 
-const addMethod$3 = function(Doc) {
+const addMethod$2 = function(Doc) {
   /**  */
   class Contractions extends Doc {
     constructor(list, from, world) {
@@ -9876,12 +9576,12 @@ const addMethod$3 = function(Doc) {
   Doc.prototype.contracted = Doc.prototype.isContracted;
   return Doc
 };
-var Contractions = addMethod$3;
+var Contractions = addMethod$2;
 
 const open = /\(/;
 const close = /\)/;
 
-const addMethod$4 = function(Doc) {
+const addMethod$3 = function(Doc) {
   /** anything between (these things) */
   class Parentheses extends Doc {
     /** remove the parentheses characters */
@@ -9930,9 +9630,9 @@ const addMethod$4 = function(Doc) {
 
   return Doc
 };
-var Parentheses = addMethod$4;
+var Parentheses = addMethod$3;
 
-const addMethod$5 = function(Doc) {
+const addMethod$4 = function(Doc) {
   /**  */
   class Possessives extends Doc {
     constructor(list, from, world) {
@@ -9973,9 +9673,9 @@ const addMethod$5 = function(Doc) {
   };
   return Doc
 };
-var Possessives = addMethod$5;
+var Possessives = addMethod$4;
 
-const addMethod$6 = function(Doc) {
+const addMethod$5 = function(Doc) {
   //pull it apart..
   const parse = function(doc) {
     let things = doc.splitAfter('@hasComma').not('(and|or) not?');
@@ -10047,7 +9747,7 @@ const addMethod$6 = function(Doc) {
   };
   return Doc
 };
-var Lists = addMethod$6;
+var Lists = addMethod$5;
 
 const pairs = {
   '\u0022': '\u0022', // 'StraightDoubleQuotes'
@@ -10074,7 +9774,7 @@ const pairs = {
 
 const hasOpen = RegExp('(' + Object.keys(pairs).join('|') + ')');
 
-const addMethod$7 = function(Doc) {
+const addMethod$6 = function(Doc) {
   /** "these things" */
   class Quotations extends Doc {
     /** remove the quote characters */
@@ -10124,7 +9824,7 @@ const addMethod$7 = function(Doc) {
 
   return Doc
 };
-var Quotations = addMethod$7;
+var Quotations = addMethod$6;
 
 const noPlural =
   '(#Pronoun|#Place|#Value|#Person|#Uncountable|#Month|#WeekDay|#Holiday|#Possessive)';
@@ -10144,7 +9844,7 @@ const hasPlural = function(doc) {
 var hasPlural_1 = hasPlural;
 
 //chooses an indefinite aricle 'a/an' for a word
-const irregulars$8 = {
+const irregulars$5 = {
   hour: 'an',
   heir: 'an',
   heirloom: 'an',
@@ -10186,8 +9886,8 @@ const makeArticle = function(doc) {
   }
   let str = doc.text('normal').trim();
   //explicit irregular forms
-  if (irregulars$8.hasOwnProperty(str)) {
-    return irregulars$8[str]
+  if (irregulars$5.hasOwnProperty(str)) {
+    return irregulars$5[str]
   }
   //spelled-out acronyms
   let firstLetter = str.substr(0, 1);
@@ -10322,7 +10022,7 @@ const parse$1 = function(doc) {
 };
 var parse_1 = parse$1;
 
-const addMethod$8 = function(Doc) {
+const addMethod$7 = function(Doc) {
   /**  */
   class Nouns extends Doc {
     /** overload the original json with noun information */
@@ -10405,7 +10105,7 @@ const addMethod$8 = function(Doc) {
   };
   return Doc
 };
-var Nouns = addMethod$8;
+var Nouns = addMethod$7;
 
 // turn 'would not really walk up' into parts
 const parseVerb = function(vb) {
@@ -10753,7 +10453,7 @@ const methods$8 = [
   methods$7,
 ];
 
-const addMethod$9 = function(Doc) {
+const addMethod$8 = function(Doc) {
   /**  */
   class Verbs extends Doc {
     constructor(list, from, world) {
@@ -10824,11 +10524,10 @@ const addMethod$9 = function(Doc) {
   };
   return Doc
 };
-var Verbs = addMethod$9;
+var Verbs = addMethod$8;
 
 const selections$1 = [
   Acronyms,
-  Adjectives,
   Clauses,
   Contractions,
   Parentheses,
@@ -10937,6 +10636,8 @@ const aliases$1 = {
 };
 Object.keys(aliases$1).forEach(k => (Doc.prototype[k] = Doc.prototype[aliases$1[k]]));
 var Doc_1 = Doc;
+
+process.on('warning', e => console.warn(e.stack));
 
 //blast-out our word-lists, just once
 let world = new World_1();

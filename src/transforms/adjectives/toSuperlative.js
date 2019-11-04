@@ -1,5 +1,4 @@
 //turn 'quick' into 'quickest'
-'use strict'
 const do_rules = [/ght$/, /nge$/, /ough$/, /ain$/, /uel$/, /[au]ll$/, /ow$/, /oud$/, /...p$/]
 const dont_rules = [/ary$/]
 

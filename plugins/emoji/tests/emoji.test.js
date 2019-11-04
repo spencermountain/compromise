@@ -1,5 +1,5 @@
 const test = require('tape')
-const nlp = require('../../../tests/_lib')
+const nlp = require('./_lib')
 
 test('keyword emojis', function(t) {
   ;[

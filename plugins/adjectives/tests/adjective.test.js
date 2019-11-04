@@ -1,8 +1,9 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
+// const doc = nlp('quick').adjectives()
 test('to_adverb:', function(t) {
-  let list = [
+  const list = [
     ['quick', 'quickly'],
     // ['idle', 'idly'],
     ['dirty', ''],

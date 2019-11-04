@@ -3,6 +3,8 @@ const version = require('./_version')
 const World = require('./World/World')
 const Doc = require('./Doc/Doc')
 
+process.on('warning', e => console.warn(e.stack))
+
 //blast-out our word-lists, just once
 let world = new World()
 

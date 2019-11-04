@@ -1,0 +1,762 @@
+TAP version 13
+# to_adverb:
+ok 1 quick
+not ok 2 dirty
+  ---
+    operator: equal
+    expected: ''
+    actual:   'quickly'
+    at: <anonymous> (/Users/spencer/mountain/compromise/plugins/adjectives/tests/adjective.test.js:21:7)
+    stack: |-
+      Error: dirty
+          at Test.assert [as _assert] (/Users/spencer/mountain/compromise/plugins/adjectives/node_modules/tape/lib/test.js:225:54)
+          at Test.bound [as _assert] (/Users/spencer/mountain/compromise/plugins/adjectives/node_modules/tape/lib/test.js:77:32)
+          at Test.equal (/Users/spencer/mountain/compromise/plugins/adjectives/node_modules/tape/lib/test.js:385:10)
+          at Test.bound [as equal] (/Users/spencer/mountain/compromise/plugins/adjectives/node_modules/tape/lib/test.js:77:32)
+          at /Users/spencer/mountain/compromise/plugins/adjectives/tests/adjective.test.js:21:7
+          at Array.forEach (<anonymous>)
+          at Test.<anonymous> (/Users/spencer/mountain/compromise/plugins/adjectives/tests/adjective.test.js:17:8)
+          at Test.bound [as _cb] (/Users/spencer/mountain/compromise/plugins/adjectives/node_modules/tape/lib/test.js:77:32)
+          at Test.run (/Users/spencer/mountain/compromise/plugins/adjectives/node_modules/tape/lib/test.js:93:10)
+          at Test.bound [as run] (/Users/spencer/mountain/compromise/plugins/adjectives/node_modules/tape/lib/test.js:77:32)
+  ...
+not ok 3 full
+  ---
+    operator: equal
+    expected: ''
+    actual:   'quickly'
+    at: <anonymous> (/Users/spencer/mountain/compromise/plugins/adjectives/tests/adjective.test.js:21:7)
+    stack: |-
+      Error: full
+          at Test.assert [as _assert] (/Users/spencer/mountain/compromise/plugins/adjectives/node_modules/tape/lib/test.js:225:54)
+          at Test.bound [as _assert] (/Users/spencer/mountain/compromise/plugins/adjectives/node_modules/tape/lib/test.js:77:32)
+          at Test.equal (/Users/spencer/mountain/compromise/plugins/adjectives/node_modules/tape/lib/test.js:385:10)
+          at Test.bound [as equal] (/Users/spencer/mountain/compromise/plugins/adjectives/node_modules/tape/lib/test.js:77:32)
+          at /Users/spencer/mountain/compromise/plugins/adjectives/tests/adjective.test.js:21:7
+          at Array.forEach (<anonymous>)
+          at Test.<anonymous> (/Users/spencer/mountain/compromise/plugins/adjectives/tests/adjective.test.js:17:8)
+          at Test.bound [as _cb] (/Users/spencer/mountain/compromise/plugins/adjectives/node_modules/tape/lib/test.js:77:32)
+          at Test.run (/Users/spencer/mountain/compromise/plugins/adjectives/node_modules/tape/lib/test.js:93:10)
+          at Test.bound [as run] (/Users/spencer/mountain/compromise/plugins/adjectives/node_modules/tape/lib/test.js:77:32)
+  ...
+not ok 4 cute
+  ---
+    operator: equal
+    expected: 'cutely'
+    actual:   'quickly'
+    at: <anonymous> (/Users/spencer/mountain/compromise/plugins/adjectives/tests/adjective.test.js:21:7)
+    stack: |-
+      Error: cute
+          at Test.assert [as _assert] (/Users/spencer/mountain/compromise/plugins/adjectives/node_modules/tape/lib/test.js:225:54)
+          at Test.bound [as _assert] (/Users/spencer/mountain/compromise/plugins/adjectives/node_modules/tape/lib/test.js:77:32)
+          at Test.equal (/Users/spencer/mountain/compromise/plugins/adjectives/node_modules/tape/lib/test.js:385:10)
+          at Test.bound [as equal] (/Users/spencer/mountain/compromise/plugins/adjectives/node_modules/tape/lib/test.js:77:32)
+          at /Users/spencer/mountain/compromise/plugins/adjectives/tests/adjective.test.js:21:7
+          at Array.forEach (<anonymous>)
+          at Test.<anonymous> (/Users/spencer/mountain/compromise/plugins/adjectives/tests/adjective.test.js:17:8)
+          at Test.bound [as _cb] (/Users/spencer/mountain/compromise/plugins/adjectives/node_modules/tape/lib/test.js:77:32)
+          at Test.run (/Users/spencer/mountain/compromise/plugins/adjectives/node_modules/tape/lib/test.js:93:10)
+          at Test.bound [as run] (/Users/spencer/mountain/compromise/plugins/adjectives/node_modules/tape/lib/test.js:77:32)
+  ...
+#  to_superlative
+ok 5 quick
+ok 6 friendly
+ok 7 full
+ok 8 cute
+ok 9 large
+#  to_comparative
+ok 10 quick
+ok 11 friendly
+ok 12 full
+ok 13 cute
+#  to_noun
+ok 14 quick
+ok 15 fancy
+ok 16 clean
+#  conjugate
+ok 17 comparative
+ok 18 superlative
+ok 19 adverb
+ok 20 noun
+TAP version 13
+# misc dates
+ok 1 one-date
+ok 2 date-normal
+# date-tagger
+ok 3 june Month
+ok 4 2009 Year
+ok 5 june Month
+ok 6 5th Date
+ok 7 2009 Year
+ok 8 q2 Date
+ok 9 2009 Year
+ok 10 spring Date
+ok 11 1980 Year
+ok 12 summer Date
+ok 13 of Date
+ok 14 1999 Year
+ok 15 today Date
+ok 16 minute Duration
+ok 17 valentines Holiday
+ok 18 day Holiday
+ok 19 ash Holiday
+ok 20 wednesday Holiday
+TAP version 13
+# keyword emojis
+ok 1 have: ':heart:' want: ':heart:'
+ok 2 have: ':cool: :wine_glass:' want: ':cool: :wine_glass:'
+ok 3 have: ':cookie:' want: ':cookie:'
+# unicode emojis
+ok 4 have: '💯 ❤️' want: '💯 ❤️'
+ok 5 have: '💚 🎇' want: '💚 🎇'
+ok 6 have: '' want: ''
+ok 7 have: '🇧🇳' want: '🇧🇳'
+ok 8 have: '🇧🇳🇧🇳🇧🇳' want: '🇧🇳🇧🇳🇧🇳'
+# emoticon emojis
+ok 9 have: ':)' want: ':)'
+ok 10 have: ';)' want: ';)'
+ok 11 have: ';( :(' want: ';( :('
+ok 12 have: '' want: ''
+ok 13 have: '</3 </3 </3' want: '</3 </3 </3'
+# result methods
+ok 14 nlp.has positive
+ok 15 nlp.has neg
+ok 16 nlp.filter string
+ok 17 nlp.filter method
+# misc methods
+ok 18 nlp.has positive
+ok 19 nlp.has neg
+ok 20 nlp.filter string
+ok 21 nlp.filter method
+TAP version 13
+# misc entities
+ok 1 one person
+ok 2 no places
+ok 3 no organizations
+ok 4 one entity
+# people:
+ok 5 people-easy
+ok 6 people-context
+ok 7 the-bill
+ok 8 the-rod-1
+ok 9 the-rod-2
+ok 10 nickname-1
+ok 11 nickname-2a
+ok 12 nickname-2b
+# celebrity names:
+ok 13 'john stewart' is a person - - have: 'john stewart'
+ok 14 'martha stewart' is a person - - have: 'martha stewart'
+ok 15 'George Bush' is a person - - have: 'George Bush'
+ok 16 'Hillary Clinton' is a person - - have: 'Hillary Clinton'
+ok 17 'Hillary Rodham Clinton' is a person - - have: 'Hillary Rodham Clinton'
+ok 18 'Margaret Thatcher' is a person - - have: 'Margaret Thatcher'
+ok 19 'Messiaen' is a person - - have: 'Messiaen'
+ok 20 'Mozart' is a person - - have: 'Mozart'
+ok 21 'Nixon' is a person - - have: 'Nixon'
+ok 22 'Pope John Paul II' is a person - - have: 'Pope John Paul II'
+ok 23 'Richard Nixon' is a person - - have: 'Richard Nixon'
+ok 24 'Ronald Reagan' is a person - - have: 'Ronald Reagan'
+ok 25 'Saddam Hussain' is a person - - have: 'Saddam Hussain'
+ok 26 'Saint - Saens' is a person - - have: 'Saint - Saens'
+ok 27 'Van Gogh' is a person - - have: 'Van Gogh'
+ok 28 'Virgin Mary' is a person - - have: 'Virgin Mary'
+ok 29 'Vivaldi' is a person - - have: 'Vivaldi'
+ok 30 'van Gogh' is a person - - have: 'van Gogh'
+ok 31 'Carl Marx' is a person - - have: 'Carl Marx'
+ok 32 'Lenin' is a person - - have: 'Lenin'
+ok 33 'Stalin' is a person - - have: 'Stalin'
+ok 34 'George W.Bush' is a person - - have: 'George W.Bush'
+ok 35 'Mitt Romney' is a person - - have: 'Mitt Romney'
+ok 36 'Barack Obama' is a person - - have: 'Barack Obama'
+ok 37 'Obama' is a person - - have: 'Obama'
+ok 38 'Lady Gaga' is a person - - have: 'Lady Gaga'
+ok 39 'Kanye West' is a person - - have: 'Kanye West'
+ok 40 'Abu Hamza' is a person - - have: 'Abu Hamza'
+ok 41 'Abu Hamza Al - Masri' is a person - - have: 'Abu Hamza Al - Masri'
+ok 42 'Osama bin Laden' is a person - - have: 'Osama bin Laden'
+ok 43 'Osama Bin Laden' is a person - - have: 'Osama Bin Laden'
+ok 44 'Mubarek' is a person - - have: 'Mubarek'
+ok 45 'Muhammad Ali' is a person - - have: 'Muhammad Ali'
+ok 46 'Jennifer Aniston' is a person - - have: 'Jennifer Aniston'
+ok 47 'Tyra Banks' is a person - - have: 'Tyra Banks'
+ok 48 'Mario Batali' is a person - - have: 'Mario Batali'
+ok 49 'David Beckham' is a person - - have: 'David Beckham'
+ok 50 'Halle Berry' is a person - - have: 'Halle Berry'
+ok 51 'Tom Brady' is a person - - have: 'Tom Brady'
+ok 52 'Matthew Broderick' is a person - - have: 'Matthew Broderick'
+ok 53 'Nathan Lane' is a person - - have: 'Nathan Lane'
+ok 54 'Mel Brooks' is a person - - have: 'Mel Brooks'
+ok 55 'Dan Brown' is a person - - have: 'Dan Brown'
+ok 56 'Jerry Bruckheimer' is a person - - have: 'Jerry Bruckheimer'
+ok 57 'Kobe Bryant' is a person - - have: 'Kobe Bryant'
+ok 58 'Gisele Bundchen' is a person - - have: 'Gisele Bundchen'
+ok 59 'Jim Carrey' is a person - - have: 'Jim Carrey'
+ok 60 'Dave Chappelle' is a person - - have: 'Dave Chappelle'
+ok 61 'Sean Combs' is a person - - have: 'Sean Combs'
+ok 62 'Katie Couric' is a person - - have: 'Katie Couric'
+ok 63 'Simon Cowell' is a person - - have: 'Simon Cowell'
+ok 64 'Tom Cruise' is a person - - have: 'Tom Cruise'
+ok 65 'Johnny Depp' is a person - - have: 'Johnny Depp'
+ok 66 'Cameron Diaz' is a person - - have: 'Cameron Diaz'
+ok 67 'Leonardo DiCaprio' is a person - - have: 'Leonardo DiCaprio'
+ok 68 'Celine Dion' is a person - - have: 'Celine Dion'
+ok 69 'Jodie Foster' is a person - - have: 'Jodie Foster'
+ok 70 'John Grisham' is a person - - have: 'John Grisham'
+ok 71 'Tom Hanks' is a person - - have: 'Tom Hanks'
+ok 72 'Paris Hilton' is a person - - have: 'Paris Hilton'
+ok 73 'Eric Idle' is a person - - have: 'Eric Idle'
+ok 74 'Mike Nichols' is a person - - have: 'Mike Nichols'
+ok 75 'Peter Jackson' is a person - - have: 'Peter Jackson'
+ok 76 'LeBron James' is a person - - have: 'LeBron James'
+ok 77 'Derek Jeter' is a person - - have: 'Derek Jeter'
+ok 78 'Scarlett Johansson' is a person - - have: 'Scarlett Johansson'
+ok 79 'Elton John' is a person - - have: 'Elton John'
+ok 80 'Angelina Jolie' is a person - - have: 'Angelina Jolie'
+ok 81 'Michael Jordan' is a person - - have: 'Michael Jordan'
+ok 82 'Nicole Kidman' is a person - - have: 'Nicole Kidman'
+ok 83 'Heidi Klum' is a person - - have: 'Heidi Klum'
+ok 84 'Emeril Lagasse' is a person - - have: 'Emeril Lagasse'
+ok 85 'Jay Leno' is a person - - have: 'Jay Leno'
+ok 86 'David Letterman' is a person - - have: 'David Letterman'
+ok 87 'Adriana Lima' is a person - - have: 'Adriana Lima'
+ok 88 'Rush Limbaugh' is a person - - have: 'Rush Limbaugh'
+ok 89 'George Lopez' is a person - - have: 'George Lopez'
+ok 90 'Jennifer Lopez' is a person - - have: 'Jennifer Lopez'
+ok 91 'George Lucas' is a person - - have: 'George Lucas'
+ok 92 'Paul McCartney' is a person - - have: 'Paul McCartney'
+ok 93 'Dr. Phil McGraw' is a person - - have: 'Dr. Phil McGraw'
+ok 94 'Phil Mickelson' is a person - - have: 'Phil Mickelson'
+ok 95 'Kate Moss' is a person - - have: 'Kate Moss'
+ok 96 'Neil Diamond' is a person - - have: 'Neil Diamond'
+ok 97 'Bill O'Reilly' is a person - - have: 'Bill O'Reilly'
+ok 98 'Shaquille O'Neal' is a person - - have: 'Shaquille O'Neal'
+ok 99 'Carson Palmer' is a person - - have: 'Carson Palmer'
+ok 100 'James Patterson' is a person - - have: 'James Patterson'
+ok 101 'Ty Pennington' is a person - - have: 'Ty Pennington'
+ok 102 'Regis Philbin' is a person - - have: 'Regis Philbin'
+ok 103 'Brad Pitt' is a person - - have: 'Brad Pitt'
+ok 104 'Wolfgang Puck' is a person - - have: 'Wolfgang Puck'
+ok 105 'Rachael Ray' is a person - - have: 'Rachael Ray'
+ok 106 'Nicole Richie' is a person - - have: 'Nicole Richie'
+ok 107 'Alex Rodriguez' is a person - - have: 'Alex Rodriguez'
+ok 108 'Ray Romano' is a person - - have: 'Ray Romano'
+ok 109 'Ronaldo' is a person - - have: 'Ronaldo'
+ok 110 'Valentino Rossi' is a person - - have: 'Valentino Rossi'
+ok 111 'J.K. Rowling' is a person - - have: 'J.K. Rowling'
+ok 112 'Adam Sandler' is a person - - have: 'Adam Sandler'
+ok 113 'Diane Sawyer' is a person - - have: 'Diane Sawyer'
+ok 114 'Michael Schumacher' is a person - - have: 'Michael Schumacher'
+ok 115 'Ryan Seacrest' is a person - - have: 'Ryan Seacrest'
+ok 116 'Jerry Seinfeld' is a person - - have: 'Jerry Seinfeld'
+ok 117 'Maria Sharapova' is a person - - have: 'Maria Sharapova'
+ok 118 'Jessica Simpson' is a person - - have: 'Jessica Simpson'
+ok 119 'Will Smith' is a person - - have: 'Will Smith'
+ok 120 'Annika Sorenstam' is a person - - have: 'Annika Sorenstam'
+ok 121 'Steven Spielberg' is a person - - have: 'Steven Spielberg'
+ok 122 'Bruce Springsteen' is a person - - have: 'Bruce Springsteen'
+ok 123 'Howard Stern' is a person - - have: 'Howard Stern'
+ok 124 'Rod Stewart' is a person - - have: 'Rod Stewart'
+ok 125 'Kiefer Sutherland' is a person - - have: 'Kiefer Sutherland'
+ok 126 'Donald Trump' is a person - - have: 'Donald Trump'
+ok 127 'Rick Warren' is a person - - have: 'Rick Warren'
+ok 128 'Denzel Washington' is a person - - have: 'Denzel Washington'
+ok 129 'Sardinia F Jones' is a person - - have: 'Sardinia F Jones'
+ok 130 'Andrew Lloyd Webber' is a person - - have: 'Andrew Lloyd Webber'
+ok 131 'Michelle Wie' is a person - - have: 'Michelle Wie'
+ok 132 'Serena Williams' is a person - - have: 'Serena Williams'
+ok 133 'Venus Williams' is a person - - have: 'Venus Williams'
+ok 134 'Oprah Winfrey' is a person - - have: 'Oprah Winfrey'
+ok 135 'Reese Witherspoon' is a person - - have: 'Reese Witherspoon'
+ok 136 'Dick Wolf' is a person - - have: 'Dick Wolf'
+ok 137 'Tiger Woods' is a person - - have: 'Tiger Woods'
+ok 138 'Renee Zellweger' is a person - - have: 'Renee Zellweger'
+ok 139 'Whitney Houston' is a person - - have: 'Whitney Houston'
+ok 140 'Adolf Hitler' is a person - - have: 'Adolf Hitler'
+ok 141 'Shania Twain' is a person - - have: 'Shania Twain'
+ok 142 'Hulk Hogan' is a person - - have: 'Hulk Hogan'
+ok 143 'Michelle Obama' is a person - - have: 'Michelle Obama'
+ok 144 'Ashton Kutcher' is a person - - have: 'Ashton Kutcher'
+ok 145 'Cardinal Wolsey' is a person - - have: 'Cardinal Wolsey'
+ok 146 'Slobodan Milosevic' is a person - - have: 'Slobodan Milosevic'
+# known-regions:
+ok 147 i want to go to Ohio to see George Harrison
+ok 148 we are visiting Gloucestershire, before we leave
+ok 149 manitoba is nice this time of year
+# unknown-places:
+ok 150 live in the Rekcjd Province
+ok 151 live in the Lekfjs District
+ok 152 visiting Tojbs Kjeh Region
+ok 153 visiting the State of Lkjfhe
+ok 154 see you in West Nunavut
+ok 155 see you in western Hunan
+ok 156 see you in Northern Hunan province
+# mixed continents-places:
+ok 157 6-places
+# topics concat:
+ok 158 found right things
+# topics:
+ok 159 Tony Hawk lives in Toronto. Tony Hawk is cool.
+ok 160 I live Toronto. I think Toronto is cool.
+ok 161 The EACD united in 1972. EACD must follow regulations.
+ok 162 Toronto's citizens love toronto!
+# topics-false-positives:
+ok 163 topics #0 -> 
+ok 164 topics #1 -> 
+ok 165 topics #2 -> 
+ok 166 topics #3 -> 
+ok 167 topics #4 -> 
+ok 168 topics #5 -> 
+ok 169 topics #6 -> 
+ok 170 topics #7 -> 
+TAP version 13
+# edgegram-sizes:
+ok 1 no-overgrams
+ok 2 one-4-startgram
+ok 3 found-3-startgrams
+ok 4 found-2-startgrams
+ok 5 one-4-endgram
+ok 6 found-3-endgram
+ok 7 zerp-5-ngram
+ok 8 one-4-ngram
+ok 9 four-3-ngrams
+ok 10 six-2-ngrams
+# start-sizes:
+ok 11 sorted-by-freq
+ok 12 normalized-counted
+ok 13 normalized-counted
+# misc ngrams
+ok 14 found three ngrams
+ok 15 found three unigrams
+ok 16 found 2 bigrams
+ok 17 found 1 trigrams
+ok 18 found 2 endgrams of size-2
+ok 19 found good person
+ok 20 found 2 good person results
+# ngram-test:
+ok 21 sorted-by-freq
+ok 22 normalized-counted
+ok 23 normalized-counted
+ok 24 ngram-length
+# sort-bigrams:
+ok 25 #1-by-freq
+ok 26 #2-by-freq
+ok 27 #3-by-freq
+ok 28 ngram-length
+# contractions-support:
+ok 29 dont include empty contraction
+# ngrams-options:
+ok 30 ngram-max-size-5
+ok 31 ngram-max-size-2
+ok 32 ngram-max-size-9
+ok 33 ngram-size-2
+ok 34 ngram-size-4
+TAP version 13
+# a very large cardinal
+ok 1 trillion
+ok 2 quadrillion
+ok 3 quintilion
+ok 4 quintilion 2
+ok 5 sextillion
+# number ordinal
+ok 6 should be equal
+ok 7 should be equal
+ok 8 should be equal
+ok 9 should be equal
+# text ordinal
+ok 10 should be equal
+ok 11 should be equal
+ok 12 should be equal
+ok 13 should be equal
+# from number
+ok 14 should be equal
+ok 15 should be equal
+ok 16 should be equal
+ok 17 should be equal
+ok 18 should be equal
+ok 19 should be equal
+# misc values
+ok 20 found no values
+ok 21 found three values
+# misc:
+ok 22 2 million five hundred thousand and fifty nine is bigger than 2882
+ok 23 2 million five hundred thousand and fifty nine is bigger than 2882
+ok 24 doug is 5 years old
+# money-basic:
+ok 25 match-$70.23
+ok 26 match-$703
+not ok 27 match-five-euros
+  ---
+    operator: equal
+    expected: 'five euros'
+    actual:   'five'
+    at: Test.<anonymous> (/Users/spencer/mountain/compromise/plugins/numbers/tests/money.test.js:15:5)
+    stack: |-
+      Error: match-five-euros
+          at Test.assert [as _assert] (/Users/spencer/mountain/compromise/plugins/numbers/node_modules/tape/lib/test.js:225:54)
+          at Test.bound [as _assert] (/Users/spencer/mountain/compromise/plugins/numbers/node_modules/tape/lib/test.js:77:32)
+          at Test.equal (/Users/spencer/mountain/compromise/plugins/numbers/node_modules/tape/lib/test.js:385:10)
+          at Test.bound [as equal] (/Users/spencer/mountain/compromise/plugins/numbers/node_modules/tape/lib/test.js:77:32)
+          at Test.<anonymous> (/Users/spencer/mountain/compromise/plugins/numbers/tests/money.test.js:15:5)
+          at Test.bound [as _cb] (/Users/spencer/mountain/compromise/plugins/numbers/node_modules/tape/lib/test.js:77:32)
+          at Test.run (/Users/spencer/mountain/compromise/plugins/numbers/node_modules/tape/lib/test.js:93:10)
+          at Test.bound [as run] (/Users/spencer/mountain/compromise/plugins/numbers/node_modules/tape/lib/test.js:77:32)
+          at Immediate.next [as _onImmediate] (/Users/spencer/mountain/compromise/plugins/numbers/node_modules/tape/lib/results.js:81:19)
+          at runCallback (timers.js:705:18)
+  ...
+not ok 28 match-12 dollars
+  ---
+    operator: equal
+    expected: '12 dollars'
+    actual:   '12'
+    at: Test.<anonymous> (/Users/spencer/mountain/compromise/plugins/numbers/tests/money.test.js:19:5)
+    stack: |-
+      Error: match-12 dollars
+          at Test.assert [as _assert] (/Users/spencer/mountain/compromise/plugins/numbers/node_modules/tape/lib/test.js:225:54)
+          at Test.bound [as _assert] (/Users/spencer/mountain/compromise/plugins/numbers/node_modules/tape/lib/test.js:77:32)
+          at Test.equal (/Users/spencer/mountain/compromise/plugins/numbers/node_modules/tape/lib/test.js:385:10)
+          at Test.bound [as equal] (/Users/spencer/mountain/compromise/plugins/numbers/node_modules/tape/lib/test.js:77:32)
+          at Test.<anonymous> (/Users/spencer/mountain/compromise/plugins/numbers/tests/money.test.js:19:5)
+          at Test.bound [as _cb] (/Users/spencer/mountain/compromise/plugins/numbers/node_modules/tape/lib/test.js:77:32)
+          at Test.run (/Users/spencer/mountain/compromise/plugins/numbers/node_modules/tape/lib/test.js:93:10)
+          at Test.bound [as run] (/Users/spencer/mountain/compromise/plugins/numbers/node_modules/tape/lib/test.js:77:32)
+          at Immediate.next [as _onImmediate] (/Users/spencer/mountain/compromise/plugins/numbers/node_modules/tape/lib/results.js:81:19)
+          at runCallback (timers.js:705:18)
+  ...
+not ok 29 match-long-usd
+  ---
+    operator: equal
+    expected: 'sixty five dollars and four cents usd'
+    actual:   'sixty five four'
+    at: Test.<anonymous> (/Users/spencer/mountain/compromise/plugins/numbers/tests/money.test.js:23:5)
+    stack: |-
+      Error: match-long-usd
+          at Test.assert [as _assert] (/Users/spencer/mountain/compromise/plugins/numbers/node_modules/tape/lib/test.js:225:54)
+          at Test.bound [as _assert] (/Users/spencer/mountain/compromise/plugins/numbers/node_modules/tape/lib/test.js:77:32)
+          at Test.equal (/Users/spencer/mountain/compromise/plugins/numbers/node_modules/tape/lib/test.js:385:10)
+          at Test.bound [as equal] (/Users/spencer/mountain/compromise/plugins/numbers/node_modules/tape/lib/test.js:77:32)
+          at Test.<anonymous> (/Users/spencer/mountain/compromise/plugins/numbers/tests/money.test.js:23:5)
+          at Test.bound [as _cb] (/Users/spencer/mountain/compromise/plugins/numbers/node_modules/tape/lib/test.js:77:32)
+          at Test.run (/Users/spencer/mountain/compromise/plugins/numbers/node_modules/tape/lib/test.js:93:10)
+          at Test.bound [as run] (/Users/spencer/mountain/compromise/plugins/numbers/node_modules/tape/lib/test.js:77:32)
+          at Immediate.next [as _onImmediate] (/Users/spencer/mountain/compromise/plugins/numbers/node_modules/tape/lib/results.js:81:19)
+          at runCallback (timers.js:705:18)
+  ...
+# money-has:
+ok 30 money-has: '$7'
+ok 31 money-has: '$7.0'
+ok 32 money-has: '$7.00'
+ok 33 money-has: '$7.003'
+ok 34 money-has: '$7082.03'
+ok 35 money-has: '$2,082.03'
+ok 36 money-has: '€7.00'
+ok 37 money-has: '¥70'
+ok 38 money-has: '£0.20'
+ok 39 money-has: '@0.20'
+ok 40 money-has: '8 cents'
+ok 41 money-has: '60 pence'
+ok 42 money-has: 'sixty pence'
+ok 43 money-has: 'sixty USD'
+# percent-basic:
+ok 44 match-33%
+ok 45 match-50
+ok 46 match-9000
+ok 47 match-0.5
+# percent-conversion:
+ok 48 3% to number
+ok 49 39% to number
+ok 50 to text
+ok 51 to text
+# percent-tag:
+ok 52 Percent-has: '7%'
+ok 53 Percent-has: '7.0%'
+ok 54 Percent-has: '2.22%'
+ok 55 Percent-has: '.2%'
+ok 56 Percent-has: '0.2%'
+ok 57 Percent-has: '2,999%'
+ok 58 Percent-has: '2asdf99%'
+ok 59 Percent-has: '99%3'
+# prefix:
+ok 60 $400
+# suffix:
+ok 61 400usd
+ok 62 4.5m
+ok 63 $47.5m
+ok 64 25km
+ok 65 400s!
+# should give right answers for numbers
+ok 66 should be equal
+ok 67 should be equal
+ok 68 should be equal
+ok 69 should be equal
+ok 70 should be equal
+ok 71 should be equal
+ok 72 should be equal
+ok 73 should be equal
+ok 74 should be equal
+ok 75 should be equal
+ok 76 should be equal
+ok 77 should be equal
+ok 78 should be equal
+ok 79 should be equal
+ok 80 should be equal
+ok 81 should be equal
+# should give right answers for numbered ordinals
+ok 82 should be equal
+ok 83 should be equal
+ok 84 should be equal
+ok 85 should be equal
+ok 86 should be equal
+ok 87 should be equal
+ok 88 should be equal
+ok 89 should be equal
+ok 90 should be equal
+ok 91 should be equal
+ok 92 should be equal
+ok 93 should be equal
+ok 94 should be equal
+ok 95 should be equal
+ok 96 should be equal
+ok 97 should be equal
+ok 98 should be equal
+# should give right answers for english names of numbers
+ok 99 should be equal
+ok 100 should be equal
+ok 101 should be equal
+ok 102 should be equal
+ok 103 should be equal
+ok 104 should be equal
+ok 105 should be equal
+ok 106 should be equal
+ok 107 should be equal
+ok 108 should be equal
+ok 109 should be equal
+ok 110 should be equal
+ok 111 should be equal
+ok 112 should be equal
+ok 113 should be equal
+ok 114 should be equal
+ok 115 should be equal
+ok 116 should be equal
+ok 117 should be equal
+ok 118 should be equal
+ok 119 should be equal
+ok 120 should be equal
+ok 121 should be equal
+ok 122 should be equal
+ok 123 should be equal
+ok 124 should be equal
+ok 125 should be equal
+ok 126 should be equal
+ok 127 should be equal
+ok 128 should be equal
+ok 129 should be equal
+ok 130 should be equal
+# should give right answers for english names of ordinal positions
+ok 131 should be equal
+ok 132 should be equal
+ok 133 should be equal
+ok 134 should be equal
+ok 135 should be equal
+ok 136 should be equal
+ok 137 should be equal
+ok 138 should be equal
+ok 139 should be equal
+ok 140 should be equal
+ok 141 should be equal
+ok 142 should be equal
+ok 143 should be equal
+ok 144 should be equal
+ok 145 should be equal
+ok 146 should be equal
+ok 147 should be equal
+ok 148 should be equal
+ok 149 should be equal
+ok 150 should be equal
+ok 151 should be equal
+ok 152 should be equal
+ok 153 should be equal
+ok 154 should be equal
+ok 155 should be equal
+ok 156 should be equal
+ok 157 should be equal
+ok 158 should be equal
+ok 159 should be equal
+ok 160 should be equal
+ok 161 should be equal
+ok 162 should be equal
+# should deal with negative numbers
+ok 163 should be equal
+ok 164 should be equal
+ok 165 should be equal
+# to_text:
+ok 166 5
+ok 167 15
+ok 168 10
+ok 169 20
+ok 170 75
+ok 171 97
+ok 172 111
+ok 173 175
+ok 174 900
+ok 175 1175
+ok 176 2000
+ok 177 2100
+ok 178 2102
+ok 179 70000
+ok 180 72000
+ok 181 900000
+ok 182 900001
+ok 183 900200
+ok 184 900205
+ok 185 7900205
+ok 186 90000000
+ok 187 900000000
+ok 188 900000080
+# all-to-text:
+ok 189 one -> one
+ok 190 1 -> one
+ok 191 1.0 -> one
+ok 192 1st -> one
+ok 193 first -> one
+ok 194 500 -> five hundred
+ok 195 500.0 -> five hundred
+ok 196 500th -> five hundred
+ok 197 five hundred -> five hundred
+ok 198 five hundredth -> five hundred
+ok 199 2012 -> two thousand and twelve
+ok 200 2012.0 -> two thousand and twelve
+ok 201 2,012 -> two thousand and twelve
+ok 202 2012th -> two thousand and twelve
+ok 203 two thousand and twelve -> two thousand and twelve
+ok 204 two thousand and twelfth -> two thousand and twelve
+# big number:
+ok 205 quadrillion
+# value-lumper-splitter:
+ok 206 two-numbers
+ok 207 two-numbers2
+ok 208 two-numbers3
+ok 209 two-numbers4
+# value-basic:
+ok 210 toNumber
+ok 211 toText
+ok 212 toCardinal
+ok 213 toOrdinal
+ok 214 toNumber2
+# value-to_ordinal:
+ok 215 11
+ok 216 5
+ok 217 22
+# value-number:
+ok 218 five hundred feet
+ok 219 fifty square feet
+ok 220 90 hertz
+ok 221 twelve 2-gram containers
+ok 222 thirty-seven forever-21 stores
+# add/subtract:
+ok 223 add-2-cardinal
+ok 224 add-2-ordinal
+ok 225 add-minus-2-ordinal
+ok 226 subtract-2-cardinal
+ok 227 subtract-2-ordinal
+ok 228 text-add-2-ordinal
+ok 229 text-add-2-ordinal
+ok 230 text-subtract-2-cardinal
+ok 231 text-subtract-2-cardinal
+not ok 232 two-add-50s
+  ---
+    operator: equal
+    expected: 'fifty seven apples and 1,281 peaches'
+    actual:   'fifty seven apples and 1281 peaches'
+    at: Test.<anonymous> (/Users/spencer/mountain/compromise/plugins/numbers/tests/value.test.js:134:5)
+    stack: |-
+      Error: two-add-50s
+          at Test.assert [as _assert] (/Users/spencer/mountain/compromise/plugins/numbers/node_modules/tape/lib/test.js:225:54)
+          at Test.bound [as _assert] (/Users/spencer/mountain/compromise/plugins/numbers/node_modules/tape/lib/test.js:77:32)
+          at Test.equal (/Users/spencer/mountain/compromise/plugins/numbers/node_modules/tape/lib/test.js:385:10)
+          at Test.bound [as equal] (/Users/spencer/mountain/compromise/plugins/numbers/node_modules/tape/lib/test.js:77:32)
+          at Test.<anonymous> (/Users/spencer/mountain/compromise/plugins/numbers/tests/value.test.js:134:5)
+          at Test.bound [as _cb] (/Users/spencer/mountain/compromise/plugins/numbers/node_modules/tape/lib/test.js:77:32)
+          at Test.run (/Users/spencer/mountain/compromise/plugins/numbers/node_modules/tape/lib/test.js:93:10)
+          at Test.bound [as run] (/Users/spencer/mountain/compromise/plugins/numbers/node_modules/tape/lib/test.js:77:32)
+          at Immediate.next [as _onImmediate] (/Users/spencer/mountain/compromise/plugins/numbers/node_modules/tape/lib/results.js:81:19)
+          at runCallback (timers.js:705:18)
+  ...
+# increment:
+ok 233 increment-cardinal
+ok 234 decrement-cardinal
+ok 235 increment-ordinal
+ok 236 decrement-ordinal
+# number splits
+ok 237 12, 34, 56
+ok 238 12 34 56
+ok 239 12, 34, 56
+ok 240 1 2 4
+TAP version 13
+# hash has whitespace
+ok 1 whitespace changes hash
+# hash output
+ok 2 both are equal
+ok 3 hashes not equal after tag
+# html output
+ok 4 html escaped
+TAP version 13
+# paragraph-basic
+ok 1 three-paragraphs
+ok 2 two sentences in first paragraph
+ok 3 three-json objects
+ok 4 filter-one
+ok 5 filter-text
+TAP version 13
+# misc sentences
+ok 1 found one sentence
+ok 2 found three sentences
+# sentence prepend
+ok 3 reset titlecase
+ok 4 leave propernoun titlecase
+# sentence filters
+ok 5 has-exclamation
+ok 6 has-question
+ok 7 has-statement
+# sentence append
+ok 8 move period
+ok 9 move question-mark
+ok 10 move exclamation-mark
+# sentence append - change
+ok 11 change ending
+ok 12 change ending 2
+# svo parser
+ok 13 subject: my dog
+ok 14 verb: loves
+ok 15 subject: my grey dog
+ok 16 verb: loves
+ok 17 subject: my grey dog
+ok 18 verb: loves
+ok 19 subject: i
+ok 20 verb: remember
+ok 21 subject: i
+ok 22 verb: eat
+ok 23 subject: i
+ok 24 verb: thought
+ok 25 subject: i
+ok 26 verb: eat
+ok 27 subject: smoked poutine
+ok 28 verb: is
+ok 29 subject: i
+ok 30 verb: eat
+ok 31 subject: the store
+ok 32 verb: is
+ok 33 subject: diane
+ok 34 verb: decided
+ok 35 subject: he
+ok 36 verb: ran
+TAP version 13
+# misc swap
+TAP version 13
+# test length
+ok 1 should be truthy
+
+1..20
+# tests 20
+# pass  17
+# fail  3
+

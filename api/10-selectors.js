@@ -1,9 +1,4 @@
 module.exports = {
-  adjectives: {
-    example:
-      "nlp('Guys, we have to assume our guns are useless. Throw them in the lake.').adjectives().json()\n//[{text:'useless'}]",
-  },
-
   hashTags: {
     example: "nlp('oh, but where is the #anykey').hashTags().json()\n//[{normal:'anykey'}]",
   },

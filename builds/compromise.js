@@ -4905,74 +4905,10 @@
 
   var conjugate_1 = conjugate;
 
-  //convert 'cute' to 'cuteness'
-  var irregulars = {
-    clean: 'cleanliness',
-    naivety: 'naivety',
-    hurt: 'hurt'
-  };
-  var transforms = [{
-    reg: /y$/,
-    repl: 'iness'
-  }, {
-    reg: /le$/,
-    repl: 'ility'
-  }, {
-    reg: /ial$/,
-    repl: 'y'
-  }, {
-    reg: /al$/,
-    repl: 'ality'
-  }, {
-    reg: /ting$/,
-    repl: 'ting'
-  }, {
-    reg: /ring$/,
-    repl: 'ring'
-  }, {
-    reg: /bing$/,
-    repl: 'bingness'
-  }, {
-    reg: /sing$/,
-    repl: 'se'
-  }, {
-    reg: /ing$/,
-    repl: 'ment'
-  }, {
-    reg: /ess$/,
-    repl: 'essness'
-  }, {
-    reg: /ous$/,
-    repl: 'ousness'
-  }];
-
-  var to_noun = function to_noun(w) {
-    if (irregulars.hasOwnProperty(w)) {
-      return irregulars[w];
-    }
-
-    var lastChar = w.charAt(w.length - 1);
-
-    if (lastChar === 'w' || lastChar === 's') {
-      return null;
-    }
-
-    for (var i = 0; i < transforms.length; i++) {
-      if (transforms[i].reg.test(w) === true) {
-        return w.replace(transforms[i].reg, transforms[i].repl);
-      }
-    }
-
-    return w + 'ness';
-  };
-
-  var toNoun = to_noun;
-
   //turn 'quick' into 'quickest'
-
   var do_rules = [/ght$/, /nge$/, /ough$/, /ain$/, /uel$/, /[au]ll$/, /ow$/, /oud$/, /...p$/];
   var dont_rules = [/ary$/];
-  var irregulars$1 = {
+  var irregulars = {
     nice: 'nicest',
     late: 'latest',
     hard: 'hardest',
@@ -4985,7 +4921,7 @@
     big: 'biggest',
     large: 'largest'
   };
-  var transforms$1 = [{
+  var transforms = [{
     reg: /y$/i,
     repl: 'iest'
   }, {
@@ -5004,14 +4940,14 @@
 
   var to_superlative = function to_superlative(str) {
     //irregulars
-    if (irregulars$1.hasOwnProperty(str)) {
-      return irregulars$1[str];
+    if (irregulars.hasOwnProperty(str)) {
+      return irregulars[str];
     } //known transforms
 
 
-    for (var i = 0; i < transforms$1.length; i++) {
-      if (transforms$1[i].reg.test(str)) {
-        return str.replace(transforms$1[i].reg, transforms$1[i].repl);
+    for (var i = 0; i < transforms.length; i++) {
+      if (transforms[i].reg.test(str)) {
+        return str.replace(transforms[i].reg, transforms[i].repl);
       }
     } //dont-rules
 
@@ -5041,7 +4977,7 @@
   //turn 'quick' into 'quickly'
   var do_rules$1 = [/ght$/, /nge$/, /ough$/, /ain$/, /uel$/, /[au]ll$/, /ow$/, /old$/, /oud$/, /e[ae]p$/];
   var dont_rules$1 = [/ary$/, /ous$/];
-  var irregulars$2 = {
+  var irregulars$1 = {
     grey: 'greyer',
     gray: 'grayer',
     green: 'greener',
@@ -5053,7 +4989,7 @@
     sad: 'sadder',
     big: 'bigger'
   };
-  var transforms$2 = [{
+  var transforms$1 = [{
     reg: /y$/i,
     repl: 'ier'
   }, {
@@ -5069,14 +5005,14 @@
 
   var to_comparative = function to_comparative(str) {
     //known-irregulars
-    if (irregulars$2.hasOwnProperty(str)) {
-      return irregulars$2[str];
+    if (irregulars$1.hasOwnProperty(str)) {
+      return irregulars$1[str];
     } //known-transforms
 
 
-    for (var i = 0; i < transforms$2.length; i++) {
-      if (transforms$2[i].reg.test(str) === true) {
-        return str.replace(transforms$2[i].reg, transforms$2[i].repl);
+    for (var i = 0; i < transforms$1.length; i++) {
+      if (transforms$1[i].reg.test(str) === true) {
+        return str.replace(transforms$1[i].reg, transforms$1[i].repl);
       }
     } //dont-patterns
 
@@ -5104,155 +5040,14 @@
 
   var toComparative = to_comparative;
 
-  //turn 'quick' into 'quickly'
-  var not_matches = [/airs$/, /ll$/, /ee.$/, /ile$/, /y$/];
-  var irregulars$3 = {
-    bad: 'badly',
-    good: 'well',
-    icy: 'icily',
-    idle: 'idly',
-    male: 'manly',
-    "public": 'publicly',
-    simple: 'simply',
-    single: 'singly',
-    special: 'especially',
-    straight: 'straight',
-    vague: 'vaguely',
-    whole: 'wholly'
-  };
-  var dontChange = ['best', 'early', 'hard', 'fast', 'wrong', 'well', 'late', 'latter', 'little', 'long', 'low'].reduce(function (h, c) {
-    h[c] = true;
-    return h;
-  }, {});
-  var transforms$3 = [{
-    reg: /al$/i,
-    repl: 'ally'
-  }, {
-    reg: /ly$/i,
-    repl: 'ly'
-  }, {
-    reg: /(.{3})y$/i,
-    repl: '$1ily'
-  }, {
-    reg: /que$/i,
-    repl: 'quely'
-  }, {
-    reg: /ue$/i,
-    repl: 'uly'
-  }, {
-    reg: /ic$/i,
-    repl: 'ically'
-  }, {
-    reg: /ble$/i,
-    repl: 'bly'
-  }, {
-    reg: /l$/i,
-    repl: 'ly'
-  }];
-
-  var adj_to_adv = function adj_to_adv(str) {
-    if (irregulars$3.hasOwnProperty(str) === true) {
-      return irregulars$3[str];
-    }
-
-    if (dontChange.hasOwnProperty(str) === true) {
-      return str;
-    }
-
-    for (var i = 0; i < not_matches.length; i++) {
-      if (not_matches[i].test(str) === true) {
-        return null;
-      }
-    }
-
-    for (var _i = 0; _i < transforms$3.length; _i++) {
-      if (transforms$3[_i].reg.test(str) === true) {
-        return str.replace(transforms$3[_i].reg, transforms$3[_i].repl);
-      }
-    }
-
-    return str + 'ly';
-  };
-
-  var toAdverb = adj_to_adv;
-
-  //turn an adjective like 'soft' into a verb like 'soften'
-  //(don't do words like 'green' -> 'greenen')
-  //these are suffices that are usually too weird
-  var dontDo = ['c', 'e', 'g', 'l', 'n', 'r', 'w', 'y'].reduce(function (h, c) {
-    h[c] = true;
-    return h;
-  }, {});
-  var dontDoTwo = {
-    ed: true,
-    nt: true
-  };
-  var blacklist = {
-    random: true,
-    wild: true
-  };
-  var irregulars$4 = {
-    bored: 'bore',
-    red: 'redden',
-    sad: 'sadden',
-    fat: 'fatten',
-    small: 'shrink',
-    full: 'fill',
-    tired: 'tire'
-  };
-
-  var toVerb = function toVerb(str) {
-    if (irregulars$4.hasOwnProperty(str) === true) {
-      return irregulars$4[str];
-    } //don't bother with these:
-
-
-    if (str.length <= 3) {
-      return null;
-    }
-
-    if (blacklist.hasOwnProperty(str) === true) {
-      return null;
-    } //suffixes to avoid
-
-
-    if (dontDo.hasOwnProperty(str[str.length - 1])) {
-      return null;
-    }
-
-    var suffix = str.substr(str.length - 2);
-
-    if (dontDoTwo.hasOwnProperty(suffix) === true) {
-      return null;
-    }
-
-    if (/e$/.test(str) === true) {
-      return str + 'n';
-    }
-
-    return str + 'en';
-  };
-
-  var toVerb_1 = toVerb;
-
   var fns$1 = {
-    toNoun: toNoun,
     toSuperlative: toSuperlative,
-    toComparative: toComparative,
-    toAdverb: toAdverb,
-    toVerb: toVerb_1
+    toComparative: toComparative
   };
   /** conjugate an adjective into other forms */
 
   var conjugate$1 = function conjugate(w) {
-    var res = {}; // 'greatness'
-
-    var noun = fns$1.toNoun(w);
-
-    if (noun) {
-      res.Noun = noun;
-    } // 'greatest'
-
+    var res = {}; // 'greatest'
 
     var sup = fns$1.toSuperlative(w);
 
@@ -5265,22 +5060,7 @@
 
     if (comp) {
       res.Comparative = comp;
-    } // 'greatly'
-
-
-    var adv = fns$1.toAdverb(w);
-
-    if (adv) {
-      res.Adverb = adv;
-    } // 'greaten' :/
-
-
-    var vb = fns$1.toVerb(w);
-
-    if (vb) {
-      res.Verb = vb;
-    } // res.Adjective = w
-
+    }
 
     return res;
   };
@@ -5628,12 +5408,12 @@
 
   var toInfinitive_1 = toInfinitive;
 
-  var irregulars$5 = {
+  var irregulars$2 = {
     nouns: plurals,
     verbs: conjugations_1
   }; //these behaviours are configurable & shared across some plugins
 
-  var transforms$4 = {
+  var transforms$2 = {
     conjugate: conjugate_1,
     adjectives: adjectives,
     toPlural: toPlural,
@@ -5662,7 +5442,7 @@
       });
       Object.defineProperty(this, 'irregulars', {
         enumerable: false,
-        value: irregulars$5,
+        value: irregulars$2,
         writable: true
       });
       Object.defineProperty(this, 'tags', {
@@ -5672,7 +5452,7 @@
       });
       Object.defineProperty(this, 'transforms', {
         enumerable: false,
-        value: transforms$4
+        value: transforms$2
       });
       Object.defineProperty(this, 'taggers', {
         enumerable: false,
@@ -8889,7 +8669,7 @@
   var _02Fallbacks = fallbacks;
 
   var hasNegative = /n't$/;
-  var irregulars$6 = {
+  var irregulars$3 = {
     "won't": ['will', 'not'],
     wont: ['will', 'not'],
     "can't": ['can', 'not'],
@@ -8903,8 +8683,8 @@
 
   var checkNegative = function checkNegative(term) {
     //check named-ones
-    if (irregulars$6.hasOwnProperty(term.clean) === true) {
-      return irregulars$6[term.clean];
+    if (irregulars$3.hasOwnProperty(term.clean) === true) {
+      return irregulars$3[term.clean];
     } //try it normally
 
 
@@ -8944,7 +8724,7 @@
 
   var _02Simple = checkApostrophe;
 
-  var irregulars$7 = {
+  var irregulars$4 = {
     wanna: ['want', 'to'],
     gonna: ['going', 'to'],
     im: ['i', 'am'],
@@ -8997,8 +8777,8 @@
     } //check white-list
 
 
-    if (irregulars$7.hasOwnProperty(term.clean)) {
-      return irregulars$7[term.clean];
+    if (irregulars$4.hasOwnProperty(term.clean)) {
+      return irregulars$4[term.clean];
     }
 
     return null;
@@ -9007,7 +8787,7 @@
   var _03Irregulars = checkIrregulars;
 
   var hasApostropheS = /([a-z\u00C0-\u00FF]+)'s$/i;
-  var blacklist$1 = {
+  var blacklist = {
     that: true,
     there: true
   };
@@ -9023,7 +8803,7 @@
       return false;
     }
 
-    if (blacklist$1.hasOwnProperty(term.clean)) {
+    if (blacklist.hasOwnProperty(term.clean)) {
       return false;
     } //if end of sentence, it is possessive - "was spencer's"
 
@@ -10112,109 +9892,6 @@
   var Acronyms = addMethod;
 
   var addMethod$1 = function addMethod(Doc) {
-    /** simple transformations of adjectives*/
-    var Adjectives =
-    /*#__PURE__*/
-    function (_Doc) {
-      _inherits(Adjectives, _Doc);
-
-      function Adjectives() {
-        _classCallCheck(this, Adjectives);
-
-        return _possibleConstructorReturn(this, _getPrototypeOf(Adjectives).apply(this, arguments));
-      }
-
-      _createClass(Adjectives, [{
-        key: "conjugate",
-        value: function conjugate(n) {
-          var transform = this.world.transforms.adjectives;
-          var arr = [];
-          this.forEach(function (doc) {
-            var obj = transform(doc.text('reduced'));
-            arr.push(obj);
-          }); //support nth result
-
-          if (typeof n === 'number') {
-            return arr[n];
-          }
-
-          return arr;
-        }
-      }, {
-        key: "toSuperlative",
-        value: function toSuperlative() {
-          var transform = this.world.transforms.adjectives;
-          this.forEach(function (doc) {
-            var obj = transform(doc.text('reduced'));
-            doc.replaceWith(obj.Superlative);
-          });
-          return this;
-        }
-      }, {
-        key: "toComparative",
-        value: function toComparative() {
-          var transform = this.world.transforms.adjectives;
-          this.forEach(function (doc) {
-            var obj = transform(doc.text('reduced'));
-            doc.replaceWith(obj.Comparative);
-          });
-          return this;
-        }
-      }, {
-        key: "toAdverb",
-        value: function toAdverb() {
-          var transform = this.world.transforms.adjectives;
-          this.forEach(function (doc) {
-            var obj = transform(doc.text('reduced'));
-            doc.replaceWith(obj.Adverb);
-          });
-          return this;
-        }
-      }, {
-        key: "toVerb",
-        value: function toVerb() {
-          var transform = this.world.transforms.adjectives;
-          this.forEach(function (doc) {
-            var obj = transform(doc.text('reduced'));
-            doc.replaceWith(obj.Verb);
-          });
-          return this;
-        }
-      }, {
-        key: "toNoun",
-        value: function toNoun() {
-          var transform = this.world.transforms.adjectives;
-          this.forEach(function (doc) {
-            var obj = transform(doc.text('reduced'));
-            doc.replaceWith(obj.Noun);
-          });
-          return this;
-        }
-      }]);
-
-      return Adjectives;
-    }(Doc); // simple lookup
-
-
-    Doc.prototype.adjectives = function (n) {
-      var list = this.match('#Adjective').list; //support nth result
-
-      if (typeof n === 'number') {
-        list = list[n];
-        list = [list].filter(function (a) {
-          return a;
-        });
-      }
-
-      return new Adjectives(list, this, this.world);
-    };
-
-    return Doc;
-  };
-
-  var Adjectives = addMethod$1;
-
-  var addMethod$2 = function addMethod(Doc) {
     /** split into approximate sub-sentence phrases */
     Doc.prototype.clauses = function (n) {
       // an awkward way to disambiguate a comma use
@@ -10262,9 +9939,9 @@
     return Doc;
   };
 
-  var Clauses = addMethod$2;
+  var Clauses = addMethod$1;
 
-  var addMethod$3 = function addMethod(Doc) {
+  var addMethod$2 = function addMethod(Doc) {
     /**  */
     var Contractions =
     /*#__PURE__*/
@@ -10338,12 +10015,12 @@
     return Doc;
   };
 
-  var Contractions = addMethod$3;
+  var Contractions = addMethod$2;
 
   var open = /\(/;
   var close = /\)/;
 
-  var addMethod$4 = function addMethod(Doc) {
+  var addMethod$3 = function addMethod(Doc) {
     /** anything between (these things) */
     var Parentheses =
     /*#__PURE__*/
@@ -10412,9 +10089,9 @@
     return Doc;
   };
 
-  var Parentheses = addMethod$4;
+  var Parentheses = addMethod$3;
 
-  var addMethod$5 = function addMethod(Doc) {
+  var addMethod$4 = function addMethod(Doc) {
     /**  */
     var Possessives =
     /*#__PURE__*/
@@ -10473,9 +10150,9 @@
     return Doc;
   };
 
-  var Possessives = addMethod$5;
+  var Possessives = addMethod$4;
 
-  var addMethod$6 = function addMethod(Doc) {
+  var addMethod$5 = function addMethod(Doc) {
     //pull it apart..
     var parse = function parse(doc) {
       var things = doc.splitAfter('@hasComma').not('(and|or) not?');
@@ -10586,7 +10263,7 @@
     return Doc;
   };
 
-  var Lists = addMethod$6;
+  var Lists = addMethod$5;
 
   var pairs = {
     "\"": "\"",
@@ -10630,7 +10307,7 @@
   };
   var hasOpen = RegExp('(' + Object.keys(pairs).join('|') + ')');
 
-  var addMethod$7 = function addMethod(Doc) {
+  var addMethod$6 = function addMethod(Doc) {
     /** "these things" */
     var Quotations =
     /*#__PURE__*/
@@ -10700,7 +10377,7 @@
     return Doc;
   };
 
-  var Quotations = addMethod$7;
+  var Quotations = addMethod$6;
 
   var noPlural = '(#Pronoun|#Place|#Value|#Person|#Uncountable|#Month|#WeekDay|#Holiday|#Possessive)'; //certain words can't be plural, like 'peace'
 
@@ -10719,7 +10396,7 @@
 
   var hasPlural_1 = hasPlural;
 
-  var irregulars$8 = {
+  var irregulars$5 = {
     hour: 'an',
     heir: 'an',
     heirloom: 'an',
@@ -10762,8 +10439,8 @@
 
     var str = doc.text('normal').trim(); //explicit irregular forms
 
-    if (irregulars$8.hasOwnProperty(str)) {
-      return irregulars$8[str];
+    if (irregulars$5.hasOwnProperty(str)) {
+      return irregulars$5[str];
     } //spelled-out acronyms
 
 
@@ -10886,7 +10563,7 @@
 
   var parse_1 = parse$1;
 
-  var addMethod$8 = function addMethod(Doc) {
+  var addMethod$7 = function addMethod(Doc) {
     /**  */
     var Nouns =
     /*#__PURE__*/
@@ -11013,7 +10690,7 @@
     return Doc;
   };
 
-  var Nouns = addMethod$8;
+  var Nouns = addMethod$7;
 
   // turn 'would not really walk up' into parts
   var parseVerb = function parseVerb(vb) {
@@ -11428,7 +11105,7 @@
 
   var methods$8 = [methods$5, methods$6, methods$7];
 
-  var addMethod$9 = function addMethod(Doc) {
+  var addMethod$8 = function addMethod(Doc) {
     /**  */
     var Verbs =
     /*#__PURE__*/
@@ -11530,9 +11207,9 @@
     return Doc;
   };
 
-  var Verbs = addMethod$9;
+  var Verbs = addMethod$8;
 
-  var selections$1 = [Acronyms, Adjectives, Clauses, Contractions, Parentheses, Possessives, Lists, Quotations, Nouns, Verbs];
+  var selections$1 = [Acronyms, Clauses, Contractions, Parentheses, Possessives, Lists, Quotations, Nouns, Verbs];
 
   var extend = function extend(Doc) {
     selections$1.forEach(function (addFn) {
@@ -11659,6 +11336,10 @@
     return Doc.prototype[k] = Doc.prototype[aliases$1[k]];
   });
   var Doc_1 = Doc;
+
+  process.on('warning', function (e) {
+    return console.warn(e.stack);
+  }); //blast-out our word-lists, just once
 
   var world = new World_1();
   /** parse and tag text into a compromise object  */

@@ -1,14 +1,14 @@
 {
-  "name": "compromise-emoji",
+  "name": "compromise-adjectives",
   "description": "smart-replace plugin for nlp-compromise",
   "version": "0.0.1",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
-  "main": "./builds/compromise-emoji.js",
-  "unpkg": "./builds/compromise-emoji.min.js",
-  "module": "./builds/compromise-emoji.mjs",
+  "main": "./builds/compromise-adjectives.js",
+  "unpkg": "./builds/compromise-adjectives.min.js",
+  "module": "./builds/compromise-adjectives.mjs",
   "repository": {
     "type": "git",
-    "url": "git://github.com/nlp-compromise/compromise-emoji.git"
+    "url": "git://github.com/nlp-compromise/compromise-adjectives.git"
   },
   "scripts": {
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer",

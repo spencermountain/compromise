@@ -1,4 +1,4 @@
-let orgWords = require('./data/orgWords')
+let orgWords = require('../data/orgWords')
 
 //could this word be an organization
 const maybeOrg = function(t) {

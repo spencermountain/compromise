@@ -55,7 +55,7 @@ test('pos from-lexicon', function(t) {
     ['invest', 'Verb'],
     ['investing', 'Verb'],
     [`wallys'`, 'Possessive'],
-    [`JDI University'`, 'Organization'],
+    // [`JDI University'`, 'Organization'],
     ['ocean', 'Noun'],
     ['shiver', 'Verb'],
     [`flanders'`, 'Possessive'],

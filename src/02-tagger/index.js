@@ -1,8 +1,7 @@
 const init = require('./01-init')
 const fallbacks = require('./02-fallbacks')
 const contractions = require('./03-contractions')
-const inference = require('./04-inference')
-const corrections = require('./05-correction')
+const corrections = require('./04-correction')
 
 /** POS-tag all terms in this document */
 const tagger = function(doc) {
@@ -24,11 +23,6 @@ const tagger = function(doc) {
 
   //set our cache, to speed things up
   doc.cache()
-
-  // deduce more specific tags - singular/plurals/quotations...
-  // console.time('inference')
-  doc = inference(doc)
-  // console.timeEnd('inference')
 
   // wiggle-around the results, so they make more sense
   // console.time('corrections')

@@ -8985,80 +8985,6 @@
 
   var _03Contractions = contractions;
 
-  //nouns that also signal the title of an unknown organization
-  //todo remove/normalize plural forms
-  var orgWords = ['academy', 'administration', 'agence', 'agences', 'agencies', 'agency', 'airlines', 'airways', 'army', 'assoc', 'associates', 'association', 'assurance', 'authority', 'autorite', 'aviation', 'bank', 'banque', 'board', 'boys', 'brands', 'brewery', 'brotherhood', 'brothers', 'building society', 'bureau', 'cafe', 'caisse', 'capital', 'care', 'cathedral', 'center', 'central bank', 'centre', 'chemicals', 'choir', 'chronicle', 'church', 'circus', 'clinic', 'clinique', 'club', 'co', 'coalition', 'coffee', 'collective', 'college', 'commission', 'committee', 'communications', 'community', 'company', 'comprehensive', 'computers', 'confederation', 'conference', 'conseil', 'consulting', 'containers', 'corporation', 'corps', 'corp', 'council', 'crew', 'daily news', 'data', 'departement', 'department', 'department store', 'departments', 'design', 'development', 'directorate', 'division', 'drilling', 'education', 'eglise', 'electric', 'electricity', 'energy', 'ensemble', 'enterprise', 'enterprises', 'entertainment', 'estate', 'etat', 'evening news', 'faculty', 'federation', 'financial', 'fm', 'foundation', 'fund', 'gas', 'gazette', 'girls', 'government', 'group', 'guild', 'health authority', 'herald', 'holdings', 'hospital', 'hotel', 'hotels', 'inc', 'industries', 'institut', 'institute', 'institute of technology', 'institutes', 'insurance', 'international', 'interstate', 'investment', 'investments', 'investors', 'journal', 'laboratory', 'labs', // 'law',
-  'liberation army', 'limited', 'local authority', 'local health authority', 'machines', 'magazine', 'management', 'marine', 'marketing', 'markets', 'media', 'memorial', 'mercantile exchange', 'ministere', 'ministry', 'military', 'mobile', 'motor', 'motors', 'musee', 'museum', // 'network',
-  'news', 'news service', 'observatory', 'office', 'oil', 'optical', 'orchestra', 'organization', 'partners', 'partnership', // 'party',
-  "people's party", 'petrol', 'petroleum', 'pharmacare', 'pharmaceutical', 'pharmaceuticals', 'pizza', 'plc', 'police', 'polytechnic', 'post', 'power', 'press', 'productions', 'quartet', 'radio', 'regional authority', 'regional health authority', 'reserve', 'resources', 'restaurant', 'restaurants', 'savings', 'school', 'securities', 'service', 'services', 'social club', 'societe', 'society', 'sons', 'standard', 'state police', 'state university', 'stock exchange', 'subcommittee', 'syndicat', 'systems', 'telecommunications', 'telegraph', 'television', 'times', 'tribunal', 'tv', 'union', 'university', 'utilities', 'workers'];
-  var orgWords_1 = orgWords.reduce(function (h, str) {
-    h[str] = 'Noun';
-    return h;
-  }, {});
-
-  var maybeOrg = function maybeOrg(t) {
-    //must be a noun
-    if (!t.tags.Noun) {
-      return false;
-    } //can't be these things
-
-
-    if (t.tags.Pronoun || t.tags.Comma || t.tags.Possessive) {
-      return false;
-    } //must be one of these
-
-
-    if (t.tags.TitleCase || t.tags.Organization || t.tags.Acronym || t.tags.Place) {
-      return true;
-    }
-
-    return false;
-  };
-
-  var tagOrgs = function tagOrgs(doc, termArr) {
-    termArr.forEach(function (terms) {
-      for (var i = 0; i < terms.length; i += 1) {
-        var t = terms[i];
-
-        if (orgWords_1[t.clean] !== undefined && orgWords_1.hasOwnProperty(t.clean) === true) {
-          // look-backward - eg. 'Toronto University'
-          var lastTerm = terms[i - 1];
-
-          if (lastTerm !== undefined && maybeOrg(lastTerm) === true) {
-            lastTerm.tagSafe('Organization', 'org-word-1', doc.world);
-            t.tagSafe('Organization', 'org-word-2', doc.world);
-            continue;
-          } //look-forward - eg. University of Toronto
-
-
-          var nextTerm = terms[i + 1];
-
-          if (nextTerm !== undefined && nextTerm.clean === 'of') {
-            if (terms[i + 2] && maybeOrg(terms[i + 2])) {
-              t.tagSafe('Organization', 'org-of-word-1', doc.world);
-              nextTerm.tagSafe('Organization', 'org-of-word-2', doc.world);
-              terms[i + 2].tagSafe('Organization', 'org-of-word-3', doc.world);
-              continue;
-            }
-          }
-        }
-      }
-    });
-    return doc;
-  };
-
-  var _01Organizations = tagOrgs;
-
-  var inference$2 = function inference(doc) {
-    var termArr = doc.list.map(function (p) {
-      return p.terms();
-    });
-    _01Organizations(doc, termArr);
-    return doc;
-  };
-
-  var _04Inference = inference$2;
-
   //mostly pos-corections here
   var miscCorrection = function miscCorrection(doc) {
     //misc:
@@ -9329,25 +9255,25 @@
     } //methods requiring a titlecase
 
 
-    var titleCase = doc["if"]('#TitleCase');
+    var title = doc["if"]('#TitleCase');
 
-    if (titleCase.found === true) {
-      titleCase.match('#Acronym #TitleCase').tagSafe('#Person', 'acronym-titlecase'); //ludwig van beethovan
+    if (title.found === true) {
+      title.match('#Acronym #TitleCase').tagSafe('#Person', 'acronym-titlecase'); //ludwig van beethovan
 
-      titleCase.match('#TitleCase (van|al|bin) #TitleCase').tagSafe('Person', 'titlecase-van-titlecase'); //jose de Sucre
+      title.match('#TitleCase (van|al|bin) #TitleCase').tagSafe('Person', 'titlecase-van-titlecase'); //jose de Sucre
 
-      titleCase.match('#TitleCase (de|du) la? #TitleCase').tagSafe('Person', 'titlecase-van-titlecase'); //pope francis
+      title.match('#TitleCase (de|du) la? #TitleCase').tagSafe('Person', 'titlecase-van-titlecase'); //pope francis
 
-      titleCase.match('(lady|queen|sister) #TitleCase').ifNo('#Date').ifNo('#Honorific').tag('#FemaleName', 'lady-titlecase');
-      titleCase.match('(king|pope|father) #TitleCase').ifNo('#Date').tag('#MaleName', 'poe'); // jean Foobar
+      title.match('(lady|queen|sister) #TitleCase').ifNo('#Date').ifNo('#Honorific').tag('#FemaleName', 'lady-titlecase');
+      title.match('(king|pope|father) #TitleCase').ifNo('#Date').tag('#MaleName', 'poe'); // jean Foobar
 
-      titleCase.match(maybeNoun + ' #Acronym? #TitleCase').tagSafe('Person', 'ray-smith'); // rob Foobar
+      title.match(maybeNoun + ' #Acronym? #TitleCase').tagSafe('Person', 'ray-smith'); // rob Foobar
 
-      titleCase.match(maybeVerb + ' #Acronym? #TitleCase').tag('Person', 'rob-smith'); // rusty Foobar
+      title.match(maybeVerb + ' #Acronym? #TitleCase').tag('Person', 'rob-smith'); // rusty Foobar
 
-      titleCase.match(maybeAdj + ' #Acronym? #TitleCase').tag('Person', 'rusty-smith'); // june Foobar
+      title.match(maybeAdj + ' #Acronym? #TitleCase').tag('Person', 'rusty-smith'); // june Foobar
 
-      titleCase.match(maybeDate + ' #Acronym? #TitleCase').tagSafe('Person', 'june-smith');
+      title.match(maybeDate + ' #Acronym? #TitleCase').tagSafe('Person', 'june-smith');
     }
 
     var person = doc["if"]('#Person');
@@ -9366,7 +9292,7 @@
 
       person.match('[(private|general|major|corporal|lord|lady|secretary|premier)] #Honorific? #Person').tag('Honorific', 'ambg-honorifics'); //Morgan Shlkjsfne
 
-      titleCase.match('#Person #TitleCase').match('#TitleCase #Noun').tagSafe('Person', 'person-titlecase'); //a bunch of ambiguous first names
+      title.match('#Person #TitleCase').match('#TitleCase #Noun').tagSafe('Person', 'person-titlecase'); //a bunch of ambiguous first names
       //Nouns: 'viola' or 'sky'
 
       var ambigNoun = person["if"](maybeNoun);
@@ -9821,7 +9747,7 @@
     return doc;
   };
 
-  var _05Correction = corrections;
+  var _04Correction = corrections;
 
   /** POS-tag all terms in this document */
 
@@ -9840,14 +9766,10 @@
     doc = _03Contractions(doc); // console.timeEnd('contractions')
     //set our cache, to speed things up
 
-    doc.cache(); // deduce more specific tags - singular/plurals/quotations...
-    // console.time('inference')
-
-    doc = _04Inference(doc); // console.timeEnd('inference')
-    // wiggle-around the results, so they make more sense
+    doc.cache(); // wiggle-around the results, so they make more sense
     // console.time('corrections')
 
-    doc = _05Correction(doc); // console.timeEnd('corrections')
+    doc = _04Correction(doc); // console.timeEnd('corrections')
     //remove our cache
 
     doc.uncache(); // run any user-given tagger functions

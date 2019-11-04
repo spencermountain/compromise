@@ -1,5 +1,5 @@
 const parseNumber = require('./parse')
-const makeNumber = require('./makeNumber')
+const makeNumber = require('./convert/makeNumber')
 
 let methods = {
   /** overload the original json with noun information */

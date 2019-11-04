@@ -14,9 +14,6 @@ module.exports = {
     isA: 'Cardinal', //can be a person, too
     notA: ['Ordinal', 'TextValue'],
   },
-  Fraction: {
-    isA: 'Value',
-  },
   TextValue: {
     isA: 'Value',
     notA: ['NumericValue'],
@@ -27,6 +24,9 @@ module.exports = {
   },
   Money: {
     isA: 'Cardinal',
+  },
+  Fraction: {
+    isA: 'Value',
   },
   Percent: {
     isA: 'Value',

@@ -18,8 +18,6 @@ const addMethod = function(Doc, world) {
   }
   //aliases
   Object.assign(Numbers.prototype, methods)
-  Numbers.prototype.plus = Numbers.prototype.add
-  Numbers.prototype.minus = Numbers.prototype.subtract
 
   Doc.prototype.numbers = function(n) {
     let match = findNumbers(this, n)

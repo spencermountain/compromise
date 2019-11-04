@@ -46,8 +46,8 @@ exports.export = function() {
   })
 
   return {
-    tags: tagMap,
+    tags: Object.keys(tagMap),
     // words: {},
-    phrases: phraseList,
+    list: phraseList,
   }
 }

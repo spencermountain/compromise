@@ -2,7 +2,7 @@ const parseNumber = require('./parse')
 const makeNumber = require('./convert/makeNumber')
 
 let methods = {
-  /** overload the original json with noun information */
+  /** overloaded json method with additional number information */
   json: function(options) {
     let n = null
     if (typeof options === 'number') {
@@ -28,13 +28,15 @@ let methods = {
     }
     return res
   },
-
+  /** return only ordinal numbers */
   isOrdinal: function() {
     return this.if('#Ordinal')
   },
+  /** return only cardinal numbers*/
   isCardinal: function() {
     return this.if('#Cardinal')
   },
+  /** convert to numeric form like '8' or '8th' */
   toNumber: function() {
     this.forEach(val => {
       let obj = parseNumber(val)
@@ -46,7 +48,7 @@ let methods = {
     })
     return this
   },
-  // toNumber, but with some commas
+  /** add commas, or nicer formatting for numbers */
   toLocaleString: function() {
     this.forEach(val => {
       let obj = parseNumber(val)
@@ -59,6 +61,7 @@ let methods = {
     })
     return this
   },
+  /** convert to text form - like 'eight' or 'eigth'*/
   toText: function() {
     this.forEach(val => {
       let obj = parseNumber(val)
@@ -70,6 +73,7 @@ let methods = {
     })
     return this
   },
+  /** convert to cardinal form, like 'eight', or '8' */
   toCardinal: function() {
     let m = this.if('#Ordinal')
     m.forEach(val => {
@@ -82,7 +86,7 @@ let methods = {
     })
     return this
   },
-
+  /** convert to ordinal form, like 'eighth', or '8th' */
   toOrdinal: function() {
     let m = this.if('#Cardinal')
     m.forEach(val => {
@@ -95,30 +99,35 @@ let methods = {
     })
     return this
   },
+  /** return only numbers that are == n */
   isEqual: function(n) {
     return this.filter(val => {
       let num = parseNumber(val).num
       return num === n
     })
   },
+  /** return only numbers that are > n*/
   greaterThan: function(n) {
     return this.filter(val => {
       let num = parseNumber(val).num
       return num > n
     })
   },
+  /** return only numbers that are < n*/
   lessThan: function(n) {
     return this.filter(val => {
       let num = parseNumber(val).num
       return num < n
     })
   },
-  between: function(a, b) {
+  /** return only numbers > min and < max */
+  between: function(min, max) {
     return this.filter(val => {
       let num = parseNumber(val).num
-      return num > a && num < b
+      return num > min && num < max
     })
   },
+  /** increase each number by n */
   add: function(n) {
     if (!n) {
       return this // don't bother
@@ -134,13 +143,16 @@ let methods = {
     })
     return this
   },
+  /** decrease each number by n*/
   subtract: function(n) {
     return this.add(n * -1)
   },
+  /** increase each number by 1 */
   increment: function() {
     this.add(1)
     return this
   },
+  /** decrease each number by 1 */
   decrement: function() {
     this.add(-1)
     return this
@@ -148,6 +160,7 @@ let methods = {
 }
 // aliases
 methods.toNice = methods.toLocaleString
+methods.isBetween = methods.between
 methods.minus = methods.subtract
 methods.plus = methods.add
 methods.equals = methods.isEqual

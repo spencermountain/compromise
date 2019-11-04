@@ -1,6 +1,7 @@
 const tens = 'twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|fourty'
 const teens = 'eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen'
 
+// this is a bit of a mess
 const findNumbers = function(doc, n) {
   let match = doc.match('#Value+ #Unit?')
 

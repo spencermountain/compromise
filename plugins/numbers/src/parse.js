@@ -1,4 +1,5 @@
 const toNumber = require('./convert/toNumber')
+
 // get a numeric value from this phrase
 const parseNumber = function(p) {
   let str = p.text('reduced')

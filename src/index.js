@@ -3,8 +3,6 @@ const version = require('./_version')
 const World = require('./World/World')
 const Doc = require('./Doc/Doc')
 
-process.on('warning', e => console.warn(e.stack))
-
 //blast-out our word-lists, just once
 let world = new World()
 
@@ -41,8 +39,8 @@ nlp.clone = function() {
 }
 
 /** re-generate a Doc object from .json() results */
-nlp.fromJSON = function(json) {
-  let list = tokenize.fromJSON(json)
+nlp.import = function(json) {
+  let list = tokenize.fromJSON(json, world)
   return new Doc(list, null, world)
 }
 

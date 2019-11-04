@@ -48,25 +48,39 @@ const fromText = function(text = '', world, pool) {
   return phrases
 }
 
-/** create a word-pool and Phrase objects from .json() results*/
-const fromJSON = function(data) {
+/** create a word-pool and Phrase objects from .export() json*/
+const fromJSON = function(json) {
+  if (typeof json === 'string') {
+    json = JSON.parse(json)
+  }
   let pool = new Pool()
   //create Phrase objects
-  let phrases = data.map(terms => {
-    //create Term objects
-    terms = terms.map(obj => {
-      let term = new Term(obj.text)
-      term.pre = obj.pre
-      term.post = obj.post
-      term.tags = obj.tags.reduce((h, tag) => {
-        h[tag] = true
+  let phrases = json.list.map(o => {
+    // unpack the tag data
+    let tagArr = o[1].split('|').map(str => {
+      let numList = str.split(',')
+      numList = numList.map(n => parseInt(n, 10))
+      // convert a list pf numbers into an array of tag names
+      return numList.reduce((h, num) => {
+        if (!json.tags[num]) {
+          console.warn('Compromise import: missing tag at index ' + num)
+        } else {
+          h[json.tags[num]] = true
+        }
         return h
       }, {})
+    })
+    let terms = splitTerms(o[0])
+    //create Term objects
+    terms = terms.map((str, i) => {
+      let term = new Term(str)
+      term.tags = tagArr[i]
       pool.add(term)
       return term
     })
     //add prev/next links
     addLinks(terms)
+    // return a proper Phrase object
     return new Phrase(terms[0].id, terms.length, pool)
   })
   return phrases

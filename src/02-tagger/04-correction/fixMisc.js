@@ -15,6 +15,8 @@ const miscCorrection = function(doc) {
   doc.match('#Noun [(who|whom)]').tag('Determiner', 'captain-who')
   //timezones
   doc.match('(standard|daylight|summer|eastern|pacific|central|mountain) standard? time').tag('Time', 'timezone')
+  //Brazilian pesos
+  doc.match('#Demonym #Currency').tag('Currency', 'demonym-currency')
   //about to go
   doc.match('[about to] #Adverb? #Verb').tag(['Auxiliary', 'Verb'], 'about-to')
   //right of way

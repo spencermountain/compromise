@@ -15,7 +15,7 @@ exports.last = function(n) {
   return this.slice(end - n, end)
 }
 
-/** grab a subset of the results*/
+/** grab a given subset of the results*/
 exports.slice = function(start, end) {
   let list = this.list.slice(start, end)
   return this.buildFrom(list)

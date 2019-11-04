@@ -50,14 +50,19 @@ module.exports = {
     notA: anything,
   },
 
+  // what, who, why
   QuestionWord: {
     notA: ['Determiner'],
   },
 
+  // peso, euro
   Currency: {},
+  // ughh
   Expression: {},
+  // dr.
   Abbreviation: {},
 
+  // internet tags
   Url: {
     notA: ['HashTag', 'PhoneNumber', 'Verb', 'Adjective', 'Value', 'AtMention', 'Email'],
   },

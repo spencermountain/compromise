@@ -1,5 +1,5 @@
-const emojiReg = require('./emoji/regex')
-const emoticon = require('./emoji/list')
+const emojiReg = require('./data/regex')
+const emoticon = require('./data/list')
 //for us, there's three types -
 // * ;) - emoticons
 // * 🌵 - unicode emoji
@@ -33,23 +33,28 @@ const isEmoticon = t => {
 }
 
 //these are somewhat popular.
-const tagEmoji = (term, world) => {
-  //test for :keyword: emojis
-  if (isCommaEmoji(term) === true) {
-    term.tag('Emoji', 'comma-emoji', world)
-    term.text = term.raw
-    term.pre = term.pre.replace(':', '')
-    term.post = term.post.replace(':', '')
-  }
-  //test for unicode emojis
-  if (term.text.match(emojiReg)) {
-    term.tag('Emoji', 'unicode-emoji', world)
-    term.text = term.raw
-  }
-  //test for emoticon ':)' emojis
-  if (isEmoticon(term) === true) {
-    term.tag('Emoji', 'emoticon-emoji', world)
-    term.text = term.raw
-  }
+const tagEmoji = doc => {
+  let terms = doc.termList()
+  let world = doc.world
+  terms.forEach(term => {
+    //test for :keyword: emojis
+    if (isCommaEmoji(term) === true) {
+      term.tag('Emoji', 'comma-emoji', world)
+      term.text = term.raw
+      term.pre = term.pre.replace(':', '')
+      term.post = term.post.replace(':', '')
+    }
+    //test for unicode emojis
+    if (term.text.match(emojiReg)) {
+      term.tag('Emoji', 'unicode-emoji', world)
+      term.text = term.raw
+    }
+    //test for emoticon ':)' emojis
+    if (isEmoticon(term) === true) {
+      term.tag('Emoji', 'emoticon-emoji', world)
+      term.text = term.raw
+    }
+  })
 }
+
 module.exports = tagEmoji

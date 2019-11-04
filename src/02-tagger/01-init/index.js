@@ -3,7 +3,6 @@ const steps = {
   punctuation: require('./02-punctuation'),
   regex: require('./03-regex'),
   suffix: require('./04-suffixes'),
-  emoji: require('./05-emoji'),
 }
 
 //'lookups' look at a term by itself
@@ -22,8 +21,6 @@ const lookups = function(doc) {
     steps.regex(term, world)
     //maybe we can guess
     steps.suffix(term, world)
-    // :c
-    steps.emoji(term, world)
   }
   return doc
 }

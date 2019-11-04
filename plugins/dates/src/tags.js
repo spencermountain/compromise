@@ -16,4 +16,7 @@ module.exports = {
     isA: ['Date', 'Noun'],
     notA: 'Value',
   },
+  Holiday: {
+    isA: ['Date', 'Noun'],
+  },
 }

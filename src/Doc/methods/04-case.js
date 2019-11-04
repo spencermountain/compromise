@@ -33,6 +33,6 @@ exports.toCamelCase = function() {
       }
     })
   })
-  this.tag('#CamelCase', 'toCamelCase')
+  // this.tag('#CamelCase', 'toCamelCase')
   return this
 }

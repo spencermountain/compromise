@@ -1,7 +1,6 @@
 const nouns = require('./tags/nouns')
 const verbs = require('./tags/verbs')
 const values = require('./tags/values')
-const dates = require('./tags/dates')
 const misc = require('./tags/misc')
 const inferTags = require('./inference/index')
 
@@ -17,7 +16,6 @@ const build = () => {
   addIn(nouns, tags)
   addIn(verbs, tags)
   addIn(values, tags)
-  addIn(dates, tags)
   addIn(misc, tags)
   // do the graph-stuff
   tags = inferTags(tags)

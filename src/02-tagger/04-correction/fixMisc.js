@@ -81,17 +81,17 @@ const miscCorrection = function(doc) {
       .tag('Adverb', 'adverb-like')
   }
 
-  let title = doc.if('#TitleCase')
+  let title = doc.if('@titleCase')
   if (title.found === true) {
     //FitBit Inc
-    title.match('#TitleCase (ltd|co|inc|dept|assn|bros)').tag('Organization', 'org-abbrv')
+    title.match('@titleCase (ltd|co|inc|dept|assn|bros)').tag('Organization', 'org-abbrv')
     //Foo District
     title
-      .match('#TitleCase+ (district|region|province|county|prefecture|municipality|territory|burough|reservation)')
+      .match('@titleCase+ (district|region|province|county|prefecture|municipality|territory|burough|reservation)')
       .tag('Region', 'foo-district')
     //District of Foo
     title
-      .match('(district|region|province|municipality|territory|burough|state) of #TitleCase')
+      .match('(district|region|province|municipality|territory|burough|state) of @titleCase')
       .tag('Region', 'district-of-Foo')
   }
 

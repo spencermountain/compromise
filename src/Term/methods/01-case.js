@@ -24,3 +24,4 @@ exports.toTitleCase = function() {
 exports.isTitleCase = function() {
   return titleCase.test(this.text)
 }
+exports.titleCase = exports.isTitleCase

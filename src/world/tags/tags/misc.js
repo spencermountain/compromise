@@ -26,6 +26,19 @@ module.exports = {
     notA: ['Noun', 'Verb', 'Adjective', 'Value'],
   },
 
+  // Dates:
+  //not a noun, but usually is
+  Date: {
+    notA: ['Verb', 'Conjunction', 'Adverb', 'Preposition', 'Adjective'],
+  },
+  Month: {
+    isA: ['Date', 'Singular'],
+    notA: ['Year', 'WeekDay', 'Time'],
+  },
+  WeekDay: {
+    isA: ['Date', 'Noun'],
+  },
+
   //glue
   Determiner: {
     notA: anything,
@@ -40,9 +53,7 @@ module.exports = {
   QuestionWord: {
     notA: ['Determiner'],
   },
-  RelativeProunoun: {
-    isA: ['Pronoun'],
-  },
+
   Currency: {},
   Expression: {},
   Abbreviation: {},

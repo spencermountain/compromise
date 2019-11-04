@@ -30,7 +30,7 @@ const fixNouns = function(doc) {
     //organization
     let org = noun.if('#Organization')
     if (org.found === true) {
-      org.match('#Organization of the? #TitleCase').tagSafe('Organization', 'org-of-place')
+      org.match('#Organization of the? @titleCase').tagSafe('Organization', 'org-of-place')
       org.match('#Organization #Country').tag('Organization', 'org-country')
       org.match('(world|global|international|national|#Demonym) #Organization').tag('Organization', 'global-org')
     }

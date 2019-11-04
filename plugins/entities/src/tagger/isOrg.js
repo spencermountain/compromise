@@ -11,7 +11,7 @@ const maybeOrg = function(t) {
     return false
   }
   //must be one of these
-  if (t.tags.TitleCase || t.tags.Organization || t.tags.Acronym || t.tags.Place) {
+  if (t.tags.Organization || t.tags.Acronym || t.tags.Place || t.titleCase()) {
     return true
   }
   return false

@@ -2,16 +2,7 @@ const doesMatch = require('./_doesMatch')
 const isAcronym = require('../normalize/isAcronym')
 
 // these tags aren't juicy-enough
-const boring = {
-  TitleCase: true,
-  UpperCase: true,
-  CamelCase: true,
-  Hyphenated: true,
-  StartBracket: true,
-  EndBracket: true,
-  Comma: true,
-  ClauseEnd: true,
-}
+const boring = {}
 
 /** check a match object against this term */
 exports.doesMatch = function(reg, index, length) {

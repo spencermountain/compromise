@@ -10,7 +10,7 @@
   v
   <!-- file size -->
   <a href="https://unpkg.com/spacetime/builds/compromise-paragraphs.min.js">
-    <img src="https://badge-size.herokuapp.com/spencermountain/compromise-verbs/master/builds/compromise-paragraphs.min.js" />
+    <img src="https://badge-size.herokuapp.com/spencermountain/compromise-paragraphs/master/builds/compromise-paragraphs.min.js" />
   </a>
    <hr/>
 </div>

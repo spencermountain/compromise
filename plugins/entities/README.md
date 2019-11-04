@@ -5,18 +5,18 @@
   
   <!-- npm version -->
   <a href="https://npmjs.org/package/compromise-entities">
-    <img src="https://img.shields.io/npm/v/compromise-things.svg?style=flat-square" />
+    <img src="https://img.shields.io/npm/v/compromise-entities.svg?style=flat-square" />
   </a>
   
   <!-- file size -->
   <a href="https://unpkg.com/spacetime/builds/compromise-entities.min.js">
-    <img src="https://badge-size.herokuapp.com/spencermountain/compromise-things/master/builds/compromise-entities.min.js" />
+    <img src="https://badge-size.herokuapp.com/spencermountain/compromise-entities/master/builds/compromise-entities.min.js" />
   </a>
    <hr/>
 </div>
 
 <div align="center">
-  <code>npm install compromise-things</code>
+  <code>npm install compromise-entities</code>
 </div>
 
 ```js

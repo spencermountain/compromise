@@ -5,12 +5,12 @@
   
   <!-- npm version -->
   <a href="https://npmjs.org/package/compromise-output">
-    <img src="https://img.shields.io/npm/v/compromise-verbs.svg?style=flat-square" />
+    <img src="https://img.shields.io/npm/v/compromise-output.svg?style=flat-square" />
   </a>
   
   <!-- file size -->
   <a href="https://unpkg.com/spacetime/builds/compromise-output.min.js">
-    <img src="https://badge-size.herokuapp.com/spencermountain/compromise-verbs/master/builds/compromise-output.min.js" />
+    <img src="https://badge-size.herokuapp.com/spencermountain/compromise-output/master/builds/compromise-output.min.js" />
   </a>
    <hr/>
 </div>

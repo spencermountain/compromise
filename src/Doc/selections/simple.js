@@ -4,21 +4,15 @@ const arr = [
   ['hashTags', '#HashTag'],
   ['emails', '#Email'],
   ['atMentions', '#AtMention'],
-  ['emoji', '#Emoji'],
   ['urls', '#Url'],
   ['adverbs', '#Adverb'],
   ['pronouns', '#Pronoun'],
-  ['acronyms', '#Acronym'],
   ['fractions', '#Fraction'],
   ['money', '#Money'],
-  ['months', '#Month'],
-  ['years', '#Year'],
   ['conjunctions', '#Conjunction'],
   ['prepositions', '#Preposition'],
   ['abbreviations', '#Abbreviation'],
   ['romanNumerals', '#RomanNumeral'],
-  ['firstNames', '#FirstName'],
-  ['lastNames', '#LastName'],
 ]
 let methods = {}
 arr.forEach(a => {

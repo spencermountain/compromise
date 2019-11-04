@@ -47,12 +47,12 @@ exports.wordCount = function() {
 exports.wordcount = exports.wordCount
 
 /** turn on logging for decision-debugging */
-exports.verbose = function(bool) {
-  if (bool === undefined) {
-    bool = true
-  }
-  this.world.verbose = bool
-}
+// exports.verbose = function(bool) {
+//   if (bool === undefined) {
+//     bool = true
+//   }
+//   this.world.verbose = bool
+// }
 
 /** todo: */
 exports.pre = function(str) {

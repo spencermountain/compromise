@@ -83,7 +83,7 @@ const fixVerb = function(doc) {
       //sometimes adverbs - 'pretty good','well above'
       copula
         .match('#Copula (pretty|dead|full|well) (#Adjective|#Noun)')
-        .ifNo('#Comma')
+        .ifNo('@hasComma')
         .tag('#Copula #Adverb #Adjective', 'sometimes-adverb')
     }
 

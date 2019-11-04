@@ -8,86 +8,31 @@ module.exports = {
     },
     toShortForm: {
       desc: "turn 'Thurs' and 'Sept' into `Thursday` and `September`",
-      returns: 'Text',
+      returns: 'Doc',
       example: "nlp('April, June, and Sept').dates().toShortForm().all().out()\n//Apr, Jun, and Sept",
     },
     toLongForm: {
       desc: "turn `Thursday` and `September` into 'Thurs' and 'Sept'",
-      returns: 'Text',
+      returns: 'Doc',
       example: "nlp('April, June, and Sept').dates().toShortForm().all().out()\n//April, June, and September",
-    },
-  },
-
-  people: {
-    data: {
-      desc: 'return a handy array of meta-data of people mentioned in the text',
-      example:
-        "nlp('The bone-rattling bass of Mel Schacher? The competent drum work of Don Brewer?').people().data()\n//[{text:' Mel Schacher'}, {text:'Don Brewer'}]",
-      returns: 'array',
-    },
-    pronoun: {
-      desc: 'find the pronoun used to refer to the person, or suggest one based on their inferred gender.',
-      returns: 'String',
-      example: "nlp('Tony Hawk did a 900').people().pronoun()\n//'he'",
-    },
-    firstNames: {
-      desc: 'grab only the first-names',
-      returns: 'Text',
-      example: "nlp('Tony Hawk did a 900').people().firstNames().out('array')\n//['tony']",
-    },
-    lastNames: {
-      desc: 'grab only the last-names',
-      returns: 'Text',
-      example: "nlp('Tony Hawk did a 900').people().lastNames().out('array')\n//['hawk']",
     },
   },
 
   acronyms: {
     stripPeriods: {
       desc: "turn 'FBI' into 'F.B.I.'",
-      returns: 'Text',
+      returns: 'Doc',
       example: "nlp('Director of the F.B.I.').acronyms().stripPeriods().out()\n//Director of the FBI",
     },
     addPeriods: {
       desc: "turn 'FBI' into 'F.B.I.'",
-      returns: 'Text',
+      returns: 'Doc',
       example: "nlp('Director of the FBI').acronyms().addPeriods().out()\n//Director of the F.B.I.",
     },
     data: {
       desc: 'return an array of meta-data for the acronyms in this text',
       example:
         "nlp('In the USA, the big CIA. The Bloods and the Crips, and the KKK.').acronyms().data()\n//[{text:'USA'...}]",
-      returns: 'array',
-    },
-  },
-
-  organizations: {
-    data: {
-      desc: 'return an array of named-organizations in this text',
-      example:
-        "nlp('Your dreams may vary from those of Globex Corporation, its subsidiaries and shareholders.').organizations().data()\n//[{text:'Globex Corporation'}]",
-      returns: 'array',
-    },
-  },
-  places: {
-    data: {
-      desc: 'return an array of locations mentioned in this text',
-      example: "nlp('you could still go to McGill, the Harvard of Canada!').places().data()\n//[{normal:'canada'}]",
-      returns: 'array',
-    },
-  },
-  questions: {
-    data: {
-      desc: 'return an array of question sentences in this text',
-      example: "nlp('are you saying boo, or boo-urns?').questions().data().length\n//1",
-      returns: 'array',
-    },
-  },
-  topics: {
-    data: {
-      desc: 'return the people, places, and organizations of this text',
-      example:
-        "nlp('Hey everybody, I’m lookin’ for Amanda Hugginkiss').topics().data()\n//[{text:'Amanda Hugginkiss'}]",
       returns: 'array',
     },
   },

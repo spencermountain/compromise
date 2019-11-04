@@ -66,18 +66,18 @@ const fixNouns = function(doc) {
     //spencer kelly's
     poss
       .match('#FirstName #Acronym? #Possessive')
-      .ifNo('#Comma')
+      .ifNo('@hasComma')
       .match('#FirstName #Acronym? #LastName')
       .tag('Possessive')
     //Super Corp's fundraiser
     poss
       .match('#Organization+ #Possessive')
-      .ifNo('#Comma')
+      .ifNo('@hasComma')
       .tag('Possessive')
     //Los Angeles's fundraiser
     poss
       .match('#Place+ #Possessive')
-      .ifNo('#Comma')
+      .ifNo('@hasComma')
       .tag('Possessive')
     //her polling
     poss.match('#Possessive [#Verb]').tag('Noun', 'correction-possessive')

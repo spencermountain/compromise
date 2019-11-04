@@ -65,7 +65,7 @@ const miscCorrection = function(doc) {
     //that car goes
     which.match('that #Noun [#Verb]').tag('Determiner', 'that-determiner')
     //work, which has been done.
-    which.match('#Comma [which] (#Pronoun|#Verb)').tag('Preposition', 'which-copula')
+    which.match('@hasComma [which] (#Pronoun|#Verb)').tag('Preposition', 'which-copula')
   }
 
   //like

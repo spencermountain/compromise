@@ -7,27 +7,27 @@ module.exports = {
   },
   isPlural: {
     desc: 'return only the plural nouns',
-    returns: 'Text',
+    returns: 'Doc',
     example: "nlp('All my life I’ve had one dream, to accomplish my many goals.').nouns().isPlural().text()\n//goals",
   },
   hasPlural: {
     desc: "return only the nouns which can be plural (sometimes called 'countable' nouns)",
-    returns: 'Text',
+    returns: 'Doc',
     example: "nlp('bring joy to the air, water, earth, and sky.').nouns().hasPlural().length\n//0",
   },
   toPlural: {
     desc: 'transform singular nouns into their plural (inflected) forms',
-    returns: 'Text',
+    returns: 'Doc',
     example: "nlp('the purple dinosaur').nouns().toPlural().all().text()\n//the purple dinosaurs",
   },
   toSingular: {
     desc: 'transform plural nouns into their singular forms',
-    returns: 'Text',
+    returns: 'Doc',
     example: "nlp('the king’s men').nouns().toSingular().text()\n//the king's man",
   },
   toPossessive: {
     desc: "transform nouns into a possessive form  - John → John's",
-    returns: 'Text',
+    returns: 'Doc',
     example: "nlp('the king').nouns().toPossessive().text()\n//the king's",
   },
   // articles: {

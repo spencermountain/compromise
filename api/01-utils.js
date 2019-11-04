@@ -16,7 +16,7 @@ module.exports = {
   clone: {
     desc: 'copy the object, so changes no longer effect the original (make it ~immutable)',
     mutative: false,
-    returns: 'Text',
+    returns: 'Doc',
     example: `nlp('would somebody please think of the children').clone().toUpperCase().parent().out()\n//would somebody please think of the children`,
   },
   wordCount: {},

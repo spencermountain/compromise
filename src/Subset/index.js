@@ -2,11 +2,11 @@ const selections = [
   require('./Acronyms'),
   require('./Clauses'),
   require('./Contractions'),
+  require('./Lists'),
+  require('./Nouns'),
   require('./Parentheses'),
   require('./Possessives'),
-  require('./Lists'),
   require('./Quotations'),
-  require('./Nouns'),
   require('./Verbs'),
 ]
 

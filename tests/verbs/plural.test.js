@@ -1,5 +1,5 @@
 const test = require('tape')
-const nlp = require('./_lib')
+const nlp = require('../_lib')
 
 test('plural-verbs:', function(t) {
   let r = nlp('i look at')

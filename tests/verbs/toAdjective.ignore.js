@@ -1,5 +1,5 @@
 const test = require('tape')
-const nlp = require('../../lib/nlp')
+const nlp = require('../_lib')
 
 test('verb-to-adjective:', function(t) {
   ;[

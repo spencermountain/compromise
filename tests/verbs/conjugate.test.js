@@ -1,5 +1,5 @@
 const test = require('tape')
-const nlp = require('./_lib')
+const nlp = require('../_lib')
 
 const arr = [
   {
@@ -233,8 +233,7 @@ const arr = [
 ]
 test('conjugation:', function(t) {
   const test_conjugation = function(inf, o, form, original) {
-    const msg =
-      'from ' + original + ' to ' + form + ':  [' + o[original] + '] -> [' + inf[form] + ']'
+    const msg = 'from ' + original + ' to ' + form + ':  [' + o[original] + '] -> [' + inf[form] + ']'
     t.equal(inf[form], o[form], msg)
   }
 

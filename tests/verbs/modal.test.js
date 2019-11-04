@@ -1,5 +1,5 @@
 const test = require('tape')
-const nlp = require('./_lib')
+const nlp = require('../_lib')
 
 //ignore some modals during conjugation, i guess
 test('ignore-would-behaviour', t => {

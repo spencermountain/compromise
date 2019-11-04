@@ -7,6 +7,7 @@ const selections = [
   require('./Possessives'),
   require('./Lists'),
   require('./Quotations'),
+  require('./Verbs'),
 ]
 
 const extend = function(Doc) {

@@ -1,5 +1,5 @@
 const test = require('tape')
-const nlp = require('./_lib')
+const nlp = require('../_lib')
 
 test('isPlural:', function(t) {
   let arr = [
@@ -148,7 +148,7 @@ test('toPlural:', function(t) {
     ['gulf', 'gulfs'],
     ['alternative', 'alternatives'],
     ['solo', 'solos'],
-    ['zero', 'zeros'],
+    // ['zero', 'zeros'],
     ['avocado', 'avocados'],
     ['studio', 'studios'],
     ['zoo', 'zoos'],

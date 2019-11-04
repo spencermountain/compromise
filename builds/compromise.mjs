@@ -10416,6 +10416,287 @@ const addMethod$7 = function(Doc) {
 };
 var Quotations = addMethod$7;
 
+const noPlural =
+  '(#Pronoun|#Place|#Value|#Person|#Uncountable|#Month|#WeekDay|#Holiday|#Possessive)';
+
+//certain words can't be plural, like 'peace'
+const hasPlural = function(doc) {
+  if (doc.has('#Plural') === true) {
+    return true
+  }
+  // these can't be plural
+  if (doc.has(noPlural) === true) {
+    return false
+  }
+  return true
+};
+
+var hasPlural_1 = hasPlural;
+
+//chooses an indefinite aricle 'a/an' for a word
+const irregulars$8 = {
+  hour: 'an',
+  heir: 'an',
+  heirloom: 'an',
+  honest: 'an',
+  honour: 'an',
+  honor: 'an',
+  uber: 'an', //german u
+};
+//pronounced letters of acronyms that get a 'an'
+const an_acronyms = {
+  a: true,
+  e: true,
+  f: true,
+  h: true,
+  i: true,
+  l: true,
+  m: true,
+  n: true,
+  o: true,
+  r: true,
+  s: true,
+  x: true,
+};
+//'a' regexes
+const a_regexs = [
+  /^onc?e/i, //'wu' sound of 'o'
+  /^u[bcfhjkqrstn][aeiou]/i, // 'yu' sound for hard 'u'
+  /^eul/i,
+];
+
+const makeArticle = function(doc) {
+  //no 'the john smith', but 'a london hotel'
+  if (doc.has('#Person') || doc.has('#Place')) {
+    return ''
+  }
+  //no a/an if it's plural
+  if (doc.has('#Plural')) {
+    return 'the'
+  }
+  let str = doc.text('normal').trim();
+  //explicit irregular forms
+  if (irregulars$8.hasOwnProperty(str)) {
+    return irregulars$8[str]
+  }
+  //spelled-out acronyms
+  let firstLetter = str.substr(0, 1);
+  if (doc.has('^@isAcronym') && an_acronyms.hasOwnProperty(firstLetter)) {
+    return 'an'
+  }
+  //'a' regexes
+  for (let i = 0; i < a_regexs.length; i++) {
+    if (a_regexs[i].test(str)) {
+      return 'a'
+    }
+  }
+  //basic vowel-startings
+  if (/^[aeiou]/i.test(str)) {
+    return 'an'
+  }
+  return 'a'
+};
+
+var getArticle = makeArticle;
+
+//similar to plural/singularize rules, but not the same
+const isPlural$1 = [
+  /(antenn|formul|nebul|vertebr|vit)ae$/i,
+  /(octop|vir|radi|nucle|fung|cact|stimul)i$/i,
+  /men$/i,
+  /.tia$/i,
+  /(m|l)ice$/i,
+];
+
+//similar to plural/singularize rules, but not the same
+const isSingular$1 = [
+  /(ax|test)is$/i,
+  /(octop|vir|radi|nucle|fung|cact|stimul)us$/i,
+  /(octop|vir)i$/i,
+  /(rl)f$/i,
+  /(alias|status)$/i,
+  /(bu)s$/i,
+  /(al|ad|at|er|et|ed|ad)o$/i,
+  /(ti)um$/i,
+  /(ti)a$/i,
+  /sis$/i,
+  /(?:(^f)fe|(lr)f)$/i,
+  /hive$/i,
+  /(^aeiouy|qu)y$/i,
+  /(x|ch|ss|sh|z)$/i,
+  /(matr|vert|ind|cort)(ix|ex)$/i,
+  /(m|l)ouse$/i,
+  /(m|l)ice$/i,
+  /(antenn|formul|nebul|vertebr|vit)a$/i,
+  /.sis$/i,
+  /^(?!talis|.*hu)(.*)man$/i,
+];
+var _rules$2 = {
+  isSingular: isSingular$1,
+  isPlural: isPlural$1,
+};
+
+const endS = /s$/;
+// double-check this term, if it is not plural, or singular.
+// (this is a partial copy of ./tagger/fallbacks/plural)
+// fallback plural if it ends in an 's'.
+const isPlural$2 = function(str) {
+  // isSingular suffix rules
+  if (_rules$2.isSingular.find(reg => reg.test(str))) {
+    return false
+  }
+  // does it end in an s?
+  if (endS.test(str) === true) {
+    return true
+  }
+  // is it a plural like 'fungi'?
+  if (_rules$2.isPlural.find(reg => reg.test(str))) {
+    return true
+  }
+  return null
+};
+var isPlural_1$1 = isPlural$2;
+
+const exceptions = {
+  he: 'his',
+  she: 'hers',
+  they: 'theirs',
+  we: 'ours',
+  i: 'mine',
+  you: 'yours',
+
+  her: 'hers',
+  their: 'theirs',
+  our: 'ours',
+  my: 'mine',
+  your: 'yours',
+};
+
+// turn "David" to "David's"
+const toPossessive = function(doc) {
+  let str = doc.text('text').trim();
+  // exceptions
+  if (exceptions.hasOwnProperty(str)) {
+    doc.replaceWith(exceptions[str]);
+    doc.tag('Possessive', 'toPossessive');
+    return
+  }
+  // flanders'
+  if (/s$/.test(str)) {
+    str += "'";
+    doc.replaceWith(str);
+    doc.tag('Possessive', 'toPossessive');
+    return
+  }
+  //normal form:
+  str += "'s";
+  doc.replaceWith(str);
+  doc.tag('Possessive', 'toPossessive');
+  return
+};
+var toPossessive_1 = toPossessive;
+
+// .nouns() supports some noun-phrase-ish groupings
+// pull these apart, if necessary
+const parse$1 = function(doc) {
+  let res = {
+    main: doc,
+  };
+  //support 'mayor of chicago' as one noun-phrase
+  if (doc.has('#Noun (of|by|for) .')) {
+    let m = doc.splitAfter('[#Noun+]');
+    res.main = m.eq(0);
+    res.post = m.eq(1);
+  }
+  return res
+};
+var parse_1 = parse$1;
+
+const addMethod$8 = function(Doc) {
+  /**  */
+  class Nouns extends Doc {
+    /** overload the original json with noun information */
+    json(options) {
+      options = options || { text: true, normal: true, trim: true, terms: true };
+      let res = [];
+      this.forEach(doc => {
+        let json = doc.json(options)[0];
+        json.article = getArticle(doc);
+        res.push(json);
+      });
+      return res
+    }
+
+    isPlural() {
+      return this.if('#Plural') //assume tagger has run?
+    }
+    hasPlural() {
+      return this.filter(d => hasPlural_1(d))
+    }
+    toPlural() {
+      let toPlural = this.world.transforms.toPlural;
+      this.forEach(doc => {
+        if (doc.has('#Plural') || hasPlural_1(doc) === false) {
+          return
+        }
+        // double-check it isn't an un-tagged plural
+        let main = parse_1(doc).main;
+        let str = main.text();
+        if (!main.has('#Singular') && isPlural_1$1(str) === true) {
+          return
+        }
+        str = toPlural(str, this.world);
+        main.replace(str).tag('#Plural');
+      });
+      return this
+    }
+    toSingular() {
+      let toSingular = this.world.transforms.toSingular;
+      this.forEach(doc => {
+        if (doc.has('#Singular') || hasPlural_1(doc) === false) {
+          return
+        }
+        // double-check it isn't an un-tagged plural
+        let main = parse_1(doc).main;
+        let str = main.text();
+        if (!main.has('#Plural') && isPlural_1$1(str) !== true) {
+          return
+        }
+        str = toSingular(str, this.world);
+        main.replace(str).tag('#Singular');
+      });
+      return this
+    }
+    toPossessive() {
+      this.forEach(d => {
+        toPossessive_1(d);
+      });
+      return this
+    }
+  }
+
+  Doc.prototype.nouns = function(n) {
+    let match = this.clauses();
+    match = match.match('#Noun+ (of|by)? the? #Noun+?');
+    //nouns that we don't want in these results, for weird reasons
+    match = match.not('#Pronoun');
+    match = match.not('(there|these)');
+    match = match.not('(#Month|#WeekDay)'); //allow Durations, Holidays
+    // //allow possessives like "spencer's", but not generic ones like,
+    match = match.not('(my|our|your|their|her|his)');
+    match = match.not('(of|for|by|the)$');
+
+    // match = match.splitAfter('@hasComma')
+
+    if (typeof n === 'number') {
+      match = match.get(n);
+    }
+    return new Nouns(match.list, this, this.world)
+  };
+  return Doc
+};
+var Nouns = addMethod$8;
+
 // turn 'would not really walk up' into parts
 const parseVerb = function(vb) {
   let parsed = {
@@ -10427,7 +10708,7 @@ const parseVerb = function(vb) {
   };
   return parsed
 };
-var parse$1 = parseVerb;
+var parse$2 = parseVerb;
 
 // walked => walk  - turn a verb into it's root form
 const toInfinitive$1 = function(parsed, world) {
@@ -10468,7 +10749,7 @@ const findNoun = function(vb) {
 //sometimes you can tell if a verb is plural/singular, just by the verb
 // i am / we were
 // othertimes you need its subject 'we walk' vs 'i walk'
-const isPlural$1 = function(parsed) {
+const isPlural$3 = function(parsed) {
   let vb = parsed.verb;
   if (vb.has('(are|were|does)') || parsed.auxiliary.has('(are|were|does)')) {
     return true
@@ -10489,11 +10770,11 @@ const isPlural$1 = function(parsed) {
   }
   return null
 };
-var isPlural_1$1 = isPlural$1;
+var isPlural_1$2 = isPlural$3;
 
 /** too many special cases for is/was/will be*/
 const toBe = parsed => {
-  let plural = isPlural_1$1(parsed);
+  let plural = isPlural_1$2(parsed);
   let isNegative = parsed.negative.found;
   //account for 'i is' -> 'i am' irregular
   // if (vb.parent && vb.parent.has('i #Adverb? #Copula')) {
@@ -10598,7 +10879,7 @@ const toNegative = function(parsed, world) {
   if (vb.has('#PresentTense')) {
     let inf = toInfinitive_1$1(parsed, world);
     vb.replace(inf);
-    if (isPlural_1$1(parsed)) {
+    if (isPlural_1$2(parsed)) {
       vb.prepend('do not');
     } else {
       vb.prepend('does not');
@@ -10614,7 +10895,7 @@ const toNegative = function(parsed, world) {
   }
 
   //fallback 1:  walk -> does not walk
-  if (isPlural_1$1(parsed)) {
+  if (isPlural_1$2(parsed)) {
     vb.prepend('does not');
     return
   }
@@ -10638,7 +10919,7 @@ var isPositive = function() {
 var toNegative_1$1 = function() {
   this.list.forEach(p => {
     let doc = this.buildFrom([p]);
-    let parsed = parse$1(doc);
+    let parsed = parse$2(doc);
     toNegative_1(parsed, doc.world);
   });
   return this
@@ -10657,22 +10938,22 @@ var methods$5 = {
 };
 
 /** */
-var isPlural_1$2 = function() {
+var isPlural_1$3 = function() {
   let list = [];
   this.forEach(vb => {
-    let parsed = parse$1(vb);
-    if (isPlural_1$1(parsed, this.world) === true) {
+    let parsed = parse$2(vb);
+    if (isPlural_1$2(parsed, this.world) === true) {
       list.push(vb.list[0]);
     }
   });
   return this.buildFrom(list)
 };
 /** */
-var isSingular$1 = function() {
+var isSingular$2 = function() {
   let list = [];
   this.forEach(vb => {
-    let parsed = parse$1(vb);
-    if (isPlural_1$1(parsed, this.world) === false) {
+    let parsed = parse$2(vb);
+    if (isPlural_1$2(parsed, this.world) === false) {
       list.push(vb.list[0]);
     }
   });
@@ -10680,8 +10961,8 @@ var isSingular$1 = function() {
 };
 
 var methods$6 = {
-	isPlural: isPlural_1$2,
-	isSingular: isSingular$1
+	isPlural: isPlural_1$3,
+	isSingular: isSingular$2
 };
 
 /**  */
@@ -10693,7 +10974,7 @@ var methods$6 = {
 var conjugate_1$2 = function() {
   let result = [];
   this.forEach(vb => {
-    let parsed = parse$1(vb);
+    let parsed = parse$2(vb);
     let forms = conjugate_1$1(parsed, this.world);
     result.push(forms);
   });
@@ -10702,7 +10983,7 @@ var conjugate_1$2 = function() {
 /** */
 var toPastTense = function() {
   this.forEach(vb => {
-    let parsed = parse$1(vb);
+    let parsed = parse$2(vb);
     let str = conjugate_1$1(parsed, this.world).PastTense;
     vb.replace(str);
   });
@@ -10711,7 +10992,7 @@ var toPastTense = function() {
 /** */
 var toPresentTense = function() {
   this.forEach(vb => {
-    let parsed = parse$1(vb);
+    let parsed = parse$2(vb);
     let str = conjugate_1$1(parsed, this.world).PresentTense;
     vb.replace(str);
   });
@@ -10720,7 +11001,7 @@ var toPresentTense = function() {
 /** */
 var toFutureTense = function() {
   this.forEach(vb => {
-    let parsed = parse$1(vb);
+    let parsed = parse$2(vb);
     let inf = toInfinitive_1$1(parsed, this.world);
     vb.replace('will ' + inf); //not smart.
   });
@@ -10729,7 +11010,7 @@ var toFutureTense = function() {
 /** */
 var toInfinitive_1$2 = function() {
   this.forEach(vb => {
-    let parsed = parse$1(vb);
+    let parsed = parse$2(vb);
     let inf = toInfinitive_1$1(parsed, this.world);
     vb.replace(inf);
   });
@@ -10738,7 +11019,7 @@ var toInfinitive_1$2 = function() {
 /** */
 var toGerund = function() {
   this.forEach(vb => {
-    let parsed = parse$1(vb);
+    let parsed = parse$2(vb);
     let str = conjugate_1$1(parsed, this.world).Gerund;
     vb.replace(str);
   });
@@ -10762,7 +11043,7 @@ const methods$8 = [
   methods$7,
 ];
 
-const addMethod$8 = function(Doc) {
+const addMethod$9 = function(Doc) {
   /**  */
   class Verbs extends Doc {
     constructor(list, from, world) {
@@ -10780,7 +11061,7 @@ const addMethod$8 = function(Doc) {
       let res = [];
       this.forEach(p => {
         let json = p.json(options)[0];
-        let parsed = parse$1(p);
+        let parsed = parse$2(p);
         json.parts = {};
         Object.keys(parsed).forEach(k => {
           json.parts[k] = parsed[k].text('normal');
@@ -10799,7 +11080,7 @@ const addMethod$8 = function(Doc) {
     adverbs() {
       let list = [];
       this.forEach(vb => {
-        let advb = parse$1(vb).adverb;
+        let advb = parse$2(vb).adverb;
         if (advb.found) {
           list = list.concat(advb.list);
         }
@@ -10833,7 +11114,7 @@ const addMethod$8 = function(Doc) {
   };
   return Doc
 };
-var Verbs = addMethod$8;
+var Verbs = addMethod$9;
 
 const selections$1 = [
   Acronyms,
@@ -10844,6 +11125,7 @@ const selections$1 = [
   Possessives,
   Lists,
   Quotations,
+  Nouns,
   Verbs,
 ];
 

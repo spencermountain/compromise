@@ -7,6 +7,7 @@ const selections = [
   require('./Possessives'),
   require('./Lists'),
   require('./Quotations'),
+  require('./Nouns'),
   require('./Verbs'),
 ]
 

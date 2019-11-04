@@ -1,9 +1,0 @@
-demo
-scripts
-src
-tests
-.eslintrc
-.babelrc
-.gitignore
-changelog.md
-scratch.js

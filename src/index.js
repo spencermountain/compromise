@@ -30,6 +30,7 @@ nlp.tokenize = function(text = '', lexicon) {
 /** mix in a compromise-plugin */
 nlp.extend = function(fn) {
   fn(Doc, world)
+  return this
 }
 
 /** make a deep-copy of the library state */
@@ -47,6 +48,7 @@ nlp.import = function(json) {
 /** log our decision-making for debugging */
 nlp.verbose = function(bool = true) {
   world.verbose(bool)
+  return this
 }
 
 /** current version of the library */

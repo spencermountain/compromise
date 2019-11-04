@@ -12,14 +12,18 @@ let doc = Object.assign(
   require('./10-selectors')
 )
 
-let plugins = Object.assign({}, require('./plugins'))
-plugins.numbers = require('./plugins/numbers')
-plugins.nouns = require('./plugins/nouns')
-plugins.sentences = require('./plugins/sentences')
-plugins.verbs = require('./plugins/verbs')
-plugins.contractions = require('./plugins/contractions')
+// let plugins = Object.assign({}, require('./plugins'))
+// plugins.numbers = require('./plugins/numbers')
+// plugins.sentences = require('./plugins/sentences')
+
+let plugins = {
+  contractions: require('./11-contractions'),
+  nouns: require('./12-nouns'),
+  verbs: require('./13-verbs'),
+}
 
 module.exports = {
   doc: doc,
-  subset: plugins,
+  plugins: plugins,
+  main: require('./_constructor'),
 }

@@ -38,3 +38,21 @@ test('document methods eval', function(t) {
   })
   t.end()
 })
+
+test('constructor methods eval', function(t) {
+  Object.keys(api.main).forEach(k => {
+    if (skip[k] === true) {
+      return
+    }
+    let code = `(function(){
+      ${api.main[k].example}
+    })()`
+    try {
+      eval(code)
+      t.ok(true, 'eval ' + k)
+    } catch (e) {
+      t.ok(false, 'eval ' + k)
+    }
+  })
+  t.end()
+})

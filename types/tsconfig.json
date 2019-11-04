@@ -4,6 +4,7 @@
     "module": "commonjs",
     "lib": [],
     "checkJs": true,
+    "allowJs": true,
     "sourceMap": false,
     "importHelpers": true,
     "downlevelIteration": true,

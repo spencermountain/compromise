@@ -61,14 +61,6 @@ module.exports = {
     },
   },
 
-  clauses: {
-    data: {
-      desc: 'return an array of words split by sentence phrase (clause)',
-      example:
-        "nlp('All right, Colossus, you’re free to go, but stay away from Death Mountain').clauses().data()\n//[{normal:'all right'}, {normal:'Colossus'}, {normal:'you're free to go'},]",
-      returns: 'array',
-    },
-  },
   organizations: {
     data: {
       desc: 'return an array of named-organizations in this text',
@@ -84,31 +76,10 @@ module.exports = {
       returns: 'array',
     },
   },
-  parentheses: {
-    data: {
-      desc: 'return a list of phrases between ( ) brackets.',
-      example: "nlp('Use a pointed stick (a pencil) or a similar tool').parentheses().data()\n//[{text:'a pencil'}..]",
-      returns: 'array',
-    },
-  },
   questions: {
     data: {
       desc: 'return an array of question sentences in this text',
       example: "nlp('are you saying boo, or boo-urns?').questions().data().length\n//1",
-      returns: 'array',
-    },
-  },
-  quotations: {
-    data: {
-      desc: 'return an array of meta-data with the parsed quoations',
-      example: 'nlp(\'the he said "crazy like a fox!".\').quotations().data().length\n//1',
-      returns: 'array',
-    },
-  },
-  possessives: {
-    strip: {
-      desc: 'grab all the things that are possessive, like "Homer Simpson\'s"',
-      example: "nlp('moe’s tavern').possessives().strip()\n//moe",
       returns: 'array',
     },
   },

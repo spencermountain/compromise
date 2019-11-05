@@ -52,9 +52,7 @@ doc.if('the #Adjective of times').text()
 ```
 ```js
 if(doc.has('^simon says #Verb+')){
-  doThis(doc.match('#Verb+ .*').text())
-}else{
-  doThis('')
+  return doc.match('#Verb .*').text()
 }
 ```
 <div align="right">
@@ -116,7 +114,7 @@ grab the subjects of a text:
 nlp.extend(require('compromise-entities'))
 
 nlp(buddyHolly).people().if('mary').json()
-// [{text:'Marry Tyler Moore'}]
+// [{text:'Mary Tyler Moore'}]
 
 nlp(freshPrince).places().first().text()
 // 'West Phillidelphia'
@@ -438,7 +436,7 @@ you can specify which data you'd like to return with these options:
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221824-09809d80-ffb8-11e9-9ef0-6ed3574b0ce8.png"/>
 </div>
 
-#### Plugins:
+### Plugins:
 These are some helpful extensions:
 
 ##### Adjectives
@@ -457,8 +455,7 @@ These are some helpful extensions:
 * **[.dates()](#)**  -  find dates like `June 8th` or `03/03/18`
   * **[.dates().json()](#)**   -  overloaded output with date metadata
 
-##### Emoji
-`npm install compromise-emoji`
+##### Emoji - `npm install compromise-emoji`
 * **[.emoji()](#)**  -  find emoticons like `:)` or emojis like `💋`
 
 ##### Topics
@@ -478,7 +475,7 @@ These are some helpful extensions:
   * **[.numbers().toCardinal()](#)**   -  convert number to `five` or `5`
   * **[.numbers().add(n)]()**   -  increase number by n
   * **[.numbers().subtract(n)]()**   -  decrease number by n
-  * **[.numbers().increment()](#)**   -  decrease number by 1
+  * **[.numbers().increment()](#)**   -  increase number by 1
   * **[.numbers().decrement()](#)**   -  decrease number by 1
   * **[.numbers().isEqual(n)]()**   -  return numbers with this value
   * **[.numbers().greaterThan(min)]()**   -  return numbers bigger than n
@@ -582,13 +579,13 @@ this plugin creates a wrapper around the default sentence objects.
 ##### Some fun Applications:
 * **[Chat dialogue framework](http://superscriptjs.com/)**  -  by Rob Ellis
 * **[Automated Bechdel Test](https://github.com/guardian/bechdel-test)**  -  by The Guardian
+* **[Story generation framework](https://perchance.org/welcome)**  -  by Jose Phrocca
 * **[Tumbler blog of lists](https://leanstooneside.tumblr.com/)**  -  horse-ebooks-like lists -  by Michael Paulukonis
-* **[Story generation](https://perchance.org/welcome)**  -  by Jose Phrocca
+* **[Video Editing from Transcription](https://newtheory.io/)** -  by New Theory
 * **[Browser extension Fact-checking](https://github.com/AlexanderKidd/FactoidL)**  -  by Alexander Kidd
-* **[Video Transcription and Editing](https://newtheory.io/)** -  by New Theory
 * **[Siri shortcut](https://routinehub.co/shortcut/3260)**  -  by Michael Byrns 
 * **[Amazon skill](https://github.com/tajddin/voiceplay)**  -  by Tajddin Maghni
-* **[Tasking slack-bot](https://github.com/kevinsuh/toki)**  -  by Kevin Suh
+* **[Tasking Slack-bot](https://github.com/kevinsuh/toki)**  -  by Kevin Suh
 
 <!-- spacer -->
 <div align="center">
@@ -611,7 +608,7 @@ this plugin creates a wrapper around the default sentence objects.
         string processing is synchronous too, and parallelizing node processes is weird.
         <br/>
         See <a href="https://docs.compromise.cool/compromise-performance">here</a> for information about speed & performance, and
-        <a href="https://github.com/spencermountain/compromise/wiki/Justification">here></a> for project motivations
+        <a href="https://github.com/spencermountain/compromise/wiki/Justification">here</a> for project motivations
       </ul>
       <p></p>
     </details>
@@ -646,10 +643,10 @@ this plugin creates a wrapper around the default sentence objects.
       <p></p>
       <ul>
         compromise isn't easily tree-shaken.
-        <br/> the tagging methods are competitive, and greedy, so it's not recommended to pull things out.
-        <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-        It's best to load the library fully, given it's smaller than <a href="https://68.media.tumblr.com/tumblr_m674jlpyPT1ry8fquo1_250.gif">this gif</a>.
-        <br/>
+        <br/> 
+        the tagging methods are competitive, and greedy, so it's not recommended to pull things out.
+        <br/> 
+        It's recommended to run the library fully.
       </ul>
       <p></p>
     </details>

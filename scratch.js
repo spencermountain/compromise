@@ -12,21 +12,8 @@ nlp(txt)
 console.timeEnd('parse')
 // console.log(corpus.sotu.array()[27])
 
-// nlp('Monorail...Once again! Monorail... Monorail!')
-//   .splitBefore('monorail')
-//   .eq(0)
-//   .out()
-doc.json({
-  text: true,
-  normal: false,
-  reduced: false,
-  root: false,
-  offset: false,
-  trim: false,
-  terms: {
-    text: true,
-    tags: true,
-    normal: false,
-    offset: false,
-  },
-})
+let lexicon = {
+  kermit: 'FirstName',
+  fozzie: 'FirstName',
+}
+let doc = nlp(muppetText, lexicon)

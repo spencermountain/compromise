@@ -57,7 +57,9 @@ if(doc.has('^simon says #Verb+')){
   doThis('')
 }
 ```
-read about the [match syntax here](https://observablehq.com/@spencermountain/compromise-match-syntax)
+<div align="right">
+  read about the <a href="https://observablehq.com/@spencermountain/compromise-match-syntax">match syntax here</a>
+</div>
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221837-0d142480-ffb8-11e9-9d30-90669f1b897c.png"/>
 </div>
@@ -69,7 +71,9 @@ let doc = nlp('she sells seashells by the seashore.').verbs().toPastTense()
 doc.text()
 // 'she sold seashells by the seashore.'
 ```
-[docs](https://observablehq.com/@spencermountain/verbs)
+<div align="right">
+  <a href="https://observablehq.com/@spencermountain/verbs">docs</a>
+</div>
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221824-09809d80-ffb8-11e9-9ef0-6ed3574b0ce8.png"/>
 </div>
@@ -187,7 +191,7 @@ The final lexicon is > 14,000 words:
   <img width="600" src="https://user-images.githubusercontent.com/399657/68234805-0d201e80-ffd0-11e9-8dc6-f7a600352555.png"/>
 </div>
 
-you can read more about how it works, [here](http://blog.spencermounta.in/2019/building-compromise/index.html)
+you can read more about how it works, [here](http://blog.spencermounta.in/2019/building-compromise/index.html).
 
 <!-- spacer -->
   <!-- <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/> -->
@@ -198,7 +202,12 @@ you can read more about how it works, [here](http://blog.spencermounta.in/2019/b
 ### .extend():
 pass-in an object with your own words:
 ```js
-let doc = nlp(muppetText, {kermit:'FirstName', fozzie:'FirstName'})
+let myWords = {
+  kermit: 'FirstName',
+  fozzie: 'FirstName',
+}
+let doc = nlp(muppetText, myWords)
+
 ```
 
 or change the library's internal data:
@@ -234,7 +243,9 @@ nlp.extend((Doc, world) => {
   }
 })
 ```
-you can read about [.extend() here](https://observablehq.com/@spencermountain/compromise-plugins) .
+<div align="right">
+  <a href="https://observablehq.com/@spencermountain/compromise-plugins">.extend() docs</a>
+</div>
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221848-11404200-ffb8-11e9-90cd-3adee8d8564f.png"/>
 </div>
@@ -242,6 +253,7 @@ you can read about [.extend() here](https://observablehq.com/@spencermountain/co
 
 ### API:
 ##### Constructor
+*these methods are on the `nlp` object*
 * **[.tokenize()](http://docs.compromise.cool/compromise-tokenize)** - parse text without running POS-tagging
 * **[.extend()]()** - mix in a compromise-plugin
 * **[.clone()]()** - make a deep-copy of the library state
@@ -251,12 +263,12 @@ you can read about [.extend() here](https://observablehq.com/@spencermountain/co
 
 ##### Utils
 * **[.all()]()** - return the whole original document ('zoom out')
-* **[.found]()** [getter] - is this document empty?
+* **[.found]()** *[getter]* - is this document empty?
 * **[.parent()]()** - return the previous result
 * **[.parents()]()** - return all of the previous results
 * **[.tagger()]()** - (re-)run the part-of-speech tagger on this document
-* **[.wordCount()]()**  -  count the # of terms in each match
-* **[.length]()** [getter] - count the # of characters of each match  (string length)
+* **[.wordCount()]()**  -  count the # of terms in the document
+* **[.length]()** *[getter]* - count the # of characters in the document  (string length)
 * **[.clone()]()**  -  deep-copy the document, so that no references remain
 * **[.cache({})]()**  -  freeze the current state of the document, for speed-purposes 
 * **[.uncache()]()**  -  un-freezes the current state of the document, so it may be transformed
@@ -271,7 +283,7 @@ you can read about [.extend() here](https://observablehq.com/@spencermountain/co
 * **[.termList()]()**  -  return a flat list of all Term objects in match 
 
 ##### Match
-all match methods use the [match-syntax](https://beta.observablehq.com/@spencermountain/compromise-match-syntax).
+*all match methods use the [match-syntax](https://beta.observablehq.com/@spencermountain/compromise-match-syntax).*
 * **[.match('')]()**  -  return a new Doc, with this one as a parent
 * **[.not('')]()**  -  return all results except for this
 * **[.matchOne('')]()**  -  return only the first match
@@ -319,10 +331,10 @@ all match methods use the [match-syntax](https://beta.observablehq.com/@spencerm
 * **[.concat()]()**  -  add these new things to the end
 
 ##### Transform
-* **[.sort('alpha|chron|freq')]()**  -  re-arrange the order of the matches (in place)
-* * **alpha**  - [default]  alphabetical order
-* * **chron**  -  the 'chronological', or original document sort order 
-* * **freq**  -  sort by # of duplicates in the document
+* **[.sort('method')]()**  -  re-arrange the order of the matches (in place)
+  * ***'alpha'***  - [default]  alphabetical order
+  * ***'chron'***  -  the 'chronological', or original document sort order 
+  * ***'freq'***  -  sort by # of duplicates in the document
 * **[.reverse()]()**  -  reverse the order of the matches, but not the words
 * **[.unique()]()**  -  remove any duplicate matches
 * **[.split('')]()**  -  return a Document with three parts for every match ('splitOn')
@@ -335,11 +347,11 @@ all match methods use the [match-syntax](https://beta.observablehq.com/@spencerm
 ##### Output
 * **[.text('text|normal|reduced|root')]()**  -  return the document as text
 there are 4 preset text outputs:
-* * **'text'**  - a perfect copy of the input text (default)
-* * **'normal'**  - normalized whitespace, case, unicode, punctuation
-* * **clean**  -  'normal' + lowercase, trimmed whitespace
-* * **reduced**  -  'clean' + contractions expanded.
-* * **root**  -  for machine-reading, inflected verbs, singular nouns. Like a 'stemmed' text.
+  * ***'text'***  - a perfect copy of the input text (default)
+  * ***'normal'***  - normalized whitespace, case, unicode, punctuation
+  * ***'clean'***  -  'normal' + lowercase, trimmed whitespace
+  * ***'reduced'***  -  'clean' + contractions expanded.
+  * ***'root'***  -  for machine-reading, inflected verbs, singular nouns. Like a 'stemmed' text.
 you can toggle any of these options, using an object as a parameter:
 ```js
 doc.text({
@@ -389,8 +401,8 @@ doc.json({
 * **[.pronouns()]()**  -  things like *'he'*
 * **[.conjunctions()]()**  -  things like *'but'*
 * **[.prepositions()]()**  -  things like *'of'*
-* **[.abbreviations()]()**  -  things like 'Mrs.'
-* **[.acronyms()]()**  -  things like 'FBI'  
+* **[.abbreviations()]()**  -  things like `'Mrs.'`
+* **[.acronyms()]()**  -  things like `FBI` 
 * **[.contractions()]()**  -  things like "didn't" and "would not"
 * **[.lists()]()**  -  return all comma-seperated lists
 * **[.nouns()]()**  -   return any subsequent terms tagged as a Noun

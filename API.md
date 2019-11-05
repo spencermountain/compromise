@@ -2,7 +2,7 @@
 * **tokenize** - parse text into a compromise object, without running POS-tagging
 * **extend** - mix in a compromise-plugin
 * **clone** - make a deep-copy of the library state
-* **import** - re-generate a Doc object from .export() results
+* **load** - re-generate a Doc object from .export() results
 * **verbose**  -  log our decision-making for debugging
 * **version**  -  current semver version of the library
 

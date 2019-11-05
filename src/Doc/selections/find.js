@@ -12,7 +12,7 @@ exports.words = exports.terms
 
 /** all terms connected with a hyphen or dash */
 exports.hyphenated = function(n) {
-  let r = this.match('@hasHyphen .').debug()
+  let r = this.match('@hasHyphen .')
   if (typeof n === 'number') {
     r = r.get(n)
   }

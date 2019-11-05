@@ -8,7 +8,8 @@ module.exports = {
   debug: {
     desc: 'pretty-print the current selection to the console',
     returns: 'Doc',
-    example: `nlp('wayne’s world, party time, excellent- weeeyooweeeyoo!')//.debug()`,
+    // example: `nlp('wayne’s world, party time, excellent- weeeyooweeeyoo!')//.debug()`,
+    example: '',
   },
   out: { desc: 'some named output formats ', returns: 'Doc', example: '' },
   normalize: {

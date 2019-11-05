@@ -56,12 +56,13 @@ exports.wordcount = exports.wordCount
 
 /** todo: */
 exports.pre = function(str) {
-  let p = this.list[0]
-  let terms = p.terms(0)
   if (str === undefined) {
-    return terms[0].pre
+    return this.list[0].terms(0).pre
   }
-  terms[0].pre = str
+  this.list.forEach(p => {
+    let term = p.terms(0)
+    term.pre = str
+  })
   return this
 }
 
@@ -115,4 +116,5 @@ exports.uncache = function() {
   this.list.forEach(p => {
     p.cache = {}
   })
+  return this
 }

@@ -3,11 +3,10 @@ const nlp = require('./src/index')
 nlp.extend(require('./plugins/adjectives/src'))
 // nlp.extend(require('./plugins/verbs/src'))
 
-let doc = nlp('John K. Smith')
-doc.debug()
+// let doc = nlp(`we're here. we're clear. we don't want anymore bears.`).pre('\n')
+// console.log(doc.text())
 
-let json = doc.export()
-// console.log(JSON.stringify(json, null, 2))
-
-let doc2 = nlp.import(json)
-doc2.debug()
+nlp('Monorail...Once again! Monorail... Monorail!')
+  .splitBefore('monorail')
+  .eq(0)
+  .out()

@@ -22,16 +22,27 @@ module.exports = {
   },
   clone: {
     desc: 'copy the object, so changes no longer effect the original (make it ~immutable)',
-    mutative: false,
     returns: 'Doc',
     example: `nlp('would somebody please think of the children').clone().toUpperCase().parent().out()\n//would somebody please think of the children`,
   },
-  pre: { desc: 'add this punctuation or whitespace before each match', returns: 'Doc', example: '' },
-  post: { desc: 'add this punctuation or whitespace after each match', returns: 'Doc', example: '' },
-  cache: { desc: 'freeze the current state of the document, for speed-purposes', returns: 'Doc', example: '' },
+  pre: {
+    desc: 'add this punctuation or whitespace before each match',
+    returns: 'Doc',
+    example: `nlp("we're here. we're clear. we don't want anymore bears.").pre("  ")`,
+  },
+  post: {
+    desc: 'add this punctuation or whitespace after each match',
+    returns: 'Doc',
+    example: `nlp("we're here. we're clear. we don't want anymore bears.").post('!')`,
+  },
+  cache: {
+    desc: 'freeze the current state of the document, for speed-purposes',
+    returns: 'Doc',
+    example: `let doc=nlp("I'm looking for Amanda Hugginkiss").cache({root:true});\ndoc.match('~look~')`,
+  },
   uncache: {
     desc: 'un-freezes the current state of the document, so it may be transformed',
     returns: 'Doc',
-    example: '',
+    example: 'let doc=nlp("urine-soaked hell-hole").uncache();doc.tag("Insult")',
   },
 }

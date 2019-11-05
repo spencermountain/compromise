@@ -108,6 +108,7 @@ exports.splitBefore = function(reg) {
 
 /** split a document into labeled sections */
 exports.segment = function(regs, options) {
+  regs = regs || {}
   options = options || { text: true }
   let doc = this
   let keys = Object.keys(regs)

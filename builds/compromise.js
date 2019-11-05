@@ -336,45 +336,51 @@
 
   var parse = parseTerm;
 
-  var titleCase = /^[A-Z][a-z'\u00C0-\u00FF]/;
-  /** convert all text to uppercase */
+  function createCommonjsModule(fn, module) {
+  	return module = { exports: {} }, fn(module, module.exports), module.exports;
+  }
 
-  var toUpperCase = function toUpperCase() {
-    this.text = this.text.toUpperCase();
-    return this;
-  };
-  /** convert all text to lowercase */
+  var _01Case = createCommonjsModule(function (module, exports) {
+    var titleCase = /^[A-Z][a-z'\u00C0-\u00FF]/;
+    /** convert all text to uppercase */
 
-
-  var toLowerCase = function toLowerCase() {
-    this.text = this.text.toLowerCase();
-    return this;
-  };
-  /** only set the first letter to uppercase
-   * leave any existing uppercase alone
-   */
+    exports.toUpperCase = function () {
+      this.text = this.text.toUpperCase();
+      return this;
+    };
+    /** convert all text to lowercase */
 
 
-  var toTitleCase = function toTitleCase() {
-    this.text = this.text.replace(/^ *[a-z\u00C0-\u00FF]/, function (x) {
-      return x.toUpperCase();
-    }); //support unicode?
+    exports.toLowerCase = function () {
+      this.text = this.text.toLowerCase();
+      return this;
+    };
+    /** only set the first letter to uppercase
+     * leave any existing uppercase alone
+     */
 
-    return this;
-  };
-  /** if the first letter is uppercase, and the rest are lowercase */
+
+    exports.toTitleCase = function () {
+      this.text = this.text.replace(/^ *[a-z\u00C0-\u00FF]/, function (x) {
+        return x.toUpperCase();
+      }); //support unicode?
+
+      return this;
+    };
+    /** if the first letter is uppercase, and the rest are lowercase */
 
 
-  var isTitleCase = function isTitleCase() {
-    return titleCase.test(this.text);
-  };
+    exports.isTitleCase = function () {
+      return titleCase.test(this.text);
+    };
 
-  var _01Case = {
-    toUpperCase: toUpperCase,
-    toLowerCase: toLowerCase,
-    toTitleCase: toTitleCase,
-    isTitleCase: isTitleCase
-  };
+    exports.titleCase = exports.isTitleCase;
+  });
+  var _01Case_1 = _01Case.toUpperCase;
+  var _01Case_2 = _01Case.toLowerCase;
+  var _01Case_3 = _01Case.toTitleCase;
+  var _01Case_4 = _01Case.isTitleCase;
+  var _01Case_5 = _01Case.titleCase;
 
   // these methods are called with '@hasComma' in the match syntax
   // various unicode quotation-mark formats
@@ -587,16 +593,7 @@
 
   var _doesMatch = wrapMatch;
 
-  var boring = {
-    TitleCase: true,
-    UpperCase: true,
-    CamelCase: true,
-    Hyphenated: true,
-    StartBracket: true,
-    EndBracket: true,
-    Comma: true,
-    ClauseEnd: true
-  };
+  var boring = {};
   /** check a match object against this term */
 
   var doesMatch_1 = function doesMatch_1(reg, index, length) {
@@ -868,7 +865,7 @@
     return Object.prototype.toString.call(arr) === '[object Array]';
   };
 
-  var titleCase$1 = function titleCase(str) {
+  var titleCase = function titleCase(str) {
     return str.charAt(0).toUpperCase() + str.substr(1);
   };
 
@@ -876,7 +873,7 @@
     logTag: logTag,
     logUntag: logUntag,
     isArray: isArray,
-    titleCase: titleCase$1
+    titleCase: titleCase
   };
 
   /** add a tag, and its descendents, to a term */
@@ -2052,7 +2049,7 @@
   var hasMinMax = /\{([0-9]+,?[0-9]*)\}/;
   var andSign = /&&/;
 
-  var titleCase$2 = function titleCase(str) {
+  var titleCase$1 = function titleCase(str) {
     return str.charAt(0).toUpperCase() + str.substr(1);
   };
 
@@ -2189,7 +2186,7 @@
 
     if (start(w) === '#') {
       obj.tag = stripStart(w);
-      obj.tag = titleCase$2(obj.tag);
+      obj.tag = titleCase$1(obj.tag);
       return obj;
     } //dynamic function on a term object
 
@@ -2963,28 +2960,52 @@
     }); //return them ready for a Document object
 
     return phrases;
+  }; // parse the compressed format '3,2|2,4'
+
+
+  var parseTags = function parseTags(text, tagList) {
+    return text.split('|').map(function (str) {
+      var numList = str.split(',');
+      numList = numList.map(function (n) {
+        return parseInt(n, 10);
+      }); // convert a list pf numbers into an array of tag names
+
+      return numList.map(function (num) {
+        if (!tagList[num]) {
+          console.warn('Compromise import: missing tag at index ' + num);
+        }
+
+        return tagList[num];
+      });
+    });
   };
-  /** create a word-pool and Phrase objects from .json() results*/
+  /** create a word-pool and Phrase objects from .export() json*/
 
 
-  var fromJSON = function fromJSON(data) {
+  var fromJSON = function fromJSON(json, world) {
+    if (typeof json === 'string') {
+      json = JSON.parse(json);
+    }
+
     var pool = new Pool_1(); //create Phrase objects
 
-    var phrases = data.map(function (terms) {
-      //create Term objects
-      terms = terms.map(function (obj) {
-        var term = new Term_1(obj.text);
-        term.pre = obj.pre;
-        term.post = obj.post;
-        term.tags = obj.tags.reduce(function (h, tag) {
-          h[tag] = true;
-          return h;
-        }, {});
+    var phrases = json.list.map(function (o) {
+      // tokenize words from sentence text
+      var terms = _02Words(o[0]); // unpack the tag data for each term
+
+      var tagArr = parseTags(o[1], json.tags); //create Term objects
+
+      terms = terms.map(function (str, i) {
+        var term = new Term_1(str);
+        tagArr[i].forEach(function (tag) {
+          return term.tag(tag, '', world);
+        });
         pool.add(term);
         return term;
       }); //add prev/next links
 
-      addLinks(terms);
+      addLinks(terms); // return a proper Phrase object
+
       return new Phrase_1(terms[0].id, terms.length, pool);
     });
     return phrases;
@@ -3225,9 +3246,6 @@
       //can be a person, too
       notA: ['Ordinal', 'TextValue']
     },
-    Fraction: {
-      isA: 'Value'
-    },
     TextValue: {
       isA: 'Value',
       notA: ['NumericValue']
@@ -3239,25 +3257,11 @@
     Money: {
       isA: 'Cardinal'
     },
+    Fraction: {
+      isA: 'Value'
+    },
     Percent: {
       isA: 'Value'
-    }
-  };
-
-  var dates = {
-    //not a noun, but usually is
-    Date: {
-      notA: ['Verb', 'Conjunction', 'Adverb', 'Preposition', 'Adjective']
-    },
-    Month: {
-      isA: ['Date', 'Singular'],
-      notA: ['Year', 'WeekDay', 'Time']
-    },
-    WeekDay: {
-      isA: ['Date', 'Noun']
-    },
-    Holiday: {
-      isA: ['Date', 'Noun']
     }
   };
 
@@ -3286,6 +3290,18 @@
     Adverb: {
       notA: ['Noun', 'Verb', 'Adjective', 'Value']
     },
+    // Dates:
+    //not a noun, but usually is
+    Date: {
+      notA: ['Verb', 'Conjunction', 'Adverb', 'Preposition', 'Adjective']
+    },
+    Month: {
+      isA: ['Date', 'Singular'],
+      notA: ['Year', 'WeekDay', 'Time']
+    },
+    WeekDay: {
+      isA: ['Date', 'Noun']
+    },
     //glue
     Determiner: {
       notA: anything
@@ -3296,15 +3312,17 @@
     Preposition: {
       notA: anything
     },
+    // what, who, why
     QuestionWord: {
       notA: ['Determiner']
     },
-    RelativeProunoun: {
-      isA: ['Pronoun']
-    },
+    // peso, euro
     Currency: {},
+    // ughh
     Expression: {},
+    // dr.
     Abbreviation: {},
+    // internet tags
     Url: {
       notA: ['HashTag', 'PhoneNumber', 'Verb', 'Adjective', 'Value', 'AtMention', 'Email']
     },
@@ -3502,7 +3520,6 @@
     addIn(nouns, tags);
     addIn(verbs, tags);
     addIn(values, tags);
-    addIn(dates, tags);
     addIn(misc, tags); // do the graph-stuff
 
     tags = inference(tags);
@@ -5605,10 +5622,6 @@
 
   var World_1 = World;
 
-  function createCommonjsModule(fn, module) {
-  	return module = { exports: {} }, fn(module, module.exports), module.exports;
-  }
-
   var _01Utils$1 = createCommonjsModule(function (module, exports) {
     // const cache = require('./_setCache')
 
@@ -5670,26 +5683,24 @@
 
     exports.wordcount = exports.wordCount;
     /** turn on logging for decision-debugging */
+    // exports.verbose = function(bool) {
+    //   if (bool === undefined) {
+    //     bool = true
+    //   }
+    //   this.world.verbose = bool
+    // }
 
-    exports.verbose = function (bool) {
-      if (bool === undefined) {
-        bool = true;
-      }
-
-      this.world.verbose = bool;
-    };
     /** todo: */
 
-
     exports.pre = function (str) {
-      var p = this.list[0];
-      var terms = p.terms(0);
-
       if (str === undefined) {
-        return terms[0].pre;
+        return this.list[0].terms(0).pre;
       }
 
-      terms[0].pre = str;
+      this.list.forEach(function (p) {
+        var term = p.terms(0);
+        term.pre = str;
+      });
       return this;
     };
     /** todo: */
@@ -5755,6 +5766,7 @@
       this.list.forEach(function (p) {
         p.cache = {};
       });
+      return this;
     };
   });
   var _01Utils_1 = _01Utils$1.all;
@@ -5763,11 +5775,10 @@
   var _01Utils_4 = _01Utils$1.clone;
   var _01Utils_5 = _01Utils$1.wordCount;
   var _01Utils_6 = _01Utils$1.wordcount;
-  var _01Utils_7 = _01Utils$1.verbose;
-  var _01Utils_8 = _01Utils$1.pre;
-  var _01Utils_9 = _01Utils$1.post;
-  var _01Utils_10 = _01Utils$1.cache;
-  var _01Utils_11 = _01Utils$1.uncache;
+  var _01Utils_7 = _01Utils$1.pre;
+  var _01Utils_8 = _01Utils$1.post;
+  var _01Utils_9 = _01Utils$1.cache;
+  var _01Utils_10 = _01Utils$1.uncache;
 
   var _02Accessors = createCommonjsModule(function (module, exports) {
     /** use only the first result(s) */
@@ -5789,7 +5800,7 @@
       var end = this.list.length;
       return this.slice(end - n, end);
     };
-    /** grab a subset of the results*/
+    /** grab a given subset of the results*/
 
 
     exports.slice = function (start, end) {
@@ -6047,19 +6058,19 @@
   /** turn every letter of every term to lower-cse */
 
 
-  var toLowerCase$1 = function toLowerCase() {
+  var toLowerCase = function toLowerCase() {
     return eachTerm(this, 'toLowerCase');
   };
   /** turn every letter of every term to upper case */
 
 
-  var toUpperCase$1 = function toUpperCase() {
+  var toUpperCase = function toUpperCase() {
     return eachTerm(this, 'toUpperCase');
   };
   /** upper-case the first letter of each term */
 
 
-  var toTitleCase$1 = function toTitleCase() {
+  var toTitleCase = function toTitleCase() {
     this.tag('TitleCase');
     return eachTerm(this, 'toTitleCase');
   };
@@ -6076,15 +6087,15 @@
           t.post = '';
         }
       });
-    });
-    this.tag('#CamelCase', 'toCamelCase');
+    }); // this.tag('#CamelCase', 'toCamelCase')
+
     return this;
   };
 
   var _04Case = {
-    toLowerCase: toLowerCase$1,
-    toUpperCase: toUpperCase$1,
-    toTitleCase: toTitleCase$1,
+    toLowerCase: toLowerCase,
+    toUpperCase: toUpperCase,
+    toTitleCase: toTitleCase,
     toCamelCase: toCamelCase
   };
 
@@ -6868,9 +6879,6 @@
       //can be a person, too
       notA: ['Ordinal', 'TextValue']
     },
-    Fraction: {
-      isA: 'Value'
-    },
     TextValue: {
       isA: 'Value',
       notA: ['NumericValue']
@@ -6882,25 +6890,11 @@
     Money: {
       isA: 'Cardinal'
     },
+    Fraction: {
+      isA: 'Value'
+    },
     Percent: {
       isA: 'Value'
-    }
-  };
-
-  var dates$1 = {
-    //not a noun, but usually is
-    Date: {
-      notA: ['Verb', 'Conjunction', 'Adverb', 'Preposition', 'Adjective']
-    },
-    Month: {
-      isA: ['Date', 'Singular'],
-      notA: ['Year', 'WeekDay', 'Time']
-    },
-    WeekDay: {
-      isA: ['Date', 'Noun']
-    },
-    Holiday: {
-      isA: ['Date', 'Noun']
     }
   };
 
@@ -6929,6 +6923,18 @@
     Adverb: {
       notA: ['Noun', 'Verb', 'Adjective', 'Value']
     },
+    // Dates:
+    //not a noun, but usually is
+    Date: {
+      notA: ['Verb', 'Conjunction', 'Adverb', 'Preposition', 'Adjective']
+    },
+    Month: {
+      isA: ['Date', 'Singular'],
+      notA: ['Year', 'WeekDay', 'Time']
+    },
+    WeekDay: {
+      isA: ['Date', 'Noun']
+    },
     //glue
     Determiner: {
       notA: anything$1
@@ -6939,15 +6945,17 @@
     Preposition: {
       notA: anything$1
     },
+    // what, who, why
     QuestionWord: {
       notA: ['Determiner']
     },
-    RelativeProunoun: {
-      isA: ['Pronoun']
-    },
+    // peso, euro
     Currency: {},
+    // ughh
     Expression: {},
+    // dr.
     Abbreviation: {},
+    // internet tags
     Url: {
       notA: ['HashTag', 'PhoneNumber', 'Verb', 'Adjective', 'Value', 'AtMention', 'Email']
     },
@@ -7145,7 +7153,6 @@
     addIn$1(nouns$1, tags);
     addIn$1(verbs$1, tags);
     addIn$1(values$1, tags);
-    addIn$1(dates$1, tags);
     addIn$1(misc$2, tags); // do the graph-stuff
 
     tags = inference$1(tags);
@@ -7624,6 +7631,7 @@
 
 
     exports.segment = function (regs, options) {
+      regs = regs || {};
       options = options || {
         text: true
       };
@@ -7725,13 +7733,36 @@
     return arr.map(function (a) {
       return [a, counts[a]];
     });
+  }; // remove implied tags, like 'Noun' when we have 'Plural'
+
+
+  var reduceTags = function reduceTags(tags, world) {
+    var tagset = world.tags;
+    var implied = [];
+    tags.forEach(function (tag) {
+      if (tagset[tag] && tagset[tag].isA) {
+        implied = implied.concat(tagset[tag].isA);
+      }
+    });
+    implied = implied.reduce(function (h, tag) {
+      h[tag] = true;
+      return h;
+    }, {});
+    tags = tags.filter(function (tag) {
+      return !implied[tag];
+    }); // tags
+
+    return tags;
   };
   /** store a parsed document for later use */
 
 
   var export_1 = function export_1() {
+    var _this = this;
+
     var phraseList = this.json({
       text: true,
+      trim: false,
       terms: {
         tags: true,
         whitespace: true
@@ -7741,7 +7772,9 @@
     var allTags = [];
     phraseList.forEach(function (p) {
       p.terms.forEach(function (t) {
-        allTags = allTags.concat(t.tags);
+        // reduce redundant tags
+        var tags = reduceTags(t.tags, _this.world);
+        allTags = allTags.concat(tags);
       });
     }); // compress the top tags
 
@@ -7753,7 +7786,9 @@
 
     phraseList = phraseList.map(function (p) {
       var terms = p.terms.map(function (term) {
-        var tags = term.tags.map(function (tag) {
+        var tags = term.tags;
+        tags = reduceTags(tags, _this.world);
+        tags = tags.map(function (tag) {
           return tagMap[tag];
         });
         tags = tags.join(',');
@@ -7763,9 +7798,9 @@
       return [p.text, terms];
     });
     return {
-      tags: tagMap,
+      tags: Object.keys(tagMap),
       // words: {},
-      phrases: phraseList
+      list: phraseList
     };
   };
 
@@ -7793,7 +7828,7 @@
     /** all terms connected with a hyphen or dash */
 
     exports.hyphenated = function (n) {
-      var r = this.match('@hasHyphen .').debug();
+      var r = this.match('@hasHyphen .');
 
       if (typeof n === 'number') {
         r = r.get(n);
@@ -7805,7 +7840,7 @@
 
 
     exports.phoneNumbers = function (n) {
-      var r = this.splitAfter('#Comma');
+      var r = this.splitAfter('@hasComma');
       r = r.match('#PhoneNumber+');
 
       if (typeof n === 'number') {
@@ -7813,68 +7848,16 @@
       }
 
       return r;
-    }; // /** return anything inside parentheses */
-    // exports.parentheses = function(n) {
-    //   let r = this.match('#Parentheses+')
-    //   //split-up consecutive ones
-    //   r = r.splitAfter('#EndBracket')
-    //   if (typeof n === 'number') {
-    //     r = r.get(n)
-    //   }
-    //   return r
-    // }
-
-    /** return anything tagged as an organization*/
-
-
-    exports.organizations = function (n) {
-      var r = this.splitAfter('#Comma');
-      r = r.match('#Organization+');
-
-      if (typeof n === 'number') {
-        r = r.get(n);
-      }
-
-      return r;
     };
-    /** return anything tagged as a Place*/
-
-
-    exports.places = function (n) {
-      var r = this.splitAfter('#Comma');
-      r = r.match('#Place+');
-
-      if (typeof n === 'number') {
-        r = r.get(n);
-      }
-
-      return r;
-    };
-    /** return any sentences that ask a question */
-    // exports.questions = function(doc) {
-    //   return doc.sentences().isQuestion()
-    // }
-    // /** return any sentences that are not a question or exclamation*/
-    // exports.statements = function(doc) {
-    //   return doc.sentences().isStatement()
-    // }
-
-    /** return any sentences that are not a question */
-    // exports.exclamations = function(doc) {
-    //   return doc.sentences().isExclamation()
-    // }
-
   });
   var find_1 = find$1.terms;
   var find_2 = find$1.words;
   var find_3 = find$1.hyphenated;
   var find_4 = find$1.phoneNumbers;
-  var find_5 = find$1.organizations;
-  var find_6 = find$1.places;
 
   // allow helper methods like .adjectives() and .adverbs()
   var arr = [// ['adjectives', '#Adjective'],
-  ['hashTags', '#HashTag'], ['emails', '#Email'], ['atMentions', '#AtMention'], ['emoji', '#Emoji'], ['urls', '#Url'], ['adverbs', '#Adverb'], ['pronouns', '#Pronoun'], ['acronyms', '#Acronym'], ['fractions', '#Fraction'], ['money', '#Money'], ['months', '#Month'], ['years', '#Year'], ['conjunctions', '#Conjunction'], ['prepositions', '#Preposition'], ['abbreviations', '#Abbreviation'], ['romanNumerals', '#RomanNumeral'], ['firstNames', '#FirstName'], ['lastNames', '#LastName']];
+  ['hashTags', '#HashTag'], ['emails', '#Email'], ['atMentions', '#AtMention'], ['urls', '#Url'], ['adverbs', '#Adverb'], ['pronouns', '#Pronoun'], ['fractions', '#Fraction'], ['money', '#Money'], ['conjunctions', '#Conjunction'], ['prepositions', '#Preposition'], ['abbreviations', '#Abbreviation'], ['romanNumerals', '#RomanNumeral']];
   var methods$4 = {};
   arr.forEach(function (a) {
     methods$4[a[0]] = function (n) {
@@ -8507,14 +8490,14 @@
 
   var _01Neighbours = checkNeighbours;
 
-  var titleCase$3 = /^[A-Z][a-z'\u00C0-\u00FF]/;
+  var titleCase$2 = /^[A-Z][a-z'\u00C0-\u00FF]/;
   var hasNumber = /[0-9]/;
   /** look for any grammar signals based on capital/lowercase */
 
   var checkCase = function checkCase(terms, world) {
     terms.forEach(function (term, i) {
       //is it a titlecased word?
-      if (titleCase$3.test(term.text) === true && hasNumber.test(term.text) === false) {
+      if (titleCase$2.test(term.text) === true && hasNumber.test(term.text) === false) {
         // tag it as titlecase, if possible
         if (i !== 0) {
           term.tag('TitleCase', 'case', world);
@@ -9001,7 +8984,9 @@
 
     doc.match('#Noun [(who|whom)]').tag('Determiner', 'captain-who'); //timezones
 
-    doc.match('(standard|daylight|summer|eastern|pacific|central|mountain) standard? time').tag('Time', 'timezone'); //about to go
+    doc.match('(standard|daylight|summer|eastern|pacific|central|mountain) standard? time').tag('Time', 'timezone'); //Brazilian pesos
+
+    doc.match('#Demonym #Currency').tag('Currency', 'demonym-currency'); //about to go
 
     doc.match('[about to] #Adverb? #Verb').tag(['Auxiliary', 'Verb'], 'about-to'); //right of way
 
@@ -9049,7 +9034,7 @@
 
       which.match('that #Noun [#Verb]').tag('Determiner', 'that-determiner'); //work, which has been done.
 
-      which.match('#Comma [which] (#Pronoun|#Verb)').tag('Preposition', 'which-copula');
+      which.match('@hasComma [which] (#Pronoun|#Verb)').tag('Preposition', 'which-copula');
     } //like
 
 
@@ -9065,15 +9050,15 @@
       like.match('#Adverb like').notIf('(really|generally|typically|usually|sometimes|often) [like]').tag('Adverb', 'adverb-like');
     }
 
-    var title = doc["if"]('#TitleCase');
+    var title = doc["if"]('@titleCase');
 
     if (title.found === true) {
       //FitBit Inc
-      title.match('#TitleCase (ltd|co|inc|dept|assn|bros)').tag('Organization', 'org-abbrv'); //Foo District
+      title.match('@titleCase (ltd|co|inc|dept|assn|bros)').tag('Organization', 'org-abbrv'); //Foo District
 
-      title.match('#TitleCase+ (district|region|province|county|prefecture|municipality|territory|burough|reservation)').tag('Region', 'foo-district'); //District of Foo
+      title.match('@titleCase+ (district|region|province|county|prefecture|municipality|territory|burough|reservation)').tag('Region', 'foo-district'); //District of Foo
 
-      title.match('(district|region|province|municipality|territory|burough|state) of #TitleCase').tag('Region', 'district-of-Foo');
+      title.match('(district|region|province|municipality|territory|burough|state) of @titleCase').tag('Region', 'district-of-Foo');
     }
 
     var hyph = doc["if"]('@hasHyphen');
@@ -9189,7 +9174,7 @@
       var org = noun["if"]('#Organization');
 
       if (org.found === true) {
-        org.match('#Organization of the? #TitleCase').tagSafe('Organization', 'org-of-place');
+        org.match('#Organization of the? @titleCase').tagSafe('Organization', 'org-of-place');
         org.match('#Organization #Country').tag('Organization', 'org-country');
         org.match('(world|global|international|national|#Demonym) #Organization').tag('Organization', 'global-org');
       }
@@ -9219,11 +9204,11 @@
       //my buddy
       poss.match('#Possessive [#FirstName]').unTag('Person', 'possessive-name'); //spencer kelly's
 
-      poss.match('#FirstName #Acronym? #Possessive').ifNo('#Comma').match('#FirstName #Acronym? #LastName').tag('Possessive'); //Super Corp's fundraiser
+      poss.match('#FirstName #Acronym? #Possessive').ifNo('@hasComma').match('#FirstName #Acronym? #LastName').tag('Possessive'); //Super Corp's fundraiser
 
-      poss.match('#Organization+ #Possessive').ifNo('#Comma').tag('Possessive'); //Los Angeles's fundraiser
+      poss.match('#Organization+ #Possessive').ifNo('@hasComma').tag('Possessive'); //Los Angeles's fundraiser
 
-      poss.match('#Place+ #Possessive').ifNo('#Comma').tag('Possessive'); //her polling
+      poss.match('#Place+ #Possessive').ifNo('@hasComma').tag('Possessive'); //her polling
 
       poss.match('#Possessive [#Verb]').tag('Noun', 'correction-possessive');
     }
@@ -9454,7 +9439,7 @@
 
         copula.match('#Copula [#Adjective to] #Verb').tag('Verb', 'adj-to'); //sometimes adverbs - 'pretty good','well above'
 
-        copula.match('#Copula (pretty|dead|full|well) (#Adjective|#Noun)').ifNo('#Comma').tag('#Copula #Adverb #Adjective', 'sometimes-adverb');
+        copula.match('#Copula (pretty|dead|full|well) (#Adjective|#Noun)').ifNo('@hasComma').tag('#Copula #Adverb #Adjective', 'sometimes-adverb');
       } //Gerund - 'walking'
 
 
@@ -9536,32 +9521,17 @@
 
   //
   var fixValue = function fixValue(doc) {
-    //canadian dollar, Brazilian pesos
-    doc.match('#Demonym #Currency').tag('Currency', 'demonym-currency');
     var val = doc["if"]('#Value');
 
     if (val.found === true) {
-      //half a million
-      val.match('half a? #Value').tag('Value', 'half-a-value'); //(quarter not ready)
-      //five and a half
-
-      val.match('#Value and a (half|quarter)').tag('Value', 'value-and-a-half'); //one hundred and seven dollars
-
-      val.match('#Money and #Money #Currency?').tag('Money', 'money-and-money'); //1 800 PhoneNumber
-
+      //1 800 PhoneNumber
       val.match('1 #Value #PhoneNumber').tag('PhoneNumber', '1-800-Value'); //(454) 232-9873
 
       val.match('#NumericValue #PhoneNumber').tag('PhoneNumber', '(800) PhoneNumber'); //three trains
 
-      val.match('#Value [#PresentTense]').tag('Plural', 'value-presentTense'); //all values are either ordinal or cardinal
-      // doc.match('#Value').match('!#Ordinal').tag('#Cardinal', 'not-ordinal');
-      //money
+      val.match('#Value [#PresentTense]').tag('Plural', 'value-presentTense'); //money
 
-      val.match('#Value+ #Currency').tag('Money', 'value-currency').lastTerm().tag('Unit', 'money-unit'); //two hundredth
-      // val
-      //   .match('#TextValue+')
-      //   .match('#Cardinal+ #Ordinal')
-      //   .tag('Ordinal', 'two-hundredth')
+      val.match('#Value+ #Currency').tag('Money', 'value-currency').lastTerm().tag('Unit', 'money-unit');
     }
 
     return doc;
@@ -9939,142 +9909,7 @@
 
   var Contractions = addMethod$2;
 
-  var open = /\(/;
-  var close = /\)/;
-
   var addMethod$3 = function addMethod(Doc) {
-    /** anything between (these things) */
-    var Parentheses =
-    /*#__PURE__*/
-    function (_Doc) {
-      _inherits(Parentheses, _Doc);
-
-      function Parentheses() {
-        _classCallCheck(this, Parentheses);
-
-        return _possibleConstructorReturn(this, _getPrototypeOf(Parentheses).apply(this, arguments));
-      }
-
-      _createClass(Parentheses, [{
-        key: "unwrap",
-
-        /** remove the parentheses characters */
-        value: function unwrap() {
-          this.list.forEach(function (p) {
-            var first = p.terms(0);
-            first.pre = first.pre.replace(open, '');
-            var last = p.lastTerm();
-            last.post = last.post.replace(close, '');
-          });
-          return this;
-        }
-      }]);
-
-      return Parentheses;
-    }(Doc);
-
-    Doc.prototype.parentheses = function (n) {
-      var list = [];
-      this.list.forEach(function (p) {
-        var terms = p.terms(); //look for opening brackets
-
-        for (var i = 0; i < terms.length; i += 1) {
-          var t = terms[i];
-
-          if (open.test(t.pre)) {
-            //look for the closing bracket..
-            for (var o = i; o < terms.length; o += 1) {
-              if (close.test(terms[o].post)) {
-                var len = o - i + 1;
-                list.push(p.buildFrom(t.id, len));
-                i = o;
-                break;
-              }
-            }
-          }
-        }
-      }); //support nth result
-
-      if (typeof n === 'number') {
-        if (list[n]) {
-          list = [list[n]];
-        } else {
-          list = [];
-        }
-
-        return new Parentheses(list, this, this.world);
-      }
-
-      return new Parentheses(list, this, this.world);
-    };
-
-    return Doc;
-  };
-
-  var Parentheses = addMethod$3;
-
-  var addMethod$4 = function addMethod(Doc) {
-    /**  */
-    var Possessives =
-    /*#__PURE__*/
-    function (_Doc) {
-      _inherits(Possessives, _Doc);
-
-      function Possessives(list, from, world) {
-        var _this;
-
-        _classCallCheck(this, Possessives);
-
-        _this = _possibleConstructorReturn(this, _getPrototypeOf(Possessives).call(this, list, from, world));
-        _this.contracted = null;
-        return _this;
-      }
-      /** turn didn't into 'did not' */
-
-
-      _createClass(Possessives, [{
-        key: "strip",
-        value: function strip() {
-          this.list.forEach(function (p) {
-            var terms = p.terms();
-            terms.forEach(function (t) {
-              var str = t.text.replace(/'s$/, '');
-              t.set(str || t.text);
-            });
-          });
-          return this;
-        }
-      }]);
-
-      return Possessives;
-    }(Doc); //find contractable, expanded-contractions
-    // const findExpanded = r => {
-    //   let remain = r.not('#Contraction')
-    //   let m = remain.match('(#Noun|#QuestionWord) (#Copula|did|do|have|had|could|would|will)')
-    //   m.concat(remain.match('(they|we|you|i) have'))
-    //   m.concat(remain.match('i am'))
-    //   m.concat(remain.match('(#Copula|#Modal|do|does|have|has|can|will) not'))
-    //   return m
-    // }
-
-
-    Doc.prototype.possessives = function (n) {
-      //find currently-contracted
-      var found = this.match('#Noun+? #Possessive'); //todo: split consecutive contractions
-
-      if (typeof n === 'number') {
-        found = found.get(n);
-      }
-
-      return new Possessives(found.list, this, this.world);
-    };
-
-    return Doc;
-  };
-
-  var Possessives = addMethod$4;
-
-  var addMethod$5 = function addMethod(Doc) {
     //pull it apart..
     var parse = function parse(doc) {
       var things = doc.splitAfter('@hasComma').not('(and|or) not?');
@@ -10185,121 +10020,7 @@
     return Doc;
   };
 
-  var Lists = addMethod$5;
-
-  var pairs = {
-    "\"": "\"",
-    // 'StraightDoubleQuotes'
-    "\uFF02": "\uFF02",
-    // 'StraightDoubleQuotesWide'
-    "'": "'",
-    // 'StraightSingleQuotes'
-    "\u201C": "\u201D",
-    // 'CommaDoubleQuotes'
-    "\u2018": "\u2019",
-    // 'CommaSingleQuotes'
-    "\u201F": "\u201D",
-    // 'CurlyDoubleQuotesReversed'
-    "\u201B": "\u2019",
-    // 'CurlySingleQuotesReversed'
-    "\u201E": "\u201D",
-    // 'LowCurlyDoubleQuotes'
-    "\u2E42": "\u201D",
-    // 'LowCurlyDoubleQuotesReversed'
-    "\u201A": "\u2019",
-    // 'LowCurlySingleQuotes'
-    "\xAB": "\xBB",
-    // 'AngleDoubleQuotes'
-    "\u2039": "\u203A",
-    // 'AngleSingleQuotes'
-    // Prime 'non quotation'
-    "\u2035": "\u2032",
-    // 'PrimeSingleQuotes'
-    "\u2036": "\u2033",
-    // 'PrimeDoubleQuotes'
-    "\u2037": "\u2034",
-    // 'PrimeTripleQuotes'
-    // Prime 'quotation' variation
-    "\u301D": "\u301E",
-    // 'PrimeDoubleQuotes'
-    "`": "\xB4",
-    // 'PrimeSingleQuotes'
-    "\u301F": "\u301E" // 'LowPrimeDoubleQuotesReversed'
-
-  };
-  var hasOpen = RegExp('(' + Object.keys(pairs).join('|') + ')');
-
-  var addMethod$6 = function addMethod(Doc) {
-    /** "these things" */
-    var Quotations =
-    /*#__PURE__*/
-    function (_Doc) {
-      _inherits(Quotations, _Doc);
-
-      function Quotations() {
-        _classCallCheck(this, Quotations);
-
-        return _possibleConstructorReturn(this, _getPrototypeOf(Quotations).apply(this, arguments));
-      }
-
-      _createClass(Quotations, [{
-        key: "unwrap",
-
-        /** remove the quote characters */
-        value: function unwrap() {
-          return this;
-        }
-      }]);
-
-      return Quotations;
-    }(Doc);
-
-    Doc.prototype.quotations = function (n) {
-      var list = [];
-      this.list.forEach(function (p) {
-        var terms = p.terms(); //look for opening quotes
-
-        for (var i = 0; i < terms.length; i += 1) {
-          var t = terms[i];
-
-          if (hasOpen.test(t.pre)) {
-            var _char = (t.pre.match(hasOpen) || [])[0];
-            var want = pairs[_char]; // if (!want) {
-            //   console.warn('missing quote char ' + char)
-            // }
-            //look for the closing bracket..
-
-            for (var o = i; o < terms.length; o += 1) {
-              if (terms[o].post.indexOf(want) !== -1) {
-                var len = o - i + 1;
-                list.push(p.buildFrom(t.id, len));
-                i = o;
-                break;
-              }
-            }
-          }
-        }
-      }); //support nth result
-
-      if (typeof n === 'number') {
-        if (list[n]) {
-          list = [list[n]];
-        } else {
-          list = [];
-        }
-
-        return new Quotations(list, this, this.world);
-      }
-
-      return new Quotations(list, this, this.world);
-    }; // alias
-
-
-    Doc.prototype.quotes = Doc.prototype.quotations;
-    return Doc;
-  };
-
-  var Quotations = addMethod$6;
+  var Lists = addMethod$3;
 
   var noPlural = '(#Pronoun|#Place|#Value|#Person|#Uncountable|#Month|#WeekDay|#Holiday|#Possessive)'; //certain words can't be plural, like 'peace'
 
@@ -10485,7 +10206,7 @@
 
   var parse_1 = parse$1;
 
-  var addMethod$7 = function addMethod(Doc) {
+  var addMethod$4 = function addMethod(Doc) {
     /**  */
     var Nouns =
     /*#__PURE__*/
@@ -10612,7 +10333,256 @@
     return Doc;
   };
 
-  var Nouns = addMethod$7;
+  var Nouns = addMethod$4;
+
+  var open = /\(/;
+  var close = /\)/;
+
+  var addMethod$5 = function addMethod(Doc) {
+    /** anything between (these things) */
+    var Parentheses =
+    /*#__PURE__*/
+    function (_Doc) {
+      _inherits(Parentheses, _Doc);
+
+      function Parentheses() {
+        _classCallCheck(this, Parentheses);
+
+        return _possibleConstructorReturn(this, _getPrototypeOf(Parentheses).apply(this, arguments));
+      }
+
+      _createClass(Parentheses, [{
+        key: "unwrap",
+
+        /** remove the parentheses characters */
+        value: function unwrap() {
+          this.list.forEach(function (p) {
+            var first = p.terms(0);
+            first.pre = first.pre.replace(open, '');
+            var last = p.lastTerm();
+            last.post = last.post.replace(close, '');
+          });
+          return this;
+        }
+      }]);
+
+      return Parentheses;
+    }(Doc);
+
+    Doc.prototype.parentheses = function (n) {
+      var list = [];
+      this.list.forEach(function (p) {
+        var terms = p.terms(); //look for opening brackets
+
+        for (var i = 0; i < terms.length; i += 1) {
+          var t = terms[i];
+
+          if (open.test(t.pre)) {
+            //look for the closing bracket..
+            for (var o = i; o < terms.length; o += 1) {
+              if (close.test(terms[o].post)) {
+                var len = o - i + 1;
+                list.push(p.buildFrom(t.id, len));
+                i = o;
+                break;
+              }
+            }
+          }
+        }
+      }); //support nth result
+
+      if (typeof n === 'number') {
+        if (list[n]) {
+          list = [list[n]];
+        } else {
+          list = [];
+        }
+
+        return new Parentheses(list, this, this.world);
+      }
+
+      return new Parentheses(list, this, this.world);
+    };
+
+    return Doc;
+  };
+
+  var Parentheses = addMethod$5;
+
+  var addMethod$6 = function addMethod(Doc) {
+    /**  */
+    var Possessives =
+    /*#__PURE__*/
+    function (_Doc) {
+      _inherits(Possessives, _Doc);
+
+      function Possessives(list, from, world) {
+        var _this;
+
+        _classCallCheck(this, Possessives);
+
+        _this = _possibleConstructorReturn(this, _getPrototypeOf(Possessives).call(this, list, from, world));
+        _this.contracted = null;
+        return _this;
+      }
+      /** turn didn't into 'did not' */
+
+
+      _createClass(Possessives, [{
+        key: "strip",
+        value: function strip() {
+          this.list.forEach(function (p) {
+            var terms = p.terms();
+            terms.forEach(function (t) {
+              var str = t.text.replace(/'s$/, '');
+              t.set(str || t.text);
+            });
+          });
+          return this;
+        }
+      }]);
+
+      return Possessives;
+    }(Doc); //find contractable, expanded-contractions
+    // const findExpanded = r => {
+    //   let remain = r.not('#Contraction')
+    //   let m = remain.match('(#Noun|#QuestionWord) (#Copula|did|do|have|had|could|would|will)')
+    //   m.concat(remain.match('(they|we|you|i) have'))
+    //   m.concat(remain.match('i am'))
+    //   m.concat(remain.match('(#Copula|#Modal|do|does|have|has|can|will) not'))
+    //   return m
+    // }
+
+
+    Doc.prototype.possessives = function (n) {
+      //find currently-contracted
+      var found = this.match('#Noun+? #Possessive'); //todo: split consecutive contractions
+
+      if (typeof n === 'number') {
+        found = found.get(n);
+      }
+
+      return new Possessives(found.list, this, this.world);
+    };
+
+    return Doc;
+  };
+
+  var Possessives = addMethod$6;
+
+  var pairs = {
+    "\"": "\"",
+    // 'StraightDoubleQuotes'
+    "\uFF02": "\uFF02",
+    // 'StraightDoubleQuotesWide'
+    "'": "'",
+    // 'StraightSingleQuotes'
+    "\u201C": "\u201D",
+    // 'CommaDoubleQuotes'
+    "\u2018": "\u2019",
+    // 'CommaSingleQuotes'
+    "\u201F": "\u201D",
+    // 'CurlyDoubleQuotesReversed'
+    "\u201B": "\u2019",
+    // 'CurlySingleQuotesReversed'
+    "\u201E": "\u201D",
+    // 'LowCurlyDoubleQuotes'
+    "\u2E42": "\u201D",
+    // 'LowCurlyDoubleQuotesReversed'
+    "\u201A": "\u2019",
+    // 'LowCurlySingleQuotes'
+    "\xAB": "\xBB",
+    // 'AngleDoubleQuotes'
+    "\u2039": "\u203A",
+    // 'AngleSingleQuotes'
+    // Prime 'non quotation'
+    "\u2035": "\u2032",
+    // 'PrimeSingleQuotes'
+    "\u2036": "\u2033",
+    // 'PrimeDoubleQuotes'
+    "\u2037": "\u2034",
+    // 'PrimeTripleQuotes'
+    // Prime 'quotation' variation
+    "\u301D": "\u301E",
+    // 'PrimeDoubleQuotes'
+    "`": "\xB4",
+    // 'PrimeSingleQuotes'
+    "\u301F": "\u301E" // 'LowPrimeDoubleQuotesReversed'
+
+  };
+  var hasOpen = RegExp('(' + Object.keys(pairs).join('|') + ')');
+
+  var addMethod$7 = function addMethod(Doc) {
+    /** "these things" */
+    var Quotations =
+    /*#__PURE__*/
+    function (_Doc) {
+      _inherits(Quotations, _Doc);
+
+      function Quotations() {
+        _classCallCheck(this, Quotations);
+
+        return _possibleConstructorReturn(this, _getPrototypeOf(Quotations).apply(this, arguments));
+      }
+
+      _createClass(Quotations, [{
+        key: "unwrap",
+
+        /** remove the quote characters */
+        value: function unwrap() {
+          return this;
+        }
+      }]);
+
+      return Quotations;
+    }(Doc);
+
+    Doc.prototype.quotations = function (n) {
+      var list = [];
+      this.list.forEach(function (p) {
+        var terms = p.terms(); //look for opening quotes
+
+        for (var i = 0; i < terms.length; i += 1) {
+          var t = terms[i];
+
+          if (hasOpen.test(t.pre)) {
+            var _char = (t.pre.match(hasOpen) || [])[0];
+            var want = pairs[_char]; // if (!want) {
+            //   console.warn('missing quote char ' + char)
+            // }
+            //look for the closing bracket..
+
+            for (var o = i; o < terms.length; o += 1) {
+              if (terms[o].post.indexOf(want) !== -1) {
+                var len = o - i + 1;
+                list.push(p.buildFrom(t.id, len));
+                i = o;
+                break;
+              }
+            }
+          }
+        }
+      }); //support nth result
+
+      if (typeof n === 'number') {
+        if (list[n]) {
+          list = [list[n]];
+        } else {
+          list = [];
+        }
+
+        return new Quotations(list, this, this.world);
+      }
+
+      return new Quotations(list, this, this.world);
+    }; // alias
+
+
+    Doc.prototype.quotes = Doc.prototype.quotations;
+    return Doc;
+  };
+
+  var Quotations = addMethod$7;
 
   // turn 'would not really walk up' into parts
   var parseVerb = function parseVerb(vb) {
@@ -11131,7 +11101,7 @@
 
   var Verbs = addMethod$8;
 
-  var selections$1 = [Acronyms, Clauses, Contractions, Parentheses, Possessives, Lists, Quotations, Nouns, Verbs];
+  var selections$1 = [Acronyms, Clauses, Contractions, Lists, Nouns, Parentheses, Possessives, Quotations, Verbs];
 
   var extend = function extend(Doc) {
     selections$1.forEach(function (addFn) {
@@ -11259,10 +11229,6 @@
   });
   var Doc_1 = Doc;
 
-  process.on('warning', function (e) {
-    return console.warn(e.stack);
-  }); //blast-out our word-lists, just once
-
   var world = new World_1();
   /** parse and tag text into a compromise object  */
 
@@ -11299,6 +11265,7 @@
 
   nlp.extend = function (fn) {
     fn(Doc_1, world);
+    return this;
   };
   /** make a deep-copy of the library state */
 
@@ -11310,8 +11277,8 @@
   /** re-generate a Doc object from .json() results */
 
 
-  nlp.fromJSON = function (json) {
-    var list = _01Tokenizer.fromJSON(json);
+  nlp.load = function (json) {
+    var list = _01Tokenizer.fromJSON(json, world);
     return new Doc_1(list, null, world);
   };
   /** log our decision-making for debugging */
@@ -11320,11 +11287,14 @@
   nlp.verbose = function () {
     var bool = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
     world.verbose(bool);
+    return this;
   };
   /** current version of the library */
 
 
-  nlp.version = _version;
+  nlp.version = _version; // alias
+
+  nlp["import"] = nlp.load;
   var src = nlp;
 
   return src;

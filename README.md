@@ -1,214 +1,92 @@
-hmmm:
-  getPunctuation()
-  setPunctuation()
+<div align="center">
+  <div>compromise</div>
+  <img src="https://user-images.githubusercontent.com/399657/68222691-6597f180-ffb9-11e9-8a32-a7f38aa8bded.png"/>
+  <div>modest natural language processing</div>
 
-  lump()?
+  <sub>
+    by
+    <a href="https://github.com/spencermountain">Spencer Kelly</a> and
+    <a href="https://github.com/spencermountain/compromise/graphs/contributors">
+      many contributors
+    </a>
+  </sub>
 
-  js array fns
+  <div>
+    <a href="https://npmjs.org/package/compromise">
+    <img src="https://img.shields.io/npm/v/compromise.svg?style=flat-square" />
+  </a>
+  <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
+    <img src="https://api.codacy.com/project/badge/Coverage/82cc8ebd98b64ed199d7be6021488062" />
+  </a>
+  <a href="https://unpkg.com/compromise">
+    <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/builds/compromise.min.js" />
+  </a>
+  </div>
+</div>
 
+<!-- spacer -->
+<img src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
----
-### Breaking changes:
-
-removed methods:
-* 
-
- 
-* `.text()` input parameter changes
-  
-* remove `.flatten()` (anti-pattern)
-
-* results of `.canbe()` are more like `.match()`
-
-* `.map()` `.forEach()` `.reduce()` etc all return full **Doc** objects of length 1
-
-more consistent behaviour for `.replace('foo [bar]', 'baz')`
-
-some cases like `.canbe()` where v11 results were mutable, but v12 are not mutating
-
-cleaned-up various `.data()` results
-
-removed no-longer-needed `prefix_` and `_suffix` operators from match syntax
-
-stopped using `#Comma` pos-tag, for less denormalization
-
-stopped parsing `#NumberRange`
-
-improved handling of slashed terms - like `he is/was fun.`
-
-* map/reduce/foreach/etc all loop over proper `Doc` objects, instead of an internal object
-
-* the internal compromise api has changed considerably. If you were 'reaching in' to the internal Text object in v11, you'll see many changes.
----
-
-**non-breaking changes**
-
-* cleaned-up internal handling of whitspace/punctuation
-  
-* better unicode-letter support in regexes
-
-* adds `.matchOne()`
-* adds `.freeze()`
-
-* adds `@function` syntax to match queries:
-* *  hasComma
-* *  hasPeriod
-* *  hasExclamation
-* *  hasQuestionMark
-* *  hasElipses
-* *  hasSemicolon
-* *  isAcronym
-* *  isKnown
-
----
-
-jsdoc output:
-`jsdoc src/** -t templates/haruki -d console`
-
-generate typings file
-`jsdoc -t node_modules/tsd-jsdoc/dist -r src/**/*.js`
-
-type hints
-
-`tsc --allowJs --checkJs --noEmit --target ES6 src/*.js`
-
-
-### Normalisation levels:
-
-* .text({})
-    `case` : true,
-    `whitespace` : true,
-    `unicode` : true,
-    `punctuation` : true,
-
-    `contractions`:  true,
-
-    `adverbs` : true,
-    `emoji` : true,
-    `parentheses` : true,
-    `quotations` : true,
-
-    `verbs` : true,
-    `nouns` : true,
-
-* .json({})
-  ---text-formats per phrase--
-    `text` : true
-    `normal` : false
-    `clean` : false
-    `simple` : false
-    `reduced` : false
-    `root` : false
-
-  ---term-formats--
-    `text` : true
-    `tags` : true
-    `pre` : true
-    `post` : true
-    `normal` : false
-    `clean` : false
-    `simple` : false
-    `root` : false
-    `bestTag`: false
-
-
-* .out('')
-  `text`
-  `json`
-    --support text formats--
-  `normal`
-  `clean`
-  `simple`
-  `reduced`
-  `root`
-   --named formats--
-  `array`
-  `terms`
-  `tsv` - like stanford  -https://nlp.stanford.edu/software/pos-tagger-faq.html#f
-  `xml`
-  `jsonl` - like spacy
-  `iob` - chunking - https://en.wikipedia.org/wiki/Inside%E2%80%93outside%E2%80%93beginning_(tagging)
-
+### .match():
+```js
+let doc = nlp(entireNovel)
+doc.if('the #Adjective of times').text()
+// "it was the blurst of times??"
 ```
-[
-  {
-    text:'i am cool',
-    terms:[
-      {text:'i', pre:'', post:'', tags}
-    ]
-  }
-]
+```js
+if(doc.has('^simon says #Verb+')){
+  doThis(doc.match('#Verb+ .*').text())
+}else{
+  doThis('')
+}
 ```
+<div align="center">
+  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221837-0d142480-ffb8-11e9-9d30-90669f1b897c.png"/>
+</div>
+
+### .verbs():
+```js
+let doc = nlp().verbs().toPastTense()
+doc.text()
+// ''
+```
+<div align="center">
+  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221824-09809d80-ffb8-11e9-9ef0-6ed3574b0ce8.png"/>
+</div>
+
+### .nouns():
+```js
+let doc = nlp().nouns().toPlural()
+doc.text()
+// ''
+```
+<div align="center">
+  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221731-e8b84800-ffb7-11e9-8453-6395e0e903fa.png"/>
+</div>
 
 
+### .numbers():
+```js
+nlp.extend(require('compromise-numbers'))
 
-## Subsets
+let doc = nlp().numbers().add(2)
+doc.text()
+// ''
+```
+<div align="center">
+  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221814-05ed1680-ffb8-11e9-8b6b-c7528d163871.png"/>
+</div>
 
-### in main:
+### .topics():
+```js
+nlp.extend(require('compromise-entities'))
 
-- contractions
-  -expand/contract
+nlp(buddyHolly).people().if('#MiddleName').json()
+// [{text:'Marry Tyler Moore'}]
 
-- acronyms
-  -stripPeriods/addPeriods
-
-* verbs
-  -conjugation/conjugate
-  -isSingular/isPlural
-  -isPositive/isNegative
-  -toPast/toPresent/toFuture
-  -asAdjective
-
-* nouns
-  -isplural/hasplural
-  -toSingular/toPlural
-  -toPossessive
-  -articles
-
-* adjectives
-* adverbs
-* parentheses
-* quotations
-* possessives
-
-* hashtags
-* phoneNumbers
-* urls
-
-### External libs:
-
-`compromise-entity`
-
-- people
-  -firstName/lastName
-  -pronoun
-
-- organizations
-- places
-- topics
-
-`compromise-number`
--toText/toNumber
--toCardinal/toOrdinal
--greaterThan/lessThan
--between/isEqual
--add/subtract/increment/decrement
-
-`compromise-sentence`
--prepend/append
--toPast/toPresent/toFuture
--toNegative/toPositive
--toQuestion/toStatement
-
-- questions
-- statements
-
-`compromise-date`
-
-`compromise-term`
-
-- terms
-
-`compromise-ngram`
--unigrams/bigrams/trigrams
--startGrams/endGrams ?
+nlp(freshPrince).places().first().text()
+// 'West Phillidelphia'
+```
+<div align="center">
+  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221814-05ed1680-ffb8-11e9-8b6b-c7528d163871.png"/>
+</div>

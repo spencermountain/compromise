@@ -34,9 +34,9 @@
   compromise is not <a href="https://github.com/spencermountain/compromise/wiki/Justification">the cleverest</a>.
   <br/>
   but it is
-  <a href="https://beta.observablehq.com/@spencermountain/compromise-filesize">small,
-  <a href="https://beta.observablehq.com/@spencermountain/compromise-performance">quick</a>,
-  and <a href="https://beta.observablehq.com/@spencermountain/compromise-accuracy">good-enough</a> for a bunch of things.
+  <a href="https://docs.compromise.cool/compromise-filesize">small,
+  <a href="https://docs.compromise.cool/compromise-performance">quick</a>,
+  and <a href="https://docs.compromise.cool/compromise-accuracy">good-enough</a> for a bunch of things.
 </div>
 
 <!-- spacer -->
@@ -58,7 +58,7 @@ if(doc.has('^simon says #Verb+')){
 }
 ```
 <div align="right">
-  read about the <a href="https://observablehq.com/@spencermountain/compromise-match-syntax">match syntax here</a>
+  <a href="https://docs.compromise.cool/compromise-match-syntax">match syntax docs</a>
 </div>
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221837-0d142480-ffb8-11e9-9d30-90669f1b897c.png"/>
@@ -72,7 +72,7 @@ doc.text()
 // 'she sold seashells by the seashore.'
 ```
 <div align="right">
-  <a href="https://observablehq.com/@spencermountain/verbs">docs</a>
+  <a href="https://docs.compromise.cool/verbs">verb docs</a>
 </div>
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221824-09809d80-ffb8-11e9-9ef0-6ed3574b0ce8.png"/>
@@ -85,7 +85,9 @@ let doc = nlp('the purple dinosaur').nouns().toPlural()
 doc.text()
 // 'the purple dinosaurs'
 ```
-[docs](https://observablehq.com/@spencermountain/nouns)
+<div align="right">
+  <a href="https://docs.compromise.cool/nouns">noun docs</a>
+</div>
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221731-e8b84800-ffb7-11e9-8453-6395e0e903fa.png"/>
 </div>
@@ -101,7 +103,9 @@ doc.numbers().toNumber().add(2)
 doc.text()
 // '95054'
 ```
-[docs](https://observablehq.com/@spencermountain/compromise-values)
+<div align="right">
+  <a href="https://docs.compromise.cool/compromise-values">number docs</a>
+</div>
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221814-05ed1680-ffb8-11e9-8b6b-c7528d163871.png"/>
 </div>
@@ -124,7 +128,9 @@ doc.topics().json()
 //   { text: 'china' }
 // ]
 ```
-[docs](https://observablehq.com/@spencermountain/topics-named-entity-recognition)
+<div align="right">
+  <a href="https://docs.compromise.cool/topics-named-entity-recognition">topics docs</a>
+</div>
 
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221632-b9094000-ffb7-11e9-99e0-b48edd6cdf8a.png"/>
@@ -244,7 +250,7 @@ nlp.extend((Doc, world) => {
 })
 ```
 <div align="right">
-  <a href="https://observablehq.com/@spencermountain/compromise-plugins">.extend() docs</a>
+  <a href="https://docs.compromise.cool/compromise-plugins">.extend() docs</a>
 </div>
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221848-11404200-ffb8-11e9-90cd-3adee8d8564f.png"/>
@@ -283,7 +289,7 @@ nlp.extend((Doc, world) => {
 * **[.termList()]()**  -  return a flat list of all Term objects in match 
 
 ##### Match
-*all match methods use the [match-syntax](https://beta.observablehq.com/@spencermountain/compromise-match-syntax).*
+*all match methods use the [match-syntax](https://docs.compromise.cool/compromise-match-syntax).*
 * **[.match('')]()**  -  return a new Doc, with this one as a parent
 * **[.not('')]()**  -  return all results except for this
 * **[.matchOne('')]()**  -  return only the first match
@@ -345,7 +351,7 @@ nlp.extend((Doc, world) => {
 * **[.join('')]()** - make all phrases into one phrase 
 
 ##### Output
-* **[.text('text|normal|reduced|root')]()**  -  return the document as text
+* **[.text('method')]()**  -  return the document as text
 there are 4 preset text outputs:
   * ***'text'***  - a perfect copy of the input text (default)
   * ***'normal'***  - normalized whitespace, case, unicode, punctuation
@@ -353,22 +359,18 @@ there are 4 preset text outputs:
   * ***'reduced'***  -  'clean' + contractions expanded.
   * ***'root'***  -  for machine-reading, inflected verbs, singular nouns. Like a 'stemmed' text.
 you can toggle any of these options, using an object as a parameter:
-```js
-doc.text({
-  lowercase: false,
-  punctuation: false,
-  whitespace: false,
-  unicode: false,
-  implicit: false,
-  root: false,
-})
-```
+ * ***lowercase* : false**,
+ * ***punctuation* : false**,
+ * ***whitespace* : false**,
+ * ***unicode* : false**,
+ * ***implicit* : false**,
+ * ***root* : false**,
 * **[.json({})](https://docs.compromise.cool/compromise-json)**  -  pull out desired metadata from the document
 you can specify which data you'd like to return with these options:
-  * ***text*** 
-  * ***normal*** 
-  * ***reduced*** 
-  * ***root*** 
+  * ***text* : true**,
+  * ***normal*** : true,
+  * ***reduced*** : true,
+  * ***root* : true,** 
   * ***trim*** 
   * ***offset*** 
   * ***wordCount*** 
@@ -401,7 +403,6 @@ you can specify which data you'd like to return with these options:
 * **[.parentheses()]()**  -  return anything inside (parentheses)
 * **[.possessives()]()**  -  things like `"Spencer's"`
 * **[.quotations()]()**  -  return any terms inside quotation marks
-  
 * **[.nouns()]()**  -   return any subsequent terms tagged as a Noun
   * **[.nouns().json()]()**  - overloaded output with noun metadata
   * **[.nouns().toPlural()]()**   -  `'football captain' → 'football captains'`
@@ -546,9 +547,9 @@ this plugin creates a wrapper around the default sentence objects.
 
 ### Docs:
 ##### Tutorials:
-* **[Tutorial #1](https://observablehq.com/@spencermountain/tutorial-1)**  -  Input → output 
-* **[Tutorial #2](https://observablehq.com/@spencermountain/compromise-tutorial-2)**  -  Match & transform 
-* **[Tutorial #3](https://observablehq.com/@spencermountain/compromise-making-a-bot)**  -  Making a chat-bot
+* **[Tutorial #1](https://docs.compromise.cool/tutorial-1)**  -  Input → output 
+* **[Tutorial #2](https://docs.compromise.cool/compromise-tutorial-2)**  -  Match & transform 
+* **[Tutorial #3](https://docs.compromise.cool/compromise-making-a-bot)**  -  Making a chat-bot
 <!-- * **[Tutorial #4]()**  -  Making a plugin -->
 ##### 3rd party:
 * **[Geocoding Social Conversations with NLP and JavaScript](http://compromise.cool)**  -  by Microsoft
@@ -594,7 +595,7 @@ this plugin creates a wrapper around the default sentence objects.
         <br/>
         string processing is synchronous too, and parallelizing node processes is weird.
         <br/>
-        See <a href="https://beta.observablehq.com/@spencermountain/compromise-performance">here</a> for information about speed & performance, and
+        See <a href="https://docs.compromise.cool/compromise-performance">here</a> for information about speed & performance, and
         <a href="https://github.com/spencermountain/compromise/wiki/Justification">here></a> for project motivations
       </ul>
       <p></p>

@@ -1,4 +1,14 @@
 module.exports = {
+  pre: {
+    desc: 'add this punctuation or whitespace before each match',
+    returns: 'Doc',
+    example: `nlp("we're here. we're clear. we don't want anymore bears.").pre("  ")`,
+  },
+  post: {
+    desc: 'add this punctuation or whitespace after each match',
+    returns: 'Doc',
+    example: `nlp("we're here. we're clear. we don't want anymore bears.").post('!')`,
+  },
   trim: {
     desc: 'remove leading and trailing whitespace from each match',
     returns: 'Doc',

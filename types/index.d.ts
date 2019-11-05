@@ -35,10 +35,6 @@ declare module nlp {
     length(): Number
     /**  deep-copy the document, so that no references remain */
     clone(shallow?: Boolean): Document
-    /** add this punctuation or whitespace before each match */
-    pre(str: String): Document
-    /** add this punctuation or whitespace after each match */
-    post(str: String): Document
     /** freeze the current state of the document, for speed-purposes */
     cache(options?: Object): Document
     /** un-freezes the current state of the document, so it may be transformed */
@@ -53,9 +49,9 @@ declare module nlp {
     slice(start: Number, end?: Number): Document
     /**  use only the nth result */
     eq(n: Number): Document
-    /** get the first word in each match*/
+    /** get the first word in each match */
     firstTerm(): Document
-    /** get the end word in each match*/
+    /** get the end word in each match */
     lastTerm(): Document
     /** return a flat list of all Term objects in match */
     termList(): any
@@ -93,6 +89,10 @@ declare module nlp {
     toCamelCase(): Document
 
     // Whitespace
+    /** add this punctuation or whitespace before each match */
+    pre(str: String): Document
+    /** add this punctuation or whitespace after each match */
+    post(str: String): Document
     /**  remove start and end whitespace */
     trim(): Document
     /**  connect words with hyphen, and remove whitespace */
@@ -144,19 +144,6 @@ declare module nlp {
     reverse(): Document
     /** remove any duplicate matches */
     unique(): Document
-
-    // Output
-    /**  return the document as text */
-    text(options?: Object): String
-    /**  pretty-print the current document and its tags */
-    debug(): Document
-    /** some named output formats */
-    out(format?: string): String
-    /** clean-up the document, in various ways */
-    normalize(options?: Object): String
-    /**  pull out desired metadata from the document */
-    json(options?: Object): any
-
     /**  return a Document with three parts for every match ('splitOn') */
     splitOn(match: String): Document
     /**  separate everything before the word, as a new phrase */
@@ -165,20 +152,31 @@ declare module nlp {
     splitBefore(match: String): Document
     /** split a document into labeled sections  */
     segment(regs: Object, options?: Object): Document
-
     /** make all phrases into one phrase  */
     join(match: String): Document
+
+    // Output
+    /**  return the document as text */
+    text(options?: Object): String
+    /**  pull out desired metadata from the document */
+    json(options?: Object): any
+    /** some named output formats */
+    out(format?: string): String
+    /**  pretty-print the current document and its tags */
+    debug(): Document
+    /** clean-up the document, in various ways */
+    normalize(options?: Object): String
     /** store a parsed document for later use  */
     export(): any
 
     // Helpers
     /**  split-up results by each individual term */
     terms(n?: Number): Document
+    /**  split-up results into multi-term phrases */
+    clauses(n?: Number): Document
     /**  all terms connected with a hyphen or dash */
     hyphenated(n?: Number): Document
 
-    /**  return anything tagged as a phone number */
-    phoneNumbers(n?: Number): Document
     /**  return anything tagged as a HashTag */
     hashTags(n?: Number): Document
     /**  return anything tagged as a Email */
@@ -187,14 +185,18 @@ declare module nlp {
     atMentions(n?: Number): Document
     /**  return anything tagged as a Url */
     urls(n?: Number): Document
+
+    /**  return anything tagged as a Fraction*/
+    fractions(n?: Number): Document
+    /**  return anything tagged as a phone number */
+    phoneNumbers(n?: Number): Document
+    /**  return anything tagged as Money*/
+    money(n?: Number): Document
+
     /**  return anything tagged as an Adverb */
     adverbs(n?: Number): Document
     /**  return anything tagged as a Pronoun*/
     pronouns(n?: Number): Document
-    /**  return anything tagged as a Fraction*/
-    fractions(n?: Number): Document
-    /**  return anything tagged as Money*/
-    money(n?: Number): Document
     /**  return anything tagged as a Conjunction*/
     conjunctions(n?: Number): Document
     /**  return anything tagged as a Preposition*/
@@ -204,10 +206,8 @@ declare module nlp {
     /**  return anything tagged as a RomanNumeral*/
     romanNumerals(n?: Number): Document
 
-    /**  return anything tagged as an Acronym, like 'Dr.' */
+    /**  return anything tagged as an Acronym, like 'FBI.' */
     acronyms(n?: Number): Document
-    /**  split-up results into multi-term phrases */
-    clauses(n?: Number): Document
     /** return any multi-word terms, like "didn't"  */
     contractions(n?: Number): Document
     /**  return all comma-seperated lists */

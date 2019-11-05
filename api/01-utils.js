@@ -25,16 +25,6 @@ module.exports = {
     returns: 'Doc',
     example: `nlp('would somebody please think of the children').clone().toUpperCase().parent().out()\n//would somebody please think of the children`,
   },
-  pre: {
-    desc: 'add this punctuation or whitespace before each match',
-    returns: 'Doc',
-    example: `nlp("we're here. we're clear. we don't want anymore bears.").pre("  ")`,
-  },
-  post: {
-    desc: 'add this punctuation or whitespace after each match',
-    returns: 'Doc',
-    example: `nlp("we're here. we're clear. we don't want anymore bears.").post('!')`,
-  },
   cache: {
     desc: 'freeze the current state of the document, for speed-purposes',
     returns: 'Doc',

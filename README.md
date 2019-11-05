@@ -442,7 +442,7 @@ you can specify which data you'd like to return with these options:
 These are some helpful extensions:
 
 ##### Adjectives
-`nlp i compromise-adjectives`
+`npm install compromise-adjectives`
 * **[.adjectives()](#)**  -  like `quick`
   * **[.numbers().json()](#)**   -  overloaded output with adjective metadata
   * **[.numbers().conjugate()](#)**   -  return all conjugated forms of this adjective
@@ -453,23 +453,23 @@ These are some helpful extensions:
   * **[.numbers().toNoun()](#)**   -  convert `quick` to `quickness`
 
 ##### Dates
-`nlp i compromise-dates`
+`npm install compromise-dates`
 * **[.dates()](#)**  -  find dates like `June 8th` or `03/03/18`
   * **[.dates().json()](#)**   -  overloaded output with date metadata
 
 ##### Emoji
-`nlp i compromise-emoji`
+`npm install compromise-emoji`
 * **[.emoji()](#)**  -  find emoticons like `:)` or emojis like `💋`
 
 ##### Topics
-`nlp i compromise-topics`
+`npm install compromise-topics`
 * **[.people()](#)**  -  names like 'John F. Kennedy'
 * **[.places()](#)**  -  like 'Paris, France'
 * **[.organizations()](#)**  -  like 'Google, Inc'
 * **[.topics()](#)**  -  `people()` + `places()` + `organizations()`
   
 ##### Numbers
-`nlp i compromise-numbers`
+`npm install compromise-numbers`
 * **[.numbers()](#)**  -  grab all written and numeric values
   * **[.numbers().json()](#)**   -  overloaded output with number metadata
   * **[.numbers().toText()](#)**   -  convert number to `five` or `fifth`
@@ -489,7 +489,7 @@ These are some helpful extensions:
   * **[.numbers().toLocaleString()](#)**   -  add commas, or nicer formatting for numbers
 
 ##### Ngrams
-`nlp i compromise-ngrams`
+`npm install compromise-ngrams`
 * **[.ngrams({})]()**  -  list all repeating sub-phrases, by word-count 
 * **[.unigrams()](#)**  -  n-grams with one word 
 * **[.bigrams()](#)**  -  n-grams with two words 
@@ -499,12 +499,12 @@ These are some helpful extensions:
 * **[.edgegrams()](#)**  -   n-grams including the first or last term of a phrase
 
 ##### Output
-`nlp i compromise-output`
+`npm install compromise-output`
 * **[.hash()](#)**  - generate an md5 hash from the document+tags
 * **[.html({})]()**  - generate sanitized html from the document
 
 ##### Paragraphs
-`nlp i compromise-paragraphs`
+`npm install compromise-paragraphs`
 this plugin creates a wrapper around the default sentence objects.
 * **[.paragraphs()](#)**  - return groups of sentences
   * **[.paragraphs().json()](#)**   - output metadata for each paragraph
@@ -523,7 +523,7 @@ this plugin creates a wrapper around the default sentence objects.
   * **[.paragraphs().filter()](#)**   - 
 
 ##### Sentences
-`nlp i compromise-sentences`
+`npm install compromise-sentences`
 * **[.sentences()](#)**  - return a sentence class with additional methods
   * **[.sentences().json()](#)**   - overloaded output with sentence metadata
   * **[.sentences().subjects()](#)**   - return the main noun of each sentence
@@ -544,7 +544,7 @@ this plugin creates a wrapper around the default sentence objects.
   * **[.sentences().toStatement()](#)**   - 
   * 
 ##### Syllables
-`nlp i compromise-syllables`
+`npm install compromise-syllables`
 * **[.syllables()](#)**  - split each term by its typical pronounciation
 
 <!-- spacer -->

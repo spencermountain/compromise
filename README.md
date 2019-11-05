@@ -69,7 +69,7 @@ let doc = nlp('she sells seashells by the seashore.').verbs().toPastTense()
 doc.text()
 // 'she sold seashells by the seashore.'
 ```
-[docs here](https://observablehq.com/@spencermountain/verbs)
+[docs](https://observablehq.com/@spencermountain/verbs)
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221824-09809d80-ffb8-11e9-9ef0-6ed3574b0ce8.png"/>
 </div>
@@ -81,7 +81,7 @@ let doc = nlp('the purple dinosaur').nouns().toPlural()
 doc.text()
 // 'the purple dinosaurs'
 ```
-[docs here](https://observablehq.com/@spencermountain/nouns)
+[docs](https://observablehq.com/@spencermountain/nouns)
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221731-e8b84800-ffb7-11e9-8453-6395e0e903fa.png"/>
 </div>
@@ -97,7 +97,7 @@ doc.numbers().toNumber().add(2)
 doc.text()
 // '95054'
 ```
-[docs here](https://observablehq.com/@spencermountain/compromise-values)
+[docs](https://observablehq.com/@spencermountain/compromise-values)
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221814-05ed1680-ffb8-11e9-8b6b-c7528d163871.png"/>
 </div>
@@ -120,7 +120,7 @@ doc.topics().json()
 //   { text: 'china' }
 // ]
 ```
-[docs here](https://observablehq.com/@spencermountain/topics-named-entity-recognition)
+[docs](https://observablehq.com/@spencermountain/topics-named-entity-recognition)
 
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221632-b9094000-ffb7-11e9-99e0-b48edd6cdf8a.png"/>
@@ -241,14 +241,13 @@ you can read about [.extend() here](https://observablehq.com/@spencermountain/co
 
 
 ### API:
-
 ##### Constructor
-* **[tokenize](docs.compromise.cool/compromise-tokenize)** - parse text into a compromise object, without running POS-tagging
-* **[extend]()** - mix in a compromise-plugin
-* **[clone]()** - make a deep-copy of the library state
-* **[load]()** - re-generate a Doc object from .export() results
-* **[verbose]()**  -  log our decision-making for debugging
-* **[version]()**  -  current semver version of the library
+* **[.tokenize()](http://docs.compromise.cool/compromise-tokenize)** - *parse text into a compromise object, without running POS-tagging*
+* **[.extend()]()** - *mix in a compromise-plugin*
+* **[.clone()]()** - *make a deep-copy of the library state*
+* **[.load()]()** - *re-generate a Doc object from .export() results*
+* **[.verbose()]()**  -  *log our decision-making for debugging*
+* **[.version()]()**  -  *current semver version of the library*
 
 ##### Utils
 * **[all]()** - return the whole original document ('zoom out')
@@ -365,7 +364,6 @@ you can read about [.extend() here](https://observablehq.com/@spencermountain/co
 * **[possessives]()**  -  return things like "Spencer's"
 * **[quotations]()**  -  return any terms inside quotation marks
 * **[verbs]()**  -  return any subsequent terms tagged as a Verb
-
 
 <!-- spacer -->
 <div >

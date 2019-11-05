@@ -3,13 +3,15 @@
   <img src="https://user-images.githubusercontent.com/399657/68222691-6597f180-ffb9-11e9-8a32-a7f38aa8bded.png"/>
   <div>modest natural language processing</div>
 
-  <sub align="center">
-    by
-    <a href="https://github.com/spencermountain">Spencer Kelly</a> and
-    <a href="https://github.com/spencermountain/compromise/graphs/contributors">
-      many contributors
-    </a>
-  </sub>
+  <div align="center">
+    <sub>
+      by
+      <a href="https://github.com/spencermountain">Spencer Kelly</a> and
+      <a href="https://github.com/spencermountain/compromise/graphs/contributors">
+        many contributors
+      </a>
+    </sub>
+  </div>
   <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 </div>
 
@@ -30,10 +32,22 @@
 <!-- spacer -->
 <img src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
+
+<div align="center">
+  compromise is not <a href="https://github.com/spencermountain/compromise/wiki/Justification">the cleverest</a>.
+  <br/>
+  but it is
+  <a href="https://beta.observablehq.com/@spencermountain/compromise-filesize">small,
+  <a href="https://beta.observablehq.com/@spencermountain/compromise-performance">quick</a>,
+  and <a href="https://beta.observablehq.com/@spencermountain/compromise-accuracy">good-enough</a> for a bunch of stuff.
+</div>
+
+
 ### .match():
 compromise makes it simple to interpret and match text:
 ```js
 let doc = nlp(entireNovel)
+
 doc.if('the #Adjective of times').text()
 // "it was the blurst of times??"
 ```
@@ -49,6 +63,7 @@ if(doc.has('^simon says #Verb+')){
 </div>
 
 ### .verbs():
+it can reliably conjugate and negate verbs in any tense:
 ```js
 let doc = nlp('she sells seashells by the seashore.').verbs().toPastTense()
 doc.text()
@@ -59,10 +74,11 @@ doc.text()
 </div>
 
 ### .nouns():
+it can transform nouns to plural and possessive forms:
 ```js
-let doc = nlp().nouns().toPlural()
+let doc = nlp('the purple dinosaur').nouns().toPlural()
 doc.text()
-// ''
+// 'the purple dinosaurs'
 ```
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221731-e8b84800-ffb7-11e9-8453-6395e0e903fa.png"/>
@@ -70,6 +86,7 @@ doc.text()
 
 
 ### .numbers():
+it can interpret plaintext numbers
 ```js
 nlp.extend(require('compromise-numbers'))
 
@@ -83,6 +100,7 @@ doc.text()
 </div>
 
 ### .topics():
+grabbing subjects is a one-liner:
 ```js
 nlp.extend(require('compromise-entities'))
 
@@ -91,12 +109,20 @@ nlp(buddyHolly).people().if('mary').json()
 
 nlp(freshPrince).places().first().text()
 // 'West Phillidelphia'
+
+doc = nlp('the opera about richard nixon visiting china')
+doc.topics().json()
+// [
+//   { text: 'richard nixon' },
+//   { text: 'china' }
+// ]
 ```
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221632-b9094000-ffb7-11e9-99e0-b48edd6cdf8a.png"/>
 </div>
 
 ### .contractions():
+these always confuse every plaintext regex:
 ```js
 let doc =nlp("we're not gonna take it, no we ain't gonna take it.")
 
@@ -115,7 +141,7 @@ dox.text()
   <img height="30" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 </div>
 
-Use on the client-side: 
+Use it on the client-side: 
 ```html
 <script src="https://unpkg.com/compromise"></script>
 <script>
@@ -126,7 +152,7 @@ Use on the client-side:
   // 'dinosaurs'
 </script>
 ```
-Or as an esmodule:
+or as an esmodule:
 ```typescript
 import nlp from 'compromise'
 
@@ -141,20 +167,22 @@ doc.verbs().toNegative()
 compromise is **170kb**:
 <div align="center">
   <!-- filesize -->
-  <img width="450" src="https://user-images.githubusercontent.com/399657/68234819-14dfc300-ffd0-11e9-8b30-cb8545707b29.png"/>
+  <img width="600" src="https://user-images.githubusercontent.com/399657/68234819-14dfc300-ffd0-11e9-8b30-cb8545707b29.png"/>
 </div>
 
 it's pretty fast. It can run on keypress:
 <div align="center">
-  <img width="450" src="https://user-images.githubusercontent.com/399657/68234798-0abdc480-ffd0-11e9-9ac5-8875d185a631.png"/>
+  <img width="600" src="https://user-images.githubusercontent.com/399657/68234798-0abdc480-ffd0-11e9-9ac5-8875d185a631.png"/>
 </div>
 
 it works mainly by conjugating/inflecting many forms a base word list. 
 
 The final lexicon is 14,000 words:
 <div align="center">
-  <img width="450" src="https://user-images.githubusercontent.com/399657/68234805-0d201e80-ffd0-11e9-8dc6-f7a600352555.png"/>
+  <img width="600" src="https://user-images.githubusercontent.com/399657/68234805-0d201e80-ffd0-11e9-8dc6-f7a600352555.png"/>
 </div>
+you can read more about how it works, [here](http://blog.spencermounta.in/2019/building-compromise/index.html)
+
 <!-- spacer -->
   <!-- <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/> -->
 <div align="center">
@@ -162,14 +190,14 @@ The final lexicon is 14,000 words:
 </div>
 
 ### .extend():
-There are two ways to configure compromise results:
+There are two ways to configure compromise results -
 
-the first is to pass-in an object with your own words:
+**One** is to pass-in an object with your own words:
 ```js
 let doc = nlp(muppetText, {kermit:'FirstName', fozzie:'FirstName'})
 ```
 
-the second is more powerful:
+the **second** is more powerful:
 ```js
 const nlp = require('compromise')
 
@@ -239,7 +267,7 @@ you can read more about [.extend() here](https://observablehq.com/@spencermounta
 * **[Geocoding Social Conversations with NLP and JavaScript](http://compromise.cool)**  -  by Microsoft
 * **[Microservice Recipe](https://eventn.com/recipes/text-parsing-with-nlp-compromise)**  -  by Eventn
 
-* **[Building Text-Based Games with Compromise](https://killalldefects.com/2019/09/24/building-text-based-games-with-compromise-nlp/)**  -  by Matt Eland
+* **[Building Text-Based Games](https://killalldefects.com/2019/09/24/building-text-based-games-with-compromise-nlp/)**  -  by Matt Eland
 * **[Fun with javascript in BigQuery](https://medium.com/@hoffa/new-in-bigquery-persistent-udfs-c9ea4100fd83#6e09)**  -  by Felipe Hoffa
 ##### Talks:
 * **[Language as an Interface](https://www.youtube.com/watch?v=WuPVS2tCg8s)**  -  by Spencer Kelly
@@ -264,6 +292,73 @@ you can read more about [.extend() here](https://observablehq.com/@spencermounta
 <div align="center">
   <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
   <hr/>
+</div>
+
+#### FAQ
+
+<ul align="left">
+  <p>
+    <details>
+      <summary>☂️ Isn't javascript too...</summary>
+      <p></p>
+      <ul>
+        yeah it is!
+        <br/>
+        it wasn't built to compete with NLTK, and may not fit every project.
+        <br/>
+        string processing is synchronous too, and parallelizing node processes is weird.
+        <br/>
+        See <a href="https://beta.observablehq.com/@spencermountain/compromise-performance">here</a> for information about speed & performance, and
+        <a href="https://github.com/spencermountain/compromise/wiki/Justification">here></a> for project motivations
+      </ul>
+      <p></p>
+    </details>
+  </p>  
+  <p>
+    <details>
+      <summary>💃 Can it run on my arduino-watch?</summary>
+      <p></p>
+      <ul>
+        Only if it's water-proof!
+        <br/>
+        Read <a href="https://github.com/spencermountain/compromise/wiki/QuickStart">quickStart</a> for all sorts of funny environments.
+      </ul>
+      <p></p>
+    </details>
+  </p>
+  <p>
+    <details>
+      <summary>🌎 Compromise in other Languages?</summary>
+      <p></p>
+      <ul>
+        okay! <br/>
+        we've got work-in-progress forks for <a href="https://github.com/nlp-compromise/de-compromise">German</a> and <a href="https://github.com/nlp-compromise/fr-compromise">French</a>, in the same philosophy.
+        <br/>
+        Get involved!
+      </ul>
+      <p></p>
+    </details>
+  </p>
+  <p>
+    <details>
+      <summary>✨ Partial builds?</summary>
+      <p></p>
+      <ul>
+        compromise is one function so can't really be tree-shaken.
+        <br/> .. and the tagging methods are competitive, so it's not recommended to pull things out.
+        <br/>
+        It's best to load the library fully, given it's smaller than <a href="https://68.media.tumblr.com/tumblr_m674jlpyPT1ry8fquo1_250.gif">this gif</a>.
+        <br/>
+        A plug-in scheme is in the works.
+      </ul>
+      <p></p>
+    </details>
+  </p>
+</ul>
+
+
+
+<div align="center">
   <img src="https://user-images.githubusercontent.com/399657/68221731-e8b84800-ffb7-11e9-8453-6395e0e903fa.png"/>
 </div>
 

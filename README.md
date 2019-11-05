@@ -1,9 +1,9 @@
 <div align="center">
-  <div>compromise</div>
+  <div><b>compromise</b></div>
   <img src="https://user-images.githubusercontent.com/399657/68222691-6597f180-ffb9-11e9-8a32-a7f38aa8bded.png"/>
   <div>modest natural language processing</div>
 
-  <sub>
+  <sub align="center">
     by
     <a href="https://github.com/spencermountain">Spencer Kelly</a> and
     <a href="https://github.com/spencermountain/compromise/graphs/contributors">
@@ -136,15 +136,37 @@ doc.verbs().toNegative()
 ```
 
 <!-- spacer -->
-  <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+<img height="30" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
+compromise is **170kb**:
+<div align="center">
+  <!-- filesize -->
+  <img width="450" src="https://user-images.githubusercontent.com/399657/68234819-14dfc300-ffd0-11e9-8b30-cb8545707b29.png"/>
+</div>
+
+it's pretty fast. It can run on keypress:
+<div align="center">
+  <img width="450" src="https://user-images.githubusercontent.com/399657/68234798-0abdc480-ffd0-11e9-9ac5-8875d185a631.png"/>
+</div>
+
+it works mainly by conjugating/inflecting many forms a base word list. 
+
+The final lexicon is 14,000 words:
+<div align="center">
+  <img width="450" src="https://user-images.githubusercontent.com/399657/68234805-0d201e80-ffd0-11e9-8dc6-f7a600352555.png"/>
+</div>
+<!-- spacer -->
+  <!-- <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/> -->
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/399657/68221814-05ed1680-ffb8-11e9-8b6b-c7528d163871.png"/>
+</div>
 
 ### .extend():
 There are two ways to configure compromise results:
 
 the first is to pass-in an object with your own words:
 ```js
-let doc = nlp('', {})
+let doc = nlp(muppetText, {kermit:'FirstName', fozzie:'FirstName'})
 ```
 
 the second is more powerful:
@@ -152,12 +174,32 @@ the second is more powerful:
 const nlp = require('compromise')
 
 nlp.extend((Doc, world) => {
+  
+  // augment the internal tagset
+  world.addTags({
+    Character: {
+      isA: 'Person',
+      notA: 'Adjective',
+    },
+  })
+
+  // add some words to the lexicon
+  world.addWords({
+    kermit: 'Character',
+    gonzo: 'Character',
+  })
+
   // methods to run after the tagger
-  world.postProcess()
-  // change the internal lexicon
-  world.addWords()
-  // augment the compromise tagset
-  world.addTags()
+  world.postProcess(doc => {
+    doc.match('light the lights').tag('#Verb . #Plural')
+  })
+
+  // add a new method
+  Doc.prototype.kermitVoice = function() {
+    this.sentences().prepend('well,')
+    this.match('i [(am|was)]').prepend('um,')
+    return this
+  }
 })
 ```
 you can read more about [.extend() here](https://observablehq.com/@spencermountain/compromise-plugins) .

@@ -31,7 +31,7 @@
 
 
 <div align="center">
-  compromise is not <a href="https://github.com/spencermountain/compromise/wiki/Justification">the cleverest</a>.
+  compromise is <a href="https://github.com/spencermountain/compromise/wiki/Justification">not the cleverest</a>.
   <br/>
   but it is
   <a href="https://docs.compromise.cool/compromise-filesize">small,
@@ -40,7 +40,7 @@
 </div>
 
 <!-- spacer -->
-<img src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+<img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 ### .match():
 compromise makes it simple to interpret and match text:
@@ -58,7 +58,7 @@ if(doc.has('^simon says #Verb+')){
 }
 ```
 <div align="right">
-  <a href="https://docs.compromise.cool/compromise-match-syntax">match syntax docs</a>
+  <a href="https://docs.compromise.cool/compromise-match-syntax">match docs</a>
 </div>
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221837-0d142480-ffb8-11e9-9d30-90669f1b897c.png"/>
@@ -149,7 +149,9 @@ doc.contractions().expand()
 dox.text()
 // 'we are not going to take it, no we are not going to take it.'
 ```
-
+<div align="right">
+  <a href="https://docs.compromise.cool/compromise-contractions">contraction docs</a>
+</div>
 <div align="center">
   <img src="https://user-images.githubusercontent.com/399657/68221731-e8b84800-ffb7-11e9-8453-6395e0e903fa.png"/>
   <!-- spacer -->
@@ -261,32 +263,32 @@ nlp.extend((Doc, world) => {
 ##### Constructor
 *these methods are on the `nlp` object*
 * **[.tokenize()](http://docs.compromise.cool/compromise-tokenize)** - parse text without running POS-tagging
-* **[.extend()]()** - mix in a compromise-plugin
-* **[.clone()]()** - make a deep-copy of the library state
-* **[.load()]()** - re-generate a Doc object from .export() results
-* **[.verbose()]()**  -  log our decision-making for debugging
-* **[.version()]()**  -  current semver version of the library
+* **[.extend()](#)** - mix in a compromise-plugin
+* **[.clone()](#)** - make a deep-copy of the library state
+* **[.load()](#)** - re-generate a Doc object from .export() results
+* **[.verbose()](#)**  -  log our decision-making for debugging
+* **[.version()](#)**  -  current semver version of the library
 
 ##### Utils
-* **[.all()]()** - return the whole original document ('zoom out')
+* **[.all()](#)** - return the whole original document ('zoom out')
 * **[.found]()** *[getter]* - is this document empty?
-* **[.parent()]()** - return the previous result
-* **[.parents()]()** - return all of the previous results
-* **[.tagger()]()** - (re-)run the part-of-speech tagger on this document
-* **[.wordCount()]()**  -  count the # of terms in the document
+* **[.parent()](#)** - return the previous result
+* **[.parents()](#)** - return all of the previous results
+* **[.tagger()](#)** - (re-)run the part-of-speech tagger on this document
+* **[.wordCount()](#)**  -  count the # of terms in the document
 * **[.length]()** *[getter]* - count the # of characters in the document  (string length)
-* **[.clone()]()**  -  deep-copy the document, so that no references remain
+* **[.clone()](#)**  -  deep-copy the document, so that no references remain
 * **[.cache({})]()**  -  freeze the current state of the document, for speed-purposes 
-* **[.uncache()]()**  -  un-freezes the current state of the document, so it may be transformed
+* **[.uncache()](#)**  -  un-freezes the current state of the document, so it may be transformed
 
 ##### Accessors
 * **[.first(n)]()**  -  use only the first result(s)
 * **[.last(n)]()**  -  use only the last result(s)
 * **[.slice(n,n)]()**  -  grab a subset of the results
 * **[.eq(n)]()**  -  use only the nth result
-* **[.firstTerm()]()**  -  get the first word in each match
-* **[.lastTerm()]()**  -  get the end word in each match
-* **[.termList()]()**  -  return a flat list of all Term objects in match 
+* **[.firstTerm()](#)**  -  get the first word in each match
+* **[.lastTerm()](#)**  -  get the end word in each match
+* **[.termList()](#)**  -  return a flat list of all Term objects in match 
 
 ##### Match
 *all match methods use the [match-syntax](https://docs.compromise.cool/compromise-match-syntax).*
@@ -294,25 +296,25 @@ nlp.extend((Doc, world) => {
 * **[.not('')]()**  -  return all results except for this
 * **[.matchOne('')]()**  -  return only the first match
 * **[.if('')]()**  -  return each current phrase, only if it contains this match ('only')
-* **[.ifNo()]()**  -  Filter-out any current phrases that have this match ('notIf')
-* **[.has()]()**  -  Return a boolean if this match exists
+* **[.ifNo()](#)**  -  Filter-out any current phrases that have this match ('notIf')
+* **[.has()](#)**  -  Return a boolean if this match exists
 * **[.lookBehind('')]()**  -  search through earlier terms, in the sentence
 * **[.lookAhead('')]()**  -  search through following terms, in the sentence
 * **[.before('')]()**  -  return all terms before a match, in each phrase
 * **[.after('')]()**  -  return all terms after a match, in each phrase
 
 ##### Case
-* **[.toLowerCase()]()**  -  turn every letter of every term to lower-cse
-* **[.toUpperCase()]()**  -  turn every letter of every term to upper case
-* **[.toTitleCase()]()**  -  upper-case the first letter of each term
-* **[.toCamelCase()]()**  -  remove whitespace and title-case each term
+* **[.toLowerCase()](#)**  -  turn every letter of every term to lower-cse
+* **[.toUpperCase()](#)**  -  turn every letter of every term to upper case
+* **[.toTitleCase()](#)**  -  upper-case the first letter of each term
+* **[.toCamelCase()](#)**  -  remove whitespace and title-case each term
 
 ##### Whitespace
 * **[.pre('')]()**  -  add this punctuation or whitespace before each match 
 * **[.post('')]()**  -  add this punctuation or whitespace after each match
-* **[.trim()]()**  -  remove start and end whitespace
-* **[.hyphenate()]()**  -  connect words with hyphen, and remove whitespace
-* **[.dehyphenate()]()**  -  remove hyphens between words, and set whitespace
+* **[.trim()](#)**  -  remove start and end whitespace
+* **[.hyphenate()](#)**  -  connect words with hyphen, and remove whitespace
+* **[.dehyphenate()](#)**  -  remove hyphens between words, and set whitespace
   
 ##### Tag
 * **[.tag('')]()**  -  Give all terms the given tag
@@ -331,18 +333,18 @@ nlp.extend((Doc, world) => {
 ##### Insert
 * **[.replace(match, replace)]()**  -  search and replace match with new content
 * **[.replaceWith(replace)]()**  -  substitute-in new text
-* **[.delete()]()**  -  fully remove these terms from the document
+* **[.delete()](#)**  -  fully remove these terms from the document
 * **[.append(str)]()**  -  add these new terms to the end (insertAfter)
 * **[.prepend(str)]()**  -  add these new terms to the front (insertBefore)
-* **[.concat()]()**  -  add these new things to the end
+* **[.concat()](#)**  -  add these new things to the end
 
 ##### Transform
 * **[.sort('method')]()**  -  re-arrange the order of the matches (in place)
   * ***'alpha'***  - [default]  alphabetical order
   * ***'chron'***  -  the 'chronological', or original document sort order 
   * ***'freq'***  -  sort by # of duplicates in the document
-* **[.reverse()]()**  -  reverse the order of the matches, but not the words
-* **[.unique()]()**  -  remove any duplicate matches
+* **[.reverse()](#)**  -  reverse the order of the matches, but not the words
+* **[.unique()](#)**  -  remove any duplicate matches
 * **[.split('')]()**  -  return a Document with three parts for every match ('splitOn')
 * **[.splitBefore('')]()**  -  separate everything after the match as a new phrase
 * **[.splitAfter('')]()**  -  separate everything before the word, as a new phrase 
@@ -352,20 +354,24 @@ nlp.extend((Doc, world) => {
 
 ##### Output
 * **[.text('method')]()**  -  return the document as text
+
 there are 4 preset text outputs:
   * ***'text'***  - a perfect copy of the input text (default)
   * ***'normal'***  - normalized whitespace, case, unicode, punctuation
   * ***'clean'***  -  'normal' + lowercase, trimmed whitespace
   * ***'reduced'***  -  'clean' + contractions expanded.
   * ***'root'***  -  for machine-reading, inflected verbs, singular nouns. Like a 'stemmed' text.
+
 you can toggle any of these options, using an object as a parameter:
- * ***lowercase* : false**,
- * ***punctuation* : false**,
- * ***whitespace* : false**,
- * ***unicode* : false**,
- * ***implicit* : false**,
- * ***root* : false**,
+  * ***lowercase* : false**,
+  * ***punctuation* : false**,
+  * ***whitespace* : false**,
+  * ***unicode* : false**,
+  * ***implicit* : false**,
+  * ***root* : false**
+   
 * **[.json({})](https://docs.compromise.cool/compromise-json)**  -  pull out desired metadata from the document
+  
 you can specify which data you'd like to return with these options:
   * ***text* : true**,
   * ***normal*** : true,
@@ -380,157 +386,166 @@ you can specify which data you'd like to return with these options:
     * ***normal*** 
     * ***offset*** 
 * **[.out('array|offset|terms')]()**  -  some named output formats (deprecated)
-* **[.debug()]()**  -  pretty-print the current document and its tags
-* **[.export()]()**  -  store a parsed document for later use
+* **[.debug()](#)**  -  pretty-print the current document and its tags
+* **[.export()](#)**  -  store a parsed document for later use
   
 ##### Selections
-* **[.terms()]()**  -  split-up results by each individual term
-* **[.clauses()]()**  -  split-up sentences into multi-term phrases
-* **[.hyphenated()]()**  -   all terms connected with a hyphen or dash like `'wash-out'`
-* **[.hashTags()]()**  -  things like `'#nlp'`
-* **[.emails()]()**  -  things like `'hi@compromise.cool'`
-* **[.atMentions()]()**  -  things like `'@nlp_compromise'`
-* **[.urls()]()**  -  things like `'compromise.cool'`
-* **[.phoneNumbers()]()**  -  things like `'(939) 555-0113'`
-* **[.money()]()**  -  things like `'$2.50'`
-* **[.adverbs()]()**  -  things like `'quickly'`
-* **[.pronouns()]()**  -  things like `'he'`
-* **[.conjunctions()]()**  -  things like `'but'`
-* **[.prepositions()]()**  -  things like `'of'`
-* **[.abbreviations()]()**  -  things like `'Mrs.'`
-* **[.acronyms()]()**  -  things like `'FBI'` 
-* **[.contractions()]()**  -  things like "didn't" and "would not"
-* **[.parentheses()]()**  -  return anything inside (parentheses)
-* **[.possessives()]()**  -  things like `"Spencer's"`
-* **[.quotations()]()**  -  return any terms inside quotation marks
-* **[.nouns()]()**  -   return any subsequent terms tagged as a Noun
-  * **[.nouns().json()]()**  - overloaded output with noun metadata
-  * **[.nouns().toPlural()]()**   -  `'football captain' → 'football captains'`
-  * **[.nouns().toSingular()]()**   -  `'turnovers' → 'turnover'`
-  * **[.nouns().isPlural()]()**   -  return only plural nouns
-  * **[.nouns().isSingular()]()**   -  return only singular nouns
-  * **[.nouns().hasPlural()]()**   -  return only nouns that *can be* inflected as plural
-  * **[.nouns().toPossessive()]()**   -  add a `'s` to the end, in a safe manner.
-* **[.verbs()]()**  -  return any subsequent terms tagged as a Verb
-  * **[.verbs().json()]()**   - overloaded output with verb metadata
-  * **[.verbs().conjugate()]()**   - return all forms of these verbs
-  * **[.verbs().toPastTense()]()**   -  `'will go' → 'went'`
-  * **[.verbs().toPresentTense()]()**   -  `'walked' → 'walks'`
-  * **[.verbs().toFutureTense()]()**   -  `'walked' → 'will walk'`
-  * **[.verbs().toInfinitive()]()**   -  `'walks' → 'walk'`
-  * **[.verbs().toGerund()]()**   -  `'walks' → 'walking'`
-  * **[.verbs().toNegative()]()**   -  `'went' → 'did not go'`
-  * **[.verbs().toPositive()]()**   -  `"didn't study" → 'studied'`
-  * **[.verbs().isNegative()]()**   -  return verbs with 'not'
-  * **[.verbs().isPositive()]()**   -  only verbs without 'not'
-  * **[.verbs().isPlural()]()**   -  return plural verbs like 'we walk'
-  * **[.verbs().isSingular()]()**   -  return singular verbs like 'spencer walks' 
-  * **[.verbs().adverbs()]()**   -  return the adverbs describing this verb.
-* **[.lists()]()**  -  things like `'eats, shoots, and leaves'`
+* **[.terms()](#)**  -  split-up results by each individual term
+* **[.clauses()](#)**  -  split-up sentences into multi-term phrases
+* **[.hyphenated()](#)**  -   all terms connected with a hyphen or dash like `'wash-out'`
+* **[.hashTags()](#)**  -  things like `'#nlp'`
+* **[.emails()](#)**  -  things like `'hi@compromise.cool'`
+* **[.atMentions()](#)**  -  things like `'@nlp_compromise'`
+* **[.urls()](#)**  -  things like `'compromise.cool'`
+* **[.phoneNumbers()](#)**  -  things like `'(939) 555-0113'`
+* **[.money()](#)**  -  things like `'$2.50'`
+* **[.adverbs()](#)**  -  things like `'quickly'`
+* **[.pronouns()](#)**  -  things like `'he'`
+* **[.conjunctions()](#)**  -  things like `'but'`
+* **[.prepositions()](#)**  -  things like `'of'`
+* **[.abbreviations()](#)**  -  things like `'Mrs.'`
+* **[.acronyms()](#)**  -  things like `'FBI'` 
+* **[.contractions()](#)**  -  things like "didn't" and "would not"
+* **[.parentheses()](#)**  -  return anything inside (parentheses)
+* **[.possessives()](#)**  -  things like `"Spencer's"`
+* **[.quotations()](#)**  -  return any terms inside quotation marks
+* **[.nouns()](#)**  -   return any subsequent terms tagged as a Noun
+  * **[.nouns().json()](#)**  - overloaded output with noun metadata
+  * **[.nouns().toPlural()](#)**   -  `'football captain' → 'football captains'`
+  * **[.nouns().toSingular()](#)**   -  `'turnovers' → 'turnover'`
+  * **[.nouns().isPlural()](#)**   -  return only plural nouns
+  * **[.nouns().isSingular()](#)**   -  return only singular nouns
+  * **[.nouns().hasPlural()](#)**   -  return only nouns that *can be* inflected as plural
+  * **[.nouns().toPossessive()](#)**   -  add a `'s` to the end, in a safe manner.
+* **[.verbs()](#)**  -  return any subsequent terms tagged as a Verb
+  * **[.verbs().json()](#)**   - overloaded output with verb metadata
+  * **[.verbs().conjugate()](#)**   - return all forms of these verbs
+  * **[.verbs().toPastTense()](#)**   -  `'will go' → 'went'`
+  * **[.verbs().toPresentTense()](#)**   -  `'walked' → 'walks'`
+  * **[.verbs().toFutureTense()](#)**   -  `'walked' → 'will walk'`
+  * **[.verbs().toInfinitive()](#)**   -  `'walks' → 'walk'`
+  * **[.verbs().toGerund()](#)**   -  `'walks' → 'walking'`
+  * **[.verbs().toNegative()](#)**   -  `'went' → 'did not go'`
+  * **[.verbs().toPositive()](#)**   -  `"didn't study" → 'studied'`
+  * **[.verbs().isNegative()](#)**   -  return verbs with 'not'
+  * **[.verbs().isPositive()](#)**   -  only verbs without 'not'
+  * **[.verbs().isPlural()](#)**   -  return plural verbs like 'we walk'
+  * **[.verbs().isSingular()](#)**   -  return singular verbs like 'spencer walks' 
+  * **[.verbs().adverbs()](#)**   -  return the adverbs describing this verb.
+* **[.lists()](#)**  -  things like `'eats, shoots, and leaves'`
 
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221824-09809d80-ffb8-11e9-9ef0-6ed3574b0ce8.png"/>
 </div>
 
 #### Plugins:
-These are some helpful extensions to compromise:
+These are some helpful extensions:
 
 ##### Adjectives
-* **[.adjectives()]()**  -  like `quick`
-  * **[.numbers().json()]()**   -  overloaded output with adjective metadata
-  * **[.numbers().conjugate()]()**   -  return all conjugated forms of this adjective
-  * **[.numbers().toSuperlative()]()**   -  convert `quick` to `quickest`
-  * **[.numbers().toComparative()]()**   -  convert `quick` to `quickest`
-  * **[.numbers().toAdverb()]()**   -  convert `quick` to `quickly`
-  * **[.numbers().toVerb()]()**   -  convert `quick` to `quicken`
-  * **[.numbers().toNoun()]()**   -  convert `quick` to `quickness`
+`nlp i compromise-adjectives`
+* **[.adjectives()](#)**  -  like `quick`
+  * **[.numbers().json()](#)**   -  overloaded output with adjective metadata
+  * **[.numbers().conjugate()](#)**   -  return all conjugated forms of this adjective
+  * **[.numbers().toSuperlative()](#)**   -  convert `quick` to `quickest`
+  * **[.numbers().toComparative()](#)**   -  convert `quick` to `quickest`
+  * **[.numbers().toAdverb()](#)**   -  convert `quick` to `quickly`
+  * **[.numbers().toVerb()](#)**   -  convert `quick` to `quicken`
+  * **[.numbers().toNoun()](#)**   -  convert `quick` to `quickness`
 
 ##### Dates
-* **[.dates()]()**  -  find dates like `June 8th` or `03/03/18`
-  * **[.dates().json()]()**   -  overloaded output with date metadata
+`nlp i compromise-dates`
+* **[.dates()](#)**  -  find dates like `June 8th` or `03/03/18`
+  * **[.dates().json()](#)**   -  overloaded output with date metadata
 
 ##### Emoji
-* **[.emoji()]()**  -  find emoticons like `:)` or emojis like `💋`
+`nlp i compromise-emoji`
+* **[.emoji()](#)**  -  find emoticons like `:)` or emojis like `💋`
 
-##### Entities
-* **[.people()]()**  -  names like 'John F. Kennedy'
-* **[.places()]()**  -  like 'Paris, France'
-* **[.organizations()]()**  -  like 'Google, Inc'
-* **[.topics()]()**  -  `people()` + `places()` + `organizations()`
-* 
+##### Topics
+`nlp i compromise-topics`
+* **[.people()](#)**  -  names like 'John F. Kennedy'
+* **[.places()](#)**  -  like 'Paris, France'
+* **[.organizations()](#)**  -  like 'Google, Inc'
+* **[.topics()](#)**  -  `people()` + `places()` + `organizations()`
+  
 ##### Numbers
-* **[.numbers()]()**  -  grab all written and numeric values
-  * **[.numbers().json()]()**   -  overloaded output with number metadata
-  * **[.numbers().toText()]()**   -  convert number to `five` or `fifth`
-  * **[.numbers().toNumber()]()**   -  convert number to `5` or `5th`
-  * **[.numbers().toOrdinal()]()**   -  convert number to `fifth` or `5th`
-  * **[.numbers().toCardinal()]()**   -  convert number to `five` or `5`
+`nlp i compromise-numbers`
+* **[.numbers()](#)**  -  grab all written and numeric values
+  * **[.numbers().json()](#)**   -  overloaded output with number metadata
+  * **[.numbers().toText()](#)**   -  convert number to `five` or `fifth`
+  * **[.numbers().toNumber()](#)**   -  convert number to `5` or `5th`
+  * **[.numbers().toOrdinal()](#)**   -  convert number to `fifth` or `5th`
+  * **[.numbers().toCardinal()](#)**   -  convert number to `five` or `5`
   * **[.numbers().add(n)]()**   -  increase number by n
   * **[.numbers().subtract(n)]()**   -  decrease number by n
-  * **[.numbers().increment()]()**   -  decrease number by 1
-  * **[.numbers().decrement()]()**   -  decrease number by 1
+  * **[.numbers().increment()](#)**   -  decrease number by 1
+  * **[.numbers().decrement()](#)**   -  decrease number by 1
   * **[.numbers().isEqual(n)]()**   -  return numbers with this value
   * **[.numbers().greaterThan(min)]()**   -  return numbers bigger than n
   * **[.numbers().lessThan(max)]()**   -  return numbers smaller than n
   * **[.numbers().between(min, max)]()**   -  return numbers between min and max
-  * **[.numbers().isOrdinal()]()**   -  return only ordinal numbers
-  * **[.numbers().isCardinal()]()**   -  return only cardinal numbers
-  * **[.numbers().toLocaleString()]()**   -  add commas, or nicer formatting for numbers
+  * **[.numbers().isOrdinal()](#)**   -  return only ordinal numbers
+  * **[.numbers().isCardinal()](#)**   -  return only cardinal numbers
+  * **[.numbers().toLocaleString()](#)**   -  add commas, or nicer formatting for numbers
 
 ##### Ngrams
+`nlp i compromise-ngrams`
 * **[.ngrams({})]()**  -  list all repeating sub-phrases, by word-count 
-* **[.unigrams()]()**  -  n-grams with one word 
-* **[.bigrams()]()**  -  n-grams with two words 
-* **[.trigrams()]()**  -  n-grams with three words
-* **[.startgrams()]()**  -  n-grams including the first term of a phrase
-* **[.endgrams()]()**  -   n-grams including the last term of a phrase
-* **[.edgegrams()]()**  -   n-grams including the first or last term of a phrase
-
+* **[.unigrams()](#)**  -  n-grams with one word 
+* **[.bigrams()](#)**  -  n-grams with two words 
+* **[.trigrams()](#)**  -  n-grams with three words
+* **[.startgrams()](#)**  -  n-grams including the first term of a phrase
+* **[.endgrams()](#)**  -   n-grams including the last term of a phrase
+* **[.edgegrams()](#)**  -   n-grams including the first or last term of a phrase
 
 ##### Output
-* **[.hash()]()**  - generate an md5 hash from the document+tags
+`nlp i compromise-output`
+* **[.hash()](#)**  - generate an md5 hash from the document+tags
 * **[.html({})]()**  - generate sanitized html from the document
 
 ##### Paragraphs
+`nlp i compromise-paragraphs`
 this plugin creates a wrapper around the default sentence objects.
-* **[.paragraphs()]()**  - return groups of sentences
-  * **[.paragraphs().json()]()**   - output metadata for each paragraph
-  * **[.paragraphs().sentences()]()**   - go back to a regular Doc object 
-  * **[.paragraphs().terms()]()**   - 
-  * **[.paragraphs().eq()]()**   - 
-  * **[.paragraphs().first()]()**   - 
-  * **[.paragraphs().last()]()**   - 
-  * **[.paragraphs().match()]()**   - 
-  * **[.paragraphs().not()]()**   - 
-  * **[.paragraphs().if()]()**   - 
-  * **[.paragraphs().ifNo()]()**   - 
-  * **[.paragraphs().has()]()**   - 
-  * **[.paragraphs().forEach()]()**   - 
-  * **[.paragraphs().map()]()**   - 
-  * **[.paragraphs().filter()]()**   - 
+* **[.paragraphs()](#)**  - return groups of sentences
+  * **[.paragraphs().json()](#)**   - output metadata for each paragraph
+  * **[.paragraphs().sentences()](#)**   - go back to a regular Doc object 
+  * **[.paragraphs().terms()](#)**   - 
+  * **[.paragraphs().eq()](#)**   - 
+  * **[.paragraphs().first()](#)**   - 
+  * **[.paragraphs().last()](#)**   - 
+  * **[.paragraphs().match()](#)**   - 
+  * **[.paragraphs().not()](#)**   - 
+  * **[.paragraphs().if()](#)**   - 
+  * **[.paragraphs().ifNo()](#)**   - 
+  * **[.paragraphs().has()](#)**   - 
+  * **[.paragraphs().forEach()](#)**   - 
+  * **[.paragraphs().map()](#)**   - 
+  * **[.paragraphs().filter()](#)**   - 
 
 ##### Sentences
-* **[.sentences()]()**  - return a sentence class with additional methods
-  * **[.sentences().json()]()**   - overloaded output with sentence metadata
-  * **[.sentences().subjects()]()**   - return the main noun of each sentence
-  * **[.sentences().toPastTense()]()**   - 
-  * **[.sentences().toPresentTense()]()**   - 
-  * **[.sentences().toFutureTense()]()**   - 
-  * **[.sentences().toContinuous()]()**   - 
-  * **[.sentences().toNegative()]()**   - 
-  * **[.sentences().toPositive()]()**   - 
-  * **[.sentences().isPassive()]()**   - 
-  * **[.sentences().isQuestion()]()**   - return questions with a `?`
-  * **[.sentences().isExclamation()]()**   - return sentences with a `!`
-  * **[.sentences().isStatement()]()**   - return sentences without `?` or `!`
-  * **[.sentences().prepend()]()**   - smarter prepend that repairs whitespace + titlecasing
-  * **[.sentences().append()]()**   - smarter append that repairs sentence punctuation
-  * **[.sentences().toExclamation()]()**   - 
-  * **[.sentences().toQuestion()]()**   - 
-  * **[.sentences().toStatement()]()**   - 
+`nlp i compromise-sentences`
+* **[.sentences()](#)**  - return a sentence class with additional methods
+  * **[.sentences().json()](#)**   - overloaded output with sentence metadata
+  * **[.sentences().subjects()](#)**   - return the main noun of each sentence
+  * **[.sentences().toPastTense()](#)**   - 
+  * **[.sentences().toPresentTense()](#)**   - 
+  * **[.sentences().toFutureTense()](#)**   - 
+  * **[.sentences().toContinuous()](#)**   - 
+  * **[.sentences().toNegative()](#)**   - 
+  * **[.sentences().toPositive()](#)**   - 
+  * **[.sentences().isPassive()](#)**   - 
+  * **[.sentences().isQuestion()](#)**   - return questions with a `?`
+  * **[.sentences().isExclamation()](#)**   - return sentences with a `!`
+  * **[.sentences().isStatement()](#)**   - return sentences without `?` or `!`
+  * **[.sentences().prepend()](#)**   - smarter prepend that repairs whitespace + titlecasing
+  * **[.sentences().append()](#)**   - smarter append that repairs sentence punctuation
+  * **[.sentences().toExclamation()](#)**   - 
+  * **[.sentences().toQuestion()](#)**   - 
+  * **[.sentences().toStatement()](#)**   - 
   * 
 ##### Syllables
-* **[.syllables()]()**  - split each term by its typical pronounciation
+`nlp i compromise-syllables`
+* **[.syllables()](#)**  - split each term by its typical pronounciation
 
 <!-- spacer -->
 <div >

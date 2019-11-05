@@ -36,7 +36,7 @@ const addMethod = function(Doc) {
   }
   Doc.prototype.biGrams = Doc.prototype.bigrams
 
-  /** n-grams with two words */
+  /** n-grams with three words */
   Doc.prototype.trigrams = function(n) {
     let arr = getGrams(tokenize(this), { max: 3, min: 3 })
     arr = sort(arr)

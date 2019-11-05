@@ -363,26 +363,20 @@ doc.text({
   root: false,
 })
 ```
-* **[.json({})]()**  -  pull out desired metadata from the document
+* **[.json({})](https://docs.compromise.cool/compromise-json)**  -  pull out desired metadata from the document
 you can specify which data you'd like to return with these options:
-```js
-doc.json({
-  text: true,
-  normal: false,
-  reduced: false,
-  root: false,
-  trim: false,
-  offset: false,
-  wordCount: false,
-  terms: {
-    text: true,
-    tags: true,
-    id: false,
-    normal: false,
-    offset: false,
-  },
-})
-```
+  * ***text*** 
+  * ***normal*** 
+  * ***reduced*** 
+  * ***root*** 
+  * ***trim*** 
+  * ***offset*** 
+  * ***wordCount*** 
+    * ***text*** 
+    * ***tags*** 
+    * ***id*** 
+    * ***normal*** 
+    * ***offset*** 
 * **[.out('array|offset|terms')]()**  -  some named output formats (deprecated)
 * **[.debug()]()**  -  pretty-print the current document and its tags
 * **[.export()]()**  -  store a parsed document for later use
@@ -390,26 +384,152 @@ doc.json({
 ##### Selections
 * **[.terms()]()**  -  split-up results by each individual term
 * **[.clauses()]()**  -  split-up sentences into multi-term phrases
-* **[.hyphenated()]()**  -   all terms connected with a hyphen or dash
-* **[.hashTags()]()**  -  things like *'#nlp'*
-* **[.emails()]()**  -  things like *'hi@compromise.cool'*
-* **[.atMentions()]()**  -  things like '@nlp_compromise'
-* **[.urls()]()**  -  things like 'compromise.cool'
-* **[.phoneNumbers()]()**  -  things like '(939) 555-0113'
-* **[.money()]()**  -  things like *'$2.50'*
-* **[.adverbs()]()**  -  things like *'quickly'*
-* **[.pronouns()]()**  -  things like *'he'*
-* **[.conjunctions()]()**  -  things like *'but'*
-* **[.prepositions()]()**  -  things like *'of'*
+* **[.hyphenated()]()**  -   all terms connected with a hyphen or dash like `'wash-out'`
+* **[.hashTags()]()**  -  things like `'#nlp'`
+* **[.emails()]()**  -  things like `'hi@compromise.cool'`
+* **[.atMentions()]()**  -  things like `'@nlp_compromise'`
+* **[.urls()]()**  -  things like `'compromise.cool'`
+* **[.phoneNumbers()]()**  -  things like `'(939) 555-0113'`
+* **[.money()]()**  -  things like `'$2.50'`
+* **[.adverbs()]()**  -  things like `'quickly'`
+* **[.pronouns()]()**  -  things like `'he'`
+* **[.conjunctions()]()**  -  things like `'but'`
+* **[.prepositions()]()**  -  things like `'of'`
 * **[.abbreviations()]()**  -  things like `'Mrs.'`
-* **[.acronyms()]()**  -  things like `FBI` 
+* **[.acronyms()]()**  -  things like `'FBI'` 
 * **[.contractions()]()**  -  things like "didn't" and "would not"
-* **[.lists()]()**  -  return all comma-seperated lists
-* **[.nouns()]()**  -   return any subsequent terms tagged as a Noun
 * **[.parentheses()]()**  -  return anything inside (parentheses)
-* **[.possessives()]()**  -  things like "Spencer's"
+* **[.possessives()]()**  -  things like `"Spencer's"`
 * **[.quotations()]()**  -  return any terms inside quotation marks
+  
+* **[.nouns()]()**  -   return any subsequent terms tagged as a Noun
+  * **[.nouns().json()]()**  - overloaded output with noun metadata
+  * **[.nouns().toPlural()]()**   -  `'football captain' → 'football captains'`
+  * **[.nouns().toSingular()]()**   -  `'turnovers' → 'turnover'`
+  * **[.nouns().isPlural()]()**   -  return only plural nouns
+  * **[.nouns().isSingular()]()**   -  return only singular nouns
+  * **[.nouns().hasPlural()]()**   -  return only nouns that *can be* inflected as plural
+  * **[.nouns().toPossessive()]()**   -  add a `'s` to the end, in a safe manner.
 * **[.verbs()]()**  -  return any subsequent terms tagged as a Verb
+  * **[.verbs().json()]()**   - overloaded output with verb metadata
+  * **[.verbs().conjugate()]()**   - return all forms of these verbs
+  * **[.verbs().toPastTense()]()**   -  `'will go' → 'went'`
+  * **[.verbs().toPresentTense()]()**   -  `'walked' → 'walks'`
+  * **[.verbs().toFutureTense()]()**   -  `'walked' → 'will walk'`
+  * **[.verbs().toInfinitive()]()**   -  `'walks' → 'walk'`
+  * **[.verbs().toGerund()]()**   -  `'walks' → 'walking'`
+  * **[.verbs().toNegative()]()**   -  `'went' → 'did not go'`
+  * **[.verbs().toPositive()]()**   -  `"didn't study" → 'studied'`
+  * **[.verbs().isNegative()]()**   -  return verbs with 'not'
+  * **[.verbs().isPositive()]()**   -  only verbs without 'not'
+  * **[.verbs().isPlural()]()**   -  return plural verbs like 'we walk'
+  * **[.verbs().isSingular()]()**   -  return singular verbs like 'spencer walks' 
+  * **[.verbs().adverbs()]()**   -  return the adverbs describing this verb.
+* **[.lists()]()**  -  things like `'eats, shoots, and leaves'`
+
+<div align="center">
+  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221824-09809d80-ffb8-11e9-9ef0-6ed3574b0ce8.png"/>
+</div>
+
+#### Plugins:
+These are some helpful extensions to compromise:
+
+##### Adjectives
+* **[.adjectives()]()**  -  like `quick`
+  * **[.numbers().json()]()**   -  overloaded output with adjective metadata
+  * **[.numbers().conjugate()]()**   -  return all conjugated forms of this adjective
+  * **[.numbers().toSuperlative()]()**   -  convert `quick` to `quickest`
+  * **[.numbers().toComparative()]()**   -  convert `quick` to `quickest`
+  * **[.numbers().toAdverb()]()**   -  convert `quick` to `quickly`
+  * **[.numbers().toVerb()]()**   -  convert `quick` to `quicken`
+  * **[.numbers().toNoun()]()**   -  convert `quick` to `quickness`
+
+##### Dates
+* **[.dates()]()**  -  find dates like `June 8th` or `03/03/18`
+  * **[.dates().json()]()**   -  overloaded output with date metadata
+
+##### Emoji
+* **[.emoji()]()**  -  find emoticons like `:)` or emojis like `💋`
+
+##### Entities
+* **[.people()]()**  -  names like 'John F. Kennedy'
+* **[.places()]()**  -  like 'Paris, France'
+* **[.organizations()]()**  -  like 'Google, Inc'
+* **[.topics()]()**  -  `people()` + `places()` + `organizations()`
+* 
+##### Numbers
+* **[.numbers()]()**  -  grab all written and numeric values
+  * **[.numbers().json()]()**   -  overloaded output with number metadata
+  * **[.numbers().toText()]()**   -  convert number to `five` or `fifth`
+  * **[.numbers().toNumber()]()**   -  convert number to `5` or `5th`
+  * **[.numbers().toOrdinal()]()**   -  convert number to `fifth` or `5th`
+  * **[.numbers().toCardinal()]()**   -  convert number to `five` or `5`
+  * **[.numbers().add(n)]()**   -  increase number by n
+  * **[.numbers().subtract(n)]()**   -  decrease number by n
+  * **[.numbers().increment()]()**   -  decrease number by 1
+  * **[.numbers().decrement()]()**   -  decrease number by 1
+  * **[.numbers().isEqual(n)]()**   -  return numbers with this value
+  * **[.numbers().greaterThan(min)]()**   -  return numbers bigger than n
+  * **[.numbers().lessThan(max)]()**   -  return numbers smaller than n
+  * **[.numbers().between(min, max)]()**   -  return numbers between min and max
+  * **[.numbers().isOrdinal()]()**   -  return only ordinal numbers
+  * **[.numbers().isCardinal()]()**   -  return only cardinal numbers
+  * **[.numbers().toLocaleString()]()**   -  add commas, or nicer formatting for numbers
+
+##### Ngrams
+* **[.ngrams({})]()**  -  list all repeating sub-phrases, by word-count 
+* **[.unigrams()]()**  -  n-grams with one word 
+* **[.bigrams()]()**  -  n-grams with two words 
+* **[.trigrams()]()**  -  n-grams with three words
+* **[.startgrams()]()**  -  n-grams including the first term of a phrase
+* **[.endgrams()]()**  -   n-grams including the last term of a phrase
+* **[.edgegrams()]()**  -   n-grams including the first or last term of a phrase
+
+
+##### Output
+* **[.hash()]()**  - generate an md5 hash from the document+tags
+* **[.html({})]()**  - generate sanitized html from the document
+
+##### Paragraphs
+this plugin creates a wrapper around the default sentence objects.
+* **[.paragraphs()]()**  - return groups of sentences
+  * **[.paragraphs().json()]()**   - output metadata for each paragraph
+  * **[.paragraphs().sentences()]()**   - go back to a regular Doc object 
+  * **[.paragraphs().terms()]()**   - 
+  * **[.paragraphs().eq()]()**   - 
+  * **[.paragraphs().first()]()**   - 
+  * **[.paragraphs().last()]()**   - 
+  * **[.paragraphs().match()]()**   - 
+  * **[.paragraphs().not()]()**   - 
+  * **[.paragraphs().if()]()**   - 
+  * **[.paragraphs().ifNo()]()**   - 
+  * **[.paragraphs().has()]()**   - 
+  * **[.paragraphs().forEach()]()**   - 
+  * **[.paragraphs().map()]()**   - 
+  * **[.paragraphs().filter()]()**   - 
+
+##### Sentences
+* **[.sentences()]()**  - return a sentence class with additional methods
+  * **[.sentences().json()]()**   - overloaded output with sentence metadata
+  * **[.sentences().subjects()]()**   - return the main noun of each sentence
+  * **[.sentences().toPastTense()]()**   - 
+  * **[.sentences().toPresentTense()]()**   - 
+  * **[.sentences().toFutureTense()]()**   - 
+  * **[.sentences().toContinuous()]()**   - 
+  * **[.sentences().toNegative()]()**   - 
+  * **[.sentences().toPositive()]()**   - 
+  * **[.sentences().isPassive()]()**   - 
+  * **[.sentences().isQuestion()]()**   - return questions with a `?`
+  * **[.sentences().isExclamation()]()**   - return sentences with a `!`
+  * **[.sentences().isStatement()]()**   - return sentences without `?` or `!`
+  * **[.sentences().prepend()]()**   - smarter prepend that repairs whitespace + titlecasing
+  * **[.sentences().append()]()**   - smarter append that repairs sentence punctuation
+  * **[.sentences().toExclamation()]()**   - 
+  * **[.sentences().toQuestion()]()**   - 
+  * **[.sentences().toStatement()]()**   - 
+  * 
+##### Syllables
+* **[.syllables()]()**  - split each term by its typical pronounciation
 
 <!-- spacer -->
 <div >

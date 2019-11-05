@@ -17,3 +17,22 @@ let lexicon = {
   fozzie: 'FirstName',
 }
 let doc = nlp(muppetText, lexicon)
+
+{
+  const defaults = {
+    text: true,
+    normal: false,
+    reduced: false,
+    root: false,
+    trim: false,
+    offset: false,
+    wordCount: false,
+    terms: {
+      text: true,
+      tags: true,
+      id: false,
+      normal: false,
+      offset: false,
+    },
+  }
+}

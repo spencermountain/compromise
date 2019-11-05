@@ -12,7 +12,7 @@ const arr = [
   ['conjunctions', '#Conjunction'],
   ['prepositions', '#Preposition'],
   ['abbreviations', '#Abbreviation'],
-  ['romanNumerals', '#RomanNumeral'],
+  // ['romanNumerals', '#RomanNumeral'],
 ]
 let methods = {}
 arr.forEach(a => {

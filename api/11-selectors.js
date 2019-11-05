@@ -71,11 +71,6 @@ module.exports = {
     returns: 'Doc',
     example: '',
   },
-  romanNumerals: {
-    desc: '',
-    returns: 'Doc',
-    example: '',
-  },
 
   acronyms: {
     desc: '',

@@ -203,8 +203,6 @@ declare module nlp {
     prepositions(n?: Number): Document
     /**  return anything tagged as a Abbreviation*/
     abbreviations(n?: Number): Document
-    /**  return anything tagged as a RomanNumeral*/
-    romanNumerals(n?: Number): Document
 
     /**  return anything tagged as an Acronym, like 'FBI.' */
     acronyms(n?: Number): Document

@@ -16,3 +16,17 @@ console.timeEnd('parse')
 //   .splitBefore('monorail')
 //   .eq(0)
 //   .out()
+doc.json({
+  text: true,
+  normal: false,
+  reduced: false,
+  root: false,
+  offset: false,
+  trim: false,
+  terms: {
+    text: true,
+    tags: true,
+    normal: false,
+    offset: false,
+  },
+})

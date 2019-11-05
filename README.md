@@ -320,21 +320,58 @@ all match methods use the [match-syntax](https://beta.observablehq.com/@spencerm
 
 ##### Transform
 * **[.sort('alpha|chron|freq')]()**  -  re-arrange the order of the matches (in place)
+* * **alpha**  - [default]  alphabetical order
+* * **chron**  -  the 'chronological', or original document sort order 
+* * **freq**  -  sort by # of duplicates in the document
 * **[.reverse()]()**  -  reverse the order of the matches, but not the words
 * **[.unique()]()**  -  remove any duplicate matches
-  
 * **[.split('')]()**  -  return a Document with three parts for every match ('splitOn')
 * **[.splitBefore('')]()**  -  separate everything after the match as a new phrase
 * **[.splitAfter('')]()**  -  separate everything before the word, as a new phrase 
-
 * **[.normalize({})]()** - clean-up the text in various ways
 * **[.segment({})]()** - split a document into labeled sections
 * **[.join('')]()** - make all phrases into one phrase 
 
 ##### Output
 * **[.text('text|normal|reduced|root')]()**  -  return the document as text
+there are 4 preset text outputs:
+* * **'text'**  - a perfect copy of the input text (default)
+* * **'normal'**  - normalized whitespace, case, unicode, punctuation
+* * **clean**  -  'normal' + lowercase, trimmed whitespace
+* * **reduced**  -  'clean' + contractions expanded.
+* * **root**  -  for machine-reading, inflected verbs, singular nouns. Like a 'stemmed' text.
+you can toggle any of these options, using an object as a parameter:
+```js
+doc.text({
+  lowercase: false,
+  punctuation: false,
+  whitespace: false,
+  unicode: false,
+  implicit: false,
+  root: false,
+})
+```
 * **[.json({})]()**  -  pull out desired metadata from the document
-* **[.out('array|offset|terms')]()**  -  some named output formats
+you can specify which data you'd like to return with these options:
+```js
+doc.json({
+  text: true,
+  normal: false,
+  reduced: false,
+  root: false,
+  trim: false,
+  offset: false,
+  wordCount: false,
+  terms: {
+    text: true,
+    tags: true,
+    id: false,
+    normal: false,
+    offset: false,
+  },
+})
+```
+* **[.out('array|offset|terms')]()**  -  some named output formats (deprecated)
 * **[.debug()]()**  -  pretty-print the current document and its tags
 * **[.export()]()**  -  store a parsed document for later use
   
@@ -342,28 +379,23 @@ all match methods use the [match-syntax](https://beta.observablehq.com/@spencerm
 * **[.terms()]()**  -  split-up results by each individual term
 * **[.clauses()]()**  -  split-up sentences into multi-term phrases
 * **[.hyphenated()]()**  -   all terms connected with a hyphen or dash
-
-* **[.hashTags()]()**  -  return things like '#nlp'
-* **[.emails()]()**  -  return things like 'hi@compromise.cool'
-* **[.atMentions()]()**  -  return things like '@nlp_compromise'
-* **[.urls()]()**  -  return things like 'compromise.cool'
-
-* **[.fractions()]()**  -  return anything tagged as a Fraction
-* **[.phoneNumbers()]()**  -  return things like '(939) 555-0113'
-* **[.money()]()**  -  return things like '$2.50'
-
-* **[.adverbs()]()**  -  return things like 'quickly'
-* **[.pronouns()]()**  -  return anything tagged as a Pronoun
-* **[.conjunctions()]()**  -  return things like 
-* **[.prepositions()]()**  -  return things like 
-* **[.abbreviations()]()**  -  return things like 'Mrs.'
-
-* **[.acronyms()]()**  -  return things like 'FBI'  
-* **[.contractions()]()**  -  return things like "didn't" and "would not"
+* **[.hashTags()]()**  -  things like *'#nlp'*
+* **[.emails()]()**  -  things like *'hi@compromise.cool'*
+* **[.atMentions()]()**  -  things like '@nlp_compromise'
+* **[.urls()]()**  -  things like 'compromise.cool'
+* **[.phoneNumbers()]()**  -  things like '(939) 555-0113'
+* **[.money()]()**  -  things like *'$2.50'*
+* **[.adverbs()]()**  -  things like *'quickly'*
+* **[.pronouns()]()**  -  things like *'he'*
+* **[.conjunctions()]()**  -  things like *'but'*
+* **[.prepositions()]()**  -  things like *'of'*
+* **[.abbreviations()]()**  -  things like 'Mrs.'
+* **[.acronyms()]()**  -  things like 'FBI'  
+* **[.contractions()]()**  -  things like "didn't" and "would not"
 * **[.lists()]()**  -  return all comma-seperated lists
 * **[.nouns()]()**  -   return any subsequent terms tagged as a Noun
 * **[.parentheses()]()**  -  return anything inside (parentheses)
-* **[.possessives()]()**  -  return things like "Spencer's"
+* **[.possessives()]()**  -  things like "Spencer's"
 * **[.quotations()]()**  -  return any terms inside quotation marks
 * **[.verbs()]()**  -  return any subsequent terms tagged as a Verb
 

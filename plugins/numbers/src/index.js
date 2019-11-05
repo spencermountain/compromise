@@ -4,6 +4,16 @@ const tagger = require('./tagger')
 
 /** adds .numbers() method */
 const addMethod = function(Doc, world) {
+  // add tags to our tagset
+  world.addTags({
+    Fraction: {
+      isA: 'Value',
+    },
+    Multiple: {
+      isA: 'Value',
+    },
+  })
+
   // additional tagging before running the number-parser
   world.postProcess(tagger)
 
@@ -23,6 +33,16 @@ const addMethod = function(Doc, world) {
     let match = findNumbers(this, n)
     return new Numbers(match.list, this, this.world)
   }
+
+  /** return things like 1/3rd */
+  Doc.prototype.fractions = function(n) {
+    return this.match('#Fraction')
+  }
+  /** return things like CCXX*/
+  Doc.prototype.romanNumerals = function(n) {
+    return this.match('#RomanNumeral')
+  }
+
   // alias for reverse-compatibility
   Doc.prototype.values = Doc.prototype.numbers
   return Doc

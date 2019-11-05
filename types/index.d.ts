@@ -186,8 +186,6 @@ declare module nlp {
     /**  return anything tagged as a Url */
     urls(n?: Number): Document
 
-    /**  return anything tagged as a Fraction*/
-    fractions(n?: Number): Document
     /**  return anything tagged as a phone number */
     phoneNumbers(n?: Number): Document
     /**  return anything tagged as Money*/

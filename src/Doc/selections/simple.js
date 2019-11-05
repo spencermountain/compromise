@@ -7,12 +7,10 @@ const arr = [
   ['urls', '#Url'],
   ['adverbs', '#Adverb'],
   ['pronouns', '#Pronoun'],
-  ['fractions', '#Fraction'],
   ['money', '#Money'],
   ['conjunctions', '#Conjunction'],
   ['prepositions', '#Preposition'],
   ['abbreviations', '#Abbreviation'],
-  // ['romanNumerals', '#RomanNumeral'],
 ]
 let methods = {}
 arr.forEach(a => {

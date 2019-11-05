@@ -8,9 +8,13 @@ module.exports = {
   not: {
     desc: 'return parts of the text that do not match. Like .match() but opposite.',
     returns: 'Doc',
-    example: `nlp('wait, there’s a new mexico?').places().not('new').out()\n//mexico`,
+    example: `nlp('wait, there’s a new mexico?').match('#Place').not('new').out()\n//mexico`,
   },
-  matchOne: {},
+  matchOne: {
+    desc: 'return only the first match ',
+    returns: 'Doc',
+    example: ``,
+  },
   if: {
     desc: 'returns only the sets which contain this match. Like a Array.filter() method, for your results',
     returns: 'Doc',
@@ -26,13 +30,23 @@ module.exports = {
     returns: 'Boolean',
     example: `nlp('I am the very model of a modern Major-General').has('#Pronoun')\n//true,`,
   },
+  lookBehind: {
+    desc: 'search through earlier terms, in the sentence',
+    returns: 'Doc',
+    example: ``,
+  },
+  lookAhead: {
+    desc: 'search through following terms, in the sentence',
+    returns: 'Doc',
+    example: ``,
+  },
   before: {
-    desc: 'find a match, and return everything infront of it',
+    desc: 'return the terms before each match',
     returns: 'Doc',
     example: `nlp('one two three four five').before('three').out()\n//one two`,
   },
   after: {
-    desc: 'find a match, and return everything following of it',
+    desc: 'return the terms after each match',
     returns: 'Doc',
     example: `nlp('one two three four five').after('three').out()\n//four five`,
   },

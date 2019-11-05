@@ -10,31 +10,28 @@ module.exports = {
     returns: 'Boolean',
     example: `nlp('oh say can you see?').match('see').found\n//true`,
   },
-  parent: {},
-  parents: {},
-  tagger: {},
-  clone: {
-    desc: 'copy the object, so changes no longer effect the original (make it ~immutable)',
-    mutative: false,
-    returns: 'Doc',
-    example: `nlp('would somebody please think of the children').clone().toUpperCase().parent().out()\n//would somebody please think of the children`,
-  },
-  wordCount: {},
+  parent: { desc: 'return the previous result', returns: 'Doc', example: '' },
+  parents: { desc: 'return all of the previous results', returns: 'Array', example: '' },
+  tagger: { desc: '(re)run the part-of-speech tagger on this document', returns: 'Doc', example: '' },
+  wordCount: { desc: '', returns: 'Doc', example: '' },
   length: {
     desc: 'how many individual matches in the result',
     getter: true,
     returns: 'Number',
     example: `nlp('jackie kennedy and aristotle onassis').match('#Person+').length\n//2`,
   },
-  normalize: {
-    desc:
-      'transforms whitespace, case, punctuation, contractions and values, so that they are more standard and workable',
+  clone: {
+    desc: 'copy the object, so changes no longer effect the original (make it ~immutable)',
+    mutative: false,
     returns: 'Doc',
-    example: `nlp(' so... you like   DONUTS? have all the donuts in the WORLD!!!').normalize().all().get(0).out()\n//So you like donuts?`,
+    example: `nlp('would somebody please think of the children').clone().toUpperCase().parent().out()\n//would somebody please think of the children`,
   },
-  debug: {
-    desc: 'pretty-print the current selection to the console',
+  pre: { desc: 'add this punctuation or whitespace before each match', returns: 'Doc', example: '' },
+  post: { desc: 'add this punctuation or whitespace after each match', returns: 'Doc', example: '' },
+  cache: { desc: 'freeze the current state of the document, for speed-purposes', returns: 'Doc', example: '' },
+  uncache: {
+    desc: 'un-freezes the current state of the document, so it may be transformed',
     returns: 'Doc',
-    example: `nlp('wayne’s world, party time, excellent- weeeyooweeeyoo!')//.debug()`,
+    example: '',
   },
 }

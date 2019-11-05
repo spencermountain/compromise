@@ -14,15 +14,15 @@ module.exports = {
     returns: 'lib',
     example: `let b=nlp.clone(); b.extend((Doc, world)=>{world.addWords({ 'a hoy hoy' : 'Greeting'})})`,
   },
-  import: {
+  load: {
     desc: 'load a Doc from .export() json',
     returns: 'Doc',
-    example: `let json=nlp('Tony Hawk').export();\nnlp.import(json).match('#Person')`,
+    example: `let json=nlp('Tony Hawk').export();\nnlp.load(json).match('#Person')`,
   },
   verbose: {
     desc: 'enable debugging mode for pos-tagging',
     returns: 'lib',
-    example: `let json=nlp('Tony Hawk').export();\nnlp.import(json).match('#Person')`,
+    example: `nlp.verbose(false);\nnlp('I am the very model of a modern Major-General')`,
   },
   version: {
     desc: "current version of compromise that's running",

@@ -40,7 +40,7 @@ nlp.clone = function() {
 }
 
 /** re-generate a Doc object from .json() results */
-nlp.import = function(json) {
+nlp.load = function(json) {
   let list = tokenize.fromJSON(json, world)
   return new Doc(list, null, world)
 }
@@ -53,5 +53,7 @@ nlp.verbose = function(bool = true) {
 
 /** current version of the library */
 nlp.version = version
+// alias
+nlp.import = nlp.load
 
 module.exports = nlp

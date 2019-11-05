@@ -11,7 +11,7 @@ declare module nlp {
   /** make a deep-copy of the library state */
   export function clone(): Document
   /** re-generate a Doc object from .json() results */
-  export function fromJSON(json: any): Document
+  export function load(json: any): Document
   /**  log our decision-making for debugging */
   export function verbose(bool: boolean): Document
   /**  current semver version of the library */
@@ -41,14 +41,14 @@ declare module nlp {
     post(str: String): Document
     /** freeze the current state of the document, for speed-purposes */
     cache(options?: Object): Document
-    /** n-freezes the current state of the document, so it may be transformed */
+    /** un-freezes the current state of the document, so it may be transformed */
     uncache(options?: Object): Document
 
     // Accessors
     /**  use only the first result(s) */
-    first(): Document
+    first(n?: Number): Document
     /**  use only the last result(s) */
-    last(): Document
+    last(n?: Number): Document
     /**  grab a subset of the results */
     slice(start: Number, end?: Number): Document
     /**  use only the nth result */
@@ -176,9 +176,9 @@ declare module nlp {
     terms(n?: Number): Document
     /**  all terms connected with a hyphen or dash */
     hyphenated(n?: Number): Document
+
     /**  return anything tagged as a phone number */
     phoneNumbers(n?: Number): Document
-
     /**  return anything tagged as a HashTag */
     hashTags(n?: Number): Document
     /**  return anything tagged as a Email */

@@ -19,24 +19,24 @@ const isEqual = function(a, b, t) {
   })
 }
 
-test('import-export basic', function(t) {
+test('load-export basic', function(t) {
   let a = nlp('it was cold. John K. Smith  was  verrrrry  cold ! ')
-  let b = nlp.import(a.export())
+  let b = nlp.load(a.export())
   isEqual(a, b, t)
   t.end()
 })
 
-test('import-export-empty', function(t) {
+test('load-export-empty', function(t) {
   let a = nlp('')
-  let b = nlp.import(a.export())
+  let b = nlp.load(a.export())
   isEqual(a, b, t)
 
   t.end()
 })
 
-test('import-export-garbage', function(t) {
+test('load-export-garbage', function(t) {
   let a = nlp('[]. oh yeah. function the null prototype.   - \n "two| (time()7 77')
-  let b = nlp.import(a.export())
+  let b = nlp.load(a.export())
   isEqual(a, b, t)
 
   t.end()
@@ -47,7 +47,7 @@ test('export-unknown tag', function(t) {
   a.match('. monster').tag('Character')
   a.match('ok boomer').tag('Diss')
   let json = a.export()
-  let b = nlp.import(json)
+  let b = nlp.load(json)
   isEqual(a, b, t)
   t.end()
 })

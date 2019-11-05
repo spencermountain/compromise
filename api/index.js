@@ -2,14 +2,15 @@ let doc = Object.assign(
   {},
   require('./01-utils'),
   require('./02-accessors'),
-  require('./03-case'),
-  require('./04-whitespace'),
-  require('./05-insert'),
-  require('./06-out'),
+  require('./03-match'),
+  require('./04-case'),
+  require('./05-whitespace'),
+  require('./06-tag'),
   require('./07-loops'),
-  require('./08-match'),
-  require('./09-tag'),
-  require('./10-selectors')
+  require('./08-insert'),
+  require('./09-out'),
+  require('./10-split'),
+  require('./11-selectors')
 )
 
 // let plugins = Object.assign({}, require('./plugins'))
@@ -17,9 +18,9 @@ let doc = Object.assign(
 // plugins.sentences = require('./plugins/sentences')
 
 let subclass = {
-  contractions: require('./11-contractions'),
-  nouns: require('./12-nouns'),
-  verbs: require('./13-verbs'),
+  contractions: require('./subclass/01-contractions'),
+  nouns: require('./subclass/02-nouns'),
+  verbs: require('./subclass/03-verbs'),
 }
 
 module.exports = {

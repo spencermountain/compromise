@@ -63,7 +63,7 @@ test('random-null', function(t) {
   t.equal(arr.length, 0, 'random can be empty')
 
   arr = r
-    .places()
+    .match('#Place+')
     .random(5)
     .out('array')
   t.equal(arr.length, 1, 'random can be full-match')

@@ -1,11 +1,10 @@
 module.exports = {
   tag: {
-    desc:
-      'set a particular interpretation for these terms. Can tag your match as anything. Supported tags do dependency/conflict logic.',
+    desc: 'Give all terms the given tag',
     returns: 'Doc',
     example: `nlp('Michael Apple ate a delicious apple.').match('#FirstName apple').tag('Person').all().match('#Person+').out()\n//Michael Apple`,
   },
-  tagSafe: {},
+  tagSafe: { desc: 'Only apply tag to terms if it is consistent with current tags', returns: 'Doc', example: `` },
   unTag: {
     desc: `remove a particular tag for all these terms. Passing in a '*' removes all the current tags.`,
     returns: 'Doc',

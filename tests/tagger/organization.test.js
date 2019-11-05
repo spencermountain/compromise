@@ -17,7 +17,7 @@ test('organization test', function(t) {
   ]
   arr.forEach(function(str) {
     const r = nlp(str)
-    const orgs = r.organizations()
+    const orgs = r.match('#Organization+')
     const msg = orgs.out('text') + '  -  ' + str
     t.equal(orgs.out('text'), str, msg)
   })

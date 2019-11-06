@@ -17,7 +17,7 @@ const termOffsets = function(doc) {
 /** pull out desired metadata from the document */
 exports.json = function(options = {}) {
   //support json(3) format
-  if (typeof options === 'number') {
+  if (typeof options === 'number' && this.list[options]) {
     return this.list[options].json(jsonDefaults)
   }
   options = Object.assign({}, jsonDefaults, options)

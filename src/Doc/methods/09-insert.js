@@ -1,4 +1,5 @@
 const tokenize = require('../../01-tokenizer')
+
 /** add these new terms to the end*/
 exports.append = function(str) {
   if (!str) {

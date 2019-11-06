@@ -1,4 +1,8 @@
+const normalize = require('./normalize')
+const parseRanges = require('./parse-ranges')
+
 const parse = function(doc) {
-  return {}
+  doc = normalize(doc)
+  return parseRanges(doc)
 }
 module.exports = parse

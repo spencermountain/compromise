@@ -1,6 +1,6 @@
-const append = require('./_join/append')
-const prepend = require('./_join/prepend')
-const deletePhrase = require('./_join/delete')
+const append = require('../insert/append')
+const prepend = require('../insert/prepend')
+const deletePhrase = require('../insert/delete')
 // const tokenize = require('../../01-tokenizer')
 
 /** put this text at the end */

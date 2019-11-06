@@ -126,9 +126,9 @@ declare module nlp {
 
     // Insert
     /**  substitute-in new content */
-    replaceWith(text: String): Document
+    replaceWith(text: String, keepTags?: Boolean): Document
     /**  search and replace match with new content */
-    replace(match: String, text: String): Document
+    replace(match: String, text: String, keepTags?: Boolean): Document
     /**  fully remove these terms from the document */
     delete(match: String): Document
     /**  add these new terms to the end (insertAfter) */

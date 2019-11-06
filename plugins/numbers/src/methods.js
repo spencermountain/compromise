@@ -44,7 +44,7 @@ let methods = {
         return
       }
       let str = makeNumber(obj, false, val.has('#Ordinal'))
-      val.replaceWith(str)
+      val.replaceWith(str, true)
     })
     return this
   },
@@ -57,7 +57,7 @@ let methods = {
       }
       obj.num = obj.num.toLocaleString()
       let str = makeNumber(obj, false, val.has('#Ordinal'))
-      val.replaceWith(str)
+      val.replaceWith(str, true)
     })
     return this
   },
@@ -69,7 +69,7 @@ let methods = {
         return
       }
       let str = makeNumber(obj, true, val.has('#Ordinal'))
-      val.replaceWith(str)
+      val.replaceWith(str, true)
     })
     return this
   },
@@ -82,7 +82,7 @@ let methods = {
         return
       }
       let str = makeNumber(obj, val.has('#TextValue'), false)
-      val.replaceWith(str)
+      val.replaceWith(str, true)
     })
     return this
   },
@@ -95,7 +95,7 @@ let methods = {
         return
       }
       let str = makeNumber(obj, val.has('#TextValue'), true)
-      val.replaceWith(str)
+      val.replaceWith(str, true)
     })
     return this
   },
@@ -139,7 +139,7 @@ let methods = {
       }
       obj.num += n
       let str = makeNumber(obj, val.has('#TextValue'), val.has('#Ordinal'))
-      val.replaceWith(str)
+      val.replaceWith(str, true)
     })
     return this
   },

@@ -20,10 +20,15 @@ const addMethods = function(Doc, world) {
         n = options
         options = null
       }
+      options = options || { terms: false }
       let res = []
       this.forEach(doc => {
         let json = doc.json(options)[0]
-        json.date = parse(doc)
+        let obj = parse(doc)
+        json.date = {
+          start: obj.start ? obj.start.format('iso-short') : null,
+          end: obj.end ? obj.end.format('iso-short') : null,
+        }
         res.push(json)
       })
       if (n !== null) {
@@ -31,7 +36,21 @@ const addMethods = function(Doc, world) {
       }
       return res
     }
-    format(str) {}
+    /** render all dates according to a specific format */
+    format(fmt) {
+      this.forEach(doc => {
+        let obj = parse(doc)
+        let str = ''
+        if (obj.start) {
+          str = obj.start.format(fmt)
+        }
+        if (obj.end) {
+          str += ' to ' + obj.start.format(fmt)
+        }
+        doc.replaceWith(str)
+      })
+      return this
+    }
   }
 
   Doc.prototype.dates = function(n) {

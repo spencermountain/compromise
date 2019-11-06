@@ -39,6 +39,7 @@
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "^5.1.0",
     "rollup-plugin-terser": "^5.0.0",
+    "spacetime": "^6.2.0",
     "tap-dancer": "0.2.0",
     "tape": "4.11.0"
   },

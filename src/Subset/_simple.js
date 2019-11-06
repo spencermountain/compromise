@@ -7,7 +7,7 @@ const arr = [
   // ['adjectives', '#Adjective'],
   ['hashTags', '#HashTag'],
   ['emails', '#Email'],
-  ['emojis', '#Emoji'],
+  ['emoji', '#Emoji'],
   ['emoticons', '#Emoticon'],
   ['atMentions', '#AtMention'],
   ['urls', '#Url'],
@@ -20,22 +20,25 @@ const arr = [
 ]
 arr.forEach(a => {
   methods[a[0]] = function(n) {
-    let r = this.match(a[1])
+    let m = this.match(a[1])
     if (typeof n === 'number') {
-      r = r.get(n)
+      m = m.get(n)
     }
-    return r
+    return m
   }
 })
+// aliases
+methods.emojis = methods.emoji
+methods.atmentions = methods.atMentions
 
 /** return anything tagged as a phone number */
 methods.phoneNumbers = function(n) {
-  let r = this.splitAfter('@hasComma')
-  r = r.match('#PhoneNumber+')
+  let m = this.splitAfter('@hasComma')
+  m = m.match('#PhoneNumber+')
   if (typeof n === 'number') {
-    r = r.get(n)
+    m = m.get(n)
   }
-  return r
+  return m
 }
 
 module.exports = methods

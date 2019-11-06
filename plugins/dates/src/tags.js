@@ -19,4 +19,7 @@ module.exports = {
   Holiday: {
     isA: ['Date', 'Noun'],
   },
+  Timezone: {
+    isA: ['Date', 'Noun'],
+  },
 }

@@ -1,56 +1,10 @@
-const parseVerb = require('./parse')
-const conjugations = require('./tense/conjugate')
-
-const methods = [require('./negative/methods'), require('./plural/methods'), require('./tense/methods')]
+const methods = require('./methods')
 
 const addMethod = function(Doc) {
   /**  */
-  class Verbs extends Doc {
-    constructor(list, from, world) {
-      super(list, from, world)
-    }
-
-    /** overload the original json with verb information */
-    json(options) {
-      let n = null
-      if (typeof options === 'number') {
-        n = options
-        options = null
-      }
-      options = options || { text: true, normal: true, trim: true, terms: true }
-      let res = []
-      this.forEach(p => {
-        let json = p.json(options)[0]
-        let parsed = parseVerb(p)
-        json.parts = {}
-        Object.keys(parsed).forEach(k => {
-          json.parts[k] = parsed[k].text('normal')
-        })
-        json.isNegative = p.has('#Negative')
-        json.conjugations = conjugations(parsed, this.world)
-        res.push(json)
-      })
-      if (n !== null) {
-        return res[n]
-      }
-      return res
-    }
-
-    /** grab the adverbs describing these verbs */
-    adverbs() {
-      let list = []
-      this.forEach(vb => {
-        let advb = parseVerb(vb).adverb
-        if (advb.found) {
-          list = list.concat(advb.list)
-        }
-      })
-      return this.buildFrom(list)
-    }
-  }
-
+  class Verbs extends Doc {}
   // add-in our methods
-  methods.forEach(obj => Object.assign(Verbs.prototype, obj))
+  Object.assign(Verbs.prototype, methods)
 
   // aliases
   Verbs.prototype.negate = Verbs.prototype.toNegative

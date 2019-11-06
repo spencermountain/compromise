@@ -80,7 +80,7 @@ module.exports = {
     this.forEach(vb => {
       let parsed = parseVerb(vb)
       let str = conjugate(parsed, this.world).PastTense
-      vb.replace(str)
+      vb.replaceWith(str, true)
     })
     return this
   },
@@ -89,7 +89,7 @@ module.exports = {
     this.forEach(vb => {
       let parsed = parseVerb(vb)
       let str = conjugate(parsed, this.world).PresentTense
-      vb.replace(str)
+      vb.replaceWith(str, true)
     })
     return this
   },
@@ -98,7 +98,7 @@ module.exports = {
     this.forEach(vb => {
       let parsed = parseVerb(vb)
       let inf = toInfinitive(parsed, this.world)
-      vb.replace('will ' + inf) //not smart.
+      vb.replaceWith('will ' + inf, true) //not smart.
     })
     return this
   },
@@ -107,7 +107,7 @@ module.exports = {
     this.forEach(vb => {
       let parsed = parseVerb(vb)
       let inf = toInfinitive(parsed, this.world)
-      vb.replace(inf)
+      vb.replaceWith(inf, true)
     })
     return this
   },
@@ -116,7 +116,7 @@ module.exports = {
     this.forEach(vb => {
       let parsed = parseVerb(vb)
       let str = conjugate(parsed, this.world).Gerund
-      vb.replace(str)
+      vb.replaceWith(str, true)
     })
     return this
   },

@@ -27,14 +27,14 @@ const toNegative = function(parsed, world) {
   // walked -> did not walk
   if (vb.has('#PastTense')) {
     let inf = toInfinitive(parsed, world)
-    vb.replace(inf)
+    vb.replaceWith(inf, true)
     vb.prepend('did not')
     return
   }
   // walks -> does not walk
   if (vb.has('#PresentTense')) {
     let inf = toInfinitive(parsed, world)
-    vb.replace(inf)
+    vb.replaceWith(inf, true)
     if (isPlural(parsed, world)) {
       vb.prepend('do not')
     } else {
@@ -45,7 +45,7 @@ const toNegative = function(parsed, world) {
   //walking -> not walking
   if (vb.has('#Gerund')) {
     let inf = toInfinitive(parsed, world)
-    vb.replace(inf)
+    vb.replaceWith(inf, true)
     vb.prepend('not')
     return
   }

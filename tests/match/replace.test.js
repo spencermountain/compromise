@@ -76,3 +76,15 @@ test('structured-object-replace :', function(t) {
   t.equal(r.out(), 'fun times in shitsville', 'structured-replace-multi')
   t.end()
 })
+
+test('replace-keep some punctuation', function(t) {
+  let doc = nlp('two weeks').tag('Cool')
+  doc.replace('two', '2', true)
+  t.equal(doc.match('#Cool+').text(), '2 weeks', 'replace-keep-tags')
+
+  doc = nlp('first sentence. I am trying it out.')
+  doc.match('#Gerund').tag('HashTag')
+  doc.match('trying').replaceWith('working', true)
+  t.equal(doc.match('#HashTag+').text(), 'working', 'replacewith-keep-tags')
+  t.end()
+})

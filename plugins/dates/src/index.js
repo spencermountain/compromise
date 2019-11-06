@@ -47,7 +47,7 @@ const addMethods = function(Doc, world) {
         if (obj.end) {
           str += ' to ' + obj.start.format(fmt)
         }
-        doc.replaceWith(str)
+        doc.replaceWith(str, true)
       })
       return this
     }

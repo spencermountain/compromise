@@ -51,7 +51,7 @@ const contractions = function(doc) {
         firstTerm.text = term.text
         //grab sub-phrase to remove
         let match = p.buildFrom(term.id, 1, doc.pool())
-        match.replace(newPhrase, doc)
+        match.replace(newPhrase, doc, true)
       }
     }
   })

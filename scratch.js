@@ -23,13 +23,8 @@ nlp.extend(require('./plugins/dates/src'))
 // doc.normalize(options)
 // console.log(doc.text())
 
-// bug one:
-let doc = nlp('two weeks ').tag('Cool')
-doc.numbers().toNumber()
-doc.debug()
-
 // bug two:
-// let doc = nlp('two weeks before june 19th 2019')
+let doc = nlp('two years before june 19th 2019')
 // doc.match('^(on|during|in) [.]').debug()
 
-// console.log(doc.dates().json())
+console.log(doc.dates().json())

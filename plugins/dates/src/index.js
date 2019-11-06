@@ -26,8 +26,8 @@ const addMethods = function(Doc, world) {
         let json = doc.json(options)[0]
         let obj = parse(doc)
         json.date = {
-          start: obj.start ? obj.start.format('iso-short') : null,
-          end: obj.end ? obj.end.format('iso-short') : null,
+          start: obj.start ? obj.start.format('nice-year') : null,
+          end: obj.end ? obj.end.format('nice-year') : null,
         }
         res.push(json)
       })

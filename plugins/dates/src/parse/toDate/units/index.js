@@ -4,7 +4,7 @@ class Unit {
   constructor(str, unit) {
     this.str = str
     this.unit = unit || 'day'
-    this.d = spacetime.now()
+    this.d = spacetime(str)
     // set it to the beginning of the given unit
     this.d = this.d.startOf(unit)
   }
@@ -13,6 +13,12 @@ class Unit {
     let d = new Unit(this.str)
     d.unit = this.unit
     return d
+  }
+  applyShift(obj) {
+    Object.keys(obj).forEach(k => {
+      this.d = this.d.add(obj[k], k)
+    })
+    return this
   }
   format(fmt) {
     return this.d.format(fmt)

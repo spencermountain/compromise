@@ -33,6 +33,8 @@ const parseShift = function(doc) {
   if (m.has('before$') === true) {
     Object.keys(result).forEach(k => (result[k] *= -1))
   }
+  // finally, remove it from our text
+  doc.remove('#DateShift')
   return result
 }
 module.exports = parseShift

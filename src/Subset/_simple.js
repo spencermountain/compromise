@@ -1,5 +1,9 @@
+let methods = {}
+
 // allow helper methods like .adjectives() and .adverbs()
 const arr = [
+  ['terms', '.'],
+  ['hyphenated', '@hasHyphen .'],
   // ['adjectives', '#Adjective'],
   ['hashTags', '#HashTag'],
   ['emails', '#Email'],
@@ -14,7 +18,6 @@ const arr = [
   ['prepositions', '#Preposition'],
   ['abbreviations', '#Abbreviation'],
 ]
-let methods = {}
 arr.forEach(a => {
   methods[a[0]] = function(n) {
     let r = this.match(a[1])
@@ -24,4 +27,15 @@ arr.forEach(a => {
     return r
   }
 })
+
+/** return anything tagged as a phone number */
+methods.phoneNumbers = function(n) {
+  let r = this.splitAfter('@hasComma')
+  r = r.match('#PhoneNumber+')
+  if (typeof n === 'number') {
+    r = r.get(n)
+  }
+  return r
+}
+
 module.exports = methods

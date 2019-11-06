@@ -1,6 +1,6 @@
 const methods = {
   misc: require('./methods'),
-  selections: require('./selections'),
+  selections: require('../Subset/_simple'),
 }
 const tagger = require('../02-tagger')
 const tokenize = require('../01-tokenizer')

@@ -12,15 +12,14 @@ let options = {
   punctuation: true,
 
   contractions: false,
-
   adverbs: false,
   emoji: false,
   parentheses: false,
   quotations: false,
   possessives: false,
-
   verbs: false,
   nouns: false,
 }
-// let doc = nlp(`we're here. we're clear. we don't want anymore bears.`).pre('\n')
-// console.log(doc.text())
+let doc = nlp(`We're HERE. we're CLEAR. we don't want anymore bears.`)
+doc.normalize(options)
+console.log(doc.text())

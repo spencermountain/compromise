@@ -1,4 +1,5 @@
-const selections = [
+const subsets = require('./_simple')
+const subclass = [
   require('./Acronyms'),
   require('./Clauses'),
   require('./Contractions'),
@@ -11,7 +12,10 @@ const selections = [
 ]
 
 const extend = function(Doc) {
-  selections.forEach(addFn => addFn(Doc))
+  // add basic methods
+  Object.keys(subsets).forEach(k => (Doc.prototype[k] = subsets[k]))
+  // add subclassed methods
+  subclass.forEach(addFn => addFn(Doc))
   return Doc
 }
 module.exports = extend

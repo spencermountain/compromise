@@ -181,6 +181,10 @@ declare module nlp {
     hashTags(n?: Number): Document
     /**  return anything tagged as a Email */
     emails(n?: Number): Document
+    /**  return anything tagged as a Emoji */
+    emojis(n?: Number): Document
+    /**  return anything tagged as a Emoticon */
+    emoticons(n?: Number): Document
     /**  return anything tagged as an AtMention*/
     atMentions(n?: Number): Document
     /**  return anything tagged as a Url */

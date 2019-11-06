@@ -77,6 +77,9 @@ module.exports = {
   Emoji: {
     notA: ['HashTag', 'Verb', 'Adjective', 'Value', 'AtMention'],
   },
+  Emoticon: {
+    notA: ['HashTag', 'Verb', 'Adjective', 'Value', 'AtMention'],
+  },
   Email: {
     notA: ['HashTag', 'Verb', 'Adjective', 'Value', 'AtMention'],
   },

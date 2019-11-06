@@ -1,5 +1,6 @@
-const emojiReg = require('./data/regex')
-const emoticon = require('./data/list')
+//from https://www.regextester.com/106421
+const emojiReg = /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/
+const emoticon = require('./data/emoticons')
 //for us, there's three types -
 // * ;) - emoticons
 // * 🌵 - unicode emoji
@@ -33,28 +34,24 @@ const isEmoticon = t => {
 }
 
 //these are somewhat popular.
-const tagEmoji = doc => {
-  let terms = doc.termList()
-  let world = doc.world
-  terms.forEach(term => {
-    //test for :keyword: emojis
-    if (isCommaEmoji(term) === true) {
-      term.tag('Emoji', 'comma-emoji', world)
-      term.text = term.raw
-      term.pre = term.pre.replace(':', '')
-      term.post = term.post.replace(':', '')
-    }
-    //test for unicode emojis
-    if (term.text.match(emojiReg)) {
-      term.tag('Emoji', 'unicode-emoji', world)
-      term.text = term.raw
-    }
-    //test for emoticon ':)' emojis
-    if (isEmoticon(term) === true) {
-      term.tag('Emoji', 'emoticon-emoji', world)
-      term.text = term.raw
-    }
-  })
+const tagEmoji = (term, world) => {
+  //test for :keyword: emojis
+  if (isCommaEmoji(term) === true) {
+    term.tag('Emoji', 'comma-emoji', world)
+    term.text = term.raw
+    term.pre = term.pre.replace(':', '')
+    term.post = term.post.replace(':', '')
+  }
+  //test for unicode emojis
+  if (term.text.match(emojiReg)) {
+    term.tag('Emoji', 'unicode-emoji', world)
+    term.text = term.raw
+  }
+  //test for emoticon ':)' emojis
+  if (isEmoticon(term) === true) {
+    term.tag('Emoticon', 'emoticon-emoji', world)
+    term.text = term.raw
+  }
 }
 
 module.exports = tagEmoji

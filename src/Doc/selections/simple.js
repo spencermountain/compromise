@@ -3,6 +3,8 @@ const arr = [
   // ['adjectives', '#Adjective'],
   ['hashTags', '#HashTag'],
   ['emails', '#Email'],
+  ['emojis', '#Emoji'],
+  ['emoticons', '#Emoticon'],
   ['atMentions', '#AtMention'],
   ['urls', '#Url'],
   ['adverbs', '#Adverb'],

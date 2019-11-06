@@ -1,65 +1,71 @@
 ### Removed methods:
-* .whitespace()
-* .reduce()
-* .flatten()
-* .lump()
-* .getPunctuation()
-* .setPunctuation()
-* .insertAt()
 
+- .whitespace()
+- .reduce()
+- .flatten()
+- .lump()
+- .getPunctuation()
+- .setPunctuation()
+- .insertAt()
 
 ### New Behaviour
-* data/out -> .json() .text()
-* .html()
-* ngrams()
-* offsets
-* removed #Quotation, #Comma, #ClauseEnd tags
+
+- data/out -> .json() .text()
+- .html()
+- ngrams()
+- offsets
+- removed #Quotation, #Comma, #ClauseEnd tags
 
 ### Plugin scheme
-  * .extend()
+
+- .extend()
 
 ### New Methods:
-* .reverse()
-* .unique()
-* .wordcount()
-* .cache()
-* .uncache()
-* .join()
-* .lookAhead()
-* .lookBehind()
-* .segment()
 
+- .reverse()
+- .unique()
+- .wordcount()
+- .cache()
+- .uncache()
+- .join()
+- .lookAhead()
+- .lookBehind()
+- .segment()
 
 * .swap() ?
 
 ### New features
-* (foo && bar)
-* @methods
-* .hash()
-* syllables
-* paragraphs()
 
-
-
----
-hmmm:
-  getPunctuation()
-  setPunctuation()
-
-  lump()?
-
-  js array fns
-
+- (foo && bar)
+- @methods
+- .hash()
+- syllables
+- paragraphs()
 
 ---
+
+### match-methods:
+
+- **@hasComma** - does it have a comma?
+- **@hasPeriod** - does it end in a period?
+- **@hasExclamation** - does it end in an exclamation
+- **@hasQuestionMark** - does it end with a question mark?
+- **@hasEllipses** - is there a ... at the end?
+- **@hasSemicolon** - is there a semicolon after this word?
+- **@hasSlash** - is there a slash after this word?
+- **@hasContraction** - is it multiple words combined?
+- **@isAcronym** - does this term look like an acronym?
+- **@isKnown** - does the term have at least one good tag?
+- **@isImplicit** - is this term implied by a contraction?
+
 ### Breaking changes:
 
 removed methods:
-* 
 
- 
+-
+
 * `.text()` input parameter changes
-  
+
 * remove `.flatten()` (anti-pattern)
 
 * results of `.canbe()` are more like `.match()`
@@ -80,29 +86,30 @@ stopped parsing `#NumberRange`
 
 improved handling of slashed terms - like `he is/was fun.`
 
-* map/reduce/foreach/etc all loop over proper `Doc` objects, instead of an internal object
+- map/reduce/foreach/etc all loop over proper `Doc` objects, instead of an internal object
 
-* the internal compromise api has changed considerably. If you were 'reaching in' to the internal Text object in v11, you'll see many changes.
+- the internal compromise api has changed considerably. If you were 'reaching in' to the internal Text object in v11, you'll see many changes.
+
 ---
 
 **non-breaking changes**
 
-* cleaned-up internal handling of whitspace/punctuation
-  
-* better unicode-letter support in regexes
+- cleaned-up internal handling of whitspace/punctuation
 
-* adds `.matchOne()`
-* adds `.freeze()`
+- better unicode-letter support in regexes
 
-* adds `@function` syntax to match queries:
-* *  hasComma
-* *  hasPeriod
-* *  hasExclamation
-* *  hasQuestionMark
-* *  hasElipses
-* *  hasSemicolon
-* *  isAcronym
-* *  isKnown
+- adds `.matchOne()`
+- adds `.freeze()`
+
+- adds `@function` syntax to match queries:
+- - hasComma
+- - hasPeriod
+- - hasExclamation
+- - hasQuestionMark
+- - hasElipses
+- - hasSemicolon
+- - isAcronym
+- - isKnown
 
 ---
 
@@ -116,59 +123,57 @@ type hints
 
 `tsc --allowJs --checkJs --noEmit --target ES6 src/*.js`
 
-
 ### Normalisation levels:
 
-* .text({})
-    `case` : true,
-    `whitespace` : true,
-    `unicode` : true,
-    `punctuation` : true,
+- .text({})
+  `case` : true,
+  `whitespace` : true,
+  `unicode` : true,
+  `punctuation` : true,
 
-    `contractions`:  true,
+  `contractions`: true,
 
-    `adverbs` : true,
-    `emoji` : true,
-    `parentheses` : true,
-    `quotations` : true,
+  `adverbs` : true,
+  `emoji` : true,
+  `parentheses` : true,
+  `quotations` : true,
 
-    `verbs` : true,
-    `nouns` : true,
+  `verbs` : true,
+  `nouns` : true,
 
-* .json({})
+- .json({})
   ---text-formats per phrase--
-    `text` : true
-    `normal` : false
-    `clean` : false
-    `simple` : false
-    `reduced` : false
-    `root` : false
+  `text` : true
+  `normal` : false
+  `clean` : false
+  `simple` : false
+  `reduced` : false
+  `root` : false
 
   ---term-formats--
-    `text` : true
-    `tags` : true
-    `pre` : true
-    `post` : true
-    `normal` : false
-    `clean` : false
-    `simple` : false
-    `root` : false
-    `bestTag`: false
-
+  `text` : true
+  `tags` : true
+  `pre` : true
+  `post` : true
+  `normal` : false
+  `clean` : false
+  `simple` : false
+  `root` : false
+  `bestTag`: false
 
 * .out('')
   `text`
   `json`
-    --support text formats--
+  --support text formats--
   `normal`
   `clean`
   `simple`
   `reduced`
   `root`
-   --named formats--
+  --named formats--
   `array`
   `terms`
-  `tsv` - like stanford  -https://nlp.stanford.edu/software/pos-tagger-faq.html#f
+  `tsv` - like stanford -https://nlp.stanford.edu/software/pos-tagger-faq.html#f
   `xml`
   `jsonl` - like spacy
   `iob` - chunking - https://en.wikipedia.org/wiki/Inside%E2%80%93outside%E2%80%93beginning_(tagging)
@@ -183,8 +188,6 @@ type hints
   }
 ]
 ```
-
-
 
 ## Subsets
 

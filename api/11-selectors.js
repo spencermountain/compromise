@@ -46,11 +46,6 @@ module.exports = {
     returns: 'Doc',
     example: '',
   },
-  fractions: {
-    desc: '',
-    returns: 'Doc',
-    example: '',
-  },
   money: {
     desc: '',
     returns: 'Doc',

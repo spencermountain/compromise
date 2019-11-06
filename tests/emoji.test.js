@@ -44,7 +44,7 @@ test('emoticon emojis', function(t) {
     // ['</3</3', '</3</3'],
   ].forEach(function(a) {
     const have = nlp(a[0])
-      .match('#Emoji')
+      .match('#Emoticon')
       .out('normal')
     const msg = "have: '" + have + "'  want: '" + a[1] + "'"
     t.equal(have, a[1], msg)
@@ -61,11 +61,11 @@ test('result methods', function(t) {
   t.equal(m.match('#SportsTeam').found, false, 'nlp.has neg')
 
   //filter string
-  let small = m.if('#Emoji')
+  let small = m.if('(#Emoji|#Emoticon)')
   t.equal(small.out('text'), 'this :cookie: <3 💯 so good. Yes it is <3', 'nlp.filter string')
 
   //filter method
-  small = m.ifNo('#Emoji')
+  small = m.ifNo('(#Emoji|#Emoticon)')
   t.equal(small.out('normal'), 'it is really nice.', 'nlp.filter method')
 
   t.end()

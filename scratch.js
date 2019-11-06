@@ -4,35 +4,23 @@ const corpus = require('nlp-corpus')
 // nlp.extend(require('./plugins/adjectives/src'))
 // nlp.extend(require('./plugins/verbs/src'))
 
+// **.normalize()** options
+let options = {
+  case: true,
+  whitespace: true,
+  unicode: true,
+  punctuation: true,
+
+  contractions: false,
+
+  adverbs: false,
+  emoji: false,
+  parentheses: false,
+  quotations: false,
+  possessives: false,
+
+  verbs: false,
+  nouns: false,
+}
 // let doc = nlp(`we're here. we're clear. we don't want anymore bears.`).pre('\n')
 // console.log(doc.text())
-let txt = corpus.wikipedia.array()[6]
-console.time('parse')
-nlp(txt)
-console.timeEnd('parse')
-// console.log(corpus.sotu.array()[27])
-
-let lexicon = {
-  kermit: 'FirstName',
-  fozzie: 'FirstName',
-}
-let doc = nlp(muppetText, lexicon)
-
-{
-  const defaults = {
-    text: true,
-    normal: false,
-    reduced: false,
-    root: false,
-    trim: false,
-    offset: false,
-    wordCount: false,
-    terms: {
-      text: true,
-      tags: true,
-      id: false,
-      normal: false,
-      offset: false,
-    },
-  }
-}

@@ -1,5 +1,5 @@
-const regexes = require('./suffixes/regex')
-const suffixList = require('./suffixes/suffixList')
+const regexes = require('./data/endsWith')
+const suffixList = require('./data/suffixList')
 
 const suffixRegexes = function(term, world) {
   let str = term.clean

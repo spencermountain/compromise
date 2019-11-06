@@ -16,6 +16,7 @@ test('constructor api', function(t) {
   })
   t.end()
 })
+
 test('utils api', function(t) {
   const fns = {
     all: "()=>{ nlp('this is yelling').match('#Verb').toTitleCase().all().out()\n }",
@@ -34,6 +35,7 @@ test('utils api', function(t) {
   })
   t.end()
 })
+
 test('accessors api', function(t) {
   const fns = {
     first: '()=>{  }',
@@ -49,6 +51,7 @@ test('accessors api', function(t) {
   })
   t.end()
 })
+
 test('match api', function(t) {
   const fns = {
     match: "()=>{ nlp('we understand, we are from the land of chocolate.').match('land of #Noun').out()\n }",
@@ -67,6 +70,7 @@ test('match api', function(t) {
   })
   t.end()
 })
+
 test('case api', function(t) {
   const fns = {
     toUpperCase: "()=>{ nlp('Dental plan. Lisa needs braces.').match('dental .').toUpperCase().out()\n }",
@@ -79,6 +83,7 @@ test('case api', function(t) {
   })
   t.end()
 })
+
 test('whitespace api', function(t) {
   const fns = {
     pre: '()=>{ nlp("we\'re here. we\'re clear. we don\'t want anymore bears.").pre("  ") }',
@@ -92,6 +97,7 @@ test('whitespace api', function(t) {
   })
   t.end()
 })
+
 test('tag api', function(t) {
   const fns = {
     tag:
@@ -106,6 +112,7 @@ test('tag api', function(t) {
   })
   t.end()
 })
+
 test('loops api', function(t) {
   const fns = {
     map: "()=>{ nlp('yahoo serious festival').terms().map((m)=> m.toUpperCase()).out()\n     }",
@@ -121,6 +128,7 @@ test('loops api', function(t) {
   })
   t.end()
 })
+
 test('insert api', function(t) {
   const fns = {
     replaceWith: "()=>{ nlp('it was the worst of times').match('worst').replaceWith('blurst', true).all().out() }",
@@ -129,37 +137,40 @@ test('insert api', function(t) {
     append: "()=>{ nlp('i know so many words').insertAfter('bigly').all().out()\n }",
     prepend: "()=>{ nlp('stupid flanders').match('flanders').insertBefore('sexy').all().out()\n }",
     concat: "()=>{ nlp('My name is Otto').concat('and i love to get blotto').all().length }",
+  }
+  Object.keys(fns).forEach(k => {
+    t.doesNotThrow(eval(fns[k]), k)
+  })
+  t.end()
+})
+
+test('transform api', function(t) {
+  const fns = {
     sort: "()=>{ nlp('Larry, Curly, Moe').terms().sort('alphabetical').out('array')\n    }",
     reverse: '()=>{  }',
-    unique: '()=>{  }',
-  }
-  Object.keys(fns).forEach(k => {
-    t.doesNotThrow(eval(fns[k]), k)
-  })
-  t.end()
-})
-test('out api', function(t) {
-  const fns = {
-    text: "()=>{ nlp('you might say there’s a little Uter in all of us').match('#Adjective uter').out('array')\n }",
-    debug: '()=>{  }',
-    out: '()=>{  }',
     normalize:
       "()=>{ nlp(' so... you like   DONUTS? have all the donuts in the WORLD!!!').normalize().all().get(0).out() }",
-    json:
-      "()=>{ nlp('The stage was set for the Alan Parsons Project! Which I believe was some sort of hovercraft.').data()\n }",
-  }
-  Object.keys(fns).forEach(k => {
-    t.doesNotThrow(eval(fns[k]), k)
-  })
-  t.end()
-})
-test('split api', function(t) {
-  const fns = {
+    unique: '()=>{  }',
     split: "()=>{ nlp('Monorail...Once again! Monorail... Monorail!').splitOn('monorail').eq(0).text()\n }",
     splitAfter: "()=>{ nlp('Monorail...Once again! Monorail... Monorail!').splitAfter('monorail').eq(0).text()\n }",
     splitBefore: "()=>{ nlp('Monorail...Once again! Monorail... Monorail!').splitBefore('monorail').eq(0).text()\n}",
     segment: '()=>{  }',
     join: '()=>{  }',
+  }
+  Object.keys(fns).forEach(k => {
+    t.doesNotThrow(eval(fns[k]), k)
+  })
+  t.end()
+})
+
+test('out api', function(t) {
+  const fns = {
+    text: "()=>{ nlp('you might say there’s a little Uter in all of us').match('#Adjective uter').out('array')\n }",
+    debug: '()=>{  }',
+    out: '()=>{  }',
+    json:
+      "()=>{ nlp('The stage was set for the Alan Parsons Project! Which I believe was some sort of hovercraft.').data()\n }",
+
     export: '()=>{  }',
   }
   Object.keys(fns).forEach(k => {
@@ -167,30 +178,41 @@ test('split api', function(t) {
   })
   t.end()
 })
+
 test('selectors api', function(t) {
   const fns = {
     terms: "()=>{ nlp('we should all be more like little Ruttiger').terms().json()\n }",
+    clauses:
+      "()=>{ nlp('All right, Colossus, you’re free to go, but stay away from Death Mountain').clauses().data()\n }",
     hyphenated: '()=>{  }',
     phoneNumbers: "()=>{ nlp('Moe Sizlak. That’s right. I’m a surgeon. (800) 555-0000.').phoneNumbers().json()\n }",
     hashTags: "()=>{ nlp('oh, but where is the #anykey').hashTags().json()\n }",
     emails: '()=>{  }',
+    emoticons: '()=>{  }',
+    emoji: '()=>{  }',
     atMentions: '()=>{  }',
     urls: "()=>{ nlp('thank you http://simpsons.wikia.com').urls().json()\n}",
     adverbs: '()=>{  }',
     pronouns: '()=>{  }',
-    money: '()=>{  }',
     conjunctions: '()=>{  }',
     prepositions: '()=>{  }',
     abbreviations: '()=>{  }',
-    acronyms: '()=>{  }',
-    clauses:
-      "()=>{ nlp('All right, Colossus, you’re free to go, but stay away from Death Mountain').clauses().data()\n }",
+  }
+  Object.keys(fns).forEach(k => {
+    t.doesNotThrow(eval(fns[k]), k)
+  })
+  t.end()
+})
+
+test('subsets api', function(t) {
+  const fns = {
     contractions: '()=>{  }',
-    lists: '()=>{  }',
-    nouns: '()=>{  }',
     parentheses: "()=>{ nlp('Use a pointed stick (a pencil) or a similar tool').parentheses().data()\n }",
     possessives: "()=>{ nlp('moe’s tavern').possessives().text()\n }",
     quotations: '()=>{ nlp(\'the he said "crazy like a fox!".\').quotations().data().length\n }',
+    acronyms: '()=>{  }',
+    lists: '()=>{  }',
+    nouns: '()=>{  }',
     verbs: `()=>{  nlp('Moe Sizlak. That’s right. I’m a surgeon.').verbs() }`,
   }
   Object.keys(fns).forEach(k => {

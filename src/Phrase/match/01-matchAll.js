@@ -1,6 +1,6 @@
 const failFast = require('./02-failFast')
 const tryMatch = require('./03-tryMatch')
-const syntax = require('../../Doc/methods/match/syntax')
+const syntax = require('../../Doc/match/syntax')
 
 /**  returns a simple array of arrays */
 const matchAll = function(p, regs, matchOne = false) {

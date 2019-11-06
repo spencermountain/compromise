@@ -395,11 +395,11 @@ _all match methods use the [match-syntax](https://docs.compromise.cool/compromis
   - **_'chron'_** - the 'chronological', or original document sort order
   - **_'freq'_** - sort by # of duplicates in the document
 - **[.reverse()](#)** - reverse the order of the matches, but not the words
+- **[.normalize({})]()** - clean-up the text in various ways
 - **[.unique()](#)** - remove any duplicate matches
 - **[.split('')]()** - return a Document with three parts for every match ('splitOn')
 - **[.splitBefore('')]()** - separate everything after the match as a new phrase
 - **[.splitAfter('')]()** - separate everything before the word, as a new phrase
-- **[.normalize({})]()** - clean-up the text in various ways
 - **[.segment({})]()** - split a document into labeled sections
 - **[.join('')]()** - make all phrases into one phrase
 
@@ -449,24 +449,26 @@ you can specify which data you'd like to return with these options:
 - **[.terms()](#)** - split-up results by each individual term
 - **[.clauses()](#)** - split-up sentences into multi-term phrases
 - **[.hyphenated()](#)** - all terms connected with a hyphen or dash like `'wash-out'`
+- **[.phoneNumbers()](#)** - things like `'(939) 555-0113'`
 - **[.hashTags()](#)** - things like `'#nlp'`
 - **[.emails()](#)** - things like `'hi@compromise.cool'`
 - **[.emoticons()](#)** - things like `:)`
 - **[.emojis()](#)** - things like `💋`
 - **[.atMentions()](#)** - things like `'@nlp_compromise'`
 - **[.urls()](#)** - things like `'compromise.cool'`
-- **[.phoneNumbers()](#)** - things like `'(939) 555-0113'`
-- **[.money()](#)** - things like `'$2.50'`
 - **[.adverbs()](#)** - things like `'quickly'`
 - **[.pronouns()](#)** - things like `'he'`
 - **[.conjunctions()](#)** - things like `'but'`
 - **[.prepositions()](#)** - things like `'of'`
 - **[.abbreviations()](#)** - things like `'Mrs.'`
-- **[.acronyms()](#)** - things like `'FBI'`
-- **[.contractions()](#)** - things like "didn't" and "would not"
+
+- ##### Subsets
+- **[.contractions()](#)** - things like "didn't"
 - **[.parentheses()](#)** - return anything inside (parentheses)
 - **[.possessives()](#)** - things like `"Spencer's"`
 - **[.quotations()](#)** - return any terms inside quotation marks
+- **[.acronyms()](#)** - things like `'FBI'`
+- **[.lists()](#)** - things like `'eats, shoots, and leaves'`
 - **[.nouns()](#)** - return any subsequent terms tagged as a Noun
   - **[.nouns().json()](#)** - overloaded output with noun metadata
   - **[.nouns().toPlural()](#)** - `'football captain' → 'football captains'`
@@ -490,7 +492,6 @@ you can specify which data you'd like to return with these options:
   - **[.verbs().isPlural()](#)** - return plural verbs like 'we walk'
   - **[.verbs().isSingular()](#)** - return singular verbs like 'spencer walks'
   - **[.verbs().adverbs()](#)** - return the adverbs describing this verb.
-- **[.lists()](#)** - things like `'eats, shoots, and leaves'`
 
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221824-09809d80-ffb8-11e9-9ef0-6ed3574b0ce8.png"/>
@@ -535,6 +536,8 @@ These are some helpful extensions:
 
 - **[.numbers()](#)** - grab all written and numeric values
   - **[.numbers().json()](#)** - overloaded output with number metadata
+  - **[.money()](#)** - things like `'$2.50'`
+  - **[.fractions()](#)** - things like `1/3rd`
   - **[.numbers().toText()](#)** - convert number to `five` or `fifth`
   - **[.numbers().toNumber()](#)** - convert number to `5` or `5th`
   - **[.numbers().toOrdinal()](#)** - convert number to `fifth` or `5th`

@@ -1,4 +1,4 @@
-const parseSyntax = require('./match/syntax')
+const parseSyntax = require('../match/syntax')
 
 /** return a new Doc, with this one as a parent */
 exports.match = function(reg) {

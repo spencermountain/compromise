@@ -19,10 +19,10 @@ declare module nlp {
 
   class Document {
     // Utils
-    /** is this document empty? */
-    found: Boolean
     /** return the whole original document ('zoom out') */
     all(): Document
+    /** is this document empty? */
+    found: Boolean
     /** return the previous result */
     parent(): Document
     /** return all of the previous results */
@@ -138,18 +138,21 @@ declare module nlp {
     /**  add these new things to the end */
     concat(text: String): Document
 
+    // transform
     /**re-arrange the order of the matches (in place) */
     sort(method: String): Document
     /**reverse the order of the matches, but not the words */
     reverse(): Document
+    /** clean-up the document, in various ways */
+    normalize(options?: Object): String
     /** remove any duplicate matches */
     unique(): Document
     /**  return a Document with three parts for every match ('splitOn') */
-    splitOn(match: String): Document
-    /**  separate everything before the word, as a new phrase */
-    splitAfter(match: String): Document
+    split(match: String): Document
     /**  separate everything after the match as a new phrase */
     splitBefore(match: String): Document
+    /**  separate everything before the word, as a new phrase */
+    splitAfter(match: String): Document
     /** split a document into labeled sections  */
     segment(regs: Object, options?: Object): Document
     /** make all phrases into one phrase  */
@@ -164,63 +167,57 @@ declare module nlp {
     out(format?: string): String
     /**  pretty-print the current document and its tags */
     debug(): Document
-    /** clean-up the document, in various ways */
-    normalize(options?: Object): String
     /** store a parsed document for later use  */
     export(): any
 
-    // Helpers
+    // Selections
     /**  split-up results by each individual term */
     terms(n?: Number): Document
     /**  split-up results into multi-term phrases */
     clauses(n?: Number): Document
-    /**  all terms connected with a hyphen or dash */
+    /** return all terms connected with a hyphen or dash like `'wash-out'`*/
     hyphenated(n?: Number): Document
-
-    /**  return anything tagged as a HashTag */
-    hashTags(n?: Number): Document
-    /**  return anything tagged as a Email */
-    emails(n?: Number): Document
-    /**  return anything tagged as a Emoji */
-    emojis(n?: Number): Document
-    /**  return anything tagged as a Emoticon */
-    emoticons(n?: Number): Document
-    /**  return anything tagged as an AtMention*/
-    atMentions(n?: Number): Document
-    /**  return anything tagged as a Url */
-    urls(n?: Number): Document
-
-    /**  return anything tagged as a phone number */
+    /** return things like `'(939) 555-0113'` */
     phoneNumbers(n?: Number): Document
-    /**  return anything tagged as Money*/
-    money(n?: Number): Document
-
-    /**  return anything tagged as an Adverb */
+    /** return things like `'#nlp'` */
+    hashTags(n?: Number): Document
+    /** return things like `'hi@compromise.cool'` */
+    emails(n?: Number): Document
+    /**  return  things like `:)` */
+    emoticons(n?: Number): Document
+    /**  return athings like `💋` */
+    emoji(n?: Number): Document
+    /**  return things like `'@nlp_compromise'`*/
+    atMentions(n?: Number): Document
+    /**  return things like `'compromise.cool'` */
+    urls(n?: Number): Document
+    /**  return things like `'quickly'` */
     adverbs(n?: Number): Document
-    /**  return anything tagged as a Pronoun*/
+    /**  return things like `'he'` */
     pronouns(n?: Number): Document
-    /**  return anything tagged as a Conjunction*/
+    /**  return things like `'but'`*/
     conjunctions(n?: Number): Document
-    /**  return anything tagged as a Preposition*/
+    /**  return things like `'of'`*/
     prepositions(n?: Number): Document
-    /**  return anything tagged as a Abbreviation*/
+    /**  return things like `'Mrs.'`*/
     abbreviations(n?: Number): Document
 
-    /**  return anything tagged as an Acronym, like 'FBI.' */
-    acronyms(n?: Number): Document
+    // Subsets
     /** return any multi-word terms, like "didn't"  */
     contractions(n?: Number): Document
-    /**  return all comma-seperated lists */
-    lists(n?: Number): Document
-    /**  return any subsequent terms tagged as a Noun*/
-    nouns(n?: Number): Document
-    /**  return anything inside parentheses */
+    /**  return anything inside (parentheses) */
     parentheses(n?: Number): Document
-    /**  return anything tagged as a Possessive noun, like "Spencer's" */
+    /**  return things like "Spencer's" */
     possessives(n?: Number): Document
-    /**  return any terms inside quotation marks */
+    /**  return any terms inside 'quotation marks' */
     quotations(n?: Number): Document
-    /**  return any subsequent terms tagged as a Verb*/
+    /**  return things like `'FBI'` */
+    acronyms(n?: Number): Document
+    /**  return things like `'eats, shoots, and leaves'` */
+    lists(n?: Number): Document
+    /**  return any subsequent terms tagged as a Noun */
+    nouns(n?: Number): Document
+    /**  return any subsequent terms tagged as a Verb */
     verbs(n?: Number): Document
   }
 }

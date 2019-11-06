@@ -1,11 +1,7 @@
 const parseVerb = require('./parse')
 const conjugations = require('./tense/conjugate')
 
-const methods = [
-  require('./negative/methods'),
-  require('./plural/methods'),
-  require('./tense/methods'),
-]
+const methods = [require('./negative/methods'), require('./plural/methods'), require('./tense/methods')]
 
 const addMethod = function(Doc) {
   /**  */

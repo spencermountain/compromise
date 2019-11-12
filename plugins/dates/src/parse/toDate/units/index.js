@@ -4,9 +4,15 @@ class Unit {
   constructor(str, unit) {
     this.str = str
     this.unit = unit || 'day'
-    this.d = spacetime(str)
+
     // set it to the beginning of the given unit
-    this.d = this.d.startOf(unit)
+    let d = spacetime(str)
+    d = d.startOf(unit)
+    Object.defineProperty(this, 'd', {
+      enumerable: false,
+      writable: true,
+      value: d,
+    })
   }
   // make a new one
   clone() {
@@ -55,14 +61,53 @@ class Unit {
     return this
   }
 }
-// class Day extends Unit {
-//   constructor(str, unit) {
-//     super(str, unit)
-//     this.unit = 'day'
-//   }
-// }
+class Day extends Unit {
+  constructor(str, unit) {
+    super(str, unit)
+    this.unit = 'day'
+  }
+}
+class Month extends Unit {
+  constructor(str, unit) {
+    super(str, unit)
+    this.unit = 'month'
+  }
+}
+class Quarter extends Unit {
+  constructor(str, unit) {
+    super(str, unit)
+    this.unit = 'quarter'
+  }
+}
+class Year extends Unit {
+  constructor(str, unit) {
+    super(str, unit)
+    this.unit = 'year'
+  }
+}
+class WeekDay extends Unit {
+  constructor(str, unit) {
+    super(str, unit)
+    this.unit = 'week'
+    this.d = this.d.day(str)
+  }
+  next() {
+    this.d = this.d.add(7, 'days')
+    this.d = this.d.day(this.str)
+    return this
+  }
+  last() {
+    this.d = this.d.minus(7, 'days')
+    this.d = this.d.day(this.str)
+    return this
+  }
+}
 
 module.exports = {
   Unit: Unit,
-  // Day: Day,
+  Day: Day,
+  Month: Month,
+  Quarter: Quarter,
+  Year: Year,
+  WeekDay: WeekDay,
 }

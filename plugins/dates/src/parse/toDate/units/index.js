@@ -102,7 +102,21 @@ class WeekDay extends Unit {
     return this
   }
 }
-
+// like 'feb 2'
+class CalendarDate extends Unit {
+  constructor(str, unit) {
+    super(str, unit)
+    this.unit = 'day'
+  }
+  next() {
+    this.d = this.d.add(1, 'year')
+    return this
+  }
+  last() {
+    this.d = this.d.minus(1, 'year')
+    return this
+  }
+}
 module.exports = {
   Unit: Unit,
   Day: Day,
@@ -110,4 +124,5 @@ module.exports = {
   Quarter: Quarter,
   Year: Year,
   WeekDay: WeekDay,
+  CalendarDate: CalendarDate,
 }

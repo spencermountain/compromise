@@ -5,6 +5,13 @@ const logic = function(doc, context) {
   // two explicit dates - 'between friday and sunday'
   let m = doc.match('between * and *')
   if (m.found) {
+    let d = parseDate(m, context)
+    if (d) {
+      return {
+        start: d,
+        end: d.clone().end(),
+      }
+    }
   }
   // two months, one year - 'june 5 to june 7 1998'
   m = doc.match('#Month #Value to #Month #Value of? #Year')

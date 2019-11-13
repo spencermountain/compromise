@@ -72,7 +72,7 @@ test('all-to-text:', function(t) {
       .toText()
       .toCardinal()
       .text()
-    t.equal(str, 'two thousand and twelve', txt + ' -> two thousand and twelve')
+    t.equal(str, 'two thousand and twelve', txt)
   })
   t.end()
 })

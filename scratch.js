@@ -1,7 +1,7 @@
 const nlp = require('./src/index')
 // nlp.verbose(true)
 nlp.extend(require('./plugins/numbers/src'))
-nlp.extend(require('./plugins/dates/src'))
+// nlp.extend(require('./plugins/dates/src'))
 
 // **.normalize()** options
 let options = {
@@ -22,10 +22,8 @@ let options = {
 // doc.normalize(options)
 // console.log(doc.text())
 
-let str = nlp('1st')
-  .debug()
+const str = nlp('3,423rd')
   .values()
-  .toText()
   .toCardinal()
   .text()
 console.log(str)

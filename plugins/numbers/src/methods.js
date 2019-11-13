@@ -45,6 +45,7 @@ let methods = {
       }
       let str = makeNumber(obj, false, val.has('#Ordinal'))
       val.replaceWith(str, true)
+      val.tag('NumericValue')
     })
     return this
   },
@@ -70,6 +71,7 @@ let methods = {
       }
       let str = makeNumber(obj, true, val.has('#Ordinal'))
       val.replaceWith(str, true)
+      val.tag('TextValue')
     })
     return this
   },
@@ -83,6 +85,7 @@ let methods = {
       }
       let str = makeNumber(obj, val.has('#TextValue'), false)
       val.replaceWith(str, true)
+      val.tag('Cardinal')
     })
     return this
   },
@@ -96,6 +99,7 @@ let methods = {
       }
       let str = makeNumber(obj, val.has('#TextValue'), true)
       val.replaceWith(str, true)
+      val.tag('Ordinal')
     })
     return this
   },

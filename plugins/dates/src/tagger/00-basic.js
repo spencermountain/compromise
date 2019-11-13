@@ -3,8 +3,6 @@ const preps = '(in|by|before|during|on|until|after|of|within|all)' //6
 const thisNext = '(last|next|this|previous|current|upcoming|coming)' //2
 const sections = '(start|end|middle|starting|ending|midpoint|beginning)' //2
 const seasons = '(spring|summer|winter|fall|autumn)'
-const units =
-  '(hundred|thousand|million|billion|trillion|quadrillion|quintillion|sextillion|septillion)'
 
 //ensure a year is approximately typical for common years
 //please change in one thousand years
@@ -56,16 +54,6 @@ const fixDates = function(doc) {
   //months:
   let val = doc.if('#Value')
   if (val.found === true) {
-    //values
-    val.match('#Value #Abbreviation').tag('Value', 'value-abbr')
-    //seven point five
-    val.match('#Value (point|decimal) #Value').tag('Value', 'value-point-value')
-    //minus 7
-    val.match('(minus|negative) #Value').tag('Value', 'minus-value')
-    // ten grand
-    val.match('#Value grand').tag('Value', 'value-grand')
-    //quarter million
-    val.match('(a|the) [(half|quarter)] #Ordinal').tag('Value', 'half-ordinal')
     //june 7
     val
       .match('(#WeekDay|#Month) #Value')
@@ -95,13 +83,6 @@ const fixDates = function(doc) {
       duration.match(`${preps}? #Value #Duration`).tag('Date', 'value-duration')
       //two years old
       duration.match('#Value #Duration old').unTag('Date', 'val-years-old')
-    }
-    //eg 'trillion'
-    let mult = val.if(units)
-    if (mult.found === true) {
-      mult.match('a #Value').tag('Value', 'a-value') //?
-      // mult.match('#Ordinal (half|quarter)').tag('Value', 'ordinal-half');//not ready
-      mult.match(`${units} and #Value`).tag('Value', 'magnitude-and-value')
     }
   }
 

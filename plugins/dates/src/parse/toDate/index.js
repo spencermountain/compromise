@@ -8,8 +8,8 @@ const parseRelative = require('./01-parse/03-relative')
 const parseDate = function(doc) {
   let shift = parseShift(doc)
   let time = parseTime(doc)
-  doc.debug()
-  time.debug()
+  // doc.debug()
+  // time.debug()
 
   // 'this month'
   // let d = parseRelative(doc)

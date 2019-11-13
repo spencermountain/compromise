@@ -1,6 +1,6 @@
 const nlp = require('./src/index')
 // nlp.verbose(true)
-nlp.extend(require('./plugins/numbers/src'))
+// nlp.extend(require('./plugins/numbers/src'))
 // nlp.extend(require('./plugins/dates/src'))
 
 // **.normalize()** options
@@ -18,15 +18,9 @@ let options = {
   // verbs: false,
   // nouns: false,
 }
-// let doc = nlp(`We're HERE. we're CLEAR. we don't want anymore bears.`)
-// doc.normalize(options)
-// console.log(doc.text())
+let doc = nlp(`We're HERE. we're CLEAR. we don't want anymore bears.`)
+doc.normalize(options)
+console.log(doc.text())
 
-const str = nlp('2,012')
-  .values()
-  .toText()
-  .text()
-console.log(str)
-
-// let doc = nlp.tokenize('during august')
+// let doc = nlp('during august')
 // console.log(doc.dates().json(0))

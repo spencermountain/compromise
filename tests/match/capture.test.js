@@ -31,3 +31,10 @@ test('match-capture-group', function(t) {
 
   t.end()
 })
+
+test('tricky capture', function(t) {
+  let doc = nlp.tokenize('during august')
+  let m = doc.match('^(on|during|in) [.]')
+  t.equal(m.text('normal'), 'august', 'found capture')
+  t.end()
+})

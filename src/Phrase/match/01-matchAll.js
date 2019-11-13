@@ -24,6 +24,10 @@ const matchAll = function(p, regs, matchOne = false) {
     if (match !== false && match.length > 0) {
       matches.push(match)
     }
+    // remove (intentional) null results
+    matches = matches.map(arr => {
+      return arr.filter(t => t)
+    })
     return matches
   }
   //try starting, from every term
@@ -34,7 +38,6 @@ const matchAll = function(p, regs, matchOne = false) {
     }
     //try it!
 
-    // console.log(terms.slice(i)[0].text, regs, i, terms.length)
     let match = tryMatch(terms.slice(i), regs, i, terms.length)
     if (match !== false && match.length > 0) {
       //zoom forward!

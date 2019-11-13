@@ -85,8 +85,15 @@ const tryHere = function(terms, regs, index, length) {
       let startAt = t
       // okay, it was a match, but if it optional too,
       // we should check the next reg too, to skip it?
-      if (reg.optional && regs[r + 1] && terms[t].doesMatch(regs[r + 1], index + t, length) === true) {
-        r += 1
+      if (reg.optional && regs[r + 1]) {
+        // does the next reg match it too?
+        if (terms[t].doesMatch(regs[r + 1], index + t, length) === true) {
+          // but does the next reg match the next term??
+          // only skip if it doesn't
+          if (!terms[t + 1] || terms[t + 1].doesMatch(regs[r + 1], index + t, length) === false) {
+            r += 1
+          }
+        }
       }
       //advance to the next term!
       t += 1
@@ -129,6 +136,7 @@ const tryHere = function(terms, regs, index, length) {
     // console.log('   ❌\n\n')
     return false
   }
+
   //we got to the end of the regs, and haven't failed!
   //try to only return our [captured] segment
   if (captures.length > 0) {
@@ -136,7 +144,7 @@ const tryHere = function(terms, regs, index, length) {
     let arr = terms.slice(captures[0], captures[captures.length - 1] + 1)
     //make sure the array is t-length (so we skip ahead full-length)
     for (let tmp = 0; tmp < t; tmp++) {
-      arr[tmp] = arr[tmp] || null
+      arr[tmp] = arr[tmp] || null //these get cleaned-up after
     }
     return arr
   }

@@ -44,9 +44,9 @@ const deletePhrase = function(phrase, doc) {
   if (after) {
     after.prev = prev.id
   }
-  // lastly, actually delete the terms from the pool
-  for (let i = 0; i < terms.length; i++) {
-    pool.remove(terms[i].id)
-  }
+  // lastly, actually delete the terms from the pool?
+  // for (let i = 0; i < terms.length; i++) {
+  // pool.remove(terms[i].id)
+  // }
 }
 module.exports = deletePhrase

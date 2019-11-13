@@ -111,6 +111,32 @@ test('fancy match', function(t) {
   t.end()
 })
 
+test('consecutive greedy cases', function(t) {
+  let doc = nlp('one two')
+  let m = doc.match('#Value #Value')
+  t.equal(m.length, 1, 'consecutive-found one')
+  t.equal(m.eq(0).text(), 'one two', 'consecutive-found both')
+
+  m = doc.match('#Value+ #Value')
+  t.equal(m.length, 1, 'plus-found one')
+  t.equal(m.eq(0).text(), 'one two', 'plus-found both')
+
+  m = doc.match('#Value* #Value')
+  t.equal(m.length, 1, 'astrix-found one')
+  t.equal(m.eq(0).text(), 'one two', 'astrix-found both')
+
+  m = doc.match('#Value? #Value')
+  t.equal(m.length, 1, 'optional-found one')
+  t.equal(m.eq(0).text(), 'one two', 'optional-found both')
+
+  m = nlp.tokenize('one one').match('one? one')
+  t.equal(m.length, 1, 'optional-double')
+  m = nlp.tokenize('one one two').match('one? one two')
+  t.equal(m.text(), 'one one two', 'found all three terms')
+
+  t.end()
+})
+
 test('tricky-case', function(t) {
   t.equal(nlp('Number II').has('Number II'), true, 'uppercase-match')
   t.equal(nlp('Number I').has('Number I'), true, 'uppercase-match')

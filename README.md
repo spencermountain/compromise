@@ -679,7 +679,30 @@ this plugin creates a wrapper around the default sentence objects.
   <hr/>
 </div>
 
-#### FAQ
+#### Limitations:
+
+- **slash-support:**
+  We currently split slashes up as different words, like we do for hyphens. so things like this don't work:
+  <code>nlp('the koala eats/shoots/leaves').has('koala leaves') //false</code>
+
+- **inter-sentence match:**
+  By default, sentences are the top-level abstraction.
+
+  Inter-sentence, or multi-sentence matches aren't supported:
+  <code>nlp("that's it. Back to Winnipeg!").has('it back')//false</code>
+
+- **nested match syntax:**
+  the <s>danger</s> beauty of regex is that you can recurse indefinitely.
+
+  Our match syntax is much weaker. Things like this are not <i>(yet)</i> possible:
+  <code>doc.match('(modern (major|minor))? general')</code>
+  complex matches must be achieved with successive **.match()** statements.
+
+- **dependency parsing:**
+  Proper sentence transformation requires understanding the [syntax tree](https://en.wikipedia.org/wiki/Parse_tree) of a sentence, which we don't currently do.
+  We should! Help wanted with this.
+
+##### FAQ
 
 <ul align="left">
   <p>

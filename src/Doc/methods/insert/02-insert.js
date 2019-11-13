@@ -1,4 +1,4 @@
-const tokenize = require('../../01-tokenizer')
+const tokenize = require('../../../01-tokenizer')
 
 /** add these new terms to the end*/
 exports.append = function(str) {
@@ -58,3 +58,15 @@ exports.concat = function() {
   }
   return this.buildFrom(list)
 }
+
+/** fully remove these terms from the document */
+exports.delete = function(match) {
+  let toRemove = this
+  if (match) {
+    toRemove = this.match(match)
+  }
+  toRemove.list.forEach(phrase => phrase.delete(this))
+  return this
+}
+// aliases
+exports.remove = exports.delete

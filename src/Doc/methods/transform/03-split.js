@@ -1,4 +1,4 @@
-const parseSyntax = require('../match/syntax')
+const parseSyntax = require('../../match/syntax')
 
 /** return a Document with three parts for every match
  * seperate everything before the word, as a new phrase

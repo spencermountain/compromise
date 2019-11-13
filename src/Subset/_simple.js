@@ -16,7 +16,6 @@ const arr = [
   ['money', '#Money'],
   ['conjunctions', '#Conjunction'],
   ['prepositions', '#Preposition'],
-  ['abbreviations', '#Abbreviation'],
 ]
 arr.forEach(a => {
   methods[a[0]] = function(n) {

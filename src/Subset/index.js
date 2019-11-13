@@ -1,5 +1,6 @@
 const subsets = require('./_simple')
 const subclass = [
+  require('./Abbreviations'),
   require('./Acronyms'),
   require('./Clauses'),
   require('./Contractions'),

@@ -16,7 +16,7 @@ exports.isAcronym = function() {
 
 /** is this term implied by a contraction? */
 exports.isImplicit = function() {
-  return this.text === '' && this.implicit
+  return this.text === '' && Boolean(this.implicit)
 }
 
 /** does the term have at least one good tag? */

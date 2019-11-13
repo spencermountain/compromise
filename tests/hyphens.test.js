@@ -50,3 +50,13 @@ test('hyphenate', function(t) {
 
   t.end()
 })
+
+test('hasHyphen', function(t) {
+  let doc = nlp(`super-cool and hunky-dory. Connected with-a-dash.`)
+  let arr = doc.match('@hasHyphen+ .').out('array')
+  t.equal(arr.length, 3, 'three found')
+  t.equal(arr[0], 'super-cool', 'first found')
+  t.equal(arr[1], 'hunky-dory.', 'second found')
+  // t.equal(arr[2], 'with-a-dash', 'third found') //FIXME:hyphens
+  t.end()
+})

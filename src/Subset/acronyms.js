@@ -1,13 +1,24 @@
 const addMethod = function(Doc) {
   /**  */
   class Acronyms extends Doc {
-    // stripPeriods() {//TODO:finish
-    //   return this
-    // }
-    // addPeriods() {
-    //   return this
-    // }
+    stripPeriods() {
+      this.termList().forEach(t => {
+        let str = t.text.replace(/\./, '')
+        t.set(str)
+      })
+      return this
+    }
+    addPeriods() {
+      this.termList().forEach(t => {
+        let str = t.text.replace(/\./, '')
+        str = str.split('').join('.')
+        t.set(str)
+      })
+      return this
+    }
   }
+  Acronyms.prototype.unwrap = Acronyms.prototype.stripPeriods
+  Acronyms.prototype.strip = Acronyms.prototype.stripPeriods
 
   Doc.prototype.acronyms = function(n) {
     let match = this.match('#Acronym')

@@ -18,8 +18,15 @@ let options = {
   // verbs: false,
   // nouns: false,
 }
-let doc = nlp(`We're HERE. we're CLEAR. we don't want anymore bears.`)
-doc.normalize(options)
+// let doc = nlp(`mr. kelly's, really (i dare say) 'cool' A.F! ;) 👍`).debug()
+let doc = nlp(`mr. and Mrs. Kelly`)
+  .abbreviations()
+  // .stripPeriods()
+  .addPeriods()
+  .addPeriods()
+  .all()
+  .debug()
+// doc.normalize(options)
 console.log(doc.text())
 
 // let doc = nlp('during august')

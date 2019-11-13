@@ -1,4 +1,4 @@
-const tokenize = require('../../01-tokenizer')
+const tokenize = require('../../../01-tokenizer')
 
 /** substitute-in new content */
 exports.replaceWith = function(replace, keepTags) {
@@ -35,15 +35,3 @@ exports.replace = function(match, replace, keepTags) {
   this.match(match).replaceWith(replace, keepTags)
   return this
 }
-
-/** fully remove these terms from the document */
-exports.delete = function(match) {
-  let toRemove = this
-  if (match) {
-    toRemove = this.match(match)
-  }
-  toRemove.list.forEach(phrase => phrase.delete(this))
-  return this
-}
-// aliases
-exports.remove = exports.delete

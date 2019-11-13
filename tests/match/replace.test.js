@@ -88,3 +88,10 @@ test('replace-keep some punctuation', function(t) {
   t.equal(doc.match('#HashTag+').text(), 'working', 'replacewith-keep-tags')
   t.end()
 })
+
+test('replace over implict', function(t) {
+  let doc = nlp("i'm good")
+  doc.match('am').replaceWith('was')
+  t.equal(doc.text(), 'i was good', 'replace over implicit')
+  t.end()
+})

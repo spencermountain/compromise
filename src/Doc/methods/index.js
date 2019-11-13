@@ -7,13 +7,17 @@ module.exports = Object.assign(
   require('./05-whitespace'),
   require('./06-tag'),
   require('./07-loops'),
-  require('./08-replace'),
-  require('./09-insert'),
-  require('./10-sort'),
-  require('./11-out'),
-  require('./12-normalize'),
-  require('./13-json'),
-  require('./14-split'),
-  require('./15-join'),
-  require('./16-export')
+
+  require('./insert/01-replace'),
+  require('./insert/02-insert'),
+
+  require('./output/01-text'),
+  require('./output/02-json'),
+  require('./output/03-out'),
+  require('./output/04-export'),
+
+  require('./transform/01-sort'),
+  require('./transform/02-normalize'),
+  require('./transform/03-split'),
+  require('./transform/04-join')
 )

@@ -1,8 +1,8 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('sentence():', function(t) {
-  ;[
+test('text({normal:true}):', function(t) {
+  let arr = [
     ['he is good', 'he is good'],
     ['Jack and Jill went up the hill.', 'jack and jill went up the hill.'],
     ['Mr. Clinton did so.', 'mr clinton did so.'],
@@ -16,7 +16,8 @@ test('sentence():', function(t) {
     ['john smith', 'john smith'],
     ['Dr. John Smith-McDonald', 'dr john smith mcdonald'],
     ['Contains no fruit juice. \n\n All rights reserved', 'contains no fruit juice. all rights reserved'],
-  ].forEach(function(a) {
+  ]
+  arr.forEach(function(a) {
     const str = nlp(a[0]).text({ normal: true })
     t.equal(str, a[0], a[1])
   })
@@ -24,7 +25,7 @@ test('sentence():', function(t) {
 })
 
 test('normalize():', function(t) {
-  ;[
+  let arr = [
     [
       ' so... you like DONUTS? have all the donuts in the WORLD!!!',
       'so you like donuts? have all the donuts in the world!',
@@ -35,7 +36,8 @@ test('normalize():', function(t) {
     // ['the so-called ❛singer-songwriter❜', 'the so called \'singer songwriter\''],
     // ['the so-called ❛group of seven❜', 'the so called \'group of 7\''],
     ['Director of the F.B.I.', 'director of the fbi'],
-  ].forEach(function(a) {
+  ]
+  arr.forEach(function(a) {
     const str = nlp(a[0])
       .normalize()
       .out('text')
@@ -45,7 +47,7 @@ test('normalize():', function(t) {
 })
 
 test('possessives', function(t) {
-  const doc = nlp(`Corey Hart's pudding and Google's advertising`)
+  let doc = nlp(`Corey Hart's pudding and Google's advertising`)
   doc = doc.normalize({
     possessives: true,
     case: false,
@@ -123,7 +125,7 @@ test('honorifics', function(t) {
     // ['Sergeant', 'sergeant'],
   ]
   tests.forEach(a => {
-    const doc = nlp(a[0])
+    let doc = nlp(a[0])
     doc = doc.normalize({
       honorifics: true,
       case: true,
@@ -134,7 +136,7 @@ test('honorifics', function(t) {
 })
 
 test('elipses-whitespace:', function(t) {
-  const doc = nlp('about this ...').normalize()
+  let doc = nlp('about this ...').normalize()
   t.equal(doc.out('text'), 'about this', 'normalize seperate elipses')
 
   doc = nlp('about this ...').toLowerCase()
@@ -146,7 +148,7 @@ test('elipses-whitespace:', function(t) {
 })
 
 test('more-normalize:', function(t) {
-  const doc = nlp(`i saw first lady michelle obama`)
+  let doc = nlp(`i saw first lady michelle obama`)
   doc.normalize({
     honorifics: true,
   })

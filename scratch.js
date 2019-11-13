@@ -22,9 +22,9 @@ let options = {
 // doc.normalize(options)
 // console.log(doc.text())
 
-const str = nlp('3,423rd')
+const str = nlp('2,012')
   .values()
-  .toCardinal()
+  .toText()
   .text()
 console.log(str)
 

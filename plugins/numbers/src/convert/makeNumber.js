@@ -63,6 +63,10 @@ const makeNumber = function(obj, isText, isOrdinal) {
     obj = prefixToText(obj)
     return `${obj.prefix || ''}${num}${obj.suffix || ''}`
   }
+  // support comma format
+  if (obj.hasComma === true) {
+    num = obj.num.toLocaleString()
+  }
   // cardinal-number
   num = toString(num) // support very large numbers
   return `${obj.prefix || ''}${num}${obj.suffix || ''}`

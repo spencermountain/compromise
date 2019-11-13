@@ -3,6 +3,9 @@ const toNumber = require('./convert/toNumber')
 // get a numeric value from this phrase
 const parseNumber = function(p) {
   let str = p.text('reduced')
+  // is it in '3,123' format?
+  let hasComma = /[0-9],[0-9]/.test(p.text('text'))
+
   //parse a numeric-number (easy)
   let arr = str.split(/^([^0-9]*)([0-9.,]*)([^0-9]*)$/)
   if (arr && arr[2] && p.terms().length < 2) {
@@ -26,6 +29,7 @@ const parseNumber = function(p) {
       suffix = ''
     }
     return {
+      hasComma: hasComma,
       prefix: arr[1] || '',
       num: num,
       suffix: suffix,
@@ -34,6 +38,7 @@ const parseNumber = function(p) {
   //parse a text-numer (harder)
   let num = toNumber(str)
   return {
+    hasComma: hasComma,
     prefix: '',
     num: num,
     suffix: '',

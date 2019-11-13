@@ -1,5 +1,5 @@
-const normalize = require('./normalize')
-const parseRanges = require('./parse-ranges')
+const normalize = require('./01-normalize')
+const parseRanges = require('./02-ranges')
 
 const parse = function(doc) {
   doc = normalize(doc)

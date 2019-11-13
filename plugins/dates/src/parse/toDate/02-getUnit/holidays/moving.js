@@ -18,7 +18,7 @@ module.exports = {
   2018: {
     // Astronomical major holidays
     'martin luther king': [jan, 15], //[third monday in january],
-    mlk: [jan, 15], //[third Monday in January],
+    'mlk day': [jan, 15], //[third Monday in January],
     'presidents day': [feb, 19], //[third monday in february],
     'mardi gras': [feb, 13], //[47 days before easter],
     'commonwealth day': [march, 12], //[second monday in march],
@@ -32,7 +32,7 @@ module.exports = {
     'canadian thanksgiving': [oct, 8], //[second monday in october],
     'election day': [nov, 6], // [Tuesday following the first Monday in November],
     thanksgiving: [nov, 22], // [fourth Thursday in November],
-    't-day': [nov, 22], // [fourth Thursday in November],
+    // 't-day': [nov, 22], // [fourth Thursday in November],
     'turkey day': [nov, 22], //[fourth Thursday in November],
     'black friday': [nov, 23], //[fourth tuesday in november],
     'cyber monday': [nov, 26],

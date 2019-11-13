@@ -1,25 +1,7 @@
 const methods = require('./_methods')
-/*
-  case: true,
-  whitespace: true,
-  unicode: true,
-  punctuation: true,
-  emoji: true,
-  acronyms:true
-  abbreviations:true
-
-  contractions: false,
-  parentheses: false,
-  quotations: false,
-  
-  possessives: false,
-  verbs: false,
-  honorifics: false,
-  nouns: false,
-  adverbs: false,
-*/
 
 const defaults = {
+  // light
   case: true,
   whitespace: true,
   unicode: true,
@@ -28,19 +10,34 @@ const defaults = {
   acronyms: true,
   abbreviations: true,
 
-  contractions: true,
-  parentheses: true,
-  quotations: true,
+  // medium
+  contractions: false,
+  parentheses: false,
+  quotations: false,
+  adverbs: false,
 
-  adverbs: true,
+  // heavy (loose legibility)
   possessives: false,
   verbs: false,
-  honorifics: false,
   nouns: false,
+  honorifics: false,
+
+  // pronouns: true,
+}
+const mapping = {
+  light: {},
+  medium: { contractions: true, parentheses: true, quotations: true, adverbs: true },
+  heavy: { possessives: true, verbs: true, nouns: true, honorifics: true },
 }
 
 /** common ways to clean-up the document, and reduce noise */
-exports.normalize = function(options = {}) {
+exports.normalize = function(options) {
+  options = options || {}
+  // support named forms
+  if (typeof options === 'string') {
+    options = mapping[options] || {}
+  }
+  // set defaults
   options = Object.assign({}, defaults, options)
   let termList = this.termList()
 
@@ -64,11 +61,6 @@ exports.normalize = function(options = {}) {
     methods.punctuation(termList)
   }
 
-  // `isn't` -> 'is not'
-  if (options.contraction || options.contractions) {
-    this.contractions().expand()
-  }
-
   // remove ':)'
   if (options.emoji) {
     this.remove('(#Emoji|#Emoticon)')
@@ -79,10 +71,16 @@ exports.normalize = function(options = {}) {
     this.acronyms().strip()
     // .toUpperCase()
   }
-
   // remove period from abbreviations
   if (options.abbreviations) {
     methods.abbreviations(this)
+  }
+
+  // --Medium methods--
+
+  // `isn't` -> 'is not'
+  if (options.contraction || options.contractions) {
+    this.contractions().expand()
   }
 
   // '(word)' -> 'word'
@@ -94,15 +92,16 @@ exports.normalize = function(options = {}) {
     methods.quotations(termList)
   }
 
+  // remove any un-necessary adverbs
+  if (options.adverbs) {
+    methods.adverbs(this)
+  }
+
+  // --Heavy methods--
+
   // `cory hart's -> cory hart'
   if (options.possessive || options.possessives) {
     this.possessives().strip()
-  }
-  // remove any un-necessary adverbs
-  if (options.adverbs) {
-    this.match('#Adverb')
-      .not('(not|nary|seldom|never|barely|almost|basically)')
-      .remove()
   }
   // 'he walked' -> 'he walk'
   if (options.verbs) {

@@ -3,14 +3,14 @@ const addMethod = function(Doc) {
   class Acronyms extends Doc {
     stripPeriods() {
       this.termList().forEach(t => {
-        let str = t.text.replace(/\./, '')
+        let str = t.text.replace(/\./g, '')
         t.set(str)
       })
       return this
     }
     addPeriods() {
       this.termList().forEach(t => {
-        let str = t.text.replace(/\./, '')
+        let str = t.text.replace(/\./g, '')
         str = str.split('').join('.')
         t.set(str)
       })

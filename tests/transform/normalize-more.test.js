@@ -1,51 +1,6 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('text({normal:true}):', function(t) {
-  let arr = [
-    ['he is good', 'he is good'],
-    ['Jack and Jill went up the hill.', 'jack and jill went up the hill.'],
-    ['Mr. Clinton did so.', 'mr clinton did so.'],
-    ['he is good', 'he is good'],
-    ['Jack and Jill   went up the hill. She got  water.', 'jack and jill went up the hill. she got water.'],
-    ['Joe', 'joe'],
-    ['just-right', 'just right'],
-    ['camel', 'camel'],
-    ['4', '4'],
-    ['four', 'four'],
-    ['john smith', 'john smith'],
-    ['Dr. John Smith-McDonald', 'dr john smith mcdonald'],
-    ['Contains no fruit juice. \n\n All rights reserved', 'contains no fruit juice. all rights reserved'],
-  ]
-  arr.forEach(function(a) {
-    const str = nlp(a[0]).text({ normal: true })
-    t.equal(str, a[0], a[1])
-  })
-  t.end()
-})
-
-test('normalize():', function(t) {
-  let arr = [
-    [
-      ' so... you like DONUTS? have all the donuts in the WORLD!!!',
-      'so you like donuts? have all the donuts in the world!',
-    ],
-    // ['This is a test. .', 'this is a test.'],
-    ['Björk, the singer-songwriter...', 'bjork the singer songwriter'],
-    ['the so-called “fascist  dictator”', 'the so called "fascist dictator"'],
-    // ['the so-called ❛singer-songwriter❜', 'the so called \'singer songwriter\''],
-    // ['the so-called ❛group of seven❜', 'the so called \'group of 7\''],
-    ['Director of the F.B.I.', 'director of the fbi'],
-  ]
-  arr.forEach(function(a) {
-    const str = nlp(a[0])
-      .normalize()
-      .out('text')
-    t.equal(str, a[0], a[1])
-  })
-  t.end()
-})
-
 test('possessives', function(t) {
   let doc = nlp(`Corey Hart's pudding and Google's advertising`)
   doc = doc.normalize({
@@ -132,6 +87,21 @@ test('honorifics', function(t) {
     })
     t.equal(doc.out('normal'), a[1], a[0])
   })
+  t.end()
+})
+
+test('hyphen-whitespace:', function(t) {
+  let doc = nlp(`the so-called “fascist  dictator”`)
+  doc.normalize({ whitespace: true, punctuation: false })
+  t.equal(doc.text(), `the so-called “fascist dictator”`, 'keep hyphen')
+  t.end()
+})
+
+test('dash-whitespace:', function(t) {
+  let str = `a dash seperates words - like that`
+  let doc = nlp(str)
+  doc.normalize({ whitespace: true, punctuation: false })
+  t.equal(doc.text(), str, 'keep the dash')
   t.end()
 })
 

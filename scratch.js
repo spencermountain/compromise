@@ -19,14 +19,9 @@ let options = {
   // nouns: false,
 }
 // let doc = nlp(`mr. kelly's, really (i dare say) 'cool' A.F! ;) 👍`).debug()
-let doc = nlp(`mr. and Mrs. Kelly`)
-  .abbreviations()
-  // .stripPeriods()
-  .addPeriods()
-  .addPeriods()
-  .all()
-  .debug()
-// doc.normalize(options)
+// let doc = nlp(`the so-called “fascist  dictator”`).debug()
+let doc = nlp(`a dash seperates words - like that`).debug()
+doc.normalize({ whitespace: true, punctuation: false })
 console.log(doc.text())
 
 // let doc = nlp('during august')

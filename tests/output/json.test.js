@@ -1,5 +1,5 @@
 const test = require('tape')
-const nlp = require('./_lib')
+const nlp = require('../_lib')
 
 const hasTag = function(term, want) {
   if (!term || !term.tags) {
@@ -79,6 +79,10 @@ test('out-custom:', function(t) {
   t.equal(arr[0].text, 'The', 'has text')
   // t.equal(arr[5].root, 'don', 'has root')
   t.equal(arr[5].sdf, undefined, 'has no sdf')
-  t.equal(arr[0].tags.some(tag => tag === 'Determiner'), true, 'has tags')
+  t.equal(
+    arr[0].tags.some(tag => tag === 'Determiner'),
+    true,
+    'has tags'
+  )
   t.end()
 })

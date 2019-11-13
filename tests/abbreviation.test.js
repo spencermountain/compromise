@@ -3,8 +3,7 @@ const nlp = require('./_lib')
 
 test('abbreviations', function(t) {
   let doc = nlp(`mr. and Mrs. Kelly live on Shoreditch st.`)
-    .abbreviations()
-    .stripPeriods()
+  doc.abbreviations().stripPeriods()
   t.equal(doc.text(), 'mr and Mrs Kelly live on Shoreditch st.', 'no-periods')
 
   doc

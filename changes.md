@@ -10,7 +10,7 @@ You can read about some of the design-decisions for this update [here](https://m
 
 Although the release is a near-complete rewrite, most compromise v11 scripts will continue to work in v12.
 
-There are many
+There are many subtle changes, and this document is intended as a upgrade guide.
 
 ---
 
@@ -33,6 +33,8 @@ There are many
 - paragraph support
 
 - better unicode support
+
+- moved all documentation to [observablehq](https://observablehq.com/collection/@spencermountain/nlp-compromise)
 
 - cleaned-up internal handling of whitespace/punctuation
 
@@ -113,7 +115,7 @@ Once the plugin is applied, things should work just as normal.
 
 #### New Constructor methods
 
-- .extend()
+- .extend() - change any internal compromise data
 - .import() - create a new document from `.export()` results
 
 ### Misc new features
@@ -156,40 +158,12 @@ Once the plugin is applied, things should work just as normal.
 
 ### Breaking changes:
 
-- `.text()` input parameter changes
-
+<!-- - `.text()` input parameter changes -->
 <!-- cleaned-up various `.data()` results -->
 
 removed no-longer-needed `prefix_` and `_suffix` operators from match syntax
 
 ---
-
-**non-breaking changes**
-
-- adds `.matchOne()`
-- adds `.freeze()`
-
-- adds `@function` syntax to match queries:
-- - hasComma
-- - hasPeriod
-- - hasExclamation
-- - hasQuestionMark
-- - hasElipses
-- - hasSemicolon
-- - isAcronym
-- - isKnown
-
----
-
-jsdoc output:
-`jsdoc src/** -t templates/haruki -d console`
-
-generate typings file
-`jsdoc -t node_modules/tsd-jsdoc/dist -r src/**/*.js`
-
-type hints
-
-`tsc --allowJs --checkJs --noEmit --target ES6 src/*.js`
 
 ### Normalisation levels:
 
@@ -245,85 +219,3 @@ type hints
   `xml`
   `jsonl` - like spacy
   `iob` - chunking - https://en.wikipedia.org/wiki/Inside%E2%80%93outside%E2%80%93beginning_(tagging)
-
-```
-[
-  {
-    text:'i am cool',
-    terms:[
-      {text:'i', pre:'', post:'', tags}
-    ]
-  }
-]
-```
-
-## Subsets
-
-### in main:
-
-- contractions
-  -expand/contract
-
-- acronyms
-  -stripPeriods/addPeriods
-
-* verbs
-  -conjugation/conjugate
-  -isSingular/isPlural
-  -isPositive/isNegative
-  -toPast/toPresent/toFuture
-  -asAdjective
-
-* nouns
-  -isplural/hasplural
-  -toSingular/toPlural
-  -toPossessive
-  -articles
-
-* adjectives
-* adverbs
-* parentheses
-* quotations
-* possessives
-
-* hashtags
-* phoneNumbers
-* urls
-
-### External libs:
-
-`compromise-entity`
-
-- people
-  -firstName/lastName
-  -pronoun
-
-- organizations
-- places
-- topics
-
-`compromise-number`
--toText/toNumber
--toCardinal/toOrdinal
--greaterThan/lessThan
--between/isEqual
--add/subtract/increment/decrement
-
-`compromise-sentence`
--prepend/append
--toPast/toPresent/toFuture
--toNegative/toPositive
--toQuestion/toStatement
-
-- questions
-- statements
-
-`compromise-date`
-
-`compromise-term`
-
-- terms
-
-`compromise-ngram`
--unigrams/bigrams/trigrams
--startGrams/endGrams ?

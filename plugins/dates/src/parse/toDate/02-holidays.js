@@ -1,6 +1,6 @@
 const fixedHolidays = require('./holidays/fixed')
 const astroHolidays = require('./holidays/moving')
-const units = require('./_units')
+const units = require('./units')
 const spacetime = require('spacetime')
 
 const parseHoliday = function(doc) {

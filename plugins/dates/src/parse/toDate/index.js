@@ -1,18 +1,20 @@
-const { Unit } = require('./02-getUnit/_units')
-const parseShift = require('./01-parse/01-shift')
-const parseTime = require('./01-parse/02-time')
-const parseRelative = require('./01-parse/03-relative')
-// const parseRelative = require('./01-parse/03-relative')
+const { Unit } = require('./units')
+const parseShift = require('./tokenize/01-shift')
+const parseTime = require('./tokenize/02-time')
+const parseRelative = require('./tokenize/03-relative')
+const namedUnit = require('./01-namedUnit')
 // const parseHoliday = require('./02-getUnit/02-holidays')
 
 const parseDate = function(doc) {
   let shift = parseShift(doc)
   let time = parseTime(doc)
+  let rel = parseRelative(doc)
   let str = doc.text('reduced')
-  // console.log(str, shift, time)
+  console.log(str, '  -  ', rel, '  -  ', shift, '  -  ', time)
+
+  let d = namedUnit(doc)
 
   // 'this month'
-  let d = parseRelative(doc)
 
   // let rel = doc.match('^this? [(next|last|previous|current|this)]')
   // doc.remove('^this? (next|last|previous|current|this)')
@@ -24,11 +26,12 @@ const parseDate = function(doc) {
   }
 
   // // apply relative
-  // if (rel.has('(last|previous)')) {
-  //   d.last()
-  // } else if (rel.has('next')) {
-  //   d.next()
-  // }
+  if (rel === 'last') {
+    d.last()
+  }
+  if (rel === 'next') {
+    d.next()
+  }
   // apply shift
   if (shift) {
     d.applyShift(shift)

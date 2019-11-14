@@ -19,7 +19,7 @@ test('text(normal):', function(t) {
   ]
   arr.forEach(function(a) {
     const str = nlp(a[0]).text('normal')
-    t.equal(str, a[0], a[1])
+    t.equal(str, a[1], a[0])
   })
   t.end()
 })

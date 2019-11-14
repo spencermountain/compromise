@@ -7,14 +7,18 @@ exports.text = function(options = {}, isFirst, isLast) {
   if (typeof options === 'string') {
     if (options === 'normal') {
       options = {
-        punctuation: true,
         whitespace: true,
         unicode: true,
+        case: true,
+        punctuation: true,
+        // emoji: true,
+        acronyms: true,
+        abbreviations: true,
         implicit: true,
       }
     } else if (options === 'clean') {
       options = {
-        lowercase: true,
+        case: true,
         punctuation: true,
         whitespace: true,
         unicode: true,
@@ -22,7 +26,7 @@ exports.text = function(options = {}, isFirst, isLast) {
       }
     } else if (options === 'reduced') {
       options = {
-        lowercase: true,
+        case: true,
         punctuation: false, //FIXME: reversed
         whitespace: true,
         unicode: true,
@@ -31,7 +35,7 @@ exports.text = function(options = {}, isFirst, isLast) {
       }
     } else if (options === 'root') {
       options = {
-        lowercase: true,
+        case: true,
         punctuation: true,
         whitespace: true,
         unicode: true,

@@ -18,7 +18,7 @@ test('normalize():', function(t) {
     const str = nlp(a[0])
       .normalize()
       .out('text')
-    t.equal(str, a[0], a[1])
+    t.equal(str, a[1], a[0])
   })
   t.end()
 })

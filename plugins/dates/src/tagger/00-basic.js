@@ -160,9 +160,6 @@ const fixDates = function(doc) {
     //it was 1998
     v = cardinal.match('it (is|was) [#Cardinal]')
     tagYearSafe(v, 'in-year')
-    //was 1998 and...
-    v = cardinal.match(`[#Cardinal] !#Plural`)
-    tagYearSafe(v, 'year-unsafe')
   }
 
   let time = doc.if('#Time')

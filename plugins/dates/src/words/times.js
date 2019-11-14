@@ -14,6 +14,7 @@ module.exports = [
   'sometime',
   'eod',
   'oclock',
+  'oclock',
   'all day',
   'at night',
 ]

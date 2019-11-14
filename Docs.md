@@ -3,17 +3,17 @@ there are 4 preset text outputs:
 
 ```js
 const default = {
-  whitespace: true,
-  unicode: true,
-  lowercase: true,
-  titlecase: true,
-  punctuation: true,
-  acronyms: true,
-  abbreviations: true,
+  whitespace: false,
+  unicode: false,
+  lowercase: false,
+  titlecase: false,
+  punctuation: false,
+  acronyms: false,
+  abbreviations: false,
 
-  reduced:true,
-  root:true,
-  implicit: true,
+  reduced:false,
+  root:false,
+  implicit: false,
 }
 ```
 
@@ -25,7 +25,7 @@ const default = {
     *clean plaintext form for human-reading*
   - normalized whitespace
   - normalized unicode
-  - titlecase sentence beginning, uppercase acronyms
+  <!-- - titlecase sentence beginning, uppercase acronyms -->
   - expanded contractions
   - hide semicolons, emdashes, or slashes (allow commas)
    {}
@@ -85,7 +85,6 @@ const default = {
 ```js
 const default = {
   // light
-  case: true,
   whitespace: true,
   unicode: true,
   punctuation: true,
@@ -94,6 +93,7 @@ const default = {
   abbreviations: true,
 
   // medium
+  case: true,
   contractions: false,
   parentheses: false,
   quotations: false,
@@ -107,10 +107,10 @@ const default = {
 }
 ```
 #### 'light'
-`{ case: true, whitespace: true, unicode: true, punctuation: true, emoji: true, acronyms: true, abbreviations: true }`
+`{  whitespace: true, unicode: true, punctuation: true, emoji: true, acronyms: true, abbreviations: true }`
 
 #### 'medium'
-`{ contractions: false, parentheses: false, quotations: false, adverbs: false }`
+`{ case: true, contractions: false, parentheses: false, quotations: false, adverbs: false }`
 
 #### 'heavy'
 `{ possessives: false, verbs: false, nouns: false, honorifics: false }`

@@ -1,42 +1,12 @@
 const nlp = require('./src/index')
 // nlp.verbose(true)
-nlp.extend(require('./plugins/syllables/src'))
-// nlp.extend(require('./plugins/dates/src'))
+nlp.extend(require('./plugins/numbers/src'))
+nlp.extend(require('./plugins/dates/src'))
 
-/*
-**'normal'** 
-    *human-readable plaintext form*
-  - normalized whitespace
-  - normalized unicode
-  - titlecase sentence beginning, uppercase acronyms
-  - expanded contractions
-  - hide semicolons, emdashes, or slashes (allow commas)
-   {}
-
-**'clean'** 
-  *machine-scan plaintext form*
-  - full lowercase
-  - expand contractions
-  - only punctuation is end-of-sentence. (no commas)
-   {}
-
-**'reduced'** 
-  *machine-scan plaintext form*
-  - no punctuation, or sentence delimiters.
-  - no emoji
-  - parentheses
-  - quotations
-
-**'root'** 
-  *'stemmed' version. Not fully legible.*
-  - all verbs to infinitive
-  - all nouns to singular
-  - no (unnecessary) adverbs
-*/
-
-let doc = nlp(`SPENCER's house (spencer)`)
-doc = doc.terms().unique()
-console.log(doc.text('reduced'))
+// let doc = nlp(`between june 5th 1999 and sept 7 2019`)
+let doc = nlp(`two days after june 5th 1999 at nine oclock`)
+// doc.debug()
+console.log(doc.dates().json())
 
 // let doc = nlp(`My dog LOVES pizza, and grapes!!`)
 // doc.debug()

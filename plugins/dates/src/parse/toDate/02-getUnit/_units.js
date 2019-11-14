@@ -26,6 +26,14 @@ class Unit {
     })
     return this
   }
+  applyTime(str) {
+    if (str) {
+      this.d = this.d.time(str)
+    } else {
+      this.d = this.d.startOf('day') //zero-out time
+    }
+    return this
+  }
   format(fmt) {
     return this.d.format(fmt)
   }

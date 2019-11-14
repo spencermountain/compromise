@@ -11,7 +11,7 @@ test('misc dates', function(t) {
 })
 
 test('date-tagger', function(t) {
-  ;[
+  let arr = [
     ['june 2009', ['Month', 'Year']],
     ['june 5th 2009', ['Month', 'Date', 'Year']],
     ['q2 2009', ['Date', 'Year']],
@@ -21,7 +21,8 @@ test('date-tagger', function(t) {
     ['minute', ['Duration']],
     ['valentines day', ['Holiday', 'Holiday']],
     ['ash wednesday', ['Holiday', 'Holiday']],
-  ].forEach(function(a) {
+  ]
+  arr.forEach(function(a) {
     let terms = nlp(a[0]).json(0).terms
     terms.forEach((term, i) => {
       let tag = a[1][i]
@@ -29,5 +30,16 @@ test('date-tagger', function(t) {
       t.equal(found, true, term.text + ' ' + tag)
     })
   })
+  t.end()
+})
+
+test('date-format', function(t) {
+  let doc = nlp(`i'm going skiing two days after next monday at 7pm`)
+  doc.dates().format('{day} {month} {day-ordinal}, {time}')
+  t.equal(doc.text(), `i'm going skiing Wednesday November 3rd, 7:00pm`, 'format-test')
+
+  doc = nlp(`two days after halloween 2019`)
+  doc.dates().format('{month} {date-ordinal}, {time}')
+  t.equal(doc.text(), `November 2nd, 12:00am`, 'format-test-holiday')
   t.end()
 })

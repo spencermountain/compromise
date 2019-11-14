@@ -29,6 +29,10 @@ const addMethods = function(Doc, world) {
           start: obj.start ? obj.start.format('nice-full') : null,
           end: obj.end ? obj.end.format('nice-full') : null,
         }
+        // add duration
+        if (json.date.start && json.date.end) {
+          json.date.duration = json.date.start.diff(json.diff.end)
+        }
         res.push(json)
       })
       if (n !== null) {
@@ -43,11 +47,11 @@ const addMethods = function(Doc, world) {
         let str = ''
         if (obj.start) {
           str = obj.start.format(fmt)
+          if (obj.end) {
+            str += ' to ' + obj.start.format(fmt)
+          }
+          doc.replaceWith(str, true)
         }
-        if (obj.end) {
-          str += ' to ' + obj.start.format(fmt)
-        }
-        doc.replaceWith(str, true)
       })
       return this
     }

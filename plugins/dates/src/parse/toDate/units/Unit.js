@@ -4,10 +4,12 @@ class Unit {
   constructor(str, unit) {
     this.str = str
     this.unit = unit || 'day'
-
     // set it to the beginning of the given unit
     let d = spacetime(str)
-    d = d.startOf(unit)
+    // set to beginning
+    if (d.isValid()) {
+      d = d.startOf(unit)
+    }
     Object.defineProperty(this, 'd', {
       enumerable: false,
       writable: true,

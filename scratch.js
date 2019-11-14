@@ -3,9 +3,7 @@ const nlp = require('./src/index')
 nlp.extend(require('./plugins/numbers/src'))
 nlp.extend(require('./plugins/dates/src'))
 
-// let doc = nlp(`between june 5th 1999 and sept 7 2019`)
-let doc = nlp(`next monday`)
+let doc = nlp(`June 2nd 2012`)
+// doc.dates().format('{nice-year}')
+// console.log(doc.text())
 console.log(doc.dates().json())
-
-// let doc = nlp(`My dog LOVES pizza, and grapes!!`)
-// doc.debug()

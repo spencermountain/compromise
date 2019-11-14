@@ -23,21 +23,6 @@ const parseHoliday = function(doc) {
     s = s.date(arr[1])
     d = new units.CalendarDate(s)
   }
-  if (!d) {
-    return d
-  }
-
-  // support 'last easter'
-  let m = doc.match('this? (next|last|previous|current|this)')
-  if (m.found === true) {
-    let rel = m.lastTerm().out('reduced')
-    if (rel === 'last' || rel === 'previous') {
-      d.last()
-    }
-    if (rel === 'next') {
-      d.next()
-    }
-  }
   return d
 }
 module.exports = parseHoliday

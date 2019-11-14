@@ -5,11 +5,17 @@ const logic = function(doc, context) {
   // two explicit dates - 'between friday and sunday'
   let m = doc.match('between * and *')
   if (m.found) {
-    let d = parseDate(m, context)
-    if (d) {
+    let start = m
+      .match('between [.*] and')
+      .not('^between')
+      .not('and$')
+    start = parseDate(start, context)
+    let end = m.match('and *').not('^and')
+    end = parseDate(end, context)
+    if (start) {
       return {
-        start: d,
-        end: d.clone().end(),
+        start: start,
+        end: end,
       }
     }
   }

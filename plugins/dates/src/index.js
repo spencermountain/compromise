@@ -25,13 +25,19 @@ const addMethods = function(Doc, world) {
       this.forEach(doc => {
         let json = doc.json(options)[0]
         let obj = parse(doc)
+        let start = obj.start ? obj.start.format('iso') : null
+        let end = obj.end ? obj.end.format('iso') : null
+        // set iso strings to json result
         json.date = {
-          start: obj.start ? obj.start.format('iso') : null,
-          end: obj.end ? obj.end.format('iso') : null,
+          start: start,
+          end: end,
         }
         // add duration
-        if (json.date.start && json.date.end) {
-          json.date.duration = json.date.start.diff(json.diff.end)
+        if (start && end) {
+          json.date.duration = obj.start.d.diff(obj.end.d)
+          // we don't need these
+          delete json.date.duration.milliseconds
+          delete json.date.duration.seconds
         }
         res.push(json)
       })
@@ -40,6 +46,7 @@ const addMethods = function(Doc, world) {
       }
       return res
     }
+
     /** render all dates according to a specific format */
     format(fmt) {
       this.forEach(doc => {

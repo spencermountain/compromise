@@ -19,7 +19,7 @@ test('optional params', function(t) {
     // plurals: true,
     verbs: true,
   })
-  t.equal(doc.out(), 'john smith buy automobiles', 'many-on')
+  t.equal(doc.out(), 'john smith buy automobiles for us', 'many-on')
   t.end()
 })
 

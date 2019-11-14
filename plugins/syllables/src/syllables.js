@@ -9,7 +9,7 @@ const starts_with_e = /^e/
 const ends_with_noisy_vowel_combos = /(eo|eu|ia|oa|ua|ui)$/i
 const aiouy = /[aiouy]/
 const ends_with_ee = /ee$/
-const whitespace_dash = /\s\-/
+// const whitespace_dash = /\s\-/
 
 //method is nested because it's called recursively
 const doWord = function(w) {

@@ -2,9 +2,9 @@ const killUnicode = require('../normalize/unicode')
 const hasSpace = /[\s-]/
 const isUpperCase = /^[A-Z-]+$/
 
-const titleCase = str => {
-  return str.charAt(0).toUpperCase() + str.substr(1)
-}
+// const titleCase = str => {
+//   return str.charAt(0).toUpperCase() + str.substr(1)
+// }
 
 /** return various text formats of this term */
 exports.textOut = function(options, showPre, showPost) {
@@ -23,7 +23,9 @@ exports.textOut = function(options, showPre, showPost) {
   if (options.implicit === true && this.implicit) {
     word = this.implicit || ''
   }
-
+  if (options.normal === true) {
+    word = this.clean || this.text || ''
+  }
   if (options.root === true) {
     word = this.root || this.reduced || ''
   }
@@ -33,7 +35,7 @@ exports.textOut = function(options, showPre, showPost) {
   // cleanup case
   if (options.titlecase === true) {
     if (this.tags.ProperNoun && !this.titleCase()) {
-      word = titleCase(word)
+      // word = titleCase(word)
     } else if (this.tags.Acronym) {
       word = word.toUpperCase() //uppercase acronyms
     } else if (isUpperCase.test(word) && !this.tags.Acronym) {
@@ -50,14 +52,14 @@ exports.textOut = function(options, showPre, showPost) {
   }
 
   // -before/after-
-  if (options.whitespace === true) {
+  if (options.whitespace === true || options.root) {
     before = ''
     after = ' '
     if ((hasSpace.test(this.post) === false || options.last) && !this.implicit) {
       after = ''
     }
   }
-  if (options.punctuation === true) {
+  if (options.punctuation === true && !options.root) {
     //normalized end punctuation
     if (this.hasPost('.') === true) {
       after = '.' + after
@@ -75,7 +77,8 @@ exports.textOut = function(options, showPre, showPost) {
     before = ''
   }
   if (showPost !== true) {
-    after = ''
+    // let keep = after.match(/\)/) || ''
+    after = '' //keep //after.replace(/[ .?!,]+/, '')
   }
   // remove the '.' from 'Mrs.' (safely)
   if (options.abbreviations === true && this.tags.Abbreviation) {

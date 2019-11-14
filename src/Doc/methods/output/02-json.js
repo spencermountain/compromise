@@ -21,6 +21,18 @@ exports.json = function(options = {}) {
     return this.list[options].json(jsonDefaults)
   }
   options = Object.assign({}, jsonDefaults, options)
+
+  // cache roots, if necessary
+  if (options === 'root' || (typeof options === 'object' && options.root)) {
+    this.list.forEach(p => {
+      p.terms().forEach(t => {
+        if (t.root === null) {
+          t.setRoot(this.world)
+        }
+      })
+    })
+  }
+
   if (options.offset) {
     options.terms = options.terms === true ? {} : options.terms
     options.terms.offset = true

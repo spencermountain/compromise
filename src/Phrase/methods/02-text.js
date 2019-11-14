@@ -2,9 +2,9 @@ const trimEnd = function(str) {
   return str.replace(/ +$/, '')
 }
 
-const titleCase = str => {
-  return str.charAt(0).toUpperCase() + str.substr(1)
-}
+// const titleCase = str => {
+//   return str.charAt(0).toUpperCase() + str.substr(1)
+// }
 
 /** produce output in the given format */
 exports.text = function(options = {}, isFirst, isLast) {
@@ -13,11 +13,12 @@ exports.text = function(options = {}, isFirst, isLast) {
       options = {
         whitespace: true,
         unicode: true,
-        titlecase: true,
+        lowercase: true,
         punctuation: true,
         acronyms: true,
         abbreviations: true,
         implicit: true,
+        normal: true,
       }
     } else if (options === 'clean') {
       options = {
@@ -36,7 +37,7 @@ exports.text = function(options = {}, isFirst, isLast) {
         whitespace: true,
         unicode: true,
         implicit: true,
-        // reduced: true,
+        reduced: true,
       }
     } else if (options === 'root') {
       options = {
@@ -73,9 +74,9 @@ exports.text = function(options = {}, isFirst, isLast) {
       }
     }
     let txt = t.textOut(options, showPre, showPost)
-    if (options.titlecase && i === 0) {
-      txt = titleCase(txt)
-    }
+    // if (options.titlecase && i === 0) {
+    // txt = titleCase(txt)
+    // }
     return str + txt
   }, '')
   //full-phrases show punctuation, but not whitespace

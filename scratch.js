@@ -1,6 +1,6 @@
 const nlp = require('./src/index')
 // nlp.verbose(true)
-nlp.extend(require('./plugins/numbers/src'))
+nlp.extend(require('./plugins/syllables/src'))
 // nlp.extend(require('./plugins/dates/src'))
 
 /*
@@ -34,6 +34,9 @@ nlp.extend(require('./plugins/numbers/src'))
   - no (unnecessary) adverbs
 */
 
-let doc = nlp(`My dog LOVES pizza, and grapes!!`)
+let doc = nlp(`SPENCER's house (spencer)`)
+doc = doc.terms().unique()
+console.log(doc.text('reduced'))
+
+// let doc = nlp(`My dog LOVES pizza, and grapes!!`)
 // doc.debug()
-console.log(doc.text('root'))

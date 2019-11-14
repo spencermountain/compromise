@@ -5,7 +5,7 @@ const defaultObj = { normal: true, text: true, terms: false }
 const addMethod = function(Doc) {
   /** split each term by typical pronounciation */
   Doc.prototype.syllables = function(n, obj) {
-    let data = this.data(obj || defaultObj)
+    let data = this.json(obj || defaultObj)
     //add syllable data to each phrase
     data = data.map(o => {
       o.syllables = getSyllables(o.normal || o.text)

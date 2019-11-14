@@ -12,9 +12,9 @@ const isAcronym = function(term, world) {
   if (term.tags.Acronym) {
     return true
   }
-  if (term.tags.Adverb || term.tags.Verb || term.tags.Value || term.tags.Plural) {
-    return false
-  }
+  // if (term.tags.Adverb || term.tags.Verb || term.tags.Value || term.tags.Plural) {
+  // return false
+  // }
   // 'PIZZA' is not an acronym.
   if (str.length > 4 && world.words[str]) {
     return false

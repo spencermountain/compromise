@@ -10,6 +10,14 @@ const shrinkAll = function(doc, id, deleteLength, after) {
       phrase.start = after.id
     }
   }
+  // cleanup empty phrase objects
+  doc.list = doc.list.filter(p => {
+    if (!p.start || !p.length) {
+      return false
+    }
+    return true
+  })
+  // keep going!
   if (doc.from) {
     shrinkAll(doc.from, id, deleteLength, after)
   }
@@ -21,8 +29,6 @@ const shrinkAll = function(doc, id, deleteLength, after) {
 const deletePhrase = function(phrase, doc) {
   let pool = doc.pool()
   let terms = phrase.terms()
-
-  // console.log(doc)
 
   //grab both sides of the chain,
   let prev = pool.get(terms[0].prev) || {}
@@ -44,6 +50,7 @@ const deletePhrase = function(phrase, doc) {
   if (after) {
     after.prev = prev.id
   }
+
   // lastly, actually delete the terms from the pool?
   // for (let i = 0; i < terms.length; i++) {
   // pool.remove(terms[i].id)

@@ -12,8 +12,11 @@ const parseDate = function(doc) {
   // let str = doc.text('reduced')
   // console.log(str, '  -  ', rel, '  -  ', shift, '  -  ', time)
 
+  // this month
   let d = namedUnit(doc)
+  // this haloween
   d = d || parseHoliday(doc)
+  // this june 2nd
   d = d || explicit(doc)
 
   if (!d) {

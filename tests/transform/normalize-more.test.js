@@ -25,7 +25,7 @@ test('optional params', function(t) {
 
 test('optional param - verbs and plurals together', function(t) {
   const plurals = [['batmobiles', 'batmobile']]
-  const verbs = [['I was walking', 'i walk']]
+  const verbs = [['I was walking', 'I walk']]
 
   // good
   plurals.forEach(a => {

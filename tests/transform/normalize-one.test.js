@@ -11,12 +11,13 @@ const only = function(options) {
   }
   return Object.assign({}, none, options)
 }
-// test('normalize defaults', function(t) {
-//   let doc = nlp.tokenize(` it's   coöl, (i think) .    He is   cool;  i said .`)
-//   doc.normalize()
-//   t.equal(doc.text(), `it's cool i think. He is cool i said.`, 'normalize-defaults')
-//   t.end()
-// })
+
+test('normalize defaults', function(t) {
+  let doc = nlp.tokenize(` it's   coöl, (i think) .    He is   cool;  i said .`)
+  doc.normalize()
+  t.equal(doc.text(), `it's cool (i think). He is cool i said.`, 'normalize-defaults')
+  t.end()
+})
 
 test('normalize unicode', function(t) {
   let doc = nlp.tokenize(` it's   coöl, (i think) .    He is   cool;  i said .`)

@@ -35,9 +35,9 @@ let plugins = [
   'syllables',
 ]
 plugins.forEach(dir => {
-  console.log(dir + ':')
   code = sh.exec(`tape "./plugins/${dir}/tests/**/*.test.js" | tap-dancer --color always`).code
   if (code !== 0) {
+    console.log(dir)
     fail = true
   }
 })

@@ -2,7 +2,6 @@ const methods = require('./_methods')
 
 const defaults = {
   // light
-  case: true,
   whitespace: true,
   unicode: true,
   punctuation: true,
@@ -11,6 +10,7 @@ const defaults = {
   abbreviations: true,
 
   // medium
+  case: false,
   contractions: false,
   parentheses: false,
   quotations: false,
@@ -26,9 +26,9 @@ const defaults = {
 }
 const mapping = {
   light: {},
-  medium: { contractions: true, parentheses: true, quotations: true, adverbs: true },
-  heavy: { possessives: true, verbs: true, nouns: true, honorifics: true },
+  medium: { case: true, contractions: true, parentheses: true, quotations: true, adverbs: true },
 }
+mapping.heavy = Object.assign({}, mapping.medium, { possessives: true, verbs: true, nouns: true, honorifics: true })
 
 /** common ways to clean-up the document, and reduce noise */
 exports.normalize = function(options) {

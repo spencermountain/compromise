@@ -1,4 +1,5 @@
 const titleCase = /^[A-Z][a-z'\u00C0-\u00FF]/
+const upperCase = /^[A-Z]+s?$/
 
 /** convert all text to uppercase */
 exports.toUpperCase = function() {
@@ -20,6 +21,10 @@ exports.toTitleCase = function() {
   return this
 }
 
+/** if all letters are uppercase */
+exports.isUpperCase = function() {
+  return upperCase.test(this.text)
+}
 /** if the first letter is uppercase, and the rest are lowercase */
 exports.isTitleCase = function() {
   return titleCase.test(this.text)

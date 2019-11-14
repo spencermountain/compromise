@@ -2,6 +2,10 @@ const trimEnd = function(str) {
   return str.replace(/ +$/, '')
 }
 
+const titleCase = str => {
+  return str.charAt(0).toUpperCase() + str.substr(1)
+}
+
 /** produce output in the given format */
 exports.text = function(options = {}, isFirst, isLast) {
   if (typeof options === 'string') {
@@ -9,7 +13,7 @@ exports.text = function(options = {}, isFirst, isLast) {
       options = {
         whitespace: true,
         unicode: true,
-        case: true,
+        titlecase: true,
         punctuation: true,
         acronyms: true,
         abbreviations: true,
@@ -17,7 +21,8 @@ exports.text = function(options = {}, isFirst, isLast) {
       }
     } else if (options === 'clean') {
       options = {
-        case: true,
+        titlecase: false,
+        lowercase: true,
         punctuation: true,
         whitespace: true,
         unicode: true,
@@ -25,7 +30,8 @@ exports.text = function(options = {}, isFirst, isLast) {
       }
     } else if (options === 'reduced') {
       options = {
-        case: true,
+        titlecase: false,
+        lowercase: true,
         punctuation: false, //FIXME: reversed
         whitespace: true,
         unicode: true,
@@ -34,12 +40,13 @@ exports.text = function(options = {}, isFirst, isLast) {
       }
     } else if (options === 'root') {
       options = {
-        case: true,
+        titlecase: false,
+        lowercase: true,
         punctuation: true,
         whitespace: true,
         unicode: true,
         implicit: true,
-        // root: true,
+        root: true,
       }
     } else {
       options = {}
@@ -65,7 +72,11 @@ exports.text = function(options = {}, isFirst, isLast) {
         showPost = false
       }
     }
-    return str + t.textOut(options, showPre, showPost)
+    let txt = t.textOut(options, showPre, showPost)
+    if (options.titlecase && i === 0) {
+      txt = titleCase(txt)
+    }
+    return str + txt
   }, '')
   //full-phrases show punctuation, but not whitespace
   if (isFull === true && isLast) {

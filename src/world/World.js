@@ -28,7 +28,7 @@ let isVerbose = false
 class World {
   constructor() {
     // quiet these properties from a console.log
-    Object.defineProperty(this, 'lexicon', {
+    Object.defineProperty(this, 'words', {
       enumerable: false,
       value: misc,
       writable: true,
@@ -82,7 +82,7 @@ class World {
 
   /** get all terms in our lexicon with this tag */
   getByTag(tag) {
-    let lex = this.lexicon
+    let lex = this.words
     let res = {}
     let words = Object.keys(lex)
     for (let i = 0; i < words.length; i++) {
@@ -103,7 +103,7 @@ class World {
     for (let i = 0; i < tags.length; i++) {
       let words = Object.keys(unpack(lex[tags[i]]))
       for (let w = 0; w < words.length; w++) {
-        addLex.addWord(words[w], tags[i], this.lexicon)
+        addLex.addWord(words[w], tags[i], this.words)
         // do some fancier stuff
         addLex.addMore(words[w], tags[i], this)
       }
@@ -114,7 +114,7 @@ class World {
     let keys = Object.keys(obj)
     for (let i = 0; i < keys.length; i++) {
       let word = keys[i].toLowerCase()
-      addLex.addWord(word, obj[keys[i]], this.lexicon)
+      addLex.addWord(word, obj[keys[i]], this.words)
       // do some fancier stuff
       addLex.addMore(word, obj[keys[i]], this)
     }
@@ -142,7 +142,7 @@ class World {
   /** helper method for logging + debugging */
   stats() {
     return {
-      words: Object.keys(this.lexicon).length,
+      words: Object.keys(this.words).length,
       plurals: Object.keys(this.irregular.plurals).length,
       conjugations: Object.keys(this.irregular.conjugations).length,
       compounds: Object.keys(this.hasCompound).length,
@@ -160,7 +160,7 @@ const clone = function(obj) {
 World.prototype.clone = function() {
   let w2 = new World()
   // these are simple to copy:
-  w2.lexicon = Object.assign({}, this.lexicon)
+  w2.words = Object.assign({}, this.words)
   w2.hasCompound = Object.assign({}, this.hasCompound)
   //these ones are nested:
   w2.irregulars = clone(this.irregulars)

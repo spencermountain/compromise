@@ -3,15 +3,37 @@ const nlp = require('./src/index')
 nlp.extend(require('./plugins/numbers/src'))
 // nlp.extend(require('./plugins/dates/src'))
 
-// text
-// normal
-// clean
-// reduced
-// root
+/*
+**'normal'** 
+    *human-readable plaintext form*
+  - normalized whitespace
+  - normalized unicode
+  - titlecase sentence beginning, uppercase acronyms
+  - expanded contractions
+  - hide semicolons, emdashes, or slashes (allow commas)
+   {}
 
-let doc = nlp(`Toronto's citizens love toronto!`)
-console.log(doc.out('freq'))
+**'clean'** 
+  *machine-scan plaintext form*
+  - full lowercase
+  - expand contractions
+  - only punctuation is end-of-sentence. (no commas)
+   {}
 
-// let doc = nlp(`My dog loves Pizza. He was nice.`)
-// console.log(doc.text('root'))
-// console.log(doc.json({ normal: true, clean: true, reduced: true, root: true, terms: false })[0])
+**'reduced'** 
+  *machine-scan plaintext form*
+  - no punctuation, or sentence delimiters.
+  - no emoji
+  - parentheses
+  - quotations
+
+**'root'** 
+  *'stemmed' version. Not fully legible.*
+  - all verbs to infinitive
+  - all nouns to singular
+  - no (unnecessary) adverbs
+*/
+
+let doc = nlp(`My dog LOVES pizza, and grapes!!`)
+// doc.debug()
+console.log(doc.text('root'))

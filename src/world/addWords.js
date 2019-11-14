@@ -12,7 +12,7 @@ const addWord = function(word, tag, lex) {
 
 // blast-out more forms for some given words
 const addMore = function(word, tag, world) {
-  let lexicon = world.lexicon
+  let lexicon = world.words
   let transform = world.transforms
 
   // cache multi-words
@@ -69,7 +69,7 @@ const addMore = function(word, tag, world) {
 
 // throw a bunch of words in our lexicon
 // const doWord = function(words, tag, world) {
-//   let lexicon = world.lexicon
+//   let lexicon = world.words
 //   for (let i = 0; i < words.length; i++) {
 //     addWord(words[i], tag, lexicon)
 //     // do some fancier stuff

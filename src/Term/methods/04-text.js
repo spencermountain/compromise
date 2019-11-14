@@ -1,5 +1,10 @@
 const killUnicode = require('../normalize/unicode')
 const hasSpace = /[\s-]/
+const isUpperCase = /^[A-Z-]+$/
+
+const titleCase = str => {
+  return str.charAt(0).toUpperCase() + str.substr(1)
+}
 
 /** return various text formats of this term */
 exports.textOut = function(options, showPre, showPost) {
@@ -18,10 +23,25 @@ exports.textOut = function(options, showPre, showPost) {
   if (options.implicit === true && this.implicit) {
     word = this.implicit || ''
   }
+
+  if (options.root === true) {
+    word = this.root || this.reduced || ''
+  }
   if (options.unicode === true) {
     word = killUnicode(word)
   }
-  if (options.case === true) {
+  // cleanup case
+  if (options.titlecase === true) {
+    if (this.tags.ProperNoun && !this.titleCase()) {
+      word = titleCase(word)
+    } else if (this.tags.Acronym) {
+      word = word.toUpperCase() //uppercase acronyms
+    } else if (isUpperCase.test(word) && !this.tags.Acronym) {
+      // lowercase everything else
+      word = word.toLowerCase()
+    }
+  }
+  if (options.lowercase === true) {
     word = word.toLowerCase()
   }
   // remove the '.'s from 'F.B.I.' (safely)

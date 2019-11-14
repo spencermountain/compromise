@@ -391,9 +391,11 @@ _all match methods use the [match-syntax](https://docs.compromise.cool/compromis
 ##### Transform
 
 - **[.sort('method')]()** - re-arrange the order of the matches (in place)
-  - **_'alpha'_** - [default] alphabetical order
-  - **_'sequence'_** - the 'chronological', or original document sort order
-  - **_'freq'_** - sort by # of duplicates in the document
+- - **_'alpha'_** - [default] alphabetical order
+- - **_'index'_** - the 'chronological', or original document sort order
+- - **_'freq'_** - sort by # of duplicates in the document
+- - **_'wordcount'_** - sort by # of terms in each result
+- - **_'length'_** - sort by character counts of each result
 - **[.reverse()](#)** - reverse the order of the matches, but not the words
 - **[.normalize({})]()** - clean-up the text in various ways
 - **[.unique()](#)** - remove any duplicate matches

@@ -1,6 +1,6 @@
 /** match a word-sequence, like 'super bowl' in the lexicon */
 const tryMultiple = function(terms, t, world) {
-  let lex = world.lexicon
+  let lex = world.words
   //try a two-word version
   let txt = terms[t].reduced + ' ' + terms[t + 1].reduced
   if (lex[txt] !== undefined && lex.hasOwnProperty(txt) === true) {
@@ -34,7 +34,7 @@ const tryMultiple = function(terms, t, world) {
 
 /** look at each word in our list of known-words */
 const checkLexicon = function(terms, world) {
-  let lex = world.lexicon
+  let lex = world.words
   let hasCompound = world.hasCompound // use reduced?
   //go through each term, and check the lexicon
   for (let t = 0; t < terms.length; t += 1) {

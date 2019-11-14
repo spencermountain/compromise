@@ -9,8 +9,12 @@ exports.doesMatch = function(reg, index, length) {
   return doesMatch(this, reg, index, length)
 }
 
-/** does this term look like an acryonym? */
+/** does this term look like an acronym? */
 exports.isAcronym = function() {
+  // clear-out upper-case emphasis - 'i REALLY love it'
+  if (this.tags.Verb || this.tags.Adverb) {
+    return false
+  }
   return isAcronym(this.text)
 }
 

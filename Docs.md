@@ -5,7 +5,8 @@ there are 4 preset text outputs:
 const default = {
   whitespace: true,
   unicode: true,
-  case: true,
+  lowercase: true,
+  titlecase: true,
   punctuation: true,
   acronyms: true,
   abbreviations: true,
@@ -16,16 +17,38 @@ const default = {
 }
 ```
 
-#### 'text'
-a perfect copy of the input text (default)
-#### 'normal'
-normalized whitespace, case, unicode, punctuation
-#### 'clean'
-'normal' + lowercase, trimmed whitespace
-#### 'reduced'
-'clean' + contractions expanded.
-#### 'root'
-for machine-reading, inflected verbs, singular nouns. Like a 'stemmed' text.
+**'text'**
+    *a perfect copy of the input text* (default)
+   {}
+
+**'normal'** 
+    *clean plaintext form for human-reading*
+  - normalized whitespace
+  - normalized unicode
+  - titlecase sentence beginning, uppercase acronyms
+  - expanded contractions
+  - hide semicolons, emdashes, or slashes (allow commas)
+   {}
+
+**'clean'** 
+  *human-readable, but grammatically incorrect*
+  - full lowercase
+  - expand contractions
+  - only punctuation is end-of-sentence. (no commas)
+   {}
+
+**'reduced'** 
+  *machine-scan plaintext form*
+  - no punctuation, or sentence delimiters.
+  - no emoji
+  - parentheses
+  - quotations
+
+**'root'** 
+  *'stemmed' version. Not fully legible.*
+  - all verbs to infinitive
+  - all nouns to singular
+  - no (unnecessary) adverbs
 
 
 ## JSON output
@@ -37,9 +60,9 @@ const default = {
   normal:false,
 
   // phrase metadata
-  trim:false, //?
-  offset:false,
-  frequency:false,
+  trim:false, // ?
+  offset:false, // character-position where this begins
+  count:false, // frequency of this match in the document
 
   // each term
   terms:{
@@ -93,16 +116,31 @@ const default = {
 `{ possessives: false, verbs: false, nouns: false, honorifics: false }`
 
 
+## Sort methods:
+
+- **_'alpha'_** - [default] alphabetical order
+- **_'index'_** - the 'chronological', or original document sort order
+- **_'freq'_** - sort by # of duplicates in the document
+- **_'wordcount'_** - sort by # of terms in each result
+- **_'length'_** - sort by character counts of each result
+
 ## Match methods:
 
+- **@hasQuote** - does it have a quotation symbol?
 - **@hasComma** - does it have a comma?
 - **@hasPeriod** - does it end in a period?
 - **@hasExclamation** - does it end in an exclamation
 - **@hasQuestionMark** - does it end with a question mark?
 - **@hasEllipses** - is there a ... at the end?
 - **@hasSemicolon** - is there a semicolon after this word?
-- **@hasSlash** - is there a slash after this word?
+- **@hasSlash** - is there a slash '/' in this word?
+- **@hasHyphen** - a hyphen connects two words like-this
+- **@hasDash** - a dash separates words - like that
+
 - **@hasContraction** - is it multiple words combined?
 - **@isAcronym** - does this term look like an acronym?
 - **@isKnown** - does the term have at least one good tag?
-- **@isImplicit** - is this term implied by a contraction?
+- **@isUpperCase** - are all the (main) letters upper-case?
+- **@isTitleCase** - is the first letter upper-case, and the remaining not?
+
+

@@ -6,6 +6,22 @@ const oneLetterWord = {
   A: true,
 }
 
+const isAcronym = function(term, world) {
+  let str = term.reduced
+  // a known acronym like fbi
+  if (term.tags.Acronym) {
+    return true
+  }
+  if (term.tags.Adverb || term.tags.Verb || term.tags.Value || term.tags.Plural) {
+    return false
+  }
+  // 'PIZZA' is not an acronym.
+  if (str.length > 4 && world.words[str]) {
+    return false
+  }
+  return term.isAcronym()
+}
+
 //
 const checkPunctuation = function(terms, i, world) {
   let term = terms[i]
@@ -30,8 +46,8 @@ const checkPunctuation = function(terms, i, world) {
       }
     }
   }
-  // NASA
-  if (term.isAcronym()) {
+  // 'NASA' is, but not 'i REALLY love it.'
+  if (isAcronym(term, world)) {
     term.tag('Acronym', 'acronym-step', world)
     term.tag('Noun', 'acronym-infer', world)
   } else if (!oneLetterWord.hasOwnProperty(term.text) && oneLetterAcronym.test(term.text)) {

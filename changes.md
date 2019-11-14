@@ -51,6 +51,7 @@ There are many subtle changes, and this document is intended as a upgrade guide.
 - **.lump()** - this was an anti-pattern.
 - **.insertAt()** - using term indexes is not fun!
 - **.reduce()** - not sure if this ever even worked?
+- **.normal()** - use `.text('normal')`
 
 #### Removed tags:
 

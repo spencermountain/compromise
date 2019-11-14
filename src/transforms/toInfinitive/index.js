@@ -20,7 +20,7 @@ const guessTense = function(str) {
 
 const toInfinitive = function(str, world, tense) {
   //1. look at known irregulars
-  if (world.lexicon.hasOwnProperty(str) === true) {
+  if (world.words.hasOwnProperty(str) === true) {
     let irregs = world.irregulars.verbs
     let keys = Object.keys(irregs)
     for (let i = 0; i < keys.length; i++) {

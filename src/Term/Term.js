@@ -11,7 +11,7 @@ class Term {
     this.text = obj.text || ''
     this.clean = obj.clean
     this.reduced = obj.reduced
-    this.root = obj.root
+    this.root = obj.root || null
     this.implicit = obj.implicit || null
 
     this.pre = obj.pre || ''

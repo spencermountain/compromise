@@ -3,7 +3,7 @@ const prefix = /^(re|un)-?/
 
 /** check 'rewatch' in lexicon as 'watch' */
 const checkPrefix = function(terms, world) {
-  let lex = world.lexicon
+  let lex = world.words
   terms.forEach(term => {
     // skip if we have a good tag already
     if (term.isKnown() === true) {

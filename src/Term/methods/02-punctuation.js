@@ -49,7 +49,7 @@ exports.hasSemicolon = function() {
   return this.hasPost(';')
 }
 
-/** is there a slash in this word? */
+/** is there a slash '/' in this word? */
 exports.hasSlash = function() {
   return /\//.test(this.text)
 }
@@ -59,7 +59,7 @@ exports.hasHyphen = function() {
   const hyphen = /(-|–|—)/
   return hyphen.test(this.post) || hyphen.test(this.pre)
 }
-/** a dash seperates words - like that */
+/** a dash separates words - like that */
 exports.hasDash = function() {
   const hyphen = / (-|–|—) /
   return hyphen.test(this.post) || hyphen.test(this.pre)

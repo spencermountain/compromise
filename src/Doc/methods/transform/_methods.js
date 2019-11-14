@@ -40,8 +40,20 @@ const methods = {
       if (t.hasHyphen() === true) {
         t.post = ' '
       }
-      t.post = t.post.replace(isPunct, '')
       t.pre = t.pre.replace(isPunct, '')
+      t.post = t.post.replace(isPunct, '')
+      // elipses
+      t.post = t.post.replace(/\.\.\./, '')
+      // only allow one exclamation
+      if (/!/.test(t.post) === true) {
+        t.post = t.post.replace(/!/g, '')
+        t.post = '!' + t.post
+      }
+      // only allow one question mark
+      if (/\?/.test(t.post) === true) {
+        t.post = t.post.replace(/[\?!]*/, '')
+        t.post = '?' + t.post
+      }
     })
   },
 

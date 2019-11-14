@@ -16,7 +16,6 @@ class Term {
 
     this.pre = obj.pre || ''
     this.post = obj.post || ''
-    this.raw = text.trim()
     this.tags = {}
     this.prev = null
     this.next = null

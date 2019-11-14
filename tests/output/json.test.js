@@ -48,7 +48,7 @@ test('json out implicit', function(t) {
 
 test('json terms out', function(t) {
   let doc = nlp(`she is not`)
-  let json = doc.json({ text: false, terms: { clean: true, id: true, bestTag: true, raw: true, whitespace: true } })
+  let json = doc.json({ text: false, terms: { clean: true, id: true, bestTag: true, whitespace: true } })
   t.equal(json.length, 1, 'json-len')
   t.equal(json[0].text, undefined, 'json-text')
   t.equal(json[0].terms.length, 3, 'json-terms-length')
@@ -58,7 +58,6 @@ test('json terms out', function(t) {
   t.equal(t1.bestTag, 'Copula', 'json-terms-bestTag1')
   let t2 = json[0].terms[2] || {}
   t.equal(t2.bestTag, 'Negative', 'json-terms-bestTag2')
-  t.equal(t2.raw, 'not', 'json-terms-raw')
 
   t.equal(t1.pre, '', 'json-terms-whitespace-pre')
   t.equal(t1.post, ' ', 'json-terms-whitespace-post')

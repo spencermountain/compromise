@@ -1,6 +1,5 @@
 const killUnicode = require('../normalize/unicode')
 const hasSpace = /[\s-]/
-const normalize = require('../../Doc/methods/transform/_methods')
 
 /** return various text formats of this term */
 exports.textOut = function(options, showPre, showPost) {

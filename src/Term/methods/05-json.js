@@ -6,7 +6,6 @@ const jsonDefault = {
   implicit: true,
 
   clean: false,
-  raw: false,
   id: false,
   offset: false,
   whitespace: false,
@@ -23,6 +22,10 @@ exports.json = function(options, world) {
   if (options.text) {
     result.text = this.text
   }
+  if (options.normal) {
+    result.normal = this.normal
+  }
+
   if (options.tags) {
     result.tags = Object.keys(this.tags)
   }
@@ -33,12 +36,6 @@ exports.json = function(options, world) {
   }
   if (options.id || options.offset) {
     result.id = this.id
-  }
-  if (options.normal) {
-    result.normal = this.normal
-  }
-  if (options.raw) {
-    result.raw = this.raw
   }
   if (options.implicit && this.implicit !== null) {
     result.implicit = this.implicit

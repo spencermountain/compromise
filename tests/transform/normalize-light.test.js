@@ -8,6 +8,7 @@ test('normalize():', function(t) {
       'so you like donuts? have all the donuts in the world!',
     ],
     // ['This is a test. .', 'this is a test.'],
+    ['This is a test?!', 'this is a test?'],
     ['Björk, the singer-songwriter...', 'bjork the singer songwriter'],
     ['the so-called “fascist  dictator”', 'the so called "fascist dictator"'],
     // ['the so-called ❛singer-songwriter❜', 'the so called \'singer songwriter\''],

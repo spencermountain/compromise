@@ -23,3 +23,56 @@ test('text(normal):', function(t) {
   })
   t.end()
 })
+
+test('text is consistent', function(t) {
+  const str = `My dog loves Pizza, and grapes!!`
+  let doc = nlp(str)
+
+  t.equal(doc.json({ text: true })[0].text, str, 'json(text)')
+
+  t.equal(doc.text('text'), str, 'text(text): ')
+
+  t.end()
+})
+
+test('normal is consistent', function(t) {
+  let doc = nlp(`My dog loves Pizza, and grapes!!`)
+  const str = 'my dog loves pizza, and grapes!'
+
+  t.equal(doc.json({ normal: true })[0].normal, str, 'json(normal)')
+
+  t.equal(doc.text('normal'), str, 'text(normal): ')
+
+  doc.normalize()
+  t.equal(doc.text('text'), str, 'normalize():  ')
+
+  t.end()
+})
+
+test('reduced is consistent', function(t) {
+  let doc = nlp(`My dog loves Pizza, and grapes!!`)
+  const str = 'my dog loves pizza and grapes'
+
+  t.equal(doc.json({ reduced: true })[0].reduced, str, 'json(reduced)')
+
+  t.equal(doc.text('reduced'), str, 'text(reduced): ')
+
+  doc.normalize('reduced')
+  t.equal(doc.text('reduced'), str, 'normalize(reduced):  ')
+
+  t.end()
+})
+
+test('root is consistent', function(t) {
+  let doc = nlp(`My dog loves Pizza, and grapes!!`)
+  const str = 'my dog love pizza and grape'
+
+  t.equal(doc.json({ root: true })[0].root, str, 'json(root)')
+
+  t.equal(doc.text('root'), str, 'text(root): ')
+
+  doc.normalize('root')
+  t.equal(doc.text('root'), str, 'normalize(root):  ')
+
+  t.end()
+})

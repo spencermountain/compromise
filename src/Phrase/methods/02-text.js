@@ -11,7 +11,6 @@ exports.text = function(options = {}, isFirst, isLast) {
         unicode: true,
         case: true,
         punctuation: true,
-        // emoji: true,
         acronyms: true,
         abbreviations: true,
         implicit: true,
@@ -31,7 +30,7 @@ exports.text = function(options = {}, isFirst, isLast) {
         whitespace: true,
         unicode: true,
         implicit: true,
-        reduced: true,
+        // reduced: true,
       }
     } else if (options === 'root') {
       options = {
@@ -40,7 +39,7 @@ exports.text = function(options = {}, isFirst, isLast) {
         whitespace: true,
         unicode: true,
         implicit: true,
-        root: true,
+        // root: true,
       }
     } else {
       options = {}

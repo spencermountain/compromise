@@ -417,7 +417,7 @@ there are 4 preset text outputs:
 
 you can toggle any of these options, using an object as a parameter:
 
-- **_lowercase_ : false**,
+- **_case_ : false**,
 - **_punctuation_ : false**,
 - **_whitespace_ : false**,
 - **_unicode_ : false**,

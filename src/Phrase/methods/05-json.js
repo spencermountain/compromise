@@ -5,14 +5,27 @@ exports.json = function(options = {}, world) {
   if (options.text) {
     res.text = this.text()
   }
+  if (options.clean) {
+    res.clean = this.text('clean')
+  }
+  if (options.reduced) {
+    res.reduced = this.text('reduced')
+  }
+  if (options.root) {
+    res.root = this.text('root')
+  }
   if (options.reduced) {
     res.reduced = this.text('reduced')
   }
   if (options.normal) {
     res.normal = this.text({
-      punctuation: true,
       whitespace: true,
       unicode: true,
+      case: true,
+      punctuation: true,
+      acronyms: true,
+      abbreviations: true,
+      implicit: true,
     })
   }
   if (options.trim) {

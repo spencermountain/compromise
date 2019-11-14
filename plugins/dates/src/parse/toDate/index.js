@@ -8,12 +8,11 @@ const parseRelative = require('./01-parse/03-relative')
 const parseDate = function(doc) {
   let shift = parseShift(doc)
   let time = parseTime(doc)
-  let d = null
   let str = doc.text('reduced')
-  console.log(str)
+  // console.log(str, shift, time)
 
   // 'this month'
-  // let d = parseRelative(doc)
+  let d = parseRelative(doc)
 
   // let rel = doc.match('^this? [(next|last|previous|current|this)]')
   // doc.remove('^this? (next|last|previous|current|this)')

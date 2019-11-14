@@ -17,8 +17,7 @@ module.exports = {
   },
   // '9:20pm'
   Time: {
-    isA: ['Date', 'Noun'],
-    notA: 'Value',
+    isA: ['Date'],
   },
   // 'easter'
   Holiday: {

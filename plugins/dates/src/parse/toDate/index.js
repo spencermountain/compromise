@@ -4,16 +4,23 @@ const parseRelative = require('./tokenize/03-relative')
 const namedUnit = require('./01-namedUnit')
 const parseHoliday = require('./02-holidays')
 const explicit = require('./03-explicit')
+const { Unit } = require('./units')
 
 const parseDate = function(doc) {
   let shift = parseShift(doc)
   let time = parseTime(doc)
   let rel = parseRelative(doc)
+  let d = null
   // let str = doc.text('reduced')
   // console.log(str, '  -  ', rel, '  -  ', shift, '  -  ', time)
 
+  // do we have just a time?
+  if (doc.found === false && time !== null) {
+    d = new Unit() // choose today
+  }
+
   // this month
-  let d = namedUnit(doc)
+  d = d || namedUnit(doc)
   // this haloween
   d = d || parseHoliday(doc)
   // this june 2nd

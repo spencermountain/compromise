@@ -5,6 +5,7 @@ const parseNumber = function(p) {
   let str = p.text('reduced')
   // is it in '3,123' format?
   let hasComma = /[0-9],[0-9]/.test(p.text('text'))
+  str = str.replace(/,/g, '')
 
   //parse a numeric-number (easy)
   let arr = str.split(/^([^0-9]*)([0-9.,]*)([^0-9]*)$/)

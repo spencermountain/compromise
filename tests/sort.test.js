@@ -11,12 +11,12 @@ test('sortAlpha:', function(t) {
   t.end()
 })
 
-test('sortChronological:', function(t) {
+test('sortSequential:', function(t) {
   const str = 'John xoo, John fredman, John davis'
   let r = nlp(str)
   r = r.split('@hasComma')
   r.sort('alphabetical')
-  r.sort('chronological')
+  r.sort('seq')
   const want = ['John xoo,', 'John fredman,', 'John davis']
   t.deepEqual(r.out('array'), want, 'sort-chron')
   t.end()

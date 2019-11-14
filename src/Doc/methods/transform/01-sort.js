@@ -69,7 +69,7 @@ const byFreq = function(doc) {
 }
 
 // order results 'chronologically', or document-order
-const byOffset = function(doc) {
+const sortSequential = function(doc) {
   let order = {}
   doc.json({ terms: { offset: true } }).forEach(o => {
     order[o.terms[0].id] = o.terms[0].offset.start
@@ -88,8 +88,16 @@ const byOffset = function(doc) {
 //aliases
 methods.alphabetical = methods.alpha
 methods.wordcount = methods.wordCount
-methods.chronological = methods.chron
-methods.index = methods.chron
+
+// aliases for sequential ordering
+const seqNames = {
+  index: true,
+  sequence: true,
+  seq: true,
+  sequential: true,
+  chron: true,
+  chronological: true,
+}
 
 /** re-arrange the order of the matches (in place) */
 exports.sort = function(input) {
@@ -98,8 +106,8 @@ exports.sort = function(input) {
   if (input === 'freq' || input === 'frequency' || input === 'topk') {
     return byFreq(this)
   }
-  if (input === 'chron' || input === 'chronological') {
-    return byOffset(this)
+  if (seqNames.hasOwnProperty(input)) {
+    return sortSequential(this)
   }
 
   input = methods[input] || input

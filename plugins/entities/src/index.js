@@ -22,7 +22,7 @@ const addMethods = function(Doc, world) {
     let ignore = ['someone', 'man', 'woman', 'mother', 'brother', 'sister', 'father']
     yup = yup.not(ignore)
     //return them to normal ordering
-    yup.sort('chronological')
+    yup.sort('sequence')
     // yup.unique() //? not sure
     if (typeof n === 'number') {
       yup = yup.get(n)

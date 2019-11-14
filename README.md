@@ -392,7 +392,7 @@ _all match methods use the [match-syntax](https://docs.compromise.cool/compromis
 
 - **[.sort('method')]()** - re-arrange the order of the matches (in place)
   - **_'alpha'_** - [default] alphabetical order
-  - **_'chron'_** - the 'chronological', or original document sort order
+  - **_'sequence'_** - the 'chronological', or original document sort order
   - **_'freq'_** - sort by # of duplicates in the document
 - **[.reverse()](#)** - reverse the order of the matches, but not the words
 - **[.normalize({})]()** - clean-up the text in various ways

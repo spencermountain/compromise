@@ -135,6 +135,7 @@ module.exports = [
   'summer solistice',
   'mabon',
   'september equinox',
+  'fall equinox',
   'autumnal equinox',
   'yule',
   'december solstice',

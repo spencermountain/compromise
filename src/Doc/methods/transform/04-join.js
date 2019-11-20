@@ -1,5 +1,7 @@
 /** make all phrases into one phrase */
 exports.join = function(str) {
+  // clear the cache
+  this.uncache()
   // make one large phrase - 'main'
   let main = this.list[0]
   let before = main.length

@@ -5,6 +5,8 @@ exports.append = function(str) {
   if (!str) {
     return this
   }
+  // clear the cache
+  this.uncache()
   //add it to end of every phrase
   this.list.forEach(p => {
     //build it
@@ -25,6 +27,8 @@ exports.prepend = function(str) {
   if (!str) {
     return this
   }
+  // clear the cache
+  this.uncache()
   //add it to start of every phrase
   this.list.forEach(p => {
     //build it
@@ -41,6 +45,8 @@ exports.insertBefore = exports.prepend
 
 /** add these new things to the end*/
 exports.concat = function() {
+  // clear the cache
+  this.uncache()
   let list = this.list.slice(0)
   //repeat for any number of params
   for (let i = 0; i < arguments.length; i++) {
@@ -61,6 +67,8 @@ exports.concat = function() {
 
 /** fully remove these terms from the document */
 exports.delete = function(match) {
+  // clear the cache
+  this.uncache()
   let toRemove = this
   if (match) {
     toRemove = this.match(match)

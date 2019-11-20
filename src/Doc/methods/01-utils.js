@@ -83,10 +83,14 @@ exports.cache = function(options) {
 
 /** un-freezes the current state of the document, so it may be transformed */
 exports.uncache = function() {
-  // do parents too?
-  //
   this.list.forEach(p => {
     p.cache = {}
+  })
+  // do parents too?
+  this.parents().forEach(doc => {
+    doc.list.forEach(p => {
+      p.cache = {}
+    })
   })
   return this
 }

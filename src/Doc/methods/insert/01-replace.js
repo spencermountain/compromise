@@ -5,7 +5,8 @@ exports.replaceWith = function(replace, keepTags) {
   if (!replace) {
     return this.delete()
   }
-
+  // clear the cache
+  this.uncache()
   this.list.forEach(p => {
     let newPhrases = tokenize.fromText(replace, this.world, this.pool())
     //tag the new phrases

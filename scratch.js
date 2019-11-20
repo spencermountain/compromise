@@ -14,7 +14,10 @@ nlp.extend(require('./plugins/sentences/src'))
 // doc.match('between [#Date+] and').debug()
 // doc.match('between [.*] and').debug()
 
-let doc = nlp("he isn't AT Spencer house of pain. The haunted house of not pain. Third sentence spencer.")
-// doc.cache()
+// let doc = nlp("he isn't AT Spencer house of pain. The haunted house of not pain. Third sentence spencer.")
+// // doc.cache()
 
-doc.lookup(['house of pain', 'spencer', 'house of']).debug()
+// doc.lookup(['house of pain', "Spencer's   walking", 'house of']).debug()
+
+let doc = nlp(`i think it's spencer's`)
+console.log(doc.has('spencer'))

@@ -39,6 +39,9 @@ exports.normalize = function(options) {
   }
   // set defaults
   options = Object.assign({}, defaults, options)
+  // clear the cache
+  this.uncache()
+
   let termList = this.termList()
 
   // lowercase things

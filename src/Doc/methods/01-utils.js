@@ -59,12 +59,13 @@ exports.cache = function(options) {
   options = options || { words: true }
   this.list.forEach(p => {
     let words = {}
-    p.cache.terms = p.terms()
+    p.cache = p.cache || {}
+    p.cache.terms = p.cache.terms || p.terms()
     // cache all the terms
-    p.cache.terms.forEach(t => {
-      words[t.clean] = true
+    p.cache.terms.forEach((t, i) => {
+      words[t.clean] = i
       if (t.implicit) {
-        words[t.implicit] = true
+        words[t.implicit] = i
       }
       if (t.alias) {
         words = Object.assign(words, t.alias)
@@ -82,6 +83,8 @@ exports.cache = function(options) {
 
 /** un-freezes the current state of the document, so it may be transformed */
 exports.uncache = function() {
+  // do parents too?
+  //
   this.list.forEach(p => {
     p.cache = {}
   })

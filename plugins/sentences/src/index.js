@@ -40,9 +40,11 @@ const addMethod = function(Doc) {
 
     toPastTense() {
       this.forEach(doc => {
-        let res = parse(doc)
-        doc.match(res.verb).replaceWith('was')
-        // return doc
+        // let res = parse(doc)
+        // let txt = res.verb.text('normal')
+        let m = doc.match('walked')
+        m.debug()
+        m.replaceWith('sat')
       })
       return this
     }

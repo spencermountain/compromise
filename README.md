@@ -30,12 +30,14 @@
 </div>
 
 <!-- spacer -->
+<img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
 <div align="left">
- <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/> compromise <a href="https://observablehq.com/@spencermountain/compromise-justification">tries its best</a>.
+ <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/> compromise <a href="https://observablehq.com/@spencermountain/compromise-justification">tries its best</a>.
 </div>
 
 <div align="left">
- <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+ <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
   it is
   <a href="https://docs.compromise.cool/compromise-filesize">small,
   <a href="https://docs.compromise.cool/compromise-performance">quick</a>,

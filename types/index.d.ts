@@ -120,7 +120,7 @@ declare module nlp {
     /**  return only the phrases that return true */
     filter(fn: Function): Document
     /**  return a document with only the first phrase that matches */
-    find(fn: Function): Document
+    find(fn: Function): Document | undefined
     /**  return true or false if there is one matching phrase */
     some(fn: Function): Document
     /**  sample a subset of the results */

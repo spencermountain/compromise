@@ -32,5 +32,5 @@ terms.sort((a, b) => {
   }
   return 1
 })
-let arr = terms.map(d => d.text('normal'))
+let arr = terms.find(d => d.text('normal'))
 console.log(arr)

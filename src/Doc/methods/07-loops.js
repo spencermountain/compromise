@@ -59,13 +59,13 @@ exports.find = function(fn) {
   if (!fn) {
     return this
   }
-  let list = this.list.find((p, i) => {
+  let p = this.list.find((p, i) => {
     let doc = this.buildFrom([p])
     doc.from = null //it's not a child/parent
     return fn(doc, i)
   })
-  if (list) {
-    return this.buildFrom([list])
+  if (p) {
+    return this.buildFrom([p])
   }
   return undefined
 }

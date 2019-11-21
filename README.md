@@ -557,13 +557,13 @@ These are some helpful extensions:
 
 `npm install compromise-ngrams`
 
-- **[.ngrams({})]()** - list all repeating sub-phrases, by word-count
-- **[.unigrams()](#)** - n-grams with one word
-- **[.bigrams()](#)** - n-grams with two words
-- **[.trigrams()](#)** - n-grams with three words
-- **[.startgrams()](#)** - n-grams including the first term of a phrase
-- **[.endgrams()](#)** - n-grams including the last term of a phrase
-- **[.edgegrams()](#)** - n-grams including the first or last term of a phrase
+- **[.ngrams({})](https://observablehq.com/@spencermountain/compromise-ngram)** - list all repeating sub-phrases, by word-count
+- **[.unigrams()](https://observablehq.com/@spencermountain/compromise-ngram)** - n-grams with one word
+- **[.bigrams()](https://observablehq.com/@spencermountain/compromise-ngram)** - n-grams with two words
+- **[.trigrams()](https://observablehq.com/@spencermountain/compromise-ngram)** - n-grams with three words
+- **[.startgrams()](https://observablehq.com/@spencermountain/compromise-ngram)** - n-grams including the first term of a phrase
+- **[.endgrams()](https://observablehq.com/@spencermountain/compromise-ngram)** - n-grams including the last term of a phrase
+- **[.edgegrams()](https://observablehq.com/@spencermountain/compromise-ngram)** - n-grams including the first or last term of a phrase
 
 ##### Output
 

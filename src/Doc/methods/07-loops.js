@@ -12,6 +12,13 @@ exports.map = function(fn) {
     }
     return res
   })
+  if (list.length === 0) {
+    return this.buildFrom(list)
+  }
+  // if it is not a list of Phrase objects, then don't try to make a Doc object
+  if (typeof list[0] !== 'object' || list[0].isA !== 'Phrase') {
+    return list
+  }
   return this.buildFrom(list)
 }
 

@@ -65,6 +65,20 @@ test('unique:', function(t) {
   t.end()
 })
 
+test('custom-sort:', function(t) {
+  let doc = nlp('Eeny, meeny, miny, moe')
+  let terms = doc.terms()
+  terms.sort((a, b) => {
+    if (a.text('normal').length > b.text('normal').length) {
+      return -1
+    }
+    return 1
+  })
+  let arr = terms.map(d => d.text('normal'))
+  t.deepEqual(arr, ['meeny, ', 'miny, ', 'eeny, ', 'moe'], 'custom sort output')
+  t.end()
+})
+
 // test('frequency:', function(t) {
 //   const str = 'John xoo, John fredman, john xoo, John davis'
 //   let r = nlp(str)

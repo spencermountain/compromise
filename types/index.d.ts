@@ -114,7 +114,7 @@ declare module nlp {
 
     // Loops
     /** run each phrase through a function, and create a new document */
-    map(fn: Function): Document
+    map(fn: Function): Document | []
     /**  run a function on each phrase, as an individual document */
     forEach(fn: Function): Document
     /**  return only the phrases that return true */
@@ -142,7 +142,7 @@ declare module nlp {
 
     // transform
     /**re-arrange the order of the matches (in place) */
-    sort(method: String): Document
+    sort(method: String | Function): Document
     /**reverse the order of the matches, but not the words */
     reverse(): Document
     /** clean-up the document, in various ways */

@@ -64,6 +64,15 @@ test('some-stuff', function(t) {
   t.end()
 })
 
+test('map array return', function(t) {
+  let doc = nlp('Larry, Curly, and Moe')
+  let people = doc.match('#Noun') // (any one noun)
+  people.sort('alpha')
+  let arr = people.map(d => d.text('normal'))
+  t.deepEqual(arr, ['curly, ', 'larry, ', 'moe'], 'got array in response')
+  t.end()
+})
+
 // test('reduce-stuff', function(t) {
 //   let doc = nlp('one two three. three four five.')
 //     .terms()

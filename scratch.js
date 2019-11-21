@@ -19,5 +19,18 @@ nlp.extend(require('./plugins/sentences/src'))
 
 // doc.lookup(['house of pain', "Spencer's   walking", 'house of']).debug()
 
-let doc = nlp(`i think it's spencer's`)
-console.log(doc.has('spencer'))
+// BUG 3
+// let doc = nlp(`i think it's spencer's`)
+// console.log(doc.has('spencer'))
+
+// ADD CUSTOM SORT METHOD
+let doc = nlp('Eeny, meeny, miny, moe')
+let terms = doc.terms()
+terms.sort((a, b) => {
+  if (a.text('normal').length > b.text('normal').length) {
+    return -1
+  }
+  return 1
+})
+let arr = terms.map(d => d.text('normal'))
+console.log(arr)

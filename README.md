@@ -30,23 +30,17 @@
 </div>
 
 <!-- spacer -->
-<table align="left">
-  <tr>
-    <td>
-      <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-    </td>
-    <td>
-      <div align="left">
-        compromise <a href="https://observablehq.com/@spencermountain/compromise-justification">tries its best</a>.
-        <br/>
-        it is
-        <a href="https://docs.compromise.cool/compromise-filesize">small,
-        <a href="https://docs.compromise.cool/compromise-performance">quick</a>,
-        and <a href="https://docs.compromise.cool/compromise-accuracy">good-enough</a> for a bunch of stuff.
-      </div>
-    </td>
-  </tr>
-</table>
+<div align="left">
+ <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/> compromise <a href="https://observablehq.com/@spencermountain/compromise-justification">tries its best</a>.
+</div>
+
+<div align="left">
+ <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+  it is
+  <a href="https://docs.compromise.cool/compromise-filesize">small,
+  <a href="https://docs.compromise.cool/compromise-performance">quick</a>,
+  and <a href="https://docs.compromise.cool/compromise-accuracy">good-enough</a> for a bunch of stuff.
+</div>
 
 
 

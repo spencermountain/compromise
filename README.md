@@ -347,6 +347,7 @@ _all match methods use the [match-syntax](https://docs.compromise.cool/compromis
 - **[.lookAhead('')]()** - search through following terms, in the sentence
 - **[.before('')]()** - return all terms before a match, in each phrase
 - **[.after('')]()** - return all terms after a match, in each phrase
+- **[.lookup([])]()** - quick find for an array of string matches
 
 ##### Case
 

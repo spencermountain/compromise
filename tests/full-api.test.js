@@ -64,6 +64,7 @@ test('match api', function(t) {
     lookAhead: '()=>{  }',
     before: "()=>{ nlp('one two three four five').before('three').out()\n }",
     after: "()=>{ nlp('one two three four five').after('three').out()\n }",
+    lookup: "()=>{ nlp('chocolate microscopes? double guitars?').lookup(['double guitars']).length\n }",
   }
   Object.keys(fns).forEach(k => {
     t.doesNotThrow(eval(fns[k]), k)

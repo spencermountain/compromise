@@ -1601,7 +1601,7 @@ const failFast = function(p, regs) {
         return true
       }
       // has almost no effect
-      if (p.cache.words !== undefined && reg.word !== undefined && p.cache.words[reg.word] !== true) {
+      if (p.cache.words !== undefined && reg.word !== undefined && p.cache.words.hasOwnProperty(reg.word) !== true) {
         // console.log('skip')
         return true
       }
@@ -5311,12 +5311,13 @@ exports.cache = function(options) {
   options = options || { words: true };
   this.list.forEach(p => {
     let words = {};
-    p.cache.terms = p.terms();
+    p.cache = p.cache || {};
+    p.cache.terms = p.cache.terms || p.terms();
     // cache all the terms
-    p.cache.terms.forEach(t => {
-      words[t.clean] = true;
+    p.cache.terms.forEach((t, i) => {
+      words[t.clean] = i;
       if (t.implicit) {
-        words[t.implicit] = true;
+        words[t.implicit] = i;
       }
       if (t.alias) {
         words = Object.assign(words, t.alias);
@@ -5336,6 +5337,12 @@ exports.cache = function(options) {
 exports.uncache = function() {
   this.list.forEach(p => {
     p.cache = {};
+  });
+  // do parents too?
+  this.parents().forEach(doc => {
+    doc.list.forEach(p => {
+      p.cache = {};
+    });
   });
   return this
 };
@@ -5879,12 +5886,56 @@ var _07Loops = {
 	random: random
 };
 
+// do we have a match from this term?
+const fromHere = function(terms, i, words) {
+  for (let n = 0; n < words.length; n++) {
+    if (terms[i + n].text !== words[n]) {
+      return false
+    }
+  }
+  return true
+};
+
+/** lookup an array of words or phrases */
+var lookup = function(arr) {
+  if (typeof arr === 'string') {
+    arr = [arr];
+  }
+  let tokenized = arr.map(str => {
+    str = str.toLowerCase();
+    let words = _02Words(str);
+    words = words.map(s => s.trim());
+    return words
+  });
+  this.cache();
+  let found = [];
+  this.list.forEach(p => {
+    tokenized.forEach(a => {
+      if (p.cache.words.hasOwnProperty(a[0])) {
+        let terms = p.terms();
+        let i = p.cache.words[a[0]];
+        // try it, at this index
+        if (fromHere(terms, i, a) === true) {
+          let phrase = p.buildFrom(terms[i].id, a.length);
+          found.push(phrase);
+        }
+      }
+    });
+  });
+  return this.buildFrom(found)
+};
+
+var _08Lookup = {
+	lookup: lookup
+};
+
 /** substitute-in new content */
 var replaceWith = function(replace, keepTags) {
   if (!replace) {
     return this.delete()
   }
-
+  // clear the cache
+  this.uncache();
   this.list.forEach(p => {
     let newPhrases = _01Tokenizer.fromText(replace, this.world, this.pool());
     //tag the new phrases
@@ -5926,6 +5977,8 @@ exports.append = function(str) {
   if (!str) {
     return this
   }
+  // clear the cache
+  this.uncache();
   //add it to end of every phrase
   this.list.forEach(p => {
     //build it
@@ -5946,6 +5999,8 @@ exports.prepend = function(str) {
   if (!str) {
     return this
   }
+  // clear the cache
+  this.uncache();
   //add it to start of every phrase
   this.list.forEach(p => {
     //build it
@@ -5962,6 +6017,8 @@ exports.insertBefore = exports.prepend;
 
 /** add these new things to the end*/
 exports.concat = function() {
+  // clear the cache
+  this.uncache();
   let list = this.list.slice(0);
   //repeat for any number of params
   for (let i = 0; i < arguments.length; i++) {
@@ -5982,6 +6039,8 @@ exports.concat = function() {
 
 /** fully remove these terms from the document */
 exports.delete = function(match) {
+  // clear the cache
+  this.uncache();
   let toRemove = this;
   if (match) {
     toRemove = this.match(match);
@@ -7050,6 +7109,9 @@ var normalize = function(options) {
   }
   // set defaults
   options = Object.assign({}, defaults, options);
+  // clear the cache
+  this.uncache();
+
   let termList = this.termList();
 
   // lowercase things
@@ -7275,6 +7337,8 @@ var _03Split_5 = _03Split.segment;
 
 /** make all phrases into one phrase */
 var join = function(str) {
+  // clear the cache
+  this.uncache();
   // make one large phrase - 'main'
   let main = this.list[0];
   let before = main.length;
@@ -7328,6 +7392,7 @@ var methods$4 = Object.assign(
   _05Whitespace,
   _06Tag,
   _07Loops,
+  _08Lookup,
 
   _01Replace,
   _02Insert,
@@ -9476,31 +9541,23 @@ var _04Correction = corrections;
 /** POS-tag all terms in this document */
 const tagger = function(doc) {
   let terms = doc.termList();
-  // console.time('init')
   // check against any known-words
   doc = _01Init(doc);
-  // console.timeEnd('init')
 
   // everything has gotta be something. ¯\_(:/)_/¯
-  // console.time('fallbacks')
   doc = _02Fallbacks(doc);
-  // console.timeEnd('fallbacks')
 
   // support "didn't" & "spencer's"
-  // console.time('contractions')
   doc = _03Contractions(doc);
-  // console.timeEnd('contractions')
 
   //set our cache, to speed things up
   doc.cache();
 
   // wiggle-around the results, so they make more sense
-  // console.time('corrections')
   doc = _04Correction(doc);
-  // console.timeEnd('corrections')
 
   //remove our cache
-  doc.uncache();
+  // doc.uncache()
 
   // run any user-given tagger functions
   doc.world.taggers.forEach(fn => {

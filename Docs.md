@@ -1,3 +1,34 @@
+
+## compromise-how-it-works
+
+
+
+
+## compromise-tagging
+
+
+## compromise-cache
+
+
+
+-------------
+
+<!-- # .contractions()
+calling `.contractions()` returns both contracted, and *possible contractions* as a list:
+```js
+r= nlp(`john is nice. john's cool.`)
+r.contractions().out('array')
+//['john is', 'john\'s']
+
+r.contractions().expand()
+// john is nice. john is cool.
+
+r.contractions.contract()
+// john's nice. john's cool.
+``` -->
+
+
+
 ## Text output
 there are 4 preset text outputs:
 

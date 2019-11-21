@@ -1902,7 +1902,7 @@
         } // has almost no effect
 
 
-        if (p.cache.words !== undefined && reg.word !== undefined && p.cache.words[reg.word] !== true) {
+        if (p.cache.words !== undefined && reg.word !== undefined && p.cache.words.hasOwnProperty(reg.word) !== true) {
           // console.log('skip')
           return true;
         }
@@ -5773,13 +5773,14 @@
       };
       this.list.forEach(function (p) {
         var words = {};
-        p.cache.terms = p.terms(); // cache all the terms
+        p.cache = p.cache || {};
+        p.cache.terms = p.cache.terms || p.terms(); // cache all the terms
 
-        p.cache.terms.forEach(function (t) {
-          words[t.clean] = true;
+        p.cache.terms.forEach(function (t, i) {
+          words[t.clean] = i;
 
           if (t.implicit) {
-            words[t.implicit] = true;
+            words[t.implicit] = i;
           }
 
           if (t.alias) {
@@ -5803,6 +5804,12 @@
     exports.uncache = function () {
       this.list.forEach(function (p) {
         p.cache = {};
+      }); // do parents too?
+
+      this.parents().forEach(function (doc) {
+        doc.list.forEach(function (p) {
+          p.cache = {};
+        });
       });
       return this;
     };
@@ -6466,6 +6473,53 @@
     random: random
   };
 
+  var fromHere = function fromHere(terms, i, words) {
+    for (var n = 0; n < words.length; n++) {
+      if (terms[i + n].text !== words[n]) {
+        return false;
+      }
+    }
+
+    return true;
+  };
+  /** lookup an array of words or phrases */
+
+
+  var lookup = function lookup(arr) {
+    if (typeof arr === 'string') {
+      arr = [arr];
+    }
+
+    var tokenized = arr.map(function (str) {
+      str = str.toLowerCase();
+      var words = _02Words(str);
+      words = words.map(function (s) {
+        return s.trim();
+      });
+      return words;
+    });
+    this.cache();
+    var found = [];
+    this.list.forEach(function (p) {
+      tokenized.forEach(function (a) {
+        if (p.cache.words.hasOwnProperty(a[0])) {
+          var terms = p.terms();
+          var i = p.cache.words[a[0]]; // try it, at this index
+
+          if (fromHere(terms, i, a) === true) {
+            var phrase = p.buildFrom(terms[i].id, a.length);
+            found.push(phrase);
+          }
+        }
+      });
+    });
+    return this.buildFrom(found);
+  };
+
+  var _08Lookup = {
+    lookup: lookup
+  };
+
   /** substitute-in new content */
 
   var replaceWith = function replaceWith(replace, keepTags) {
@@ -6473,8 +6527,10 @@
 
     if (!replace) {
       return this["delete"]();
-    }
+    } // clear the cache
 
+
+    this.uncache();
     this.list.forEach(function (p) {
       var newPhrases = _01Tokenizer.fromText(replace, _this.world, _this.pool()); //tag the new phrases
 
@@ -6524,8 +6580,10 @@
 
       if (!str) {
         return this;
-      } //add it to end of every phrase
+      } // clear the cache
 
+
+      this.uncache(); //add it to end of every phrase
 
       this.list.forEach(function (p) {
         //build it
@@ -6550,8 +6608,10 @@
 
       if (!str) {
         return this;
-      } //add it to start of every phrase
+      } // clear the cache
 
+
+      this.uncache(); //add it to start of every phrase
 
       this.list.forEach(function (p) {
         //build it
@@ -6571,6 +6631,8 @@
     /** add these new things to the end*/
 
     exports.concat = function () {
+      // clear the cache
+      this.uncache();
       var list = this.list.slice(0); //repeat for any number of params
 
       for (var i = 0; i < arguments.length; i++) {
@@ -6595,6 +6657,8 @@
     exports["delete"] = function (match) {
       var _this3 = this;
 
+      // clear the cache
+      this.uncache();
       var toRemove = this;
 
       if (match) {
@@ -7763,7 +7827,9 @@
     } // set defaults
 
 
-    options = Object.assign({}, defaults, options);
+    options = Object.assign({}, defaults, options); // clear the cache
+
+    this.uncache();
     var termList = this.termList(); // lowercase things
 
     if (options["case"]) {
@@ -8004,7 +8070,9 @@
 
   /** make all phrases into one phrase */
   var join = function join(str) {
-    // make one large phrase - 'main'
+    // clear the cache
+    this.uncache(); // make one large phrase - 'main'
+
     var main = this.list[0];
     var before = main.length;
     var removed = {};
@@ -8053,7 +8121,7 @@
     join: join
   };
 
-  var methods$4 = Object.assign({}, _01Utils$1, _02Accessors, _03Match, _04Case, _05Whitespace, _06Tag, _07Loops, _01Replace, _02Insert, _01Text, _02Json, _03Out, _04Export, _01Sort, _02Normalize, _03Split, _04Join);
+  var methods$4 = Object.assign({}, _01Utils$1, _02Accessors, _03Match, _04Case, _05Whitespace, _06Tag, _07Loops, _08Lookup, _01Replace, _02Insert, _01Text, _02Json, _03Out, _04Export, _01Sort, _02Normalize, _03Split, _04Join);
 
   var methods$5 = {}; // allow helper methods like .adjectives() and .adverbs()
 
@@ -10099,27 +10167,19 @@
   /** POS-tag all terms in this document */
 
   var tagger = function tagger(doc) {
-    var terms = doc.termList(); // console.time('init')
-    // check against any known-words
+    var terms = doc.termList(); // check against any known-words
 
-    doc = _01Init(doc); // console.timeEnd('init')
-    // everything has gotta be something. ¯\_(:/)_/¯
-    // console.time('fallbacks')
+    doc = _01Init(doc); // everything has gotta be something. ¯\_(:/)_/¯
 
-    doc = _02Fallbacks(doc); // console.timeEnd('fallbacks')
-    // support "didn't" & "spencer's"
-    // console.time('contractions')
+    doc = _02Fallbacks(doc); // support "didn't" & "spencer's"
 
-    doc = _03Contractions(doc); // console.timeEnd('contractions')
-    //set our cache, to speed things up
+    doc = _03Contractions(doc); //set our cache, to speed things up
 
     doc.cache(); // wiggle-around the results, so they make more sense
-    // console.time('corrections')
 
-    doc = _04Correction(doc); // console.timeEnd('corrections')
-    //remove our cache
-
-    doc.uncache(); // run any user-given tagger functions
+    doc = _04Correction(doc); //remove our cache
+    // doc.uncache()
+    // run any user-given tagger functions
 
     doc.world.taggers.forEach(function (fn) {
       fn(doc);

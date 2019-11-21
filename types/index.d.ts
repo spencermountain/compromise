@@ -77,6 +77,8 @@ declare module nlp {
     before(match: String): Document
     /**  return the terms after each match */
     after(match: String): Document
+    /** quick find for an array of string matches */
+    lookup(matches: String[]): Document
 
     // Case
     /**  turn every letter of every term to lower-cse */

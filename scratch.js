@@ -23,14 +23,5 @@ nlp.extend(require('./plugins/sentences/src'))
 // let doc = nlp(`i think it's spencer's`)
 // console.log(doc.has('spencer'))
 
-// ADD CUSTOM SORT METHOD
-let doc = nlp('Eeny, meeny, miny, moe')
-let terms = doc.terms()
-terms.sort((a, b) => {
-  if (a.text('normal').length > b.text('normal').length) {
-    return -1
-  }
-  return 1
-})
-let arr = terms.find(d => d.text('normal'))
-console.log(arr)
+// .toQuotation()
+// .toParentheses()

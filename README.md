@@ -29,10 +29,14 @@
   </div>
 </div>
 
+<!-- spacer -->
+<img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
+
 <div align="center">
-  compromise is <a href="https://github.com/spencermountain/compromise/wiki/Justification">not the cleverest</a>.
+  compromise <a href="https://observablehq.com/@spencermountain/compromise-justification">tries its best</a>.
   <br/>
-  but it is
+  it is
   <a href="https://docs.compromise.cool/compromise-filesize">small,
   <a href="https://docs.compromise.cool/compromise-performance">quick</a>,
   and <a href="https://docs.compromise.cool/compromise-accuracy">good-enough</a> for a bunch of things.
@@ -401,8 +405,8 @@ _all match methods use the [match-syntax](https://docs.compromise.cool/compromis
 - **[.normalize({})]()** - clean-up the text in various ways
 - **[.unique()](#)** - remove any duplicate matches
 - **[.split('')]()** - return a Document with three parts for every match ('splitOn')
-- **[.splitBefore('')]()** - separate everything after the match as a new phrase
-- **[.splitAfter('')]()** - separate everything before the word, as a new phrase
+- **[.splitBefore('')]()** - partition a phrase before each matching segment
+- **[.splitAfter('')]()** - partition a phrase after each matching segment
 - **[.segment({})]()** - split a document into labeled sections
 - **[.join('')]()** - make all phrases into one phrase
 

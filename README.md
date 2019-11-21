@@ -41,7 +41,7 @@
   it is
   <a href="https://docs.compromise.cool/compromise-filesize">small,
   <a href="https://docs.compromise.cool/compromise-performance">quick</a>,
-  and <a href="https://docs.compromise.cool/compromise-accuracy">good-enough</a> for a bunch of stuff.
+  and <a href="https://docs.compromise.cool/compromise-accuracy">good-enough</a> for a bunch of applications.
 </div>
 
 
@@ -63,12 +63,12 @@ doc.if('the #Adjective of times').text()
 
 ```js
 if (doc.has('^simon says #Verb+')) {
-  return doc.match('#Verb .*').text()
+  return doc.match('#Verb .*').text() //'fire the lazer ..'
 }
 ```
 
 <div align="right">
-  <a href="https://docs.compromise.cool/compromise-match-syntax">match docs</a>
+  <a href="https://docs.compromise.cool/compromise-match">match docs</a>
 </div>
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221837-0d142480-ffb8-11e9-9d30-90669f1b897c.png"/>
@@ -80,8 +80,7 @@ conjugate and negate verbs in any tense:
 
 ```js
 let doc = nlp('she sells seashells by the seashore.')
-  .verbs()
-  .toPastTense()
+doc.verbs().toPastTense()
 doc.text()
 // 'she sold seashells by the seashore.'
 ```
@@ -99,8 +98,7 @@ transform nouns to plural and possessive forms:
 
 ```js
 let doc = nlp('the purple dinosaur')
-  .nouns()
-  .toPlural()
+doc.nouns().toPlural()
 doc.text()
 // 'the purple dinosaurs'
 ```
@@ -120,12 +118,9 @@ interpret plaintext numbers
 nlp.extend(require('compromise-numbers'))
 
 let doc = nlp('ninety five thousand and fifty two')
-doc
-  .numbers()
-  .toNumber()
-  .add(2)
+doc.numbers().add(2)
 doc.text()
-// '95054'
+// 'ninety five thousand and fifty four'
 ```
 
 <div align="right">
@@ -137,21 +132,17 @@ doc.text()
 
 ### .topics():
 
-grab the subjects of a text:
+grab subjects in a text:
 
 ```js
 nlp.extend(require('compromise-entities'))
 
-nlp(buddyHolly)
-  .people()
-  .if('mary')
-  .json()
+let doc = nlp(buddyHolly)
+doc.people().if('mary').json()
 // [{text:'Mary Tyler Moore'}]
 
-nlp(freshPrince)
-  .places()
-  .first()
-  .text()
+let doc = nlp(freshPrince)
+doc.places().first().text()
 // 'West Phillidelphia'
 
 doc = nlp('the opera about richard nixon visiting china')
@@ -172,12 +163,12 @@ doc.topics().json()
 
 ### .contractions():
 
-work with contracted and expanded words:
+work with contracted and implicit words:
 
 ```js
 let doc = nlp("we're not gonna take it, no we ain't gonna take it.")
 
-// match within a contraction
+// match an implicit term
 doc.has('going') // true
 
 // transform
@@ -201,17 +192,13 @@ Use it on the client-side:
 <script src="https://unpkg.com/compromise"></script>
 <script>
   var doc = nlp('dinosaur')
-
-  var str = doc
-    .nouns()
-    .toPlural()
-    .out('text')
+  var str = doc.nouns().toPlural().text()
   console.log(str)
   // 'dinosaurs'
 </script>
 ```
 
-or as an esmodule:
+or as an es-module:
 
 ```typescript
 import nlp from 'compromise'
@@ -228,24 +215,28 @@ compromise is **170kb** (minified):
 
 <div align="center">
   <!-- filesize -->
-  <img width="600" src="https://user-images.githubusercontent.com/399657/68234819-14dfc300-ffd0-11e9-8b30-cb8545707b29.png"/>
+  <a href="https://bundlephobia.com/result?p=compromise">
+    <img width="600" src="https://user-images.githubusercontent.com/399657/68234819-14dfc300-ffd0-11e9-8b30-cb8545707b29.png"/>
+  </a>
 </div>
 
 it's pretty fast. It can run on keypress:
 
 <div align="center">
-  <img width="600" src="https://user-images.githubusercontent.com/399657/68234798-0abdc480-ffd0-11e9-9ac5-8875d185a631.png"/>
+  <a href="https://observablehq.com/@spencermountain/compromise-performance">
+    <img width="600" src="https://user-images.githubusercontent.com/399657/68234798-0abdc480-ffd0-11e9-9ac5-8875d185a631.png"/>
+  </a>
 </div>
 
-it works mainly by conjugating many forms of a basic word list.
+it works mainly by <a href="https://observablehq.com/@spencermountain/verbs">conjugating many forms</a> of a basic word list.
 
-The final lexicon is > 14,000 words:
+The final lexicon is ~14,000 words:
 
 <div align="center">
   <img width="600" src="https://user-images.githubusercontent.com/399657/68234805-0d201e80-ffd0-11e9-8dc6-f7a600352555.png"/>
 </div>
 
-you can read more about how it works, [here](http://blog.spencermounta.in/2019/building-compromise/index.html).
+you can read more about how it works, [here](https://observablehq.com/@spencermountain/compromise-internals).
 
 <!-- spacer -->
   <!-- <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/> -->
@@ -255,7 +246,7 @@ you can read more about how it works, [here](http://blog.spencermounta.in/2019/b
 
 ### .extend():
 
-pass-in an object with your own words:
+set a custom interpretation of your own words:
 
 ```js
 let myWords = {
@@ -265,7 +256,7 @@ let myWords = {
 let doc = nlp(muppetText, myWords)
 ```
 
-or change the library's internal data:
+or make more changes with a [compromise-plugin](https://observablehq.com/@spencermountain/compromise-plugins).
 
 ```js
 const nlp = require('compromise')

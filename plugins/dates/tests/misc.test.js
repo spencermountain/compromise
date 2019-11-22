@@ -38,8 +38,12 @@ test('date-format', function(t) {
   // doc.dates().format('{day} {month} {date-ordinal}, {time}') //TODO: November 0th??
   // t.equal(doc.text(), `i'm going skiing Wednesday November 3rd, 7:00pm`, 'format-test')
 
-  doc = nlp(`two days after halloween 2019`)
+  doc = nlp(`halloween`)
+  doc.dates().format('{month} {date-ordinal}')
+  t.equal(doc.text(), `October 31st`, 'format-test-holiday')
+
+  doc = nlp(`two days after halloween`)
   doc.dates().format('{month} {date-ordinal}, {time}')
-  t.equal(doc.text(), `November 2nd, 12:00am`, 'format-test-holiday')
+  t.equal(doc.text(), `November 2nd, 12:00am`, 'format-test-punt')
   t.end()
 })

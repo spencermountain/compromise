@@ -64,5 +64,26 @@ const addMethod = function(Doc) {
     return arr
   }
   Doc.prototype.endGrams = Doc.prototype.endgrams
+
+  /** list all repeating sub-phrases, connected to the last word of each phrase */
+  Doc.prototype.edgegrams = function(obj) {
+    let list = tokenize(this)
+    let start = startGrams(list, obj || {})
+    let end = endGrams(list, obj || {})
+    // combine them together
+    let all = start.concat(end)
+    let combine = all.reduce((h, a) => {
+      if (h[a.normal]) {
+        h[a.normal].count += a.count
+      } else {
+        h[a.normal] = a
+      }
+      return h
+    }, {})
+    let arr = Object.keys(combine).map(k => combine[k])
+    arr = sort(arr)
+    return arr
+  }
+  Doc.prototype.edgeGrams = Doc.prototype.edgegrams
 }
 module.exports = addMethod

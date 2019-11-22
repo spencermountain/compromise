@@ -45,8 +45,10 @@ doc.eq(1).text()
 // 'What did we ever ...'
 
 // get the first two sentences of the first paragraph
-doc.first().sentences().slice(0, 2)
-
+doc
+  .first()
+  .sentences()
+  .slice(0, 2)
 ```
 
 This is a tentative implementation of `.paragraphs()` and associated methods, for compromise.
@@ -67,31 +69,35 @@ doc = doc.filter(p => {
 ```
 
 ## API:
+
 outputs:
-* text
-* json
-  
+
+- .text()
+- .json()
+
 matches:
-* match
-* not
-* if
-* ifNo
-* has
+
+- .match()
+- .not()
+- .if()
+- .ifNo()
+- .has()
 
 selectors:
-* sentences
-* terms
+
+- .sentences()
+- .terms()
 
 accessors:
-* eq
-* first
-* last
+
+- .eq()
+- .first()
+- .last()
 
 loops:
-* forEach
-* map
-* filter
 
-
+- .forEach()
+- .map()
+- .filter()
 
 MIT

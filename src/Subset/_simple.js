@@ -40,4 +40,46 @@ methods.phoneNumbers = function(n) {
   return m
 }
 
+/** return all cities, countries, addresses, and regions */
+methods.places = function(n) {
+  let m = this.clauses()
+  m = m.lists().items()
+  m = m.match('#Place+')
+  if (typeof n === 'number') {
+    m = m.get(n)
+  }
+  return m
+}
+
+/** return all schools, businesses and institutions */
+methods.organizations = function(n) {
+  let m = this.clauses()
+  m = m.match('#Organization+')
+  if (typeof n === 'number') {
+    m = m.get(n)
+  }
+  return m
+}
+
+//combine them with .topics() method
+methods.entities = function(n) {
+  let r = this.clauses()
+  // Find people, places, and organizations
+  let yup = r.people()
+  yup = yup.concat(r.places())
+  yup = yup.concat(r.organizations())
+  let ignore = ['someone', 'man', 'woman', 'mother', 'brother', 'sister', 'father']
+  yup = yup.not(ignore)
+  //return them to normal ordering
+  yup.sort('sequence')
+  // yup.unique() //? not sure
+  if (typeof n === 'number') {
+    yup = yup.get(n)
+  }
+  return yup
+}
+//aliases
+methods.things = methods.entities
+methods.topics = methods.entities
+
 module.exports = methods

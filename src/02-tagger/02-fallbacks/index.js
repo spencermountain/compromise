@@ -1,8 +1,9 @@
 const step = {
   neighbours: require('./01-neighbours'),
   case: require('./02-case'),
-  plural: require('./04-plurals'),
   stem: require('./03-stem'),
+  plural: require('./04-plurals'),
+  organizations: require('./05-organizations'),
 }
 //
 const fallbacks = function(doc) {
@@ -24,6 +25,9 @@ const fallbacks = function(doc) {
       t.tag('Noun', 'noun-fallback', doc.world)
     }
   })
+
+  // turn 'Foo University' into an Org
+  step.organizations(terms, world)
 
   //are the nouns singular or plural?
   terms.forEach(t => {

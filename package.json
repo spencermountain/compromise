@@ -6,6 +6,7 @@
   "main": "./builds/compromise.js",
   "unpkg": "./builds/compromise.min.js",
   "module": "./builds/compromise.mjs",
+  "type": "commonjs",
   "types": "types/index.d.ts",
   "repository": {
     "type": "git",

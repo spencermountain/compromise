@@ -16,6 +16,10 @@ const fixNouns = function(doc) {
     doc.match('#Noun van der? #Noun').tagSafe('#Person', 'von der noun')
     //king of spain
     doc.match('(king|queen|prince|saint|lady) of? #Noun').tagSafe('#Person', 'king-of-noun')
+    // addresses
+    doc.match('#Value #Noun (st|street|rd|road|crescent|way)').tag('Address')
+    // schools
+    doc.match('#Noun+ (public|private) school').tag('School')
     //the word 'second'
     noun
       .match('[second] #Noun')

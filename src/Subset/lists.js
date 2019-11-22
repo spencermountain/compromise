@@ -22,7 +22,7 @@ const addMethod = function(Doc) {
       return this.splitAfter('(@hasComma|#Conjunction)')
     }
     /** remove the conjunction */
-    things() {
+    items() {
       return this.parts().notIf('#Conjunction')
     }
     /** add a new unit to the list */
@@ -51,6 +51,8 @@ const addMethod = function(Doc) {
       return this
     }
   }
+  // aliases
+  Lists.prototype.things = Lists.prototype.items
 
   Doc.prototype.lists = function(n) {
     let m = this.if('@hasComma+ .? (and|or) not? .')

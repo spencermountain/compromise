@@ -33,7 +33,7 @@
 <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 <div align="left">
- - <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>compromise<a href="https://observablehq.com/@spencermountain/compromise-justification">tries its best</a>.
+ - <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>compromise <a href="https://observablehq.com/@spencermountain/compromise-justification">tries its best</a>.
 </div>
 
 <div align="left">
@@ -43,9 +43,6 @@
   <a href="https://docs.compromise.cool/compromise-performance">quick</a>,
   and <a href="https://docs.compromise.cool/compromise-accuracy">usually good-enough</a>.
 </div>
-
-
-
 
 <!-- spacer -->
 <img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
@@ -138,11 +135,17 @@ grab subjects in a text:
 nlp.extend(require('compromise-entities'))
 
 let doc = nlp(buddyHolly)
-doc.people().if('mary').json()
+doc
+  .people()
+  .if('mary')
+  .json()
 // [{text:'Mary Tyler Moore'}]
 
 let doc = nlp(freshPrince)
-doc.places().first().text()
+doc
+  .places()
+  .first()
+  .text()
 // 'West Phillidelphia'
 
 doc = nlp('the opera about richard nixon visiting china')
@@ -192,7 +195,10 @@ Use it on the client-side:
 <script src="https://unpkg.com/compromise"></script>
 <script>
   var doc = nlp('dinosaur')
-  var str = doc.nouns().toPlural().text()
+  var str = doc
+    .nouns()
+    .toPlural()
+    .text()
   console.log(str)
   // 'dinosaurs'
 </script>
@@ -428,12 +434,15 @@ _(all match methods use the [match-syntax](https://docs.compromise.cool/compromi
 - **[.abbreviations()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'Mrs.'`
 
 ##### Subsets
+
 - **[.contractions()](https://observablehq.com/@spencermountain/compromise-selections)** - things like "didn't"
 - **[.parentheses()](https://observablehq.com/@spencermountain/compromise-selections)** - return anything inside (parentheses)
 - **[.possessives()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `"Spencer's"`
 - **[.quotations()](https://observablehq.com/@spencermountain/compromise-selections)** - return any terms inside quotation marks
 - **[.acronyms()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'FBI'`
-- **[.lists()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'eats, shoots, and leaves'`
+- **[.lists()](https://observablehq.com/@spencermountain/compromise-lists)** - things like `'eats, shoots, and leaves'`
+  - **[.lists().items()](https://observablehq.com/@spencermountain/compromise-lists)** - return the partitioned things in the list
+  - **[.lists().add()](https://observablehq.com/@spencermountain/compromise-lists)** - put a new item in the list
 - **[.nouns()](https://observablehq.com/@spencermountain/nouns)** - return any subsequent terms tagged as a Noun
   - **[.nouns().json()](https://observablehq.com/@spencermountain/nouns)** - overloaded output with noun metadata
   - **[.nouns().toPlural()](https://observablehq.com/@spencermountain/nouns)** - `'football captain' → 'football captains'`
@@ -504,6 +513,7 @@ These are some helpful extensions:
   - **[.numbers().json()](https://observablehq.com/@spencermountain/compromise-values)** - overloaded output with number metadata
   - **[.money()](https://observablehq.com/@spencermountain/compromise-values)** - things like `'$2.50'`
   - **[.fractions()](https://observablehq.com/@spencermountain/compromise-values)** - things like `1/3rd`
+  - **[.money()](https://observablehq.com/@spencermountain/compromise-values)** - things like `twenty bucks`
   - **[.numbers().toText()](https://observablehq.com/@spencermountain/compromise-values)** - convert number to `five` or `fifth`
   - **[.numbers().toNumber()](https://observablehq.com/@spencermountain/compromise-values)** - convert number to `5` or `5th`
   - **[.numbers().toOrdinal()](https://observablehq.com/@spencermountain/compromise-values)** - convert number to `fifth` or `5th`
@@ -544,21 +554,21 @@ These are some helpful extensions:
 `npm install compromise-paragraphs`
 this plugin creates a wrapper around the default sentence objects.
 
-- **[.paragraphs()](#)** - return groups of sentences
-  - **[.paragraphs().json()](#)** - output metadata for each paragraph
-  - **[.paragraphs().sentences()](#)** - go back to a regular Doc object
-  - **[.paragraphs().terms()](#)** -
-  - **[.paragraphs().eq()](#)** -
-  - **[.paragraphs().first()](#)** -
-  - **[.paragraphs().last()](#)** -
-  - **[.paragraphs().match()](#)** -
-  - **[.paragraphs().not()](#)** -
-  - **[.paragraphs().if()](#)** -
-  - **[.paragraphs().ifNo()](#)** -
-  - **[.paragraphs().has()](#)** -
-  - **[.paragraphs().forEach()](#)** -
-  - **[.paragraphs().map()](#)** -
-  - **[.paragraphs().filter()](#)** -
+- **[.paragraphs()](https://observablehq.com/@spencermountain/compromise-paragraphs)** - return groups of sentences
+  - **[.paragraphs().json()](https://observablehq.com/@spencermountain/compromise-paragraphs)** - output metadata for each paragraph
+  - **[.paragraphs().sentences()](https://observablehq.com/@spencermountain/compromise-paragraphs)** - go back to a regular Doc object
+  - **[.paragraphs().terms()](https://observablehq.com/@spencermountain/compromise-paragraphs)** -
+  - **[.paragraphs().eq()](https://observablehq.com/@spencermountain/compromise-paragraphs)** -
+  - **[.paragraphs().first()](https://observablehq.com/@spencermountain/compromise-paragraphs)** -
+  - **[.paragraphs().last()](https://observablehq.com/@spencermountain/compromise-paragraphs)** -
+  - **[.paragraphs().match()](https://observablehq.com/@spencermountain/compromise-paragraphs)** -
+  - **[.paragraphs().not()](https://observablehq.com/@spencermountain/compromise-paragraphs)** -
+  - **[.paragraphs().if()](https://observablehq.com/@spencermountain/compromise-paragraphs)** -
+  - **[.paragraphs().ifNo()](https://observablehq.com/@spencermountain/compromise-paragraphs)** -
+  - **[.paragraphs().has()](https://observablehq.com/@spencermountain/compromise-paragraphs)** -
+  - **[.paragraphs().forEach()](https://observablehq.com/@spencermountain/compromise-paragraphs)** -
+  - **[.paragraphs().map()](https://observablehq.com/@spencermountain/compromise-paragraphs)** -
+  - **[.paragraphs().filter()](https://observablehq.com/@spencermountain/compromise-paragraphs)** -
 
 ##### Sentences
 
@@ -742,4 +752,5 @@ this plugin creates a wrapper around the default sentence objects.
 <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 <b>MIT</b>
+
 <div align="right">by <a href="https://spencermounta.in/">spencermountain</a></div>

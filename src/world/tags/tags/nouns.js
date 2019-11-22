@@ -55,6 +55,9 @@ module.exports = {
   Region: {
     isA: ['Place', 'ProperNoun'],
   },
+  Address: {
+    isA: 'Place',
+  },
 
   //---Orgs---
   Organization: {
@@ -62,6 +65,12 @@ module.exports = {
     notA: ['Person', 'Place'],
   },
   SportsTeam: {
+    isA: 'Organization',
+  },
+  School: {
+    isA: 'Organization',
+  },
+  Company: {
     isA: 'Organization',
   },
 

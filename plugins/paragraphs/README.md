@@ -68,6 +68,8 @@ doc = doc.filter(p => {
 // What did we ever do to these guys that made them so violent?
 ```
 
+### [Demo](https://observablehq.com/@spencermountain/compromise-paragraphs)
+
 ## API:
 
 outputs:

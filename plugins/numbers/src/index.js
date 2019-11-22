@@ -16,38 +16,11 @@ const addMethod = function(Doc, world) {
   //aliases
   Object.assign(Numbers.prototype, methods)
 
+  /** find all numbers and values */
   Doc.prototype.numbers = function(n) {
     let match = findNumbers(this, n)
     return new Numbers(match.list, this, this.world)
   }
-
-  /** return things like 1/3rd */
-  Doc.prototype.fractions = function(n) {
-    let m = this.match('#Fraction')
-    if (typeof n === 'number') {
-      m = m.get(n)
-    }
-    return m
-  }
-
-  /** return things like CCXX*/
-  Doc.prototype.romanNumerals = function(n) {
-    let m = this.match('#RomanNumeral').numbers()
-    if (typeof n === 'number') {
-      m = m.get(n)
-    }
-    return m
-  }
-
-  /** return things like $4.50*/
-  Doc.prototype.money = function(n) {
-    let m = this.match('#Money').numbers()
-    if (typeof n === 'number') {
-      m = m.get(n)
-    }
-    return m
-  }
-
   // alias for reverse-compatibility
   Doc.prototype.values = Doc.prototype.numbers
   return Doc

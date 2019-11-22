@@ -10,6 +10,7 @@ const subclass = [
   require('./Possessives'),
   require('./Quotations'),
   require('./Verbs'),
+  require('./People'),
 ]
 
 const extend = function(Doc) {

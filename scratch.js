@@ -1,7 +1,7 @@
 const nlp = require('./src/index')
 // nlp.verbose(true)
-nlp.extend(require('./plugins/sentences/src'))
-// nlp.extend(require('./plugins/dates/src'))
+// nlp.extend(require('./plugins/ngrams/src'))
+// nlp.extend(require('./plugins/numbers/src'))
 
 // let doc = nlp(`i walked to the moon when it was shining`)
 // doc.verbs().forEach(d => {
@@ -17,8 +17,5 @@ nlp.extend(require('./plugins/sentences/src'))
 // .toQuotation()
 // .toParentheses()
 
-let doc = nlp('if so, he is the best, that i see. he is the greatest in the world')
-doc
-  .clauses()
-  .splitAfter()
-  .debug()
+const doc = nlp('in north africa, eastern asia, guatemala, europe, north america, and japan')
+doc.places().debug()

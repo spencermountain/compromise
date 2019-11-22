@@ -5768,33 +5768,36 @@
     exports.cache = function (options) {
       var _this = this;
 
-      options = options || {
-        words: true
-      };
+      options = options || {};
       this.list.forEach(function (p) {
         var words = {};
         p.cache = p.cache || {};
         p.cache.terms = p.cache.terms || p.terms(); // cache all the terms
 
-        p.cache.terms.forEach(function (t, i) {
-          words[t.clean] = i;
+        p.cache.terms.forEach(function (t) {
+          words[t.clean] = true;
+          words[t.reduced] = true;
+          words[t.text.toLowerCase()] = true;
 
           if (t.implicit) {
-            words[t.implicit] = i;
+            words[t.implicit] = true;
           }
 
-          if (t.alias) {
+          if (t.root) {
+            words[t.root] = true;
+          }
+
+          if (t.alias !== undefined) {
             words = Object.assign(words, t.alias);
           }
 
           if (options.root) {
             t.setRoot(_this.world);
+            words[t.root] = true;
           }
         });
-
-        if (options.words === true) {
-          p.cache.words = words;
-        }
+        delete words[''];
+        p.cache.words = words;
       });
       return this;
     };
@@ -6343,6 +6346,16 @@
 
       return res;
     });
+
+    if (list.length === 0) {
+      return this.buildFrom(list);
+    } // if it is not a list of Phrase objects, then don't try to make a Doc object
+
+
+    if (_typeof(list[0]) !== 'object' || list[0].isA !== 'Phrase') {
+      return list;
+    }
+
     return this.buildFrom(list);
   };
   /** run a function on each phrase */
@@ -6398,7 +6411,7 @@
       return this;
     }
 
-    var list = this.list.find(function (p, i) {
+    var p = this.list.find(function (p, i) {
       var doc = _this4.buildFrom([p]);
 
       doc.from = null; //it's not a child/parent
@@ -6406,8 +6419,8 @@
       return fn(doc, i);
     });
 
-    if (list) {
-      return this.buildFrom([list]);
+    if (p) {
+      return this.buildFrom([p]);
     }
 
     return undefined;
@@ -6473,24 +6486,48 @@
     random: random
   };
 
-  var fromHere = function fromHere(terms, i, words) {
-    for (var n = 0; n < words.length; n++) {
-      if (terms[i + n].text !== words[n]) {
-        return false;
-      }
+  var doesMatch$1 = function doesMatch(term, str) {
+    if (str === '') {
+      return false;
     }
 
-    return true;
+    return term.reduced === str || term.implicit === str || term.root === str || term.text.toLowerCase() === str;
+  }; // is this lookup found in these terms?
+
+
+  var findStart = function findStart(arr, terms) {
+    var _loop = function _loop(i) {
+      if (doesMatch$1(terms[i], arr[0])) {
+        if (arr.every(function (a) {
+          return doesMatch$1(terms[i], a) === true;
+        })) {
+          return {
+            v: terms[i].id
+          };
+        }
+      }
+    };
+
+    //find the start
+    for (var i = 0; i < terms.length; i++) {
+      var _ret = _loop(i);
+
+      if (_typeof(_ret) === "object") return _ret.v;
+    }
+
+    return false;
   };
   /** lookup an array of words or phrases */
 
 
   var lookup = function lookup(arr) {
+    var _this = this;
+
     if (typeof arr === 'string') {
       arr = [arr];
     }
 
-    var tokenized = arr.map(function (str) {
+    var lookups = arr.map(function (str) {
       str = str.toLowerCase();
       var words = _02Words(str);
       words = words.map(function (s) {
@@ -6499,17 +6536,25 @@
       return words;
     });
     this.cache();
-    var found = [];
-    this.list.forEach(function (p) {
-      tokenized.forEach(function (a) {
-        if (p.cache.words.hasOwnProperty(a[0])) {
-          var terms = p.terms();
-          var i = p.cache.words[a[0]]; // try it, at this index
+    var found = []; // try each lookup
 
-          if (fromHere(terms, i, a) === true) {
-            var phrase = p.buildFrom(terms[i].id, a.length);
-            found.push(phrase);
-          }
+    lookups.forEach(function (a) {
+      //try each phrase
+      _this.list.forEach(function (p) {
+        // cache-miss, skip.
+        if (p.cache.words[a[0]] !== true) {
+          return;
+        } //we found a potential match
+
+
+        var terms = p.terms();
+        var id = findStart(a, terms);
+
+        if (id !== false) {
+          // create the actual phrase
+          var phrase = p.buildFrom(id, a.length);
+          found.push(phrase);
+          return;
         }
       });
     });

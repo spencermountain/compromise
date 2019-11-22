@@ -5308,27 +5308,32 @@ exports.wordcount = exports.wordCount;
 
 /** freeze the current state of the document, for speed-purposes*/
 exports.cache = function(options) {
-  options = options || { words: true };
+  options = options || {};
   this.list.forEach(p => {
     let words = {};
     p.cache = p.cache || {};
     p.cache.terms = p.cache.terms || p.terms();
     // cache all the terms
-    p.cache.terms.forEach((t, i) => {
-      words[t.clean] = i;
+    p.cache.terms.forEach(t => {
+      words[t.clean] = true;
+      words[t.reduced] = true;
+      words[t.text.toLowerCase()] = true;
       if (t.implicit) {
-        words[t.implicit] = i;
+        words[t.implicit] = true;
       }
-      if (t.alias) {
+      if (t.root) {
+        words[t.root] = true;
+      }
+      if (t.alias !== undefined) {
         words = Object.assign(words, t.alias);
       }
       if (options.root) {
         t.setRoot(this.world);
+        words[t.root] = true;
       }
     });
-    if (options.words === true) {
-      p.cache.words = words;
-    }
+    delete words[''];
+    p.cache.words = words;
   });
   return this
 };
@@ -5786,6 +5791,13 @@ var map = function(fn) {
     }
     return res
   });
+  if (list.length === 0) {
+    return this.buildFrom(list)
+  }
+  // if it is not a list of Phrase objects, then don't try to make a Doc object
+  if (typeof list[0] !== 'object' || list[0].isA !== 'Phrase') {
+    return list
+  }
   return this.buildFrom(list)
 };
 
@@ -5826,13 +5838,13 @@ var find = function(fn) {
   if (!fn) {
     return this
   }
-  let list = this.list.find((p, i) => {
+  let p = this.list.find((p, i) => {
     let doc = this.buildFrom([p]);
     doc.from = null; //it's not a child/parent
     return fn(doc, i)
   });
-  if (list) {
-    return this.buildFrom([list])
+  if (p) {
+    return this.buildFrom([p])
   }
   return undefined
 };
@@ -5886,14 +5898,24 @@ var _07Loops = {
 	random: random
 };
 
-// do we have a match from this term?
-const fromHere = function(terms, i, words) {
-  for (let n = 0; n < words.length; n++) {
-    if (terms[i + n].text !== words[n]) {
-      return false
+const doesMatch$1 = function(term, str) {
+  if (str === '') {
+    return false
+  }
+  return term.reduced === str || term.implicit === str || term.root === str || term.text.toLowerCase() === str
+};
+
+// is this lookup found in these terms?
+const findStart = function(arr, terms) {
+  //find the start
+  for (let i = 0; i < terms.length; i++) {
+    if (doesMatch$1(terms[i], arr[0])) {
+      if (arr.every(a => doesMatch$1(terms[i], a) === true)) {
+        return terms[i].id
+      }
     }
   }
-  return true
+  return false
 };
 
 /** lookup an array of words or phrases */
@@ -5901,7 +5923,7 @@ var lookup = function(arr) {
   if (typeof arr === 'string') {
     arr = [arr];
   }
-  let tokenized = arr.map(str => {
+  let lookups = arr.map(str => {
     str = str.toLowerCase();
     let words = _02Words(str);
     words = words.map(s => s.trim());
@@ -5909,16 +5931,22 @@ var lookup = function(arr) {
   });
   this.cache();
   let found = [];
-  this.list.forEach(p => {
-    tokenized.forEach(a => {
-      if (p.cache.words.hasOwnProperty(a[0])) {
-        let terms = p.terms();
-        let i = p.cache.words[a[0]];
-        // try it, at this index
-        if (fromHere(terms, i, a) === true) {
-          let phrase = p.buildFrom(terms[i].id, a.length);
-          found.push(phrase);
-        }
+  // try each lookup
+  lookups.forEach(a => {
+    //try each phrase
+    this.list.forEach(p => {
+      // cache-miss, skip.
+      if (p.cache.words[a[0]] !== true) {
+        return
+      }
+      //we found a potential match
+      let terms = p.terms();
+      let id = findStart(a, terms);
+      if (id !== false) {
+        // create the actual phrase
+        let phrase = p.buildFrom(id, a.length);
+        found.push(phrase);
+        return
       }
     });
   });

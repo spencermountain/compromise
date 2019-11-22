@@ -1,5 +1,6 @@
 const tokenize = require('../../01-tokenizer/02-words')
 
+// compare one term and one match
 const doesMatch = function(term, str) {
   if (str === '') {
     return false
@@ -12,7 +13,7 @@ const findStart = function(arr, terms) {
   //find the start
   for (let i = 0; i < terms.length; i++) {
     if (doesMatch(terms[i], arr[0])) {
-      if (arr.every(a => doesMatch(terms[i], a) === true)) {
+      if (arr.every((a, n) => doesMatch(terms[i + n], a) === true)) {
         return terms[i].id
       }
     }

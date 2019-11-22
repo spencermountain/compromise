@@ -17,15 +17,8 @@ nlp.extend(require('./plugins/sentences/src'))
 // let doc = nlp("he isn't AT Spencer house of pain. The haunted house of not pain. Third sentence spencer.")
 // // doc.cache()
 
-// doc.lookup(['house of pain', "Spencer's   walking", 'house of']).debug()
-
-// let doc = nlp("AT Spencer's house.")
-
-// doc.lookup(['spencer']).debug()
+let doc = nlp("Spencer's house of pain.")
+doc.lookup(['house of']).debug()
 
 // .toQuotation()
 // .toParentheses()
-let doc = nlp(`a priest walked into the bars`)
-doc.cache({ root: true })
-console.log(doc.list[0].cache.words)
-console.log(doc.match('~bar~').found)

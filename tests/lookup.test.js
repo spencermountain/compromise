@@ -10,7 +10,7 @@ test('lookup tests', function(t) {
   t.equal(m.length, 1, 'found possessive lookup')
 
   m = doc.lookup('spencer')
-  t.equal(m.length, 1, 'end of line lookup')
+  t.equal(m.length, 2, 'end of line lookup')
 
   t.end()
 })

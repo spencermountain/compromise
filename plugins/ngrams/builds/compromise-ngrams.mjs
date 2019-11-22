@@ -234,6 +234,27 @@ const addMethod = function(Doc) {
     return arr
   };
   Doc.prototype.endGrams = Doc.prototype.endgrams;
+
+  /** list all repeating sub-phrases, connected to the last word of each phrase */
+  Doc.prototype.edgegrams = function(obj) {
+    let list = tokenize_1(this);
+    let start = startGrams_1(list, obj || {});
+    let end = endGrams_1(list, obj || {});
+    // combine them together
+    let all = start.concat(end);
+    let combine = all.reduce((h, a) => {
+      if (h[a.normal]) {
+        h[a.normal].count += a.count;
+      } else {
+        h[a.normal] = a;
+      }
+      return h
+    }, {});
+    let arr = Object.keys(combine).map(k => combine[k]);
+    arr = sort_1(arr);
+    return arr
+  };
+  Doc.prototype.edgeGrams = Doc.prototype.edgegrams;
 };
 var src = addMethod;
 

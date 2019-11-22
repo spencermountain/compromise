@@ -293,6 +293,31 @@
     };
 
     Doc.prototype.endGrams = Doc.prototype.endgrams;
+    /** list all repeating sub-phrases, connected to the last word of each phrase */
+
+    Doc.prototype.edgegrams = function (obj) {
+      var list = tokenize_1(this);
+      var start = startGrams_1(list, obj || {});
+      var end = endGrams_1(list, obj || {}); // combine them together
+
+      var all = start.concat(end);
+      var combine = all.reduce(function (h, a) {
+        if (h[a.normal]) {
+          h[a.normal].count += a.count;
+        } else {
+          h[a.normal] = a;
+        }
+
+        return h;
+      }, {});
+      var arr = Object.keys(combine).map(function (k) {
+        return combine[k];
+      });
+      arr = sort_1(arr);
+      return arr;
+    };
+
+    Doc.prototype.edgeGrams = Doc.prototype.edgegrams;
   };
 
   var src = addMethod;

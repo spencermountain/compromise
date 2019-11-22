@@ -43,6 +43,8 @@ module.exports = [
   'jpy',
   'kn',
   'kr',
+  'nis',
+  'ils',
   'krona',
   'kronas',
   'krw',

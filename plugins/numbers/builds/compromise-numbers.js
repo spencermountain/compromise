@@ -1049,6 +1049,42 @@
     decrement: function decrement() {
       this.add(-1);
       return this;
+    },
+    /// ----
+
+    /** return things like 1/3rd */
+    fractions: function fractions(n) {
+      var m = this.match('#Fraction');
+
+      if (typeof n === 'number') {
+        m = m.get(n);
+      }
+
+      return m;
+    },
+
+    /** return things like CCXX*/
+    romanNumerals: function romanNumerals(n) {
+      var m = this.match('#RomanNumeral').numbers();
+
+      if (typeof n === 'number') {
+        m = m.get(n);
+      }
+
+      return m;
+    },
+
+    /** return things like $4.50*/
+    money: function money(n) {
+      var m = this.splitOn('@hasComma');
+      m = m.match('#Money+ #Currency?');
+      m = m.numbers();
+
+      if (typeof n === 'number') {
+        m = m.get(n);
+      }
+
+      return m;
     }
   }; // aliases
 
@@ -1113,46 +1149,11 @@
 
 
     Object.assign(Numbers.prototype, methods_1);
+    /** find all numbers and values */
 
     Doc.prototype.numbers = function (n) {
       var match = find(this, n);
       return new Numbers(match.list, this, this.world);
-    };
-    /** return things like 1/3rd */
-
-
-    Doc.prototype.fractions = function (n) {
-      var m = this.match('#Fraction');
-
-      if (typeof n === 'number') {
-        m = m.get(n);
-      }
-
-      return m;
-    };
-    /** return things like CCXX*/
-
-
-    Doc.prototype.romanNumerals = function (n) {
-      var m = this.match('#RomanNumeral').numbers();
-
-      if (typeof n === 'number') {
-        m = m.get(n);
-      }
-
-      return m;
-    };
-    /** return things like $4.50*/
-
-
-    Doc.prototype.money = function (n) {
-      var m = this.match('#Money').numbers();
-
-      if (typeof n === 'number') {
-        m = m.get(n);
-      }
-
-      return m;
     }; // alias for reverse-compatibility
 
 

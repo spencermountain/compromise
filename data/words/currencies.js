@@ -1,6 +1,8 @@
 module.exports = [
   'usd',
   'cad',
+  'nis',
+  'ils'
   'aud',
   'gbp',
   'krw',

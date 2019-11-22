@@ -14,11 +14,14 @@ nlp.extend(require('./plugins/sentences/src'))
 // doc.match('between [#Date+] and').debug()
 // doc.match('between [.*] and').debug()
 
-// let doc = nlp("he isn't AT Spencer house of pain. The haunted house of not pain. Third sentence spencer.")
-// // doc.cache()
-
-let doc = nlp("Spencer's house of pain.")
-doc.lookup(['house of']).debug()
-
 // .toQuotation()
 // .toParentheses()
+
+let doc = nlp('he is the best, that i see. he is the greatest')
+let childA = doc.if('greatest')
+let childB = doc.match('he is')
+childA.splitAfter(childB).debug()
+childA.debug()
+
+// doc.match('he is').split()
+// doc.debug()

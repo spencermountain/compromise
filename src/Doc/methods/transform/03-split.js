@@ -35,10 +35,23 @@ exports.splitOn = function(reg) {
   return this.buildFrom(matches)
 }
 
+const splitParent = function(doc) {
+  let parent = doc.parent()
+  // console.log(doc.list[0].id)
+  // let reg = [{ id: doc.list[0].start }]
+  // parent.splitOn(reg).debug()
+  return parent
+}
+
 /** return a Document with two parts for every match
  * seperate everything after the word, as a new phrase
  */
 exports.splitAfter = function(reg) {
+  // if there's no match, split parent, instead
+  if (!reg) {
+    return splitParent(this)
+  }
+  // start looking for our matches
   let regs = parseSyntax(reg)
   let matches = []
   this.list.forEach(p => {

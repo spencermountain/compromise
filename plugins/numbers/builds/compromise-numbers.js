@@ -58,7 +58,7 @@
   }
 
   var tens = 'twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|fourty';
-  var teens = 'eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen';
+  var teens = 'eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen'; // this is a bit of a mess
 
   var findNumbers = function findNumbers(doc, n) {
     var match = doc.match('#Value+ #Unit?'); //"50 83"
@@ -469,7 +469,10 @@
   var toNumber = parse;
 
   var parseNumber = function parseNumber(p) {
-    var str = p.text('reduced'); //parse a numeric-number (easy)
+    var str = p.text('reduced'); // is it in '3,123' format?
+
+    var hasComma = /[0-9],[0-9]/.test(p.text('text'));
+    str = str.replace(/,/g, ''); //parse a numeric-number (easy)
 
     var arr = str.split(/^([^0-9]*)([0-9.,]*)([^0-9]*)$/);
 
@@ -500,6 +503,7 @@
       }
 
       return {
+        hasComma: hasComma,
         prefix: arr[1] || '',
         num: _num,
         suffix: suffix
@@ -509,6 +513,7 @@
 
     var num = toNumber(str);
     return {
+      hasComma: hasComma,
       prefix: '',
       num: num,
       suffix: ''
@@ -833,6 +838,11 @@
 
       obj = prefixToText(obj);
       return "".concat(obj.prefix || '').concat(num).concat(obj.suffix || '');
+    } // support comma format
+
+
+    if (obj.hasComma === true) {
+      num = obj.num.toLocaleString();
     } // cardinal-number
 
 
@@ -844,7 +854,7 @@
   var makeNumber_1 = makeNumber;
 
   var methods = {
-    /** overload the original json with noun information */
+    /** overloaded json method with additional number information */
     json: function json(options) {
       var n = null;
 
@@ -879,12 +889,18 @@
 
       return res;
     },
+
+    /** return only ordinal numbers */
     isOrdinal: function isOrdinal() {
       return this["if"]('#Ordinal');
     },
+
+    /** return only cardinal numbers*/
     isCardinal: function isCardinal() {
       return this["if"]('#Cardinal');
     },
+
+    /** convert to numeric form like '8' or '8th' */
     toNumber: function toNumber() {
       this.forEach(function (val) {
         var obj = parse$1(val);
@@ -894,11 +910,13 @@
         }
 
         var str = makeNumber_1(obj, false, val.has('#Ordinal'));
-        val.replaceWith(str);
+        val.replaceWith(str, true);
+        val.tag('NumericValue');
       });
       return this;
     },
-    // toNumber, but with some commas
+
+    /** add commas, or nicer formatting for numbers */
     toLocaleString: function toLocaleString() {
       this.forEach(function (val) {
         var obj = parse$1(val);
@@ -909,10 +927,12 @@
 
         obj.num = obj.num.toLocaleString();
         var str = makeNumber_1(obj, false, val.has('#Ordinal'));
-        val.replaceWith(str);
+        val.replaceWith(str, true);
       });
       return this;
     },
+
+    /** convert to text form - like 'eight' or 'eigth'*/
     toText: function toText() {
       this.forEach(function (val) {
         var obj = parse$1(val);
@@ -922,10 +942,13 @@
         }
 
         var str = makeNumber_1(obj, true, val.has('#Ordinal'));
-        val.replaceWith(str);
+        val.replaceWith(str, true);
+        val.tag('TextValue');
       });
       return this;
     },
+
+    /** convert to cardinal form, like 'eight', or '8' */
     toCardinal: function toCardinal() {
       var m = this["if"]('#Ordinal');
       m.forEach(function (val) {
@@ -936,10 +959,13 @@
         }
 
         var str = makeNumber_1(obj, val.has('#TextValue'), false);
-        val.replaceWith(str);
+        val.replaceWith(str, true);
+        val.tag('Cardinal');
       });
       return this;
     },
+
+    /** convert to ordinal form, like 'eighth', or '8th' */
     toOrdinal: function toOrdinal() {
       var m = this["if"]('#Cardinal');
       m.forEach(function (val) {
@@ -950,34 +976,45 @@
         }
 
         var str = makeNumber_1(obj, val.has('#TextValue'), true);
-        val.replaceWith(str);
+        val.replaceWith(str, true);
+        val.tag('Ordinal');
       });
       return this;
     },
+
+    /** return only numbers that are == n */
     isEqual: function isEqual(n) {
       return this.filter(function (val) {
         var num = parse$1(val).num;
         return num === n;
       });
     },
+
+    /** return only numbers that are > n*/
     greaterThan: function greaterThan(n) {
       return this.filter(function (val) {
         var num = parse$1(val).num;
         return num > n;
       });
     },
+
+    /** return only numbers that are < n*/
     lessThan: function lessThan(n) {
       return this.filter(function (val) {
         var num = parse$1(val).num;
         return num < n;
       });
     },
-    between: function between(a, b) {
+
+    /** return only numbers > min and < max */
+    between: function between(min, max) {
       return this.filter(function (val) {
         var num = parse$1(val).num;
-        return num > a && num < b;
+        return num > min && num < max;
       });
     },
+
+    /** increase each number by n */
     add: function add(n) {
       if (!n) {
         return this; // don't bother
@@ -992,17 +1029,23 @@
 
         obj.num += n;
         var str = makeNumber_1(obj, val.has('#TextValue'), val.has('#Ordinal'));
-        val.replaceWith(str);
+        val.replaceWith(str, true);
       });
       return this;
     },
+
+    /** decrease each number by n*/
     subtract: function subtract(n) {
       return this.add(n * -1);
     },
+
+    /** increase each number by 1 */
     increment: function increment() {
       this.add(1);
       return this;
     },
+
+    /** decrease each number by 1 */
     decrement: function decrement() {
       this.add(-1);
       return this;
@@ -1010,23 +1053,47 @@
   }; // aliases
 
   methods.toNice = methods.toLocaleString;
+  methods.isBetween = methods.between;
   methods.minus = methods.subtract;
   methods.plus = methods.add;
   methods.equals = methods.isEqual;
   var methods_1 = methods;
 
-  var tagger = function tagger(doc) {
-    doc.match('(hundred|thousand|million|billion|trillion|quadrillion|quintillion|sextillion|septillion)').tag('#Multiple'); //  in the 400s
+  var multiples = '(hundred|thousand|million|billion|trillion|quadrillion|quintillion|sextillion|septillion)'; // improved tagging for numbers
 
-    doc.match('the [/[0-9]+s$/]').tag('#Plural');
+  var tagger = function tagger(doc) {
+    doc.match(multiples).tag('#Multiple'); //  in the 400s
+
+    doc.match('the [/[0-9]+s$/]').tag('#Plural'); //half a million
+
+    doc.match('half a? #Value').tag('Value', 'half-a-value'); //(quarter not ready)
+    //five and a half
+
+    doc.match('#Value and a (half|quarter)').tag('Value', 'value-and-a-half'); //one hundred and seven dollars
+
+    doc.match('#Money and #Money #Currency?').tag('Money', 'money-and-money');
   };
 
   var tagger_1 = tagger;
 
+  var tags = {
+    Fraction: {
+      isA: 'Value'
+    },
+    Multiple: {
+      isA: 'Value'
+    },
+    Unit: {
+      isA: 'Value'
+    }
+  };
+
   /** adds .numbers() method */
 
   var addMethod = function addMethod(Doc, world) {
-    // additional tagging before running the number-parser
+    // add tags to our tagset
+    world.addTags(tags); // additional tagging before running the number-parser
+
     world.postProcess(tagger_1);
     /** a list of number values, and their units */
 
@@ -1035,18 +1102,10 @@
     function (_Doc) {
       _inherits(Numbers, _Doc);
 
-      function Numbers(list, from, w) {
-        var _this;
-
+      function Numbers() {
         _classCallCheck(this, Numbers);
 
-        _this = _possibleConstructorReturn(this, _getPrototypeOf(Numbers).call(this, list, from, w));
-        _this.unit = _this.match('#Unit+$');
-
-        var numbers = _this.not('#Unit+$');
-
-        _this.list = numbers.list;
-        return _this;
+        return _possibleConstructorReturn(this, _getPrototypeOf(Numbers).apply(this, arguments));
       }
 
       return Numbers;
@@ -1054,12 +1113,46 @@
 
 
     Object.assign(Numbers.prototype, methods_1);
-    Numbers.prototype.plus = Numbers.prototype.add;
-    Numbers.prototype.minus = Numbers.prototype.subtract;
 
     Doc.prototype.numbers = function (n) {
       var match = find(this, n);
       return new Numbers(match.list, this, this.world);
+    };
+    /** return things like 1/3rd */
+
+
+    Doc.prototype.fractions = function (n) {
+      var m = this.match('#Fraction');
+
+      if (typeof n === 'number') {
+        m = m.get(n);
+      }
+
+      return m;
+    };
+    /** return things like CCXX*/
+
+
+    Doc.prototype.romanNumerals = function (n) {
+      var m = this.match('#RomanNumeral').numbers();
+
+      if (typeof n === 'number') {
+        m = m.get(n);
+      }
+
+      return m;
+    };
+    /** return things like $4.50*/
+
+
+    Doc.prototype.money = function (n) {
+      var m = this.match('#Money').numbers();
+
+      if (typeof n === 'number') {
+        m = m.get(n);
+      }
+
+      return m;
     }; // alias for reverse-compatibility
 
 

@@ -117,6 +117,7 @@ const starts_with_e = /^e/;
 const ends_with_noisy_vowel_combos = /(eo|eu|ia|oa|ua|ui)$/i;
 const aiouy = /[aiouy]/;
 const ends_with_ee = /ee$/;
+// const whitespace_dash = /\s\-/
 
 //method is nested because it's called recursively
 const doWord = function(w) {
@@ -199,8 +200,14 @@ var syllables_1 = syllables;
 const defaultObj = { normal: true, text: true, terms: false };
 
 const addMethod = function(Doc) {
-  Doc.prototype.syllables = function(n, obj) {
-    let data = this.data(obj || defaultObj);
+  /** split each term by typical pronounciation */
+  Doc.prototype.syllables = function(obj) {
+    let n = null;
+    if (typeof obj === 'number') {
+      n = obj;
+      obj = {};
+    }
+    let data = this.json(obj || defaultObj);
     //add syllable data to each phrase
     data = data.map(o => {
       o.syllables = syllables_1(o.normal || o.text);

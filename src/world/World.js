@@ -51,11 +51,13 @@ class World {
     Object.defineProperty(this, 'transforms', {
       enumerable: false,
       value: transforms,
+      writable: true,
     })
 
     Object.defineProperty(this, 'taggers', {
       enumerable: false,
       value: [],
+      writable: true,
     })
     // add our compressed data to lexicon
     this.unpackWords(lexData)

@@ -256,7 +256,7 @@
     };
 
     Doc.prototype.biGrams = Doc.prototype.bigrams;
-    /** n-grams with two words */
+    /** n-grams with three words */
 
     Doc.prototype.trigrams = function (n) {
       var arr = getGrams(tokenize_1(this), {

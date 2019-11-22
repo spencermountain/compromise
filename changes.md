@@ -97,6 +97,8 @@ Once the plugin is applied, things should work just as normal.
 
 - the internal compromise api has changed considerably. If you were 'reaching in' to the internal objects in v11, you'll see many changes.
 
+- removed no-longer-needed `prefix_` and `_suffix` operators from match syntax
+
 ### non-breaking changes:
 
 #### New Methods:
@@ -104,20 +106,20 @@ Once the plugin is applied, things should work just as normal.
 - `.reverse()` -
 - `.unique()` - remove duplicates using 'root'
   <!-- - `.wordcount()` -  -->
-- `.cache()` -
-- `.uncache()` -
+- `.cache()` - speed-up matches and lookups
+- `.uncache()` - manually disable the cache
 - `.join()` - search between sentences, for example
 - `.lookAhead()` - match through the terms before your current match
 - `.lookBehind()` -match through the terms after your current match
 - `.lists()` - find all comma-seperated natural-language lists
 - `.matchOne()` - return the first .match()
-- `.segment()` -
+- `.segment()` - split a document according to a given label
 - `.export()` - serialize and compress the document for saving/moving
 
 #### New Constructor methods
 
 - .extend() - change any internal compromise data
-- .import() - create a new document from `.export()` results
+- .load() - create a new document from `.export()` results
 
 ### Misc new features
 
@@ -126,85 +128,3 @@ Once the plugin is applied, things should work just as normal.
 - `.syllables()` via [compromise-syllables](https://github.com/spencermountain/compromise/tree/master/plugins/syllables)
 - `.paragraphs()` via [compromise-paragraphs](https://github.com/spencermountain/compromise/tree/master/plugins/paragraphs)
 - improved handling of slashed terms - like `he is/was fun.`
-
-
-
----
-
----
-
----
-
----
-
----
-
----
-
----
-
----
-
-### Breaking changes:
-
-<!-- - `.text()` input parameter changes -->
-<!-- cleaned-up various `.data()` results -->
-
-removed no-longer-needed `prefix_` and `_suffix` operators from match syntax
-
----
-
-### Normalisation levels:
-
-- .text({})
-  `case` : true,
-  `whitespace` : true,
-  `unicode` : true,
-  `punctuation` : true,
-
-  `contractions`: true,
-
-  `adverbs` : true,
-  `emoji` : true,
-  `parentheses` : true,
-  `quotations` : true,
-
-  `verbs` : true,
-  `nouns` : true,
-
-- .json({})
-  ---text-formats per phrase--
-  `text` : true
-  `normal` : false
-  `clean` : false
-  `simple` : false
-  `reduced` : false
-  `root` : false
-
-  ---term-formats--
-  `text` : true
-  `tags` : true
-  `pre` : true
-  `post` : true
-  `normal` : false
-  `clean` : false
-  `simple` : false
-  `root` : false
-  `bestTag`: false
-
-* .out('')
-  `text`
-  `json`
-  --support text formats--
-  `normal`
-  `clean`
-  `simple`
-  `reduced`
-  `root`
-  --named formats--
-  `array`
-  `terms`
-  `tsv` - like stanford -https://nlp.stanford.edu/software/pos-tagger-faq.html#f
-  `xml`
-  `jsonl` - like spacy
-  `iob` - chunking - https://en.wikipedia.org/wiki/Inside%E2%80%93outside%E2%80%93beginning_(tagging)

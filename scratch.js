@@ -19,6 +19,6 @@ nlp.extend(require('./plugins/sentences/src'))
 
 let doc = nlp('if so, he is the best, that i see. he is the greatest in the world')
 doc
-  .match('he is')
+  .clauses()
   .splitAfter()
   .debug()

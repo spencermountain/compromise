@@ -15,13 +15,17 @@
    <hr/>
 </div>
 
-This is a naiive syllable tokenizer, and simply splits a compromise document, according to some simple, biased interpretation.
+This is a naive syllable tokenizer, and simply splits a compromise document, according to some simple, biased interpretation.
 
-It makes some judgement-calls, about prononciation, but also where splits make the most sense.
+It makes some judgement-calls about pronunciation, but also where splits make the most sense.
 
 <div align="center">
   <code>npm install compromise-syllables</code>
 </div>
+
+<h3>
+  <a href="https://observablehq.com/@spencermountain/compromise-syllables">Demo</a>
+</h3>
 
 ```js
 const nlp = require('compromise')
@@ -35,6 +39,9 @@ doc.terms().syllables()
 ]*/
 ```
 
+`.syllables( {options} )` will pass it's optional first parameter to `.json()`. You can see the full set of options [here](https://observablehq.com/@spencermountain/compromise-json).
+
+Keep in mind there are cultural-differences in syllable pronunciation, which this library has a certain bias.
 
 
 MIT

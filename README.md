@@ -33,7 +33,7 @@
 <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 <div align="left">
- <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/> compromise <a href="https://observablehq.com/@spencermountain/compromise-justification">tries its best</a>.
+ - <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>compromise<a href="https://observablehq.com/@spencermountain/compromise-justification">tries its best</a>.
 </div>
 
 <div align="left">
@@ -41,7 +41,7 @@
   it is
   <a href="https://docs.compromise.cool/compromise-filesize">small,
   <a href="https://docs.compromise.cool/compromise-performance">quick</a>,
-  and <a href="https://docs.compromise.cool/compromise-accuracy">good-enough</a> for a bunch of applications.
+  and <a href="https://docs.compromise.cool/compromise-accuracy">usually good-enough</a>.
 </div>
 
 
@@ -301,7 +301,7 @@ nlp.extend((Doc, world) => {
 
 ##### Constructor
 
-_these methods are on the `nlp` object_
+_(these methods are on the `nlp` object)_
 
 - **[.tokenize()](https://observablehq.com/@spencermountain/compromise-tokenization)** - parse text without running POS-tagging
 - **[.extend()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - mix in a compromise-plugin
@@ -335,14 +335,14 @@ _these methods are on the `nlp` object_
 
 ##### Match
 
-_all match methods use the [match-syntax](https://docs.compromise.cool/compromise-match-syntax)._
+_(all match methods use the [match-syntax](https://docs.compromise.cool/compromise-match-syntax).)_
 
 - **[.match('')](https://observablehq.com/@spencermountain/compromise-match)** - return a new Doc, with this one as a parent
 - **[.not('')](https://observablehq.com/@spencermountain/compromise-match)** - return all results except for this
 - **[.matchOne('')](https://observablehq.com/@spencermountain/compromise-match)** - return only the first match
 - **[.if('')](https://observablehq.com/@spencermountain/compromise-match)** - return each current phrase, only if it contains this match ('only')
-- **[.ifNo()](https://observablehq.com/@spencermountain/compromise-match)** - Filter-out any current phrases that have this match ('notIf')
-- **[.has()](https://observablehq.com/@spencermountain/compromise-match)** - Return a boolean if this match exists
+- **[.ifNo('')](https://observablehq.com/@spencermountain/compromise-match)** - Filter-out any current phrases that have this match ('notIf')
+- **[.has('')](https://observablehq.com/@spencermountain/compromise-match)** - Return a boolean if this match exists
 - **[.lookBehind('')](https://observablehq.com/@spencermountain/compromise-match)** - search through earlier terms, in the sentence
 - **[.lookAhead('')](https://observablehq.com/@spencermountain/compromise-match)** - search through following terms, in the sentence
 - **[.before('')](https://observablehq.com/@spencermountain/compromise-match)** - return all terms before a match, in each phrase
@@ -394,7 +394,7 @@ _all match methods use the [match-syntax](https://docs.compromise.cool/compromis
 - **[.sort('method')](https://observablehq.com/@spencermountain/compromise-sorting)** - re-arrange the order of the matches (in place)
 - **[.reverse()](https://observablehq.com/@spencermountain/compromise-sorting)** - reverse the order of the matches, but not the words
 - **[.normalize({})](https://observablehq.com/@spencermountain/compromise-normalization)** - clean-up the text in various ways
-- **[.unique()](#)** - remove any duplicate matches
+- **[.unique()](https://observablehq.com/@spencermountain/compromise-sorting)** - remove any duplicate matches
 - **[.split('')](https://observablehq.com/@spencermountain/compromise-split)** - return a Document with three parts for every match ('splitOn')
 - **[.splitBefore('')](https://observablehq.com/@spencermountain/compromise-split)** - partition a phrase before each matching segment
 - **[.splitAfter('')](https://observablehq.com/@spencermountain/compromise-split)** - partition a phrase after each matching segment
@@ -404,23 +404,7 @@ _all match methods use the [match-syntax](https://docs.compromise.cool/compromis
 ##### Output
 
 - **[.text('method')](https://observablehq.com/@spencermountain/compromise-output)** - return the document as text
-
 - **[.json({})](https://observablehq.com/@spencermountain/compromise-json)** - pull out desired metadata from the document
-
-you can specify which data you'd like to return with these options:
-
-- **_text_ : true**,
-- **_normal_** : true,
-- **_reduced_** : true,
-- **_root_ : true,**
-- **_trim_**
-- **_offset_**
-- **_wordCount_**
-  - **_text_**
-  - **_tags_**
-  - **_id_**
-  - **_normal_**
-  - **_offset_**
 - **[.out('array|offset|terms')](https://observablehq.com/@spencermountain/compromise-output)** - some named output formats (deprecated)
 - **[.debug()](https://observablehq.com/@spencermountain/compromise-output)** - pretty-print the current document and its tags
 - **[.export()](https://observablehq.com/@spencermountain/compromise-export)** - store a parsed document for later use
@@ -604,7 +588,7 @@ this plugin creates a wrapper around the default sentence objects.
 
 `npm install compromise-syllables`
 
-- **[.syllables()](#)** - split each term by its typical pronounciation
+- **[.syllables()](https://observablehq.com/@spencermountain/compromise-syllables)** - split each term by its typical pronounciation
 
 <!-- spacer -->
 <div >

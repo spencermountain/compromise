@@ -1344,7 +1344,6 @@ module.exports = [
   'staci',
   'stacie',
   'stacy',
-  'star',
   'starla',
   'stefanie',
   'stela',

@@ -56,27 +56,32 @@ exports.wordcount = exports.wordCount
 
 /** freeze the current state of the document, for speed-purposes*/
 exports.cache = function(options) {
-  options = options || { words: true }
+  options = options || {}
   this.list.forEach(p => {
     let words = {}
     p.cache = p.cache || {}
     p.cache.terms = p.cache.terms || p.terms()
     // cache all the terms
-    p.cache.terms.forEach((t, i) => {
-      words[t.clean] = i
+    p.cache.terms.forEach(t => {
+      words[t.clean] = true
+      words[t.reduced] = true
+      words[t.text.toLowerCase()] = true
       if (t.implicit) {
-        words[t.implicit] = i
+        words[t.implicit] = true
       }
-      if (t.alias) {
+      if (t.root) {
+        words[t.root] = true
+      }
+      if (t.alias !== undefined) {
         words = Object.assign(words, t.alias)
       }
       if (options.root) {
         t.setRoot(this.world)
+        words[t.root] = true
       }
     })
-    if (options.words === true) {
-      p.cache.words = words
-    }
+    delete words['']
+    p.cache.words = words
   })
   return this
 }

@@ -405,23 +405,6 @@ _all match methods use the [match-syntax](https://docs.compromise.cool/compromis
 
 - **[.text('method')](https://observablehq.com/@spencermountain/compromise-output)** - return the document as text
 
-there are 4 preset text outputs:
-
-- **_'text'_** - a perfect copy of the input text (default)
-- **_'normal'_** - normalized whitespace, case, unicode, punctuation
-- **_'clean'_** - 'normal' + lowercase, trimmed whitespace
-- **_'reduced'_** - 'clean' + contractions expanded.
-- **_'root'_** - for machine-reading, inflected verbs, singular nouns. Like a 'stemmed' text.
-
-you can toggle any of these options, using an object as a parameter:
-
-- **_case_ : false**,
-- **_punctuation_ : false**,
-- **_whitespace_ : false**,
-- **_unicode_ : false**,
-- **_implicit_ : false**,
-- **_root_ : false**
-
 - **[.json({})](https://observablehq.com/@spencermountain/compromise-json)** - pull out desired metadata from the document
 
 you can specify which data you'd like to return with these options:
@@ -448,7 +431,7 @@ you can specify which data you'd like to return with these options:
 - **[.clauses()](https://observablehq.com/@spencermountain/compromise-selections)** - split-up sentences into multi-term phrases
 - **[.hyphenated()](https://observablehq.com/@spencermountain/compromise-selections)** - all terms connected with a hyphen or dash like `'wash-out'`
 - **[.phoneNumbers()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'(939) 555-0113'`
-- **[.hashTags()](#https://observablehq.com/@spencermountain/compromise-selections** - things like `'#nlp'`
+- **[.hashTags()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'#nlp'`
 - **[.emails()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'hi@compromise.cool'`
 - **[.emoticons()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `:)`
 - **[.emojis()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `💋`
@@ -460,7 +443,7 @@ you can specify which data you'd like to return with these options:
 - **[.prepositions()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'of'`
 - **[.abbreviations()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'Mrs.'`
 
-- ##### Subsets
+##### Subsets
 - **[.contractions()](https://observablehq.com/@spencermountain/compromise-selections)** - things like "didn't"
 - **[.parentheses()](https://observablehq.com/@spencermountain/compromise-selections)** - return anything inside (parentheses)
 - **[.possessives()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `"Spencer's"`
@@ -686,13 +669,11 @@ this plugin creates a wrapper around the default sentence objects.
 
 - **inter-sentence match:**
   By default, sentences are the top-level abstraction.
-
   Inter-sentence, or multi-sentence matches aren't supported:
   <code>nlp("that's it. Back to Winnipeg!").has('it back')//false</code>
 
 - **nested match syntax:**
   the <s>danger</s> beauty of regex is that you can recurse indefinitely.
-
   Our match syntax is much weaker. Things like this are not <i>(yet)</i> possible:
   <code>doc.match('(modern (major|minor))? general')</code>
   complex matches must be achieved with successive **.match()** statements.
@@ -715,8 +696,8 @@ this plugin creates a wrapper around the default sentence objects.
         <br/>
         string processing is synchronous too, and parallelizing node processes is weird.
         <br/>
-        See <a href="https://docs.compromise.cool/compromise-performance">here</a> for information about speed & performance, and
-        <a href="https://github.com/spencermountain/compromise/wiki/Justification">here</a> for project motivations
+        See <a href="https://observablehq.com/@spencermountain/compromise-performance">here</a> for information about speed & performance, and
+        <a href="https://observablehq.com/@spencermountain/compromise-justification">here</a> for project motivations
       </ul>
       <p></p>
     </details>
@@ -728,7 +709,7 @@ this plugin creates a wrapper around the default sentence objects.
       <ul>
         Only if it's water-proof!
         <br/>
-        Read <a href="https://github.com/spencermountain/compromise/wiki/QuickStart">quick start</a> for running compromise in workers, mobile apps, and all sorts of funny environments.
+        Read <a href="https://observablehq.com/@spencermountain/compromise-quickstart">quick start</a> for running compromise in workers, mobile apps, and all sorts of funny environments.
       </ul>
       <p></p>
     </details>
@@ -776,4 +757,5 @@ this plugin creates a wrapper around the default sentence objects.
 
 <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-**MIT**
+<b>MIT</b>
+<div align="right">by <a href="https://spencermounta.in/">spencermountain</a></div>

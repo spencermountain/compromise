@@ -58,25 +58,25 @@ declare module nlp {
 
     // Match
     /**  return a new Doc, with this one as a parent */
-    match(match: String): Document
+    match(match: String | Document): Document
     /**  return all results except for this */
-    not(match: String): Document
+    not(match: String | Document): Document
     /**  return only the first match */
-    matchOne(match: String): Document
+    matchOne(match: String | Document): Document
     /**  return each current phrase, only if it contains this match */
-    if(match: String): Document
+    if(match: String | Document): Document
     /**  Filter-out any current phrases that have this match */
-    ifNo(match: String): Document
+    ifNo(match: String | Document): Document
     /**  Return a boolean if this match exists */
-    has(match: String): Document
+    has(match: String | Document): Document
     /**  search through earlier terms, in the sentence */
-    lookBehind(match: String): Document
+    lookBehind(match: String | Document): Document
     /**  search through following terms, in the sentence */
-    lookAhead(match: String): Document
+    lookAhead(match: String | Document): Document
     /**  return the terms before each match */
-    before(match: String): Document
+    before(match: String | Document): Document
     /**  return the terms after each match */
-    after(match: String): Document
+    after(match: String | Document): Document
     /** quick find for an array of string matches */
     lookup(matches: String[]): Document
 
@@ -104,11 +104,11 @@ declare module nlp {
 
     // Tag
     /**  Give all terms the given tag */
-    tag(tag: String): Document
+    tag(tag: String, reason?: String): Document
     /**  Only apply tag to terms if it is consistent with current tags */
-    tagSafe(tag: String): Document
+    tagSafe(tag: String, reason?: String): Document
     /**  Remove this term from the given terms */
-    unTag(tag: String): Document
+    unTag(tag: String, reason?: String): Document
     /**  return only the terms that can be this tag */
     canBe(tag: String): Document
 
@@ -124,13 +124,13 @@ declare module nlp {
     /**  return true or false if there is one matching phrase */
     some(fn: Function): Document
     /**  sample a subset of the results */
-    random(n: Number): Document
+    random(n?: Number): Document
 
     // Insert
     /**  substitute-in new content */
     replaceWith(text: String, keepTags?: Boolean): Document
     /**  search and replace match with new content */
-    replace(match: String, text: String, keepTags?: Boolean): Document
+    replace(match: String, text?: String, keepTags?: Boolean): Document
     /**  fully remove these terms from the document */
     delete(match: String): Document
     /**  add these new terms to the end (insertAfter) */
@@ -142,29 +142,29 @@ declare module nlp {
 
     // transform
     /**re-arrange the order of the matches (in place) */
-    sort(method: String | Function): Document
+    sort(method?: String | Function): Document
     /**reverse the order of the matches, but not the words */
     reverse(): Document
     /** clean-up the document, in various ways */
-    normalize(options?: Object): String
+    normalize(options?: String | Object): String
     /** remove any duplicate matches */
     unique(): Document
     /**  return a Document with three parts for every match ('splitOn') */
-    split(match: String): Document
+    split(match?: String): Document
     /**  separate everything after the match as a new phrase */
-    splitBefore(match: String): Document
+    splitBefore(match?: String): Document
     /**  separate everything before the word, as a new phrase */
-    splitAfter(match: String): Document
+    splitAfter(match?: String): Document
     /** split a document into labeled sections  */
     segment(regs: Object, options?: Object): Document
     /** make all phrases into one phrase  */
-    join(match: String): Document
+    join(str?: String): Document
 
     // Output
     /**  return the document as text */
-    text(options?: Object): String
+    text(options?: String | Object): String
     /**  pull out desired metadata from the document */
-    json(options?: Object): any
+    json(options?: String | Object): any
     /** some named output formats */
     out(format?: string): String
     /**  pretty-print the current document and its tags */

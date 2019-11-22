@@ -17,11 +17,8 @@ nlp.extend(require('./plugins/sentences/src'))
 // .toQuotation()
 // .toParentheses()
 
-let doc = nlp('he is the best, that i see. he is the greatest')
-let childA = doc.if('greatest')
-let childB = doc.match('he is')
-childA.splitAfter(childB).debug()
-childA.debug()
-
-// doc.match('he is').split()
-// doc.debug()
+let doc = nlp('if so, he is the best, that i see. he is the greatest in the world')
+doc
+  .match('he is')
+  .splitAfter()
+  .debug()

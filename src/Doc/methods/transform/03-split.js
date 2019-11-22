@@ -4,6 +4,12 @@ const parseSyntax = require('../../match/syntax')
  * seperate everything before the word, as a new phrase
  */
 exports.splitOn = function(reg) {
+  // if there's no match, split parent, instead
+  if (!reg) {
+    let parent = this.parent()
+    return parent.splitOn(this)
+  }
+  //start looking for a match..
   let regs = parseSyntax(reg)
   let matches = []
   this.list.forEach(p => {
@@ -35,21 +41,14 @@ exports.splitOn = function(reg) {
   return this.buildFrom(matches)
 }
 
-const splitParent = function(doc) {
-  let parent = doc.parent()
-  // console.log(doc.list[0].id)
-  // let reg = [{ id: doc.list[0].start }]
-  // parent.splitOn(reg).debug()
-  return parent
-}
-
 /** return a Document with two parts for every match
  * seperate everything after the word, as a new phrase
  */
 exports.splitAfter = function(reg) {
   // if there's no match, split parent, instead
   if (!reg) {
-    return splitParent(this)
+    let parent = this.parent()
+    return parent.splitAfter(this)
   }
   // start looking for our matches
   let regs = parseSyntax(reg)
@@ -87,6 +86,12 @@ exports.split = exports.splitAfter //i guess?
 
 /** return a Document with two parts for every match */
 exports.splitBefore = function(reg) {
+  // if there's no match, split parent, instead
+  if (!reg) {
+    let parent = this.parent()
+    return parent.splitBefore(this)
+  }
+  //start looking for a match..
   let regs = parseSyntax(reg)
   let matches = []
   this.list.forEach(p => {

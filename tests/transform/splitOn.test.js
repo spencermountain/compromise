@@ -80,3 +80,21 @@ test('no match split', function(t) {
   t.equal(m.get(1).out('normal'), 'none here either', 'not found 2')
   t.end()
 })
+
+test('split-parent', function(t) {
+  let doc = nlp('if so, he is the best, that i see. he is the greatest in the world')
+  t.equal(doc.length, 2, 'init parent is 2 sentence')
+
+  let m = doc.match('he is').splitOn()
+  t.equal(m.length, 5, 'splitOn parent into 5')
+
+  m = doc.match('he is').splitAfter()
+  t.equal(m.length, 4, 'splitAfter parent into 4')
+
+  m = doc.match('he is').splitBefore()
+  t.equal(m.length, 3, 'splitBefore parent into 3')
+
+  t.equal(doc.length, 2, 'parent is still 2 sentence')
+
+  t.end()
+})

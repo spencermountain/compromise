@@ -30,8 +30,19 @@ doc.bigrams().data()
 //same for:
 doc.unigrams()
 doc.trigrams()
-doc.ngrams({size:3})
+doc.ngrams({ size: 3 })
 ```
 
+### [Demo](https://observablehq.com/@spencermountain/compromise-ngram)
+
+### API:
+
+- **.ngrams({})** - list all repeating sub-phrases, by word-count
+- **.unigrams()** - n-grams with one word
+- **.bigrams()** - n-grams with two words
+- **.trigrams()** - n-grams with three words
+- **.startgrams()** - n-grams including the first term of a phrase
+- **.endgrams()** - n-grams including the last term of a phrase
+- **.edgegrams()** - n-grams including the first or last term of a phrase
 
 MIT

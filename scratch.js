@@ -17,5 +17,12 @@ const nlp = require('./src/index')
 // .toQuotation()
 // .toParentheses()
 
+// [, 'tony hawk'],
+// ['I live Toronto. I think Toronto is cool.', 'toronto'],
+// ['The EACD united in 1972. EACD must follow regulations.', 'eacd'],
+// // ['The Elkjsdflkjsdf sells hamburgers. I think the Elkjsdflkjsdf eats turky.', 'elkjsdflkjsdf'],
+// ["Toronto's citizens love toronto!", 'toronto'],
+
+// const doc = nlp('I live Toronto. I think Toronto is cool.').debug()
 const doc = nlp('in north africa, eastern asia, guatemala, europe, north america, and japan')
 doc.places().debug()

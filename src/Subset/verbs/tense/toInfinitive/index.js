@@ -3,7 +3,7 @@ const toInfinitive = function(parsed, world) {
   let verb = parsed.verb
 
   //1. if it's already infinitive
-  let str = verb.out('normal')
+  let str = verb.text('normal')
   if (verb.has('#Infinitive')) {
     return str
   }

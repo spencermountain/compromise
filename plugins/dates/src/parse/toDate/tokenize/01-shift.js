@@ -19,10 +19,10 @@ const parseShift = function(doc) {
     return result
   }
   m.match('#Cardinal #Duration').forEach(ts => {
-    let num = ts.match('#Cardinal').out('normal')
+    let num = ts.match('#Cardinal').text('normal')
     num = parseFloat(num)
     if (num && typeof num === 'number') {
-      let unit = ts.match('#Duration').out('normal')
+      let unit = ts.match('#Duration').text('normal')
       unit = unit.replace(/s$/, '')
       if (unit && knownUnits.hasOwnProperty(unit)) {
         result[unit] = num

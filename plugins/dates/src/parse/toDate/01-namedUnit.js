@@ -12,7 +12,7 @@ const namedUnit = function(doc) {
   //this month, last quarter, next year
   let m = doc.match('(weekday|week|month|quarter|season|year)')
   if (m.found === true) {
-    let str = m.lastTerm().out('reduced')
+    let str = m.lastTerm().text('reduced')
     if (mapping.hasOwnProperty(str)) {
       let Model = mapping[str]
       if (!Model) {
@@ -26,7 +26,7 @@ const namedUnit = function(doc) {
   //try this version - 'next friday, last thursday'
   m = doc.match('(monday|tuesday|wednesday|thursday|friday|saturday|sunday)')
   if (m.found === true) {
-    let str = m.lastTerm().out('reduced')
+    let str = m.lastTerm().text('reduced')
     let unit = new units.WeekDay(str)
     return unit
   }

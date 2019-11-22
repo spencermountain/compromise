@@ -10,7 +10,7 @@ test('known-regions:', function(t) {
   arr.forEach(function(a) {
     const str = nlp(a[0])
       .match('#Region')
-      .out('normal')
+      .text('normal')
     t.equal(str, a[1], a[0])
   })
   t.end()
@@ -29,7 +29,7 @@ test('unknown-places:', function(t) {
   arr.forEach(function(a) {
     const str = nlp(a[0])
       .places(0)
-      .out('normal')
+      .text('normal')
     t.equal(str, a[1], a[0])
   })
   t.end()

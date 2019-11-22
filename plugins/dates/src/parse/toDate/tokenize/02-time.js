@@ -54,7 +54,7 @@ const parseTime = function(doc) {
     }
   }
   // parse random a time like '4:54pm'
-  let str = time.out('reduced')
+  let str = time.text('reduced')
   s = s.time(str)
   if (s.isValid() && !s.isEqual(now)) {
     return s.time()

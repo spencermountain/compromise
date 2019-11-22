@@ -10,7 +10,7 @@
   
   <!-- file size -->
   <a href="https://unpkg.com/spacetime/builds/compromise-syllables.min.js">
-    <img src="https://badge-size.herokuapp.com/spencermountain/compromise-syllables/master/builds/compromise-verbs.min.js" />
+    <img src="https://badge-size.herokuapp.com/spencermountain/compromise-syllables/master/builds/compromise-syllables.min.js" />
   </a>
    <hr/>
 </div>
@@ -42,6 +42,5 @@ doc.terms().syllables()
 `.syllables( {options} )` will pass it's optional first parameter to `.json()`. You can see the full set of options [here](https://observablehq.com/@spencermountain/compromise-json).
 
 Keep in mind there are cultural-differences in syllable pronunciation, which this library has a certain bias.
-
 
 MIT

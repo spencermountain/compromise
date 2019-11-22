@@ -8,7 +8,7 @@
   "module": "./builds/compromise-swap.mjs",
   "repository": {
     "type": "git",
-    "url": "git://github.com/nlp-compromise/compromise-swap.git"
+    "url": "git://github.com/spencermountain/compromise.git"
   },
   "scripts": {
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer",

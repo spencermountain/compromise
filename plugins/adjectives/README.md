@@ -37,8 +37,16 @@ doc.adjectives().json()
     toSuperlative:'quickest'
   }]
 */
-
 ```
+
+- **[.adjectives()](https://observablehq.com/@spencermountain/compromise-adjectives)** - like `quick`
+  - **[.adjectives().json()](https://observablehq.com/@spencermountain/compromise-adjectives)** - overloaded output with adjective metadata
+  - **[.adjectives().conjugate()](https://observablehq.com/@spencermountain/compromise-adjectives)** - return all conjugated forms of this adjective
+  - **[.adjectives().toSuperlative()](https://observablehq.com/@spencermountain/compromise-adjectives)** - convert `quick` to `quickest`
+  - **[.adjectives().toComparative()](https://observablehq.com/@spencermountain/compromise-adjectives)** - convert `quick` to `quickest`
+  - **[.adjectives().toAdverb()](https://observablehq.com/@spencermountain/compromise-adjectives)** - convert `quick` to `quickly`
+  - **[.adjectives().toVerb()](https://observablehq.com/@spencermountain/compromise-adjectives)** - convert `quick` to `quicken`
+  - **[.adjectives().toNoun()](https://observablehq.com/@spencermountain/compromise-adjectives)** - convert `quick` to `quickness`
 
 work-in-progress
 

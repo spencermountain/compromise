@@ -2610,7 +2610,7 @@ var _01Tokenizer = {
   fromJSON,
 };
 
-var _version = '12.0.0-beta.0';
+var _version = '12.0.0-rc1';
 
 var _data={
   "Comparative": "true¦better",

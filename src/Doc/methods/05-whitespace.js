@@ -49,7 +49,6 @@ exports.hyphenate = function() {
       }
     })
   })
-  this.tag('#Hyphenated', 'hyphenate')
   return this
 }
 
@@ -65,6 +64,5 @@ exports.dehyphenate = function() {
       }
     })
   })
-  this.untag('#Hyphenated', 'hyphenate')
   return this
 }

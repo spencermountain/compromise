@@ -6,36 +6,37 @@ test('short+long form', function(t) {
   let shorter = r
     .dates()
     .toShortForm()
-    .out('normal')
-  t.equal(shorter, 'wed jan 2nd 2016')
+    .text()
+  t.equal(shorter, 'wed, jan 2nd, 2016')
 
   let r2 = nlp('Thurs, feb 2nd, 2016')
   let longer = r2
     .dates()
     .toLongForm()
-    .out('normal')
-  t.equal(longer, 'thursday february 2nd 2016')
+    .text()
+  t.equal(longer, 'Thursday, february 2nd, 2016')
 
   let doc = nlp('April, June, and Sept')
   shorter = doc
     .dates()
     .toShortForm()
     .all()
-    .out('normal')
-  t.equal(shorter, 'apr jun and sept', 'months-short')
+    .text()
+  t.equal(shorter, 'Apr, Jun, and Sept', 'months-short')
+
   longer = doc
     .dates()
     .toLongForm()
     .all()
-    .out('normal')
-  t.equal(longer, 'april june and september', 'months-longer')
+    .text()
+  t.equal(longer, 'April, June, and September', 'months-longer')
 
   r2 = nlp('Thurs, feb 2nd, 2016')
   longer = r2
     .dates()
     .toLongForm()
-    .out('normal')
-  t.equal(longer, 'thursday february 2nd 2016')
+    .text()
+  t.equal(longer, 'Thursday, february 2nd, 2016')
 
   let str = nlp('April, June, and Sept')
     .dates()

@@ -46,7 +46,7 @@ const fixPerson = function(doc) {
     // rusty Foobar
     title.match(maybeAdj + ' #Acronym? #TitleCase').tag('Person', 'rusty-smith')
     // june Foobar
-    title.match(maybeDate + ' #Acronym? #TitleCase').tagSafe('Person', 'june-smith')
+    title.match(maybeDate + ' #Acronym? (#TitleCase && !#Month)').tagSafe('Person', 'june-smith')
   }
 
   let person = doc.if('#Person')

@@ -1,5 +1,5 @@
 const nlp = require('./src/index')
-// nlp.verbose(true)
+nlp.verbose(true)
 nlp.extend(require('./plugins/dates/src'))
 nlp.extend(require('./plugins/numbers/src'))
 
@@ -20,9 +20,10 @@ nlp.extend(require('./plugins/numbers/src'))
 // let doc = nlp('Tony is, i think').contract()
 // console.log(doc.text())
 
-let doc = nlp('Thurs, Feb 2nd, 2016')
-doc.match('feb').replaceWith(m => {
-  return m.text({ trim: true }) + '!'
-})
-// doc.debug()
-console.log(doc.text())
+let doc = nlp('April, June, and Sept')
+let shorter = doc.debug()
+// .dates()
+// .toShortForm()
+// .all()
+// .text()
+console.log(shorter)

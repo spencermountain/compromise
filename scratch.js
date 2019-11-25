@@ -26,3 +26,6 @@ const nlp = require('./src/index')
 // const doc = nlp('I live Toronto. I think Toronto is cool.').debug()
 const doc = nlp('in north africa, eastern asia, guatemala, europe, north america, and japan')
 doc.places().debug()
+
+nlp.verbose(true) // open the dev console, to see the output
+nlp('supercalifragilisticexpialidocious')

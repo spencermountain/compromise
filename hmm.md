@@ -36,3 +36,31 @@ let doc = nlp(`Andreas Johnsson, Auston Matthews, and Zach Hyman.`)
 let names = doc.clauses().split()
 let json = names.syllables()
 ```
+
+phone number missing
+
+```js
+nlp(`That’s right. I’m a surgeon. (800) 555-0000.`)
+  .phoneNumbers()
+  .out('array')
+```
+
+emojis
+
+```js
+nlp('good night! 💋')
+  .emojis()
+  .json()
+```
+
+```js
+nlp(`wayne's world, party time`)
+  .possessives()
+  .out('array')
+```
+
+```js
+nlp('it is a UNESCO world heritage site')
+  .acronyms()
+  .text()
+```

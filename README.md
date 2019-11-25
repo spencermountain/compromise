@@ -435,7 +435,8 @@ _(all match methods use the [match-syntax](https://docs.compromise.cool/compromi
 
 ##### Subsets
 
-- **[.contractions()](https://observablehq.com/@spencermountain/compromise-selections)** - things like "didn't"
+- **[.contractions()](https://observablehq.com/@spencermountain/compromise-contractions)** - things like "didn't"
+- **[.contractions().expand()](https://observablehq.com/@spencermountain/compromise-contractions)** - things like "didn't"
 - **[.parentheses()](https://observablehq.com/@spencermountain/compromise-selections)** - return anything inside (parentheses)
 - **[.possessives()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `"Spencer's"`
 - **[.quotations()](https://observablehq.com/@spencermountain/compromise-selections)** - return any terms inside quotation marks

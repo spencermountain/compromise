@@ -76,6 +76,8 @@ our new plugin scheme allows us to easily add all sorts of behaviour to compromi
 
 - **.adjectives()** - adjective conjugation has been moved to [compromise-adjectives](https://github.com/spencermountain/compromise/tree/master/plugins/adjectives)
 
+- **.contractions()** - now returns only contractions, and not _possible-contractions_. `.conctract()` is now a stand-alone method.
+
 - **.out('html')** - html output has been moved to [compromise-output](https://github.com/spencermountain/compromise/tree/master/plugins/output)
 
 These plugins can just be applied like this:

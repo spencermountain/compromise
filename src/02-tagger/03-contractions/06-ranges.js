@@ -1,4 +1,4 @@
-const isRange = /([0-9]+)[-–—]([0-9]+)$/i
+const isRange = /^([0-9]+)[-–—]([0-9]+)$/i
 
 //split '2-4' into '2 to 4'
 const checkRange = function(term) {

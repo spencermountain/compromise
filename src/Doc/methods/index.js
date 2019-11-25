@@ -20,5 +20,6 @@ module.exports = Object.assign(
   require('./transform/01-sort'),
   require('./transform/02-normalize'),
   require('./transform/03-split'),
-  require('./transform/04-join')
+  require('./transform/04-join'),
+  require('./transform/05-contract')
 )

@@ -1,5 +1,5 @@
 const test = require('tape')
-const nlp = require('./_lib')
+const nlp = require('../_lib')
 
 test('match contractions/possessives', function(t) {
   let doc = nlp(`i think it's spencer's`)

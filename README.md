@@ -496,6 +496,8 @@ These are some helpful extensions:
 - **[.dates()](https://observablehq.com/@spencermountain/compromise-dates)** - find dates like `June 8th` or `03/03/18`
   - **[.dates().json()](https://observablehq.com/@spencermountain/compromise-dates)** - overloaded output with date metadata
   - **[.dates().format('')](https://observablehq.com/@spencermountain/compromise-dates)** - convert the dates to specific formats
+  - **[.dates().toShortForm('')](https://observablehq.com/@spencermountain/compromise-dates)** - convert 'Wednesday' to 'Wed', etc
+  - **[.dates().toLongForm('')](https://observablehq.com/@spencermountain/compromise-dates)** - convert 'Feb' to 'February', etc
 
 ##### Topics
 

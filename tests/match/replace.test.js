@@ -95,3 +95,21 @@ test('replace over implict', function(t) {
   t.equal(doc.text(), 'i was good', 'replace over implicit')
   t.end()
 })
+
+test('replace-with-function', function(t) {
+  const repl = p => {
+    if (p.has('john')) {
+      return 'johnny'
+    }
+    return 'nancy'
+  }
+  let doc = nlp('spencer and John').replace('#Person', repl, true, true)
+  t.equal(doc.text(), 'nancy and Johnny', 'replace function')
+
+  doc = nlp('Thurs, Feb 2nd, 2016')
+  doc.match('feb').replaceWith(m => {
+    return m.text({ trim: true }) + '!'
+  })
+  t.equal(doc.text(), 'Thurs, Feb! 2nd, 2016', 'replaceWith function')
+  t.end()
+})

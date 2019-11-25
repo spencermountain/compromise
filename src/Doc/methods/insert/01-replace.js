@@ -11,8 +11,13 @@ exports.replaceWith = function(replace, keepTags, keepCase) {
   }
   // clear the cache
   this.uncache()
+  // return this
   this.list.forEach(p => {
     let str = replace
+    // accept a function for replace
+    if (typeof replace === 'function') {
+      str = replace(p)
+    }
     if (keepCase === true && p.terms(0).isTitleCase()) {
       str = titleCase(str)
     }

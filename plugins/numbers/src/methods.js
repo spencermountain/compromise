@@ -84,7 +84,7 @@ let methods = {
         return
       }
       let str = makeNumber(obj, val.has('#TextValue'), false)
-      val.replaceWith(str, true)
+      val.replaceWith(str, true, true)
       val.tag('Cardinal')
     })
     return this
@@ -98,7 +98,7 @@ let methods = {
         return
       }
       let str = makeNumber(obj, val.has('#TextValue'), true)
-      val.replaceWith(str, true)
+      val.replaceWith(str, true, true)
       val.tag('Ordinal')
     })
     return this
@@ -143,7 +143,7 @@ let methods = {
       }
       obj.num += n
       let str = makeNumber(obj, val.has('#TextValue'), val.has('#Ordinal'))
-      val.replaceWith(str, true)
+      val.replaceWith(str, true, true)
     })
     return this
   },

@@ -44,7 +44,7 @@ const addMethod = function(Doc) {
         // let txt = res.verb.text('normal')
         let m = doc.match('walked')
         m.debug()
-        m.replaceWith('sat')
+        m.replaceWith('sat') //FIXME:
       })
       return this
     }

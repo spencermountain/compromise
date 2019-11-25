@@ -21,8 +21,8 @@ nlp.extend(require('./plugins/numbers/src'))
 // console.log(doc.text())
 
 let doc = nlp('Thurs, Feb 2nd, 2016')
-doc.match('thurs').tag('Cool')
-doc.dates().toLongForm()
-console.log(doc.text())
-doc.dates().toShortForm()
+doc.match('feb').replaceWith(m => {
+  return m.text({ trim: true }) + '!'
+})
+// doc.debug()
 console.log(doc.text())

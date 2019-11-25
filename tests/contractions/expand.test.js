@@ -16,15 +16,15 @@ test('basic is contractions', function(t) {
 
   r = nlp(`she'll, eat icecream`)
   r.contractions().expand()
-  t.equal(r.out('text'), `she will eat icecream`, 'with-punctuation')
+  t.equal(r.out('text'), `she will, eat icecream`, 'with-punctuation')
 
   r = nlp("we're not gonna take it, no we're not gonna take it")
   r.contractions().expand()
   t.equal(r.out('text'), `we are not going to take it, no we are not going to take it`, 'expand gonna twice')
 
-  r = nlp("let's let's we're gonna gonna")
+  r = nlp("we're we're gonna gonna")
   r.contractions().expand()
-  t.equal(r.out('text'), `let us let us we are going to going to`, 'expand consecutive')
+  t.equal(r.out('text'), `we are we are going to going to`, 'expand consecutive')
   t.end()
 })
 
@@ -66,10 +66,11 @@ test('repeated contract-expand', function(t) {
 
 test('contracted', function(t) {
   let r = nlp(`I'll go to Toronto. I will see.`)
-  let str = r.contractions().out('text')
+  let m = r.contractions()
+  let str = m.out('text')
   t.equal(str, `I'll`, 'contracted')
 
-  t.equal(r.contractions().has('i will'), false, 'no-expanded')
+  t.equal(m.length, 1, 'no-expanded')
   t.end()
 })
 

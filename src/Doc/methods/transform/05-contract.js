@@ -26,36 +26,44 @@ const setContraction = function(m, suffix) {
   // clean-up the others
   terms.slice(1).forEach(t => {
     t.text = ''
-    t.post = t.post.replace(/ /, '')
   })
+  for (let i = 0; i < terms.length - 1; i++) {
+    const t = terms[i]
+    t.post = t.post.replace(/ /, '')
+  }
 }
 
+/** turn 'i am' into i'm */
 exports.contract = function() {
+  let doc = this.not('@hasContraction')
   // we are -> we're
-  let m = this.match('(we|they|you) are')
+  let m = doc.match('(we|they|you) are')
   setContraction(m, `'re`)
   // they will -> they'll
-  m = this.match('(he|she|they|it|we|you) will')
+  m = doc.match('(he|she|they|it|we|you) will')
   setContraction(m, `'ll`)
   // she is -> she's
-  m = this.match('(he|she|they|it|we) is')
+  m = doc.match('(he|she|they|it|we) is')
   setContraction(m, `'s`)
   // spencer is -> spencer's
-  m = this.match('#Person is')
+  m = doc.match('#Person is')
   setContraction(m, `'s`)
   // spencer would -> spencer'd
-  m = this.match('#Person would')
+  m = doc.match('#Person would')
   setContraction(m, `'d`)
   // would not -> wouldn't
-  m = this.match('(is|was|had|would|should|could|do|does|have|has|can) not')
+  m = doc.match('(is|was|had|would|should|could|do|does|have|has|can) not')
   setContraction(m, `n't`)
+  // i have -> i've
+  m = doc.match('(i|we|they) have')
+  setContraction(m, `'ve`)
   // would have -> would've
-  m = this.match('(would|should|could) have')
+  m = doc.match('(would|should|could) have')
   setContraction(m, `'ve`)
   // i am -> i'm
-  m = this.match('i am')
+  m = doc.match('i am')
   setContraction(m, `'m`)
   // going to -> gonna
-  m = this.match('going to')
+  m = doc.match('going to')
   return this
 }

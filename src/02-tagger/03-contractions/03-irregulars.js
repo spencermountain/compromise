@@ -14,7 +14,7 @@ const irregulars = {
   howd: ['how', 'did'],
   "what'd": ['what', 'did'],
   whatd: ['what', 'did'],
-  "let's": ['let', 'us'],
+  // "let's": ['let', 'us'], //too weird
 
   //multiple word contractions
   dunno: ['do', 'not', 'know'],

@@ -64,3 +64,8 @@ nlp('it is a UNESCO world heritage site')
   .acronyms()
   .text()
 ```
+
+```js
+let r = nlp(`paris, france`)
+r.topics().debug()
+```

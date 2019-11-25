@@ -19,7 +19,7 @@ const addMethod = function(Doc) {
           t.implicit = undefined
 
           //add whitespace
-          if (i < terms.length - 1) {
+          if (i < terms.length - 1 && t.post === '') {
             t.post += ' '
           }
         })
@@ -44,7 +44,7 @@ const addMethod = function(Doc) {
 
   Doc.prototype.contractions = function(n) {
     //find currently-contracted
-    let found = this.match('@hasContraction+')
+    let found = this.match('@hasContraction+') //(may want to split these up)
     //todo: split consecutive contractions
     if (typeof n === 'number') {
       found = found.get(n)

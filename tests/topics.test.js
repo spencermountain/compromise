@@ -37,9 +37,9 @@ test('topics-false-positives:', function(t) {
 })
 
 test('topics-basic', function(t) {
-  let doc = nlp('i went to Foo University in Paris, France, with John H. Smith')
+  let doc = nlp('i went to Gloop University in Paris, France, with John H. Smith')
   let arr = doc.topics().out('array')
-  t.deepEqual(arr, ['Foo University', 'Paris, France,', 'John H. Smith'], 'found all three topics')
+  t.deepEqual(arr, ['Gloop University', 'Paris, France,', 'John H. Smith'], 'found all three topics')
   t.end()
 })
 

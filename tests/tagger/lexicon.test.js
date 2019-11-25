@@ -54,13 +54,13 @@ test('root-in-lexicon:', function(t) {
 test('adjusted lexicon:', function(t) {
   //place new words
   let lexicon = {
-    paris: 'Person',
+    geneva: 'Person',
     lkjj: 'Adjective',
     'donkey kong': 'City',
   }
 
   const arr = [
-    ['paris is nice', '#Person #Copula #Adjective'],
+    ['geneva is nice', '#Person #Copula #Adjective'],
     ['he is lkjj', '#Pronoun #Copula #Adjective'],
     ['donkey kong wins the award', '#City #City #Verb #Determiner #Noun'],
   ]

@@ -2,6 +2,7 @@ const tagger = require('./tagger')
 const tags = require('./tags')
 const words = require('./words')
 const parse = require('./parse')
+const abbrevs = require('./abbrevs')
 
 const addMethods = function(Doc, world) {
   // our new tags
@@ -59,6 +60,20 @@ const addMethods = function(Doc, world) {
           }
           doc.replaceWith(str, true)
         }
+      })
+      return this
+    }
+    /** replace 'Fri' with 'Friday', etc*/
+    toLongForm() {
+      abbrevs.forEach(a => {
+        this.replace(a.short, a.long, true, true)
+      })
+      return this
+    }
+    /** replace 'Friday' with 'Fri', etc*/
+    toShortForm() {
+      abbrevs.forEach(a => {
+        this.replace(a.long, a.short, true, true)
       })
       return this
     }

@@ -2,10 +2,6 @@ const trimEnd = function(str) {
   return str.replace(/ +$/, '')
 }
 
-// const titleCase = str => {
-//   return str.charAt(0).toUpperCase() + str.substr(1)
-// }
-
 /** produce output in the given format */
 exports.text = function(options = {}, isFirst, isLast) {
   if (typeof options === 'string') {

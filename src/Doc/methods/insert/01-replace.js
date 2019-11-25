@@ -1,14 +1,22 @@
 const tokenize = require('../../../01-tokenizer')
 
+const titleCase = str => {
+  return str.charAt(0).toUpperCase() + str.substr(1)
+}
+
 /** substitute-in new content */
-exports.replaceWith = function(replace, keepTags) {
+exports.replaceWith = function(replace, keepTags, keepCase) {
   if (!replace) {
     return this.delete()
   }
   // clear the cache
   this.uncache()
   this.list.forEach(p => {
-    let newPhrases = tokenize.fromText(replace, this.world, this.pool())
+    let str = replace
+    if (keepCase === true && p.terms(0).isTitleCase()) {
+      str = titleCase(str)
+    }
+    let newPhrases = tokenize.fromText(str, this.world, this.pool())
     //tag the new phrases
     let tmpDoc = this.buildFrom(newPhrases)
     tmpDoc.tagger()
@@ -28,11 +36,11 @@ exports.replaceWith = function(replace, keepTags) {
 }
 
 /** search and replace match with new content */
-exports.replace = function(match, replace, keepTags) {
+exports.replace = function(match, replace, keepTags, keepCase) {
   // if there's no 2nd param, use replaceWith
   if (replace === undefined) {
     return this.replaceWith(match)
   }
-  this.match(match).replaceWith(replace, keepTags)
+  this.match(match).replaceWith(replace, keepTags, keepCase)
   return this
 }

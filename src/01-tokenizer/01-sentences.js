@@ -16,7 +16,7 @@ const hasSomething = /\S/
 const isAcronym = /[ .][A-Z]\.? *$/i
 const hasEllipse = /(?:\u2026|\.{2,}) *$/
 const newLine = /((?:\r?\n|\r)+)/ // Match different new-line formats
-const hasLetter = /[a-z\u00C0-\u00FF\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff]/i
+const hasLetter = /[a-z0-9\u00C0-\u00FF\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff]/i
 
 const startWhitespace = /^\s+/
 
@@ -107,7 +107,8 @@ const splitSentences = function(text, world) {
     //should this chunk be combined with the next one?
     if (chunks[i + 1] && isSentence(c, abbrevs) === false) {
       chunks[i + 1] = c + (chunks[i + 1] || '')
-    } else if (c && c.length > 0 && hasLetter.test(c)) {
+    } else if (c && c.length > 0) {
+      //&& hasLetter.test(c)
       //this chunk is a proper sentence..
       sentences.push(c)
       chunks[i] = ''

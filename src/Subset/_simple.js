@@ -42,9 +42,13 @@ methods.phoneNumbers = function(n) {
 
 /** return all cities, countries, addresses, and regions */
 methods.places = function(n) {
-  // let split = this.not('(#City && @hasComma) #Region').match('@hasComma')
-  // let m = this.splitOn(split)
-  let m = this.splitAfter('@hasComma')
+  // don't split 'paris, france'
+  let keep = this.match('(#City && @hasComma) (#Region|#Country)')
+  // but split the other commas
+  let m = this.not(keep).splitAfter('@hasComma')
+  // combine them back together
+  m = m.concat(keep)
+  m.sort('index')
   m = m.match('#Place+')
   if (typeof n === 'number') {
     m = m.get(n)

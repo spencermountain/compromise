@@ -29,3 +29,9 @@ test('em-dash, en-dash', function(t) {
   t.equal(doc.terms().length, 3, 'em-dash-num')
   t.end()
 })
+
+test('emoji-only sentence', function(t) {
+  let doc = nlp('good night! 💋')
+  t.equal(doc.length, 2, 'boemojith sentence')
+  t.end()
+})

@@ -20,6 +20,6 @@ nlp.extend(require('./plugins/numbers/src'))
 // let doc = nlp('Tony is, i think').contract()
 // console.log(doc.text())
 
-nlp('good night! 💋')
-  // .emojis()
+let doc = nlp(`hello from Toronto. paris, france`)
+  .places()
   .debug()

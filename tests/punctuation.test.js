@@ -32,3 +32,16 @@ test('normalize question mark', function(t) {
 //   t.equal(doc.text(), 'one two three four five six.', 'normal out-3')
 //   t.end()
 // })
+
+test('toParentheses', function(t) {
+  let doc = nlp(`you could still go to McGill, the Harvard of Canada!`)
+  doc.match('the harvard of #Place').toParentheses()
+  t.equal(doc.text(), 'you could still go to McGill, (the Harvard of Canada)!', 'toparentheses')
+  t.end()
+})
+test('toQuotation', function(t) {
+  let doc = nlp(`you could still go to McGill, the Harvard of Canada!`)
+  doc.match('harvard of #Place').toQuotation()
+  t.equal(doc.text(), 'you could still go to McGill, the "Harvard of Canada"!', 'toparentheses')
+  t.end()
+})

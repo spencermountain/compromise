@@ -369,6 +369,8 @@ _(all match methods use the [match-syntax](https://docs.compromise.cool/compromi
 - **[.trim()](https://observablehq.com/@spencermountain/compromise-whitespace)** - remove start and end whitespace
 - **[.hyphenate()](https://observablehq.com/@spencermountain/compromise-whitespace)** - connect words with hyphen, and remove whitespace
 - **[.dehyphenate()](https://observablehq.com/@spencermountain/compromise-whitespace)** - remove hyphens between words, and set whitespace
+- **[.toQuotations()](https://observablehq.com/@spencermountain/compromise-whitespace)** - add quotation marks around these matches
+- **[.toParentheses()](https://observablehq.com/@spencermountain/compromise-whitespace)** - add brackets around these matches
 
 ##### Tag
 
@@ -437,6 +439,7 @@ _(all match methods use the [match-syntax](https://docs.compromise.cool/compromi
 
 - **[.contractions()](https://observablehq.com/@spencermountain/compromise-contractions)** - things like "didn't"
 - **[.contractions().expand()](https://observablehq.com/@spencermountain/compromise-contractions)** - things like "didn't"
+- **[.contract()](https://observablehq.com/@spencermountain/compromise-contractions)** - `"she would"` -> `"she'd"`
 - **[.parentheses()](https://observablehq.com/@spencermountain/compromise-selections)** - return anything inside (parentheses)
 - **[.possessives()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `"Spencer's"`
 - **[.quotations()](https://observablehq.com/@spencermountain/compromise-selections)** - return any terms inside quotation marks

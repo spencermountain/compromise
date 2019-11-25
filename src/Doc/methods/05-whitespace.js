@@ -66,3 +66,30 @@ exports.dehyphenate = function() {
   })
   return this
 }
+
+/** add quotations around these matches */
+exports.toQuotations = function(start, end) {
+  start = start || `"`
+  end = end || `"`
+  this.list.forEach(p => {
+    let terms = p.terms()
+    terms[0].pre = start + terms[0].pre
+    let last = terms[terms.length - 1]
+    last.post = end + last.post
+  })
+  return this
+}
+exports.toQuotation = exports.toQuotations
+
+/** add brackets around these matches */
+exports.toParentheses = function(start, end) {
+  start = start || `(`
+  end = end || `)`
+  this.list.forEach(p => {
+    let terms = p.terms()
+    terms[0].pre = start + terms[0].pre
+    let last = terms[terms.length - 1]
+    last.post = end + last.post
+  })
+  return this
+}

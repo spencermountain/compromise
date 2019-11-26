@@ -41,20 +41,51 @@ const addMethod = function(Doc) {
 
     toPastTense() {
       this.forEach(doc => {
-        // let res = parse(doc)
-        // let txt = res.verb.text('normal')
-        doc.replace('am', 'was')
-        // m.debug()
-        // m.replaceWith('sat') //FIXME:
+        let obj = parse(doc)
+        let vb = obj.verb.clone()
+        vb = vb.verbs().toPastTense()
+        obj.verb.replaceWith(vb.text(), true, true)
       })
       return this
     }
-    toPresentTense() {}
-    toFutureTense() {}
+    toPresentTense() {
+      this.forEach(doc => {
+        let obj = parse(doc)
+        let vb = obj.verb.clone()
+        vb = vb.verbs().toPresentTense()
+        obj.verb.replaceWith(vb.text(), true, true)
+      })
+      return this
+    }
+    toFutureTense() {
+      this.forEach(doc => {
+        let obj = parse(doc)
+        let vb = obj.verb.clone()
+        vb = vb.verbs().toFutureTense()
+        obj.verb.replaceWith(vb.text(), true, true)
+      })
+      return this
+    }
     toContinuous() {}
 
-    toNegative() {}
-    toPositive() {}
+    toNegative() {
+      this.forEach(doc => {
+        let obj = parse(doc)
+        let vb = obj.verb.clone()
+        vb = vb.verbs().toNegative()
+        obj.verb.replaceWith(vb.text(), true, true)
+      })
+      return this
+    }
+    toPositive() {
+      this.forEach(doc => {
+        let obj = parse(doc)
+        let vb = obj.verb.clone()
+        vb = vb.verbs().toPositive()
+        obj.verb.replaceWith(vb.text(), true, true)
+      })
+      return this
+    }
 
     isPassive() {
       return this.has('was #Adverb? #PastTense #Adverb? by') //haha
@@ -117,7 +148,7 @@ const addMethod = function(Doc) {
   }
 
   Doc.prototype.sentences = function(n) {
-    let match = this //.all()
+    let match = this.all()
 
     //grab (n)th result
     if (typeof n === 'number') {

@@ -20,6 +20,10 @@ class Pool {
   remove(id) {
     delete this.words[id]
   }
+  merge(pool) {
+    Object.assign(this.words, pool.words)
+    return this
+  }
   /** helper method */
   stats() {
     return {

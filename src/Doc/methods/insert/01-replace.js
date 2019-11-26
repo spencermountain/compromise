@@ -13,18 +13,28 @@ exports.replaceWith = function(replace, keepTags, keepCase) {
   this.uncache()
   // return this
   this.list.forEach(p => {
-    let str = replace
+    let input = replace
     // accept a function for replace
     if (typeof replace === 'function') {
-      str = replace(p)
+      input = replace(p)
     }
-    if (keepCase === true && p.terms(0).isTitleCase()) {
-      str = titleCase(str)
+    let newPhrases
+    // accept a Doc object to replace
+    if (input && typeof input === 'object' && input.isA === 'Doc') {
+      newPhrases = input.list
+      this.pool().merge(input.pool())
+    } else if (typeof input === 'string') {
+      //input is a string
+      if (keepCase === true && p.terms(0).isTitleCase()) {
+        input = titleCase(input)
+      }
+      newPhrases = tokenize.fromText(input, this.world, this.pool())
+      //tag the new phrases
+      let tmpDoc = this.buildFrom(newPhrases)
+      tmpDoc.tagger()
+    } else {
+      return //don't even bother
     }
-    let newPhrases = tokenize.fromText(str, this.world, this.pool())
-    //tag the new phrases
-    let tmpDoc = this.buildFrom(newPhrases)
-    tmpDoc.tagger()
 
     // try to keep its old tags, if appropriate
     if (keepTags === true) {

@@ -7,6 +7,12 @@ test('misc sentences', function(t) {
 
   doc = nlp(`john, bill, and joe. Here we go. Must be three now.`)
   t.equal(doc.sentences().length, 3, 'found three sentences')
+
+  let d = nlp(`i am good`)
+  let s = d.sentences()
+  s.replace('am', 'was')
+  t.equal(d.text(), 'i was good', 'tricky map replace bug')
+
   t.end()
 })
 

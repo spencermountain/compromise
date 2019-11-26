@@ -14,7 +14,15 @@ export default [
         format: 'esm',
       },
     ],
-    plugins: [resolve(), json(), commonjs()],
+    plugins: [
+      resolve(),
+      json(),
+      commonjs(),
+      babel({
+        babelrc: false,
+        presets: ['@babel/preset-env'],
+      }),
+    ],
   },
   {
     input: 'src/index.js',

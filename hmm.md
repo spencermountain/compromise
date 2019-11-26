@@ -1,12 +1,4 @@
 ```js
-// blocking .sentences() methods
-let r = nlp(`i am good`)
-let s = r.sentences()
-s.replace('am', 'was')
-r.debug()
-```
-
-```js
 //bad greedy match issue
 nlp(`wayne's world, party time`)
   .match('#Noun+? wayne')

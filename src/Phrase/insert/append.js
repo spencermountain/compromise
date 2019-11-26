@@ -51,26 +51,44 @@ const stitchIn = function(main, newPhrase) {
   // main.length += newPhrase.length
 }
 
+// const stitchParent=function(doc){}
+
+// avoid stretching a phrase twice.
 const unique = function(list) {
+  // let obj = {}
+  // list = list.filter(p => {
+  //   let id = p.start + '_' + p.length
+  //   if (obj[id] === true) {
+  //     return false
+  //   }
+  //   obj[id] = true
+  //   return true
+  // })
+  // console.log(list.length)
+  // return list
+  // console.log(list)
   return list.filter((o, i) => {
     return list.indexOf(o) === i
   })
 }
 
-//append one phrase onto another
-const appendPhrase = function(main, newPhrase, doc) {
-  let beforeTerms = main.terms()
+//append one phrase onto another.
+const appendPhrase = function(before, newPhrase, doc) {
+  let beforeTerms = before.terms()
   //spruce-up the whitespace issues
   addWhitespace(beforeTerms, newPhrase.terms())
   //insert this segment into the linked-list
-  stitchIn(main, newPhrase)
+  stitchIn(before, newPhrase)
 
   // stretch!
   // make each effected phrase longer
-  let toStretch = [main]
-  let hasId = main.start
+  let toStretch = [before]
+  let hasId = before.start
   let docs = [doc]
+  // console.log(before.text())
+
   docs = docs.concat(doc.parents()) // find them all!
+  // console.log(docs)
   docs.forEach(parent => {
     // only the phrases that should change
     let shouldChange = parent.list.filter(p => {
@@ -80,9 +98,16 @@ const appendPhrase = function(main, newPhrase, doc) {
   })
   // don't double-count a phrase
   toStretch = unique(toStretch)
+  // console.log(toStretch)
   toStretch.forEach(p => {
     p.length += newPhrase.length
   })
-  return main
+  // let from = doc.from
+  // from.debug()
+  // console.log(from.list[0].terms(0).next)
+  // console.log(before)
+  // console.log(doc.parents().map(d => d.text()))
+  // toStretch.forEach(p => console.log(p.text()))
+  return before
 }
 module.exports = appendPhrase

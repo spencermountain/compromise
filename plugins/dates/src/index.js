@@ -14,6 +14,10 @@ const addMethods = function(Doc, world) {
 
   /**  */
   class Dates extends Doc {
+    constructor(list, from, w) {
+      super(list, from, w)
+      this.context = {}
+    }
     /** overload the original json with noun information */
     json(options) {
       let n = null
@@ -23,11 +27,12 @@ const addMethods = function(Doc, world) {
       }
       options = options || { terms: false }
       let res = []
+      let format = options.format || 'iso'
       this.forEach(doc => {
         let json = doc.json(options)[0]
-        let obj = parse(doc)
-        let start = obj.start ? obj.start.format('iso') : null
-        let end = obj.end ? obj.end.format('iso') : null
+        let obj = parse(doc, this.context)
+        let start = obj.start ? obj.start.format(format) : null
+        let end = obj.end ? obj.end.format(format) : null
         // set iso strings to json result
         json.date = {
           start: start,
@@ -51,7 +56,7 @@ const addMethods = function(Doc, world) {
     /** render all dates according to a specific format */
     format(fmt) {
       this.forEach(doc => {
-        let obj = parse(doc)
+        let obj = parse(doc, this.context)
         let str = ''
         if (obj.start) {
           str = obj.start.format(fmt)
@@ -80,6 +85,11 @@ const addMethods = function(Doc, world) {
   }
 
   Doc.prototype.dates = function(n) {
+    let context = {}
+    if (n && typeof n === 'object') {
+      context = n
+      n = null
+    }
     let r = this.clauses()
     let dates = r.match('#Date+')
     if (typeof n === 'number') {
@@ -88,7 +98,9 @@ const addMethods = function(Doc, world) {
     if (typeof n === 'number') {
       dates = dates.get(n)
     }
-    return new Dates(dates.list, this, this.world)
+    let d = new Dates(dates.list, this, this.world)
+    d.context = context
+    return d
   }
 }
 

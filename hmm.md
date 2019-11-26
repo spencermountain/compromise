@@ -1,5 +1,13 @@
 ```js
-//Priority bug:
+// blocking .sentences() methods
+let r = nlp(`i am good`)
+let s = r.sentences()
+s.replace('am', 'was')
+r.debug()
+```
+
+```js
+//bad greedy match issue
 nlp(`wayne's world, party time`)
   .match('#Noun+? wayne')
   .debug()
@@ -44,21 +52,8 @@ let names = doc.clauses().split()
 let json = names.syllables()
 ```
 
-phone number missing
-
-```js
-nlp(`That’s right. I’m a surgeon. (800) 555-0000.`)
-  .phoneNumbers()
-  .out('array')
-```
-
 ```js
 nlp('it is a UNESCO world heritage site')
   .acronyms()
   .text()
-```
-
-```js
-let r = nlp(`paris, france`)
-r.topics().debug()
 ```

@@ -1,15 +1,20 @@
 //recursively decrease the length of all the parent phrases
 const shrinkAll = function(doc, id, deleteLength, after) {
-  //find our phrase to shrink
-  let phrase = doc.list.find(p => p.hasId(id))
-  if (phrase !== undefined) {
-    phrase.length -= deleteLength
+  let arr = doc.parents()
+  arr.push(doc)
 
-    //does it start with this soon-removed word?
+  arr.forEach(d => {
+    //find our phrase to shrink
+    let phrase = d.list.find(p => p.hasId(id))
+    if (!phrase) {
+      return
+    }
+    phrase.length -= deleteLength
+    // does it start with this soon-removed word?
     if (phrase.start === id) {
       phrase.start = after.id
     }
-  }
+  })
   // cleanup empty phrase objects
   doc.list = doc.list.filter(p => {
     if (!p.start || !p.length) {
@@ -17,10 +22,6 @@ const shrinkAll = function(doc, id, deleteLength, after) {
     }
     return true
   })
-  // keep going!
-  if (doc.from) {
-    shrinkAll(doc.from, id, deleteLength, after)
-  }
 }
 
 /** wrap the linked-list around these terms
@@ -53,7 +54,7 @@ const deletePhrase = function(phrase, doc) {
 
   // lastly, actually delete the terms from the pool?
   // for (let i = 0; i < terms.length; i++) {
-  // pool.remove(terms[i].id)
+  //   pool.remove(terms[i].id)
   // }
 }
 module.exports = deletePhrase

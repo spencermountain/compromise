@@ -4,6 +4,7 @@ const addMethod = function(Doc) {
   /**  */
   class Sentences extends Doc {
     constructor(list, from, world) {
+      list = list.map(p => p.clone(true))
       super(list, from, world)
     }
 
@@ -42,9 +43,9 @@ const addMethod = function(Doc) {
       this.forEach(doc => {
         // let res = parse(doc)
         // let txt = res.verb.text('normal')
-        let m = doc.match('walked')
-        m.debug()
-        m.replaceWith('sat') //FIXME:
+        doc.replace('am', 'was')
+        // m.debug()
+        // m.replaceWith('sat') //FIXME:
       })
       return this
     }
@@ -116,7 +117,7 @@ const addMethod = function(Doc) {
   }
 
   Doc.prototype.sentences = function(n) {
-    let match = this.all()
+    let match = this //.all()
 
     //grab (n)th result
     if (typeof n === 'number') {

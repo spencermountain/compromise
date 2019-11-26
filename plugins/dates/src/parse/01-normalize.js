@@ -5,7 +5,9 @@ const normalize = function(doc) {
     console.warn("Compromise: compromise-dates cannot find plugin dependency 'compromise-number'")
   } else {
     // convert 'two' to 2
-    doc.numbers().toNumber()
+    let num = doc.numbers()
+    num.toNumber()
+    num.toCardinal()
   }
   // remove adverbs
   doc.adverbs().remove()

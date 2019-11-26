@@ -1,6 +1,12 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
+let d = Date.now()
+d.setFullYear(2019)
+const config = {
+  now: d,
+}
+
 test('date-parse :', function(t) {
   ;[
     ['june 5th 1999', [5, 5, 1999]],
@@ -39,9 +45,10 @@ test('date-parse :', function(t) {
     // ['January 5th 4032', [0, 5, null]],
   ].forEach(function(a) {
     let arr = nlp(a[0])
-      .dates()
-      .data()
-    let o = arr[0].date
+      .dates(config)
+      .json({ format: 'json' })
+
+    let o = (arr[0].date || {}).start || {}
     let got = [o.month, o.date, o.year]
     let msg = 'date "' + a[0] + '"  got: [' + got.join(',') + ']  want: [' + a[1].join(',') + ']'
     t.deepEqual(got, a[1], msg)

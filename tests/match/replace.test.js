@@ -96,6 +96,17 @@ test('replace over implict', function(t) {
   t.end()
 })
 
+test('replace-with-Doc', function(t) {
+  let b = nlp('sneaks').tag('Cool')
+
+  let doc = nlp(`john walks quickly`)
+
+  doc.match('walks').replaceWith(b)
+  t.equal(doc.text(), 'john sneaks quickly')
+  t.equal(doc.has('#Cool'), true)
+  t.end()
+})
+
 test('replace-with-function', function(t) {
   const repl = p => {
     if (p.has('john')) {

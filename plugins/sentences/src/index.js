@@ -38,55 +38,62 @@ const addMethod = function(Doc) {
         return res.subject
       })
     }
-
+    /** he walks -> he walked */
     toPastTense() {
       this.forEach(doc => {
         let obj = parse(doc)
         let vb = obj.verb.clone()
         vb = vb.verbs().toPastTense()
-        obj.verb.replaceWith(vb.text(), true, true)
+        obj.verb.replaceWith(vb, false, true)
       })
       return this
     }
+    /** he walked -> he walks */
     toPresentTense() {
       this.forEach(doc => {
         let obj = parse(doc)
         let vb = obj.verb.clone()
         vb = vb.verbs().toPresentTense()
-        obj.verb.replaceWith(vb.text(), true, true)
+        obj.verb.replaceWith(vb, false, true)
       })
       return this
     }
+    /** he walks -> he will walk */
     toFutureTense() {
       this.forEach(doc => {
         let obj = parse(doc)
         let vb = obj.verb.clone()
         vb = vb.verbs().toFutureTense()
-        obj.verb.replaceWith(vb.text(), true, true)
+        obj.verb.replaceWith(vb, false, true)
       })
       return this
     }
-    toContinuous() {}
 
+    // toContinuous() {
+    //   return this
+    // }
+    /** he walks -> he did not walk */
     toNegative() {
       this.forEach(doc => {
         let obj = parse(doc)
         let vb = obj.verb.clone()
         vb = vb.verbs().toNegative()
-        obj.verb.replaceWith(vb.text(), true, true)
+        obj.verb.replaceWith(vb, false, true)
       })
       return this
     }
+    /** he doesn't walk -> he walks */
     toPositive() {
       this.forEach(doc => {
         let obj = parse(doc)
         let vb = obj.verb.clone()
         vb = vb.verbs().toPositive()
-        obj.verb.replaceWith(vb.text(), true, true)
+        obj.verb.replaceWith(vb, false, true)
       })
       return this
     }
 
+    /** return sentences that are in passive-voice */
     isPassive() {
       return this.has('was #Adverb? #PastTense #Adverb? by') //haha
     }
@@ -142,9 +149,18 @@ const addMethod = function(Doc) {
       })
     }
 
-    toExclamation() {}
-    toQuestion() {}
-    toStatement() {}
+    /** 'he is.' -> 'he is!' */
+    toExclamation() {
+      return this
+    }
+    /** 'he is.' -> 'he is?' */
+    toQuestion() {
+      return this
+    }
+    /** 'he is?' -> 'he is.' */
+    toStatement() {
+      return this
+    }
   }
 
   Doc.prototype.sentences = function(n) {

@@ -11,7 +11,14 @@ test('sanity-check case:', function(t) {
   t.equal(str, 'john xoo, john fredman', 'lowercase')
 
   str = r.toCamelCase().out('text')
-  t.equal(str, 'JohnXooJohnFredman', 'camelcase') //removes comma
+  t.equal(str, 'johnXooJohnFredman', 'camelcase') //removes comma
+  t.end()
+})
+
+test('camel case:', function(t) {
+  let doc = nlp('and check this out! a walk-in microwave.')
+  doc.hyphenated().toCamelCase()
+  t.equal(doc.text(), 'and check this out! a walkIn microwave.', 'hyphenated-camelcase')
   t.end()
 })
 

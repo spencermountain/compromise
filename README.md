@@ -203,13 +203,9 @@ Use it on the client-side:
 ```html
 <script src="https://unpkg.com/compromise"></script>
 <script>
-  var doc = nlp('dinosaur')
-  var str = doc
-    .nouns()
-    .toPlural()
-    .text()
-  console.log(str)
-  // 'dinosaurs'
+  var doc = nlp('hey, has anyone here seen Mya Normisbutt?')
+  var arr = doc.people().json()
+  // [{text:'Mya Normisbutt'}]
 </script>
 ```
 

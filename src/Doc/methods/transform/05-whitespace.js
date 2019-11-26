@@ -66,6 +66,7 @@ exports.dehyphenate = function() {
   })
   return this
 }
+exports.deHyphenate = exports.dehyphenate
 
 /** add quotations around these matches */
 exports.toQuotations = function(start, end) {

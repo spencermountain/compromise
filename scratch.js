@@ -30,7 +30,11 @@ nlp.extend(require('./plugins/output/src'))
 
 //json `unique:true`
 
-let doc = nlp(`What'd I say? Monorail. What's it called? Monorail.`)
-console.log(doc.out('freq'))
+// let doc = nlp(`What'd I say? Monorail. What's it called? Monorail.`)
+// console.log(doc.out('freq'))
 
+let doc = nlp('and check this out! a walk-in microwave.')
+doc.hyphenated().toCamelCase()
+console.log(doc.text())
 // console.log(o)
+// nlp("hey guys, do I have a Bee Oproblem?").sentences().append('here').text()

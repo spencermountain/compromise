@@ -101,6 +101,8 @@ Once the plugin is applied, things should work just as normal.
 
 - removed no-longer-needed `prefix_` and `_suffix` operators from match syntax
 
+- `.toCamelCase()` no-longer capitalizes char[0]. Run `.toCamelCase().toTitleCase()` for this.
+
 ### non-breaking changes:
 
 #### New Methods:

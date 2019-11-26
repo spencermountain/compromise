@@ -1079,6 +1079,7 @@ module.exports = [
   'merissa',
   'meryl',
   'mia',
+  'mya',
   'michaela',
   'michele',
   'michelle',

@@ -23,11 +23,13 @@ exports.toTitleCase = function() {
 }
 /** remove whitespace and title-case each term */
 exports.toCamelCase = function() {
-  this.toTitleCase()
   this.list.forEach(p => {
     //remove whitespace
     let terms = p.terms()
     terms.forEach((t, i) => {
+      if (i !== 0) {
+        t.toTitleCase()
+      }
       if (i !== terms.length - 1) {
         t.post = ''
       }

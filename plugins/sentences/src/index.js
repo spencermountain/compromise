@@ -95,7 +95,7 @@ const addMethod = function(Doc) {
 
     /** return sentences that are in passive-voice */
     isPassive() {
-      return this.has('was #Adverb? #PastTense #Adverb? by') //haha
+      return this.if('was #Adverb? #PastTense #Adverb? by') //haha
     }
     /** return sentences ending with '?' */
     isQuestion() {

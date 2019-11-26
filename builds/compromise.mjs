@@ -3091,7 +3091,7 @@ var _01Tokenizer = {
   fromJSON: fromJSON
 };
 
-var _version = '12.0.0-rc1';
+var _version = '12.0.0-rc2';
 
 var _data = {
   "Comparative": "true¦better",

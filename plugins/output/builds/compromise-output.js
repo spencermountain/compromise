@@ -341,7 +341,7 @@
   var htm = getCjsExportFromNamespace(htm_module$1);
 
   function _templateObject2() {
-    var data = _taggedTemplateLiteral(["<div>", "</div>"]);
+    var data = _taggedTemplateLiteral(["<pre>", "</pre>"]);
 
     _templateObject2 = function _templateObject2() {
       return data;
@@ -351,7 +351,7 @@
   }
 
   function _templateObject() {
-    var data = _taggedTemplateLiteral(["<span>", "</span>"]);
+    var data = _taggedTemplateLiteral(["<span class=", ">", "</span>"]);
 
     _templateObject = function _templateObject() {
       return data;
@@ -360,7 +360,7 @@
     return data;
   }
 
-  var toHtml = function toHtml(doc, options) {
+  var toHtml = function toHtml(doc, segments, options) {
     var h = htm.bind(vhtml);
 
     if (options.bind) {
@@ -368,12 +368,10 @@
     }
 
     var html = [];
-    doc.list.forEach(function (p) {
-      var text = '';
-      p.terms().forEach(function (t) {
-        text += t.pre + t.text + t.post;
-      });
-      html.push(h(_templateObject(), text));
+    var arr = doc.segment(segments);
+    arr.forEach(function (o) {
+      var str = h(_templateObject(), o.segment, o.text);
+      html.push(str);
     });
     return h(_templateObject2(), html);
   };
@@ -389,8 +387,9 @@
 
 
     Doc.prototype.html = function () {
-      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      return html(this, options);
+      var segments = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      return html(this, segments, options);
     };
   };
 

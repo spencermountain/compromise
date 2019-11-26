@@ -24,6 +24,7 @@ test('hash output', function(t) {
 
 test('html output', function(t) {
   let doc = nlp('i <3 you')
-  t.equal(doc.html(), '<div><span>i &lt;3 you</span></div>', 'html escaped')
+  t.equal(doc.html(), '<pre><span>i &lt;3 you</span></pre>', 'html escaped')
+  doc = nlp()
   t.end()
 })

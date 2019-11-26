@@ -8,8 +8,8 @@ const addMethods = function(Doc) {
   }
 
   /** generate sanitized html from the document */
-  Doc.prototype.html = function(options = {}) {
-    return toHtml(this, options)
+  Doc.prototype.html = function(segments = {}, options = {}) {
+    return toHtml(this, segments, options)
   }
 }
 module.exports = addMethods

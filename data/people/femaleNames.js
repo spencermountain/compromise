@@ -148,7 +148,6 @@ module.exports = [
   'audry',
   'augustina',
   'aurelia',
-  'aurora',
   'ava',
   'avril',
   'ayana',

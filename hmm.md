@@ -49,3 +49,30 @@ nlp('it is a UNESCO world heritage site')
   .acronyms()
   .text()
 ```
+
+trailing whitespace
+
+```js
+let doc = nlp('The   children are right to laugh at you,  Rälf.  ')
+doc.text('reduced')
+```
+
+possessive, sentence period
+
+```js
+nlp(`Wayne's World, party-time, excellent!! `).text('reduced')
+nlp(`Wayne's World, party-time, excellent!! `).text('root')
+```
+
+freq out
+
+```js
+let doc = nlp(`What'd I say? Monorail. What's it called? Monorail.`)
+console.log(doc.terms().out('freq'))
+```
+
+```js
+nlp(`Kwazy-Clown Airlines`)
+  .organizations()
+  .debug()
+```

@@ -9,7 +9,7 @@
   </a>
   
   <!-- file size -->
-  <a href="https://unpkg.com/spacetime/builds/compromise-output.min.js">
+  <a href="https://unpkg.com/compromise-output/builds/compromise-output.min.js">
     <img src="https://badge-size.herokuapp.com/spencermountain/compromise-output/master/builds/compromise-output.min.js" />
   </a>
    <hr/>

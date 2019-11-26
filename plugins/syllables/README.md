@@ -9,7 +9,7 @@
   </a>
   
   <!-- file size -->
-  <a href="https://unpkg.com/spacetime/builds/compromise-syllables.min.js">
+  <a href="https://unpkg.com/compromise-syllables/builds/compromise-syllables.min.js">
     <img src="https://badge-size.herokuapp.com/spencermountain/compromise-syllables/master/builds/compromise-syllables.min.js" />
   </a>
    <hr/>

@@ -24,7 +24,10 @@ exports.out = function(method) {
     return this.json({ terms: false }).map(obj => obj.text)
   }
   if (method === 'freq') {
-    return this.json({ count: true, terms: false, reduced: true })
+    let arr = this.json({ count: true, terms: false, reduced: true, unique: true })
+    arr.forEach(o => delete o.text)
+    // combine results
+    return arr
   }
   if (method === 'terms') {
     let list = []
@@ -34,6 +37,14 @@ exports.out = function(method) {
       list = list.concat(terms)
     })
     return list
+  }
+  if (method === 'tags') {
+    return this.list.map(p => {
+      return p.terms().reduce((h, t) => {
+        h[t.clean || t.implicit] = Object.keys(t.tags)
+        return h
+      }, {})
+    })
   }
   if (method === 'debug') {
     debug(this)

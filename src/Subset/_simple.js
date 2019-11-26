@@ -4,7 +4,7 @@ let methods = {}
 const arr = [
   ['terms', '.'],
   ['hyphenated', '@hasHyphen .'],
-  // ['adjectives', '#Adjective'],
+  ['adjectives', '#Adjective'],
   ['hashTags', '#HashTag'],
   ['emails', '#Email'],
   ['emoji', '#Emoji'],
@@ -29,6 +29,7 @@ arr.forEach(a => {
 // aliases
 methods.emojis = methods.emoji
 methods.atmentions = methods.atMentions
+methods.words = methods.terms
 
 /** return anything tagged as a phone number */
 methods.phoneNumbers = function(n) {
@@ -86,5 +87,10 @@ methods.entities = function(n) {
 //aliases
 methods.things = methods.entities
 methods.topics = methods.entities
+
+/** alias for .all() until it gets overloaded by plugin */
+methods.sentences = function() {
+  return this.all()
+}
 
 module.exports = methods

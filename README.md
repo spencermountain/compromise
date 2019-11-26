@@ -591,22 +591,21 @@ this plugin creates a wrapper around the default sentence objects.
 - **[.sentences()](#)** - return a sentence class with additional methods
   - **[.sentences().json()](#)** - overloaded output with sentence metadata
   - **[.sentences().subjects()](#)** - return the main noun of each sentence
-  - **[.sentences().toPastTense()](#)** -
-  - **[.sentences().toPresentTense()](#)** -
-  - **[.sentences().toFutureTense()](#)** -
-  - **[.sentences().toContinuous()](#)** -
-  - **[.sentences().toNegative()](#)** -
-  - **[.sentences().toPositive()](#)** -
-  - **[.sentences().isPassive()](#)** -
+  - **[.sentences().toPastTense()](#)** - `he walks` -> `he walked`
+  - **[.sentences().toPresentTense()](#)** - `he walked` -> `he walks`
+  - **[.sentences().toFutureTense()](#)** -- `he walks` -> `he will walk`
+  - **[.sentences().toNegative()](#)** - - `he walks` -> `he didn't walk`
+  - **[.sentences().toPositive()](#)** - `he doesn't walk` -> `he walks`
+  - **[.sentences().isPassive()](#)** - return only sentences with a passive-voice
   - **[.sentences().isQuestion()](#)** - return questions with a `?`
   - **[.sentences().isExclamation()](#)** - return sentences with a `!`
   - **[.sentences().isStatement()](#)** - return sentences without `?` or `!`
   - **[.sentences().prepend()](#)** - smarter prepend that repairs whitespace + titlecasing
   - **[.sentences().append()](#)** - smarter append that repairs sentence punctuation
-  - **[.sentences().toExclamation()](#)** -
-  - **[.sentences().toQuestion()](#)** -
-  - **[.sentences().toStatement()](#)** -
-  -
+  - **[.sentences().toExclamation()](#)** - end sentence with a `!`
+  - **[.sentences().toQuestion()](#)** - end sentence with a `?`
+  - **[.sentences().toStatement()](#)** - end sentence with a `.`
+    <!-- - **[.sentences().toContinuous()](#)** - -->
 
 ##### Syllables
 

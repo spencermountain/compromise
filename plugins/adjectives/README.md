@@ -9,7 +9,7 @@
   </a>
   
   <!-- file size -->
-  <a href="https://unpkg.com/spacetime/builds/compromise-adjectives.min.js">
+  <a href="https://unpkg.com/compromise-adjectives/builds/compromise-adjectives.min.js">
     <img src="https://badge-size.herokuapp.com/spencermountain/compromise-adjectives/master/builds/compromise-adjectives.min.js" />
   </a>
    <hr/>

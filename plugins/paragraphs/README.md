@@ -9,7 +9,7 @@
   </a>
   v
   <!-- file size -->
-  <a href="https://unpkg.com/spacetime/builds/compromise-paragraphs.min.js">
+  <a href="https://unpkg.com/compromise-paragraphs/builds/compromise-paragraphs.min.js">
     <img src="https://badge-size.herokuapp.com/spencermountain/compromise-paragraphs/master/builds/compromise-paragraphs.min.js" />
   </a>
    <hr/>

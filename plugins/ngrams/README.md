@@ -9,7 +9,7 @@
   </a>
   
   <!-- file size -->
-  <a href="https://unpkg.com/spacetime/builds/compromise-ngrams.min.js">
+  <a href="https://unpkg.com/compromise-ngrams/builds/compromise-ngrams.min.js">
     <img src="https://badge-size.herokuapp.com/spencermountain/compromise-ngrams/master/builds/compromise-ngrams.min.js" />
   </a>
    <hr/>

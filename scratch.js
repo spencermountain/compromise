@@ -28,16 +28,9 @@ nlp.extend(require('./plugins/output/src'))
 //   .toFutureTense()
 // .debug()
 
-let m = nlp(`i walked to the moon when it was shining. 
+//json `unique:true`
 
-It was blue.`)
-// m.verbs().toPastTense()
-// m.debug()
-console.log(
-  m.html({
-    'the moon': 'red',
-  })
-)
+let doc = nlp(`What'd I say? Monorail. What's it called? Monorail.`)
+console.log(doc.out('freq'))
 
-// m.toPresentTense()
-// m.toFutureTense()
+// console.log(o)

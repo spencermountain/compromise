@@ -28,6 +28,8 @@ doc.sentences().length
 // 3
 ```
 
+### [Demo](https://observablehq.com/@spencermountain/compromise-sentences)
+
 ### API
 
 - **[.sentences()](#)** - return a sentence class with additional methods

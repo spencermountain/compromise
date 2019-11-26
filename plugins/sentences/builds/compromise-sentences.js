@@ -150,6 +150,9 @@
       function Sentences(list, from, world) {
         _classCallCheck(this, Sentences);
 
+        list = list.map(function (p) {
+          return p.clone(true);
+        });
         return _possibleConstructorReturn(this, _getPrototypeOf(Sentences).call(this, list, from, world));
       }
       /** overload the original json with noun information */
@@ -197,33 +200,76 @@
             return res.subject;
           });
         }
+        /** he walks -> he walked */
+
       }, {
         key: "toPastTense",
         value: function toPastTense() {
           this.forEach(function (doc) {
-            // let res = parse(doc)
-            // let txt = res.verb.text('normal')
-            var m = doc.match('walked');
-            m.debug();
-            m.replaceWith('sat');
+            var obj = parse_1(doc);
+            var vb = obj.verb.clone();
+            vb = vb.verbs().toPastTense();
+            obj.verb.replaceWith(vb, false, true);
           });
           return this;
         }
+        /** he walked -> he walks */
+
       }, {
         key: "toPresentTense",
-        value: function toPresentTense() {}
+        value: function toPresentTense() {
+          this.forEach(function (doc) {
+            var obj = parse_1(doc);
+            var vb = obj.verb.clone();
+            vb = vb.verbs().toPresentTense();
+            obj.verb.replaceWith(vb, false, true);
+          });
+          return this;
+        }
+        /** he walks -> he will walk */
+
       }, {
         key: "toFutureTense",
-        value: function toFutureTense() {}
-      }, {
-        key: "toContinuous",
-        value: function toContinuous() {}
+        value: function toFutureTense() {
+          this.forEach(function (doc) {
+            var obj = parse_1(doc);
+            var vb = obj.verb.clone();
+            vb = vb.verbs().toFutureTense();
+            obj.verb.replaceWith(vb, false, true);
+          });
+          return this;
+        } // toContinuous() {
+        //   return this
+        // }
+
+        /** he walks -> he did not walk */
+
       }, {
         key: "toNegative",
-        value: function toNegative() {}
+        value: function toNegative() {
+          this.forEach(function (doc) {
+            var obj = parse_1(doc);
+            var vb = obj.verb.clone();
+            vb = vb.verbs().toNegative();
+            obj.verb.replaceWith(vb, false, true);
+          });
+          return this;
+        }
+        /** he doesn't walk -> he walks */
+
       }, {
         key: "toPositive",
-        value: function toPositive() {}
+        value: function toPositive() {
+          this.forEach(function (doc) {
+            var obj = parse_1(doc);
+            var vb = obj.verb.clone();
+            vb = vb.verbs().toPositive();
+            obj.verb.replaceWith(vb, false, true);
+          });
+          return this;
+        }
+        /** return sentences that are in passive-voice */
+
       }, {
         key: "isPassive",
         value: function isPassive() {
@@ -295,15 +341,27 @@
             lastTerm.post = ' ';
           });
         }
+        /** 'he is.' -> 'he is!' */
+
       }, {
         key: "toExclamation",
-        value: function toExclamation() {}
+        value: function toExclamation() {
+          return this;
+        }
+        /** 'he is.' -> 'he is?' */
+
       }, {
         key: "toQuestion",
-        value: function toQuestion() {}
+        value: function toQuestion() {
+          return this;
+        }
+        /** 'he is?' -> 'he is.' */
+
       }, {
         key: "toStatement",
-        value: function toStatement() {}
+        value: function toStatement() {
+          return this;
+        }
       }]);
 
       return Sentences;

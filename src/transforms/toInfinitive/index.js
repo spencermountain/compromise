@@ -19,6 +19,9 @@ const guessTense = function(str) {
 }
 
 const toInfinitive = function(str, world, tense) {
+  if (!str) {
+    return ''
+  }
   //1. look at known irregulars
   if (world.words.hasOwnProperty(str) === true) {
     let irregs = world.irregulars.verbs

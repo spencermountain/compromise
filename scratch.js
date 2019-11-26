@@ -14,17 +14,23 @@ nlp.extend(require('./plugins/sentences/src'))
 // doc.match('between [#Date+] and').debug()
 // doc.match('between [.*] and').debug()
 
-let b = nlp('b').tag('Cool')
-
-let doc = nlp(`john walks quickly`)
+// let doc = nlp(`the stool falls over`)
 
 // doc.replace('walks', b)
 // doc.debug()
 
-let s = doc.sentences()
-s.toPastTense()
-s.toFutureTense()
-s.debug()
+// let s = doc.sentences()
+// s.toPastTense()
+// s.toFutureTense()
+// s.toPresentTense()
+// doc.debug()
 // s.verbs()
 //   .toFutureTense()
 // .debug()
+
+let m = nlp('i will not')
+m.verbs().toPastTense()
+m.debug()
+
+// m.toPresentTense()
+// m.toFutureTense()

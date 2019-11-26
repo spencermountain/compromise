@@ -80,8 +80,10 @@ module.exports = {
     this.forEach(vb => {
       let parsed = parseVerb(vb)
       let str = conjugate(parsed, this.world).PastTense
-      vb.replaceWith(str, true, true)
-      vb.tag('PastTense')
+      if (str) {
+        vb.replaceWith(str, false, true)
+        vb.tag('PastTense')
+      }
     })
     return this
   },
@@ -90,8 +92,10 @@ module.exports = {
     this.forEach(vb => {
       let parsed = parseVerb(vb)
       let str = conjugate(parsed, this.world).PresentTense
-      vb.replaceWith(str, true, true)
-      vb.tag('PresentTense')
+      if (str) {
+        vb.replaceWith(str, false, true)
+        vb.tag('PresentTense')
+      }
     })
     return this
   },
@@ -99,9 +103,12 @@ module.exports = {
   toFutureTense: function() {
     this.forEach(vb => {
       let parsed = parseVerb(vb)
-      let inf = toInfinitive(parsed, this.world)
-      vb.replaceWith('will ' + inf, true, true) //not smart!
-      vb.tag('FutureTense')
+      let str = conjugate(parsed, this.world).Infinitive
+      if (str) {
+        str = 'will ' + str
+        vb.replaceWith(str, false, true)
+        vb.tag('FutureTense')
+      }
     })
     return this
   },
@@ -109,9 +116,11 @@ module.exports = {
   toInfinitive: function() {
     this.forEach(vb => {
       let parsed = parseVerb(vb)
-      let inf = toInfinitive(parsed, this.world)
-      vb.replaceWith(inf, true, true)
-      vb.tag('Infinitive')
+      let str = toInfinitive(parsed, this.world)
+      if (str) {
+        vb.replaceWith(str, false, true)
+        vb.tag('Infinitive')
+      }
     })
     return this
   },
@@ -120,8 +129,10 @@ module.exports = {
     this.forEach(vb => {
       let parsed = parseVerb(vb)
       let str = conjugate(parsed, this.world).Gerund
-      vb.replaceWith(str, true, true)
-      vb.tag('Gerund')
+      if (str) {
+        vb.replaceWith(str, false, true)
+        vb.tag('Gerund')
+      }
     })
     return this
   },

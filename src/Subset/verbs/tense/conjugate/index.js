@@ -10,6 +10,9 @@ const conjugate = function(parsed, world) {
   }
 
   let infinitive = toInfinitive(parsed, world)
+  if (!infinitive) {
+    return {}
+  }
   // console.log(infinitive)
   let forms = world.transforms.conjugate(infinitive, world)
   forms.Infinitive = infinitive
@@ -31,6 +34,11 @@ const conjugate = function(parsed, world) {
   }
   if (isNegative) {
     forms.Infinitive = 'not ' + forms.Infinitive
+  }
+  // add particle to phrasal verbs ('fall over')
+  if (parsed.particle.found) {
+    let particle = parsed.particle.text()
+    Object.keys(forms).forEach(k => (forms[k] += ' ' + particle))
   }
   return forms
 }

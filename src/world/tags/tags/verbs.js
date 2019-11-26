@@ -5,7 +5,7 @@ module.exports = {
   // walks
   PresentTense: {
     isA: 'Verb',
-    notA: ['PastTense', 'Copula'],
+    notA: ['PastTense', 'Copula', 'FutureTense'],
   },
   // neutral form - 'walk'
   Infinitive: {
@@ -15,11 +15,12 @@ module.exports = {
   // walking
   Gerund: {
     isA: 'PresentTense',
-    notA: ['PastTense', 'Copula'],
+    notA: ['PastTense', 'Copula', 'FutureTense'],
   },
   // walked
   PastTense: {
     isA: 'Verb',
+    notA: ['FutureTense'],
   },
   // will walk
   FutureTense: {
@@ -33,6 +34,7 @@ module.exports = {
   // would have
   Modal: {
     isA: 'Verb',
+    notA: ['Infinitive'],
   },
   // had walked
   PerfectTense: {

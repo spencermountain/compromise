@@ -5,7 +5,4 @@ module.exports = {
   Multiple: {
     isA: 'Value',
   },
-  Unit: {
-    isA: 'Value',
-  },
 }

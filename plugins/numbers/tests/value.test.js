@@ -26,9 +26,9 @@ test('value-basic:', function(t) {
 
   r = nlp('third month of two thousand and nineteen')
   r.values().toCardinal()
-  t.equal(r.out(), 'three month of two thousand and nineteen', 'toCardinal')
+  t.equal(r.out(), 'three months of two thousand and nineteen', 'toCardinal')
 
-  r = nlp('three month of two thousand nineteen')
+  r = nlp('three months of two thousand nineteen')
   r.values().toOrdinal()
   t.equal(r.out(), 'third month of two thousand and nineteenth', 'toOrdinal')
 

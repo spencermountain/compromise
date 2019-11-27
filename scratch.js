@@ -28,5 +28,13 @@ nlp.extend(require('./plugins/numbers/src'))
 //   .toFutureTense()
 // .debug()
 
-let doc = nlp(`we walked, talked, and sang`)
-doc.verbs() //.debug()
+let doc = nlp('seventeen beers')
+doc.values().toOrdinal()
+console.log(doc.text())
+
+doc.values().toCardinal()
+console.log(doc.text())
+
+//   let doc = nlp('five bottles of beer')
+//   doc.values().toOrdinal()
+//  console.log( doc.text())

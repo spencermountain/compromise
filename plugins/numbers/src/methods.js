@@ -82,7 +82,7 @@ let methods = {
     return this
   },
   /** convert to cardinal form, like 'eight', or '8' */
-  toCardinal: function() {
+  toCardinal: function(agree) {
     let m = this.if('#Ordinal')
     m.forEach(val => {
       let obj = parseNumber(val)
@@ -92,6 +92,8 @@ let methods = {
       let str = makeNumber(obj, val.has('#TextValue'), false)
       val.replaceWith(str, true, true)
       val.tag('Cardinal')
+      // turn unit into plural -> 'seven beers'
+      agreeUnits(agree, val, obj)
     })
     return this
   },
@@ -106,6 +108,11 @@ let methods = {
       let str = makeNumber(obj, val.has('#TextValue'), true)
       val.replaceWith(str, true, true)
       val.tag('Ordinal')
+      // turn unit into singular -> 'seventh beer'
+      let unit = this.lookAhead('^#Plural')
+      if (unit.found) {
+        unit.nouns().toSingular()
+      }
     })
     return this
   },

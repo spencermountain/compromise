@@ -3,7 +3,7 @@ const teens = 'eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eightee
 
 // this is a bit of a mess
 const findNumbers = function(doc, n) {
-  let match = doc.match('#Value+ #Unit?')
+  let match = doc.match('#Value+')
 
   //"50 83"
   if (match.has('#NumericValue #NumericValue')) {

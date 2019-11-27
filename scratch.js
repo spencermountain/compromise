@@ -30,5 +30,6 @@ nlp.extend(require('./plugins/sentences/src'))
 
 //json `unique:true`
 
-let doc = nlp(`What'd I say? Monorail. What's it called? Monorail.`)
+// let doc = nlp(`What'd I say? Monorail. What's it called? Monorail.`)
+let doc = nlp(`a b c.\n b c.`).terms()
 console.log(doc.out('freq'))

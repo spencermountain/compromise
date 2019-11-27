@@ -1,4 +1,5 @@
 const debug = require('../_debug')
+const topk = require('./_topk')
 
 /** pretty-print the current document and its tags */
 exports.debug = function() {
@@ -24,10 +25,7 @@ exports.out = function(method) {
     return this.json({ terms: false }).map(obj => obj.text)
   }
   if (method === 'freq') {
-    let arr = this.json({ count: true, terms: false, reduced: true, unique: true })
-    arr.forEach(o => delete o.text)
-    // combine results
-    return arr
+    return topk(this)
   }
   if (method === 'terms') {
     let list = []

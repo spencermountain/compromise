@@ -1,7 +1,7 @@
 const nlp = require('./src/index')
 // nlp.verbose(true)
 nlp.extend(require('./plugins/sentences/src'))
-// nlp.extend(require('./plugins/numbers/src'))
+nlp.extend(require('./plugins/numbers/src'))
 
 // let doc = nlp(`i walked to the moon when it was shining`)
 // doc.verbs().forEach(d => {
@@ -35,8 +35,14 @@ nlp.extend(require('./plugins/sentences/src'))
 // .toPresentTense()
 // doc.debug()
 
-console.log(
-  nlp('we walked, talked, and sang')
-    .verbs()
-    .json()
-)
+let doc = nlp('spencer truly would really run quickly')
+  .verbs()
+  .adverbs()
+  .debug()
+
+// const doc = nlp('spencer is really great! Spencer really really was superb.')
+// doc
+//   .verbs()
+//   .adverbs()
+//   .delete()
+// doc.debug()

@@ -11,14 +11,24 @@ const addMethod = function(Doc) {
 
   Doc.prototype.verbs = function(n) {
     let match = this.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+')
-    // handle commas
-    match = match.clauses()
+    // try to ignore leading and trailing adverbs
+    match = match.not('^#Adverb+')
+    match = match.not('#Adverb+$')
+    // handle commas:
+    // don't split 'really, really'
+    let keep = this.match('(#Adverb && @hasComma) #Adverb')
+    // // but split the other commas
+    let m = this.not(keep).splitAfter('@hasComma')
+    // // combine them back together
+    m = m.concat(keep)
+    m.sort('index')
+
     //handle slashes?
     // match = match.splitAfter('@hasSlash')
     //ensure there's actually a verb
     match = match.if('#Verb') //this could be smarter
-    // try to ignore leading and trailing adverbs
-    match = match.not('^#Adverb').not('#Adverb$')
+
+    // match.join().debug()
     //grab (n)th result
     if (typeof n === 'number') {
       match = match.get(n)

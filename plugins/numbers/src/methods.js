@@ -28,6 +28,10 @@ let methods = {
     }
     return res
   },
+  /** two of what? */
+  units: function() {
+    return this.lookAhead('^(#Unit|#Noun)')
+  },
   /** return only ordinal numbers */
   isOrdinal: function() {
     return this.if('#Ordinal')

@@ -10,6 +10,19 @@ test('misc values', function(t) {
   t.end()
 })
 
+test('misc units', function(t) {
+  let doc = nlp('i ate 7 kilos of fruit')
+    .numbers()
+    .units()
+  t.equal(doc.text('trim'), 'kilos', 'found unit')
+
+  doc = nlp('i ate 7 of them, kilos are kilograms')
+    .numbers()
+    .units()
+  t.equal(doc.text('trim'), '', 'found no unit')
+  t.end()
+})
+
 test('misc:', function(t) {
   let str = '2 million five hundred thousand and fifty nine is bigger than 2882'
   let m = nlp(str)

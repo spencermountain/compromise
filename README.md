@@ -522,6 +522,7 @@ These are some helpful extensions:
 
 - **[.numbers()](https://observablehq.com/@spencermountain/compromise-values)** - grab all written and numeric values
   - **[.numbers().json()](https://observablehq.com/@spencermountain/compromise-values)** - overloaded output with number metadata
+  - **[.numbers().units()](https://observablehq.com/@spencermountain/compromise-values)** - grab 'kilos' from `25 kilos'`
   - **[.numbers().money()](https://observablehq.com/@spencermountain/compromise-values)** - things like `'$2.50'`
   - **[.numbers().fractions()](https://observablehq.com/@spencermountain/compromise-values)** - things like `1/3rd`
   - **[.numbers().toText()](https://observablehq.com/@spencermountain/compromise-values)** - convert number to `five` or `fifth`

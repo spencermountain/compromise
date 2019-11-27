@@ -34,12 +34,23 @@ module.exports = {
   /** grab the adverbs describing these verbs */
   adverbs: function() {
     let list = []
+    // look at internal adverbs
     this.forEach(vb => {
       let advb = parseVerb(vb).adverb
       if (advb.found) {
         list = list.concat(advb.list)
       }
     })
+    // look for leading adverbs
+    let m = this.lookBehind('#Adverb$')
+    if (m.found) {
+      list = m.list.concat(list)
+    }
+    // look for trailing adverbs
+    m = this.lookAhead('^#Adverb')
+    if (m.found) {
+      list = list.concat(m.list)
+    }
     return this.buildFrom(list)
   },
   /**return verbs like 'we walk' and not 'spencer walks' */

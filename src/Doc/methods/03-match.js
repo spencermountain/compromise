@@ -73,6 +73,7 @@ exports.lookAhead = function(reg) {
   matches = matches.filter(p => p)
   return this.buildFrom(matches)
 }
+exports.lookAfter = exports.lookAhead
 
 /** match any terms before our matches, within the sentence */
 exports.lookBehind = function(reg) {
@@ -88,6 +89,7 @@ exports.lookBehind = function(reg) {
   matches = matches.filter(p => p)
   return this.buildFrom(matches)
 }
+exports.lookBefore = exports.lookBehind
 
 /** return all terms before a match, in each phrase */
 exports.before = function(reg) {

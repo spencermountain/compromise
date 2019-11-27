@@ -97,7 +97,9 @@ Once the plugin is applied, things should work just as normal.
 
 - more consistent behaviour for `.replace('foo [bar]', 'baz')`
 
-- `.verbs()` results no longer include Units, and when possible, `.verbs()` results no longer includes Adverbs.
+- `.numbers()` results no longer include Units, by default. Get them with `.numbers().units()`
+  
+- `.verbs()` results no longer include leading/trailing Adverbs. Get them with `.verbs().adverbs()`
 
 - the internal compromise api has changed considerably. If you were 'reaching in' to the internal objects in v11, you'll see many changes.
 

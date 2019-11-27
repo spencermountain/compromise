@@ -7,6 +7,7 @@ const jsonDefault = {
 
   clean: false,
   id: false,
+  index: false,
   offset: false,
   whitespace: false,
   bestTag: false,

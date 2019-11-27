@@ -40,6 +40,11 @@ const conjugate = function(parsed, world) {
     let particle = parsed.particle.text()
     Object.keys(forms).forEach(k => (forms[k] += ' ' + particle))
   }
+  //put the adverb at the end?
+  if (parsed.adverb.found) {
+    let adverb = parsed.adverb.text()
+    Object.keys(forms).forEach(k => (forms[k] += ' ' + adverb))
+  }
   return forms
 }
 module.exports = conjugate

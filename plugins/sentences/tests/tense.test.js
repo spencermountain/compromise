@@ -270,3 +270,23 @@ test('pronoun-specific', function(t) {
   t.equal(m.out(), 'i will be really cool', 'toFutureTense-I-3')
   t.end()
 })
+
+test('tense-multiple', function(t) {
+  let doc = nlp(`he walks down the street and smells the flowers.`)
+  doc.sentences().toPastTense()
+  t.equal(doc.text(), 'he walked down the street and smelled the flowers.', 'to-past')
+
+  doc = nlp(`he walked down the street and smelled the flowers.`)
+  doc.sentences().toPresentTense()
+  t.equal(doc.text(), 'he walks down the street and smells the flowers.', 'to-pres')
+
+  // past
+  doc = nlp(`he walked down the street and smelled the flowers.`)
+  doc.sentences().toFutureTense()
+  t.equal(doc.text(), 'he will walk down the street and smell the flowers.', 'past-1')
+  // past-two
+  doc = nlp(`he walks down the street and smells the flowers.`)
+  doc.sentences().toFutureTense()
+  t.equal(doc.text(), 'he will walk down the street and smell the flowers.', 'past-2')
+  t.end()
+})

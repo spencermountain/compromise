@@ -12,12 +12,13 @@ const addMethod = function(Doc) {
   Doc.prototype.verbs = function(n) {
     let match = this.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+')
     // handle commas
-    match = match.splitAfter('@hasComma')
-    // match = match.clauses()
+    match = match.clauses()
     //handle slashes?
     // match = match.splitAfter('@hasSlash')
     //ensure there's actually a verb
     match = match.if('#Verb') //this could be smarter
+    // try to ignore leading and trailing adverbs
+    match = match.not('^#Adverb').not('#Adverb$')
     //grab (n)th result
     if (typeof n === 'number') {
       match = match.get(n)

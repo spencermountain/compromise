@@ -97,6 +97,8 @@ Once the plugin is applied, things should work just as normal.
 
 - more consistent behaviour for `.replace('foo [bar]', 'baz')`
 
+- `.verbs()` results no longer include Units, and when possible, `.verbs()` results no longer includes Adverbs.
+
 - the internal compromise api has changed considerably. If you were 'reaching in' to the internal objects in v11, you'll see many changes.
 
 - removed no-longer-needed `prefix_` and `_suffix` operators from match syntax

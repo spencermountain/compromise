@@ -64,6 +64,21 @@ test('json terms out', function(t) {
   t.end()
 })
 
+test('json-index:', function(t) {
+  let doc = nlp(`john is not really walking`)
+  let obj = doc.match('really').json({ index: true })[0]
+  t.equal(obj.terms[0].index, 3, 'index:3')
+  t.equal(obj.index, 3, 'phrase-index:3')
+  t.end()
+})
+
+test('json-unique:', function(t) {
+  let doc = nlp(`a b c b a`)
+  let arr = doc.terms().json({ unique: true, terms: false, count: true })
+  t.equal(arr.length, 3, 'no duplicates')
+  t.end()
+})
+
 test('out-custom:', function(t) {
   const doc = nlp('The competent drum work of Don Brewer?')
   const arr = doc.json({

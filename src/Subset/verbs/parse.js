@@ -17,6 +17,7 @@ const parseVerb = function(vb) {
     parsed.verb = vb
     return parsed
   }
+  console.log(parsed.adverb.json({ index: true })[0])
   return parsed
 }
 module.exports = parseVerb

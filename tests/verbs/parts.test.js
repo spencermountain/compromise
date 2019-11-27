@@ -63,7 +63,7 @@ test('verb-greedy:', function(t) {
   let arr = nlp('he would be, had he survived')
     .verbs()
     .json()
-  t.equal(arr.length, 3, 'split-on-clause')
+  t.equal(arr.length, 2, 'split-on-clause')
 
   arr = nlp('we walked, talked, and sang')
     .verbs()
@@ -103,7 +103,7 @@ test('verb-greedy:', function(t) {
   str = nlp('we must really')
     .verbs()
     .out('normal')
-  t.equal(str, 'must really', 'verb-adverb')
+  t.equal(str, 'must', 'verb-adverb')
 
   str = nlp('we must really not')
     .verbs()

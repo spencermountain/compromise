@@ -2,7 +2,7 @@ const entity = ['Person', 'Place', 'Organization']
 
 module.exports = {
   Noun: {
-    notA: ['Verb', 'Adjective', 'Adverb', 'Value'],
+    notA: ['Verb', 'Adjective', 'Adverb'],
   },
   // - singular
   Singular: {

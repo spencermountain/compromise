@@ -41,7 +41,11 @@ test('value-basic:', function(t) {
 })
 
 test('value-to_ordinal:', function(t) {
-  let arr = [[11, '11th'], [5, '5th'], [22, '22nd']]
+  let arr = [
+    [11, '11th'],
+    [5, '5th'],
+    [22, '22nd'],
+  ]
   arr.forEach(function(a) {
     const str = nlp(a[0])
       .values()
@@ -121,6 +125,7 @@ test('add/subtract:', function(t) {
     .subtract(2)
     .all()
   t.equal(r.out(), 'fifteen years old', 'text-subtract-2-cardinal')
+
   r = nlp('seventeenth birthday')
     .values()
     .subtract(2)

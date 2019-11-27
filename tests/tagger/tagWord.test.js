@@ -65,6 +65,7 @@ test('pos from-lexicon', function(t) {
     ['MIMMCMXXIII', 'Acronym'], //invalid roman numeral
     ['c.e.o', 'Acronym'],
     ['MDMA', 'Acronym'],
+    ['unless', 'Condition'],
   ]
   arr.forEach(function(a) {
     const term = nlp(a[0]).termList()[0]

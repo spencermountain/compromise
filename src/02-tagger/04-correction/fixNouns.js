@@ -17,7 +17,7 @@ const fixNouns = function(doc) {
     //king of spain
     doc.match('(king|queen|prince|saint|lady) of? #Noun').tagSafe('#Person', 'king-of-noun')
     // addresses
-    doc.match('#Value #Noun (st|street|rd|road|crescent|way)').tag('Address')
+    doc.match('#Value #Noun (st|street|rd|road|crescent|cr|way|tr|terrace|avenue|ave)').tag('Address')
     // schools
     doc.match('#Noun+ (public|private) school').tag('School')
     //the word 'second'

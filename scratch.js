@@ -28,21 +28,5 @@ nlp.extend(require('./plugins/numbers/src'))
 //   .toFutureTense()
 // .debug()
 
-// let doc = nlp(`john is not really walking`)
-// doc
-// .verbs() //.toPastTense()
-//   // .toFutureTense()
-// .toPresentTense()
-// doc.debug()
-
-let doc = nlp('spencer truly would really run quickly')
-  .verbs()
-  .adverbs()
-  .debug()
-
-// const doc = nlp('spencer is really great! Spencer really really was superb.')
-// doc
-//   .verbs()
-//   .adverbs()
-//   .delete()
-// doc.debug()
+let doc = nlp(`we walked, talked, and sang`)
+doc.verbs() //.debug()

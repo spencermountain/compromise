@@ -529,6 +529,7 @@ These are some helpful extensions:
   - **[.numbers().toNumber()](https://observablehq.com/@spencermountain/compromise-values)** - convert number to `5` or `5th`
   - **[.numbers().toOrdinal()](https://observablehq.com/@spencermountain/compromise-values)** - convert number to `fifth` or `5th`
   - **[.numbers().toCardinal()](https://observablehq.com/@spencermountain/compromise-values)** - convert number to `five` or `5`
+  - **[.numbers().set(n)](https://observablehq.com/@spencermountain/compromise-values)** - set number to n
   - **[.numbers().add(n)](https://observablehq.com/@spencermountain/compromise-values)** - increase number by n
   - **[.numbers().subtract(n)](https://observablehq.com/@spencermountain/compromise-values)** - decrease number by n
   - **[.numbers().increment()](https://observablehq.com/@spencermountain/compromise-values)** - increase number by 1

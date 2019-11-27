@@ -7,6 +7,10 @@ test('misc values', function(t) {
 
   doc = nlp(`seven is slightly before eleven, but after two.`)
   t.equal(doc.values().length, 3, 'found three values')
+
+  doc = nlp('742 Evergreen Terrace')
+  doc.numbers().set('eleven')
+  t.equal(doc.text('trim'), '11 Evergreen Terrace', 'address can be value')
   t.end()
 })
 

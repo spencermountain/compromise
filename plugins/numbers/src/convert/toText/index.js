@@ -114,6 +114,10 @@ const handle_decimal = num => {
 
 /** turns an integer into a textual number */
 const to_text = function(num) {
+  // handle zero, quickly
+  if (num === 0 || num === '0') {
+    return 'zero' // no?
+  }
   //big numbers, north of sextillion, aren't gonna work well..
   //keep them small..
   if (num > 1e21) {
@@ -122,7 +126,7 @@ const to_text = function(num) {
   let arr = []
   //handle negative numbers
   if (num < 0) {
-    arr.push('negative')
+    arr.push('minus')
     num = Math.abs(num)
   }
   //break-down into units, counts

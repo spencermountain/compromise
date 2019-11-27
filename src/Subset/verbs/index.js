@@ -16,25 +16,23 @@ const addMethod = function(Doc) {
     match = match.not('#Adverb+$')
     // handle commas:
     // don't split 'really, really'
-    let keep = this.match('(#Adverb && @hasComma) #Adverb')
+    let keep = match.match('(#Adverb && @hasComma) #Adverb')
     // // but split the other commas
-    let m = this.not(keep).splitAfter('@hasComma')
+    let m = match.not(keep).splitAfter('@hasComma')
     // // combine them back together
     m = m.concat(keep)
     m.sort('index')
 
     //handle slashes?
-    // match = match.splitAfter('@hasSlash')
-    //ensure there's actually a verb
-    match = match.if('#Verb') //this could be smarter
 
-    // match.join().debug()
+    //ensure there's actually a verb
+    m = m.if('#Verb')
+
     //grab (n)th result
     if (typeof n === 'number') {
-      match = match.get(n)
+      m = m.get(n)
     }
-    let vb = new Verbs(match.list, this, this.world)
-    // this.before(match).debug()
+    let vb = new Verbs(m.list, this, this.world)
     return vb
   }
   return Doc

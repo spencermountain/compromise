@@ -14,7 +14,7 @@ test('verb-to-negative:', function(t) {
 
     //conjugations
     [`she walked`, 'did not walk'],
-    [`it all came apart`, 'all did not come apart'],
+    [`it all came apart`, 'did not come apart'],
 
     //phrasals
     [`he would come forward`, 'would not come forward'],

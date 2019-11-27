@@ -96,4 +96,8 @@ module.exports = {
   Negative: {
     notA: ['Noun', 'Adjective', 'Value'],
   },
+  // if, unless, were
+  Condition: {
+    notA: ['Verb', 'Adjective', 'Noun', 'Value'],
+  },
 }

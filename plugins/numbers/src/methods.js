@@ -1,5 +1,7 @@
 const parseNumber = require('./parse')
+const agreeUnits = require('./_agreeUnits')
 const makeNumber = require('./convert/makeNumber')
+const toNumber = require('./convert/toNumber')
 
 let methods = {
   /** overloaded json method with additional number information */
@@ -135,34 +137,60 @@ let methods = {
       return num > min && num < max
     })
   },
-  /** increase each number by n */
-  add: function(n) {
-    if (!n) {
+  /** set these number to n */
+  set: function(n, agree) {
+    if (n === undefined) {
       return this // don't bother
+    }
+    if (typeof n === 'string') {
+      n = toNumber(n)
     }
     this.forEach(val => {
       let obj = parseNumber(val)
+      obj.num = n
+      if (obj.num === null) {
+        return
+      }
+      let str = makeNumber(obj, val.has('#TextValue'), val.has('#Ordinal'))
+      val.replaceWith(str, true, true)
+      // handle plural/singular unit
+      agreeUnits(agree, val, obj)
+    })
+    return this
+  },
+  add: function(n, agree) {
+    if (!n) {
+      return this // don't bother
+    }
+    if (typeof n === 'string') {
+      n = toNumber(n)
+    }
+    this.forEach(val => {
+      let obj = parseNumber(val)
+
       if (obj.num === null) {
         return
       }
       obj.num += n
       let str = makeNumber(obj, val.has('#TextValue'), val.has('#Ordinal'))
       val.replaceWith(str, true, true)
+      // handle plural/singular unit
+      agreeUnits(agree, val, obj)
     })
     return this
   },
   /** decrease each number by n*/
-  subtract: function(n) {
-    return this.add(n * -1)
+  subtract: function(n, agree) {
+    return this.add(n * -1, agree)
   },
   /** increase each number by 1 */
-  increment: function() {
-    this.add(1)
+  increment: function(agree) {
+    this.add(1, agree)
     return this
   },
   /** decrease each number by 1 */
-  decrement: function() {
-    this.add(-1)
+  decrement: function(agree) {
+    this.add(-1, agree)
     return this
   },
 

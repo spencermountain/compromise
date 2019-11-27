@@ -1,6 +1,6 @@
 module.exports = {
   Value: {
-    notA: ['Noun', 'Verb', 'Adjective', 'Adverb'],
+    notA: ['Verb', 'Adjective', 'Adverb'],
   },
   Ordinal: {
     isA: 'Value',

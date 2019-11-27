@@ -1,5 +1,5 @@
 const nlp = require('./src/index')
-nlp.verbose(true)
+// nlp.verbose(true)
 nlp.extend(require('./plugins/sentences/src'))
 nlp.extend(require('./plugins/numbers/src'))
 
@@ -15,14 +15,13 @@ nlp.extend(require('./plugins/numbers/src'))
 // doc.match('between [.*] and').debug()
 
 // let doc = nlp('falls over')
-let doc = nlp('fell over')
 
-// let doc = nlp('the stool falls over')
-// let s = doc.verbs()
-// s.toPastTense()
-doc.debug()
+let doc = nlp("spencer's butler").debug()
+let s = doc.verbs()
+s.toPastTense()
 // s.toFutureTense()
-// s.toPresentTense()
+s.toPresentTense()
+doc.debug()
 // s.verbs()
 // .debug()
 
@@ -34,3 +33,5 @@ doc.debug()
 // doc.tagger()
 // doc.debug()
 // // console.log(doc.match('#Person+').text())
+
+console.log(doc.normalize('heavy').text())

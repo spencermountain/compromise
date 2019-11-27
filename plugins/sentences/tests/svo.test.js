@@ -24,7 +24,7 @@ test('svo parser', function(t) {
       'diane',
       'decided',
     ],
-    ['Once Adam smashed the spider, he ran into the bathroom', 'he', 'ran'],
+    ['Once Adam smashed the spider, he ran into the bathroom', 'he', 'ran into'],
 
     // ['The boy who you saw at the store committed a robbery.', 'the boy', 'committed'],
     // [

@@ -49,7 +49,7 @@
 
 <div align="right">
   <code>
-    Welcome to v12! - <a href="">Release Notes here 👍</a>
+    Welcome to v12! - <a href="https://github.com/spencermountain/compromise/wiki/v12-Release-Notes">Release Notes here 👍</a>
   </code>
 </div>
 

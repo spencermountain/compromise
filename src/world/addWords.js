@@ -28,7 +28,7 @@ const addMore = function(word, tag, world) {
   }
   //conjugate our verbs
   if (tag === 'Infinitive') {
-    let conj = transform.conjugate(word)
+    let conj = transform.conjugate(word, world)
     let tags = Object.keys(conj)
     for (let i = 0; i < tags.length; i++) {
       let w = conj[tags[i]]
@@ -49,13 +49,14 @@ const addMore = function(word, tag, world) {
     //add original form
     addWord(word, 'Infinitive', lexicon)
     //conjugate first word
-    let conj = transform.conjugate(words[0])
+    let conj = transform.conjugate(words[0], world)
     let tags = Object.keys(conj)
     for (let i = 0; i < tags.length; i++) {
       //add it to our cache
       world.hasCompound[conj[tags[i]]] = true
       //first + last words
       let w = conj[tags[i]] + ' ' + words[1]
+
       addWord(w, tags[i], lexicon)
       addWord(w, 'PhrasalVerb', lexicon)
     }

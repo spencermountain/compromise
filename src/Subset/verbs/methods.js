@@ -93,7 +93,7 @@ module.exports = {
       let str = conjugate(parsed, this.world).PastTense
       if (str) {
         vb.replaceWith(str, false, true)
-        vb.tag('PastTense')
+        // vb.tag('PastTense')
       }
     })
     return this

@@ -638,6 +638,7 @@ module.exports = [
   'miguel',
   'mike',
   'mikolaj',
+  'milhouse',
   'milo',
   'milos',
   'milton',

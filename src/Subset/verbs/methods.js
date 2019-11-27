@@ -114,9 +114,8 @@ module.exports = {
   toFutureTense: function() {
     this.forEach(vb => {
       let parsed = parseVerb(vb)
-      let str = conjugate(parsed, this.world).Infinitive
+      let str = conjugate(parsed, this.world).FutureTense
       if (str) {
-        str = 'will ' + str
         vb.replaceWith(str, false, true)
         vb.tag('FutureTense')
       }

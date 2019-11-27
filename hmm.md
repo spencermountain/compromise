@@ -64,21 +64,25 @@ nlp(`Wayne's World, party-time, excellent!! `).text('reduced')
 nlp(`Wayne's World, party-time, excellent!! `).text('root')
 ```
 
-freq out
-
-```js
-let doc = nlp(`What'd I say? Monorail. What's it called? Monorail.`)
-console.log(doc.terms().out('freq'))
-```
-
-```js
-nlp(`Kwazy-Clown Airlines`)
-  .organizations()
-  .debug()
-```
 
 ```js
 var doc = nlp('we get it, you vape.')
 doc.verbs().toNegative()
 console.log(doc.text())
+```
+
+
+
+```js
+let nlpA = nlp.clone()
+nlp.extend(require('compromise-dates'))
+return {
+  before: nlpA('quarter to nine').json(),
+  after: nlp('quarter to nine').json(),
+}
+```
+
+```js
+nlp(`Cows don't`).nouns().toSingular()
+//a cow doesn't
 ```

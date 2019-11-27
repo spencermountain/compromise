@@ -14,27 +14,20 @@ nlp.extend(require('./plugins/numbers/src'))
 // doc.match('between [#Date+] and').debug()
 // doc.match('between [.*] and').debug()
 
-// let doc = nlp(`the stool falls over`)
-
-// doc.replace('walks', b)
-// doc.debug()
-
-// let s = doc.sentences()
+// let doc = nlp('the stool falls over')
+// let s = doc.verbs()
 // s.toPastTense()
 // s.toFutureTense()
 // s.toPresentTense()
 // doc.debug()
 // s.verbs()
-//   .toFutureTense()
 // .debug()
-
-let doc = nlp('seventeen beers')
-doc.values().toOrdinal()
-console.log(doc.text())
-
-doc.values().toCardinal()
-console.log(doc.text())
 
 //   let doc = nlp('five bottles of beer')
 //   doc.values().toOrdinal()
 //  console.log( doc.text())
+// let doc = nlp.tokenize('let the blossoming of Millhouse begin') //only tokenize, don't tag
+// // (doc currently has no tags)
+// doc.tagger()
+// doc.debug()
+// // console.log(doc.match('#Person+').text())

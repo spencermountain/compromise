@@ -52,6 +52,7 @@ There are many subtle changes, and this document is intended as a upgrade guide.
 - **.insertAt()** - using term indexes is not fun!
 - **.reduce()** - not sure if this ever even worked?
 - **.normal()** - use `.text('normal')`
+- **nouns().articles()** - use `nouns().json()`
 
 #### Removed tags:
 
@@ -106,6 +107,7 @@ Once the plugin is applied, things should work just as normal.
 - removed no-longer-needed `prefix_` and `_suffix` operators from match syntax
 
 - `.toCamelCase()` no-longer capitalizes char[0]. Run `.toCamelCase().toTitleCase()` for this.
+
 
 ### non-breaking changes:
 

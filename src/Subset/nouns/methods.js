@@ -7,6 +7,11 @@ const parse = require('./parse')
 const methods = {
   /** overload the original json with noun information */
   json: function(options) {
+    let n = null
+    if (typeof options === 'number') {
+      n = options
+      options = null
+    }
     options = options || { text: true, normal: true, trim: true, terms: true }
     let res = []
     this.forEach(doc => {
@@ -14,6 +19,9 @@ const methods = {
       json.article = getArticle(doc)
       res.push(json)
     })
+    if (n !== null) {
+      return res[n]
+    }
     return res
   },
 

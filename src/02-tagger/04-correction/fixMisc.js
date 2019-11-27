@@ -28,6 +28,8 @@ const miscCorrection = function(doc) {
   doc.match('too much').tag('Adverb Adjective', 'bit-4')
   // u r cool
   doc.match('u r').tag('Pronoun #Copula', 'u r')
+  // well, ...
+  doc.match('^(well|so|okay)').tag('Expression', 'well-')
   //swear-words as non-expression POS
   //nsfw
   doc.match('holy (shit|fuck|hell)').tag('Expression', 'swears-expression')

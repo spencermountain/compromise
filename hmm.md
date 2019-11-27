@@ -76,3 +76,9 @@ nlp(`Kwazy-Clown Airlines`)
   .organizations()
   .debug()
 ```
+
+```js
+var doc = nlp('we get it, you vape.')
+doc.verbs().toNegative()
+console.log(doc.text())
+```

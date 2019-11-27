@@ -156,6 +156,10 @@ module.exports = {
   },
   /** remove 'not' from these verbs */
   toPositive: function() {
+    let m = this.match('do not #Verb')
+    if (m.found) {
+      m.remove('do not')
+    }
     return this.remove('#Negative')
   },
 }

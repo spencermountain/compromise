@@ -101,6 +101,7 @@ module.exports = [
     ettes: Plrl,
     ities: Plrl,
     rough: Adj,
+    ology: Noun,
     bound: Adj,
     tieth: 'Ordinal',
     ishes: Pres,

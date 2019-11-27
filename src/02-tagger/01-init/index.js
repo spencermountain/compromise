@@ -1,7 +1,7 @@
 const steps = {
   lexicon: require('./01-lexicon'),
   punctuation: require('./02-punctuation'),
-  regex: require('./03-regex'),
+  regex: require('./03-prefixes'),
   suffix: require('./04-suffixes'),
   emoji: require('./05-emoji'),
 }

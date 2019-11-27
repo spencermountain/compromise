@@ -37,6 +37,10 @@ const fixNouns = function(doc) {
       org.match('#Organization of the? @titleCase').tagSafe('Organization', 'org-of-place')
       org.match('#Organization #Country').tag('Organization', 'org-country')
       org.match('(world|global|international|national|#Demonym) #Organization').tag('Organization', 'global-org')
+      org
+        .match('#TitleCase #Organization')
+        .ifNo('@hasComma')
+        .tag('Organization', 'titlecase-org')
     }
 
     let plural = noun.if('#Plural')

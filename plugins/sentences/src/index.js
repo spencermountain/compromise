@@ -1,4 +1,5 @@
 const parse = require('./parse')
+const methods = require('./methods')
 
 const addMethod = function(Doc) {
   /**  */
@@ -38,85 +39,10 @@ const addMethod = function(Doc) {
         return res.subject
       })
     }
-    /** he walks -> he walked */
-    toPastTense() {
-      this.forEach(doc => {
-        let obj = parse(doc)
-        let vb = obj.verb.clone()
-        vb = vb.verbs().toPastTense()
-        obj.verb.replaceWith(vb, false, true)
-      })
-      return this
-    }
-    /** he walked -> he walks */
-    toPresentTense() {
-      this.forEach(doc => {
-        let obj = parse(doc)
-        let vb = obj.verb.clone()
-        vb = vb.verbs().toPresentTense()
-        obj.verb.replaceWith(vb, false, true)
-      })
-      return this
-    }
-    /** he walks -> he will walk */
-    toFutureTense() {
-      this.forEach(doc => {
-        let obj = parse(doc)
-        let vb = obj.verb.clone()
-        vb = vb.verbs().toFutureTense()
-        obj.verb.replaceWith(vb, false, true)
-      })
-      return this
-    }
-
-    // toContinuous() {
-    //   return this
-    // }
-    /** he walks -> he did not walk */
-    toNegative() {
-      this.forEach(doc => {
-        let obj = parse(doc)
-        let vb = obj.verb.clone()
-        vb = vb.verbs().toNegative()
-        obj.verb.replaceWith(vb, false, true)
-      })
-      return this
-    }
-    /** he doesn't walk -> he walks */
-    toPositive() {
-      this.forEach(doc => {
-        let obj = parse(doc)
-        let vb = obj.verb.clone()
-        vb = vb.verbs().toPositive()
-        obj.verb.replaceWith(vb, false, true)
-      })
-      return this
-    }
 
     /** return sentences that are in passive-voice */
     isPassive() {
       return this.if('was #Adverb? #PastTense #Adverb? by') //haha
-    }
-    /** return sentences ending with '?' */
-    isQuestion() {
-      return this.filter(doc => {
-        let term = doc.lastTerm().termList(0)
-        return term.hasPost('?')
-      })
-    }
-    /** return sentences ending with '!' */
-    isExclamation() {
-      return this.filter(doc => {
-        let term = doc.lastTerm().termList(0)
-        return term.hasPost('!')
-      })
-    }
-    /** return sentences with neither a question or an exclamation */
-    isStatement() {
-      return this.filter(doc => {
-        let term = doc.lastTerm().termList(0)
-        return !term.hasPost('?') && !term.hasPost('!')
-      })
     }
 
     /** add a word to the start of this sentence */
@@ -130,6 +56,7 @@ const addMethod = function(Doc) {
         // add a titlecase
         firstTerms.terms(0).toTitleCase()
       })
+      return this
     }
 
     /** add a word to the end of this sentence */
@@ -147,21 +74,10 @@ const addMethod = function(Doc) {
         // remove punctuation from the former last-term
         lastTerm.post = ' '
       })
-    }
-
-    /** 'he is.' -> 'he is!' */
-    toExclamation() {
-      return this
-    }
-    /** 'he is.' -> 'he is?' */
-    toQuestion() {
-      return this
-    }
-    /** 'he is?' -> 'he is.' */
-    toStatement() {
       return this
     }
   }
+  Object.assign(Sentences.prototype, methods)
 
   Doc.prototype.sentences = function(n) {
     let match = this.all()

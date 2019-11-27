@@ -30,6 +30,11 @@ const fixVerb = function(doc) {
       .not('#Verb$')
       .tag('Auxiliary', 'be-walking')
 
+    // directive verb - 'use reverse'
+    vb.match('(try|do|use|attempt|build|make) #Verb')
+      .ifNo('(@hasComma|#Negative|#Copula|will|be)')
+      .lastTerm()
+      .tag('#Noun', 'do-verb')
     //infinitive verbs suggest plural nouns - 'XYZ walk to the store'
     // r.match(`#Singular+ #Infinitive`).match('#Singular+').tag('Plural', 'infinitive-make-plural');
 

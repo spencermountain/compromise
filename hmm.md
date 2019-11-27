@@ -64,14 +64,11 @@ nlp(`Wayne's World, party-time, excellent!! `).text('reduced')
 nlp(`Wayne's World, party-time, excellent!! `).text('root')
 ```
 
-
 ```js
 var doc = nlp('we get it, you vape.')
 doc.verbs().toNegative()
 console.log(doc.text())
 ```
-
-
 
 ```js
 let nlpA = nlp.clone()
@@ -83,6 +80,12 @@ return {
 ```
 
 ```js
-nlp(`Cows don't`).nouns().toSingular()
+console.log(doc.normalize('heavy').text())
+```
+
+```js
+nlp(`Cows don't`)
+  .nouns()
+  .toSingular()
 //a cow doesn't
 ```

@@ -230,7 +230,6 @@ module.exports = [
   'gather',
   'gaze',
   'gloss',
-  'goes',
   'govern',
   'grab',
   'grasp',

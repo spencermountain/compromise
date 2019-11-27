@@ -23,9 +23,17 @@ exports.toPastTense = function() {
 exports.toPresentTense = function() {
   this.forEach(doc => {
     let obj = parse(doc)
+    let isPlural = obj.verb.lookBehind('(i|we) (#Adverb|#Verb)?$').found
     let vb = obj.verb.clone()
-    vb = vb.verbs().toPresentTense()
+    // 'i look', not 'i looks'
+    if (isPlural) {
+      vb = vb.verbs().toInfinitive()
+    } else {
+      //'he looks'
+      vb = vb.verbs().toPresentTense()
+    }
     obj.verb.replaceWith(vb, false, true)
+
     // future is okay, but 'walks and ate' -> 'walks and eats'
     if (obj.object && obj.object.found && obj.object.has('#PastTense')) {
       let verbs = obj.object.verbs()

@@ -1,8 +1,8 @@
 const toNegative = require('./toNegative')
 const parseVerb = require('./parse')
 const isPlural = require('./isPlural')
-const conjugate = require('./tense/conjugate')
-const toInfinitive = require('./tense/toInfinitive')
+const conjugate = require('./conjugate')
+const toInfinitive = require('./toInfinitive')
 
 module.exports = {
   /** overload the original json with verb information */
@@ -102,7 +102,12 @@ module.exports = {
   toPresentTense: function() {
     this.forEach(vb => {
       let parsed = parseVerb(vb)
-      let str = conjugate(parsed, this.world).PresentTense
+      let obj = conjugate(parsed, this.world)
+      let str = obj.PresentTense
+      // 'i look', not 'i looks'
+      if (vb.lookBehind('(i|we) (#Adverb|#Verb)?$').found) {
+        str = obj.Infinitive
+      }
       if (str) {
         vb.replaceWith(str, false, true)
         vb.tag('PresentTense')

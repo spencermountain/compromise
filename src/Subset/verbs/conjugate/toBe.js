@@ -1,4 +1,4 @@
-const isPlural = require('../../isPlural')
+const isPlural = require('../isPlural')
 
 /** too many special cases for is/was/will be*/
 const toBe = parsed => {

@@ -16,9 +16,9 @@ nlp.extend(require('./plugins/numbers/src'))
 
 // let doc = nlp('falls over')
 
-let doc = nlp("spencer's butler").debug()
-let s = doc.verbs()
-s.toPastTense()
+let doc = nlp(`i went to sleep`).debug()
+let s = doc.sentences()
+// s.toPastTense()
 // s.toFutureTense()
 s.toPresentTense()
 doc.debug()
@@ -33,5 +33,3 @@ doc.debug()
 // doc.tagger()
 // doc.debug()
 // // console.log(doc.match('#Person+').text())
-
-console.log(doc.normalize('heavy').text())

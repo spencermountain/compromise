@@ -17,7 +17,14 @@ const parseVerb = function(vb) {
     parsed.verb = vb
     return parsed
   }
-  console.log(parsed.adverb.json({ index: true })[0])
+  //
+  if (parsed.adverb && parsed.adverb.found) {
+    let match = parsed.adverb.text('reduced') + '$'
+    if (vb.has(match)) {
+      parsed.adverbAfter = true
+    }
+  }
+  // console.log(parsed.adverb.json({ index: true })[0])
   return parsed
 }
 module.exports = parseVerb

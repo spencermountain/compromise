@@ -17,6 +17,21 @@ const conjugate = function(parsed, world) {
   let forms = world.transforms.conjugate(infinitive, world)
   forms.Infinitive = infinitive
 
+  // add particle to phrasal verbs ('fall over')
+  if (parsed.particle.found) {
+    let particle = parsed.particle.text()
+    Object.keys(forms).forEach(k => (forms[k] += ' ' + particle))
+  }
+  //put the adverb at the end?
+  if (parsed.adverb.found) {
+    let adverb = parsed.adverb.text()
+    if (parsed.adverbAfter === true) {
+      Object.keys(forms).forEach(k => (forms[k] += ' ' + adverb))
+    } else {
+      Object.keys(forms).forEach(k => (forms[k] = adverb + ' ' + forms[k]))
+    }
+  }
+
   //apply negative
   const isNegative = parsed.negative.found
   if (isNegative) {
@@ -34,16 +49,6 @@ const conjugate = function(parsed, world) {
   }
   if (isNegative) {
     forms.Infinitive = 'not ' + forms.Infinitive
-  }
-  // add particle to phrasal verbs ('fall over')
-  if (parsed.particle.found) {
-    let particle = parsed.particle.text()
-    Object.keys(forms).forEach(k => (forms[k] += ' ' + particle))
-  }
-  //put the adverb at the end?
-  if (parsed.adverb.found) {
-    let adverb = parsed.adverb.text()
-    Object.keys(forms).forEach(k => (forms[k] += ' ' + adverb))
   }
   return forms
 }

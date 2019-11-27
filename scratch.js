@@ -28,9 +28,15 @@ nlp.extend(require('./plugins/sentences/src'))
 //   .toFutureTense()
 // .debug()
 
-let doc = nlp(`john is not really walking`)
-doc
-  .verbs() //.toPastTense()
-  //   // .toFutureTense()
-  .toPresentTense()
+// let doc = nlp(`john is not really walking`)
+// doc
+// .verbs() //.toPastTense()
+//   // .toFutureTense()
+// .toPresentTense()
 // doc.debug()
+
+console.log(
+  nlp('we walked, talked, and sang')
+    .verbs()
+    .json()
+)

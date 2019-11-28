@@ -6,6 +6,9 @@ compromise uses semver, and pushes to npm frequently
 * **Minor** is considered a behaviour/performance change.
 * **Patch** is an obvious, non-controversial bugfix
 
+### v12 &nbsp; :postal_horn:
+- [see Release Notes](https://github.com/spencermountain/compromise/wiki/v12-Release-Notes)
+
 ### v11
 ##### 11.13.0
 - support singular units in `.value()`

@@ -1,6 +1,7 @@
 {
   "env": {
-    "es6": true
+    "node": true,
+    "browser": true
   },
   "parserOptions": {
     "ecmaVersion": 6,
@@ -11,7 +12,7 @@
   },
   "rules": {
     "no-cond-assign": 2,
-    "no-var": 0,
+    "no-var": 1,
     "prefer-const": 0,
     "no-extra-parens": 0,
     "no-dupe-keys": 2,
@@ -34,6 +35,7 @@
     "no-octal-escape": 2,
     "no-constant-condition": 1,
     "no-unused-expressions": 2,
-    "no-undefined": 0
+    "no-undefined": 0,
+    "no-undef": 2
   }
 }

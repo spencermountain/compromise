@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      * {
+        font-size: 40px;
+        margin: 20%;
+      }
+    </style>
+  </head>
+  <script src="../builds/compromise.js"></script>
+  <script src="../plugins/numbers/builds/compromise-numbers.min.js"></script>
+  <!-- <script src="https://unpkg.com/compromise-numbers"></script> -->
+  <script defer>
+    // compromise is loaded as 'window.nlp'
+    // plugin is loaded as 'window.compromiseNumbers'
+    nlp.extend(compromiseNumbers)
+
+    var doc = nlp('two bottles of beer')
+    doc.numbers().minus(1)
+    // 'one bottle of beer'
+    window.onload = function() {
+      document.body.innerHTML = doc.text()
+    }
+  </script>
+  <body>
+    <div>compromise plugin demo ...</div>
+  </body>
+</html>

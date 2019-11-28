@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <link href="https://unpkg.com/spencer-css@1.1.3/builds/spencer.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Tajawal&display=swap" rel="stylesheet" />
+    <style>
+      body {
+        font-family: 'Tajawal';
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="m2">
+      <div class="f2 red ">nlp-compromise stress-test</div>
+      <div>parse a bunch of large texts in the browser</div>
+      <button id="start" class="m2">start</button>
+      <div id="duration" class="darkgrey f3"></div>
+    </div>
+    <table id="stage" class=" m4 center w10"></table>
+    <script src="../builds/compromise.js"></script>
+    <!-- <script src="https://unpkg.com/compromise@11.14.2/builds/compromise.min.js"></script> -->
+    <script defer>
+      let url = 'https://unpkg.com/nlp-corpus@3.3.0/builds/nlp-corpus-1.json'
+      fetch(url)
+        .then(response => {
+          return response.json()
+        })
+        .then(texts => {
+          window.texts = texts
+          console.log('loaded')
+        })
+      document.querySelector('#start').onclick = function() {
+        console.log(nlp.version)
+        let el = document.querySelector('#stage')
+        document.querySelector('#start').innerHTML = 'running..'
+        el.innerHTML = ''
+        let begin = Date.now()
+        console.log('start')
+        let els = texts.map(txt => {
+          let start = Date.now()
+          let doc = nlp(txt)
+          let duration = Date.now() - start
+          return `<tr class="m3 h4"><td>${txt.slice(0, 50)}</td> 
+          <td>${doc.wordCount().toLocaleString()} words</td> 
+          <td>${duration.toLocaleString()}ms</td> 
+          <td class="darkgrey f2">${parseInt(doc.wordCount() / duration)}ms per word</td>
+          </tr>`
+        })
+        el.innerHTML = els.join('')
+        document.querySelector('#duration').innerHTML = parseInt(Date.now() - begin, 10) / 1000 + 's - in total'
+      }
+    </script>
+  </body>
+</html>

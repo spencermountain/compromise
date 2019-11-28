@@ -1,14 +1,23 @@
 {
   "compilerOptions": {
+    "target": "es5",
     "module": "commonjs",
-    "lib": [
-      "es6"
-    ],
+    "lib": [],
+    "checkJs": true,
+    "allowJs": true,
+    "sourceMap": false,
+    "importHelpers": true,
+    "downlevelIteration": true,
+    "strict": true,
     "noImplicitAny": true,
-    "noImplicitThis": true,
     "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "noEmit": true,
-    "baseUrl": "."
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true
   }
 }

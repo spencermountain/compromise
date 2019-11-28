@@ -1,112 +1,59 @@
-'use strict';
-const buildText = require('./text/build');
-const pkg = require('../package.json');
-const log = require('./log');
-const unpack = require('./world/unpack');
-let world = require('./world');
-let w = world.w;
+const tokenize = require('./01-tokenizer')
+const version = require('./_version')
+const World = require('./World/World')
+const Doc = require('./Doc/Doc')
 
-//the main function
-const nlp = function(str, lex) {
-  if (lex) {
-    w.plugin({
-      words: lex
-    });
+//blast-out our word-lists, just once
+let world = new World()
+
+/** parse and tag text into a compromise object  */
+const nlp = function(text = '', lexicon) {
+  if (lexicon) {
+    world.addWords(lexicon)
   }
-  let doc = buildText(str, w);
-  doc.tagger();
-  return doc;
-};
+  let list = tokenize.fromText(text, world)
+  let doc = new Doc(list, null, world)
+  doc.tagger()
+  return doc
+}
 
-//this is used, atleast, for testing the packing
-nlp.unpack = function(plugin) {
-  return unpack(plugin);
-};
-//this is handy
-nlp.version = pkg.version;
-//turn-on some debugging
-nlp.verbose = function(str) {
-  log.enable(str);
-};
-//same as main method, except with no POS-tagging.
-nlp.tokenize = function(str) {
-  return buildText(str);
-};
+/** parse text into a compromise object, without running POS-tagging */
+nlp.tokenize = function(text = '', lexicon) {
+  if (lexicon) {
+    world.addWords(lexicon)
+  }
+  let list = tokenize.fromText(text, world)
+  let doc = new Doc(list, null, world)
+  return doc
+}
 
-//uncompress user-submitted lexicon
-nlp.plugin = function(plugin) {
-  w.plugin(plugin);
-};
-//contribute words to the lexicon
-nlp.addWords = function(lex) {
-  w.plugin({
-    words: lex
-  });
-};
-nlp.addTags = function(tags) {
-  w.plugin({
-    tags: tags
-  });
-};
-nlp.addRegex = function(regex) {
-  w.plugin({
-    regex: regex
-  });
-};
-nlp.addPatterns = function(patterns) {
-  w.plugin({
-    patterns: patterns
-  });
-};
-nlp.addPlurals = function(plurals) {
-  w.plugin({
-    plurals: plurals
-  });
-};
-nlp.addConjugations = function(conj) {
-  w.plugin({
-    conjugations: conj
-  });
-};
+/** mix in a compromise-plugin */
+nlp.extend = function(fn) {
+  fn(Doc, world)
+  return this
+}
 
-//make a weird, half-copy of this method
+/** make a deep-copy of the library state */
 nlp.clone = function() {
-  let w2 = world.reBuild();
-  //this is weird, but it's okay
-  var nlp2 = function(str, lex) {
-    if (lex) {
-      w2.plugin({
-        words: lex
-      });
-    }
-    let doc = buildText(str, w2);
-    doc.tagger();
-    return doc;
-  };
-  nlp2.tokenize = nlp.tokenize;
-  nlp2.verbose = nlp.verbose;
-  nlp2.version = nlp.version;
-  ['Words', 'Tags', 'Regex', 'Patterns', 'Plurals', 'Conjugations'].forEach((fn) => {
-    nlp2['add' + fn] = function(obj) {
-      w2['add' + fn](obj);
-    };
-  });
-  return nlp2;
-};
+  world = world.clone()
+  return this
+}
 
-//and then all-the-exports...
-if (typeof self !== 'undefined') {
-  self.nlp = nlp; // Web Worker
-} else if (typeof window !== 'undefined') {
-  window.nlp = nlp; // Browser
-} else if (typeof global !== 'undefined') {
-  global.nlp = nlp; // NodeJS
+/** re-generate a Doc object from .json() results */
+nlp.load = function(json) {
+  let list = tokenize.fromJSON(json, world)
+  return new Doc(list, null, world)
 }
-//don't forget amd!
-if (typeof define === 'function' && define.amd) {
-  define(nlp);
+
+/** log our decision-making for debugging */
+nlp.verbose = function(bool = true) {
+  world.verbose(bool)
+  return this
 }
-//then for some reason, do this too!
-if (typeof module !== 'undefined') {
-  module.exports = nlp;
-}
+
+/** current version of the library */
+nlp.version = version
+// alias
+nlp.import = nlp.load
+
+module.exports = nlp

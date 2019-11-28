@@ -1,7 +1,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global = global || self, global.nlp = factory());
+  (global = global || self, global.compromiseNumbers = factory());
 }(this, (function () { 'use strict';
 
   function _classCallCheck(instance, Constructor) {
@@ -61,7 +61,7 @@
   var teens = 'eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen'; // this is a bit of a mess
 
   var findNumbers = function findNumbers(doc, n) {
-    var match = doc.match('#Value+ #Unit?'); //"50 83"
+    var match = doc.match('#Value+'); //"50 83"
 
     if (match.has('#NumericValue #NumericValue')) {
       //a comma may mean two numbers
@@ -522,6 +522,27 @@
 
   var parse$1 = parseNumber;
 
+  // handle 'one bottle', 'two bottles'
+  var agreeUnits = function agreeUnits(agree, val, obj) {
+    if (agree === false) {
+      return;
+    }
+
+    var unit = val.lookAhead('^(#Unit|#Noun)'); // don't do these
+
+    if (unit.has('(#Address|#Money|#Percent)') || val.has('#Ordinal')) {
+      return;
+    }
+
+    if (obj.num === 1) {
+      unit.nouns().toSingular();
+    } else if (unit.has('#Singular')) {
+      unit.nouns().toPlural();
+    }
+  };
+
+  var _agreeUnits = agreeUnits;
+
   /**
    * turn big numbers, like 2.3e+22, into a string with a ton of trailing 0's
    * */
@@ -625,8 +646,13 @@
 
 
   var to_text = function to_text(num) {
-    //big numbers, north of sextillion, aren't gonna work well..
+    // handle zero, quickly
+    if (num === 0 || num === '0') {
+      return 'zero'; // no?
+    } //big numbers, north of sextillion, aren't gonna work well..
     //keep them small..
+
+
     if (num > 1e21) {
       num = _toString(num);
     }
@@ -634,7 +660,7 @@
     var arr = []; //handle negative numbers
 
     if (num < 0) {
-      arr.push('negative');
+      arr.push('minus');
       num = Math.abs(num);
     } //break-down into units, counts
 
@@ -890,6 +916,11 @@
       return res;
     },
 
+    /** two of what? */
+    units: function units() {
+      return this.lookAhead('^(#Unit|#Noun)');
+    },
+
     /** return only ordinal numbers */
     isOrdinal: function isOrdinal() {
       return this["if"]('#Ordinal');
@@ -949,7 +980,7 @@
     },
 
     /** convert to cardinal form, like 'eight', or '8' */
-    toCardinal: function toCardinal() {
+    toCardinal: function toCardinal(agree) {
       var m = this["if"]('#Ordinal');
       m.forEach(function (val) {
         var obj = parse$1(val);
@@ -959,14 +990,18 @@
         }
 
         var str = makeNumber_1(obj, val.has('#TextValue'), false);
-        val.replaceWith(str, true);
-        val.tag('Cardinal');
+        val.replaceWith(str, true, true);
+        val.tag('Cardinal'); // turn unit into plural -> 'seven beers'
+
+        _agreeUnits(agree, val, obj);
       });
       return this;
     },
 
     /** convert to ordinal form, like 'eighth', or '8th' */
     toOrdinal: function toOrdinal() {
+      var _this = this;
+
       var m = this["if"]('#Cardinal');
       m.forEach(function (val) {
         var obj = parse$1(val);
@@ -976,8 +1011,14 @@
         }
 
         var str = makeNumber_1(obj, val.has('#TextValue'), true);
-        val.replaceWith(str, true);
-        val.tag('Ordinal');
+        val.replaceWith(str, true, true);
+        val.tag('Ordinal'); // turn unit into singular -> 'seventh beer'
+
+        var unit = _this.lookAhead('^#Plural');
+
+        if (unit.found) {
+          unit.nouns().toSingular();
+        }
       });
       return this;
     },
@@ -1014,10 +1055,38 @@
       });
     },
 
-    /** increase each number by n */
-    add: function add(n) {
+    /** set these number to n */
+    set: function set(n, agree) {
+      if (n === undefined) {
+        return this; // don't bother
+      }
+
+      if (typeof n === 'string') {
+        n = toNumber(n);
+      }
+
+      this.forEach(function (val) {
+        var obj = parse$1(val);
+        obj.num = n;
+
+        if (obj.num === null) {
+          return;
+        }
+
+        var str = makeNumber_1(obj, val.has('#TextValue'), val.has('#Ordinal'));
+        val.replaceWith(str, true, true); // handle plural/singular unit
+
+        _agreeUnits(agree, val, obj);
+      });
+      return this;
+    },
+    add: function add(n, agree) {
       if (!n) {
         return this; // don't bother
+      }
+
+      if (typeof n === 'string') {
+        n = toNumber(n);
       }
 
       this.forEach(function (val) {
@@ -1029,25 +1098,27 @@
 
         obj.num += n;
         var str = makeNumber_1(obj, val.has('#TextValue'), val.has('#Ordinal'));
-        val.replaceWith(str, true);
+        val.replaceWith(str, true, true); // handle plural/singular unit
+
+        _agreeUnits(agree, val, obj);
       });
       return this;
     },
 
     /** decrease each number by n*/
-    subtract: function subtract(n) {
-      return this.add(n * -1);
+    subtract: function subtract(n, agree) {
+      return this.add(n * -1, agree);
     },
 
     /** increase each number by 1 */
-    increment: function increment() {
-      this.add(1);
+    increment: function increment(agree) {
+      this.add(1, agree);
       return this;
     },
 
     /** decrease each number by 1 */
-    decrement: function decrement() {
-      this.add(-1);
+    decrement: function decrement(agree) {
+      this.add(-1, agree);
       return this;
     },
     /// ----
@@ -1117,9 +1188,6 @@
       isA: 'Value'
     },
     Multiple: {
-      isA: 'Value'
-    },
-    Unit: {
       isA: 'Value'
     }
   };

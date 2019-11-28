@@ -141,8 +141,6 @@ doc.text()
 grab subjects in a text:
 
 ```js
-nlp.extend(require('compromise-entities'))
-
 let doc = nlp(buddyHolly)
 doc
   .people()
@@ -202,10 +200,14 @@ Use it on the client-side:
 
 ```html
 <script src="https://unpkg.com/compromise"></script>
-<script>
-  var doc = nlp('hey, has anyone here seen Mya Normisbutt?')
-  var arr = doc.people().json()
-  // [{text:'Mya Normisbutt'}]
+<script src="https://unpkg.com/compromise-numbers"></script>
+<script defer>
+  nlp.extend(compromiseNumbers)
+
+  var doc = nlp('two bottles of beer')
+  doc.numbers().minus(1)
+  body.innerHTML = doc.text()
+  // 'one bottle of beer'
 </script>
 ```
 

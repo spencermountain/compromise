@@ -34,6 +34,7 @@
           console.log('loaded')
         })
       document.querySelector('#start').onclick = function() {
+        console.log(nlp.version)
         let el = document.querySelector('#stage')
         document.querySelector('#start').innerHTML = 'running..'
         el.innerHTML = ''

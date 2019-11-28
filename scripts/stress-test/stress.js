@@ -1,5 +1,5 @@
 const corpus = require('nlp-corpus')
-const nlp = require('../src')
+const nlp = require('../../src')
 console.log(`\n\n--- running compromise on 100 random texts---\n`)
 console.log('    --should take a few minutes--')
 

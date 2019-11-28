@@ -11,11 +11,9 @@ const fixValue = function(doc) {
     //three trains
     val.match('#Value [#PresentTense]').tag('Plural', 'value-presentTense')
     //money
-    val
-      .match('#Value+ #Currency')
-      .tag('Money', 'value-currency')
-      .lastTerm()
-      .tag('Unit', 'money-unit')
+    let m = val.match('#Value+ #Currency')
+    m.lastTerm().tag('Unit', 'money-unit')
+    m.match('#Value+').tag('Money', 'value-currency')
   }
   //5 kg.
   val.match('#Value #Abbreviation').tag('Value', 'value-abbr')

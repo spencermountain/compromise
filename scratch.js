@@ -1,7 +1,7 @@
 const nlp = require('./src/index')
 // nlp.verbose(true)
-nlp.extend(require('./plugins/sentences/src'))
-nlp.extend(require('./plugins/numbers/src'))
+// nlp.extend(require('./plugins/sentences/src'))
+// nlp.extend(require('./plugins/numbers/src'))
 
 // let doc = nlp(`i walked to the moon when it was shining`)
 // doc.verbs().forEach(d => {
@@ -15,6 +15,6 @@ nlp.extend(require('./plugins/numbers/src'))
 // doc.match('between [.*] and').debug()
 
 // let doc = nlp('falls over')
-let doc = nlp('john smith was really working. he is cool')
-  .first()
-  .debug()
+// let doc = nlp('i paid $5.20 for the thing')
+let doc = nlp('i got 1 peso and £30.').debug()
+doc.money().debug()

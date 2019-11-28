@@ -8,8 +8,6 @@ declare module nlp {
   export function tokenize(text: string): Document
   /** mix in a compromise-plugin */
   export function extend(plugin: any): Document
-  /** make a deep-copy of the library state */
-  export function clone(): Document
   /** re-generate a Doc object from .json() results */
   export function load(json: any): Document
   /**  log our decision-making for debugging */
@@ -209,6 +207,8 @@ declare module nlp {
     abbreviations(n?: Number): Document
 
     // Subsets
+    /** alias for .all(), until plugin overloading  */
+    sentences(): Document
     /** return any multi-word terms, like "didn't"  */
     contractions(n?: Number): Document
     /** contract words that can combine, like "did not" */

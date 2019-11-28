@@ -13,7 +13,6 @@ const arr = [
   ['urls', '#Url'],
   ['adverbs', '#Adverb'],
   ['pronouns', '#Pronoun'],
-  ['money', '#Money'],
   ['conjunctions', '#Conjunction'],
   ['prepositions', '#Preposition'],
 ]
@@ -35,6 +34,15 @@ methods.words = methods.terms
 methods.phoneNumbers = function(n) {
   let m = this.splitAfter('@hasComma')
   m = m.match('#PhoneNumber+')
+  if (typeof n === 'number') {
+    m = m.get(n)
+  }
+  return m
+}
+
+/** money + currency pair */
+methods.money = function(n) {
+  let m = this.match('#Money #Currency?')
   if (typeof n === 'number') {
     m = m.get(n)
   }

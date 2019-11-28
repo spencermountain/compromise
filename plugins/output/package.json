@@ -1,7 +1,7 @@
 {
   "name": "compromise-output",
   "description": "plugin for nlp-compromise",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "main": "./builds/compromise-output.js",
   "unpkg": "./builds/compromise-output.min.js",
@@ -38,7 +38,7 @@
     "vhtml": "^2.1.0"
   },
   "devDependencies": {
-    "rollup": "1.26.3",
+    "rollup": "1.27.5",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.0.0",
     "rollup-plugin-json": "^4.0.0",

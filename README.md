@@ -201,12 +201,12 @@ Use it on the client-side:
 ```html
 <script src="https://unpkg.com/compromise"></script>
 <script src="https://unpkg.com/compromise-numbers"></script>
-<script defer>
+<script>
   nlp.extend(compromiseNumbers)
 
   var doc = nlp('two bottles of beer')
   doc.numbers().minus(1)
-  body.innerHTML = doc.text()
+  document.body.innerHTML = doc.text()
   // 'one bottle of beer'
 </script>
 ```

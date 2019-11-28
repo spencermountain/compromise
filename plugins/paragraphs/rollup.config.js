@@ -31,7 +31,7 @@ export default [
         file: `builds/${name}.js`,
         format: 'umd',
         sourcemap: true,
-        name: 'nlp',
+        name: 'compromiseParagraphs',
       },
     ],
     plugins: [
@@ -50,7 +50,7 @@ export default [
       {
         file: `builds/${name}.min.js`,
         format: 'umd',
-        name: 'nlp',
+        name: 'compromiseParagraphs',
       },
     ],
     plugins: [

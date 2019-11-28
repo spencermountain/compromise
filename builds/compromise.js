@@ -3104,7 +3104,7 @@
     fromJSON: fromJSON
   };
 
-  var _version = '12.0.0-rc3';
+  var _version = '12.0.0';
 
   var _data = {
     "Comparative": "true¦better",
@@ -8462,7 +8462,7 @@
 
   var methods$5 = {}; // allow helper methods like .adjectives() and .adverbs()
 
-  var arr = [['terms', '.'], ['hyphenated', '@hasHyphen .'], ['adjectives', '#Adjective'], ['hashTags', '#HashTag'], ['emails', '#Email'], ['emoji', '#Emoji'], ['emoticons', '#Emoticon'], ['atMentions', '#AtMention'], ['urls', '#Url'], ['adverbs', '#Adverb'], ['pronouns', '#Pronoun'], ['money', '#Money'], ['conjunctions', '#Conjunction'], ['prepositions', '#Preposition']];
+  var arr = [['terms', '.'], ['hyphenated', '@hasHyphen .'], ['adjectives', '#Adjective'], ['hashTags', '#HashTag'], ['emails', '#Email'], ['emoji', '#Emoji'], ['emoticons', '#Emoticon'], ['atMentions', '#AtMention'], ['urls', '#Url'], ['adverbs', '#Adverb'], ['pronouns', '#Pronoun'], ['conjunctions', '#Conjunction'], ['prepositions', '#Preposition']];
   arr.forEach(function (a) {
     methods$5[a[0]] = function (n) {
       var m = this.match(a[1]);
@@ -8483,6 +8483,18 @@
   methods$5.phoneNumbers = function (n) {
     var m = this.splitAfter('@hasComma');
     m = m.match('#PhoneNumber+');
+
+    if (typeof n === 'number') {
+      m = m.get(n);
+    }
+
+    return m;
+  };
+  /** money + currency pair */
+
+
+  methods$5.money = function (n) {
+    var m = this.match('#Money #Currency?');
 
     if (typeof n === 'number') {
       m = m.get(n);
@@ -10435,7 +10447,9 @@
 
       val.match('#Value [#PresentTense]').tag('Plural', 'value-presentTense'); //money
 
-      val.match('#Value+ #Currency').tag('Money', 'value-currency').lastTerm().tag('Unit', 'money-unit');
+      var m = val.match('#Value+ #Currency');
+      m.lastTerm().tag('Unit', 'money-unit');
+      m.match('#Value+').tag('Money', 'value-currency');
     } //5 kg.
 
 

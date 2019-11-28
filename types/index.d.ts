@@ -205,6 +205,14 @@ declare module nlp {
     prepositions(n?: Number): Document
     /**  return things like `'Mrs.'`*/
     abbreviations(n?: Number): Document
+    /**  return person names like `'John A. Smith'`*/
+    people(n?: Number): Document
+    /**  return location names like `'Paris, France'`*/
+    places(n?: Number): Document
+    /**  return companies and org names like `'Google Inc.'`*/
+    organizations(n?: Number): Document
+    /**  return people, places, and organizations */
+    topics(n?: Number): Document
 
     // Subsets
     /** alias for .all(), until plugin overloading  */

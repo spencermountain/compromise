@@ -10,6 +10,11 @@ const toBe = parsed => {
   //   isI = true;
   // }
 
+  // 'i look', not 'i looks'
+  if (parsed.verb.lookBehind('(i|we) (#Adverb|#Verb)?$').found) {
+    isI = true
+  }
+
   let obj = {
     PastTense: 'was',
     PresentTense: 'is',

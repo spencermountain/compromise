@@ -16,6 +16,8 @@ const fixVerb = function(doc) {
     vb.match('[#PastTense] #Singular is').tag('#Adjective', 'smoked-poutine')
     // baked onions are
     vb.match('[#PastTense] #Plural are').tag('#Adjective', 'baked-onions')
+    // goes to sleep
+    vb.match('(go|goes|went) to [#Infinitive]').tag('#Noun', 'goes-to-verb')
 
     //there are reasons
     vb.match('there (are|were) #Adjective? [#PresentTense]').tag('Plural', 'there-are')
@@ -31,7 +33,7 @@ const fixVerb = function(doc) {
       .tag('Auxiliary', 'be-walking')
 
     // directive verb - 'use reverse'
-    vb.match('(try|do|use|attempt|build|make) #Verb')
+    vb.match('(try|use|attempt|build|make) #Verb')
       .ifNo('(@hasComma|#Negative|#Copula|will|be)')
       .lastTerm()
       .tag('#Noun', 'do-verb')

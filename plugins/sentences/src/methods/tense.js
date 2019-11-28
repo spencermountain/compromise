@@ -3,6 +3,9 @@ const parse = require('../parse')
 /** he walks -> he walked */
 exports.toPastTense = function() {
   this.forEach(doc => {
+    if (doc.has('#PastTense')) {
+      return
+    }
     let obj = parse(doc)
     let vb = obj.verb.clone()
     vb = vb.verbs().toPastTense()
@@ -27,7 +30,12 @@ exports.toPresentTense = function() {
     let vb = obj.verb.clone()
     // 'i look', not 'i looks'
     if (isPlural) {
-      vb = vb.verbs().toInfinitive()
+      //quick hack for copula verb - be/am
+      if (vb.has('(is|was|am|be)')) {
+        vb = vb.replace('will? (is|was|am|be)', 'am')
+      } else {
+        vb = vb.verbs().toInfinitive()
+      }
     } else {
       //'he looks'
       vb = vb.verbs().toPresentTense()

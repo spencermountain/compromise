@@ -89,3 +89,7 @@ nlp(`Cows don't`)
   .toSingular()
 //a cow doesn't
 ```
+
+```js
+let doc = nlp('I’m lookin’ for Amanda').debug()
+```

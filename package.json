@@ -8,6 +8,7 @@
   "module": "./builds/compromise.mjs",
   "type": "commonjs",
   "types": "types/index.d.ts",
+  "sideEffects": false,
   "repository": {
     "type": "git",
     "url": "git://github.com/spencermountain/compromise.git"

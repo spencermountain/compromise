@@ -23,7 +23,7 @@
   <a href="https://codecov.io/gh/spencermountain/compromise">
     <img src="https://codecov.io/gh/spencermountain/compromise/branch/master/graph/badge.svg" />
   </a>
-  <a href="https://unpkg.com/compromise">
+  <a href="https://bundlephobia.com/result?p=compromise">
     <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/builds/compromise.min.js" />
   </a>
   </div>

@@ -1,7 +1,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global = global || self, global.nlp = factory());
+  (global = global || self, global.compromiseAdjectives = factory());
 }(this, (function () { 'use strict';
 
   function _classCallCheck(instance, Constructor) {
@@ -334,7 +334,7 @@
           var transform = this.world.transforms.adjectives;
           this.forEach(function (doc) {
             var obj = transform(doc.text('reduced'));
-            doc.replaceWith(obj.Superlative, true);
+            doc.replaceWith(obj.Superlative, true, true);
           });
           return this;
         }
@@ -344,7 +344,7 @@
           var transform = this.world.transforms.adjectives;
           this.forEach(function (doc) {
             var obj = transform(doc.text('reduced'));
-            doc.replaceWith(obj.Comparative, true);
+            doc.replaceWith(obj.Comparative, true, true);
           });
           return this;
         }
@@ -354,7 +354,7 @@
           this.forEach(function (doc) {
             var adverb = toAdverb(doc.text('reduced'));
 
-            doc.replaceWith(adverb, true);
+            doc.replaceWith(adverb, true, true);
           });
           return this;
         }
@@ -364,7 +364,7 @@
           this.forEach(function (doc) {
             var verb = toVerb_1(doc.text('reduced'));
 
-            doc.replaceWith(verb, true);
+            doc.replaceWith(verb, true, true);
           });
           return this;
         }
@@ -374,7 +374,7 @@
           this.forEach(function (doc) {
             var noun = toNoun(doc.text('reduced'));
 
-            doc.replaceWith(noun, true);
+            doc.replaceWith(noun, true, true);
           });
           return this;
         }

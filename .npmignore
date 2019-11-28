@@ -1,4 +1,3 @@
-api
 data
 demo
 plugins
@@ -6,9 +5,8 @@ scripts
 src
 tests
 .eslintrc
-.babelrc
 .gitignore
-TODO.MD
 changelog.md
-fixme.md
+hmm.md
+rollup.config.js
 scratch.js

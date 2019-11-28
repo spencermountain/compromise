@@ -1,8 +1,22 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global = global || self, global.nlp = factory());
+  (global = global || self, global.compromiseDates = factory());
 }(this, (function () { 'use strict';
+
+  function _typeof(obj) {
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof = function (obj) {
+        return typeof obj;
+      };
+    } else {
+      _typeof = function (obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+      };
+    }
+
+    return _typeof(obj);
+  }
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -385,29 +399,33 @@
       var oops = doc.match('#Date+ by #Date+');
 
       if (oops.found && !oops.has('^due')) {
-        oops.match('^#Date+').unTag('Date', here$5);
+        oops.match('^#Date+').unTag('Date', 'by-monday');
       }
 
       var d = doc.match('#Date+'); //'spa day'
 
-      d.match('^day$').unTag('Date', here$5);
+      d.match('^day$').unTag('Date', 'spa-day');
       var knownDate = '(yesterday|today|tomorrow)';
 
       if (d.has(knownDate)) {
         //yesterday 7
-        d.match("".concat(knownDate, " #Value$")).terms(1).unTag('Date', here$5); //7 yesterday
+        d.match("".concat(knownDate, " [#Value]$")).unTag('Date', 'yesterday-7'); //7 yesterday
 
-        d.match("^#Value ".concat(knownDate, "$")).terms(0).unTag('Date', here$5); //friday yesterday
+        d.match("^[#Value] ".concat(knownDate, "$")).unTag('Date', '7 yesterday'); //friday yesterday
 
-        d.match("#WeekDay+ ".concat(knownDate, "$")).unTag('Date').lastTerm().tag('Date', here$5);
-        d.match("".concat(knownDate, "+ ").concat(knownDate, "$")).unTag('Date').lastTerm().tag('Date', here$5);
-        d.match("(this|last|next) #Date ".concat(knownDate, "$")).unTag('Date').lastTerm().tag('Date', here$5);
+        d.match("#WeekDay+ ".concat(knownDate, "$")).unTag('Date').lastTerm().tag('Date', 'fri-yesterday'); // yesterday yesterday
+        // d.match(`${knownDate}+ ${knownDate}$`)
+        //   .unTag('Date')
+        //   .lastTerm()
+        //   .tag('Date', here)
+
+        d.match("(this|last|next) #Date ".concat(knownDate, "$")).unTag('Date').lastTerm().tag('Date', 'this month yesterday');
       } //tomorrow on 5
 
 
       d.match("on #Cardinal$").unTag('Date', here$5); //this tomorrow
 
-      d.match("this tomorrow").terms(0).unTag('Date', here$5); //q2 2019
+      d.match("this tomorrow").terms(0).unTag('Date', 'this-tomorrow'); //q2 2019
 
       d.match("(q1|q2|q3|q4) #Year").tag('Date', here$5); //5 tuesday
       // d.match(`^#Value #WeekDay`).terms(0).unTag('Date');
@@ -433,8 +451,8 @@
       } //june june
 
 
-      if (d.has('#Month #Month') && !d.has('#Hyphenated')) {
-        d.match('#Month').lastTerm().unTag('Date', here$5);
+      if (d.has('#Month #Month') && !d.has('@hasHyphen') && !d.has('@hasComma')) {
+        d.match('#Month').lastTerm().unTag('Date', 'month-month');
       }
     }
 
@@ -521,7 +539,9 @@
       console.warn("Compromise: compromise-dates cannot find plugin dependency 'compromise-number'");
     } else {
       // convert 'two' to 2
-      doc.numbers().toNumber();
+      var num = doc.numbers();
+      num.toNumber();
+      num.toCardinal();
     } // remove adverbs
 
 
@@ -552,11 +572,11 @@
     }
 
     m.match('#Cardinal #Duration').forEach(function (ts) {
-      var num = ts.match('#Cardinal').out('normal');
+      var num = ts.match('#Cardinal').text('normal');
       num = parseFloat(num);
 
       if (num && typeof num === 'number') {
-        var unit = ts.match('#Duration').out('normal');
+        var unit = ts.match('#Duration').text('normal');
         unit = unit.replace(/s$/, '');
 
         if (unit && knownUnits.hasOwnProperty(unit)) {
@@ -4603,7 +4623,7 @@
     } // parse random a time like '4:54pm'
 
 
-    var str = time.out('reduced');
+    var str = time.text('reduced');
     s = s.time(str);
 
     if (s.isValid() && !s.isEqual(now)) {
@@ -4913,7 +4933,7 @@
     var m = doc.match('(weekday|week|month|quarter|season|year)');
 
     if (m.found === true) {
-      var str = m.lastTerm().out('reduced');
+      var str = m.lastTerm().text('reduced');
 
       if (mapping$1.hasOwnProperty(str)) {
         var Model = mapping$1[str];
@@ -4931,7 +4951,7 @@
     m = doc.match('(monday|tuesday|wednesday|thursday|friday|saturday|sunday)');
 
     if (m.found === true) {
-      var _str = m.lastTerm().out('reduced');
+      var _str = m.lastTerm().text('reduced');
 
       var _unit = new units$4.WeekDay(_str);
 
@@ -5401,7 +5421,7 @@
 
   var parseHoliday = function parseHoliday(doc) {
     var d = null;
-    var str = doc.match('#Holiday+').out('reduced');
+    var str = doc.match('#Holiday+').text('reduced');
     var year = 2020; //change me!
 
     var s = spacetimeHoliday(str, year);
@@ -5418,6 +5438,8 @@
   var Unit$1 = units$4.Unit; // parse things like 'june 5th 2019'
 
   var parseExplicit = function parseExplicit(doc) {
+    if (doc.has('#Number of #Month')) ;
+
     var str = doc.text('reduced'); // spacetime does the heavy-lifting
 
     var d = new Unit$1(str); // did we find a date?
@@ -5564,12 +5586,21 @@
 
   var _02Ranges = logic;
 
-  var parse = function parse(doc) {
+  var parse = function parse(doc, context) {
     doc = _01Normalize(doc);
     return _02Ranges(doc);
   };
 
   var parse_1 = parse;
+
+  var arr = [['mon', 'monday'], ['tue', 'tuesday'], ['tues', 'tuesday'], ['wed', 'wednesday'], ['thu', 'thursday'], ['thurs', 'thursday'], ['fri', 'friday'], ['sat', 'saturday'], ['sun', 'sunday'], ['jan', 'january'], ['feb', 'february'], ['mar', 'march'], ['apr', 'april'], ['jun', 'june'], ['jul', 'july'], ['aug', 'august'], ['sep', 'september'], ['sept', 'september'], ['oct', 'october'], ['nov', 'november'], ['dec', 'december']];
+  arr = arr.map(function (a) {
+    return {
+      "short": a[0],
+      "long": a[1]
+    };
+  });
+  var abbrevs = arr;
 
   var addMethods$5 = function addMethods(Doc, world) {
     // our new tags
@@ -5585,17 +5616,23 @@
     function (_Doc) {
       _inherits(Dates, _Doc);
 
-      function Dates() {
+      function Dates(list, from, w) {
+        var _this;
+
         _classCallCheck(this, Dates);
 
-        return _possibleConstructorReturn(this, _getPrototypeOf(Dates).apply(this, arguments));
+        _this = _possibleConstructorReturn(this, _getPrototypeOf(Dates).call(this, list, from, w));
+        _this.context = {};
+        return _this;
       }
+      /** overload the original json with noun information */
+
 
       _createClass(Dates, [{
         key: "json",
-
-        /** overload the original json with noun information */
         value: function json(options) {
+          var _this2 = this;
+
           var n = null;
 
           if (typeof options === 'number') {
@@ -5607,11 +5644,12 @@
             terms: false
           };
           var res = [];
+          var format = options.format || 'iso';
           this.forEach(function (doc) {
             var json = doc.json(options)[0];
-            var obj = parse_1(doc);
-            var start = obj.start ? obj.start.format('iso') : null;
-            var end = obj.end ? obj.end.format('iso') : null; // set iso strings to json result
+            var obj = parse_1(doc, _this2.context);
+            var start = obj.start ? obj.start.format(format) : null;
+            var end = obj.end ? obj.end.format(format) : null; // set iso strings to json result
 
             json.date = {
               start: start,
@@ -5639,8 +5677,10 @@
       }, {
         key: "format",
         value: function format(fmt) {
+          var _this3 = this;
+
           this.forEach(function (doc) {
-            var obj = parse_1(doc);
+            var obj = parse_1(doc, _this3.context);
             var str = '';
 
             if (obj.start) {
@@ -5655,12 +5695,43 @@
           });
           return this;
         }
+        /** replace 'Fri' with 'Friday', etc*/
+
+      }, {
+        key: "toLongForm",
+        value: function toLongForm() {
+          var _this4 = this;
+
+          abbrevs.forEach(function (a) {
+            _this4.replace(a["short"], a["long"], true, true);
+          });
+          return this;
+        }
+        /** replace 'Friday' with 'Fri', etc*/
+
+      }, {
+        key: "toShortForm",
+        value: function toShortForm() {
+          var _this5 = this;
+
+          abbrevs.forEach(function (a) {
+            _this5.replace(a["long"], a["short"], true, true);
+          });
+          return this;
+        }
       }]);
 
       return Dates;
     }(Doc);
 
     Doc.prototype.dates = function (n) {
+      var context = {};
+
+      if (n && _typeof(n) === 'object') {
+        context = n;
+        n = null;
+      }
+
       var r = this.clauses();
       var dates = r.match('#Date+');
 
@@ -5672,7 +5743,9 @@
         dates = dates.get(n);
       }
 
-      return new Dates(dates.list, this, this.world);
+      var d = new Dates(dates.list, this, this.world);
+      d.context = context;
+      return d;
     };
   };
 

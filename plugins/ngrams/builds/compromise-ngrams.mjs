@@ -1,261 +1,319 @@
-const defaults = {
+var defaults = {
   max: 4,
-  min: 1,
+  min: 1
 };
 
-const oneSize = function(list, size) {
-  let grams = {};
-  // count each instance
-  list.forEach(terms => {
-    for (let i = 0; i < terms.length; i += 1) {
-      let slice = terms.slice(i, i + size);
+var oneSize = function oneSize(list, size) {
+  var grams = {}; // count each instance
+
+  list.forEach(function (terms) {
+    for (var i = 0; i < terms.length; i += 1) {
+      var slice = terms.slice(i, i + size);
+
       if (slice.length === size) {
-        let str = slice.join(' ');
+        var str = slice.join(' ');
+
         if (grams.hasOwnProperty(str)) {
           grams[str].count += 1;
         } else {
           grams[str] = {
             size: size,
-            count: 1,
+            count: 1
           };
         }
       }
     }
-  });
-  // turn them into an array
-  let arr = Object.keys(grams).map(k => {
+  }); // turn them into an array
+
+  var arr = Object.keys(grams).map(function (k) {
     grams[k].normal = k;
-    return grams[k]
+    return grams[k];
   });
-  return arr
+  return arr;
 };
 
-const allGrams = function(list, options) {
+var allGrams = function allGrams(list, options) {
   // support {size:2} syntax
   if (options.size) {
     options.min = options.size;
     options.max = options.size;
   }
-  let max = options.max || defaults.max;
-  let min = options.min || defaults.min;
-  let arr = [];
-  for (let size = min; size <= max; size += 1) {
+
+  var max = options.max || defaults.max;
+  var min = options.min || defaults.min;
+  var arr = [];
+
+  for (var size = min; size <= max; size += 1) {
     arr = arr.concat(oneSize(list, size));
   }
-  return arr
+
+  return arr;
 };
+
 var getGrams = allGrams;
 
-const defaults$1 = {
+var defaults$1 = {
   max: 4,
-  min: 1,
+  min: 1
 };
 
-const oneSize$1 = function(list, size) {
-  let grams = {};
-  // count each instance
-  list.forEach(terms => {
-    for (let i = 0; i <= terms.length; i += 1) {
-      let slice = terms.slice(0, i);
+var oneSize$1 = function oneSize(list, size) {
+  var grams = {}; // count each instance
+
+  list.forEach(function (terms) {
+    for (var i = 0; i <= terms.length; i += 1) {
+      var slice = terms.slice(0, i);
+
       if (slice.length === size) {
-        let str = slice.join(' ');
+        var str = slice.join(' ');
+
         if (grams.hasOwnProperty(str)) {
           grams[str].count += 1;
         } else {
           grams[str] = {
             size: size,
-            count: 1,
+            count: 1
           };
         }
       }
     }
-  });
-  // turn them into an array
-  let arr = Object.keys(grams).map(k => {
+  }); // turn them into an array
+
+  var arr = Object.keys(grams).map(function (k) {
     grams[k].normal = k;
-    return grams[k]
+    return grams[k];
   });
-  return arr
+  return arr;
 };
 
-const startGrams = function(list, options) {
+var startGrams = function startGrams(list, options) {
   // support {size:2} syntax
   if (options.size) {
     options.min = options.size;
     options.max = options.size;
   }
-  let max = options.max || defaults$1.max;
-  let min = options.min || defaults$1.min;
-  let arr = [];
-  for (let size = min; size <= max; size++) {
+
+  var max = options.max || defaults$1.max;
+  var min = options.min || defaults$1.min;
+  var arr = [];
+
+  for (var size = min; size <= max; size++) {
     arr = arr.concat(oneSize$1(list, size));
   }
-  return arr
+
+  return arr;
 };
+
 var startGrams_1 = startGrams;
 
-const defaults$2 = {
+var defaults$2 = {
   max: 4,
-  min: 1,
+  min: 1
 };
 
-const oneSize$2 = function(list, size) {
-  let grams = {};
-  // count each instance
-  list.forEach(terms => {
-    let len = terms.length;
-    for (let i = 0; i <= terms.length; i += 1) {
-      let slice = terms.slice(len - i, len);
+var oneSize$2 = function oneSize(list, size) {
+  var grams = {}; // count each instance
+
+  list.forEach(function (terms) {
+    var len = terms.length;
+
+    for (var i = 0; i <= terms.length; i += 1) {
+      var slice = terms.slice(len - i, len);
+
       if (slice.length === size) {
-        let str = slice.join(' ');
+        var str = slice.join(' ');
+
         if (grams.hasOwnProperty(str)) {
           grams[str].count += 1;
         } else {
           grams[str] = {
             size: size,
-            count: 1,
+            count: 1
           };
         }
       }
     }
-  });
-  // turn them into an array
-  let arr = Object.keys(grams).map(k => {
+  }); // turn them into an array
+
+  var arr = Object.keys(grams).map(function (k) {
     grams[k].normal = k;
-    return grams[k]
+    return grams[k];
   });
-  return arr
+  return arr;
 };
 
-const endGrams = function(list, options) {
+var endGrams = function endGrams(list, options) {
   // support {size:2} syntax
   if (options.size) {
     options.min = options.size;
     options.max = options.size;
   }
-  let max = options.max || defaults$2.max;
-  let min = options.min || defaults$2.min;
-  let arr = [];
-  for (let size = min; size <= max; size++) {
+
+  var max = options.max || defaults$2.max;
+  var min = options.min || defaults$2.min;
+  var arr = [];
+
+  for (var size = min; size <= max; size++) {
     arr = arr.concat(oneSize$2(list, size));
   }
-  return arr
+
+  return arr;
 };
+
 var endGrams_1 = endGrams;
 
 // tokenize by term
-const tokenize = function(doc) {
-  let list = doc.json({ terms: { clean: true }, text: false }).map(o => {
-    return o.terms.map(t => t.clean)
+var tokenize = function tokenize(doc) {
+  var list = doc.json({
+    terms: {
+      clean: true
+    },
+    text: false
+  }).map(function (o) {
+    return o.terms.map(function (t) {
+      return t.clean;
+    });
   });
-  return list
+  return list;
 };
+
 var tokenize_1 = tokenize;
 
-const sort = function(arr) {
-  arr = arr.sort((a, b) => {
+var sort = function sort(arr) {
+  arr = arr.sort(function (a, b) {
     //first sort them by count
     if (a.count > b.count) {
-      return -1
+      return -1;
     }
+
     if (a.count < b.count) {
-      return 1
-    }
-    // in a tie, sort them by size
+      return 1;
+    } // in a tie, sort them by size
+
+
     if (a.size > b.size) {
-      return -1
+      return -1;
     }
+
     if (a.size < b.size) {
-      return 1
+      return 1;
     }
-    return 0
+
+    return 0;
   });
-  return arr
+  return arr;
 };
+
 var sort_1 = sort;
 
-const addMethod = function(Doc) {
+var addMethod = function addMethod(Doc) {
   /** list all repeating sub-phrases, by word-count */
-  Doc.prototype.ngrams = function(obj) {
-    let list = tokenize_1(this);
-    let arr = getGrams(list, obj || {});
+  Doc.prototype.ngrams = function (obj) {
+    var list = tokenize_1(this);
+    var arr = getGrams(list, obj || {});
     arr = sort_1(arr);
-    return arr
+    return arr;
   };
+
   Doc.prototype.nGrams = Doc.prototype.ngrams;
-
   /** n-grams with one word */
-  Doc.prototype.unigrams = function(n) {
-    let arr = getGrams(tokenize_1(this), { max: 1, min: 1 });
+
+  Doc.prototype.unigrams = function (n) {
+    var arr = getGrams(tokenize_1(this), {
+      max: 1,
+      min: 1
+    });
     arr = sort_1(arr);
+
     if (typeof n === 'number') {
       arr = arr[n];
     }
-    return arr
+
+    return arr;
   };
+
   Doc.prototype.uniGrams = Doc.prototype.unigrams;
-
   /** n-grams with two words */
-  Doc.prototype.bigrams = function(n) {
-    let arr = getGrams(tokenize_1(this), { max: 2, min: 2 });
+
+  Doc.prototype.bigrams = function (n) {
+    var arr = getGrams(tokenize_1(this), {
+      max: 2,
+      min: 2
+    });
     arr = sort_1(arr);
+
     if (typeof n === 'number') {
       arr = arr[n];
     }
-    return arr
+
+    return arr;
   };
+
   Doc.prototype.biGrams = Doc.prototype.bigrams;
-
   /** n-grams with three words */
-  Doc.prototype.trigrams = function(n) {
-    let arr = getGrams(tokenize_1(this), { max: 3, min: 3 });
+
+  Doc.prototype.trigrams = function (n) {
+    var arr = getGrams(tokenize_1(this), {
+      max: 3,
+      min: 3
+    });
     arr = sort_1(arr);
+
     if (typeof n === 'number') {
       arr = arr[n];
     }
-    return arr
+
+    return arr;
   };
+
   Doc.prototype.triGrams = Doc.prototype.trigrams;
-
   /** list all repeating sub-phrases, using the first word */
-  Doc.prototype.startgrams = function(obj) {
-    let list = tokenize_1(this);
-    let arr = startGrams_1(list, obj || {});
+
+  Doc.prototype.startgrams = function (obj) {
+    var list = tokenize_1(this);
+    var arr = startGrams_1(list, obj || {});
     arr = sort_1(arr);
-    return arr
+    return arr;
   };
+
   Doc.prototype.startGrams = Doc.prototype.startgrams;
-
   /** list all repeating sub-phrases, connected to the last word of each phrase */
-  Doc.prototype.endgrams = function(obj) {
-    let list = tokenize_1(this);
-    let arr = endGrams_1(list, obj || {});
+
+  Doc.prototype.endgrams = function (obj) {
+    var list = tokenize_1(this);
+    var arr = endGrams_1(list, obj || {});
     arr = sort_1(arr);
-    return arr
+    return arr;
   };
-  Doc.prototype.endGrams = Doc.prototype.endgrams;
 
+  Doc.prototype.endGrams = Doc.prototype.endgrams;
   /** list all repeating sub-phrases, connected to the last word of each phrase */
-  Doc.prototype.edgegrams = function(obj) {
-    let list = tokenize_1(this);
-    let start = startGrams_1(list, obj || {});
-    let end = endGrams_1(list, obj || {});
-    // combine them together
-    let all = start.concat(end);
-    let combine = all.reduce((h, a) => {
+
+  Doc.prototype.edgegrams = function (obj) {
+    var list = tokenize_1(this);
+    var start = startGrams_1(list, obj || {});
+    var end = endGrams_1(list, obj || {}); // combine them together
+
+    var all = start.concat(end);
+    var combine = all.reduce(function (h, a) {
       if (h[a.normal]) {
         h[a.normal].count += a.count;
       } else {
         h[a.normal] = a;
       }
-      return h
+
+      return h;
     }, {});
-    let arr = Object.keys(combine).map(k => combine[k]);
+    var arr = Object.keys(combine).map(function (k) {
+      return combine[k];
+    });
     arr = sort_1(arr);
-    return arr
+    return arr;
   };
+
   Doc.prototype.edgeGrams = Doc.prototype.edgegrams;
 };
+
 var src = addMethod;
 
 export default src;

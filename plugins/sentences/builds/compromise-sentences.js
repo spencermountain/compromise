@@ -1,7 +1,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global = global || self, global.nlp = factory());
+  (global = global || self, global.compromiseSentences = factory());
 }(this, (function () { 'use strict';
 
   function _classCallCheck(instance, Constructor) {
@@ -130,7 +130,8 @@
     var clauses = doc.clauses();
     var main = mainClause_1(clauses);
     var nouns = main.match('#Determiner? (#Noun|#Adjective)+')["if"]('#Noun');
-    var verb = main.match('#Verb+').eq(0);
+    var verb = main.verbs().eq(0); // match('(do|will)? not? #Verb+ not?').eq(0)
+
     return {
       subject: nouns.eq(0),
       verb: verb,
@@ -139,6 +140,167 @@
   };
 
   var parse_1 = parse;
+
+  /** he walks -> he did not walk */
+
+  var toNegative = function toNegative() {
+    this.forEach(function (doc) {
+      var obj = parse_1(doc);
+      var vb = obj.verb.clone();
+      vb = vb.verbs().toNegative();
+      obj.verb.replaceWith(vb, false, true);
+    });
+    return this;
+  };
+  /** he doesn't walk -> he walks */
+
+
+  var toPositive = function toPositive() {
+    this.forEach(function (doc) {
+      var obj = parse_1(doc);
+      var vb = obj.verb.clone();
+      vb = vb.verbs().toPositive();
+      obj.verb.replaceWith(vb, false, true);
+    });
+    return this;
+  };
+
+  var negate = {
+    toNegative: toNegative,
+    toPositive: toPositive
+  };
+
+  /** return sentences ending with '?' */
+  var isQuestion = function isQuestion() {
+    return this.filter(function (doc) {
+      var term = doc.lastTerm().termList(0);
+      return term.hasPost('?');
+    });
+  };
+  /** return sentences ending with '!' */
+
+
+  var isExclamation = function isExclamation() {
+    return this.filter(function (doc) {
+      var term = doc.lastTerm().termList(0);
+      return term.hasPost('!');
+    });
+  };
+  /** return sentences with neither a question or an exclamation */
+
+
+  var isStatement = function isStatement() {
+    return this.filter(function (doc) {
+      var term = doc.lastTerm().termList(0);
+      return !term.hasPost('?') && !term.hasPost('!');
+    });
+  };
+  /** 'he is.' -> 'he is!' */
+
+
+  var toExclamation = function toExclamation() {
+    return this;
+  };
+  /** 'he is.' -> 'he is?' */
+
+
+  var toQuestion = function toQuestion() {
+    return this;
+  };
+  /** 'he is?' -> 'he is.' */
+
+
+  var toStatement = function toStatement() {
+    return this;
+  };
+
+  var punct = {
+    isQuestion: isQuestion,
+    isExclamation: isExclamation,
+    isStatement: isStatement,
+    toExclamation: toExclamation,
+    toQuestion: toQuestion,
+    toStatement: toStatement
+  };
+
+  /** he walks -> he walked */
+
+  var toPastTense = function toPastTense() {
+    this.forEach(function (doc) {
+      if (doc.has('#PastTense')) {
+        return;
+      }
+
+      var obj = parse_1(doc);
+      var vb = obj.verb.clone();
+      vb = vb.verbs().toPastTense();
+      obj.verb.replaceWith(vb, false, true); // trailing gerund/future/present are okay, but 'walked and eats' is not
+
+      if (obj.object && obj.object.found && obj.object.has('#PresentTense')) {
+        var verbs = obj.object.verbs();
+        verbs["if"]('#PresentTense').verbs().toPastTense();
+      }
+    });
+    return this;
+  };
+  /** he walked -> he walks */
+
+
+  var toPresentTense = function toPresentTense() {
+    this.forEach(function (doc) {
+      var obj = parse_1(doc);
+      var isPlural = obj.verb.lookBehind('(i|we) (#Adverb|#Verb)?$').found;
+      var vb = obj.verb.clone(); // 'i look', not 'i looks'
+
+      if (isPlural) {
+        //quick hack for copula verb - be/am
+        if (vb.has('(is|was|am|be)')) {
+          vb = vb.replace('will? (is|was|am|be)', 'am');
+        } else {
+          vb = vb.verbs().toInfinitive();
+        }
+      } else {
+        //'he looks'
+        vb = vb.verbs().toPresentTense();
+      }
+
+      obj.verb.replaceWith(vb, false, true); // future is okay, but 'walks and ate' -> 'walks and eats'
+
+      if (obj.object && obj.object.found && obj.object.has('#PastTense')) {
+        var verbs = obj.object.verbs();
+        verbs["if"]('#PastTense').verbs().toPresentTense();
+      }
+    });
+    return this;
+  };
+  /**he walked -> he will walk */
+
+
+  var toFutureTense = function toFutureTense() {
+    this.forEach(function (doc) {
+      var obj = parse_1(doc);
+      var vb = obj.verb.clone();
+      vb = vb.verbs().toFutureTense();
+      obj.verb.replaceWith(vb, false, true); //Present is okay, but 'will walk and ate' -> 'will walk and eat'
+
+      if (obj.object && obj.object.found && obj.object.has('(#PastTense|#PresentTense)')) {
+        var verbs = obj.object.verbs();
+        verbs["if"]('(#PastTense|#PresentTense)').verbs().toInfinitive();
+      }
+    });
+    return this;
+  }; // toContinuous() {
+  //   return this
+  // }
+
+
+  var tense = {
+    toPastTense: toPastTense,
+    toPresentTense: toPresentTense,
+    toFutureTense: toFutureTense
+  };
+
+  var methods = Object.assign({}, negate, punct, tense);
 
   var addMethod = function addMethod(Doc) {
     /**  */
@@ -200,110 +362,12 @@
             return res.subject;
           });
         }
-        /** he walks -> he walked */
-
-      }, {
-        key: "toPastTense",
-        value: function toPastTense() {
-          this.forEach(function (doc) {
-            var obj = parse_1(doc);
-            var vb = obj.verb.clone();
-            vb = vb.verbs().toPastTense();
-            obj.verb.replaceWith(vb, false, true);
-          });
-          return this;
-        }
-        /** he walked -> he walks */
-
-      }, {
-        key: "toPresentTense",
-        value: function toPresentTense() {
-          this.forEach(function (doc) {
-            var obj = parse_1(doc);
-            var vb = obj.verb.clone();
-            vb = vb.verbs().toPresentTense();
-            obj.verb.replaceWith(vb, false, true);
-          });
-          return this;
-        }
-        /** he walks -> he will walk */
-
-      }, {
-        key: "toFutureTense",
-        value: function toFutureTense() {
-          this.forEach(function (doc) {
-            var obj = parse_1(doc);
-            var vb = obj.verb.clone();
-            vb = vb.verbs().toFutureTense();
-            obj.verb.replaceWith(vb, false, true);
-          });
-          return this;
-        } // toContinuous() {
-        //   return this
-        // }
-
-        /** he walks -> he did not walk */
-
-      }, {
-        key: "toNegative",
-        value: function toNegative() {
-          this.forEach(function (doc) {
-            var obj = parse_1(doc);
-            var vb = obj.verb.clone();
-            vb = vb.verbs().toNegative();
-            obj.verb.replaceWith(vb, false, true);
-          });
-          return this;
-        }
-        /** he doesn't walk -> he walks */
-
-      }, {
-        key: "toPositive",
-        value: function toPositive() {
-          this.forEach(function (doc) {
-            var obj = parse_1(doc);
-            var vb = obj.verb.clone();
-            vb = vb.verbs().toPositive();
-            obj.verb.replaceWith(vb, false, true);
-          });
-          return this;
-        }
         /** return sentences that are in passive-voice */
 
       }, {
         key: "isPassive",
         value: function isPassive() {
-          return this.has('was #Adverb? #PastTense #Adverb? by'); //haha
-        }
-        /** return sentences ending with '?' */
-
-      }, {
-        key: "isQuestion",
-        value: function isQuestion() {
-          return this.filter(function (doc) {
-            var term = doc.lastTerm().termList(0);
-            return term.hasPost('?');
-          });
-        }
-        /** return sentences ending with '!' */
-
-      }, {
-        key: "isExclamation",
-        value: function isExclamation() {
-          return this.filter(function (doc) {
-            var term = doc.lastTerm().termList(0);
-            return term.hasPost('!');
-          });
-        }
-        /** return sentences with neither a question or an exclamation */
-
-      }, {
-        key: "isStatement",
-        value: function isStatement() {
-          return this.filter(function (doc) {
-            var term = doc.lastTerm().termList(0);
-            return !term.hasPost('?') && !term.hasPost('!');
-          });
+          return this["if"]('was #Adverb? #PastTense #Adverb? by'); //haha
         }
         /** add a word to the start of this sentence */
 
@@ -319,6 +383,7 @@
 
             firstTerms.terms(0).toTitleCase();
           });
+          return this;
         }
         /** add a word to the end of this sentence */
 
@@ -340,32 +405,14 @@
 
             lastTerm.post = ' ';
           });
-        }
-        /** 'he is.' -> 'he is!' */
-
-      }, {
-        key: "toExclamation",
-        value: function toExclamation() {
-          return this;
-        }
-        /** 'he is.' -> 'he is?' */
-
-      }, {
-        key: "toQuestion",
-        value: function toQuestion() {
-          return this;
-        }
-        /** 'he is?' -> 'he is.' */
-
-      }, {
-        key: "toStatement",
-        value: function toStatement() {
           return this;
         }
       }]);
 
       return Sentences;
     }(Doc);
+
+    Object.assign(Sentences.prototype, methods);
 
     Doc.prototype.sentences = function (n) {
       var match = this.all(); //grab (n)th result

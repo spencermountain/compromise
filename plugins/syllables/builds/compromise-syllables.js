@@ -1,7 +1,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global = global || self, global.nlp = factory());
+  (global = global || self, global.compromiseSyllables = factory());
 }(this, (function () { 'use strict';
 
   var starts_with_single_vowel_combos = /^(eu)/i;

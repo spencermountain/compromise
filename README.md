@@ -20,8 +20,8 @@
     <a href="https://npmjs.org/package/compromise">
     <img src="https://img.shields.io/npm/v/compromise.svg?style=flat-square" />
   </a>
-  <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
-    <img src="https://api.codacy.com/project/badge/Coverage/82cc8ebd98b64ed199d7be6021488062" />
+  <a href="https://codecov.io/gh/spencermountain/compromise">
+    <img src="https://codecov.io/gh/spencermountain/compromise/branch/master/graph/badge.svg" />
   </a>
   <a href="https://unpkg.com/compromise">
     <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/builds/compromise.min.js" />

@@ -1,8 +1,8 @@
 const postPunct = /[,\)"';:\-–—\.…]/
-const irregulars = {
-  'will not': `won't`,
-  'i am': `i'm`,
-}
+// const irregulars = {
+//   'will not': `won't`,
+//   'i am': `i'm`,
+// }
 
 const setContraction = function(m, suffix) {
   if (!m.found) {

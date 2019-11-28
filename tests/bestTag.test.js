@@ -8,7 +8,7 @@ test('bestTag', function(t) {
     .terms()
     .json({ terms: { bestTag: true } })
     .map(p => p.terms[0].bestTag)
-  let want = ['MaleName', 'LastName', 'Auxiliary', 'Adverb', 'Gerund']
+  let want = ['MaleName', 'LastName', 'Copula', 'Adverb', 'Gerund']
   let msg = str + ' - [' + have.join(', ') + ']'
   t.deepEqual(have, want, msg)
 

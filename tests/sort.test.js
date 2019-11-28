@@ -69,13 +69,18 @@ test('custom-sort:', function(t) {
   let doc = nlp('Eeny, meeny, miny, moe')
   let terms = doc.terms()
   terms.sort((a, b) => {
-    if (a.text('normal').length > b.text('normal').length) {
+    a = a.text('normal')
+    b = b.text('normal')
+    if (a.length > b.length) {
       return -1
     }
-    return 1
+    if (a.length < b.length) {
+      return 1
+    }
+    return 0
   })
   let arr = terms.map(d => d.text('normal'))
-  t.deepEqual(arr, ['meeny, ', 'miny, ', 'eeny, ', 'moe'], 'custom sort output')
+  t.deepEqual(arr, ['meeny, ', 'eeny, ', 'miny, ', 'moe'], 'custom sort output')
   t.end()
 })
 

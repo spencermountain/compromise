@@ -1,5 +1,5 @@
 const nlp = require('./src/index')
-nlp.verbose(true)
+// nlp.verbose(true)
 nlp.extend(require('./plugins/sentences/src'))
 nlp.extend(require('./plugins/numbers/src'))
 
@@ -15,8 +15,5 @@ nlp.extend(require('./plugins/numbers/src'))
 // doc.match('between [.*] and').debug()
 
 // let doc = nlp('falls over')
-
-let doc = nlp('so do use reverse psychology.').debug()
-
-doc.sentences().toNegative()
-console.log(doc.text())
+let doc = nlp('john smith was really working').debug()
+console.log(doc.json({ terms: { bestTag: true } })[0].terms)

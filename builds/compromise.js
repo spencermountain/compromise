@@ -778,8 +778,6 @@
   var rankTags = function rankTags(term, world) {
     var tags = Object.keys(term.tags);
     var tagSet = world.tags;
-    tags = tags.sort(); //alphabetical, first
-
     tags = tags.sort(function (a, b) {
       //bury the tags we dont want
       if (boringTags[b] || !tagSet[b]) {
@@ -787,8 +785,12 @@
       } // unknown tags are interesting
 
 
-      if (!tagSet[a]) {
+      if (!tagSet[b]) {
         return 1;
+      }
+
+      if (!tagSet[a]) {
+        return 0;
       } // then sort by #of parent tags (most-specific tags first)
 
 
@@ -796,7 +798,11 @@
         return 1;
       }
 
-      return -1;
+      if (tagSet[a].isA.length > tagSet[b].isA.length) {
+        return -1;
+      }
+
+      return 0;
     });
     return tags;
   };
@@ -6302,7 +6308,7 @@
       return this;
     }
 
-    var p = this.list.find(function (p, i) {
+    var phrase = this.list.find(function (p, i) {
       var doc = _this4.buildFrom([p]);
 
       doc.from = null; //it's not a child/parent
@@ -6310,8 +6316,8 @@
       return fn(doc, i);
     });
 
-    if (p) {
-      return this.buildFrom([p]);
+    if (phrase) {
+      return this.buildFrom([phrase]);
     }
 
     return undefined;
@@ -7434,7 +7440,7 @@
       });
     }
 
-    if (method === 'freq') {
+    if (method === 'freq' || method === 'frequency') {
       return _topk(this);
     }
 
@@ -8375,7 +8381,10 @@
     join: join
   };
 
-  var postPunct = /[,\)"';:\-–—\.…]/;
+  var postPunct = /[,\)"';:\-–—\.…]/; // const irregulars = {
+  //   'will not': `won't`,
+  //   'i am': `i'm`,
+  // }
 
   var setContraction = function setContraction(m, suffix) {
     if (!m.found) {
@@ -12307,13 +12316,6 @@
   Doc.prototype.fromText = function (str) {
     var list = _01Tokenizer.fromText(str, this.world, this.pool());
     return this.buildFrom(list);
-  };
-  /** add new subclass methods */
-
-
-  Doc.prototype.extend = function (fn) {
-    fn(this);
-    return this;
   };
 
   Object.assign(Doc.prototype, methods$8.misc);

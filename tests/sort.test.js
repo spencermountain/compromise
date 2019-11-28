@@ -84,12 +84,12 @@ test('custom-sort:', function(t) {
   t.end()
 })
 
-// test('frequency:', function(t) {
-//   const str = 'John xoo, John fredman, john xoo, John davis'
-//   let r = nlp(str)
-//   r = r.split('@hasComma')
-//   const a = r.out('frequency')
-//   t.equal(a[0].normal, 'john xoo', 'topk is sorted')
-//   t.equal(a[0].count, 2, 'topk finds two')
-//   t.end()
-// })
+test('frequency:', function(t) {
+  const str = 'John xoo, John fredman, john xoo, John davis'
+  let r = nlp(str)
+  r = r.split('@hasComma')
+  const a = r.out('frequency')
+  t.equal(a[0].reduced, 'john xoo', 'topk is sorted')
+  t.equal(a[0].count, 2, 'topk finds two')
+  t.end()
+})

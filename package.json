@@ -46,11 +46,11 @@
     "efrt-unpack": "2.2.0"
   },
   "devDependencies": {
-    "@babel/core": "7.6.4",
-    "@babel/preset-env": "7.6.3",
+    "@babel/core": "7.7.4",
+    "@babel/preset-env": "7.7.4",
     "amble": "0.0.7",
     "efrt": "2.2.1",
-    "rollup": "1.26.3",
+    "rollup": "1.27.5",
     "rollup-plugin-babel": "4.3.3",
     "rollup-plugin-commonjs": "10.1.0",
     "rollup-plugin-json": "4.0.0",

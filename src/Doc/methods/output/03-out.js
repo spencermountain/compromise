@@ -24,7 +24,7 @@ exports.out = function(method) {
   if (method === 'array') {
     return this.json({ terms: false }).map(obj => obj.text)
   }
-  if (method === 'freq') {
+  if (method === 'freq' || method === 'frequency') {
     return topk(this)
   }
   if (method === 'terms') {

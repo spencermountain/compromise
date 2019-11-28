@@ -69,11 +69,6 @@ Doc.prototype.fromText = function(str) {
   let list = tokenize.fromText(str, this.world, this.pool())
   return this.buildFrom(list)
 }
-/** add new subclass methods */
-Doc.prototype.extend = function(fn) {
-  fn(this)
-  return this
-}
 
 Object.assign(Doc.prototype, methods.misc)
 Object.assign(Doc.prototype, methods.selections)

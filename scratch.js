@@ -15,5 +15,6 @@ nlp.extend(require('./plugins/numbers/src'))
 // doc.match('between [.*] and').debug()
 
 // let doc = nlp('falls over')
-let doc = nlp('john smith was really working').debug()
-console.log(doc.json({ terms: { bestTag: true } })[0].terms)
+let doc = nlp('john smith was really working. he is cool')
+  .first()
+  .debug()

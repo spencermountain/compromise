@@ -1,4 +1,4 @@
-const tagset = require('../../world/tags')
+const tagset = require('../../../world/tags')
 
 // https://stackoverflow.com/questions/9781218/how-to-change-node-jss-console-font-color
 const reset = '\x1b[0m'
@@ -9,6 +9,30 @@ const padEnd = function(str, width) {
     str += ' '
   }
   return str
+}
+
+function isClientSide() {
+  return typeof window !== 'undefined' && window.document
+}
+
+const logClientSide = function(doc) {
+  doc.list.forEach(p => {
+    console.log(p.text())
+    let obj = {}
+    let terms = p.cache.terms || p.terms()
+    terms.forEach(t => {
+      let text = t.text || '-'
+      if (t.implicit) {
+        text = '[' + t.implicit + ']'
+      }
+      obj[text] = Object.keys(t.tags).join(', ')
+    })
+    if (console.table) {
+      console.table(obj)
+    } else {
+      console.log(JSON.stringify(obj, null, 2))
+    }
+  })
 }
 
 //cheaper than requiring chalk
@@ -49,10 +73,15 @@ const tagString = function(tags) {
 
 //output some helpful stuff to the console
 const debug = function(doc) {
+  if (isClientSide()) {
+    logClientSide(doc)
+    return doc
+  }
   console.log(cli.blue('====='))
   doc.list.forEach(p => {
     console.log(cli.blue('  -----'))
-    p.terms().forEach(t => {
+    let terms = p.cache.terms || p.terms()
+    terms.forEach(t => {
       let tags = Object.keys(t.tags)
       let text = t.text || '-'
       if (t.implicit) {

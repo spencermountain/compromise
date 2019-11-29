@@ -1,4 +1,4 @@
-const debug = require('../_debug')
+const debug = require('./_debug')
 const topk = require('./_topk')
 
 /** pretty-print the current document and its tags */

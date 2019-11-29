@@ -12,6 +12,7 @@ compromise uses semver, and pushes to npm frequently
 - add 'sideEffect:false' flag to build
 - considerable speedup (20%) in tagger 
 - ensure trimming of whitespace for root/clean/reduced text formats
+- fix client-side logging
 
 ### v11
 ##### 11.13.0

@@ -7340,6 +7340,33 @@
       }
 
       return str;
+    };
+
+    function isClientSide() {
+      return typeof window !== 'undefined' && window.document;
+    }
+
+    var logClientSide = function logClientSide(doc) {
+      doc.list.forEach(function (p) {
+        console.log(p.text());
+        var obj = {};
+        var terms = p.cache.terms || p.terms();
+        terms.forEach(function (t) {
+          var text = t.text || '-';
+
+          if (t.implicit) {
+            text = '[' + t.implicit + ']';
+          }
+
+          obj[text] = Object.keys(t.tags).join(', ');
+        });
+
+        if (console.table) {
+          console.table(obj);
+        } else {
+          console.log(JSON.stringify(obj, null, 2));
+        }
+      });
     }; //cheaper than requiring chalk
 
 
@@ -7381,10 +7408,16 @@
 
 
     var debug = function debug(doc) {
+      if (isClientSide()) {
+        logClientSide(doc);
+        return doc;
+      }
+
       console.log(cli.blue('====='));
       doc.list.forEach(function (p) {
         console.log(cli.blue('  -----'));
-        p.terms().forEach(function (t) {
+        var terms = p.cache.terms || p.terms();
+        terms.forEach(function (t) {
           var tags = Object.keys(t.tags);
           var text = t.text || '-';
 

@@ -9,6 +9,6 @@ const nlp = require('./src/index')
 
 // console.log('aaaab'.match(/a+?[a|b]/))
 
-nlp('Toronto Ontario foo')
-  .match('#Place+ .')
+nlp(`And how come Batman doesn't dance anymore? Remember the Batusi?`)
+  // .match('#Place+ .')
   .debug()

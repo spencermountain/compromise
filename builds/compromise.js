@@ -7344,28 +7344,45 @@
 
     function isClientSide() {
       return typeof window !== 'undefined' && window.document;
-    }
+    } // some nice colors for client-side debug
+
+
+    var css = {
+      green: '#7f9c6c',
+      red: '#914045',
+      blue: '#6699cc',
+      magenta: '#6D5685',
+      cyan: '#2D85A8',
+      yellow: '#e6d7b3',
+      black: '#303b50'
+    };
 
     var logClientSide = function logClientSide(doc) {
       doc.list.forEach(function (p) {
-        console.log(p.text());
-        var obj = {};
+        console.log('\n%c"' + p.text() + '"', 'color: #e6d7b3;');
         var terms = p.cache.terms || p.terms();
         terms.forEach(function (t) {
+          var tags = Object.keys(t.tags);
           var text = t.text || '-';
 
           if (t.implicit) {
             text = '[' + t.implicit + ']';
           }
 
-          obj[text] = Object.keys(t.tags).join(', ');
-        });
+          var word = "'" + text + "'";
+          word = padEnd(word, 8);
+          var found = tags.find(function (tag) {
+            return tags$1[tag] && tags$1[tag].color;
+          });
+          var color = 'steelblue';
 
-        if (console.table) {
-          console.table(obj);
-        } else {
-          console.log(JSON.stringify(obj, null, 2));
-        }
+          if (tags$1[found]) {
+            color = tags$1[found].color;
+            color = css[color];
+          }
+
+          console.log("   ".concat(word, "  -  %c").concat(tags.join(', ')), "color: ".concat(color || 'steelblue', ";"));
+        });
       });
     }; //cheaper than requiring chalk
 

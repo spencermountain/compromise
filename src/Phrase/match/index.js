@@ -31,7 +31,7 @@ exports.not = function(str) {
 /** return a list of phrases that can have this tag */
 exports.canBe = function(tag, world) {
   let results = []
-  let terms = this.terms()
+  let terms = this.cache.terms || this.terms()
   let previous = false
   for (let i = 0; i < terms.length; i += 1) {
     let can = terms[i].canBe(tag, world)

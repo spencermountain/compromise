@@ -42,14 +42,14 @@ exports.matchOne = function(reg) {
 /** return each current phrase, only if it contains this match */
 exports.if = function(reg) {
   let regs = parseSyntax(reg)
-  let found = this.list.filter(p => p.match(regs).length > 0)
+  let found = this.list.filter(p => p.has(regs) === true)
   return this.buildFrom(found)
 }
 
 /** Filter-out any current phrases that have this match*/
 exports.ifNo = function(reg) {
   let regs = parseSyntax(reg)
-  let found = this.list.filter(p => p.match(regs).length === 0)
+  let found = this.list.filter(p => p.has(regs) === false)
   return this.buildFrom(found)
 }
 

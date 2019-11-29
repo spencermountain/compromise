@@ -31,10 +31,6 @@ Phrase.prototype.buildFrom = function(id, length) {
   }
   return p
 }
-// Phrase.prototype.fromString = function(str) {
-//   console.log(tokenize)
-//   return tokenize.fromText(str)
-// }
 
 //apply methods
 Object.assign(Phrase.prototype, matchMethods)

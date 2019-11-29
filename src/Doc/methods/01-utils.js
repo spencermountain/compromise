@@ -1,5 +1,3 @@
-// const cache = require('./_setCache')
-
 /** return the root, first document */
 exports.all = function() {
   return this.parents()[0] || this

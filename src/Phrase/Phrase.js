@@ -25,7 +25,9 @@ Phrase.prototype.buildFrom = function(id, length) {
   let p = new Phrase(id, length, this.pool)
   if (this.cache) {
     p.cache = this.cache
-    p.cache.terms = null
+    if (length !== this.length) {
+      p.cache.terms = null
+    }
   }
   return p
 }

@@ -8,6 +8,7 @@ exports.match = function(str) {
   matches = matches.map(list => {
     return this.buildFrom(list[0].id, list.length)
   })
+  // console.log(matches[0].cache)
   return matches
 }
 

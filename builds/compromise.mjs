@@ -864,7 +864,12 @@ var _05Json = {
 
 var methods = Object.assign({}, _01Case, _02Punctuation, _03Misc, _04Text, _05Json);
 
+function isClientSide() {
+  return typeof window !== 'undefined' && window.document;
+}
 /** add spaces at the end */
+
+
 var padEnd = function padEnd(str, width) {
   str = str.toString();
 
@@ -878,6 +883,12 @@ var padEnd = function padEnd(str, width) {
 
 
 var logTag = function logTag(t, tag, reason) {
+  if (isClientSide()) {
+    console.log('%c' + padEnd(t.clean, 3) + '  + ' + tag + ' ', 'color: #6accb2;');
+    return;
+  } //server-side
+
+
   var log = '\x1b[33m' + padEnd(t.clean, 15) + '\x1b[0m + \x1b[32m' + tag + '\x1b[0m ';
 
   if (reason) {
@@ -890,6 +901,12 @@ var logTag = function logTag(t, tag, reason) {
 
 
 var logUntag = function logUntag(t, tag, reason) {
+  if (isClientSide()) {
+    console.log('%c' + padEnd(t.clean, 3) + '  - ' + tag + ' ', 'color: #AB5850;');
+    return;
+  } //server-side
+
+
   var log = '\x1b[33m' + padEnd(t.clean, 3) + ' \x1b[31m - #' + tag + '\x1b[0m ';
 
   if (reason) {
@@ -1512,8 +1529,7 @@ var appendPhrase = function appendPhrase(before, newPhrase, doc) {
     toStretch = toStretch.concat(shouldChange);
   }); // don't double-count a phrase
 
-  toStretch = unique(toStretch); // console.log(toStretch)
-
+  toStretch = unique(toStretch);
   toStretch.forEach(function (p) {
     p.length += newPhrase.length;
   });
@@ -1532,20 +1548,7 @@ var addWhitespace$1 = function addWhitespace(newTerms) {
 
   if (hasSpace$1.test(lastTerm.post) === false) {
     lastTerm.post += ' ';
-  } // let term = original.pool.get(original.start)
-  // if (term.prev) {
-  //   //add our space ahead of our new terms
-  //   let firstWord = newTerms[0]
-  //   if (hasSpace.test(firstWord.post) === false) {
-  //     firstWord.post += ' '
-  //   }
-  //   return
-  // }
-  //otherwise, add our space to the start of original
-  // if (hasSpace.test(term.pre) === false) {
-  //   term.pre = ' ' + term.pre
-  // }
-
+  }
 
   return;
 }; //insert this segment into the linked-list
@@ -1569,25 +1572,7 @@ var stitchIn$1 = function stitchIn(main, newPhrase, newTerms) {
   newTerms[0].prev = main.terms(0).prev; // newPhrase ← main
 
   main.terms(0).prev = lastTerm.id;
-}; //recursively increase the length of all parent phrases
-// const stretchAll = function(doc, oldStart, newPhrase) {
-//   //find our phrase to stretch
-//   let phrase = doc.list.find(p => p.hasId(oldStart) || p.hasId(newPhrase.start))
-//   if (phrase === undefined) {
-//     console.error('compromise error: Prepend missing start - ' + oldStart)
-//     return
-//   }
-//   //should we update the phrase's starting?
-//   if (phrase.start === oldStart) {
-//     phrase.start = newPhrase.start
-//   }
-//   // console.log(newPhrase)
-//   phrase.length += newPhrase.length
-//   if (doc.from) {
-//     stretchAll(doc.from, oldStart, newPhrase)
-//   }
-// }
-
+};
 
 var unique$1 = function unique(list) {
   return list.filter(function (o, i) {
@@ -1715,15 +1700,13 @@ var delete_1 = function delete_1(doc) {
 
 
 var replace = function replace(newPhrase, doc) {
-  // console.log('replace')
   //add it do the end
   var firstLength = this.length;
   append(this, newPhrase, doc); //delete original terms
 
   var tmp = this.buildFrom(this.start, this.length);
-  tmp.length = firstLength; // console.log(tmp)
-
-  _delete(tmp, doc); // return doc
+  tmp.length = firstLength;
+  _delete(tmp, doc);
 };
 /**
  * Turn this phrase object into 3 phrase objects
@@ -1933,7 +1916,6 @@ var failFast = function failFast(p, regs) {
 
 
       if (p.cache.words !== undefined && reg.word !== undefined && p.cache.words.hasOwnProperty(reg.word) !== true) {
-        // console.log('skip')
         return true;
       }
     } //this is not possible
@@ -2566,8 +2548,7 @@ var match_1 = function match_1(str) {
 
   matches = matches.map(function (list) {
     return _this.buildFrom(list[0].id, list.length);
-  }); // console.log(matches[0].cache)
-
+  });
   return matches;
 };
 /** return boolean if one match is found */
@@ -3127,7 +3108,7 @@ var _01Tokenizer = {
   fromJSON: fromJSON
 };
 
-var _version = '12.0.0';
+var _version = '12.1.0';
 
 var _data = {
   "Comparative": "true¦better",
@@ -6157,8 +6138,7 @@ var tagTerms = function tagTerms(tag, doc, safe, reason) {
 
   if (typeof tag === 'string') {
     tagList = tag.split(' ');
-  } // console.log(doc.parents().length)
-  //do indepenent tags for each term:
+  } //do indepenent tags for each term:
 
 
   doc.list.forEach(function (p) {
@@ -6292,11 +6272,9 @@ var forEach = function forEach(fn, detachParent) {
 
     if (detachParent === true) {
       sub.from = null; //
-    } // let len
-    // console.log(sub.from.list[0].text())
+    }
 
-
-    fn(sub, i); // console.log(sub.from.list[0].text())
+    fn(sub, i);
   });
   return this;
 };
@@ -10961,7 +10939,6 @@ var addMethod$3 = function addMethod(Doc) {
           var isTitlecase = terms[0].isTitleCase();
           terms.forEach(function (t, i) {
             //use the implicit text
-            // console.log(t.clean)
             t.set(t.implicit || t.text);
             t.implicit = undefined; //add whitespace
 
@@ -11865,8 +11842,7 @@ var parseVerb = function parseVerb(vb) {
     if (vb.has(match)) {
       parsed.adverbAfter = true;
     }
-  } // console.log(parsed.adverb.json({ index: true })[0])
-
+  }
 
   return parsed;
 };
@@ -11936,8 +11912,7 @@ var conjugate$2 = function conjugate(parsed, world) {
 
   if (!infinitive) {
     return {};
-  } // console.log(infinitive)
-
+  }
 
   var forms = world.transforms.conjugate(infinitive, world);
   forms.Infinitive = infinitive; // add particle to phrasal verbs ('fall over')

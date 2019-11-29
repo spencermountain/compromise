@@ -14,7 +14,6 @@ const failFast = function(p, regs) {
       }
       // has almost no effect
       if (p.cache.words !== undefined && reg.word !== undefined && p.cache.words.hasOwnProperty(reg.word) !== true) {
-        // console.log('skip')
         return true
       }
     }

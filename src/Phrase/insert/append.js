@@ -84,7 +84,6 @@ const appendPhrase = function(before, newPhrase, doc) {
   })
   // don't double-count a phrase
   toStretch = unique(toStretch)
-  // console.log(toStretch)
   toStretch.forEach(p => {
     p.length += newPhrase.length
   })

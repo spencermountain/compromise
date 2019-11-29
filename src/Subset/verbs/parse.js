@@ -24,7 +24,6 @@ const parseVerb = function(vb) {
       parsed.adverbAfter = true
     }
   }
-  // console.log(parsed.adverb.json({ index: true })[0])
   return parsed
 }
 module.exports = parseVerb

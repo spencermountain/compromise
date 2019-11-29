@@ -5,7 +5,6 @@ const tagTerms = function(tag, doc, safe, reason) {
     tagList = tag.split(' ')
   }
 
-  // console.log(doc.parents().length)
   //do indepenent tags for each term:
   doc.list.forEach(p => {
     let terms = p.cache.terms || p.terms()

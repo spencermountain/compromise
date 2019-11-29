@@ -9898,12 +9898,16 @@
     doc.match('u r').tag('Pronoun #Copula', 'u r'); // well, ...
 
     doc.match('^(well|so|okay)').tag('Expression', 'well-'); // some conditional statements
-
-    var m = doc.clauses(); // had he survived,
-
-    m.match('^had #Noun+ #PastTense').firstTerm().tag('Condition', 'had-he'); // were he to survive
-
-    m.match('^were #Noun+ to #Infinitive').firstTerm().tag('Condition', 'were-he'); //swear-words as non-expression POS
+    // let m = doc.clauses()
+    // // had he survived,
+    // m.match('^had #Noun+ #PastTense')
+    //   .firstTerm()
+    //   .tag('Condition', 'had-he')
+    // // were he to survive
+    // m.match('^were #Noun+ to #Infinitive')
+    //   .firstTerm()
+    //   .tag('Condition', 'were-he')
+    //swear-words as non-expression POS
     //nsfw
 
     doc.match('holy (shit|fuck|hell)').tag('Expression', 'swears-expression');

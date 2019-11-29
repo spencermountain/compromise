@@ -16,5 +16,15 @@ const nlp = require('./src/index')
 
 // let doc = nlp('falls over')
 // let doc = nlp('i paid $5.20 for the thing')
-let doc = nlp('i got 1 peso and £30.').debug()
-doc.money().debug()
+// let doc = nlp('i got 1 peso and £30.').debug()
+// doc.money().debug()
+
+// nlp.verbose('tagger')
+
+// nlp('His is green.').debug()
+// nlp('i let her have').debug()
+
+let arr = nlp('he would be, had he survived')
+  .verbs()
+  .json()
+t.equal(arr.length, 2, 'split-on-clause')

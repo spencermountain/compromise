@@ -32,16 +32,16 @@ const miscCorrection = function(doc) {
   doc.match('^(well|so|okay)').tag('Expression', 'well-')
 
   // some conditional statements
-  let m = doc.clauses()
+  // let m = doc.clauses()
 
-  // had he survived,
-  m.match('^had #Noun+ #PastTense')
-    .firstTerm()
-    .tag('Condition', 'had-he')
-  // were he to survive
-  m.match('^were #Noun+ to #Infinitive')
-    .firstTerm()
-    .tag('Condition', 'were-he')
+  // // had he survived,
+  // m.match('^had #Noun+ #PastTense')
+  //   .firstTerm()
+  //   .tag('Condition', 'had-he')
+  // // were he to survive
+  // m.match('^were #Noun+ to #Infinitive')
+  //   .firstTerm()
+  //   .tag('Condition', 'were-he')
 
   //swear-words as non-expression POS
   //nsfw

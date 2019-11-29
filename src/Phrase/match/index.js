@@ -2,8 +2,8 @@ const matchAll = require('./01-matchAll')
 const notMatch = require('./not')
 
 /** return an array of matching phrases */
-exports.match = function(str) {
-  let matches = matchAll(this, str)
+exports.match = function(str, justOne = false) {
+  let matches = matchAll(this, str, justOne)
   //make them phrase objects
   matches = matches.map(list => {
     return this.buildFrom(list[0].id, list.length)

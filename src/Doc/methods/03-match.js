@@ -33,7 +33,7 @@ exports.not = function(reg) {
 exports.matchOne = function(reg) {
   let regs = parseSyntax(reg)
   for (let i = 0; i < this.list.length; i++) {
-    let match = this.list[i].match(regs)
+    let match = this.list[i].match(regs, true)
     return this.buildFrom(match)
   }
   return this.buildFrom([])

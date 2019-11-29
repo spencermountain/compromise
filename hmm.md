@@ -92,5 +92,5 @@ let doc = nlp('I’m lookin’ for Amanda').debug()
 ```
 
 ```js
-
+nlp("spencer's fines").debug()
 ```

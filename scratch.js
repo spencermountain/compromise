@@ -25,4 +25,4 @@ const nlp = require('./src/index')
 
 // nlp('her glue').debug()
 // nlp('let Toronto Ontario glue it').debug()
-nlp('his fines').debug()
+nlp("spencer's fines").debug()

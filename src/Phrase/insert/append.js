@@ -29,24 +29,22 @@ const addWhitespace = function(beforeTerms, newTerms) {
 }
 
 //insert this segment into the linked-list
-const stitchIn = function(main, newPhrase) {
-  let mainTerms = main.terms()
-  let newTerms = newPhrase.terms()
-  let lastMain = mainTerms[mainTerms.length - 1]
+const stitchIn = function(beforeTerms, newTerms, pool) {
+  let lastBefore = beforeTerms[beforeTerms.length - 1]
   let lastNew = newTerms[newTerms.length - 1]
-  let afterId = lastMain.next
+  let afterId = lastBefore.next
   //connect ours in (main → newPhrase)
-  lastMain.next = newPhrase.start
+  lastBefore.next = newTerms[0].id
   //stich the end in  (newPhrase → after)
   lastNew.next = afterId
   //do it backwards, too
   if (afterId) {
     // newPhrase ← after
-    let afterTerm = main.pool.get(afterId)
+    let afterTerm = pool.get(afterId)
     afterTerm.prev = lastNew.id
   }
   // before ← newPhrase
-  let beforeId = mainTerms[0].id
+  let beforeId = beforeTerms[0].id
   if (beforeId) {
     let newTerm = newTerms[0]
     newTerm.prev = beforeId
@@ -62,11 +60,12 @@ const unique = function(list) {
 
 //append one phrase onto another.
 const appendPhrase = function(before, newPhrase, doc) {
-  let beforeTerms = before.terms()
+  let beforeTerms = before.cache.terms || before.terms()
+  let newTerms = newPhrase.cache.terms || newPhrase.terms()
   //spruce-up the whitespace issues
-  addWhitespace(beforeTerms, newPhrase.terms())
+  addWhitespace(beforeTerms, newTerms)
   //insert this segment into the linked-list
-  stitchIn(before, newPhrase)
+  stitchIn(beforeTerms, newTerms, before.pool)
 
   // stretch!
   // make each effected phrase longer

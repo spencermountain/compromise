@@ -1,18 +1,15 @@
-// let times = 0
 /** return a flat array of Term objects */
 exports.terms = function(n) {
-  // console.log('hi', times)
-  // times += 1
   if (this.length === 0) {
     return []
   }
   // use cache, if it exists
-  // if (this.cache.terms) {
-  //   if (n !== undefined) {
-  //     return this.cache.terms[n]
-  //   }
-  //   return this.cache.terms
-  // }
+  if (this.cache.terms) {
+    if (n !== undefined) {
+      return this.cache.terms[n]
+    }
+    return this.cache.terms
+  }
   let terms = [this.pool.get(this.start)]
   for (let i = 0; i < this.length - 1; i += 1) {
     let id = terms[terms.length - 1].next

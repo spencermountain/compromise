@@ -718,7 +718,7 @@ var textOut = function textOut(options, showPre, showPost) {
   } // -before/after-
 
 
-  if (options.whitespace === true || options.root) {
+  if (options.whitespace === true || options.root === true) {
     before = '';
     after = ' ';
 
@@ -961,10 +961,11 @@ var addTag = function addTag(t, tag, reason, world) {
 
 
 var addTags = function addTags(term, tags, reason, world) {
-  if (fns.isArray(tags) === true) {
-    tags.forEach(function (tag) {
-      return addTag(term, tag, reason, world);
-    });
+  if (typeof tags !== 'string') {
+    for (var i = 0; i < tags.length; i++) {
+      addTag(term, tags[i], reason, world);
+    } // tags.forEach(tag => addTag(term, tag, reason, world))
+
   } else {
     addTag(term, tags, reason, world);
   }
@@ -983,7 +984,7 @@ var unTag = function unTag(t, tag, reason, world) {
   } // remove the tag
 
 
-  if (t.tags[tag] === true && t.tags.hasOwnProperty(tag) === true) {
+  if (t.tags[tag] === true) {
     delete t.tags[tag]; //log in verbose-mode
 
     if (isVerbose === true) {
@@ -998,7 +999,6 @@ var unTag = function unTag(t, tag, reason, world) {
     var lineage = tagset[tag].lineage;
 
     for (var i = 0; i < lineage.length; i++) {
-      // unTag(t, also[i], ' - -   - ', world) //recursive
       if (t.tags[lineage[i]] === true) {
         delete t.tags[lineage[i]];
 
@@ -1014,13 +1014,15 @@ var unTag = function unTag(t, tag, reason, world) {
 
 
 var untagAll = function untagAll(term, tags, reason, world) {
-  if (fns.isArray(tags) === true) {
-    tags.forEach(function (tag) {
-      return unTag(term, tag, reason, world);
-    });
-  } else {
-    unTag(term, tags, reason, world);
+  if (typeof tags !== 'string' && tags) {
+    for (var i = 0; i < tags.length; i++) {
+      unTag(term, tags[i], reason, world);
+    }
+
+    return;
   }
+
+  unTag(term, tags, reason, world);
 };
 
 var unTag_1 = untagAll;
@@ -1164,11 +1166,20 @@ var Term_1 = Term;
 
 /** return a flat array of Term objects */
 var terms = function terms(n) {
-  var terms = [this.pool.get(this.start)];
-
   if (this.length === 0) {
     return [];
+  } // use cache, if it exists
+
+
+  if (this.cache.terms) {
+    if (n !== undefined) {
+      return this.cache.terms[n];
+    }
+
+    return this.cache.terms;
   }
+
+  var terms = [this.pool.get(this.start)];
 
   for (var i = 0; i < this.length - 1; i += 1) {
     var id = terms[terms.length - 1].next;
@@ -1185,7 +1196,8 @@ var terms = function terms(n) {
     if (n !== undefined && n === i) {
       return terms[n];
     }
-  }
+  } // this.cache.terms = terms
+
 
   if (n !== undefined) {
     return terms[n];
@@ -1240,11 +1252,25 @@ var hasId = function hasId(wantId) {
 
   if (this.start === wantId) {
     return true;
-  }
+  } // use cache, if available
+
+
+  if (this.cache.terms) {
+    var _terms = this.cache.terms;
+
+    for (var i = 0; i < _terms.length; i++) {
+      if (_terms[i].id === wantId) {
+        return true;
+      }
+    }
+
+    return false;
+  } // otherwise, go through each term
+
 
   var lastId = this.start;
 
-  for (var i = 0; i < this.length - 1; i += 1) {
+  for (var _i = 0; _i < this.length - 1; _i += 1) {
     var term = this.pool.get(lastId);
 
     if (term === undefined) {
@@ -1316,7 +1342,7 @@ var text = function text() {
         titlecase: false,
         lowercase: true,
         punctuation: false,
-        //FIXME: reversed
+        //FIXME: reversed?
         whitespace: true,
         unicode: true,
         implicit: true,
@@ -1373,7 +1399,7 @@ var text = function text() {
     text = trimEnd(text);
   }
 
-  if (options.trim) {
+  if (options.trim === true) {
     text = text.trim();
   }
 
@@ -1432,25 +1458,26 @@ var addWhitespace = function addWhitespace(beforeTerms, newTerms) {
 }; //insert this segment into the linked-list
 
 
-var stitchIn = function stitchIn(main, newPhrase) {
-  // console.log(main.text(), newPhrase.text())
-  var afterId = main.lastTerm().next; //connect ours in (main → newPhrase)
+var stitchIn = function stitchIn(beforeTerms, newTerms, pool) {
+  var lastBefore = beforeTerms[beforeTerms.length - 1];
+  var lastNew = newTerms[newTerms.length - 1];
+  var afterId = lastBefore.next; //connect ours in (main → newPhrase)
 
-  main.lastTerm().next = newPhrase.start; //stich the end in  (newPhrase → after)
+  lastBefore.next = newTerms[0].id; //stich the end in  (newPhrase → after)
 
-  newPhrase.lastTerm().next = afterId; //do it backwards, too
+  lastNew.next = afterId; //do it backwards, too
 
   if (afterId) {
     // newPhrase ← after
-    var afterTerm = main.pool.get(afterId);
-    afterTerm.prev = newPhrase.lastTerm().id;
+    var afterTerm = pool.get(afterId);
+    afterTerm.prev = lastNew.id;
   } // before ← newPhrase
 
 
-  var beforeId = main.terms(0).id;
+  var beforeId = beforeTerms[0].id;
 
   if (beforeId) {
-    var newTerm = newPhrase.terms(0);
+    var newTerm = newTerms[0];
     newTerm.prev = beforeId;
   }
 }; // avoid stretching a phrase twice.
@@ -1464,11 +1491,12 @@ var unique = function unique(list) {
 
 
 var appendPhrase = function appendPhrase(before, newPhrase, doc) {
-  var beforeTerms = before.terms(); //spruce-up the whitespace issues
+  var beforeTerms = before.cache.terms || before.terms();
+  var newTerms = newPhrase.cache.terms || newPhrase.terms(); //spruce-up the whitespace issues
 
-  addWhitespace(beforeTerms, newPhrase.terms()); //insert this segment into the linked-list
+  addWhitespace(beforeTerms, newTerms); //insert this segment into the linked-list
 
-  stitchIn(before, newPhrase); // stretch!
+  stitchIn(beforeTerms, newTerms, before.pool); // stretch!
   // make each effected phrase longer
 
   var toStretch = [before];
@@ -1637,7 +1665,7 @@ var shrinkAll = function shrinkAll(doc, id, deleteLength, after) {
 
 var deletePhrase = function deletePhrase(phrase, doc) {
   var pool = doc.pool();
-  var terms = phrase.terms(); //grab both sides of the chain,
+  var terms = phrase.cache.terms || phrase.terms(); //grab both sides of the chain,
 
   var prev = pool.get(terms[0].prev) || {};
   var after = pool.get(terms[terms.length - 1].next) || {};
@@ -1687,7 +1715,7 @@ var delete_1 = function delete_1(doc) {
 
 
 var replace = function replace(newPhrase, doc) {
-  // doc.debug()
+  // console.log('replace')
   //add it do the end
   var firstLength = this.length;
   append(this, newPhrase, doc); //delete original terms
@@ -2533,11 +2561,13 @@ var not = notMatch;
 var match_1 = function match_1(str) {
   var _this = this;
 
-  var matches = _01MatchAll(this, str); //make them phrase objects
+  var justOne = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  var matches = _01MatchAll(this, str, justOne); //make them phrase objects
 
   matches = matches.map(function (list) {
     return _this.buildFrom(list[0].id, list.length);
-  });
+  }); // console.log(matches[0].cache)
+
   return matches;
 };
 /** return boolean if one match is found */
@@ -2567,7 +2597,7 @@ var canBe$1 = function canBe(tag, world) {
   var _this3 = this;
 
   var results = [];
-  var terms = this.terms();
+  var terms = this.cache.terms || this.terms();
   var previous = false;
 
   for (var i = 0; i < terms.length; i += 1) {
@@ -2627,15 +2657,14 @@ Phrase.prototype.buildFrom = function (id, length) {
 
   if (this.cache) {
     p.cache = this.cache;
-    p.cache.terms = null;
+
+    if (length !== this.length) {
+      p.cache.terms = null;
+    }
   }
 
   return p;
-}; // Phrase.prototype.fromString = function(str) {
-//   console.log(tokenize)
-//   return tokenize.fromText(str)
-// }
-//apply methods
+}; //apply methods
 
 
 Object.assign(Phrase.prototype, match);
@@ -5728,8 +5757,6 @@ World.prototype.clone = function () {
 var World_1 = World;
 
 var _01Utils$1 = createCommonjsModule(function (module, exports) {
-  // const cache = require('./_setCache')
-
   /** return the root, first document */
   exports.all = function () {
     return this.parents()[0] || this;
@@ -5980,7 +6007,7 @@ var _03Match = createCommonjsModule(function (module, exports) {
     var regs = syntax_1(reg);
 
     for (var i = 0; i < this.list.length; i++) {
-      var match = this.list[i].match(regs);
+      var match = this.list[i].match(regs, true);
       return this.buildFrom(match);
     }
 
@@ -5992,7 +6019,7 @@ var _03Match = createCommonjsModule(function (module, exports) {
   exports["if"] = function (reg) {
     var regs = syntax_1(reg);
     var found = this.list.filter(function (p) {
-      return p.match(regs).length > 0;
+      return p.has(regs) === true;
     });
     return this.buildFrom(found);
   };
@@ -6002,7 +6029,7 @@ var _03Match = createCommonjsModule(function (module, exports) {
   exports.ifNo = function (reg) {
     var regs = syntax_1(reg);
     var found = this.list.filter(function (p) {
-      return p.match(regs).length === 0;
+      return p.has(regs) === false;
     });
     return this.buildFrom(found);
   };
@@ -6135,7 +6162,7 @@ var tagTerms = function tagTerms(tag, doc, safe, reason) {
 
 
   doc.list.forEach(function (p) {
-    var terms = p.terms(); // tagSafe - apply only to fitting terms
+    var terms = p.cache.terms || p.terms(); // tagSafe - apply only to fitting terms
 
     if (safe === true) {
       terms = terms.filter(function (t) {
@@ -6645,7 +6672,13 @@ var _02Insert_5 = _02Insert.insertBefore;
 var _02Insert_6 = _02Insert.concat;
 var _02Insert_7 = _02Insert.remove;
 
+var shouldTrim = {
+  clean: true,
+  reduced: true,
+  root: true
+};
 /** return the document as text */
+
 var text$1 = function text(options) {
   var _this = this;
 
@@ -6668,11 +6701,17 @@ var text$1 = function text(options) {
     });
   }
 
-  return this.list.reduce(function (str, p, i) {
+  var txt = this.list.reduce(function (str, p, i) {
     var trimPre = !showFull && i === 0;
     var trimPost = !showFull && i === _this.list.length - 1;
     return str + p.text(options, trimPre, trimPost);
-  }, '');
+  }, ''); // clumsy final trim of leading/trailing whitespace
+
+  if (shouldTrim[options] === true || options.reduced === true || options.clean === true || options.root === true) {
+    txt = txt.trim();
+  }
+
+  return txt;
 };
 
 var _01Text = {
@@ -9114,8 +9153,7 @@ var steps = {
   emoji: _05Emoji
 }; //'lookups' look at a term by itself
 
-var lookups = function lookups(doc) {
-  var terms = doc.termList();
+var lookups = function lookups(doc, terms) {
   var world = doc.world; //our list of known-words
 
   steps.lexicon(terms, world); //try these other methods
@@ -9517,8 +9555,7 @@ var step = {
   organizations: _05Organizations
 }; //
 
-var fallbacks = function fallbacks(doc) {
-  var terms = doc.termList();
+var fallbacks = function fallbacks(doc, terms) {
   var world = doc.world; // if it's empty, consult it's neighbours, first
 
   step.neighbours(terms, world); // is there a case-sensitive clue?
@@ -9629,7 +9666,7 @@ var irregulars$4 = {
 }; // either 'is not' or 'are not'
 
 var doAint = function doAint(term, phrase) {
-  var terms = phrase.terms();
+  var terms = phrase.cache.terms || phrase.terms();
   var index = terms.indexOf(term);
   var before = terms.slice(0, index); //look for the preceding noun
 
@@ -9720,7 +9757,7 @@ var isPossessive = function isPossessive(term, pool) {
 };
 
 var isHas = function isHas(term, phrase) {
-  var terms = phrase.terms();
+  var terms = phrase.cache.terms || phrase.terms();
   var index = terms.indexOf(term);
   var after = terms.slice(index + 1, index + 3); //look for a past-tense verb
 
@@ -9762,7 +9799,7 @@ var checkPerfect = function checkPerfect(term, phrase) {
   if (hasPerfect.test(term.clean)) {
     var root = term.clean.replace(/'d$/, ''); //look at the next few words
 
-    var terms = phrase.terms();
+    var terms = phrase.cache.terms || phrase.terms();
     var index = terms.indexOf(term);
     var after = terms.slice(index + 1, index + 4); //is it before a past-tense verb? - 'i'd walked'
 
@@ -9833,7 +9870,7 @@ var createPhrase = function createPhrase(found, doc) {
 var contractions = function contractions(doc) {
   var world = doc.world;
   doc.list.forEach(function (p) {
-    var terms = p.terms();
+    var terms = p.cache.terms || p.terms();
 
     for (var i = 0; i < terms.length; i += 1) {
       var term = terms[i];
@@ -9891,17 +9928,11 @@ var miscCorrection = function miscCorrection(doc) {
 
   doc.match('u r').tag('Pronoun #Copula', 'u r'); // well, ...
 
-  doc.match('^(well|so|okay)').tag('Expression', 'well-'); // some conditional statements
-  // let m = doc.clauses()
-  // // had he survived,
-  // m.match('^had #Noun+ #PastTense')
-  //   .firstTerm()
-  //   .tag('Condition', 'had-he')
-  // // were he to survive
-  // m.match('^were #Noun+ to #Infinitive')
-  //   .firstTerm()
-  //   .tag('Condition', 'were-he')
-  //swear-words as non-expression POS
+  doc.match('^(well|so|okay)').tag('Expression', 'well-'); // had he survived,
+
+  doc.match('had #Noun+ #PastTense').ifNo('@hasComma').firstTerm().tag('Condition', 'had-he'); // were he to survive
+
+  doc.match('were #Noun+ to #Infinitive').ifNo('@hasComma').firstTerm().tag('Condition', 'were-he'); //swear-words as non-expression POS
   //nsfw
 
   doc.match('holy (shit|fuck|hell)').tag('Expression', 'swears-expression');
@@ -10119,9 +10150,19 @@ var fixNouns = function fixNouns(doc) {
 
     poss.match('#Place+ #Possessive').ifNo('@hasComma').tag('Possessive'); //her polling
 
-    poss.match('#Possessive [#Verb]').tag('Noun', 'correction-possessive');
-  }
+    poss.match('#Possessive [#Gerund]').tag('Noun', 'her-polling'); //her fines
 
+    poss.match('(his|her|its) [#PresentTense]').tag('Noun', 'her-polling'); //'her match' vs 'let her match'
+
+    var m = poss.match('#Possessive [#Infinitive]');
+
+    if (!m.lookBehind('(let|made|make|force|ask)').found) {
+      m.tag('Noun', 'her-match');
+    }
+  } //let him glue
+
+
+  doc.match('(let|make|made) (him|her|it|#Person|#Place|#Organization)+ #Singular (a|an|the|it)').ifNo('@hasComma').match('[#Singular] (a|an|the|it)').tag('#Infinitive', 'let-him-glue');
   return doc;
 };
 
@@ -10660,9 +10701,9 @@ var _04Correction = corrections;
 var tagger = function tagger(doc) {
   var terms = doc.termList(); // check against any known-words
 
-  doc = _01Init(doc); // everything has gotta be something. ¯\_(:/)_/¯
+  doc = _01Init(doc, terms); // everything has gotta be something. ¯\_(:/)_/¯
 
-  doc = _02Fallbacks(doc); // support "didn't" & "spencer's"
+  doc = _02Fallbacks(doc, terms); // support "didn't" & "spencer's"
 
   doc = _03Contractions(doc); //set our cache, to speed things up
 

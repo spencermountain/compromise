@@ -92,7 +92,7 @@ module.exports = {
       let parsed = parseVerb(vb)
       let str = conjugate(parsed, this.world).PastTense
       if (str) {
-        vb.replaceWith(str, false, true)
+        vb.replaceWith(str, false)
         // vb.tag('PastTense')
       }
     })
@@ -109,7 +109,7 @@ module.exports = {
         str = obj.Infinitive
       }
       if (str) {
-        vb.replaceWith(str, false, true)
+        vb.replaceWith(str, false)
         vb.tag('PresentTense')
       }
     })
@@ -121,7 +121,7 @@ module.exports = {
       let parsed = parseVerb(vb)
       let str = conjugate(parsed, this.world).FutureTense
       if (str) {
-        vb.replaceWith(str, false, true)
+        vb.replaceWith(str, false)
         vb.tag('FutureTense')
       }
     })
@@ -133,7 +133,7 @@ module.exports = {
       let parsed = parseVerb(vb)
       let str = toInfinitive(parsed, this.world)
       if (str) {
-        vb.replaceWith(str, false, true)
+        vb.replaceWith(str, false)
         vb.tag('Infinitive')
       }
     })
@@ -145,7 +145,7 @@ module.exports = {
       let parsed = parseVerb(vb)
       let str = conjugate(parsed, this.world).Gerund
       if (str) {
-        vb.replaceWith(str, false, true)
+        vb.replaceWith(str, false)
         vb.tag('Gerund')
       }
     })

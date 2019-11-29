@@ -63,7 +63,7 @@ const addMethods = function(Doc, world) {
           if (obj.end) {
             str += ' to ' + obj.start.format(fmt)
           }
-          doc.replaceWith(str, true)
+          doc.replaceWith(str, { keepTags: true, keepCase: false })
         }
       })
       return this
@@ -71,14 +71,14 @@ const addMethods = function(Doc, world) {
     /** replace 'Fri' with 'Friday', etc*/
     toLongForm() {
       abbrevs.forEach(a => {
-        this.replace(a.short, a.long, true, true)
+        this.replace(a.short, a.long, true)
       })
       return this
     }
     /** replace 'Friday' with 'Fri', etc*/
     toShortForm() {
       abbrevs.forEach(a => {
-        this.replace(a.long, a.short, true, true)
+        this.replace(a.long, a.short, true)
       })
       return this
     }

@@ -18,20 +18,20 @@ const toPossessive = function(doc) {
   let str = doc.text('text').trim()
   // exceptions
   if (exceptions.hasOwnProperty(str)) {
-    doc.replaceWith(exceptions[str], true, true)
+    doc.replaceWith(exceptions[str], true)
     doc.tag('Possessive', 'toPossessive')
     return
   }
   // flanders'
   if (/s$/.test(str)) {
     str += "'"
-    doc.replaceWith(str, true, true)
+    doc.replaceWith(str, true)
     doc.tag('Possessive', 'toPossessive')
     return
   }
   //normal form:
   str += "'s"
-  doc.replaceWith(str, true, true)
+  doc.replaceWith(str, true)
   doc.tag('Possessive', 'toPossessive')
   return
 }

@@ -1,7 +1,11 @@
 ```js
-//bad greedy match issue
+//greedy match issue
 nlp(`wayne's world, party time`)
   .match('#Noun+? wayne')
+  .debug()
+  
+  nlp('Toronto Ontario foo')
+  .match('(him|her|it|#Person|#Place|#Organization)+ .')
   .debug()
 ```
 
@@ -50,13 +54,6 @@ nlp('it is a UNESCO world heritage site')
   .text()
 ```
 
-trailing whitespace
-
-```js
-let doc = nlp('The   children are right to laugh at you,  Rälf.  ')
-doc.text('reduced')
-```
-
 possessive, sentence period
 
 ```js
@@ -92,4 +89,8 @@ nlp(`Cows don't`)
 
 ```js
 let doc = nlp('I’m lookin’ for Amanda').debug()
+```
+
+```js
+nlp("spencer's fines").debug()
 ```

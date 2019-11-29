@@ -5,7 +5,7 @@ const checkPerfect = function(term, phrase) {
   if (hasPerfect.test(term.clean)) {
     let root = term.clean.replace(/'d$/, '')
     //look at the next few words
-    let terms = phrase.terms()
+    let terms = phrase.cache.terms || phrase.terms()
     let index = terms.indexOf(term)
     let after = terms.slice(index + 1, index + 4)
     //is it before a past-tense verb? - 'i'd walked'

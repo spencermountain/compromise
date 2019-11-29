@@ -48,7 +48,7 @@ const addMethods = function(Doc) {
       let transform = this.world.transforms.adjectives
       this.forEach(doc => {
         let obj = transform(doc.text('reduced'))
-        doc.replaceWith(obj.Superlative, true, true)
+        doc.replaceWith(obj.Superlative, true)
       })
       return this
     }
@@ -56,28 +56,28 @@ const addMethods = function(Doc) {
       let transform = this.world.transforms.adjectives
       this.forEach(doc => {
         let obj = transform(doc.text('reduced'))
-        doc.replaceWith(obj.Comparative, true, true)
+        doc.replaceWith(obj.Comparative, true)
       })
       return this
     }
     toAdverb() {
       this.forEach(doc => {
         let adverb = toAdverb(doc.text('reduced'))
-        doc.replaceWith(adverb, true, true)
+        doc.replaceWith(adverb, true)
       })
       return this
     }
     toVerb() {
       this.forEach(doc => {
         let verb = toVerb(doc.text('reduced'))
-        doc.replaceWith(verb, true, true)
+        doc.replaceWith(verb, true)
       })
       return this
     }
     toNoun() {
       this.forEach(doc => {
         let noun = toNoun(doc.text('reduced'))
-        doc.replaceWith(noun, true, true)
+        doc.replaceWith(noun, true)
       })
       return this
     }

@@ -1,9 +1,16 @@
 /** return a flat array of Term objects */
 exports.terms = function(n) {
-  let terms = [this.pool.get(this.start)]
   if (this.length === 0) {
     return []
   }
+  // use cache, if it exists
+  if (this.cache.terms) {
+    if (n !== undefined) {
+      return this.cache.terms[n]
+    }
+    return this.cache.terms
+  }
+  let terms = [this.pool.get(this.start)]
   for (let i = 0; i < this.length - 1; i += 1) {
     let id = terms[terms.length - 1].next
     if (id === null) {
@@ -18,6 +25,7 @@ exports.terms = function(n) {
       return terms[n]
     }
   }
+  // this.cache.terms = terms
   if (n !== undefined) {
     return terms[n]
   }
@@ -60,6 +68,17 @@ exports.hasId = function(wantId) {
   if (this.start === wantId) {
     return true
   }
+  // use cache, if available
+  if (this.cache.terms) {
+    let terms = this.cache.terms
+    for (let i = 0; i < terms.length; i++) {
+      if (terms[i].id === wantId) {
+        return true
+      }
+    }
+    return false
+  }
+  // otherwise, go through each term
   let lastId = this.start
   for (let i = 0; i < this.length - 1; i += 1) {
     let term = this.pool.get(lastId)

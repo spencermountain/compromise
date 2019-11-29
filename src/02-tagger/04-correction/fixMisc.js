@@ -31,15 +31,16 @@ const miscCorrection = function(doc) {
   // well, ...
   doc.match('^(well|so|okay)').tag('Expression', 'well-')
 
-  // some conditional statements
-  let m = doc.clauses()
-
   // had he survived,
-  m.match('^had #Noun+ #PastTense')
+  doc
+    .match('had #Noun+ #PastTense')
+    .ifNo('@hasComma')
     .firstTerm()
     .tag('Condition', 'had-he')
   // were he to survive
-  m.match('^were #Noun+ to #Infinitive')
+  doc
+    .match('were #Noun+ to #Infinitive')
+    .ifNo('@hasComma')
     .firstTerm()
     .tag('Condition', 'were-he')
 

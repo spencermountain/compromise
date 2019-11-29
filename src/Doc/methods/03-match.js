@@ -33,7 +33,7 @@ exports.not = function(reg) {
 exports.matchOne = function(reg) {
   let regs = parseSyntax(reg)
   for (let i = 0; i < this.list.length; i++) {
-    let match = this.list[i].match(regs)
+    let match = this.list[i].match(regs, true)
     return this.buildFrom(match)
   }
   return this.buildFrom([])
@@ -42,14 +42,14 @@ exports.matchOne = function(reg) {
 /** return each current phrase, only if it contains this match */
 exports.if = function(reg) {
   let regs = parseSyntax(reg)
-  let found = this.list.filter(p => p.match(regs).length > 0)
+  let found = this.list.filter(p => p.has(regs) === true)
   return this.buildFrom(found)
 }
 
 /** Filter-out any current phrases that have this match*/
 exports.ifNo = function(reg) {
   let regs = parseSyntax(reg)
-  let found = this.list.filter(p => p.match(regs).length === 0)
+  let found = this.list.filter(p => p.has(regs) === false)
   return this.buildFrom(found)
 }
 

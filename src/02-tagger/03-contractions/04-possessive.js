@@ -47,7 +47,7 @@ const isPossessive = (term, pool) => {
 }
 
 const isHas = (term, phrase) => {
-  let terms = phrase.terms()
+  let terms = phrase.cache.terms || phrase.terms()
   let index = terms.indexOf(term)
   let after = terms.slice(index + 1, index + 3)
   //look for a past-tense verb

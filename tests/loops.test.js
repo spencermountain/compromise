@@ -72,17 +72,3 @@ test('map array return', function(t) {
   t.deepEqual(arr, ['curly, ', 'larry, ', 'moe'], 'got array in response')
   t.end()
 })
-
-// test('reduce-stuff', function(t) {
-//   let doc = nlp('one two three. three four five.')
-//     .terms()
-//     .reduce((p, d) => {
-//       if (!p.has('two')) {
-//         return d
-//       }
-//       return null
-//     })
-//   doc.debug()
-//   // t.equal(doc.out('text'), 'ONE TWO THREE. THREE FOUR FIVE.', 'foreach-uppercase')
-//   t.end()
-// })

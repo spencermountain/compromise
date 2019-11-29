@@ -90,7 +90,7 @@ let methods = {
         return
       }
       let str = makeNumber(obj, val.has('#TextValue'), false)
-      val.replaceWith(str, true, true)
+      val.replaceWith(str, true)
       val.tag('Cardinal')
       // turn unit into plural -> 'seven beers'
       agreeUnits(agree, val, obj)
@@ -106,7 +106,7 @@ let methods = {
         return
       }
       let str = makeNumber(obj, val.has('#TextValue'), true)
-      val.replaceWith(str, true, true)
+      val.replaceWith(str, true)
       val.tag('Ordinal')
       // turn unit into singular -> 'seventh beer'
       let unit = this.lookAhead('^#Plural')
@@ -159,7 +159,7 @@ let methods = {
         return
       }
       let str = makeNumber(obj, val.has('#TextValue'), val.has('#Ordinal'))
-      val.replaceWith(str, true, true)
+      val.replaceWith(str, true)
       // handle plural/singular unit
       agreeUnits(agree, val, obj)
     })
@@ -180,7 +180,7 @@ let methods = {
       }
       obj.num += n
       let str = makeNumber(obj, val.has('#TextValue'), val.has('#Ordinal'))
-      val.replaceWith(str, true, true)
+      val.replaceWith(str, true)
       // handle plural/singular unit
       agreeUnits(agree, val, obj)
     })

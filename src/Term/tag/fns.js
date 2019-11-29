@@ -1,3 +1,7 @@
+function isClientSide() {
+  return typeof window !== 'undefined' && window.document
+}
+
 /** add spaces at the end */
 const padEnd = function(str, width) {
   str = str.toString()
@@ -9,6 +13,11 @@ const padEnd = function(str, width) {
 
 /** output for verbose-mode */
 exports.logTag = function(t, tag, reason) {
+  if (isClientSide()) {
+    console.log('%c' + padEnd(t.clean, 3) + '  + ' + tag + ' ', 'color: #6accb2;')
+    return
+  }
+  //server-side
   let log = '\x1b[33m' + padEnd(t.clean, 15) + '\x1b[0m + \x1b[32m' + tag + '\x1b[0m '
   if (reason) {
     log = padEnd(log, 35) + ' ' + reason + ''
@@ -18,6 +27,11 @@ exports.logTag = function(t, tag, reason) {
 
 /** output for verbose mode  */
 exports.logUntag = function(t, tag, reason) {
+  if (isClientSide()) {
+    console.log('%c' + padEnd(t.clean, 3) + '  - ' + tag + ' ', 'color: #AB5850;')
+    return
+  }
+  //server-side
   let log = '\x1b[33m' + padEnd(t.clean, 3) + ' \x1b[31m - #' + tag + '\x1b[0m '
   if (reason) {
     log = padEnd(log, 35) + ' ' + reason

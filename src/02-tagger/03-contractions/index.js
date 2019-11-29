@@ -34,7 +34,7 @@ const createPhrase = function(found, doc) {
 const contractions = function(doc) {
   let world = doc.world
   doc.list.forEach(p => {
-    let terms = p.terms()
+    let terms = p.cache.terms || p.terms()
     for (let i = 0; i < terms.length; i += 1) {
       let term = terms[i]
       let found = checkNegative(term)

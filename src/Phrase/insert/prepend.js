@@ -4,27 +4,11 @@ const hasSpace = / /
 // '[new] [◻old]'   -or-   '[old] [◻new] [old]'
 const addWhitespace = function(newTerms) {
   //add a space before our new text?
-
   // add a space after our text
   let lastTerm = newTerms[newTerms.length - 1]
   if (hasSpace.test(lastTerm.post) === false) {
     lastTerm.post += ' '
   }
-
-  // let term = original.pool.get(original.start)
-  // if (term.prev) {
-  //   //add our space ahead of our new terms
-  //   let firstWord = newTerms[0]
-  //   if (hasSpace.test(firstWord.post) === false) {
-  //     firstWord.post += ' '
-  //   }
-  //   return
-  // }
-
-  //otherwise, add our space to the start of original
-  // if (hasSpace.test(term.pre) === false) {
-  //   term.pre = ' ' + term.pre
-  // }
   return
 }
 
@@ -47,24 +31,6 @@ const stitchIn = function(main, newPhrase, newTerms) {
   main.terms(0).prev = lastTerm.id
 }
 
-//recursively increase the length of all parent phrases
-// const stretchAll = function(doc, oldStart, newPhrase) {
-//   //find our phrase to stretch
-//   let phrase = doc.list.find(p => p.hasId(oldStart) || p.hasId(newPhrase.start))
-//   if (phrase === undefined) {
-//     console.error('compromise error: Prepend missing start - ' + oldStart)
-//     return
-//   }
-//   //should we update the phrase's starting?
-//   if (phrase.start === oldStart) {
-//     phrase.start = newPhrase.start
-//   }
-//   // console.log(newPhrase)
-//   phrase.length += newPhrase.length
-//   if (doc.from) {
-//     stretchAll(doc.from, oldStart, newPhrase)
-//   }
-// }
 const unique = function(list) {
   return list.filter((o, i) => {
     return list.indexOf(o) === i

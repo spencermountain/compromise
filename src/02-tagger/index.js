@@ -14,10 +14,8 @@ const tagger = function(doc) {
 
   // support "didn't" & "spencer's"
   doc = contractions(doc)
-
   //set our cache, to speed things up
   doc.cache()
-
   // wiggle-around the results, so they make more sense
   doc = corrections(doc)
 

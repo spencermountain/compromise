@@ -29,7 +29,7 @@ const shrinkAll = function(doc, id, deleteLength, after) {
  */
 const deletePhrase = function(phrase, doc) {
   let pool = doc.pool()
-  let terms = phrase.terms()
+  let terms = phrase.cache.terms || phrase.terms()
 
   //grab both sides of the chain,
   let prev = pool.get(terms[0].prev) || {}

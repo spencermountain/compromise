@@ -22,7 +22,6 @@ exports.delete = function(doc) {
 
 // stich-in newPhrase, stretch 'doc' + parents
 exports.replace = function(newPhrase, doc) {
-  // doc.debug()
   //add it do the end
   let firstLength = this.length
   append(this, newPhrase, doc)
@@ -30,9 +29,7 @@ exports.replace = function(newPhrase, doc) {
   //delete original terms
   let tmp = this.buildFrom(this.start, this.length)
   tmp.length = firstLength
-  // console.log(tmp)
   deletePhrase(tmp, doc)
-  // return doc
 }
 
 /**

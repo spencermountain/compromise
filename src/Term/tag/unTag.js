@@ -9,7 +9,7 @@ const unTag = function(t, tag, reason, world) {
     return t
   }
   // remove the tag
-  if (t.tags[tag] === true && t.tags.hasOwnProperty(tag) === true) {
+  if (t.tags[tag] === true) {
     delete t.tags[tag]
     //log in verbose-mode
     if (isVerbose === true) {
@@ -21,7 +21,6 @@ const unTag = function(t, tag, reason, world) {
   if (tagset[tag]) {
     let lineage = tagset[tag].lineage
     for (let i = 0; i < lineage.length; i++) {
-      // unTag(t, also[i], ' - -   - ', world) //recursive
       if (t.tags[lineage[i]] === true) {
         delete t.tags[lineage[i]]
         if (isVerbose === true) {
@@ -35,10 +34,12 @@ const unTag = function(t, tag, reason, world) {
 
 //handle an array of tags
 const untagAll = function(term, tags, reason, world) {
-  if (fns.isArray(tags) === true) {
-    tags.forEach(tag => unTag(term, tag, reason, world))
-  } else {
-    unTag(term, tags, reason, world)
+  if (typeof tags !== 'string' && tags) {
+    for (let i = 0; i < tags.length; i++) {
+      unTag(term, tags[i], reason, world)
+    }
+    return
   }
+  unTag(term, tags, reason, world)
 }
 module.exports = untagAll

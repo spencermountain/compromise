@@ -2,8 +2,8 @@ const matchAll = require('./01-matchAll')
 const notMatch = require('./not')
 
 /** return an array of matching phrases */
-exports.match = function(str) {
-  let matches = matchAll(this, str)
+exports.match = function(str, justOne = false) {
+  let matches = matchAll(this, str, justOne)
   //make them phrase objects
   matches = matches.map(list => {
     return this.buildFrom(list[0].id, list.length)
@@ -30,7 +30,7 @@ exports.not = function(str) {
 /** return a list of phrases that can have this tag */
 exports.canBe = function(tag, world) {
   let results = []
-  let terms = this.terms()
+  let terms = this.cache.terms || this.terms()
   let previous = false
   for (let i = 0; i < terms.length; i += 1) {
     let can = terms[i].canBe(tag, world)

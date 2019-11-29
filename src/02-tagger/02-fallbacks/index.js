@@ -6,8 +6,7 @@ const step = {
   organizations: require('./05-organizations'),
 }
 //
-const fallbacks = function(doc) {
-  let terms = doc.termList()
+const fallbacks = function(doc, terms) {
   let world = doc.world
 
   // if it's empty, consult it's neighbours, first

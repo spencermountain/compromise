@@ -66,6 +66,8 @@ test('text-reduced', function(t) {
   doc.normalize('reduced')
   t.equal(doc.text('reduced'), str, 'normalize(reduced):  ')
 
+  doc = nlp('Rälf.  ')
+  t.equal(doc.text('reduced'), 'ralf', 'reduced trim whitespace ')
   t.end()
 })
 

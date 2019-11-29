@@ -39,8 +39,11 @@ const addTag = function(t, tag, reason, world) {
 
 /** support an array of tags */
 const addTags = function(term, tags, reason, world) {
-  if (fns.isArray(tags) === true) {
-    tags.forEach(tag => addTag(term, tag, reason, world))
+  if (typeof tags !== 'string') {
+    for (let i = 0; i < tags.length; i++) {
+      addTag(term, tags[i], reason, world)
+    }
+    // tags.forEach(tag => addTag(term, tag, reason, world))
   } else {
     addTag(term, tags, reason, world)
   }

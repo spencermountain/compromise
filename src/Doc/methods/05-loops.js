@@ -33,10 +33,7 @@ exports.forEach = function(fn, detachParent) {
     if (detachParent === true) {
       sub.from = null //
     }
-    // let len
-    // console.log(sub.from.list[0].text())
     fn(sub, i)
-    // console.log(sub.from.list[0].text())
   })
   return this
 }

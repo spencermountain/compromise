@@ -2,12 +2,13 @@
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "natural language processing in the browser",
-  "version": "12.0.0",
+  "version": "12.1.0",
   "main": "./builds/compromise.js",
   "unpkg": "./builds/compromise.min.js",
   "module": "./builds/compromise.mjs",
   "type": "commonjs",
   "types": "types/index.d.ts",
+  "sideEffects": false,
   "repository": {
     "type": "git",
     "url": "git://github.com/spencermountain/compromise.git"
@@ -27,7 +28,8 @@
     "plugins": "node ./scripts/plugin-check.js",
     "speed": "node ./scripts/stress-test/speed.js",
     "demo": "python -m SimpleHTTPServer 8888",
-    "coverage": "nyc --reporter=html tape \"./tests/**/*.test.js\" | tap-dancer --color always",
+    "coverage": "node ./scripts/coverage.js",
+    "coverage:html": "nyc --reporter=html tape \"./tests/**/*.test.js\" | tap-dancer --color always",
     "test:types": "ts-node ./types/types.test.ts | tap-dancer",
     "lint": "eslint ./src/"
   },

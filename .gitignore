@@ -4,3 +4,4 @@ coverage/
 .env
 .nyc_output/
 .vscode
+coverage.lcov

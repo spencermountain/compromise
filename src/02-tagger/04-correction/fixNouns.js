@@ -88,8 +88,21 @@ const fixNouns = function(doc) {
       .ifNo('@hasComma')
       .tag('Possessive')
     //her polling
-    poss.match('#Possessive [#Verb]').tag('Noun', 'correction-possessive')
+    poss.match('#Possessive [#Gerund]').tag('Noun', 'her-polling')
+    //her fines
+    poss.match('(his|her|its) [#PresentTense]').tag('Noun', 'her-polling')
+    //'her match' vs 'let her match'
+    let m = poss.match('#Possessive [#Infinitive]')
+    if (!m.lookBehind('(let|made|make|force|ask)').found) {
+      m.tag('Noun', 'her-match')
+    }
   }
+  //let him glue
+  doc
+    .match('(let|make|made) (him|her|it|#Person|#Place|#Organization)+ #Singular (a|an|the|it)')
+    .ifNo('@hasComma')
+    .match('[#Singular] (a|an|the|it)')
+    .tag('#Infinitive', 'let-him-glue')
   return doc
 }
 module.exports = fixNouns

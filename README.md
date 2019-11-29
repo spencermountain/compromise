@@ -20,10 +20,10 @@
     <a href="https://npmjs.org/package/compromise">
     <img src="https://img.shields.io/npm/v/compromise.svg?style=flat-square" />
   </a>
-  <a href="https://www.codacy.com/app/spencerkelly86/nlp_compromise">
-    <img src="https://api.codacy.com/project/badge/Coverage/82cc8ebd98b64ed199d7be6021488062" />
+  <a href="https://codecov.io/gh/spencermountain/compromise">
+    <img src="https://codecov.io/gh/spencermountain/compromise/branch/master/graph/badge.svg" />
   </a>
-  <a href="https://unpkg.com/compromise">
+  <a href="https://bundlephobia.com/result?p=compromise">
     <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/builds/compromise.min.js" />
   </a>
   </div>
@@ -33,7 +33,7 @@
 <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 <div align="left">
- - <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>compromise <a href="https://observablehq.com/@spencermountain/compromise-justification">tries its best</a>.
+  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>compromise <a href="https://observablehq.com/@spencermountain/compromise-justification">tries its best</a>.
 </div>
 
 <div align="left">
@@ -440,6 +440,10 @@ _(all match methods use the [match-syntax](https://docs.compromise.cool/compromi
 - **[.conjunctions()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'but'`
 - **[.prepositions()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'of'`
 - **[.abbreviations()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'Mrs.'`
+- **[.people()](https://observablehq.com/@spencermountain/topics-named-entity-recognition)** - names like 'John F. Kennedy'
+- **[.places()](https://observablehq.com/@spencermountain/topics-named-entity-recognition)** - like 'Paris, France'
+- **[.organizations()](https://observablehq.com/@spencermountain/topics-named-entity-recognition)** - like 'Google, Inc'
+- **[.topics()](https://observablehq.com/@spencermountain/topics-named-entity-recognition)** - `people()` + `places()` + `organizations
 
 ##### Subsets
 
@@ -507,15 +511,6 @@ These are some helpful extensions:
   - **[.dates().format('')](https://observablehq.com/@spencermountain/compromise-dates)** - convert the dates to specific formats
   - **[.dates().toShortForm('')](https://observablehq.com/@spencermountain/compromise-dates)** - convert 'Wednesday' to 'Wed', etc
   - **[.dates().toLongForm('')](https://observablehq.com/@spencermountain/compromise-dates)** - convert 'Feb' to 'February', etc
-
-##### Topics
-
-`npm install compromise-topics`
-
-- **[.people()](https://observablehq.com/@spencermountain/topics-named-entity-recognition)** - names like 'John F. Kennedy'
-- **[.places()](https://observablehq.com/@spencermountain/topics-named-entity-recognition)** - like 'Paris, France'
-- **[.organizations()](https://observablehq.com/@spencermountain/topics-named-entity-recognition)** - like 'Google, Inc'
-- **[.topics()](https://observablehq.com/@spencermountain/topics-named-entity-recognition)** - `people()` + `places()` + `organizations()`
 
 ##### Numbers
 

@@ -126,9 +126,9 @@ declare module nlp {
 
     // Insert
     /**  substitute-in new content */
-    replaceWith(text: String | Function, keepTags?: Boolean, keepCase?: Boolean): Document
+    replaceWith(text: String | Function, keepTags?: Boolean | Object, keepCase?: Boolean): Document
     /**  search and replace match with new content */
-    replace(match: String, text?: String | Function, keepTags?: Boolean, keepCase?: Boolean): Document
+    replace(match: String, text?: String | Function, keepTags?: Boolean | Object, keepCase?: Boolean): Document
     /**  fully remove these terms from the document */
     delete(match: String): Document
     /**  add these new terms to the end (insertAfter) */
@@ -205,6 +205,14 @@ declare module nlp {
     prepositions(n?: Number): Document
     /**  return things like `'Mrs.'`*/
     abbreviations(n?: Number): Document
+    /**  return person names like `'John A. Smith'`*/
+    people(n?: Number): Document
+    /**  return location names like `'Paris, France'`*/
+    places(n?: Number): Document
+    /**  return companies and org names like `'Google Inc.'`*/
+    organizations(n?: Number): Document
+    /**  return people, places, and organizations */
+    topics(n?: Number): Document
 
     // Subsets
     /** alias for .all(), until plugin overloading  */

@@ -9,7 +9,7 @@ exports.toPastTense = function() {
     let obj = parse(doc)
     let vb = obj.verb.clone()
     vb = vb.verbs().toPastTense()
-    obj.verb.replaceWith(vb, false, true)
+    obj.verb.replaceWith(vb, false)
     // trailing gerund/future/present are okay, but 'walked and eats' is not
     if (obj.object && obj.object.found && obj.object.has('#PresentTense')) {
       let verbs = obj.object.verbs()
@@ -40,7 +40,7 @@ exports.toPresentTense = function() {
       //'he looks'
       vb = vb.verbs().toPresentTense()
     }
-    obj.verb.replaceWith(vb, false, true)
+    obj.verb.replaceWith(vb, false)
 
     // future is okay, but 'walks and ate' -> 'walks and eats'
     if (obj.object && obj.object.found && obj.object.has('#PastTense')) {
@@ -60,7 +60,7 @@ exports.toFutureTense = function() {
     let obj = parse(doc)
     let vb = obj.verb.clone()
     vb = vb.verbs().toFutureTense()
-    obj.verb.replaceWith(vb, false, true)
+    obj.verb.replaceWith(vb, false)
     //Present is okay, but 'will walk and ate' -> 'will walk and eat'
     if (obj.object && obj.object.found && obj.object.has('(#PastTense|#PresentTense)')) {
       let verbs = obj.object.verbs()

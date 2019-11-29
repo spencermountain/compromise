@@ -6,7 +6,7 @@ exports.toNegative = function() {
     let obj = parse(doc)
     let vb = obj.verb.clone()
     vb = vb.verbs().toNegative()
-    obj.verb.replaceWith(vb, false, true)
+    obj.verb.replaceWith(vb, false)
   })
   return this
 }
@@ -16,7 +16,7 @@ exports.toPositive = function() {
     let obj = parse(doc)
     let vb = obj.verb.clone()
     vb = vb.verbs().toPositive()
-    obj.verb.replaceWith(vb, false, true)
+    obj.verb.replaceWith(vb, false)
   })
   return this
 }

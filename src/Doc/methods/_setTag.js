@@ -5,10 +5,9 @@ const tagTerms = function(tag, doc, safe, reason) {
     tagList = tag.split(' ')
   }
 
-  // console.log(doc.parents().length)
   //do indepenent tags for each term:
   doc.list.forEach(p => {
-    let terms = p.terms()
+    let terms = p.cache.terms || p.terms()
     // tagSafe - apply only to fitting terms
     if (safe === true) {
       terms = terms.filter(t => t.canBe(tag, doc.world))

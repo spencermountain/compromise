@@ -13,7 +13,6 @@ const conjugate = function(parsed, world) {
   if (!infinitive) {
     return {}
   }
-  // console.log(infinitive)
   let forms = world.transforms.conjugate(infinitive, world)
   forms.Infinitive = infinitive
 

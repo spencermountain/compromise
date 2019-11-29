@@ -5,10 +5,19 @@ const titleCase = str => {
 }
 
 /** substitute-in new content */
-exports.replaceWith = function(replace, keepTags, keepCase) {
+exports.replaceWith = function(replace, options = {}) {
   if (!replace) {
     return this.delete()
   }
+  //support old-style params
+  if (options === true) {
+    options = { keepTags: true }
+  }
+  if (options === false) {
+    options = { keepTags: false }
+  }
+  options = options || {}
+
   // clear the cache
   this.uncache()
   // return this
@@ -25,7 +34,7 @@ exports.replaceWith = function(replace, keepTags, keepCase) {
       this.pool().merge(input.pool())
     } else if (typeof input === 'string') {
       //input is a string
-      if (keepCase === true && p.terms(0).isTitleCase()) {
+      if (options.keepCase !== false && p.terms(0).isTitleCase()) {
         input = titleCase(input)
       }
       newPhrases = tokenize.fromText(input, this.world, this.pool())
@@ -37,7 +46,7 @@ exports.replaceWith = function(replace, keepTags, keepCase) {
     }
 
     // try to keep its old tags, if appropriate
-    if (keepTags === true) {
+    if (options.keepTags === true) {
       let oldTags = p.json({ terms: { tags: true } }).terms
       newPhrases[0].terms().forEach((t, i) => {
         if (oldTags[i]) {
@@ -51,11 +60,11 @@ exports.replaceWith = function(replace, keepTags, keepCase) {
 }
 
 /** search and replace match with new content */
-exports.replace = function(match, replace, keepTags, keepCase) {
+exports.replace = function(match, replace, options) {
   // if there's no 2nd param, use replaceWith
   if (replace === undefined) {
-    return this.replaceWith(match)
+    return this.replaceWith(match, options)
   }
-  this.match(match).replaceWith(replace, keepTags, keepCase)
+  this.match(match).replaceWith(replace, options)
   return this
 }

@@ -3,18 +3,19 @@ const nlp = require('./src/index')
 // nlp.extend(require('./plugins/sentences/src'))
 // nlp.extend(require('./plugins/numbers/src'))
 
-// let doc = nlp(`i walked to the moon when it was shining`)
-// doc.verbs().forEach(d => {
-//   d.matchOne('walked').replaceWith('sat')
-// })
-// doc.sentences().toPastTense()
-// doc.debug()
+// nlp(`wayne's world, party time`)
+//   .match('#Noun+? wayne')
+//   .debug()
 
-// let doc = nlp.tokenize(`between june 5th and june 7th`)
-// doc.match('between [#Date+] and').debug()
-// doc.match('between [.*] and').debug()
+// console.log('aaaab'.match(/a+?[a|b]/))
 
-// let doc = nlp('falls over')
-// let doc = nlp('i paid $5.20 for the thing')
-let doc = nlp('i got 1 peso and £30.').debug()
-doc.money().debug()
+// nlp(`And how come Batman doesn't dance anymore? Remember the Batusi?`)
+// .match('#Place+ .')
+// .debug()
+
+let doc = nlp('Spencer is a very famous company.')
+  .match('spencer')
+  .replaceWith('jogging')
+
+doc.debug()
+console.log(doc.text())

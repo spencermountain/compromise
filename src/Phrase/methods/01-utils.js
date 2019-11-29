@@ -69,6 +69,17 @@ exports.hasId = function(wantId) {
   if (this.start === wantId) {
     return true
   }
+  // use cache, if available
+  if (this.cache.terms) {
+    let terms = this.cache.terms
+    for (let i = 0; i < terms.length; i++) {
+      if (terms[i].id === wantId) {
+        return true
+      }
+    }
+    return false
+  }
+  // otherwise, go through each term
   let lastId = this.start
   for (let i = 0; i < this.length - 1; i += 1) {
     let term = this.pool.get(lastId)

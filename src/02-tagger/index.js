@@ -17,8 +17,6 @@ const tagger = function(doc) {
 
   //set our cache, to speed things up
   doc.cache()
-  // console.log('---')
-  // doc.if('fines').tag('asfd')
   // wiggle-around the results, so they make more sense
   doc = corrections(doc)
 

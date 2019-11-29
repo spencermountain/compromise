@@ -6467,13 +6467,29 @@ var titleCase$2 = function titleCase(str) {
 /** substitute-in new content */
 
 
-var replaceWith = function replaceWith(replace, keepTags, keepCase) {
+var replaceWith = function replaceWith(replace) {
   var _this = this;
+
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
   if (!replace) {
     return this["delete"]();
-  } // clear the cache
+  } //support old-style params
 
+
+  if (options === true) {
+    options = {
+      keepTags: true
+    };
+  }
+
+  if (options === false) {
+    options = {
+      keepTags: false
+    };
+  }
+
+  options = options || {}; // clear the cache
 
   this.uncache(); // return this
 
@@ -6492,7 +6508,7 @@ var replaceWith = function replaceWith(replace, keepTags, keepCase) {
       _this.pool().merge(input.pool());
     } else if (typeof input === 'string') {
       //input is a string
-      if (keepCase === true && p.terms(0).isTitleCase()) {
+      if (options.keepCase !== false && p.terms(0).isTitleCase()) {
         input = titleCase$2(input);
       }
 
@@ -6506,7 +6522,7 @@ var replaceWith = function replaceWith(replace, keepTags, keepCase) {
     } // try to keep its old tags, if appropriate
 
 
-    if (keepTags === true) {
+    if (options.keepTags === true) {
       var oldTags = p.json({
         terms: {
           tags: true
@@ -6526,13 +6542,13 @@ var replaceWith = function replaceWith(replace, keepTags, keepCase) {
 /** search and replace match with new content */
 
 
-var replace$1 = function replace(match, _replace, keepTags, keepCase) {
+var replace$1 = function replace(match, _replace, options) {
   // if there's no 2nd param, use replaceWith
   if (_replace === undefined) {
-    return this.replaceWith(match);
+    return this.replaceWith(match, options);
   }
 
-  this.match(match).replaceWith(_replace, keepTags, keepCase);
+  this.match(match).replaceWith(_replace, options);
   return this;
 };
 
@@ -11247,7 +11263,7 @@ var toPossessive = function toPossessive(doc) {
   var str = doc.text('text').trim(); // exceptions
 
   if (exceptions.hasOwnProperty(str)) {
-    doc.replaceWith(exceptions[str], true, true);
+    doc.replaceWith(exceptions[str], true);
     doc.tag('Possessive', 'toPossessive');
     return;
   } // flanders'
@@ -11255,14 +11271,14 @@ var toPossessive = function toPossessive(doc) {
 
   if (/s$/.test(str)) {
     str += "'";
-    doc.replaceWith(str, true, true);
+    doc.replaceWith(str, true);
     doc.tag('Possessive', 'toPossessive');
     return;
   } //normal form:
 
 
   str += "'s";
-  doc.replaceWith(str, true, true);
+  doc.replaceWith(str, true);
   doc.tag('Possessive', 'toPossessive');
   return;
 };
@@ -11769,7 +11785,7 @@ var toNegative = function toNegative(parsed, world) {
 
   if (vb.has('#PastTense')) {
     var inf = toInfinitive_1$1(parsed, world);
-    vb.replaceWith(inf, true, true);
+    vb.replaceWith(inf, true);
     vb.prepend('did not');
     return;
   } // walks -> does not walk
@@ -11778,7 +11794,7 @@ var toNegative = function toNegative(parsed, world) {
   if (vb.has('#PresentTense')) {
     var _inf = toInfinitive_1$1(parsed, world);
 
-    vb.replaceWith(_inf, true, true);
+    vb.replaceWith(_inf, true);
 
     if (isPlural_1$2(parsed)) {
       vb.prepend('do not');
@@ -11793,7 +11809,7 @@ var toNegative = function toNegative(parsed, world) {
   if (vb.has('#Gerund')) {
     var _inf2 = toInfinitive_1$1(parsed, world);
 
-    vb.replaceWith(_inf2, true, true);
+    vb.replaceWith(_inf2, true);
     vb.prepend('not');
     return;
   } //fallback 1:  walk -> does not walk
@@ -12087,7 +12103,7 @@ var methods$7 = {
       var str = conjugate_1$1(parsed, _this5.world).PastTense;
 
       if (str) {
-        vb.replaceWith(str, false, true); // vb.tag('PastTense')
+        vb.replaceWith(str, false); // vb.tag('PastTense')
       }
     });
     return this;
@@ -12109,7 +12125,7 @@ var methods$7 = {
       }
 
       if (str) {
-        vb.replaceWith(str, false, true);
+        vb.replaceWith(str, false);
         vb.tag('PresentTense');
       }
     });
@@ -12126,7 +12142,7 @@ var methods$7 = {
       var str = conjugate_1$1(parsed, _this7.world).FutureTense;
 
       if (str) {
-        vb.replaceWith(str, false, true);
+        vb.replaceWith(str, false);
         vb.tag('FutureTense');
       }
     });
@@ -12143,7 +12159,7 @@ var methods$7 = {
       var str = toInfinitive_1$1(parsed, _this8.world);
 
       if (str) {
-        vb.replaceWith(str, false, true);
+        vb.replaceWith(str, false);
         vb.tag('Infinitive');
       }
     });
@@ -12160,7 +12176,7 @@ var methods$7 = {
       var str = conjugate_1$1(parsed, _this9.world).Gerund;
 
       if (str) {
-        vb.replaceWith(str, false, true);
+        vb.replaceWith(str, false);
         vb.tag('Gerund');
       }
     });

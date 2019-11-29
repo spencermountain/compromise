@@ -1,6 +1,8 @@
+// let times = 0
 /** return a flat array of Term objects */
 exports.terms = function(n) {
-  // console.log('hi')
+  // console.log('hi', times)
+  // times += 1
   if (this.length === 0) {
     return []
   }

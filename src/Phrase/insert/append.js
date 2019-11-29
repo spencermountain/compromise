@@ -30,22 +30,24 @@ const addWhitespace = function(beforeTerms, newTerms) {
 
 //insert this segment into the linked-list
 const stitchIn = function(main, newPhrase) {
-  // console.log(main.text(), newPhrase.text())
+  let mainTerms = main.terms()
+  let newTerms = newPhrase.terms()
+  let lastNew = newTerms[newTerms.length - 1]
   let afterId = main.lastTerm().next
   //connect ours in (main → newPhrase)
-  main.lastTerm().next = newPhrase.start
+  mainTerms[mainTerms.length - 1].next = newPhrase.start
   //stich the end in  (newPhrase → after)
-  newPhrase.lastTerm().next = afterId
+  lastNew.next = afterId
   //do it backwards, too
   if (afterId) {
     // newPhrase ← after
     let afterTerm = main.pool.get(afterId)
-    afterTerm.prev = newPhrase.lastTerm().id
+    afterTerm.prev = lastNew.id
   }
   // before ← newPhrase
-  let beforeId = main.terms(0).id
+  let beforeId = mainTerms[0].id
   if (beforeId) {
-    let newTerm = newPhrase.terms(0)
+    let newTerm = newTerms[0]
     newTerm.prev = beforeId
   }
 }

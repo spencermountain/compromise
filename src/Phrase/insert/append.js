@@ -32,10 +32,11 @@ const addWhitespace = function(beforeTerms, newTerms) {
 const stitchIn = function(main, newPhrase) {
   let mainTerms = main.terms()
   let newTerms = newPhrase.terms()
+  let lastMain = mainTerms[mainTerms.length - 1]
   let lastNew = newTerms[newTerms.length - 1]
-  let afterId = main.lastTerm().next
+  let afterId = lastMain.next
   //connect ours in (main → newPhrase)
-  mainTerms[mainTerms.length - 1].next = newPhrase.start
+  lastMain.next = newPhrase.start
   //stich the end in  (newPhrase → after)
   lastNew.next = afterId
   //do it backwards, too

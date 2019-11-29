@@ -22,7 +22,7 @@ exports.delete = function(doc) {
 
 // stich-in newPhrase, stretch 'doc' + parents
 exports.replace = function(newPhrase, doc) {
-  // doc.debug()
+  // console.log('replace')
   //add it do the end
   let firstLength = this.length
   append(this, newPhrase, doc)

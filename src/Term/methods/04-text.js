@@ -52,7 +52,7 @@ exports.textOut = function(options, showPre, showPost) {
   }
 
   // -before/after-
-  if (options.whitespace === true || options.root) {
+  if (options.whitespace === true || options.root === true) {
     before = ''
     after = ' '
     if ((hasSpace.test(this.post) === false || options.last) && !this.implicit) {

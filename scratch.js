@@ -22,6 +22,7 @@ const nlp = require('./src/index')
 // nlp.verbose('tagger')
 
 // nlp('His is green.').debug()
-// nlp('i let her have').debug()
 
-nlp('he would be, had he survived').debug()
+// nlp('her glue').debug()
+// nlp('let Toronto Ontario glue it').debug()
+nlp('his fines').debug()

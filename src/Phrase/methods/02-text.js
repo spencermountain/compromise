@@ -29,7 +29,7 @@ exports.text = function(options = {}, isFirst, isLast) {
       options = {
         titlecase: false,
         lowercase: true,
-        punctuation: false, //FIXME: reversed
+        punctuation: false, //FIXME: reversed?
         whitespace: true,
         unicode: true,
         implicit: true,
@@ -79,7 +79,7 @@ exports.text = function(options = {}, isFirst, isLast) {
   if (isFull === true && isLast) {
     text = trimEnd(text)
   }
-  if (options.trim) {
+  if (options.trim === true) {
     text = text.trim()
   }
   return text

@@ -8,6 +8,10 @@ compromise uses semver, and pushes to npm frequently
 
 ### v12 &nbsp; :postal_horn:
 - [see Release Notes](https://github.com/spencermountain/compromise/wiki/v12-Release-Notes)
+##### 12.1.0
+- add 'sideEffect:false' flag to build
+- considerable speedup (20%) in tagger 
+- ensure trimming of whitespace for root/clean/reduced text formats
 
 ### v11
 ##### 11.13.0

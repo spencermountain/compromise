@@ -24,7 +24,4 @@ const nlp = require('./src/index')
 // nlp('His is green.').debug()
 // nlp('i let her have').debug()
 
-let arr = nlp('he would be, had he survived')
-  .verbs()
-  .json()
-t.equal(arr.length, 2, 'split-on-clause')
+nlp('he would be, had he survived').debug()

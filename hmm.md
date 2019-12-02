@@ -3,8 +3,8 @@
 nlp(`wayne's world, party time`)
   .match('#Noun+? wayne')
   .debug()
-  
-  nlp('Toronto Ontario foo')
+
+nlp('Toronto Ontario foo')
   .match('(him|her|it|#Person|#Place|#Organization)+ .')
   .debug()
 ```
@@ -93,4 +93,39 @@ let doc = nlp('I’m lookin’ for Amanda').debug()
 
 ```js
 nlp("spencer's fines").debug()
+```
+
+emdash becomes minus
+
+```js
+let nlpObj = nlp('text—text')
+const sen = nlpObj.sentences().data()
+console.log(sen)
+```
+
+tag-logic
+
+```js
+let doc = nlp('april')
+//by default, it is a #Month, and a #Date
+doc.tag('FemaleName')
+//now it is automatically a #Person, and a #FirstName
+console.log(doc.out('tags')[0].april)
+```
+
+text-replace
+
+```js
+let doc = nlp('i worked at the F.B.I')
+doc = doc.match('(#Acronym|#Abbreviation)').replaceWith(d => {
+  return d
+})
+doc.debug()
+```
+
+nouns() commas
+
+```js
+let doc = nlp('cat, boy, and chair')
+doc.nouns().debug()
 ```

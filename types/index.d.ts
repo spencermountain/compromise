@@ -90,9 +90,9 @@ declare module nlp {
 
     // Whitespace
     /** add this punctuation or whitespace before each match */
-    pre(str: String): Document
+    pre(str: String, concat: Boolean): Document
     /** add this punctuation or whitespace after each match */
-    post(str: String): Document
+    post(str: String, concat: Boolean): Document
     /**  remove start and end whitespace */
     trim(): Document
     /**  connect words with hyphen, and remove whitespace */

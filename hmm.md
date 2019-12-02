@@ -123,9 +123,12 @@ doc = doc.match('(#Acronym|#Abbreviation)').replaceWith(d => {
 doc.debug()
 ```
 
-nouns() commas
 
 ```js
-let doc = nlp('cat, boy, and chair')
-doc.nouns().debug()
+nlp(`i met April O'neil`).dates()
+```
+
+
+```js
+nlp(`why can't i have no kids and three money?`).contractions().expand().text()
 ```

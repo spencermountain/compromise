@@ -23,3 +23,12 @@ test('whitespace-out', function(t) {
   // t.equal(doc.match('.').out(), str, 'every word') // ❌
   t.end()
 })
+
+test('pre/post concat', function(t) {
+  let doc = nlp(`Getting ready for whacking day? What's whacking day?`)
+  doc.post(' ', true)
+  t.equal(doc.text(), `Getting ready for whacking day?  What's whacking day? `)
+  // doc.trim()
+  // t.equal(doc.text(), `Getting ready for whacking day?  What's whacking day?`)
+  t.end()
+})

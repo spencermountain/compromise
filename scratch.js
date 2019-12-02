@@ -9,7 +9,27 @@ const nlp = require('./src/index')
 // })
 // doc.debug()
 
-//
-let doc = nlp('cat, boy, and chair')
-doc.nouns().toPlural()
+// let doc = nlp('the cat that was mean attacked the cute dog')
+// doc
+//   .nouns()
+//   .eq(0)
+//   .nouns()
+//   .adjectives()
+//   .debug()
+
+// Lookahead - look forward
+// Lookbehind - look backward
+
+// nlp(`yet soft and yielding like a nerf ball`).debug()
+
+let doc = nlp(`Getting ready for whacking day? What's whacking day?`)
+doc.post('  ', true)
+
+let doc = nlp(`Your dreams may vary from those of Globex Corporation, its subsidiaries and shareholders.`)
+doc.organizations().post('©', true)
+
+// doc
+// .match('whacking day')
+// .pre(`'`, true)
+// .post(`'`, true)
 console.log(doc.text())

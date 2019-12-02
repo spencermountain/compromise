@@ -459,6 +459,7 @@ _(all match methods use the [match-syntax](https://docs.compromise.cool/compromi
   - **[.lists().add()](https://observablehq.com/@spencermountain/compromise-lists)** - put a new item in the list
 - **[.nouns()](https://observablehq.com/@spencermountain/nouns)** - return any subsequent terms tagged as a Noun
   - **[.nouns().json()](https://observablehq.com/@spencermountain/nouns)** - overloaded output with noun metadata
+  - **[.nouns().adjectives()](https://observablehq.com/@spencermountain/nouns)** - get any adjectives describing this noun
   - **[.nouns().toPlural()](https://observablehq.com/@spencermountain/nouns)** - `'football captain' → 'football captains'`
   - **[.nouns().toSingular()](https://observablehq.com/@spencermountain/nouns)** - `'turnovers' → 'turnover'`
   - **[.nouns().isPlural()](https://observablehq.com/@spencermountain/nouns)** - return only plural nouns

@@ -24,6 +24,14 @@ const methods = {
     }
     return res
   },
+  /** get all adjectives describing this noun*/
+  adjectives: function() {
+    // this.lookAhead('.+').debug()
+    let list = this.lookAhead('^(that|who|which)? (was|is|will)? be? #Adverb? #Adjective+')
+    list = list.concat(this.lookBehind('#Adjective+ #Adverb?$'))
+    list = list.match('#Adjective')
+    return list.sort('index')
+  },
 
   isPlural: function() {
     return this.if('#Plural') //assume tagger has run?

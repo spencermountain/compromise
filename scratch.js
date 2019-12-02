@@ -9,9 +9,7 @@ const nlp = require('./src/index')
 // })
 // doc.debug()
 
+//
 let doc = nlp('cat, boy, and chair')
-doc
-  .nouns()
-  .debug()
-  .toPlural()
+doc.nouns().toPlural()
 console.log(doc.text())

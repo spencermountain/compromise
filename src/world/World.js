@@ -145,8 +145,8 @@ class World {
   stats() {
     return {
       words: Object.keys(this.words).length,
-      plurals: Object.keys(this.irregular.plurals).length,
-      conjugations: Object.keys(this.irregular.conjugations).length,
+      plurals: Object.keys(this.irregulars.nouns).length,
+      conjugations: Object.keys(this.irregulars.verbs).length,
       compounds: Object.keys(this.hasCompound).length,
       postProcessors: this.taggers.length,
     }

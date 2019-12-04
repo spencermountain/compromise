@@ -39,7 +39,7 @@ const methods = {
   hasPlural: function() {
     return this.filter(d => hasPlural(d))
   },
-  toPlural: function() {
+  toPlural: function(agree) {
     let toPlural = this.world.transforms.toPlural
     this.forEach(doc => {
       if (doc.has('#Plural') || hasPlural(doc) === false) {
@@ -54,9 +54,11 @@ const methods = {
       str = toPlural(str, this.world)
       main.replace(str).tag('#Plural')
       // 'an apple' -> 'apples'
-      let an = main.lookBefore('(an|a) #Adjective?$').not('#Adjective')
-      if (an.found === true) {
-        an.remove()
+      if (agree) {
+        let an = main.lookBefore('(an|a) #Adjective?$').not('#Adjective')
+        if (an.found === true) {
+          an.remove()
+        }
       }
     })
     return this

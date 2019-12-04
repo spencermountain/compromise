@@ -232,9 +232,55 @@ declare module nlp {
     /**  return things like `'eats, shoots, and leaves'` */
     lists(n?: Number): Document
     /**  return any subsequent terms tagged as a Noun */
-    nouns(n?: Number): Document
+    nouns(n?: Number): Nouns
     /**  return any subsequent terms tagged as a Verb */
-    verbs(n?: Number): Document
+    verbs(n?: Number): Verbs
+  }
+
+  // Nouns class
+  interface Nouns extends Document {
+    /** get any adjectives describing this noun*/
+    adjectives(): Document
+    /** return only plural nouns */
+    isPlural(): Document
+    /** return only nouns that _can be_ inflected as plural */
+    hasPlural(): Document
+    /** 'football captain' → 'football captains' */
+    toPlural(setArticle?: Boolean): Document
+    /** 'turnovers' → 'turnover' */
+    toSingular(setArticle?: Boolean): Document
+    /** add a `'s` to the end, in a safe manner. */
+    toPossessive(): Document
+  }
+
+  // Verbs class
+  interface Verbs extends Document {
+    /** return the adverbs describing this verb */
+    adverbs(): Document
+    /** return only plural nouns */
+    isPlural(): Document
+    /** return only singular nouns */
+    isSingular(): Document
+    /** return all forms of these verbs */
+    conjugate(): Document
+    /** 'will go' → 'went' */
+    toPastTense(): Document
+    /** 'walked' → 'walks' */
+    toPresentTense(): Document
+    /** 'walked' → 'will walk' */
+    toFutureTense(): Document
+    /** 'walks' → 'walk' */
+    toInfinitive(): Document
+    /** 'walks' → 'walking' */
+    toGerund(): Document
+    /** return verbs with 'not' */
+    isNegative(): Document
+    /** only verbs without 'not'*/
+    isPositive(): Document
+    /** 'went' → 'did not go'*/
+    toNegative(): Document
+    /** "didn't study" → 'studied' */
+    toPositive(): Document
   }
 }
 

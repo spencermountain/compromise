@@ -95,23 +95,6 @@ let doc = nlp('I’m lookin’ for Amanda').debug()
 nlp("spencer's fines").debug()
 ```
 
-emdash becomes minus
-
-```js
-let nlpObj = nlp('text—text')
-const sen = nlpObj.sentences().data()
-console.log(sen)
-```
-
-tag-logic
-
-```js
-let doc = nlp('april')
-//by default, it is a #Month, and a #Date
-doc.tag('FemaleName')
-//now it is automatically a #Person, and a #FirstName
-console.log(doc.out('tags')[0].april)
-```
 
 text-replace
 
@@ -123,10 +106,6 @@ doc = doc.match('(#Acronym|#Abbreviation)').replaceWith(d => {
 doc.debug()
 ```
 
-
-```js
-nlp(`i met April O'neil`).dates()
-```
 
 
 ```js

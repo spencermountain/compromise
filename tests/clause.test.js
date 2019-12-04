@@ -46,3 +46,11 @@ test('clauses-list:', function(t) {
   t.equal(m.eq(0).text(), 'he is nice, cool and fun.', 'clause 1')
   t.end()
 })
+
+test('clauses-find:', function(t) {
+  let doc = nlp(`...and my butt smells, and i like to kiss my own butt`)
+  let m = doc.clauses().find(d => d.has('@hasEllipses'))
+  let str = m.text('reduced')
+  t.equal(str, 'and my butt smells', 'first clause')
+  t.end()
+})

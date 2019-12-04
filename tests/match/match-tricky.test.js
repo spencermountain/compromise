@@ -143,6 +143,17 @@ test('tricky-case', function(t) {
   t.end()
 })
 
+test('post-process', function(t) {
+  let doc = nlp(`jack is guarded end`)
+  let m = doc.match('is guarded foo?$')
+  t.equal(m.found, false, 'no end')
+
+  doc = nlp(`start jack is guarded end`)
+  m = doc.match('^start? jack')
+  t.equal(m.text(), 'start jack', 'optional-start')
+  t.end()
+})
+
 test('text-as-input', function(t) {
   const doc = nlp('he is from Phoenix AZ')
   const m = doc.match('#City')

@@ -24,6 +24,7 @@ compromise uses semver, and pushes to npm frequently
 - add `.nouns().adjectives()` method
 - add `concat` param to `.pre()` and `.post()`
 - allow ellipses at start of term *"....so"* in `@hasEllipses`
+- fix matches with optional-end `foo?$` match syntax
 
 ### v11
 

@@ -489,10 +489,6 @@
     Duration: {
       isA: ['Date', 'Noun']
     },
-    // '9:20pm'
-    Time: {
-      isA: ['Date']
-    },
     // 'easter'
     Holiday: {
       isA: ['Date', 'Noun']
@@ -5690,7 +5686,10 @@
                 str += ' to ' + obj.start.format(fmt);
               }
 
-              doc.replaceWith(str, true);
+              doc.replaceWith(str, {
+                keepTags: true,
+                keepCase: false
+              });
             }
           });
           return this;
@@ -5703,7 +5702,7 @@
           var _this4 = this;
 
           abbrevs.forEach(function (a) {
-            _this4.replace(a["short"], a["long"], true, true);
+            _this4.replace(a["short"], a["long"], true);
           });
           return this;
         }
@@ -5715,7 +5714,7 @@
           var _this5 = this;
 
           abbrevs.forEach(function (a) {
-            _this5.replace(a["long"], a["short"], true, true);
+            _this5.replace(a["long"], a["short"], true);
           });
           return this;
         }

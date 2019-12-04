@@ -3,4 +3,7 @@ const nlp = require('./src/index')
 // nlp.extend(require('./plugins/sentences/src'))
 nlp.extend(require('./plugins/dates/src'))
 
-nlp(`i met April O'neil`).debug()
+let doc = nlp(`i ate red apples`)
+doc.nouns().toSingular()
+// doc.nouns().toPlural()
+console.log(doc.text())

@@ -111,9 +111,3 @@ doc.debug()
 ```js
 nlp(`why can't i have no kids and three money?`).contractions().expand().text()
 ```
-
-optional+end
-```js
-let doc = nlp('the cat that was mean attacked the cute dog')
-doc.match('#Adjective+ #Adverb?$').debug()
-```

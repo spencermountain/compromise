@@ -53,10 +53,15 @@ const methods = {
       }
       str = toPlural(str, this.world)
       main.replace(str).tag('#Plural')
+      // 'an apple' -> 'apples'
+      let an = main.lookBefore('(an|a) #Adjective?$').not('#Adjective')
+      if (an.found === true) {
+        an.remove()
+      }
     })
     return this
   },
-  toSingular: function() {
+  toSingular: function(agree) {
     let toSingular = this.world.transforms.toSingular
     this.forEach(doc => {
       if (doc.has('#Singular') || hasPlural(doc) === false) {
@@ -70,6 +75,17 @@ const methods = {
       }
       str = toSingular(str, this.world)
       main.replace(str).tag('#Singular')
+      // add an article
+      if (agree) {
+        // 'apples' -> 'an apple'
+        let start = doc
+        let adj = doc.lookBefore('#Adjective')
+        if (adj.found) {
+          start = adj
+        }
+        let article = getArticle(start)
+        start.insertBefore(article)
+      }
     })
     return this
   },

@@ -23,6 +23,7 @@ compromise uses semver, and pushes to npm frequently
 - improved splitting in .nouns()
 - add `.nouns().adjectives()` method
 - add `concat` param to `.pre()` and `.post()`
+- allow ellipses at start of term *"....so"* in `@hasEllipses`
 
 ### v11
 

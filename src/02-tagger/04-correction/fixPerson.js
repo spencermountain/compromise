@@ -27,6 +27,11 @@ const fixPerson = function(doc) {
     title.match('#TitleCase (van|al|bin) #TitleCase').tagSafe('Person', 'titlecase-van-titlecase')
     //jose de Sucre
     title.match('#TitleCase (de|du) la? #TitleCase').tagSafe('Person', 'titlecase-van-titlecase')
+    //Foo U Ford
+    title
+      .match('[#ProperNoun] #Person')
+      .notIf('@hasComma')
+      .tagSafe('Person', 'proper-person')
 
     //pope francis
     title

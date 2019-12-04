@@ -15,10 +15,6 @@ module.exports = {
   Duration: {
     isA: ['Date', 'Noun'],
   },
-  // '9:20pm'
-  Time: {
-    isA: ['Date'],
-  },
   // 'easter'
   Holiday: {
     isA: ['Date', 'Noun'],

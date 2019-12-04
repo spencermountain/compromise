@@ -25,6 +25,7 @@ compromise uses semver, and pushes to npm frequently
 - add `concat` param to `.pre()` and `.post()`
 - allow ellipses at start of term *"....so"* in `@hasEllipses`
 - fix matches with optional-end `foo?$` match syntax
+- add typescript types for subsets
 
 ### v11
 

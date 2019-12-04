@@ -29,7 +29,7 @@ test('.article():', function(t) {
 
 test('remove article', function(t) {
   let doc = nlp(`i ate a red apple`)
-  doc.nouns().toPlural()
+  doc.nouns().toPlural(true)
   t.equal(doc.text(), 'i ate red apples', 'remove article')
   t.end()
 })

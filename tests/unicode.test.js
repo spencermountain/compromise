@@ -9,3 +9,10 @@ test('many-unicode', function(t) {
   t.equal(doc.terms().length, 1, 'one-term')
   t.end()
 })
+
+test('em-dashes', function(t) {
+  let str = 'text—text'
+  let doc = nlp(str)
+  t.equal(doc.text() === str, true, 'emdash')
+  t.end()
+})

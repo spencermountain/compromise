@@ -90,9 +90,9 @@ declare module nlp {
 
     // Whitespace
     /** add this punctuation or whitespace before each match */
-    pre(str: String): Document
+    pre(str: String, concat: Boolean): Document
     /** add this punctuation or whitespace after each match */
-    post(str: String): Document
+    post(str: String, concat: Boolean): Document
     /**  remove start and end whitespace */
     trim(): Document
     /**  connect words with hyphen, and remove whitespace */
@@ -203,8 +203,6 @@ declare module nlp {
     conjunctions(n?: Number): Document
     /**  return things like `'of'`*/
     prepositions(n?: Number): Document
-    /**  return things like `'Mrs.'`*/
-    abbreviations(n?: Number): Document
     /**  return person names like `'John A. Smith'`*/
     people(n?: Number): Document
     /**  return location names like `'Paris, France'`*/
@@ -217,24 +215,121 @@ declare module nlp {
     // Subsets
     /** alias for .all(), until plugin overloading  */
     sentences(): Document
+    /**  return things like `'Mrs.'`*/
+    abbreviations(n?: Number): Abbreviations
     /** return any multi-word terms, like "didn't"  */
-    contractions(n?: Number): Document
+    contractions(n?: Number): Contractions
     /** contract words that can combine, like "did not" */
     contract(): Document
     /**  return anything inside (parentheses) */
-    parentheses(n?: Number): Document
+    parentheses(n?: Number): Parentheses
     /**  return things like "Spencer's" */
-    possessives(n?: Number): Document
+    possessives(n?: Number): Possessives
     /**  return any terms inside 'quotation marks' */
-    quotations(n?: Number): Document
+    quotations(n?: Number): Quotations
     /**  return things like `'FBI'` */
-    acronyms(n?: Number): Document
+    acronyms(n?: Number): Acronyms
     /**  return things like `'eats, shoots, and leaves'` */
-    lists(n?: Number): Document
+    lists(n?: Number): Lists
     /**  return any subsequent terms tagged as a Noun */
-    nouns(n?: Number): Document
+    nouns(n?: Number): Nouns
     /**  return any subsequent terms tagged as a Verb */
-    verbs(n?: Number): Document
+    verbs(n?: Number): Verbs
+  }
+
+  // Nouns class
+  interface Nouns extends Document {
+    /** get any adjectives describing this noun*/
+    adjectives(): Document
+    /** return only plural nouns */
+    isPlural(): Document
+    /** return only nouns that _can be_ inflected as plural */
+    hasPlural(): Document
+    /** 'football captain' → 'football captains' */
+    toPlural(setArticle?: Boolean): Document
+    /** 'turnovers' → 'turnover' */
+    toSingular(setArticle?: Boolean): Document
+    /** add a `'s` to the end, in a safe manner. */
+    toPossessive(): Document
+  }
+
+  // Verbs class
+  interface Verbs extends Document {
+    /** return the adverbs describing this verb */
+    adverbs(): Document
+    /** return only plural nouns */
+    isPlural(): Document
+    /** return only singular nouns */
+    isSingular(): Document
+    /** return all forms of these verbs */
+    conjugate(): Document
+    /** 'will go' → 'went' */
+    toPastTense(): Document
+    /** 'walked' → 'walks' */
+    toPresentTense(): Document
+    /** 'walked' → 'will walk' */
+    toFutureTense(): Document
+    /** 'walks' → 'walk' */
+    toInfinitive(): Document
+    /** 'walks' → 'walking' */
+    toGerund(): Document
+    /** return verbs with 'not' */
+    isNegative(): Document
+    /** only verbs without 'not'*/
+    isPositive(): Document
+    /** 'went' → 'did not go'*/
+    toNegative(): Document
+    /** "didn't study" → 'studied' */
+    toPositive(): Document
+  }
+
+  interface Abbreviations extends Document {
+    /**  */
+    stripPeriods(): Document
+    /**  */
+    addPeriods(): Document
+  }
+
+  interface Acronyms extends Document {
+    /**  */
+    stripPeriods(): Document
+    /**  */
+    addPeriods(): Document
+  }
+
+  interface Contractions extends Document {
+    /**  */
+    expand(): Document
+  }
+
+  interface Parentheses extends Document {
+    /**  */
+    unwrap(): Document
+  }
+
+  interface Possessives extends Document {
+    /**  */
+    strip(): Document
+  }
+
+  interface Quotations extends Document {
+    /**  */
+    unwrap(): Document
+  }
+
+  interface Lists extends Document {
+    /**  */
+    conjunctions(): Document
+    /**  */
+    parts(): Document
+    /**  */
+    items(): Document
+    /**  */
+    add(): Document
+    /**  */
+    remove(): Document
+    /**  */
+    hasOxfordComma(): Document
   }
 }
 

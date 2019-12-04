@@ -1,21 +1,17 @@
 const nlp = require('./src/index')
 // nlp.verbose(true)
 // nlp.extend(require('./plugins/sentences/src'))
-// nlp.extend(require('./plugins/numbers/src'))
+nlp.extend(require('./plugins/dates/src'))
 
-// nlp(`wayne's world, party time`)
-//   .match('#Noun+? wayne')
-//   .debug()
+// let doc = nlp(`i ate red apples`)
+// doc.nouns().toSingular()
+// // doc.nouns().toPlural()
+// console.log(doc.text())
 
-// console.log('aaaab'.match(/a+?[a|b]/))
-
-// nlp(`And how come Batman doesn't dance anymore? Remember the Batusi?`)
-// .match('#Place+ .')
-// .debug()
-
-let doc = nlp('Spencer is a very famous company.')
-  .match('spencer')
-  .replaceWith('jogging')
-
+let doc = nlp(`i have two questions for Homer - 'Why lie?' and 'Lies, why?'`)
+doc
+  .quotations()
+  .split()
+  .out('array')
+doc.clauses().split()
 doc.debug()
-console.log(doc.text())

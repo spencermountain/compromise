@@ -3,8 +3,8 @@
 nlp(`wayne's world, party time`)
   .match('#Noun+? wayne')
   .debug()
-  
-  nlp('Toronto Ontario foo')
+
+nlp('Toronto Ontario foo')
   .match('(him|her|it|#Person|#Place|#Organization)+ .')
   .debug()
 ```
@@ -93,4 +93,21 @@ let doc = nlp('I’m lookin’ for Amanda').debug()
 
 ```js
 nlp("spencer's fines").debug()
+```
+
+
+text-replace
+
+```js
+let doc = nlp('i worked at the F.B.I')
+doc = doc.match('(#Acronym|#Abbreviation)').replaceWith(d => {
+  return d
+})
+doc.debug()
+```
+
+
+
+```js
+nlp(`why can't i have no kids and three money?`).contractions().expand().text()
 ```

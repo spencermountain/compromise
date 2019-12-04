@@ -26,3 +26,17 @@ test('.article():', function(t) {
   })
   t.end()
 })
+
+test('remove article', function(t) {
+  let doc = nlp(`i ate a red apple`)
+  doc.nouns().toPlural(true)
+  t.equal(doc.text(), 'i ate red apples', 'remove article')
+  t.end()
+})
+
+test('add article', function(t) {
+  let doc = nlp(`i ate red apples`)
+  doc.nouns().toSingular(true)
+  t.equal(doc.text(), 'i ate a red apple', 'add article')
+  t.end()
+})

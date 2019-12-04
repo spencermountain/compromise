@@ -55,3 +55,4 @@ exports.lookup = function(arr) {
   })
   return this.buildFrom(found)
 }
+exports.lookUp = exports.lookup

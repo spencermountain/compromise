@@ -390,118 +390,119 @@
   var _01Case_5 = _01Case.isTitleCase;
   var _01Case_6 = _01Case.titleCase;
 
-  // these methods are called with '@hasComma' in the match syntax
-  // various unicode quotation-mark formats
-  var startQuote = "(\"|\uFF02|'|\u201C|\u2018|\u201F|\u201B|\u201E|\u2E42|\u201A|\xAB|\u2039|\u2035|\u2036|\u2037|\u301D|`|\u301F)";
-  var endQuote = "(\"|\uFF02|'|\u201D|\u2019|\u201D|\u2019|\u201D|\u201D|\u2019|\xBB|\u203A|\u2032|\u2033|\u2034|\u301E|\xB4|\u301E)";
-  /** search the term's 'post' punctuation  */
+  var _02Punctuation = createCommonjsModule(function (module, exports) {
+    // these methods are called with '@hasComma' in the match syntax
+    // various unicode quotation-mark formats
+    var startQuote = /(\u0022|\uFF02|\u0027|\u201C|\u2018|\u201F|\u201B|\u201E|\u2E42|\u201A|\u00AB|\u2039|\u2035|\u2036|\u2037|\u301D|\u0060|\u301F)/;
+    var endQuote = /(\u0022|\uFF02|\u0027|\u201D|\u2019|\u201D|\u2019|\u201D|\u201D|\u2019|\u00BB|\u203A|\u2032|\u2033|\u2034|\u301E|\u00B4|\u301E)/;
+    /** search the term's 'post' punctuation  */
 
-  var hasPost = function hasPost(punct) {
-    return this.post.indexOf(punct) !== -1;
-  };
-  /** search the term's 'pre' punctuation  */
-
-
-  var hasPre = function hasPre(punct) {
-    return this.pre.indexOf(punct) !== -1;
-  };
-  /** does it have a quotation symbol?  */
+    exports.hasPost = function (punct) {
+      return this.post.indexOf(punct) !== -1;
+    };
+    /** search the term's 'pre' punctuation  */
 
 
-  var hasQuote = function hasQuote() {
-    return startQuote.test(this.pre) || endQuote.test(this.post);
-  };
-  /** does it have a comma?  */
+    exports.hasPre = function (punct) {
+      return this.pre.indexOf(punct) !== -1;
+    };
+    /** does it have a quotation symbol?  */
 
 
-  var hasComma = function hasComma() {
-    return this.hasPost(',');
-  };
-  /** does it end in a period? */
+    exports.hasQuote = function () {
+      return startQuote.test(this.pre) || endQuote.test(this.post);
+    };
+
+    exports.hasQuotation = exports.hasQuote;
+    /** does it have a comma?  */
+
+    exports.hasComma = function () {
+      return this.hasPost(',');
+    };
+    /** does it end in a period? */
 
 
-  var hasPeriod = function hasPeriod() {
-    return this.hasPost('.') === true && this.hasPost('...') === false;
-  };
-  /** does it end in an exclamation */
+    exports.hasPeriod = function () {
+      return this.hasPost('.') === true && this.hasPost('...') === false;
+    };
+    /** does it end in an exclamation */
 
 
-  var hasExclamation = function hasExclamation() {
-    return this.hasPost('!');
-  };
-  /** does it end with a question mark? */
+    exports.hasExclamation = function () {
+      return this.hasPost('!');
+    };
+    /** does it end with a question mark? */
 
 
-  var hasQuestionMark = function hasQuestionMark() {
-    return this.hasPost('?') || this.hasPost('¿');
-  };
-  /** is there a ... at the end? */
+    exports.hasQuestionMark = function () {
+      return this.hasPost('?') || this.hasPost('¿');
+    };
+    /** is there a ... at the end? */
 
 
-  var hasEllipses = function hasEllipses() {
-    return this.hasPost('..') || this.hasPost('…');
-  };
-  /** is there a semicolon after this word? */
+    exports.hasEllipses = function () {
+      return this.hasPost('..') || this.hasPost('…') || this.hasPre('..') || this.hasPre('…');
+    };
+    /** is there a semicolon after this word? */
 
 
-  var hasSemicolon = function hasSemicolon() {
-    return this.hasPost(';');
-  };
-  /** is there a slash '/' in this word? */
+    exports.hasSemicolon = function () {
+      return this.hasPost(';');
+    };
+    /** is there a slash '/' in this word? */
 
 
-  var hasSlash$2 = function hasSlash() {
-    return /\//.test(this.text);
-  };
-  /** a hyphen connects two words like-this */
+    exports.hasSlash = function () {
+      return /\//.test(this.text);
+    };
+    /** a hyphen connects two words like-this */
 
 
-  var hasHyphen = function hasHyphen() {
-    var hyphen = /(-|–|—)/;
-    return hyphen.test(this.post) || hyphen.test(this.pre);
-  };
-  /** a dash separates words - like that */
+    exports.hasHyphen = function () {
+      var hyphen = /(-|–|—)/;
+      return hyphen.test(this.post) || hyphen.test(this.pre);
+    };
+    /** a dash separates words - like that */
 
 
-  var hasDash = function hasDash() {
-    var hyphen = / (-|–|—) /;
-    return hyphen.test(this.post) || hyphen.test(this.pre);
-  };
-  /** is it multiple words combinded */
+    exports.hasDash = function () {
+      var hyphen = / (-|–|—) /;
+      return hyphen.test(this.post) || hyphen.test(this.pre);
+    };
+    /** is it multiple words combinded */
 
 
-  var hasContraction = function hasContraction() {
-    return Boolean(this.implicit);
-  };
-  /** try to sensibly put this punctuation mark into the term */
+    exports.hasContraction = function () {
+      return Boolean(this.implicit);
+    };
+    /** try to sensibly put this punctuation mark into the term */
 
 
-  var addPunctuation = function addPunctuation(punct) {
-    // dont add doubles
-    if (punct === ',' || punct === ';') {
-      this.post = this.post.replace(punct, '');
-    }
+    exports.addPunctuation = function (punct) {
+      // dont add doubles
+      if (punct === ',' || punct === ';') {
+        this.post = this.post.replace(punct, '');
+      }
 
-    this.post = punct + this.post;
-    return this;
-  };
-
-  var _02Punctuation = {
-    hasPost: hasPost,
-    hasPre: hasPre,
-    hasQuote: hasQuote,
-    hasComma: hasComma,
-    hasPeriod: hasPeriod,
-    hasExclamation: hasExclamation,
-    hasQuestionMark: hasQuestionMark,
-    hasEllipses: hasEllipses,
-    hasSemicolon: hasSemicolon,
-    hasSlash: hasSlash$2,
-    hasHyphen: hasHyphen,
-    hasDash: hasDash,
-    hasContraction: hasContraction,
-    addPunctuation: addPunctuation
-  };
+      this.post = punct + this.post;
+      return this;
+    };
+  });
+  var _02Punctuation_1 = _02Punctuation.hasPost;
+  var _02Punctuation_2 = _02Punctuation.hasPre;
+  var _02Punctuation_3 = _02Punctuation.hasQuote;
+  var _02Punctuation_4 = _02Punctuation.hasQuotation;
+  var _02Punctuation_5 = _02Punctuation.hasComma;
+  var _02Punctuation_6 = _02Punctuation.hasPeriod;
+  var _02Punctuation_7 = _02Punctuation.hasExclamation;
+  var _02Punctuation_8 = _02Punctuation.hasQuestionMark;
+  var _02Punctuation_9 = _02Punctuation.hasEllipses;
+  var _02Punctuation_10 = _02Punctuation.hasSemicolon;
+  var _02Punctuation_11 = _02Punctuation.hasSlash;
+  var _02Punctuation_12 = _02Punctuation.hasHyphen;
+  var _02Punctuation_13 = _02Punctuation.hasDash;
+  var _02Punctuation_14 = _02Punctuation.hasContraction;
+  var _02Punctuation_15 = _02Punctuation.addPunctuation;
 
   //declare it up here
   var wrapMatch = function wrapMatch() {};
@@ -2115,6 +2116,28 @@
 
   var _03TryMatch = tryHere;
 
+  var postProcess = function postProcess(terms, regs, matches) {
+    if (!matches || matches.length === 0) {
+      return matches;
+    } // ensure end reg has the end term
+
+
+    var atEnd = regs.some(function (r) {
+      return r.end;
+    });
+
+    if (atEnd) {
+      var lastTerm = terms[terms.length - 1];
+      matches = matches.filter(function (arr) {
+        return arr.indexOf(lastTerm) !== -1;
+      });
+    }
+
+    return matches;
+  };
+
+  var _04PostProcess = postProcess;
+
   /* break-down a match expression into this:
   {
     word:'',
@@ -2349,7 +2372,7 @@
     }];
   };
 
-  var postProcess = function postProcess(tokens) {
+  var postProcess$1 = function postProcess(tokens) {
     //ensure there's only one consecutive capture group.
     var count = tokens.filter(function (t) {
       return t.capture === true;
@@ -2431,7 +2454,7 @@
     tokens = byWords(tokens);
     tokens = tokens.map(parseToken_1); //clean up anything weird
 
-    tokens = postProcess(tokens); // console.log(JSON.stringify(tokens, null, 2))
+    tokens = postProcess$1(tokens); // console.log(JSON.stringify(tokens, null, 2))
 
     return tokens;
   };
@@ -2473,7 +2496,7 @@
           return t;
         });
       });
-      return matches;
+      return _04PostProcess(terms, regs, matches);
     } //try starting, from every term
 
 
@@ -2496,12 +2519,12 @@
         matches.push(_match); //ok, maybe that's enough?
 
         if (matchOne === true) {
-          return matches;
+          return _04PostProcess(terms, regs, matches);
         }
       }
     }
 
-    return matches;
+    return _04PostProcess(terms, regs, matches);
   };
 
   var _01MatchAll = matchAll;
@@ -2901,7 +2924,7 @@
 
   };
 
-  var hasHyphen$1 = function hasHyphen(str) {
+  var hasHyphen = function hasHyphen(str) {
     //dont split 're-do'
     if (/^(re|un)-?[^aeiou]./.test(str) === true) {
       return false;
@@ -2939,12 +2962,18 @@
     var arr = []; //support multiple-hyphenated-terms
 
     var hyphens = word.split(/[-–—]/);
+    var whichDash = '-';
+    var found = word.match(/[-–—]/);
+
+    if (found && found[0]) {
+      whichDash = found;
+    }
 
     for (var o = 0; o < hyphens.length; o++) {
       if (o === hyphens.length - 1) {
         arr.push(hyphens[o]);
       } else {
-        arr.push(hyphens[o] + '-');
+        arr.push(hyphens[o] + whichDash);
       }
     }
 
@@ -2966,7 +2995,7 @@
 
     for (var i = 0; i < words.length; i++) {
       //split 'one-two'
-      if (hasHyphen$1(words[i]) === true) {
+      if (hasHyphen(words[i]) === true) {
         arr = arr.concat(splitHyphens(words[i]));
         continue;
       }
@@ -3114,7 +3143,7 @@
     fromJSON: fromJSON
   };
 
-  var _version = '12.1.0';
+  var _version = '12.2.0';
 
   var _data = {
     "Comparative": "true¦better",
@@ -3185,7 +3214,7 @@
     // -- people
     Person: {
       isA: ['ProperNoun', 'Singular'],
-      notA: ['Place', 'Organization']
+      notA: ['Place', 'Organization', 'Date']
     },
     FirstName: {
       isA: 'Person'
@@ -3407,6 +3436,11 @@
     },
     WeekDay: {
       isA: ['Date', 'Noun']
+    },
+    // '9:20pm'
+    Time: {
+      isA: ['Date'],
+      notA: ['Value']
     },
     //glue
     Determiner: {
@@ -5709,8 +5743,8 @@
       value: function stats() {
         return {
           words: Object.keys(this.words).length,
-          plurals: Object.keys(this.irregular.plurals).length,
-          conjugations: Object.keys(this.irregular.conjugations).length,
+          plurals: Object.keys(this.irregulars.nouns).length,
+          conjugations: Object.keys(this.irregulars.verbs).length,
           compounds: Object.keys(this.hasCompound).length,
           postProcessors: this.taggers.length
         };
@@ -6388,84 +6422,87 @@
     random: random
   };
 
-  var doesMatch$1 = function doesMatch(term, str) {
-    if (str === '') {
-      return false;
-    }
-
-    return term.reduced === str || term.implicit === str || term.root === str || term.text.toLowerCase() === str;
-  }; // is this lookup found in these terms?
-
-
-  var findStart = function findStart(arr, terms) {
-    var _loop = function _loop(i) {
-      if (doesMatch$1(terms[i], arr[0])) {
-        if (arr.every(function (a, n) {
-          return doesMatch$1(terms[i + n], a) === true;
-        })) {
-          return {
-            v: terms[i].id
-          };
-        }
+  var _06Lookup = createCommonjsModule(function (module, exports) {
+    // compare one term and one match
+    var doesMatch = function doesMatch(term, str) {
+      if (str === '') {
+        return false;
       }
+
+      return term.reduced === str || term.implicit === str || term.root === str || term.text.toLowerCase() === str;
+    }; // is this lookup found in these terms?
+
+
+    var findStart = function findStart(arr, terms) {
+      var _loop = function _loop(i) {
+        if (doesMatch(terms[i], arr[0])) {
+          if (arr.every(function (a, n) {
+            return doesMatch(terms[i + n], a) === true;
+          })) {
+            return {
+              v: terms[i].id
+            };
+          }
+        }
+      };
+
+      //find the start
+      for (var i = 0; i < terms.length; i++) {
+        var _ret = _loop(i);
+
+        if (_typeof(_ret) === "object") return _ret.v;
+      }
+
+      return false;
+    };
+    /** lookup an array of words or phrases */
+
+
+    exports.lookup = function (arr) {
+      var _this = this;
+
+      if (typeof arr === 'string') {
+        arr = [arr];
+      }
+
+      var lookups = arr.map(function (str) {
+        str = str.toLowerCase();
+        var words = _02Words(str);
+        words = words.map(function (s) {
+          return s.trim();
+        });
+        return words;
+      });
+      this.cache();
+      var found = []; // try each lookup
+
+      lookups.forEach(function (a) {
+        //try each phrase
+        _this.list.forEach(function (p) {
+          // cache-miss, skip.
+          if (p.cache.words[a[0]] !== true) {
+            return;
+          } //we found a potential match
+
+
+          var terms = p.terms();
+          var id = findStart(a, terms);
+
+          if (id !== false) {
+            // create the actual phrase
+            var phrase = p.buildFrom(id, a.length);
+            found.push(phrase);
+            return;
+          }
+        });
+      });
+      return this.buildFrom(found);
     };
 
-    //find the start
-    for (var i = 0; i < terms.length; i++) {
-      var _ret = _loop(i);
-
-      if (_typeof(_ret) === "object") return _ret.v;
-    }
-
-    return false;
-  };
-  /** lookup an array of words or phrases */
-
-
-  var lookup = function lookup(arr) {
-    var _this = this;
-
-    if (typeof arr === 'string') {
-      arr = [arr];
-    }
-
-    var lookups = arr.map(function (str) {
-      str = str.toLowerCase();
-      var words = _02Words(str);
-      words = words.map(function (s) {
-        return s.trim();
-      });
-      return words;
-    });
-    this.cache();
-    var found = []; // try each lookup
-
-    lookups.forEach(function (a) {
-      //try each phrase
-      _this.list.forEach(function (p) {
-        // cache-miss, skip.
-        if (p.cache.words[a[0]] !== true) {
-          return;
-        } //we found a potential match
-
-
-        var terms = p.terms();
-        var id = findStart(a, terms);
-
-        if (id !== false) {
-          // create the actual phrase
-          var phrase = p.buildFrom(id, a.length);
-          found.push(phrase);
-          return;
-        }
-      });
-    });
-    return this.buildFrom(found);
-  };
-
-  var _06Lookup = {
-    lookup: lookup
-  };
+    exports.lookUp = exports.lookup;
+  });
+  var _06Lookup_1 = _06Lookup.lookup;
+  var _06Lookup_2 = _06Lookup.lookUp;
 
   var titleCase$2 = function titleCase(str) {
     return str.charAt(0).toUpperCase() + str.substr(1);
@@ -6864,7 +6901,7 @@
     // -- people
     Person: {
       isA: ['ProperNoun', 'Singular'],
-      notA: ['Place', 'Organization']
+      notA: ['Place', 'Organization', 'Date']
     },
     FirstName: {
       isA: 'Person'
@@ -7086,6 +7123,11 @@
     },
     WeekDay: {
       isA: ['Date', 'Noun']
+    },
+    // '9:20pm'
+    Time: {
+      isA: ['Date'],
+      notA: ['Value']
     },
     //glue
     Determiner: {
@@ -8294,21 +8336,26 @@
 
   var _05Whitespace = createCommonjsModule(function (module, exports) {
     /** add this punctuation or whitespace before each match: */
-    exports.pre = function (str) {
+    exports.pre = function (str, concat) {
       if (str === undefined) {
         return this.list[0].terms(0).pre;
       }
 
       this.list.forEach(function (p) {
         var term = p.terms(0);
-        term.pre = str;
+
+        if (concat === true) {
+          term.pre += str;
+        } else {
+          term.pre = str;
+        }
       });
       return this;
     };
     /** add this punctuation or whitespace after each match: */
 
 
-    exports.post = function (str) {
+    exports.post = function (str, concat) {
       // return array of post strings
       if (str === undefined) {
         return this.list.map(function (p) {
@@ -8322,7 +8369,12 @@
       this.list.forEach(function (p) {
         var terms = p.terms();
         var term = terms[terms.length - 1];
-        term.post = str;
+
+        if (concat === true) {
+          term.post += str;
+        } else {
+          term.post = str;
+        }
       });
       return this;
     };
@@ -10247,7 +10299,9 @@
 
       title.match('#TitleCase (van|al|bin) #TitleCase').tagSafe('Person', 'titlecase-van-titlecase'); //jose de Sucre
 
-      title.match('#TitleCase (de|du) la? #TitleCase').tagSafe('Person', 'titlecase-van-titlecase'); //pope francis
+      title.match('#TitleCase (de|du) la? #TitleCase').tagSafe('Person', 'titlecase-van-titlecase'); //Foo U Ford
+
+      title.match('[#ProperNoun] #Person').notIf('@hasComma').tagSafe('Person', 'proper-person'); //pope francis
 
       title.match('(lady|queen|sister) #TitleCase').ifNo('#Date').ifNo('#Honorific').tag('#FemaleName', 'lady-titlecase');
       title.match('(king|pope|father) #TitleCase').ifNo('#Date').tag('#MaleName', 'poe'); // jean Foobar
@@ -10258,7 +10312,7 @@
 
       title.match(maybeAdj + ' #Acronym? #TitleCase').tag('Person', 'rusty-smith'); // june Foobar
 
-      title.match(maybeDate + ' #Acronym? (#TitleCase && !#Month)').tagSafe('Person', 'june-smith');
+      title.match(maybeDate + ' #Acronym? (#TitleCase && !#Month)').tag('Person', 'june-smith');
     }
 
     var person = doc["if"]('#Person');
@@ -10307,9 +10361,9 @@
       var ambigDate = person["if"](maybeDate);
 
       if (ambigDate.found === true) {
-        ambigDate.match(String(maybeDate) + ' #Person').tagSafe('Person', 'june-smith');
-        ambigDate.match('(in|during|on|by|before|#Date) [' + maybeDate + ']').tagSafe('Date', 'in-june');
-        ambigDate.match(maybeDate + ' (#Date|#Value)').tagSafe('Date', 'june-5th');
+        ambigDate.match(maybeDate + ' #ProperNoun').tag(['FirstName', 'Person'], 'june-smith');
+        ambigDate.match('(in|during|on|by|before|#Date) [' + maybeDate + ']').tag('Date', 'in-june');
+        ambigDate.match(maybeDate + ' (#Date|#Value)').tag('Date', 'june-5th');
       } //Places: paris or syndey
 
 
@@ -11338,6 +11392,15 @@
 
       return res;
     },
+
+    /** get all adjectives describing this noun*/
+    adjectives: function adjectives() {
+      // this.lookAhead('.+').debug()
+      var list = this.lookAhead('^(that|who|which)? (was|is|will)? be? #Adverb? #Adjective+');
+      list = list.concat(this.lookBehind('#Adjective+ #Adverb?$'));
+      list = list.match('#Adjective');
+      return list.sort('index');
+    },
     isPlural: function isPlural() {
       return this["if"]('#Plural'); //assume tagger has run?
     },
@@ -11346,7 +11409,7 @@
         return hasPlural_1(d);
       });
     },
-    toPlural: function toPlural() {
+    toPlural: function toPlural(agree) {
       var _this = this;
 
       var toPlural = this.world.transforms.toPlural;
@@ -11364,11 +11427,19 @@
         }
 
         str = toPlural(str, _this.world);
-        main.replace(str).tag('#Plural');
+        main.replace(str).tag('#Plural'); // 'an apple' -> 'apples'
+
+        if (agree) {
+          var an = main.lookBefore('(an|a) #Adjective?$').not('#Adjective');
+
+          if (an.found === true) {
+            an.remove();
+          }
+        }
       });
       return this;
     },
-    toSingular: function toSingular() {
+    toSingular: function toSingular(agree) {
       var _this2 = this;
 
       var toSingular = this.world.transforms.toSingular;
@@ -11386,7 +11457,20 @@
         }
 
         str = toSingular(str, _this2.world);
-        main.replace(str).tag('#Singular');
+        main.replace(str).tag('#Singular'); // add an article
+
+        if (agree) {
+          // 'apples' -> 'an apple'
+          var start = doc;
+          var adj = doc.lookBefore('#Adjective');
+
+          if (adj.found) {
+            start = adj;
+          }
+
+          var article = getArticle(start);
+          start.insertBefore(article);
+        }
       });
       return this;
     },
@@ -11419,22 +11503,27 @@
     Object.assign(Nouns.prototype, methods_1);
 
     Doc.prototype.nouns = function (n) {
-      var match = this.clauses();
-      match = match.match('#Noun+ (of|by)? the? #Noun+?'); //nouns that we don't want in these results, for weird reasons
+      // don't split 'paris, france'
+      var keep = this.match('(#City && @hasComma) (#Region|#Country)'); // but split the other commas
 
-      match = match.not('#Pronoun');
-      match = match.not('(there|these)');
-      match = match.not('(#Month|#WeekDay)'); //allow Durations, Holidays
+      var m = this.not(keep).splitAfter('@hasComma'); // combine them back together
+
+      m = m.concat(keep);
+      m = m.match('#Noun+ (of|by)? the? #Noun+?'); //nouns that we don't want in these results, for weird reasons
+
+      m = m.not('#Pronoun');
+      m = m.not('(there|these)');
+      m = m.not('(#Month|#WeekDay)'); //allow Durations, Holidays
       // //allow possessives like "spencer's", but not generic ones like,
 
-      match = match.not('(my|our|your|their|her|his)');
-      match = match.not('(of|for|by|the)$');
+      m = m.not('(my|our|your|their|her|his)');
+      m = m.not('(of|for|by|the)$');
 
       if (typeof n === 'number') {
-        match = match.get(n);
+        m = m.get(n);
       }
 
-      return new Nouns(match.list, this, this.world);
+      return new Nouns(m.list, this, this.world);
     };
 
     return Doc;

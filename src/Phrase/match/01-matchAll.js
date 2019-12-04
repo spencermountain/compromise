@@ -1,5 +1,6 @@
 const failFast = require('./02-failFast')
 const tryMatch = require('./03-tryMatch')
+const postProcess = require('./04-postProcess')
 const syntax = require('../../Doc/match/syntax')
 
 /**  returns a simple array of arrays */
@@ -28,7 +29,7 @@ const matchAll = function(p, regs, matchOne = false) {
     matches = matches.map(arr => {
       return arr.filter(t => t)
     })
-    return matches
+    return postProcess(terms, regs, matches)
   }
   //try starting, from every term
   for (let i = 0; i < terms.length; i += 1) {
@@ -37,7 +38,6 @@ const matchAll = function(p, regs, matchOne = false) {
       break
     }
     //try it!
-
     let match = tryMatch(terms.slice(i), regs, i, terms.length)
     if (match !== false && match.length > 0) {
       //zoom forward!
@@ -47,10 +47,10 @@ const matchAll = function(p, regs, matchOne = false) {
       matches.push(match)
       //ok, maybe that's enough?
       if (matchOne === true) {
-        return matches
+        return postProcess(terms, regs, matches)
       }
     }
   }
-  return matches
+  return postProcess(terms, regs, matches)
 }
 module.exports = matchAll

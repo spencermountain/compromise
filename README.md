@@ -243,7 +243,7 @@ it's pretty fast. It can run on keypress:
 
 it works mainly by <a href="https://observablehq.com/@spencermountain/verbs">conjugating many forms</a> of a basic word list.
 
-The final lexicon is ~14,000 words:
+The final lexicon is <a href="https://observablehq.com/@spencermountain/compromise-lexicon">~14,000 words</a>:
 
 <div align="center">
   <img width="600" src="https://user-images.githubusercontent.com/399657/68234805-0d201e80-ffd0-11e9-8dc6-f7a600352555.png"/>
@@ -417,7 +417,7 @@ _(all match methods use the [match-syntax](https://docs.compromise.cool/compromi
 
 ##### Output
 
-- **[.text('method')](https://observablehq.com/@spencermountain/compromise-output)** - return the document as text
+- **[.text('method')](https://observablehq.com/@spencermountain/compromise-text)** - return the document as text
 - **[.json({})](https://observablehq.com/@spencermountain/compromise-json)** - pull out desired metadata from the document
 - **[.out('array|offset|terms')](https://observablehq.com/@spencermountain/compromise-output)** - some named output formats (deprecated)
 - **[.debug()](https://observablehq.com/@spencermountain/compromise-output)** - pretty-print the current document and its tags
@@ -459,6 +459,7 @@ _(all match methods use the [match-syntax](https://docs.compromise.cool/compromi
   - **[.lists().add()](https://observablehq.com/@spencermountain/compromise-lists)** - put a new item in the list
 - **[.nouns()](https://observablehq.com/@spencermountain/nouns)** - return any subsequent terms tagged as a Noun
   - **[.nouns().json()](https://observablehq.com/@spencermountain/nouns)** - overloaded output with noun metadata
+  - **[.nouns().adjectives()](https://observablehq.com/@spencermountain/nouns)** - get any adjectives describing this noun
   - **[.nouns().toPlural()](https://observablehq.com/@spencermountain/nouns)** - `'football captain' → 'football captains'`
   - **[.nouns().toSingular()](https://observablehq.com/@spencermountain/nouns)** - `'turnovers' → 'turnover'`
   - **[.nouns().isPlural()](https://observablehq.com/@spencermountain/nouns)** - return only plural nouns
@@ -582,23 +583,23 @@ this plugin creates a wrapper around the default sentence objects.
 
 `npm install compromise-sentences`
 
-- **[.sentences()](#)** - return a sentence class with additional methods
-  - **[.sentences().json()](#)** - overloaded output with sentence metadata
-  - **[.sentences().subjects()](#)** - return the main noun of each sentence
-  - **[.sentences().toPastTense()](#)** - `he walks` -> `he walked`
-  - **[.sentences().toPresentTense()](#)** - `he walked` -> `he walks`
-  - **[.sentences().toFutureTense()](#)** -- `he walks` -> `he will walk`
-  - **[.sentences().toNegative()](#)** - - `he walks` -> `he didn't walk`
-  - **[.sentences().toPositive()](#)** - `he doesn't walk` -> `he walks`
-  - **[.sentences().isPassive()](#)** - return only sentences with a passive-voice
-  - **[.sentences().isQuestion()](#)** - return questions with a `?`
-  - **[.sentences().isExclamation()](#)** - return sentences with a `!`
-  - **[.sentences().isStatement()](#)** - return sentences without `?` or `!`
-  - **[.sentences().prepend()](#)** - smarter prepend that repairs whitespace + titlecasing
-  - **[.sentences().append()](#)** - smarter append that repairs sentence punctuation
-  - **[.sentences().toExclamation()](#)** - end sentence with a `!`
-  - **[.sentences().toQuestion()](#)** - end sentence with a `?`
-  - **[.sentences().toStatement()](#)** - end sentence with a `.`
+- **[.sentences()](https://observablehq.com/@spencermountain/compromise-sentences)** - return a sentence class with additional methods
+  - **[.sentences().json()](https://observablehq.com/@spencermountain/compromise-sentences)** - overloaded output with sentence metadata
+  - **[.sentences().subjects()](https://observablehq.com/@spencermountain/compromise-sentences)** - return the main noun of each sentence
+  - **[.sentences().toPastTense()](https://observablehq.com/@spencermountain/compromise-sentences)** - `he walks` -> `he walked`
+  - **[.sentences().toPresentTense()](https://observablehq.com/@spencermountain/compromise-sentences)** - `he walked` -> `he walks`
+  - **[.sentences().toFutureTense()](https://observablehq.com/@spencermountain/compromise-sentences)** -- `he walks` -> `he will walk`
+  - **[.sentences().toNegative()](https://observablehq.com/@spencermountain/compromise-sentences)** - - `he walks` -> `he didn't walk`
+  - **[.sentences().toPositive()](https://observablehq.com/@spencermountain/compromise-sentences)** - `he doesn't walk` -> `he walks`
+  - **[.sentences().isPassive()](https://observablehq.com/@spencermountain/compromise-sentences)** - return only sentences with a passive-voice
+  - **[.sentences().isQuestion()](https://observablehq.com/@spencermountain/compromise-sentences)** - return questions with a `?`
+  - **[.sentences().isExclamation()](https://observablehq.com/@spencermountain/compromise-sentences)** - return sentences with a `!`
+  - **[.sentences().isStatement()](https://observablehq.com/@spencermountain/compromise-sentences)** - return sentences without `?` or `!`
+  - **[.sentences().prepend()](https://observablehq.com/@spencermountain/compromise-sentences)** - smarter prepend that repairs whitespace + titlecasing
+  - **[.sentences().append()](https://observablehq.com/@spencermountain/compromise-sentences)** - smarter append that repairs sentence punctuation
+  - **[.sentences().toExclamation()](https://observablehq.com/@spencermountain/compromise-sentences)** - end sentence with a `!`
+  - **[.sentences().toQuestion()](https://observablehq.com/@spencermountain/compromise-sentences)** - end sentence with a `?`
+  - **[.sentences().toStatement()](https://observablehq.com/@spencermountain/compromise-sentences)** - end sentence with a `.`
     <!-- - **[.sentences().toContinuous()](#)** - -->
 
 ##### Syllables

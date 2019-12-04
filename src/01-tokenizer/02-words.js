@@ -47,11 +47,16 @@ const splitHyphens = function(word) {
   let arr = []
   //support multiple-hyphenated-terms
   const hyphens = word.split(/[-–—]/)
+  let whichDash = '-'
+  let found = word.match(/[-–—]/)
+  if (found && found[0]) {
+    whichDash = found
+  }
   for (let o = 0; o < hyphens.length; o++) {
     if (o === hyphens.length - 1) {
       arr.push(hyphens[o])
     } else {
-      arr.push(hyphens[o] + '-')
+      arr.push(hyphens[o] + whichDash)
     }
   }
   return arr
@@ -76,7 +81,6 @@ const splitWords = function(str) {
     }
     arr.push(words[i])
   }
-
   //greedy merge whitespace+arr to the right
   let carry = ''
   for (let i = 0; i < arr.length; i++) {

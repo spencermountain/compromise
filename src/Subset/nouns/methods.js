@@ -24,6 +24,14 @@ const methods = {
     }
     return res
   },
+  /** get all adjectives describing this noun*/
+  adjectives: function() {
+    // this.lookAhead('.+').debug()
+    let list = this.lookAhead('^(that|who|which)? (was|is|will)? be? #Adverb? #Adjective+')
+    list = list.concat(this.lookBehind('#Adjective+ #Adverb?$'))
+    list = list.match('#Adjective')
+    return list.sort('index')
+  },
 
   isPlural: function() {
     return this.if('#Plural') //assume tagger has run?
@@ -31,7 +39,7 @@ const methods = {
   hasPlural: function() {
     return this.filter(d => hasPlural(d))
   },
-  toPlural: function() {
+  toPlural: function(agree) {
     let toPlural = this.world.transforms.toPlural
     this.forEach(doc => {
       if (doc.has('#Plural') || hasPlural(doc) === false) {
@@ -45,10 +53,17 @@ const methods = {
       }
       str = toPlural(str, this.world)
       main.replace(str).tag('#Plural')
+      // 'an apple' -> 'apples'
+      if (agree) {
+        let an = main.lookBefore('(an|a) #Adjective?$').not('#Adjective')
+        if (an.found === true) {
+          an.remove()
+        }
+      }
     })
     return this
   },
-  toSingular: function() {
+  toSingular: function(agree) {
     let toSingular = this.world.transforms.toSingular
     this.forEach(doc => {
       if (doc.has('#Singular') || hasPlural(doc) === false) {
@@ -62,6 +77,17 @@ const methods = {
       }
       str = toSingular(str, this.world)
       main.replace(str).tag('#Singular')
+      // add an article
+      if (agree) {
+        // 'apples' -> 'an apple'
+        let start = doc
+        let adj = doc.lookBefore('#Adjective')
+        if (adj.found) {
+          start = adj
+        }
+        let article = getArticle(start)
+        start.insertBefore(article)
+      }
     })
     return this
   },

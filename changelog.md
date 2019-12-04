@@ -18,6 +18,15 @@ compromise uses semver, and pushes to npm frequently
 - fix client-side logging
 - more flexible params to `replace()` and `replaceWith()`
 
+##### 12.2.0
+
+- improved splitting in .nouns()
+- add `.nouns().adjectives()` method
+- add `concat` param to `.pre()` and `.post()`
+- allow ellipses at start of term *"....so"* in `@hasEllipses`
+- fix matches with optional-end `foo?$` match syntax
+- add typescript types for subsets
+
 ### v11
 
 ##### 11.13.0

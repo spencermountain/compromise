@@ -48,7 +48,6 @@ const parseTerm = str => {
     pre = ''
     post = post
   }
-
   // create the various forms of our text,
   let clean = normalize(str)
   const parsed = {

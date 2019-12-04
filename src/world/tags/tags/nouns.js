@@ -17,7 +17,7 @@ module.exports = {
   // -- people
   Person: {
     isA: ['ProperNoun', 'Singular'],
-    notA: ['Place', 'Organization'],
+    notA: ['Place', 'Organization', 'Date'],
   },
   FirstName: {
     isA: 'Person',

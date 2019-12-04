@@ -38,6 +38,11 @@ module.exports = {
   WeekDay: {
     isA: ['Date', 'Noun'],
   },
+  // '9:20pm'
+  Time: {
+    isA: ['Date'],
+    notA: ['Value'],
+  },
 
   //glue
   Determiner: {

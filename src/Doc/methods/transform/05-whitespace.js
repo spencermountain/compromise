@@ -1,17 +1,21 @@
 /** add this punctuation or whitespace before each match: */
-exports.pre = function(str) {
+exports.pre = function(str, concat) {
   if (str === undefined) {
     return this.list[0].terms(0).pre
   }
   this.list.forEach(p => {
     let term = p.terms(0)
-    term.pre = str
+    if (concat === true) {
+      term.pre += str
+    } else {
+      term.pre = str
+    }
   })
   return this
 }
 
 /** add this punctuation or whitespace after each match: */
-exports.post = function(str) {
+exports.post = function(str, concat) {
   // return array of post strings
   if (str === undefined) {
     return this.list.map(p => {
@@ -24,7 +28,11 @@ exports.post = function(str) {
   this.list.forEach(p => {
     let terms = p.terms()
     let term = terms[terms.length - 1]
-    term.post = str
+    if (concat === true) {
+      term.post += str
+    } else {
+      term.post = str
+    }
   })
   return this
 }

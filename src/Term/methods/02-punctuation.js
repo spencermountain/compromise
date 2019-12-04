@@ -1,9 +1,7 @@
 // these methods are called with '@hasComma' in the match syntax
 // various unicode quotation-mark formats
-const startQuote =
-  '(\u0022|\uFF02|\u0027|\u201C|\u2018|\u201F|\u201B|\u201E|\u2E42|\u201A|\u00AB|\u2039|\u2035|\u2036|\u2037|\u301D|\u0060|\u301F)'
-const endQuote =
-  '(\u0022|\uFF02|\u0027|\u201D|\u2019|\u201D|\u2019|\u201D|\u201D|\u2019|\u00BB|\u203A|\u2032|\u2033|\u2034|\u301E|\u00B4|\u301E)'
+const startQuote = /(\u0022|\uFF02|\u0027|\u201C|\u2018|\u201F|\u201B|\u201E|\u2E42|\u201A|\u00AB|\u2039|\u2035|\u2036|\u2037|\u301D|\u0060|\u301F)/
+const endQuote = /(\u0022|\uFF02|\u0027|\u201D|\u2019|\u201D|\u2019|\u201D|\u201D|\u2019|\u00BB|\u203A|\u2032|\u2033|\u2034|\u301E|\u00B4|\u301E)/
 
 /** search the term's 'post' punctuation  */
 exports.hasPost = function(punct) {
@@ -18,6 +16,7 @@ exports.hasPre = function(punct) {
 exports.hasQuote = function() {
   return startQuote.test(this.pre) || endQuote.test(this.post)
 }
+exports.hasQuotation = exports.hasQuote
 
 /** does it have a comma?  */
 exports.hasComma = function() {
@@ -41,7 +40,7 @@ exports.hasQuestionMark = function() {
 
 /** is there a ... at the end? */
 exports.hasEllipses = function() {
-  return this.hasPost('..') || this.hasPost('…')
+  return this.hasPost('..') || this.hasPost('…') || this.hasPre('..') || this.hasPre('…')
 }
 
 /** is there a semicolon after this word? */

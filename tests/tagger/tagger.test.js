@@ -116,6 +116,8 @@ test('pos-basic-tag:', function(t) {
     ['Iraqis are nice', ['Plural', 'Copula', 'Adjective']],
     ['canadians are nice', ['ProperNoun', 'Verb', 'Adjective']],
     ['thom is smart', ['ProperNoun', 'Verb', 'Adjective']],
+
+    [`i met April O'neil`, ['Pronoun', 'PastTense', 'Person', 'Person']],
   ].forEach(function(a) {
     let terms = nlp(a[0]).json(0).terms
     terms.forEach((term, i) => {

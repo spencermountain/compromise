@@ -27,6 +27,11 @@ const fixPerson = function(doc) {
     title.match('#TitleCase (van|al|bin) #TitleCase').tagSafe('Person', 'titlecase-van-titlecase')
     //jose de Sucre
     title.match('#TitleCase (de|du) la? #TitleCase').tagSafe('Person', 'titlecase-van-titlecase')
+    //Foo U Ford
+    title
+      .match('[#ProperNoun] #Person')
+      .notIf('@hasComma')
+      .tagSafe('Person', 'proper-person')
 
     //pope francis
     title
@@ -46,7 +51,7 @@ const fixPerson = function(doc) {
     // rusty Foobar
     title.match(maybeAdj + ' #Acronym? #TitleCase').tag('Person', 'rusty-smith')
     // june Foobar
-    title.match(maybeDate + ' #Acronym? (#TitleCase && !#Month)').tagSafe('Person', 'june-smith')
+    title.match(maybeDate + ' #Acronym? (#TitleCase && !#Month)').tag('Person', 'june-smith')
   }
 
   let person = doc.if('#Person')
@@ -96,9 +101,9 @@ const fixPerson = function(doc) {
     //Dates: 'june' or 'may'
     let ambigDate = person.if(maybeDate)
     if (ambigDate.found === true) {
-      ambigDate.match(String(maybeDate) + ' #Person').tagSafe('Person', 'june-smith')
-      ambigDate.match('(in|during|on|by|before|#Date) [' + maybeDate + ']').tagSafe('Date', 'in-june')
-      ambigDate.match(maybeDate + ' (#Date|#Value)').tagSafe('Date', 'june-5th')
+      ambigDate.match(maybeDate + ' #ProperNoun').tag(['FirstName', 'Person'], 'june-smith')
+      ambigDate.match('(in|during|on|by|before|#Date) [' + maybeDate + ']').tag('Date', 'in-june')
+      ambigDate.match(maybeDate + ' (#Date|#Value)').tag('Date', 'june-5th')
     }
 
     //Places: paris or syndey

@@ -1,7 +1,7 @@
 {
   "name": "compromise-adjectives",
   "description": "smart-replace plugin for nlp-compromise",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "main": "./builds/compromise-adjectives.js",
   "unpkg": "./builds/compromise-adjectives.min.js",

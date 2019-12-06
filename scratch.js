@@ -16,4 +16,7 @@ const nlp = require('./src/index')
 // })
 // nlp('apple').debug()
 
-nlp("spencer's runs").debug()
+let str = nlp("spencer's runs")
+  .normalize({ contractions: true })
+  .text()
+console.log(str)

@@ -27,6 +27,10 @@ const isPossessive = (term, pool) => {
     if (nextTerm.tags.Infinitive) {
       return true
     }
+    //fix 'spencer's runs'
+    if (nextTerm.tags.PresentTense) {
+      return true
+    }
     return false
   }
 

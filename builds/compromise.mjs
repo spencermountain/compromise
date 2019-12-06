@@ -214,10 +214,7 @@ var clean = function clean(str) {
 
   str = str.replace(/\u2013/g, '-'); //lookin'->looking (make it easier for conjugation)
 
-  if (/[a-z][^aeiou]in['’]$/.test(str) === true) {
-    str = str.replace(/in['’]$/, 'ing');
-  } //turn re-enactment to reenactment
-
+  str = str.replace(/([aeiou][ktrp])in$/, '$1ing'); //turn re-enactment to reenactment
 
   if (/^(re|un)-?[^aeiou]./.test(str) === true) {
     str = str.replace('-', '');
@@ -267,6 +264,7 @@ var endings = /[ \n\t\.’'\[\](){}⟨⟩:,،、‒–—―…!.‹›«»‐\-
 
 var hasSlash$1 = /\//;
 var hasApostrophe = /['’]/;
+var hasAcronym = /^[a-z]\.([a-z]\.)+/i;
 var minusNumber = /^[-+\.][0-9]/;
 /** turn given text into a parsed-up object
  * seperate the 'meat' of the word from the whitespace+punctuation
@@ -292,6 +290,12 @@ var parseTerm = function parseTerm(str) {
     if (hasApostrophe.test(found) && /[sn]['’]$/.test(original) && hasApostrophe.test(pre) === false) {
       post = post.replace(hasApostrophe, '');
       return "'";
+    } //keep end-period in acronym
+
+
+    if (hasAcronym.test(str) === true) {
+      post = post.replace(/\./, '');
+      return '.';
     }
 
     return '';
@@ -3137,7 +3141,7 @@ var _01Tokenizer = {
   fromJSON: fromJSON
 };
 
-var _version = '12.2.0';
+var _version = '12.2.1';
 
 var _data = {
   "Comparative": "true¦better",
@@ -8934,7 +8938,8 @@ var endsWith$1 = {
   l: [[/.[gl]ial$/, Adj], [/.[^aeiou]ful$/, Adj], [/.[nrtumcd]al$/, Adj], [/.[^aeiou][ei]al$/, Adj]],
   m: [[/.[^aeiou]ium$/, Sing], [/[^aeiou]ism$/, Sing], [/^h*u*m+$/, Exp], //mmmmmmm / ummmm / huuuuuummmmmm
   [/^\d+ ?[ap]m$/, 'Date']],
-  n: [[/.[lsrnpb]ian$/, Adj], [/[^aeiou]ician$/, Actor]],
+  n: [[/.[lsrnpb]ian$/, Adj], [/[^aeiou]ician$/, Actor], [/[aeiou][ktrp]in$/, 'Gerund'] // 'cookin', 'hootin'
+  ],
   o: [[/^no+$/, Exp], //noooo
   [/^(yo)+$/, Exp], //yoyo
   [/^woo+[pt]?$/, Exp] //woo
@@ -9178,7 +9183,7 @@ var emoticons = {
   '<\\3': true
 };
 
-var emojiReg = /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/; //for us, there's three types -
+var emojiReg = /^(\u00a9|\u00ae|[\u2319-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/; //for us, there's three types -
 // * ;) - emoticons
 // * 🌵 - unicode emoji
 // * :smiling_face: - asci-represented emoji
@@ -9687,12 +9692,33 @@ var irregulars$3 = {
   dont: ['do', 'not'],
   dun: ['do', 'not'] // "ain't" is ambiguous for is/was
 
+}; // either 'is not' or 'are not'
+
+var doAint = function doAint(term, phrase) {
+  var terms = phrase.cache.terms || phrase.terms();
+  var index = terms.indexOf(term);
+  var before = terms.slice(0, index); //look for the preceding noun
+
+  var noun = before.find(function (t) {
+    return t.tags.Noun;
+  });
+
+  if (noun && noun.tags.Plural) {
+    return ['are', 'not'];
+  }
+
+  return ['is', 'not'];
 };
 
-var checkNegative = function checkNegative(term) {
+var checkNegative = function checkNegative(term, phrase) {
   //check named-ones
   if (irregulars$3.hasOwnProperty(term.clean) === true) {
     return irregulars$3[term.clean];
+  } //this word needs it's own logic:
+
+
+  if (term.clean === "ain't" || term.clean === 'aint') {
+    return doAint(term, phrase);
   } //try it normally
 
 
@@ -9706,7 +9732,7 @@ var checkNegative = function checkNegative(term) {
 
 var _01Negative = checkNegative;
 
-var contraction = /([a-z\u00C0-\u00FF]+)'([a-z]{1,2})$/i; //these ones don't seem to be ambiguous
+var contraction = /([a-z\u00C0-\u00FF]+)[\u0027\u0060\u00B4\u2018\u2019\u201A\u201B\u2032\u2035\u2039\u203A]([a-z]{1,2})$/i; //these ones don't seem to be ambiguous
 
 var easy = {
   ll: 'will',
@@ -9743,9 +9769,9 @@ var irregulars$4 = {
   whered: ['where', 'did'],
   "when'd": ['when', 'did'],
   whend: ['when', 'did'],
-  "how'd": ['how', 'did'],
+  // "how'd": ['how', 'did'], //'how would?'
+  // "what'd": ['what', 'did'], //'what would?'
   howd: ['how', 'did'],
-  "what'd": ['what', 'did'],
   whatd: ['what', 'did'],
   // "let's": ['let', 'us'], //too weird
   //multiple word contractions
@@ -9759,32 +9785,10 @@ var irregulars$4 = {
   rn: ['right', 'now'],
   twas: ['it', 'was'],
   '@': ['at']
-}; // either 'is not' or 'are not'
-
-var doAint = function doAint(term, phrase) {
-  var terms = phrase.cache.terms || phrase.terms();
-  var index = terms.indexOf(term);
-  var before = terms.slice(0, index); //look for the preceding noun
-
-  var noun = before.find(function (t) {
-    return t.tags.Noun;
-  });
-
-  if (noun && noun.tags.Plural) {
-    return ['are', 'not'];
-  }
-
-  return ['is', 'not'];
 }; //
 
-
-var checkIrregulars = function checkIrregulars(term, phrase) {
-  //this word needs it's own logic:
-  if (term.clean === "ain't" || term.clean === 'aint') {
-    return doAint(term, phrase);
-  } //check white-list
-
-
+var checkIrregulars = function checkIrregulars(term) {
+  //check white-list
   if (irregulars$4.hasOwnProperty(term.clean)) {
     return irregulars$4[term.clean];
   }
@@ -9794,7 +9798,7 @@ var checkIrregulars = function checkIrregulars(term, phrase) {
 
 var _03Irregulars = checkIrregulars;
 
-var hasApostropheS = /([a-z\u00C0-\u00FF]+)'s$/i;
+var hasApostropheS = /([a-z\u00C0-\u00FF]+)[\u0027\u0060\u00B4\u2018\u2019\u201A\u201B\u2032\u2035\u2039\u203A]s$/i;
 var blacklist = {
   that: true,
   there: true
@@ -9826,6 +9830,11 @@ var isPossessive = function isPossessive(term, pool) {
   if (nextTerm.tags.Verb) {
     //fix 'jamie's bite'
     if (nextTerm.tags.Infinitive) {
+      return true;
+    } //fix 'spencer's runs'
+
+
+    if (nextTerm.tags.PresentTense) {
       return true;
     }
 
@@ -9889,7 +9898,11 @@ var checkPossessive = function checkPossessive(term, phrase, world) {
 var _04Possessive = checkPossessive;
 
 var hasPerfect = /[a-z\u00C0-\u00FF]'d$/;
-/** split `i'd` into 'i had', or 'i would' */
+var useDid = {
+  how: true,
+  what: true
+};
+/** split `i'd` into 'i had',  or 'i would'  */
 
 var checkPerfect = function checkPerfect(term, phrase) {
   if (hasPerfect.test(term.clean)) {
@@ -9905,6 +9918,11 @@ var checkPerfect = function checkPerfect(term, phrase) {
       if (t.tags.Verb) {
         if (t.tags.PastTense) {
           return [root, 'had'];
+        } //what'd you see
+
+
+        if (useDid[root] === true) {
+          return [root, 'did'];
         }
 
         return [root, 'would'];
@@ -9970,9 +9988,9 @@ var contractions = function contractions(doc) {
 
     for (var i = 0; i < terms.length; i += 1) {
       var term = terms[i];
-      var found = _01Negative(term);
+      var found = _01Negative(term, p);
       found = found || _02Simple(term);
-      found = found || _03Irregulars(term, p);
+      found = found || _03Irregulars(term);
       found = found || _04Possessive(term, p, world);
       found = found || _05PerfectTense(term, p);
       found = found || _06Ranges(term); //add them in
@@ -10876,6 +10894,8 @@ var addMethod = function addMethod(Doc) {
 
 var Abbreviations = addMethod;
 
+var hasPeriod = /\./;
+
 var addMethod$1 = function addMethod(Doc) {
   /**  */
   var Acronyms =
@@ -10903,7 +10923,12 @@ var addMethod$1 = function addMethod(Doc) {
       value: function addPeriods() {
         this.termList().forEach(function (t) {
           var str = t.text.replace(/\./g, '');
-          str = str.split('').join('.');
+          str = str.split('').join('.'); // don't add a end-period if there's a sentence-end one
+
+          if (hasPeriod.test(t.post) === false) {
+            str += '.';
+          }
+
           t.set(str);
         });
         return this;
@@ -12436,8 +12461,8 @@ function () {
 
     Object.defineProperty(this, 'world', {
       enumerable: false,
-      value: world // writable: true, //todo: add me?
-
+      value: world,
+      writable: true
     }); //fast-scans for our data
     //'found' getter
 

@@ -14,3 +14,12 @@ test('abbreviations', function(t) {
 
   t.end()
 })
+
+test('abbreviations', function(t) {
+  let doc = nlp("i live on Main St. and it's fine.")
+  doc.abbreviations().stripPeriods()
+  t.equal(doc.text(), "i live on Main St and it's fine.")
+  doc.abbreviations().addPeriods()
+  t.equal(doc.text(), "i live on Main St. and it's fine.")
+  t.end()
+})

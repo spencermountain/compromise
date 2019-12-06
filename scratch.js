@@ -16,9 +16,4 @@ const nlp = require('./src/index')
 // })
 // nlp('apple').debug()
 
-let doc = nlp(`he ain't going`)
-doc.debug()
-// doc
-//   .contractions()
-//   .expand()
-//   .debug()
+nlp("spencer's runs").debug()

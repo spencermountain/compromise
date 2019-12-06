@@ -27,6 +27,7 @@ compromise uses semver, and pushes to npm frequently
 - fix matches with optional-end `foo?$` match syntax
 - add typescript types for subsets
 - fix over-active emoji regex
+- tag 'cookin', 'hootin' as `Gerund`
 
 ##### 12.2.1
 

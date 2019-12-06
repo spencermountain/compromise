@@ -16,5 +16,4 @@ nlp.verbose(true)
 // })
 // nlp('apple').debug()
 
-// let doc = nlp(`I’m lookin’ for Amanda`).debug()
-let doc = nlp(`💯 ❤️`).debug()
+let doc = nlp(`I’m lookin’ for Amanda`).debug()

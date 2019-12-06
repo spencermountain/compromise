@@ -142,7 +142,7 @@ var toNegative = function toNegative() {
     var obj = parse_1(doc);
     var vb = obj.verb.clone();
     vb = vb.verbs().toNegative();
-    obj.verb.replaceWith(vb, false, true);
+    obj.verb.replaceWith(vb, false);
   });
   return this;
 };
@@ -154,7 +154,7 @@ var toPositive = function toPositive() {
     var obj = parse_1(doc);
     var vb = obj.verb.clone();
     vb = vb.verbs().toPositive();
-    obj.verb.replaceWith(vb, false, true);
+    obj.verb.replaceWith(vb, false);
   });
   return this;
 };
@@ -228,7 +228,7 @@ var toPastTense = function toPastTense() {
     var obj = parse_1(doc);
     var vb = obj.verb.clone();
     vb = vb.verbs().toPastTense();
-    obj.verb.replaceWith(vb, false, true); // trailing gerund/future/present are okay, but 'walked and eats' is not
+    obj.verb.replaceWith(vb, false); // trailing gerund/future/present are okay, but 'walked and eats' is not
 
     if (obj.object && obj.object.found && obj.object.has('#PresentTense')) {
       var verbs = obj.object.verbs();
@@ -258,7 +258,7 @@ var toPresentTense = function toPresentTense() {
       vb = vb.verbs().toPresentTense();
     }
 
-    obj.verb.replaceWith(vb, false, true); // future is okay, but 'walks and ate' -> 'walks and eats'
+    obj.verb.replaceWith(vb, false); // future is okay, but 'walks and ate' -> 'walks and eats'
 
     if (obj.object && obj.object.found && obj.object.has('#PastTense')) {
       var verbs = obj.object.verbs();
@@ -275,7 +275,7 @@ var toFutureTense = function toFutureTense() {
     var obj = parse_1(doc);
     var vb = obj.verb.clone();
     vb = vb.verbs().toFutureTense();
-    obj.verb.replaceWith(vb, false, true); //Present is okay, but 'will walk and ate' -> 'will walk and eat'
+    obj.verb.replaceWith(vb, false); //Present is okay, but 'will walk and ate' -> 'will walk and eat'
 
     if (obj.object && obj.object.found && obj.object.has('(#PastTense|#PresentTense)')) {
       var verbs = obj.object.verbs();

@@ -328,7 +328,7 @@ var addMethods = function addMethods(Doc) {
         var transform = this.world.transforms.adjectives;
         this.forEach(function (doc) {
           var obj = transform(doc.text('reduced'));
-          doc.replaceWith(obj.Superlative, true, true);
+          doc.replaceWith(obj.Superlative, true);
         });
         return this;
       }
@@ -338,7 +338,7 @@ var addMethods = function addMethods(Doc) {
         var transform = this.world.transforms.adjectives;
         this.forEach(function (doc) {
           var obj = transform(doc.text('reduced'));
-          doc.replaceWith(obj.Comparative, true, true);
+          doc.replaceWith(obj.Comparative, true);
         });
         return this;
       }
@@ -348,7 +348,7 @@ var addMethods = function addMethods(Doc) {
         this.forEach(function (doc) {
           var adverb = toAdverb(doc.text('reduced'));
 
-          doc.replaceWith(adverb, true, true);
+          doc.replaceWith(adverb, true);
         });
         return this;
       }
@@ -358,7 +358,7 @@ var addMethods = function addMethods(Doc) {
         this.forEach(function (doc) {
           var verb = toVerb_1(doc.text('reduced'));
 
-          doc.replaceWith(verb, true, true);
+          doc.replaceWith(verb, true);
         });
         return this;
       }
@@ -368,7 +368,7 @@ var addMethods = function addMethods(Doc) {
         this.forEach(function (doc) {
           var noun = toNoun(doc.text('reduced'));
 
-          doc.replaceWith(noun, true, true);
+          doc.replaceWith(noun, true);
         });
         return this;
       }

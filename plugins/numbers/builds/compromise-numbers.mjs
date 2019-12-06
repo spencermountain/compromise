@@ -984,7 +984,7 @@ var methods = {
       }
 
       var str = makeNumber_1(obj, val.has('#TextValue'), false);
-      val.replaceWith(str, true, true);
+      val.replaceWith(str, true);
       val.tag('Cardinal'); // turn unit into plural -> 'seven beers'
 
       _agreeUnits(agree, val, obj);
@@ -1005,7 +1005,7 @@ var methods = {
       }
 
       var str = makeNumber_1(obj, val.has('#TextValue'), true);
-      val.replaceWith(str, true, true);
+      val.replaceWith(str, true);
       val.tag('Ordinal'); // turn unit into singular -> 'seventh beer'
 
       var unit = _this.lookAhead('^#Plural');
@@ -1068,7 +1068,7 @@ var methods = {
       }
 
       var str = makeNumber_1(obj, val.has('#TextValue'), val.has('#Ordinal'));
-      val.replaceWith(str, true, true); // handle plural/singular unit
+      val.replaceWith(str, true); // handle plural/singular unit
 
       _agreeUnits(agree, val, obj);
     });
@@ -1092,7 +1092,7 @@ var methods = {
 
       obj.num += n;
       var str = makeNumber_1(obj, val.has('#TextValue'), val.has('#Ordinal'));
-      val.replaceWith(str, true, true); // handle plural/singular unit
+      val.replaceWith(str, true); // handle plural/singular unit
 
       _agreeUnits(agree, val, obj);
     });

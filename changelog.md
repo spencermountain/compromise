@@ -23,9 +23,21 @@ compromise uses semver, and pushes to npm frequently
 - improved splitting in .nouns()
 - add `.nouns().adjectives()` method
 - add `concat` param to `.pre()` and `.post()`
-- allow ellipses at start of term *"....so"* in `@hasEllipses`
+- allow ellipses at start of term _"....so"_ in `@hasEllipses`
 - fix matches with optional-end `foo?$` match syntax
 - add typescript types for subsets
+
+##### 12.2.1
+
+- fix 'aint' contraction
+- make Doc.world writable
+- update deps
+- more tests
+- fix shared period with acronym at end of sentence
+- fix some mis-classification of contraction
+- fix over-active emoji regex
+- tag 'cookin', 'hootin' as `Gerund`
+- support unicode single-quote symbols in contractions
 
 ### v11
 

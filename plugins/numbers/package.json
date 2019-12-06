@@ -1,11 +1,12 @@
 {
   "name": "compromise-numbers",
   "description": "plugin for nlp-compromise",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "main": "./builds/compromise-numbers.js",
   "unpkg": "./builds/compromise-numbers.min.js",
   "module": "./builds/compromise-numbers.mjs",
+  "types": "types/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git://github.com/spencermountain/compromise.git"

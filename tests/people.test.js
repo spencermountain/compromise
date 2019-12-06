@@ -48,5 +48,10 @@ test('people:', function(t) {
   t.equal(doc.people(0).out('normal'), 'randal kieth orton', 'nickname-2a')
   t.equal(doc.people(1).out('normal'), 'dwayne the rock johnson', 'nickname-2b')
 
+  doc = nlp('i work with Tina Fey and Jake Gyllenhal.')
+  let m = doc.people()
+  t.equal(m.eq(0).text(), 'Tina Fey')
+  t.equal(m.eq(1).text(), 'Jake Gyllenhal')
+
   t.end()
 })

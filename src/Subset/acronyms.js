@@ -1,3 +1,5 @@
+const hasPeriod = /\./
+
 const addMethod = function(Doc) {
   /**  */
   class Acronyms extends Doc {
@@ -12,6 +14,10 @@ const addMethod = function(Doc) {
       this.termList().forEach(t => {
         let str = t.text.replace(/\./g, '')
         str = str.split('').join('.')
+        // don't add a end-period if there's a sentence-end one
+        if (hasPeriod.test(t.post) === false) {
+          str += '.'
+        }
         t.set(str)
       })
       return this

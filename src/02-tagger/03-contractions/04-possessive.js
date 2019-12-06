@@ -1,4 +1,4 @@
-const hasApostropheS = /([a-z\u00C0-\u00FF]+)'s$/i
+const hasApostropheS = /([a-z\u00C0-\u00FF]+)[\u0027\u0060\u00B4\u2018\u2019\u201A\u201B\u2032\u2035\u2039\u203A]s$/i
 
 const blacklist = {
   that: true,
@@ -25,6 +25,10 @@ const isPossessive = (term, pool) => {
   if (nextTerm.tags.Verb) {
     //fix 'jamie's bite'
     if (nextTerm.tags.Infinitive) {
+      return true
+    }
+    //fix 'spencer's runs'
+    if (nextTerm.tags.PresentTense) {
       return true
     }
     return false

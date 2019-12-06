@@ -30,9 +30,7 @@ const clean = function(str) {
   //en-dash
   str = str.replace(/\u2013/g, '-')
   //lookin'->looking (make it easier for conjugation)
-  if (/[a-z][^aeiou]in['’]$/.test(str) === true) {
-    str = str.replace(/in['’]$/, 'ing')
-  }
+  str = str.replace(/([aeiou][ktrp])in$/, '$1ing')
   //turn re-enactment to reenactment
   if (/^(re|un)-?[^aeiou]./.test(str) === true) {
     str = str.replace('-', '')

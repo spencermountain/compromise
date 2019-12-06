@@ -13,7 +13,7 @@ test('normalize - light', function(t) {
     // ['the so-called “fascist  dictator”', 'the so called "fascist dictator"'],
     // ['the so-called ❛singer-songwriter❜', 'the so called \'singer songwriter\''],
     // ['the so-called ❛group of seven❜', 'the so called \'group of 7\''],
-    ['Director of the F.B.I.', 'Director of the FBI.'],
+    ['Director of the F.B.I.', 'Director of the FBI'],
   ]
   arr.forEach(function(a) {
     const str = nlp(a[0])
@@ -32,7 +32,7 @@ test('normalize - medium', function(t) {
     ],
     ['This is a test?!', 'this is a test?'],
     ['Björk, the singer-songwriter...', 'bjork the singer songwriter'],
-    ['Director of the F.B.I.', 'director of the fbi.'],
+    ['Director of the F.B.I.', 'director of the fbi'],
   ]
   arr.forEach(function(a) {
     const str = nlp(a[0])
@@ -51,7 +51,7 @@ test('normalize - heavy', function(t) {
     ],
     // ['This is a test?!', 'this be a test?'],
     ['Björk, the singer-songwriter...', 'bjork the singer songwriter'],
-    ['Director of the F.B.I.', 'director of the fbi.'],
+    ['Director of the F.B.I.', 'director of the fbi'],
   ]
   arr.forEach(function(a) {
     const str = nlp(a[0])

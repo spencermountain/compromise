@@ -10,6 +10,10 @@ test('basic is contractions', function(t) {
   r.contractions().expand()
   t.equal(r.out('text'), `he is cool.`, 'contracted-expand')
 
+  r = nlp(`he ain't going`)
+  r.contractions().expand()
+  t.equal(r.out('text'), `he is not going`, 'aint')
+
   r = nlp(`that's really great.`)
   r.contractions().expand()
   t.equal(r.out('text'), `that is really great.`, 'contracted-expand')

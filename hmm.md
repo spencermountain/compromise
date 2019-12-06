@@ -91,10 +91,11 @@ nlp(`Cows don't`)
 let doc = nlp('I’m lookin’ for Amanda').debug()
 ```
 
-```js
-nlp("spencer's fines").debug()
-```
+did/would contractions
 
+```js
+let doc = nlp(`what’d be good`).debug()
+```
 
 text-replace
 
@@ -106,8 +107,15 @@ doc = doc.match('(#Acronym|#Abbreviation)').replaceWith(d => {
 doc.debug()
 ```
 
-
+```js
+nlp('  we like Roy!    we like Roy!!  ')
+  .trim()
+  .text()
+```
 
 ```js
-nlp(`why can't i have no kids and three money?`).contractions().expand().text()
+nlp(`why can't i have no kids and three money?`)
+  .contractions()
+  .expand()
+  .text()
 ```

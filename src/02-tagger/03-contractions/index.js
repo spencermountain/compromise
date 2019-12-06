@@ -37,7 +37,7 @@ const contractions = function(doc) {
     let terms = p.cache.terms || p.terms()
     for (let i = 0; i < terms.length; i += 1) {
       let term = terms[i]
-      let found = checkNegative(term)
+      let found = checkNegative(term, p)
       found = found || checkApostrophe(term)
       found = found || checkIrregulars(term, p)
       found = found || checkPossessive(term, p, world)

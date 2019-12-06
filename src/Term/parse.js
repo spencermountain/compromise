@@ -10,6 +10,7 @@ const endings = /[ \n\t\.’'\[\](){}⟨⟩:,،、‒–—―…!.‹›«»‐
 //money = ₵¢₡₢$₫₯֏₠€ƒ₣₲₴₭₺₾ℳ₥₦₧₱₰£៛₽₹₨₪৳₸₮₩¥
 const hasSlash = /\//
 const hasApostrophe = /['’]/
+const hasAcronym = /^[a-z]\.([a-z]\.)+/i
 const minusNumber = /^[-+\.][0-9]/
 
 /** turn given text into a parsed-up object
@@ -34,6 +35,11 @@ const parseTerm = str => {
     if (hasApostrophe.test(found) && /[sn]['’]$/.test(original) && hasApostrophe.test(pre) === false) {
       post = post.replace(hasApostrophe, '')
       return `'`
+    }
+    //keep end-period in acronym
+    if (hasAcronym.test(str) === true) {
+      post = post.replace(/\./, '')
+      return '.'
     }
     return ''
   })

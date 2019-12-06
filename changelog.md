@@ -26,6 +26,7 @@ compromise uses semver, and pushes to npm frequently
 - allow ellipses at start of term _"....so"_ in `@hasEllipses`
 - fix matches with optional-end `foo?$` match syntax
 - add typescript types for subsets
+- fix over-active emoji regex
 
 ##### 12.2.1
 
@@ -34,6 +35,7 @@ compromise uses semver, and pushes to npm frequently
 - update deps
 - more tests
 - fix shared period with acronym at end of sentence
+- fix some mis-classification of contraction
 
 ### v11
 

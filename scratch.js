@@ -1,5 +1,5 @@
 const nlp = require('./src/index')
-// nlp.verbose(true)
+nlp.verbose(true)
 // nlp.extend(require('./plugins/numbers/src'))
 // nlp.extend(require('./plugins/dates/src'))
 
@@ -16,7 +16,5 @@ const nlp = require('./src/index')
 // })
 // nlp('apple').debug()
 
-let str = nlp("spencer's runs")
-  .normalize({ contractions: true })
-  .text()
-console.log(str)
+// let doc = nlp(`I’m lookin’ for Amanda`).debug()
+let doc = nlp(`💯 ❤️`).debug()

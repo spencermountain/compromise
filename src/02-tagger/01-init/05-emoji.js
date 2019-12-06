@@ -1,5 +1,5 @@
 //from https://www.regextester.com/106421
-const emojiReg = /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/
+const emojiReg = /^(\u00a9|\u00ae|[\u2319-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/
 const emoticon = require('./data/emoticons')
 //for us, there's three types -
 // * ;) - emoticons

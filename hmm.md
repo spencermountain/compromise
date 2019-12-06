@@ -91,10 +91,6 @@ nlp(`Cows don't`)
 let doc = nlp('I’m lookin’ for Amanda').debug()
 ```
 
-```js
-nlp("spencer's fines").debug()
-```
-
 text-replace
 
 ```js

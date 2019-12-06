@@ -24,7 +24,7 @@ class Doc {
     Object.defineProperty(this, 'world', {
       enumerable: false,
       value: world,
-      // writable: true, //todo: add me?
+      writable: true,
     })
     //fast-scans for our data
 

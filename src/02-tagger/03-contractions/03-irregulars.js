@@ -29,27 +29,8 @@ const irregulars = {
   '@': ['at'],
 }
 
-// either 'is not' or 'are not'
-const doAint = function(term, phrase) {
-  let terms = phrase.cache.terms || phrase.terms()
-  let index = terms.indexOf(term)
-  let before = terms.slice(0, index)
-  //look for the preceding noun
-  let noun = before.find(t => {
-    return t.tags.Noun
-  })
-  if (noun && noun.tags.Plural) {
-    return ['are', 'not']
-  }
-  return ['is', 'not']
-}
-
 //
-const checkIrregulars = function(term, phrase) {
-  //this word needs it's own logic:
-  if (term.clean === `ain't` || term.clean === 'aint') {
-    return doAint(term, phrase)
-  }
+const checkIrregulars = function(term) {
   //check white-list
   if (irregulars.hasOwnProperty(term.clean)) {
     return irregulars[term.clean]

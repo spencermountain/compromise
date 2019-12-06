@@ -10,7 +10,6 @@ declare module nlpNumbers {
   }
   class Numbers {
     json(n?: Number): Document
-    money(): Document
     fractions(): Document
     toText(): Document
     toNumber(): Document

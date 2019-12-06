@@ -91,6 +91,12 @@ nlp(`Cows don't`)
 let doc = nlp('I’m lookin’ for Amanda').debug()
 ```
 
+did/would contractions
+
+```js
+let doc = nlp(`what’d be good`).debug()
+```
+
 text-replace
 
 ```js

@@ -1,6 +1,34 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
+test('tricky contractions', function(t) {
+  let doc = nlp(`I’m `)
+  doc.contractions().expand()
+  t.equal(doc.text(), 'I am ', '')
+
+  doc = nlp(` i can’t `)
+  doc.contractions().expand()
+  t.equal(doc.text(), ' i can not ', '')
+
+  doc = nlp(`spencer’s clean`)
+  doc.contractions().expand()
+  t.equal(doc.text(), 'spencer is clean', '')
+
+  doc = nlp(`wouldn’t be good`)
+  doc.contractions().expand()
+  t.equal(doc.text(), 'would not be good', '')
+
+  doc = nlp(`what’d you see`)
+  doc.contractions().expand()
+  t.equal(doc.text(), 'what did you see', '')
+
+  doc = nlp(`spencer’d go see`)
+  doc.contractions().expand()
+  t.equal(doc.text(), 'spencer would go see', '')
+
+  t.end()
+})
+
 test('contractions v possessive', function(t) {
   let str = nlp("spencer's not cool")
     .normalize({ contractions: true })

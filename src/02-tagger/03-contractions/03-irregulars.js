@@ -10,9 +10,9 @@ const irregulars = {
   whered: ['where', 'did'],
   "when'd": ['when', 'did'],
   whend: ['when', 'did'],
-  "how'd": ['how', 'did'],
+  // "how'd": ['how', 'did'], //'how would?'
+  // "what'd": ['what', 'did'], //'what would?'
   howd: ['how', 'did'],
-  "what'd": ['what', 'did'],
   whatd: ['what', 'did'],
   // "let's": ['let', 'us'], //too weird
 

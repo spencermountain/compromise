@@ -1,5 +1,5 @@
 const nlp = require('./src/index')
-nlp.verbose(true)
+// nlp.verbose(true)
 // nlp.extend(require('./plugins/numbers/src'))
 // nlp.extend(require('./plugins/dates/src'))
 
@@ -16,4 +16,13 @@ nlp.verbose(true)
 // })
 // nlp('apple').debug()
 
-let doc = nlp(`I’m lookin’ for Amanda`).debug()
+// let doc = nlp(`I’m `).debug()
+let doc = nlp(`can’t `).debug()
+// let doc = nlp(`spencer’s clean`).debug()
+// let doc = nlp(`wouldn’t be good`).debug()
+// let doc = nlp(`what’d you see`).debug()
+// let doc = nlp(`spencer’d go see`).debug()
+
+// let doc = nlp(`I'm `).debug()
+// console.log(doc.termList()[0])
+// let doc = nlp(`I’m lookin’ for Amanda`).debug()

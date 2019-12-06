@@ -1,6 +1,11 @@
 const hasPerfect = /[a-z\u00C0-\u00FF]'d$/
 
-/** split `i'd` into 'i had', or 'i would' */
+const useDid = {
+  how: true,
+  what: true,
+}
+
+/** split `i'd` into 'i had',  or 'i would'  */
 const checkPerfect = function(term, phrase) {
   if (hasPerfect.test(term.clean)) {
     let root = term.clean.replace(/'d$/, '')
@@ -14,6 +19,10 @@ const checkPerfect = function(term, phrase) {
       if (t.tags.Verb) {
         if (t.tags.PastTense) {
           return [root, 'had']
+        }
+        //what'd you see
+        if (useDid[root] === true) {
+          return [root, 'did']
         }
         return [root, 'would']
       }

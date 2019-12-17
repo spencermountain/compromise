@@ -163,3 +163,17 @@ test('text-as-input', function(t) {
   t.equal(without, 'he is from AZ', 'text-as-not')
   t.end()
 })
+
+test('anchor-with-greedy', function(t) {
+  const doc = nlp.tokenize('a a b b')
+  let m = doc.match('^a a b b$')
+  t.equal(m.found, true, 'simple anchors not found')
+
+  m = doc.match('^a+ b b$')
+  t.equal(m.found, true, 'start-anchor greedy not found')
+
+  m = doc.match('^a a b+$')
+  t.equal(m.found, true, 'end-anchor greedy not found')
+
+  t.end()
+})

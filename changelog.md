@@ -6,26 +6,12 @@ compromise uses semver, and pushes to npm frequently
 - **Minor** is considered a behaviour/performance change.
 - **Patch** is an obvious, non-controversial bugfix
 
-### v12 &nbsp; :postal_horn:
+##### 12.2.2
 
-- [see Release Notes](https://github.com/spencermountain/compromise/wiki/v12-Release-Notes)
-
-##### 12.1.0
-
-- add 'sideEffect:false' flag to build
-- considerable speedup (20%) in tagger
-- ensure trimming of whitespace for root/clean/reduced text formats
-- fix client-side logging
-- more flexible params to `replace()` and `replaceWith()`
-
-##### 12.2.0
-
-- improved splitting in .nouns()
-- add `.nouns().adjectives()` method
-- add `concat` param to `.pre()` and `.post()`
-- allow ellipses at start of term _"....so"_ in `@hasEllipses`
-- fix matches with optional-end `foo?$` match syntax
-- add typescript types for subsets
+- update dependencies
+- fix case-sensitive paths
+- fix greedy-start match condition regression #651
+- fix single period sentence runtime error
 
 ##### 12.2.1
 
@@ -39,7 +25,26 @@ compromise uses semver, and pushes to npm frequently
 - tag 'cookin', 'hootin' as `Gerund`
 - support unicode single-quote symbols in contractions
 
-### v11
+##### 12.2.0
+
+- improved splitting in .nouns()
+- add `.nouns().adjectives()` method
+- add `concat` param to `.pre()` and `.post()`
+- allow ellipses at start of term _"....so"_ in `@hasEllipses`
+- fix matches with optional-end `foo?$` match syntax
+- add typescript types for subsets
+
+##### 12.1.0
+
+- add 'sideEffect:false' flag to build
+- considerable speedup (20%) in tagger
+- ensure trimming of whitespace for root/clean/reduced text formats
+- fix client-side logging
+- more flexible params to `replace()` and `replaceWith()`
+
+### 12.0.0 &nbsp; :postal_horn:
+
+- [see Release Notes](https://github.com/spencermountain/compromise/wiki/v12-Release-Notes)
 
 ##### 11.13.0
 
@@ -124,7 +129,7 @@ compromise uses semver, and pushes to npm frequently
 - support more complex noun-phrases with JustesonKatz in `.nouns()`
   <!-- * include 'the #TitleCase' matches in .topics() -->
 
-##### 11.0.0
+### v11
 
 - support for persistent lexicon/tagset changes
 - `addTags, addWords, addRegs, addPlurals, addConjugations` methods to extend native data
@@ -143,8 +148,6 @@ compromise uses semver, and pushes to npm frequently
 - set `.words()` as alias for .terms()
 - `people().firstNames()`, `people().lastNames()`
 - split-out comma-separated adverbs
-
-### v10
 
 ##### 10.7.2
 
@@ -193,7 +196,7 @@ compromise uses semver, and pushes to npm frequently
 - fix return format of .isPlural(), so it acts like a match filter
 - less-greedy date tagging & ambiguous month fixes
 
-##### 10.0.0
+### v10
 
 - cleanup & rename some `.value()` methods
 - change lumping behaviour of lexicon terms with multiple words
@@ -208,13 +211,11 @@ compromise uses semver, and pushes to npm frequently
 - changes params of `.replaceWith()` method to a 'keyTags' boolean
 - improved .debug() and logging on client-side
 
-### v9 &nbsp;
-
 ##### 9.1.0
 
 - pretty-real filesize reduction by swapping es6 classes for es5 inheritance
 
-##### 9.0.0
+### v9.0.0
 
 - rename `Term.tag` object to `Term.tags` so the `.tag()` method can work throughout more-consistently
 - fix 'Auxillary' tag typo to 'Auxiliary'
@@ -222,8 +223,6 @@ compromise uses semver, and pushes to npm frequently
 - adds `.tagger()` method and cleanup extra params
 - adds `wordStart` and `wordEnd` offsets to `.out('offset')` for whitespace+punctuation
 - new `.has()` method for faster lookups
-
-### v8 &nbsp;
 
 ##### 8.2.0
 
@@ -233,22 +232,18 @@ compromise uses semver, and pushes to npm frequently
 
 - add `nlp.tokenize()` method for disabling pos-tagging of input
 
-##### 8.0.0
+### v8.0.0
 
 - less-ambitious date-parsing of nl-date forms
 - filesize reduction using [efrt](https://github.com/nlp-compromise/efrt) data structure (254k -> 214k)
-
-### v7 &nbsp; :postal_horn:
 
 ##### 7.0.15
 
 - fix for IE9
 
-##### 7.0.0
+### v7 &nbsp; :postal_horn:
 
 - weee! [big change!](https://github.com/nlp-compromise/compromise/wiki/v7-Upgrade,-welcome) _npm package rename_
-
-### v6 &nbsp;
 
 ##### 6.5.0
 
@@ -262,11 +257,9 @@ compromise uses semver, and pushes to npm frequently
 
 - new nlp.lexicon({word:'POS'}) flow
 
-##### 6.0.0
+### v6
 
 - be consistent with `text.normal()`, `term.all_forms()`, `text.word_count()`. `text.normal()` includes sentence-terminators, like periods etc.
-
-### v5 &nbsp;
 
 ##### 5.2.0
 
@@ -276,11 +269,9 @@ compromise uses semver, and pushes to npm frequently
 
 - newlines split sentences
 
-##### 5.0.0
+### v5
 
 - Text methods now return this, instead of array of sentences
-
-### v4 &nbsp;
 
 ##### 4.12.0
 
@@ -322,23 +313,19 @@ compromise uses semver, and pushes to npm frequently
 
 - hyphenated words are normalized into spaces
 
-##### 4.0.0
+### v4.0.0
 
 - grammar-aware match & replace functions
-
-### v3 &nbsp; **(Breaking)**
 
 ##### 3.0.2
 
 - Statement & Question classes
 
-##### 3.0.0 - Feb 2016
+### v3.0.0 Feb 2016
 
 - split ngram, locale, and syllables into plugins in seperate repo
 
-### v2
-
-##### 2.0.0 - Nov 2015 &nbsp; **(Breaking)**
+### 2.0.0 - Nov 2015
 
 - es6 classes, babel building
 - better test coverage
@@ -353,18 +340,14 @@ compromise uses semver, and pushes to npm frequently
 - lexicon can be augmented third-party
 - date parsing results are different
 
-### v1
-
 ##### 1.1.0 - May 2015
 
 - smarter handling of ambiguous contractions ("he's" -> ["he is", "he has"])
 
-##### 1.0.0 - May 2015
+### v1.0.0 - May 2015
 
 - added name genders and beginning of co-reference resolution ('Tony' -> 'he') API.
 - small breaking change on `Noun.is_plural` and `Noun.is_entity`, affording significant pos() speedup. Bumped Major version for these changes.
-
-### v0
 
 ##### 0.5.2 - May 2015
 

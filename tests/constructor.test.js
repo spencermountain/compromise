@@ -27,7 +27,7 @@ test('tokenize() runs without pos-tagging', function(t) {
 
 //make sure it can handle garbage inputs
 test('garbage:', function(t) {
-  const garbage = ['', '  ', null, '\n\n', []] //{}
+  const garbage = ['', '  ', null, '\n\n', [], '.'] //{}
   garbage.forEach(function(g, i) {
     let num = nlp(g).list.length
     let msg = typeof g + ' text input #' + i

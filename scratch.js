@@ -3,6 +3,5 @@ const nlp = require('./src/index')
 // nlp.extend(require('./plugins/numbers/src'))
 // nlp.extend(require('./plugins/dates/src'))
 
-let nlpObj = nlp('I love peaches. Yes I do. ')
-const sen = nlpObj.sentences().data()
-console.log(sen)
+let str = `.`
+nlp(str)

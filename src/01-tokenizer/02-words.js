@@ -101,7 +101,10 @@ const splitWords = function(str) {
     }
   }
   //handle last one
-  if (carry && result.length > 0) {
+  if (carry) {
+    if (result.length === 0) {
+      result[0] = ''
+    }
     result[result.length - 1] += carry //put it on the end
   }
   // combine 'one / two'

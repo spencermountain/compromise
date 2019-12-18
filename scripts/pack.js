@@ -4,7 +4,7 @@ var efrt = require('efrt')
 // var nlpPlugin = require('compromise-plugin')
 
 console.log('\n 🕑  - packing lexicon..')
-var outFile = path.join(__dirname, '../src/world/_data.js')
+var outFile = path.join(__dirname, '../src/World/_data.js')
 
 var lexicon = require('../data')
 

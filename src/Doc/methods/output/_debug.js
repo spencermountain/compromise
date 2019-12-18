@@ -1,4 +1,4 @@
-const tagset = require('../../../world/tags')
+const tagset = require('../../../World/tags')
 
 // https://stackoverflow.com/questions/9781218/how-to-change-node-jss-console-font-color
 const reset = '\x1b[0m'

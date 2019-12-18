@@ -68,8 +68,8 @@ doc.if('the #Adjective of times').text()
 ```
 
 ```js
-if (doc.has('^simon says #Verb+')) {
-  return doc.match('#Verb .*').text() //'fire the lazer ..'
+if (doc.has('simon says #Verb')) {
+  return true
 }
 ```
 
@@ -635,6 +635,7 @@ this plugin creates a wrapper around the default sentence objects.
 - **[Microservice Recipe](https://eventn.com/recipes/text-parsing-with-nlp-compromise)** - by Eventn
 - **[Building Text-Based Games](https://killalldefects.com/2019/09/24/building-text-based-games-with-compromise-nlp/)** - by Matt Eland
 - **[Fun with javascript in BigQuery](https://medium.com/@hoffa/new-in-bigquery-persistent-udfs-c9ea4100fd83#6e09)** - by Felipe Hoffa
+- - **[Natural Language Processing... in the Browser???](https://dev.to/charlesdlandau/natural-language-processing-in-the-browser-52hj)** - by Charles Landau
 
 ##### Talks:
 
@@ -756,9 +757,8 @@ this plugin creates a wrapper around the default sentence objects.
 - &nbsp; **[reText](https://github.com/wooorm/retext)** - very impressive [text utilities](https://github.com/wooorm/retext/blob/master/doc/plugins.md) in javascript
 - &nbsp; **[jsPos](https://code.google.com/archive/p/jspos/)** - javascript build of the time-tested Brill-tagger
 - &nbsp; **[spaCy](https://spacy.io/)** - speedy, multilingual tagger in C/python
+- &nbsp; **[Prose](https://github.com/jdkato/prose/)** - quick tagger in Go by Joseph Kato
 
 <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 <b>MIT</b>
-
-<div align="right">by <a href="https://spencermounta.in/">spencermountain</a></div>

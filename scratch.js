@@ -3,6 +3,7 @@ const nlp = require('./src/index')
 // nlp.extend(require('./plugins/numbers/src'))
 // nlp.extend(require('./plugins/dates/src'))
 
-let str = 'hello 🇵🇷.'
-let doc = nlp(str).debug()
+let str = ' 🇵🇷.'
+let doc = nlp(str)
+console.log(doc.termList(1))
 console.log(doc.text())

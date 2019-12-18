@@ -2030,9 +2030,15 @@ var tryHere = function tryHere(terms, regs, index, length) {
       t = skipto;
       continue;
     } //if it looks like a match, continue
+    //we have a special case where an end-anchored greedy match may need to
+    //start matching before the actual end; we do this by (temporarily!)
+    //removing the "end" property from the matching token... since this is
+    //very situation-specific, we *only* do this when we really need to.
 
 
-    if (reg.anything === true || terms[t].doesMatch(reg, index + t, length) === true) {
+    if (reg.anything === true || reg.end === true && reg.greedy === true && index + t < length - 1 && terms[t].doesMatch(Object.assign({}, reg, {
+      end: false
+    }), index + t, length) === true || terms[t].doesMatch(reg, index + t, length) === true) {
       var startAt = t; // okay, it was a match, but if it optional too,
       // we should check the next reg too, to skip it?
 
@@ -2059,10 +2065,23 @@ var tryHere = function tryHere(terms, regs, index, length) {
 
 
       if (reg.greedy === true) {
-        t = getGreedy(terms, t, reg, regs[r + 1], index, length);
+        // for greedy checking, we no longer care about the reg.start
+        // value, and leaving it can cause failures for anchored greedy
+        // matches.  ditto for end-greedy matches: we need an earlier non-
+        // ending match to succceed until we get to the actual end.
+        t = getGreedy(terms, t, Object.assign({}, reg, {
+          start: false,
+          end: false
+        }), regs[r + 1], index, length);
 
         if (t === null) {
           return false; //greedy was too short
+        } // if this was also an end-anchor match, check to see we really
+        // reached the end
+
+
+        if (reg.end === true && index + t !== length) {
+          return false; //greedy didn't reach the end
         }
       }
 
@@ -6882,486 +6901,6 @@ var _02Json = createCommonjsModule(function (module, exports) {
 var _02Json_1 = _02Json.json;
 var _02Json_2 = _02Json.data;
 
-var entity$1 = ['Person', 'Place', 'Organization'];
-var nouns$1 = {
-  Noun: {
-    notA: ['Verb', 'Adjective', 'Adverb']
-  },
-  // - singular
-  Singular: {
-    isA: 'Noun',
-    notA: 'Plural'
-  },
-  //a specific thing that's capitalized
-  ProperNoun: {
-    isA: 'Noun'
-  },
-  // -- people
-  Person: {
-    isA: ['ProperNoun', 'Singular'],
-    notA: ['Place', 'Organization', 'Date']
-  },
-  FirstName: {
-    isA: 'Person'
-  },
-  MaleName: {
-    isA: 'FirstName',
-    notA: ['FemaleName', 'LastName']
-  },
-  FemaleName: {
-    isA: 'FirstName',
-    notA: ['MaleName', 'LastName']
-  },
-  LastName: {
-    isA: 'Person',
-    notA: ['FirstName']
-  },
-  Honorific: {
-    isA: 'Noun',
-    notA: ['FirstName', 'LastName']
-  },
-  // -- places
-  Place: {
-    isA: 'Singular',
-    notA: ['Person', 'Organization']
-  },
-  Country: {
-    isA: ['Place', 'ProperNoun'],
-    notA: ['City']
-  },
-  City: {
-    isA: ['Place', 'ProperNoun'],
-    notA: ['Country']
-  },
-  Region: {
-    isA: ['Place', 'ProperNoun']
-  },
-  Address: {
-    isA: 'Place'
-  },
-  //---Orgs---
-  Organization: {
-    isA: ['Singular', 'ProperNoun'],
-    notA: ['Person', 'Place']
-  },
-  SportsTeam: {
-    isA: 'Organization'
-  },
-  School: {
-    isA: 'Organization'
-  },
-  Company: {
-    isA: 'Organization'
-  },
-  // - plural
-  Plural: {
-    isA: 'Noun',
-    notA: ['Singular']
-  },
-  //(not plural or singular)
-  Uncountable: {
-    isA: 'Noun'
-  },
-  Pronoun: {
-    isA: 'Noun',
-    notA: entity$1
-  },
-  //a word for someone doing something -'plumber'
-  Actor: {
-    isA: 'Noun',
-    notA: entity$1
-  },
-  //a gerund-as-noun - 'swimming'
-  Activity: {
-    isA: 'Noun',
-    notA: ['Person', 'Place']
-  },
-  //'kilograms'
-  Unit: {
-    isA: 'Noun',
-    notA: entity$1
-  },
-  //'Canadians'
-  Demonym: {
-    isA: ['Noun', 'ProperNoun'],
-    notA: entity$1
-  },
-  //`john's`
-  Possessive: {
-    isA: 'Noun' // notA: 'Pronoun',
-
-  }
-};
-
-var verbs$1 = {
-  Verb: {
-    notA: ['Noun', 'Adjective', 'Adverb', 'Value']
-  },
-  // walks
-  PresentTense: {
-    isA: 'Verb',
-    notA: ['PastTense', 'Copula', 'FutureTense']
-  },
-  // neutral form - 'walk'
-  Infinitive: {
-    isA: 'PresentTense',
-    notA: ['PastTense', 'Gerund']
-  },
-  // walking
-  Gerund: {
-    isA: 'PresentTense',
-    notA: ['PastTense', 'Copula', 'FutureTense']
-  },
-  // walked
-  PastTense: {
-    isA: 'Verb',
-    notA: ['FutureTense']
-  },
-  // will walk
-  FutureTense: {
-    isA: 'Verb'
-  },
-  // is
-  Copula: {
-    isA: 'Verb'
-  },
-  // would have
-  Modal: {
-    isA: 'Verb',
-    notA: ['Infinitive']
-  },
-  // had walked
-  PerfectTense: {
-    isA: 'Verb',
-    notA: 'Gerund'
-  },
-  Pluperfect: {
-    isA: 'Verb'
-  },
-  // shown
-  Participle: {
-    isA: 'Verb'
-  },
-  // show up
-  PhrasalVerb: {
-    isA: 'Verb'
-  },
-  //'up' part
-  Particle: {
-    isA: 'PhrasalVerb'
-  }
-};
-
-var values$1 = {
-  Value: {
-    notA: ['Verb', 'Adjective', 'Adverb']
-  },
-  Ordinal: {
-    isA: 'Value',
-    notA: ['Cardinal']
-  },
-  Cardinal: {
-    isA: 'Value',
-    notA: ['Ordinal']
-  },
-  RomanNumeral: {
-    isA: 'Cardinal',
-    //can be a person, too
-    notA: ['Ordinal', 'TextValue']
-  },
-  TextValue: {
-    isA: 'Value',
-    notA: ['NumericValue']
-  },
-  NumericValue: {
-    isA: 'Value',
-    notA: ['TextValue']
-  },
-  Money: {
-    isA: 'Cardinal'
-  },
-  Percent: {
-    isA: 'Value'
-  }
-};
-
-var anything$1 = ['Noun', 'Verb', 'Adjective', 'Adverb', 'Value'];
-var misc$2 = {
-  //--Adjectives--
-  Adjective: {
-    notA: ['Noun', 'Verb', 'Adverb', 'Value']
-  },
-  // adjectives that can conjugate
-  Comparable: {
-    isA: ['Adjective']
-  },
-  // better
-  Comparative: {
-    isA: ['Adjective']
-  },
-  // best
-  Superlative: {
-    isA: ['Adjective'],
-    notA: ['Comparative']
-  },
-  NumberRange: {
-    isA: ['Contraction']
-  },
-  Adverb: {
-    notA: ['Noun', 'Verb', 'Adjective', 'Value']
-  },
-  // Dates:
-  //not a noun, but usually is
-  Date: {
-    notA: ['Verb', 'Conjunction', 'Adverb', 'Preposition', 'Adjective']
-  },
-  Month: {
-    isA: ['Date', 'Singular'],
-    notA: ['Year', 'WeekDay', 'Time']
-  },
-  WeekDay: {
-    isA: ['Date', 'Noun']
-  },
-  // '9:20pm'
-  Time: {
-    isA: ['Date'],
-    notA: ['Value']
-  },
-  //glue
-  Determiner: {
-    notA: anything$1
-  },
-  Conjunction: {
-    notA: anything$1
-  },
-  Preposition: {
-    notA: anything$1
-  },
-  // what, who, why
-  QuestionWord: {
-    notA: ['Determiner']
-  },
-  // peso, euro
-  Currency: {},
-  // ughh
-  Expression: {
-    notA: ['Noun', 'Adjective', 'Verb', 'Adverb']
-  },
-  // dr.
-  Abbreviation: {},
-  // internet tags
-  Url: {
-    notA: ['HashTag', 'PhoneNumber', 'Verb', 'Adjective', 'Value', 'AtMention', 'Email']
-  },
-  PhoneNumber: {
-    notA: ['HashTag', 'Verb', 'Adjective', 'Value', 'AtMention', 'Email']
-  },
-  HashTag: {},
-  AtMention: {
-    isA: ['Noun'],
-    notA: ['HashTag', 'Verb', 'Adjective', 'Value', 'Email']
-  },
-  Emoji: {
-    notA: ['HashTag', 'Verb', 'Adjective', 'Value', 'AtMention']
-  },
-  Emoticon: {
-    notA: ['HashTag', 'Verb', 'Adjective', 'Value', 'AtMention']
-  },
-  Email: {
-    notA: ['HashTag', 'Verb', 'Adjective', 'Value', 'AtMention']
-  },
-  //non-exclusive
-  Auxiliary: {
-    notA: ['Noun', 'Adjective', 'Value']
-  },
-  Acronym: {
-    notA: ['Plural', 'RomanNumeral']
-  },
-  Negative: {
-    notA: ['Noun', 'Adjective', 'Value']
-  },
-  // if, unless, were
-  Condition: {
-    notA: ['Verb', 'Adjective', 'Noun', 'Value']
-  }
-};
-
-// i just made these up
-var colorMap$1 = {
-  Noun: 'blue',
-  Verb: 'green',
-  Negative: 'green',
-  Date: 'red',
-  Value: 'red',
-  Adjective: 'magenta',
-  Preposition: 'cyan',
-  Conjunction: 'cyan',
-  Determiner: 'cyan',
-  Adverb: 'cyan'
-};
-/** add a debug color to some tags */
-
-var addColors$1 = function addColors(tags) {
-  Object.keys(tags).forEach(function (k) {
-    if (colorMap$1[k]) {
-      tags[k].color = colorMap$1[k];
-      return;
-    }
-
-    tags[k].isA.some(function (t) {
-      if (colorMap$1[t]) {
-        tags[k].color = colorMap$1[t];
-        return true;
-      }
-
-      return false;
-    });
-  });
-  return tags;
-};
-
-var _color$1 = addColors$1;
-
-var unique$4 = function unique(arr) {
-  return arr.filter(function (v, i, a) {
-    return a.indexOf(v) === i;
-  });
-}; //add 'downward' tags (that immediately depend on this one)
-
-
-var inferIsA$1 = function inferIsA(tags) {
-  Object.keys(tags).forEach(function (k) {
-    var tag = tags[k];
-    var len = tag.isA.length;
-
-    for (var i = 0; i < len; i++) {
-      var down = tag.isA[i];
-
-      if (tags[down]) {
-        tag.isA = tag.isA.concat(tags[down].isA);
-      }
-    } // clean it up
-
-
-    tag.isA = unique$4(tag.isA);
-  });
-  return tags;
-};
-
-var _isA$1 = inferIsA$1;
-
-var unique$5 = function unique(arr) {
-  return arr.filter(function (v, i, a) {
-    return a.indexOf(v) === i;
-  });
-}; // crawl the tag-graph and infer any conflicts
-// faster than doing this at tag-time
-
-
-var inferNotA$1 = function inferNotA(tags) {
-  var keys = Object.keys(tags);
-  keys.forEach(function (k) {
-    var tag = tags[k];
-    tag.notA = tag.notA || [];
-    tag.isA.forEach(function (down) {
-      if (tags[down] && tags[down].notA) {
-        // borrow its conflicts
-        var notA = typeof tags[down].notA === 'string' ? [tags[down].isA] : tags[down].notA || [];
-        tag.notA = tag.notA.concat(notA);
-      }
-    }); // any tag that lists us as a conflict, we conflict it back.
-
-    for (var i = 0; i < keys.length; i++) {
-      var key = keys[i];
-
-      if (tags[key].notA.indexOf(k) !== -1) {
-        tag.notA.push(key);
-      }
-    } // clean it up
-
-
-    tag.notA = unique$5(tag.notA);
-  });
-  return tags;
-};
-
-var _notA$1 = inferNotA$1;
-
-// a lineage is all 'incoming' tags that have this as 'isA'
-var inferLineage$1 = function inferLineage(tags) {
-  var keys = Object.keys(tags);
-  keys.forEach(function (k) {
-    var tag = tags[k];
-    tag.lineage = []; // find all tags with it in their 'isA' set
-
-    for (var i = 0; i < keys.length; i++) {
-      if (tags[keys[i]].isA.indexOf(k) !== -1) {
-        tag.lineage.push(keys[i]);
-      }
-    }
-  });
-  return tags;
-};
-
-var _lineage$1 = inferLineage$1;
-
-var validate$1 = function validate(tags) {
-  // cleanup format
-  Object.keys(tags).forEach(function (k) {
-    var tag = tags[k]; // ensure isA is an array
-
-    tag.isA = tag.isA || [];
-
-    if (typeof tag.isA === 'string') {
-      tag.isA = [tag.isA];
-    } // ensure notA is an array
-
-
-    tag.notA = tag.notA || [];
-
-    if (typeof tag.notA === 'string') {
-      tag.notA = [tag.notA];
-    }
-  });
-  return tags;
-}; // build-out the tag-graph structure
-
-
-var inferTags$1 = function inferTags(tags) {
-  // validate data
-  tags = validate$1(tags); // build its 'down tags'
-
-  tags = _isA$1(tags); // infer the conflicts
-
-  tags = _notA$1(tags); // debug tag color
-
-  tags = _color$1(tags); // find incoming links
-
-  tags = _lineage$1(tags);
-  return tags;
-};
-
-var inference$1 = inferTags$1;
-
-var addIn$1 = function addIn(obj, tags) {
-  Object.keys(obj).forEach(function (k) {
-    tags[k] = obj[k];
-  });
-};
-
-var build$1 = function build() {
-  var tags = {};
-  addIn$1(nouns$1, tags);
-  addIn$1(verbs$1, tags);
-  addIn$1(values$1, tags);
-  addIn$1(misc$2, tags); // do the graph-stuff
-
-  tags = inference$1(tags);
-  return tags;
-};
-
-var tags$1 = build$1();
-
 var _debug = createCommonjsModule(function (module) {
   // https://stackoverflow.com/questions/9781218/how-to-change-node-jss-console-font-color
   var reset = '\x1b[0m';
@@ -7396,7 +6935,7 @@ var _debug = createCommonjsModule(function (module) {
       console.log('\n%c"' + p.text() + '"', 'color: #e6d7b3;');
       var terms = p.cache.terms || p.terms();
       terms.forEach(function (t) {
-        var tags = Object.keys(t.tags);
+        var tags$1 = Object.keys(t.tags);
         var text = t.text || '-';
 
         if (t.implicit) {
@@ -7405,17 +6944,17 @@ var _debug = createCommonjsModule(function (module) {
 
         var word = "'" + text + "'";
         word = padEnd(word, 8);
-        var found = tags.find(function (tag) {
-          return tags$1[tag] && tags$1[tag].color;
+        var found = tags$1.find(function (tag) {
+          return tags[tag] && tags[tag].color;
         });
         var color = 'steelblue';
 
-        if (tags$1[found]) {
-          color = tags$1[found].color;
+        if (tags[found]) {
+          color = tags[found].color;
           color = css[color];
         }
 
-        console.log("   ".concat(word, "  -  %c").concat(tags.join(', ')), "color: ".concat(color || 'steelblue', ";"));
+        console.log("   ".concat(word, "  -  %c").concat(tags$1.join(', ')), "color: ".concat(color || 'steelblue', ";"));
       });
     });
   }; //cheaper than requiring chalk
@@ -7445,16 +6984,16 @@ var _debug = createCommonjsModule(function (module) {
     }
   };
 
-  var tagString = function tagString(tags) {
-    tags = tags.map(function (tag) {
-      if (!tags$1.hasOwnProperty(tag)) {
+  var tagString = function tagString(tags$1) {
+    tags$1 = tags$1.map(function (tag) {
+      if (!tags.hasOwnProperty(tag)) {
         return tag;
       }
 
-      var c = tags$1[tag].color || 'blue';
+      var c = tags[tag].color || 'blue';
       return cli[c](tag);
     });
-    return tags.join(', ');
+    return tags$1.join(', ');
   }; //output some helpful stuff to the console
 
 
@@ -7851,7 +7390,7 @@ var reverse = function reverse() {
 /** remove any duplicate matches */
 
 
-var unique$6 = function unique() {
+var unique$4 = function unique() {
   var list = [].concat(this.list);
   var obj = {};
   list = list.filter(function (p) {
@@ -7870,7 +7409,7 @@ var unique$6 = function unique() {
 var _01Sort = {
   sort: sort,
   reverse: reverse,
-  unique: unique$6
+  unique: unique$4
 };
 
 var isPunct = /[\[\]{}⟨⟩:,،、‒–—―…‹›«»‐\-;\/⁄·*\•^†‡°¡¿※№÷×ºª%‰=‱¶§~|‖¦©℗®℠™¤₳฿]/g;
@@ -10636,7 +10175,7 @@ var preps = '(in|by|before|during|on|until|after|of|within|all)'; //6
 
 var people = '(january|april|may|june|summer|autumn|jan|sep)'; //ambiguous month-names
 
-var verbs$2 = '(may|march)'; //ambiguous month-verbs
+var verbs$1 = '(may|march)'; //ambiguous month-verbs
 
 var fixDates = function fixDates(doc) {
   //ambiguous month - person forms
@@ -10674,22 +10213,22 @@ var fixDates = function fixDates(doc) {
   } //ambiguous month - verb-forms
 
 
-  var verb = doc["if"](verbs$2);
+  var verb = doc["if"](verbs$1);
 
   if (verb.found === true) {
     //quickly march
-    verb.match("#Adverb [".concat(verbs$2, "]")).tag('Infinitive', 'ambig-verb');
-    verb.match("".concat(verbs$2, " [#Adverb]")).tag('Infinitive', 'ambig-verb'); //all march
+    verb.match("#Adverb [".concat(verbs$1, "]")).tag('Infinitive', 'ambig-verb');
+    verb.match("".concat(verbs$1, " [#Adverb]")).tag('Infinitive', 'ambig-verb'); //all march
 
-    verb.match("".concat(preps, " [").concat(verbs$2, "]")).tag('Month', 'in-month'); //this march
+    verb.match("".concat(preps, " [").concat(verbs$1, "]")).tag('Month', 'in-month'); //this march
 
-    verb.match("(next|this|last) [".concat(verbs$2, "]")).tag('Month', 'this-month'); //with date
+    verb.match("(next|this|last) [".concat(verbs$1, "]")).tag('Month', 'this-month'); //with date
 
-    verb.match("[".concat(verbs$2, "] the? #Value")).tag('Month', 'march-5th');
-    verb.match("#Value of? [".concat(verbs$2, "]")).tag('Month', '5th-of-march'); //nearby
+    verb.match("[".concat(verbs$1, "] the? #Value")).tag('Month', 'march-5th');
+    verb.match("#Value of? [".concat(verbs$1, "]")).tag('Month', '5th-of-march'); //nearby
 
-    verb.match("[".concat(verbs$2, "] .? #Date")).tag('Month', 'march-and-feb');
-    verb.match("#Date .? [".concat(verbs$2, "]")).tag('Month', 'feb-and-march');
+    verb.match("[".concat(verbs$1, "] .? #Date")).tag('Month', 'march-and-feb');
+    verb.match("#Date .? [".concat(verbs$1, "]")).tag('Month', 'feb-and-march');
     var march = doc["if"]('march');
 
     if (march.found === true) {
@@ -12146,14 +11685,14 @@ var methods$7 = {
       }
     }); // look for leading adverbs
 
-    var m = this.lookBehind('#Adverb$');
+    var m = this.lookBehind('#Adverb+$');
 
     if (m.found) {
       list = m.list.concat(list);
     } // look for trailing adverbs
 
 
-    m = this.lookAhead('^#Adverb');
+    m = this.lookAhead('^#Adverb+');
 
     if (m.found) {
       list = list.concat(m.list);

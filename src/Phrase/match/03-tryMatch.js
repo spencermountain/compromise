@@ -81,7 +81,11 @@ const tryHere = function(terms, regs, index, length) {
     }
 
     //if it looks like a match, continue
-    if (reg.anything === true || terms[t].doesMatch(reg, index + t, length) === true) {
+    //we have a special case where an end-anchored greedy match may need to
+    //start matching before the actual end; we do this by (temporarily!)
+    //removing the "end" property from the matching token... since this is
+    //very situation-specific, we *only* do this when we really need to.
+    if (reg.anything === true || (reg.end === true && reg.greedy === true && index + t < length - 1 && terms[t].doesMatch(Object.assign({}, reg, { end: false }), index + t, length) === true) || terms[t].doesMatch(reg, index + t, length) === true) {
       let startAt = t
       // okay, it was a match, but if it optional too,
       // we should check the next reg too, to skip it?
@@ -106,9 +110,18 @@ const tryHere = function(terms, regs, index, length) {
       }
       //try keep it going!
       if (reg.greedy === true) {
-        t = getGreedy(terms, t, reg, regs[r + 1], index, length)
+        // for greedy checking, we no longer care about the reg.start
+        // value, and leaving it can cause failures for anchored greedy
+        // matches.  ditto for end-greedy matches: we need an earlier non-
+        // ending match to succceed until we get to the actual end.
+        t = getGreedy(terms, t, Object.assign({}, reg, { start: false, end: false }), regs[r + 1], index, length)
         if (t === null) {
           return false //greedy was too short
+        }
+        // if this was also an end-anchor match, check to see we really
+        // reached the end
+        if (reg.end === true && index + t !== length) {
+          return false //greedy didn't reach the end
         }
       }
       if (reg.capture) {

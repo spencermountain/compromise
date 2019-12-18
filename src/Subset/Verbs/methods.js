@@ -42,12 +42,12 @@ module.exports = {
       }
     })
     // look for leading adverbs
-    let m = this.lookBehind('#Adverb$')
+    let m = this.lookBehind('#Adverb+$')
     if (m.found) {
       list = m.list.concat(list)
     }
     // look for trailing adverbs
-    m = this.lookAhead('^#Adverb')
+    m = this.lookAhead('^#Adverb+')
     if (m.found) {
       list = list.concat(m.list)
     }

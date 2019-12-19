@@ -101,6 +101,7 @@ test('pos-basic-tag:', function(t) {
     ['100+ rumours', ['Value', 'Plural']],
     ['John & John,', ['Noun', 'Noun', 'Noun']],
     // ['i am gutted', ['Noun', 'PastTense', 'Adjective']],
+    ['N.V.,', ['Noun']],
 
     //abbreviations
     [

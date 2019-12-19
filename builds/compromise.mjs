@@ -2039,9 +2039,10 @@ var tryHere = function tryHere(terms, regs, index, length) {
     if (reg.anything === true || reg.end === true && reg.greedy === true && index + t < length - 1 && terms[t].doesMatch(Object.assign({}, reg, {
       end: false
     }), index + t, length) === true || terms[t].doesMatch(reg, index + t, length) === true) {
-      var startAt = t; // Give our matched term a name to find it later
+      var startAt = t;
 
       if (reg.name) {
+        // Give our matched term a name to find it later - is this the best place?
         terms[t].name = reg.name;
       } // okay, it was a match, but if it optional too,
       // we should check the next reg too, to skip it?

@@ -88,8 +88,8 @@ const tryHere = function(terms, regs, index, length) {
     if (reg.anything === true || (reg.end === true && reg.greedy === true && index + t < length - 1 && terms[t].doesMatch(Object.assign({}, reg, { end: false }), index + t, length) === true) || terms[t].doesMatch(reg, index + t, length) === true) {
       let startAt = t
 
-      // Give our matched term a name to find it later
       if (reg.name) {
+        // Give our matched term a name to find it later - is this the best place?
         terms[t].name = reg.name
       }
 

@@ -100,6 +100,7 @@ test('pos-basic-tag:', function(t) {
     ['his fines', ['Possessive', 'Noun']],
     ['100+ rumours', ['Value', 'Plural']],
     ['John & John,', ['Noun', 'Noun', 'Noun']],
+    // ['i am gutted', ['Noun', 'PastTense', 'Adjective']],
 
     //abbreviations
     [

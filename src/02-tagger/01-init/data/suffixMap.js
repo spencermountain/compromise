@@ -27,98 +27,99 @@ module.exports = [
   },
   {
     //3-letter
-    que: Adj,
-    lar: Adj,
-    ffy: Adj,
-    nny: Adj,
-    rmy: Adj,
-    azy: Adj,
-    oid: Adj,
-    mum: Adj,
-    ous: Adj,
-    end: Vb,
-    sis: Sing,
-    rol: Sing,
-    ize: Inf,
-    ify: Inf,
-    zes: Pres,
-    nes: Pres,
-    ing: 'Gerund', //likely to be converted to Adj after lexicon pass
     ' so': Avb,
     "'ll": Modal,
     "'re": 'Copula',
+    azy: Adj,
+    end: Vb,
+    ffy: Adj,
+    ify: Inf,
+    ing: 'Gerund', //likely to be converted to Adj after lexicon pass
+    ize: Inf,
+    lar: Adj,
+    mum: Adj,
+    nes: Pres,
+    nny: Adj,
+    oid: Adj,
+    ous: Adj,
+    que: Adj,
+    rmy: Adj,
+    rol: Sing,
+    sis: Sing,
+    zes: Pres,
   },
   {
     //4-letter
-    teen: 'Value',
-    tors: Noun,
     amed: Past,
-    ched: Past,
-    ends: Vb,
-    oses: Pres,
-    fies: Pres,
-    ects: Pres,
-    nded: Past,
-    cede: Inf,
-    tage: Inf,
-    gate: Inf,
-    vice: Sing,
-    tion: Sing,
-    cted: Past,
-    ette: Sing,
-    some: Adj,
-    llen: Adj,
-    ried: Adj,
-    gone: Adj,
-    made: Adj,
-    fore: Avb,
-    less: Avb,
-    ices: Plrl,
-    ions: Plrl,
-    ints: Plrl,
     aped: Past,
+    ched: Past,
     lked: Past,
-    ould: Modal,
-    tive: Actor,
-    sson: Last, //swedish male
-    czyk: Last, //polish (male)
-    chuk: Last, //east-europe
-    enko: Last, //east-europe
+    nded: Past,
+    cted: Past,
+
     akis: Last, //greek
+    cede: Inf,
+    chuk: Last, //east-europe
+    czyk: Last, //polish (male)
+    ects: Pres,
+    ends: Vb,
+    enko: Last, //east-europe
+    ette: Sing,
+    fies: Pres,
+    fore: Avb,
+    gate: Inf,
+    gone: Adj,
+    ices: Plrl,
+    ints: Plrl,
+    ions: Plrl,
+    less: Avb,
+    llen: Adj,
+    made: Adj,
     nsen: Last, //norway
+    oses: Pres,
+    ould: Modal,
+    some: Adj,
+    sson: Last, //swedish male
+    tage: Inf,
+    teen: 'Value',
+    tion: Sing,
+    tive: Actor,
+    tors: Noun,
+    vice: Sing,
   },
   {
     //5-letter
-    fully: Avb,
-    where: Avb,
-    wards: Avb,
-    urned: Past,
     tized: Past,
+    urned: Past,
     eased: Past,
+
     ances: Plrl,
-    tures: Plrl,
-    ports: Plrl,
-    ettes: Plrl,
-    ities: Plrl,
-    rough: Adj,
-    ology: Noun,
     bound: Adj,
-    tieth: 'Ordinal',
+    ettes: Plrl,
+    fully: Avb,
     ishes: Pres,
-    tches: Pres,
-    nssen: Last, //norway
+    ities: Plrl,
     marek: Last, //polish (male)
+    nssen: Last, //norway
+    ology: Noun,
+    ports: Plrl,
+    rough: Adj,
+    tches: Pres,
+    tieth: 'Ordinal',
+    tures: Plrl,
+    wards: Avb,
+    where: Avb,
   },
   {
     //6-letter
+    auskas: Last, //lithuania
     keeper: Actor,
     logist: Actor,
-    auskas: Last, //lithuania
     teenth: 'Value',
   },
   {
     //7-letter
-    sdottir: Last, //swedish female
     opoulos: Last, //greek
+    sdottir: Last, //swedish female
   },
 ]

@@ -24,16 +24,25 @@ module.exports = {
   ],
   c: [[/.[^aeiou]ic$/, Adj]],
   d: [
-    [/.[iao]s?sed$/, Past], //franchised
-    [/.[gt]led$/, Past], //startled
+    //-hed
     [/.[aeiou][sg]hed$/, Past], //stashed, sighed
-    [/.[td]ed$/, Past], //wetted
+    //-red
     [/.[aeiou]red$/, Past], //stored
-    [/.[aeiou]n[cs]ed$/, Past], //lanced
-    [/.[^aeiou]led$/, Past], //rumbled
+    [/[^aeiou]ard$/, Sing], //card
+    //-led
+    [/.[bcdgt]led$/, Past], //startled, rumbled
+    [/.[aou]led$/, Past], //impaled
+    //-sed
+    [/.[iao]sed$/, Past], //franchised
+    //-ked
     [/[aeiou]n?c?ked$/, Past], //hooked
+
+    [/.[aeiou]n?[cs]ed$/, Past], //laced, lanced
+    [/.(pp|ll|ss|ff|gg|tt)ed$/, Past], //popped
+    [/.[td]ed$/, Past], //wetted
     [/[^aeiou][aeiou][tvx]ed$/, Past], //boxed
-    [/[^aeiou]ard$/, Sing],
+
+    //-id
     [/[aeiou][^aeiou]id$/, Adj],
     [/.[vrl]id$/, Adj],
   ],

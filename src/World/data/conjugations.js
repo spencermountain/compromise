@@ -654,6 +654,9 @@ let conjugations = {
   weave: {
     prt: 'woven',
   },
+  wed: {
+    pst: 'wed',
+  },
   weep: {
     prt: 'wept',
   },

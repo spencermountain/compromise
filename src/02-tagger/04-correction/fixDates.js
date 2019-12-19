@@ -1,6 +1,6 @@
 const preps = '(in|by|before|during|on|until|after|of|within|all)' //6
 const people = '(january|april|may|june|summer|autumn|jan|sep)' //ambiguous month-names
-const verbs = '(may|march)' //ambiguous month-verbs
+const verbs = '(may|march|sat)' //ambiguous month-verbs
 
 const fixDates = function(doc) {
   //ambiguous month - person forms
@@ -69,6 +69,8 @@ const fixDates = function(doc) {
   if (sun.found === true) {
     //sun feb 2
     sun.match('[sun] #Date').tag('WeekDay', 'sun-feb')
+    //1pm next sun
+    sun.match('#Date (on|this|next|last|during)? [sun]').tag('WeekDay', '1pm-sun')
     //sun the 5th
     sun
       .match('sun the #Ordinal')

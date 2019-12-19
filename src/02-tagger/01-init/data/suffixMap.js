@@ -47,6 +47,7 @@ module.exports = [
     rol: Sing,
     sis: Sing,
     zes: Pres,
+    oed: Past,
   },
   {
     //4-letter

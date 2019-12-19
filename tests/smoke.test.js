@@ -23,6 +23,22 @@ test('garbage-inputs', function(t) {
   t.end()
 })
 
+test('test-regex-safety', function(t) {
+  let doc = nlp(
+    '-5,999,666,454,234,523,233,234,234,234,234,234,234,234,999,929,838,234,234,234,234,234,234,234.00282828282838383838383838383838383838380'
+  )
+  t.equal(doc.has('#NumericValue'), true, 'found-long-number')
+
+  doc = nlp(
+    '-5,999,666,454,234,523,233,234,234,234,234,234,234,234,999,929,838,234,234,234,234,234,234,234.00282828282838383838383838383838383838380%'
+  )
+  t.equal(doc.has('#Percent'), true, 'found-long-percent')
+
+  doc = nlp('-$22,999,666,454,234,523,233,234,234,234,234,234,234,234,999,929,838,234,234,234,234,234,234,234.00')
+  t.equal(doc.has('#Money'), true, 'found-long-money')
+  t.end()
+})
+
 test('only-punctuation', function(t) {
   const garbage = ['.', ' - ', '...', '?', '&', '?,', '\n. \n', '🎵', '\n🇵🇷\n', '🇵🇷.', `🇷 %`]
   garbage.forEach(function(str) {

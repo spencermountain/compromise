@@ -15,6 +15,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - fix case-sensitive paths
 - fix greedy-start match condition regression #651
 - fix single period sentence runtime error
+- fix potentially-unsafe regexes
 
 ##### 12.2.1
 
@@ -47,7 +48,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 
 ### 12.0.0 &nbsp; :postal_horn:
 
-- [see Release Notes](https://github.com/spencermountain/compromise/wiki/v12-Release-Notes)
+- see **[Release Notes](https://github.com/spencermountain/compromise/wiki/v12-Release-Notes)**
 
 ##### 11.13.0
 
@@ -130,7 +131,6 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - nouns().articles() method
 - neighborhoods as #Place
 - support more complex noun-phrases with JustesonKatz in `.nouns()`
-  <!-- * include 'the #TitleCase' matches in .topics() -->
 
 ### v11
 

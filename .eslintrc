@@ -36,6 +36,9 @@
     "no-constant-condition": 1,
     "no-unused-expressions": 2,
     "no-undefined": 0,
-    "no-undef": 2
-  }
+    "no-undef": 2,
+    "security/detect-object-injection": 0
+  },
+  "plugins": ["security"],
+  "extends": ["plugin:security/recommended"]
 }

@@ -8,4 +8,5 @@ nlp.verbose(true)
 // console.log(doc.termList(1))
 // console.log(doc.text())
 
-nlp('text. Pretty inspired').debug()
+nlp('text. Pretty inspired Feeling.').debug()
+// nlp('16.125').debug()

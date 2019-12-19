@@ -13,7 +13,7 @@ const fallbacks = function(doc, terms) {
   step.neighbours(terms, world)
 
   // is there a case-sensitive clue?
-  step.case(terms, world)
+  step.case(doc)
 
   // check 'rewatch' as 'watch'
   step.stem(terms, world)

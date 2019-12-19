@@ -9,4 +9,4 @@ nlp.verbose(true)
 // console.log(doc.text())
 
 // nlp('16.125').debug()
-nlp('wed').debug()
+nlp('boxed').debug()

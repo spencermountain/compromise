@@ -27,11 +27,16 @@ module.exports = [
   },
   {
     //3-letter
+    oed: Past,
+    ued: Past,
+    xed: Past,
+
     ' so': Avb,
     "'ll": Modal,
     "'re": 'Copula',
     azy: Adj,
     end: Vb,
+    ped: Past,
     ffy: Adj,
     ify: Inf,
     ing: 'Gerund', //likely to be converted to Adj after lexicon pass
@@ -47,7 +52,6 @@ module.exports = [
     rol: Sing,
     sis: Sing,
     zes: Pres,
-    oed: Past,
   },
   {
     //4-letter
@@ -57,6 +61,7 @@ module.exports = [
     lked: Past,
     nded: Past,
     cted: Past,
+    dged: Past,
 
     akis: Last, //greek
     cede: Inf,

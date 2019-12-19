@@ -27,6 +27,8 @@ module.exports = {
     //==-ed==
     //double-consonant
     [/.(pp|ll|ss|ff|gg|tt|rr|bb)ed$/, Past], //popped
+    //double-vowel
+    [/.[aeo]{2}[bdgmnprvz]ed$/, Past], //beeped, mooned, veered
     //-hed
     [/.[aeiou][sg]hed$/, Past], //stashed, sighed
     //-rd
@@ -34,15 +36,21 @@ module.exports = {
     [/.[aeiou]r?ried$/, Past], //buried
     //-led
     [/.[bcdgtr]led$/, Past], //startled, rumbled
-    [/.[aoui]led$/, Past], //impaled
+    [/.[aoui]f?led$/, Past], //impaled, stifled
     //-sed
     [/.[iao]sed$/, Past], //franchised
     [/.[aeiou]n?[cs]ed$/, Past], //laced, lanced
+    //-med
+    [/[aeiou][rl]?[mnf]ed$/, Past], //warmed, attained, engulfed
     //-ked
     [/[aeiou]n?c?ked$/, Past], //hooked
+    //-ged
+    [/[aeiou][nl]?ged$/, Past], //engaged
     //-ted
-    [/.[tdbw]ed$/, Past], //bribed
+    [/.[tdbwxz]ed$/, Past], //bribed, boxed
     [/[^aeiou][aeiou][tvx]ed$/, Past], //boxed
+    //-ied
+    [/.[cdlmnprstv]ied$/, Past], //rallied
 
     [/[^aeiou]ard$/, Sing], //card
     [/[aeiou][^aeiou]id$/, Adj],

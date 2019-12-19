@@ -2039,8 +2039,13 @@ var tryHere = function tryHere(terms, regs, index, length) {
     if (reg.anything === true || reg.end === true && reg.greedy === true && index + t < length - 1 && terms[t].doesMatch(Object.assign({}, reg, {
       end: false
     }), index + t, length) === true || terms[t].doesMatch(reg, index + t, length) === true) {
-      var startAt = t; // okay, it was a match, but if it optional too,
+      var startAt = t; // Give our matched term a name to find it later
+
+      if (reg.name) {
+        terms[t].name = reg.name;
+      } // okay, it was a match, but if it optional too,
       // we should check the next reg too, to skip it?
+
 
       if (reg.optional && regs[r + 1]) {
         // does the next reg match it too?
@@ -5995,6 +6000,24 @@ var _02Accessors = createCommonjsModule(function (module, exports) {
 
     return arr;
   };
+
+  exports.named = function () {
+    var res = {}; //'reduce' but faster
+
+    for (var i = 0; i < this.list.length; i++) {
+      var terms = this.list[i].terms();
+
+      for (var o = 0; o < terms.length; o++) {
+        var term = terms[o];
+
+        if (term.name) {
+          res[term.name] = term;
+        }
+      }
+    }
+
+    return res;
+  };
 });
 var _02Accessors_1 = _02Accessors.first;
 var _02Accessors_2 = _02Accessors.last;
@@ -6004,6 +6027,7 @@ var _02Accessors_5 = _02Accessors.get;
 var _02Accessors_6 = _02Accessors.firstTerm;
 var _02Accessors_7 = _02Accessors.lastTerm;
 var _02Accessors_8 = _02Accessors.termList;
+var _02Accessors_9 = _02Accessors.named;
 
 var _03Match = createCommonjsModule(function (module, exports) {
   /** return a new Doc, with this one as a parent */

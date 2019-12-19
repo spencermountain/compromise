@@ -24,15 +24,17 @@ module.exports = {
   ],
   c: [[/.[^aeiou]ic$/, Adj]],
   d: [
-    [/.[ia]sed$/, Adj],
-    [/.[gt]led$/, Adj],
-    [/.[td]ed$/, Past],
-    [/.[aeiou]red$/, Past],
+    [/.[iao]s?sed$/, Past], //franchised
+    [/.[gt]led$/, Past], //startled
+    [/.[aeiou][sg]hed$/, Past], //stashed, sighed
+    [/.[td]ed$/, Past], //wetted
+    [/.[aeiou]red$/, Past], //stored
+    [/.[aeiou]n[cs]ed$/, Past], //lanced
     [/.[^aeiou]led$/, Past], //rumbled
+    [/[aeiou]n?c?ked$/, Past], //hooked
+    [/[^aeiou][aeiou][tvx]ed$/, Past], //boxed
     [/[^aeiou]ard$/, Sing],
     [/[aeiou][^aeiou]id$/, Adj],
-    [/[aeiou]c?ked$/, Past], //hooked
-    [/[^aeiou][aeiou][tvx]ed$/, Past], //boxed
     [/.[vrl]id$/, Adj],
   ],
   e: [
@@ -55,12 +57,7 @@ module.exports = {
   k: [
     [/^(k)+$/, Exp], //kkkk
   ],
-  l: [
-    [/.[gl]ial$/, Adj],
-    [/.[^aeiou]ful$/, Adj],
-    [/.[nrtumcd]al$/, Adj],
-    [/.[^aeiou][ei]al$/, Adj],
-  ],
+  l: [[/.[gl]ial$/, Adj], [/.[^aeiou]ful$/, Adj], [/.[nrtumcd]al$/, Adj], [/.[^aeiou][ei]al$/, Adj]],
   m: [
     [/.[^aeiou]ium$/, Sing],
     [/[^aeiou]ism$/, Sing],
@@ -84,12 +81,7 @@ module.exports = {
     [/[^i]fer$/, Inf],
     [/.[^aeiou][ao]pher$/, Actor],
   ],
-  t: [
-    [/.[di]est$/, 'Superlative'],
-    [/.[icldtgrv]ent$/, Adj],
-    [/[aeiou].*ist$/, Adj],
-    [/^[a-z]et$/, Verb],
-  ],
+  t: [[/.[di]est$/, 'Superlative'], [/.[icldtgrv]ent$/, Adj], [/[aeiou].*ist$/, Adj], [/^[a-z]et$/, Verb]],
   s: [
     [/.[rln]ates$/, Pres],
     [/.[^z]ens$/, Verb],

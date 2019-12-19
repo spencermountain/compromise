@@ -6014,10 +6014,8 @@
         var terms = this.list[i].terms();
 
         for (var o = 0; o < terms.length; o++) {
-          var term = terms[o];
-
-          if (term.name) {
-            res[term.name] = term;
+          if (terms[o].name) {
+            res[terms[o].name] = terms[o];
           }
         }
       }

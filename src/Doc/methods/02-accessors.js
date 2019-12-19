@@ -63,9 +63,8 @@ exports.named = function() {
   for (let i = 0; i < this.list.length; i++) {
     let terms = this.list[i].terms()
     for (let o = 0; o < terms.length; o++) {
-      const term = terms[o]
-      if (term.name) {
-        res[term.name] = term
+      if (terms[o].name) {
+        res[terms[o].name] = terms[o]
       }
     }
   }

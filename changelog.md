@@ -17,6 +17,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - fix single period sentence runtime error
 - fix potentially-unsafe regexes
 - improved tagging for '-ed' verbs (#616)
+- improve support for auxilary-pastTense ('was lifted') verb-phrases
 
 ##### 12.2.1
 

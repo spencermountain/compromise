@@ -22,7 +22,6 @@ const addMethod = function(Doc) {
     // // combine them back together
     m = m.concat(keep)
     m.sort('index')
-
     //handle slashes?
 
     //ensure there's actually a verb

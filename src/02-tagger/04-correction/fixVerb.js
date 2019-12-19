@@ -73,7 +73,7 @@ const fixVerb = function(doc) {
     if (copula.found === true) {
       //was walking
       copula
-        .match(`#Copula ${advb} #Gerund`)
+        .match(`#Copula ${advb} (#Gerund|#PastTense)`)
         .not('#Verb$')
         .tag('Auxiliary', 'copula-walking')
       //is mark hughes

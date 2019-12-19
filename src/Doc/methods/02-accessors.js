@@ -56,3 +56,18 @@ exports.termList = function(num) {
   }
   return arr
 }
+
+exports.named = function() {
+  const res = {}
+  //'reduce' but faster
+  for (let i = 0; i < this.list.length; i++) {
+    let terms = this.list[i].terms()
+    for (let o = 0; o < terms.length; o++) {
+      const term = terms[o]
+      if (term.name) {
+        res[term.name] = term
+      }
+    }
+  }
+  return res
+}

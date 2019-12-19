@@ -2,12 +2,15 @@ compromise uses semver, and pushes to npm frequently
 
 (github-releases occasionally)
 
-- **Major** is considered a breaking api change,
-- **Minor** is considered a behaviour/performance change.
-- **Patch** is an obvious, non-controversial bugfix
+- **Major** is a breaking api change - method or response changes that can cause runtime errors.
+- **Minor** is a behaviour change - Tagging or grammar changes.
+- **Patch** is an obvious, non-controversial bugfix.
+
+While all _Major_ releases should be reviewed, our only two _large_ releases are **v6** in 2016 and and **v12** in 2019. Others have been mostly incremental, or niche.
 
 ##### 12.2.2
 
+- prefer `@titleCase` instead of `#TitleCase` tag
 - update dependencies
 - fix case-sensitive paths
 - fix greedy-start match condition regression #651

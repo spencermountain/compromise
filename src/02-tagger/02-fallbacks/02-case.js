@@ -7,11 +7,11 @@ const checkCase = function(terms, world) {
     //is it a titlecased word?
     if (titleCase.test(term.text) === true && hasNumber.test(term.text) === false) {
       // tag it as titlecase, if possible
-      if (i !== 0) {
-        term.tag('TitleCase', 'case', world)
-      } else if (term.tags.Person || term.tags.Organization || term.tags.Place) {
-        term.tag('TitleCase', 'case-person', world)
-      }
+      // if (i !== 0) {
+      //   term.tag('TitleCase', 'case', world)
+      // } else if (term.tags.Person || term.tags.Organization || term.tags.Place) {
+      //   term.tag('TitleCase', 'case-person', world)
+      // }
       // can we call it a noun?
       if (i !== 0) {
         //sure!

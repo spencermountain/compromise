@@ -10,7 +10,7 @@ const fixPerson = function(doc) {
   let hon = doc.if('#Honorific')
   if (hon.found === true) {
     //mr Putin
-    doc.match('(mr|mrs|ms|dr) (#TitleCase|#Possessive)+').tag('#Person', 'mr-putin')
+    doc.match('(mr|mrs|ms|dr) (@titleCase|#Possessive)+').tag('#Person', 'mr-putin')
     //mr X
     hon.match('#Honorific #Acronym').tag('Person', 'Honorific-TitleCase')
     //remove single 'mr'
@@ -20,13 +20,13 @@ const fixPerson = function(doc) {
   }
 
   //methods requiring a titlecase
-  let title = doc.if('#TitleCase')
+  let title = doc.if('@titleCase')
   if (title.found === true) {
-    title.match('#Acronym #TitleCase').tagSafe('#Person', 'acronym-titlecase')
+    title.match('#Acronym @titleCase').tagSafe('#Person', 'acronym-titlecase')
     //ludwig van beethovan
-    title.match('#TitleCase (van|al|bin) #TitleCase').tagSafe('Person', 'titlecase-van-titlecase')
+    title.match('@titleCase (van|al|bin) @titleCase').tagSafe('Person', 'titlecase-van-titlecase')
     //jose de Sucre
-    title.match('#TitleCase (de|du) la? #TitleCase').tagSafe('Person', 'titlecase-van-titlecase')
+    title.match('@titleCase (de|du) la? @titleCase').tagSafe('Person', 'titlecase-van-titlecase')
     //Foo U Ford
     title
       .match('[#ProperNoun] #Person')
@@ -35,23 +35,23 @@ const fixPerson = function(doc) {
 
     //pope francis
     title
-      .match('(lady|queen|sister) #TitleCase')
+      .match('(lady|queen|sister) @titleCase')
       .ifNo('#Date')
       .ifNo('#Honorific')
       .tag('#FemaleName', 'lady-titlecase')
     title
-      .match('(king|pope|father) #TitleCase')
+      .match('(king|pope|father) @titleCase')
       .ifNo('#Date')
       .tag('#MaleName', 'poe')
 
     // jean Foobar
-    title.match(maybeNoun + ' #Acronym? #TitleCase').tagSafe('Person', 'ray-smith')
+    title.match(maybeNoun + ' #Acronym? @titleCase').tagSafe('Person', 'ray-smith')
     // rob Foobar
-    title.match(maybeVerb + ' #Acronym? #TitleCase').tag('Person', 'rob-smith')
+    title.match(maybeVerb + ' #Acronym? @titleCase').tag('Person', 'rob-smith')
     // rusty Foobar
-    title.match(maybeAdj + ' #Acronym? #TitleCase').tag('Person', 'rusty-smith')
+    title.match(maybeAdj + ' #Acronym? @titleCase').tag('Person', 'rusty-smith')
     // june Foobar
-    title.match(maybeDate + ' #Acronym? (#TitleCase && !#Month)').tag('Person', 'june-smith')
+    title.match(maybeDate + ' #Acronym? (@titleCase && !#Month)').tag('Person', 'june-smith')
   }
 
   let person = doc.if('#Person')
@@ -72,8 +72,8 @@ const fixPerson = function(doc) {
       .tag('Honorific', 'ambg-honorifics')
     //Morgan Shlkjsfne
     title
-      .match('#Person #TitleCase')
-      .match('#TitleCase #Noun')
+      .match('#Person @titleCase')
+      .match('@titleCase #Noun')
       .tagSafe('Person', 'person-titlecase')
     //a bunch of ambiguous first names
 
@@ -117,8 +117,8 @@ const fixPerson = function(doc) {
     //this one is tricky
     let al = person.if('al')
     if (al.found === true) {
-      al.match('al (#Person|#TitleCase)').tagSafe('#Person', 'al-borlen')
-      al.match('#TitleCase al #TitleCase').tagSafe('#Person', 'arabic-al-arabic')
+      al.match('al (#Person|@titleCase)').tagSafe('#Person', 'al-borlen')
+      al.match('@titleCase al @titleCase').tagSafe('#Person', 'arabic-al-arabic')
     }
 
     let firstName = person.if('#FirstName')
@@ -128,11 +128,11 @@ const fixPerson = function(doc) {
       //Osama bin Laden
       firstName.match('#FirstName (bin|al) #Noun').tag('#Person', 'firstname-al-noun')
       //John L. Foo
-      firstName.match('#FirstName #Acronym #TitleCase').tag('Person', 'firstname-acronym-titlecase')
+      firstName.match('#FirstName #Acronym @titleCase').tag('Person', 'firstname-acronym-titlecase')
       //Andrew Lloyd Webber
-      firstName.match('#FirstName #FirstName #TitleCase').tag('Person', 'firstname-firstname-titlecase')
+      firstName.match('#FirstName #FirstName @titleCase').tag('Person', 'firstname-firstname-titlecase')
       //Mr Foo
-      firstName.match('#Honorific #FirstName? #TitleCase').tag('Person', 'Honorific-TitleCase')
+      firstName.match('#Honorific #FirstName? @titleCase').tag('Person', 'Honorific-TitleCase')
       //peter the great
       firstName.match('#FirstName the #Adjective').tag('Person', 'determiner5')
 
@@ -143,7 +143,7 @@ const fixPerson = function(doc) {
 
       //John Foo
       firstName
-        .match('#FirstName #TitleCase #TitleCase?')
+        .match('#FirstName @titleCase @titleCase?')
         .match('#Noun+')
         .tag('Person', 'firstname-titlecase')
       //Joe K. Sombrero
@@ -170,7 +170,7 @@ const fixPerson = function(doc) {
 
       // Firstname x (dangerous)
       let tmp = firstName
-        .match('#FirstName (#Noun|#TitleCase)')
+        .match('#FirstName (#Noun|@titleCase)')
         .ifNo('^#Possessive')
         .ifNo('#ClauseEnd .')
         .ifNo('#Pronoun')
@@ -194,7 +194,7 @@ const fixPerson = function(doc) {
         .tag('#FirstName', 'maybe-lastname')
       //Jani K. Smith
       lastName
-        .match('(#TitleCase|#Singular) #Acronym? #LastName')
+        .match('(@titleCase|#Singular) #Acronym? #LastName')
         .ifNo('#Date')
         .tag('#Person', 'title-acro-noun')
         .lastTerm()

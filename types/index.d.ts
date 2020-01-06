@@ -1,14 +1,33 @@
 export as namespace nlp
 
-type compromise<Doc extends nlp.Document = nlp.Document> = (text: string) => Doc
+interface Compromise<CurrentDocumentExtension extends object = {}, CurrentWorldExtension extends object = {}> {
+  /** normal usage */
+  (text: string): nlp.Document<nlp.World & CurrentWorldExtension> & CurrentDocumentExtension
+  /** tozenize string */
+  tokenize(text: string): nlp.Document<nlp.World & CurrentWorldExtension> & CurrentDocumentExtension
+  /** mix in a compromise-plugin */
+  extend<DocumentExtension extends object = {}, WorldExtension extends object = {}>(
+    plugin: Plugin
+  ): Compromise<CurrentDocumentExtension & DocumentExtension, CurrentWorldExtension & WorldExtension>
+  /** re-generate a Doc object from .json() results */
+  load(json: any): nlp.Document<nlp.World & CurrentWorldExtension> & CurrentDocumentExtension
+  /**  log our decision-making for debugging */
+  verbose(bool: boolean): nlp.Document<nlp.World & CurrentWorldExtension> & CurrentDocumentExtension
+  /**  current semver version of the library */
+  version: nlp.Document<nlp.World & CurrentWorldExtension> & CurrentDocumentExtension
+}
 
-declare function nlp<Doc extends nlp.Document = nlp.Document>(text: string): Doc
+declare function nlp<DocumentExtension extends object = {}, WorldExtension extends object = {}>(
+  text: string
+): nlp.Document<nlp.World & WorldExtension> & DocumentExtension
 
 // Constructor
 declare module nlp {
   export function tokenize(text: string): Document
   /** mix in a compromise-plugin */
-  export function extend<Doc extends nlp.Document = nlp.Document>(plugin: Plugin): compromise<Doc>
+  export function extend<DocumentExtension extends object = {}, WorldExtension extends object = {}>(
+    plugin: Plugin
+  ): Compromise<DocumentExtension, WorldExtension>
   /** re-generate a Doc object from .json() results */
   export function load(json: any): Document
   /**  log our decision-making for debugging */

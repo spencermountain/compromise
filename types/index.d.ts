@@ -1,6 +1,6 @@
 export as namespace nlp
 
-interface Compromise<CurrentDocumentExtension extends object = {}, CurrentWorldExtension extends object = {}> {
+export interface Compromise<CurrentDocumentExtension extends object = {}, CurrentWorldExtension extends object = {}> {
   /** normal usage */
   (text: string): nlp.Document<nlp.World & CurrentWorldExtension> & CurrentDocumentExtension
   /** tozenize string */
@@ -8,7 +8,14 @@ interface Compromise<CurrentDocumentExtension extends object = {}, CurrentWorldE
   /** mix in a compromise-plugin */
   extend<DocumentExtension extends object = {}, WorldExtension extends object = {}>(
     plugin: Plugin
-  ): Compromise<CurrentDocumentExtension & DocumentExtension, CurrentWorldExtension & WorldExtension>
+  ): Compromise<
+    {
+      [k in keyof (CurrentDocumentExtension & DocumentExtension)]: (CurrentDocumentExtension & DocumentExtension)[k]
+    },
+    {
+      [k in keyof (CurrentWorldExtension & WorldExtension)]: (CurrentWorldExtension & WorldExtension)[k]
+    }
+  >
   /** re-generate a Doc object from .json() results */
   load(json: any): nlp.Document<nlp.World & CurrentWorldExtension> & CurrentDocumentExtension
   /**  log our decision-making for debugging */

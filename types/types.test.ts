@@ -4,13 +4,31 @@ import nlp from '../'
 import nlpNumbers from '../plugins/numbers'
 
 // Typings for imported plugin
+interface NumberFunctions {
+  json(n?: number): Document
+  fractions(): Document
+  toText(): Document
+  toNumber(): Document
+  toOrdinal(): Document
+  toCardinal(): Document
+  add(n: number): Document
+  subtract(n: number): Document
+  increment(): Document
+  decrement(): Document
+  isEqual(): Document
+  greaterThan(min: number): Document
+  lessThan(max: number): Document
+  between(min: number, max: number): Document
+  isOrdinal(): Document
+  isCardinal(): Document
+  toLocaleString(): Document
+}
+
 type NLPNumbers = nlp.Plugin<
   {
-    numbers: () => number[]
+    numbers(n?: number): NumberFunctions
   },
-  {
-    a: string
-  }
+  {}
 >
 
 // vs Typed plugin
@@ -30,7 +48,7 @@ const nlpEx = nlp
 const doc = nlpEx('hello world')
 doc.test('test')
 doc.numbers()
-doc.world.a === typeof 'string'
+doc.numbers().json()
 doc.world.test === typeof 'string'
 
 // Demo: For external use

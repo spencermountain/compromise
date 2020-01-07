@@ -8,7 +8,7 @@ compromise uses semver, and pushes to npm frequently
 
 While all _Major_ releases should be reviewed, our only two _large_ releases are **v6** in 2016 and and **v12** in 2019. Others have been mostly incremental, or niche.
 
-##### 12.2.2
+##### 12.3.0
 
 - prefer `@titleCase` instead of `#TitleCase` tag
 - update dependencies
@@ -18,6 +18,8 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - fix potentially-unsafe regexes
 - improved tagging for '-ed' verbs (#616)
 - improve support for auxilary-pastTense ('was lifted') verb-phrases
+- more robust number-tagging regexes
+- fix typescript types for plugins #661 (thanks @Drache93)
 
 ##### 12.2.1
 

@@ -63,7 +63,8 @@
     "tape": "4.12.0"
   },
   "eslintIgnore": [
-    "builds/*.js"
+    "builds/*.js",
+    "types/*.ts"
   ],
   "license": "MIT"
 }

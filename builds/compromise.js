@@ -2281,7 +2281,8 @@
 
       if (start(w) === '/' && end(w) === '/') {
         w = stripBoth(w);
-        obj.regex = new RegExp(w);
+        obj.regex = new RegExp(w); //potential vuln - security/detect-non-literal-regexp
+
         return obj;
       } //soft-match
 
@@ -3049,7 +3050,11 @@
     } //handle last one
 
 
-    if (carry && result.length > 0) {
+    if (carry) {
+      if (result.length === 0) {
+        result[0] = '';
+      }
+
       result[result.length - 1] += carry; //put it on the end
     } // combine 'one / two'
 
@@ -3200,7 +3205,7 @@
     "Country": "true¦0:38;1:2L;a2Wb2Dc21d1Xe1Rf1Lg1Bh19i13j11k0Zl0Um0Gn05om3CpZqat1JrXsKtCu6v4wal3yemTz2;a24imbabwe;es,lis and futu2X;a2enezue31ietnam;nuatu,tican city;.5gTkraiZnited 3ruXs2zbeE;a,sr;arab emirat0Kkingdom,states2;! of am2X;k.,s.2; 27a.;a7haBimor-les0Bo6rinidad4u2;nis0rk2valu;ey,me2Xs and caic1T; and 2-2;toba1J;go,kel0Ynga;iw2Vji2nz2R;ki2T;aCcotl1eBi8lov7o5pa2Bri lanka,u4w2yr0;az2ed9itzerl1;il1;d2Qriname;lomon1Vmal0uth 2;afr2IkLsud2O;ak0en0;erra leoEn2;gapo1Wt maart2;en;negKrb0ychellY;int 2moa,n marino,udi arab0;hele24luc0mart1Z;epublic of ir0Com2Cuss0w2;an25;a3eHhilippinTitcairn1Ko2uerto riM;l1rtugE;ki2Bl3nama,pua new0Tra2;gu6;au,esti2;ne;aAe8i6or2;folk1Gth3w2;ay; k2ern mariana1B;or0M;caragua,ger2ue;!ia;p2ther18w zeal1;al;mib0u2;ru;a6exi5icro09o2yanm04;ldova,n2roc4zamb9;a3gol0t2;enegro,serrat;co;c9dagascZl6r4urit3yot2;te;an0i14;shall0Vtin2;ique;a3div2i,ta;es;wi,ys0;ao,ed00;a5e4i2uxembourg;b2echtenste10thu1E;er0ya;ban0Gsotho;os,tv0;azakh1De2iriba02osovo,uwait,yrgyz1D;eling0Jnya;a2erF;ma15p1B;c6nd5r3s2taly,vory coast;le of m19rael;a2el1;n,q;ia,oI;el1;aiSon2ungary;dur0Mg kong;aAermany,ha0Pibralt9re7u2;a5ern4inea2ya0O;!-biss2;au;sey;deloupe,m,tema0P;e2na0M;ce,nl1;ar;bTmb0;a6i5r2;ance,ench 2;guia0Dpoly2;nes0;ji,nl1;lklandTroeT;ast tim6cu5gypt,l salv5ngl1quatorial3ritr4st2thiop0;on0; guin2;ea;ad2;or;enmark,jibou4ominica3r con2;go;!n B;ti;aAentral african 9h7o4roat0u3yprQzech2; 8ia;ba,racao;c3lo2morPngo-brazzaville,okFsta r03te d'ivoiK;mb0;osD;i2ristmasF;le,na;republic;m2naTpe verde,yman9;bod0ero2;on;aFeChut00o8r4u2;lgar0r2;kina faso,ma,undi;azil,itish 2unei;virgin2; is2;lands;liv0nai4snia and herzegoviGtswaGuvet2; isl1;and;re;l2n7rmuF;ar2gium,ize;us;h3ngladesh,rbad2;os;am3ra2;in;as;fghaFlCmAn5r3ustr2zerbaijH;al0ia;genti2men0uba;na;dorra,g4t2;arct6igua and barbu2;da;o2uil2;la;er2;ica;b2ger0;an0;ia;ni2;st2;an",
     "Region": "true¦0:1U;a20b1Sc1Id1Des1Cf19g13h10i0Xj0Vk0Tl0Qm0FnZoXpSqPrMsDtAut9v6w3y1zacatec22;o05u1;cat18kZ;a1est vi4isconsin,yomi14;rwick0shington1;! dc;er2i1;rgin1S;acruz,mont;ah,tar pradesh;a2e1laxca1DuscaA;nnessee,x1R;bas0Kmaulip1QsmJ;a6i4o2taf0Ou1ylh13;ffVrr00s0Y;me10no1Auth 1;cSdR;ber1Ic1naloa;hu0Sily;n2skatchew0Rxo1;ny; luis potosi,ta catari1I;a1hode7;j1ngp02;asth0Mshahi;inghai,u1;e1intana roo;bec,ensWreta0E;ara4e2rince edward1; isU;i,nnsylv1rnambu02;an14;!na;axa0Ndisha,h1klaho1Bntar1reg4x04;io;ayarit,eBo3u1;evo le1nav0L;on;r1tt0Rva scot0X;f6mandy,th1; 1ampton0;c3d2yo1;rk0;ako0Y;aroli0V;olk;bras0Xva01w1; 2foundland1;! and labrador;brunswick,hamp0jers1mexiJyork state;ey;a6i2o1;nta0Nrelos;ch3dlanBn2ss1;issippi,ouri;as geraGneso0M;igQoacQ;dhya,harasht04ine,ni3r1ssachusetts;anhao,y1;land;p1toba;ur;anca0e1incoln0ouis8;e1iH;ds;a1entucky,hul0A;ns08rnata0Dshmir;alis1iangxi;co;daho,llino2nd1owa;ia05;is;a2ert1idalEunA;ford0;mp0waii;ansu,eorgWlou5u1;an2erre1izhou,jarat;ro;ajuato,gdo1;ng;cester0;lori2uji1;an;da;sex;e4o2uran1;go;rs1;et;lawaErby0;a8ea7hi6o1umbrH;ahui4l3nnectic2rsi1ventry;ca;ut;iMorado;la;apEhuahua;ra;l8m1;bridge0peche;a5r4uck1;ingham0;shi1;re;emen,itish columb3;h2ja cal1sque,var2;iforn1;ia;guascalientes,l4r1;izo2kans1;as;na;a2ber1;ta;ba2s1;ka;ma",
     "FemaleName": "true¦0:FY;1:G2;2:FR;3:FD;4:FC;5:EP;6:ER;7:FS;8:GF;9:EZ;A:GB;B:E5;C:FO;D:FL;E:G8;F:EG;aE2bD4cB8dAIe9Gf91g8Hh83i7Sj6Uk60l4Om38n2To2Qp2Fqu2Er1Os0Qt04ursu6vUwOyLzG;aJeHoG;e,la,ra;lGna;da,ma;da,ra;as7EeHol1TvG;et5onB9;le0sen3;an9endBNhiB4iG;lInG;if3AniGo0;e,f39;a,helmi0lGma;a,ow;aMeJiG;cHviG;an9XenG1;kCZtor3;da,l8Vnus,rG;a,nGoniD2;a,iDC;leGnesEC;nDLrG;i1y;aSePhNiMoJrGu6y4;acG3iGu0E;c3na,sG;h9Mta;nHrG;a,i;i9Jya;a5IffaCGna,s7;al3eGomasi0;a,l8Go6Xres1;g7Uo6WrHssG;!a,ie;eFi,ri8;bNliMmKnIrHs7tGwa0;ia0um;a,yn;iGya;a,ka,s7;a4e4iGmCAra;!ka;a,t7;at7it7;a05carlet2Ye04hUiSkye,oQtMuHyG;bFJlvi1;e,sHzG;an2Tet5ie,y;anGi8;!a,e,nG;aDe;aIeG;fGl3DphG;an2;cF8r6;f3nGphi1;d4ia,ja,ya;er4lv3mon1nGobh75;dy;aKeGirlBLo0y6;ba,e0i6lIrG;iGrBPyl;!d70;ia,lBV;ki4nIrHu0w0yG;la,na;i,leAon,ron;a,da,ia,nGon;a,on;l5Yre0;bMdLi9lKmIndHrGs7vannaD;aDi0;ra,y;aGi4;nt7ra;lBNome;e,ie;in1ri0;a02eXhViToHuG;by,thBK;bQcPlOnNsHwe0xG;an94ie,y;aHeGie,lE;ann8ll1marBFtB;!lGnn1;iGyn;e,nG;a,d7W;da,i,na;an9;hel53io;bin,erByn;a,cGkki,na,ta;helBZki;ea,iannDXoG;da,n12;an0bIgi0i0nGta,y0;aGee;!e,ta;a,eG;cARkaD;chGe,i0mo0n5EquCDvCy0;aCCelGi9;!e,le;een2ia0;aMeLhJoIrG;iGudenAW;scil1Uyamva9;lly,rt3;ilome0oebe,ylG;is,lis;arl,ggy,nelope,r6t4;ige,m0Fn4Oo6rvaBBtHulG;a,et5in1;ricGsy,tA8;a,e,ia;ctav3deHfAWlGphAW;a,ga,iv3;l3t5;aQePiJoGy6;eHrG;aDeCma;ll1mi;aKcIkGla,na,s7ta;iGki;!ta;hoB2k8BolG;a,eBH;!mh;l7Tna,risF;dIi5PnHo23taG;li1s7;cy,et5;eAiCO;a01ckenz2eViLoIrignayani,uriBGyG;a,rG;a,na,tAS;i4ll9XnG;a,iG;ca,ka,qB4;a,chOkaNlJmi,nIrGtzi;aGiam;!n9;a,dy,erva,h,n2;a,dIi9JlG;iGy;cent,e;red;!e6;ae6el3G;ag4KgKi,lHrG;edi61isFyl;an2iGliF;nGsAM;a,da;!an,han;b08c9Ed06e,g04i03l01nZrKtJuHv6Sx87yGz2;a,bell,ra;de,rG;a,eC;h75il9t2;a,cSgOiJjor2l6In2s7tIyG;!aGbe5QjaAlou;m,n9S;a,ha,i0;!aIbALeHja,lEna,sGt53;!a,ol,sa;!l06;!h,m,nG;!a,e,n1;arIeHie,oGr3Kueri5;!t;!ry;et3IiB;elGi61y;a,l1;dGon,ue6;akranBy;iGlo36;a,ka,n9;a,re,s2;daGg2;!l2W;alEd2elGge,isBGon0;eiAin1yn;el,le;a0Ie08iWoQuKyG;d3la,nG;!a,dHe9SnGsAQ;!a,e9R;a,sAO;aB1cJelIiFlHna,pGz;e,iB;a,u;a,la;iGy;a2Ae,l25n9;is,l1GrHtt2uG;el6is1;aIeHi8na,rG;a6Zi8;lei,n1tB;!in1;aQbPd3lLnIsHv3zG;!a,be4Ket5z2;a,et5;a,dG;a,sGy;ay,ey,i,y;a,iaIlG;iGy;a8Ge;!n4F;b7Terty;!n5R;aNda,e0iLla,nKoIslARtGx2;iGt2;c3t3;la,nGra;a,ie,o4;a,or1;a,gh,laG;!ni;!h,nG;a,d4e,n4N;cNdon7Si6kes7na,rMtKurIvHxGy6;mi;ern1in3;a,eGie,yn;l,n;as7is7oG;nya,ya;a,isF;ey,ie,y;aZeUhadija,iMoLrIyG;lGra;a,ee,ie;istGy5B;a,en,iGy;!e,n48;ri,urtn9A;aMerLl99mIrGzzy;a,stG;en,in;!berlG;eGi,y;e,y;a,stC;!na,ra;el6PiJlInHrG;a,i,ri;d4na;ey,i,l9Qs2y;ra,s7;c8Wi5XlOma6nyakumari,rMss5LtJviByG;!e,lG;a,eG;e,i78;a5EeHhGi3PlEri0y;ar5Cer5Cie,leCr9Fy;!lyn73;a,en,iGl4Uyn;!ma,n31sF;ei72i,l2;a04eVilToMuG;anKdJliGst56;aHeGsF;!nAt0W;!n8X;i2Ry;a,iB;!anLcelEd5Vel71han6IlJni,sHva0yG;a,ce;eGie;fi0lEph4X;eGie;en,n1;!a,e,n36;!i10lG;!i0Z;anLle0nIrHsG;i5Qsi5Q;i,ri;!a,el6Pif1RnG;a,et5iGy;!e,f1P;a,e72iHnG;a,e71iG;e,n1;cLd1mi,nHqueliAsmin2Uvie4yAzG;min8;a8eHiG;ce,e,n1s;!lGsFt06;e,le;inHk2lEquelG;in1yn;da,ta;lPmNnMo0rLsHvaG;!na;aHiGob6U;do4;!belGdo4;!a,e,l2G;en1i0ma;a,di4es,gr5R;el9ogG;en1;a,eAia0o0se;aNeKilHoGyacin1N;ll2rten1H;aHdGlaH;a,egard;ry;ath0WiHlGnrietBrmiAst0W;en24ga;di;il75lKnJrGtt2yl75z6D;iGmo4Fri4G;etG;!te;aDnaD;ey,l2;aYeTiOlMold12rIwG;enGyne18;!dolE;acHetGisel9;a,chC;e,ieG;!la;adys,enGor3yn1Y;a,da,na;aJgi,lHna,ov71selG;a,e,le;da,liG;an;!n0;mYnIorgHrG;ald35i,m2Stru73;et5i5T;a,eGna;s1Nvieve;briel3Fil,le,rnet,yle;aReOio0loMrG;anHe9iG;da,e9;!cG;esHiGoi0G;n1s3V;!ca;!rG;a,en43;lHrnG;!an9;ec3ic3;rHtiGy8;ma;ah,rah;d0FileCkBl00mUn4ArRsMtLuKvG;aIelHiG;e,ta;in0Ayn;!ngel2H;geni1la,ni3R;h52ta;meral9peranJtG;eHhGrel6;er;l2Pr;za;iGma,nest29yn;cGka,n;a,ka;eJilImG;aGie,y;!liA;ee,i1y;lGrald;da,y;aTeRiMlLma,no4oJsIvG;a,iG;na,ra;a,ie;iGuiG;se;a,en,ie,y;a0c3da,nJsGzaH;aGe;!beG;th;!a,or;anor,nG;!a;in1na;en,iGna,wi0;e,th;aWeKiJoGul2U;lor51miniq3Yn30rGtt2;a,eCis,la,othGthy;ea,y;an09naDonAx2;anPbOde,eNiLja,lImetr3nGsir4U;a,iG;ce,se;a,iHla,orGphiA;es,is;a,l5J;dGrdG;re;!d4Mna;!b2CoraDra;a,d4nG;!a,e;hl3i0mMnKphn1rHvi1WyG;le,na;a,by,cHia,lG;a,en1;ey,ie;a,et5iG;!ca,el1Aka;arGia;is;a0Qe0Mh04i02lUoJrHynG;di,th3;istGy04;al,i0;lOnLrHurG;tn1D;aId28iGn28riA;!nG;a,e,n1;!l1S;n2sG;tanGuelo;ce,za;eGleC;en,t5;aIeoHotG;il4B;!pat4;ir8rIudG;et5iG;a,ne;a,e,iG;ce,sX;a4er4ndG;i,y;aPeMloe,rG;isHyG;stal;sy,tG;aHen,iGy;!an1e,n1;!l;lseHrG;!i8yl;a,y;nLrG;isJlHmG;aiA;a,eGot5;n1t5;!sa;d4el1PtG;al,el1O;cHlG;es5i3F;el3ilG;e,ia,y;iYlXmilWndVrNsLtGy6;aJeIhGri0;erGleCrEy;in1;ri0;li0ri0;a2GsG;a2Fie;a,iMlKmeIolHrG;ie,ol;!e,in1yn;lGn;!a,la;a,eGie,y;ne,y;na,sF;a0Di0D;a,e,l1;isBl2;tlG;in,yn;arb0CeYianXlVoTrG;andRePiIoHyG;an0nn;nwEok8;an2NdgKg0ItG;n27tG;!aHnG;ey,i,y;ny;etG;!t8;an0e,nG;da,na;i8y;bbi8nG;iBn2;ancGossom,ythe;a,he;ca;aRcky,lin9niBrNssMtIulaDvG;!erlG;ey,y;hHsy,tG;e,i0Zy8;!anG;ie,y;!ie;nGt7yl;adHiG;ce;et5iA;!triG;ce,z;a4ie,ra;aliy29b24d1Lg1Hi19l0Sm0Nn01rWsNthe0uJvIyG;anGes7;a,na;a,r25;drIgusHrG;el3;ti0;a,ey,i,y;hHtrG;id;aKlGt1P;eHi8yG;!n;e,iGy;gh;!nG;ti;iIleHpiB;ta;en,n1t5;an19elG;le;aYdWeUgQiOja,nHtoGya;inet5n3;!aJeHiGmI;e,ka;!mGt5;ar2;!belHliFmT;sa;!le;ka,sGta;a,sa;elGie;a,iG;a,ca,n1qG;ue;!t5;te;je6rea;la;!bHmGstas3;ar3;el;aIberHel3iGy;e,na;!ly;l3n9;da;aTba,eNiKlIma,yG;a,c3sG;a,on,sa;iGys0J;e,s0I;a,cHna,sGza;a,ha,on,sa;e,ia;c3is7jaIna,ssaIxG;aGia;!nd4;nd4;ra;ia;i0nHyG;ah,na;a,is,naD;c7da,leCmLnslKsG;haDlG;inGyW;g,n;!h;ey;ee;en;at7g2nG;es;ie;ha;aVdiSelLrG;eIiG;anLenG;a,e,ne;an0;na;aKeJiHyG;nn;a,n1;a,e;!ne;!iG;de;e,lEsG;on;yn;!lG;iAyn;ne;agaJbHiG;!gaI;ey,i8y;!e;il;ah",
-    "WeekDay": "true¦fri4mon4s2t1wed0;!nesd4;hurs2ues2;at0un1;!urd1;!d0;ay0;!s",
+    "WeekDay": "true¦fri2mon2s1t0wednesd3;hurs1ues1;aturd1und1;!d0;ay0;!s",
     "Month": "true¦aBdec9feb7j2mar,nov9oct1sep0;!t8;!o8;an3u0;l1n0;!e;!y;!u1;!ru0;ary;!em0;ber;pr1ug0;!ust;!il",
     "FirstName": "true¦aEblair,cCdevBj8k6lashawn,m3nelly,quinn,re2sh0;ay,e0iloh;a,lby;g1ne;ar1el,org0;an;ion,lo;as8e0r9;ls7nyatta,rry;am0ess1ude;ie,m0;ie;an,on;as0heyenne;ey,sidy;lex1ndra,ubr0;ey;is",
     "LastName": "true¦0:34;1:39;2:3B;3:2Y;4:2E;5:30;a3Bb31c2Od2Ee2Bf25g1Zh1Pi1Kj1Ek17l0Zm0Nn0Jo0Gp05rYsMtHvFwCxBy8zh6;a6ou,u;ng,o;a6eun2Uoshi1Kun;ma6ng;da,guc1Zmo27sh21zaR;iao,u;a7eb0il6o3right,u;li3Bs1;gn0lk0ng,tanabe;a6ivaldi;ssilj37zqu2;a9h8i2Go7r6sui,urn0;an,ynisJ;lst0Prr1Uth;at1Uomps1;kah0Vnaka,ylor;aEchDeChimizu,iBmiAo9t7u6zabo;ar2lliv2AzuE;a6ein0;l23rm0;sa,u3;rn4th;lva,mmo24ngh;mjon4rrano;midt,neid0ulz;ito,n7sa6to;ki;ch2dLtos,z;amBeag1Zi9o7u6;bio,iz,sD;b6dri1MgIj0Tme24osevelt,ssi,ux;erts,ins1;c6ve0F;ci,hards1;ir2os;aEeAh8ic6ow20;as6hl0;so;a6illips;m,n1T;ders5et8r7t6;e0Nr4;ez,ry;ers;h21rk0t6vl4;el,te0J;baBg0Blivei01r6;t6w1O;ega,iz;a6eils1guy5ix1owak,ym1E;gy,ka6var1K;ji6muW;ma;aEeCiBo8u6;ll0n6rr0Bssolini,ñ6;oz;lina,oKr6zart;al0Me6r0U;au,no;hhail4ll0;rci0ssi6y0;!er;eWmmad4r6tsu07;in6tin2;!o;aCe8i6op2uo;!n6u;coln,dholm;fe7n0Qr6w0J;oy;bv6v6;re;mmy,rs5u;aBennedy,imuAle0Lo8u7wo6;k,n;mar,znets4;bay6vacs;asY;ra;hn,rl9to,ur,zl4;aAen9ha3imen2o6u3;h6nYu3;an6ns1;ss1;ki0Es5;cks1nsse0D;glesi9ke8noue,shik7to,vano6;u,v;awa;da;as;aBe8itchcock,o7u6;!a3b0ghNynh;a3ffmann,rvat;mingw7nde6rN;rs1;ay;ns5rrQs7y6;asDes;an4hi6;moJ;a9il,o8r7u6;o,tierr2;ayli3ub0;m2nzal2;nd6o,rcia;hi;erAis9lor8o7uj6;ita;st0urni0;es;ch0;nand2;d7insteHsposi6vaL;to;is1wards;aCeBi9omin8u6;bo6rand;is;gu2;az,mitr4;ov;lgado,vi;nkula,rw7vi6;es,s;in;aFhBlarkAo6;h5l6op0rbyn,x;em7li6;ns;an;!e;an8e7iu,o6ristens5u3we;i,ng,u3w,y;!n,on6u3;!g;mpb7rt0st6;ro;ell;aBe8ha3lanco,oyko,r6yrne;ooks,yant;ng;ck7ethov5nnett;en;er,ham;ch,h8iley,rn6;es,i0;er;k,ng;dDl9nd6;ers6rA;en,on,s1;on;eks7iy8var2;ez;ej6;ev;ams",
@@ -4700,6 +4705,9 @@
     },
     weave: {
       prt: 'woven'
+    },
+    wed: {
+      pst: 'wed'
     },
     weep: {
       prt: 'wept'
@@ -7846,7 +7854,6 @@
 
 
   var toTitleCase = function toTitleCase() {
-    this.tag('TitleCase');
     return eachTerm(this, 'toTitleCase');
   };
   /** remove whitespace and title-case each term */
@@ -8382,17 +8389,10 @@
 
   //these are regexes applied to t.text, instead of t.clean
   // order matters.
-  var startsWith = [//phone numbers
-  [/^[0-9]{3}-[0-9]{4}$/, 'PhoneNumber'], //589-3809
-  [/^[0-9]{3}[ -]?[0-9]{3}-[0-9]{4}$/, 'PhoneNumber'], //632-589-3809
-  //money
-  [/^[-+]?[$€¥£][0-9]+(.[0-9]{1,2})?([a-z]{1,4})?$/, ['Money', 'Value']], //like $5.30
-  [/^[-+]?[$€¥£][0-9]{1,3}(,[0-9]{3})+(.[0-9]{1,2})?$/, ['Money', 'Value']], //like $5,231.30
-  [/^[-+]?[0-9]([0-9,.]+)?(usd|eur|jpy|gbp|cad|aud|chf|cny|hkd|nzd|kr|rub)$/i, ['Money', 'Value']], //like 400usd
-  //web tags
+  var startsWith = [//web tags
   [/^\w+@\w+\.[a-z]{2,3}$/, 'Email'], //not fancy
   [/^#[a-z0-9_\u00C0-\u00FF]{2,}$/, 'HashTag'], [/^@\w{2,}$/, 'AtMention'], [/^(https?:\/\/|www\.)\w+\.[a-z]{2,3}/, 'Url'], //with http/www
-  [/^[\w\.\/]+\.(com|net|gov|org|ly|edu|info|biz|ru|jp|de|in|uk|br)/, 'Url'], //http://mostpopularwebsites.net/top-level-domain
+  [/^[\w./]+\.(com|net|gov|org|ly|edu|info|biz|ru|jp|de|in|uk|br)/, 'Url'], //http://mostpopularwebsites.net/top-level-domain
   //dates/times
   [/^[012]?[0-9](:[0-5][0-9])(:[0-5][0-9])$/, 'Time'], //4:32:32
   [/^[012]?[0-9](:[0-5][0-9])?(:[0-5][0-9])? ?(am|pm)$/, 'Time'], //4pm
@@ -8408,19 +8408,32 @@
   [/^ma?cd[aeiou]/, 'LastName'], //macdonell - Last patterns https://en.wikipedia.org/wiki/List_of_family_name_affixes
   //slang things
   [/^(lol)+[sz]$/, 'Expression'], //lol
-  [/^(un|de|re)\\-[a-z\u00C0-\u00FF]{2}/, 'Verb'], [/^[\-\+]?[0-9]+(\.[0-9])*$/, ['Cardinal', 'NumericValue']], [/^(over|under)[a-z]{2,}/, 'Adjective'], [/^[0-9]{1,4}\.[0-9]{1,2}\.[0-9]{1,4}$/, 'Date'], // 03-02-89
-  //numbers
-  [/^[\-\+]?[0-9][0-9,]*(\.[0-9])*$/, ['Cardinal', 'NumericValue']], //like 5
-  [/^[-+]?[0-9]+(.[0-9]+)?$/, ['Cardinal', 'NumericValue']], //like +5.0
-  [/^[0-9\.]{1,4}(st|nd|rd|th)?[-–][0-9\.]{1,4}(st|nd|rd|th)?$/, 'NumberRange'], //5-7
-  [/^[-+]?[0-9.,]{1,3}(,[0-9.,]{3})+(.[0-9]+)?$/, 'NumericValue'], //like 5,999.0
-  [/^.?[0-9]+([0-9,.]+)?%$/, ['Percent', 'Cardinal', 'NumericValue']], //7%  ..
+  [/^(un|de|re)\\-[a-z\u00C0-\u00FF]{2}/, 'Verb'], [/^(over|under)[a-z]{2,}/, 'Adjective'], [/^[0-9]{1,4}\.[0-9]{1,2}\.[0-9]{1,4}$/, 'Date'], // 03-02-89
+  //phone numbers
+  [/^[0-9]{3}-[0-9]{4}$/, 'PhoneNumber'], //589-3809
+  [/^[0-9]{3}[ -]?[0-9]{3}-[0-9]{4}$/, 'PhoneNumber'], //632-589-3809
+  //money
+  // currency regex
+  // /[\$\xA2-\xA5\u058F\u060B\u09F2\u09F3\u09FB\u0AF1\u0BF9\u0E3F\u17DB\u20A0-\u20BD\uA838\uFDFC\uFE69\uFF04\uFFE0\uFFE1\uFFE5\uFFE6]
+  //like $5.30
+  [/^[-+]?[\$\xA2-\xA5\u058F\u060B\u09F2\u09F3\u09FB\u0AF1\u0BF9\u0E3F\u17DB\u20A0-\u20BD\uA838\uFDFC\uFE69\uFF04\uFFE0\uFFE1\uFFE5\uFFE6][-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?(k|m|b|bn)?\+?$/, ['Money', 'Value']], //like 5.30$
+  [/^[-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?[\$\xA2-\xA5\u058F\u060B\u09F2\u09F3\u09FB\u0AF1\u0BF9\u0E3F\u17DB\u20A0-\u20BD\uA838\uFDFC\uFE69\uFF04\uFFE0\uFFE1\uFFE5\uFFE6]\+?$/, ['Money', 'Value']], //like 400usd
+  [/^[-+]?[0-9]([0-9,.])+?(usd|eur|jpy|gbp|cad|aud|chf|cny|hkd|nzd|kr|rub)$/i, ['Money', 'Value']], //numbers
+  // 50 | -50 | 3.23  | 5,999.0  | 10+
+  [/^[-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?\+?$/, ['Cardinal', 'NumericValue']], [/^[-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?(st|nd|rd|th)$/, ['Ordinal', 'NumericValue']], // .73th
+  [/^\.[0-9]+\+?$/, ['Cardinal', 'NumericValue']], //percent
+  [/^[-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?%\+?$/, ['Percent', 'Cardinal', 'NumericValue']], //7%  ..
+  [/^\.[0-9]+%$/, ['Percent', 'Cardinal', 'NumericValue']], //.7%  ..
+  //fraction
   [/^[0-9]{1,4}\/[0-9]{1,4}$/, 'Fraction'], //3/2ths
-  [/^[0-9\.]{1,2}[-–][0-9]{1,2}$/, ['Value', 'NumberRange']], //7-8
-  [/^[0-9][0-9,\.]*(st|nd|rd|r?th)$/, ['NumericValue', 'Ordinal']], //like 5th
-  [/[0-9]\+$/, ['Cardinal', 'NumericValue']], //10+
-  [/^[0-9]+(st|nd|rd|th)$/, 'Ordinal'], //like 5th
-  [/^[0-9\.]+([a-z]{1,4})$/, 'Value'] //like 5tbsp
+  //range
+  [/^[0-9.]{1,2}[-–][0-9]{1,2}$/, ['Value', 'NumberRange']], //7-8
+  [/^[0-9.]{1,4}(st|nd|rd|th)?[-–][0-9\.]{1,4}(st|nd|rd|th)?$/, 'NumberRange'], //5-7
+  //with unit
+  [/^[0-9.]+([a-z]{1,4})$/, 'Value'] //like 5tbsp
+  //ordinal
+  // [/^[0-9][0-9,.]*(st|nd|rd|r?th)$/, ['NumericValue', 'Ordinal']], //like 5th
+  // [/^[0-9]+(st|nd|rd|th)$/, 'Ordinal'], //like 5th
   ];
 
   var romanNumeral = /^[IVXLCDM]{2,}$/;
@@ -8467,10 +8480,35 @@
     [/.[^aeiou]ica$/, Sing], [/^([hyj]a)+$/, Exp] //hahah
     ],
     c: [[/.[^aeiou]ic$/, Adj]],
-    d: [[/.[ia]sed$/, Adj], [/.[gt]led$/, Adj], [/.[td]ed$/, Past], [/.[aeiou]red$/, Past], [/.[^aeiou]led$/, Past], //rumbled
-    [/[^aeiou]ard$/, Sing], [/[aeiou][^aeiou]id$/, Adj], [/[aeiou]c?ked$/, Past], //hooked
+    d: [//==-ed==
+    //double-consonant
+    [/.(pp|ll|ss|ff|gg|tt|rr|bb)ed$/, Past], //popped
+    //double-vowel
+    [/.[aeo]{2}[bdgmnprvz]ed$/, Past], //beeped, mooned, veered
+    //-hed
+    [/.[aeiou][sg]hed$/, Past], //stashed, sighed
+    //-rd
+    [/.[aeiou]red$/, Past], //stored
+    [/.[aeiou]r?ried$/, Past], //buried
+    //-led
+    [/.[bcdgtr]led$/, Past], //startled, rumbled
+    [/.[aoui]f?led$/, Past], //impaled, stifled
+    //-sed
+    [/.[iao]sed$/, Past], //franchised
+    [/.[aeiou]n?[cs]ed$/, Past], //laced, lanced
+    //-med
+    [/[aeiou][rl]?[mnf]ed$/, Past], //warmed, attained, engulfed
+    //-ked
+    [/[aeiou]n?c?ked$/, Past], //hooked
+    //-ged
+    [/[aeiou][nl]?ged$/, Past], //engaged
+    //-ted
+    [/.[tdbwxz]ed$/, Past], //bribed, boxed
     [/[^aeiou][aeiou][tvx]ed$/, Past], //boxed
-    [/.[vrl]id$/, Adj]],
+    //-ied
+    [/.[cdlmnprstv]ied$/, Past], //rallied
+    [/[^aeiou]ard$/, Sing], //card
+    [/[aeiou][^aeiou]id$/, Adj], [/.[vrl]id$/, Adj]],
     e: [[/.[lnr]ize$/, Inf], [/.[^aeiou]ise$/, Inf], [/.[aeiou]te$/, Inf], [/.[^aeiou][ai]ble$/, Adj], [/.[^aeiou]eable$/, Adj], [/.[ts]ive$/, Adj]],
     h: [[/.[^aeiouf]ish$/, Adj], [/.v[iy]ch$/, Last], //east-europe
     [/^ug?h+$/, Exp], //uhh
@@ -8524,106 +8562,110 @@
     "'t": Vb
   }, {
     //3-letter
-    que: Adj$1,
-    lar: Adj$1,
-    ffy: Adj$1,
-    nny: Adj$1,
-    rmy: Adj$1,
-    azy: Adj$1,
-    oid: Adj$1,
-    mum: Adj$1,
-    ous: Adj$1,
-    end: Vb,
-    sis: Sing$1,
-    rol: Sing$1,
-    ize: Inf$1,
-    ify: Inf$1,
-    zes: Pres$1,
-    nes: Pres$1,
-    ing: 'Gerund',
-    //likely to be converted to Adj after lexicon pass
+    oed: Past$1,
+    ued: Past$1,
+    xed: Past$1,
     ' so': Avb,
     "'ll": Modal,
-    "'re": 'Copula'
+    "'re": 'Copula',
+    azy: Adj$1,
+    end: Vb,
+    ped: Past$1,
+    ffy: Adj$1,
+    ify: Inf$1,
+    ing: 'Gerund',
+    //likely to be converted to Adj after lexicon pass
+    ize: Inf$1,
+    lar: Adj$1,
+    mum: Adj$1,
+    nes: Pres$1,
+    nny: Adj$1,
+    oid: Adj$1,
+    ous: Adj$1,
+    que: Adj$1,
+    rmy: Adj$1,
+    rol: Sing$1,
+    sis: Sing$1,
+    zes: Pres$1
   }, {
     //4-letter
-    teen: 'Value',
-    tors: Noun$1,
     amed: Past$1,
-    ched: Past$1,
-    ends: Vb,
-    oses: Pres$1,
-    fies: Pres$1,
-    ects: Pres$1,
-    nded: Past$1,
-    cede: Inf$1,
-    tage: Inf$1,
-    gate: Inf$1,
-    vice: Sing$1,
-    tion: Sing$1,
-    cted: Past$1,
-    ette: Sing$1,
-    some: Adj$1,
-    llen: Adj$1,
-    ried: Adj$1,
-    gone: Adj$1,
-    made: Adj$1,
-    fore: Avb,
-    less: Avb,
-    ices: Plrl,
-    ions: Plrl,
-    ints: Plrl,
     aped: Past$1,
+    ched: Past$1,
     lked: Past$1,
-    ould: Modal,
-    tive: Actor$1,
-    sson: Last$1,
-    //swedish male
-    czyk: Last$1,
-    //polish (male)
-    chuk: Last$1,
-    //east-europe
-    enko: Last$1,
-    //east-europe
+    nded: Past$1,
+    cted: Past$1,
+    dged: Past$1,
     akis: Last$1,
     //greek
-    nsen: Last$1 //norway
-
+    cede: Inf$1,
+    chuk: Last$1,
+    //east-europe
+    czyk: Last$1,
+    //polish (male)
+    ects: Pres$1,
+    ends: Vb,
+    enko: Last$1,
+    //east-europe
+    ette: Sing$1,
+    fies: Pres$1,
+    fore: Avb,
+    gate: Inf$1,
+    gone: Adj$1,
+    ices: Plrl,
+    ints: Plrl,
+    ions: Plrl,
+    less: Avb,
+    llen: Adj$1,
+    made: Adj$1,
+    nsen: Last$1,
+    //norway
+    oses: Pres$1,
+    ould: Modal,
+    some: Adj$1,
+    sson: Last$1,
+    //swedish male
+    tage: Inf$1,
+    teen: 'Value',
+    tion: Sing$1,
+    tive: Actor$1,
+    tors: Noun$1,
+    vice: Sing$1
   }, {
     //5-letter
-    fully: Avb,
-    where: Avb,
-    wards: Avb,
-    urned: Past$1,
     tized: Past$1,
+    urned: Past$1,
     eased: Past$1,
     ances: Plrl,
-    tures: Plrl,
-    ports: Plrl,
-    ettes: Plrl,
-    ities: Plrl,
-    rough: Adj$1,
-    ology: Noun$1,
     bound: Adj$1,
-    tieth: 'Ordinal',
+    ettes: Plrl,
+    fully: Avb,
     ishes: Pres$1,
-    tches: Pres$1,
+    ities: Plrl,
+    marek: Last$1,
+    //polish (male)
     nssen: Last$1,
     //norway
-    marek: Last$1 //polish (male)
-
+    ology: Noun$1,
+    ports: Plrl,
+    rough: Adj$1,
+    tches: Pres$1,
+    tieth: 'Ordinal',
+    tures: Plrl,
+    wards: Avb,
+    where: Avb
   }, {
     //6-letter
-    keeper: Actor$1,
-    logist: Actor$1,
     auskas: Last$1,
     //lithuania
+    keeper: Actor$1,
+    logist: Actor$1,
     teenth: 'Value'
   }, {
     //7-letter
-    sdottir: Last$1,
-    //swedish female
-    opoulos: Last$1 //greek
+    opoulos: Last$1,
+    //greek
+    sdottir: Last$1 //swedish female
 
   }];
 
@@ -9006,21 +9048,16 @@
   var hasNumber = /[0-9]/;
   /** look for any grammar signals based on capital/lowercase */
 
-  var checkCase = function checkCase(terms, world) {
-    terms.forEach(function (term, i) {
-      //is it a titlecased word?
-      if (titleCase$3.test(term.text) === true && hasNumber.test(term.text) === false) {
-        // tag it as titlecase, if possible
-        if (i !== 0) {
-          term.tag('TitleCase', 'case', world);
-        } else if (term.tags.Person || term.tags.Organization || term.tags.Place) {
-          term.tag('TitleCase', 'case-person', world);
-        } // can we call it a noun?
+  var checkCase = function checkCase(doc) {
+    var world = doc.world;
+    doc.list.forEach(function (p) {
+      var terms = p.terms();
 
+      for (var i = 1; i < terms.length; i++) {
+        var term = terms[i];
 
-        if (i !== 0) {
-          //sure!
-          term.tag('ProperNoun', 'case-noun', world);
+        if (titleCase$3.test(term.text) === true && hasNumber.test(term.text) === false) {
+          term.tag('ProperNoun', 'titlecase-noun', world);
         }
       }
     });
@@ -9206,7 +9243,7 @@
 
     step.neighbours(terms, world); // is there a case-sensitive clue?
 
-    step["case"](terms, world); // check 'rewatch' as 'watch'
+    step["case"](doc); // check 'rewatch' as 'watch'
 
     step.stem(terms, world); // ... fallback to a noun!
 
@@ -9775,7 +9812,7 @@
         org.match('#Organization of the? @titleCase').tagSafe('Organization', 'org-of-place');
         org.match('#Organization #Country').tag('Organization', 'org-country');
         org.match('(world|global|international|national|#Demonym) #Organization').tag('Organization', 'global-org');
-        org.match('#TitleCase #Organization').ifNo('@hasComma').tag('Organization', 'titlecase-org');
+        org.match('@titleCase #Organization').ifNo('@hasComma').tag('Organization', 'titlecase-org');
       }
 
       var plural = noun["if"]('#Plural');
@@ -9839,7 +9876,7 @@
 
     if (hon.found === true) {
       //mr Putin
-      doc.match('(mr|mrs|ms|dr) (#TitleCase|#Possessive)+').tag('#Person', 'mr-putin'); //mr X
+      doc.match('(mr|mrs|ms|dr) (@titleCase|#Possessive)+').tag('#Person', 'mr-putin'); //mr X
 
       hon.match('#Honorific #Acronym').tag('Person', 'Honorific-TitleCase'); //remove single 'mr'
 
@@ -9849,27 +9886,27 @@
     } //methods requiring a titlecase
 
 
-    var title = doc["if"]('#TitleCase');
+    var title = doc["if"]('@titleCase');
 
     if (title.found === true) {
-      title.match('#Acronym #TitleCase').tagSafe('#Person', 'acronym-titlecase'); //ludwig van beethovan
+      title.match('#Acronym @titleCase').tagSafe('#Person', 'acronym-titlecase'); //ludwig van beethovan
 
-      title.match('#TitleCase (van|al|bin) #TitleCase').tagSafe('Person', 'titlecase-van-titlecase'); //jose de Sucre
+      title.match('@titleCase (van|al|bin) @titleCase').tagSafe('Person', 'titlecase-van-titlecase'); //jose de Sucre
 
-      title.match('#TitleCase (de|du) la? #TitleCase').tagSafe('Person', 'titlecase-van-titlecase'); //Foo U Ford
+      title.match('@titleCase (de|du) la? @titleCase').tagSafe('Person', 'titlecase-van-titlecase'); //Foo U Ford
 
       title.match('[#ProperNoun] #Person').notIf('@hasComma').tagSafe('Person', 'proper-person'); //pope francis
 
-      title.match('(lady|queen|sister) #TitleCase').ifNo('#Date').ifNo('#Honorific').tag('#FemaleName', 'lady-titlecase');
-      title.match('(king|pope|father) #TitleCase').ifNo('#Date').tag('#MaleName', 'poe'); // jean Foobar
+      title.match('(lady|queen|sister) @titleCase').ifNo('#Date').ifNo('#Honorific').tag('#FemaleName', 'lady-titlecase');
+      title.match('(king|pope|father) @titleCase').ifNo('#Date').tag('#MaleName', 'poe'); // jean Foobar
 
-      title.match(maybeNoun + ' #Acronym? #TitleCase').tagSafe('Person', 'ray-smith'); // rob Foobar
+      title.match(maybeNoun + ' #Acronym? @titleCase').tagSafe('Person', 'ray-smith'); // rob Foobar
 
-      title.match(maybeVerb + ' #Acronym? #TitleCase').tag('Person', 'rob-smith'); // rusty Foobar
+      title.match(maybeVerb + ' #Acronym? @titleCase').tag('Person', 'rob-smith'); // rusty Foobar
 
-      title.match(maybeAdj + ' #Acronym? #TitleCase').tag('Person', 'rusty-smith'); // june Foobar
+      title.match(maybeAdj + ' #Acronym? @titleCase').tag('Person', 'rusty-smith'); // june Foobar
 
-      title.match(maybeDate + ' #Acronym? (#TitleCase && !#Month)').tag('Person', 'june-smith');
+      title.match(maybeDate + ' #Acronym? (@titleCase && !#Month)').tag('Person', 'june-smith');
     }
 
     var person = doc["if"]('#Person');
@@ -9888,7 +9925,7 @@
 
       person.match('[(private|general|major|corporal|lord|lady|secretary|premier)] #Honorific? #Person').tag('Honorific', 'ambg-honorifics'); //Morgan Shlkjsfne
 
-      title.match('#Person #TitleCase').match('#TitleCase #Noun').tagSafe('Person', 'person-titlecase'); //a bunch of ambiguous first names
+      title.match('#Person @titleCase').match('@titleCase #Noun').tagSafe('Person', 'person-titlecase'); //a bunch of ambiguous first names
       //Nouns: 'viola' or 'sky'
 
       var ambigNoun = person["if"](maybeNoun);
@@ -9935,8 +9972,8 @@
       var al = person["if"]('al');
 
       if (al.found === true) {
-        al.match('al (#Person|#TitleCase)').tagSafe('#Person', 'al-borlen');
-        al.match('#TitleCase al #TitleCase').tagSafe('#Person', 'arabic-al-arabic');
+        al.match('al (#Person|@titleCase)').tagSafe('#Person', 'al-borlen');
+        al.match('@titleCase al @titleCase').tagSafe('#Person', 'arabic-al-arabic');
       }
 
       var firstName = person["if"]('#FirstName');
@@ -9947,17 +9984,17 @@
 
         firstName.match('#FirstName (bin|al) #Noun').tag('#Person', 'firstname-al-noun'); //John L. Foo
 
-        firstName.match('#FirstName #Acronym #TitleCase').tag('Person', 'firstname-acronym-titlecase'); //Andrew Lloyd Webber
+        firstName.match('#FirstName #Acronym @titleCase').tag('Person', 'firstname-acronym-titlecase'); //Andrew Lloyd Webber
 
-        firstName.match('#FirstName #FirstName #TitleCase').tag('Person', 'firstname-firstname-titlecase'); //Mr Foo
+        firstName.match('#FirstName #FirstName @titleCase').tag('Person', 'firstname-firstname-titlecase'); //Mr Foo
 
-        firstName.match('#Honorific #FirstName? #TitleCase').tag('Person', 'Honorific-TitleCase'); //peter the great
+        firstName.match('#Honorific #FirstName? @titleCase').tag('Person', 'Honorific-TitleCase'); //peter the great
 
         firstName.match('#FirstName the #Adjective').tag('Person', 'determiner5'); //very common-but-ambiguous lastnames
 
         firstName.match('#FirstName (green|white|brown|hall|young|king|hill|cook|gray|price)').tag('#Person', 'firstname-maybe'); //John Foo
 
-        firstName.match('#FirstName #TitleCase #TitleCase?').match('#Noun+').tag('Person', 'firstname-titlecase'); //Joe K. Sombrero
+        firstName.match('#FirstName @titleCase @titleCase?').match('#Noun+').tag('Person', 'firstname-titlecase'); //Joe K. Sombrero
 
         firstName.match('#FirstName #Acronym #Noun').ifNo('#Date').tag('#Person', 'n-acro-noun').lastTerm().tag('#LastName', 'n-acro-noun'); // Dwayne 'the rock' Johnson
 
@@ -9965,7 +10002,7 @@
 
         firstName.match('#FirstName (#Singular|#Possessive)').ifNo('(#Date|#Pronoun|#NickName)').tag('#Person', 'first-possessive').lastTerm().tag('#LastName', 'first-possessive'); // Firstname x (dangerous)
 
-        var tmp = firstName.match('#FirstName (#Noun|#TitleCase)').ifNo('^#Possessive').ifNo('#ClauseEnd .').ifNo('#Pronoun');
+        var tmp = firstName.match('#FirstName (#Noun|@titleCase)').ifNo('^#Possessive').ifNo('#ClauseEnd .').ifNo('#Pronoun');
         tmp.lastTerm().tag('#LastName', 'firstname-noun');
       }
 
@@ -9979,7 +10016,7 @@
 
         lastName.match('[(will|may|april|june|said|rob|wade|ray|rusty|drew|miles|jack|chuck|randy|jan|pat|cliff|bill)] #LastName').tag('#FirstName', 'maybe-lastname'); //Jani K. Smith
 
-        lastName.match('(#TitleCase|#Singular) #Acronym? #LastName').ifNo('#Date').tag('#Person', 'title-acro-noun').lastTerm().tag('#LastName', 'title-acro-noun');
+        lastName.match('(@titleCase|#Singular) #Acronym? #LastName').ifNo('#Date').tag('#Person', 'title-acro-noun').lastTerm().tag('#LastName', 'title-acro-noun');
       }
     }
 
@@ -10042,7 +10079,7 @@
 
       if (copula.found === true) {
         //was walking
-        copula.match("#Copula ".concat(advb, " #Gerund")).not('#Verb$').tag('Auxiliary', 'copula-walking'); //is mark hughes
+        copula.match("#Copula ".concat(advb, " (#Gerund|#PastTense)")).not('#Verb$').tag('Auxiliary', 'copula-walking'); //is mark hughes
 
         copula.match('#Copula [#Infinitive] #Noun').tag('Noun', 'is-pres-noun'); //
 
@@ -10181,7 +10218,7 @@
 
   var people = '(january|april|may|june|summer|autumn|jan|sep)'; //ambiguous month-names
 
-  var verbs$1 = '(may|march)'; //ambiguous month-verbs
+  var verbs$1 = '(may|march|sat)'; //ambiguous month-verbs
 
   var fixDates = function fixDates(doc) {
     //ambiguous month - person forms
@@ -10250,7 +10287,9 @@
 
     if (sun.found === true) {
       //sun feb 2
-      sun.match('[sun] #Date').tag('WeekDay', 'sun-feb'); //sun the 5th
+      sun.match('[sun] #Date').tag('WeekDay', 'sun-feb'); //1pm next sun
+
+      sun.match('#Date (on|this|next|last|during)? [sun]').tag('WeekDay', '1pm-sun'); //sun the 5th
 
       sun.match('sun the #Ordinal').tag('Date').firstTerm().tag('WeekDay', 'sun-the-5th'); //the sun
 
@@ -10528,7 +10567,17 @@
       found = found.splitBefore('in addition to .'); // semicolons, dashes
 
       found = found.splitAfter('@hasSemicolon');
-      found = found.splitAfter('@hasDash'); // does there appear to have relative/subordinate clause still?
+      found = found.splitAfter('@hasDash'); // passive voice verb - '.. which was robbed is empty'
+      // let passive = found.match('#Noun (which|that) (was|is) #Adverb? #PastTense #Adverb?')
+      // if (passive.found) {
+      //   found = found.splitAfter(passive)
+      // }
+      // //which the boy robbed
+      // passive = found.match('#Noun (which|that) the? #Noun+ #Adverb? #PastTense #Adverb?')
+      // if (passive.found) {
+      //   found = found.splitAfter(passive)
+      // }
+      // does there appear to have relative/subordinate clause still?
 
       var tooLong = found.filter(function (d) {
         return d.wordCount() > 5 && d.match('#Verb+').length >= 2;

@@ -360,7 +360,7 @@ declare module nlp {
     /**  */
     remove(): Document
     /**  */
-    hasOxfordComma(): Document
+    hasOxfordComma(): Document // Can we change all the unfinished types to 'any' instead? Not sure which ones are placeholders
   }
 
   class World {}

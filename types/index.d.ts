@@ -9,8 +9,8 @@ export interface Compromise<CurrentDocumentExtension extends object = {}, Curren
   extend<P extends nlp.Plugin>(
     plugin: P
   ): Compromise<
-    P extends nlp.Plugin<infer D> ? D & CurrentDocumentExtension : {},
-    P extends nlp.Plugin<infer D, infer W> ? W & CurrentWorldExtension : {}
+    P extends nlp.Plugin<infer D> ? D & CurrentDocumentExtension : CurrentDocumentExtension,
+    P extends nlp.Plugin<infer D, infer W> ? W & CurrentWorldExtension : CurrentWorldExtension
   >
 
   /** re-generate a Doc object from .json() results */

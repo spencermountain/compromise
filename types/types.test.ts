@@ -28,8 +28,8 @@ const nlpEx = nlp
 const doc = nlpEx('hello world')
 doc.test('test')
 doc.numbers()
-type a3 = typeof doc.world.a
-type b = typeof doc.world.test
+doc.world.a === typeof 'string'
+doc.world.test === typeof 'string'
 
 // Demo: For external use
 export type NLP = typeof nlpEx
@@ -38,3 +38,15 @@ export type NLP = typeof nlpEx
 nlp('test')
 nlp.tokenize('test')
 nlp.version
+
+// Directly set nlp type
+const doc2 = nlp<
+  {
+    numbers: () => number[]
+  },
+  {
+    a: string
+  }
+>('test')
+doc2.numbers()
+doc2.world.a === typeof 'string'

@@ -33,3 +33,8 @@ type b = typeof doc.world.test
 
 // Demo: For external use
 export type NLP = typeof nlpEx
+
+// Standard still works
+nlp('test')
+nlp.tokenize('test')
+nlp.version

@@ -1,6 +1,6 @@
 export as namespace nlp
 
-export interface Compromise<CurrentDocumentExtension extends object = {}, CurrentWorldExtension extends object = {}> {
+declare interface nlp<CurrentDocumentExtension extends object = {}, CurrentWorldExtension extends object = {}> {
   /** normal usage */
   (text: string): nlp.Document<nlp.World & CurrentWorldExtension> & CurrentDocumentExtension
   /** tozenize string */
@@ -8,7 +8,7 @@ export interface Compromise<CurrentDocumentExtension extends object = {}, Curren
   /** mix in a compromise-plugin */
   extend<P extends nlp.Plugin>(
     plugin: P
-  ): Compromise<
+  ): nlp<
     P extends nlp.Plugin<infer D> ? D & CurrentDocumentExtension : CurrentDocumentExtension,
     P extends nlp.Plugin<infer D, infer W> ? W & CurrentWorldExtension : CurrentWorldExtension
   >
@@ -21,9 +21,9 @@ export interface Compromise<CurrentDocumentExtension extends object = {}, Curren
   version: nlp.Document<nlp.World & CurrentWorldExtension> & CurrentDocumentExtension
 }
 
-declare function nlp<DocumentExtension extends object = {}, WorldExtension extends object = {}>(
+declare function nlp<CurrentDocumentExtension extends object = {}, CurrentWorldExtension extends object = {}>(
   text: string
-): nlp.Document<nlp.World & WorldExtension> & DocumentExtension
+): nlp.Document<nlp.World & CurrentWorldExtension> & CurrentDocumentExtension
 
 // Constructor
 declare module nlp {
@@ -31,13 +31,13 @@ declare module nlp {
   /** mix in a compromise-plugin */
   export function extend<P extends Plugin>(
     plugin: P
-  ): Compromise<P extends Plugin<infer D> ? D : {}, P extends Plugin<infer D, infer W> ? W : {}>
+  ): nlp<P extends Plugin<infer D> ? D : {}, P extends Plugin<infer D, infer W> ? W : {}>
   /** re-generate a Doc object from .json() results */
   export function load(json: any): Document
   /**  log our decision-making for debugging */
   export function verbose(bool: boolean): Document
   /**  current semver version of the library */
-  export const version: Document
+  export const version: number
 
   type Plugin<DocumentExtension extends object = {}, WorldExtension extends object = {}> = (
     Doc: Document<World & WorldExtension> & DocumentExtension,

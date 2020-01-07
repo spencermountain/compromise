@@ -6,16 +6,13 @@ export interface Compromise<CurrentDocumentExtension extends object = {}, Curren
   /** tozenize string */
   tokenize(text: string): nlp.Document<nlp.World & CurrentWorldExtension> & CurrentDocumentExtension
   /** mix in a compromise-plugin */
-  extend<DocumentExtension extends object = {}, WorldExtension extends object = {}>(
-    plugin: Plugin
+  extend<P extends nlp.Plugin>(
+    plugin: P
   ): Compromise<
-    {
-      [k in keyof (CurrentDocumentExtension & DocumentExtension)]: (CurrentDocumentExtension & DocumentExtension)[k]
-    },
-    {
-      [k in keyof (CurrentWorldExtension & WorldExtension)]: (CurrentWorldExtension & WorldExtension)[k]
-    }
+    P extends nlp.Plugin<infer D> ? D & CurrentDocumentExtension : {},
+    P extends nlp.Plugin<infer D, infer W> ? W & CurrentWorldExtension : {}
   >
+
   /** re-generate a Doc object from .json() results */
   load(json: any): nlp.Document<nlp.World & CurrentWorldExtension> & CurrentDocumentExtension
   /**  log our decision-making for debugging */
@@ -32,9 +29,9 @@ declare function nlp<DocumentExtension extends object = {}, WorldExtension exten
 declare module nlp {
   export function tokenize(text: string): Document
   /** mix in a compromise-plugin */
-  export function extend<DocumentExtension extends object = {}, WorldExtension extends object = {}>(
-    plugin: Plugin
-  ): Compromise<DocumentExtension, WorldExtension>
+  export function extend<P extends Plugin>(
+    plugin: P
+  ): Compromise<P extends Plugin<infer D> ? D : {}, P extends Plugin<infer D, infer W> ? W : {}>
   /** re-generate a Doc object from .json() results */
   export function load(json: any): Document
   /**  log our decision-making for debugging */
@@ -42,7 +39,10 @@ declare module nlp {
   /**  current semver version of the library */
   export const version: Document
 
-  type Plugin = (Doc: Document, world: any) => void
+  type Plugin<DocumentExtension extends object = {}, WorldExtension extends object = {}> = (
+    Doc: Document<World & WorldExtension> & DocumentExtension,
+    world: World & WorldExtension
+  ) => void
 
   class Document<World extends nlp.World = nlp.World> {
     // Utils

@@ -1,15 +1,15 @@
 export as namespace nlp
 
-declare interface nlp<CurrentDocumentExtension extends object = {}, CurrentWorldExtension extends object = {}> {
+declare interface nlp<CurrentDocumentExtension extends object, CurrentWorldExtension extends object> {
   /** normal usage */
   (text: string): nlp.Document<nlp.World & CurrentWorldExtension> & CurrentDocumentExtension
   /** tozenize string */
   tokenize(text: string): nlp.Document<nlp.World & CurrentWorldExtension> & CurrentDocumentExtension
   /** mix in a compromise-plugin */
-  extend<P extends nlp.Plugin>(
+  extend<P>(
     plugin: P
   ): nlp<
-    P extends nlp.Plugin<infer D> ? D & CurrentDocumentExtension : CurrentDocumentExtension,
+    P extends nlp.Plugin<infer D, infer W> ? D & CurrentDocumentExtension : CurrentDocumentExtension,
     P extends nlp.Plugin<infer D, infer W> ? W & CurrentWorldExtension : CurrentWorldExtension
   >
 
@@ -21,7 +21,7 @@ declare interface nlp<CurrentDocumentExtension extends object = {}, CurrentWorld
   version: nlp.Document<nlp.World & CurrentWorldExtension> & CurrentDocumentExtension
 }
 
-declare function nlp<CurrentDocumentExtension extends object = {}, CurrentWorldExtension extends object = {}>(
+declare function nlp<CurrentDocumentExtension extends object, CurrentWorldExtension extends object>(
   text: string
 ): nlp.Document<nlp.World & CurrentWorldExtension> & CurrentDocumentExtension
 
@@ -29,9 +29,9 @@ declare function nlp<CurrentDocumentExtension extends object = {}, CurrentWorldE
 declare module nlp {
   export function tokenize(text: string): Document
   /** mix in a compromise-plugin */
-  export function extend<P extends Plugin>(
+  export function extend<P>(
     plugin: P
-  ): nlp<P extends Plugin<infer D> ? D : {}, P extends Plugin<infer D, infer W> ? W : {}>
+  ): nlp<P extends Plugin<infer D, infer W> ? D : {}, P extends Plugin<infer D, infer W> ? W : {}>
   /** re-generate a Doc object from .json() results */
   export function load(json: any): Document
   /**  log our decision-making for debugging */
@@ -39,8 +39,8 @@ declare module nlp {
   /**  current semver version of the library */
   export const version: number
 
-  type Plugin<DocumentExtension extends object = {}, WorldExtension extends object = {}> = (
-    Doc: Document<World & WorldExtension> & DocumentExtension,
+  type Plugin<DocumentExtension extends object, WorldExtension extends object> = (
+    Doc: Document<World & WorldExtension> & DocumentExtension & { prototype: DocumentExtension },
     world: World & WorldExtension
   ) => void
 

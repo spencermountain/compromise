@@ -1,5 +1,6 @@
 // a smoke-test for our typescipt typings
 import nlp from '../'
+// @ts-ignore
 import nlpNumbers from '../plugins/numbers'
 
 // Typings for imported plugin
@@ -15,7 +16,8 @@ type NLPNumbers = nlp.Plugin<
 // vs Typed plugin
 type NLPTest = nlp.Plugin<{ test: (text: string) => string }, { test: string }>
 const test: NLPTest = (Doc, world) => {
-  Doc.test = text => text
+  // Prototype is visible in here with plugin values
+  Doc.prototype.test = text => text
   world.test = 'Hello world!'
 }
 

@@ -3,14 +3,15 @@ sudo: false
 language: node_js
 
 node_js:
-  - "6"
+  - '6'
 
 cache:
   directories:
     - node_modules
 
 before_install:
+  - npm install -g typescript ts-node
 
 install: npm install
 
-script: npm run testb
+script: npm run testb && npm run test:types

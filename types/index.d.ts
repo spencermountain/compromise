@@ -49,7 +49,7 @@ declare module nlp {
     /** return the whole original document ('zoom out') */
     all(): Document<World>
     /** is this document empty? */
-    found: Boolean
+    found: boolean
     /** return the previous result */
     parent(): Document<World>
     /** return all of the previous results */
@@ -57,27 +57,27 @@ declare module nlp {
     /**  (re)run the part-of-speech tagger on this document */
     tagger(): Document<World>
     /**  count the # of terms in each match */
-    wordCount(): Number
+    wordCount(): number
     /**  count the # of characters of each match */
-    length(): Number
+    length(): number
     /**  deep-copy the document, so that no references remain */
-    clone(shallow?: Boolean): Document<World>
+    clone(shallow?: boolean): Document<World>
     /** freeze the current state of the document, for speed-purposes */
-    cache(options?: Object): Document<World>
+    cache(options?: object): Document<World>
     /** un-freezes the current state of the document, so it may be transformed */
-    uncache(options?: Object): Document<World>
+    uncache(options?: object): Document<World>
     /** the current world */
     world: World
 
     // Accessors
     /**  use only the first result(s) */
-    first(n?: Number): Document<World>
+    first(n?: number): Document<World>
     /**  use only the last result(s) */
-    last(n?: Number): Document<World>
+    last(n?: number): Document<World>
     /**  grab a subset of the results */
-    slice(start: Number, end?: Number): Document<World>
+    slice(start: number, end?: number): Document<World>
     /**  use only the nth result */
-    eq(n: Number): Document<World>
+    eq(n: number): Document<World>
     /** get the first word in each match */
     firstTerm(): Document<World>
     /** get the end word in each match */
@@ -87,27 +87,27 @@ declare module nlp {
 
     // Match
     /**  return a new Doc, with this one as a parent */
-    match(match: String | Document): Document<World>
+    match(match: string | Document): Document<World>
     /**  return all results except for this */
-    not(match: String | Document): Document<World>
+    not(match: string | Document): Document<World>
     /**  return only the first match */
-    matchOne(match: String | Document): Document<World>
+    matchOne(match: string | Document): Document<World>
     /**  return each current phrase, only if it contains this match */
-    if(match: String | Document): Document<World>
+    if(match: string | Document): Document<World>
     /**  Filter-out any current phrases that have this match */
-    ifNo(match: String | Document): Document<World>
+    ifNo(match: string | Document): Document<World>
     /**  Return a boolean if this match exists */
-    has(match: String | Document): Document<World>
+    has(match: string | Document): Document<World>
     /**  search through earlier terms, in the sentence */
-    lookBehind(match: String | Document): Document<World>
+    lookBehind(match: string | Document): Document<World>
     /**  search through following terms, in the sentence */
-    lookAhead(match: String | Document): Document<World>
+    lookAhead(match: string | Document): Document<World>
     /**  return the terms before each match */
-    before(match: String | Document): Document<World>
+    before(match: string | Document): Document<World>
     /**  return the terms after each match */
-    after(match: String | Document): Document<World>
+    after(match: string | Document): Document<World>
     /** quick find for an array of string matches */
-    lookup(matches: String[]): Document<World>
+    lookup(matches: string[]): Document<World>
 
     // Case
     /**  turn every letter of every term to lower-cse */
@@ -121,9 +121,9 @@ declare module nlp {
 
     // Whitespace
     /** add this punctuation or whitespace before each match */
-    pre(str: String, concat: Boolean): Document<World>
+    pre(str: string, concat: boolean): Document<World>
     /** add this punctuation or whitespace after each match */
-    post(str: String, concat: Boolean): Document<World>
+    post(str: string, concat: boolean): Document<World>
     /**  remove start and end whitespace */
     trim(): Document<World>
     /**  connect words with hyphen, and remove whitespace */
@@ -133,13 +133,13 @@ declare module nlp {
 
     // Tag
     /**  Give all terms the given tag */
-    tag(tag: String, reason?: String): Document<World>
+    tag(tag: string, reason?: string): Document<World>
     /**  Only apply tag to terms if it is consistent with current tags */
-    tagSafe(tag: String, reason?: String): Document<World>
+    tagSafe(tag: string, reason?: string): Document<World>
     /**  Remove this term from the given terms */
-    unTag(tag: String, reason?: String): Document<World>
+    unTag(tag: string, reason?: string): Document<World>
     /**  return only the terms that can be this tag */
-    canBe(tag: String): Document<World>
+    canBe(tag: string): Document<World>
 
     // Loops
     /** run each phrase through a function, and create a new document */
@@ -153,49 +153,49 @@ declare module nlp {
     /**  return true or false if there is one matching phrase */
     some(fn: Function): Document<World>
     /**  sample a subset of the results */
-    random(n?: Number): Document<World>
+    random(n?: number): Document<World>
 
     // Insert
     /**  substitute-in new content */
-    replaceWith(text: String | Function, keepTags?: Boolean | Object, keepCase?: Boolean): Document<World>
+    replaceWith(text: string | Function, keepTags?: boolean | object, keepCase?: boolean): Document<World>
     /**  search and replace match with new content */
-    replace(match: String, text?: String | Function, keepTags?: Boolean | Object, keepCase?: Boolean): Document<World>
+    replace(match: string, text?: string | Function, keepTags?: boolean | object, keepCase?: boolean): Document<World>
     /**  fully remove these terms from the document */
-    delete(match: String): Document<World>
+    delete(match: string): Document<World>
     /**  add these new terms to the end (insertAfter) */
-    append(text: String): Document<World>
+    append(text: string): Document<World>
     /**  add these new terms to the front (insertBefore) */
-    prepend(text: String): Document<World>
+    prepend(text: string): Document<World>
     /**  add these new things to the end */
-    concat(text: String): Document<World>
+    concat(text: string): Document<World>
 
     // transform
     /**re-arrange the order of the matches (in place) */
-    sort(method?: String | Function): Document<World>
+    sort(method?: string | Function): Document<World>
     /**reverse the order of the matches, but not the words */
     reverse(): Document<World>
     /** clean-up the document, in various ways */
-    normalize(options?: String | Object): String
+    normalize(options?: string | object): string
     /** remove any duplicate matches */
     unique(): Document<World>
     /**  return a Document with three parts for every match ('splitOn') */
-    split(match?: String): Document<World>
+    split(match?: string): Document<World>
     /**  separate everything after the match as a new phrase */
-    splitBefore(match?: String): Document<World>
+    splitBefore(match?: string): Document<World>
     /**  separate everything before the word, as a new phrase */
-    splitAfter(match?: String): Document<World>
+    splitAfter(match?: string): Document<World>
     /** split a document into labeled sections  */
-    segment(regs: Object, options?: Object): Document<World>
+    segment(regs: object, options?: object): Document<World>
     /** make all phrases into one phrase  */
-    join(str?: String): Document<World>
+    join(str?: string): Document<World>
 
     // Output
     /**  return the document as text */
-    text(options?: String | Object): String
+    text(options?: string | object): string
     /**  pull out desired metadata from the document */
-    json(options?: String | Object): any
+    json(options?: string | object): any
     /** some named output formats */
-    out(format?: string): String
+    out(format?: string): string
     /**  pretty-print the current document and its tags */
     debug(): Document<World>
     /** store a parsed document for later use  */
@@ -203,69 +203,69 @@ declare module nlp {
 
     // Selections
     /**  split-up results by each individual term */
-    terms(n?: Number): Document<World>
+    terms(n?: number): Document<World>
     /**  split-up results into multi-term phrases */
-    clauses(n?: Number): Document<World>
+    clauses(n?: number): Document<World>
     /** return all terms connected with a hyphen or dash like `'wash-out'`*/
-    hyphenated(n?: Number): Document<World>
+    hyphenated(n?: number): Document<World>
     /** add quoation marks around each match */
-    toQuoations(start?: String, end?: String): Document<World>
+    toQuoations(start?: string, end?: string): Document<World>
     /** add brackets around each match */
-    toParentheses(start?: String, end?: String): Document<World>
+    toParentheses(start?: string, end?: string): Document<World>
     /** return things like `'(939) 555-0113'` */
-    phoneNumbers(n?: Number): Document<World>
+    phoneNumbers(n?: number): Document<World>
     /** return things like `'#nlp'` */
-    hashTags(n?: Number): Document<World>
+    hashTags(n?: number): Document<World>
     /** return things like `'hi@compromise.cool'` */
-    emails(n?: Number): Document<World>
+    emails(n?: number): Document<World>
     /**  return  things like `:)` */
-    emoticons(n?: Number): Document<World>
+    emoticons(n?: number): Document<World>
     /**  return athings like `💋` */
-    emoji(n?: Number): Document<World>
+    emoji(n?: number): Document<World>
     /**  return things like `'@nlp_compromise'`*/
-    atMentions(n?: Number): Document<World>
+    atMentions(n?: number): Document<World>
     /**  return things like `'compromise.cool'` */
-    urls(n?: Number): Document<World>
+    urls(n?: number): Document<World>
     /**  return things like `'quickly'` */
-    adverbs(n?: Number): Document<World>
+    adverbs(n?: number): Document<World>
     /**  return things like `'he'` */
-    pronouns(n?: Number): Document<World>
+    pronouns(n?: number): Document<World>
     /**  return things like `'but'`*/
-    conjunctions(n?: Number): Document<World>
+    conjunctions(n?: number): Document<World>
     /**  return things like `'of'`*/
-    prepositions(n?: Number): Document<World>
+    prepositions(n?: number): Document<World>
     /**  return person names like `'John A. Smith'`*/
-    people(n?: Number): Document<World>
+    people(n?: number): Document<World>
     /**  return location names like `'Paris, France'`*/
-    places(n?: Number): Document<World>
+    places(n?: number): Document<World>
     /**  return companies and org names like `'Google Inc.'`*/
-    organizations(n?: Number): Document<World>
+    organizations(n?: number): Document<World>
     /**  return people, places, and organizations */
-    topics(n?: Number): Document<World>
+    topics(n?: number): Document<World>
 
     // Subsets
     /** alias for .all(), until plugin overloading  */
     sentences(): Document<World>
     /**  return things like `'Mrs.'`*/
-    abbreviations(n?: Number): Abbreviations
+    abbreviations(n?: number): Abbreviations
     /** return any multi-word terms, like "didn't"  */
-    contractions(n?: Number): Contractions
+    contractions(n?: number): Contractions
     /** contract words that can combine, like "did not" */
     contract(): Document<World>
     /**  return anything inside (parentheses) */
-    parentheses(n?: Number): Parentheses
+    parentheses(n?: number): Parentheses
     /**  return things like "Spencer's" */
-    possessives(n?: Number): Possessives
+    possessives(n?: number): Possessives
     /**  return any terms inside 'quotation marks' */
-    quotations(n?: Number): Quotations
+    quotations(n?: number): Quotations
     /**  return things like `'FBI'` */
-    acronyms(n?: Number): Acronyms
+    acronyms(n?: number): Acronyms
     /**  return things like `'eats, shoots, and leaves'` */
-    lists(n?: Number): Lists
+    lists(n?: number): Lists
     /**  return any subsequent terms tagged as a Noun */
-    nouns(n?: Number): Nouns
+    nouns(n?: number): Nouns
     /**  return any subsequent terms tagged as a Verb */
-    verbs(n?: Number): Verbs
+    verbs(n?: number): Verbs
   }
 
   // Nouns class
@@ -277,9 +277,9 @@ declare module nlp {
     /** return only nouns that _can be_ inflected as plural */
     hasPlural(): Document
     /** 'football captain' → 'football captains' */
-    toPlural(setArticle?: Boolean): Document
+    toPlural(setArticle?: boolean): Document
     /** 'turnovers' → 'turnover' */
-    toSingular(setArticle?: Boolean): Document
+    toSingular(setArticle?: boolean): Document
     /** add a `'s` to the end, in a safe manner. */
     toPossessive(): Document
   }

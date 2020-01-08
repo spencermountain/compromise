@@ -1,6 +1,5 @@
 // a smoke-test for our typescipt typings
 import nlp from '../'
-// @ts-ignore
 import nlpNumbers from '../plugins/numbers'
 
 // Typings for imported plugin
@@ -41,7 +40,7 @@ const test: NLPTest = (Doc, world) => {
 
 const nlpEx = nlp
   // Give typing to untyped Plugin
-  .extend(nlpNumbers as NLPNumbers)
+  .extend(nlpNumbers)
   // Use typed plugin
   .extend(test)
 

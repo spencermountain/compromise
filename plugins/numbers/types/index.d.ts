@@ -20,6 +20,6 @@ declare class Numbers {
   toLocaleString(): nlp.Document
 }
 
-type plugin = nlp.Plugin<{ numbers(n?: number): Numbers }, {}>
+declare const nlpNumbers: nlp.Plugin<{ numbers(n?: number): Numbers }, {}>
 
-export default plugin
+export default nlpNumbers

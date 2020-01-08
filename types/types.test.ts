@@ -57,7 +57,9 @@ doc.world.test === typeof 'string'
 export type NLP = typeof nlpEx
 
 // Standard still works
-nlp('test')
+const docSimple = nlp('test')
+docSimple.nouns()
+docSimple.nouns().world
 nlp.tokenize('test')
 nlp.version
 

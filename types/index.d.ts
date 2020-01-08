@@ -1,12 +1,10 @@
 export as namespace nlp
 
-type ExtendedDocument<D, W> = nlp.Document<nlp.World & W> & D
-
 declare interface nlp<D, W> {
   /** normal usage */
-  (text: string): ExtendedDocument<D, W>
+  (text: string): nlp.ExtendedDocument<D, W>
   /** tozenize string */
-  tokenize(text: string): ExtendedDocument<D, W>
+  tokenize(text: string): nlp.ExtendedDocument<D, W>
   /** mix in a compromise-plugin */
   extend<P>(
     plugin: P
@@ -16,15 +14,15 @@ declare interface nlp<D, W> {
   >
 
   /** re-generate a Doc object from .json() results */
-  load(json: any): ExtendedDocument<D, W>
+  load(json: any): nlp.ExtendedDocument<D, W>
   /**  log our decision-making for debugging */
-  verbose(bool: boolean): ExtendedDocument<D, W>
+  verbose(bool: boolean): nlp.ExtendedDocument<D, W>
   /**  current semver version of the library */
-  version: ExtendedDocument<D, W>
+  version: nlp.ExtendedDocument<D, W>
 }
 
 declare function nlp(text: string): nlp.Document
-declare function nlp<D, W>(text: string): ExtendedDocument<D, W>
+declare function nlp<D, W>(text: string): nlp.ExtendedDocument<D, W>
 
 // Constructor
 declare module nlp {
@@ -41,6 +39,11 @@ declare module nlp {
   export const version: number
 
   type Plugin<D, W> = (Doc: Document<World & W> & D & { prototype: D }, world: World & W) => void
+
+  type ExtendedWorld<W> = nlp.World & W
+  type ExtendedDocument<D, W> = {
+    [k in keyof (nlp.Document<ExtendedWorld<W>> & D)]: (nlp.Document<ExtendedWorld<W>> & D)[k]
+  }
 
   class Document<W extends World = World> {
     // Utils

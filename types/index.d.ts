@@ -234,7 +234,7 @@ declare module nlp {
     /**  pull out desired metadata from the document */
     json(options?: JsonOptions | string): any
     /** some named output formats */
-    out(format?: 'grid' | 'color' | 'normal' | 'csv' | 'newlines' | 'html' | 'text'): string
+    out(format?: 'text' | 'normal' | 'offset' | 'terms'): string
     out(format: 'array'): string[]
     out(format: 'tags' | 'terms'): Array<{ normal: string; text: string; tags: string[] }>
     out(format: 'json'): Array<{ normal: string; text: string; tags: () => void }>[]

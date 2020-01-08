@@ -499,7 +499,7 @@ These are some helpful extensions:
   - **[.adjectives().json()](https://observablehq.com/@spencermountain/compromise-adjectives)** - overloaded output with adjective metadata
   - **[.adjectives().conjugate()](https://observablehq.com/@spencermountain/compromise-adjectives)** - return all conjugated forms of this adjective
   - **[.adjectives().toSuperlative()](https://observablehq.com/@spencermountain/compromise-adjectives)** - convert `quick` to `quickest`
-  - **[.adjectives().toComparative()](https://observablehq.com/@spencermountain/compromise-adjectives)** - convert `quick` to `quickest`
+  - **[.adjectives().toComparative()](https://observablehq.com/@spencermountain/compromise-adjectives)** - convert `quick` to `quicker`
   - **[.adjectives().toAdverb()](https://observablehq.com/@spencermountain/compromise-adjectives)** - convert `quick` to `quickly`
   - **[.adjectives().toVerb()](https://observablehq.com/@spencermountain/compromise-adjectives)** - convert `quick` to `quicken`
   - **[.adjectives().toNoun()](https://observablehq.com/@spencermountain/compromise-adjectives)** - convert `quick` to `quickness`
@@ -511,8 +511,8 @@ These are some helpful extensions:
 - **[.dates()](https://observablehq.com/@spencermountain/compromise-dates)** - find dates like `June 8th` or `03/03/18`
   - **[.dates().json()](https://observablehq.com/@spencermountain/compromise-dates)** - overloaded output with date metadata
   - **[.dates().format('')](https://observablehq.com/@spencermountain/compromise-dates)** - convert the dates to specific formats
-  - **[.dates().toShortForm('')](https://observablehq.com/@spencermountain/compromise-dates)** - convert 'Wednesday' to 'Wed', etc
-  - **[.dates().toLongForm('')](https://observablehq.com/@spencermountain/compromise-dates)** - convert 'Feb' to 'February', etc
+  - **[.dates().toShortForm()](https://observablehq.com/@spencermountain/compromise-dates)** - convert 'Wednesday' to 'Wed', etc
+  - **[.dates().toLongForm()](https://observablehq.com/@spencermountain/compromise-dates)** - convert 'Feb' to 'February', etc
 
 ##### Numbers
 
@@ -566,10 +566,10 @@ this plugin creates a wrapper around the default sentence objects.
 - **[.paragraphs()](https://observablehq.com/@spencermountain/compromise-paragraphs)** - return groups of sentences
   - **[.paragraphs().json()](https://observablehq.com/@spencermountain/compromise-paragraphs)** - output metadata for each paragraph
   - **[.paragraphs().sentences()](https://observablehq.com/@spencermountain/compromise-paragraphs)** - go back to a regular Doc object
-  - **[.paragraphs().terms()](https://observablehq.com/@spencermountain/compromise-paragraphs)** -
-  - **[.paragraphs().eq()](https://observablehq.com/@spencermountain/compromise-paragraphs)** -
-  - **[.paragraphs().first()](https://observablehq.com/@spencermountain/compromise-paragraphs)** -
-  - **[.paragraphs().last()](https://observablehq.com/@spencermountain/compromise-paragraphs)** -
+  - **[.paragraphs().terms()](https://observablehq.com/@spencermountain/compromise-paragraphs)** - return all individual terms
+  - **[.paragraphs().eq()](https://observablehq.com/@spencermountain/compromise-paragraphs)** - get the nth paragraph
+  - **[.paragraphs().first()](https://observablehq.com/@spencermountain/compromise-paragraphs)** - get the first n paragraphs
+  - **[.paragraphs().last()](https://observablehq.com/@spencermountain/compromise-paragraphs)** - get the last n paragraphs
   - **[.paragraphs().match()](https://observablehq.com/@spencermountain/compromise-paragraphs)** -
   - **[.paragraphs().not()](https://observablehq.com/@spencermountain/compromise-paragraphs)** -
   - **[.paragraphs().if()](https://observablehq.com/@spencermountain/compromise-paragraphs)** -

@@ -1,6 +1,6 @@
 export as namespace nlp
 
-declare interface nlp<D, W> {
+declare interface nlp<D extends object, W extends object> {
   /** normal usage */
   (text: string): nlp.ExtendedDocument<D, W>
   /** tozenize string */
@@ -38,10 +38,13 @@ declare module nlp {
   /**  current semver version of the library */
   export const version: number
 
-  type Plugin<D, W> = (Doc: Document<World & W> & D & { prototype: D }, world: World & W) => void
+  type Plugin<D extends object, W extends object> = (
+    Doc: Document<World & W> & D & { prototype: D },
+    world: World & W
+  ) => void
 
-  type ExtendedWorld<W> = nlp.World & W
-  type ExtendedDocument<D, W> = {
+  type ExtendedWorld<W extends object> = nlp.World & W
+  type ExtendedDocument<D extends object, W extends object> = {
     [k in keyof (nlp.Document<ExtendedWorld<W>> & D)]: (nlp.Document<ExtendedWorld<W>> & D)[k]
   }
 

@@ -25,7 +25,8 @@
     "printWidth": 100
   },
   "files": [
-    "builds/"
+    "builds/",
+    "types/index.d.ts"
   ],
   "eslintIgnore": [
     "builds/*.js"

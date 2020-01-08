@@ -6,6 +6,7 @@
   "main": "./builds/compromise-dates.js",
   "unpkg": "./builds/compromise-dates.min.js",
   "module": "./builds/compromise-dates.mjs",
+  "types": "types/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git://github.com/spencermountain/compromise.git"
@@ -24,7 +25,8 @@
     "printWidth": 120
   },
   "files": [
-    "builds/"
+    "builds/",
+    "types/index.d.ts"
   ],
   "eslintIgnore": [
     "builds/*.js"

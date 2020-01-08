@@ -6,6 +6,7 @@
   "main": "./builds/compromise-output.js",
   "unpkg": "./builds/compromise-output.min.js",
   "module": "./builds/compromise-output.mjs",
+  "types": "types/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git://github.com/spencermountain/compromise.git"
@@ -24,7 +25,8 @@
     "printWidth": 100
   },
   "files": [
-    "builds/"
+    "builds/",
+    "types/index.d.ts"
   ],
   "eslintIgnore": [
     "builds/*.js"

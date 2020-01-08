@@ -6,6 +6,7 @@
   "main": "./builds/compromise-paragraphs.js",
   "unpkg": "./builds/compromise-paragraphs.min.js",
   "module": "./builds/compromise-paragraphs.mjs",
+  "types": "types/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git://github.com/spencermountain/compromise.git"
@@ -24,7 +25,8 @@
     "printWidth": 100
   },
   "files": [
-    "builds/"
+    "builds/",
+    "types/index.d.ts"
   ],
   "eslintIgnore": [
     "builds/*.js"

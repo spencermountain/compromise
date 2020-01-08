@@ -104,7 +104,7 @@ declare module nlp {
     /**  Filter-out any current phrases that have this match */
     ifNo(match: string | Document<W>): Document<W>
     /**  Return a boolean if this match exists */
-    has(match: string | Document<W>): Document<W>
+    has(match: string | Document<W>): boolean
     /**  search through earlier terms, in the sentence */
     lookBehind(match: string | Document<W>): Document<W>
     /**  search through following terms, in the sentence */

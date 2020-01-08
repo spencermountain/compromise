@@ -1,35 +1,6 @@
 // a smoke-test for our typescipt typings
 import nlp from '../'
-// @ts-ignore
 import nlpNumbers from '../plugins/numbers'
-
-// Typings for imported plugin
-interface NumberFunctions {
-  json(n?: number): Document
-  fractions(): Document
-  toText(): Document
-  toNumber(): Document
-  toOrdinal(): Document
-  toCardinal(): Document
-  add(n: number): Document
-  subtract(n: number): Document
-  increment(): Document
-  decrement(): Document
-  isEqual(): Document
-  greaterThan(min: number): Document
-  lessThan(max: number): Document
-  between(min: number, max: number): Document
-  isOrdinal(): Document
-  isCardinal(): Document
-  toLocaleString(): Document
-}
-
-type NLPNumbers = nlp.Plugin<
-  {
-    numbers(n?: number): NumberFunctions
-  },
-  {}
->
 
 // vs Typed plugin
 type NLPTest = nlp.Plugin<{ test: (text: string) => string }, { test: string }>
@@ -41,11 +12,13 @@ const test: NLPTest = (Doc, world) => {
 
 const nlpEx = nlp
   // Give typing to untyped Plugin
-  .extend(nlpNumbers as NLPNumbers)
+  .extend(nlpNumbers)
   // Use typed plugin
   .extend(test)
 
-const doc = nlpEx('hello world')
+const doc = nlpEx('hello world') // This type is cleaner
+doc.nouns()
+doc.nouns().world.test
 doc.test('test')
 doc.numbers()
 doc.numbers().json()
@@ -55,7 +28,9 @@ doc.world.test === typeof 'string'
 export type NLP = typeof nlpEx
 
 // Standard still works
-nlp('test')
+const docSimple = nlp('test')
+docSimple.nouns()
+docSimple.nouns().world
 nlp.tokenize('test')
 nlp.version
 

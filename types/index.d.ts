@@ -4,13 +4,16 @@ type ExtendedDocument<D, W> = nlp.Document<nlp.World & W> & D
 
 declare interface nlp<D, W> {
   /** normal usage */
-  (text: string): ExtendedDocument<{ [K in keyof D]: D[K] }, { [K in keyof W]: W[K] }>
+  (text: string): ExtendedDocument<D, W>
   /** tozenize string */
   tokenize(text: string): nlp.Document<nlp.World & W> & D
   /** mix in a compromise-plugin */
   extend<P>(
     plugin: P
-  ): nlp<P extends nlp.Plugin<infer PD, infer PW> ? PD & D : D, P extends nlp.Plugin<infer PD, infer PW> ? PW & W : D>
+  ): nlp<
+    P extends nlp.Plugin<infer PD, infer PW> ? { [K in keyof (PD & D)]: (PD & D)[K] } : { [K in keyof D]: D[K] },
+    P extends nlp.Plugin<infer PD, infer PW> ? { [K in keyof (PW & W)]: (PW & W)[K] } : { [K in keyof W]: W[K] }
+  >
 
   /** re-generate a Doc object from .json() results */
   load(json: any): nlp.Document<nlp.World & W> & D

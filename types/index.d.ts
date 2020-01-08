@@ -196,7 +196,12 @@ declare module nlp {
     /**  pull out desired metadata from the document */
     json(options?: string | object): any
     /** some named output formats */
-    out(format?: string): string
+    out(format?: 'grid' | 'color' | 'normal' | 'csv' | 'newlines' | 'html' | 'text'): string
+    out(format: 'array'): string[]
+    out(format: 'tags' | 'terms'): Array<{ normal: string; text: string; tags: string[] }>
+    out(format: 'json'): Array<{ normal: string; text: string; tags: () => void }>[]
+    out(format: 'debug'): Text
+    out(format: 'topk'): Array<{ normal: string; count: number; percent: number }>
     /**  pretty-print the current document and its tags */
     debug(): Document<W>
     /** store a parsed document for later use  */
@@ -361,7 +366,7 @@ declare module nlp {
     /**  */
     remove(): Document<W>
     /**  */
-    hasOxfordComma(): Document<W> // Can we change all the unfinished types to 'any' instead? Not sure which ones are placeholders
+    hasOxfordComma(): Document<W>
   }
 
   class World {}

@@ -45,7 +45,8 @@ const nlpEx = nlp
   // Use typed plugin
   .extend(test)
 
-const doc = nlpEx('hello world')
+const doc = nlpEx('hello world') // This type is cleaner
+doc.nouns().world.test
 doc.test('test')
 doc.numbers()
 doc.numbers().json()

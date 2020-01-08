@@ -19,7 +19,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - improved tagging for '-ed' verbs (#616)
 - improve support for auxilary-pastTense ('was lifted') verb-phrases
 - more robust number-tagging regexes
-- fix typescript types for plugins #661 (thanks @Drache93)
+- setup typescript types for plugins #661 (thanks @Drache93!)
 
 ##### 12.2.1
 

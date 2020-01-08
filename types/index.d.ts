@@ -9,8 +9,8 @@ declare interface nlp<D extends object, W extends object> {
   extend<P>(
     plugin: P
   ): nlp<
-    P extends nlp.Plugin<infer PD, infer PW> ? { [K in keyof (PD & D)]: (PD & D)[K] } : { [K in keyof D]: D[K] },
-    P extends nlp.Plugin<infer PD, infer PW> ? { [K in keyof (PW & W)]: (PW & W)[K] } : { [K in keyof W]: W[K] }
+    P extends nlp.Plugin<infer PD, infer PW> ? { [k in keyof (PD & D)]: (PD & D)[k] } : { [k in keyof D]: D[k] },
+    P extends nlp.Plugin<infer PD, infer PW> ? { [k in keyof (PW & W)]: (PW & W)[k] } : { [k in keyof W]: W[k] }
   >
 
   /** re-generate a Doc object from .json() results */
@@ -21,20 +21,20 @@ declare interface nlp<D extends object, W extends object> {
   version: nlp.ExtendedDocument<D, W>
 }
 
-declare function nlp(text: string): nlp.Document
-declare function nlp<D, W>(text: string): nlp.ExtendedDocument<D, W>
+declare function nlp(text: string): nlp.DefaultDocument
+declare function nlp<D extends object, W extends object>(text: string): nlp.ExtendedDocument<D, W>
 
 // Constructor
 declare module nlp {
-  export function tokenize(text: string): Document
+  export function tokenize(text: string): DefaultDocument
   /** mix in a compromise-plugin */
   export function extend<P>(
     plugin: P
   ): nlp<P extends Plugin<infer D, infer W> ? D : {}, P extends Plugin<infer D, infer W> ? W : {}>
   /** re-generate a Doc object from .json() results */
-  export function load(json: any): Document
+  export function load(json: any): DefaultDocument
   /**  log our decision-making for debugging */
-  export function verbose(bool: boolean): Document
+  export function verbose(bool: boolean): DefaultDocument
   /**  current semver version of the library */
   export const version: number
 
@@ -46,6 +46,9 @@ declare module nlp {
   type ExtendedWorld<W extends object> = nlp.World & W
   type ExtendedDocument<D extends object, W extends object> = {
     [k in keyof (nlp.Document<ExtendedWorld<W>> & D)]: (nlp.Document<ExtendedWorld<W>> & D)[k]
+  }
+  type DefaultDocument = {
+    [k in keyof nlp.Document]: nlp.Document[k]
   }
 
   class Document<W extends World = World> {
@@ -91,25 +94,25 @@ declare module nlp {
 
     // Match
     /**  return a new Doc, with this one as a parent */
-    match(match: string | Document): Document<W>
+    match(match: string | Document<W>): Document<W>
     /**  return all results except for this */
-    not(match: string | Document): Document<W>
+    not(match: string | Document<W>): Document<W>
     /**  return only the first match */
-    matchOne(match: string | Document): Document<W>
+    matchOne(match: string | Document<W>): Document<W>
     /**  return each current phrase, only if it contains this match */
-    if(match: string | Document): Document<W>
+    if(match: string | Document<W>): Document<W>
     /**  Filter-out any current phrases that have this match */
-    ifNo(match: string | Document): Document<W>
+    ifNo(match: string | Document<W>): Document<W>
     /**  Return a boolean if this match exists */
-    has(match: string | Document): Document<W>
+    has(match: string | Document<W>): Document<W>
     /**  search through earlier terms, in the sentence */
-    lookBehind(match: string | Document): Document<W>
+    lookBehind(match: string | Document<W>): Document<W>
     /**  search through following terms, in the sentence */
-    lookAhead(match: string | Document): Document<W>
+    lookAhead(match: string | Document<W>): Document<W>
     /**  return the terms before each match */
-    before(match: string | Document): Document<W>
+    before(match: string | Document<W>): Document<W>
     /**  return the terms after each match */
-    after(match: string | Document): Document<W>
+    after(match: string | Document<W>): Document<W>
     /** quick find for an array of string matches */
     lookup(matches: string[]): Document<W>
 

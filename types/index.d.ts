@@ -24,6 +24,38 @@ declare interface nlp<D extends object, W extends object> {
 declare function nlp(text: string): nlp.DefaultDocument
 declare function nlp<D extends object, W extends object>(text: string): nlp.ExtendedDocument<D, W>
 
+// possible values to .json()
+declare interface JsonOptions {
+  /**  a perfect copy of the input text */
+  text?: boolean
+  /** normalized whitespace, case, unicode, punctuation */
+  normal?: boolean
+  /** lowercase, trimmed, contractions expanded. */
+  reduced?: boolean
+  /** cleanup whitespace */
+  trim?: boolean
+  /** character-position where this begins */
+  offset?: boolean
+  /** frequency of this match in the document */
+  count?: boolean
+  /**  remove duplicate results*/
+  unique?: boolean
+  /** starting term # in document */
+  index?: boolean
+  /** options for each term */
+  terms?: {
+    text?: boolean
+    normal?: boolean
+    clean?: boolean
+    implicit?: boolean
+    tags?: boolean
+    whitespace?: boolean
+    id?: boolean
+    offset?: boolean
+    bestTag?: boolean
+  }
+}
+
 // Constructor
 declare module nlp {
   export function tokenize(text: string): DefaultDocument
@@ -200,7 +232,7 @@ declare module nlp {
     /**  return the document as text */
     text(options?: string | object): string
     /**  pull out desired metadata from the document */
-    json(options?: string | object): any
+    json(options?: JsonOptions | string): any
     /** some named output formats */
     out(format?: 'grid' | 'color' | 'normal' | 'csv' | 'newlines' | 'html' | 'text'): string
     out(format: 'array'): string[]

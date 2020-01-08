@@ -6,7 +6,7 @@ declare interface nlp<D, W> {
   /** normal usage */
   (text: string): ExtendedDocument<D, W>
   /** tozenize string */
-  tokenize(text: string): nlp.Document<nlp.World & W> & D
+  tokenize(text: string): ExtendedDocument<D, W>
   /** mix in a compromise-plugin */
   extend<P>(
     plugin: P
@@ -16,14 +16,15 @@ declare interface nlp<D, W> {
   >
 
   /** re-generate a Doc object from .json() results */
-  load(json: any): nlp.Document<nlp.World & W> & D
+  load(json: any): ExtendedDocument<D, W>
   /**  log our decision-making for debugging */
-  verbose(bool: boolean): nlp.Document<nlp.World & W> & D
+  verbose(bool: boolean): ExtendedDocument<D, W>
   /**  current semver version of the library */
-  version: nlp.Document<nlp.World & W> & D
+  version: ExtendedDocument<D, W>
 }
 
-declare function nlp<D, W>(text: string): nlp.Document<nlp.World & W> & D
+declare function nlp(text: string): nlp.Document
+declare function nlp<D, W>(text: string): ExtendedDocument<D, W>
 
 // Constructor
 declare module nlp {
@@ -266,7 +267,7 @@ declare module nlp {
   }
 
   // Nouns class
-  interface Nouns<W extends World = World> extends Document<W> {
+  interface Nouns<W extends World = World> extends ExtendedDocument<{}, W> {
     /** get any adjectives describing this noun*/
     adjectives(): Document<W>
     /** return only plural nouns */

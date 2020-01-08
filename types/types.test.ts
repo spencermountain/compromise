@@ -46,6 +46,7 @@ const nlpEx = nlp
   .extend(test)
 
 const doc = nlpEx('hello world') // This type is cleaner
+doc.nouns()
 doc.nouns().world.test
 doc.test('test')
 doc.numbers()

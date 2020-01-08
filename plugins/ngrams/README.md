@@ -38,11 +38,11 @@ doc.ngrams({ size: 3 })
 ### API:
 
 - **.ngrams({})** - list all repeating sub-phrases, by word-count
-- **.unigrams()** - n-grams with one word
-- **.bigrams()** - n-grams with two words
-- **.trigrams()** - n-grams with three words
-- **.startgrams()** - n-grams including the first term of a phrase
-- **.endgrams()** - n-grams including the last term of a phrase
-- **.edgegrams()** - n-grams including the first or last term of a phrase
+- **.unigrams(n)** - n-grams with one word
+- **.bigrams(n)** - n-grams with two words
+- **.trigrams(n)** - n-grams with three words
+- **.startgrams({})** - n-grams including the first term of a phrase
+- **.endgrams({})** - n-grams including the last term of a phrase
+- **.edgegrams({})** - n-grams including the first or last term of a phrase
 
 MIT

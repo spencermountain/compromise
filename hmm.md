@@ -119,3 +119,51 @@ nlp(`why can't i have no kids and three money?`)
   .expand()
   .text()
 ```
+
+```js
+nlp('Garth, I’m going to be frank.')
+  .verbs()
+  .toFutureTense()
+  .all()
+  .text()
+
+nlp('WE’RE NOT WORTHY! WE’RE NOT WORTHY!')
+  .verbs()
+  .toFutureTense()
+  .all()
+  .text()
+
+nlp('All my life I’ve had one dream, to accomplish my many goals.')
+  .verbs()
+  .toGerund()
+  .all()
+  .text()
+
+nlp(`It's sucking my will to live!`)
+  .nouns()
+  .out('array')
+
+nlp(`powerful like a gorilla, yet soft and yielding like a nerf ball`)
+  .nouns()
+  .toPlural()
+  .all()
+  .text()
+
+nlp(`I'm not going to jail for you, or ANYBODY.`)
+  .nouns()
+  .toPlural()
+  .all()
+  .text()
+
+nlp(`bort licence plate`)
+  .nouns()
+  .toPlural()
+  .all()
+  .text()
+
+nlp(`hey pal, did you get a load of the nerd?`)
+  .nouns()
+  .toPlural()
+  .all()
+  .text()
+```

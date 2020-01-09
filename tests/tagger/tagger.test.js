@@ -20,6 +20,22 @@ test('pos-basic-tag:', function(t) {
     ['Peter the man', ['Person', 'Determiner', 'Noun']],
     // ['book the flight', ['Verb', 'Determiner', 'Noun']],
 
+    ['one dream', ['Value', 'Singular']],
+    ['two dreams', ['Value', 'Plural']],
+
+    // modal verbs
+    ['can buy', ['Modal', 'Verb']],
+    ['he can', ['Pronoun', 'Verb']],
+    ['the can', ['Determiner', 'Noun']],
+
+    ['will earn', ['Modal', 'Verb']],
+    ['they will', ['Pronoun', 'Verb']],
+    ['the will', ['Determiner', 'Noun']],
+
+    ['may leave', ['Modal', 'Verb']],
+    ['they may', ['Pronoun', 'Verb']],
+    ['this may', ['Determiner', 'Noun']],
+
     //slang, contractions
     ['u r nice', ['Pronoun', 'Copula', 'Adjective']],
     ['canadian bacon', ['Demonym', 'Noun']],

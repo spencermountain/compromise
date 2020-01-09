@@ -139,10 +139,6 @@ nlp('All my life I’ve had one dream, to accomplish my many goals.')
   .all()
   .text()
 
-nlp(`It's sucking my will to live!`)
-  .nouns()
-  .out('array')
-
 nlp(`powerful like a gorilla, yet soft and yielding like a nerf ball`)
   .nouns()
   .toPlural()
@@ -150,12 +146,6 @@ nlp(`powerful like a gorilla, yet soft and yielding like a nerf ball`)
   .text()
 
 nlp(`I'm not going to jail for you, or ANYBODY.`)
-  .nouns()
-  .toPlural()
-  .all()
-  .text()
-
-nlp(`bort licence plate`)
   .nouns()
   .toPlural()
   .all()

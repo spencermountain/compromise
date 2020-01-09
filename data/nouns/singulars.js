@@ -41,6 +41,7 @@ module.exports = [
   'others',
   'part',
   'patent',
+  'plate',
   'problem',
   'purpose',
   'question mark',

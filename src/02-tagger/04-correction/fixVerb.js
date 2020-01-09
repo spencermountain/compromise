@@ -42,6 +42,12 @@ const fixVerb = function(doc) {
 
     let modal = vb.if('(#Modal|did|had|has)')
     if (modal.found === true) {
+      if (!modal.has('#Modal #Verb')) {
+        //'the can'
+        modal.match('#Determiner [(can|will|may)]').tag('Singular', 'the can')
+        //'he can'
+        modal.match('(can|will|may|must|should|could)').untag('Modal', 'he can')
+      }
       //support a splattering of auxillaries before a verb
       modal
         .match(`(has|had) ${advb} #PastTense`)

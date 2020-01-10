@@ -21,6 +21,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - more robust number-tagging regexes
 - setup typescript types for plugins #661 (thanks @Drache93!)
 - verb conjugation and tagger bugfixes
+- disambiguate acryonyms & yelling
 
 ##### 12.2.1
 

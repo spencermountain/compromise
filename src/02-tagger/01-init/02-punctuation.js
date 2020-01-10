@@ -1,26 +1,4 @@
 const apostrophes = /[\'‘’‛‵′`´]$/
-const oneLetterAcronym = /^[A-Z]('s|,)?$/
-
-const oneLetterWord = {
-  I: true,
-  A: true,
-}
-
-const isAcronym = function(term, world) {
-  let str = term.reduced
-  // a known acronym like fbi
-  if (term.tags.Acronym) {
-    return true
-  }
-  // if (term.tags.Adverb || term.tags.Verb || term.tags.Value || term.tags.Plural) {
-  //   return false
-  // }
-  // 'PIZZA' is not an acronym.
-  if (str.length > 4 && world.words[str]) {
-    return false
-  }
-  return term.isAcronym()
-}
 
 //
 const checkPunctuation = function(terms, i, world) {
@@ -52,12 +30,12 @@ const checkPunctuation = function(terms, i, world) {
     }
   }
   // 'NASA' is, but not 'i REALLY love it.'
-  if (isAcronym(term, world)) {
-    term.tag('Acronym', 'acronym-step', world)
-    term.tag('Noun', 'acronym-infer', world)
-  } else if (!oneLetterWord.hasOwnProperty(term.text) && oneLetterAcronym.test(term.text)) {
-    term.tag('Acronym', 'one-letter-acronym', world)
-    term.tag('Noun', 'one-letter-infer', world)
-  }
+  // if (term.tags.Noun === true && isAcronym(term, world)) {
+  //   term.tag('Acronym', 'acronym-step', world)
+  //   term.tag('Noun', 'acronym-infer', world)
+  // } else if (!oneLetterWord.hasOwnProperty(term.text) && oneLetterAcronym.test(term.text)) {
+  //   term.tag('Acronym', 'one-letter-acronym', world)
+  //   term.tag('Noun', 'one-letter-infer', world)
+  // }
 }
 module.exports = checkPunctuation

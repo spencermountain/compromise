@@ -19,6 +19,10 @@ let conjugations = {
   act: {
     a: '_or',
   },
+  ache: {
+    pst: 'ached',
+    g: 'aching',
+  },
   age: {
     g: 'ageing',
     pst: 'aged',
@@ -149,6 +153,7 @@ let conjugations = {
   come: {
     prt: '_',
     pst: 'came',
+    g: 'coming',
   },
   compete: {
     a: 'competitor',
@@ -395,6 +400,9 @@ let conjugations = {
   },
   miss: {
     pres: '_',
+  },
+  name: {
+    g: 'naming',
   },
   pay: {
     prt: 'paid',
@@ -653,6 +661,9 @@ let conjugations = {
   },
   weave: {
     prt: 'woven',
+  },
+  wed: {
+    pst: 'wed',
   },
   weep: {
     prt: 'wept',

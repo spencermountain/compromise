@@ -38,7 +38,7 @@ const fixNouns = function(doc) {
       org.match('#Organization #Country').tag('Organization', 'org-country')
       org.match('(world|global|international|national|#Demonym) #Organization').tag('Organization', 'global-org')
       org
-        .match('#TitleCase #Organization')
+        .match('@titleCase #Organization')
         .ifNo('@hasComma')
         .tag('Organization', 'titlecase-org')
     }

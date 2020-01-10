@@ -23,8 +23,13 @@ const fixVerb = function(doc) {
     vb.match('there (are|were) #Adjective? [#PresentTense]').tag('Plural', 'there-are')
     //jack seems guarded
     vb.match('#Singular (seems|appears) #Adverb? [#PastTense$]').tag('Adjective', 'seems-filled')
+    //'foo-up'
+    vb.match('#Verb (up|off|over|out)')
+      .match('@hasHyphen .')
+      .tag('#PhrasalVerb')
     //fall over
     vb.match('#PhrasalVerb [#PhrasalVerb]').tag('Particle', 'phrasal-particle')
+
     //went to sleep
     // vb.match('#Verb to #Verb').lastTerm().tag('Noun', 'verb-to-verb');
     //been walking
@@ -42,6 +47,12 @@ const fixVerb = function(doc) {
 
     let modal = vb.if('(#Modal|did|had|has)')
     if (modal.found === true) {
+      if (!modal.has('#Modal #Verb')) {
+        //'the can'
+        modal.match('#Determiner [(can|will|may)]').tag('Singular', 'the can')
+        //'he can'
+        modal.match('(can|will|may|must|should|could)').untag('Modal', 'he can')
+      }
       //support a splattering of auxillaries before a verb
       modal
         .match(`(has|had) ${advb} #PastTense`)
@@ -73,7 +84,7 @@ const fixVerb = function(doc) {
     if (copula.found === true) {
       //was walking
       copula
-        .match(`#Copula ${advb} #Gerund`)
+        .match(`#Copula ${advb} (#Gerund|#PastTense)`)
         .not('#Verb$')
         .tag('Auxiliary', 'copula-walking')
       //is mark hughes

@@ -101,7 +101,7 @@ const parseToken = function(w) {
     //regex
     if (start(w) === '/' && end(w) === '/') {
       w = stripBoth(w)
-      obj.regex = new RegExp(w)
+      obj.regex = new RegExp(w) //potential vuln - security/detect-non-literal-regexp
       return obj
     }
     //soft-match

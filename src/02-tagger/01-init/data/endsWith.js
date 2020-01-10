@@ -24,15 +24,36 @@ module.exports = {
   ],
   c: [[/.[^aeiou]ic$/, Adj]],
   d: [
-    [/.[ia]sed$/, Adj],
-    [/.[gt]led$/, Adj],
-    [/.[td]ed$/, Past],
-    [/.[aeiou]red$/, Past],
-    [/.[^aeiou]led$/, Past], //rumbled
-    [/[^aeiou]ard$/, Sing],
-    [/[aeiou][^aeiou]id$/, Adj],
-    [/[aeiou]c?ked$/, Past], //hooked
+    //==-ed==
+    //double-consonant
+    [/[aeiou](pp|ll|ss|ff|gg|tt|rr|bb|nn|mm)ed$/, Past], //popped, planned
+    //double-vowel
+    [/.[aeo]{2}[bdgmnprvz]ed$/, Past], //beeped, mooned, veered
+    //-hed
+    [/.[aeiou][sg]hed$/, Past], //stashed, sighed
+    //-rd
+    [/.[aeiou]red$/, Past], //stored
+    [/.[aeiou]r?ried$/, Past], //buried
+    //-led
+    [/.[bcdgtr]led$/, Past], //startled, rumbled
+    [/.[aoui]f?led$/, Past], //impaled, stifled
+    //-sed
+    [/.[iao]sed$/, Past], //franchised
+    [/[aeiou]n?[cs]ed$/, Past], //laced, lanced
+    //-med
+    [/[aeiou][rl]?[mnf]ed$/, Past], //warmed, attained, engulfed
+    //-ked
+    [/[aeiou][ns]?c?ked$/, Past], //hooked, masked
+    //-ged
+    [/[aeiou][nl]?ged$/, Past], //engaged
+    //-ted
+    [/.[tdbwxz]ed$/, Past], //bribed, boxed
     [/[^aeiou][aeiou][tvx]ed$/, Past], //boxed
+    //-ied
+    [/.[cdlmnprstv]ied$/, Past], //rallied
+
+    [/[^aeiou]ard$/, Sing], //card
+    [/[aeiou][^aeiou]id$/, Adj],
     [/.[vrl]id$/, Adj],
   ],
   e: [
@@ -94,6 +115,8 @@ module.exports = {
     [/.[rln]ates$/, Pres],
     [/.[^z]ens$/, Verb],
     [/.[lstrn]us$/, Sing],
+    [/.[aeiou]sks$/, Pres], //masks
+    [/.[aeiou]kes$/, Pres], //bakes
     [/[aeiou][^aeiou]is$/, Sing],
     [/[a-z]\'s$/, Noun],
     [/^yes+$/, Exp], //yessss

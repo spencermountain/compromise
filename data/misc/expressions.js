@@ -57,6 +57,7 @@ module.exports = [
   'sheesh',
   'shhh',
   'shit',
+  'tsk',
   'ugh',
   'uh huh',
   'uh oh',

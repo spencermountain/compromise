@@ -1,336 +1,413 @@
 export as namespace nlp
 
-declare function nlp(text: string): nlp.Document
+declare interface nlp<D extends object, W extends object> {
+  /** normal usage */
+  (text: string): nlp.ExtendedDocument<D, W>
+  /** tozenize string */
+  tokenize(text: string): nlp.ExtendedDocument<D, W>
+  /** mix in a compromise-plugin */
+  extend<P>(
+    plugin: P
+  ): nlp<
+    P extends nlp.Plugin<infer PD, infer PW> ? { [k in keyof (PD & D)]: (PD & D)[k] } : { [k in keyof D]: D[k] },
+    P extends nlp.Plugin<infer PD, infer PW> ? { [k in keyof (PW & W)]: (PW & W)[k] } : { [k in keyof W]: W[k] }
+  >
+
+  /** re-generate a Doc object from .json() results */
+  load(json: any): nlp.ExtendedDocument<D, W>
+  /**  log our decision-making for debugging */
+  verbose(bool: boolean): nlp.ExtendedDocument<D, W>
+  /**  current semver version of the library */
+  version: nlp.ExtendedDocument<D, W>
+}
+
+declare function nlp(text: string): nlp.DefaultDocument
+declare function nlp<D extends object, W extends object>(text: string): nlp.ExtendedDocument<D, W>
+
+// possible values to .json()
+declare interface JsonOptions {
+  /**  a perfect copy of the input text */
+  text?: boolean
+  /** normalized whitespace, case, unicode, punctuation */
+  normal?: boolean
+  /** lowercase, trimmed, contractions expanded. */
+  reduced?: boolean
+  /** cleanup whitespace */
+  trim?: boolean
+  /** character-position where this begins */
+  offset?: boolean
+  /** frequency of this match in the document */
+  count?: boolean
+  /**  remove duplicate results*/
+  unique?: boolean
+  /** starting term # in document */
+  index?: boolean
+  /** options for each term */
+  terms?: {
+    text?: boolean
+    normal?: boolean
+    clean?: boolean
+    implicit?: boolean
+    tags?: boolean
+    whitespace?: boolean
+    id?: boolean
+    offset?: boolean
+    bestTag?: boolean
+  }
+}
 
 // Constructor
 declare module nlp {
-  /** parse text into a compromise object, without running POS-tagging */
-  export function tokenize(text: string): Document
+  export function tokenize(text: string): DefaultDocument
   /** mix in a compromise-plugin */
-  export function extend(plugin: any): Document
+  export function extend<P>(
+    plugin: P
+  ): nlp<P extends Plugin<infer D, infer W> ? D : {}, P extends Plugin<infer D, infer W> ? W : {}>
   /** re-generate a Doc object from .json() results */
-  export function load(json: any): Document
+  export function load(json: any): DefaultDocument
   /**  log our decision-making for debugging */
-  export function verbose(bool: boolean): Document
+  export function verbose(bool: boolean): DefaultDocument
   /**  current semver version of the library */
-  export const version: Document
+  export const version: number
 
-  class Document {
+  type Plugin<D extends object, W extends object> = (
+    Doc: Document<World & W> & D & { prototype: D },
+    world: World & W
+  ) => void
+
+  type ExtendedWorld<W extends object> = nlp.World & W
+  type ExtendedDocument<D extends object, W extends object> = {
+    [k in keyof (nlp.Document<ExtendedWorld<W>> & D)]: (nlp.Document<ExtendedWorld<W>> & D)[k]
+  }
+  type DefaultDocument = {
+    [k in keyof nlp.Document]: nlp.Document[k]
+  }
+
+  class Document<W extends World = World> {
     // Utils
     /** return the whole original document ('zoom out') */
-    all(): Document
+    all(): Document<W>
     /** is this document empty? */
-    found: Boolean
+    found: boolean
     /** return the previous result */
-    parent(): Document
+    parent(): Document<W>
     /** return all of the previous results */
-    parents(): Document[]
+    parents(): Document<W>[]
     /**  (re)run the part-of-speech tagger on this document */
-    tagger(): Document
+    tagger(): Document<W>
     /**  count the # of terms in each match */
-    wordCount(): Number
+    wordCount(): number
     /**  count the # of characters of each match */
-    length(): Number
+    length(): number
     /**  deep-copy the document, so that no references remain */
-    clone(shallow?: Boolean): Document
+    clone(shallow?: boolean): Document<W>
     /** freeze the current state of the document, for speed-purposes */
-    cache(options?: Object): Document
+    cache(options?: object): Document<W>
     /** un-freezes the current state of the document, so it may be transformed */
-    uncache(options?: Object): Document
+    uncache(options?: object): Document<W>
+    /** the current world */
+    world: W
 
     // Accessors
     /**  use only the first result(s) */
-    first(n?: Number): Document
+    first(n?: number): Document<W>
     /**  use only the last result(s) */
-    last(n?: Number): Document
+    last(n?: number): Document<W>
     /**  grab a subset of the results */
-    slice(start: Number, end?: Number): Document
+    slice(start: number, end?: number): Document<W>
     /**  use only the nth result */
-    eq(n: Number): Document
+    eq(n: number): Document<W>
     /** get the first word in each match */
-    firstTerm(): Document
+    firstTerm(): Document<W>
     /** get the end word in each match */
-    lastTerm(): Document
+    lastTerm(): Document<W>
     /** return a flat list of all Term objects in match */
     termList(): any
 
     // Match
     /**  return a new Doc, with this one as a parent */
-    match(match: String | Document): Document
+    match(match: string | Document<W>): Document<W>
     /**  return all results except for this */
-    not(match: String | Document): Document
+    not(match: string | Document<W>): Document<W>
     /**  return only the first match */
-    matchOne(match: String | Document): Document
+    matchOne(match: string | Document<W>): Document<W>
     /**  return each current phrase, only if it contains this match */
-    if(match: String | Document): Document
+    if(match: string | Document<W>): Document<W>
     /**  Filter-out any current phrases that have this match */
-    ifNo(match: String | Document): Document
+    ifNo(match: string | Document<W>): Document<W>
     /**  Return a boolean if this match exists */
-    has(match: String | Document): Document
+    has(match: string | Document<W>): boolean
     /**  search through earlier terms, in the sentence */
-    lookBehind(match: String | Document): Document
+    lookBehind(match: string | Document<W>): Document<W>
     /**  search through following terms, in the sentence */
-    lookAhead(match: String | Document): Document
+    lookAhead(match: string | Document<W>): Document<W>
     /**  return the terms before each match */
-    before(match: String | Document): Document
+    before(match: string | Document<W>): Document<W>
     /**  return the terms after each match */
-    after(match: String | Document): Document
+    after(match: string | Document<W>): Document<W>
     /** quick find for an array of string matches */
-    lookup(matches: String[]): Document
+    lookup(matches: string[]): Document<W>
 
     // Case
     /**  turn every letter of every term to lower-cse */
-    toLowerCase(): Document
+    toLowerCase(): Document<W>
     /**  turn every letter of every term to upper case */
-    toUpperCase(): Document
+    toUpperCase(): Document<W>
     /**  upper-case the first letter of each term */
-    toTitleCase(): Document
+    toTitleCase(): Document<W>
     /**  remove whitespace and title-case each term */
-    toCamelCase(): Document
+    toCamelCase(): Document<W>
 
     // Whitespace
     /** add this punctuation or whitespace before each match */
-    pre(str: String, concat: Boolean): Document
+    pre(str: string, concat: boolean): Document<W>
     /** add this punctuation or whitespace after each match */
-    post(str: String, concat: Boolean): Document
+    post(str: string, concat: boolean): Document<W>
     /**  remove start and end whitespace */
-    trim(): Document
+    trim(): Document<W>
     /**  connect words with hyphen, and remove whitespace */
-    hyphenate(): Document
+    hyphenate(): Document<W>
     /**  remove hyphens between words, and set whitespace */
-    dehyphenate(): Document
+    dehyphenate(): Document<W>
 
     // Tag
     /**  Give all terms the given tag */
-    tag(tag: String, reason?: String): Document
+    tag(tag: string, reason?: string): Document<W>
     /**  Only apply tag to terms if it is consistent with current tags */
-    tagSafe(tag: String, reason?: String): Document
+    tagSafe(tag: string, reason?: string): Document<W>
     /**  Remove this term from the given terms */
-    unTag(tag: String, reason?: String): Document
+    unTag(tag: string, reason?: string): Document<W>
     /**  return only the terms that can be this tag */
-    canBe(tag: String): Document
+    canBe(tag: string): Document<W>
 
     // Loops
     /** run each phrase through a function, and create a new document */
-    map(fn: Function): Document | []
+    map(fn: Function): Document<W> | []
     /**  run a function on each phrase, as an individual document */
-    forEach(fn: Function): Document
+    forEach(fn: Function): Document<W>
     /**  return only the phrases that return true */
-    filter(fn: Function): Document
+    filter(fn: Function): Document<W>
     /**  return a document with only the first phrase that matches */
-    find(fn: Function): Document | undefined
+    find(fn: Function): Document<W> | undefined
     /**  return true or false if there is one matching phrase */
-    some(fn: Function): Document
+    some(fn: Function): Document<W>
     /**  sample a subset of the results */
-    random(n?: Number): Document
+    random(n?: number): Document<W>
 
     // Insert
     /**  substitute-in new content */
-    replaceWith(text: String | Function, keepTags?: Boolean | Object, keepCase?: Boolean): Document
+    replaceWith(text: string | Function, keepTags?: boolean | object, keepCase?: boolean): Document<W>
     /**  search and replace match with new content */
-    replace(match: String, text?: String | Function, keepTags?: Boolean | Object, keepCase?: Boolean): Document
+    replace(match: string, text?: string | Function, keepTags?: boolean | object, keepCase?: boolean): Document<W>
     /**  fully remove these terms from the document */
-    delete(match: String): Document
+    delete(match: string): Document<W>
     /**  add these new terms to the end (insertAfter) */
-    append(text: String): Document
+    append(text: string): Document<W>
     /**  add these new terms to the front (insertBefore) */
-    prepend(text: String): Document
+    prepend(text: string): Document<W>
     /**  add these new things to the end */
-    concat(text: String): Document
+    concat(text: string): Document<W>
 
     // transform
     /**re-arrange the order of the matches (in place) */
-    sort(method?: String | Function): Document
+    sort(method?: string | Function): Document<W>
     /**reverse the order of the matches, but not the words */
-    reverse(): Document
+    reverse(): Document<W>
     /** clean-up the document, in various ways */
-    normalize(options?: String | Object): String
+    normalize(options?: string | object): string
     /** remove any duplicate matches */
-    unique(): Document
+    unique(): Document<W>
     /**  return a Document with three parts for every match ('splitOn') */
-    split(match?: String): Document
+    split(match?: string): Document<W>
     /**  separate everything after the match as a new phrase */
-    splitBefore(match?: String): Document
+    splitBefore(match?: string): Document<W>
     /**  separate everything before the word, as a new phrase */
-    splitAfter(match?: String): Document
+    splitAfter(match?: string): Document<W>
     /** split a document into labeled sections  */
-    segment(regs: Object, options?: Object): Document
+    segment(regs: object, options?: object): Document<W>
     /** make all phrases into one phrase  */
-    join(str?: String): Document
+    join(str?: string): Document<W>
 
     // Output
     /**  return the document as text */
-    text(options?: String | Object): String
+    text(options?: string | object): string
     /**  pull out desired metadata from the document */
-    json(options?: String | Object): any
+    json(options?: JsonOptions | string): any
     /** some named output formats */
-    out(format?: string): String
+    out(format?: 'text' | 'normal' | 'offset' | 'terms'): string
+    out(format: 'array'): string[]
+    out(format: 'tags' | 'terms'): Array<{ normal: string; text: string; tags: string[] }>
+    out(format: 'json'): Array<{ normal: string; text: string; tags: () => void }>[]
+    out(format: 'debug'): Text
+    out(format: 'topk'): Array<{ normal: string; count: number; percent: number }>
     /**  pretty-print the current document and its tags */
-    debug(): Document
+    debug(): Document<W>
     /** store a parsed document for later use  */
     export(): any
 
     // Selections
     /**  split-up results by each individual term */
-    terms(n?: Number): Document
+    terms(n?: number): Document<W>
     /**  split-up results into multi-term phrases */
-    clauses(n?: Number): Document
+    clauses(n?: number): Document<W>
     /** return all terms connected with a hyphen or dash like `'wash-out'`*/
-    hyphenated(n?: Number): Document
+    hyphenated(n?: number): Document<W>
     /** add quoation marks around each match */
-    toQuoations(start?: String, end?: String): Document
+    toQuoations(start?: string, end?: string): Document<W>
     /** add brackets around each match */
-    toParentheses(start?: String, end?: String): Document
+    toParentheses(start?: string, end?: string): Document<W>
     /** return things like `'(939) 555-0113'` */
-    phoneNumbers(n?: Number): Document
+    phoneNumbers(n?: number): Document<W>
     /** return things like `'#nlp'` */
-    hashTags(n?: Number): Document
+    hashTags(n?: number): Document<W>
     /** return things like `'hi@compromise.cool'` */
-    emails(n?: Number): Document
+    emails(n?: number): Document<W>
     /**  return  things like `:)` */
-    emoticons(n?: Number): Document
+    emoticons(n?: number): Document<W>
     /**  return athings like `💋` */
-    emoji(n?: Number): Document
+    emoji(n?: number): Document<W>
     /**  return things like `'@nlp_compromise'`*/
-    atMentions(n?: Number): Document
+    atMentions(n?: number): Document<W>
     /**  return things like `'compromise.cool'` */
-    urls(n?: Number): Document
+    urls(n?: number): Document<W>
     /**  return things like `'quickly'` */
-    adverbs(n?: Number): Document
+    adverbs(n?: number): Document<W>
     /**  return things like `'he'` */
-    pronouns(n?: Number): Document
+    pronouns(n?: number): Document<W>
     /**  return things like `'but'`*/
-    conjunctions(n?: Number): Document
+    conjunctions(n?: number): Document<W>
     /**  return things like `'of'`*/
-    prepositions(n?: Number): Document
+    prepositions(n?: number): Document<W>
     /**  return person names like `'John A. Smith'`*/
-    people(n?: Number): Document
+    people(n?: number): Document<W>
     /**  return location names like `'Paris, France'`*/
-    places(n?: Number): Document
+    places(n?: number): Document<W>
     /**  return companies and org names like `'Google Inc.'`*/
-    organizations(n?: Number): Document
+    organizations(n?: number): Document<W>
     /**  return people, places, and organizations */
-    topics(n?: Number): Document
+    topics(n?: number): Document<W>
 
     // Subsets
     /** alias for .all(), until plugin overloading  */
-    sentences(): Document
+    sentences(): Document<W>
     /**  return things like `'Mrs.'`*/
-    abbreviations(n?: Number): Abbreviations
+    abbreviations(n?: number): Abbreviations<W>
     /** return any multi-word terms, like "didn't"  */
-    contractions(n?: Number): Contractions
+    contractions(n?: number): Contractions<W>
     /** contract words that can combine, like "did not" */
-    contract(): Document
+    contract(): Document<W>
     /**  return anything inside (parentheses) */
-    parentheses(n?: Number): Parentheses
+    parentheses(n?: number): Parentheses<W>
     /**  return things like "Spencer's" */
-    possessives(n?: Number): Possessives
+    possessives(n?: number): Possessives<W>
     /**  return any terms inside 'quotation marks' */
-    quotations(n?: Number): Quotations
+    quotations(n?: number): Quotations<W>
     /**  return things like `'FBI'` */
-    acronyms(n?: Number): Acronyms
+    acronyms(n?: number): Acronyms<W>
     /**  return things like `'eats, shoots, and leaves'` */
-    lists(n?: Number): Lists
+    lists(n?: number): Lists<W>
     /**  return any subsequent terms tagged as a Noun */
-    nouns(n?: Number): Nouns
+    nouns(n?: number): Nouns<W>
     /**  return any subsequent terms tagged as a Verb */
-    verbs(n?: Number): Verbs
+    verbs(n?: number): Verbs<W>
   }
 
   // Nouns class
-  interface Nouns extends Document {
+  interface Nouns<W extends World = World> extends ExtendedDocument<{}, W> {
     /** get any adjectives describing this noun*/
-    adjectives(): Document
+    adjectives(): Document<W>
     /** return only plural nouns */
-    isPlural(): Document
+    isPlural(): Document<W>
     /** return only nouns that _can be_ inflected as plural */
-    hasPlural(): Document
+    hasPlural(): Document<W>
     /** 'football captain' → 'football captains' */
-    toPlural(setArticle?: Boolean): Document
+    toPlural(setArticle?: boolean): Document<W>
     /** 'turnovers' → 'turnover' */
-    toSingular(setArticle?: Boolean): Document
+    toSingular(setArticle?: boolean): Document<W>
     /** add a `'s` to the end, in a safe manner. */
-    toPossessive(): Document
+    toPossessive(): Document<W>
   }
 
   // Verbs class
-  interface Verbs extends Document {
+  interface Verbs<W extends World = World> extends Document<W> {
     /** return the adverbs describing this verb */
-    adverbs(): Document
+    adverbs(): Document<W>
     /** return only plural nouns */
-    isPlural(): Document
+    isPlural(): Document<W>
     /** return only singular nouns */
-    isSingular(): Document
+    isSingular(): Document<W>
     /** return all forms of these verbs */
-    conjugate(): Document
+    conjugate(): Document<W>
     /** 'will go' → 'went' */
-    toPastTense(): Document
+    toPastTense(): Document<W>
     /** 'walked' → 'walks' */
-    toPresentTense(): Document
+    toPresentTense(): Document<W>
     /** 'walked' → 'will walk' */
-    toFutureTense(): Document
+    toFutureTense(): Document<W>
     /** 'walks' → 'walk' */
-    toInfinitive(): Document
+    toInfinitive(): Document<W>
     /** 'walks' → 'walking' */
-    toGerund(): Document
+    toGerund(): Document<W>
     /** return verbs with 'not' */
-    isNegative(): Document
+    isNegative(): Document<W>
     /** only verbs without 'not'*/
-    isPositive(): Document
+    isPositive(): Document<W>
     /** 'went' → 'did not go'*/
-    toNegative(): Document
+    toNegative(): Document<W>
     /** "didn't study" → 'studied' */
-    toPositive(): Document
+    toPositive(): Document<W>
   }
 
-  interface Abbreviations extends Document {
+  interface Abbreviations<W extends World = World> extends Document<W> {
     /**  */
-    stripPeriods(): Document
+    stripPeriods(): Document<W>
     /**  */
-    addPeriods(): Document
+    addPeriods(): Document<W>
   }
 
-  interface Acronyms extends Document {
+  interface Acronyms<W extends World = World> extends Document<W> {
     /**  */
-    stripPeriods(): Document
+    stripPeriods(): Document<W>
     /**  */
-    addPeriods(): Document
+    addPeriods(): Document<W>
   }
 
-  interface Contractions extends Document {
+  interface Contractions<W extends World = World> extends Document<W> {
     /**  */
-    expand(): Document
+    expand(): Document<W>
   }
 
-  interface Parentheses extends Document {
+  interface Parentheses<W extends World = World> extends Document<W> {
     /**  */
-    unwrap(): Document
+    unwrap(): Document<W>
   }
 
-  interface Possessives extends Document {
+  interface Possessives<W extends World = World> extends Document<W> {
     /**  */
-    strip(): Document
+    strip(): Document<W>
   }
 
-  interface Quotations extends Document {
+  interface Quotations<W extends World = World> extends Document<W> {
     /**  */
-    unwrap(): Document
+    unwrap(): Document<W>
   }
 
-  interface Lists extends Document {
+  interface Lists<W extends World = World> extends Document<W> {
     /**  */
-    conjunctions(): Document
+    conjunctions(): Document<W>
     /**  */
-    parts(): Document
+    parts(): Document<W>
     /**  */
-    items(): Document
+    items(): Document<W>
     /**  */
-    add(): Document
+    add(): Document<W>
     /**  */
-    remove(): Document
+    remove(): Document<W>
     /**  */
-    hasOxfordComma(): Document
+    hasOxfordComma(): Document<W>
   }
+
+  class World {}
 }
 
 export default nlp

@@ -26,7 +26,6 @@ const methods = {
   },
   /** get all adjectives describing this noun*/
   adjectives: function() {
-    // this.lookAhead('.+').debug()
     let list = this.lookAhead('^(that|who|which)? (was|is|will)? be? #Adverb? #Adjective+')
     list = list.concat(this.lookBehind('#Adjective+ #Adverb?$'))
     list = list.match('#Adjective')
@@ -47,7 +46,7 @@ const methods = {
       }
       // double-check it isn't an un-tagged plural
       let main = parse(doc).main
-      let str = main.text()
+      let str = main.text('reduced')
       if (!main.has('#Singular') && isPlural(str) === true) {
         return
       }
@@ -71,7 +70,7 @@ const methods = {
       }
       // double-check it isn't an un-tagged plural
       let main = parse(doc).main
-      let str = main.text()
+      let str = main.text('reduced')
       if (!main.has('#Plural') && isPlural(str) !== true) {
         return
       }

@@ -29,6 +29,7 @@ class Term {
   /** set the text of the Term to something else*/
   set(str) {
     let obj = parseTerm(str)
+
     this.text = obj.text
     this.clean = obj.clean
     return this

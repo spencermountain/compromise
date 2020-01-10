@@ -6,6 +6,7 @@
   "main": "./builds/compromise-ngrams.js",
   "unpkg": "./builds/compromise-ngrams.min.js",
   "module": "./builds/compromise-ngrams.mjs",
+  "types": "types/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git://github.com/spencermountain/compromise.git"
@@ -24,7 +25,8 @@
     "printWidth": 100
   },
   "files": [
-    "builds/"
+    "builds/",
+    "types/index.d.ts"
   ],
   "eslintIgnore": [
     "builds/*.js"

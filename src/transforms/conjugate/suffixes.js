@@ -66,12 +66,33 @@ const endsWith = {
       },
     },
     {
-      reg: /(ake)$/i,
+      //shake
+      reg: /(t|sh?)(ake)$/i,
       repl: {
-        pr: '$1s',
-        pa: 'ook',
-        gr: 'aking',
-        ar: '$1r',
+        pr: '$1$2s',
+        pa: '$1ook',
+        gr: '$1aking',
+        ar: '$1$2r',
+      },
+    },
+    {
+      //awake
+      reg: /w(ake)$/i,
+      repl: {
+        pr: 'w$1s',
+        pa: 'woke',
+        gr: 'waking',
+        ar: 'w$1r',
+      },
+    },
+    {
+      //make
+      reg: /m(ake)$/i,
+      repl: {
+        pr: 'm$1s',
+        pa: 'made',
+        gr: 'making',
+        ar: 'm$1r',
       },
     },
     {
@@ -80,7 +101,7 @@ const endsWith = {
         pr: '$1es',
         pa: '$1ed',
         gr: '$1ing',
-        prt: '$1en',
+        // prt: '$1en',
       },
     },
     {

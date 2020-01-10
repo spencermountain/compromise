@@ -36,6 +36,8 @@ const isEmoticon = str => {
 const tagEmoji = (term, world) => {
   let raw = term.pre + term.text + term.post
   raw = raw.trim()
+  //dont double-up on ending periods
+  raw = raw.replace(/[.!?,]$/, '')
   //test for :keyword: emojis
   if (isCommaEmoji(raw) === true) {
     term.tag('Emoji', 'comma-emoji', world)

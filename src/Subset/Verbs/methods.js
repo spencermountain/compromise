@@ -2,7 +2,6 @@ const toNegative = require('./toNegative')
 const parseVerb = require('./parse')
 const isPlural = require('./isPlural')
 const conjugate = require('./conjugate')
-const toInfinitive = require('./toInfinitive')
 
 module.exports = {
   /** overload the original json with verb information */
@@ -131,7 +130,7 @@ module.exports = {
   toInfinitive: function() {
     this.forEach(vb => {
       let parsed = parseVerb(vb)
-      let str = toInfinitive(parsed, this.world)
+      let str = conjugate(parsed, this.world).Infinitive
       if (str) {
         vb.replaceWith(str, false)
         vb.tag('Infinitive')

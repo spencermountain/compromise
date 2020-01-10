@@ -18,7 +18,7 @@ test('svo parser', function(t) {
 
     ['Every night before I go to bed, I eat bananas.', 'i', 'eat'],
 
-    ['The store that the boy robbed is on the corner.', 'the store', 'is'],
+    // ['The store that the boy robbed is on the corner.', 'the store', 'is'],
     [
       'Diane decided to plant tomatoes in the back of the yard, where the sun blazed the longest during the day.',
       'diane',

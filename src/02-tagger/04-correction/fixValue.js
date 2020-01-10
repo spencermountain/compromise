@@ -8,10 +8,17 @@ const fixValue = function(doc) {
     val.match('1 #Value #PhoneNumber').tag('PhoneNumber', '1-800-Value')
     //(454) 232-9873
     val.match('#NumericValue #PhoneNumber').tag('PhoneNumber', '(800) PhoneNumber')
-    //three trains
-    val.match('#Value [#PresentTense]').tag('Plural', 'value-presentTense')
+    //three trains / one train
+    let m = val.match('#Value #PresentTense')
+    if (m.found) {
+      if (m.has('(one|1)') === true) {
+        m.terms(1).tag('Singular', 'one-presentTense')
+      } else {
+        m.terms(1).tag('Plural', 'value-presentTense')
+      }
+    }
     //money
-    let m = val.match('#Value+ #Currency')
+    m = val.match('#Value+ #Currency')
     m.lastTerm().tag('Unit', 'money-unit')
     m.match('#Value+').tag('Money', 'value-currency')
   }

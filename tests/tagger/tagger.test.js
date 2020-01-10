@@ -1,9 +1,8 @@
 const test = require('tape')
 const nlp = require('../_lib')
-// const pos_test = require('../_lib').pos_test
 
 test('pos-basic-tag:', function(t) {
-  ;[
+  let arr = [
     ['John is pretty', ['Person', 'Copula', 'Adjective']],
     ['John was lofty', ['Person', 'Copula', 'Adjective']],
     ['John Smith was lofty', ['FirstName', 'LastName', 'Copula', 'Adjective']],
@@ -20,6 +19,22 @@ test('pos-basic-tag:', function(t) {
     ['walk the walk', ['Verb', 'Determiner', 'Noun']],
     ['Peter the man', ['Person', 'Determiner', 'Noun']],
     // ['book the flight', ['Verb', 'Determiner', 'Noun']],
+
+    ['one dream', ['Value', 'Singular']],
+    ['two dreams', ['Value', 'Plural']],
+
+    // modal verbs
+    ['can buy', ['Modal', 'Verb']],
+    ['he can', ['Pronoun', 'Verb']],
+    ['the can', ['Determiner', 'Noun']],
+
+    ['will earn', ['Modal', 'Verb']],
+    ['they will', ['Pronoun', 'Verb']],
+    ['the will', ['Determiner', 'Noun']],
+
+    ['may leave', ['Modal', 'Verb']],
+    ['they may', ['Pronoun', 'Verb']],
+    ['this may', ['Determiner', 'Noun']],
 
     //slang, contractions
     ['u r nice', ['Pronoun', 'Copula', 'Adjective']],
@@ -91,19 +106,68 @@ test('pos-basic-tag:', function(t) {
     ['it was just', ['Noun', 'Copula', 'Adjective']],
     ['it was just gorgeous', ['Noun', 'Copula', 'Adverb', 'Adjective']],
 
-    ['N.V.,', ['Noun']],
-    ['16.125', ['Cardinal']],
-    ['$19', ['Money']],
     ['butterfly', ['Singular']],
     ['he blamed the girl', ['Pronoun', 'PastTense', 'Determiner', 'Singular']],
     ['his fine', ['Possessive', 'Noun']],
-    ['contracted AIDS', ['PastTense', 'Acronym']],
+    // ['contracted AIDS', ['PastTense', 'Acronym']],
+    // ['contacted nbc', ['PastTense', 'Acronym']],
     ['city/town', ['Noun', 'Noun']],
     ['boyfriend to Jane', ['Noun', 'Conjunction', 'Person']],
     // ['boyfriend of Jane', ['Noun', 'Conjunction', 'Person']],
     ['his fines', ['Possessive', 'Noun']],
     ['100+ rumours', ['Value', 'Plural']],
     ['John & John,', ['Noun', 'Noun', 'Noun']],
+    // ['i am gutted', ['Noun', 'PastTense', 'Adjective']],
+    ['N.V.,', ['Noun']],
+
+    // verb suffixes
+    ['lied', ['PastTense']],
+    ['lies', ['PresentTense']],
+    ['owed', ['PastTense']],
+    ['owes', ['PresentTense']],
+    ['aced', ['PastTense']],
+    ['vied', ['PastTense']],
+    ['vies', ['PresentTense']],
+    ['husked', ['PastTense']],
+    ['husks', ['PresentTense']],
+    ['masked', ['PastTense']],
+    ['planned', ['PastTense']],
+    ['hummed', ['PastTense']],
+
+    ['bakes', ['PresentTense']],
+    ['fakes', ['PresentTense']],
+    ['makes', ['PresentTense']],
+    ['mistakes', ['PresentTense']],
+    ['overtakes', ['PresentTense']],
+    ['remakes', ['PresentTense']],
+    ['retakes', ['PresentTense']],
+    ['forsakes', ['PresentTense']],
+    ['shakes', ['PresentTense']],
+    ['snakes', ['PresentTense']],
+    ['takes', ['PresentTense']],
+    ['undertakes', ['PresentTense']],
+
+    ['baked', ['PastTense']],
+    ['faked', ['PastTense']],
+    ['maked', ['PastTense']],
+    ['mistaked', ['PastTense']],
+    ['overtook', ['PastTense']],
+    ['remaked', ['PastTense']],
+    ['retaked', ['PastTense']],
+    ['forsaked', ['PastTense']],
+    ['shaked', ['PastTense']],
+    ['snaked', ['PastTense']],
+    ['took', ['PastTense']],
+    ['undertook', ['PastTense']],
+
+    //phrasal verb tense
+    ['head-over', ['PresentTense', 'Particle']],
+    ['head-under', ['PresentTense', 'Particle']],
+    ['haze-over', ['PresentTense', 'Particle']],
+    ['hazed-over', ['PastTense', 'Particle']],
+    ['headed-over', ['PastTense', 'Particle']],
+    ['heading-under', ['Gerund', 'Particle']],
+    ['healing-over', ['Gerund', 'Particle']],
 
     //abbreviations
     [
@@ -118,7 +182,8 @@ test('pos-basic-tag:', function(t) {
     ['thom is smart', ['ProperNoun', 'Verb', 'Adjective']],
 
     [`i met April O'neil`, ['Pronoun', 'PastTense', 'Person', 'Person']],
-  ].forEach(function(a) {
+  ]
+  arr.forEach(function(a) {
     let terms = nlp(a[0]).json(0).terms
     terms.forEach((term, i) => {
       let tag = a[1][i]

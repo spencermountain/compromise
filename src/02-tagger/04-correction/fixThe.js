@@ -26,7 +26,7 @@ const fixThe = function(doc) {
       //the test string
       inf.match('#Determiner [#Infinitive] #Noun').tag('Noun', 'correction-determiner7')
       //by a bear.
-      inf.match('#Determiner [#Infinitive]$').tag('Noun', 'a-inf')
+      inf.match('#Determiner #Adjective [#Infinitive]$').tag('Noun', 'a-inf')
     }
 
     //the wait to vote
@@ -40,7 +40,9 @@ const fixThe = function(doc) {
     //the western line
     det.match('#Determiner [(western|eastern|northern|southern|central)] #Noun').tag('Noun', 'western-line')
     //the swim
-    det.match('(the|those|these) [(#Infinitive|#PresentTense|#PastTense)]').tag('Noun', 'correction-determiner2')
+    det
+      .match('(the|those|these) #Adjective? [(#Infinitive|#PresentTense|#PastTense)]')
+      .tag('Noun', 'correction-determiner2')
   }
 
   let an = doc.if('(a|an)')

@@ -4,6 +4,7 @@ const step = {
   stem: require('./03-stem'),
   plural: require('./04-plurals'),
   organizations: require('./05-organizations'),
+  acronyms: require('./06-acronyms'),
 }
 //
 const fallbacks = function(doc, terms) {
@@ -13,7 +14,7 @@ const fallbacks = function(doc, terms) {
   step.neighbours(terms, world)
 
   // is there a case-sensitive clue?
-  step.case(terms, world)
+  step.case(doc)
 
   // check 'rewatch' as 'watch'
   step.stem(terms, world)
@@ -27,6 +28,9 @@ const fallbacks = function(doc, terms) {
 
   // turn 'Foo University' into an Org
   step.organizations(terms, world)
+
+  //turn 'FBD' into an acronym
+  step.acronyms(terms, world)
 
   //are the nouns singular or plural?
   terms.forEach(t => {

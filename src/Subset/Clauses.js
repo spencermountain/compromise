@@ -34,6 +34,17 @@ const addMethod = function(Doc) {
     found = found.splitAfter('@hasSemicolon')
     found = found.splitAfter('@hasDash')
 
+    // passive voice verb - '.. which was robbed is empty'
+    // let passive = found.match('#Noun (which|that) (was|is) #Adverb? #PastTense #Adverb?')
+    // if (passive.found) {
+    //   found = found.splitAfter(passive)
+    // }
+    // //which the boy robbed
+    // passive = found.match('#Noun (which|that) the? #Noun+ #Adverb? #PastTense #Adverb?')
+    // if (passive.found) {
+    //   found = found.splitAfter(passive)
+    // }
+
     // does there appear to have relative/subordinate clause still?
     let tooLong = found.filter(d => d.wordCount() > 5 && d.match('#Verb+').length >= 2)
     if (tooLong.found) {

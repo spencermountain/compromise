@@ -26,6 +26,7 @@ module.exports = {
   meant: 'PastTense',
   went: 'PastTense',
   taken: 'PastTense',
+  lied: 'PastTense',
 
   going: 'Gerund',
   being: 'Gerund',

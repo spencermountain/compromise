@@ -9,7 +9,7 @@ const checkRegex = function(term, world) {
   // do them all!
   for (let r = 0; r < regex.length; r += 1) {
     if (regex[r][0].test(str) === true) {
-      term.tagSafe(regex[r][1], 'regex #' + r, world)
+      term.tagSafe(regex[r][1], 'prefix #' + r, world)
       break
     }
   }

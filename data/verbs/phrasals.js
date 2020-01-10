@@ -1,5 +1,8 @@
 //phrasal verbs are two words that really mean one verb.
 //'beef up' is one verb, and not some direction of beefing.
+
+//this seems like an inefficient way to store it, but the trie compresses by prefix
+
 //by @spencermountain, 2015 mit
 //many credits to http://www.allmyphrasalverbs.com/
 module.exports = [
@@ -289,10 +292,14 @@ module.exports = [
   'hang up',
   'hanker for',
   'have it',
+  'haze over',
   'head in',
   'head off',
   'head on',
   'head out',
+  'head over',
+  'head under',
+  'heal over',
   'hear from',
   'hear of',
   'heat up',

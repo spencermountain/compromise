@@ -9,9 +9,13 @@ const nlp = require('./src/index')
 // nlp('the second test message').debug()
 // nlp('the generative approach and the discriminative approach." ').debug()
 
+// nlp('our head').debug()
+// nlp('heavy head').debug()
+// nlp('heavy-over').debug()
+
 //#369
-console.log(
-  nlp('ached')
-    .verbs()
-    .conjugate()[0]
-)
+let doc = nlp('haze-over').debug()
+
+doc.verbs().toInfinitive()
+
+console.log(doc.text())

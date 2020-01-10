@@ -30,6 +30,11 @@ const checkPunctuation = function(terms, i, world) {
   // if (term.post.indexOf('-') !== -1 && terms[i + 1] && terms[i + 1].pre === '') {
   //   term.tag('Hyphenated', 'has-hyphen', world)
   // }
+  // support 'head-over'
+  // if (term.hasHyphen() === true) {
+  //   console.log(term.tags)
+  // }
+  // console.log(term.hasHyphen(), term.text)
 
   //an end-tick (trailing apostrophe) - flanders', or Carlos'
   if (apostrophes.test(term.text)) {

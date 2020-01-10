@@ -20,6 +20,7 @@ let conjugations = {
     a: '_or',
   },
   ache: {
+    pst: 'ached',
     g: 'aching',
   },
   age: {

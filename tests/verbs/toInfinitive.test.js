@@ -11,6 +11,8 @@ test('gerund -> infinitive:', function(t) {
     ['aching', 'ache'],
     ['tuning', 'tune'],
     ['hazing', 'haze'],
+    //phrasal
+    ['hazing-over', 'haze-over'],
   ]
   arr.forEach(function(a) {
     const str = nlp(a[0])
@@ -34,13 +36,14 @@ test('pastTense -> infinitive:', function(t) {
 
     ['ached', 'ache'],
     ['tuned', 'tune'],
+    //phrasal
     ['hazed-over', 'haze-over'],
   ]
   arr.forEach(function(a) {
-    const str = nlp(a[0])
+    const doc = nlp(a[0])
       .verbs()
       .toInfinitive()
-      .out('normal')
+    let str = doc.out('normal')
     t.equal(str, a[1], a[0] + ' -> ' + str)
   })
   t.end()

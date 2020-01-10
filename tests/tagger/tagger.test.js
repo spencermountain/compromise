@@ -159,6 +159,15 @@ test('pos-basic-tag:', function(t) {
     ['took', ['PastTense']],
     ['undertook', ['PastTense']],
 
+    //phrasal verb tense
+    ['head-over', ['PresentTense', 'Particle']],
+    ['head-under', ['PresentTense', 'Particle']],
+    ['haze-over', ['PresentTense', 'Particle']],
+    ['hazed-over', ['PastTense', 'Particle']],
+    ['headed-over', ['PastTense', 'Particle']],
+    ['heading-under', ['Gerund', 'Particle']],
+    ['healing-over', ['Gerund', 'Particle']],
+
     //abbreviations
     [
       'col. Patrick said march and feb. etc.',

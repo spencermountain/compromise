@@ -1,8 +1,8 @@
 {
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
-  "description": "natural language processing in the browser",
-  "version": "12.2.1",
+  "description": "modest natural language processing",
+  "version": "12.3.0",
   "main": "./builds/compromise.js",
   "unpkg": "./builds/compromise.min.js",
   "module": "./builds/compromise.mjs",

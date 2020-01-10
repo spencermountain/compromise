@@ -20,7 +20,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - improve support for auxilary-pastTense ('was lifted') verb-phrases
 - more robust number-tagging regexes
 - setup typescript types for plugins #661 (thanks @Drache93!)
-- verb conjugation bugfixes
+- verb conjugation and tagger bugfixes
 
 ##### 12.2.1
 

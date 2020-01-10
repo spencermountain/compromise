@@ -43,7 +43,7 @@ module.exports = {
     //-med
     [/[aeiou][rl]?[mnf]ed$/, Past], //warmed, attained, engulfed
     //-ked
-    [/[aeiou]n?c?ked$/, Past], //hooked
+    [/[aeiou][ns]?c?ked$/, Past], //hooked, masked
     //-ged
     [/[aeiou][nl]?ged$/, Past], //engaged
     //-ted
@@ -76,7 +76,12 @@ module.exports = {
   k: [
     [/^(k)+$/, Exp], //kkkk
   ],
-  l: [[/.[gl]ial$/, Adj], [/.[^aeiou]ful$/, Adj], [/.[nrtumcd]al$/, Adj], [/.[^aeiou][ei]al$/, Adj]],
+  l: [
+    [/.[gl]ial$/, Adj],
+    [/.[^aeiou]ful$/, Adj],
+    [/.[nrtumcd]al$/, Adj],
+    [/.[^aeiou][ei]al$/, Adj],
+  ],
   m: [
     [/.[^aeiou]ium$/, Sing],
     [/[^aeiou]ism$/, Sing],
@@ -100,11 +105,17 @@ module.exports = {
     [/[^i]fer$/, Inf],
     [/.[^aeiou][ao]pher$/, Actor],
   ],
-  t: [[/.[di]est$/, 'Superlative'], [/.[icldtgrv]ent$/, Adj], [/[aeiou].*ist$/, Adj], [/^[a-z]et$/, Verb]],
+  t: [
+    [/.[di]est$/, 'Superlative'],
+    [/.[icldtgrv]ent$/, Adj],
+    [/[aeiou].*ist$/, Adj],
+    [/^[a-z]et$/, Verb],
+  ],
   s: [
     [/.[rln]ates$/, Pres],
     [/.[^z]ens$/, Verb],
     [/.[lstrn]us$/, Sing],
+    [/.[aeiou]sks$/, Pres], //masks
     [/[aeiou][^aeiou]is$/, Sing],
     [/[a-z]\'s$/, Noun],
     [/^yes+$/, Exp], //yessss

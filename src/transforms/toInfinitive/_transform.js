@@ -218,6 +218,11 @@ let rules = {
       to: '$1',
     },
     {
+      //owed, aced
+      reg: /([aeiou][^aeiou])ed$/i,
+      to: '$1e',
+    },
+    {
       reg: /([rl])ew$/i,
       to: '$1ow',
     },

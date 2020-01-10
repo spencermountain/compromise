@@ -534,6 +534,7 @@ module.exports = [
   'use',
   'value',
   'vary',
+  'vie',
   'view',
   'visit',
   'vote',

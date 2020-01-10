@@ -89,7 +89,7 @@ module.exports = [
     tage: Inf,
     teen: 'Value',
     tion: Sing,
-    tive: Actor,
+    tive: Adj,
     tors: Noun,
     vice: Sing,
   },

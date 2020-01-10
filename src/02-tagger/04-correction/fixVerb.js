@@ -23,8 +23,13 @@ const fixVerb = function(doc) {
     vb.match('there (are|were) #Adjective? [#PresentTense]').tag('Plural', 'there-are')
     //jack seems guarded
     vb.match('#Singular (seems|appears) #Adverb? [#PastTense$]').tag('Adjective', 'seems-filled')
+    //'foo-up'
+    vb.match('#Verb (up|off|over|out)')
+      .match('@hasHyphen .')
+      .tag('#PhrasalVerb')
     //fall over
     vb.match('#PhrasalVerb [#PhrasalVerb]').tag('Particle', 'phrasal-particle')
+
     //went to sleep
     // vb.match('#Verb to #Verb').lastTerm().tag('Noun', 'verb-to-verb');
     //been walking

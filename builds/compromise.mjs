@@ -1354,6 +1354,28 @@ var named = function named(target) {
 
   return [];
 };
+/* grab named capture group terms as object */
+
+
+var groupByNames = function groupByNames() {
+  var names = Object.keys(this.names);
+
+  if (names.length === 0) {
+    return {};
+  }
+
+  var res = {};
+
+  for (var i = 0; i < names.length; i++) {
+    var name = names[i];
+    var _this$names$name2 = this.names[name],
+        start = _this$names$name2.start,
+        length = _this$names$name2.length;
+    res[name] = this.buildFrom(start, length);
+  }
+
+  return res;
+};
 
 var _01Utils = {
   terms: terms,
@@ -1361,7 +1383,8 @@ var _01Utils = {
   lastTerm: lastTerm,
   hasId: hasId,
   wordCount: wordCount,
-  named: named
+  named: named,
+  groupByNames: groupByNames
 };
 
 var trimEnd = function trimEnd(str) {
@@ -2447,17 +2470,23 @@ var postProcess$1 = function postProcess(tokens) {
     var last = captureArr.length - 1 - captureArr.reverse().indexOf(true); //'fill in' capture groups between start-end
 
     for (var i = first; i < last; i++) {
+      if (typeof tokens[i].capture === 'string' || typeof tokens[i].capture === 'number') {
+        continue;
+      }
+
       tokens[i].capture = true;
     }
   } // Merge named capture groups with target
 
 
-  var namedIdx = tokens.findIndex(function (t) {
+  var names = tokens.filter(function (t) {
     return typeof t.capture === 'string' || typeof t.capture === 'number';
+  }).map(function (n) {
+    return n.capture;
   });
 
-  if (namedIdx > -1) {
-    var name = tokens[namedIdx].capture;
+  for (var _i = 0; _i < names.length; _i++) {
+    var name = names[_i];
 
     var _captureArr = tokens.map(function (t) {
       return t.capture;
@@ -2465,15 +2494,13 @@ var postProcess$1 = function postProcess(tokens) {
 
     var _first = _captureArr.indexOf(name);
 
-    var _last = _captureArr.length - _captureArr.reverse().indexOf(true); // Replace capture value with name
+    var _last = _captureArr.length - _captureArr.reverse().indexOf(name);
 
+    for (var j = _first; j < _last + 1; j++) {
+      tokens[j].capture = name;
+    }
 
-    for (var _i = _first; _i < _last; _i++) {
-      tokens[_i].capture = name;
-    } // Remove the name token
-
-
-    tokens.splice(namedIdx, 1);
+    tokens.splice(_first, 1);
   }
 
   return tokens;
@@ -6162,6 +6189,24 @@ var _02Accessors = createCommonjsModule(function (module, exports) {
 
     return this.buildFrom(arr);
   };
+  /* grab named capture group terms as object */
+
+
+  exports.groupByNames = function () {
+    var arr = {};
+
+    for (var i = 0; i < this.list.length; i++) {
+      var terms = this.list[i].groupByNames();
+      var keys = Object.keys(terms);
+
+      for (var j = 0; j < keys.length; j++) {
+        var k = keys[j];
+        arr[k] = this.buildFrom([terms[k]]);
+      }
+    }
+
+    return arr;
+  };
 });
 var _02Accessors_1 = _02Accessors.first;
 var _02Accessors_2 = _02Accessors.last;
@@ -6172,6 +6217,7 @@ var _02Accessors_6 = _02Accessors.firstTerm;
 var _02Accessors_7 = _02Accessors.lastTerm;
 var _02Accessors_8 = _02Accessors.termList;
 var _02Accessors_9 = _02Accessors.named;
+var _02Accessors_10 = _02Accessors.groupByNames;
 
 var _03Match = createCommonjsModule(function (module, exports) {
   /** return a new Doc, with this one as a parent */

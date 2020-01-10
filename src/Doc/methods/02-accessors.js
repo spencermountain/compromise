@@ -77,11 +77,12 @@ exports.groupByNames = function() {
 
   for (let i = 0; i < this.list.length; i++) {
     let terms = this.list[i].groupByNames()
+    let keys = Object.keys(terms)
 
-    for (let j = 0; j < Object.keys(terms).length; j++) {
-      const k = Object.keys(terms)[j]
+    for (let j = 0; j < keys.length; j++) {
+      const k = keys[j]
 
-      arr[k] = terms[k]
+      arr[k] = this.buildFrom([terms[k]])
     }
   }
 

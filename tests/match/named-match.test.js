@@ -6,7 +6,7 @@ test('named-match-group', function(t) {
     .match('the [<type> #Noun] played')
     .groupByNames()
 
-  t.equal(res['type'].trim().text(), 'dog')
+  t.equal(res['type'].text(), 'dog')
 
   const res2 = nlp('the big big dog played')
     .match('the [<size> #Adjective+] [<type> #Noun] played')

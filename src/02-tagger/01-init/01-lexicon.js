@@ -1,3 +1,5 @@
+const underOver = /^(under|over)-?/
+
 /** match a word-sequence, like 'super bowl' in the lexicon */
 const tryMultiple = function(terms, t, world) {
   let lex = world.words
@@ -50,10 +52,19 @@ const checkLexicon = function(terms, world) {
     //try one-word lexicon
     if (lex[str] !== undefined && lex.hasOwnProperty(str) === true) {
       terms[t].tag(lex[str], 'lexicon', world)
+      continue
     }
     // look at reduced version of term, too
     if (str !== terms[t].reduced && lex.hasOwnProperty(terms[t].reduced) === true) {
       terms[t].tag(lex[terms[t].reduced], 'lexicon', world)
+      continue
+    }
+    // prefix strip: try to match 'take' for 'undertake'
+    if (underOver.test(str) === true) {
+      let noPrefix = str.replace(underOver, '')
+      if (lex.hasOwnProperty(noPrefix) === true) {
+        terms[t].tag(lex[noPrefix], 'noprefix-lexicon', world)
+      }
     }
   }
   return terms

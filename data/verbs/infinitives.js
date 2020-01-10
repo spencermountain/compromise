@@ -528,6 +528,7 @@ module.exports = [
   'undo',
   'unite',
   'unlock',
+  'underwhelm',
   'upgrade',
   'uplift',
   'urge',

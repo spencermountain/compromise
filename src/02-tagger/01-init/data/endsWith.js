@@ -26,7 +26,7 @@ module.exports = {
   d: [
     //==-ed==
     //double-consonant
-    [/.(pp|ll|ss|ff|gg|tt|rr|bb)ed$/, Past], //popped
+    [/[aeiou](pp|ll|ss|ff|gg|tt|rr|bb|nn|mm)ed$/, Past], //popped, planned
     //double-vowel
     [/.[aeo]{2}[bdgmnprvz]ed$/, Past], //beeped, mooned, veered
     //-hed
@@ -39,7 +39,7 @@ module.exports = {
     [/.[aoui]f?led$/, Past], //impaled, stifled
     //-sed
     [/.[iao]sed$/, Past], //franchised
-    [/.[aeiou]n?[cs]ed$/, Past], //laced, lanced
+    [/[aeiou]n?[cs]ed$/, Past], //laced, lanced
     //-med
     [/[aeiou][rl]?[mnf]ed$/, Past], //warmed, attained, engulfed
     //-ked
@@ -116,6 +116,7 @@ module.exports = {
     [/.[^z]ens$/, Verb],
     [/.[lstrn]us$/, Sing],
     [/.[aeiou]sks$/, Pres], //masks
+    [/.[aeiou]kes$/, Pres], //bakes
     [/[aeiou][^aeiou]is$/, Sing],
     [/[a-z]\'s$/, Noun],
     [/^yes+$/, Exp], //yessss

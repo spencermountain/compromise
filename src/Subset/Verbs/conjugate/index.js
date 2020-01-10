@@ -9,6 +9,8 @@ const conjugate = function(parsed, world) {
     return toBe(parsed, world)
   }
 
+  let hasHyphen = parsed.verb.termList(0).hasHyphen()
+
   let infinitive = toInfinitive(parsed, world)
   if (!infinitive) {
     return {}
@@ -19,15 +21,17 @@ const conjugate = function(parsed, world) {
   // add particle to phrasal verbs ('fall over')
   if (parsed.particle.found) {
     let particle = parsed.particle.text()
-    Object.keys(forms).forEach(k => (forms[k] += ' ' + particle))
+    let space = hasHyphen === true ? '-' : ' '
+    Object.keys(forms).forEach(k => (forms[k] += space + particle))
   }
   //put the adverb at the end?
   if (parsed.adverb.found) {
     let adverb = parsed.adverb.text()
+    let space = hasHyphen === true ? '-' : ' '
     if (parsed.adverbAfter === true) {
-      Object.keys(forms).forEach(k => (forms[k] += ' ' + adverb))
+      Object.keys(forms).forEach(k => (forms[k] += space + adverb))
     } else {
-      Object.keys(forms).forEach(k => (forms[k] = adverb + ' ' + forms[k]))
+      Object.keys(forms).forEach(k => (forms[k] = adverb + space + forms[k]))
     }
   }
 

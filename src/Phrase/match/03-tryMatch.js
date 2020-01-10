@@ -115,12 +115,19 @@ const tryHere = function(terms, regs, index, length) {
           return false
         }
       }
+
+      // Add capture group name so we can grab it in matchAll
+      if (typeof reg.capture === 'string' || typeof reg.capture === 'number') {
+        terms[t - 1].group = reg.capture
+      }
+
       //try keep it going!
       if (reg.greedy === true) {
         // for greedy checking, we no longer care about the reg.start
         // value, and leaving it can cause failures for anchored greedy
         // matches.  ditto for end-greedy matches: we need an earlier non-
         // ending match to succceed until we get to the actual end.
+        const oldT = t
         t = getGreedy(terms, t, Object.assign({}, reg, { start: false, end: false }), regs[r + 1], index, length)
         if (t === null) {
           return false //greedy was too short
@@ -129,6 +136,13 @@ const tryHere = function(terms, regs, index, length) {
         // reached the end
         if (reg.end === true && index + t !== length) {
           return false //greedy didn't reach the end
+        }
+
+        // Add capture group name to terms we missed
+        if (typeof reg.capture === 'string' || typeof reg.capture === 'number') {
+          for (let j = oldT; j < t; j++) {
+            terms[j].group = reg.capture
+          }
         }
       }
       if (reg.capture || typeof reg.capture === 'number') {

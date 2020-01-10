@@ -2127,6 +2127,11 @@
           if (t !== terms.length && reg.greedy !== true) {
             return false;
           }
+        } // Add capture group name so we can grab it in matchAll
+
+
+        if (typeof reg.capture === 'string' || typeof reg.capture === 'number') {
+          terms[t - 1].group = reg.capture;
         } //try keep it going!
 
 
@@ -2135,6 +2140,7 @@
           // value, and leaving it can cause failures for anchored greedy
           // matches.  ditto for end-greedy matches: we need an earlier non-
           // ending match to succceed until we get to the actual end.
+          var oldT = t;
           t = getGreedy(terms, t, Object.assign({}, reg, {
             start: false,
             end: false
@@ -2148,6 +2154,13 @@
 
           if (reg.end === true && index + t !== length) {
             return false; //greedy didn't reach the end
+          } // Add capture group name to terms we missed
+
+
+          if (typeof reg.capture === 'string' || typeof reg.capture === 'number') {
+            for (var j = oldT; j < t; j++) {
+              terms[j].group = reg.capture;
+            }
           }
         }
 
@@ -2637,16 +2650,31 @@
         });
         matches.push(_match); //add to names if named capture group
 
-        var _ref = regs.find(function (r) {
+        var names = regs.filter(function (r) {
           return typeof r.capture === 'string' || typeof r.capture === 'number';
-        }) || {},
-            name = _ref.capture;
+        });
 
-        if (name !== undefined) {
-          p.names[name] = {
-            start: _match[0].id,
-            length: _match.length
-          };
+        var _loop = function _loop(j) {
+          var name = names[j].capture; // Get first and last terms that use this group name
+
+          var first = _match.find(function (m) {
+            return m.group === name;
+          });
+
+          var length = _match.filter(function (m) {
+            return m.group === name;
+          }).length;
+
+          if (first) {
+            p.names[name] = {
+              start: first.id,
+              length: length
+            };
+          }
+        };
+
+        for (var j = 0; j < names.length; j++) {
+          _loop(j);
         } //ok, maybe that's enough?
 
 

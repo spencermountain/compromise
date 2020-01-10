@@ -8,11 +8,12 @@ test('named-match-group', function(t) {
 
   t.equal(res['type'].text(), 'dog')
 
-  const res2 = nlp('the big big dog played')
+  const res2 = nlp('the big big big dog played')
     .match('the [<size> #Adjective+] [<type> #Noun] played')
     .groupByNames()
 
-  // multiple capture groups isn't in...
+  t.equal(res2['type'].text(), 'dog')
+  t.equal(res2['size'].text(), 'big big big')
 
   t.end()
 })

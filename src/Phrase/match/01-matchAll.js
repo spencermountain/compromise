@@ -47,12 +47,20 @@ const matchAll = function(p, regs, matchOne = false) {
       matches.push(match)
 
       //add to names if named capture group
-      const { capture: name } = regs.find(r => typeof r.capture === 'string' || typeof r.capture === 'number') || {}
+      const names = regs.filter(r => typeof r.capture === 'string' || typeof r.capture === 'number')
 
-      if (name !== undefined) {
-        p.names[name] = {
-          start: match[0].id,
-          length: match.length,
+      for (let j = 0; j < names.length; j++) {
+        const { capture: name } = names[j]
+
+        // Get first and last terms that use this group name
+        const first = match.find(m => m.group === name)
+        const length = match.filter(m => m.group === name).length
+
+        if (first) {
+          p.names[name] = {
+            start: first.id,
+            length,
+          }
         }
       }
 

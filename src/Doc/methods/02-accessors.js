@@ -70,3 +70,20 @@ exports.named = function(target) {
   }
   return this.buildFrom(arr)
 }
+
+/* grab named capture group terms as object */
+exports.groupByNames = function() {
+  let arr = {}
+
+  for (let i = 0; i < this.list.length; i++) {
+    let terms = this.list[i].groupByNames()
+
+    for (let j = 0; j < Object.keys(terms).length; j++) {
+      const k = Object.keys(terms)[j]
+
+      arr[k] = terms[k]
+    }
+  }
+
+  return arr
+}

@@ -1,6 +1,22 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
+test('named-match-group', function(t) {
+  const res = nlp('the dog played')
+    .match('the [<type> #Noun] played')
+    .groupByNames()
+
+  t.equal(res['type'].trim().text(), 'dog')
+
+  const res2 = nlp('the big big dog played')
+    .match('the [<size> #Adjective+] [<type> #Noun] played')
+    .groupByNames()
+
+  // multiple capture groups isn't in...
+
+  t.end()
+})
+
 test('named-object-match:', function(t) {
   let arr = [
     ['the dog played', [{ word: 'the' }, { tag: 'Noun', capture: 'target' }, { word: 'played' }], 'dog'],

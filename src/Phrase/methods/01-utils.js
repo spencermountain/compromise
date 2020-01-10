@@ -131,3 +131,23 @@ exports.named = function(target) {
 
   return []
 }
+
+/* grab named capture group terms as object */
+exports.groupByNames = function() {
+  const names = Object.keys(this.names)
+
+  if (names.length === 0) {
+    return {}
+  }
+
+  const res = {}
+
+  for (let i = 0; i < names.length; i++) {
+    const name = names[i]
+    const { start, length } = this.names[name]
+
+    res[name] = this.buildFrom(start, length)
+  }
+
+  return res
+}

@@ -85,7 +85,14 @@ const tryHere = function(terms, regs, index, length) {
     //start matching before the actual end; we do this by (temporarily!)
     //removing the "end" property from the matching token... since this is
     //very situation-specific, we *only* do this when we really need to.
-    if (reg.anything === true || (reg.end === true && reg.greedy === true && index + t < length - 1 && terms[t].doesMatch(Object.assign({}, reg, { end: false }), index + t, length) === true) || terms[t].doesMatch(reg, index + t, length) === true) {
+    if (
+      reg.anything === true ||
+      (reg.end === true &&
+        reg.greedy === true &&
+        index + t < length - 1 &&
+        terms[t].doesMatch(Object.assign({}, reg, { end: false }), index + t, length) === true) ||
+      terms[t].doesMatch(reg, index + t, length) === true
+    ) {
       let startAt = t
       // okay, it was a match, but if it optional too,
       // we should check the next reg too, to skip it?
@@ -124,7 +131,7 @@ const tryHere = function(terms, regs, index, length) {
           return false //greedy didn't reach the end
         }
       }
-      if (reg.capture) {
+      if (reg.capture || typeof reg.capture === 'number') {
         captures.push(startAt)
         //add greedy-end to capture
         if (t > 1 && reg.greedy) {

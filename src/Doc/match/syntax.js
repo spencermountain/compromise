@@ -51,6 +51,24 @@ const postProcess = function(tokens) {
       tokens[i].capture = true
     }
   }
+
+  // Merge named capture groups with target
+  let namedIdx = tokens.findIndex(t => typeof t.capture === 'string' || typeof t.capture === 'number')
+  if (namedIdx > -1) {
+    let name = tokens[namedIdx].capture
+    let captureArr = tokens.map(t => t.capture)
+    let first = captureArr.indexOf(name)
+    let last = captureArr.length - captureArr.reverse().indexOf(true)
+
+    // Replace capture value with name
+    for (let i = first; i < last; i++) {
+      tokens[i].capture = name
+    }
+
+    // Remove the name token
+    tokens.splice(namedIdx, 1)
+  }
+
   return tokens
 }
 

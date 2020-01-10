@@ -1318,13 +1318,50 @@ var wordCount = function wordCount() {
     return t.text !== '';
   }).length;
 };
+/** grab named capture group results */
+
+
+var named = function named(target) {
+  // Allow accessing by name
+  if (target !== undefined) {
+    if (!this.names[target]) {
+      return [];
+    }
+
+    var _this$names$target = this.names[target],
+        start = _this$names$target.start,
+        length = _this$names$target.length;
+    return this.buildFrom(start, length);
+  } // Find all named groups
+
+
+  var names = Object.keys(this.names);
+
+  if (names.length === 0) {
+    return [];
+  }
+
+  for (var i = 0; i < names.length; i++) {
+    var name = names[i];
+    var _this$names$name = this.names[name],
+        _start = _this$names$name.start,
+        _length = _this$names$name.length;
+
+    if (this.hasId(_start)) {
+      return this.buildFrom(_start, _length);
+    }
+  }
+
+  return [];
+};
 
 var _01Utils = {
   terms: terms,
   clone: clone,
   lastTerm: lastTerm,
   hasId: hasId,
-  wordCount: wordCount
+  wordCount: wordCount,
+  named: named
 };
 
 var trimEnd = function trimEnd(str) {
@@ -2085,7 +2122,7 @@ var tryHere = function tryHere(terms, regs, index, length) {
         }
       }
 
-      if (reg.capture) {
+      if (reg.capture || typeof reg.capture === 'number') {
         captures.push(startAt); //add greedy-end to capture
 
         if (t > 1 && reg.greedy) {
@@ -2269,7 +2306,13 @@ var parseToken = function parseToken(w) {
     if (start(w) === '[' || end(w) === ']') {
       obj.capture = true;
       w = w.replace(/^\[/, '');
-      w = w.replace(/\]$/, '');
+
+      if (start(w) === '<' && end(w) === '>') {
+        // Named group!
+        obj.capture = w.replace(/^\</, '').replace(/\>$/, '');
+      } else {
+        w = w.replace(/\]$/, '');
+      }
     } //regex
 
 
@@ -2406,6 +2449,31 @@ var postProcess$1 = function postProcess(tokens) {
     for (var i = first; i < last; i++) {
       tokens[i].capture = true;
     }
+  } // Merge named capture groups with target
+
+
+  var namedIdx = tokens.findIndex(function (t) {
+    return typeof t.capture === 'string' || typeof t.capture === 'number';
+  });
+
+  if (namedIdx > -1) {
+    var name = tokens[namedIdx].capture;
+
+    var _captureArr = tokens.map(function (t) {
+      return t.capture;
+    });
+
+    var _first = _captureArr.indexOf(name);
+
+    var _last = _captureArr.length - _captureArr.reverse().indexOf(true); // Replace capture value with name
+
+
+    for (var _i = _first; _i < _last; _i++) {
+      tokens[_i].capture = name;
+    } // Remove the name token
+
+
+    tokens.splice(namedIdx, 1);
   }
 
   return tokens;
@@ -2534,7 +2602,20 @@ var matchAll = function matchAll(p, regs) {
       _match = _match.filter(function (m) {
         return m;
       });
-      matches.push(_match); //ok, maybe that's enough?
+      matches.push(_match); //add to names if named capture group
+
+      var _ref = regs.find(function (r) {
+        return typeof r.capture === 'string' || typeof r.capture === 'number';
+      }) || {},
+          name = _ref.capture;
+
+      if (name !== undefined) {
+        p.names[name] = {
+          start: _match[0].id,
+          length: _match.length
+        };
+      } //ok, maybe that's enough?
+
 
       if (matchOne === true) {
         return _04PostProcess(terms, regs, matches);
@@ -2676,6 +2757,11 @@ var Phrase = function Phrase(id, length, pool) {
     writable: true,
     value: {}
   });
+  Object.defineProperty(this, 'names', {
+    enumerable: false,
+    writable: true,
+    value: {}
+  });
 };
 /** create a new Phrase object from an id and length */
 
@@ -2689,6 +2775,10 @@ Phrase.prototype.buildFrom = function (id, length) {
     if (length !== this.length) {
       p.cache.terms = null;
     }
+  }
+
+  if (this.names) {
+    p.names = this.names;
   }
 
   return p;
@@ -6056,6 +6146,22 @@ var _02Accessors = createCommonjsModule(function (module, exports) {
 
     return arr;
   };
+  /** grab named capture group results */
+
+
+  exports.named = function (target) {
+    var arr = []; //'reduce' but faster
+
+    for (var i = 0; i < this.list.length; i++) {
+      var terms = this.list[i].named(target);
+
+      if (terms.length > 0) {
+        arr.push(this.list[i]);
+      }
+    }
+
+    return this.buildFrom(arr);
+  };
 });
 var _02Accessors_1 = _02Accessors.first;
 var _02Accessors_2 = _02Accessors.last;
@@ -6065,6 +6171,7 @@ var _02Accessors_5 = _02Accessors.get;
 var _02Accessors_6 = _02Accessors.firstTerm;
 var _02Accessors_7 = _02Accessors.lastTerm;
 var _02Accessors_8 = _02Accessors.termList;
+var _02Accessors_9 = _02Accessors.named;
 
 var _03Match = createCommonjsModule(function (module, exports) {
   /** return a new Doc, with this one as a parent */
@@ -6833,27 +6940,87 @@ var _01Text = {
   text: text$1
 };
 
+// get all character startings in doc
+var termOffsets = function termOffsets(doc) {
+  var elapsed = 0;
+  var index = 0;
+  var offsets = {};
+  doc.termList().forEach(function (term) {
+    offsets[term.id] = {
+      index: index,
+      start: elapsed + term.pre.length,
+      length: term.text.length
+    };
+    elapsed += term.pre.length + term.text.length + term.post.length;
+    index += 1;
+  });
+  return offsets;
+};
+
+var calcOffset = function calcOffset(doc, result, options) {
+  // calculate offsets for each term
+  var offsets = termOffsets(doc.all()); // add index values
+
+  if (options.terms.index || options.index) {
+    result.forEach(function (o) {
+      o.terms.forEach(function (t) {
+        t.index = offsets[t.id].index;
+      });
+      o.index = o.terms[0].index;
+    });
+  } // add offset values
+
+
+  if (options.terms.offset || options.offset) {
+    result.forEach(function (o) {
+      o.terms.forEach(function (t) {
+        t.offset = offsets[t.id] || {};
+      }); // let len = o.terms.reduce((n, t, i) => {
+      //   n += t.offset.length || 0
+      //   //add whitespace, too
+      //   console.log(t.post)
+      //   return n
+      // }, 0)
+
+      o.offset = o.terms[0].offset;
+      o.offset.length = o.text.length;
+    });
+  }
+};
+
+var _offset = calcOffset;
+
 var _02Json = createCommonjsModule(function (module, exports) {
   var jsonDefaults = {
     text: true,
     terms: true,
     trim: true
-  }; // get all character startings in doc
+  }; //some options have dependents
 
-  var termOffsets = function termOffsets(doc) {
-    var elapsed = 0;
-    var index = 0;
-    var offsets = {};
-    doc.termList().forEach(function (term) {
-      offsets[term.id] = {
-        index: index,
-        start: elapsed + term.pre.length,
-        length: term.text.length
-      };
-      elapsed += term.pre.length + term.text.length + term.post.length;
-      index += 1;
-    });
-    return offsets;
+  var setOptions = function setOptions(options) {
+    options = Object.assign({}, jsonDefaults, options);
+
+    if (options.unique) {
+      options.reduced = true;
+    } //offset calculation requires these options to be on
+
+
+    if (options.offset) {
+      options.text = true;
+
+      if (!options.terms || options.terms === true) {
+        options.terms = {};
+      }
+
+      options.terms.offset = true;
+    }
+
+    if (options.index || options.terms.index) {
+      options.terms = options.terms === true ? {} : options.terms;
+      options.terms.id = true;
+    }
+
+    return options;
   };
   /** pull out desired metadata from the document */
 
@@ -6868,9 +7035,9 @@ var _02Json = createCommonjsModule(function (module, exports) {
       return this.list[options].json(jsonDefaults);
     }
 
-    options = Object.assign({}, jsonDefaults, options); // cache roots, if necessary
+    options = setOptions(options); // cache root strings beforehand, if necessary
 
-    if (options === 'root' || _typeof(options) === 'object' && options.root) {
+    if (options.root === true) {
       this.list.forEach(function (p) {
         p.terms().forEach(function (t) {
           if (t.root === null) {
@@ -6880,51 +7047,12 @@ var _02Json = createCommonjsModule(function (module, exports) {
       });
     }
 
-    if (options.unique) {
-      options.reduced = true;
-    }
-
-    if (options.offset) {
-      options.terms = options.terms || {};
-      options.terms.offset = true;
-    }
-
-    if (options.index || options.terms.index) {
-      options.terms = options.terms === true ? {} : options.terms;
-      options.terms.id = true;
-    }
-
     var result = this.list.map(function (p) {
       return p.json(options, _this.world);
     }); // add offset and index data for each term
 
     if (options.terms.offset || options.offset || options.terms.index || options.index) {
-      // calculate them, (from beginning of doc)
-      var offsets = termOffsets(this.all()); // add index values
-
-      if (options.terms.index || options.index) {
-        result.forEach(function (o) {
-          o.terms.forEach(function (t) {
-            t.index = offsets[t.id].index;
-          });
-          o.index = o.terms[0].index;
-        });
-      } // add offset values
-
-
-      if (options.terms.offset || options.offset) {
-        result.forEach(function (o) {
-          o.terms.forEach(function (t) {
-            t.offset = offsets[t.id] || {};
-          });
-          var len = o.terms.reduce(function (n, t) {
-            n += t.offset.length || 0;
-            return n;
-          }, 0);
-          o.offset = o.terms[0].offset;
-          o.offset.length = len;
-        });
-      }
+      _offset(this, result, options);
     } // add frequency #s
 
 

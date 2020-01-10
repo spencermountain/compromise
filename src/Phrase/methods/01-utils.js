@@ -103,7 +103,7 @@ exports.wordCount = function() {
 /** grab named capture group results */
 exports.named = function(target) {
   // Allow accessing by name
-  if (target) {
+  if (target !== undefined) {
     if (!this.names[target]) {
       return []
     }

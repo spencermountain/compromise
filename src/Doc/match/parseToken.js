@@ -96,7 +96,13 @@ const parseToken = function(w) {
     if (start(w) === '[' || end(w) === ']') {
       obj.capture = true
       w = w.replace(/^\[/, '')
-      w = w.replace(/\]$/, '')
+
+      if (start(w) === '<' && end(w) === '>') {
+        // Named group!
+        obj.capture = w.replace(/^\</, '').replace(/\>$/, '')
+      } else {
+        w = w.replace(/\]$/, '')
+      }
     }
     //regex
     if (start(w) === '/' && end(w) === '/') {

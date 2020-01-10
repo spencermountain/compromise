@@ -47,9 +47,9 @@ const matchAll = function(p, regs, matchOne = false) {
       matches.push(match)
 
       //add to names if named capture group
-      const { capture: name } = regs.find(r => typeof r.capture === 'string') || {}
+      const { capture: name } = regs.find(r => typeof r.capture === 'string' || typeof r.capture === 'number') || {}
 
-      if (name) {
+      if (name !== undefined) {
         p.names[name] = {
           start: match[0].id,
           length: match.length,

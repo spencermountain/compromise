@@ -75,28 +75,14 @@ let rules = {
 
   Gerund: [
     {
-      reg: /pping$/i,
-      to: 'p',
+      //popping -> pop
+      reg: /(..)(p|d|t|g){2}ing$/i,
+      to: '$1$2',
     },
     {
-      reg: /lling$/i,
-      to: 'll',
-    },
-    {
-      reg: /tting$/i,
-      to: 't',
-    },
-    {
-      reg: /dding$/i,
-      to: 'd',
-    },
-    {
-      reg: /ssing$/i,
-      to: 'ss',
-    },
-    {
-      reg: /(..)gging$/i,
-      to: '$1g',
+      //fuzzing -> fuzz
+      reg: /(ll|ss|zz)ing$/i,
+      to: '$1',
     },
     {
       reg: /([^aeiou])ying$/i,
@@ -107,18 +93,54 @@ let rules = {
       to: '$1e',
     },
     {
-      reg: /(ea.)ing$/i,
+      //eating, reading
+      reg: /(ea[dklnrtv])ing$/i,
       to: '$1',
     },
     {
-      reg: /(u[rtcb]|[bdtpkg]l|n[cg]|a[gdkvtc]|[ua]s|[dr]g|yz|o[rlsp]|cre)ing$/i,
-      to: '$1e',
-    },
-    {
+      //washing -> wash
       reg: /(ch|sh)ing$/i,
       to: '$1',
     },
+    //soft-e forms:
     {
+      //z : hazing (not buzzing)
+      reg: /(z)ing$/i,
+      to: '$1e',
+    },
+    {
+      //a : baking, undulating
+      reg: /(a[gdkvtc])ing$/i,
+      to: '$1e',
+    },
+    {
+      //u : conjuring, tubing
+      reg: /(u[rtcbn])ing$/i,
+      to: '$1e',
+    },
+    {
+      //o : forboding, poking, hoping, boring (not hooping)
+      reg: /([^o]o[bdknprv])ing$/i,
+      to: '$1e',
+    },
+    {
+      //ling : tingling, wrinkling, circling, scrambling, bustling
+      reg: /([tbckg]l)ing$/i, //dp
+      to: '$1e',
+    },
+    {
+      //cing : bouncing, denouncing
+      reg: /(c)ing$/i, //dp
+      to: '$1e',
+    },
+
+    // {
+    //   //soft-e :
+    //   reg: /([ua]s|[dr]g|z|o[rlsp]|cre)ing$/i,
+    //   to: '$1e',
+    // },
+    {
+      //fallback
       reg: /(..)ing$/i,
       to: '$1',
     },

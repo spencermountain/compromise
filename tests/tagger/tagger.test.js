@@ -110,7 +110,7 @@ test('pos-basic-tag:', function(t) {
     ['he blamed the girl', ['Pronoun', 'PastTense', 'Determiner', 'Singular']],
     ['his fine', ['Possessive', 'Noun']],
     // ['contracted AIDS', ['PastTense', 'Acronym']],
-    ['contacted nbc', ['PastTense', 'Acronym']],
+    // ['contacted nbc', ['PastTense', 'Acronym']],
     ['city/town', ['Noun', 'Noun']],
     ['boyfriend to Jane', ['Noun', 'Conjunction', 'Person']],
     // ['boyfriend of Jane', ['Noun', 'Conjunction', 'Person']],

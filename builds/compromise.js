@@ -8392,31 +8392,7 @@
 
   var _01Lexicon = checkLexicon;
 
-  var apostrophes = /[\'‘’‛‵′`´]$/;
-  var oneLetterAcronym$1 = /^[A-Z]('s|,)?$/;
-  var oneLetterWord = {
-    I: true,
-    A: true
-  };
-
-  var isAcronym$2 = function isAcronym(term, world) {
-    var str = term.reduced; // a known acronym like fbi
-
-    if (term.tags.Acronym) {
-      return true;
-    } // if (term.tags.Adverb || term.tags.Verb || term.tags.Value || term.tags.Plural) {
-    //   return false
-    // }
-    // 'PIZZA' is not an acronym.
-
-
-    if (str.length > 4 && world.words[str]) {
-      return false;
-    }
-
-    return term.isAcronym();
-  }; //
-
+  var apostrophes = /[\'‘’‛‵′`´]$/; //
 
   var checkPunctuation = function checkPunctuation(terms, i, world) {
     var term = terms[i]; //check hyphenation
@@ -8445,15 +8421,14 @@
         }
       }
     } // 'NASA' is, but not 'i REALLY love it.'
+    // if (term.tags.Noun === true && isAcronym(term, world)) {
+    //   term.tag('Acronym', 'acronym-step', world)
+    //   term.tag('Noun', 'acronym-infer', world)
+    // } else if (!oneLetterWord.hasOwnProperty(term.text) && oneLetterAcronym.test(term.text)) {
+    //   term.tag('Acronym', 'one-letter-acronym', world)
+    //   term.tag('Noun', 'one-letter-infer', world)
+    // }
 
-
-    if (isAcronym$2(term, world)) {
-      term.tag('Acronym', 'acronym-step', world);
-      term.tag('Noun', 'acronym-infer', world);
-    } else if (!oneLetterWord.hasOwnProperty(term.text) && oneLetterAcronym$1.test(term.text)) {
-      term.tag('Acronym', 'one-letter-acronym', world);
-      term.tag('Noun', 'one-letter-infer', world);
-    }
   };
 
   var _02Punctuation$1 = checkPunctuation;
@@ -9306,12 +9281,69 @@
 
   var _05Organizations = tagOrgs;
 
+  var oneLetterAcronym$1 = /^[A-Z]('s|,)?$/;
+  var periodSeperated = /([A-Z]\.){2}[A-Z]?/i;
+  var oneLetterWord = {
+    I: true,
+    A: true
+  };
+
+  var isAcronym$2 = function isAcronym(term, world) {
+    var str = term.reduced; // a known acronym like fbi
+
+    if (term.tags.Acronym) {
+      return true;
+    } // if (term.tags.Adverb || term.tags.Verb || term.tags.Value || term.tags.Plural) {
+    //   return false
+    // }
+    // known-words, like 'PIZZA' is not an acronym.
+
+
+    if (world.words[str]) {
+      return false;
+    }
+
+    return term.isAcronym();
+  }; // F.B.I., NBC, - but not 'NO COLLUSION'
+
+
+  var checkAcronym = function checkAcronym(terms, world) {
+    terms.forEach(function (term) {
+      //these are not acronyms
+      if (term.tags.RomanNumeral === true) {
+        return;
+      } //period-ones F.D.B.
+
+
+      if (periodSeperated.test(term.text) === true) {
+        term.tag('Acronym', 'period-acronym', world);
+      } //non-period ones are harder
+
+
+      if (term.isUpperCase() && isAcronym$2(term, world)) {
+        term.tag('Acronym', 'acronym-step', world);
+        term.tag('Noun', 'acronym-infer', world);
+      } else if (!oneLetterWord.hasOwnProperty(term.text) && oneLetterAcronym$1.test(term.text)) {
+        term.tag('Acronym', 'one-letter-acronym', world);
+        term.tag('Noun', 'one-letter-infer', world);
+      } //if it's a organization,
+
+
+      if (term.tags.Organization && term.text.length < 4) {
+        term.tag('Acronym', 'acronym-org', world);
+      }
+    });
+  };
+
+  var _06Acronyms = checkAcronym;
+
   var step = {
     neighbours: _01Neighbours,
     "case": _02Case,
     stem: _03Stem,
     plural: _04Plurals,
-    organizations: _05Organizations
+    organizations: _05Organizations,
+    acronyms: _06Acronyms
   }; //
 
   var fallbacks = function fallbacks(doc, terms) {
@@ -9329,7 +9361,9 @@
       }
     }); // turn 'Foo University' into an Org
 
-    step.organizations(terms, world); //are the nouns singular or plural?
+    step.organizations(terms, world); //turn 'FBD' into an acronym
+
+    step.acronyms(terms, world); //are the nouns singular or plural?
 
     terms.forEach(function (t) {
       step.plural(t, doc.world);

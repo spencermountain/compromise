@@ -1,20 +1,27 @@
 // a smoke-test for our typescipt typings
 import nlp from '../'
-import nlpNumbers from '../plugins/numbers'
 
-// vs Typed plugin
-type NLPTest = nlp.Plugin<{ test: (text: string) => string }, { test: string }>
-const test: NLPTest = (Doc, world) => {
+// Typed plugins
+type testPlugin = nlp.Plugin<{ test: (text: string) => string }, { test: string }>
+const test: testPlugin = (Doc, world) => {
   // Prototype is visible in here with plugin values
   Doc.prototype.test = text => text
   world.test = 'Hello world!'
 }
 
-const nlpEx = nlp
-  // Give typing to untyped Plugin
-  .extend(nlpNumbers)
-  // Use typed plugin
-  .extend(test)
+class Numbers {
+  json() {
+    return {}
+  }
+}
+
+type numbersPlugin = nlp.Plugin<{ numbers: (n?: number) => Numbers }, {}>
+const numbers: numbersPlugin = Doc => {
+  // Prototype is visible in here with plugin values
+  Doc.prototype.numbers = () => new Numbers()
+}
+
+const nlpEx = nlp.extend(numbers).extend(test)
 
 const doc = nlpEx('hello world') // This type is cleaner
 doc.nouns()

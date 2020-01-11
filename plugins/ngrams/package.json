@@ -1,7 +1,7 @@
 {
   "name": "compromise-ngrams",
   "description": "plugin for nlp-compromise",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "main": "./builds/compromise-ngrams.js",
   "unpkg": "./builds/compromise-ngrams.min.js",

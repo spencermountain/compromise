@@ -1,7 +1,7 @@
 {
   "name": "compromise-sentences",
   "description": "plugin for nlp-compromise",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "main": "./builds/compromise-sentences.js",
   "unpkg": "./builds/compromise-sentences.min.js",

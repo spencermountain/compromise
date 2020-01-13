@@ -48,12 +48,6 @@ let names = doc.clauses().split()
 let json = names.syllables()
 ```
 
-```js
-nlp('it is a UNESCO world heritage site')
-  .acronyms()
-  .text()
-```
-
 possessive, sentence period
 
 ```js
@@ -78,13 +72,6 @@ return {
 
 ```js
 console.log(doc.normalize('heavy').text())
-```
-
-```js
-nlp(`Cows don't`)
-  .nouns()
-  .toSingular()
-//a cow doesn't
 ```
 
 ```js

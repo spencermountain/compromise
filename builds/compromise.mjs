@@ -12262,72 +12262,85 @@ Object.keys(aliases$1).forEach(function (k) {
 });
 var Doc_1 = Doc;
 
-var world = new World_1();
-/** parse and tag text into a compromise object  */
+var globalWorld = new World_1();
 
-var nlp = function nlp() {
-  var text = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-  var lexicon = arguments.length > 1 ? arguments[1] : undefined;
+function instance() {
+  //blast-out our word-lists, just once
+  var world = globalWorld.clone();
+  /** parse and tag text into a compromise object  */
 
-  if (lexicon) {
-    world.addWords(lexicon);
-  }
+  var nlp = function nlp() {
+    var text = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+    var lexicon = arguments.length > 1 ? arguments[1] : undefined;
 
-  var list = _01Tokenizer.fromText(text, world);
-  var doc = new Doc_1(list, null, world);
-  doc.tagger();
-  return doc;
-};
-/** parse text into a compromise object, without running POS-tagging */
+    if (lexicon) {
+      world.addWords(lexicon);
+    }
 
-
-nlp.tokenize = function () {
-  var text = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-  var lexicon = arguments.length > 1 ? arguments[1] : undefined;
-
-  if (lexicon) {
-    world.addWords(lexicon);
-  }
-
-  var list = _01Tokenizer.fromText(text, world);
-  var doc = new Doc_1(list, null, world);
-  return doc;
-};
-/** mix in a compromise-plugin */
+    var list = _01Tokenizer.fromText(text, world);
+    var doc = new Doc_1(list, null, world);
+    doc.tagger();
+    return doc;
+  };
+  /** parse text into a compromise object, without running POS-tagging */
 
 
-nlp.extend = function (fn) {
-  fn(Doc_1, world);
-  return this;
-};
-/** make a deep-copy of the library state */
+  nlp.tokenize = function () {
+    var text = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+    var lexicon = arguments.length > 1 ? arguments[1] : undefined;
+
+    if (lexicon) {
+      world.addWords(lexicon);
+    }
+
+    var list = _01Tokenizer.fromText(text, world);
+    var doc = new Doc_1(list, null, world);
+    return doc;
+  };
+  /** mix in a compromise-plugin */
 
 
-nlp.clone = function () {
-  world = world.clone();
-  return this;
-};
-/** re-generate a Doc object from .json() results */
+  nlp.extend = function (fn) {
+    fn(Doc_1, world);
+    return this;
+  };
+  /** make a deep-copy of the library state */
 
 
-nlp.load = function (json) {
-  var list = _01Tokenizer.fromJSON(json, world);
-  return new Doc_1(list, null, world);
-};
-/** log our decision-making for debugging */
+  nlp.clone = function () {
+    world = world.clone();
+    return this;
+  };
+  /** re-generate a Doc object from .json() results */
 
 
-nlp.verbose = function () {
-  var bool = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
-  world.verbose(bool);
-  return this;
-};
-/** current version of the library */
+  nlp.load = function (json) {
+    var list = _01Tokenizer.fromJSON(json, world);
+    return new Doc_1(list, null, world);
+  };
+  /** log our decision-making for debugging */
 
 
-nlp.version = _version; // alias
+  nlp.verbose = function () {
+    var bool = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+    world.verbose(bool);
+    return this;
+  };
+  /** create instance using global world or new world */
 
-nlp["import"] = nlp.load;
-var src = nlp;
+
+  nlp.instance = function () {
+    return instance();
+  };
+  /** current version of the library */
+
+
+  nlp.version = _version; // alias
+
+  nlp["import"] = nlp.load;
+  return nlp;
+}
+
+var src = instance();
 
 export default src;

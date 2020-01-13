@@ -2,7 +2,7 @@ export as namespace nlp
 
 declare interface nlp<D extends object, W extends object> {
   /** normal usage */
-  (text: string): nlp.ExtendedDocument<D, W>
+  (text?: string): nlp.ExtendedDocument<D, W>
   /** tozenize string */
   tokenize(text: string): nlp.ExtendedDocument<D, W>
   /** mix in a compromise-plugin */
@@ -16,13 +16,15 @@ declare interface nlp<D extends object, W extends object> {
   /** re-generate a Doc object from .json() results */
   load(json: any): nlp.ExtendedDocument<D, W>
   /**  log our decision-making for debugging */
-  verbose(bool: boolean): nlp.ExtendedDocument<D, W>
+  verbose(bool?: boolean): nlp.ExtendedDocument<D, W>
+  /** create instance using global world*/
+  instance(): nlp<D, W>
   /**  current semver version of the library */
   version: nlp.ExtendedDocument<D, W>
 }
 
-declare function nlp(text: string): nlp.DefaultDocument
-declare function nlp<D extends object, W extends object>(text: string): nlp.ExtendedDocument<D, W>
+declare function nlp(text?: string): nlp.DefaultDocument
+declare function nlp<D extends object, W extends object>(text?: string): nlp.ExtendedDocument<D, W>
 
 // possible values to .json()
 declare interface JsonOptions {
@@ -58,7 +60,7 @@ declare interface JsonOptions {
 
 // Constructor
 declare module nlp {
-  export function tokenize(text: string): DefaultDocument
+  export function tokenize(text?: string): DefaultDocument
   /** mix in a compromise-plugin */
   export function extend<P>(
     plugin: P
@@ -66,7 +68,9 @@ declare module nlp {
   /** re-generate a Doc object from .json() results */
   export function load(json: any): DefaultDocument
   /**  log our decision-making for debugging */
-  export function verbose(bool: boolean): DefaultDocument
+  export function verbose(bool?: boolean): DefaultDocument
+  /** create instance using global world */
+  export function instance(): nlp<{}, {}>
   /**  current semver version of the library */
   export const version: number
 

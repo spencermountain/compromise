@@ -7,6 +7,27 @@ const test: testPlugin = (Doc, world) => {
   // Prototype is visible in here with plugin values
   Doc.prototype.test = text => text
   world.test = 'Hello world!'
+
+  world.addTags({
+    Character: {
+      isA: 'Person',
+      notA: 'Adjective',
+    },
+    Dog: {
+      isA: ['Animal'],
+      notA: ['Fish', 'Reptile'],
+    },
+  })
+
+  world.addWords({
+    kermit: 'Character',
+    gonzo: 'Character',
+  })
+
+  world.postProcess(doc => {
+    doc.match('light the lights').tag('#Verb . #Plural')
+    world.test = doc.test('boom!')
+  })
 }
 
 class Numbers {

@@ -56,6 +56,14 @@ declare interface JsonOptions {
   }
 }
 
+// Cleaner plugin types
+type PluginWorld<D extends object, W extends object> = {
+  // Override post process type
+  postProcess(process: (Doc: nlp.ExtendedDocument<D, W>) => void): nlp.ExtendedWorld<W>
+} & nlp.ExtendedWorld<W>
+
+type PluginDocument<D extends object, W extends object> = nlp.ExtendedDocument<D, W> & { prototype: D }
+
 // Constructor
 declare module nlp {
   export function tokenize(text: string): DefaultDocument
@@ -70,10 +78,7 @@ declare module nlp {
   /**  current semver version of the library */
   export const version: number
 
-  type Plugin<D extends object, W extends object> = (
-    Doc: Document<World & W> & D & { prototype: D },
-    world: World & W
-  ) => void
+  type Plugin<D extends object, W extends object> = (Doc: PluginDocument<D, W>, world: PluginWorld<D, W>) => void
 
   type ExtendedWorld<W extends object> = nlp.World & W
   type ExtendedDocument<D extends object, W extends object> = {
@@ -407,7 +412,31 @@ declare module nlp {
     hasOxfordComma(): Document<W>
   }
 
-  class World {}
+  class World {
+    /** more logs for debugging */
+    verbose(on?: boolean): this
+    isVerbose(): boolean
+
+    /** get all terms in our lexicon with this tag */
+    getByTag(tag: string): Record<string, true>
+
+    /** put new words into our lexicon, properly */
+    addWords(words: Record<string, string>): void
+
+    /** extend the compromise tagset */
+    addTags(
+      tags: Record<
+        string,
+        {
+          isA?: string | string[]
+          notA?: string | string[]
+        }
+      >
+    ): void
+
+    /** call methods after tagger runs */
+    postProcess<D extends Document = Document>(process: (Doc: D) => void): this
+  }
 }
 
 export default nlp

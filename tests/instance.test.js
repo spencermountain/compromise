@@ -33,3 +33,32 @@ test('nlp-instance', function(t) {
 
   t.end()
 })
+
+test('original nlp changes', function(t) {
+  const nlpBefore = nlp.instance()
+  nlp.extend((Doc, world) => {
+    world.addWords({ blahblah: 'Yes' })
+  })
+  const nlpAfter = nlp.instance()
+
+  t.equal(nlp('blahblah').has('#Yes'), true, 'native nlp changed')
+  t.equal(nlpBefore('blahblah').has('#Yes'), false, 'original before-change')
+  t.equal(nlpAfter('blahblah').has('#Yes'), false, 'original after-change')
+
+  t.end()
+})
+
+test('new nlp changes', function(t) {
+  const nlpChange = nlp.instance()
+  nlpChange.extend((Doc, world) => {
+    world.addWords({ foofoo: 'Yes' })
+  })
+  const nlpAfter = nlp.instance()
+
+  t.equal(nlpChange('foofoo').has('#Yes'), true, 'nlp is changed')
+
+  t.equal(nlp('foofoo').has('#Yes'), false, 'original unchanged')
+  t.equal(nlpAfter('foofoo').has('#Yes'), false, 'after unchanged')
+
+  t.end()
+})

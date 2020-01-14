@@ -40,7 +40,7 @@ exports.json = function(options = {}) {
     options.reduced = true
   }
   if (options.offset) {
-    options.terms = options.terms === true ? {} : options.terms
+    options.terms = options.terms || {}
     options.terms.offset = true
   }
   if (options.index || options.terms.index) {

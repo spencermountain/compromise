@@ -73,3 +73,13 @@ const doc2 = nlp<
 >('test')
 doc2.numbers()
 doc2.world.a === typeof 'string'
+
+/** Instance test */
+const pluginTest: nlp.Plugin<{}, { test: 'test' }> = (_, world) => {
+  world.test = 'test'
+}
+
+const nlpEx2 = nlp.extend(pluginTest)
+
+nlpEx2().world.test === 'test'
+nlpEx2.instance()().world.test === 'test'

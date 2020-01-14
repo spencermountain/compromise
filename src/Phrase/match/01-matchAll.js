@@ -45,6 +45,17 @@ const matchAll = function(p, regs, matchOne = false) {
       //[capture-groups] return some null responses
       match = match.filter(m => m)
       matches.push(match)
+
+      //add to names if named capture group
+      const { capture: name } = regs.find(r => typeof r.capture === 'string') || {}
+
+      if (name) {
+        p.names[name] = {
+          start: match[0].id,
+          length: match.length,
+        }
+      }
+
       //ok, maybe that's enough?
       if (matchOne === true) {
         return postProcess(terms, regs, matches)

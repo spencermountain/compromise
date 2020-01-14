@@ -17,6 +17,11 @@ class Phrase {
       writable: true,
       value: {},
     })
+    Object.defineProperty(this, 'names', {
+      enumerable: false,
+      writable: true,
+      value: {},
+    })
   }
 }
 
@@ -29,6 +34,11 @@ Phrase.prototype.buildFrom = function(id, length) {
       p.cache.terms = null
     }
   }
+
+  if (this.names) {
+    p.names = this.names
+  }
+
   return p
 }
 

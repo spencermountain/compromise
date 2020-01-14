@@ -7,6 +7,7 @@ exports.match = function(reg) {
   if (regs.length === 0) {
     return this.buildFrom([])
   }
+
   //try expression on each phrase
   let matches = this.list.reduce((arr, p) => {
     return arr.concat(p.match(regs))

@@ -99,3 +99,23 @@ exports.hasId = function(wantId) {
 exports.wordCount = function() {
   return this.terms().filter(t => t.text !== '').length
 }
+
+/** grab named capture group results */
+exports.named = function() {
+  const names = Object.keys(this.names)
+
+  if (names.length === 0) {
+    return []
+  }
+
+  for (let i = 0; i < names.length; i++) {
+    const name = names[i]
+    const { start, length } = this.names[name]
+
+    if (this.hasId(start)) {
+      return this.buildFrom(start, length)
+    }
+  }
+
+  return []
+}

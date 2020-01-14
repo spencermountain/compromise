@@ -104,7 +104,7 @@ exports.wordCount = function() {
 exports.named = function(target) {
   // Allow accessing by name
   if (target !== undefined) {
-    const phrase = Object.values(this.names).find(n => n.group === target)
+    const phrase = Object.values(this.names).find(n => n.group === target.toString())
 
     if (!phrase) {
       return []

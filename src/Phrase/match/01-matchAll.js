@@ -74,7 +74,7 @@ const matchAll = function(p, regs, matchOne = false) {
         if (first) {
           previousFirst = firstIdx
           p.names[makeId(name)] = {
-            group: name,
+            group: name.toString(),
             start: first.id,
             length,
           }

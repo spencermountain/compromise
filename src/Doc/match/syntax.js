@@ -57,12 +57,20 @@ const postProcess = function(tokens) {
 
   // Merge named capture groups with target
   let names = tokens.filter(t => typeof t.capture === 'string' || typeof t.capture === 'number').map(n => n.capture)
+  let previousFirst = 0
 
   for (let i = 0; i < names.length; i++) {
     const name = names[i]
     const captureArr = tokens.map(t => t.capture)
-    const first = captureArr.indexOf(name)
-    const last = captureArr.length - captureArr.reverse().indexOf(name)
+    const first = captureArr.indexOf(name, previousFirst)
+    const last = names[i + 1]
+      ? captureArr.indexOf(names[i + 1], previousFirst + 1) - 1
+      : captureArr.length - 1 - captureArr.reverse().indexOf(true)
+    previousFirst = first
+
+    if (first === -1) {
+      continue
+    }
 
     for (let j = first; j < last + 1; j++) {
       tokens[j].capture = name

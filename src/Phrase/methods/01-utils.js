@@ -104,11 +104,13 @@ exports.wordCount = function() {
 exports.named = function(target) {
   // Allow accessing by name
   if (target !== undefined) {
-    if (!this.names[target]) {
+    const phrase = Object.values(this.names).find(n => n.group === target)
+
+    if (!phrase) {
       return []
     }
 
-    const { start, length } = this.names[target]
+    const { start, length } = phrase
 
     return this.buildFrom(start, length)
   }
@@ -130,24 +132,4 @@ exports.named = function(target) {
   }
 
   return []
-}
-
-/* grab named capture group terms as object */
-exports.groupByNames = function() {
-  const names = Object.keys(this.names)
-
-  if (names.length === 0) {
-    return {}
-  }
-
-  const res = {}
-
-  for (let i = 0; i < names.length; i++) {
-    const name = names[i]
-    const { start, length } = this.names[name]
-
-    res[name] = this.buildFrom(start, length)
-  }
-
-  return res
 }

@@ -73,18 +73,29 @@ exports.named = function(target) {
 
 /* grab named capture group terms as object */
 exports.groupByNames = function() {
-  let arr = {}
+  let res = {}
 
+  const groups = {}
   for (let i = 0; i < this.list.length; i++) {
-    let terms = this.list[i].groupByNames()
-    let keys = Object.keys(terms)
+    const phrase = this.list[i]
+    const names = Object.values(phrase.names)
 
-    for (let j = 0; j < keys.length; j++) {
-      const k = keys[j]
+    for (let j = 0; j < names.length; j++) {
+      const { group, start, length } = names[j]
 
-      arr[k] = this.buildFrom([terms[k]])
+      if (!groups[group]) {
+        groups[group] = []
+      }
+
+      groups[group].push(phrase.buildFrom(start, length))
     }
   }
 
-  return arr
+  const keys = Object.keys(groups)
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i]
+    res[key] = this.buildFrom(groups[key])
+  }
+
+  return res
 }

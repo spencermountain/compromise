@@ -2,6 +2,7 @@ const failFast = require('./02-failFast')
 const tryMatch = require('./03-tryMatch')
 const postProcess = require('./04-postProcess')
 const syntax = require('../../Doc/match/syntax')
+const makeId = require('../../Term/_id')
 
 /**  returns a simple array of arrays */
 const matchAll = function(p, regs, matchOne = false) {
@@ -48,16 +49,32 @@ const matchAll = function(p, regs, matchOne = false) {
 
       //add to names if named capture group
       const names = regs.filter(r => typeof r.capture === 'string' || typeof r.capture === 'number')
+      const captureArr = match.map(m => m.group)
+      let previousFirst = 0
 
       for (let j = 0; j < names.length; j++) {
         const { capture: name } = names[j]
 
         // Get first and last terms that use this group name
-        const first = match.find(m => m.group === name)
-        const length = match.filter(m => m.group === name).length
+        const firstIdx = captureArr.indexOf(name, previousFirst)
+
+        const first = match[firstIdx]
+        let length = 0
+
+        for (let l = firstIdx; l < captureArr.length; l++) {
+          const element = match[l]
+
+          if (element.group !== name) {
+            break
+          }
+
+          length++
+        }
 
         if (first) {
-          p.names[name] = {
+          previousFirst = firstIdx
+          p.names[makeId(name)] = {
+            group: name,
             start: first.id,
             length,
           }

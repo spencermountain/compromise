@@ -18,6 +18,29 @@ test('named-match-group', function(t) {
   t.end()
 })
 
+test('named-match-overlap', function(t) {
+  const arr = [
+    {
+      input: 'the big dog played',
+      match: 'the [<target> #Adjective] [<type> #Noun] [<target> played]',
+      run: res => {
+        t.equal(res['type'].text(), 'dog')
+        t.equal(res['target'].text(), 'big played')
+      },
+    },
+  ]
+
+  arr.forEach(a =>
+    a.run(
+      nlp(a.input)
+        .match(a.match)
+        .groupByNames()
+    )
+  )
+
+  t.end()
+})
+
 test('named-object-match:', function(t) {
   let arr = [
     ['the dog played', [{ word: 'the' }, { tag: 'Noun', capture: 'target' }, { word: 'played' }], 'dog'],

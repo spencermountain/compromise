@@ -101,7 +101,19 @@ exports.wordCount = function() {
 }
 
 /** grab named capture group results */
-exports.named = function() {
+exports.named = function(target) {
+  // Allow accessing by name
+  if (target) {
+    if (!this.names[target]) {
+      return []
+    }
+
+    const { start, length } = this.names[target]
+
+    return this.buildFrom(start, length)
+  }
+
+  // Find all named groups
   const names = Object.keys(this.names)
 
   if (names.length === 0) {

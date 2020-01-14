@@ -58,11 +58,11 @@ exports.termList = function(num) {
 }
 
 /** grab named capture group results */
-exports.named = function() {
+exports.named = function(name) {
   let arr = []
   //'reduce' but faster
   for (let i = 0; i < this.list.length; i++) {
-    let terms = this.list[i].named()
+    let terms = this.list[i].named(name)
 
     if (terms.length > 0) {
       arr.push(this.list[i])

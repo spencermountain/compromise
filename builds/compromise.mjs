@@ -1324,13 +1324,16 @@ var wordCount = function wordCount() {
 var named = function named(target) {
   // Allow accessing by name
   if (target !== undefined) {
-    if (!this.names[target]) {
+    var phrase = Object.values(this.names).find(function (n) {
+      return n.group === target.toString();
+    });
+
+    if (!phrase) {
       return [];
     }
 
-    var _this$names$target = this.names[target],
-        start = _this$names$target.start,
-        length = _this$names$target.length;
+    var start = phrase.start,
+        length = phrase.length;
     return this.buildFrom(start, length);
   } // Find all named groups
 
@@ -1354,28 +1357,6 @@ var named = function named(target) {
 
   return [];
 };
-/* grab named capture group terms as object */
-
-
-var groupByNames = function groupByNames() {
-  var names = Object.keys(this.names);
-
-  if (names.length === 0) {
-    return {};
-  }
-
-  var res = {};
-
-  for (var i = 0; i < names.length; i++) {
-    var name = names[i];
-    var _this$names$name2 = this.names[name],
-        start = _this$names$name2.start,
-        length = _this$names$name2.length;
-    res[name] = this.buildFrom(start, length);
-  }
-
-  return res;
-};
 
 var _01Utils = {
   terms: terms,
@@ -1383,8 +1364,7 @@ var _01Utils = {
   lastTerm: lastTerm,
   hasId: hasId,
   wordCount: wordCount,
-  named: named,
-  groupByNames: groupByNames
+  named: named
 };
 
 var trimEnd = function trimEnd(str) {
@@ -2247,6 +2227,7 @@ var _04PostProcess = postProcess;
 */
 var hasMinMax = /\{([0-9]+,?[0-9]*)\}/;
 var andSign = /&&/;
+var captureName = new RegExp(/^<(\S+)>/);
 
 var titleCase$1 = function titleCase(str) {
   return str.charAt(0).toUpperCase() + str.substr(1);
@@ -2342,12 +2323,15 @@ var parseToken = function parseToken(w) {
     if (start(w) === '[' || end(w) === ']') {
       obj.capture = true;
       w = w.replace(/^\[/, '');
+      w = w.replace(/\]$/, ''); // Use capture group name
 
-      if (start(w) === '<' && end(w) === '>') {
-        // Named group!
-        obj.capture = w.replace(/^\</, '').replace(/\>$/, '');
-      } else {
-        w = w.replace(/\]$/, '');
+      if (start(w) === '<') {
+        var res = captureName.exec(w);
+
+        if (res.length >= 2) {
+          obj.capture = res[1];
+          w = w.replace(res[0], '');
+        }
       }
     } //regex
 
@@ -2427,6 +2411,10 @@ var parseToken = function parseToken(w) {
 
 var parseToken_1 = parseToken;
 
+var isNamed = function isNamed(capture) {
+  return typeof capture === 'string' || typeof capture === 'number';
+};
+
 var isArray$1 = function isArray(arr) {
   return Object.prototype.toString.call(arr) === '[object Array]';
 }; //split-up by (these things)
@@ -2469,51 +2457,52 @@ var byArray = function byArray(arr) {
   }];
 };
 
+var getLastTrue = function getLastTrue(arr, start) {
+  var last = arr.length - 1 - arr.reverse().findIndex(function (t) {
+    return t === true;
+  });
+
+  for (var j = start + 1; j < last; j++) {
+    // Don't fill in if there's a named group ahead
+    if (isNamed(arr[j])) {
+      return start;
+    }
+  }
+
+  return last;
+};
+
 var postProcess$1 = function postProcess(tokens) {
-  //ensure there's only one consecutive capture group.
+  // ensure there's only one consecutive capture group.
   var count = tokens.filter(function (t) {
-    return t.capture === true;
+    return t.capture === true || isNamed(t.capture);
   }).length;
 
   if (count > 1) {
     var captureArr = tokens.map(function (t) {
       return t.capture;
     });
-    var first = captureArr.indexOf(true);
-    var last = captureArr.length - 1 - captureArr.reverse().indexOf(true); //'fill in' capture groups between start-end
+    var first = captureArr.findIndex(function (t) {
+      return t === true || isNamed(t);
+    });
+    var last = getLastTrue(captureArr, first);
 
-    for (var i = first; i < last; i++) {
-      if (typeof tokens[i].capture === 'string' || typeof tokens[i].capture === 'number') {
+    if (captureArr.find(function (t) {
+      return isNamed(t);
+    })) {
+      console.log('Named:', JSON.stringify(tokens));
+    } //'fill in' capture groups between start-end
+
+
+    for (var i = first; i < last + 1; i++) {
+      // Don't replace named groups
+      if (isNamed(tokens[i].capture)) {
         continue;
       }
 
-      tokens[i].capture = true;
+      var capture = tokens[first].capture;
+      tokens[i].capture = capture;
     }
-  } // Merge named capture groups with target
-
-
-  var names = tokens.filter(function (t) {
-    return typeof t.capture === 'string' || typeof t.capture === 'number';
-  }).map(function (n) {
-    return n.capture;
-  });
-
-  for (var _i = 0; _i < names.length; _i++) {
-    var name = names[_i];
-
-    var _captureArr = tokens.map(function (t) {
-      return t.capture;
-    });
-
-    var _first = _captureArr.indexOf(name);
-
-    var _last = _captureArr.length - _captureArr.reverse().indexOf(name);
-
-    for (var j = _first; j < _last + 1; j++) {
-      tokens[j].capture = name;
-    }
-
-    tokens.splice(_first, 1);
   }
 
   return tokens;
@@ -2648,27 +2637,41 @@ var matchAll = function matchAll(p, regs) {
         return typeof r.capture === 'string' || typeof r.capture === 'number';
       });
 
-      var _loop = function _loop(j) {
-        var name = names[j].capture; // Get first and last terms that use this group name
+      var captureArr = _match.map(function (m) {
+        return m.group;
+      });
 
-        var first = _match.find(function (m) {
-          return m.group === name;
-        });
+      var indexFrom = 0;
 
-        var length = _match.filter(function (m) {
-          return m.group === name;
-        }).length;
+      for (var j = 0; j < names.length; j++) {
+        var name = names[j].capture; // Get first term that uses this group name
+
+        var firstIdx = captureArr.indexOf(name, indexFrom);
+        var first = _match[firstIdx];
+        var length = 0;
+
+        if (firstIdx < 0) {
+          break;
+        }
+
+        for (var l = firstIdx; l < captureArr.length; l++) {
+          var element = _match[l];
+
+          if (element.group !== name) {
+            break;
+          }
+
+          length++;
+        }
 
         if (first) {
-          p.names[name] = {
+          indexFrom = firstIdx + length;
+          p.names[_id(name)] = {
+            group: name.toString(),
             start: first.id,
             length: length
           };
         }
-      };
-
-      for (var j = 0; j < names.length; j++) {
-        _loop(j);
       } //ok, maybe that's enough?
 
 
@@ -6221,19 +6224,35 @@ var _02Accessors = createCommonjsModule(function (module, exports) {
 
 
   exports.groupByNames = function () {
-    var arr = {};
+    var res = {};
+    var groups = {};
 
     for (var i = 0; i < this.list.length; i++) {
-      var terms = this.list[i].groupByNames();
-      var keys = Object.keys(terms);
+      var phrase = this.list[i];
+      var names = Object.values(phrase.names);
 
-      for (var j = 0; j < keys.length; j++) {
-        var k = keys[j];
-        arr[k] = this.buildFrom([terms[k]]);
+      for (var j = 0; j < names.length; j++) {
+        var _names$j = names[j],
+            group = _names$j.group,
+            start = _names$j.start,
+            length = _names$j.length;
+
+        if (!groups[group]) {
+          groups[group] = [];
+        }
+
+        groups[group].push(phrase.buildFrom(start, length));
       }
     }
 
-    return arr;
+    var keys = Object.keys(groups);
+
+    for (var _i = 0; _i < keys.length; _i++) {
+      var key = keys[_i];
+      res[key] = this.buildFrom(groups[key]);
+    }
+
+    return res;
   };
 });
 var _02Accessors_1 = _02Accessors.first;

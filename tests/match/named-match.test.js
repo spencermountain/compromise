@@ -8,12 +8,66 @@ test('named-match-group', function(t) {
 
   t.equal(res['type'].text(), 'dog')
 
-  const res2 = nlp('the big big big dog played')
-    .match('the [<size> #Adjective+] [<type> #Noun] played')
-    .groupByNames()
+  const doc2 = nlp('the big big big dog played').match('the [<size> #Adjective+] [<type> #Noun] played')
+  const res2 = doc2.groupByNames()
 
   t.equal(res2['type'].text(), 'dog')
   t.equal(res2['size'].text(), 'big big big')
+
+  t.end()
+})
+
+test('named-match-to-json:', function(t) {
+  let arr = [
+    [
+      'the dog played',
+      'the [<target> #Noun] played',
+      'dog',
+      [{ text: 'dog', terms: [{ text: 'dog', tags: ['Noun', 'Singular'] }] }],
+    ],
+    [
+      'the dog played',
+      'the [<target> dog] played',
+      'dog',
+      [{ text: 'dog', terms: [{ text: 'dog', tags: ['Noun', 'Singular'] }] }],
+    ],
+    [
+      'the big dog played',
+      'the [<target> big dog] played',
+      'big dog',
+      [
+        {
+          text: 'big dog',
+          terms: [
+            { text: 'big', tags: ['Comparable', 'Adjective'] },
+            { text: 'dog', tags: ['Noun', 'Singular'] },
+          ],
+        },
+      ],
+    ],
+    [
+      'the big dog played',
+      'the [<target> big] dog [<target> played]',
+      'big played',
+      [
+        { text: 'big', terms: [{ text: 'big', tags: ['Comparable', 'Adjective'] }] },
+        { text: 'played', terms: [{ text: 'played', tags: ['PastTense', 'Verb'] }] },
+      ],
+    ],
+  ]
+
+  arr.forEach(function(a) {
+    const doc = nlp(a[0]).match(a[1])
+
+    const res = doc.groupByNames()
+    t.ok(res['target'], "Should contain 'target' group")
+
+    const json = res.target.json()
+    const text = res.target.text()
+
+    t.equal(text, a[2])
+    t.deepEqual(json, a[3])
+  })
 
   t.end()
 })

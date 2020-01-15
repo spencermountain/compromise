@@ -1,5 +1,9 @@
 const parseToken = require('./parseToken')
 
+const isNamed = function(capture) {
+  return typeof capture === 'string' || typeof capture === 'number'
+}
+
 const isArray = function(arr) {
   return Object.prototype.toString.call(arr) === '[object Array]'
 }
@@ -39,13 +43,43 @@ const byArray = function(arr) {
   ]
 }
 
+const getLastNamed = (arr, target, start) => {
+  let i = arr.indexOf(target, start)
+
+  for (; i < arr.length; ) {
+    const a = arr[i]
+
+    if (a === true || a === target) {
+      i++
+    } else {
+      break
+    }
+  }
+
+  return i - 1
+}
+
+const getLastTrue = (arr, start) => {
+  const last = arr.length - 1 - arr.reverse().findIndex(t => t === true)
+
+  for (let j = start + 1; j < last; j++) {
+    // Don't fill in if there's a named group ahead
+    if (typeof arr[j] === 'string' || typeof arr[j] === 'number') {
+      return start
+    }
+  }
+
+  return last
+}
+
 const postProcess = function(tokens) {
-  //ensure there's only one consecutive capture group.
-  let count = tokens.filter(t => t.capture === true).length
+  // ensure there's only one consecutive capture group.
+  let count = tokens.filter(t => t.capture === true || isNamed(t.capture)).length
   if (count > 1) {
     let captureArr = tokens.map(t => t.capture)
-    let first = captureArr.indexOf(true)
-    let last = captureArr.length - 1 - captureArr.reverse().indexOf(true)
+    let first = captureArr.findIndex(t => t === true || isNamed(t))
+    let last = getLastTrue(captureArr, first)
+
     //'fill in' capture groups between start-end
     for (let i = first; i < last; i++) {
       if (typeof tokens[i].capture === 'string' || typeof tokens[i].capture === 'number') {
@@ -57,16 +91,14 @@ const postProcess = function(tokens) {
 
   // Merge named capture groups with target
   let names = tokens.filter(t => typeof t.capture === 'string' || typeof t.capture === 'number').map(n => n.capture)
-  let previousFirst = 0
+  let previousLast = 0
 
   for (let i = 0; i < names.length; i++) {
     const name = names[i]
     const captureArr = tokens.map(t => t.capture)
-    const first = captureArr.indexOf(name, previousFirst)
-    const last = names[i + 1]
-      ? captureArr.indexOf(names[i + 1], previousFirst + 1) - 1
-      : captureArr.length - 1 - captureArr.reverse().indexOf(true)
-    previousFirst = first
+    const first = captureArr.indexOf(name, previousLast)
+    const last = getLastNamed(captureArr, name, previousLast)
+    previousLast = last
 
     if (first === -1) {
       continue

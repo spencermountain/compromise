@@ -50,16 +50,19 @@ const matchAll = function(p, regs, matchOne = false) {
       //add to names if named capture group
       const names = regs.filter(r => typeof r.capture === 'string' || typeof r.capture === 'number')
       const captureArr = match.map(m => m.group)
-      let previousFirst = 0
+      let indexFrom = 0
 
       for (let j = 0; j < names.length; j++) {
         const { capture: name } = names[j]
 
-        // Get first and last terms that use this group name
-        const firstIdx = captureArr.indexOf(name, previousFirst)
-
+        // Get first term that uses this group name
+        const firstIdx = captureArr.indexOf(name, indexFrom)
         const first = match[firstIdx]
         let length = 0
+
+        if (firstIdx < 0) {
+          break
+        }
 
         for (let l = firstIdx; l < captureArr.length; l++) {
           const element = match[l]
@@ -72,7 +75,7 @@ const matchAll = function(p, regs, matchOne = false) {
         }
 
         if (first) {
-          previousFirst = firstIdx
+          indexFrom = firstIdx + length
           p.names[makeId(name)] = {
             group: name.toString(),
             start: first.id,

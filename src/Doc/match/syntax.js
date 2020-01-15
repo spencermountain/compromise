@@ -64,7 +64,7 @@ const getLastTrue = (arr, start) => {
 
   for (let j = start + 1; j < last; j++) {
     // Don't fill in if there's a named group ahead
-    if (typeof arr[j] === 'string' || typeof arr[j] === 'number') {
+    if (isNamed(arr[j])) {
       return start
     }
   }
@@ -80,35 +80,19 @@ const postProcess = function(tokens) {
     let first = captureArr.findIndex(t => t === true || isNamed(t))
     let last = getLastTrue(captureArr, first)
 
+    if (captureArr.find(t => isNamed(t))) {
+      console.log('Named:', JSON.stringify(tokens))
+    }
+
     //'fill in' capture groups between start-end
-    for (let i = first; i < last; i++) {
-      if (typeof tokens[i].capture === 'string' || typeof tokens[i].capture === 'number') {
+    for (let i = first; i < last + 1; i++) {
+      // Don't replace named groups
+      if (isNamed(tokens[i].capture)) {
         continue
       }
-      tokens[i].capture = true
+      const { capture } = tokens[first]
+      tokens[i].capture = capture
     }
-  }
-
-  // Merge named capture groups with target
-  let names = tokens.filter(t => typeof t.capture === 'string' || typeof t.capture === 'number').map(n => n.capture)
-  let previousLast = 0
-
-  for (let i = 0; i < names.length; i++) {
-    const name = names[i]
-    const captureArr = tokens.map(t => t.capture)
-    const first = captureArr.indexOf(name, previousLast)
-    const last = getLastNamed(captureArr, name, previousLast)
-    previousLast = last
-
-    if (first === -1) {
-      continue
-    }
-
-    for (let j = first; j < last + 1; j++) {
-      tokens[j].capture = name
-    }
-
-    tokens.splice(first, 1)
   }
 
   return tokens

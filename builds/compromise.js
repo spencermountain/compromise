@@ -6891,7 +6891,7 @@
       }
 
       if (options.offset) {
-        options.terms = options.terms === true ? {} : options.terms;
+        options.terms = options.terms || {};
         options.terms.offset = true;
       }
 
@@ -9329,7 +9329,7 @@
       } //if it's a organization,
 
 
-      if (term.tags.Organization && term.text.length < 4) {
+      if (term.tags.Organization && term.text.length <= 6) {
         term.tag('Acronym', 'acronym-org', world);
       }
     });
@@ -12268,11 +12268,9 @@
   });
   var Doc_1 = Doc;
 
-  var globalWorld = new World_1();
-
-  function instance() {
+  function instance(worldInstance) {
     //blast-out our word-lists, just once
-    var world = globalWorld.clone();
+    var world = worldInstance;
     /** parse and tag text into a compromise object  */
 
     var nlp = function nlp() {
@@ -12314,8 +12312,7 @@
 
 
     nlp.clone = function () {
-      world = world.clone();
-      return this;
+      return instance(world.clone());
     };
     /** re-generate a Doc object from .json() results */
 
@@ -12332,12 +12329,6 @@
       world.verbose(bool);
       return this;
     };
-    /** create instance using global world or new world */
-
-
-    nlp.instance = function () {
-      return instance();
-    };
     /** current version of the library */
 
 
@@ -12347,7 +12338,7 @@
     return nlp;
   }
 
-  var src = instance();
+  var src = instance(new World_1());
 
   return src;
 

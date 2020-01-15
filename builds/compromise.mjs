@@ -6885,7 +6885,7 @@ var _02Json = createCommonjsModule(function (module, exports) {
     }
 
     if (options.offset) {
-      options.terms = options.terms === true ? {} : options.terms;
+      options.terms = options.terms || {};
       options.terms.offset = true;
     }
 
@@ -9323,7 +9323,7 @@ var checkAcronym = function checkAcronym(terms, world) {
     } //if it's a organization,
 
 
-    if (term.tags.Organization && term.text.length < 4) {
+    if (term.tags.Organization && term.text.length <= 6) {
       term.tag('Acronym', 'acronym-org', world);
     }
   });
@@ -12262,11 +12262,9 @@ Object.keys(aliases$1).forEach(function (k) {
 });
 var Doc_1 = Doc;
 
-var globalWorld = new World_1();
-
-function instance() {
+function instance(worldInstance) {
   //blast-out our word-lists, just once
-  var world = globalWorld.clone();
+  var world = worldInstance;
   /** parse and tag text into a compromise object  */
 
   var nlp = function nlp() {
@@ -12308,8 +12306,7 @@ function instance() {
 
 
   nlp.clone = function () {
-    world = world.clone();
-    return this;
+    return instance(world.clone());
   };
   /** re-generate a Doc object from .json() results */
 
@@ -12326,12 +12323,6 @@ function instance() {
     world.verbose(bool);
     return this;
   };
-  /** create instance using global world or new world */
-
-
-  nlp.instance = function () {
-    return instance();
-  };
   /** current version of the library */
 
 
@@ -12341,6 +12332,6 @@ function instance() {
   return nlp;
 }
 
-var src = instance();
+var src = instance(new World_1());
 
 export default src;

@@ -3,11 +3,9 @@ const version = require('./_version')
 const World = require('./World/World')
 const Doc = require('./Doc/Doc')
 
-const globalWorld = new World()
-
-function instance() {
+function instance(worldInstance) {
   //blast-out our word-lists, just once
-  let world = globalWorld.clone()
+  let world = worldInstance
 
   /** parse and tag text into a compromise object  */
   const nlp = function(text = '', lexicon) {
@@ -38,8 +36,7 @@ function instance() {
 
   /** make a deep-copy of the library state */
   nlp.clone = function() {
-    world = world.clone()
-    return this
+    return instance(world.clone())
   }
 
   /** re-generate a Doc object from .json() results */
@@ -54,11 +51,6 @@ function instance() {
     return this
   }
 
-  /** create instance using global world or new world */
-  nlp.instance = function() {
-    return instance()
-  }
-
   /** current version of the library */
   nlp.version = version
   // alias
@@ -67,4 +59,4 @@ function instance() {
   return nlp
 }
 
-module.exports = instance()
+module.exports = instance(new World())

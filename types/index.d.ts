@@ -18,7 +18,7 @@ declare interface nlp<D extends object, W extends object> {
   /**  log our decision-making for debugging */
   verbose(bool?: boolean): nlp.ExtendedDocument<D, W>
   /** create instance using global world*/
-  instance(): nlp<D, W>
+  clone(): nlp<D, W>
   /**  current semver version of the library */
   version: nlp.ExtendedDocument<D, W>
 }
@@ -78,7 +78,7 @@ declare module nlp {
   /**  log our decision-making for debugging */
   export function verbose(bool?: boolean): DefaultDocument
   /** create instance using global world */
-  export function instance(): nlp<{}, {}>
+  export function clone(): nlp<{}, {}>
   /**  current semver version of the library */
   export const version: number
 

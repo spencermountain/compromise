@@ -80,10 +80,6 @@ const postProcess = function(tokens) {
     let first = captureArr.findIndex(t => t === true || isNamed(t))
     let last = getLastTrue(captureArr, first)
 
-    if (captureArr.find(t => isNamed(t))) {
-      console.log('Named:', JSON.stringify(tokens))
-    }
-
     //'fill in' capture groups between start-end
     for (let i = first; i < last + 1; i++) {
       // Don't replace named groups

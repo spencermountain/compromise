@@ -43,22 +43,6 @@ const byArray = function(arr) {
   ]
 }
 
-const getLastNamed = (arr, target, start) => {
-  let i = arr.indexOf(target, start)
-
-  for (; i < arr.length; ) {
-    const a = arr[i]
-
-    if (a === true || a === target) {
-      i++
-    } else {
-      break
-    }
-  }
-
-  return i - 1
-}
-
 const getLastTrue = (arr, start) => {
   const last = arr.length - 1 - arr.reverse().findIndex(t => t === true)
 

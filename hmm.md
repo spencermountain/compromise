@@ -94,6 +94,8 @@ doc = doc.match('(#Acronym|#Abbreviation)').replaceWith(d => {
 doc.debug()
 ```
 
+### Jan 5
+
 ```js
 nlp('  we like Roy!    we like Roy!!  ')
   .trim()
@@ -143,4 +145,12 @@ nlp(`hey pal, did you get a load of the nerd?`)
   .toPlural()
   .all()
   .text()
+```
+
+### Jan 15
+
+match cached numbers?
+
+```js
+nlp('four').match('4')
 ```

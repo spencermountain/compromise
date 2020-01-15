@@ -8,6 +8,17 @@ compromise uses semver, and pushes to npm frequently
 
 While all _Major_ releases should be reviewed, our only two _large_ releases are **v6** in 2016 and and **v12** in 2019. Others have been mostly incremental, or niche.
 
+<!-- ##### 13
+- remove nlp.clone()  - never worked properly, in the first place (use nlp.original())
+-->
+
+##### 12.4.0
+
+- adds proper `nlp.clone()` support (thanks @Drache93!)
+- better typescript support
+- allow longer acronyms
+- fix offset length issue
+
 ##### 12.3.0
 
 - prefer `@titleCase` instead of `#TitleCase` tag
@@ -21,7 +32,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - more robust number-tagging regexes
 - setup typescript types for plugins #661 (thanks @Drache93!)
 - verb conjugation and tagger bugfixes
-- disambiguate acryonyms & yelling
+- disambiguate between acronyms & yelling
 
 ##### 12.2.1
 

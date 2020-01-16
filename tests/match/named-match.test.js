@@ -227,3 +227,21 @@ test('named-match-number:', function(t) {
 
   t.end()
 })
+
+test('named-match-code-gen', function(t) {
+  const group = nlp('the big dog played')
+    .match('the [<size>#Adjective] [<type>#Noun] played')
+    .groupByNames()
+
+  const codeFromGroup = ({ size, type }) => `size = '${size.text()}'; type = '${type.text()}'`
+  t.equal(codeFromGroup(group), "size = 'big'; type = 'dog'", 'Should create code')
+
+  const args = Object.keys(group)
+    .sort((a, b) => a.localeCompare(b))
+    .map(k => group[k])
+
+  const codeFromList = (size, type) => `size = '${size.text()}'; type = '${type.text()}'`
+  t.equal(codeFromList(...args), "size = 'big'; type = 'dog'", 'Should create code')
+
+  t.end()
+})

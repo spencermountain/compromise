@@ -229,6 +229,7 @@ test('named-match-number:', function(t) {
 })
 
 test('named-match-code-gen', function(t) {
+  // Use group as arguments to function
   const group = nlp('the big dog played')
     .match('the [<size>#Adjective] [<type>#Noun] played')
     .groupByNames()
@@ -236,12 +237,50 @@ test('named-match-code-gen', function(t) {
   const codeFromGroup = ({ size, type }) => `size = '${size.text()}'; type = '${type.text()}'`
   t.equal(codeFromGroup(group), "size = 'big'; type = 'dog'", 'Should create code')
 
+  // Convert group to sorted list and use as args
   const args = Object.keys(group)
     .sort((a, b) => a.localeCompare(b))
     .map(k => group[k])
 
   const codeFromList = (size, type) => `size = '${size.text()}'; type = '${type.text()}'`
   t.equal(codeFromList(...args), "size = 'big'; type = 'dog'", 'Should create code')
+
+  /** Test fancy use of group by names */
+  const templates = [
+    {
+      name: 'SetSize',
+      match: '[<type>#Noun] size equals [<size>#Adjective]',
+      fn: ({ size, type }) => `=== Info\n${size.text()}\n${type.text()}`,
+    },
+  ]
+
+  // Plugin for post processing matches and thunking the output
+  const codeNlp = nlp.extend((Doc, world) => {
+    Doc.prototype.generators = []
+    Doc.prototype.toCode = function() {
+      let output = ''
+
+      for (const g of this.generators) {
+        output += g()
+      }
+
+      return output
+    }
+
+    world.postProcess(doc => {
+      for (let i = 0; i < templates.length; i++) {
+        const template = templates[i]
+
+        const res = doc.match(template.match).groupByNames()
+        doc.generators.push(() => template.fn(res))
+      }
+    })
+  })
+
+  // Use code generators
+  const output = codeNlp('Dog size equals big').toCode()
+
+  t.equal(output, '=== Info\nbig\nDog')
 
   t.end()
 })

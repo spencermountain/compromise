@@ -1,3 +1,4 @@
+const makeId = require('../../Term/_id')
 // i formally apologize for how complicated this is.
 
 //found a match? it's greedy? keep going!
@@ -44,10 +45,24 @@ const greedyTo = function(terms, t, nextReg, index, length) {
 /** tries to match a sequence of terms, starting from here */
 const tryHere = function(terms, regs, index, length) {
   let captures = []
+  const namedGroups = {}
+  let previousGroupId = null
   let t = 0
   // we must satisfy each rule in 'regs'
   for (let r = 0; r < regs.length; r += 1) {
     let reg = regs[r]
+    const isNamedGroup = typeof reg.capture === 'string' || typeof reg.capture === 'number'
+    let namedGroupId = null
+
+    if (isNamedGroup) {
+      const prev = regs[r - 1]
+      if (prev && prev.capture === reg.capture && previousGroupId) {
+        namedGroupId = previousGroupId
+      } else {
+        namedGroupId = makeId(reg.capture)
+        previousGroupId = namedGroupId
+      }
+    }
 
     //should we fail here?
     if (!terms[t]) {
@@ -57,7 +72,7 @@ const tryHere = function(terms, regs, index, length) {
         break
       }
       // have unmet needs
-      return false
+      return [false, null]
     }
 
     //support 'unspecific greedy' .* properly
@@ -65,7 +80,7 @@ const tryHere = function(terms, regs, index, length) {
       let skipto = greedyTo(terms, t, regs[r + 1], reg, index, length)
       // ensure it's long enough
       if (reg.min !== undefined && skipto - t < reg.min) {
-        return false
+        return [false, null]
       }
       // reduce it back, if it's too long
       if (reg.max !== undefined && skipto - t > reg.max) {
@@ -74,7 +89,7 @@ const tryHere = function(terms, regs, index, length) {
       }
       //TODO: support [*] properly
       if (skipto === null) {
-        return false //couldn't find it
+        return [false, null] //couldn't find it
       }
       t = skipto
       continue
@@ -112,13 +127,8 @@ const tryHere = function(terms, regs, index, length) {
       if (reg.end === true) {
         //if this isn't the last term, refuse the match
         if (t !== terms.length && reg.greedy !== true) {
-          return false
+          return [false, null]
         }
-      }
-
-      // Add capture group name so we can grab it in matchAll
-      if (typeof reg.capture === 'string' || typeof reg.capture === 'number') {
-        terms[t - 1].group = reg.capture
       }
 
       //try keep it going!
@@ -127,31 +137,47 @@ const tryHere = function(terms, regs, index, length) {
         // value, and leaving it can cause failures for anchored greedy
         // matches.  ditto for end-greedy matches: we need an earlier non-
         // ending match to succceed until we get to the actual end.
-        const oldT = t
         t = getGreedy(terms, t, Object.assign({}, reg, { start: false, end: false }), regs[r + 1], index, length)
         if (t === null) {
-          return false //greedy was too short
+          return [false, null] //greedy was too short
         }
         // if this was also an end-anchor match, check to see we really
         // reached the end
         if (reg.end === true && index + t !== length) {
-          return false //greedy didn't reach the end
-        }
-
-        // Add capture group name to terms we missed
-        if (typeof reg.capture === 'string' || typeof reg.capture === 'number') {
-          for (let j = oldT; j < t; j++) {
-            terms[j].group = reg.capture
-          }
+          return [false, null] //greedy didn't reach the end
         }
       }
-      if (reg.capture || typeof reg.capture === 'number') {
+      if (reg.capture || isNamedGroup) {
         captures.push(startAt)
+
         //add greedy-end to capture
         if (t > 1 && reg.greedy) {
           captures.push(t - 1)
         }
+
+        if (isNamedGroup) {
+          let g = namedGroups[namedGroupId]
+
+          if (!g) {
+            const { id } = terms[startAt]
+
+            namedGroups[namedGroupId] = {
+              group: reg.capture.toString(),
+              start: id,
+              length: 0,
+            }
+
+            g = namedGroups[namedGroupId]
+          }
+
+          if (t > 1 && reg.greedy) {
+            g.length = t - startAt
+          } else {
+            g.length++
+          }
+        }
       }
+
       continue
     }
 
@@ -168,7 +194,7 @@ const tryHere = function(terms, regs, index, length) {
       }
     }
     // console.log('   ❌\n\n')
-    return false
+    return [false, null]
   }
 
   //we got to the end of the regs, and haven't failed!
@@ -180,9 +206,9 @@ const tryHere = function(terms, regs, index, length) {
     for (let tmp = 0; tmp < t; tmp++) {
       arr[tmp] = arr[tmp] || null //these get cleaned-up after
     }
-    return arr
+    return [arr, namedGroups]
   }
   //return our result
-  return terms.slice(0, t)
+  return [terms.slice(0, t), namedGroups]
 }
 module.exports = tryHere

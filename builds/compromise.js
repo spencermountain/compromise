@@ -87,6 +87,48 @@
     return _assertThisInitialized(self);
   }
 
+  function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();
+  }
+
+  function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+  }
+
+  function _iterableToArrayLimit(arr, i) {
+    if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
+      return;
+    }
+
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _e = undefined;
+
+    try {
+      for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+        _arr.push(_s.value);
+
+        if (i && _arr.length === i) break;
+      }
+    } catch (err) {
+      _d = true;
+      _e = err;
+    } finally {
+      try {
+        if (!_n && _i["return"] != null) _i["return"]();
+      } finally {
+        if (_d) throw _e;
+      }
+    }
+
+    return _arr;
+  }
+
+  function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance");
+  }
+
   //this is a not-well-thought-out way to reduce our dependence on `object===object` stuff
   var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'.split(''); //generates a unique id for this term
 
@@ -1982,8 +2024,8 @@
 
   var _02FailFast = failFast;
 
-  // i formally apologize for how complicated this is.
   //found a match? it's greedy? keep going!
+
   var getGreedy = function getGreedy(terms, t, reg, until, index, length) {
     var start = t;
 
@@ -2035,10 +2077,26 @@
 
   var tryHere = function tryHere(terms, regs, index, length) {
     var captures = [];
+    var namedGroups = {};
+    var previousGroupId = null;
     var t = 0; // we must satisfy each rule in 'regs'
 
     for (var r = 0; r < regs.length; r += 1) {
-      var reg = regs[r]; //should we fail here?
+      var reg = regs[r];
+      var isNamedGroup = typeof reg.capture === 'string' || typeof reg.capture === 'number';
+      var namedGroupId = null;
+
+      if (isNamedGroup) {
+        var prev = regs[r - 1];
+
+        if (prev && prev.capture === reg.capture && previousGroupId) {
+          namedGroupId = previousGroupId;
+        } else {
+          namedGroupId = _id(reg.capture);
+          previousGroupId = namedGroupId;
+        }
+      } //should we fail here?
+
 
       if (!terms[t]) {
         //are all remaining regs optional?
@@ -2051,7 +2109,7 @@
         } // have unmet needs
 
 
-        return false;
+        return [false, null];
       } //support 'unspecific greedy' .* properly
 
 
@@ -2059,7 +2117,7 @@
         var skipto = greedyTo(terms, t, regs[r + 1], reg, index); // ensure it's long enough
 
         if (reg.min !== undefined && skipto - t < reg.min) {
-          return false;
+          return [false, null];
         } // reduce it back, if it's too long
 
 
@@ -2070,7 +2128,7 @@
 
 
         if (skipto === null) {
-          return false; //couldn't find it
+          return [false, null]; //couldn't find it
         }
 
         t = skipto;
@@ -2105,13 +2163,8 @@
         if (reg.end === true) {
           //if this isn't the last term, refuse the match
           if (t !== terms.length && reg.greedy !== true) {
-            return false;
+            return [false, null];
           }
-        } // Add capture group name so we can grab it in matchAll
-
-
-        if (typeof reg.capture === 'string' || typeof reg.capture === 'number') {
-          terms[t - 1].group = reg.capture;
         } //try keep it going!
 
 
@@ -2120,35 +2173,47 @@
           // value, and leaving it can cause failures for anchored greedy
           // matches.  ditto for end-greedy matches: we need an earlier non-
           // ending match to succceed until we get to the actual end.
-          var oldT = t;
           t = getGreedy(terms, t, Object.assign({}, reg, {
             start: false,
             end: false
           }), regs[r + 1], index, length);
 
           if (t === null) {
-            return false; //greedy was too short
+            return [false, null]; //greedy was too short
           } // if this was also an end-anchor match, check to see we really
           // reached the end
 
 
           if (reg.end === true && index + t !== length) {
-            return false; //greedy didn't reach the end
-          } // Add capture group name to terms we missed
-
-
-          if (typeof reg.capture === 'string' || typeof reg.capture === 'number') {
-            for (var j = oldT; j < t; j++) {
-              terms[j].group = reg.capture;
-            }
+            return [false, null]; //greedy didn't reach the end
           }
         }
 
-        if (reg.capture || typeof reg.capture === 'number') {
+        if (reg.capture || isNamedGroup) {
           captures.push(startAt); //add greedy-end to capture
 
           if (t > 1 && reg.greedy) {
             captures.push(t - 1);
+          }
+
+          if (isNamedGroup) {
+            var g = namedGroups[namedGroupId];
+
+            if (!g) {
+              var id = terms[startAt].id;
+              namedGroups[namedGroupId] = {
+                group: reg.capture.toString(),
+                start: id,
+                length: 0
+              };
+              g = namedGroups[namedGroupId];
+            }
+
+            if (t > 1 && reg.greedy) {
+              g.length = t - startAt;
+            } else {
+              g.length++;
+            }
           }
         }
 
@@ -2170,7 +2235,7 @@
       } // console.log('   ❌\n\n')
 
 
-      return false;
+      return [false, null];
     } //we got to the end of the regs, and haven't failed!
     //try to only return our [captured] segment
 
@@ -2183,11 +2248,11 @@
         arr[tmp] = arr[tmp] || null; //these get cleaned-up after
       }
 
-      return arr;
+      return [arr, namedGroups];
     } //return our result
 
 
-    return terms.slice(0, t);
+    return [terms.slice(0, t), namedGroups];
   };
 
   var _03TryMatch = tryHere;
@@ -2491,14 +2556,7 @@
       var first = captureArr.findIndex(function (t) {
         return t === true || isNamed(t);
       });
-      var last = getLastTrue(captureArr, first);
-
-      if (captureArr.find(function (t) {
-        return isNamed(t);
-      })) {
-        console.log('Named:', JSON.stringify(tokens));
-      } //'fill in' capture groups between start-end
-
+      var last = getLastTrue(captureArr, first); //'fill in' capture groups between start-end
 
       for (var i = first; i < last + 1; i++) {
         // Don't replace named groups
@@ -2605,7 +2663,10 @@
     var matches = []; //optimisation for '^' start logic
 
     if (regs[0].start === true) {
-      var match = _03TryMatch(terms, regs, 0, terms.length);
+      var _tryMatch = _03TryMatch(terms, regs, 0, terms.length),
+          _tryMatch2 = _slicedToArray(_tryMatch, 2),
+          match = _tryMatch2[0],
+          groups = _tryMatch2[1];
 
       if (match !== false && match.length > 0) {
         matches.push(match);
@@ -2616,7 +2677,12 @@
         return arr.filter(function (t) {
           return t;
         });
-      });
+      }); //add to names if named capture group
+
+      if (groups && Object.keys(groups).length > 0) {
+        p.names = Object.assign({}, p.names, groups);
+      }
+
       return _04PostProcess(terms, regs, matches);
     } //try starting, from every term
 
@@ -2628,7 +2694,10 @@
       } //try it!
 
 
-      var _match = _03TryMatch(terms.slice(i), regs, i, terms.length);
+      var _tryMatch3 = _03TryMatch(terms.slice(i), regs, i, terms.length),
+          _tryMatch4 = _slicedToArray(_tryMatch3, 2),
+          _match = _tryMatch4[0],
+          _groups = _tryMatch4[1];
 
       if (_match !== false && _match.length > 0) {
         //zoom forward!
@@ -2639,45 +2708,8 @@
         });
         matches.push(_match); //add to names if named capture group
 
-        var names = regs.filter(function (r) {
-          return typeof r.capture === 'string' || typeof r.capture === 'number';
-        });
-
-        var captureArr = _match.map(function (m) {
-          return m.group;
-        });
-
-        var indexFrom = 0;
-
-        for (var j = 0; j < names.length; j++) {
-          var name = names[j].capture; // Get first term that uses this group name
-
-          var firstIdx = captureArr.indexOf(name, indexFrom);
-          var first = _match[firstIdx];
-          var length = 0;
-
-          if (firstIdx < 0) {
-            break;
-          }
-
-          for (var l = firstIdx; l < captureArr.length; l++) {
-            var element = _match[l];
-
-            if (element.group !== name) {
-              break;
-            }
-
-            length++;
-          }
-
-          if (first) {
-            indexFrom = firstIdx + length;
-            p.names[_id(name)] = {
-              group: name.toString(),
-              start: first.id,
-              length: length
-            };
-          }
+        if (_groups && Object.keys(_groups).length > 0) {
+          p.names = Object.assign({}, p.names, _groups);
         } //ok, maybe that's enough?
 
 

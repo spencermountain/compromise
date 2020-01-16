@@ -2,7 +2,6 @@ const failFast = require('./02-failFast')
 const tryMatch = require('./03-tryMatch')
 const postProcess = require('./04-postProcess')
 const syntax = require('../../Doc/match/syntax')
-const makeId = require('../../Term/_id')
 
 /**  returns a simple array of arrays */
 const matchAll = function(p, regs, matchOne = false) {
@@ -22,7 +21,7 @@ const matchAll = function(p, regs, matchOne = false) {
 
   //optimisation for '^' start logic
   if (regs[0].start === true) {
-    let match = tryMatch(terms, regs, 0, terms.length)
+    let [match, groups] = tryMatch(terms, regs, 0, terms.length)
     if (match !== false && match.length > 0) {
       matches.push(match)
     }
@@ -30,6 +29,12 @@ const matchAll = function(p, regs, matchOne = false) {
     matches = matches.map(arr => {
       return arr.filter(t => t)
     })
+
+    //add to names if named capture group
+    if (groups && Object.keys(groups).length > 0) {
+      p.names = Object.assign({}, p.names, groups)
+    }
+
     return postProcess(terms, regs, matches)
   }
   //try starting, from every term
@@ -39,7 +44,7 @@ const matchAll = function(p, regs, matchOne = false) {
       break
     }
     //try it!
-    let match = tryMatch(terms.slice(i), regs, i, terms.length)
+    let [match, groups] = tryMatch(terms.slice(i), regs, i, terms.length)
     if (match !== false && match.length > 0) {
       //zoom forward!
       i += match.length - 1
@@ -48,40 +53,8 @@ const matchAll = function(p, regs, matchOne = false) {
       matches.push(match)
 
       //add to names if named capture group
-      const names = regs.filter(r => typeof r.capture === 'string' || typeof r.capture === 'number')
-      const captureArr = match.map(m => m.group)
-      let indexFrom = 0
-
-      for (let j = 0; j < names.length; j++) {
-        const { capture: name } = names[j]
-
-        // Get first term that uses this group name
-        const firstIdx = captureArr.indexOf(name, indexFrom)
-        const first = match[firstIdx]
-        let length = 0
-
-        if (firstIdx < 0) {
-          break
-        }
-
-        for (let l = firstIdx; l < captureArr.length; l++) {
-          const element = match[l]
-
-          if (element.group !== name) {
-            break
-          }
-
-          length++
-        }
-
-        if (first) {
-          indexFrom = firstIdx + length
-          p.names[makeId(name)] = {
-            group: name.toString(),
-            start: first.id,
-            length,
-          }
-        }
+      if (groups && Object.keys(groups).length > 0) {
+        p.names = Object.assign({}, p.names, groups)
       }
 
       //ok, maybe that's enough?

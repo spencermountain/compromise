@@ -51,9 +51,12 @@ const tryHere = function(terms, regs, index, length) {
   // we must satisfy each rule in 'regs'
   for (let r = 0; r < regs.length; r += 1) {
     let reg = regs[r]
+
+    // Check if this reg has a named capture group
     const isNamedGroup = typeof reg.capture === 'string' || typeof reg.capture === 'number'
     let namedGroupId = null
 
+    // Reuse previous capture group if same
     if (isNamedGroup) {
       const prev = regs[r - 1]
       if (prev && prev.capture === reg.capture && previousGroupId) {
@@ -155,6 +158,7 @@ const tryHere = function(terms, regs, index, length) {
           captures.push(t - 1)
         }
 
+        // Create capture group if missing
         if (isNamedGroup) {
           let g = namedGroups[namedGroupId]
 
@@ -170,6 +174,7 @@ const tryHere = function(terms, regs, index, length) {
             g = namedGroups[namedGroupId]
           }
 
+          // Update group - add greedy or increment length
           if (t > 1 && reg.greedy) {
             g.length = t - startAt
           } else {

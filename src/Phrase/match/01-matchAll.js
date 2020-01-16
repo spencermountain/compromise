@@ -52,7 +52,7 @@ const matchAll = function(p, regs, matchOne = false) {
       match = match.filter(m => m)
       matches.push(match)
 
-      //add to names if named capture group
+      //save new capture groups
       if (groups && Object.keys(groups).length > 0) {
         p.names = Object.assign({}, p.names, groups)
       }

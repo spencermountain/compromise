@@ -99,3 +99,37 @@ exports.hasId = function(wantId) {
 exports.wordCount = function() {
   return this.terms().filter(t => t.text !== '').length
 }
+
+/** grab named capture group results */
+exports.named = function(target) {
+  // Allow accessing by name
+  if (target !== undefined) {
+    const phrase = Object.values(this.names).find(n => n.group === target.toString())
+
+    if (!phrase) {
+      return []
+    }
+
+    const { start, length } = phrase
+
+    return this.buildFrom(start, length)
+  }
+
+  // Find all named groups
+  const names = Object.keys(this.names)
+
+  if (names.length === 0) {
+    return []
+  }
+
+  for (let i = 0; i < names.length; i++) {
+    const name = names[i]
+    const { start, length } = this.names[name]
+
+    if (this.hasId(start)) {
+      return this.buildFrom(start, length)
+    }
+  }
+
+  return []
+}

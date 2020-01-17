@@ -81,6 +81,48 @@ function _possibleConstructorReturn(self, call) {
   return _assertThisInitialized(self);
 }
 
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();
+}
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+function _iterableToArrayLimit(arr, i) {
+  if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
+    return;
+  }
+
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance");
+}
+
 //this is a not-well-thought-out way to reduce our dependence on `object===object` stuff
 var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'.split(''); //generates a unique id for this term
 
@@ -1318,13 +1360,53 @@ var wordCount = function wordCount() {
     return t.text !== '';
   }).length;
 };
+/** grab named capture group results */
+
+
+var named = function named(target) {
+  // Allow accessing by name
+  if (target !== undefined) {
+    var phrase = Object.values(this.names).find(function (n) {
+      return n.group === target.toString();
+    });
+
+    if (!phrase) {
+      return [];
+    }
+
+    var start = phrase.start,
+        length = phrase.length;
+    return this.buildFrom(start, length);
+  } // Find all named groups
+
+
+  var names = Object.keys(this.names);
+
+  if (names.length === 0) {
+    return [];
+  }
+
+  for (var i = 0; i < names.length; i++) {
+    var name = names[i];
+    var _this$names$name = this.names[name],
+        _start = _this$names$name.start,
+        _length = _this$names$name.length;
+
+    if (this.hasId(_start)) {
+      return this.buildFrom(_start, _length);
+    }
+  }
+
+  return [];
+};
 
 var _01Utils = {
   terms: terms,
   clone: clone,
   lastTerm: lastTerm,
   hasId: hasId,
-  wordCount: wordCount
+  wordCount: wordCount,
+  named: named
 };
 
 var trimEnd = function trimEnd(str) {
@@ -1936,8 +2018,8 @@ var failFast = function failFast(p, regs) {
 
 var _02FailFast = failFast;
 
-// i formally apologize for how complicated this is.
 //found a match? it's greedy? keep going!
+
 var getGreedy = function getGreedy(terms, t, reg, until, index, length) {
   var start = t;
 
@@ -1989,10 +2071,26 @@ var greedyTo = function greedyTo(terms, t, nextReg, index, length) {
 
 var tryHere = function tryHere(terms, regs, index, length) {
   var captures = [];
+  var namedGroups = {};
+  var previousGroupId = null;
   var t = 0; // we must satisfy each rule in 'regs'
 
   for (var r = 0; r < regs.length; r += 1) {
-    var reg = regs[r]; //should we fail here?
+    var reg = regs[r];
+    var isNamedGroup = typeof reg.capture === 'string' || typeof reg.capture === 'number';
+    var namedGroupId = null;
+
+    if (isNamedGroup) {
+      var prev = regs[r - 1];
+
+      if (prev && prev.capture === reg.capture && previousGroupId) {
+        namedGroupId = previousGroupId;
+      } else {
+        namedGroupId = _id(reg.capture);
+        previousGroupId = namedGroupId;
+      }
+    } //should we fail here?
+
 
     if (!terms[t]) {
       //are all remaining regs optional?
@@ -2005,7 +2103,7 @@ var tryHere = function tryHere(terms, regs, index, length) {
       } // have unmet needs
 
 
-      return false;
+      return [false, null];
     } //support 'unspecific greedy' .* properly
 
 
@@ -2013,7 +2111,7 @@ var tryHere = function tryHere(terms, regs, index, length) {
       var skipto = greedyTo(terms, t, regs[r + 1], reg, index); // ensure it's long enough
 
       if (reg.min !== undefined && skipto - t < reg.min) {
-        return false;
+        return [false, null];
       } // reduce it back, if it's too long
 
 
@@ -2024,7 +2122,7 @@ var tryHere = function tryHere(terms, regs, index, length) {
 
 
       if (skipto === null) {
-        return false; //couldn't find it
+        return [false, null]; //couldn't find it
       }
 
       t = skipto;
@@ -2059,7 +2157,7 @@ var tryHere = function tryHere(terms, regs, index, length) {
       if (reg.end === true) {
         //if this isn't the last term, refuse the match
         if (t !== terms.length && reg.greedy !== true) {
-          return false;
+          return [false, null];
         }
       } //try keep it going!
 
@@ -2075,21 +2173,41 @@ var tryHere = function tryHere(terms, regs, index, length) {
         }), regs[r + 1], index, length);
 
         if (t === null) {
-          return false; //greedy was too short
+          return [false, null]; //greedy was too short
         } // if this was also an end-anchor match, check to see we really
         // reached the end
 
 
         if (reg.end === true && index + t !== length) {
-          return false; //greedy didn't reach the end
+          return [false, null]; //greedy didn't reach the end
         }
       }
 
-      if (reg.capture) {
+      if (reg.capture || isNamedGroup) {
         captures.push(startAt); //add greedy-end to capture
 
         if (t > 1 && reg.greedy) {
           captures.push(t - 1);
+        }
+
+        if (isNamedGroup) {
+          var g = namedGroups[namedGroupId];
+
+          if (!g) {
+            var id = terms[startAt].id;
+            namedGroups[namedGroupId] = {
+              group: reg.capture.toString(),
+              start: id,
+              length: 0
+            };
+            g = namedGroups[namedGroupId];
+          }
+
+          if (t > 1 && reg.greedy) {
+            g.length = t - startAt;
+          } else {
+            g.length++;
+          }
         }
       }
 
@@ -2111,7 +2229,7 @@ var tryHere = function tryHere(terms, regs, index, length) {
     } // console.log('   ❌\n\n')
 
 
-    return false;
+    return [false, null];
   } //we got to the end of the regs, and haven't failed!
   //try to only return our [captured] segment
 
@@ -2124,11 +2242,11 @@ var tryHere = function tryHere(terms, regs, index, length) {
       arr[tmp] = arr[tmp] || null; //these get cleaned-up after
     }
 
-    return arr;
+    return [arr, namedGroups];
   } //return our result
 
 
-  return terms.slice(0, t);
+  return [terms.slice(0, t), namedGroups];
 };
 
 var _03TryMatch = tryHere;
@@ -2174,6 +2292,7 @@ var _04PostProcess = postProcess;
 */
 var hasMinMax = /\{([0-9]+,?[0-9]*)\}/;
 var andSign = /&&/;
+var captureName = new RegExp(/^<(\S+)>/);
 
 var titleCase$1 = function titleCase(str) {
   return str.charAt(0).toUpperCase() + str.substr(1);
@@ -2269,7 +2388,16 @@ var parseToken = function parseToken(w) {
     if (start(w) === '[' || end(w) === ']') {
       obj.capture = true;
       w = w.replace(/^\[/, '');
-      w = w.replace(/\]$/, '');
+      w = w.replace(/\]$/, ''); // Use capture group name
+
+      if (start(w) === '<') {
+        var res = captureName.exec(w);
+
+        if (res.length >= 2) {
+          obj.capture = res[1];
+          w = w.replace(res[0], '');
+        }
+      }
     } //regex
 
 
@@ -2348,6 +2476,10 @@ var parseToken = function parseToken(w) {
 
 var parseToken_1 = parseToken;
 
+var isNamed = function isNamed(capture) {
+  return typeof capture === 'string' || typeof capture === 'number';
+};
+
 var isArray$1 = function isArray(arr) {
   return Object.prototype.toString.call(arr) === '[object Array]';
 }; //split-up by (these things)
@@ -2390,21 +2522,44 @@ var byArray = function byArray(arr) {
   }];
 };
 
+var getLastTrue = function getLastTrue(arr, start) {
+  var last = arr.length - 1 - arr.reverse().findIndex(function (t) {
+    return t === true;
+  });
+
+  for (var j = start + 1; j < last; j++) {
+    // Don't fill in if there's a named group ahead
+    if (isNamed(arr[j])) {
+      return start;
+    }
+  }
+
+  return last;
+};
+
 var postProcess$1 = function postProcess(tokens) {
-  //ensure there's only one consecutive capture group.
+  // ensure there's only one consecutive capture group.
   var count = tokens.filter(function (t) {
-    return t.capture === true;
+    return t.capture === true || isNamed(t.capture);
   }).length;
 
   if (count > 1) {
     var captureArr = tokens.map(function (t) {
       return t.capture;
     });
-    var first = captureArr.indexOf(true);
-    var last = captureArr.length - 1 - captureArr.reverse().indexOf(true); //'fill in' capture groups between start-end
+    var first = captureArr.findIndex(function (t) {
+      return t === true || isNamed(t);
+    });
+    var last = getLastTrue(captureArr, first); //'fill in' capture groups between start-end
 
-    for (var i = first; i < last; i++) {
-      tokens[i].capture = true;
+    for (var i = first; i < last + 1; i++) {
+      // Don't replace named groups
+      if (isNamed(tokens[i].capture)) {
+        continue;
+      }
+
+      var capture = tokens[first].capture;
+      tokens[i].capture = capture;
     }
   }
 
@@ -2502,7 +2657,10 @@ var matchAll = function matchAll(p, regs) {
   var matches = []; //optimisation for '^' start logic
 
   if (regs[0].start === true) {
-    var match = _03TryMatch(terms, regs, 0, terms.length);
+    var _tryMatch = _03TryMatch(terms, regs, 0, terms.length),
+        _tryMatch2 = _slicedToArray(_tryMatch, 2),
+        match = _tryMatch2[0],
+        groups = _tryMatch2[1];
 
     if (match !== false && match.length > 0) {
       matches.push(match);
@@ -2513,7 +2671,12 @@ var matchAll = function matchAll(p, regs) {
       return arr.filter(function (t) {
         return t;
       });
-    });
+    }); //add to names if named capture group
+
+    if (groups && Object.keys(groups).length > 0) {
+      p.names = Object.assign({}, p.names, groups);
+    }
+
     return _04PostProcess(terms, regs, matches);
   } //try starting, from every term
 
@@ -2525,7 +2688,10 @@ var matchAll = function matchAll(p, regs) {
     } //try it!
 
 
-    var _match = _03TryMatch(terms.slice(i), regs, i, terms.length);
+    var _tryMatch3 = _03TryMatch(terms.slice(i), regs, i, terms.length),
+        _tryMatch4 = _slicedToArray(_tryMatch3, 2),
+        _match = _tryMatch4[0],
+        _groups = _tryMatch4[1];
 
     if (_match !== false && _match.length > 0) {
       //zoom forward!
@@ -2534,7 +2700,12 @@ var matchAll = function matchAll(p, regs) {
       _match = _match.filter(function (m) {
         return m;
       });
-      matches.push(_match); //ok, maybe that's enough?
+      matches.push(_match); //add to names if named capture group
+
+      if (_groups && Object.keys(_groups).length > 0) {
+        p.names = Object.assign({}, p.names, _groups);
+      } //ok, maybe that's enough?
+
 
       if (matchOne === true) {
         return _04PostProcess(terms, regs, matches);
@@ -2676,6 +2847,11 @@ var Phrase = function Phrase(id, length, pool) {
     writable: true,
     value: {}
   });
+  Object.defineProperty(this, 'names', {
+    enumerable: false,
+    writable: true,
+    value: {}
+  });
 };
 /** create a new Phrase object from an id and length */
 
@@ -2689,6 +2865,10 @@ Phrase.prototype.buildFrom = function (id, length) {
     if (length !== this.length) {
       p.cache.terms = null;
     }
+  }
+
+  if (this.names) {
+    p.names = this.names;
   }
 
   return p;
@@ -6056,6 +6236,56 @@ var _02Accessors = createCommonjsModule(function (module, exports) {
 
     return arr;
   };
+  /** grab named capture group results */
+
+
+  exports.named = function (target) {
+    var arr = []; //'reduce' but faster
+
+    for (var i = 0; i < this.list.length; i++) {
+      var terms = this.list[i].named(target);
+
+      if (terms.length > 0) {
+        arr.push(this.list[i]);
+      }
+    }
+
+    return this.buildFrom(arr);
+  };
+  /* grab named capture group terms as object */
+
+
+  exports.groupByNames = function () {
+    var res = {};
+    var groups = {};
+
+    for (var i = 0; i < this.list.length; i++) {
+      var phrase = this.list[i];
+      var names = Object.values(phrase.names);
+
+      for (var j = 0; j < names.length; j++) {
+        var _names$j = names[j],
+            group = _names$j.group,
+            start = _names$j.start,
+            length = _names$j.length;
+
+        if (!groups[group]) {
+          groups[group] = [];
+        }
+
+        groups[group].push(phrase.buildFrom(start, length));
+      }
+    }
+
+    var keys = Object.keys(groups);
+
+    for (var _i = 0; _i < keys.length; _i++) {
+      var key = keys[_i];
+      res[key] = this.buildFrom(groups[key]);
+    }
+
+    return res;
+  };
 });
 var _02Accessors_1 = _02Accessors.first;
 var _02Accessors_2 = _02Accessors.last;
@@ -6065,6 +6295,8 @@ var _02Accessors_5 = _02Accessors.get;
 var _02Accessors_6 = _02Accessors.firstTerm;
 var _02Accessors_7 = _02Accessors.lastTerm;
 var _02Accessors_8 = _02Accessors.termList;
+var _02Accessors_9 = _02Accessors.named;
+var _02Accessors_10 = _02Accessors.groupByNames;
 
 var _03Match = createCommonjsModule(function (module, exports) {
   /** return a new Doc, with this one as a parent */
@@ -6833,27 +7065,87 @@ var _01Text = {
   text: text$1
 };
 
+// get all character startings in doc
+var termOffsets = function termOffsets(doc) {
+  var elapsed = 0;
+  var index = 0;
+  var offsets = {};
+  doc.termList().forEach(function (term) {
+    offsets[term.id] = {
+      index: index,
+      start: elapsed + term.pre.length,
+      length: term.text.length
+    };
+    elapsed += term.pre.length + term.text.length + term.post.length;
+    index += 1;
+  });
+  return offsets;
+};
+
+var calcOffset = function calcOffset(doc, result, options) {
+  // calculate offsets for each term
+  var offsets = termOffsets(doc.all()); // add index values
+
+  if (options.terms.index || options.index) {
+    result.forEach(function (o) {
+      o.terms.forEach(function (t) {
+        t.index = offsets[t.id].index;
+      });
+      o.index = o.terms[0].index;
+    });
+  } // add offset values
+
+
+  if (options.terms.offset || options.offset) {
+    result.forEach(function (o) {
+      o.terms.forEach(function (t) {
+        t.offset = offsets[t.id] || {};
+      }); // let len = o.terms.reduce((n, t, i) => {
+      //   n += t.offset.length || 0
+      //   //add whitespace, too
+      //   console.log(t.post)
+      //   return n
+      // }, 0)
+
+      o.offset = o.terms[0].offset;
+      o.offset.length = o.text.length;
+    });
+  }
+};
+
+var _offset = calcOffset;
+
 var _02Json = createCommonjsModule(function (module, exports) {
   var jsonDefaults = {
     text: true,
     terms: true,
     trim: true
-  }; // get all character startings in doc
+  }; //some options have dependents
 
-  var termOffsets = function termOffsets(doc) {
-    var elapsed = 0;
-    var index = 0;
-    var offsets = {};
-    doc.termList().forEach(function (term) {
-      offsets[term.id] = {
-        index: index,
-        start: elapsed + term.pre.length,
-        length: term.text.length
-      };
-      elapsed += term.pre.length + term.text.length + term.post.length;
-      index += 1;
-    });
-    return offsets;
+  var setOptions = function setOptions(options) {
+    options = Object.assign({}, jsonDefaults, options);
+
+    if (options.unique) {
+      options.reduced = true;
+    } //offset calculation requires these options to be on
+
+
+    if (options.offset) {
+      options.text = true;
+
+      if (!options.terms || options.terms === true) {
+        options.terms = {};
+      }
+
+      options.terms.offset = true;
+    }
+
+    if (options.index || options.terms.index) {
+      options.terms = options.terms === true ? {} : options.terms;
+      options.terms.id = true;
+    }
+
+    return options;
   };
   /** pull out desired metadata from the document */
 
@@ -6868,9 +7160,9 @@ var _02Json = createCommonjsModule(function (module, exports) {
       return this.list[options].json(jsonDefaults);
     }
 
-    options = Object.assign({}, jsonDefaults, options); // cache roots, if necessary
+    options = setOptions(options); // cache root strings beforehand, if necessary
 
-    if (options === 'root' || _typeof(options) === 'object' && options.root) {
+    if (options.root === true) {
       this.list.forEach(function (p) {
         p.terms().forEach(function (t) {
           if (t.root === null) {
@@ -6880,51 +7172,12 @@ var _02Json = createCommonjsModule(function (module, exports) {
       });
     }
 
-    if (options.unique) {
-      options.reduced = true;
-    }
-
-    if (options.offset) {
-      options.terms = options.terms || {};
-      options.terms.offset = true;
-    }
-
-    if (options.index || options.terms.index) {
-      options.terms = options.terms === true ? {} : options.terms;
-      options.terms.id = true;
-    }
-
     var result = this.list.map(function (p) {
       return p.json(options, _this.world);
     }); // add offset and index data for each term
 
     if (options.terms.offset || options.offset || options.terms.index || options.index) {
-      // calculate them, (from beginning of doc)
-      var offsets = termOffsets(this.all()); // add index values
-
-      if (options.terms.index || options.index) {
-        result.forEach(function (o) {
-          o.terms.forEach(function (t) {
-            t.index = offsets[t.id].index;
-          });
-          o.index = o.terms[0].index;
-        });
-      } // add offset values
-
-
-      if (options.terms.offset || options.offset) {
-        result.forEach(function (o) {
-          o.terms.forEach(function (t) {
-            t.offset = offsets[t.id] || {};
-          });
-          var len = o.terms.reduce(function (n, t) {
-            n += t.offset.length || 0;
-            return n;
-          }, 0);
-          o.offset = o.terms[0].offset;
-          o.offset.length = len;
-        });
-      }
+      _offset(this, result, options);
     } // add frequency #s
 
 

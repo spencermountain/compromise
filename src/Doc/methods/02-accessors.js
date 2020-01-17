@@ -56,3 +56,46 @@ exports.termList = function(num) {
   }
   return arr
 }
+
+/** grab named capture group results */
+exports.named = function(target) {
+  let arr = []
+  //'reduce' but faster
+  for (let i = 0; i < this.list.length; i++) {
+    let terms = this.list[i].named(target)
+
+    if (terms.length > 0) {
+      arr.push(this.list[i])
+    }
+  }
+  return this.buildFrom(arr)
+}
+
+/* grab named capture group terms as object */
+exports.groupByNames = function() {
+  let res = {}
+
+  const groups = {}
+  for (let i = 0; i < this.list.length; i++) {
+    const phrase = this.list[i]
+    const names = Object.values(phrase.names)
+
+    for (let j = 0; j < names.length; j++) {
+      const { group, start, length } = names[j]
+
+      if (!groups[group]) {
+        groups[group] = []
+      }
+
+      groups[group].push(phrase.buildFrom(start, length))
+    }
+  }
+
+  const keys = Object.keys(groups)
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i]
+    res[key] = this.buildFrom(groups[key])
+  }
+
+  return res
+}

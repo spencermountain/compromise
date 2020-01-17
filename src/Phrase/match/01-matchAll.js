@@ -21,7 +21,7 @@ const matchAll = function(p, regs, matchOne = false) {
 
   //optimisation for '^' start logic
   if (regs[0].start === true) {
-    let match = tryMatch(terms, regs, 0, terms.length)
+    let [match, groups] = tryMatch(terms, regs, 0, terms.length)
     if (match !== false && match.length > 0) {
       matches.push(match)
     }
@@ -29,6 +29,12 @@ const matchAll = function(p, regs, matchOne = false) {
     matches = matches.map(arr => {
       return arr.filter(t => t)
     })
+
+    //add to names if named capture group
+    if (groups && Object.keys(groups).length > 0) {
+      p.names = Object.assign({}, p.names, groups)
+    }
+
     return postProcess(terms, regs, matches)
   }
   //try starting, from every term
@@ -38,13 +44,19 @@ const matchAll = function(p, regs, matchOne = false) {
       break
     }
     //try it!
-    let match = tryMatch(terms.slice(i), regs, i, terms.length)
+    let [match, groups] = tryMatch(terms.slice(i), regs, i, terms.length)
     if (match !== false && match.length > 0) {
       //zoom forward!
       i += match.length - 1
       //[capture-groups] return some null responses
       match = match.filter(m => m)
       matches.push(match)
+
+      //save new capture groups
+      if (groups && Object.keys(groups).length > 0) {
+        p.names = Object.assign({}, p.names, groups)
+      }
+
       //ok, maybe that's enough?
       if (matchOne === true) {
         return postProcess(terms, regs, matches)

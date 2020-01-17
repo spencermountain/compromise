@@ -1,5 +1,9 @@
 const parseToken = require('./parseToken')
 
+const isNamed = function(capture) {
+  return typeof capture === 'string' || typeof capture === 'number'
+}
+
 const isArray = function(arr) {
   return Object.prototype.toString.call(arr) === '[object Array]'
 }
@@ -39,18 +43,38 @@ const byArray = function(arr) {
   ]
 }
 
-const postProcess = function(tokens) {
-  //ensure there's only one consecutive capture group.
-  let count = tokens.filter(t => t.capture === true).length
-  if (count > 1) {
-    let captureArr = tokens.map(t => t.capture)
-    let first = captureArr.indexOf(true)
-    let last = captureArr.length - 1 - captureArr.reverse().indexOf(true)
-    //'fill in' capture groups between start-end
-    for (let i = first; i < last; i++) {
-      tokens[i].capture = true
+const getLastTrue = (arr, start) => {
+  const last = arr.length - 1 - arr.reverse().findIndex(t => t === true)
+
+  for (let j = start + 1; j < last; j++) {
+    // Don't fill in if there's a named group ahead
+    if (isNamed(arr[j])) {
+      return start
     }
   }
+
+  return last
+}
+
+const postProcess = function(tokens) {
+  // ensure there's only one consecutive capture group.
+  let count = tokens.filter(t => t.capture === true || isNamed(t.capture)).length
+  if (count > 1) {
+    let captureArr = tokens.map(t => t.capture)
+    let first = captureArr.findIndex(t => t === true || isNamed(t))
+    let last = getLastTrue(captureArr, first)
+
+    //'fill in' capture groups between start-end
+    for (let i = first; i < last + 1; i++) {
+      // Don't replace named groups
+      if (isNamed(tokens[i].capture)) {
+        continue
+      }
+      const { capture } = tokens[first]
+      tokens[i].capture = capture
+    }
+  }
+
   return tokens
 }
 

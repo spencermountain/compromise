@@ -2065,6 +2065,23 @@ var greedyTo = function greedyTo(terms, t, nextReg, index, length) {
 
 
   return null;
+}; // get or create named group
+
+
+var getOrCreateGroup = function getOrCreateGroup(namedGroups, namedGroupId, terms, startIndex, reg) {
+  var g = namedGroups[namedGroupId];
+
+  if (g) {
+    return g;
+  }
+
+  var id = terms[startIndex].id;
+  namedGroups[namedGroupId] = {
+    group: reg.capture.toString(),
+    start: id,
+    length: 0
+  };
+  return namedGroups[namedGroupId];
 };
 /** tries to match a sequence of terms, starting from here */
 
@@ -2131,18 +2148,7 @@ var tryHere = function tryHere(terms, regs, index, length) {
         captures.push(skipto - 1);
 
         if (isNamedGroup) {
-          var g = namedGroups[namedGroupId];
-
-          if (!g) {
-            var id = terms[t].id;
-            namedGroups[namedGroupId] = {
-              group: reg.capture.toString(),
-              start: id,
-              length: 0
-            };
-            g = namedGroups[namedGroupId];
-          } // Update group
-
+          var g = getOrCreateGroup(namedGroups, namedGroupId, terms, t, reg); // Update group
 
           g.length = skipto - t;
         }
@@ -2215,17 +2221,7 @@ var tryHere = function tryHere(terms, regs, index, length) {
 
 
         if (isNamedGroup) {
-          var _g = namedGroups[namedGroupId];
-
-          if (!_g) {
-            var _id$1 = terms[startAt].id;
-            namedGroups[namedGroupId] = {
-              group: reg.capture.toString(),
-              start: _id$1,
-              length: 0
-            };
-            _g = namedGroups[namedGroupId];
-          } // Update group - add greedy or increment length
+          var _g = getOrCreateGroup(namedGroups, namedGroupId, terms, startAt, reg); // Update group - add greedy or increment length
 
 
           if (t > 1 && reg.greedy) {

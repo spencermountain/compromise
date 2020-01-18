@@ -96,9 +96,28 @@ const tryHere = function(terms, regs, index, length) {
       }
 
       // is it really this easy?....
-      if (reg.capture) {
+      if (reg.capture || isNamedGroup) {
         captures.push(t)
         captures.push(skipto - 1)
+
+        if (isNamedGroup) {
+          let g = namedGroups[namedGroupId]
+
+          if (!g) {
+            const { id } = terms[t]
+
+            namedGroups[namedGroupId] = {
+              group: reg.capture.toString(),
+              start: id,
+              length: 0,
+            }
+
+            g = namedGroups[namedGroupId]
+          }
+
+          // Update group
+          g.length = skipto - t
+        }
       }
 
       t = skipto
@@ -184,7 +203,7 @@ const tryHere = function(terms, regs, index, length) {
 
           // Update group - add greedy or increment length
           if (t > 1 && reg.greedy) {
-            g.length = t - startAt
+            g.length += t - startAt
           } else {
             g.length++
           }

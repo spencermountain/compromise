@@ -2126,9 +2126,26 @@ var tryHere = function tryHere(terms, regs, index, length) {
       } // is it really this easy?....
 
 
-      if (reg.capture) {
+      if (reg.capture || isNamedGroup) {
         captures.push(t);
         captures.push(skipto - 1);
+
+        if (isNamedGroup) {
+          var g = namedGroups[namedGroupId];
+
+          if (!g) {
+            var id = terms[t].id;
+            namedGroups[namedGroupId] = {
+              group: reg.capture.toString(),
+              start: id,
+              length: 0
+            };
+            g = namedGroups[namedGroupId];
+          } // Update group
+
+
+          g.length = skipto - t;
+        }
       }
 
       t = skipto;
@@ -2198,23 +2215,23 @@ var tryHere = function tryHere(terms, regs, index, length) {
 
 
         if (isNamedGroup) {
-          var g = namedGroups[namedGroupId];
+          var _g = namedGroups[namedGroupId];
 
-          if (!g) {
-            var id = terms[startAt].id;
+          if (!_g) {
+            var _id$1 = terms[startAt].id;
             namedGroups[namedGroupId] = {
               group: reg.capture.toString(),
-              start: id,
+              start: _id$1,
               length: 0
             };
-            g = namedGroups[namedGroupId];
+            _g = namedGroups[namedGroupId];
           } // Update group - add greedy or increment length
 
 
           if (t > 1 && reg.greedy) {
-            g.length = t - startAt;
+            _g.length += t - startAt;
           } else {
-            g.length++;
+            _g.length++;
           }
         }
       }

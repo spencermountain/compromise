@@ -2082,9 +2082,10 @@
     var t = 0; // we must satisfy each rule in 'regs'
 
     for (var r = 0; r < regs.length; r += 1) {
-      var reg = regs[r];
+      var reg = regs[r]; // Check if this reg has a named capture group
+
       var isNamedGroup = typeof reg.capture === 'string' || typeof reg.capture === 'number';
-      var namedGroupId = null;
+      var namedGroupId = null; // Reuse previous capture group if same
 
       if (isNamedGroup) {
         var prev = regs[r - 1];
@@ -2124,11 +2125,16 @@
         if (reg.max !== undefined && skipto - t > reg.max) {
           t = t + reg.max;
           continue;
-        } //TODO: support [*] properly
-
+        }
 
         if (skipto === null) {
           return [false, null]; //couldn't find it
+        } // is it really this easy?....
+
+
+        if (reg.capture) {
+          captures.push(t);
+          captures.push(skipto - 1);
         }
 
         t = skipto;
@@ -2194,7 +2200,8 @@
 
           if (t > 1 && reg.greedy) {
             captures.push(t - 1);
-          }
+          } // Create capture group if missing
+
 
           if (isNamedGroup) {
             var g = namedGroups[namedGroupId];
@@ -2207,7 +2214,8 @@
                 length: 0
               };
               g = namedGroups[namedGroupId];
-            }
+            } // Update group - add greedy or increment length
+
 
             if (t > 1 && reg.greedy) {
               g.length = t - startAt;
@@ -2706,7 +2714,7 @@
         _match = _match.filter(function (m) {
           return m;
         });
-        matches.push(_match); //add to names if named capture group
+        matches.push(_match); //save new capture groups
 
         if (_groups && Object.keys(_groups).length > 0) {
           p.names = Object.assign({}, p.names, _groups);

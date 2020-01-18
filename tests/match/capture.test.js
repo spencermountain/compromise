@@ -1,6 +1,24 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
+test('match-capture-group-greedy', function(t) {
+  let m
+
+  m = nlp('ralf eats the glue').match('ralf eats [*]')
+  t.equal(m.out('normal'), 'the glue', 'wildcard capture at the end')
+
+  m = nlp('ralf eats the glue').match('ralf eats [*] glue')
+  t.equal(m.out('normal'), 'the', 'wildcard capture in the middle')
+
+  m = nlp('ralf eats the glue').match('ralf eats [.+]')
+  t.equal(m.out('normal'), 'the glue', 'wildcard capture at the end')
+
+  m = nlp('ralf eats the glue').match('ralf eats [.+] glue')
+  t.equal(m.out('normal'), 'the', 'wildcard capture in the middle')
+
+  t.end()
+})
+
 test('match-capture-group', function(t) {
   let m = nlp('John eats glue').match('[john]')
   t.equal(m.out('text'), 'John', 'capture-group-simple')

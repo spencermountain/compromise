@@ -90,11 +90,19 @@ const tryHere = function(terms, regs, index, length) {
         t = t + reg.max
         continue
       }
-      //TODO: support [*] properly
+
       if (skipto === null) {
         return [false, null] //couldn't find it
       }
+
+      // is it really this easy?....
+      if (reg.capture) {
+        captures.push(t)
+        captures.push(skipto - 1)
+      }
+
       t = skipto
+
       continue
     }
 

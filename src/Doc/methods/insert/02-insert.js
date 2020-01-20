@@ -10,7 +10,7 @@ exports.append = function(str) {
   //add it to end of every phrase
   this.list.forEach(p => {
     //build it
-    let phrase = tokenize.fromText(str, this.world, this.pool())[0] //assume it's one sentence, for now
+    let phrase = tokenize(str, this.world, this.pool())[0] //assume it's one sentence, for now
     //tag it
     let tmpDoc = this.buildFrom([phrase])
     tmpDoc.tagger()
@@ -32,7 +32,7 @@ exports.prepend = function(str) {
   //add it to start of every phrase
   this.list.forEach(p => {
     //build it
-    let phrase = tokenize.fromText(str, this.world, this.pool())[0] //assume it's one sentence, for now
+    let phrase = tokenize(str, this.world, this.pool())[0] //assume it's one sentence, for now
     //tag it
     let tmpDoc = this.buildFrom([phrase])
     tmpDoc.tagger()
@@ -53,7 +53,7 @@ exports.concat = function() {
     let arg = arguments[i]
     //support a fresh string
     if (typeof arg === 'string') {
-      let arr = tokenize.fromText(arg, this.world)
+      let arr = tokenize(arg, this.world)
       //TODO: phrase.tagger()?
       list = list.concat(arr)
     } else if (arg.isA === 'Doc') {

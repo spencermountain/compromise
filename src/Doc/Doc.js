@@ -66,7 +66,7 @@ Doc.prototype.buildFrom = function(list) {
 
 /** create a new Document from plaintext. */
 Doc.prototype.fromText = function(str) {
-  let list = tokenize.fromText(str, this.world, this.pool())
+  let list = tokenize(str, this.world, this.pool())
   return this.buildFrom(list)
 }
 

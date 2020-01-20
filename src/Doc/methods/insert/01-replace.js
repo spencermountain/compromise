@@ -37,7 +37,7 @@ exports.replaceWith = function(replace, options = {}) {
       if (options.keepCase !== false && p.terms(0).isTitleCase()) {
         input = titleCase(input)
       }
-      newPhrases = tokenize.fromText(input, this.world, this.pool())
+      newPhrases = tokenize(input, this.world, this.pool())
       //tag the new phrases
       let tmpDoc = this.buildFrom(newPhrases)
       tmpDoc.tagger()

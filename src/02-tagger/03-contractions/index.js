@@ -10,7 +10,7 @@ const isNumber = /^[0-9]+$/
 
 const createPhrase = function(found, doc) {
   //create phrase from ['would', 'not']
-  let phrase = tokenize.fromText(found.join(' '), doc.world, doc.pool())[0]
+  let phrase = tokenize(found.join(' '), doc.world, doc.pool())[0]
   //tag it
   let terms = phrase.terms()
   checkLexicon(terms, doc.world)

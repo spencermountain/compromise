@@ -12,7 +12,7 @@ function instance(worldInstance) {
     if (lexicon) {
       world.addWords(lexicon)
     }
-    let list = tokenize.fromText(text, world)
+    let list = tokenize(text, world)
     let doc = new Doc(list, null, world)
     doc.tagger()
     return doc
@@ -23,26 +23,20 @@ function instance(worldInstance) {
     if (lexicon) {
       world.addWords(lexicon)
     }
-    let list = tokenize.fromText(text, world)
+    let list = tokenize(text, world)
     let doc = new Doc(list, null, world)
     return doc
   }
 
   /** mix in a compromise-plugin */
   nlp.extend = function(fn) {
-    fn(Doc, world)
+    fn(Doc, world, this)
     return this
   }
 
   /** make a deep-copy of the library state */
   nlp.clone = function() {
     return instance(world.clone())
-  }
-
-  /** re-generate a Doc object from .json() results */
-  nlp.load = function(json) {
-    let list = tokenize.fromJSON(json, world)
-    return new Doc(list, null, world)
   }
 
   /** log our decision-making for debugging */

@@ -19,6 +19,27 @@ const isEqual = function(a, b, t) {
   })
 }
 
+test('fromJSON - minimum', function(t) {
+  let json = [
+    {
+      terms: [
+        { text: 'hi', tags: ['Foo'] },
+        { text: 'world', tags: ['Bar'] },
+      ],
+    },
+    {
+      terms: [
+        { text: 'hi', tags: ['Foo'] },
+        { text: 'there', tags: ['Bar'] },
+      ],
+    },
+  ]
+  let doc = nlp.fromJSON(json)
+  t.equal(doc.text(), 'hi world. hi there.', 'two words')
+  t.equal(doc.has('#Bar'), true, 'has tag')
+  t.end()
+})
+
 test('fromJSON - basic', function(t) {
   let a = nlp('All my life I’ve had one dream - to accomplish my many goals.')
   let b = nlp.fromJSON(a.json())

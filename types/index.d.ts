@@ -74,7 +74,7 @@ declare module nlp {
     plugin: P
   ): nlp<P extends Plugin<infer D, infer W> ? D : {}, P extends Plugin<infer D, infer W> ? W : {}>
   /** re-generate a Doc object from .json() results */
-  export function load(json: any): DefaultDocument
+  export function fromJSON(json: any): DefaultDocument
   /**  log our decision-making for debugging */
   export function verbose(bool?: boolean): DefaultDocument
   /** create instance using global world */

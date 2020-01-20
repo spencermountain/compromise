@@ -41,10 +41,15 @@ const exportFn = function() {
       a[2] = wordMap[a[2]] !== undefined ? wordMap[a[2]] : a[2]
     })
   })
-  // console.log(phraseList)
+  // pivot wordlist
+  let wordList = []
+  Object.keys(wordMap).forEach(k => {
+    wordList[wordMap[k]] = k
+  })
+
   return {
     tags: Object.keys(tagMap),
-    words: wordMap,
+    words: wordList,
     list: phraseList,
   }
 }

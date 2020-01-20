@@ -3,6 +3,9 @@ const fromJSON = require('./01-tokenizer/fromJSON')
 const version = require('./_version')
 const World = require('./World/World')
 const Doc = require('./Doc/Doc')
+const Phrase = require('./Phrase/Phrase')
+const Term = require('./Term/Term')
+const Pool = require('./01-tokenizer/Pool')
 
 function instance(worldInstance) {
   //blast-out our word-lists, just once
@@ -31,7 +34,7 @@ function instance(worldInstance) {
 
   /** mix in a compromise-plugin */
   nlp.extend = function(fn) {
-    fn(Doc, world, this)
+    fn(Doc, world, this, Phrase, Term, Pool)
     return this
   }
 

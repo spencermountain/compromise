@@ -1,4 +1,5 @@
 const tokenize = require('./01-tokenizer')
+const fromJSON = require('./01-tokenizer/fromJSON')
 const version = require('./_version')
 const World = require('./World/World')
 const Doc = require('./Doc/Doc')
@@ -32,6 +33,12 @@ function instance(worldInstance) {
   nlp.extend = function(fn) {
     fn(Doc, world, this)
     return this
+  }
+
+  /** create a compromise Doc object from .json() results */
+  nlp.fromJSON = function(json) {
+    let list = fromJSON(json, world)
+    return new Doc(list, null, world)
   }
 
   /** make a deep-copy of the library state */

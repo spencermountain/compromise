@@ -9,13 +9,16 @@ compromise uses semver, and pushes to npm frequently
 While all _Major_ releases should be reviewed, our only two _large_ releases are **v6** in 2016 and and **v12** in 2019. Others have been mostly incremental, or niche.
 
 <!-- ##### 13.0.0
-- [breaking] move .export() and .load() methods to plugin (compromise-export)
--  - change .export() format - hasn't worked properly, since v12. (screwed-up contractions 😫)
-- [breaking] split `compromise-output` into `compromise-html` and `compromise-hash`
+- **[breaking]** move .export() and .load() methods to plugin (compromise-export)
+-  - change .export() format - this hasn't worked properly since v12. (mis-parsed contractions) see #669
+- **[breaking]** split `compromise-output` into `compromise-html` and `compromise-hash` plugins
+
 - fix nlp.clone()  - hasn't worked properly, since v12. (@Drache93)
 - add new named-match syntax, with .name() and .groupByNames() methods (@Drache93)
 - fix issues with greedy capture [*] and [.+] (@Drache93) 💛
 - add whitespace (pre+post) to default json output (suppress with `.json({whitespace:false})`)
+- add constructor as extra param to .extend()
+- add `nlp.fromJSON()` method
 -->
 
 ##### 12.4.0

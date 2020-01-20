@@ -10,28 +10,6 @@ const linkTerms = terms => {
   })
 }
 
-//create phrase objects from .json() output
-const loadFromJSON = function(json, world) {
-  let pool = new Pool()
-  let phrases = json.map(p => {
-    let terms = p.terms.map(o => {
-      let term = new Term(o.text)
-      term.pre = o.pre !== undefined ? o.pre : term.pre
-      term.post = o.post !== undefined ? o.post : term.post
-      if (o.tags) {
-        o.tags.forEach(tag => term.tag(tag, '', world))
-      }
-      pool.add(term)
-      return term
-    })
-    //add prev/next links
-    linkTerms(terms)
-    // return a proper Phrase object
-    return new Phrase(terms[0].id, terms.length, pool)
-  })
-  return phrases
-}
-
 //create phrase objects from .export() output
 const loadFromExport = function(json, world) {
   let pool = new Pool()
@@ -58,20 +36,11 @@ const loadFromExport = function(json, world) {
   return phrases
 }
 
-const isArray = function(thing) {
-  return toString.call(thing) === '[object Array]'
-}
-
 /** create a word-pool and Phrase objects from .export() json*/
 const fromJSON = function(json, world) {
   if (typeof json === 'string') {
     json = JSON.parse(json)
   }
-  //is this .export() output?
-  if (isArray(json) === false && isArray(json.list) === true) {
-    return loadFromExport(json, world)
-  }
-  //otherwise, assume .json() output
-  return loadFromJSON(json, world)
+  return loadFromExport(json, world)
 }
 module.exports = fromJSON

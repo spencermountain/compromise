@@ -318,7 +318,6 @@ _(these methods are on the `nlp` object)_
 
 - **[.tokenize()](https://observablehq.com/@spencermountain/compromise-tokenization)** - parse text without running POS-tagging
 - **[.extend()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - mix in a compromise-plugin
-- **[.load()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - re-generate a Doc object from .export() results
 - **[.verbose()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - log our decision-making for debugging
 - **[.version()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - current semver version of the library
 
@@ -421,7 +420,6 @@ _(all match methods use the [match-syntax](https://docs.compromise.cool/compromi
 - **[.json({})](https://observablehq.com/@spencermountain/compromise-json)** - pull out desired metadata from the document
 - **[.out('array|offset|terms')](https://observablehq.com/@spencermountain/compromise-output)** - some named output formats (deprecated)
 - **[.debug()](https://observablehq.com/@spencermountain/compromise-output)** - pretty-print the current document and its tags
-- **[.export()](https://observablehq.com/@spencermountain/compromise-export)** - store a parsed document for later use
 
 ##### Selections
 
@@ -539,6 +537,32 @@ These are some helpful extensions:
   - **[.numbers().isCardinal()](https://observablehq.com/@spencermountain/compromise-values)** - return only cardinal numbers
   - **[.numbers().toLocaleString()](https://observablehq.com/@spencermountain/compromise-values)** - add commas, or nicer formatting for numbers
 
+##### Export
+
+`npm install compromise-export`
+
+- **[.export()](https://observablehq.com/@spencermountain/compromise-export)** - store a parsed document for later use
+- **[nlp.load()](https://observablehq.com/@spencermountain/compromise-export)** - re-generate a Doc object from .export() results
+
+##### Html
+
+`npm install compromise-html`
+
+- **[.html({})](https://observablehq.com/@spencermountain/compromise-html)** - generate sanitized html from the document
+
+##### Hash
+
+`npm install compromise-hash`
+
+- **[.hash()](https://observablehq.com/@spencermountain/compromise-hash)** - generate an md5 hash from the document+tags
+- **[.isEqual(doc)](https://observablehq.com/@spencermountain/compromise-hash)** - compare the hash of two documents for semantic-equality
+
+##### Keypress
+
+`npm install compromise-keypress`
+
+- **[nlp.keypress('')](https://observablehq.com/@spencermountain/compromise-keypress)** - generate an md5 hash from the document+tags
+
 ##### Ngrams
 
 `npm install compromise-ngrams`
@@ -550,19 +574,6 @@ These are some helpful extensions:
 - **[.startgrams()](https://observablehq.com/@spencermountain/compromise-ngram)** - n-grams including the first term of a phrase
 - **[.endgrams()](https://observablehq.com/@spencermountain/compromise-ngram)** - n-grams including the last term of a phrase
 - **[.edgegrams()](https://observablehq.com/@spencermountain/compromise-ngram)** - n-grams including the first or last term of a phrase
-
-##### Html
-
-`npm install compromise-html`
-
-- **[.html({})]()** - generate sanitized html from the document
-
-##### Hash
-
-`npm install compromise-hash`
-
-- **[.hash()](#)** - generate an md5 hash from the document+tags
-- **[.isEqual(doc)](#)** - compare the hash of two documents for semantic-equality
 
 ##### Paragraphs
 

@@ -58,24 +58,3 @@ test('load export() contraction', function(t) {
   isEqual(a, b, t)
   t.end()
 })
-
-test('load json() contraction', function(t) {
-  let a = nlp('I’ve had one dream.')
-  let b = nlp.load(a.json())
-  isEqual(a, b, t)
-  t.end()
-})
-
-test('load-json output - basic', function(t) {
-  let a = nlp('All my life I’ve had one dream - to accomplish my many goals.')
-  let b = nlp.load(a.json())
-  isEqual(a, b, t)
-  t.end()
-})
-test('load-json output - longer', function(t) {
-  let str = `OK... First I'll access the secret military spy satelite that is in geosynchronous orbit over the midwest. Then I'll ID the limo by the vanity plate "MR. BIGGG" and get his approximate position. Then I'll reposition the transmission dish on the remote truck to 17.32 degrees east, hit WESTAR 4 over the Atlantic, bounce the signal back into the aerosphere up to COMSAT 6, beam it back to SATCOM 2 transmitter number 137 and down on the dish on the back of Mr. Big's limo... It's almost too easy.`
-  let a = nlp(str)
-  let b = nlp.load(a.json())
-  isEqual(a, b, t)
-  t.end()
-})

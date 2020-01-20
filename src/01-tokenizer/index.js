@@ -1,21 +1,9 @@
 const Term = require('../Term/Term')
 const Phrase = require('../Phrase/Phrase')
 const Pool = require('./Pool')
-
+const linkTerms = require('./_linkTerms')
 const splitSentences = require('./01-sentences')
 const splitTerms = require('./02-words')
-
-//add forward/backward 'linked-list' prev/next ids
-const linkTerms = terms => {
-  terms.forEach((term, i) => {
-    if (i > 0) {
-      term.prev = terms[i - 1].id
-    }
-    if (terms[i + 1]) {
-      term.next = terms[i + 1].id
-    }
-  })
-}
 
 /** turn a string into an array of Phrase objects */
 const fromText = function(text = '', world, pool) {

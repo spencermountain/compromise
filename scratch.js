@@ -19,10 +19,10 @@ keypress(nlp)
 
 // const contractions = require('./src/02-tagger/03-contractions/index.js')
 
-let doc = nlp.tokenize(`I've had one.`)
-console.log(JSON.stringify(doc.json({ terms: { whitespace: true } }), null, 2))
+// let doc = nlp.tokenize(`I've had one.`)
+// console.log(JSON.stringify(doc.json({ terms: { whitespace: true } }), null, 2))
 // doc = contractions(doc)
-doc.debug()
+// doc.debug()
 
-// let a = nlp('I’ve had one dream.')
-// console.log(a.export().list)
+let a = nlp('I’ve had one dream. To accomplish my goals.')
+console.log(JSON.stringify(a.export(), null, 2))

@@ -12,6 +12,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - change .export() format - hasn't worked properly, since v12. (screws-up contractions 😫)
 - fix nlp.clone()  - hasn't worked properly, since v12. (@Drache93)
 - add new named-match syntax, with .name() and .groupByNames() methods (@Drache93)
+- fix issues with greedy capture [*] (@Drache93)
 -->
 
 ##### 12.4.0

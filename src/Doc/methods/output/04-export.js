@@ -37,14 +37,14 @@ const reduceTags = function(tags, world) {
 
 /** store a parsed document for later use */
 exports.export = function() {
-  let phraseList = this.json({ text: true, trim: false, terms: { tags: true, whitespace: true } })
-  // let phraseList = json.map(p => p.terms)
+  let phraseList = this.json({ text: false, trim: false, terms: { tags: true, whitespace: true } })
   let allTags = []
-  phraseList.forEach(p => {
-    p.terms.forEach(t => {
-      // reduce redundant tags
-      let tags = reduceTags(t.tags, this.world)
-      allTags = allTags.concat(tags)
+  phraseList = phraseList.map(p => {
+    return p.terms.map(t => {
+      //remove any implied tags, first
+      t.tags = reduceTags(t.tags, this.world)
+      allTags = allTags.concat(t.tags)
+      return [t.pre, t.text, t.post, t.tags]
     })
   })
   // compress the top tags
@@ -54,22 +54,15 @@ exports.export = function() {
     tagMap[a[0]] = i
   })
 
-  //use index numbers instead of redundant tag-names
-  phraseList = phraseList.map(p => {
-    let terms = p.terms.map(term => {
-      let tags = term.tags
-      tags = reduceTags(tags, this.world)
-      tags = tags.map(tag => tagMap[tag])
-      tags = tags.join(',')
-      return tags
+  // use index numbers instead of redundant tag-names
+  phraseList.forEach(arr => {
+    arr.forEach(a => {
+      a[3] = a[3].map(tag => tagMap[tag]).join(',')
     })
-    terms = terms.join('|')
-    return [p.text, terms]
   })
 
   return {
     tags: Object.keys(tagMap),
-    // words: {},
     list: phraseList,
   }
 }

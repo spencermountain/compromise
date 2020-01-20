@@ -82,4 +82,4 @@ const pluginTest: nlp.Plugin<{}, { test: 'test' }> = (_, world) => {
 const nlpEx2 = nlp.extend(pluginTest)
 
 nlpEx2().world.test === 'test'
-nlpEx2.instance()().world.test === 'test'
+nlpEx2.clone()().world.test === 'test'

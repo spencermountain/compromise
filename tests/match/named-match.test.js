@@ -23,13 +23,13 @@ test('named-match-to-json:', function(t) {
       'the dog played',
       'the [<target>#Noun] played',
       'dog',
-      [{ text: 'dog', terms: [{ text: 'dog', tags: ['Noun', 'Singular'] }] }],
+      [{ text: 'dog', terms: [{ text: 'dog', tags: ['Noun', 'Singular'], pre: '', post: ' ' }] }],
     ],
     [
       'the dog played',
       'the [<target>dog] played',
       'dog',
-      [{ text: 'dog', terms: [{ text: 'dog', tags: ['Noun', 'Singular'] }] }],
+      [{ text: 'dog', terms: [{ text: 'dog', tags: ['Noun', 'Singular'], pre: '', post: ' ' }] }],
     ],
     [
       'the big dog played',
@@ -39,8 +39,8 @@ test('named-match-to-json:', function(t) {
         {
           text: 'big dog',
           terms: [
-            { text: 'big', tags: ['Comparable', 'Adjective'] },
-            { text: 'dog', tags: ['Noun', 'Singular'] },
+            { text: 'big', tags: ['Comparable', 'Adjective'], pre: '', post: ' ' },
+            { text: 'dog', tags: ['Noun', 'Singular'], pre: '', post: ' ' },
           ],
         },
       ],
@@ -50,8 +50,8 @@ test('named-match-to-json:', function(t) {
       'the [<target>big] dog [<target>played]',
       'big played',
       [
-        { text: 'big', terms: [{ text: 'big', tags: ['Comparable', 'Adjective'] }] },
-        { text: 'played', terms: [{ text: 'played', tags: ['PastTense', 'Verb'] }] },
+        { text: 'big', terms: [{ text: 'big', tags: ['Comparable', 'Adjective'], pre: '', post: ' ' }] },
+        { text: 'played', terms: [{ text: 'played', tags: ['PastTense', 'Verb'], pre: '', post: '' }] },
       ],
     ],
   ]
@@ -66,7 +66,7 @@ test('named-match-to-json:', function(t) {
     const text = res.target.text()
 
     t.equal(text, a[2])
-    t.deepEqual(json, a[3])
+    t.deepEqual(json, a[3], a[0])
   })
 
   t.end()

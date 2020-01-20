@@ -1,5 +1,4 @@
 const makeHash = require('./hash')
-const toHtml = require('./html')
 
 const addMethods = function(Doc) {
   /** generate an md5 hash from the document */
@@ -7,9 +6,9 @@ const addMethods = function(Doc) {
     return makeHash(this)
   }
 
-  /** generate sanitized html from the document */
-  Doc.prototype.html = function(segments = {}, options = {}) {
-    return toHtml(this, segments, options)
+  /** compare two documents, by their hashes */
+  Doc.prototype.isEqual = function(b) {
+    return makeHash(this) === makeHash(b)
   }
 }
 module.exports = addMethods

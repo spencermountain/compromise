@@ -3,7 +3,7 @@ import json from 'rollup-plugin-json'
 import { terser } from 'rollup-plugin-terser'
 import resolve from 'rollup-plugin-node-resolve'
 import babel from 'rollup-plugin-babel'
-const name = 'compromise-output'
+const name = 'compromise-hash'
 
 export default [
   {
@@ -31,7 +31,7 @@ export default [
         file: `builds/${name}.js`,
         format: 'umd',
         sourcemap: true,
-        name: 'compromiseOutput',
+        name: 'compromiseHash',
       },
     ],
     plugins: [
@@ -50,7 +50,7 @@ export default [
       {
         file: `builds/${name}.min.js`,
         format: 'umd',
-        name: 'compromiseOutput',
+        name: 'compromiseHash',
       },
     ],
     plugins: [

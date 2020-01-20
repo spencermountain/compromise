@@ -551,12 +551,18 @@ These are some helpful extensions:
 - **[.endgrams()](https://observablehq.com/@spencermountain/compromise-ngram)** - n-grams including the last term of a phrase
 - **[.edgegrams()](https://observablehq.com/@spencermountain/compromise-ngram)** - n-grams including the first or last term of a phrase
 
-##### Output
+##### Html
 
-`npm install compromise-output`
+`npm install compromise-html`
+
+- **[.html({})]()** - generate sanitized html from the document
+
+##### Hash
+
+`npm install compromise-hash`
 
 - **[.hash()](#)** - generate an md5 hash from the document+tags
-- **[.html({})]()** - generate sanitized html from the document
+- **[.isEqual(doc)](#)** - compare the hash of two documents for semantic-equality
 
 ##### Paragraphs
 

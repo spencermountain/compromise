@@ -1,4 +1,4 @@
-const addMethods = function(nlp) {
+const addMethods = function(Doc, world, nlp) {
   let cache = {}
 
   /** memoize tagger per-sentence */

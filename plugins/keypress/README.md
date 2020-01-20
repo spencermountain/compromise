@@ -32,7 +32,14 @@ let doc = nlp.keypress('Seven bottles of beer on the wall.')
 
 doc = nlp.keypress('Seven bottles of beer on the wall. Six bottles of beer...')
 // only re-tags the second sentence
+
+nlp.clear() // invalidate the cache
+// (free-up any cached sentences from memory)
 ```
+
+This plugin tries its best to avoid caching sentences that _look unfinished_.
+
+<!-- Nevertheless, continued editing in a text will build-up unused sentences in memory. It is recommended to use `.clear()` -->
 
 Work in progress.
 

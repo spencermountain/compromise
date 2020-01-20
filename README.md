@@ -562,6 +562,7 @@ These are some helpful extensions:
 `npm install compromise-keypress`
 
 - **[nlp.keypress('')](https://observablehq.com/@spencermountain/compromise-keypress)** - generate an md5 hash from the document+tags
+- **[nlp.clear('')](https://observablehq.com/@spencermountain/compromise-keypress)** - clean-up any cached sentences from memory
 
 ##### Ngrams
 

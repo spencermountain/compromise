@@ -2,11 +2,7 @@ const nlp = require('./src/index')
 // const corpus = require('nlp-corpus')
 // const nlp = require('./')
 // nlp.verbose(true)
-// nlp.extend(require('./plugins/export/src'))
-// let keypress = require('./plugins/keypress/src')
-// keypress(nlp)
-// keypress.bind(nlp)
-// nlp.extend()
+nlp.extend(require('./plugins/export/src'))
 
 // let doc = nlp(`Cows do not`)
 // doc.nouns().toSingular()
@@ -27,10 +23,11 @@ const nlp = require('./src/index')
 // let text = corpus.sotu.array()[8] //default: 110,845  -> 85,804
 // let text = corpus.sotu.array()[7] //default: 113,747  -> 87,856
 // let a = nlp(text)
-let a = nlp(`we're here, we're clear.`)
-// console.log(JSON.stringify(a.export(), null, 2))
+let a = nlp.keypress(`what's with these homies dissin my girl?`)
+
+console.log(JSON.stringify(a.export(), null, 2))
 
 // console.log(a.json()[0].terms)
 // let data = a.export()
-let data = a.json()
-nlp.fromJSON(data).debug()
+// let data = a.json()
+// nlp.fromJSON(data).debug()

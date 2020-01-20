@@ -1,23 +1,25 @@
 const addMethods = function(nlp) {
-  let memo = {}
+  let cache = {}
+
+  /** memoize tagger per-sentence */
   nlp.keypress = function(str) {
     let doc = nlp.tokenize(str)
     let sentences = doc.json()
     sentences.forEach(o => {
       //keep it
-      if (memo.hasOwnProperty(o.text) === false) {
-        console.log(o.text)
-        memo[o.text] = o
+      if (cache.hasOwnProperty(o.text) === false) {
+        cache[o.text] = o
       } else {
         // nlp.import([[o]])
       }
     })
     // console.log(sentences)
   }
+
+  /** invalidate the keypress cache */
   nlp.clear = function() {
-    memo = {}
+    cache = {}
   }
-  console.log(nlp.version)
 }
 
 module.exports = addMethods

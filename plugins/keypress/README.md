@@ -41,4 +41,8 @@ nlp.clear() // invalidate the cache
 
 Work in progress.
 
+### See Also
+
+- [compromise-export](../export)
+
 MIT

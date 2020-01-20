@@ -24,27 +24,5 @@ nlp.extend(require('./plugins/export/src'))
 // let text = corpus.sotu.array()[7] //default: 113,747  -> 87,856
 // let a = nlp(text)
 
-let result = [
-  {
-    terms: [
-      { text: 'hi', tags: ['Foo'] },
-      { text: 'world', tags: ['Bar'] },
-    ],
-  },
-  {
-    terms: [
-      { text: 'hi', tags: ['Foo'] },
-      { text: 'there!', tags: ['Bar'] },
-    ],
-  },
-]
-let doc = nlp.fromJSON(result)
-console.log(doc.text() + '|')
-// let a = nlp(`what's the point? what's the word?`)
-
-// console.log(JSON.stringify(a.export(), null, 2))
-
-// console.log(a.json()[0].terms)
-// let data = a.export()
-// let b = nlp.import(data)
-// b.debug()
+let str = ` the world's primary`
+nlp(str).debug()

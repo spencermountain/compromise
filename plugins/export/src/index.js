@@ -1,16 +1,14 @@
 const exportFn = require('./export')
-const loadFn = require('./load')
+const loadFn = require('./import')
 
-const addMethods = function(Doc, world, nlp, Phrase, Term, Pool) {
-  // console.log(nlp('asdf').list[0].pool)
+const addMethods = function(Doc, world, nlp) {
   /** create a compressed json object from this document */
   Doc.prototype.export = exportFn
 
   /** create a compromise object from compressed export data */
   nlp.import = function(data) {
-    // return loadFn(data, this.world, { Doc, Phrase, Term, Pool })
-    let output = loadFn(data, this.world, { Doc, Phrase, Term, Pool })
-    return nlp.fromJSON(output)
+    let json = loadFn(data, this.world)
+    return nlp.fromJSON(json)
   }
 }
 

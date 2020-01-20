@@ -21,7 +21,18 @@ if (code !== 0) {
 }
 
 // run each plugin's tests:
-let plugins = ['adjectives', 'dates', 'ngrams', 'numbers', 'output', 'paragraphs', 'sentences', 'syllables']
+let plugins = [
+  'adjectives',
+  'dates',
+  'export',
+  'hash',
+  'keypress',
+  'ngrams',
+  'numbers',
+  'paragraphs',
+  'sentences',
+  'syllables',
+]
 plugins.forEach(dir => {
   code = sh.exec(`tape "./plugins/${dir}/tests/**/*.test.js" | tap-dancer --color always`).code
   if (code !== 0) {

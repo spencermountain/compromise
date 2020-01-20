@@ -18,6 +18,16 @@ test('keypress', function(t) {
   t.end()
 })
 
+test('keypress tags cached', function(t) {
+  let doc = nlp.keypress('ginger spice sang a song.', { 'ginger spice': '#SpiceGirl' })
+  t.equal(doc.has('#SpiceGirl'), true, 'original-tag')
+
+  doc = nlp.keypress('ginger spice sang a song. she was nice')
+  t.equal(doc.has('#SpiceGirl'), true, 'cached-tag')
+
+  t.end()
+})
+
 test('keypress cache-invalidate', function(t) {
   let str = `What's with these homies dissin' my girl? Why do they gotta front? 
 

@@ -23,7 +23,7 @@ nlp.extend(require('./plugins/export/src'))
 // let text = corpus.sotu.array()[8] //default: 110,845  -> 85,804
 // let text = corpus.sotu.array()[7] //default: 113,747  -> 87,856
 // let a = nlp(text)
-let a = nlp.keypress(`what's with these homies dissin my girl?`)
+let a = nlp(`what's with these homies dissin my girl?`)
 
 console.log(JSON.stringify(a.export(), null, 2))
 

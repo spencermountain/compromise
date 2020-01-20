@@ -15,10 +15,10 @@
    <hr/>
 </div>
 
-If you're parsing a document that's changing in real-time, it's wasteful to re-parse the whole document each time it changes.
+If you're parsing a document that's changing in real-time, it's wasteful to re-parse the whole document each time one character changes.
 
-This plugin adds a new function `nlp.memoize()` to the compromise object.
-This method works the same as the main `nlp()` object, except it remembers each sentence, and only analyses a sentence if it changes.
+This plugin adds a new function `nlp.keypress()` to the compromise object.
+This method works the same as the main `nlp()` object, except it remembers each sentence, and only re-analyses a sentence if it changes.
 
 <div align="center">
   <code>npm install compromise-keypress</code>
@@ -37,9 +37,7 @@ nlp.clear() // invalidate the cache
 // (free-up any cached sentences from memory)
 ```
 
-This plugin tries its best to avoid caching sentences that _look unfinished_.
-
-<!-- Nevertheless, continued editing in a text will build-up unused sentences in memory. It is recommended to use `.clear()` -->
+`.keypress()` automatically deletes unused cached sentences, so extended-use shouldn't hog-up memory needlessly.
 
 Work in progress.
 

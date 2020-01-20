@@ -1,5 +1,4 @@
 module.exports = [
-  'weekend',
   'weekday',
 
   'summer',
@@ -15,10 +14,4 @@ module.exports = [
   'eom',
   'standard time',
   'daylight time',
-
-  'today',
-  'tomorrow',
-  'tmr',
-  'tmrw',
-  'yesterday',
 ]

@@ -24,6 +24,7 @@ const data = [
   //dates
   [require('./dates/weekdays'), 'WeekDay'],
   [require('./dates/months'), 'Month'],
+  [require('./dates/dates'), 'Date'],
   //people
   [require('./people/firstnames'), 'FirstName'],
   [require('./people/lastnames'), 'LastName'],

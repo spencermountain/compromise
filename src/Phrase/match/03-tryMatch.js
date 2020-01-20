@@ -42,6 +42,25 @@ const greedyTo = function(terms, t, nextReg, index, length) {
   return null
 }
 
+// get or create named group
+const getOrCreateGroup = function(namedGroups, namedGroupId, terms, startIndex, reg) {
+  const g = namedGroups[namedGroupId]
+
+  if (g) {
+    return g
+  }
+
+  const { id } = terms[startIndex]
+
+  namedGroups[namedGroupId] = {
+    group: reg.capture.toString(),
+    start: id,
+    length: 0,
+  }
+
+  return namedGroups[namedGroupId]
+}
+
 /** tries to match a sequence of terms, starting from here */
 const tryHere = function(terms, regs, index, length) {
   let captures = []
@@ -90,11 +109,26 @@ const tryHere = function(terms, regs, index, length) {
         t = t + reg.max
         continue
       }
-      //TODO: support [*] properly
+
       if (skipto === null) {
         return [false, null] //couldn't find it
       }
+
+      // is it really this easy?....
+      if (reg.capture || isNamedGroup) {
+        captures.push(t)
+        captures.push(skipto - 1)
+
+        if (isNamedGroup) {
+          const g = getOrCreateGroup(namedGroups, namedGroupId, terms, t, reg)
+
+          // Update group
+          g.length = skipto - t
+        }
+      }
+
       t = skipto
+
       continue
     }
 
@@ -160,23 +194,11 @@ const tryHere = function(terms, regs, index, length) {
 
         // Create capture group if missing
         if (isNamedGroup) {
-          let g = namedGroups[namedGroupId]
-
-          if (!g) {
-            const { id } = terms[startAt]
-
-            namedGroups[namedGroupId] = {
-              group: reg.capture.toString(),
-              start: id,
-              length: 0,
-            }
-
-            g = namedGroups[namedGroupId]
-          }
+          const g = getOrCreateGroup(namedGroups, namedGroupId, terms, startAt, reg)
 
           // Update group - add greedy or increment length
           if (t > 1 && reg.greedy) {
-            g.length = t - startAt
+            g.length += t - startAt
           } else {
             g.length++
           }

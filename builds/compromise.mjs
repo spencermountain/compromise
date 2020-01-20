@@ -2065,6 +2065,23 @@ var greedyTo = function greedyTo(terms, t, nextReg, index, length) {
 
 
   return null;
+}; // get or create named group
+
+
+var getOrCreateGroup = function getOrCreateGroup(namedGroups, namedGroupId, terms, startIndex, reg) {
+  var g = namedGroups[namedGroupId];
+
+  if (g) {
+    return g;
+  }
+
+  var id = terms[startIndex].id;
+  namedGroups[namedGroupId] = {
+    group: reg.capture.toString(),
+    start: id,
+    length: 0
+  };
+  return namedGroups[namedGroupId];
 };
 /** tries to match a sequence of terms, starting from here */
 
@@ -2076,9 +2093,10 @@ var tryHere = function tryHere(terms, regs, index, length) {
   var t = 0; // we must satisfy each rule in 'regs'
 
   for (var r = 0; r < regs.length; r += 1) {
-    var reg = regs[r];
+    var reg = regs[r]; // Check if this reg has a named capture group
+
     var isNamedGroup = typeof reg.capture === 'string' || typeof reg.capture === 'number';
-    var namedGroupId = null;
+    var namedGroupId = null; // Reuse previous capture group if same
 
     if (isNamedGroup) {
       var prev = regs[r - 1];
@@ -2118,11 +2136,22 @@ var tryHere = function tryHere(terms, regs, index, length) {
       if (reg.max !== undefined && skipto - t > reg.max) {
         t = t + reg.max;
         continue;
-      } //TODO: support [*] properly
-
+      }
 
       if (skipto === null) {
         return [false, null]; //couldn't find it
+      } // is it really this easy?....
+
+
+      if (reg.capture || isNamedGroup) {
+        captures.push(t);
+        captures.push(skipto - 1);
+
+        if (isNamedGroup) {
+          var g = getOrCreateGroup(namedGroups, namedGroupId, terms, t, reg); // Update group
+
+          g.length = skipto - t;
+        }
       }
 
       t = skipto;
@@ -2188,25 +2217,17 @@ var tryHere = function tryHere(terms, regs, index, length) {
 
         if (t > 1 && reg.greedy) {
           captures.push(t - 1);
-        }
+        } // Create capture group if missing
+
 
         if (isNamedGroup) {
-          var g = namedGroups[namedGroupId];
+          var _g = getOrCreateGroup(namedGroups, namedGroupId, terms, startAt, reg); // Update group - add greedy or increment length
 
-          if (!g) {
-            var id = terms[startAt].id;
-            namedGroups[namedGroupId] = {
-              group: reg.capture.toString(),
-              start: id,
-              length: 0
-            };
-            g = namedGroups[namedGroupId];
-          }
 
           if (t > 1 && reg.greedy) {
-            g.length = t - startAt;
+            _g.length += t - startAt;
           } else {
-            g.length++;
+            _g.length++;
           }
         }
       }
@@ -2700,7 +2721,7 @@ var matchAll = function matchAll(p, regs) {
       _match = _match.filter(function (m) {
         return m;
       });
-      matches.push(_match); //add to names if named capture group
+      matches.push(_match); //save new capture groups
 
       if (_groups && Object.keys(_groups).length > 0) {
         p.names = Object.assign({}, p.names, _groups);

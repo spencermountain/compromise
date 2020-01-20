@@ -25,4 +25,6 @@ keypress(nlp)
 // doc.debug()
 
 let a = nlp('I’ve had one dream. To accomplish my goals.')
-console.log(JSON.stringify(a.export(), null, 2))
+// console.log(JSON.stringify(a.export(), null, 2))
+let data = a.export()
+nlp.load(data).debug()

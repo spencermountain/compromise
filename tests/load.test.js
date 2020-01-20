@@ -46,18 +46,18 @@ test('export() unknown tag', function(t) {
   let a = nlp('cookie monster was a boomer. ok boomer', { boomer: 'Generation' })
   a.match('. monster').tag('Character')
   a.match('ok boomer').tag('Diss')
-  let json = a.export()
-  let b = nlp.load(json)
+  let data = a.export()
+  let b = nlp.load(data)
   isEqual(a, b, t)
   t.end()
 })
 
-// test('load export() contraction', function(t) {
-//   let a = nlp('I’ve had one dream.')
-//   let b = nlp.load(a.export())
-//   isEqual(a, b, t)
-//   t.end()
-// })
+test('load export() contraction', function(t) {
+  let a = nlp('I’ve had one dream.')
+  let b = nlp.load(a.export())
+  isEqual(a, b, t)
+  t.end()
+})
 
 // test('load json() contraction', function(t) {
 //   let a = nlp('I’ve had one dream.')

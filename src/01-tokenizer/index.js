@@ -64,49 +64,20 @@ const parseTags = function(text, tagList) {
   })
 }
 
-//create phrases from .json() output
-const fromJSONData = function(json, world) {
-  let pool = new Pool()
-  //create Phrase objects
-  let phrases = json.map(o => {
-    // tokenize words from sentence text
-    let terms = splitTerms(o.text || '')
-    //does it look okay-enough?
-    if (terms.length !== o.terms.length) {
-      console.warn('Compromise: json .load() interpretation warning.')
-    }
-    //create Term objects
-    terms = terms.map((str, i) => {
-      let term = new Term(str)
-      o.terms[i].tags.forEach(tag => term.tag(tag, '', world))
-      pool.add(term)
-      return term
-    })
-    //add prev/next links
-    linkTerms(terms)
-    // return a proper Phrase object
-    return new Phrase(terms[0].id, terms.length, pool)
-  })
-  return phrases
-}
-
 //create phrases from .export() output
 const fromExportData = function(json, world) {
   let pool = new Pool()
   //create Phrase objects
-  let phrases = json.list.map(o => {
-    // tokenize words from sentence text
-    let terms = splitTerms(o[0])
-    // unpack the tag data for each term
-    let tagArr = parseTags(o[1], json.tags)
-    //does it look okay-enough?
-    if (terms.length !== tagArr.length) {
-      console.warn('Compromise: json .load() interpretation warning.')
-    }
+  let phrases = json.list.map(terms => {
     //create Term objects
-    terms = terms.map((str, i) => {
-      let term = new Term(str)
-      tagArr[i].forEach(tag => term.tag(tag, '', world))
+    terms = terms.map(arr => {
+      let term = new Term(arr[1])
+      term.pre = arr[0]
+      term.post = arr[2]
+      arr[3].split(',').forEach(num => {
+        let tag = json.tags[num]
+        term.tag(tag, '', world)
+      })
       pool.add(term)
       return term
     })
@@ -116,10 +87,6 @@ const fromExportData = function(json, world) {
     return new Phrase(terms[0].id, terms.length, pool)
   })
   return phrases
-}
-
-const isArray = function(thing) {
-  return toString.call(thing) === '[object Array]'
 }
 
 /** create a word-pool and Phrase objects from .export() json*/
@@ -127,12 +94,7 @@ const fromJSON = function(json, world) {
   if (typeof json === 'string') {
     json = JSON.parse(json)
   }
-  //is this .export() output?
-  if (isArray(json) === false && isArray(json.list) === true) {
-    return fromExportData(json, world)
-  }
-  //otherwise, assume .json() output
-  return fromJSONData(json, world)
+  return fromExportData(json, world)
 }
 
 module.exports = {

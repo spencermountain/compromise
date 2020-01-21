@@ -1,3 +1,5 @@
+const informal = require('../../data/_timezones')
+
 const isOffset = /(\-?[0-9]+)h(rs)?/i
 const isNumber = /(\-?[0-9]+)/
 const utcOffset = /utc([\-+]?[0-9]+)/i
@@ -37,4 +39,25 @@ const parseOffset = function(tz) {
   }
   return null
 }
-module.exports = parseOffset
+
+const parseTimezone = function(doc) {
+  let m = doc.match('#Timezone+')
+  //remove prepositions
+  m = m.remove('(in|for|by|near|at)')
+  let str = m.text('reduced')
+
+  // remove it from our doc, either way
+  doc.remove('#Timezone+')
+
+  // check our list of informal tz names
+  if (informal.hasOwnProperty(str)) {
+    return informal[str]
+  }
+  let tz = parseOffset(str)
+  if (tz) {
+    return tz
+  }
+
+  return null
+}
+module.exports = parseTimezone

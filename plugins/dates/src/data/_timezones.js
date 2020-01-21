@@ -1,6 +1,7 @@
 // some opinionated-but-common-sense timezone abbreviations
 // these timezone abbreviations are wholly made-up by me, Spencer Kelly, with no expertise in geography
 // generated humbly from https://github.com/spencermountain/spacetime-informal
+const spacetime = require('spacetime')
 
 const america = 'America/'
 const asia = 'Asia/'
@@ -9,7 +10,7 @@ const africa = 'Africa/'
 const aus = 'Australia/'
 const pac = 'Pacific/'
 
-module.exports = {
+const informal = {
   //europe
   'british summer time': europe + 'London',
   bst: europe + 'London',
@@ -246,3 +247,11 @@ module.exports = {
   'papua new guinea time': pac + 'Bougainville',
   pgt: pac + 'Bougainville',
 }
+
+//add the official iana zonefile names
+let iana = spacetime().timezones
+let formal = Object.keys(iana).reduce((h, k) => {
+  h[k] = k
+  return h
+}, {})
+module.exports = Object.assign({}, informal, formal)

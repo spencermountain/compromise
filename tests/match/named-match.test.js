@@ -279,7 +279,6 @@ test('named-match-code-gen', function(t) {
 
   // Use code generators
   const output = codeNlp('Dog size equals big').toCode()
-
   t.equal(output, '=== Info\nbig\nDog')
 
   t.end()

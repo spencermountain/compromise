@@ -13,14 +13,29 @@ const knownWord = {
 // parse things like 'june 5th 2019'
 const parseExplicit = function(doc, context) {
   // 'fifth of june'
-  // let m = doc.match('[<date>#Value] of [#Month]')
-
-  // console.log(m.named())
-
-  if (doc.has('#Value of #Month')) {
+  let m = doc.match('[<date>#Value] of [<month>#Month]')
+  if (!m.found) {
+    // 'june the fifth'
+    m = doc.match('[<month>#Month] the [<date>#Value]')
+    // console.log(m.byName('date').text())
+  }
+  if (m.found) {
     let obj = {
-      month: doc.match('#Month').text(),
-      date: doc.match('[#Value] of #Month').text(),
+      month: m.byName('month').text(),
+      date: m.byName('date').text(),
+      year: context.today.year(),
+    }
+    // console.log(obj)
+    let d = new CalendarDate(obj, null, context)
+    if (d.d.isValid() === true) {
+      return d
+    }
+  }
+
+  if (m.found) {
+    let obj = {
+      month: m.byName('month').text(),
+      date: m.byName('date').text(),
       year: context.today.year(),
     }
     let d = new CalendarDate(obj, null, context)

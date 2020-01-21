@@ -60,30 +60,37 @@ exports.termList = function(num) {
 /* grab named capture group terms as object */
 const groupByNames = function(doc) {
   let res = {}
-
   const groups = {}
   for (let i = 0; i < doc.list.length; i++) {
     const phrase = doc.list[i]
     const names = Object.values(phrase.names)
-
     for (let j = 0; j < names.length; j++) {
       const { group, start, length } = names[j]
-
       if (!groups[group]) {
         groups[group] = []
       }
-
       groups[group].push(phrase.buildFrom(start, length))
     }
   }
-
   const keys = Object.keys(groups)
   for (let i = 0; i < keys.length; i++) {
     const key = keys[i]
     res[key] = doc.buildFrom(groups[key])
   }
-
   return res
+}
+
+const getOneName = function(doc, name) {
+  const arr = []
+  for (let i = 0; i < doc.list.length; i++) {
+    const phrase = doc.list[i]
+    let keys = Object.keys(phrase.names)
+    keys = keys.filter(id => phrase.names[id].group === name)
+    keys.forEach(id => {
+      arr.push(phrase.buildFrom(phrase.names[id].start, phrase.names[id].length))
+    })
+  }
+  return doc.buildFrom(arr)
 }
 
 /** grab named capture group results */
@@ -91,16 +98,10 @@ exports.byName = function(target) {
   if (target === undefined) {
     return groupByNames(this)
   }
-  let arr = []
-  //'reduce' but faster
-  for (let i = 0; i < this.list.length; i++) {
-    let terms = this.list[i].byName(target)
-
-    if (terms.length > 0) {
-      arr.push(this.list[i])
-    }
+  if (typeof target === 'number') {
+    target = String(target)
   }
-  return this.buildFrom(arr)
+  return getOneName(this, target) || this.buildFrom([])
 }
 exports.names = exports.byName
 exports.named = exports.byName

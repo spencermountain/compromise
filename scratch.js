@@ -63,27 +63,43 @@ let arr = [
   // `middle of q2 last year`,
 ]
 
+let m = nlp('the big dog played').match('the [<0>#Adjective] [<type>#Noun] played')
+const group = m.byName()
+// console.log('obj:', group.size.text())
+// console.log('obj:', group.type.text())
+
+console.log('byName:', m.byName('0').text())
+// console.log('byName:', m.byName('asdf').text())
+
 // let doc = nlp(arr[0]).debug()
+// let doc = nlp.tokenize('june the 5th').debug()
+// let m = doc.match('[<month>june] the [<date>5th]')
+// console.log(m.byName())
+// console.log('month: ', m.byName('month').text())
+// console.log('date: ', m.byName('date').text())
+
+// let doc2 = nlp('5th of june').debug()
+// let m2 = doc2.match('[<date>#Value] of [<month>#Month]')
+// console.log(m2.byName('month').text())
+
 // let json = doc.dates({}).json()
 // console.log(json)
 
 ///-------------
 
-/*
+/* --Working:---
 m.byName('date').text() // 'fifth of november'
 m.byName('fooo').text() // ''
 
 m.byName() // { date: Doc }
 
 nlp('asdf').byName() // {}
+
+--Not Working:---
+
+doc.match('[<month>june] the [<date>5th]')
+
+doc.match('[#Value] of')
+
+doc.match('[#Value] of [#Month]')
 */
-
-let doc = nlp('5th of June and then 7th of April cool')
-let m = doc.match('[#Value] of [#Month]')
-m.debug()
-console.log(m.list[0].named)
-console.log(m.byName())
-
-// console.log(m.text())
-// m.named().debug()
-// console.log(m.named().text())

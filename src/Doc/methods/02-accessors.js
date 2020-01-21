@@ -94,7 +94,7 @@ exports.byName = function(target) {
   let arr = []
   //'reduce' but faster
   for (let i = 0; i < this.list.length; i++) {
-    let terms = this.list[i].named(target)
+    let terms = this.list[i].byName(target)
 
     if (terms.length > 0) {
       arr.push(this.list[i])

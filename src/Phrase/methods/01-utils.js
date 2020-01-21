@@ -101,7 +101,7 @@ exports.wordCount = function() {
 }
 
 /** grab named capture group results */
-exports.named = function(target) {
+exports.byName = function(target) {
   // Allow accessing by name
   if (target !== undefined) {
     const phrase = Object.values(this.names).find(n => n.group === target.toString())

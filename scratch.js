@@ -80,8 +80,9 @@ nlp('asdf').byName() // {}
 
 let doc = nlp('5th of June and then 7th of April cool')
 let m = doc.match('[#Value] of [#Month]')
-// console.log(m.byName())
-console.log(m.byName(0).text())
+m.debug()
+console.log(m.list[0].named)
+console.log(m.byName())
 
 // console.log(m.text())
 // m.named().debug()

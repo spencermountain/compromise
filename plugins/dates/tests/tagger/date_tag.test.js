@@ -1,8 +1,8 @@
 const test = require('tape')
-const nlp = require('./_lib')
+const nlp = require('../_lib')
 
 test('date-tag :', function(t) {
-  ;[
+  let arr = [
     'yesterday',
     'today',
     'tomorrow',
@@ -289,7 +289,8 @@ test('date-tag :', function(t) {
     // '+2d',
     // '100th day to 200th',
     // 'march'
-  ].forEach(function(first) {
+  ]
+  arr.forEach(function(first) {
     const str = nlp(first)
       .match('#Date+')
       .out('text')

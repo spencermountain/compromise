@@ -1,11 +1,11 @@
 const spacetime = require('spacetime')
 
 class Unit {
-  constructor(str, unit, context) {
+  constructor(input, unit, context) {
     this.unit = unit || 'day'
     context = context || {}
     // set it to the beginning of the given unit
-    let d = spacetime(str, context.timezone)
+    let d = spacetime(input, context.timezone)
 
     // set to beginning
     if (d.isValid()) {
@@ -16,11 +16,6 @@ class Unit {
       writable: true,
       value: d,
     })
-    Object.defineProperty(this, 'str', {
-      enumerable: false,
-      writable: true,
-      value: str,
-    })
     Object.defineProperty(this, 'context', {
       enumerable: false,
       writable: true,
@@ -29,7 +24,7 @@ class Unit {
   }
   // make a new one
   clone() {
-    let d = new Unit(this.str, this.unit, this.context)
+    let d = new Unit(this.d, this.unit, this.context)
     return d
   }
   log() {

@@ -104,9 +104,7 @@ const fixDates = function(doc) {
     //by 5 March
     date.match('due? (by|before|after|until) #Date').tag('Date', 'by')
     //next feb
-    date
-      .match('(last|next|this|previous|current|upcoming|coming|the) #Date')
-      .tag('Date', 'next-feb')
+    date.match('(last|next|this|previous|current|upcoming|coming|the) #Date').tag('Date', 'next-feb')
     //start of june
     date.match(`the? ${sections} of #Date`).tag('Date', 'section-of')
     //fifth week in 1998
@@ -172,9 +170,9 @@ const fixDates = function(doc) {
       .not('#Year')
       .tag('Time', 'value-time')
     //2pm est
-    time.match('#Time [(eastern|pacific|central|mountain)]').tag('Time', 'timezone')
+    time.match('#Time [(eastern|pacific|central|mountain)]').tag('Date', 'timezone')
     //6pm est
-    time.match('#Time [(est|pst|gmt)]').tag('Time', 'timezone abbr')
+    time.match('#Time [(est|pst|gmt)]').tag('Date', 'timezone abbr')
   }
 
   return doc

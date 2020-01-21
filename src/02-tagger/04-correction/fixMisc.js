@@ -14,7 +14,7 @@ const miscCorrection = function(doc) {
   // the captain who
   doc.match('#Noun [(who|whom)]').tag('Determiner', 'captain-who')
   //timezones
-  doc.match('(standard|daylight|summer|eastern|pacific|central|mountain) standard? time').tag('Time', 'timezone')
+  // doc.match('(standard|daylight|summer|eastern|pacific|central|mountain) standard? time').tag('Time', 'timezone')
   //Brazilian pesos
   doc.match('#Demonym #Currency').tag('Currency', 'demonym-currency')
   //about to go

@@ -378,11 +378,12 @@
   var shiftTagger = function shiftTagger(doc) {
     if (doc.has('#Date')) {
       //two weeks before
-      doc.match('#Cardinal #Duration (before|after)').tag('#DateShift', here$4); //two weeks and three days before
+      doc.match('#Cardinal #Duration (before|after)').tag('#DateShift', here$4); // in two weeks
+
+      doc.match('in #Cardinal #Duration').tag('#DateShift', here$4); //two weeks and three days before
 
       doc.match('#Cardinal #Duration and? #DateShift').tag('#DateShift', here$4);
-      doc.match('#Cardinal #Duration and? #DateShift').tag('#DateShift', here$4);
-      doc.match('#Cardinal #Duration and? #DateShift').tag('#DateShift', here$4);
+      doc.match('#DateShift and #Cardinal #Duration').tag('#DateShift', here$4); // doc.match('#Cardinal #Duration and? #DateShift').tag('#DateShift', here)
     }
 
     return doc;
@@ -503,7 +504,7 @@
     }
   };
 
-  var dates = ['weekend', 'weekday', 'summer', 'winter', 'autumn', 'some day', 'one day', 'all day', 'some point', 'eod', 'eom', 'standard time', 'daylight time', 'today', 'tomorrow', 'tmr', 'tmrw', 'yesterday'];
+  var dates = ['weekday', 'summer', 'winter', 'autumn', 'some day', 'one day', 'all day', 'some point', 'eod', 'eom', 'standard time', 'daylight time'];
 
   var durations = ['centuries', 'century', 'day', 'days', 'decade', 'decades', 'hour', 'hours', 'millisecond', 'milliseconds', 'minute', 'minutes', 'month', 'months', 'seconds', 'week', 'weeks', 'year', 'years'];
 
@@ -546,53 +547,6 @@
   };
 
   var _01Normalize = normalize;
-
-  var knownUnits = {
-    second: true,
-    minute: true,
-    hour: true,
-    day: true,
-    week: true,
-    month: true,
-    season: true,
-    quarter: true,
-    year: true
-  }; //turn '5 weeks before' to {weeks:5}
-
-  var parseShift = function parseShift(doc) {
-    var result = {};
-    var m = doc.match('#DateShift+');
-
-    if (m.found === false) {
-      return result;
-    }
-
-    m.match('#Cardinal #Duration').forEach(function (ts) {
-      var num = ts.match('#Cardinal').text('normal');
-      num = parseFloat(num);
-
-      if (num && typeof num === 'number') {
-        var unit = ts.match('#Duration').text('normal');
-        unit = unit.replace(/s$/, '');
-
-        if (unit && knownUnits.hasOwnProperty(unit)) {
-          result[unit] = num;
-        }
-      }
-    }); //is it 2 weeks before?  → -2
-
-    if (m.has('before$') === true) {
-      Object.keys(result).forEach(function (k) {
-        return result[k] *= -1;
-      });
-    } // finally, remove it from our text
-
-
-    doc.remove('#DateShift');
-    return result;
-  };
-
-  var _01Shift = parseShift;
 
   function createCommonjsModule(fn, module) {
     return module = {
@@ -4544,6 +4498,53 @@
     'default': src
   });
 
+  var knownUnits = {
+    second: true,
+    minute: true,
+    hour: true,
+    day: true,
+    week: true,
+    month: true,
+    season: true,
+    quarter: true,
+    year: true
+  }; //turn '5 weeks before' to {weeks:5}
+
+  var parseShift = function parseShift(doc) {
+    var result = {};
+    var m = doc.match('#DateShift+');
+
+    if (m.found === false) {
+      return result;
+    }
+
+    m.match('#Cardinal #Duration').forEach(function (ts) {
+      var num = ts.match('#Cardinal').text('normal');
+      num = parseFloat(num);
+
+      if (num && typeof num === 'number') {
+        var unit = ts.match('#Duration').text('normal');
+        unit = unit.replace(/s$/, '');
+
+        if (unit && knownUnits.hasOwnProperty(unit)) {
+          result[unit] = num;
+        }
+      }
+    }); //is it 2 weeks before?  → -2
+
+    if (m.has('before$') === true) {
+      Object.keys(result).forEach(function (k) {
+        return result[k] *= -1;
+      });
+    } // finally, remove it from our text
+
+
+    doc.remove('#DateShift');
+    return result;
+  };
+
+  var _01Shift = parseShift;
+
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
   function createCommonjsModule$1(fn, module) {
@@ -4554,7 +4555,7 @@
   	return n && n['default'] || n;
   }
 
-  var require$$0 = getCjsExportFromNamespace$1(spacetime$1);
+  var spacetime$2 = getCjsExportFromNamespace$1(spacetime$1);
 
   var halfPast = function halfPast(m, s) {
     var hour = m.match('#Cardinal$').text('reduced');
@@ -4583,7 +4584,7 @@
     return s;
   };
 
-  var parseTime$1 = function parseTime(doc) {
+  var parseTime$1 = function parseTime(doc, context) {
     var time = doc.match('(at|by|for|before)? #Time+');
 
     if (time.found) {
@@ -4593,7 +4594,7 @@
 
     time = time.not('(at|by|for|before|sharp)');
     time = time.not('on the dot');
-    var s = require$$0.now();
+    var s = spacetime$2.now(context.timezone);
     var now = s.clone(); // '5 oclock'
 
     var m = time.match('^#Cardinal oclock (am|pm)?');
@@ -4657,16 +4658,16 @@
   var Unit =
   /*#__PURE__*/
   function () {
-    function Unit(str, unit) {
+    function Unit(input, unit, context) {
       _classCallCheck(this, Unit);
 
-      this.str = str;
-      this.unit = unit || 'day'; // set it to the beginning of the given unit
+      this.unit = unit || 'day';
+      context = context || {}; // set it to the beginning of the given unit
 
-      var d = require$$0(str); // set to beginning
+      var d = spacetime$2(input, context.timezone); // set to beginning
 
       if (d.isValid()) {
-        d = d.startOf(unit);
+        d = d.startOf(this.unit);
       }
 
       Object.defineProperty(this, 'd', {
@@ -4674,15 +4675,27 @@
         writable: true,
         value: d
       });
+      Object.defineProperty(this, 'context', {
+        enumerable: false,
+        writable: true,
+        value: context
+      });
     } // make a new one
 
 
     _createClass(Unit, [{
       key: "clone",
       value: function clone() {
-        var d = new Unit(this.str);
-        d.unit = this.unit;
+        var d = new Unit(this.d, this.unit, this.context);
         return d;
+      }
+    }, {
+      key: "log",
+      value: function log() {
+        console.log('--');
+        this.d.log();
+        console.log('\n');
+        return this;
       }
     }, {
       key: "applyShift",
@@ -4726,7 +4739,7 @@
     }, {
       key: "before",
       value: function before() {
-        this.d = require$$0.now(); // ???
+        this.d = spacetime$2.now(this.context.timezone); // ???
 
         return this;
       } // 'after 2019'
@@ -4766,12 +4779,12 @@
   function (_Unit) {
     _inherits(Day, _Unit);
 
-    function Day(str, unit) {
+    function Day(input, unit, context) {
       var _this;
 
       _classCallCheck(this, Day);
 
-      _this = _possibleConstructorReturn(this, _getPrototypeOf(Day).call(this, str, unit));
+      _this = _possibleConstructorReturn(this, _getPrototypeOf(Day).call(this, input, unit, context));
       _this.unit = 'day';
       return _this;
     }
@@ -4784,12 +4797,12 @@
   function (_Unit2) {
     _inherits(Month, _Unit2);
 
-    function Month(str, unit) {
+    function Month(input, unit, context) {
       var _this2;
 
       _classCallCheck(this, Month);
 
-      _this2 = _possibleConstructorReturn(this, _getPrototypeOf(Month).call(this, str, unit));
+      _this2 = _possibleConstructorReturn(this, _getPrototypeOf(Month).call(this, input, unit, context));
       _this2.unit = 'month';
       return _this2;
     }
@@ -4802,12 +4815,12 @@
   function (_Unit3) {
     _inherits(Quarter, _Unit3);
 
-    function Quarter(str, unit) {
+    function Quarter(input, unit, context) {
       var _this3;
 
       _classCallCheck(this, Quarter);
 
-      _this3 = _possibleConstructorReturn(this, _getPrototypeOf(Quarter).call(this, str, unit));
+      _this3 = _possibleConstructorReturn(this, _getPrototypeOf(Quarter).call(this, input, unit, context));
       _this3.unit = 'quarter';
       return _this3;
     }
@@ -4820,12 +4833,12 @@
   function (_Unit4) {
     _inherits(Year, _Unit4);
 
-    function Year(str, unit) {
+    function Year(input, unit, context) {
       var _this4;
 
       _classCallCheck(this, Year);
 
-      _this4 = _possibleConstructorReturn(this, _getPrototypeOf(Year).call(this, str, unit));
+      _this4 = _possibleConstructorReturn(this, _getPrototypeOf(Year).call(this, input, unit, context));
       _this4.unit = 'year';
       return _this4;
     }
@@ -4838,16 +4851,17 @@
   function (_Unit5) {
     _inherits(WeekDay, _Unit5);
 
-    function WeekDay(str, unit) {
+    function WeekDay(input, unit, context) {
       var _this5;
 
       _classCallCheck(this, WeekDay);
 
-      _this5 = _possibleConstructorReturn(this, _getPrototypeOf(WeekDay).call(this, str, unit));
+      _this5 = _possibleConstructorReturn(this, _getPrototypeOf(WeekDay).call(this, input, unit, context));
       _this5.unit = 'week';
-      _this5.d = _this5.d.day(str); //assume a wednesday in the future
+      _this5.d = _this5.d.day(input);
+      _this5.weekDay = _this5.d.dayName(); //assume a wednesday in the future
 
-      if (_this5.d.date() < require$$0.now().date()) {
+      if (_this5.d.date() < spacetime$2.now(context.timezone).date()) {
         _this5.d = _this5.d.add(7, 'days');
       }
 
@@ -4858,14 +4872,14 @@
       key: "next",
       value: function next() {
         this.d = this.d.add(7, 'days');
-        this.d = this.d.day(this.str);
+        this.d = this.d.day(this.weekDay);
         return this;
       }
     }, {
       key: "last",
       value: function last() {
         this.d = this.d.minus(7, 'days');
-        this.d = this.d.day(this.str);
+        this.d = this.d.day(this.weekDay);
         return this;
       }
     }]);
@@ -4879,12 +4893,12 @@
   function (_Unit6) {
     _inherits(CalendarDate, _Unit6);
 
-    function CalendarDate(str, unit) {
+    function CalendarDate(input, unit, context) {
       var _this6;
 
       _classCallCheck(this, CalendarDate);
 
-      _this6 = _possibleConstructorReturn(this, _getPrototypeOf(CalendarDate).call(this, str, unit));
+      _this6 = _possibleConstructorReturn(this, _getPrototypeOf(CalendarDate).call(this, input, unit, context));
       _this6.unit = 'day';
       return _this6;
     }
@@ -4924,7 +4938,7 @@
     season: units$4.Season
   }; // when a unit of time is spoken of as 'this month' - instead of 'february'
 
-  var namedUnit = function namedUnit(doc) {
+  var namedUnit = function namedUnit(doc, context) {
     //this month, last quarter, next year
     var m = doc.match('(weekday|week|month|quarter|season|year)');
 
@@ -4938,7 +4952,7 @@
           return null;
         }
 
-        var unit = new Model(null, str);
+        var unit = new Model(null, str, context);
         return unit;
       }
     } //try this version - 'next friday, last thursday'
@@ -4949,7 +4963,7 @@
     if (m.found === true) {
       var _str = m.lastTerm().text('reduced');
 
-      var _unit = new units$4.WeekDay(_str);
+      var _unit = new units$4.WeekDay(_str, null, context);
 
       return _unit;
     }
@@ -4961,7 +4975,7 @@
 
   var spacetimeHoliday = createCommonjsModule$1(function (module, exports) {
     (function (global, factory) {
-       module.exports = factory(require$$0) ;
+       module.exports = factory(spacetime$2) ;
     })(commonjsGlobal, function (spacetime) {
 
       spacetime = spacetime && spacetime.hasOwnProperty('default') ? spacetime['default'] : spacetime; //yep,
@@ -5415,7 +5429,7 @@
     });
   });
 
-  var parseHoliday = function parseHoliday(doc) {
+  var parseHoliday = function parseHoliday(doc, context) {
     var d = null;
     var str = doc.match('#Holiday+').text('reduced');
     var year = 2020; //change me!
@@ -5423,7 +5437,7 @@
     var s = spacetimeHoliday(str, year);
 
     if (s !== null) {
-      d = new units$4.CalendarDate(s);
+      d = new units$4.CalendarDate(s, null, context);
     }
 
     return d;
@@ -5431,14 +5445,48 @@
 
   var _02Holidays = parseHoliday;
 
-  var Unit$1 = units$4.Unit; // parse things like 'june 5th 2019'
+  var Unit$1 = units$4.Unit,
+      Day$1 = units$4.Day,
+      CalendarDate$1 = units$4.CalendarDate;
+  var knownWord = {
+    today: function today(context) {
+      return new Day$1(context.today, null, context);
+    },
+    yesterday: function yesterday(context) {
+      new Day$1(context.today.minus(1, 'day'), null, context);
+    },
+    tomorrow: function tomorrow(context) {
+      new Day$1(context.today.plus(1, 'day'), null, context);
+    }
+  }; // parse things like 'june 5th 2019'
 
-  var parseExplicit = function parseExplicit(doc) {
-    if (doc.has('#Number of #Month')) ;
+  var parseExplicit = function parseExplicit(doc, context) {
+    // 'fifth of june'
+    if (doc.has('#Value of #Month')) {
+      var obj = {
+        month: doc.match('#Month').text(),
+        date: doc.match('[#Value] of #Month').text(),
+        year: context.today.year()
+      };
 
-    var str = doc.text('reduced'); // spacetime does the heavy-lifting
+      var _d = new CalendarDate$1(obj, null, context);
 
-    var d = new Unit$1(str); // did we find a date?
+      if (_d.d.isValid() === true) {
+        return _d;
+      }
+    }
+
+    var str = doc.text('reduced'); // today, yesterday, tomorrow
+
+    if (knownWord.hasOwnProperty(str) === true) {
+      var _d2 = knownWord[str](context);
+
+      return _d2;
+    } // punt it to spacetime, for the heavy-lifting
+
+
+    var d = new Unit$1(str, null, context); // console.log(context.d.format('nice-year'))
+    // did we find a date?
 
     if (d.d.isValid() === false) {
       return null;
@@ -5451,24 +5499,30 @@
 
   var Unit$2 = units$4.Unit;
 
-  var parseDate = function parseDate(doc) {
+  var parseDate = function parseDate(doc, context) {
     var shift = _01Shift(doc);
-    var time = _02Time(doc);
+    var time = _02Time(doc, context);
     var rel = _03Relative(doc);
-    var d = null; // let str = doc.text('reduced')
-    // console.log(str, '  -  ', rel, '  -  ', shift, '  -  ', time)
-    // do we have just a time?
+    var d = null;
 
-    if (doc.found === false && time !== null) {
-      d = new Unit$2(); // choose today
+    if (doc.found === false) {
+      // do we have just a time?
+      if (time !== null) {
+        d = new Unit$2(context.today, null, context); // choose today
+      } //do we just have a shift?
+
+
+      if (Object.keys(shift).length > 0) {
+        d = new Unit$2(context.today, null, context); // choose today
+      }
     } // this month
 
 
-    d = d || _01NamedUnit(doc); // this haloween
+    d = d || _01NamedUnit(doc, context); // this haloween
 
-    d = d || _02Holidays(doc); // this june 2nd
+    d = d || _02Holidays(doc, context); // this june 2nd
 
-    d = d || _03Explicit(doc);
+    d = d || _03Explicit(doc, context);
 
     if (!d) {
       return null;
@@ -5501,9 +5555,9 @@
 
     if (m.found) {
       var start = m.match('between [.*] and').not('^between').not('and$');
-      start = toDate(start);
+      start = toDate(start, context);
       var end = m.match('and *').not('^and');
-      end = toDate(end);
+      end = toDate(end, context);
 
       if (start) {
         return {
@@ -5562,7 +5616,7 @@
     m = doc.match('^(on|during|in) [*]');
 
     if (m.found) {
-      var _d = toDate(m);
+      var _d = toDate(m, context);
 
       if (_d) {
         return {
@@ -5573,18 +5627,24 @@
     } //else, try whole thing
 
 
-    var d = toDate(doc);
+    var d = toDate(doc, context);
     return {
       start: d,
-      end: null
+      end: d.clone().end()
     };
   };
 
-  var _02Ranges = logic;
+  var _02ParseRange = logic;
 
   var parse = function parse(doc, context) {
-    doc = _01Normalize(doc);
-    return _02Ranges(doc);
+    // validate context a bit
+    context = context || {};
+    context.timezone = context.timezone || 'ETC/UTC';
+    context.today = spacetime$2(context.today, context.timezone); //turn 'five' into 5..
+
+    doc = _01Normalize(doc); //interpret 'between [A] and [B]'...
+
+    return _02ParseRange(doc, context);
   };
 
   var parse_1 = parse;

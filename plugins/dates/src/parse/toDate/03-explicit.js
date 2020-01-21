@@ -34,6 +34,7 @@ const parseExplicit = function(doc, context) {
 
   // punt it to spacetime, for the heavy-lifting
   let d = new Unit(str, null, context)
+  // console.log(context.d.format('nice-year'))
   // did we find a date?
   if (d.d.isValid() === false) {
     return null

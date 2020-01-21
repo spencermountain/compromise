@@ -30,7 +30,6 @@ const parseDate = function(doc, context) {
   d = d || parseHoliday(doc, context)
   // this june 2nd
   d = d || explicit(doc, context)
-
   if (!d) {
     return null
   }
@@ -46,9 +45,6 @@ const parseDate = function(doc, context) {
   if (shift) {
     d.applyShift(shift)
   }
-
-  //  d.log()
-  // d.clone().log()
 
   // apply time
   d.applyTime(time)

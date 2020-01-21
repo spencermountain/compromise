@@ -13,7 +13,6 @@ const knownUnits = {
 //turn '5 weeks before' to {weeks:5}
 const parseShift = function(doc) {
   let result = {}
-
   let m = doc.match('#DateShift+')
   if (m.found === false) {
     return result

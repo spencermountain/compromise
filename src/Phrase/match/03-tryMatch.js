@@ -53,7 +53,7 @@ const getOrCreateGroup = function(namedGroups, namedGroupId, terms, startIndex, 
   const { id } = terms[startIndex]
 
   namedGroups[namedGroupId] = {
-    group: reg.capture.toString(),
+    group: reg.named.toString(),
     start: id,
     length: 0,
   }
@@ -72,16 +72,16 @@ const tryHere = function(terms, regs, index, length) {
     let reg = regs[r]
 
     // Check if this reg has a named capture group
-    const isNamedGroup = typeof reg.capture === 'string' || typeof reg.capture === 'number'
+    const isNamedGroup = typeof reg.named === 'string' || typeof reg.named === 'number'
     let namedGroupId = null
 
     // Reuse previous capture group if same
     if (isNamedGroup) {
       const prev = regs[r - 1]
-      if (prev && prev.capture === reg.capture && previousGroupId) {
+      if (prev && prev.named === reg.named && previousGroupId) {
         namedGroupId = previousGroupId
       } else {
-        namedGroupId = makeId(reg.capture)
+        namedGroupId = makeId(reg.named)
         // namedGroupId = terms[t].id
         previousGroupId = namedGroupId
       }
@@ -116,7 +116,7 @@ const tryHere = function(terms, regs, index, length) {
       }
 
       // is it really this easy?....
-      if (reg.capture || isNamedGroup) {
+      if (reg.named || isNamedGroup) {
         captures.push(t)
         captures.push(skipto - 1)
 
@@ -185,7 +185,7 @@ const tryHere = function(terms, regs, index, length) {
           return [false, null] //greedy didn't reach the end
         }
       }
-      if (reg.capture || isNamedGroup) {
+      if (reg.named || isNamedGroup) {
         captures.push(startAt)
 
         //add greedy-end to capture

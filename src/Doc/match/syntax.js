@@ -59,20 +59,20 @@ const getLastTrue = (arr, start) => {
 
 const postProcess = function(tokens) {
   // ensure there's only one consecutive capture group.
-  let count = tokens.filter(t => t.capture === true || isNamed(t.capture)).length
+  let count = tokens.filter(t => t.named === true || isNamed(t.named)).length
   if (count > 1) {
-    let captureArr = tokens.map(t => t.capture)
+    let captureArr = tokens.map(t => t.named)
     let first = captureArr.findIndex(t => t === true || isNamed(t))
     let last = getLastTrue(captureArr, first)
 
     //'fill in' capture groups between start-end
     for (let i = first; i < last + 1; i++) {
       // Don't replace named groups
-      if (isNamed(tokens[i].capture)) {
+      if (isNamed(tokens[i].named)) {
         continue
       }
-      const { capture } = tokens[first]
-      tokens[i].capture = capture
+      const { named } = tokens[first]
+      tokens[i].named = named
     }
   }
 

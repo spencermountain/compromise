@@ -11,7 +11,7 @@
   greedy:false,
   optional:false,
 
-  capture:false,
+  named:'',
   choices:[],
 }
 */
@@ -95,7 +95,7 @@ const parseToken = function(w) {
     }
     //capture group (this one can span multiple-terms)
     if (start(w) === '[' || end(w) === ']') {
-      obj.capture = true
+      obj.named = true
       w = w.replace(/^\[/, '')
       w = w.replace(/\]$/, '')
 
@@ -104,7 +104,7 @@ const parseToken = function(w) {
         const res = captureName.exec(w)
 
         if (res.length >= 2) {
-          obj.capture = res[1]
+          obj.named = res[1]
           w = w.replace(res[0], '')
         }
       }

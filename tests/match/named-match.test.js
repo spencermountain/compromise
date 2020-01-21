@@ -97,9 +97,9 @@ test('named-match-overlap', function(t) {
 
 test('named-object-match:', function(t) {
   let arr = [
-    ['the dog played', [{ word: 'the' }, { tag: 'Noun', capture: 'target' }, { word: 'played' }], 'dog'],
-    ['the dog played', [{ word: 'dog', capture: 'target' }], 'dog'],
-    ['the dog played', [{ tag: 'Verb', capture: 'target' }], 'played'],
+    ['the dog played', [{ word: 'the' }, { tag: 'Noun', named: 'target' }, { word: 'played' }], 'dog'],
+    ['the dog played', [{ word: 'dog', named: 'target' }], 'dog'],
+    ['the dog played', [{ tag: 'Verb', named: 'target' }], 'played'],
   ]
 
   arr.forEach(function(a) {
@@ -116,13 +116,13 @@ test('named-object-match:', function(t) {
 
 test('named-object-match-target:', function(t) {
   let arr = [
-    ['the dog played', [{ word: 'the' }, { tag: 'Noun', capture: 'target' }, { word: 'played' }], 'dog'],
-    ['the dog played', [{ word: 'dog', capture: 'target' }], 'dog'],
-    ['the dog played', [{ tag: 'Verb', capture: 'target' }], 'played'],
+    ['the dog played', [{ word: 'the' }, { tag: 'Noun', named: 'target' }, { word: 'played' }], 'dog'],
+    ['the dog played', [{ word: 'dog', named: 'target' }], 'dog'],
+    ['the dog played', [{ tag: 'Verb', named: 'target' }], 'played'],
 
-    ['the dog played', [{ word: 'the' }, { tag: 'Noun', capture: 'not-target' }, { word: 'played' }], ''],
-    ['the dog played', [{ word: 'dog', capture: 'not-target' }], ''],
-    ['the dog played', [{ tag: 'Verb', capture: 'not-target' }], ''],
+    ['the dog played', [{ word: 'the' }, { tag: 'Noun', named: 'not-target' }, { word: 'played' }], ''],
+    ['the dog played', [{ word: 'dog', named: 'not-target' }], ''],
+    ['the dog played', [{ tag: 'Verb', named: 'not-target' }], ''],
   ]
 
   arr.forEach(function(a) {
@@ -139,14 +139,14 @@ test('named-object-match-target:', function(t) {
 
 test('named-object-match-number:', function(t) {
   let arr = [
-    ['the dog played', [{ word: 'the' }, { tag: 'Noun', capture: '0' }, { word: 'played' }], 'dog'],
-    ['the dog played', [{ word: 'the' }, { tag: 'Noun', capture: 0 }, { word: 'played' }], 'dog'],
-    ['the dog played', [{ word: 'dog', capture: 0 }], 'dog'],
-    ['the dog played', [{ tag: 'Verb', capture: 0 }], 'played'],
+    ['the dog played', [{ word: 'the' }, { tag: 'Noun', named: '0' }, { word: 'played' }], 'dog'],
+    ['the dog played', [{ word: 'the' }, { tag: 'Noun', named: 0 }, { word: 'played' }], 'dog'],
+    ['the dog played', [{ word: 'dog', named: 0 }], 'dog'],
+    ['the dog played', [{ tag: 'Verb', named: 0 }], 'played'],
 
-    ['the dog played', [{ word: 'the' }, { tag: 'Noun', capture: 1 }, { word: 'played' }], ''],
-    ['the dog played', [{ word: 'dog', capture: 1 }], ''],
-    ['the dog played', [{ tag: 'Verb', capture: 1 }], ''],
+    ['the dog played', [{ word: 'the' }, { tag: 'Noun', named: 1 }, { word: 'played' }], ''],
+    ['the dog played', [{ word: 'dog', named: 1 }], ''],
+    ['the dog played', [{ tag: 'Verb', named: 1 }], ''],
   ]
 
   arr.forEach(function(a) {

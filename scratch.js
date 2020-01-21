@@ -67,12 +67,22 @@ let arr = [
 // let json = doc.dates({}).json()
 // console.log(json)
 
+///-------------
+
+/*
+m.byName('date').text() // 'fifth of november'
+m.byName('fooo').text() // ''
+
+m.byName() // { date: Doc }
+
+nlp('asdf').byName() // {}
+*/
+
 let doc = nlp('5th of June and then 7th of April cool')
-// let m = doc.match('[<date>#Value of #Month] cool')
 let m = doc.match('[<a>#Value] of [<b>#Month]')
-// m.debug()
-// console.log(m.list[0].names)
-console.log(m.groupByNames())
+// console.log(m.byName())
+console.log(m.byName('a').text())
+
 // console.log(m.text())
 // m.named().debug()
 // console.log(m.named().text())

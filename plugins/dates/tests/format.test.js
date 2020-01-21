@@ -62,3 +62,18 @@ test('short+long form', function(t) {
 
   t.end()
 })
+
+test('date-format', function(t) {
+  let doc = nlp(`i'm going skiing two days after November 1st 2019 at 7pm`)
+  // doc.dates().format('{day} {month} {date-ordinal}, {time}') //TODO: November 0th??
+  // t.equal(doc.text(), `i'm going skiing Wednesday November 3rd, 7:00pm`, 'format-test')
+
+  doc = nlp(`halloween`)
+  doc.dates().format('{month} {date-ordinal}')
+  t.equal(doc.text(), `October 31st`, 'format-test-holiday')
+
+  doc = nlp(`two days after halloween`)
+  doc.dates().format('{month} {date-ordinal}, {time}')
+  t.equal(doc.text(), `November 2nd, 12:00am`, 'format-test-punt')
+  t.end()
+})

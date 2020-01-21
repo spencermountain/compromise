@@ -21,6 +21,14 @@ test('negative-ambiguous-dates', t => {
     'buy eggs with may',
     'shop with april',
     'go there with jan',
+    'lkjsdf day',
+    'day slkj',
+    'do the 5 day running trip',
+    'write day 5 of surf diary',
+    'day of remembering pinapple',
+    'be up-to-date',
+    'be up-to-day',
+    "remember all of today's laundary",
   ]
   noDates.forEach(str => {
     let found = nlp(str).dates().found
@@ -43,6 +51,29 @@ test('positive-ambiguous-dates', t => {
   yesDates.forEach(str => {
     let found = nlp(str).dates().found
     t.equal(found, true, str)
+  })
+  t.end()
+})
+
+test('date-tagger', function(t) {
+  let arr = [
+    ['june 2009', ['Month', 'Year']],
+    ['june 5th 2009', ['Month', 'Date', 'Year']],
+    ['q2 2009', ['Date', 'Year']],
+    ['spring 1980', ['Date', 'Year']],
+    ['summer of 1999', ['Date', 'Date', 'Year']],
+    ['today', ['Date']],
+    ['minute', ['Duration']],
+    ['valentines day', ['Holiday', 'Holiday']],
+    ['ash wednesday', ['Holiday', 'Holiday']],
+  ]
+  arr.forEach(function(a) {
+    let terms = nlp(a[0]).json(0).terms
+    terms.forEach((term, i) => {
+      let tag = a[1][i]
+      let found = term.tags.some(tg => tg === tag)
+      t.equal(found, true, term.text + ' ' + tag)
+    })
   })
   t.end()
 })

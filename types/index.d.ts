@@ -132,6 +132,8 @@ declare module nlp {
     lastTerm(): Document<W>
     /** return a flat list of all Term objects in match */
     termList(): any
+    /** grab any named capture groups */
+    byName(name?: string): Document | object
 
     // Match
     /**  return a new Doc, with this one as a parent */

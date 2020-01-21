@@ -343,6 +343,7 @@ _(these methods are on the `nlp` object)_
 - **[.firstTerm()](https://observablehq.com/@spencermountain/compromise-accessors)** - get the first word in each match
 - **[.lastTerm()](https://observablehq.com/@spencermountain/compromise-accessors)** - get the end word in each match
 - **[.termList()](https://observablehq.com/@spencermountain/compromise-accessors)** - return a flat list of all Term objects in match
+- **[.byName('')](https://observablehq.com/@spencermountain/compromise-accessors)** - grab any named capture-groups from a match
 
 ##### Match
 

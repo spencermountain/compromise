@@ -21,10 +21,12 @@ test('two named matches', function(t) {
 })
 
 test('two named - two results', function(t) {
-  let doc = nlp.tokenize('june the 5th and july the 7th')
-  let m = doc.match('[<month>june] the [<date>5th]')
+  let doc = nlp('june the 5th and july the 7th')
+  let m = doc.match('[<month>#Month] the [<date>#Value]')
   //by object
   let res = m.byName()
+  t.equal(res.date.length, 2, '2-obj-results-date')
+  t.equal(res.month.length, 2, '2-obj-results-month')
   t.equal(res.date.eq(0).text(), '5th', 'obj-date')
   t.equal(res.month.eq(0).text(), 'june', 'obj-month')
 

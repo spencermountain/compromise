@@ -1,5 +1,5 @@
 let lex = {}
-const timezones = require('../parse/_timezone/abbreviations')
+const timezones = require('../_timezones')
 
 const data = [
   [require('./dates'), ['#Date']],

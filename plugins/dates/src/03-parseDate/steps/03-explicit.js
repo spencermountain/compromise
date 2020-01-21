@@ -1,4 +1,4 @@
-const { Unit, Day, CalendarDate } = require('./units')
+const { Unit, Day, CalendarDate } = require('../_units')
 
 const knownWord = {
   today: context => new Day(context.today, null, context),

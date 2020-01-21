@@ -154,3 +154,8 @@ match cached numbers?
 ```js
 nlp('four').match('4')
 ```
+
+### Jan 21
+```js
+let doc = nlp('pack a lunch for sam sunday morning')
+```

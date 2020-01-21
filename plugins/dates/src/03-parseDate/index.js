@@ -1,13 +1,14 @@
-const parseShift = require('./tokenize/01-shift')
-const parseTime = require('./tokenize/02-time')
-const parseRelative = require('./tokenize/03-relative')
+const parseShift = require('./sections/01-shift')
+const parseTime = require('./sections/02-time')
+const parseRelative = require('./sections/03-relative')
 
-const namedUnit = require('./01-namedUnit')
-const parseHoliday = require('./02-holidays')
-const explicit = require('./03-explicit')
-const { Unit } = require('./units')
+const namedUnit = require('./steps/01-namedUnit')
+const parseHoliday = require('./steps/02-holidays')
+const explicit = require('./steps/03-explicit')
+const { Unit } = require('./_units')
 
 const parseDate = function(doc, context) {
+  //parse-out any sections
   let shift = parseShift(doc)
   let time = parseTime(doc, context)
   let rel = parseRelative(doc)

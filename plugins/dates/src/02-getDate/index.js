@@ -1,8 +1,8 @@
-const normalize = require('./01-normalize')
 const spacetime = require('spacetime')
-const parseRanges = require('./02-parse-range')
+const normalize = require('./00-normalize')
+const parseRanges = require('./01-parse-range')
 
-const parse = function(doc, context) {
+const getDate = function(doc, context) {
   // validate context a bit
   context = context || {}
 
@@ -13,4 +13,4 @@ const parse = function(doc, context) {
   //interpret 'between [A] and [B]'...
   return parseRanges(doc, context)
 }
-module.exports = parse
+module.exports = getDate

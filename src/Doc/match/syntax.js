@@ -1,4 +1,5 @@
 const parseToken = require('./parseToken')
+// const cache = {}
 
 const isNamed = function(capture) {
   return typeof capture === 'string' || typeof capture === 'number'
@@ -130,4 +131,13 @@ const syntax = function(input) {
   // console.log(JSON.stringify(tokens, null, 2))
   return tokens
 }
+
+// const memoizeSyntax = function(input) {
+//   if (typeof input === 'string' && cache.hasOwnProperty(input)) {
+//     return cache[input]
+//   }
+//   let res = syntax(input)
+//   cache[input] = res
+//   return res
+// }
 module.exports = syntax

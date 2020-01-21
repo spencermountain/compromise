@@ -1,4 +1,4 @@
-const parseDate = require('./toDate')
+const parseDate = require('../03-parseDate')
 
 //
 const logic = function(doc, context) {

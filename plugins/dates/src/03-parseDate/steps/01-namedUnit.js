@@ -1,4 +1,4 @@
-const units = require('./units')
+const units = require('../_units')
 const mapping = {
   week: units.Week,
   month: units.Month,

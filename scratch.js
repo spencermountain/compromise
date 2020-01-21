@@ -1,28 +1,12 @@
 const nlp = require('./src/index')
-// const corpus = require('nlp-corpus')
-// const nlp = require('./')
 // nlp.verbose(true)
-nlp.extend(require('./plugins/export/src'))
-
-// let doc = nlp(`Cows do not`)
-// doc.nouns().toSingular()
-// let str = doc.text()
-// console.log(str)
-
-// let doc = nlp(`what’d be good`).debug()
+nlp.extend(require('./plugins/numbers/src'))
+nlp.extend(require('./plugins/dates/src'))
 
 // let doc = nlp(`buy eggs on june 5th 2021`)
-// console.log(doc.dates().json())
+// console.log(doc.dates({ timezone: 'Asia/Karachi' }).json())
 
-// const contractions = require('./src/02-tagger/03-contractions/index.js')
-
-// let doc = nlp.tokenize(`I've had one.`)
-// console.log(JSON.stringify(doc.json({ terms: { whitespace: true } }), null, 2))
-// doc = contractions(doc)
-// doc.debug()
-// let text = corpus.sotu.array()[8] //default: 110,845  -> 85,804
-// let text = corpus.sotu.array()[7] //default: 113,747  -> 87,856
-// let a = nlp(text)
-
-let str = ` the world's primary`
-nlp(str).debug()
+let doc = nlp('in 3 weeks')
+// let doc = nlp('two days from today')
+let json = doc.dates({ today: '1996-03-1' }).json()
+console.log(json)

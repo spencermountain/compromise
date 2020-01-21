@@ -1,26 +1,42 @@
 const spacetime = require('spacetime')
 
 class Unit {
-  constructor(str, unit) {
-    this.str = str
+  constructor(str, unit, context) {
     this.unit = unit || 'day'
+    context = context || {}
     // set it to the beginning of the given unit
-    let d = spacetime(str)
+    let d = spacetime(str, context.timezone)
+
     // set to beginning
     if (d.isValid()) {
-      d = d.startOf(unit)
+      d = d.startOf(this.unit)
     }
     Object.defineProperty(this, 'd', {
       enumerable: false,
       writable: true,
       value: d,
     })
+    Object.defineProperty(this, 'str', {
+      enumerable: false,
+      writable: true,
+      value: str,
+    })
+    Object.defineProperty(this, 'context', {
+      enumerable: false,
+      writable: true,
+      value: context,
+    })
   }
   // make a new one
   clone() {
-    let d = new Unit(this.str)
-    d.unit = this.unit
+    let d = new Unit(this.str, this.unit, this.context)
     return d
+  }
+  log() {
+    console.log('--')
+    this.d.log()
+    console.log('\n')
+    return this
   }
   applyShift(obj) {
     Object.keys(obj).forEach(k => {
@@ -49,7 +65,7 @@ class Unit {
   }
   // 'before 2019'
   before() {
-    this.d = spacetime.now() // ???
+    this.d = spacetime.now(this.context.timezone) // ???
     return this
   }
   // 'after 2019'

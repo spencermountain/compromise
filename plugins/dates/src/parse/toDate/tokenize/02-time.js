@@ -24,7 +24,7 @@ const halfPast = function(m, s) {
   return s
 }
 
-const parseTime = function(doc) {
+const parseTime = function(doc, context) {
   let time = doc.match('(at|by|for|before)? #Time+')
   if (time.found) {
     doc.remove(time)
@@ -32,7 +32,7 @@ const parseTime = function(doc) {
   // get the main part of the time
   time = time.not('(at|by|for|before|sharp)')
   time = time.not('on the dot')
-  let s = spacetime.now()
+  let s = spacetime.now(context.timezone)
   let now = s.clone()
 
   // '5 oclock'

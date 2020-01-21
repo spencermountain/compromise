@@ -47,3 +47,24 @@ test('date-format', function(t) {
   t.equal(doc.text(), `November 2nd, 12:00am`, 'format-test-punt')
   t.end()
 })
+
+test('set today context', function(t) {
+  let doc = nlp('today')
+  let json = doc.dates({ today: '1996-03-28', timezone: 'Canada/Eastern' }).json()[0]
+  t.equal(json.date.start, '1996-03-28T00:00:00.000-04:00', '+5hrs')
+
+  json = doc.dates({ today: '1996-11-28', timezone: 'Canada/Eastern' }).json()[0]
+  t.equal(json.date.start, '1996-11-28T00:00:00.000-05:00', '+5hrs')
+  t.end()
+})
+
+test('set timezone context', function(t) {
+  let doc = nlp('April 7th 2018')
+  let json = doc.dates({ timezone: 'Asia/Karachi' }).json()[0]
+  t.equal(json.date.start, '2018-04-07T00:00:00.000+05:00', '+5hrs')
+
+  json = doc.dates({ timezone: 'Asia/Vladivostok' }).json()[0]
+  t.equal(json.date.start, '2018-04-07T00:00:00.000+10:00', '+10hrs')
+
+  t.end()
+})

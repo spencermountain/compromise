@@ -1,30 +1,35 @@
 const parseShift = require('./tokenize/01-shift')
 const parseTime = require('./tokenize/02-time')
 const parseRelative = require('./tokenize/03-relative')
+
 const namedUnit = require('./01-namedUnit')
 const parseHoliday = require('./02-holidays')
 const explicit = require('./03-explicit')
 const { Unit } = require('./units')
 
-const parseDate = function(doc) {
+const parseDate = function(doc, context) {
   let shift = parseShift(doc)
-  let time = parseTime(doc)
+  let time = parseTime(doc, context)
   let rel = parseRelative(doc)
   let d = null
-  // let str = doc.text('reduced')
-  // console.log(str, '  -  ', rel, '  -  ', shift, '  -  ', time)
 
-  // do we have just a time?
-  if (doc.found === false && time !== null) {
-    d = new Unit() // choose today
+  if (doc.found === false) {
+    // do we have just a time?
+    if (time !== null) {
+      d = new Unit(context.today, null, context) // choose today
+    }
+    //do we just have a shift?
+    if (Object.keys(shift).length > 0) {
+      d = new Unit(context.today, null, context) // choose today
+    }
   }
 
   // this month
-  d = d || namedUnit(doc)
+  d = d || namedUnit(doc, context)
   // this haloween
-  d = d || parseHoliday(doc)
+  d = d || parseHoliday(doc, context)
   // this june 2nd
-  d = d || explicit(doc)
+  d = d || explicit(doc, context)
 
   if (!d) {
     return null
@@ -41,6 +46,10 @@ const parseDate = function(doc) {
   if (shift) {
     d.applyShift(shift)
   }
+
+  //  d.log()
+  // d.clone().log()
+
   // apply time
   d.applyTime(time)
 

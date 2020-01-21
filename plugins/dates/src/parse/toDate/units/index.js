@@ -2,36 +2,36 @@ const spacetime = require('spacetime')
 const Unit = require('./Unit')
 
 class Day extends Unit {
-  constructor(str, unit) {
-    super(str, unit)
+  constructor(str, unit, context) {
+    super(str, unit, context)
     this.unit = 'day'
   }
 }
 class Month extends Unit {
-  constructor(str, unit) {
-    super(str, unit)
+  constructor(str, unit, context) {
+    super(str, unit, context)
     this.unit = 'month'
   }
 }
 class Quarter extends Unit {
-  constructor(str, unit) {
-    super(str, unit)
+  constructor(str, unit, context) {
+    super(str, unit, context)
     this.unit = 'quarter'
   }
 }
 class Year extends Unit {
-  constructor(str, unit) {
-    super(str, unit)
+  constructor(str, unit, context) {
+    super(str, unit, context)
     this.unit = 'year'
   }
 }
 class WeekDay extends Unit {
-  constructor(str, unit) {
-    super(str, unit)
+  constructor(str, unit, context) {
+    super(str, unit, context)
     this.unit = 'week'
     this.d = this.d.day(str)
     //assume a wednesday in the future
-    if (this.d.date() < spacetime.now().date()) {
+    if (this.d.date() < spacetime.now(context.timezone).date()) {
       this.d = this.d.add(7, 'days')
     }
   }
@@ -48,8 +48,8 @@ class WeekDay extends Unit {
 }
 // like 'feb 2'
 class CalendarDate extends Unit {
-  constructor(str, unit) {
-    super(str, unit)
+  constructor(str, unit, context) {
+    super(str, unit, context)
     this.unit = 'day'
   }
   next() {

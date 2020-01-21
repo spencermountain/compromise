@@ -42,6 +42,19 @@ doc.dates().json()
   - **.dates().json()** - overloaded output with date metadata
   - **.dates().format('')** - convert the dates to specific formats
 
+`.dates()` accepts an optional object, that lets you set the context for the date parsing.
+
+```js
+const context = {
+  timezone: 'Canada/Eastern', //the default timezone is 'ETC/UTC'
+  today: '2020-02-20', //the reference day (for testing)
+}
+
+nlp('in two days')
+  .dates(context)
+  .json()
+```
+
 Work in progress.
 
 MIT

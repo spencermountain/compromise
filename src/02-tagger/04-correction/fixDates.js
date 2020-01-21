@@ -46,15 +46,39 @@ const fixDates = function(doc) {
     verb.match(`#Adverb [${verbs}]`).tag('Infinitive', 'ambig-verb')
     verb.match(`${verbs} [#Adverb]`).tag('Infinitive', 'ambig-verb')
     //all march
-    verb.match(`${preps} [${verbs}]`).tag('Month', 'in-month')
+    verb
+      .match(`${preps} [${verbs}]`)
+      .tag('Date', 'in-month')
+      .match('(may|march)')
+      .tag('Month')
     //this march
-    verb.match(`(next|this|last) [${verbs}]`).tag('Month', 'this-month')
+    verb
+      .match(`(next|this|last) [${verbs}]`)
+      .tag('Date', 'this-month')
+      .match('(may|march)')
+      .tag('Month')
     //with date
-    verb.match(`[${verbs}] the? #Value`).tag('Month', 'march-5th')
-    verb.match(`#Value of? [${verbs}]`).tag('Month', '5th-of-march')
+    verb
+      .match(`[${verbs}] the? #Value`)
+      .tag('Date', 'march-5th')
+      .match('(may|march)')
+      .tag('Month')
+    verb
+      .match(`#Value of? [${verbs}]`)
+      .tag('Date', '5th-of-march')
+      .match('(may|march)')
+      .tag('Month')
     //nearby
-    verb.match(`[${verbs}] .? #Date`).tag('Month', 'march-and-feb')
-    verb.match(`#Date .? [${verbs}]`).tag('Month', 'feb-and-march')
+    verb
+      .match(`[${verbs}] .? #Date`)
+      .tag('Date', 'march-and-feb')
+      .match('(may|march)')
+      .tag('Month')
+    verb
+      .match(`#Date .? [${verbs}]`)
+      .tag('Date', 'feb-and-march')
+      .match('(may|march)')
+      .tag('Month')
 
     let march = doc.if('march')
     if (march.found === true) {

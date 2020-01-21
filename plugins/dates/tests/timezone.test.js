@@ -6,7 +6,7 @@ test('text sets timezone', function(t) {
     ['today', '2019-01-01T00:00:00.000Z'], //london
     ['today in PST', '2019-01-01T00:00:00.000-08:00'],
     ['today in eastern time', '2019-01-01T00:00:00.000-05:00'],
-    ['today GMT+9', '2019-01-01T00:00:00.000+09:00'],
+    ['today GMT+9', '2019-01-01T00:00:00.000-09:00'],
     // ['today GMT-9', '2019-01-01T00:00:00.000-09:00'],
   ]
   let context = {

@@ -82,6 +82,7 @@ const tryHere = function(terms, regs, index, length) {
         namedGroupId = previousGroupId
       } else {
         namedGroupId = makeId(reg.capture)
+        // namedGroupId = terms[t].id
         previousGroupId = namedGroupId
       }
     }

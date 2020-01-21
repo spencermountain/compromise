@@ -13,6 +13,10 @@ const knownWord = {
 // parse things like 'june 5th 2019'
 const parseExplicit = function(doc, context) {
   // 'fifth of june'
+  // let m = doc.match('[<date>#Value] of [#Month]')
+
+  // console.log(m.named())
+
   if (doc.has('#Value of #Month')) {
     let obj = {
       month: doc.match('#Month').text(),

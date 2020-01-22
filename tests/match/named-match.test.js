@@ -250,36 +250,45 @@ test('named-match-code-gen', function(t) {
     {
       name: 'SetSize',
       match: '[<type>#Noun] size equals [<size>#Adjective]',
-      fn: ({ size, type }) => `=== Info\n${size.text()}\n${type.text()}`,
+      fn: ({ size, type }) => `${type.text()}.size = ${size.text()}`,
+    },
+    {
+      name: 'If',
+      match: 'If [<a>#Verb] equals [<b>#Value] then [<contents>.+]',
+      fn: ({ a, b, contents }) => `if(${a.text()} === ${b.text()}){${contents.text()}}`,
     },
   ]
 
   // Plugin for post processing matches and thunking the output
-  const codeNlp = nlp.extend((Doc, world) => {
-    Doc.prototype.generators = []
+  const code = Doc => {
     Doc.prototype.toCode = function() {
       let output = ''
 
-      for (const g of this.generators) {
-        output += g()
+      for (let i = 0; i < templates.length; i++) {
+        const template = templates[i]
+
+        const res = this.if(template.match)
+        if (res.found) {
+          output += template.fn(res.byName())
+        }
       }
 
       return output
     }
+  }
 
-    world.postProcess(doc => {
-      for (let i = 0; i < templates.length; i++) {
-        const template = templates[i]
-
-        const res = doc.match(template.match).byName()
-        doc.generators.push(() => template.fn(res))
-      }
-    })
-  })
+  let output = nlp
+    .clone()
+    .extend(code)('if size equals 0 then do this, and this, and this')
+    .toCode()
+  t.equal(output, 'if(size === 0){do this, and this, and this}')
 
   // Use code generators
-  const output = codeNlp('Dog size equals big').toCode()
-  t.equal(output, '=== Info\nbig\nDog')
+  output = nlp
+    .clone()
+    .extend(code)('Dog size equals big')
+    .toCode()
+  t.equal(output, 'Dog.size = big')
 
   t.end()
 })

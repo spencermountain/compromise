@@ -854,11 +854,11 @@ var jsonDefault = {
   text: true,
   tags: true,
   implicit: true,
+  whitespace: true,
   clean: false,
   id: false,
   index: false,
   offset: false,
-  whitespace: false,
   bestTag: false
 };
 /** return various metadata for this term */
@@ -1360,53 +1360,13 @@ var wordCount = function wordCount() {
     return t.text !== '';
   }).length;
 };
-/** grab named capture group results */
-
-
-var named = function named(target) {
-  // Allow accessing by name
-  if (target !== undefined) {
-    var phrase = Object.values(this.names).find(function (n) {
-      return n.group === target.toString();
-    });
-
-    if (!phrase) {
-      return [];
-    }
-
-    var start = phrase.start,
-        length = phrase.length;
-    return this.buildFrom(start, length);
-  } // Find all named groups
-
-
-  var names = Object.keys(this.names);
-
-  if (names.length === 0) {
-    return [];
-  }
-
-  for (var i = 0; i < names.length; i++) {
-    var name = names[i];
-    var _this$names$name = this.names[name],
-        _start = _this$names$name.start,
-        _length = _this$names$name.length;
-
-    if (this.hasId(_start)) {
-      return this.buildFrom(_start, _length);
-    }
-  }
-
-  return [];
-};
 
 var _01Utils = {
   terms: terms,
   clone: clone,
   lastTerm: lastTerm,
   hasId: hasId,
-  wordCount: wordCount,
-  named: named
+  wordCount: wordCount
 };
 
 var trimEnd = function trimEnd(str) {
@@ -2077,7 +2037,7 @@ var getOrCreateGroup = function getOrCreateGroup(namedGroups, namedGroupId, term
 
   var id = terms[startIndex].id;
   namedGroups[namedGroupId] = {
-    group: reg.capture.toString(),
+    group: reg.named.toString(),
     start: id,
     length: 0
   };
@@ -2095,16 +2055,17 @@ var tryHere = function tryHere(terms, regs, index, length) {
   for (var r = 0; r < regs.length; r += 1) {
     var reg = regs[r]; // Check if this reg has a named capture group
 
-    var isNamedGroup = typeof reg.capture === 'string' || typeof reg.capture === 'number';
+    var isNamedGroup = typeof reg.named === 'string' || typeof reg.named === 'number';
     var namedGroupId = null; // Reuse previous capture group if same
 
     if (isNamedGroup) {
       var prev = regs[r - 1];
 
-      if (prev && prev.capture === reg.capture && previousGroupId) {
+      if (prev && prev.named === reg.named && previousGroupId) {
         namedGroupId = previousGroupId;
       } else {
-        namedGroupId = _id(reg.capture);
+        namedGroupId = _id(reg.named); // namedGroupId = terms[t].id
+
         previousGroupId = namedGroupId;
       }
     } //should we fail here?
@@ -2143,7 +2104,7 @@ var tryHere = function tryHere(terms, regs, index, length) {
       } // is it really this easy?....
 
 
-      if (reg.capture || isNamedGroup) {
+      if (reg.named || isNamedGroup) {
         captures.push(t);
         captures.push(skipto - 1);
 
@@ -2212,7 +2173,7 @@ var tryHere = function tryHere(terms, regs, index, length) {
         }
       }
 
-      if (reg.capture || isNamedGroup) {
+      if (reg.named || isNamedGroup) {
         captures.push(startAt); //add greedy-end to capture
 
         if (t > 1 && reg.greedy) {
@@ -2307,7 +2268,7 @@ var _04PostProcess = postProcess;
   greedy:false,
   optional:false,
 
-  capture:false,
+  named:'',
   choices:[],
 }
 */
@@ -2407,7 +2368,7 @@ var parseToken = function parseToken(w) {
 
 
     if (start(w) === '[' || end(w) === ']') {
-      obj.capture = true;
+      obj.named = true;
       w = w.replace(/^\[/, '');
       w = w.replace(/\]$/, ''); // Use capture group name
 
@@ -2415,7 +2376,7 @@ var parseToken = function parseToken(w) {
         var res = captureName.exec(w);
 
         if (res.length >= 2) {
-          obj.capture = res[1];
+          obj.named = res[1];
           w = w.replace(res[0], '');
         }
       }
@@ -2561,12 +2522,12 @@ var getLastTrue = function getLastTrue(arr, start) {
 var postProcess$1 = function postProcess(tokens) {
   // ensure there's only one consecutive capture group.
   var count = tokens.filter(function (t) {
-    return t.capture === true || isNamed(t.capture);
+    return t.named === true || isNamed(t.named);
   }).length;
 
   if (count > 1) {
     var captureArr = tokens.map(function (t) {
-      return t.capture;
+      return t.named;
     });
     var first = captureArr.findIndex(function (t) {
       return t === true || isNamed(t);
@@ -2575,12 +2536,12 @@ var postProcess$1 = function postProcess(tokens) {
 
     for (var i = first; i < last + 1; i++) {
       // Don't replace named groups
-      if (isNamed(tokens[i].capture)) {
+      if (isNamed(tokens[i].named)) {
         continue;
       }
 
-      var capture = tokens[first].capture;
-      tokens[i].capture = capture;
+      var named = tokens[first].named;
+      tokens[i].named = named;
     }
   }
 
@@ -2651,7 +2612,15 @@ var syntax = function syntax(input) {
   tokens = postProcess$1(tokens); // console.log(JSON.stringify(tokens, null, 2))
 
   return tokens;
-};
+}; // const memoizeSyntax = function(input) {
+//   if (typeof input === 'string' && cache.hasOwnProperty(input)) {
+//     return cache[input]
+//   }
+//   let res = syntax(input)
+//   cache[input] = res
+//   return res
+// }
+
 
 var syntax_1 = syntax;
 
@@ -2982,6 +2951,21 @@ Pool.prototype.clone = function () {
 
 var Pool_1 = Pool;
 
+//add forward/backward 'linked-list' prev/next ids
+var linkTerms = function linkTerms(terms) {
+  terms.forEach(function (term, i) {
+    if (i > 0) {
+      term.prev = terms[i - 1].id;
+    }
+
+    if (terms[i + 1]) {
+      term.next = terms[i + 1].id;
+    }
+  });
+};
+
+var _linkTerms = linkTerms;
+
 //(Rule-based sentence boundary segmentation) - chop given text into its proper sentences.
 // Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
 // @spencermountain 2017 MIT
@@ -3264,19 +3248,7 @@ var splitWords = function splitWords(str) {
 
 var _02Words = splitWords;
 
-var addLinks = function addLinks(terms) {
-  terms.forEach(function (term, i) {
-    if (i > 0) {
-      term.prev = terms[i - 1].id;
-    }
-
-    if (terms[i + 1]) {
-      term.next = terms[i + 1].id;
-    }
-  });
-};
 /** turn a string into an array of Phrase objects */
-
 
 var fromText = function fromText() {
   var text = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
@@ -3304,67 +3276,55 @@ var fromText = function fromText() {
       return term;
     }); //add next/previous ids
 
-    addLinks(terms); //return phrase objects
+    _linkTerms(terms); //return phrase objects
 
     return new Phrase_1(terms[0].id, terms.length, pool);
   }); //return them ready for a Document object
 
   return phrases;
-}; // parse the compressed format '3,2|2,4'
-
-
-var parseTags = function parseTags(text, tagList) {
-  return text.split('|').map(function (str) {
-    var numList = str.split(',');
-    numList = numList.map(function (n) {
-      return parseInt(n, 10);
-    }); // convert a list pf numbers into an array of tag names
-
-    return numList.map(function (num) {
-      if (!tagList[num]) {
-        console.warn('Compromise import: missing tag at index ' + num);
-      }
-
-      return tagList[num];
-    });
-  });
 };
-/** create a word-pool and Phrase objects from .export() json*/
 
+var _01Tokenizer = fromText;
 
 var fromJSON = function fromJSON(json, world) {
-  if (typeof json === 'string') {
-    json = JSON.parse(json);
-  }
+  var pool = new Pool_1();
+  var phrases = json.map(function (p, k) {
+    var terms = p.terms.map(function (o, i) {
+      var term = new Term_1(o.text);
+      term.pre = o.pre !== undefined ? o.pre : '';
 
-  var pool = new Pool_1(); //create Phrase objects
+      if (o.post === undefined) {
+        o.post = ' '; //no given space for very last term
 
-  var phrases = json.list.map(function (o) {
-    // tokenize words from sentence text
-    var terms = _02Words(o[0]); // unpack the tag data for each term
+        if (i >= p.terms.length - 1) {
+          o.post = '. ';
 
-    var tagArr = parseTags(o[1], json.tags); //create Term objects
+          if (k >= p.terms.length - 1) {
+            o.post = '.';
+          }
+        }
+      }
 
-    terms = terms.map(function (str, i) {
-      var term = new Term_1(str);
-      tagArr[i].forEach(function (tag) {
-        return term.tag(tag, '', world);
-      });
+      term.post = o.post !== undefined ? o.post : ' ';
+
+      if (o.tags) {
+        o.tags.forEach(function (tag) {
+          return term.tag(tag, '', world);
+        });
+      }
+
       pool.add(term);
       return term;
     }); //add prev/next links
 
-    addLinks(terms); // return a proper Phrase object
+    _linkTerms(terms); // return a proper Phrase object
 
     return new Phrase_1(terms[0].id, terms.length, pool);
   });
   return phrases;
 };
 
-var _01Tokenizer = {
-  fromText: fromText,
-  fromJSON: fromJSON
-};
+var fromJSON_1 = fromJSON;
 
 var _version = '12.3.0';
 
@@ -3402,6 +3362,7 @@ var _data = {
   "FemaleName": "true¦0:FY;1:G2;2:FR;3:FD;4:FC;5:EP;6:ER;7:FS;8:GF;9:EZ;A:GB;B:E5;C:FO;D:FL;E:G8;F:EG;aE2bD4cB8dAIe9Gf91g8Hh83i7Sj6Uk60l4Om38n2To2Qp2Fqu2Er1Os0Qt04ursu6vUwOyLzG;aJeHoG;e,la,ra;lGna;da,ma;da,ra;as7EeHol1TvG;et5onB9;le0sen3;an9endBNhiB4iG;lInG;if3AniGo0;e,f39;a,helmi0lGma;a,ow;aMeJiG;cHviG;an9XenG1;kCZtor3;da,l8Vnus,rG;a,nGoniD2;a,iDC;leGnesEC;nDLrG;i1y;aSePhNiMoJrGu6y4;acG3iGu0E;c3na,sG;h9Mta;nHrG;a,i;i9Jya;a5IffaCGna,s7;al3eGomasi0;a,l8Go6Xres1;g7Uo6WrHssG;!a,ie;eFi,ri8;bNliMmKnIrHs7tGwa0;ia0um;a,yn;iGya;a,ka,s7;a4e4iGmCAra;!ka;a,t7;at7it7;a05carlet2Ye04hUiSkye,oQtMuHyG;bFJlvi1;e,sHzG;an2Tet5ie,y;anGi8;!a,e,nG;aDe;aIeG;fGl3DphG;an2;cF8r6;f3nGphi1;d4ia,ja,ya;er4lv3mon1nGobh75;dy;aKeGirlBLo0y6;ba,e0i6lIrG;iGrBPyl;!d70;ia,lBV;ki4nIrHu0w0yG;la,na;i,leAon,ron;a,da,ia,nGon;a,on;l5Yre0;bMdLi9lKmIndHrGs7vannaD;aDi0;ra,y;aGi4;nt7ra;lBNome;e,ie;in1ri0;a02eXhViToHuG;by,thBK;bQcPlOnNsHwe0xG;an94ie,y;aHeGie,lE;ann8ll1marBFtB;!lGnn1;iGyn;e,nG;a,d7W;da,i,na;an9;hel53io;bin,erByn;a,cGkki,na,ta;helBZki;ea,iannDXoG;da,n12;an0bIgi0i0nGta,y0;aGee;!e,ta;a,eG;cARkaD;chGe,i0mo0n5EquCDvCy0;aCCelGi9;!e,le;een2ia0;aMeLhJoIrG;iGudenAW;scil1Uyamva9;lly,rt3;ilome0oebe,ylG;is,lis;arl,ggy,nelope,r6t4;ige,m0Fn4Oo6rvaBBtHulG;a,et5in1;ricGsy,tA8;a,e,ia;ctav3deHfAWlGphAW;a,ga,iv3;l3t5;aQePiJoGy6;eHrG;aDeCma;ll1mi;aKcIkGla,na,s7ta;iGki;!ta;hoB2k8BolG;a,eBH;!mh;l7Tna,risF;dIi5PnHo23taG;li1s7;cy,et5;eAiCO;a01ckenz2eViLoIrignayani,uriBGyG;a,rG;a,na,tAS;i4ll9XnG;a,iG;ca,ka,qB4;a,chOkaNlJmi,nIrGtzi;aGiam;!n9;a,dy,erva,h,n2;a,dIi9JlG;iGy;cent,e;red;!e6;ae6el3G;ag4KgKi,lHrG;edi61isFyl;an2iGliF;nGsAM;a,da;!an,han;b08c9Ed06e,g04i03l01nZrKtJuHv6Sx87yGz2;a,bell,ra;de,rG;a,eC;h75il9t2;a,cSgOiJjor2l6In2s7tIyG;!aGbe5QjaAlou;m,n9S;a,ha,i0;!aIbALeHja,lEna,sGt53;!a,ol,sa;!l06;!h,m,nG;!a,e,n1;arIeHie,oGr3Kueri5;!t;!ry;et3IiB;elGi61y;a,l1;dGon,ue6;akranBy;iGlo36;a,ka,n9;a,re,s2;daGg2;!l2W;alEd2elGge,isBGon0;eiAin1yn;el,le;a0Ie08iWoQuKyG;d3la,nG;!a,dHe9SnGsAQ;!a,e9R;a,sAO;aB1cJelIiFlHna,pGz;e,iB;a,u;a,la;iGy;a2Ae,l25n9;is,l1GrHtt2uG;el6is1;aIeHi8na,rG;a6Zi8;lei,n1tB;!in1;aQbPd3lLnIsHv3zG;!a,be4Ket5z2;a,et5;a,dG;a,sGy;ay,ey,i,y;a,iaIlG;iGy;a8Ge;!n4F;b7Terty;!n5R;aNda,e0iLla,nKoIslARtGx2;iGt2;c3t3;la,nGra;a,ie,o4;a,or1;a,gh,laG;!ni;!h,nG;a,d4e,n4N;cNdon7Si6kes7na,rMtKurIvHxGy6;mi;ern1in3;a,eGie,yn;l,n;as7is7oG;nya,ya;a,isF;ey,ie,y;aZeUhadija,iMoLrIyG;lGra;a,ee,ie;istGy5B;a,en,iGy;!e,n48;ri,urtn9A;aMerLl99mIrGzzy;a,stG;en,in;!berlG;eGi,y;e,y;a,stC;!na,ra;el6PiJlInHrG;a,i,ri;d4na;ey,i,l9Qs2y;ra,s7;c8Wi5XlOma6nyakumari,rMss5LtJviByG;!e,lG;a,eG;e,i78;a5EeHhGi3PlEri0y;ar5Cer5Cie,leCr9Fy;!lyn73;a,en,iGl4Uyn;!ma,n31sF;ei72i,l2;a04eVilToMuG;anKdJliGst56;aHeGsF;!nAt0W;!n8X;i2Ry;a,iB;!anLcelEd5Vel71han6IlJni,sHva0yG;a,ce;eGie;fi0lEph4X;eGie;en,n1;!a,e,n36;!i10lG;!i0Z;anLle0nIrHsG;i5Qsi5Q;i,ri;!a,el6Pif1RnG;a,et5iGy;!e,f1P;a,e72iHnG;a,e71iG;e,n1;cLd1mi,nHqueliAsmin2Uvie4yAzG;min8;a8eHiG;ce,e,n1s;!lGsFt06;e,le;inHk2lEquelG;in1yn;da,ta;lPmNnMo0rLsHvaG;!na;aHiGob6U;do4;!belGdo4;!a,e,l2G;en1i0ma;a,di4es,gr5R;el9ogG;en1;a,eAia0o0se;aNeKilHoGyacin1N;ll2rten1H;aHdGlaH;a,egard;ry;ath0WiHlGnrietBrmiAst0W;en24ga;di;il75lKnJrGtt2yl75z6D;iGmo4Fri4G;etG;!te;aDnaD;ey,l2;aYeTiOlMold12rIwG;enGyne18;!dolE;acHetGisel9;a,chC;e,ieG;!la;adys,enGor3yn1Y;a,da,na;aJgi,lHna,ov71selG;a,e,le;da,liG;an;!n0;mYnIorgHrG;ald35i,m2Stru73;et5i5T;a,eGna;s1Nvieve;briel3Fil,le,rnet,yle;aReOio0loMrG;anHe9iG;da,e9;!cG;esHiGoi0G;n1s3V;!ca;!rG;a,en43;lHrnG;!an9;ec3ic3;rHtiGy8;ma;ah,rah;d0FileCkBl00mUn4ArRsMtLuKvG;aIelHiG;e,ta;in0Ayn;!ngel2H;geni1la,ni3R;h52ta;meral9peranJtG;eHhGrel6;er;l2Pr;za;iGma,nest29yn;cGka,n;a,ka;eJilImG;aGie,y;!liA;ee,i1y;lGrald;da,y;aTeRiMlLma,no4oJsIvG;a,iG;na,ra;a,ie;iGuiG;se;a,en,ie,y;a0c3da,nJsGzaH;aGe;!beG;th;!a,or;anor,nG;!a;in1na;en,iGna,wi0;e,th;aWeKiJoGul2U;lor51miniq3Yn30rGtt2;a,eCis,la,othGthy;ea,y;an09naDonAx2;anPbOde,eNiLja,lImetr3nGsir4U;a,iG;ce,se;a,iHla,orGphiA;es,is;a,l5J;dGrdG;re;!d4Mna;!b2CoraDra;a,d4nG;!a,e;hl3i0mMnKphn1rHvi1WyG;le,na;a,by,cHia,lG;a,en1;ey,ie;a,et5iG;!ca,el1Aka;arGia;is;a0Qe0Mh04i02lUoJrHynG;di,th3;istGy04;al,i0;lOnLrHurG;tn1D;aId28iGn28riA;!nG;a,e,n1;!l1S;n2sG;tanGuelo;ce,za;eGleC;en,t5;aIeoHotG;il4B;!pat4;ir8rIudG;et5iG;a,ne;a,e,iG;ce,sX;a4er4ndG;i,y;aPeMloe,rG;isHyG;stal;sy,tG;aHen,iGy;!an1e,n1;!l;lseHrG;!i8yl;a,y;nLrG;isJlHmG;aiA;a,eGot5;n1t5;!sa;d4el1PtG;al,el1O;cHlG;es5i3F;el3ilG;e,ia,y;iYlXmilWndVrNsLtGy6;aJeIhGri0;erGleCrEy;in1;ri0;li0ri0;a2GsG;a2Fie;a,iMlKmeIolHrG;ie,ol;!e,in1yn;lGn;!a,la;a,eGie,y;ne,y;na,sF;a0Di0D;a,e,l1;isBl2;tlG;in,yn;arb0CeYianXlVoTrG;andRePiIoHyG;an0nn;nwEok8;an2NdgKg0ItG;n27tG;!aHnG;ey,i,y;ny;etG;!t8;an0e,nG;da,na;i8y;bbi8nG;iBn2;ancGossom,ythe;a,he;ca;aRcky,lin9niBrNssMtIulaDvG;!erlG;ey,y;hHsy,tG;e,i0Zy8;!anG;ie,y;!ie;nGt7yl;adHiG;ce;et5iA;!triG;ce,z;a4ie,ra;aliy29b24d1Lg1Hi19l0Sm0Nn01rWsNthe0uJvIyG;anGes7;a,na;a,r25;drIgusHrG;el3;ti0;a,ey,i,y;hHtrG;id;aKlGt1P;eHi8yG;!n;e,iGy;gh;!nG;ti;iIleHpiB;ta;en,n1t5;an19elG;le;aYdWeUgQiOja,nHtoGya;inet5n3;!aJeHiGmI;e,ka;!mGt5;ar2;!belHliFmT;sa;!le;ka,sGta;a,sa;elGie;a,iG;a,ca,n1qG;ue;!t5;te;je6rea;la;!bHmGstas3;ar3;el;aIberHel3iGy;e,na;!ly;l3n9;da;aTba,eNiKlIma,yG;a,c3sG;a,on,sa;iGys0J;e,s0I;a,cHna,sGza;a,ha,on,sa;e,ia;c3is7jaIna,ssaIxG;aGia;!nd4;nd4;ra;ia;i0nHyG;ah,na;a,is,naD;c7da,leCmLnslKsG;haDlG;inGyW;g,n;!h;ey;ee;en;at7g2nG;es;ie;ha;aVdiSelLrG;eIiG;anLenG;a,e,ne;an0;na;aKeJiHyG;nn;a,n1;a,e;!ne;!iG;de;e,lEsG;on;yn;!lG;iAyn;ne;agaJbHiG;!gaI;ey,i8y;!e;il;ah",
   "WeekDay": "true¦fri2mon2s1t0wednesd3;hurs1ues1;aturd1und1;!d0;ay0;!s",
   "Month": "true¦aBdec9feb7j2mar,nov9oct1sep0;!t8;!o8;an3u0;l1n0;!e;!y;!u1;!ru0;ary;!em0;ber;pr1ug0;!ust;!il",
+  "Date": "true¦t0weekend,yesterd2;mr2o0;d0morrow;ay;!w",
   "FirstName": "true¦aEblair,cCdevBj8k6lashawn,m3nelly,quinn,re2sh0;ay,e0iloh;a,lby;g1ne;ar1el,org0;an;ion,lo;as8e0r9;ls7nyatta,rry;am0ess1ude;ie,m0;ie;an,on;as0heyenne;ey,sidy;lex1ndra,ubr0;ey;is",
   "LastName": "true¦0:34;1:39;2:3B;3:2Y;4:2E;5:30;a3Bb31c2Od2Ee2Bf25g1Zh1Pi1Kj1Ek17l0Zm0Nn0Jo0Gp05rYsMtHvFwCxBy8zh6;a6ou,u;ng,o;a6eun2Uoshi1Kun;ma6ng;da,guc1Zmo27sh21zaR;iao,u;a7eb0il6o3right,u;li3Bs1;gn0lk0ng,tanabe;a6ivaldi;ssilj37zqu2;a9h8i2Go7r6sui,urn0;an,ynisJ;lst0Prr1Uth;at1Uomps1;kah0Vnaka,ylor;aEchDeChimizu,iBmiAo9t7u6zabo;ar2lliv2AzuE;a6ein0;l23rm0;sa,u3;rn4th;lva,mmo24ngh;mjon4rrano;midt,neid0ulz;ito,n7sa6to;ki;ch2dLtos,z;amBeag1Zi9o7u6;bio,iz,sD;b6dri1MgIj0Tme24osevelt,ssi,ux;erts,ins1;c6ve0F;ci,hards1;ir2os;aEeAh8ic6ow20;as6hl0;so;a6illips;m,n1T;ders5et8r7t6;e0Nr4;ez,ry;ers;h21rk0t6vl4;el,te0J;baBg0Blivei01r6;t6w1O;ega,iz;a6eils1guy5ix1owak,ym1E;gy,ka6var1K;ji6muW;ma;aEeCiBo8u6;ll0n6rr0Bssolini,ñ6;oz;lina,oKr6zart;al0Me6r0U;au,no;hhail4ll0;rci0ssi6y0;!er;eWmmad4r6tsu07;in6tin2;!o;aCe8i6op2uo;!n6u;coln,dholm;fe7n0Qr6w0J;oy;bv6v6;re;mmy,rs5u;aBennedy,imuAle0Lo8u7wo6;k,n;mar,znets4;bay6vacs;asY;ra;hn,rl9to,ur,zl4;aAen9ha3imen2o6u3;h6nYu3;an6ns1;ss1;ki0Es5;cks1nsse0D;glesi9ke8noue,shik7to,vano6;u,v;awa;da;as;aBe8itchcock,o7u6;!a3b0ghNynh;a3ffmann,rvat;mingw7nde6rN;rs1;ay;ns5rrQs7y6;asDes;an4hi6;moJ;a9il,o8r7u6;o,tierr2;ayli3ub0;m2nzal2;nd6o,rcia;hi;erAis9lor8o7uj6;ita;st0urni0;es;ch0;nand2;d7insteHsposi6vaL;to;is1wards;aCeBi9omin8u6;bo6rand;is;gu2;az,mitr4;ov;lgado,vi;nkula,rw7vi6;es,s;in;aFhBlarkAo6;h5l6op0rbyn,x;em7li6;ns;an;!e;an8e7iu,o6ristens5u3we;i,ng,u3w,y;!n,on6u3;!g;mpb7rt0st6;ro;ell;aBe8ha3lanco,oyko,r6yrne;ooks,yant;ng;ck7ethov5nnett;en;er,ham;ch,h8iley,rn6;es,i0;er;k,ng;dDl9nd6;ers6rA;en,on,s1;on;eks7iy8var2;ez;ej6;ev;ams",
   "MaleName": "true¦0:CE;1:BL;2:C2;3:BT;4:B5;5:9V;6:BZ;7:AT;8:BD;9:AX;A:AO;aB4bA8c97d87e7Gf6Yg6Gh5Wi5Ij4Lk4Bl3Rm2Pn2Eo28p22qu20r1As0Qt06u05v00wNxavi3yGzB;aBor0;cBh8Ine;hCkB;!aB1;ar51eB0;ass2i,oCuB;sDu25;nEsDusB;oBsC;uf;ef;at0g;aJeHiCoByaAP;lfgang,odrow;lBn1O;bDey,frBJlB;aA5iB;am,e,s;e89ur;i,nde5sB;!l7t1;de,lCrr6yB;l1ne;lBt3;a93y;aEern1iB;cCha0nceBrg9Bva0;!nt;ente,t5A;lentin49n8Yughn;lyss4Msm0;aTeOhKiIoErCyB;!l3ro8s1;av9QeBist0oy,um0;nt9Iv54y;bDd7XmBny;!as,mBoharu;aAYie,y;i83y;mBt9;!my,othy;adDeoCia7DomB;!as;!do7M;!de9;dErB;en8HrB;an8GeBy;ll,n8F;!dy;dgh,ic9Tnn3req,ts45;aRcotPeNhJiHoFpenc3tBur1Oylve8Hzym1;anDeBua7B;f0phAFvBwa7A;e57ie;!islaw,l7;lom1nA3uB;leyma8ta;dBl7Jm1;!n7;aDeB;lBrm0;d1t1;h6Sne,qu0Uun,wn,y8;aBbasti0k1Xl41rg40th,ymo9I;m9n;!tB;!ie,y;lCmBnti21q4Iul;!mAu4;ik,vato6V;aWeShe92iOoFuCyB;an,ou;b6LdCf9pe6QssB;!elAI;ol2Uy;an,bIcHdGel,geFh0landA9mEnDry,sCyB;!ce;coe,s;!a95nA;an,eo;l3Jr;e4Qg3n7olfo,ri68;co,ky;bAe9U;cBl7;ar5Oc5NhCkBo;!ey,ie,y;a85ie;gCid,ub6x,yBza;ansh,nS;g8WiB;na8Ss;ch5Yfa4lDmCndBpha4sh6Uul,ymo70;al9Yol2By;i9Ion;f,ph;ent2inB;cy,t1;aFeDhilCier62ol,reB;st1;!ip,lip;d9Brcy,tB;ar,e2V;b3Sdra6Ft44ul;ctav2Vliv3m96rFsCtBum8Uw6;is,to;aCc8SvB;al52;ma;i,l49vJ;athJeHiDoB;aBel,l0ma0r2X;h,m;cCg4i3IkB;h6Uola;hol5XkBol5X;!ol5W;al,d,il,ls1vB;il50;anBy;!a4i4;aWeTiKoFuCyB;l21r1;hamCr5ZstaB;fa,p4G;ed,mF;dibo,e,hamDis1XntCsBussa;es,he;e,y;ad,ed,mB;ad,ed;cGgu4kElDnCtchB;!e5;a78ik;house,o03t1;e,olB;aj;ah,hBk7;a4eB;al,l;hClv2rB;le,ri5v2;di,met;ck,hNlLmOnu4rHs1tDuricCxB;!imilian8Cwe5;e,io;eo,hCi52tB;!eo,hew,ia;eBis;us,w;cDio,k86lCqu6Gsha5tBv2;i2Hy;in,on;!el,oKus;achBcolm,ik;ai,y;amBdi,moud;adB;ou;aReNiMlo2RoIuCyB;le,nd1;cEiDkBth3;aBe;!s;gi,s;as,iaB;no;g0nn6RrenDuBwe5;!iB;e,s;!zo;am,on4;a7Bevi,la4SnDoBst3vi;!nB;!a60el;!ny;mCnBr67ur4Twr4T;ce,d1;ar,o4N;aIeDhaled,iBrist4Vu48y3B;er0p,rB;by,k,ollos;en0iEnBrmit,v2;!dCnBt5C;e0Yy;a5ri4N;r,th;na68rBthem;im,l;aYeQiOoDuB;an,liBst2;an,o,us;aqu2eJhnInGrEsB;eChBi7Bue;!ua;!ph;dBge;an,i,on;!aBny;h,s,th4X;!ath4Wie,nA;!l,sBy;ph;an,e,mB;!mA;d,ffGrDsB;sBus;!e;a5JemCmai8oBry;me,ni0O;i6Uy;!e58rB;ey,y;cHd6kGmFrDsCvi3yB;!d6s1;on,p3;ed,od,rBv4M;e4Zod;al,es,is1;e,ob,ub;k,ob,quB;es;aNbrahMchika,gKkeJlija,nuIrGsDtBv0;ai,sB;uki;aBha0i6Fma4sac;ac,iaB;h,s;a,vinBw2;!g;k,nngu52;!r;nacBor;io;im;in,n;aJeFina4VoDuByd56;be25gBmber4CsD;h,o;m3ra33sBwa3X;se2;aDctCitCn4ErB;be20m0;or;th;bKlJmza,nIo,rDsCyB;a43d6;an,s0;lEo4FrDuBv7;hi40ki,tB;a,o;is1y;an,ey;k,s;!im;ib;aQeMiLlenKoIrEuB;illerCsB;!tavo;mo;aDegBov3;!g,orB;io,y;dy,h57nt;nzaBrd1;lo;!n;lbe4Qno,ovan4R;ne,oDrB;aBry;ld,rd4U;ffr7rge;bri4l6rBv2;la1Zr3Eth,y;aReNiLlJorr0IrB;anDedBitz;!dAeBri24;ri23;cDkB;!ie,lB;in,yn;esJisB;!co,zek;etch3oB;yd;d4lBonn;ip;deriDliCng,rnB;an01;pe,x;co;bi0di;arZdUfrTit0lNmGnFo2rCsteb0th0uge8vBym6zra;an,ere2V;gi,iCnBrol,v2w2;est45ie;c07k;och,rique,zo;aGerFiCmB;aFe2P;lCrB;!h0;!io;s1y;nu4;be09d1iEliDmCt1viBwood;n,s;er,o;ot1Ts;!as,j43sB;ha;a2en;!dAg32mEuCwB;a25in;arB;do;o0Su0S;l,nB;est;aYeOiLoErDuCwByl0;ay8ight;a8dl7nc0st2;ag0ew;minFnDri0ugCyB;le;!l03;!a29nBov0;e5ie,y;go,icB;!k;armuCeBll1on,rk;go;id;anIj0lbeHmetri9nFon,rEsDvCwBxt3;ay8ey;en,in;hawn,mo08;ek,ri0F;is,nBv3;is,y;rt;!dB;re;lKmInHrDvB;e,iB;!d;en,iDne5rByl;eBin,yl;l2Vn;n,o,us;!e,i4ny;iBon;an,en,on;e,lB;as;a06e04hWiar0lLoGrEuCyrB;il,us;rtB;!is;aBistobal;ig;dy,lEnCrB;ey,neli9y;or,rB;ad;by,e,in,l2t1;aGeDiByI;fBnt;fo0Ct1;meCt9velaB;nd;nt;rDuCyB;!t1;de;enB;ce;aFeErisCuB;ck;!tB;i0oph3;st3;d,rlBs;eBie;s,y;cBdric,s11;il;lEmer1rB;ey,lCro5y;ll;!os,t1;eb,v2;ar02eUilTlaSoPrCuByr1;ddy,rtI;aJeEiDuCyB;an,ce,on;ce,no;an,ce;nCtB;!t;dCtB;!on;an,on;dCndB;en,on;!foBl7y;rd;bCrByd;is;!by;i8ke;al,lA;nFrBshoi;at,nCtB;!r10;aBie;rd0S;!edict,iCjam2nA;ie,y;to;n7rBt;eBy;tt;ey;ar0Xb0Nd0Jgust2hm0Gid6ja0ElZmXnPputsiOrFsaEuCveBya0ziz;ry;gust9st2;us;hi;aIchHi4jun,maFnDon,tBy0;hBu06;ur;av,oB;ld;an,nd0A;el;ie;ta;aq;dGgel05tB;hoEoB;i8nB;!i02y;ne;ny;reBy;!as,s,w;ir,mBos;ar;an,beOd6eIfFi,lEonDphonHt1vB;aMin;on;so,zo;an,en;onCrB;edP;so;c,jaEksandDssaExB;!and3;er;ar,er;ndB;ro;rtH;ni;en;ad,eB;d,t;in;aColfBri0vik;!o;mBn;!a;dFeEraCuB;!bakr,lfazl;hBm;am;!l;allEel,oulaye,ulB;!lCrahm0;an;ah,o;ah;av,on",
@@ -6257,31 +6218,15 @@ var _02Accessors = createCommonjsModule(function (module, exports) {
 
     return arr;
   };
-  /** grab named capture group results */
-
-
-  exports.named = function (target) {
-    var arr = []; //'reduce' but faster
-
-    for (var i = 0; i < this.list.length; i++) {
-      var terms = this.list[i].named(target);
-
-      if (terms.length > 0) {
-        arr.push(this.list[i]);
-      }
-    }
-
-    return this.buildFrom(arr);
-  };
   /* grab named capture group terms as object */
 
 
-  exports.groupByNames = function () {
+  var groupByNames = function groupByNames(doc) {
     var res = {};
     var groups = {};
 
-    for (var i = 0; i < this.list.length; i++) {
-      var phrase = this.list[i];
+    for (var i = 0; i < doc.list.length; i++) {
+      var phrase = doc.list[i];
       var names = Object.values(phrase.names);
 
       for (var j = 0; j < names.length; j++) {
@@ -6302,11 +6247,49 @@ var _02Accessors = createCommonjsModule(function (module, exports) {
 
     for (var _i = 0; _i < keys.length; _i++) {
       var key = keys[_i];
-      res[key] = this.buildFrom(groups[key]);
+      res[key] = doc.buildFrom(groups[key]);
     }
 
     return res;
   };
+
+  var getOneName = function getOneName(doc, name) {
+    var arr = [];
+
+    var _loop = function _loop(i) {
+      var phrase = doc.list[i];
+      var keys = Object.keys(phrase.names);
+      keys = keys.filter(function (id) {
+        return phrase.names[id].group === name;
+      });
+      keys.forEach(function (id) {
+        arr.push(phrase.buildFrom(phrase.names[id].start, phrase.names[id].length));
+      });
+    };
+
+    for (var i = 0; i < doc.list.length; i++) {
+      _loop(i);
+    }
+
+    return doc.buildFrom(arr);
+  };
+  /** grab named capture group results */
+
+
+  exports.byName = function (target) {
+    if (target === undefined) {
+      return groupByNames(this);
+    }
+
+    if (typeof target === 'number') {
+      target = String(target);
+    }
+
+    return getOneName(this, target) || this.buildFrom([]);
+  };
+
+  exports.names = exports.byName;
+  exports.named = exports.byName;
 });
 var _02Accessors_1 = _02Accessors.first;
 var _02Accessors_2 = _02Accessors.last;
@@ -6316,8 +6299,9 @@ var _02Accessors_5 = _02Accessors.get;
 var _02Accessors_6 = _02Accessors.firstTerm;
 var _02Accessors_7 = _02Accessors.lastTerm;
 var _02Accessors_8 = _02Accessors.termList;
-var _02Accessors_9 = _02Accessors.named;
-var _02Accessors_10 = _02Accessors.groupByNames;
+var _02Accessors_9 = _02Accessors.byName;
+var _02Accessors_10 = _02Accessors.names;
+var _02Accessors_11 = _02Accessors.named;
 
 var _03Match = createCommonjsModule(function (module, exports) {
   /** return a new Doc, with this one as a parent */
@@ -6886,7 +6870,7 @@ var replaceWith = function replaceWith(replace) {
         input = titleCase$2(input);
       }
 
-      newPhrases = _01Tokenizer.fromText(input, _this.world, _this.pool()); //tag the new phrases
+      newPhrases = _01Tokenizer(input, _this.world, _this.pool()); //tag the new phrases
 
       var tmpDoc = _this.buildFrom(newPhrases);
 
@@ -6945,7 +6929,7 @@ var _02Insert = createCommonjsModule(function (module, exports) {
 
     this.list.forEach(function (p) {
       //build it
-      var phrase = _01Tokenizer.fromText(str, _this.world, _this.pool())[0]; //assume it's one sentence, for now
+      var phrase = _01Tokenizer(str, _this.world, _this.pool())[0]; //assume it's one sentence, for now
       //tag it
 
       var tmpDoc = _this.buildFrom([phrase]);
@@ -6973,7 +6957,7 @@ var _02Insert = createCommonjsModule(function (module, exports) {
 
     this.list.forEach(function (p) {
       //build it
-      var phrase = _01Tokenizer.fromText(str, _this2.world, _this2.pool())[0]; //assume it's one sentence, for now
+      var phrase = _01Tokenizer(str, _this2.world, _this2.pool())[0]; //assume it's one sentence, for now
       //tag it
 
       var tmpDoc = _this2.buildFrom([phrase]);
@@ -6997,7 +6981,7 @@ var _02Insert = createCommonjsModule(function (module, exports) {
       var arg = arguments[i]; //support a fresh string
 
       if (typeof arg === 'string') {
-        var arr = _01Tokenizer.fromText(arg, this.world); //TODO: phrase.tagger()?
+        var arr = _01Tokenizer(arg, this.world); //TODO: phrase.tagger()?
 
         list = list.concat(arr);
       } else if (arg.isA === 'Doc') {
@@ -7480,100 +7464,6 @@ var out = function out(method) {
 var _03Out = {
   debug: debug_1,
   out: out
-};
-
-// compress a list of things by frequency
-var topk$1 = function topk(list) {
-  var counts = {};
-  list.forEach(function (a) {
-    counts[a] = counts[a] || 0;
-    counts[a] += 1;
-  });
-  var arr = Object.keys(counts);
-  arr = arr.sort(function (a, b) {
-    if (counts[a] > counts[b]) {
-      return -1;
-    } else {
-      return 1;
-    }
-  }); // arr = arr.filter(a => counts[a] > 1)
-
-  return arr.map(function (a) {
-    return [a, counts[a]];
-  });
-}; // remove implied tags, like 'Noun' when we have 'Plural'
-
-
-var reduceTags = function reduceTags(tags, world) {
-  var tagset = world.tags;
-  var implied = [];
-  tags.forEach(function (tag) {
-    if (tagset[tag] && tagset[tag].isA) {
-      implied = implied.concat(tagset[tag].isA);
-    }
-  });
-  implied = implied.reduce(function (h, tag) {
-    h[tag] = true;
-    return h;
-  }, {});
-  tags = tags.filter(function (tag) {
-    return !implied[tag];
-  }); // tags
-
-  return tags;
-};
-/** store a parsed document for later use */
-
-
-var export_1 = function export_1() {
-  var _this = this;
-
-  var phraseList = this.json({
-    text: true,
-    trim: false,
-    terms: {
-      tags: true,
-      whitespace: true
-    }
-  }); // let phraseList = json.map(p => p.terms)
-
-  var allTags = [];
-  phraseList.forEach(function (p) {
-    p.terms.forEach(function (t) {
-      // reduce redundant tags
-      var tags = reduceTags(t.tags, _this.world);
-      allTags = allTags.concat(tags);
-    });
-  }); // compress the top tags
-
-  allTags = topk$1(allTags);
-  var tagMap = {};
-  allTags.forEach(function (a, i) {
-    tagMap[a[0]] = i;
-  }); //use index numbers instead of redundant tag-names
-
-  phraseList = phraseList.map(function (p) {
-    var terms = p.terms.map(function (term) {
-      var tags = term.tags;
-      tags = reduceTags(tags, _this.world);
-      tags = tags.map(function (tag) {
-        return tagMap[tag];
-      });
-      tags = tags.join(',');
-      return tags;
-    });
-    terms = terms.join('|');
-    return [p.text, terms];
-  });
-  return {
-    tags: Object.keys(tagMap),
-    // words: {},
-    list: phraseList
-  };
-};
-
-var _04Export = {
-  "export": export_1
 };
 
 var methods$2 = {
@@ -8464,7 +8354,7 @@ var _07Contract = {
   contract: contract
 };
 
-var methods$4 = Object.assign({}, _01Utils$1, _02Accessors, _03Match, _04Tag, _05Loops, _06Lookup, _01Replace, _02Insert, _01Text, _02Json, _03Out, _04Export, _01Sort, _02Normalize, _03Split, _04Case, _05Whitespace, _06Join, _07Contract);
+var methods$4 = Object.assign({}, _01Utils$1, _02Accessors, _03Match, _04Tag, _05Loops, _06Lookup, _01Replace, _02Insert, _01Text, _02Json, _03Out, _01Sort, _02Normalize, _03Split, _04Case, _05Whitespace, _06Join, _07Contract);
 
 var methods$5 = {}; // allow helper methods like .adjectives() and .adverbs()
 
@@ -9920,7 +9810,7 @@ var isNumber = /^[0-9]+$/;
 
 var createPhrase = function createPhrase(found, doc) {
   //create phrase from ['would', 'not']
-  var phrase = _01Tokenizer.fromText(found.join(' '), doc.world, doc.pool())[0]; //tag it
+  var phrase = _01Tokenizer(found.join(' '), doc.world, doc.pool())[0]; //tag it
 
   var terms = phrase.terms();
   _01Lexicon(terms, doc.world); //make these terms implicit
@@ -9986,8 +9876,8 @@ var miscCorrection = function miscCorrection(doc) {
   doc.match('#Holiday (day|eve)').tag('Holiday', 'holiday-day'); // the captain who
 
   doc.match('#Noun [(who|whom)]').tag('Determiner', 'captain-who'); //timezones
-
-  doc.match('(standard|daylight|summer|eastern|pacific|central|mountain) standard? time').tag('Time', 'timezone'); //Brazilian pesos
+  // doc.match('(standard|daylight|summer|eastern|pacific|central|mountain) standard? time').tag('Time', 'timezone')
+  //Brazilian pesos
 
   doc.match('#Demonym #Currency').tag('Currency', 'demonym-currency'); //about to go
 
@@ -10659,15 +10549,15 @@ var fixDates = function fixDates(doc) {
     verb.match("#Adverb [".concat(verbs$1, "]")).tag('Infinitive', 'ambig-verb');
     verb.match("".concat(verbs$1, " [#Adverb]")).tag('Infinitive', 'ambig-verb'); //all march
 
-    verb.match("".concat(preps, " [").concat(verbs$1, "]")).tag('Month', 'in-month'); //this march
+    verb.match("".concat(preps, " [").concat(verbs$1, "]")).tag('Date', 'in-month').match('(may|march)').tag('Month'); //this march
 
-    verb.match("(next|this|last) [".concat(verbs$1, "]")).tag('Month', 'this-month'); //with date
+    verb.match("(next|this|last) [".concat(verbs$1, "]")).tag('Date', 'this-month').match('(may|march)').tag('Month'); //with date
 
-    verb.match("[".concat(verbs$1, "] the? #Value")).tag('Month', 'march-5th');
-    verb.match("#Value of? [".concat(verbs$1, "]")).tag('Month', '5th-of-march'); //nearby
+    verb.match("[".concat(verbs$1, "] the? #Value")).tag('Date', 'march-5th').match('(may|march)').tag('Month');
+    verb.match("#Value of? [".concat(verbs$1, "]")).tag('Date', '5th-of-march').match('(may|march)').tag('Month'); //nearby
 
-    verb.match("[".concat(verbs$1, "] .? #Date")).tag('Month', 'march-and-feb');
-    verb.match("#Date .? [".concat(verbs$1, "]")).tag('Month', 'feb-and-march');
+    verb.match("[".concat(verbs$1, "] .? #Date")).tag('Date', 'march-and-feb').match('(may|march)').tag('Month');
+    verb.match("#Date .? [".concat(verbs$1, "]")).tag('Date', 'feb-and-march').match('(may|march)').tag('Month');
     var march = doc["if"]('march');
 
     if (march.found === true) {
@@ -12515,7 +12405,7 @@ Doc.prototype.buildFrom = function (list) {
 
 
 Doc.prototype.fromText = function (str) {
-  var list = _01Tokenizer.fromText(str, this.world, this.pool());
+  var list = _01Tokenizer(str, this.world, this.pool());
   return this.buildFrom(list);
 };
 
@@ -12549,7 +12439,7 @@ function instance(worldInstance) {
       world.addWords(lexicon);
     }
 
-    var list = _01Tokenizer.fromText(text, world);
+    var list = _01Tokenizer(text, world);
     var doc = new Doc_1(list, null, world);
     doc.tagger();
     return doc;
@@ -12565,7 +12455,7 @@ function instance(worldInstance) {
       world.addWords(lexicon);
     }
 
-    var list = _01Tokenizer.fromText(text, world);
+    var list = _01Tokenizer(text, world);
     var doc = new Doc_1(list, null, world);
     return doc;
   };
@@ -12573,21 +12463,21 @@ function instance(worldInstance) {
 
 
   nlp.extend = function (fn) {
-    fn(Doc_1, world);
+    fn(Doc_1, world, this, Phrase_1, Term_1, Pool_1);
     return this;
+  };
+  /** create a compromise Doc object from .json() results */
+
+
+  nlp.fromJSON = function (json) {
+    var list = fromJSON_1(json, world);
+    return new Doc_1(list, null, world);
   };
   /** make a deep-copy of the library state */
 
 
   nlp.clone = function () {
     return instance(world.clone());
-  };
-  /** re-generate a Doc object from .json() results */
-
-
-  nlp.load = function (json) {
-    var list = _01Tokenizer.fromJSON(json, world);
-    return new Doc_1(list, null, world);
   };
   /** log our decision-making for debugging */
 

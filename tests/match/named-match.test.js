@@ -254,8 +254,8 @@ test('named-match-code-gen', function(t) {
     },
     {
       name: 'If',
-      match: 'If [<a>#Verb] equals [<b>#Value] then',
-      fn: ({ a, b }) => `if(${a.text()} === ${b.text()}){}`,
+      match: 'If [<a>#Verb] equals [<b>#Value] then [<contents>.+]',
+      fn: ({ a, b, contents }) => `if(${a.text()} === ${b.text()}){${contents.text()}}`,
     },
   ]
 
@@ -279,9 +279,9 @@ test('named-match-code-gen', function(t) {
 
   let output = nlp
     .clone()
-    .extend(code)('if size equals 0 then')
+    .extend(code)('if size equals 0 then do this, and this, and this')
     .toCode()
-  t.equal(output, 'if(size === 0){}')
+  t.equal(output, 'if(size === 0){do this, and this, and this}')
 
   // Use code generators
   output = nlp

@@ -260,28 +260,21 @@ test('named-match-code-gen', function(t) {
   ]
 
   // Plugin for post processing matches and thunking the output
-  const code = (Doc, world) => {
-    world.generators = []
+  const code = Doc => {
     Doc.prototype.toCode = function() {
       let output = ''
 
-      for (const g of world.generators) {
-        output += g()
+      for (let i = 0; i < templates.length; i++) {
+        const template = templates[i]
+
+        const res = this.if(template.match)
+        if (res.found) {
+          output += template.fn(res.byName())
+        }
       }
 
       return output
     }
-
-    world.postProcess(doc => {
-      for (let i = 0; i < templates.length; i++) {
-        const template = templates[i]
-
-        const res = doc.if(template.match)
-        if (res.found) {
-          world.generators.push(() => template.fn(res.byName()))
-        }
-      }
-    })
   }
 
   let output = nlp

@@ -1,3 +1,4 @@
+/* compromise-ngrams 0.0.4 MIT */
 var defaults = {
   max: 4,
   min: 1

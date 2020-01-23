@@ -6,6 +6,9 @@ import babel from 'rollup-plugin-babel'
 import sizeCheck from 'rollup-plugin-filesize-check'
 const name = 'compromise-syllables'
 
+import { version } from './package.json'
+const banner = `/* ${name} ${version} MIT */`
+
 export default [
   {
     input: 'src/index.js',
@@ -13,6 +16,7 @@ export default [
       {
         file: `builds/${name}.mjs`,
         format: 'esm',
+        banner: banner,
       },
     ],
     plugins: [
@@ -34,6 +38,7 @@ export default [
         format: 'umd',
         sourcemap: true,
         name: 'compromiseSyllables',
+        banner: banner,
       },
     ],
     plugins: [

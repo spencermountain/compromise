@@ -1,3 +1,4 @@
+/* compromise-keypress 0.0.1 MIT */
 var addMethods = function addMethods(Doc, world, nlp) {
   var sentenceCache = {};
   /** memoize tagger per-sentence */

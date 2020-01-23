@@ -1,3 +1,4 @@
+/* compromise-html 0.0.3 MIT */
 function _taggedTemplateLiteral(strings, raw) {
   if (!raw) {
     raw = strings.slice(0);

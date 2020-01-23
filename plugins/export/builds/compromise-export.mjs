@@ -1,3 +1,4 @@
+/* compromise-export 0.0.1 MIT */
 var reduceWords = function reduceWords(allWords) {
   var topWords = Object.keys(allWords).filter(function (str) {
     return allWords[str] >= 2;

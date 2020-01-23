@@ -29,7 +29,7 @@
     "lint": "eslint ./src/",
     "watch": "amble ./scratch.js",
     "build:all": "node ./scripts/build-all.js && npm run build  --silent",
-    "plugins": "node ./scripts/plugin-check.js",
+    "plugins": "node ./scripts/plugin-check.js --silent",
     "demo": "python -m SimpleHTTPServer 8888"
   },
   "files": [

@@ -36,12 +36,13 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "rollup": "1.29.0",
-    "rollup-plugin-babel": "^4.3.3",
-    "rollup-plugin-commonjs": "^10.0.0",
-    "rollup-plugin-json": "^4.0.0",
-    "rollup-plugin-node-resolve": "^5.1.0",
+    "rollup": "1.29.1",
+    "@rollup/plugin-commonjs": "11.0.1",
+    "@rollup/plugin-json": "4.0.1",
+    "@rollup/plugin-node-resolve": "7.0.0",
+    "rollup-plugin-babel": "4.3.3",
     "rollup-plugin-terser": "5.2.0",
+    "rollup-plugin-filesize-check": "0.0.1",
     "tap-dancer": "0.2.0",
     "tape": "4.13.0"
   },

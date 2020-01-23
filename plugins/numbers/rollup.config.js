@@ -1,8 +1,9 @@
-import commonjs from 'rollup-plugin-commonjs'
-import json from 'rollup-plugin-json'
+import commonjs from '@rollup/plugin-commonjs'
+import json from '@rollup/plugin-json'
+import resolve from '@rollup/plugin-node-resolve'
 import { terser } from 'rollup-plugin-terser'
-import resolve from 'rollup-plugin-node-resolve'
 import babel from 'rollup-plugin-babel'
+import sizeCheck from 'rollup-plugin-filesize-check'
 const name = 'compromise-numbers'
 
 export default [
@@ -22,6 +23,7 @@ export default [
         babelrc: false,
         presets: ['@babel/preset-env'],
       }),
+      sizeCheck(),
     ],
   },
   {
@@ -42,6 +44,7 @@ export default [
         babelrc: false,
         presets: ['@babel/preset-env'],
       }),
+      sizeCheck(),
     ],
   },
   {
@@ -62,6 +65,7 @@ export default [
         presets: ['@babel/preset-env'],
       }),
       terser(),
+      sizeCheck(),
     ],
   },
 ]

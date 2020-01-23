@@ -31,6 +31,7 @@
     "coverage": "node ./scripts/coverage.js",
     "coverage:html": "nyc --reporter=html tape \"./tests/**/*.test.js\" | tap-dancer --color always",
     "test:types": "ts-node ./types/types.test.ts | tap-dancer",
+    "test:perf": "tape \"./tests/performance.ignore.js\" | tap-dancer",
     "lint": "eslint ./src/"
   },
   "files": [
@@ -53,6 +54,7 @@
     "@rollup/plugin-alias": "^3.0.0",
     "amble": "0.0.7",
     "efrt": "2.2.1",
+    "node-fetch": "^2.6.0",
     "rollup": "1.29.0",
     "rollup-plugin-babel": "4.3.3",
     "rollup-plugin-commonjs": "10.1.0",

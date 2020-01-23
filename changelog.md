@@ -16,10 +16,14 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - fix nlp.clone()  - hasn't worked properly, since v12. (@Drache93)
 - add new named-match syntax, with .byName() method (@Drache93)
 - fix issues with greedy capture [*] and [.+] (@Drache93) 💛
+- `.lookup({key:val})` with an object now returns an object back ({val: Doc})
 - add whitespace properties (pre+post) to default json output (suppress with `.json({whitespace:false})`)
-- add constructor as extra param to .extend()
+- add nlp constructor as extra param to `.extend()`
 - add `nlp.fromJSON()` method
 - add a new `compromise-tokenize.js` build, without the tagger.
+- support lexicon object input to tokenize - `.tokenize({word:'tag'})`
+- clean-up of scripts and tooling
+- improved typescript types
 -->
 
 ##### 12.4.0

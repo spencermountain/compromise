@@ -54,7 +54,7 @@
     "@rollup/plugin-json": "^4.0.1",
     "@rollup/plugin-node-resolve": "^7.0.0",
     "amble": "0.0.7",
-    "efrt": "2.2.1",
+    "efrt": "2.2.2",
     "rollup": "1.29.1",
     "rollup-plugin-babel": "4.3.3",
     "rollup-plugin-filesize-check": "0.0.1",

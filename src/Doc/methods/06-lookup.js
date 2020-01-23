@@ -21,20 +21,21 @@ const findStart = function(arr, terms) {
   return false
 }
 
-const findTerms = function(doc, a) {
+//return a phrase-object from a ['word', 'sequence']
+//this ought to be faster.
+const findTerms = function(doc, termArr) {
   let found = []
-  //try each phrase
+  //go through each phrase
   doc.list.forEach(p => {
     // cache-miss, skip.
-    if (p.cache.words[a[0]] !== true) {
+    if (p.cache.words[termArr[0]] !== true) {
       return
     }
     //we found a potential match
-    let terms = p.terms()
-    let id = findStart(a, terms)
+    let id = findStart(termArr, p.terms())
     if (id !== false) {
-      // create the actual phrase
-      let phrase = p.buildFrom(id, a.length)
+      // create the actual phrase object
+      let phrase = p.buildFrom(id, termArr.length)
       found.push(phrase)
       return
     }
@@ -43,29 +44,40 @@ const findTerms = function(doc, a) {
 }
 
 const isObject = function(obj) {
-  return Object.prototype.toString.call(obj) === '[object Object]'
+  return obj && Object.prototype.toString.call(obj) === '[object Object]'
+}
+
+// turn {key:val} into {val: Doc}
+const lookupObject = function(doc, obj) {
+  let result = {}
+  Object.keys(obj).forEach(k => {
+    let str = k.toLowerCase()
+    let a = tokenize(str).map(s => s.trim())
+    let found = findTerms(doc, a)
+    if (found.length > 0) {
+      result[obj[k]] = doc.buildFrom(found)
+    }
+  })
+  return result
 }
 
 /** lookup an array of words or phrases */
-exports.lookup = function(input) {
-  let arr = []
-  if (typeof input === 'string') {
-    arr = [input]
-  } else if (isObject(input)) {
-    arr = Object.keys(input)
-  } else {
-    arr = input
-  }
-  let lookups = arr.map(str => {
-    str = str.toLowerCase()
-    let words = tokenize(str)
-    words = words.map(s => s.trim())
-    return words
-  })
+exports.lookup = function(arr) {
+  //make sure we go fast.
   this.cache()
+  //is it a {key:val} object?
+  if (isObject(arr)) {
+    return lookupObject(this, arr)
+  }
+  // otherwise, do array mode.
+  if (typeof arr === 'string') {
+    arr = [arr]
+  }
   let found = []
-  // try each lookup
-  lookups.forEach(a => {
+  arr.forEach(str => {
+    str = str.toLowerCase()
+    let a = tokenize(str)
+    a = a.map(s => s.trim())
     found = found.concat(findTerms(this, a))
   })
   return this.buildFrom(found)

@@ -34,11 +34,10 @@ Phrase.prototype.buildFrom = function(id, length) {
       p.cache.terms = null
     }
   }
-
+  //copy-over capture-groups too
   if (this.names) {
     p.names = this.names
   }
-
   return p
 }
 

@@ -4,8 +4,10 @@ import resolve from '@rollup/plugin-node-resolve'
 import { terser } from 'rollup-plugin-terser'
 import babel from 'rollup-plugin-babel'
 import alias from '@rollup/plugin-alias'
+import sizeCheck from 'rollup-plugin-filesize-check'
+
 import { version } from './package.json'
-const banner = '/* spencermountain/compromise ' + version + ' MIT */'
+const banner = '/* compromise ' + version + ' MIT */'
 
 export default [
   {
@@ -21,12 +23,13 @@ export default [
       alias({
         //remove a bunch of imports with no-ops
         entries: [
-          { find: './_data', replacement: __dirname + '/scripts/no-ops/_object' },
-          { find: '../02-tagger', replacement: __dirname + '/scripts/no-ops/_function' },
-          { find: 'efrt-unpack', replacement: __dirname + '/scripts/no-ops/_function' },
+          { find: './_data', replacement: __dirname + '/scripts/build/no-ops/_object' },
+          { find: '../02-tagger', replacement: __dirname + '/src/02-tagger/tiny' },
+          { find: 'efrt-unpack', replacement: __dirname + '/scripts/build/no-ops/_function' },
         ],
       }),
       terser(),
+      sizeCheck({ shouldBe: 95, warn: 5 }),
     ],
   },
   {
@@ -40,6 +43,7 @@ export default [
         babelrc: false,
         presets: ['@babel/preset-env'],
       }),
+      sizeCheck({ shouldBe: 95, warn: 5 }),
     ],
   },
   {
@@ -53,6 +57,7 @@ export default [
         babelrc: false,
         presets: ['@babel/preset-env'],
       }),
+      sizeCheck({ shouldBe: 95, warn: 5 }),
     ],
   },
   {
@@ -67,6 +72,7 @@ export default [
         presets: ['@babel/preset-env'],
       }),
       terser(),
+      sizeCheck({ shouldBe: 170, warn: 15 }),
     ],
   },
 ]

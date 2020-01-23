@@ -1,4 +1,4 @@
-/* spencermountain/compromise 12.3.0 MIT */
+/* compromise 12.3.0 MIT */
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {

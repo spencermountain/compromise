@@ -1,12 +1,12 @@
-var fs = require('fs')
-var path = require('path')
-var efrt = require('efrt')
-// var nlpPlugin = require('compromise-plugin')
+const fs = require('fs')
+const path = require('path')
+const efrt = require('efrt')
+// const nlpPlugin = require('compromise-plugin')
 
 console.log('\n 🕑  - packing lexicon..')
-var outFile = path.join(__dirname, '../src/World/_data.js')
+const outFile = path.join(__dirname, '../../src/World/_data.js')
 
-var lexicon = require('../data')
+const lexicon = require('../../data')
 
 //turn them into a series of flat-arrays
 let words = Object.keys(lexicon)
@@ -31,7 +31,7 @@ Object.keys(packed).forEach(tag => {
 fs.writeFileSync(outFile, 'module.exports=' + JSON.stringify(packed, null, 2), 'utf8')
 
 //get filesize
-var stats = fs.statSync(outFile)
+const stats = fs.statSync(outFile)
 let size = (stats['size'] / 1000.0).toFixed(1)
 
 console.log('       - packed into  ' + size + 'k\n')

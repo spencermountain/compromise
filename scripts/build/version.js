@@ -1,5 +1,5 @@
-var fs = require('fs')
-var pkg = require('../package.json')
+const fs = require('fs')
+const pkg = require('../../package.json')
 
 // avoid requiring our whole package.json file
 // make a small file for our version number

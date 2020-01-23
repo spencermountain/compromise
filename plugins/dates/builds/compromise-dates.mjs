@@ -243,9 +243,9 @@ var fixDates = function fixDates(doc) {
 
     time.match('#Cardinal #Time').not('#Year').tag('Time', 'value-time'); //2pm est
 
-    time.match('#Time [(eastern|pacific|central|mountain)]').tag('Time', 'timezone'); //6pm est
+    time.match('#Time [(eastern|pacific|central|mountain)]').tag('Date', 'timezone'); //6pm est
 
-    time.match('#Time [(est|pst|gmt)]').tag('Time', 'timezone abbr');
+    time.match('#Time [(est|pst|gmt)]').tag('Date', 'timezone abbr');
   }
 
   return doc;
@@ -346,20 +346,22 @@ var _03Sections = sectionTagger;
 var here$3 = 'time-tagger'; //
 
 var timeTagger = function timeTagger(doc) {
-  if (doc.has('#Time')) {
-    //eastern daylight time
-    doc.match('#Noun (standard|daylight|central|mountain)? time').tag('Timezone', here$3);
-  } // https://raw.githubusercontent.com/davispuh/TimezoneParser/master/data/abbreviations.yml
-
-
-  if (doc.has('#Acronym')) {
-    var abbr = '(acdt|acst|ace|dmt|ist|tse|addt|adt|aedt|aest|ahdt|ahst|akdt|akst|amt|nst|apt|awt|gmt|awdt|awst|bdst|bst|bdt|nwt|bmt|wet|bost|cddt|cdt|cet|cmt|cpt|cst|cwt|chst|gst|eat|eddt|edt|eest|eet|emt|ept|ewt|est|ffmt|fmt|hdt|hst|hkst|hkt|hmt|iddt|idt|jmt|imt|jdt|jst|kdt|kst|kmt|lst|mddt|mdst|msd|msk|mdt|mmt|mpt|pdt|pst|mst|mwt|nddt|ndt|npt|nzdt|nzmt|nzst|pddt|pkst|pkt|plmt|pmmt|pmt|ppmt|ppt|pwt|qmt|rmt|sast|sdmt|set|sjmt|smt|sst|tbmt|tmt|utc|wast|wemt|wib|wit|wita|wmt|yddt|ydt|ypt|ywt|yst)';
-    doc.match(abbr).tag('Timezone', here$3);
-  } // quarter to seven
-
-
+  // quarter to seven
   if (doc.has('#Cardinal')) {
-    doc.match('(half|quarter|25|15|10|5) (past|after|to) #Cardinal').tag('Time');
+    doc.match('(half|quarter|25|15|10|5) (past|after|to) #Cardinal').tag('Time', here$3);
+  } //timezone
+
+
+  if (doc.has('#Date')) {
+    //eastern daylight time
+    doc.match('#Noun (standard|daylight|central|mountain)? time').tag('Timezone', here$3); //utc+5
+
+    doc.match('/^utc[+-][0-9]/').tag('Timezone', here$3);
+    doc.match('/^gmt[+-][0-9]/').tag('Timezone', here$3);
+    doc.match('(in|for|by|near|at) #Timezone').tag('Timezone', here$3); // https://raw.githubusercontent.com/davispuh/TimezoneParser/master/data/abbreviations.yml
+    // let abbr =
+    // '(acdt|acst|ace|dmt|ist|tse|addt|adt|aedt|aest|ahdt|ahst|akdt|akst|amt|nst|apt|awt|gmt|awdt|awst|bdst|bst|bdt|nwt|bmt|wet|bost|cddt|cdt|cet|cmt|cpt|cst|cwt|chst|gst|eat|eddt|edt|eest|eet|emt|ept|ewt|est|ffmt|fmt|hdt|hst|hkst|hkt|hmt|iddt|idt|jmt|imt|jdt|jst|kdt|kst|kmt|lst|mddt|mdst|msd|msk|mdt|mmt|mpt|pdt|pst|mst|mwt|nddt|ndt|npt|nzdt|nzmt|nzst|pddt|pkst|pkt|plmt|pmmt|pmt|ppmt|ppt|pwt|qmt|rmt|sast|sdmt|set|sjmt|smt|sst|tbmt|tmt|utc|wast|wemt|wib|wit|wita|wmt|yddt|ydt|ypt|ywt|yst)'
+    // doc.match(abbr).tag('Timezone', here)
   }
 
   return doc;
@@ -465,9 +467,9 @@ var tagDate = function tagDate(doc) {
   return doc;
 };
 
-var tagger = tagDate;
+var _01Tag = tagDate;
 
-var tags = {
+var _tags = {
   FinancialQuarter: {
     isA: 'Date'
   },
@@ -497,50 +499,6 @@ var tags = {
     isA: ['Date']
   }
 };
-
-var dates = ['weekday', 'summer', 'winter', 'autumn', 'some day', 'one day', 'all day', 'some point', 'eod', 'eom', 'standard time', 'daylight time'];
-
-var durations = ['centuries', 'century', 'day', 'days', 'decade', 'decades', 'hour', 'hours', 'millisecond', 'milliseconds', 'minute', 'minutes', 'month', 'months', 'seconds', 'week', 'weeks', 'year', 'years'];
-
-var holidays = ['all hallows eve', 'all saints day', 'all sts day', 'april fools', 'armistice day', 'australia day', 'bastille day', 'boxing day', 'canada day', 'christmas eve', 'christmas', 'cinco de mayo', 'day of the dead', 'dia de muertos', 'dieciseis de septiembre', 'emancipation day', 'grito de dolores', 'groundhog day', 'halloween', 'harvey milk day', 'inauguration day', 'independence day', 'independents day', 'juneteenth', 'labour day', 'national freedom day', 'national nurses day', 'new years eve', 'new years', 'purple heart day', 'rememberance day', 'rosa parks day', 'saint andrews day', 'saint patricks day', 'saint stephens day', 'saint valentines day', 'st andrews day', 'st patricks day', 'st stephens day', 'st valentines day ', 'valentines day', 'valentines', 'veterans day', 'victoria day', 'womens equality day', 'xmas', // Fixed religious and cultural holidays
-// Catholic + Christian
-'epiphany', 'orthodox christmas day', 'orthodox new year', 'assumption of mary', 'all souls day', 'feast of the immaculate conception', 'feast of our lady of guadalupe', // Kwanzaa
-'kwanzaa', // Pagan / metal 🤘
-'imbolc', 'beltaine', 'lughnassadh', 'samhain', 'martin luther king day', 'mlk day', 'presidents day', 'mardi gras', 'tax day', 'commonwealth day', 'mothers day', 'memorial day', 'fathers day', 'columbus day', 'indigenous peoples day', 'canadian thanksgiving', 'election day', 'thanksgiving', 't-day', 'turkey day', 'black friday', 'cyber monday', // Astronomical religious and cultural holidays
-'ash wednesday', 'palm sunday', 'maundy thursday', 'good friday', 'holy saturday', 'easter', 'easter sunday', 'easter monday', 'orthodox good friday', 'orthodox holy saturday', 'orthodox easter', 'orthodox easter monday', 'ascension day', 'pentecost', 'whitsunday', 'whit sunday', 'whit monday', 'trinity sunday', 'corpus christi', 'advent', // Jewish
-'tu bishvat', 'tu bshevat', 'purim', 'passover', 'yom hashoah', 'lag baomer', 'shavuot', 'tisha bav', 'rosh hashana', 'yom kippur', 'sukkot', 'shmini atzeret', 'simchat torah', 'chanukah', 'hanukkah', // Muslim
-'isra and miraj', 'lailat al-qadr', 'eid al-fitr', 'id al-Fitr', 'eid ul-Fitr', 'ramadan', 'eid al-adha', 'muharram', 'the prophets birthday', 'ostara', 'march equinox', 'vernal equinox', 'litha', 'june solistice', 'summer solistice', 'mabon', 'september equinox', 'fall equinox', 'autumnal equinox', 'yule', 'december solstice', 'winter solstice', // Additional important holidays
-'chinese new year', 'diwali'];
-
-var times = ['noon', 'midnight', 'now', 'morning', 'tonight', 'evening', 'afternoon', 'night', 'breakfast time', 'lunchtime', 'dinnertime', 'ago', 'sometime', 'eod', 'oclock', 'oclock', 'all day', 'at night'];
-
-var lex = {};
-var data = [[dates, ['#Date']], [durations, ['#Duration']], [holidays, ['#Holiday']], [times, ['#Time']]];
-data.forEach(function (a) {
-  for (var i = 0; i < a[0].length; i++) {
-    lex[a[0][i]] = a[1];
-  }
-});
-var words = lex;
-
-var normalize = function normalize(doc) {
-  doc = doc.clone();
-
-  if (!doc.numbers) {
-    console.warn("Compromise: compromise-dates cannot find plugin dependency 'compromise-number'");
-  } else {
-    // convert 'two' to 2
-    var num = doc.numbers();
-    num.toNumber();
-    num.toCardinal();
-  } // remove adverbs
-
-
-  doc.adverbs().remove();
-  return doc;
-};
-
-var _01Normalize = normalize;
 
 function createCommonjsModule(fn, module) {
   return module = {
@@ -844,9 +802,9 @@ Object.freeze({
 
 
 var _prefixes = ['africa', 'america', 'asia', 'atlantic', 'australia', 'brazil', 'canada', 'chile', 'europe', 'indian', 'mexico', 'pacific', 'antarctica', 'etc'];
-var data$1 = getCjsExportFromNamespace(_build$1);
+var data = getCjsExportFromNamespace(_build$1);
 var all = {};
-Object.keys(data$1).forEach(function (k) {
+Object.keys(data).forEach(function (k) {
   var split = k.split('|');
   var obj = {
     offset: Number(split[0]),
@@ -857,7 +815,7 @@ Object.keys(data$1).forEach(function (k) {
     obj.dst = split[2];
   }
 
-  var names = data$1[k].split(',');
+  var names = data[k].split(',');
   names.forEach(function (str) {
     str = str.replace(/(^[0-9]+)\//, function (before, num) {
       num = Number(num);
@@ -998,7 +956,7 @@ var cities = Object.keys(unpack).reduce(function (h, k) {
   return h;
 }, {}); //try to match these against iana form
 
-var normalize$1 = function normalize(tz) {
+var normalize = function normalize(tz) {
   tz = tz.replace(/ time/g, '');
   tz = tz.replace(/ (standard|daylight|summer)/g, '');
   tz = tz.replace(/\b(east|west|north|south)ern/g, '$1');
@@ -1028,7 +986,7 @@ var lookupTz = function lookupTz(str, zones) {
   } //lookup more loosely..
 
 
-  tz = normalize$1(tz);
+  tz = normalize(tz);
 
   if (zones.hasOwnProperty(tz) === true) {
     return tz;
@@ -1681,7 +1639,7 @@ var strFmt = [//iso-this 1998-05-30T22:00:00:000Z, iso-that 2017-04-03T08:00:00-
   }
 }];
 var strParse = strFmt;
-var dates$1 = {
+var dates = {
   now: function now(s) {
     s.epoch = Date.now();
     return s;
@@ -1720,8 +1678,8 @@ var dates$1 = {
     return s;
   }
 };
-dates$1['new years eve'] = dates$1['new years'];
-var namedDates = dates$1; //we have to actually parse these inputs ourselves
+dates['new years eve'] = dates['new years'];
+var namedDates = dates; //we have to actually parse these inputs ourselves
 //  -  can't use built-in js parser ;(
 //=========================================
 // ISO Date	  "2015-03-25"
@@ -4492,6 +4450,311 @@ var spacetime$1 = /*#__PURE__*/Object.freeze({
   'default': src
 });
 
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+function createCommonjsModule$1(fn, module) {
+	return module = { exports: {} }, fn(module, module.exports), module.exports;
+}
+
+function getCjsExportFromNamespace$1 (n) {
+	return n && n['default'] || n;
+}
+
+var spacetime$2 = getCjsExportFromNamespace$1(spacetime$1);
+
+// these timezone abbreviations are wholly made-up by me, Spencer Kelly, with no expertise in geography
+// generated humbly from https://github.com/spencermountain/spacetime-informal
+
+var america = 'America/';
+var asia = 'Asia/';
+var europe = 'Europe/';
+var africa = 'Africa/';
+var aus = 'Australia/';
+var pac = 'Pacific/';
+var informal = {
+  //europe
+  'british summer time': europe + 'London',
+  bst: europe + 'London',
+  'british time': europe + 'London',
+  'britain time': europe + 'London',
+  'irish summer time': europe + 'Dublin',
+  'irish time': europe + 'Dublin',
+  ireland: europe + 'Dublin',
+  'central european time': europe + 'Berlin',
+  cet: europe + 'Berlin',
+  'central european summer time': europe + 'Berlin',
+  cest: europe + 'Berlin',
+  'central europe': europe + 'Berlin',
+  'eastern european time': europe + 'Riga',
+  eet: europe + 'Riga',
+  'eastern european summer time': europe + 'Riga',
+  eest: europe + 'Riga',
+  'eastern europe time': europe + 'Riga',
+  'western european time': europe + 'Lisbon',
+  // wet: europe+'Lisbon',
+  'western european summer time': europe + 'Lisbon',
+  // west: europe+'Lisbon',
+  'western europe': europe + 'Lisbon',
+  'turkey standard time': europe + 'Istanbul',
+  trt: europe + 'Istanbul',
+  'turkish time': europe + 'Istanbul',
+  //africa
+  etc: africa + 'Freetown',
+  utc: africa + 'Freetown',
+  'greenwich standard time': africa + 'Freetown',
+  gmt: africa + 'Freetown',
+  'east africa time': africa + 'Nairobi',
+  // eat: africa+'Nairobi',
+  'east african time': africa + 'Nairobi',
+  'eastern africa time': africa + 'Nairobi',
+  'central africa time': africa + 'Khartoum',
+  // cat: africa+'Khartoum',
+  'central african time': africa + 'Khartoum',
+  'south africa standard time': africa + 'Johannesburg',
+  sast: africa + 'Johannesburg',
+  'southern africa': africa + 'Johannesburg',
+  'south african': africa + 'Johannesburg',
+  'west africa standard time': africa + 'Lagos',
+  // wat: africa+'Lagos',
+  'western africa time': africa + 'Lagos',
+  'west african time': africa + 'Lagos',
+  'australian central standard time': aus + 'Adelaide',
+  acst: aus + 'Adelaide',
+  'australian central daylight time': aus + 'Adelaide',
+  acdt: aus + 'Adelaide',
+  'australia central': aus + 'Adelaide',
+  'australian eastern standard time': aus + 'Brisbane',
+  aest: aus + 'Brisbane',
+  'australian eastern daylight time': aus + 'Brisbane',
+  aedt: aus + 'Brisbane',
+  'australia east': aus + 'Brisbane',
+  'australian western standard time': aus + 'Perth',
+  awst: aus + 'Perth',
+  'australian western daylight time': aus + 'Perth',
+  awdt: aus + 'Perth',
+  'australia west': aus + 'Perth',
+  'australian central western standard time': aus + 'Eucla',
+  acwst: aus + 'Eucla',
+  'australia central west': aus + 'Eucla',
+  'lord howe standard time': aus + 'Lord_Howe',
+  lhst: aus + 'Lord_Howe',
+  'lord howe daylight time': aus + 'Lord_Howe',
+  lhdt: aus + 'Lord_Howe',
+  'russian standard time': europe + 'Moscow',
+  msk: europe + 'Moscow',
+  russian: europe + 'Moscow',
+  //america
+  'central standard time': america + 'Chicago',
+  'central time': america + 'Chicago',
+  cst: america + 'Havana',
+  'central daylight time': america + 'Chicago',
+  cdt: america + 'Havana',
+  'mountain standard time': america + 'Denver',
+  'mountain time': america + 'Denver',
+  mst: america + 'Denver',
+  'mountain daylight time': america + 'Denver',
+  mdt: america + 'Denver',
+  'atlantic standard time': america + 'Halifax',
+  'atlantic time': america + 'Halifax',
+  ast: asia + 'Baghdad',
+  'atlantic daylight time': america + 'Halifax',
+  adt: america + 'Halifax',
+  'eastern standard time': america + 'New_York',
+  'eastern time': america + 'New_York',
+  est: america + 'New_York',
+  'eastern daylight time': america + 'New_York',
+  edt: america + 'New_York',
+  'pacific time': america + 'Los_Angeles',
+  'pacific standard time': america + 'Los_Angeles',
+  pst: america + 'Los_Angeles',
+  'pacific daylight time': america + 'Los_Angeles',
+  pdt: america + 'Los_Angeles',
+  'alaskan standard time': america + 'Anchorage',
+  'alaskan time': america + 'Anchorage',
+  ahst: america + 'Anchorage',
+  'alaskan daylight time': america + 'Anchorage',
+  ahdt: america + 'Anchorage',
+  'hawaiian standard time': pac + 'Honolulu',
+  'hawaiian time': pac + 'Honolulu',
+  hst: pac + 'Honolulu',
+  'aleutian time': pac + 'Honolulu',
+  'hawaii time': pac + 'Honolulu',
+  'newfoundland standard time': america + 'St_Johns',
+  'newfoundland time': america + 'St_Johns',
+  nst: america + 'St_Johns',
+  'newfoundland daylight time': america + 'St_Johns',
+  ndt: america + 'St_Johns',
+  'brazil time': america + 'Sao_Paulo',
+  brt: america + 'Sao_Paulo',
+  brasília: america + 'Sao_Paulo',
+  brasilia: america + 'Sao_Paulo',
+  'brazilian time': america + 'Sao_Paulo',
+  'argentina time': america + 'Buenos_Aires',
+  // art: a+'Buenos_Aires',
+  'argentinian time': america + 'Buenos_Aires',
+  'amazon time': america + 'Manaus',
+  amt: america + 'Manaus',
+  'amazonian time': america + 'Manaus',
+  'easter island standard time': 'Chile/Easterisland',
+  east: 'Chile/Easterisland',
+  'easter island summer time': 'Chile/Easterisland',
+  easst: 'Chile/Easterisland',
+  'venezuelan standard time': america + 'Caracas',
+  'venezuelan time': america + 'Caracas',
+  vet: america + 'Caracas',
+  'venezuela time': america + 'Caracas',
+  'paraguay time': america + 'Asuncion',
+  pyt: america + 'Asuncion',
+  'paraguay summer time': america + 'Asuncion',
+  pyst: america + 'Asuncion',
+  'cuba standard time': america + 'Havana',
+  'cuba time': america + 'Havana',
+  'cuba daylight time': america + 'Havana',
+  'cuban time': america + 'Havana',
+  'bolivia time': america + 'La_Paz',
+  // bot: a+'La_Paz',
+  'bolivian time': america + 'La_Paz',
+  'colombia time': america + 'Bogota',
+  cot: america + 'Bogota',
+  'colombian time': america + 'Bogota',
+  'acre time': america + 'Eirunepe',
+  // act: a+'Eirunepe',
+  'peru time': america + 'Lima',
+  // pet: a+'Lima',
+  'chile standard time': america + 'Punta_Arenas',
+  'chile time': america + 'Punta_Arenas',
+  clst: america + 'Punta_Arenas',
+  'chile summer time': america + 'Punta_Arenas',
+  cldt: america + 'Punta_Arenas',
+  'uruguay time': america + 'Montevideo',
+  uyt: america + 'Montevideo',
+  //asia
+  ist: asia + 'Jerusalem',
+  'arabic standard time': asia + 'Baghdad',
+  'arabic time': asia + 'Baghdad',
+  'arab time': asia + 'Baghdad',
+  'iran standard time': asia + 'Tehran',
+  'iran time': asia + 'Tehran',
+  irst: asia + 'Tehran',
+  'iran daylight time': asia + 'Tehran',
+  irdt: asia + 'Tehran',
+  iranian: asia + 'Tehran',
+  'pakistan standard time': asia + 'Karachi',
+  'pakistan time': asia + 'Karachi',
+  pkt: asia + 'Karachi',
+  'india standard time': asia + 'Kolkata',
+  'indian time': asia + 'Kolkata',
+  'indochina time': asia + 'Bangkok',
+  ict: asia + 'Bangkok',
+  'south east asia': asia + 'Bangkok',
+  'china standard time': asia + 'Shanghai',
+  ct: asia + 'Shanghai',
+  'chinese time': asia + 'Shanghai',
+  'alma-ata time': asia + 'Almaty',
+  almt: asia + 'Almaty',
+  'oral time': asia + 'Oral',
+  'orat time': asia + 'Oral',
+  'yakutsk time': asia + 'Yakutsk',
+  yakt: asia + 'Yakutsk',
+  'gulf standard time': asia + 'Dubai',
+  'gulf time': asia + 'Dubai',
+  gst: asia + 'Dubai',
+  uae: asia + 'Dubai',
+  'hong kong time': asia + 'Hong_Kong',
+  hkt: asia + 'Hong_Kong',
+  'western indonesian time': asia + 'Jakarta',
+  wib: asia + 'Jakarta',
+  'indonesia time': asia + 'Jakarta',
+  'central indonesian time': asia + 'Makassar',
+  wita: asia + 'Makassar',
+  'israel daylight time': asia + 'Jerusalem',
+  idt: asia + 'Jerusalem',
+  'israel standard time': asia + 'Jerusalem',
+  'israel time': asia + 'Jerusalem',
+  israeli: asia + 'Jerusalem',
+  'krasnoyarsk time': asia + 'Krasnoyarsk',
+  krat: asia + 'Krasnoyarsk',
+  'malaysia time': asia + 'Kuala_Lumpur',
+  myt: asia + 'Kuala_Lumpur',
+  'singapore time': asia + 'Singapore',
+  sgt: asia + 'Singapore',
+  'korea standard time': asia + 'Seoul',
+  'korea time': asia + 'Seoul',
+  kst: asia + 'Seoul',
+  'korean time': asia + 'Seoul',
+  'uzbekistan time': asia + 'Samarkand',
+  uzt: asia + 'Samarkand',
+  'vladivostok time': asia + 'Vladivostok',
+  vlat: asia + 'Vladivostok',
+  //indian
+  'maldives time': 'Indian/Maldives',
+  mvt: 'Indian/Maldives',
+  'mauritius time': 'Indian/Mauritius',
+  mut: 'Indian/Mauritius',
+  // pacific
+  'marshall islands time': pac + 'Kwajalein',
+  mht: pac + 'Kwajalein',
+  'samoa standard time': pac + 'Midway',
+  sst: pac + 'Midway',
+  'somoan time': pac + 'Midway',
+  'chamorro standard time': pac + 'Guam',
+  chst: pac + 'Guam',
+  'papua new guinea time': pac + 'Bougainville',
+  pgt: pac + 'Bougainville'
+}; //add the official iana zonefile names
+
+var iana = spacetime$2().timezones;
+var formal = Object.keys(iana).reduce(function (h, k) {
+  h[k] = k;
+  return h;
+}, {});
+
+var _timezones = Object.assign({}, informal, formal);
+
+var dates$1 = ['weekday', 'summer', 'winter', 'autumn', 'some day', 'one day', 'all day', 'some point', 'eod', 'eom', 'standard time', 'daylight time'];
+
+var durations = ['centuries', 'century', 'day', 'days', 'decade', 'decades', 'hour', 'hours', 'millisecond', 'milliseconds', 'minute', 'minutes', 'month', 'months', 'seconds', 'week', 'weeks', 'year', 'years'];
+
+var holidays = ['all hallows eve', 'all saints day', 'all sts day', 'april fools', 'armistice day', 'australia day', 'bastille day', 'boxing day', 'canada day', 'christmas eve', 'christmas', 'cinco de mayo', 'day of the dead', 'dia de muertos', 'dieciseis de septiembre', 'emancipation day', 'grito de dolores', 'groundhog day', 'halloween', 'harvey milk day', 'inauguration day', 'independence day', 'independents day', 'juneteenth', 'labour day', 'national freedom day', 'national nurses day', 'new years eve', 'new years', 'purple heart day', 'rememberance day', 'rosa parks day', 'saint andrews day', 'saint patricks day', 'saint stephens day', 'saint valentines day', 'st andrews day', 'st patricks day', 'st stephens day', 'st valentines day ', 'valentines day', 'valentines', 'veterans day', 'victoria day', 'womens equality day', 'xmas', // Fixed religious and cultural holidays
+// Catholic + Christian
+'epiphany', 'orthodox christmas day', 'orthodox new year', 'assumption of mary', 'all souls day', 'feast of the immaculate conception', 'feast of our lady of guadalupe', // Kwanzaa
+'kwanzaa', // Pagan / metal 🤘
+'imbolc', 'beltaine', 'lughnassadh', 'samhain', 'martin luther king day', 'mlk day', 'presidents day', 'mardi gras', 'tax day', 'commonwealth day', 'mothers day', 'memorial day', 'fathers day', 'columbus day', 'indigenous peoples day', 'canadian thanksgiving', 'election day', 'thanksgiving', 't-day', 'turkey day', 'black friday', 'cyber monday', // Astronomical religious and cultural holidays
+'ash wednesday', 'palm sunday', 'maundy thursday', 'good friday', 'holy saturday', 'easter', 'easter sunday', 'easter monday', 'orthodox good friday', 'orthodox holy saturday', 'orthodox easter', 'orthodox easter monday', 'ascension day', 'pentecost', 'whitsunday', 'whit sunday', 'whit monday', 'trinity sunday', 'corpus christi', 'advent', // Jewish
+'tu bishvat', 'tu bshevat', 'purim', 'passover', 'yom hashoah', 'lag baomer', 'shavuot', 'tisha bav', 'rosh hashana', 'yom kippur', 'sukkot', 'shmini atzeret', 'simchat torah', 'chanukah', 'hanukkah', // Muslim
+'isra and miraj', 'lailat al-qadr', 'eid al-fitr', 'id al-Fitr', 'eid ul-Fitr', 'ramadan', 'eid al-adha', 'muharram', 'the prophets birthday', 'ostara', 'march equinox', 'vernal equinox', 'litha', 'june solistice', 'summer solistice', 'mabon', 'september equinox', 'fall equinox', 'autumnal equinox', 'yule', 'december solstice', 'winter solstice', // Additional important holidays
+'chinese new year', 'diwali'];
+
+var times = ['noon', 'midnight', 'now', 'morning', 'tonight', 'evening', 'afternoon', 'night', 'breakfast time', 'lunchtime', 'dinnertime', 'ago', 'sometime', 'eod', 'oclock', 'oclock', 'all day', 'at night'];
+
+var lex = {};
+var data$1 = [[dates$1, '#Date'], [durations, '#Duration'], [holidays, '#Holiday'], [times, '#Time'], [Object.keys(_timezones), '#Timezone']];
+data$1.forEach(function (a) {
+  for (var i = 0; i < a[0].length; i++) {
+    lex[a[0][i]] = a[1];
+  }
+});
+var words = lex;
+
+var normalize$1 = function normalize(doc) {
+  doc = doc.clone();
+
+  if (!doc.numbers) {
+    console.warn("Compromise: compromise-dates cannot find plugin dependency 'compromise-number'");
+  } else {
+    // convert 'two' to 2
+    var num = doc.numbers();
+    num.toNumber();
+    num.toCardinal();
+  } // remove adverbs
+
+
+  doc.adverbs().remove();
+  return doc;
+};
+
+var _00Normalize = normalize$1;
+
 var knownUnits = {
   second: true,
   minute: true,
@@ -4538,18 +4801,6 @@ var parseShift = function parseShift(doc) {
 };
 
 var _01Shift = parseShift;
-
-var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-function createCommonjsModule$1(fn, module) {
-	return module = { exports: {} }, fn(module, module.exports), module.exports;
-}
-
-function getCjsExportFromNamespace$1 (n) {
-	return n && n['default'] || n;
-}
-
-var spacetime$2 = getCjsExportFromNamespace$1(spacetime$1);
 
 var halfPast = function halfPast(m, s) {
   var hour = m.match('#Cardinal$').text('reduced');
@@ -4648,6 +4899,81 @@ var parseRelative = function parseRelative(doc) {
 };
 
 var _03Relative = parseRelative;
+
+var isOffset$1 = /(\-?[0-9]+)h(rs)?/i;
+var isNumber$1 = /(\-?[0-9]+)/;
+var utcOffset$1 = /utc([\-+]?[0-9]+)/i;
+var gmtOffset$1 = /gmt([\-+]?[0-9]+)/i;
+
+var toIana$1 = function toIana(num) {
+  num = Number(num);
+
+  if (num > -13 && num < 13) {
+    num = num * -1; //it's opposite!
+
+    num = (num > 0 ? '+' : '') + num; //add plus sign
+
+    return 'Etc/GMT' + num;
+  }
+
+  return null;
+};
+
+var parseOffset$2 = function parseOffset(tz) {
+  // '+5hrs'
+  var m = tz.match(isOffset$1);
+
+  if (m !== null) {
+    return toIana$1(m[1]);
+  } // 'utc+5'
+
+
+  m = tz.match(utcOffset$1);
+
+  if (m !== null) {
+    return toIana$1(m[1]);
+  } // 'GMT-5' (not opposite)
+
+
+  m = tz.match(gmtOffset$1);
+
+  if (m !== null) {
+    var num = Number(m[1]) * -1;
+    return toIana$1(num);
+  } // '+5'
+
+
+  m = tz.match(isNumber$1);
+
+  if (m !== null) {
+    return toIana$1(m[1]);
+  }
+
+  return null;
+};
+
+var parseTimezone = function parseTimezone(doc) {
+  var m = doc.match('#Timezone+'); //remove prepositions
+
+  m = m.remove('(in|for|by|near|at)');
+  var str = m.text('reduced'); // remove it from our doc, either way
+
+  doc.remove('#Timezone+'); // check our list of informal tz names
+
+  if (_timezones.hasOwnProperty(str)) {
+    return _timezones[str];
+  }
+
+  var tz = parseOffset$2(str);
+
+  if (tz) {
+    return tz;
+  }
+
+  return null;
+};
+
+var _04Timezone = parseTimezone;
 
 var Unit =
 /*#__PURE__*/
@@ -4914,7 +5240,7 @@ function (_Unit6) {
   return CalendarDate;
 }(Unit_1);
 
-var units$4 = {
+var _units = {
   Unit: Unit_1,
   Day: Day,
   Month: Month,
@@ -4924,12 +5250,34 @@ var units$4 = {
   CalendarDate: CalendarDate
 };
 
+var Unit$1 = _units.Unit;
+
+var onlySection = function onlySection(doc, context, section) {
+  var d = null;
+
+  if (doc.found === false) {
+    // do we have just a time?
+    if (section.time !== null) {
+      d = new Unit$1(context.today, null, context); // choose today
+    } //do we just have a shift?
+
+
+    if (Object.keys(section.shift).length > 0) {
+      d = new Unit$1(context.today, null, context); // choose today
+    }
+  }
+
+  return d;
+};
+
+var _00Implied = onlySection;
+
 var mapping$1 = {
-  week: units$4.Week,
-  month: units$4.Month,
-  quarter: units$4.Quarter,
-  year: units$4.Year,
-  season: units$4.Season
+  week: _units.Week,
+  month: _units.Month,
+  quarter: _units.Quarter,
+  year: _units.Year,
+  season: _units.Season
 }; // when a unit of time is spoken of as 'this month' - instead of 'february'
 
 var namedUnit = function namedUnit(doc, context) {
@@ -4957,7 +5305,7 @@ var namedUnit = function namedUnit(doc, context) {
   if (m.found === true) {
     var _str = m.lastTerm().text('reduced');
 
-    var _unit = new units$4.WeekDay(_str, null, context);
+    var _unit = new _units.WeekDay(_str, null, context);
 
     return _unit;
   }
@@ -4965,7 +5313,7 @@ var namedUnit = function namedUnit(doc, context) {
   return null;
 };
 
-var _01NamedUnit = namedUnit;
+var _01Duration = namedUnit;
 
 var spacetimeHoliday = createCommonjsModule$1(function (module, exports) {
   (function (global, factory) {
@@ -5423,6 +5771,8 @@ var spacetimeHoliday = createCommonjsModule$1(function (module, exports) {
   });
 });
 
+var CalendarDate$1 = _units.CalendarDate;
+
 var parseHoliday = function parseHoliday(doc, context) {
   var d = null;
   var str = doc.match('#Holiday+').text('reduced');
@@ -5431,7 +5781,7 @@ var parseHoliday = function parseHoliday(doc, context) {
   var s = spacetimeHoliday(str, year);
 
   if (s !== null) {
-    d = new units$4.CalendarDate(s, null, context);
+    d = new CalendarDate$1(s, null, context);
   }
 
   return d;
@@ -5439,9 +5789,9 @@ var parseHoliday = function parseHoliday(doc, context) {
 
 var _02Holidays = parseHoliday;
 
-var Unit$1 = units$4.Unit,
-    Day$1 = units$4.Day,
-    CalendarDate$1 = units$4.CalendarDate;
+var Unit$2 = _units.Unit,
+    Day$1 = _units.Day,
+    CalendarDate$2 = _units.CalendarDate;
 var knownWord = {
   today: function today(context) {
     return new Day$1(context.today, null, context);
@@ -5456,30 +5806,51 @@ var knownWord = {
 
 var parseExplicit = function parseExplicit(doc, context) {
   // 'fifth of june'
-  if (doc.has('#Value of #Month')) {
-    var obj = {
-      month: doc.match('#Month').text(),
-      date: doc.match('[#Value] of #Month').text(),
-      year: context.today.year()
-    };
+  var m = doc.match('[<date>#Value] of [<month>#Month]');
 
-    var _d = new CalendarDate$1(obj, null, context);
+  if (!m.found) {
+    // 'june the fifth'
+    m = doc.match('[<month>#Month] the [<date>#Value]'); // console.log(m.byName('date').text())
+  }
+
+  if (m.found) {
+    var obj = {
+      month: m.byName('month').text(),
+      date: m.byName('date').text(),
+      year: context.today.year()
+    }; // console.log(obj)
+
+    var _d = new CalendarDate$2(obj, null, context);
 
     if (_d.d.isValid() === true) {
       return _d;
     }
   }
 
+  if (m.found) {
+    var _obj = {
+      month: m.byName('month').text(),
+      date: m.byName('date').text(),
+      year: context.today.year()
+    };
+
+    var _d2 = new CalendarDate$2(_obj, null, context);
+
+    if (_d2.d.isValid() === true) {
+      return _d2;
+    }
+  }
+
   var str = doc.text('reduced'); // today, yesterday, tomorrow
 
   if (knownWord.hasOwnProperty(str) === true) {
-    var _d2 = knownWord[str](context);
+    var _d3 = knownWord[str](context);
 
-    return _d2;
+    return _d3;
   } // punt it to spacetime, for the heavy-lifting
 
 
-  var d = new Unit$1(str, null, context); // console.log(context.d.format('nice-year'))
+  var d = new Unit$2(str, null, context); // console.log(context.d.format('nice-year'))
   // did we find a date?
 
   if (d.d.isValid() === false) {
@@ -5491,32 +5862,47 @@ var parseExplicit = function parseExplicit(doc, context) {
 
 var _03Explicit = parseExplicit;
 
-var Unit$2 = units$4.Unit;
+var section = {
+  shift: _01Shift,
+  time: _02Time,
+  relative: _03Relative,
+  timezone: _04Timezone
+};
+var steps = {
+  implied: _00Implied,
+  duration: _01Duration,
+  holiday: _02Holidays,
+  explicit: _03Explicit
+};
 
 var parseDate = function parseDate(doc, context) {
-  var shift = _01Shift(doc);
-  var time = _02Time(doc, context);
-  var rel = _03Relative(doc);
-  var d = null;
+  //parse-out any sections
+  var shift = section.shift(doc);
+  var tz = section.timezone(doc);
+  var time = section.time(doc, context);
+  var rel = section.relative(doc); //set our new timezone
 
-  if (doc.found === false) {
-    // do we have just a time?
-    if (time !== null) {
-      d = new Unit$2(context.today, null, context); // choose today
-    } //do we just have a shift?
+  if (tz) {
+    context = Object.assign({}, context, {
+      timezone: tz
+    });
+    var iso = context.today.format('iso-short');
+    context.today = context.today["goto"](context.timezone).set(iso);
+  }
 
+  var d = null; //'in two days'
 
-    if (Object.keys(shift).length > 0) {
-      d = new Unit$2(context.today, null, context); // choose today
-    }
-  } // this month
+  d = d || steps.implied(doc, context, {
+    shift: shift,
+    time: time,
+    rel: rel
+  }); // 'this month'
 
+  d = d || steps.duration(doc, context); // 'this haloween'
 
-  d = d || _01NamedUnit(doc, context); // this haloween
+  d = d || steps.holiday(doc, context); // 'this june 2nd'
 
-  d = d || _02Holidays(doc, context); // this june 2nd
-
-  d = d || _03Explicit(doc, context);
+  d = d || steps.explicit(doc, context);
 
   if (!d) {
     return null;
@@ -5541,7 +5927,7 @@ var parseDate = function parseDate(doc, context) {
   return d;
 };
 
-var toDate = parseDate;
+var _03ParseDate = parseDate;
 
 var logic = function logic(doc, context) {
   // two explicit dates - 'between friday and sunday'
@@ -5549,9 +5935,9 @@ var logic = function logic(doc, context) {
 
   if (m.found) {
     var start = m.match('between [.*] and').not('^between').not('and$');
-    start = toDate(start, context);
+    start = _03ParseDate(start, context);
     var end = m.match('and *').not('^and');
-    end = toDate(end, context);
+    end = _03ParseDate(end, context);
 
     if (start) {
       return {
@@ -5610,7 +5996,7 @@ var logic = function logic(doc, context) {
   m = doc.match('^(on|during|in) [*]');
 
   if (m.found) {
-    var _d = toDate(m, context);
+    var _d = _03ParseDate(m, context);
 
     if (_d) {
       return {
@@ -5621,27 +6007,27 @@ var logic = function logic(doc, context) {
   } //else, try whole thing
 
 
-  var d = toDate(doc, context);
+  var d = _03ParseDate(doc, context);
   return {
     start: d,
-    end: d.clone().end()
+    end: null
   };
 };
 
-var _02ParseRange = logic;
+var _01ParseRange = logic;
 
-var parse = function parse(doc, context) {
+var getDate = function getDate(doc, context) {
   // validate context a bit
   context = context || {};
   context.timezone = context.timezone || 'ETC/UTC';
   context.today = spacetime$2(context.today, context.timezone); //turn 'five' into 5..
 
-  doc = _01Normalize(doc); //interpret 'between [A] and [B]'...
+  doc = _00Normalize(doc); //interpret 'between [A] and [B]'...
 
-  return _02ParseRange(doc, context);
+  return _01ParseRange(doc, context);
 };
 
-var parse_1 = parse;
+var _02GetDate = getDate;
 
 var arr = [['mon', 'monday'], ['tue', 'tuesday'], ['tues', 'tuesday'], ['wed', 'wednesday'], ['thu', 'thursday'], ['thurs', 'thursday'], ['fri', 'friday'], ['sat', 'saturday'], ['sun', 'sunday'], ['jan', 'january'], ['feb', 'february'], ['mar', 'march'], ['apr', 'april'], ['jun', 'june'], ['jul', 'july'], ['aug', 'august'], ['sep', 'september'], ['sept', 'september'], ['oct', 'october'], ['nov', 'november'], ['dec', 'december']];
 arr = arr.map(function (a) {
@@ -5650,15 +6036,105 @@ arr = arr.map(function (a) {
     "long": a[1]
   };
 });
-var abbrevs = arr;
+var _abbrevs = arr;
+
+var methods$5 = {
+  /** overload the original json with noun information */
+  json: function json(options) {
+    var _this = this;
+
+    var n = null;
+
+    if (typeof options === 'number') {
+      n = options;
+      options = null;
+    }
+
+    options = options || {
+      terms: false
+    };
+    var res = [];
+    var format = options.format || 'iso';
+    this.forEach(function (doc) {
+      var json = doc.json(options)[0];
+      var obj = _02GetDate(doc, _this.context);
+      var start = obj.start ? obj.start.format(format) : null;
+      var end = obj.end ? obj.end.format(format) : null; // set iso strings to json result
+
+      json.date = {
+        start: start,
+        end: end
+      }; // add duration
+
+      if (start && end) {
+        json.date.duration = obj.start.d.diff(obj.end.d); // we don't need these
+
+        delete json.date.duration.milliseconds;
+        delete json.date.duration.seconds;
+      }
+
+      res.push(json);
+    });
+
+    if (n !== null) {
+      return res[n];
+    }
+
+    return res;
+  },
+
+  /** render all dates according to a specific format */
+  format: function format(fmt) {
+    var _this2 = this;
+
+    this.forEach(function (doc) {
+      var obj = _02GetDate(doc, _this2.context);
+      var str = '';
+
+      if (obj.start) {
+        str = obj.start.format(fmt);
+
+        if (obj.end) {
+          str += ' to ' + obj.start.format(fmt);
+        }
+
+        doc.replaceWith(str, {
+          keepTags: true,
+          keepCase: false
+        });
+      }
+    });
+    return this;
+  },
+
+  /** replace 'Fri' with 'Friday', etc*/
+  toLongForm: function toLongForm() {
+    var _this3 = this;
+
+    _abbrevs.forEach(function (a) {
+      _this3.replace(a["short"], a["long"], true);
+    });
+    return this;
+  },
+
+  /** replace 'Friday' with 'Fri', etc*/
+  toShortForm: function toShortForm() {
+    var _this4 = this;
+
+    _abbrevs.forEach(function (a) {
+      _this4.replace(a["long"], a["short"], true);
+    });
+    return this;
+  }
+};
 
 var addMethods$5 = function addMethods(Doc, world) {
   // our new tags
-  world.addTags(tags); // add info for the date plugin
+  world.addTags(_tags); // add info for the date plugin
 
   world.addWords(words); // run our tagger
 
-  world.postProcess(tagger);
+  world.postProcess(_01Tag);
   /**  */
 
   var Dates =
@@ -5675,107 +6151,12 @@ var addMethods$5 = function addMethods(Doc, world) {
       _this.context = {};
       return _this;
     }
-    /** overload the original json with noun information */
-
-
-    _createClass(Dates, [{
-      key: "json",
-      value: function json(options) {
-        var _this2 = this;
-
-        var n = null;
-
-        if (typeof options === 'number') {
-          n = options;
-          options = null;
-        }
-
-        options = options || {
-          terms: false
-        };
-        var res = [];
-        var format = options.format || 'iso';
-        this.forEach(function (doc) {
-          var json = doc.json(options)[0];
-          var obj = parse_1(doc, _this2.context);
-          var start = obj.start ? obj.start.format(format) : null;
-          var end = obj.end ? obj.end.format(format) : null; // set iso strings to json result
-
-          json.date = {
-            start: start,
-            end: end
-          }; // add duration
-
-          if (start && end) {
-            json.date.duration = obj.start.d.diff(obj.end.d); // we don't need these
-
-            delete json.date.duration.milliseconds;
-            delete json.date.duration.seconds;
-          }
-
-          res.push(json);
-        });
-
-        if (n !== null) {
-          return res[n];
-        }
-
-        return res;
-      }
-      /** render all dates according to a specific format */
-
-    }, {
-      key: "format",
-      value: function format(fmt) {
-        var _this3 = this;
-
-        this.forEach(function (doc) {
-          var obj = parse_1(doc, _this3.context);
-          var str = '';
-
-          if (obj.start) {
-            str = obj.start.format(fmt);
-
-            if (obj.end) {
-              str += ' to ' + obj.start.format(fmt);
-            }
-
-            doc.replaceWith(str, {
-              keepTags: true,
-              keepCase: false
-            });
-          }
-        });
-        return this;
-      }
-      /** replace 'Fri' with 'Friday', etc*/
-
-    }, {
-      key: "toLongForm",
-      value: function toLongForm() {
-        var _this4 = this;
-
-        abbrevs.forEach(function (a) {
-          _this4.replace(a["short"], a["long"], true);
-        });
-        return this;
-      }
-      /** replace 'Friday' with 'Fri', etc*/
-
-    }, {
-      key: "toShortForm",
-      value: function toShortForm() {
-        var _this5 = this;
-
-        abbrevs.forEach(function (a) {
-          _this5.replace(a["long"], a["short"], true);
-        });
-        return this;
-      }
-    }]);
 
     return Dates;
-  }(Doc);
+  }(Doc); //add-in methods
+
+
+  Object.assign(Dates.prototype, methods$5);
 
   Doc.prototype.dates = function (n) {
     var context = {};

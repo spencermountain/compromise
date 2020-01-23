@@ -1,27 +1,7 @@
 const test = require('tape')
-const nlp = require('../../tests/_lib')
+const nlp = require('../../../tests/_lib')
 const fs = require('fs')
 const path = require('path')
-const https = require('https')
-
-const fetch = function(url) {
-  return new Promise((resolve, reject) => {
-    https
-      .get(url, resp => {
-        let data = ''
-        resp.on('data', chunk => {
-          data += chunk
-        })
-        resp.on('end', () => {
-          resolve(JSON.parse(data))
-        })
-      })
-      .on('error', err => {
-        console.log('Error: ' + err.message)
-        reject()
-      })
-  })
-}
 
 const TEST_COUNT = 5
 

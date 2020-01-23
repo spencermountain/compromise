@@ -10,7 +10,7 @@ const fixPerson = function(doc) {
   let hon = doc.if('#Honorific')
   if (hon.found === true) {
     //mr Putin
-    doc.match('(mr|mrs|ms|dr) (@titleCase|#Possessive)+').tag('#Person', 'mr-putin')
+    hon.match('(mr|mrs|ms|dr) (@titleCase|#Possessive)+').tag('#Person', 'mr-putin')
     //mr X
     hon.match('#Honorific #Acronym').tag('Person', 'Honorific-TitleCase')
     //remove single 'mr'

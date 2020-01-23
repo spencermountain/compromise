@@ -2,36 +2,18 @@ const test = require('tape')
 const nlp = require('../../../tests/_lib')
 const fs = require('fs')
 const path = require('path')
+const fetch = require('./_fetch')
+const calculateRegression = require('./_regression')
 
 const TEST_COUNT = 5
-
-function calculateRegression(x, y) {
-  const sumX = x.reduce((acc, v) => acc + v, 0)
-  const sumY = y.reduce((acc, v) => acc + v, 0)
-
-  const avgX = sumX / x.length
-  const avgY = sumY / y.length
-
-  let sumSqX = 0
-  for (let i = 0; i < x.length; i++) {
-    sumSqX += Math.pow(x[i] - avgX, 2) // this will never change unless we add more tests...
-  }
-
-  let sumP = 0
-  for (let i = 0; i < y.length; i++) {
-    sumP += (x[i] - avgX) * (y[i] - avgY)
-  }
-
-  const b = sumP / sumSqX
-  const a = avgY - b * avgX
-  const result = `${b.toFixed(5)}X ${a > 0 ? '+' : '-'} ${a.toFixed(5)}`
-
-  return { regression: result, average: avgY.toFixed(5) }
+const node_version = 'v10.13.0'
+if (node_version !== process.version) {
+  console.log("\n(running '" + process.version + "' instead of '" + node_version + "')\n")
 }
 
 test('Performance', function(t) {
   fetch('https://unpkg.com/nlp-corpus@3.3.0/builds/nlp-corpus-1.json').then(res => {
-    const outputPath = path.join(__dirname, './performance.results.json')
+    const outputPath = path.join(__dirname, './_performance.json')
 
     let expected = {}
     if (fs.existsSync(outputPath)) {
@@ -46,16 +28,16 @@ test('Performance', function(t) {
       const text = textArr[i]
       const yI = []
 
-      console.group('Test', i)
+      console.group('Text', i)
 
       for (let j = 0; j < TEST_COUNT; j++) {
-        console.log('--', j)
         const _nlp = nlp.clone() // Avoid caching?
         const start = Date.now()
         _nlp(text)
         const end = Date.now()
-
-        yI.push(end - start)
+        const diff = end - start
+        console.log('  ' + diff + ' ms')
+        yI.push(diff)
       }
 
       x.push(text.length)
@@ -70,11 +52,12 @@ test('Performance', function(t) {
 
     fs.writeFileSync(outputPath, JSON.stringify(results, null, 2))
 
-    console.log('Previous average:', expected.average)
-    console.log('Current average:', results.average)
-    console.log('Performance change:', diff)
+    console.log('\n')
+    console.log('Expected:', Math.ceil(expected.average) + 'ms')
+    console.log('Current :', Math.ceil(results.average) + 'ms')
+    console.log('Diff:', Math.ceil(diff) + 'ms')
 
-    t.true(diff < 20, 'Should not see large performance change between runs - unless you did something awesome!')
+    t.true(diff < 20, 'perfomance is stable')
 
     t.end()
   })

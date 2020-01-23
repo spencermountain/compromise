@@ -64,5 +64,5 @@
     "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
   },
   "files": ["types/index.d.ts"],
-  "include": ["types/**/*"]
+  "include": ["types/**/*", "scripts/test/types.ts", "scripts/test/types.test.ts"]
 }

@@ -29,7 +29,7 @@ export default [
         ],
       }),
       terser(),
-      sizeCheck({ shouldBe: 95, warn: 5 }),
+      sizeCheck({ expect: 95, warn: 5 }),
     ],
   },
   {
@@ -43,7 +43,7 @@ export default [
         babelrc: false,
         presets: ['@babel/preset-env'],
       }),
-      sizeCheck({ shouldBe: 95, warn: 5 }),
+      sizeCheck({ expect: 95, warn: 5 }),
     ],
   },
   {
@@ -57,7 +57,7 @@ export default [
         babelrc: false,
         presets: ['@babel/preset-env'],
       }),
-      sizeCheck({ shouldBe: 95, warn: 5 }),
+      sizeCheck({ expect: 95, warn: 5 }),
     ],
   },
   {
@@ -72,7 +72,7 @@ export default [
         presets: ['@babel/preset-env'],
       }),
       terser(),
-      sizeCheck({ shouldBe: 170, warn: 15 }),
+      sizeCheck({ expect: 170, warn: 15 }),
     ],
   },
 ]

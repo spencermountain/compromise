@@ -1,9 +1,9 @@
 // a smoke-test for our typescipt typings
-import nlp from '../'
+import nlp from '../../types'
 
 // Typed plugins
 type testPlugin = nlp.Plugin<{ test: (text: string) => string }, { test: string }>
-const test: testPlugin = (Doc, world) => {
+const test: testPlugin = (Doc: any, world: any) => {
   // Prototype is visible in here with plugin values
   Doc.prototype.test = text => text
   world.test = 'Hello world!'

@@ -1,7 +1,10 @@
-const nlp = require('./src/index')
+// const nlp = require('./src/index')
+const nlp = require('./builds/compromise-tokenize')
 // nlp.verbose(true)
-nlp.extend(require('./plugins/numbers/src'))
-nlp.extend(require('./plugins/dates/src'))
+// nlp.extend(require('./plugins/numbers/src'))
+// nlp.extend(require('./plugins/dates/src'))
+
+nlp('spencer kelly').debug()
 
 let arr = [
   // *explicit-dates**,

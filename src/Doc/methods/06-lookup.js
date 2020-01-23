@@ -13,7 +13,7 @@ const findStart = function(arr, terms) {
   //find the start
   for (let i = 0; i < terms.length; i++) {
     if (doesMatch(terms[i], arr[0])) {
-      if (arr.every((a, n) => doesMatch(terms[i + n], a) === true)) {
+      if (arr.every((a, n) => terms[i + n] && doesMatch(terms[i + n], a) === true)) {
         return terms[i].id
       }
     }

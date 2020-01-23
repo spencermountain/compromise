@@ -6758,7 +6758,7 @@
       var _loop = function _loop(i) {
         if (doesMatch(terms[i], arr[0])) {
           if (arr.every(function (a, n) {
-            return doesMatch(terms[i + n], a) === true;
+            return terms[i + n] && doesMatch(terms[i + n], a) === true;
           })) {
             return {
               v: terms[i].id

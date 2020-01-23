@@ -28,8 +28,12 @@
     "coverage:html": "nyc --reporter=html tape \"./tests/**/*.test.js\" | tap-dancer --color always",
     "lint": "eslint ./src/",
     "watch": "amble ./scratch.js",
-    "build:all": "node ./scripts/build-all.js && npm run build  --silent",
+    "build:all": "node ./scripts/build/build-all.js && npm run build --silent",
     "plugins": "node ./scripts/plugin-check.js --silent",
+    "plugins:install": "node ./scripts/plugins.js npm install",
+    "plugins:ci": "node ./scripts/plugins.js npm ci",
+    "plugins:build": "node ./scripts/plugins.js npm run build",
+    "plugins:test": "node ./scripts/plugins.js npm run test",
     "demo": "python -m SimpleHTTPServer 8888"
   },
   "files": [
@@ -55,13 +59,18 @@
     "@rollup/plugin-node-resolve": "^7.0.0",
     "amble": "0.0.7",
     "efrt": "2.2.2",
+    "eslint": "^6.8.0",
+    "nyc": "^15.0.0",
     "rollup": "1.29.1",
     "rollup-plugin-babel": "4.3.3",
     "rollup-plugin-filesize-check": "0.0.1",
     "rollup-plugin-terser": "5.2.0",
     "shelljs": "0.8.3",
     "tap-dancer": "0.2.0",
-    "tape": "4.13.0"
+    "tap-spec": "^5.0.0",
+    "tape": "4.13.0",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.5"
   },
   "eslintIgnore": [
     "builds/*.js",

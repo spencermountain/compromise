@@ -2,7 +2,26 @@ const test = require('tape')
 const nlp = require('./_lib')
 const fs = require('fs')
 const path = require('path')
-const fetch = require('node-fetch')
+const https = require('https')
+
+const fetch = function(url) {
+  return new Promise((resolve, reject) => {
+    https
+      .get(url, resp => {
+        let data = ''
+        resp.on('data', chunk => {
+          data += chunk
+        })
+        resp.on('end', () => {
+          resolve(JSON.parse(data))
+        })
+      })
+      .on('error', err => {
+        console.log('Error: ' + err.message)
+        reject()
+      })
+  })
+}
 
 const TEST_COUNT = 5
 
@@ -31,54 +50,52 @@ function calculateRegression(x, y) {
 }
 
 test('Performance', function(t) {
-  fetch('https://unpkg.com/nlp-corpus@3.3.0/builds/nlp-corpus-1.json')
-    .then(res => res.json())
-    .then(res => {
-      const outputPath = path.join(__dirname, './performance.results.json')
+  fetch('https://unpkg.com/nlp-corpus@3.3.0/builds/nlp-corpus-1.json').then(res => {
+    const outputPath = path.join(__dirname, './performance.results.json')
 
-      let expected = {}
-      if (fs.existsSync(outputPath)) {
-        expected = JSON.parse(fs.readFileSync(outputPath))
+    let expected = {}
+    if (fs.existsSync(outputPath)) {
+      expected = JSON.parse(fs.readFileSync(outputPath))
+    }
+
+    const textArr = res.sort((a, b) => a.length - b.length)
+    const x = []
+    const y = []
+
+    for (let i = 0; i < textArr.length; i++) {
+      const text = textArr[i]
+      const yI = []
+
+      console.group('Test', i)
+
+      for (let j = 0; j < TEST_COUNT; j++) {
+        console.log('--', j)
+        const _nlp = nlp.clone() // Avoid caching?
+        const start = Date.now()
+        _nlp(text)
+        const end = Date.now()
+
+        yI.push(end - start)
       }
 
-      const textArr = res.sort((a, b) => a.length - b.length)
-      const x = []
-      const y = []
+      x.push(text.length)
+      y.push(yI.reduce((acc, v) => acc + v, 0) / yI.length)
 
-      for (let i = 0; i < textArr.length; i++) {
-        const text = textArr[i]
-        const yI = []
+      console.groupEnd()
+    }
 
-        console.group('Test', i)
+    const regression = calculateRegression(x, y, t)
+    const diff = Math.abs(regression.average - expected.average).toFixed(5)
+    const results = Object.assign({ x, y, key: { x: 'Length', y: 'Time' }, diff }, regression)
 
-        for (let j = 0; j < TEST_COUNT; j++) {
-          console.log('--', j)
-          const _nlp = nlp.clone() // Avoid caching?
-          const start = Date.now()
-          _nlp(text)
-          const end = Date.now()
+    fs.writeFileSync(outputPath, JSON.stringify(results, null, 2))
 
-          yI.push(end - start)
-        }
+    console.log('Previous average:', expected.average)
+    console.log('Current average:', results.average)
+    console.log('Performance change:', diff)
 
-        x.push(text.length)
-        y.push(yI.reduce((acc, v) => acc + v, 0) / yI.length)
+    t.true(diff < 20, 'Should not see large performance change between runs - unless you did something awesome!')
 
-        console.groupEnd()
-      }
-
-      const regression = calculateRegression(x, y, t)
-      const diff = Math.abs(regression.average - expected.average).toFixed(5)
-      const results = Object.assign({ x, y, key: { x: 'Length', y: 'Time' }, diff }, regression)
-
-      fs.writeFileSync(outputPath, JSON.stringify(results, null, 2))
-
-      console.log('Previous average:', expected.average)
-      console.log('Current average:', results.average)
-      console.log('Performance change:', diff)
-
-      t.true(diff < 20, 'Should not see large performance change between runs - unless you did something awesome!')
-
-      t.end()
-    })
+    t.end()
+  })
 })

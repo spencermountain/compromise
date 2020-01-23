@@ -1,6 +1,5 @@
 // Run arbitrary (but typically npm) commands for each plugin
 // Example: "node ./plugins.js npm install"
-//
 const sh = require('shelljs')
 
 // process.argv contains the complete command-line, with [0] as the node

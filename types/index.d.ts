@@ -1,10 +1,15 @@
 export as namespace nlp
 
+// a key-value object of words, terms
+declare interface Lexicon {
+  [key: string]: string
+}
+
 declare interface nlp<D extends object, W extends object> {
   /** normal usage */
-  (text?: string): nlp.ExtendedDocument<D, W>
+  (text?: string, lexicon?: Lexicon): nlp.ExtendedDocument<D, W>
   /** tozenize string */
-  tokenize(text: string): nlp.ExtendedDocument<D, W>
+  tokenize(text: string, lexicon?: Lexicon): nlp.ExtendedDocument<D, W>
   /** mix in a compromise-plugin */
   extend<P>(
     plugin: P
@@ -14,7 +19,7 @@ declare interface nlp<D extends object, W extends object> {
   >
 
   /** re-generate a Doc object from .json() results */
-  load(json: any): nlp.ExtendedDocument<D, W>
+  fromJSON(json: any): nlp.ExtendedDocument<D, W>
   /**  log our decision-making for debugging */
   verbose(bool?: boolean): nlp.ExtendedDocument<D, W>
   /** create instance using global world*/
@@ -23,7 +28,7 @@ declare interface nlp<D extends object, W extends object> {
   version: nlp.ExtendedDocument<D, W>
 }
 
-declare function nlp(text?: string): nlp.DefaultDocument
+declare function nlp(text?: string, lexicon?: Lexicon): nlp.DefaultDocument
 declare function nlp<D extends object, W extends object>(text?: string): nlp.ExtendedDocument<D, W>
 
 // possible values to .json()
@@ -68,7 +73,7 @@ type PluginDocument<D extends object, W extends object> = nlp.ExtendedDocument<D
 
 // Constructor
 declare module nlp {
-  export function tokenize(text?: string): DefaultDocument
+  export function tokenize(text?: string, lexicon?: Lexicon): DefaultDocument
   /** mix in a compromise-plugin */
   export function extend<P>(
     plugin: P

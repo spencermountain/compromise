@@ -21,10 +21,40 @@ const findStart = function(arr, terms) {
   return false
 }
 
+const findTerms = function(doc, a) {
+  let found = []
+  //try each phrase
+  doc.list.forEach(p => {
+    // cache-miss, skip.
+    if (p.cache.words[a[0]] !== true) {
+      return
+    }
+    //we found a potential match
+    let terms = p.terms()
+    let id = findStart(a, terms)
+    if (id !== false) {
+      // create the actual phrase
+      let phrase = p.buildFrom(id, a.length)
+      found.push(phrase)
+      return
+    }
+  })
+  return found
+}
+
+const isObject = function(obj) {
+  return Object.prototype.toString.call(obj) === '[object Object]'
+}
+
 /** lookup an array of words or phrases */
-exports.lookup = function(arr) {
-  if (typeof arr === 'string') {
-    arr = [arr]
+exports.lookup = function(input) {
+  let arr = []
+  if (typeof input === 'string') {
+    arr = [input]
+  } else if (isObject(input)) {
+    arr = Object.keys(input)
+  } else {
+    arr = input
   }
   let lookups = arr.map(str => {
     str = str.toLowerCase()
@@ -36,22 +66,7 @@ exports.lookup = function(arr) {
   let found = []
   // try each lookup
   lookups.forEach(a => {
-    //try each phrase
-    this.list.forEach(p => {
-      // cache-miss, skip.
-      if (p.cache.words[a[0]] !== true) {
-        return
-      }
-      //we found a potential match
-      let terms = p.terms()
-      let id = findStart(a, terms)
-      if (id !== false) {
-        // create the actual phrase
-        let phrase = p.buildFrom(id, a.length)
-        found.push(phrase)
-        return
-      }
-    })
+    found = found.concat(findTerms(this, a))
   })
   return this.buildFrom(found)
 }

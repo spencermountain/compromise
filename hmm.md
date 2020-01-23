@@ -227,3 +227,5 @@ let arr = [
 // let json = doc.dates({}).json()
 // console.log(json)
 ```
+
+- make .tokenize run .02-lexicon?

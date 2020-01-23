@@ -31,5 +31,8 @@ test('tokenize build', function(t) {
   t.equal(doc.verbs().data().length, 0, 'found-verbs')
   t.equal(doc.match('joe walked .').found, true, 'match-statement')
   t.equal(doc.terms(1).text('reduced'), 'and', 'text-out')
+  //ensure lexicon works
+  let tmp = tokenize('spencer kelly', { spencer: 'Cool' })
+  t.equal(tmp.match('#Cool').text(), 'spencer', 'lexicon-works')
   t.end()
 })

@@ -1,5 +1,21 @@
 // a smoke-test for our typescipt typings
-import nlp from '../../types'
+import nlp from '../../'
+import tape from 'tape'
+
+console.log('\n 🥗  - running types-test..\n')
+
+tape('misc functions', function(t) {
+  let doc = nlp('John and Joe walked to the store')
+  t.equal(doc.people().json().length, 2, 'found-people')
+  t.equal(doc.verbs().json().length, 1, 'found-verbs')
+  t.equal(doc.match('joe walked .').found, true, 'match-statement')
+  t.equal(doc.terms(1).text('reduced'), 'and', 'text-out')
+  //ensure lexicon works
+  let tmp = nlp('spencer kelly', { spencer: 'Cool' })
+  t.equal(tmp.match('#Cool').text(), 'spencer', 'lexicon-works')
+  // let tmp = nlp.tokenize('spencer kelly', { spencer: 'Cool' })
+  t.end()
+})
 
 // Typed plugins
 type testPlugin = nlp.Plugin<{ test: (text: string) => string }, { test: string }>

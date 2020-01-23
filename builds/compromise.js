@@ -1,3 +1,4 @@
+/* spencermountain/compromise 12.3.0 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -10150,7 +10151,7 @@
 
     if (hon.found === true) {
       //mr Putin
-      doc.match('(mr|mrs|ms|dr) (@titleCase|#Possessive)+').tag('#Person', 'mr-putin'); //mr X
+      hon.match('(mr|mrs|ms|dr) (@titleCase|#Possessive)+').tag('#Person', 'mr-putin'); //mr X
 
       hon.match('#Honorific #Acronym').tag('Person', 'Honorific-TitleCase'); //remove single 'mr'
 

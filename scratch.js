@@ -4,7 +4,7 @@ const nlp = require('./builds/compromise-tokenize')
 // nlp.extend(require('./plugins/numbers/src'))
 // nlp.extend(require('./plugins/dates/src'))
 
-// nlp('spencer kelly').debug()
+nlp('spencer kelly', { spencer: 'Cool' }).debug()
 
 ///-------------
 

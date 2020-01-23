@@ -221,6 +221,19 @@ doc.verbs().toNegative()
 // 'London is not calling'
 ```
 
+or if you don't care about POS-tagging, you can use the tokenize-only build: (90kb!)
+
+```html
+<script src="https://unpkg.com/compromise/builds/compromise-tokenize.js"></script>
+<script>
+  var doc = nlp('No, my son is also named Bort.')
+  //you can see the text has no tags
+  console.log(doc.has('#Noun')) //false
+  //but the whole api still works
+  console.log(doc.has('my .* is .? named /^b[oa]rt/')) //true
+</script>
+```
+
 <!-- spacer -->
 <img height="30" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
@@ -753,9 +766,13 @@ this plugin creates a wrapper around the default sentence objects.
       <summary>✨ Partial builds?</summary>
       <p></p>
       <ul>
-        compromise isn't easily tree-shaken.
+        we do offer a [compromise-tokenize](./builds/compromise-tokenize.js) build, which has the POS-tagger pulled-out.
+        <br/> 
+        but otherwise, compromise isn't easily tree-shaken.
         <br/> 
         the tagging methods are competitive, and greedy, so it's not recommended to pull things out.
+        <br/> 
+        Note that without a full POS-tagging, the contraction-parser won't work perfectly. (<i>(spencer's cool)</i> vs. <i>(spencer's house)</i>)
         <br/> 
         It's recommended to run the library fully.
       </ul>

@@ -1,5 +1,5 @@
 const test = require('tape')
-const nlp = require('./_lib')
+const nlp = require('../../tests/_lib')
 const fs = require('fs')
 const path = require('path')
 const https = require('https')

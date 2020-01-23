@@ -1,4 +1,4 @@
-const corpus = require('nlp-corpus')
+const corpus = require('nlp-corpus') //install with `npm i nlp-corpus --no-save`
 const nlp = require('../../src')
 console.log(`\n\n--- running compromise on 100 random texts---\n`)
 console.log('    --should take a few minutes--')

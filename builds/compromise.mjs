@@ -1,3 +1,4 @@
+/* spencermountain/compromise 12.3.0 MIT */
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
@@ -10144,7 +10145,7 @@ var fixPerson = function fixPerson(doc) {
 
   if (hon.found === true) {
     //mr Putin
-    doc.match('(mr|mrs|ms|dr) (@titleCase|#Possessive)+').tag('#Person', 'mr-putin'); //mr X
+    hon.match('(mr|mrs|ms|dr) (@titleCase|#Possessive)+').tag('#Person', 'mr-putin'); //mr X
 
     hon.match('#Honorific #Acronym').tag('Person', 'Honorific-TitleCase'); //remove single 'mr'
 

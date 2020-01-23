@@ -66,6 +66,11 @@ type PluginWorld<D extends object, W extends object> = {
 
 type PluginDocument<D extends object, W extends object> = nlp.ExtendedDocument<D, W> & { prototype: D }
 
+// Make these available, full support tbd
+type PluginConstructors = {
+  prototype: Record<string, any>
+}
+
 // Constructor
 declare module nlp {
   export function tokenize(text?: string): DefaultDocument
@@ -82,7 +87,14 @@ declare module nlp {
   /**  current semver version of the library */
   export const version: number
 
-  type Plugin<D extends object, W extends object> = (Doc: PluginDocument<D, W>, world: PluginWorld<D, W>) => void
+  type Plugin<D extends object, W extends object> = (
+    Doc: PluginDocument<D, W>,
+    world: PluginWorld<D, W>,
+    nlp: nlp<D, W>,
+    Phrase: PluginConstructors,
+    Term: PluginConstructors,
+    Pool: PluginConstructors
+  ) => void
 
   type ExtendedWorld<W extends object> = nlp.World & W
   type ExtendedDocument<D extends object, W extends object> = {

@@ -3,7 +3,7 @@ import nlp from '../../types'
 
 // Typed plugins
 type testPlugin = nlp.Plugin<{ test: (text: string) => string }, { test: string }>
-const test: testPlugin = (Doc: any, world: any) => {
+const test: testPlugin = (Doc, world, nlp, Phrase, Term, Pool) => {
   // Prototype is visible in here with plugin values
   Doc.prototype.test = text => text
   world.test = 'Hello world!'
@@ -28,6 +28,10 @@ const test: testPlugin = (Doc: any, world: any) => {
     doc.match('light the lights').tag('#Verb . #Plural')
     world.test = doc.test('boom!')
   })
+
+  Term.prototype.test = (text: string) => text
+  Phrase.prototype.test = (text: string) => text
+  Pool.prototype.test = (text: string) => text
 }
 
 class Numbers {

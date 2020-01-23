@@ -65,7 +65,7 @@
   },
   "eslintIgnore": [
     "builds/*.js",
-    "types/*.ts",
+    "*.ts",
     "plugins/**/types/*.ts"
   ],
   "license": "MIT"

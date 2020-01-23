@@ -4,6 +4,10 @@ export as namespace nlp
 declare interface Lexicon {
   [key: string]: string
 }
+// documents indexed by a string
+declare interface DocIndex {
+  [key: string]: Document
+}
 
 declare interface nlp<D extends object, W extends object> {
   /** normal usage */
@@ -149,8 +153,10 @@ declare module nlp {
     lastTerm(): Document<W>
     /** return a flat list of all Term objects in match */
     termList(): any
-    /** grab any named capture groups */
-    byName(name?: string): Document | object
+    /** grab a specific named capture group */
+    byName(name: string): Document
+    /** grab all named capture groups */
+    byName(): DocIndex
 
     // Match
     /**  return a new Doc, with this one as a parent */
@@ -174,7 +180,9 @@ declare module nlp {
     /**  return the terms after each match */
     after(match: string | Document<W>): Document<W>
     /** quick find for an array of string matches */
-    lookup(matches: string[] | object): Document<W> | object
+    lookup(matches: string[]): Document<W>
+    /** quick find for an object of key-value matches */
+    lookup(matches: Lexicon): DocIndex
 
     // Case
     /**  turn every letter of every term to lower-cse */

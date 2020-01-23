@@ -14,6 +14,12 @@ tape('misc functions', function(t) {
   let tmp = nlp('spencer kelly', { spencer: 'Cool' })
   t.equal(tmp.match('#Cool').text(), 'spencer', 'lexicon-works')
   // let tmp = nlp.tokenize('spencer kelly', { spencer: 'Cool' })
+
+  let obj = nlp('spencer kelly').lookup({ spencer: 'Name' })
+  t.equal(obj['Name'].text(), 'spencer', 'lookup-obj')
+
+  let m = nlp('spencer kelly').lookup(['spencer', 'david'])
+  t.equal(m.text(), 'spencer', 'lookup-arr')
   t.end()
 })
 

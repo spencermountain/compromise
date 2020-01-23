@@ -60,6 +60,7 @@
     "amble": "0.0.7",
     "efrt": "2.2.2",
     "eslint": "^6.8.0",
+    "nlp-corpus": "^3.3.0",
     "nyc": "^15.0.0",
     "rollup": "1.29.1",
     "rollup-plugin-babel": "4.3.3",

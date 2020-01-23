@@ -35,4 +35,3 @@ const stats = fs.statSync(outFile)
 let size = (stats['size'] / 1000.0).toFixed(1)
 
 console.log('       - packed into  ' + size + 'k\n')
-console.log('  done!\n')

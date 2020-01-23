@@ -7,6 +7,8 @@ import alias from '@rollup/plugin-alias'
 import sizeCheck from 'rollup-plugin-filesize-check'
 
 import { version } from './package.json'
+console.log('\n 📦  - running rollup..\n')
+
 const banner = '/* compromise ' + version + ' MIT */'
 
 export default [
@@ -29,7 +31,7 @@ export default [
         ],
       }),
       terser(),
-      sizeCheck({ expect: 95, warn: 5 }),
+      sizeCheck({ expect: 96, warn: 5 }),
     ],
   },
   {
@@ -43,7 +45,7 @@ export default [
         babelrc: false,
         presets: ['@babel/preset-env'],
       }),
-      sizeCheck({ expect: 95, warn: 5 }),
+      sizeCheck({ expect: 330, warn: 10 }),
     ],
   },
   {
@@ -57,7 +59,7 @@ export default [
         babelrc: false,
         presets: ['@babel/preset-env'],
       }),
-      sizeCheck({ expect: 95, warn: 5 }),
+      sizeCheck({ expect: 351, warn: 10 }),
     ],
   },
   {
@@ -72,7 +74,7 @@ export default [
         presets: ['@babel/preset-env'],
       }),
       terser(),
-      sizeCheck({ expect: 170, warn: 15 }),
+      sizeCheck({ expect: 173, warn: 10 }),
     ],
   },
 ]

@@ -174,7 +174,7 @@ declare module nlp {
     /**  return the terms after each match */
     after(match: string | Document<W>): Document<W>
     /** quick find for an array of string matches */
-    lookup(matches: string[]): Document<W>
+    lookup(matches: string[] | object): Document<W> | object
 
     // Case
     /**  turn every letter of every term to lower-cse */

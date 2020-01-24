@@ -101,7 +101,7 @@ declare module nlp {
     world: PluginWorld<D, W>,
     nlp: nlp<D, W>,
     Phrase: PluginConstructors,
-    Term: PluginConstructors,
+    Term: Term, // @todo Add extend support
     Pool: PluginConstructors
   ) => void
 
@@ -152,7 +152,7 @@ declare module nlp {
     /** get the end word in each match */
     lastTerm(): Document<W>
     /** return a flat list of all Term objects in match */
-    termList(): any
+    termList(): Term[]
     /** grab a specific named capture group */
     byName(name: string): Document<W>
     /** grab all named capture groups */
@@ -467,6 +467,150 @@ declare module nlp {
 
     /** call methods after tagger runs */
     postProcess<D extends Document = Document>(process: (Doc: D) => void): this
+  }
+
+  // @todo
+  interface RegSyntax {
+    [index: string]: any
+  }
+
+  type TextOutOptions =
+    | 'reduced'
+    | 'root'
+    | 'implicit'
+    | 'normal'
+    | 'unicode'
+    | 'titlecase'
+    | 'lowercase'
+    | 'acronyms'
+    | 'whitespace'
+    | 'punctuation'
+    | 'abbreviations'
+
+  type JsonOutOptions = 'text' | 'normal' | 'tags' | 'clean' | 'id' | 'offset' | 'implicit' | 'whitespace' | 'bestTag'
+
+  class Term {
+    isA: 'Term' // Get Type
+    id: string
+
+    // main data
+    text: string
+    tags: Record<string, boolean>
+
+    // alternative forms of this.text
+    root: string | null
+    implicit: string | null
+    clean?: string
+    reduced?: string
+
+    // additional surrounding information
+    prev: string | null // id of prev term
+    next: string | null // id of next term
+    pre?: string // character before e.g. ' ' ','
+    post?: string // character after e.g. ' ' ','
+
+    // support alternative matches
+    alias?: string
+
+    constructor(text?: string)
+    set(text: string): this
+
+    /** clone contents to new term */
+    clone(): Term
+
+    /** convert all text to uppercase */
+    toUpperCase(): this
+
+    /** convert all text to lowercase */
+    toLowerCase(): this
+
+    /** only set the first letter to uppercase
+     * leave any existing uppercase alone
+     */
+    toTitleCase(): this
+
+    /** if all letters are uppercase */
+    isUpperCase(): this
+
+    /** if the first letter is uppercase, and the rest are lowercase */
+    isTitleCase(): this
+    titleCase(): this
+
+    /** search the term's 'post' punctuation  */
+    hasPost(): boolean
+
+    /** search the term's 'pre' punctuation  */
+    hasPre(): boolean
+
+    /** does it have a quotation symbol?  */
+    hasQuote(): boolean
+    hasQuotation(): boolean
+
+    /** does it have a comma?  */
+    hasComma(): boolean
+
+    /** does it end in a period? */
+    hasPeriod(): boolean
+
+    /** does it end in an exclamation */
+    hasExclamation(): boolean
+
+    /** does it end with a question mark? */
+    hasQuestionMark(): boolean
+
+    /** is there a ... at the end? */
+    hasEllipses(): boolean
+
+    /** is there a semicolon after this word? */
+    hasSemicolon(): boolean
+
+    /** is there a slash '/' in this word? */
+    hasSlash(): boolean
+
+    /** a hyphen connects two words like-this */
+    hasHyphen(): boolean
+
+    /** a dash separates words - like that */
+    hasDash(): boolean
+
+    /** is it multiple words combinded */
+    hasContraction(): boolean
+
+    /** try to sensibly put this punctuation mark into the term */
+    addPunctuation(punct: string): this
+
+    doesMatch(reg: RegSyntax, index: number, length: number): boolean
+
+    /** does this term look like an acronym? */
+    isAcronym(): boolean
+
+    /** is this term implied by a contraction? */
+    isImplicit(): boolean
+
+    /** does the term have at least one good tag? */
+    isKnown(): boolean
+
+    /** cache the root property of the term */
+    setRoot(world: World): void
+
+    /** return various text formats of this term */
+    textOut(options?: Record<TextOutOptions, boolean>, showPre?: boolean, showPost?: boolean): string
+
+    /** return various metadata for this term */
+    // @todo create output type from options...
+    json(options?: Record<JsonOutOptions, boolean>, world?: World): object
+
+    /** add a tag or tags, and their descendents to this term */
+    tag(tags: string | string[], reason?: string, world?: World): this
+
+    /** only tag this term if it's consistent with it's current tags */
+    tagSafe(tags: string | string[], reason?: string, world?: World): this
+
+    /** remove a tag or tags, and their descendents from this term */
+    unTag(tags: string | string[], reason?: string, world?: World): this
+
+    /** is this tag consistent with the word's current tags? */
+    canBe(tags: string | string[], world?: World): boolean
   }
 }
 

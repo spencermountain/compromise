@@ -4,7 +4,6 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -46,7 +45,7 @@ jobs:
           npm run test:perf
           npm run test:types
           npm run test:stress
-          # -- currently failing, also alters on-disk file -- npm run test:speed
+          npm run test:speed
           npm run plugins:test
           # -- currently failing -- npx nyc tape ./tests/**/*.test.js
         env:

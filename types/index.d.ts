@@ -5,8 +5,8 @@ declare interface Lexicon {
   [key: string]: string
 }
 // documents indexed by a string
-declare interface DocIndex {
-  [key: string]: Document
+declare interface DocIndex<W extends nlp.World = nlp.World> {
+  [key: string]: nlp.Document<W>
 }
 
 declare interface nlp<D extends object, W extends object> {
@@ -154,9 +154,9 @@ declare module nlp {
     /** return a flat list of all Term objects in match */
     termList(): any
     /** grab a specific named capture group */
-    byName(name: string): Document
+    byName(name: string): Document<W>
     /** grab all named capture groups */
-    byName(): DocIndex
+    byName(): DocIndex<W>
 
     // Match
     /**  return a new Doc, with this one as a parent */
@@ -182,7 +182,7 @@ declare module nlp {
     /** quick find for an array of string matches */
     lookup(matches: string[]): Document<W>
     /** quick find for an object of key-value matches */
-    lookup(matches: Lexicon): DocIndex
+    lookup(matches: Lexicon): DocIndex<W>
 
     // Case
     /**  turn every letter of every term to lower-cse */

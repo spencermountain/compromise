@@ -13,12 +13,31 @@ test('named-match-auto:', function(t) {
   ]
 
   arr.forEach(function(a) {
-    const doc = nlp(a[0])
-      .match(a[1])
-      .byName(0)
+    const doc = nlp(a[0]).match(a[1])
+
+    const res = doc.byName(0)
 
     const msg = a[0] + ' matches ' + JSON.stringify(a[1]) + ' ' + a[2]
-    t.equal(doc.text(), a[2], msg)
+    t.equal(res.text(), a[2], msg)
+  })
+
+  t.end()
+})
+
+test('named-match-auto-multi:', function(t) {
+  let arr = [
+    ['the dog played', 'the [#Noun] [played]', 'dog played'],
+    ['the dog played lots', 'the [dog] played [<0>lots]', 'dog lots'],
+    ['the big dog played', 'the [big dog] [played]', 'big dog played'],
+  ]
+
+  arr.forEach(function(a) {
+    const doc = nlp(a[0]).match(a[1])
+
+    const res = doc.byName(0)
+
+    const msg = a[0] + ' matches ' + JSON.stringify(a[1]) + ' ' + a[2]
+    t.equal(res.text(), a[2], msg)
   })
 
   t.end()

@@ -85,7 +85,13 @@ const getOneName = function(doc, name) {
   for (let i = 0; i < doc.list.length; i++) {
     const phrase = doc.list[i]
     let keys = Object.keys(phrase.names)
-    keys = keys.filter(id => phrase.names[id].group === name)
+    keys = keys.filter(id => {
+      if (phrase.names[id].group !== undefined) {
+        return phrase.names[id].group === name
+      }
+
+      return phrase.names[id].index === name
+    })
     keys.forEach(id => {
       arr.push(phrase.buildFrom(phrase.names[id].start, phrase.names[id].length))
     })

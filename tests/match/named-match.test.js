@@ -1,6 +1,29 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
+test('named-match-auto:', function(t) {
+  let arr = [
+    ['the dog played', 'the [#Noun] played', 'dog'],
+    ['the dog played', 'the [dog] played', 'dog'],
+    ['the big dog played', 'the [big dog] played', 'big dog'],
+
+    ['the dog played', 'the #Noun [played]', 'played'],
+    ['the dog played', 'the dog [played]', 'played'],
+    ['the big dog played', 'the big dog [played]', 'played'],
+  ]
+
+  arr.forEach(function(a) {
+    const doc = nlp(a[0])
+      .match(a[1])
+      .byName(0)
+
+    const msg = a[0] + ' matches ' + JSON.stringify(a[1]) + ' ' + a[2]
+    t.equal(doc.text(), a[2], msg)
+  })
+
+  t.end()
+})
+
 test('named-match-group', function(t) {
   const res = nlp('the dog played')
     .match('the [<type>#Noun] played')

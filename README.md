@@ -353,8 +353,10 @@ _(these methods are on the `nlp` object)_
 - **[.last(n)](https://observablehq.com/@spencermountain/compromise-accessors)** - use only the last result(s)
 - **[.slice(n,n)](https://observablehq.com/@spencermountain/compromise-accessors)** - grab a subset of the results
 - **[.eq(n)](https://observablehq.com/@spencermountain/compromise-accessors)** - use only the nth result
-- **[.firstTerm()](https://observablehq.com/@spencermountain/compromise-accessors)** - get the first word in each match
-- **[.lastTerm()](https://observablehq.com/@spencermountain/compromise-accessors)** - get the end word in each match
+- **[.terms()](https://observablehq.com/@spencermountain/compromise-selections)** - split-up results by each individual term
+- **[.firstTerms()](https://observablehq.com/@spencermountain/compromise-accessors)** - get the first word in each match
+- **[.lastTerms()](https://observablehq.com/@spencermountain/compromise-accessors)** - get the end word in each match
+- **[.fullSentences()](https://observablehq.com/@spencermountain/compromise-accessors)** - get the whole sentence for each match
 - **[.termList()](https://observablehq.com/@spencermountain/compromise-accessors)** - return a flat list of all Term objects in match
 - **[.byName('')](https://observablehq.com/@spencermountain/compromise-accessors)** - grab any named capture-groups from a match
 
@@ -437,7 +439,6 @@ _(all match methods use the [match-syntax](https://docs.compromise.cool/compromi
 
 ##### Selections
 
-- **[.terms()](https://observablehq.com/@spencermountain/compromise-selections)** - split-up results by each individual term
 - **[.clauses()](https://observablehq.com/@spencermountain/compromise-selections)** - split-up sentences into multi-term phrases
 - **[.hyphenated()](https://observablehq.com/@spencermountain/compromise-selections)** - all terms connected with a hyphen or dash like `'wash-out'`
 - **[.phoneNumbers()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'(939) 555-0113'`

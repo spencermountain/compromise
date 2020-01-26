@@ -32,13 +32,16 @@ exports.eq = function(n) {
 exports.get = exports.eq
 
 /** grab term[0] for every match */
-exports.firstTerm = function() {
+exports.firstTerms = function() {
   return this.match('^.')
 }
+exports.firstTerm = exports.firstTerms
+
 /** grab the last term for every match  */
-exports.lastTerm = function() {
+exports.lastTerms = function() {
   return this.match('.$')
 }
+exports.lastTerm = exports.lastTerms
 
 /** return a flat array of term objects */
 exports.termList = function(num) {
@@ -113,10 +116,15 @@ exports.names = exports.byName
 exports.named = exports.byName
 
 /** get the full-sentence each phrase belongs to */
-exports.sentence = function() {
+exports.fullSentence = function(n) {
   let arr = []
   this.list.forEach(p => {
-    arr.push(p.sentence())
+    arr.push(p.fullSentence())
   })
+  if (typeof n === 'number') {
+    return this.buildFrom([arr[n]])
+  }
   return this.buildFrom(arr)
 }
+exports.fullSentences = exports.fullSentence
+exports.sentence = exports.fullSentence

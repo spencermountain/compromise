@@ -11,9 +11,12 @@ const nlp = require('./src/index')
 // console.log(res)
 
 // let doc = nlp('one two foo four five')
-let doc = nlp('one two foo four five. i saw foo house. I ate a sandwhich. Foo was nice')
+let doc = nlp('one two foo four five. i foo saw foo house. I ate a sandwhich. Foo was nice')
 
-console.log(doc.sentences(0).text())
+doc.firstTerms().debug()
+// let m = doc.match('foo')
+// let matches = m.fullSentences()
+// console.log(matches.out('array'))
 // let m = doc.match('foo')
 
 // m.eq(1)

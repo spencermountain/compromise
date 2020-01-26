@@ -101,7 +101,7 @@ exports.wordCount = function() {
 }
 
 /** get the full-sentence this phrase belongs to */
-exports.sentence = function() {
+exports.fullSentence = function() {
   let t = this.terms(0)
   //find first term in sentence
   while (t.prev) {

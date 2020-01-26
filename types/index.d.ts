@@ -150,9 +150,11 @@ declare module nlp {
     /**  use only the nth result */
     eq(n: number): Document<W>
     /** get the first word in each match */
-    firstTerm(): Document<W>
+    firstTerms(): Document<W>
     /** get the end word in each match */
-    lastTerm(): Document<W>
+    lastTerms(): Document<W>
+    /** get the whole sentence for each match */
+    fullSentences(n?: number): Document<W>
     /** return a flat list of all Term objects in match */
     termList(): Term[]
     /** grab a specific named capture group */

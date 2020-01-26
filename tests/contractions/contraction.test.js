@@ -72,3 +72,10 @@ test('contraction whitespace', function(t) {
 
   t.end()
 })
+
+test('number-range', function(t) {
+  let doc = nlp(`between 5-7.`)
+  t.equal(doc.has('5 to 7'), true, 'range-preposition-match')
+  t.equal(doc.has('#NumberRange'), true, 'has NumberRange tag')
+  t.end()
+})

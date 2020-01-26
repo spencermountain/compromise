@@ -46,6 +46,10 @@ const contractions = function(doc) {
       //add them in
       if (found !== null) {
         let newPhrase = createPhrase(found, doc)
+        // keep tag NumberRange, if we had it
+        if (p.has('#NumberRange') === true) {
+          doc.buildFrom([newPhrase]).tag('NumberRange')
+        }
         //set text as contraction
         let firstTerm = newPhrase.terms(0)
         firstTerm.text = term.text

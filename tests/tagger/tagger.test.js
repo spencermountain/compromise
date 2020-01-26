@@ -139,6 +139,9 @@ test('pos-basic-tag:', function(t) {
     ['planned', ['PastTense']],
     ['hummed', ['PastTense']],
 
+    // numberrange
+    ['it was 1-2 kg woooh', ['Noun', 'PastTense', 'NumberRange', 'NumberRange', 'NumberRange', 'Unit', 'Expression']],
+
     ['bakes', ['PresentTense']],
     ['fakes', ['PresentTense']],
     ['makes', ['PresentTense']],

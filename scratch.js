@@ -9,4 +9,18 @@ const nlp = require('./src/index')
 //   working: 'Uncool',
 // })
 // console.log(res)
-nlp('woooh').debug()
+
+// let doc = nlp('one two foo four five')
+let doc = nlp('one two foo four five. i saw foo house. I ate a sandwhich. Foo was nice')
+
+console.log(doc.sentences(0).text())
+// let m = doc.match('foo')
+
+// m.eq(1)
+//   .sentence()
+//   .debug()
+
+// m.map(d => {
+// console.log(d.parents())
+// return d.parent().parent().parent()
+// }).debug()

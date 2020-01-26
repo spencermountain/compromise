@@ -97,8 +97,12 @@ methods.things = methods.entities
 methods.topics = methods.entities
 
 /** alias for .all() until it gets overloaded by plugin */
-methods.sentences = function() {
-  return this.all()
+methods.sentences = function(n) {
+  let all = this.all()
+  if (typeof n === 'number') {
+    return all.eq(n)
+  }
+  return all
 }
 
 module.exports = methods

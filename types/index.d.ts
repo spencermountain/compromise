@@ -75,8 +75,10 @@ type PluginWorld<D extends object, W extends object> = {
 
 type PluginDocument<D extends object, W extends object> = nlp.ExtendedDocument<D, W> & { prototype: D }
 
+type PluginTerm = nlp.Term & PluginConstructor
+
 // Make these available, full support tbd
-type PluginConstructors = {
+type PluginConstructor = {
   prototype: Record<string, any>
 }
 
@@ -100,9 +102,9 @@ declare module nlp {
     Doc: PluginDocument<D, W>,
     world: PluginWorld<D, W>,
     nlp: nlp<D, W>,
-    Phrase: PluginConstructors,
-    Term: Term, // @todo Add extend support
-    Pool: PluginConstructors
+    Phrase: PluginConstructor,
+    Term: PluginTerm, // @todo Add extend support
+    Pool: PluginConstructor
   ) => void
 
   type ExtendedWorld<W extends object> = nlp.World & W

@@ -11,7 +11,7 @@ const isArray = function(arr) {
 
 //split-up by (these things)
 const byParentheses = function(str) {
-  let arr = str.split(/([\^\[\!]*\(.*?\)[?+*]*\]?\$?)/)
+  let arr = str.split(/([\^\[\!]*(?:<\S+>)?\(.*?\)[?+*]*\]?\$?)/)
   arr = arr.map(s => s.trim())
   return arr
 }
@@ -73,11 +73,6 @@ const postProcess = function(tokens) {
       }
       const { named } = tokens[first]
       tokens[i].named = named
-    }
-
-    // Remove empty named reg - probably an OR capture group
-    if (Object.keys(tokens[first]).length === 1) {
-      tokens.splice(first, 1)
     }
   }
 

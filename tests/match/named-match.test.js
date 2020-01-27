@@ -3,6 +3,8 @@ const nlp = require('../_lib')
 
 test('named-match-or:', function(t) {
   let arr = [
+    ['the dog played again', 'the [<target>(#Noun|#Verb)] played [<0>(#Adverb)]', 'dog'],
+    ['the dog played again', 'the [<target>(#Noun|#Verb)] played [<another>(#Adverb)]', 'dog'],
     ['the dog played', 'the [<target>(#Noun|#Verb)] played', 'dog'],
     ['the dog played', 'the [<target>(#Noun)] played', 'dog'],
   ]

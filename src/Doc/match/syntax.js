@@ -74,6 +74,11 @@ const postProcess = function(tokens) {
       const { named } = tokens[first]
       tokens[i].named = named
     }
+
+    // Remove empty named reg - probably an OR capture group
+    if (Object.keys(tokens[first]).length === 1) {
+      tokens.splice(first, 1)
+    }
   }
 
   return tokens

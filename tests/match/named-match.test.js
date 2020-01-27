@@ -1,6 +1,24 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
+test('named-match-or:', function(t) {
+  let arr = [
+    ['the dog played', 'the [<target>(#Noun|#Verb)] played', 'dog'],
+    ['the dog played', 'the [<target>(#Noun)] played', 'dog'],
+  ]
+
+  arr.forEach(function(a) {
+    const doc = nlp(a[0])
+      .match(a[1])
+      .byName('target')
+
+    const msg = a[0] + ' matches ' + JSON.stringify(a[1]) + ' ' + a[2]
+    t.equal(doc.text(), a[2], msg)
+  })
+
+  t.end()
+})
+
 test('named-match-auto:', function(t) {
   let arr = [
     ['the dog played', 'the [#Noun] played', 'dog'],

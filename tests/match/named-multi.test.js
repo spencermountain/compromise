@@ -43,3 +43,11 @@ test('two named - two results', function(t) {
 
   t.end()
 })
+
+test('one named - three results', function(t) {
+  let doc = nlp('june the 5th, july the 7th, and sept the 12th.')
+  let m = doc.match('[<month>#Month]')
+  //by object
+  t.equal(m.byName('month').length, 3, '3 months, one sentence')
+  t.end()
+})

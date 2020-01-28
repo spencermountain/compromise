@@ -10,8 +10,14 @@ const nlp = require('./src/index')
 // })
 // console.log(res)
 
-let doc = nlp(`Mr. Spiegel's next career move is a subject of speculation on Wall Street.`)
-doc.debug()
-// let doc = nlp('one two foo four five. i foo saw foo house. I ate a sandwhich. Foo was nice')
-// let m = doc.match('foo')
-// let matches = m.fullSentences()
+let doc = nlp('june the 5th, july the 7th, and sept the 12th.')
+let m = doc.match('[<month>#Month]')
+m.debug()
+m.byName('month').debug()
+
+// console.log(m.list[0])
+//by object
+
+// console.log(m.byName().month.debug())
+// m.byName('date').debug()
+// console.log(res)

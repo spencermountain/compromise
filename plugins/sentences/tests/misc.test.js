@@ -16,6 +16,13 @@ test('misc sentences', function(t) {
   t.end()
 })
 
+test('full sentence', function(t) {
+  let doc = nlp(`john, bill, and joe. Here we go. Must be three now.`)
+  let m = doc.match('we')
+  t.equal(m.sentences().text(), 'Here we go.', 'found full sentence')
+  t.end()
+})
+
 test('sentence prepend', function(t) {
   let doc = nlp('He is cool.')
   doc.sentences().prepend('so i think')
@@ -59,6 +66,6 @@ test('sentence append - change', function(t) {
 
   doc = nlp('it is cool? it is raining?')
   doc.sentences(0).append('for sure.  ')
-  t.equal(doc.text(), 'it is cool for sure.   it is raining?', 'change ending 2')
+  t.equal(doc.all().text(), 'it is cool for sure.   it is raining?', 'change ending 2')
   t.end()
 })

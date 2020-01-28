@@ -79,3 +79,10 @@ test('number-range', function(t) {
   t.equal(doc.has('#NumberRange'), true, 'has NumberRange tag')
   t.end()
 })
+
+test('french-contraction', function(t) {
+  let doc = nlp(`oh j'aime ca`)
+  t.equal(doc.has('aime'), true, 'has verb')
+  t.equal(doc.has('je'), true, 'has je')
+  t.end()
+})

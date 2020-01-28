@@ -116,7 +116,7 @@ exports.names = exports.byName
 exports.named = exports.byName
 
 /** get the full-sentence each phrase belongs to */
-exports.fullSentence = function(n) {
+exports.sentences = function(n) {
   let arr = []
   this.list.forEach(p => {
     arr.push(p.fullSentence())
@@ -126,5 +126,4 @@ exports.fullSentence = function(n) {
   }
   return this.buildFrom(arr)
 }
-exports.fullSentences = exports.fullSentence
-exports.sentence = exports.fullSentence
+exports.sentence = exports.sentences

@@ -153,8 +153,6 @@ declare module nlp {
     firstTerms(): Document<W>
     /** get the end word in each match */
     lastTerms(): Document<W>
-    /** get the whole sentence for each match */
-    fullSentences(n?: number): Document<W>
     /** return a flat list of all Term objects in match */
     termList(): Term[]
     /** grab a specific named capture group */
@@ -328,7 +326,7 @@ declare module nlp {
     topics(n?: number): Document<W>
 
     // Subsets
-    /** alias for .all(), until plugin overloading  */
+    /** get the whole sentence for each match */
     sentences(): Document<W>
     /**  return things like `'Mrs.'`*/
     abbreviations(n?: number): Abbreviations<W>

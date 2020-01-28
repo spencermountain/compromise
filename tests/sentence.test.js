@@ -30,7 +30,7 @@ test('get full sentence:', function(t) {
 test('get multiple-copies of one sentence:', function(t) {
   let doc = nlp('John Smith was cool. I am missing. Cindy Lauper and Carl Sagan here. I am also missing.')
   let m = doc.match('#Person+')
-  let matches = m.fullSentences()
+  let matches = m.sentences()
   let arr = matches.out('array')
   t.equal(arr.length, 3, 'two sentences into three results')
   t.equal(arr[0], 'John Smith was cool.', 'one person sentence #1')

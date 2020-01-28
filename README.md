@@ -359,7 +359,7 @@ _(these methods are on the `nlp` object)_
 - **[.terms()](https://observablehq.com/@spencermountain/compromise-selections)** - split-up results by each individual term
 - **[.firstTerms()](https://observablehq.com/@spencermountain/compromise-accessors)** - get the first word in each match
 - **[.lastTerms()](https://observablehq.com/@spencermountain/compromise-accessors)** - get the end word in each match
-- **[.fullSentences()](https://observablehq.com/@spencermountain/compromise-accessors)** - get the whole sentence for each match
+- **[.sentences()](https://observablehq.com/@spencermountain/compromise-accessors)** - get the whole sentence for each match
 - **[.termList()](https://observablehq.com/@spencermountain/compromise-accessors)** - return a flat list of all Term objects in match
 - **[.byName('')](https://observablehq.com/@spencermountain/compromise-accessors)** - grab any named capture-groups from a match
 

@@ -11,7 +11,7 @@ const isArray = function(arr) {
 
 //split-up by (these things)
 const byParentheses = function(str) {
-  let arr = str.split(/([\^\[\!]*\(.*?\)[?+*]*\]?\$?)/)
+  let arr = str.split(/([\^\[\!]*(?:<\S+>)?\(.*?\)[?+*]*\]?\$?)/)
   arr = arr.map(s => s.trim())
   return arr
 }

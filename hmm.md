@@ -228,4 +228,8 @@ let arr = [
 // console.log(json)
 ```
 
-- make .tokenize run .02-lexicon?
+### lookup duplicates
+```js
+let doc = nlp('spencer kelly is working here')
+let res = doc.lookup(['spencer kelly', 'spencer'])
+```

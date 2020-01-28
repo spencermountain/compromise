@@ -6,6 +6,7 @@ const Doc = require('./Doc/Doc')
 const Phrase = require('./Phrase/Phrase')
 const Term = require('./Term/Term')
 const Pool = require('./01-tokenizer/Pool')
+const tinyTagger = require('./02-tagger/tiny')
 
 function instance(worldInstance) {
   //blast-out our word-lists, just once
@@ -24,11 +25,17 @@ function instance(worldInstance) {
 
   /** parse text into a compromise object, without running POS-tagging */
   nlp.tokenize = function(text = '', lexicon) {
+    let w = world
     if (lexicon) {
-      world.addWords(lexicon)
+      w = w.clone()
+      w.words = {}
+      w.addWords(lexicon)
     }
-    let list = tokenize(text, world)
-    let doc = new Doc(list, null, world)
+    let list = tokenize(text, w)
+    let doc = new Doc(list, null, w)
+    if (lexicon) {
+      tinyTagger(doc)
+    }
     return doc
   }
 

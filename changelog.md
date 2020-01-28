@@ -22,7 +22,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - add nlp constructor as extra param to `.extend()`
 - add `nlp.fromJSON()` method
 - add a new `compromise-tokenize.js` build, without the tagger.
-- support lexicon object input to tokenize - `.tokenize({word:'tag'})`
+- support lexicon object param in tokenize - `.tokenize('my word', {word:'tag'})`
 - clean-up of scripts and tooling
 - improved typescript types
 - add support for some french contractions like `j'aime -> je aime`

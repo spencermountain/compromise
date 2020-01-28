@@ -26,6 +26,9 @@
   <a href="https://bundlephobia.com/result?p=compromise">
     <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/builds/compromise.min.js" />
   </a>
+  <a href="https://gitter.im/nlpcompromise/">
+    <img src="https://badges.gitter.im/gitterHQ/gitter.svg" />
+  </a>
   </div>
 </div>
 

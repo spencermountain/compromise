@@ -10,20 +10,8 @@ const nlp = require('./src/index')
 // })
 // console.log(res)
 
-// let doc = nlp('one two foo four five')
-let doc = nlp('one two foo four five. i foo saw foo house. I ate a sandwhich. Foo was nice')
-
-doc.firstTerms().debug()
+// let doc = nlp('one two foo four five. i foo saw foo house. I ate a sandwhich. Foo was nice')
 // let m = doc.match('foo')
 // let matches = m.fullSentences()
-// console.log(matches.out('array'))
-// let m = doc.match('foo')
 
-// m.eq(1)
-//   .sentence()
-//   .debug()
-
-// m.map(d => {
-// console.log(d.parents())
-// return d.parent().parent().parent()
-// }).debug()
+nlp(`l'amour`).debug()

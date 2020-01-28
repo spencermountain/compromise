@@ -6,6 +6,7 @@ const checkIrregulars = require('./03-irregulars')
 const checkPossessive = require('./04-possessive')
 const checkPerfect = require('./05-perfectTense')
 const checkRange = require('./06-ranges')
+const checkFrench = require('./07-french')
 const isNumber = /^[0-9]+$/
 
 const createPhrase = function(found, doc) {
@@ -43,6 +44,7 @@ const contractions = function(doc) {
       found = found || checkPossessive(term, p, world)
       found = found || checkPerfect(term, p)
       found = found || checkRange(term, p)
+      found = found || checkFrench(term, p)
       //add them in
       if (found !== null) {
         let newPhrase = createPhrase(found, doc)

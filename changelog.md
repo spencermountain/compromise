@@ -24,7 +24,8 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - support lexicon object input to tokenize - `.tokenize({word:'tag'})`
 - clean-up of scripts and tooling
 - improved typescript types
-- add `.sentence()` method to retrieve full sentence from a match
+- add `.fullSentence()` method to retrieve full sentence from a match
+- add support for some french contractions like `j'aime -> je aime`
 -->
 
 ##### 12.4.0

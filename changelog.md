@@ -12,6 +12,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - **[breaking]** move .export() and .load() methods to plugin (compromise-export)
 -  - change .export() format - this hasn't worked properly since v12. (mis-parsed contractions) see #669
 - **[breaking]** split `compromise-output` into `compromise-html` and `compromise-hash` plugins
+- **[breaking]** change `.sentences()` method to return only full-sentences of matches (use `.all()` instead)
 
 - fix nlp.clone()  - hasn't worked properly, since v12. (@Drache93)
 - add new named-match syntax, with .byName() method (@Drache93)
@@ -24,7 +25,6 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - support lexicon object input to tokenize - `.tokenize({word:'tag'})`
 - clean-up of scripts and tooling
 - improved typescript types
-- add `.fullSentence()` method to retrieve full sentence from a match
 - add support for some french contractions like `j'aime -> je aime`
 -->
 

@@ -103,7 +103,7 @@ const getOneName = function(doc, name) {
 }
 
 /** grab named capture group results */
-exports.byName = function(target) {
+exports.groups = function(target) {
   if (target === undefined) {
     return getGroups(this)
   }
@@ -112,7 +112,6 @@ exports.byName = function(target) {
   }
   return getOneName(this, target) || this.buildFrom([])
 }
-exports.groups = exports.byName
 
 /** get the full-sentence each phrase belongs to */
 exports.sentences = function(n) {

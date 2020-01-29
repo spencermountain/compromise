@@ -8,7 +8,7 @@ test('named-match-overlap', function(t) {
 
   t.equal(m.length, 3, 'Should have 3 results')
 
-  t.equal(m.byName('month').length, 3, 'Should have 3 capture group results')
+  t.equal(m.groups('month').length, 3, 'Should have 3 capture group results')
 
   t.end()
 })
@@ -24,7 +24,7 @@ test('named-match-or:', function(t) {
   arr.forEach(function(a) {
     const doc = nlp(a[0])
       .match(a[1])
-      .byName('target')
+      .groups('target')
 
     const msg = a[0] + ' matches ' + JSON.stringify(a[1]) + ' ' + a[2]
     t.equal(doc.text(), a[2], msg)
@@ -47,7 +47,7 @@ test('named-match-auto:', function(t) {
   arr.forEach(function(a) {
     const doc = nlp(a[0]).match(a[1])
 
-    const res = doc.byName(0)
+    const res = doc.groups(0)
 
     const msg = a[0] + ' matches ' + JSON.stringify(a[1]) + ' ' + a[2]
     t.equal(res.text(), a[2], msg)
@@ -66,7 +66,7 @@ test('named-match-auto-multi:', function(t) {
   arr.forEach(function(a) {
     const doc = nlp(a[0]).match(a[1])
 
-    const res = doc.byName(0)
+    const res = doc.groups(0)
 
     const msg = a[0] + ' matches ' + JSON.stringify(a[1]) + ' ' + a[2]
     t.equal(res.text(), a[2], msg)
@@ -78,12 +78,12 @@ test('named-match-auto-multi:', function(t) {
 test('named-match-group', function(t) {
   const res = nlp('the dog played')
     .match('the [<type>#Noun] played')
-    .byName()
+    .groups()
 
   t.equal(res['type'].text(), 'dog')
 
   const doc2 = nlp('the big big big dog played').match('the [<size>#Adjective+] [<type>#Noun] played')
-  const res2 = doc2.byName()
+  const res2 = doc2.groups()
 
   t.equal(res2['type'].text(), 'dog')
   t.equal(res2['size'].text(), 'big big big')
@@ -133,7 +133,7 @@ test('named-match-to-json:', function(t) {
   arr.forEach(function(a) {
     const doc = nlp(a[0]).match(a[1])
 
-    const res = doc.byName()
+    const res = doc.groups()
     t.ok(res['target'], "Should contain 'target' group")
 
     const json = res.target.json()
@@ -162,7 +162,7 @@ test('named-match-overlap', function(t) {
     a.run(
       nlp(a.input)
         .match(a.match)
-        .byName()
+        .groups()
     )
   )
 
@@ -179,7 +179,7 @@ test('named-object-match:', function(t) {
   arr.forEach(function(a) {
     const doc = nlp(a[0])
       .match(a[1])
-      .byName('target')
+      .groups('target')
 
     const msg = a[0] + ' matches ' + JSON.stringify(a[1]) + ' ' + a[2]
     t.equal(doc.text(), a[2], msg)
@@ -202,7 +202,7 @@ test('named-object-match-target:', function(t) {
   arr.forEach(function(a) {
     const doc = nlp(a[0])
       .match(a[1])
-      .byName('target')
+      .groups('target')
 
     const msg = a[0] + ' matches ' + JSON.stringify(a[1]) + ' ' + a[2]
     t.equal(doc.text(), a[2], msg)
@@ -226,7 +226,7 @@ test('named-object-match-number:', function(t) {
   arr.forEach(function(a) {
     const doc = nlp(a[0])
       .match(a[1])
-      .byName(0)
+      .groups(0)
 
     const msg = a[0] + ' matches ' + JSON.stringify(a[1]) + ' ' + a[2]
     t.equal(doc.text(), a[2], msg)
@@ -247,7 +247,7 @@ test('named-match:', function(t) {
   arr.forEach(function(a) {
     const doc = nlp(a[0])
       .match(a[1])
-      .byName('target')
+      .groups('target')
 
     const msg = a[0] + ' matches ' + JSON.stringify(a[1]) + ' ' + a[2]
     t.equal(doc.text(), a[2], msg)
@@ -270,7 +270,7 @@ test('named-match-target:', function(t) {
   arr.forEach(function(a) {
     const doc = nlp(a[0])
       .match(a[1])
-      .byName('target')
+      .groups('target')
 
     const msg = a[0] + ' matches ' + JSON.stringify(a[1]) + ' ' + a[2]
     t.equal(doc.text(), a[2], msg)
@@ -293,7 +293,7 @@ test('named-match-number:', function(t) {
   arr.forEach(function(a) {
     const doc = nlp(a[0])
       .match(a[1])
-      .byName(0)
+      .groups(0)
 
     const msg = a[0] + ' matches ' + JSON.stringify(a[1]) + ' ' + a[2]
     t.equal(doc.text(), a[2], msg)

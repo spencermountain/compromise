@@ -40,13 +40,12 @@ jobs:
           npm run build
           npm run plugins:build
           npm run test:smoke
-          # -- currently failing -- npm run test
-          # -- currently failing -- npm run test:spec
+          npm run testb
           npm run test:perf
           npm run test:types
           npm run test:stress
           npm run test:speed
           npm run plugins:test
-          # -- currently failing -- npx nyc tape ./tests/**/*.test.js
+          npx nyc tape ./tests/**/*.test.js
         env:
           CI: true

@@ -66,7 +66,7 @@ const getGroups = function(doc) {
   const allGroups = {}
   for (let i = 0; i < doc.list.length; i++) {
     const phrase = doc.list[i]
-    const groups = Object.values(phrase.groups)
+    const groups = Object.keys(phrase.groups).map(k => phrase.groups[k])
     for (let j = 0; j < groups.length; j++) {
       const { group, start, length } = groups[j]
       if (!allGroups[group]) {

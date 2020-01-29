@@ -13,6 +13,9 @@
     "type": "git",
     "url": "git://github.com/spencermountain/compromise.git"
   },
+  "engines": {
+    "node": ">=6.11.0"
+  },
   "scripts": {
     "build": "node ./scripts/build && rollup -c --silent && npm run test:smoke --silent",
     "pack": "node ./scripts/build/pack.js",

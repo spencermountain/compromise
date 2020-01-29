@@ -17,7 +17,7 @@ class Phrase {
       writable: true,
       value: {},
     })
-    Object.defineProperty(this, 'names', {
+    Object.defineProperty(this, 'groups', {
       enumerable: false,
       writable: true,
       value: {},
@@ -36,9 +36,9 @@ Phrase.prototype.buildFrom = function(id, length, groups) {
   }
   //copy-over or replace capture-groups too
   if (groups && Object.keys(groups).length > 0) {
-    p.names = groups
+    p.groups = groups
   } else {
-    p.names = this.names
+    p.groups = this.groups
   }
   return p
 }

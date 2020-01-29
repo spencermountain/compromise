@@ -159,6 +159,10 @@ declare module nlp {
     byName(name: string): Document<W>
     /** grab all named capture groups */
     byName(): DocIndex<W>
+    /** grab a specific named capture group */
+    groups(name: string): Document<W>
+    /** grab all named capture groups */
+    groups(): DocIndex<W>
 
     // Match
     /**  return a new Doc, with this one as a parent */

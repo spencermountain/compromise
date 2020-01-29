@@ -6,7 +6,7 @@ const matchAll = require('./01-matchAll')
 const notMatch = function(p, regs) {
   let found = {}
   let arr = matchAll(p, regs)
-  arr.forEach(ts => {
+  arr.forEach(({ match: ts }) => {
     ts.forEach(t => {
       found[t.id] = true
     })

@@ -1,6 +1,18 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
+test('named-match-overlap', function(t) {
+  let doc = nlp('june the 5th, july the 7th, and sept the 12th.')
+
+  let m = doc.match('[<month>#Month]')
+
+  t.equal(m.length, 3, 'Should have 3 results')
+
+  t.equal(m.byName('month').length, 3, 'Should have 3 capture group results')
+
+  t.end()
+})
+
 test('named-match-or:', function(t) {
   let arr = [
     ['the dog played again', 'the [<target>(#Noun|#Verb)] played [<0>(#Adverb)]', 'dog'],

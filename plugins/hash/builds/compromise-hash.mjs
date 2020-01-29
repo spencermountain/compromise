@@ -1,4 +1,4 @@
-/* compromise-hash 0.0.3 MIT */
+/* compromise-hash 0.0.1 MIT */
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {

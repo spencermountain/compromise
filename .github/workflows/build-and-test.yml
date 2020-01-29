@@ -1,6 +1,6 @@
 name: Build and test
 
-on: [push, pull_request]
+on: [pull_request]
 
 jobs:
   build:
@@ -27,11 +27,6 @@ jobs:
             ${{ runner.os }}-npm-${{ matrix.node-version }}-
             ${{ runner.os }}-npm-
 
-      # This is quite possibly an excessively long list of build/test steps,
-      # since I don't know the exact process that really needs to be used to
-      # test everything.  Note also that this calls `nyc ...` directly rather
-      # than using the "coverage" script, as that script always pushes coverage
-      # info to codecov, and we don't need *every* build's info pushed.
       - name: npm install, build, and test
         run: |
           npm ci

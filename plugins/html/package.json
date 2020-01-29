@@ -1,7 +1,7 @@
 {
   "name": "compromise-html",
   "description": "plugin for nlp-compromise",
-  "version": "0.0.3",
+  "version": "0.0.1",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "main": "./builds/compromise-html.js",
   "unpkg": "./builds/compromise-html.min.js",

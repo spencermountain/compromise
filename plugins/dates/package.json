@@ -1,7 +1,7 @@
 {
   "name": "compromise-dates",
   "description": "plugin for nlp-compromise",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "main": "./builds/compromise-dates.js",
   "unpkg": "./builds/compromise-dates.min.js",

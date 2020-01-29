@@ -1,4 +1,4 @@
-/* compromise-syllables 0.0.3 MIT */
+/* compromise-syllables 0.0.4 MIT */
 var starts_with_single_vowel_combos = /^(eu)/i;
 var joining_consonant_vowel = /^[^aeiou][e]([^d]|$)/;
 var cvcv_same_consonant = /^([^aeiouy])[aeiouy]\1[aeiouy]/;

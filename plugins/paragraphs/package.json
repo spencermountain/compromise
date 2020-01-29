@@ -1,7 +1,7 @@
 {
   "name": "compromise-paragraphs",
   "description": "plugin for nlp-compromise",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "main": "./builds/compromise-paragraphs.js",
   "unpkg": "./builds/compromise-paragraphs.min.js",

@@ -1,7 +1,7 @@
 {
   "name": "compromise-hash",
   "description": "plugin for nlp-compromise",
-  "version": "0.0.3",
+  "version": "0.0.1",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "main": "./builds/compromise-hash.js",
   "unpkg": "./builds/compromise-hash.min.js",

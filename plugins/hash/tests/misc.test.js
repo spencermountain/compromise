@@ -9,7 +9,6 @@ test('hash has whitespace', function(t) {
     contractions: false,
   })
   t.equal(nlp('he is not working').hash() === doc.hash(), false, 'whitespace changes hash')
-  t.ok(false)
   t.end()
 })
 

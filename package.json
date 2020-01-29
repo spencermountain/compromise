@@ -32,7 +32,6 @@
     "plugins:install": "node ./scripts/plugins.js npm install",
     "plugins:ci": "node ./scripts/plugins.js npm ci",
     "plugins:build": "node ./scripts/plugins.js npm run build",
-    "plugins:test": "node ./scripts/plugins.js npm run test",
     "demo": "python -m SimpleHTTPServer 8888"
   },
   "files": [

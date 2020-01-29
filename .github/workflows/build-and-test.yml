@@ -45,7 +45,5 @@ jobs:
           npm run test:perf
           npm run test:types
           # npm run test:stress
-          npm run plugins:test
-          npx nyc tape ./tests/**/*.test.js
         env:
           CI: true

@@ -17,12 +17,12 @@ const parseExplicit = function(doc, context) {
   if (!m.found) {
     // 'june the fifth'
     m = doc.match('[<month>#Month] the [<date>#Value]')
-    // console.log(m.byName('date').text())
+    // console.log(m.groups('date').text())
   }
   if (m.found) {
     let obj = {
-      month: m.byName('month').text(),
-      date: m.byName('date').text(),
+      month: m.groups('month').text(),
+      date: m.groups('date').text(),
       year: context.today.year(),
     }
     // console.log(obj)
@@ -34,8 +34,8 @@ const parseExplicit = function(doc, context) {
 
   if (m.found) {
     let obj = {
-      month: m.byName('month').text(),
-      date: m.byName('date').text(),
+      month: m.groups('month').text(),
+      date: m.groups('date').text(),
       year: context.today.year(),
     }
     let d = new CalendarDate(obj, null, context)

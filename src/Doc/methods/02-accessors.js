@@ -112,6 +112,7 @@ exports.groups = function(target) {
   }
   return getOneName(this, target) || this.buildFrom([])
 }
+exports.group = exports.groups
 
 /** get the full-sentence each phrase belongs to */
 exports.sentences = function(n) {

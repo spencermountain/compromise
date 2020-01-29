@@ -73,4 +73,9 @@ doc.html(
 )
 ```
 
+### See also:
+
+- [compromise-highlight](https://github.com/spencermountain/compromise-highlight/)
+- [compromise-align](https://github.com/spencermountain/compromise-align)
+
 MIT

@@ -14,7 +14,7 @@
     "url": "git://github.com/spencermountain/compromise.git"
   },
   "engines": {
-    "node": ">=6.11.0"
+    "node": ">=6.0.0"
   },
   "scripts": {
     "build": "node ./scripts/build && rollup -c --silent && npm run test:smoke --silent",
@@ -60,7 +60,7 @@
     "@rollup/plugin-node-resolve": "^7.0.0",
     "amble": "0.0.7",
     "efrt": "2.2.2",
-    "rollup": "1.29.1",
+    "rollup": "1.30.1",
     "rollup-plugin-babel": "4.3.3",
     "rollup-plugin-filesize-check": "0.0.1",
     "rollup-plugin-terser": "5.2.0",

@@ -15,7 +15,7 @@ _major changes to `.export()` and `[capture] group` match-syntax._
 - **[breaking]** move .export() and .load() methods to plugin (compromise-export)
 - - change .export() format - this hasn't worked properly since v12. (mis-parsed contractions) see #669
 - **[breaking]** split `compromise-output` into `compromise-html` and `compromise-hash` plugins
-- **[breaking]** `.match('foo [bar]')` no-longer returns 'bar'. (use `.byName('bar')`)
+- **[breaking]** `.match('foo [bar]')` no-longer returns 'bar'. (use `.match('foo [bar]', 0)`)
 - **[breaking]** change `.sentences()` method to return only full-sentences of matches (use `.all()` instead)
 
 modifications:

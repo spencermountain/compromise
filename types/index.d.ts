@@ -156,10 +156,6 @@ declare module nlp {
     /** return a flat list of all Term objects in match */
     termList(): Term[]
     /** grab a specific named capture group */
-    byName(name: string): Document<W>
-    /** grab all named capture groups */
-    byName(): DocIndex<W>
-    /** grab a specific named capture group */
     groups(name: string): Document<W>
     /** grab all named capture groups */
     groups(): DocIndex<W>

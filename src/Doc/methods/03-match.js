@@ -1,7 +1,7 @@
 const parseSyntax = require('../match/syntax')
 
 /** return a new Doc, with this one as a parent */
-exports.match = function(reg) {
+exports.match = function(reg, name) {
   //parse-up the input expression
   let regs = parseSyntax(reg)
   if (regs.length === 0) {
@@ -11,6 +11,11 @@ exports.match = function(reg) {
   let matches = this.list.reduce((arr, p) => {
     return arr.concat(p.match(regs))
   }, [])
+
+  if (name) {
+    return this.buildFrom(matches).groups(name)
+  }
+
   return this.buildFrom(matches)
 }
 

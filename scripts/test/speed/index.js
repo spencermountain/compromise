@@ -1,4 +1,3 @@
-const test = require('tape')
 const nlp = require('../../../tests/_lib')
 const fs = require('fs')
 const path = require('path')
@@ -11,55 +10,54 @@ if (node_version !== process.version) {
   console.log("\n(running '" + process.version + "' instead of '" + node_version + "')\n")
 }
 
-test('Performance', function(t) {
-  fetch('https://unpkg.com/nlp-corpus@3.3.0/builds/nlp-corpus-1.json').then(res => {
-    const outputPath = path.join(__dirname, './_performance.json')
+fetch('https://unpkg.com/nlp-corpus@3.3.0/builds/nlp-corpus-1.json').then(res => {
+  const outputPath = path.join(__dirname, './_performance.json')
 
-    let expected = {}
-    if (fs.existsSync(outputPath)) {
-      expected = JSON.parse(fs.readFileSync(outputPath))
+  let expected = {}
+  if (fs.existsSync(outputPath)) {
+    expected = JSON.parse(fs.readFileSync(outputPath))
+  }
+
+  const textArr = res.sort((a, b) => a.length - b.length)
+  const x = []
+  const y = []
+
+  for (let i = 0; i < textArr.length; i++) {
+    const text = textArr[i]
+    const yI = []
+
+    console.group('Text', i)
+
+    for (let j = 0; j < TEST_COUNT; j++) {
+      const _nlp = nlp.clone() // Avoid caching?
+      const start = Date.now()
+      _nlp(text)
+      const end = Date.now()
+      const diff = end - start
+      console.log('  ' + diff + ' ms')
+      yI.push(diff)
     }
 
-    const textArr = res.sort((a, b) => a.length - b.length)
-    const x = []
-    const y = []
+    x.push(text.length)
+    y.push(yI.reduce((acc, v) => acc + v, 0) / yI.length)
 
-    for (let i = 0; i < textArr.length; i++) {
-      const text = textArr[i]
-      const yI = []
+    console.groupEnd()
+  }
 
-      console.group('Text', i)
+  const regression = calculateRegression(x, y)
+  const diff = Math.abs(regression.average - expected.average).toFixed(5)
+  const results = Object.assign({ x, y, key: { x: 'Length', y: 'Time' }, diff }, regression)
 
-      for (let j = 0; j < TEST_COUNT; j++) {
-        const _nlp = nlp.clone() // Avoid caching?
-        const start = Date.now()
-        _nlp(text)
-        const end = Date.now()
-        const diff = end - start
-        console.log('  ' + diff + ' ms')
-        yI.push(diff)
-      }
+  fs.writeFileSync(outputPath, JSON.stringify(results, null, 2))
 
-      x.push(text.length)
-      y.push(yI.reduce((acc, v) => acc + v, 0) / yI.length)
+  console.log('\n')
+  console.log('Expected:', Math.ceil(expected.average) + 'ms')
+  console.log('Current :', Math.ceil(results.average) + 'ms')
+  console.log('Diff:', Math.ceil(diff) + 'ms')
 
-      console.groupEnd()
-    }
-
-    const regression = calculateRegression(x, y, t)
-    const diff = Math.abs(regression.average - expected.average).toFixed(5)
-    const results = Object.assign({ x, y, key: { x: 'Length', y: 'Time' }, diff }, regression)
-
-    fs.writeFileSync(outputPath, JSON.stringify(results, null, 2))
-
-    console.log('\n')
-    console.log('Expected:', Math.ceil(expected.average) + 'ms')
-    console.log('Current :', Math.ceil(results.average) + 'ms')
-    console.log('Diff:', Math.ceil(diff) + 'ms')
-
-    // Should we decide on a good value to check against? Might as well just log it for now
-    //t.true(diff < 20, 'perfomance is stable')
-
-    t.end()
-  })
+  // Should we decide on a good value to check against? Might as well just log it for now
+  //t.true(diff < 20, 'perfomance is stable')
+  if (diff > 30) {
+    throw 'speed-difference of ' + diff
+  }
 })

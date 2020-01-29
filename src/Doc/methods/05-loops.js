@@ -7,11 +7,15 @@ exports.map = function(fn) {
     let doc = this.buildFrom([p])
     doc.from = null //it's not a child/parent
     let res = fn(doc, i)
-    if (res.list && res.list[0]) {
+    // if its a doc, return one result
+    if (res && res.list && res.list[0]) {
       return res.list[0]
     }
     return res
   })
+  //remove nulls
+  list = list.filter(x => x)
+  // return an empty response
   if (list.length === 0) {
     return this.buildFrom(list)
   }

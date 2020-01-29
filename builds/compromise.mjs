@@ -1361,13 +1361,34 @@ var wordCount = function wordCount() {
     return t.text !== '';
   }).length;
 };
+/** get the full-sentence this phrase belongs to */
+
+
+var fullSentence = function fullSentence() {
+  var t = this.terms(0); //find first term in sentence
+
+  while (t.prev) {
+    t = this.pool.get(t.prev);
+  }
+
+  var start = t.id;
+  var len = 1; //go to end of sentence
+
+  while (t.next) {
+    t = this.pool.get(t.next);
+    len += 1;
+  }
+
+  return this.buildFrom(start, len);
+};
 
 var _01Utils = {
   terms: terms,
   clone: clone,
   lastTerm: lastTerm,
   hasId: hasId,
-  wordCount: wordCount
+  wordCount: wordCount,
+  fullSentence: fullSentence
 };
 
 var trimEnd = function trimEnd(str) {
@@ -2029,7 +2050,7 @@ var greedyTo = function greedyTo(terms, t, nextReg, index, length) {
 }; // get or create named group
 
 
-var getOrCreateGroup = function getOrCreateGroup(namedGroups, namedGroupId, terms, startIndex, reg) {
+var getOrCreateGroup = function getOrCreateGroup(namedGroups, namedGroupId, terms, startIndex, group, index) {
   var g = namedGroups[namedGroupId];
 
   if (g) {
@@ -2038,7 +2059,8 @@ var getOrCreateGroup = function getOrCreateGroup(namedGroups, namedGroupId, term
 
   var id = terms[startIndex].id;
   namedGroups[namedGroupId] = {
-    group: reg.named.toString(),
+    group: group === true ? undefined : String(group),
+    index: String(index),
     start: id,
     length: 0
   };
@@ -2051,21 +2073,24 @@ var tryHere = function tryHere(terms, regs, index, length) {
   var captures = [];
   var namedGroups = {};
   var previousGroupId = null;
+  var groupCounter = -1;
   var t = 0; // we must satisfy each rule in 'regs'
 
   for (var r = 0; r < regs.length; r += 1) {
     var reg = regs[r]; // Check if this reg has a named capture group
 
     var isNamedGroup = typeof reg.named === 'string' || typeof reg.named === 'number';
+    var hasGroup = reg.named === true || isNamedGroup;
     var namedGroupId = null; // Reuse previous capture group if same
 
-    if (isNamedGroup) {
+    if (hasGroup) {
       var prev = regs[r - 1];
 
       if (prev && prev.named === reg.named && previousGroupId) {
         namedGroupId = previousGroupId;
       } else {
-        namedGroupId = _id(reg.named); // namedGroupId = terms[t].id
+        groupCounter++;
+        namedGroupId = _id(isNamedGroup ? reg.named : groupCounter); // namedGroupId = terms[t].id
 
         previousGroupId = namedGroupId;
       }
@@ -2108,12 +2133,9 @@ var tryHere = function tryHere(terms, regs, index, length) {
       if (reg.named || isNamedGroup) {
         captures.push(t);
         captures.push(skipto - 1);
+        var g = getOrCreateGroup(namedGroups, namedGroupId, terms, t, reg.named, groupCounter); // Update group
 
-        if (isNamedGroup) {
-          var g = getOrCreateGroup(namedGroups, namedGroupId, terms, t, reg); // Update group
-
-          g.length = skipto - t;
-        }
+        g.length = skipto - t;
       }
 
       t = skipto;
@@ -2182,15 +2204,13 @@ var tryHere = function tryHere(terms, regs, index, length) {
         } // Create capture group if missing
 
 
-        if (isNamedGroup) {
-          var _g = getOrCreateGroup(namedGroups, namedGroupId, terms, startAt, reg); // Update group - add greedy or increment length
+        var _g = getOrCreateGroup(namedGroups, namedGroupId, terms, startAt, reg.named, groupCounter); // Update group - add greedy or increment length
 
 
-          if (t > 1 && reg.greedy) {
-            _g.length += t - startAt;
-          } else {
-            _g.length++;
-          }
+        if (t > 1 && reg.greedy) {
+          _g.length += t - startAt;
+        } else {
+          _g.length++;
         }
       }
 
@@ -2246,7 +2266,8 @@ var postProcess = function postProcess(terms, regs, matches) {
 
   if (atEnd) {
     var lastTerm = terms[terms.length - 1];
-    matches = matches.filter(function (arr) {
+    matches = matches.filter(function (_ref) {
+      var arr = _ref.match;
       return arr.indexOf(lastTerm) !== -1;
     });
   }
@@ -2469,7 +2490,7 @@ var isArray$1 = function isArray(arr) {
 
 
 var byParentheses = function byParentheses(str) {
-  var arr = str.split(/([\^\[\!]*\(.*?\)[?+*]*\]?\$?)/);
+  var arr = str.split(/([\^\[\!]*(?:<\S+>)?\(.*?\)[?+*]*\]?\$?)/);
   arr = arr.map(function (s) {
     return s.trim();
   });
@@ -2654,18 +2675,13 @@ var matchAll = function matchAll(p, regs) {
         groups = _tryMatch2[1];
 
     if (match !== false && match.length > 0) {
-      matches.push(match);
-    } // remove (intentional) null results
-
-
-    matches = matches.map(function (arr) {
-      return arr.filter(function (t) {
-        return t;
+      match = match.filter(function (m) {
+        return m;
       });
-    }); //add to names if named capture group
-
-    if (groups && Object.keys(groups).length > 0) {
-      p.names = Object.assign({}, p.names, groups);
+      matches.push({
+        match: match,
+        groups: groups
+      });
     }
 
     return _04PostProcess(terms, regs, matches);
@@ -2691,12 +2707,10 @@ var matchAll = function matchAll(p, regs) {
       _match = _match.filter(function (m) {
         return m;
       });
-      matches.push(_match); //save new capture groups
-
-      if (_groups && Object.keys(_groups).length > 0) {
-        p.names = Object.assign({}, p.names, _groups);
-      } //ok, maybe that's enough?
-
+      matches.push({
+        match: _match,
+        groups: _groups
+      }); //ok, maybe that's enough?
 
       if (matchOne === true) {
         return _04PostProcess(terms, regs, matches);
@@ -2716,7 +2730,8 @@ var _01MatchAll = matchAll;
 var notMatch = function notMatch(p, regs) {
   var found = {};
   var arr = _01MatchAll(p, regs);
-  arr.forEach(function (ts) {
+  arr.forEach(function (_ref) {
+    var ts = _ref.match;
     ts.forEach(function (t) {
       found[t.id] = true;
     });
@@ -2755,8 +2770,10 @@ var match_1 = function match_1(str) {
   var justOne = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
   var matches = _01MatchAll(this, str, justOne); //make them phrase objects
 
-  matches = matches.map(function (list) {
-    return _this.buildFrom(list[0].id, list.length);
+  matches = matches.map(function (_ref) {
+    var match = _ref.match,
+        groups = _ref.groups;
+    return _this.buildFrom(match[0].id, match.length, groups);
   });
   return matches;
 };
@@ -2838,7 +2855,7 @@ var Phrase = function Phrase(id, length, pool) {
     writable: true,
     value: {}
   });
-  Object.defineProperty(this, 'names', {
+  Object.defineProperty(this, 'groups', {
     enumerable: false,
     writable: true,
     value: {}
@@ -2847,7 +2864,7 @@ var Phrase = function Phrase(id, length, pool) {
 /** create a new Phrase object from an id and length */
 
 
-Phrase.prototype.buildFrom = function (id, length) {
+Phrase.prototype.buildFrom = function (id, length, groups) {
   var p = new Phrase(id, length, this.pool);
 
   if (this.cache) {
@@ -2856,10 +2873,13 @@ Phrase.prototype.buildFrom = function (id, length) {
     if (length !== this.length) {
       p.cache.terms = null;
     }
-  }
+  } //copy-over or replace capture-groups too
 
-  if (this.names) {
-    p.names = this.names;
+
+  if (groups && Object.keys(groups).length > 0) {
+    p.groups = groups;
+  } else {
+    p.groups = this.groups;
   }
 
   return p;
@@ -6190,17 +6210,19 @@ var _02Accessors = createCommonjsModule(function (module, exports) {
   exports.get = exports.eq;
   /** grab term[0] for every match */
 
-  exports.firstTerm = function () {
+  exports.firstTerms = function () {
     return this.match('^.');
   };
+
+  exports.firstTerm = exports.firstTerms;
   /** grab the last term for every match  */
 
-
-  exports.lastTerm = function () {
+  exports.lastTerms = function () {
     return this.match('.$');
   };
-  /** return a flat array of term objects */
 
+  exports.lastTerm = exports.lastTerms;
+  /** return a flat array of term objects */
 
   exports.termList = function (num) {
     var arr = []; //'reduce' but faster
@@ -6222,33 +6244,33 @@ var _02Accessors = createCommonjsModule(function (module, exports) {
   /* grab named capture group terms as object */
 
 
-  var groupByNames = function groupByNames(doc) {
+  var getGroups = function getGroups(doc) {
     var res = {};
-    var groups = {};
+    var allGroups = {};
 
     for (var i = 0; i < doc.list.length; i++) {
       var phrase = doc.list[i];
-      var names = Object.values(phrase.names);
+      var groups = Object.values(phrase.groups);
 
-      for (var j = 0; j < names.length; j++) {
-        var _names$j = names[j],
-            group = _names$j.group,
-            start = _names$j.start,
-            length = _names$j.length;
+      for (var j = 0; j < groups.length; j++) {
+        var _groups$j = groups[j],
+            group = _groups$j.group,
+            start = _groups$j.start,
+            length = _groups$j.length;
 
-        if (!groups[group]) {
-          groups[group] = [];
+        if (!allGroups[group]) {
+          allGroups[group] = [];
         }
 
-        groups[group].push(phrase.buildFrom(start, length));
+        allGroups[group].push(phrase.buildFrom(start, length));
       }
     }
 
-    var keys = Object.keys(groups);
+    var keys = Object.keys(allGroups);
 
     for (var _i = 0; _i < keys.length; _i++) {
       var key = keys[_i];
-      res[key] = doc.buildFrom(groups[key]);
+      res[key] = doc.buildFrom(allGroups[key]);
     }
 
     return res;
@@ -6259,12 +6281,16 @@ var _02Accessors = createCommonjsModule(function (module, exports) {
 
     var _loop = function _loop(i) {
       var phrase = doc.list[i];
-      var keys = Object.keys(phrase.names);
+      var keys = Object.keys(phrase.groups);
       keys = keys.filter(function (id) {
-        return phrase.names[id].group === name;
+        if (phrase.groups[id].group !== undefined) {
+          return phrase.groups[id].group === name;
+        }
+
+        return phrase.groups[id].index === name;
       });
       keys.forEach(function (id) {
-        arr.push(phrase.buildFrom(phrase.names[id].start, phrase.names[id].length));
+        arr.push(phrase.buildFrom(phrase.groups[id].start, phrase.groups[id].length));
       });
     };
 
@@ -6279,7 +6305,7 @@ var _02Accessors = createCommonjsModule(function (module, exports) {
 
   exports.byName = function (target) {
     if (target === undefined) {
-      return groupByNames(this);
+      return getGroups(this);
     }
 
     if (typeof target === 'number') {
@@ -6289,20 +6315,38 @@ var _02Accessors = createCommonjsModule(function (module, exports) {
     return getOneName(this, target) || this.buildFrom([]);
   };
 
-  exports.names = exports.byName;
-  exports.named = exports.byName;
+  exports.groups = exports.byName;
+  /** get the full-sentence each phrase belongs to */
+
+  exports.sentences = function (n) {
+    var arr = [];
+    this.list.forEach(function (p) {
+      arr.push(p.fullSentence());
+    });
+
+    if (typeof n === 'number') {
+      return this.buildFrom([arr[n]]);
+    }
+
+    return this.buildFrom(arr);
+  };
+
+  exports.sentence = exports.sentences;
 });
 var _02Accessors_1 = _02Accessors.first;
 var _02Accessors_2 = _02Accessors.last;
 var _02Accessors_3 = _02Accessors.slice;
 var _02Accessors_4 = _02Accessors.eq;
 var _02Accessors_5 = _02Accessors.get;
-var _02Accessors_6 = _02Accessors.firstTerm;
-var _02Accessors_7 = _02Accessors.lastTerm;
-var _02Accessors_8 = _02Accessors.termList;
-var _02Accessors_9 = _02Accessors.byName;
-var _02Accessors_10 = _02Accessors.names;
-var _02Accessors_11 = _02Accessors.named;
+var _02Accessors_6 = _02Accessors.firstTerms;
+var _02Accessors_7 = _02Accessors.firstTerm;
+var _02Accessors_8 = _02Accessors.lastTerms;
+var _02Accessors_9 = _02Accessors.lastTerm;
+var _02Accessors_10 = _02Accessors.termList;
+var _02Accessors_11 = _02Accessors.byName;
+var _02Accessors_12 = _02Accessors.groups;
+var _02Accessors_13 = _02Accessors.sentences;
+var _02Accessors_14 = _02Accessors.sentence;
 
 var _03Match = createCommonjsModule(function (module, exports) {
   /** return a new Doc, with this one as a parent */
@@ -6592,14 +6636,18 @@ var map = function map(fn) {
 
     doc.from = null; //it's not a child/parent
 
-    var res = fn(doc, i);
+    var res = fn(doc, i); // if its a doc, return one result
 
-    if (res.list && res.list[0]) {
+    if (res && res.list && res.list[0]) {
       return res.list[0];
     }
 
     return res;
-  });
+  }); //remove nulls
+
+  list = list.filter(function (x) {
+    return x;
+  }); // return an empty response
 
   if (list.length === 0) {
     return this.buildFrom(list);
@@ -6770,6 +6818,51 @@ var _06Lookup = createCommonjsModule(function (module, exports) {
     }
 
     return false;
+  }; //return a phrase-object from a ['word', 'sequence']
+  //this ought to be faster.
+
+
+  var findTerms = function findTerms(doc, termArr) {
+    var found = []; //go through each phrase
+
+    doc.list.forEach(function (p) {
+      // cache-miss, skip.
+      if (p.cache.words[termArr[0]] !== true) {
+        return;
+      } //we found a potential match
+
+
+      var id = findStart(termArr, p.terms());
+
+      if (id !== false) {
+        // create the actual phrase object
+        var phrase = p.buildFrom(id, termArr.length);
+        found.push(phrase);
+        return;
+      }
+    });
+    return found;
+  };
+
+  var isObject = function isObject(obj) {
+    return obj && Object.prototype.toString.call(obj) === '[object Object]';
+  }; // turn {key:val} into {val: Doc}
+
+
+  var lookupObject = function lookupObject(doc, obj) {
+    var result = {};
+    Object.keys(obj).forEach(function (k) {
+      var str = k.toLowerCase();
+      var a = _02Words(str).map(function (s) {
+        return s.trim();
+      });
+      var found = findTerms(doc, a);
+
+      if (found.length > 0) {
+        result[obj[k]] = doc.buildFrom(found);
+      }
+    });
+    return result;
   };
   /** lookup an array of words or phrases */
 
@@ -6777,40 +6870,26 @@ var _06Lookup = createCommonjsModule(function (module, exports) {
   exports.lookup = function (arr) {
     var _this = this;
 
+    //make sure we go fast.
+    this.cache(); //is it a {key:val} object?
+
+    if (isObject(arr)) {
+      return lookupObject(this, arr);
+    } // otherwise, do array mode.
+
+
     if (typeof arr === 'string') {
       arr = [arr];
     }
 
-    var lookups = arr.map(function (str) {
+    var found = [];
+    arr.forEach(function (str) {
       str = str.toLowerCase();
-      var words = _02Words(str);
-      words = words.map(function (s) {
+      var a = _02Words(str);
+      a = a.map(function (s) {
         return s.trim();
       });
-      return words;
-    });
-    this.cache();
-    var found = []; // try each lookup
-
-    lookups.forEach(function (a) {
-      //try each phrase
-      _this.list.forEach(function (p) {
-        // cache-miss, skip.
-        if (p.cache.words[a[0]] !== true) {
-          return;
-        } //we found a potential match
-
-
-        var terms = p.terms();
-        var id = findStart(a, terms);
-
-        if (id !== false) {
-          // create the actual phrase
-          var phrase = p.buildFrom(id, a.length);
-          found.push(phrase);
-          return;
-        }
-      });
+      found = found.concat(findTerms(_this, a));
     });
     return this.buildFrom(found);
   };
@@ -8454,12 +8533,6 @@ methods$5.entities = function (n) {
 
 methods$5.things = methods$5.entities;
 methods$5.topics = methods$5.entities;
-/** alias for .all() until it gets overloaded by plugin */
-
-methods$5.sentences = function () {
-  return this.all();
-};
-
 var _simple = methods$5;
 
 var underOver = /^(under|over)-?/;
@@ -8613,6 +8686,7 @@ var startsWith = [//web tags
 [/^ma?cd[aeiou]/, 'LastName'], //macdonell - Last patterns https://en.wikipedia.org/wiki/List_of_family_name_affixes
 //slang things
 [/^(lol)+[sz]$/, 'Expression'], //lol
+[/^woo+a*?h?$/, 'Expression'], //whoaa, wooo
 [/^(un|de|re)\\-[a-z\u00C0-\u00FF]{2}/, 'Verb'], // [/^(over|under)[a-z]{2,}/, 'Adjective'],
 [/^[0-9]{1,4}\.[0-9]{1,2}\.[0-9]{1,4}$/, 'Date'], // 03-02-89
 //phone numbers
@@ -9807,6 +9881,48 @@ var checkRange = function checkRange(term) {
 
 var _06Ranges = checkRange;
 
+var contraction$1 = /^(l|c|d|j|m|n|qu|s|t)[\u0027\u0060\u00B4\u2018\u2019\u201A\u201B\u2032\u2035\u2039\u203A]([a-z\u00C0-\u00FF]+)$/i; // basic support for ungendered french contractions
+// not perfect, but better than nothing, to support matching on french text.
+
+var french = {
+  l: 'le',
+  // l'amour
+  c: 'ce',
+  // c'est
+  d: 'de',
+  // d'amerique
+  j: 'je',
+  // j'aime
+  m: 'me',
+  // m'appelle
+  n: 'ne',
+  // n'est
+  qu: 'que',
+  // qu'il
+  s: 'se',
+  // s'appelle
+  t: 'tu' // t'aime
+
+};
+
+var checkFrench = function checkFrench(term) {
+  var parts = term.text.match(contraction$1);
+
+  if (parts === null || french.hasOwnProperty(parts[1]) === false) {
+    return null;
+  }
+
+  var arr = [french[parts[1]], parts[2]];
+
+  if (arr[0] && arr[1]) {
+    return arr;
+  }
+
+  return null;
+};
+
+var _07French = checkFrench;
+
 var isNumber = /^[0-9]+$/;
 
 var createPhrase = function createPhrase(found, doc) {
@@ -9844,10 +9960,16 @@ var contractions = function contractions(doc) {
       found = found || _03Irregulars(term);
       found = found || _04Possessive(term, p, world);
       found = found || _05PerfectTense(term, p);
-      found = found || _06Ranges(term); //add them in
+      found = found || _06Ranges(term);
+      found = found || _07French(term); //add them in
 
       if (found !== null) {
-        var newPhrase = createPhrase(found, doc); //set text as contraction
+        var newPhrase = createPhrase(found, doc); // keep tag NumberRange, if we had it
+
+        if (p.has('#NumberRange') === true) {
+          doc.buildFrom([newPhrase]).tag('NumberRange');
+        } //set text as contraction
+
 
         var firstTerm = newPhrase.terms(0);
         firstTerm.text = term.text; //grab sub-phrase to remove
@@ -12427,6 +12549,14 @@ Object.keys(aliases$1).forEach(function (k) {
 });
 var Doc_1 = Doc;
 
+var smallTagger = function smallTagger(doc) {
+  var terms = doc.termList();
+  _01Lexicon(terms, doc.world);
+  return doc;
+};
+
+var tiny = smallTagger;
+
 function instance(worldInstance) {
   //blast-out our word-lists, just once
   var world = worldInstance;
@@ -12451,13 +12581,21 @@ function instance(worldInstance) {
   nlp.tokenize = function () {
     var text = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
     var lexicon = arguments.length > 1 ? arguments[1] : undefined;
+    var w = world;
 
     if (lexicon) {
-      world.addWords(lexicon);
+      w = w.clone();
+      w.words = {};
+      w.addWords(lexicon);
     }
 
-    var list = _01Tokenizer(text, world);
-    var doc = new Doc_1(list, null, world);
+    var list = _01Tokenizer(text, w);
+    var doc = new Doc_1(list, null, w);
+
+    if (lexicon) {
+      tiny(doc);
+    }
+
     return doc;
   };
   /** mix in a compromise-plugin */

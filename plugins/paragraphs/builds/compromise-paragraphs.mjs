@@ -146,9 +146,9 @@ var addMethods = function addMethods(Paragraphs, Doc) {
     // returns boolean
     has: function has(str) {
       return this.paragraphs.some(function (docs) {
-        for (var i = 0; i < docs.length; i++) {
-          return docs[i].has(str);
-        }
+        return docs.some(function (doc) {
+          return doc.has(str);
+        });
       });
     },
     //loops

@@ -414,15 +414,21 @@
     }(Doc);
 
     Object.assign(Sentences.prototype, methods);
+    /** overload original sentences() method and return Sentence class**/
 
     Doc.prototype.sentences = function (n) {
-      var match = this.all(); //grab (n)th result
+      var arr = [];
+      this.list.forEach(function (p) {
+        arr.push(p.fullSentence());
+      }); //grab (n)th result
+
+      var s = new Sentences(arr, this, this.world);
 
       if (typeof n === 'number') {
-        match = match.get(n);
+        s = s.get(n);
       }
 
-      return new Sentences(match.list, this, this.world);
+      return s;
     };
 
     return Doc;

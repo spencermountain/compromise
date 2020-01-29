@@ -3,11 +3,10 @@ const nlp = require('./src/index')
 // nlp.extend(require('./plugins/numbers/src'))
 // nlp.extend(require('./plugins/dates/src'))
 
-let doc = nlp.tokenize('spencer kelly is working here', {
-  'spencer kelly': 'Person',
-})
-
-doc.debug()
+let doc = nlp('spencer kelly is working here')
+let m = doc.map(d => 'asdf')
+// m.debug()
+console.log(m)
 // console.log(m.list[0])
 //by object
 

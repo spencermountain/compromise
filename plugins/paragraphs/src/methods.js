@@ -122,9 +122,7 @@ const addMethods = function(Paragraphs, Doc) {
     // returns boolean
     has: function(str) {
       return this.paragraphs.some(docs => {
-        for (let i = 0; i < docs.length; i++) {
-          return docs[i].has(str)
-        }
+        return docs.some(doc => doc.has(str))
       })
     },
 

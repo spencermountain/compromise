@@ -26,6 +26,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - clean-up of scripts and tooling
 - improved typescript types
 - add support for some french contractions like `j'aime -> je aime`
+- allow null results in `.map()` function
 -->
 
 ##### 12.4.0

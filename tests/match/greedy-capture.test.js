@@ -11,22 +11,22 @@ test('issue-654: named greedy capture', function(t) {
 
   m = nlp('ralf eats the glue')
     .match('ralf eats [<target>*]')
-    .byName('target')
+    .groups('target')
   t.equal(m.out('normal'), 'the glue', 'wildcard capture at the end')
 
   m = nlp('ralf eats the glue')
     .match('ralf eats [<target>*] glue')
-    .byName('target')
+    .groups('target')
   t.equal(m.out('normal'), 'the', 'wildcard capture in the middle')
 
   m = nlp('ralf eats the glue')
     .match('ralf eats [<target>.+]')
-    .byName('target')
+    .groups('target')
   t.equal(m.out('normal'), 'the glue', 'wildcard capture at the end')
 
   m = nlp('ralf eats the glue')
     .match('ralf eats [<target>.+] glue')
-    .byName('target')
+    .groups('target')
   t.equal(m.out('normal'), 'the', 'wildcard capture in the middle')
 
   t.end()

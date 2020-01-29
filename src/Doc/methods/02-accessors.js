@@ -61,24 +61,24 @@ exports.termList = function(num) {
 }
 
 /* grab named capture group terms as object */
-const groupByNames = function(doc) {
+const getGroups = function(doc) {
   let res = {}
-  const groups = {}
+  const allGroups = {}
   for (let i = 0; i < doc.list.length; i++) {
     const phrase = doc.list[i]
-    const names = Object.values(phrase.names)
-    for (let j = 0; j < names.length; j++) {
-      const { group, start, length } = names[j]
-      if (!groups[group]) {
-        groups[group] = []
+    const groups = Object.values(phrase.groups)
+    for (let j = 0; j < groups.length; j++) {
+      const { group, start, length } = groups[j]
+      if (!allGroups[group]) {
+        allGroups[group] = []
       }
-      groups[group].push(phrase.buildFrom(start, length))
+      allGroups[group].push(phrase.buildFrom(start, length))
     }
   }
-  const keys = Object.keys(groups)
+  const keys = Object.keys(allGroups)
   for (let i = 0; i < keys.length; i++) {
     const key = keys[i]
-    res[key] = doc.buildFrom(groups[key])
+    res[key] = doc.buildFrom(allGroups[key])
   }
   return res
 }
@@ -87,16 +87,16 @@ const getOneName = function(doc, name) {
   const arr = []
   for (let i = 0; i < doc.list.length; i++) {
     const phrase = doc.list[i]
-    let keys = Object.keys(phrase.names)
+    let keys = Object.keys(phrase.groups)
     keys = keys.filter(id => {
-      if (phrase.names[id].group !== undefined) {
-        return phrase.names[id].group === name
+      if (phrase.groups[id].group !== undefined) {
+        return phrase.groups[id].group === name
       }
 
-      return phrase.names[id].index === name
+      return phrase.groups[id].index === name
     })
     keys.forEach(id => {
-      arr.push(phrase.buildFrom(phrase.names[id].start, phrase.names[id].length))
+      arr.push(phrase.buildFrom(phrase.groups[id].start, phrase.groups[id].length))
     })
   }
   return doc.buildFrom(arr)
@@ -105,15 +105,14 @@ const getOneName = function(doc, name) {
 /** grab named capture group results */
 exports.byName = function(target) {
   if (target === undefined) {
-    return groupByNames(this)
+    return getGroups(this)
   }
   if (typeof target === 'number') {
     target = String(target)
   }
   return getOneName(this, target) || this.buildFrom([])
 }
-exports.names = exports.byName
-exports.named = exports.byName
+exports.groups = exports.byName
 
 /** get the full-sentence each phrase belongs to */
 exports.sentences = function(n) {

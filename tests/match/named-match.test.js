@@ -1,6 +1,18 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
+test('named-match-overlap', function(t) {
+  let doc = nlp('june the 5th, july the 7th, and sept the 12th.')
+
+  let m = doc.match('[<month>#Month]')
+
+  t.equal(m.length, 3, 'Should have 3 results')
+
+  t.equal(m.byName('month').length, 3, 'Should have 3 capture group results')
+
+  t.end()
+})
+
 test('named-match-or:', function(t) {
   let arr = [
     ['the dog played again', 'the [<target>(#Noun|#Verb)] played [<0>(#Adverb)]', 'dog'],
@@ -286,71 +298,6 @@ test('named-match-number:', function(t) {
     const msg = a[0] + ' matches ' + JSON.stringify(a[1]) + ' ' + a[2]
     t.equal(doc.text(), a[2], msg)
   })
-
-  t.end()
-})
-
-test('named-match-code-gen', function(t) {
-  // Use group as arguments to function
-  const group = nlp('the big dog played')
-    .match('the [<size>#Adjective] [<type>#Noun] played')
-    .byName()
-
-  const codeFromGroup = ({ size, type }) => `size = '${size.text()}'; type = '${type.text()}'`
-  t.equal(codeFromGroup(group), "size = 'big'; type = 'dog'", 'Should create code')
-
-  // Convert group to sorted list and use as args
-  const args = Object.keys(group)
-    .sort((a, b) => a.localeCompare(b))
-    .map(k => group[k])
-
-  const codeFromList = (size, type) => `size = '${size.text()}'; type = '${type.text()}'`
-  t.equal(codeFromList(...args), "size = 'big'; type = 'dog'", 'Should create code')
-
-  /** Test fancy use of group by names */
-  const templates = [
-    {
-      name: 'SetSize',
-      match: '[<type>#Noun] size equals [<size>#Adjective]',
-      fn: ({ size, type }) => `${type.text()}.size = ${size.text()}`,
-    },
-    {
-      name: 'If',
-      match: 'If [<a>#Verb] equals [<b>#Value] then [<contents>.+]',
-      fn: ({ a, b, contents }) => `if(${a.text()} === ${b.text()}){${contents.text()}}`,
-    },
-  ]
-
-  // Plugin for post processing matches and thunking the output
-  const code = Doc => {
-    Doc.prototype.toCode = function() {
-      let output = ''
-
-      for (let i = 0; i < templates.length; i++) {
-        const template = templates[i]
-
-        const res = this.if(template.match)
-        if (res.found) {
-          output += template.fn(res.byName())
-        }
-      }
-
-      return output
-    }
-  }
-
-  let output = nlp
-    .clone()
-    .extend(code)('if size equals 0 then do this, and this, and this')
-    .toCode()
-  t.equal(output, 'if(size === 0){do this, and this, and this}')
-
-  // Use code generators
-  output = nlp
-    .clone()
-    .extend(code)('Dog size equals big')
-    .toCode()
-  t.equal(output, 'Dog.size = big')
 
   t.end()
 })

@@ -22,3 +22,32 @@ test('named groups silent by default', function(t) {
   t.equal(m.text(), 'one two three four', 'full-response-named-2')
   t.end()
 })
+
+test('unnamed capture groups found', function(t) {
+  let doc = nlp.tokenize('one two three four')
+  let m = doc.match('one [two] three')
+  t.equal(m.groups(0).text(), 'two', 'unnamed-found-single-0')
+
+  m = doc.match('one [two] three [four]')
+  t.equal(m.groups(0).text(), 'two', 'unnamed-found-0')
+  t.equal(m.groups(1).text(), 'four', 'unnamed-found-1')
+
+  let groups = m.groups()
+  t.equal(groups['0'].text(), 'two', 'groups-0')
+  t.equal(groups['0'].text(), 'four', 'groups-1')
+
+  t.end()
+})
+
+test('capture groups match-shorthand', function(t) {
+  let doc = nlp.tokenize('one two three four')
+  let m = doc.match('one [two] three', 0)
+  t.equal(m.text(), 'two', 'match-0')
+
+  m = doc.match('one [two] three [four]', 0)
+  t.equal(m.text(), 'two', 'match-0-two')
+  m = doc.match('one [two] three [four]', 1)
+  t.equal(m.text(), 'four', 'match-1-two')
+
+  t.end()
+})

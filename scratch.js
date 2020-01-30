@@ -3,9 +3,10 @@ const nlp = require('./src/index')
 // nlp.extend(require('./plugins/numbers/src'))
 // nlp.extend(require('./plugins/dates/src'))
 
-nlp
-  .tokenize('one two three four')
-  .match('one [two] three [four]')
-  .debug()
+let doc = nlp('one two three four')
+let m = doc.match('one [two] three [four]')
+console.log(m.groups())
+// console.log(m.list[0].groups)
+// m.debug()
 
 // 'one two three four'.match(/one (?<two>two) three/)

@@ -5,9 +5,9 @@ const fixNouns = function(doc) {
     //'more' is not always an adverb
     noun.match('more #Noun').tag('Noun', 'more-noun')
     //he quickly foo
-    noun.match('#Noun #Adverb [#Noun]').tag('Verb', 'quickly-foo')
+    noun.match('#Noun #Adverb [#Noun]', 0).tag('Verb', 'quickly-foo')
     //fix for busted-up phrasalVerbs
-    noun.match('#Noun [#Particle]').tag('Preposition', 'repair-noPhrasal')
+    noun.match('#Noun [#Particle]', 0).tag('Preposition', 'repair-noPhrasal')
     //John & Joe's
     noun.match('#Noun (&|n) #Noun').tag('Organization', 'Noun-&-Noun')
     //Aircraft designer
@@ -22,13 +22,13 @@ const fixNouns = function(doc) {
     doc.match('#Noun+ (public|private) school').tag('School')
     //the word 'second'
     noun
-      .match('[second] #Noun')
+      .match('[second] #Noun', 0)
       .notIf('#Honorific')
       .unTag('Unit')
       .tag('Ordinal', 'second-noun')
     //linear algebra
     noun
-      .match('(#Determiner|#Value) [(linear|binary|mobile|lexical|technical|computer|scientific|formal)] #Noun')
+      .match('(#Determiner|#Value) [(linear|binary|mobile|lexical|technical|computer|scientific|formal)] #Noun', 0)
       .tag('Noun', 'technical-noun')
 
     //organization
@@ -46,10 +46,10 @@ const fixNouns = function(doc) {
     let plural = noun.if('#Plural')
     if (plural.found === true) {
       //some pressing issues
-      plural.match('some [#Verb] #Plural').tag('Noun', 'correction-determiner6')
+      plural.match('some [#Verb] #Plural', 0).tag('Noun', 'correction-determiner6')
 
       //this rocks
-      noun.match('(this|that) [#Plural]').tag('PresentTense', 'this-verbs')
+      noun.match('(this|that) [#Plural]', 0).tag('PresentTense', 'this-verbs')
     }
   }
 
@@ -57,7 +57,7 @@ const fixNouns = function(doc) {
   let acronym = doc.if('#Acronym')
   if (acronym.found === true) {
     acronym
-      .match('the [#Acronym]')
+      .match('the [#Acronym]', 0)
       .notIf('(iou|fomo|yolo|diy|dui|nimby)')
       .tag('Organization', 'the-acronym')
     acronym
@@ -70,7 +70,7 @@ const fixNouns = function(doc) {
   let poss = doc.if('#Possessive')
   if (poss.found === true) {
     //my buddy
-    poss.match('#Possessive [#FirstName]').unTag('Person', 'possessive-name')
+    poss.match('#Possessive [#FirstName]', 0).unTag('Person', 'possessive-name')
     //spencer kelly's
     poss
       .match('#FirstName #Acronym? #Possessive')
@@ -88,11 +88,11 @@ const fixNouns = function(doc) {
       .ifNo('@hasComma')
       .tag('Possessive')
     //her polling
-    poss.match('#Possessive [#Gerund]').tag('Noun', 'her-polling')
+    poss.match('#Possessive [#Gerund]', 0).tag('Noun', 'her-polling')
     //her fines
-    poss.match('(his|her|its) [#PresentTense]').tag('Noun', 'her-polling')
+    poss.match('(his|her|its) [#PresentTense]', 0).tag('Noun', 'her-polling')
     //'her match' vs 'let her match'
-    let m = poss.match('#Possessive [#Infinitive]')
+    let m = poss.match('#Possessive [#Infinitive]', 0)
     if (!m.lookBehind('(let|made|make|force|ask)').found) {
       m.tag('Noun', 'her-match')
     }
@@ -101,7 +101,7 @@ const fixNouns = function(doc) {
   doc
     .match('(let|make|made) (him|her|it|#Person|#Place|#Organization)+ #Singular (a|an|the|it)')
     .ifNo('@hasComma')
-    .match('[#Singular] (a|an|the|it)')
+    .match('[#Singular] (a|an|the|it)', 0)
     .tag('#Infinitive', 'let-him-glue')
   return doc
 }

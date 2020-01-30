@@ -2,7 +2,7 @@ const addMethod = function(Doc) {
   //pull it apart..
   const parse = function(doc) {
     let things = doc.splitAfter('@hasComma').not('(and|or) not?')
-    let beforeLast = doc.match('[.] (and|or)')
+    let beforeLast = doc.match('[.] (and|or)', 0)
     return {
       things: things,
       conjunction: doc.match('(and|or) not?'),

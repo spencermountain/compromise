@@ -31,7 +31,7 @@ const fixValue = function(doc) {
   // ten grand
   val.match('#Value grand').tag('Value', 'value-grand')
   //quarter million
-  val.match('(a|the) [(half|quarter)] #Ordinal').tag('Value', 'half-ordinal')
+  val.match('(a|the) [(half|quarter)] #Ordinal', 0).tag('Value', 'half-ordinal')
   //eg 'trillion'
   let mult = val.if(units)
   if (mult.found === true) {

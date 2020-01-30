@@ -6,7 +6,7 @@ const logic = function(doc, context) {
   let m = doc.match('between * and *')
   if (m.found) {
     let start = m
-      .match('between [.*] and')
+      .match('between [.*] and', 0)
       .not('^between')
       .not('and$')
     start = parseDate(start, context)

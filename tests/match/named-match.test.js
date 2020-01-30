@@ -4,7 +4,7 @@ const nlp = require('../_lib')
 test('named-match-overlap', function(t) {
   let doc = nlp('june the 5th, july the 7th, and sept the 12th.')
 
-  let m = doc.match('[<month>#Month]')
+  let m = doc.match('[<month>#Month]', 'month')
 
   t.equal(m.length, 3, 'Should have 3 results')
 

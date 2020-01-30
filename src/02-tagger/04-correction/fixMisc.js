@@ -4,26 +4,26 @@ const miscCorrection = function(doc) {
   //foot/feet
   doc.match('(foot|feet)').tag('Noun', 'foot-noun')
   // blood, sweat, and tears
-  doc.match('(#Noun && @hasComma) #Noun (and|or) [#PresentTense]').tag('#Noun', 'noun-list')
+  doc.match('(#Noun && @hasComma) #Noun (and|or) [#PresentTense]', 0).tag('#Noun', 'noun-list')
   //3 feet
-  doc.match('#Value [(foot|feet)]').tag('Unit', 'foot-unit')
+  doc.match('#Value [(foot|feet)]', 0).tag('Unit', 'foot-unit')
   //'u' as pronoun
-  doc.match('#Conjunction [u]').tag('Pronoun', 'u-pronoun-2')
+  doc.match('#Conjunction [u]', 0).tag('Pronoun', 'u-pronoun-2')
   //6 am
   doc.match('#Holiday (day|eve)').tag('Holiday', 'holiday-day')
   // the captain who
-  doc.match('#Noun [(who|whom)]').tag('Determiner', 'captain-who')
+  doc.match('#Noun [(who|whom)]', 0).tag('Determiner', 'captain-who')
   //timezones
   // doc.match('(standard|daylight|summer|eastern|pacific|central|mountain) standard? time').tag('Time', 'timezone')
   //Brazilian pesos
   doc.match('#Demonym #Currency').tag('Currency', 'demonym-currency')
   //about to go
-  doc.match('[about to] #Adverb? #Verb').tag(['Auxiliary', 'Verb'], 'about-to')
+  doc.match('[about to] #Adverb? #Verb', 0).tag(['Auxiliary', 'Verb'], 'about-to')
   //right of way
   doc.match('(right|rights) of .').tag('Noun', 'right-of')
   // a bit
-  doc.match('[much] #Adjective').tag('Adverb', 'bit-1')
-  doc.match('a [bit]').tag('Noun', 'bit-2')
+  doc.match('[much] #Adjective', 0).tag('Adverb', 'bit-1')
+  doc.match('a [bit]', 0).tag('Noun', 'bit-2')
   doc.match('a bit much').tag('Determiner Adverb Adjective', 'bit-3')
   doc.match('too much').tag('Adverb Adjective', 'bit-4')
   // u r cool
@@ -47,8 +47,8 @@ const miscCorrection = function(doc) {
   //swear-words as non-expression POS
   //nsfw
   doc.match('holy (shit|fuck|hell)').tag('Expression', 'swears-expression')
-  doc.match('#Determiner [(shit|damn|hell)]').tag('Noun', 'swears-noun')
-  doc.match('[(shit|damn|fuck)] (#Determiner|#Possessive|them)').tag('Verb', 'swears-verb')
+  doc.match('#Determiner [(shit|damn|hell)]', 0).tag('Noun', 'swears-noun')
+  doc.match('[(shit|damn|fuck)] (#Determiner|#Possessive|them)', 0).tag('Verb', 'swears-verb')
   doc
     .match('#Copula fucked up?')
     .not('#Copula')
@@ -58,40 +58,40 @@ const miscCorrection = function(doc) {
   let so = doc.if('so')
   if (so.found === true) {
     //so funny
-    so.match('[so] #Adjective').tag('Adverb', 'so-adv')
+    so.match('[so] #Adjective', 0).tag('Adverb', 'so-adv')
     //so the
-    so.match('[so] #Noun').tag('Conjunction', 'so-conj')
+    so.match('[so] #Noun', 0).tag('Conjunction', 'so-conj')
     //do so
-    so.match('do [so]').tag('Noun', 'so-noun')
+    so.match('do [so]', 0).tag('Noun', 'so-noun')
   }
 
   let all = doc.if('all')
   if (all.found === true) {
     //all students
-    all.match('[all] #Determiner? #Noun').tag('Adjective', 'all-noun')
+    all.match('[all] #Determiner? #Noun', 0).tag('Adjective', 'all-noun')
     //it all fell apart
-    all.match('[all] #Verb').tag('Adverb', 'all-verb')
+    all.match('[all] #Verb', 0).tag('Adverb', 'all-verb')
   }
 
   //the ambiguous word 'that' and 'which'
   let which = doc.if('which')
   if (which.found === true) {
     //remind john that
-    which.match('#Verb #Adverb? #Noun [(that|which)]').tag('Preposition', 'that-prep')
+    which.match('#Verb #Adverb? #Noun [(that|which)]', 0).tag('Preposition', 'that-prep')
     //that car goes
-    which.match('that #Noun [#Verb]').tag('Determiner', 'that-determiner')
+    which.match('that #Noun [#Verb]', 0).tag('Determiner', 'that-determiner')
     //work, which has been done.
-    which.match('@hasComma [which] (#Pronoun|#Verb)').tag('Preposition', 'which-copula')
+    which.match('@hasComma [which] (#Pronoun|#Verb)', 0).tag('Preposition', 'which-copula')
   }
 
   //like
   let like = doc.if('like')
   if (like.found === true) {
-    like.match('just [like]').tag('Preposition', 'like-preposition')
+    like.match('just [like]', 0).tag('Preposition', 'like-preposition')
     //folks like her
-    like.match('#Noun [like] #Noun').tag('Preposition', 'noun-like')
+    like.match('#Noun [like] #Noun', 0).tag('Preposition', 'noun-like')
     //look like
-    like.match('#Verb [like]').tag('Adverb', 'verb-like')
+    like.match('#Verb [like]', 0).tag('Adverb', 'verb-like')
     //exactly like
     like
       .match('#Adverb like')
@@ -133,7 +133,7 @@ const miscCorrection = function(doc) {
     place.match('(west|north|south|east|western|northern|southern|eastern)+ #Place').tag('Region', 'west-norfolk')
     //some us-state acronyms (exlude: al, in, la, mo, hi, me, md, ok..)
     place
-      .match('#City [#Acronym]')
+      .match('#City [#Acronym]', 0)
       .match('(al|ak|az|ar|ca|ct|dc|fl|ga|id|il|nv|nh|nj|ny|oh|or|pa|sc|tn|tx|ut|vt|pr)')
       .tag('Region', 'us-state')
   }

@@ -12,7 +12,7 @@ test('match-capture-group', function(t) {
   t.equal(m.out('normal'), 'eats', 'simple subset')
 
   m = nlp('ralf eats the glue').match('[ralf] [#Verb] the', 0)
-  t.equal(m.out('normal'), 'ralf eats', 'two-word capture')
+  t.equal(m.out('normal'), 'ralf', 'two-word capture')
 
   m = nlp('i saw ralf eat the glue Mrs. Hoover').match('ralf [#Verb the glue] mrs', 0)
   t.equal(m.out('normal'), 'eat the glue', 'three-word capture')

@@ -58,9 +58,9 @@ test('named-match-auto:', function(t) {
 
 test('named-match-auto-multi:', function(t) {
   let arr = [
-    ['the dog played', 'the [#Noun] [played]', 'dog played'],
+    ['the dog played', 'the [#Noun] [played]', 'dog'],
     ['the dog played lots', 'the [dog] played [<0>lots]', 'dog lots'],
-    ['the big dog played', 'the [big dog] [played]', 'big dog played'],
+    ['the big dog played', 'the [big dog] [played]', 'big dog'],
   ]
 
   arr.forEach(function(a) {

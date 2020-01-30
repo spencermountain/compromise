@@ -35,6 +35,7 @@ test('unnamed capture groups found', function(t) {
   let groups = m.groups()
   t.equal(groups[0].text(), 'two', 'groups-0')
   t.equal(groups[1].text(), 'four', 'groups-1')
+  t.equal(groups[2], undefined, 'no-group-2')
 
   t.end()
 })

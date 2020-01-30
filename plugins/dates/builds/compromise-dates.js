@@ -205,7 +205,7 @@
 
       date.match('#Date (by|before|after|at|@|about) #Cardinal').not('^#Date').tag('Time', 'date-before-Cardinal'); //saturday am
 
-      date.match('#Date [(am|pm)]').unTag('Verb').unTag('Copula').tag('Time', 'date-am'); //feb to june
+      date.match('#Date [(am|pm)]', 0).unTag('Verb').unTag('Copula').tag('Time', 'date-am'); //feb to june
 
       date.match('#Date (#Preposition|to) #Date').ifNo('#Duration').tag('Date', 'date-prep-date');
     } //year/cardinal tagging
@@ -214,31 +214,31 @@
     var cardinal = doc["if"]('#Cardinal');
 
     if (cardinal.found === true) {
-      var v = cardinal.match("#Date #Value [#Cardinal]");
+      var v = cardinal.match("#Date #Value [#Cardinal]", 0);
       tagYear(v, 'date-value-year'); //scoops up a bunch
 
-      v = cardinal.match("#Date+ [#Cardinal]");
+      v = cardinal.match("#Date+ [#Cardinal]", 0);
       tagYear(v, 'date-year'); //feb 8 2018
 
-      v = cardinal.match("#Month #Value [#Cardinal]");
+      v = cardinal.match("#Month #Value [#Cardinal]", 0);
       tagYear(v, 'month-value-year'); //feb 8 to 10th 2018
 
-      v = cardinal.match("#Month #Value to #Value [#Cardinal]");
+      v = cardinal.match("#Month #Value to #Value [#Cardinal]", 0);
       tagYear(v, 'month-range-year'); //in 1998
 
-      v = cardinal.match("(in|of|by|during|before|starting|ending|for|year) [#Cardinal]");
+      v = cardinal.match("(in|of|by|during|before|starting|ending|for|year) [#Cardinal]", 0);
       tagYear(v, 'in-year'); //q2 2009
 
-      v = cardinal.match('(q1|q2|q3|q4) [#Cardinal]');
+      v = cardinal.match('(q1|q2|q3|q4) [#Cardinal]', 0);
       tagYear(v, 'in-year'); //2nd quarter 2009
 
-      v = cardinal.match('#Ordinal quarter [#Cardinal]');
+      v = cardinal.match('#Ordinal quarter [#Cardinal]', 0);
       tagYear(v, 'in-year'); //in the year 1998
 
-      v = cardinal.match('the year [#Cardinal]');
+      v = cardinal.match('the year [#Cardinal]', 0);
       tagYear(v, 'in-year'); //it was 1998
 
-      v = cardinal.match('it (is|was) [#Cardinal]');
+      v = cardinal.match('it (is|was) [#Cardinal]', 0);
       tagYearSafe(v, 'in-year');
     }
 
@@ -250,9 +250,9 @@
 
       time.match('#Cardinal #Time').not('#Year').tag('Time', 'value-time'); //2pm est
 
-      time.match('#Time [(eastern|pacific|central|mountain)]').tag('Date', 'timezone'); //6pm est
+      time.match('#Time [(eastern|pacific|central|mountain)]', 0).tag('Date', 'timezone'); //6pm est
 
-      time.match('#Time [(est|pst|gmt)]').tag('Date', 'timezone abbr');
+      time.match('#Time [(est|pst|gmt)]', 0).tag('Date', 'timezone abbr');
     }
 
     return doc;
@@ -415,7 +415,7 @@
         //yesterday 7
         d.match("".concat(knownDate, " [#Value]$")).unTag('Date', 'yesterday-7'); //7 yesterday
 
-        d.match("^[#Value] ".concat(knownDate, "$")).unTag('Date', '7 yesterday'); //friday yesterday
+        d.match("^[#Value] ".concat(knownDate, "$"), 0).unTag('Date', '7 yesterday'); //friday yesterday
 
         d.match("#WeekDay+ ".concat(knownDate, "$")).unTag('Date').lastTerm().tag('Date', 'fri-yesterday'); // yesterday yesterday
         // d.match(`${knownDate}+ ${knownDate}$`)
@@ -5941,7 +5941,7 @@
     var m = doc.match('between * and *');
 
     if (m.found) {
-      var start = m.match('between [.*] and').not('^between').not('and$');
+      var start = m.match('between [.*] and', 0).not('^between').not('and$');
       start = _03ParseDate(start, context);
       var end = m.match('and *').not('^and');
       end = _03ParseDate(end, context);

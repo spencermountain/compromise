@@ -35,16 +35,16 @@ test('issue-654: named greedy capture', function(t) {
 test('issue-654: greedy capture', function(t) {
   let m
 
-  m = nlp('ralf eats the glue').match('ralf eats [*]')
+  m = nlp('ralf eats the glue').match('ralf eats [*]', 0)
   t.equal(m.out('normal'), 'the glue', 'wildcard capture at the end')
 
-  m = nlp('ralf eats the glue').match('ralf eats [*] glue')
+  m = nlp('ralf eats the glue').match('ralf eats [*] glue', 0)
   t.equal(m.out('normal'), 'the', 'wildcard capture in the middle')
 
-  m = nlp('ralf eats the glue').match('ralf eats [.+]')
+  m = nlp('ralf eats the glue').match('ralf eats [.+]', 0)
   t.equal(m.out('normal'), 'the glue', 'wildcard capture at the end')
 
-  m = nlp('ralf eats the glue').match('ralf eats [.+] glue')
+  m = nlp('ralf eats the glue').match('ralf eats [.+] glue', 0)
   t.equal(m.out('normal'), 'the', 'wildcard capture in the middle')
 
   t.end()

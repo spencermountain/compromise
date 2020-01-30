@@ -18,7 +18,7 @@ const fixUp = function(doc) {
       //yesterday 7
       d.match(`${knownDate} [#Value]$`).unTag('Date', 'yesterday-7')
       //7 yesterday
-      d.match(`^[#Value] ${knownDate}$`).unTag('Date', '7 yesterday')
+      d.match(`^[#Value] ${knownDate}$`, 0).unTag('Date', '7 yesterday')
       //friday yesterday
       d.match(`#WeekDay+ ${knownDate}$`)
         .unTag('Date')

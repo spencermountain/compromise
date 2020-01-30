@@ -64,7 +64,6 @@ const getOrCreateGroup = function(namedGroups, namedGroupId, terms, startIndex, 
 
 /** tries to match a sequence of terms, starting from here */
 const tryHere = function(terms, regs, index, length) {
-  let captures = []
   const namedGroups = {}
   let previousGroupId = null
   let groupCounter = -1
@@ -121,9 +120,6 @@ const tryHere = function(terms, regs, index, length) {
 
       // is it really this easy?....
       if (reg.named || isNamedGroup) {
-        captures.push(t)
-        captures.push(skipto - 1)
-
         const g = getOrCreateGroup(namedGroups, namedGroupId, terms, t, reg.named, groupCounter)
 
         // Update group
@@ -188,15 +184,7 @@ const tryHere = function(terms, regs, index, length) {
         }
       }
       if (reg.named || isNamedGroup) {
-        captures.push(startAt)
-
-        //add greedy-end to capture
-        if (t > 1 && reg.greedy) {
-          captures.push(t - 1)
-        }
-
-        // Create capture group if missing
-
+        // Get or create capture group
         const g = getOrCreateGroup(namedGroups, namedGroupId, terms, startAt, reg.named, groupCounter)
 
         // Update group - add greedy or increment length
@@ -226,17 +214,6 @@ const tryHere = function(terms, regs, index, length) {
     return [false, null]
   }
 
-  //we got to the end of the regs, and haven't failed!
-  //try to only return our [captured] segment
-  if (captures.length > 0) {
-    //make sure the array is the full-length we'd return anyways
-    let arr = terms.slice(captures[0], captures[captures.length - 1] + 1)
-    //make sure the array is t-length (so we skip ahead full-length)
-    for (let tmp = 0; tmp < t; tmp++) {
-      arr[tmp] = arr[tmp] || null //these get cleaned-up after
-    }
-    return [arr, namedGroups]
-  }
   //return our result
   return [terms.slice(0, t), namedGroups]
 }

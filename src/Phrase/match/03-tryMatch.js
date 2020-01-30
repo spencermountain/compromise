@@ -80,7 +80,7 @@ const tryHere = function(terms, regs, index, length) {
     // Reuse previous capture group if same
     if (hasGroup) {
       const prev = regs[r - 1]
-      if (prev && prev.named === reg.named && previousGroupId) {
+      if (prev && prev.named !== true && prev.named === reg.named && previousGroupId) {
         namedGroupId = previousGroupId
       } else {
         groupCounter++

@@ -2,8 +2,8 @@
 const fixAdjective = function(doc) {
   let adj = doc.if('#Adjective')
   if (adj.found) {
-    //still good
-    adj.match('[still] #Adjective').tag('Adverb', 'still-advb')
+    //still goodß
+    adj.match('[still] #Adjective', 0).tag('Adverb', 'still-advb')
     //barely even walk
     adj.match('(barely|hardly) even').tag('#Adverb', 'barely-even')
     //big dreams, critical thinking

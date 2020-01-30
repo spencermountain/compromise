@@ -3,7 +3,7 @@ const advb = '(#Adverb|not)+?'
 const fixVerb = function(doc) {
   let vb = doc.if('#Verb')
   if (vb.found) {
-    vb.match('[(do|does|will|have|had)] (not|#Adverb)? #Verb').tag('Auxiliary', 'have-had')
+    vb.match('[(do|does|will|have|had)] (not|#Adverb)? #Verb', 0).tag('Auxiliary', 'have-had')
     //still make
     vb.match('[still] #Verb', 0).tag('Adverb', 'still-verb')
     //'u' as pronoun

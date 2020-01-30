@@ -68,7 +68,7 @@ const fixPerson = function(doc) {
     person.match('#Honorific #Person').tag('Person', 'honorific-person')
     //general pearson
     person
-      .match('[(private|general|major|corporal|lord|lady|secretary|premier)] #Honorific? #Person')
+      .match('[(private|general|major|corporal|lord|lady|secretary|premier)] #Honorific? #Person', 0)
       .tag('Honorific', 'ambg-honorifics')
     //Morgan Shlkjsfne
     title
@@ -109,8 +109,8 @@ const fixPerson = function(doc) {
     //Places: paris or syndey
     let ambigPlace = person.if(maybePlace)
     if (ambigPlace.found === true) {
-      ambigPlace.match('(in|near|at|from|to|#Place) [' + maybePlace + ']').tagSafe('Place', 'in-paris')
-      ambigPlace.match('[' + maybePlace + '] #Place').tagSafe('Place', 'paris-france')
+      ambigPlace.match('(in|near|at|from|to|#Place) [' + maybePlace + ']', 0).tagSafe('Place', 'in-paris')
+      ambigPlace.match('[' + maybePlace + '] #Place', 0).tagSafe('Place', 'paris-france')
       // ambigPlace.match('[' + maybePlace + '] #Person').tagSafe('Person', 'paris-hilton')
     }
 

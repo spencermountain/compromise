@@ -16,7 +16,7 @@ const fixPerson = function(doc) {
     //remove single 'mr'
     hon.match('^#Honorific$').unTag('Person', 'single-honorific')
     //first general..
-    hon.match('[(1st|2nd|first|second)] #Honorific').tag('Honorific', 'ordinal-honorific')
+    hon.match('[(1st|2nd|first|second)] #Honorific', 0).tag('Honorific', 'ordinal-honorific')
   }
 
   //methods requiring a titlecase
@@ -29,7 +29,7 @@ const fixPerson = function(doc) {
     title.match('@titleCase (de|du) la? @titleCase').tagSafe('Person', 'titlecase-van-titlecase')
     //Foo U Ford
     title
-      .match('[#ProperNoun] #Person')
+      .match('[#ProperNoun] #Person', 0)
       .notIf('@hasComma')
       .tagSafe('Person', 'proper-person')
 
@@ -63,7 +63,7 @@ const fixPerson = function(doc) {
     //'Professor Fink', 'General McCarthy'
     person.match('#Honorific #Person').tag('Person', 'Honorific-Person')
     // 'john E rockefeller'
-    person.match('#FirstName [/^[^aiurck]$/]').tag(['Acronym', 'Person'], 'john-e')
+    person.match('#FirstName [/^[^aiurck]$/]', 0).tag(['Acronym', 'Person'], 'john-e')
     //Doctor john smith jr
     person.match('#Honorific #Person').tag('Person', 'honorific-person')
     //general pearson
@@ -80,21 +80,21 @@ const fixPerson = function(doc) {
     //Nouns: 'viola' or 'sky'
     let ambigNoun = person.if(maybeNoun)
     if (ambigNoun.found === true) {
-      // ambigNoun.match('(#Determiner|#Adverb|#Pronoun|#Possessive) [' + maybeNoun + ']').tag('Noun', 'the-ray')
+      // ambigNoun.match('(#Determiner|#Adverb|#Pronoun|#Possessive) [' + maybeNoun + ']' ,0).tag('Noun', 'the-ray')
       ambigNoun.match(maybeNoun + ' #Person').tagSafe('Person', 'ray-smith')
     }
 
     //Verbs: 'pat' or 'wade'
     let ambigVerb = person.if(maybeVerb)
     if (ambigVerb === true) {
-      ambigVerb.match('(#Modal|#Adverb) [' + maybeVerb + ']').tag('Verb', 'would-mark')
+      ambigVerb.match('(#Modal|#Adverb) [' + maybeVerb + ']', 0).tag('Verb', 'would-mark')
       ambigVerb.match(maybeVerb + ' #Person').tag('Person', 'rob-smith')
     }
 
     //Adjectives: 'rusty' or 'rich'
     let ambigAdj = person.if(maybeAdj)
     if (ambigAdj.found === true) {
-      ambigAdj.match('#Adverb [' + maybeAdj + ']').tag('Adjective', 'really-rich')
+      ambigAdj.match('#Adverb [' + maybeAdj + ']', 0).tag('Adjective', 'really-rich')
       ambigAdj.match(maybeAdj + ' #Person').tag('Person', 'randy-smith')
     }
 
@@ -102,7 +102,7 @@ const fixPerson = function(doc) {
     let ambigDate = person.if(maybeDate)
     if (ambigDate.found === true) {
       ambigDate.match(maybeDate + ' #ProperNoun').tag(['FirstName', 'Person'], 'june-smith')
-      ambigDate.match('(in|during|on|by|before|#Date) [' + maybeDate + ']').tag('Date', 'in-june')
+      ambigDate.match('(in|during|on|by|before|#Date) [' + maybeDate + ']', 0).tag('Date', 'in-june')
       ambigDate.match(maybeDate + ' (#Date|#Value)').tag('Date', 'june-5th')
     }
 
@@ -156,7 +156,7 @@ const fixPerson = function(doc) {
 
       // Dwayne 'the rock' Johnson
       firstName
-        .match('#FirstName [#Determiner #Noun] #LastName')
+        .match('#FirstName [#Determiner #Noun] #LastName', 0)
         .tag('#NickName', 'first-noun-last')
         .tag('#Person', 'first-noun-last')
 
@@ -180,16 +180,17 @@ const fixPerson = function(doc) {
     let lastName = person.if('#LastName')
     if (lastName.found === true) {
       //is foo Smith
-      lastName.match('#Copula [(#Noun|#PresentTense)] #LastName').tag('#FirstName', 'copula-noun-lastname')
+      lastName.match('#Copula [(#Noun|#PresentTense)] #LastName', 0).tag('#FirstName', 'copula-noun-lastname')
       // x Lastname
       lastName
-        .match('[#Noun] #LastName')
+        .match('[#Noun] #LastName', 0)
         .canBe('#FirstName')
         .tag('#FirstName', 'noun-lastname')
       //ambiguous-but-common firstnames
       lastName
         .match(
-          '[(will|may|april|june|said|rob|wade|ray|rusty|drew|miles|jack|chuck|randy|jan|pat|cliff|bill)] #LastName'
+          '[(will|may|april|june|said|rob|wade|ray|rusty|drew|miles|jack|chuck|randy|jan|pat|cliff|bill)] #LastName',
+          0
         )
         .tag('#FirstName', 'maybe-lastname')
       //Jani K. Smith

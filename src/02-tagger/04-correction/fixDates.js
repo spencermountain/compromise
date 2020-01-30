@@ -7,44 +7,44 @@ const fixDates = function(doc) {
   let person = doc.if(people)
   if (person.found === true) {
     //give to april
-    person.match(`#Infinitive #Determiner? #Adjective? #Noun? (to|for) [${people}]`).tag('Person', 'ambig-person')
+    person.match(`#Infinitive #Determiner? #Adjective? #Noun? (to|for) [${people}]`, 0).tag('Person', 'ambig-person')
     //remind june
-    person.match(`#Infinitive [${people}]`).tag('Person', 'infinitive-person')
+    person.match(`#Infinitive [${people}]`, 0).tag('Person', 'infinitive-person')
     //may waits for
-    person.match(`[${people}] #PresentTense (to|for)`).tag('Person', 'ambig-active')
+    person.match(`[${people}] #PresentTense (to|for)`, 0).tag('Person', 'ambig-active')
     //april will
-    person.match(`[${people}] #Modal`).tag('Person', 'ambig-modal')
+    person.match(`[${people}] #Modal`, 0).tag('Person', 'ambig-modal')
     //would april
-    person.match(`#Modal [${people}]`).tag('Person', 'modal-ambig')
+    person.match(`#Modal [${people}]`, 0).tag('Person', 'modal-ambig')
     //with april
-    person.match(`(that|with|for) [${people}]`).tag('Person', 'that-month')
+    person.match(`(that|with|for) [${people}]`, 0).tag('Person', 'that-month')
     //it is may
-    person.match(`#Copula [${people}]`).tag('Person', 'is-may')
+    person.match(`#Copula [${people}]`, 0).tag('Person', 'is-may')
     //may is
-    person.match(`[${people}] #Copula`).tag('Person', 'may-is')
+    person.match(`[${people}] #Copula`, 0).tag('Person', 'may-is')
     //april the 5th
-    person.match(`[${people}] the? #Value`).tag('Month', 'person-value')
+    person.match(`[${people}] the? #Value`, 0).tag('Month', 'person-value')
     //wednesday april
-    person.match(`#Date [${people}]`).tag('Month', 'correction-may')
+    person.match(`#Date [${people}]`, 0).tag('Month', 'correction-may')
     //may 5th
-    person.match(`[${people}] the? #Value`).tag('Month', 'may-5th')
+    person.match(`[${people}] the? #Value`, 0).tag('Month', 'may-5th')
     //5th of may
-    person.match(`#Value of [${people}]`).tag('Month', '5th-of-may')
+    person.match(`#Value of [${people}]`, 0).tag('Month', '5th-of-may')
     //by april
     person
-      .match(`${preps} [${people}]`)
+      .match(`${preps} [${people}]`, 0)
       .ifNo('#Holiday')
       .tag('Month', 'preps-month')
     //this april
-    person.match(`(next|this|last) [${people}]`).tag('Month', 'correction-may') //maybe not 'this'
+    person.match(`(next|this|last) [${people}]`, 0).tag('Month', 'correction-may') //maybe not 'this'
   }
 
   //ambiguous month - verb-forms
   let verb = doc.if(verbs)
   if (verb.found === true) {
     //quickly march
-    verb.match(`#Adverb [${verbs}]`).tag('Infinitive', 'ambig-verb')
-    verb.match(`${verbs} [#Adverb]`).tag('Infinitive', 'ambig-verb')
+    verb.match(`#Adverb [${verbs}]`, 0).tag('Infinitive', 'ambig-verb')
+    verb.match(`${verbs} [#Adverb]`, 0).tag('Infinitive', 'ambig-verb')
     //all march
     verb
       .match(`${preps} [${verbs}]`)
@@ -83,18 +83,18 @@ const fixDates = function(doc) {
     let march = doc.if('march')
     if (march.found === true) {
       //march to
-      march.match('[march] (up|down|back|to|toward)').tag('Infinitive', 'march-to')
+      march.match('[march] (up|down|back|to|toward)', 0).tag('Infinitive', 'march-to')
       //must march
-      march.match('#Modal [march]').tag('Infinitive', 'must-march')
+      march.match('#Modal [march]', 0).tag('Infinitive', 'must-march')
     }
   }
   //sun 5th
   let sun = doc.if('sun')
   if (sun.found === true) {
     //sun feb 2
-    sun.match('[sun] #Date').tag('WeekDay', 'sun-feb')
+    sun.match('[sun] #Date', 0).tag('WeekDay', 'sun-feb')
     //1pm next sun
-    sun.match('#Date (on|this|next|last|during)? [sun]').tag('WeekDay', '1pm-sun')
+    sun.match('#Date (on|this|next|last|during)? [sun]', 0).tag('WeekDay', '1pm-sun')
     //sun the 5th
     sun
       .match('sun the #Ordinal')
@@ -102,16 +102,16 @@ const fixDates = function(doc) {
       .firstTerm()
       .tag('WeekDay', 'sun-the-5th')
     //the sun
-    sun.match('#Determiner [sun]').tag('Singular', 'the-sun')
+    sun.match('#Determiner [sun]', 0).tag('Singular', 'the-sun')
   }
 
   //sat, nov 5th
   let sat = doc.if('sat')
   if (sat.found) {
     //sat november
-    sat.match('[sat] #Date').tag('WeekDay', 'sat-feb')
+    sat.match('[sat] #Date', 0).tag('WeekDay', 'sat-feb')
     //this sat
-    sat.match(`${preps} [sat]`).tag('WeekDay', 'sat')
+    sat.match(`${preps} [sat]`, 0).tag('WeekDay', 'sat')
   }
 
   //months:
@@ -141,7 +141,7 @@ const fixDates = function(doc) {
     // ten grand
     val.match('#Value grand').tag('Value', 'value-grand')
     //quarter million
-    val.match('(a|the) [(half|quarter)] #Ordinal').tag('Value', 'half-ordinal')
+    val.match('(a|the) [(half|quarter)] #Ordinal', 0).tag('Value', 'half-ordinal')
     //june 7
     val
       .match('(#WeekDay|#Month) #Value')

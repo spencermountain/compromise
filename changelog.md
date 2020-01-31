@@ -16,16 +16,17 @@ _major changes to `.export()` and `[capture] group` match-syntax._
 - - change .export() format - this hasn't worked properly since v12. (mis-parsed contractions) see #669
 - **[breaking]** split `compromise-output` into `compromise-html` and `compromise-hash` plugins
 - **[breaking]** `.match('foo [bar]')` no-longer returns 'bar'. (use `.match('foo [bar]', 0)`)
+- **[breaking]** capture groups are no longer merged. `.match('[foo] [bar]')` returns two groups accessible with the new `.groups()` function
 - **[breaking]** change `.sentences()` method to return only full-sentences of matches (use `.all()` instead)
 
 modifications:
 
 - fix nlp.clone() - hasn't worked properly, since v12. (@Drache93)
 - fix issues with greedy capture [*] and [.+] -(@Drache93) 💛
-- add whitespace properties (pre+post) to default json output (suppress with `.json({whitespace:false})`)
-- `.lookup({key:val})` with an object now returns an object back ({val: Doc})
+- add whitespace properties (pre+post) to default json output (suppress with `.json({ whitespace: false })`)
+- `.lookup({ key: val })` with an object now returns an object back ({val: Doc})
 - add nlp constructor as a third param to `.extend()`
-- support lexicon object param in tokenize - `.tokenize('my word', {word:'tag'})`
+- support lexicon object param in tokenize - `.tokenize('my word', { word: 'tag' })`
 - clean-up of scripts and tooling
 - improved typescript types
 - add support for some french contractions like `j'aime -> je aime`

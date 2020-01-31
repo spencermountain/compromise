@@ -44,35 +44,46 @@ const byArray = function(arr) {
   ]
 }
 
-const getLastTrue = (arr, start) => {
-  const last = arr.length - 1 - arr.reverse().findIndex(t => t === true)
-
-  for (let j = start + 1; j < last; j++) {
-    // Don't fill in if there's a named group ahead
-    if (isNamed(arr[j])) {
-      return start
-    }
-  }
-
-  return last
-}
-
 const postProcess = function(tokens) {
-  // ensure there's only one consecutive capture group.
-  let count = tokens.filter(t => t.named === true || isNamed(t.named)).length
-  if (count > 1) {
-    let captureArr = tokens.map(t => t.named)
-    let first = captureArr.findIndex(t => t === true || isNamed(t))
-    let last = getLastTrue(captureArr, first)
+  // ensure all capture groups are filled between start and end
+  // give all capture groups names
+  let count = tokens.filter(t => t.groupType).length
+  if (count > 0) {
+    let convert = false
+    let index = -1
+    let current
 
     //'fill in' capture groups between start-end
-    for (let i = first; i < last + 1; i++) {
-      // Don't replace named groups
-      if (isNamed(tokens[i].named)) {
+    for (let i = 0; i < tokens.length; i++) {
+      const n = tokens[i]
+
+      // Give name to un-named single tokens
+      if (n.groupType === 'single' && n.named === true) {
+        index += 1
+        n.named = index
         continue
       }
-      const { named } = tokens[first]
-      tokens[i].named = named
+
+      // Start converting tokens
+      if (n.groupType === 'start') {
+        convert = true
+        if (isNamed(n.named)) {
+          current = n.named
+        } else {
+          index += 1
+          current = index
+        }
+      }
+
+      // Ensure this token has the right name
+      if (convert) {
+        n.named = current
+      }
+
+      // Stop converting tokens
+      if (n.groupType === 'end') {
+        convert = false
+      }
     }
   }
 

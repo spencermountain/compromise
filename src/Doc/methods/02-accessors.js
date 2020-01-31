@@ -68,13 +68,12 @@ const getGroups = function(doc) {
     const phrase = doc.list[i]
     const groups = Object.keys(phrase.groups).map(k => phrase.groups[k])
     for (let j = 0; j < groups.length; j++) {
-      const { group, start, length, index } = groups[j]
-      const groupName = group === undefined ? index : group
+      const { group, start, length } = groups[j]
 
-      if (!allGroups[groupName]) {
-        allGroups[groupName] = []
+      if (!allGroups[group]) {
+        allGroups[group] = []
       }
-      allGroups[groupName].push(phrase.buildFrom(start, length))
+      allGroups[group].push(phrase.buildFrom(start, length))
     }
   }
   const keys = Object.keys(allGroups)
@@ -90,13 +89,7 @@ const getOneName = function(doc, name) {
   for (let i = 0; i < doc.list.length; i++) {
     const phrase = doc.list[i]
     let keys = Object.keys(phrase.groups)
-    keys = keys.filter(id => {
-      if (phrase.groups[id].group !== undefined) {
-        return phrase.groups[id].group === name
-      }
-
-      return phrase.groups[id].index === name
-    })
+    keys = keys.filter(id => phrase.groups[id].group === name)
     keys.forEach(id => {
       arr.push(phrase.buildFrom(phrase.groups[id].start, phrase.groups[id].length))
     })

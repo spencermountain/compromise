@@ -1,4 +1,4 @@
-/* compromise 13.0.0 MIT */
+/* compromise 13.0.0-rc1 MIT */
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
@@ -2085,7 +2085,7 @@ var tryHere = function tryHere(terms, regs, index, length) {
     if (hasGroup) {
       var prev = regs[r - 1];
 
-      if (prev && prev.named === reg.named && previousGroupId) {
+      if (prev && prev.named !== true && prev.named === reg.named && previousGroupId) {
         namedGroupId = previousGroupId;
       } else {
         groupCounter++;
@@ -3325,7 +3325,7 @@ var fromJSON = function fromJSON(json, world) {
 
 var fromJSON_1 = fromJSON;
 
-var _version = '13.0.0';
+var _version = '13.0.0-rc1';
 
 var _data = {
   "Comparative": "true¦better",
@@ -3986,7 +3986,11 @@ var addWord = function addWord(word, tag, lex) {
       lex[word] = [lex[word]];
     }
 
-    lex[word].push(tag);
+    if (typeof tag === 'string') {
+      lex[word].push(tag);
+    } else {
+      lex[word] = lex[word].concat(tag);
+    }
   } else {
     lex[word] = tag;
   }
@@ -6236,13 +6240,15 @@ var _02Accessors = createCommonjsModule(function (module, exports) {
         var _groups$j = groups[j],
             group = _groups$j.group,
             start = _groups$j.start,
-            length = _groups$j.length;
+            length = _groups$j.length,
+            index = _groups$j.index;
+        var groupName = group === undefined ? index : group;
 
-        if (!allGroups[group]) {
-          allGroups[group] = [];
+        if (!allGroups[groupName]) {
+          allGroups[groupName] = [];
         }
 
-        allGroups[group].push(phrase.buildFrom(start, length));
+        allGroups[groupName].push(phrase.buildFrom(start, length));
       }
     };
 

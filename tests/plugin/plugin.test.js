@@ -104,6 +104,17 @@ test('extend-tagset-nested', function(t) {
   t.end()
 })
 
+test('word-array to lex-string', function(t) {
+  nlp.extend((Doc, world) => {
+    world.addWords({
+      mi: ['Possessive'],
+    })
+  })
+  let doc = nlp('hello mi')
+  t.equal(doc.has('#Possessive'), true)
+  t.end()
+})
+
 test('basic-plugin', function(t) {
   nlp.extend((Doc, world) => {
     world.addWords({

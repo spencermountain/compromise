@@ -34,7 +34,7 @@ modifications:
 
 new things:
 
-- add new named-match syntax, with .byName() method (@Drache93)
+- add new named-match syntax, with .groups() method (@Drache93)
 - add `nlp.fromJSON()` method
 - add a new `compromise-tokenize.js` build, without the tagger, or data included.
 

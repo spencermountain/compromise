@@ -334,6 +334,7 @@ _(these methods are on the `nlp` object)_
 
 - **[.tokenize()](https://observablehq.com/@spencermountain/compromise-tokenization)** - parse text without running POS-tagging
 - **[.extend()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - mix in a compromise-plugin
+- **[.fromJSON()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - load a compromise object from `.json()` result
 - **[.verbose()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - log our decision-making for debugging
 - **[.version()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - current semver version of the library
 

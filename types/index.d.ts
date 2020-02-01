@@ -1,10 +1,19 @@
 export as namespace nlp
 
+// a key-value object of words, terms
+declare interface Lexicon {
+  [key: string]: string
+}
+// documents indexed by a string
+declare interface DocIndex<W extends nlp.World = nlp.World> {
+  [key: string]: nlp.Document<W>
+}
+
 declare interface nlp<D extends object, W extends object> {
   /** normal usage */
-  (text: string): nlp.ExtendedDocument<D, W>
+  (text?: string, lexicon?: Lexicon): nlp.ExtendedDocument<D, W>
   /** tozenize string */
-  tokenize(text: string): nlp.ExtendedDocument<D, W>
+  tokenize(text: string, lexicon?: Lexicon): nlp.ExtendedDocument<D, W>
   /** mix in a compromise-plugin */
   extend<P>(
     plugin: P
@@ -14,15 +23,17 @@ declare interface nlp<D extends object, W extends object> {
   >
 
   /** re-generate a Doc object from .json() results */
-  load(json: any): nlp.ExtendedDocument<D, W>
+  fromJSON(json: any): nlp.ExtendedDocument<D, W>
   /**  log our decision-making for debugging */
-  verbose(bool: boolean): nlp.ExtendedDocument<D, W>
+  verbose(bool?: boolean): nlp.ExtendedDocument<D, W>
+  /** create instance using global world*/
+  clone(): nlp<D, W>
   /**  current semver version of the library */
   version: nlp.ExtendedDocument<D, W>
 }
 
-declare function nlp(text: string): nlp.DefaultDocument
-declare function nlp<D extends object, W extends object>(text: string): nlp.ExtendedDocument<D, W>
+declare function nlp(text?: string, lexicon?: Lexicon): nlp.DefaultDocument
+declare function nlp<D extends object, W extends object>(text?: string): nlp.ExtendedDocument<D, W>
 
 // possible values to .json()
 declare interface JsonOptions {
@@ -56,23 +67,44 @@ declare interface JsonOptions {
   }
 }
 
+// Cleaner plugin types
+type PluginWorld<D extends object, W extends object> = {
+  // Override post process type
+  postProcess(process: (Doc: nlp.ExtendedDocument<D, W>) => void): nlp.ExtendedWorld<W>
+} & nlp.ExtendedWorld<W>
+
+type PluginDocument<D extends object, W extends object> = nlp.ExtendedDocument<D, W> & { prototype: D }
+
+type PluginTerm = nlp.Term & PluginConstructor
+
+// Make these available, full support tbd
+type PluginConstructor = {
+  prototype: Record<string, any>
+}
+
 // Constructor
 declare module nlp {
-  export function tokenize(text: string): DefaultDocument
+  export function tokenize(text?: string, lexicon?: Lexicon): DefaultDocument
   /** mix in a compromise-plugin */
   export function extend<P>(
     plugin: P
   ): nlp<P extends Plugin<infer D, infer W> ? D : {}, P extends Plugin<infer D, infer W> ? W : {}>
   /** re-generate a Doc object from .json() results */
-  export function load(json: any): DefaultDocument
+  export function fromJSON(json: any): DefaultDocument
   /**  log our decision-making for debugging */
-  export function verbose(bool: boolean): DefaultDocument
+  export function verbose(bool?: boolean): DefaultDocument
+  /** create instance using global world */
+  export function clone(): nlp<{}, {}>
   /**  current semver version of the library */
   export const version: number
 
   type Plugin<D extends object, W extends object> = (
-    Doc: Document<World & W> & D & { prototype: D },
-    world: World & W
+    Doc: PluginDocument<D, W>,
+    world: PluginWorld<D, W>,
+    nlp: nlp<D, W>,
+    Phrase: PluginConstructor,
+    Term: PluginTerm, // @todo Add extend support
+    Pool: PluginConstructor
   ) => void
 
   type ExtendedWorld<W extends object> = nlp.World & W
@@ -118,11 +150,15 @@ declare module nlp {
     /**  use only the nth result */
     eq(n: number): Document<W>
     /** get the first word in each match */
-    firstTerm(): Document<W>
+    firstTerms(): Document<W>
     /** get the end word in each match */
-    lastTerm(): Document<W>
+    lastTerms(): Document<W>
     /** return a flat list of all Term objects in match */
-    termList(): any
+    termList(): Term[]
+    /** grab a specific named capture group */
+    groups(name: string): Document<W>
+    /** grab all named capture groups */
+    groups(): DocIndex<W>
 
     // Match
     /**  return a new Doc, with this one as a parent */
@@ -147,6 +183,8 @@ declare module nlp {
     after(match: string | Document<W>): Document<W>
     /** quick find for an array of string matches */
     lookup(matches: string[]): Document<W>
+    /** quick find for an object of key-value matches */
+    lookup(matches: Lexicon): DocIndex<W>
 
     // Case
     /**  turn every letter of every term to lower-cse */
@@ -288,7 +326,7 @@ declare module nlp {
     topics(n?: number): Document<W>
 
     // Subsets
-    /** alias for .all(), until plugin overloading  */
+    /** get the whole sentence for each match */
     sentences(): Document<W>
     /**  return things like `'Mrs.'`*/
     abbreviations(n?: number): Abbreviations<W>
@@ -407,7 +445,175 @@ declare module nlp {
     hasOxfordComma(): Document<W>
   }
 
-  class World {}
+  class World {
+    /** more logs for debugging */
+    verbose(on?: boolean): this
+    isVerbose(): boolean
+
+    /** get all terms in our lexicon with this tag */
+    getByTag(tag: string): Record<string, true>
+
+    /** put new words into our lexicon, properly */
+    addWords(words: Record<string, string>): void
+
+    /** extend the compromise tagset */
+    addTags(
+      tags: Record<
+        string,
+        {
+          isA?: string | string[]
+          notA?: string | string[]
+        }
+      >
+    ): void
+
+    /** call methods after tagger runs */
+    postProcess<D extends Document = Document>(process: (Doc: D) => void): this
+  }
+
+  // @todo
+  interface RegSyntax {
+    [index: string]: any
+  }
+
+  type TextOutOptions =
+    | 'reduced'
+    | 'root'
+    | 'implicit'
+    | 'normal'
+    | 'unicode'
+    | 'titlecase'
+    | 'lowercase'
+    | 'acronyms'
+    | 'whitespace'
+    | 'punctuation'
+    | 'abbreviations'
+
+  type JsonOutOptions = 'text' | 'normal' | 'tags' | 'clean' | 'id' | 'offset' | 'implicit' | 'whitespace' | 'bestTag'
+
+  class Term {
+    isA: 'Term' // Get Type
+    id: string
+
+    // main data
+    text: string
+    tags: Record<string, boolean>
+
+    // alternative forms of this.text
+    root: string | null
+    implicit: string | null
+    clean?: string
+    reduced?: string
+
+    // additional surrounding information
+    prev: string | null // id of prev term
+    next: string | null // id of next term
+    pre?: string // character before e.g. ' ' ','
+    post?: string // character after e.g. ' ' ','
+
+    // support alternative matches
+    alias?: string
+
+    constructor(text?: string)
+    set(text: string): this
+
+    /** clone contents to new term */
+    clone(): Term
+
+    /** convert all text to uppercase */
+    toUpperCase(): this
+
+    /** convert all text to lowercase */
+    toLowerCase(): this
+
+    /** only set the first letter to uppercase
+     * leave any existing uppercase alone
+     */
+    toTitleCase(): this
+
+    /** if all letters are uppercase */
+    isUpperCase(): this
+
+    /** if the first letter is uppercase, and the rest are lowercase */
+    isTitleCase(): this
+    titleCase(): this
+
+    /** search the term's 'post' punctuation  */
+    hasPost(): boolean
+
+    /** search the term's 'pre' punctuation  */
+    hasPre(): boolean
+
+    /** does it have a quotation symbol?  */
+    hasQuote(): boolean
+    hasQuotation(): boolean
+
+    /** does it have a comma?  */
+    hasComma(): boolean
+
+    /** does it end in a period? */
+    hasPeriod(): boolean
+
+    /** does it end in an exclamation */
+    hasExclamation(): boolean
+
+    /** does it end with a question mark? */
+    hasQuestionMark(): boolean
+
+    /** is there a ... at the end? */
+    hasEllipses(): boolean
+
+    /** is there a semicolon after this word? */
+    hasSemicolon(): boolean
+
+    /** is there a slash '/' in this word? */
+    hasSlash(): boolean
+
+    /** a hyphen connects two words like-this */
+    hasHyphen(): boolean
+
+    /** a dash separates words - like that */
+    hasDash(): boolean
+
+    /** is it multiple words combinded */
+    hasContraction(): boolean
+
+    /** try to sensibly put this punctuation mark into the term */
+    addPunctuation(punct: string): this
+
+    doesMatch(reg: RegSyntax, index: number, length: number): boolean
+
+    /** does this term look like an acronym? */
+    isAcronym(): boolean
+
+    /** is this term implied by a contraction? */
+    isImplicit(): boolean
+
+    /** does the term have at least one good tag? */
+    isKnown(): boolean
+
+    /** cache the root property of the term */
+    setRoot(world: World): void
+
+    /** return various text formats of this term */
+    textOut(options?: Record<TextOutOptions, boolean>, showPre?: boolean, showPost?: boolean): string
+
+    /** return various metadata for this term */
+    // @todo create output type from options...
+    json(options?: Record<JsonOutOptions, boolean>, world?: World): object
+
+    /** add a tag or tags, and their descendents to this term */
+    tag(tags: string | string[], reason?: string, world?: World): this
+
+    /** only tag this term if it's consistent with it's current tags */
+    tagSafe(tags: string | string[], reason?: string, world?: World): this
+
+    /** remove a tag or tags, and their descendents from this term */
+    unTag(tags: string | string[], reason?: string, world?: World): this
+
+    /** is this tag consistent with the word's current tags? */
+    canBe(tags: string | string[], world?: World): boolean
+  }
 }
 
 export default nlp

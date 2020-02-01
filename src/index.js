@@ -1,59 +1,73 @@
 const tokenize = require('./01-tokenizer')
+const fromJSON = require('./01-tokenizer/fromJSON')
 const version = require('./_version')
 const World = require('./World/World')
 const Doc = require('./Doc/Doc')
+const Phrase = require('./Phrase/Phrase')
+const Term = require('./Term/Term')
+const Pool = require('./01-tokenizer/Pool')
+const tinyTagger = require('./02-tagger/tiny')
 
-//blast-out our word-lists, just once
-let world = new World()
+function instance(worldInstance) {
+  //blast-out our word-lists, just once
+  let world = worldInstance
 
-/** parse and tag text into a compromise object  */
-const nlp = function(text = '', lexicon) {
-  if (lexicon) {
-    world.addWords(lexicon)
+  /** parse and tag text into a compromise object  */
+  const nlp = function(text = '', lexicon) {
+    if (lexicon) {
+      world.addWords(lexicon)
+    }
+    let list = tokenize(text, world)
+    let doc = new Doc(list, null, world)
+    doc.tagger()
+    return doc
   }
-  let list = tokenize.fromText(text, world)
-  let doc = new Doc(list, null, world)
-  doc.tagger()
-  return doc
-}
 
-/** parse text into a compromise object, without running POS-tagging */
-nlp.tokenize = function(text = '', lexicon) {
-  if (lexicon) {
-    world.addWords(lexicon)
+  /** parse text into a compromise object, without running POS-tagging */
+  nlp.tokenize = function(text = '', lexicon) {
+    let w = world
+    if (lexicon) {
+      w = w.clone()
+      w.words = {}
+      w.addWords(lexicon)
+    }
+    let list = tokenize(text, w)
+    let doc = new Doc(list, null, w)
+    if (lexicon) {
+      tinyTagger(doc)
+    }
+    return doc
   }
-  let list = tokenize.fromText(text, world)
-  let doc = new Doc(list, null, world)
-  return doc
+
+  /** mix in a compromise-plugin */
+  nlp.extend = function(fn) {
+    fn(Doc, world, this, Phrase, Term, Pool)
+    return this
+  }
+
+  /** create a compromise Doc object from .json() results */
+  nlp.fromJSON = function(json) {
+    let list = fromJSON(json, world)
+    return new Doc(list, null, world)
+  }
+
+  /** make a deep-copy of the library state */
+  nlp.clone = function() {
+    return instance(world.clone())
+  }
+
+  /** log our decision-making for debugging */
+  nlp.verbose = function(bool = true) {
+    world.verbose(bool)
+    return this
+  }
+
+  /** current version of the library */
+  nlp.version = version
+  // alias
+  nlp.import = nlp.load
+
+  return nlp
 }
 
-/** mix in a compromise-plugin */
-nlp.extend = function(fn) {
-  fn(Doc, world)
-  return this
-}
-
-/** make a deep-copy of the library state */
-nlp.clone = function() {
-  world = world.clone()
-  return this
-}
-
-/** re-generate a Doc object from .json() results */
-nlp.load = function(json) {
-  let list = tokenize.fromJSON(json, world)
-  return new Doc(list, null, world)
-}
-
-/** log our decision-making for debugging */
-nlp.verbose = function(bool = true) {
-  world.verbose(bool)
-  return this
-}
-
-/** current version of the library */
-nlp.version = version
-// alias
-nlp.import = nlp.load
-
-module.exports = nlp
+module.exports = instance(new World())

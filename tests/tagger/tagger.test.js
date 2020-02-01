@@ -109,8 +109,13 @@ test('pos-basic-tag:', function(t) {
     ['butterfly', ['Singular']],
     ['he blamed the girl', ['Pronoun', 'PastTense', 'Determiner', 'Singular']],
     ['his fine', ['Possessive', 'Noun']],
+
+    //acronyms
     // ['contracted AIDS', ['PastTense', 'Acronym']],
-    // ['contacted nbc', ['PastTense', 'Acronym']],
+    ['contacted nbc', ['PastTense', 'Acronym']],
+    ['UNESCO', ['Acronym']],
+    ['NAFTA', ['Acronym']],
+
     ['city/town', ['Noun', 'Noun']],
     ['boyfriend to Jane', ['Noun', 'Conjunction', 'Person']],
     // ['boyfriend of Jane', ['Noun', 'Conjunction', 'Person']],
@@ -133,6 +138,9 @@ test('pos-basic-tag:', function(t) {
     ['masked', ['PastTense']],
     ['planned', ['PastTense']],
     ['hummed', ['PastTense']],
+
+    // numberrange
+    ['it was 1-2 kg woooh', ['Noun', 'PastTense', 'NumberRange', 'NumberRange', 'NumberRange', 'Unit', 'Expression']],
 
     ['bakes', ['PresentTense']],
     ['fakes', ['PresentTense']],

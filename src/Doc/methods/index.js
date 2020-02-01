@@ -13,7 +13,6 @@ module.exports = Object.assign(
   require('./output/01-text'),
   require('./output/02-json'),
   require('./output/03-out'),
-  require('./output/04-export'),
 
   require('./transform/01-sort'),
   require('./transform/02-normalize'),

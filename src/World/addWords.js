@@ -4,7 +4,11 @@ const addWord = function(word, tag, lex) {
     if (typeof lex[word] === 'string') {
       lex[word] = [lex[word]]
     }
-    lex[word].push(tag)
+    if (typeof tag === 'string') {
+      lex[word].push(tag)
+    } else {
+      lex[word] = lex[word].concat(tag)
+    }
   } else {
     lex[word] = tag
   }

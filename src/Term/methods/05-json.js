@@ -4,12 +4,12 @@ const jsonDefault = {
   text: true,
   tags: true,
   implicit: true,
+  whitespace: true,
 
   clean: false,
   id: false,
   index: false,
   offset: false,
-  whitespace: false,
   bestTag: false,
 }
 

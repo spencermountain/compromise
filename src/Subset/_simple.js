@@ -96,9 +96,4 @@ methods.entities = function(n) {
 methods.things = methods.entities
 methods.topics = methods.entities
 
-/** alias for .all() until it gets overloaded by plugin */
-methods.sentences = function() {
-  return this.all()
-}
-
 module.exports = methods

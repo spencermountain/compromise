@@ -1,4 +1,9 @@
 const parseToken = require('./parseToken')
+// const cache = {}
+
+const isNamed = function(capture) {
+  return typeof capture === 'string' || typeof capture === 'number'
+}
 
 const isArray = function(arr) {
   return Object.prototype.toString.call(arr) === '[object Array]'
@@ -6,7 +11,7 @@ const isArray = function(arr) {
 
 //split-up by (these things)
 const byParentheses = function(str) {
-  let arr = str.split(/([\^\[\!]*\(.*?\)[?+*]*\]?\$?)/)
+  let arr = str.split(/([\^\[\!]*(?:<\S+>)?\(.*?\)[?+*]*\]?\$?)/)
   arr = arr.map(s => s.trim())
   return arr
 }
@@ -40,17 +45,48 @@ const byArray = function(arr) {
 }
 
 const postProcess = function(tokens) {
-  //ensure there's only one consecutive capture group.
-  let count = tokens.filter(t => t.capture === true).length
-  if (count > 1) {
-    let captureArr = tokens.map(t => t.capture)
-    let first = captureArr.indexOf(true)
-    let last = captureArr.length - 1 - captureArr.reverse().indexOf(true)
+  // ensure all capture groups are filled between start and end
+  // give all capture groups names
+  let count = tokens.filter(t => t.groupType).length
+  if (count > 0) {
+    let convert = false
+    let index = -1
+    let current
+
     //'fill in' capture groups between start-end
-    for (let i = first; i < last; i++) {
-      tokens[i].capture = true
+    for (let i = 0; i < tokens.length; i++) {
+      const n = tokens[i]
+
+      // Give name to un-named single tokens
+      if (n.groupType === 'single' && n.named === true) {
+        index += 1
+        n.named = index
+        continue
+      }
+
+      // Start converting tokens
+      if (n.groupType === 'start') {
+        convert = true
+        if (isNamed(n.named)) {
+          current = n.named
+        } else {
+          index += 1
+          current = index
+        }
+      }
+
+      // Ensure this token has the right name
+      if (convert) {
+        n.named = current
+      }
+
+      // Stop converting tokens
+      if (n.groupType === 'end') {
+        convert = false
+      }
     }
   }
+
   return tokens
 }
 
@@ -106,4 +142,13 @@ const syntax = function(input) {
   // console.log(JSON.stringify(tokens, null, 2))
   return tokens
 }
+
+// const memoizeSyntax = function(input) {
+//   if (typeof input === 'string' && cache.hasOwnProperty(input)) {
+//     return cache[input]
+//   }
+//   let res = syntax(input)
+//   cache[input] = res
+//   return res
+// }
 module.exports = syntax

@@ -48,12 +48,6 @@ let names = doc.clauses().split()
 let json = names.syllables()
 ```
 
-```js
-nlp('it is a UNESCO world heritage site')
-  .acronyms()
-  .text()
-```
-
 possessive, sentence period
 
 ```js
@@ -81,13 +75,6 @@ console.log(doc.normalize('heavy').text())
 ```
 
 ```js
-nlp(`Cows don't`)
-  .nouns()
-  .toSingular()
-//a cow doesn't
-```
-
-```js
 let doc = nlp('I’m lookin’ for Amanda').debug()
 ```
 
@@ -106,6 +93,8 @@ doc = doc.match('(#Acronym|#Abbreviation)').replaceWith(d => {
 })
 doc.debug()
 ```
+
+### Jan 5
 
 ```js
 nlp('  we like Roy!    we like Roy!!  ')
@@ -156,4 +145,91 @@ nlp(`hey pal, did you get a load of the nerd?`)
   .toPlural()
   .all()
   .text()
+```
+
+### Jan 15
+
+match cached numbers?
+
+```js
+nlp('four').match('4')
+```
+
+### Jan 21
+
+```js
+let doc = nlp('pack a lunch for sam sunday morning')
+```
+
+### Jan 23
+
+```js
+let arr = [
+  // *explicit-dates**,
+  // `march 2nd`,
+  // `2 march`,
+  // `tues march 2`,
+  `march the second`,
+  // `on the 2nd`,
+  // // *numerical-dates**,
+  // `1999/03/02`,
+  // `1999-03-02`,
+  // `03-02-1999`,
+  // `03/02`,
+  // `2015.08.13`,
+  // // *named-dates**,
+  // `today`,
+  // `easter`,
+  // `q1`,
+  // `tomorrow`,
+  // // *time:**,
+  // `2pm`,
+  // `2:12pm`,
+  // `2:12`,
+  // `02:12:00`,
+  // `2 oclock`,
+  // `before 1`,
+  // `noon`,
+  // `at night`,
+  // `in the morning`,
+  // `tomorrow evening`,
+  // // *timezone:**,
+  // `eastern time`,
+  // `est`,
+  // `peru time`,
+  // `GMT+9`,
+  // // *relative duration**,
+  // `this march`,
+  // `this week`,
+  // `this sunday`,
+  // `next april`,
+  // `this past year`,
+  // `second week of march`,
+  // `last weekend of march`,
+  // `last spring`,
+  // `the saturday after next`,
+  // // *punt**,
+  // `two days after tomorrow`,
+  // `in seven weeks`,
+  // `2 weeks from now`,
+  // `2 weeks after`,
+  // `2 years 4 months 5 days ago`,
+  // `a week friday`,
+  // `a week and a half before`,
+  // `on the 1st`,
+  // // *start/end**,
+  // `end of the week`,
+  // `start of next year`,
+  // `start of next year`,
+  // `middle of q2 last year`,
+]
+
+// let json = doc.dates({}).json()
+// console.log(json)
+```
+
+### lookup duplicates
+```js
+let doc = nlp('spencer kelly is working here')
+let res = doc.lookup(['spencer kelly', 'spencer'])
 ```

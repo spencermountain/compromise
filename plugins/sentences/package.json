@@ -1,7 +1,7 @@
 {
   "name": "compromise-sentences",
   "description": "plugin for nlp-compromise",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "main": "./builds/compromise-sentences.js",
   "unpkg": "./builds/compromise-sentences.min.js",
@@ -12,10 +12,10 @@
     "url": "git://github.com/spencermountain/compromise.git"
   },
   "scripts": {
-    "test": "tape \"./tests/**/*.test.js\" | tap-dancer",
-    "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer",
+    "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
+    "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
     "watch": "amble ./scratch.js",
-    "build": "rollup -c"
+    "build": "rollup -c --silent"
   },
   "prettier": {
     "trailingComma": "es5",
@@ -36,14 +36,15 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "rollup": "1.27.5",
-    "rollup-plugin-babel": "^4.3.3",
-    "rollup-plugin-commonjs": "^10.0.0",
-    "rollup-plugin-json": "^4.0.0",
-    "rollup-plugin-node-resolve": "^5.1.0",
-    "rollup-plugin-terser": "^5.0.0",
+    "@rollup/plugin-commonjs": "11.0.1",
+    "@rollup/plugin-json": "4.0.1",
+    "@rollup/plugin-node-resolve": "7.0.0",
+    "rollup": "1.30.1",
+    "rollup-plugin-babel": "4.3.3",
+    "rollup-plugin-filesize-check": "0.0.1",
+    "rollup-plugin-terser": "5.2.0",
     "tap-dancer": "0.2.0",
-    "tape": "4.11.0"
+    "tape": "4.13.0"
   },
   "license": "MIT"
 }

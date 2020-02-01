@@ -1,0 +1,50 @@
+{
+  "name": "compromise-export",
+  "description": "plugin for nlp-compromise",
+  "version": "0.0.1",
+  "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
+  "main": "./builds/compromise-export.js",
+  "unpkg": "./builds/compromise-export.min.js",
+  "module": "./builds/compromise-export.mjs",
+  "types": "types/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/spencermountain/compromise.git"
+  },
+  "scripts": {
+    "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
+    "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
+    "watch": "amble ./scratch.js",
+    "build": "rollup -c --silent"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": true,
+    "printWidth": 100
+  },
+  "files": [
+    "builds/",
+    "types/index.d.ts"
+  ],
+  "eslintIgnore": [
+    "builds/*.js"
+  ],
+  "peerDependencies": {
+    "compromise": "^12.*.*"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "11.0.1",
+    "@rollup/plugin-json": "4.0.1",
+    "@rollup/plugin-node-resolve": "7.0.0",
+    "rollup": "1.30.1",
+    "rollup-plugin-babel": "4.3.3",
+    "rollup-plugin-filesize-check": "0.0.1",
+    "rollup-plugin-terser": "5.2.0",
+    "tap-dancer": "0.2.0",
+    "tape": "4.13.0"
+  },
+  "license": "MIT"
+}

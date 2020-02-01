@@ -6,11 +6,12 @@ const checkIrregulars = require('./03-irregulars')
 const checkPossessive = require('./04-possessive')
 const checkPerfect = require('./05-perfectTense')
 const checkRange = require('./06-ranges')
+const checkFrench = require('./07-french')
 const isNumber = /^[0-9]+$/
 
 const createPhrase = function(found, doc) {
   //create phrase from ['would', 'not']
-  let phrase = tokenize.fromText(found.join(' '), doc.world, doc.pool())[0]
+  let phrase = tokenize(found.join(' '), doc.world, doc.pool())[0]
   //tag it
   let terms = phrase.terms()
   checkLexicon(terms, doc.world)
@@ -43,9 +44,14 @@ const contractions = function(doc) {
       found = found || checkPossessive(term, p, world)
       found = found || checkPerfect(term, p)
       found = found || checkRange(term, p)
+      found = found || checkFrench(term, p)
       //add them in
       if (found !== null) {
         let newPhrase = createPhrase(found, doc)
+        // keep tag NumberRange, if we had it
+        if (p.has('#NumberRange') === true) {
+          doc.buildFrom([newPhrase]).tag('NumberRange')
+        }
         //set text as contraction
         let firstTerm = newPhrase.terms(0)
         firstTerm.text = term.text

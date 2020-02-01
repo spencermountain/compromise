@@ -1,3 +1,4 @@
+/* compromise-paragraphs 0.0.4 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -151,9 +152,9 @@
       // returns boolean
       has: function has(str) {
         return this.paragraphs.some(function (docs) {
-          for (var i = 0; i < docs.length; i++) {
-            return docs[i].has(str);
-          }
+          return docs.some(function (doc) {
+            return doc.has(str);
+          });
         });
       },
       //loops

@@ -1,3 +1,4 @@
+const makeId = require('../../Term/_id')
 // i formally apologize for how complicated this is.
 
 //found a match? it's greedy? keep going!
@@ -41,13 +42,48 @@ const greedyTo = function(terms, t, nextReg, index, length) {
   return null
 }
 
+// get or create named group
+const getOrCreateGroup = function(namedGroups, namedGroupId, terms, startIndex, group) {
+  const g = namedGroups[namedGroupId]
+
+  if (g) {
+    return g
+  }
+
+  const { id } = terms[startIndex]
+
+  namedGroups[namedGroupId] = {
+    group: String(group),
+    start: id,
+    length: 0,
+  }
+
+  return namedGroups[namedGroupId]
+}
+
 /** tries to match a sequence of terms, starting from here */
 const tryHere = function(terms, regs, index, length) {
-  let captures = []
+  const namedGroups = {}
+  let previousGroupId = null
   let t = 0
   // we must satisfy each rule in 'regs'
   for (let r = 0; r < regs.length; r += 1) {
     let reg = regs[r]
+
+    // Check if this reg has a named capture group
+    const isNamedGroup = typeof reg.named === 'string' || typeof reg.named === 'number'
+    let namedGroupId = null
+
+    // Reuse previous capture group if same
+    if (isNamedGroup) {
+      const prev = regs[r - 1]
+      if (prev && prev.named === reg.named && previousGroupId) {
+        namedGroupId = previousGroupId
+      } else {
+        namedGroupId = makeId(reg.named)
+        previousGroupId = namedGroupId
+      }
+    }
 
     //should we fail here?
     if (!terms[t]) {
@@ -57,7 +93,7 @@ const tryHere = function(terms, regs, index, length) {
         break
       }
       // have unmet needs
-      return false
+      return [false, null]
     }
 
     //support 'unspecific greedy' .* properly
@@ -65,18 +101,28 @@ const tryHere = function(terms, regs, index, length) {
       let skipto = greedyTo(terms, t, regs[r + 1], reg, index, length)
       // ensure it's long enough
       if (reg.min !== undefined && skipto - t < reg.min) {
-        return false
+        return [false, null]
       }
       // reduce it back, if it's too long
       if (reg.max !== undefined && skipto - t > reg.max) {
         t = t + reg.max
         continue
       }
-      //TODO: support [*] properly
+
       if (skipto === null) {
-        return false //couldn't find it
+        return [false, null] //couldn't find it
       }
+
+      // is it really this easy?....
+      if (isNamedGroup) {
+        const g = getOrCreateGroup(namedGroups, namedGroupId, terms, t, reg.named)
+
+        // Update group
+        g.length = skipto - t
+      }
+
       t = skipto
+
       continue
     }
 
@@ -85,7 +131,14 @@ const tryHere = function(terms, regs, index, length) {
     //start matching before the actual end; we do this by (temporarily!)
     //removing the "end" property from the matching token... since this is
     //very situation-specific, we *only* do this when we really need to.
-    if (reg.anything === true || (reg.end === true && reg.greedy === true && index + t < length - 1 && terms[t].doesMatch(Object.assign({}, reg, { end: false }), index + t, length) === true) || terms[t].doesMatch(reg, index + t, length) === true) {
+    if (
+      reg.anything === true ||
+      (reg.end === true &&
+        reg.greedy === true &&
+        index + t < length - 1 &&
+        terms[t].doesMatch(Object.assign({}, reg, { end: false }), index + t, length) === true) ||
+      terms[t].doesMatch(reg, index + t, length) === true
+    ) {
       let startAt = t
       // okay, it was a match, but if it optional too,
       // we should check the next reg too, to skip it?
@@ -105,9 +158,10 @@ const tryHere = function(terms, regs, index, length) {
       if (reg.end === true) {
         //if this isn't the last term, refuse the match
         if (t !== terms.length && reg.greedy !== true) {
-          return false
+          return [false, null]
         }
       }
+
       //try keep it going!
       if (reg.greedy === true) {
         // for greedy checking, we no longer care about the reg.start
@@ -116,21 +170,26 @@ const tryHere = function(terms, regs, index, length) {
         // ending match to succceed until we get to the actual end.
         t = getGreedy(terms, t, Object.assign({}, reg, { start: false, end: false }), regs[r + 1], index, length)
         if (t === null) {
-          return false //greedy was too short
+          return [false, null] //greedy was too short
         }
         // if this was also an end-anchor match, check to see we really
         // reached the end
         if (reg.end === true && index + t !== length) {
-          return false //greedy didn't reach the end
+          return [false, null] //greedy didn't reach the end
         }
       }
-      if (reg.capture) {
-        captures.push(startAt)
-        //add greedy-end to capture
+      if (isNamedGroup) {
+        // Get or create capture group
+        const g = getOrCreateGroup(namedGroups, namedGroupId, terms, startAt, reg.named)
+
+        // Update group - add greedy or increment length
         if (t > 1 && reg.greedy) {
-          captures.push(t - 1)
+          g.length += t - startAt
+        } else {
+          g.length++
         }
       }
+
       continue
     }
 
@@ -147,21 +206,10 @@ const tryHere = function(terms, regs, index, length) {
       }
     }
     // console.log('   ❌\n\n')
-    return false
+    return [false, null]
   }
 
-  //we got to the end of the regs, and haven't failed!
-  //try to only return our [captured] segment
-  if (captures.length > 0) {
-    //make sure the array is the full-length we'd return anyways
-    let arr = terms.slice(captures[0], captures[captures.length - 1] + 1)
-    //make sure the array is t-length (so we skip ahead full-length)
-    for (let tmp = 0; tmp < t; tmp++) {
-      arr[tmp] = arr[tmp] || null //these get cleaned-up after
-    }
-    return arr
-  }
   //return our result
-  return terms.slice(0, t)
+  return [terms.slice(0, t), namedGroups]
 }
 module.exports = tryHere

@@ -1,9 +1,13 @@
-import commonjs from 'rollup-plugin-commonjs'
-import json from 'rollup-plugin-json'
+import commonjs from '@rollup/plugin-commonjs'
+import json from '@rollup/plugin-json'
+import resolve from '@rollup/plugin-node-resolve'
 import { terser } from 'rollup-plugin-terser'
-import resolve from 'rollup-plugin-node-resolve'
 import babel from 'rollup-plugin-babel'
+import sizeCheck from 'rollup-plugin-filesize-check'
 const name = 'compromise-syllables'
+
+import { version } from './package.json'
+const banner = `/* ${name} ${version} MIT */`
 
 export default [
   {
@@ -12,6 +16,7 @@ export default [
       {
         file: `builds/${name}.mjs`,
         format: 'esm',
+        banner: banner,
       },
     ],
     plugins: [
@@ -22,6 +27,7 @@ export default [
         babelrc: false,
         presets: ['@babel/preset-env'],
       }),
+      sizeCheck(),
     ],
   },
   {
@@ -32,6 +38,7 @@ export default [
         format: 'umd',
         sourcemap: true,
         name: 'compromiseSyllables',
+        banner: banner,
       },
     ],
     plugins: [
@@ -42,6 +49,7 @@ export default [
         babelrc: false,
         presets: ['@babel/preset-env'],
       }),
+      sizeCheck(),
     ],
   },
   {
@@ -62,6 +70,7 @@ export default [
         presets: ['@babel/preset-env'],
       }),
       terser(),
+      sizeCheck(),
     ],
   },
 ]

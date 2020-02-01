@@ -99,3 +99,20 @@ exports.hasId = function(wantId) {
 exports.wordCount = function() {
   return this.terms().filter(t => t.text !== '').length
 }
+
+/** get the full-sentence this phrase belongs to */
+exports.fullSentence = function() {
+  let t = this.terms(0)
+  //find first term in sentence
+  while (t.prev) {
+    t = this.pool.get(t.prev)
+  }
+  let start = t.id
+  let len = 1
+  //go to end of sentence
+  while (t.next) {
+    t = this.pool.get(t.next)
+    len += 1
+  }
+  return this.buildFrom(start, len)
+}

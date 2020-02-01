@@ -14,3 +14,16 @@ test('lookup tests', function(t) {
 
   t.end()
 })
+
+test('lookup object', function(t) {
+  let doc = nlp('spencer kelly is working here')
+  let res = doc.lookup({
+    'spencer kelly': 'Cool',
+    working: 'Uncool',
+    miss: 'None',
+  })
+  t.equal(Object.keys(res).length, 2, 'found two keys')
+  t.equal(res.Cool.text(), 'spencer kelly', 'obj text-one')
+  t.equal(res.Uncool.text(), 'working', 'obj text-two')
+  t.end()
+})

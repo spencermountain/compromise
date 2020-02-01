@@ -29,19 +29,19 @@ test('match-from-array :', function(t) {
 })
 
 test('greedy-capture', function(t) {
-  let m = nlp('so ralf and really eats the glue').match('* [eats] the')
+  let m = nlp('so ralf and really eats the glue').match('* [eats] the', 0)
   t.equal(m.out('normal'), 'eats', 'one-captures')
 
-  m = nlp('so ralf really, really eats the glue').match('[#Adverb+] eats the')
+  m = nlp('so ralf really, really eats the glue').match('[#Adverb+] eats the', 0)
   t.equal(m.out('normal'), 'really, really', 'greedy-capture')
 
-  m = nlp('so ralf and really eats the glue').match('* [eats the]')
+  m = nlp('so ralf and really eats the glue').match('* [eats the]', 0)
   t.equal(m.out('normal'), 'eats the', 'two-captures')
 
-  m = nlp('so ralf really eats the glue').match('really [eats the] *')
+  m = nlp('so ralf really eats the glue').match('really [eats the] *', 0)
   t.equal(m.out('normal'), 'eats the', 'astrix after')
 
-  m = nlp('so ralf really eats the glue').match('really * [eats the]')
+  m = nlp('so ralf really eats the glue').match('really * [eats the]', 0)
   t.equal(m.out('normal'), 'eats the', 'astrix is not necessary')
   t.end()
 })

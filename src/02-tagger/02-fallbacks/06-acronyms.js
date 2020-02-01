@@ -42,7 +42,7 @@ const checkAcronym = function(terms, world) {
       term.tag('Noun', 'one-letter-infer', world)
     }
     //if it's a organization,
-    if (term.tags.Organization && term.text.length < 4) {
+    if (term.tags.Organization && term.text.length <= 6) {
       term.tag('Acronym', 'acronym-org', world)
     }
   })

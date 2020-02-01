@@ -25,6 +25,7 @@ module.exports = [
 
   //slang things
   [/^(lol)+[sz]$/, 'Expression'], //lol
+  [/^woo+a*?h?$/, 'Expression'], //whoaa, wooo
   [/^(un|de|re)\\-[a-z\u00C0-\u00FF]{2}/, 'Verb'],
   // [/^(over|under)[a-z]{2,}/, 'Adjective'],
   [/^[0-9]{1,4}\.[0-9]{1,2}\.[0-9]{1,4}$/, 'Date'], // 03-02-89

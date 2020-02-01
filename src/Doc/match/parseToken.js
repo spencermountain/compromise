@@ -11,12 +11,13 @@
   greedy:false,
   optional:false,
 
-  capture:false,
+  named:'',
   choices:[],
 }
 */
 const hasMinMax = /\{([0-9]+,?[0-9]*)\}/
 const andSign = /&&/
+const captureName = new RegExp(/^<(\S+)>/)
 
 const titleCase = str => {
   return str.charAt(0).toUpperCase() + str.substr(1)
@@ -94,9 +95,26 @@ const parseToken = function(w) {
     }
     //capture group (this one can span multiple-terms)
     if (start(w) === '[' || end(w) === ']') {
-      obj.capture = true
+      obj.named = true
+
+      if (start(w) === '[') {
+        obj.groupType = end(w) === ']' ? 'single' : 'start'
+      } else {
+        obj.groupType = 'end'
+      }
+
       w = w.replace(/^\[/, '')
       w = w.replace(/\]$/, '')
+
+      // Use capture group name
+      if (start(w) === '<') {
+        const res = captureName.exec(w)
+
+        if (res.length >= 2) {
+          obj.named = res[1]
+          w = w.replace(res[0], '')
+        }
+      }
     }
     //regex
     if (start(w) === '/' && end(w) === '/') {

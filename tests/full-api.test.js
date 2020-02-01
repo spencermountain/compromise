@@ -1,5 +1,5 @@
 const test = require('tape')
-const nlp = require('./_lib')
+const nlp = require('./_lib') // eslint-disable-line
 
 //run every method once, and check against runtime errors
 test('constructor api', function(t) {
@@ -7,7 +7,7 @@ test('constructor api', function(t) {
     tokenize: '()=>{ nlp.tokenize("you\'re sure you haven\'t just made thousands of mistakes?") }',
     extend: "()=>{ nlp.extend((Doc, world)=>world.addWords({bort:'FirstName'})) }",
     clone: "()=>{ let b=nlp.clone(); b.extend((Doc, world)=>{world.addWords({ 'a hoy hoy' : 'Greeting'})}) }",
-    load: "()=>{ let json=nlp('Tony Hawk').export();nlp.load(json).match('#Person') }",
+    // load: "()=>{ let json=nlp('Tony Hawk').export();nlp.load(json).match('#Person') }",
     verbose: "()=>{ nlp.verbose(false);nlp('I am the very model of a modern Major-General') }",
     version: '()=>{ nlp.version}',
   }

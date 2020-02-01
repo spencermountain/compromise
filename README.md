@@ -26,6 +26,9 @@
   <a href="https://bundlephobia.com/result?p=compromise">
     <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/builds/compromise.min.js" />
   </a>
+  <a href="https://spectrum.chat/nlp-compromise">
+    <img src="https://img.shields.io/badge/spectrum-chat-%23b14344" />
+  </a>
   </div>
 </div>
 
@@ -221,6 +224,19 @@ doc.verbs().toNegative()
 // 'London is not calling'
 ```
 
+or if you don't care about POS-tagging, you can use the tokenize-only build: (90kb!)
+
+```html
+<script src="https://unpkg.com/compromise/builds/compromise-tokenize.js"></script>
+<script>
+  var doc = nlp('No, my son is also named Bort.')
+  //you can see the text has no tags
+  console.log(doc.has('#Noun')) //false
+  //but the whole api still works
+  console.log(doc.has('my .* is .? named /^b[oa]rt/')) //true
+</script>
+```
+
 <!-- spacer -->
 <img height="30" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
@@ -318,7 +334,6 @@ _(these methods are on the `nlp` object)_
 
 - **[.tokenize()](https://observablehq.com/@spencermountain/compromise-tokenization)** - parse text without running POS-tagging
 - **[.extend()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - mix in a compromise-plugin
-- **[.load()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - re-generate a Doc object from .export() results
 - **[.verbose()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - log our decision-making for debugging
 - **[.version()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - current semver version of the library
 
@@ -341,9 +356,12 @@ _(these methods are on the `nlp` object)_
 - **[.last(n)](https://observablehq.com/@spencermountain/compromise-accessors)** - use only the last result(s)
 - **[.slice(n,n)](https://observablehq.com/@spencermountain/compromise-accessors)** - grab a subset of the results
 - **[.eq(n)](https://observablehq.com/@spencermountain/compromise-accessors)** - use only the nth result
-- **[.firstTerm()](https://observablehq.com/@spencermountain/compromise-accessors)** - get the first word in each match
-- **[.lastTerm()](https://observablehq.com/@spencermountain/compromise-accessors)** - get the end word in each match
+- **[.terms()](https://observablehq.com/@spencermountain/compromise-selections)** - split-up results by each individual term
+- **[.firstTerms()](https://observablehq.com/@spencermountain/compromise-accessors)** - get the first word in each match
+- **[.lastTerms()](https://observablehq.com/@spencermountain/compromise-accessors)** - get the end word in each match
+- **[.sentences()](https://observablehq.com/@spencermountain/compromise-accessors)** - get the whole sentence for each match
 - **[.termList()](https://observablehq.com/@spencermountain/compromise-accessors)** - return a flat list of all Term objects in match
+- **[.groups('')](https://observablehq.com/@spencermountain/compromise-accessors)** - grab any named capture-groups from a match
 
 ##### Match
 
@@ -421,11 +439,9 @@ _(all match methods use the [match-syntax](https://docs.compromise.cool/compromi
 - **[.json({})](https://observablehq.com/@spencermountain/compromise-json)** - pull out desired metadata from the document
 - **[.out('array|offset|terms')](https://observablehq.com/@spencermountain/compromise-output)** - some named output formats (deprecated)
 - **[.debug()](https://observablehq.com/@spencermountain/compromise-output)** - pretty-print the current document and its tags
-- **[.export()](https://observablehq.com/@spencermountain/compromise-export)** - store a parsed document for later use
 
 ##### Selections
 
-- **[.terms()](https://observablehq.com/@spencermountain/compromise-selections)** - split-up results by each individual term
 - **[.clauses()](https://observablehq.com/@spencermountain/compromise-selections)** - split-up sentences into multi-term phrases
 - **[.hyphenated()](https://observablehq.com/@spencermountain/compromise-selections)** - all terms connected with a hyphen or dash like `'wash-out'`
 - **[.phoneNumbers()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'(939) 555-0113'`
@@ -539,6 +555,33 @@ These are some helpful extensions:
   - **[.numbers().isCardinal()](https://observablehq.com/@spencermountain/compromise-values)** - return only cardinal numbers
   - **[.numbers().toLocaleString()](https://observablehq.com/@spencermountain/compromise-values)** - add commas, or nicer formatting for numbers
 
+##### Export
+
+`npm install compromise-export`
+
+- **[.export()](https://observablehq.com/@spencermountain/compromise-export)** - store a parsed document for later use
+- **[nlp.load()](https://observablehq.com/@spencermountain/compromise-export)** - re-generate a Doc object from .export() results
+
+##### Html
+
+`npm install compromise-html`
+
+- **[.html({})](https://observablehq.com/@spencermountain/compromise-html)** - generate sanitized html from the document
+
+##### Hash
+
+`npm install compromise-hash`
+
+- **[.hash()](https://observablehq.com/@spencermountain/compromise-hash)** - generate an md5 hash from the document+tags
+- **[.isEqual(doc)](https://observablehq.com/@spencermountain/compromise-hash)** - compare the hash of two documents for semantic-equality
+
+##### Keypress
+
+`npm install compromise-keypress`
+
+- **[nlp.keypress('')](https://observablehq.com/@spencermountain/compromise-keypress)** - generate an md5 hash from the document+tags
+- **[nlp.clear('')](https://observablehq.com/@spencermountain/compromise-keypress)** - clean-up any cached sentences from memory
+
 ##### Ngrams
 
 `npm install compromise-ngrams`
@@ -550,13 +593,6 @@ These are some helpful extensions:
 - **[.startgrams()](https://observablehq.com/@spencermountain/compromise-ngram)** - n-grams including the first term of a phrase
 - **[.endgrams()](https://observablehq.com/@spencermountain/compromise-ngram)** - n-grams including the last term of a phrase
 - **[.edgegrams()](https://observablehq.com/@spencermountain/compromise-ngram)** - n-grams including the first or last term of a phrase
-
-##### Output
-
-`npm install compromise-output`
-
-- **[.hash()](#)** - generate an md5 hash from the document+tags
-- **[.html({})]()** - generate sanitized html from the document
 
 ##### Paragraphs
 
@@ -734,9 +770,13 @@ this plugin creates a wrapper around the default sentence objects.
       <summary>✨ Partial builds?</summary>
       <p></p>
       <ul>
-        compromise isn't easily tree-shaken.
+        we do offer a [compromise-tokenize](./builds/compromise-tokenize.js) build, which has the POS-tagger pulled-out.
+        <br/> 
+        but otherwise, compromise isn't easily tree-shaken.
         <br/> 
         the tagging methods are competitive, and greedy, so it's not recommended to pull things out.
+        <br/> 
+        Note that without a full POS-tagging, the contraction-parser won't work perfectly. (<i>(spencer's cool)</i> vs. <i>(spencer's house)</i>)
         <br/> 
         It's recommended to run the library fully.
       </ul>

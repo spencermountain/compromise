@@ -8,6 +8,43 @@ compromise uses semver, and pushes to npm frequently
 
 While all _Major_ releases should be reviewed, our only two _large_ releases are **v6** in 2016 and and **v12** in 2019. Others have been mostly incremental, or niche.
 
+##### 13.0.0
+
+_major changes to `.export()` and `[capture] group` match-syntax._
+
+- **[breaking]** move .export() and .load() methods to plugin (compromise-export)
+- - change .export() format - this hasn't worked properly since v12. (mis-parsed contractions) see #669
+- **[breaking]** split `compromise-output` into `compromise-html` and `compromise-hash` plugins
+- **[breaking]** `.match('foo [bar]')` no-longer returns 'bar'. (use `.match('foo [bar]', 0)`)
+- **[breaking]** capture groups are no longer merged. `.match('[foo] [bar]')` returns two groups accessible with the new `.groups()` function
+- **[breaking]** change `.sentences()` method to return only full-sentences of matches (use `.all()` instead)
+
+modifications:
+
+- fix nlp.clone() - hasn't worked properly, since v12. (@Drache93)
+- fix issues with greedy capture [*] and [.+] -(@Drache93) 💛
+- add whitespace properties (pre+post) to default json output (suppress with `.json({ whitespace: false })`)
+- `.lookup({ key: val })` with an object now returns an object back ({val: Doc})
+- add nlp constructor as a third param to `.extend()`
+- support lexicon object param in tokenize - `.tokenize('my word', { word: 'tag' })`
+- clean-up of scripts and tooling
+- improved typescript types
+- add support for some french contractions like `j'aime -> je aime`
+- allow null results in `.map()` function
+
+new things:
+
+- add new named-match syntax, with .groups() method (@Drache93)
+- add `nlp.fromJSON()` method
+- add a new `compromise-tokenize.js` build, without the tagger, or data included.
+
+##### 12.4.0
+
+- adds proper `nlp.clone()` support (thanks @Drache93!)
+- better typescript support
+- allow longer acronyms
+- fix offset length issue
+
 ##### 12.3.0
 
 - prefer `@titleCase` instead of `#TitleCase` tag
@@ -21,7 +58,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - more robust number-tagging regexes
 - setup typescript types for plugins #661 (thanks @Drache93!)
 - verb conjugation and tagger bugfixes
-- disambiguate acryonyms & yelling
+- disambiguate between acronyms & yelling
 
 ##### 12.2.1
 

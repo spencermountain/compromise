@@ -23,7 +23,7 @@
     "testb": "npm run test:smoke && TESTENV=prod  node ./scripts/test/index.js",
     "test:smoke": "node \"./scripts/test/smoke-test/\" | tap-dancer",
     "test:spec": "tape \"./tests/**/*.test.js\" | tap-spec",
-    "test:perf": "node ./scripts/test/speed/index.js",
+    "test:perf": "size-limit",
     "test:types": "ts-node ./scripts/test/types.ts | tap-dancer",
     "test:stress": "node ./scripts/test/stress.js",
     "coverage": "node ./scripts/test/coverage.js",
@@ -58,6 +58,7 @@
     "@rollup/plugin-commonjs": "^11.0.1",
     "@rollup/plugin-json": "^4.0.1",
     "@rollup/plugin-node-resolve": "^7.0.0",
+    "@size-limit/preset-big-lib": "^4.0.0",
     "amble": "0.0.7",
     "efrt": "2.2.2",
     "rollup": "1.30.1",
@@ -65,6 +66,7 @@
     "rollup-plugin-filesize-check": "0.0.1",
     "rollup-plugin-terser": "5.2.0",
     "shelljs": "0.8.3",
+    "size-limit": "^4.0.0",
     "tap-dancer": "0.2.0",
     "tape": "4.13.0"
   },
@@ -72,6 +74,20 @@
     "builds/*.js",
     "*.ts",
     "plugins/**/types/*.ts"
+  ],
+  "size-limit": [
+    {
+      "path": "builds/compromise-tokenize.js",
+      "limit": "1 s"
+    },
+    {
+      "path": "builds/compromise.min.js",
+      "limit": "3 s"
+    },
+    {
+      "path": "scripts/test/speed/index.js",
+      "limit": "15 s"
+    }
   ],
   "license": "MIT"
 }

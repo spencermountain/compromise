@@ -43,7 +43,7 @@ const greedyTo = function(terms, t, nextReg, index, length) {
 }
 
 // get or create named group
-const getOrCreateGroup = function(namedGroups, namedGroupId, terms, startIndex, group, index) {
+const getOrCreateGroup = function(namedGroups, namedGroupId, terms, startIndex, group) {
   const g = namedGroups[namedGroupId]
 
   if (g) {
@@ -53,8 +53,7 @@ const getOrCreateGroup = function(namedGroups, namedGroupId, terms, startIndex, 
   const { id } = terms[startIndex]
 
   namedGroups[namedGroupId] = {
-    group: group === true ? undefined : String(group),
-    index: String(index),
+    group: String(group),
     start: id,
     length: 0,
   }
@@ -66,7 +65,6 @@ const getOrCreateGroup = function(namedGroups, namedGroupId, terms, startIndex, 
 const tryHere = function(terms, regs, index, length) {
   const namedGroups = {}
   let previousGroupId = null
-  let groupCounter = -1
   let t = 0
   // we must satisfy each rule in 'regs'
   for (let r = 0; r < regs.length; r += 1) {
@@ -74,18 +72,15 @@ const tryHere = function(terms, regs, index, length) {
 
     // Check if this reg has a named capture group
     const isNamedGroup = typeof reg.named === 'string' || typeof reg.named === 'number'
-    const hasGroup = reg.named === true || isNamedGroup
     let namedGroupId = null
 
     // Reuse previous capture group if same
-    if (hasGroup) {
+    if (isNamedGroup) {
       const prev = regs[r - 1]
-      if (prev && prev.named !== true && prev.named === reg.named && previousGroupId) {
+      if (prev && prev.named === reg.named && previousGroupId) {
         namedGroupId = previousGroupId
       } else {
-        groupCounter++
-        namedGroupId = makeId(isNamedGroup ? reg.named : groupCounter)
-        // namedGroupId = terms[t].id
+        namedGroupId = makeId(reg.named)
         previousGroupId = namedGroupId
       }
     }
@@ -119,8 +114,8 @@ const tryHere = function(terms, regs, index, length) {
       }
 
       // is it really this easy?....
-      if (reg.named || isNamedGroup) {
-        const g = getOrCreateGroup(namedGroups, namedGroupId, terms, t, reg.named, groupCounter)
+      if (isNamedGroup) {
+        const g = getOrCreateGroup(namedGroups, namedGroupId, terms, t, reg.named)
 
         // Update group
         g.length = skipto - t
@@ -183,9 +178,9 @@ const tryHere = function(terms, regs, index, length) {
           return [false, null] //greedy didn't reach the end
         }
       }
-      if (reg.named || isNamedGroup) {
+      if (isNamedGroup) {
         // Get or create capture group
-        const g = getOrCreateGroup(namedGroups, namedGroupId, terms, startAt, reg.named, groupCounter)
+        const g = getOrCreateGroup(namedGroups, namedGroupId, terms, startAt, reg.named)
 
         // Update group - add greedy or increment length
         if (t > 1 && reg.greedy) {

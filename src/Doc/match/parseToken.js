@@ -96,6 +96,13 @@ const parseToken = function(w) {
     //capture group (this one can span multiple-terms)
     if (start(w) === '[' || end(w) === ']') {
       obj.named = true
+
+      if (start(w) === '[') {
+        obj.groupType = end(w) === ']' ? 'single' : 'start'
+      } else {
+        obj.groupType = 'end'
+      }
+
       w = w.replace(/^\[/, '')
       w = w.replace(/\]$/, '')
 

@@ -12,6 +12,10 @@ test('lookup tests', function(t) {
   m = doc.lookup('spencer')
   t.equal(m.length, 2, 'end of line lookup')
 
+  doc = nlp('one two three four')
+  let res = doc.lookup(['two three four', 'one', 'blah', 'three four five'])
+  t.equal(res.length, 2, 'found arr single, multi')
+
   t.end()
 })
 
@@ -25,5 +29,13 @@ test('lookup object', function(t) {
   t.equal(Object.keys(res).length, 2, 'found two keys')
   t.equal(res.Cool.text(), 'spencer kelly', 'obj text-one')
   t.equal(res.Uncool.text(), 'working', 'obj text-two')
+
+  doc = nlp('one two three four')
+  res = doc.lookup({ 'two three four': 'yes', one: 'single', blah: 'no', 'three four five': 'nope' })
+  let keys = Object.keys(res)
+  t.equal(keys.length, 2, 'found obj single, multi')
+  t.equal(res['single'].text(), 'one', 'found single')
+  t.equal(res['yes'].text(), 'two three four', 'found multi')
+
   t.end()
 })

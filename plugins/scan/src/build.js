@@ -21,7 +21,7 @@ const buildTrie = function(keywords) {
       }
     }
 
-    output[curr].push(word)
+    output[curr] = [words.length]
   })
 
   let failure = {}
@@ -51,6 +51,7 @@ const buildTrie = function(keywords) {
         let fs = gotoFn[state][l]
         failure[s] = fs
         output[s] = output[s].concat(output[fs])
+        // output[s] = output[fs]
       } else {
         failure[s] = 0
       }

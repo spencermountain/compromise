@@ -1,8 +1,8 @@
 const buildTrie = require('./build')
 const scan = require('./scan')
 
-const addMethod = function(Doc) {
-  Doc.prototype.buildTrie = function(obj) {
+const addMethod = function(Doc, world, nlp) {
+  nlp.buildTrie = function(obj) {
     return buildTrie(obj)
   }
 

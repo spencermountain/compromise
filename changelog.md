@@ -8,6 +8,9 @@ compromise uses semver, and pushes to npm frequently
 
 While all _Major_ releases should be reviewed, our only two _large_ releases are **v6** in 2016 and and **v12** in 2019. Others have been mostly incremental, or niche.
 
+##### [unreleased]
+- change sensitivity of input in `.lookup()` for major speed improvements.
+
 ##### 13.0.0
 
 _major changes to `.export()` and `[capture] group` match-syntax._

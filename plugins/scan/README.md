@@ -19,16 +19,16 @@
   <code>npm install compromise-scan</code>
 </div>
 
-a very fast lookup for compromise documents, when you have a lot of terms to look up.
+a very-fast lookup for compromise documents, when you have a lot of terms to look up.
 
 ```js
 const nlp = require('compromise')
 nlp.extend(require('compromise-scan'))
 
+// create a compressed lookup trie
+let trie = nlp.buildTrie(['two three four', 'three'])
 // create a document
 let doc = nlp('one two three four five.')
-// create a compressed lookup trie
-let trie = doc.buildTrie(['two three four', 'three'])
 // throw it at a document
 let m = doc.scan(trie)
 m.debug()
@@ -37,6 +37,7 @@ m.debug()
 nlp('three four five six.').scan(trie)
 nlp('one two. seven eight nine.').scan(trie)
 ```
+compared to our typical lookup function, it's outrageously fast.
 
 based on [BrunoRB/ahocorasick](https://github.com/BrunoRB/ahocorasick) by Bruno Roberto Búrigo.
 

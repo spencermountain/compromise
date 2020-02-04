@@ -3,10 +3,8 @@ import nlp from 'compromise'
 /**  **/
 declare const nlpScan: nlp.Plugin<
   {
-    /** */
-    buildTrie(options?: any): any
-    /** */
-    scan(index?: number): any
+    /** lookup terms in the document from a pre-created trie*/
+    scan(trie: any): any
   },
   {}
 >

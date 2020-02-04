@@ -1,4 +1,7 @@
-const tokenize = require('../../01-tokenizer/02-words')
+// const tokenize = require('../../01-tokenizer/02-words')
+const tokenize = function(str) {
+  return str.split(/[ -]/g)
+}
 // take a list of strings
 // look them up in the document
 const buildTree = function(termList, values = []) {
@@ -9,8 +12,8 @@ const buildTree = function(termList, values = []) {
     if (values[i] !== undefined) {
       val = values[i]
     }
-    str = (str || '').toLowerCase()
     // some rough normalization
+    str = (str || '').toLowerCase()
     str = str.replace(/[,;.!?]+$/, '')
     let arr = tokenize(str).map(s => s.trim())
     root[arr[0]] = root[arr[0]] || {}
@@ -31,6 +34,10 @@ const buildTree = function(termList, values = []) {
 
 const fastLookup = function(termList, values, doc) {
   let root = buildTree(termList, values)
+  // let root = termList.reduce((h, t) => {
+  //   h[t] = true
+  //   return h
+  // }, {})
   let found = []
   // each phrase
   for (let i = 0; i < doc.list.length; i++) {

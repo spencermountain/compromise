@@ -29,7 +29,9 @@ exports.lookup = function(arr) {
   }
 
   //make sure we go fast.
-  this.cache()
+  if (this.list[0] && !this.list[0].cache.terms) {
+    this.cache()
+  }
 
   let found = lookup(arr, values, this)
   let p = this.list[0]

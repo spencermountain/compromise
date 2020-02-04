@@ -1,7 +1,7 @@
 {
   "name": "compromise-scan",
   "description": "plugin for nlp-compromise",
-  "version": "0.0.4",
+  "version": "0.0.1",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "main": "./builds/compromise-scan.js",
   "unpkg": "./builds/compromise-scan.min.js",

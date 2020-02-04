@@ -37,6 +37,7 @@ m.debug()
 nlp('three four five six.').scan(trie)
 nlp('one two. seven eight nine.').scan(trie)
 ```
+
 compared to our typical lookup function, it's outrageously fast.
 
 based on [BrunoRB/ahocorasick](https://github.com/BrunoRB/ahocorasick) by Bruno Roberto Búrigo.

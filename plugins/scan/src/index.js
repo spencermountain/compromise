@@ -2,13 +2,17 @@ const buildTrie = require('./build')
 const scan = require('./scan')
 
 const addMethod = function(Doc, world, nlp) {
+  /** turn an array or object into a compressed trie*/
   nlp.buildTrie = function(obj) {
     return buildTrie(obj)
   }
 
+  /** find all matches in this document */
   Doc.prototype.scan = function(trie) {
-    this.cache()
-
+    // cache it first
+    if (this.list[0] && !this.list[0].cache.terms) {
+      this.cache()
+    }
     return scan(this, trie)
   }
 

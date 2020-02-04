@@ -1,7 +1,12 @@
+// edited by Spencer Kelly
+// credit to https://github.com/BrunoRB/ahocorasick by Bruno Roberto Búrigo.
+
+// object v. array
 const isObject = function(obj) {
   return obj && Object.prototype.toString.call(obj) === '[object Object]'
 }
 
+// turn an array or object into a compressed aho-corasick structure
 const buildTrie = function(keywords) {
   let values = []
   const isObj = isObject(keywords)
@@ -67,7 +72,6 @@ const buildTrie = function(keywords) {
         let fs = gotoFn[state][l]
         failure[s] = fs
         output[s] = output[s].concat(output[fs])
-        // output[s] = output[fs]
       } else {
         failure[s] = 0
       }
@@ -79,8 +83,5 @@ const buildTrie = function(keywords) {
     output: output,
     failure: failure,
   }
-  // this.gotoFn = gotoFn
-  // this.output = output
-  // this.failure = failure
 }
 module.exports = buildTrie

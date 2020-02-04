@@ -18,8 +18,9 @@ const scanWords = function(terms, trie) {
     if (trie.output[state] !== undefined) {
       let arr = trie.output[state]
       for (let o = 0; o < arr.length; o++) {
-        let len = arr[o]
-        results.push([terms[i - len + 1].id, len])
+        let obj = arr[o]
+        let start = terms[i - obj.len + 1]
+        results.push({ id: start.id, len: obj.len, value: obj.value })
       }
     }
   }
@@ -36,11 +37,20 @@ const scan = function(doc, trie) {
       results = results.concat(found)
     }
   }
-  // return results
+  let byVal = {}
   let p = doc.list[0]
-  let phrases = results.map(a => {
-    return p.buildFrom(a[0], a[1])
+  results.forEach(obj => {
+    byVal[obj.value] = byVal[obj.value] || []
+    byVal[obj.value].push(p.buildFrom(obj.id, obj.len))
   })
-  return doc.buildFrom(phrases)
+  Object.keys(byVal).forEach(k => {
+    byVal[k] = doc.buildFrom(byVal[k])
+  })
+  // return object-format
+  if (trie.isObj === true) {
+    return byVal
+  }
+  // return array format
+  return byVal[true] || []
 }
 module.exports = scan

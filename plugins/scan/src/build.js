@@ -1,11 +1,27 @@
+const isObject = function(obj) {
+  return obj && Object.prototype.toString.call(obj) === '[object Object]'
+}
+
 const buildTrie = function(keywords) {
+  let values = []
+  const isObj = isObject(keywords)
+  if (isObj === true) {
+    keywords = Object.keys(keywords).map(k => {
+      values.push(keywords[k])
+      return k
+    })
+  }
   let gotoFn = {
     0: {},
   }
   let output = {}
 
   let state = 0
-  keywords.forEach(function(word) {
+  keywords.forEach(function(word, w) {
+    let value = true
+    if (values[w] !== undefined) {
+      value = values[w]
+    }
     let curr = 0
     let words = word.split(/ /g)
     for (let i = 0; i < words.length; i++) {
@@ -21,7 +37,7 @@ const buildTrie = function(keywords) {
       }
     }
 
-    output[curr] = [words.length]
+    output[curr] = [{ len: words.length, value: value }]
   })
 
   let failure = {}
@@ -58,6 +74,7 @@ const buildTrie = function(keywords) {
     }
   }
   return {
+    isObj: isObj,
     gotoFn: gotoFn,
     output: output,
     failure: failure,

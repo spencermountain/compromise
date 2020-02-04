@@ -1,6 +1,5 @@
-const scan = function(string, trie) {
-  let words = string.split(/ /g)
-
+// follow our trie structure
+const scanWords = function(words, trie) {
   let state = 0
   let results = []
   for (let i = 0; i < words.length; i++) {
@@ -16,10 +15,23 @@ const scan = function(string, trie) {
 
     if (trie.output[state].length) {
       let foundStrs = trie.output[state]
-      results.push([i, foundStrs])
+      // results.push([i, foundStrs])
+      results.push(foundStrs)
     }
   }
+  return results
+}
 
+const scan = function(doc, trie) {
+  let results = []
+  // do each phrase
+  for (let i = 0; i < doc.list.length; i++) {
+    let words = Object.keys(doc.list[i].cache.words)
+    let found = scanWords(words, trie)
+    if (found.length > 0) {
+      results = results.concat(found)
+    }
+  }
   return results
 }
 module.exports = scan

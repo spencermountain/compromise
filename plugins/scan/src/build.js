@@ -29,7 +29,7 @@ const buildTrie = function(keywords) {
 
   // f(s) = 0 for all states of depth 1 (the ones from which the 0 state can transition to)
   for (let l in gotoFn[0]) {
-    let state = gotoFn[0][l]
+    state = gotoFn[0][l]
     failure[state] = 0
     xs.push(state)
   }
@@ -42,7 +42,7 @@ const buildTrie = function(keywords) {
       xs.push(s)
 
       // set state = f(r)
-      let state = failure[r]
+      state = failure[r]
       while (state > 0 && !(l in gotoFn[state])) {
         state = failure[state]
       }

@@ -1,0 +1,44 @@
+{
+  "env": {
+    "node": true,
+    "browser": true
+  },
+  "globals": {
+    "Promise": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": false
+    }
+  },
+  "rules": {
+    "no-cond-assign": 2,
+    "no-var": 1,
+    "prefer-const": 0,
+    "no-extra-parens": 0,
+    "no-dupe-keys": 2,
+    "no-unreachable": 2,
+    "eqeqeq": 1,
+    "keyword-spacing": 0,
+    "no-native-reassign": 2,
+    "no-redeclare": 2,
+    "radix": 1,
+    "indent": 0,
+    "quotes": [0, "single", "avoid-escape"],
+    "no-shadow": 2,
+    "no-unused-vars": 1,
+    "no-lonely-if": 1,
+    "no-use-before-define": 2,
+    "no-bitwise": 2,
+    "no-dupe-class-members": 2,
+    "guard-for-in": 0,
+    "consistent-return": 2,
+    "no-octal-escape": 2,
+    "no-constant-condition": 1,
+    "no-unused-expressions": 2,
+    "no-undefined": 0,
+    "no-undef": 2
+  }
+}

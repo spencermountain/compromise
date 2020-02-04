@@ -6,8 +6,10 @@ const addMethod = function(Doc) {
     return buildTrie(obj)
   }
 
-  Doc.prototype.scan = function(str, trie) {
-    return scan(str, trie)
+  Doc.prototype.scan = function(trie) {
+    this.cache()
+
+    return scan(this, trie)
   }
 
   return Doc

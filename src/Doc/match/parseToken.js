@@ -46,6 +46,29 @@ const parseToken = function(w) {
   let obj = {}
   //collect any flags (do it twice)
   for (let i = 0; i < 2; i += 1) {
+    //capture group (this one can span multiple-terms)
+    if (start(w) === '[' || end(w) === ']') {
+      obj.named = true
+
+      if (start(w) === '[') {
+        obj.groupType = end(w) === ']' ? 'single' : 'start'
+      } else {
+        obj.groupType = 'end'
+      }
+
+      w = w.replace(/^\[/, '')
+      w = w.replace(/\]$/, '')
+
+      // Use capture group name
+      if (start(w) === '<') {
+        const res = captureName.exec(w)
+
+        if (res.length >= 2) {
+          obj.named = res[1]
+          w = w.replace(res[0], '')
+        }
+      }
+    }
     //back-flags
     if (end(w) === '+') {
       obj.greedy = true
@@ -93,29 +116,7 @@ const parseToken = function(w) {
       obj.choices = obj.choices.map(parseToken)
       w = ''
     }
-    //capture group (this one can span multiple-terms)
-    if (start(w) === '[' || end(w) === ']') {
-      obj.named = true
 
-      if (start(w) === '[') {
-        obj.groupType = end(w) === ']' ? 'single' : 'start'
-      } else {
-        obj.groupType = 'end'
-      }
-
-      w = w.replace(/^\[/, '')
-      w = w.replace(/\]$/, '')
-
-      // Use capture group name
-      if (start(w) === '<') {
-        const res = captureName.exec(w)
-
-        if (res.length >= 2) {
-          obj.named = res[1]
-          w = w.replace(res[0], '')
-        }
-      }
-    }
     //regex
     if (start(w) === '/' && end(w) === '/') {
       w = stripBoth(w)

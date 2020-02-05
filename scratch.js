@@ -1,7 +1,10 @@
 const nlp = require('./src/index')
-nlp.verbose(true)
+// nlp.verbose(true)
 // nlp.extend(require('./plugins/numbers/src'))
 // nlp.extend(require('./plugins/scan/src'))
 
 // nlp('rod l. macdonald').debug()
-nlp('would have had walked').debug()
+// nlp('john is not really walking').debug()
+nlp('john is not really walking')
+  .match('[#Copula (#Adverb|not)+?]', 0)
+  .debug()

@@ -347,18 +347,17 @@ const list = [
   ['(go|goes|went) to [#Infinitive]', 0, 'Noun', 'goes-to-verb'],
 
   //was walking
-  [`[#Copula (#Adverb+|not)?] (#Gerund|#PastTense)`, 0, 'Auxiliary', 'copula-walking'],
-
+  [`[#Copula (#Adverb|not)+?] (#Gerund|#PastTense)`, 0, 'Auxiliary', 'copula-walking'],
   //support a splattering of auxillaries before a verb
-  [`[(has|had) (#Adverb+|not)?] #PastTense`, 0, 'Auxiliary', 'had-walked'],
+  [`[(has|had) (#Adverb|not)+?] #PastTense`, 0, 'Auxiliary', 'had-walked'],
   //would walk
-  [`[(#Modal|did) (#Adverb+|not)?] #Verb`, 0, 'Auxiliary', 'modal-verb'],
+  [`[(#Modal|did) (#Adverb|not)+?] #Verb`, 0, 'Auxiliary', 'modal-verb'],
   //would have had
-  [`[#Modal (#Adverb+|not)? have (#Adverb+|not)? had (#Adverb+|not)?] #Verb`, 0, 'Auxiliary', 'would-have'],
+  [`[#Modal (#Adverb|not)+? have (#Adverb|not)+? had (#Adverb|not)+?] #Verb`, 0, 'Auxiliary', 'would-have'],
   //would be walking
-  [`#Modal (#Adverb+|not)? be (#Adverb+|not)? #Verb`, 0, 'Auxiliary', 'would-be'],
+  [`#Modal (#Adverb|not)+? be (#Adverb|not)+? #Verb`, 0, 'Auxiliary', 'would-be'],
   //had been walking
-  [`(#Modal|had|has) (#Adverb+|not)? been (#Adverb+|not)? #Verb`, 0, 'Auxiliary', 'had-been'],
+  [`(#Modal|had|has) (#Adverb|not)+? been (#Adverb|not)+? #Verb`, 0, 'Auxiliary', 'had-been'],
 
   //there are reasons
   ['there (are|were) #Adjective? [#PresentTense]', 0, 'Plural', 'there-are'],

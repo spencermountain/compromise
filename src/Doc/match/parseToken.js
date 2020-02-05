@@ -46,6 +46,16 @@ const parseToken = function(w) {
   let obj = {}
   //collect any flags (do it twice)
   for (let i = 0; i < 2; i += 1) {
+    //end-flag
+    if (end(w) === '$') {
+      obj.end = true
+      w = stripEnd(w)
+    }
+    //front-flag
+    if (start(w) === '^') {
+      obj.start = true
+      w = stripStart(w)
+    }
     //capture group (this one can span multiple-terms)
     if (start(w) === '[' || end(w) === ']') {
       obj.named = true
@@ -82,15 +92,7 @@ const parseToken = function(w) {
       obj.optional = true
       w = stripEnd(w)
     }
-    if (end(w) === '$') {
-      obj.end = true
-      w = stripEnd(w)
-    }
-    //front-flags
-    if (start(w) === '^') {
-      obj.start = true
-      w = stripStart(w)
-    }
+
     if (start(w) === '!') {
       obj.negative = true
       w = stripStart(w)

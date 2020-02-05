@@ -36,6 +36,16 @@ const miscCorrection = function(doc) {
     .ifNo('#Plural')
     .tag('Value', 'a-is-one')
 
+  //three trains / one train
+  let m = doc.match('#Value #PresentTense')
+  if (m.found) {
+    if (m.has('(one|1)') === true) {
+      m.terms(1).tag('Singular', 'one-presentTense')
+    } else {
+      m.terms(1).tag('Plural', 'value-presentTense')
+    }
+  }
+
   return doc
 }
 

@@ -6,10 +6,12 @@ const maybeNoun =
 const maybeVerb = '(pat|wade|ollie|will|rob|buck|bob|mark|jack)'
 const maybeAdj = '(misty|rusty|dusty|rich|randy)'
 const maybeDate = '(april|june|may|jan|august|eve)'
-const maybePlace = '(paris|alexandria|houston|kobe|salvador|sydney)'
 const units = '(hundred|thousand|million|billion|trillion|quadrillion|quintillion|sextillion|septillion)'
 
+// order matters
 const list = [
+  //there are reasons
+  ['there (are|were) #Adjective? [#PresentTense]', 0, 'Plural', 'there-are'],
   //still goodß
   ['[still] #Adjective', 0, 'Adverb', 'still-advb'],
   //barely even walk
@@ -76,7 +78,7 @@ const list = [
   [`${preps} [sat]`, 0, 'WeekDay', 'sat'],
 
   //June 5-7th
-  [`#Month #DateRange+`, null, 'Date', 'correction-numberRange'],
+  [`#Month #DateRange+`, null, 'Date', 'numberRange'],
   //5th of March
   ['#Value of #Month', null, 'Date', 'value-of-month'],
   //5 March
@@ -169,10 +171,8 @@ const list = [
   ['(king|queen|prince|saint|lady) of? #Noun', null, 'Person', 'king-of-noun', true],
   //Foo U Ford
   ['[#ProperNoun] #Person', 0, 'Person', 'proper-person', true],
-  // Dwayne 'the rock' Johnson
-  ['#FirstName [#Determiner #Noun] #LastName', 0, '#NickName', 'first-noun-last'],
   // x Lastname
-  ['[#Noun] #LastName', 0, '#FirstName', 'noun-lastname'],
+  ['[#Noun] #LastName', 0, '#FirstName', 'noun-lastname', true],
   // addresses
   ['#Value #Noun (st|street|rd|road|crescent|cr|way|tr|terrace|avenue|ave)', null, 'Address', 'address-st'],
   // schools
@@ -182,7 +182,7 @@ const list = [
   ['#Organization #Country', null, 'Organization', 'org-country'],
   ['(world|global|international|national|#Demonym) #Organization', null, 'Organization', 'global-org'],
   //some pressing issues
-  ['some [#Verb] #Plural', 0, 'Noun', 'correction-determiner6'],
+  ['some [#Verb] #Plural', 0, 'Noun', 'determiner6'],
   //this rocks
   ['(this|that) [#Plural]', 0, 'PresentTense', 'this-verbs'],
   //my buddy
@@ -225,21 +225,21 @@ const list = [
   ],
 
   [maybeNoun + ' #Person', null, 'Person', 'ray-smith', true],
-  ['(#Modal|#Adverb) [' + maybeVerb + ']', 0, 'Verb', 'would-mark'],
   [maybeVerb + ' #Person', null, 'Person', 'rob-smith'],
-  ['#Adverb [' + maybeAdj + ']', 0, 'Adjective', 'really-rich'],
   [maybeAdj + ' #Person', null, 'Person', 'randy-smith'],
-  [maybeDate + ' #ProperNoun', null, 'FirstName Person', 'june-smith'],
-  ['(in|during|on|by|before|#Date) [' + maybeDate + ']', 0, 'Date', 'in-june'],
-  [maybeDate + ' (#Date|#Value)', null, 'Date', 'june-5th'],
-  ['(in|near|at|from|to|#Place) [' + maybePlace + ']', 0, 'Place', 'in-paris', true],
-  ['[' + maybePlace + '] #Place', 0, 'Place', 'paris-france', true],
+  ['(#Modal|#Adverb) [' + maybeVerb + ']', 0, 'Verb', 'would-mark'],
+  // ['#Adverb [' + maybeAdj + ']', 0, 'Adjective', 'really-rich'],
+  // [maybeDate + ' #ProperNoun', null, ['FirstName', 'Person'], 'june-smith'],
+  // ['(in|during|on|by|before|#Date) [' + maybeDate + ']', 0, 'Date', 'in-june'],
+  // [maybeDate + ' (#Date|#Value)', null, 'Date', 'june-5th'],
+  // ['(in|near|at|from|to|#Place) [' + maybePlace + ']', 0, 'Place', 'in-paris', true],
+  // ['[' + maybePlace + '] #Place', 0, 'Place', 'paris-france', true],
 
   //West Norforlk
   ['(west|north|south|east|western|northern|southern|eastern)+ #Place', null, 'Region', 'west-norfolk'],
 
   ['al (#Person|@titleCase)', null, 'Person', 'al-borlen', true],
-  ['@titleCase al @titleCase', null, 'Person', 'arabic-al-arabic', true],
+  // ['@titleCase al @titleCase', null, 'Person', 'arabic-al-arabic', true],
   //ferdinand de almar
   ['#FirstName de #Noun', null, 'Person', 'bill-de-noun'],
   //Osama bin Laden
@@ -268,35 +268,29 @@ const list = [
   //the nice swim
   ['(the|this|those|these) #Adjective [#Verb]', 0, 'Noun', 'the-adj-verb'],
   // the truly nice swim
-  ['(the|this|those|these) #Adverb #Adjective [#Verb]', 0, 'Noun', 'correction-determiner4'],
+  ['(the|this|those|these) #Adverb #Adjective [#Verb]', 0, 'Noun', 'determiner4'],
   //the orange is
   ['#Determiner [#Adjective] (#Copula|#PastTense|#Auxiliary)', 0, 'Noun', 'the-adj-2'],
   // a stream runs
-  ['(the|this|a|an) [#Infinitive] #Adverb? #Verb', 0, 'Noun', 'correction-determiner5'],
+  ['(the|this|a|an) [#Infinitive] #Adverb? #Verb', 0, 'Noun', 'determiner5'],
   //the test string
-  ['#Determiner [#Infinitive] #Noun', 0, 'Noun', 'correction-determiner7'],
+  ['#Determiner [#Infinitive] #Noun', 0, 'Noun', 'determiner7'],
   //by a bear.
   ['#Determiner #Adjective [#Infinitive]$', 0, 'Noun', 'a-inf'],
   //the wait to vote
-  ['(the|this) [#Verb] #Preposition .', 0, 'Noun', 'correction-determiner1'],
+  ['(the|this) [#Verb] #Preposition .', 0, 'Noun', 'determiner1'],
   //a sense of
   ['#Determiner [#Verb] of', 0, 'Noun', 'the-verb-of'],
   //the threat of force
   ['#Determiner #Noun of [#Verb]', 0, 'Noun', 'noun-of-noun'],
-  //a close
-  ['#Determiner #Adverb? [close]', 0, 'Adjective', 'a-close'],
   //the western line
   ['#Determiner [(western|eastern|northern|southern|central)] #Noun', 0, 'Noun', 'western-line'],
   //the swim
-  ['(the|those|these) #Adjective? [(#Infinitive|#PresentTense|#PastTense)]', 0, 'Noun', 'correction-determiner2'],
+  ['(the|those|these) #Adjective? [(#Infinitive|#PresentTense|#PastTense)]', 0, 'Noun', 'determiner2'],
   //a staggering cost
-  ['(a|an) [#Gerund]', 0, 'Adjective', 'correction-a|an'],
+  ['(a|an) [#Gerund]', 0, 'Adjective', 'a|an'],
   //did a 900, paid a 20
   ['#Verb (a|an) [#Value]', 0, 'Singular', 'did-a-value'],
-  //three trains
-  ['#Value [#PresentTense]', null, 'Plural', 'three-trains'],
-  //one train
-  ['(one|1) [#PresentTense]', null, 'Singular', 'one-train'],
   //a tv show
   ['(a|an) #Noun [#Infinitive]', 0, 'Noun', 'a-noun-inf'],
 
@@ -310,7 +304,9 @@ const list = [
   ['[were] #Noun+ to #Infinitive', 0, 'Condition', 'were-he'],
 
   //a great run
-  ['(a|an) #Adjective [(#Infinitive|#PresentTense)]', null, 'Noun', 'correction-a|an2'],
+  ['(a|an) #Adjective [(#Infinitive|#PresentTense)]', null, 'Noun', 'a|an2'],
+  //a close
+  ['#Determiner #Adverb? [close]', 0, 'Adjective', 'a-close'],
 
   //1 800 PhoneNumber
   ['1 #Value #PhoneNumber', null, 'PhoneNumber', '1-800-Value'],
@@ -357,8 +353,6 @@ const list = [
   //had been walking
   [`(#Modal|had|has) (#Adverb|not)+? been (#Adverb|not)+? #Verb`, 0, 'Auxiliary', 'had-been'],
 
-  //there are reasons
-  ['there (are|were) #Adjective? [#PresentTense]', 0, 'Plural', 'there-are'],
   //jack seems guarded
   ['#Singular (seems|appears) #Adverb? [#PastTense$]', 0, 'Adjective', 'seems-filled'],
   //fall over

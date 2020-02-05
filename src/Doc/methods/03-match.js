@@ -12,7 +12,7 @@ exports.match = function(reg, name) {
     return arr.concat(p.match(regs))
   }, [])
 
-  if (name !== undefined) {
+  if (name !== undefined && name !== null && name !== '') {
     return this.buildFrom(matches).groups(name)
   }
 

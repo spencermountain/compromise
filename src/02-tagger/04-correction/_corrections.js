@@ -88,7 +88,6 @@ const list = [
 
   //minus 7
   ['(minus|negative) #Value', null, 'Value', 'minus-value'],
-  //misc:
   //foot/feet
   ['(foot|feet)', null, 'Noun', 'foot-noun'], // blood, sweat, and tears
   ['(#Noun && @hasComma) #Noun (and|or) [#PresentTense]', 0, 'Noun', 'noun-list'], //3 feet
@@ -96,7 +95,6 @@ const list = [
   ['#Conjunction [u]', 0, 'Pronoun', 'u-pronoun-2'], //6 am
   ['#Holiday (day|eve)', null, 'Holiday', 'holiday-day'], // the captain who
   ['#Noun [(who|whom)]', 0, 'Determiner', 'captain-who'], //timezones
-  // ['(standard|daylight|summer|eastern|pacific|central|mountain) standard? time','Time', 'timezone'],  //Brazilian pesos
   ['#Demonym #Currency', null, 'Currency', 'demonym-currency'], //about to go
   ['[about to] #Adverb? #Verb', 0, 'Auxiliary', 'Verb', 'about-to'], //right of way
   ['(right|rights) of .', null, 'Noun', 'right-of'], // a bit

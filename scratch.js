@@ -5,6 +5,6 @@ const nlp = require('./src/index')
 
 // nlp('rod l. macdonald').debug()
 // nlp('john is not really walking').debug()
-nlp('john is not really walking')
-  .match('[#Copula (#Adverb|not)+?]', 0)
+nlp('u r cool')
+  .match('u r', null)
   .debug()

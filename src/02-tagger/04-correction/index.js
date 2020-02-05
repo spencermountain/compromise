@@ -7,10 +7,6 @@ const list = require('./_corrections')
 
 const runAll = function(doc) {
   list.forEach(c => {
-    // if (doc.has(c[0])) {
-    //   console.log(c[0])
-    // }
-    // console.log(c[0])
     doc.match(c[0], c[1]).tag(c[2], c[3])
   })
 }

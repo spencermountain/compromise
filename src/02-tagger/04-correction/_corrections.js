@@ -164,11 +164,11 @@ const list = [
   //Aircraft designer
   ['#Noun #Actor', null, 'Actor', 'thing-doer'],
   //j.k Rowling
-  ['#Noun van der? #Noun', null, 'Person', 'von der noun'],
+  ['#Noun van der? #Noun', null, 'Person', 'von der noun', true],
   //king of spain
-  ['(king|queen|prince|saint|lady) of? #Noun', null, 'Person', 'king-of-noun'],
+  ['(king|queen|prince|saint|lady) of? #Noun', null, 'Person', 'king-of-noun', true],
   //Foo U Ford
-  ['[#ProperNoun] #Person', 0, 'Person', 'proper-person'],
+  ['[#ProperNoun] #Person', 0, 'Person', 'proper-person', true],
   // Dwayne 'the rock' Johnson
   ['#FirstName [#Determiner #Noun] #LastName', 0, '#NickName', 'first-noun-last'],
   // x Lastname
@@ -178,7 +178,7 @@ const list = [
   // schools
   ['#Noun+ (public|private) school', null, 'School', 'noun-public-school'],
 
-  ['#Organization of the? @titleCase', null, 'Organization', 'org-of-place'],
+  ['#Organization of the? @titleCase', null, 'Organization', 'org-of-place', true],
   ['#Organization #Country', null, 'Organization', 'org-country'],
   ['(world|global|international|national|#Demonym) #Organization', null, 'Organization', 'global-org'],
   //some pressing issues
@@ -205,11 +205,11 @@ const list = [
   ['#Honorific #Acronym', null, 'Person', 'Honorific-TitleCase'], //remove single 'mr'
   // ['^#Honorific$').unTag('Person', 'single-honorific'],  //first general..
   ['[(1st|2nd|first|second)] #Honorific', 0, 'Honorific', 'ordinal-honorific'],
-  ['#Acronym @titleCase', null, 'Person', 'acronym-titlecase'], //ludwig van beethovan
-  ['@titleCase (van|al|bin) @titleCase', null, 'Person', 'title-van-title'], //jose de Sucre
-  ['@titleCase (de|du) la? @titleCase', null, 'Person', 'title-de-title'],
+  ['#Acronym @titleCase', null, 'Person', 'acronym-titlecase', true], //ludwig van beethovan
+  ['@titleCase (van|al|bin) @titleCase', null, 'Person', 'title-van-title', true], //jose de Sucre
+  ['@titleCase (de|du) la? @titleCase', null, 'Person', 'title-de-title', true],
   // jean Foobar
-  [maybeNoun + ' #Acronym? @titleCase', null, 'Person', 'ray-a-smith'], // rob Foobar
+  [maybeNoun + ' #Acronym? @titleCase', null, 'Person', 'ray-a-smith', true], // rob Foobar
   [maybeVerb + ' #Acronym? @titleCase', null, 'Person', 'rob-a-smith'], // rusty Foobar
   [maybeAdj + ' #Acronym? @titleCase', null, 'Person', 'rusty-smith'], // june Foobar
   [maybeDate + ' #Acronym? (@titleCase && !#Month)', null, 'Person', 'june-smith-jr'], //Frank jr
@@ -224,7 +224,7 @@ const list = [
     'ambg-honorifics',
   ],
 
-  [maybeNoun + ' #Person', null, 'Person', 'ray-smith'],
+  [maybeNoun + ' #Person', null, 'Person', 'ray-smith', true],
   ['(#Modal|#Adverb) [' + maybeVerb + ']', 0, 'Verb', 'would-mark'],
   [maybeVerb + ' #Person', null, 'Person', 'rob-smith'],
   ['#Adverb [' + maybeAdj + ']', 0, 'Adjective', 'really-rich'],
@@ -232,14 +232,14 @@ const list = [
   [maybeDate + ' #ProperNoun', null, 'FirstName Person', 'june-smith'],
   ['(in|during|on|by|before|#Date) [' + maybeDate + ']', 0, 'Date', 'in-june'],
   [maybeDate + ' (#Date|#Value)', null, 'Date', 'june-5th'],
-  ['(in|near|at|from|to|#Place) [' + maybePlace + ']', 0, 'Place', 'in-paris'],
-  ['[' + maybePlace + '] #Place', 0, 'Place', 'paris-france'],
+  ['(in|near|at|from|to|#Place) [' + maybePlace + ']', 0, 'Place', 'in-paris', true],
+  ['[' + maybePlace + '] #Place', 0, 'Place', 'paris-france', true],
 
   //West Norforlk
   ['(west|north|south|east|western|northern|southern|eastern)+ #Place', null, 'Region', 'west-norfolk'],
 
-  ['al (#Person|@titleCase)', null, 'Person', 'al-borlen'],
-  ['@titleCase al @titleCase', null, 'Person', 'arabic-al-arabic'],
+  ['al (#Person|@titleCase)', null, 'Person', 'al-borlen', true],
+  ['@titleCase al @titleCase', null, 'Person', 'arabic-al-arabic', true],
   //ferdinand de almar
   ['#FirstName de #Noun', null, 'Person', 'bill-de-noun'],
   //Osama bin Laden

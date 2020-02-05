@@ -1,10 +1,8 @@
 const nlp = require('./src/index')
-// nlp.verbose(true)
+nlp.verbose(true)
 // nlp.extend(require('./plugins/numbers/src'))
 // nlp.extend(require('./plugins/scan/src'))
 
 // nlp('rod l. macdonald').debug()
 // nlp('john is not really walking').debug()
-nlp('u r cool')
-  .match('u r', null)
-  .debug()
+nlp('Johnson & Johnson').debug()

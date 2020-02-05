@@ -26,7 +26,8 @@ const list = [
   ['#Noun #Adverb? [left]', 0, 'PastTense', 'left-verb'],
   //he disguised the thing
   ['#Pronoun [#Adjective] #Determiner #Adjective? #Noun', 0, 'Verb', 'he-adj-the'],
-
+  //'foo-up'
+  ['(#Verb && @hasHyphen) (up|off|over|out)', null, 'PhrasalVerb', 'foo-up'],
   //give to april
   [`#Infinitive #Determiner? #Adjective? #Noun? (to|for) [${people}]`, 0, 'Person', 'ambig-person'],
   //remind june
@@ -60,6 +61,8 @@ const list = [
   ['[march] (up|down|back|to|toward)', 0, 'Infinitive', 'march-to'],
   //must march
   ['#Modal [march]', 0, 'Infinitive', 'must-march'],
+  // sun the 5th
+  ['[sun] the #Ordinal', null, 'WeekDay', 'sun-the-5th'],
   //sun feb 2
   ['[sun] #Date', 0, 'WeekDay', 'sun-feb'],
   //1pm next sun
@@ -95,22 +98,42 @@ const list = [
   ['#Noun [(who|whom)]', 0, 'Determiner', 'captain-who'], //timezones
   // ['(standard|daylight|summer|eastern|pacific|central|mountain) standard? time','Time', 'timezone'],  //Brazilian pesos
   ['#Demonym #Currency', null, 'Currency', 'demonym-currency'], //about to go
-  ['[about to] #Adverb? #Verb', 0, ['Auxiliary', 'Verb'], 'about-to'], //right of way
+  ['[about to] #Adverb? #Verb', 0, 'Auxiliary', 'Verb', 'about-to'], //right of way
   ['(right|rights) of .', null, 'Noun', 'right-of'], // a bit
   ['[much] #Adjective', 0, 'Adverb', 'bit-1'],
   ['a [bit]', 0, 'Noun', 'bit-2'],
-  ['a bit much', null, ['Determiner', 'Adverb', 'Adjective'], 'bit-3'],
-  ['too much', null, ['Adverb', 'Adjective'], 'bit-4'], // u r cool
-  ['u r', null, ['Pronoun', 'Copula'], 'u r'], // well, ...
+  ['a bit much', null, 'Determiner Adverb Adjective', 'bit-3'],
+  ['too much', null, 'Adverb Adjective', 'bit-4'], // u r cool
+  ['u r', null, 'Pronoun Copula', 'u r'], // well, ...
   ['^(well|so|okay)', null, 'Expression', 'well-'],
+
+  //spencer kelly's
+  ['#FirstName #Acronym? (#Possessive && #LastName)', null, 'Possessive', 'name-poss'],
+  //Super Corp's fundraiser
+  ['#Organization+ #Possessive', null, 'Possessive', 'org-possessive'],
+  //Los Angeles's fundraiser
+  ['#Place+ #Possessive', null, 'Possessive', 'place-possessive'],
+
+  //let him glue
+  [
+    '(let|make|made) (him|her|it|#Person|#Place|#Organization)+ [#Singular] (a|an|the|it)',
+    0,
+    '#Infinitive',
+    'let-him-glue',
+  ],
+
   //swear-words as non-expression POS
   //nsfw
   ['holy (shit|fuck|hell)', null, 'Expression', 'swears-expression'],
   ['#Determiner [(shit|damn|hell)]', 0, 'Noun', 'swears-noun'],
   ['[(shit|damn|fuck)] (#Determiner|#Possessive|them)', 0, 'Verb', 'swears-verb'], //so funny
+  // is f*ed up
+  ['#Copula [fucked up?]', null, 'Adjective', 'swears-adjective'],
+
   ['[so] #Adjective', 0, 'Adverb', 'so-adv'], //so the
   ['[so] #Noun', 0, 'Conjunction', 'so-conj'], //do so
   ['do [so]', 0, 'Noun', 'so-noun'],
+
   //all students
   ['[all] #Determiner? #Noun', 0, 'Adjective', 'all-noun'], //it all fell apart
   ['[all] #Verb', 0, 'Adverb', 'all-verb'], //remind john that
@@ -146,6 +169,12 @@ const list = [
   ['#Noun van der? #Noun', null, 'Person', 'von der noun'],
   //king of spain
   ['(king|queen|prince|saint|lady) of? #Noun', null, 'Person', 'king-of-noun'],
+  //Foo U Ford
+  ['[#ProperNoun] #Person', 0, 'Person', 'proper-person'],
+  // Dwayne 'the rock' Johnson
+  ['#FirstName [#Determiner #Noun] #LastName', 0, '#NickName', 'first-noun-last'],
+  // x Lastname
+  ['[#Noun] #LastName', 0, '#FirstName', 'noun-lastname'],
   // addresses
   ['#Value #Noun (st|street|rd|road|crescent|cr|way|tr|terrace|avenue|ave)', null, 'Address', 'address-st'],
   // schools
@@ -202,11 +231,15 @@ const list = [
   [maybeVerb + ' #Person', null, 'Person', 'rob-smith'],
   ['#Adverb [' + maybeAdj + ']', 0, 'Adjective', 'really-rich'],
   [maybeAdj + ' #Person', null, 'Person', 'randy-smith'],
-  [maybeDate + ' #ProperNoun', null, ['FirstName', 'Person'], 'june-smith'],
+  [maybeDate + ' #ProperNoun', null, 'FirstName Person', 'june-smith'],
   ['(in|during|on|by|before|#Date) [' + maybeDate + ']', 0, 'Date', 'in-june'],
   [maybeDate + ' (#Date|#Value)', null, 'Date', 'june-5th'],
   ['(in|near|at|from|to|#Place) [' + maybePlace + ']', 0, 'Place', 'in-paris'],
   ['[' + maybePlace + '] #Place', 0, 'Place', 'paris-france'],
+
+  //West Norforlk
+  ['(west|north|south|east|western|northern|southern|eastern)+ #Place', null, 'Region', 'west-norfolk'],
+
   ['al (#Person|@titleCase)', null, 'Person', 'al-borlen'],
   ['@titleCase al @titleCase', null, 'Person', 'arabic-al-arabic'],
   //ferdinand de almar
@@ -262,8 +295,21 @@ const list = [
   ['(a|an) [#Gerund]', 0, 'Adjective', 'correction-a|an'],
   //did a 900, paid a 20
   ['#Verb (a|an) [#Value]', 0, 'Singular', 'did-a-value'],
+  //three trains
+  ['#Value [#PresentTense]', null, 'Plural', 'three-trains'],
+  //one train
+  ['(one|1) [#PresentTense]', null, 'Singular', 'one-train'],
   //a tv show
   ['(a|an) #Noun [#Infinitive]', 0, 'Noun', 'a-noun-inf'],
+
+  //5 yan
+  ['#Value+ [#Currency]', 0, 'Unit', '5-yan'],
+  ['#Value+ #Currency', null, 'Money', '15 usd'],
+
+  // had he survived,
+  ['[had] #Noun+ #PastTense', 0, 'Condition', 'had-he'],
+  // were he to survive
+  ['[were] #Noun+ to #Infinitive', 0, 'Condition', 'were-he'],
 
   //a great run
   ['(a|an) #Adjective [(#Infinitive|#PresentTense)]', null, 'Noun', 'correction-a|an2'],
@@ -300,6 +346,20 @@ const list = [
   // goes to sleep
   ['(go|goes|went) to [#Infinitive]', 0, 'Noun', 'goes-to-verb'],
 
+  //was walking
+  [`[#Copula (#Adverb+|not)?] (#Gerund|#PastTense)`, 0, 'Auxiliary', 'copula-walking'],
+
+  //support a splattering of auxillaries before a verb
+  [`[(has|had) (#Adverb+|not)?] #PastTense`, 0, 'Auxiliary', 'had-walked'],
+  //would walk
+  [`[(#Modal|did) (#Adverb+|not)?] #Verb`, 0, 'Auxiliary', 'modal-verb'],
+  //would have had
+  [`[#Modal (#Adverb+|not)? have (#Adverb+|not)? had (#Adverb+|not)?] #Verb`, 0, 'Auxiliary', 'would-have'],
+  //would be walking
+  [`#Modal (#Adverb+|not)? be (#Adverb+|not)? #Verb`, 0, 'Auxiliary', 'would-be'],
+  //had been walking
+  [`(#Modal|had|has) (#Adverb+|not)? been (#Adverb+|not)? #Verb`, 0, 'Auxiliary', 'had-been'],
+
   //there are reasons
   ['there (are|were) #Adjective? [#PresentTense]', 0, 'Plural', 'there-are'],
   //jack seems guarded
@@ -335,9 +395,10 @@ const list = [
 
 // let obj = {}
 // list.forEach(a => {
-//   if (obj[a[0]] === true) {
-//     console.log(a[0])
+//   console.log(a[2])
+//   if (obj[a[2]] === true) {
+//     console.log(a[2])
 //   }
-//   obj[a[0]] = true
+//   obj[a[2]] = true
 // })
 module.exports = list

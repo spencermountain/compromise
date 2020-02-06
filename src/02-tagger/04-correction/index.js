@@ -17,13 +17,21 @@ const corrections = function(doc) {
   runAlways(doc)
   // console.timeEnd('always')
 
-  // console.time('more')
+  // console.time('nouns')
   fixNouns(doc) //30
+  // console.timeEnd('nouns')
+  // console.time('person')
   fixPerson(doc) //58
+  // console.timeEnd('person')
+  // console.time('verb')
   fixVerb(doc) //50
+  // console.timeEnd('verb')
+  // console.time('dates')
   fixDates(doc) //92
+  // console.timeEnd('dates')
+  // console.time('misc')
   fixMisc(doc) //43
-  // console.timeEnd('more')
+  // console.timeEnd('misc')
   // console.timeEnd('corrections')
   return doc
 }

@@ -15,12 +15,6 @@ const fixPerson = function(doc) {
     .ifNo('#Date')
     .tag('#MaleName', 'poe')
 
-  //Morgan Shlkjsfne
-  doc
-    .match('#Person @titleCase')
-    .match('@titleCase #Noun')
-    .tagSafe('Person', 'person-titlecase')
-
   let person = doc.if('#Person')
   if (person.found === true) {
     // ['(#Modal|#Adverb) [' + maybeVerb + ']', 0, 'Verb', 'would-mark'],
@@ -64,11 +58,7 @@ const fixPerson = function(doc) {
       .tag('#Person', 'n-acro-noun')
       .lastTerm()
       .tag('#LastName', 'n-acro-noun')
-    // Dwayne 'the rock' Johnson
-    firstName
-      .match('#FirstName [#Determiner #Noun] #LastName', 0)
-      .tag('#NickName', 'first-noun-last')
-      .tag('#Person', 'first-noun-last')
+
     //john bodego's
     firstName
       .match('#FirstName (#Singular|#Possessive)')

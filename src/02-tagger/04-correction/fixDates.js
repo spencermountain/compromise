@@ -62,12 +62,6 @@ const fixDates = function(doc) {
       .match('#Value (#WeekDay|#Month)')
       .ifNo('#Money')
       .tag('Date', 'value-date')
-
-    //may twenty five
-    val
-      .match('#TextValue #TextValue')
-      .if('#Date')
-      .tag('#Date', 'textvalue-date')
   }
 
   return doc

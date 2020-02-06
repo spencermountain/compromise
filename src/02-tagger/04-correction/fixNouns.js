@@ -18,10 +18,6 @@ const fixNouns = function(doc) {
     .match('the [#Acronym]', 0)
     .notIf('(iou|fomo|yolo|diy|dui|nimby)')
     .tag('Organization', 'the-acronym')
-  doc
-    .match('#Acronym')
-    .match('#Possessive')
-    .tag('Organization', 'possessive-acronym')
 
   //possessives
   //'her match' vs 'let her match'

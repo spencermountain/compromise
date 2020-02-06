@@ -26,10 +26,10 @@ const hasEvery = function(chances) {
 }
 
 // matches = matches.slice(0, 3)
-matches = matches.map(a => {
+matches = matches.map(m => {
   let needTags = []
   let needWords = []
-  let reg = parseSyntax(a[0])
+  let reg = parseSyntax(m.match)
   reg.forEach(obj => {
     if (obj.optional === true) {
       return
@@ -46,11 +46,11 @@ matches = matches.map(a => {
   return {
     reg: reg,
     required: { tags: needTags, words: needWords },
-    group: a[1],
-    tag: a[2],
-    hint: a[3],
-    safe: a[4],
-    str: a[0],
+    group: m.group,
+    tag: m.tag,
+    reason: m.reason,
+    safe: m.safe,
+    str: m.match,
   }
 })
 
@@ -78,10 +78,17 @@ const runner = function(doc) {
     // console.log(worthIt.length, m.str)
     let phrases = worthIt.map(index => doc.list[index])
     let tryDoc = doc.buildFrom(phrases)
-    if (m.safe === true) {
-      tryDoc.match(m.reg, m.group).tagSafe(m.tag, m.hint)
-    } else {
-      tryDoc.match(m.reg, m.group).tag(m.tag, m.hint)
+    // phrases getting tagged
+    let match = tryDoc.match(m.reg, m.group)
+    if (match.found) {
+      if (m.debug === true) {
+        tryDoc.debug()
+      }
+      if (m.safe === true) {
+        match.tagSafe(m.tag, m.reason)
+      } else {
+        match.tag(m.tag, m.reason)
+      }
     }
   })
 }

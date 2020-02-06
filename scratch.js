@@ -1,5 +1,5 @@
 const nlp = require('./src/index')
-// nlp.verbose(true)
+nlp.verbose(true)
 // nlp.extend(require('./plugins/numbers/src'))
 // nlp.extend(require('./plugins/scan/src'))
 
@@ -8,7 +8,4 @@ const nlp = require('./src/index')
 // nlp(`among them the ones at HUD`).debug()
 
 // nlp(`really mark. tony is cool. u r okay? April, June, and September`).debug()
-nlp
-  .tokenize('two')
-  .match('(one|two|three)')
-  .debug()
+nlp(`Dwayne 'the rock' Johnson`).debug()

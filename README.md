@@ -657,6 +657,52 @@ this plugin creates a wrapper around the default sentence objects.
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 </div>
 
+### Typescript
+
+Typescript support is still a work in progress. So far support for plugins has been mostly complete, and can be used to type-safely extend NLP.
+
+```ts
+import nlp from 'compromise'
+import ngrams from 'compromise-ngrams'
+import numbers from 'compromise-numbers'
+
+// .extend() can be chained
+const nlpEx  = nlp.extend(ngrams).extend(numbers)
+
+nlpEx('This is type safe!').ngrams({ min: 1 })
+nlpEx('This is type safe!').numbers()
+```
+
+#### Type-safe Plugins
+The `.extend()` function returns an nlp type with updated Document and World types (Phrase, Term and Pool are not currently supported). While the global nlp also recieves the plugin from a runtime perspective; it's type will not be updated - this is a limitation of Typescript.
+
+Typesafe plugins can be created by using the `nlp.Plugin` type:
+```ts
+interface myExtendedDoc {
+  sayHello(): string
+}
+
+interface myExtendedWorld {
+  hello: string
+}
+
+const myPlugin: nlp.Plugin<myExtendedDoc, myExtendedWorld> = (Doc, world) => {
+  world.hello = 'Hello world!'
+
+  Doc.prototype.sayHello = () => world.hello
+}
+
+const _nlp = nlp.extend(myPlugin)
+const doc = _nlp('This is safe!')
+doc.sayHello()
+doc.world.hello = "Hello again!"
+
+```
+
+#### Known Issues
+
+* `compromise_1.default is not a function` - This is a problem with your `tsconfig.json` it can be solved by adding `"esModuleInterop": true`. Make sure to run `tsc --init` when starting a new Typescript project.
+
 ### Docs:
 
 ##### Tutorials:

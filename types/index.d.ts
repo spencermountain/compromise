@@ -75,7 +75,9 @@ type PluginWorld<D extends object, W extends object> = {
 
 type PluginDocument<D extends object, W extends object> = nlp.ExtendedDocument<D, W> & { prototype: D }
 
+type PluginPhrase = nlp.Phrase & PluginConstructor
 type PluginTerm = nlp.Term & PluginConstructor
+type PluginPool = nlp.Pool & PluginConstructor
 
 // Make these available, full support tbd
 type PluginConstructor = {
@@ -102,9 +104,9 @@ declare module nlp {
     Doc: PluginDocument<D, W>,
     world: PluginWorld<D, W>,
     nlp: nlp<D, W>,
-    Phrase: PluginConstructor,
+    Phrase: PluginPhrase,
     Term: PluginTerm, // @todo Add extend support
-    Pool: PluginConstructor
+    Pool: PluginPool
   ) => void
 
   type ExtendedWorld<W extends object> = nlp.World & W
@@ -159,6 +161,8 @@ declare module nlp {
     groups(name: string): Document<W>
     /** grab all named capture groups */
     groups(): DocIndex<W>
+    /** Access Phrase list */
+    list: Phrase[]
 
     // Match
     /**  return a new Doc, with this one as a parent */
@@ -469,6 +473,13 @@ declare module nlp {
 
     /** call methods after tagger runs */
     postProcess<D extends Document = Document>(process: (Doc: D) => void): this
+  }
+
+  class Pool {}
+
+  class Phrase {
+    /** return a flat array of Term objects */
+    terms(): Term[]
   }
 
   // @todo

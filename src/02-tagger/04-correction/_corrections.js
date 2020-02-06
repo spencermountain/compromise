@@ -379,6 +379,17 @@ const list = [
 
   // Dwayne 'the rock' Johnson
   { match: '#FirstName [#Determiner #Noun] #LastName', group: 0, tag: '#NickName', reason: 'first-noun-last' },
+
+  //john bodego's
+  { match: '#FirstName (#Singular|#Possessive)', tag: '#Person', reason: 'first-possessive', safe: true },
+
+  //Jani K. Smith
+  { match: '(@titleCase|#Singular) #Acronym? #LastName', tag: '#Person', reason: 'title-acro-noun', safe: true },
+
+  //John Foo
+  { match: '#FirstName (#Noun && @titleCase) @titleCase?', tag: 'Person', reason: 'firstname-titlecase' },
+
+  // { match: '', tag: '', reason: '' },
   // { match: '', tag: '', reason: '' },
   // { match: '', tag: '', reason: '' },
   // { match: '', tag: '', reason: '' },
@@ -386,31 +397,43 @@ const list = [
 
   // ----
 ]
-const maybeNoun =
-  'rose|robin|dawn|ray|holly|bill|joy|viola|penny|sky|violet|daisy|melody|kelvin|hope|mercedes|olive|jewel|faith|van|charity|miles|lily|summer|dolly|rod|dick|cliff|lane|reed|kitty|art|jean|trinity'
-
-const maybeVerb = 'pat|wade|ollie|will|rob|buck|bob|mark|jack'
-const maybeAdj = 'misty|rusty|dusty|rich|randy'
-const people = 'january|april|may|june|summer|autumn|jan|sep' //ambiguous month-names
-const maybeDate = 'april|june|may|jan|august|eve'
-
-maybeNoun.split(/\|/).forEach(name => {
+const pipe = /\|/
+const maybeNoun = 'rose|robin|dawn|ray|holly|bill|joy|viola|penny|sky|violet|daisy|melody|kelvin|hope|mercedes|olive|jewel|faith|van|charity|miles|lily|summer|dolly|rod|dick|cliff|lane|reed|kitty|art|jean|trinity'.split(
+  pipe
+)
+const maybeVerb = 'pat|wade|ollie|will|rob|buck|bob|mark|jack'.split(pipe)
+const maybeAdj = 'misty|rusty|dusty|rich|randy'.split(pipe)
+const people = 'january|april|may|june|summer|autumn|jan|sep'.split(pipe) //ambiguous month-names
+const maybeDate = 'april|june|may|jan|august|eve'.split(pipe)
+const maybePlace = 'paris|alexandria|houston|kobe|salvador|sydney'.split(pipe)
+//Places: paris or syndey
+maybePlace.forEach(place => {
+  list.push({ match: '(in|near|at|from|to|#Place) [' + place + ']', group: 0, tag: 'Place', reason: 'in-paris' })
+  list.push({ match: '[' + place + '] #Place', group: 0, tag: 'Place', reason: 'paris-france' })
+})
+maybeNoun.forEach(name => {
   list.push({ match: name + ' #Person', tag: 'Person', reason: 'ray-smith', safe: true })
   list.push({ match: name + ' #Acronym? @titleCase', tag: 'Person', reason: 'ray-a-smith', safe: true })
 })
-maybeVerb.split(/\|/).forEach(verb => {
+maybeVerb.forEach(verb => {
+  list.push({ match: '(#Modal|#Adverb) [' + verb + ']', group: 0, tag: 'Verb', reason: 'would-mark' })
   list.push({ match: verb + ' #Person', tag: 'Person', reason: 'rob-smith' })
   list.push({ match: verb + ' #Acronym? @titleCase', tag: 'Person', reason: 'rob-a-smith' })
   list.push({ match: '(#Modal|#Adverb) [' + verb + ']', group: 0, tag: 'Verb', reason: 'would-mark' })
 })
-maybeAdj.split(/\|/).forEach(adj => {
+maybeAdj.forEach(adj => {
+  list.push({ match: '#Adverb [' + adj + ']', group: 0, tag: 'Adjective', reason: 'really-rich' })
   list.push({ match: adj + ' #Person', tag: 'Person', reason: 'randy-smith' })
   list.push({ match: maybeAdj + ' #Acronym? @titleCase', tag: 'Person', reason: 'rusty-smith' })
 })
-maybeDate.split(/\|/).forEach(date => {
+//Dates: 'june' or 'may'
+maybeDate.forEach(date => {
+  list.push({ match: date + ' #ProperNoun', tag: 'Person', reason: 'june-smith', safe: true })
+  list.push({ match: '(in|during|on|by|before|#Date) [' + date + ']', group: 0, tag: 'Date', reason: 'in-june' })
+  list.push({ match: date + ' (#Date|#Value)', tag: 'Date', reason: 'june-5th' })
   list.push({ match: date + ' #Acronym? (@titleCase && !#Month)', tag: 'Person', reason: 'june-smith-jr' })
 })
-people.split(/\|/).forEach(person => {
+people.forEach(person => {
   //give to april
   list.push({
     match: `#Infinitive #Determiner? #Adjective? #Noun? (to|for) [${person}]`,

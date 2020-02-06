@@ -196,7 +196,7 @@ test('pos-basic-tag:', function(t) {
     terms.forEach((term, i) => {
       let tag = a[1][i]
       let found = term.tags.some(tg => tg === tag)
-      t.equal(found, true, term.text + ' ' + tag)
+      t.equal(found, true, a[0] + '  - ' + term.text + ' ' + tag)
     })
   })
   t.end()

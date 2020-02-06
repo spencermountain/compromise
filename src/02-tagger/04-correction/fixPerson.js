@@ -15,42 +15,29 @@ const fixPerson = function(doc) {
     .ifNo('#Date')
     .tag('#MaleName', 'poe')
 
-  let person = doc.if('#Person')
-  if (person.found === true) {
-    // ['(#Modal|#Adverb) [' + maybeVerb + ']', 0, 'Verb', 'would-mark'],
-    person.match('(#Modal|#Adverb) [' + maybeVerb + ']', 0).tag('Verb', 'would-mark')
-    // ['#Adverb [' + maybeAdj + ']', 0, 'Adjective', 'really-rich'],
-    person.match('#Adverb [' + maybeAdj + ']', 0).tag('Adjective', 'really-rich')
-    // [maybeDate + ' #ProperNoun', null, ['FirstName', 'Person'], 'june-smith'],
-    // ['(in|during|on|by|before|#Date) [' + maybeDate + ']', 0, 'Date', 'in-june'],
-    // [maybeDate + ' (#Date|#Value)', null, 'Date', 'june-5th'],
-    //Dates: 'june' or 'may'
-    let ambigDate = person.if(maybeDate)
-    if (ambigDate.found === true) {
-      ambigDate.match(maybeDate + ' #ProperNoun').tag(['FirstName', 'Person'], 'june-smith')
-      ambigDate.match('(in|during|on|by|before|#Date) [' + maybeDate + ']', 0).tag('Date', 'in-june')
-      ambigDate.match(maybeDate + ' (#Date|#Value)').tag('Date', 'june-5th')
-    }
-    // ['(in|near|at|from|to|#Place) [' + maybePlace + ']', 0, 'Place', 'in-paris', true],
-    // ['[' + maybePlace + '] #Place', 0, 'Place', 'paris-france', true],
-    //Places: paris or syndey
-    let ambigPlace = person.if(maybePlace)
-    if (ambigPlace.found === true) {
-      ambigPlace.match('(in|near|at|from|to|#Place) [' + maybePlace + ']', 0).tagSafe('Place', 'in-paris')
-      ambigPlace.match('[' + maybePlace + '] #Place', 0).tagSafe('Place', 'paris-france')
-      // ambigPlace.match('[' + maybePlace + '] #Person').tagSafe('Person', 'paris-hilton')
-    }
-  }
+  // let person = doc.if('#Person')
+  // if (person.found === true) {
+  //   person.match('(#Modal|#Adverb) [' + maybeVerb + ']', 0).tag('Verb', 'would-mark')
+  //   person.match('#Adverb [' + maybeAdj + ']', 0).tag('Adjective', 'really-rich')
+  //   //Dates: 'june' or 'may'
+  //   let ambigDate = person.if(maybeDate)
+  //   if (ambigDate.found === true) {
+  //     ambigDate.match(maybeDate + ' #ProperNoun').tag(['FirstName', 'Person'], 'june-smith')
+  //     ambigDate.match('(in|during|on|by|before|#Date) [' + maybeDate + ']', 0).tag('Date', 'in-june')
+  //     ambigDate.match(maybeDate + ' (#Date|#Value)').tag('Date', 'june-5th')
+  //   }
+  //   //Places: paris or syndey
+  //   let ambigPlace = person.if(maybePlace)
+  //   if (ambigPlace.found === true) {
+  //     ambigPlace.match('(in|near|at|from|to|#Place) [' + maybePlace + ']', 0).tagSafe('Place', 'in-paris')
+  //     ambigPlace.match('[' + maybePlace + '] #Place', 0).tagSafe('Place', 'paris-france')
+  //   }
+  // }
 
   //a bunch of ambiguous first names
 
   let firstName = doc.if('#FirstName')
   if (firstName.found === true) {
-    //John Foo
-    firstName
-      .match('#FirstName @titleCase @titleCase?')
-      .match('#Noun+')
-      .tag('Person', 'firstname-titlecase')
     //Joe K. Sombrero
     firstName
       .match('#FirstName #Acronym #Noun')
@@ -58,14 +45,6 @@ const fixPerson = function(doc) {
       .tag('#Person', 'n-acro-noun')
       .lastTerm()
       .tag('#LastName', 'n-acro-noun')
-
-    //john bodego's
-    firstName
-      .match('#FirstName (#Singular|#Possessive)')
-      .ifNo('(#Date|#Pronoun|#NickName)')
-      .tag('#Person', 'first-possessive')
-      .lastTerm()
-      .tag('#LastName', 'first-possessive')
 
     // Firstname x (dangerous)
     let tmp = firstName
@@ -75,14 +54,6 @@ const fixPerson = function(doc) {
       .ifNo('#Pronoun')
     tmp.lastTerm().tag('#LastName', 'firstname-noun')
   }
-
-  //Jani K. Smith
-  doc
-    .match('(@titleCase|#Singular) #Acronym? #LastName')
-    .ifNo('#Date')
-    .tag('#Person', 'title-acro-noun')
-    .lastTerm()
-    .tag('#LastName', 'title-acro-noun')
 
   return doc
 }

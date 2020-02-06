@@ -2,7 +2,7 @@ const txt = require('./_sotu-text')
 
 const paths = {
   v12: '../../../src',
-  v12build: '../../../builds/compromise.min.js',
+  // v12build: '../../../builds/compromise.min.js',
 }
 
 function test(build) {

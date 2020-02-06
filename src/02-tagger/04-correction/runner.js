@@ -1,6 +1,30 @@
 let matches = require('./_corrections')
 const parseSyntax = require('../../Doc/match/syntax')
 
+const unique = function(arr) {
+  let obj = arr.reduce((h, a) => {
+    h[a] = true
+    return h
+  }, {})
+  return Object.keys(obj)
+}
+const intersection = function(array1, array2) {
+  return array1.filter(value => -1 !== array2.indexOf(value))
+}
+const hasEvery = function(chances) {
+  if (chances.length === 0) {
+    return []
+  }
+  if (chances.length === 1) {
+    return unique(chances[0])
+  }
+  let running = intersection(chances[0], chances[1])
+  for (let i = 2; i < chances.length; i++) {
+    running = intersection(running, chances[i])
+  }
+  return running
+}
+
 // matches = matches.slice(0, 3)
 matches = matches.map(a => {
   let needTags = []
@@ -17,6 +41,8 @@ matches = matches.map(a => {
       needWords.push(obj.word)
     }
   })
+  needTags = unique(needTags)
+  needWords = unique(needWords)
   return {
     reg: reg,
     required: { tags: needTags, words: needWords },
@@ -28,30 +54,28 @@ matches = matches.map(a => {
   }
 })
 
-const union = function(a, b) {
-  return [...new Set([...a, ...b])]
-}
+// console.log(matches.length)
+// console.log(matches.filter(m => m.required.tags.length > 1).length)
+
+// console.log(hasEvery([[1], [1, 2], [1], [4, 6, 34, 6, 3, 1], [2]]))
+// console.log(hasEvery([[0, 1, 2, 2, 3, 3, 3]]))
 
 const runner = function(doc) {
   //find phrases to try for each match
   matches.forEach(m => {
-    let fromTags = []
-    let fromWords = []
+    let allChances = []
     m.required.words.forEach(w => {
-      if (doc._cache.words[w] !== undefined) {
-        fromWords = fromWords.concat(doc._cache.words[w])
-      }
+      allChances.push(doc._cache.words[w] || [])
     })
     m.required.tags.forEach(tag => {
-      if (doc._cache.tags[tag] !== undefined) {
-        fromTags = fromTags.concat(doc._cache.tags[tag])
-      }
+      allChances.push(doc._cache.tags[tag] || [])
     })
-    if (fromTags.length === 0 && fromWords.length === 0) {
+
+    let worthIt = hasEvery(allChances)
+    if (worthIt.length === 0) {
       return
     }
-    let worthIt = union(fromTags, fromWords)
-    // let toTry = intersection(fromTags, fromWords)
+    // console.log(worthIt.length, m.str)
     let phrases = worthIt.map(index => doc.list[index])
     let tryDoc = doc.buildFrom(phrases)
     if (m.safe === true) {

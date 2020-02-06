@@ -1,7 +1,10 @@
-const preps = '(in|by|before|during|on|until|after|of|within|all)' //6
-const verbs = '(may|march|sat)' //ambiguous month-verbs
-
-const units = '(hundred|thousand|million|billion|trillion|quadrillion|quintillion|sextillion|septillion)'
+// '#Adjective [#PresentTense]'
+// '(the|this|a|an) [#Infinitive] #Adverb? #Verb'
+// [(do|does|will|have|had)] (not|#Adverb)? #Verb'
+// [(#Modal|did) (#Adverb|not)+?] #Verb
+// '[#Copula (#Adverb|not)+?] (#Gerund|#PastTense)'
+// '(the|this) [#Verb] #Preposition .'
+// '[#ProperNoun] #Person'
 
 // order matters
 const list = [
@@ -23,11 +26,6 @@ const list = [
   { match: '#Noun #Adverb? [left]', group: 0, tag: 'PastTense', reason: 'left-verb' },
   //he disguised the thing
   { match: '#Pronoun [#Adjective] #Determiner #Adjective? #Noun', group: 0, tag: 'Verb', reason: 'he-adj-the' },
-
-  //quickly march
-  { match: `#Adverb [${verbs}]`, group: 0, tag: 'Infinitive', reason: 'quickly-march' },
-  { match: `${verbs} [#Adverb]`, group: 0, tag: 'Infinitive', reason: 'march-quickly' },
-
   //march to
   { match: '[march] (up|down|back|to|toward)', group: 0, tag: 'Infinitive', reason: 'march-to' },
   //must march
@@ -44,7 +42,7 @@ const list = [
   //sat november
   { match: '[sat] #Date', group: 0, tag: 'WeekDay', reason: 'sat-feb' },
   //this sat
-  { match: `${preps} [sat]`, group: 0, tag: 'WeekDay', reason: 'sat' },
+  { match: `(in|by|before|during|on|until|after|of|within|all) [sat]`, group: 0, tag: 'WeekDay', reason: 'sat' },
 
   //June 5-7th
   { match: `#Month #DateRange+`, tag: 'Date', reason: 'numberRange' },
@@ -111,7 +109,7 @@ const list = [
 
   //District of Foo
   {
-    match: '(district|region|province|municipality|territory|burough|state) of @titleCase',
+    match: '(district|region|province|municipality|territory|burough|state) of #ProperNoun',
 
     tag: 'Region',
     reason: 'district-of-Foo',
@@ -133,8 +131,6 @@ const list = [
   { match: '(king|queen|prince|saint|lady) of? #Noun', tag: 'Person', reason: 'king-of-noun', safe: true },
   //Foo U Ford
   { match: '[#ProperNoun] #Person', group: 0, tag: 'Person', reason: 'proper-person', safe: true },
-  // x Lastname
-  { match: '[#Noun] #LastName', group: 0, tag: '#FirstName', reason: 'noun-lastname', safe: true },
   // addresses
   {
     match: '#Value #Noun (st|street|rd|road|crescent|cr|way|tr|terrace|avenue|ave)',
@@ -145,7 +141,7 @@ const list = [
   // schools
   { match: '#Noun+ (public|private) school', tag: 'School', reason: 'noun-public-school' },
 
-  { match: '#Organization of the? @titleCase', tag: 'Organization', reason: 'org-of-place', safe: true },
+  { match: '#Organization of the? #ProperNoun', tag: 'Organization', reason: 'org-of-place', safe: true },
   { match: '#Organization #Country', tag: 'Organization', reason: 'org-country' },
   {
     match: '(world|global|international|national|#Demonym) #Organization',
@@ -175,7 +171,7 @@ const list = [
   { match: '#Honorific #Acronym', tag: 'Person', reason: 'Honorific-TitleCase' }, //remove single 'mr'
   // ['^#Honorific$').unTag('Person', 'single-honorific'}, //first general..
   { match: '[(1st|2nd|first|second)] #Honorific', group: 0, tag: 'Honorific', reason: 'ordinal-honorific' },
-  { match: '#Acronym @titleCase', tag: 'Person', reason: 'acronym-titlecase', safe: true }, //ludwig van beethovan
+  { match: '#Acronym #ProperNoun', tag: 'Person', reason: 'acronym-titlecase', safe: true }, //ludwig van beethovan
   { match: '#Person (jr|sr|md)', tag: 'Person', reason: 'person-honorific' }, //peter II
   { match: '#Person #Person the? #RomanNumeral', tag: 'Person', reason: 'roman-numeral' }, //'Professor Fink', 'General McCarthy'
   { match: '#FirstName [/^[^aiurck]$/]', group: 0, tag: ['Acronym', 'Person'], reason: 'john-e' }, //Doctor john smith jr
@@ -195,18 +191,17 @@ const list = [
     reason: 'west-norfolk',
   },
 
-  { match: 'al (#Person|@titleCase)', tag: 'Person', reason: 'al-borlen', safe: true },
-  // ['@titleCase al @titleCase',  tag:'Person', 'arabic-al-arabic', true},
+  { match: 'al (#Person|#ProperNoun)', tag: 'Person', reason: 'al-borlen', safe: true },
   //ferdinand de almar
   { match: '#FirstName de #Noun', tag: 'Person', reason: 'bill-de-noun' },
   //Osama bin Laden
   { match: '#FirstName (bin|al) #Noun', tag: 'Person', reason: 'bill-al-noun' },
   //John L. Foo
-  { match: '#FirstName #Acronym @titleCase', tag: 'Person', reason: 'bill-acronym-title' },
+  { match: '#FirstName #Acronym #ProperNoun', tag: 'Person', reason: 'bill-acronym-title' },
   //Andrew Lloyd Webber
-  { match: '#FirstName #FirstName @titleCase', tag: 'Person', reason: 'bill-firstname-title' },
+  { match: '#FirstName #FirstName #ProperNoun', tag: 'Person', reason: 'bill-firstname-title' },
   //Mr Foo
-  { match: '#Honorific #FirstName? @titleCase', tag: 'Person', reason: 'dr-john-Title' },
+  { match: '#Honorific #FirstName? #ProperNoun', tag: 'Person', reason: 'dr-john-Title' },
   //peter the great
   { match: '#FirstName the #Adjective', tag: 'Person', reason: 'determiner5' },
 
@@ -285,9 +280,7 @@ const list = [
   { match: '#Value grand', tag: 'Value', reason: 'value-grand' },
   //quarter million
   { match: '(a|the) [(half|quarter)] #Ordinal', group: 0, tag: 'Value', reason: 'half-ordinal' },
-  { match: 'a #Value', tag: 'Value', reason: 'a-value' }, //?
-  // ['#Ordinal (half|quarter)','Value', 'ordinal-half');//not ready
-  { match: `${units} and #Value`, tag: 'Value', reason: 'magnitude-and-value' },
+  { match: 'a #Value', tag: 'Value', reason: 'a-value' },
 
   { match: '[(do|does|will|have|had)] (not|#Adverb)? #Verb', group: 0, tag: 'Auxiliary', reason: 'have-had' },
   //still make
@@ -373,14 +366,11 @@ const list = [
   // Dwayne 'the rock' Johnson
   { match: '#FirstName [#Determiner #Noun] #LastName', group: 0, tag: '#NickName', reason: 'first-noun-last' },
 
-  //john bodego's
-  { match: '#FirstName (#Singular|#Possessive)', tag: '#Person', reason: 'first-possessive', safe: true },
-
   //Jani K. Smith
-  { match: '(@titleCase|#Singular) #Acronym? #LastName', tag: '#Person', reason: 'title-acro-noun', safe: true },
+  { match: '#Singular #Acronym #LastName', tag: '#Person', reason: 'title-acro-noun', safe: true },
 
   //John Foo
-  { match: '#FirstName (#Noun && @titleCase) @titleCase?', tag: 'Person', reason: 'firstname-titlecase' },
+  { match: '#FirstName (#Noun && #ProperNoun) #ProperNoun?', tag: 'Person', reason: 'firstname-titlecase' },
   //Joe K. Sombrero
   { match: '#FirstName #Acronym #Noun', tag: 'Person', reason: 'n-acro-noun', safe: true },
 
@@ -396,7 +386,7 @@ const list = [
   { match: '#Value (#WeekDay|#Month)', tag: 'Date', reason: 'value-date' },
 
   //organization
-  { match: '@titleCase #Organization', tag: 'Organization', reason: 'titlecase-org' },
+  { match: '#ProperNoun #Organization', tag: 'Organization', reason: 'titlecase-org' },
   //'a/an' can mean 1 - "a hour"
   {
     match: '[(a|an)] (#Duration|hundred|thousand|million|billion|trillion)',
@@ -451,21 +441,18 @@ const list = [
   { match: '(#Verb && @hasHyphen) over', group: 0, tag: 'PhrasalVerb', reason: 'foo-over' },
   { match: '(#Verb && @hasHyphen) out', group: 0, tag: 'PhrasalVerb', reason: 'foo-out' },
 
-
   // { match: '', group: 0, tag: , reason: '' },
 ]
 const pipe = /\|/
-const maybeNoun = 'rose|robin|dawn|ray|holly|bill|joy|viola|penny|sky|violet|daisy|melody|kelvin|hope|mercedes|olive|jewel|faith|van|charity|miles|lily|summer|dolly|rod|dick|cliff|lane|reed|kitty|art|jean|trinity'.split(
-  pipe
-)
-const maybeVerb = 'pat|wade|ollie|will|rob|buck|bob|mark|jack'.split(pipe)
-const maybeAdj = 'misty|rusty|dusty|rich|randy'.split(pipe)
-const people = 'january|april|may|june|summer|autumn|jan|sep'.split(pipe) //ambiguous month-names
-const maybeDate = 'april|june|may|jan|august|eve'.split(pipe)
-const maybePlace = 'paris|alexandria|houston|kobe|salvador|sydney'.split(pipe)
-const maybeMonth = 'march|may'.split(pipe)
 
-// add 'sat' support
+const units = 'hundred|thousand|million|billion|trillion|quadrillion|quintillion|sextillion|septillion'.split(pipe)
+units.forEach(unit => {
+  list.push({ match: `${unit}+ and #Value`, tag: 'Value', reason: 'magnitude-and-value' })
+})
+
+// const verbs = '(may|march|sat)' //ambiguous month-verbs
+
+const maybeMonth = ['march', 'may']
 maybeMonth.forEach(month => {
   //all march
   list.push({ match: `#Preposition [${month}]`, group: 0, tag: 'Month', reason: 'in-month' })
@@ -476,38 +463,55 @@ maybeMonth.forEach(month => {
   // 5th of march
   list.push({ match: `#Value of? [${month}]`, group: 0, tag: 'Month', reason: '5th-of-march' })
   // march and feb
-  list.push({ match: `[${verbs}] .? #Date`, group: 0, tag: 'Month', reason: 'march-and-feb' })
+  list.push({ match: `[${month}] .? #Date`, group: 0, tag: 'Month', reason: 'march-and-feb' })
   // feb to march
-  list.push({ match: `#Date .? [${verbs}]`, group: 0, tag: 'Month', reason: 'feb-and-march' })
+  list.push({ match: `#Date .? [${month}]`, group: 0, tag: 'Month', reason: 'feb-and-march' })
+  //quickly march
+  list.push({ match: `#Adverb [${month}]`, group: 0, tag: 'Infinitive', reason: 'quickly-march' })
+  //march quickly
+  list.push({ match: `${month} [#Adverb]`, group: 0, tag: 'Infinitive', reason: 'march-quickly' })
 })
 
 //Places: paris or syndey
+const maybePlace = 'paris|alexandria|houston|kobe|salvador|sydney'.split(pipe)
 maybePlace.forEach(place => {
   list.push({ match: '(in|near|at|from|to|#Place) [' + place + ']', group: 0, tag: 'Place', reason: 'in-paris' })
   list.push({ match: '[' + place + '] #Place', group: 0, tag: 'Place', reason: 'paris-france' })
 })
+
+let maybeNoun = 'rose|robin|dawn|ray|holly|bill|joy|viola|penny|sky|violet|daisy|melody|kelvin|hope|mercedes|olive'
+maybeNoun += '|jewel|faith|van|charity|miles|lily|summer|dolly|rod|dick|cliff|lane|reed|kitty|art|jean|trinity'
+maybeNoun = maybeNoun.split(pipe)
 maybeNoun.forEach(name => {
   list.push({ match: name + ' #Person', tag: 'Person', reason: 'ray-smith', safe: true })
-  list.push({ match: name + ' #Acronym? @titleCase', tag: 'Person', reason: 'ray-a-smith', safe: true })
+  list.push({ match: name + ' #Acronym? #ProperNoun', tag: 'Person', reason: 'ray-a-smith', safe: true })
 })
+
+const maybeVerb = 'pat|wade|ollie|will|rob|buck|bob|mark|jack'.split(pipe)
 maybeVerb.forEach(verb => {
   list.push({ match: '(#Modal|#Adverb) [' + verb + ']', group: 0, tag: 'Verb', reason: 'would-mark' })
   list.push({ match: verb + ' #Person', tag: 'Person', reason: 'rob-smith' })
-  list.push({ match: verb + ' #Acronym? @titleCase', tag: 'Person', reason: 'rob-a-smith' })
+  list.push({ match: verb + ' #Acronym? #ProperNoun', tag: 'Person', reason: 'rob-a-smith' })
   list.push({ match: '(#Modal|#Adverb) [' + verb + ']', group: 0, tag: 'Verb', reason: 'would-mark' })
 })
+
+const maybeAdj = 'misty|rusty|dusty|rich|randy'.split(pipe)
 maybeAdj.forEach(adj => {
   list.push({ match: '#Adverb [' + adj + ']', group: 0, tag: 'Adjective', reason: 'really-rich' })
   list.push({ match: adj + ' #Person', tag: 'Person', reason: 'randy-smith' })
-  list.push({ match: maybeAdj + ' #Acronym? @titleCase', tag: 'Person', reason: 'rusty-smith' })
+  list.push({ match: maybeAdj + ' #Acronym? #ProperNoun', tag: 'Person', reason: 'rusty-smith' })
 })
+
 //Dates: 'june' or 'may'
+const maybeDate = 'april|june|may|jan|august|eve'.split(pipe)
 maybeDate.forEach(date => {
   list.push({ match: date + ' #ProperNoun', tag: 'Person', reason: 'june-smith', safe: true })
   list.push({ match: '(in|during|on|by|before|#Date) [' + date + ']', group: 0, tag: 'Date', reason: 'in-june' })
   list.push({ match: date + ' (#Date|#Value)', tag: 'Date', reason: 'june-5th' })
-  list.push({ match: date + ' #Acronym? (@titleCase && !#Month)', tag: 'Person', reason: 'june-smith-jr' })
+  list.push({ match: date + ' #Acronym? (#ProperNoun && !#Month)', tag: 'Person', reason: 'june-smith-jr' })
 })
+
+const people = 'january|april|may|june|summer|autumn|jan|sep'.split(pipe) //ambiguous month-names
 people.forEach(person => {
   //give to april
   list.push({
@@ -529,7 +533,7 @@ people.forEach(person => {
   // may is
   list.push({ match: `[${person}] #Copula`, group: 0, tag: 'Person', reason: 'may-is' })
   // wednesday april
-  list.push({ match: `#Date [${person}]`, group: 0, tag: 'Month', reason: 'date-may' })
+  list.push({ match: `#Date [${person}]`, group: 0, tag: 'Month', reason: 'date-may' }) //FIXME: autumn is not a month
   // may 5th
   list.push({ match: `[${person}] the? #Value`, group: 0, tag: 'Month', reason: 'may-5th' })
   // 5th of may

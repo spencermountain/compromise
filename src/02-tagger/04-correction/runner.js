@@ -1,6 +1,6 @@
 let matches = require('./_corrections')
 const parseSyntax = require('../../Doc/match/syntax')
-
+let tagCount = 0
 const unique = function(arr) {
   let obj = arr.reduce((h, a) => {
     h[a] = true
@@ -25,7 +25,6 @@ const hasEvery = function(chances) {
   return running
 }
 
-// matches = matches.slice(0, 3)
 matches = matches.map(m => {
   let needTags = []
   let needWords = []
@@ -43,22 +42,11 @@ matches = matches.map(m => {
   })
   needTags = unique(needTags)
   needWords = unique(needWords)
-  return {
-    reg: reg,
-    required: { tags: needTags, words: needWords },
-    group: m.group,
-    tag: m.tag,
-    reason: m.reason,
-    safe: m.safe,
-    str: m.match,
-  }
+  m.reg = reg
+  m.required = { tags: needTags, words: needWords }
+  m.str = m.match
+  return m
 })
-
-// console.log(matches.length)
-// console.log(matches.filter(m => m.required.tags.length > 1).length)
-
-// console.log(hasEvery([[1], [1, 2], [1], [4, 6, 34, 6, 3, 1], [2]]))
-// console.log(hasEvery([[0, 1, 2, 2, 3, 3, 3]]))
 
 const runner = function(doc) {
   //find phrases to try for each match
@@ -81,9 +69,10 @@ const runner = function(doc) {
     // phrases getting tagged
     let match = tryDoc.match(m.reg, m.group)
     if (match.found) {
-      if (m.debug === true) {
-        tryDoc.debug()
-      }
+      // tagCount += 1
+      // if (match.has(m.tag)) {
+      //   console.log(m.str)
+      // }
       if (m.safe === true) {
         match.tagSafe(m.tag, m.reason)
       } else {

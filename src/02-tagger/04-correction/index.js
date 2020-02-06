@@ -8,13 +8,13 @@ const runner = require('./runner')
 //sequence of match-tag statements to correct mis-tags
 const corrections = function(doc) {
   // console.time('all')
-  console.time('runner')
+  // console.time('runner')
   runner(doc)
-  console.timeEnd('runner')
+  // console.timeEnd('runner')
 
-  console.time('misc')
+  // console.time('misc')
   fixMisc(doc)
-  console.timeEnd('misc')
+  // console.timeEnd('misc')
   // console.timeEnd('all')
   return doc
 }

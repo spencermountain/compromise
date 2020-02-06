@@ -34,9 +34,13 @@ module.exports = {
     isA: 'Person',
     notA: ['FirstName'],
   },
+  NickName: {
+    isA: 'Person',
+    notA: ['FirstName', 'LastName'],
+  },
   Honorific: {
     isA: 'Noun',
-    notA: ['FirstName', 'LastName'],
+    notA: ['FirstName', 'LastName', 'Value'],
   },
 
   // -- places

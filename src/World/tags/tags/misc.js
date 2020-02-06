@@ -1,4 +1,4 @@
-const anything = ['Noun', 'Verb', 'Adjective', 'Adverb', 'Value']
+const anything = ['Noun', 'Verb', 'Adjective', 'Adverb', 'Value', 'QuestionWord']
 
 module.exports = {
   //--Adjectives--

@@ -55,31 +55,47 @@ exports.wordcount = exports.wordCount
 /** freeze the current state of the document, for speed-purposes*/
 exports.cache = function(options) {
   options = options || {}
-  this.list.forEach(p => {
-    let words = {}
+  let words = {}
+  let tags = {}
+  this._cache.words = words
+  this._cache.tags = tags
+  this.list.forEach((p, i) => {
     p.cache = p.cache || {}
     p.cache.terms = p.cache.terms || p.terms()
+
     // cache all the terms
     p.cache.terms.forEach(t => {
-      words[t.clean] = true
-      words[t.reduced] = true
-      words[t.text.toLowerCase()] = true
-      if (t.implicit) {
-        words[t.implicit] = true
+      if (words[t.reduced] && !words.hasOwnProperty(t.reduced)) {
+        return //skip prototype words
       }
-      if (t.root) {
-        words[t.root] = true
-      }
-      if (t.alias !== undefined) {
-        words = Object.assign(words, t.alias)
-      }
+      words[t.reduced] = words[t.reduced] || []
+      words[t.reduced].push(i)
+
+      Object.keys(t.tags).forEach(tag => {
+        tags[tag] = tags[tag] || []
+        tags[tag].push(i)
+      })
+      // Object.assign(this._cache.tags, t.tags)
+
+      //   words[t.clean] = true
+      //   words[t.text.toLowerCase()] = true
+      //   if (t.implicit) {
+      //     words[t.implicit] = true
+      //   }
+      //   if (t.root) {
+      //     words[t.root] = true
+      //   }
+      //   if (t.alias !== undefined) {
+      //     words = Object.assign(words, t.alias)
+      //   }
       if (options.root) {
         t.setRoot(this.world)
         words[t.root] = true
       }
+      // })
+      // delete words['']
+      // p.cache.words = words
     })
-    delete words['']
-    p.cache.words = words
   })
   return this
 }

@@ -12,7 +12,6 @@ if (node_version !== process.version) {
 
 fetch('https://unpkg.com/nlp-corpus@3.3.0/builds/nlp-corpus-1.json').then(res => {
   const outputPath = path.join(__dirname, './_performance.json')
-
   let expected = {}
   if (fs.existsSync(outputPath)) {
     expected = JSON.parse(fs.readFileSync(outputPath))
@@ -22,6 +21,7 @@ fetch('https://unpkg.com/nlp-corpus@3.3.0/builds/nlp-corpus-1.json').then(res =>
   const x = []
   const y = []
 
+  const full = Date.now()
   for (let i = 0; i < textArr.length; i++) {
     const text = textArr[i]
     const yI = []
@@ -53,7 +53,9 @@ fetch('https://unpkg.com/nlp-corpus@3.3.0/builds/nlp-corpus-1.json').then(res =>
   console.log('\n')
   console.log('Expected:', Math.ceil(expected.average) + 'ms')
   console.log('Current :', Math.ceil(results.average) + 'ms')
-  console.log('Diff:', Math.ceil(diff) + 'ms')
+  console.log('Diff:', Math.ceil(diff) + 'ms\n')
+  let all = Math.ceil(Date.now() - full) / 1000
+  console.log('Full thing: ' + all + 's\n')
 
   // Should we decide on a good value to check against? Might as well just log it for now
   //t.true(diff < 20, 'perfomance is stable')

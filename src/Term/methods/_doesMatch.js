@@ -51,6 +51,10 @@ const doesMatch = function(t, reg, index, length) {
   if (reg.regex !== undefined) {
     return reg.regex.test(t.clean)
   }
+  // support optimized (one|two)
+  if (reg.oneOf !== undefined) {
+    return reg.oneOf.hasOwnProperty(t.reduced) || reg.oneOf.hasOwnProperty(t.text)
+  }
   //support (one|two)
   if (reg.choices !== undefined) {
     // try to support && operator

@@ -1,6 +1,4 @@
 const fixMisc = require('./fixMisc')
-const fixNouns = require('./fixNouns')
-const fixPerson = require('./fixPerson')
 const fixVerb = require('./fixVerb')
 const fixDates = require('./fixDates')
 const runAlways = require('./runAlways')
@@ -17,12 +15,6 @@ const corrections = function(doc) {
   runAlways(doc)
   // console.timeEnd('always')
 
-  // console.time('nouns')
-  fixNouns(doc) //30
-  // console.timeEnd('nouns')
-  // console.time('person')
-  fixPerson(doc) //58
-  // console.timeEnd('person')
   // console.time('verb')
   fixVerb(doc) //50
   // console.timeEnd('verb')

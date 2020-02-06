@@ -48,22 +48,6 @@ const fixDates = function(doc) {
       .tag('Month')
   }
 
-  //months:
-  let val = doc.if('#Value')
-  if (val.found === true) {
-    //june 7
-    val
-      .match('(#WeekDay|#Month) #Value')
-      .ifNo('#Money')
-      .tag('Date', 'date-value')
-
-    //7 june
-    val
-      .match('#Value (#WeekDay|#Month)')
-      .ifNo('#Money')
-      .tag('Date', 'value-date')
-  }
-
   return doc
 }
 module.exports = fixDates

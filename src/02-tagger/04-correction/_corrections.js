@@ -388,10 +388,19 @@ const list = [
 
   //John Foo
   { match: '#FirstName (#Noun && @titleCase) @titleCase?', tag: 'Person', reason: 'firstname-titlecase' },
+  //Joe K. Sombrero
+  { match: '#FirstName #Acronym #Noun', tag: 'Person', reason: 'n-acro-noun', safe: true },
 
-  // { match: '', tag: '', reason: '' },
-  // { match: '', tag: '', reason: '' },
-  // { match: '', tag: '', reason: '' },
+  //sometimes adverbs - 'pretty good','well above'
+  {
+    match: '#Copula (pretty|dead|full|well) (#Adjective|#Noun)',
+    tag: '#Copula #Adverb #Adjective',
+    reason: 'sometimes-adverb',
+  },
+  //june 7
+  { match: '(#WeekDay|#Month) #Value', tag: 'Date', reason: 'date-value' },
+  //7 june
+  { match: '#Value (#WeekDay|#Month)', tag: 'Date', reason: 'value-date' },
   // { match: '', tag: '', reason: '' },
   // { match: '', tag: '', reason: '' },
 

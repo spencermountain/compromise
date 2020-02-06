@@ -14,18 +14,6 @@ const fixVerb = function(doc) {
     .lastTerm()
     .tag('#Noun', 'do-verb')
 
-  //'he can'
-  doc
-    .match('(can|will|may|must|should|could)')
-    .if('#Modal #Verb')
-    .untag('Modal', 'he can')
-
-  //sometimes adverbs - 'pretty good','well above'
-  doc
-    .match('#Copula (pretty|dead|full|well) (#Adjective|#Noun)')
-    .ifNo('@hasComma')
-    .tag('#Copula #Adverb #Adjective', 'sometimes-adverb')
-
   //'will be'
   let willBe = doc.if('will #Adverb? not? #Adverb? be')
   if (willBe.found === true) {

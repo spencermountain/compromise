@@ -5,4 +5,4 @@ const nlp = require('./src/index')
 
 // nlp(`okay, do not use reverse psychology`).debug()
 // nlp(`April, June, and September`).debug()
-nlp(`really mark`).debug()
+nlp(`really mark. tony is cool. r u okay?`).debug()

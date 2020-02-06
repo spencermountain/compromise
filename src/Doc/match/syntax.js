@@ -1,9 +1,5 @@
 const parseToken = require('./parseToken')
-// const cache = {}
-
-const isNamed = function(capture) {
-  return typeof capture === 'string' || typeof capture === 'number'
-}
+const postProcess = require('./postProcess')
 
 const isArray = function(arr) {
   return Object.prototype.toString.call(arr) === '[object Array]'
@@ -42,52 +38,6 @@ const byArray = function(arr) {
       }),
     },
   ]
-}
-
-const postProcess = function(tokens) {
-  // ensure all capture groups are filled between start and end
-  // give all capture groups names
-  let count = tokens.filter(t => t.groupType).length
-  if (count > 0) {
-    let convert = false
-    let index = -1
-    let current
-
-    //'fill in' capture groups between start-end
-    for (let i = 0; i < tokens.length; i++) {
-      const n = tokens[i]
-
-      // Give name to un-named single tokens
-      if (n.groupType === 'single' && n.named === true) {
-        index += 1
-        n.named = index
-        continue
-      }
-
-      // Start converting tokens
-      if (n.groupType === 'start') {
-        convert = true
-        if (isNamed(n.named)) {
-          current = n.named
-        } else {
-          index += 1
-          current = index
-        }
-      }
-
-      // Ensure this token has the right name
-      if (convert) {
-        n.named = current
-      }
-
-      // Stop converting tokens
-      if (n.groupType === 'end') {
-        convert = false
-      }
-    }
-  }
-
-  return tokens
 }
 
 const fromDoc = function(doc) {

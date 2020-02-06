@@ -62,18 +62,19 @@ exports.cache = function(options) {
   this.list.forEach((p, i) => {
     p.cache = p.cache || {}
     p.cache.terms = p.cache.terms || p.terms()
+
     // cache all the terms
     p.cache.terms.forEach(t => {
-      // words[t.reduced] = words[t.reduced] || []
-      // if (!words[t.reduced].push) {
-      //   console.log(t.reduced)
-      // }
-      // words[t.reduced].push(i)
+      if (words[t.reduced] && !words.hasOwnProperty(t.reduced)) {
+        return //skip prototype words
+      }
+      words[t.reduced] = words[t.reduced] || []
+      words[t.reduced].push(i)
 
-      // Object.keys(t.tags).forEach(tag => {
-      //   tags[tag] = tags[tag] || []
-      //   tags[tag].push(i)
-      // })
+      Object.keys(t.tags).forEach(tag => {
+        tags[tag] = tags[tag] || []
+        tags[tag].push(i)
+      })
       // Object.assign(this._cache.tags, t.tags)
 
       //   words[t.clean] = true
@@ -89,7 +90,7 @@ exports.cache = function(options) {
       //   }
       if (options.root) {
         t.setRoot(this.world)
-        // words[t.root] = true
+        words[t.root] = true
       }
       // })
       // delete words['']

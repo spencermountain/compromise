@@ -209,7 +209,7 @@ const list = [
   //Mr Foo
   { match: '#Honorific #FirstName? #ProperNoun', tag: 'Person', reason: 'dr-john-Title' },
   //peter the great
-  { match: '#FirstName the #Adjective', tag: 'Person', reason: 'determiner5' },
+  { match: '#FirstName the #Adjective', tag: 'Person', reason: 'name-the-great' },
 
   //very common-but-ambiguous lastnames
   {
@@ -455,112 +455,13 @@ const list = [
   { match: 'the [#Acronym]', group: 0, tag: 'Organization', reason: 'the-acronym', safe: true },
   // { match: '', group: 0, tag: , reason: '' },
 ]
-const pipe = /\|/
 
-const units = 'hundred|thousand|million|billion|trillion|quadrillion'.split(pipe)
-units.forEach(unit => {
-  list.push({ match: `${unit}+ and #Value`, tag: 'Value', reason: 'magnitude-and-value' })
-})
-
-// const verbs = '(may|march|sat)' //ambiguous month-verbs
-
-const maybeMonth = ['march', 'may']
-maybeMonth.forEach(month => {
-  //all march
-  list.push({ match: `#Preposition [${month}]`, group: 0, tag: 'Month', reason: 'in-month' })
-  //this march
-  list.push({ match: `(next|this|last) [${month}]`, group: 0, tag: 'Month', reason: 'this-month' })
-  // march 5th
-  list.push({ match: `[${month}] the? #Value`, group: 0, tag: 'Month', reason: 'march-5th' })
-  // 5th of march
-  list.push({ match: `#Value of? [${month}]`, group: 0, tag: 'Month', reason: '5th-of-march' })
-  // march and feb
-  list.push({ match: `[${month}] .? #Date`, group: 0, tag: 'Month', reason: 'march-and-feb' })
-  // feb to march
-  list.push({ match: `#Date .? [${month}]`, group: 0, tag: 'Month', reason: 'feb-and-march' })
-  //quickly march
-  list.push({ match: `#Adverb [${month}]`, group: 0, tag: 'Infinitive', reason: 'quickly-march' })
-  //march quickly
-  list.push({ match: `${month} [#Adverb]`, group: 0, tag: 'Infinitive', reason: 'march-quickly' })
-})
-
-//Places: paris or syndey
-const maybePlace = 'paris|alexandria|houston|kobe|salvador|sydney'.split(pipe)
-maybePlace.forEach(place => {
-  list.push({ match: '(in|near|at|from|to|#Place) [' + place + ']', group: 0, tag: 'Place', reason: 'in-paris' })
-  list.push({ match: '[' + place + '] #Place', group: 0, tag: 'Place', reason: 'paris-france' })
-})
-
-let maybeNoun = 'rose|robin|dawn|ray|holly|bill|joy|viola|penny|sky|violet|daisy|melody|kelvin|hope|mercedes|olive'
-maybeNoun += '|jewel|faith|van|charity|miles|lily|summer|dolly|rod|dick|cliff|lane|reed|kitty|art|jean|trinity'
-maybeNoun = maybeNoun.split(pipe)
-maybeNoun.forEach(name => {
-  list.push({ match: name + ' #Person', tag: 'Person', reason: 'ray-smith', safe: true })
-  list.push({ match: name + ' #Acronym? #ProperNoun', tag: 'Person', reason: 'ray-a-smith', safe: true })
-})
-
-const maybeVerb = 'pat|wade|ollie|will|rob|buck|bob|mark|jack'.split(pipe)
-maybeVerb.forEach(verb => {
-  list.push({ match: '(#Modal|#Adverb) [' + verb + ']', group: 0, tag: 'Verb', reason: 'would-mark' })
-  list.push({ match: verb + ' #Person', tag: 'Person', reason: 'rob-smith' })
-  list.push({ match: verb + ' #Acronym? #ProperNoun', tag: 'Person', reason: 'rob-a-smith' })
-  list.push({ match: '(#Modal|#Adverb) [' + verb + ']', group: 0, tag: 'Verb', reason: 'would-mark' })
-})
-
-const maybeAdj = 'misty|rusty|dusty|rich|randy'.split(pipe)
-maybeAdj.forEach(adj => {
-  list.push({ match: '#Adverb [' + adj + ']', group: 0, tag: 'Adjective', reason: 'really-rich' })
-  list.push({ match: adj + ' #Person', tag: 'Person', reason: 'randy-smith' })
-  list.push({ match: adj + ' #Acronym? #ProperNoun', tag: 'Person', reason: 'rusty-smith' })
-})
-
-//Dates: 'june' or 'may'
-const maybeDate = 'april|june|may|jan|august|eve'.split(pipe)
-maybeDate.forEach(date => {
-  list.push({ match: date + ' #ProperNoun', tag: 'Person', reason: 'june-smith', safe: true })
-  list.push({ match: '(in|during|on|by|before|#Date) [' + date + ']', group: 0, tag: 'Date', reason: 'in-june' })
-  list.push({ match: date + ' (#Date|#Value)', tag: 'Date', reason: 'june-5th' })
-  list.push({ match: date + ' #Acronym? (#ProperNoun && !#Month)', tag: 'Person', reason: 'june-smith-jr' })
-})
-
-const people = 'january|april|may|june|summer|autumn|jan|sep'.split(pipe) //ambiguous month-names
-people.forEach(person => {
-  //give to april
-  list.push({
-    match: `#Infinitive #Determiner? #Adjective? #Noun? (to|for) [${person}]`,
-    group: 0,
-    tag: 'Person',
-    reason: 'ambig-person',
-  })
-  // remind june
-  list.push({ match: `#Infinitive [${person}]`, group: 0, tag: 'Person', reason: 'infinitive-person' })
-  // may waits for
-  list.push({ match: `[${person}] #PresentTense (to|for)`, group: 0, tag: 'Person', reason: 'ambig-active' })
-  // april will
-  list.push({ match: `[${person}] #Modal`, group: 0, tag: 'Person', reason: 'ambig-modal' })
-  // would april
-  list.push({ match: `#Modal [${person}]`, group: 0, tag: 'Person', reason: 'modal-ambig' })
-  // it is may
-  list.push({ match: `#Copula [${person}]`, group: 0, tag: 'Person', reason: 'is-may' })
-  // may is
-  list.push({ match: `[${person}] #Copula`, group: 0, tag: 'Person', reason: 'may-is' })
-  // wednesday april
-  list.push({ match: `#Date [${person}]`, group: 0, tag: 'Month', reason: 'date-may' }) //FIXME: autumn is not a month
-  // may 5th
-  list.push({ match: `[${person}] the? #Value`, group: 0, tag: 'Month', reason: 'may-5th' })
-  // 5th of may
-  list.push({ match: `#Value of [${person}]`, group: 0, tag: 'Month', reason: '5th-of-may' })
-  // with april
-  list.push({ match: `(that|with|for) [${person}]`, group: 0, tag: 'Person', reason: 'that-month' })
-  // this april
-  list.push({ match: `(next|this|last) [${person}]`, group: 0, tag: 'Month', reason: 'next-may' }) //maybe not 'this'
-})
 // let obj = {}
 // list.forEach(a => {
-//   console.log(a[2])
-//   if (obj[a[2]] === true) {
-//     console.log(a[2])
+//   if (obj[a.match] === true) {
+//     console.log(a.match)
 //   }
-//   obj[a[2]] = true
+//   obj[a.match] = true
+//   console.log(a.tag)
 // })
 module.exports = list

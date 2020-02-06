@@ -1,4 +1,7 @@
 let matches = require('./_corrections')
+const loops = require('./_loops')
+matches = matches.concat(loops)
+
 const parseSyntax = require('../../Doc/match/syntax')
 // let tagCount = 0
 const unique = function(arr) {

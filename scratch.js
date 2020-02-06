@@ -1,5 +1,5 @@
 const nlp = require('./src/index')
-nlp.verbose(true)
+// nlp.verbose(true)
 // nlp.extend(require('./plugins/numbers/src'))
 // nlp.extend(require('./plugins/scan/src'))
 
@@ -8,4 +8,5 @@ nlp.verbose(true)
 // nlp(`among them the ones at HUD`).debug()
 
 // nlp(`really mark. tony is cool. u r okay? April, June, and September`).debug()
-nlp(`two thousand and twelve`).debug()
+nlp(`second place`).debug()
+nlp(`second lt. captain`).debug()

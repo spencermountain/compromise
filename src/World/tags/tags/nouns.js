@@ -40,7 +40,7 @@ module.exports = {
   },
   Honorific: {
     isA: 'Noun',
-    notA: ['FirstName', 'LastName'],
+    notA: ['FirstName', 'LastName', 'Value'],
   },
 
   // -- places

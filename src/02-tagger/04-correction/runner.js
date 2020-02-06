@@ -1,6 +1,6 @@
 let matches = require('./_corrections')
 const parseSyntax = require('../../Doc/match/syntax')
-let tagCount = 0
+// let tagCount = 0
 const unique = function(arr) {
   let obj = arr.reduce((h, a) => {
     h[a] = true
@@ -45,6 +45,7 @@ matches = matches.map(m => {
   m.reg = reg
   m.required = { tags: needTags, words: needWords }
   m.str = m.match
+  m.count = 0
   return m
 })
 
@@ -66,6 +67,7 @@ const runner = function(doc) {
     // console.log(worthIt.length, m.str)
     let phrases = worthIt.map(index => doc.list[index])
     let tryDoc = doc.buildFrom(phrases)
+    // m.count += 1
     // phrases getting tagged
     let match = tryDoc.match(m.reg, m.group)
     if (match.found) {
@@ -80,5 +82,11 @@ const runner = function(doc) {
       }
     }
   })
+  // console.log('\n\ntotal:', matches.length)
+  // let used = matches.filter(m => m.count > 0)
+  // console.log('used:', used.length)
+  // let unused = matches.filter(m => m.count === 0)
+  // console.log('\n\n')
+  // console.log(unused.map(m => m.str))
 }
 module.exports = runner

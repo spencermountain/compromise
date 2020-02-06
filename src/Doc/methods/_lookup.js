@@ -42,6 +42,9 @@ const fastLookup = function(termList, values, doc) {
   // each phrase
   for (let i = 0; i < doc.list.length; i++) {
     const p = doc.list[i]
+    if (!p.cache.terms) {
+      continue
+    }
     // let words = Object.keys(p.cache.words)
     let words = p.cache.terms.map(t => t.reduced)
     // each word

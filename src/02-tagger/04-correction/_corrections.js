@@ -44,8 +44,6 @@ const list = [
   //this sat
   { match: `(in|by|before|during|on|until|after|of|within|all) [sat]`, group: 0, tag: 'WeekDay', reason: 'sat' },
 
-  //June 5-7th
-  { match: `#Month #DateRange+`, tag: 'Date', reason: 'numberRange' },
   //5th of March
   { match: '#Value of #Month', tag: 'Date', reason: 'value-of-month' },
   //5 March
@@ -170,6 +168,14 @@ const list = [
 
   { match: '#Honorific #Acronym', tag: 'Person', reason: 'Honorific-TitleCase' }, //remove single 'mr'
   // ['^#Honorific$').unTag('Person', 'single-honorific'}, //first general..
+
+  //the word 'second'
+  // doc
+  // .match('[second] #Noun', 0)
+  // .notIf('#Honorific')
+  // .unTag('Unit')
+  // .tag('Ordinal', 'second-noun')
+  { match: '[second] #Noun', group: 0, tag: 'Ordinal', reason: 'second-noun' },
   { match: '[(1st|2nd|first|second)] #Honorific', group: 0, tag: 'Honorific', reason: 'ordinal-honorific' },
   { match: '#Acronym #ProperNoun', tag: 'Person', reason: 'acronym-titlecase', safe: true }, //ludwig van beethovan
   { match: '#Person (jr|sr|md)', tag: 'Person', reason: 'person-honorific' }, //peter II
@@ -441,11 +447,17 @@ const list = [
   { match: '(#Verb && @hasHyphen) over', group: 0, tag: 'PhrasalVerb', reason: 'foo-over' },
   { match: '(#Verb && @hasHyphen) out', group: 0, tag: 'PhrasalVerb', reason: 'foo-out' },
 
+  //pope francis
+  { match: '(lady|queen|sister) #ProperNoun', tag: 'FemaleName', reason: 'lady-titlecase', safe: true },
+  { match: '(king|pope|father) #ProperNoun', tag: 'MaleName', reason: 'pope-titlecase', safe: true },
+
+  // the OCED
+  { match: 'the [#Acronym]', group: 0, tag: 'Organization', reason: 'the-acronym', safe: true },
   // { match: '', group: 0, tag: , reason: '' },
 ]
 const pipe = /\|/
 
-const units = 'hundred|thousand|million|billion|trillion|quadrillion|quintillion|sextillion|septillion'.split(pipe)
+const units = 'hundred|thousand|million|billion|trillion|quadrillion'.split(pipe)
 units.forEach(unit => {
   list.push({ match: `${unit}+ and #Value`, tag: 'Value', reason: 'magnitude-and-value' })
 })
@@ -499,7 +511,7 @@ const maybeAdj = 'misty|rusty|dusty|rich|randy'.split(pipe)
 maybeAdj.forEach(adj => {
   list.push({ match: '#Adverb [' + adj + ']', group: 0, tag: 'Adjective', reason: 'really-rich' })
   list.push({ match: adj + ' #Person', tag: 'Person', reason: 'randy-smith' })
-  list.push({ match: maybeAdj + ' #Acronym? #ProperNoun', tag: 'Person', reason: 'rusty-smith' })
+  list.push({ match: adj + ' #Acronym? #ProperNoun', tag: 'Person', reason: 'rusty-smith' })
 })
 
 //Dates: 'june' or 'may'

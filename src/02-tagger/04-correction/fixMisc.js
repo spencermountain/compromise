@@ -13,17 +13,6 @@ const miscCorrection = function(doc) {
     .terms(1)
     .tag('Noun', 'the-adj-1')
 
-  //pope francis
-  doc
-    .match('(lady|queen|sister) @titleCase')
-    .ifNo('#Date')
-    .ifNo('#Honorific')
-    .tag('#FemaleName', 'lady-titlecase')
-  doc
-    .match('(king|pope|father) @titleCase')
-    .ifNo('#Date')
-    .tag('#MaleName', 'poe')
-
   // Firstname x (dangerous)
   doc
     .match('#FirstName (#Noun|@titleCase)')
@@ -57,19 +46,6 @@ const miscCorrection = function(doc) {
     .ifNo('(@hasComma|#Negative|#Copula|will|be)')
     .lastTerm()
     .tag('#Noun', 'do-verb')
-
-  //the word 'second'
-  doc
-    .match('[second] #Noun', 0)
-    .notIf('#Honorific')
-    .unTag('Unit')
-    .tag('Ordinal', 'second-noun')
-
-  //acronyms
-  doc
-    .match('the [#Acronym]', 0)
-    .notIf('(iou|fomo|yolo|diy|dui|nimby)')
-    .tag('Organization', 'the-acronym')
 
   //possessives
   //'her match' vs 'let her match'

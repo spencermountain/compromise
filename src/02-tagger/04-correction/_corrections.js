@@ -5,7 +5,6 @@ const maybeNoun =
   '(rose|robin|dawn|ray|holly|bill|joy|viola|penny|sky|violet|daisy|melody|kelvin|hope|mercedes|olive|jewel|faith|van|charity|miles|lily|summer|dolly|rod|dick|cliff|lane|reed|kitty|art|jean|trinity)'
 const maybeVerb = '(pat|wade|ollie|will|rob|buck|bob|mark|jack)'
 const maybeAdj = '(misty|rusty|dusty|rich|randy)'
-const maybeDate = '(april|june|may|jan|august|eve)'
 const units = '(hundred|thousand|million|billion|trillion|quadrillion|quintillion|sextillion|septillion)'
 
 // order matters
@@ -28,8 +27,7 @@ const list = [
   ['#Noun #Adverb? [left]', 0, 'PastTense', 'left-verb'],
   //he disguised the thing
   ['#Pronoun [#Adjective] #Determiner #Adjective? #Noun', 0, 'Verb', 'he-adj-the'],
-  //'foo-up'
-  ['(#Verb && @hasHyphen) (up|off|over|out)', null, 'PhrasalVerb', 'foo-up'],
+
   //give to april
   [`#Infinitive #Determiner? #Adjective? #Noun? (to|for) [${people}]`, 0, 'Person', 'ambig-person'],
   //remind june
@@ -40,8 +38,6 @@ const list = [
   [`[${people}] #Modal`, 0, 'Person', 'ambig-modal'],
   //would april
   [`#Modal [${people}]`, 0, 'Person', 'modal-ambig'],
-  //with april
-  [`(that|with|for) [${people}]`, 0, 'Person', 'that-month'],
   //it is may
   [`#Copula [${people}]`, 0, 'Person', 'is-may'],
   //may is
@@ -52,8 +48,6 @@ const list = [
   [`[${people}] the? #Value`, 0, 'Month', 'may-5th'],
   //5th of may
   [`#Value of [${people}]`, 0, 'Month', '5th-of-may'],
-  //this april
-  [`(next|this|last) [${people}]`, 0, 'Month', 'next-may'], //maybe not 'this'
 
   //quickly march
   [`#Adverb [${verbs}]`, 0, 'Infinitive', 'quickly-march'],
@@ -90,8 +84,6 @@ const list = [
 
   //minus 7
   ['(minus|negative) #Value', null, 'Value', 'minus-value'],
-  //foot/feet
-  ['(foot|feet)', null, 'Noun', 'foot-noun'], // blood, sweat, and tears
   ['(#Noun && @hasComma) #Noun (and|or) [#PresentTense]', 0, 'Noun', 'noun-list'], //3 feet
   ['#Value [(foot|feet)]', 0, 'Unit', 'foot-unit'], //'u' as pronoun
   ['#Conjunction [u]', 0, 'Pronoun', 'u-pronoun-2'], //6 am
@@ -105,7 +97,6 @@ const list = [
   ['a bit much', null, 'Determiner Adverb Adjective', 'bit-3'],
   ['too much', null, 'Adverb Adjective', 'bit-4'], // u r cool
   ['u r', null, 'Pronoun Copula', 'u r'], // well, ...
-  ['^(well|so|okay)', null, 'Expression', 'well-'],
 
   //spencer kelly's
   ['#FirstName #Acronym? (#Possessive && #LastName)', null, 'Possessive', 'name-poss'],
@@ -126,7 +117,6 @@ const list = [
   //nsfw
   ['holy (shit|fuck|hell)', null, 'Expression', 'swears-expression'],
   ['#Determiner [(shit|damn|hell)]', 0, 'Noun', 'swears-noun'],
-  ['[(shit|damn|fuck)] (#Determiner|#Possessive|them)', 0, 'Verb', 'swears-verb'], //so funny
   // is f*ed up
   ['#Copula [fucked up?]', null, 'Adjective', 'swears-adjective'],
 
@@ -143,15 +133,7 @@ const list = [
   ['just [like]', 0, 'Preposition', 'like-preposition'], //folks like her
   ['#Noun [like] #Noun', 0, 'Preposition', 'noun-like'], //look like
   ['#Verb [like]', 0, 'Adverb', 'verb-like'],
-  //FitBit Inc
-  ['@titleCase (ltd|co|inc|dept|assn|bros)', null, 'Organization', 'org-abbrv'],
-  //Foo District
-  [
-    '@titleCase+ (district|region|province|county|prefecture|municipality|territory|burough|reservation)',
-    null,
-    'Region',
-    'foo-district',
-  ],
+
   //District of Foo
   ['(district|region|province|municipality|territory|burough|state) of @titleCase', null, 'Region', 'district-of-Foo'],
 
@@ -200,19 +182,10 @@ const list = [
     'technical-noun',
   ],
 
-  //mr Putin
-  ['(mr|mrs|ms|dr) (@titleCase|#Possessive)+', null, 'Person', 'mr-putin'], //mr X
   ['#Honorific #Acronym', null, 'Person', 'Honorific-TitleCase'], //remove single 'mr'
   // ['^#Honorific$').unTag('Person', 'single-honorific'],  //first general..
   ['[(1st|2nd|first|second)] #Honorific', 0, 'Honorific', 'ordinal-honorific'],
   ['#Acronym @titleCase', null, 'Person', 'acronym-titlecase', true], //ludwig van beethovan
-  ['@titleCase (van|al|bin) @titleCase', null, 'Person', 'title-van-title', true], //jose de Sucre
-  ['@titleCase (de|du) la? @titleCase', null, 'Person', 'title-de-title', true],
-  // jean Foobar
-  [maybeNoun + ' #Acronym? @titleCase', null, 'Person', 'ray-a-smith', true], // rob Foobar
-  [maybeVerb + ' #Acronym? @titleCase', null, 'Person', 'rob-a-smith'], // rusty Foobar
-  [maybeAdj + ' #Acronym? @titleCase', null, 'Person', 'rusty-smith'], // june Foobar
-  [maybeDate + ' #Acronym? (@titleCase && !#Month)', null, 'Person', 'june-smith-jr'], //Frank jr
   ['#Person (jr|sr|md)', null, 'Person', 'person-honorific'], //peter II
   ['#Person #Person the? #RomanNumeral', null, 'Person', 'roman-numeral'], //'Professor Fink', 'General McCarthy'
   ['#FirstName [/^[^aiurck]$/]', 0, ['Acronym', 'Person'], 'john-e'], //Doctor john smith jr
@@ -227,7 +200,6 @@ const list = [
   [maybeNoun + ' #Person', null, 'Person', 'ray-smith', true],
   [maybeVerb + ' #Person', null, 'Person', 'rob-smith'],
   [maybeAdj + ' #Person', null, 'Person', 'randy-smith'],
-  ['(#Modal|#Adverb) [' + maybeVerb + ']', 0, 'Verb', 'would-mark'],
   // ['#Adverb [' + maybeAdj + ']', 0, 'Adjective', 'really-rich'],
   // [maybeDate + ' #ProperNoun', null, ['FirstName', 'Person'], 'june-smith'],
   // ['(in|during|on|by|before|#Date) [' + maybeDate + ']', 0, 'Date', 'in-june'],
@@ -285,8 +257,6 @@ const list = [
   ['#Determiner #Noun of [#Verb]', 0, 'Noun', 'noun-of-noun'],
   //the western line
   ['#Determiner [(western|eastern|northern|southern|central)] #Noun', 0, 'Noun', 'western-line'],
-  //the swim
-  ['(the|those|these) #Adjective? [(#Infinitive|#PresentTense|#PastTense)]', 0, 'Noun', 'determiner2'],
   //a staggering cost
   ['(a|an) [#Gerund]', 0, 'Adjective', 'a|an'],
   //did a 900, paid a 20

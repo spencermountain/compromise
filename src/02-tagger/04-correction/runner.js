@@ -19,8 +19,7 @@ matches = matches.map(a => {
   })
   return {
     reg: reg,
-    needTags: needTags,
-    needWords: needWords,
+    required: { tags: needTags, words: needWords },
     group: a[1],
     tag: a[2],
     hint: a[3],
@@ -29,9 +28,8 @@ matches = matches.map(a => {
   }
 })
 console.log('all:', matches.length)
-console.log('words:', matches.filter(m => m.needWords.length > 0).length)
-console.log('tags:', matches.filter(m => m.needTags.length > 0).length)
-console.log('either:', matches.filter(m => m.needWords.length > 0 || m.needTags.length > 0).length)
+console.log('words:', matches.filter(m => m.required.words.length > 0).length)
+console.log('tags:', matches.filter(m => m.required.tags.length > 0).length)
 
 const runner = function(doc) {
   //find phrases to try for each match

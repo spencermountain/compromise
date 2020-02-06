@@ -1,8 +1,8 @@
+const parseSyntax = require('../../Doc/match/syntax')
 let matches = require('./_corrections')
 const loops = require('./_loops')
 matches = matches.concat(loops)
 
-const parseSyntax = require('../../Doc/match/syntax')
 // let tagCount = 0
 const unique = function(arr) {
   let obj = arr.reduce((h, a) => {
@@ -75,6 +75,7 @@ const runner = function(doc) {
     let match = tryDoc.match(m.reg, m.group)
     if (match.found) {
       // tagCount += 1
+      // console.log('tag ', tagCount)
       // if (match.has(m.tag)) {
       //   console.log(m.str)
       // }

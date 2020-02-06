@@ -1,11 +1,3 @@
-// '#Adjective [#PresentTense]'
-// '(the|this|a|an) [#Infinitive] #Adverb? #Verb'
-// [(do|does|will|have|had)] (not|#Adverb)? #Verb'
-// [(#Modal|did) (#Adverb|not)+?] #Verb
-// '[#Copula (#Adverb|not)+?] (#Gerund|#PastTense)'
-// '(the|this) [#Verb] #Preposition .'
-// '[#ProperNoun] #Person'
-
 // order matters
 const list = [
   //there are reasons

@@ -42,6 +42,9 @@ const miscCorrection = function(doc) {
     }
   }
 
+  // well i've been...
+  doc.match('^(well|so|okay)').tag('Expression', 'well-')
+
   //been walking
   doc
     .match(`(be|been) (#Adverb|not)+? #Gerund`)

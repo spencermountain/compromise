@@ -8,4 +8,4 @@ nlp.verbose(true)
 // nlp(`among them the ones at HUD`).debug()
 
 // nlp(`really mark. tony is cool. u r okay? April, June, and September`).debug()
-nlp('April, June, and Sept').debug()
+nlp(`well i've been thinking`).debug()

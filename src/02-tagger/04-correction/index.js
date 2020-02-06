@@ -1,5 +1,4 @@
 const fixMisc = require('./fixMisc')
-const runAlways = require('./runAlways')
 const runner = require('./runner')
 
 // runner: 349.555ms
@@ -9,17 +8,13 @@ const runner = require('./runner')
 //sequence of match-tag statements to correct mis-tags
 const corrections = function(doc) {
   // console.time('all')
-  // console.time('runner')
+  console.time('runner')
   runner(doc)
-  // console.timeEnd('runner')
+  console.timeEnd('runner')
 
-  // console.time('always')
-  runAlways(doc)
-  // console.timeEnd('always')
-
-  // console.time('misc')
-  fixMisc(doc) //43
-  // console.timeEnd('misc')
+  console.time('misc')
+  fixMisc(doc)
+  console.timeEnd('misc')
   // console.timeEnd('all')
   return doc
 }

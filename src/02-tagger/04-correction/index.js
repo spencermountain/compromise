@@ -1,12 +1,14 @@
 const fixMisc = require('./fixMisc')
-const fixVerb = require('./fixVerb')
-const fixDates = require('./fixDates')
 const runAlways = require('./runAlways')
 const runner = require('./runner')
 
+// runner: 349.555ms
+// always: 49.923ms
+// misc: 49.780ms
+
 //sequence of match-tag statements to correct mis-tags
 const corrections = function(doc) {
-  // console.time('corrections')
+  // console.time('all')
   // console.time('runner')
   runner(doc)
   // console.timeEnd('runner')
@@ -15,16 +17,10 @@ const corrections = function(doc) {
   runAlways(doc)
   // console.timeEnd('always')
 
-  // console.time('verb')
-  fixVerb(doc) //50
-  // console.timeEnd('verb')
-  // console.time('dates')
-  fixDates(doc) //92
-  // console.timeEnd('dates')
   // console.time('misc')
   fixMisc(doc) //43
   // console.timeEnd('misc')
-  // console.timeEnd('corrections')
+  // console.timeEnd('all')
   return doc
 }
 module.exports = corrections

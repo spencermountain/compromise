@@ -13,12 +13,6 @@ const miscCorrection = function(doc) {
     .terms(1)
     .tag('Noun', 'the-adj-1')
 
-  //'a/an' can mean 1 - "a hour"
-  doc
-    .match('[(a|an)] (#Duration|hundred|thousand|million|billion|trillion)', 0)
-    .ifNo('#Plural')
-    .tag('Value', 'a-is-one')
-
   //pope francis
   doc
     .match('(lady|queen|sister) @titleCase')
@@ -31,11 +25,12 @@ const miscCorrection = function(doc) {
     .tag('#MaleName', 'poe')
 
   // Firstname x (dangerous)
-  let tmp = doc
+  doc
     .match('#FirstName (#Noun|@titleCase)')
     .ifNo('^#Possessive')
     .ifNo('#Pronoun')
-  tmp.lastTerm().tag('#LastName', 'firstname-noun')
+    .lastTerm()
+    .tag('#LastName', 'firstname-noun')
 
   //three trains / one train
   let m = doc.match('#Value #PresentTense')
@@ -47,18 +42,25 @@ const miscCorrection = function(doc) {
     }
   }
 
+  //been walking
+  doc
+    .match(`(be|been) (#Adverb|not)+? #Gerund`)
+    .not('#Verb$')
+    .tag('Auxiliary', 'be-walking')
+
+  // directive verb - 'use reverse'
+  doc
+    .match('(try|use|attempt|build|make) #Verb')
+    .ifNo('(@hasComma|#Negative|#Copula|will|be)')
+    .lastTerm()
+    .tag('#Noun', 'do-verb')
+
   //the word 'second'
   doc
     .match('[second] #Noun', 0)
     .notIf('#Honorific')
     .unTag('Unit')
     .tag('Ordinal', 'second-noun')
-
-  //organization
-  doc
-    .match('@titleCase #Organization')
-    .ifNo('@hasComma')
-    .tag('Organization', 'titlecase-org')
 
   //acronyms
   doc

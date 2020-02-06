@@ -187,13 +187,6 @@ const list = [
     reason: 'ambg-honorifics',
   },
 
-  // ['#Adverb [' + maybeAdj + ']', group: 0, tag:'Adjective', 'really-rich'},
-  // [maybeDate + ' #ProperNoun', null, ['FirstName', 'Person'},'june-smith'},
-  // ['(in|during|on|by|before|#Date) [' + maybeDate + ']', group: 0, tag:'Date', 'in-june'},
-  // [maybeDate + ' (#Date|#Value)',  tag:'Date', 'june-5th'},
-  // ['(in|near|at|from|to|#Place) [' + maybePlace + ']', group: 0, tag:'Place', 'in-paris', true},
-  // ['[' + maybePlace + '] #Place', group: 0, tag:'Place', 'paris-france', true},
-
   //West Norforlk
   {
     match: '(west|north|south|east|western|northern|southern|eastern)+ #Place',
@@ -401,10 +394,35 @@ const list = [
   { match: '(#WeekDay|#Month) #Value', tag: 'Date', reason: 'date-value' },
   //7 june
   { match: '#Value (#WeekDay|#Month)', tag: 'Date', reason: 'value-date' },
-  // { match: '', tag: '', reason: '' },
-  // { match: '', tag: '', reason: '' },
 
-  // ----
+  //organization
+  { match: '@titleCase #Organization', tag: 'Organization', reason: 'titlecase-org' },
+  //'a/an' can mean 1 - "a hour"
+  {
+    match: '[(a|an)] (#Duration|hundred|thousand|million|billion|trillion)',
+    group: 0,
+    tag: 'Valye',
+    reason: 'a-is-one',
+  },
+
+  //how he is driving
+  {
+    match: '[(who|what|where|why|how|when)] #Noun #Copula #Adverb? (#Verb|#Adjective)',
+    group: 0,
+    tag: 'Conjunction',
+    reason: 'how-he-is-x',
+  },
+  {
+    match: '[(who|what|where|why|how|when)] #Noun #Adverb? #Infinitive not? #Gerund',
+    group: 0,
+    tag: 'Conjunction',
+    reason: 'when i go fishing',
+  },
+
+  //will be running (not copula)
+  { match: '[will #Adverb? not? #Adverb? be] #Gerund', group: 0, tag: 'Copula', reason: 'will-be-copula' },
+  //for more complex forms, just tag 'be'
+  { match: 'will #Adverb? not? #Adverb? [be] #Adjective', group: 0, tag: 'Copula', reason: 'be-copula' },
 ]
 const pipe = /\|/
 const maybeNoun = 'rose|robin|dawn|ray|holly|bill|joy|viola|penny|sky|violet|daisy|melody|kelvin|hope|mercedes|olive|jewel|faith|van|charity|miles|lily|summer|dolly|rod|dick|cliff|lane|reed|kitty|art|jean|trinity'.split(
@@ -415,6 +433,24 @@ const maybeAdj = 'misty|rusty|dusty|rich|randy'.split(pipe)
 const people = 'january|april|may|june|summer|autumn|jan|sep'.split(pipe) //ambiguous month-names
 const maybeDate = 'april|june|may|jan|august|eve'.split(pipe)
 const maybePlace = 'paris|alexandria|houston|kobe|salvador|sydney'.split(pipe)
+const maybeMonth = 'march|may'.split(pipe)
+
+// add 'sat' support
+maybeMonth.forEach(month => {
+  //all march
+  list.push({ match: `#Preposition [${month}]`, group: 0, tag: 'Month', reason: 'in-month' })
+  //this march
+  list.push({ match: `(next|this|last) [${month}]`, group: 0, tag: 'Month', reason: 'this-month' })
+  // march 5th
+  list.push({ match: `[${month}] the? #Value`, group: 0, tag: 'Month', reason: 'march-5th' })
+  // 5th of march
+  list.push({ match: `#Value of? [${month}]`, group: 0, tag: 'Month', reason: '5th-of-march' })
+  // march and feb
+  list.push({ match: `[${verbs}] .? #Date`, group: 0, tag: 'Month', reason: 'march-and-feb' })
+  // feb to march
+  list.push({ match: `#Date .? [${verbs}]`, group: 0, tag: 'Month', reason: 'feb-and-march' })
+})
+
 //Places: paris or syndey
 maybePlace.forEach(place => {
   list.push({ match: '(in|near|at|from|to|#Place) [' + place + ']', group: 0, tag: 'Place', reason: 'in-paris' })

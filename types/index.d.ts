@@ -163,6 +163,8 @@ declare module nlp {
     groups(): DocIndex<W>
     /** Access Phrase list */
     list: Phrase[]
+    /** Access pool */
+    pool(): Pool
 
     // Match
     /**  return a new Doc, with this one as a parent */
@@ -475,9 +477,24 @@ declare module nlp {
     postProcess<D extends Document = Document>(process: (Doc: D) => void): this
   }
 
-  class Pool {}
+  class Pool {
+    /** throw a new term object in */
+    add(term: Term): this
+    /** find a term by it's id */
+    get(id: string): Term
+    /** find a term by it's id */
+    remove(id: string): void
+    /** merge with another pool */
+    merge(pool: Pool): this
+    /** size of pool */
+    stats(): number
+  }
 
   class Phrase {
+    isA: 'Phrase' // Get Type
+    start: string // id of start Term
+    length: number // number of terms in phrase
+
     /** return a flat array of Term objects */
     terms(): Term[]
   }

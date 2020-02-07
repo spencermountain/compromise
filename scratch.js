@@ -8,8 +8,9 @@ let txt = require('./scripts/test/speed/_sotu-text.js')
 // nlp(`April, June, and September`).debug()
 // nlp(`among them the ones at HUD`).debug()
 
+// console.time('all')
 nlp(txt) //.debug()
-console.log('done')
+// console.timeEnd('all')
 
 // (the|those|these) #Adjective? [#PastTense]
 // (#WeekDay|#Month) #Value

@@ -5,10 +5,10 @@ matches = matches.concat(loops)
 
 // let tagCount = 0
 const unique = function(arr) {
-  let obj = arr.reduce((h, a) => {
-    h[a] = true
-    return h
-  }, {})
+  let obj = {}
+  for (let i = 0; i < arr.length; i++) {
+    obj[arr[i]] = true
+  }
   return Object.keys(obj)
 }
 
@@ -17,15 +17,16 @@ const hasEvery = function(chances) {
   if (chances.length === 0) {
     return []
   }
-  let all = {}
+  let obj = {}
   chances.forEach(arr => {
     arr = unique(arr)
-    arr.forEach(a => {
-      all[a] = all[a] || 0
-      all[a] += 1
-    })
+    for (let i = 0; i < arr.length; i++) {
+      obj[arr[i]] = obj[arr[i]] || 0
+      obj[arr[i]] += 1
+    }
   })
-  let res = Object.keys(all).filter(k => all[k] >= chances.length)
+  let res = Object.keys(obj)
+  res = res.filter(k => obj[k] === chances.length)
   res = res.map(num => Number(num))
   return res
 }

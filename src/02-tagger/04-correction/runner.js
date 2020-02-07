@@ -1,16 +1,6 @@
-const parseSyntax = require('../../Doc/match/syntax')
-let matches = require('./_corrections')
-const loops = require('./_loops')
-matches = matches.concat(loops)
-
+const matches = require('./matches')
+const unique = require('./_unique')
 // let tagCount = 0
-const unique = function(arr) {
-  let obj = {}
-  for (let i = 0; i < arr.length; i++) {
-    obj[arr[i]] = true
-  }
-  return Object.keys(obj)
-}
 
 // return intersection of array-of-arrays
 const hasEvery = function(chances) {
@@ -30,30 +20,6 @@ const hasEvery = function(chances) {
   res = res.map(num => Number(num))
   return res
 }
-
-matches = matches.map(m => {
-  let needTags = []
-  let needWords = []
-  let reg = parseSyntax(m.match)
-  reg.forEach(obj => {
-    if (obj.optional === true) {
-      return
-    }
-    if (obj.tag !== undefined) {
-      needTags.push(obj.tag)
-    }
-    if (obj.word !== undefined) {
-      needWords.push(obj.word)
-    }
-  })
-  needTags = unique(needTags)
-  needWords = unique(needWords)
-  m.reg = reg
-  m.required = { tags: needTags, words: needWords }
-  m.str = m.match
-  m.count = 0
-  return m
-})
 
 const runner = function(doc) {
   //find phrases to try for each match

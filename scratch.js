@@ -9,7 +9,10 @@ let txt = require('./scripts/test/speed/_sotu-text.js')
 // nlp(`among them the ones at HUD`).debug()
 
 // console.time('all')
-nlp(txt) //.debug()
+// nlp(txt) //.debug()
+nlp('i went to Phoenix AZ today')
+  // .match([{ tag: 'City' }, { named: 0, groupType: 'single', word: 'az' }])
+  .debug()
 // console.timeEnd('all')
 
 // (the|those|these) #Adjective? [#PastTense]

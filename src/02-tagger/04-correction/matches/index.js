@@ -1,9 +1,9 @@
 const parseSyntax = require('../../../Doc/match/syntax')
 let matches = require('./_corrections')
-const loops = require('./_loops')
 const unique = require('../_unique')
-matches = matches.concat(loops)
 
+const loops = require('./_loops')
+matches = matches.concat(loops)
 // cache the easier conditions up-front
 const cacheRequired = function(reg) {
   let needTags = []
@@ -22,12 +22,42 @@ const cacheRequired = function(reg) {
   return { tags: unique(needTags), words: unique(needWords) }
 }
 
-matches = matches.map(m => {
-  let reg = parseSyntax(m.match)
-  m.reg = reg
-  m.required = cacheRequired(reg)
-  m.str = m.match
+const allLists = function(m) {
+  let more = []
+  let lists = m.reg.filter(r => r.oneOf !== undefined)
+  if (lists.length === 1) {
+    let i = m.reg.findIndex(r => r.oneOf !== undefined)
+    Object.keys(m.reg[i].oneOf).forEach(w => {
+      let newM = Object.assign({}, m)
+      newM.reg = newM.reg.slice(0)
+      newM.reg[i] = Object.assign({}, newM.reg[i])
+      newM.reg[i].word = w
+      delete newM.reg[i].operator
+      delete newM.reg[i].oneOf
+      newM.reason += '-' + w
+      more.push(newM)
+    })
+  }
+  return more
+}
+
+// parse them
+let all = []
+matches.forEach(m => {
+  m.reg = parseSyntax(m.match)
+  let enumerated = allLists(m)
+  if (enumerated.length > 0) {
+    all = all.concat(enumerated)
+  } else {
+    all.push(m)
+  }
+})
+
+all.forEach(m => {
+  m.required = cacheRequired(m.reg)
   return m
 })
 
-module.exports = matches
+// console.log('\n')
+// console.log(all.map(o => o.reg))
+module.exports = all

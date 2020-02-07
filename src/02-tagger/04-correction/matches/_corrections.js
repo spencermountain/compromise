@@ -277,7 +277,7 @@ const list = [
   // ten grand
   { match: '#Value grand', tag: 'Value', reason: 'value-grand' },
   //quarter million
-  { match: '(a|the) [(half|quarter)] #Ordinal', group: 0, tag: 'Value', reason: 'half-ordinal' },
+  { match: '#Determiner [(half|quarter)] #Ordinal', group: 0, tag: 'Value', reason: 'half-ordinal' },
   { match: 'a #Value', tag: 'Value', reason: 'a-value' },
 
   { match: '[(do|does|will|have|had)] (not|#Adverb)? #Verb', group: 0, tag: 'Auxiliary', reason: 'have-had' },

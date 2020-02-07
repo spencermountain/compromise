@@ -1,4 +1,5 @@
 const nlp = require('./src/index')
+let txt = require('./scripts/test/speed/_sotu-text.js')
 // nlp.verbose(true)
 // nlp.extend(require('./plugins/numbers/src'))
 // nlp.extend(require('./plugins/scan/src'))
@@ -7,6 +8,8 @@ const nlp = require('./src/index')
 // nlp(`April, June, and September`).debug()
 // nlp(`among them the ones at HUD`).debug()
 
-// nlp(`really mark. tony is cool. u r okay? April, June, and September`).debug()
-nlp(`second place`).debug()
-nlp(`second lt. captain`).debug()
+nlp(txt) //.debug()
+console.log('done')
+
+// (the|those|these) #Adjective? [#PastTense]
+// (#WeekDay|#Month) #Value

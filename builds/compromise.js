@@ -615,6 +615,11 @@
 
     if (reg.regex !== undefined) {
       return reg.regex.test(t.clean);
+    } // support optimized (one|two)
+
+
+    if (reg.oneOf !== undefined) {
+      return reg.oneOf.hasOwnProperty(t.reduced) || reg.oneOf.hasOwnProperty(t.text);
     } //support (one|two)
 
 
@@ -2308,7 +2313,42 @@
     var obj = {}; //collect any flags (do it twice)
 
     for (var i = 0; i < 2; i += 1) {
-      //back-flags
+      //end-flag
+      if (end(w) === '$') {
+        obj.end = true;
+        w = stripEnd(w);
+      } //front-flag
+
+
+      if (start(w) === '^') {
+        obj.start = true;
+        w = stripStart(w);
+      } //capture group (this one can span multiple-terms)
+
+
+      if (start(w) === '[' || end(w) === ']') {
+        obj.named = true;
+
+        if (start(w) === '[') {
+          obj.groupType = end(w) === ']' ? 'single' : 'start';
+        } else {
+          obj.groupType = 'end';
+        }
+
+        w = w.replace(/^\[/, '');
+        w = w.replace(/\]$/, ''); // Use capture group name
+
+        if (start(w) === '<') {
+          var res = captureName.exec(w);
+
+          if (res.length >= 2) {
+            obj.named = res[1];
+            w = w.replace(res[0], '');
+          }
+        }
+      } //back-flags
+
+
       if (end(w) === '+') {
         obj.greedy = true;
         w = stripEnd(w);
@@ -2322,17 +2362,6 @@
       if (end(w) === '?') {
         obj.optional = true;
         w = stripEnd(w);
-      }
-
-      if (end(w) === '$') {
-        obj.end = true;
-        w = stripEnd(w);
-      } //front-flags
-
-
-      if (start(w) === '^') {
-        obj.start = true;
-        w = stripStart(w);
       }
 
       if (start(w) === '!') {
@@ -2365,29 +2394,6 @@
 
         obj.choices = obj.choices.map(parseToken);
         w = '';
-      } //capture group (this one can span multiple-terms)
-
-
-      if (start(w) === '[' || end(w) === ']') {
-        obj.named = true;
-
-        if (start(w) === '[') {
-          obj.groupType = end(w) === ']' ? 'single' : 'start';
-        } else {
-          obj.groupType = 'end';
-        }
-
-        w = w.replace(/^\[/, '');
-        w = w.replace(/\]$/, ''); // Use capture group name
-
-        if (start(w) === '<') {
-          var res = captureName.exec(w);
-
-          if (res.length >= 2) {
-            obj.named = res[1];
-            w = w.replace(res[0], '');
-          }
-        }
       } //regex
 
 
@@ -2470,6 +2476,87 @@
     return typeof capture === 'string' || typeof capture === 'number';
   };
 
+  var fillGroups = function fillGroups(tokens) {
+    var convert = false;
+    var index = -1;
+    var current; //'fill in' capture groups between start-end
+
+    for (var i = 0; i < tokens.length; i++) {
+      var n = tokens[i]; // Give name to un-named single tokens
+
+      if (n.groupType === 'single' && n.named === true) {
+        index += 1;
+        n.named = index;
+        continue;
+      } // Start converting tokens
+
+
+      if (n.groupType === 'start') {
+        convert = true;
+
+        if (isNamed(n.named)) {
+          current = n.named;
+        } else {
+          index += 1;
+          current = index;
+        }
+      } // Ensure this token has the right name
+
+
+      if (convert) {
+        n.named = current;
+      } // Stop converting tokens
+
+
+      if (n.groupType === 'end') {
+        convert = false;
+      }
+    }
+
+    return tokens;
+  };
+
+  var useOneOf = function useOneOf(tokens) {
+    return tokens.map(function (token) {
+      if (token.choices !== undefined) {
+        // are they all straight non-optional words?
+        var shouldPack = token.choices.every(function (c) {
+          return c.optional !== true && c.negative !== true && c.word !== undefined;
+        });
+
+        if (shouldPack === true) {
+          var oneOf = {};
+          token.choices.forEach(function (c) {
+            return oneOf[c.word] = true;
+          });
+          token.oneOf = oneOf;
+          delete token.choices;
+        }
+      }
+
+      return token;
+    });
+  };
+
+  var postProcess$1 = function postProcess(tokens) {
+    // ensure all capture groups are filled between start and end
+    // give all capture groups names
+    var count = tokens.filter(function (t) {
+      return t.groupType;
+    }).length;
+
+    if (count > 0) {
+      tokens = fillGroups(tokens);
+    } // convert 'choices' format to 'oneOf' format
+
+
+    tokens = useOneOf(tokens); // console.log(tokens)
+
+    return tokens;
+  };
+
+  var postProcess_1 = postProcess$1;
+
   var isArray$1 = function isArray(arr) {
     return Object.prototype.toString.call(arr) === '[object Array]';
   }; //split-up by (these things)
@@ -2510,54 +2597,6 @@
         };
       })
     }];
-  };
-
-  var postProcess$1 = function postProcess(tokens) {
-    // ensure all capture groups are filled between start and end
-    // give all capture groups names
-    var count = tokens.filter(function (t) {
-      return t.groupType;
-    }).length;
-
-    if (count > 0) {
-      var convert = false;
-      var index = -1;
-      var current; //'fill in' capture groups between start-end
-
-      for (var i = 0; i < tokens.length; i++) {
-        var n = tokens[i]; // Give name to un-named single tokens
-
-        if (n.groupType === 'single' && n.named === true) {
-          index += 1;
-          n.named = index;
-          continue;
-        } // Start converting tokens
-
-
-        if (n.groupType === 'start') {
-          convert = true;
-
-          if (isNamed(n.named)) {
-            current = n.named;
-          } else {
-            index += 1;
-            current = index;
-          }
-        } // Ensure this token has the right name
-
-
-        if (convert) {
-          n.named = current;
-        } // Stop converting tokens
-
-
-        if (n.groupType === 'end') {
-          convert = false;
-        }
-      }
-    }
-
-    return tokens;
   };
 
   var fromDoc = function fromDoc(doc) {
@@ -2621,7 +2660,7 @@
     tokens = byWords(tokens);
     tokens = tokens.map(parseToken_1); //clean up anything weird
 
-    tokens = postProcess$1(tokens); // console.log(JSON.stringify(tokens, null, 2))
+    tokens = postProcess_1(tokens); // console.log(JSON.stringify(tokens, null, 2))
 
     return tokens;
   }; // const memoizeSyntax = function(input) {
@@ -2754,11 +2793,11 @@
 
   /** return an array of matching phrases */
 
-  var match_1 = function match_1(str) {
+  var match_1 = function match_1(regs) {
     var _this = this;
 
     var justOne = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-    var matches = _01MatchAll(this, str, justOne); //make them phrase objects
+    var matches = _01MatchAll(this, regs, justOne); //make them phrase objects
 
     matches = matches.map(function (_ref) {
       var match = _ref.match,
@@ -2770,17 +2809,17 @@
   /** return boolean if one match is found */
 
 
-  var has = function has(str) {
-    var matches = _01MatchAll(this, str, true);
+  var has = function has(regs) {
+    var matches = _01MatchAll(this, regs, true);
     return matches.length > 0;
   };
   /** remove all matches from the result */
 
 
-  var not$1 = function not$1(str) {
+  var not$1 = function not$1(regs) {
     var _this2 = this;
 
-    var matches = not(this, str); //make them phrase objects
+    var matches = not(this, regs); //make them phrase objects
 
     matches = matches.map(function (list) {
       return _this2.buildFrom(list[0].id, list.length);
@@ -3192,7 +3231,7 @@
     }
 
     return arr;
-  }; //turn a string into an array of terms (naiive for now, lumped later)
+  }; //turn a string into an array of strings (naiive for now, lumped later)
 
 
   var splitWords = function splitWords(str) {
@@ -3426,9 +3465,13 @@
       isA: 'Person',
       notA: ['FirstName']
     },
+    NickName: {
+      isA: 'Person',
+      notA: ['FirstName', 'LastName']
+    },
     Honorific: {
       isA: 'Noun',
-      notA: ['FirstName', 'LastName']
+      notA: ['FirstName', 'LastName', 'Value']
     },
     // -- places
     Place: {
@@ -3595,7 +3638,7 @@
     }
   };
 
-  var anything = ['Noun', 'Verb', 'Adjective', 'Adverb', 'Value'];
+  var anything = ['Noun', 'Verb', 'Adjective', 'Adverb', 'Value', 'QuestionWord'];
   var misc = {
     //--Adjectives--
     Adjective: {
@@ -6104,35 +6147,45 @@
       var _this = this;
 
       options = options || {};
-      this.list.forEach(function (p) {
-        var words = {};
+      var words = {};
+      var tags = {};
+      this._cache.words = words;
+      this._cache.tags = tags;
+      this.list.forEach(function (p, i) {
         p.cache = p.cache || {};
         p.cache.terms = p.cache.terms || p.terms(); // cache all the terms
 
         p.cache.terms.forEach(function (t) {
-          words[t.clean] = true;
-          words[t.reduced] = true;
-          words[t.text.toLowerCase()] = true;
-
-          if (t.implicit) {
-            words[t.implicit] = true;
+          if (words[t.reduced] && !words.hasOwnProperty(t.reduced)) {
+            return; //skip prototype words
           }
 
-          if (t.root) {
-            words[t.root] = true;
-          }
-
-          if (t.alias !== undefined) {
-            words = Object.assign(words, t.alias);
-          }
+          words[t.reduced] = words[t.reduced] || [];
+          words[t.reduced].push(i);
+          Object.keys(t.tags).forEach(function (tag) {
+            tags[tag] = tags[tag] || [];
+            tags[tag].push(i);
+          }); // Object.assign(this._cache.tags, t.tags)
+          //   words[t.clean] = true
+          //   words[t.text.toLowerCase()] = true
+          //   if (t.implicit) {
+          //     words[t.implicit] = true
+          //   }
+          //   if (t.root) {
+          //     words[t.root] = true
+          //   }
+          //   if (t.alias !== undefined) {
+          //     words = Object.assign(words, t.alias)
+          //   }
 
           if (options.root) {
             t.setRoot(_this.world);
             words[t.root] = true;
-          }
+          } // })
+          // delete words['']
+          // p.cache.words = words
+
         });
-        delete words[''];
-        p.cache.words = words;
       });
       return this;
     };
@@ -6346,20 +6399,23 @@
 
   var _03Match = createCommonjsModule(function (module, exports) {
     /** return a new Doc, with this one as a parent */
+
     exports.match = function (reg, name) {
       //parse-up the input expression
       var regs = syntax_1(reg);
 
       if (regs.length === 0) {
         return this.buildFrom([]);
-      } //try expression on each phrase
+      } // totalMatches += this.list.length
+      // console.log(totalMatches)
+      //try expression on each phrase
 
 
       var matches = this.list.reduce(function (arr, p) {
         return arr.concat(p.match(regs));
       }, []);
 
-      if (name !== undefined) {
+      if (name !== undefined && name !== null && name !== '') {
         return this.buildFrom(matches).groups(name);
       }
 
@@ -6787,83 +6843,131 @@
     random: random
   };
 
-  var _06Lookup = createCommonjsModule(function (module, exports) {
-    // compare one term and one match
-    var doesMatch = function doesMatch(term, str) {
-      if (str === '') {
-        return false;
+  // const tokenize = require('../../01-tokenizer/02-words')
+  var tokenize = function tokenize(str) {
+    return str.split(/[ -]/g);
+  }; // take a list of strings
+  // look them up in the document
+
+
+  var buildTree = function buildTree(termList) {
+    var values = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+    var root = {}; // parse our input
+
+    termList.forEach(function (str, i) {
+      var val = true;
+
+      if (values[i] !== undefined) {
+        val = values[i];
+      } // some rough normalization
+
+
+      str = (str || '').toLowerCase();
+      str = str.replace(/[,;.!?]+$/, '');
+      var arr = tokenize(str).map(function (s) {
+        return s.trim();
+      });
+      root[arr[0]] = root[arr[0]] || {};
+
+      if (arr.length === 1) {
+        root[arr[0]].value = val;
+      } else {
+        root[arr[0]].more = root[arr[0]].more || [];
+        root[arr[0]].more.push({
+          rest: arr.slice(1),
+          value: val
+        });
       }
+    }); // sort by longest-first?
+    // console.log(JSON.stringify(root, null, 2))
 
-      return term.reduced === str || term.implicit === str || term.root === str || term.text.toLowerCase() === str;
-    }; // is this lookup found in these terms?
+    return root;
+  };
+
+  var fastLookup = function fastLookup(termList, values, doc) {
+    var root = buildTree(termList, values); // let root = termList.reduce((h, t) => {
+    //   h[t] = true
+    //   return h
+    // }, {})
+
+    var found = []; // each phrase
+
+    var _loop = function _loop(i) {
+      var p = doc.list[i];
+
+      if (!p.cache.terms) {
+        return "continue";
+      } // let words = Object.keys(p.cache.words)
 
 
-    var findStart = function findStart(arr, terms) {
-      var _loop = function _loop(i) {
-        if (doesMatch(terms[i], arr[0])) {
-          if (arr.every(function (a, n) {
-            return terms[i + n] && doesMatch(terms[i + n], a) === true;
-          })) {
-            return {
-              v: terms[i].id
-            };
-          }
+      var words = p.cache.terms.map(function (t) {
+        return t.reduced;
+      }); // each word
+
+      var _loop2 = function _loop2(w) {
+        if (root[words[w]] !== undefined) {
+          // is it a multi-word match?
+          if (root[words[w]].more !== undefined) {
+            root[words[w]].more.forEach(function (more) {
+              // is it too-long?
+              if (words[w + more.rest.length] === undefined) {
+                return;
+              } // compare each subsequent term
+
+
+              var everyTerm = more.rest.every(function (word, r) {
+                return word === words[w + r + 1];
+              });
+
+              if (everyTerm === true) {
+                found.push({
+                  id: p.cache.terms[w].id,
+                  value: more.value,
+                  length: more.rest.length + 1
+                });
+              }
+            });
+          } // is it a single-word match?
+
+
+          if (root[words[w]].value !== undefined) {
+            found.push({
+              id: p.cache.terms[w].id,
+              value: root[words[w]].value,
+              length: 1
+            });
+          } // if(root[words[w]])
+          // console.log(words[w])
+
         }
       };
 
-      //find the start
-      for (var i = 0; i < terms.length; i++) {
-        var _ret = _loop(i);
-
-        if (_typeof(_ret) === "object") return _ret.v;
+      for (var w = 0; w < words.length; w++) {
+        _loop2(w);
       }
-
-      return false;
-    }; //return a phrase-object from a ['word', 'sequence']
-    //this ought to be faster.
-
-
-    var findTerms = function findTerms(doc, termArr) {
-      var found = []; //go through each phrase
-
-      doc.list.forEach(function (p) {
-        // cache-miss, skip.
-        if (p.cache.words[termArr[0]] !== true) {
-          return;
-        } //we found a potential match
-
-
-        var id = findStart(termArr, p.terms());
-
-        if (id !== false) {
-          // create the actual phrase object
-          var phrase = p.buildFrom(id, termArr.length);
-          found.push(phrase);
-          return;
-        }
-      });
-      return found;
     };
 
+    for (var i = 0; i < doc.list.length; i++) {
+      var _ret = _loop(i);
+
+      if (_ret === "continue") continue;
+    }
+
+    return found;
+  };
+
+  var _lookup = fastLookup;
+
+  var _06Lookup = createCommonjsModule(function (module, exports) {
+    // compare one term and one match
+    // const doesMatch = function(term, str) {
+    //   if (str === '') {
+    //     return false
+    //   }
+    //   return term.reduced === str || term.implicit === str || term.root === str || term.text.toLowerCase() === str
+    // }
     var isObject = function isObject(obj) {
       return obj && Object.prototype.toString.call(obj) === '[object Object]';
-    }; // turn {key:val} into {val: Doc}
-
-
-    var lookupObject = function lookupObject(doc, obj) {
-      var result = {};
-      Object.keys(obj).forEach(function (k) {
-        var str = k.toLowerCase();
-        var a = _02Words(str).map(function (s) {
-          return s.trim();
-        });
-        var found = findTerms(doc, a);
-
-        if (found.length > 0) {
-          result[obj[k]] = doc.buildFrom(found);
-        }
-      });
-      return result;
     };
     /** lookup an array of words or phrases */
 
@@ -6871,26 +6975,45 @@
     exports.lookup = function (arr) {
       var _this = this;
 
-      //make sure we go fast.
-      this.cache(); //is it a {key:val} object?
+      var values = []; //is it a {key:val} object?
 
-      if (isObject(arr)) {
-        return lookupObject(this, arr);
-      } // otherwise, do array mode.
+      var isObj = isObject(arr);
+
+      if (isObj === true) {
+        arr = Object.keys(arr).map(function (k) {
+          values.push(arr[k]);
+          return k;
+        });
+      } // support .lookup('foo')
 
 
       if (typeof arr === 'string') {
         arr = [arr];
+      } //make sure we go fast.
+
+
+      if (this.list[0] && !this.list[0].cache.terms) {
+        this.cache();
       }
 
-      var found = [];
-      arr.forEach(function (str) {
-        str = str.toLowerCase();
-        var a = _02Words(str);
-        a = a.map(function (s) {
-          return s.trim();
+      var found = _lookup(arr, values, this);
+      var p = this.list[0]; // make object response
+
+      if (isObj === true) {
+        var byVal = {};
+        found.forEach(function (o) {
+          byVal[o.value] = byVal[o.value] || [];
+          byVal[o.value].push(p.buildFrom(o.id, o.length));
         });
-        found = found.concat(findTerms(_this, a));
+        Object.keys(byVal).forEach(function (k) {
+          byVal[k] = _this.buildFrom(byVal[k]);
+        });
+        return byVal;
+      } // otherwise, make array response:
+
+
+      found = found.map(function (o) {
+        return p.buildFrom(o.id, o.length);
       });
       return this.buildFrom(found);
     };
@@ -9563,8 +9686,12 @@
       } //if it's a organization,
 
 
-      if (term.tags.Organization && term.text.length <= 6) {
+      if (term.tags.Organization && term.text.length <= 3) {
         term.tag('Acronym', 'acronym-org', world);
+      }
+
+      if (term.tags.Organization && term.isUpperCase() && term.text.length <= 6) {
+        term.tag('Acronym', 'acronym-org-case', world);
       }
     });
   };
@@ -9987,119 +10114,35 @@
 
   //mostly pos-corections here
   var miscCorrection = function miscCorrection(doc) {
-    //misc:
-    //foot/feet
-    doc.match('(foot|feet)').tag('Noun', 'foot-noun'); // blood, sweat, and tears
+    //exactly like
+    doc.match('#Adverb like').notIf('(really|generally|typically|usually|sometimes|often) [like]').tag('Adverb', 'adverb-like'); //the orange.
 
-    doc.match('(#Noun && @hasComma) #Noun (and|or) [#PresentTense]', 0).tag('#Noun', 'noun-list'); //3 feet
+    doc.match('#Determiner #Adjective$').notIf('(#Comparative|#Superlative)').terms(1).tag('Noun', 'the-adj-1'); // Firstname x (dangerous)
 
-    doc.match('#Value [(foot|feet)]', 0).tag('Unit', 'foot-unit'); //'u' as pronoun
+    doc.match('#FirstName (#Noun|@titleCase)').ifNo('^#Possessive').ifNo('#Pronoun').lastTerm().tag('#LastName', 'firstname-noun'); //three trains / one train
 
-    doc.match('#Conjunction [u]', 0).tag('Pronoun', 'u-pronoun-2'); //6 am
+    var m = doc.match('#Value #PresentTense');
 
-    doc.match('#Holiday (day|eve)').tag('Holiday', 'holiday-day'); // the captain who
-
-    doc.match('#Noun [(who|whom)]', 0).tag('Determiner', 'captain-who'); //timezones
-    // doc.match('(standard|daylight|summer|eastern|pacific|central|mountain) standard? time').tag('Time', 'timezone')
-    //Brazilian pesos
-
-    doc.match('#Demonym #Currency').tag('Currency', 'demonym-currency'); //about to go
-
-    doc.match('[about to] #Adverb? #Verb', 0).tag(['Auxiliary', 'Verb'], 'about-to'); //right of way
-
-    doc.match('(right|rights) of .').tag('Noun', 'right-of'); // a bit
-
-    doc.match('[much] #Adjective', 0).tag('Adverb', 'bit-1');
-    doc.match('a [bit]', 0).tag('Noun', 'bit-2');
-    doc.match('a bit much').tag('Determiner Adverb Adjective', 'bit-3');
-    doc.match('too much').tag('Adverb Adjective', 'bit-4'); // u r cool
-
-    doc.match('u r').tag('Pronoun #Copula', 'u r'); // well, ...
-
-    doc.match('^(well|so|okay)').tag('Expression', 'well-'); // had he survived,
-
-    doc.match('had #Noun+ #PastTense').ifNo('@hasComma').firstTerm().tag('Condition', 'had-he'); // were he to survive
-
-    doc.match('were #Noun+ to #Infinitive').ifNo('@hasComma').firstTerm().tag('Condition', 'were-he'); //swear-words as non-expression POS
-    //nsfw
-
-    doc.match('holy (shit|fuck|hell)').tag('Expression', 'swears-expression');
-    doc.match('#Determiner [(shit|damn|hell)]', 0).tag('Noun', 'swears-noun');
-    doc.match('[(shit|damn|fuck)] (#Determiner|#Possessive|them)', 0).tag('Verb', 'swears-verb');
-    doc.match('#Copula fucked up?').not('#Copula').tag('Adjective', 'swears-adjective'); //ambig prepositions/conjunctions
-
-    var so = doc["if"]('so');
-
-    if (so.found === true) {
-      //so funny
-      so.match('[so] #Adjective', 0).tag('Adverb', 'so-adv'); //so the
-
-      so.match('[so] #Noun', 0).tag('Conjunction', 'so-conj'); //do so
-
-      so.match('do [so]', 0).tag('Noun', 'so-noun');
-    }
-
-    var all = doc["if"]('all');
-
-    if (all.found === true) {
-      //all students
-      all.match('[all] #Determiner? #Noun', 0).tag('Adjective', 'all-noun'); //it all fell apart
-
-      all.match('[all] #Verb', 0).tag('Adverb', 'all-verb');
-    } //the ambiguous word 'that' and 'which'
+    if (m.found) {
+      if (m.has('(one|1)') === true) {
+        m.terms(1).tag('Singular', 'one-presentTense');
+      } else {
+        m.terms(1).tag('Plural', 'value-presentTense');
+      }
+    } // well i've been...
 
 
-    var which = doc["if"]('which');
+    doc.match('^(well|so|okay)').tag('Expression', 'well-'); //been walking
 
-    if (which.found === true) {
-      //remind john that
-      which.match('#Verb #Adverb? #Noun [(that|which)]', 0).tag('Preposition', 'that-prep'); //that car goes
+    doc.match("(be|been) (#Adverb|not)+? #Gerund").not('#Verb$').tag('Auxiliary', 'be-walking'); // directive verb - 'use reverse'
 
-      which.match('that #Noun [#Verb]', 0).tag('Determiner', 'that-determiner'); //work, which has been done.
+    doc.match('(try|use|attempt|build|make) #Verb').ifNo('(@hasComma|#Negative|#Copula|will|be)').lastTerm().tag('#Noun', 'do-verb'); //possessives
+    //'her match' vs 'let her match'
 
-      which.match('@hasComma [which] (#Pronoun|#Verb)', 0).tag('Preposition', 'which-copula');
-    } //like
+    m = doc.match('#Possessive [#Infinitive]', 0);
 
-
-    var like = doc["if"]('like');
-
-    if (like.found === true) {
-      like.match('just [like]', 0).tag('Preposition', 'like-preposition'); //folks like her
-
-      like.match('#Noun [like] #Noun', 0).tag('Preposition', 'noun-like'); //look like
-
-      like.match('#Verb [like]', 0).tag('Adverb', 'verb-like'); //exactly like
-
-      like.match('#Adverb like').notIf('(really|generally|typically|usually|sometimes|often) [like]').tag('Adverb', 'adverb-like');
-    }
-
-    var title = doc["if"]('@titleCase');
-
-    if (title.found === true) {
-      //FitBit Inc
-      title.match('@titleCase (ltd|co|inc|dept|assn|bros)').tag('Organization', 'org-abbrv'); //Foo District
-
-      title.match('@titleCase+ (district|region|province|county|prefecture|municipality|territory|burough|reservation)').tag('Region', 'foo-district'); //District of Foo
-
-      title.match('(district|region|province|municipality|territory|burough|state) of @titleCase').tag('Region', 'district-of-Foo');
-    }
-
-    var hyph = doc["if"]('@hasHyphen');
-
-    if (hyph.found === true) {
-      //air-flow
-      hyph.match('@hasHyphen .').match('#Noun #Verb').tag('Noun', 'hyphen-verb'); //connect hyphenated expressions - 'ooh-wee'
-
-      hyph["if"]('#Expression').match('@hasHyphen+').tag('Expression', 'ooh-wee');
-    }
-
-    var place = doc["if"]('#Place');
-
-    if (place.found === true) {
-      //West Norforlk
-      place.match('(west|north|south|east|western|northern|southern|eastern)+ #Place').tag('Region', 'west-norfolk'); //some us-state acronyms (exlude: al, in, la, mo, hi, me, md, ok..)
-
-      place.match('#City [#Acronym]', 0).match('(al|ak|az|ar|ca|ct|dc|fl|ga|id|il|nv|nh|nj|ny|oh|or|pa|sc|tn|tx|ut|vt|pr)').tag('Region', 'us-state');
+    if (!m.lookBehind('(let|made|make|force|ask)').found) {
+      m.tag('Noun', 'her-match');
     }
 
     return doc;
@@ -10107,699 +10150,1430 @@
 
   var fixMisc = miscCorrection;
 
-  //Determiner-signals
-  var fixThe = function fixThe(doc) {
-    var det = doc["if"]('#Determiner');
+  // order matters
+  var list = [//there are reasons
+  {
+    match: 'there (are|were) #Adjective? [#PresentTense]',
+    group: 0,
+    tag: 'Plural',
+    reason: 'there-are'
+  }, //still goodß
+  {
+    match: '[still] #Adjective',
+    group: 0,
+    tag: 'Adverb',
+    reason: 'still-advb'
+  }, //barely even walk
+  {
+    match: '(barely|hardly) even',
+    tag: 'Adverb',
+    reason: 'barely-even'
+  }, //big dreams, critical thinking
+  {
+    match: '#Adjective [#PresentTense]',
+    group: 0,
+    tag: 'Noun',
+    reason: 'adj-presentTense'
+  }, //will secure our
+  {
+    match: 'will [#Adjective]',
+    group: 0,
+    tag: 'Verb',
+    reason: 'will-adj'
+  }, //cheering hard - dropped -ly's
+  {
+    match: '#PresentTense [(hard|quick|long|bright|slow)]',
+    group: 0,
+    tag: 'Adverb',
+    reason: 'lazy-ly'
+  }, //his fine
+  {
+    match: '(his|her|its) [#Adjective]',
+    group: 0,
+    tag: 'Noun',
+    reason: 'his-fine'
+  }, //he left
+  {
+    match: '#Noun #Adverb? [left]',
+    group: 0,
+    tag: 'PastTense',
+    reason: 'left-verb'
+  }, //he disguised the thing
+  {
+    match: '#Pronoun [#Adjective] #Determiner #Adjective? #Noun',
+    group: 0,
+    tag: 'Verb',
+    reason: 'he-adj-the'
+  }, //march to
+  {
+    match: '[march] (up|down|back|to|toward)',
+    group: 0,
+    tag: 'Infinitive',
+    reason: 'march-to'
+  }, //must march
+  {
+    match: '#Modal [march]',
+    group: 0,
+    tag: 'Infinitive',
+    reason: 'must-march'
+  }, // sun the 5th
+  {
+    match: '[sun] the #Ordinal',
+    tag: 'WeekDay',
+    reason: 'sun-the-5th'
+  }, //sun feb 2
+  {
+    match: '[sun] #Date',
+    group: 0,
+    tag: 'WeekDay',
+    reason: 'sun-feb'
+  }, //1pm next sun
+  {
+    match: '#Date (on|this|next|last|during)? [sun]',
+    group: 0,
+    tag: 'WeekDay',
+    reason: '1pm-sun'
+  }, //the sun
+  {
+    match: '#Determiner [sun]',
+    group: 0,
+    tag: 'Singular',
+    reason: 'the-sun'
+  }, //sat november
+  {
+    match: '[sat] #Date',
+    group: 0,
+    tag: 'WeekDay',
+    reason: 'sat-feb'
+  }, //this sat
+  {
+    match: "(in|by|before|during|on|until|after|of|within|all) [sat]",
+    group: 0,
+    tag: 'WeekDay',
+    reason: 'sat'
+  }, //5th of March
+  {
+    match: '#Value of #Month',
+    tag: 'Date',
+    reason: 'value-of-month'
+  }, //5 March
+  {
+    match: '#Cardinal #Month',
+    tag: 'Date',
+    reason: 'cardinal-month'
+  }, //march 5 to 7
+  {
+    match: '#Month #Value to #Value',
+    tag: 'Date',
+    reason: 'value-to-value'
+  }, //march the 12th
+  {
+    match: '#Month the #Value',
+    tag: 'Date',
+    reason: 'month-the-value'
+  }, //minus 7
+  {
+    match: '(minus|negative) #Value',
+    tag: 'Value',
+    reason: 'minus-value'
+  }, {
+    match: '(#Noun && @hasComma) #Noun (and|or) [#PresentTense]',
+    group: 0,
+    tag: 'Noun',
+    reason: 'noun-list'
+  }, //3 feet
+  {
+    match: '#Value [(foot|feet)]',
+    group: 0,
+    tag: 'Unit',
+    reason: 'foot-unit'
+  }, //'u' as pronoun
+  {
+    match: '#Conjunction [u]',
+    group: 0,
+    tag: 'Pronoun',
+    reason: 'u-pronoun-2'
+  }, //6 am
+  {
+    match: '#Holiday (day|eve)',
+    tag: 'Holiday',
+    reason: 'holiday-day'
+  }, // the captain who
+  {
+    match: '#Noun [(who|whom)]',
+    group: 0,
+    tag: 'Determiner',
+    reason: 'captain-who'
+  }, //timezones
+  {
+    match: '#Demonym #Currency',
+    tag: 'Currency',
+    reason: 'demonym-currency'
+  }, //about to go
+  {
+    match: '[about to] #Adverb? #Verb',
+    group: 0,
+    tag: ['Auxiliary', 'Verb'],
+    reason: 'about-to'
+  }, //right of way
+  {
+    match: '(right|rights) of .',
+    tag: 'Noun',
+    reason: 'right-of'
+  }, // a bit
+  {
+    match: '[much] #Adjective',
+    group: 0,
+    tag: 'Adverb',
+    reason: 'bit-1'
+  }, {
+    match: 'a [bit]',
+    group: 0,
+    tag: 'Noun',
+    reason: 'bit-2'
+  }, {
+    match: 'a bit much',
+    tag: 'Determiner Adverb Adjective',
+    reason: 'bit-3'
+  }, {
+    match: 'too much',
+    tag: 'Adverb Adjective',
+    reason: 'bit-4'
+  }, // u r cool
+  {
+    match: 'u r',
+    tag: 'Pronoun Copula',
+    reason: 'u r'
+  }, // well, ...
+  //spencer kelly's
+  {
+    match: '#FirstName #Acronym? (#Possessive && #LastName)',
+    tag: 'Possessive',
+    reason: 'name-poss'
+  }, //Super Corp's fundraiser
+  {
+    match: '#Organization+ #Possessive',
+    tag: 'Possessive',
+    reason: 'org-possessive'
+  }, //Los Angeles's fundraiser
+  {
+    match: '#Place+ #Possessive',
+    tag: 'Possessive',
+    reason: 'place-possessive'
+  }, //let him glue
+  {
+    match: '(let|make|made) (him|her|it|#Person|#Place|#Organization)+ [#Singular] (a|an|the|it)',
+    group: 0,
+    tag: '#Infinitive',
+    reason: 'let-him-glue'
+  }, //swear-words as non-expression POS
+  //nsfw
+  {
+    match: 'holy (shit|fuck|hell)',
+    tag: 'Expression',
+    reason: 'swears-expression'
+  }, {
+    match: '#Determiner [(shit|damn|hell)]',
+    group: 0,
+    tag: 'Noun',
+    reason: 'swears-noun'
+  }, // is f*ed up
+  {
+    match: '#Copula [fucked up?]',
+    tag: 'Adjective',
+    reason: 'swears-adjective'
+  }, {
+    match: '[so] #Adjective',
+    group: 0,
+    tag: 'Adverb',
+    reason: 'so-adv'
+  }, //so the
+  {
+    match: '[so] #Noun',
+    group: 0,
+    tag: 'Conjunction',
+    reason: 'so-conj'
+  }, //do so
+  {
+    match: 'do [so]',
+    group: 0,
+    tag: 'Noun',
+    reason: 'so-noun'
+  }, //all students
+  {
+    match: '[all] #Determiner? #Noun',
+    group: 0,
+    tag: 'Adjective',
+    reason: 'all-noun'
+  }, //it all fell apart
+  {
+    match: '[all] #Verb',
+    group: 0,
+    tag: 'Adverb',
+    reason: 'all-verb'
+  }, //remind john that
+  {
+    match: '#Verb #Adverb? #Noun [(that|which)]',
+    group: 0,
+    tag: 'Preposition',
+    reason: 'that-prep'
+  }, //that car goes
+  {
+    match: 'that #Noun [#Verb]',
+    group: 0,
+    tag: 'Determiner',
+    reason: 'that-determiner'
+  }, //work, which has been done.
+  {
+    match: '@hasComma [which] (#Pronoun|#Verb)',
+    group: 0,
+    tag: 'Preposition',
+    reason: 'which-copula'
+  }, {
+    match: 'just [like]',
+    group: 0,
+    tag: 'Preposition',
+    reason: 'like-preposition'
+  }, //folks like her
+  {
+    match: '#Noun [like] #Noun',
+    group: 0,
+    tag: 'Preposition',
+    reason: 'noun-like'
+  }, //look like
+  {
+    match: '#Verb [like]',
+    group: 0,
+    tag: 'Adverb',
+    reason: 'verb-like'
+  }, //District of Foo
+  {
+    match: '(district|region|province|municipality|territory|burough|state) of #ProperNoun',
+    tag: 'Region',
+    reason: 'district-of-Foo'
+  }, //'more' is not always an adverb
+  {
+    match: 'more #Noun',
+    tag: 'Noun',
+    reason: 'more-noun'
+  }, //he quickly foo
+  {
+    match: '#Noun #Adverb [#Noun]',
+    group: 0,
+    tag: 'Verb',
+    reason: 'quickly-foo'
+  }, //fix for busted-up phrasalVerbs
+  {
+    match: '#Noun [#Particle]',
+    group: 0,
+    tag: 'Preposition',
+    reason: 'repair-noPhrasal'
+  }, //John & Joe's
+  {
+    match: '#Noun (&|n) #Noun',
+    tag: 'Organization',
+    reason: 'Noun-&-Noun'
+  }, //Aircraft designer
+  {
+    match: '#Noun #Actor',
+    tag: 'Actor',
+    reason: 'thing-doer'
+  }, //j.k Rowling
+  {
+    match: '#Noun van der? #Noun',
+    tag: 'Person',
+    reason: 'von der noun',
+    safe: true
+  }, //king of spain
+  {
+    match: '(king|queen|prince|saint|lady) of? #Noun',
+    tag: 'Person',
+    reason: 'king-of-noun',
+    safe: true
+  }, //Foo U Ford
+  {
+    match: '[#ProperNoun] #Person',
+    group: 0,
+    tag: 'Person',
+    reason: 'proper-person',
+    safe: true
+  }, // addresses
+  {
+    match: '#Value #Noun (st|street|rd|road|crescent|cr|way|tr|terrace|avenue|ave)',
+    tag: 'Address',
+    reason: 'address-st'
+  }, // schools
+  {
+    match: '#Noun+ (public|private) school',
+    tag: 'School',
+    reason: 'noun-public-school'
+  }, {
+    match: '#Organization of the? #ProperNoun',
+    tag: 'Organization',
+    reason: 'org-of-place',
+    safe: true
+  }, {
+    match: '#Organization #Country',
+    tag: 'Organization',
+    reason: 'org-country'
+  }, {
+    match: '(world|global|international|national|#Demonym) #Organization',
+    tag: 'Organization',
+    reason: 'global-org'
+  }, //some pressing issues
+  {
+    match: 'some [#Verb] #Plural',
+    group: 0,
+    tag: 'Noun',
+    reason: 'determiner6'
+  }, //this rocks
+  {
+    match: '(this|that) [#Plural]',
+    group: 0,
+    tag: 'PresentTense',
+    reason: 'this-verbs'
+  }, //my buddy
+  {
+    match: '#Possessive [#FirstName]',
+    group: 0,
+    tag: 'Person',
+    reason: 'possessive-name'
+  }, //her polling
+  {
+    match: '#Possessive [#Gerund]',
+    group: 0,
+    tag: 'Noun',
+    reason: 'her-polling'
+  }, //her fines
+  {
+    match: '(his|her|its) [#PresentTense]',
+    group: 0,
+    tag: 'Noun',
+    reason: 'its-polling'
+  }, //linear algebra
+  {
+    match: '(#Determiner|#Value) [(linear|binary|mobile|lexical|technical|computer|scientific|formal)] #Noun',
+    group: 0,
+    tag: 'Noun',
+    reason: 'technical-noun'
+  }, {
+    match: '#Honorific #Acronym',
+    tag: 'Person',
+    reason: 'Honorific-TitleCase'
+  }, //remove single 'mr'
+  // ['^#Honorific$').unTag('Person', 'single-honorific'}, //first general..
+  //the word 'second'
+  // doc
+  // .match('[second] #Noun', 0)
+  // .notIf('#Honorific')
+  // .unTag('Unit')
+  // .tag('Ordinal', 'second-noun')
+  {
+    match: '[second] #Noun',
+    group: 0,
+    tag: 'Ordinal',
+    reason: 'second-noun'
+  }, {
+    match: '[(1st|2nd|first|second)] #Honorific',
+    group: 0,
+    tag: 'Honorific',
+    reason: 'ordinal-honorific'
+  }, {
+    match: '#Acronym #ProperNoun',
+    tag: 'Person',
+    reason: 'acronym-titlecase',
+    safe: true
+  }, //ludwig van beethovan
+  {
+    match: '#Person (jr|sr|md)',
+    tag: 'Person',
+    reason: 'person-honorific'
+  }, //peter II
+  {
+    match: '#Person #Person the? #RomanNumeral',
+    tag: 'Person',
+    reason: 'roman-numeral'
+  }, //'Professor Fink', 'General McCarthy'
+  {
+    match: '#FirstName [/^[^aiurck]$/]',
+    group: 0,
+    tag: ['Acronym', 'Person'],
+    reason: 'john-e'
+  }, //Doctor john smith jr
+  {
+    match: '#Honorific #Person',
+    tag: 'Person',
+    reason: 'honorific-person'
+  }, //general pearson
+  {
+    match: '[(private|general|major|corporal|lord|lady|secretary|premier)] #Honorific? #Person',
+    group: 0,
+    tag: 'Honorific',
+    reason: 'ambg-honorifics'
+  }, //West Norforlk
+  {
+    match: '(west|north|south|east|western|northern|southern|eastern)+ #Place',
+    tag: 'Region',
+    reason: 'west-norfolk'
+  }, {
+    match: 'al (#Person|#ProperNoun)',
+    tag: 'Person',
+    reason: 'al-borlen',
+    safe: true
+  }, //ferdinand de almar
+  {
+    match: '#FirstName de #Noun',
+    tag: 'Person',
+    reason: 'bill-de-noun'
+  }, //Osama bin Laden
+  {
+    match: '#FirstName (bin|al) #Noun',
+    tag: 'Person',
+    reason: 'bill-al-noun'
+  }, //John L. Foo
+  {
+    match: '#FirstName #Acronym #ProperNoun',
+    tag: 'Person',
+    reason: 'bill-acronym-title'
+  }, //Andrew Lloyd Webber
+  {
+    match: '#FirstName #FirstName #ProperNoun',
+    tag: 'Person',
+    reason: 'bill-firstname-title'
+  }, //Mr Foo
+  {
+    match: '#Honorific #FirstName? #ProperNoun',
+    tag: 'Person',
+    reason: 'dr-john-Title'
+  }, //peter the great
+  {
+    match: '#FirstName the #Adjective',
+    tag: 'Person',
+    reason: 'name-the-great'
+  }, //very common-but-ambiguous lastnames
+  {
+    match: '#FirstName (green|white|brown|hall|young|king|hill|cook|gray|price)',
+    tag: 'Person',
+    reason: 'bill-green'
+  }, //is foo Smith
+  {
+    match: '#Copula [(#Noun|#PresentTense)] #LastName',
+    group: 0,
+    tag: 'FirstName',
+    reason: 'copula-noun-lastname'
+  }, //ambiguous-but-common firstnames
+  {
+    match: '[(will|may|april|june|said|rob|wade|ray|rusty|drew|miles|jack|chuck|randy|jan|pat|cliff|bill)] #LastName',
+    group: 0,
+    tag: 'FirstName',
+    reason: 'maybe-lastname'
+  }, //the nice swim
+  {
+    match: '(the|this|those|these) #Adjective [#Verb]',
+    group: 0,
+    tag: 'Noun',
+    reason: 'the-adj-verb'
+  }, // the truly nice swim
+  {
+    match: '(the|this|those|these) #Adverb #Adjective [#Verb]',
+    group: 0,
+    tag: 'Noun',
+    reason: 'determiner4'
+  }, //the orange is
+  {
+    match: '#Determiner [#Adjective] (#Copula|#PastTense|#Auxiliary)',
+    group: 0,
+    tag: 'Noun',
+    reason: 'the-adj-2'
+  }, // a stream runs
+  {
+    match: '(the|this|a|an) [#Infinitive] #Adverb? #Verb',
+    group: 0,
+    tag: 'Noun',
+    reason: 'determiner5'
+  }, //the test string
+  {
+    match: '#Determiner [#Infinitive] #Noun',
+    group: 0,
+    tag: 'Noun',
+    reason: 'determiner7'
+  }, //by a bear.
+  {
+    match: '#Determiner #Adjective [#Infinitive]$',
+    group: 0,
+    tag: 'Noun',
+    reason: 'a-inf'
+  }, //the wait to vote
+  {
+    match: '(the|this) [#Verb] #Preposition .',
+    group: 0,
+    tag: 'Noun',
+    reason: 'determiner1'
+  }, //a sense of
+  {
+    match: '#Determiner [#Verb] of',
+    group: 0,
+    tag: 'Noun',
+    reason: 'the-verb-of'
+  }, //the threat of force
+  {
+    match: '#Determiner #Noun of [#Verb]',
+    group: 0,
+    tag: 'Noun',
+    reason: 'noun-of-noun'
+  }, //the western line
+  {
+    match: '#Determiner [(western|eastern|northern|southern|central)] #Noun',
+    group: 0,
+    tag: 'Noun',
+    reason: 'western-line'
+  }, //a staggering cost
+  {
+    match: '(a|an) [#Gerund]',
+    group: 0,
+    tag: 'Adjective',
+    reason: 'a|an'
+  }, //did a 900, paid a 20
+  {
+    match: '#Verb (a|an) [#Value]',
+    group: 0,
+    tag: 'Singular',
+    reason: 'did-a-value'
+  }, //a tv show
+  {
+    match: '(a|an) #Noun [#Infinitive]',
+    group: 0,
+    tag: 'Noun',
+    reason: 'a-noun-inf'
+  }, //5 yan
+  {
+    match: '#Value+ [#Currency]',
+    group: 0,
+    tag: 'Unit',
+    reason: '5-yan'
+  }, {
+    match: '#Value+ #Currency',
+    tag: 'Money',
+    reason: '15 usd'
+  }, // had he survived,
+  {
+    match: '[had] #Noun+ #PastTense',
+    group: 0,
+    tag: 'Condition',
+    reason: 'had-he'
+  }, // were he to survive
+  {
+    match: '[were] #Noun+ to #Infinitive',
+    group: 0,
+    tag: 'Condition',
+    reason: 'were-he'
+  }, //a great run
+  {
+    match: '(a|an) #Adjective [(#Infinitive|#PresentTense)]',
+    tag: 'Noun',
+    reason: 'a|an2'
+  }, //a close
+  {
+    match: '#Determiner #Adverb? [close]',
+    group: 0,
+    tag: 'Adjective',
+    reason: 'a-close'
+  }, //1 800 PhoneNumber
+  {
+    match: '1 #Value #PhoneNumber',
+    tag: 'PhoneNumber',
+    reason: '1-800-Value'
+  }, //(454) 232-9873
+  {
+    match: '#NumericValue #PhoneNumber',
+    tag: 'PhoneNumber',
+    reason: '(800) PhoneNumber'
+  }, //5 kg.
+  {
+    match: '#Value #Abbreviation',
+    tag: 'Value',
+    reason: 'value-abbr'
+  }, //seven point five
+  {
+    match: '#Value (point|decimal) #Value',
+    tag: 'Value',
+    reason: 'value-point-value'
+  }, // ten grand
+  {
+    match: '#Value grand',
+    tag: 'Value',
+    reason: 'value-grand'
+  }, //quarter million
+  {
+    match: '(a|the) [(half|quarter)] #Ordinal',
+    group: 0,
+    tag: 'Value',
+    reason: 'half-ordinal'
+  }, {
+    match: 'a #Value',
+    tag: 'Value',
+    reason: 'a-value'
+  }, {
+    match: '[(do|does|will|have|had)] (not|#Adverb)? #Verb',
+    group: 0,
+    tag: 'Auxiliary',
+    reason: 'have-had'
+  }, //still make
+  {
+    match: '[still] #Verb',
+    group: 0,
+    tag: 'Adverb',
+    reason: 'still-verb'
+  }, //'u' as pronoun
+  {
+    match: '[u] #Verb',
+    group: 0,
+    tag: 'Pronoun',
+    reason: 'u-pronoun-1'
+  }, //is no walk
+  {
+    match: 'is no [#Verb]',
+    group: 0,
+    tag: 'Noun',
+    reason: 'is-no-verb'
+  }, //different views than
+  {
+    match: '[#Verb] than',
+    group: 0,
+    tag: 'Noun',
+    reason: 'correction'
+  }, // smoked poutine is
+  {
+    match: '[#PastTense] #Singular is',
+    group: 0,
+    tag: 'Adjective',
+    reason: 'smoked-poutine'
+  }, // baked onions are
+  {
+    match: '[#PastTense] #Plural are',
+    group: 0,
+    tag: 'Adjective',
+    reason: 'baked-onions'
+  }, // goes to sleep
+  {
+    match: '(go|goes|went) to [#Infinitive]',
+    group: 0,
+    tag: 'Noun',
+    reason: 'goes-to-verb'
+  }, //was walking
+  {
+    match: "[#Copula (#Adverb|not)+?] (#Gerund|#PastTense)",
+    group: 0,
+    tag: 'Auxiliary',
+    reason: 'copula-walking'
+  }, //support a splattering of auxillaries before a verb
+  {
+    match: "[(has|had) (#Adverb|not)+?] #PastTense",
+    group: 0,
+    tag: 'Auxiliary',
+    reason: 'had-walked'
+  }, //would walk
+  {
+    match: "[(#Modal|did) (#Adverb|not)+?] #Verb",
+    group: 0,
+    tag: 'Auxiliary',
+    reason: 'modal-verb'
+  }, //would have had
+  {
+    match: "[#Modal (#Adverb|not)+? have (#Adverb|not)+? had (#Adverb|not)+?] #Verb",
+    group: 0,
+    tag: 'Auxiliary',
+    reason: 'would-have'
+  }, //would be walking
+  {
+    match: "#Modal (#Adverb|not)+? be (#Adverb|not)+? #Verb",
+    group: 0,
+    tag: 'Auxiliary',
+    reason: 'would-be'
+  }, //had been walking
+  {
+    match: "(#Modal|had|has) (#Adverb|not)+? been (#Adverb|not)+? #Verb",
+    group: 0,
+    tag: 'Auxiliary',
+    reason: 'had-been'
+  }, //jack seems guarded
+  {
+    match: '#Singular (seems|appears) #Adverb? [#PastTense$]',
+    group: 0,
+    tag: 'Adjective',
+    reason: 'seems-filled'
+  }, //fall over
+  {
+    match: '#PhrasalVerb [#PhrasalVerb]',
+    group: 0,
+    tag: 'Particle',
+    reason: 'phrasal-particle'
+  }, //'the can'
+  {
+    match: '#Determiner [(can|will|may)]',
+    group: 0,
+    tag: 'Singular',
+    reason: 'the can'
+  }, //is mark hughes
+  {
+    match: '#Copula [#Infinitive] #Noun',
+    group: 0,
+    tag: 'Noun',
+    reason: 'is-pres-noun'
+  }, //
+  {
+    match: '[#Infinitive] #Copula',
+    group: 0,
+    tag: 'Noun',
+    reason: 'inf-copula'
+  }, //sometimes not-adverbs
+  {
+    match: '#Copula [(just|alone)]$',
+    group: 0,
+    tag: 'Adjective',
+    reason: 'not-adverb'
+  }, //jack is guarded
+  {
+    match: '#Singular is #Adverb? [#PastTense$]',
+    group: 0,
+    tag: 'Adjective',
+    reason: 'is-filled'
+  }, //is eager to go
+  {
+    match: '#Copula [#Adjective to] #Verb',
+    group: 0,
+    tag: 'Verb',
+    reason: 'adj-to'
+  }, //walking is cool
+  {
+    match: '[#Gerund] #Adverb? not? #Copula',
+    group: 0,
+    tag: 'Activity',
+    reason: 'gerund-copula'
+  }, //walking should be fun
+  {
+    match: '[#Gerund] #Modal',
+    group: 0,
+    tag: 'Activity',
+    reason: 'gerund-modal'
+  }, //running-a-show
+  {
+    match: '#Gerund #Determiner [#Infinitive]',
+    group: 0,
+    tag: 'Noun',
+    reason: 'running-a-show'
+  }, //the word 'how'
+  {
+    match: '^how',
+    tag: 'QuestionWord',
+    reason: 'how-question'
+  }, {
+    match: '[how] (#Determiner|#Copula|#Modal|#PastTense)',
+    group: 0,
+    tag: 'QuestionWord',
+    reason: 'how-is'
+  }, // //the word 'which'
+  {
+    match: '^which',
+    tag: 'QuestionWord',
+    reason: 'which-question'
+  }, {
+    match: '[which] . (#Noun)+ #Pronoun',
+    group: 0,
+    tag: 'QuestionWord',
+    reason: 'which-question2'
+  }, {
+    match: 'which',
+    tag: 'QuestionWord',
+    reason: 'which-question3'
+  }, //air-flow
+  {
+    match: '(#Noun && @hasHyphen) #Verb',
+    tag: 'Noun',
+    reason: 'hyphen-verb'
+  }, //some us-state acronyms (exlude: al, in, la, mo, hi, me, md, ok..)
+  {
+    match: '#City [(al|ak|az|ar|ca|ct|dc|fl|ga|id|il|nv|nh|nj|ny|oh|or|pa|sc|tn|tx|ut|vt|pr)]',
+    group: 0,
+    tag: 'Region',
+    reason: 'us-state'
+  }, //may twenty five
+  {
+    match: '(#TextValue && #Date) #TextValue',
+    tag: 'Date',
+    reason: 'textvalue-date'
+  }, // Dwayne 'the rock' Johnson
+  {
+    match: '#FirstName [#Determiner #Noun] #LastName',
+    group: 0,
+    tag: '#NickName',
+    reason: 'first-noun-last'
+  }, //Jani K. Smith
+  {
+    match: '#Singular #Acronym #LastName',
+    tag: '#Person',
+    reason: 'title-acro-noun',
+    safe: true
+  }, //John Foo
+  {
+    match: '#FirstName (#Noun && #ProperNoun) #ProperNoun?',
+    tag: 'Person',
+    reason: 'firstname-titlecase'
+  }, //Joe K. Sombrero
+  {
+    match: '#FirstName #Acronym #Noun',
+    tag: 'Person',
+    reason: 'n-acro-noun',
+    safe: true
+  }, //sometimes adverbs - 'pretty good','well above'
+  {
+    match: '#Copula (pretty|dead|full|well) (#Adjective|#Noun)',
+    tag: '#Copula #Adverb #Adjective',
+    reason: 'sometimes-adverb'
+  }, //june 7
+  {
+    match: '(#WeekDay|#Month) #Value',
+    tag: 'Date',
+    reason: 'date-value'
+  }, //7 june
+  {
+    match: '#Value (#WeekDay|#Month)',
+    tag: 'Date',
+    reason: 'value-date'
+  }, //organization
+  {
+    match: '#ProperNoun #Organization',
+    tag: 'Organization',
+    reason: 'titlecase-org'
+  }, //'a/an' can mean 1 - "a hour"
+  {
+    match: '[(a|an)] (#Duration|hundred|thousand|million|billion|trillion)',
+    group: 0,
+    tag: 'Valye',
+    reason: 'a-is-one'
+  }, //how he is driving
+  {
+    match: '[(who|what|where|why|how|when)] #Noun #Copula #Adverb? (#Verb|#Adjective)',
+    group: 0,
+    tag: 'Conjunction',
+    reason: 'how-he-is-x'
+  }, {
+    match: '[(who|what|where|why|how|when)] #Noun #Adverb? #Infinitive not? #Gerund',
+    group: 0,
+    tag: 'Conjunction',
+    reason: 'when i go fishing'
+  }, //will be running (not copula)
+  {
+    match: '[will #Adverb? not? #Adverb? be] #Gerund',
+    group: 0,
+    tag: 'Copula',
+    reason: 'will-be-copula'
+  }, //for more complex forms, just tag 'be'
+  {
+    match: 'will #Adverb? not? #Adverb? [be] #Adjective',
+    group: 0,
+    tag: 'Copula',
+    reason: 'be-copula'
+  }, //FitBit Inc
+  {
+    match: '#ProperNoun (ltd|co|inc|dept|assn|bros)',
+    tag: 'Organization',
+    reason: 'org-abbrv'
+  }, {
+    match: '#ProperNoun (van|al|bin) #ProperNoun',
+    tag: 'Person',
+    reason: 'title-van-title',
+    safe: true
+  }, //jose de Sucre
+  {
+    match: '#ProperNoun (de|du) la? #ProperNoun',
+    tag: 'Person',
+    reason: 'title-de-title',
+    safe: true
+  }, //Foo District
+  {
+    match: '#ProperNoun+ (district|region|province|county|prefecture|municipality|territory|burough|reservation)',
+    tag: 'Region',
+    reason: 'foo-district'
+  }, // walk the walk
+  {
+    match: '(the|those|these) #Adjective? [#Infinitive]',
+    group: 0,
+    tag: 'Noun',
+    reason: 'det-inf'
+  }, {
+    match: '(the|those|these) #Adjective? [#PresentTense]',
+    group: 0,
+    tag: 'Noun',
+    reason: 'det-pres'
+  }, {
+    match: '(the|those|these) #Adjective? [#PastTense]',
+    group: 0,
+    tag: 'Noun',
+    reason: 'det-past'
+  }, // damn them
+  {
+    match: '[shit] (#Determiner|#Possessive|them)',
+    group: 0,
+    tag: 'Verb',
+    reason: 'swear1-verb'
+  }, {
+    match: '[damn] (#Determiner|#Possessive|them)',
+    group: 0,
+    tag: 'Verb',
+    reason: 'swear2-verb'
+  }, {
+    match: '[fuck] (#Determiner|#Possessive|them)',
+    group: 0,
+    tag: 'Verb',
+    reason: 'swear3-verb'
+  }, //'foo-up'
+  {
+    match: '(#Verb && @hasHyphen) up',
+    group: 0,
+    tag: 'PhrasalVerb',
+    reason: 'foo-up'
+  }, {
+    match: '(#Verb && @hasHyphen) off',
+    group: 0,
+    tag: 'PhrasalVerb',
+    reason: 'foo-off'
+  }, {
+    match: '(#Verb && @hasHyphen) over',
+    group: 0,
+    tag: 'PhrasalVerb',
+    reason: 'foo-over'
+  }, {
+    match: '(#Verb && @hasHyphen) out',
+    group: 0,
+    tag: 'PhrasalVerb',
+    reason: 'foo-out'
+  }, //pope francis
+  {
+    match: '(lady|queen|sister) #ProperNoun',
+    tag: 'FemaleName',
+    reason: 'lady-titlecase',
+    safe: true
+  }, {
+    match: '(king|pope|father) #ProperNoun',
+    tag: 'MaleName',
+    reason: 'pope-titlecase',
+    safe: true
+  }, // the OCED
+  {
+    match: 'the [#Acronym]',
+    group: 0,
+    tag: 'Organization',
+    reason: 'the-acronym',
+    safe: true
+  } // { match: '', group: 0, tag: , reason: '' },
+  ]; // let obj = {}
+  // list.forEach(a => {
+  //   if (obj[a.match] === true) {
+  //     console.log(a.match)
+  //   }
+  //   obj[a.match] = true
+  //   console.log(a.tag)
+  // })
 
-    if (det.found === true) {
-      var adj = det["if"]('#Adjective');
+  var _corrections = list;
 
-      if (adj.found) {
-        //the nice swim
-        adj.match('(the|this|those|these) #Adjective [#Verb]', 0).tag('Noun', 'the-adj-verb'); // the truly nice swim
+  //blast-out programmatic match statements, based on a list
+  //based on our caching, this is actually faster to do.
+  var pipe = /\|/;
+  var list$1 = [];
+  var units = 'hundred|thousand|million|billion|trillion|quadrillion'.split(pipe);
+  units.forEach(function (unit) {
+    // thousand and two
+    list$1.push({
+      match: "".concat(unit, "+ and #Value"),
+      tag: 'Value',
+      reason: 'magnitude-and-value'
+    });
+  });
+  var maybeMonth = ['march', 'may'];
+  maybeMonth.forEach(function (month) {
+    //all march
+    list$1.push({
+      match: "#Preposition [".concat(month, "]"),
+      group: 0,
+      tag: 'Month',
+      reason: 'in-month'
+    }); //this march
 
-        adj.match('(the|this|those|these) #Adverb #Adjective [#Verb]', 0).tag('Noun', 'correction-determiner4'); //the orange is
+    list$1.push({
+      match: "(next|this|last) [".concat(month, "]"),
+      group: 0,
+      tag: 'Month',
+      reason: 'this-month'
+    }); // march 5th
 
-        adj.match('#Determiner [#Adjective] (#Copula|#PastTense|#Auxiliary)', 0).tag('Noun', 'the-adj-2'); //the orange.
+    list$1.push({
+      match: "[".concat(month, "] the? #Value"),
+      group: 0,
+      tag: 'Month',
+      reason: 'march-5th'
+    }); // 5th of march
 
-        adj.match('#Determiner #Adjective$').notIf('(#Comparative|#Superlative)').terms(1).tag('Noun', 'the-adj-1');
-      }
+    list$1.push({
+      match: "#Value of? [".concat(month, "]"),
+      group: 0,
+      tag: 'Month',
+      reason: '5th-of-march'
+    }); // march and feb
 
-      var inf = det["if"]('#Infinitive');
+    list$1.push({
+      match: "[".concat(month, "] .? #Date"),
+      group: 0,
+      tag: 'Month',
+      reason: 'march-and-feb'
+    }); // feb to march
 
-      if (inf.found) {
-        // a stream runs
-        inf.match('(the|this|a|an) [#Infinitive] #Adverb? #Verb', 0).tag('Noun', 'correction-determiner5'); //the test string
+    list$1.push({
+      match: "#Date .? [".concat(month, "]"),
+      group: 0,
+      tag: 'Month',
+      reason: 'feb-and-march'
+    }); //quickly march
 
-        inf.match('#Determiner [#Infinitive] #Noun', 0).tag('Noun', 'correction-determiner7'); //by a bear.
+    list$1.push({
+      match: "#Adverb [".concat(month, "]"),
+      group: 0,
+      tag: 'Infinitive',
+      reason: 'quickly-march'
+    }); //march quickly
 
-        inf.match('#Determiner #Adjective [#Infinitive]$', 0).tag('Noun', 'a-inf');
-      } //the wait to vote
+    list$1.push({
+      match: "".concat(month, " [#Adverb]"),
+      group: 0,
+      tag: 'Infinitive',
+      reason: 'march-quickly'
+    });
+  }); //Places: paris or syndey
+
+  var maybePlace = 'paris|alexandria|houston|kobe|salvador|sydney'.split(pipe);
+  maybePlace.forEach(function (place) {
+    // in houston
+    list$1.push({
+      match: '(in|near|at|from|to|#Place) [' + place + ']',
+      group: 0,
+      tag: 'Place',
+      reason: 'in-paris'
+    }); // houston texas
+
+    list$1.push({
+      match: '[' + place + '] #Place',
+      group: 0,
+      tag: 'Place',
+      reason: 'paris-france'
+    });
+  });
+  var maybeNoun = 'rose|robin|dawn|ray|holly|bill|joy|viola|penny|sky|violet|daisy|melody|kelvin|hope|mercedes|olive';
+  maybeNoun += '|jewel|faith|van|charity|miles|lily|summer|dolly|rod|dick|cliff|lane|reed|kitty|art|jean|trinity';
+  maybeNoun = maybeNoun.split(pipe);
+  maybeNoun.forEach(function (name) {
+    // faith smith
+    list$1.push({
+      match: name + ' #Person',
+      tag: 'Person',
+      reason: 'ray-smith',
+      safe: true
+    }); // faith m. Smith
+
+    list$1.push({
+      match: name + ' #Acronym? #ProperNoun',
+      tag: 'Person',
+      reason: 'ray-a-smith',
+      safe: true
+    });
+  });
+  var maybeVerb = 'pat|wade|ollie|will|rob|buck|bob|mark|jack'.split(pipe);
+  maybeVerb.forEach(function (verb) {
+    // would wade
+    list$1.push({
+      match: '(#Modal|#Adverb) [' + verb + ']',
+      group: 0,
+      tag: 'Verb',
+      reason: 'would-mark'
+    }); // wade smith
+
+    list$1.push({
+      match: verb + ' #Person',
+      tag: 'Person',
+      reason: 'rob-smith'
+    }); // wade m. Cooper
+
+    list$1.push({
+      match: verb + ' #Acronym? #ProperNoun',
+      tag: 'Person',
+      reason: 'rob-a-smith'
+    });
+  });
+  var maybeAdj = 'misty|rusty|dusty|rich|randy'.split(pipe);
+  maybeAdj.forEach(function (adj) {
+    // very rusty
+    list$1.push({
+      match: '#Adverb [' + adj + ']',
+      group: 0,
+      tag: 'Adjective',
+      reason: 'really-rich'
+    }); // rusty smith
+
+    list$1.push({
+      match: adj + ' #Person',
+      tag: 'Person',
+      reason: 'randy-smith'
+    }); // rusty a. smith
+
+    list$1.push({
+      match: adj + ' #Acronym? #ProperNoun',
+      tag: 'Person',
+      reason: 'rusty-smith'
+    });
+  }); //Dates: 'june' or 'may'
+
+  var maybeDate = 'april|june|may|jan|august|eve'.split(pipe);
+  maybeDate.forEach(function (date) {
+    // June Smith
+    list$1.push({
+      match: date + ' #ProperNoun',
+      tag: 'Person',
+      reason: 'june-smith',
+      safe: true
+    }); // in june
+
+    list$1.push({
+      match: '(in|during|on|by|before|#Date) [' + date + ']',
+      group: 0,
+      tag: 'Date',
+      reason: 'in-june'
+    }); // june 1992
+
+    list$1.push({
+      match: date + ' (#Date|#Value)',
+      tag: 'Date',
+      reason: 'june-5th'
+    }); // june m. Cooper
+
+    list$1.push({
+      match: date + ' #Acronym? (#ProperNoun && !#Month)',
+      tag: 'Person',
+      reason: 'june-smith-jr'
+    });
+  });
+  var people = 'january|april|may|june|summer|autumn|jan|sep'.split(pipe); //ambiguous month-names
+
+  people.forEach(function (name) {
+    //give to april
+    list$1.push({
+      match: "#Infinitive #Determiner? #Adjective? #Noun? (to|for) [".concat(name, "]"),
+      group: 0,
+      tag: 'Person',
+      reason: 'ambig-person'
+    }); // remind june
+
+    list$1.push({
+      match: "#Infinitive [".concat(name, "]"),
+      group: 0,
+      tag: 'Person',
+      reason: 'infinitive-person'
+    }); // may waits for
+
+    list$1.push({
+      match: "[".concat(name, "] #PresentTense (to|for)"),
+      group: 0,
+      tag: 'Person',
+      reason: 'ambig-active'
+    }); // april will
+
+    list$1.push({
+      match: "[".concat(name, "] #Modal"),
+      group: 0,
+      tag: 'Person',
+      reason: 'ambig-modal'
+    }); // would april
+
+    list$1.push({
+      match: "#Modal [".concat(name, "]"),
+      group: 0,
+      tag: 'Person',
+      reason: 'modal-ambig'
+    }); // it is may
+
+    list$1.push({
+      match: "#Copula [".concat(name, "]"),
+      group: 0,
+      tag: 'Person',
+      reason: 'is-may'
+    }); // may is
+
+    list$1.push({
+      match: "[".concat(name, "] #Copula"),
+      group: 0,
+      tag: 'Person',
+      reason: 'may-is'
+    }); // wednesday april
+
+    list$1.push({
+      match: "#Date [".concat(name, "]"),
+      group: 0,
+      tag: 'Month',
+      reason: 'date-may'
+    }); //FIXME: autumn is not a month
+    // may 5th
+
+    list$1.push({
+      match: "[".concat(name, "] the? #Value"),
+      group: 0,
+      tag: 'Month',
+      reason: 'may-5th'
+    }); // 5th of may
+
+    list$1.push({
+      match: "#Value of [".concat(name, "]"),
+      group: 0,
+      tag: 'Month',
+      reason: '5th-of-may'
+    }); // with april
+
+    list$1.push({
+      match: "(that|with|for) [".concat(name, "]"),
+      group: 0,
+      tag: 'Person',
+      reason: 'that-month'
+    }); // this april
+
+    list$1.push({
+      match: "(next|this|last) [".concat(name, "]"),
+      group: 0,
+      tag: 'Month',
+      reason: 'next-may'
+    }); //maybe not 'this'
+  });
+  var _loops = list$1;
+
+  var matches = _corrections;
+  matches = matches.concat(_loops); // let tagCount = 0
+
+  var unique$5 = function unique(arr) {
+    var obj = arr.reduce(function (h, a) {
+      h[a] = true;
+      return h;
+    }, {});
+    return Object.keys(obj);
+  }; // return intersection of array-of-arrays
 
 
-      det.match('(the|this) [#Verb] #Preposition .', 0).tag('Noun', 'correction-determiner1'); //a sense of
-
-      det.match('#Determiner [#Verb] of', 0).tag('Noun', 'the-verb-of'); //the threat of force
-
-      det.match('#Determiner #Noun of [#Verb]', 0).tag('Noun', 'noun-of-noun'); //a close
-
-      det.match('#Determiner #Adverb? [close]', 0).tag('Adjective', 'a-close'); //the western line
-
-      det.match('#Determiner [(western|eastern|northern|southern|central)] #Noun', 0).tag('Noun', 'western-line'); //the swim
-
-      det.match('(the|those|these) #Adjective? [(#Infinitive|#PresentTense|#PastTense)]', 0).tag('Noun', 'correction-determiner2');
+  var hasEvery = function hasEvery(chances) {
+    if (chances.length === 0) {
+      return [];
     }
 
-    var an = doc["if"]('(a|an)');
-
-    if (an.found === true) {
-      //a staggering cost
-      an.match('(a|an) [#Gerund]', 0).tag('Adjective', 'correction-a|an'); //did a 900, paid a 20
-
-      an.match('#Verb (a|an) [#Value]', 0).tag('Singular', 'a-value'); //a tv show
-
-      an.match('(a|an) #Noun [#Infinitive]', 0).tag('Noun', 'a-noun-inf'); //a great run
-
-      an.match('(a|an) #Adjective (#Infinitive|#PresentTense)').terms(2).tag('Noun', 'correction-a|an2'); //'a/an' can mean 1 - "a hour"
-
-      an.match('[(a|an)] (#Duration|hundred|thousand|million|billion|trillion)', 0).ifNo('#Plural').tag('Value', 'a-is-one');
-    }
-
-    return doc;
+    var all = {};
+    chances.forEach(function (arr) {
+      arr = unique$5(arr);
+      arr.forEach(function (a) {
+        all[a] = all[a] || 0;
+        all[a] += 1;
+      });
+    });
+    var res = Object.keys(all).filter(function (k) {
+      return all[k] >= chances.length;
+    });
+    res = res.map(function (num) {
+      return Number(num);
+    });
+    return res;
   };
 
-  var fixThe_1 = fixThe;
-
-  //
-  var fixNouns = function fixNouns(doc) {
-    var noun = doc["if"]('#Noun');
-
-    if (noun.found === true) {
-      //'more' is not always an adverb
-      noun.match('more #Noun').tag('Noun', 'more-noun'); //he quickly foo
-
-      noun.match('#Noun #Adverb [#Noun]', 0).tag('Verb', 'quickly-foo'); //fix for busted-up phrasalVerbs
-
-      noun.match('#Noun [#Particle]', 0).tag('Preposition', 'repair-noPhrasal'); //John & Joe's
-
-      noun.match('#Noun (&|n) #Noun').tag('Organization', 'Noun-&-Noun'); //Aircraft designer
-
-      noun.match('#Noun #Actor').tag('Actor', 'thing-doer'); //j.k Rowling
-
-      doc.match('#Noun van der? #Noun').tagSafe('#Person', 'von der noun'); //king of spain
-
-      doc.match('(king|queen|prince|saint|lady) of? #Noun').tagSafe('#Person', 'king-of-noun'); // addresses
-
-      doc.match('#Value #Noun (st|street|rd|road|crescent|cr|way|tr|terrace|avenue|ave)').tag('Address'); // schools
-
-      doc.match('#Noun+ (public|private) school').tag('School'); //the word 'second'
-
-      noun.match('[second] #Noun', 0).notIf('#Honorific').unTag('Unit').tag('Ordinal', 'second-noun'); //linear algebra
-
-      noun.match('(#Determiner|#Value) [(linear|binary|mobile|lexical|technical|computer|scientific|formal)] #Noun', 0).tag('Noun', 'technical-noun'); //organization
-
-      var org = noun["if"]('#Organization');
-
-      if (org.found === true) {
-        org.match('#Organization of the? @titleCase').tagSafe('Organization', 'org-of-place');
-        org.match('#Organization #Country').tag('Organization', 'org-country');
-        org.match('(world|global|international|national|#Demonym) #Organization').tag('Organization', 'global-org');
-        org.match('@titleCase #Organization').ifNo('@hasComma').tag('Organization', 'titlecase-org');
+  matches = matches.map(function (m) {
+    var needTags = [];
+    var needWords = [];
+    var reg = syntax_1(m.match);
+    reg.forEach(function (obj) {
+      if (obj.optional === true) {
+        return;
       }
 
-      var plural = noun["if"]('#Plural');
-
-      if (plural.found === true) {
-        //some pressing issues
-        plural.match('some [#Verb] #Plural', 0).tag('Noun', 'correction-determiner6'); //this rocks
-
-        noun.match('(this|that) [#Plural]', 0).tag('PresentTense', 'this-verbs');
-      }
-    } //acronyms
-
-
-    var acronym = doc["if"]('#Acronym');
-
-    if (acronym.found === true) {
-      acronym.match('the [#Acronym]', 0).notIf('(iou|fomo|yolo|diy|dui|nimby)').tag('Organization', 'the-acronym');
-      acronym.match('#Acronym').match('#Possessive').tag('Organization', 'possessive-acronym');
-    } //possessives
-
-
-    var poss = doc["if"]('#Possessive');
-
-    if (poss.found === true) {
-      //my buddy
-      poss.match('#Possessive [#FirstName]', 0).unTag('Person', 'possessive-name'); //spencer kelly's
-
-      poss.match('#FirstName #Acronym? #Possessive').ifNo('@hasComma').match('#FirstName #Acronym? #LastName').tag('Possessive'); //Super Corp's fundraiser
-
-      poss.match('#Organization+ #Possessive').ifNo('@hasComma').tag('Possessive'); //Los Angeles's fundraiser
-
-      poss.match('#Place+ #Possessive').ifNo('@hasComma').tag('Possessive'); //her polling
-
-      poss.match('#Possessive [#Gerund]', 0).tag('Noun', 'her-polling'); //her fines
-
-      poss.match('(his|her|its) [#PresentTense]', 0).tag('Noun', 'her-polling'); //'her match' vs 'let her match'
-
-      var m = poss.match('#Possessive [#Infinitive]', 0);
-
-      if (!m.lookBehind('(let|made|make|force|ask)').found) {
-        m.tag('Noun', 'her-match');
-      }
-    } //let him glue
-
-
-    doc.match('(let|make|made) (him|her|it|#Person|#Place|#Organization)+ #Singular (a|an|the|it)').ifNo('@hasComma').match('[#Singular] (a|an|the|it)', 0).tag('#Infinitive', 'let-him-glue');
-    return doc;
-  };
-
-  var fixNouns_1 = fixNouns;
-
-  var maybeNoun = '(rose|robin|dawn|ray|holly|bill|joy|viola|penny|sky|violet|daisy|melody|kelvin|hope|mercedes|olive|jewel|faith|van|charity|miles|lily|summer|dolly|rod|dick|cliff|lane|reed|kitty|art|jean|trinity)';
-  var maybeVerb = '(pat|wade|ollie|will|rob|buck|bob|mark|jack)';
-  var maybeAdj = '(misty|rusty|dusty|rich|randy)';
-  var maybeDate = '(april|june|may|jan|august|eve)';
-  var maybePlace = '(paris|alexandria|houston|kobe|salvador|sydney)';
-
-  var fixPerson = function fixPerson(doc) {
-    // clues from honorifics
-    var hon = doc["if"]('#Honorific');
-
-    if (hon.found === true) {
-      //mr Putin
-      hon.match('(mr|mrs|ms|dr) (@titleCase|#Possessive)+').tag('#Person', 'mr-putin'); //mr X
-
-      hon.match('#Honorific #Acronym').tag('Person', 'Honorific-TitleCase'); //remove single 'mr'
-
-      hon.match('^#Honorific$').unTag('Person', 'single-honorific'); //first general..
-
-      hon.match('[(1st|2nd|first|second)] #Honorific', 0).tag('Honorific', 'ordinal-honorific');
-    } //methods requiring a titlecase
-
-
-    var title = doc["if"]('@titleCase');
-
-    if (title.found === true) {
-      title.match('#Acronym @titleCase').tagSafe('#Person', 'acronym-titlecase'); //ludwig van beethovan
-
-      title.match('@titleCase (van|al|bin) @titleCase').tagSafe('Person', 'titlecase-van-titlecase'); //jose de Sucre
-
-      title.match('@titleCase (de|du) la? @titleCase').tagSafe('Person', 'titlecase-van-titlecase'); //Foo U Ford
-
-      title.match('[#ProperNoun] #Person', 0).notIf('@hasComma').tagSafe('Person', 'proper-person'); //pope francis
-
-      title.match('(lady|queen|sister) @titleCase').ifNo('#Date').ifNo('#Honorific').tag('#FemaleName', 'lady-titlecase');
-      title.match('(king|pope|father) @titleCase').ifNo('#Date').tag('#MaleName', 'poe'); // jean Foobar
-
-      title.match(maybeNoun + ' #Acronym? @titleCase').tagSafe('Person', 'ray-smith'); // rob Foobar
-
-      title.match(maybeVerb + ' #Acronym? @titleCase').tag('Person', 'rob-smith'); // rusty Foobar
-
-      title.match(maybeAdj + ' #Acronym? @titleCase').tag('Person', 'rusty-smith'); // june Foobar
-
-      title.match(maybeDate + ' #Acronym? (@titleCase && !#Month)').tag('Person', 'june-smith');
-    }
-
-    var person = doc["if"]('#Person');
-
-    if (person.found === true) {
-      //Frank jr
-      person.match('#Person (jr|sr|md)').tag('Person', 'person-honorific'); //peter II
-
-      person.match('#Person #Person the? #RomanNumeral').tag('Person', 'roman-numeral'); //'Professor Fink', 'General McCarthy'
-
-      person.match('#Honorific #Person').tag('Person', 'Honorific-Person'); // 'john E rockefeller'
-
-      person.match('#FirstName [/^[^aiurck]$/]', 0).tag(['Acronym', 'Person'], 'john-e'); //Doctor john smith jr
-
-      person.match('#Honorific #Person').tag('Person', 'honorific-person'); //general pearson
-
-      person.match('[(private|general|major|corporal|lord|lady|secretary|premier)] #Honorific? #Person', 0).tag('Honorific', 'ambg-honorifics'); //Morgan Shlkjsfne
-
-      title.match('#Person @titleCase').match('@titleCase #Noun').tagSafe('Person', 'person-titlecase'); //a bunch of ambiguous first names
-      //Nouns: 'viola' or 'sky'
-
-      var ambigNoun = person["if"](maybeNoun);
-
-      if (ambigNoun.found === true) {
-        // ambigNoun.match('(#Determiner|#Adverb|#Pronoun|#Possessive) [' + maybeNoun + ']' ,0).tag('Noun', 'the-ray')
-        ambigNoun.match(maybeNoun + ' #Person').tagSafe('Person', 'ray-smith');
-      } //Verbs: 'pat' or 'wade'
-
-
-      var ambigVerb = person["if"](maybeVerb);
-
-      if (ambigVerb === true) {
-        ambigVerb.match('(#Modal|#Adverb) [' + maybeVerb + ']', 0).tag('Verb', 'would-mark');
-        ambigVerb.match(maybeVerb + ' #Person').tag('Person', 'rob-smith');
-      } //Adjectives: 'rusty' or 'rich'
-
-
-      var ambigAdj = person["if"](maybeAdj);
-
-      if (ambigAdj.found === true) {
-        ambigAdj.match('#Adverb [' + maybeAdj + ']', 0).tag('Adjective', 'really-rich');
-        ambigAdj.match(maybeAdj + ' #Person').tag('Person', 'randy-smith');
-      } //Dates: 'june' or 'may'
-
-
-      var ambigDate = person["if"](maybeDate);
-
-      if (ambigDate.found === true) {
-        ambigDate.match(maybeDate + ' #ProperNoun').tag(['FirstName', 'Person'], 'june-smith');
-        ambigDate.match('(in|during|on|by|before|#Date) [' + maybeDate + ']', 0).tag('Date', 'in-june');
-        ambigDate.match(maybeDate + ' (#Date|#Value)').tag('Date', 'june-5th');
-      } //Places: paris or syndey
-
-
-      var ambigPlace = person["if"](maybePlace);
-
-      if (ambigPlace.found === true) {
-        ambigPlace.match('(in|near|at|from|to|#Place) [' + maybePlace + ']', 0).tagSafe('Place', 'in-paris');
-        ambigPlace.match('[' + maybePlace + '] #Place', 0).tagSafe('Place', 'paris-france'); // ambigPlace.match('[' + maybePlace + '] #Person').tagSafe('Person', 'paris-hilton')
-      } //this one is tricky
-
-
-      var al = person["if"]('al');
-
-      if (al.found === true) {
-        al.match('al (#Person|@titleCase)').tagSafe('#Person', 'al-borlen');
-        al.match('@titleCase al @titleCase').tagSafe('#Person', 'arabic-al-arabic');
+      if (obj.tag !== undefined) {
+        needTags.push(obj.tag);
       }
 
-      var firstName = person["if"]('#FirstName');
-
-      if (firstName.found === true) {
-        //ferdinand de almar
-        firstName.match('#FirstName de #Noun').tag('#Person', 'firstname-de-noun'); //Osama bin Laden
-
-        firstName.match('#FirstName (bin|al) #Noun').tag('#Person', 'firstname-al-noun'); //John L. Foo
-
-        firstName.match('#FirstName #Acronym @titleCase').tag('Person', 'firstname-acronym-titlecase'); //Andrew Lloyd Webber
-
-        firstName.match('#FirstName #FirstName @titleCase').tag('Person', 'firstname-firstname-titlecase'); //Mr Foo
-
-        firstName.match('#Honorific #FirstName? @titleCase').tag('Person', 'Honorific-TitleCase'); //peter the great
-
-        firstName.match('#FirstName the #Adjective').tag('Person', 'determiner5'); //very common-but-ambiguous lastnames
-
-        firstName.match('#FirstName (green|white|brown|hall|young|king|hill|cook|gray|price)').tag('#Person', 'firstname-maybe'); //John Foo
-
-        firstName.match('#FirstName @titleCase @titleCase?').match('#Noun+').tag('Person', 'firstname-titlecase'); //Joe K. Sombrero
-
-        firstName.match('#FirstName #Acronym #Noun').ifNo('#Date').tag('#Person', 'n-acro-noun').lastTerm().tag('#LastName', 'n-acro-noun'); // Dwayne 'the rock' Johnson
-
-        firstName.match('#FirstName [#Determiner #Noun] #LastName', 0).tag('#NickName', 'first-noun-last').tag('#Person', 'first-noun-last'); //john bodego's
-
-        firstName.match('#FirstName (#Singular|#Possessive)').ifNo('(#Date|#Pronoun|#NickName)').tag('#Person', 'first-possessive').lastTerm().tag('#LastName', 'first-possessive'); // Firstname x (dangerous)
-
-        var tmp = firstName.match('#FirstName (#Noun|@titleCase)').ifNo('^#Possessive').ifNo('#ClauseEnd .').ifNo('#Pronoun');
-        tmp.lastTerm().tag('#LastName', 'firstname-noun');
+      if (obj.word !== undefined) {
+        needWords.push(obj.word);
       }
-
-      var lastName = person["if"]('#LastName');
-
-      if (lastName.found === true) {
-        //is foo Smith
-        lastName.match('#Copula [(#Noun|#PresentTense)] #LastName', 0).tag('#FirstName', 'copula-noun-lastname'); // x Lastname
-
-        lastName.match('[#Noun] #LastName', 0).canBe('#FirstName').tag('#FirstName', 'noun-lastname'); //ambiguous-but-common firstnames
-
-        lastName.match('[(will|may|april|june|said|rob|wade|ray|rusty|drew|miles|jack|chuck|randy|jan|pat|cliff|bill)] #LastName', 0).tag('#FirstName', 'maybe-lastname'); //Jani K. Smith
-
-        lastName.match('(@titleCase|#Singular) #Acronym? #LastName').ifNo('#Date').tag('#Person', 'title-acro-noun').lastTerm().tag('#LastName', 'title-acro-noun');
-      }
-    }
-
-    return doc;
-  };
-
-  var fixPerson_1 = fixPerson;
-
-  var advb = '(#Adverb|not)+?'; //
-
-  var fixVerb = function fixVerb(doc) {
-    var vb = doc["if"]('#Verb');
-
-    if (vb.found) {
-      vb.match('[(do|does|will|have|had)] (not|#Adverb)? #Verb', 0).tag('Auxiliary', 'have-had'); //still make
-
-      vb.match('[still] #Verb', 0).tag('Adverb', 'still-verb'); //'u' as pronoun
-
-      vb.match('[u] #Verb', 0).tag('Pronoun', 'u-pronoun-1'); //is no walk
-
-      vb.match('is no [#Verb]', 0).tag('Noun', 'is-no-verb'); //different views than
-
-      vb.match('[#Verb] than', 0).tag('Noun', 'correction'); // smoked poutine is
-
-      vb.match('[#PastTense] #Singular is', 0).tag('#Adjective', 'smoked-poutine'); // baked onions are
-
-      vb.match('[#PastTense] #Plural are', 0).tag('#Adjective', 'baked-onions'); // goes to sleep
-
-      vb.match('(go|goes|went) to [#Infinitive]', 0).tag('#Noun', 'goes-to-verb'); //there are reasons
-
-      vb.match('there (are|were) #Adjective? [#PresentTense]', 0).tag('Plural', 'there-are'); //jack seems guarded
-
-      vb.match('#Singular (seems|appears) #Adverb? [#PastTense$]', 0).tag('Adjective', 'seems-filled'); //'foo-up'
-
-      vb.match('#Verb (up|off|over|out)').match('@hasHyphen .').tag('#PhrasalVerb'); //fall over
-
-      vb.match('#PhrasalVerb [#PhrasalVerb]', 0).tag('Particle', 'phrasal-particle'); //went to sleep
-      // vb.match('#Verb to #Verb').lastTerm().tag('Noun', 'verb-to-verb');
-      //been walking
-
-      vb.match("(be|been) ".concat(advb, " #Gerund")).not('#Verb$').tag('Auxiliary', 'be-walking'); // directive verb - 'use reverse'
-
-      vb.match('(try|use|attempt|build|make) #Verb').ifNo('(@hasComma|#Negative|#Copula|will|be)').lastTerm().tag('#Noun', 'do-verb'); //infinitive verbs suggest plural nouns - 'XYZ walk to the store'
-      // r.match(`#Singular+ #Infinitive`).match('#Singular+').tag('Plural', 'infinitive-make-plural');
-
-      var modal = vb["if"]('(#Modal|did|had|has)');
-
-      if (modal.found === true) {
-        if (!modal.has('#Modal #Verb')) {
-          //'the can'
-          modal.match('#Determiner [(can|will|may)]', 0).tag('Singular', 'the can'); //'he can'
-
-          modal.match('(can|will|may|must|should|could)').untag('Modal', 'he can');
-        } //support a splattering of auxillaries before a verb
-
-
-        modal.match("(has|had) ".concat(advb, " #PastTense")).not('#Verb$').tag('Auxiliary', 'had-walked'); //would walk
-
-        modal.match("(#Modal|did) ".concat(advb, " #Verb")).not('#Verb$').tag('Auxiliary', 'modal-verb'); //would have had
-
-        modal.match("#Modal ".concat(advb, " have ").concat(advb, " had ").concat(advb, " #Verb")).not('#Verb$').tag('Auxiliary', 'would-have'); //would be walking
-
-        modal.match("#Modal ".concat(advb, " be ").concat(advb, " #Verb")).not('#Verb$').tag('Auxiliary', 'would-be'); //would been walking
-
-        modal.match("(#Modal|had|has) ".concat(advb, " been ").concat(advb, " #Verb")).not('#Verb$').tag('Auxiliary', 'would-be');
-      }
-
-      var copula = vb["if"]('#Copula');
-
-      if (copula.found === true) {
-        //was walking
-        copula.match("#Copula ".concat(advb, " (#Gerund|#PastTense)")).not('#Verb$').tag('Auxiliary', 'copula-walking'); //is mark hughes
-
-        copula.match('#Copula [#Infinitive] #Noun', 0).tag('Noun', 'is-pres-noun'); //
-
-        copula.match('[#Infinitive] #Copula', 0).tag('Noun', 'inf-copula'); //sometimes not-adverbs
-
-        copula.match('#Copula [(just|alone)]$', 0).tag('Adjective', 'not-adverb'); //jack is guarded
-
-        copula.match('#Singular is #Adverb? [#PastTense$]', 0).tag('Adjective', 'is-filled'); //is eager to go
-
-        copula.match('#Copula [#Adjective to] #Verb', 0).tag('Verb', 'adj-to'); //sometimes adverbs - 'pretty good','well above'
-
-        copula.match('#Copula (pretty|dead|full|well) (#Adjective|#Noun)').ifNo('@hasComma').tag('#Copula #Adverb #Adjective', 'sometimes-adverb');
-      } //Gerund - 'walking'
-
-
-      var gerund = vb["if"]('#Gerund');
-
-      if (gerund.found === true) {
-        //walking is cool
-        gerund.match('[#Gerund] #Adverb? not? #Copula', 0).tag('Activity', 'gerund-copula'); //walking should be fun
-
-        gerund.match('[#Gerund] #Modal', 0).tag('Activity', 'gerund-modal'); //running-a-show
-
-        gerund.match('#Gerund #Determiner [#Infinitive]', 0).tag('Noun', 'running-a-show'); //setting records
-        // doc.match('#Gerund [#PresentTense]' ,0).tag('Plural', 'setting-records');
-      } //'will be'
-
-
-      var willBe = vb["if"]('will #Adverb? not? #Adverb? be');
-
-      if (willBe.found === true) {
-        //will be running (not copula
-        if (willBe.has('will #Adverb? not? #Adverb? be #Gerund') === false) {
-          //tag it all
-          willBe.match('will not? be').tag('Copula', 'will-be-copula'); //for more complex forms, just tag 'be'
-
-          willBe.match('will #Adverb? not? #Adverb? be #Adjective').match('be').tag('Copula', 'be-copula');
-        }
-      }
-    } //question words
-
-
-    var m = doc["if"]('(who|what|where|why|how|when)');
-
-    if (m.found) {
-      //the word 'how'
-      m.match('^how').tag('QuestionWord', 'how-question');
-      m.match('[how] (#Determiner|#Copula|#Modal|#PastTense)', 0).tag('QuestionWord', 'how-is'); // //the word 'which'
-
-      m.match('^which').tag('QuestionWord', 'which-question');
-      m.match('[which] . (#Noun)+ #Pronoun', 0).tag('QuestionWord', 'which-question2');
-      m.match('which').tag('QuestionWord', 'which-question3'); //how he is driving
-
-      m.match('[#QuestionWord] #Noun #Copula #Adverb? (#Verb|#Adjective)', 0).unTag('QuestionWord').tag('Conjunction', 'how-he-is-x'); //when i go fishing
-
-      m.match('#QuestionWord #Noun #Adverb? #Infinitive not? #Gerund').unTag('QuestionWord').tag('Conjunction', 'when i go fishing');
-    }
-
-    return doc;
-  };
-
-  var fixVerb_1 = fixVerb;
-
-  //
-  var fixAdjective = function fixAdjective(doc) {
-    var adj = doc["if"]('#Adjective');
-
-    if (adj.found) {
-      //still goodß
-      adj.match('[still] #Adjective', 0).tag('Adverb', 'still-advb'); //barely even walk
-
-      adj.match('(barely|hardly) even').tag('#Adverb', 'barely-even'); //big dreams, critical thinking
-
-      adj.match('#Adjective [#PresentTense]', 0).tag('Noun', 'adj-presentTense'); //will secure our
-
-      adj.match('will [#Adjective]', 0).tag('Verb', 'will-adj'); //cheering hard - dropped -ly's
-
-      adj.match('#PresentTense [(hard|quick|long|bright|slow)]', 0).tag('Adverb', 'lazy-ly'); //his fine
-
-      adj.match('(his|her|its) [#Adjective]', 0).tag('Noun', 'his-fine'); //he left
-
-      adj.match('#Noun #Adverb? [left]', 0).tag('PastTense', 'left-verb'); //he disguised the thing
-
-      adj.match('#Pronoun [#Adjective] #Determiner #Adjective? #Noun', 0).tag('Verb', 'he-adj-the');
-    }
-
-    return doc;
-  };
-
-  var fixAdjective_1 = fixAdjective;
-
-  var units = '(hundred|thousand|million|billion|trillion|quadrillion|quintillion|sextillion|septillion)'; //
-
-  var fixValue = function fixValue(doc) {
-    var val = doc["if"]('#Value');
-
-    if (val.found === true) {
-      //1 800 PhoneNumber
-      val.match('1 #Value #PhoneNumber').tag('PhoneNumber', '1-800-Value'); //(454) 232-9873
-
-      val.match('#NumericValue #PhoneNumber').tag('PhoneNumber', '(800) PhoneNumber'); //three trains / one train
-
-      var m = val.match('#Value #PresentTense');
-
-      if (m.found) {
-        if (m.has('(one|1)') === true) {
-          m.terms(1).tag('Singular', 'one-presentTense');
+    });
+    needTags = unique$5(needTags);
+    needWords = unique$5(needWords);
+    m.reg = reg;
+    m.required = {
+      tags: needTags,
+      words: needWords
+    };
+    m.str = m.match;
+    m.count = 0;
+    return m;
+  });
+
+  var runner = function runner(doc) {
+    //find phrases to try for each match
+    matches.forEach(function (m) {
+      var allChances = [];
+      m.required.words.forEach(function (w) {
+        allChances.push(doc._cache.words[w] || []);
+      });
+      m.required.tags.forEach(function (tag) {
+        allChances.push(doc._cache.tags[tag] || []);
+      });
+      var worthIt = hasEvery(allChances);
+
+      if (worthIt.length === 0) {
+        return;
+      } // console.log(worthIt.length, m.str)
+
+
+      var phrases = worthIt.map(function (index) {
+        return doc.list[index];
+      });
+      var tryDoc = doc.buildFrom(phrases); // m.count += 1
+      // phrases getting tagged
+
+      var match = tryDoc.match(m.reg, m.group);
+
+      if (match.found) {
+        // tagCount += 1
+        // console.log('tag ', tagCount)
+        // if (match.has(m.tag)) {
+        //   console.log(m.str)
+        // }
+        if (m.safe === true) {
+          match.tagSafe(m.tag, m.reason);
         } else {
-          m.terms(1).tag('Plural', 'value-presentTense');
+          match.tag(m.tag, m.reason);
         }
-      } //money
-
-
-      m = val.match('#Value+ #Currency');
-      m.lastTerm().tag('Unit', 'money-unit');
-      m.match('#Value+').tag('Money', 'value-currency');
-    } //5 kg.
-
-
-    val.match('#Value #Abbreviation').tag('Value', 'value-abbr'); //seven point five
-
-    val.match('#Value (point|decimal) #Value').tag('Value', 'value-point-value'); //minus 7
-
-    val.match('(minus|negative) #Value').tag('Value', 'minus-value'); // ten grand
-
-    val.match('#Value grand').tag('Value', 'value-grand'); //quarter million
-
-    val.match('(a|the) [(half|quarter)] #Ordinal', 0).tag('Value', 'half-ordinal'); //eg 'trillion'
-
-    var mult = val["if"](units);
-
-    if (mult.found === true) {
-      mult.match('a #Value').tag('Value', 'a-value'); //?
-      // mult.match('#Ordinal (half|quarter)').tag('Value', 'ordinal-half');//not ready
-
-      mult.match("".concat(units, " and #Value")).tag('Value', 'magnitude-and-value');
-    }
-
-    return doc;
-  };
-
-  var fixValue_1 = fixValue;
-
-  var preps = '(in|by|before|during|on|until|after|of|within|all)'; //6
-
-  var people = '(january|april|may|june|summer|autumn|jan|sep)'; //ambiguous month-names
-
-  var verbs$1 = '(may|march|sat)'; //ambiguous month-verbs
-
-  var fixDates = function fixDates(doc) {
-    //ambiguous month - person forms
-    var person = doc["if"](people);
-
-    if (person.found === true) {
-      //give to april
-      person.match("#Infinitive #Determiner? #Adjective? #Noun? (to|for) [".concat(people, "]"), 0).tag('Person', 'ambig-person'); //remind june
-
-      person.match("#Infinitive [".concat(people, "]"), 0).tag('Person', 'infinitive-person'); //may waits for
-
-      person.match("[".concat(people, "] #PresentTense (to|for)"), 0).tag('Person', 'ambig-active'); //april will
-
-      person.match("[".concat(people, "] #Modal"), 0).tag('Person', 'ambig-modal'); //would april
-
-      person.match("#Modal [".concat(people, "]"), 0).tag('Person', 'modal-ambig'); //with april
-
-      person.match("(that|with|for) [".concat(people, "]"), 0).tag('Person', 'that-month'); //it is may
-
-      person.match("#Copula [".concat(people, "]"), 0).tag('Person', 'is-may'); //may is
-
-      person.match("[".concat(people, "] #Copula"), 0).tag('Person', 'may-is'); //april the 5th
-
-      person.match("[".concat(people, "] the? #Value"), 0).tag('Month', 'person-value'); //wednesday april
-
-      person.match("#Date [".concat(people, "]"), 0).tag('Month', 'correction-may'); //may 5th
-
-      person.match("[".concat(people, "] the? #Value"), 0).tag('Month', 'may-5th'); //5th of may
-
-      person.match("#Value of [".concat(people, "]"), 0).tag('Month', '5th-of-may'); //by april
-
-      person.match("".concat(preps, " [").concat(people, "]"), 0).ifNo('#Holiday').tag('Month', 'preps-month'); //this april
-
-      person.match("(next|this|last) [".concat(people, "]"), 0).tag('Month', 'correction-may'); //maybe not 'this'
-    } //ambiguous month - verb-forms
-
-
-    var verb = doc["if"](verbs$1);
-
-    if (verb.found === true) {
-      //quickly march
-      verb.match("#Adverb [".concat(verbs$1, "]"), 0).tag('Infinitive', 'ambig-verb');
-      verb.match("".concat(verbs$1, " [#Adverb]"), 0).tag('Infinitive', 'ambig-verb'); //all march
-
-      verb.match("".concat(preps, " [").concat(verbs$1, "]"), 0).tag('Date', 'in-month').match('(may|march)').tag('Month'); //this march
-
-      verb.match("(next|this|last) [".concat(verbs$1, "]"), 0).tag('Date', 'this-month').match('(may|march)').tag('Month'); //with date
-
-      verb.match("[".concat(verbs$1, "] the? #Value"), 0).tag('Date', 'march-5th').match('(may|march)').tag('Month');
-      verb.match("#Value of? [".concat(verbs$1, "]"), 0).tag('Date', '5th-of-march').match('(may|march)').tag('Month'); //nearby
-
-      verb.match("[".concat(verbs$1, "] .? #Date"), 0).tag('Date', 'march-and-feb').match('(may|march)').tag('Month');
-      verb.match("#Date .? [".concat(verbs$1, "]"), 0).tag('Date', 'feb-and-march').match('(may|march)').tag('Month');
-      var march = doc["if"]('march');
-
-      if (march.found === true) {
-        //march to
-        march.match('[march] (up|down|back|to|toward)', 0).tag('Infinitive', 'march-to'); //must march
-
-        march.match('#Modal [march]', 0).tag('Infinitive', 'must-march');
       }
-    } //sun 5th
-
-
-    var sun = doc["if"]('sun');
-
-    if (sun.found === true) {
-      //sun feb 2
-      sun.match('[sun] #Date', 0).tag('WeekDay', 'sun-feb'); //1pm next sun
-
-      sun.match('#Date (on|this|next|last|during)? [sun]', 0).tag('WeekDay', '1pm-sun'); //sun the 5th
-
-      sun.match('sun the #Ordinal').tag('Date').firstTerm().tag('WeekDay', 'sun-the-5th'); //the sun
-
-      sun.match('#Determiner [sun]', 0).tag('Singular', 'the-sun');
-    } //sat, nov 5th
-
-
-    var sat = doc["if"]('sat');
-
-    if (sat.found) {
-      //sat november
-      sat.match('[sat] #Date', 0).tag('WeekDay', 'sat-feb'); //this sat
-
-      sat.match("".concat(preps, " [sat]"), 0).tag('WeekDay', 'sat');
-    } //months:
-
-
-    var month = doc["if"]('#Month');
-
-    if (month.found === true) {
-      //June 5-7th
-      month.match("#Month #DateRange+").tag('Date', 'correction-numberRange'); //5th of March
-
-      month.match('#Value of #Month').tag('Date', 'value-of-month'); //5 March
-
-      month.match('#Cardinal #Month').tag('Date', 'cardinal-month'); //march 5 to 7
-
-      month.match('#Month #Value to #Value').tag('Date', 'value-to-value'); //march the 12th
-
-      month.match('#Month the #Value').tag('Date', 'month-the-value');
-    } //months:
-
-
-    var val = doc["if"]('#Value');
-
-    if (val.found === true) {
-      //values
-      val.match('#Value #Abbreviation').tag('Value', 'value-abbr'); //seven point five
-
-      val.match('#Value (point|decimal) #Value').tag('Value', 'value-point-value'); //minus 7
-
-      val.match('(minus|negative) #Value').tag('Value', 'minus-value'); // ten grand
-
-      val.match('#Value grand').tag('Value', 'value-grand'); //quarter million
-
-      val.match('(a|the) [(half|quarter)] #Ordinal', 0).tag('Value', 'half-ordinal'); //june 7
-
-      val.match('(#WeekDay|#Month) #Value').ifNo('#Money').tag('Date', 'date-value'); //7 june
-
-      val.match('#Value (#WeekDay|#Month)').ifNo('#Money').tag('Date', 'value-date'); //may twenty five
-
-      val.match('#TextValue #TextValue')["if"]('#Date').tag('#Date', 'textvalue-date');
-    }
-
-    return doc;
+    }); // console.log('\n\ntotal:', matches.length)
+    // let used = matches.filter(m => m.count > 0)
+    // console.log('used:', used.length)
+    // let unused = matches.filter(m => m.count === 0)
+    // console.log('\n\n')
+    // console.log(unused.map(m => m.str))
   };
 
-  var fixDates_1 = fixDates;
+  var runner_1 = runner; // console.log(hasEvery([[1, 2, 2, 3], [2, 3], []]))
 
-  // verb: 100.828ms
-  // dates: 80.874ms
-  // person: 66.054ms
-  // nouns: 51.340ms
-  // adj: 19.760ms
-  // value: 12.950ms
-  // misc: 43.359ms
+  // always: 49.923ms
+  // misc: 49.780ms
   //sequence of match-tag statements to correct mis-tags
 
   var corrections = function corrections(doc) {
-    // console.time('det')
-    fixThe_1(doc); //27
-    // console.timeEnd('det')
-    // console.time('nouns')
+    // console.time('all')
+    // console.time('runner')
+    runner_1(doc); // console.timeEnd('runner')
+    // console.time('misc')
 
-    fixNouns_1(doc); //30
-    // // console.timeEnd('nouns')
-    // // console.time('person')
-
-    fixPerson_1(doc); //58
-    // // console.timeEnd('person')
-    // // console.time('verb')
-
-    fixVerb_1(doc); //50
-    // // console.timeEnd('verb')
-    // // console.time('adj')
-
-    fixAdjective_1(doc); //8
-    // // console.timeEnd('adj')
-    // // console.time('value')
-
-    fixValue_1(doc); //12
-    // // console.timeEnd('value')
-    // // console.time('dates')
-
-    fixDates_1(doc); //92
-    // // console.timeEnd('dates')
-    // // console.time('misc')
-
-    fixMisc(doc); //43
-    // console.timeEnd('misc')
+    fixMisc(doc); // console.timeEnd('misc')
+    // console.timeEnd('all')
 
     return doc;
   };
@@ -12471,7 +13245,12 @@
         value: world,
         writable: true
       }); //fast-scans for our data
-      //'found' getter
+
+      Object.defineProperty(this, '_cache', {
+        enumerable: false,
+        writable: true,
+        value: {}
+      }); //'found' getter
 
       Object.defineProperty(this, 'found', {
         get: function get() {

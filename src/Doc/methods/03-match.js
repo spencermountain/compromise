@@ -1,5 +1,5 @@
 const parseSyntax = require('../match/syntax')
-// let totalMatches = 0
+let totalMatches = 0
 
 /** return a new Doc, with this one as a parent */
 exports.match = function(reg, name) {

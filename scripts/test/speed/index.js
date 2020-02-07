@@ -48,7 +48,7 @@ fetch('https://unpkg.com/nlp-corpus@3.3.0/builds/nlp-corpus-1.json').then(res =>
   const diff = Math.abs(regression.average - expected.average).toFixed(5)
   const results = Object.assign({ x, y, key: { x: 'Length', y: 'Time' }, diff }, regression)
 
-  fs.writeFileSync(outputPath, JSON.stringify(results, null, 2))
+  // fs.writeFileSync(outputPath, JSON.stringify(results, null, 2))
 
   console.log('\n')
   console.log('Expected:', Math.ceil(expected.average) + 'ms')

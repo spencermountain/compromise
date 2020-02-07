@@ -11,21 +11,23 @@ const unique = function(arr) {
   }, {})
   return Object.keys(obj)
 }
-const intersection = function(array1, array2) {
-  return array1.filter(value => -1 !== array2.indexOf(value))
-}
+
+// return intersection of array-of-arrays
 const hasEvery = function(chances) {
   if (chances.length === 0) {
     return []
   }
-  if (chances.length === 1) {
-    return unique(chances[0])
-  }
-  let running = intersection(chances[0], chances[1])
-  for (let i = 2; i < chances.length; i++) {
-    running = intersection(running, chances[i])
-  }
-  return running
+  let all = {}
+  chances.forEach(arr => {
+    arr = unique(arr)
+    arr.forEach(a => {
+      all[a] = all[a] || 0
+      all[a] += 1
+    })
+  })
+  let res = Object.keys(all).filter(k => all[k] >= chances.length)
+  res = res.map(num => Number(num))
+  return res
 }
 
 matches = matches.map(m => {
@@ -94,3 +96,5 @@ const runner = function(doc) {
   // console.log(unused.map(m => m.str))
 }
 module.exports = runner
+
+// console.log(hasEvery([[1, 2, 2, 3], [2, 3], []]))

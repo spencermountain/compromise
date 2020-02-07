@@ -1,6 +1,11 @@
 const parseSyntax = require('../../../Doc/match/syntax')
 const unique = require('../_unique')
-let matches = require('./list')
+let matches = []
+matches = matches.concat(require('./dates'))
+matches = matches.concat(require('./nouns'))
+matches = matches.concat(require('./numbers'))
+matches = matches.concat(require('./list'))
+matches = matches.concat(require('./verbs'))
 matches = matches.concat(require('./people-names'))
 
 // cache the easier conditions up-front

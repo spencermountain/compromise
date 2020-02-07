@@ -22,31 +22,11 @@ const list = [
   { match: '[march] (up|down|back|to|toward)', group: 0, tag: 'Infinitive', reason: 'march-to' },
   //must march
   { match: '#Modal [march]', group: 0, tag: 'Infinitive', reason: 'must-march' },
-  // sun the 5th
-  { match: '[sun] the #Ordinal', tag: 'WeekDay', reason: 'sun-the-5th' },
-  //sun feb 2
-  { match: '[sun] #Date', group: 0, tag: 'WeekDay', reason: 'sun-feb' },
-  //1pm next sun
-  { match: '#Date (on|this|next|last|during)? [sun]', group: 0, tag: 'WeekDay', reason: '1pm-sun' },
+
   //the sun
   { match: '#Determiner [sun]', group: 0, tag: 'Singular', reason: 'the-sun' },
 
-  //sat november
-  { match: '[sat] #Date', group: 0, tag: 'WeekDay', reason: 'sat-feb' },
-  //this sat
-  { match: `(in|by|before|during|on|until|after|of|within|all) [sat]`, group: 0, tag: 'WeekDay', reason: 'sat' },
 
-  //5th of March
-  { match: '#Value of #Month', tag: 'Date', reason: 'value-of-month' },
-  //5 March
-  { match: '#Cardinal #Month', tag: 'Date', reason: 'cardinal-month' },
-  //march 5 to 7
-  { match: '#Month #Value to #Value', tag: 'Date', reason: 'value-to-value' },
-  //march the 12th
-  { match: '#Month the #Value', tag: 'Date', reason: 'month-the-value' },
-
-  //minus 7
-  { match: '(minus|negative) #Value', tag: 'Value', reason: 'minus-value' },
   { match: '(#Noun && @hasComma) #Noun (and|or) [#PresentTense]', group: 0, tag: 'Noun', reason: 'noun-list' }, //3 feet
   { match: '#Value [(foot|feet)]', group: 0, tag: 'Unit', reason: 'foot-unit' }, //'u' as pronoun
   { match: '#Conjunction [u]', group: 0, tag: 'Pronoun', reason: 'u-pronoun-2' }, //6 am
@@ -61,12 +41,6 @@ const list = [
   { match: 'too much', tag: 'Adverb Adjective', reason: 'bit-4' }, // u r cool
   { match: 'u r', tag: 'Pronoun Copula', reason: 'u r' }, // well, ...
 
-  //spencer kelly's
-  { match: '#FirstName #Acronym? (#Possessive && #LastName)', tag: 'Possessive', reason: 'name-poss' },
-  //Super Corp's fundraiser
-  { match: '#Organization+ #Possessive', tag: 'Possessive', reason: 'org-possessive' },
-  //Los Angeles's fundraiser
-  { match: '#Place+ #Possessive', tag: 'Possessive', reason: 'place-possessive' },
 
   //let him glue
   {
@@ -220,41 +194,12 @@ const list = [
     reason: 'maybe-lastname',
   },
 
-  //the nice swim
-  { match: '(the|this|those|these) #Adjective [#Verb]', group: 0, tag: 'Noun', reason: 'the-adj-verb' },
-  // the truly nice swim
-  { match: '(the|this|those|these) #Adverb #Adjective [#Verb]', group: 0, tag: 'Noun', reason: 'determiner4' },
-  //the orange is
-  { match: '#Determiner [#Adjective] (#Copula|#PastTense|#Auxiliary)', group: 0, tag: 'Noun', reason: 'the-adj-2' },
-  // a stream runs
-  { match: '(the|this|a|an) [#Infinitive] #Adverb? #Verb', group: 0, tag: 'Noun', reason: 'determiner5' },
-  //the test string
-  { match: '#Determiner [#Infinitive] #Noun', group: 0, tag: 'Noun', reason: 'determiner7' },
-  //by a bear.
-  { match: '#Determiner #Adjective [#Infinitive]$', group: 0, tag: 'Noun', reason: 'a-inf' },
-  //the wait to vote
-  { match: '(the|this) [#Verb] #Preposition .', group: 0, tag: 'Noun', reason: 'determiner1' },
-  //a sense of
-  { match: '#Determiner [#Verb] of', group: 0, tag: 'Noun', reason: 'the-verb-of' },
-  //the threat of force
-  { match: '#Determiner #Noun of [#Verb]', group: 0, tag: 'Noun', reason: 'noun-of-noun' },
-  //the western line
-  {
-    match: '#Determiner [(western|eastern|northern|southern|central)] #Noun',
-    group: 0,
-    tag: 'Noun',
-    reason: 'western-line',
-  },
   //a staggering cost
   { match: '(a|an) [#Gerund]', group: 0, tag: 'Adjective', reason: 'a|an' },
   //did a 900, paid a 20
   { match: '#Verb (a|an) [#Value]', group: 0, tag: 'Singular', reason: 'did-a-value' },
   //a tv show
   { match: '(a|an) #Noun [#Infinitive]', group: 0, tag: 'Noun', reason: 'a-noun-inf' },
-
-  //5 yan
-  { match: '#Value+ [#Currency]', group: 0, tag: 'Unit', reason: '5-yan' },
-  { match: '#Value+ #Currency', tag: 'Money', reason: '15 usd' },
 
   // had he survived,
   { match: '[had] #Noun+ #PastTense', group: 0, tag: 'Condition', reason: 'had-he' },
@@ -265,20 +210,6 @@ const list = [
   { match: '(a|an) #Adjective [(#Infinitive|#PresentTense)]', tag: 'Noun', reason: 'a|an2' },
   //a close
   { match: '#Determiner #Adverb? [close]', group: 0, tag: 'Adjective', reason: 'a-close' },
-
-  //1 800 PhoneNumber
-  { match: '1 #Value #PhoneNumber', tag: 'PhoneNumber', reason: '1-800-Value' },
-  //(454) 232-9873
-  { match: '#NumericValue #PhoneNumber', tag: 'PhoneNumber', reason: '(800) PhoneNumber' },
-  //5 kg.
-  { match: '#Value #Abbreviation', tag: 'Value', reason: 'value-abbr' },
-  //seven point five
-  { match: '#Value (point|decimal) #Value', tag: 'Value', reason: 'value-point-value' },
-  // ten grand
-  { match: '#Value grand', tag: 'Value', reason: 'value-grand' },
-  //quarter million
-  { match: '#Determiner [(half|quarter)] #Ordinal', group: 0, tag: 'Value', reason: 'half-ordinal' },
-  { match: 'a #Value', tag: 'Value', reason: 'a-value' },
 
   { match: '[(do|does|will|have|had)] (not|#Adverb)? #Verb', group: 0, tag: 'Auxiliary', reason: 'have-had' },
   //still make
@@ -296,51 +227,6 @@ const list = [
   // goes to sleep
   { match: '(go|goes|went) to [#Infinitive]', group: 0, tag: 'Noun', reason: 'goes-to-verb' },
 
-  //was walking
-  { match: `[#Copula (#Adverb|not)+?] (#Gerund|#PastTense)`, group: 0, tag: 'Auxiliary', reason: 'copula-walking' },
-  //support a splattering of auxillaries before a verb
-  { match: `[(has|had) (#Adverb|not)+?] #PastTense`, group: 0, tag: 'Auxiliary', reason: 'had-walked' },
-  //would walk
-  { match: `[(#Modal|did) (#Adverb|not)+?] #Verb`, group: 0, tag: 'Auxiliary', reason: 'modal-verb' },
-  //would have had
-  {
-    match: `[#Modal (#Adverb|not)+? have (#Adverb|not)+? had (#Adverb|not)+?] #Verb`,
-    group: 0,
-    tag: 'Auxiliary',
-    reason: 'would-have',
-  },
-  //would be walking
-  { match: `#Modal (#Adverb|not)+? be (#Adverb|not)+? #Verb`, group: 0, tag: 'Auxiliary', reason: 'would-be' },
-  //had been walking
-  {
-    match: `(#Modal|had|has) (#Adverb|not)+? been (#Adverb|not)+? #Verb`,
-    group: 0,
-    tag: 'Auxiliary',
-    reason: 'had-been',
-  },
-
-  //jack seems guarded
-  { match: '#Singular (seems|appears) #Adverb? [#PastTense$]', group: 0, tag: 'Adjective', reason: 'seems-filled' },
-  //fall over
-  { match: '#PhrasalVerb [#PhrasalVerb]', group: 0, tag: 'Particle', reason: 'phrasal-particle' },
-  //'the can'
-  { match: '#Determiner [(can|will|may)]', group: 0, tag: 'Singular', reason: 'the can' },
-  //is mark hughes
-  { match: '#Copula [#Infinitive] #Noun', group: 0, tag: 'Noun', reason: 'is-pres-noun' },
-  //
-  { match: '[#Infinitive] #Copula', group: 0, tag: 'Noun', reason: 'inf-copula' },
-  //sometimes not-adverbs
-  { match: '#Copula [(just|alone)]$', group: 0, tag: 'Adjective', reason: 'not-adverb' },
-  //jack is guarded
-  { match: '#Singular is #Adverb? [#PastTense$]', group: 0, tag: 'Adjective', reason: 'is-filled' },
-  //is eager to go
-  { match: '#Copula [#Adjective to] #Verb', group: 0, tag: 'Verb', reason: 'adj-to' },
-  //walking is cool
-  { match: '[#Gerund] #Adverb? not? #Copula', group: 0, tag: 'Activity', reason: 'gerund-copula' },
-  //walking should be fun
-  { match: '[#Gerund] #Modal', group: 0, tag: 'Activity', reason: 'gerund-modal' },
-  //running-a-show
-  { match: '#Gerund #Determiner [#Infinitive]', group: 0, tag: 'Noun', reason: 'running-a-show' },
   //the word 'how'
   { match: '^how', tag: 'QuestionWord', reason: 'how-question' },
   { match: '[how] (#Determiner|#Copula|#Modal|#PastTense)', group: 0, tag: 'QuestionWord', reason: 'how-is' },

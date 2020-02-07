@@ -1,4 +1,5 @@
 module.exports = [
+  { match: '[second] #Noun', group: 0, tag: 'Ordinal', reason: 'second-noun' },
   //minus 7
   { match: '(minus|negative) #Value', tag: 'Value', reason: 'minus-value' },
   //1 800 PhoneNumber
@@ -18,4 +19,18 @@ module.exports = [
   //5 yan
   { match: '#Value+ [#Currency]', group: 0, tag: 'Unit', reason: '5-yan' },
   { match: '#Value+ #Currency', tag: 'Money', reason: '15 usd' },
+
+  // thousand and two
+  {
+    match: `(hundred|thousand|million|billion|trillion|quadrillion)+ and #Value`,
+    tag: 'Value',
+    reason: 'magnitude-and-value',
+  },
+  //'a/an' can mean 1 - "a hour"
+  {
+    match: '[(a|an)] (#Duration|hundred|thousand|million|billion|trillion)',
+    group: 0,
+    tag: 'Value',
+    reason: 'a-is-one',
+  },
 ]

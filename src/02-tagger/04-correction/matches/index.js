@@ -1,12 +1,16 @@
 const parseSyntax = require('../../../Doc/match/syntax')
 const unique = require('../_unique')
 let matches = []
-matches = matches.concat(require('./dates'))
-matches = matches.concat(require('./nouns'))
-matches = matches.concat(require('./numbers'))
-matches = matches.concat(require('./list'))
-matches = matches.concat(require('./verbs'))
-matches = matches.concat(require('./people-names'))
+matches = matches.concat(require('./01-misc'))
+matches = matches.concat(require('./02-dates'))
+matches = matches.concat(require('./03-noun'))
+matches = matches.concat(require('./04-adjective'))
+matches = matches.concat(require('./05-adverb'))
+matches = matches.concat(require('./06-value'))
+matches = matches.concat(require('./07-verbs'))
+matches = matches.concat(require('./08-place'))
+matches = matches.concat(require('./09-org'))
+matches = matches.concat(require('./10-people'))
 
 // cache the easier conditions up-front
 const cacheRequired = function(reg) {

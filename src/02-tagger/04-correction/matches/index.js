@@ -1,9 +1,8 @@
 const parseSyntax = require('../../../Doc/match/syntax')
-let matches = require('./_corrections')
 const unique = require('../_unique')
+let matches = require('./list')
+matches = matches.concat(require('./people-names'))
 
-const loops = require('./_loops')
-matches = matches.concat(loops)
 // cache the easier conditions up-front
 const cacheRequired = function(reg) {
   let needTags = []

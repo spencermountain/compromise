@@ -445,6 +445,32 @@ const list = [
 
   // the OCED
   { match: 'the [#Acronym]', group: 0, tag: 'Organization', reason: 'the-acronym', safe: true },
+
+  // thousand and two
+  {
+    match: `(hundred|thousand|million|billion|trillion|quadrillion)+ and #Value`,
+    tag: 'Value',
+    reason: 'magnitude-and-value',
+  },
+  //all march
+  { match: `#Preposition [(march|may)]`, group: 0, tag: 'Month', reason: 'in-month' },
+  //this march
+  { match: `this [(march|may)]`, group: 0, tag: 'Month', reason: 'this-month' },
+  { match: `next [(march|may)]`, group: 0, tag: 'Month', reason: 'this-month' },
+  { match: `last [(march|may)]`, group: 0, tag: 'Month', reason: 'this-month' },
+  // march 5th
+  { match: `[(march|may)] the? #Value`, group: 0, tag: 'Month', reason: 'march-5th' },
+  // 5th of march
+  { match: `#Value of? [(march|may)]`, group: 0, tag: 'Month', reason: '5th-of-march' },
+  // march and feb
+  { match: `[(march|may)] .? #Date`, group: 0, tag: 'Month', reason: 'march-and-feb' },
+  // feb to march
+  { match: `#Date .? [(march|may)]`, group: 0, tag: 'Month', reason: 'feb-and-march' },
+  //quickly march
+  { match: `#Adverb [(march|may)]`, group: 0, tag: 'Infinitive', reason: 'quickly-march' },
+  //march quickly
+  { match: `(march|may) [#Adverb]`, group: 0, tag: 'Infinitive', reason: 'march-quickly' },
+
   // { match: '', group: 0, tag: , reason: '' },
 ]
 

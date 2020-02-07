@@ -35,6 +35,12 @@ let list = [
   { match: '#Honorific #FirstName? #ProperNoun', tag: 'Person', reason: 'dr-john-Title' },
   //peter the great
   { match: '#FirstName the #Adjective', tag: 'Person', reason: 'name-the-great' },
+  {
+    match: '[(private|general|major|corporal|lord|lady|secretary|premier)] #Honorific? #Person',
+    group: 0,
+    tag: 'Honorific',
+    reason: 'ambg-honorifics',
+  },
 
   //very common-but-ambiguous lastnames
   {

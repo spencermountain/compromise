@@ -17,4 +17,6 @@ module.exports = [
 
   // the OCED
   { match: 'the [#Acronym]', group: 0, tag: 'Organization', reason: 'the-acronym', safe: true },
+  // schools
+  { match: '#Noun+ (public|private) school', tag: 'School', reason: 'noun-public-school' },
 ]

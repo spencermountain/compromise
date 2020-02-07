@@ -1,17 +1,30 @@
 module.exports = [
-  //some pressing issues
-  { match: 'some [#Verb] #Plural', group: 0, tag: 'Noun', reason: 'determiner6' },
-  //'more' is not always an adverb
-  { match: 'more #Noun', tag: 'Noun', reason: 'more-noun' },
+  // ==== Plural ====
   //there are reasons
   { match: 'there (are|were) #Adjective? [#PresentTense]', group: 0, tag: 'Plural', reason: 'there-are' },
+
+  // ==== Singular ====
+  //the sun
+  { match: '#Determiner [sun]', group: 0, tag: 'Singular', reason: 'the-sun' },
+  //did a 900, paid a 20
+  { match: '#Verb (a|an) [#Value]', group: 0, tag: 'Singular', reason: 'did-a-value' },
+
+  // ==== Possessive ====
+  //spencer kelly's
+  { match: '#FirstName #Acronym? (#Possessive && #LastName)', tag: 'Possessive', reason: 'name-poss' },
+  //Super Corp's fundraiser
+  { match: '#Organization+ #Possessive', tag: 'Possessive', reason: 'org-possessive' },
+  //Los Angeles's fundraiser
+  { match: '#Place+ #Possessive', tag: 'Possessive', reason: 'place-possessive' },
+
   //big dreams, critical thinking
   { match: '#Adjective [#PresentTense]', group: 0, tag: 'Noun', reason: 'adj-presentTense' },
   //his fine
   { match: '(his|her|its) [#Adjective]', group: 0, tag: 'Noun', reason: 'his-fine' },
-  //the sun
-  { match: '#Determiner [sun]', group: 0, tag: 'Singular', reason: 'the-sun' },
-
+  //some pressing issues
+  { match: 'some [#Verb] #Plural', group: 0, tag: 'Noun', reason: 'determiner6' },
+  //'more' is not always an adverb
+  { match: 'more #Noun', tag: 'Noun', reason: 'more-noun' },
   { match: '(#Noun && @hasComma) #Noun (and|or) [#PresentTense]', group: 0, tag: 'Noun', reason: 'noun-list' }, //3 feet
   { match: '(right|rights) of .', tag: 'Noun', reason: 'right-of' }, // a bit
   { match: 'a [bit]', group: 0, tag: 'Noun', reason: 'bit-2' },
@@ -41,12 +54,6 @@ module.exports = [
     reason: 'western-line',
   },
 
-  //spencer kelly's
-  { match: '#FirstName #Acronym? (#Possessive && #LastName)', tag: 'Possessive', reason: 'name-poss' },
-  //Super Corp's fundraiser
-  { match: '#Organization+ #Possessive', tag: 'Possessive', reason: 'org-possessive' },
-  //Los Angeles's fundraiser
-  { match: '#Place+ #Possessive', tag: 'Possessive', reason: 'place-possessive' },
   //her polling
   { match: '#Possessive [#Gerund]', group: 0, tag: 'Noun', reason: 'her-polling' },
   //her fines
@@ -66,22 +73,24 @@ module.exports = [
 
   //air-flow
   { match: '(#Noun && @hasHyphen) #Verb', tag: 'Noun', reason: 'hyphen-verb' },
-
   //is no walk
   { match: 'is no [#Verb]', group: 0, tag: 'Noun', reason: 'is-no-verb' },
   //different views than
   { match: '[#Verb] than', group: 0, tag: 'Noun', reason: 'correction' },
   // goes to sleep
   { match: '(go|goes|went) to [#Infinitive]', group: 0, tag: 'Noun', reason: 'goes-to-verb' },
-
   //a great run
   { match: '(a|an) #Adjective [(#Infinitive|#PresentTense)]', tag: 'Noun', reason: 'a|an2' },
-
-  //did a 900, paid a 20
-  { match: '#Verb (a|an) [#Value]', group: 0, tag: 'Singular', reason: 'did-a-value' },
   //a tv show
   { match: '(a|an) #Noun [#Infinitive]', group: 0, tag: 'Noun', reason: 'a-noun-inf' },
-
+  //do so
+  { match: 'do [so]', group: 0, tag: 'Noun', reason: 'so-noun' },
+  //is mark hughes
+  { match: '#Copula [#Infinitive] #Noun', group: 0, tag: 'Noun', reason: 'is-pres-noun' },
+  //
+  { match: '[#Infinitive] #Copula', group: 0, tag: 'Noun', reason: 'inf-copula' },
   //a close
   { match: '#Determiner #Adverb? [close]', group: 0, tag: 'Adjective', reason: 'a-close' },
+  // what the hell
+  { match: '#Determiner [(shit|damn|hell)]', group: 0, tag: 'Noun', reason: 'swears-noun' },
 ]

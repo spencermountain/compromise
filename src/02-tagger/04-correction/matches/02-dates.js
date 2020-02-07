@@ -2,28 +2,22 @@
 const dates = '(april|june|may|jan|august|eve)'
 
 let list = [
+  // ==== Holiday ====
   { match: '#Holiday (day|eve)', tag: 'Holiday', reason: 'holiday-day' }, // the captain who
+
+  // ==== WeekDay ====
   // sun the 5th
   { match: '[sun] the #Ordinal', tag: 'WeekDay', reason: 'sun-the-5th' },
   //sun feb 2
   { match: '[sun] #Date', group: 0, tag: 'WeekDay', reason: 'sun-feb' },
   //1pm next sun
   { match: '#Date (on|this|next|last|during)? [sun]', group: 0, tag: 'WeekDay', reason: '1pm-sun' },
-
-  //sat november
-  { match: '[sat] #Date', group: 0, tag: 'WeekDay', reason: 'sat-feb' },
   //this sat
   { match: `(in|by|before|during|on|until|after|of|within|all) [sat]`, group: 0, tag: 'WeekDay', reason: 'sat' },
+  //sat november
+  { match: '[sat] #Date', group: 0, tag: 'WeekDay', reason: 'sat-feb' },
 
-  //5th of March
-  { match: '#Value of #Month', tag: 'Date', reason: 'value-of-month' },
-  //5 March
-  { match: '#Cardinal #Month', tag: 'Date', reason: 'cardinal-month' },
-  //march 5 to 7
-  { match: '#Month #Value to #Value', tag: 'Date', reason: 'value-to-value' },
-  //march the 12th
-  { match: '#Month the #Value', tag: 'Date', reason: 'month-the-value' },
-
+  // ==== Month ====
   //all march
   { match: `#Preposition [(march|may)]`, group: 0, tag: 'Month', reason: 'in-month' },
   //this march
@@ -43,10 +37,21 @@ let list = [
   //march quickly
   { match: `(march|may) [#Adverb]`, group: 0, tag: 'Infinitive', reason: 'march-quickly' },
 
+  //5th of March
+  { match: '#Value of #Month', tag: 'Date', reason: 'value-of-month' },
+  //5 March
+  { match: '#Cardinal #Month', tag: 'Date', reason: 'cardinal-month' },
+  //march 5 to 7
+  { match: '#Month #Value to #Value', tag: 'Date', reason: 'value-to-value' },
+  //march the 12th
+  { match: '#Month the #Value', tag: 'Date', reason: 'month-the-value' },
   //june 7
   { match: '(#WeekDay|#Month) #Value', tag: 'Date', reason: 'date-value' },
   //7 june
   { match: '#Value (#WeekDay|#Month)', tag: 'Date', reason: 'value-date' },
+  //may twenty five
+  { match: '(#TextValue && #Date) #TextValue', tag: 'Date', reason: 'textvalue-date' },
+
   // in june
   { match: `in [${dates}]`, group: 0, tag: 'Date', reason: 'in-june' },
   { match: `during [${dates}]`, group: 0, tag: 'Date', reason: 'in-june' },
@@ -54,16 +59,13 @@ let list = [
   { match: `by [${dates}]`, group: 0, tag: 'Date', reason: 'in-june' },
   { match: `before [${dates}]`, group: 0, tag: 'Date', reason: 'in-june' },
   { match: `#Date [${dates}]`, group: 0, tag: 'Date', reason: 'in-june' },
-  // June Smith
-  { match: `${dates} #ProperNoun`, tag: 'Person', reason: 'june-smith', safe: true },
   // june 1992
   { match: `${dates} #Value`, tag: 'Date', reason: 'june-5th' },
   { match: `${dates} #Date`, tag: 'Date', reason: 'june-5th' },
+  // June Smith
+  { match: `${dates} #ProperNoun`, tag: 'Person', reason: 'june-smith', safe: true },
   // june m. Cooper
   { match: `${dates} #Acronym? (#ProperNoun && !#Month)`, tag: 'Person', reason: 'june-smith-jr' },
-
-  //may twenty five
-  { match: '(#TextValue && #Date) #TextValue', tag: 'Date', reason: 'textvalue-date' },
 ]
 
 module.exports = list

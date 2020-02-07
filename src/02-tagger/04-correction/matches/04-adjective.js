@@ -13,9 +13,12 @@ let list = [
   { match: '[#PastTense] #Singular is', group: 0, tag: 'Adjective', reason: 'smoked-poutine' },
   // baked onions are
   { match: '[#PastTense] #Plural are', group: 0, tag: 'Adjective', reason: 'baked-onions' },
-
   //a staggering cost
   { match: '(a|an) [#Gerund]', group: 0, tag: 'Adjective', reason: 'a|an' },
+  // is f*ed up
+  { match: '#Copula [fucked up?]', tag: 'Adjective', reason: 'swears-adjective' },
+  //jack seems guarded
+  { match: '#Singular (seems|appears) #Adverb? [#PastTense$]', group: 0, tag: 'Adjective', reason: 'seems-filled' },
 ]
 
 module.exports = list

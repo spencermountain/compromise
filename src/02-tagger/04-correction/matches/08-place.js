@@ -19,6 +19,12 @@ let list = [
     tag: 'Region',
     reason: 'foo-district',
   },
+  //District of Foo
+  {
+    match: '(district|region|province|municipality|territory|burough|state) of #ProperNoun',
+    tag: 'Region',
+    reason: 'district-of-Foo',
+  },
   // in houston
   { match: `in [${places}]`, group: 0, tag: 'Place', reason: 'in-paris' },
   { match: `near [${places}]`, group: 0, tag: 'Place', reason: 'near-paris' },

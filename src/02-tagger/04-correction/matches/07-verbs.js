@@ -1,18 +1,16 @@
 const verbs = '(pat|wade|ollie|will|rob|buck|bob|mark|jack)'
 
 let list = [
-  //he quickly foo
-  { match: '#Noun #Adverb [#Noun]', group: 0, tag: 'Verb', reason: 'quickly-foo' },
-  //will secure our
-  { match: 'will [#Adjective]', group: 0, tag: 'Verb', reason: 'will-adj' },
   //he left
   { match: '#Noun #Adverb? [left]', group: 0, tag: 'PastTense', reason: 'left-verb' },
-  //he disguised the thing
-  { match: '#Pronoun [#Adjective] #Determiner #Adjective? #Noun', group: 0, tag: 'Verb', reason: 'he-adj-the' },
   //march to
   { match: '[march] (up|down|back|to|toward)', group: 0, tag: 'Infinitive', reason: 'march-to' },
   //must march
   { match: '#Modal [march]', group: 0, tag: 'Infinitive', reason: 'must-march' },
+
+  { match: '[about to] #Adverb? #Verb', group: 0, tag: ['Auxiliary', 'Verb'], reason: 'about-to' },
+
+  // ==== Auxiliary ====
   //was walking
   { match: `[#Copula (#Adverb|not)+?] (#Gerund|#PastTense)`, group: 0, tag: 'Auxiliary', reason: 'copula-walking' },
   //support a splattering of auxillaries before a verb
@@ -36,26 +34,35 @@ let list = [
     reason: 'had-been',
   },
 
-  //jack seems guarded
-  { match: '#Singular (seems|appears) #Adverb? [#PastTense$]', group: 0, tag: 'Adjective', reason: 'seems-filled' },
+  //he quickly foo
+  { match: '#Noun #Adverb [#Noun]', group: 0, tag: 'Verb', reason: 'quickly-foo' },
+  //will secure our
+  { match: 'will [#Adjective]', group: 0, tag: 'Verb', reason: 'will-adj' },
+  //he disguised the thing
+  { match: '#Pronoun [#Adjective] #Determiner #Adjective? #Noun', group: 0, tag: 'Verb', reason: 'he-adj-the' },
+
+  //let him glue
+  {
+    match: '(let|make|made) (him|her|it|#Person|#Place|#Organization)+ [#Singular] (a|an|the|it)',
+    group: 0,
+    tag: 'Infinitive',
+    reason: 'let-him-glue',
+  },
+
+  //this rocks
+  { match: '(this|that) [#Plural]', group: 0, tag: 'PresentTense', reason: 'this-verbs' },
   //fall over
   { match: '#PhrasalVerb [#PhrasalVerb]', group: 0, tag: 'Particle', reason: 'phrasal-particle' },
   //'the can'
   { match: '#Determiner [(can|will|may)]', group: 0, tag: 'Singular', reason: 'the can' },
-  //is mark hughes
-  { match: '#Copula [#Infinitive] #Noun', group: 0, tag: 'Noun', reason: 'is-pres-noun' },
-  //
-  { match: '[#Infinitive] #Copula', group: 0, tag: 'Noun', reason: 'inf-copula' },
+
   //sometimes not-adverbs
   { match: '#Copula [(just|alone)]$', group: 0, tag: 'Adjective', reason: 'not-adverb' },
   //jack is guarded
   { match: '#Singular is #Adverb? [#PastTense$]', group: 0, tag: 'Adjective', reason: 'is-filled' },
   //is eager to go
   { match: '#Copula [#Adjective to] #Verb', group: 0, tag: 'Verb', reason: 'adj-to' },
-  //walking is cool
-  { match: '[#Gerund] #Adverb? not? #Copula', group: 0, tag: 'Activity', reason: 'gerund-copula' },
-  //walking should be fun
-  { match: '[#Gerund] #Modal', group: 0, tag: 'Activity', reason: 'gerund-modal' },
+
   //running-a-show
   { match: '#Gerund #Determiner [#Infinitive]', group: 0, tag: 'Noun', reason: 'running-a-show' },
 

@@ -1,13 +1,21 @@
 // order matters
 const list = [
-  // ==== Misc ====
+  // ==== Mutliple tags ====
   { match: 'too much', tag: 'Adverb Adjective', reason: 'bit-4' },
   // u r cool
   { match: 'u r', tag: 'Pronoun Copula', reason: 'u r' },
+  //sometimes adverbs - 'pretty good','well above'
+  {
+    match: '#Copula (pretty|dead|full|well) (#Adjective|#Noun)',
+    tag: '#Copula #Adverb #Adjective',
+    reason: 'sometimes-adverb',
+  },
+
   //walking is cool
   { match: '[#Gerund] #Adverb? not? #Copula', group: 0, tag: 'Activity', reason: 'gerund-copula' },
   //walking should be fun
   { match: '[#Gerund] #Modal', group: 0, tag: 'Activity', reason: 'gerund-modal' },
+
   //swear-words as non-expression POS
   { match: 'holy (shit|fuck|hell)', tag: 'Expression', reason: 'swears-expression' },
   //Aircraft designer
@@ -15,12 +23,6 @@ const list = [
   { match: '#Conjunction [u]', group: 0, tag: 'Pronoun', reason: 'u-pronoun-2' },
   //'u' as pronoun
   { match: '[u] #Verb', group: 0, tag: 'Pronoun', reason: 'u-pronoun-1' },
-  //sometimes adverbs - 'pretty good','well above'
-  {
-    match: '#Copula (pretty|dead|full|well) (#Adjective|#Noun)',
-    tag: '#Copula #Adverb #Adjective',
-    reason: 'sometimes-adverb',
-  },
 
   // ==== Determiners ====
   { match: '#Noun [(who|whom)]', group: 0, tag: 'Determiner', reason: 'captain-who' },

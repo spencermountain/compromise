@@ -8,7 +8,8 @@ module.exports = [
   { match: '#Determiner [sun]', group: 0, tag: 'Singular', reason: 'the-sun' },
   //did a 900, paid a 20
   { match: '#Verb (a|an) [#Value]', group: 0, tag: 'Singular', reason: 'did-a-value' },
-
+  //'the can'
+  { match: '#Determiner [(can|will|may)]', group: 0, tag: 'Singular', reason: 'the can' },
   // ==== Possessive ====
   //spencer kelly's
   { match: '#FirstName #Acronym? (#Possessive && #LastName)', tag: 'Possessive', reason: 'name-poss' },
@@ -28,6 +29,9 @@ module.exports = [
   { match: '(#Noun && @hasComma) #Noun (and|or) [#PresentTense]', group: 0, tag: 'Noun', reason: 'noun-list' }, //3 feet
   { match: '(right|rights) of .', tag: 'Noun', reason: 'right-of' }, // a bit
   { match: 'a [bit]', group: 0, tag: 'Noun', reason: 'bit-2' },
+
+  //running-a-show
+  { match: '#Gerund #Determiner [#Infinitive]', group: 0, tag: 'Noun', reason: 'running-a-show' },
   //the nice swim
   { match: '(the|this|those|these) #Adjective [#Verb]', group: 0, tag: 'Noun', reason: 'the-adj-verb' },
   // the truly nice swim

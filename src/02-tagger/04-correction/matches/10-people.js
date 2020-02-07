@@ -4,9 +4,35 @@ const nouns =
 const months = '(january|april|may|june|jan|sep)' //summer|autumn
 
 let list = [
+  // ==== Honorific ====
+  { match: '[(1st|2nd|first|second)] #Honorific', group: 0, tag: 'Honorific', reason: 'ordinal-honorific' },
+  {
+    match: '[(private|general|major|corporal|lord|lady|secretary|premier)] #Honorific? #Person',
+    group: 0,
+    tag: 'Honorific',
+    reason: 'ambg-honorifics',
+  },
+
+  // ==== FirstNames ====
+  //is foo Smith
+  { match: '#Copula [(#Noun|#PresentTense)] #LastName', group: 0, tag: 'FirstName', reason: 'copula-noun-lastname' },
+  //pope francis
+  { match: '(lady|queen|sister) #ProperNoun', tag: 'FemaleName', reason: 'lady-titlecase', safe: true },
+  { match: '(king|pope|father) #ProperNoun', tag: 'MaleName', reason: 'pope-titlecase', safe: true },
+  //ambiguous-but-common firstnames
+  {
+    match: '[(will|may|april|june|said|rob|wade|ray|rusty|drew|miles|jack|chuck|randy|jan|pat|cliff|bill)] #LastName',
+    group: 0,
+    tag: 'FirstName',
+    reason: 'maybe-lastname',
+  },
+
+  // ==== Nickname ====
+  // Dwayne 'the rock' Johnson
+  { match: '#FirstName [#Determiner #Noun] #LastName', group: 0, tag: 'NickName', reason: 'first-noun-last' },
+
   //my buddy
   { match: '#Possessive [#FirstName]', group: 0, tag: 'Person', reason: 'possessive-name' },
-  { match: '[(1st|2nd|first|second)] #Honorific', group: 0, tag: 'Honorific', reason: 'ordinal-honorific' },
   { match: '#Acronym #ProperNoun', tag: 'Person', reason: 'acronym-titlecase', safe: true }, //ludwig van beethovan
   { match: '#Person (jr|sr|md)', tag: 'Person', reason: 'person-honorific' }, //peter II
   { match: '#Person #Person the? #RomanNumeral', tag: 'Person', reason: 'roman-numeral' }, //'Professor Fink', 'General McCarthy'
@@ -21,7 +47,7 @@ let list = [
   { match: '(king|queen|prince|saint|lady) of? #Noun', tag: 'Person', reason: 'king-of-noun', safe: true },
   //Foo U Ford
   { match: '[#ProperNoun] #Person', group: 0, tag: 'Person', reason: 'proper-person', safe: true },
-
+  // al sharpton
   { match: 'al (#Person|#ProperNoun)', tag: 'Person', reason: 'al-borlen', safe: true },
   //ferdinand de almar
   { match: '#FirstName de #Noun', tag: 'Person', reason: 'bill-de-noun' },
@@ -35,13 +61,6 @@ let list = [
   { match: '#Honorific #FirstName? #ProperNoun', tag: 'Person', reason: 'dr-john-Title' },
   //peter the great
   { match: '#FirstName the #Adjective', tag: 'Person', reason: 'name-the-great' },
-  {
-    match: '[(private|general|major|corporal|lord|lady|secretary|premier)] #Honorific? #Person',
-    group: 0,
-    tag: 'Honorific',
-    reason: 'ambg-honorifics',
-  },
-
   //very common-but-ambiguous lastnames
   {
     match: '#FirstName (green|white|brown|hall|young|king|hill|cook|gray|price)',
@@ -49,25 +68,10 @@ let list = [
     tag: 'Person',
     reason: 'bill-green',
   },
-  //is foo Smith
-  { match: '#Copula [(#Noun|#PresentTense)] #LastName', group: 0, tag: 'FirstName', reason: 'copula-noun-lastname' },
-  //ambiguous-but-common firstnames
-  {
-    match: '[(will|may|april|june|said|rob|wade|ray|rusty|drew|miles|jack|chuck|randy|jan|pat|cliff|bill)] #LastName',
-    group: 0,
-    tag: 'FirstName',
-    reason: 'maybe-lastname',
-  },
-
-  //pope francis
-  { match: '(lady|queen|sister) #ProperNoun', tag: 'FemaleName', reason: 'lady-titlecase', safe: true },
-  { match: '(king|pope|father) #ProperNoun', tag: 'MaleName', reason: 'pope-titlecase', safe: true },
-
   // faith smith
   { match: `${nouns} #Person`, tag: 'Person', reason: 'ray-smith', safe: true },
   // faith m. Smith
   { match: `${nouns} #Acronym? #ProperNoun`, tag: 'Person', reason: 'ray-a-smith', safe: true },
-
   //give to april
   {
     match: `#Infinitive #Determiner? #Adjective? #Noun? (to|for) [${months}]`,
@@ -91,14 +95,16 @@ let list = [
   { match: `[${months}] #Copula`, group: 0, tag: 'Person', reason: 'may-is' },
   // with april
   { match: `that [${months}]`, group: 0, tag: 'Person', reason: 'that-month' },
+  // with april
   { match: `with [${months}]`, group: 0, tag: 'Person', reason: 'with-month' },
+  // for april
   { match: `for [${months}]`, group: 0, tag: 'Person', reason: 'for-month' },
   // this april
   { match: `this [${months}]`, group: 0, tag: 'Month', reason: 'this-may' }, //maybe not 'this'
+  // next april
   { match: `next [${months}]`, group: 0, tag: 'Month', reason: 'next-may' },
+  // last april
   { match: `last [${months}]`, group: 0, tag: 'Month', reason: 'last-may' },
-
-  // date tags
   // wednesday april
   { match: `#Date [${months}]`, group: 0, tag: 'Month', reason: 'date-may' },
   // may 5th
@@ -109,13 +115,8 @@ let list = [
   { match: '#ProperNoun (van|al|bin) #ProperNoun', tag: 'Person', reason: 'title-van-title', safe: true },
   //jose de Sucre
   { match: '#ProperNoun (de|du) la? #ProperNoun', tag: 'Person', reason: 'title-de-title', safe: true },
-
-  // Dwayne 'the rock' Johnson
-  { match: '#FirstName [#Determiner #Noun] #LastName', group: 0, tag: '#NickName', reason: 'first-noun-last' },
-
   //Jani K. Smith
   { match: '#Singular #Acronym #LastName', tag: '#Person', reason: 'title-acro-noun', safe: true },
-
   //John Foo
   { match: '#FirstName (#Noun && #ProperNoun) #ProperNoun?', tag: 'Person', reason: 'firstname-titlecase' },
   //Joe K. Sombrero

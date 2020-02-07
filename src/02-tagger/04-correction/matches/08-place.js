@@ -1,5 +1,6 @@
 const places = '(paris|alexandria|houston|kobe|salvador|sydney)'
 let list = [
+  // ==== Region ====
   //West Norforlk
   {
     match: '(west|north|south|east|western|northern|southern|eastern)+ #Place',
@@ -7,11 +8,12 @@ let list = [
     tag: 'Region',
     reason: 'west-norfolk',
   },
-  // addresses
+  //some us-state acronyms (exlude: al, in, la, mo, hi, me, md, ok..)
   {
-    match: '#Value #Noun (st|street|rd|road|crescent|cr|way|tr|terrace|avenue|ave)',
-    tag: 'Address',
-    reason: 'address-st',
+    match: '#City [(al|ak|az|ar|ca|ct|dc|fl|ga|id|il|nv|nh|nj|ny|oh|or|pa|sc|tn|tx|ut|vt|pr)]',
+    group: 0,
+    tag: 'Region',
+    reason: 'us-state',
   },
   //Foo District
   {
@@ -25,6 +27,14 @@ let list = [
     tag: 'Region',
     reason: 'district-of-Foo',
   },
+
+  // ==== Address ====
+  {
+    match: '#Value #Noun (st|street|rd|road|crescent|cr|way|tr|terrace|avenue|ave)',
+    tag: 'Address',
+    reason: 'address-st',
+  },
+
   // in houston
   { match: `in [${places}]`, group: 0, tag: 'Place', reason: 'in-paris' },
   { match: `near [${places}]`, group: 0, tag: 'Place', reason: 'near-paris' },
@@ -34,12 +44,5 @@ let list = [
   { match: `#Place [${places}]`, group: 0, tag: 'Place', reason: 'tokyo-paris' },
   // houston texas
   { match: `[${places}] #Place`, group: 0, tag: 'Place', reason: 'paris-france' },
-  //some us-state acronyms (exlude: al, in, la, mo, hi, me, md, ok..)
-  {
-    match: '#City [(al|ak|az|ar|ca|ct|dc|fl|ga|id|il|nv|nh|nj|ny|oh|or|pa|sc|tn|tx|ut|vt|pr)]',
-    group: 0,
-    tag: 'Region',
-    reason: 'us-state',
-  },
 ]
 module.exports = list

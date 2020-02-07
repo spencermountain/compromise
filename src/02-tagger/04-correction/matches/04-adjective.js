@@ -8,7 +8,10 @@ let list = [
   { match: `${adjectives} #Person`, tag: 'Person', reason: 'randy-smith' },
   // rusty a. smith
   { match: `${adjectives} #Acronym? #ProperNoun`, tag: 'Person', reason: 'rusty-smith' },
-
+  //sometimes not-adverbs
+  { match: '#Copula [(just|alone)]$', group: 0, tag: 'Adjective', reason: 'not-adverb' },
+  //jack is guarded
+  { match: '#Singular is #Adverb? [#PastTense$]', group: 0, tag: 'Adjective', reason: 'is-filled' },
   // smoked poutine is
   { match: '[#PastTense] #Singular is', group: 0, tag: 'Adjective', reason: 'smoked-poutine' },
   // baked onions are

@@ -5,35 +5,44 @@ declare interface Lexicon {
   [key: string]: string
 }
 // documents indexed by a string
-declare interface DocIndex<W extends nlp.World = nlp.World> {
-  [key: string]: nlp.Document<W>
+declare interface DocIndex<W extends nlp.World = nlp.World, Ph extends nlp.Phrase = nlp.Phrase> {
+  [key: string]: nlp.Document<W, Ph>
 }
 
-declare interface nlp<D extends object, W extends object> {
+declare interface nlp<D extends object, W extends object, Ph extends Object> {
   /** normal usage */
-  (text?: string, lexicon?: Lexicon): nlp.ExtendedDocument<D, W>
+  (text?: string, lexicon?: Lexicon): nlp.ExtendedDocument<D, W, Ph>
   /** tozenize string */
-  tokenize(text: string, lexicon?: Lexicon): nlp.ExtendedDocument<D, W>
+  tokenize(text: string, lexicon?: Lexicon): nlp.ExtendedDocument<D, W, Ph>
   /** mix in a compromise-plugin */
   extend<P>(
     plugin: P
   ): nlp<
-    P extends nlp.Plugin<infer PD, infer PW> ? { [k in keyof (PD & D)]: (PD & D)[k] } : { [k in keyof D]: D[k] },
-    P extends nlp.Plugin<infer PD, infer PW> ? { [k in keyof (PW & W)]: (PW & W)[k] } : { [k in keyof W]: W[k] }
+    P extends nlp.Plugin<infer PD, infer PW, infer PPh>
+      ? { [k in keyof (PD & D)]: (PD & D)[k] }
+      : { [k in keyof D]: D[k] },
+    P extends nlp.Plugin<infer PD, infer PW, infer PPh>
+      ? { [k in keyof (PW & W)]: (PW & W)[k] }
+      : { [k in keyof W]: W[k] },
+    P extends nlp.Plugin<infer PD, infer PW, infer PPh>
+      ? { [k in keyof (PPh & Ph)]: (PPh & Ph)[k] }
+      : { [k in keyof Ph]: Ph[k] }
   >
 
   /** re-generate a Doc object from .json() results */
-  fromJSON(json: any): nlp.ExtendedDocument<D, W>
+  fromJSON(json: any): nlp.ExtendedDocument<D, W, Ph>
   /**  log our decision-making for debugging */
-  verbose(bool?: boolean): nlp.ExtendedDocument<D, W>
+  verbose(bool?: boolean): nlp.ExtendedDocument<D, W, Ph>
   /** create instance using global world*/
-  clone(): nlp<D, W>
+  clone(): nlp<D, W, Ph>
   /**  current semver version of the library */
-  version: nlp.ExtendedDocument<D, W>
+  version: nlp.ExtendedDocument<D, W, Ph>
 }
 
 declare function nlp(text?: string, lexicon?: Lexicon): nlp.DefaultDocument
-declare function nlp<D extends object, W extends object>(text?: string): nlp.ExtendedDocument<D, W>
+declare function nlp<D extends object = {}, W extends object = {}, Ph extends object = {}>(
+  text?: string
+): nlp.ExtendedDocument<D, W, Ph>
 
 // possible values to .json()
 declare interface JsonOptions {
@@ -68,14 +77,16 @@ declare interface JsonOptions {
 }
 
 // Cleaner plugin types
-type PluginWorld<D extends object, W extends object> = {
+type PluginWorld<D extends object, W extends object, Ph extends object> = {
   // Override post process type
-  postProcess(process: (Doc: nlp.ExtendedDocument<D, W>) => void): nlp.ExtendedWorld<W>
+  postProcess(process: (Doc: nlp.ExtendedDocument<D, W, Ph>) => void): nlp.ExtendedWorld<W>
 } & nlp.ExtendedWorld<W>
 
-type PluginDocument<D extends object, W extends object> = nlp.ExtendedDocument<D, W> & { prototype: D }
+type PluginDocument<D extends object, W extends object, Ph extends object> = nlp.ExtendedDocument<D, W, Ph> & {
+  prototype: D
+}
 
-type PluginPhrase = nlp.Phrase & PluginConstructor
+type PluginPhrase<Ph extends object> = nlp.ExtendedPhrase<Ph> & { prototype: Ph }
 type PluginTerm = nlp.Term & PluginConstructor
 type PluginPool = nlp.Pool & PluginConstructor
 
@@ -90,187 +101,196 @@ declare module nlp {
   /** mix in a compromise-plugin */
   export function extend<P>(
     plugin: P
-  ): nlp<P extends Plugin<infer D, infer W> ? D : {}, P extends Plugin<infer D, infer W> ? W : {}>
+  ): nlp<
+    P extends Plugin<infer D, infer W, infer Ph> ? D : {},
+    P extends Plugin<infer D, infer W, infer Ph> ? W : {},
+    P extends Plugin<infer D, infer W, infer Ph> ? Ph : {}
+  >
   /** re-generate a Doc object from .json() results */
   export function fromJSON(json: any): DefaultDocument
   /**  log our decision-making for debugging */
   export function verbose(bool?: boolean): DefaultDocument
   /** create instance using global world */
-  export function clone(): nlp<{}, {}>
+  export function clone(): nlp<{}, {}, {}>
   /**  current semver version of the library */
   export const version: number
 
-  type Plugin<D extends object, W extends object> = (
-    Doc: PluginDocument<D, W>,
-    world: PluginWorld<D, W>,
-    nlp: nlp<D, W>,
-    Phrase: PluginPhrase,
+  type Plugin<D extends object = {}, W extends object = {}, Ph extends object = {}> = (
+    Doc: PluginDocument<D, W, Ph>,
+    world: PluginWorld<D, W, Ph>,
+    nlp: nlp<D, W, Ph>,
+    Phrase: PluginPhrase<Ph>,
     Term: PluginTerm, // @todo Add extend support
     Pool: PluginPool
   ) => void
 
   type ExtendedWorld<W extends object> = nlp.World & W
-  type ExtendedDocument<D extends object, W extends object> = {
-    [k in keyof (nlp.Document<ExtendedWorld<W>> & D)]: (nlp.Document<ExtendedWorld<W>> & D)[k]
+  type ExtendedDocument<D extends object, W extends object, Ph extends object> = {
+    [k in keyof (nlp.Document<ExtendedWorld<W>, ExtendedPhrase<Ph>> & D)]: (nlp.Document<
+      ExtendedWorld<W>,
+      ExtendedPhrase<Ph>
+    > &
+      D)[k]
   }
+  type ExtendedPhrase<Ph extends object> = nlp.Phrase & Ph
   type DefaultDocument = {
     [k in keyof nlp.Document]: nlp.Document[k]
   }
 
-  class Document<W extends World = World> {
+  class Document<W extends World = World, Ph extends Phrase = Phrase> {
     // Utils
     /** return the whole original document ('zoom out') */
-    all(): Document<W>
+    all(): Document<W, Ph>
     /** is this document empty? */
     found: boolean
     /** return the previous result */
-    parent(): Document<W>
+    parent(): Document<W, Ph>
     /** return all of the previous results */
-    parents(): Document<W>[]
+    parents(): Document<W, Ph>[]
     /**  (re)run the part-of-speech tagger on this document */
-    tagger(): Document<W>
+    tagger(): Document<W, Ph>
     /**  count the # of terms in each match */
     wordCount(): number
     /**  count the # of characters of each match */
     length(): number
     /**  deep-copy the document, so that no references remain */
-    clone(shallow?: boolean): Document<W>
+    clone(shallow?: boolean): Document<W, Ph>
     /** freeze the current state of the document, for speed-purposes */
-    cache(options?: object): Document<W>
+    cache(options?: object): Document<W, Ph>
     /** un-freezes the current state of the document, so it may be transformed */
-    uncache(options?: object): Document<W>
+    uncache(options?: object): Document<W, Ph>
     /** the current world */
     world: W
 
     // Accessors
     /**  use only the first result(s) */
-    first(n?: number): Document<W>
+    first(n?: number): Document<W, Ph>
     /**  use only the last result(s) */
-    last(n?: number): Document<W>
+    last(n?: number): Document<W, Ph>
     /**  grab a subset of the results */
-    slice(start: number, end?: number): Document<W>
+    slice(start: number, end?: number): Document<W, Ph>
     /**  use only the nth result */
-    eq(n: number): Document<W>
+    eq(n: number): Document<W, Ph>
     /** get the first word in each match */
-    firstTerms(): Document<W>
+    firstTerms(): Document<W, Ph>
     /** get the end word in each match */
-    lastTerms(): Document<W>
+    lastTerms(): Document<W, Ph>
     /** return a flat list of all Term objects in match */
     termList(): Term[]
     /** grab a specific named capture group */
-    groups(name: string): Document<W>
+    groups(name: string): Document<W, Ph>
     /** grab all named capture groups */
     groups(): DocIndex<W>
     /** Access Phrase list */
-    list: Phrase[]
+    list: Ph[]
     /** Access pool */
     pool(): Pool
 
     // Match
     /**  return a new Doc, with this one as a parent */
-    match(match: string | Document<W>): Document<W>
+    match(match: string | Document<W, Ph>): Document<W, Ph>
     /**  return all results except for this */
-    not(match: string | Document<W>): Document<W>
+    not(match: string | Document<W, Ph>): Document<W, Ph>
     /**  return only the first match */
-    matchOne(match: string | Document<W>): Document<W>
+    matchOne(match: string | Document<W, Ph>): Document<W, Ph>
     /**  return each current phrase, only if it contains this match */
-    if(match: string | Document<W>): Document<W>
+    if(match: string | Document<W, Ph>): Document<W, Ph>
     /**  Filter-out any current phrases that have this match */
-    ifNo(match: string | Document<W>): Document<W>
+    ifNo(match: string | Document<W, Ph>): Document<W, Ph>
     /**  Return a boolean if this match exists */
-    has(match: string | Document<W>): boolean
+    has(match: string | Document<W, Ph>): boolean
     /**  search through earlier terms, in the sentence */
-    lookBehind(match: string | Document<W>): Document<W>
+    lookBehind(match: string | Document<W, Ph>): Document<W, Ph>
     /**  search through following terms, in the sentence */
-    lookAhead(match: string | Document<W>): Document<W>
+    lookAhead(match: string | Document<W, Ph>): Document<W, Ph>
     /**  return the terms before each match */
-    before(match: string | Document<W>): Document<W>
+    before(match: string | Document<W, Ph>): Document<W, Ph>
     /**  return the terms after each match */
-    after(match: string | Document<W>): Document<W>
+    after(match: string | Document<W, Ph>): Document<W, Ph>
     /** quick find for an array of string matches */
-    lookup(matches: string[]): Document<W>
+    lookup(matches: string[]): Document<W, Ph>
     /** quick find for an object of key-value matches */
     lookup(matches: Lexicon): DocIndex<W>
 
     // Case
     /**  turn every letter of every term to lower-cse */
-    toLowerCase(): Document<W>
+    toLowerCase(): Document<W, Ph>
     /**  turn every letter of every term to upper case */
-    toUpperCase(): Document<W>
+    toUpperCase(): Document<W, Ph>
     /**  upper-case the first letter of each term */
-    toTitleCase(): Document<W>
+    toTitleCase(): Document<W, Ph>
     /**  remove whitespace and title-case each term */
-    toCamelCase(): Document<W>
+    toCamelCase(): Document<W, Ph>
 
     // Whitespace
     /** add this punctuation or whitespace before each match */
-    pre(str: string, concat: boolean): Document<W>
+    pre(str: string, concat: boolean): Document<W, Ph>
     /** add this punctuation or whitespace after each match */
-    post(str: string, concat: boolean): Document<W>
+    post(str: string, concat: boolean): Document<W, Ph>
     /**  remove start and end whitespace */
-    trim(): Document<W>
+    trim(): Document<W, Ph>
     /**  connect words with hyphen, and remove whitespace */
-    hyphenate(): Document<W>
+    hyphenate(): Document<W, Ph>
     /**  remove hyphens between words, and set whitespace */
-    dehyphenate(): Document<W>
+    dehyphenate(): Document<W, Ph>
 
     // Tag
     /**  Give all terms the given tag */
-    tag(tag: string, reason?: string): Document<W>
+    tag(tag: string, reason?: string): Document<W, Ph>
     /**  Only apply tag to terms if it is consistent with current tags */
-    tagSafe(tag: string, reason?: string): Document<W>
+    tagSafe(tag: string, reason?: string): Document<W, Ph>
     /**  Remove this term from the given terms */
-    unTag(tag: string, reason?: string): Document<W>
+    unTag(tag: string, reason?: string): Document<W, Ph>
     /**  return only the terms that can be this tag */
-    canBe(tag: string): Document<W>
+    canBe(tag: string): Document<W, Ph>
 
     // Loops
     /** run each phrase through a function, and create a new document */
-    map(fn: Function): Document<W> | []
+    map(fn: Function): Document<W, Ph> | []
     /**  run a function on each phrase, as an individual document */
-    forEach(fn: Function): Document<W>
+    forEach(fn: Function): Document<W, Ph>
     /**  return only the phrases that return true */
-    filter(fn: Function): Document<W>
+    filter(fn: Function): Document<W, Ph>
     /**  return a document with only the first phrase that matches */
-    find(fn: Function): Document<W> | undefined
+    find(fn: Function): Document<W, Ph> | undefined
     /**  return true or false if there is one matching phrase */
-    some(fn: Function): Document<W>
+    some(fn: Function): Document<W, Ph>
     /**  sample a subset of the results */
-    random(n?: number): Document<W>
+    random(n?: number): Document<W, Ph>
 
     // Insert
     /**  substitute-in new content */
-    replaceWith(text: string | Function, keepTags?: boolean | object, keepCase?: boolean): Document<W>
+    replaceWith(text: string | Function, keepTags?: boolean | object, keepCase?: boolean): Document<W, Ph>
     /**  search and replace match with new content */
-    replace(match: string, text?: string | Function, keepTags?: boolean | object, keepCase?: boolean): Document<W>
+    replace(match: string, text?: string | Function, keepTags?: boolean | object, keepCase?: boolean): Document<W, Ph>
     /**  fully remove these terms from the document */
-    delete(match: string): Document<W>
+    delete(match: string): Document<W, Ph>
     /**  add these new terms to the end (insertAfter) */
-    append(text: string): Document<W>
+    append(text: string): Document<W, Ph>
     /**  add these new terms to the front (insertBefore) */
-    prepend(text: string): Document<W>
+    prepend(text: string): Document<W, Ph>
     /**  add these new things to the end */
-    concat(text: string): Document<W>
+    concat(text: string): Document<W, Ph>
 
     // transform
     /**re-arrange the order of the matches (in place) */
-    sort(method?: string | Function): Document<W>
+    sort(method?: string | Function): Document<W, Ph>
     /**reverse the order of the matches, but not the words */
-    reverse(): Document<W>
+    reverse(): Document<W, Ph>
     /** clean-up the document, in various ways */
     normalize(options?: string | object): string
     /** remove any duplicate matches */
-    unique(): Document<W>
+    unique(): Document<W, Ph>
     /**  return a Document with three parts for every match ('splitOn') */
-    split(match?: string): Document<W>
+    split(match?: string): Document<W, Ph>
     /**  separate everything after the match as a new phrase */
-    splitBefore(match?: string): Document<W>
+    splitBefore(match?: string): Document<W, Ph>
     /**  separate everything before the word, as a new phrase */
-    splitAfter(match?: string): Document<W>
+    splitAfter(match?: string): Document<W, Ph>
     /** split a document into labeled sections  */
-    segment(regs: object, options?: object): Document<W>
+    segment(regs: object, options?: object): Document<W, Ph>
     /** make all phrases into one phrase  */
-    join(str?: string): Document<W>
+    join(str?: string): Document<W, Ph>
 
     // Output
     /**  return the document as text */
@@ -285,61 +305,61 @@ declare module nlp {
     out(format: 'debug'): Text
     out(format: 'topk'): Array<{ normal: string; count: number; percent: number }>
     /**  pretty-print the current document and its tags */
-    debug(): Document<W>
+    debug(): Document<W, Ph>
     /** store a parsed document for later use  */
     export(): any
 
     // Selections
     /**  split-up results by each individual term */
-    terms(n?: number): Document<W>
+    terms(n?: number): Document<W, Ph>
     /**  split-up results into multi-term phrases */
-    clauses(n?: number): Document<W>
+    clauses(n?: number): Document<W, Ph>
     /** return all terms connected with a hyphen or dash like `'wash-out'`*/
-    hyphenated(n?: number): Document<W>
+    hyphenated(n?: number): Document<W, Ph>
     /** add quoation marks around each match */
-    toQuoations(start?: string, end?: string): Document<W>
+    toQuoations(start?: string, end?: string): Document<W, Ph>
     /** add brackets around each match */
-    toParentheses(start?: string, end?: string): Document<W>
+    toParentheses(start?: string, end?: string): Document<W, Ph>
     /** return things like `'(939) 555-0113'` */
-    phoneNumbers(n?: number): Document<W>
+    phoneNumbers(n?: number): Document<W, Ph>
     /** return things like `'#nlp'` */
-    hashTags(n?: number): Document<W>
+    hashTags(n?: number): Document<W, Ph>
     /** return things like `'hi@compromise.cool'` */
-    emails(n?: number): Document<W>
+    emails(n?: number): Document<W, Ph>
     /**  return  things like `:)` */
-    emoticons(n?: number): Document<W>
+    emoticons(n?: number): Document<W, Ph>
     /**  return athings like `💋` */
-    emoji(n?: number): Document<W>
+    emoji(n?: number): Document<W, Ph>
     /**  return things like `'@nlp_compromise'`*/
-    atMentions(n?: number): Document<W>
+    atMentions(n?: number): Document<W, Ph>
     /**  return things like `'compromise.cool'` */
-    urls(n?: number): Document<W>
+    urls(n?: number): Document<W, Ph>
     /**  return things like `'quickly'` */
-    adverbs(n?: number): Document<W>
+    adverbs(n?: number): Document<W, Ph>
     /**  return things like `'he'` */
-    pronouns(n?: number): Document<W>
+    pronouns(n?: number): Document<W, Ph>
     /**  return things like `'but'`*/
-    conjunctions(n?: number): Document<W>
+    conjunctions(n?: number): Document<W, Ph>
     /**  return things like `'of'`*/
-    prepositions(n?: number): Document<W>
+    prepositions(n?: number): Document<W, Ph>
     /**  return person names like `'John A. Smith'`*/
-    people(n?: number): Document<W>
+    people(n?: number): Document<W, Ph>
     /**  return location names like `'Paris, France'`*/
-    places(n?: number): Document<W>
+    places(n?: number): Document<W, Ph>
     /**  return companies and org names like `'Google Inc.'`*/
-    organizations(n?: number): Document<W>
+    organizations(n?: number): Document<W, Ph>
     /**  return people, places, and organizations */
-    topics(n?: number): Document<W>
+    topics(n?: number): Document<W, Ph>
 
     // Subsets
     /** get the whole sentence for each match */
-    sentences(): Document<W>
+    sentences(): Document<W, Ph>
     /**  return things like `'Mrs.'`*/
     abbreviations(n?: number): Abbreviations<W>
     /** return any multi-word terms, like "didn't"  */
     contractions(n?: number): Contractions<W>
     /** contract words that can combine, like "did not" */
-    contract(): Document<W>
+    contract(): Document<W, Ph>
     /**  return anything inside (parentheses) */
     parentheses(n?: number): Parentheses<W>
     /**  return things like "Spencer's" */
@@ -357,98 +377,98 @@ declare module nlp {
   }
 
   // Nouns class
-  interface Nouns<W extends World = World> extends ExtendedDocument<{}, W> {
+  interface Nouns<W extends World = World, Ph extends Phrase = Phrase> extends ExtendedDocument<{}, W, Ph> {
     /** get any adjectives describing this noun*/
-    adjectives(): Document<W>
+    adjectives(): Document<W, Ph>
     /** return only plural nouns */
-    isPlural(): Document<W>
+    isPlural(): Document<W, Ph>
     /** return only nouns that _can be_ inflected as plural */
-    hasPlural(): Document<W>
+    hasPlural(): Document<W, Ph>
     /** 'football captain' → 'football captains' */
-    toPlural(setArticle?: boolean): Document<W>
+    toPlural(setArticle?: boolean): Document<W, Ph>
     /** 'turnovers' → 'turnover' */
-    toSingular(setArticle?: boolean): Document<W>
+    toSingular(setArticle?: boolean): Document<W, Ph>
     /** add a `'s` to the end, in a safe manner. */
-    toPossessive(): Document<W>
+    toPossessive(): Document<W, Ph>
   }
 
   // Verbs class
-  interface Verbs<W extends World = World> extends Document<W> {
+  interface Verbs<W extends World = World, Ph extends Phrase = Phrase> extends ExtendedDocument<{}, W, Ph> {
     /** return the adverbs describing this verb */
-    adverbs(): Document<W>
+    adverbs(): Document<W, Ph>
     /** return only plural nouns */
-    isPlural(): Document<W>
+    isPlural(): Document<W, Ph>
     /** return only singular nouns */
-    isSingular(): Document<W>
+    isSingular(): Document<W, Ph>
     /** return all forms of these verbs */
-    conjugate(): Document<W>
+    conjugate(): Document<W, Ph>
     /** 'will go' → 'went' */
-    toPastTense(): Document<W>
+    toPastTense(): Document<W, Ph>
     /** 'walked' → 'walks' */
-    toPresentTense(): Document<W>
+    toPresentTense(): Document<W, Ph>
     /** 'walked' → 'will walk' */
-    toFutureTense(): Document<W>
+    toFutureTense(): Document<W, Ph>
     /** 'walks' → 'walk' */
-    toInfinitive(): Document<W>
+    toInfinitive(): Document<W, Ph>
     /** 'walks' → 'walking' */
-    toGerund(): Document<W>
+    toGerund(): Document<W, Ph>
     /** return verbs with 'not' */
-    isNegative(): Document<W>
+    isNegative(): Document<W, Ph>
     /** only verbs without 'not'*/
-    isPositive(): Document<W>
+    isPositive(): Document<W, Ph>
     /** 'went' → 'did not go'*/
-    toNegative(): Document<W>
+    toNegative(): Document<W, Ph>
     /** "didn't study" → 'studied' */
-    toPositive(): Document<W>
+    toPositive(): Document<W, Ph>
   }
 
-  interface Abbreviations<W extends World = World> extends Document<W> {
+  interface Abbreviations<W extends World = World, Ph extends Phrase = Phrase> extends ExtendedDocument<{}, W, Ph> {
     /**  */
-    stripPeriods(): Document<W>
+    stripPeriods(): Document<W, Ph>
     /**  */
-    addPeriods(): Document<W>
+    addPeriods(): Document<W, Ph>
   }
 
-  interface Acronyms<W extends World = World> extends Document<W> {
+  interface Acronyms<W extends World = World, Ph extends Phrase = Phrase> extends ExtendedDocument<{}, W, Ph> {
     /**  */
-    stripPeriods(): Document<W>
+    stripPeriods(): Document<W, Ph>
     /**  */
-    addPeriods(): Document<W>
+    addPeriods(): Document<W, Ph>
   }
 
-  interface Contractions<W extends World = World> extends Document<W> {
+  interface Contractions<W extends World = World, Ph extends Phrase = Phrase> extends ExtendedDocument<{}, W, Ph> {
     /**  */
-    expand(): Document<W>
+    expand(): Document<W, Ph>
   }
 
-  interface Parentheses<W extends World = World> extends Document<W> {
+  interface Parentheses<W extends World = World, Ph extends Phrase = Phrase> extends ExtendedDocument<{}, W, Ph> {
     /**  */
-    unwrap(): Document<W>
+    unwrap(): Document<W, Ph>
   }
 
-  interface Possessives<W extends World = World> extends Document<W> {
+  interface Possessives<W extends World = World, Ph extends Phrase = Phrase> extends ExtendedDocument<{}, W, Ph> {
     /**  */
-    strip(): Document<W>
+    strip(): Document<W, Ph>
   }
 
-  interface Quotations<W extends World = World> extends Document<W> {
+  interface Quotations<W extends World = World, Ph extends Phrase = Phrase> extends ExtendedDocument<{}, W, Ph> {
     /**  */
-    unwrap(): Document<W>
+    unwrap(): Document<W, Ph>
   }
 
-  interface Lists<W extends World = World> extends Document<W> {
+  interface Lists<W extends World = World, Ph extends Phrase = Phrase> extends ExtendedDocument<{}, W, Ph> {
     /**  */
-    conjunctions(): Document<W>
+    conjunctions(): Document<W, Ph>
     /**  */
-    parts(): Document<W>
+    parts(): Document<W, Ph>
     /**  */
-    items(): Document<W>
+    items(): Document<W, Ph>
     /**  */
-    add(): Document<W>
+    add(): Document<W, Ph>
     /**  */
-    remove(): Document<W>
+    remove(): Document<W, Ph>
     /**  */
-    hasOxfordComma(): Document<W>
+    hasOxfordComma(): Document<W, Ph>
   }
 
   class World {
@@ -494,6 +514,7 @@ declare module nlp {
     isA: 'Phrase' // Get Type
     start: string // id of start Term
     length: number // number of terms in phrase
+    pool: Pool // global pool
 
     /** return a flat array of Term objects */
     terms(): Term[]

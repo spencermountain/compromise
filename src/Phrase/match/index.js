@@ -6,7 +6,9 @@ exports.match = function(regs, justOne = false) {
   let matches = matchAll(this, regs, justOne)
   //make them phrase objects
   matches = matches.map(({ match, groups }) => {
-    return this.buildFrom(match[0].id, match.length, groups)
+    let p = this.buildFrom(match[0].id, match.length, groups)
+    p.cache.terms = match
+    return p
   })
   return matches
 }

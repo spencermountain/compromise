@@ -18,7 +18,6 @@ exports.match = function(reg, name) {
   if (name !== undefined && name !== null && name !== '') {
     return this.buildFrom(matches).groups(name)
   }
-
   return this.buildFrom(matches)
 }
 

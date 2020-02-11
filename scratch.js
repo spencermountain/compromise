@@ -11,8 +11,10 @@ let txt = require('./scripts/test/speed/_sotu-text.js')
 
 let str = `Why do they front?`
 let doc = nlp.tokenize(str) //.join()
-doc.match('do they').tag('asf')
-doc.match('do they').tag('asf')
+let m = doc.match('do they') //.match('asf')
+console.log(m.list[0].cache)
+// m.match('asdfasf')
+// doc.match('do they').tag('asf')
 // doc.tag('cool')
 // doc.match('do')
 console.log('done')

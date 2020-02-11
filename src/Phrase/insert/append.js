@@ -60,8 +60,8 @@ const unique = function(list) {
 
 //append one phrase onto another.
 const appendPhrase = function(before, newPhrase, doc) {
-  let beforeTerms = before.cache.terms || before.terms()
-  let newTerms = newPhrase.cache.terms || newPhrase.terms()
+  let beforeTerms = before.terms()
+  let newTerms = newPhrase.terms()
   //spruce-up the whitespace issues
   addWhitespace(beforeTerms, newTerms)
   //insert this segment into the linked-list

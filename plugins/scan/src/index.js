@@ -10,7 +10,7 @@ const addMethod = function(Doc, world, nlp) {
   /** find all matches in this document */
   Doc.prototype.scan = function(trie) {
     // cache it first
-    if (this.list[0] && !this.list[0].cache.terms) {
+    if (!this._cache || this._cache.set !== true) {
       this.cache()
     }
     return scan(this, trie)

@@ -14,7 +14,7 @@ const irregulars = {
 
 // either 'is not' or 'are not'
 const doAint = function(term, phrase) {
-  let terms = phrase.cache.terms || phrase.terms()
+  let terms = phrase.terms()
   let index = terms.indexOf(term)
   let before = terms.slice(0, index)
   //look for the preceding noun

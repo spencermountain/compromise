@@ -34,19 +34,14 @@ const buildTree = function(termList, values = []) {
 
 const fastLookup = function(termList, values, doc) {
   let root = buildTree(termList, values)
-  // let root = termList.reduce((h, t) => {
-  //   h[t] = true
-  //   return h
-  // }, {})
   let found = []
   // each phrase
   for (let i = 0; i < doc.list.length; i++) {
     const p = doc.list[i]
-    if (!p.cache.terms) {
-      continue
-    }
+    let terms = p.terms()
+
     // let words = Object.keys(p.cache.words)
-    let words = p.cache.terms.map(t => t.reduced)
+    let words = terms.map(t => t.reduced)
     // each word
     for (let w = 0; w < words.length; w++) {
       if (root[words[w]] !== undefined) {
@@ -62,13 +57,13 @@ const fastLookup = function(termList, values, doc) {
               return word === words[w + r + 1]
             })
             if (everyTerm === true) {
-              found.push({ id: p.cache.terms[w].id, value: more.value, length: more.rest.length + 1 })
+              found.push({ id: p.terms()[w].id, value: more.value, length: more.rest.length + 1 })
             }
           })
         }
         // is it a single-word match?
         if (root[words[w]].value !== undefined) {
-          found.push({ id: p.cache.terms[w].id, value: root[words[w]].value, length: 1 })
+          found.push({ id: p.terms()[w].id, value: root[words[w]].value, length: 1 })
         }
 
         // if(root[words[w]])

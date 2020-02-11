@@ -31,7 +31,7 @@ const scan = function(doc, trie) {
   let results = []
   // do each phrase
   for (let i = 0; i < doc.list.length; i++) {
-    let words = doc.list[i].cache.terms
+    let words = doc.list[i].terms() || []
     let found = scanWords(words, trie)
     if (found.length > 0) {
       results = results.concat(found)

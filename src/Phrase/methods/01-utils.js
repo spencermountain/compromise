@@ -25,6 +25,7 @@ exports.terms = function(n) {
       return terms[n]
     }
   }
+  // console.log('terms')
   // this.cache.terms = terms
   if (n !== undefined) {
     return terms[n]
@@ -78,6 +79,7 @@ exports.hasId = function(wantId) {
     }
     return false
   }
+  // console.log('hasId')
   // otherwise, go through each term
   let lastId = this.start
   for (let i = 0; i < this.length - 1; i += 1) {

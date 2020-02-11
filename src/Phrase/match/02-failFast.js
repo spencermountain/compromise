@@ -5,15 +5,10 @@ const failFast = function(p, regs) {
   }
   for (let i = 0; i < regs.length; i += 1) {
     let reg = regs[i]
-
-    //   //logical quick-ones
+    //logical quick-ones
     if (reg.optional !== true && reg.negative !== true) {
       //start/end impossibilites
       if (reg.start === true && i > 0) {
-        return true
-      }
-      // has almost no effect
-      if (p.cache.words !== undefined && reg.word !== undefined && p.cache.words.hasOwnProperty(reg.word) !== true) {
         return true
       }
     }

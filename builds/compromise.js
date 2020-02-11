@@ -1243,7 +1243,6 @@
   var Term_1 = Term;
 
   /** return a flat array of Term objects */
-
   var terms = function terms(n) {
     if (this.length === 0) {
       return [];
@@ -1256,7 +1255,8 @@
       }
 
       return this.cache.terms;
-    }
+    } // console.log('terms:', termCount)
+
 
     var terms = [this.pool.get(this.start)];
 

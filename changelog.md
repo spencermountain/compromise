@@ -14,6 +14,8 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - change sensitivity of input in `.lookup()` for major speed improvements.
 - improved typescript types
 - subtle changes to internal caching
+- adds 'oneOf' match syntax param
+- fixes `[word?]` syntax parsing
 
 ### 13.0.0
 

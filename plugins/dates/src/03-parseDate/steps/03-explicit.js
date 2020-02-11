@@ -17,7 +17,6 @@ const parseExplicit = function(doc, context) {
   if (!m.found) {
     // 'june the fifth'
     m = doc.match('[<month>#Month] the [<date>#Value]')
-    // console.log(m.groups('date').text())
   }
   if (m.found) {
     let obj = {
@@ -25,7 +24,6 @@ const parseExplicit = function(doc, context) {
       date: m.groups('date').text(),
       year: context.today.year(),
     }
-    // console.log(obj)
     let d = new CalendarDate(obj, null, context)
     if (d.d.isValid() === true) {
       return d

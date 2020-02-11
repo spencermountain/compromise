@@ -1,6 +1,5 @@
 const matches = require('./matches')
 const unique = require('./_unique')
-// let tagCount = 0
 
 // return intersection of array-of-arrays
 const hasEvery = function(chances) {
@@ -39,15 +38,9 @@ const runner = function(doc) {
 
     let phrases = worthIt.map(index => doc.list[index])
     let tryDoc = doc.buildFrom(phrases)
-    // m.count += 1
     // phrases getting tagged
     let match = tryDoc.match(m.reg, m.group)
     if (match.found) {
-      // tagCount += 1
-      // console.log('tag ', tagCount)
-      // if (match.has(m.tag)) {
-      //   console.log(m.str)
-      // }
       if (m.safe === true) {
         match.tagSafe(m.tag, m.reason)
       } else {

@@ -66,6 +66,4 @@ all.forEach(m => {
   return m
 })
 
-// console.log('\n')
-// console.log(all.map(o => o.reg))
 module.exports = all

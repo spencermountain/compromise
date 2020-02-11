@@ -1,5 +1,4 @@
 const parseSyntax = require('../match/syntax')
-// let totalMatches = 0
 
 /** return a new Doc, with this one as a parent */
 exports.match = function(reg, name) {
@@ -8,8 +7,6 @@ exports.match = function(reg, name) {
   if (regs.length === 0) {
     return this.buildFrom([])
   }
-  // totalMatches += this.list.length
-  // console.log(totalMatches)
   //try expression on each phrase
   let matches = this.list.reduce((arr, p) => {
     return arr.concat(p.match(regs))

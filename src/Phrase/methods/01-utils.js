@@ -1,4 +1,3 @@
-let termCount = 0
 /** return a flat array of Term objects */
 exports.terms = function(n) {
   if (this.length === 0) {
@@ -11,8 +10,6 @@ exports.terms = function(n) {
     }
     return this.cache.terms
   }
-  termCount += 1
-  // console.log('terms:', termCount)
   let terms = [this.pool.get(this.start)]
   for (let i = 0; i < this.length - 1; i += 1) {
     let id = terms[terms.length - 1].next
@@ -85,7 +82,6 @@ exports.hasId = function(wantId) {
     }
     return false
   }
-  // console.log('hasId')
   // otherwise, go through each term
   let lastId = this.start
   for (let i = 0; i < this.length - 1; i += 1) {

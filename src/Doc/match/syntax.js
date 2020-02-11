@@ -93,12 +93,4 @@ const syntax = function(input) {
   return tokens
 }
 
-// const memoizeSyntax = function(input) {
-//   if (typeof input === 'string' && cache.hasOwnProperty(input)) {
-//     return cache[input]
-//   }
-//   let res = syntax(input)
-//   cache[input] = res
-//   return res
-// }
 module.exports = syntax

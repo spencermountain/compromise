@@ -8,7 +8,6 @@ exports.cache = function(options) {
   this._cache.set = true
   this.list.forEach((p, i) => {
     p.cache = p.cache || {}
-    // p.cache.terms = []
     let terms = p.terms()
     // cache all the terms
     terms.forEach(t => {
@@ -49,11 +48,13 @@ exports.cache = function(options) {
 
 /** un-freezes the current state of the document, so it may be transformed */
 exports.uncache = function() {
+  this._cache = {}
   this.list.forEach(p => {
     p.cache = {}
   })
   // do parents too?
   this.parents().forEach(doc => {
+    doc._cache = {}
     doc.list.forEach(p => {
       p.cache = {}
     })

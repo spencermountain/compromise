@@ -40,7 +40,6 @@ const fastLookup = function(termList, values, doc) {
     const p = doc.list[i]
     let terms = p.terms()
 
-    // let words = Object.keys(p.cache.words)
     let words = terms.map(t => t.reduced)
     // each word
     for (let w = 0; w < words.length; w++) {
@@ -65,9 +64,6 @@ const fastLookup = function(termList, values, doc) {
         if (root[words[w]].value !== undefined) {
           found.push({ id: p.terms()[w].id, value: root[words[w]].value, length: 1 })
         }
-
-        // if(root[words[w]])
-        // console.log(words[w])
       }
     }
   }

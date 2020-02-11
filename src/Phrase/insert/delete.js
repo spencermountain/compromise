@@ -14,6 +14,7 @@ const shrinkAll = function(doc, id, deleteLength, after) {
     if (phrase.start === id) {
       phrase.start = after.id
     }
+    phrase.cache = {}
   })
   // cleanup empty phrase objects
   doc.list = doc.list.filter(p => {

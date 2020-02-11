@@ -65,6 +65,7 @@ const joinPhrase = function(original, newPhrase, doc) {
     if (p.start === starterId) {
       p.start = newPhrase.start
     }
+    p.cache = {}
   })
   return original
 }

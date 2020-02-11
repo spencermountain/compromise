@@ -87,6 +87,7 @@ const appendPhrase = function(before, newPhrase, doc) {
   toStretch.forEach(p => {
     p.length += newPhrase.length
   })
+  before.cache = {}
   return before
 }
 module.exports = appendPhrase

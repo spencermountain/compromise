@@ -29,7 +29,7 @@ exports.lookup = function(arr) {
   }
 
   //make sure we go fast.
-  if (this.list[0] && !this.list[0].cache.terms) {
+  if (this._cache.set !== true) {
     this.cache()
   }
 

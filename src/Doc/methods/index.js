@@ -6,6 +6,7 @@ module.exports = Object.assign(
   require('./04-tag'),
   require('./05-loops'),
   require('./06-lookup'),
+  require('./07-cache'),
 
   require('./insert/01-replace'),
   require('./insert/02-insert'),

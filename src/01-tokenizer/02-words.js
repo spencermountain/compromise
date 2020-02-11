@@ -62,7 +62,7 @@ const splitHyphens = function(word) {
   return arr
 }
 
-//turn a string into an array of terms (naiive for now, lumped later)
+//turn a string into an array of strings (naiive for now, lumped later)
 const splitWords = function(str) {
   let result = []
   let arr = []

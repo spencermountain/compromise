@@ -8,7 +8,16 @@ compromise uses semver, and pushes to npm frequently
 
 While all _Major_ releases should be reviewed, our only two _large_ releases are **v6** in 2016 and and **v12** in 2019. Others have been mostly incremental, or niche.
 
-##### 13.0.0
+#### 13.1.0
+
+- significant (~30%) speed up of parsing
+- change sensitivity of input in `.lookup()` for major speed improvements.
+- improved typescript types
+- subtle changes to internal caching
+- adds 'oneOf' match syntax param
+- fixes `[word?]` syntax parsing
+
+### 13.0.0
 
 _major changes to `.export()` and `[capture] group` match-syntax._
 
@@ -38,14 +47,14 @@ new things:
 - add `nlp.fromJSON()` method
 - add a new `compromise-tokenize.js` build, without the tagger, or data included.
 
-##### 12.4.0
+#### 12.4.0
 
 - adds proper `nlp.clone()` support (thanks @Drache93!)
 - better typescript support
 - allow longer acronyms
 - fix offset length issue
 
-##### 12.3.0
+#### 12.3.0
 
 - prefer `@titleCase` instead of `#TitleCase` tag
 - update dependencies
@@ -72,7 +81,7 @@ new things:
 - tag 'cookin', 'hootin' as `Gerund`
 - support unicode single-quote symbols in contractions
 
-##### 12.2.0
+#### 12.2.0
 
 - improved splitting in .nouns()
 - add `.nouns().adjectives()` method
@@ -81,7 +90,7 @@ new things:
 - fix matches with optional-end `foo?$` match syntax
 - add typescript types for subsets
 
-##### 12.1.0
+#### 12.1.0
 
 - add 'sideEffect:false' flag to build
 - considerable speedup (20%) in tagger
@@ -93,37 +102,37 @@ new things:
 
 - see **[Release Notes](https://github.com/spencermountain/compromise/wiki/v12-Release-Notes)**
 
-##### 11.13.0
+#### 11.13.0
 
 - support singular units in `.value()`
 
-##### 11.11.0
+#### 11.11.0
 
 - `.quotations()` no-longer return repeated results for nested quotes
 - simplify quotation tagset
 - `.out('normal')` no longer includes quotes or trailing-possessives
 - improve `.debug()` on client-side
 
-##### 11.10.0
+#### 11.10.0
 
 - better honorific support, add `honorifics` feature to .normalize()
 - elipses bugfixes
 - replace unicode chars in `.normalize()` now by default
 - `acronyms().stripPeriods()` and `acronyms().addPeriods()`
 
-##### 11.9.0
+#### 11.9.0
 
 - tag professions as `#Actor`
 - add more behaviours to `.normalize()`
 - support match-results as inputs to .match() and .not()
 - support some us-state abbreviations like 'Phoeniz AZ'
 
-##### 11.8.0
+#### 11.8.0
 
 - add `nouns().toPossessive()`
 - ngrams now remove empty-terms in contractions - fixes counting issue [#476](https://github.com/spencermountain/compromise/issues/476)
 
-##### 11.7.0
+#### 11.7.0
 
 - expose internal `sentences().isQuestion()` method
 - `.join()` as an alias for `.flatten()`
@@ -131,7 +140,7 @@ new things:
 - `.possessives()` subset + `#Possessive` tagging fixes
 - hide massive `world` output for console.log of a term
 
-##### 11.6.0
+#### 11.6.0
 
 - improve quotations() method
 - add .parentheses() method
@@ -144,7 +153,7 @@ new things:
 - rename internal `endPunctuation` to `getPunctuation`
 - more consistent `cardinal/ordinal` tagging for values
 
-##### 11.5.0
+#### 11.5.0
 
 - add #Abbreviation tag
 - add #ProperNoun tag
@@ -166,7 +175,7 @@ new things:
 - 'can\'t' contraction bugfix
 - fix for dates().toShortForm()
 
-##### 11.1.0
+#### 11.1.0
 
 - add `#Multiple` Values tag, and changes to how invalid numbers like 'sixty fifteen hundred' are understood
 - better em-dash/en-dash support
@@ -199,45 +208,45 @@ new things:
 
 - fix for '.watch' reserved word in efrt
 
-##### 10.7.0
+#### 10.7.0
 
 - improved `places()` parsing
 - improved `{min,max}` match syntax
 - new `.out('match')` method
 - quiet addition of .pack() and .unpack() for owen
 
-##### 10.6.0
+#### 10.6.0
 
 - move internal lexicon around, to support new format in v11
 - added states & provinces as #Region
 - added #Comparable tag for adjectives that conjugate
 
-##### 10.5.0
+#### 10.5.0
 
 - add increment/decrement/add/subtract methods to .values()
 - add units(), noUnits() methods to .values()
 - 'uncountable' nouns are no longer assumed to be singular
 - money tag is no longer always a value
 
-##### 10.4.0
+#### 10.4.0
 
 - improved tagging of `VerbPhrase` and `Condition`
 - fixes to contractions in sentence-changes - "i'm going -> i went"
 - several verb conjugation fixes
 - accept Terms & Result objects in .match() and .replace()
 
-##### 10.3.0
+#### 10.3.0
 
 - new `Percent` tag
 - lump more units in with `.values()`
 
-##### 10.2.0
+#### 10.2.0
 
 - .trim() method,
 - adjective tagging fixes
 - some new .out() methods
 
-##### 10.1.0
+#### 10.1.0
 
 - fix return format of .isPlural(), so it acts like a match filter
 - less-greedy date tagging & ambiguous month fixes
@@ -257,7 +266,7 @@ new things:
 - changes params of `.replaceWith()` method to a 'keyTags' boolean
 - improved .debug() and logging on client-side
 
-##### 9.1.0
+#### 9.1.0
 
 - pretty-real filesize reduction by swapping es6 classes for es5 inheritance
 
@@ -270,11 +279,11 @@ new things:
 - adds `wordStart` and `wordEnd` offsets to `.out('offset')` for whitespace+punctuation
 - new `.has()` method for faster lookups
 
-##### 8.2.0
+#### 8.2.0
 
 - add `nlp.out('index')` method, 12 bugs
 
-##### 8.1.0
+#### 8.1.0
 
 - add `nlp.tokenize()` method for disabling pos-tagging of input
 
@@ -291,15 +300,15 @@ new things:
 
 - weee! [big change!](https://github.com/nlp-compromise/compromise/wiki/v7-Upgrade,-welcome) _npm package rename_
 
-##### 6.5.0
+#### 6.5.0
 
 - builds now using browserify + derequire()
 
-##### 6.4.0
+#### 6.4.0
 
 - re-written term-lumper logic
 
-##### 6.3.0
+#### 6.3.0
 
 - new nlp.lexicon({word:'POS'}) flow
 
@@ -307,11 +316,11 @@ new things:
 
 - be consistent with `text.normal()`, `term.all_forms()`, `text.word_count()`. `text.normal()` includes sentence-terminators, like periods etc.
 
-##### 5.2.0
+#### 5.2.0
 
 - airport codes support, helper methods for specific POS
 
-##### 5.1.0
+#### 5.1.0
 
 - newlines split sentences
 
@@ -319,35 +328,35 @@ new things:
 
 - Text methods now return this, instead of array of sentences
 
-##### 4.12.0
+#### 4.12.0
 
 - more-sensible responses for invalid, non-string inputs
 
-##### 4.11.0
+#### 4.11.0
 
 - 14 PRs, with fixes for currencies, pluralization, conjugation
 
-##### 4.10.0
+#### 4.10.0
 
 - Value.to_text() new method, fix "Posessive" POS typo
 
-##### 4.9.0
+#### 4.9.0
 
 - return of the text.spot() method (Re:#107)
 
-##### 4.8.0
+#### 4.8.0
 
 - more aggressive lumping of dates, like 'last week of february'
 
-##### 4.7.0
+#### 4.7.0
 
 - whitespace reproduction in .text() methods
 
-##### 4.6.0
+#### 4.6.0
 
 - move negate from sentence to verb & statement
 
-##### 4.2.0
+#### 4.2.0
 
 - rename 'implicit' to 'expansion' for smarter contractions
 
@@ -355,7 +364,7 @@ new things:
 
 - added readable-compression to adj, verbs (121kb -> 117kb)
 
-##### 4.1.0
+#### 4.1.0
 
 - hyphenated words are normalized into spaces
 

@@ -27,7 +27,11 @@ class Doc {
       writable: true,
     })
     //fast-scans for our data
-
+    Object.defineProperty(this, '_cache', {
+      enumerable: false,
+      writable: true,
+      value: {},
+    })
     //'found' getter
     Object.defineProperty(this, 'found', {
       get: () => this.list.length > 0,

@@ -14,6 +14,7 @@ const shrinkAll = function(doc, id, deleteLength, after) {
     if (phrase.start === id) {
       phrase.start = after.id
     }
+    phrase.cache = {}
   })
   // cleanup empty phrase objects
   doc.list = doc.list.filter(p => {
@@ -29,7 +30,7 @@ const shrinkAll = function(doc, id, deleteLength, after) {
  */
 const deletePhrase = function(phrase, doc) {
   let pool = doc.pool()
-  let terms = phrase.cache.terms || phrase.terms()
+  let terms = phrase.terms()
 
   //grab both sides of the chain,
   let prev = pool.get(terms[0].prev) || {}

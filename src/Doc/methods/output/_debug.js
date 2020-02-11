@@ -29,7 +29,7 @@ const css = {
 const logClientSide = function(doc) {
   doc.list.forEach(p => {
     console.log('\n%c"' + p.text() + '"', 'color: #e6d7b3;')
-    let terms = p.cache.terms || p.terms()
+    let terms = p.terms()
     terms.forEach(t => {
       let tags = Object.keys(t.tags)
       let text = t.text || '-'
@@ -94,7 +94,7 @@ const debug = function(doc) {
   console.log(cli.blue('====='))
   doc.list.forEach(p => {
     console.log(cli.blue('  -----'))
-    let terms = p.cache.terms || p.terms()
+    let terms = p.terms()
     terms.forEach(t => {
       let tags = Object.keys(t.tags)
       let text = t.text || '-'

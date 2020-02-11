@@ -24,7 +24,7 @@ tape('misc functions', function(t) {
 })
 
 // Typed plugins
-type testPlugin = nlp.Plugin<{ test: (text: string) => string }, { test: string }>
+type testPlugin = nlp.Plugin<{ test: (text: string) => string }, { test: string }, { test: (text: string) => string }>
 const test: testPlugin = (Doc, world, nlp, Phrase, Term, Pool) => {
   // Prototype is visible in here with plugin values
   Doc.prototype.test = text => text

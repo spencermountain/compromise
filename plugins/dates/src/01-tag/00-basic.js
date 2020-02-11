@@ -40,7 +40,7 @@ const fixDates = function(doc) {
   let month = doc.if('#Month')
   if (month.found === true) {
     //June 5-7th
-    month.match(`#Month #DateRange+`).tag('Date', 'correction-numberRange')
+    month.match(`#Month #Date+`).tag('Date', 'correction-numberRange')
     //5th of March
     month.match('#Value of #Month').tag('Date', 'value-of-month')
     //5 March

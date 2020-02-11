@@ -25,7 +25,9 @@ exports.terms = function(n) {
       return terms[n]
     }
   }
-  // this.cache.terms = terms
+  if (n === undefined) {
+    this.cache.terms = terms
+  }
   if (n !== undefined) {
     return terms[n]
   }
@@ -35,7 +37,9 @@ exports.terms = function(n) {
 /** return a shallow or deep copy of this phrase  */
 exports.clone = function(isShallow) {
   if (isShallow) {
-    return this.buildFrom(this.start, this.length)
+    let p = this.buildFrom(this.start, this.length)
+    p.cache = this.cache
+    return p
   }
   //how do we clone part of the pool?
   let terms = this.terms()

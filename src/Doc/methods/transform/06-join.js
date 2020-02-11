@@ -19,6 +19,7 @@ exports.join = function(str) {
     // main <- p
     p.terms(0).prev = term.id
     main.length += p.length
+    main.cache = {}
   }
 
   // parents are bigger than than their children.
@@ -34,6 +35,7 @@ exports.join = function(str) {
           break
         }
       }
+      p.cache = {}
     })
     // remove redundant phrases now
     doc.list = doc.list.filter(p => removed[p.start] !== true)

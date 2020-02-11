@@ -149,7 +149,6 @@ module.exports = [
   'likely',
   'little',
   'lively',
-  'living',
   'lofty',
   'lonely',
   'long',

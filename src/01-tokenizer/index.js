@@ -30,7 +30,9 @@ const fromText = function(text = '', world, pool) {
     linkTerms(terms)
 
     //return phrase objects
-    return new Phrase(terms[0].id, terms.length, pool)
+    let p = new Phrase(terms[0].id, terms.length, pool)
+    p.cache.terms = terms
+    return p
   })
   //return them ready for a Document object
   return phrases

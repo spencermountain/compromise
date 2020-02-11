@@ -9,13 +9,14 @@ let txt = require('./scripts/test/speed/_sotu-text.js')
 // let doc = nlp(`so good`).debug()
 // console.log(doc.list[0].cache)
 
-let str = `What's with these homies dissin' my girl? Why do they gotta front? 
-  
-What did we ever do to these guys that made them so violent?
-
-`
-let doc = nlp(str).join()
-doc.debug()
+let str = `Why do they front?`
+let doc = nlp.tokenize(str) //.join()
+doc.match('do they').tag('asf')
+doc.match('do they').tag('asf')
+// doc.tag('cool')
+// doc.match('do')
+console.log('done')
+// doc.debug()
 // t.equal(doc.length, 1, 'one phrase')
 // console.log('pre')
 // doc = doc.splitOn('we ever')

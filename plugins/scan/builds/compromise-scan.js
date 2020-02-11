@@ -3,7 +3,7 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
   (global = global || self, global.compromiseScan = factory());
-}(this, function () { 'use strict';
+}(this, (function () { 'use strict';
 
   // edited by Spencer Kelly
   // credit to https://github.com/BrunoRB/ahocorasick by Bruno Roberto Búrigo.
@@ -144,7 +144,7 @@
     var results = []; // do each phrase
 
     for (var i = 0; i < doc.list.length; i++) {
-      var words = doc.list[i].cache.terms;
+      var words = doc.list[i].terms() || [];
       var found = scanWords(words, trie);
 
       if (found.length > 0) {
@@ -182,7 +182,7 @@
 
     Doc.prototype.scan = function (trie) {
       // cache it first
-      if (this.list[0] && !this.list[0].cache.terms) {
+      if (!this._cache || this._cache.set !== true) {
         this.cache();
       }
 
@@ -196,5 +196,5 @@
 
   return src;
 
-}));
+})));
 //# sourceMappingURL=compromise-scan.js.map

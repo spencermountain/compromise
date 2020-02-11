@@ -1249,8 +1249,7 @@ var terms = function terms(n) {
     }
 
     return this.cache.terms;
-  } // console.log('terms:', termCount)
-
+  }
 
   var terms = [this.pool.get(this.start)];
 
@@ -1343,8 +1342,7 @@ var hasId = function hasId(wantId) {
     }
 
     return false;
-  } // console.log('hasId')
-  // otherwise, go through each term
+  } // otherwise, go through each term
 
 
   var lastId = this.start;
@@ -2666,15 +2664,7 @@ var syntax = function syntax(input) {
   tokens = postProcess_1(tokens); // console.log(JSON.stringify(tokens, null, 2))
 
   return tokens;
-}; // const memoizeSyntax = function(input) {
-//   if (typeof input === 'string' && cache.hasOwnProperty(input)) {
-//     return cache[input]
-//   }
-//   let res = syntax(input)
-//   cache[input] = res
-//   return res
-// }
-
+};
 
 var syntax_1 = syntax;
 
@@ -6332,8 +6322,6 @@ var _02Accessors_13 = _02Accessors.sentences;
 var _02Accessors_14 = _02Accessors.sentence;
 
 var _03Match = createCommonjsModule(function (module, exports) {
-  // let totalMatches = 0
-
   /** return a new Doc, with this one as a parent */
   exports.match = function (reg, name) {
     //parse-up the input expression
@@ -6341,9 +6329,7 @@ var _03Match = createCommonjsModule(function (module, exports) {
 
     if (regs.length === 0) {
       return this.buildFrom([]);
-    } // totalMatches += this.list.length
-    // console.log(totalMatches)
-    //try expression on each phrase
+    } //try expression on each phrase
 
 
     var matches = this.list.reduce(function (arr, p) {
@@ -11664,12 +11650,8 @@ matches.forEach(function (m) {
 all.forEach(function (m) {
   m.required = cacheRequired(m.reg);
   return m;
-}); // console.log('\n')
-// console.log(all.map(o => o.reg))
-
+});
 var matches_1 = all;
-
-// return intersection of array-of-arrays
 
 var hasEvery = function hasEvery(chances) {
   if (chances.length === 0) {
@@ -11714,17 +11696,11 @@ var runner = function runner(doc) {
     var phrases = worthIt.map(function (index) {
       return doc.list[index];
     });
-    var tryDoc = doc.buildFrom(phrases); // m.count += 1
-    // phrases getting tagged
+    var tryDoc = doc.buildFrom(phrases); // phrases getting tagged
 
     var match = tryDoc.match(m.reg, m.group);
 
     if (match.found) {
-      // tagCount += 1
-      // console.log('tag ', tagCount)
-      // if (match.has(m.tag)) {
-      //   console.log(m.str)
-      // }
       if (m.safe === true) {
         match.tagSafe(m.tag, m.reason);
       } else {

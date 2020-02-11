@@ -6,6 +6,8 @@
 }(this, (function () { 'use strict';
 
   function _typeof(obj) {
+    "@babel/helpers - typeof";
+
     if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
       _typeof = function (obj) {
         return typeof obj;
@@ -139,7 +141,7 @@
 
     if (month.found === true) {
       //June 5-7th
-      month.match("#Month #DateRange+").tag('Date', 'correction-numberRange'); //5th of March
+      month.match("#Month #Date+").tag('Date', 'correction-numberRange'); //5th of March
 
       month.match('#Value of #Month').tag('Date', 'value-of-month'); //5 March
 
@@ -5817,7 +5819,7 @@
 
     if (!m.found) {
       // 'june the fifth'
-      m = doc.match('[<month>#Month] the [<date>#Value]'); // console.log(m.groups('date').text())
+      m = doc.match('[<month>#Month] the [<date>#Value]');
     }
 
     if (m.found) {
@@ -5825,7 +5827,7 @@
         month: m.groups('month').text(),
         date: m.groups('date').text(),
         year: context.today.year()
-      }; // console.log(obj)
+      };
 
       var _d = new CalendarDate$2(obj, null, context);
 

@@ -138,7 +138,7 @@ var scan = function scan(doc, trie) {
   var results = []; // do each phrase
 
   for (var i = 0; i < doc.list.length; i++) {
-    var words = doc.list[i].cache.terms;
+    var words = doc.list[i].terms() || [];
     var found = scanWords(words, trie);
 
     if (found.length > 0) {
@@ -176,7 +176,7 @@ var addMethod = function addMethod(Doc, world, nlp) {
 
   Doc.prototype.scan = function (trie) {
     // cache it first
-    if (this.list[0] && !this.list[0].cache.terms) {
+    if (!this._cache || this._cache.set !== true) {
       this.cache();
     }
 

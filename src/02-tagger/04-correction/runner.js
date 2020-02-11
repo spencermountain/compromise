@@ -36,7 +36,7 @@ const runner = function(doc) {
     if (worthIt.length === 0) {
       return
     }
-    // console.log(worthIt.length, m.str)
+
     let phrases = worthIt.map(index => doc.list[index])
     let tryDoc = doc.buildFrom(phrases)
     // m.count += 1
@@ -55,12 +55,6 @@ const runner = function(doc) {
       }
     }
   })
-  // console.log('\n\ntotal:', matches.length)
-  // let used = matches.filter(m => m.count > 0)
-  // console.log('used:', used.length)
-  // let unused = matches.filter(m => m.count === 0)
-  // console.log('\n\n')
-  // console.log(unused.map(m => m.str))
 }
 module.exports = runner
 

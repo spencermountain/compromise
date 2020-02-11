@@ -1,4 +1,4 @@
-/* compromise 13.0.0 MIT */
+/* compromise 13.1.0 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -3382,7 +3382,7 @@
 
   var fromJSON_1 = fromJSON;
 
-  var _version = '13.0.0';
+  var _version = '13.1.0';
 
   var _data = {
     "Comparative": "true¦better",
@@ -11715,8 +11715,7 @@
 
       if (worthIt.length === 0) {
         return;
-      } // console.log(worthIt.length, m.str)
-
+      }
 
       var phrases = worthIt.map(function (index) {
         return doc.list[index];
@@ -11738,12 +11737,7 @@
           match.tag(m.tag, m.reason);
         }
       }
-    }); // console.log('\n\ntotal:', matches.length)
-    // let used = matches.filter(m => m.count > 0)
-    // console.log('used:', used.length)
-    // let unused = matches.filter(m => m.count === 0)
-    // console.log('\n\n')
-    // console.log(unused.map(m => m.str))
+    });
   };
 
   var runner_1 = runner; // console.log(hasEvery([[1, 2, 2, 3], [2, 3], []]))

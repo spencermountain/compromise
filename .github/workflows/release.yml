@@ -1,0 +1,63 @@
+name: Release
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    env:
+      CI: true
+
+    # Note that these steps are *identical* to build-and-test (with the caveat
+    # that build-and-test uses several versions of Node, and Release only uses
+    # 10.x) at least until the actual publishing happens.  Ideally, we could
+    # delegate to the build- and-test workflow, but I haven't found a way to do
+    # that yet.
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10.x
+
+      - name: cache dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-10.x-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-10.x-
+            ${{ runner.os }}-npm-
+
+      - name: install
+      run: |
+        npm ci
+        npm i --no-save eslint ts-node typescript
+        npm run plugins:ci
+
+      - name: static checks
+        run: |
+          npm run lint
+
+      - name: build
+        run: |
+          npm run build
+          npm run plugins:build
+
+      - name: test
+      run: |
+          npm run test:smoke
+          npm run testb
+          npm run test:perf
+          npm run test:types
+          # npm run test:stress
+
+      # And finally... publish it!
+      - name: publish
+        run: npm publish
+        with:
+          env:
+            NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -57,7 +57,7 @@ jobs:
 
       # And finally... publish it!
       - name: publish
-        run: npm publish
+        run: npm publish --dry-run
         with:
           env:
             NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

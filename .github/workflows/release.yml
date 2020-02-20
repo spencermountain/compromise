@@ -55,9 +55,12 @@ jobs:
           npm run test:types
           # npm run test:stress
 
-      # And finally... publish it!
+      # And finally... publish it!  Note that we create the .npmrc file
+      # "just in time" so that `npm publish` can get the auth token from the
+      # environment
       - name: publish
-        run: npm publish --dry-run
-        with:
-          env:
-            NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
+          npm publish --dry-run
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

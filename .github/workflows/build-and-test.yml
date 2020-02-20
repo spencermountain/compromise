@@ -46,7 +46,7 @@ jobs:
           npm run plugins:build
 
       - name: test
-      run: |
+        run: |
           npm run test:smoke
           npm run testb
           npm run test:perf

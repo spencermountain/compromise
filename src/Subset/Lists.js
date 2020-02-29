@@ -22,7 +22,7 @@ const addMethod = function(Doc) {
     }
     /** split-up by list object */
     parts() {
-      return this.splitAfter('(@hasComma|#Conjunction)')
+      return this.splitAfter('@hasComma').splitOn('(and|or) not?')
     }
     /** remove the conjunction */
     items() {
@@ -39,10 +39,11 @@ const addMethod = function(Doc) {
       return this
     }
     /** remove any matching unit from the list */
-    remove() {
-      return this
+    remove(match) {
+      return this.items()
+        .if(match)
+        .remove()
     }
-
     /** return only lists that use a serial comma */
     hasOxfordComma() {
       return this.filter(doc => parse(doc).hasOxford)
@@ -61,7 +62,9 @@ const addMethod = function(Doc) {
     let m = this.if('@hasComma+ .? (and|or) not? .')
 
     // person-list
-    let nounList = m.match('(#Noun|#Adjective)+ #Conjunction not? #Adjective? #Noun+')
+    let nounList = m
+      .match('(#Noun|#Adjective|#Determiner|#Article)+ #Conjunction not? (#Article|#Determiner)? #Adjective? #Noun+')
+      .if('#Noun')
     let adjList = m.match('(#Adjective|#Adverb)+ #Conjunction not? #Adverb? #Adjective+')
     let verbList = m.match('(#Verb|#Adverb)+ #Conjunction not? #Adverb? #Verb+')
     let result = nounList.concat(adjList)

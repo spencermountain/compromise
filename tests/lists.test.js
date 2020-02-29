@@ -1,6 +1,17 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
+test('list-remove', function(t) {
+  let doc = nlp('i saw red, blue and green.')
+  doc.lists().remove('asdf')
+  t.equal(doc.text(), 'i saw red, blue and green.', 'missing remove match')
+
+  doc = nlp('i saw red, blue and green.')
+  doc.lists().remove('blue')
+  t.equal(doc.text(), 'i saw red, and green.', 'remove list item')
+  t.end()
+})
+
 test('list-parse', function(t) {
   let arr = nlp('i saw red, blue, and silver')
     .lists()
@@ -11,6 +22,17 @@ test('list-parse', function(t) {
     .lists()
     .items()
   t.equal(arr.length, 3, 'found three colors, no-comma')
+
+  arr = nlp('i saw the Eiffel Tower, the pyramids, and the Louvre')
+    .lists()
+    .items()
+  t.equal(arr.length, 3, 'found three places, with article')
+
+  arr = nlp('i saw Eiffel Tower, pyramids, and not Louvre')
+    .lists()
+    .items()
+  t.equal(arr.length, 3, 'found three places, without article')
+
   t.end()
 })
 

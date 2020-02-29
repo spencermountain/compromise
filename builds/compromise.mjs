@@ -3746,6 +3746,13 @@ var colorMap = {
 
 var addColors = function addColors(tags) {
   Object.keys(tags).forEach(function (k) {
+    // assigned from plugin, for example
+    if (tags[k].color) {
+      tags[k].color = tags[k].color;
+      return;
+    } // defined above
+
+
     if (colorMap[k]) {
       tags[k].color = colorMap[k];
       return;
@@ -7488,11 +7495,12 @@ var _debug = createCommonjsModule(function (module) {
   };
 
   var logClientSide = function logClientSide(doc) {
+    var tagset = doc.world.tags;
     doc.list.forEach(function (p) {
       console.log('\n%c"' + p.text() + '"', 'color: #e6d7b3;');
       var terms = p.terms();
       terms.forEach(function (t) {
-        var tags$1 = Object.keys(t.tags);
+        var tags = Object.keys(t.tags);
         var text = t.text || '-';
 
         if (t.implicit) {
@@ -7501,17 +7509,17 @@ var _debug = createCommonjsModule(function (module) {
 
         var word = "'" + text + "'";
         word = padEnd(word, 8);
-        var found = tags$1.find(function (tag) {
-          return tags[tag] && tags[tag].color;
+        var found = tags.find(function (tag) {
+          return tagset[tag] && tagset[tag].color;
         });
         var color = 'steelblue';
 
-        if (tags[found]) {
-          color = tags[found].color;
+        if (tagset[found]) {
+          color = tagset[found].color;
           color = css[color];
         }
 
-        console.log("   ".concat(word, "  -  %c").concat(tags$1.join(', ')), "color: ".concat(color || 'steelblue', ";"));
+        console.log("   ".concat(word, "  -  %c").concat(tags.join(', ')), "color: ".concat(color || 'steelblue', ";"));
       });
     });
   }; //cheaper than requiring chalk
@@ -7541,16 +7549,16 @@ var _debug = createCommonjsModule(function (module) {
     }
   };
 
-  var tagString = function tagString(tags$1) {
-    tags$1 = tags$1.map(function (tag) {
-      if (!tags.hasOwnProperty(tag)) {
+  var tagString = function tagString(tags, world) {
+    tags = tags.map(function (tag) {
+      if (!world.tags.hasOwnProperty(tag)) {
         return tag;
       }
 
-      var c = tags[tag].color || 'blue';
+      var c = world.tags[tag].color || 'blue';
       return cli[c](tag);
     });
-    return tags$1.join(', ');
+    return tags.join(', ');
   }; //output some helpful stuff to the console
 
 
@@ -7578,7 +7586,7 @@ var _debug = createCommonjsModule(function (module) {
 
         var word = "'" + text + "'";
         word = padEnd(word, 18);
-        var str = cli.blue('  ｜ ') + word + '  - ' + tagString(tags);
+        var str = cli.blue('  ｜ ') + word + '  - ' + tagString(tags, doc.world);
         console.log(str);
       });
     });
@@ -12061,7 +12069,7 @@ var Contractions = addMethod$3;
 var addMethod$4 = function addMethod(Doc) {
   //pull it apart..
   var parse = function parse(doc) {
-    var things = doc.splitAfter('@hasComma').not('(and|or) not?');
+    var things = doc.splitAfter('@hasComma').splitOn('(and|or) not?').not('(and|or) not?');
     var beforeLast = doc.match('[.] (and|or)', 0);
     return {
       things: things,
@@ -12096,14 +12104,14 @@ var addMethod$4 = function addMethod(Doc) {
     }, {
       key: "parts",
       value: function parts() {
-        return this.splitAfter('(@hasComma|#Conjunction)');
+        return this.splitAfter('@hasComma').splitOn('(and|or) not?');
       }
       /** remove the conjunction */
 
     }, {
       key: "items",
       value: function items() {
-        return this.parts().notIf('#Conjunction');
+        return parse(this).things;
       }
       /** add a new unit to the list */
 
@@ -12122,8 +12130,8 @@ var addMethod$4 = function addMethod(Doc) {
 
     }, {
       key: "remove",
-      value: function remove() {
-        return this;
+      value: function remove(match) {
+        return this.items()["if"](match).remove();
       }
       /** return only lists that use a serial comma */
 
@@ -12137,11 +12145,25 @@ var addMethod$4 = function addMethod(Doc) {
     }, {
       key: "addOxfordComma",
       value: function addOxfordComma() {
+        var items = this.items();
+        var needsComma = items.eq(items.length - 2);
+
+        if (needsComma.found && needsComma.has('@hasComma') === false) {
+          needsComma.post(', ');
+        }
+
         return this;
       }
     }, {
       key: "removeOxfordComma",
       value: function removeOxfordComma() {
+        var items = this.items();
+        var needsComma = items.eq(items.length - 2);
+
+        if (needsComma.found && needsComma.has('@hasComma') === true) {
+          needsComma.post(' ');
+        }
+
         return this;
       }
     }]);
@@ -12155,7 +12177,7 @@ var addMethod$4 = function addMethod(Doc) {
   Doc.prototype.lists = function (n) {
     var m = this["if"]('@hasComma+ .? (and|or) not? .'); // person-list
 
-    var nounList = m.match('(#Noun|#Adjective)+ #Conjunction not? #Adjective? #Noun+');
+    var nounList = m.match('(#Noun|#Adjective|#Determiner|#Article)+ #Conjunction not? (#Article|#Determiner)? #Adjective? #Noun+')["if"]('#Noun');
     var adjList = m.match('(#Adjective|#Adverb)+ #Conjunction not? #Adverb? #Adjective+');
     var verbList = m.match('(#Verb|#Adverb)+ #Conjunction not? #Adverb? #Verb+');
     var result = nounList.concat(adjList);
@@ -13099,7 +13121,11 @@ var methods$7 = {
       var parsed = parse$2(p);
       json.parts = {};
       Object.keys(parsed).forEach(function (k) {
-        json.parts[k] = parsed[k].text('normal');
+        if (parsed[k] && parsed[k].isA === 'Doc') {
+          json.parts[k] = parsed[k].text('normal');
+        } else {
+          json.parts[k] = parsed[k];
+        }
       });
       json.isNegative = p.has('#Negative');
       json.conjugations = conjugate_1$1(parsed, _this.world);

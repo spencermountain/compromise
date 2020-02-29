@@ -8,6 +8,13 @@ compromise uses semver, and pushes to npm frequently
 
 While all _Major_ releases should be reviewed, our only two _large_ releases are **v6** in 2016 and and **v12** in 2019. Others have been mostly incremental, or niche.
 
+#### 13.1.1
+
+- fix `verbs.json()` runtime-error
+- improve empty `.lists()` methods
+- allow custom tag colors
+- test new github action workflow
+
 #### 13.1.0
 
 - significant (~30%) speed up of parsing

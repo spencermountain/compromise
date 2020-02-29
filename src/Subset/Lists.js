@@ -1,7 +1,10 @@
 const addMethod = function(Doc) {
   //pull it apart..
   const parse = function(doc) {
-    let things = doc.splitAfter('@hasComma').not('(and|or) not?')
+    let things = doc
+      .splitAfter('@hasComma')
+      .splitOn('(and|or) not?')
+      .not('(and|or) not?')
     let beforeLast = doc.match('[.] (and|or)', 0)
     return {
       things: things,
@@ -23,7 +26,7 @@ const addMethod = function(Doc) {
     }
     /** remove the conjunction */
     items() {
-      return this.parts().notIf('#Conjunction')
+      return parse(this).things
     }
     /** add a new unit to the list */
     add(str) {

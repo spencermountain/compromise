@@ -1,6 +1,19 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
+test('list-parse', function(t) {
+  let arr = nlp('i saw red, blue, and silver')
+    .lists()
+    .items()
+  t.equal(arr.length, 3, 'found three colors, oxfort-comma')
+
+  arr = nlp('i saw red, blue and silver')
+    .lists()
+    .items()
+  t.equal(arr.length, 3, 'found three colors, no-comma')
+  t.end()
+})
+
 test('list-types', function(t) {
   let doc = nlp('he is nice, cool, and really fun.').lists()
   t.equal(doc.length, 1, 'found adj list')

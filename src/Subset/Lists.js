@@ -49,9 +49,19 @@ const addMethod = function(Doc) {
       return this.filter(doc => parse(doc).hasOxford)
     }
     addOxfordComma() {
+      let items = this.items()
+      let needsComma = items.eq(items.length - 2)
+      if (needsComma.found && needsComma.has('@hasComma') === false) {
+        needsComma.post(', ')
+      }
       return this
     }
     removeOxfordComma() {
+      let items = this.items()
+      let needsComma = items.eq(items.length - 2)
+      if (needsComma.found && needsComma.has('@hasComma') === true) {
+        needsComma.post(' ')
+      }
       return this
     }
   }

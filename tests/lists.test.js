@@ -1,6 +1,26 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
+test('comma-remove', function(t) {
+  let doc = nlp('i saw red, blue, and green.')
+  doc.lists().removeOxfordComma()
+  t.equal(doc.text(), 'i saw red, blue and green.', 'remove comma')
+
+  doc = nlp('i saw red, blue, and green.')
+  doc.lists().addOxfordComma()
+  t.equal(doc.text(), 'i saw red, blue, and green.', 'add comma')
+
+  doc.lists().addOxfordComma()
+  doc.lists().addOxfordComma()
+  doc.lists().addOxfordComma()
+  t.equal(doc.text(), 'i saw red, blue, and green.', 'just one comma')
+  doc.lists().removeOxfordComma()
+  doc.lists().removeOxfordComma()
+  doc.lists().removeOxfordComma()
+  t.equal(doc.text(), 'i saw red, blue and green.', 'still no commas')
+  t.end()
+})
+
 test('list-remove', function(t) {
   let doc = nlp('i saw red, blue and green.')
   doc.lists().remove('asdf')

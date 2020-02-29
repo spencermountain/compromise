@@ -18,7 +18,11 @@ module.exports = {
       let parsed = parseVerb(p)
       json.parts = {}
       Object.keys(parsed).forEach(k => {
-        json.parts[k] = parsed[k].text('normal')
+        if (parsed[k] && parsed[k].isA === 'Doc') {
+          json.parts[k] = parsed[k].text('normal')
+        } else {
+          json.parts[k] = parsed[k]
+        }
       })
       json.isNegative = p.has('#Negative')
       json.conjugations = conjugate(parsed, this.world)

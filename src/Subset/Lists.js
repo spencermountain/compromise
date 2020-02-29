@@ -1,7 +1,10 @@
 const addMethod = function(Doc) {
   //pull it apart..
   const parse = function(doc) {
-    let things = doc.splitAfter('@hasComma').not('(and|or) not?')
+    let things = doc
+      .splitAfter('@hasComma')
+      .splitOn('(and|or) not?')
+      .not('(and|or) not?')
     let beforeLast = doc.match('[.] (and|or)', 0)
     return {
       things: things,
@@ -19,11 +22,11 @@ const addMethod = function(Doc) {
     }
     /** split-up by list object */
     parts() {
-      return this.splitAfter('(@hasComma|#Conjunction)')
+      return this.splitAfter('@hasComma').splitOn('(and|or) not?')
     }
     /** remove the conjunction */
     items() {
-      return this.parts().notIf('#Conjunction')
+      return parse(this).things
     }
     /** add a new unit to the list */
     add(str) {
@@ -36,18 +39,29 @@ const addMethod = function(Doc) {
       return this
     }
     /** remove any matching unit from the list */
-    remove() {
-      return this
+    remove(match) {
+      return this.items()
+        .if(match)
+        .remove()
     }
-
     /** return only lists that use a serial comma */
     hasOxfordComma() {
       return this.filter(doc => parse(doc).hasOxford)
     }
     addOxfordComma() {
+      let items = this.items()
+      let needsComma = items.eq(items.length - 2)
+      if (needsComma.found && needsComma.has('@hasComma') === false) {
+        needsComma.post(', ')
+      }
       return this
     }
     removeOxfordComma() {
+      let items = this.items()
+      let needsComma = items.eq(items.length - 2)
+      if (needsComma.found && needsComma.has('@hasComma') === true) {
+        needsComma.post(' ')
+      }
       return this
     }
   }
@@ -58,7 +72,9 @@ const addMethod = function(Doc) {
     let m = this.if('@hasComma+ .? (and|or) not? .')
 
     // person-list
-    let nounList = m.match('(#Noun|#Adjective)+ #Conjunction not? #Adjective? #Noun+')
+    let nounList = m
+      .match('(#Noun|#Adjective|#Determiner|#Article)+ #Conjunction not? (#Article|#Determiner)? #Adjective? #Noun+')
+      .if('#Noun')
     let adjList = m.match('(#Adjective|#Adverb)+ #Conjunction not? #Adverb? #Adjective+')
     let verbList = m.match('(#Verb|#Adverb)+ #Conjunction not? #Adverb? #Verb+')
     let result = nounList.concat(adjList)

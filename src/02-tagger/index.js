@@ -16,6 +16,8 @@ const tagger = function(doc) {
   doc.cache()
   // wiggle-around the results, so they make more sense
   doc = corrections(doc)
+  // remove our cache, as it's invalidated now
+  doc.uncache()
   // run any user-given tagger functions
   doc.world.taggers.forEach(fn => {
     fn(doc)

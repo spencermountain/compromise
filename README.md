@@ -716,9 +716,10 @@ doc.world.hello = "Hello again!"
 
 - **[Geocoding Social Conversations with NLP and JavaScript](http://compromise.cool)** - by Microsoft
 - **[Microservice Recipe](https://eventn.com/recipes/text-parsing-with-nlp-compromise)** - by Eventn
+- **[Adventure Game Sentence Parsing with Compromise](https://killalldefects.com/2020/02/20/adventure-game-sentence-parsing-with-compromise/)
 - **[Building Text-Based Games](https://killalldefects.com/2019/09/24/building-text-based-games-with-compromise-nlp/)** - by Matt Eland
 - **[Fun with javascript in BigQuery](https://medium.com/@hoffa/new-in-bigquery-persistent-udfs-c9ea4100fd83#6e09)** - by Felipe Hoffa
-- - **[Natural Language Processing... in the Browser???](https://dev.to/charlesdlandau/natural-language-processing-in-the-browser-52hj)** - by Charles Landau
+- **[Natural Language Processing... in the Browser???](https://dev.to/charlesdlandau/natural-language-processing-in-the-browser-52hj)** - by Charles Landau
 
 ##### Talks:
 

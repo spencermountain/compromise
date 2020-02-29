@@ -8,6 +8,7 @@ exports.cache = function(options) {
   this._cache.set = true
   this.list.forEach((p, i) => {
     p.cache = p.cache || {}
+    //p.terms get cached automatically
     let terms = p.terms()
     // cache all the terms
     terms.forEach(t => {
@@ -21,26 +22,12 @@ exports.cache = function(options) {
         tags[tag] = tags[tag] || []
         tags[tag].push(i)
       })
-      // Object.assign(this._cache.tags, t.tags)
 
-      //   words[t.clean] = true
-      //   words[t.text.toLowerCase()] = true
-      //   if (t.implicit) {
-      //     words[t.implicit] = true
-      //   }
-      //   if (t.root) {
-      //     words[t.root] = true
-      //   }
-      //   if (t.alias !== undefined) {
-      //     words = Object.assign(words, t.alias)
-      //   }
+      // cache root-form on Term, too
       if (options.root) {
         t.setRoot(this.world)
         words[t.root] = true
       }
-      // })
-      // delete words['']
-      // p.cache.words = words
     })
   })
   return this

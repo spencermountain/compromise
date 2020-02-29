@@ -61,6 +61,6 @@ jobs:
       - name: publish
         run: |
           echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
-          npm publish --dry-run
+          npm publish
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

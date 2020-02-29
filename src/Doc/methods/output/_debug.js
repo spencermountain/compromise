@@ -1,5 +1,3 @@
-const tagset = require('../../../World/tags')
-
 // https://stackoverflow.com/questions/9781218/how-to-change-node-jss-console-font-color
 const reset = '\x1b[0m'
 
@@ -27,6 +25,7 @@ const css = {
 }
 
 const logClientSide = function(doc) {
+  let tagset = doc.world.tags
   doc.list.forEach(p => {
     console.log('\n%c"' + p.text() + '"', 'color: #e6d7b3;')
     let terms = p.terms()
@@ -74,12 +73,12 @@ const cli = {
   },
 }
 
-const tagString = function(tags) {
+const tagString = function(tags, world) {
   tags = tags.map(tag => {
-    if (!tagset.hasOwnProperty(tag)) {
+    if (!world.tags.hasOwnProperty(tag)) {
       return tag
     }
-    const c = tagset[tag].color || 'blue'
+    const c = world.tags[tag].color || 'blue'
     return cli[c](tag)
   })
   return tags.join(', ')
@@ -106,7 +105,7 @@ const debug = function(doc) {
       }
       let word = "'" + text + "'"
       word = padEnd(word, 18)
-      let str = cli.blue('  ｜ ') + word + '  - ' + tagString(tags)
+      let str = cli.blue('  ｜ ') + word + '  - ' + tagString(tags, doc.world)
       console.log(str)
     })
   })

@@ -15,6 +15,5 @@ module.exports = [
   'ma',
   'md',
   'pd',
-  'pl',
   'tce',
 ]

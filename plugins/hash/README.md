@@ -10,7 +10,7 @@
   
   <!-- file size -->
   <a href="https://unpkg.com/compromise-hash/builds/compromise-hash.min.js">
-    <img src="https://badge-size.herokuapp.com/spencermountain/compromise-hash/master/builds/compromise-hash.min.js" />
+    <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/plugins/hash/builds/compromise-hash.min.js" />
   </a>
    <hr/>
 </div>

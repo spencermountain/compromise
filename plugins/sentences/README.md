@@ -10,7 +10,7 @@
   
   <!-- file size -->
   <a href="https://unpkg.com/compromise-sentences/builds/compromise-sentences.min.js">
-    <img src="https://badge-size.herokuapp.com/spencermountain/compromise-sentences/master/builds/compromise-sentences.min.js" />
+    <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/plugins/sentences/builds/compromise-sentences.min.js" />
   </a>
    <hr/>
 </div>

@@ -11,7 +11,7 @@
   
   <!-- file size -->
   <a href="https://unpkg.com/compromise-numbers/builds/compromise-numbers.min.js">
-    <img src="https://badge-size.herokuapp.com/spencermountain/compromise-numbers/master/builds/compromise-numbers.min.js" />
+    <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/plugins/numbers/builds/compromise-numbers.min.js" />
   </a>
    <hr/>
 </div>

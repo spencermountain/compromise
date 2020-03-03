@@ -10,7 +10,7 @@
   
   <!-- file size -->
   <a href="https://unpkg.com/compromise-dates/builds/compromise-keypress.min.js">
-    <img src="https://badge-size.herokuapp.com/spencermountain/compromise-keypress/master/builds/compromise-keypress.min.js" />
+    <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/plugins/keypress/builds/compromise-keypress.min.js" />
   </a>
    <hr/>
 </div>

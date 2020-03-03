@@ -14,15 +14,12 @@ module.exports = [
   'gal', //gallon
   'min',
   'pseud',
-  'mph',
   'fig', //figure
   'jd',
   'lat', //latitude
   'lng', //longitude
   'vol', //volume
   'psa', //psalms
-  'hr', //hour
-  'hrs', //hour
   'fm', //not am
   'def', //definition
   'misc',

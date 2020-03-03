@@ -7,6 +7,6 @@ nlp.extend(require('./plugins/numbers/src'))
 // let doc = nlp('i paid $5.50.')
 // let doc = nlp('$5.32')
 
-let doc = nlp('it was 55 mph. or so').debug()
+let doc = nlp('it was 5 kg. or so').debug()
 doc.numbers().debug()
 // console.log(doc.termList())

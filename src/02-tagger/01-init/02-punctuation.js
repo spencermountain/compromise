@@ -1,4 +1,5 @@
 const apostrophes = /[\'‘’‛‵′`´]$/
+const perSec = /^(m|k|cm|km|m)\/(s|h|hr)$/ // '5 k/m'
 
 //
 const checkPunctuation = function(terms, i, world) {
@@ -29,6 +30,11 @@ const checkPunctuation = function(terms, i, world) {
       }
     }
   }
+  // '5 km/s'
+  if (perSec.test(term.text)) {
+    term.tag('Unit', 'per-sec', world)
+  }
+
   // 'NASA' is, but not 'i REALLY love it.'
   // if (term.tags.Noun === true && isAcronym(term, world)) {
   //   term.tag('Acronym', 'acronym-step', world)

@@ -32,7 +32,7 @@ let methods = {
   },
   /** two of what? */
   units: function() {
-    return this.lookAhead('^(#Unit|#Noun)')
+    return this.lookAhead('(#Unit|#Noun)')
   },
   /** return only ordinal numbers */
   isOrdinal: function() {
@@ -203,14 +203,14 @@ let methods = {
 
   /// ----
 
-  /** return things like 1/3rd */
-  fractions: function(n) {
-    let m = this.match('#Fraction')
-    if (typeof n === 'number') {
-      m = m.get(n)
-    }
-    return m
-  },
+  // /** return things like 1/3rd */
+  // fractions: function(n) {
+  //   let m = this.match('#Fraction')
+  //   if (typeof n === 'number') {
+  //     m = m.get(n)
+  //   }
+  //   return m
+  // },
 
   /** return things like CCXX*/
   romanNumerals: function(n) {

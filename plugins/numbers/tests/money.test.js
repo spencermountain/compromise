@@ -40,6 +40,17 @@ test('money-basic:', function(t) {
   t.end()
 })
 
+test('money-transform:', function(t) {
+  let doc = nlp('i paid $5.32 for a pizza slice')
+  doc.money().add(1)
+  t.equal(doc.text(), 'i paid $6.32 for a pizza slice', 'money-add-one')
+
+  doc = nlp('i paid fifty eight dollars')
+  doc.money().add(1)
+  t.equal(doc.text(), 'i paid fifty nine dollars', 'text-add-one')
+  t.end()
+})
+
 test('money-has:', function(t) {
   let tests = [
     ['$7', true],

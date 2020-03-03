@@ -1,3 +1,12 @@
+### Unit/Currency
+
+- `5 km`
+- `5 k/s`
+- `5 books`
+- `5 euros`
+
+---
+
 ```js
 //greedy match issue
 nlp(`wayne's world, party time`)
@@ -229,6 +238,7 @@ let arr = [
 ```
 
 ### lookup duplicates
+
 ```js
 let doc = nlp('spencer kelly is working here')
 let res = doc.lookup(['spencer kelly', 'spencer'])

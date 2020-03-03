@@ -8,10 +8,13 @@ compromise uses semver, and pushes to npm frequently
 
 While all _Major_ releases should be reviewed, our only two _large_ releases are **v6** in 2016 and and **v12** in 2019. Others have been mostly incremental, or niche.
 
-#### [unreleased]
+#### [Unreleased] 13.2.0
+
 - deprecate `.money()` and favour overloaded method in compromise-numbers plugin
+- add `.percentages()` and `.fractions()` to compromise-numbers plugin
 - add `.hasAfter()` and `.hasBefore()` methods
-- 
+- change handling of slashes
+
 #### 13.1.1
 
 - fix `verbs.json()` runtime-error

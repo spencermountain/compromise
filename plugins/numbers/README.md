@@ -51,11 +51,16 @@ doc.numbers().debug()
   - **[.numbers().isOrdinal()](https://observablehq.com/@spencermountain/compromise-values)** - return only ordinal numbers
   - **[.numbers().isCardinal()](https://observablehq.com/@spencermountain/compromise-values)** - return only cardinal numbers
   - **[.numbers().toLocaleString()](https://observablehq.com/@spencermountain/compromise-values)** - add commas, or nicer formatting for numbers
+- **[.money()](https://observablehq.com/@spencermountain/compromise-values)** - like \$5.50 or '5 euros'
+- **[.fractions()](https://observablehq.com/@spencermountain/compromise-values)** - like '2/3rds'
+- **[.percentages()](https://observablehq.com/@spencermountain/compromise-values)** - like '2.5%'
 
 ### Notes:
 
 if a number is changed within a sentence, attempts are made at sentence-agreement - in both a leading determiner, and the plurality of a following noun.
 This is done safely, but it may have sneaky or unintended effects for some applications.
+
+money,fractions, and percentages will be returned and work fine in `.numbers()`, but can be isolated with `.money()`, `.fractions()` and `.percentages()`
 
 compromise-numbers uses the [period decimal point](https://en.wikipedia.org/wiki/Decimal_separator) and supports comma as a thousands-seperator.
 Some european or latin-american number formats like comma-decimals, or space-separated-thousands do not parse properly.

@@ -4,7 +4,7 @@ const tagger = require('./tagger')
 const tags = require('./tags')
 
 /** adds .numbers() method */
-const addMethod = function(Doc, world) {
+const plugin = function(Doc, world) {
   // add tags to our tagset
   world.addTags(tags)
 
@@ -16,20 +16,40 @@ const addMethod = function(Doc, world) {
   //aliases
   Object.assign(Numbers.prototype, methods)
 
-  /** find all numbers and values */
-  Doc.prototype.numbers = function(n) {
-    let m = findNumbers(this, n)
-    return new Numbers(m.list, this, this.world)
-  }
-  // alias for reverse-compatibility
-  Doc.prototype.values = Doc.prototype.numbers
+  class Money extends Numbers {}
+  class Fraction extends Numbers {}
 
-  /** money + currency pair */
-  Doc.prototype.money = function(n) {
-    let m = this.numbers(n).if('#Money')
-    return new Numbers(m.list, this, this.world)
+  const docMethods = {
+    /** find all numbers and values */
+    numbers: function(n) {
+      let m = findNumbers(this, n)
+      return new Numbers(m.list, this, this.world)
+    },
+    /** numbers that are percentages*/
+    percentages: function(n) {
+      let m = findNumbers(this, n)
+      m = m.if('/%$/')
+      return new Numbers(m.list, this, this.world)
+    },
+    /** number + currency pair */
+    money: function(n) {
+      let nums = findNumbers(this, n)
+      let m = nums.if('#Money') //$5.75
+      m = m.concat(nums.hasAfter('#Currency')) //'5 dollars'
+      return new Money(m.list, this, this.world)
+    },
+    fractions: function(n) {
+      let nums = findNumbers(this, n)
+      let m = nums.if('#Fraction') //2/3
+      return new Fraction(m.list, this, this.world)
+    },
   }
+  // aliases
+  docMethods.values = docMethods.numbers
+  docMethods.percents = docMethods.percentages
+
+  Object.assign(Doc.prototype, docMethods)
 
   return Doc
 }
-module.exports = addMethod
+module.exports = plugin

@@ -178,6 +178,7 @@ module.exports = [
   'mph',
   'mile per hour',
   'miles per hour',
+  'miles an hour',
   'mi/h',
   'knot',
   'knots',

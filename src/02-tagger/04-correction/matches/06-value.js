@@ -14,12 +14,13 @@ module.exports = [
   //5 yan
   { match: '#Value+ [#Currency]', group: 0, tag: 'Unit', reason: '5-yan' },
   { match: '#Value [(foot|feet)]', group: 0, tag: 'Unit', reason: 'foot-unit' },
-  // ==== Money ====
-  { match: '[#Value+] #Currency', group: 0, tag: 'Money', reason: '15 usd' },
+
   //minus 7
   { match: '(minus|negative) #Value', tag: 'Value', reason: 'minus-value' },
   //5 kg.
-  { match: '#Value #Abbreviation', tag: 'Value', reason: 'value-abbr' },
+  { match: '#Value [#Abbreviation]', group: 0, tag: 'Unit', reason: 'value-abbr' },
+  { match: '#Value [k]', group: 0, tag: 'Unit', reason: 'value-k' },
+  { match: '#Unit an hour', tag: 'Unit', reason: 'unit-an-hour' },
   //seven point five
   { match: '#Value (point|decimal) #Value', tag: 'Value', reason: 'value-point-value' },
   // ten bucks
@@ -28,6 +29,8 @@ module.exports = [
   { match: '#Determiner [(half|quarter)] #Ordinal', group: 0, tag: 'Value', reason: 'half-ordinal' },
   { match: 'a #Value', tag: 'Value', reason: 'a-value' },
 
+  // ==== Money ====
+  { match: '[#Value+] #Currency', group: 0, tag: 'Money', reason: '15 usd' },
   // thousand and two
   {
     match: `(hundred|thousand|million|billion|trillion|quadrillion)+ and #Value`,

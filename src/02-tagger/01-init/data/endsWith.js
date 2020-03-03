@@ -74,7 +74,7 @@ module.exports = {
     [/.[oau][wvl]ski$/, Last], //polish (male)
   ],
   k: [
-    [/^(k)+$/, Exp], //kkkk
+    [/^(k){2}$/, Exp], //kkkk
   ],
   l: [
     [/.[gl]ial$/, Adj],

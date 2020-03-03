@@ -10,7 +10,8 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 
 #### [unreleased]
 - deprecate `.money()` and favour overloaded method in compromise-numbers plugin
-
+- add `.hasAfter()` and `.hasBefore()` methods
+- 
 #### 13.1.1
 
 - fix `verbs.json()` runtime-error

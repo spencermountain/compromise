@@ -1,4 +1,9 @@
 const fns = require('./fns')
+const lowerCase = /^[a-z]/
+
+const titleCase = str => {
+  return str.charAt(0).toUpperCase() + str.substr(1)
+}
 
 /** remove this tag, and its descentents from the term */
 const unTag = function(t, tag, reason, world) {
@@ -7,6 +12,10 @@ const unTag = function(t, tag, reason, world) {
   if (tag === '*') {
     t.tags = {}
     return t
+  }
+  tag = tag.replace(/^#/, '')
+  if (lowerCase.test(tag) === true) {
+    tag = titleCase(tag)
   }
   // remove the tag
   if (t.tags[tag] === true) {

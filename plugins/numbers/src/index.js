@@ -18,19 +18,16 @@ const addMethod = function(Doc, world) {
 
   /** find all numbers and values */
   Doc.prototype.numbers = function(n) {
-    let match = findNumbers(this, n)
-    return new Numbers(match.list, this, this.world)
+    let m = findNumbers(this, n)
+    return new Numbers(m.list, this, this.world)
   }
   // alias for reverse-compatibility
   Doc.prototype.values = Doc.prototype.numbers
 
   /** money + currency pair */
   Doc.prototype.money = function(n) {
-    let m = this.match('#Money #Currency?')
-    if (typeof n === 'number') {
-      m = m.get(n)
-    }
-    return m
+    let m = this.numbers(n).if('#Money')
+    return new Numbers(m.list, this, this.world)
   }
 
   return Doc

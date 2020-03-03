@@ -52,4 +52,14 @@ doc.numbers().debug()
   - **[.numbers().isCardinal()](https://observablehq.com/@spencermountain/compromise-values)** - return only cardinal numbers
   - **[.numbers().toLocaleString()](https://observablehq.com/@spencermountain/compromise-values)** - add commas, or nicer formatting for numbers
 
+### Notes:
+
+if a number is changed within a sentence, attempts are made at sentence-agreement - in both a leading determiner, and the plurality of a following noun.
+This is done safely, but it may have sneaky or unintended effects for some applications.
+
+compromise-numbers uses the [period decimal point](https://en.wikipedia.org/wiki/Decimal_separator) and supports comma as a thousands-seperator.
+Some european or latin-american number formats like comma-decimals, or space-separated-thousands do not parse properly.
+
+attempts are made to ignore phone-numbers, postal-codes and credit-card numbers from `.numbers()` results, but there may be numbers used in other ways that are not accounted for.
+
 MIT

@@ -60,7 +60,9 @@ doc.numbers().debug()
 if a number is changed within a sentence, attempts are made at sentence-agreement - in both a leading determiner, and the plurality of a following noun.
 This is done safely, but it may have sneaky or unintended effects for some applications.
 
-money,fractions, and percentages will be returned and work fine in `.numbers()`, but can be isolated with `.money()`, `.fractions()` and `.percentages()`
+**money, fractions, and percentages** will be returned and work fine in `.numbers()`, but can be isolated with `.money()`, `.fractions()` and `.percentages()`
+
+**times** like `5pm` are parsed and handled by [compromise-dates](https://observablehq.com/@spencermountain/compromise-dates) and are not returned by `.numbers()`.
 
 compromise-numbers uses the [period decimal point](https://en.wikipedia.org/wiki/Decimal_separator) and supports comma as a thousands-seperator.
 Some european or latin-american number formats like comma-decimals, or space-separated-thousands do not parse properly.

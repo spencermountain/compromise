@@ -61,6 +61,10 @@ function instance(worldInstance) {
     world.verbose(bool)
     return this
   }
+  /** grab currently-used World object */
+  nlp.world = function() {
+    return world
+  }
 
   /** current version of the library */
   nlp.version = version

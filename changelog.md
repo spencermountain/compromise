@@ -14,6 +14,8 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - add `.percentages()` and `.fractions()` to compromise-numbers plugin
 - add `.hasAfter()` and `.hasBefore()` methods
 - change handling of slashes
+- add `.world()` method to constructor
+- add more abbreviations
 
 #### 13.1.1
 

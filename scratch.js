@@ -7,5 +7,11 @@ nlp.extend(require('./plugins/numbers/src'))
 // let doc = nlp('i paid $5.50.')
 // let doc = nlp('$5.32')
 
-let doc = nlp('i went 5 k/m²').debug()
+let world = nlp.world()
+Object.assign(world.cache.abbreviations, {
+  fn: true,
+  abbr: true,
+})
+
+let doc = nlp('on tel. 34th').debug()
 // console.log(doc.termList())

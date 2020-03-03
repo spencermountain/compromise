@@ -23,6 +23,16 @@ const addMethod = function(Doc, world) {
   }
   // alias for reverse-compatibility
   Doc.prototype.values = Doc.prototype.numbers
+
+  /** money + currency pair */
+  Doc.prototype.money = function(n) {
+    let m = this.match('#Money #Currency?')
+    if (typeof n === 'number') {
+      m = m.get(n)
+    }
+    return m
+  }
+
   return Doc
 }
 module.exports = addMethod

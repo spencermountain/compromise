@@ -40,7 +40,7 @@ methods.phoneNumbers = function(n) {
   return m
 }
 
-/** money + currency pair */
+/** Deprecated: please use compromise-numbers plugin */
 methods.money = function(n) {
   let m = this.match('#Money #Currency?')
   if (typeof n === 'number') {

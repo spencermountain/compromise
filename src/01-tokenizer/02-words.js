@@ -1,7 +1,7 @@
 const wordlike = /\S/
 const isBoundary = /^[!?.]+$/
 const naiiveSplit = /(\S+)/
-const isSlash = /\/\W*$/
+const isSlash = /[a-z] ?\/ ?[a-z]*$/
 
 const notWord = {
   '.': true,

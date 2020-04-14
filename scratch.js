@@ -1,13 +1,10 @@
 const nlp = require('./src/index')
-// nlp.verbose(true)
+nlp.verbose(true)
 // let txt = require('./scripts/test/speed/_sotu-text.js')
 // nlp.extend(require('./plugins/numbers/src'))
 // nlp.extend(require('./plugins/dates/src'))
 
 /*
-### Tagging:
-`in Hillsborough, California`
-`based in Creston British Columbia`
 
 ### article issues
 `'20th-century American'  - .article()  -> a`
@@ -20,6 +17,6 @@ const nlp = require('./src/index')
 `rhythm and blues singer-songwriters`
 */
 
-let doc = nlp('in Hillsborough, California')
+let doc = nlp('based in Creston British Columbia')
 doc.nouns().toSingular()
 doc.debug()

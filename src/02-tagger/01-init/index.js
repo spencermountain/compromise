@@ -7,7 +7,7 @@ const steps = {
 }
 
 //'lookups' look at a term by itself
-const lookups = function(doc, terms) {
+const lookups = function (doc, terms) {
   let world = doc.world
   //our list of known-words
   steps.lexicon(terms, world)

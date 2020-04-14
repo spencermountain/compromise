@@ -1,7 +1,7 @@
 const endsWith = require('./data/endsWith')
 const suffixMap = require('./data/suffixMap')
 
-const endRegexs = function(term, world) {
+const endRegexs = function (term, world) {
   let str = term.clean
   let char = str[str.length - 1]
   if (endsWith.hasOwnProperty(char) === true) {
@@ -16,7 +16,7 @@ const endRegexs = function(term, world) {
 }
 
 //sweep-through all suffixes
-const knownSuffixes = function(term, world) {
+const knownSuffixes = function (term, world) {
   const len = term.clean.length
   let max = 7
   if (len <= max) {
@@ -33,7 +33,7 @@ const knownSuffixes = function(term, world) {
 }
 
 //all-the-way-down!
-const checkRegex = function(term, world) {
+const checkRegex = function (term, world) {
   knownSuffixes(term, world)
   endRegexs(term, world)
 }

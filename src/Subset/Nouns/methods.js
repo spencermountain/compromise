@@ -6,7 +6,7 @@ const parse = require('./parse')
 
 const methods = {
   /** overload the original json with noun information */
-  json: function(options) {
+  json: function (options) {
     let n = null
     if (typeof options === 'number') {
       n = options
@@ -14,7 +14,7 @@ const methods = {
     }
     options = options || { text: true, normal: true, trim: true, terms: true }
     let res = []
-    this.forEach(doc => {
+    this.forEach((doc) => {
       let json = doc.json(options)[0]
       json.article = getArticle(doc)
       res.push(json)
@@ -25,22 +25,22 @@ const methods = {
     return res
   },
   /** get all adjectives describing this noun*/
-  adjectives: function() {
+  adjectives: function () {
     let list = this.lookAhead('^(that|who|which)? (was|is|will)? be? #Adverb? #Adjective+')
     list = list.concat(this.lookBehind('#Adjective+ #Adverb?$'))
     list = list.match('#Adjective')
     return list.sort('index')
   },
 
-  isPlural: function() {
+  isPlural: function () {
     return this.if('#Plural') //assume tagger has run?
   },
-  hasPlural: function() {
-    return this.filter(d => hasPlural(d))
+  hasPlural: function () {
+    return this.filter((d) => hasPlural(d))
   },
-  toPlural: function(agree) {
+  toPlural: function (agree) {
     let toPlural = this.world.transforms.toPlural
-    this.forEach(doc => {
+    this.forEach((doc) => {
       if (doc.has('#Plural') || hasPlural(doc) === false) {
         return
       }
@@ -62,10 +62,10 @@ const methods = {
     })
     return this
   },
-  toSingular: function(agree) {
+  toSingular: function (agree) {
     let toSingular = this.world.transforms.toSingular
-    this.forEach(doc => {
-      if (doc.has('#Singular') || hasPlural(doc) === false) {
+    this.forEach((doc) => {
+      if (doc.has('^#Singular+$') || hasPlural(doc) === false) {
         return
       }
       // double-check it isn't an un-tagged plural
@@ -90,8 +90,8 @@ const methods = {
     })
     return this
   },
-  toPossessive: function() {
-    this.forEach(d => {
+  toPossessive: function () {
+    this.forEach((d) => {
       toPossessive(d)
     })
     return this

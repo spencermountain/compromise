@@ -4,12 +4,22 @@ const nlp = require('./src/index')
 // nlp.extend(require('./plugins/numbers/src'))
 // nlp.extend(require('./plugins/dates/src'))
 
-// let doc = nlp('i paid $5.50.')
-// let doc = nlp('$5.32')
+/*
+### Tagging:
+`in Hillsborough, California`
+`based in Creston British Columbia`
 
-let doc = nlp('hello 4 / 2 * 5 - 1 world').debug()
-doc
-  .match('/[0-9] \\/ [0-9]/')
-  .debug()
-  .tag('Formula')
-// doc.match('#Value+ (*|+|-) #Value+').tag('#Formula')
+### article issues
+`'20th-century American'  - .article()  -> a`
+`sports people`
+``
+``
+`The Football clubs in Morocco`
+`Defunct tennis tournaments in the United States`
+`The Expatriate football managers in Georgia `
+`rhythm and blues singer-songwriters`
+*/
+
+let doc = nlp('in Hillsborough, California')
+doc.nouns().toSingular()
+doc.debug()

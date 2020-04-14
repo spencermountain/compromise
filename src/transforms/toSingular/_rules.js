@@ -9,7 +9,8 @@ module.exports = [
   [/(octop|vir|radi|nucle|fung|cact|stimul)(i)$/i, '$1us'],
   [/(buffal|tomat|tornad)(oes)$/i, '$1o'],
   // [/(analy|diagno|parenthe|progno|synop|the)ses$/i, '$1sis'],
-  [/(..[aeiou]s)es$/i, '$1'],
+  [/(eas)es$/i, '$1e'], //diseases
+  [/(..[aeiou]s)es$/i, '$1'], //geniouses
   [/(vert|ind|cort)(ices)$/i, '$1ex'],
   [/(matr|append)(ices)$/i, '$1ix'],
   [/(x|ch|ss|sh|z|o)es$/i, '$1'],

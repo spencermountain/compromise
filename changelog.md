@@ -16,6 +16,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - change handling of slashes
 - add `.world()` method to constructor
 - add more abbreviations
+- fix regex backtracking #739
 
 #### 13.1.1
 

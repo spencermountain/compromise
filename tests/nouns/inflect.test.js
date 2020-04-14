@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('isPlural:', function(t) {
+test('isPlural:', function (t) {
   let arr = [
     ['octopus', false],
     ['tree', false],
@@ -19,10 +19,11 @@ test('isPlural:', function(t) {
     ["toronto's", false],
     ['circus', false],
     ['circuses', true],
+    ['circuses', true],
     // ['simpsons\'', false],
     // ['she\'s', false],
   ]
-  arr.forEach(function(a) {
+  arr.forEach(function (a) {
     const r = nlp(a[0]).nouns()
     const msg = a[0]
     t.equal(r.isPlural().found, a[1], msg)
@@ -30,7 +31,7 @@ test('isPlural:', function(t) {
   t.end()
 })
 
-test('toSingular:', function(t) {
+test('toSingular:', function (t) {
   let arr = [
     // ["Joneses", "Jones"],
     ['children', 'child'],
@@ -109,18 +110,17 @@ test('toSingular:', function(t) {
     ['parentheses', 'parenthesis'],
     ['theses', 'thesis'],
     ['bases', 'base'],
+    // ['Isley Brothers members', 'Isley Brothers member'],
   ]
-  arr.forEach(function(a) {
-    const r = nlp(a[0])
-      .tag('Noun')
-      .nouns()
-    const str = r.toSingular().out('normal')
+  arr.forEach(function (a) {
+    const r = nlp(a[0]).tag('Noun').nouns()
+    const str = r.toSingular().text()
     t.equal(str, a[1], a[0])
   })
   t.end()
 })
 
-test('toPlural:', function(t) {
+test('toPlural:', function (t) {
   let arr = [
     ['snake', 'snakes'],
     ['ski', 'skis'],
@@ -199,10 +199,8 @@ test('toPlural:', function(t) {
     ['studios', 'studios'],
     ['zoos', 'zoos'],
   ]
-  arr.forEach(function(a) {
-    const r = nlp(a[0])
-      .tag('Noun')
-      .nouns()
+  arr.forEach(function (a) {
+    const r = nlp(a[0]).tag('Noun').nouns()
     const str = r.toPlural().out('normal')
     t.equal(str, a[1], a[0])
   })

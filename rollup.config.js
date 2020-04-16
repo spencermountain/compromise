@@ -25,6 +25,8 @@ export default [
       alias({
         //remove a bunch of imports with no-ops
         entries: [
+          { find: './data/conjugations', replacement: __dirname + '/scripts/build/no-ops/_object' },
+          { find: './data/plurals', replacement: __dirname + '/scripts/build/no-ops/_object' },
           { find: './_data', replacement: __dirname + '/scripts/build/no-ops/_object' },
           { find: '../02-tagger', replacement: __dirname + '/src/02-tagger/tiny' },
           { find: 'efrt-unpack', replacement: __dirname + '/scripts/build/no-ops/_function' },

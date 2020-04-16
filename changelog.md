@@ -17,6 +17,8 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - add `.world()` method to constructor
 - add more abbreviations
 - fix regex backtracking #739
+- remove conjugation and inflection data from tokenize build
+- remove sourcemaps from build
 
 #### 13.1.1
 

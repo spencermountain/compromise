@@ -5,7 +5,7 @@ const toNumber = require('./convert/toNumber')
 
 let methods = {
   /** overloaded json method with additional number information */
-  json: function(options) {
+  json: function (options) {
     let n = null
     if (typeof options === 'number') {
       n = options
@@ -13,7 +13,7 @@ let methods = {
     }
     options = options || { text: true, normal: true, trim: true, terms: true }
     let res = []
-    this.forEach(doc => {
+    this.forEach((doc) => {
       let json = doc.json(options)[0]
       let obj = parseNumber(doc)
       json.prefix = obj.prefix
@@ -31,20 +31,23 @@ let methods = {
     return res
   },
   /** two of what? */
-  units: function() {
-    return this.lookAhead('(#Unit|#Noun)')
+  units: function () {
+    let m = this.lookAhead('(#Unit|#Noun)+')
+    m = m.splitAfter('@hasComma').first()
+    m = m.not('#Pronoun')
+    return m.first()
   },
   /** return only ordinal numbers */
-  isOrdinal: function() {
+  isOrdinal: function () {
     return this.if('#Ordinal')
   },
   /** return only cardinal numbers*/
-  isCardinal: function() {
+  isCardinal: function () {
     return this.if('#Cardinal')
   },
   /** convert to numeric form like '8' or '8th' */
-  toNumber: function() {
-    this.forEach(val => {
+  toNumber: function () {
+    this.forEach((val) => {
       let obj = parseNumber(val)
       if (obj.num === null) {
         return
@@ -56,8 +59,8 @@ let methods = {
     return this
   },
   /** add commas, or nicer formatting for numbers */
-  toLocaleString: function() {
-    this.forEach(val => {
+  toLocaleString: function () {
+    this.forEach((val) => {
       let obj = parseNumber(val)
       if (obj.num === null) {
         return
@@ -69,8 +72,8 @@ let methods = {
     return this
   },
   /** convert to text form - like 'eight' or 'eigth'*/
-  toText: function() {
-    this.forEach(val => {
+  toText: function () {
+    this.forEach((val) => {
       let obj = parseNumber(val)
       if (obj.num === null) {
         return
@@ -82,9 +85,9 @@ let methods = {
     return this
   },
   /** convert to cardinal form, like 'eight', or '8' */
-  toCardinal: function(agree) {
+  toCardinal: function (agree) {
     let m = this.if('#Ordinal')
-    m.forEach(val => {
+    m.forEach((val) => {
       let obj = parseNumber(val)
       if (obj.num === null) {
         return
@@ -98,9 +101,9 @@ let methods = {
     return this
   },
   /** convert to ordinal form, like 'eighth', or '8th' */
-  toOrdinal: function() {
+  toOrdinal: function () {
     let m = this.if('#Cardinal')
-    m.forEach(val => {
+    m.forEach((val) => {
       let obj = parseNumber(val)
       if (obj.num === null) {
         return
@@ -117,42 +120,42 @@ let methods = {
     return this
   },
   /** return only numbers that are == n */
-  isEqual: function(n) {
-    return this.filter(val => {
+  isEqual: function (n) {
+    return this.filter((val) => {
       let num = parseNumber(val).num
       return num === n
     })
   },
   /** return only numbers that are > n*/
-  greaterThan: function(n) {
-    return this.filter(val => {
+  greaterThan: function (n) {
+    return this.filter((val) => {
       let num = parseNumber(val).num
       return num > n
     })
   },
   /** return only numbers that are < n*/
-  lessThan: function(n) {
-    return this.filter(val => {
+  lessThan: function (n) {
+    return this.filter((val) => {
       let num = parseNumber(val).num
       return num < n
     })
   },
   /** return only numbers > min and < max */
-  between: function(min, max) {
-    return this.filter(val => {
+  between: function (min, max) {
+    return this.filter((val) => {
       let num = parseNumber(val).num
       return num > min && num < max
     })
   },
   /** set these number to n */
-  set: function(n, agree) {
+  set: function (n, agree) {
     if (n === undefined) {
       return this // don't bother
     }
     if (typeof n === 'string') {
       n = toNumber(n)
     }
-    this.forEach(val => {
+    this.forEach((val) => {
       let obj = parseNumber(val)
       obj.num = n
       if (obj.num === null) {
@@ -165,14 +168,14 @@ let methods = {
     })
     return this
   },
-  add: function(n, agree) {
+  add: function (n, agree) {
     if (!n) {
       return this // don't bother
     }
     if (typeof n === 'string') {
       n = toNumber(n)
     }
-    this.forEach(val => {
+    this.forEach((val) => {
       let obj = parseNumber(val)
 
       if (obj.num === null) {
@@ -187,16 +190,16 @@ let methods = {
     return this
   },
   /** decrease each number by n*/
-  subtract: function(n, agree) {
+  subtract: function (n, agree) {
     return this.add(n * -1, agree)
   },
   /** increase each number by 1 */
-  increment: function(agree) {
+  increment: function (agree) {
     this.add(1, agree)
     return this
   },
   /** decrease each number by 1 */
-  decrement: function(agree) {
+  decrement: function (agree) {
     this.add(-1, agree)
     return this
   },
@@ -213,7 +216,7 @@ let methods = {
   // },
 
   /** return things like CCXX*/
-  romanNumerals: function(n) {
+  romanNumerals: function (n) {
     let m = this.match('#RomanNumeral').numbers()
     if (typeof n === 'number') {
       m = m.get(n)
@@ -222,15 +225,16 @@ let methods = {
   },
 
   /** return things like $4.50*/
-  money: function(n) {
-    let m = this.splitOn('@hasComma')
-    m = m.match('#Money+ #Currency?')
-    m = m.numbers()
-    if (typeof n === 'number') {
-      m = m.get(n)
-    }
-    return m
-  },
+  // money: function (n) {
+  //   console.log('hello')
+  //   let m = this.splitOn('@hasComma')
+  //   m = m.match('#Money+ #Currency?')
+  //   // m.debug()
+  //   if (typeof n === 'number') {
+  //     m = m.get(n)
+  //   }
+  //   return m
+  // },
 }
 // aliases
 methods.toNice = methods.toLocaleString

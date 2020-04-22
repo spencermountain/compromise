@@ -17,9 +17,6 @@ nlp.extend(require('./plugins/numbers/src'))
 `rhythm and blues singer-songwriters`
 */
 
-// let doc = nlp('will go foobar')
-// doc.replace('will', "before i'm")
-// console.log(doc.text())
-
-let doc = nlp('i paid 5 USD for the thing, and got $2.50 back.')
-let m = doc.numbers().debug()
+let doc = nlp('i paid fifty eight dollars')
+doc.money().set(1)
+doc.debug()

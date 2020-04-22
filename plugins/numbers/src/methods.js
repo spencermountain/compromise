@@ -162,6 +162,7 @@ let methods = {
         return
       }
       let str = makeNumber(obj, val.has('#TextValue'), val.has('#Ordinal'))
+      val = val.not('#Currency')
       val.replaceWith(str, true)
       // handle plural/singular unit
       agreeUnits(agree, val, obj)
@@ -183,6 +184,7 @@ let methods = {
       }
       obj.num += n
       let str = makeNumber(obj, val.has('#TextValue'), val.has('#Ordinal'))
+      val = val.not('#Currency')
       val.replaceWith(str, true)
       // handle plural/singular unit
       agreeUnits(agree, val, obj)
@@ -203,18 +205,6 @@ let methods = {
     this.add(-1, agree)
     return this
   },
-
-  /// ----
-
-  // /** return things like 1/3rd */
-  // fractions: function(n) {
-  //   let m = this.match('#Fraction')
-  //   if (typeof n === 'number') {
-  //     m = m.get(n)
-  //   }
-  //   return m
-  // },
-
   /** return things like CCXX*/
   romanNumerals: function (n) {
     let m = this.match('#RomanNumeral').numbers()
@@ -223,18 +213,6 @@ let methods = {
     }
     return m
   },
-
-  /** return things like $4.50*/
-  // money: function (n) {
-  //   console.log('hello')
-  //   let m = this.splitOn('@hasComma')
-  //   m = m.match('#Money+ #Currency?')
-  //   // m.debug()
-  //   if (typeof n === 'number') {
-  //     m = m.get(n)
-  //   }
-  //   return m
-  // },
 }
 // aliases
 methods.toNice = methods.toLocaleString

@@ -1,7 +1,7 @@
 {
   "name": "compromise-redact",
   "description": "plugin for nlp-compromise",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "main": "./builds/compromise-redact.js",
   "unpkg": "./builds/compromise-redact.min.js",

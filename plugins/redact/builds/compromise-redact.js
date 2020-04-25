@@ -1,9 +1,9 @@
-/* compromise-redact 0.0.1 MIT */
+/* compromise-redact 0.0.2 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
   (global = global || self, global.compromiseRedact = factory());
-}(this, (function () { 'use strict';
+}(this, function () { 'use strict';
 
   var randChar = function randChar(_char) {
     var len = Math.random() * 10;
@@ -76,5 +76,5 @@
 
   return src;
 
-})));
+}));
 //# sourceMappingURL=compromise-redact.js.map

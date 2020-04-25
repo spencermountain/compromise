@@ -1,15 +1,15 @@
 const rules = require('./_rules')
 
-const invertObj = function(obj) {
+const invertObj = function (obj) {
   return Object.keys(obj).reduce((h, k) => {
     h[obj[k]] = k
     return h
   }, {})
 }
 
-const toSingular = function(str, world) {
+const toSingular = function (str, world) {
   let irregulars = world.irregulars.nouns
-  let invert = invertObj(irregulars)
+  let invert = invertObj(irregulars) //(not very efficient)
 
   // check irregulars list
   if (invert.hasOwnProperty(str)) {

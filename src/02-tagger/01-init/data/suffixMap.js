@@ -11,6 +11,7 @@ const Vb = 'Verb'
 const Noun = 'Noun'
 const Last = 'LastName'
 const Modal = 'Modal'
+const Place = 'Place'
 
 // find any issues - https://observablehq.com/@spencermountain/suffix-word-lookup
 module.exports = [
@@ -126,6 +127,7 @@ module.exports = [
   {
     //7-letter
     opoulos: Last, //greek
+    borough: Place, //Hillsborough
     sdottir: Last, //swedish female
   },
 ]

@@ -10,6 +10,8 @@ import { version } from './package.json'
 console.log('\n 📦  - running rollup..\n')
 
 const banner = '/* compromise ' + version + ' MIT */'
+const noop = __dirname + '/scripts/build/no-ops/_function'
+const noobj = __dirname + '/scripts/build/no-ops/_object'
 
 export default [
   {
@@ -25,13 +27,21 @@ export default [
       alias({
         //remove a bunch of imports with no-ops
         entries: [
-          { find: './_data', replacement: __dirname + '/scripts/build/no-ops/_object' },
+          { find: './data/conjugations', replacement: noobj },
+          { find: './data/plurals', replacement: noobj },
+          { find: './data/misc', replacement: noobj },
+          { find: '../transforms/conjugate', replacement: noop },
+          { find: '../transforms/adjectives', replacement: noop },
+          { find: '../transforms/toPlural', replacement: noop },
+          { find: '../transforms/toSingular', replacement: noop },
+          { find: '../transforms/toInfinitive', replacement: noop },
+          { find: './_data', replacement: noobj },
           { find: '../02-tagger', replacement: __dirname + '/src/02-tagger/tiny' },
-          { find: 'efrt-unpack', replacement: __dirname + '/scripts/build/no-ops/_function' },
+          { find: 'efrt-unpack', replacement: noop },
         ],
       }),
       terser(),
-      sizeCheck({ expect: 96, warn: 5 }),
+      sizeCheck({ expect: 82, warn: 5 }),
     ],
   },
   {
@@ -50,7 +60,7 @@ export default [
   },
   {
     input: 'src/index.js',
-    output: [{ banner: banner, file: 'builds/compromise.js', format: 'umd', sourcemap: true, name: 'nlp' }],
+    output: [{ banner: banner, file: 'builds/compromise.js', format: 'umd', sourcemap: false, name: 'nlp' }],
     plugins: [
       resolve(),
       json(),

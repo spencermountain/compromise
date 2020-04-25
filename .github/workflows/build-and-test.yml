@@ -11,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [8.x, 10.x, 13.x]
+        node-version: [10.x, 13.x]
 
     steps:
       - uses: actions/checkout@v2
@@ -49,6 +49,6 @@ jobs:
         run: |
           npm run test:smoke
           npm run testb
-          npm run test:perf
+          npm run perf
           npm run test:types
           # npm run test:stress

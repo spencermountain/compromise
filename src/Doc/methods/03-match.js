@@ -155,3 +155,16 @@ exports.after = function(reg) {
   befores = befores.filter(p => p !== null)
   return this.buildFrom(befores)
 }
+
+/** return only results with this match afterwards */
+exports.hasAfter = function(reg) {
+  return this.filter(doc => {
+    return doc.lookAfter(reg).found
+  })
+}
+/** return only results with this match before it */
+exports.hasBefore = function(reg) {
+  return this.filter(doc => {
+    return doc.lookBefore(reg).found
+  })
+}

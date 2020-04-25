@@ -10,7 +10,7 @@
   
   <!-- file size -->
   <a href="https://unpkg.com/compromise-html/builds/compromise-html.min.js">
-    <img src="https://badge-size.herokuapp.com/spencermountain/compromise-html/master/builds/compromise-html.min.js" />
+    <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/plugins/html/builds/compromise-html.min.js" />
   </a>
    <hr/>
 </div>

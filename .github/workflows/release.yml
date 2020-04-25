@@ -51,7 +51,7 @@ jobs:
         run: |
           npm run test:smoke
           npm run testb
-          npm run test:perf
+          npm run perf
           npm run test:types
           # npm run test:stress
 
@@ -61,6 +61,6 @@ jobs:
       - name: publish
         run: |
           echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
-          npm publish --dry-run
+          npm publish
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

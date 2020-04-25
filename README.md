@@ -337,6 +337,7 @@ _(these methods are on the `nlp` object)_
 - **[.fromJSON()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - load a compromise object from `.json()` result
 - **[.verbose()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - log our decision-making for debugging
 - **[.version()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - current semver version of the library
+- **[.world()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - grab all current linguistic data
 
 ##### Utils
 
@@ -446,7 +447,6 @@ _(all match methods use the [match-syntax](https://docs.compromise.cool/compromi
 - **[.clauses()](https://observablehq.com/@spencermountain/compromise-selections)** - split-up sentences into multi-term phrases
 - **[.hyphenated()](https://observablehq.com/@spencermountain/compromise-selections)** - all terms connected with a hyphen or dash like `'wash-out'`
 - **[.phoneNumbers()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'(939) 555-0113'`
-- **[.money()](https://observablehq.com/@spencermountain/compromise-values)** - things like `'$2.50'`
 - **[.hashTags()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'#nlp'`
 - **[.emails()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'hi@compromise.cool'`
 - **[.emoticons()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `:)`
@@ -555,6 +555,7 @@ These are some helpful extensions:
   - **[.numbers().isOrdinal()](https://observablehq.com/@spencermountain/compromise-values)** - return only ordinal numbers
   - **[.numbers().isCardinal()](https://observablehq.com/@spencermountain/compromise-values)** - return only cardinal numbers
   - **[.numbers().toLocaleString()](https://observablehq.com/@spencermountain/compromise-values)** - add commas, or nicer formatting for numbers
+- **[.money()](https://observablehq.com/@spencermountain/compromise-values)** - things like `'$2.50'`
 
 ##### Export
 
@@ -667,16 +668,18 @@ import ngrams from 'compromise-ngrams'
 import numbers from 'compromise-numbers'
 
 // .extend() can be chained
-const nlpEx  = nlp.extend(ngrams).extend(numbers)
+const nlpEx = nlp.extend(ngrams).extend(numbers)
 
 nlpEx('This is type safe!').ngrams({ min: 1 })
 nlpEx('This is type safe!').numbers()
 ```
 
 #### Type-safe Plugins
+
 The `.extend()` function returns an nlp type with updated Document and World types (Phrase, Term and Pool are not currently supported). While the global nlp also recieves the plugin from a runtime perspective; it's type will not be updated - this is a limitation of Typescript.
 
 Typesafe plugins can be created by using the `nlp.Plugin` type:
+
 ```ts
 interface myExtendedDoc {
   sayHello(): string
@@ -695,13 +698,12 @@ const myPlugin: nlp.Plugin<myExtendedDoc, myExtendedWorld> = (Doc, world) => {
 const _nlp = nlp.extend(myPlugin)
 const doc = _nlp('This is safe!')
 doc.sayHello()
-doc.world.hello = "Hello again!"
-
+doc.world.hello = 'Hello again!'
 ```
 
 #### Known Issues
 
-* `compromise_1.default is not a function` - This is a problem with your `tsconfig.json` it can be solved by adding `"esModuleInterop": true`. Make sure to run `tsc --init` when starting a new Typescript project.
+- `compromise_1.default is not a function` - This is a problem with your `tsconfig.json` it can be solved by adding `"esModuleInterop": true`. Make sure to run `tsc --init` when starting a new Typescript project.
 
 ### Docs:
 
@@ -716,7 +718,7 @@ doc.world.hello = "Hello again!"
 
 - **[Geocoding Social Conversations with NLP and JavaScript](http://compromise.cool)** - by Microsoft
 - **[Microservice Recipe](https://eventn.com/recipes/text-parsing-with-nlp-compromise)** - by Eventn
-- **[Adventure Game Sentence Parsing with Compromise](https://killalldefects.com/2020/02/20/adventure-game-sentence-parsing-with-compromise/)
+- \*\*[Adventure Game Sentence Parsing with Compromise](https://killalldefects.com/2020/02/20/adventure-game-sentence-parsing-with-compromise/)
 - **[Building Text-Based Games](https://killalldefects.com/2019/09/24/building-text-based-games-with-compromise-nlp/)** - by Matt Eland
 - **[Fun with javascript in BigQuery](https://medium.com/@hoffa/new-in-bigquery-persistent-udfs-c9ea4100fd83#6e09)** - by Felipe Hoffa
 - **[Natural Language Processing... in the Browser???](https://dev.to/charlesdlandau/natural-language-processing-in-the-browser-52hj)** - by Charles Landau

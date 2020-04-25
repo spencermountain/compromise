@@ -1,4 +1,4 @@
-/* compromise-numbers 0.0.5 MIT */
+/* compromise-numbers 1.0.0 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -42,6 +42,19 @@
     return _setPrototypeOf(o, p);
   }
 
+  function _isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   function _assertThisInitialized(self) {
     if (self === void 0) {
       throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -56,6 +69,23 @@
     }
 
     return _assertThisInitialized(self);
+  }
+
+  function _createSuper(Derived) {
+    return function () {
+      var Super = _getPrototypeOf(Derived),
+          result;
+
+      if (_isNativeReflectConstruct()) {
+        var NewTarget = _getPrototypeOf(this).constructor;
+
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
+
+      return _possibleConstructorReturn(this, result);
+    };
   }
 
   var tens = 'twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|fourty';
@@ -919,7 +949,10 @@
 
     /** two of what? */
     units: function units() {
-      return this.lookAhead('^(#Unit|#Noun)');
+      var m = this.lookAhead('(#Unit|#Noun)+');
+      m = m.splitAfter('@hasComma').first();
+      m = m.not('#Pronoun');
+      return m.first();
     },
 
     /** return only ordinal numbers */
@@ -1075,6 +1108,7 @@
         }
 
         var str = makeNumber_1(obj, val.has('#TextValue'), val.has('#Ordinal'));
+        val = val.not('#Currency');
         val.replaceWith(str, true); // handle plural/singular unit
 
         _agreeUnits(agree, val, obj);
@@ -1099,6 +1133,7 @@
 
         obj.num += n;
         var str = makeNumber_1(obj, val.has('#TextValue'), val.has('#Ordinal'));
+        val = val.not('#Currency');
         val.replaceWith(str, true); // handle plural/singular unit
 
         _agreeUnits(agree, val, obj);
@@ -1122,35 +1157,10 @@
       this.add(-1, agree);
       return this;
     },
-    /// ----
-
-    /** return things like 1/3rd */
-    fractions: function fractions(n) {
-      var m = this.match('#Fraction');
-
-      if (typeof n === 'number') {
-        m = m.get(n);
-      }
-
-      return m;
-    },
 
     /** return things like CCXX*/
     romanNumerals: function romanNumerals(n) {
       var m = this.match('#RomanNumeral').numbers();
-
-      if (typeof n === 'number') {
-        m = m.get(n);
-      }
-
-      return m;
-    },
-
-    /** return things like $4.50*/
-    money: function money(n) {
-      var m = this.splitOn('@hasComma');
-      m = m.match('#Money+ #Currency?');
-      m = m.numbers();
 
       if (typeof n === 'number') {
         m = m.get(n);
@@ -1179,7 +1189,10 @@
 
     doc.match('#Value and a (half|quarter)').tag('Value', 'value-and-a-half'); //one hundred and seven dollars
 
-    doc.match('#Money and #Money #Currency?').tag('Money', 'money-and-money');
+    doc.match('#Money and #Money #Currency?').tag('Money', 'money-and-money'); // doc.debug()
+    // $5.032 is invalid money
+
+    doc.match('#Money').not('#TextValue').match('/\\.[0-9]{3}$/').unTag('#Money', 'three-decimal money');
   };
 
   var tagger_1 = tagger;
@@ -1195,22 +1208,22 @@
 
   /** adds .numbers() method */
 
-  var addMethod = function addMethod(Doc, world) {
+  var plugin = function plugin(Doc, world) {
     // add tags to our tagset
     world.addTags(tags); // additional tagging before running the number-parser
 
     world.postProcess(tagger_1);
     /** a list of number values, and their units */
 
-    var Numbers =
-    /*#__PURE__*/
-    function (_Doc) {
+    var Numbers = /*#__PURE__*/function (_Doc) {
       _inherits(Numbers, _Doc);
+
+      var _super = _createSuper(Numbers);
 
       function Numbers() {
         _classCallCheck(this, Numbers);
 
-        return _possibleConstructorReturn(this, _getPrototypeOf(Numbers).apply(this, arguments));
+        return _super.apply(this, arguments);
       }
 
       return Numbers;
@@ -1218,19 +1231,71 @@
 
 
     Object.assign(Numbers.prototype, methods_1);
-    /** find all numbers and values */
 
-    Doc.prototype.numbers = function (n) {
-      var match = find(this, n);
-      return new Numbers(match.list, this, this.world);
-    }; // alias for reverse-compatibility
+    var Money = /*#__PURE__*/function (_Numbers) {
+      _inherits(Money, _Numbers);
 
+      var _super2 = _createSuper(Money);
 
-    Doc.prototype.values = Doc.prototype.numbers;
+      function Money() {
+        _classCallCheck(this, Money);
+
+        return _super2.apply(this, arguments);
+      }
+
+      return Money;
+    }(Numbers);
+
+    var Fraction = /*#__PURE__*/function (_Numbers2) {
+      _inherits(Fraction, _Numbers2);
+
+      var _super3 = _createSuper(Fraction);
+
+      function Fraction() {
+        _classCallCheck(this, Fraction);
+
+        return _super3.apply(this, arguments);
+      }
+
+      return Fraction;
+    }(Numbers);
+
+    var docMethods = {
+      /** find all numbers and values */
+      numbers: function numbers(n) {
+        var m = find(this, n);
+        return new Numbers(m.list, this, this.world);
+      },
+
+      /** numbers that are percentages*/
+      percentages: function percentages(n) {
+        var m = find(this, n);
+        m = m["if"]('/%$/');
+        return new Numbers(m.list, this, this.world);
+      },
+
+      /** number + currency pair */
+      money: function money(n) {
+        // let nums = findNumbers(this, n)
+        var m = this.match('#Money+ #Currency?'); // m = m.concat(nums.hasAfter('#Currency')) //'5 dollars'
+
+        return new Money(m.list, this, this.world);
+      },
+      fractions: function fractions(n) {
+        var nums = find(this, n);
+        var m = nums["if"]('#Fraction'); //2/3
+
+        return new Fraction(m.list, this, this.world);
+      }
+    }; // aliases
+
+    docMethods.values = docMethods.numbers;
+    docMethods.percents = docMethods.percentages;
+    Object.assign(Doc.prototype, docMethods);
     return Doc;
   };
 
-  var src = addMethod;
+  var src = plugin;
 
   return src;
 

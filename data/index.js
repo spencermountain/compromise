@@ -44,6 +44,8 @@ const data = [
   [require('./numbers/ordinals'), ['TextValue', 'Ordinal']],
   [require('./numbers/cardinals'), ['TextValue', 'Cardinal']],
   //abbreviations
+  [require('./abbreviations/misc'), 'Abbreviation'],
+  [require('./abbreviations/units'), ['Abbreviation', 'Unit']],
   [require('./abbreviations/nouns'), ['Abbreviation', 'Noun']],
   [require('./abbreviations/honorifics'), ['Abbreviation', 'Honorific']],
   [require('./abbreviations/months'), ['Abbreviation', 'Month']],

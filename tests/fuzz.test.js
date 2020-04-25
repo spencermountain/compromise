@@ -27,6 +27,10 @@ const subsets = [
   'conjunctions',
   'prepositions',
   'sentences',
+  'phoneNumbers',
+  'places',
+  'organizations',
+  'entities',
 ]
 
 const isArray = function(arr) {

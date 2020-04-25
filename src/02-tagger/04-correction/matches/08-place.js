@@ -27,6 +27,13 @@ let list = [
     tag: 'Region',
     reason: 'district-of-Foo',
   },
+  // in Foo California
+  {
+    match: 'in [#ProperNoun] #Place',
+    group: 0,
+    tag: 'Place',
+    reason: 'propernoun-place',
+  },
 
   // ==== Address ====
   {

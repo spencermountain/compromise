@@ -31,6 +31,7 @@ test('barely a term', function (t) {
   t.end()
 })
 
+//#744
 test('replacement with a contraction', function (t) {
   let doc = nlp('a b c d')
   t.equal(doc.text(), 'a b c d', 'before replace')
@@ -39,7 +40,7 @@ test('replacement with a contraction', function (t) {
 
   doc = nlp("The only reason he doesn't continue is because of how tired he feels.", { reason: 'Noun' })
   doc.verbs().toPastTense()
-  t.equal(doc.text(), "The only reason he didn't continue is because of how tired he felt.", 'conjugate-contraction')
+  t.equal(doc.text(), 'The only reason he did not continue was because of how tired he felt.', 'conjugate-contraction')
 
   t.end()
 })

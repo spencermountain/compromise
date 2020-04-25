@@ -94,7 +94,7 @@ module.exports = [
   //is mark hughes
   { match: '#Copula [#Infinitive] #Noun', group: 0, tag: 'Noun', reason: 'is-pres-noun' },
   //
-  { match: '[#Infinitive] #Copula', group: 0, tag: 'Noun', reason: 'inf-copula' },
+  // { match: '[#Infinitive] #Copula', group: 0, tag: 'Noun', reason: 'inf-copula' },
   //a close
   { match: '#Determiner #Adverb? [close]', group: 0, tag: 'Adjective', reason: 'a-close' },
   // what the hell

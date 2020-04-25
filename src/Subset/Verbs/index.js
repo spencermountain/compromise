@@ -1,6 +1,6 @@
 const methods = require('./methods')
 
-const addMethod = function(Doc) {
+const addMethod = function (Doc) {
   /**  */
   class Verbs extends Doc {}
   // add-in our methods
@@ -9,7 +9,7 @@ const addMethod = function(Doc) {
   // aliases
   Verbs.prototype.negate = Verbs.prototype.toNegative
 
-  Doc.prototype.verbs = function(n) {
+  Doc.prototype.verbs = function (n) {
     let match = this.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+')
     // try to ignore leading and trailing adverbs
     match = match.not('^#Adverb+')
@@ -26,6 +26,11 @@ const addMethod = function(Doc) {
 
     //ensure there's actually a verb
     m = m.if('#Verb')
+
+    // the reason he will is ...
+    if (m.has('(is|was)$')) {
+      m = m.splitBefore('(is|was)$')
+    }
 
     //grab (n)th result
     if (typeof n === 'number') {

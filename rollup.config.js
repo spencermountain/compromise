@@ -41,7 +41,7 @@ export default [
         ],
       }),
       terser(),
-      sizeCheck({ expect: 96, warn: 5 }),
+      sizeCheck({ expect: 82, warn: 5 }),
     ],
   },
   {

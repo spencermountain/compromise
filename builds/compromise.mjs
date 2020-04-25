@@ -1,4 +1,4 @@
-/* compromise 13.1.1 MIT */
+/* compromise 13.2.0 MIT */
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
@@ -68,6 +68,19 @@ function _setPrototypeOf(o, p) {
   return _setPrototypeOf(o, p);
 }
 
+function _isNativeReflectConstruct() {
+  if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+  if (Reflect.construct.sham) return false;
+  if (typeof Proxy === "function") return true;
+
+  try {
+    Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
 function _assertThisInitialized(self) {
   if (self === void 0) {
     throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -84,8 +97,25 @@ function _possibleConstructorReturn(self, call) {
   return _assertThisInitialized(self);
 }
 
+function _createSuper(Derived) {
+  return function () {
+    var Super = _getPrototypeOf(Derived),
+        result;
+
+    if (_isNativeReflectConstruct()) {
+      var NewTarget = _getPrototypeOf(this).constructor;
+
+      result = Reflect.construct(Super, arguments, NewTarget);
+    } else {
+      result = Super.apply(this, arguments);
+    }
+
+    return _possibleConstructorReturn(this, result);
+  };
+}
+
 function _slicedToArray(arr, i) {
-  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
 
 function _arrayWithHoles(arr) {
@@ -93,10 +123,7 @@ function _arrayWithHoles(arr) {
 }
 
 function _iterableToArrayLimit(arr, i) {
-  if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
-    return;
-  }
-
+  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
   var _arr = [];
   var _n = true;
   var _d = false;
@@ -122,8 +149,25 @@ function _iterableToArrayLimit(arr, i) {
   return _arr;
 }
 
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(n);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+  return arr2;
+}
+
 function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance");
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
 //this is a not-well-thought-out way to reduce our dependence on `object===object` stuff
@@ -1187,9 +1231,7 @@ var tag = {
   canBe: canBe_1$1
 };
 
-var Term =
-/*#__PURE__*/
-function () {
+var Term = /*#__PURE__*/function () {
   function Term() {
     var text = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
 
@@ -1791,7 +1833,7 @@ var prepend_1 = function prepend_1(newPhrase, doc) {
   return this;
 };
 
-var delete_1 = function delete_1(doc) {
+var _delete$1 = function _delete$1(doc) {
   _delete(this, doc);
   return this;
 }; // stich-in newPhrase, stretch 'doc' + parents
@@ -1851,7 +1893,7 @@ var splitOn = function splitOn(p) {
 var _04Insert = {
   append: append_1,
   prepend: prepend_1,
-  "delete": delete_1,
+  "delete": _delete$1,
   replace: replace,
   splitOn: splitOn
 };
@@ -2927,9 +2969,7 @@ Object.keys(aliases).forEach(function (k) {
 var Phrase_1 = Phrase;
 
 /** a key-value store of all terms in our Document */
-var Pool =
-/*#__PURE__*/
-function () {
+var Pool = /*#__PURE__*/function () {
   function Pool() {
     var words = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
@@ -3378,7 +3418,7 @@ var fromJSON = function fromJSON(json, world) {
 
 var fromJSON_1 = fromJSON;
 
-var _version = '13.1.1';
+var _version = '13.2.0';
 
 var _data = {
   "Comparative": "true¦better",
@@ -5903,9 +5943,7 @@ var transforms$2 = {
 var _isVerbose = false;
 /** all configurable linguistic data */
 
-var World =
-/*#__PURE__*/
-function () {
+var World = /*#__PURE__*/function () {
   function World() {
     _classCallCheck(this, World);
 
@@ -7153,6 +7191,7 @@ var replaceWith = function replaceWith(replace) {
       var tmpDoc = _this.buildFrom(newPhrases);
 
       tmpDoc.tagger();
+      newPhrases = tmpDoc.list;
     } else {
       return; //don't even bother
     } // try to keep its old tags, if appropriate
@@ -10698,6 +10737,12 @@ var _03Noun = [// ==== Plural ====
   group: 0,
   tag: 'Noun',
   reason: 'running-a-show'
+}, //the-only-reason
+{
+  match: '#Determiner #Adverb [#Infinitive]',
+  group: 0,
+  tag: 'Noun',
+  reason: 'the-reason'
 }, //the nice swim
 {
   match: '(the|this|those|these) #Adjective [#Verb]',
@@ -10839,12 +10884,8 @@ var _03Noun = [// ==== Plural ====
   tag: 'Noun',
   reason: 'is-pres-noun'
 }, //
-{
-  match: '[#Infinitive] #Copula',
-  group: 0,
-  tag: 'Noun',
-  reason: 'inf-copula'
-}, //a close
+// { match: '[#Infinitive] #Copula', group: 0, tag: 'Noun', reason: 'inf-copula' },
+//a close
 {
   match: '#Determiner #Adverb? [close]',
   group: 0,
@@ -11875,15 +11916,15 @@ var _02Tagger = tagger;
 
 var addMethod = function addMethod(Doc) {
   /**  */
-  var Abbreviations =
-  /*#__PURE__*/
-  function (_Doc) {
+  var Abbreviations = /*#__PURE__*/function (_Doc) {
     _inherits(Abbreviations, _Doc);
+
+    var _super = _createSuper(Abbreviations);
 
     function Abbreviations() {
       _classCallCheck(this, Abbreviations);
 
-      return _possibleConstructorReturn(this, _getPrototypeOf(Abbreviations).apply(this, arguments));
+      return _super.apply(this, arguments);
     }
 
     _createClass(Abbreviations, [{
@@ -11934,15 +11975,15 @@ var hasPeriod = /\./;
 
 var addMethod$1 = function addMethod(Doc) {
   /**  */
-  var Acronyms =
-  /*#__PURE__*/
-  function (_Doc) {
+  var Acronyms = /*#__PURE__*/function (_Doc) {
     _inherits(Acronyms, _Doc);
+
+    var _super = _createSuper(Acronyms);
 
     function Acronyms() {
       _classCallCheck(this, Acronyms);
 
-      return _possibleConstructorReturn(this, _getPrototypeOf(Acronyms).apply(this, arguments));
+      return _super.apply(this, arguments);
     }
 
     _createClass(Acronyms, [{
@@ -12054,17 +12095,17 @@ var Clauses = addMethod$2;
 
 var addMethod$3 = function addMethod(Doc) {
   /**  */
-  var Contractions =
-  /*#__PURE__*/
-  function (_Doc) {
+  var Contractions = /*#__PURE__*/function (_Doc) {
     _inherits(Contractions, _Doc);
+
+    var _super = _createSuper(Contractions);
 
     function Contractions(list, from, world) {
       var _this;
 
       _classCallCheck(this, Contractions);
 
-      _this = _possibleConstructorReturn(this, _getPrototypeOf(Contractions).call(this, list, from, world));
+      _this = _super.call(this, list, from, world);
       _this.contracted = null;
       return _this;
     }
@@ -12143,15 +12184,15 @@ var addMethod$4 = function addMethod(Doc) {
   /** cool, fun, and nice */
 
 
-  var Lists =
-  /*#__PURE__*/
-  function (_Doc) {
+  var Lists = /*#__PURE__*/function (_Doc) {
     _inherits(Lists, _Doc);
+
+    var _super = _createSuper(Lists);
 
     function Lists() {
       _classCallCheck(this, Lists);
 
-      return _possibleConstructorReturn(this, _getPrototypeOf(Lists).apply(this, arguments));
+      return _super.apply(this, arguments);
     }
 
     _createClass(Lists, [{
@@ -12563,15 +12604,15 @@ var methods_1 = methods$6;
 
 var addMethod$5 = function addMethod(Doc) {
   /**  */
-  var Nouns =
-  /*#__PURE__*/
-  function (_Doc) {
+  var Nouns = /*#__PURE__*/function (_Doc) {
     _inherits(Nouns, _Doc);
+
+    var _super = _createSuper(Nouns);
 
     function Nouns() {
       _classCallCheck(this, Nouns);
 
-      return _possibleConstructorReturn(this, _getPrototypeOf(Nouns).apply(this, arguments));
+      return _super.apply(this, arguments);
     }
 
     return Nouns;
@@ -12614,15 +12655,15 @@ var close = /\)/;
 
 var addMethod$6 = function addMethod(Doc) {
   /** anything between (these things) */
-  var Parentheses =
-  /*#__PURE__*/
-  function (_Doc) {
+  var Parentheses = /*#__PURE__*/function (_Doc) {
     _inherits(Parentheses, _Doc);
+
+    var _super = _createSuper(Parentheses);
 
     function Parentheses() {
       _classCallCheck(this, Parentheses);
 
-      return _possibleConstructorReturn(this, _getPrototypeOf(Parentheses).apply(this, arguments));
+      return _super.apply(this, arguments);
     }
 
     _createClass(Parentheses, [{
@@ -12685,17 +12726,17 @@ var Parentheses = addMethod$6;
 
 var addMethod$7 = function addMethod(Doc) {
   /**  */
-  var Possessives =
-  /*#__PURE__*/
-  function (_Doc) {
+  var Possessives = /*#__PURE__*/function (_Doc) {
     _inherits(Possessives, _Doc);
+
+    var _super = _createSuper(Possessives);
 
     function Possessives(list, from, world) {
       var _this;
 
       _classCallCheck(this, Possessives);
 
-      _this = _possibleConstructorReturn(this, _getPrototypeOf(Possessives).call(this, list, from, world));
+      _this = _super.call(this, list, from, world);
       _this.contracted = null;
       return _this;
     }
@@ -12788,15 +12829,15 @@ var hasOpen = RegExp('(' + Object.keys(pairs).join('|') + ')');
 
 var addMethod$8 = function addMethod(Doc) {
   /** "these things" */
-  var Quotations =
-  /*#__PURE__*/
-  function (_Doc) {
+  var Quotations = /*#__PURE__*/function (_Doc) {
     _inherits(Quotations, _Doc);
+
+    var _super = _createSuper(Quotations);
 
     function Quotations() {
       _classCallCheck(this, Quotations);
 
-      return _possibleConstructorReturn(this, _getPrototypeOf(Quotations).apply(this, arguments));
+      return _super.apply(this, arguments);
     }
 
     _createClass(Quotations, [{
@@ -13402,15 +13443,15 @@ var methods$7 = {
 
 var addMethod$9 = function addMethod(Doc) {
   /**  */
-  var Verbs =
-  /*#__PURE__*/
-  function (_Doc) {
+  var Verbs = /*#__PURE__*/function (_Doc) {
     _inherits(Verbs, _Doc);
+
+    var _super = _createSuper(Verbs);
 
     function Verbs() {
       _classCallCheck(this, Verbs);
 
-      return _possibleConstructorReturn(this, _getPrototypeOf(Verbs).apply(this, arguments));
+      return _super.apply(this, arguments);
     }
 
     return Verbs;
@@ -13436,7 +13477,12 @@ var addMethod$9 = function addMethod(Doc) {
     m.sort('index'); //handle slashes?
     //ensure there's actually a verb
 
-    m = m["if"]('#Verb'); //grab (n)th result
+    m = m["if"]('#Verb'); // the reason he will is ...
+
+    if (m.has('(is|was)$')) {
+      m = m.splitBefore('(is|was)$');
+    } //grab (n)th result
+
 
     if (typeof n === 'number') {
       m = m.get(n);
@@ -13453,15 +13499,15 @@ var Verbs = addMethod$9;
 
 var addMethod$a = function addMethod(Doc) {
   /**  */
-  var People =
-  /*#__PURE__*/
-  function (_Doc) {
+  var People = /*#__PURE__*/function (_Doc) {
     _inherits(People, _Doc);
+
+    var _super = _createSuper(People);
 
     function People() {
       _classCallCheck(this, People);
 
-      return _possibleConstructorReturn(this, _getPrototypeOf(People).apply(this, arguments));
+      return _super.apply(this, arguments);
     }
 
     return People;
@@ -13505,9 +13551,7 @@ var methods$8 = {
 };
 /** a parsed text object */
 
-var Doc =
-/*#__PURE__*/
-function () {
+var Doc = /*#__PURE__*/function () {
   function Doc(list, from, world) {
     var _this = this;
 

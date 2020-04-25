@@ -5,7 +5,7 @@ const titleCase = str => {
 }
 
 /** substitute-in new content */
-exports.replaceWith = function(replace, options = {}) {
+exports.replaceWith = function (replace, options = {}) {
   if (!replace) {
     return this.delete()
   }
@@ -41,6 +41,7 @@ exports.replaceWith = function(replace, options = {}) {
       //tag the new phrases
       let tmpDoc = this.buildFrom(newPhrases)
       tmpDoc.tagger()
+      newPhrases = tmpDoc.list
     } else {
       return //don't even bother
     }
@@ -60,7 +61,7 @@ exports.replaceWith = function(replace, options = {}) {
 }
 
 /** search and replace match with new content */
-exports.replace = function(match, replace, options) {
+exports.replace = function (match, replace, options) {
   // if there's no 2nd param, use replaceWith
   if (replace === undefined) {
     return this.replaceWith(match, options)

@@ -47,7 +47,8 @@
     "tabWidth": 2,
     "semi": false,
     "singleQuote": true,
-    "printWidth": 120
+    "printWidth": 120,
+    "arrowParens": "avoid"
   },
   "dependencies": {
     "efrt-unpack": "2.2.0"

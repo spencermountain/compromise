@@ -57,6 +57,9 @@ let list = [
     reason: 'had-been',
   },
 
+  // was being driven
+  { match: '[being] #Participle', group: 0, tag: 'Auxiliary', reason: 'being-foo' },
+
   // ==== Phrasal ====
   //'foo-up'
   { match: '(#Verb && @hasHyphen) up', group: 0, tag: 'PhrasalVerb', reason: 'foo-up' },

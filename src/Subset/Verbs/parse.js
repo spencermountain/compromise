@@ -1,5 +1,5 @@
 // turn 'would not really walk up' into parts
-const parseVerb = function(vb) {
+const parseVerb = function (vb) {
   let parsed = {
     adverb: vb.match('#Adverb+'), // 'really'
     negative: vb.match('#Negative'), // 'not'

@@ -1,6 +1,8 @@
 // walked => walk  - turn a verb into it's root form
-const toInfinitive = function(parsed, world) {
+const toInfinitive = function (parsed, world) {
   let verb = parsed.verb
+  // console.log(parsed)
+  // verb.debug()
 
   //1. if it's already infinitive
   let str = verb.text('normal')

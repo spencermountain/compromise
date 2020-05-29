@@ -1,7 +1,7 @@
 const toInfinitive = require('../toInfinitive')
 const toBe = require('./toBe')
 
-const conjugate = function(parsed, world) {
+const conjugate = function (parsed, world) {
   let verb = parsed.verb
 
   //special handling of 'is', 'will be', etc.

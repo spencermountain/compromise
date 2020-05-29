@@ -3,6 +3,8 @@ const nlp = require('./src/index')
 // let txt = require('./scripts/test/speed/_sotu-text.js')
 nlp.extend(require('./plugins/sentences/src'))
 
-let doc = nlp(`I can't believe it's a law firm.`)
-let str = doc.sentences().toExclamation().text()
-console.log(str)
+const txt = `Probably the renovation, which has been done to the property.`
+let doc = nlp(txt)
+// let doc = nlp('is wayne gretskzy alive')
+doc.clauses().debug()
+// doc.sentences().isQuestion().debug()

@@ -1,9 +1,8 @@
+const isQuestion = require('./isQuestion')
+
 /** return sentences ending with '?' */
 exports.isQuestion = function () {
-  return this.filter((doc) => {
-    let term = doc.lastTerm().termList(0)
-    return term.hasPost('?')
-  })
+  return this.filter((d) => isQuestion(d))
 }
 /** return sentences ending with '!' */
 exports.isExclamation = function () {

@@ -1,5 +1,5 @@
 const nlp = require('./src/index')
-// nlp.verbose(true)
+nlp.verbose(true)
 // let txt = require('./scripts/test/speed/_sotu-text.js')
 // nlp.extend(require('./plugins/sentences/src'))
 
@@ -8,12 +8,4 @@ const nlp = require('./src/index')
 // // let doc = nlp('i should have been driven')
 // doc.sentences().toFutureTense().debug()
 
-// let doc = nlp('open').debug()
-
-let doc = nlp('added')
-// let doc = nlp('edited')
-// let doc = nlp('edit')
-console.log(doc.verbs().conjugate())
-
-// let doc = nlp('includes')
-// console.log(doc.verbs().conjugate())
+let doc = nlp('open the car door').debug()

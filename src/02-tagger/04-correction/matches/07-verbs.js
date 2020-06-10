@@ -97,6 +97,8 @@ let list = [
 
   //is eager to go
   { match: '#Copula [#Adjective to] #Verb', group: 0, tag: 'Verb', reason: 'adj-to' },
+  // open the door
+  { match: '[open] #Determiner', group: 0, tag: 'Infinitive', reason: 'open-the' },
 
   // would wade
   { match: `#Modal [${verbs}]`, group: 0, tag: 'Verb', reason: 'would-mark' },

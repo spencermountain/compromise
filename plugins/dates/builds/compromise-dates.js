@@ -1,4 +1,4 @@
-/* compromise-dates 0.0.5 MIT */
+/* compromise-dates 0.0.6 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -74,6 +74,19 @@
     return _setPrototypeOf(o, p);
   }
 
+  function _isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   function _assertThisInitialized(self) {
     if (self === void 0) {
       throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -88,6 +101,25 @@
     }
 
     return _assertThisInitialized(self);
+  }
+
+  function _createSuper(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct();
+
+    return function _createSuperInternal() {
+      var Super = _getPrototypeOf(Derived),
+          result;
+
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf(this).constructor;
+
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
+
+      return _possibleConstructorReturn(this, result);
+    };
   }
 
   //ambiguous 'may' and 'march'
@@ -803,9 +835,7 @@
     "-10|n": "11/honolulu,11/johnston,11/rarotonga,11/tahiti"
   };
 
-  var _build$1 =
-  /*#__PURE__*/
-  Object.freeze({
+  var _build$1 = /*#__PURE__*/Object.freeze({
     'default': _build
   }); //prefixes for iana names..
 
@@ -4984,9 +5014,7 @@
 
   var _04Timezone = parseTimezone;
 
-  var Unit =
-  /*#__PURE__*/
-  function () {
+  var Unit = /*#__PURE__*/function () {
     function Unit(input, unit, context) {
       _classCallCheck(this, Unit);
 
@@ -5103,17 +5131,17 @@
 
   var Unit_1 = Unit;
 
-  var Day =
-  /*#__PURE__*/
-  function (_Unit) {
+  var Day = /*#__PURE__*/function (_Unit) {
     _inherits(Day, _Unit);
+
+    var _super = _createSuper(Day);
 
     function Day(input, unit, context) {
       var _this;
 
       _classCallCheck(this, Day);
 
-      _this = _possibleConstructorReturn(this, _getPrototypeOf(Day).call(this, input, unit, context));
+      _this = _super.call(this, input, unit, context);
       _this.unit = 'day';
       return _this;
     }
@@ -5121,17 +5149,17 @@
     return Day;
   }(Unit_1);
 
-  var Month =
-  /*#__PURE__*/
-  function (_Unit2) {
+  var Month = /*#__PURE__*/function (_Unit2) {
     _inherits(Month, _Unit2);
+
+    var _super2 = _createSuper(Month);
 
     function Month(input, unit, context) {
       var _this2;
 
       _classCallCheck(this, Month);
 
-      _this2 = _possibleConstructorReturn(this, _getPrototypeOf(Month).call(this, input, unit, context));
+      _this2 = _super2.call(this, input, unit, context);
       _this2.unit = 'month';
       return _this2;
     }
@@ -5139,17 +5167,17 @@
     return Month;
   }(Unit_1);
 
-  var Quarter =
-  /*#__PURE__*/
-  function (_Unit3) {
+  var Quarter = /*#__PURE__*/function (_Unit3) {
     _inherits(Quarter, _Unit3);
+
+    var _super3 = _createSuper(Quarter);
 
     function Quarter(input, unit, context) {
       var _this3;
 
       _classCallCheck(this, Quarter);
 
-      _this3 = _possibleConstructorReturn(this, _getPrototypeOf(Quarter).call(this, input, unit, context));
+      _this3 = _super3.call(this, input, unit, context);
       _this3.unit = 'quarter';
       return _this3;
     }
@@ -5157,17 +5185,17 @@
     return Quarter;
   }(Unit_1);
 
-  var Year =
-  /*#__PURE__*/
-  function (_Unit4) {
+  var Year = /*#__PURE__*/function (_Unit4) {
     _inherits(Year, _Unit4);
+
+    var _super4 = _createSuper(Year);
 
     function Year(input, unit, context) {
       var _this4;
 
       _classCallCheck(this, Year);
 
-      _this4 = _possibleConstructorReturn(this, _getPrototypeOf(Year).call(this, input, unit, context));
+      _this4 = _super4.call(this, input, unit, context);
       _this4.unit = 'year';
       return _this4;
     }
@@ -5175,17 +5203,17 @@
     return Year;
   }(Unit_1);
 
-  var WeekDay =
-  /*#__PURE__*/
-  function (_Unit5) {
+  var WeekDay = /*#__PURE__*/function (_Unit5) {
     _inherits(WeekDay, _Unit5);
+
+    var _super5 = _createSuper(WeekDay);
 
     function WeekDay(input, unit, context) {
       var _this5;
 
       _classCallCheck(this, WeekDay);
 
-      _this5 = _possibleConstructorReturn(this, _getPrototypeOf(WeekDay).call(this, input, unit, context));
+      _this5 = _super5.call(this, input, unit, context);
       _this5.unit = 'week';
       _this5.d = _this5.d.day(input);
       _this5.weekDay = _this5.d.dayName(); //assume a wednesday in the future
@@ -5217,17 +5245,17 @@
   }(Unit_1); // like 'feb 2'
 
 
-  var CalendarDate =
-  /*#__PURE__*/
-  function (_Unit6) {
+  var CalendarDate = /*#__PURE__*/function (_Unit6) {
     _inherits(CalendarDate, _Unit6);
+
+    var _super6 = _createSuper(CalendarDate);
 
     function CalendarDate(input, unit, context) {
       var _this6;
 
       _classCallCheck(this, CalendarDate);
 
-      _this6 = _possibleConstructorReturn(this, _getPrototypeOf(CalendarDate).call(this, input, unit, context));
+      _this6 = _super6.call(this, input, unit, context);
       _this6.unit = 'day';
       return _this6;
     }
@@ -6002,7 +6030,7 @@
     if (m.found) ; // 'in june'
 
 
-    m = doc.match('^(on|during|in) [*]');
+    m = doc.match('^(on|during|in) [*]', 0);
 
     if (m.found) {
       var _d = _03ParseDate(m, context);
@@ -6104,7 +6132,11 @@
           str = obj.start.format(fmt);
 
           if (obj.end) {
-            str += ' to ' + obj.start.format(fmt);
+            var end = obj.start.format(fmt);
+
+            if (str !== end) {
+              str += ' to ' + end;
+            }
           }
 
           doc.replaceWith(str, {
@@ -6146,17 +6178,17 @@
     world.postProcess(_01Tag);
     /**  */
 
-    var Dates =
-    /*#__PURE__*/
-    function (_Doc) {
+    var Dates = /*#__PURE__*/function (_Doc) {
       _inherits(Dates, _Doc);
+
+      var _super = _createSuper(Dates);
 
       function Dates(list, from, w) {
         var _this;
 
         _classCallCheck(this, Dates);
 
-        _this = _possibleConstructorReturn(this, _getPrototypeOf(Dates).call(this, list, from, w));
+        _this = _super.call(this, list, from, w);
         _this.context = {};
         return _this;
       }

@@ -12,6 +12,13 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 
 -move (some) contractions into tokenizer?
 
+#### 13.3.0
+
+- bugfixes (conjugation and tagging) 752, 737, 725, 751, 743 748, 755, 758, 706, 761
+- support tokenized array as input
+- update deps
+- bugfix updates to `plugin-sentences`, and `plugin-dates`
+
 #### 13.2.0
 
 - deprecate `.money()` and favour overloaded method in compromise-numbers plugin

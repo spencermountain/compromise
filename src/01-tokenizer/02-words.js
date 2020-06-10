@@ -13,7 +13,7 @@ const notWord = {
   // '/': true, // 'one / two'
 }
 
-const hasHyphen = function(str) {
+const hasHyphen = function (str) {
   //dont split 're-do'
   if (/^(re|un)-?[^aeiou]./.test(str) === true) {
     return false
@@ -32,7 +32,7 @@ const hasHyphen = function(str) {
 }
 
 // 'he / she' should be one word
-const combineSlashes = function(arr) {
+const combineSlashes = function (arr) {
   for (let i = 1; i < arr.length - 1; i++) {
     if (isSlash.test(arr[i])) {
       arr[i - 1] += arr[i] + arr[i + 1]
@@ -43,7 +43,7 @@ const combineSlashes = function(arr) {
   return arr
 }
 
-const splitHyphens = function(word) {
+const splitHyphens = function (word) {
   let arr = []
   //support multiple-hyphenated-terms
   const hyphens = word.split(/[-–—]/)
@@ -62,14 +62,21 @@ const splitHyphens = function(word) {
   return arr
 }
 
+const isArray = function (arr) {
+  return Object.prototype.toString.call(arr) === '[object Array]'
+}
+
 //turn a string into an array of strings (naiive for now, lumped later)
-const splitWords = function(str) {
+const splitWords = function (str) {
   let result = []
   let arr = []
   //start with a naiive split
   str = str || ''
   if (typeof str === 'number') {
     str = String(str)
+  }
+  if (isArray(str)) {
+    return str
   }
 
   const words = str.split(naiiveSplit)

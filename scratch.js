@@ -18,4 +18,7 @@ nlp.extend(require('./plugins/dates/src'))
 // let doc = nlp('i was born on august 11th 1998')
 // doc.debug()
 // doc.dates().debug()
-nlp(`that's mine`).debug()
+nlp(`what companies are doing is`).debug()
+
+const arr = [['some', 'array', 'of text and such']]
+nlp(arr).debug()

@@ -5,16 +5,23 @@ const linkTerms = require('./_linkTerms')
 const splitSentences = require('./01-sentences')
 const splitTerms = require('./02-words')
 
+const isArray = function (arr) {
+  return Object.prototype.toString.call(arr) === '[object Array]'
+}
+
 /** turn a string into an array of Phrase objects */
-const fromText = function(text = '', world, pool) {
+const fromText = function (text = '', world, pool) {
+  let sentences = null
   //a bit of validation, first
   if (typeof text !== 'string') {
     if (typeof text === 'number') {
       text = String(text)
+    } else if (isArray(text)) {
+      sentences = text
     }
   }
   //tokenize into words
-  let sentences = splitSentences(text, world)
+  sentences = sentences || splitSentences(text, world)
   sentences = sentences.map(str => splitTerms(str))
 
   //turn them into proper objects

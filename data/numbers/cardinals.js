@@ -37,4 +37,9 @@ module.exports = [
   'quintillion',
   'sextillion',
   'septillion',
+  // plural-multiples
+  'thousands',
+  'millions',
+  'billions',
+  'trillions',
 ]

@@ -1,6 +1,6 @@
 const hasApostropheS = /([a-z\u00C0-\u00FF]+)[\u0027\u0060\u00B4\u2018\u2019\u201A\u201B\u2032\u2035\u2039\u203A]s$/i
 
-const blacklist = {
+const banList = {
   that: true,
   there: true,
 }
@@ -13,7 +13,7 @@ const isPossessive = (term, pool) => {
   if (term.tags.Pronoun || term.tags.QuestionWord) {
     return false
   }
-  if (blacklist.hasOwnProperty(term.clean)) {
+  if (banList.hasOwnProperty(term.reduced)) {
     return false
   }
   //if end of sentence, it is possessive - "was spencer's"
@@ -60,7 +60,7 @@ const isHas = (term, phrase) => {
   })
 }
 
-const checkPossessive = function(term, phrase, world) {
+const checkPossessive = function (term, phrase, world) {
   //the rest of 's
   let found = term.text.match(hasApostropheS)
   if (found !== null) {

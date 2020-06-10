@@ -9,7 +9,7 @@ let dontDo = ['c', 'e', 'g', 'l', 'n', 'r', 'w', 'y'].reduce((h, c) => {
 
 const dontDoTwo = { ed: true, nt: true }
 
-const blacklist = {
+const banList = {
   random: true,
   wild: true,
 }
@@ -24,7 +24,7 @@ const irregulars = {
   tired: 'tire',
 }
 
-const toVerb = str => {
+const toVerb = (str) => {
   if (irregulars.hasOwnProperty(str) === true) {
     return irregulars[str]
   }
@@ -32,7 +32,7 @@ const toVerb = str => {
   if (str.length <= 3) {
     return null
   }
-  if (blacklist.hasOwnProperty(str) === true) {
+  if (banList.hasOwnProperty(str) === true) {
     return null
   }
   //suffixes to avoid

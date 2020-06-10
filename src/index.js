@@ -13,7 +13,7 @@ function instance(worldInstance) {
   let world = worldInstance
 
   /** parse and tag text into a compromise object  */
-  const nlp = function(text = '', lexicon) {
+  const nlp = function (text = '', lexicon) {
     if (lexicon) {
       world.addWords(lexicon)
     }
@@ -24,7 +24,7 @@ function instance(worldInstance) {
   }
 
   /** parse text into a compromise object, without running POS-tagging */
-  nlp.tokenize = function(text = '', lexicon) {
+  nlp.tokenize = function (text = '', lexicon) {
     let w = world
     if (lexicon) {
       w = w.clone()
@@ -40,29 +40,29 @@ function instance(worldInstance) {
   }
 
   /** mix in a compromise-plugin */
-  nlp.extend = function(fn) {
+  nlp.extend = function (fn) {
     fn(Doc, world, this, Phrase, Term, Pool)
     return this
   }
 
   /** create a compromise Doc object from .json() results */
-  nlp.fromJSON = function(json) {
+  nlp.fromJSON = function (json) {
     let list = fromJSON(json, world)
     return new Doc(list, null, world)
   }
 
   /** make a deep-copy of the library state */
-  nlp.clone = function() {
+  nlp.clone = function () {
     return instance(world.clone())
   }
 
   /** log our decision-making for debugging */
-  nlp.verbose = function(bool = true) {
+  nlp.verbose = function (bool = true) {
     world.verbose(bool)
     return this
   }
   /** grab currently-used World object */
-  nlp.world = function() {
+  nlp.world = function () {
     return world
   }
 

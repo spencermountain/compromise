@@ -312,7 +312,7 @@ declare module nlp {
     out(format: 'array'): string[]
     out(format: 'tags' | 'terms'): Array<{ normal: string; text: string; tags: string[] }>
     out(format: 'json'): Array<{ normal: string; text: string; tags: () => void }>[]
-    out(format: 'debug'): Text
+    out(format: 'debug'): ExtendedDocument<Ext, W, Ph>
     out(format: 'topk'): Array<{ normal: string; count: number; percent: number }>
     /**  pretty-print the current document and its tags */
     debug(): ExtendedDocument<Ext, W, Ph>

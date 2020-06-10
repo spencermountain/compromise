@@ -904,6 +904,7 @@ module.exports = [
   'vernon',
   'vicente',
   'victor',
+  'viktor',
   'vihaan',
   'vince',
   'vincent',

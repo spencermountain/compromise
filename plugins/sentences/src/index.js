@@ -1,11 +1,11 @@
 const parse = require('./parse')
 const methods = require('./methods')
 
-const addMethod = function(Doc) {
+const addMethod = function (Doc) {
   /**  */
   class Sentences extends Doc {
     constructor(list, from, world) {
-      list = list.map(p => p.clone(true))
+      list = list.map((p) => p.clone(true))
       super(list, from, world)
     }
 
@@ -18,7 +18,7 @@ const addMethod = function(Doc) {
       }
       options = options || { text: true, normal: true, trim: true, terms: true }
       let res = []
-      this.forEach(doc => {
+      this.forEach((doc) => {
         let json = doc.json(options)[0]
         let obj = parse(doc)
         json.subject = obj.subject.json(options)[0]
@@ -34,7 +34,7 @@ const addMethod = function(Doc) {
 
     /** the main noun of the sentence */
     subjects() {
-      return this.map(doc => {
+      return this.map((doc) => {
         let res = parse(doc)
         return res.subject
       })
@@ -47,7 +47,7 @@ const addMethod = function(Doc) {
 
     /** add a word to the start of this sentence */
     prepend(str) {
-      this.forEach(doc => {
+      this.forEach((doc) => {
         // repair the titlecase
         let firstTerms = doc.match('^.')
         firstTerms.not('#ProperNoun').toLowerCase()
@@ -62,7 +62,7 @@ const addMethod = function(Doc) {
     /** add a word to the end of this sentence */
     append(str) {
       let hasEnd = /[.?!]\s*$/.test(str)
-      this.forEach(doc => {
+      this.forEach((doc) => {
         let end = doc.match('.$')
         let lastTerm = end.termList(0)
         let punct = lastTerm.post
@@ -77,12 +77,17 @@ const addMethod = function(Doc) {
       return this
     }
   }
+  // add some aliases
+  methods.questions = methods.isQuestion
+  methods.exclamations = methods.isExclamation
+  methods.statements = methods.isStatement
+
   Object.assign(Sentences.prototype, methods)
 
   /** overload original sentences() method and return Sentence class**/
-  Doc.prototype.sentences = function(n) {
+  Doc.prototype.sentences = function (n) {
     let arr = []
-    this.list.forEach(p => {
+    this.list.forEach((p) => {
       arr.push(p.fullSentence())
     })
     //grab (n)th result

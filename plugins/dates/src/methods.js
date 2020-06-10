@@ -3,7 +3,7 @@ const abbrevs = require('./data/_abbrevs')
 
 module.exports = {
   /** overload the original json with noun information */
-  json: function(options) {
+  json: function (options) {
     let n = null
     if (typeof options === 'number') {
       n = options
@@ -12,7 +12,7 @@ module.exports = {
     options = options || { terms: false }
     let res = []
     let format = options.format || 'iso'
-    this.forEach(doc => {
+    this.forEach((doc) => {
       let json = doc.json(options)[0]
       let obj = parse(doc, this.context)
       let start = obj.start ? obj.start.format(format) : null
@@ -38,14 +38,17 @@ module.exports = {
   },
 
   /** render all dates according to a specific format */
-  format: function(fmt) {
-    this.forEach(doc => {
+  format: function (fmt) {
+    this.forEach((doc) => {
       let obj = parse(doc, this.context)
       let str = ''
       if (obj.start) {
         str = obj.start.format(fmt)
         if (obj.end) {
-          str += ' to ' + obj.start.format(fmt)
+          let end = obj.start.format(fmt)
+          if (str !== end) {
+            str += ' to ' + end
+          }
         }
         doc.replaceWith(str, { keepTags: true, keepCase: false })
       }
@@ -53,15 +56,15 @@ module.exports = {
     return this
   },
   /** replace 'Fri' with 'Friday', etc*/
-  toLongForm: function() {
-    abbrevs.forEach(a => {
+  toLongForm: function () {
+    abbrevs.forEach((a) => {
       this.replace(a.short, a.long, true)
     })
     return this
   },
   /** replace 'Friday' with 'Fri', etc*/
-  toShortForm: function() {
-    abbrevs.forEach(a => {
+  toShortForm: function () {
+    abbrevs.forEach((a) => {
       this.replace(a.long, a.short, true)
     })
     return this

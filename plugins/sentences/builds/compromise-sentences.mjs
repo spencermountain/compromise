@@ -1,4 +1,4 @@
-/* compromise-sentences 0.0.5 MIT */
+/* compromise-sentences 0.0.6 MIT */
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -52,6 +52,19 @@ function _setPrototypeOf(o, p) {
   return _setPrototypeOf(o, p);
 }
 
+function _isNativeReflectConstruct() {
+  if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+  if (Reflect.construct.sham) return false;
+  if (typeof Proxy === "function") return true;
+
+  try {
+    Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
 function _assertThisInitialized(self) {
   if (self === void 0) {
     throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -66,6 +79,25 @@ function _possibleConstructorReturn(self, call) {
   }
 
   return _assertThisInitialized(self);
+}
+
+function _createSuper(Derived) {
+  var hasNativeReflectConstruct = _isNativeReflectConstruct();
+
+  return function _createSuperInternal() {
+    var Super = _getPrototypeOf(Derived),
+        result;
+
+    if (hasNativeReflectConstruct) {
+      var NewTarget = _getPrototypeOf(this).constructor;
+
+      result = Reflect.construct(Super, arguments, NewTarget);
+    } else {
+      result = Super.apply(this, arguments);
+    }
+
+    return _possibleConstructorReturn(this, result);
+  };
 }
 
 // if a clause starts with these, it's not a main clause
@@ -165,11 +197,71 @@ var negate = {
   toPositive: toPositive
 };
 
+//is this sentence asking a question?
+var isQuestion = function isQuestion(doc) {
+  var endPunct = doc.post();
+  var clauses = doc.clauses();
+
+  if (/\?/.test(endPunct) === true) {
+    return true;
+  } // Has ellipsis at the end means it's probably not a question
+  // e.g., Is this just fantasy...
+
+
+  if (/\.\.$/.test(doc.out('text'))) {
+    return false;
+  } // Starts with question word, but has a comma, so probably not a question
+  // e.g., Why are we caught in a land slide, no escape from reality
+
+
+  if (doc.has('^#QuestionWord') && doc.has('#Comma')) {
+    return false;
+  } // Starts with a #QuestionWord
+  // e.g., What open your eyes look up to the skies and see
+
+
+  if (doc.has('^#QuestionWord')) {
+    return true;
+  } // Second word is a #QuestionWord
+  // e.g., I'm what a poor boy
+  // case ts.has('^\w+\s#QuestionWord'):
+  // return true;
+  // is it, do you - start of sentence
+  // e.g., Do I need no sympathy
+
+
+  if (doc.has('^(do|does|did|is|was|can|could|will|would|may) #Noun')) {
+    return true;
+  } // these are a little more loose..
+  // e.g., Must I be come easy come easy go
+
+
+  if (doc.has('^(have|must) you')) {
+    return true;
+  } // Clause starts with a question word
+  // e.g., Anyway the wind blows, what doesn't really matter to me
+
+
+  if (clauses.has('^#QuestionWord')) {
+    return true;
+  } //is wayne gretskzy alive
+
+
+  if (clauses.has('(do|does|is|was) #Noun+ #Adverb? (#Adjective|#Infinitive)$')) {
+    return true;
+  } // Probably not a question
+
+
+  return false;
+};
+
+var isQuestion_1 = isQuestion;
+
 /** return sentences ending with '?' */
-var isQuestion = function isQuestion() {
-  return this.filter(function (doc) {
-    var term = doc.lastTerm().termList(0);
-    return term.hasPost('?');
+
+var isQuestion_1$1 = function isQuestion_1$1() {
+  return this.filter(function (d) {
+    return isQuestion_1(d);
   });
 };
 /** return sentences ending with '!' */
@@ -194,23 +286,26 @@ var isStatement = function isStatement() {
 
 
 var toExclamation = function toExclamation() {
+  this.post('!');
   return this;
 };
 /** 'he is.' -> 'he is?' */
 
 
 var toQuestion = function toQuestion() {
+  this.post('?');
   return this;
 };
 /** 'he is?' -> 'he is.' */
 
 
 var toStatement = function toStatement() {
+  this.post('.');
   return this;
 };
 
-var punct = {
-  isQuestion: isQuestion,
+var types = {
+  isQuestion: isQuestion_1$1,
   isExclamation: isExclamation,
   isStatement: isStatement,
   toExclamation: toExclamation,
@@ -295,14 +390,14 @@ var tense = {
   toFutureTense: toFutureTense
 };
 
-var methods = Object.assign({}, negate, punct, tense);
+var methods = Object.assign({}, negate, types, tense);
 
 var addMethod = function addMethod(Doc) {
   /**  */
-  var Sentences =
-  /*#__PURE__*/
-  function (_Doc) {
+  var Sentences = /*#__PURE__*/function (_Doc) {
     _inherits(Sentences, _Doc);
+
+    var _super = _createSuper(Sentences);
 
     function Sentences(list, from, world) {
       _classCallCheck(this, Sentences);
@@ -310,7 +405,7 @@ var addMethod = function addMethod(Doc) {
       list = list.map(function (p) {
         return p.clone(true);
       });
-      return _possibleConstructorReturn(this, _getPrototypeOf(Sentences).call(this, list, from, world));
+      return _super.call(this, list, from, world);
     }
     /** overload the original json with noun information */
 
@@ -405,8 +500,12 @@ var addMethod = function addMethod(Doc) {
     }]);
 
     return Sentences;
-  }(Doc);
+  }(Doc); // add some aliases
 
+
+  methods.questions = methods.isQuestion;
+  methods.exclamations = methods.isExclamation;
+  methods.statements = methods.isStatement;
   Object.assign(Sentences.prototype, methods);
   /** overload original sentences() method and return Sentence class**/
 

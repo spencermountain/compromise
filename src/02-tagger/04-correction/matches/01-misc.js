@@ -54,7 +54,7 @@ const list = [
   // //the word 'which'
   { match: '^which', tag: 'QuestionWord', reason: 'which-question' },
   { match: '[which] . (#Noun)+ #Pronoun', group: 0, tag: 'QuestionWord', reason: 'which-question2' },
-  { match: 'which', tag: 'QuestionWord', reason: 'which-question3' },
+  // { match: 'which', tag: 'QuestionWord', reason: 'which-question3' },
 
   // ==== Conjunctions ====
   { match: '[so] #Noun', group: 0, tag: 'Conjunction', reason: 'so-conj' },

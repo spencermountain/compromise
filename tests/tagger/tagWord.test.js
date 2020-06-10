@@ -2,7 +2,7 @@ const test = require('tape')
 const nlp = require('../_lib')
 
 //test a word from each file in ./data/**
-test('pos from-lexicon', function(t) {
+test('pos from-lexicon', function (t) {
   const arr = [
     ['toronto', 'City'],
     ['mexico', 'Country'],
@@ -52,6 +52,7 @@ test('pos from-lexicon', function(t) {
     ['823-425-1231', 'PhoneNumber'],
     ['823 425-1231', 'PhoneNumber'],
     ['(823) 425-1231', 'PhoneNumber'],
+    ['+1-123-444-5655', 'PhoneNumber'],
     ['invest', 'Verb'],
     ['investing', 'Verb'],
     [`wallys'`, 'Possessive'],
@@ -67,7 +68,7 @@ test('pos from-lexicon', function(t) {
     ['MDMA', 'Acronym'],
     ['unless', 'Condition'],
   ]
-  arr.forEach(function(a) {
+  arr.forEach(function (a) {
     const term = nlp(a[0]).termList()[0]
     t.equal(term.tags[a[1]], true, a[0])
   })

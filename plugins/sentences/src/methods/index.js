@@ -1,1 +1,1 @@
-module.exports = Object.assign({}, require('./negate'), require('./punct'), require('./tense'))
+module.exports = Object.assign({}, require('./negate'), require('./types'), require('./tense'))

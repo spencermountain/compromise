@@ -2,7 +2,7 @@
 // order matters.
 module.exports = [
   //web tags
-  [/^\w+@\w+\.[a-z]{2,3}$/, 'Email'], //not fancy
+  [/^[\w\.]+@[\w\.]+\.[a-z]{2,3}$/, 'Email'], //not fancy
   [/^#[a-z0-9_\u00C0-\u00FF]{2,}$/, 'HashTag'],
   [/^@\w{2,}$/, 'AtMention'],
   [/^(https?:\/\/|www\.)\w+\.[a-z]{2,3}/, 'Url'], //with http/www
@@ -32,7 +32,7 @@ module.exports = [
 
   //phone numbers
   [/^[0-9]{3}-[0-9]{4}$/, 'PhoneNumber'], //589-3809
-  [/^[0-9]{3}[ -]?[0-9]{3}-[0-9]{4}$/, 'PhoneNumber'], //632-589-3809
+  [/^(\+?[0-9][ -])?[0-9]{3}[ -]?[0-9]{3}-[0-9]{4}$/, 'PhoneNumber'], //632-589-3809
 
   //money
   // currency regex

@@ -221,6 +221,7 @@ let conjugations = {
     pst: 'ate',
   },
   edit: {
+    pst: '_ed',
     g: '_ing',
   },
   egg: {

@@ -2,7 +2,7 @@ const rules = require('./_transform')
 const guess = require('./_guess')
 
 /** it helps to know what we're conjugating from */
-const guessTense = function(str) {
+const guessTense = function (str) {
   let three = str.substr(str.length - 3)
   if (guess.hasOwnProperty(three) === true) {
     return guess[three]
@@ -18,7 +18,7 @@ const guessTense = function(str) {
   return null
 }
 
-const toInfinitive = function(str, world, tense) {
+const toInfinitive = function (str, world, tense) {
   if (!str) {
     return ''
   }
@@ -42,6 +42,7 @@ const toInfinitive = function(str, world, tense) {
     for (let i = 0; i < rules[tense].length; i++) {
       const rule = rules[tense][i]
       if (rule.reg.test(str) === true) {
+        // console.log(rule.reg)
         return str.replace(rule.reg, rule.to)
       }
     }

@@ -3,7 +3,7 @@ const genericFill = require('./02-generic')
 
 //we run this on every verb in the lexicon, so please keep it fast
 //we assume the input word is a proper infinitive
-const conjugate = function(inf = '', world) {
+const conjugate = function (inf = '', world) {
   let found = {}
   // 1. look at irregulars
   //the lexicon doesn't pass this in

@@ -220,6 +220,10 @@ let rules = {
       to: '$1e',
     },
     {
+      reg: /(dd)ed$/i,
+      to: '$1',
+    },
+    {
       reg: /(..[^aeiouy])ed$/i,
       to: '$1e',
     },

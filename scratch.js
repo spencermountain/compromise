@@ -8,4 +8,4 @@ nlp.verbose(true)
 // // let doc = nlp('i should have been driven')
 // doc.sentences().toFutureTense().debug()
 
-let doc = nlp('open the car door').debug()
+let doc = nlp('in 1 second').debug()

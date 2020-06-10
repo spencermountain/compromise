@@ -66,6 +66,8 @@ let list = [
   { match: `${dates} #ProperNoun`, tag: 'Person', reason: 'june-smith', safe: true },
   // june m. Cooper
   { match: `${dates} #Acronym? (#ProperNoun && !#Month)`, tag: 'Person', reason: 'june-smith-jr' },
+  // 'second'
+  { match: `#Cardinal [second]`, tag: 'Unit', reason: 'one-second' },
 ]
 
 module.exports = list

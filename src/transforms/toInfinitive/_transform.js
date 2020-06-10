@@ -130,7 +130,7 @@ let rules = {
     },
     {
       //cing : bouncing, denouncing
-      reg: /(c)ing$/i, //dp
+      reg: /(c|s)ing$/i, //dp
       to: '$1e',
     },
 

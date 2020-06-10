@@ -1,14 +1,11 @@
 const parseDate = require('../03-parseDate')
 
 //
-const logic = function(doc, context) {
+const logic = function (doc, context) {
   // two explicit dates - 'between friday and sunday'
   let m = doc.match('between * and *')
   if (m.found) {
-    let start = m
-      .match('between [.*] and', 0)
-      .not('^between')
-      .not('and$')
+    let start = m.match('between [.*] and', 0).not('^between').not('and$')
     start = parseDate(start, context)
     let end = m.match('and *').not('^and')
     end = parseDate(end, context)
@@ -56,7 +53,7 @@ const logic = function(doc, context) {
   if (m.found) {
   }
   // 'in june'
-  m = doc.match('^(on|during|in) [*]')
+  m = doc.match('^(on|during|in) [*]', 0)
   if (m.found) {
     let d = parseDate(m, context)
     if (d) {

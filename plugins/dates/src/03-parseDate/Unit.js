@@ -41,7 +41,7 @@ class Unit {
     console.log('\n')
     return this
   }
-  applyShift(obj) {
+  applyShift(obj = {}) {
     Object.keys(obj).forEach((k) => {
       this.d = this.d.add(obj[k], k)
     })

@@ -2,6 +2,7 @@ const tagger = require('./01-tag')
 const tags = require('./data/_tags')
 const words = require('./data/words')
 const methods = require('./methods')
+const spacetime = require('spacetime')
 
 const addMethods = function (Doc, world) {
   // our new tags
@@ -38,6 +39,9 @@ const addMethods = function (Doc, world) {
       dates = dates.get(n)
     }
     let d = new Dates(dates.list, this, this.world)
+    if (context.today) {
+      context.today = spacetime(context.today)
+    }
     d.context = context
     return d
   }

@@ -591,20 +591,16 @@ const tests = [
   },
 ]
 
-test('start dates', t => {
-  Object.keys(tests).forEach(k => {
+test('start dates', (t) => {
+  Object.keys(tests).forEach((k) => {
     const context = {
       today: tests[k].today,
       timezone: 'Canada/Eastern',
     }
-    tests[k].tests.forEach(a => {
-      let want = spacetime(a[1], context.timezone)
-        .startOf('day')
-        .iso()
-      let json = nlp(a[0])
-        .dates(context)
-        .json()[0]
-      let start = json.date.start
+    tests[k].tests.forEach((a) => {
+      let want = spacetime(a[1], context.timezone).startOf('day').iso()
+      let json = nlp(a[0]).dates(context).json()[0] || {}
+      let start = (json.date || {}).start
       t.equal(start, want, a[0])
     })
   })

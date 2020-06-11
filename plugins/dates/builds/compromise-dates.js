@@ -1,4 +1,4 @@
-/* compromise-dates 0.0.6 MIT */
+/* compromise-dates 1.0.0 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -387,8 +387,8 @@
   var here$3 = 'time-tagger'; //
 
   var timeTagger = function timeTagger(doc) {
-    // quarter to seven
-    if (doc.has('#Cardinal')) {
+    // quarter to seven (not march 5 to 7)
+    if (doc.has('#Cardinal') && !doc.has('#Month')) {
       doc.match('(half|quarter|25|15|10|5) (past|after|to) #Cardinal').tag('Time', here$3);
     } //timezone
 
@@ -442,7 +442,9 @@
 
       var d = doc.match('#Date+'); //'spa day'
 
-      d.match('^day$').unTag('Date', 'spa-day');
+      d.match('^day$').unTag('Date', 'spa-day'); // tomorrow's meeting
+
+      d.match('(in|of|by|for)? (#Possessive && #Date)').unTag('Date', 'tomorrows meeting');
       var knownDate = '(yesterday|today|tomorrow)';
 
       if (d.has(knownDate)) {
@@ -491,7 +493,21 @@
 
       if (d.has('#Month #Month') && !d.has('@hasHyphen') && !d.has('@hasComma')) {
         d.match('#Month').lastTerm().unTag('Date', 'month-month');
-      }
+      } // log the hours
+
+
+      if (d.has('(minutes|seconds|weeks|hours|days|months)') && !d.has('#Value #Duration')) {
+        d.match('(minutes|seconds|weeks|hours|days|months)').unTag('#Date', 'log-hours');
+      } // about thanksgiving
+
+
+      if (d.has('about #Holiday')) {
+        d.match('about').unTag('#Date', 'about-thanksgiving');
+      } // dangling date-chunks
+      // if (d.has('!#Date (in|of|by|for) !#Date')) {
+      //   d.unTag('Date', 'dangling-date')
+      // }
+
     }
 
     return doc;
@@ -541,6 +557,7 @@
     }
   };
 
+  /* spencermountain/spacetime 6.6.0 Apache 2.0 */
   function createCommonjsModule(fn, module) {
     return module = {
       exports: {}
@@ -675,7 +692,7 @@
   var fns_12 = fns.formatTimezone;
   var zeroPad = fns.zeroPad;
 
-  var toString = function toString(d) {
+  var serialize = function serialize(d) {
     return zeroPad(d.getMonth() + 1) + '/' + zeroPad(d.getDate()) + ':' + zeroPad(d.getHours());
   }; // a timezone will begin with a specific offset in january
   // then some will switch to something else between november-march
@@ -693,7 +710,7 @@
     shift = shift * 60 * 1000; //in ms
 
     d = new Date(epoch + shift);
-    var current = toString(d); //eg. is it after ~november?
+    var current = serialize(d); //eg. is it after ~november?
 
     if (current >= start) {
       //eg. is it before ~march~ too?
@@ -705,8 +722,7 @@
     return false;
   };
 
-  var summerTime = shouldChange; // this method avoids having to do a full dst-calculation on every operation
-  // it reproduces some things in ./index.js, but speeds up spacetime considerably
+  var summerTime = shouldChange; // it reproduces some things in ./index.js, but speeds up spacetime considerably
 
   var quickOffset = function quickOffset(s) {
     var zones = s.timezones;
@@ -743,7 +759,7 @@
   var _build = {
     "9|s": "2/dili,2/jayapura",
     "9|n": "2/chita,2/khandyga,2/pyongyang,2/seoul,2/tokyo,11/palau",
-    "9.5|s|04/07:03->10/06:02": "4/adelaide,4/broken_hill,4/south,4/yancowinna",
+    "9.5|s|04/05:03->10/04:02": "4/adelaide,4/broken_hill,4/south,4/yancowinna",
     "9.5|s": "4/darwin,4/north",
     "8|s": "12/casey,2/kuala_lumpur,2/makassar,2/singapore,4/perth,4/west",
     "8|n|03/25:03->09/29:23": "2/ulan_bator",
@@ -753,89 +769,90 @@
     "7|n": "2/bangkok,2/barnaul,2/ho_chi_minh,2/hovd,2/krasnoyarsk,2/novokuznetsk,2/novosibirsk,2/phnom_penh,2/pontianak,2/saigon,2/tomsk,2/vientiane",
     "6|s": "12/vostok",
     "6|n": "2/almaty,2/bishkek,2/dacca,2/dhaka,2/kashgar,2/omsk,2/qyzylorda,2/thimbu,2/thimphu,2/urumqi,9/chagos",
-    "6.5|n": "2/rangoon,9/cocos",
+    "6.5|n": "2/rangoon,2/yangon,9/cocos",
     "5|s": "12/mawson,9/kerguelen",
     "5|n": "2/aqtau,2/aqtobe,2/ashgabat,2/ashkhabad,2/atyrau,2/baku,2/dushanbe,2/karachi,2/oral,2/samarkand,2/tashkent,2/yekaterinburg,9/maldives",
     "5.75|n": "2/kathmandu,2/katmandu",
     "5.5|n": "2/calcutta,2/colombo,2/kolkata",
     "4|s": "9/reunion",
     "4|n": "2/dubai,2/muscat,2/tbilisi,2/yerevan,8/astrakhan,8/samara,8/saratov,8/ulyanovsk,8/volgograd,2/volgograd,9/mahe,9/mauritius",
-    "4.5|n|03/22:00->09/21:24": "2/tehran",
+    "4.5|n|03/21:00->09/20:24": "2/tehran",
     "4.5|n": "2/kabul",
     "3|s": "12/syowa,9/antananarivo",
-    "3|n|03/31:03->10/27:04": "2/nicosia,8/athens,8/bucharest,8/helsinki,8/kiev,8/mariehamn,8/nicosia,8/riga,8/sofia,8/tallinn,8/uzhgorod,8/vilnius,8/zaporozhye",
-    "3|n|03/31:02->10/27:03": "8/chisinau,8/tiraspol",
-    "3|n|03/31:00->10/26:24": "2/beirut",
-    "3|n|03/29:02->10/27:02": "2/jerusalem,2/tel_aviv",
-    "3|n|03/29:00->10/26:01": "2/gaza,2/hebron",
-    "3|n|03/29:00->10/25:01": "2/amman",
-    "3|n|03/29:00->10/24:24": "2/damascus",
+    "3|n|03/29:03->10/25:04": "2/famagusta,2/nicosia,8/athens,8/bucharest,8/helsinki,8/kiev,8/mariehamn,8/nicosia,8/riga,8/sofia,8/tallinn,8/uzhgorod,8/vilnius,8/zaporozhye",
+    "3|n|03/29:02->10/25:03": "8/chisinau,8/tiraspol",
+    "3|n|03/29:00->10/24:24": "2/beirut",
+    "3|n|03/27:02->10/25:02": "2/jerusalem,2/tel_aviv",
+    "3|n|03/27:00->10/31:01": "2/gaza,2/hebron",
+    "3|n|03/27:00->10/30:01": "2/amman",
+    "3|n|03/27:00->10/29:24": "2/damascus",
     "3|n": "0/addis_ababa,0/asmara,0/asmera,0/dar_es_salaam,0/djibouti,0/juba,0/kampala,0/mogadishu,0/nairobi,2/aden,2/baghdad,2/bahrain,2/istanbul,2/kuwait,2/qatar,2/riyadh,8/istanbul,8/kirov,8/minsk,8/moscow,8/simferopol,9/comoro,9/mayotte",
-    "2|s|03/31:02->10/27:02": "12/troll",
+    "2|s|03/29:02->10/25:02": "12/troll",
     "2|s": "0/gaborone,0/harare,0/johannesburg,0/lubumbashi,0/lusaka,0/maputo,0/maseru,0/mbabane",
-    "2|n|03/31:02->10/27:03": "0/ceuta,arctic/longyearbyen,3/jan_mayen,8/amsterdam,8/andorra,8/belgrade,8/berlin,8/bratislava,8/brussels,8/budapest,8/busingen,8/copenhagen,8/gibraltar,8/ljubljana,8/luxembourg,8/madrid,8/malta,8/monaco,8/oslo,8/paris,8/podgorica,8/prague,8/rome,8/san_marino,8/sarajevo,8/skopje,8/stockholm,8/tirane,8/vaduz,8/vatican,8/vienna,8/warsaw,8/zagreb,8/zurich",
+    "2|n|03/29:02->10/25:03": "0/ceuta,arctic/longyearbyen,3/jan_mayen,8/amsterdam,8/andorra,8/belgrade,8/berlin,8/bratislava,8/brussels,8/budapest,8/busingen,8/copenhagen,8/gibraltar,8/ljubljana,8/luxembourg,8/madrid,8/malta,8/monaco,8/oslo,8/paris,8/podgorica,8/prague,8/rome,8/san_marino,8/sarajevo,8/skopje,8/stockholm,8/tirane,8/vaduz,8/vatican,8/vienna,8/warsaw,8/zagreb,8/zurich",
     "2|n": "0/blantyre,0/bujumbura,0/cairo,0/khartoum,0/kigali,0/tripoli,8/kaliningrad",
     "1|s|04/02:01->09/03:03": "0/windhoek",
     "1|s": "0/kinshasa,0/luanda",
-    "1|n|05/05:03->06/09:02": "0/casablanca,0/el_aaiun",
-    "1|n|03/31:01->10/27:02": "3/canary,3/faeroe,3/faroe,3/madeira,8/belfast,8/dublin,8/guernsey,8/isle_of_man,8/jersey,8/lisbon,8/london",
+    "1|n|04/19:03->05/31:02": "0/casablanca,0/el_aaiun",
+    "1|n|03/29:01->10/25:02": "3/canary,3/faeroe,3/faroe,3/madeira,8/belfast,8/dublin,8/guernsey,8/isle_of_man,8/jersey,8/lisbon,8/london",
     "1|n": "0/algiers,0/bangui,0/brazzaville,0/douala,0/lagos,0/libreville,0/malabo,0/ndjamena,0/niamey,0/porto-novo,0/tunis",
     "14|n": "11/kiritimati",
-    "13|s|04/07:04->09/29:03": "11/apia",
+    "13|s|04/05:04->09/27:03": "11/apia",
     "13|s|01/15:02->11/05:03": "11/tongatapu",
     "13|n": "11/enderbury,11/fakaofo",
-    "12|s|04/07:03->09/29:02": "12/mcmurdo,12/south_pole,11/auckland",
-    "12|s|01/13:03->11/10:02": "11/fiji",
+    "12|s|04/05:03->09/27:02": "12/mcmurdo,12/south_pole,11/auckland",
+    "12|s|01/12:03->11/08:02": "11/fiji",
     "12|n": "2/anadyr,2/kamchatka,2/srednekolymsk,11/funafuti,11/kwajalein,11/majuro,11/nauru,11/tarawa,11/wake,11/wallis",
-    "12.75|s|04/07:03->09/29:02": "11/chatham",
+    "12.75|s|04/05:03->04/05:02": "11/chatham",
     "11|s": "12/macquarie,11/bougainville",
     "11|n": "2/magadan,2/sakhalin,11/efate,11/guadalcanal,11/kosrae,11/noumea,11/pohnpei,11/ponape",
-    "11.5|n": "11/norfolk",
-    "10|s|04/07:03->10/06:02": "4/act,4/canberra,4/currie,4/hobart,4/melbourne,4/nsw,4/sydney,4/tasmania,4/victoria",
+    "11.5|n|04/05:03->10/04:02": "11/norfolk",
+    "10|s|04/05:03->10/04:02": "4/act,4/canberra,4/currie,4/hobart,4/melbourne,4/nsw,4/sydney,4/tasmania,4/victoria",
     "10|s": "12/dumontdurville,4/brisbane,4/lindeman,4/queensland",
     "10|n": "2/ust-nera,2/vladivostok,2/yakutsk,11/chuuk,11/guam,11/port_moresby,11/saipan,11/truk,11/yap",
-    "10.5|s|04/07:01->10/06:02": "4/lhi,4/lord_howe",
-    "0|n|03/31:00->10/27:01": "1/scoresbysund,3/azores",
+    "10.5|s|04/05:01->10/04:02": "4/lhi,4/lord_howe",
+    "0|n|03/29:00->10/25:01": "1/scoresbysund,3/azores",
     "0|n": "0/abidjan,0/accra,0/bamako,0/banjul,0/bissau,0/conakry,0/dakar,0/freetown,0/lome,0/monrovia,0/nouakchott,0/ouagadougou,0/sao_tome,0/timbuktu,1/danmarkshavn,3/reykjavik,3/st_helena,13/gmt,13/gmt+0,13/gmt-0,13/gmt0,13/greenwich,13/utc,13/universal,13/zulu",
-    "-9|n|03/10:02->11/03:02": "1/adak,1/atka",
+    "-9|n|03/08:02->11/01:02": "1/adak,1/atka",
     "-9|n": "11/gambier",
     "-9.5|n": "11/marquesas",
-    "-8|n|03/10:02->11/03:02": "1/anchorage,1/juneau,1/metlakatla,1/nome,1/sitka,1/yakutat",
+    "-8|n|03/08:02->11/01:02": "1/anchorage,1/juneau,1/metlakatla,1/nome,1/sitka,1/yakutat",
     "-8|n": "11/pitcairn",
-    "-7|n|03/10:02->11/03:02": "1/dawson,1/ensenada,1/los_angeles,1/santa_isabel,1/tijuana,1/vancouver,1/whitehorse,6/pacific,6/yukon,10/bajanorte",
+    "-7|n|03/08:02->11/01:02": "1/dawson,1/ensenada,1/los_angeles,1/santa_isabel,1/tijuana,1/vancouver,1/whitehorse,6/pacific,6/yukon,10/bajanorte",
     "-7|n": "1/creston,1/dawson_creek,1/hermosillo,1/phoenix",
-    "-6|s|04/06:22->09/07:22": "7/easterisland,11/easter",
-    "-6|n|04/07:02->10/27:02": "1/chihuahua,1/mazatlan,10/bajasur",
-    "-6|n|03/10:02->11/03:02": "1/boise,1/cambridge_bay,1/denver,1/edmonton,1/inuvik,1/ojinaga,1/shiprock,1/yellowknife,6/mountain",
+    "-6|s|04/04:22->09/05:22": "7/easterisland,11/easter",
+    "-6|n|04/05:02->10/25:02": "1/chihuahua,1/mazatlan,10/bajasur",
+    "-6|n|03/08:02->11/01:02": "1/boise,1/cambridge_bay,1/denver,1/edmonton,1/inuvik,1/ojinaga,1/shiprock,1/yellowknife,6/mountain",
     "-6|n": "1/belize,1/costa_rica,1/el_salvador,1/guatemala,1/managua,1/regina,1/swift_current,1/tegucigalpa,6/east-saskatchewan,6/saskatchewan,11/galapagos",
     "-5|s": "1/lima,1/rio_branco,5/acre",
-    "-5|n|04/07:02->10/27:02": "1/bahia_banderas,1/merida,1/mexico_city,1/monterrey,10/general",
+    "-5|n|04/05:02->10/25:02": "1/bahia_banderas,1/merida,1/mexico_city,1/monterrey,10/general",
     "-5|n|03/12:03->11/05:01": "1/north_dakota",
-    "-5|n|03/10:02->11/03:02": "1/chicago,1/knox_in,1/matamoros,1/menominee,1/rainy_river,1/rankin_inlet,1/resolute,1/winnipeg,6/central",
+    "-5|n|03/08:02->11/01:02": "1/chicago,1/knox_in,1/matamoros,1/menominee,1/rainy_river,1/rankin_inlet,1/resolute,1/winnipeg,6/central",
     "-5|n": "1/atikokan,1/bogota,1/cancun,1/cayman,1/coral_harbour,1/eirunepe,1/guayaquil,1/jamaica,1/panama,1/porto_acre",
     "-4|s|05/13:23->08/13:01": "12/palmer",
-    "-4|s|04/06:24->09/08:00": "1/santiago,7/continental",
-    "-4|s|03/23:24->10/06:00": "1/asuncion",
+    "-4|s|04/04:24->09/06:00": "1/santiago,7/continental",
+    "-4|s|03/21:24->10/04:00": "1/asuncion",
     "-4|s|02/16:24->11/03:00": "1/campo_grande,1/cuiaba",
     "-4|s": "1/la_paz,1/manaus,5/west",
     "-4|n|03/12:03->11/05:01": "1/indiana,1/kentucky",
-    "-4|n|03/10:02->11/03:02": "1/detroit,1/fort_wayne,1/grand_turk,1/indianapolis,1/iqaluit,1/louisville,1/montreal,1/nassau,1/new_york,1/nipigon,1/pangnirtung,1/port-au-prince,1/thunder_bay,1/toronto,6/eastern",
-    "-4|n|03/10:00->11/03:01": "1/havana",
+    "-4|n|03/08:02->11/01:02": "1/detroit,1/fort_wayne,1/grand_turk,1/indianapolis,1/iqaluit,1/louisville,1/montreal,1/nassau,1/new_york,1/nipigon,1/pangnirtung,1/port-au-prince,1/thunder_bay,1/toronto,6/eastern",
+    "-4|n|03/08:00->11/01:01": "1/havana",
     "-4|n": "1/anguilla,1/antigua,1/aruba,1/barbados,1/blanc-sablon,1/boa_vista,1/caracas,1/curacao,1/dominica,1/grenada,1/guadeloupe,1/guyana,1/kralendijk,1/lower_princes,1/marigot,1/martinique,1/montserrat,1/port_of_spain,1/porto_velho,1/puerto_rico,1/santo_domingo,1/st_barthelemy,1/st_kitts,1/st_lucia,1/st_thomas,1/st_vincent,1/tortola,1/virgin",
     "-3|s": "1/argentina,1/buenos_aires,1/cordoba,1/fortaleza,1/montevideo,1/punta_arenas,1/sao_paulo,12/rothera,3/stanley,5/east",
-    "-3|n|03/10:02->11/03:02": "1/glace_bay,1/goose_bay,1/halifax,1/moncton,1/thule,3/bermuda,6/atlantic",
+    "-3|n|03/08:02->11/01:02": "1/glace_bay,1/goose_bay,1/halifax,1/moncton,1/thule,3/bermuda,6/atlantic",
     "-3|n": "1/araguaina,1/bahia,1/belem,1/catamarca,1/cayenne,1/jujuy,1/maceio,1/mendoza,1/paramaribo,1/recife,1/rosario,1/santarem",
     "-2|s": "5/denoronha",
-    "-2|n|03/30:22->10/26:23": "1/godthab",
-    "-2|n|03/10:02->11/03:02": "1/miquelon",
+    "-2|n|03/28:22->10/24:23": "1/godthab",
+    "-2|n|03/08:02->11/01:02": "1/miquelon",
     "-2|n": "1/noronha,3/south_georgia",
-    "-2.5|n|03/10:02->11/03:02": "1/st_johns,6/newfoundland",
+    "-2.5|n|03/08:02->11/01:02": "1/st_johns,6/newfoundland",
     "-1|n": "3/cape_verde",
     "-11|n": "11/midway,11/niue,11/pago_pago,11/samoa",
     "-10|n": "11/honolulu,11/johnston,11/rarotonga,11/tahiti"
   };
 
   var _build$1 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
     'default': _build
   }); //prefixes for iana names..
 
@@ -970,9 +987,8 @@
     m = tz.match(gmtOffset);
 
     if (m !== null) {
-      var _num = Number(m[1]) * -1;
-
-      return toIana(_num);
+      var num = Number(m[1]) * -1;
+      return toIana(num);
     } // '+5'
 
 
@@ -1068,7 +1084,7 @@
   Object.keys(o).forEach(function (k) {
     o[k + 's'] = o[k];
   });
-  var milliseconds = o; //basically, step-forward/backward until js Date object says we're there.
+  var milliseconds = o;
 
   var walk = function walk(s, n, fn, unit, previous) {
     var current = s.d[fn]();
@@ -1202,8 +1218,8 @@
     var keys = Object.keys(units);
     var old = s.clone();
 
-    for (var _i = 0; _i < keys.length; _i++) {
-      var k = keys[_i];
+    for (var i = 0; i < keys.length; i++) {
+      var k = keys[i];
       var n = wants[k];
 
       if (n === undefined) {
@@ -1242,22 +1258,22 @@
 
     };
 
-    for (var _i2 = 0; _i2 < shortMonths.length; _i2++) {
-      obj[shortMonths[_i2]] = _i2;
+    for (var i = 0; i < shortMonths.length; i++) {
+      obj[shortMonths[i]] = i;
     }
 
-    for (var _i3 = 0; _i3 < longMonths.length; _i3++) {
-      obj[longMonths[_i3]] = _i3;
+    for (var _i = 0; _i < longMonths.length; _i++) {
+      obj[longMonths[_i]] = _i;
     }
 
     return obj;
   }
 
   var months = {
-    "short": function short() {
+    "short": function _short() {
       return shortMonths;
     },
-    "long": function long() {
+    "long": function _long() {
       return longMonths;
     },
     mapping: function mapping() {
@@ -1269,7 +1285,7 @@
     }
   }; //pull-apart ISO offsets, like "+0100"
 
-  var parseOffset$1 = function parseOffset$1(s, offset) {
+  var parseOffset$1 = function parseOffset(s, offset) {
     if (!offset) {
       return s;
     } //this is a fancy-move
@@ -1400,7 +1416,8 @@
   30, // November - 30 days
   31 // December - 31 days
   ];
-  var monthLengths_1 = monthLengths;
+  var monthLengths_1 = monthLengths; // 28 - feb
+
   var isLeapYear = fns.isLeapYear; //given a month, return whether day number exists in it
 
   var hasDate = function hasDate(obj) {
@@ -1433,10 +1450,14 @@
 
   var parseYear = function parseYear() {
     var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-    //support '18 -> 2018
-    // str = str.replace(/^'([0-9]{2})/, '20$1')
-    // str = str.replace('([0-9]+) ?b\.?c\.?$', '-$1')
-    var year = parseInt(str.trim(), 10);
+    var today = arguments.length > 1 ? arguments[1] : undefined;
+    var year = parseInt(str.trim(), 10); // use a given year from options.today
+
+    if (!year && today) {
+      year = today.year;
+    } // fallback to this year
+
+
     year = year || new Date().getFullYear();
     return year;
   };
@@ -1520,7 +1541,7 @@
     reg: /^([0-9]{1,2})[\-\/]([a-z]+)[\-\/]?([0-9]{4})?$/i,
     parse: function parse(s, arr) {
       var month = months$1[arr[2].toLowerCase()];
-      var year = parseYear(arr[3]);
+      var year = parseYear(arr[3], s._today);
       var obj = {
         year: year,
         month: month,
@@ -1542,7 +1563,7 @@
     reg: /^([a-z]+) ([0-9]{1,2}(?:st|nd|rd|th)?),?( [0-9]{4})?( ([0-9:]+( ?am| ?pm| ?gmt)?))?$/i,
     parse: function parse(s, arr) {
       var month = months$1[arr[1].toLowerCase()];
-      var year = parseYear(arr[3]);
+      var year = parseYear(arr[3], s._today);
       var obj = {
         year: year,
         month: month,
@@ -1563,11 +1584,11 @@
     reg: /^([a-z]+) ([0-9]{4})$/i,
     parse: function parse(s, arr) {
       var month = months$1[arr[1].toLowerCase()];
-      var year = parseYear(arr[2]);
+      var year = parseYear(arr[2], s._today);
       var obj = {
         year: year,
         month: month,
-        date: 1
+        date: s._today.date || 1
       };
 
       if (hasDate_1(obj) === false) {
@@ -1589,7 +1610,7 @@
         return null;
       }
 
-      var year = parseYear(arr[3]);
+      var year = parseYear(arr[3], s._today);
       var obj = {
         year: year,
         month: month,
@@ -1659,12 +1680,18 @@
     // '1992'
     reg: /^[0-9]{4}( ?a\.?d\.?)?$/i,
     parse: function parse(s, arr) {
-      var year = parseYear(arr[0]);
-      var d = new Date();
+      var today = s._today;
+      var year = parseYear(arr[0], today);
+      var d = new Date(); // using today's date, but a new month is awkward.
+
+      if (today.month && !today.date) {
+        today.date = 1;
+      }
+
       var obj = {
         year: year,
-        month: d.getMonth(),
-        date: d.getDate()
+        month: today.month || d.getMonth(),
+        date: today.date || d.getDate()
       };
 
       if (hasDate_1(obj) === false) {
@@ -1718,8 +1745,7 @@
     }
   };
   dates['new years eve'] = dates['new years'];
-  var namedDates = dates; //we have to actually parse these inputs ourselves
-  //  -  can't use built-in js parser ;(
+  var namedDates = dates; //  -  can't use built-in js parser ;(
   //=========================================
   // ISO Date	  "2015-03-25"
   // Short Date	"03/25/2015" or "2015/03/25"
@@ -1739,25 +1765,24 @@
     date: 1
   }; //support [2016, 03, 01] format
 
-  var handleArray = function handleArray(s, arr) {
+  var handleArray = function handleArray(s, arr, today) {
     var order = ['year', 'month', 'date', 'hour', 'minute', 'second', 'millisecond'];
 
-    for (var _i4 = 0; _i4 < order.length; _i4++) {
-      var _num2 = arr[_i4] || defaults[order[_i4]] || 0;
-
-      s = s[order[_i4]](_num2);
+    for (var i = 0; i < order.length; i++) {
+      var num = arr[i] || today[order[i]] || defaults[order[i]] || 0;
+      s = s[order[i]](num);
     }
 
     return s;
   }; //support {year:2016, month:3} format
 
 
-  var handleObject = function handleObject(s, obj) {
-    obj = Object.assign({}, defaults, obj);
+  var handleObject = function handleObject(s, obj, today) {
+    obj = Object.assign({}, defaults, today, obj);
     var keys = Object.keys(obj);
 
-    for (var _i5 = 0; _i5 < keys.length; _i5++) {
-      var unit = keys[_i5]; //make sure we have this method
+    for (var i = 0; i < keys.length; i++) {
+      var unit = keys[i]; //make sure we have this method
 
       if (s[unit] === undefined || typeof s[unit] !== 'function') {
         continue;
@@ -1768,9 +1793,8 @@
         continue;
       }
 
-      var _num3 = obj[unit] || defaults[unit] || 0;
-
-      s = s[unit](_num3);
+      var num = obj[unit] || today[unit] || defaults[unit] || 0;
+      s = s[unit](num);
     }
 
     return s;
@@ -1778,7 +1802,8 @@
 
 
   var parseInput = function parseInput(s, input, givenTz) {
-    //if we've been given a epoch number, it's easy
+    var today = s._today || defaults; //if we've been given a epoch number, it's easy
+
     if (typeof input === 'number') {
       if (input > 0 && input < minimumEpoch && s.silent === false) {
         console.warn('  - Warning: You are setting the date to January 1970.');
@@ -1804,7 +1829,7 @@
 
 
     if (fns.isArray(input) === true) {
-      s = handleArray(s, input);
+      s = handleArray(s, input, today);
       return s;
     } //support {year:2016, month:3} format
 
@@ -1817,7 +1842,7 @@
         return s;
       }
 
-      s = handleObject(s, input);
+      s = handleObject(s, input, today);
       return s;
     } //input as a string..
 
@@ -1837,11 +1862,11 @@
     } //try each text-parse template, use the first good result
 
 
-    for (var _i6 = 0; _i6 < strParse.length; _i6++) {
-      var m = input.match(strParse[_i6].reg);
+    for (var i = 0; i < strParse.length; i++) {
+      var m = input.match(strParse[i].reg);
 
       if (m) {
-        var res = strParse[_i6].parse(s, m, givenTz);
+        var res = strParse[i].parse(s, m, givenTz);
 
         if (res !== null) {
           return res;
@@ -1861,18 +1886,17 @@
   var shortDays = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
   var longDays = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
   var days = {
-    "short": function short() {
+    "short": function _short2() {
       return shortDays;
     },
-    "long": function long() {
+    "long": function _long2() {
       return longDays;
     },
     set: function set(i18n) {
       shortDays = i18n["short"] || shortDays;
       longDays = i18n["long"] || longDays;
     }
-  }; // create the timezone offset part of an iso timestamp
-  // it's kind of nuts how involved this is
+  }; // it's kind of nuts how involved this is
   // "+01:00", "+0100", or simply "+01"
 
   var isoOffset = function isoOffset(s) {
@@ -2121,9 +2145,8 @@
   });
 
   var printFormat = function printFormat(s) {
-    var str = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+    var str = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : ''; //don't print anything if it's an invalid date
 
-    //don't print anything if it's an invalid date
     if (s.isValid() !== true) {
       return '';
     } //support .format('month')
@@ -2357,7 +2380,7 @@
     var name = _char;
     var toName = to;
 
-    for (var _i7 = 0; _i7 < n; _i7 += 1) {
+    for (var i = 0; i < n; i += 1) {
       mapping[name] = mapping[toName];
       name += _char;
       toName += to;
@@ -2380,12 +2403,12 @@
     var arr = [chars[0]];
     var quoteOn = false;
 
-    for (var _i8 = 1; _i8 < chars.length; _i8 += 1) {
+    for (var i = 1; i < chars.length; i += 1) {
       //support quoted substrings
-      if (chars[_i8] === "'") {
+      if (chars[i] === "'") {
         quoteOn = !quoteOn; //support '', meaning one tick
 
-        if (quoteOn === true && chars[_i8 + 1] && chars[_i8 + 1] === "'") {
+        if (quoteOn === true && chars[i + 1] && chars[i + 1] === "'") {
           quoteOn = true;
         } else {
           continue;
@@ -2393,10 +2416,10 @@
       } //merge it with the last one
 
 
-      if (quoteOn === true || chars[_i8] === arr[arr.length - 1][0]) {
-        arr[arr.length - 1] += chars[_i8];
+      if (quoteOn === true || chars[i] === arr[arr.length - 1][0]) {
+        arr[arr.length - 1] += chars[i];
       } else {
-        arr.push(chars[_i8]);
+        arr.push(chars[i]);
       }
     }
 
@@ -2436,7 +2459,7 @@
     return obj;
   };
 
-  var progress_1 = progress; //round to either current, or +1 of this unit
+  var progress_1 = progress;
 
   var nearest = function nearest(s, unit) {
     //how far have we gone?
@@ -2492,8 +2515,7 @@
     }
   };
 
-  var one = diffOne; // don't do anything too fancy here.
-  // 2020 - 2019 may be 1 year, or 0 years
+  var one = diffOne; // 2020 - 2019 may be 1 year, or 0 years
   // - '1 year difference' means 366 days during a leap year
 
   var fastYear = function fastYear(a, b) {
@@ -2591,8 +2613,7 @@
     return obj;
   };
 
-  var diff$1 = main; //by spencermountain + Shaun Grady
-  //our conceptual 'break-points' for each unit
+  var diff$1 = main; //our conceptual 'break-points' for each unit
 
   var qualifiers = {
     months: {
@@ -2849,8 +2870,8 @@
         hem = 'south';
       }
 
-      for (var _i9 = 0; _i9 < seasons$1[hem].length; _i9++) {
-        if (seasons$1[hem][_i9][0] === current) {
+      for (var i = 0; i < seasons$1[hem].length; i++) {
+        if (seasons$1[hem][i][0] === current) {
           //winter goes between years
           var year = s.year();
 
@@ -2860,8 +2881,8 @@
 
           walk_1(s, {
             year: year,
-            month: seasons$1[hem][_i9][1],
-            date: seasons$1[hem][_i9][2],
+            month: seasons$1[hem][i][1],
+            date: seasons$1[hem][i][2],
             hour: 0,
             minute: 0,
             second: 0,
@@ -2936,7 +2957,7 @@
   var startOf_1 = {
     startOf: startOf,
     endOf: endOf
-  }; //is it 'wednesday'?
+  };
 
   var isDay = function isDay(unit) {
     if (days["short"]().find(function (s) {
@@ -3092,7 +3113,7 @@
   var methods$1 = {
     set: function set(input$1, tz) {
       var s = this.clone();
-      s = input(s, input$1);
+      s = input(s, input$1, null);
 
       if (tz) {
         this.tz = find(tz);
@@ -3165,7 +3186,7 @@
       return !isNaN(this.d.getTime());
     },
     //travel to this timezone
-    "goto": function goto(tz) {
+    "goto": function _goto(tz) {
       var s = this.clone();
       s.tz = find(tz, s.timezones); //science!
 
@@ -3232,18 +3253,17 @@
       if (typeof input === 'string') {
         // accept 'wednesday'
         input = input.toLowerCase().trim();
+        var num = days["short"]().indexOf(input);
 
-        var _num4 = days["short"]().indexOf(input);
-
-        if (_num4 === -1) {
-          _num4 = days["long"]().indexOf(input);
+        if (num === -1) {
+          num = days["long"]().indexOf(input);
         }
 
-        if (_num4 === -1) {
-          _num4 = 1; //go back to default
+        if (num === -1) {
+          num = 1; //go back to default
         }
 
-        this._weekStart = _num4;
+        this._weekStart = num;
       } else {
         console.warn('Spacetime Error: Cannot understand .weekStart() input:', input);
       }
@@ -3255,8 +3275,7 @@
   methods$1.inDST = methods$1.isDST;
   methods$1.round = methods$1.nearest;
   methods$1.each = methods$1.every;
-  var methods_1 = methods$1; // javascript setX methods like setDate() can't be used because of the local bias
-  //these methods wrap around them.
+  var methods_1 = methods$1; //these methods wrap around them.
 
   var validate = function validate(n) {
     //handle number as a string
@@ -3273,10 +3292,9 @@
     var n = order.indexOf(unit);
     var arr = order.slice(n, order.length);
 
-    for (var _i10 = 0; _i10 < arr.length; _i10++) {
-      var want = tmp[arr[_i10]]();
-
-      s[arr[_i10]](want);
+    for (var i = 0; i < arr.length; i++) {
+      var want = tmp[arr[i]]();
+      s[arr[i]](want);
     }
 
     return s;
@@ -3720,14 +3738,14 @@
       var month = this.d.getMonth();
       var tmp; //count the num days in each month
 
-      for (var _i11 = 1; _i11 <= month; _i11++) {
+      for (var i = 1; i <= month; i++) {
         tmp = new Date();
         tmp.setDate(1);
         tmp.setFullYear(this.d.getFullYear()); //the year matters, because leap-years
 
         tmp.setHours(1);
         tmp.setMinutes(1);
-        tmp.setMonth(_i11);
+        tmp.setMonth(i);
         tmp.setHours(-2); //the last day of the month
 
         sum += tmp.getDate();
@@ -3826,9 +3844,9 @@
 
       var month = this.d.getMonth();
 
-      for (var _i12 = 1; _i12 < quarters.length; _i12++) {
-        if (month < quarters[_i12][0]) {
-          return _i12 - 1;
+      for (var i = 1; i < quarters.length; i++) {
+        if (month < quarters[i][0]) {
+          return i - 1;
         }
       }
 
@@ -3845,9 +3863,9 @@
       if (input !== undefined) {
         var s = this.clone();
 
-        for (var _i13 = 0; _i13 < seasons$1[hem].length; _i13++) {
-          if (input === seasons$1[hem][_i13][0]) {
-            s = s.month(seasons$1[hem][_i13][1]);
+        for (var i = 0; i < seasons$1[hem].length; i++) {
+          if (input === seasons$1[hem][i][0]) {
+            s = s.month(seasons$1[hem][i][1]);
             s = s.date(1);
             s = s.startOf('day');
           }
@@ -3858,9 +3876,9 @@
 
       var month = this.d.getMonth();
 
-      for (var _i14 = 0; _i14 < seasons$1[hem].length - 1; _i14++) {
-        if (month >= seasons$1[hem][_i14][1] && month < seasons$1[hem][_i14 + 1][1]) {
-          return seasons$1[hem][_i14][0];
+      for (var _i = 0; _i < seasons$1[hem].length - 1; _i++) {
+        if (month >= seasons$1[hem][_i][1] && month < seasons$1[hem][_i + 1][1]) {
+          return seasons$1[hem][_i][0];
         }
       }
 
@@ -4037,6 +4055,95 @@
   };
 
   var query = addMethods;
+  var isLeapYear$1 = fns.isLeapYear;
+
+  var getMonthLength = function getMonthLength(month, year) {
+    if (month === 1 && isLeapYear$1(year)) {
+      return 29;
+    }
+
+    return monthLengths_1[month];
+  }; //month is the one thing we 'model/compute'
+  //- because ms-shifting can be off by enough
+
+
+  var rollMonth = function rollMonth(want, old) {
+    //increment year
+    if (want.month > 0) {
+      var years = parseInt(want.month / 12, 10);
+      want.year = old.year() + years;
+      want.month = want.month % 12;
+    } else if (want.month < 0) {
+      //decrement year
+      var _years = Math.floor(Math.abs(want.month) / 13, 10);
+
+      _years = Math.abs(_years) + 1;
+      want.year = old.year() - _years; //ignore extras
+
+      want.month = want.month % 12;
+      want.month = want.month + 12;
+
+      if (want.month === 12) {
+        want.month = 0;
+      }
+    }
+
+    return want;
+  };
+
+  var rollDaysDown = function rollDaysDown(want, old, sum) {
+    want.year = old.year();
+    want.month = old.month();
+    var date = old.date();
+    want.date = date - Math.abs(sum);
+
+    while (want.date < 1) {
+      want.month -= 1;
+
+      if (want.month < 0) {
+        want.month = 11;
+        want.year -= 1;
+      }
+
+      var max = getMonthLength(want.month, want.year);
+      want.date += max;
+    }
+
+    return want;
+  }; // briefly support day=33 (this does not need to be perfect.)
+
+
+  var rollDaysUp = function rollDaysUp(want, old, sum) {
+    var year = old.year();
+    var month = old.month();
+    var max = getMonthLength(month, year);
+
+    while (sum > max) {
+      sum -= max;
+      month += 1;
+
+      if (month >= 12) {
+        month -= 12;
+        year += 1;
+      }
+
+      max = getMonthLength(month, year);
+    }
+
+    want.month = month;
+    want.date = sum;
+    return want;
+  };
+
+  var _model = {
+    months: rollMonth,
+    days: rollDaysUp,
+    daysBack: rollDaysDown
+  }; // but briefly:
+  // millisecond-math, and some post-processing covers most-things
+  // we 'model' the calendar here only a little bit
+  // and that usually works-out...
+
   var order$1 = ['millisecond', 'second', 'minute', 'hour', 'date', 'month'];
   var keep = {
     second: order$1.slice(0, 1),
@@ -4068,34 +4175,9 @@
     quarter: true,
     season: true,
     year: true
-  }; //month is the only thing we 'model/compute'
-  //- because ms-shifting can be off by enough
-
-  var rollMonth = function rollMonth(want, old) {
-    //increment year
-    if (want.month > 0) {
-      var years = parseInt(want.month / 12, 10);
-      want.year = old.year() + years;
-      want.month = want.month % 12;
-    } else if (want.month < 0) {
-      //decrement year
-      var _years = Math.floor(Math.abs(want.month) / 13, 10);
-
-      _years = Math.abs(_years) + 1;
-      want.year = old.year() - _years; //ignore extras
-
-      want.month = want.month % 12;
-      want.month = want.month + 12;
-
-      if (want.month === 12) {
-        want.month = 0;
-      }
-    }
-
-    return want;
   };
 
-  var addMethods$1 = function addMethods$1(SpaceTime) {
+  var addMethods$1 = function addMethods(SpaceTime) {
     SpaceTime.prototype.add = function (num, unit) {
       var s = this.clone();
 
@@ -4128,16 +4210,15 @@
       }
 
       if (dstAwareUnits[unit]) {
-        var _diff = old.timezone().current.offset - s.timezone().current.offset;
-
-        s.epoch += _diff * 3600 * 1000;
+        var diff = old.timezone().current.offset - s.timezone().current.offset;
+        s.epoch += diff * 3600 * 1000;
       } //ensure month/year has ticked-over
 
 
       if (unit === 'month') {
         want.month = old.month() + num; //month is the one unit we 'model' directly
 
-        want = rollMonth(want, old);
+        want = _model.months(want, old);
       } //support coercing a week, too
 
 
@@ -4149,15 +4230,20 @@
         }
       } //support 25-hour day-changes on dst-changes
       else if (unit === 'date') {
-          //specify a naive date number, if it's easy to do...
-          var _sum = old.date() + num;
+          if (num < 0) {
+            want = _model.daysBack(want, old, num);
+          } else {
+            //specify a naive date number, if it's easy to do...
+            var _sum = old.date() + num; // ok, model this one too
 
-          if (_sum <= 28 && _sum > 1) {
-            want.date = _sum;
-          } //or if we haven't moved at all..
-          else if (num !== 0 && old.isSame(s, 'day')) {
-              want.date = old.date() + num;
-            }
+
+            want = _model.days(want, old, _sum);
+          } //manually punt it if we haven't moved at all..
+
+
+          if (num !== 0 && old.isSame(s, 'day')) {
+            want.date = old.date() + num;
+          }
         } //ensure year has changed (leap-years)
         else if (unit === 'year' && s.year() === old.year()) {
             s.epoch += milliseconds.week;
@@ -4226,7 +4312,7 @@
   };
   print.date = print.day;
 
-  var addMethods$2 = function addMethods$2(SpaceTime) {
+  var addMethods$2 = function addMethods(SpaceTime) {
     SpaceTime.prototype.isSame = function (b, unit) {
       var a = this;
 
@@ -4251,7 +4337,7 @@
 
   var same = addMethods$2;
 
-  var addMethods$3 = function addMethods$3(SpaceTime) {
+  var addMethods$3 = function addMethods(SpaceTime) {
     var methods = {
       isAfter: function isAfter(d) {
         d = fns.beADate(d, this);
@@ -4284,6 +4370,7 @@
         return this.epoch === epoch;
       },
       isBetween: function isBetween(start, end) {
+        var isInclusive = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
         start = fns.beADate(start, this);
         end = fns.beADate(end, this);
         var startEpoch = fns.getEpoch(start);
@@ -4298,6 +4385,10 @@
           return null;
         }
 
+        if (isInclusive) {
+          return this.isBetween(start, end) || this.isEqual(start) || this.isEqual(end);
+        }
+
         return startEpoch < this.epoch && this.epoch < endEpoch;
       }
     }; //hook them into proto
@@ -4309,7 +4400,7 @@
 
   var compare = addMethods$3;
 
-  var addMethods$4 = function addMethods$4(SpaceTime) {
+  var addMethods$4 = function addMethods(SpaceTime) {
     var methods = {
       i18n: function i18n(data) {
         //change the day names
@@ -4333,8 +4424,8 @@
   var timezones = unpack; //fake timezone-support, for fakers (es5 class)
 
   var SpaceTime = function SpaceTime(input$1, tz) {
-    var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-    //the holy moment
+    var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {}; //the holy moment
+
     this.epoch = null; //the shift for the given timezone
 
     this.tz = find(tz, timezones); //whether to output warnings to console
@@ -4347,6 +4438,13 @@
 
     if (options.weekStart !== undefined) {
       this._weekStart = options.weekStart;
+    } // the reference today date object, (for testing)
+
+
+    this._today = {};
+
+    if (options.today !== undefined) {
+      this._today = options.today;
     } //add getter/setters
 
 
@@ -4378,10 +4476,8 @@
       }
     }); //parse the various formats
 
-    if (input$1 !== undefined || input$1 === null) {
-      var tmp = input(this, input$1, tz);
-      this.epoch = tmp.epoch;
-    }
+    var tmp = input(this, input$1, tz);
+    this.epoch = tmp.epoch;
   }; //(add instance methods to prototype)
 
 
@@ -4392,8 +4488,14 @@
   SpaceTime.prototype.clone = function () {
     return new SpaceTime(this.epoch, this.tz, {
       silent: this.silent,
-      weekStart: this._weekStart
+      weekStart: this._weekStart,
+      today: this._today
     });
+  }; //return native date object at the same epoch
+
+
+  SpaceTime.prototype.toLocalDate = function () {
+    return new Date(this.epoch);
   }; //append more methods
 
 
@@ -4402,7 +4504,7 @@
   same(SpaceTime);
   compare(SpaceTime);
   i18n(SpaceTime);
-  var spacetime = SpaceTime; // const timezones = require('../data');
+  var spacetime = SpaceTime;
 
   var whereIts = function whereIts(a, b) {
     var start = new spacetime(null);
@@ -4444,29 +4546,43 @@
   };
 
   var whereIts_1 = whereIts;
-  var _version = '6.3.0';
+  var _version = '6.6.0';
 
-  var main$1 = function main$1(input, tz, options) {
+  var main$1 = function main(input, tz, options) {
     return new spacetime(input, tz, options);
+  }; // set all properties of a given 'today' object
+
+
+  var setToday = function setToday(s) {
+    var today = s._today || {};
+    Object.keys(today).forEach(function (k) {
+      s = s[k](today[k]);
+    });
+    return s;
   }; //some helper functions on the main method
 
 
   main$1.now = function (tz, options) {
-    return new spacetime(new Date().getTime(), tz, options);
+    var s = new spacetime(new Date().getTime(), tz, options);
+    s = setToday(s);
+    return s;
   };
 
   main$1.today = function (tz, options) {
     var s = new spacetime(new Date().getTime(), tz, options);
+    s = setToday(s);
     return s.startOf('day');
   };
 
   main$1.tomorrow = function (tz, options) {
     var s = new spacetime(new Date().getTime(), tz, options);
+    s = setToday(s);
     return s.add(1, 'day').startOf('day');
   };
 
   main$1.yesterday = function (tz, options) {
     var s = new spacetime(new Date().getTime(), tz, options);
+    s = setToday(s);
     return s.subtract(1, 'day').startOf('day');
   };
 
@@ -4491,12 +4607,22 @@
 
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-  function createCommonjsModule$1(fn, module) {
-  	return module = { exports: {} }, fn(module, module.exports), module.exports;
+  function createCommonjsModule$1(fn, basedir, module) {
+  	return module = {
+  	  path: basedir,
+  	  exports: {},
+  	  require: function (path, base) {
+        return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
+      }
+  	}, fn(module, module.exports), module.exports;
   }
 
   function getCjsExportFromNamespace$1 (n) {
   	return n && n['default'] || n;
+  }
+
+  function commonjsRequire () {
+  	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
   }
 
   var spacetime$2 = getCjsExportFromNamespace$1(spacetime$1);
@@ -5019,9 +5145,21 @@
       _classCallCheck(this, Unit);
 
       this.unit = unit || 'day';
-      context = context || {}; // set it to the beginning of the given unit
+      context = context || {};
+      var today = {};
 
-      var d = spacetime$2(input, context.timezone); // set to beginning
+      if (context.today) {
+        today = {
+          date: context.today.date(),
+          month: context.today.month(),
+          year: context.today.year()
+        };
+      } // set it to the beginning of the given unit
+
+
+      var d = spacetime$2(input, context.timezone, {
+        today: today
+      }); // set to beginning
 
       if (d.isValid()) {
         d = d.startOf(this.unit);
@@ -5056,9 +5194,10 @@
       }
     }, {
       key: "applyShift",
-      value: function applyShift(obj) {
+      value: function applyShift() {
         var _this = this;
 
+        var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
         Object.keys(obj).forEach(function (k) {
           _this.d = _this.d.add(obj[k], k);
         });
@@ -5096,7 +5235,9 @@
     }, {
       key: "before",
       value: function before() {
-        this.d = spacetime$2.now(this.context.timezone); // ???
+        this.d = spacetime$2.now(this.context.timezone, {
+          today: this.context.today
+        }); // ???
 
         return this;
       } // 'after 2019'
@@ -5840,21 +5981,22 @@
       new Day$1(context.today.plus(1, 'day'), null, context);
     }
   }; // parse things like 'june 5th 2019'
+  // most of this is done in spacetime
 
   var parseExplicit = function parseExplicit(doc, context) {
-    // 'fifth of june'
-    var m = doc.match('[<date>#Value] of [<month>#Month]');
+    var impliedYear = context.today.year(); // 'fifth of june'
+
+    var m = doc.match('[<date>#Value] of [<month>#Month] [<year>#Year?]'); // 'june the fifth'
 
     if (!m.found) {
-      // 'june the fifth'
-      m = doc.match('[<month>#Month] the [<date>#Value]');
+      m = doc.match('[<month>#Month] the [<date>#Value] [<year>#Year?]');
     }
 
     if (m.found) {
       var obj = {
         month: m.groups('month').text(),
         date: m.groups('date').text(),
-        year: context.today.year()
+        year: m.groups('year').text() || impliedYear
       };
 
       var _d = new CalendarDate$2(obj, null, context);
@@ -5887,8 +6029,7 @@
     } // punt it to spacetime, for the heavy-lifting
 
 
-    var d = new Unit$2(str, null, context); // console.log(context.d.format('nice-year'))
-    // did we find a date?
+    var d = new Unit$2(str, null, context); // did we find a date?
 
     if (d.d.isValid() === false) {
       return null;
@@ -5966,14 +6107,20 @@
 
   var _03ParseDate = parseDate;
 
+  var punt = function punt(unit, context) {
+    unit = unit.applyShift(context.casual_duration);
+    return unit;
+  }; //
+
+
   var logic = function logic(doc, context) {
     // two explicit dates - 'between friday and sunday'
-    var m = doc.match('between * and *');
+    var m = doc.match('between [<start>*] and [<end>*]');
 
     if (m.found) {
-      var start = m.match('between [.*] and', 0).not('^between').not('and$');
+      var start = m.groups('start');
       start = _03ParseDate(start, context);
-      var end = m.match('and *').not('^and');
+      var end = m.groups('end');
       end = _03ParseDate(end, context);
 
       if (start) {
@@ -5982,63 +6129,175 @@
           end: end
         };
       }
-    } // two months, one year - 'june 5 to june 7 1998'
+    } // two months, no year - 'june 5 to june 7'
 
 
-    m = doc.match('#Month #Value to #Month #Value of? #Year');
+    m = doc.match('[<from>#Month #Value] to [<to>#Month #Value] [<year>#Year?]');
 
-    if (m.found) ; // two months, no year - 'june 5 to june 7'
+    if (m.found) {
+      var res = m.groups();
+      var _start = res.from;
 
+      if (res.year) {
+        _start = _start.concat(res.year);
+      }
 
-    m = doc.match('#Month #Value to #Month #Value');
+      _start = _03ParseDate(_start, context);
 
-    if (m.found) ; // one month, one year, first form - 'january 5 to 7 1998'
+      if (_start) {
+        var _end = res.to;
 
+        if (res.year) {
+          _end = _end.concat(res.year);
+        }
 
-    m = doc.match('#Month #Value to #Value of? #Year');
-
-    if (m.found) ; // one month, one year, second form - '5 to 7 of january 1998'
-
-
-    m = doc.match('#Value to #Value of? #Month of? #Year');
-
-    if (m.found) ; // one month, no year - '5 to 7 of january'
-
-
-    m = doc.match('#Value to #Value of? #Month');
-
-    if (m.found) ; // one month, no year - 'january 5 to 7'
-
-
-    m = doc.match('#Month #Value to #Value');
-
-    if (m.found) ; // 'from A to B'
+        _end = _03ParseDate(_end, context);
+        return {
+          start: _start,
+          end: _end
+        };
+      }
+    } // one month, one year, first form - 'january 5 to 7 1998'
 
 
-    m = doc.match('from? * (to|@hasHyphen|until|upto) [*]');
+    m = doc.match('[<month>#Month] [<from>#Value] to [<to>#Value] of? [<year>#Year]');
 
-    if (m.found) ; // 'before june'
+    if (m.found) {
+      var _res = m.groups();
+
+      var _start2 = _res.month.concat(_res.from, _res.year);
+
+      _start2 = _03ParseDate(_start2, context);
+
+      if (_start2) {
+        var _end2 = _res.month.concat(_res.to, _res.year);
+
+        _end2 = _03ParseDate(_end2, context);
+        return {
+          start: _start2,
+          end: _end2
+        };
+      }
+    } // one month, one year, second form - '5 to 7 of january 1998'
 
 
-    m = doc.match('^due (by|before|on|in)? [*]');
+    m = doc.match('[<from>#Value] to [<to>#Value of? #Month of? #Year]');
 
-    if (m.found) ; // 'after june'
+    if (m.found) {
+      var to = m.groups('to');
+      to = _03ParseDate(to, context);
+
+      if (to) {
+        var fromDate = m.groups('to');
+        var from = to.clone();
+        from.d = from.d.date(fromDate.text('normal'));
+        return {
+          start: from,
+          end: to
+        };
+      }
+    } // one month, no year - '5 to 7 of january'
 
 
-    m = doc.match('^(after|following|from) [*]');
+    m = doc.match('[<from>#Value] to [<to>#Value of? #Month]');
 
-    if (m.found) ; // 'in june'
+    if (m.found) {
+      var _to = m.groups('to');
+
+      _to = _03ParseDate(_to, context);
+
+      if (_to) {
+        var _fromDate = m.groups('from');
+
+        var _from = _to.clone();
+
+        _from.d = _from.d.date(_fromDate.text('normal'));
+        return {
+          start: _from,
+          end: _to
+        };
+      }
+    } // one month, no year - 'january 5 to 7'
 
 
-    m = doc.match('^(on|during|in) [*]', 0);
+    m = doc.match('[<from>#Month #Value] to [<to>#Value]');
+
+    if (m.found) {
+      var _from2 = m.groups('from');
+
+      _from2 = _03ParseDate(_from2, context);
+
+      if (_from2) {
+        var toDate = m.groups('to');
+
+        var _to2 = _from2.clone();
+
+        _to2.d = _to2.d.date(toDate.text('normal'));
+        return {
+          start: _from2,
+          end: _to2
+        };
+      }
+    } // 'from A to B'
+
+
+    m = doc.match('from? [<from>*] (to|@hasHyphen|until|upto) [<to>*]');
+
+    if (m.found) {
+      var _from3 = m.groups('from');
+
+      var _to3 = m.groups('to');
+
+      _from3 = _03ParseDate(_from3, context);
+      _to3 = _03ParseDate(_to3, context);
+
+      if (_from3 && _to3) {
+        return {
+          start: _from3,
+          end: _to3
+        };
+      }
+    } // 'before june'
+
+
+    m = doc.match('^due (by|before|on|in)? [*]', 0);
 
     if (m.found) {
       var _d = _03ParseDate(m, context);
 
       if (_d) {
+        var today = new Unit_1(context.today, null, context);
         return {
-          start: _d,
-          end: _d.clone().end()
+          start: today,
+          end: punt(_d.clone(), context)
+        };
+      }
+    } // 'after june'
+
+
+    m = doc.match('^(after|following|from) [*]', 0);
+
+    if (m.found) {
+      var _d2 = _03ParseDate(m, context);
+
+      if (_d2) {
+        return {
+          start: _d2,
+          end: punt(_d2.clone(), context)
+        };
+      }
+    } // 'in june'
+
+
+    m = doc.match('^(on|during|in) [*]', 0);
+
+    if (m.found) {
+      var _d3 = _03ParseDate(m, context);
+
+      if (_d3) {
+        return {
+          start: _d3,
+          end: _d3.clone().end()
         };
       }
     } //else, try whole thing
@@ -6057,7 +6316,7 @@
     // validate context a bit
     context = context || {};
     context.timezone = context.timezone || 'ETC/UTC';
-    context.today = spacetime$2(context.today, context.timezone); //turn 'five' into 5..
+    context.today = spacetime$2(context.today || null, context.timezone); //turn 'five' into 5..
 
     doc = _00Normalize(doc); //interpret 'between [A] and [B]'...
 
@@ -6189,7 +6448,11 @@
         _classCallCheck(this, Dates);
 
         _this = _super.call(this, list, from, w);
-        _this.context = {};
+        _this.context = {
+          casual_duration: {
+            weeks: 2
+          }
+        };
         return _this;
       }
 
@@ -6219,6 +6482,11 @@
       }
 
       var d = new Dates(dates.list, this, this.world);
+
+      if (context.today) {
+        context.today = spacetime$2(context.today, context.timezone);
+      }
+
       d.context = context;
       return d;
     };

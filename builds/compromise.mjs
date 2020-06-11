@@ -1,4 +1,4 @@
-/* compromise 13.3.0 MIT */
+/* compromise 13.3.1 MIT */
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
@@ -3126,8 +3126,10 @@ var splitSentences = function splitSentences(text, world) {
 
   if (!text || typeof text !== 'string' || hasSomething.test(text) === false) {
     return sentences;
-  } // Start somewhere:
+  } // cleanup unicode-spaces
 
+
+  text = text.replace('\xa0', ' '); // Start somewhere:
 
   var splits = naiive_split(text); // Filter-out the crap ones
 
@@ -3423,7 +3425,7 @@ var fromJSON = function fromJSON(json, world) {
 
 var fromJSON_1 = fromJSON;
 
-var _version = '13.3.0';
+var _version = '13.3.1';
 
 var _data = {
   "Comparative": "true¦better",

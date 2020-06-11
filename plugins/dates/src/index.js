@@ -41,7 +41,7 @@ const addMethods = function (Doc, world) {
     }
     let d = new Dates(dates.list, this, this.world)
     if (context.today) {
-      context.today = spacetime(context.today)
+      context.today = spacetime(context.today, context.timezone)
     }
     d.context = context
     return d

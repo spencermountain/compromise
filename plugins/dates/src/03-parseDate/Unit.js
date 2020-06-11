@@ -68,7 +68,7 @@ class Unit {
   }
   // 'before 2019'
   before() {
-    this.d = spacetime.now(this.context.timezone) // ???
+    this.d = spacetime.now(this.context.timezone, { today: this.context.today }) // ???
     return this
   }
   // 'after 2019'

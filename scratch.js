@@ -1,5 +1,5 @@
 const nlp = require('./src/index')
-nlp.verbose(true)
+// nlp.verbose(true)
 // let txt = require('./scripts/test/speed/_sotu-text.js')
 nlp.extend(require('./plugins/numbers/src'))
 nlp.extend(require('./plugins/dates/src'))
@@ -16,11 +16,10 @@ nlp.extend(require('./plugins/dates/src'))
 // console.log(nlp('i was born in august 11th 1998').dates().format('{date}-{month}-{year}').text())
 // console.log(nlp('i was born august 11th 1998').dates().format('{date}-{month}-{year}').text())
 
-nlp(` tickets for valentines day`).debug()
-// nlp(`and sam sunday morning`).debug()
 // don't publish until fixing local-path in date-plugin.
 
-// console.log(nlp('5 to 7 of january 1998').dates(context).json())
+// doc = nlp(`two days after halloween`)
+console.log(nlp('june 5 to june 7').dates().json())
 // console.log(nlp('at 6:15').dates(context).json())
 // console.log(nlp('3rd of March').dates(context).json())
 // console.log(nlp('March 18th').dates(context).json())

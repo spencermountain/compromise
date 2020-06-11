@@ -19,7 +19,8 @@ nlp.extend(require('./plugins/dates/src'))
 // don't publish until fixing local-path in date-plugin.
 
 // doc = nlp(`two days after halloween`)
-console.log(nlp('june 5 to june 7').dates().json())
+console.log(nlp('two days after halloween').dates().json())
+// console.log(nlp('june 5 to june 7').dates().json())
 // console.log(nlp('at 6:15').dates(context).json())
 // console.log(nlp('3rd of March').dates(context).json())
 // console.log(nlp('March 18th').dates(context).json())

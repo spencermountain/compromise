@@ -119,7 +119,8 @@ doc.dates().json()
 ```js
 const context = {
   timezone: 'Canada/Eastern', //the default timezone is 'ETC/UTC'
-  today: '2020-02-20', //the reference day (for testing)
+  today: '2020-02-20', //the implicit, or reference day/year
+  casual_duration: { weeks: 2 }, // the implied duration to use for 'after june 2nd'
 }
 
 nlp('in two days')

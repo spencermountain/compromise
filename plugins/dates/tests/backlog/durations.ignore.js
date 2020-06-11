@@ -43,15 +43,13 @@ const tests = [
   },
 ]
 
-test('date durations', t => {
-  tests.forEach(obj => {
+test('date durations', (t) => {
+  tests.forEach((obj) => {
     const context = {
       today: obj.today,
     }
-    obj.tests.forEach(a => {
-      let json = nlp(a[0])
-        .dates(context)
-        .json()[0]
+    obj.tests.forEach((a) => {
+      let json = nlp(a[0]).dates(context).json()[0] || {}
       let date = json.date || {}
       date.duration = date.duration || {}
       t.equal(date.duration.days, a[1], a[0])

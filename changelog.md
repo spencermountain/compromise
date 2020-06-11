@@ -12,6 +12,12 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 
 -move (some) contractions into tokenizer?
 
+#### 13.3.1
+
+-support unicode spaces for #759
+
+- major improvements to `compromise-plugin-dates` (1.0.0)
+
 #### 13.3.0
 
 - bugfixes (conjugation and tagging) 752, 737, 725, 751, 743 748, 755, 758, 706, 761

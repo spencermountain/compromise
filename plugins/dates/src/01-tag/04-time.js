@@ -1,9 +1,9 @@
 const here = 'time-tagger'
 
 //
-const timeTagger = function(doc) {
-  // quarter to seven
-  if (doc.has('#Cardinal')) {
+const timeTagger = function (doc) {
+  // quarter to seven (not march 5 to 7)
+  if (doc.has('#Cardinal') && !doc.has('#Month')) {
     doc.match('(half|quarter|25|15|10|5) (past|after|to) #Cardinal').tag('Time', here)
   }
   //timezone

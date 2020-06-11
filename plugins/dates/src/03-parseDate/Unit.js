@@ -4,8 +4,16 @@ class Unit {
   constructor(input, unit, context) {
     this.unit = unit || 'day'
     context = context || {}
+    let today = {}
+    if (context.today) {
+      today = {
+        date: context.today.date(),
+        month: context.today.month(),
+        year: context.today.year(),
+      }
+    }
     // set it to the beginning of the given unit
-    let d = spacetime(input, context.timezone)
+    let d = spacetime(input, context.timezone, { today: today })
 
     // set to beginning
     if (d.isValid()) {
@@ -33,8 +41,8 @@ class Unit {
     console.log('\n')
     return this
   }
-  applyShift(obj) {
-    Object.keys(obj).forEach(k => {
+  applyShift(obj = {}) {
+    Object.keys(obj).forEach((k) => {
       this.d = this.d.add(obj[k], k)
     })
     return this
@@ -60,7 +68,7 @@ class Unit {
   }
   // 'before 2019'
   before() {
-    this.d = spacetime.now(this.context.timezone) // ???
+    this.d = spacetime.now(this.context.timezone, { today: this.context.today }) // ???
     return this
   }
   // 'after 2019'

@@ -177,19 +177,22 @@ const tests = [
   },
 ]
 
-test('full-dates', t => {
-  tests.forEach(obj => {
+test('full-dates', (t) => {
+  tests.forEach((obj) => {
     const context = {
       today: obj.today,
       timezone: 'Canada/Pacific',
     }
-    obj.tests.forEach(a => {
-      let left = nlp(a[0])
-        .dates(context)
-        .json()[0]
-      let right = nlp(a[1])
-        .dates(context)
-        .json()[0]
+    obj.tests.forEach((a) => {
+      let left = nlp(a[0]).dates(context).json()[0]
+      // ensure we found no date, if we shouldn't have
+      if (!a[1]) {
+        t.equal(left, undefined, 'no-date:' + a[0])
+        return
+      }
+      let right = nlp(a[1]).dates(context).json()[0] || {}
+      left.date = left.date || {}
+      right.date = right.date || {}
       t.equal(left.date.start, right.date.start, 'start-date: ' + a[0])
       t.equal(left.date.end, right.date.end, 'end-date: ' + a[0])
     })

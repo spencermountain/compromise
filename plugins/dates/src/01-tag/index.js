@@ -8,8 +8,8 @@ const methods = [
   require('./06-fixup'),
 ]
 // run each of the taggers
-const tagDate = function(doc) {
-  methods.forEach(fn => fn(doc))
+const tagDate = function (doc) {
+  methods.forEach((fn) => fn(doc))
   return doc
 }
 module.exports = tagDate

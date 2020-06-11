@@ -21,7 +21,7 @@ const hasLetter = /[a-z0-9\u00C0-\u00FF\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud0
 const startWhitespace = /^\s+/
 
 // Start with a regex:
-const naiive_split = function(text) {
+const naiive_split = function (text) {
   let all = []
   //first, split by newline
   let lines = text.split(newLine)
@@ -36,7 +36,7 @@ const naiive_split = function(text) {
 }
 
 /** does this look like a sentence? */
-const isSentence = function(str, abbrevs) {
+const isSentence = function (str, abbrevs) {
   // check for 'F.B.I.'
   if (isAcronym.test(str) === true) {
     return false
@@ -64,7 +64,7 @@ const isSentence = function(str, abbrevs) {
   return true
 }
 
-const splitSentences = function(text, world) {
+const splitSentences = function (text, world) {
   let abbrevs = world.cache.abbreviations
 
   text = text || ''
@@ -76,6 +76,8 @@ const splitSentences = function(text, world) {
   if (!text || typeof text !== 'string' || hasSomething.test(text) === false) {
     return sentences
   }
+  // cleanup unicode-spaces
+  text = text.replace('\xa0', ' ')
   // Start somewhere:
   let splits = naiive_split(text)
   // Filter-out the crap ones

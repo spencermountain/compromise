@@ -1,13 +1,11 @@
 const test = require('tape')
-const nlp = require('../_lib')
+const nlp = require('./_lib')
 
-let d = new Date()
-d.setFullYear(2019)
 const context = {
-  today: d,
+  today: { year: 2019 },
 }
 
-test('date-parse :', function(t) {
+test('date-parse :', function (t) {
   let arr = [
     ['june 5th 1999', '1999-06-05T00:00:00.000Z'],
     ['june 5th 1999', '1999-06-05T00:00:00.000Z'],
@@ -26,7 +24,7 @@ test('date-parse :', function(t) {
     ['2nd of April 1929', '1929-04-02T00:00:00.000Z'],
     ['2nd of jul 1929', '1929-07-02T00:00:00.000Z'],
     //no date
-    ['March 1969', '1969-03-21T00:00:00.000Z'],
+    ['March 1969', '1969-03-01T00:00:00.000Z'],
     ['jan 1921', '1921-01-01T00:00:00.000Z'],
 
     //no-year
@@ -35,17 +33,15 @@ test('date-parse :', function(t) {
     ['18th of March', '2019-03-18T00:00:00.000Z'],
     ['27th of March', '2019-03-27T00:00:00.000Z'],
     ['february 10th', '2019-02-10T00:00:00.000Z'],
-    ['february 30th', '2019-02-28T00:00:00.000Z'],
+    ['february 28th', '2019-02-28T00:00:00.000Z'],
     //invalid dates
     // ['303rd of March 1969', [2, null, 1969]],
     // ['4103', [null, null, null]],
 
     // ['January 5th 4032', [0, 5, null]],
   ]
-  arr.forEach(function(a) {
-    let json = nlp(a[0])
-      .dates(context)
-      .json()[0]
+  arr.forEach(function (a) {
+    let json = nlp(a[0]).dates(context).json()[0]
     let start = json.date.start
     t.equal(start, a[1], a[0])
   })

@@ -1,4 +1,10 @@
 const parseDate = require('../03-parseDate')
+const Unit = require('../03-parseDate/Unit')
+
+const punt = function (unit, context) {
+  unit = unit.applyShift(context.casual_duration)
+  return unit
+}
 
 //
 const logic = function (doc, context) {
@@ -31,26 +37,84 @@ const logic = function (doc, context) {
   // one month, one year, second form - '5 to 7 of january 1998'
   m = doc.match('#Value to #Value of? #Month of? #Year')
   if (m.found) {
+    let to = doc.match('#Value to [#Value of? #Month of? #Year]', 0)
+    to = parseDate(to, context)
+    if (to) {
+      let fromDate = doc.match('[#Value] to #Value of? #Month of? #Year', 0)
+      let from = to.clone()
+      from.d = from.d.date(fromDate.text('normal'))
+      return {
+        start: from,
+        end: to,
+      }
+    }
   }
   // one month, no year - '5 to 7 of january'
   m = doc.match('#Value to #Value of? #Month')
   if (m.found) {
+    let to = doc.match('#Value to [#Value of? #Month]', 0)
+    to = parseDate(to, context)
+    if (to) {
+      let fromDate = doc.match('[#Value] to #Value of? #Month', 0)
+      let from = to.clone()
+      from.d = from.d.date(fromDate.text('normal'))
+      return {
+        start: from,
+        end: to,
+      }
+    }
   }
   // one month, no year - 'january 5 to 7'
   m = doc.match('#Month #Value to #Value')
   if (m.found) {
+    let from = doc.match('[#Month #Value] to', 0)
+    from = parseDate(from, context)
+    if (from) {
+      let toDate = doc.match('#Month #Value to [#Value+]', 0)
+      let to = from.clone()
+      to.d = to.d.date(toDate.text('normal'))
+      return {
+        start: from,
+        end: to,
+      }
+    }
   }
   // 'from A to B'
   m = doc.match('from? * (to|@hasHyphen|until|upto) [*]')
   if (m.found) {
+    let from = doc.match('from [*] (to|@hasHyphen|until|upto)', 0)
+    let to = doc.match('(to|@hasHyphen|until|upto) [*]', 0)
+    from = parseDate(from, context)
+    to = parseDate(to, context)
+    if (from && to) {
+      return {
+        start: from,
+        end: to,
+      }
+    }
   }
   // 'before june'
-  m = doc.match('^due (by|before|on|in)? [*]')
+  m = doc.match('^due (by|before|on|in)? [*]', 0)
   if (m.found) {
+    let d = parseDate(m, context)
+    if (d) {
+      const today = new Unit(context.today, null, context)
+      return {
+        start: today,
+        end: punt(d.clone(), context),
+      }
+    }
   }
   // 'after june'
-  m = doc.match('^(after|following|from) [*]')
+  m = doc.match('^(after|following|from) [*]', 0)
   if (m.found) {
+    let d = parseDate(m, context)
+    if (d) {
+      return {
+        start: d,
+        end: punt(d.clone(), context),
+      }
+    }
   }
   // 'in june'
   m = doc.match('^(on|during|in) [*]', 0)

@@ -17,12 +17,13 @@ nlp.extend(require('./plugins/dates/src'))
 // console.log(nlp('i was born august 11th 1998').dates().format('{date}-{month}-{year}').text())
 
 const context = {
-  today: '1992-04-03',
-  casual_duration: { weeks: 2 },
+  today: { year: '1992' },
 }
 
+// don't publish until fixing local-path in date-plugin.
+
 // console.log(nlp('5 to 7 of january 1998').dates(context).json())
-console.log(nlp('jan 1921').dates(context).json())
+console.log(nlp('june the 5th 1929').dates(context).json())
 // console.log(nlp('3rd of March').dates(context).json())
 // console.log(nlp('March 18th').dates(context).json())
 // console.log(nlp('March 18th').dates().json())

@@ -1,10 +1,8 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
-let d = new Date()
-d.setFullYear(2019)
 const context = {
-  today: d,
+  today: { year: 2019 },
 }
 
 test('date-parse :', function (t) {
@@ -26,7 +24,7 @@ test('date-parse :', function (t) {
     ['2nd of April 1929', '1929-04-02T00:00:00.000Z'],
     ['2nd of jul 1929', '1929-07-02T00:00:00.000Z'],
     //no date
-    ['March 1969', '1969-03-21T00:00:00.000Z'],
+    ['March 1969', '1969-03-01T00:00:00.000Z'],
     ['jan 1921', '1921-01-01T00:00:00.000Z'],
 
     //no-year

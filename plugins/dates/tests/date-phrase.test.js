@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
-test('directive-statements :', function (t) {
+test('date-phrase tests:', function (t) {
   let arr = [
     [`remind me to buy eggs`, `buy`, `egg`, ``],
     [`please remind me to buy eggs`, `buy`, `egg`, ``],

@@ -2,7 +2,8 @@ const tagger = require('./01-tag')
 const tags = require('./data/_tags')
 const words = require('./data/words')
 const methods = require('./methods')
-const spacetime = require('spacetime')
+// const spacetime = require('spacetime')
+const spacetime = require('/Users/spencer/mountain/spacetime/src')
 
 const addMethods = function (Doc, world) {
   // our new tags

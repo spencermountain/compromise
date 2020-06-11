@@ -11,24 +11,20 @@ const knownWord = {
 }
 
 // parse things like 'june 5th 2019'
+// most of this is done in spacetime
 const parseExplicit = function (doc, context) {
   let impliedYear = context.today.year()
   // 'fifth of june'
-  let m = doc.match('[<date>#Value] of [<month>#Month]')
+  let m = doc.match('[<date>#Value] of [<month>#Month] [<year>#Year?]')
   // 'june the fifth'
   if (!m.found) {
-    m = doc.match('[<month>#Month] the [<date>#Value]')
+    m = doc.match('[<month>#Month] the [<date>#Value] [<year>#Year?]')
   }
-  // 'june fifth'
-  // if (!m.found) {
-  //   m = doc.match('[<month>#Month] [<date>#Value]')
-  // }
   if (m.found) {
-    let year = m.groups('year').text() || impliedYear
     let obj = {
       month: m.groups('month').text(),
       date: m.groups('date').text(),
-      year: year,
+      year: m.groups('year').text() || impliedYear,
     }
     let d = new CalendarDate(obj, null, context)
     if (d.d.isValid() === true) {
@@ -54,7 +50,6 @@ const parseExplicit = function (doc, context) {
     let d = knownWord[str](context)
     return d
   }
-
   // punt it to spacetime, for the heavy-lifting
   let d = new Unit(str, null, context)
   // did we find a date?

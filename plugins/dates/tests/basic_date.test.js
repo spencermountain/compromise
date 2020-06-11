@@ -1,5 +1,5 @@
 const test = require('tape')
-const nlp = require('../_lib')
+const nlp = require('./_lib')
 
 let d = new Date()
 d.setFullYear(2019)
@@ -35,7 +35,7 @@ test('date-parse :', function (t) {
     ['18th of March', '2019-03-18T00:00:00.000Z'],
     ['27th of March', '2019-03-27T00:00:00.000Z'],
     ['february 10th', '2019-02-10T00:00:00.000Z'],
-    ['february 30th', '2019-02-28T00:00:00.000Z'],
+    ['february 28th', '2019-02-28T00:00:00.000Z'],
     //invalid dates
     // ['303rd of March 1969', [2, null, 1969]],
     // ['4103', [null, null, null]],

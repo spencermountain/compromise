@@ -22,7 +22,7 @@ const context = {
 }
 
 // console.log(nlp('5 to 7 of january 1998').dates(context).json())
-console.log(nlp('june 5th').dates(context).json())
+console.log(nlp('jan 1921').dates(context).json())
 // console.log(nlp('3rd of March').dates(context).json())
 // console.log(nlp('March 18th').dates(context).json())
 // console.log(nlp('March 18th').dates().json())

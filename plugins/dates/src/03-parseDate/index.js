@@ -12,7 +12,7 @@ const steps = {
   explicit: require('./steps/03-explicit'),
 }
 
-const parseDate = function(doc, context) {
+const parseDate = function (doc, context) {
   //parse-out any sections
   let shift = section.shift(doc)
   let tz = section.timezone(doc)

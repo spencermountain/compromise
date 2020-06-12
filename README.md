@@ -50,12 +50,6 @@
 <!-- spacer -->
 <img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-<div align="right">
-  <code>
-    Welcome to v12! - <a href="https://github.com/spencermountain/compromise/wiki/v12-Release-Notes">Release Notes here 👍</a>
-  </code>
-</div>
-
 <!-- spacer -->
 <img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 

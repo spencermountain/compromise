@@ -218,8 +218,10 @@ or if you don't care about POS-tagging, you can use the tokenize-only build: (90
 <script src="https://unpkg.com/compromise/builds/compromise-tokenize.js"></script>
 <script>
   var doc = nlp('No, my son is also named Bort.')
+
   //you can see the text has no tags
   console.log(doc.has('#Noun')) //false
+
   //but the whole api still works
   console.log(doc.has('my .* is .? named /^b[oa]rt/')) //true
 </script>
@@ -648,50 +650,22 @@ this plugin creates a wrapper around the default sentence objects.
 
 ### Typescript
 
-Typescript support is still a work in progress. So far support for plugins has been mostly complete, and can be used to type-safely extend NLP.
+we're committed to typescript/deno support, both in main and in the official-plugins:
 
 ```ts
 import nlp from 'compromise'
 import ngrams from 'compromise-ngrams'
 import numbers from 'compromise-numbers'
 
-// .extend() can be chained
 const nlpEx = nlp.extend(ngrams).extend(numbers)
 
 nlpEx('This is type safe!').ngrams({ min: 1 })
 nlpEx('This is type safe!').numbers()
 ```
 
-#### Type-safe Plugins
-
-The `.extend()` function returns an nlp type with updated Document and World types (Phrase, Term and Pool are not currently supported). While the global nlp also recieves the plugin from a runtime perspective; it's type will not be updated - this is a limitation of Typescript.
-
-Typesafe plugins can be created by using the `nlp.Plugin` type:
-
-```ts
-interface myExtendedDoc {
-  sayHello(): string
-}
-
-interface myExtendedWorld {
-  hello: string
-}
-
-const myPlugin: nlp.Plugin<myExtendedDoc, myExtendedWorld> = (Doc, world) => {
-  world.hello = 'Hello world!'
-
-  Doc.prototype.sayHello = () => world.hello
-}
-
-const _nlp = nlp.extend(myPlugin)
-const doc = _nlp('This is safe!')
-doc.sayHello()
-doc.world.hello = 'Hello again!'
-```
-
-#### Known Issues
-
-- `compromise_1.default is not a function` - This is a problem with your `tsconfig.json` it can be solved by adding `"esModuleInterop": true`. Make sure to run `tsc --init` when starting a new Typescript project.
+<div align="right">
+  <a href="https://docs.compromise.cool/compromise-typescript">typescript docs</a>
+</div>
 
 ### Docs:
 

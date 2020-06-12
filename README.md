@@ -6,7 +6,7 @@
   <div align="center">
     <sub>
       by
-      <a href="https://github.com/spencermountain">Spencer Kelly</a> and
+      <a href="https://spencermounta.in/">Spencer Kelly</a> and
       <a href="https://github.com/spencermountain/compromise/graphs/contributors">
         many contributors
       </a>
@@ -145,17 +145,11 @@ grab subjects in a text:
 
 ```js
 let doc = nlp(buddyHolly)
-doc
-  .people()
-  .if('mary')
-  .json()
+doc.people().if('mary').json()
 // [{text:'Mary Tyler Moore'}]
 
 let doc = nlp(freshPrince)
-doc
-  .places()
-  .first()
-  .text()
+doc.places().first().text()
 // 'West Phillidelphia'
 
 doc = nlp('the opera about richard nixon visiting china')
@@ -311,7 +305,7 @@ nlp.extend((Doc, world) => {
   })
 
   // add a whole new method
-  Doc.prototype.kermitVoice = function() {
+  Doc.prototype.kermitVoice = function () {
     this.sentences().prepend('well,')
     this.match('i [(am|was)]').prepend('um,')
     return this

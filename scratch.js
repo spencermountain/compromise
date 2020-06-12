@@ -12,17 +12,4 @@ nlp.extend(require('./plugins/dates/src'))
 // doc.sentences().toFutureTense().debug()
 // doc.sentences().toPastTense().debug()
 
-// console.log(nlp('i was born on august 11th 1998').dates().format('{date}-{month}-{year}').text())
-// console.log(nlp('i was born in august 11th 1998').dates().format('{date}-{month}-{year}').text())
-// console.log(nlp('i was born august 11th 1998').dates().format('{date}-{month}-{year}').text())
-
-// don't publish until fixing local-path in date-plugin.
-
-// doc = nlp(`two days after halloween`)
-console.log(nlp('two days after halloween').dates().json())
-// console.log(nlp('june 5 to june 7').dates().json())
-// console.log(nlp('at 6:15').dates(context).json())
-// console.log(nlp('3rd of March').dates(context).json())
-// console.log(nlp('March 18th').dates(context).json())
-// console.log(nlp('March 18th').dates().json())
-// console.log(nlp('3rd of March 1969').dates().json())
+console.log(nlp('next week').dates().json())

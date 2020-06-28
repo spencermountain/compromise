@@ -209,6 +209,7 @@ module.exports = [
   'picasso',
   'pichler',
   'powell',
+  'putin',
   'ramirez',
   'ramos',
   'reagan',

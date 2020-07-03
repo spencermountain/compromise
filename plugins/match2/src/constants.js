@@ -1,0 +1,16 @@
+export const NOOP = Symbol("NOOP"); // basically continue
+export const MATCH_ANY = Symbol("MATCH_ANY");
+export const MATCH_WORD = Symbol("MATCH_WORD");
+export const MATCH_TAG = Symbol("MATCH_TAG");
+export const MATCH_END = Symbol("MATCH_END");
+export const JMP = Symbol("JMP");
+export const SPLIT = Symbol("SPLIT");
+export const GLOBAL_SAVE = Symbol("GLOBAL_SAVE"); // Set global save value, if true saves results.
+export const MATCH = Symbol("MATCH");
+export const OGROUP = Symbol("OGROUP"); // open group
+export const CGROUP = Symbol("CGROUP"); // close group
+export const INCV = Symbol("INCV"); // increment a value, set to 0 by default
+export const JMP_LT = Symbol("JMP_LT"); // jmp if a variable is less than value else continue
+export const SPLIT_LT = Symbol("SPLIT_LT"); // split if a variable is less than value else continue
+export const LOOKAHEAD = Symbol("LOOKAHEAD");
+export const NEGATIVE_LOOKAHEAD = Symbol("NEGATIVE_LOOKAHEAD");

@@ -38,6 +38,10 @@ describe("match2 plugin", () => {
       it("any", () => {
         expect(doc.match2(".").text()).toEqual("hello");
       });
+
+      it('matches anywhere when not start of', () => {
+        expect(nlp('hi there hello world this is a match').match2('world').text()).toEqual('world');
+      });
     });
 
     describe("value modifiers", () => {

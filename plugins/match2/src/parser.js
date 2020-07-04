@@ -208,8 +208,9 @@ export class NLPMatchParser extends EmbeddedActionsParser {
         // .*? at the start when not ^ / startOf, don't save the matched
         // values.
         matches.prog.push({ code: GLOBAL_SAVE, value: false });
-        matches.prog.push({ code: SPLIT, locs: [3, 2] });
+        matches.prog.push({ code: SPLIT, locs: [4, 2] });
         matches.prog.push({ code: MATCH_ANY });
+        matches.prog.push({ code: JMP, loc: 1 });
         matches.prog.push({ code: GLOBAL_SAVE, value: true });
       }
 

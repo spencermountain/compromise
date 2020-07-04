@@ -9845,10 +9845,14 @@
           });
           matches.prog.push({
             code: SPLIT,
-            locs: [3, 2]
+            locs: [4, 2]
           });
           matches.prog.push({
             code: MATCH_ANY
+          });
+          matches.prog.push({
+            code: JMP,
+            loc: 1
           });
           matches.prog.push({
             code: GLOBAL_SAVE,

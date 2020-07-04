@@ -1,6 +1,6 @@
 {
   "name": "compromise-match2",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Better regex like matching for nlp-compromise",
   "main": "dist/compromise-match2.js",
   "unpkg": "dist/compromise-match2.min.js",
@@ -8,7 +8,8 @@
   "scripts": {
     "test": "jest",
     "build": "rollup -c",
-    "pretty": "prettier --write ."
+    "pretty": "prettier --write .",
+    "bench": "node bench.js"
   },
   "prettier": {
     "trailingComma": "es5",
@@ -51,6 +52,7 @@
     "@rollup/plugin-commonjs": "^13.0.0",
     "@rollup/plugin-node-resolve": "^8.1.0",
     "babel-jest": "^26.1.0",
+    "benchmark": "^2.1.4",
     "compromise": "^13.3.1",
     "jest": "^26.1.0",
     "prettier": "^2.0.5",

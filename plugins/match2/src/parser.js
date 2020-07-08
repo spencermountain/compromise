@@ -21,9 +21,12 @@ import {
 
 const StartOf = createToken({ name: "StartOf", pattern: /\^/ });
 const EndOf = createToken({ name: "EndOf", pattern: /\$/ });
-const Tag = createToken({ name: "Tag", pattern: /#\w+/ });
-const EscapedWord = createToken({ name: "EscapedWord", pattern: /\\#\w+/ });
-const Word = createToken({ name: "Word", pattern: /\w+/ });
+const Tag = createToken({ name: "Tag", pattern: /#([_-\w]|\\.)+/ });
+const EscapedWord = createToken({
+  name: "EscapedWord",
+  pattern: /\\#([_-\w]|\\.)+/,
+});
+const Word = createToken({ name: "Word", pattern: /([_-\w]|\\.)+/ });
 const Question = createToken({
   name: "Question",
   pattern: /\?/,
@@ -320,20 +323,28 @@ export class NLPMatchParser extends EmbeddedActionsParser {
             vars.push(varId);
             prog.push({ code: INCV, varId }); // increment first
 
-            const minInst = { code: JMP_LT, varId, value: min, loc: start };
+            const minInst = {
+              code: JMP_LT,
+              varId,
+              value: min ?? 0,
+              loc: start,
+            };
             let maxInst = null;
             if (min === max) {
               // a{x}
               if (min === 0) {
-                // a{0} edge case, skip matching
+                // a{0} skip matching, causes token to be ignored
                 split.code = JMP;
                 split.loc = prog.length; // next instruction
               } else {
                 // a{x}
                 prog.push(minInst);
               }
-            } else if (min === null && max !== null) {
-              // a{,y}
+            } else if ((min ?? 0) === 0 && max !== null) {
+              // a{,y} a{0,y}
+              split.code = SPLIT;
+              split.locs = [start, prog.length + 1];
+
               maxInst = {
                 code: SPLIT_LT,
                 varId,
@@ -346,10 +357,16 @@ export class NLPMatchParser extends EmbeddedActionsParser {
               prog.push(minInst);
               maxInst = { code: SPLIT, locs: [start, prog.length + 1] };
               prog.push(maxInst);
-            } else if (min !== null && max !== null) {
+            } else {
+              // if (min !== null && max !== null) {
               // a{x,y}
               prog.push(minInst);
-              maxInst = { code: SPLIT, locs: [start, prog.length + 1] };
+              maxInst = {
+                code: SPLIT_LT,
+                varId,
+                value: max,
+                locs: [start, prog.length + 1],
+              };
               prog.push(maxInst);
             }
 
@@ -455,7 +472,7 @@ export class NLPMatchParser extends EmbeddedActionsParser {
             `Range min(${min}) must be greater than max(${max}).`
           );
         }
-        if (!(min || max)) {
+        if (min === null && max === null) {
           throw new Error(`Range min or max must be defined.`);
         }
       });

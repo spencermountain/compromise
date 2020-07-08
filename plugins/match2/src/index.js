@@ -1,6 +1,7 @@
 import { NLPRegexP } from "./regex";
 
-export { NLPRegexP } from "./regex";
+export { NLPMatchParser } from "./parser";
+export { NLPRegexP, NLPRegexParseError } from "./regex";
 
 // nlp compromise plugin
 export const Match2Plugin = (Doc, world, nlp, Phrase) => {

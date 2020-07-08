@@ -18,7 +18,7 @@ import {
 } from "./constants";
 
 export const termContainsTag = (term, name) =>
-  Object.entries(term?.tags ?? [])
+  Object.entries(term.tags)
     .filter(([k, v]) => v)
     .map((entry) => entry[0].toLowerCase())
     .includes(name.toLowerCase());
@@ -98,7 +98,7 @@ const addthread = (prog, list, th) => {
       addthread(prog, list, thread(th.pc + 1, th));
       break;
     case JMP_LT:
-      if ((th.vars[inst.varId] ?? 0) < inst.value) {
+      if (th.vars[inst.varId] < inst.value) {
         // jump!
         addthread(prog, list, thread(inst.loc, th));
       } else {
@@ -107,7 +107,7 @@ const addthread = (prog, list, th) => {
       }
       break;
     case SPLIT_LT:
-      if ((th.vars[inst.varId] ?? 0) < inst.value) {
+      if (th.vars[inst.varId] < inst.value) {
         // split!
         for (const loc of inst.locs) {
           addthread(prog, list, thread(loc, th));

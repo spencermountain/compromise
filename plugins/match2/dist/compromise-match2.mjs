@@ -1,4 +1,4 @@
-/* compromise-match2 1.0.0 GPLv3 */
+/* compromise-match2 1.1.0 GPLv3 */
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
@@ -9611,15 +9611,15 @@ var EndOf = createToken({
 });
 var Tag = createToken({
   name: "Tag",
-  pattern: /#\w+/
+  pattern: /#([_-\w]|\\.)+/
 });
 var EscapedWord = createToken({
   name: "EscapedWord",
-  pattern: /\\#\w+/
+  pattern: /\\#([_-\w]|\\.)+/
 });
 var Word = createToken({
   name: "Word",
-  pattern: /\w+/
+  pattern: /([_-\w]|\\.)+/
 });
 var Question = createToken({
   name: "Question",
@@ -9998,7 +9998,7 @@ var NLPMatchParser = /*#__PURE__*/function (_EmbeddedActionsParse) {
             var minInst = {
               code: JMP_LT,
               varId: varId,
-              value: min,
+              value: min !== null && min !== void 0 ? min : 0,
               loc: start
             };
             var maxInst = null;
@@ -10006,15 +10006,17 @@ var NLPMatchParser = /*#__PURE__*/function (_EmbeddedActionsParse) {
             if (min === max) {
               // a{x}
               if (min === 0) {
-                // a{0} edge case, skip matching
+                // a{0} skip matching, causes token to be ignored
                 split.code = JMP;
                 split.loc = prog.length; // next instruction
               } else {
                 // a{x}
                 prog.push(minInst);
               }
-            } else if (min === null && max !== null) {
-              // a{,y}
+            } else if ((min !== null && min !== void 0 ? min : 0) === 0 && max !== null) {
+              // a{,y} a{0,y}
+              split.code = SPLIT;
+              split.locs = [start, prog.length + 1];
               maxInst = {
                 code: SPLIT_LT,
                 varId: varId,
@@ -10030,11 +10032,14 @@ var NLPMatchParser = /*#__PURE__*/function (_EmbeddedActionsParse) {
                 locs: [start, prog.length + 1]
               };
               prog.push(maxInst);
-            } else if (min !== null && max !== null) {
+            } else {
+              // if (min !== null && max !== null) {
               // a{x,y}
               prog.push(minInst);
               maxInst = {
-                code: SPLIT,
+                code: SPLIT_LT,
+                varId: varId,
+                value: max,
                 locs: [start, prog.length + 1]
               };
               prog.push(maxInst);
@@ -10146,7 +10151,7 @@ var NLPMatchParser = /*#__PURE__*/function (_EmbeddedActionsParse) {
           throw new Error("Range min(".concat(min, ") must be greater than max(").concat(max, ")."));
         }
 
-        if (!(min || max)) {
+        if (min === null && max === null) {
           throw new Error("Range min or max must be defined.");
         }
       });
@@ -10318,9 +10323,7 @@ var NLPMatchParser = /*#__PURE__*/function (_EmbeddedActionsParse) {
 }(EmbeddedActionsParser);
 
 var termContainsTag = function termContainsTag(term, name) {
-  var _term$tags;
-
-  return Object.entries((_term$tags = term === null || term === void 0 ? void 0 : term.tags) !== null && _term$tags !== void 0 ? _term$tags : []).filter(function (_ref) {
+  return Object.entries(term.tags).filter(function (_ref) {
     var _ref2 = _slicedToArray(_ref, 2),
         k = _ref2[0],
         v = _ref2[1];
@@ -10372,7 +10375,7 @@ var thread = function thread(pc) {
 };
 
 var addthread = function addthread(prog, list, th) {
-  var _th$vars$inst$varId, _th$vars, _th$vars$inst$varId2, _th$vars$inst$varId3;
+  var _th$vars$inst$varId, _th$vars;
 
   var inst = prog[th.pc]; //console.log("addthread:", th.pc);
   //console.log("  inst:", inst);
@@ -10431,7 +10434,7 @@ var addthread = function addthread(prog, list, th) {
       break;
 
     case JMP_LT:
-      if (((_th$vars$inst$varId2 = th.vars[inst.varId]) !== null && _th$vars$inst$varId2 !== void 0 ? _th$vars$inst$varId2 : 0) < inst.value) {
+      if (th.vars[inst.varId] < inst.value) {
         // jump!
         addthread(prog, list, thread(inst.loc, th));
       } else {
@@ -10442,7 +10445,7 @@ var addthread = function addthread(prog, list, th) {
       break;
 
     case SPLIT_LT:
-      if (((_th$vars$inst$varId3 = th.vars[inst.varId]) !== null && _th$vars$inst$varId3 !== void 0 ? _th$vars$inst$varId3 : 0) < inst.value) {
+      if (th.vars[inst.varId] < inst.value) {
         // split!
         var _iterator2 = _createForOfIteratorHelper(inst.locs),
             _step2;
@@ -10633,6 +10636,29 @@ var pikevm = function pikevm(prog, input) {
 
 var NLPMatchLexer = new Lexer(allTokens);
 var parserInstance = new NLPMatchParser();
+var NLPRegexParseError = /*#__PURE__*/function () {
+  function NLPRegexParseError(errors) {
+    _classCallCheck(this, NLPRegexParseError);
+
+    this.errors = errors;
+  }
+
+  _createClass(NLPRegexParseError, [{
+    key: "toString",
+    value: function toString() {
+      return "NLP RegexP Parsing error: ".concat(this.message);
+    }
+  }, {
+    key: "message",
+    get: function get() {
+      var _this$errors$;
+
+      return (_this$errors$ = this.errors[0]) === null || _this$errors$ === void 0 ? void 0 : _this$errors$.message;
+    }
+  }]);
+
+  return NLPRegexParseError;
+}();
 /**
  * Custom NLPRegexP class for regexp compile / cache.
  */
@@ -10648,7 +10674,7 @@ var NLPRegexP = /*#__PURE__*/function () {
     if (regex === null || regex === void 0 ? void 0 : regex.prog) {
       // take another NLPRegexP
       this.regex = regex.regex;
-      this.prog = regex.prog;
+      this.prog = _toConsumableArray(regex.prog);
       return;
     }
 
@@ -10656,16 +10682,21 @@ var NLPRegexP = /*#__PURE__*/function () {
         tokens = _NLPMatchLexer$tokeni.tokens;
 
     parserInstance.input = tokens;
+    var parsed = null;
 
-    var _parserInstance$match = parserInstance.matchStatement(),
-        prog = _parserInstance$match.prog;
+    try {
+      parsed = parserInstance.matchStatement();
+    } catch (e) {
+      // catch thrown error
+      throw new NLPRegexParseError([e]);
+    }
 
     if (parserInstance.errors.length > 0) {
-      throw new Error("Sad sad panda, parsing errors detected!\n".concat(parserInstance.errors[0].message));
+      throw new NLPRegexParseError(parserInstance.errors);
     }
 
     this.regex = regex;
-    this.prog = prog;
+    this.prog = parsed.prog;
   }
 
   _createClass(NLPRegexP, [{
@@ -10681,8 +10712,7 @@ var NLPRegexP = /*#__PURE__*/function () {
           return this.execPhrase(docOrPhrase);
 
         default:
-          return null;
-        // may want to throw an error here
+          throw new Error("Invalid type, must be Document or Phrase");
       }
     }
   }, {
@@ -10702,20 +10732,19 @@ var NLPRegexP = /*#__PURE__*/function () {
       var _saved$;
 
       var _pikevm = pikevm(this.prog, phrase.terms()),
-          _pikevm$found = _pikevm.found,
-          found = _pikevm$found === void 0 ? false : _pikevm$found,
+          found = _pikevm.found,
           _pikevm$saved = _pikevm.saved,
           saved = _pikevm$saved === void 0 ? [] : _pikevm$saved,
           _pikevm$groups = _pikevm.groups,
           groups = _pikevm$groups === void 0 ? {} : _pikevm$groups;
 
       var namedGroups = Object.values(groups).reduce(function (arr, g) {
-        var _g$name, _g$saved$0$id, _g$saved, _g$saved$length, _g$saved2;
+        var _g$name, _g$saved$0$id, _g$saved$;
 
         return _objectSpread2(_objectSpread2({}, arr), {}, _defineProperty({}, parseInt(g.id), {
           group: (_g$name = g === null || g === void 0 ? void 0 : g.name) !== null && _g$name !== void 0 ? _g$name : "".concat(g.id),
-          start: (_g$saved$0$id = (_g$saved = g.saved) === null || _g$saved === void 0 ? void 0 : _g$saved[0].id) !== null && _g$saved$0$id !== void 0 ? _g$saved$0$id : 0,
-          length: (_g$saved$length = (_g$saved2 = g.saved) === null || _g$saved2 === void 0 ? void 0 : _g$saved2.length) !== null && _g$saved$length !== void 0 ? _g$saved$length : 0
+          start: (_g$saved$0$id = (_g$saved$ = g.saved[0]) === null || _g$saved$ === void 0 ? void 0 : _g$saved$.id) !== null && _g$saved$0$id !== void 0 ? _g$saved$0$id : 0,
+          length: g.saved.length
         }));
       }, {});
       return found && (saved === null || saved === void 0 ? void 0 : (_saved$ = saved[0]) === null || _saved$ === void 0 ? void 0 : _saved$.id) ? phrase.buildFrom(saved[0].id, saved.length, namedGroups) : null;
@@ -10745,4 +10774,4 @@ var Match2Plugin = function Match2Plugin(Doc, world, nlp, Phrase) {
 };
 
 export default Match2Plugin;
-export { Match2Plugin, NLPRegexP };
+export { Match2Plugin, NLPMatchParser, NLPRegexP, NLPRegexParseError };

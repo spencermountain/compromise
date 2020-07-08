@@ -1,12 +1,15 @@
 {
   "name": "compromise-match2",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Better regex like matching for nlp-compromise",
   "main": "dist/compromise-match2.js",
   "unpkg": "dist/compromise-match2.min.js",
   "module": "dist/compromise-match2.mjs",
   "scripts": {
     "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch",
+    "test:watch:cover": "jest --watchAll --coverage",
     "build": "rollup -c",
     "pretty": "prettier --write .",
     "bench": "node bench.js"
@@ -15,6 +18,20 @@
     "trailingComma": "es5",
     "tabWidth": 2,
     "semi": true
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/**/*.test.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
+      }
+    }
   },
   "repository": {
     "type": "git",

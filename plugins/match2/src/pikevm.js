@@ -18,7 +18,7 @@ import {
 } from "./constants";
 
 export const termContainsTag = (term, name) =>
-  Object.entries(term.tags)
+  Object.entries(term?.tags ?? {})
     .filter(([k, v]) => v)
     .map((entry) => entry[0].toLowerCase())
     .includes(name.toLowerCase());

@@ -37,6 +37,22 @@ describe("match2 plugin", () => {
     });
   });
 
+  describe("handles previous bugs", () => {
+    it("match term should handle match_end or when term.tags is nullish", () => {
+      // this particular query triggers it, match2 ends up with MATCH_END as a
+      // tag, probably the nested groups that allows it to get there where it
+      // keeps trying to match, this is fine / expected
+      doc = nlp("remind me to reply to @spencermountain today");
+      expect(
+        doc
+          .match2(
+            "((remind|remember) (me|you|.) to? do? (?P<what>.+) (?P<when>#Date+))"
+          )
+          .text()
+      ).toEqual(doc.text());
+    });
+  });
+
   describe("regex matches doc", () => {
     it("successful match sets found", () => {
       expect(doc.match2("world").found).toBe(true);
@@ -241,6 +257,13 @@ describe("match2 plugin", () => {
           expect(match.text()).toEqual("hello world");
           expect(match.group(0).text()).toEqual("world");
           expect(Object.keys(match.groups())).toEqual(["0"]);
+        });
+
+        it("matches nested groups", () => {
+          const match = doc.match2("(hello (hello+ world+)+)+");
+          expect(Object.keys(match.groups())).toHaveLength(2);
+          expect(match.groups(0).text()).toEqual("hello hello world");
+          expect(match.groups(1).text()).toEqual("hello world");
         });
 
         it("matches optional groups", () => {

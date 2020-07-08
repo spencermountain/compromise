@@ -1,4 +1,4 @@
-/* compromise-match2 1.1.0 GPLv3 */
+/* compromise-match2 1.1.1 GPLv3 */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -10329,7 +10329,9 @@
   }(EmbeddedActionsParser);
 
   var termContainsTag = function termContainsTag(term, name) {
-    return Object.entries(term.tags).filter(function (_ref) {
+    var _term$tags;
+
+    return Object.entries((_term$tags = term === null || term === void 0 ? void 0 : term.tags) !== null && _term$tags !== void 0 ? _term$tags : {}).filter(function (_ref) {
       var _ref2 = _slicedToArray(_ref, 2),
           k = _ref2[0],
           v = _ref2[1];

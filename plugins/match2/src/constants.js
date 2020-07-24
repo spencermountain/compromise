@@ -2,6 +2,7 @@ export const NOOP = Symbol("NOOP"); // basically continue
 export const MATCH_ANY = Symbol("MATCH_ANY");
 export const MATCH_WORD = Symbol("MATCH_WORD");
 export const MATCH_TAG = Symbol("MATCH_TAG");
+export const MATCH_METHOD = Symbol("MATCH_METHOD");
 export const MATCH_END = Symbol("MATCH_END");
 export const JMP = Symbol("JMP");
 export const SPLIT = Symbol("SPLIT");

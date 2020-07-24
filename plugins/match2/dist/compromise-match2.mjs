@@ -1,4 +1,4 @@
-/* compromise-match2 1.1.1 GPLv3 */
+/* compromise-match2 1.2.0 GPLv3 */
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
@@ -9582,6 +9582,7 @@ var NOOP$1 = Symbol("NOOP"); // basically continue
 var MATCH_ANY = Symbol("MATCH_ANY");
 var MATCH_WORD = Symbol("MATCH_WORD");
 var MATCH_TAG = Symbol("MATCH_TAG");
+var MATCH_METHOD = Symbol("MATCH_METHOD");
 var MATCH_END = Symbol("MATCH_END");
 var JMP = Symbol("JMP");
 var SPLIT = Symbol("SPLIT");
@@ -9615,11 +9616,15 @@ var Tag = createToken({
 });
 var EscapedWord = createToken({
   name: "EscapedWord",
-  pattern: /\\#([_-\w]|\\.)+/
+  pattern: /\\[#@]([_-\w]|\\.)+/
 });
 var Word = createToken({
   name: "Word",
   pattern: /([_-\w]|\\.)+/
+});
+var Method = createToken({
+  name: "Method",
+  pattern: /@[_-\w]+/
 });
 var Question = createToken({
   name: "Question",
@@ -9712,7 +9717,7 @@ var WhiteSpace = createToken({
   pattern: /\s+/,
   group: Lexer.SKIPPED
 });
-var allTokens = [NamedGroupBegin, NamedGroupEnd, WhiteSpace, StartOf, EndOf, Zero, PositiveInt, Dot, Word, EscapedWord, Tag, Exclamation, Equals, Pound, Colon, Question, Plus, Star, Comma, Pipe, LParenthesis, RParenthesis, LCurly, RCurly]; // Notes or something like it, may not be accurate.
+var allTokens = [NamedGroupBegin, NamedGroupEnd, WhiteSpace, StartOf, EndOf, Zero, PositiveInt, Dot, EscapedWord, Word, Method, Tag, Exclamation, Equals, Pound, Colon, Question, Plus, Star, Comma, Pipe, LParenthesis, RParenthesis, LCurly, RCurly]; // Notes or something like it, may not be accurate.
 // (a|b)
 // 0. split 1, 3
 // 1. char a
@@ -9917,18 +9922,20 @@ var NLPMatchParser = /*#__PURE__*/function (_EmbeddedActionsParse) {
         }
       }, {
         ALT: function ALT() {
+          var _$$CONSUME$image;
+
           prog.push({
             code: MATCH_WORD,
-            value: $.CONSUME(EscapedWord).image
+            value: (_$$CONSUME$image = $.CONSUME(EscapedWord).image) === null || _$$CONSUME$image === void 0 ? void 0 : _$$CONSUME$image.substr(1)
           });
         }
       }, {
         ALT: function ALT() {
-          var _$$CONSUME$image;
+          var _$$CONSUME$image2;
 
           prog.push({
             code: MATCH_TAG,
-            value: (_$$CONSUME$image = $.CONSUME(Tag).image) === null || _$$CONSUME$image === void 0 ? void 0 : _$$CONSUME$image.substr(1)
+            value: (_$$CONSUME$image2 = $.CONSUME(Tag).image) === null || _$$CONSUME$image2 === void 0 ? void 0 : _$$CONSUME$image2.substr(1)
           });
         }
       }, {
@@ -9943,6 +9950,15 @@ var NLPMatchParser = /*#__PURE__*/function (_EmbeddedActionsParse) {
           prog.push({
             code: MATCH_WORD,
             value: $.CONSUME(PositiveInt).image
+          });
+        }
+      }, {
+        ALT: function ALT() {
+          var _$$CONSUME$image3;
+
+          prog.push({
+            code: MATCH_METHOD,
+            value: (_$$CONSUME$image3 = $.CONSUME(Method).image) === null || _$$CONSUME$image3 === void 0 ? void 0 : _$$CONSUME$image3.substr(1)
           });
         }
       }, {
@@ -10519,7 +10535,7 @@ var saveMatch = function saveMatch(th, sp) {
 
 
 var pikevm = function pikevm(prog, input) {
-  var _sp$text;
+  var _sp$text, _sp$inst$value;
   var clist = [];
   var nlist = [];
   var found = false;
@@ -10567,6 +10583,14 @@ var pikevm = function pikevm(prog, input) {
 
         case MATCH_TAG:
           if (termContainsTag(sp, inst.value)) {
+            addthread(prog, nlist, thread(th.pc + 1, saveMatch(th, sp)));
+          }
+
+          break;
+
+        case MATCH_METHOD:
+          // call method using null coalescing on term, if it returns true continue
+          if (sp === null || sp === void 0 ? void 0 : (_sp$inst$value = sp[inst.value]) === null || _sp$inst$value === void 0 ? void 0 : _sp$inst$value.call(sp)) {
             addthread(prog, nlist, thread(th.pc + 1, saveMatch(th, sp)));
           }
 

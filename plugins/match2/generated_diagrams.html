@@ -117,7 +117,7 @@
                 "name": "EscapedWord",
                 "label": "EscapedWord",
                 "idx": 0,
-                "pattern": "\\\\#([_-\\w]|\\\\.)+"
+                "pattern": "\\\\[#@]([_-\\w]|\\\\.)+"
               }
             ]
           },
@@ -154,6 +154,18 @@
                 "label": "PositiveInt",
                 "idx": 0,
                 "pattern": "[1-9]\\d*"
+              }
+            ]
+          },
+          {
+            "type": "Alternative",
+            "definition": [
+              {
+                "type": "Terminal",
+                "name": "Method",
+                "label": "Method",
+                "idx": 0,
+                "pattern": "@[_-\\w]+"
               }
             ]
           },

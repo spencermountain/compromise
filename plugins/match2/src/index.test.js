@@ -76,6 +76,22 @@ describe("match2 plugin", () => {
       it("any", () => {
         expect(doc.match2(".").text()).toEqual("hello");
       });
+
+      it("mathod", () => {
+        expect(nlp("a, b, c").match2("@hasComma+").text()).toEqual("a, b");
+      });
+
+      describe("escaped words", () => {
+        it("tag", () => {
+          expect(nlp("#Noun").match2("\\#Noun").text()).toEqual("#Noun");
+        });
+
+        it("methods", () => {
+          expect(nlp("@hasComma").match2("\\@hasComma").text()).toEqual(
+            "@hasComma"
+          );
+        });
+      });
     });
 
     describe("match locations", () => {

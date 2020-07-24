@@ -3,6 +3,7 @@ import {
   MATCH_ANY,
   MATCH_TAG,
   MATCH_WORD,
+  MATCH_METHOD,
   MATCH_END,
   JMP,
   SPLIT,
@@ -198,6 +199,12 @@ export const pikevm = (prog, input, flags = []) => {
           break;
         case MATCH_TAG:
           if (termContainsTag(sp, inst.value)) {
+            addthread(prog, nlist, thread(th.pc + 1, saveMatch(th, sp)));
+          }
+          break;
+        case MATCH_METHOD:
+          // call method using null coalescing on term, if it returns true continue
+          if (sp?.[inst.value]?.()) {
             addthread(prog, nlist, thread(th.pc + 1, saveMatch(th, sp)));
           }
           break;

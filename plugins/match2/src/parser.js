@@ -5,6 +5,7 @@ import {
   MATCH_ANY,
   MATCH_TAG,
   MATCH_WORD,
+  MATCH_METHOD,
   MATCH_END,
   JMP,
   SPLIT,
@@ -24,9 +25,10 @@ const EndOf = createToken({ name: "EndOf", pattern: /\$/ });
 const Tag = createToken({ name: "Tag", pattern: /#([_-\w]|\\.)+/ });
 const EscapedWord = createToken({
   name: "EscapedWord",
-  pattern: /\\#([_-\w]|\\.)+/,
+  pattern: /\\[#@]([_-\w]|\\.)+/,
 });
 const Word = createToken({ name: "Word", pattern: /([_-\w]|\\.)+/ });
+const Method = createToken({ name: "Method", pattern: /@[_-\w]+/ });
 const Question = createToken({
   name: "Question",
   pattern: /\?/,
@@ -77,8 +79,9 @@ export const allTokens = [
   Zero,
   PositiveInt,
   Dot,
-  Word,
   EscapedWord,
+  Word,
+  Method,
   Tag,
   Exclamation,
   Equals,
@@ -267,7 +270,7 @@ export class NLPMatchParser extends EmbeddedActionsParser {
           ALT: () => {
             prog.push({
               code: MATCH_WORD,
-              value: $.CONSUME(EscapedWord).image,
+              value: $.CONSUME(EscapedWord).image?.substr(1),
             });
           },
         },
@@ -289,6 +292,14 @@ export class NLPMatchParser extends EmbeddedActionsParser {
             prog.push({
               code: MATCH_WORD,
               value: $.CONSUME(PositiveInt).image,
+            });
+          },
+        },
+        {
+          ALT: () => {
+            prog.push({
+              code: MATCH_METHOD,
+              value: $.CONSUME(Method).image?.substr(1),
             });
           },
         },

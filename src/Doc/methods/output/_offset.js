@@ -39,8 +39,16 @@ const calcOffset = function(doc, result, options) {
       //   console.log(t.post)
       //   return n
       // }, 0)
-      o.offset = o.terms[0].offset
-      o.offset.length = o.text.length
+
+      // offset information for the entire doc starts at the first term, and
+      // is as long as the whole text (note that there may be an issue where
+      // leading punctuation is counted in the doc text length, but is
+      // *excluded* from the term[0] start position)
+      o.offset = Object.assign(
+        {},
+        o.terms[0].offset,
+        { length: o.text.length }
+      )
     })
   }
 }

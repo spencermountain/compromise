@@ -2,7 +2,7 @@ const makeId = require('../../Term/_id')
 // i formally apologize for how complicated this is.
 
 //found a match? it's greedy? keep going!
-const getGreedy = function(terms, t, reg, until, index, length) {
+const getGreedy = function (terms, t, reg, until, index, length) {
   let start = t
   for (; t < terms.length; t += 1) {
     //stop for next-reg match
@@ -27,7 +27,7 @@ const getGreedy = function(terms, t, reg, until, index, length) {
 }
 
 //'unspecific greedy' is a weird situation.
-const greedyTo = function(terms, t, nextReg, index, length) {
+const greedyTo = function (terms, t, nextReg, index, length) {
   //if there's no next one, just go off the end!
   if (!nextReg) {
     return terms.length
@@ -43,7 +43,7 @@ const greedyTo = function(terms, t, nextReg, index, length) {
 }
 
 // get or create named group
-const getOrCreateGroup = function(namedGroups, namedGroupId, terms, startIndex, group) {
+const getOrCreateGroup = function (namedGroups, namedGroupId, terms, startIndex, group) {
   const g = namedGroups[namedGroupId]
 
   if (g) {
@@ -62,7 +62,7 @@ const getOrCreateGroup = function(namedGroups, namedGroupId, terms, startIndex, 
 }
 
 /** tries to match a sequence of terms, starting from here */
-const tryHere = function(terms, regs, index, length) {
+const tryHere = function (terms, regs, index, length) {
   const namedGroups = {}
   let previousGroupId = null
   let t = 0
@@ -125,7 +125,6 @@ const tryHere = function(terms, regs, index, length) {
 
       continue
     }
-
     //if it looks like a match, continue
     //we have a special case where an end-anchored greedy match may need to
     //start matching before the actual end; we do this by (temporarily!)
@@ -170,6 +169,9 @@ const tryHere = function(terms, regs, index, length) {
         // ending match to succceed until we get to the actual end.
         t = getGreedy(terms, t, Object.assign({}, reg, { start: false, end: false }), regs[r + 1], index, length)
         if (t === null) {
+          return [false, null] //greedy was too short
+        }
+        if (reg.min && reg.min > t) {
           return [false, null] //greedy was too short
         }
         // if this was also an end-anchor match, check to see we really

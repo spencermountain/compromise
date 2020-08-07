@@ -910,6 +910,7 @@ module.exports = [
   'vincent',
   'virgil',
   'vivaan',
+  'vladimir',
   'wade',
   'wallace',
   'wally',

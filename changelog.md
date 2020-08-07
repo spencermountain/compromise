@@ -12,6 +12,11 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 
 -move (some) contractions into tokenizer?
 
+#### 13.3.2
+
+- fix for offset issue #771
+- update deps
+
 #### 13.3.1
 
 -support unicode spaces for #759

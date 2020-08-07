@@ -1,16 +1,16 @@
-const hasWord = function(doc, word) {
+const hasWord = function (doc, word) {
   let arr = doc._cache.words[word] || []
   arr = arr.map(i => doc.list[i])
   return doc.buildFrom(arr)
 }
-const hasTag = function(doc, tag) {
+const hasTag = function (doc, tag) {
   let arr = doc._cache.tags[tag] || []
   arr = arr.map(i => doc.list[i])
   return doc.buildFrom(arr)
 }
 
 //mostly pos-corections here
-const miscCorrection = function(doc) {
+const miscCorrection = function (doc) {
   //exactly like
   let m = hasWord(doc, 'like')
   m.match('#Adverb like')
@@ -19,16 +19,14 @@ const miscCorrection = function(doc) {
 
   //the orange.
   m = hasTag(doc, 'Adjective')
-  m.match('#Determiner #Adjective$')
-    .notIf('(#Comparative|#Superlative)')
-    .terms(1)
-    .tag('Noun', 'the-adj-1')
+  m.match('#Determiner #Adjective$').notIf('(#Comparative|#Superlative)').terms(1).tag('Noun', 'the-adj-1')
 
   // Firstname x (dangerous)
   m = hasTag(doc, 'FirstName')
   m.match('#FirstName (#Noun|@titleCase)')
     .ifNo('^#Possessive')
     .ifNo('#Pronoun')
+    .ifNo('@hasComma .')
     .lastTerm()
     .tag('#LastName', 'firstname-noun')
 
@@ -48,9 +46,7 @@ const miscCorrection = function(doc) {
 
   //been walking
   m = hasTag(doc, 'Gerund')
-  m.match(`(be|been) (#Adverb|not)+? #Gerund`)
-    .not('#Verb$')
-    .tag('Auxiliary', 'be-walking')
+  m.match(`(be|been) (#Adverb|not)+? #Gerund`).not('#Verb$').tag('Auxiliary', 'be-walking')
 
   // directive verb - 'use reverse'
   doc

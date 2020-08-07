@@ -288,7 +288,7 @@ declare module nlp {
     /**reverse the order of the matches, but not the words */
     reverse(): ExtendedDocument<Ext, W, Ph>
     /** clean-up the document, in various ways */
-    normalize(options?: string | object): string
+    normalize(options?: string | object): ExtendedDocument<Ext, W, Ph>
     /** remove any duplicate matches */
     unique(): ExtendedDocument<Ext, W, Ph>
     /**  return a Document with three parts for every match ('splitOn') */
@@ -363,7 +363,7 @@ declare module nlp {
 
     // Subsets
     /** get the whole sentence for each match */
-    sentences(): ExtendedDocument<Ext, W, Ph>
+    sentences(n?: number): ExtendedDocument<Ext, W, Ph>
     /**  return things like `'Mrs.'`*/
     abbreviations(n?: number): Abbreviations<Ext, W, Ph>
     /** return any multi-word terms, like "didn't"  */

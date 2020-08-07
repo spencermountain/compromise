@@ -1,5 +1,5 @@
 const nlp = require('./src/index')
-// nlp.verbose(true)
+nlp.verbose(true)
 // let txt = require('./scripts/test/speed/_sotu-text.js')
 nlp.extend(require('./plugins/numbers/src'))
 nlp.extend(require('./plugins/dates/src'))
@@ -12,4 +12,5 @@ nlp.extend(require('./plugins/dates/src'))
 // doc.sentences().toFutureTense().debug()
 // doc.sentences().toPastTense().debug()
 
-console.log(nlp('next week').dates().json())
+// console.log(nlp('next week').dates().json())
+nlp('you are John, Lisa, and Fred').debug()

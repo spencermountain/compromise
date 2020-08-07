@@ -15,6 +15,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 #### 13.3.2
 
 - fix for offset issue #771
+- fix for `{min,max}` syntax #767
 - typescript fixes
 - update deps
 

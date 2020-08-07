@@ -1,4 +1,4 @@
-/* compromise 13.3.1 MIT */
+/* compromise 13.3.2 MIT */
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
@@ -2236,6 +2236,10 @@ var tryHere = function tryHere(terms, regs, index, length) {
 
         if (t === null) {
           return [false, null]; //greedy was too short
+        }
+
+        if (reg.min && reg.min > t) {
+          return [false, null]; //greedy was too short
         } // if this was also an end-anchor match, check to see we really
         // reached the end
 
@@ -3425,7 +3429,7 @@ var fromJSON = function fromJSON(json, world) {
 
 var fromJSON_1 = fromJSON;
 
-var _version = '13.3.1';
+var _version = '13.3.2';
 
 var _data = {
   "Comparative": "true¦better",
@@ -10224,7 +10228,7 @@ var miscCorrection = function miscCorrection(doc) {
   m.match('#Determiner #Adjective$').notIf('(#Comparative|#Superlative)').terms(1).tag('Noun', 'the-adj-1'); // Firstname x (dangerous)
 
   m = hasTag(doc, 'FirstName');
-  m.match('#FirstName (#Noun|@titleCase)').ifNo('^#Possessive').ifNo('#Pronoun').lastTerm().tag('#LastName', 'firstname-noun'); //three trains / one train
+  m.match('#FirstName (#Noun|@titleCase)').ifNo('^#Possessive').ifNo('#Pronoun').ifNo('@hasComma .').lastTerm().tag('#LastName', 'firstname-noun'); //three trains / one train
 
   m = hasTag(doc, 'Value');
   m = m.match('#Value #PresentTense');

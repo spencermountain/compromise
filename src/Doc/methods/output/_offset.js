@@ -40,15 +40,16 @@ const calcOffset = function(doc, result, options) {
       //   return n
       // }, 0)
 
-      // offset information for the entire doc starts at the first term, and
-      // is as long as the whole text (note that there may be an issue where
-      // leading punctuation is counted in the doc text length, but is
-      // *excluded* from the term[0] start position)
-      o.offset = Object.assign(
-        {},
-        o.terms[0].offset,
-        { length: o.text.length }
-      )
+      // The offset information for the entire doc starts at (or just before)
+      // the first term, and is as long as the whole text.  The code originally
+      // copied the entire offset value from terms[0], but since we're now
+      // overriding 2 of the three fields, it's cleaner to just create an all-
+      // new object and not pretend it's "just" the same as terms[0].
+      o.offset = {
+        index: o.terms[0].offset.index,
+        start: o.terms[0].offset.start - o.text.indexOf(o.terms[0].text),
+        length: o.text.length
+      }
     })
   }
 }

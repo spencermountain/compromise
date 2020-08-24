@@ -31,15 +31,15 @@ const conjugate = function (parsed, world) {
     Object.keys(forms).forEach(k => (forms[k] += space + particle))
   }
   //put the adverb at the end?
-  if (parsed.adverb.found) {
-    let adverb = parsed.adverb.text()
-    let space = hasHyphen === true ? '-' : ' '
-    if (parsed.adverbAfter === true) {
-      Object.keys(forms).forEach(k => (forms[k] += space + adverb))
-    } else {
-      Object.keys(forms).forEach(k => (forms[k] = adverb + space + forms[k]))
-    }
-  }
+  // if (parsed.adverb.found) {
+  // let adverb = parsed.adverb.text()
+  // let space = hasHyphen === true ? '-' : ' '
+  // if (parsed.adverbAfter === true) {
+  //   Object.keys(forms).forEach(k => (forms[k] += space + adverb))
+  // } else {
+  //   Object.keys(forms).forEach(k => (forms[k] = adverb + space + forms[k]))
+  // }
+  // }
 
   //apply negative
   const isNegative = parsed.negative.found

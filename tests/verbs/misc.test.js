@@ -21,3 +21,15 @@ test('verbs.adverbs', function (t) {
 
   t.end()
 })
+
+test('dont conjugate modals', function (t) {
+  let doc = nlp('i may')
+  doc.verbs().toPastTense()
+  t.equal(doc.out(), 'i may have', 'may')
+
+  doc = nlp('i think he really could.')
+  doc.verbs().toPastTense()
+  t.equal(doc.out(), 'i thought he really could have.', 'really could')
+
+  t.end()
+})

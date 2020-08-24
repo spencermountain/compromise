@@ -161,8 +161,8 @@ module.exports = {
       let obj = conjugate(parsed, this.world)
       let str = obj.Participle || obj.PastTense
       if (str) {
-        vb.replaceWith('have ' + str, false)
-        vb.tag('Participle') //
+        parsed.verb.replaceWith('have ' + str, false)
+        parsed.verb.tag('Participle') //
       }
     })
     return this

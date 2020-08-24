@@ -1,5 +1,6 @@
 const toInfinitive = require('../toInfinitive')
 const toBe = require('./toBe')
+const doModal = require('./doModal')
 
 const conjugate = function (parsed, world) {
   let verb = parsed.verb
@@ -7,6 +8,11 @@ const conjugate = function (parsed, world) {
   //special handling of 'is', 'will be', etc.
   if (verb.has('#Copula') || (verb.out('normal') === 'be' && parsed.auxiliary.has('will'))) {
     return toBe(parsed, world)
+  }
+
+  // special handling of 'he could.'
+  if (verb.has('#Modal')) {
+    return doModal(parsed, world)
   }
 
   let hasHyphen = parsed.verb.termList(0).hasHyphen()

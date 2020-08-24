@@ -1,6 +1,34 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
+test('toPast finds participle form', function (t) {
+  let doc = nlp('i drive')
+  doc.sentences().toPastTense()
+  t.equal(doc.text(), 'i drove', 'no modal')
+
+  doc = nlp('i really drive')
+  doc.sentences().toPastTense()
+  t.equal(doc.text(), 'i really drove', 'adverb no modal')
+
+  doc = nlp('i should drive')
+  doc.sentences().toPastTense()
+  t.equal(doc.text(), 'i should have driven', 'with should')
+
+  doc = nlp('i really may drive')
+  doc.sentences().toPastTense()
+  t.equal(doc.text(), 'i really may have driven', 'with really may')
+
+  doc = nlp('i could actually drive')
+  doc.sentences().toPastTense()
+  t.equal(doc.text(), 'i may could actually have driven', 'with could actually')
+
+  doc = nlp("i seriously couldn't even drive")
+  doc.sentences().toPastTense()
+  t.equal(doc.text(), "i seriously couldn't even have driven", 'with many modals')
+
+  t.end()
+})
+
 test('toParticiple', function (t) {
   let arr = [
     ['i drive', 'i have driven'],

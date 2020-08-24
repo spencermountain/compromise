@@ -78,6 +78,7 @@ module.exports = [
     gone: Adj,
     ices: Plrl,
     ints: Plrl,
+    ines: Plrl,
     ions: Plrl,
     less: Avb,
     llen: Adj,

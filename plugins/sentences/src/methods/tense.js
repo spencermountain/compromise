@@ -1,30 +1,37 @@
 const parse = require('../parse')
+const { useParticiple, toParticiple } = require('./participle')
 
 /** he walks -> he walked */
-exports.toPastTense = function() {
-  this.forEach(doc => {
+exports.toPastTense = function () {
+  this.forEach((doc) => {
     if (doc.has('#PastTense')) {
       return
     }
     let obj = parse(doc)
     let vb = obj.verb.clone()
-    vb = vb.verbs().toPastTense()
-    obj.verb.replaceWith(vb, false)
+    // support 'he could drive' -> 'he could have driven'
+    if (useParticiple(vb)) {
+      vb = vb.verbs().toParticiple()
+      obj.verb.replaceWith(vb, false)
+      // console.log('here')
+      // vb.debug()
+    } else {
+      //do a normal conjugation
+      vb = vb.verbs().toPastTense()
+      obj.verb.replaceWith(vb, false)
+    }
     // trailing gerund/future/present are okay, but 'walked and eats' is not
     if (obj.object && obj.object.found && obj.object.has('#PresentTense')) {
       let verbs = obj.object.verbs()
-      verbs
-        .if('#PresentTense')
-        .verbs()
-        .toPastTense()
+      verbs.if('#PresentTense').verbs().toPastTense()
     }
   })
   return this
 }
 
 /** he walked -> he walks */
-exports.toPresentTense = function() {
-  this.forEach(doc => {
+exports.toPresentTense = function () {
+  this.forEach((doc) => {
     let obj = parse(doc)
     let isPlural = obj.verb.lookBehind('(i|we) (#Adverb|#Verb)?$').found
     let vb = obj.verb.clone()
@@ -45,18 +52,15 @@ exports.toPresentTense = function() {
     // future is okay, but 'walks and ate' -> 'walks and eats'
     if (obj.object && obj.object.found && obj.object.has('#PastTense')) {
       let verbs = obj.object.verbs()
-      verbs
-        .if('#PastTense')
-        .verbs()
-        .toPresentTense()
+      verbs.if('#PastTense').verbs().toPresentTense()
     }
   })
   return this
 }
 
 /**he walked -> he will walk */
-exports.toFutureTense = function() {
-  this.forEach(doc => {
+exports.toFutureTense = function () {
+  this.forEach((doc) => {
     let obj = parse(doc)
     let vb = obj.verb.clone()
     vb = vb.verbs().toFutureTense()
@@ -64,10 +68,7 @@ exports.toFutureTense = function() {
     //Present is okay, but 'will walk and ate' -> 'will walk and eat'
     if (obj.object && obj.object.found && obj.object.has('(#PastTense|#PresentTense)')) {
       let verbs = obj.object.verbs()
-      verbs
-        .if('(#PastTense|#PresentTense)')
-        .verbs()
-        .toInfinitive()
+      verbs.if('(#PastTense|#PresentTense)').verbs().toInfinitive()
     }
   })
   return this

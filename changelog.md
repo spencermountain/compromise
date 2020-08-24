@@ -10,7 +10,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 
 #### [Unreleased]
 
--move (some) contractions into tokenizer?
+- add `verbs().toParticiple()` method  (add to observables/verb)
 
 #### 13.3.2
 

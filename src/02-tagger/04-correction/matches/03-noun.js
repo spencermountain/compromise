@@ -19,7 +19,7 @@ module.exports = [
   { match: '#Place+ #Possessive', tag: 'Possessive', reason: 'place-possessive' },
 
   //big dreams, critical thinking
-  { match: '#Adjective [#PresentTense]', group: 0, tag: 'Noun', reason: 'adj-presentTense' },
+  { match: '(#Adjective && !all) [#PresentTense]', group: 0, tag: 'Noun', reason: 'adj-presentTense' },
   //his fine
   { match: '(his|her|its) [#Adjective]', group: 0, tag: 'Noun', reason: 'his-fine' },
   //some pressing issues

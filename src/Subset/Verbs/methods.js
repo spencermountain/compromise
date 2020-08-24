@@ -5,7 +5,7 @@ const conjugate = require('./conjugate')
 
 module.exports = {
   /** overload the original json with verb information */
-  json: function(options) {
+  json: function (options) {
     let n = null
     if (typeof options === 'number') {
       n = options
@@ -35,7 +35,7 @@ module.exports = {
   },
 
   /** grab the adverbs describing these verbs */
-  adverbs: function() {
+  adverbs: function () {
     let list = []
     // look at internal adverbs
     this.forEach(vb => {
@@ -57,7 +57,7 @@ module.exports = {
     return this.buildFrom(list)
   },
   /**return verbs like 'we walk' and not 'spencer walks' */
-  isPlural: function() {
+  isPlural: function () {
     let list = []
     this.forEach(vb => {
       let parsed = parseVerb(vb)
@@ -68,7 +68,7 @@ module.exports = {
     return this.buildFrom(list)
   },
   /** return verbs like 'spencer walks' and not 'we walk' */
-  isSingular: function() {
+  isSingular: function () {
     let list = []
     this.forEach(vb => {
       let parsed = parseVerb(vb)
@@ -80,7 +80,7 @@ module.exports = {
   },
 
   /**  */
-  conjugate: function() {
+  conjugate: function () {
     let result = []
     this.forEach(vb => {
       let parsed = parseVerb(vb)
@@ -90,7 +90,7 @@ module.exports = {
     return result
   },
   /** */
-  toPastTense: function() {
+  toPastTense: function () {
     this.forEach(vb => {
       let parsed = parseVerb(vb)
       let str = conjugate(parsed, this.world).PastTense
@@ -102,7 +102,7 @@ module.exports = {
     return this
   },
   /** */
-  toPresentTense: function() {
+  toPresentTense: function () {
     this.forEach(vb => {
       let parsed = parseVerb(vb)
       let obj = conjugate(parsed, this.world)
@@ -119,7 +119,7 @@ module.exports = {
     return this
   },
   /** */
-  toFutureTense: function() {
+  toFutureTense: function () {
     this.forEach(vb => {
       let parsed = parseVerb(vb)
       let str = conjugate(parsed, this.world).FutureTense
@@ -131,7 +131,7 @@ module.exports = {
     return this
   },
   /** */
-  toInfinitive: function() {
+  toInfinitive: function () {
     this.forEach(vb => {
       let parsed = parseVerb(vb)
       let str = conjugate(parsed, this.world).Infinitive
@@ -143,7 +143,7 @@ module.exports = {
     return this
   },
   /** */
-  toGerund: function() {
+  toGerund: function () {
     this.forEach(vb => {
       let parsed = parseVerb(vb)
       let str = conjugate(parsed, this.world).Gerund
@@ -154,17 +154,30 @@ module.exports = {
     })
     return this
   },
+  /** return a naked past-participle if it exists, otherwise past-tense */
+  toParticiple: function () {
+    this.forEach(vb => {
+      let parsed = parseVerb(vb)
+      let obj = conjugate(parsed, this.world)
+      let str = obj.Participle || obj.PastTense
+      if (str) {
+        vb.replaceWith('have ' + str, false)
+        vb.tag('Participle') //
+      }
+    })
+    return this
+  },
 
   /** return only verbs with 'not'*/
-  isNegative: function() {
+  isNegative: function () {
     return this.if('#Negative')
   },
   /**  return only verbs without 'not'*/
-  isPositive: function() {
+  isPositive: function () {
     return this.ifNo('#Negative')
   },
   /** add a 'not' to these verbs */
-  toNegative: function() {
+  toNegative: function () {
     this.list.forEach(p => {
       let doc = this.buildFrom([p])
       let parsed = parseVerb(doc)
@@ -173,7 +186,7 @@ module.exports = {
     return this
   },
   /** remove 'not' from these verbs */
-  toPositive: function() {
+  toPositive: function () {
     let m = this.match('do not #Verb')
     if (m.found) {
       m.remove('do not')

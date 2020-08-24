@@ -424,6 +424,8 @@ declare module nlp {
     toInfinitive(): ExtendedDocument<Ext, W, Ph>
     /** 'walks' → 'walking' */
     toGerund(): ExtendedDocument<Ext, W, Ph>
+    /** 'drive' → 'driven' if it exists, otherwise past-tense */
+    toParticiple(): ExtendedDocument<Ext, W, Ph>
     /** return verbs with 'not' */
     isNegative(): ExtendedDocument<Ext, W, Ph>
     /** only verbs without 'not'*/

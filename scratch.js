@@ -22,7 +22,7 @@ nlp.extend(require('./plugins/sentences/src'))
 // console.log(nlp('next week').dates().json())
 // nlp('you are John, Lisa, Fred').match('#FirstName{1,2}').debug()
 
-let doc = nlp('everybody ought to').debug()
-doc.verbs().toPastTense()
+let doc = nlp('i may really drive').debug()
+doc.verbs().toParticiple()
 console.log(doc.text())
 // i thought he really could have.

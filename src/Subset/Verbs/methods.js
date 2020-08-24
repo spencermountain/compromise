@@ -162,7 +162,7 @@ module.exports = {
       let str = obj.Participle || obj.PastTense
       if (str) {
         parsed.verb.replaceWith('have ' + str, false)
-        parsed.verb.tag('Participle') //
+        // parsed.verb.tag('Participle', 'toParticiple') //
       }
     })
     return this

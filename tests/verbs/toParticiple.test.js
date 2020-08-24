@@ -5,7 +5,7 @@ test('toParticiple', function (t) {
   let arr = [
     ['i drive', 'i have driven'],
     ['we smoke', 'we have smoked'],
-    ['i will go', 'i have gone'],
+    ['i will go', 'i will have gone'], //still future-tense
     ['they all swim', 'they all have swam'],
     ['i learn', 'i have learned'],
     ['i really travel to india', 'i really have traveled to india'],

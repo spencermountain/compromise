@@ -13,7 +13,7 @@ let list = [
   //support a splattering of auxillaries before a verb
   { match: `[(has|had) (#Adverb|not)+?] #PastTense`, group: 0, tag: 'Auxiliary', reason: 'had-walked' },
   //would walk
-  { match: `[(#Modal|did) (#Adverb|not)+?] (#Verb && !to)`, group: 0, tag: 'Auxiliary', reason: 'modal-verb' },
+  { match: `[#Adverb+? (#Modal|did)+ (#Adverb|not)+?] #Verb`, group: 0, tag: 'Auxiliary', reason: 'modal-verb' },
   //would have had
   {
     match: `[#Modal (#Adverb|not)+? have (#Adverb|not)+? had (#Adverb|not)+?] #Verb`,

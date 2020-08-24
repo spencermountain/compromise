@@ -33,9 +33,9 @@ let list = [
   // feb to march
   { match: `#Date .? [(march|may)]`, group: 0, tag: 'Month', reason: 'feb-and-march' },
   //quickly march
-  { match: `#Adverb [(march|may)]`, group: 0, tag: 'Infinitive', reason: 'quickly-march' },
+  { match: `#Adverb [(march|may)]`, group: 0, tag: 'Verb', reason: 'quickly-march' },
   //march quickly
-  { match: `(march|may) [#Adverb]`, group: 0, tag: 'Infinitive', reason: 'march-quickly' },
+  { match: `[(march|may)] #Adverb`, group: 0, tag: 'Verb', reason: 'march-quickly' },
 
   //5th of March
   { match: '#Value of #Month', tag: 'Date', reason: 'value-of-month' },

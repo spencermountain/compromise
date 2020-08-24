@@ -13,7 +13,7 @@ let list = [
   //support a splattering of auxillaries before a verb
   { match: `[(has|had) (#Adverb|not)+?] #PastTense`, group: 0, tag: 'Auxiliary', reason: 'had-walked' },
   //would walk
-  { match: `[(#Modal|did) (#Adverb|not)+?] #Verb`, group: 0, tag: 'Auxiliary', reason: 'modal-verb' },
+  { match: `[(#Modal|did) (#Adverb|not)+?] (#Verb && !to)`, group: 0, tag: 'Auxiliary', reason: 'modal-verb' },
   //would have had
   {
     match: `[#Modal (#Adverb|not)+? have (#Adverb|not)+? had (#Adverb|not)+?] #Verb`,
@@ -34,8 +34,6 @@ let list = [
   { match: `[#Copula (#Adverb|not)+?] (#Gerund|#PastTense)`, group: 0, tag: 'Auxiliary', reason: 'copula-walking' },
   //support a splattering of auxillaries before a verb
   { match: `[(has|had) (#Adverb|not)+?] #PastTense`, group: 0, tag: 'Auxiliary', reason: 'had-walked' },
-  //would walk
-  { match: `[(#Modal|did) (#Adverb|not)+?] #Verb`, group: 0, tag: 'Auxiliary', reason: 'modal-verb' },
   // will walk
   { match: '[(do|does|will|have|had)] (not|#Adverb)? #Verb', group: 0, tag: 'Auxiliary', reason: 'have-had' },
   // about to go

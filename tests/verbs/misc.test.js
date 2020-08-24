@@ -31,5 +31,13 @@ test('dont conjugate modals', function (t) {
   doc.verbs().toPastTense()
   t.equal(doc.out(), 'i thought he really could have.', 'really could')
 
+  doc = nlp('everybody ought to.')
+  doc.verbs().toPastTense()
+  t.equal(doc.out(), 'everybody ought to have.', 'ought to')
+
+  // doc = nlp('i think he really could have.')
+  // doc.verbs().toPastTense()
+  // t.equal(doc.out(), 'i thought he really could have.', 'really could')
+
   t.end()
 })

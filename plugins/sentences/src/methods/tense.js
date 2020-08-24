@@ -1,5 +1,5 @@
 const parse = require('../parse')
-const { useParticiple, toParticiple } = require('./participle')
+const { useParticiple, toParticiple } = require('./_participle')
 
 /** he walks -> he walked */
 exports.toPastTense = function () {
@@ -13,8 +13,6 @@ exports.toPastTense = function () {
     if (useParticiple(vb)) {
       vb = vb.verbs().toParticiple()
       obj.verb.replaceWith(vb, false)
-      // console.log('here')
-      // vb.debug()
     } else {
       //do a normal conjugation
       vb = vb.verbs().toPastTense()
@@ -24,6 +22,25 @@ exports.toPastTense = function () {
     if (obj.object && obj.object.found && obj.object.has('#PresentTense')) {
       let verbs = obj.object.verbs()
       verbs.if('#PresentTense').verbs().toPastTense()
+    }
+  })
+  return this
+}
+
+/** he drives -> he has driven */
+exports.toParticiple = function () {
+  this.forEach((doc) => {
+    if (doc.has('has #Participle')) {
+      return
+    }
+    let obj = parse(doc)
+    let vb = obj.verb.clone()
+    vb = vb.verbs().toParticiple()
+    obj.verb.replaceWith(vb, false)
+    // trailing gerund/future/present are okay, but 'walked and eats' is not
+    if (obj.object && obj.object.found && obj.object.has('#PresentTense')) {
+      let verbs = obj.object.verbs()
+      verbs.if('#PresentTense').verbs().toParticiple()
     }
   })
   return this

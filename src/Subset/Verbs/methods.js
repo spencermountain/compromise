@@ -7,7 +7,7 @@ const { toParticiple, useParticiple } = require('./participle')
 // remove any tense-information in auxiliary verbs
 const makeNeutral = function (parsed) {
   //remove tense-info from auxiliaries
-  parsed.auxiliary.remove('(will|are|am)')
+  parsed.auxiliary.remove('(will|are|am|being)')
   parsed.auxiliary.remove('(did|does)')
   parsed.auxiliary.remove('(had|has|have)')
   //our conjugation includes the 'not' and the phrasal-verb particle

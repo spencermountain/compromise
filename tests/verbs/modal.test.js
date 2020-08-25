@@ -5,7 +5,7 @@ const nlp = require('../_lib')
 test('ignore-would-behaviour', t => {
   let doc = nlp('he would walk')
   doc.verbs().toPastTense()
-  t.equal(doc.text(), 'he walked', 'would-past')
+  t.equal(doc.text(), 'he would have walked', 'would-past')
 
   doc = nlp('he would walk')
   doc.verbs().toFutureTense()

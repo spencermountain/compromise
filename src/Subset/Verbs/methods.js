@@ -2,6 +2,19 @@ const toNegative = require('./toNegative')
 const parseVerb = require('./parse')
 const isPlural = require('./isPlural')
 const conjugate = require('./conjugate')
+const { toParticiple, useParticiple } = require('./participle')
+
+// remove any tense-information in auxiliary verbs
+const makeNeutral = function (parsed) {
+  //remove tense-info from auxiliaries
+  parsed.auxiliary.remove('(will|are|am)')
+  parsed.auxiliary.remove('(did|does)')
+  parsed.auxiliary.remove('(had|has|have)')
+  //our conjugation includes the 'not' and the phrasal-verb particle
+  parsed.particle.remove()
+  parsed.negative.remove()
+  return parsed
+}
 
 module.exports = {
   /** overload the original json with verb information */
@@ -56,6 +69,8 @@ module.exports = {
     }
     return this.buildFrom(list)
   },
+
+  /// Verb Inflection
   /**return verbs like 'we walk' and not 'spencer walks' */
   isPlural: function () {
     let list = []
@@ -79,7 +94,8 @@ module.exports = {
     return this.buildFrom(list)
   },
 
-  /**  */
+  /// Conjugation
+  /** return all forms of this verb  */
   conjugate: function () {
     let result = []
     this.forEach(vb => {
@@ -89,19 +105,25 @@ module.exports = {
     })
     return result
   },
-  /** */
+  /** walk ➔ walked*/
   toPastTense: function () {
     this.forEach(vb => {
       let parsed = parseVerb(vb)
+      // should we support 'would swim' ➔ 'would have swam'
+      if (useParticiple(parsed)) {
+        toParticiple(parsed, this.world)
+        return
+      }
       let str = conjugate(parsed, this.world).PastTense
       if (str) {
-        vb.replaceWith(str, false)
+        parsed = makeNeutral(parsed)
+        parsed.verb.replaceWith(str, false)
         // vb.tag('PastTense')
       }
     })
     return this
   },
-  /** */
+  /** walk ➔ walks */
   toPresentTense: function () {
     this.forEach(vb => {
       let parsed = parseVerb(vb)
@@ -112,25 +134,31 @@ module.exports = {
         str = obj.Infinitive
       }
       if (str) {
-        vb.replaceWith(str, false)
-        vb.tag('PresentTense')
+        parsed = makeNeutral(parsed)
+        // avoid 'he would walks'
+        parsed.auxiliary.remove('#Modal')
+        parsed.verb.replaceWith(str, false)
+        parsed.verb.tag('PresentTense')
       }
     })
     return this
   },
-  /** */
+  /** walk ➔ will walk*/
   toFutureTense: function () {
     this.forEach(vb => {
       let parsed = parseVerb(vb)
       let str = conjugate(parsed, this.world).FutureTense
       if (str) {
-        vb.replaceWith(str, false)
-        vb.tag('FutureTense')
+        parsed = makeNeutral(parsed)
+        // avoid 'he would will go'
+        parsed.auxiliary.remove('#Modal')
+        parsed.verb.replaceWith(str, false)
+        parsed.verb.tag('FutureTense')
       }
     })
     return this
   },
-  /** */
+  /** walks ➔ walk */
   toInfinitive: function () {
     this.forEach(vb => {
       let parsed = parseVerb(vb)
@@ -142,7 +170,7 @@ module.exports = {
     })
     return this
   },
-  /** */
+  /** walk ➔ walking */
   toGerund: function () {
     this.forEach(vb => {
       let parsed = parseVerb(vb)
@@ -154,25 +182,16 @@ module.exports = {
     })
     return this
   },
-  /** return a naked past-participle if it exists, otherwise past-tense */
+  /** drive ➔ driven - naked past-participle if it exists, otherwise past-tense */
   toParticiple: function () {
     this.forEach(vb => {
       let parsed = parseVerb(vb)
-      let obj = conjugate(parsed, this.world)
-      let str = obj.Participle || obj.PastTense
-      if (str) {
-        parsed.verb.replaceWith('have ' + str, false)
-        // tag it as a participle
-        parsed.verb.match('have [*]', 0).tag('Participle', 'toParticiple')
-        // turn 'i can swim' to -> 'i could swim'
-        if (parsed.auxiliary.has('can')) {
-          parsed.auxiliary.replace('can', 'could')
-        }
-      }
+      toParticiple(parsed, this.world)
     })
     return this
   },
 
+  /// Negation
   /** return only verbs with 'not'*/
   isNegative: function () {
     return this.if('#Negative')

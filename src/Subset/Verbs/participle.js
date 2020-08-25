@@ -10,13 +10,16 @@ const useParticiple = function (parsed) {
   if (parsed.auxiliary.has('am .+? being')) {
     return true
   }
+  if (parsed.auxiliary.has('had .+? been')) {
+    return true
+  }
   return false
 }
 
 // conjugate 'drive' ➔ 'have driven'
 const toParticiple = function (parsed, world) {
   //is it already a participle?
-  if (parsed.auxiliary.has('have') && parsed.verb.has('#Participle')) {
+  if (parsed.auxiliary.has('(have|had)') && parsed.verb.has('#Participle')) {
     return
   }
   // try to swap the main verb to its participle form

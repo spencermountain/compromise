@@ -127,6 +127,7 @@ module.exports = {
   toPresentTense: function () {
     this.forEach(vb => {
       let parsed = parseVerb(vb)
+
       let obj = conjugate(parsed, this.world)
       let str = obj.PresentTense
       // 'i look', not 'i looks'
@@ -134,11 +135,20 @@ module.exports = {
         str = obj.Infinitive
       }
       if (str) {
+        //awkward support for present-participle form
+        // -- should we support 'have been swimming' ➔ 'am swimming'
+        if (parsed.auxiliary.has('(have|had) been')) {
+          parsed.auxiliary.replace('(have|had) been', 'am being')
+          if (obj.Particle) {
+            str = obj.Particle || obj.PastTense
+          }
+          return
+        }
+        parsed.verb.replaceWith(str, false)
+        parsed.verb.tag('PresentTense')
         parsed = makeNeutral(parsed)
         // avoid 'he would walks'
         parsed.auxiliary.remove('#Modal')
-        parsed.verb.replaceWith(str, false)
-        parsed.verb.tag('PresentTense')
       }
     })
     return this

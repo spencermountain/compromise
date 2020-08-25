@@ -56,7 +56,7 @@ let list = [
   },
 
   // was being driven
-  { match: '[(be|being)] #Participle', group: 0, tag: 'Auxiliary', reason: 'being-foo' },
+  { match: '[(be|being|been)] #Participle', group: 0, tag: 'Auxiliary', reason: 'being-foo' },
 
   // ==== Phrasal ====
   //'foo-up'

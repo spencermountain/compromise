@@ -35,6 +35,7 @@ test('sneaky past participles', function (t) {
     ['i am being driven', 'i have been driven'],
     ['i should be driven', 'i should have been driven'],
     // past->past
+    ['i had been driven', 'i had been driven'],
     ['i should have been driven', 'i should have been driven'],
   ]
   arr.forEach(function (a) {

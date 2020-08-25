@@ -190,7 +190,13 @@ module.exports = {
   toParticiple: function () {
     this.forEach(vb => {
       let parsed = parseVerb(vb)
+      let noAux = !parsed.auxiliary.found
       toParticiple(parsed, this.world)
+      // dirty trick to  ensure our new auxiliary is found
+      if (noAux) {
+        parsed.verb.prepend(parsed.auxiliary.text())
+        parsed.auxiliary.remove()
+      }
     })
     return this
   },

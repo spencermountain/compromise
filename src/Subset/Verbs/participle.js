@@ -17,16 +17,15 @@ const toParticiple = function (parsed, world) {
   if (str) {
     parsed.verb.replaceWith(str, false)
   }
-  if (parsed.auxiliary.found) {
-    parsed.auxiliary.append('have')
-  }
-
+  parsed.auxiliary.append('have')
   // tag it as a participle
   parsed.verb.tag('Participle', 'toParticiple')
   // turn 'i can swim' to -> 'i could swim'
   parsed.auxiliary.replace('can', 'could')
   //'must be' ➔ 'must have been'
   parsed.auxiliary.replace('be have', 'have been')
+  //'not have' ➔ 'have not'
+  parsed.auxiliary.replace('not have', 'have not')
 }
 
 module.exports = {

@@ -7,7 +7,7 @@ const isPlural = require('./isPlural')
 // #Gerund : walking:     -> not walking
 // #Infinitive : walk     -> do not walk
 
-const toNegative = function(parsed, world) {
+const toNegative = function (parsed, world) {
   let vb = parsed.verb
   // if it's already negative...
   if (parsed.negative.found) {
@@ -17,6 +17,10 @@ const toNegative = function(parsed, world) {
   // would walk -> would not walk
   if (parsed.auxiliary.found) {
     parsed.auxiliary.eq(0).append('not')
+    // 'would not have' ➔ 'would not have'
+    if (parsed.auxiliary.has('#Modal have not')) {
+      parsed.auxiliary.replace('have not', 'not have')
+    }
     return
   }
   // is walking -> is not walking

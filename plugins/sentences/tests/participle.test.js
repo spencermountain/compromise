@@ -20,7 +20,7 @@ test('toPast finds participle form', function (t) {
 
   doc = nlp('i could actually drive')
   doc.sentences().toPastTense()
-  t.equal(doc.text(), 'i could actually have driven', 'with could actually')
+  t.equal(doc.text(), 'i could have actually driven', 'with could actually')
 
   doc = nlp("i seriously couldn't drive")
   doc.sentences().toPastTense()

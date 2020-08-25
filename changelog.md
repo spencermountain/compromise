@@ -10,12 +10,13 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 
 #### 13.4.0 [Unreleased]
 
-- **[change]** stop including adverbs in `.conjugate()` results
+- **[change]** stop including adverbs and some auxiliaries in `.conjugate()` results
+- **[change]** .append() and .prepend() on an empty doc now creates a new doc
 - **[new]** add `verbs().toParticiple()` method  (add to observables/verb)
 - **[new]** add `sentences().toParticiple()` method  (add to observables/verb)
 - **[fix]** some verb-tagging issues
 - **[fix]** contractions issue in `.clone()` 
-- 
+- **[fix]** try harder to retain modal-verbs in conjugation - 'i should drive' no-longer becomes 'i will drive'
 #### 13.3.2
 
 - fix for offset issue #771

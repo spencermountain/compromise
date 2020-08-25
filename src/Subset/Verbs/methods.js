@@ -147,6 +147,10 @@ module.exports = {
   toFutureTense: function () {
     this.forEach(vb => {
       let parsed = parseVerb(vb)
+      // 'i should drive' is already future-enough
+      if (useParticiple(parsed)) {
+        return
+      }
       let str = conjugate(parsed, this.world).FutureTense
       if (str) {
         parsed = makeNeutral(parsed)

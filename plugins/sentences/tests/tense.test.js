@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
-test('sentence-change-tense:', function(t) {
+test('sentence-change-tense:', function (t) {
   let arr = [
     ['john walks quickly', 'john walked quickly', 'john will walk quickly'],
     ['he is quick', 'he was quick', 'he will be quick'],
@@ -30,7 +30,7 @@ test('sentence-change-tense:', function(t) {
     //support negative
     // ['this isn\'t one sentence. This doesn\'t make two now.', 'this was not one sentence. This didn\'t make two now.', 'this won\'t be one sentence. This won\'t make two now.']
   ]
-  arr.forEach(function(a) {
+  arr.forEach(function (a) {
     let r = nlp(a[0]).sentences()
 
     r.toPastTense()
@@ -48,7 +48,7 @@ test('sentence-change-tense:', function(t) {
   t.end()
 })
 
-test('copula-form', function(t) {
+test('copula-form', function (t) {
   let m = nlp('john is nice').sentences()
 
   m.toPastTense()
@@ -77,7 +77,7 @@ test('copula-form', function(t) {
 })
 
 //
-test('conjugate-form', function(t) {
+test('conjugate-form', function (t) {
   let m = nlp('john walks quickly').sentences()
 
   m.toPastTense()
@@ -105,7 +105,7 @@ test('conjugate-form', function(t) {
   t.end()
 })
 
-test('particle-form', function(t) {
+test('particle-form', function (t) {
   let m = nlp('the stool falls over').sentences()
 
   m.toPastTense()
@@ -133,145 +133,91 @@ test('particle-form', function(t) {
   t.end()
 })
 
-test('contraction-cases', function(t) {
+test('contraction past-tense', function (t) {
   let arr = [
     [`I'm going to the shops`, `I went to the shops`],
     [`I'll go to the shops`, `I went to the shops`],
-  ]
-  arr.forEach(a => {
-    let str = nlp(a[0])
-      .sentences()
-      .toPastTense()
-      .out()
-    t.equal(str, a[1], 'past-tense ' + a.join(' - '))
-  })
-  arr = [
     [`We're looking`, `We looked`],
     [`We'll look`, `We looked`],
     [`We are looking`, `We looked`],
   ]
-  arr.forEach(a => {
-    let str = nlp(a[0])
-      .sentences()
-      .toPastTense()
-      .out()
+  arr.forEach((a) => {
+    let str = nlp(a[0]).sentences().toPastTense().out()
     t.equal(str, a[1], 'past-tense ' + a.join(' - '))
   })
-  arr = [
-    [`I'm going to the shops`, `I will go to the shops`],
-    [`I'll go to the shops`, `I will go to the shops`],
-  ]
-  arr.forEach(a => {
-    let str = nlp(a[0])
-      .sentences()
-      .toFutureTense()
-      .out()
-    t.equal(str, a[1], 'future-tense ' + a.join(' - '))
-  })
-  arr = [
-    [`I'm going to the shops`, `I go to the shops`],
-    [`I'll go to the shops`, `I go to the shops`],
-  ]
-  arr.forEach(a => {
-    let str = nlp(a[0])
-      .sentences()
-      .toPresentTense()
-      .out()
-    t.equal(str, a[1], 'present-tense ' + a.join(' - '))
-  })
-  arr = [
-    [`I'm looking for a bug`, `I look for a bug`],
-    [`I'll look for a bug`, `I look for a bug`],
-  ]
-  arr.forEach(a => {
-    let str = nlp(a[0])
-      .sentences()
-      .toPresentTense()
-      .out()
-    t.equal(str, a[1], 'present-tense ' + a.join(' - '))
-  })
-  // let str = nlp('I’m lookin’ for Amanda Hugginkiss')
-  //   .sentences()
-  //   .toPastTense()
-  //   .out()
-  // t.equal(str, 'i looked for Amanda Hugginkiss', 'present-tense slang')
   t.end()
 })
 
-test('pronoun-specific', function(t) {
+test('contraction future-tense', function (t) {
+  let arr = [
+    [`I'm going to the shops`, `I will go to the shops`],
+    [`I'll go to the shops`, `I will go to the shops`],
+  ]
+  arr.forEach((a) => {
+    let str = nlp(a[0]).sentences().toFutureTense().out()
+    t.equal(str, a[1], 'future-tense ' + a.join(' - '))
+  })
+  t.end()
+})
+
+test('contraction present-tense', function (t) {
+  let arr = [
+    [`I'm going to the shops`, `I am going to the shops`],
+    [`I'm looking for a bug`, `I am looking for a bug`],
+    [`I'll go to the shops`, `I go to the shops`],
+    [`I'll look for a bug`, `I look for a bug`],
+  ]
+  arr.forEach((a) => {
+    let str = nlp(a[0]).sentences().toPresentTense().out()
+    t.equal(str, a[1], 'present-tense ' + a.join(' - '))
+  })
+  t.end()
+})
+
+test('pronoun-specific', function (t) {
   //from present
-  let m = nlp('i am cool')
-    .sentences()
-    .toPresentTense()
+  let m = nlp('i am cool').sentences().toPresentTense()
   t.equal(m.out(), 'i am cool', 'toPresent-I')
-  m = nlp('i am cool')
-    .sentences()
-    .toPastTense()
+  m = nlp('i am cool').sentences().toPastTense()
   t.equal(m.out(), 'i was cool', 'toPastTense-I')
-  m = nlp('i am cool')
-    .sentences()
-    .toFutureTense()
+  m = nlp('i am cool').sentences().toFutureTense()
   t.equal(m.out(), 'i will be cool', 'toFutureTense-I')
 
   //from future
-  m = nlp('i will be cool')
-    .sentences()
-    .toFutureTense()
+  m = nlp('i will be cool').sentences().toFutureTense()
   t.equal(m.out(), 'i will be cool', 'toFutureTense-I-2')
-  m = nlp('i will be cool')
-    .sentences()
-    .toPastTense()
+  m = nlp('i will be cool').sentences().toPastTense()
   t.equal(m.out(), 'i was cool', 'toPastTense-I-2')
-  m = nlp('i will be cool')
-    .sentences()
-    .toPresentTense()
+  m = nlp('i will be cool').sentences().toPresentTense()
   t.equal(m.out(), 'i am cool', 'toPresentTense-I-2')
 
   //from past
-  m = nlp('i was cool')
-    .sentences()
-    .toPresentTense()
+  m = nlp('i was cool').sentences().toPresentTense()
   t.equal(m.out(), 'i am cool', 'toPresentTense-I-3')
-  m = nlp('i was cool')
-    .sentences()
-    .toPastTense()
+  m = nlp('i was cool').sentences().toPastTense()
   t.equal(m.out(), 'i was cool', 'toPastTense-I-3')
-  m = nlp('i was cool')
-    .sentences()
-    .toFutureTense()
+  m = nlp('i was cool').sentences().toFutureTense()
   t.equal(m.out(), 'i will be cool', 'toFutureTense-I-3')
 
   //with negative
-  m = nlp('i was not cool')
-    .sentences()
-    .toPresentTense()
+  m = nlp('i was not cool').sentences().toPresentTense()
   t.equal(m.out(), 'i am not cool', 'neg-1')
-  m = nlp("i wasn't cool")
-    .sentences()
-    .toPastTense()
+  m = nlp("i wasn't cool").sentences().toPastTense()
   t.equal(m.out(), "i wasn't cool", 'neg-2')
-  m = nlp('i was not cool')
-    .sentences()
-    .toFutureTense()
+  m = nlp('i was not cool').sentences().toFutureTense()
   t.equal(m.out(), 'i will not be cool', 'neg-3')
 
   //with adverbs
-  m = nlp('i was really cool')
-    .sentences()
-    .toPresentTense()
+  m = nlp('i was really cool').sentences().toPresentTense()
   t.equal(m.out(), 'i am really cool', 'toPresentTense-I-3')
-  m = nlp('i was really cool')
-    .sentences()
-    .toPastTense()
+  m = nlp('i was really cool').sentences().toPastTense()
   t.equal(m.out(), 'i was really cool', 'toPastTense-I-3')
-  m = nlp('i was really cool')
-    .sentences()
-    .toFutureTense()
+  m = nlp('i was really cool').sentences().toFutureTense()
   t.equal(m.out(), 'i will be really cool', 'toFutureTense-I-3')
   t.end()
 })
 
-test('tense-multiple', function(t) {
+test('tense-multiple', function (t) {
   let doc = nlp(`he walks down the street and smells the flowers.`)
   doc.sentences().toPastTense()
   t.equal(doc.text(), 'he walked down the street and smelled the flowers.', 'to-past')

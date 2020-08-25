@@ -13,7 +13,9 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - **[change]** stop including adverbs in `.conjugate()` results
 - **[new]** add `verbs().toParticiple()` method  (add to observables/verb)
 - **[new]** add `sentences().toParticiple()` method  (add to observables/verb)
-
+- **[fix]** some verb-tagging issues
+- **[fix]** contractions issue in `.clone()` 
+- 
 #### 13.3.2
 
 - fix for offset issue #771

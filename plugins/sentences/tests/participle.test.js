@@ -22,9 +22,9 @@ test('toPast finds participle form', function (t) {
   doc.sentences().toPastTense()
   t.equal(doc.text(), 'i could actually have driven', 'with could actually')
 
-  // doc = nlp("i seriously couldn't drive")
-  // doc.sentences().toPastTense()
-  // t.equal(doc.text(), "i seriously couldn't have driven", 'with adverb + neg')
+  doc = nlp("i seriously couldn't drive")
+  doc.sentences().toPastTense()
+  t.equal(doc.text(), "i seriously couldn't have driven", 'with adverb + neg')
 
   // doc = nlp("i seriously couldn't even drive")
   // doc.sentences().toPastTense()
@@ -50,19 +50,19 @@ test('toParticiple', function (t) {
   t.end()
 })
 
-// test('modal-present-to-past', function (t) {
-//   let arr = [
-//     ['he may drive', 'he may have driven'],
-//     ['he should smoke', 'he should have smoked'],
-//     ['i could go', 'i could have gone'],
-//     ['nobody can swim', 'nobody could have swam'],
-//     ['i must learn', 'i must have learned'],
-//     ['i really may travel to india', 'i really may have traveled to india'],
-//   ]
-//   arr.forEach((a) => {
-//     let doc = nlp(a[0])
-//     doc.sentences().toPastTense()
-//     t.equal(doc.text(), a[1], a[0])
-//   })
-//   t.end()
-// })
+test('modal-present-to-past', function (t) {
+  let arr = [
+    ['he may drive', 'he may have driven'],
+    ['he should smoke', 'he should have smoked'],
+    ['i could go', 'i could have gone'],
+    ['nobody can swim', 'nobody could have swam'],
+    ['i must learn', 'i must have learned'],
+    ['i really may travel', 'i really may have traveled'],
+  ]
+  arr.forEach((a) => {
+    let doc = nlp(a[0])
+    doc.sentences().toPastTense()
+    t.equal(doc.text(), a[1], a[0])
+  })
+  t.end()
+})

@@ -1,5 +1,12 @@
 const parse = require('../parse')
-const { useParticiple, toParticiple } = require('./_participle')
+
+// 'i could drive' -> 'i could have driven'
+const useParticiple = function (vb) {
+  if (vb.has('(could|should|would|may|can|must)')) {
+    return true
+  }
+  return false
+}
 
 /** he walks -> he walked */
 exports.toPastTense = function () {

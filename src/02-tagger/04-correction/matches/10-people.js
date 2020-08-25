@@ -83,7 +83,7 @@ let list = [
   { match: `#Infinitive [${months}]`, group: 0, tag: 'Person', reason: 'infinitive-person' },
   // may waits for
   { match: `[${months}] #PresentTense for`, group: 0, tag: 'Person', reason: 'ambig-active-for' },
-  // may waits for
+  // may waits to
   { match: `[${months}] #PresentTense to`, group: 0, tag: 'Person', reason: 'ambig-active-to' },
   // april will
   { match: `[${months}] #Modal`, group: 0, tag: 'Person', reason: 'ambig-modal' },

@@ -162,7 +162,12 @@ module.exports = {
       let str = obj.Participle || obj.PastTense
       if (str) {
         parsed.verb.replaceWith('have ' + str, false)
-        // parsed.verb.tag('Participle', 'toParticiple') //
+        // tag it as a participle
+        parsed.verb.match('have [*]', 0).tag('Participle', 'toParticiple')
+        // turn 'i can swim' to -> 'i could swim'
+        if (parsed.auxiliary.has('can')) {
+          parsed.auxiliary.replace('can', 'could')
+        }
       }
     })
     return this

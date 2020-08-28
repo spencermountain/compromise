@@ -58,7 +58,6 @@ const parseExplicit = function (doc, context) {
       return d
     }
   }
-
   let str = doc.text('reduced')
   // today, yesterday, tomorrow
   if (knownWord.hasOwnProperty(str) === true) {

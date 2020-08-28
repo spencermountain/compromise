@@ -40,6 +40,7 @@ const parseDate = function (doc, context) {
     console.log(`  shift:      ${JSON.stringify(shift)}`)
     console.log(`  rel:        ${rel || '-'}`)
     console.log(`  time:       ${time || '-'}`)
+    console.log(`\n  str:       '${doc.text()}'`)
     console.log('\n     ', d)
     console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n')
   }

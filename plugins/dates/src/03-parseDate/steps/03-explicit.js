@@ -58,6 +58,21 @@ const parseExplicit = function (doc, context) {
       return d
     }
   }
+
+  // support date-only 'the 21st'
+  m = doc.match('the [<date>#Value]')
+  if (m.found) {
+    let obj = {
+      month: context.today.month(),
+      date: m.groups('date').text(),
+      year: context.today.year(),
+    }
+    let d = new CalendarDate(obj, null, context)
+    if (d.d.isValid() === true) {
+      return d
+    }
+  }
+
   let str = doc.text('reduced')
   // today, yesterday, tomorrow
   if (knownWord.hasOwnProperty(str) === true) {

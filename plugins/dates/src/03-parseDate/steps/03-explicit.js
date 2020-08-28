@@ -22,6 +22,7 @@ const parseExplicit = function (doc, context) {
   if (!m.found) {
     m = doc.match('[<month>#Month] the [<date>#Value] [<year>#Year?]')
   }
+  // support 'dec 5th 2012'
   if (m.found) {
     let obj = {
       month: m.groups('month').text(),
@@ -33,11 +34,23 @@ const parseExplicit = function (doc, context) {
       return d
     }
   }
-
+  // support 'dec 5th'
   if (m.found) {
     let obj = {
       month: m.groups('month').text(),
       date: m.groups('date').text(),
+      year: context.today.year(),
+    }
+    let d = new CalendarDate(obj, null, context)
+    if (d.d.isValid() === true) {
+      return d
+    }
+  }
+  // support 'december'
+  if (doc.has('#Month')) {
+    let obj = {
+      month: doc.match('#Month').text(),
+      date: 1, //assume 1st
       year: context.today.year(),
     }
     let d = new CalendarDate(obj, null, context)

@@ -32,7 +32,7 @@ const tagYearSafe = (m, reason) => {
   }
 }
 
-const fixDates = function(doc) {
+const fixDates = function (doc) {
   doc.match('in the (night|evening|morning|afternoon|day|daytime)').tag('Time', 'in-the-night')
   doc.match('(#Value|#Time) (am|pm)').tag('Time', 'value-ampm')
 
@@ -55,22 +55,13 @@ const fixDates = function(doc) {
   let val = doc.if('#Value')
   if (val.found === true) {
     //june 7
-    val
-      .match('(#WeekDay|#Month) #Value')
-      .ifNo('#Money')
-      .tag('Date', 'date-value')
+    val.match('(#WeekDay|#Month) #Value').ifNo('#Money').tag('Date', 'date-value')
 
     //7 june
-    val
-      .match('#Value (#WeekDay|#Month)')
-      .ifNo('#Money')
-      .tag('Date', 'value-date')
+    val.match('#Value (#WeekDay|#Month)').ifNo('#Money').tag('Date', 'value-date')
 
     //may twenty five
-    val
-      .match('#TextValue #TextValue')
-      .if('#Date')
-      .tag('#Date', 'textvalue-date')
+    val.match('#TextValue #TextValue').if('#Date').tag('#Date', 'textvalue-date')
 
     //eg 'year'
     let duration = val.if('#Duration')
@@ -112,21 +103,11 @@ const fixDates = function(doc) {
     //early in june
     date.match('(early|late) (at|in)? the? #Date').tag('Time', 'early-evening')
     //tomorrow before 3
-    date
-      .match('#Date (by|before|after|at|@|about) #Cardinal')
-      .not('^#Date')
-      .tag('Time', 'date-before-Cardinal')
+    date.match('#Date (by|before|after|at|@|about) #Cardinal').not('^#Date').tag('Time', 'date-before-Cardinal')
     //saturday am
-    date
-      .match('#Date [(am|pm)]', 0)
-      .unTag('Verb')
-      .unTag('Copula')
-      .tag('Time', 'date-am')
+    date.match('#Date [(am|pm)]', 0).unTag('Verb').unTag('Copula').tag('Time', 'date-am')
     //feb to june
-    date
-      .match('#Date (#Preposition|to) #Date')
-      .ifNo('#Duration')
-      .tag('Date', 'date-prep-date')
+    date.match('#Date (#Preposition|to) #Date').ifNo('#Duration').tag('Date', 'date-prep-date')
   }
 
   //year/cardinal tagging
@@ -165,10 +146,7 @@ const fixDates = function(doc) {
     //by 6pm
     time.match('(by|before|after|at|@|about) #Time').tag('Time', 'preposition-time')
     //7 7pm
-    time
-      .match('#Cardinal #Time')
-      .not('#Year')
-      .tag('Time', 'value-time')
+    time.match('#Cardinal #Time').not('#Year').tag('Time', 'value-time')
     //2pm est
     time.match('#Time [(eastern|pacific|central|mountain)]', 0).tag('Date', 'timezone')
     //6pm est

@@ -6,8 +6,8 @@ nlp.extend(require('./plugins/numbers/src'))
 nlp.extend(require('./plugins/dates/src'))
 // nlp.extend(require('./plugins/sentences/src'))
 
-let doc = nlp('a year ago').debug()
-let dates = doc.dates({ today: null }).json(0)
+let doc = nlp('april fools').debug()
+let dates = doc.dates({ today: { year: 1999 } }).json(0)
 console.log(spacetime(dates.date.start).format('{day-short} {month-short} {date} {year}, {time}'))
 
 if (dates.date.end) {

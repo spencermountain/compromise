@@ -17,7 +17,7 @@ const knownWord = {
 const parseExplicit = function (doc, context) {
   let impliedYear = context.today.year()
   // 'fifth of june'
-  let m = doc.match('[<date>#Value] of [<month>#Month] [<year>#Year?]')
+  let m = doc.match('[<date>#Value] of? [<month>#Month] [<year>#Year?]')
   // 'june the fifth'
   if (!m.found) {
     m = doc.match('[<month>#Month] the? [<date>#Value] [<year>#Year?]')

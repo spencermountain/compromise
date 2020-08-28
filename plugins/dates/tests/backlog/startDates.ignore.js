@@ -598,9 +598,10 @@ test('start dates', (t) => {
       timezone: 'Canada/Eastern',
     }
     tests[k].tests.forEach((a) => {
-      let want = spacetime(a[1], context.timezone).startOf('day').iso()
+      let want = spacetime(a[1], context.timezone).startOf('day').format('iso-short')
       let json = nlp(a[0]).dates(context).json()[0] || {}
       let start = (json.date || {}).start
+      start = spacetime(start).format('iso-short')
       t.equal(start, want, a[0])
     })
   })

@@ -1,12 +1,14 @@
 const { Unit, Day, CalendarDate } = require('../_units')
 
 const knownWord = {
-  today: (context) => new Day(context.today, null, context),
+  today: (context) => {
+    return new Day(context.today, null, context)
+  },
   yesterday: (context) => {
-    new Day(context.today.minus(1, 'day'), null, context)
+    return new Day(context.today.minus(1, 'day'), null, context)
   },
   tomorrow: (context) => {
-    new Day(context.today.plus(1, 'day'), null, context)
+    return new Day(context.today.plus(1, 'day'), null, context)
   },
 }
 

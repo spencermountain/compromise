@@ -47,7 +47,7 @@
     "tape": "5.0.1"
   },
   "dependencies": {
-    "spacetime": "6.6.0",
+    "spacetime": "6.6.3",
     "spacetime-holiday": "0.0.2"
   },
   "license": "MIT"

@@ -20,7 +20,7 @@ const parseExplicit = function (doc, context) {
   let m = doc.match('[<date>#Value] of [<month>#Month] [<year>#Year?]')
   // 'june the fifth'
   if (!m.found) {
-    m = doc.match('[<month>#Month] the [<date>#Value] [<year>#Year?]')
+    m = doc.match('[<month>#Month] the? [<date>#Value] [<year>#Year?]')
   }
   // support 'dec 5th 2012'
   if (m.found) {

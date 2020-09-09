@@ -19,7 +19,7 @@ module.exports = [
   'lat', //latitude
   'lng', //longitude
   'vol', //volume
-  'psa', //psalms
+  // 'psa', //psalms
   'fm', //not am
   'def', //definition
   'misc',

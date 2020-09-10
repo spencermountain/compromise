@@ -1,4 +1,4 @@
-/* compromise 13.4.0 MIT */
+/* compromise 13.5.0 MIT */
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
@@ -3434,7 +3434,7 @@ var fromJSON = function fromJSON(json, world) {
 
 var fromJSON_1 = fromJSON;
 
-var _version = '13.4.0';
+var _version = '13.5.0';
 
 var _data = {
   "Comparative": "true¦better",
@@ -13899,6 +13899,12 @@ function instance(worldInstance) {
 
   nlp.world = function () {
     return world;
+  };
+  /** pre-parse any match statements */
+
+
+  nlp.parseMatch = function (str) {
+    return syntax_1(str);
   };
   /** current version of the library */
 

@@ -1,4 +1,4 @@
-/* compromise 13.4.0 MIT */
+/* compromise 13.5.0 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -3440,7 +3440,7 @@
 
   var fromJSON_1 = fromJSON;
 
-  var _version = '13.4.0';
+  var _version = '13.5.0';
 
   var _data = {
     "Comparative": "true¦better",
@@ -13905,6 +13905,12 @@
 
     nlp.world = function () {
       return world;
+    };
+    /** pre-parse any match statements */
+
+
+    nlp.parseMatch = function (str) {
+      return syntax_1(str);
     };
     /** current version of the library */
 

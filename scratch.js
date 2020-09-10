@@ -11,7 +11,8 @@ nlp.extend(require('./plugins/dates/src'))
 
 // let doc = nlp(`once a month`)
 let doc = nlp(`March 1929`)
-doc.debug()
+
+// doc.debug()
 let dates = doc.dates({ today: { year: 1999 } }).json(0)
 console.log(dates)
 if (dates.date.end) {

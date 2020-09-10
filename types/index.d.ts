@@ -41,6 +41,10 @@ declare interface nlp<D extends object, W extends object, Ph extends Object> {
   clone(): nlp<D, W, Ph>
   /**  current semver version of the library */
   version: nlp.ExtendedDocument<D, W, Ph>
+  /** grab the document's context data */
+  world(): W
+  /** pre-parse a match statement, for faster lookups*/
+  parseMatch(str: string): nlp<D, W, Ph>
 }
 
 declare function nlp(text?: string, lexicon?: Lexicon): nlp.DefaultDocument

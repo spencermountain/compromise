@@ -10,6 +10,10 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 
 #### [Unreleased]
 
+#### 13.5.0
+
+- **[new]** add `.parseMatch()` method for pre-parsing match statements
+
 #### 13.4.0
 
 - **[change]** stop including adverbs and some auxiliaries in `.conjugate()` results

@@ -328,6 +328,7 @@ _(these methods are on the `nlp` object)_
 - **[.verbose()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - log our decision-making for debugging
 - **[.version()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - current semver version of the library
 - **[.world()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - grab all current linguistic data
+- **[.parseMatch()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - pre-parse any match statements for faster lookups
 
 ##### Utils
 

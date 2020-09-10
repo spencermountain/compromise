@@ -1,4 +1,4 @@
-/* compromise-sentences 0.0.6 MIT */
+/* compromise-sentences 0.1.0 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -319,7 +319,15 @@
     toStatement: toStatement
   };
 
+  var useParticiple = function useParticiple(vb) {
+    if (vb.has('(could|should|would|may|can|must)')) {
+      return true;
+    }
+
+    return false;
+  };
   /** he walks -> he walked */
+
 
   var toPastTense = function toPastTense() {
     this.forEach(function (doc) {
@@ -328,13 +336,42 @@
       }
 
       var obj = parse_1(doc);
-      var vb = obj.verb.clone();
-      vb = vb.verbs().toPastTense();
-      obj.verb.replaceWith(vb, false); // trailing gerund/future/present are okay, but 'walked and eats' is not
+      var vb = obj.verb.clone(); // support 'he could drive' -> 'he could have driven'
+
+      if (useParticiple(vb)) {
+        vb = vb.verbs().toParticiple();
+        obj.verb.replaceWith(vb, false);
+      } else {
+        //do a normal conjugation
+        vb = vb.verbs().toPastTense();
+        obj.verb.replaceWith(vb, false);
+      } // trailing gerund/future/present are okay, but 'walked and eats' is not
+
 
       if (obj.object && obj.object.found && obj.object.has('#PresentTense')) {
         var verbs = obj.object.verbs();
         verbs["if"]('#PresentTense').verbs().toPastTense();
+      }
+    });
+    return this;
+  };
+  /** he drives -> he has driven */
+
+
+  var toParticiple = function toParticiple() {
+    this.forEach(function (doc) {
+      if (doc.has('has #Participle')) {
+        return;
+      }
+
+      var obj = parse_1(doc);
+      var vb = obj.verb.clone();
+      vb = vb.verbs().toParticiple();
+      obj.verb.replaceWith(vb, false); // trailing gerund/future/present are okay, but 'walked and eats' is not
+
+      if (obj.object && obj.object.found && obj.object.has('#PresentTense')) {
+        var verbs = obj.object.verbs();
+        verbs["if"]('#PresentTense').verbs().toParticiple();
       }
     });
     return this;
@@ -392,6 +429,7 @@
 
   var tense = {
     toPastTense: toPastTense,
+    toParticiple: toParticiple,
     toPresentTense: toPresentTense,
     toFutureTense: toFutureTense
   };

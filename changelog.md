@@ -8,15 +8,18 @@ compromise uses semver, and pushes to npm frequently
 
 While all _Major_ releases should be reviewed, our only two _large_ releases are **v6** in 2016 and and **v12** in 2019. Others have been mostly incremental, or niche.
 
-#### 13.4.0 [Unreleased]
+#### [Unreleased]
+
+#### 13.4.0
 
 - **[change]** stop including adverbs and some auxiliaries in `.conjugate()` results
 - **[change]** .append() and .prepend() on an empty doc now creates a new doc
-- **[new]** add `verbs().toParticiple()` method  (add to observables/verb)
-- **[new]** add `sentences().toParticiple()` method  (add to observables/verb)
+- **[new]** add `verbs().toParticiple()` method (add to observables/verb)
+- **[new]** add `sentences().toParticiple()` method (add to observables/verb)
 - **[fix]** some verb-tagging issues
-- **[fix]** contractions issue in `.clone()` 
+- **[fix]** contractions issue in `.clone()`
 - **[fix]** try harder to retain modal-verbs in conjugation - 'i should drive' no-longer becomes 'i will drive'
+
 #### 13.3.2
 
 - fix for offset issue #771

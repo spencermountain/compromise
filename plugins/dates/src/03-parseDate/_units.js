@@ -29,6 +29,7 @@ class WeekDay extends Unit {
   constructor(input, unit, context) {
     super(input, unit, context)
     this.unit = 'week'
+    this.d = spacetime(context.today, context.timezone)
     this.d = this.d.day(input)
     this.weekDay = this.d.dayName()
     //assume a wednesday in the future

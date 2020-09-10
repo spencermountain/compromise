@@ -16,6 +16,7 @@ module.exports = {
 
   if: 'Condition',
   unless: 'Condition',
+  lest: 'Condition',
 
   said: 'PastTense',
   had: 'PastTense',

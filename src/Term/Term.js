@@ -37,10 +37,14 @@ class Term {
 }
 
 /** create a deep-copy of this term */
-Term.prototype.clone = function() {
+Term.prototype.clone = function () {
   let term = new Term(this.text)
   term.pre = this.pre
   term.post = this.post
+  term.clean = this.clean
+  term.reduced = this.reduced
+  term.root = this.root
+  term.implicit = this.implicit
   term.tags = Object.assign({}, this.tags)
   //use the old id, so it can be matched with .match(doc)
   // term.id = this.id

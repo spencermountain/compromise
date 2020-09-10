@@ -1,9 +1,22 @@
 const tokenize = require('../../../01-tokenizer')
 
+// if it's empty, just create the phrase
+const makeNew = function (str, doc) {
+  let phrase = tokenize(str, doc.world)[0] //assume it's one sentence, for now
+  let tmpDoc = doc.buildFrom([phrase])
+  tmpDoc.tagger()
+  doc.list = tmpDoc.list
+  return doc
+}
+
 /** add these new terms to the end*/
-exports.append = function(str) {
+exports.append = function (str) {
   if (!str) {
     return this
+  }
+  // if it's empty, just create the phrase
+  if (!this.found) {
+    return makeNew(str, this)
   }
   // clear the cache
   this.uncache()
@@ -23,9 +36,13 @@ exports.insertAfter = exports.append
 exports.insertAt = exports.append
 
 /** add these new terms to the front*/
-exports.prepend = function(str) {
+exports.prepend = function (str) {
   if (!str) {
     return this
+  }
+  // if it's empty, just create the phrase
+  if (!this.found) {
+    return makeNew(str, this)
   }
   // clear the cache
   this.uncache()
@@ -44,7 +61,7 @@ exports.prepend = function(str) {
 exports.insertBefore = exports.prepend
 
 /** add these new things to the end*/
-exports.concat = function() {
+exports.concat = function () {
   // clear the cache
   this.uncache()
   let list = this.list.slice(0)
@@ -66,7 +83,7 @@ exports.concat = function() {
 }
 
 /** fully remove these terms from the document */
-exports.delete = function(match) {
+exports.delete = function (match) {
   // clear the cache
   this.uncache()
   let toRemove = this

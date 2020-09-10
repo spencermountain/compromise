@@ -1,5 +1,5 @@
 /** return a flat array of Term objects */
-exports.terms = function(n) {
+exports.terms = function (n) {
   if (this.length === 0) {
     return []
   }
@@ -35,7 +35,7 @@ exports.terms = function(n) {
 }
 
 /** return a shallow or deep copy of this phrase  */
-exports.clone = function(isShallow) {
+exports.clone = function (isShallow) {
   if (isShallow) {
     let p = this.buildFrom(this.start, this.length)
     p.cache = this.cache
@@ -44,6 +44,7 @@ exports.clone = function(isShallow) {
   //how do we clone part of the pool?
   let terms = this.terms()
   let newTerms = terms.map(t => t.clone())
+  // console.log(newTerms)
   //connect these new ids up
   newTerms.forEach((t, i) => {
     //add it to the pool..
@@ -59,13 +60,13 @@ exports.clone = function(isShallow) {
 }
 
 /** return last term object */
-exports.lastTerm = function() {
+exports.lastTerm = function () {
   let terms = this.terms()
   return terms[terms.length - 1]
 }
 
 /** quick lookup for a term id */
-exports.hasId = function(wantId) {
+exports.hasId = function (wantId) {
   if (this.length === 0 || !wantId) {
     return false
   }
@@ -100,12 +101,12 @@ exports.hasId = function(wantId) {
 }
 
 /** how many seperate, non-empty words is it? */
-exports.wordCount = function() {
+exports.wordCount = function () {
   return this.terms().filter(t => t.text !== '').length
 }
 
 /** get the full-sentence this phrase belongs to */
-exports.fullSentence = function() {
+exports.fullSentence = function () {
   let t = this.terms(0)
   //find first term in sentence
   while (t.prev) {

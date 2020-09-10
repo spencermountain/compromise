@@ -156,7 +156,7 @@ const logic = function (doc, context) {
   let d = parseDate(doc, context)
   return {
     start: d,
-    end: null,
+    end: d.clone().end(),
   }
 }
 module.exports = logic

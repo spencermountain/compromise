@@ -2,14 +2,14 @@ const test = require('tape')
 const nlp = require('../_lib')
 
 //ignore some modals during conjugation, i guess
-test('ignore-would-behaviour', t => {
+test('modal-verb conjugation', t => {
   let doc = nlp('he would walk')
   doc.verbs().toPastTense()
-  t.equal(doc.text(), 'he walked', 'would-past')
+  t.equal(doc.text(), 'he would have walked', 'would-past')
 
   doc = nlp('he would walk')
   doc.verbs().toFutureTense()
-  t.equal(doc.out(), 'he will walk', 'would-future')
+  t.equal(doc.out(), 'he would walk', 'would-future')
 
   doc = nlp('he would walk')
   doc.verbs().toPresentTense()

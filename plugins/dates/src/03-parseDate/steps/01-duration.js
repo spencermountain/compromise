@@ -8,7 +8,7 @@ const mapping = {
 }
 
 // when a unit of time is spoken of as 'this month' - instead of 'february'
-const namedUnit = function(doc, context) {
+const namedUnit = function (doc, context) {
   //this month, last quarter, next year
   let m = doc.match('(weekday|week|month|quarter|season|year)')
   if (m.found === true) {

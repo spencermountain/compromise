@@ -1,12 +1,15 @@
-const { Unit, Day, CalendarDate } = require('../_units')
+const { Unit, Day, CalendarDate, Month } = require('../_units')
+const tryHere = require('../../../../../src/Phrase/match/03-tryMatch')
 
 const knownWord = {
-  today: (context) => new Day(context.today, null, context),
+  today: (context) => {
+    return new Day(context.today, null, context)
+  },
   yesterday: (context) => {
-    new Day(context.today.minus(1, 'day'), null, context)
+    return new Day(context.today.minus(1, 'day'), null, context)
   },
   tomorrow: (context) => {
-    new Day(context.today.plus(1, 'day'), null, context)
+    return new Day(context.today.plus(1, 'day'), null, context)
   },
 }
 
@@ -14,11 +17,12 @@ const knownWord = {
 // most of this is done in spacetime
 const parseExplicit = function (doc, context) {
   let impliedYear = context.today.year()
-  // 'fifth of june'
-  let m = doc.match('[<date>#Value] of [<month>#Month] [<year>#Year?]')
-  // 'june the fifth'
+
+  // 'fifth of june 1992'
+  let m = doc.match('[<date>#Value] of? [<month>#Month] [<year>#Year]')
+  // 'june the fifth 1992'
   if (!m.found) {
-    m = doc.match('[<month>#Month] the [<date>#Value] [<year>#Year?]')
+    m = doc.match('[<month>#Month] the? [<date>#Value] [<year>#Year]')
   }
   if (m.found) {
     let obj = {
@@ -32,6 +36,27 @@ const parseExplicit = function (doc, context) {
     }
   }
 
+  //no-dates
+  // 'march 1992'
+  m = doc.match('[<month>#Month] of? [<year>#Year]')
+  if (m.found) {
+    let obj = {
+      month: m.groups('month').text(),
+      year: m.groups('year').text() || impliedYear,
+    }
+    let d = new Month(obj, null, context)
+    if (d.d.isValid() === true) {
+      return d
+    }
+  }
+  //no-years
+  // 'fifth of june'
+  m = doc.match('[<date>#Value] of? [<month>#Month]')
+  // 'june the fifth'
+  if (!m.found) {
+    m = doc.match('[<month>#Month] the? [<date>#Value]')
+  }
+  // support 'dec 5th'
   if (m.found) {
     let obj = {
       month: m.groups('month').text(),
@@ -43,7 +68,32 @@ const parseExplicit = function (doc, context) {
       return d
     }
   }
+  // support 'december'
+  if (doc.has('#Month')) {
+    let obj = {
+      month: doc.match('#Month').text(),
+      date: 1, //assume 1st
+      year: context.today.year(),
+    }
+    let d = new CalendarDate(obj, null, context)
+    if (d.d.isValid() === true) {
+      return d
+    }
+  }
 
+  // support date-only 'the 21st'
+  m = doc.match('the [<date>#Value]')
+  if (m.found) {
+    let obj = {
+      month: context.today.month(),
+      date: m.groups('date').text(),
+      year: context.today.year(),
+    }
+    let d = new CalendarDate(obj, null, context)
+    if (d.d.isValid() === true) {
+      return d
+    }
+  }
   let str = doc.text('reduced')
   // today, yesterday, tomorrow
   if (knownWord.hasOwnProperty(str) === true) {

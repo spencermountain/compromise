@@ -392,18 +392,18 @@ const tests = [
     ],
   },
   {
-    today: [2016, september, 28],
+    today: [2016, october, 28], //friday
     tests: [
-      ['saturday morning', [2016, october, 1]],
-      ['saturday early in the day', [2016, october, 1]],
-      ['saturday am', [2016, october, 1]],
-      ['saturday pm', [2016, october, 1]],
-      ['saturday noon', [2016, october, 1]],
-      ['saturday afternoon', [2016, october, 1]],
-      ['saturday evening', [2016, october, 1]],
-      ['saturday night', [2016, october, 1]],
-      ['saturday late night', [2016, october, 1]],
-      ['saturday late at night', [2016, october, 1]],
+      ['saturday morning', [2016, october, 29]],
+      ['saturday early in the day', [2016, october, 29]],
+      ['saturday am', [2016, october, 29]],
+      ['saturday pm', [2016, october, 29]],
+      ['saturday noon', [2016, october, 29]],
+      ['saturday afternoon', [2016, october, 29]],
+      ['saturday evening', [2016, october, 29]],
+      ['saturday night', [2016, october, 29]],
+      ['saturday late night', [2016, october, 29]],
+      ['saturday late at night', [2016, october, 29]],
     ],
   },
   {
@@ -598,9 +598,10 @@ test('start dates', (t) => {
       timezone: 'Canada/Eastern',
     }
     tests[k].tests.forEach((a) => {
-      let want = spacetime(a[1], context.timezone).startOf('day').iso()
+      let want = spacetime(a[1], context.timezone).startOf('day').format('iso-short')
       let json = nlp(a[0]).dates(context).json()[0] || {}
       let start = (json.date || {}).start
+      start = spacetime(start).format('iso-short')
       t.equal(start, want, a[0])
     })
   })

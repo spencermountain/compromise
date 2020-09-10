@@ -34,6 +34,17 @@ const parseDate = function (doc, context) {
   d = d || steps.holiday(doc, context)
   // 'this june 2nd'
   d = d || steps.explicit(doc, context)
+
+  if (typeof process !== undefined && process && process.env.DEBUG) {
+    console.log('\n\n=-=-=-=-=-=Date-=-=-=-=-=-=-')
+    console.log(`  shift:      ${JSON.stringify(shift)}`)
+    console.log(`  rel:        ${rel || '-'}`)
+    console.log(`  time:       ${time || '-'}`)
+    console.log(`\n  str:       '${doc.text()}'`)
+    console.log('\n     ', d)
+    console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n')
+  }
+
   if (!d) {
     return null
   }

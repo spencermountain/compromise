@@ -482,6 +482,7 @@ _(all match methods use the [match-syntax](https://docs.compromise.cool/compromi
   - **[.verbs().toFutureTense()](https://observablehq.com/@spencermountain/verbs)** - `'walked' → 'will walk'`
   - **[.verbs().toInfinitive()](https://observablehq.com/@spencermountain/verbs)** - `'walks' → 'walk'`
   - **[.verbs().toGerund()](https://observablehq.com/@spencermountain/verbs)** - `'walks' → 'walking'`
+  - **[.verbs().toParticiple()](https://observablehq.com/@spencermountain/verbs)** - `'drive' → 'driven'` - otherwise simple-past ('walked')
   - **[.verbs().toNegative()](https://observablehq.com/@spencermountain/verbs)** - `'went' → 'did not go'`
   - **[.verbs().toPositive()](https://observablehq.com/@spencermountain/verbs)** - `"didn't study" → 'studied'`
   - **[.verbs().isNegative()](https://observablehq.com/@spencermountain/verbs)** - return verbs with 'not'

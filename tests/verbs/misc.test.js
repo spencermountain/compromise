@@ -21,3 +21,31 @@ test('verbs.adverbs', function (t) {
 
   t.end()
 })
+
+test('dont conjugate modals', function (t) {
+  let doc = nlp('i may')
+  doc.verbs().toPastTense()
+  t.equal(doc.out(), 'i may have', 'may')
+
+  doc = nlp('i think he really could.')
+  doc.verbs().toPastTense()
+  t.equal(doc.out(), 'i thought he really could have.', 'really could')
+
+  doc = nlp('everybody ought to.')
+  doc.verbs().toPastTense()
+  t.equal(doc.out(), 'everybody ought to have.', 'ought to')
+
+  t.end()
+})
+
+// test('detect participle in past-tense', function (t) {
+//   let doc = nlp('everybody ought to swim.')
+//   doc.verbs().toPastTense()
+//   t.equal(doc.out(), 'everybody ought to have swam.', 'ought to swim')
+
+//   doc = nlp('i think he really could have.')
+//   doc.verbs().toPastTense()
+//   t.equal(doc.out(), 'i thought he really could have.', 'really could')
+
+//   t.end()
+// })

@@ -1,5 +1,6 @@
 const toInfinitive = require('../toInfinitive')
 const toBe = require('./toBe')
+const doModal = require('./doModal')
 
 const conjugate = function (parsed, world) {
   let verb = parsed.verb
@@ -7,6 +8,11 @@ const conjugate = function (parsed, world) {
   //special handling of 'is', 'will be', etc.
   if (verb.has('#Copula') || (verb.out('normal') === 'be' && parsed.auxiliary.has('will'))) {
     return toBe(parsed, world)
+  }
+
+  // special handling of 'he could.'
+  if (verb.has('#Modal')) {
+    return doModal(parsed, world)
   }
 
   let hasHyphen = parsed.verb.termList(0).hasHyphen()
@@ -25,15 +31,15 @@ const conjugate = function (parsed, world) {
     Object.keys(forms).forEach(k => (forms[k] += space + particle))
   }
   //put the adverb at the end?
-  if (parsed.adverb.found) {
-    let adverb = parsed.adverb.text()
-    let space = hasHyphen === true ? '-' : ' '
-    if (parsed.adverbAfter === true) {
-      Object.keys(forms).forEach(k => (forms[k] += space + adverb))
-    } else {
-      Object.keys(forms).forEach(k => (forms[k] = adverb + space + forms[k]))
-    }
-  }
+  // if (parsed.adverb.found) {
+  // let adverb = parsed.adverb.text()
+  // let space = hasHyphen === true ? '-' : ' '
+  // if (parsed.adverbAfter === true) {
+  //   Object.keys(forms).forEach(k => (forms[k] += space + adverb))
+  // } else {
+  //   Object.keys(forms).forEach(k => (forms[k] = adverb + space + forms[k]))
+  // }
+  // }
 
   //apply negative
   const isNegative = parsed.negative.found

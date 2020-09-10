@@ -17,9 +17,10 @@ module.exports = [
   { match: '#Organization+ #Possessive', tag: 'Possessive', reason: 'org-possessive' },
   //Los Angeles's fundraiser
   { match: '#Place+ #Possessive', tag: 'Possessive', reason: 'place-possessive' },
-
+  // assign all tasks
+  { match: '#Verb (all|every|each|most|some|no) [#PresentTense]', group: 0, tag: 'Noun', reason: 'all-presentTense' },
   //big dreams, critical thinking
-  { match: '#Adjective [#PresentTense]', group: 0, tag: 'Noun', reason: 'adj-presentTense' },
+  { match: '(#Adjective && !all) [#PresentTense]', group: 0, tag: 'Noun', reason: 'adj-presentTense' },
   //his fine
   { match: '(his|her|its) [#Adjective]', group: 0, tag: 'Noun', reason: 'his-fine' },
   //some pressing issues

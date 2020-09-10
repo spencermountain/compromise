@@ -2,10 +2,23 @@ const toNegative = require('./toNegative')
 const parseVerb = require('./parse')
 const isPlural = require('./isPlural')
 const conjugate = require('./conjugate')
+const { toParticiple, useParticiple } = require('./participle')
+
+// remove any tense-information in auxiliary verbs
+const makeNeutral = function (parsed) {
+  //remove tense-info from auxiliaries
+  parsed.auxiliary.remove('(will|are|am|being)')
+  parsed.auxiliary.remove('(did|does)')
+  parsed.auxiliary.remove('(had|has|have)')
+  //our conjugation includes the 'not' and the phrasal-verb particle
+  parsed.particle.remove()
+  parsed.negative.remove()
+  return parsed
+}
 
 module.exports = {
   /** overload the original json with verb information */
-  json: function(options) {
+  json: function (options) {
     let n = null
     if (typeof options === 'number') {
       n = options
@@ -35,7 +48,7 @@ module.exports = {
   },
 
   /** grab the adverbs describing these verbs */
-  adverbs: function() {
+  adverbs: function () {
     let list = []
     // look at internal adverbs
     this.forEach(vb => {
@@ -56,8 +69,10 @@ module.exports = {
     }
     return this.buildFrom(list)
   },
+
+  /// Verb Inflection
   /**return verbs like 'we walk' and not 'spencer walks' */
-  isPlural: function() {
+  isPlural: function () {
     let list = []
     this.forEach(vb => {
       let parsed = parseVerb(vb)
@@ -68,7 +83,7 @@ module.exports = {
     return this.buildFrom(list)
   },
   /** return verbs like 'spencer walks' and not 'we walk' */
-  isSingular: function() {
+  isSingular: function () {
     let list = []
     this.forEach(vb => {
       let parsed = parseVerb(vb)
@@ -79,8 +94,9 @@ module.exports = {
     return this.buildFrom(list)
   },
 
-  /**  */
-  conjugate: function() {
+  /// Conjugation
+  /** return all forms of this verb  */
+  conjugate: function () {
     let result = []
     this.forEach(vb => {
       let parsed = parseVerb(vb)
@@ -89,22 +105,29 @@ module.exports = {
     })
     return result
   },
-  /** */
-  toPastTense: function() {
+  /** walk ➔ walked*/
+  toPastTense: function () {
     this.forEach(vb => {
       let parsed = parseVerb(vb)
+      // should we support 'would swim' ➔ 'would have swam'
+      if (useParticiple(parsed)) {
+        toParticiple(parsed, this.world)
+        return
+      }
       let str = conjugate(parsed, this.world).PastTense
       if (str) {
-        vb.replaceWith(str, false)
+        parsed = makeNeutral(parsed)
+        parsed.verb.replaceWith(str, false)
         // vb.tag('PastTense')
       }
     })
     return this
   },
-  /** */
-  toPresentTense: function() {
+  /** walk ➔ walks */
+  toPresentTense: function () {
     this.forEach(vb => {
       let parsed = parseVerb(vb)
+
       let obj = conjugate(parsed, this.world)
       let str = obj.PresentTense
       // 'i look', not 'i looks'
@@ -112,26 +135,45 @@ module.exports = {
         str = obj.Infinitive
       }
       if (str) {
-        vb.replaceWith(str, false)
-        vb.tag('PresentTense')
+        //awkward support for present-participle form
+        // -- should we support 'have been swimming' ➔ 'am swimming'
+        if (parsed.auxiliary.has('(have|had) been')) {
+          parsed.auxiliary.replace('(have|had) been', 'am being')
+          if (obj.Particle) {
+            str = obj.Particle || obj.PastTense
+          }
+          return
+        }
+        parsed.verb.replaceWith(str, false)
+        parsed.verb.tag('PresentTense')
+        parsed = makeNeutral(parsed)
+        // avoid 'he would walks'
+        parsed.auxiliary.remove('#Modal')
       }
     })
     return this
   },
-  /** */
-  toFutureTense: function() {
+  /** walk ➔ will walk*/
+  toFutureTense: function () {
     this.forEach(vb => {
       let parsed = parseVerb(vb)
+      // 'i should drive' is already future-enough
+      if (useParticiple(parsed)) {
+        return
+      }
       let str = conjugate(parsed, this.world).FutureTense
       if (str) {
-        vb.replaceWith(str, false)
-        vb.tag('FutureTense')
+        parsed = makeNeutral(parsed)
+        // avoid 'he would will go'
+        parsed.auxiliary.remove('#Modal')
+        parsed.verb.replaceWith(str, false)
+        parsed.verb.tag('FutureTense')
       }
     })
     return this
   },
-  /** */
-  toInfinitive: function() {
+  /** walks ➔ walk */
+  toInfinitive: function () {
     this.forEach(vb => {
       let parsed = parseVerb(vb)
       let str = conjugate(parsed, this.world).Infinitive
@@ -142,8 +184,8 @@ module.exports = {
     })
     return this
   },
-  /** */
-  toGerund: function() {
+  /** walk ➔ walking */
+  toGerund: function () {
     this.forEach(vb => {
       let parsed = parseVerb(vb)
       let str = conjugate(parsed, this.world).Gerund
@@ -154,17 +196,32 @@ module.exports = {
     })
     return this
   },
+  /** drive ➔ driven - naked past-participle if it exists, otherwise past-tense */
+  toParticiple: function () {
+    this.forEach(vb => {
+      let parsed = parseVerb(vb)
+      let noAux = !parsed.auxiliary.found
+      toParticiple(parsed, this.world)
+      // dirty trick to  ensure our new auxiliary is found
+      if (noAux) {
+        parsed.verb.prepend(parsed.auxiliary.text())
+        parsed.auxiliary.remove()
+      }
+    })
+    return this
+  },
 
+  /// Negation
   /** return only verbs with 'not'*/
-  isNegative: function() {
+  isNegative: function () {
     return this.if('#Negative')
   },
   /**  return only verbs without 'not'*/
-  isPositive: function() {
+  isPositive: function () {
     return this.ifNo('#Negative')
   },
   /** add a 'not' to these verbs */
-  toNegative: function() {
+  toNegative: function () {
     this.list.forEach(p => {
       let doc = this.buildFrom([p])
       let parsed = parseVerb(doc)
@@ -173,7 +230,7 @@ module.exports = {
     return this
   },
   /** remove 'not' from these verbs */
-  toPositive: function() {
+  toPositive: function () {
     let m = this.match('do not #Verb')
     if (m.found) {
       m.remove('do not')

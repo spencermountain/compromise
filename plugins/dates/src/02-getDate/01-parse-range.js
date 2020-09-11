@@ -154,9 +154,15 @@ const logic = function (doc, context) {
   }
   //else, try whole thing
   let d = parseDate(doc, context)
+  if (d) {
+    return {
+      start: d,
+      end: d.clone().end(),
+    }
+  }
   return {
-    start: d,
-    end: d.clone().end(),
+    start: null,
+    end: null,
   }
 }
 module.exports = logic

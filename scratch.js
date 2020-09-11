@@ -10,10 +10,10 @@ nlp.extend(require('./plugins/dates/src'))
 // console.log(spacetime(dates.date.start).format('{day-short} {month-short} {date} {year}, {time}'))
 
 // let doc = nlp(`once a month`)
-let doc = nlp(`March 1929`)
+let doc = nlp(`wednesday`)
 
 // doc.debug()
-let dates = doc.dates({ today: { year: 1999 } }).json(0)
+let dates = doc.dates().json(0)
 console.log(dates)
 if (dates.date.end) {
   console.log(spacetime(dates.date.end).format('{day-short} {month-short} {date} {year}, {time}'))

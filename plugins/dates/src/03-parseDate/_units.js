@@ -29,13 +29,27 @@ class WeekDay extends Unit {
   constructor(input, unit, context) {
     super(input, unit, context)
     this.unit = 'week'
-    this.d = spacetime(context.today, context.timezone)
-    this.d = this.d.day(input)
-    this.weekDay = this.d.dayName()
-    //assume a wednesday in the future
-    if (this.d.date() < spacetime.now(context.timezone).date()) {
-      this.d = this.d.add(7, 'days')
+    // is the input just a weekday?
+    if (typeof input === 'string') {
+      this.d = spacetime(context.today, context.timezone)
+      this.d = this.d.day(input)
+      // assume a wednesday in the future
+      if (this.d.date() < spacetime.now(context.timezone).date()) {
+        this.d = this.d.add(7, 'days')
+      }
+    } else {
+      this.d = input
     }
+    this.weekDay = this.d.dayName()
+  }
+  clone() {
+    //overloaded method
+    return new WeekDay(this.d, this.unit, this.context)
+  }
+  end() {
+    //overloaded method
+    this.d = this.d.endOf('day')
+    return this
   }
   next() {
     this.d = this.d.add(7, 'days')

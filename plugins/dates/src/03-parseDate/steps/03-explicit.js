@@ -35,7 +35,6 @@ const parseExplicit = function (doc, context) {
       return d
     }
   }
-
   //no-dates
   // 'march 1992'
   m = doc.match('[<month>#Month] of? [<year>#Year]')

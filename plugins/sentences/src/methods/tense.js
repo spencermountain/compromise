@@ -11,25 +11,25 @@ const useParticiple = function (vb) {
 /** he walks -> he walked */
 exports.toPastTense = function () {
   this.forEach((doc) => {
-    if (doc.has('#PastTense')) {
-      return
-    }
+    // if (doc.has('#PastTense')) {
+    //   return
+    // }
     let obj = parse(doc)
     let vb = obj.verb.clone()
-    // support 'he could drive' -> 'he could have driven'
-    if (useParticiple(vb)) {
-      vb = vb.verbs().toParticiple()
-      obj.verb.replaceWith(vb, false)
-    } else {
-      //do a normal conjugation
-      vb = vb.verbs().toPastTense()
-      obj.verb.replaceWith(vb, false)
-    }
-    // trailing gerund/future/present are okay, but 'walked and eats' is not
-    if (obj.object && obj.object.found && obj.object.has('#PresentTense')) {
-      let verbs = obj.object.verbs()
-      verbs.if('#PresentTense').verbs().toPastTense()
-    }
+    // // support 'he could drive' -> 'he could have driven'
+    // if (useParticiple(vb)) {
+    //   vb = vb.verbs().toParticiple()
+    //   obj.verb.replaceWith(vb, false)
+    // } else {
+    //   //do a normal conjugation
+    vb = vb.verbs().toPastTense()
+    // obj.verb.replaceWith(vb, false)
+    // }
+    // // trailing gerund/future/present are okay, but 'walked and eats' is not
+    // if (obj.object && obj.object.found && obj.object.has('#PresentTense')) {
+    //   let verbs = obj.object.verbs()
+    //   verbs.if('#PresentTense').verbs().toPastTense()
+    // }
   })
   return this
 }

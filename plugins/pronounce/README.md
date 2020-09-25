@@ -23,13 +23,12 @@ an [nlp_compromise](https://github.com/nlp-compromise/nlp_compromise) plugin for
 it is a [metaphone](https://en.wikipedia.org/wiki/Metaphone) implementation in javascript, based on Chris Umbel's great work in [naturalNode](https://github.com/NaturalNode/natural/blob/master/lib/natural/phonetics/metaphone.js)
 
 ```javascript
-var nlp = require('nlp_compromise')
-var nlpPronounce = require('nlp-pronounce')
-nlp.plugin(nlpPronounce)
-
-var t = nlp.text('phil collins')
-t.pronounce()
-// [{pronounce:"fil kolins", text:"phil collins"}]
+var nlp = require('compromise')
+var nlpPronounce = require('compromise-pronounce')
+nlp.extend(nlpPronounce)
+var texxt = 'Phil Collins'
+var doc = nlp(texxt)
+console.log(doc.pronounce())
 ```
 
 it also takes advantage of the tokenization & cleverness of nlp_compromise.

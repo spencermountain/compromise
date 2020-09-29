@@ -1,4 +1,4 @@
-/* compromise-dates 1.1.0 MIT */
+/* compromise-dates 1.2.0 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -298,7 +298,9 @@
 
   var values = function values(doc) {
     // a year ago
-    doc.match('!once [a] #Duration', 0).replaceWith('1').tag('Cardinal', here);
+    if (!doc.has('once [a] #Duration')) {
+      doc.match('[a] #Duration', 0).replaceWith('1').tag('Cardinal', here);
+    }
 
     if (doc.has('#Value')) {
       //june 5 to 7th
@@ -500,17 +502,19 @@
 
 
       if (d.has('(minutes|seconds|weeks|hours|days|months)') && !d.has('#Value #Duration')) {
-        d.match('(minutes|seconds|weeks|hours|days|months)').unTag('#Date', 'log-hours');
+        d.match('(minutes|seconds|weeks|hours|days|months)').unTag('Date', 'log-hours');
       } // about thanksgiving
 
 
       if (d.has('about #Holiday')) {
         d.match('about').unTag('#Date', 'about-thanksgiving');
-      } // dangling date-chunks
+      } // a month from now
+
+
+      d.match('(from|by|before) now').unTag('Time'); // dangling date-chunks
       // if (d.has('!#Date (in|of|by|for) !#Date')) {
       //   d.unTag('Date', 'dangling-date')
       // }
-
     }
 
     return doc;
@@ -5418,19 +5422,37 @@
       _classCallCheck(this, WeekDay);
 
       _this5 = _super5.call(this, input, unit, context);
-      _this5.unit = 'week';
-      _this5.d = spacetime$2(context.today, context.timezone);
-      _this5.d = _this5.d.day(input);
-      _this5.weekDay = _this5.d.dayName(); //assume a wednesday in the future
+      _this5.unit = 'week'; // is the input just a weekday?
 
-      if (_this5.d.date() < spacetime$2.now(context.timezone).date()) {
-        _this5.d = _this5.d.add(7, 'days');
+      if (typeof input === 'string') {
+        _this5.d = spacetime$2(context.today, context.timezone);
+        _this5.d = _this5.d.day(input); // assume a wednesday in the future
+
+        if (_this5.d.isBefore(context.today)) {
+          _this5.d = _this5.d.add(7, 'days');
+        }
+      } else {
+        _this5.d = input;
       }
 
+      _this5.weekDay = _this5.d.dayName();
       return _this5;
     }
 
     _createClass(WeekDay, [{
+      key: "clone",
+      value: function clone() {
+        //overloaded method
+        return new WeekDay(this.d, this.unit, this.context);
+      }
+    }, {
+      key: "end",
+      value: function end() {
+        //overloaded method
+        this.d = this.d.endOf('day');
+        return this;
+      }
+    }, {
       key: "next",
       value: function next() {
         this.d = this.d.add(7, 'days');
@@ -5524,7 +5546,7 @@
 
   var namedUnit = function namedUnit(doc, context) {
     //this month, last quarter, next year
-    var m = doc.match('(weekday|week|month|quarter|season|year)');
+    var m = doc.match('^(weekday|week|month|quarter|season|year)$');
 
     if (m.found === true) {
       var str = m.lastTerm().text('reduced');
@@ -5542,7 +5564,7 @@
     } //try this version - 'next friday, last thursday'
 
 
-    m = doc.match('(monday|tuesday|wednesday|thursday|friday|saturday|sunday)');
+    m = doc.match('^(monday|tuesday|wednesday|thursday|friday|saturday|sunday)$');
 
     if (m.found === true) {
       var _str = m.lastTerm().text('reduced');
@@ -6204,17 +6226,15 @@
 
     d = d || steps.holiday(doc, context); // 'this june 2nd'
 
-    d = d || steps.explicit(doc, context);
-
-    if ((typeof process === "undefined" ? "undefined" : _typeof(process)) !== undefined && process && process.env.DEBUG) {
-      console.log('\n\n=-=-=-=-=-=Date-=-=-=-=-=-=-');
-      console.log("  shift:      ".concat(JSON.stringify(shift)));
-      console.log("  rel:        ".concat(rel || '-'));
-      console.log("  time:       ".concat(time || '-'));
-      console.log("\n  str:       '".concat(doc.text(), "'"));
-      console.log('\n     ', d);
-      console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n');
-    }
+    d = d || steps.explicit(doc, context); // if (typeof process !== undefined && process && process.env.DEBUG) {
+    // console.log('\n\n=-=-=-=-=-=Date-=-=-=-=-=-=-')
+    // console.log(`  shift:      ${JSON.stringify(shift)}`)
+    // console.log(`  rel:        ${rel || '-'}`)
+    // console.log(`  time:       ${time || '-'}`)
+    // console.log(`\n  str:       '${doc.text()}'`)
+    // console.log('\n     ', d)
+    // console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n')
+    // }
 
     if (!d) {
       return null;
@@ -6438,9 +6458,17 @@
 
 
     var d = _03ParseDate(doc, context);
+
+    if (d) {
+      return {
+        start: d,
+        end: d.clone().end()
+      };
+    }
+
     return {
-      start: d,
-      end: d.clone().end()
+      start: null,
+      end: null
     };
   };
 

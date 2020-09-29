@@ -62,12 +62,15 @@ const fixUp = function (doc) {
     }
     // log the hours
     if (d.has('(minutes|seconds|weeks|hours|days|months)') && !d.has('#Value #Duration')) {
-      d.match('(minutes|seconds|weeks|hours|days|months)').unTag('#Date', 'log-hours')
+      d.match('(minutes|seconds|weeks|hours|days|months)').unTag('Date', 'log-hours')
     }
     // about thanksgiving
     if (d.has('about #Holiday')) {
       d.match('about').unTag('#Date', 'about-thanksgiving')
     }
+
+    // a month from now
+    d.match('(from|by|before) now').unTag('Time')
     // dangling date-chunks
     // if (d.has('!#Date (in|of|by|for) !#Date')) {
     //   d.unTag('Date', 'dangling-date')

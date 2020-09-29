@@ -38,3 +38,8 @@
     He was snowboarding yesterday afternoon.   [was snowboarding = past continuous]
     Tomorrow, my friends and I are going to be snowboarding.   [are going to be snowboarding = future 
 */
+
+
+// let doc = nlp(`so I have not arranged`)
+// doc = doc.clone()
+// console.log(doc.json({ offset: true, normal: true })[0].offset)

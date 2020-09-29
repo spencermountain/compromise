@@ -34,7 +34,7 @@ class WeekDay extends Unit {
       this.d = spacetime(context.today, context.timezone)
       this.d = this.d.day(input)
       // assume a wednesday in the future
-      if (this.d.date() < spacetime.now(context.timezone).date()) {
+      if (this.d.isBefore(context.today)) {
         this.d = this.d.add(7, 'days')
       }
     } else {

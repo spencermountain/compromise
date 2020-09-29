@@ -2,7 +2,9 @@ const here = 'date-values'
 //
 const values = function (doc) {
   // a year ago
-  doc.match('!once [a] #Duration', 0).replaceWith('1').tag('Cardinal', here)
+  if (!doc.has('once [a] #Duration')) {
+    doc.match('[a] #Duration', 0).replaceWith('1').tag('Cardinal', here)
+  }
   if (doc.has('#Value')) {
     //june 5 to 7th
     doc.match('#Month #Value to #Value of? #Year?').tag('Date', here)

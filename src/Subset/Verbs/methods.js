@@ -119,6 +119,15 @@ module.exports = {
       if (isImperative(parsed)) {
         return
       }
+      // don't conjugate 'to be'
+      if (vb.has('be') && vb.lookBehind('to$').found) {
+        return
+      }
+      // handle 'is raining' -> 'was raining'
+      if (parsed.verb.has('#Gerund') && parsed.auxiliary.has('(is|will|was)')) {
+        vb.replace('is', 'was')
+        return
+      }
       let str = conjugate(parsed, this.world).PastTense
       if (str) {
         parsed = makeNeutral(parsed)

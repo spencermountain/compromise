@@ -4,7 +4,7 @@ const nlp = require('./src/index')
 // let txt = require('./scripts/test/speed/_sotu-text.js')
 // nlp.extend(require('./plugins/numbers/src'))
 // nlp.extend(require('./plugins/dates/src'))
-// nlp.extend(require('./plugins/sentences/src'))
+nlp.extend(require('./plugins/sentences/src'))
 
 // let doc = nlp(`before 2017`)
 // // let doc = nlp(`last week`)
@@ -16,13 +16,10 @@ const nlp = require('./src/index')
 // let obj = doc.dates({ today: today }).json()[0]
 // console.log(spacetime(obj.date.start).format('{nice-day} {year}'))
 
-let doc = nlp(`john is not really walking`)
-let terms = doc.out('terms')
-console.log(terms)
-// let doc = nlp(`morning's here!`)
-// doc.verbs().toPastTense()
-// doc.debug()
-// doc.verbs().toPastTense()
+let doc = nlp(`i think it will be raining`)
+// let doc = nlp(`to be rich`)
+doc.verbs().toPastTense()
+doc.debug()
 /*
 i pronounce it to be
 i've got to 

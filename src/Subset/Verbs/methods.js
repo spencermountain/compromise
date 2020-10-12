@@ -245,7 +245,6 @@ module.exports = {
   /** who, or what is doing this action? */
   subject: function () {
     let list = []
-    // return this.map(p => getSubject(p))
     this.forEach(p => {
       let found = getSubject(p)
       if (found.list[0]) {

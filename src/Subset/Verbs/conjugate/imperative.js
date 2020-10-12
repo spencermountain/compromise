@@ -6,13 +6,13 @@ exports.isImperative = function (parsed) {
     return true
   }
   // speak the truth
-  if (parsed.original.has('^#Infinitive')) {
-    // 'i speak the truth' is not the same
-    // if (parsed.subject.has('(i|we)')) {
-    // return false
-    // }
-    return true
-  }
+  // if (parsed.verb.has('^#Infinitive')) {
+  //   // 'i speak' is not imperative
+  //   if (parsed.subject.has('(i|we|you|they)')) {
+  //     return false
+  //   }
+  //   return true
+  // }
   return false
 }
 

@@ -1,5 +1,5 @@
 /** return json metadata for this phrase */
-exports.json = function(options = {}, world) {
+exports.json = function (options = {}, world) {
   let res = {}
   // text data
   if (options.text) {

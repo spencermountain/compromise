@@ -14,7 +14,9 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 
 - **[new]** first-attempt at `verbs().subject()` method
 - **[change]** avoid conjugating imperative tense - 'please close the door'
-- **[change]** misc tagging fixes
+- **[change]** misc tagging fixes #786
+- **[change]** .nouns() results split on quotations #783
+- **[change]** NumberRange must be < 4 digits #735
 
 #### 13.5.0
 

@@ -101,10 +101,13 @@ let list = [
   // would wade
   { match: `#Modal [${verbs}]`, group: 0, tag: 'Verb', reason: 'would-mark' },
   { match: `#Adverb [${verbs}]`, group: 0, tag: 'Verb', reason: 'really-mark' },
+  //to mark
+  { match: '(to|#Modal) [mark]', group: 0, tag: 'PresentTense', reason: 'to-mark' },
+
   // wade smith
   { match: `${verbs} #Person`, tag: 'Person', reason: 'rob-smith' },
   // wade m. Cooper
-  { match: `${verbs} #Acronym? #ProperNoun`, tag: 'Person', reason: 'rob-a-smith' },
+  { match: `${verbs} #Acronym #ProperNoun`, tag: 'Person', reason: 'rob-a-smith' },
 
   // damn them
   { match: '[shit] (#Determiner|#Possessive|them)', group: 0, tag: 'Verb', reason: 'swear1-verb' },

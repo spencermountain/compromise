@@ -112,6 +112,7 @@ module.exports = {
     [/^[a-z]et$/, Verb],
   ],
   s: [
+    [/.[^aeiou]ises$/, Pres],
     [/.[rln]ates$/, Pres],
     [/.[^z]ens$/, Verb],
     [/.[lstrn]us$/, Sing],

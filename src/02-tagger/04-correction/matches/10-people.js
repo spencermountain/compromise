@@ -61,6 +61,7 @@ let list = [
   { match: '#Honorific #FirstName? #ProperNoun', tag: 'Person', reason: 'dr-john-Title' },
   //peter the great
   { match: '#FirstName the #Adjective', tag: 'Person', reason: 'name-the-great' },
+
   //very common-but-ambiguous lastnames
   {
     match: '#FirstName (green|white|brown|hall|young|king|hill|cook|gray|price)',

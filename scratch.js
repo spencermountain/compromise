@@ -1,6 +1,6 @@
 const nlp = require('./src/index')
-const spacetime = require('/Users/spencer/mountain/spacetime/src')
-// nlp.verbose(true)
+// const spacetime = require('/Users/spencer/mountain/spacetime/src')
+nlp.verbose(true)
 // let txt = require('./scripts/test/speed/_sotu-text.js')
 nlp.extend(require('./plugins/numbers/src'))
 nlp.extend(require('./plugins/dates/src'))
@@ -16,8 +16,5 @@ nlp.extend(require('./plugins/dates/src'))
 // let obj = doc.dates({ today: today }).json()[0]
 // console.log(spacetime(obj.date.start).format('{nice-day} {year}'))
 
-let doc = nlp(`
-What to stream this weekend: Birds of Prey, The Walking Dead: Word Beyond and more highlights`)
-const knownTerms = ['Birds of Prey', 'The Walking Dead', 'Word Beyond']
-
-doc.lookup(knownTerms).debug()
+// let doc = nlp(`Backlash as gym advertises 'slave' workout to mark Black History Month`, {})
+// doc.debug()

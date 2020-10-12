@@ -352,6 +352,7 @@ module.exports = [
   'pile',
   'plan',
   'play',
+  'plead',
   'plug',
   'plunge',
   'point',

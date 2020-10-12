@@ -13,7 +13,7 @@ const subclass = [
   require('./People'),
 ]
 
-const extend = function(Doc) {
+const extend = function (Doc) {
   // add basic methods
   Object.keys(subsets).forEach(k => (Doc.prototype[k] = subsets[k]))
   // add subclassed methods

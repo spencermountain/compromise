@@ -12,7 +12,7 @@ const nlp = require('../_lib')
 // NNN: class probability function; text analysis system; gradient elution chromatography
 // NPN: degrees of freedom; [no example]; energy of adsorption
 
-test('noun-phrases', function(t) {
+test('noun-phrases', function (t) {
   ;[
     ['he was a person of interest in the case', 'person of interest'],
     ['he was the mayor of chicago', 'mayor of chicago'],
@@ -33,10 +33,9 @@ test('noun-phrases', function(t) {
     ['a typical machine learning documentary film', 'machine learning documentary film'],
     ['every cold war re-enactment is boring', 'cold war reenactment'],
     ['two slices of cranberry', 'slices of cranberry'],
-  ].forEach(function(a) {
-    const str = nlp(a[0])
-      .nouns(0)
-      .out('normal')
+    [`Japan 'Twitter killer' pleads guilty to murders`, 'japan'],
+  ].forEach(function (a) {
+    const str = nlp(a[0]).nouns(0).out('normal')
     t.equal(str, a[1], a[0] + ' -> "' + str + '"')
   })
   t.end()

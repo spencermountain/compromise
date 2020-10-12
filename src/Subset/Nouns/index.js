@@ -14,6 +14,12 @@ const addMethod = function (Doc) {
     // combine them back together
     m = m.concat(keep)
 
+    // don't combine over scare-quotes
+    let quotes = m.quotations()
+    if (quotes.found) {
+      m = m.splitOn(quotes.eq(0))
+    }
+
     m = m.match('#Noun+ (of|by)? the? #Noun+?')
     //nouns that we don't want in these results, for weird reasons
     if (opts.keep_anaphora !== true) {

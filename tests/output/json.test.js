@@ -1,14 +1,14 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-const hasTag = function(term, want) {
+const hasTag = function (term, want) {
   if (!term || !term.tags) {
     return false
   }
   return term.tags.some(tag => tag === want)
 }
 
-test('json out default', function(t) {
+test('json out default', function (t) {
   let doc = nlp('who are you? what is this?')
   let json = doc.json({ terms: true })
   t.equal(json.length, 2, 'json-len')
@@ -18,7 +18,7 @@ test('json out default', function(t) {
   t.end()
 })
 
-test('json out trim', function(t) {
+test('json out trim', function (t) {
   let doc = nlp('who are you? what is this?')
   let json = doc.json({ trim: false, terms: false })
   t.equal(json.length, 2, 'json-len')
@@ -28,7 +28,7 @@ test('json out trim', function(t) {
   t.end()
 })
 
-test('json out implicit', function(t) {
+test('json out implicit', function (t) {
   let str = `he isn't`
   let doc = nlp(str)
   let json = doc.json()
@@ -46,7 +46,7 @@ test('json out implicit', function(t) {
   t.end()
 })
 
-test('json terms out', function(t) {
+test('json terms out', function (t) {
   let doc = nlp(`she is not`)
   let json = doc.json({ text: false, terms: { clean: true, id: true, bestTag: true, whitespace: true } })
   t.equal(json.length, 1, 'json-len')
@@ -64,7 +64,7 @@ test('json terms out', function(t) {
   t.end()
 })
 
-test('json-index:', function(t) {
+test('json-index:', function (t) {
   let doc = nlp(`john is not really walking`)
   let obj = doc.match('really').json({ index: true })[0]
   t.equal(obj.terms[0].index, 3, 'index:3')
@@ -72,14 +72,14 @@ test('json-index:', function(t) {
   t.end()
 })
 
-test('json-unique:', function(t) {
+test('json-unique:', function (t) {
   let doc = nlp(`a b c b a`)
   let arr = doc.terms().json({ unique: true, terms: false, count: true })
   t.equal(arr.length, 3, 'no duplicates')
   t.end()
 })
 
-test('out-custom:', function(t) {
+test('out-custom:', function (t) {
   const doc = nlp('The competent drum work of Don Brewer?')
   const arr = doc.json({
     terms: {
@@ -98,5 +98,17 @@ test('out-custom:', function(t) {
     true,
     'has tags'
   )
+  t.end()
+})
+
+test('out:', function (t) {
+  let doc = nlp(`john is not really walking`)
+  let json = doc.out('json')
+  t.equal(json.length, 1, 'one-json')
+  json = doc.out('offset')
+  t.equal(json.length, 1, 'offset-out')
+
+  let terms = doc.out('terms')
+  t.equal(terms[0], 'john', 'terms-out')
   t.end()
 })

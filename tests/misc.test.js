@@ -44,3 +44,10 @@ test('replacement with a contraction', function (t) {
 
   t.end()
 })
+
+test('Doc.fromText', function (t) {
+  let doc = nlp('original')
+  let b = doc.fromText('a bee see')
+  t.equal(b.text(), 'a bee see', 'fromText')
+  t.end()
+})

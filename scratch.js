@@ -16,9 +16,10 @@ const nlp = require('./src/index')
 // let obj = doc.dates({ today: today }).json()[0]
 // console.log(spacetime(obj.date.start).format('{nice-day} {year}'))
 
-let doc = nlp(`morning's here!`)
-doc.debug()
-console.log(doc.verbs(0).subject().text())
+let doc = nlp(`john is not really walking`)
+let terms = doc.out('terms')
+console.log(terms)
+// let doc = nlp(`morning's here!`)
 // doc.verbs().toPastTense()
 // doc.debug()
 // doc.verbs().toPastTense()

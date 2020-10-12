@@ -38,6 +38,20 @@ test('dont conjugate modals', function (t) {
   t.end()
 })
 
+test('support punctuation', function (t) {
+  let doc = nlp('i go!')
+  doc.verbs().toPastTense()
+  t.equal(doc.text(), 'i went!', 'excl-mark')
+
+  doc = nlp('i go?!')
+  doc.verbs().toPastTense()
+  t.equal(doc.text(), 'i went?!', 'ques-excl-mark')
+
+  doc = nlp('i go; he went.')
+  doc.verbs().toPastTense()
+  t.equal(doc.text(), 'i went; he went.', 'semi-colon')
+  t.end()
+})
 // test('detect participle in past-tense', function (t) {
 //   let doc = nlp('everybody ought to swim.')
 //   doc.verbs().toPastTense()

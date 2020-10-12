@@ -1,9 +1,9 @@
 const nlp = require('./src/index')
 // const spacetime = require('/Users/spencer/mountain/spacetime/src')
-nlp.verbose(true)
+// nlp.verbose(true)
 // let txt = require('./scripts/test/speed/_sotu-text.js')
-nlp.extend(require('./plugins/numbers/src'))
-nlp.extend(require('./plugins/dates/src'))
+// nlp.extend(require('./plugins/numbers/src'))
+// nlp.extend(require('./plugins/dates/src'))
 // nlp.extend(require('./plugins/sentences/src'))
 
 // let doc = nlp(`before 2017`)
@@ -16,5 +16,20 @@ nlp.extend(require('./plugins/dates/src'))
 // let obj = doc.dates({ today: today }).json()[0]
 // console.log(spacetime(obj.date.start).format('{nice-day} {year}'))
 
-// let doc = nlp(`Backlash as gym advertises 'slave' workout to mark Black History Month`, {})
+// let doc = nlp(`i have got to`)
+// let doc = nlp(`i am nice, he really drive`)
+let doc = nlp(`drive the car!`)
+// doc.nouns().debug()
+let m = doc.verbs() //.subject().debug()
+m.lookBehind().nouns(null, { keep_anaphora: true }).last().debug()
+
 // doc.debug()
+// doc.verbs().toPastTense()
+// console.log(doc.text())
+
+/*
+i pronounce it to be
+i've got to 
+when it's raining
+don't speak
+*/

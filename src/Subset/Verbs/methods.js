@@ -2,6 +2,7 @@ const toNegative = require('./toNegative')
 const parseVerb = require('./parse')
 const isPlural = require('./isPlural')
 const conjugate = require('./conjugate')
+const isImperative = require('./conjugate/imperative').isImperative
 const { toParticiple, useParticiple } = require('./participle')
 
 // remove any tense-information in auxiliary verbs
@@ -112,6 +113,9 @@ module.exports = {
       // should we support 'would swim' ➔ 'would have swam'
       if (useParticiple(parsed)) {
         toParticiple(parsed, this.world)
+        return
+      }
+      if (isImperative(parsed)) {
         return
       }
       let str = conjugate(parsed, this.world).PastTense
@@ -236,5 +240,10 @@ module.exports = {
       m.remove('do not')
     }
     return this.remove('#Negative')
+  },
+  /** who, or what is doing this action? */
+  subject: function () {
+    let lastNoun = this.lookBehind().nouns(null, { keep_anaphora: true }).last()
+    return lastNoun
   },
 }

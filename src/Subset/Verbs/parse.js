@@ -6,6 +6,7 @@ const parseVerb = function (vb) {
     auxiliary: vb.match('#Auxiliary+').not('(#Negative|#Adverb)'), // 'will' of 'will go'
     particle: vb.match('#Particle'), // 'up' of 'pull up'
     verb: vb.match('#Verb+').not('(#Adverb|#Negative|#Auxiliary|#Particle)'),
+    original: vb,
   }
   // fallback, if no verb found
   if (!parsed.verb.found) {

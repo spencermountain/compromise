@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('pos-basic-tag:', function(t) {
+test('pos-basic-tag:', function (t) {
   let arr = [
     ['John is pretty', ['Person', 'Copula', 'Adjective']],
     ['John was lofty', ['Person', 'Copula', 'Adjective']],
@@ -141,6 +141,10 @@ test('pos-basic-tag:', function(t) {
 
     // numberrange
     ['it was 1-2 kg woooh', ['Noun', 'PastTense', 'NumberRange', 'NumberRange', 'NumberRange', 'Unit', 'Expression']],
+    ['1-1', ['NumberRange', 'NumberRange', 'NumberRange']],
+    ['12-12', ['NumberRange', 'NumberRange', 'NumberRange']],
+    ['123-123', ['NumberRange', 'NumberRange', 'NumberRange']],
+    ['1234-1234', ['Noun']],
 
     ['bakes', ['PresentTense']],
     ['fakes', ['PresentTense']],
@@ -191,7 +195,7 @@ test('pos-basic-tag:', function(t) {
 
     [`i met April O'neil`, ['Pronoun', 'PastTense', 'Person', 'Person']],
   ]
-  arr.forEach(function(a) {
+  arr.forEach(function (a) {
     let terms = nlp(a[0]).json(0).terms
     terms.forEach((term, i) => {
       let tag = a[1][i]

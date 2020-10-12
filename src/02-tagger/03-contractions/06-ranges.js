@@ -1,7 +1,7 @@
-const isRange = /^([0-9]+)[-–—]([0-9]+)$/i
+const isRange = /^([0-9]{1,3})[-–—]([0-9]{1,3})$/i
 
 //split '2-4' into '2 to 4'
-const checkRange = function(term) {
+const checkRange = function (term) {
   if (term.tags.PhoneNumber === true) {
     return null
   }

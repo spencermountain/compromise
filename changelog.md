@@ -8,7 +8,12 @@ compromise uses semver, and pushes to npm frequently
 
 While all _Major_ releases should be reviewed, our only two _large_ releases are **v6** in 2016 and and **v12** in 2019. Others have been mostly incremental, or niche.
 
-#### [Unreleased]
+<!-- #### [Unreleased] -->
+
+#### [Unreleased] 13.6.0
+
+- **[new]** first-attempt at `verbs().subject()` method
+- **[change]** avoid conjugating imperative tense - 'please close the door'
 
 #### 13.5.0
 

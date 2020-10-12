@@ -1,6 +1,7 @@
 const toNegative = require('./toNegative')
 const parseVerb = require('./parse')
 const isPlural = require('./isPlural')
+const getSubject = require('./getSubject')
 const conjugate = require('./conjugate')
 const isImperative = require('./conjugate/imperative').isImperative
 const { toParticiple, useParticiple } = require('./participle')
@@ -243,7 +244,14 @@ module.exports = {
   },
   /** who, or what is doing this action? */
   subject: function () {
-    let lastNoun = this.lookBehind().nouns(null, { keep_anaphora: true }).last()
-    return lastNoun
+    let list = []
+    // return this.map(p => getSubject(p))
+    this.forEach(p => {
+      let found = getSubject(p)
+      if (found.list[0]) {
+        list.push(found.list[0])
+      }
+    })
+    return this.buildFrom(list)
   },
 }

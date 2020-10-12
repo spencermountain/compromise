@@ -4,6 +4,11 @@ const banList = {
   that: true,
   there: true,
 }
+const hereThere = {
+  here: true,
+  there: true,
+  everywhere: true,
+}
 const isPossessive = (term, pool) => {
   // if we already know it
   if (term.tags.Possessive) {
@@ -36,6 +41,10 @@ const isPossessive = (term, pool) => {
 
   //spencer's house
   if (nextTerm.tags.Noun) {
+    // 'spencer's here'
+    if (hereThere.hasOwnProperty(nextTerm.reduced) === true) {
+      return false
+    }
     return true
   }
   //rocket's red glare

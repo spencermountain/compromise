@@ -9,7 +9,7 @@ const checkRange = require('./06-ranges')
 const checkFrench = require('./07-french')
 const isNumber = /^[0-9]+$/
 
-const createPhrase = function(found, doc) {
+const createPhrase = function (found, doc) {
   //create phrase from ['would', 'not']
   let phrase = tokenize(found.join(' '), doc.world, doc.pool())[0]
   //tag it
@@ -28,11 +28,15 @@ const createPhrase = function(found, doc) {
       t.tags.Number = true
       t.tags.Cardinal = true
     }
+    // if no tag, give it a noun
+    if (Object.keys(t.tags).length === 0) {
+      t.tags.Noun = true
+    }
   })
   return phrase
 }
 
-const contractions = function(doc) {
+const contractions = function (doc) {
   let world = doc.world
   doc.list.forEach(p => {
     let terms = p.terms()

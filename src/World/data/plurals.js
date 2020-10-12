@@ -47,7 +47,7 @@ module.exports = {
   modulus: 'moduli',
   mosquito: 'mosquitoes',
   mouse: 'mice',
-  move: 'moves',
+  // move: 'moves',
   nebula: 'nebulae',
   nucleus: 'nuclei',
   octopus: 'octopi',

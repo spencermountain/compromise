@@ -292,6 +292,7 @@ module.exports = [
   'ugly',
   'unlikely',
   'untidy',
+  'untrue',
   'upcoming',
   'useful',
   'vague',

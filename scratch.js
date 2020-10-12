@@ -20,10 +20,10 @@ nlp.verbose(true)
 // let doc = nlp(`i am nice, he really drive`)
 // let doc = nlp(`john will drive the car!`)
 
-// let doc = nlp(`it moves power and decision making closer to the people.`)
-let doc = nlp(`move `)
+let doc = nlp(`i really oughta hit the shower.`)
+// let doc = nlp(`move `)
 doc.debug()
-// let m = doc.verbs().subject() //.debug()
+let m = doc.verbs().subject().debug()
 // console.log(m)
 // m.lookBehind().nouns(null, { keep_anaphora: true }).last().debug()
 

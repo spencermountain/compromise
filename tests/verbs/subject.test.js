@@ -35,10 +35,10 @@ test('verb.subject():', function (t) {
     [`give me a red rose, she cried`, ''],
     [`drinking orange juice out of a champagne glass.`, ''],
     //
-    // [`it moves power and decision making closer to the people.`, 'it'],
-    // [`that is completely untrue.`, 'that'],
-    // [`i better hit the shower.`, 'i'],
-    // [`morning's here!`, 'morning'],
+    [`it moves power and decision making closer to the people.`, 'it'],
+    [`that is completely untrue.`, 'that'],
+    [`i better hit the shower.`, 'i'],
+    [`morning's here!`, 'morning'],
   ]
   arr.forEach(function (a) {
     const str = nlp(a[0]).verbs(0).subject().text()

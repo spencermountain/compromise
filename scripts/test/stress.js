@@ -21,10 +21,10 @@ for (let i = 0; i < 100; i++) {
     .forEach(s => {
       let vb = s.verbs(0)
       let subj = vb.subject()
-      // console.log(padEnd(subj.text('normal'), 16), '  -  ', vb.text('normal'))
-      if (!subj.found) {
-        console.log(s.text('normal'), '\n')
-      }
+      console.log(padEnd(subj.text('reduced'), 16), '  -  ', vb.text('reduced'))
+      // if (!subj.found) {
+      //   console.log(s.text('normal'), '\n')
+      // }
     })
 }
 

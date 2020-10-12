@@ -19,7 +19,12 @@ const addMethod = function (Doc) {
     let keep = match.match('(#Adverb && @hasComma) #Adverb')
     // // but split the other commas
     let m = match.not(keep).splitAfter('@hasComma')
-    // // combine them back together
+    // i was shocked looking at...
+    let gerund = m.match('#PastTense #Gerund')
+    if (!gerund.has('(been|am|#Auxiliary) #Gerund')) {
+      m = m.splitBefore(gerund.match('#Gerund'))
+    }
+    // combine them back together
     m = m.concat(keep)
     m.sort('index')
     //handle slashes?

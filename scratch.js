@@ -16,13 +16,6 @@ nlp.extend(require('./plugins/sentences/src'))
 // let obj = doc.dates({ today: today }).json()[0]
 // console.log(spacetime(obj.date.start).format('{nice-day} {year}'))
 
-let doc = nlp(`i think it will be raining`)
-// let doc = nlp(`to be rich`)
-doc.verbs().toPastTense()
-doc.debug()
-/*
-i pronounce it to be
-i've got to 
-when it's raining
-don't speak
-*/
+let doc = nlp(`i was shocked looking at`)
+doc.verbs().debug()
+// doc.debug()

@@ -1,2 +1,2 @@
 // uncontroversial date words
-module.exports = ['today', 'tomorrow', 'tmr', 'tmrw', 'yesterday', 'weekend', 'ago', 'morning', 'evening']
+module.exports = ['today', 'tomorrow', 'tmr', 'tmrw', 'yesterday', 'weekend', 'ago']

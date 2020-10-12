@@ -41,7 +41,7 @@ test('verb.subject():', function (t) {
     [`morning's here!`, 'morning'],
   ]
   arr.forEach(function (a) {
-    const str = nlp(a[0]).verbs(0).subject().text()
+    const str = nlp(a[0]).verbs(0).subject().text('reduced')
     t.equal(str, a[1], a[0] + ' -> ' + str)
   })
   t.end()

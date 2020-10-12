@@ -99,6 +99,8 @@ let list = [
   { match: '[open] #Determiner', group: 0, tag: 'Infinitive', reason: 'open-the' },
   // to murders
   { match: 'to [#PresentTense]$', group: 0, tag: 'Noun', reason: 'to-murders' },
+  // compromises are possible
+  { match: '[#PresentTense] (are|were|was) #Adjective', group: 0, tag: 'Plural', reason: 'compromises-are-possible' },
 
   // would wade
   { match: `#Modal [${verbs}]`, group: 0, tag: 'Verb', reason: 'would-mark' },

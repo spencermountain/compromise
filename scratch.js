@@ -16,10 +16,11 @@ const nlp = require('./src/index')
 // let obj = doc.dates({ today: today }).json()[0]
 // console.log(spacetime(obj.date.start).format('{nice-day} {year}'))
 
-let doc = nlp('go!')
-
-doc.verbs().toPastTense()
+let doc = nlp(`morning's here!`)
 doc.debug()
+console.log(doc.verbs(0).subject().text())
+// doc.verbs().toPastTense()
+// doc.debug()
 // doc.verbs().toPastTense()
 /*
 i pronounce it to be

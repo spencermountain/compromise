@@ -36,7 +36,6 @@ module.exports = [
   'rear admiral',
   'reverend',
   'second lieutenant',
-  'secretary',
   'sergeant',
   'sultan',
   'taoiseach',

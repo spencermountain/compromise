@@ -17,6 +17,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - **[change]** misc tagging fixes #786
 - **[change]** .nouns() results split on quotations #783
 - **[change]** NumberRange must be < 4 digits #735
+- **[change]** reduction in #Person tag false-positives
 
 #### 13.5.0
 

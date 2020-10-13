@@ -33,7 +33,12 @@ let list = [
 
   //my buddy
   { match: '#Possessive [#FirstName]', group: 0, tag: 'Person', reason: 'possessive-name' },
-  { match: '#ProperNoun #Acronym #ProperNoun', tag: 'Person', reason: 'titlecase-acronym-titlecase', safe: true }, //ludwig van beethovan
+  {
+    match: '#ProperNoun (b|c|d|e|f|g|h|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z) #ProperNoun',
+    tag: 'Person',
+    reason: 'titlecase-acronym-titlecase',
+    safe: true,
+  }, //ludwig van beethovan
   { match: '#Acronym #LastName', tag: 'Person', reason: 'acronym-latname', safe: true }, //jk rowling
   { match: '#Person (jr|sr|md)', tag: 'Person', reason: 'person-honorific' }, //peter II
   { match: '#Person #Person the? #RomanNumeral', tag: 'Person', reason: 'roman-numeral' }, //'Professor Fink', 'General McCarthy'
@@ -88,11 +93,13 @@ let list = [
   // remind june
   { match: `#Infinitive [${months}]`, group: 0, tag: 'Person', reason: 'infinitive-person' },
   // may waits for
-  { match: `[${months}] #PresentTense for`, group: 0, tag: 'Person', reason: 'ambig-active-for' },
+  // { match: `[${months}] #PresentTense for`, group: 0, tag: 'Person', reason: 'ambig-active-for' },
   // may waits to
-  { match: `[${months}] #PresentTense to`, group: 0, tag: 'Person', reason: 'ambig-active-to' },
+  // { match: `[${months}] #PresentTense to`, group: 0, tag: 'Person', reason: 'ambig-active-to' },
   // april will
   { match: `[${months}] #Modal`, group: 0, tag: 'Person', reason: 'ambig-modal' },
+  // may be
+  { match: `[may] be`, group: 0, tag: 'Verb', reason: 'may-be' },
   // would april
   { match: `#Modal [${months}]`, group: 0, tag: 'Person', reason: 'modal-ambig' },
   // it is may

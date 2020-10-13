@@ -17,30 +17,8 @@ nlp.extend(require('./plugins/sentences/src'))
 // console.log(spacetime(obj.date.start).format('{nice-day} {year}'))
 
 /*
-op assessment
-may
-liberty
-Service.
-CATS Clinic
-CATS Team.
-Mount  Vernon
-CCP
-GI Team
-Breast
-lady's shoulder.
-secretary's contact
-Limb CATS Clinic
-b.d. In
-Spinal
-TIA
-TURBT  +/-Mitomycin
-lady's
-MRI Brain
-P.S. Dear
-(AP
-Sam myself
-Barrett's
+
 */
-let doc = nlp(`lady's shoulder.`)
-doc.people().debug()
-// doc.debug()
+let doc = nlp(`onto the Spinal CATS Service`)
+// doc.people().debug()
+doc.debug()

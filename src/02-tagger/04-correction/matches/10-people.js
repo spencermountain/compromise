@@ -33,7 +33,8 @@ let list = [
 
   //my buddy
   { match: '#Possessive [#FirstName]', group: 0, tag: 'Person', reason: 'possessive-name' },
-  { match: '#Acronym #ProperNoun', tag: 'Person', reason: 'acronym-titlecase', safe: true }, //ludwig van beethovan
+  { match: '#ProperNoun #Acronym #ProperNoun', tag: 'Person', reason: 'titlecase-acronym-titlecase', safe: true }, //ludwig van beethovan
+  { match: '#Acronym #LastName', tag: 'Person', reason: 'acronym-latname', safe: true }, //jk rowling
   { match: '#Person (jr|sr|md)', tag: 'Person', reason: 'person-honorific' }, //peter II
   { match: '#Person #Person the? #RomanNumeral', tag: 'Person', reason: 'roman-numeral' }, //'Professor Fink', 'General McCarthy'
   { match: '#FirstName [/^[^aiurck]$/]', group: 0, tag: ['Acronym', 'Person'], reason: 'john-e' }, //Doctor john smith jr
@@ -44,7 +45,11 @@ let list = [
   //j.k Rowling
   { match: '#Noun van der? #Noun', tag: 'Person', reason: 'von der noun', safe: true },
   //king of spain
-  { match: '(king|queen|prince|saint|lady) of? #Noun', tag: 'Person', reason: 'king-of-noun', safe: true },
+  { match: '(king|queen|prince|saint|lady) of #Noun', tag: 'Person', reason: 'king-of-noun', safe: true },
+  //lady Florence
+  { match: '(prince|lady) #Place', tag: 'Person', reason: 'lady-place' },
+  //saint Foo
+  { match: '(king|queen|prince|saint) #ProperNoun', tag: 'Person', reason: 'saint-foo' },
   //Foo U Ford
   { match: '[#ProperNoun] #Person', group: 0, tag: 'Person', reason: 'proper-person', safe: true },
   // al sharpton

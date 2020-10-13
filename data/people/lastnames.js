@@ -225,6 +225,7 @@ module.exports = [
   'roosevelt',
   'rossi',
   'roux',
+  'rowling',
   'rubio',
   'ruiz',
   'russo',

@@ -13,6 +13,7 @@ module.exports = [
   'hulk hogan',
   'kanye west',
   'kiefer sutherland',
+  'jk rowling',
   'kobe bryant',
   'lebron james',
   'messiaen',

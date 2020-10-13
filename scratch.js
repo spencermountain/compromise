@@ -1,6 +1,6 @@
 const nlp = require('./src/index')
 // const spacetime = require('/Users/spencer/mountain/spacetime/src')
-// nlp.verbose(true)
+nlp.verbose(true)
 // let txt = require('./scripts/test/speed/_sotu-text.js')
 // nlp.extend(require('./plugins/numbers/src'))
 // nlp.extend(require('./plugins/dates/src'))
@@ -16,6 +16,31 @@ nlp.extend(require('./plugins/sentences/src'))
 // let obj = doc.dates({ today: today }).json()[0]
 // console.log(spacetime(obj.date.start).format('{nice-day} {year}'))
 
-let doc = nlp(`i was shocked looking at`)
-doc.verbs().debug()
+/*
+op assessment
+may
+liberty
+Service.
+CATS Clinic
+CATS Team.
+Mount  Vernon
+CCP
+GI Team
+Breast
+lady's shoulder.
+secretary's contact
+Limb CATS Clinic
+b.d. In
+Spinal
+TIA
+TURBT  +/-Mitomycin
+lady's
+MRI Brain
+P.S. Dear
+(AP
+Sam myself
+Barrett's
+*/
+let doc = nlp(`lady's shoulder.`)
+doc.people().debug()
 // doc.debug()

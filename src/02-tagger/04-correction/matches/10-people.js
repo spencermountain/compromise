@@ -1,6 +1,5 @@
-const nouns =
-  '(rose|robin|dawn|ray|holly|bill|joy|viola|penny|sky|violet|daisy|melody|kelvin|hope|mercedes|olive|jewel|faith|van|charity|miles|lily|summer|dolly|rod|dick|cliff|lane|reed|kitty|art|jean|trinity)'
-
+const ambig = require('../_ambig')
+const nouns = `(${ambig.person.nouns.join('|')})`
 const months = '(january|april|may|june|jan|sep)' //summer|autumn
 
 let list = [

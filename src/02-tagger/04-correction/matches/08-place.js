@@ -1,4 +1,6 @@
-const places = '(paris|alexandria|houston|kobe|salvador|sydney)'
+const ambig = require('../_ambig')
+const places = `(${ambig.person.verbs.join('|')})`
+
 let list = [
   // ==== Region ====
   //West Norforlk

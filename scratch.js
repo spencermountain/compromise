@@ -4,21 +4,39 @@ nlp.verbose(true)
 // let txt = require('./scripts/test/speed/_sotu-text.js')
 // nlp.extend(require('./plugins/numbers/src'))
 // nlp.extend(require('./plugins/dates/src'))
-nlp.extend(require('./plugins/sentences/src'))
+// nlp.extend(require('./plugins/sentences/src'))
 
 // let doc = nlp(`before 2017`)
-// // let doc = nlp(`last week`)
-// let february = 1
-// let today = [2016, february, 5] // a friday
-// // let doc = nlp(`sunday`)
-// doc.debug()
-// // let doc = nlp(`a year ago`)
+// let today = [2016, 1, 5] // feb 5th, a friday
 // let obj = doc.dates({ today: today }).json()[0]
 // console.log(spacetime(obj.date.start).format('{nice-day} {year}'))
 
-/*
+/* //more person false-positives
+Vitamin D.
+may
+ACE
+gene
+Jennifer  antibiotics
+rheumatoid factor, ANA, ENA, CCP antibody, ESR, CRP, etc.
+in our X-ray Uro-radiology
 
 */
-let doc = nlp(`onto the Spinal CATS Service`)
+
+/* //place false-positives
+CT
+St
+*/
+
+/*
+`was disgusting`  was disgusting
+`was so nausiating`
+`a (word|#Noun+) is`   - 'a farmer boy is' 
+
+`dark green`
+`kinda sparkly`
+`quite stunning`  - vs `slowly stunning`
+*/
+
+let doc = nlp(`gene editing`)
 // doc.people().debug()
 doc.debug()

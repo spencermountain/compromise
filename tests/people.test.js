@@ -70,6 +70,13 @@ test('people false-positives:', function (t) {
     `which  I  think  may  be  arising`,
     // `Mr Sean Malay, Spinal Surgeon`,
     `onto the Spinal CATS Service`,
+    // `Vitamin D.`,
+    // `may`,
+    // `ACE`,
+    // `gene`,
+    // `Jennifer  antibiotics`,
+    // `rheumatoid factor, ANA, ENA, CCP antibody, ESR, CRP, etc.`,
+    // `in our X-ray Uro-radiology`,
   ]
   arr.forEach(str => {
     let doc = nlp(str)

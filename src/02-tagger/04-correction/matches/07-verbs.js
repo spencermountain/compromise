@@ -1,4 +1,5 @@
-const verbs = '(pat|wade|ollie|will|rob|buck|bob|mark|jack)'
+const ambig = require('../_ambig')
+const verbs = `(${ambig.person.verbs.join('|')})`
 
 let list = [
   // ==== Tense ====

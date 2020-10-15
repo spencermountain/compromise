@@ -1,4 +1,6 @@
-const adjectives = '(misty|rusty|dusty|rich|randy)'
+const ambig = require('../_ambig')
+const adjectives = `(${ambig.person.adjectives.join('|')})`
+
 let list = [
   // all fell apart
   { match: '[all] #Determiner? #Noun', group: 0, tag: 'Adjective', reason: 'all-noun' },

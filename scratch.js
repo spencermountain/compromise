@@ -38,16 +38,12 @@ St
 */
 
 // let doc = nlp(`ANA, ENA, CCP etc.`)
-// let doc = nlp(`as disgusting as`)
-// let doc = nlp(`more disgusting than`)
-// let doc = nlp(`was so nausiating`)
-// let doc = nlp(`extremely moving`)
-// let doc = nlp(`each promising image`)
+let doc = nlp(`extremely moving`)
 // let doc = nlp(`this reckoning`)
 // let doc = nlp(`it was redefining`)
 // let doc = nlp(`revealing his guts`)
 // let doc = nlp(`the ruling party`)
-let doc = nlp(`i found it isolating`)
+// let doc = nlp(`i found it isolating`)
 // let doc = nlp(`promising to leave`)
 // let doc = nlp(`distressing us`)
 // let doc = nlp(`loving you`)

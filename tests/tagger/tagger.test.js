@@ -186,21 +186,43 @@ test('pos-basic-tag:', function (t) {
       'col. Patrick said march and feb. etc.',
       ['Abbreviation', 'Person', 'PastTense', 'Month', 'Conjunction', 'Abbreviation', 'Abbreviation'],
     ],
-    //dates
+    [`i met April O'neil`, ['Pronoun', 'PastTense', 'Person', 'Person']],
 
+    // adjectives
     ['germans are nice', ['Demonym', 'Verb', 'Adjective']],
     ['Iraqis are nice', ['Plural', 'Copula', 'Adjective']],
     ['canadians are nice', ['ProperNoun', 'Verb', 'Adjective']],
     ['thom is smart', ['ProperNoun', 'Verb', 'Adjective']],
 
-    [`i met April O'neil`, ['Pronoun', 'PastTense', 'Person', 'Person']],
+    [`ANA, ENA, CCP etc.`, ['Acronym', 'Acronym', 'Acronym', 'Abbreviation']],
+    [`as disgusting as`, ['Preposition', 'Adjective', 'Preposition']],
+    [`more disgusting than`, ['Adverb', 'Adjective', 'Preposition']],
+    [`was so nausiating`, ['Copula', 'Adverb', 'Adjective']],
+    [`extremely moving`, ['Adverb', 'Adjective']],
+    [`each promising image`, ['Determiner', 'Adjective', 'Singular']],
+    [`this reckoning`, ['Determiner', 'Noun']],
+    [`it was redefining`, ['Pronoun', 'Copula', 'Adjective']],
+    [`revealing his guts`, ['Gerund', 'Possessive', 'Plural']],
+    [`the ruling party`, ['Determiner', 'Adjective', 'Singular']],
+    [`i found it isolating`, ['Noun', 'PastTense', 'Noun', 'Adjective']],
+    [`promising to leave`, ['Gerund', 'Conjunction', 'Verb']],
+    [`distressing us`, ['Gerund', 'Noun']],
+    [`loving you`, ['Gerund', 'Noun']],
+    [`was disgusting`, ['Copula', 'Adjective']],
+    [`dark green`, ['Adverb', 'Adjective']],
+    [`kinda sparkly`, ['Adverb', 'Adjective']],
+    [`quite stunning`, ['Adverb', 'Adjective']],
+    [`slowly stunning`, ['Adverb', 'Verb']],
   ]
   arr.forEach(function (a) {
     let terms = nlp(a[0]).json(0).terms
     terms.forEach((term, i) => {
       let tag = a[1][i]
       let found = term.tags.some(tg => tg === tag)
-      t.equal(found, true, a[0] + '  - ' + term.text + ' ' + tag)
+      if (!found) {
+        console.log(term.text, term.tags)
+      }
+      t.equal(found, true, a[0] + "  - '" + term.text + "' no " + tag)
     })
   })
   t.end()

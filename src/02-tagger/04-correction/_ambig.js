@@ -1,4 +1,8 @@
 module.exports = {
+  adverbs: {
+    // adverbs than can be adjectives
+    adjectives: ['dark', 'bright', 'light', 'dim', 'little', 'wee', 'sheer', 'most', 'near', 'good', 'extra', 'all'],
+  },
   person: {
     // names that are dates
     dates: ['april', 'june', 'may', 'jan', 'august', 'eve'],

@@ -31,8 +31,14 @@ let list = [
   { match: 'as [#Gerund] as', group: 0, tag: 'Adjective', reason: 'as-gerund-as' },
   // more amusing than
   { match: 'more [#Gerund] than', group: 0, tag: 'Adjective', reason: 'more-gerund-than' },
+  // very amusing
+  { match: '(so|very|extremely) [#Gerund]', group: 0, tag: 'Adjective', reason: 'so-gerund' },
   // was amusing
-  { match: '#Copula (so|very|extremely) [#Gerund]', group: 0, tag: 'Adjective', reason: 'was-so-gerund' },
+  { match: '(it|he|she) #Adverb? was #Adverb? [#Gerund]', group: 0, tag: 'Adjective', reason: 'was-gerund' },
+  // found it amusing
+  { match: '(found|found) it #Adverb? [#Gerund]', group: 0, tag: 'Adjective', reason: 'found-it-gerund' },
+  // a bit amusing
+  { match: 'a (little|bit|wee) bit? [#Gerund]', group: 0, tag: 'Adjective', reason: 'a-bit-gerund' },
 ]
 
 module.exports = list

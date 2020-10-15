@@ -2,6 +2,14 @@ const ambig = require('../_ambig')
 const verbs = `(${ambig.person.verbs.join('|')})`
 
 let list = [
+  // adj -> gerund
+  // amusing his aunt
+  { match: '[#Adjective] #Possessive #Noun', group: 0, tag: 'Gerund', reason: 'gerund-his-noun' },
+  // loving you
+  { match: '[#Adjective] (us|you)', group: 0, tag: 'Gerund', reason: 'loving-you' },
+  // slowly stunning
+  { match: '(slowly|quickly) [#Adjective]', group: 0, tag: 'Gerund', reason: 'slowly-adj' },
+
   // ==== Tense ====
   //he left
   { match: '#Noun #Adverb? [left]', group: 0, tag: 'PastTense', reason: 'left-verb' },

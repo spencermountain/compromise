@@ -38,14 +38,10 @@ St
 */
 
 // let doc = nlp(`ANA, ENA, CCP etc.`)
-let doc = nlp(`extremely moving`)
 // let doc = nlp(`this reckoning`)
-// let doc = nlp(`it was redefining`)
-// let doc = nlp(`revealing his guts`)
 // let doc = nlp(`the ruling party`)
-// let doc = nlp(`i found it isolating`)
+let doc = nlp(`a little bit singing`)
+// let doc = nlp(`a little green`)
 // let doc = nlp(`promising to leave`)
-// let doc = nlp(`distressing us`)
-// let doc = nlp(`loving you`)
 // doc.people().debug()
 doc.debug()

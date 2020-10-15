@@ -11,6 +11,7 @@ matches = matches.concat(require('./07-verbs'))
 matches = matches.concat(require('./08-place'))
 matches = matches.concat(require('./09-org'))
 matches = matches.concat(require('./10-people'))
+matches = matches.concat(require('./11-adverbs'))
 
 // cache the easier conditions up-front
 const cacheRequired = function (reg) {

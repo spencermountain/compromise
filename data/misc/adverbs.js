@@ -79,6 +79,7 @@ module.exports = [
   'twice',
   'up to',
   'upwards of',
+  'tiny bit',
   'very',
   'way',
   'yep',

@@ -58,6 +58,8 @@ module.exports = [
   'fourier',
   'fowl',
   'furniture',
+  'gene editing',
+  'gene pool',
   'genetics',
   'gold',
   'golf',

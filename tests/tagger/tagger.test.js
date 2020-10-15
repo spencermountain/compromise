@@ -215,13 +215,15 @@ test('pos-basic-tag:', function (t) {
     [`kinda sparkly`, ['Adverb', 'Adjective']],
     [`quite stunning`, ['Adverb', 'Adjective']],
     [`slowly stunning`, ['Adverb', 'Verb']],
+    [`quite awfully stunning`, ['Adverb', 'Adverb', 'Adjective']],
+    [`quite awfully swimming`, ['Adverb', 'Adverb', 'Verb']],
   ]
   arr.forEach(function (a) {
     let terms = nlp(a[0]).json(0).terms
     terms.forEach((term, i) => {
       let tag = a[1][i]
       let found = term.tags.some(tg => tg === tag)
-      t.equal(found, true, a[0] + "  - '" + term.text + "' no " + tag)
+      t.equal(found, true, a[0] + "  - '" + term.text + ' #' + tag)
     })
   })
   t.end()

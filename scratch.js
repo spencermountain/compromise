@@ -17,9 +17,7 @@ may
 ACE
 gene
 Jennifer  antibiotics
-rheumatoid factor, ANA, ENA, CCP antibody, ESR, CRP, etc.
 in our X-ray Uro-radiology
-
 */
 
 /* //place false-positives
@@ -27,16 +25,10 @@ CT
 St
 */
 
-/*
-`was disgusting`  was disgusting
-`was so nausiating`
-`a (word|#Noun+) is`   - 'a farmer boy is' 
-
-`dark green`
-`kinda sparkly`
-`quite stunning`  - vs `slowly stunning`
-*/
-
 // let doc = nlp(`ANA, ENA, CCP etc.`)
 let doc = nlp(`promising to leave`)
 doc.debug()
+
+// hmmm
+// let doc = nlp('a farmer boy is')
+// doc.match(`a (word|#Noun+) is`).debug()

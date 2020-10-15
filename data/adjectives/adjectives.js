@@ -37,6 +37,7 @@ module.exports = [
   'meandering',
   'menacing',
   'mindblowing',
+  'nausiating',
   'ongoing',
   'outgoing',
   'perplexing',

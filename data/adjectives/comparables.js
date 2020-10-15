@@ -320,7 +320,6 @@ module.exports = [
   'yellow',
   'young',
   'zany',
-  // 'close',
 
   //these ones can also be verbs, for what it's worth
   'bright',

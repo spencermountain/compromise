@@ -3,8 +3,8 @@ const unique = require('../_unique')
 let matches = []
 matches = matches.concat(require('./01-misc'))
 matches = matches.concat(require('./02-dates'))
-matches = matches.concat(require('./03-noun'))
-matches = matches.concat(require('./04-adjective'))
+matches = matches.concat(require('./03-adjective'))
+matches = matches.concat(require('./04-noun'))
 matches = matches.concat(require('./05-adverb'))
 matches = matches.concat(require('./06-value'))
 matches = matches.concat(require('./07-verbs'))
@@ -13,7 +13,7 @@ matches = matches.concat(require('./09-org'))
 matches = matches.concat(require('./10-people'))
 
 // cache the easier conditions up-front
-const cacheRequired = function(reg) {
+const cacheRequired = function (reg) {
   let needTags = []
   let needWords = []
   reg.forEach(obj => {
@@ -30,7 +30,7 @@ const cacheRequired = function(reg) {
   return { tags: unique(needTags), words: unique(needWords) }
 }
 
-const allLists = function(m) {
+const allLists = function (m) {
   let more = []
   let lists = m.reg.filter(r => r.oneOf !== undefined)
   if (lists.length === 1) {

@@ -25,7 +25,7 @@ const miscCorrection = function (doc) {
   m = hasTag(doc, 'FirstName')
   m.match('#FirstName (#Noun|@titleCase)')
     .ifNo('^#Possessive')
-    .ifNo('#Pronoun')
+    .ifNo('(#Pronoun|#Plural)')
     .ifNo('@hasComma .')
     .lastTerm()
     .tag('#LastName', 'firstname-noun')

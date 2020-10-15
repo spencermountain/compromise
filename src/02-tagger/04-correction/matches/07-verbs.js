@@ -106,8 +106,6 @@ let list = [
   { match: '#Copula [#Adjective to] #Verb', group: 0, tag: 'Verb', reason: 'adj-to' },
   // open the door
   { match: '[open] #Determiner', group: 0, tag: 'Infinitive', reason: 'open-the' },
-  // to murders
-  { match: 'to [#PresentTense]$', group: 0, tag: 'Noun', reason: 'to-murders' },
   // compromises are possible
   { match: '[#PresentTense] (are|were|was) #Adjective', group: 0, tag: 'Plural', reason: 'compromises-are-possible' },
 

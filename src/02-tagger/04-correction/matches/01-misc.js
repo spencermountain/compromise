@@ -73,10 +73,6 @@ const list = [
     tag: 'Conjunction',
     reason: 'when i go fishing',
   },
-
-  // adverbs
-  // dark green
-  { match: '[(dark|bright)] #Adjective', group: 0, tag: 'Adverb', reason: 'dark-green' },
 ]
 
 module.exports = list

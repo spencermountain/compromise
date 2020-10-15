@@ -33,8 +33,13 @@ let list = [
   { match: 'more [#Gerund] than', group: 0, tag: 'Adjective', reason: 'more-gerund-than' },
   // very amusing
   { match: '(so|very|extremely) [#Gerund]', group: 0, tag: 'Adjective', reason: 'so-gerund' },
-  // was amusing
-  { match: '(it|he|she) #Adverb? was #Adverb? [#Gerund]', group: 0, tag: 'Adjective', reason: 'was-gerund' },
+  // it was amusing
+  {
+    match: '(it|he|she|everything|something) #Adverb? was #Adverb? [#Gerund]',
+    group: 0,
+    tag: 'Adjective',
+    reason: 'it-was-gerund',
+  },
   // found it amusing
   { match: '(found|found) it #Adverb? [#Gerund]', group: 0, tag: 'Adjective', reason: 'found-it-gerund' },
   // a bit amusing

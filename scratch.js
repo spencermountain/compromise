@@ -38,10 +38,5 @@ St
 */
 
 // let doc = nlp(`ANA, ENA, CCP etc.`)
-// let doc = nlp(`this reckoning`)
-// let doc = nlp(`the ruling party`)
-let doc = nlp(`a little bit singing`)
-// let doc = nlp(`a little green`)
-// let doc = nlp(`promising to leave`)
-// doc.people().debug()
+let doc = nlp(`promising to leave`)
 doc.debug()

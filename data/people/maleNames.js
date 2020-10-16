@@ -900,8 +900,6 @@ module.exports = [
   'valentin',
   'valentine',
   'vance',
-  'vaughn',
-  'vernon',
   'vicente',
   'victor',
   'viktor',

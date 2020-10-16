@@ -7,6 +7,7 @@ module.exports = [
   'must',
   'ought to',
   'ought',
+  'oughta',
   'shall',
   'shant',
   'should',

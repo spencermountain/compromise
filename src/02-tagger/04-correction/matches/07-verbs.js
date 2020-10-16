@@ -1,6 +1,15 @@
-const verbs = '(pat|wade|ollie|will|rob|buck|bob|mark|jack)'
+const ambig = require('../_ambig')
+const verbs = `(${ambig.person.verbs.join('|')})`
 
 let list = [
+  // adj -> gerund
+  // amusing his aunt
+  { match: '[#Adjective] #Possessive #Noun', group: 0, tag: 'Gerund', reason: 'gerund-his-noun' },
+  // loving you
+  { match: '[#Adjective] (us|you)', group: 0, tag: 'Gerund', reason: 'loving-you' },
+  // slowly stunning
+  { match: '(slowly|quickly) [#Adjective]', group: 0, tag: 'Gerund', reason: 'slowly-adj' },
+
   // ==== Tense ====
   //he left
   { match: '#Noun #Adverb? [left]', group: 0, tag: 'PastTense', reason: 'left-verb' },
@@ -97,14 +106,19 @@ let list = [
   { match: '#Copula [#Adjective to] #Verb', group: 0, tag: 'Verb', reason: 'adj-to' },
   // open the door
   { match: '[open] #Determiner', group: 0, tag: 'Infinitive', reason: 'open-the' },
+  // compromises are possible
+  { match: '[#PresentTense] (are|were|was) #Adjective', group: 0, tag: 'Plural', reason: 'compromises-are-possible' },
 
   // would wade
   { match: `#Modal [${verbs}]`, group: 0, tag: 'Verb', reason: 'would-mark' },
   { match: `#Adverb [${verbs}]`, group: 0, tag: 'Verb', reason: 'really-mark' },
+  //to mark
+  { match: '(to|#Modal) [mark]', group: 0, tag: 'PresentTense', reason: 'to-mark' },
+
   // wade smith
   { match: `${verbs} #Person`, tag: 'Person', reason: 'rob-smith' },
   // wade m. Cooper
-  { match: `${verbs} #Acronym? #ProperNoun`, tag: 'Person', reason: 'rob-a-smith' },
+  { match: `${verbs} #Acronym #ProperNoun`, tag: 'Person', reason: 'rob-a-smith' },
 
   // damn them
   { match: '[shit] (#Determiner|#Possessive|them)', group: 0, tag: 'Verb', reason: 'swear1-verb' },

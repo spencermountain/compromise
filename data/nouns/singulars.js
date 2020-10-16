@@ -143,4 +143,8 @@ module.exports = [
   'stepmother',
   'uncle',
   'woman',
+
+  // dates
+  'morning',
+  'evening',
 ]

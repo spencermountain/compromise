@@ -1,5 +1,6 @@
 //Dates: 'june' or 'may'
-const dates = '(april|june|may|jan|august|eve)'
+const ambig = require('../_ambig')
+const dates = `(${ambig.person.dates.join('|')})`
 
 let list = [
   // ==== Holiday ====

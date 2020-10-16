@@ -5,7 +5,7 @@ const toInfinitive = function (parsed, world) {
   // verb.debug()
 
   //1. if it's already infinitive
-  let str = verb.text('normal')
+  let str = verb.text('reduced')
   if (verb.has('#Infinitive')) {
     return str
   }

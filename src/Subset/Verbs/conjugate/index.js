@@ -15,6 +15,18 @@ const conjugate = function (parsed, world) {
     return doModal(parsed, world)
   }
 
+  // dont conjugate imperative form - 'close the door'
+  // if (parsed.auxiliary.has('do')) {
+  //   let str = parsed.original.text()
+  //   let res = {
+  //     PastTense: str,
+  //     PresentTense: str,
+  //     FutureTense: str,
+  //     Infinitive: str,
+  //   }
+  //   return res
+  // }
+
   let hasHyphen = parsed.verb.termList(0).hasHyphen()
 
   let infinitive = toInfinitive(parsed, world)

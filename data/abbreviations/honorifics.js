@@ -28,8 +28,6 @@ module.exports = [
   'mrs',
   'ms',
   'mstr',
-  'op',
-  'ord',
   'phd',
   'prof',
   'pvt',

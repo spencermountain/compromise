@@ -1,11 +1,12 @@
-const addMethod = function(Doc) {
+const addMethod = function (Doc) {
   /** split into approximate sub-sentence phrases */
-  Doc.prototype.clauses = function(n) {
+  Doc.prototype.clauses = function (n) {
     // an awkward way to disambiguate a comma use
     let commas = this.if('@hasComma')
       .notIf('@hasComma @hasComma') //fun, cool...
       .notIf('@hasComma . .? (and|or) .') //cool, and fun
       .notIf('(#City && @hasComma) #Country') //'toronto, canada'
+      .notIf('(#WeekDay && @hasComma) #Date') //'tuesday, march 2nd'
       .notIf('(#Date && @hasComma) #Year') //'july 6, 1992'
       .notIf('@hasComma (too|also)$') //at end of sentence
       .match('@hasComma')

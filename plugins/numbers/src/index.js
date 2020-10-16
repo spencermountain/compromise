@@ -32,7 +32,7 @@ const plugin = function (Doc, world) {
       return new Numbers(m.list, this, this.world)
     },
     /** number + currency pair */
-    money: function (n) {
+    money: function () {
       // let nums = findNumbers(this, n)
       let m = this.match('#Money+ #Currency?')
       // m = m.concat(nums.hasAfter('#Currency')) //'5 dollars'

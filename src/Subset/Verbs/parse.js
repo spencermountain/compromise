@@ -1,3 +1,4 @@
+const getSubject = require('./getSubject')
 // turn 'would not really walk up' into parts
 const parseVerb = function (vb) {
   let parsed = {
@@ -6,6 +7,8 @@ const parseVerb = function (vb) {
     auxiliary: vb.match('#Auxiliary+').not('(#Negative|#Adverb)'), // 'will' of 'will go'
     particle: vb.match('#Particle'), // 'up' of 'pull up'
     verb: vb.match('#Verb+').not('(#Adverb|#Negative|#Auxiliary|#Particle)'),
+    original: vb,
+    subject: getSubject(vb),
   }
   // fallback, if no verb found
   if (!parsed.verb.found) {

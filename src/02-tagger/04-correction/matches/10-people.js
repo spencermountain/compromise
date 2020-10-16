@@ -1,6 +1,5 @@
-const nouns =
-  '(rose|robin|dawn|ray|holly|bill|joy|viola|penny|sky|violet|daisy|melody|kelvin|hope|mercedes|olive|jewel|faith|van|charity|miles|lily|summer|dolly|rod|dick|cliff|lane|reed|kitty|art|jean|trinity)'
-
+const ambig = require('../_ambig')
+const nouns = `(${ambig.person.nouns.join('|')})`
 const months = '(january|april|may|june|jan|sep)' //summer|autumn
 
 let list = [
@@ -33,7 +32,13 @@ let list = [
 
   //my buddy
   { match: '#Possessive [#FirstName]', group: 0, tag: 'Person', reason: 'possessive-name' },
-  { match: '#Acronym #ProperNoun', tag: 'Person', reason: 'acronym-titlecase', safe: true }, //ludwig van beethovan
+  {
+    match: '#ProperNoun (b|c|d|e|f|g|h|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z) #ProperNoun',
+    tag: 'Person',
+    reason: 'titlecase-acronym-titlecase',
+    safe: true,
+  }, //ludwig van beethovan
+  { match: '#Acronym #LastName', tag: 'Person', reason: 'acronym-latname', safe: true }, //jk rowling
   { match: '#Person (jr|sr|md)', tag: 'Person', reason: 'person-honorific' }, //peter II
   { match: '#Person #Person the? #RomanNumeral', tag: 'Person', reason: 'roman-numeral' }, //'Professor Fink', 'General McCarthy'
   { match: '#FirstName [/^[^aiurck]$/]', group: 0, tag: ['Acronym', 'Person'], reason: 'john-e' }, //Doctor john smith jr
@@ -44,7 +49,11 @@ let list = [
   //j.k Rowling
   { match: '#Noun van der? #Noun', tag: 'Person', reason: 'von der noun', safe: true },
   //king of spain
-  { match: '(king|queen|prince|saint|lady) of? #Noun', tag: 'Person', reason: 'king-of-noun', safe: true },
+  { match: '(king|queen|prince|saint|lady) of #Noun', tag: 'Person', reason: 'king-of-noun', safe: true },
+  //lady Florence
+  { match: '(prince|lady) #Place', tag: 'Person', reason: 'lady-place' },
+  //saint Foo
+  { match: '(king|queen|prince|saint) #ProperNoun', tag: 'Person', reason: 'saint-foo' },
   //Foo U Ford
   { match: '[#ProperNoun] #Person', group: 0, tag: 'Person', reason: 'proper-person', safe: true },
   // al sharpton
@@ -61,6 +70,7 @@ let list = [
   { match: '#Honorific #FirstName? #ProperNoun', tag: 'Person', reason: 'dr-john-Title' },
   //peter the great
   { match: '#FirstName the #Adjective', tag: 'Person', reason: 'name-the-great' },
+
   //very common-but-ambiguous lastnames
   {
     match: '#FirstName (green|white|brown|hall|young|king|hill|cook|gray|price)',
@@ -82,11 +92,13 @@ let list = [
   // remind june
   { match: `#Infinitive [${months}]`, group: 0, tag: 'Person', reason: 'infinitive-person' },
   // may waits for
-  { match: `[${months}] #PresentTense for`, group: 0, tag: 'Person', reason: 'ambig-active-for' },
+  // { match: `[${months}] #PresentTense for`, group: 0, tag: 'Person', reason: 'ambig-active-for' },
   // may waits to
-  { match: `[${months}] #PresentTense to`, group: 0, tag: 'Person', reason: 'ambig-active-to' },
+  // { match: `[${months}] #PresentTense to`, group: 0, tag: 'Person', reason: 'ambig-active-to' },
   // april will
   { match: `[${months}] #Modal`, group: 0, tag: 'Person', reason: 'ambig-modal' },
+  // may be
+  { match: `[may] be`, group: 0, tag: 'Verb', reason: 'may-be' },
   // would april
   { match: `#Modal [${months}]`, group: 0, tag: 'Person', reason: 'modal-ambig' },
   // it is may

@@ -385,7 +385,7 @@ declare module nlp {
     /**  return things like `'eats, shoots, and leaves'` */
     lists(n?: number): Lists<Ext, W, Ph>
     /**  return any subsequent terms tagged as a Noun */
-    nouns(n?: number): Nouns<Ext, W, Ph>
+    nouns(n?: number, opts?: object): Nouns<Ext, W, Ph>
     /**  return any subsequent terms tagged as a Verb */
     verbs(n?: number): Verbs<Ext, W, Ph>
   }

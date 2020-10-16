@@ -6,7 +6,7 @@ module.exports = [
   'ave',
   'blvd',
   'cl',
-  'ct',
+  // 'ct',
   'cres',
   'hwy',
   //states

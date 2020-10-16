@@ -889,7 +889,6 @@ module.exports = [
   'lianne',
   'libbie',
   'libby',
-  'liberty',
   'lidia',
   'lila',
   'lilia',

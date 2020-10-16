@@ -1,7 +1,9 @@
 const toNegative = require('./toNegative')
 const parseVerb = require('./parse')
 const isPlural = require('./isPlural')
+const getSubject = require('./getSubject')
 const conjugate = require('./conjugate')
+const isImperative = require('./conjugate/imperative').isImperative
 const { toParticiple, useParticiple } = require('./participle')
 
 // remove any tense-information in auxiliary verbs
@@ -112,6 +114,18 @@ module.exports = {
       // should we support 'would swim' ➔ 'would have swam'
       if (useParticiple(parsed)) {
         toParticiple(parsed, this.world)
+        return
+      }
+      if (isImperative(parsed)) {
+        return
+      }
+      // don't conjugate 'to be'
+      if (vb.has('be') && vb.lookBehind('to$').found) {
+        return
+      }
+      // handle 'is raining' -> 'was raining'
+      if (parsed.verb.has('#Gerund') && parsed.auxiliary.has('(is|will|was)')) {
+        vb.replace('is', 'was')
         return
       }
       let str = conjugate(parsed, this.world).PastTense
@@ -236,5 +250,16 @@ module.exports = {
       m.remove('do not')
     }
     return this.remove('#Negative')
+  },
+  /** who, or what is doing this action? */
+  subject: function () {
+    let list = []
+    this.forEach(p => {
+      let found = getSubject(p)
+      if (found.list[0]) {
+        list.push(found.list[0])
+      }
+    })
+    return this.buildFrom(list)
   },
 }

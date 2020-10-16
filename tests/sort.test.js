@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
-test('sortAlpha:', function(t) {
+test('sortAlpha:', function (t) {
   const str = 'John xoo, John fredman, John davis, John fredman,'
   let r = nlp(str)
   r = r.split('@hasComma')
@@ -11,7 +11,7 @@ test('sortAlpha:', function(t) {
   t.end()
 })
 
-test('sortSequential:', function(t) {
+test('sortSequential:', function (t) {
   const str = 'John xoo, John fredman, John davis'
   let r = nlp(str)
   r = r.split('@hasComma')
@@ -22,7 +22,7 @@ test('sortSequential:', function(t) {
   t.end()
 })
 
-test('reverse:', function(t) {
+test('reverse:', function (t) {
   const str = 'John xoo, John fredman, John davis'
   let r = nlp(str)
   r = r.split('@hasComma')
@@ -33,7 +33,17 @@ test('reverse:', function(t) {
   t.end()
 })
 
-test('length:', function(t) {
+test('freq:', function (t) {
+  const str = 'John xoo, John fredman, John davis'
+  let r = nlp(str)
+  r = r.terms()
+  r = r.sort('freq')
+  const want = ['John', 'John', 'John', 'xoo,', 'fredman,', 'davis']
+  t.deepEqual(r.out('array'), want, 'freq-reverse')
+  t.end()
+})
+
+test('length:', function (t) {
   const str = 'Amy, John Fredman, Dr. Bill, Alexis Smithsonian'
   let r = nlp(str)
   r = r.split('@hasComma')
@@ -44,7 +54,7 @@ test('length:', function(t) {
   t.end()
 })
 
-test('wordCount:', function(t) {
+test('wordCount:', function (t) {
   const str = 'John Fredman, Amy, Dr. Bill G. Gates'
   let r = nlp(str)
   r = r.split('@hasComma')
@@ -55,7 +65,7 @@ test('wordCount:', function(t) {
   t.end()
 })
 
-test('unique:', function(t) {
+test('unique:', function (t) {
   const str = 'John xoo, John fredman, john xoo, John davis'
   let r = nlp(str)
   r = r.split('@hasComma')
@@ -65,7 +75,7 @@ test('unique:', function(t) {
   t.end()
 })
 
-test('custom-sort:', function(t) {
+test('custom-sort:', function (t) {
   let doc = nlp('Eeny, meeny, miny, moe')
   let terms = doc.terms()
   terms.sort((a, b) => {
@@ -84,7 +94,7 @@ test('custom-sort:', function(t) {
   t.end()
 })
 
-test('frequency:', function(t) {
+test('frequency:', function (t) {
   const str = 'John xoo, John fredman, john xoo, John davis'
   let r = nlp(str)
   r = r.split('@hasComma')

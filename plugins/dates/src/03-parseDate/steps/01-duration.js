@@ -10,7 +10,7 @@ const mapping = {
 // when a unit of time is spoken of as 'this month' - instead of 'february'
 const namedUnit = function (doc, context) {
   //this month, last quarter, next year
-  let m = doc.match('(weekday|week|month|quarter|season|year)')
+  let m = doc.match('^(weekday|week|month|quarter|season|year)$')
   if (m.found === true) {
     let str = m.lastTerm().text('reduced')
     if (mapping.hasOwnProperty(str)) {
@@ -24,7 +24,7 @@ const namedUnit = function (doc, context) {
   }
 
   //try this version - 'next friday, last thursday'
-  m = doc.match('(monday|tuesday|wednesday|thursday|friday|saturday|sunday)')
+  m = doc.match('^(monday|tuesday|wednesday|thursday|friday|saturday|sunday)$')
   if (m.found === true) {
     let str = m.lastTerm().text('reduced')
     let unit = new units.WeekDay(str, null, context)

@@ -37,6 +37,10 @@ test('sneaky past participles', function (t) {
     // past->past
     ['i had been driven', 'i had been driven'],
     ['i should have been driven', 'i should have been driven'],
+    // gerund
+    ['when it is raining', 'when it was raining'],
+    ['i think it will be raining', 'i thought it will be raining'],
+    ['when it was raining', 'when it was raining'],
   ]
   arr.forEach(function (a) {
     let doc = nlp(a[0])

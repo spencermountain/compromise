@@ -1,22 +1,34 @@
 const nlp = require('./src/index')
-const spacetime = require('/Users/spencer/mountain/spacetime/src')
-// nlp.verbose(true)
+// const spacetime = require('/Users/spencer/mountain/spacetime/src')
+nlp.verbose(true)
 // let txt = require('./scripts/test/speed/_sotu-text.js')
-nlp.extend(require('./plugins/numbers/src'))
-nlp.extend(require('./plugins/dates/src'))
+// nlp.extend(require('./plugins/numbers/src'))
+// nlp.extend(require('./plugins/dates/src'))
 // nlp.extend(require('./plugins/sentences/src'))
 
-// let doc = nlp('april fools').debug()
-// console.log(spacetime(dates.date.start).format('{day-short} {month-short} {date} {year}, {time}'))
+// let doc = nlp(`before 2017`)
+// let today = [2016, 1, 5] // feb 5th, a friday
+// let obj = doc.dates({ today: today }).json()[0]
+// console.log(spacetime(obj.date.start).format('{nice-day} {year}'))
 
-// let doc = nlp(`once a month`)
-let doc = nlp(`March 1929`)
+/* //more person false-positives
+Vitamin D.
+may
+ACE
+gene
+Jennifer  antibiotics
+in our X-ray Uro-radiology
+*/
 
-// doc.debug()
-let dates = doc.dates({ today: { year: 1999 } }).json(0)
-console.log(dates)
-if (dates.date.end) {
-  console.log(spacetime(dates.date.end).format('{day-short} {month-short} {date} {year}, {time}'))
-} else {
-  console.log('--')
-}
+/* //place false-positives
+CT
+St
+*/
+
+// let doc = nlp(`ANA, ENA, CCP etc.`)
+let doc = nlp(`promising to leave`)
+doc.debug()
+
+// hmmm
+// let doc = nlp('a farmer boy is')
+// doc.match(`a (word|#Noun+) is`).debug()

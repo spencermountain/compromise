@@ -10,7 +10,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 
 <!-- #### [Unreleased] -->
 
-#### [Unreleased] 13.6.0
+#### 13.6.0
 
 - **[new]** first-attempt at `verbs().subject()` method
 - **[change]** avoid conjugating imperative tense - 'please close the door'

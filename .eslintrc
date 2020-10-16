@@ -1,31 +1,32 @@
 {
+  "root": true,
   "env": {
-    "node": true,
-    "browser": true
-  },
-  "globals": {
-    "Promise": true
+    "es6": true,
+    "browser": true,
+    "node": true
   },
   "parserOptions": {
-    "ecmaVersion": 6,
+    "ecmaVersion": 2017,
     "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": false
-    }
+    "ecmaFeatures": {}
   },
+  "extends": [],
   "rules": {
+    "semi": ["warn", "never"],
+    "indent": ["error", 2],
+    "spaced-comment": 0,
     "no-cond-assign": 2,
     "no-var": 1,
     "prefer-const": 0,
     "no-extra-parens": 0,
     "no-dupe-keys": 2,
+    "no-undef": 2,
     "no-unreachable": 2,
     "eqeqeq": 1,
     "keyword-spacing": 0,
     "no-native-reassign": 2,
     "no-redeclare": 2,
     "radix": 1,
-    "indent": 0,
     "quotes": [0, "single", "avoid-escape"],
     "no-shadow": 2,
     "no-unused-vars": 1,
@@ -38,7 +39,17 @@
     "no-octal-escape": 2,
     "no-constant-condition": 1,
     "no-unused-expressions": 2,
-    "no-undefined": 0,
-    "no-undef": 2
+    "comma-dangle": [1, "only-multiline"],
+    "space-before-function-paren": 0,
+    "max-len": [
+      "error",
+      {
+        "code": 120,
+        "ignoreComments": true,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true,
+        "ignoreRegExpLiterals": true
+      }
+    ]
   }
 }

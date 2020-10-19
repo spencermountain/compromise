@@ -43,6 +43,7 @@ module.exports = [
   'part',
   'patent',
   'plate',
+  'player',
   'problem',
   'purpose',
   'question mark',

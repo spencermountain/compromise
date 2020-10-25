@@ -5,3 +5,4 @@ coverage/
 .nyc_output/
 .vscode
 coverage.lcov
+codecov.yml

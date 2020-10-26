@@ -1688,7 +1688,7 @@ module.exports = [
     tags: 'NNP, VBD',
   },
   {
-    text: "I 'll initiate the call.",
+    text: "I'll initiate the call.",
     tags: 'PRP, MD, VB, DT, NN',
   },
   {
@@ -2544,7 +2544,7 @@ module.exports = [
     tags: 'NNP',
   },
   {
-    text: "I 'll be in Portland but can call you.",
+    text: "I'll be in Portland but can call you.",
     tags: 'PRP, MD, VB, IN, NNP, CC, MD, VB, PRP',
   },
   {
@@ -3169,7 +3169,7 @@ module.exports = [
     tags: 'NNP',
   },
   {
-    text: "I 'll be in town through Sunday morning.",
+    text: "I'll be in town through Sunday morning.",
     tags: 'PRP, MD, VB, IN, NN, IN, NNP, NN',
   },
   {
@@ -3461,7 +3461,7 @@ module.exports = [
     tags: 'NNP, MD, VB, PRP, DT, JJ, NN, NN',
   },
   {
-    text: "I 'll call you shortly.",
+    text: "I'll call you shortly.",
     tags: 'PRP, MD, VB, PRP, RB',
   },
   {
@@ -3577,7 +3577,7 @@ module.exports = [
     tags: 'DT, VBZ, DT, RB, JJ, NN',
   },
   {
-    text: "I 'll make the change.",
+    text: "I'll make the change.",
     tags: 'PRP, MD, VB, DT, NN',
   },
   {
@@ -3901,7 +3901,7 @@ module.exports = [
     tags: 'NNP',
   },
   {
-    text: "I 'll get you the announcement.",
+    text: "I'll get you the announcement.",
     tags: 'PRP, MD, VB, PRP, DT, NN',
   },
   {
@@ -4807,7 +4807,7 @@ module.exports = [
       'VBG, DT, JJ, NN, IN, IN, DT, JJ, JJ, CC, JJ, NNS, MD, VB, JJR, DT, NN, IN, PRP, VBZ, IN, DT, JJ, NN, IN, PRP, NNP',
   },
   {
-    text: "You 'll be able to create opportunities for advancement almost out of thin air.",
+    text: "you'll be able to create opportunities for advancement almost out of thin air.",
     tags: 'PRP, MD, VB, JJ, TO, VB, NNS, IN, NN, RB, IN, IN, JJ, NN',
   },
   {
@@ -5557,7 +5557,7 @@ module.exports = [
     tags: 'RB, NNP',
   },
   {
-    text: "You 'll need to have intermediate French to have a good time in Paris.",
+    text: "you'll need to have intermediate French to have a good time in Paris.",
     tags: 'PRP, MD, VB, TO, VB, JJ, NNP, TO, VB, DT, JJ, NN, IN, NNP',
   },
   {
@@ -7223,7 +7223,7 @@ module.exports = [
     tags: 'PRP, VBZ, RB, JJ, RB',
   },
   {
-    text: "you 'll love it",
+    text: "you'll love it",
     tags: 'PRP, MD, VB, PRP',
   },
   {

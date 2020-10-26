@@ -12,14 +12,14 @@ const softMapping = {
   JJ: 'Adjective',
   JJR: 'Comparative',
   JJS: 'Superlative',
-  MD: 'Verb',
+  MD: 'Modal',
   NN: 'Noun',
   NNS: 'Noun', //'Plural',
   NNP: 'Noun',
   NNPS: 'Noun',
   POS: 'Possessive',
   PRP: 'Pronoun',
-  PRP$: 'Pronoun',
+  PRP$: 'Possessive',
   RB: 'Adverb',
   RP: 'Verb', //phrasal particle
   RBR: 'Comparative',
@@ -34,7 +34,7 @@ const softMapping = {
   VBZ: 'Verb', // 3rd person singular present
   WDT: 'Determiner',
   WP: 'Pronoun',
-  WP$: 'Noun',
+  WP$: 'Possessive',
   WRB: 'Adverb',
   PDT: 'Noun', //predeterminer
   SYM: 'Noun', //symbol

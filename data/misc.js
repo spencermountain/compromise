@@ -14,7 +14,7 @@ module.exports = {
   am: 'Copula',
   are: 'Copula',
 
-  if: 'Condition',
+  if: ['Condition', 'Preposition'],
   unless: 'Condition',
   lest: 'Condition',
 

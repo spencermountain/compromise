@@ -25,8 +25,17 @@ CT
 St
 */
 
+// let doc = nlp(`your`)
+// let doc = nlp(`my`)
+// let doc = nlp(`their`)
+// let doc = nlp(`thanks`)
+// let doc = nlp(`if`)
+// let doc = nlp(`like`)
+// let doc = nlp(`your own conclusions`)
+// let doc = nlp(`India keeps what it has`)
+let doc = nlp(`if you were a pilot`)
+// let doc = nlp(`succumbing to radiation`)
 // let doc = nlp(`be given up`)
-let doc = nlp(`john is really walking`)
 // let doc = nlp(`i lost track`)
 // let doc = nlp(`you have seen`)
 // let doc = nlp(`i have taken`)

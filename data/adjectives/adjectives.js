@@ -16,6 +16,7 @@ module.exports = [
   'assuring',
   'astonishing',
   'blinding',
+  'below',
   'boring',
   'confusing',
   'damaging',

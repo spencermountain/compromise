@@ -28,6 +28,7 @@ module.exports = [
   'definitely',
   'directly',
   'en masse',
+  'enough',
   'ever',
   'for example',
   'for good',

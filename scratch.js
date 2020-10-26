@@ -35,7 +35,11 @@ St
 // let doc = nlp(`India keeps what it has`)
 
 // let doc = nlp(`a job well done`)
-let doc = nlp(`The below site`)
+// let doc = nlp(`a crime against humanity`)
+// let doc = nlp(`make the call`)
+// let doc = nlp(`Photographs from a seized computer `)
+// let doc = nlp(`I am a licensed mental health counsellour`)
+// let doc = nlp(`Photographs from a seized computer `)
 // let doc = nlp(`succumbing to radiation`)
 // let doc = nlp(`be given up`)
 // let doc = nlp(`i lost track`)

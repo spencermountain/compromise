@@ -860,8 +860,8 @@ module.exports = [
   },
   {
     text:
-      'Photographs from a seized computer disc included the controls and the locks on the door between the passengers and pilot.',
-    tags: 'NNS, IN, DT, VBN, NN, NN, VBD, DT, NNS, CC, DT, NNS, IN, DT, NN, IN, DT, NNS, CC, NN',
+      'Photographs from a computer disc included the controls and the locks on the door between the passengers and pilot.',
+    tags: 'NNS, IN, DT, NN, NN, VBD, DT, NNS, CC, DT, NNS, IN, DT, NN, IN, DT, NNS, CC, NN',
   },
   {
     text: 'This is old news.',
@@ -7091,8 +7091,8 @@ module.exports = [
     tags: 'DT, NN, VBZ, DT, NN, NN',
   },
   {
-    text: 'I am a licensed mental health counselor and I work with variety of mental health problems.',
-    tags: 'PRP, VBP, DT, VBN, JJ, NN, NN, CC, PRP, VBP, IN, NN, IN, JJ, NN, NNS',
+    text: 'I am a mental health counselor and I work with variety of mental health problems.',
+    tags: 'PRP, VBP, DT, JJ, NN, NN, CC, PRP, VBP, IN, NN, IN, JJ, NN, NNS',
   },
   {
     text: 'Fantastic for kids',

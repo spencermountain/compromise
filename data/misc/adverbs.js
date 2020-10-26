@@ -15,6 +15,7 @@ module.exports = [
   'anyway',
   'apart',
   'aside',
+  'as soon',
   'at best',
   'at large',
   'at least',

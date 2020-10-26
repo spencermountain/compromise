@@ -2499,7 +2499,7 @@ module.exports = [
     tags: 'NNP',
   },
   {
-    text: "I 've booked Videoconference Room # 1.",
+    text: "I've booked Videoconference Room # 1.",
     tags: 'PRP, VBP, VBN, NN, NN, NN, CD',
   },
   {
@@ -3485,7 +3485,7 @@ module.exports = [
     tags: 'NNP, NNP, NNP',
   },
   {
-    text: "I 've simply lost track!",
+    text: "I've simply lost track!",
     tags: 'PRP, VBP, RB, VBN, NN',
   },
   {
@@ -4002,7 +4002,7 @@ module.exports = [
     tags: 'NNP',
   },
   {
-    text: "I 've read the materials you sent and agree we need to address these allegations appropriately.",
+    text: "I've read the materials you sent and agree we need to address these allegations appropriately.",
     tags: 'PRP, VBP, VBN, DT, NNS, PRP, VBD, CC, VBP, PRP, VBP, TO, VB, DT, NNS, RB',
   },
   {
@@ -4761,7 +4761,7 @@ module.exports = [
     tags: 'DT, VBD, TO, VB, CC, RB, JJ, VBD, JJ, TO',
   },
   {
-    text: "These are some of the things I 've been wondering ...",
+    text: "These are some of the things I've been wondering ...",
     tags: 'DT, VBP, DT, IN, DT, NNS, PRP, VBP, VBN, VBG',
   },
   {
@@ -5385,7 +5385,7 @@ module.exports = [
     tags: 'RB, DT, NN, MD, VB, DT, NN, VBG, DT, JJS, NN, TO, VB, DT, NN',
   },
   {
-    text: "I 've had cats for 35 years and I only feed them dry food.",
+    text: "I've had cats for 35 years and I only feed them dry food.",
     tags: 'PRP, VBP, VBN, NNS, IN, CD, NNS, CC, PRP, RB, VBP, PRP, JJ, NN',
   },
   {
@@ -6027,7 +6027,7 @@ module.exports = [
     tags: 'PRP, VBP, VBN, NN, PRP, MD, TO, VB, PRP, TO, VB, CC, PRP, VBZ',
   },
   {
-    text: "i 've only tried to feed him one at a time.",
+    text: "I've only tried to feed him one at a time.",
     tags: 'PRP, VBP, RB, VBN, TO, VB, PRP, CD, IN, DT, NN',
   },
   {
@@ -6476,7 +6476,7 @@ module.exports = [
     tags: 'VBZ, TO, VB, IN, IN, NN',
   },
   {
-    text: "I 've only had good experiences at Adorn, I was greeted and offered a refreshment.",
+    text: "I've only had good experiences at Adorn, I was greeted and offered a refreshment.",
     tags: 'PRP, VBP, RB, VBN, JJ, NNS, IN, NNP, PRP, VBD, VBN, CC, VBN, DT, NN',
   },
   {
@@ -7767,7 +7767,7 @@ module.exports = [
     tags: 'JJ, NN',
   },
   {
-    text: "One of the worst experiences I 've ever had with a auto repair shop.",
+    text: "One of the worst experiences I've ever had with a auto repair shop.",
     tags: 'CD, IN, DT, JJS, NNS, PRP, VBP, RB, VBN, IN, DT, NN, NN, NN',
   },
   {

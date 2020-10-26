@@ -15,6 +15,7 @@ const mapping = {
 }
 
 // '_' in conjugations is the infinitive form
+// (order matters, to the lexicon)
 let conjugations = {
   act: {
     a: '_or',
@@ -87,8 +88,8 @@ let conjugations = {
     pst: 'bit',
   },
   bleed: {
-    prt: 'bled',
     pst: 'bled',
+    prt: 'bled',
   },
   blow: {
     prt: '_n',
@@ -107,8 +108,8 @@ let conjugations = {
     pst: 'bred',
   },
   bring: {
-    prt: 'brought',
     pst: 'brought',
+    prt: 'brought',
   },
   broadcast: {
     pst: '_',
@@ -117,8 +118,8 @@ let conjugations = {
     pst: '_ed',
   },
   build: {
-    prt: 'built',
     pst: 'built',
+    prt: 'built',
   },
   burn: {
     prt: '_ed',
@@ -127,8 +128,8 @@ let conjugations = {
     prt: '_',
   },
   buy: {
-    prt: 'bought',
     pst: 'bought',
+    prt: 'bought',
   },
   can: {
     a: '',
@@ -170,8 +171,8 @@ let conjugations = {
     prt: '_',
   },
   deal: {
-    prt: '_t',
     pst: '_t',
+    prt: '_t',
   },
   develop: {
     a: '_er',
@@ -184,8 +185,8 @@ let conjugations = {
   },
   dig: {
     g: '_ging',
-    prt: 'dug',
     pst: 'dug',
+    prt: 'dug',
   },
   dive: {
     prt: '_d',
@@ -240,8 +241,8 @@ let conjugations = {
     pst: 'felt',
   },
   fight: {
-    prt: 'fought',
     pst: 'fought',
+    prt: 'fought',
   },
   find: {
     pst: 'found',
@@ -297,18 +298,18 @@ let conjugations = {
     prt: '_n',
   },
   hang: {
-    prt: 'hung',
     pst: 'hung',
+    prt: 'hung',
   },
   have: {
     g: 'having',
-    prt: 'had',
     pst: 'had',
+    prt: 'had',
     pres: 'has',
   },
   hear: {
-    prt: '_d',
     pst: '_d',
+    prt: '_d',
   },
   hide: {
     prt: 'hidden',
@@ -318,12 +319,12 @@ let conjugations = {
     prt: '_',
   },
   hold: {
-    prt: 'held',
     pst: 'held',
+    prt: 'held',
   },
   hurt: {
-    prt: '_',
     pst: '_',
+    prt: '_',
   },
   ice: {
     g: 'icing',
@@ -349,19 +350,19 @@ let conjugations = {
     prt: '_n',
   },
   lay: {
-    prt: 'laid',
     pst: 'laid',
+    prt: 'laid',
   },
   lead: {
-    prt: 'led',
     pst: 'led',
+    prt: 'led',
   },
   leap: {
     prt: '_t',
   },
   leave: {
-    prt: 'left',
     pst: 'left',
+    prt: 'left',
   },
   lend: {
     prt: 'lent',
@@ -371,8 +372,8 @@ let conjugations = {
     pst: 'lay',
   },
   light: {
-    prt: 'lit',
     pst: 'lit',
+    prt: 'lit',
   },
   log: {
     g: '_ging',
@@ -386,18 +387,18 @@ let conjugations = {
     pst: 'lost',
   },
   make: {
-    prt: 'made',
     pst: 'made',
+    prt: 'made',
   },
   mean: {
-    prt: '_t',
     pst: '_t',
+    prt: '_t',
   },
   meet: {
     a: '_er',
     g: '_ing',
-    prt: 'met',
     pst: 'met',
+    prt: 'met',
   },
   miss: {
     pres: '_',
@@ -406,8 +407,8 @@ let conjugations = {
     g: 'naming',
   },
   pay: {
-    prt: 'paid',
     pst: 'paid',
+    prt: 'paid',
   },
   prove: {
     prt: '_n',
@@ -422,15 +423,15 @@ let conjugations = {
     prt: '_',
   },
   read: {
-    prt: '_',
     pst: '_',
+    prt: '_',
   },
   ride: {
     prt: 'ridden',
   },
   ring: {
-    prt: 'rung',
     pst: 'rang',
+    prt: 'rung',
   },
   rise: {
     fut: 'will have _n',
@@ -449,11 +450,12 @@ let conjugations = {
     pst: 'ran',
   },
   say: {
-    prt: 'said',
     pst: 'said',
+    prt: 'said',
     pres: '_s',
   },
   seat: {
+    pst: 'sat',
     prt: 'sat',
   },
   see: {
@@ -465,8 +467,8 @@ let conjugations = {
     prt: 'sought',
   },
   sell: {
-    prt: 'sold',
     pst: 'sold',
+    prt: 'sold',
   },
   send: {
     prt: 'sent',
@@ -489,12 +491,12 @@ let conjugations = {
     pres: '_s',
   },
   shine: {
-    prt: 'shone',
     pst: 'shone',
+    prt: 'shone',
   },
   shoot: {
-    prt: 'shot',
     pst: 'shot',
+    prt: 'shot',
   },
   show: {
     pst: '_ed',
@@ -523,8 +525,8 @@ let conjugations = {
     prt: 'slept',
   },
   slide: {
-    prt: 'slid',
     pst: 'slid',
+    prt: 'slid',
   },
   smash: {
     pres: '_es',
@@ -551,8 +553,8 @@ let conjugations = {
   },
   spin: {
     g: '_ning',
-    prt: 'spun',
     pst: 'spun',
+    prt: 'spun',
   },
   spit: {
     prt: 'spat',
@@ -580,8 +582,8 @@ let conjugations = {
     pst: 'stung',
   },
   stink: {
-    prt: 'stunk',
     pst: 'stunk',
+    prt: 'stunk',
   },
   stream: {
     a: '_er',

@@ -1,6 +1,6 @@
 const nlp = require('./src/index')
 // const spacetime = require('/Users/spencer/mountain/spacetime/src')
-// nlp.verbose(true)
+nlp.verbose(true)
 // let txt = require('./scripts/test/speed/_sotu-text.js')
 // nlp.extend(require('./plugins/numbers/src'))
 // nlp.extend(require('./plugins/dates/src'))
@@ -25,9 +25,13 @@ CT
 St
 */
 
-// let doc = nlp(`ANA, ENA, CCP etc.`)
-let doc = nlp(`players only love you when they're playing`)
-doc.verbs().debug().toPastTense()
+// let doc = nlp(`be given up`)
+let doc = nlp(`john is really walking`)
+// let doc = nlp(`i lost track`)
+// let doc = nlp(`you have seen`)
+// let doc = nlp(`i have taken`)
+// let doc = nlp(`have you gotten?`)
+// doc.verbs().debug().toPastTense()
 doc.debug()
 
 // hmmm

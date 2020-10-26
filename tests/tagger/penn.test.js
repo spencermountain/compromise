@@ -47,7 +47,7 @@ test('pennTreebank-test:', function (t) {
 
     let doc = nlp(sentence.text)
     let perfect = true
-    let msg = `'` + sentence.text.substr(0, 20) + `..   -  `
+    let msg = `'` + sentence.text.substr(0, 35) + `..   -  `
 
     let terms = doc.json(0).terms
     if (doc.length !== 1) {

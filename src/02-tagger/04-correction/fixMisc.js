@@ -32,7 +32,7 @@ const miscCorrection = function (doc) {
 
   //three trains / one train
   m = hasTag(doc, 'Value')
-  m = m.match('#Value #PresentTense')
+  m = m.match('#Value #PresentTense').ifNo('#Copula')
   if (m.found) {
     if (m.has('(one|1)') === true) {
       m.terms(1).tag('Singular', 'one-presentTense')

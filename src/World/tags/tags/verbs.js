@@ -5,7 +5,7 @@ module.exports = {
   // walks
   PresentTense: {
     isA: 'Verb',
-    notA: ['PastTense', 'Copula', 'FutureTense'],
+    notA: ['PastTense', 'FutureTense'],
   },
   // neutral form - 'walk'
   Infinitive: {

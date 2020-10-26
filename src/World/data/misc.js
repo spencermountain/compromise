@@ -15,6 +15,7 @@ module.exports = {
   her: ['Possessive', 'Pronoun'],
   his: ['Possessive', 'Pronoun'],
   their: ['Possessive', 'Pronoun'],
+  themselves: ['Possessive', 'Pronoun'],
   your: ['Possessive', 'Pronoun'],
   our: ['Possessive', 'Pronoun'],
   my: ['Possessive', 'Pronoun'],

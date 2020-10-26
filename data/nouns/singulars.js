@@ -33,6 +33,7 @@ module.exports = [
   'home',
   'house',
   'insect',
+  'line',
   'lunch',
   'meeting',
   'model',

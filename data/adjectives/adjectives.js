@@ -499,6 +499,7 @@ module.exports = [
   'upside down',
   'upstairs',
   'uptight',
+  'up to date',
   'urban',
   'usual',
   'utter',

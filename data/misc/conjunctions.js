@@ -24,5 +24,6 @@ module.exports = [
   'versus',
   'whether',
   'while',
+  'vs',
   'yet',
 ]

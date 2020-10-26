@@ -293,7 +293,6 @@ module.exports = [
   'lift',
   'like',
   'limit',
-  'line',
   'link',
   'list',
   'listen',

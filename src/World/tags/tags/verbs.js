@@ -46,7 +46,7 @@ module.exports = {
   },
   // shown
   Participle: {
-    isA: 'Verb',
+    isA: 'PastTense',
   },
   // show up
   PhrasalVerb: {

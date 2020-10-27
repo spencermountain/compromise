@@ -30,6 +30,7 @@ module.exports = [
   'grand slam',
   'head start',
   'home run',
+  'human right',
   'home',
   'house',
   'insect',

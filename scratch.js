@@ -1,6 +1,6 @@
 const nlp = require('./src/index')
 // const spacetime = require('/Users/spencer/mountain/spacetime/src')
-nlp.verbose(true)
+// nlp.verbose(true)
 // let txt = require('./scripts/test/speed/_sotu-text.js')
 // nlp.extend(require('./plugins/numbers/src'))
 // nlp.extend(require('./plugins/dates/src'))
@@ -29,13 +29,9 @@ St
 // let doc = nlp(`The situation appears to be even worse`)//even
 // let doc = nlp(`They even occasionally attack`)
 // let doc = nlp(`a crime against humanity`)
-// let doc = nlp(`make the call`)
 // let doc = nlp(`Photographs from a seized computer `)
 // let doc = nlp(`I am a licensed mental health counsellour`)
-// let doc = nlp(`Photographs from a seized computer `)
-// let doc = nlp(`succumbing to radiation`)
-// let doc = nlp(`be given up`)
-// let doc = nlp(`i lost track`)
+let doc = nlp(`i lost track`)
 // let doc = nlp(`your own destiny`)
 // let doc = nlp(`john vs john`)
 // let doc = nlp(`At some point`)
@@ -46,7 +42,8 @@ St
 // let doc = nlp(`i have taken`)
 // let doc = nlp(`have you gotten?`)
 doc.debug()
-
+console.log(doc.world.words.lost)
+console.log(doc.world.words.lose)
 // hmmm
 // let doc = nlp('a farmer boy is')
 // doc.match(`a (word|#Noun+) is`).debug()

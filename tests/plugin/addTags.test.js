@@ -101,3 +101,39 @@ test('tagset-remove-half-downward', function (t) {
   t.ok(doc.has('#Surgeon') === false, 'Surgeon-tag-gone')
   t.end()
 })
+
+test('tagset-tree', function (t) {
+  nlp.extend((_, world) => {
+    world.addTags({
+      One: {},
+      Two: {},
+      Three: { isA: 'Two' },
+    })
+  })
+  let doc = nlp(`have fun in toronto`, { toronto: 'Three' })
+  let m = doc.match('toronto')
+  t.ok(m.has('#Three'), 'three')
+  t.ok(m.has('#Two'), 'two')
+  t.equal(m.has('#One'), false, 'no one')
+  t.equal(m.has('#Adjective'), false, 'no Adjective')
+  t.end()
+})
+
+test('tagset-tree-array', function (t) {
+  nlp.extend((_, world) => {
+    world.addTags({
+      One: {},
+      Two: {},
+      Three: { isA: ['Two', 'One', 'FirstName'] },
+    })
+  })
+  let doc = nlp(`have fun in toronto`, { toronto: 'Three' })
+  let m = doc.match('toronto')
+  t.ok(m.has('#Three'), 'three')
+  t.ok(m.has('#Two'), 'two')
+  t.ok(m.has('#One'), 'one')
+  t.ok(m.has('#FirstName'), 'FirstName')
+  t.ok(m.has('#Person'), 'Person')
+  t.ok(m.has('#Noun'), 'Noun')
+  t.end()
+})

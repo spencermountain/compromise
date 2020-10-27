@@ -35,7 +35,7 @@ in our X-ray Uro-radiology
 // let doc = nlp(`in regards to`)
 // let doc = nlp(`have you gotten?`)
 
-let doc = nlp(`federal regulators justifying higher costs.`)
+let doc = nlp(`Good food, good wait staff`)
 // let doc = nlp(` fantastic wait staff`)
 // let doc = nlp(`he is able to make up for his lack of preparedness`)
 doc.debug()

@@ -51,7 +51,7 @@ const miscCorrection = function (doc) {
   // directive verb - 'use reverse'
   doc
     .match('(try|use|attempt|build|make) #Verb')
-    .ifNo('(@hasComma|#Negative|#Copula|will|be)')
+    .ifNo('(@hasComma|#Negative|#PhrasalVerb|#Copula|will|be)')
     .lastTerm()
     .tag('#Noun', 'do-verb')
 

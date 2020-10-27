@@ -86,8 +86,10 @@ data.forEach(a => {
 console.log('right:', right)
 console.log('wrong', wrong)
 
-// let byWord = topk(wrongs.map(o => o.word))
 wrongs = wrongs.filter(o => o.want === 'Verb')
+// let byWord = topk(wrongs.map(o => o.word))
+wrongs = wrongs.filter(o => o.word === 'up')
 
 console.log(JSON.stringify(wrongs, null, 2))
-console.log(JSON.stringify(wrongs.length, null, 2))
+// console.log(JSON.stringify(byWord, null, 2))
+// console.log(JSON.stringify(wrongs.length, null, 2))

@@ -55,6 +55,7 @@ module.exports = {
   //misc
   records: 'Plural',
   '&': 'Conjunction',
+  vs: ['Conjunction', 'Abbreviation'],
 
   //pronouns
   i: ['Pronoun', 'Singular'],

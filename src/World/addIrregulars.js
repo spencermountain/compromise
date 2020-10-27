@@ -21,6 +21,10 @@ const addIrregulars = function (world) {
     //add the others
     Object.keys(forms).forEach(tag => {
       world.words[forms[tag]] = world.words[forms[tag]] || tag
+      // lexicon should prefer other tags, over participle
+      if (world.words[forms[tag]] === 'Participle') {
+        world.words[forms[tag]] = tag
+      }
     })
   }
 }

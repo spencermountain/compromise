@@ -41,7 +41,6 @@ module.exports = [
   'vet',
   // 'sing',//singular
   'ver', //version
-  'vs',
   'fem', //feminine
   'masc', //masculine
   'eng', //engineering/english

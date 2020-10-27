@@ -49,8 +49,8 @@ let list = [
   { match: `#Modal (#Adverb|not)+? be (#Adverb|not)+? #Verb`, group: 0, tag: 'Auxiliary', reason: 'would-be' },
   //were being run
   { match: `(were|was) being [#PresentTense]`, group: 0, tag: 'PastTense', reason: 'was-being' },
-  //must have run
-  { match: `must have [#PresentTense]`, group: 0, tag: 'PastTense', reason: 'must-have-vb' },
+  //have run
+  { match: `have #PresentTense`, group: 0, tag: 'PastTense', reason: 'have-vb' },
   //would have had
   {
     match: `[#Modal (#Adverb|not)+? have (#Adverb|not)+? had (#Adverb|not)+?] #Verb`,

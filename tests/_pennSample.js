@@ -7495,8 +7495,8 @@ module.exports = [
     tags: 'NNS',
   },
   {
-    text: 'I paid 2 k cash for a truck with a blown motor.',
-    tags: 'PRP, VBD, CD, NN, NN, IN, DT, NN, IN, DT, VBN, NN',
+    text: 'I paid 2 k cash for a truck with a bad motor.',
+    tags: 'PRP, VBD, CD, NN, NN, IN, DT, NN, IN, DT, JJ, NN',
   },
   {
     text: 'Grimy work you guys do.',

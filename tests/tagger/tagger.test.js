@@ -221,6 +221,8 @@ test('pos-basic-tag:', function (t) {
     ['well, no.', ['Expression', 'Negative']],
     ['he is well', ['Pronoun', 'Copula', 'Adjective']],
     ['is well made', ['Copula', 'Adverb', 'Adjective']],
+    ['at some point', ['Preposition', 'Determiner', 'Noun']],
+    ['to a point', ['Conjunction', 'Determiner', 'Noun']],
   ]
   arr.forEach(function (a) {
     let terms = nlp(a[0]).json(0).terms

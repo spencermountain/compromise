@@ -319,6 +319,7 @@ module.exports = [
   'mingle',
   'minus',
   'mirror',
+  'misrepresent',
   'monitor',
   'move',
   'multiply',

@@ -75,6 +75,8 @@ module.exports = [
     tag: 'Noun',
     reason: 'technical-noun',
   },
+  // a blown motor
+  { match: '(the|those|these|a|an) [#Participle] #Noun', group: 0, tag: 'Adjective', reason: 'blown-motor' },
   // walk the walk
   { match: '(the|those|these|a|an) #Adjective? [#Infinitive]', group: 0, tag: 'Noun', reason: 'det-inf' },
   { match: '(the|those|these|a|an) #Adjective? [#PresentTense]', group: 0, tag: 'Noun', reason: 'det-pres' },
@@ -82,6 +84,8 @@ module.exports = [
 
   // this swimming
   { match: '(this|that) [#Gerund]', group: 0, tag: 'Noun', reason: 'this-gerund' },
+  // at some point
+  { match: 'at some [#Infinitive]', group: 0, tag: 'Noun', reason: 'at-some-inf' },
 
   //air-flow
   { match: '(#Noun && @hasHyphen) #Verb', tag: 'Noun', reason: 'hyphen-verb' },

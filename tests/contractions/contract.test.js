@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('contract basic', function(t) {
+test('contract basic', function (t) {
   let r = nlp(`he is cool.`)
   r.contract()
   t.equal(r.out('text'), `he's cool.`, 'expanded-contract')
@@ -34,16 +34,13 @@ test('contract basic', function(t) {
   r.contract()
   t.equal(r.out('text'), `i'm good`, 'contract-2')
 
-  r.contractions()
-    .contract()
-    .contract()
-    .contract()
+  r.contractions().contract().contract().contract()
   t.equal(r.out('text'), `i'm good`, 'contract-n')
 
   t.end()
 })
 
-test('avoid contraction messes', function(t) {
+test('avoid contraction messes', function (t) {
   let doc = nlp('Tony, is').contract()
   t.equal(doc.text('reduced'), 'tony is', 'avoid-contraction 1')
 

@@ -2,13 +2,11 @@ const test = require('tape')
 const nlp = require('./_lib')
 
 function testAllQuotes(a, t) {
-  const str = nlp(a[0])
-    .quotations()
-    .out('normal')
+  const str = nlp(a[0]).quotations().out('normal')
   t.equal(str, a[1], a[0])
 }
 
-test('quotation test:', function(t) {
+test('quotation test:', function (t) {
   ;[
     [`he is "really good"`, `really good`],
     [`he is "really good" i guess`, `really good`],
@@ -16,16 +14,14 @@ test('quotation test:', function(t) {
     [`he is "completely and utterly great" i guess`, `completely and utterly great`],
     [`“quote”`, `quote`],
     [`“quote is here”`, `quote is here`],
-  ].forEach(function(a) {
-    const str = nlp(a[0])
-      .quotations()
-      .out('normal')
+  ].forEach(function (a) {
+    const str = nlp(a[0]).quotations().out('normal')
     t.equal(str, a[1], a[0])
   })
   t.end()
 })
 
-test('Quotations - U+0022 to U+0022', function(t) {
+test('Quotations - U+0022 to U+0022', function (t) {
   ;[
     ['he is \u0022really good\u0022', 'really good'],
     ['he is \u0022really good\u0022 i guess', 'really good'],
@@ -36,7 +32,7 @@ test('Quotations - U+0022 to U+0022', function(t) {
   t.end()
 })
 
-test('Quotations - U+FF02 to U+FF02', function(t) {
+test('Quotations - U+FF02 to U+FF02', function (t) {
   ;[
     ['he is \uFF02really good\uFF02', 'really good'],
     ['he is \uFF02really good\uFF02 i guess', 'really good'],
@@ -47,7 +43,7 @@ test('Quotations - U+FF02 to U+FF02', function(t) {
   t.end()
 })
 
-test('Quotations - U+0027 to U+0027', function(t) {
+test('Quotations - U+0027 to U+0027', function (t) {
   ;[
     ['he is \u0027really good\u0027', 'really good'],
     ['he is \u0027really good\u0027 i guess', 'really good'],
@@ -58,7 +54,7 @@ test('Quotations - U+0027 to U+0027', function(t) {
   t.end()
 })
 //
-test('Quotations - U+201C to U+201D', function(t) {
+test('Quotations - U+201C to U+201D', function (t) {
   ;[
     ['he is \u201Creally good\u201D', 'really good'],
     ['he is \u201Creally good\u201D i guess', 'really good'],
@@ -69,7 +65,7 @@ test('Quotations - U+201C to U+201D', function(t) {
   t.end()
 })
 
-test('Quotations - U+2018 to U+2019', function(t) {
+test('Quotations - U+2018 to U+2019', function (t) {
   ;[
     ['he is \u2018really good\u2019', 'really good'],
     ['he is \u2018really good\u2019 i guess', 'really good'],
@@ -80,7 +76,7 @@ test('Quotations - U+2018 to U+2019', function(t) {
   t.end()
 })
 
-test('Quotations - U+201F to U+201D', function(t) {
+test('Quotations - U+201F to U+201D', function (t) {
   ;[
     ['he is \u201Freally good\u201D', 'really good'],
     ['he is \u201Freally good\u201D i guess', 'really good'],
@@ -91,7 +87,7 @@ test('Quotations - U+201F to U+201D', function(t) {
   t.end()
 })
 
-test('Quotations - U+201B to U+2019', function(t) {
+test('Quotations - U+201B to U+2019', function (t) {
   ;[
     ['he is \u201Breally good\u2019', 'really good'],
     ['he is \u201Breally good\u2019 i guess', 'really good'],
@@ -102,7 +98,7 @@ test('Quotations - U+201B to U+2019', function(t) {
   t.end()
 })
 
-test('Quotations - U+201E to U+201D', function(t) {
+test('Quotations - U+201E to U+201D', function (t) {
   ;[
     ['he is \u201Ereally good\u201D', 'really good'],
     ['he is \u201Ereally good\u201D i guess', 'really good'],
@@ -113,7 +109,7 @@ test('Quotations - U+201E to U+201D', function(t) {
   t.end()
 })
 
-test('Quotations - U+2E42 to U+201D', function(t) {
+test('Quotations - U+2E42 to U+201D', function (t) {
   ;[
     ['he is \u2E42really good\u201D', 'really good'],
     ['he is \u2E42really good\u201D i guess', 'really good'],
@@ -124,7 +120,7 @@ test('Quotations - U+2E42 to U+201D', function(t) {
   t.end()
 })
 
-test('Quotations - U+201A to U+2019', function(t) {
+test('Quotations - U+201A to U+2019', function (t) {
   ;[
     ['he is \u201Areally good\u2019', 'really good'],
     ['he is \u201Areally good\u2019 i guess', 'really good'],
@@ -135,7 +131,7 @@ test('Quotations - U+201A to U+2019', function(t) {
   t.end()
 })
 
-test('Quotations - U+00AB to U+00BB', function(t) {
+test('Quotations - U+00AB to U+00BB', function (t) {
   ;[
     ['he is \u00ABreally good\u00BB', 'really good'],
     ['he is \u00ABreally good\u00BB i guess', 'really good'],
@@ -146,7 +142,7 @@ test('Quotations - U+00AB to U+00BB', function(t) {
   t.end()
 })
 
-test('Quotations - U+2039 to U+203A', function(t) {
+test('Quotations - U+2039 to U+203A', function (t) {
   ;[
     ['he is \u2039really good\u203A', 'really good'],
     ['he is \u2039really good\u203A i guess', 'really good'],
@@ -157,7 +153,7 @@ test('Quotations - U+2039 to U+203A', function(t) {
   t.end()
 })
 
-test('Quotations - U+2035 to U+2032', function(t) {
+test('Quotations - U+2035 to U+2032', function (t) {
   ;[
     ['he is \u2035really good\u2032', 'really good'],
     ['he is \u2035really good\u2032 i guess', 'really good'],
@@ -168,7 +164,7 @@ test('Quotations - U+2035 to U+2032', function(t) {
   t.end()
 })
 
-test('Quotations - U+2036 to U+2033', function(t) {
+test('Quotations - U+2036 to U+2033', function (t) {
   ;[
     ['he is \u2036really good\u2033', 'really good'],
     ['he is \u2036really good\u2033 i guess', 'really good'],
@@ -179,7 +175,7 @@ test('Quotations - U+2036 to U+2033', function(t) {
   t.end()
 })
 
-test('Quotations - U+2037 to U+2034', function(t) {
+test('Quotations - U+2037 to U+2034', function (t) {
   ;[
     ['he is \u2037really good\u2034', 'really good'],
     ['he is \u2037really good\u2034 i guess', 'really good'],
@@ -190,7 +186,7 @@ test('Quotations - U+2037 to U+2034', function(t) {
   t.end()
 })
 
-test('Quotations - U+301D to U+301E', function(t) {
+test('Quotations - U+301D to U+301E', function (t) {
   ;[
     ['he is \u301Dreally good\u301E', 'really good'],
     ['he is \u301Dreally good\u301E i guess', 'really good'],
@@ -201,7 +197,7 @@ test('Quotations - U+301D to U+301E', function(t) {
   t.end()
 })
 
-test('Quotations - U+0060 to U+00B4', function(t) {
+test('Quotations - U+0060 to U+00B4', function (t) {
   ;[
     ['he is \u0060really good\u00B4', 'really good'],
     ['he is \u0060really good\u00B4 i guess', 'really good'],
@@ -212,7 +208,7 @@ test('Quotations - U+0060 to U+00B4', function(t) {
   t.end()
 })
 
-test('Quotations - U+301F to U+301E', function(t) {
+test('Quotations - U+301F to U+301E', function (t) {
   ;[
     ['he is \u301Freally good\u301E', 'really good'],
     ['he is \u301Freally good\u301E i guess', 'really good'],

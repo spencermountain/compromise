@@ -7,7 +7,7 @@ const lexicon = {
   Tobruk: 'Place',
 }
 
-test('user-lex-with-hyphenation:', function(t) {
+test('user-lex-with-hyphenation:', function (t) {
   const sentence =
     'A suicide attack hit the centre of Jardas-al-Abid killing one person (and the attacker) and injuring more than twenty.'
   const found = nlp(sentence, lexicon).match('#Place+')
@@ -16,7 +16,7 @@ test('user-lex-with-hyphenation:', function(t) {
   t.end()
 })
 
-test('user-lex-with-possessive form:', function(t) {
+test('user-lex-with-possessive form:', function (t) {
   const sentence =
     "A suicide attack hit Jardas al Abid's center killing one person (and the attacker) and injuring more than twenty."
   const found = nlp(sentence, lexicon).match('#Place+')
@@ -25,7 +25,7 @@ test('user-lex-with-possessive form:', function(t) {
   t.end()
 })
 
-test('user-lex-with-proper name in front:', function(t) {
+test('user-lex-with-proper name in front:', function (t) {
   const sentence =
     "A suicide attack hit Lybia's Jardas al Abid city killing one person (and the attacker) and injuring more than twenty."
   const found = nlp(sentence, lexicon).match('#Place+')
@@ -34,7 +34,7 @@ test('user-lex-with-proper name in front:', function(t) {
   t.end()
 })
 
-test('user-lex-with-punctuation:', function(t) {
+test('user-lex-with-punctuation:', function (t) {
   const sentence =
     'A suicide attack hit Jardas al Abid, which killed one person (and the attacker) and injured more than twenty.'
   const found = nlp(sentence, lexicon).match('#Place+')

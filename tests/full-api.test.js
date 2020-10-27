@@ -2,7 +2,7 @@ const test = require('tape')
 const nlp = require('./_lib') // eslint-disable-line
 
 //run every method once, and check against runtime errors
-test('constructor api', function(t) {
+test('constructor api', function (t) {
   const fns = {
     tokenize: '()=>{ nlp.tokenize("you\'re sure you haven\'t just made thousands of mistakes?") }',
     extend: "()=>{ nlp.extend((Doc, world)=>world.addWords({bort:'FirstName'})) }",
@@ -17,7 +17,7 @@ test('constructor api', function(t) {
   t.end()
 })
 
-test('utils api', function(t) {
+test('utils api', function (t) {
   const fns = {
     all: "()=>{ nlp('this is yelling').match('#Verb').toTitleCase().all().text() }",
     found: "()=>{ nlp('oh say can you see?').match('see').found }",
@@ -36,7 +36,7 @@ test('utils api', function(t) {
   t.end()
 })
 
-test('accessors api', function(t) {
+test('accessors api', function (t) {
   const fns = {
     first: '()=>{  }',
     last: '()=>{  }',
@@ -52,7 +52,7 @@ test('accessors api', function(t) {
   t.end()
 })
 
-test('match api', function(t) {
+test('match api', function (t) {
   const fns = {
     match: "()=>{ nlp('we understand, we are from the land of chocolate.').match('land of #Noun').text() }",
     not: "()=>{ nlp('wait, there’s a new mexico?').match('#Place').not('new').text() }",
@@ -72,7 +72,7 @@ test('match api', function(t) {
   t.end()
 })
 
-test('case api', function(t) {
+test('case api', function (t) {
   const fns = {
     toUpperCase: "()=>{ nlp('Dental plan. Lisa needs braces.').match('dental .').toUpperCase().text() }",
     toLowerCase: "()=>{ nlp('Careful! They’re RUFFLED!!').toLowerCase().text() }",
@@ -85,7 +85,7 @@ test('case api', function(t) {
   t.end()
 })
 
-test('whitespace api', function(t) {
+test('whitespace api', function (t) {
   const fns = {
     pre: '()=>{ nlp("we\'re here. we\'re clear. we don\'t want anymore bears.").pre("  ") }',
     post: "()=>{ nlp(\"we're here. we're clear. we don't want anymore bears.\").post('!') }",
@@ -99,7 +99,7 @@ test('whitespace api', function(t) {
   t.end()
 })
 
-test('tag api', function(t) {
+test('tag api', function (t) {
   const fns = {
     tag:
       "()=>{ nlp('Michael Apple ate a delicious apple.').match('#FirstName apple').tag('Person').all().match('#Person+').text() }",
@@ -114,7 +114,7 @@ test('tag api', function(t) {
   t.end()
 })
 
-test('loops api', function(t) {
+test('loops api', function (t) {
   const fns = {
     map: "()=>{ nlp('yahoo serious festival').terms().map((m)=> m.toUpperCase()).text()     }",
     forEach: "()=>{ nlp('Oh, no! Bette Midler!').match('#Person+').forEach((m,i)=> m.text())  }",
@@ -130,7 +130,7 @@ test('loops api', function(t) {
   t.end()
 })
 
-test('insert api', function(t) {
+test('insert api', function (t) {
   const fns = {
     replaceWith: "()=>{ nlp('it was the worst of times').match('worst').replaceWith('blurst', true).all().text() }",
     replace: "()=>{ nlp('trust me folks, big league.').replace('big league','bigly').all().text() }",
@@ -145,7 +145,7 @@ test('insert api', function(t) {
   t.end()
 })
 
-test('transform api', function(t) {
+test('transform api', function (t) {
   const fns = {
     sort: "()=>{ nlp('Larry, Curly, Moe').terms().sort('alphabetical').out('array')    }",
     reverse: '()=>{  }',
@@ -164,7 +164,7 @@ test('transform api', function(t) {
   t.end()
 })
 
-test('out api', function(t) {
+test('out api', function (t) {
   const fns = {
     text: "()=>{ nlp('you might say there’s a little Uter in all of us').match('#Adjective uter').out('array') }",
     debug: '()=>{  }',
@@ -180,7 +180,7 @@ test('out api', function(t) {
   t.end()
 })
 
-test('selectors api', function(t) {
+test('selectors api', function (t) {
   const fns = {
     terms: "()=>{ nlp('we should all be more like little Ruttiger').terms().json() }",
     clauses:
@@ -205,7 +205,7 @@ test('selectors api', function(t) {
   t.end()
 })
 
-test('subsets api', function(t) {
+test('subsets api', function (t) {
   const fns = {
     contractions: '()=>{  }',
     parentheses: "()=>{ nlp('Use a pointed stick (a pencil) or a similar tool').parentheses().data() }",

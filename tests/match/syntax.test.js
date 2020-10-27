@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('negative parentheses', function(t) {
+test('negative parentheses', function (t) {
   let doc = nlp.tokenize('if he does. does he?')
   let m = doc.if('!^(if|cool)')
   t.equals(m.out('normal'), 'does he?', 'negative-start')
@@ -20,7 +20,7 @@ test('negative parentheses', function(t) {
   t.end()
 })
 
-test('start-end parentheses', function(t) {
+test('start-end parentheses', function (t) {
   let doc = nlp("matt does but matthew doesn't")
   let m = doc.match('^(/matt/|frank) .')
   t.equals(m.out('normal'), 'matt does', 'choice-start')

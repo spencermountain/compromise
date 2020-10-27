@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
-test('clauses-parentheses:', function(t) {
+test('clauses-parentheses:', function (t) {
   let m = nlp("i said, 'did you have to do that' and then left, like nothing happened (which it didn't).").clauses()
   t.equal(m.length, 5, 'found 5 clauses')
   t.equal(m.eq(0).text(), 'i said', 'clause 1')
@@ -12,7 +12,7 @@ test('clauses-parentheses:', function(t) {
   t.end()
 })
 
-test('clauses-commas:', function(t) {
+test('clauses-commas:', function (t) {
   let doc = nlp(`in Toronto, Canada`).clauses()
   t.equal(doc.length, 1, 'place-comma')
 
@@ -24,7 +24,7 @@ test('clauses-commas:', function(t) {
   t.end()
 })
 
-test('clauses-condition:', function(t) {
+test('clauses-condition:', function (t) {
   let m = nlp('if you must, go to the basement').clauses()
   t.equal(m.length, 2, 'found 2 clauses2')
   t.equal(m.eq(0).text(), 'if you must', 'clause 1')
@@ -32,7 +32,7 @@ test('clauses-condition:', function(t) {
   t.end()
 })
 
-test('clauses-conjunction:', function(t) {
+test('clauses-conjunction:', function (t) {
   let m = nlp(`it is cool but it is not`).clauses()
   t.equal(m.length, 2, 'found 2 clauses3')
   t.equal(m.eq(0).text(), 'it is cool', 'clause 1')
@@ -40,14 +40,14 @@ test('clauses-conjunction:', function(t) {
   t.end()
 })
 
-test('clauses-list:', function(t) {
+test('clauses-list:', function (t) {
   let m = nlp('he is nice, cool and fun.').clauses()
   t.equal(m.length, 1, 'found 1 clause')
   t.equal(m.eq(0).text(), 'he is nice, cool and fun.', 'clause 1')
   t.end()
 })
 
-test('clauses-find:', function(t) {
+test('clauses-find:', function (t) {
   let doc = nlp(`...and my butt smells, and i like to kiss my own butt`)
   let m = doc.clauses().find(d => d.has('@hasEllipses'))
   let str = m.text('reduced')

@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('term-match :', function(t) {
+test('term-match :', function (t) {
   let arr = [
     ['quick', 'quick', true],
     ['Quick', 'Quick', true],
@@ -11,7 +11,7 @@ test('term-match :', function(t) {
     ['quick', '(fun|nice|quick|cool)', true],
     ['quick', '(fun|nice|good)', false],
   ]
-  arr.forEach(function(a) {
+  arr.forEach(function (a) {
     const m = nlp(a[0]).match(a[1])
     const msg = a[0] + ' matches ' + a[1] + ' ' + a[2]
     t.equal(m.found, a[2], msg)
@@ -19,7 +19,7 @@ test('term-match :', function(t) {
   t.end()
 })
 
-test('sentence-match:', function(t) {
+test('sentence-match:', function (t) {
   let arr = [
     ['the dog played', 'the dog', 'the dog'],
     ['the dog played', 'the dog played', 'the dog played'],
@@ -71,7 +71,7 @@ test('sentence-match:', function(t) {
     //bugs
     // [`really remind me to buy`, '#Adverb? #Infinitive (me|us) (to|for)', `really remind me to`],
   ]
-  arr.forEach(function(a) {
+  arr.forEach(function (a) {
     const m = nlp(a[0]).match(a[1])
     if (!m.found) {
       t.equal(a[2], '', 'no-match: ' + a[0] + ' - -' + a[1])
@@ -83,7 +83,7 @@ test('sentence-match:', function(t) {
   t.end()
 })
 
-test('tag-match-tag :', function(t) {
+test('tag-match-tag :', function (t) {
   const m = nlp('apple is cool')
   m.match(['apple', 'susan']).tag('Person')
   const p = m.match('#Person')

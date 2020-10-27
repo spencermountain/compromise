@@ -1,10 +1,8 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('tag inference:', function(t) {
-  let m = nlp('aasdf2')
-    .unTag('Noun')
-    .unTag('NounPhrase')
+test('tag inference:', function (t) {
+  let m = nlp('aasdf2').unTag('Noun').unTag('NounPhrase')
   let term = m.list[0].terms(0)
   t.equal(Object.keys(term.tags).length, 0, 'aasdf2 has no tags')
   //give it a specific tag-
@@ -20,7 +18,7 @@ test('tag inference:', function(t) {
   t.end()
 })
 
-test('untag inference:', function(t) {
+test('untag inference:', function (t) {
   let m = nlp('aasdf')
   m.tag('FemaleName')
   let term = m.list[0].terms(0)
@@ -35,7 +33,7 @@ test('untag inference:', function(t) {
   t.end()
 })
 
-test('tag idempodence:', function(t) {
+test('tag idempodence:', function (t) {
   const m = nlp('walk').tag('Verb')
   const term = m.list[0].terms(0)
   t.equal(term.tags.Verb, true, 'walk has Verb')
@@ -50,19 +48,17 @@ test('tag idempodence:', function(t) {
   t.end()
 })
 
-test('tags are self-removing', function(t) {
+test('tags are self-removing', function (t) {
   const terms = ['Person', 'Place', 'PastTense', 'FemaleName', 'Infinitive', 'HashTag', 'Month']
-  terms.forEach(function(tag) {
-    const m = nlp('aasdf')
-      .tag(tag)
-      .unTag(tag)
+  terms.forEach(function (tag) {
+    const m = nlp('aasdf').tag(tag).unTag(tag)
     const t0 = m.list[0].terms(0)
     t.equal(t0.tags[tag], undefined, 'tag removes self ' + tag)
   })
   t.end()
 })
 
-test('untag wildcard', function(t) {
+test('untag wildcard', function (t) {
   const r = nlp('we live in Toronto Canada and it is cold')
   r.match('#Place+').unTag('*')
   t.equal(r.match('#Place').found, false, 'place-tag-is-gone')

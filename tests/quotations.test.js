@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
-test('quotation test', function(t) {
+test('quotation test', function (t) {
   const arr = [
     ['so I said "nah forget it"', 'nah forget it'],
     ['so I said "nah, forget it" go home to bel-air!', 'nah, forget it'],
@@ -18,7 +18,7 @@ test('quotation test', function(t) {
     // ["'twas 'good cookin'", 'twas good cookin'],
     [`and "Dig Your own grave and Save".`, 'dig your own grave and save'],
   ]
-  arr.forEach(function(a) {
+  arr.forEach(function (a) {
     const r = nlp(a[0])
     const str = r.quotations().out('normal')
     const msg = a[0] + '  -  ' + str

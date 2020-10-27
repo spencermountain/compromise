@@ -1,14 +1,14 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('prepend parent start', function(t) {
+test('prepend parent start', function (t) {
   let doc = nlp(`one two three`)
   doc.prepend('zero')
   t.equal(doc.text(), 'zero one two three', 'prepended in parent')
   t.end()
 })
 
-test('prepend middle', function(t) {
+test('prepend middle', function (t) {
   let doc = nlp(`one two four five`)
   let m = doc.match('four').prepend('three')
   t.equal(m.text().trim(), 'three four', 'prepended in child')
@@ -16,14 +16,14 @@ test('prepend middle', function(t) {
   t.end()
 })
 
-test('prepend multi', function(t) {
+test('prepend multi', function (t) {
   let doc = nlp('one two. three four')
   doc.prepend('oooo')
   t.equal(doc.text(), 'oooo one two. oooo three four')
   t.end()
 })
 
-test('prepend children', function(t) {
+test('prepend children', function (t) {
   let doc = nlp(`one four five six.`)
   let m1 = doc.match('one four')
   let m2 = m1.match('four')
@@ -35,21 +35,16 @@ test('prepend children', function(t) {
   t.end()
 })
 
-test('prepend start child', function(t) {
+test('prepend start child', function (t) {
   let doc = nlp(`one two three four`)
   doc.match('one').prepend('zero')
   t.equal(doc.text(), 'zero one two three four', 'prepended in parent')
   t.end()
 })
 
-test('prepend many children', function(t) {
+test('prepend many children', function (t) {
   let doc = nlp(`one two three four`)
-  doc
-    .match('one two three')
-    .match('one two')
-    .match('.')
-    .match('one')
-    .prepend('zero')
+  doc.match('one two three').match('one two').match('.').match('one').prepend('zero')
   t.equal(doc.text(), 'zero one two three four', 'prepended in parent')
   t.end()
 })

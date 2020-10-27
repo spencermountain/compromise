@@ -13,7 +13,7 @@ const plugin = (Doc, world) => {
   world.test = 'test'
 }
 
-test('nlp-global', function(t) {
+test('nlp-global', function (t) {
   const instance = nlp.clone().extend(plugin)
   const instance2 = nlp.clone()
 
@@ -24,7 +24,7 @@ test('nlp-global', function(t) {
   t.end()
 })
 
-test('nlp-instance', function(t) {
+test('nlp-instance', function (t) {
   const instance = nlp.clone().extend(plugin)
   const instance2 = nlp.clone()
 
@@ -34,7 +34,7 @@ test('nlp-instance', function(t) {
   t.end()
 })
 
-test('original nlp changes', function(t) {
+test('original nlp changes', function (t) {
   const nlpBefore = nlp.clone()
   nlp.extend((Doc, world) => {
     world.addWords({ blahblah: 'Yes' })
@@ -48,7 +48,7 @@ test('original nlp changes', function(t) {
   t.end()
 })
 
-test('new nlp changes', function(t) {
+test('new nlp changes', function (t) {
   const nlpChange = nlp.clone()
   nlpChange.extend((Doc, world) => {
     world.addWords({ foofoo: 'Yes' })
@@ -63,7 +63,7 @@ test('new nlp changes', function(t) {
   t.end()
 })
 
-test('new nlp changes twice', function(t) {
+test('new nlp changes twice', function (t) {
   const nlpChange = nlp.clone().extend((Doc, world) => {
     world.addWords({ foofoo: 'Yes' })
   })

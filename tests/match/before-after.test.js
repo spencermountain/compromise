@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('before-basic', function(t) {
+test('before-basic', function (t) {
   let doc = nlp('one two three four five. one three four')
   let arr = doc.before('three four').out('array')
   t.equal(arr.length, 2, 'two-matches')
@@ -16,7 +16,7 @@ test('before-basic', function(t) {
   t.end()
 })
 
-test('before-match:', function(t) {
+test('before-match:', function (t) {
   let r = nlp('one two three four five').before('two')
   t.equal(r.out('normal'), 'one', 'before-two')
 
@@ -40,7 +40,7 @@ test('before-match:', function(t) {
   t.end()
 })
 
-test('after-match:', function(t) {
+test('after-match:', function (t) {
   let r = nlp('one two three four five').after('two')
   t.equal(r.out('normal'), 'three four five', 'after-one')
 

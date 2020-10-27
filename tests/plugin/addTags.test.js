@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('tagset-change-isA-basic', function(t) {
+test('tagset-change-isA-basic', function (t) {
   nlp.extend((Doc, world) => {
     world.addTags({
       Doctor: {
@@ -32,7 +32,7 @@ test('tagset-change-isA-basic', function(t) {
   t.end()
 })
 
-test('tagset-change-isA', function(t) {
+test('tagset-change-isA', function (t) {
   nlp.extend((Doc, world) => {
     world.addTags({
       Doctor: {
@@ -54,7 +54,7 @@ test('tagset-change-isA', function(t) {
   t.end()
 })
 
-test('tagset-remove-downward', function(t) {
+test('tagset-remove-downward', function (t) {
   nlp.extend((Doc, world) => {
     world.addTags({
       Doctor: {
@@ -80,7 +80,7 @@ test('tagset-remove-downward', function(t) {
   t.end()
 })
 
-test('tagset-remove-half-downward', function(t) {
+test('tagset-remove-half-downward', function (t) {
   nlp.extend((Doc, world) => {
     world.addTags({
       Doctor: {

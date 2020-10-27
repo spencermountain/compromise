@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('one split, one sentence', function(t) {
+test('one split, one sentence', function (t) {
   let doc = nlp('before before match, after after.')
   let m = doc.splitOn('@hasComma')
   t.equal(m.length, 3, 'found 3')
@@ -11,7 +11,7 @@ test('one split, one sentence', function(t) {
   t.end()
 })
 
-test('multi split, one sentence', function(t) {
+test('multi split, one sentence', function (t) {
   let doc = nlp('before before match, then a match, after after.')
   let m = doc.splitOn('@hasComma')
   t.equal(m.length, 5, 'found 5')
@@ -23,7 +23,7 @@ test('multi split, one sentence', function(t) {
   t.end()
 })
 
-test('one split, multi sentence', function(t) {
+test('one split, multi sentence', function (t) {
   let doc = nlp('before before match, after after. then over here')
   let m = doc.splitOn('match')
   t.equal(m.length, 4, 'found 4')
@@ -34,7 +34,7 @@ test('one split, multi sentence', function(t) {
   t.end()
 })
 
-test('multi split, multi sentence', function(t) {
+test('multi split, multi sentence', function (t) {
   let doc = nlp('before before match1, match2 after after. then a match3 over here')
   let m = doc.splitOn('/^match/')
   t.equal(m.length, 7, 'found 7')
@@ -48,7 +48,7 @@ test('multi split, multi sentence', function(t) {
   t.end()
 })
 
-test('greedy split', function(t) {
+test('greedy split', function (t) {
   let doc = nlp('match match middle middle match. then over here')
   let m = doc.splitOn('match+')
   t.equal(m.length, 4, 'found 4')
@@ -59,7 +59,7 @@ test('greedy split', function(t) {
   t.end()
 })
 
-test('split skip sentence', function(t) {
+test('split skip sentence', function (t) {
   let doc = nlp('before match. nothing found here. two match after')
   let m = doc.splitOn('match')
   t.equal(m.length, 6, 'found 6')
@@ -72,7 +72,7 @@ test('split skip sentence', function(t) {
   t.end()
 })
 
-test('no match split', function(t) {
+test('no match split', function (t) {
   let doc = nlp('nothing found here. none here either')
   let m = doc.splitOn('match')
   t.equal(m.length, 2, 'found 2')
@@ -81,7 +81,7 @@ test('no match split', function(t) {
   t.end()
 })
 
-test('split-parent', function(t) {
+test('split-parent', function (t) {
   let doc = nlp('if so, he is the best, that i see. he is the greatest in the world')
   t.equal(doc.length, 2, 'init parent is 2 sentence')
 

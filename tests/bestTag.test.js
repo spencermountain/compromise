@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
-test('bestTag', function(t) {
+test('bestTag', function (t) {
   let str = 'john smith was really working'
   let m = nlp(str)
   let have = m

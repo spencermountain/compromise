@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('match min-max', function(t) {
+test('match min-max', function (t) {
   let doc = nlp('hello1 one hello2').match('#Value{7,9}')
   t.equal(doc.out(), '', 'match was too short')
 

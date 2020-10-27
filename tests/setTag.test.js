@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
-test('custom-tags-persist', function(t) {
+test('custom-tags-persist', function (t) {
   let r = nlp('i am two years older now')
   let two = r.match('#Value').tag('#FunTag')
   two.replaceWith('never')
@@ -40,7 +40,7 @@ test('custom-tags-persist', function(t) {
   t.end()
 })
 
-test('untag-soft', function(t) {
+test('untag-soft', function (t) {
   let doc = nlp('$5.32')
   t.equal(doc.has('#Money'), true, 'had-money')
   doc.untag('#money')

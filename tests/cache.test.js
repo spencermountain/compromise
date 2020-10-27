@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
-test('ensure cache is off', function(t) {
+test('ensure cache is off', function (t) {
   let doc = nlp('i am a modern major general')
   t.ok(doc._cache.set !== true, 'cache is off')
   doc.match('modern').tag('Person')
@@ -12,7 +12,7 @@ test('ensure cache is off', function(t) {
   t.end()
 })
 
-test('new cache is on', function(t) {
+test('new cache is on', function (t) {
   let doc = nlp('i am a modern major general')
   doc.cache()
   t.ok(doc._cache.set === true, 'cache is on now')

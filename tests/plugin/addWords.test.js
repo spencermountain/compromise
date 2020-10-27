@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('persistent-lexicon-change', function(t) {
+test('persistent-lexicon-change', function (t) {
   let nlp2 = nlp.clone()
   let doc = nlp('he is marko')
   t.equal(doc.match('#Place+').length, 0, 'default-no-place')

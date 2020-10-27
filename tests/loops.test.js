@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
-test('map-stuff', function(t) {
+test('map-stuff', function (t) {
   let doc = nlp('and').map(d => {
     return d.replaceWith('or')
   })
@@ -16,7 +16,7 @@ test('map-stuff', function(t) {
   t.end()
 })
 
-test('foreach-stuff', function(t) {
+test('foreach-stuff', function (t) {
   let doc = nlp('one two three. three four five.').forEach(p => {
     p.toUpperCase()
   })
@@ -24,7 +24,7 @@ test('foreach-stuff', function(t) {
   t.end()
 })
 
-test('filter-stuff', function(t) {
+test('filter-stuff', function (t) {
   let doc = nlp('one two three. three four five.').filter(p => {
     return p.has('four')
   })
@@ -46,7 +46,7 @@ test('filter-stuff', function(t) {
   t.end()
 })
 
-test('find-stuff', function(t) {
+test('find-stuff', function (t) {
   let doc = nlp('one two three. three four five.').find(m => m.has('four'))
   t.equal(doc && doc.out('normal') === 'three four five.', true, 'found four')
 
@@ -55,7 +55,7 @@ test('find-stuff', function(t) {
   t.end()
 })
 
-test('some-stuff', function(t) {
+test('some-stuff', function (t) {
   let bool = nlp('one two three. three four five.').some(m => m.has('three'))
   t.equal(bool, true, 'found-three')
 
@@ -64,7 +64,7 @@ test('some-stuff', function(t) {
   t.end()
 })
 
-test('map array return', function(t) {
+test('map array return', function (t) {
   let doc = nlp('Larry, Curly, and Moe')
   let people = doc.match('#Noun') // (any one noun)
   people.sort('alpha')

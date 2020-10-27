@@ -9,7 +9,7 @@ const args = process.argv.slice(2)
 const command = args.join(' ')
 
 let shouldFail = false
-sh.ls('./plugins').forEach(function(dir) {
+sh.ls('./plugins').forEach(function (dir) {
   console.log('\n===' + dir + '===')
   let code = sh.exec(command, { cwd: `./plugins/${dir}` }).code
   if (code !== 0) {

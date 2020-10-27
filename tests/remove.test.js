@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
-test('remove-everything-basic', function(t) {
+test('remove-everything-basic', function (t) {
   let doc = nlp(`2pm`)
   doc.remove('#Time')
   t.equal(doc.text(), '', 'empty-text')
@@ -13,7 +13,7 @@ test('remove-everything-basic', function(t) {
   t.end()
 })
 
-test('remove-everything-nested', function(t) {
+test('remove-everything-nested', function (t) {
   let doc = nlp(`see term. term. term after.`)
   t.equal(doc.length, 3, 'start-3')
 

@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
-test('whitespace-out', function(t) {
+test('whitespace-out', function (t) {
   let str = 'one, two three. One, two, four?'
   const doc = nlp(str)
 
@@ -24,7 +24,7 @@ test('whitespace-out', function(t) {
   t.end()
 })
 
-test('pre/post concat', function(t) {
+test('pre/post concat', function (t) {
   let doc = nlp(`Getting ready for whacking day? What's whacking day?`)
   doc.post(' ', true)
   t.equal(doc.text(), `Getting ready for whacking day?  What's whacking day? `)

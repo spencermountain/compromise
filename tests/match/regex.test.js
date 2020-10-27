@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('regex-match:', function(t) {
+test('regex-match:', function (t) {
   let doc = nlp('it is waaaay cool')
   let m = doc.match('/aaa/')
   t.equal(m.out('normal'), 'waaaay', 'basic-match')

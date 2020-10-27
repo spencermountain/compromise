@@ -33,11 +33,11 @@ const subsets = [
   'entities',
 ]
 
-const isArray = function(arr) {
+const isArray = function (arr) {
   return Object.prototype.toString.call(arr) === '[object Array]'
 }
 
-test('try all json methods', function(t) {
+test('try all json methods', function (t) {
   let str = `
   
   .

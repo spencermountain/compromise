@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('basic is contractions', function(t) {
+test('basic is contractions', function (t) {
   let r = nlp(`he is cool.`)
   r.contractions().expand()
   t.equal(r.out('text'), `he is cool.`, 'expanded-expand')
@@ -32,7 +32,7 @@ test('basic is contractions', function(t) {
   t.end()
 })
 
-test('do-not contractions', function(t) {
+test('do-not contractions', function (t) {
   let r = nlp(`please do not eat the marshmellow`)
   r.contractions().expand()
   t.equal(r.out('text'), `please do not eat the marshmellow`, 'expanded-expand')
@@ -44,7 +44,7 @@ test('do-not contractions', function(t) {
   t.end()
 })
 
-test('have contractions', function(t) {
+test('have contractions', function (t) {
   let r = nlp(`i have stood`)
   r.contractions().expand()
   t.equal(r.out('text'), `i have stood`, 'expanded-expand')
@@ -56,19 +56,16 @@ test('have contractions', function(t) {
   t.end()
 })
 
-test('repeated contract-expand', function(t) {
+test('repeated contract-expand', function (t) {
   let r = nlp(`i'm good`)
   r.contractions().expand()
 
-  r.contractions()
-    .expand()
-    .expand()
-    .expand()
+  r.contractions().expand().expand().expand()
   t.equal(r.out('text'), `i am good`, 'expand-n')
   t.end()
 })
 
-test('contracted', function(t) {
+test('contracted', function (t) {
   let r = nlp(`I'll go to Toronto. I will see.`)
   let m = r.contractions()
   let str = m.out('text')
@@ -78,21 +75,13 @@ test('contracted', function(t) {
   t.end()
 })
 
-test('would-or-did', function(t) {
+test('would-or-did', function (t) {
   let r = nlp(`i'd contemplate`)
-  let str = r
-    .contractions()
-    .expand()
-    .all()
-    .out('text')
+  let str = r.contractions().expand().all().out('text')
   t.equal(str, `i would contemplate`, 'i-would')
 
   r = nlp(`i'd contemplated`)
-  str = r
-    .contractions()
-    .expand()
-    .all()
-    .out('text')
+  str = r.contractions().expand().all().out('text')
   t.equal(str, `i had contemplated`, 'i-had')
   t.end()
 })

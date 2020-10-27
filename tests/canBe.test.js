@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
-test('canBe', function(t) {
+test('canBe', function (t) {
   let doc = nlp(`spencer was going crazy. He walks quickly.`)
 
   let canBeNoun = doc.canBe('Noun')

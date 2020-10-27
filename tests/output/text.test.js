@@ -1,13 +1,13 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('text-formats', function(t) {
+test('text-formats', function (t) {
   let doc = nlp(`Toronto's citizens LOVE toronto! they come here for food.`)
   t.equal(doc.text('normal'), `toronto's citizens love toronto! they come here for food.`, 'normal')
   t.end()
 })
 
-test('text(normal):', function(t) {
+test('text(normal):', function (t) {
   let arr = [
     ['he is good', 'he is good'],
     ['Jack and Jill went up the hill.', 'jack and jill went up the hill.'],
@@ -23,14 +23,14 @@ test('text(normal):', function(t) {
     ['Dr. John Smith-McDonald', 'dr john smith mcdonald'],
     ['Contains no fruit juice. \n\n All rights reserved', 'contains no fruit juice. all rights reserved'],
   ]
-  arr.forEach(function(a) {
+  arr.forEach(function (a) {
     const str = nlp(a[0]).text('normal')
     t.equal(str, a[1], a[0])
   })
   t.end()
 })
 
-test('text-text', function(t) {
+test('text-text', function (t) {
   const str = `My dog LOVES pizza, and grapes!!`
   let doc = nlp(str)
 
@@ -41,7 +41,7 @@ test('text-text', function(t) {
   t.end()
 })
 
-test('text-normal', function(t) {
+test('text-normal', function (t) {
   let doc = nlp(`My dog LOVES pizza, and grapes!!`)
   const str = 'my dog loves pizza, and grapes!'
 
@@ -55,7 +55,7 @@ test('text-normal', function(t) {
   t.end()
 })
 
-test('text-reduced', function(t) {
+test('text-reduced', function (t) {
   let doc = nlp(`My dog LOVES pizza, and grapes!!`)
   const str = 'my dog loves pizza and grapes'
 
@@ -71,7 +71,7 @@ test('text-reduced', function(t) {
   t.end()
 })
 
-test('text-root', function(t) {
+test('text-root', function (t) {
   let doc = nlp(`My dog LOVES pizza, and grapes!!`)
   const str = 'my dog love pizza and grape'
 

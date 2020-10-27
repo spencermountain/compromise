@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('two named matches', function(t) {
+test('two named matches', function (t) {
   let m = nlp('the big dog played').match('the [<size>#Adjective] [<animal>#Noun] played')
   t.equal(m.groups('size').text(), 'big', 'one-size')
   t.equal(m.groups('animal').text(), 'dog', 'one-animal')
@@ -20,7 +20,7 @@ test('two named matches', function(t) {
   t.end()
 })
 
-test('two named - two results', function(t) {
+test('two named - two results', function (t) {
   let doc = nlp('june the 5th and july the 7th')
   let m = doc.match('[<month>#Month] the [<date>#Value]')
   //by object
@@ -44,7 +44,7 @@ test('two named - two results', function(t) {
   t.end()
 })
 
-test('one named - three results', function(t) {
+test('one named - three results', function (t) {
   let doc = nlp('june the 5th, july the 7th, and sept the 12th.')
   let m = doc.match('[<month>#Month]')
   //by object

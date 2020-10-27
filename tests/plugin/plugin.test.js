@@ -1,9 +1,9 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-const myPlugin = function(Doc, world) {
+const myPlugin = function (Doc, world) {
   /** add a method */
-  Doc.prototype.beNice = function() {
+  Doc.prototype.beNice = function () {
     this.match('#Infinitive').prepend('kindly')
     return this
   }
@@ -36,14 +36,14 @@ nlp.extend(myPlugin)
 //   t.end()
 // })
 
-test('plugin adds a method', function(t) {
+test('plugin adds a method', function (t) {
   let doc = nlp(`wash the floor`)
   doc.beNice()
   t.equal(doc.text(), 'kindly wash the floor', 'beNice method worked')
   t.end()
 })
 
-test('plugin adds a tag', function(t) {
+test('plugin adds a tag', function (t) {
   let doc = nlp(`goofy`)
   t.equal(doc.has('#Adjective'), true, 'starts adjective')
   // random unknown tag
@@ -57,7 +57,7 @@ test('plugin adds a tag', function(t) {
   t.end()
 })
 
-test('plugin adds words', function(t) {
+test('plugin adds words', function (t) {
   let doc = nlp(`gonzo, minnie mouse and kermit the frog`)
   t.equal(doc.match('gonzo').has('#MaleName'), true, 'new word existing tag')
   t.equal(doc.match('gonzo').has('#Person'), true, 'new word implied tag')
@@ -84,7 +84,7 @@ test('plugin adds words', function(t) {
 //   t.end()
 // })
 
-test('extend-tagset-nested', function(t) {
+test('extend-tagset-nested', function (t) {
   const tagSet = {
     Color: {},
     OffWhite: {
@@ -104,7 +104,7 @@ test('extend-tagset-nested', function(t) {
   t.end()
 })
 
-test('word-array to lex-string', function(t) {
+test('word-array to lex-string', function (t) {
   nlp.extend((Doc, world) => {
     world.addWords({
       mi: ['Possessive'],
@@ -115,7 +115,7 @@ test('word-array to lex-string', function(t) {
   t.end()
 })
 
-test('basic-plugin', function(t) {
+test('basic-plugin', function (t) {
   nlp.extend((Doc, world) => {
     world.addWords({
       trex: 'Dinosaur',

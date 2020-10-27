@@ -2,7 +2,7 @@ const test = require('tape')
 const nlp = require('../_lib')
 //nsfw!
 
-test('swears:', function(t) {
+test('swears:', function (t) {
   let m = nlp('shit, i am tired').match('^#Expression')
   t.ok(m.found, 'swear-1')
 

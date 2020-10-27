@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('inline tagging linear:', function(t) {
+test('inline tagging linear:', function (t) {
   let r = nlp('one two three four')
 
   r.match('one two three').tag('. #Person .')
@@ -20,7 +20,7 @@ test('inline tagging linear:', function(t) {
   t.end()
 })
 
-test('compound tags from lexicon:', function(t) {
+test('compound tags from lexicon:', function (t) {
   const doc = nlp('it was cold')
   const arr = doc.match('#Verb+')
   t.equal(arr.length, 1, 'one verb')

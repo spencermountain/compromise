@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('verb-to-gerund:', function(t) {
+test('verb-to-gerund:', function (t) {
   let arr = [
     ['walk', 'walking'],
     ['sing', 'singing'],
@@ -12,11 +12,8 @@ test('verb-to-gerund:', function(t) {
     ['was', 'being'],
     ['am', 'being'],
   ]
-  arr.forEach(function(a) {
-    const str = nlp(a[0])
-      .verbs()
-      .toGerund()
-      .out('normal')
+  arr.forEach(function (a) {
+    const str = nlp(a[0]).verbs().toGerund().out('normal')
     t.equal(str, a[1], a[0] + ' -> ' + str)
   })
   t.end()

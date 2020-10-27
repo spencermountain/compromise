@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
-test('comma-remove', function(t) {
+test('comma-remove', function (t) {
   let doc = nlp('i saw red, blue, and green.')
   doc.lists().removeOxfordComma()
   t.equal(doc.text(), 'i saw red, blue and green.', 'remove comma')
@@ -21,7 +21,7 @@ test('comma-remove', function(t) {
   t.end()
 })
 
-test('list-remove', function(t) {
+test('list-remove', function (t) {
   let doc = nlp('i saw red, blue and green.')
   doc.lists().remove('asdf')
   t.equal(doc.text(), 'i saw red, blue and green.', 'missing remove match')
@@ -32,31 +32,23 @@ test('list-remove', function(t) {
   t.end()
 })
 
-test('list-parse', function(t) {
-  let arr = nlp('i saw red, blue, and silver')
-    .lists()
-    .items()
+test('list-parse', function (t) {
+  let arr = nlp('i saw red, blue, and silver').lists().items()
   t.equal(arr.length, 3, 'found three colors, oxfort-comma')
 
-  arr = nlp('i saw red, blue and silver')
-    .lists()
-    .items()
+  arr = nlp('i saw red, blue and silver').lists().items()
   t.equal(arr.length, 3, 'found three colors, no-comma')
 
-  arr = nlp('i saw the Eiffel Tower, the pyramids, and the Louvre')
-    .lists()
-    .items()
+  arr = nlp('i saw the Eiffel Tower, the pyramids, and the Louvre').lists().items()
   t.equal(arr.length, 3, 'found three places, with article')
 
-  arr = nlp('i saw Eiffel Tower, pyramids, and not Louvre')
-    .lists()
-    .items()
+  arr = nlp('i saw Eiffel Tower, pyramids, and not Louvre').lists().items()
   t.equal(arr.length, 3, 'found three places, without article')
 
   t.end()
 })
 
-test('list-types', function(t) {
+test('list-types', function (t) {
   let doc = nlp('he is nice, cool, and really fun.').lists()
   t.equal(doc.length, 1, 'found adj list')
   t.equal(doc.things().length, 3, 'three adjs')
@@ -83,7 +75,7 @@ test('list-types', function(t) {
 //   t.end()
 // })
 
-test('muti-word things', function(t) {
+test('muti-word things', function (t) {
   const doc = nlp('spencer is nice, quite warm, and tired.')
   let m = doc.lists()
   t.equal(m.length, 1, 'has one list')
@@ -91,14 +83,14 @@ test('muti-word things', function(t) {
   t.end()
 })
 
-test('add', function(t) {
+test('add', function (t) {
   const doc = nlp('spencer is nice, warm and tired.')
   doc.lists().add('CRAAZY')
   t.equal(doc.text(), 'spencer is nice, warm, CRAAZY and tired.', 'without no-oxford')
   t.end()
 })
 
-test('hasOxfordComma', function(t) {
+test('hasOxfordComma', function (t) {
   const doc = nlp('spencer is cool, fun, and great. He is nice, tired and not smart.')
   let m = doc.lists().hasOxfordComma()
   t.equal(m.length, 1, 'only one has oxford-comma')

@@ -21,7 +21,7 @@ if (code !== 0) {
 }
 
 // run each plugin's tests:
-sh.ls('./plugins').forEach(function(dir) {
+sh.ls('./plugins').forEach(function (dir) {
   code = sh.exec(`tape "./plugins/${dir}/tests/**/*.test.js" | tap-dancer --color always`).code
   if (code !== 0) {
     console.log(dir)

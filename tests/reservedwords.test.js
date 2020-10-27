@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
-test('reserved words:', function(t) {
+test('reserved words:', function (t) {
   const reserved = [
     'abstract',
     'boolean',
@@ -103,7 +103,7 @@ test('reserved words:', function(t) {
   t.end()
 })
 
-test('co-erce reserved words', function(t) {
+test('co-erce reserved words', function (t) {
   const r = nlp('constructor prototype')
   r.tag('Verb')
   t.ok(r.match('#Verb').data(), 'runs tag/match')

@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
-test('em-dash, en-dash', function(t) {
+test('em-dash, en-dash', function (t) {
   // '-':  //dash
   // '–':  //en-dash
   // '—':  //em-dash
@@ -30,7 +30,7 @@ test('em-dash, en-dash', function(t) {
   t.end()
 })
 
-test('emoji-only sentence', function(t) {
+test('emoji-only sentence', function (t) {
   let doc = nlp('good night! 💋')
   t.equal(doc.length, 2, 'boemojith sentence')
   t.end()

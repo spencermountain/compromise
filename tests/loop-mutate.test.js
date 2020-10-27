@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
-test('foreach replace', function(t) {
+test('foreach replace', function (t) {
   let doc = nlp('guns and roses')
   doc.match('guns').forEach(p => {
     p.replaceWith('flowers')

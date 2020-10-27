@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('nlp.clone() -change original', function(t) {
+test('nlp.clone() -change original', function (t) {
   let nlp2 = nlp.clone()
   t.ok(nlp('bat').has('#Noun'), 'nlp1-init')
   t.ok(nlp2('bat').has('#Noun'), 'nlp2-init')

@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
-test('lookup array', function(t) {
+test('lookup array', function (t) {
   let doc = nlp("he isn't AT Spencer's house of pain. The haunted house of not pain. Third sentence spencer.")
   let m = doc.lookup(['house of pain', 'house of'])
   t.equal(m.length, 3, 'found redundant match')
@@ -19,7 +19,7 @@ test('lookup array', function(t) {
   t.end()
 })
 
-test('lookup object', function(t) {
+test('lookup object', function (t) {
   let doc = nlp('spencer kelly is working here')
   let res = doc.lookup({
     'spencer kelly': 'Cool',
@@ -40,7 +40,7 @@ test('lookup object', function(t) {
   t.end()
 })
 
-test('lookup backtrack', function(t) {
+test('lookup backtrack', function (t) {
   let doc = nlp('first one one one two.')
   let res = doc.lookup(['two three', 'one', 'blah'])
   t.equal(res.length, 3, 'found multi single match')

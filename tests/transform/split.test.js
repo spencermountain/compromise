@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('splitAfter', function(t) {
+test('splitAfter', function (t) {
   ;[
     ['doug and nancy', 'and', ['doug and', 'nancy']],
     ['doug and also nancy', 'and also', ['doug and also', 'nancy']],
@@ -18,17 +18,15 @@ test('splitAfter', function(t) {
 
     ['john paul george ringo', '.', ['john', 'paul', 'george', 'ringo']],
     ['doug is really nice', 'is', ['doug is', 'really nice']],
-  ].forEach(function(a) {
+  ].forEach(function (a) {
     const want = a[2]
-    const got = nlp(a[0])
-      .splitAfter(a[1])
-      .out('array')
+    const got = nlp(a[0]).splitAfter(a[1]).out('array')
     t.deepEqual(got, want, a[0])
   })
   t.end()
 })
 
-test('splitOn', function(t) {
+test('splitOn', function (t) {
   ;[
     ['doug and nancy', 'and', ['doug', 'and', 'nancy']],
     ['doug and also nancy', 'and also', ['doug', 'and also', 'nancy']],
@@ -41,17 +39,15 @@ test('splitOn', function(t) {
     ['x a b x c', 'x', ['x', 'a b', 'x', 'c']],
     ['x x a b c', 'x', ['x', 'x', 'a b c']],
     ['a x b x', 'x', ['a', 'x', 'b', 'x']],
-  ].forEach(function(a) {
+  ].forEach(function (a) {
     const want = a[2]
-    const got = nlp(a[0])
-      .splitOn(a[1])
-      .out('array')
+    const got = nlp(a[0]).splitOn(a[1]).out('array')
     t.deepEqual(got, want, a[0])
   })
   t.end()
 })
 
-test('splitBefore', function(t) {
+test('splitBefore', function (t) {
   ;[
     ['doug and nancy', 'and', ['doug', 'and nancy']],
     ['doug and also nancy', 'and also', ['doug', 'and also nancy']],
@@ -64,17 +60,15 @@ test('splitBefore', function(t) {
     ['x a b x c', 'x', ['x a b', 'x c']],
     ['x x a b c', 'x', ['x', 'x a b c']],
     ['a x b x', 'x', ['a', 'x b', 'x']],
-  ].forEach(function(a) {
+  ].forEach(function (a) {
     const want = a[2]
-    const got = nlp(a[0])
-      .splitBefore(a[1])
-      .out('array')
+    const got = nlp(a[0]).splitBefore(a[1]).out('array')
     t.deepEqual(got, want, a[0])
   })
   t.end()
 })
 
-test('multi splitBefore, multi sentence', function(t) {
+test('multi splitBefore, multi sentence', function (t) {
   let doc = nlp('before before match1, match2 after after. then a match3 over here. none found')
   let m = doc.splitBefore('/^match/')
   t.equal(m.length, 6, 'found 6')
@@ -87,7 +81,7 @@ test('multi splitBefore, multi sentence', function(t) {
   t.end()
 })
 
-test('multi splitAfter, multi sentence', function(t) {
+test('multi splitAfter, multi sentence', function (t) {
   let doc = nlp('before before match1, match2 after after. then a match3 over here. none found')
   let m = doc.splitAfter('/^match/')
   t.equal(m.length, 6, 'found 6')

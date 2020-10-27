@@ -6,7 +6,7 @@ const useDid = {
 }
 
 /** split `i'd` into 'i had',  or 'i would'  */
-const checkPerfect = function(term, phrase) {
+const checkPerfect = function (term, phrase) {
   if (hasPerfect.test(term.clean)) {
     let root = term.clean.replace(/'d$/, '')
     //look at the next few words

@@ -1,6 +1,6 @@
 // .nouns() supports some noun-phrase-ish groupings
 // pull these apart, if necessary
-const parse = function(doc) {
+const parse = function (doc) {
   let res = {
     main: doc,
   }

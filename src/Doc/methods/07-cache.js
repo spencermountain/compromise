@@ -1,5 +1,5 @@
 /** freeze the current state of the document, for speed-purposes*/
-exports.cache = function(options) {
+exports.cache = function (options) {
   options = options || {}
   let words = {}
   let tags = {}
@@ -34,7 +34,7 @@ exports.cache = function(options) {
 }
 
 /** un-freezes the current state of the document, so it may be transformed */
-exports.uncache = function() {
+exports.uncache = function () {
   this._cache = {}
   this.list.forEach(p => {
     p.cache = {}

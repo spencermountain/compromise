@@ -4,7 +4,7 @@ const postProcess = require('./04-postProcess')
 const syntax = require('../../Doc/match/syntax')
 
 /**  returns a simple array of arrays */
-const matchAll = function(p, regs, matchOne = false) {
+const matchAll = function (p, regs, matchOne = false) {
   //if we forgot to parse it..
   if (typeof regs === 'string') {
     regs = syntax(regs)

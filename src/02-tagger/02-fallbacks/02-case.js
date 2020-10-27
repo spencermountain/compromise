@@ -2,7 +2,7 @@ const titleCase = /^[A-Z][a-z'\u00C0-\u00FF]/
 const hasNumber = /[0-9]/
 
 /** look for any grammar signals based on capital/lowercase */
-const checkCase = function(doc) {
+const checkCase = function (doc) {
   let world = doc.world
   doc.list.forEach(p => {
     let terms = p.terms()

@@ -1,5 +1,5 @@
 /* run each phrase through a function, and create a new document */
-exports.map = function(fn) {
+exports.map = function (fn) {
   if (!fn) {
     return this
   }
@@ -27,7 +27,7 @@ exports.map = function(fn) {
 }
 
 /** run a function on each phrase */
-exports.forEach = function(fn, detachParent) {
+exports.forEach = function (fn, detachParent) {
   if (!fn) {
     return this
   }
@@ -43,7 +43,7 @@ exports.forEach = function(fn, detachParent) {
 }
 
 /** return only the phrases that return true */
-exports.filter = function(fn) {
+exports.filter = function (fn) {
   if (!fn) {
     return this
   }
@@ -56,7 +56,7 @@ exports.filter = function(fn) {
 }
 
 /** return a document with only the first phrase that matches */
-exports.find = function(fn) {
+exports.find = function (fn) {
   if (!fn) {
     return this
   }
@@ -72,7 +72,7 @@ exports.find = function(fn) {
 }
 
 /** return true or false if there is one matching phrase */
-exports.some = function(fn) {
+exports.some = function (fn) {
   if (!fn) {
     return this
   }
@@ -84,7 +84,7 @@ exports.some = function(fn) {
 }
 
 /** sample a subset of the results */
-exports.random = function(n) {
+exports.random = function (n) {
   if (!this.found) {
     return this
   }

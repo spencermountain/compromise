@@ -39,7 +39,7 @@ const transforms = [
   },
 ]
 
-const to_superlative = function(str) {
+const to_superlative = function (str) {
   //irregulars
   if (irregulars.hasOwnProperty(str)) {
     return irregulars[str]

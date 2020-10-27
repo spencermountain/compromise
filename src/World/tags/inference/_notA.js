@@ -1,10 +1,10 @@
-const unique = function(arr) {
+const unique = function (arr) {
   return arr.filter((v, i, a) => a.indexOf(v) === i)
 }
 
 // crawl the tag-graph and infer any conflicts
 // faster than doing this at tag-time
-const inferNotA = function(tags) {
+const inferNotA = function (tags) {
   let keys = Object.keys(tags)
   keys.forEach(k => {
     let tag = tags[k]

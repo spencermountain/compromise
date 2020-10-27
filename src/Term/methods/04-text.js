@@ -7,7 +7,7 @@ const isUpperCase = /^[A-Z-]+$/
 // }
 
 /** return various text formats of this term */
-exports.textOut = function(options, showPre, showPost) {
+exports.textOut = function (options, showPre, showPost) {
   options = options || {}
   let word = this.text
   let before = this.pre

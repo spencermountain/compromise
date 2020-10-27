@@ -17,7 +17,7 @@ const arr = [
   ['prepositions', '#Preposition'],
 ]
 arr.forEach(a => {
-  methods[a[0]] = function(n) {
+  methods[a[0]] = function (n) {
     let m = this.match(a[1])
     if (typeof n === 'number') {
       m = m.get(n)
@@ -31,7 +31,7 @@ methods.atmentions = methods.atMentions
 methods.words = methods.terms
 
 /** return anything tagged as a phone number */
-methods.phoneNumbers = function(n) {
+methods.phoneNumbers = function (n) {
   let m = this.splitAfter('@hasComma')
   m = m.match('#PhoneNumber+')
   if (typeof n === 'number') {
@@ -41,7 +41,7 @@ methods.phoneNumbers = function(n) {
 }
 
 /** Deprecated: please use compromise-numbers plugin */
-methods.money = function(n) {
+methods.money = function (n) {
   let m = this.match('#Money #Currency?')
   if (typeof n === 'number') {
     m = m.get(n)
@@ -50,7 +50,7 @@ methods.money = function(n) {
 }
 
 /** return all cities, countries, addresses, and regions */
-methods.places = function(n) {
+methods.places = function (n) {
   // don't split 'paris, france'
   let keep = this.match('(#City && @hasComma) (#Region|#Country)')
   // but split the other commas
@@ -66,7 +66,7 @@ methods.places = function(n) {
 }
 
 /** return all schools, businesses and institutions */
-methods.organizations = function(n) {
+methods.organizations = function (n) {
   let m = this.clauses()
   m = m.match('#Organization+')
   if (typeof n === 'number') {
@@ -76,7 +76,7 @@ methods.organizations = function(n) {
 }
 
 //combine them with .topics() method
-methods.entities = function(n) {
+methods.entities = function (n) {
   let r = this.clauses()
   // Find people, places, and organizations
   let yup = r.people()

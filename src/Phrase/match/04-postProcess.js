@@ -1,4 +1,4 @@
-const postProcess = function(terms, regs, matches) {
+const postProcess = function (terms, regs, matches) {
   if (!matches || matches.length === 0) {
     return matches
   }

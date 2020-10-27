@@ -6,13 +6,13 @@ const canBe = require('./canBe')
  * @param  {string | string[]} tags - a tag or tags
  * @param {string?} [reason] a clue for debugging
  */
-exports.tag = function(tags, reason, world) {
+exports.tag = function (tags, reason, world) {
   add(this, tags, reason, world)
   return this
 }
 
 /** only tag this term if it's consistent with it's current tags */
-exports.tagSafe = function(tags, reason, world) {
+exports.tagSafe = function (tags, reason, world) {
   if (canBe(this, tags, world)) {
     add(this, tags, reason, world)
   }
@@ -23,7 +23,7 @@ exports.tagSafe = function(tags, reason, world) {
  * @param {string | string[]} tags  - a tag or tags
  * @param {string?} [reason] a clue for debugging
  */
-exports.unTag = function(tags, reason, world) {
+exports.unTag = function (tags, reason, world) {
   unTag(this, tags, reason, world)
   return this
 }
@@ -32,6 +32,6 @@ exports.unTag = function(tags, reason, world) {
  * @param {string | string[]} tags - a tag or tags
  * @returns {boolean}
  */
-exports.canBe = function(tags, world) {
+exports.canBe = function (tags, world) {
   return canBe(this, tags, world)
 }

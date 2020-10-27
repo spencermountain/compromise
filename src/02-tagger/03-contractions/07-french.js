@@ -14,7 +14,7 @@ const french = {
   t: 'tu', // t'aime
 }
 
-const checkFrench = function(term) {
+const checkFrench = function (term) {
   let parts = term.text.match(contraction)
   if (parts === null || french.hasOwnProperty(parts[1]) === false) {
     return null

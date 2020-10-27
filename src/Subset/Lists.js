@@ -1,10 +1,7 @@
-const addMethod = function(Doc) {
+const addMethod = function (Doc) {
   //pull it apart..
-  const parse = function(doc) {
-    let things = doc
-      .splitAfter('@hasComma')
-      .splitOn('(and|or) not?')
-      .not('(and|or) not?')
+  const parse = function (doc) {
+    let things = doc.splitAfter('@hasComma').splitOn('(and|or) not?').not('(and|or) not?')
     let beforeLast = doc.match('[.] (and|or)', 0)
     return {
       things: things,
@@ -40,9 +37,7 @@ const addMethod = function(Doc) {
     }
     /** remove any matching unit from the list */
     remove(match) {
-      return this.items()
-        .if(match)
-        .remove()
+      return this.items().if(match).remove()
     }
     /** return only lists that use a serial comma */
     hasOxfordComma() {
@@ -68,7 +63,7 @@ const addMethod = function(Doc) {
   // aliases
   Lists.prototype.things = Lists.prototype.items
 
-  Doc.prototype.lists = function(n) {
+  Doc.prototype.lists = function (n) {
     let m = this.if('@hasComma+ .? (and|or) not? .')
 
     // person-list

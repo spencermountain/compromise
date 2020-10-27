@@ -1,5 +1,5 @@
 // a lineage is all 'incoming' tags that have this as 'isA'
-const inferLineage = function(tags) {
+const inferLineage = function (tags) {
   let keys = Object.keys(tags)
   keys.forEach(k => {
     let tag = tags[k]

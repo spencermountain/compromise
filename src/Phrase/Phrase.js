@@ -26,7 +26,7 @@ class Phrase {
 }
 
 /** create a new Phrase object from an id and length */
-Phrase.prototype.buildFrom = function(id, length, groups) {
+Phrase.prototype.buildFrom = function (id, length, groups) {
   let p = new Phrase(id, length, this.pool)
   //copy-over or replace capture-groups too
   if (groups && Object.keys(groups).length > 0) {

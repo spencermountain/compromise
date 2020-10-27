@@ -6,7 +6,7 @@ const titleCase = str => {
 }
 
 /** remove this tag, and its descentents from the term */
-const unTag = function(t, tag, reason, world) {
+const unTag = function (t, tag, reason, world) {
   const isVerbose = world.isVerbose()
   //support '*' for removing all tags
   if (tag === '*') {
@@ -42,7 +42,7 @@ const unTag = function(t, tag, reason, world) {
 }
 
 //handle an array of tags
-const untagAll = function(term, tags, reason, world) {
+const untagAll = function (term, tags, reason, world) {
   if (typeof tags !== 'string' && tags) {
     for (let i = 0; i < tags.length; i++) {
       unTag(term, tags[i], reason, world)

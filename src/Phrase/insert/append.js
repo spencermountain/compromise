@@ -1,7 +1,7 @@
 const endOfSentence = /[.?!]\s*$/
 
 // replacing a 'word.' with a 'word!'
-const combinePost = function(before, after) {
+const combinePost = function (before, after) {
   //only transfer the whitespace
   if (endOfSentence.test(after)) {
     let whitespace = before.match(/\s*$/)
@@ -11,7 +11,7 @@ const combinePost = function(before, after) {
 }
 
 //add whitespace to the start of the second bit
-const addWhitespace = function(beforeTerms, newTerms) {
+const addWhitespace = function (beforeTerms, newTerms) {
   // add any existing pre-whitespace to beginning
   newTerms[0].pre = beforeTerms[0].pre
   let lastTerm = beforeTerms[beforeTerms.length - 1]
@@ -29,7 +29,7 @@ const addWhitespace = function(beforeTerms, newTerms) {
 }
 
 //insert this segment into the linked-list
-const stitchIn = function(beforeTerms, newTerms, pool) {
+const stitchIn = function (beforeTerms, newTerms, pool) {
   let lastBefore = beforeTerms[beforeTerms.length - 1]
   let lastNew = newTerms[newTerms.length - 1]
   let afterId = lastBefore.next
@@ -52,14 +52,14 @@ const stitchIn = function(beforeTerms, newTerms, pool) {
 }
 
 // avoid stretching a phrase twice.
-const unique = function(list) {
+const unique = function (list) {
   return list.filter((o, i) => {
     return list.indexOf(o) === i
   })
 }
 
 //append one phrase onto another.
-const appendPhrase = function(before, newPhrase, doc) {
+const appendPhrase = function (before, newPhrase, doc) {
   let beforeTerms = before.terms()
   let newTerms = newPhrase.terms()
   //spruce-up the whitespace issues

@@ -2,7 +2,7 @@ const matches = require('./matches')
 const unique = require('./_unique')
 
 // return intersection of array-of-arrays
-const hasEvery = function(chances) {
+const hasEvery = function (chances) {
   if (chances.length === 0) {
     return []
   }
@@ -20,7 +20,7 @@ const hasEvery = function(chances) {
   return res
 }
 
-const runner = function(doc) {
+const runner = function (doc) {
   //find phrases to try for each match
   matches.forEach(m => {
     let allChances = []

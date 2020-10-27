@@ -1,4 +1,4 @@
-const addMethod = function(Doc) {
+const addMethod = function (Doc) {
   /**  */
   class Possessives extends Doc {
     constructor(list, from, world) {
@@ -28,7 +28,7 @@ const addMethod = function(Doc) {
   //   return m
   // }
 
-  Doc.prototype.possessives = function(n) {
+  Doc.prototype.possessives = function (n) {
     //find currently-contracted
     let found = this.match('#Noun+? #Possessive')
     //todo: split consecutive contractions

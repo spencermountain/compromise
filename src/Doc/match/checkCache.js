@@ -1,5 +1,5 @@
 // cache the easier conditions up-front
-const cacheRequired = function(reg) {
+const cacheRequired = function (reg) {
   let needTags = []
   let needWords = []
   reg.forEach(obj => {
@@ -16,7 +16,7 @@ const cacheRequired = function(reg) {
   return { tags: needTags, words: needWords }
 }
 
-const failFast = function(doc, regs) {
+const failFast = function (doc, regs) {
   if (doc._cache && doc._cache.set === true) {
     let { words, tags } = cacheRequired(regs)
     //check required words

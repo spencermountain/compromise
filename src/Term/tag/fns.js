@@ -3,7 +3,7 @@ function isClientSide() {
 }
 
 /** add spaces at the end */
-const padEnd = function(str, width) {
+const padEnd = function (str, width) {
   str = str.toString()
   while (str.length < width) {
     str += ' '
@@ -12,7 +12,7 @@ const padEnd = function(str, width) {
 }
 
 /** output for verbose-mode */
-exports.logTag = function(t, tag, reason) {
+exports.logTag = function (t, tag, reason) {
   if (isClientSide()) {
     console.log('%c' + padEnd(t.clean, 3) + '  + ' + tag + ' ', 'color: #6accb2;')
     return
@@ -26,7 +26,7 @@ exports.logTag = function(t, tag, reason) {
 }
 
 /** output for verbose mode  */
-exports.logUntag = function(t, tag, reason) {
+exports.logUntag = function (t, tag, reason) {
   if (isClientSide()) {
     console.log('%c' + padEnd(t.clean, 3) + '  - ' + tag + ' ', 'color: #AB5850;')
     return
@@ -39,7 +39,7 @@ exports.logUntag = function(t, tag, reason) {
   console.log(log)
 }
 
-exports.isArray = function(arr) {
+exports.isArray = function (arr) {
   return Object.prototype.toString.call(arr) === '[object Array]'
 }
 

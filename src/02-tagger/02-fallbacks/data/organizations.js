@@ -205,7 +205,7 @@ const orgWords = [
   'workers',
 ]
 
-module.exports = orgWords.reduce(function(h, str) {
+module.exports = orgWords.reduce(function (h, str) {
   h[str] = 'Noun'
   return h
 }, {})

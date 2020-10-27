@@ -2,7 +2,7 @@ const hasPrefix = /^(re|un)-?[a-z\u00C0-\u00FF]/
 const prefix = /^(re|un)-?/
 
 /** check 'rewatch' in lexicon as 'watch' */
-const checkPrefix = function(terms, world) {
+const checkPrefix = function (terms, world) {
   let lex = world.words
   terms.forEach(term => {
     // skip if we have a good tag already

@@ -32,7 +32,7 @@ const a_regexs = [
   /^eul/i,
 ]
 
-const makeArticle = function(doc) {
+const makeArticle = function (doc) {
   //no 'the john smith', but 'a london hotel'
   if (doc.has('#Person') || doc.has('#Place')) {
     return ''

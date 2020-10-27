@@ -1,4 +1,4 @@
-const topk = function(doc) {
+const topk = function (doc) {
   let list = doc.json({ text: false, terms: false, reduced: true })
   // combine them
   let obj = {}

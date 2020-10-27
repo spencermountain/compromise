@@ -1,5 +1,5 @@
 // get all character startings in doc
-const termOffsets = function(doc) {
+const termOffsets = function (doc) {
   let elapsed = 0
   let index = 0
   let offsets = {}
@@ -15,7 +15,7 @@ const termOffsets = function(doc) {
   return offsets
 }
 
-const calcOffset = function(doc, result, options) {
+const calcOffset = function (doc, result, options) {
   // calculate offsets for each term
   let offsets = termOffsets(doc.all())
   // add index values
@@ -48,7 +48,7 @@ const calcOffset = function(doc, result, options) {
       o.offset = {
         index: o.terms[0].offset.index,
         start: o.terms[0].offset.start - o.text.indexOf(o.terms[0].text),
-        length: o.text.length
+        length: o.text.length,
       }
     })
   }

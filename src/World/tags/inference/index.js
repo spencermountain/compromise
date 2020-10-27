@@ -3,7 +3,7 @@ const inferIsA = require('./_isA')
 const inferNotA = require('./_notA')
 const lineage = require('./_lineage')
 
-const validate = function(tags) {
+const validate = function (tags) {
   // cleanup format
   Object.keys(tags).forEach(k => {
     let tag = tags[k]
@@ -22,7 +22,7 @@ const validate = function(tags) {
 }
 
 // build-out the tag-graph structure
-const inferTags = function(tags) {
+const inferTags = function (tags) {
   // validate data
   tags = validate(tags)
   // build its 'down tags'

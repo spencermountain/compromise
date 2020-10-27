@@ -8,12 +8,12 @@ const lookup = require('./_lookup')
 //   return term.reduced === str || term.implicit === str || term.root === str || term.text.toLowerCase() === str
 // }
 
-const isObject = function(obj) {
+const isObject = function (obj) {
   return obj && Object.prototype.toString.call(obj) === '[object Object]'
 }
 
 /** lookup an array of words or phrases */
-exports.lookup = function(arr) {
+exports.lookup = function (arr) {
   let values = []
   //is it a {key:val} object?
   let isObj = isObject(arr)

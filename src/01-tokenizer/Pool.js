@@ -33,7 +33,7 @@ class Pool {
 }
 
 /** make a deep-copy of all terms */
-Pool.prototype.clone = function() {
+Pool.prototype.clone = function () {
   let keys = Object.keys(this.words)
   let words = keys.reduce((h, k) => {
     let t = this.words[k].clone()

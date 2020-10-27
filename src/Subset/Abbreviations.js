@@ -1,4 +1,4 @@
-const addMethod = function(Doc) {
+const addMethod = function (Doc) {
   /**  */
   class Abbreviations extends Doc {
     stripPeriods() {
@@ -21,7 +21,7 @@ const addMethod = function(Doc) {
   }
   Abbreviations.prototype.unwrap = Abbreviations.prototype.stripPeriods
 
-  Doc.prototype.abbreviations = function(n) {
+  Doc.prototype.abbreviations = function (n) {
     let match = this.match('#Abbreviation')
     if (typeof n === 'number') {
       match = match.get(n)

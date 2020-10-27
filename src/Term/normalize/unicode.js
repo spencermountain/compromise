@@ -38,8 +38,8 @@ let compact = {
 }
 //decompress data into two hashes
 let unicode = {}
-Object.keys(compact).forEach(function(k) {
-  compact[k].split('').forEach(function(s) {
+Object.keys(compact).forEach(function (k) {
+  compact[k].split('').forEach(function (s) {
     unicode[s] = k
   })
 })

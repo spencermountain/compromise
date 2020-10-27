@@ -4,7 +4,7 @@ const quotes = /['‘’“”"′″‴]+/g
 
 const methods = {
   // cleanup newlines and extra spaces
-  whitespace: function(doc) {
+  whitespace: function (doc) {
     let termArr = doc.list.map(ts => ts.terms())
     termArr.forEach((terms, o) => {
       terms.forEach((t, i) => {
@@ -34,7 +34,7 @@ const methods = {
     })
   },
 
-  punctuation: function(termList) {
+  punctuation: function (termList) {
     termList.forEach(t => {
       // space between hyphenated words
       if (t.hasHyphen() === true) {
@@ -57,7 +57,7 @@ const methods = {
     })
   },
 
-  unicode: function(termList) {
+  unicode: function (termList) {
     termList.forEach(t => {
       if (t.isImplicit() === true) {
         return
@@ -66,22 +66,19 @@ const methods = {
     })
   },
 
-  quotations: function(termList) {
+  quotations: function (termList) {
     termList.forEach(t => {
       t.post = t.post.replace(quotes, '')
       t.pre = t.pre.replace(quotes, '')
     })
   },
 
-  adverbs: function(doc) {
-    doc
-      .match('#Adverb')
-      .not('(not|nary|seldom|never|barely|almost|basically|so)')
-      .remove()
+  adverbs: function (doc) {
+    doc.match('#Adverb').not('(not|nary|seldom|never|barely|almost|basically|so)').remove()
   },
 
   // remove the '.' from 'Mrs.' (safely)
-  abbreviations: function(doc) {
+  abbreviations: function (doc) {
     doc.list.forEach(ts => {
       let terms = ts.terms()
       terms.forEach((t, i) => {

@@ -1,8 +1,8 @@
-const isNamed = function(capture) {
+const isNamed = function (capture) {
   return typeof capture === 'string' || typeof capture === 'number'
 }
 
-const fillGroups = function(tokens) {
+const fillGroups = function (tokens) {
   let convert = false
   let index = -1
   let current
@@ -42,7 +42,7 @@ const fillGroups = function(tokens) {
   return tokens
 }
 
-const useOneOf = function(tokens) {
+const useOneOf = function (tokens) {
   return tokens.map(token => {
     if (token.choices !== undefined) {
       // are they all straight non-optional words?
@@ -58,7 +58,7 @@ const useOneOf = function(tokens) {
   })
 }
 
-const postProcess = function(tokens) {
+const postProcess = function (tokens) {
   // ensure all capture groups are filled between start and end
   // give all capture groups names
   let count = tokens.filter(t => t.groupType).length

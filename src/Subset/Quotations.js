@@ -23,7 +23,7 @@ const pairs = {
 
 const hasOpen = RegExp('(' + Object.keys(pairs).join('|') + ')')
 
-const addMethod = function(Doc) {
+const addMethod = function (Doc) {
   /** "these things" */
   class Quotations extends Doc {
     /** remove the quote characters */
@@ -32,7 +32,7 @@ const addMethod = function(Doc) {
     }
   }
 
-  Doc.prototype.quotations = function(n) {
+  Doc.prototype.quotations = function (n) {
     let list = []
     this.list.forEach(p => {
       let terms = p.terms()

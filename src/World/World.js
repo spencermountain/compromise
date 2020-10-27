@@ -154,12 +154,12 @@ class World {
 }
 
 //  ¯\_(:/)_/¯
-const clone = function(obj) {
+const clone = function (obj) {
   return JSON.parse(JSON.stringify(obj))
 }
 
 /** produce a deep-copy of all lingustic data */
-World.prototype.clone = function() {
+World.prototype.clone = function () {
   let w2 = new World()
   // these are simple to copy:
   w2.words = Object.assign({}, this.words)

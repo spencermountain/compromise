@@ -30,7 +30,7 @@ const irregulars = {
 }
 
 //
-const checkIrregulars = function(term) {
+const checkIrregulars = function (term) {
   //check white-list
   if (irregulars.hasOwnProperty(term.clean)) {
     return irregulars[term.clean]

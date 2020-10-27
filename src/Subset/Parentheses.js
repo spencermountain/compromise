@@ -1,7 +1,7 @@
 const open = /\(/
 const close = /\)/
 
-const addMethod = function(Doc) {
+const addMethod = function (Doc) {
   /** anything between (these things) */
   class Parentheses extends Doc {
     /** remove the parentheses characters */
@@ -16,7 +16,7 @@ const addMethod = function(Doc) {
     }
   }
 
-  Doc.prototype.parentheses = function(n) {
+  Doc.prototype.parentheses = function (n) {
     let list = []
     this.list.forEach(p => {
       let terms = p.terms()

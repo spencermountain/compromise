@@ -2,13 +2,13 @@ const debug = require('./_debug')
 const topk = require('./_topk')
 
 /** pretty-print the current document and its tags */
-exports.debug = function() {
+exports.debug = function () {
   debug(this)
   return this
 }
 
 /** some named output formats */
-exports.out = function(method) {
+exports.out = function (method) {
   if (method === 'text') {
     return this.text()
   }

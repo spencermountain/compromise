@@ -1,5 +1,5 @@
 /** remove start and end whitespace */
-exports.trim = function() {
+exports.trim = function () {
   let terms = this.terms()
   if (terms.length > 0) {
     //trim starting

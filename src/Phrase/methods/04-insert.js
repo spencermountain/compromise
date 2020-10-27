@@ -4,24 +4,24 @@ const deletePhrase = require('../insert/delete')
 // const tokenize = require('../../01-tokenizer')
 
 /** put this text at the end */
-exports.append = function(newPhrase, doc) {
+exports.append = function (newPhrase, doc) {
   append(this, newPhrase, doc)
   return this
 }
 
 /** add this text to the beginning */
-exports.prepend = function(newPhrase, doc) {
+exports.prepend = function (newPhrase, doc) {
   prepend(this, newPhrase, doc)
   return this
 }
 
-exports.delete = function(doc) {
+exports.delete = function (doc) {
   deletePhrase(this, doc)
   return this
 }
 
 // stich-in newPhrase, stretch 'doc' + parents
-exports.replace = function(newPhrase, doc) {
+exports.replace = function (newPhrase, doc) {
   //add it do the end
   let firstLength = this.length
   append(this, newPhrase, doc)
@@ -35,7 +35,7 @@ exports.replace = function(newPhrase, doc) {
 /**
  * Turn this phrase object into 3 phrase objects
  */
-exports.splitOn = function(p) {
+exports.splitOn = function (p) {
   let terms = this.terms()
   let result = {
     before: null,

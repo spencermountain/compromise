@@ -1,7 +1,7 @@
 const setTag = require('./_setTag')
 
 /** Give all terms the given tag */
-exports.tag = function(tags, why) {
+exports.tag = function (tags, why) {
   if (!tags) {
     return this
   }
@@ -10,7 +10,7 @@ exports.tag = function(tags, why) {
 }
 
 /** Only apply tag to terms if it is consistent with current tags */
-exports.tagSafe = function(tags, why) {
+exports.tagSafe = function (tags, why) {
   if (!tags) {
     return this
   }
@@ -19,7 +19,7 @@ exports.tagSafe = function(tags, why) {
 }
 
 /** Remove this term from the given terms */
-exports.unTag = function(tags, why) {
+exports.unTag = function (tags, why) {
   this.list.forEach(p => {
     p.terms().forEach(t => t.unTag(tags, why, this.world))
   })
@@ -27,7 +27,7 @@ exports.unTag = function(tags, why) {
 }
 
 /** return only the terms that can be this tag*/
-exports.canBe = function(tag) {
+exports.canBe = function (tag) {
   if (!tag) {
     return this
   }

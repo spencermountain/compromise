@@ -14,7 +14,7 @@ const jsonDefault = {
 }
 
 /** return various metadata for this term */
-exports.json = function(options, world) {
+exports.json = function (options, world) {
   options = options || {}
   options = Object.assign({}, jsonDefault, options)
   let result = {}

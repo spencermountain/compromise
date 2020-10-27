@@ -1,5 +1,5 @@
 //safely add it to the lexicon
-const addWord = function(word, tag, lex) {
+const addWord = function (word, tag, lex) {
   if (lex[word] !== undefined) {
     if (typeof lex[word] === 'string') {
       lex[word] = [lex[word]]
@@ -15,7 +15,7 @@ const addWord = function(word, tag, lex) {
 }
 
 // blast-out more forms for some given words
-const addMore = function(word, tag, world) {
+const addMore = function (word, tag, world) {
   let lexicon = world.words
   let transform = world.transforms
 

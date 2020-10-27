@@ -29,7 +29,7 @@ const list = [
   // ==== Determiners ====
   { match: '#Noun [(who|whom)]', group: 0, tag: 'Determiner', reason: 'captain-who' },
   //that car goes
-  { match: 'that #Noun [#Verb]', group: 0, tag: 'Determiner', reason: 'that-determiner' },
+  // { match: 'that #Noun [#PresentTense]', group: 0, tag: 'Determiner', reason: 'that-determiner' },
   { match: 'a bit much', tag: 'Determiner Adverb Adjective', reason: 'bit-3' },
 
   // ==== Propositions ====

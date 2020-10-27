@@ -354,6 +354,7 @@ module.exports = [
   'knock down',
   'knock off',
   'knock out',
+  'lace up',
   'lap up',
   'lash into',
   'lash out',

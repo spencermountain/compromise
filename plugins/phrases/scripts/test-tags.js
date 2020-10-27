@@ -88,7 +88,7 @@ console.log('wrong', wrong)
 
 wrongs = wrongs.filter(o => o.want === 'Verb')
 // let byWord = topk(wrongs.map(o => o.word))
-wrongs = wrongs.filter(o => o.word === 'up')
+wrongs = wrongs.filter(o => o.word === 'will')
 
 console.log(JSON.stringify(wrongs, null, 2))
 // console.log(JSON.stringify(byWord, null, 2))

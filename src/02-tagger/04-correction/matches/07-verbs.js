@@ -78,7 +78,12 @@ let list = [
   //fall over
   { match: '#PhrasalVerb [#PhrasalVerb]', group: 0, tag: 'Particle', reason: 'phrasal-particle' },
   //back it up
-  { match: '#Verb (him|her|it) [(up|down)]', group: 0, tag: 'Adverb', reason: 'phrasal-pronoun-advb' },
+  {
+    match: '#Verb (him|her|it|us|himself|herself|itself|everything|something) [(up|down)]',
+    group: 0,
+    tag: 'Adverb',
+    reason: 'phrasal-pronoun-advb',
+  },
 
   // ==== Copula ====
   //will be running (not copula)

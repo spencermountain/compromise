@@ -1,5 +1,5 @@
 const ambig = require('../_ambig')
-const places = `(${ambig.person.verbs.join('|')})`
+const places = `(${ambig.person.places.join('|')})`
 
 let list = [
   // ==== Region ====

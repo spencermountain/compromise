@@ -9,7 +9,7 @@ module.exports = [
   //did a 900, paid a 20
   { match: '#Verb (a|an) [#Value]', group: 0, tag: 'Singular', reason: 'did-a-value' },
   //'the can'
-  { match: '#Determiner [(can|will|may)]', group: 0, tag: 'Singular', reason: 'the can' },
+  { match: 'the [(can|will|may)]', group: 0, tag: 'Singular', reason: 'the can' },
   // ==== Possessive ====
   //spencer kelly's
   { match: '#FirstName #Acronym? (#Possessive && #LastName)', tag: 'Possessive', reason: 'name-poss' },

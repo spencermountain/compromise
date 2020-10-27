@@ -55,7 +55,7 @@ exports.hasSlash = function () {
 
 /** a hyphen connects two words like-this */
 exports.hasHyphen = function () {
-  const hyphen = /(-|–|—)/
+  const hyphen = /^(-|–|—)$/
   return hyphen.test(this.post) || hyphen.test(this.pre)
 }
 /** a dash separates words - like that */

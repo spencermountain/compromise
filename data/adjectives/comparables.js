@@ -79,7 +79,6 @@ module.exports = [
   'financial',
   'fine',
   'firm',
-  'fit',
   'foamy',
   'forgetful',
   'formal',

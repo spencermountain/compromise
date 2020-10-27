@@ -331,11 +331,11 @@ module.exports = [
     tags: 'CD, IN, PRP, VBD, VBG, VBN, IN, CD, NNS, IN, DT, NNP, IN, DT, NNP',
   },
   {
-    text: 'The cells were operating in the Ghazaliyah and al - Jihad districts of the capital.',
+    text: 'The cells were operating in the Ghazaliyah and al-Jihad districts of the capital.',
     tags: 'DT, NNS, VBD, VBG, IN, DT, NNP, CC, NNP, NNP, NNS, IN, DT, NN',
   },
   {
-    text: 'Al - Zaman: Guerrillas killed a member of the Kurdistan Democratic Party after kidnapping him in Mosul.',
+    text: 'Al-Zaman: Guerrillas killed a member of the Kurdistan Democratic Party after kidnapping him in Mosul.',
     tags: 'NNP, NNP, NNS, VBD, DT, NN, IN, DT, NNP, NNP, NNP, IN, VBG, PRP, IN, NNP',
   },
   {
@@ -427,12 +427,12 @@ module.exports = [
     tags: 'NNP, NNP',
   },
   {
-    text: 'The F - 102 saw service in the Vietnam theater between March 1962 and December 1969.',
+    text: 'The F-102 saw service in the Vietnam theater between March 1962 and December 1969.',
     tags: 'DT, NNP, CD, VBD, NN, IN, DT, NNP, NN, IN, NNP, CD, CC, NNP, CD',
   },
   {
     text:
-      'During this time, F - 102 squadrons were based out of Tan Son Nhut, Da Nang and Bien Hoa in Vietnam, and Udorn and Don Muang in Thailand.',
+      'During this time, F-102 squadrons were based out of Tan Son Nhut, Da Nang and Bien Hoa in Vietnam, and Udorn and Don Muang in Thailand.',
     tags:
       'IN, DT, NN, NNP, CD, NNS, VBD, VBN, IN, IN, NNP, NNP, NNP, NNP, NNP, CC, NNP, NNP, IN, NNP, CC, NNP, CC, NNP, NNP, IN, NNP',
   },
@@ -467,7 +467,7 @@ module.exports = [
       'DT, NNP, NNP, VBZ, DT, JJS, NN, IN, VBN, NN, NNS, IN, DT, NN, CC, MD, VB, VBN, IN, DT, JJS, JJ, JJ, NN, IN, NNP',
   },
   {
-    text: "Al - Gu'ud had favoured elections and was in good terms with the government.",
+    text: "Al-Gu'ud had favoured elections and was in good terms with the government.",
     tags: 'NNP, NNP, VBD, VBN, NNS, CC, VBD, IN, JJ, NNS, IN, DT, NN',
   },
   {
@@ -528,7 +528,7 @@ module.exports = [
     tags: 'NN, NNS',
   },
   {
-    text: 'LTTE arms - running',
+    text: 'LTTE arms-running',
     tags: 'NNP, NNS, NN',
   },
   {
@@ -725,7 +725,7 @@ module.exports = [
     tags: 'PRP, VBD, VBN, IN, DT, NN, PRP, VBD',
   },
   {
-    text: 'Kindly young men, but utterly programmed and brain - dead.',
+    text: 'Kindly young men, but utterly programmed and brain-dead.',
     tags: 'JJ, JJ, NNS, CC, RB, VBN, CC, NN, JJ',
   },
   {
@@ -821,12 +821,12 @@ module.exports = [
     tags: 'MD, EX, VB, NN, NN, IN, JJ, JJ, NNS',
   },
   {
-    text: 'These are the old - fashioned dilemmas.',
+    text: 'These are the old-fashioned dilemmas.',
     tags: 'DT, VBP, DT, JJ, JJ, NNS',
   },
   {
     text:
-      'It is trying to play ice hockey by sending a ballerina ice - skater into the ring or to knock out a heavyweight boxer by a chess player.',
+      'It is trying to play ice hockey by sending a ballerina ice-skater into the ring or to knock out a heavyweight boxer by a chess player.',
     tags:
       'PRP, VBZ, VBG, TO, VB, NN, NN, IN, VBG, DT, NN, NN, NN, IN, DT, NN, CC, TO, VB, RP, DT, NN, NN, IN, DT, NN, NN',
   },
@@ -1128,20 +1128,20 @@ module.exports = [
     tags: 'NNP',
   },
   {
-    text: '18T - EI Indonesia Operations LLC',
-    tags: 'NN, NNP, NNP, NNPS, NNP',
+    text: '18T-EI Indonesia Operations LLC',
+    tags: 'NNP, NNP, NNPS, NNP',
   },
   {
-    text: '86M - Enron Net Works LLC',
-    tags: 'NN, NNP, NNP, NNPS, NNP',
+    text: '86M-Enron Net Works LLC',
+    tags: 'NNP, NNP, NNPS, NNP',
   },
   {
     text: 'Despite the name, this entity appears to be a MTM company.',
     tags: 'IN, DT, NN, DT, NN, VBZ, TO, VB, DT, NNP, NN',
   },
   {
-    text: '80Y - Enron Broadband Acquisition, Inc.',
-    tags: 'NN, NNP, NNP, NNP, NNP',
+    text: '80Y-Enron Broadband Acquisition, Inc.',
+    tags: 'NNP, NNP, NNP, NNP',
   },
   {
     text: 'I think this entity should stay with 83N.',
@@ -1152,16 +1152,12 @@ module.exports = [
     tags: 'PRP, MD, VB, CD, JJ',
   },
   {
-    text: '1579 - EBS Network Co. Division of 17H.',
-    tags: 'CD, NNP, NNP, NNP, NN, IN, NN',
+    text: '1579-EBS Network Co. Division of 17H.',
+    tags: 'NNP, NNP, NNP, NN, IN, NN',
   },
   {
-    text: '4 - easy.',
-    tags: 'CD, JJ',
-  },
-  {
-    text: '1691 - EPI - EBS Europe',
-    tags: 'CD, NNP, NNP, NNP',
+    text: '1691-EPI-EBS Europe',
+    tags: 'NNP, NNP',
   },
   {
     text: 'Set up last month to centralize merchant asset activities.',
@@ -1172,20 +1168,12 @@ module.exports = [
     tags: 'VBD, RP, DT, NNS, IN, CD',
   },
   {
-    text: '4 - easy.',
-    tags: 'CD, JJ',
+    text: '1307-EBIC-Apache, LLC',
+    tags: 'NNP, NNP',
   },
   {
-    text: '1307 - EBIC - Apache, LLC',
-    tags: 'CD, NNP, NNP, NNP',
-  },
-  {
-    text: '4 - easy.',
-    tags: 'CD, JJ',
-  },
-  {
-    text: '1689 - EPI - EBS Ventures, LLC',
-    tags: 'CD, NNP, NNP, NNPS, NNP',
+    text: '1689-EPI-EBS Ventures, LLC',
+    tags: 'NNP, NNPS, NNP',
   },
   {
     text: 'Set up last month to centralize merchant asset activities.',
@@ -1198,10 +1186,6 @@ module.exports = [
   {
     text: 'Same as 1307.',
     tags: 'JJ, IN, CD',
-  },
-  {
-    text: '4 - easy.',
-    tags: 'CD, JJ',
   },
   {
     text: 'Do you concur?',
@@ -2403,19 +2387,19 @@ module.exports = [
     tags: 'NNP',
   },
   {
-    text: 'Benjamin James - at 12.45 pm - 3 lbs 4 ozs',
+    text: 'Benjamin James-at 12.45 pm-3 lbs 4 ozs',
     tags: 'NNP, NNP, IN, CD, NN, CD, NNS, CD, NNS',
   },
   {
-    text: 'Toby William - 12.46 pm - 4 lbs',
+    text: 'Toby William-12.46 pm-4 lbs',
     tags: 'NNP, NNP, CD, NN, CD, NNS',
   },
   {
-    text: 'Hannah May - 12.48 pm - 3 lbs 15 ozs.',
+    text: 'Hannah May-12.48 pm-3 lbs 15 ozs.',
     tags: 'NNP, NNP, CD, NN, CD, NNS, CD, NNS',
   },
   {
-    text: 'Emma is fine, too - very well !!',
+    text: 'Emma is fine, too-very well !!',
     tags: 'NNP, VBZ, JJ, RB, RB, JJ',
   },
   {
@@ -2569,7 +2553,7 @@ module.exports = [
   },
   {
     text:
-      'You have all devoted considerable time, resources and spirit in the preparation of this document - and it shows .?',
+      'You have all devoted considerable time, resources and spirit in the preparation of this document-and it shows .?',
     tags: 'PRP, VBP, RB, VBN, JJ, NN, NNS, CC, NN, IN, DT, NN, IN, DT, NN, CC, PRP, VBZ',
   },
   {
@@ -2948,7 +2932,7 @@ module.exports = [
     tags: 'NNP, VBZ, VBN, VBG, PRP, IN, DT, JJ, JJ, NN, NN',
   },
   {
-    text: 'Grand - standing is ignored.',
+    text: 'Grand-standing is ignored.',
     tags: 'JJ, NN, VBZ, VBN',
   },
   {
@@ -3929,7 +3913,7 @@ module.exports = [
     tags: 'IN, DT, NN, NNS, JJ, DT, NNS, VBD, NN, IN, JJ, NNS, VBG, JJR, NNS',
   },
   {
-    text: 'Smutney - Jones also said he was unaware of anyone in the power - generating community being consulted.',
+    text: 'Smutney-Jones also said he was unaware of anyone in the power-generating community being consulted.',
     tags: 'NNP, NNP, RB, VBD, PRP, VBD, JJ, IN, NN, IN, DT, NN, NN, NN, VBG, VBN',
   },
   {
@@ -3970,19 +3954,19 @@ module.exports = [
     tags: 'NN',
   },
   {
-    text: 'HR - Veronica Parra, Nedre Strambler, Fran Mayes, Felicia Solis',
+    text: 'HR-Veronica Parra, Nedre Strambler, Fran Mayes, Felicia Solis',
     tags: 'NN, NNP, NNP, NNP, NNP, NNP, NNP, NNP, NNP',
   },
   {
-    text: 'Legal - Bob Carter, Travis McCullough, Lisa Mellencamp, Shelia Tweed, Richard Sanders, Michelle Cash',
+    text: 'Legal-Bob Carter, Travis McCullough, Lisa Mellencamp, Shelia Tweed, Richard Sanders, Michelle Cash',
     tags: 'JJ, NNP, NNP, NNP, NNP, NNP, NNP, NNP, NNP, NNP, NNP, NNP, NNP',
   },
   {
-    text: 'IT - Jason Chumley',
+    text: 'IT-Jason Chumley',
     tags: 'NN, NNP, NNP',
   },
   {
-    text: 'Insurance - David Marshall',
+    text: 'Insurance-David Marshall',
     tags: 'NN, NNP, NNP',
   },
   {
@@ -4287,7 +4271,7 @@ module.exports = [
   },
   {
     text:
-      'The name started as a joke boasting about the amount of information the search - engine would be able to search.',
+      'The name started as a joke boasting about the amount of information the search-engine would be able to search.',
     tags: 'DT, NN, VBD, IN, DT, NN, VBG, IN, DT, NN, IN, NN, DT, NN, NN, MD, VB, JJ, TO, VB',
   },
   {
@@ -4839,7 +4823,7 @@ module.exports = [
     tags: 'NNP, IN, CD, NN',
   },
   {
-    text: 'Pisces in 2005 - Self - confidence',
+    text: 'Pisces in 2005 - Self-confidence',
     tags: 'NNP, IN, CD, NN, NN',
   },
   {
@@ -4990,7 +4974,7 @@ module.exports = [
     tags: 'PRP, VBD, PRP, RB, RB, IN, NNP',
   },
   {
-    text: '300 - Number of Clean Water Act violations by the mountaintop - mining industry in 2003.',
+    text: '300 - Number of Clean Water Act violations by the mountaintop-mining industry in 2003.',
     tags: 'CD, NN, IN, NNP, NNP, NNP, NNS, IN, DT, NN, NN, NN, IN, CD',
   },
   {
@@ -5040,7 +5024,7 @@ module.exports = [
   },
   {
     text:
-      "680 - Number of suspected al - Qa'ida members that the United States admits are detained at Guantánamo Bay, Cuba.",
+      "680 - Number of suspected al-Qa'ida members that the United States admits are detained at Guantánamo Bay, Cuba.",
     tags: 'CD, NN, IN, VBN, NNP, NNP, NNS, WDT, DT, NNP, NNP, VBZ, VBP, VBN, IN, NNP, NNP, NNP',
   },
   {
@@ -5048,7 +5032,7 @@ module.exports = [
     tags: 'CD, NN, IN, NNS, IN, DT, NNS, IN, NNP',
   },
   {
-    text: 'A health - conscious president',
+    text: 'A health-conscious president',
     tags: 'DT, NN, JJ, NN',
   },
   {
@@ -5148,7 +5132,7 @@ module.exports = [
     tags: 'VBZ, EX, DT, NN, IN, NN, NN',
   },
   {
-    text: 'Crayola Air - Dry Clay?',
+    text: 'Crayola Air-Dry Clay?',
     tags: 'NNP, NN, NN, NN',
   },
   {
@@ -5525,7 +5509,7 @@ module.exports = [
     tags: 'CC, PRP, MD, VB, NNS, CC, NNS, IN, NNP',
   },
   {
-    text: 'Eat at a conveyor - belt sushi restaurant.',
+    text: 'Eat at a conveyor-belt sushi restaurant.',
     tags: 'VB, IN, DT, NN, NN, NN, NN',
   },
   {
@@ -5979,7 +5963,7 @@ module.exports = [
     tags: 'JJ, NN',
   },
   {
-    text: 'Did they do any x - rays?',
+    text: 'Did they do any x-rays?',
     tags: 'VBD, PRP, VB, DT, NN, NNS',
   },
   {
@@ -7087,7 +7071,7 @@ module.exports = [
     tags: 'VB, RB, IN, DT, NN',
   },
   {
-    text: 'This place is a Rip - Off',
+    text: 'This place is a Rip-Off',
     tags: 'DT, NN, VBZ, DT, NN, NN',
   },
   {
@@ -7179,7 +7163,7 @@ module.exports = [
     tags: 'PRP, MD, VB, PRP, DT, NNP, NNP, IN, DT, JJ, NN',
   },
   {
-    text: 'Pho - nomenal !!',
+    text: 'Pho-nomenal !!',
     tags: 'NN, JJ',
   },
   {
@@ -7823,7 +7807,7 @@ module.exports = [
     tags: 'DT, NN, VBZ, RB, RB, RB, JJ, TO, VB, IN',
   },
   {
-    text: 'Karla Ferguson - Granger',
+    text: 'Karla Ferguson-Granger',
     tags: 'NNP, NNP, NNP',
   },
   {

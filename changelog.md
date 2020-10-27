@@ -10,6 +10,10 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 
 <!-- #### [Unreleased] -->
 
+#### 13.7.0
+- **[change]** many misc tagging fixes
+- **[change]** `@hasHyphen` returns false for sentence dashes
+
 #### 13.6.0
 
 - **[new]** first-attempt at `verbs().subject()` method

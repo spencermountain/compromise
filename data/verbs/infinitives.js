@@ -210,6 +210,7 @@ module.exports = [
   'favor',
   'fear',
   'feature',
+  'fit',
   'figure',
   'file',
   'fill',

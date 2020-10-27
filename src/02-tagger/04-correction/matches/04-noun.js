@@ -20,6 +20,11 @@ module.exports = [
   // assign all tasks
   { match: '#Verb (all|every|each|most|some|no) [#PresentTense]', group: 0, tag: 'Noun', reason: 'all-presentTense' },
 
+  //the above is clear
+  { match: '#Determiner [#Adjective] #Copula', group: 0, tag: 'Noun', reason: 'the-adj-is' },
+  //real evil is
+  { match: '#Adjective [#Adjective] #Copula', group: 0, tag: 'Noun', reason: 'adj-adj-is' },
+
   // PresentTense/Noun ambiguities
   // big dreams, critical thinking
   // have big dreams
@@ -44,6 +49,8 @@ module.exports = [
   { match: '#Adjective [#Gerund]', group: 0, tag: 'Noun', reason: 'early-warning' },
   // justifiying higher costs
   { match: '#Gerund #Adverb? #Comparative [#PresentTense]', group: 0, tag: 'Noun', reason: 'higher-costs' },
+  // do the dance
+  { match: '#Infinitive (this|that|the) [#Infinitive]', group: 0, tag: 'Noun', reason: 'do-this-dance' },
 
   //his fine
   { match: '(his|her|its) [#Adjective]', group: 0, tag: 'Noun', reason: 'his-fine' },
@@ -72,7 +79,7 @@ module.exports = [
   //a nice deal
   { match: '#Determiner #Adjective #Adjective? [#Infinitive]', group: 0, tag: 'Noun', reason: 'a-nice-inf' },
   //the wait to vote
-  { match: '(the|this) [#Verb] #Preposition .', group: 0, tag: 'Noun', reason: 'determiner1' },
+  { match: 'the [#Verb] #Preposition .', group: 0, tag: 'Noun', reason: 'determiner1' },
   //a sense of
   { match: '#Determiner [#Verb] of', group: 0, tag: 'Noun', reason: 'the-verb-of' },
   //next career move

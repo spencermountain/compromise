@@ -84,6 +84,7 @@ module.exports = [
   'tiny bit',
   'very',
   'way',
+  'well',
   'yep',
   'yes',
 ]

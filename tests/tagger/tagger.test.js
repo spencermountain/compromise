@@ -217,6 +217,10 @@ test('pos-basic-tag:', function (t) {
     [`slowly stunning`, ['Adverb', 'Verb']],
     [`quite awfully stunning`, ['Adverb', 'Adverb', 'Adjective']],
     [`quite awfully swimming`, ['Adverb', 'Adverb', 'Verb']],
+    ['is doing well', ['Copula', 'Gerund', 'Adverb']],
+    ['well, no.', ['Expression', 'Negative']],
+    ['he is well', ['Pronoun', 'Copula', 'Adjective']],
+    ['is well made', ['Copula', 'Adverb', 'Adjective']],
   ]
   arr.forEach(function (a) {
     let terms = nlp(a[0]).json(0).terms

@@ -6,7 +6,7 @@ const list = [
   { match: 'u r', tag: 'Pronoun Copula', reason: 'u r' },
   //sometimes adverbs - 'pretty good','well above'
   {
-    match: '#Copula (pretty|dead|full|well) (#Adjective|#Noun)',
+    match: '#Copula (pretty|dead|full|well|sure) (#Adjective|#Noun)',
     tag: '#Copula #Adverb #Adjective',
     reason: 'sometimes-adverb',
   },

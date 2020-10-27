@@ -24,19 +24,10 @@ in our X-ray Uro-radiology
 CT
 St
 */
-
-// let doc = nlp(`your`)
-// let doc = nlp(`my`)
-// let doc = nlp(`their`)
 // let doc = nlp(`thanks`)
-// let doc = nlp(`if`)
-// let doc = nlp(`like`)
 // let doc = nlp(`your own conclusions`)
-// let doc = nlp(`India keeps what it has`)
-
-// let doc = nlp(`The situation appears to be even worse`)
+// let doc = nlp(`The situation appears to be even worse`)//even
 // let doc = nlp(`They even occasionally attack`)
-// let doc = nlp(`a job well done`)
 // let doc = nlp(`a crime against humanity`)
 // let doc = nlp(`make the call`)
 // let doc = nlp(`Photographs from a seized computer `)
@@ -50,11 +41,10 @@ St
 // let doc = nlp(`At some point`)
 // let doc = nlp(`kept me up to date`)
 // let doc = nlp(`misrepresent themselves`)
-let doc = nlp(`in regards to`)
+// let doc = nlp(`in regards to`)
 // let doc = nlp(`you have seen`)
 // let doc = nlp(`i have taken`)
 // let doc = nlp(`have you gotten?`)
-// doc.verbs().debug().toPastTense()
 doc.debug()
 
 // hmmm

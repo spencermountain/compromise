@@ -18,6 +18,8 @@ let list = [
   { match: '[#PastTense] #Singular is', group: 0, tag: 'Adjective', reason: 'smoked-poutine' },
   // baked onions are
   { match: '[#PastTense] #Plural are', group: 0, tag: 'Adjective', reason: 'baked-onions' },
+  // well made
+  { match: 'well [#PastTense]', group: 0, tag: 'Adjective', reason: 'well-made' },
 
   // is f*ed up
   { match: '#Copula [fucked up?]', tag: 'Adjective', reason: 'swears-adjective' },

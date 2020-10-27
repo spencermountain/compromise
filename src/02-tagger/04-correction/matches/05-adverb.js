@@ -15,4 +15,6 @@ module.exports = [
   { match: '#PresentTense [(hard|quick|long|bright|slow)]', group: 0, tag: 'Adverb', reason: 'lazy-ly' },
   // much appreciated
   { match: '[much] #Adjective', group: 0, tag: 'Adverb', reason: 'bit-1' },
+  // is well
+  { match: '#Copula [#Adverb]$', group: 0, tag: 'Adjective', reason: 'is-well' },
 ]

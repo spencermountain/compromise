@@ -382,7 +382,6 @@ module.exports = [
   'purchase',
   'pursue',
   'push',
-  'question',
   'raise',
   'range',
   'rank',

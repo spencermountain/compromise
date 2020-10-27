@@ -5,6 +5,10 @@ module.exports = [
   { match: '[still] #Verb', group: 0, tag: 'Adverb', reason: 'still-verb' },
   // so hot
   { match: '[so] #Adjective', group: 0, tag: 'Adverb', reason: 'so-adv' },
+  // way hotter
+  { match: '[way] #Comparative', group: 0, tag: 'Adverb', reason: 'way-adj' },
+  // way too hot
+  { match: '[way] #Adverb #Adjective', group: 0, tag: 'Adverb', reason: 'way-too-adj' },
   // all singing
   { match: '[all] #Verb', group: 0, tag: 'Adverb', reason: 'all-verb' },
   // sing like an angel

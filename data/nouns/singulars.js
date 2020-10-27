@@ -48,6 +48,7 @@ module.exports = [
   'player',
   'problem',
   'purpose',
+  'question',
   'question mark',
   'room',
   'rose',
@@ -67,6 +68,7 @@ module.exports = [
   'tv show',
   'us dollar',
   'us state',
+  'way',
 
   //double-consonant rule
   'bottle',

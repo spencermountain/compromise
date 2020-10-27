@@ -35,7 +35,8 @@ in our X-ray Uro-radiology
 // let doc = nlp(`in regards to`)
 // let doc = nlp(`have you gotten?`)
 
-let doc = nlp(`understands what I mean`)
+let doc = nlp(`have fun in toronto`)
+// let doc = nlp(` a crapload of fun!`)
 // let doc = nlp(`I mean to`)
 // let doc = nlp(`he is able to make up for his lack of preparedness`)
 doc.debug()

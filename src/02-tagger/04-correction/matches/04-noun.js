@@ -19,8 +19,28 @@ module.exports = [
   { match: '#Place+ #Possessive', tag: 'Possessive', reason: 'place-possessive' },
   // assign all tasks
   { match: '#Verb (all|every|each|most|some|no) [#PresentTense]', group: 0, tag: 'Noun', reason: 'all-presentTense' },
-  //big dreams, critical thinking
-  { match: '(#Adjective && !all) [#PresentTense]', group: 0, tag: 'Noun', reason: 'adj-presentTense' },
+
+  // PresentTense/Noun ambiguities
+  // big dreams, critical thinking
+  // have big dreams
+  { match: '(had|have|#PastTense) #Adjective [#PresentTense]', group: 0, tag: 'Noun', reason: 'adj-presentTense' },
+  // excellent answer spencer
+  { match: '^#Adjective [#PresentTense]', group: 0, tag: 'Noun', reason: 'start adj-presentTense' },
+  // one big reason
+  { match: '#Value #Adjective [#PresentTense]', group: 0, tag: 'Noun', reason: 'one-big-reason' },
+  // won widespread support
+  { match: '#PastTense #Adjective+ [#PresentTense]', group: 0, tag: 'Noun', reason: 'won-wide-support' },
+  // many poses
+  { match: '(many|few|several|couple) [#PresentTense]', group: 0, tag: 'Noun', reason: 'many-poses' },
+  // very big dreams
+  { match: '#Adverb #Adjective [#PresentTense]', group: 0, tag: 'Noun', reason: 'very-big-dream' },
+  // adorable little store
+  { match: '#Adjective #Adjective [#PresentTense]', group: 0, tag: 'Noun', reason: 'adorable-little-store' },
+  // of basic training
+  { match: '#Preposition #Adjective [#PresentTense]', group: 0, tag: 'Noun', reason: 'of-basic-training' },
+  // early warning
+  { match: '#Adjective [#Gerund]', group: 0, tag: 'Noun', reason: 'early-warning' },
+
   //his fine
   { match: '(his|her|its) [#Adjective]', group: 0, tag: 'Noun', reason: 'his-fine' },
   //some pressing issues
@@ -45,8 +65,8 @@ module.exports = [
   { match: '(the|this|a|an) [#Infinitive] #Adverb? #Verb', group: 0, tag: 'Noun', reason: 'determiner5' },
   //the test string
   { match: '#Determiner [#Infinitive] #Noun', group: 0, tag: 'Noun', reason: 'determiner7' },
-  //by a bear.
-  { match: '#Determiner #Adjective [#Infinitive]$', group: 0, tag: 'Noun', reason: 'a-inf' },
+  //a nice deal
+  { match: '#Determiner #Adjective #Adjective? [#Infinitive]', group: 0, tag: 'Noun', reason: 'a-nice-inf' },
   //the wait to vote
   { match: '(the|this) [#Verb] #Preposition .', group: 0, tag: 'Noun', reason: 'determiner1' },
   //a sense of

@@ -9,6 +9,15 @@ let list = [
   { match: '[#Adjective] (us|you)', group: 0, tag: 'Gerund', reason: 'loving-you' },
   // slowly stunning
   { match: '(slowly|quickly) [#Adjective]', group: 0, tag: 'Gerund', reason: 'slowly-adj' },
+  // like
+  { match: '(#Modal|i|they|we|do) not? [like]', group: 0, tag: 'PresentTense', reason: 'modal-like' },
+  // do not simply like
+  {
+    match: 'do (simply|just|really|not)+ [(#Adjective|like)]',
+    group: 0,
+    tag: 'Verb',
+    reason: 'do-simply-like',
+  },
 
   // ==== Tense ====
   //he left

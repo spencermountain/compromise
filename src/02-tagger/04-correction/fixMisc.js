@@ -14,7 +14,7 @@ const miscCorrection = function (doc) {
   //exactly like
   let m = hasWord(doc, 'like')
   m.match('#Adverb like')
-    .notIf('(really|generally|typically|usually|sometimes|often) [like]')
+    .notIf('(really|generally|typically|usually|sometimes|often|just) [like]')
     .tag('Adverb', 'adverb-like')
 
   //the orange.

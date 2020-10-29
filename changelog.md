@@ -12,7 +12,12 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 
 #### 13.7.0
 - **[change]** many misc tagging fixes
+  - if is preposition
+  - possessive pronouns are #Pronoun and #Possessive
+  - more phrasal verbs
+  - make #Participle tag #PastTense
 - **[change]** `@hasHyphen` returns false for sentence dashes
+- a lot more testing
 
 #### 13.6.0
 

@@ -148,12 +148,8 @@ module.exports = [
   { match: '#Gerund #Adjective to [#Infinitive]', group: 0, tag: 'Noun', reason: 'running-to' },
   // any questions for
   { match: '(many|any|some|several) [#PresentTense] for', group: 0, tag: 'Noun', reason: 'any-verbs-for' },
-  // // the way
-  // { match: '(a|the|this|that|no) (only|one|#Adjective)? [way]', group: 0, tag: 'Noun', reason: 'the-way' },
-  // // in every way
-  // { match: '(every|each|other|another|any) [way]', group: 0, tag: 'Noun', reason: 'every-way' },
-  // // his way
-  // { match: '(#Possessive) [way]', group: 0, tag: 'Noun', reason: 'his-way' },
   // have fun
   { match: `(have|had) [#Adjective] #Preposition .`, group: 0, tag: 'Noun', reason: 'have-fun' },
+  // co-founder
+  { match: `co #Noun`, tag: 'Actor', reason: 'co-noun' },
 ]

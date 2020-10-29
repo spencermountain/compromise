@@ -12,10 +12,10 @@ test('inline tagging linear:', function (t) {
   found = r.match('#FooBar').out('normal')
   t.equal(found, 'one', 'tag-skip-null')
 
-  r.match('two three').tag('#Two #Three #Four')
-  t.equal(r.match('#Two').out('normal'), 'two', 'two-is-two')
-  t.equal(r.match('#Three').out('normal'), 'three', 'three-is-three')
-  t.equal(r.match('#Four').out('normal'), '', 'four is ignored')
+  r.match('two three').tag('#TwoTag #ThreeTag #FourTag')
+  t.equal(r.match('#TwoTag').out('normal'), 'two', 'two-is-two')
+  t.equal(r.match('#ThreeTag').out('normal'), 'three', 'three-is-three')
+  t.equal(r.match('#FourTag').out('normal'), '', 'four is ignored')
 
   t.end()
 })

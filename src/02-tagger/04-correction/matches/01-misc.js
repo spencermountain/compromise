@@ -6,7 +6,7 @@ const list = [
   { match: 'u r', tag: 'Pronoun Copula', reason: 'u r' },
   //sometimes adverbs - 'pretty good','well above'
   {
-    match: '#Copula (pretty|dead|full|well) (#Adjective|#Noun)',
+    match: '#Copula (pretty|dead|full|well|sure) (#Adjective|#Noun)',
     tag: '#Copula #Adverb #Adjective',
     reason: 'sometimes-adverb',
   },
@@ -29,7 +29,7 @@ const list = [
   // ==== Determiners ====
   { match: '#Noun [(who|whom)]', group: 0, tag: 'Determiner', reason: 'captain-who' },
   //that car goes
-  { match: 'that #Noun [#Verb]', group: 0, tag: 'Determiner', reason: 'that-determiner' },
+  // { match: 'that #Noun [#PresentTense]', group: 0, tag: 'Determiner', reason: 'that-determiner' },
   { match: 'a bit much', tag: 'Determiner Adverb Adjective', reason: 'bit-3' },
 
   // ==== Propositions ====
@@ -37,7 +37,7 @@ const list = [
   { match: '#Verb #Adverb? #Noun [(that|which)]', group: 0, tag: 'Preposition', reason: 'that-prep' },
   //work, which has been done.
   { match: '@hasComma [which] (#Pronoun|#Verb)', group: 0, tag: 'Preposition', reason: 'which-copula' },
-  { match: 'just [like]', group: 0, tag: 'Preposition', reason: 'like-preposition' },
+  { match: '#Copula just [like]', group: 0, tag: 'Preposition', reason: 'like-preposition' },
   //folks like her
   { match: '#Noun [like] #Noun', group: 0, tag: 'Preposition', reason: 'noun-like' },
   //fix for busted-up phrasalVerbs

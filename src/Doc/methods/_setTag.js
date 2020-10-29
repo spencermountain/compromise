@@ -1,5 +1,5 @@
 /** apply a tag, or tags to all terms */
-const tagTerms = function(tag, doc, safe, reason) {
+const tagTerms = function (tag, doc, safe, reason) {
   let tagList = []
   if (typeof tag === 'string') {
     tagList = tag.split(' ')

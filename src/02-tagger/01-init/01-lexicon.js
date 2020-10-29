@@ -1,7 +1,7 @@
 const underOver = /^(under|over)-?/
 
 /** match a word-sequence, like 'super bowl' in the lexicon */
-const tryMultiple = function(terms, t, world) {
+const tryMultiple = function (terms, t, world) {
   let lex = world.words
   //try a two-word version
   let txt = terms[t].reduced + ' ' + terms[t + 1].reduced
@@ -35,7 +35,7 @@ const tryMultiple = function(terms, t, world) {
 }
 
 /** look at each word in our list of known-words */
-const checkLexicon = function(terms, world) {
+const checkLexicon = function (terms, world) {
   let lex = world.words
   let hasCompound = world.hasCompound // use reduced?
   //go through each term, and check the lexicon

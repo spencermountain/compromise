@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
-test('slash whitespace', function(t) {
+test('slash whitespace', function (t) {
   let str = 'left his / her backpack '
   let doc = nlp(str)
   t.equal(doc.out(), str, 'slash with normal spaces')
@@ -16,7 +16,7 @@ test('slash whitespace', function(t) {
   t.end()
 })
 
-test('slash match', function(t) {
+test('slash match', function (t) {
   let str = 'left his / her backpack '
   let doc = nlp(str)
   t.equal(doc.has('his'), true, 'slash with normal spaces - his')

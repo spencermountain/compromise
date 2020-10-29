@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('fancy match', function(t) {
+test('fancy match', function (t) {
   let arr = [
     //misc
     ['doug is good', '', 0],
@@ -100,18 +100,15 @@ test('fancy match', function(t) {
     ['the canadian senate', 'the (united states|canadian) senate', 3],
     ['the canadian senate', '(canadian|united states|british)', 1],
   ]
-  arr.forEach(function(a) {
-    const r =
-      nlp(a[0])
-        .match(a[1])
-        .terms() || []
+  arr.forEach(function (a) {
+    const r = nlp(a[0]).match(a[1]).terms() || []
     const msg = "'" + a[0] + "' - - - '" + a[1] + "' - - got:" + r.length + '  want:' + a[2]
     t.equal(r.length, a[2], msg)
   })
   t.end()
 })
 
-test('consecutive greedy cases', function(t) {
+test('consecutive greedy cases', function (t) {
   let doc = nlp('one two')
   let m = doc.match('#Value #Value')
   t.equal(m.length, 1, 'consecutive-found one')
@@ -137,13 +134,13 @@ test('consecutive greedy cases', function(t) {
   t.end()
 })
 
-test('tricky-case', function(t) {
+test('tricky-case', function (t) {
   t.equal(nlp('Number II').has('Number II'), true, 'uppercase-match')
   t.equal(nlp('Number I').has('Number I'), true, 'uppercase-match')
   t.end()
 })
 
-test('post-process', function(t) {
+test('post-process', function (t) {
   let doc = nlp(`jack is guarded end`)
   let m = doc.match('is guarded foo?$')
   t.equal(m.found, false, 'no end')
@@ -154,7 +151,7 @@ test('post-process', function(t) {
   t.end()
 })
 
-test('text-as-input', function(t) {
+test('text-as-input', function (t) {
   const doc = nlp('he is from Phoenix AZ')
   const m = doc.match('#City')
   const matchWith = doc.match(m).out('normal')
@@ -164,7 +161,7 @@ test('text-as-input', function(t) {
   t.end()
 })
 
-test('anchor-with-greedy', function(t) {
+test('anchor-with-greedy', function (t) {
   const doc = nlp.tokenize('a a b b')
   let m = doc.match('^a a b b$')
   t.equal(m.found, true, 'simple anchors not found')

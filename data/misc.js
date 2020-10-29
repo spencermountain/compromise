@@ -14,7 +14,7 @@ module.exports = {
   am: 'Copula',
   are: 'Copula',
 
-  if: 'Condition',
+  if: ['Condition', 'Preposition'],
   unless: 'Condition',
   lest: 'Condition',
 
@@ -55,6 +55,7 @@ module.exports = {
   //misc
   records: 'Plural',
   '&': 'Conjunction',
+  vs: ['Conjunction', 'Abbreviation'],
 
   //pronouns
   i: ['Pronoun', 'Singular'],

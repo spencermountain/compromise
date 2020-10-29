@@ -3,7 +3,7 @@ const Phrase = require('../Phrase/Phrase')
 const Pool = require('./Pool')
 const linkTerms = require('./_linkTerms')
 
-const fromJSON = function(json, world) {
+const fromJSON = function (json, world) {
   let pool = new Pool()
   let phrases = json.map((p, k) => {
     let terms = p.terms.map((o, i) => {

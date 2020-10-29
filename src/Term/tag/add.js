@@ -1,7 +1,7 @@
 const fns = require('./fns')
 
 /** add a tag, and its descendents, to a term */
-const addTag = function(t, tag, reason, world) {
+const addTag = function (t, tag, reason, world) {
   let tagset = world.tags
   //support '.' or '-' notation for skipping the tag
   if (tag === '' || tag === '.' || tag === '-') {
@@ -38,7 +38,7 @@ const addTag = function(t, tag, reason, world) {
 }
 
 /** support an array of tags */
-const addTags = function(term, tags, reason, world) {
+const addTags = function (term, tags, reason, world) {
   if (typeof tags !== 'string') {
     for (let i = 0; i < tags.length; i++) {
       addTag(term, tags[i], reason, world)

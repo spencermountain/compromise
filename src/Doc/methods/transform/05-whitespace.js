@@ -1,5 +1,5 @@
 /** add this punctuation or whitespace before each match: */
-exports.pre = function(str, concat) {
+exports.pre = function (str, concat) {
   if (str === undefined) {
     return this.list[0].terms(0).pre
   }
@@ -15,7 +15,7 @@ exports.pre = function(str, concat) {
 }
 
 /** add this punctuation or whitespace after each match: */
-exports.post = function(str, concat) {
+exports.post = function (str, concat) {
   // return array of post strings
   if (str === undefined) {
     return this.list.map(p => {
@@ -38,13 +38,13 @@ exports.post = function(str, concat) {
 }
 
 /** remove start and end whitespace */
-exports.trim = function() {
+exports.trim = function () {
   this.list = this.list.map(p => p.trim())
   return this
 }
 
 /** connect words with hyphen, and remove whitespace */
-exports.hyphenate = function() {
+exports.hyphenate = function () {
   this.list.forEach(p => {
     let terms = p.terms()
     //remove whitespace
@@ -61,7 +61,7 @@ exports.hyphenate = function() {
 }
 
 /** remove hyphens between words, and set whitespace */
-exports.dehyphenate = function() {
+exports.dehyphenate = function () {
   const hasHyphen = /(-|–|—)/
   this.list.forEach(p => {
     let terms = p.terms()
@@ -77,7 +77,7 @@ exports.dehyphenate = function() {
 exports.deHyphenate = exports.dehyphenate
 
 /** add quotations around these matches */
-exports.toQuotations = function(start, end) {
+exports.toQuotations = function (start, end) {
   start = start || `"`
   end = end || `"`
   this.list.forEach(p => {
@@ -91,7 +91,7 @@ exports.toQuotations = function(start, end) {
 exports.toQuotation = exports.toQuotations
 
 /** add brackets around these matches */
-exports.toParentheses = function(start, end) {
+exports.toParentheses = function (start, end) {
   start = start || `(`
   end = end || `)`
   this.list.forEach(p => {

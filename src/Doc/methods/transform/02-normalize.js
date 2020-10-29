@@ -31,7 +31,7 @@ const mapping = {
 mapping.heavy = Object.assign({}, mapping.medium, { possessives: true, verbs: true, nouns: true, honorifics: true })
 
 /** common ways to clean-up the document, and reduce noise */
-exports.normalize = function(options) {
+exports.normalize = function (options) {
   options = options || {}
   // support named forms
   if (typeof options === 'string') {

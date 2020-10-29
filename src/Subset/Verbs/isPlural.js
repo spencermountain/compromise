@@ -2,7 +2,7 @@
 // we walk -> plural
 
 // the most-recent noun-phrase, before this verb.
-const findNoun = function(vb) {
+const findNoun = function (vb) {
   let noun = vb.lookBehind('#Noun+').last()
   return noun
 }
@@ -10,7 +10,7 @@ const findNoun = function(vb) {
 //sometimes you can tell if a verb is plural/singular, just by the verb
 // i am / we were
 // othertimes you need its subject 'we walk' vs 'i walk'
-const isPlural = function(parsed) {
+const isPlural = function (parsed) {
   let vb = parsed.verb
   if (vb.has('(are|were|does)') || parsed.auxiliary.has('(are|were|does)')) {
     return true

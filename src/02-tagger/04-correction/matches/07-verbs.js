@@ -9,7 +9,20 @@ let list = [
   { match: '[#Adjective] (us|you)', group: 0, tag: 'Gerund', reason: 'loving-you' },
   // slowly stunning
   { match: '(slowly|quickly) [#Adjective]', group: 0, tag: 'Gerund', reason: 'slowly-adj' },
-
+  // like
+  { match: '(#Modal|i|they|we|do) not? [like]', group: 0, tag: 'PresentTense', reason: 'modal-like' },
+  // do not simply like
+  {
+    match: 'do (simply|just|really|not)+ [(#Adjective|like)]',
+    group: 0,
+    tag: 'Verb',
+    reason: 'do-simply-like',
+  },
+  // does mean
+  { match: 'does (#Adverb|not)? [#Adjective]', group: 0, tag: 'PresentTense', reason: 'does-mean' },
+  // i mean
+  { match: 'i (#Adverb|do)? not? [mean]', group: 0, tag: 'PresentTense', reason: 'i-mean' },
+  // { match: '!are (i|you|we) (#Adverb|do)? [#Adjective]', group: 0, tag: 'PresentTense', reason: 'i-mean' },
   // ==== Tense ====
   //he left
   { match: '#Noun #Adverb? [left]', group: 0, tag: 'PastTense', reason: 'left-verb' },
@@ -39,8 +52,6 @@ let list = [
     tag: 'Auxiliary',
     reason: 'had-been',
   },
-  //was walking
-  { match: `[#Copula (#Adverb|not)+?] (#Gerund|#PastTense)`, group: 0, tag: 'Auxiliary', reason: 'copula-walking' },
   //support a splattering of auxillaries before a verb
   { match: `[(has|had) (#Adverb|not)+?] #PastTense`, group: 0, tag: 'Auxiliary', reason: 'had-walked' },
   // will walk
@@ -49,6 +60,10 @@ let list = [
   { match: '[about to] #Adverb? #Verb', group: 0, tag: ['Auxiliary', 'Verb'], reason: 'about-to' },
   //would be walking
   { match: `#Modal (#Adverb|not)+? be (#Adverb|not)+? #Verb`, group: 0, tag: 'Auxiliary', reason: 'would-be' },
+  //were being run
+  { match: `(were|was) being [#PresentTense]`, group: 0, tag: 'PastTense', reason: 'was-being' },
+  //have run
+  { match: `have #PresentTense`, group: 0, tag: 'PastTense', reason: 'have-vb' },
   //would have had
   {
     match: `[#Modal (#Adverb|not)+? have (#Adverb|not)+? had (#Adverb|not)+?] #Verb`,
@@ -75,6 +90,13 @@ let list = [
   { match: '(#Verb && @hasHyphen) out', group: 0, tag: 'PhrasalVerb', reason: 'foo-out' },
   //fall over
   { match: '#PhrasalVerb [#PhrasalVerb]', group: 0, tag: 'Particle', reason: 'phrasal-particle' },
+  //back it up
+  {
+    match: '#Verb (him|her|it|us|himself|herself|itself|everything|something) [(up|down)]',
+    group: 0,
+    tag: 'Adverb',
+    reason: 'phrasal-pronoun-advb',
+  },
 
   // ==== Copula ====
   //will be running (not copula)

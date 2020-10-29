@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('possessives', function(t) {
+test('possessives', function (t) {
   let doc = nlp(`Corey Hart's pudding and Google's advertising`)
   doc = doc.normalize({
     possessives: true,
@@ -11,7 +11,7 @@ test('possessives', function(t) {
   t.end()
 })
 
-test('optional params', function(t) {
+test('optional params', function (t) {
   const doc = nlp(`John Smith bought automobiles (for us)`).normalize({
     case: true,
     possessives: true,
@@ -23,7 +23,7 @@ test('optional params', function(t) {
   t.end()
 })
 
-test('optional param - verbs and plurals together', function(t) {
+test('optional param - verbs and plurals together', function (t) {
   const plurals = [['batmobiles', 'batmobile']]
   const verbs = [['I was walking', 'I walk']]
 
@@ -58,7 +58,7 @@ test('optional param - verbs and plurals together', function(t) {
   t.end()
 })
 
-test('honorifics', function(t) {
+test('honorifics', function (t) {
   const tests = [
     ['rear admiral Smith', 'smith'],
     ['Lieutenant John Smith', 'john smith'],
@@ -90,14 +90,14 @@ test('honorifics', function(t) {
   t.end()
 })
 
-test('hyphen-whitespace:', function(t) {
+test('hyphen-whitespace:', function (t) {
   let doc = nlp(`the so-called “fascist  dictator”`)
   doc.normalize({ whitespace: true, punctuation: false })
   t.equal(doc.text(), `the so-called “fascist dictator”`, 'keep hyphen')
   t.end()
 })
 
-test('dash-whitespace:', function(t) {
+test('dash-whitespace:', function (t) {
   let str = `a dash seperates words - like that`
   let doc = nlp(str)
   doc.normalize({ whitespace: true, punctuation: false })
@@ -105,7 +105,7 @@ test('dash-whitespace:', function(t) {
   t.end()
 })
 
-test('elipses-whitespace:', function(t) {
+test('elipses-whitespace:', function (t) {
   let doc = nlp('about this ...').normalize()
   t.equal(doc.out('text'), 'about this', 'normalize seperate elipses')
 
@@ -117,7 +117,7 @@ test('elipses-whitespace:', function(t) {
   t.end()
 })
 
-test('more-normalize:', function(t) {
+test('more-normalize:', function (t) {
   let doc = nlp(`i saw first lady michelle obama`)
   doc.normalize({
     honorifics: true,

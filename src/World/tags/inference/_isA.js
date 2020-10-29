@@ -1,9 +1,9 @@
-const unique = function(arr) {
+const unique = function (arr) {
   return arr.filter((v, i, a) => a.indexOf(v) === i)
 }
 
 //add 'downward' tags (that immediately depend on this one)
-const inferIsA = function(tags) {
+const inferIsA = function (tags) {
   Object.keys(tags).forEach(k => {
     let tag = tags[k]
     let len = tag.isA.length

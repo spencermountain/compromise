@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('and-match', function(t) {
+test('and-match', function (t) {
   let doc = nlp('june and july cool')
   let m = doc.match('(#Date && july)')
   t.equal(m.out(), 'july', 'found july')
@@ -15,7 +15,7 @@ test('and-match', function(t) {
   t.end()
 })
 
-test('and-match-more', function(t) {
+test('and-match-more', function (t) {
   let doc = nlp('toronto and montreal. Sydney and Paris.')
   let m = doc.match('(#Place && .)')
   t.equal(m.length, 4, 'found all four')

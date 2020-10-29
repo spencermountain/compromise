@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
-test('hyphen-tokenize', function(t) {
+test('hyphen-tokenize', function (t) {
   let r = nlp('super-cool work')
   t.equal(r.terms().length, 3, 'super, cool')
   t.equal(r.out('text'), 'super-cool work', 'preserve hyphen')
@@ -29,7 +29,7 @@ test('hyphen-tokenize', function(t) {
   t.end()
 })
 
-test('hyphenate', function(t) {
+test('hyphenate', function (t) {
   let str = 'it is cool. he is nice'
   let m = nlp(str)
   m.hyphenate()
@@ -51,7 +51,7 @@ test('hyphenate', function(t) {
   t.end()
 })
 
-test('hasHyphen', function(t) {
+test('hasHyphen', function (t) {
   let doc = nlp(`super-cool and hunky-dory. Connected with-a-dash.`)
   let arr = doc.match('@hasHyphen+ .').out('array')
   t.equal(arr.length, 3, 'three found')

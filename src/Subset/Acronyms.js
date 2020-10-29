@@ -1,6 +1,6 @@
 const hasPeriod = /\./
 
-const addMethod = function(Doc) {
+const addMethod = function (Doc) {
   /**  */
   class Acronyms extends Doc {
     stripPeriods() {
@@ -26,7 +26,7 @@ const addMethod = function(Doc) {
   Acronyms.prototype.unwrap = Acronyms.prototype.stripPeriods
   Acronyms.prototype.strip = Acronyms.prototype.stripPeriods
 
-  Doc.prototype.acronyms = function(n) {
+  Doc.prototype.acronyms = function (n) {
     let match = this.match('#Acronym')
     if (typeof n === 'number') {
       match = match.get(n)

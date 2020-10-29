@@ -3,7 +3,7 @@ const parseSyntax = require('../../match/syntax')
 /** return a Document with three parts for every match
  * seperate everything before the word, as a new phrase
  */
-exports.splitOn = function(reg) {
+exports.splitOn = function (reg) {
   // if there's no match, split parent, instead
   if (!reg) {
     let parent = this.parent()
@@ -44,7 +44,7 @@ exports.splitOn = function(reg) {
 /** return a Document with two parts for every match
  * seperate everything after the word, as a new phrase
  */
-exports.splitAfter = function(reg) {
+exports.splitAfter = function (reg) {
   // if there's no match, split parent, instead
   if (!reg) {
     let parent = this.parent()
@@ -85,7 +85,7 @@ exports.splitAfter = function(reg) {
 exports.split = exports.splitAfter //i guess?
 
 /** return a Document with two parts for every match */
-exports.splitBefore = function(reg) {
+exports.splitBefore = function (reg) {
   // if there's no match, split parent, instead
   if (!reg) {
     let parent = this.parent()
@@ -125,7 +125,7 @@ exports.splitBefore = function(reg) {
 }
 
 /** split a document into labeled sections */
-exports.segment = function(regs, options) {
+exports.segment = function (regs, options) {
   regs = regs || {}
   options = options || { text: true }
   let doc = this

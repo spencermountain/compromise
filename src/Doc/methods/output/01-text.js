@@ -5,7 +5,7 @@ const shouldTrim = {
 }
 
 /** return the document as text */
-exports.text = function(options) {
+exports.text = function (options) {
   options = options || {}
   //are we showing every phrase?
   let showFull = false

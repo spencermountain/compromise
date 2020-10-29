@@ -1,4 +1,4 @@
-const addMethod = function(Doc) {
+const addMethod = function (Doc) {
   /**  */
   class People extends Doc {
     // honorifics(){}
@@ -9,7 +9,7 @@ const addMethod = function(Doc) {
     // fromPronoun(){}
   }
 
-  Doc.prototype.people = function(n) {
+  Doc.prototype.people = function (n) {
     let match = this.splitAfter('@hasComma')
     match = match.match('#Person+')
 

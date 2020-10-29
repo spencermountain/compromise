@@ -2,7 +2,7 @@ const apostrophes = /[\'‘’‛‵′`´]$/
 const perSec = /^(m|k|cm|km|m)\/(s|h|hr)$/ // '5 k/m'
 
 //
-const checkPunctuation = function(terms, i, world) {
+const checkPunctuation = function (terms, i, world) {
   let term = terms[i]
 
   //check hyphenation

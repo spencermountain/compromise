@@ -7,7 +7,6 @@ module.exports = [
   'each',
   'either',
   'else',
-  'enough',
   'every',
   'few',
   'least',

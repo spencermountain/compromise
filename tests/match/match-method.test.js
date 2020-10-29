@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('match-methods:', function(t) {
+test('match-methods:', function (t) {
   let arr = [
     ['@hasComma bravery', 'truth, bravery'],
     ['spencer @hasPeriod', 'spencer did.'],
@@ -24,7 +24,7 @@ test('match-methods:', function(t) {
   t.end()
 })
 
-test('match @functions', function(t) {
+test('match @functions', function (t) {
   let doc = nlp(`jamie's much, much better.`)
 
   let m = doc.match('@hasComma')

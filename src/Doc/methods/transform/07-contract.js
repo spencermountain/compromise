@@ -4,7 +4,7 @@ const postPunct = /[,\)"';:\-–—\.…]/
 //   'i am': `i'm`,
 // }
 
-const setContraction = function(m, suffix) {
+const setContraction = function (m, suffix) {
   if (!m.found) {
     return
   }
@@ -34,7 +34,7 @@ const setContraction = function(m, suffix) {
 }
 
 /** turn 'i am' into i'm */
-exports.contract = function() {
+exports.contract = function () {
   let doc = this.not('@hasContraction')
   // we are -> we're
   let m = doc.match('(we|they|you) are')

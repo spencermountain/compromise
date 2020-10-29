@@ -3,7 +3,7 @@ const fs = require('fs')
 const path = require('path')
 const sh = require('shelljs')
 
-sh.ls('./plugins').forEach(function(dir) {
+sh.ls('./plugins').forEach(function (dir) {
   console.log('\n\n===' + dir + '===')
   sh.exec('cd ./plugins/' + dir + ' && npm run build')
 

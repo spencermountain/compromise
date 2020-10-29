@@ -37,6 +37,11 @@ const addMethod = function (Doc) {
       m = m.splitBefore('(is|was)$')
     }
 
+    //ensure it's not two verbs
+    if (m.has('#PresentTense #Adverb #PresentTense')) {
+      m = m.splitBefore('#Adverb #PresentTense')
+    }
+
     //grab (n)th result
     if (typeof n === 'number') {
       m = m.get(n)

@@ -1,5 +1,5 @@
 //recursively decrease the length of all the parent phrases
-const shrinkAll = function(doc, id, deleteLength, after) {
+const shrinkAll = function (doc, id, deleteLength, after) {
   let arr = doc.parents()
   arr.push(doc)
 
@@ -28,7 +28,7 @@ const shrinkAll = function(doc, id, deleteLength, after) {
 /** wrap the linked-list around these terms
  * so they don't appear any more
  */
-const deletePhrase = function(phrase, doc) {
+const deletePhrase = function (phrase, doc) {
   let pool = doc.pool()
   let terms = phrase.terms()
 

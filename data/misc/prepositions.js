@@ -15,7 +15,6 @@ module.exports = [
   'at',
   'atop',
   'barring',
-  'below',
   'besides',
   'between',
   'bout',

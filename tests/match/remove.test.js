@@ -1,35 +1,23 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('remove-basic :', function(t) {
-  let m = nlp('the brown cat played')
-    .match('brown')
-    .delete()
-    .all()
+test('remove-basic :', function (t) {
+  let m = nlp('the brown cat played').match('brown').delete().all()
   t.equal(m.out('text'), 'the cat played', 'brown-cat')
 
-  m = nlp('the nice brown cat played')
-    .match('nice brown')
-    .delete()
-    .all()
+  m = nlp('the nice brown cat played').match('nice brown').delete().all()
   t.equal(m.out('text'), 'the cat played', 'nice-brown')
 
-  m = nlp('the nice brown cat played')
-    .match('#Adjective')
-    .delete()
-    .all()
+  m = nlp('the nice brown cat played').match('#Adjective').delete().all()
   t.equal(m.out('text'), 'the cat played', 'adj-each')
 
-  m = nlp('the nice brown cat played')
-    .match('#Adjective+')
-    .delete()
-    .all()
+  m = nlp('the nice brown cat played').match('#Adjective+').delete().all()
   t.equal(m.out('text'), 'the cat played', 'adj-consecutive')
 
   t.end()
 })
 
-test('remove-match :', function(t) {
+test('remove-match :', function (t) {
   let m = nlp('the brown cat played').delete('brown')
   t.equal(m.out('text'), 'the cat played', 'brown-cat')
 
@@ -48,21 +36,14 @@ test('remove-match :', function(t) {
   t.end()
 })
 
-test('remove-logic :', function(t) {
-  let m = nlp('spencer kelly is here')
-    .match('spencer kelly')
-    .delete('spencer')
+test('remove-logic :', function (t) {
+  let m = nlp('spencer kelly is here').match('spencer kelly').delete('spencer')
   t.equal(m.out('normal'), 'kelly', 'remove(reg) returns this')
 
-  m = nlp('spencer kelly is here')
-    .match('spencer kelly')
-    .delete()
-    .all()
+  m = nlp('spencer kelly is here').match('spencer kelly').delete().all()
   t.equal(m.out('normal'), 'is here', 'remove() returns parent')
 
-  m = nlp('spencer kelly is here')
-    .match('spencer kelly')
-    .delete('notfound')
+  m = nlp('spencer kelly is here').match('spencer kelly').delete('notfound')
   t.equal(m.out('normal'), 'spencer kelly', 'remove(notfound) returns this')
   t.end()
 })

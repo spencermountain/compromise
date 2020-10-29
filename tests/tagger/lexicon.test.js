@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('default lexicon:', function(t) {
+test('default lexicon:', function (t) {
   let arr = [
     ['great', 'Adjective'],
     ['walked', 'PastTense'],
@@ -16,14 +16,14 @@ test('default lexicon:', function(t) {
     ['shanghai', 'City'],
     ['google', 'Organization'],
   ]
-  arr.forEach(function(a) {
+  arr.forEach(function (a) {
     const doc = nlp(a[0])
     t.equal(doc.has('#' + a[1]), true, a[0])
   })
   t.end()
 })
 
-test('root-in-lexicon:', function(t) {
+test('root-in-lexicon:', function (t) {
   let arr = [
     ['wash', 'Infinitive'],
     ['rewash', 'Infinitive'],
@@ -44,14 +44,14 @@ test('root-in-lexicon:', function(t) {
     ['reconcile', 'Infinitive'],
     ['repeat', 'Infinitive'],
   ]
-  arr.forEach(function(a) {
+  arr.forEach(function (a) {
     const doc = nlp(a[0])
     t.equal(doc.has('#' + a[1]), true, a[0])
   })
   t.end()
 })
 
-test('adjusted lexicon:', function(t) {
+test('adjusted lexicon:', function (t) {
   //place new words
   let lexicon = {
     geneva: 'Person',
@@ -64,7 +64,7 @@ test('adjusted lexicon:', function(t) {
     ['he is lkjj', '#Pronoun #Copula #Adjective'],
     ['donkey kong wins the award', '#City #City #Verb #Determiner #Noun'],
   ]
-  arr.forEach(function(a) {
+  arr.forEach(function (a) {
     const doc = nlp(a[0], lexicon)
     t.equal(doc.has(a[1]), true, a[0])
   })
@@ -86,7 +86,7 @@ test('adjusted lexicon:', function(t) {
   t.end()
 })
 
-test('tricky lexicon:', function(t) {
+test('tricky lexicon:', function (t) {
   let lexicon = {
     'bed bath and beyond': 'Organization',
   }

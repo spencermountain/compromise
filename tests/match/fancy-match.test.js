@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('matchOne', function(t) {
+test('matchOne', function (t) {
   let doc = nlp('one two three four five. one three four')
   let arr = doc.matchOne('three four').out('array')
   t.equal(arr.length, 1, 'one-match')
@@ -9,7 +9,7 @@ test('matchOne', function(t) {
   t.end()
 })
 
-test('match-from-array :', function(t) {
+test('match-from-array :', function (t) {
   let m = nlp('spencer is really cool').match(['spencer'])
   t.equal(m.out('normal'), 'spencer', 'just-spencer')
   t.equal(m.length, 1, 'one-result')
@@ -28,7 +28,7 @@ test('match-from-array :', function(t) {
   t.end()
 })
 
-test('greedy-capture', function(t) {
+test('greedy-capture', function (t) {
   let m = nlp('so ralf and really eats the glue').match('* [eats] the', 0)
   t.equal(m.out('normal'), 'eats', 'one-captures')
 

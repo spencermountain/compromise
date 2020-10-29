@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('is-email:', function(t) {
+test('is-email:', function (t) {
   ;[
     [`s@s.com`, true],
     [`sasdf@sasdf.com`, true],
@@ -14,7 +14,7 @@ test('is-email:', function(t) {
     [`_@_._`],
     [`sas df@sasdf.com`],
     [`sasdf@sa sdf.com`],
-  ].forEach(function(a) {
+  ].forEach(function (a) {
     const term = nlp(a[0]).list[0].terms(0)
     const msg = a[0] + ' is email: ' + a[1]
     t.equal(term.tags['Email'], a[1], msg)
@@ -22,7 +22,7 @@ test('is-email:', function(t) {
   t.end()
 })
 
-test('is-hashtag:', function(t) {
+test('is-hashtag:', function (t) {
   ;[
     [`#lkjsdf`, true],
     [`#ll`, true],
@@ -31,7 +31,7 @@ test('is-hashtag:', function(t) {
     // [`#l`,],
     [`# l`],
     [`l#l`],
-  ].forEach(function(a) {
+  ].forEach(function (a) {
     const term = nlp(a[0]).list[0].terms(0)
     const msg = a[0] + ' is hashtag: ' + a[1]
     t.equal(term.tags['HashTag'], a[1], msg)
@@ -39,7 +39,7 @@ test('is-hashtag:', function(t) {
   t.end()
 })
 
-test('is-url:', function(t) {
+test('is-url:', function (t) {
   ;[
     [`http://cool.com/fun`, true],
     [`https://cool.com`, true],
@@ -57,7 +57,7 @@ test('is-url:', function(t) {
     [`http://woop.org/news?foo=bar`, true],
     [`http:subdomain.cool.com/`],
     [`coolcom`],
-  ].forEach(function(a) {
+  ].forEach(function (a) {
     const term = nlp(a[0]).list[0].terms(0)
     const msg = a[0] + ' is url: ' + a[1]
     t.equal(term.tags['Url'], a[1], msg)

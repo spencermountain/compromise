@@ -1,7 +1,7 @@
 const rules = require('./_rules')
 const addE = /(x|ch|sh|s|z)$/
 
-const trySuffix = function(str) {
+const trySuffix = function (str) {
   let c = str[str.length - 1]
   if (rules.hasOwnProperty(c) === true) {
     for (let i = 0; i < rules[c].length; i += 1) {
@@ -17,7 +17,7 @@ const trySuffix = function(str) {
 /** Turn a singular noun into a plural
  * assume the given string is singular
  */
-const pluralize = function(str = '', world) {
+const pluralize = function (str = '', world) {
   let irregulars = world.irregulars.nouns
 
   // check irregulars list

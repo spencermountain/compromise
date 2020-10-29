@@ -2,7 +2,7 @@ const test = require('tape')
 console.log('\n 🎗️  - running smoke-test..\n')
 
 //'sanity-test' the builds
-test('main build', function(t) {
+test('main build', function (t) {
   const main = require('../../../builds/compromise.js')
   let doc = main('John and Joe walked to the store')
   t.equal(doc.people().json().length, 2, 'found-people')
@@ -13,7 +13,7 @@ test('main build', function(t) {
   t.end()
 })
 
-test('min build', function(t) {
+test('min build', function (t) {
   const min = require('../../../builds/compromise.min.js')
   let doc = min('John and Joe walked to the store')
   t.equal(doc.people().json().length, 2, 'found-people')
@@ -24,7 +24,7 @@ test('min build', function(t) {
   t.end()
 })
 
-test('tokenize build', function(t) {
+test('tokenize build', function (t) {
   const tokenize = require('../../../builds/compromise-tokenize.js')
   let doc = tokenize('John and Joe walked to the store')
   t.equal(doc.people().json().length, 0, 'found-people')

@@ -137,9 +137,11 @@ test('contraction past-tense', function (t) {
   let arr = [
     [`I'm going to the shops`, `I went to the shops`],
     [`I'll go to the shops`, `I went to the shops`],
-    [`We're looking`, `We looked`],
+    [`We're looking`, `We were looking`],
+    [`We are looking`, `We were looking`],
+    // [`We are looking`, `We looked`],
+    // [`We're looking`, `We looked`],
     [`We'll look`, `We looked`],
-    [`We are looking`, `We looked`],
   ]
   arr.forEach((a) => {
     let str = nlp(a[0]).sentences().toPastTense().out()

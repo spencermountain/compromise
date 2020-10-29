@@ -4,7 +4,7 @@ const contractions = require('./03-contractions')
 const corrections = require('./04-correction')
 
 /** POS-tag all terms in this document */
-const tagger = function(doc) {
+const tagger = function (doc) {
   let terms = doc.termList()
   // check against any known-words
   doc = init(doc, terms)

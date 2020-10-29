@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('doc-as-input', function(t) {
+test('doc-as-input', function (t) {
   let doc = nlp('if so, he is the best, that i see. he is the greatest')
   let m = doc.match('he is the .')
   let found = doc.match(m)
@@ -11,7 +11,7 @@ test('doc-as-input', function(t) {
   t.end()
 })
 
-test('doc-sibling-as-input', function(t) {
+test('doc-sibling-as-input', function (t) {
   let doc = nlp('he is the best, that i see. he is the greatest')
   let childA = doc.if('greatest')
   let childB = doc.match('he is')
@@ -25,7 +25,7 @@ test('doc-sibling-as-input', function(t) {
   t.end()
 })
 
-test('split-doc-input', function(t) {
+test('split-doc-input', function (t) {
   let doc = nlp('he is the best, that i see. he is the greatest')
   let childA = doc.if('greatest')
   let childB = doc.match('he is')

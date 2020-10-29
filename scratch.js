@@ -1,8 +1,8 @@
 const nlp = require('./src/index')
 // const spacetime = require('/Users/spencer/mountain/spacetime/src')
-nlp.verbose(true)
+// nlp.verbose(true)
 // let txt = require('./scripts/test/speed/_sotu-text.js')
-// nlp.extend(require('./plugins/numbers/src'))
+nlp.extend(require('./plugins/sentences/src'))
 // nlp.extend(require('./plugins/dates/src'))
 // nlp.extend(require('./plugins/sentences/src'))
 
@@ -20,15 +20,20 @@ Jennifer  antibiotics
 in our X-ray Uro-radiology
 */
 
-/* //place false-positives
-CT
-St
-*/
+// let doc = nlp(`Photographs from a seized computer `)
+// let doc = nlp(`I am a licensed mental health counsellour`)
+// let doc = nlp(`a blown motor.`)
 
-// let doc = nlp(`ANA, ENA, CCP etc.`)
-let doc = nlp(`promising to leave`)
+// let doc = nlp(`thanks`)
+// let doc = nlp(`your own conclusions`)
+// let doc = nlp(`The situation appears to be even worse`)//even
+// let doc = nlp(`They even occasionally attack`)
+// let doc = nlp(`a crime against humanity`)
+
+// let doc = nlp(`your own destiny`)
+// let doc = nlp(`kept me up to date`)
+// let doc = nlp(`in regards to`)
+// let doc = nlp(`have you gotten?`)
+
+let doc = nlp(`Please let me know if any of you need additional information.`)
 doc.debug()
-
-// hmmm
-// let doc = nlp('a farmer boy is')
-// doc.match(`a (word|#Noun+) is`).debug()

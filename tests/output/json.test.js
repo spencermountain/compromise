@@ -47,7 +47,7 @@ test('json out implicit', function (t) {
 })
 
 test('json terms out', function (t) {
-  let doc = nlp(`she is not`)
+  let doc = nlp(`she was not`)
   let json = doc.json({ text: false, terms: { clean: true, id: true, bestTag: true, whitespace: true } })
   t.equal(json.length, 1, 'json-len')
   t.equal(json[0].text, undefined, 'json-text')

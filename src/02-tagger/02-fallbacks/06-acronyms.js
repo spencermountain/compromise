@@ -6,7 +6,7 @@ const oneLetterWord = {
   A: true,
 }
 
-const isAcronym = function(term, world) {
+const isAcronym = function (term, world) {
   let str = term.reduced
   // a known acronym like fbi
   if (term.tags.Acronym) {
@@ -23,7 +23,7 @@ const isAcronym = function(term, world) {
 }
 
 // F.B.I., NBC, - but not 'NO COLLUSION'
-const checkAcronym = function(terms, world) {
+const checkAcronym = function (terms, world) {
   terms.forEach(term => {
     //these are not acronyms
     if (term.tags.RomanNumeral === true) {

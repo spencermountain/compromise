@@ -1,9 +1,9 @@
-const trimEnd = function(str) {
+const trimEnd = function (str) {
   return str.replace(/ +$/, '')
 }
 
 /** produce output in the given format */
-exports.text = function(options = {}, isFirst, isLast) {
+exports.text = function (options = {}, isFirst, isLast) {
   if (typeof options === 'string') {
     if (options === 'normal') {
       options = {

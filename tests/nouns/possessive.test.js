@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('.toPossessive():', function(t) {
+test('.toPossessive():', function (t) {
   let arr = [
     ['duck', `duck's`],
     ['eavesdropper', `eavesdropper's`],
@@ -14,10 +14,8 @@ test('.toPossessive():', function(t) {
     // ['she', 'hers'],
     ['peaches', `peaches'`],
   ]
-  arr.forEach(function(a) {
-    const doc = nlp(a[0])
-      .nouns()
-      .toPossessive()
+  arr.forEach(function (a) {
+    const doc = nlp(a[0]).nouns().toPossessive()
     t.equal(doc.out(), a[1], a[0])
   })
   t.end()

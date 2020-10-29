@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
-test('sanity-check case:', function(t) {
+test('sanity-check case:', function (t) {
   let str = 'John xoo, John fredman'
   let r = nlp(str)
   str = r.toUpperCase().out('text')
@@ -15,14 +15,14 @@ test('sanity-check case:', function(t) {
   t.end()
 })
 
-test('camel case:', function(t) {
+test('camel case:', function (t) {
   let doc = nlp('and check this out! a walk-in microwave.')
   doc.hyphenated().toCamelCase()
   t.equal(doc.text(), 'and check this out! a walkIn microwave.', 'hyphenated-camelcase')
   t.end()
 })
 
-test('tricky case:', function(t) {
+test('tricky case:', function (t) {
   let str = 'i am spencer kelly here with Amy Adams.'
   let r = nlp(str)
   r.match('#Person').toUpperCase()
@@ -37,7 +37,7 @@ test('tricky case:', function(t) {
   t.end()
 })
 
-test('unicode case:', function(t) {
+test('unicode case:', function (t) {
   let doc = nlp(`ümasdfs`)
   doc.toTitleCase()
   t.equal(doc.text(), 'Ümasdfs', 'unicode-titlecase')

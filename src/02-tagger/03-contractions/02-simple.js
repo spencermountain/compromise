@@ -9,7 +9,7 @@ const easy = {
   "n't": 'not',
 }
 //
-const checkApostrophe = function(term) {
+const checkApostrophe = function (term) {
   let parts = term.text.match(contraction)
   if (parts === null) {
     return null

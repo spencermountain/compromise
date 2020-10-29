@@ -231,20 +231,17 @@ const arr = [
     Gerund: 'egging',
   },
 ]
-test('conjugation:', function(t) {
-  const test_conjugation = function(inf, o, form, original) {
+test('conjugation:', function (t) {
+  const test_conjugation = function (inf, o, form, original) {
     const msg = 'from ' + original + ' to ' + form + ':  [' + o[original] + '] -> [' + inf[form] + ']'
     t.equal(inf[form], o[form], msg)
   }
 
-  arr.forEach(function(o) {
+  arr.forEach(function (o) {
     const forms = ['Infinitive', 'PastTense', 'PresentTense', 'Gerund']
     for (let i = 0; i < forms.length; i++) {
       const from = forms[i]
-      const inf = nlp(o[from])
-        .tag('Verb')
-        .verbs()
-        .conjugate()[0]
+      const inf = nlp(o[from]).tag('Verb').verbs().conjugate()[0]
       test_conjugation(inf, o, 'Infinitive', from)
       test_conjugation(inf, o, 'PastTense', from)
       test_conjugation(inf, o, 'PresentTense', from)

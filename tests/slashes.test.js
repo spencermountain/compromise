@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
-test('slashes-basic', function(t) {
+test('slashes-basic', function (t) {
   let doc = nlp(`spencer is/was trying.`)
   t.equal(doc.terms().length, 3, 'three terms')
   t.equal(doc.match('#Person #Verb trying').found, true, 'verb trying')
@@ -9,7 +9,7 @@ test('slashes-basic', function(t) {
   t.end()
 })
 
-test('slashes-complex', function(t) {
+test('slashes-complex', function (t) {
   // doc = nlp(`spencer is/was trying`)
   // 1. doc.has('#PresentTense') == true (choose first)
   // 2. doc.has('#Verb') (only common tags)

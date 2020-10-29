@@ -1,6 +1,9 @@
 /** patterns for turning 'bus' to 'buses'*/
 const suffixes = {
-  a: [[/(antenn|formul|nebul|vertebr|vit)a$/i, '$1ae'], [/([ti])a$/i, '$1a']],
+  a: [
+    [/(antenn|formul|nebul|vertebr|vit)a$/i, '$1ae'],
+    [/([ti])a$/i, '$1a'],
+  ],
 
   e: [
     [/(kn|l|w)ife$/i, '$1ives'],
@@ -32,7 +35,10 @@ const suffixes = {
     [/(octop|vir|radi|nucle|fung|cact|stimul)us$/i, '$1i'],
   ],
 
-  x: [[/(matr|vert|ind|cort)(ix|ex)$/i, '$1ices'], [/^(ox)$/i, '$1en']],
+  x: [
+    [/(matr|vert|ind|cort)(ix|ex)$/i, '$1ices'],
+    [/^(ox)$/i, '$1en'],
+  ],
 
   y: [[/([^aeiouy]|qu)y$/i, '$1ies']],
 

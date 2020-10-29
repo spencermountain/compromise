@@ -9,7 +9,6 @@ const toBe = parsed => {
   // if (vb.parent && vb.parent.has('i #Adverb? #Copula')) {
   //   isI = true;
   // }
-
   // 'i look', not 'i looks'
   if (parsed.verb.lookBehind('(i|we) (#Adverb|#Verb)?$').found) {
     isI = true

@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('tagset-change-isA-basic', function(t) {
+test('tagset-change-isA-basic', function (t) {
   nlp.extend((Doc, world) => {
     world.addTags({
       Doctor: {
@@ -32,7 +32,7 @@ test('tagset-change-isA-basic', function(t) {
   t.end()
 })
 
-test('tagset-change-isA', function(t) {
+test('tagset-change-isA', function (t) {
   nlp.extend((Doc, world) => {
     world.addTags({
       Doctor: {
@@ -54,7 +54,7 @@ test('tagset-change-isA', function(t) {
   t.end()
 })
 
-test('tagset-remove-downward', function(t) {
+test('tagset-remove-downward', function (t) {
   nlp.extend((Doc, world) => {
     world.addTags({
       Doctor: {
@@ -80,7 +80,7 @@ test('tagset-remove-downward', function(t) {
   t.end()
 })
 
-test('tagset-remove-half-downward', function(t) {
+test('tagset-remove-half-downward', function (t) {
   nlp.extend((Doc, world) => {
     world.addTags({
       Doctor: {
@@ -99,5 +99,41 @@ test('tagset-remove-half-downward', function(t) {
   t.ok(doc.has('#Person') === true, 'person-tag-there')
   t.ok(doc.has('#Doctor') === false, 'doctor-tag-gone2')
   t.ok(doc.has('#Surgeon') === false, 'Surgeon-tag-gone')
+  t.end()
+})
+
+test('tagset-tree', function (t) {
+  nlp.extend((_, world) => {
+    world.addTags({
+      One: {},
+      Two: {},
+      Three: { isA: 'Two' },
+    })
+  })
+  let doc = nlp(`have fun in toronto`, { toronto: 'Three' })
+  let m = doc.match('toronto')
+  t.ok(m.has('#Three'), 'three')
+  t.ok(m.has('#Two'), 'two')
+  t.equal(m.has('#One'), false, 'no one')
+  t.equal(m.has('#Adjective'), false, 'no Adjective')
+  t.end()
+})
+
+test('tagset-tree-array', function (t) {
+  nlp.extend((_, world) => {
+    world.addTags({
+      One: {},
+      Two: {},
+      Three: { isA: ['Two', 'One', 'FirstName'] },
+    })
+  })
+  let doc = nlp(`have fun in toronto`, { toronto: 'Three' })
+  let m = doc.match('toronto')
+  t.ok(m.has('#Three'), 'three')
+  t.ok(m.has('#Two'), 'two')
+  t.ok(m.has('#One'), 'one')
+  t.ok(m.has('#FirstName'), 'FirstName')
+  t.ok(m.has('#Person'), 'Person')
+  t.ok(m.has('#Noun'), 'Noun')
   t.end()
 })

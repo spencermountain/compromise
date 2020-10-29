@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('offset-whitespace', function(t) {
+test('offset-whitespace', function (t) {
   let doc = nlp(`one two two more `)
 
   let m = doc.match('two')
@@ -22,7 +22,7 @@ test('offset-whitespace', function(t) {
   t.end()
 })
 
-test('offset-punctuation', function(t) {
+test('offset-punctuation', function (t) {
   let doc = nlp(`one (two two) more `)
   let m = doc.match('two two')
   let obj = m.json({ offset: true, terms: false })[0]
@@ -38,8 +38,7 @@ test('offset-punctuation', function(t) {
   t.end()
 })
 
-
-test('offset-terms', function(t) {
+test('offset-terms', function (t) {
   let doc = nlp(`hello world`)
   let obj = doc.json({ offset: true, terms: true })[0]
 
@@ -55,7 +54,7 @@ test('offset-terms', function(t) {
   t.end()
 })
 
-test('offset-terms-whitespace', function(t) {
+test('offset-terms-whitespace', function (t) {
   let doc = nlp(` hello world`)
   let obj = doc.json({ offset: true, terms: true })[0]
 
@@ -71,7 +70,7 @@ test('offset-terms-whitespace', function(t) {
   t.end()
 })
 
-test('offset-terms-punctuation', function(t) {
+test('offset-terms-punctuation', function (t) {
   let doc = nlp(`"hello world`)
   let obj = doc.json({ offset: true, terms: true })[0]
 

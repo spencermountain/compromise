@@ -2,9 +2,9 @@ const test = require('tape')
 const nlp = require('./_lib')
 
 //make sure it can handle garbage inputs
-test('garbage-inputs', function(t) {
+test('garbage-inputs', function (t) {
   const garbage = ['', '  ', null, '\n\n', []] //{}
-  garbage.forEach(function(g, i) {
+  garbage.forEach(function (g, i) {
     let num = nlp(g).list.length
     let msg = typeof g + ' text input #' + i + '  ' + g
     t.equal(num, 0, msg)
@@ -23,7 +23,7 @@ test('garbage-inputs', function(t) {
   t.end()
 })
 
-test('test-regex-safety', function(t) {
+test('test-regex-safety', function (t) {
   let doc = nlp(
     '-5,999,666,454,234,523,233,234,234,234,234,234,234,234,999,929,838,234,234,234,234,234,234,234.00282828282838383838383838383838383838380'
   )
@@ -39,9 +39,9 @@ test('test-regex-safety', function(t) {
   t.end()
 })
 
-test('only-punctuation', function(t) {
+test('only-punctuation', function (t) {
   const garbage = ['.', ' - ', '...', '?', '&', '?,', '\n. \n', '🎵', '\n🇵🇷\n', '🇵🇷.', `🇷 %`]
-  garbage.forEach(function(str) {
+  garbage.forEach(function (str) {
     let doc = nlp(str)
     t.equal(doc.text(), str, "text-'" + str + "'")
   })

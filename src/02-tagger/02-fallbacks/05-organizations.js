@@ -1,7 +1,7 @@
 let orgWords = require('./data/organizations')
 
 //could this word be an organization
-const maybeOrg = function(t) {
+const maybeOrg = function (t) {
   //must be a noun
   if (!t.tags.Noun) {
     return false
@@ -17,7 +17,7 @@ const maybeOrg = function(t) {
   return false
 }
 
-const tagOrgs = function(terms, world) {
+const tagOrgs = function (terms, world) {
   for (let i = 0; i < terms.length; i += 1) {
     let t = terms[i]
     if (orgWords[t.clean] !== undefined && orgWords.hasOwnProperty(t.clean) === true) {

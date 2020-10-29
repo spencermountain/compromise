@@ -35,8 +35,8 @@ let arr = [
   ['tuesday march 5th, 2015', 'Date'],
 ]
 
-test('has-test', function(t) {
-  arr.forEach(function(a) {
+test('has-test', function (t) {
+  arr.forEach(function (a) {
     let doc = nlp(a[0])
     t.equal(doc.has('#' + a[1]), true, a[0])
   })

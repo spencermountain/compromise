@@ -23,26 +23,26 @@ const titleCase = str => {
   return str.charAt(0).toUpperCase() + str.substr(1)
 }
 
-const end = function(str) {
+const end = function (str) {
   return str[str.length - 1]
 }
-const start = function(str) {
+const start = function (str) {
   return str[0]
 }
-const stripStart = function(str) {
+const stripStart = function (str) {
   return str.substr(1)
 }
-const stripEnd = function(str) {
+const stripEnd = function (str) {
   return str.substr(0, str.length - 1)
 }
-const stripBoth = function(str) {
+const stripBoth = function (str) {
   str = stripStart(str)
   str = stripEnd(str)
   return str
 }
 
 //
-const parseToken = function(w) {
+const parseToken = function (w) {
   let obj = {}
   //collect any flags (do it twice)
   for (let i = 0; i < 2; i += 1) {

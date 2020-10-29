@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('soft-match', function(t) {
+test('soft-match', function (t) {
   let doc = nlp(`a priest walked into the bars`)
   doc.cache({ root: true })
   t.equal(doc.match('bars').found, true, 'found bars')

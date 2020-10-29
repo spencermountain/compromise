@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
-test('tag-sequence:', function(t) {
+test('tag-sequence:', function (t) {
   const doc = nlp('it was cold')
   doc.tag('#One #Two #Three')
   t.equal(doc.match('#One').text(), 'it', 'one')
@@ -10,7 +10,7 @@ test('tag-sequence:', function(t) {
   t.end()
 })
 
-test('multiple-tags:', function(t) {
+test('multiple-tags:', function (t) {
   const doc = nlp('it was cold')
   doc.tag(['#One', '#Two', '#Three'])
   t.equal(doc.match('#One').text(), 'it was cold', 'multi- all have #One')
@@ -19,7 +19,7 @@ test('multiple-tags:', function(t) {
   t.end()
 })
 
-test('tag-sequence-skip:', function(t) {
+test('tag-sequence-skip:', function (t) {
   const doc = nlp('it was cold')
   doc.tag('#One . #Three')
   t.equal(doc.match('#One').text(), 'it', 'one')
@@ -29,7 +29,7 @@ test('tag-sequence-skip:', function(t) {
   t.end()
 })
 
-test('multiple-tags-skip:', function(t) {
+test('multiple-tags-skip:', function (t) {
   const doc = nlp('it was cold')
   doc.tag(['.', '#Two', '.'])
   t.equal(doc.match('#One').found, false, 'skip - none have #One')

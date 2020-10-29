@@ -18,7 +18,7 @@ test('negative-verb-phrase:', function (t) {
 
     //phrasals
     [`he would come forward`, 'would not come forward'],
-    [`we come together`, 'do not come together'],
+    // [`we come together`, 'do not come together'],
     [`i didn't want to`, "didn't want"],
 
     //===singular

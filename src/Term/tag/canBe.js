@@ -1,7 +1,7 @@
 'use strict'
 
 //recursively-check compatibility of this tag and term
-const canBe = function(term, tag, world) {
+const canBe = function (term, tag, world) {
   const tagset = world.tags
   // cleanup tag
   if (tag[0] === '#') {

@@ -14,7 +14,7 @@ const miscCorrection = function (doc) {
   //exactly like
   let m = hasWord(doc, 'like')
   m.match('#Adverb like')
-    .notIf('(really|generally|typically|usually|sometimes|often) [like]')
+    .notIf('(really|generally|typically|usually|sometimes|often|just) [like]')
     .tag('Adverb', 'adverb-like')
 
   //the orange.
@@ -32,7 +32,7 @@ const miscCorrection = function (doc) {
 
   //three trains / one train
   m = hasTag(doc, 'Value')
-  m = m.match('#Value #PresentTense')
+  m = m.match('#Value #PresentTense').ifNo('#Copula')
   if (m.found) {
     if (m.has('(one|1)') === true) {
       m.terms(1).tag('Singular', 'one-presentTense')
@@ -51,7 +51,7 @@ const miscCorrection = function (doc) {
   // directive verb - 'use reverse'
   doc
     .match('(try|use|attempt|build|make) #Verb')
-    .ifNo('(@hasComma|#Negative|#Copula|will|be)')
+    .ifNo('(@hasComma|#Negative|#PhrasalVerb|#Copula|will|be)')
     .lastTerm()
     .tag('#Noun', 'do-verb')
 

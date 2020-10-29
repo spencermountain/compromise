@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-const only = function(options) {
+const only = function (options) {
   const none = {
     case: false,
     whitespace: false,
@@ -12,14 +12,14 @@ const only = function(options) {
   return Object.assign({}, none, options)
 }
 
-test('normalize defaults', function(t) {
+test('normalize defaults', function (t) {
   let doc = nlp.tokenize(` it's   coöl, (i think) .    He is   cool;  i said .`)
   doc.normalize()
   t.equal(doc.text(), `it's cool (i think). He is cool i said.`, 'normalize-defaults')
   t.end()
 })
 
-test('normalize unicode', function(t) {
+test('normalize unicode', function (t) {
   let doc = nlp.tokenize(` it's   coöl, (i think) .    He is   cool;  i said .`)
   let options = only({ unicode: true })
   doc.normalize(options)
@@ -27,7 +27,7 @@ test('normalize unicode', function(t) {
   t.end()
 })
 
-test('normalize punctuation', function(t) {
+test('normalize punctuation', function (t) {
   let doc = nlp.tokenize(` it's   coöl, (i think) .    He is   cool;  i said .`)
   let options = only({ punctuation: true })
   doc.normalize(options)
@@ -35,7 +35,7 @@ test('normalize punctuation', function(t) {
   t.end()
 })
 
-test('normalize whitespace', function(t) {
+test('normalize whitespace', function (t) {
   let doc = nlp.tokenize(` it's   coöl, (i think) .    He is   cool;  i said .`)
   let options = only({ whitespace: true })
   doc.normalize(options)
@@ -43,7 +43,7 @@ test('normalize whitespace', function(t) {
   t.end()
 })
 
-test('normalize parentheses', function(t) {
+test('normalize parentheses', function (t) {
   let doc = nlp(` it's   coöl, (i think) .    He is   cool;  i said .`)
   let options = only({ parentheses: true })
   doc.normalize(options)
@@ -51,7 +51,7 @@ test('normalize parentheses', function(t) {
   t.end()
 })
 
-test('normalize contractions', function(t) {
+test('normalize contractions', function (t) {
   let doc = nlp(` it's   coöl, (i think) .    He is   cool;  i said .`)
   let options = only({ contractions: true })
   doc.normalize(options)

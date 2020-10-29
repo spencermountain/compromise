@@ -13,7 +13,7 @@ const irregulars = {
 }
 
 // either 'is not' or 'are not'
-const doAint = function(term, phrase) {
+const doAint = function (term, phrase) {
   let terms = phrase.terms()
   let index = terms.indexOf(term)
   let before = terms.slice(0, index)
@@ -27,7 +27,7 @@ const doAint = function(term, phrase) {
   return ['is', 'not']
 }
 
-const checkNegative = function(term, phrase) {
+const checkNegative = function (term, phrase) {
   //check named-ones
   if (irregulars.hasOwnProperty(term.clean) === true) {
     return irregulars[term.clean]

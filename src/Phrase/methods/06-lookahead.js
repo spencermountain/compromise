@@ -1,5 +1,5 @@
 /** match any terms after this phrase */
-exports.lookAhead = function(regs) {
+exports.lookAhead = function (regs) {
   // if empty match string, return everything after
   if (!regs) {
     regs = '.*'
@@ -7,7 +7,7 @@ exports.lookAhead = function(regs) {
   let pool = this.pool
   // get a list of all terms preceding our start
   let terms = []
-  const getAfter = function(id) {
+  const getAfter = function (id) {
     let term = pool.get(id)
     if (!term) {
       return
@@ -29,7 +29,7 @@ exports.lookAhead = function(regs) {
 }
 
 /** match any terms before this phrase */
-exports.lookBehind = function(regs) {
+exports.lookBehind = function (regs) {
   // if empty match string, return everything before
   if (!regs) {
     regs = '.*'
@@ -37,7 +37,7 @@ exports.lookBehind = function(regs) {
   let pool = this.pool
   // get a list of all terms preceding our start
   let terms = []
-  const getBefore = function(id) {
+  const getBefore = function (id) {
     let term = pool.get(id)
     if (!term) {
       return

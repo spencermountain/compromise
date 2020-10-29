@@ -7,7 +7,7 @@ const step = {
   acronyms: require('./06-acronyms'),
 }
 //
-const fallbacks = function(doc, terms) {
+const fallbacks = function (doc, terms) {
   let world = doc.world
 
   // if it's empty, consult it's neighbours, first

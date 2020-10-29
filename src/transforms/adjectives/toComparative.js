@@ -34,7 +34,7 @@ const transforms = [
   },
 ]
 
-const to_comparative = function(str) {
+const to_comparative = function (str) {
   //known-irregulars
   if (irregulars.hasOwnProperty(str)) {
     return irregulars[str]

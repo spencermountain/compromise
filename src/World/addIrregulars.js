@@ -1,5 +1,5 @@
 // add words from plurals and conjugations data
-const addIrregulars = function(world) {
+const addIrregulars = function (world) {
   //add irregular plural nouns
   let nouns = world.irregulars.nouns
   let words = Object.keys(nouns)
@@ -21,6 +21,10 @@ const addIrregulars = function(world) {
     //add the others
     Object.keys(forms).forEach(tag => {
       world.words[forms[tag]] = world.words[forms[tag]] || tag
+      // lexicon should prefer other tags, over participle
+      if (world.words[forms[tag]] === 'Participle') {
+        world.words[forms[tag]] = tag
+      }
     })
   }
 }

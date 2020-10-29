@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('number-tag:', function(t) {
+test('number-tag:', function (t) {
   let arr = [
     ['16.125', 'Cardinal'],
     ['+160.125', 'Cardinal'],
@@ -39,7 +39,7 @@ test('number-tag:', function(t) {
     ['$47.5bn', 'Money'],
     // ['1,000,000p', 'Cardinal'],
   ]
-  arr.forEach(function(a) {
+  arr.forEach(function (a) {
     let doc = nlp(a[0])
     t.equal(doc.has('#' + a[1]), true, a[0] + ' is #' + a[1])
   })

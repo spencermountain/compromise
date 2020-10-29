@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('organization test', function(t) {
+test('organization test', function (t) {
   const arr = [
     'google',
     'google inc',
@@ -15,7 +15,7 @@ test('organization test', function(t) {
     'Johnson & Johnson',
     // 'Johnson & Johnson LLC',
   ]
-  arr.forEach(function(str) {
+  arr.forEach(function (str) {
     const r = nlp(str)
     const orgs = r.match('#Organization+')
     const msg = orgs.out('text') + '  -  ' + str

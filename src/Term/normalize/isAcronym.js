@@ -3,7 +3,7 @@ const oneLetterAcronym = /^[A-Z]\.,?$/
 const noPeriodAcronym = /[A-Z]{2,}('s|,)?$/
 const lowerCaseAcronym = /([a-z]\.){2,}[a-z]\.?$/
 
-const isAcronym = function(str) {
+const isAcronym = function (str) {
   //like N.D.A
   if (periodAcronym.test(str) === true) {
     return true

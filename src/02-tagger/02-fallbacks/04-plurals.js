@@ -5,7 +5,7 @@ const notPlural = [/ss$/, /sis$/, /[^aeiou][uo]s$/, /'s$/]
 const notSingular = [/i$/, /ae$/]
 
 /** turn nouns into singular/plural */
-const checkPlural = function(t, world) {
+const checkPlural = function (t, world) {
   if (t.tags.Noun && !t.tags.Acronym) {
     let str = t.clean
     //skip existing tags, fast

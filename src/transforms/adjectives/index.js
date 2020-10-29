@@ -4,7 +4,7 @@ const fns = {
 }
 
 /** conjugate an adjective into other forms */
-const conjugate = function(w) {
+const conjugate = function (w) {
   let res = {}
   // 'greatest'
   let sup = fns.toSuperlative(w)

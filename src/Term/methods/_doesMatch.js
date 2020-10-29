@@ -1,8 +1,8 @@
 //declare it up here
-let wrapMatch = function() {}
+let wrapMatch = function () {}
 
 /** ignore optional/greedy logic, straight-up term match*/
-const doesMatch = function(t, reg, index, length) {
+const doesMatch = function (t, reg, index, length) {
   // support id matches
   if (reg.id === t.id) {
     return true
@@ -69,7 +69,7 @@ const doesMatch = function(t, reg, index, length) {
 }
 
 // wrap result for !negative match logic
-wrapMatch = function(t, reg, index, length) {
+wrapMatch = function (t, reg, index, length) {
   let result = doesMatch(t, reg, index, length)
   if (reg.negative === true) {
     return !result

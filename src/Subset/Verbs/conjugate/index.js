@@ -10,6 +10,21 @@ const conjugate = function (parsed, world) {
     return toBe(parsed, world)
   }
 
+  // special handling of 'are walking'
+  if (parsed.auxiliary.has('are') && verb.has('#Gerund')) {
+    let og = parsed.original.clone()
+    let past = og.clone().replace('are', 'were')
+    let fut = og.clone().replace('are', 'will be')
+    let infinitive = toInfinitive(parsed, world)
+    let res = {
+      PastTense: past.text(),
+      PresentTense: og.text(),
+      FutureTense: fut.text(),
+      Infinitive: infinitive,
+    }
+    return res
+  }
+
   // special handling of 'he could.'
   if (verb.has('#Modal')) {
     return doModal(parsed, world)

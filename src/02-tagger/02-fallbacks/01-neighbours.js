@@ -2,7 +2,7 @@ const markov = require('./data/markov')
 const afterKeys = Object.keys(markov.afterThisPos)
 const beforeKeys = Object.keys(markov.beforeThisPos)
 
-const checkNeighbours = function(terms, world) {
+const checkNeighbours = function (terms, world) {
   for (let i = 0; i < terms.length; i += 1) {
     let term = terms[i]
     //do we still need a tag?

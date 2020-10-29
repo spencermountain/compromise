@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('verb-tense-tag:', function(t) {
+test('verb-tense-tag:', function (t) {
   let arr = [
     //-ced
     ['lanced', 'PastTense'],
@@ -81,7 +81,7 @@ test('verb-tense-tag:', function(t) {
     ['implied', 'PastTense'],
     ['rallied', 'PastTense'],
   ]
-  arr.forEach(function(a) {
+  arr.forEach(function (a) {
     let doc = nlp(a[0])
     t.equal(doc.has('#' + a[1]), true, a[0])
   })

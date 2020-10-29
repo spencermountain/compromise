@@ -5,7 +5,7 @@ const misc = require('./tags/misc')
 const inferTags = require('./inference/index')
 
 //extend tagset with new tags
-const addIn = function(obj, tags) {
+const addIn = function (obj, tags) {
   Object.keys(obj).forEach(k => {
     tags[k] = obj[k]
   })

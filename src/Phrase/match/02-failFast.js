@@ -1,5 +1,5 @@
 // try to avoid doing the match
-const failFast = function(p, regs) {
+const failFast = function (p, regs) {
   if (regs.length === 0) {
     return true
   }

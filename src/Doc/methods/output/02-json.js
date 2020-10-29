@@ -2,7 +2,7 @@ const offsets = require('./_offset')
 const jsonDefaults = { text: true, terms: true, trim: true }
 
 //some options have dependents
-const setOptions = function(options) {
+const setOptions = function (options) {
   options = Object.assign({}, jsonDefaults, options)
 
   if (options.unique) {
@@ -24,7 +24,7 @@ const setOptions = function(options) {
 }
 
 /** pull out desired metadata from the document */
-exports.json = function(options = {}) {
+exports.json = function (options = {}) {
   //support json(3) format
   if (typeof options === 'number' && this.list[options]) {
     return this.list[options].json(jsonDefaults)

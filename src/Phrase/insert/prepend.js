@@ -2,7 +2,7 @@ const hasSpace = / /
 
 //a new space needs to be added, either on the new phrase, or the old one
 // '[new] [◻old]'   -or-   '[old] [◻new] [old]'
-const addWhitespace = function(newTerms) {
+const addWhitespace = function (newTerms) {
   //add a space before our new text?
   // add a space after our text
   let lastTerm = newTerms[newTerms.length - 1]
@@ -13,7 +13,7 @@ const addWhitespace = function(newTerms) {
 }
 
 //insert this segment into the linked-list
-const stitchIn = function(main, newPhrase, newTerms) {
+const stitchIn = function (main, newPhrase, newTerms) {
   // [newPhrase] → [main]
   let lastTerm = newTerms[newTerms.length - 1]
   lastTerm.next = main.start
@@ -31,14 +31,14 @@ const stitchIn = function(main, newPhrase, newTerms) {
   main.terms(0).prev = lastTerm.id
 }
 
-const unique = function(list) {
+const unique = function (list) {
   return list.filter((o, i) => {
     return list.indexOf(o) === i
   })
 }
 
 //append one phrase onto another
-const joinPhrase = function(original, newPhrase, doc) {
+const joinPhrase = function (original, newPhrase, doc) {
   const starterId = original.start
   let newTerms = newPhrase.terms()
   //spruce-up the whitespace issues

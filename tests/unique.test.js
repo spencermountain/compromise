@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
-test('term-unique', function(t) {
+test('term-unique', function (t) {
   let doc = nlp(`him and her and him`)
   let m = doc.terms().unique()
   t.equal(m.text(), 'him and her', 'terms-unique')
@@ -9,7 +9,7 @@ test('term-unique', function(t) {
   t.end()
 })
 
-test('sentence-unique', function(t) {
+test('sentence-unique', function (t) {
   let str = `him and her. in toronto. him and her. him.`
   let doc = nlp(str)
   let uniq = doc.unique()
@@ -18,7 +18,7 @@ test('sentence-unique', function(t) {
   t.end()
 })
 
-test('unique-normalize', function(t) {
+test('unique-normalize', function (t) {
   let doc = nlp(`SPENCER's house (spencer)`)
   doc = doc.terms().unique()
   t.equal(doc.text(), "SPENCER's house", 'normalize-posessive')

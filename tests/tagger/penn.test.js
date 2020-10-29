@@ -6,20 +6,22 @@ const softMapping = {
   CC: 'Conjunction',
   CD: 'Cardinal',
   DT: 'Determiner',
+  EX: 'Noun', //'there'
   FW: 'Expression',
   IN: 'Preposition',
   JJ: 'Adjective',
   JJR: 'Comparative',
   JJS: 'Superlative',
-  MD: 'Verb',
+  MD: 'Modal',
   NN: 'Noun',
-  NNS: 'Noun',
+  NNS: 'Noun', //'Plural',
   NNP: 'Noun',
   NNPS: 'Noun',
   POS: 'Possessive',
   PRP: 'Pronoun',
-  PRP$: 'Pronoun',
+  PRP$: 'Possessive',
   RB: 'Adverb',
+  RP: 'Verb', //phrasal particle
   RBR: 'Comparative',
   RBS: 'Superlative',
   TO: 'Conjunction',
@@ -32,30 +34,43 @@ const softMapping = {
   VBZ: 'Verb', // 3rd person singular present
   WDT: 'Determiner',
   WP: 'Pronoun',
-  WP$: 'Noun',
+  WP$: 'Possessive',
   WRB: 'Adverb',
+  PDT: 'Noun', //predeterminer
+  SYM: 'Noun', //symbol
+  NFP: 'Noun', //
 }
 
-test('pennTreebank-test:', function(t) {
+test('pennTreebank-test:', function (t) {
   penn.forEach((sentence, index) => {
     sentence.tags = sentence.tags.split(', ')
 
     let doc = nlp(sentence.text)
-    t.equal(doc.length, 1, 'one sentence #' + index)
+    let perfect = true
+    let msg = `'` + sentence.text.substr(0, 35) + `..   -  `
+
     let terms = doc.json(0).terms
-    t.equal(terms.length, sentence.tags.length, 'tokenize#' + index)
+    if (doc.length !== 1) {
+      perfect = false
+      msg = 'one sentence #' + index
+    }
+    if (terms.length !== sentence.tags.length) {
+      perfect = false
+      msg = 'tokenize#' + index
+    }
+    // t.equal(doc.length, 1, 'one sentence #' + index)
+    // t.equal(terms.length, sentence.tags.length, 'tokenize#' + index)
 
     for (let i = 0; i < sentence.tags.length; i++) {
       const want = softMapping[sentence.tags[i]]
-      if (!terms[i]) {
-        t.ok(false, sentence.text)
-        return
-      }
       let found = terms[i].tags.some(tag => tag === want)
-      let msg = `'` + sentence.text.substr(0, 20) + `'..   -  `
-      msg += `'${terms[i].text}' missing #${want}`
-      t.equal(found, true, msg)
+      if (!found) {
+        perfect = false
+        msg += `'${terms[i].text}' has #${want}`
+        break
+      }
     }
+    t.ok(perfect, msg)
   })
   t.end()
 })

@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('misc nouns', function(t) {
+test('misc nouns', function (t) {
   let doc = nlp(`quickly, suddenly`)
   t.equal(doc.nouns().length, 0, 'found no nouns')
 

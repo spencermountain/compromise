@@ -5,27 +5,27 @@ const isAcronym = require('../normalize/isAcronym')
 const boring = {}
 
 /** check a match object against this term */
-exports.doesMatch = function(reg, index, length) {
+exports.doesMatch = function (reg, index, length) {
   return doesMatch(this, reg, index, length)
 }
 
 /** does this term look like an acronym? */
-exports.isAcronym = function() {
+exports.isAcronym = function () {
   return isAcronym(this.text)
 }
 
 /** is this term implied by a contraction? */
-exports.isImplicit = function() {
+exports.isImplicit = function () {
   return this.text === '' && Boolean(this.implicit)
 }
 
 /** does the term have at least one good tag? */
-exports.isKnown = function() {
+exports.isKnown = function () {
   return Object.keys(this.tags).some(t => boring[t] !== true)
 }
 
 /** cache the root property of the term */
-exports.setRoot = function(world) {
+exports.setRoot = function (world) {
   let transform = world.transforms
   let str = this.implicit || this.clean
   if (this.tags.Plural) {

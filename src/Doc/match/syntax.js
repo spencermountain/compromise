@@ -1,18 +1,18 @@
 const parseToken = require('./parseToken')
 const postProcess = require('./postProcess')
 
-const isArray = function(arr) {
+const isArray = function (arr) {
   return Object.prototype.toString.call(arr) === '[object Array]'
 }
 
 //split-up by (these things)
-const byParentheses = function(str) {
+const byParentheses = function (str) {
   let arr = str.split(/([\^\[\!]*(?:<\S+>)?\(.*?\)[?+*]*\]?\$?)/)
   arr = arr.map(s => s.trim())
   return arr
 }
 
-const byWords = function(arr) {
+const byWords = function (arr) {
   let words = []
   arr.forEach(a => {
     //keep brackets lumped together
@@ -28,7 +28,7 @@ const byWords = function(arr) {
 }
 
 //turn an array into a 'choices' list
-const byArray = function(arr) {
+const byArray = function (arr) {
   return [
     {
       choices: arr.map(s => {
@@ -40,7 +40,7 @@ const byArray = function(arr) {
   ]
 }
 
-const fromDoc = function(doc) {
+const fromDoc = function (doc) {
   if (!doc || !doc.list || !doc.list[0]) {
     return []
   }
@@ -54,7 +54,7 @@ const fromDoc = function(doc) {
 }
 
 /** parse a match-syntax string into json */
-const syntax = function(input) {
+const syntax = function (input) {
   // fail-fast
   if (input === null || input === undefined || input === '') {
     return []

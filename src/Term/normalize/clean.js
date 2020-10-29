@@ -3,7 +3,7 @@ const isAcronym = require('./isAcronym')
 const hasSlash = /[a-z\u00C0-\u00FF] ?\/ ?[a-z\u00C0-\u00FF]/
 
 /** some basic operations on a string to reduce noise */
-const clean = function(str) {
+const clean = function (str) {
   str = str || ''
   str = str.toLowerCase()
   str = str.trim()

@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('tricky contractions', function(t) {
+test('tricky contractions', function (t) {
   let doc = nlp(`I’m `)
   doc.contractions().expand()
   t.equal(doc.text(), 'I am ', '')
@@ -29,25 +29,19 @@ test('tricky contractions', function(t) {
   t.end()
 })
 
-test('contractions v possessive', function(t) {
-  let str = nlp("spencer's not cool")
-    .normalize({ contractions: true })
-    .text()
+test('contractions v possessive', function (t) {
+  let str = nlp("spencer's not cool").normalize({ contractions: true }).text()
   t.equal(str, 'spencer is not cool', 'adj contraction')
 
-  str = nlp("spencer's walk")
-    .normalize({ contractions: true })
-    .text()
+  str = nlp("spencer's walk").normalize({ contractions: true }).text()
   t.equal(str, "spencer's walk", 'noun not contraction')
 
-  str = nlp("spencer's runs")
-    .normalize({ contractions: true })
-    .text()
+  str = nlp("spencer's runs").normalize({ contractions: true }).text()
   t.equal(str, "spencer's runs", 'present-tense not contraction')
   t.end()
 })
 
-test('match contractions/possessives', function(t) {
+test('match contractions/possessives', function (t) {
   let doc = nlp(`i think it's spencer's`)
   t.equal(doc.has('it'), true, 'has it')
   t.equal(doc.has('spencer'), true, 'has spencer')
@@ -57,7 +51,7 @@ test('match contractions/possessives', function(t) {
   t.end()
 })
 
-test('contraction whitespace', function(t) {
+test('contraction whitespace', function (t) {
   let doc = nlp(`i didn't know.`)
   t.equal(doc.text(), `i didn't know.`, 'init-whitespace')
 
@@ -73,14 +67,14 @@ test('contraction whitespace', function(t) {
   t.end()
 })
 
-test('number-range', function(t) {
+test('number-range', function (t) {
   let doc = nlp(`between 5-7.`)
   t.equal(doc.has('5 to 7'), true, 'range-preposition-match')
   t.equal(doc.has('#NumberRange'), true, 'has NumberRange tag')
   t.end()
 })
 
-test('french-contraction', function(t) {
+test('french-contraction', function (t) {
   let doc = nlp(`oh j'aime ca`)
   t.equal(doc.has('aime'), true, 'has verb')
   t.equal(doc.has('je'), true, 'has je')

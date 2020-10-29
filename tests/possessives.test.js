@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
-test('possessives tagger', function(t) {
+test('possessives tagger', function (t) {
   const arr = [`Spencer's`, `Spencer Kelly's`, `Spencer C. Kelly's`, `Union Corp's`, `Los Angeles's`]
   arr.forEach(a => {
     const doc = nlp(a)
@@ -12,7 +12,7 @@ test('possessives tagger', function(t) {
   t.end()
 })
 
-test('possessives strip', function(t) {
+test('possessives strip', function (t) {
   const arr = [
     [`Spencer's`, 'Spencer'],
     [`Corey Hart's`, 'Corey Hart'],

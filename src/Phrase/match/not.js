@@ -3,7 +3,7 @@ const matchAll = require('./01-matchAll')
 /** return anything that doesn't match.
  * returns a simple array of arrays
  */
-const notMatch = function(p, regs) {
+const notMatch = function (p, regs) {
   let found = {}
   let arr = matchAll(p, regs)
   arr.forEach(({ match: ts }) => {

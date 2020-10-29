@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
-test('insert-basic :', function(t) {
+test('insert-basic :', function (t) {
   let m = nlp('the dog sat').insertBefore('and')
   t.equal(m.out('text'), 'and the dog sat', 'and-dog')
 
@@ -27,7 +27,7 @@ test('insert-basic :', function(t) {
   t.end()
 })
 
-test('insert-subset-include :', function(t) {
+test('insert-subset-include :', function (t) {
   let m = nlp('the dog is nice')
   let sub = m.match('is')
   sub.insertAfter('really')

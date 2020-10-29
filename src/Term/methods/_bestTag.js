@@ -4,7 +4,7 @@ const boringTags = {
 }
 
 /** a subjective ranking of tags kinda tfidf-based */
-const rankTags = function(term, world) {
+const rankTags = function (term, world) {
   let tags = Object.keys(term.tags)
   const tagSet = world.tags
   tags = tags.sort((a, b) => {

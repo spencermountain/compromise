@@ -10,6 +10,16 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 
 <!-- #### [Unreleased] -->
 
+#### 13.7.0
+- **[change]** many misc tagging fixes
+  - 'if' is now a #Preposition
+  - possessive pronouns are #Pronoun and #Possessive
+  - more phrasal verbs
+  - make #Participle tag #PastTense
+  - favor #PastTense over #Participle interpretation in tagger
+- **[change]** `@hasHyphen` returns false for sentence dashes
+- a lot more testing
+
 #### 13.6.0
 
 - **[new]** first-attempt at `verbs().subject()` method

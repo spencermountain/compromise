@@ -1,4 +1,4 @@
-const addMethod = function(Doc) {
+const addMethod = function (Doc) {
   /**  */
   class Contractions extends Doc {
     constructor(list, from, world) {
@@ -41,7 +41,7 @@ const addMethod = function(Doc) {
   //   return m
   // }
 
-  Doc.prototype.contractions = function(n) {
+  Doc.prototype.contractions = function (n) {
     //find currently-contracted
     let found = this.match('@hasContraction+') //(may want to split these up)
     //todo: split consecutive contractions

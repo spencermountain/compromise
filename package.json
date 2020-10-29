@@ -56,22 +56,22 @@
     "efrt-unpack": "2.2.0"
   },
   "devDependencies": {
-    "@babel/core": "7.12.1",
+    "@babel/core": "7.12.3",
     "@babel/preset-env": "7.12.1",
     "@rollup/plugin-alias": "3.1.1",
-    "@rollup/plugin-commonjs": "15.1.0",
+    "@rollup/plugin-commonjs": "16.0.0",
     "@rollup/plugin-json": "4.1.0",
-    "@rollup/plugin-node-resolve": "9.0.0",
+    "@rollup/plugin-node-resolve": "10.0.0",
     "amble": "1.1.0",
     "codecov": "3.8.0",
     "efrt": "2.2.2",
     "nyc": "^15.1.0",
-    "rollup": "2.31.0",
+    "rollup": "2.32.1",
     "rollup-plugin-babel": "4.4.0",
     "rollup-plugin-filesize-check": "0.0.1",
     "rollup-plugin-terser": "7.0.2",
     "shelljs": "0.8.4",
-    "tap-dancer": "0.3.0",
+    "tap-dancer": "0.3.1",
     "tape": "5.0.1"
   },
   "eslintIgnore": [

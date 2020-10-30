@@ -4,6 +4,10 @@ const words = require('./data/words')
 const methods = require('./methods')
 const spacetime = require('spacetime')
 
+const opts = {
+  casual_duration: { weeks: 2 },
+}
+
 const addMethods = function (Doc, world) {
   // our new tags
   world.addTags(tags)
@@ -16,9 +20,7 @@ const addMethods = function (Doc, world) {
   class Dates extends Doc {
     constructor(list, from, w) {
       super(list, from, w)
-      this.context = {
-        casual_duration: { weeks: 2 },
-      }
+      this.context = opts
     }
   }
   //add-in methods
@@ -30,6 +32,7 @@ const addMethods = function (Doc, world) {
       context = n
       n = null
     }
+    context = Object.assign({}, context, opts)
     let r = this.clauses()
     let dates = r.match('#Date+')
     if (typeof n === 'number') {

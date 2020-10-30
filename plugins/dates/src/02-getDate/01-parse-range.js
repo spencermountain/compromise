@@ -59,6 +59,7 @@ const logic = function (doc, context) {
       }
     }
   }
+
   // one month, one year, second form - '5 to 7 of january 1998'
   m = doc.match('[<from>#Value] to [<to>#Value of? #Month of? #Year]')
   if (m.found) {
@@ -118,25 +119,41 @@ const logic = function (doc, context) {
       }
     }
   }
+
   // 'before june'
-  m = doc.match('^due (by|before|on|in)? [*]', 0)
+  m = doc.match('^due? (by|before) [*]', 0)
   if (m.found) {
     let d = parseDate(m, context)
     if (d) {
-      const today = new Unit(context.today, null, context)
+      let today = new Unit(context.today, null, context)
+      if (today.d.isAfter(d.d)) {
+        today = d.clone().applyShift({ weeks: -2 })
+      }
       return {
         start: today,
-        end: punt(d.clone(), context),
+        end: d.clone(),
       }
     }
   }
-  // 'after june'
-  m = doc.match('^(after|following|from) [*]', 0)
+
+  // 'in june'
+  m = doc.match('(on|in|at|@) [*]', 0)
   if (m.found) {
     let d = parseDate(m, context)
     if (d) {
+      return { start: d, end: d.clone().end() }
+    }
+  }
+
+  // 'after june'
+  m = doc.match('^(after|following) [*]', 0)
+  if (m.found) {
+    let d = parseDate(m, context)
+    d = d.applyShift({ day: 1 })
+    console.log(context)
+    if (d) {
       return {
-        start: d,
+        start: d.clone(),
         end: punt(d.clone(), context),
       }
     }

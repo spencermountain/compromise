@@ -1,4 +1,4 @@
-const normalize = function(doc) {
+const normalize = function (doc) {
   doc = doc.clone()
 
   if (!doc.numbers) {

@@ -1,12 +1,13 @@
 const test = require('tape')
 const nlp = require('../_lib')
-const relaxed = 15
+const relaxed = 14
 
+let february = 1
 //number of days between start+end
 const tests = [
   {
     //for reference: https://calendar.google.com/calendar/render#main_7%7Cmonth-3+23617+23654+23617
-    today: 'february 11th 2016',
+    today: [2016, february, 11],
     tests: [
       ['today', 1],
       ['tomorrow', 1],
@@ -52,7 +53,7 @@ test('date durations', (t) => {
       let json = nlp(a[0]).dates(context).json()[0] || {}
       let date = json.date || {}
       date.duration = date.duration || {}
-      t.equal(date.duration.days, a[1], a[0])
+      t.equal(date.duration.days, a[1] - 1, a[0])
     })
   })
   t.end()

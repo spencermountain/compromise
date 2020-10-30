@@ -7,7 +7,7 @@ nlp.extend(require('./plugins/dates/src'))
 // nlp.extend(require('./plugins/sentences/src'))
 
 // let doc = nlp(`before 2022`)
-let doc = nlp(`two days after November 1st 2019 at 7pm`)
+let doc = nlp(`two day after November 1st 2019 at 7pm`)
 // let today = [2016, 1, 5] // feb 5th, a friday
 let obj = doc.dates({}).json()[0]
 // console.log(obj)

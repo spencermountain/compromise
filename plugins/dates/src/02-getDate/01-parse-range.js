@@ -137,7 +137,7 @@ const logic = function (doc, context) {
   }
 
   // 'in june'
-  m = doc.match('(on|in|at|@) [*]', 0)
+  m = doc.match('^(on|in|at|@) [*]', 0)
   if (m.found) {
     let d = parseDate(m, context)
     if (d) {
@@ -158,6 +158,7 @@ const logic = function (doc, context) {
       }
     }
   }
+
   // 'in june'
   m = doc.match('^(on|during|in) [*]', 0)
   if (m.found) {

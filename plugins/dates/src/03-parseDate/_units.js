@@ -19,6 +19,12 @@ class Quarter extends Unit {
     this.unit = 'quarter'
   }
 }
+class Season extends Unit {
+  constructor(input, unit, context) {
+    super(input, unit, context)
+    this.unit = 'season'
+  }
+}
 class Year extends Unit {
   constructor(input, unit, context) {
     super(input, unit, context)
@@ -83,6 +89,7 @@ module.exports = {
   Day: Day,
   Month: Month,
   Quarter: Quarter,
+  Season: Season,
   Year: Year,
   WeekDay: WeekDay,
   CalendarDate: CalendarDate,

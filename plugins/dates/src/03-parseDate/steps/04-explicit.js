@@ -11,6 +11,7 @@ const knownWord = {
     return new Day(context.today.plus(1, 'day'), null, context)
   },
 }
+knownWord.tommorrow = knownWord.tomorrow
 
 // parse things like 'june 5th 2019'
 // most of this is done in spacetime

@@ -2,7 +2,7 @@ const parseDate = require('../03-parseDate')
 const Unit = require('../03-parseDate/Unit')
 
 const punt = function (unit, context) {
-  unit = unit.applyShift(context.casual_duration)
+  unit = unit.applyShift(context.punt)
   return unit
 }
 
@@ -129,9 +129,11 @@ const logic = function (doc, context) {
       if (today.d.isAfter(d.d)) {
         today = d.clone().applyShift({ weeks: -2 })
       }
+      // end the night before
+      let end = d.clone().applyShift({ day: -1 })
       return {
         start: today,
-        end: d.clone(),
+        end: end.end(),
       }
     }
   }
@@ -149,9 +151,8 @@ const logic = function (doc, context) {
   m = doc.match('^(after|following) [*]', 0)
   if (m.found) {
     let d = parseDate(m, context)
-    d = d.applyShift({ day: 1 })
-    console.log(context)
     if (d) {
+      d = d.applyShift({ day: 1 })
       return {
         start: d.clone(),
         end: punt(d.clone(), context),

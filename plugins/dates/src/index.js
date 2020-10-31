@@ -5,7 +5,7 @@ const methods = require('./methods')
 const spacetime = require('spacetime')
 
 const opts = {
-  casual_duration: { weeks: 2 },
+  punt: { weeks: 2 },
 }
 
 const addMethods = function (Doc, world) {

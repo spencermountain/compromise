@@ -48,28 +48,8 @@ const tests = [
       // ['the last weekend in october', [2016, october, 30]],
       // ['the last weekend this month', [2016, february, 27]],
       // ['around 1pm pacific time, july 5th ', [2016, july, 5]],
-      // ['before april the 22nd', [2016, april, 21]],
-      // ['by march 2nd 2 oclock', [2016, march, 1]],
-      // ['by august 2nd, 2016', [2016, august, 1]],
-      // ['by 22 november', [2016, november, 21]],
-      // ['by march 2nd at 2pm', [2016, march, 1]],
-      // ['before march 2nd at 2pm EST', [2016, march, 1]],
-      // ['before july 5th at 2pm', [2016, july, 4]],
-      // ['by july 5th, 2:12', [2016, july, 4]],
-      // ['by september 5th 2pm PST', [2016, september, 4]],
-      // ['by 1999-12-25', [1999, december, 24]],
-      // ['before 12/25/1999', [1999, december, 24]],
-      // ['by tomorrow', [2016, february, 11]],
-      // ['by the day after tomorrow', [2016, february, 12]], //by
     ],
   },
-  // {
-  //   today: [2016, april, 19],
-  //   tests: [
-  //     ['the last weekend this month', [2016, april, 23]],
-  //     ['the last weekend of this month', [2016, april, 23]]
-  //   ]
-  // },
 ]
 
 test('end dates', (t) => {

@@ -42,22 +42,36 @@ const greedyTo = function (terms, t, nextReg, index, length) {
   return null
 }
 
+//we have a special case where an end-anchored greedy match may need to
+//start matching before the actual end; we do this by (temporarily!)
+//removing the "end" property from the matching token... since this is
+//very situation-specific, we *only* do this when we really need to.
+const isEndGreedy = function (reg, index, t, terms, length) {
+  if (reg.end === true && reg.greedy === true) {
+    if (index + t < length - 1) {
+      let tmpReg = Object.assign({}, reg, { end: false })
+      if (terms[t].doesMatch(tmpReg, index + t, length) === true) {
+        return true
+      }
+    }
+  }
+  if (terms[t].doesMatch(reg, index + t, length) === true) {
+    return true
+  }
+  return false
+}
+
 // get or create named group
 const getOrCreateGroup = function (namedGroups, namedGroupId, terms, startIndex, group) {
-  const g = namedGroups[namedGroupId]
-
-  if (g) {
-    return g
+  if (namedGroups[namedGroupId]) {
+    return namedGroups[namedGroupId]
   }
-
   const { id } = terms[startIndex]
-
   namedGroups[namedGroupId] = {
     group: String(group),
     start: id,
     length: 0,
   }
-
   return namedGroups[namedGroupId]
 }
 
@@ -66,9 +80,11 @@ const tryHere = function (terms, regs, index, length) {
   const namedGroups = {}
   let previousGroupId = null
   let t = 0
+  // console.log('--- ' + terms[0].text + ' ---')
   // we must satisfy each rule in 'regs'
   for (let r = 0; r < regs.length; r += 1) {
     let reg = regs[r]
+    // console.log(reg)
 
     // Check if this reg has a named capture group
     const isNamedGroup = typeof reg.named === 'string' || typeof reg.named === 'number'
@@ -84,7 +100,6 @@ const tryHere = function (terms, regs, index, length) {
         previousGroupId = namedGroupId
       }
     }
-
     //should we fail here?
     if (!terms[t]) {
       //are all remaining regs optional?
@@ -126,18 +141,8 @@ const tryHere = function (terms, regs, index, length) {
       continue
     }
     //if it looks like a match, continue
-    //we have a special case where an end-anchored greedy match may need to
-    //start matching before the actual end; we do this by (temporarily!)
-    //removing the "end" property from the matching token... since this is
-    //very situation-specific, we *only* do this when we really need to.
-    if (
-      reg.anything === true ||
-      (reg.end === true &&
-        reg.greedy === true &&
-        index + t < length - 1 &&
-        terms[t].doesMatch(Object.assign({}, reg, { end: false }), index + t, length) === true) ||
-      terms[t].doesMatch(reg, index + t, length) === true
-    ) {
+
+    if (reg.anything === true || isEndGreedy(reg, index, t, terms, length)) {
       let startAt = t
       // okay, it was a match, but if it optional too,
       // we should check the next reg too, to skip it?
@@ -192,6 +197,7 @@ const tryHere = function (terms, regs, index, length) {
         }
       }
 
+      // console.log('=-=-=-=-', reg)
       continue
     }
 
@@ -207,6 +213,12 @@ const tryHere = function (terms, regs, index, length) {
         continue
       }
     }
+    // was the match a 'negative' match anyways?
+
+    // if (reg.negative === true) {
+    //   continue
+    // }
+
     // console.log('   ❌\n\n')
     return [false, null]
   }

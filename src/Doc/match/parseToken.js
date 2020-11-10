@@ -95,6 +95,7 @@ const parseToken = function (w) {
 
     if (start(w) === '!') {
       obj.negative = true
+      obj.optional = true
       w = stripStart(w)
     }
     //wrapped-flags

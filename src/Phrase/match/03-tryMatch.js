@@ -80,11 +80,10 @@ const tryHere = function (terms, regs, index, length) {
   const namedGroups = {}
   let previousGroupId = null
   let t = 0
-  // console.log('--- ' + terms[0].text + ' ---')
+
   // we must satisfy each rule in 'regs'
   for (let r = 0; r < regs.length; r += 1) {
     let reg = regs[r]
-    // console.log(reg)
 
     // Check if this reg has a named capture group
     const isNamedGroup = typeof reg.named === 'string' || typeof reg.named === 'number'
@@ -196,8 +195,6 @@ const tryHere = function (terms, regs, index, length) {
           g.length++
         }
       }
-
-      // console.log('=-=-=-=-', reg)
       continue
     }
 
@@ -213,11 +210,6 @@ const tryHere = function (terms, regs, index, length) {
         continue
       }
     }
-    // was the match a 'negative' match anyways?
-
-    // if (reg.negative === true) {
-    //   continue
-    // }
 
     // console.log('   ❌\n\n')
     return [false, null]

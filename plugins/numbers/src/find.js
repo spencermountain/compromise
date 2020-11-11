@@ -10,6 +10,8 @@ const findNumbers = function(doc, n) {
     //a comma may mean two numbers
     if (match.has('#Value @hasComma #Value')) {
       match.splitAfter('@hasComma')
+    } else if (match.has('#NumericValue #Fraction')) {
+      match.splitAfter('#NumericValue #Fraction')
     } else {
       match = match.splitAfter('#NumericValue')
     }

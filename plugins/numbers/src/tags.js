@@ -1,6 +1,6 @@
 module.exports = {
   Fraction: {
-    isA: 'Value',
+    isA: ['Value', 'NumericValue'],
   },
   Multiple: {
     isA: 'Value',

@@ -25,7 +25,7 @@ const createPhrase = function (found, doc) {
     t.post = ''
     // tag number-ranges
     if (isNumber.test(t.implicit)) {
-      t.tags.Number = true
+      t.tags.Value = true
       t.tags.Cardinal = true
     }
     // if no tag, give it a noun

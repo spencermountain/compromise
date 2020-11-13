@@ -1,6 +1,6 @@
 const nlp = require('./src/index')
 // const spacetime = require('/Users/spencer/mountain/spacetime/src')
-// nlp.verbose(true)
+nlp.verbose(true)
 // let txt = require('./scripts/test/speed/_sotu-text.js')
 nlp.extend(require('./plugins/numbers/src'))
 // nlp.extend(require('./plugins/dates/src'))
@@ -17,15 +17,6 @@ nlp.extend(require('./plugins/numbers/src'))
 // let doc = nlp(`By the time it was over, Bush had served nearly two years.`)
 // doc.phrases()
 
-let doc = nlp.tokenize('one two three')
-let m = doc.match('one !foo two three')
-
-doc = nlp.tokenize('one two three')
-m = doc.match('one !foo three')
-
-doc = nlp.tokenize('one two three')
-m = doc.match('one !foo two')
-
-m.debug()
-// doc.numbers().toNumber()
-// console.log(doc.text())
+console.log(nlp('1-2').contractions().expand().numbers().out('array'))
+// nlp('1').debug()
+// nlp('1-2').debug()

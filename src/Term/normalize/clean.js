@@ -41,6 +41,9 @@ const clean = function (str) {
     str = str.replace(/[",\.!:;\?\)]+$/g, '')
     str = str.replace(/^['"\(]+/g, '')
   }
+  // remove zero-width characters
+  str = str.replace(/[\u200B-\u200D\uFEFF]/g, '')
+
   //do this again..
   str = str.trim()
   //oh shucks,

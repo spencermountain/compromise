@@ -1,6 +1,6 @@
 const nlp = require('./src/index')
 // const spacetime = require('/Users/spencer/mountain/spacetime/src')
-nlp.verbose(true)
+// nlp.verbose(true)
 // let txt = require('./scripts/test/speed/_sotu-text.js')
 nlp.extend(require('./plugins/numbers/src'))
 // nlp.extend(require('./plugins/dates/src'))
@@ -14,7 +14,15 @@ nlp.extend(require('./plugins/numbers/src'))
 // console.log(spacetime(obj.date.start).format('{nice-day} {year} {time}'))
 // console.log(spacetime(obj.date.end).format('{nice-day} {year} {time}'))
 
-// let doc = nlp(`By the time it was over, Bush had served nearly two years.`)
+let doc = nlp(`By the time it was over, Bush had served nearly two years.`)
 // doc.phrases()
+// doc.json({ terms: { normal: true } })
+console.log(doc.json({ terms: { normal: true } })[0].terms)
+// console.log(nlp(`before\xa0after`).json()[0].terms[0])
+// console.log(nlp(`before after`).json()[0].terms[0])
+// console.log(nlp(`before​ after`).json()[0].terms[0])
 
-nlp('Francine du Plessix').debug()
+// var userInput = 'a\u200Bb\u200Cc\u200Dd\uFEFFe'
+// console.log(userInput.length) // 9
+// var result = userInput.replace(/[\u200B-\u200D\uFEFF]/g, '')
+// console.log(result.length) // 5

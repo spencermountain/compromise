@@ -17,6 +17,4 @@ nlp.extend(require('./plugins/numbers/src'))
 // let doc = nlp(`By the time it was over, Bush had served nearly two years.`)
 // doc.phrases()
 
-console.log(nlp('1-2').contractions().expand().numbers().out('array'))
-// nlp('1').debug()
-// nlp('1-2').debug()
+nlp('Francine du Plessix').debug()

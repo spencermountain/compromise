@@ -11,6 +11,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 <!-- #### [Unreleased] 
 #### 13.8.0
 - **[change]** make negative `!foo` matches optional
+- **[change]** remove zero-width characters in normalized output
 
 -->
 

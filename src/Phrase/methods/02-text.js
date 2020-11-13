@@ -24,12 +24,13 @@ exports.text = function (options = {}, isFirst, isLast) {
         whitespace: true,
         unicode: true,
         implicit: true,
+        normal: true,
       }
     } else if (options === 'reduced') {
       options = {
+        punctuation: false, //Hmm: is this reversed?
         titlecase: false,
         lowercase: true,
-        punctuation: false, //FIXME: reversed?
         whitespace: true,
         unicode: true,
         implicit: true,

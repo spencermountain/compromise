@@ -1,0 +1,580 @@
+
+<!-- This is a generated file -->
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+  body {
+    background-color: hsl(30, 20%, 95%)
+  }
+</style>
+
+
+<link rel='stylesheet' href='https://unpkg.com/chevrotain@7.0.1/diagrams/diagrams.css'>
+
+<script src='https://unpkg.com/chevrotain@7.0.1/diagrams/vendor/railroad-diagrams.js'></script>
+<script src='https://unpkg.com/chevrotain@7.0.1/diagrams/src/diagrams_builder.js'></script>
+<script src='https://unpkg.com/chevrotain@7.0.1/diagrams/src/diagrams_behavior.js'></script>
+<script src='https://unpkg.com/chevrotain@7.0.1/diagrams/src/main.js'></script>
+
+<div id="diagrams" align="center"></div>    
+
+<script>
+    window.serializedGrammar = [
+  {
+    "type": "Rule",
+    "name": "matchStatement",
+    "orgText": "",
+    "definition": [
+      {
+        "type": "Option",
+        "idx": 0,
+        "definition": [
+          {
+            "type": "Terminal",
+            "name": "StartOf",
+            "label": "StartOf",
+            "idx": 0,
+            "pattern": "\\^"
+          }
+        ]
+      },
+      {
+        "type": "NonTerminal",
+        "name": "valueStatement",
+        "idx": 0
+      },
+      {
+        "type": "Option",
+        "idx": 1,
+        "definition": [
+          {
+            "type": "Terminal",
+            "name": "EndOf",
+            "label": "EndOf",
+            "idx": 0,
+            "pattern": "\\$"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "Rule",
+    "name": "valueStatement",
+    "orgText": "",
+    "definition": [
+      {
+        "type": "RepetitionMandatory",
+        "idx": 0,
+        "definition": [
+          {
+            "type": "NonTerminal",
+            "name": "value",
+            "idx": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "Rule",
+    "name": "value",
+    "orgText": "",
+    "definition": [
+      {
+        "type": "Alternation",
+        "idx": 0,
+        "definition": [
+          {
+            "type": "Alternative",
+            "definition": [
+              {
+                "type": "Terminal",
+                "name": "Dot",
+                "label": "Dot",
+                "idx": 0,
+                "pattern": "\\."
+              }
+            ]
+          },
+          {
+            "type": "Alternative",
+            "definition": [
+              {
+                "type": "Terminal",
+                "name": "Word",
+                "label": "Word",
+                "idx": 0,
+                "pattern": "([_-\\w]|\\\\.)+"
+              }
+            ]
+          },
+          {
+            "type": "Alternative",
+            "definition": [
+              {
+                "type": "Terminal",
+                "name": "EscapedWord",
+                "label": "EscapedWord",
+                "idx": 0,
+                "pattern": "\\\\[#@]([_-\\w]|\\\\.)+"
+              }
+            ]
+          },
+          {
+            "type": "Alternative",
+            "definition": [
+              {
+                "type": "Terminal",
+                "name": "Tag",
+                "label": "Tag",
+                "idx": 0,
+                "pattern": "#([_-\\w]|\\\\.)+"
+              }
+            ]
+          },
+          {
+            "type": "Alternative",
+            "definition": [
+              {
+                "type": "Terminal",
+                "name": "Zero",
+                "label": "Zero",
+                "idx": 0,
+                "pattern": "0"
+              }
+            ]
+          },
+          {
+            "type": "Alternative",
+            "definition": [
+              {
+                "type": "Terminal",
+                "name": "PositiveInt",
+                "label": "PositiveInt",
+                "idx": 0,
+                "pattern": "[1-9]\\d*"
+              }
+            ]
+          },
+          {
+            "type": "Alternative",
+            "definition": [
+              {
+                "type": "Terminal",
+                "name": "Method",
+                "label": "Method",
+                "idx": 0,
+                "pattern": "@[_-\\w]+"
+              }
+            ]
+          },
+          {
+            "type": "Alternative",
+            "definition": [
+              {
+                "type": "NonTerminal",
+                "name": "group",
+                "idx": 0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Option",
+        "idx": 0,
+        "definition": [
+          {
+            "type": "NonTerminal",
+            "name": "valueModifier",
+            "idx": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "Rule",
+    "name": "valueModifier",
+    "orgText": "",
+    "definition": [
+      {
+        "type": "Alternation",
+        "idx": 0,
+        "definition": [
+          {
+            "type": "Alternative",
+            "definition": [
+              {
+                "type": "Terminal",
+                "name": "Question",
+                "label": "Question",
+                "idx": 0,
+                "pattern": "\\?"
+              }
+            ]
+          },
+          {
+            "type": "Alternative",
+            "definition": [
+              {
+                "type": "Terminal",
+                "name": "Star",
+                "label": "Star",
+                "idx": 0,
+                "pattern": "\\*"
+              }
+            ]
+          },
+          {
+            "type": "Alternative",
+            "definition": [
+              {
+                "type": "Terminal",
+                "name": "Plus",
+                "label": "Plus",
+                "idx": 0,
+                "pattern": "\\+"
+              }
+            ]
+          },
+          {
+            "type": "Alternative",
+            "definition": [
+              {
+                "type": "NonTerminal",
+                "name": "rangeModifier",
+                "idx": 0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Option",
+        "idx": 0,
+        "definition": [
+          {
+            "type": "Terminal",
+            "name": "Question",
+            "label": "Question",
+            "idx": 1,
+            "pattern": "\\?"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "Rule",
+    "name": "rangeModifier",
+    "orgText": "",
+    "definition": [
+      {
+        "type": "Terminal",
+        "name": "LCurly",
+        "label": "LCurly",
+        "idx": 0,
+        "pattern": "\\{"
+      },
+      {
+        "type": "Option",
+        "idx": 0,
+        "definition": [
+          {
+            "type": "Alternation",
+            "idx": 0,
+            "definition": [
+              {
+                "type": "Alternative",
+                "definition": [
+                  {
+                    "type": "Terminal",
+                    "name": "Zero",
+                    "label": "Zero",
+                    "idx": 0,
+                    "pattern": "0"
+                  }
+                ]
+              },
+              {
+                "type": "Alternative",
+                "definition": [
+                  {
+                    "type": "Terminal",
+                    "name": "PositiveInt",
+                    "label": "PositiveInt",
+                    "idx": 0,
+                    "pattern": "[1-9]\\d*"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Option",
+        "idx": 1,
+        "definition": [
+          {
+            "type": "Terminal",
+            "name": "Comma",
+            "label": "Comma",
+            "idx": 0,
+            "pattern": ","
+          },
+          {
+            "type": "Option",
+            "idx": 2,
+            "definition": [
+              {
+                "type": "Terminal",
+                "name": "PositiveInt",
+                "label": "PositiveInt",
+                "idx": 1,
+                "pattern": "[1-9]\\d*"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Terminal",
+        "name": "RCurly",
+        "label": "RCurly",
+        "idx": 0,
+        "pattern": "\\}"
+      }
+    ]
+  },
+  {
+    "type": "Rule",
+    "name": "group",
+    "orgText": "",
+    "definition": [
+      {
+        "type": "Terminal",
+        "name": "LParenthesis",
+        "label": "LParenthesis",
+        "idx": 0,
+        "pattern": "\\("
+      },
+      {
+        "type": "Option",
+        "idx": 0,
+        "definition": [
+          {
+            "type": "NonTerminal",
+            "name": "groupModifier",
+            "idx": 0
+          }
+        ]
+      },
+      {
+        "type": "RepetitionMandatoryWithSeparator",
+        "idx": 0,
+        "separator": {
+          "type": "Terminal",
+          "name": "Pipe",
+          "label": "Pipe",
+          "idx": 1,
+          "pattern": "\\|"
+        },
+        "definition": [
+          {
+            "type": "NonTerminal",
+            "name": "valueStatement",
+            "idx": 0
+          }
+        ]
+      },
+      {
+        "type": "Terminal",
+        "name": "RParenthesis",
+        "label": "RParenthesis",
+        "idx": 0,
+        "pattern": "\\)"
+      }
+    ]
+  },
+  {
+    "type": "Rule",
+    "name": "namedGroup",
+    "orgText": "",
+    "definition": [
+      {
+        "type": "Terminal",
+        "name": "Question",
+        "label": "Question",
+        "idx": 0,
+        "pattern": "\\?"
+      },
+      {
+        "type": "Terminal",
+        "name": "NamedGroupBegin",
+        "label": "NamedGroupBegin",
+        "idx": 0,
+        "pattern": "P<"
+      },
+      {
+        "type": "Terminal",
+        "name": "Word",
+        "label": "Word",
+        "idx": 0,
+        "pattern": "([_-\\w]|\\\\.)+"
+      },
+      {
+        "type": "Terminal",
+        "name": "NamedGroupEnd",
+        "label": "NamedGroupEnd",
+        "idx": 0,
+        "pattern": ">"
+      }
+    ]
+  },
+  {
+    "type": "Rule",
+    "name": "nonCapturingGroup",
+    "orgText": "",
+    "definition": [
+      {
+        "type": "Terminal",
+        "name": "Question",
+        "label": "Question",
+        "idx": 0,
+        "pattern": "\\?"
+      },
+      {
+        "type": "Terminal",
+        "name": "Colon",
+        "label": "Colon",
+        "idx": 0,
+        "pattern": ":"
+      }
+    ]
+  },
+  {
+    "type": "Rule",
+    "name": "negativeLookaheadGroup",
+    "orgText": "",
+    "definition": [
+      {
+        "type": "Terminal",
+        "name": "Question",
+        "label": "Question",
+        "idx": 0,
+        "pattern": "\\?"
+      },
+      {
+        "type": "Terminal",
+        "name": "Exclamation",
+        "label": "Exclamation",
+        "idx": 0,
+        "pattern": "!"
+      }
+    ]
+  },
+  {
+    "type": "Rule",
+    "name": "positiveLookaheadGroup",
+    "orgText": "",
+    "definition": [
+      {
+        "type": "Terminal",
+        "name": "Question",
+        "label": "Question",
+        "idx": 0,
+        "pattern": "\\?"
+      },
+      {
+        "type": "Terminal",
+        "name": "Equals",
+        "label": "Equals",
+        "idx": 0,
+        "pattern": "="
+      }
+    ]
+  },
+  {
+    "type": "Rule",
+    "name": "commentGroup",
+    "orgText": "",
+    "definition": [
+      {
+        "type": "Terminal",
+        "name": "Question",
+        "label": "Question",
+        "idx": 0,
+        "pattern": "\\?"
+      },
+      {
+        "type": "Terminal",
+        "name": "Pound",
+        "label": "Pound",
+        "idx": 0,
+        "pattern": "#"
+      }
+    ]
+  },
+  {
+    "type": "Rule",
+    "name": "groupModifier",
+    "orgText": "",
+    "definition": [
+      {
+        "type": "Alternation",
+        "idx": 0,
+        "definition": [
+          {
+            "type": "Alternative",
+            "definition": [
+              {
+                "type": "NonTerminal",
+                "name": "nonCapturingGroup",
+                "idx": 0
+              }
+            ]
+          },
+          {
+            "type": "Alternative",
+            "definition": [
+              {
+                "type": "NonTerminal",
+                "name": "namedGroup",
+                "idx": 0
+              }
+            ]
+          },
+          {
+            "type": "Alternative",
+            "definition": [
+              {
+                "type": "NonTerminal",
+                "name": "negativeLookaheadGroup",
+                "idx": 0
+              }
+            ]
+          },
+          {
+            "type": "Alternative",
+            "definition": [
+              {
+                "type": "NonTerminal",
+                "name": "positiveLookaheadGroup",
+                "idx": 0
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+];
+</script>
+
+<script>
+    var diagramsDiv = document.getElementById("diagrams");
+    main.drawDiagramsFromSerializedGrammar(serializedGrammar, diagramsDiv);
+</script>

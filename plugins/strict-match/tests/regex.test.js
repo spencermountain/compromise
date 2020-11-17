@@ -34,8 +34,7 @@ test("copies a regex if one already exists", (t) => {
   t.equal(regex.regex, str, "regex")
   t.equal(regex.regex, regexOrig.regex, "orig")
   t.ok(regex.prog, "prog")
-  // t.equal(regex.prog, regexOrig.prog, "prog-orig")
-
+  t.deepEqual(regex.prog, regexOrig.prog, "prog-orig")
   t.end()
 })
 

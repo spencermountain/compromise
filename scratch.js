@@ -1,9 +1,11 @@
 const nlp = require('./src/index')
 // const spacetime = require('/Users/spencer/mountain/spacetime/src')
-nlp.verbose(true)
+// nlp.verbose(true)
 // let txt = require('./scripts/test/speed/_sotu-text.js')
-nlp.extend(require('./plugins/numbers/src'))
-nlp.extend(require('./plugins/dates/src'))
+// nlp.extend(require('./plugins/numbers/src'))
+// nlp.extend(require('./plugins/dates/src'))
+let fn = require('./plugins/strict-match/builds/compromise-strict-match').default
+nlp.extend(fn)
 // nlp.extend(require('./plugins/phrases/src'))
 
 // let doc = nlp(`1st weekend of october 2020`)
@@ -23,5 +25,4 @@ nlp.extend(require('./plugins/dates/src'))
 // console.log(r)
 
 let doc = nlp('Julie de Bussy')
-doc.people().match('#FirstName [(van|von|de|du)] #LastName', 0).remove()
-doc.debug()
+doc.strictMatch('#FirstName [(van|von|de|du)] #LastName').debug()

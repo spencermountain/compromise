@@ -1,22 +1,22 @@
-import commonjs from "@rollup/plugin-commonjs";
-import resolve from "@rollup/plugin-node-resolve";
-import { terser } from "rollup-plugin-terser";
-import babel from "rollup-plugin-babel";
+import commonjs from "@rollup/plugin-commonjs"
+import resolve from "@rollup/plugin-node-resolve"
+import { terser } from "rollup-plugin-terser"
+import babel from "rollup-plugin-babel"
 
-import { version } from "./package.json";
+import { version } from "./package.json"
 
-const name = "compromise-match2";
-const banner = `/* ${name} ${version} GPLv3 */`;
+const name = "compromise-strict-match"
+const banner = `/* ${name} ${version} GPLv3 */`
 
 export default [
   {
     input: "src/index.js",
     output: [
       {
-        file: `dist/${name}.js`,
+        file: `builds/${name}.js`,
         format: "umd",
         sourcemap: true,
-        name: "compromiseMatch2",
+        name: "compromiseStrictMatch",
         banner,
       },
     ],
@@ -33,9 +33,9 @@ export default [
     input: "src/index.js",
     output: [
       {
-        file: `dist/${name}.mjs`,
+        file: `builds/${name}.mjs`,
         format: "esm",
-        name: "compromiseMatch2",
+        name: "compromiseStrictMatch",
         banner,
       },
     ],
@@ -52,9 +52,9 @@ export default [
     input: "src/index.js",
     output: [
       {
-        file: `dist/${name}.min.js`,
+        file: `builds/${name}.min.js`,
         format: "umd",
-        name: "compromiseMatch2",
+        name: "compromiseStrictMatch",
         banner,
       },
     ],
@@ -68,4 +68,4 @@ export default [
       terser(),
     ],
   },
-];
+]

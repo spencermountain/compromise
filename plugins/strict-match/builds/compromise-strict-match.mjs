@@ -1,4 +1,4 @@
-/* compromise-match2 1.2.0 GPLv3 */
+/* compromise-strict-match 1.2.0 GPLv3 */
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
@@ -9651,10 +9651,6 @@ var Dot = createToken({
   pattern: /\./,
   longer_alt: Word
 });
-var RegexP = createToken({
-  name: "RegexP",
-  pattern: /\/.*?\//
-});
 var Pipe = createToken({
   name: "Pipe",
   pattern: /\|/
@@ -10780,7 +10776,7 @@ var NLPRegexP = /*#__PURE__*/function () {
   return NLPRegexP;
 }();
 
-var Match2Plugin = function Match2Plugin(Doc, world, nlp, Phrase) {
+var plugin = function plugin(Doc, world, nlp, Phrase) {
   var compileRegex = function compileRegex(regex) {
     return new NLPRegexP(regex);
   };
@@ -10788,16 +10784,16 @@ var Match2Plugin = function Match2Plugin(Doc, world, nlp, Phrase) {
   nlp.compileRegex = compileRegex;
   Doc.prototype.compileRegex = compileRegex;
 
-  var match2 = function match2(regex) {
+  var strictMatch = function strictMatch(regex) {
     // function, non arrow, need bind for this which is doc/phrase
     regex = new NLPRegexP(regex); // coerce the value
 
     return regex.exec(this);
   };
 
-  Doc.prototype.match2 = match2;
-  Phrase.prototype.match2 = match2;
+  Doc.prototype.strictMatch = strictMatch;
+  Phrase.prototype.strictMatch = strictMatch;
 };
 
-export default Match2Plugin;
-export { Match2Plugin, NLPMatchParser, NLPRegexP, NLPRegexParseError };
+export default plugin;
+export { NLPMatchParser, NLPRegexP, NLPRegexParseError, plugin };

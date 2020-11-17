@@ -1,8 +1,8 @@
-/* compromise-match2 1.2.0 GPLv3 */
+/* compromise-strict-match 1.2.0 GPLv3 */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (global = global || self, factory(global.compromiseMatch2 = {}));
+  (global = global || self, factory(global.compromiseStrictMatch = {}));
 }(this, (function (exports) { 'use strict';
 
   function _typeof(obj) {
@@ -9657,10 +9657,6 @@
     pattern: /\./,
     longer_alt: Word
   });
-  var RegexP = createToken({
-    name: "RegexP",
-    pattern: /\/.*?\//
-  });
   var Pipe = createToken({
     name: "Pipe",
     pattern: /\|/
@@ -10786,7 +10782,7 @@
     return NLPRegexP;
   }();
 
-  var Match2Plugin = function Match2Plugin(Doc, world, nlp, Phrase) {
+  var plugin = function plugin(Doc, world, nlp, Phrase) {
     var compileRegex = function compileRegex(regex) {
       return new NLPRegexP(regex);
     };
@@ -10794,24 +10790,24 @@
     nlp.compileRegex = compileRegex;
     Doc.prototype.compileRegex = compileRegex;
 
-    var match2 = function match2(regex) {
+    var strictMatch = function strictMatch(regex) {
       // function, non arrow, need bind for this which is doc/phrase
       regex = new NLPRegexP(regex); // coerce the value
 
       return regex.exec(this);
     };
 
-    Doc.prototype.match2 = match2;
-    Phrase.prototype.match2 = match2;
+    Doc.prototype.strictMatch = strictMatch;
+    Phrase.prototype.strictMatch = strictMatch;
   };
 
-  exports.Match2Plugin = Match2Plugin;
   exports.NLPMatchParser = NLPMatchParser;
   exports.NLPRegexP = NLPRegexP;
   exports.NLPRegexParseError = NLPRegexParseError;
-  exports.default = Match2Plugin;
+  exports.default = plugin;
+  exports.plugin = plugin;
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
 })));
-//# sourceMappingURL=compromise-match2.js.map
+//# sourceMappingURL=compromise-strict-match.js.map

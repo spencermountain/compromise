@@ -1,10 +1,10 @@
 {
-  "name": "compromise-match2",
+  "name": "compromise-strict-match",
   "version": "1.2.0",
   "description": "Better regex like matching for nlp-compromise",
-  "main": "dist/compromise-match2.js",
-  "unpkg": "dist/compromise-match2.min.js",
-  "module": "dist/compromise-match2.mjs",
+  "main": "builds/compromise-strict-match.js",
+  "unpkg": "builds/compromise-strict-match.min.js",
+  "module": "builds/compromise-strict-match.mjs",
   "scripts": {
     "test": "jest",
     "test:coverage": "jest --coverage",
@@ -55,10 +55,10 @@
   },
   "homepage": "https://github.com/catalogm/compromise-match2#readme",
   "files": [
-    "dist/"
+    "builds/"
   ],
   "eslintIgnore": [
-    "dist/*.js"
+    "builds/*.js"
   ],
   "dependencies": {
     "chevrotain": "^7.0.1"

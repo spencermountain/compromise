@@ -1,136 +1,62 @@
-import NLP from "compromise"
-import compromise_match2 from "../src/index"
-import { NLPRegexParseError } from "../src/index"
+const test = require("tape")
+const nlp = require("./_lib")
 
-// describe("match2 plugin", () => {
-const nlp = NLP.clone().extend(compromise_match2)
-let doc = null
+let doc = nlp("hello hello world")
 
-beforeEach(() => {
-  doc = nlp("hello hello world")
+test("values", (t) => {
+  t.equal(doc.strictMatch("world").text(), "world")
+
+  t.equal(doc.strictMatch("#Noun").text(), "world")
+
+  t.equal(doc.strictMatch(".").text(), "hello")
+
+  t.equal(nlp("a, b, c").strictMatch("@hasComma+").text(), "a, b")
+  t.end()
 })
 
-describe("edge case", () => {
-  it("invalid compiled regex code throws exception", () => {
-    const regex = nlp.compileRegex("hello")
-    regex.prog[0].code = null
-    expect(() => doc.match2(regex)).toThrow(/Unsuppored Op code: null/)
-  })
+test("escaped words", (t) => {
+  t.equal(nlp("#Noun").strictMatch("\\#Noun").text(), "#Noun")
+
+  t.equal(nlp("@hasComma").strictMatch("\\@hasComma").text(), "@hasComma")
+  t.end()
 })
 
-describe("plugin defines", () => {
-  it("extend adds match2 functions to nlp, doc, and phrase", () => {
-    expect(nlp.compileRegex).toBeDefined()
-    expect(doc.compileRegex).toBeDefined()
-    expect(doc.match2).toBeDefined()
-    expect(doc.match2).toBeDefined()
-
-    const phrase = doc.list[0]
-    expect(phrase.match2).toBeDefined()
-  })
+// describe("match locations", () => {
+test("matches anywhere when not start of", (t) => {
+  t.equal(
+    nlp("hi there hello world this is a match").strictMatch("world").text(),
+    "world"
+  )
+  t.end()
 })
 
-describe("regex matches phrase", () => {
-  it("matches phrase", () => {
-    const phrase = doc.list[0]
-    expect(phrase.match2("world").text()).toEqual("world")
-  })
+test("matches startOf", (t) => {
+  t.equal(doc.strictMatch("^hello").text(), "hello")
+  t.equal(doc.strictMatch("^world").text(), "")
+  t.end()
 })
 
-describe("handles previous bugs", () => {
-  it("match term should handle match_end or when term.tags is nullish", () => {
-    // this particular query triggers it, match2 ends up with MATCH_END as a
-    // tag, probably the nested groups that allows it to get there where it
-    // keeps trying to match, this is fine / expected
-    doc = nlp("remind me to reply to @spencermountain today")
-    expect(
-      doc
-        .match2(
-          "((remind|remember) (me|you|.) to? do? (?P<what>.+) (?P<when>#Date+))"
-        )
-        .text()
-    ).toEqual(doc.text())
-  })
+test("matches endOf", (t) => {
+  t.equal(doc.strictMatch("world$").text(), "world")
+  t.equal(doc.strictMatch("hello$").text(), "")
+  t.end()
 })
 
-describe("regex matches doc", () => {
-  it("successful match sets found", () => {
-    expect(doc.match2("world").found).toBe(true)
-  })
+// describe("value modifiers", () => {
+test("one or more", (t) => {
+  t.equal(nlp("hello world").strictMatch(".+").text(), "hello world")
+  t.equal(nlp("hello hello world").strictMatch("hello+").text(), "hello hello")
+  t.end()
+})
 
-  it("returns empty doc when no matches", () => {
-    const match = doc.match2("no match")
-    expect(match.found).toBe(false)
-    expect(match.text()).toBe("")
-  })
+test("zero or more", (t) => {
+  t.equal(nlp("hello hello world").strictMatch("hello*").text(), "hello hello")
+  t.equal(nlp("hello hello world").strictMatch("none*").text(), "")
+  t.end()
+})
 
-  describe("values", () => {
-    it("word", () => {
-      expect(doc.match2("world").text()).toEqual("world")
-    })
-
-    it("tag", () => {
-      expect(doc.match2("#Noun").text()).toEqual("world")
-    })
-
-    it("any", () => {
-      expect(doc.match2(".").text()).toEqual("hello")
-    })
-
-    it("mathod", () => {
-      expect(nlp("a, b, c").match2("@hasComma+").text()).toEqual("a, b")
-    })
-
-    describe("escaped words", () => {
-      it("tag", () => {
-        expect(nlp("#Noun").match2("\\#Noun").text()).toEqual("#Noun")
-      })
-
-      it("methods", () => {
-        expect(nlp("@hasComma").match2("\\@hasComma").text()).toEqual(
-          "@hasComma"
-        )
-      })
-    })
-  })
-
-  describe("match locations", () => {
-    it("matches anywhere when not start of", () => {
-      expect(
-        nlp("hi there hello world this is a match").match2("world").text()
-      ).toEqual("world")
-    })
-
-    it("matches startOf", () => {
-      expect(doc.match2("^hello").text()).toEqual("hello")
-      expect(doc.match2("^world").text()).toEqual("")
-    })
-
-    it("matches endOf", () => {
-      expect(doc.match2("world$").text()).toEqual("world")
-      expect(doc.match2("hello$").text()).toEqual("")
-    })
-  })
-
-  describe("value modifiers", () => {
-    it("one or more", () => {
-      expect(nlp("hello world").match2(".+").text()).toEqual("hello world")
-      expect(nlp("hello hello world").match2("hello+").text()).toEqual(
-        "hello hello"
-      )
-    })
-
-    it("zero or more", () => {
-      expect(nlp("hello hello world").match2("hello*").text()).toEqual(
-        "hello hello"
-      )
-      expect(nlp("hello hello world").match2("none*").text()).toEqual("")
-    })
-
-    it("zero or one", () => {
-      expect(nlp("hello hello world").match2("hello?").text()).toEqual("hello")
-      expect(nlp("world").match2("hello?").text()).toEqual("")
-    })
-
-
-    
+test("zero or one", (t) => {
+  t.equal(nlp("hello hello world").strictMatch("hello?").text(), "hello")
+  t.equal(nlp("world").strictMatch("hello?").text(), "")
+  t.end()
+})

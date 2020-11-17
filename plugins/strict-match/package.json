@@ -1,7 +1,7 @@
 {
   "name": "compromise-strict-match",
   "description": "Formal parser for the compromise match syntax",
-  "version": "1.2.0",
+  "version": "0.0.1",
   "author": "Kelvin Hammond <hammond.kelvin@gmail.com>",
   "main": "builds/compromise-strict-match.js",
   "unpkg": "builds/compromise-strict-match.min.js",

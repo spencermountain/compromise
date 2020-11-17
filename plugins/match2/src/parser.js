@@ -1,4 +1,4 @@
-import { EmbeddedActionsParser, Lexer, createToken } from "chevrotain";
+import { EmbeddedActionsParser, Lexer, createToken } from "chevrotain"
 
 import {
   NOOP,
@@ -18,57 +18,56 @@ import {
   SPLIT_LT,
   LOOKAHEAD,
   NEGATIVE_LOOKAHEAD,
-} from "./constants";
+} from "./constants"
 
-const StartOf = createToken({ name: "StartOf", pattern: /\^/ });
-const EndOf = createToken({ name: "EndOf", pattern: /\$/ });
-const Tag = createToken({ name: "Tag", pattern: /#([_-\w]|\\.)+/ });
+const StartOf = createToken({ name: "StartOf", pattern: /\^/ })
+const EndOf = createToken({ name: "EndOf", pattern: /\$/ })
+const Tag = createToken({ name: "Tag", pattern: /#([_-\w]|\\.)+/ })
 const EscapedWord = createToken({
   name: "EscapedWord",
   pattern: /\\[#@]([_-\w]|\\.)+/,
-});
-const Word = createToken({ name: "Word", pattern: /([_-\w]|\\.)+/ });
-const Method = createToken({ name: "Method", pattern: /@[_-\w]+/ });
+})
+const Word = createToken({ name: "Word", pattern: /([_-\w]|\\.)+/ })
+const Method = createToken({ name: "Method", pattern: /@[_-\w]+/ })
 const Question = createToken({
   name: "Question",
   pattern: /\?/,
   longer_alt: Word,
-});
+})
 const Exclamation = createToken({
   name: "Exclamation",
   pattern: /!/,
   longer_alt: Word,
-});
-const Equals = createToken({ name: "Equals", pattern: /=/, longer_alt: Word });
-const Pound = createToken({ name: "Pound", pattern: /#/, longer_alt: Tag });
-const Dot = createToken({ name: "Dot", pattern: /\./, longer_alt: Word });
-const RegexP = createToken({ name: "RegexP", pattern: /\/.*?\// });
-const Pipe = createToken({ name: "Pipe", pattern: /\|/ });
-const Comma = createToken({ name: "Comma", pattern: /,/, longer_alt: Word });
-const Colon = createToken({ name: "Colon", pattern: /:/, longer_alt: Word });
-const Plus = createToken({ name: "Plus", pattern: /\+/ });
-const Star = createToken({ name: "Star", pattern: /\*/ });
-const Zero = createToken({ name: "Zero", pattern: /0/, longer_alt: Word });
+})
+const Equals = createToken({ name: "Equals", pattern: /=/, longer_alt: Word })
+const Pound = createToken({ name: "Pound", pattern: /#/, longer_alt: Tag })
+const Dot = createToken({ name: "Dot", pattern: /\./, longer_alt: Word })
+const Pipe = createToken({ name: "Pipe", pattern: /\|/ })
+const Comma = createToken({ name: "Comma", pattern: /,/, longer_alt: Word })
+const Colon = createToken({ name: "Colon", pattern: /:/, longer_alt: Word })
+const Plus = createToken({ name: "Plus", pattern: /\+/ })
+const Star = createToken({ name: "Star", pattern: /\*/ })
+const Zero = createToken({ name: "Zero", pattern: /0/, longer_alt: Word })
 const PositiveInt = createToken({
   name: "PositiveInt",
   pattern: /[1-9]\d*/,
   longer_alt: Word,
-});
-const LParenthesis = createToken({ name: "LParenthesis", pattern: /\(/ });
-const RParenthesis = createToken({ name: "RParenthesis", pattern: /\)/ });
-const LCurly = createToken({ name: "LCurly", pattern: /\{/ });
-const RCurly = createToken({ name: "RCurly", pattern: /\}/ });
-const NamedGroupBegin = createToken({ name: "NamedGroupBegin", pattern: /P</ });
+})
+const LParenthesis = createToken({ name: "LParenthesis", pattern: /\(/ })
+const RParenthesis = createToken({ name: "RParenthesis", pattern: /\)/ })
+const LCurly = createToken({ name: "LCurly", pattern: /\{/ })
+const RCurly = createToken({ name: "RCurly", pattern: /\}/ })
+const NamedGroupBegin = createToken({ name: "NamedGroupBegin", pattern: /P</ })
 const NamedGroupEnd = createToken({
   name: "NamedGroupEnd",
   pattern: />/,
   longer_alt: Word,
-});
+})
 const WhiteSpace = createToken({
   name: "WhiteSpace",
   pattern: /\s+/,
   group: Lexer.SKIPPED,
-});
+})
 
 export const allTokens = [
   NamedGroupBegin,
@@ -96,7 +95,7 @@ export const allTokens = [
   RParenthesis,
   LCurly,
   RCurly,
-];
+]
 
 // Notes or something like it, may not be accurate.
 // (a|b)
@@ -162,7 +161,7 @@ export const allTokens = [
 
 export class NLPMatchParser extends EmbeddedActionsParser {
   constructor() {
-    super(allTokens);
+    super(allTokens)
 
     /*
      * '.'
@@ -196,74 +195,74 @@ export class NLPMatchParser extends EmbeddedActionsParser {
      *
      */
 
-    const $ = this;
+    const $ = this
     $.RULE("matchStatement", () => {
       const matches = {
         startOf: false,
         prog: [],
         endOf: false,
-      };
+      }
 
       $.OPTION(() => {
-        $.CONSUME(StartOf);
-        matches.startOf = true;
-      });
+        $.CONSUME(StartOf)
+        matches.startOf = true
+      })
 
       // handle ^ startOf
       if (!matches.startOf) {
         // .*? at the start when not ^ / startOf, don't save the matched
         // values.
-        matches.prog.push({ code: GLOBAL_SAVE, value: false });
-        matches.prog.push({ code: SPLIT, locs: [4, 2] });
-        matches.prog.push({ code: MATCH_ANY });
-        matches.prog.push({ code: JMP, loc: 1 });
-        matches.prog.push({ code: GLOBAL_SAVE, value: true });
+        matches.prog.push({ code: GLOBAL_SAVE, value: false })
+        matches.prog.push({ code: SPLIT, locs: [4, 2] })
+        matches.prog.push({ code: MATCH_ANY })
+        matches.prog.push({ code: JMP, loc: 1 })
+        matches.prog.push({ code: GLOBAL_SAVE, value: true })
       }
 
-      matches.groups = [];
-      $.SUBRULE($.valueStatement, { ARGS: [matches.prog, matches.groups] });
+      matches.groups = []
+      $.SUBRULE($.valueStatement, { ARGS: [matches.prog, matches.groups] })
 
       $.OPTION1(() => {
-        $.CONSUME(EndOf);
-        matches.endOf = true;
-      });
+        $.CONSUME(EndOf)
+        matches.endOf = true
+      })
 
       // handle $ endOf
       $.ACTION(() => {
         if (matches.endOf) {
-          matches.prog.push({ code: MATCH_END });
+          matches.prog.push({ code: MATCH_END })
         }
-        matches.prog.push({ code: MATCH });
-      });
+        matches.prog.push({ code: MATCH })
+      })
 
-      return matches;
-    });
+      return matches
+    })
 
     $.RULE("valueStatement", (prog = [], groups = [], vars = []) => {
-      const inst = [];
+      const inst = []
       $.AT_LEAST_ONE({
         DEF: () => {
-          $.SUBRULE($.value, { ARGS: [prog, groups, vars] });
+          $.SUBRULE($.value, { ARGS: [prog, groups, vars] })
         },
-      });
-      return inst;
-    });
+      })
+      return inst
+    })
 
     $.RULE("value", (prog = [], groups = [], vars = []) => {
-      const split = { code: NOOP }; // save split for modifiers
-      prog.push(split);
-      const start = prog.length; // save start for split jmp later
+      const split = { code: NOOP } // save split for modifiers
+      prog.push(split)
+      const start = prog.length // save start for split jmp later
 
       $.OR([
         {
           ALT: () => {
-            $.CONSUME(Dot);
-            prog.push({ code: MATCH_ANY });
+            $.CONSUME(Dot)
+            prog.push({ code: MATCH_ANY })
           },
         },
         {
           ALT: () => {
-            prog.push({ code: MATCH_WORD, value: $.CONSUME(Word).image });
+            prog.push({ code: MATCH_WORD, value: $.CONSUME(Word).image })
           },
         },
         {
@@ -271,7 +270,7 @@ export class NLPMatchParser extends EmbeddedActionsParser {
             prog.push({
               code: MATCH_WORD,
               value: $.CONSUME(EscapedWord).image?.substr(1),
-            });
+            })
           },
         },
         {
@@ -279,12 +278,12 @@ export class NLPMatchParser extends EmbeddedActionsParser {
             prog.push({
               code: MATCH_TAG,
               value: $.CONSUME(Tag).image?.substr(1),
-            });
+            })
           },
         },
         {
           ALT: () => {
-            prog.push({ code: MATCH_WORD, value: $.CONSUME(Zero).image });
+            prog.push({ code: MATCH_WORD, value: $.CONSUME(Zero).image })
           },
         },
         {
@@ -292,7 +291,7 @@ export class NLPMatchParser extends EmbeddedActionsParser {
             prog.push({
               code: MATCH_WORD,
               value: $.CONSUME(PositiveInt).image,
-            });
+            })
           },
         },
         {
@@ -300,197 +299,195 @@ export class NLPMatchParser extends EmbeddedActionsParser {
             prog.push({
               code: MATCH_METHOD,
               value: $.CONSUME(Method).image?.substr(1),
-            });
+            })
           },
         },
         {
           ALT: () => {
-            $.SUBRULE($.group, { ARGS: [prog, groups, vars] });
+            $.SUBRULE($.group, { ARGS: [prog, groups, vars] })
           },
         },
-      ]);
+      ])
 
       $.OPTION(() => {
         // TODO: could probably allow relative jmps to get rid of noop
-        const { type, greedy, min, max } = $.SUBRULE($.valueModifier);
+        const { type, greedy, min, max } = $.SUBRULE($.valueModifier)
         switch (type) {
           case "ZERO_OR_ONE":
-            split.code = SPLIT;
-            split.locs = [start, prog.length];
-            break;
+            split.code = SPLIT
+            split.locs = [start, prog.length]
+            break
           case "ZERO_OR_MORE":
-            prog.push({ code: JMP, loc: start - 1 });
-            split.code = SPLIT;
-            split.locs = [start, prog.length];
-            break;
+            prog.push({ code: JMP, loc: start - 1 })
+            split.code = SPLIT
+            split.locs = [start, prog.length]
+            break
           case "ONE_OR_MORE":
-            prog.push({ code: SPLIT, locs: [start, prog.length + 1] });
+            prog.push({ code: SPLIT, locs: [start, prog.length + 1] })
             if (!greedy) {
-              prog[prog.length - 1].locs.reverse();
+              prog[prog.length - 1].locs.reverse()
             }
-            break;
+            break
           case "RANGE":
-            const varId = vars.length;
-            vars.push(varId);
-            prog.push({ code: INCV, varId }); // increment first
+            const varId = vars.length
+            vars.push(varId)
+            prog.push({ code: INCV, varId }) // increment first
 
             const minInst = {
               code: JMP_LT,
               varId,
               value: min ?? 0,
               loc: start,
-            };
-            let maxInst = null;
+            }
+            let maxInst = null
             if (min === max) {
               // a{x}
               if (min === 0) {
                 // a{0} skip matching, causes token to be ignored
-                split.code = JMP;
-                split.loc = prog.length; // next instruction
+                split.code = JMP
+                split.loc = prog.length // next instruction
               } else {
                 // a{x}
-                prog.push(minInst);
+                prog.push(minInst)
               }
             } else if ((min ?? 0) === 0 && max !== null) {
               // a{,y} a{0,y}
-              split.code = SPLIT;
-              split.locs = [start, prog.length + 1];
+              split.code = SPLIT
+              split.locs = [start, prog.length + 1]
 
               maxInst = {
                 code: SPLIT_LT,
                 varId,
                 value: max,
                 locs: [start, prog.length + 1],
-              };
-              prog.push(maxInst);
+              }
+              prog.push(maxInst)
             } else if (min !== null && max === null) {
               // a{x,}
-              prog.push(minInst);
-              maxInst = { code: SPLIT, locs: [start, prog.length + 1] };
-              prog.push(maxInst);
+              prog.push(minInst)
+              maxInst = { code: SPLIT, locs: [start, prog.length + 1] }
+              prog.push(maxInst)
             } else {
               // if (min !== null && max !== null) {
               // a{x,y}
-              prog.push(minInst);
+              prog.push(minInst)
               maxInst = {
                 code: SPLIT_LT,
                 varId,
                 value: max,
                 locs: [start, prog.length + 1],
-              };
-              prog.push(maxInst);
+              }
+              prog.push(maxInst)
             }
 
             if (!greedy) {
-              maxInst?.locs?.reverse(); // reverse thread priority for greedy / non-greedy
+              maxInst?.locs?.reverse() // reverse thread priority for greedy / non-greedy
             }
             //{ code: SPLIT, locs: [ ] }
             //prog.push({ code: SETV_ONCE, id: rid, value: 0 });
             //prog.push({ code: INCREMENT, id: rid, value: 1 });
             //prog.push({ code: JMP_IF_GTE, id: rid, value: 0 });
-            break;
+            break
         }
         if (!greedy) {
-          split?.locs?.reverse();
+          split?.locs?.reverse()
         }
-      });
-    });
+      })
+    })
 
     $.RULE("valueModifier", () => {
-      let result = { type: null, greedy: true };
+      let result = { type: null, greedy: true }
       $.OR([
         {
           ALT: () => {
-            $.CONSUME(Question);
-            result.type = "ZERO_OR_ONE";
+            $.CONSUME(Question)
+            result.type = "ZERO_OR_ONE"
           },
         },
         {
           ALT: () => {
-            $.CONSUME(Star);
-            result.type = "ZERO_OR_MORE";
+            $.CONSUME(Star)
+            result.type = "ZERO_OR_MORE"
           },
         },
         {
           ALT: () => {
-            $.CONSUME(Plus);
-            result.type = "ONE_OR_MORE";
+            $.CONSUME(Plus)
+            result.type = "ONE_OR_MORE"
           },
         },
         {
           ALT: () => {
-            const { min, max } = $.SUBRULE($.rangeModifier);
+            const { min, max } = $.SUBRULE($.rangeModifier)
             $.ACTION(() => {
-              result.type = "RANGE";
-              result.min = min;
-              result.max = max;
-            });
+              result.type = "RANGE"
+              result.min = min
+              result.max = max
+            })
           },
         },
-      ]);
+      ])
       $.OPTION(() => {
-        $.CONSUME1(Question);
+        $.CONSUME1(Question)
         $.ACTION(() => {
-          result.greedy = false;
-        });
-      });
-      return result;
-    });
+          result.greedy = false
+        })
+      })
+      return result
+    })
 
     $.RULE("rangeModifier", () => {
-      const range = { min: null, max: null };
-      $.CONSUME(LCurly);
+      const range = { min: null, max: null }
+      $.CONSUME(LCurly)
 
       // {x}
       $.OPTION(() => {
         $.OR([
           {
             ALT: () => {
-              range.min = $.CONSUME(Zero).image;
+              range.min = $.CONSUME(Zero).image
             },
           },
           {
             ALT: () => {
-              range.min = $.CONSUME(PositiveInt).image;
+              range.min = $.CONSUME(PositiveInt).image
             },
           },
-        ]);
-      });
+        ])
+      })
 
       // {x}
-      range.max = range.min;
+      range.max = range.min
 
       $.OPTION1(() => {
-        $.CONSUME(Comma);
+        $.CONSUME(Comma)
         // {x,}
-        range.max = null;
+        range.max = null
         // {,x} {x,}, {x,y}
         $.OPTION2(() => {
-          range.max = $.CONSUME1(PositiveInt).image;
-        });
-      });
+          range.max = $.CONSUME1(PositiveInt).image
+        })
+      })
 
       $.ACTION(() => {
         if (range.min) {
-          range.min = parseInt(range.min);
+          range.min = parseInt(range.min)
         }
         if (range.max) {
-          range.max = parseInt(range.max);
+          range.max = parseInt(range.max)
         }
-        const { min, max } = range;
+        const { min, max } = range
         if (min && max && min > max) {
-          throw new Error(
-            `Range min(${min}) must be greater than max(${max}).`
-          );
+          throw new Error(`Range min(${min}) must be greater than max(${max}).`)
         }
         if (min === null && max === null) {
-          throw new Error(`Range min or max must be defined.`);
+          throw new Error(`Range min or max must be defined.`)
         }
-      });
+      })
 
-      $.CONSUME(RCurly);
-      return range;
-    });
+      $.CONSUME(RCurly)
+      return range
+    })
 
     $.RULE("group", (prog = [], groups = [], vars = []) => {
       let modifiers = {
@@ -498,101 +495,101 @@ export class NLPMatchParser extends EmbeddedActionsParser {
         name: null,
         lookahead: false,
         negative: false,
-      };
+      }
 
-      $.CONSUME(LParenthesis);
+      $.CONSUME(LParenthesis)
 
       $.OPTION(() => {
-        modifiers = $.SUBRULE($.groupModifier);
-      });
+        modifiers = $.SUBRULE($.groupModifier)
+      })
 
-      let oProg = null;
+      let oProg = null
       if (modifiers.lookahead) {
         // part 1, see finish at end
-        modifiers.capture = false;
-        oProg = prog;
-        prog = [];
+        modifiers.capture = false
+        oProg = prog
+        prog = []
       }
 
-      const gId = groups.length;
+      const gId = groups.length
       if (modifiers.capture) {
-        groups.push(modifiers);
-        prog.push({ code: OGROUP, id: gId, name: modifiers.name });
+        groups.push(modifiers)
+        prog.push({ code: OGROUP, id: gId, name: modifiers.name })
       }
 
-      const split = { code: SPLIT, locs: [] };
-      prog.push(split);
-      let jmps = [];
+      const split = { code: SPLIT, locs: [] }
+      prog.push(split)
+      let jmps = []
 
       $.AT_LEAST_ONE_SEP({
         SEP: Pipe,
         DEF: () => {
-          split.locs.push(prog.length);
-          $.SUBRULE($.valueStatement, { ARGS: [prog, groups, vars] });
+          split.locs.push(prog.length)
+          $.SUBRULE($.valueStatement, { ARGS: [prog, groups, vars] })
 
-          const jmp = { code: JMP, loc: null };
-          jmps.push(jmp);
-          prog.push(jmp);
+          const jmp = { code: JMP, loc: null }
+          jmps.push(jmp)
+          prog.push(jmp)
         },
-      });
+      })
 
       // make split noop when just one in group
       if (split.locs.length === 1) {
-        split.code = NOOP;
-        delete split.locs;
+        split.code = NOOP
+        delete split.locs
       }
 
       // remove last jmp so it continues
-      prog.pop();
+      prog.pop()
 
       // set jmps to end
       for (const jmp of jmps) {
-        jmp.loc = prog.length;
+        jmp.loc = prog.length
       }
 
       // close the group if necessary as the last step
       if (modifiers.capture) {
-        prog.push({ code: CGROUP, id: gId, name: modifiers.name });
+        prog.push({ code: CGROUP, id: gId, name: modifiers.name })
       }
 
       if (modifiers.lookahead) {
-        prog.push({ code: MATCH });
+        prog.push({ code: MATCH })
         oProg.push({
           code: modifiers.negative ? NEGATIVE_LOOKAHEAD : LOOKAHEAD,
           prog,
-        });
+        })
       }
 
-      $.CONSUME(RParenthesis);
-    });
+      $.CONSUME(RParenthesis)
+    })
 
     $.RULE("namedGroup", () => {
-      $.CONSUME(Question);
-      $.CONSUME(NamedGroupBegin);
-      const name = $.CONSUME(Word).image;
-      $.CONSUME(NamedGroupEnd);
-      return name;
-    });
+      $.CONSUME(Question)
+      $.CONSUME(NamedGroupBegin)
+      const name = $.CONSUME(Word).image
+      $.CONSUME(NamedGroupEnd)
+      return name
+    })
 
     $.RULE("nonCapturingGroup", () => {
-      $.CONSUME(Question);
-      $.CONSUME(Colon);
-    });
+      $.CONSUME(Question)
+      $.CONSUME(Colon)
+    })
 
     $.RULE("negativeLookaheadGroup", () => {
-      $.CONSUME(Question);
-      $.CONSUME(Exclamation);
-    });
+      $.CONSUME(Question)
+      $.CONSUME(Exclamation)
+    })
 
     $.RULE("positiveLookaheadGroup", () => {
-      $.CONSUME(Question);
-      $.CONSUME(Equals);
-    });
+      $.CONSUME(Question)
+      $.CONSUME(Equals)
+    })
 
     $.RULE("commentGroup", () => {
-      $.CONSUME(Question);
-      $.CONSUME(Pound);
-    });
+      $.CONSUME(Question)
+      $.CONSUME(Pound)
+    })
 
     $.RULE("groupModifier", () => {
       let result = {
@@ -601,33 +598,33 @@ export class NLPMatchParser extends EmbeddedActionsParser {
         lookahead: false,
         negative: false,
         comment: false,
-      };
+      }
       $.OR([
         {
           ALT: () => {
-            $.SUBRULE($.nonCapturingGroup);
-            result.capture = false;
+            $.SUBRULE($.nonCapturingGroup)
+            result.capture = false
           },
         },
         {
           ALT: () => {
-            result.name = $.SUBRULE($.namedGroup);
+            result.name = $.SUBRULE($.namedGroup)
           },
         },
         {
           ALT: () => {
-            $.SUBRULE($.negativeLookaheadGroup);
-            result.capture = false;
-            result.lookahead = true;
-            result.negative = true;
+            $.SUBRULE($.negativeLookaheadGroup)
+            result.capture = false
+            result.lookahead = true
+            result.negative = true
           },
         },
         {
           ALT: () => {
-            $.SUBRULE($.positiveLookaheadGroup);
-            result.capture = false;
-            result.lookahead = true;
-            result.negative = false;
+            $.SUBRULE($.positiveLookaheadGroup)
+            result.capture = false
+            result.lookahead = true
+            result.negative = false
           },
         },
         /*
@@ -637,10 +634,10 @@ export class NLPMatchParser extends EmbeddedActionsParser {
           result.comment = true;
         }}
         */
-      ]);
-      return result;
-    });
+      ])
+      return result
+    })
 
-    this.performSelfAnalysis();
+    this.performSelfAnalysis()
   }
 }

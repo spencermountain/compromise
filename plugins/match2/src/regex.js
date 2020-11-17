@@ -1,21 +1,21 @@
-import { Lexer } from "chevrotain";
-import { NLPMatchParser, allTokens } from "./parser";
-import { pikevm } from "./pikevm";
+import { Lexer } from "chevrotain"
+import { NLPMatchParser, allTokens } from "./parser"
+import { pikevm } from "./pikevm"
 
-export const NLPMatchLexer = new Lexer(allTokens);
-export const parserInstance = new NLPMatchParser();
+export const NLPMatchLexer = new Lexer(allTokens)
+export const parserInstance = new NLPMatchParser()
 
 export class NLPRegexParseError {
   constructor(errors) {
-    this.errors = errors;
+    this.errors = errors
   }
 
   get message() {
-    return this.errors[0]?.message;
+    return this.errors[0]?.message
   }
 
   toString() {
-    return `NLP RegexP Parsing error: ${this.message}`;
+    return `NLP RegexP Parsing error: ${this.message}`
   }
 }
 
@@ -30,38 +30,38 @@ export class NLPRegexP {
   constructor(regex) {
     if (regex?.prog) {
       // take another NLPRegexP
-      this.regex = regex.regex;
-      this.prog = [...regex.prog];
-      return;
+      this.regex = regex.regex
+      this.prog = [...regex.prog]
+      return
     }
 
-    const { tokens } = NLPMatchLexer.tokenize(regex);
-    parserInstance.input = tokens;
-    let parsed = null;
+    const { tokens } = NLPMatchLexer.tokenize(regex)
+    parserInstance.input = tokens
+    let parsed = null
 
     try {
-      parsed = parserInstance.matchStatement();
+      parsed = parserInstance.matchStatement()
     } catch (e) {
       // catch thrown error
-      throw new NLPRegexParseError([e]);
+      throw new NLPRegexParseError([e])
     }
 
     if (parserInstance.errors.length > 0) {
-      throw new NLPRegexParseError(parserInstance.errors);
+      throw new NLPRegexParseError(parserInstance.errors)
     }
 
-    this.regex = regex;
-    this.prog = parsed.prog;
+    this.regex = regex
+    this.prog = parsed.prog
   }
 
   exec(docOrPhrase) {
     switch (docOrPhrase?.isA?.toLowerCase()) {
       case "doc":
-        return this.execDoc(docOrPhrase);
+        return this.execDoc(docOrPhrase)
       case "phrase":
-        return this.execPhrase(docOrPhrase);
+        return this.execPhrase(docOrPhrase)
       default:
-        throw new Error("Invalid type, must be Document or Phrase");
+        throw new Error("Invalid type, must be Document or Phrase")
     }
   }
 
@@ -69,17 +69,14 @@ export class NLPRegexP {
     return doc.buildFrom(
       doc.list
         .map((phrase) => {
-          return this.execPhrase(phrase);
+          return this.execPhrase(phrase)
         })
         .filter((p) => p !== null)
-    );
+    )
   }
 
   execPhrase(phrase) {
-    const { found, saved = [], groups = {} } = pikevm(
-      this.prog,
-      phrase.terms()
-    );
+    const { found, saved = [], groups = {} } = pikevm(this.prog, phrase.terms())
 
     const namedGroups = Object.values(groups).reduce(
       (arr, g) => ({
@@ -91,10 +88,10 @@ export class NLPRegexP {
         },
       }),
       {}
-    );
+    )
 
     return found && saved?.[0]?.id
       ? phrase.buildFrom(saved[0].id, saved.length, namedGroups)
-      : null;
+      : null
   }
 }

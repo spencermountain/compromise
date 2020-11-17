@@ -16,13 +16,13 @@ import {
   SPLIT_LT,
   LOOKAHEAD,
   NEGATIVE_LOOKAHEAD,
-} from "./constants";
+} from "./constants"
 
 export const termContainsTag = (term, name) =>
   Object.entries(term?.tags ?? {})
     .filter(([k, v]) => v)
     .map((entry) => entry[0].toLowerCase())
-    .includes(name.toLowerCase());
+    .includes(name.toLowerCase())
 
 /**
  * Helper function, create a thread
@@ -45,9 +45,9 @@ const thread = (
     ng[g.id] = {
       ...g,
       saved: [...g.saved],
-    };
-    return ng;
-  }, {});
+    }
+    return ng
+  }, {})
 
   return {
     pc,
@@ -56,29 +56,29 @@ const thread = (
     // clone groups.saved
     groups: ngroups,
     vars: { ...vars },
-  };
-};
+  }
+}
 
 const addthread = (prog, list, th) => {
-  const inst = prog[th.pc];
+  const inst = prog[th.pc]
   //console.log("addthread:", th.pc);
   //console.log("  inst:", inst);
   switch (inst.code) {
     case GLOBAL_SAVE:
-      th.save = inst.value;
-      addthread(prog, list, thread(th.pc + 1, th));
-      break;
+      th.save = inst.value
+      addthread(prog, list, thread(th.pc + 1, th))
+      break
     case NOOP:
-      addthread(prog, list, thread(th.pc + 1, th));
-      break;
+      addthread(prog, list, thread(th.pc + 1, th))
+      break
     case JMP:
-      addthread(prog, list, thread(inst.loc, th));
-      break;
+      addthread(prog, list, thread(inst.loc, th))
+      break
     case SPLIT:
       for (const loc of inst.locs) {
-        addthread(prog, list, thread(loc, th));
+        addthread(prog, list, thread(loc, th))
       }
-      break;
+      break
     case OGROUP:
       // again (see below comment in pikevm match), can modify thread
       // because it ends here
@@ -87,42 +87,42 @@ const addthread = (prog, list, th) => {
         name: inst.name,
         saved: [],
         open: true,
-      };
-      addthread(prog, list, thread(th.pc + 1, th));
-      break;
+      }
+      addthread(prog, list, thread(th.pc + 1, th))
+      break
     case CGROUP:
-      th.groups[inst.id].open = false;
-      addthread(prog, list, thread(th.pc + 1, th));
-      break;
+      th.groups[inst.id].open = false
+      addthread(prog, list, thread(th.pc + 1, th))
+      break
     case INCV:
-      th.vars[inst.varId] = (th.vars?.[inst.varId] ?? 0) + 1;
-      addthread(prog, list, thread(th.pc + 1, th));
-      break;
+      th.vars[inst.varId] = (th.vars?.[inst.varId] ?? 0) + 1
+      addthread(prog, list, thread(th.pc + 1, th))
+      break
     case JMP_LT:
       if (th.vars[inst.varId] < inst.value) {
         // jump!
-        addthread(prog, list, thread(inst.loc, th));
+        addthread(prog, list, thread(inst.loc, th))
       } else {
         // continue
-        addthread(prog, list, thread(th.pc + 1, th));
+        addthread(prog, list, thread(th.pc + 1, th))
       }
-      break;
+      break
     case SPLIT_LT:
       if (th.vars[inst.varId] < inst.value) {
         // split!
         for (const loc of inst.locs) {
-          addthread(prog, list, thread(loc, th));
+          addthread(prog, list, thread(loc, th))
         }
       } else {
         // continue
-        addthread(prog, list, thread(th.pc + 1, th));
+        addthread(prog, list, thread(th.pc + 1, th))
       }
-      break;
+      break
     default:
-      list.push(th);
-      break;
+      list.push(th)
+      break
   }
-};
+}
 
 /**
  * Save a match to a thread.
@@ -133,7 +133,7 @@ const addthread = (prog, list, th) => {
  */
 const saveMatch = (th, sp) => {
   if (!th.save) {
-    return th;
+    return th
   }
 
   const buckets = [
@@ -142,12 +142,12 @@ const saveMatch = (th, sp) => {
     ...Object.values(th.groups)
       .filter((g) => g.open)
       .map((g) => g.saved),
-  ];
+  ]
   for (const saved of buckets) {
-    saved.push(sp);
+    saved.push(sp)
   }
-  return th;
-};
+  return th
+}
 
 /**
  * Simulate pike's vm, see https://swtch.com/~rsc/regexp/regexp2.html
@@ -156,99 +156,99 @@ const saveMatch = (th, sp) => {
  * @returns true or false for match and saved matches
  */
 export const pikevm = (prog, input, flags = []) => {
-  let clist = [];
-  let nlist = [];
-  let found = false;
-  let groups = {};
-  let saved = [];
+  let clist = []
+  let nlist = []
+  let found = false
+  let groups = {}
+  let saved = []
 
   // helps with match end and also matches that end at exactly the end so that
   // the match function gets a chance to run.
-  const END = Symbol("END");
-  input = [...input, END];
+  const END = Symbol("END")
+  input = [...input, END]
 
-  addthread(prog, clist, thread(0)); // and so we begin...
+  addthread(prog, clist, thread(0)) // and so we begin...
   for (let i = 0; i < input.length; i++) {
     if (clist.length === 0) {
-      break;
+      break
     }
 
-    const sp = input[i];
+    const sp = input[i]
 
     for (let j = 0; j < clist.length; j++) {
       // can probably convert to clist.shift as optimization
-      const th = clist[j];
-      const inst = prog[th.pc];
+      const th = clist[j]
+      const inst = prog[th.pc]
       //console.log("exec:", inst);
       //console.log(`  stack(${i}):`, clist);
-      let gotoNextWord = false;
+      let gotoNextWord = false
       switch (inst.code) {
         case MATCH_ANY:
           // Note: can call save match like this without worrying about other
           // threads because this thread ends here and another will be created
           // in its place
           if (sp !== END) {
-            addthread(prog, nlist, thread(th.pc + 1, saveMatch(th, sp)));
+            addthread(prog, nlist, thread(th.pc + 1, saveMatch(th, sp)))
           }
-          break;
+          break
         case MATCH_WORD:
           if (sp?.text?.toLowerCase() === inst.value.toLowerCase()) {
             // continue on next word
-            addthread(prog, nlist, thread(th.pc + 1, saveMatch(th, sp)));
+            addthread(prog, nlist, thread(th.pc + 1, saveMatch(th, sp)))
           }
-          break;
+          break
         case MATCH_TAG:
           if (termContainsTag(sp, inst.value)) {
-            addthread(prog, nlist, thread(th.pc + 1, saveMatch(th, sp)));
+            addthread(prog, nlist, thread(th.pc + 1, saveMatch(th, sp)))
           }
-          break;
+          break
         case MATCH_METHOD:
           // call method using null coalescing on term, if it returns true continue
           if (sp?.[inst.value]?.()) {
-            addthread(prog, nlist, thread(th.pc + 1, saveMatch(th, sp)));
+            addthread(prog, nlist, thread(th.pc + 1, saveMatch(th, sp)))
           }
-          break;
+          break
         case MATCH_END:
           if (sp === END) {
             // continue
-            addthread(prog, clist, thread(th.pc + 1, th));
+            addthread(prog, clist, thread(th.pc + 1, th))
           }
-          break;
+          break
         case LOOKAHEAD:
-          const mla = pikevm(inst.prog, input.slice(i));
+          const mla = pikevm(inst.prog, input.slice(i))
           if (mla.found) {
-            addthread(prog, clist, thread(th.pc + 1, th));
+            addthread(prog, clist, thread(th.pc + 1, th))
           }
-          break;
+          break
         case NEGATIVE_LOOKAHEAD:
-          const mnla = pikevm(inst.prog, input.slice(i));
+          const mnla = pikevm(inst.prog, input.slice(i))
           if (!mnla.found) {
             // continue at current position
             // NOTE: this would be in addthread but we require access to input
-            addthread(prog, clist, thread(th.pc + 1, th));
+            addthread(prog, clist, thread(th.pc + 1, th))
           }
-          break;
+          break
         case MATCH:
-          saved = th.saved;
-          groups = th.groups;
-          found = true;
+          saved = th.saved
+          groups = th.groups
+          found = true
           // Go to the next word which causes all pending threads in the
           // current list (stack) to be cleared so we don't go down those
           // paths. This allows for greedy and non-greedy matches to work.
-          gotoNextWord = true;
-          break;
+          gotoNextWord = true
+          break
         default:
-          throw new Error(`Unsuppored Op code: ${inst.code}`);
+          throw new Error(`Unsuppored Op code: ${inst.code}`)
       }
       if (gotoNextWord) {
-        break; // continue next iteration
+        break // continue next iteration
       }
     }
-    clist = nlist;
-    nlist = [];
+    clist = nlist
+    nlist = []
   }
   if (found) {
-    return { found, saved, groups };
+    return { found, saved, groups }
   }
-  return { found };
-};
+  return { found }
+}

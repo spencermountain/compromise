@@ -17,12 +17,12 @@
   "prettier": {
     "trailingComma": "es5",
     "tabWidth": 2,
-    "semi": true
+    "semi": false
   },
   "jest": {
     "collectCoverageFrom": [
-      "src/**/*.js",
-      "!src/**/*.test.js"
+      "tests/**/*.js",
+      "!tests/**/*.test.js"
     ],
     "coverageThreshold": {
       "global": {

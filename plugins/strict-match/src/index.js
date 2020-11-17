@@ -1,10 +1,8 @@
-import { NLPRegexP } from "./regex"
-
-export { NLPMatchParser } from "./parser"
-export { NLPRegexP, NLPRegexParseError } from "./regex"
+const { NLPMatchParser } = require("./parser")
+const { NLPRegexP, NLPRegexParseError } = require("./regex")
 
 // nlp compromise plugin
-export const plugin = (Doc, world, nlp, Phrase) => {
+const plugin = (Doc, _world, nlp, Phrase) => {
   const compileRegex = (regex) => new NLPRegexP(regex)
   nlp.compileRegex = compileRegex
   Doc.prototype.compileRegex = compileRegex
@@ -17,4 +15,8 @@ export const plugin = (Doc, world, nlp, Phrase) => {
   Doc.prototype.strictMatch = strictMatch
   Phrase.prototype.strictMatch = strictMatch
 }
-export default plugin
+module.exports = {
+  plugin: plugin,
+  NLPMatchParser: NLPMatchParser,
+  NLPRegexParseError: NLPRegexParseError,
+}

@@ -1,11 +1,10 @@
-import { Lexer } from "chevrotain"
-import { NLPMatchParser, allTokens } from "./parser"
-import { pikevm } from "./pikevm"
+const { Lexer } = require("chevrotain")
+const { NLPMatchParser, allTokens } = require("./parser")
+const { pikevm } = require("./pikevm")
+const NLPMatchLexer = new Lexer(allTokens)
+const parserInstance = new NLPMatchParser()
 
-export const NLPMatchLexer = new Lexer(allTokens)
-export const parserInstance = new NLPMatchParser()
-
-export class NLPRegexParseError {
+class NLPRegexParseError {
   constructor(errors) {
     this.errors = errors
   }
@@ -22,7 +21,7 @@ export class NLPRegexParseError {
 /**
  * Custom NLPRegexP class for regexp compile / cache.
  */
-export class NLPRegexP {
+class NLPRegexP {
   /**
    * @param {string} regex - regular expression like string for matching nlp
    * terms.
@@ -94,4 +93,10 @@ export class NLPRegexP {
       ? phrase.buildFrom(saved[0].id, saved.length, namedGroups)
       : null
   }
+}
+module.exports = {
+  NLPMatchLexer: NLPMatchLexer,
+  parserInstance: parserInstance,
+  NLPRegexParseError: NLPRegexParseError,
+  NLPRegexP: NLPRegexP,
 }

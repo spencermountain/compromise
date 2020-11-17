@@ -1,4 +1,4 @@
-import {
+const {
   NOOP,
   MATCH_ANY,
   MATCH_TAG,
@@ -16,9 +16,9 @@ import {
   SPLIT_LT,
   LOOKAHEAD,
   NEGATIVE_LOOKAHEAD,
-} from "./constants"
+} = require("./constants")
 
-export const termContainsTag = (term, name) =>
+const termContainsTag = (term, name) =>
   Object.entries(term?.tags ?? {})
     .filter(([k, v]) => v)
     .map((entry) => entry[0].toLowerCase())
@@ -155,7 +155,7 @@ const saveMatch = (th, sp) => {
  * @param {object[]} input - input word w/ terms
  * @returns true or false for match and saved matches
  */
-export const pikevm = (prog, input, flags = []) => {
+const pikevm = (prog, input, flags = []) => {
   let clist = []
   let nlist = []
   let found = false
@@ -251,4 +251,9 @@ export const pikevm = (prog, input, flags = []) => {
     return { found, saved, groups }
   }
   return { found }
+}
+
+module.exports = {
+  termContainsTag: termContainsTag,
+  pikevm: pikevm,
 }

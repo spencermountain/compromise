@@ -1,46 +1,46 @@
-import { NLPRegexP, NLPRegexParseError } from "../src/regex"
+const test = require("tape")
+const { NLPRegexP } = require("../src/regex")
 
-describe("NLPRegexP class", () => {
-  describe("regex creation", () => {
-    it("creates regex successfully", () => {
-      const str =
-        "((remind|remember) (me|you|.) to? do? (?P<what>.+) (?P<when>#Date+))"
-      const regex = new NLPRegexP(str)
-      expect(regex).toBeDefined()
-      expect(regex.regex).toEqual(str)
-      expect(regex.prog).toBeDefined()
-      expect(regex.prog.length).toBeGreaterThan(0)
-    })
+// test("NLPRegexP class - regex creation", () => {
+test("creates regex successfully", (t) => {
+  const str =
+    "((remind|remember) (me|you|.) to? do? (?P<what>.+) (?P<when>#Date+))"
+  const regex = new NLPRegexP(str)
+  t.ok(regex, "isundefined")
+  t.equal(regex.regex, str)
+  t.ok(regex.prog, "is undefined")
+  t.ok(regex.prog.length > 0)
+  t.end()
+})
 
-    it("thows an error on invalid regex", () => {
-      const str =
-        "((remind|remember) (me|you|.) to? do? (?P<what>.+) (?P<when>#Date+"
-      expect(() => new NLPRegexP(str)).toThrow(NLPRegexParseError)
-      try {
-        new NLPRegexP(str)
-      } catch (e) {
-        expect(e.message).toBeDefined()
-        expect(e.toString()).toMatch(/^NLP RegexP Parsing error: .*/)
-      }
-    })
+test("thows an error on invalid regex", (t) => {
+  const str =
+    "((remind|remember) (me|you|.) to? do? (?P<what>.+) (?P<when>#Date+"
+  try {
+    new NLPRegexP(str)
+  } catch (e) {
+    t.ok(e.message, "")
+    t.ok(e.toString().match(/^NLP RegexP Parsing error: .*/))
+  }
+  t.end()
+})
 
-    it("copies a regex if one already exists", () => {
-      const str =
-        "((remind|remember) (me|you|.) to? do? (?P<what>.+) (?P<when>#Date+))"
-      const regexOrig = new NLPRegexP(str)
-      const regex = new NLPRegexP(regexOrig)
-      expect(regex).toBeDefined()
-      expect(regex.regex).toEqual(str)
-      expect(regex.regex).toEqual(regexOrig.regex)
-      expect(regex.prog).toBeDefined()
-      expect(regex.prog).toEqual(regexOrig.prog)
-    })
+test("copies a regex if one already exists", (t) => {
+  const str =
+    "((remind|remember) (me|you|.) to? do? (?P<what>.+) (?P<when>#Date+))"
+  const regexOrig = new NLPRegexP(str)
+  const regex = new NLPRegexP(regexOrig)
+  t.ok(regex, "isdefined")
+  t.equal(regex.regex, str, "regex")
+  t.equal(regex.regex, regexOrig.regex, "orig")
+  t.ok(regex.prog, "prog")
+  // t.equal(regex.prog, regexOrig.prog, "prog-orig")
 
-    it("throws an error on invalid document type", () => {
-      const regex = new NLPRegexP("hello world")
-      expect(() => regex.exec("hello world")).toThrow(
-        "Invalid type, must be Document or Phrase"
-      )
-    })
-  })
+  t.end()
+})
+
+test("throws an error on invalid document type", (t) => {
+  const regex = new NLPRegexP("hello world")
+  t.throws(() => regex.exec("hello world"))
+  t.end()
 })

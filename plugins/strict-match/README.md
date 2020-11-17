@@ -50,7 +50,7 @@ console.log(doc.text());
 
 ```javascript
 const nlp = require("compromise");
-nlp.extend(require("compromise-strict-match"));
+nlp.extend(require("compromise-strict-match").plugin);
 
 let doc = nlp("Good morning world")
   .strictMatch("(?P<greeting>hi|hello|good morning) #Noun")

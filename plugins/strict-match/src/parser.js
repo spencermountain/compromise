@@ -1,6 +1,6 @@
-import { EmbeddedActionsParser, Lexer, createToken } from "chevrotain"
+const { EmbeddedActionsParser, Lexer, createToken } = require("chevrotain")
 
-import {
+const {
   NOOP,
   MATCH_ANY,
   MATCH_TAG,
@@ -18,7 +18,7 @@ import {
   SPLIT_LT,
   LOOKAHEAD,
   NEGATIVE_LOOKAHEAD,
-} from "./constants"
+} = require("./constants")
 
 const StartOf = createToken({ name: "StartOf", pattern: /\^/ })
 const EndOf = createToken({ name: "EndOf", pattern: /\$/ })
@@ -69,7 +69,7 @@ const WhiteSpace = createToken({
   group: Lexer.SKIPPED,
 })
 
-export const allTokens = [
+const allTokens = [
   NamedGroupBegin,
   NamedGroupEnd,
   WhiteSpace,
@@ -159,7 +159,7 @@ export const allTokens = [
 // 2.1. if found stop, else continue at current sp
 //
 
-export class NLPMatchParser extends EmbeddedActionsParser {
+class NLPMatchParser extends EmbeddedActionsParser {
   constructor() {
     super(allTokens)
 
@@ -640,4 +640,9 @@ export class NLPMatchParser extends EmbeddedActionsParser {
 
     this.performSelfAnalysis()
   }
+}
+
+module.exports = {
+  allTokens: allTokens,
+  NLPMatchParser: NLPMatchParser,
 }

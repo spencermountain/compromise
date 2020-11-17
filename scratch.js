@@ -4,7 +4,7 @@ const nlp = require('./src/index')
 // let txt = require('./scripts/test/speed/_sotu-text.js')
 // nlp.extend(require('./plugins/numbers/src'))
 // nlp.extend(require('./plugins/dates/src'))
-let fn = require('./plugins/strict-match/builds/compromise-strict-match').default
+let fn = require('./plugins/strict-match/src').plugin
 nlp.extend(fn)
 // nlp.extend(require('./plugins/phrases/src'))
 

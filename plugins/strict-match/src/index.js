@@ -1,11 +1,10 @@
-const { MatchParser } = require("./parser")
+// const { MatchParser } = require("./parser")
 const { NLPRegexP } = require("./regex")
 
 // nlp compromise plugin
 const plugin = (Doc, _world, nlp, Phrase) => {
-  const compileRegex = (regex) => new NLPRegexP(regex)
-  nlp.compileRegex = compileRegex
-  Doc.prototype.compileRegex = compileRegex
+  const preCompile = (regex) => new NLPRegexP(regex)
+  nlp.preCompile = preCompile
 
   const strictMatch = function (regex) {
     // function, non arrow, need bind for this which is doc/phrase
@@ -15,9 +14,4 @@ const plugin = (Doc, _world, nlp, Phrase) => {
   Doc.prototype.strictMatch = strictMatch
   Phrase.prototype.strictMatch = strictMatch
 }
-module.exports = {
-  plugin: plugin,
-  preParser: function(str){
-    return new MatchParser(str)
-  }
-}
+module.exports = plugin

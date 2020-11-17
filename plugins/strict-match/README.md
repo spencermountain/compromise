@@ -50,7 +50,7 @@ console.log(doc.text());
 
 ```javascript
 const nlp = require("compromise");
-nlp.extend(require("compromise-strict-match").plugin);
+nlp.extend(require("compromise-strict-match"));
 
 let doc = nlp("Good morning world")
   .strictMatch("(?P<greeting>hi|hello|good morning) #Noun")
@@ -59,13 +59,11 @@ console.log(doc.text());
 ```
 
 ### Pre-Compling 
-strict-match has the ability to pre-compile a match statement into a parsed format, which may improve performace of the match query:
+strict-match has the ability to pre-compile a match statement into a parsed format, which may improve performace of the match query. This plugin automatically adds this as a helper-method on the main `nlp` constructor.
 
 ```javascript
-import { preParser } from "compromise-strict-match";
 // ... rest from usage above
-
-const m = preParser("(?P<greeting>hi|hello|good morning) #Noun");
+const m = nlp.preCompile("(?P<greeting>hi|hello|good morning) #Noun");
 let doc = nlp("hello world").strictMatch(m).groups("greeting");
 console.log(doc.text());
 ```

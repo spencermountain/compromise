@@ -5,18 +5,16 @@ let doc = nlp("hello hello world")
 
 // describe("edge case", () => {
 test("invalid compiled regex code throws exception", (t) => {
-  const regex = nlp.compileRegex("hello")
+  const regex = nlp.preCompile("hello")
   regex.prog[0].code = null
   t.throws(() => doc.strictMatch(regex), /Unsuppored Op code: null/)
   t.end()
 })
 
 // describe("plugin defines", () => {
-test("extend adds match2 functions to nlp, doc, and phrase", (t) => {
-  t.ok(nlp.compileRegex)
-  t.ok(doc.compileRegex)
+test("extend adds functions to nlp, doc and phrase", (t) => {
+  t.ok(nlp.preCompile)
   t.ok(doc.strictMatch)
-
   const phrase = doc.list[0]
   t.ok(phrase.strictMatch)
   t.end()

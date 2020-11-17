@@ -57,19 +57,16 @@ let doc = nlp("Good morning world")
   .groups("greeting");
 console.log(doc.text());
 ```
-### Compling regexp
 
-**es6:**
+### Pre-Compling 
+strict-match has the ability to pre-compile a match statement into a parsed format, which may improve performace of the match query:
 
 ```javascript
-import { NLPRegexP } from "compromise-strict-match";
+import { preParser } from "compromise-strict-match";
 // ... rest from usage above
 
-const regex = new NLPRegexP("(?P<greeting>hi|hello|good morning) #Noun");
-// or: const regex = nlp.compileRegex('(?P<greeting>hi|hello|good morning) #Noun');
-// or: const regex = doc.compileRegex('(?P<greeting>hi|hello|good morning) #Noun');
-
-let doc = nlp("hello world").strictMatch(regex).groups("greeting");
+const m = preParser("(?P<greeting>hi|hello|good morning) #Noun");
+let doc = nlp("hello world").strictMatch(m).groups("greeting");
 console.log(doc.text());
 ```
 
@@ -98,5 +95,10 @@ console.log(doc.text());
     - **Note**: repeatedly matched groups will overwrite and save only the last value.
 - EndOf: `$` - end of string
 
+### Railroad diagrams
+
+![image](https://user-images.githubusercontent.com/399657/99450530-e557dc00-28ee-11eb-927c-168f5aa2e5f9.png)
+
+Chevrotrain has the neat ability to generate diagrams to explain the match lookup. You can see an example of this working in [./lib/gen_diagram.js](https://github.com/spencermountain/compromise/blob/dev/plugins/strict-match/lib/gen_diagram.js)
 
 GPL-3

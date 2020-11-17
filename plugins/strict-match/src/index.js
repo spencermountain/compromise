@@ -1,5 +1,5 @@
-const { NLPMatchParser } = require("./parser")
-const { NLPRegexP, NLPRegexParseError } = require("./regex")
+const { MatchParser } = require("./parser")
+const { NLPRegexP } = require("./regex")
 
 // nlp compromise plugin
 const plugin = (Doc, _world, nlp, Phrase) => {
@@ -17,6 +17,7 @@ const plugin = (Doc, _world, nlp, Phrase) => {
 }
 module.exports = {
   plugin: plugin,
-  NLPMatchParser: NLPMatchParser,
-  NLPRegexParseError: NLPRegexParseError,
+  preParser: function(str){
+    return new MatchParser(str)
+  }
 }

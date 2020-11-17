@@ -5,18 +5,14 @@ let doc = nlp("hello hello world")
 
 test("values", (t) => {
   t.equal(doc.strictMatch("world").text(), "world")
-
   t.equal(doc.strictMatch("#Noun").text(), "world")
-
   t.equal(doc.strictMatch(".").text(), "hello")
-
   t.equal(nlp("a, b, c").strictMatch("@hasComma+").text(), "a, b")
   t.end()
 })
 
 test("escaped words", (t) => {
   t.equal(nlp("#Noun").strictMatch("\\#Noun").text(), "#Noun")
-
   t.equal(nlp("@hasComma").strictMatch("\\@hasComma").text(), "@hasComma")
   t.end()
 })

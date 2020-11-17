@@ -1,8 +1,8 @@
 const { Lexer } = require("chevrotain")
-const { NLPMatchParser, allTokens } = require("./parser")
+const { MatchParser, allTokens } = require("./parser")
 const { pikevm } = require("./pikevm")
 const NLPMatchLexer = new Lexer(allTokens)
-const parserInstance = new NLPMatchParser()
+const parserInstance = new MatchParser()
 
 class NLPRegexParseError {
   constructor(errors) {
@@ -10,7 +10,7 @@ class NLPRegexParseError {
   }
 
   get message() {
-    return this.errors[0]?.message
+    return this.errors[0].message
   }
 
   toString() {
@@ -27,7 +27,7 @@ class NLPRegexP {
    * terms.
    */
   constructor(regex) {
-    if (regex?.prog) {
+    if (regex.prog) {
       // take another NLPRegexP
       this.regex = regex.regex
       this.prog = [...regex.prog]
@@ -54,7 +54,7 @@ class NLPRegexP {
   }
 
   exec(docOrPhrase) {
-    switch (docOrPhrase?.isA?.toLowerCase()) {
+    switch (docOrPhrase.isA.toLowerCase()) {
       case "doc":
         return this.execDoc(docOrPhrase)
       case "phrase":
@@ -81,7 +81,7 @@ class NLPRegexP {
       (arr, g) => ({
         ...arr,
         [parseInt(g.id)]: {
-          group: g?.name ?? `${g.id}`,
+          group: g.name ?? `${g.id}`,
           start: g.saved[0]?.id ?? 0,
           length: g.saved.length,
         },
@@ -89,7 +89,7 @@ class NLPRegexP {
       {}
     )
 
-    return found && saved?.[0]?.id
+    return found && saved[0] && saved[0].id
       ? phrase.buildFrom(saved[0].id, saved.length, namedGroups)
       : null
   }

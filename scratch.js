@@ -5,6 +5,7 @@ const nlp = require('./src/index')
 // nlp.extend(require('./plugins/numbers/src'))
 // nlp.extend(require('./plugins/dates/src'))
 let fn = require('./plugins/strict-match/src').plugin
+let preParser = require('./plugins/strict-match/src').preParser
 nlp.extend(fn)
 // nlp.extend(require('./plugins/phrases/src'))
 
@@ -24,5 +25,12 @@ nlp.extend(fn)
 //   .out('array')
 // console.log(r)
 
-let doc = nlp('Julie de Bussy')
-doc.strictMatch('#FirstName [(van|von|de|du)] #LastName').debug()
+// let doc = nlp('Julie de Bussy')
+// doc.strictMatch('#FirstName [(van|von|de|du)] #LastName').debug()
+
+const regex = preParser('(?P<greeting>hi|hello|good morning) #Noun')
+// or: const regex = nlp.compileRegex('(?P<greeting>hi|hello|good morning) #Noun');
+// or: const regex = doc.compileRegex('(?P<greeting>hi|hello|good morning) #Noun');
+// console.log(regex)
+let doc = nlp('hello world').strictMatch(regex).groups('greeting')
+// console.log(doc.text())

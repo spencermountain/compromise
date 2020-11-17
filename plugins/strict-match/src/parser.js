@@ -159,7 +159,7 @@ const allTokens = [
 // 2.1. if found stop, else continue at current sp
 //
 
-class NLPMatchParser extends EmbeddedActionsParser {
+class MatchParser extends EmbeddedActionsParser {
   constructor() {
     super(allTokens)
 
@@ -644,5 +644,5 @@ class NLPMatchParser extends EmbeddedActionsParser {
 
 module.exports = {
   allTokens: allTokens,
-  NLPMatchParser: NLPMatchParser,
+  MatchParser: MatchParser,
 }

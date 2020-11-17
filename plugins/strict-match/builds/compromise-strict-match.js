@@ -1,9 +1,9 @@
 /* compromise-strict-match 1.2.0 GPLv3 */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-  typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (global = global || self, factory(global.compromiseStrictMatch = {}));
-}(this, (function (exports) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+  typeof define === 'function' && define.amd ? define(factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.compromiseStrictMatch = factory());
+}(this, (function () { 'use strict';
 
   function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -299,6 +299,11 @@
       }
     };
   }
+
+  // needs a separate module as this is required inside chevrotain productive code
+  // and also in the entry point for webpack(api.ts).
+  // A separate file avoids cyclic dependencies and webpack errors.
+  var VERSION = "7.0.3";
 
   /*
    Utils using lodash style API. (not necessarily 100% compliant) for functional and other utils.
@@ -768,12 +773,27 @@
 
   function createCommonjsModule(fn, basedir, module) {
   	return module = {
-  	  path: basedir,
-  	  exports: {},
-  	  require: function (path, base) {
-        return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
-      }
+  		path: basedir,
+  		exports: {},
+  		require: function (path, base) {
+  			return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
+  		}
   	}, fn(module, module.exports), module.exports;
+  }
+
+  function getAugmentedNamespace(n) {
+  	if (n.__esModule) return n;
+  	var a = Object.defineProperty({}, '__esModule', {value: true});
+  	Object.keys(n).forEach(function (k) {
+  		var d = Object.getOwnPropertyDescriptor(n, k);
+  		Object.defineProperty(a, k, d.get ? d : {
+  			enumerable: true,
+  			get: function () {
+  				return n[k];
+  			}
+  		});
+  	});
+  	return a;
   }
 
   function commonjsRequire () {
@@ -1912,7 +1932,7 @@
         d.__proto__ = b;
       } || function (d, b) {
         for (var p in b) {
-          if (b.hasOwnProperty(p)) d[p] = b[p];
+          if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
         }
       };
 
@@ -2201,7 +2221,7 @@
         d.__proto__ = b;
       } || function (d, b) {
         for (var p in b) {
-          if (b.hasOwnProperty(p)) d[p] = b[p];
+          if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
         }
       };
 
@@ -3910,6 +3930,9 @@
       return tokType.name;
     }
   }
+  function tokenName(tokType) {
+    return tokType.name;
+  }
   function hasTokenLabel(obj) {
     return isString(obj.LABEL) && obj.LABEL !== "";
   }
@@ -3995,6 +4018,9 @@
       tokenType: tokType
     };
   }
+  function tokenMatcher(token, tokType) {
+    return tokenStructuredMatcher(token, tokType);
+  }
 
   var __extends$2 = undefined && undefined.__extends || function () {
     var _extendStatics = function extendStatics(d, b) {
@@ -4004,7 +4030,7 @@
         d.__proto__ = b;
       } || function (d, b) {
         for (var p in b) {
-          if (b.hasOwnProperty(p)) d[p] = b[p];
+          if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
         }
       };
 
@@ -4025,9 +4051,20 @@
   var AbstractProduction =
   /** @class */
   function () {
-    function AbstractProduction(definition) {
-      this.definition = definition;
+    function AbstractProduction(_definition) {
+      this._definition = _definition;
     }
+
+    Object.defineProperty(AbstractProduction.prototype, "definition", {
+      get: function get() {
+        return this._definition;
+      },
+      set: function set(value) {
+        this._definition = value;
+      },
+      enumerable: false,
+      configurable: true
+    });
 
     AbstractProduction.prototype.accept = function (visitor) {
       visitor.visit(this);
@@ -4064,7 +4101,7 @@
       },
       set: function set(definition) {// immutable
       },
-      enumerable: true,
+      enumerable: false,
       configurable: true
     });
 
@@ -4218,6 +4255,16 @@
       return _this;
     }
 
+    Object.defineProperty(Alternation.prototype, "definition", {
+      get: function get() {
+        return this._definition;
+      },
+      set: function set(value) {
+        this._definition = value;
+      },
+      enumerable: false,
+      configurable: true
+    });
     return Alternation;
   }(AbstractProduction);
 
@@ -4522,7 +4569,7 @@
         d.__proto__ = b;
       } || function (d, b) {
         for (var p in b) {
-          if (b.hasOwnProperty(p)) d[p] = b[p];
+          if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
         }
       };
 
@@ -4752,7 +4799,7 @@
         d.__proto__ = b;
       } || function (d, b) {
         for (var p in b) {
-          if (b.hasOwnProperty(p)) d[p] = b[p];
+          if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
         }
       };
 
@@ -4996,7 +5043,7 @@
         d.__proto__ = b;
       } || function (d, b) {
         for (var p in b) {
-          if (b.hasOwnProperty(p)) d[p] = b[p];
+          if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
         }
       };
 
@@ -5069,7 +5116,7 @@
         d.__proto__ = b;
       } || function (d, b) {
         for (var p in b) {
-          if (b.hasOwnProperty(p)) d[p] = b[p];
+          if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
         }
       };
 
@@ -5395,7 +5442,12 @@
         result = getAlternativesForProd(newDef);
       } else if (prod instanceof Alternation) {
         forEach(prod.definition, function (currAlt) {
-          result = getAlternativesForProd(currAlt.definition);
+          // TODO: this is a limited check for empty alternatives
+          //   It would prevent a common case of infinite loops during parser initialization.
+          //   However **in-directly** empty alternatives may still cause issues.
+          if (isEmpty(currAlt.definition) === false) {
+            result = getAlternativesForProd(currAlt.definition);
+          }
         });
         return result;
       } else if (prod instanceof Terminal) {
@@ -5654,7 +5706,7 @@
         d.__proto__ = b;
       } || function (d, b) {
         for (var p in b) {
-          if (b.hasOwnProperty(p)) d[p] = b[p];
+          if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
         }
       };
 
@@ -6209,7 +6261,7 @@
         d.__proto__ = b;
       } || function (d, b) {
         for (var p in b) {
-          if (b.hasOwnProperty(p)) d[p] = b[p];
+          if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
         }
       };
 
@@ -6784,6 +6836,17 @@
       errMsgProvider: defaultGrammarValidatorErrorProvider
     });
     return validateGrammar(options.rules, options.maxLookahead, options.tokenTypes, options.errMsgProvider, options.grammarName);
+  }
+  function assignOccurrenceIndices(options) {
+    forEach(options.rules, function (currRule) {
+      var methodsCollector = new DslMethodsCollectorVisitor();
+      currRule.accept(methodsCollector);
+      forEach(methodsCollector.dslMethods, function (methods) {
+        forEach(methods, function (currMethod, arrIdx) {
+          currMethod.idx = arrIdx + 1;
+        });
+      });
+    });
   }
 
   var MISMATCHED_TOKEN_EXCEPTION = "MismatchedTokenException";
@@ -7389,22 +7452,24 @@
   function classNameFromInstance(instance) {
     return functionName(instance.constructor);
   }
-  var FUNC_NAME_REGEXP = /^\s*function\s*(\S*)\s*\(/;
   var NAME = "name";
-  /* istanbul ignore next too many hacks for IE/old versions of node.js here*/
+  /**
+   * Utility to obtain Function names.
+   * Note that there should not be an assumptions on the result of this function.
+   * E.g: When running from minified source code the result may be auto generated.
+   */
 
   function functionName(func) {
     // Engines that support Function.prototype.name OR the nth (n>1) time after
     // the name has been computed in the following else block.
     var existingNameProp = func.name;
+    /* istanbul ignore else - too many hacks for IE/old versions of node.js here*/
 
     if (existingNameProp) {
       return existingNameProp;
-    } // hack for IE and engines that do not support Object.defineProperty on function.name (Node.js 0.10 && 0.12)
-
-
-    var computedName = func.toString().match(FUNC_NAME_REGEXP)[1];
-    return computedName;
+    } else {
+      return "anonymous";
+    }
   }
   /**
    * @returns {boolean} - has the property been successfully defined
@@ -7767,15 +7832,19 @@
         return this.tokVector;
       },
       set: function set(newInput) {
+        // @ts-ignore - `this parameter` not supported in setters/getters
+        //   - https://www.typescriptlang.org/docs/handbook/functions.html#this-parameters
         if (this.selfAnalysisDone !== true) {
           throw Error("Missing <performSelfAnalysis> invocation at the end of the Parser's constructor.");
-        }
+        } // @ts-ignore - `this parameter` not supported in setters/getters
+        //   - https://www.typescriptlang.org/docs/handbook/functions.html#this-parameters
+
 
         this.reset();
         this.tokVector = newInput;
         this.tokVectorLength = newInput.length;
       },
-      enumerable: true,
+      enumerable: false,
       configurable: true
     }); // skips a token and returns the next token
 
@@ -8859,7 +8928,7 @@
       set: function set(newErrors) {
         this._errors = newErrors;
       },
-      enumerable: true,
+      enumerable: false,
       configurable: true
     }); // TODO: consider caching the error message computed information
 
@@ -9357,7 +9426,7 @@
         d.__proto__ = b;
       } || function (d, b) {
         for (var p in b) {
-          if (b.hasOwnProperty(p)) d[p] = b[p];
+          if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
         }
       };
 
@@ -9409,6 +9478,16 @@
     ParserDefinitionErrorType[ParserDefinitionErrorType["AMBIGUOUS_PREFIX_ALTS"] = 11] = "AMBIGUOUS_PREFIX_ALTS";
     ParserDefinitionErrorType[ParserDefinitionErrorType["TOO_MANY_ALTS"] = 12] = "TOO_MANY_ALTS";
   })(ParserDefinitionErrorType || (ParserDefinitionErrorType = {}));
+
+  function EMPTY_ALT(value) {
+    if (value === void 0) {
+      value = undefined;
+    }
+
+    return function () {
+      return value;
+    };
+  }
 
   var Parser =
   /** @class */
@@ -9583,6 +9662,222 @@
     return EmbeddedActionsParser;
   }(Parser);
 
+  function createSyntaxDiagramsCode(grammar, _a) {
+    var _b = _a === void 0 ? {} : _a,
+        _c = _b.resourceBase,
+        resourceBase = _c === void 0 ? "https://unpkg.com/chevrotain@" + VERSION + "/diagrams/" : _c,
+        _d = _b.css,
+        css = _d === void 0 ? "https://unpkg.com/chevrotain@" + VERSION + "/diagrams/diagrams.css" : _d;
+
+    var header = "\n<!-- This is a generated file -->\n<!DOCTYPE html>\n<meta charset=\"utf-8\">\n<style>\n  body {\n    background-color: hsl(30, 20%, 95%)\n  }\n</style>\n\n";
+    var cssHtml = "\n<link rel='stylesheet' href='" + css + "'>\n";
+    var scripts = "\n<script src='" + resourceBase + "vendor/railroad-diagrams.js'></script>\n<script src='" + resourceBase + "src/diagrams_builder.js'></script>\n<script src='" + resourceBase + "src/diagrams_behavior.js'></script>\n<script src='" + resourceBase + "src/main.js'></script>\n";
+    var diagramsDiv = "\n<div id=\"diagrams\" align=\"center\"></div>    \n";
+    var serializedGrammar = "\n<script>\n    window.serializedGrammar = " + JSON.stringify(grammar, null, "  ") + ";\n</script>\n";
+    var initLogic = "\n<script>\n    var diagramsDiv = document.getElementById(\"diagrams\");\n    main.drawDiagramsFromSerializedGrammar(serializedGrammar, diagramsDiv);\n</script>\n";
+    return header + cssHtml + scripts + diagramsDiv + serializedGrammar + initLogic;
+  }
+
+  /**
+   * Missing features
+   * 1. Rule arguments
+   * 2. Gates
+   * 3. embedded actions
+   */
+
+  var NL = "\n";
+  function genUmdModule(options) {
+    return "\n(function (root, factory) {\n    if (typeof define === 'function' && define.amd) {\n        // AMD. Register as an anonymous module.\n        define(['chevrotain'], factory);\n    } else if (typeof module === 'object' && module.exports) {\n        // Node. Does not work with strict CommonJS, but\n        // only CommonJS-like environments that support module.exports,\n        // like Node.\n        module.exports = factory(require('chevrotain'));\n    } else {\n        // Browser globals (root is window)\n        root.returnExports = factory(root.b);\n    }\n}(typeof self !== 'undefined' ? self : this, function (chevrotain) {\n\n" + genClass(options) + "\n    \nreturn {\n    " + options.name + ": " + options.name + " \n}\n}));\n";
+  }
+  function genWrapperFunction(options) {
+    return "    \n" + genClass(options) + "\nreturn new " + options.name + "(tokenVocabulary, config)    \n";
+  }
+  function genClass(options) {
+    // TODO: how to pass the token vocabulary? Constructor? other?
+    var result = "\nfunction " + options.name + "(tokenVocabulary, config) {\n    // invoke super constructor\n    // No support for embedded actions currently, so we can 'hardcode'\n    // The use of CstParser.\n    chevrotain.CstParser.call(this, tokenVocabulary, config)\n\n    const $ = this\n\n    " + genAllRules(options.rules) + "\n\n    // very important to call this after all the rules have been defined.\n    // otherwise the parser may not work correctly as it will lack information\n    // derived during the self analysis phase.\n    this.performSelfAnalysis(this)\n}\n\n// inheritance as implemented in javascript in the previous decade... :(\n" + options.name + ".prototype = Object.create(chevrotain.CstParser.prototype)\n" + options.name + ".prototype.constructor = " + options.name + "    \n    ";
+    return result;
+  }
+  function genAllRules(rules) {
+    var rulesText = map(rules, function (currRule) {
+      return genRule(currRule, 1);
+    });
+    return rulesText.join("\n");
+  }
+  function genRule(prod, n) {
+    var result = indent(n, "$.RULE(\"" + prod.name + "\", function() {") + NL;
+    result += genDefinition(prod.definition, n + 1);
+    result += indent(n + 1, "})") + NL;
+    return result;
+  }
+  function genTerminal(prod, n) {
+    var name = prod.terminalType.name; // TODO: potential performance optimization, avoid tokenMap Dictionary access
+
+    return indent(n, "$.CONSUME" + prod.idx + "(this.tokensMap." + name + ")" + NL);
+  }
+  function genNonTerminal(prod, n) {
+    return indent(n, "$.SUBRULE" + prod.idx + "($." + prod.nonTerminalName + ")" + NL);
+  }
+  function genAlternation(prod, n) {
+    var result = indent(n, "$.OR" + prod.idx + "([") + NL;
+    var alts = map(prod.definition, function (altDef) {
+      return genSingleAlt(altDef, n + 1);
+    });
+    result += alts.join("," + NL);
+    result += NL + indent(n, "])" + NL);
+    return result;
+  }
+  function genSingleAlt(prod, n) {
+    var result = indent(n, "{") + NL;
+    result += indent(n + 1, "ALT: function() {") + NL;
+    result += genDefinition(prod.definition, n + 1);
+    result += indent(n + 1, "}") + NL;
+    result += indent(n, "}");
+    return result;
+  }
+
+  function genProd(prod, n) {
+    /* istanbul ignore else */
+    if (prod instanceof NonTerminal) {
+      return genNonTerminal(prod, n);
+    } else if (prod instanceof Option) {
+      return genDSLRule("OPTION", prod, n);
+    } else if (prod instanceof RepetitionMandatory) {
+      return genDSLRule("AT_LEAST_ONE", prod, n);
+    } else if (prod instanceof RepetitionMandatoryWithSeparator) {
+      return genDSLRule("AT_LEAST_ONE_SEP", prod, n);
+    } else if (prod instanceof RepetitionWithSeparator) {
+      return genDSLRule("MANY_SEP", prod, n);
+    } else if (prod instanceof Repetition) {
+      return genDSLRule("MANY", prod, n);
+    } else if (prod instanceof Alternation) {
+      return genAlternation(prod, n);
+    } else if (prod instanceof Terminal) {
+      return genTerminal(prod, n);
+    } else if (prod instanceof Alternative) {
+      return genDefinition(prod.definition, n);
+    } else {
+      throw Error("non exhaustive match");
+    }
+  }
+
+  function genDSLRule(dslName, prod, n) {
+    var result = indent(n, "$." + (dslName + prod.idx) + "(");
+
+    if (prod.separator) {
+      result += "{" + NL;
+      result += indent(n + 1, "SEP: this.tokensMap." + prod.separator.name) + "," + NL;
+      result += "DEF: " + genDefFunction(prod.definition, n + 2) + NL;
+      result += indent(n, "}") + NL;
+    } else {
+      result += genDefFunction(prod.definition, n + 1);
+    }
+
+    result += indent(n, ")") + NL;
+    return result;
+  }
+
+  function genDefFunction(definition, n) {
+    var def = "function() {" + NL;
+    def += genDefinition(definition, n);
+    def += indent(n, "}") + NL;
+    return def;
+  }
+
+  function genDefinition(def, n) {
+    var result = "";
+    forEach(def, function (prod) {
+      result += genProd(prod, n + 1);
+    });
+    return result;
+  }
+
+  function indent(howMuch, text) {
+    var spaces = Array(howMuch * 4 + 1).join(" ");
+    return spaces + text;
+  }
+
+  function generateParserFactory(options) {
+    var wrapperText = genWrapperFunction({
+      name: options.name,
+      rules: options.rules
+    });
+    var constructorWrapper = new Function("tokenVocabulary", "config", "chevrotain", wrapperText);
+    return function (config) {
+      return constructorWrapper(options.tokenVocabulary, config, // TODO: check how the require is transpiled/webpacked
+      require("../api"));
+    };
+  }
+  function generateParserModule(options) {
+    return genUmdModule({
+      name: options.name,
+      rules: options.rules
+    });
+  }
+
+  /* istanbul ignore file - tricky to import some things from this module during testing */
+  /* istanbul ignore next */
+
+  function clearCache() {
+    console.warn("The clearCache function was 'soft' removed from the Chevrotain API." + "\n\t It performs no action other than printing this message." + "\n\t Please avoid using it as it will be completely removed in the future");
+  }
+
+  var Parser$1 =
+  /** @class */
+  function () {
+    function Parser() {
+      throw new Error("The Parser class has been deprecated, use CstParser or EmbeddedActionsParser instead.\t\n" + "See: https://sap.github.io/chevrotain/docs/changes/BREAKING_CHANGES.html#_7-0-0");
+    }
+
+    return Parser;
+  }();
+
+  var api = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    clearCache: clearCache,
+    Parser: Parser$1,
+    VERSION: VERSION,
+    CstParser: CstParser,
+    EmbeddedActionsParser: EmbeddedActionsParser,
+    get ParserDefinitionErrorType () { return ParserDefinitionErrorType; },
+    EMPTY_ALT: EMPTY_ALT,
+    Lexer: Lexer,
+    get LexerDefinitionErrorType () { return LexerDefinitionErrorType; },
+    createToken: createToken,
+    createTokenInstance: createTokenInstance,
+    EOF: EOF,
+    tokenLabel: tokenLabel,
+    tokenMatcher: tokenMatcher,
+    tokenName: tokenName,
+    defaultGrammarResolverErrorProvider: defaultGrammarResolverErrorProvider,
+    defaultGrammarValidatorErrorProvider: defaultGrammarValidatorErrorProvider,
+    defaultParserErrorProvider: defaultParserErrorProvider,
+    EarlyExitException: EarlyExitException,
+    isRecognitionException: isRecognitionException,
+    MismatchedTokenException: MismatchedTokenException,
+    NotAllInputParsedException: NotAllInputParsedException,
+    NoViableAltException: NoViableAltException,
+    defaultLexerErrorProvider: defaultLexerErrorProvider,
+    Alternation: Alternation,
+    Alternative: Alternative,
+    NonTerminal: NonTerminal,
+    Option: Option,
+    Repetition: Repetition,
+    RepetitionMandatory: RepetitionMandatory,
+    RepetitionMandatoryWithSeparator: RepetitionMandatoryWithSeparator,
+    RepetitionWithSeparator: RepetitionWithSeparator,
+    Rule: Rule,
+    Terminal: Terminal,
+    serializeGrammar: serializeGrammar,
+    serializeProduction: serializeProduction,
+    GAstVisitor: GAstVisitor,
+    assignOccurrenceIndices: assignOccurrenceIndices,
+    resolveGrammar: resolveGrammar$1,
+    validateGrammar: validateGrammar$1,
+    createSyntaxDiagramsCode: createSyntaxDiagramsCode,
+    generateParserFactory: generateParserFactory,
+    generateParserModule: generateParserModule
+  });
+
   var NOOP$1 = Symbol("NOOP"); // basically continue
 
   var MATCH_ANY = Symbol("MATCH_ANY");
@@ -9607,117 +9902,158 @@
 
   var LOOKAHEAD = Symbol("LOOKAHEAD");
   var NEGATIVE_LOOKAHEAD = Symbol("NEGATIVE_LOOKAHEAD");
+  var constants = {
+    NOOP: NOOP$1,
+    MATCH_ANY: MATCH_ANY,
+    MATCH_WORD: MATCH_WORD,
+    MATCH_TAG: MATCH_TAG,
+    MATCH_METHOD: MATCH_METHOD,
+    MATCH_END: MATCH_END,
+    JMP: JMP,
+    SPLIT: SPLIT,
+    GLOBAL_SAVE: GLOBAL_SAVE,
+    MATCH: MATCH,
+    OGROUP: OGROUP,
+    CGROUP: CGROUP,
+    INCV: INCV,
+    JMP_LT: JMP_LT,
+    SPLIT_LT: SPLIT_LT,
+    LOOKAHEAD: LOOKAHEAD,
+    NEGATIVE_LOOKAHEAD: NEGATIVE_LOOKAHEAD
+  };
 
-  var StartOf = createToken({
+  var require$$0 = /*@__PURE__*/getAugmentedNamespace(api);
+
+  var EmbeddedActionsParser$1 = require$$0.EmbeddedActionsParser,
+      Lexer$1 = require$$0.Lexer,
+      createToken$1 = require$$0.createToken;
+  var NOOP$2 = constants.NOOP,
+      MATCH_ANY$1 = constants.MATCH_ANY,
+      MATCH_TAG$1 = constants.MATCH_TAG,
+      MATCH_WORD$1 = constants.MATCH_WORD,
+      MATCH_METHOD$1 = constants.MATCH_METHOD,
+      MATCH_END$1 = constants.MATCH_END,
+      JMP$1 = constants.JMP,
+      SPLIT$1 = constants.SPLIT,
+      GLOBAL_SAVE$1 = constants.GLOBAL_SAVE,
+      MATCH$1 = constants.MATCH,
+      OGROUP$1 = constants.OGROUP,
+      CGROUP$1 = constants.CGROUP,
+      INCV$1 = constants.INCV,
+      JMP_LT$1 = constants.JMP_LT,
+      SPLIT_LT$1 = constants.SPLIT_LT,
+      LOOKAHEAD$1 = constants.LOOKAHEAD,
+      NEGATIVE_LOOKAHEAD$1 = constants.NEGATIVE_LOOKAHEAD;
+  var StartOf = createToken$1({
     name: "StartOf",
     pattern: /\^/
   });
-  var EndOf = createToken({
+  var EndOf = createToken$1({
     name: "EndOf",
     pattern: /\$/
   });
-  var Tag = createToken({
+  var Tag = createToken$1({
     name: "Tag",
     pattern: /#([_-\w]|\\.)+/
   });
-  var EscapedWord = createToken({
+  var EscapedWord = createToken$1({
     name: "EscapedWord",
     pattern: /\\[#@]([_-\w]|\\.)+/
   });
-  var Word = createToken({
+  var Word = createToken$1({
     name: "Word",
     pattern: /([_-\w]|\\.)+/
   });
-  var Method = createToken({
+  var Method = createToken$1({
     name: "Method",
     pattern: /@[_-\w]+/
   });
-  var Question = createToken({
+  var Question = createToken$1({
     name: "Question",
     pattern: /\?/,
     longer_alt: Word
   });
-  var Exclamation = createToken({
+  var Exclamation = createToken$1({
     name: "Exclamation",
     pattern: /!/,
     longer_alt: Word
   });
-  var Equals = createToken({
+  var Equals = createToken$1({
     name: "Equals",
     pattern: /=/,
     longer_alt: Word
   });
-  var Pound = createToken({
+  var Pound = createToken$1({
     name: "Pound",
     pattern: /#/,
     longer_alt: Tag
   });
-  var Dot = createToken({
+  var Dot = createToken$1({
     name: "Dot",
     pattern: /\./,
     longer_alt: Word
   });
-  var Pipe = createToken({
+  var Pipe = createToken$1({
     name: "Pipe",
     pattern: /\|/
   });
-  var Comma = createToken({
+  var Comma = createToken$1({
     name: "Comma",
     pattern: /,/,
     longer_alt: Word
   });
-  var Colon = createToken({
+  var Colon = createToken$1({
     name: "Colon",
     pattern: /:/,
     longer_alt: Word
   });
-  var Plus = createToken({
+  var Plus = createToken$1({
     name: "Plus",
     pattern: /\+/
   });
-  var Star = createToken({
+  var Star = createToken$1({
     name: "Star",
     pattern: /\*/
   });
-  var Zero = createToken({
+  var Zero = createToken$1({
     name: "Zero",
     pattern: /0/,
     longer_alt: Word
   });
-  var PositiveInt = createToken({
+  var PositiveInt = createToken$1({
     name: "PositiveInt",
     pattern: /[1-9]\d*/,
     longer_alt: Word
   });
-  var LParenthesis = createToken({
+  var LParenthesis = createToken$1({
     name: "LParenthesis",
     pattern: /\(/
   });
-  var RParenthesis = createToken({
+  var RParenthesis = createToken$1({
     name: "RParenthesis",
     pattern: /\)/
   });
-  var LCurly = createToken({
+  var LCurly = createToken$1({
     name: "LCurly",
     pattern: /\{/
   });
-  var RCurly = createToken({
+  var RCurly = createToken$1({
     name: "RCurly",
     pattern: /\}/
   });
-  var NamedGroupBegin = createToken({
+  var NamedGroupBegin = createToken$1({
     name: "NamedGroupBegin",
     pattern: /P</
   });
-  var NamedGroupEnd = createToken({
+  var NamedGroupEnd = createToken$1({
     name: "NamedGroupEnd",
     pattern: />/,
     longer_alt: Word
   });
-  var WhiteSpace = createToken({
+  var WhiteSpace = createToken$1({
     name: "WhiteSpace",
     pattern: /\s+/,
-    group: Lexer.SKIPPED
+    group: Lexer$1.SKIPPED
   });
   var allTokens = [NamedGroupBegin, NamedGroupEnd, WhiteSpace, StartOf, EndOf, Zero, PositiveInt, Dot, EscapedWord, Word, Method, Tag, Exclamation, Equals, Pound, Colon, Question, Plus, Star, Comma, Pipe, LParenthesis, RParenthesis, LCurly, RCurly]; // Notes or something like it, may not be accurate.
   // (a|b)
@@ -9841,22 +10177,22 @@
           // .*? at the start when not ^ / startOf, don't save the matched
           // values.
           matches.prog.push({
-            code: GLOBAL_SAVE,
+            code: GLOBAL_SAVE$1,
             value: false
           });
           matches.prog.push({
-            code: SPLIT,
+            code: SPLIT$1,
             locs: [4, 2]
           });
           matches.prog.push({
-            code: MATCH_ANY
+            code: MATCH_ANY$1
           });
           matches.prog.push({
-            code: JMP,
+            code: JMP$1,
             loc: 1
           });
           matches.prog.push({
-            code: GLOBAL_SAVE,
+            code: GLOBAL_SAVE$1,
             value: true
           });
         }
@@ -9873,12 +10209,12 @@
         $.ACTION(function () {
           if (matches.endOf) {
             matches.prog.push({
-              code: MATCH_END
+              code: MATCH_END$1
             });
           }
 
           matches.prog.push({
-            code: MATCH
+            code: MATCH$1
           });
         });
         return matches;
@@ -9902,7 +10238,7 @@
         var groups = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
         var vars = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
         var split = {
-          code: NOOP$1
+          code: NOOP$2
         }; // save split for modifiers
 
         prog.push(split);
@@ -9912,13 +10248,13 @@
           ALT: function ALT() {
             $.CONSUME(Dot);
             prog.push({
-              code: MATCH_ANY
+              code: MATCH_ANY$1
             });
           }
         }, {
           ALT: function ALT() {
             prog.push({
-              code: MATCH_WORD,
+              code: MATCH_WORD$1,
               value: $.CONSUME(Word).image
             });
           }
@@ -9927,7 +10263,7 @@
             var _$$CONSUME$image;
 
             prog.push({
-              code: MATCH_WORD,
+              code: MATCH_WORD$1,
               value: (_$$CONSUME$image = $.CONSUME(EscapedWord).image) === null || _$$CONSUME$image === void 0 ? void 0 : _$$CONSUME$image.substr(1)
             });
           }
@@ -9936,21 +10272,21 @@
             var _$$CONSUME$image2;
 
             prog.push({
-              code: MATCH_TAG,
+              code: MATCH_TAG$1,
               value: (_$$CONSUME$image2 = $.CONSUME(Tag).image) === null || _$$CONSUME$image2 === void 0 ? void 0 : _$$CONSUME$image2.substr(1)
             });
           }
         }, {
           ALT: function ALT() {
             prog.push({
-              code: MATCH_WORD,
+              code: MATCH_WORD$1,
               value: $.CONSUME(Zero).image
             });
           }
         }, {
           ALT: function ALT() {
             prog.push({
-              code: MATCH_WORD,
+              code: MATCH_WORD$1,
               value: $.CONSUME(PositiveInt).image
             });
           }
@@ -9959,7 +10295,7 @@
             var _$$CONSUME$image3;
 
             prog.push({
-              code: MATCH_METHOD,
+              code: MATCH_METHOD$1,
               value: (_$$CONSUME$image3 = $.CONSUME(Method).image) === null || _$$CONSUME$image3 === void 0 ? void 0 : _$$CONSUME$image3.substr(1)
             });
           }
@@ -9980,22 +10316,22 @@
 
           switch (type) {
             case "ZERO_OR_ONE":
-              split.code = SPLIT;
+              split.code = SPLIT$1;
               split.locs = [start, prog.length];
               break;
 
             case "ZERO_OR_MORE":
               prog.push({
-                code: JMP,
+                code: JMP$1,
                 loc: start - 1
               });
-              split.code = SPLIT;
+              split.code = SPLIT$1;
               split.locs = [start, prog.length];
               break;
 
             case "ONE_OR_MORE":
               prog.push({
-                code: SPLIT,
+                code: SPLIT$1,
                 locs: [start, prog.length + 1]
               });
 
@@ -10009,12 +10345,12 @@
               var varId = vars.length;
               vars.push(varId);
               prog.push({
-                code: INCV,
+                code: INCV$1,
                 varId: varId
               }); // increment first
 
               var minInst = {
-                code: JMP_LT,
+                code: JMP_LT$1,
                 varId: varId,
                 value: min !== null && min !== void 0 ? min : 0,
                 loc: start
@@ -10025,7 +10361,7 @@
                 // a{x}
                 if (min === 0) {
                   // a{0} skip matching, causes token to be ignored
-                  split.code = JMP;
+                  split.code = JMP$1;
                   split.loc = prog.length; // next instruction
                 } else {
                   // a{x}
@@ -10033,10 +10369,10 @@
                 }
               } else if ((min !== null && min !== void 0 ? min : 0) === 0 && max !== null) {
                 // a{,y} a{0,y}
-                split.code = SPLIT;
+                split.code = SPLIT$1;
                 split.locs = [start, prog.length + 1];
                 maxInst = {
-                  code: SPLIT_LT,
+                  code: SPLIT_LT$1,
                   varId: varId,
                   value: max,
                   locs: [start, prog.length + 1]
@@ -10046,7 +10382,7 @@
                 // a{x,}
                 prog.push(minInst);
                 maxInst = {
-                  code: SPLIT,
+                  code: SPLIT$1,
                   locs: [start, prog.length + 1]
                 };
                 prog.push(maxInst);
@@ -10055,7 +10391,7 @@
                 // a{x,y}
                 prog.push(minInst);
                 maxInst = {
-                  code: SPLIT_LT,
+                  code: SPLIT_LT$1,
                   varId: varId,
                   value: max,
                   locs: [start, prog.length + 1]
@@ -10204,14 +10540,14 @@
         if (modifiers.capture) {
           groups.push(modifiers);
           prog.push({
-            code: OGROUP,
+            code: OGROUP$1,
             id: gId,
             name: modifiers.name
           });
         }
 
         var split = {
-          code: SPLIT,
+          code: SPLIT$1,
           locs: []
         };
         prog.push(split);
@@ -10224,7 +10560,7 @@
               ARGS: [prog, groups, vars]
             });
             var jmp = {
-              code: JMP,
+              code: JMP$1,
               loc: null
             };
             jmps.push(jmp);
@@ -10233,7 +10569,7 @@
         }); // make split noop when just one in group
 
         if (split.locs.length === 1) {
-          split.code = NOOP$1;
+          split.code = NOOP$2;
           delete split.locs;
         } // remove last jmp so it continues
 
@@ -10248,7 +10584,7 @@
 
         if (modifiers.capture) {
           prog.push({
-            code: CGROUP,
+            code: CGROUP$1,
             id: gId,
             name: modifiers.name
           });
@@ -10256,10 +10592,10 @@
 
         if (modifiers.lookahead) {
           prog.push({
-            code: MATCH
+            code: MATCH$1
           });
           oProg.push({
-            code: modifiers.negative ? NEGATIVE_LOOKAHEAD : LOOKAHEAD,
+            code: modifiers.negative ? NEGATIVE_LOOKAHEAD$1 : LOOKAHEAD$1,
             prog: prog
           });
         }
@@ -10338,7 +10674,30 @@
     }
 
     return NLPMatchParser;
-  }(EmbeddedActionsParser);
+  }(EmbeddedActionsParser$1);
+
+  var parser = {
+    allTokens: allTokens,
+    NLPMatchParser: NLPMatchParser
+  };
+
+  var NOOP$3 = constants.NOOP,
+      MATCH_ANY$2 = constants.MATCH_ANY,
+      MATCH_TAG$2 = constants.MATCH_TAG,
+      MATCH_WORD$2 = constants.MATCH_WORD,
+      MATCH_METHOD$2 = constants.MATCH_METHOD,
+      MATCH_END$2 = constants.MATCH_END,
+      JMP$2 = constants.JMP,
+      SPLIT$2 = constants.SPLIT,
+      GLOBAL_SAVE$2 = constants.GLOBAL_SAVE,
+      MATCH$2 = constants.MATCH,
+      OGROUP$2 = constants.OGROUP,
+      CGROUP$2 = constants.CGROUP,
+      INCV$2 = constants.INCV,
+      JMP_LT$2 = constants.JMP_LT,
+      SPLIT_LT$2 = constants.SPLIT_LT,
+      LOOKAHEAD$2 = constants.LOOKAHEAD,
+      NEGATIVE_LOOKAHEAD$2 = constants.NEGATIVE_LOOKAHEAD;
 
   var termContainsTag = function termContainsTag(term, name) {
     var _term$tags;
@@ -10366,6 +10725,7 @@
    * @param {object} groups - capture groups key of group id
    * @returns {object} thread
    */
+
 
   var thread = function thread(pc) {
     var _ref3 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
@@ -10401,20 +10761,20 @@
     //console.log("  inst:", inst);
 
     switch (inst.code) {
-      case GLOBAL_SAVE:
+      case GLOBAL_SAVE$2:
         th.save = inst.value;
         addthread(prog, list, thread(th.pc + 1, th));
         break;
 
-      case NOOP$1:
+      case NOOP$3:
         addthread(prog, list, thread(th.pc + 1, th));
         break;
 
-      case JMP:
+      case JMP$2:
         addthread(prog, list, thread(inst.loc, th));
         break;
 
-      case SPLIT:
+      case SPLIT$2:
         var _iterator = _createForOfIteratorHelper(inst.locs),
             _step;
 
@@ -10431,7 +10791,7 @@
 
         break;
 
-      case OGROUP:
+      case OGROUP$2:
         // again (see below comment in pikevm match), can modify thread
         // because it ends here
         th.groups[inst.id] = {
@@ -10443,17 +10803,17 @@
         addthread(prog, list, thread(th.pc + 1, th));
         break;
 
-      case CGROUP:
+      case CGROUP$2:
         th.groups[inst.id].open = false;
         addthread(prog, list, thread(th.pc + 1, th));
         break;
 
-      case INCV:
+      case INCV$2:
         th.vars[inst.varId] = ((_th$vars$inst$varId = (_th$vars = th.vars) === null || _th$vars === void 0 ? void 0 : _th$vars[inst.varId]) !== null && _th$vars$inst$varId !== void 0 ? _th$vars$inst$varId : 0) + 1;
         addthread(prog, list, thread(th.pc + 1, th));
         break;
 
-      case JMP_LT:
+      case JMP_LT$2:
         if (th.vars[inst.varId] < inst.value) {
           // jump!
           addthread(prog, list, thread(inst.loc, th));
@@ -10464,7 +10824,7 @@
 
         break;
 
-      case SPLIT_LT:
+      case SPLIT_LT$2:
         if (th.vars[inst.varId] < inst.value) {
           // split!
           var _iterator2 = _createForOfIteratorHelper(inst.locs),
@@ -10565,7 +10925,7 @@
         var gotoNextWord = false;
 
         switch (inst.code) {
-          case MATCH_ANY:
+          case MATCH_ANY$2:
             // Note: can call save match like this without worrying about other
             // threads because this thread ends here and another will be created
             // in its place
@@ -10575,7 +10935,7 @@
 
             break;
 
-          case MATCH_WORD:
+          case MATCH_WORD$2:
             if ((sp === null || sp === void 0 ? void 0 : (_sp$text = sp.text) === null || _sp$text === void 0 ? void 0 : _sp$text.toLowerCase()) === inst.value.toLowerCase()) {
               // continue on next word
               addthread(prog, nlist, thread(th.pc + 1, saveMatch(th, sp)));
@@ -10583,14 +10943,14 @@
 
             break;
 
-          case MATCH_TAG:
+          case MATCH_TAG$2:
             if (termContainsTag(sp, inst.value)) {
               addthread(prog, nlist, thread(th.pc + 1, saveMatch(th, sp)));
             }
 
             break;
 
-          case MATCH_METHOD:
+          case MATCH_METHOD$2:
             // call method using null coalescing on term, if it returns true continue
             if (sp === null || sp === void 0 ? void 0 : (_sp$inst$value = sp[inst.value]) === null || _sp$inst$value === void 0 ? void 0 : _sp$inst$value.call(sp)) {
               addthread(prog, nlist, thread(th.pc + 1, saveMatch(th, sp)));
@@ -10598,7 +10958,7 @@
 
             break;
 
-          case MATCH_END:
+          case MATCH_END$2:
             if (sp === END) {
               // continue
               addthread(prog, clist, thread(th.pc + 1, th));
@@ -10606,7 +10966,7 @@
 
             break;
 
-          case LOOKAHEAD:
+          case LOOKAHEAD$2:
             var mla = pikevm(inst.prog, input.slice(i));
 
             if (mla.found) {
@@ -10615,7 +10975,7 @@
 
             break;
 
-          case NEGATIVE_LOOKAHEAD:
+          case NEGATIVE_LOOKAHEAD$2:
             var mnla = pikevm(inst.prog, input.slice(i));
 
             if (!mnla.found) {
@@ -10626,7 +10986,7 @@
 
             break;
 
-          case MATCH:
+          case MATCH$2:
             saved = th.saved;
             groups = th.groups;
             found = true; // Go to the next word which causes all pending threads in the
@@ -10662,8 +11022,18 @@
     };
   };
 
-  var NLPMatchLexer = new Lexer(allTokens);
-  var parserInstance = new NLPMatchParser();
+  var pikevm_1 = {
+    termContainsTag: termContainsTag,
+    pikevm: pikevm
+  };
+
+  var Lexer$2 = require$$0.Lexer;
+  var NLPMatchParser$1 = parser.NLPMatchParser,
+      allTokens$1 = parser.allTokens;
+  var pikevm$1 = pikevm_1.pikevm;
+  var NLPMatchLexer = new Lexer$2(allTokens$1);
+  var parserInstance = new NLPMatchParser$1();
+
   var NLPRegexParseError = /*#__PURE__*/function () {
     function NLPRegexParseError(errors) {
       _classCallCheck(this, NLPRegexParseError);
@@ -10690,6 +11060,7 @@
   /**
    * Custom NLPRegexP class for regexp compile / cache.
    */
+
 
   var NLPRegexP = /*#__PURE__*/function () {
     /**
@@ -10759,7 +11130,7 @@
       value: function execPhrase(phrase) {
         var _saved$;
 
-        var _pikevm = pikevm(this.prog, phrase.terms()),
+        var _pikevm = pikevm$1(this.prog, phrase.terms()),
             found = _pikevm.found,
             _pikevm$saved = _pikevm.saved,
             saved = _pikevm$saved === void 0 ? [] : _pikevm$saved,
@@ -10782,9 +11153,20 @@
     return NLPRegexP;
   }();
 
-  var plugin = function plugin(Doc, world, nlp, Phrase) {
+  var regex = {
+    NLPMatchLexer: NLPMatchLexer,
+    parserInstance: parserInstance,
+    NLPRegexParseError: NLPRegexParseError,
+    NLPRegexP: NLPRegexP
+  };
+
+  var NLPMatchParser$2 = parser.NLPMatchParser;
+  var NLPRegexP$1 = regex.NLPRegexP,
+      NLPRegexParseError$1 = regex.NLPRegexParseError; // nlp compromise plugin
+
+  var plugin = function plugin(Doc, _world, nlp, Phrase) {
     var compileRegex = function compileRegex(regex) {
-      return new NLPRegexP(regex);
+      return new NLPRegexP$1(regex);
     };
 
     nlp.compileRegex = compileRegex;
@@ -10792,7 +11174,7 @@
 
     var strictMatch = function strictMatch(regex) {
       // function, non arrow, need bind for this which is doc/phrase
-      regex = new NLPRegexP(regex); // coerce the value
+      regex = new NLPRegexP$1(regex); // coerce the value
 
       return regex.exec(this);
     };
@@ -10801,13 +11183,13 @@
     Phrase.prototype.strictMatch = strictMatch;
   };
 
-  exports.NLPMatchParser = NLPMatchParser;
-  exports.NLPRegexP = NLPRegexP;
-  exports.NLPRegexParseError = NLPRegexParseError;
-  exports.default = plugin;
-  exports.plugin = plugin;
+  var src = {
+    plugin: plugin,
+    NLPMatchParser: NLPMatchParser$2,
+    NLPRegexParseError: NLPRegexParseError$1
+  };
 
-  Object.defineProperty(exports, '__esModule', { value: true });
+  return src;
 
 })));
 //# sourceMappingURL=compromise-strict-match.js.map

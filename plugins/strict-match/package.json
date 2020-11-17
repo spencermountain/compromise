@@ -1,41 +1,28 @@
 {
   "name": "compromise-strict-match",
+  "description": "Formal parser for the compromise match syntax",
   "version": "1.2.0",
-  "description": "Better regex like matching for nlp-compromise",
+  "author": "Kelvin Hammond <hammond.kelvin@gmail.com>",
   "main": "builds/compromise-strict-match.js",
   "unpkg": "builds/compromise-strict-match.min.js",
   "module": "builds/compromise-strict-match.mjs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spencermountain/compromise.git"
+  },
   "scripts": {
-    "test": "jest",
-    "test:coverage": "jest --coverage",
-    "test:watch": "jest --watch",
-    "test:watch:cover": "jest --watchAll --coverage",
-    "build": "rollup -c",
-    "pretty": "prettier --write .",
+    "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
+    "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
+    "watch": "amble ./scratch.js",
+    "build": "rollup -c --silent",
     "bench": "node bench.js"
   },
   "prettier": {
     "trailingComma": "es5",
     "tabWidth": 2,
-    "semi": false
-  },
-  "jest": {
-    "collectCoverageFrom": [
-      "tests/**/*.js",
-      "!tests/**/*.test.js"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 100,
-        "functions": 100,
-        "lines": 100,
-        "statements": 100
-      }
-    }
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/catalogm/compromise-match2.git"
+    "semi": false,
+    "singleQuote": true,
+    "printWidth": 100
   },
   "keywords": [
     "compromise",
@@ -48,12 +35,10 @@
     "language",
     "pikevm"
   ],
-  "author": "Kelvin Hammond <hammond.kelvin@gmail.com>",
-  "license": "GPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/catalogm/compromise-match2/issues"
+    "url": "https://github.com/spencermountain/compromise/issues"
   },
-  "homepage": "https://github.com/catalogm/compromise-match2#readme",
+  "homepage": "https://github.com/spencermountain/compromise#readme",
   "files": [
     "builds/"
   ],
@@ -61,20 +46,22 @@
     "builds/*.js"
   ],
   "dependencies": {
-    "chevrotain": "^7.0.1"
+    "chevrotain": "7.0.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.10.4",
-    "@babel/preset-env": "^7.10.4",
-    "@rollup/plugin-commonjs": "^13.0.0",
-    "@rollup/plugin-node-resolve": "^8.1.0",
-    "babel-jest": "^26.1.0",
+    "@babel/core": "7.12.3",
+    "@babel/preset-env": "7.12.1",
+    "@rollup/plugin-commonjs": "16.0.0",
+    "@rollup/plugin-node-resolve": "10.0.0",
+    "babel-jest": "26.6.3",
     "benchmark": "^2.1.4",
-    "compromise": "^13.3.1",
-    "jest": "^26.1.0",
-    "prettier": "^2.0.5",
-    "rollup": "^2.18.2",
+    "compromise": "13.7.0",
+    "prettier": "2.1.2",
+    "rollup": "2.33.2",
     "rollup-plugin-babel": "^4.4.0",
-    "rollup-plugin-terser": "^6.1.0"
-  }
+    "rollup-plugin-terser": "7.0.2",
+    "tap-dancer": "0.2.0",
+    "tape": "4.13.0"
+  },
+  "license": "GPL-3.0-or-later"
 }

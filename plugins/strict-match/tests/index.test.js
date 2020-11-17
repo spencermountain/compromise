@@ -132,54 +132,5 @@ describe("regex matches doc", () => {
       expect(nlp("world").match2("hello?").text()).toEqual("")
     })
 
-    describe("ranges", () => {
-      describe("greedy", () => {
-        it("match exact", () => {
-          expect(doc.match2("hello{1}").text()).toEqual("hello")
-          expect(doc.match2("hello{1,1}").text()).toEqual("hello")
-          expect(doc.match2("hello{2}").text()).toEqual("hello hello")
-          expect(doc.match2("hello{2,2}").text()).toEqual("hello hello")
-          expect(doc.match2("hello{3}").text()).toEqual("")
-        })
-
-        it("match minimum", () => {
-          expect(doc.match2("hello{1,}").text()).toEqual("hello hello")
-          expect(doc.match2("hello{2,}").text()).toEqual("hello hello")
-          expect(doc.match2("hello{1,}").text()).toEqual("hello hello")
-          expect(doc.match2("hello{2,} world").text()).toEqual(
-            "hello hello world"
-          )
-        })
-
-        it("match maximum", () => {
-          expect(doc.match2("hello{,1} world").text()).toEqual("hello world")
-          expect(doc.match2("hello{,2}").text()).toEqual("hello hello")
-          expect(doc.match2("hello{,1}").text()).toEqual("hello")
-        })
-
-        it("match minimum and maximum", () => {
-          expect(doc.match2("hello{1,2}").text()).toEqual("hello hello")
-          expect(doc.match2("hello{0,2}").text()).toEqual("hello hello")
-          expect(doc.match2("hello{0,1}").text()).toEqual("hello")
-          expect(doc.match2("hello{0,1} world").text()).toEqual("hello world")
-          expect(doc.match2("hello{0,2} world").text()).toEqual(
-            "hello hello world"
-          )
-        })
-
-        it("skip zero range", () => {
-          expect(doc.match2("hello{0}").text()).toEqual("")
-          expect(doc.match2("hello hello{0}").text()).toEqual("hello")
-          expect(doc.match2("hello{0} world").text()).toEqual("world")
-        })
-
-        it("throws error on invalid range", () => {
-          expect(() => doc.match2("hello{,}")).toThrow(
-            /Range min or max must be defined/
-          )
-          expect(() => doc.match2("hello{2,1}")).toThrow(NLPRegexParseError)
-          expect(() => doc.match2("hello{,-1}")).toThrow(NLPRegexParseError)
-        })
-      })
 
     

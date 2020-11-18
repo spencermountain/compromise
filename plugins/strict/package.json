@@ -1,11 +1,11 @@
 {
-  "name": "compromise-strict-match",
+  "name": "compromise-strict",
   "description": "Formal parser for the compromise match syntax",
   "version": "0.0.1",
   "author": "Kelvin Hammond <hammond.kelvin@gmail.com>",
-  "main": "builds/compromise-strict-match.js",
-  "unpkg": "builds/compromise-strict-match.min.js",
-  "module": "builds/compromise-strict-match.mjs",
+  "main": "builds/compromise-strict.js",
+  "unpkg": "builds/compromise-strict.min.js",
+  "module": "builds/compromise-strict.mjs",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/spencermountain/compromise.git"

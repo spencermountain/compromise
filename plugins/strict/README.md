@@ -4,13 +4,13 @@
   <div>a plugin for <a href="https://github.com/spencermountain/compromise/">compromise</a></div>
   
   <!-- npm version -->
-  <a href="https://npmjs.org/package/compromise-strict-match">
-    <img src="https://img.shields.io/npm/v/compromise-strict-match.svg?style=flat-square" />
+  <a href="https://npmjs.org/package/compromise-strict">
+    <img src="https://img.shields.io/npm/v/compromise-strict.svg?style=flat-square" />
   </a>
   v
   <!-- file size -->
-  <a href="https://unpkg.com/compromise-strict-match/builds/compromise-strict-match.min.js">
-    <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/plugins/strict-match/builds/compromise-strict-match.min.js" />
+  <a href="https://unpkg.com/compromise-strict/builds/compromise-strict.min.js">
+    <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/plugins/strict/builds/compromise-strict.min.js" />
   </a>
    <hr/>
    <div >
@@ -19,7 +19,7 @@
 </div>
 
 <div align="center">
-  <code>npm install compromise-strict-match</code>
+  <code>npm install compromise-strict</code>
 </div>
 
 The <a href="https://observablehq.com/@spencermountain/compromise-match-syntax">compromise match syntax</a> is a custom language for matching and querying tags and metadata in a document.
@@ -36,7 +36,7 @@ This library can be used <a href="./lib">to generate rail-road diagrams</a> of m
 
 ```javascript
 import nlp from "compromise";
-import plugin from "compromise-strict-match";
+import plugin from "compromise-strict";
 
 nlp.extend(plugin);
 
@@ -50,7 +50,7 @@ console.log(doc.text());
 
 ```javascript
 const nlp = require("compromise");
-nlp.extend(require("compromise-strict-match"));
+nlp.extend(require("compromise-strict"));
 
 let doc = nlp("Good morning world")
   .strictMatch("(?P<greeting>hi|hello|good morning) #Noun")
@@ -59,7 +59,7 @@ console.log(doc.text());
 ```
 
 ### Pre-Compling 
-strict-match has the ability to pre-compile a match statement into a parsed format, which may improve performace of the match query. This plugin automatically adds this as a helper-method on the main `nlp` constructor.
+strict has the ability to pre-compile a match statement into a parsed format, which may improve performace of the match query. This plugin automatically adds this as a helper-method on the main `nlp` constructor.
 
 ```javascript
 // ... rest from usage above
@@ -97,6 +97,6 @@ console.log(doc.text());
 
 ![image](https://user-images.githubusercontent.com/399657/99450530-e557dc00-28ee-11eb-927c-168f5aa2e5f9.png)
 
-Chevrotrain has the neat ability to generate diagrams to explain the match lookup. You can see an example of this working in [./lib/gen_diagram.js](https://github.com/spencermountain/compromise/blob/dev/plugins/strict-match/lib/gen_diagram.js)
+Chevrotrain has the neat ability to generate diagrams to explain the match lookup. You can see an example of this working in [./lib/gen_diagram.js](https://github.com/spencermountain/compromise/blob/dev/plugins/strict/lib/gen_diagram.js)
 
 GPL-3

@@ -15,6 +15,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - **[change]** remove zero-width characters in normalized output #759
 - **[change]** improved Person tagging with particles #794
 - **[fix]** - NumberRange tagging issue #795
+- **[new]** - new plugin `strict-match`
 -->
 
 #### 13.7.0

@@ -5,7 +5,7 @@ import babel from "rollup-plugin-babel"
 
 import { version } from "./package.json"
 
-const name = "compromise-strict-match"
+const name = "compromise-strict"
 const banner = `/* ${name} ${version} GPLv3 */`
 
 export default [
@@ -16,7 +16,7 @@ export default [
         file: `builds/${name}.js`,
         format: "umd",
         sourcemap: true,
-        name: "compromiseStrictMatch",
+        name: "compromiseStrict",
         banner,
       },
     ],
@@ -35,7 +35,7 @@ export default [
       {
         file: `builds/${name}.mjs`,
         format: "esm",
-        name: "compromiseStrictMatch",
+        name: "compromiseStrict",
         banner,
       },
     ],
@@ -54,7 +54,7 @@ export default [
       {
         file: `builds/${name}.min.js`,
         format: "umd",
-        name: "compromiseStrictMatch",
+        name: "compromiseStrict",
         banner,
       },
     ],

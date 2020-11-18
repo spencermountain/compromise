@@ -7,6 +7,12 @@ class Day extends Unit {
     this.unit = 'day'
   }
 }
+class Week extends Unit {
+  constructor(input, unit, context) {
+    super(input, unit, context)
+    this.unit = 'week'
+  }
+}
 class Month extends Unit {
   constructor(input, unit, context) {
     super(input, unit, context)
@@ -68,6 +74,22 @@ class WeekDay extends Unit {
     return this
   }
 }
+//may need some work
+class WeekEnd extends Unit {
+  constructor(input, unit, context) {
+    super(input, unit, context)
+    this.unit = 'week'
+  }
+  start() {
+    this.d = this.d.day('saturday').startOf('day')
+    return this
+  }
+  end() {
+    this.d = this.d.day('sunday').endOf('day')
+    return this
+  }
+}
+
 // like 'feb 2'
 class CalendarDate extends Unit {
   constructor(input, unit, context) {
@@ -87,10 +109,12 @@ class CalendarDate extends Unit {
 module.exports = {
   Unit: Unit,
   Day: Day,
+  Week: Week,
   Month: Month,
   Quarter: Quarter,
   Season: Season,
   Year: Year,
   WeekDay: WeekDay,
+  WeekEnd: WeekEnd,
   CalendarDate: CalendarDate,
 }

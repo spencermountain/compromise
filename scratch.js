@@ -1,33 +1,17 @@
 const nlp = require('./src/index')
-// const spacetime = require('/Users/spencer/mountain/spacetime/src')
-// nlp.verbose(true)
-// let txt = require('./scripts/test/speed/_sotu-text.js')
-// nlp.extend(require('./plugins/numbers/src'))
-// nlp.extend(require('./plugins/dates/src'))
-let fn = require('./plugins/strict/src')
-// let preParser = require('./plugins/strict-match/src').preParser
-nlp.extend(fn)
-// nlp.extend(require('./plugins/phrases/src'))
+const spacetime = require('/Users/spencer/mountain/spacetime/src')
+nlp.verbose(true)
+nlp.extend(require('./plugins/numbers/src'))
+nlp.extend(require('./plugins/dates/src'))
 
-// let doc = nlp(`1st weekend of october 2020`)
-// doc.debug()
-// // let today = [2016, 1, 5] // a friday
-// let obj = doc.dates({}).json()[0]
-// // console.log(obj)
-// console.log(spacetime(obj.date.start).format('{nice-day} {year} {time}'))
-// console.log(spacetime(obj.date.end).format('{nice-day} {year} {time}'))
+const fmt = function (iso) {
+  if (!iso) {
+    return '-'
+  }
+  return spacetime(iso).format('{day-short} {nice} {year}')
+}
 
-// const r = nlp('Last Updated: 02/28/2020 03:00 pm ')
-//   .debug()
-//   .dates()
-//   .format('{month} {date-ordinal} {year} {time}')
-//   .debug()
-//   .out('array')
-// console.log(r)
-
-// let doc = nlp('Julie de Bussy')
-// doc.strictMatch('#FirstName [(van|von|de|du)] #LastName').debug()
-
-const m = nlp.preCompile('(?P<greeting>hi|hello|good morning) #Noun')
-let doc = nlp('hello world').strictMatch(m).groups('greeting')
-console.log(doc.text())
+let doc = nlp('last week-end of 2019')
+let found = doc.dates().json()[0]
+console.log(fmt(found.date.start))
+console.log(fmt(found.date.end))

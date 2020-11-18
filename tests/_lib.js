@@ -5,7 +5,6 @@ if (typeof process !== undefined && typeof module !== undefined) {
     nlp = require('../')
   } else {
     nlp = require('../src')
-    nlp.extend(require('../../plugins/strict-match'))
   }
 
   module.exports = nlp

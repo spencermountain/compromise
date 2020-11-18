@@ -10,7 +10,8 @@ const steps = {
   duration: require('./steps/01-duration'),
   holiday: require('./steps/02-holidays'),
   yearly: require('./steps/03-yearly'),
-  explicit: require('./steps/04-explicit'),
+  firstLast: require('./steps/04-first-last'),
+  explicit: require('./steps/05-explicit'),
 }
 
 const parseDate = function (doc, context) {
@@ -35,6 +36,8 @@ const parseDate = function (doc, context) {
   d = d || steps.holiday(doc, context)
   // 'q2 2002'
   d = d || steps.yearly(doc, context)
+  // 'last week of 2002'
+  d = d || steps.firstLast(doc, context)
   // 'this june 2nd'
   d = d || steps.explicit(doc, context)
   // console.log('\n\n=-=-=-=-=-=Date-=-=-=-=-=-=-')

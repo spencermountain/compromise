@@ -27,4 +27,8 @@ module.exports = {
   DateShift: {
     isA: ['Date'],
   },
+  // 'month', 'quarter'
+  DateUnit: {
+    isA: ['Date'],
+  },
 }

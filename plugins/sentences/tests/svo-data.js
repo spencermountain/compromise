@@ -13,7 +13,8 @@ module.exports = [
     obj: 'trouble',
   },
   {
-    txt: 'DPA : Iraqi authorities announced that they had busted up 3 terrorist cells operating in Baghdad.',
+    txt:
+      'DPA : Iraqi authorities announced that they had busted up 3 terrorist cells operating in Baghdad.',
     subj: 'they',
     verb: 'DPA',
     obj: 'cells',
@@ -39,13 +40,15 @@ module.exports = [
     obj: 'government',
   },
   {
-    txt: 'It reminds me too much of the ARVN officers who were secretly working for the other side in Vietnam.',
+    txt:
+      'It reminds me too much of the ARVN officers who were secretly working for the other side in Vietnam.',
     subj: 'who',
     verb: 'reminds',
     obj: 'me',
   },
   {
-    txt: 'Al - Zaman : Guerrillas killed a member of the Kurdistan Democratic Party after kidnapping him in Mosul.',
+    txt:
+      'Al - Zaman : Guerrillas killed a member of the Kurdistan Democratic Party after kidnapping him in Mosul.',
     subj: 'Guerrillas',
     verb: 'Al',
     obj: 'him',
@@ -58,7 +61,8 @@ module.exports = [
     obj: 'percent',
   },
   {
-    txt: 'On Wednesday guerrillas had kidnapped a cosmetic surgeon and his wife while they were on their way home.',
+    txt:
+      'On Wednesday guerrillas had kidnapped a cosmetic surgeon and his wife while they were on their way home.',
     subj: 'they',
     verb: 'had kidnapped',
     obj: 'surgeon',
@@ -77,7 +81,8 @@ module.exports = [
     obj: 'engineer',
   },
   {
-    txt: "They also killed Shaikh Hamid 'Akkab, a clan elder of a branch of the Dulaim tribe in Tikrit.",
+    txt:
+      "They also killed Shaikh Hamid 'Akkab, a clan elder of a branch of the Dulaim tribe in Tikrit.",
     subj: 'They',
     verb: 'also killed',
     obj: 'Shaikh',
@@ -130,7 +135,8 @@ module.exports = [
     obj: 'seats',
   },
   {
-    txt: 'Now the Electoral Commission is refusing to punish people for mere past Baath Party membership.',
+    txt:
+      'Now the Electoral Commission is refusing to punish people for mere past Baath Party membership.',
     subj: 'Commission',
     verb: 'is refusing',
     obj: 'people',
@@ -344,7 +350,8 @@ module.exports = [
     obj: 'painful',
   },
   {
-    txt: 'Being well - informed will give you certainty and that is desirable in a world of conflicting reports.',
+    txt:
+      'Being well - informed will give you certainty and that is desirable in a world of conflicting reports.',
     subj: 'that',
     verb: 'well will give',
     obj: 'certainty',
@@ -356,13 +363,15 @@ module.exports = [
     obj: 'conclusions',
   },
   {
-    txt: 'These links present the many viewpoints that existed and still exist about the disaster called Chernobyl :',
+    txt:
+      'These links present the many viewpoints that existed and still exist about the disaster called Chernobyl :',
     subj: 'that',
     verb: 'present',
     obj: 'Chernobyl',
   },
   {
-    txt: 'I would be interested in hearing what conclusions you reached and what you found that was most convincing.',
+    txt:
+      'I would be interested in hearing what conclusions you reached and what you found that was most convincing.',
     subj: 'that',
     verb: 'would be interested',
     obj: 'conclusions',
@@ -449,7 +458,8 @@ module.exports = [
     obj: 'lot',
   },
   {
-    txt: 'Musharraf has been trying to purge his officer corps of the substantial number of al - Qaeda sympathizers.',
+    txt:
+      'Musharraf has been trying to purge his officer corps of the substantial number of al - Qaeda sympathizers.',
     subj: 'Musharraf',
     verb: 'has been trying',
     obj: 'corps',
@@ -483,19 +493,22 @@ module.exports = [
     obj: 'MMA',
   },
   {
-    txt: 'They would thereby gain control of a major base for terrorist operations, which is also a nuclear power.',
+    txt:
+      'They would thereby gain control of a major base for terrorist operations, which is also a nuclear power.',
     subj: 'which',
     verb: 'would thereby gain',
     obj: 'control',
   },
   {
-    txt: 'But so was it unlikely that a small group of Arab mujahidin would virtually take over Afghanistan.',
+    txt:
+      'But so was it unlikely that a small group of Arab mujahidin would virtually take over Afghanistan.',
     subj: 'group',
     verb: 'unlikely',
     obj: 'Afghanistan',
   },
   {
-    txt: 'Response : The US must do whatever it can to strengthen the legitimacy of the Pakistani government.',
+    txt:
+      'Response : The US must do whatever it can to strengthen the legitimacy of the Pakistani government.',
     subj: 'it',
     verb: 'Response',
     obj: 'legitimacy',
@@ -529,7 +542,8 @@ module.exports = [
     obj: 'Muslims',
   },
   {
-    txt: 'The Kashmir issue generates far more terrorism, and even the threat of nuclear war, than Iraq ever did.',
+    txt:
+      'The Kashmir issue generates far more terrorism, and even the threat of nuclear war, than Iraq ever did.',
     subj: 'Iraq',
     verb: 'generates far',
     obj: 'terrorism',
@@ -549,7 +563,8 @@ module.exports = [
     obj: 'funding',
   },
   {
-    txt: 'This terrorist organization can now only pull off far less sophisticated bombings and attacks.',
+    txt:
+      'This terrorist organization can now only pull off far less sophisticated bombings and attacks.',
     subj: 'organization',
     verb: 'can now only pull',
     obj: 'bombings',
@@ -595,7 +610,8 @@ module.exports = [
     obj: 'Qaeda',
   },
   {
-    txt: 'The problem of mollifying the Sunnis, though, has to be solved to avoid giving al - Qaeda an entrée.',
+    txt:
+      'The problem of mollifying the Sunnis, though, has to be solved to avoid giving al - Qaeda an entrée.',
     subj: 'problem',
     verb: 'has to',
     obj: 'entrée',
@@ -628,7 +644,8 @@ module.exports = [
     obj: 'eyes',
   },
   {
-    txt: 'George W. Bush alleged Thursday that John Edwards lacks the experience necessary to be president.',
+    txt:
+      'George W. Bush alleged Thursday that John Edwards lacks the experience necessary to be president.',
     subj: 'John',
     verb: 'alleged',
     obj: 'experience',
@@ -685,7 +702,8 @@ module.exports = [
     obj: 'general',
   },
   {
-    txt: 'Hiller asked, inquiring about Gen. Pervaiz Musharraf, who seized control of the country October 12.',
+    txt:
+      'Hiller asked, inquiring about Gen. Pervaiz Musharraf, who seized control of the country October 12.',
     subj: 'who',
     verb: 'asked',
     obj: 'control',
@@ -705,7 +723,8 @@ module.exports = [
     obj: 'stability',
   },
   {
-    txt: "Gore released a statement Friday taking Bush to task for his comments on Pakistan's recent coup.",
+    txt:
+      "Gore released a statement Friday taking Bush to task for his comments on Pakistan's recent coup.",
     subj: 'Gore',
     verb: 'released',
     obj: 'Bush',
@@ -758,7 +777,8 @@ module.exports = [
     obj: 'performance',
   },
   {
-    txt: 'I still remember him stuttering about " the General, " unable to remember Musharraf \'s name.',
+    txt:
+      'I still remember him stuttering about " the General, " unable to remember Musharraf \'s name.',
     subj: 'I',
     verb: 'still remember',
     obj: 'name',
@@ -771,7 +791,8 @@ module.exports = [
     obj: 'number',
   },
   {
-    txt: 'He obviously liked authoritarian rule better than democracy, equating dictatorship with " stability . "',
+    txt:
+      'He obviously liked authoritarian rule better than democracy, equating dictatorship with " stability . "',
     subj: 'He',
     verb: 'obviously liked',
     obj: 'dictatorship',
@@ -784,7 +805,8 @@ module.exports = [
     obj: 'anything',
   },
   {
-    txt: 'Musharraf went on to play nuclear brinkmanship with India in 2002, risking war twice that year.',
+    txt:
+      'Musharraf went on to play nuclear brinkmanship with India in 2002, risking war twice that year.',
     subj: 'Musharraf',
     verb: 'went on',
     obj: 'war',
@@ -797,7 +819,8 @@ module.exports = [
     obj: 'Islamism',
   },
   {
-    txt: 'This was the body that Bush proclaimed was bringing " stability " to the region in fall of 1999.',
+    txt:
+      'This was the body that Bush proclaimed was bringing " stability " to the region in fall of 1999.',
     subj: 'Bush',
     verb: 'body',
     obj: 'stability',
@@ -810,7 +833,8 @@ module.exports = [
     obj: 'merit',
   },
   {
-    txt: 'Another answer is that Edwards certainly knows far more about foreign affairs now than Bush did then.',
+    txt:
+      'Another answer is that Edwards certainly knows far more about foreign affairs now than Bush did then.',
     subj: 'Bush',
     verb: 'is',
     obj: 'more',
@@ -931,7 +955,8 @@ module.exports = [
     obj: 'menace',
   },
   {
-    txt: 'The bungling of post-war Iraq by the Bush administration created a weak and failed state.',
+    txt:
+      'The bungling of post-war Iraq by the Bush administration created a weak and failed state.',
     subj: 'bungling',
     verb: 'created',
     obj: 'state',
@@ -951,7 +976,8 @@ module.exports = [
     obj: 'notions',
   },
   {
-    txt: 'They vehemently protested the Israeli assassination of Sheikh Ahmed Yassin, the leader of Hamas, last March.',
+    txt:
+      'They vehemently protested the Israeli assassination of Sheikh Ahmed Yassin, the leader of Hamas, last March.',
     subj: 'They',
     verb: 'vehemently protested',
     obj: 'assassination',
@@ -1060,7 +1086,8 @@ module.exports = [
     obj: 'one',
   },
   {
-    txt: 'And the Tigers look as if they are on the brink of launching another offensive, " Muni told IPS.',
+    txt:
+      'And the Tigers look as if they are on the brink of launching another offensive, " Muni told IPS.',
     subj: 'Muni',
     verb: 'told',
     obj: 'IPS',
@@ -1141,7 +1168,8 @@ module.exports = [
     obj: 'LTTE',
   },
   {
-    txt: 'He complained about the " visible lack of progress " and reaching an impasse in talks with both sides.',
+    txt:
+      'He complained about the " visible lack of progress " and reaching an impasse in talks with both sides.',
     subj: 'He',
     verb: 'complained',
     obj: 'impasse',
@@ -1266,7 +1294,7 @@ module.exports = [
   },
   {
     txt:
-      'This, Pakistan \'s lobbyist in Washington Christina Rocca has been told, is the " minimum " that the Pakistan army will accept.',
+      'This, Pakistan\'s lobbyist in Washington Christina Rocca has been told, is the "minimum" that the Pakistan army will accept.',
     subj: 'army',
     verb: 'minimum',
     obj: 'that',
@@ -1410,7 +1438,8 @@ module.exports = [
     obj: 'service',
   },
   {
-    txt: 'During his time in the Guard, George Bush flew the F - 102 Delta Dagger fighter - interceptor.',
+    txt:
+      'During his time in the Guard, George Bush flew the F - 102 Delta Dagger fighter - interceptor.',
     subj: 'George',
     verb: 'flew',
     obj: 'interceptor',
@@ -1422,7 +1451,8 @@ module.exports = [
     obj: 'service',
   },
   {
-    txt: 'In all this so - called controversy, has anyone considered that perhaps George Bush just wanted to fly jets?',
+    txt:
+      'In all this so - called controversy, has anyone considered that perhaps George Bush just wanted to fly jets?',
     subj: 'George',
     verb: 'considered',
     obj: 'jets',
@@ -1447,7 +1477,8 @@ module.exports = [
     obj: 'truth',
   },
   {
-    txt: 'For example, did you know that George Bush spent considerably more time in uniform than John Kerry?',
+    txt:
+      'For example, did you know that George Bush spent considerably more time in uniform than John Kerry?',
     subj: 'George',
     verb: 'know',
     obj: 'time',
@@ -1507,7 +1538,8 @@ module.exports = [
     obj: 'points',
   },
   {
-    txt: 'At the time, guardsmen were required to accumulate a minimum of 50 points to meet their yearly obligation.',
+    txt:
+      'At the time, guardsmen were required to accumulate a minimum of 50 points to meet their yearly obligation.',
     subj: 'guardsmen',
     verb: 'required',
     obj: 'obligation',
@@ -1583,7 +1615,8 @@ module.exports = [
     obj: 'problem',
   },
   {
-    txt: 'From May 1972 to May 1973, he earned just 56 points — not much, but enough to meet his requirement.',
+    txt:
+      'From May 1972 to May 1973, he earned just 56 points — not much, but enough to meet his requirement.',
     subj: 'he',
     verb: 'earned just',
     obj: 'requirement',
@@ -1616,7 +1649,8 @@ module.exports = [
     obj: 'years',
   },
   {
-    txt: 'By that time, however, he had accumulated enough points in each year to cover six years of service.',
+    txt:
+      'By that time, however, he had accumulated enough points in each year to cover six years of service.',
     subj: 'he',
     verb: 'however had accumulated',
     obj: 'years',
@@ -1635,7 +1669,8 @@ module.exports = [
     obj: 'proficiency',
   },
   {
-    txt: 'And a 1972 evaluation called Bush “ an exceptional fighter interceptor pilot and officer . ”',
+    txt:
+      'And a 1972 evaluation called Bush “ an exceptional fighter interceptor pilot and officer . ”',
     subj: 'evaluation',
     verb: 'called',
     obj: 'Bush',
@@ -1772,7 +1807,8 @@ module.exports = [
     obj: 'M.S.',
   },
   {
-    txt: 'Even there, many Kurds look and act as if they are going to grab the chance to vote them out of power.',
+    txt:
+      'Even there, many Kurds look and act as if they are going to grab the chance to vote them out of power.',
     subj: 'they',
     verb: 'look',
     obj: 'them',
@@ -1833,13 +1869,15 @@ module.exports = [
     obj: 'government',
   },
   {
-    txt: "I didn't argue with him but I asked him what he believed would be a viable solution to this mess.",
+    txt:
+      "I didn't argue with him but I asked him what he believed would be a viable solution to this mess.",
     subj: 'he',
     verb: "didn't argue",
     obj: 'him',
   },
   {
-    txt: 'First driving out the Americans, then fighting the Shia back into submission (as in 1991 ).',
+    txt:
+      'First driving out the Americans, then fighting the Shia back into submission (as in 1991 ).',
     subj: null,
     verb: 'First driving',
     obj: 'Shia',
@@ -1921,7 +1959,8 @@ module.exports = [
     obj: 'elections',
   },
   {
-    txt: "The Gu'ud family even accepted to be offered the seat of Al - Anbar governor some months back.",
+    txt:
+      "The Gu'ud family even accepted to be offered the seat of Al - Anbar governor some months back.",
     subj: 'family',
     verb: 'even accepted',
     obj: 'seat',
@@ -1959,7 +1998,8 @@ module.exports = [
     obj: 'questions',
   },
   {
-    txt: 'As recently as last week the official line stated they had no knowledge he had entered the country.',
+    txt:
+      'As recently as last week the official line stated they had no knowledge he had entered the country.',
     subj: 'he',
     verb: 'stated',
     obj: 'country',
@@ -2038,7 +2078,8 @@ module.exports = [
     obj: 'trial',
   },
   {
-    txt: 'Whether such an offer were accepted or declined would make no difference ; justice would not be served then.',
+    txt:
+      'Whether such an offer were accepted or declined would make no difference ; justice would not be served then.',
     subj: 'justice',
     verb: 'served then',
     obj: 'difference',
@@ -2091,7 +2132,8 @@ module.exports = [
     obj: 'documents',
   },
   {
-    txt: 'Wilson was claiming that he had been working for the CIA when he sold the C - 4 to Quaddaffi.',
+    txt:
+      'Wilson was claiming that he had been working for the CIA when he sold the C - 4 to Quaddaffi.',
     subj: 'he',
     verb: 'was claiming',
     obj: 'C',
@@ -2318,7 +2360,8 @@ module.exports = [
     obj: 'arms',
   },
   {
-    txt: 'It is old news that the Tamil Tigers have developed a strong network within South Africa.',
+    txt:
+      'It is old news that the Tamil Tigers have developed a strong network within South Africa.',
     subj: 'Tigers',
     verb: 'news',
     obj: 'network',
@@ -2359,7 +2402,8 @@ module.exports = [
     obj: 'intelligence',
   },
   {
-    txt: "Considering the islands ' huge strategic importance, it is amazing how lax New Delhi has been.",
+    txt:
+      "Considering the islands ' huge strategic importance, it is amazing how lax New Delhi has been.",
     subj: 'Delhi',
     verb: 'is amazing how',
     obj: 'importance',
@@ -2490,7 +2534,8 @@ module.exports = [
     obj: 'insurgents',
   },
   {
-    txt: '“ There have no business being there unless they are undermining Pakistan, ’’ says a Pakistani official.',
+    txt:
+      '“ There have no business being there unless they are undermining Pakistan, ’’ says a Pakistani official.',
     subj: 'official',
     verb: 'says',
     obj: 'Pakistan',
@@ -2669,13 +2714,15 @@ module.exports = [
     obj: 'reprisals',
   },
   {
-    txt: 'Their removal should also provide increased motivation for Pakistan to help the return of moderate Taliban.',
+    txt:
+      'Their removal should also provide increased motivation for Pakistan to help the return of moderate Taliban.',
     subj: 'Pakistan',
     verb: 'should also provide',
     obj: 'return',
   },
   {
-    txt: 'Afghan officials welcomed the appointment on October 3 of Lt. General Ashfaq Kiyani as the new ISI chief.',
+    txt:
+      'Afghan officials welcomed the appointment on October 3 of Lt. General Ashfaq Kiyani as the new ISI chief.',
     subj: 'officials',
     verb: 'welcomed',
     obj: 'appointment',
@@ -2695,7 +2742,8 @@ module.exports = [
     obj: 'insurgents',
   },
   {
-    txt: '“ There have no business being there unless they are undermining Pakistan, ’’ says a Pakistani official.',
+    txt:
+      '“ There have no business being there unless they are undermining Pakistan, ’’ says a Pakistani official.',
     subj: 'official',
     verb: 'says',
     obj: 'Pakistan',
@@ -2769,7 +2817,8 @@ module.exports = [
     obj: 'campaign',
   },
   {
-    txt: 'Afghan officials say the Americans have moved over 100 Special Forces and helicopters to Shindand.',
+    txt:
+      'Afghan officials say the Americans have moved over 100 Special Forces and helicopters to Shindand.',
     subj: 'Americans',
     verb: 'say',
     obj: 'Forces',
@@ -2781,7 +2830,8 @@ module.exports = [
     obj: 'threat',
   },
   {
-    txt: '‘’ We have a very small number of forces in Shindand with a few helicopters, ’’ says Barno.',
+    txt:
+      '‘’ We have a very small number of forces in Shindand with a few helicopters, ’’ says Barno.',
     subj: 'Barno',
     verb: 'says',
     obj: 'number',
@@ -2956,7 +3006,8 @@ module.exports = [
     obj: 'emotions',
   },
   {
-    txt: 'Two decades of pickling his nervous system in various highly toxic substances have left Bush damaged goods.',
+    txt:
+      'Two decades of pickling his nervous system in various highly toxic substances have left Bush damaged goods.',
     subj: 'decades',
     verb: 'have left',
     obj: 'Bush',
@@ -3003,7 +3054,8 @@ module.exports = [
     obj: 'report',
   },
   {
-    txt: 'Ask her about the handsome young man from Texas, and she remembers him 32 years later like it was yesterday.',
+    txt:
+      'Ask her about the handsome young man from Texas, and she remembers him 32 years later like it was yesterday.',
     subj: 'it',
     verb: 'Ask',
     obj: 'him',
@@ -3021,13 +3073,15 @@ module.exports = [
     obj: 'accent',
   },
   {
-    txt: "Blount's support of the party led him to be appointed Richard Nixon's postmaster general.",
+    txt:
+      "Blount's support of the party led him to be appointed Richard Nixon's postmaster general.",
     subj: 'support',
     verb: 'led',
     obj: 'him',
   },
   {
-    txt: "It was Mr. Bush's job to organize the Republican county chairpersons in the 67 Alabama counties.",
+    txt:
+      "It was Mr. Bush's job to organize the Republican county chairpersons in the 67 Alabama counties.",
     subj: null,
     verb: 'job',
     obj: 'chairpersons',
@@ -3040,7 +3094,8 @@ module.exports = [
     obj: 'much',
   },
   {
-    txt: 'But throughout Alabama, there were Republicans and Democrats who wanted to help Red Blount.',
+    txt:
+      'But throughout Alabama, there were Republicans and Democrats who wanted to help Red Blount.',
     subj: 'who',
     verb: 'were',
     obj: 'Red',
@@ -3053,7 +3108,8 @@ module.exports = [
     obj: 'supplies',
   },
   {
-    txt: 'Groom says this job helped Mr. Bush understand how even in a statewide Senate campaign, politics are local.',
+    txt:
+      'Groom says this job helped Mr. Bush understand how even in a statewide Senate campaign, politics are local.',
     subj: 'politics',
     verb: 'says',
     obj: 'Mr.',
@@ -3092,7 +3148,8 @@ module.exports = [
     obj: 'subject',
   },
   {
-    txt: "He wasn't unpleasant about it, but he just changed the subject and wouldn't talk about it.",
+    txt:
+      "He wasn't unpleasant about it, but he just changed the subject and wouldn't talk about it.",
     subj: 'he',
     verb: "wasn't unpleasant",
     obj: 'subject',
@@ -3136,7 +3193,8 @@ module.exports = [
     obj: 'ways',
   },
   {
-    txt: 'GOODWYN : Archibald says the frequency with which Mr. Bush discussed the subject was off - putting to him.',
+    txt:
+      'GOODWYN : Archibald says the frequency with which Mr. Bush discussed the subject was off - putting to him.',
     subj: 'Mr.',
     verb: 'GOODWYN',
     obj: 'subject',
@@ -3182,7 +3240,8 @@ module.exports = [
     obj: 'stories',
   },
   {
-    txt: 'But that means nothing, since they weren\'t the sort of things guys like Bush told the " girls ".',
+    txt:
+      'But that means nothing, since they weren\'t the sort of things guys like Bush told the " girls ".',
     subj: 'guys',
     verb: 'means',
     obj: 'girls',
@@ -3238,7 +3297,8 @@ module.exports = [
     obj: 'probe',
   },
   {
-    txt: 'American defence chiefs hired a US firm to take the guns, from the 90s Bosnian war, to Iraq.',
+    txt:
+      'American defence chiefs hired a US firm to take the guns, from the 90s Bosnian war, to Iraq.',
     subj: 'chiefs',
     verb: 'hired',
     obj: 'guns',
@@ -3293,7 +3353,8 @@ module.exports = [
     obj: 'shape',
   },
   {
-    txt: '" It was about how he could humiliate her the most, " prosecutor Dean Mandros said in closing arguments.',
+    txt:
+      '" It was about how he could humiliate her the most, " prosecutor Dean Mandros said in closing arguments.',
     subj: 'Dean',
     verb: 'said',
     obj: 'her',
@@ -3339,7 +3400,8 @@ module.exports = [
     obj: 'tools',
   },
   {
-    txt: 'lots of important stories out there today jeff .... thank god and a few good souls for that conviction.',
+    txt:
+      'lots of important stories out there today jeff .... thank god and a few good souls for that conviction.',
     subj: 'lots',
     verb: 'out there',
     obj: 'god',
@@ -3431,19 +3493,22 @@ module.exports = [
     obj: 'law',
   },
   {
-    txt: "Of course law enforcement has dragged it's feet when members are taking part in the activity themselves.",
+    txt:
+      "Of course law enforcement has dragged it's feet when members are taking part in the activity themselves.",
     subj: 'members',
     verb: 'has dragged',
     obj: 'part',
   },
   {
-    txt: "Personally I don't give a damn what adults do to one another as long as there is no abuse invovled.",
+    txt:
+      "Personally I don't give a damn what adults do to one another as long as there is no abuse invovled.",
     subj: 'abuse',
     verb: "don't give",
     obj: 'what',
   },
   {
-    txt: 'It is the marrying off of young girls to older men often close relatives that enfurates me.',
+    txt:
+      'It is the marrying off of young girls to older men often close relatives that enfurates me.',
     subj: 'that',
     verb: 'is',
     obj: 'me',
@@ -3456,7 +3521,8 @@ module.exports = [
     obj: 'life',
   },
   {
-    txt: 'In the Warren Jeffs cult he reassigns wives if the husband displeases him or to reward the new husband.',
+    txt:
+      'In the Warren Jeffs cult he reassigns wives if the husband displeases him or to reward the new husband.',
     subj: 'husband',
     verb: 'reassigns',
     obj: 'husband',
@@ -3475,7 +3541,8 @@ module.exports = [
     obj: 'gene',
   },
   {
-    txt: 'The doctor begs them to stop intermarrying but they say they have to keep the blood pure.',
+    txt:
+      'The doctor begs them to stop intermarrying but they say they have to keep the blood pure.',
     subj: 'they',
     verb: 'begs',
     obj: 'blood',
@@ -3532,7 +3599,8 @@ module.exports = [
     obj: 'her',
   },
   {
-    txt: 'US outsourcing special ops, intelligence to Iraq terror group, intelligence officials say',
+    txt:
+      'US outsourcing special ops, intelligence to Iraq terror group, intelligence officials say',
     subj: 'officials',
     verb: 'say',
     obj: 'ops',
@@ -3592,7 +3660,8 @@ module.exports = [
     obj: 'children',
   },
   {
-    txt: "The Rajavis, Afshari went on to say, '' saw these kids as the next generation's soldiers.",
+    txt:
+      "The Rajavis, Afshari went on to say, '' saw these kids as the next generation's soldiers.",
     subj: 'Afshari',
     verb: 'saw',
     obj: 'kids',
@@ -3645,7 +3714,8 @@ module.exports = [
     obj: 'deals',
   },
   {
-    txt: 'The wikipedia entry for Aerocom is just a stub .. waiting for someone to put some information into it ....',
+    txt:
+      'The wikipedia entry for Aerocom is just a stub .. waiting for someone to put some information into it ....',
     subj: 'entry',
     verb: 'stub',
     obj: 'information',
@@ -3676,7 +3746,8 @@ module.exports = [
     obj: 'classmates',
   },
   {
-    txt: 'They were death metal brainwashed fans, literally fulfilling the death metal paradigm, er ... morality.',
+    txt:
+      'They were death metal brainwashed fans, literally fulfilling the death metal paradigm, er ... morality.',
     subj: 'They',
     verb: 'fans literally',
     obj: 'paradigm',
@@ -3695,7 +3766,8 @@ module.exports = [
     obj: 'lisp',
   },
   {
-    txt: "I think the jury's still out on exactly who did the brainwashing when in regard to the Columbine killers.",
+    txt:
+      "I think the jury's still out on exactly who did the brainwashing when in regard to the Columbine killers.",
     subj: 'who',
     verb: 'think',
     obj: 'brainwashing',
@@ -3800,13 +3872,15 @@ module.exports = [
     obj: 'me',
   },
   {
-    txt: 'I wholly agree, and would expand that statement to include : " To hell with death metal ".',
+    txt:
+      'I wholly agree, and would expand that statement to include : " To hell with death metal ".',
     subj: 'I',
     verb: 'wholly agree',
     obj: 'statement',
   },
   {
-    txt: 'The freaky thing here is that these bozos are seriously claiming the moral high ground ? ? ? ??',
+    txt:
+      'The freaky thing here is that these bozos are seriously claiming the moral high ground ? ? ? ??',
     subj: 'bozos',
     verb: 'here is',
     obj: 'ground',
@@ -3921,7 +3995,8 @@ module.exports = [
     obj: 'tonnes',
   },
   {
-    txt: 'Maybe if you formulate your questions a little more specifically it will help you in acquiring the answers.',
+    txt:
+      'Maybe if you formulate your questions a little more specifically it will help you in acquiring the answers.',
     subj: 'it',
     verb: 'specifically will help',
     obj: 'answers',
@@ -3939,7 +4014,8 @@ module.exports = [
     obj: 'information',
   },
   {
-    txt: "Just give your email and / or phone number to these guys and they'll track down your family.",
+    txt:
+      "Just give your email and / or phone number to these guys and they'll track down your family.",
     subj: 'they',
     verb: 'Just give',
     obj: 'family',
@@ -3957,7 +4033,8 @@ module.exports = [
     obj: 'letter',
   },
   {
-    txt: 'But succintly making point after succint point, the text of the letter stands on its own merit, regardless.',
+    txt:
+      'But succintly making point after succint point, the text of the letter stands on its own merit, regardless.',
     subj: 'text',
     verb: 'stands',
     obj: 'point',
@@ -4015,7 +4092,8 @@ module.exports = [
     obj: 'RI',
   },
   {
-    txt: "I 'm a regular poster but for some reason blogger won't let me in today ... but sign me TroubleFunk.",
+    txt:
+      "I 'm a regular poster but for some reason blogger won't let me in today ... but sign me TroubleFunk.",
     subj: 'blogger',
     verb: 'poster',
     obj: 'me',
@@ -4074,7 +4152,8 @@ module.exports = [
     obj: 'them',
   },
   {
-    txt: "I do get my hackles up a bit when people haul out the old ' Rock - N - Roll made them do it ' argument.",
+    txt:
+      "I do get my hackles up a bit when people haul out the old ' Rock - N - Roll made them do it ' argument.",
     subj: 'them',
     verb: 'do get',
     obj: 'argument',
@@ -4128,7 +4207,8 @@ module.exports = [
     obj: 'view',
   },
   {
-    txt: 'I have never been and I will never be a Government official and I have no privileged information.',
+    txt:
+      'I have never been and I will never be a Government official and I have no privileged information.',
     subj: 'I',
     verb: 'have never been',
     obj: 'information',
@@ -4155,7 +4235,8 @@ module.exports = [
     obj: 'facts',
   },
   {
-    txt: 'I prefer to devote most of my remarks to the broader picture of the region and its place in world events.',
+    txt:
+      'I prefer to devote most of my remarks to the broader picture of the region and its place in world events.',
     subj: 'I',
     verb: 'prefer',
     obj: 'most',
@@ -4201,7 +4282,8 @@ module.exports = [
     obj: 'nothing',
   },
   {
-    txt: 'Saddam Hussein did not invade Kuwait, endanger Saudi Arabia and butcher his own people because of Israel.',
+    txt:
+      'Saddam Hussein did not invade Kuwait, endanger Saudi Arabia and butcher his own people because of Israel.',
     subj: 'Saddam',
     verb: 'did not invade',
     obj: 'people',
@@ -4220,13 +4302,15 @@ module.exports = [
     obj: 'thousands',
   },
   {
-    txt: 'The Taliban control of Afghanistan and the civil war there had nothing to do with Israel.',
+    txt:
+      'The Taliban control of Afghanistan and the civil war there had nothing to do with Israel.',
     subj: 'control',
     verb: 'there had',
     obj: 'nothing',
   },
   {
-    txt: 'The Libyan blowing up of the Pan - Am flight had nothing to do with Israel, and I could go on and on and on.',
+    txt:
+      'The Libyan blowing up of the Pan - Am flight had nothing to do with Israel, and I could go on and on and on.',
     subj: 'I',
     verb: 'had',
     obj: 'nothing',
@@ -4266,7 +4350,8 @@ module.exports = [
     obj: 'money',
   },
   {
-    txt: 'Birth rates in the region are very high, increasing the poverty, the social gaps and the cultural decline.',
+    txt:
+      'Birth rates in the region are very high, increasing the poverty, the social gaps and the cultural decline.',
     subj: 'rates',
     verb: 'are very high',
     obj: 'poverty',
@@ -4320,7 +4405,8 @@ module.exports = [
     obj: 'expression',
   },
   {
-    txt: 'Even after September 11, it seems that most of the Western World does not yet understand this weapon.',
+    txt:
+      'Even after September 11, it seems that most of the Western World does not yet understand this weapon.',
     subj: 'most',
     verb: 'seems',
     obj: 'weapon',
@@ -4352,7 +4438,8 @@ module.exports = [
     obj: 'thinking',
   },
   {
-    txt: 'The U.S. and Europe are constantly improving their defense against the last murder, not the next one.',
+    txt:
+      'The U.S. and Europe are constantly improving their defense against the last murder, not the next one.',
     subj: 'U.S.',
     verb: 'are constantly improving',
     obj: 'defense',
@@ -4372,7 +4459,8 @@ module.exports = [
     obj: 'murder',
   },
   {
-    txt: 'Put a metal detector in front of every train station in Spain and the terrorists will get the buses.',
+    txt:
+      'Put a metal detector in front of every train station in Spain and the terrorists will get the buses.',
     subj: 'terrorists',
     verb: 'Put',
     obj: 'buses',
@@ -4430,7 +4518,8 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: 'Instead, they send outcast women, naive children, retarded people and young incited hotheads.',
+    txt:
+      'Instead, they send outcast women, naive children, retarded people and young incited hotheads.',
     subj: 'they',
     verb: 'send',
     obj: 'women',
@@ -4455,7 +4544,8 @@ module.exports = [
     obj: 'anyone',
   },
   {
-    txt: "There was certainly more despair in Saddam's Iraq than in Paul Bremmer's Iraq, and no one exploded himself.",
+    txt:
+      "There was certainly more despair in Saddam's Iraq than in Paul Bremmer's Iraq, and no one exploded himself.",
     subj: 'one',
     verb: 'was certainly',
     obj: 'himself',
@@ -4475,7 +4565,8 @@ module.exports = [
     obj: 'top',
   },
   {
-    txt: 'You can not eliminate organized crime by arresting the little drug dealer on the street corner.',
+    txt:
+      'You can not eliminate organized crime by arresting the little drug dealer on the street corner.',
     subj: 'You',
     verb: 'can not eliminate',
     obj: 'dealer',
@@ -4559,7 +4650,8 @@ module.exports = [
     obj: 'time',
   },
   {
-    txt: 'It also does not prevent the Western press from giving credence, every day, even now, to similar liars.',
+    txt:
+      'It also does not prevent the Western press from giving credence, every day, even now, to similar liars.',
     subj: 'It',
     verb: 'also does not prevent',
     obj: 'credence',
@@ -4571,7 +4663,8 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: 'When these same leaders make other statements, the Western media report them as if they could be true.',
+    txt:
+      'When these same leaders make other statements, the Western media report them as if they could be true.',
     subj: 'they',
     verb: 'report',
     obj: 'them',
@@ -4665,7 +4758,8 @@ module.exports = [
     obj: 'infrastructure',
   },
   {
-    txt: 'It was Joseph Goebbels who said that if you repeat a lie often enough, people will believe it.',
+    txt:
+      'It was Joseph Goebbels who said that if you repeat a lie often enough, people will believe it.',
     subj: 'people',
     verb: 'was Joseph',
     obj: 'it',
@@ -4678,7 +4772,8 @@ module.exports = [
     obj: 'death',
   },
   {
-    txt: 'The money funds their travel, explosives, hideouts and permanent search for soft vulnerable targets.',
+    txt:
+      'The money funds their travel, explosives, hideouts and permanent search for soft vulnerable targets.',
     subj: 'money',
     verb: 'funds',
     obj: 'travel',
@@ -4803,19 +4898,22 @@ module.exports = [
     obj: 'priests',
   },
   {
-    txt: 'Do you search every ambulance after a few suicide murderers use ambulances to reach their targets?',
+    txt:
+      'Do you search every ambulance after a few suicide murderers use ambulances to reach their targets?',
     subj: 'murderers',
     verb: 'search',
     obj: 'targets',
   },
   {
-    txt: 'Do you strip every woman because one pretended to be pregnant and carried a suicide bomb on her belly?',
+    txt:
+      'Do you strip every woman because one pretended to be pregnant and carried a suicide bomb on her belly?',
     subj: 'one',
     verb: 'strip',
     obj: 'bomb',
   },
   {
-    txt: 'Do you shoot back at someone trying to kill you, standing deliberately behind a group of children?',
+    txt:
+      'Do you shoot back at someone trying to kill you, standing deliberately behind a group of children?',
     subj: 'you',
     verb: 'shoot back',
     obj: 'you',
@@ -4853,7 +4951,8 @@ module.exports = [
     obj: 'him',
   },
   {
-    txt: 'I leave it to you as homework to figure out what Spain or France would have done, in such a situation.',
+    txt:
+      'I leave it to you as homework to figure out what Spain or France would have done, in such a situation.',
     subj: 'Spain',
     verb: 'leave',
     obj: 'what',
@@ -4934,7 +5033,8 @@ module.exports = [
     obj: 'unity',
   },
   {
-    txt: 'Allow me, for a moment, to depart from my alleged role as a taxi driver and return to science.',
+    txt:
+      'Allow me, for a moment, to depart from my alleged role as a taxi driver and return to science.',
     subj: null,
     verb: 'Allow',
     obj: 'me',
@@ -4973,13 +5073,15 @@ module.exports = [
     obj: 'regimes',
   },
   {
-    txt: 'This is a significant strategic change and it applies strong pressure on the terrorist countries.',
+    txt:
+      'This is a significant strategic change and it applies strong pressure on the terrorist countries.',
     subj: 'it',
     verb: 'change',
     obj: 'pressure',
   },
   {
-    txt: 'It is not surprising that Iran is so active in trying to incite a Shiite uprising in Iraq.',
+    txt:
+      'It is not surprising that Iran is so active in trying to incite a Shiite uprising in Iraq.',
     subj: 'Iran',
     verb: 'is not surprising',
     obj: 'uprising',
@@ -5038,7 +5140,8 @@ module.exports = [
     obj: 'signals',
   },
   {
-    txt: 'In order to win the war it is also necessary to dry the financial resources of the terror conglomerate.',
+    txt:
+      'In order to win the war it is also necessary to dry the financial resources of the terror conglomerate.',
     subj: null,
     verb: 'is also necessary',
     obj: 'resources',
@@ -5229,7 +5332,8 @@ module.exports = [
     obj: 'weapon',
   },
   {
-    txt: 'The CIA reportedly has been quietly building a case that the anthrax mailings were an international plot.',
+    txt:
+      'The CIA reportedly has been quietly building a case that the anthrax mailings were an international plot.',
     subj: 'mailings',
     verb: 'has been quietly building',
     obj: 'case',
@@ -5326,7 +5430,8 @@ module.exports = [
     obj: 'helicopters',
   },
   {
-    txt: 'Sufaat, according to both KSM and Hambali, did not have the virulent US Army Ames strain that would be used.',
+    txt:
+      'Sufaat, according to both KSM and Hambali, did not have the virulent US Army Ames strain that would be used.',
     subj: 'that',
     verb: 'did not have',
     obj: 'strain',
@@ -5345,13 +5450,15 @@ module.exports = [
     obj: 'anthrax',
   },
   {
-    txt: 'The islamist had been released from Egyptian prison and had known Zawahiri well for many years.',
+    txt:
+      'The islamist had been released from Egyptian prison and had known Zawahiri well for many years.',
     subj: 'islamist',
     verb: 'released',
     obj: 'Zawahiri',
   },
   {
-    txt: 'He believed that the koran instructed that a jihadist should use the weapons used by the crusader.',
+    txt:
+      'He believed that the koran instructed that a jihadist should use the weapons used by the crusader.',
     subj: 'jihadist',
     verb: 'believed',
     obj: 'weapons',
@@ -5541,7 +5648,8 @@ module.exports = [
     obj: 'ties',
   },
   {
-    txt: 'Sufaat used his company called Green Laboratory Medicine to buy items useful to Al Qaeda.',
+    txt:
+      'Sufaat used his company called Green Laboratory Medicine to buy items useful to Al Qaeda.',
     subj: 'Sufaat',
     verb: 'used',
     obj: 'items',
@@ -5581,7 +5689,8 @@ module.exports = [
     obj: 'him',
   },
   {
-    txt: 'The fellow was carrying papers from Zawahiri and bragging about his ability to manipulate anthrax.',
+    txt:
+      'The fellow was carrying papers from Zawahiri and bragging about his ability to manipulate anthrax.',
     subj: 'fellow',
     verb: 'was carrying',
     obj: 'anthrax',
@@ -5601,13 +5710,15 @@ module.exports = [
     obj: 'doctors',
   },
   {
-    txt: 'Microbiologist Abdul Qadoos Khan was charged along with his son, Ahmed, for harboring the fugitives.',
+    txt:
+      'Microbiologist Abdul Qadoos Khan was charged along with his son, Ahmed, for harboring the fugitives.',
     subj: 'Abdul',
     verb: 'charged',
     obj: 'fugitives',
   },
   {
-    txt: 'As of March 28, 2003, he was in a hospital for a cardiac problem and had been granted " pre-arrest bail . "',
+    txt:
+      'As of March 28, 2003, he was in a hospital for a cardiac problem and had been granted " pre-arrest bail . "',
     subj: 'he',
     verb: 'hospital',
     obj: 'bail',
@@ -5620,13 +5731,15 @@ module.exports = [
     obj: 'stipend',
   },
   {
-    txt: 'It was Khalid Mohammed who told authorities about Aafia Siddiqui, who has a PhD from Brandeis in neurology.',
+    txt:
+      'It was Khalid Mohammed who told authorities about Aafia Siddiqui, who has a PhD from Brandeis in neurology.',
     subj: 'who',
     verb: 'who',
     obj: 'PhD',
   },
   {
-    txt: 'The Pakistan ISI and CIA rarely grant press interviews in connection with an ongoing manhunt.',
+    txt:
+      'The Pakistan ISI and CIA rarely grant press interviews in connection with an ongoing manhunt.',
     subj: 'ISI',
     verb: 'rarely grant',
     obj: 'interviews',
@@ -5652,7 +5765,8 @@ module.exports = [
     obj: 'fact',
   },
   {
-    txt: 'Her mother Ismat last saw Aafia and her grandchildren before they left in a minicab at the end of March.',
+    txt:
+      'Her mother Ismat last saw Aafia and her grandchildren before they left in a minicab at the end of March.',
     subj: 'they',
     verb: 'last saw',
     obj: 'Aafia',
@@ -5704,7 +5818,8 @@ module.exports = [
     obj: 'training',
   },
   {
-    txt: 'The United States truly no longer has time for faulty analysis or politically - based preconceptions.',
+    txt:
+      'The United States truly no longer has time for faulty analysis or politically - based preconceptions.',
     subj: 'States',
     verb: 'truly no longer has',
     obj: 'time',
@@ -5724,7 +5839,8 @@ module.exports = [
     obj: 'agents',
   },
   {
-    txt: 'The hijacker Ahmed Alhaznawi appears to have contracted cutaneous anthrax in Afghanistan.',
+    txt:
+      'The hijacker Ahmed Alhaznawi appears to have contracted cutaneous anthrax in Afghanistan.',
     subj: 'hijacker',
     verb: 'appears',
     obj: 'anthrax',
@@ -5758,7 +5874,8 @@ module.exports = [
     obj: 'which',
   },
   {
-    txt: "Zawahiri did travel to Baghdad in 1998 with an entourage to attend the birthday party of Saddam's son.",
+    txt:
+      "Zawahiri did travel to Baghdad in 1998 with an entourage to attend the birthday party of Saddam's son.",
     subj: 'Zawahiri',
     verb: 'did travel',
     obj: 'party',
@@ -5887,25 +6004,29 @@ module.exports = [
     obj: 'anthrax',
   },
   {
-    txt: '( News assistant Bobby Bender recalls the letter containing the items to have been addressed to The Sun . )',
+    txt:
+      '( News assistant Bobby Bender recalls the letter containing the items to have been addressed to The Sun . )',
     subj: 'Bobby',
     verb: 'recalls',
     obj: 'items',
   },
   {
-    txt: 'The islamists sent letter bombs in January 1997 to newspaper offices in New York City and Washington, D.C..',
+    txt:
+      'The islamists sent letter bombs in January 1997 to newspaper offices in New York City and Washington, D.C..',
     subj: 'islamists',
     verb: 'sent',
     obj: 'bombs',
   },
   {
-    txt: 'The purpose of the letter bombs -- which resulted in minimal casualty -- was to send a message.',
+    txt:
+      'The purpose of the letter bombs -- which resulted in minimal casualty -- was to send a message.',
     subj: 'which',
     verb: 'was',
     obj: 'message',
   },
   {
-    txt: 'Along with Zawahiri, Abdel Rahman and his two sons have had considerable influence over Bin Laden.',
+    txt:
+      'Along with Zawahiri, Abdel Rahman and his two sons have had considerable influence over Bin Laden.',
     subj: 'Abdel',
     verb: 'have had',
     obj: 'influence',
@@ -6037,7 +6158,8 @@ module.exports = [
     obj: 'balance',
   },
   {
-    txt: 'Finally, the " Hatfill theory " seems to have been exhausted or at least lost public favor.',
+    txt:
+      'Finally, the " Hatfill theory " seems to have been exhausted or at least lost public favor.',
     subj: 'Hatfill',
     verb: 'seems',
     obj: 'favor',
@@ -6063,7 +6185,8 @@ module.exports = [
     obj: 'interviews',
   },
   {
-    txt: 'The judge had agreed to delay the civil rights matter from proceeding until at least October 2004.',
+    txt:
+      'The judge had agreed to delay the civil rights matter from proceeding until at least October 2004.',
     subj: 'judge',
     verb: 'had agreed',
     obj: 'matter',
@@ -6104,7 +6227,8 @@ module.exports = [
     obj: 'curves',
   },
   {
-    txt: 'Typically, we receive both FX and inflation from you, but both curves may not always be used.',
+    txt:
+      'Typically, we receive both FX and inflation from you, but both curves may not always be used.',
     subj: 'curves',
     verb: 'receive',
     obj: 'FX',
@@ -6116,7 +6240,8 @@ module.exports = [
     obj: 'requests',
   },
   {
-    txt: 'For now, this is the list of countries for which we will probably need the FX and / or inflation curves.',
+    txt:
+      'For now, this is the list of countries for which we will probably need the FX and / or inflation curves.',
     subj: 'we',
     verb: 'list',
     obj: 'curves',
@@ -6185,7 +6310,8 @@ module.exports = [
     obj: 'invitation',
   },
   {
-    txt: "Beth has made our reservations for the Round Table Friday night (5/18) at Sullivan's Steak House for 6:30.",
+    txt:
+      "Beth has made our reservations for the Round Table Friday night (5/18) at Sullivan's Steak House for 6:30.",
     subj: 'Beth',
     verb: 'has made',
     obj: 'reservations',
@@ -6197,7 +6323,8 @@ module.exports = [
     obj: 'you',
   },
   {
-    txt: "Beth has made our reservations for the Round Table Friday night (5/18) at Sullivan's Steak House for 6:30.",
+    txt:
+      "Beth has made our reservations for the Round Table Friday night (5/18) at Sullivan's Steak House for 6:30.",
     subj: 'Beth',
     verb: 'has made',
     obj: 'reservations',
@@ -6346,7 +6473,8 @@ module.exports = [
     obj: 'calls',
   },
   {
-    txt: 'I would like that ability in order to hedge some exposure I have of unexercised vested options.',
+    txt:
+      'I would like that ability in order to hedge some exposure I have of unexercised vested options.',
     subj: 'I',
     verb: 'would like',
     obj: 'exposure',
@@ -6359,7 +6487,8 @@ module.exports = [
     obj: 'calls',
   },
   {
-    txt: 'Of course, you would then be in a position to sell calls again if the stock makes a bounce.',
+    txt:
+      'Of course, you would then be in a position to sell calls again if the stock makes a bounce.',
     subj: 'stock',
     verb: 'position',
     obj: 'bounce',
@@ -6554,7 +6683,8 @@ module.exports = [
     obj: 'increase',
   },
   {
-    txt: 'It would still give him room to progress in the current job group should he not be promoted.',
+    txt:
+      'It would still give him room to progress in the current job group should he not be promoted.',
     subj: 'he',
     verb: 'would still give',
     obj: 'room',
@@ -6580,7 +6710,8 @@ module.exports = [
     obj: 'demands',
   },
   {
-    txt: 'The conference will review the parameters of these challenges and possible solutions to them.',
+    txt:
+      'The conference will review the parameters of these challenges and possible solutions to them.',
     subj: 'conference',
     verb: 'will review',
     obj: 'parameters',
@@ -6672,7 +6803,8 @@ module.exports = [
     obj: 'income',
   },
   {
-    txt: 'Per September financials, this company has about $ 3 M of MTM and about $ 8 K of expenses, nothing else.',
+    txt:
+      'Per September financials, this company has about $ 3 M of MTM and about $ 8 K of expenses, nothing else.',
     subj: 'company',
     verb: 'has about',
     obj: '$',
@@ -6787,7 +6919,8 @@ module.exports = [
     obj: 'all',
   },
   {
-    txt: 'They are kind of in rank order but as I stated if I find the piece that I like we will purchase it.',
+    txt:
+      'They are kind of in rank order but as I stated if I find the piece that I like we will purchase it.',
     subj: 'we',
     verb: 'order',
     obj: 'it',
@@ -6799,7 +6932,8 @@ module.exports = [
     obj: 'signed',
   },
   {
-    txt: 'I also realize that some may not have done any works on paper or they are outrageously expensive.',
+    txt:
+      'I also realize that some may not have done any works on paper or they are outrageously expensive.',
     subj: 'they',
     verb: 'also realize',
     obj: 'works',
@@ -6877,7 +7011,8 @@ module.exports = [
     obj: 'name',
   },
   {
-    txt: 'Please leave as a word document and make any changes and additions that you think necessary.',
+    txt:
+      'Please leave as a word document and make any changes and additions that you think necessary.',
     subj: 'you',
     verb: 'leave',
     obj: 'that',
@@ -6952,13 +7087,15 @@ module.exports = [
     obj: 'time',
   },
   {
-    txt: "Most Fridays I 'm going to TRY to pick Michael up since I 'm away so much, which means leaving by 445 or so.",
+    txt:
+      "Most Fridays I 'm going to TRY to pick Michael up since I 'm away so much, which means leaving by 445 or so.",
     subj: 'which',
     verb: "'m going",
     obj: 'Michael',
   },
   {
-    txt: 'October 19 / 20, Neil is out of town, so I have to pick Michael up from school (leave at 430 )',
+    txt:
+      'October 19 / 20, Neil is out of town, so I have to pick Michael up from school (leave at 430 )',
     subj: 'I',
     verb: 'town so',
     obj: 'Michael',
@@ -6990,7 +7127,8 @@ module.exports = [
     obj: 'deal',
   },
   {
-    txt: 'I have a concern that the Enron optionality bug could bite us on the backside with that one.',
+    txt:
+      'I have a concern that the Enron optionality bug could bite us on the backside with that one.',
     subj: 'bug',
     verb: 'have',
     obj: 'us',
@@ -7039,7 +7177,8 @@ module.exports = [
     obj: 'deal',
   },
   {
-    txt: 'I have a concern that the Enron optionality bug could bite us on the backside with that one.',
+    txt:
+      'I have a concern that the Enron optionality bug could bite us on the backside with that one.',
     subj: 'bug',
     verb: 'have',
     obj: 'us',
@@ -7070,7 +7209,8 @@ module.exports = [
     obj: 'manufacturer',
   },
   {
-    txt: 'In order to mark any 2000 income, we will need to get CRRA to execute the Development Agreement in 2000.',
+    txt:
+      'In order to mark any 2000 income, we will need to get CRRA to execute the Development Agreement in 2000.',
     subj: 'we',
     verb: 'will need',
     obj: 'Agreement',
@@ -7102,7 +7242,8 @@ module.exports = [
     obj: 'contract',
   },
   {
-    txt: "We don't want to condition the acceptance of one project on the performance of another project.",
+    txt:
+      "We don't want to condition the acceptance of one project on the performance of another project.",
     subj: 'We',
     verb: "don't want",
     obj: 'acceptance',
@@ -7126,7 +7267,8 @@ module.exports = [
     obj: 'trips',
   },
   {
-    txt: 'When she was diagnosed with the flesh eating disease the doctor gave her 13 years to live.',
+    txt:
+      'When she was diagnosed with the flesh eating disease the doctor gave her 13 years to live.',
     subj: 'doctor',
     verb: 'gave',
     obj: 'years',
@@ -7200,7 +7342,8 @@ module.exports = [
     obj: 'what',
   },
   {
-    txt: 'He said they are looking for people and based on what I told him an interview was a formality.',
+    txt:
+      'He said they are looking for people and based on what I told him an interview was a formality.',
     subj: 'interview',
     verb: 'said',
     obj: 'him',
@@ -7212,13 +7355,15 @@ module.exports = [
     obj: 'that',
   },
   {
-    txt: "All the guys at work are saying I shouldn't bother having it fixed I should just buy a new one.",
+    txt:
+      "All the guys at work are saying I shouldn't bother having it fixed I should just buy a new one.",
     subj: 'I',
     verb: 'are saying',
     obj: 'one',
   },
   {
-    txt: 'Do I need to cross reference the deals in my model to the deals in the system or did you already do that?',
+    txt:
+      'Do I need to cross reference the deals in my model to the deals in the system or did you already do that?',
     subj: 'you',
     verb: 'need',
     obj: 'that',
@@ -7230,7 +7375,8 @@ module.exports = [
     obj: 'deal',
   },
   {
-    txt: 'I think it is mine but I forgot to write it in the blue FX book (I only wrote it in my red book ).',
+    txt:
+      'I think it is mine but I forgot to write it in the blue FX book (I only wrote it in my red book ).',
     subj: 'I',
     verb: 'think',
     obj: 'it',
@@ -7365,7 +7511,8 @@ module.exports = [
     obj: 'Presentation',
   },
   {
-    txt: 'So the last weekend in January would work well (and I will need a rest from formal affairs ! ).',
+    txt:
+      'So the last weekend in January would work well (and I will need a rest from formal affairs ! ).',
     subj: 'I',
     verb: 'would work well',
     obj: 'rest',
@@ -7403,7 +7550,8 @@ module.exports = [
     obj: 'press',
   },
   {
-    txt: 'On the means of delivery, I am not sure from your note whether or not I fully understand the intent.',
+    txt:
+      'On the means of delivery, I am not sure from your note whether or not I fully understand the intent.',
     subj: 'I',
     verb: 'am not sure',
     obj: 'intent',
@@ -7444,7 +7592,8 @@ module.exports = [
     obj: 'standards',
   },
   {
-    txt: 'My commitment to Rick Causey is that I will have that global report in production by the end of the year.',
+    txt:
+      'My commitment to Rick Causey is that I will have that global report in production by the end of the year.',
     subj: 'I',
     verb: 'is',
     obj: 'report',
@@ -7540,7 +7689,8 @@ module.exports = [
     obj: 'anyone',
   },
   {
-    txt: 'Please let them know that I was simply quoting the CEO of a large, regulated utility in California.',
+    txt:
+      'Please let them know that I was simply quoting the CEO of a large, regulated utility in California.',
     subj: 'I',
     verb: 'let',
     obj: 'CEO',
@@ -7558,13 +7708,15 @@ module.exports = [
     obj: 'job',
   },
   {
-    txt: 'Does she have any interest in meeting one - on - one or is she just looking for a public hanging?',
+    txt:
+      'Does she have any interest in meeting one - on - one or is she just looking for a public hanging?',
     subj: 'she',
     verb: 'have',
     obj: 'interest',
   },
   {
-    txt: 'I remain convinced that if we can just get the facts in front of people they will modulate their approach.',
+    txt:
+      'I remain convinced that if we can just get the facts in front of people they will modulate their approach.',
     subj: 'they',
     verb: 'remain',
     obj: 'approach',
@@ -7669,7 +7821,8 @@ module.exports = [
     obj: 'offices',
   },
   {
-    txt: 'Erin Rice and I would like to meet with you to discuss the issues concerning BackWeb before we proceed.',
+    txt:
+      'Erin Rice and I would like to meet with you to discuss the issues concerning BackWeb before we proceed.',
     subj: 'we',
     verb: 'would like',
     obj: 'issues',
@@ -7706,7 +7859,8 @@ module.exports = [
     obj: 'this',
   },
   {
-    txt: 'Did you do a deal with National Fuel Marketing purchasing 3,500 mmbtu on May 30th @ 2.975?',
+    txt:
+      'Did you do a deal with National Fuel Marketing purchasing 3,500 mmbtu on May 30th @ 2.975?',
     subj: 'you',
     verb: 'do',
     obj: 'mmbtu',
@@ -7754,7 +7908,8 @@ module.exports = [
     obj: 'this',
   },
   {
-    txt: 'Did you do a deal with National Fuel Marketing purchasing 3,500 mmbtu on May 30th @ 2.975?',
+    txt:
+      'Did you do a deal with National Fuel Marketing purchasing 3,500 mmbtu on May 30th @ 2.975?',
     subj: 'you',
     verb: 'do',
     obj: 'mmbtu',
@@ -7784,7 +7939,8 @@ module.exports = [
     obj: 'us',
   },
   {
-    txt: 'Can you please confirm which price is correct and make the change in Sitara if necessary?',
+    txt:
+      'Can you please confirm which price is correct and make the change in Sitara if necessary?',
     subj: 'price',
     verb: 'confirm',
     obj: 'change',
@@ -7808,7 +7964,8 @@ module.exports = [
     obj: 'us',
   },
   {
-    txt: 'Can you please confirm which price is correct and make the change in Sitara if necessary?',
+    txt:
+      'Can you please confirm which price is correct and make the change in Sitara if necessary?',
     subj: 'price',
     verb: 'confirm',
     obj: 'change',
@@ -7850,7 +8007,8 @@ module.exports = [
     obj: 'us',
   },
   {
-    txt: 'Can you please confirm which price is correct and make the change in Sitara if necessary?',
+    txt:
+      'Can you please confirm which price is correct and make the change in Sitara if necessary?',
     subj: 'price',
     verb: 'confirm',
     obj: 'change',
@@ -7862,7 +8020,8 @@ module.exports = [
     obj: 'day',
   },
   {
-    txt: "Please find enclosed EES's request for Volumes for PGE CityGate delvery effective 11/1/01 :",
+    txt:
+      "Please find enclosed EES's request for Volumes for PGE CityGate delvery effective 11/1/01 :",
     subj: null,
     verb: 'find',
     obj: 'request',
@@ -7886,7 +8045,8 @@ module.exports = [
     obj: 'questions',
   },
   {
-    txt: 'I have not had the patience to get it working - I will call you some evening and we can walk thru it.',
+    txt:
+      'I have not had the patience to get it working - I will call you some evening and we can walk thru it.',
     subj: 'we',
     verb: 'have not had',
     obj: 'you',
@@ -7923,7 +8083,8 @@ module.exports = [
     obj: 'assistance',
   },
   {
-    txt: 'Jared just told me you have a BUNCH of stuff on your plate and I think you are about to get much busier too.',
+    txt:
+      'Jared just told me you have a BUNCH of stuff on your plate and I think you are about to get much busier too.',
     subj: 'you',
     verb: 'just told',
     obj: 'BUNCH',
@@ -7997,7 +8158,8 @@ module.exports = [
     obj: 'Stipulation',
   },
   {
-    txt: 'I also deleted " subject to recall " based on our discussion, assuming you get approval for that revision.',
+    txt:
+      'I also deleted " subject to recall " based on our discussion, assuming you get approval for that revision.',
     subj: 'you',
     verb: 'also deleted',
     obj: 'approval',
@@ -8029,7 +8191,8 @@ module.exports = [
     obj: 'copies',
   },
   {
-    txt: 'A heartwarming story of the advances of women in achieving equality throughout the world.',
+    txt:
+      'A heartwarming story of the advances of women in achieving equality throughout the world.',
     subj: null,
     verb: 'story',
     obj: 'equality',
@@ -8047,7 +8210,8 @@ module.exports = [
     obj: 'one',
   },
   {
-    txt: 'Can you tell the free world just what enabled women here to achieve this reversal of roles ? "',
+    txt:
+      'Can you tell the free world just what enabled women here to achieve this reversal of roles ? "',
     subj: 'you',
     verb: 'tell',
     obj: 'reversal',
@@ -8128,7 +8292,8 @@ module.exports = [
     obj: 'sampling',
   },
   {
-    txt: "While we can't make any promises, we will do our best to bring in at least some of these special guests.",
+    txt:
+      "While we can't make any promises, we will do our best to bring in at least some of these special guests.",
     subj: 'we',
     verb: 'will do',
     obj: 'some',
@@ -8240,7 +8405,8 @@ module.exports = [
     obj: 'site',
   },
   {
-    txt: 'If we have time next week, I could step you through our website -- www.weathereffects.com.',
+    txt:
+      'If we have time next week, I could step you through our website -- www.weathereffects.com.',
     subj: 'I',
     verb: 'could step',
     obj: 'you',
@@ -8310,7 +8476,8 @@ module.exports = [
     obj: 'threshold',
   },
   {
-    txt: 'If possible, I think the cleanest way to run this biz would be to put a box around the prime broker biz.',
+    txt:
+      'If possible, I think the cleanest way to run this biz would be to put a box around the prime broker biz.',
     subj: 'way',
     verb: 'think',
     obj: 'box',
@@ -8347,7 +8514,8 @@ module.exports = [
     obj: 'line',
   },
   {
-    txt: 'I am going to find out how much line we currently have available ... you probably already have this.',
+    txt:
+      'I am going to find out how much line we currently have available ... you probably already have this.',
     subj: 'you',
     verb: 'am going',
     obj: 'this',
@@ -8417,7 +8585,8 @@ module.exports = [
     obj: 'fee',
   },
   {
-    txt: 'What person (s) in London prepares credit for the English and Singapore financial transactions?',
+    txt:
+      'What person (s) in London prepares credit for the English and Singapore financial transactions?',
     subj: 'person',
     verb: 'prepares',
     obj: 'credit',
@@ -8455,7 +8624,8 @@ module.exports = [
     obj: 'Amount',
   },
   {
-    txt: 'The Base Currency Amount shall equal the volume submitted by the Counterparty via the Website.',
+    txt:
+      'The Base Currency Amount shall equal the volume submitted by the Counterparty via the Website.',
     subj: 'Amount',
     verb: 'shall equal',
     obj: 'volume',
@@ -8474,7 +8644,8 @@ module.exports = [
     obj: 'changes',
   },
   {
-    txt: "I need to have a form filled out that says I don't have health insurance coverage through Enron.",
+    txt:
+      "I need to have a form filled out that says I don't have health insurance coverage through Enron.",
     subj: 'I',
     verb: 'need',
     obj: 'coverage',
@@ -8592,7 +8763,8 @@ module.exports = [
     obj: 'you',
   },
   {
-    txt: 'Yes, but this time it is his carotid artery - the one that transports blood to the brain.',
+    txt:
+      'Yes, but this time it is his carotid artery - the one that transports blood to the brain.',
     subj: 'that',
     verb: 'artery',
     obj: 'blood',
@@ -8697,7 +8869,8 @@ module.exports = [
     obj: 'you',
   },
   {
-    txt: "I 'm forwarding a revised development agreement term sheet, showing revisions from your original version.",
+    txt:
+      "I 'm forwarding a revised development agreement term sheet, showing revisions from your original version.",
     subj: 'I',
     verb: "'m forwarding",
     obj: 'revisions',
@@ -8884,7 +9057,8 @@ module.exports = [
     obj: 'progress',
   },
   {
-    txt: 'Now it is time to take the next steps and achieve even greater progress in our public education system.',
+    txt:
+      'Now it is time to take the next steps and achieve even greater progress in our public education system.',
     subj: 'it',
     verb: 'Now is time',
     obj: 'progress',
@@ -8923,7 +9097,8 @@ module.exports = [
     obj: 'you',
   },
   {
-    txt: 'If you are not the intended recipient, you must not read, use or disseminate the information.',
+    txt:
+      'If you are not the intended recipient, you must not read, use or disseminate the information.',
     subj: 'you',
     verb: 'must not read',
     obj: 'information',
@@ -8991,7 +9166,8 @@ module.exports = [
     obj: 'miles',
   },
   {
-    txt: 'Oh, it is dueled out through one catalytic converter with Flow Masters to accent the sound.',
+    txt:
+      'Oh, it is dueled out through one catalytic converter with Flow Masters to accent the sound.',
     subj: 'it',
     verb: 'dueled',
     obj: 'sound',
@@ -9082,7 +9258,8 @@ module.exports = [
     obj: 'couple',
   },
   {
-    txt: 'My kid is making wonderful grades and has reassured me she will graduate within the four year period.',
+    txt:
+      'My kid is making wonderful grades and has reassured me she will graduate within the four year period.',
     subj: 'she',
     verb: 'is making',
     obj: 'me',
@@ -9173,7 +9350,8 @@ module.exports = [
     obj: 'What',
   },
   {
-    txt: "If that's ok, how do you want your name to show up on the title and what address should I use?",
+    txt:
+      "If that's ok, how do you want your name to show up on the title and what address should I use?",
     subj: 'I',
     verb: 'want',
     obj: 'address',
@@ -9269,7 +9447,8 @@ module.exports = [
     obj: 'price',
   },
   {
-    txt: 'Can you please review this additional language to the risk management policy (or circulate to Jeff Hodge )?',
+    txt:
+      'Can you please review this additional language to the risk management policy (or circulate to Jeff Hodge )?',
     subj: 'you',
     verb: 'review',
     obj: 'language',
@@ -9301,7 +9480,8 @@ module.exports = [
     obj: 'policy',
   },
   {
-    txt: 'Our attorneys and internal audit area have made one language revision concerning Section XIII Audit Rights.',
+    txt:
+      'Our attorneys and internal audit area have made one language revision concerning Section XIII Audit Rights.',
     subj: 'attorneys',
     verb: 'have made',
     obj: 'revision',
@@ -9313,7 +9493,8 @@ module.exports = [
     obj: 'machine',
   },
   {
-    txt: "Otherwise, we can see who we can scare up at the office, or you can have Laura sign and I'll initial later.",
+    txt:
+      "Otherwise, we can see who we can scare up at the office, or you can have Laura sign and I'll initial later.",
     subj: 'I',
     verb: 'Otherwise can see',
     obj: 'who',
@@ -9356,7 +9537,8 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: 'Can you please review this additional language to the risk management policy (or circulate to Jeff Hodge )?',
+    txt:
+      'Can you please review this additional language to the risk management policy (or circulate to Jeff Hodge )?',
     subj: 'you',
     verb: 'review',
     obj: 'language',
@@ -9388,7 +9570,8 @@ module.exports = [
     obj: 'policy',
   },
   {
-    txt: 'Our attorneys and internal audit area have made one language revision concerning Section XIII Audit Rights.',
+    txt:
+      'Our attorneys and internal audit area have made one language revision concerning Section XIII Audit Rights.',
     subj: 'attorneys',
     verb: 'have made',
     obj: 'revision',
@@ -9426,7 +9609,8 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: 'Since it will be Janet signing, it will probably be better to have the initials on the pages first.',
+    txt:
+      'Since it will be Janet signing, it will probably be better to have the initials on the pages first.',
     subj: 'Janet',
     verb: 'will probably be better',
     obj: 'initials',
@@ -9444,7 +9628,8 @@ module.exports = [
     obj: 'machine',
   },
   {
-    txt: "Otherwise, we can see who we can scare up at the office, or you can have Laura sign and I'll initial later.",
+    txt:
+      "Otherwise, we can see who we can scare up at the office, or you can have Laura sign and I'll initial later.",
     subj: 'I',
     verb: 'Otherwise can see',
     obj: 'who',
@@ -9487,7 +9672,8 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: 'Can you please review this additional language to the risk management policy (or circulate to Jeff Hodge )?',
+    txt:
+      'Can you please review this additional language to the risk management policy (or circulate to Jeff Hodge )?',
     subj: 'you',
     verb: 'review',
     obj: 'language',
@@ -9519,7 +9705,8 @@ module.exports = [
     obj: 'policy',
   },
   {
-    txt: 'Our attorneys and internal audit area have made one language revision concerning Section XIII Audit Rights.',
+    txt:
+      'Our attorneys and internal audit area have made one language revision concerning Section XIII Audit Rights.',
     subj: 'attorneys',
     verb: 'have made',
     obj: 'revision',
@@ -9576,7 +9763,8 @@ module.exports = [
     obj: 'place',
   },
   {
-    txt: "Then, also, he's got so much stuff in there right now, that I don't know how he's going to fit baby stuff.",
+    txt:
+      "Then, also, he's got so much stuff in there right now, that I don't know how he's going to fit baby stuff.",
     subj: 'he',
     verb: 'got so',
     obj: 'stuff',
@@ -9619,7 +9807,8 @@ module.exports = [
     obj: 'email',
   },
   {
-    txt: 'Anyway, I got you message, and I got the World Series thing (although I had already received',
+    txt:
+      'Anyway, I got you message, and I got the World Series thing (although I had already received',
     subj: 'I',
     verb: 'got',
     obj: 'thing',
@@ -9632,7 +9821,8 @@ module.exports = [
     obj: 'heads',
   },
   {
-    txt: 'Ma said she had a great time in Houston, She was happy to see yourself, as well as C & D.',
+    txt:
+      'Ma said she had a great time in Houston, She was happy to see yourself, as well as C & D.',
     subj: 'She',
     verb: 'said',
     obj: 'yourself',
@@ -9644,7 +9834,8 @@ module.exports = [
     obj: 'room',
   },
   {
-    txt: "You r gon na be the first to see the new baby (woudn't it be wierd if the baby gets botn on Jan 5th ? )",
+    txt:
+      "You r gon na be the first to see the new baby (woudn't it be wierd if the baby gets botn on Jan 5th ? )",
     subj: 'baby',
     verb: 'r gon',
     obj: 'baby',
@@ -9692,7 +9883,8 @@ module.exports = [
     obj: 'me',
   },
   {
-    txt: "If so, I'll get it signed by Craig Breslau today, then bring it to you for countersignature.",
+    txt:
+      "If so, I'll get it signed by Craig Breslau today, then bring it to you for countersignature.",
     subj: 'I',
     verb: 'will get',
     obj: 'it',
@@ -9798,13 +9990,15 @@ module.exports = [
     obj: 'things',
   },
   {
-    txt: "Anyway, I 'm sure my Mom told you guys but Travis and Kathy got to meet him and I think it went well.",
+    txt:
+      "Anyway, I 'm sure my Mom told you guys but Travis and Kathy got to meet him and I think it went well.",
     subj: 'it',
     verb: "Anyway 'm sure",
     obj: 'him',
   },
   {
-    txt: "Hopefully, if we 're still dating come December, you and Chuck can meet him when you come back to visit.",
+    txt:
+      "Hopefully, if we 're still dating come December, you and Chuck can meet him when you come back to visit.",
     subj: 'you',
     verb: 'can meet',
     obj: 'him',
@@ -9817,13 +10011,15 @@ module.exports = [
     obj: 'him',
   },
   {
-    txt: 'I went with Emily and her Mom last night to see the musical " Rent " and it was wonderful.',
+    txt:
+      'I went with Emily and her Mom last night to see the musical " Rent " and it was wonderful.',
     subj: 'it',
     verb: 'went',
     obj: 'Rent',
   },
   {
-    txt: "Also, I 'm going out to San Diego for the Labor Day weekend to visit Hoot's daughter Julie.",
+    txt:
+      "Also, I 'm going out to San Diego for the Labor Day weekend to visit Hoot's daughter Julie.",
     subj: 'I',
     verb: "Also 'm going out",
     obj: 'daughter',
@@ -9914,7 +10110,8 @@ module.exports = [
     obj: 'name',
   },
   {
-    txt: "So was Darren there last night to meet her or do you just think they'd make a good match?",
+    txt:
+      "So was Darren there last night to meet her or do you just think they'd make a good match?",
     subj: 'they',
     verb: 'there',
     obj: 'match',
@@ -9933,7 +10130,8 @@ module.exports = [
     obj: 'sentiment',
   },
   {
-    txt: 'At this rate we may have to start pinning notes to your shirt to remind you to do things.',
+    txt:
+      'At this rate we may have to start pinning notes to your shirt to remind you to do things.',
     subj: 'we',
     verb: 'may have',
     obj: 'things',
@@ -9977,7 +10175,8 @@ module.exports = [
     obj: 'some',
   },
   {
-    txt: 'I may try to run out and take the test this afternoon while I get moved to 30 (I better not fail it).',
+    txt:
+      'I may try to run out and take the test this afternoon while I get moved to 30 (I better not fail it).',
     subj: 'I',
     verb: 'may try',
     obj: 'it',
@@ -9989,7 +10188,8 @@ module.exports = [
     obj: "'s",
   },
   {
-    txt: 'There is no pleasure in having nothing to do ; the fun is in having lots to do and not doing it.',
+    txt:
+      'There is no pleasure in having nothing to do ; the fun is in having lots to do and not doing it.',
     subj: 'fun',
     verb: 'is',
     obj: 'it',
@@ -10021,13 +10221,15 @@ module.exports = [
     obj: 'weekend',
   },
   {
-    txt: 'This e-mail is sent by a law firm and contains information that may be privileged and confidential.',
+    txt:
+      'This e-mail is sent by a law firm and contains information that may be privileged and confidential.',
     subj: 'that',
     verb: 'sent',
     obj: 'information',
   },
   {
-    txt: 'If you are not the intended recipient, please delete the e-mail and notify us immediately.',
+    txt:
+      'If you are not the intended recipient, please delete the e-mail and notify us immediately.',
     subj: 'you',
     verb: 'delete',
     obj: 'us',
@@ -10045,7 +10247,8 @@ module.exports = [
     obj: 'update',
   },
   {
-    txt: "Then it's real easy to call Ben Taub to find out a room number .? The address is below .?",
+    txt:
+      "Then it's real easy to call Ben Taub to find out a room number .? The address is below .?",
     subj: 'address',
     verb: "'s real easy",
     obj: 'number',
@@ -10069,13 +10272,15 @@ module.exports = [
     obj: 'visitors',
   },
   {
-    txt: 'Jann, phoned this morning and asked me to pass this information to the group, concerning Bobby Riggins.',
+    txt:
+      'Jann, phoned this morning and asked me to pass this information to the group, concerning Bobby Riggins.',
     subj: 'Jann',
     verb: 'phoned',
     obj: 'information',
   },
   {
-    txt: 'He can not accept calls, visits or flowers at this time, since he is in the emergency room .?',
+    txt:
+      'He can not accept calls, visits or flowers at this time, since he is in the emergency room .?',
     subj: 'he',
     verb: 'can not accept',
     obj: 'calls',
@@ -10094,7 +10299,8 @@ module.exports = [
     obj: 'ideas',
   },
   {
-    txt: 'We are thinking of adding a Patent Pending message to key EnronOnline pages (like the homepage).',
+    txt:
+      'We are thinking of adding a Patent Pending message to key EnronOnline pages (like the homepage).',
     subj: 'We',
     verb: 'are thinking',
     obj: 'message',
@@ -10150,7 +10356,8 @@ module.exports = [
     obj: 'you',
   },
   {
-    txt: 'They wish to launch on Sept. 1 - meaning we will need to be sending mailings sometime around mid-August.',
+    txt:
+      'They wish to launch on Sept. 1 - meaning we will need to be sending mailings sometime around mid-August.',
     subj: 'we',
     verb: 'wish',
     obj: 'mailings',
@@ -10177,7 +10384,8 @@ module.exports = [
     obj: 'definitions',
   },
   {
-    txt: 'I might also add a few items about international developments and the EEI physical power trading form.',
+    txt:
+      'I might also add a few items about international developments and the EEI physical power trading form.',
     subj: 'I',
     verb: 'might also add',
     obj: 'items',
@@ -10299,13 +10507,15 @@ module.exports = [
     obj: 'request',
   },
   {
-    txt: 'Could you please send an executable version of the contract to Fred, David, John and me tomorrow?',
+    txt:
+      'Could you please send an executable version of the contract to Fred, David, John and me tomorrow?',
     subj: 'you',
     verb: 'send',
     obj: 'version',
   },
   {
-    txt: "If they 're OK with it, we'd like to execute it as soon as possible unless there are any objections.",
+    txt:
+      "If they 're OK with it, we'd like to execute it as soon as possible unless there are any objections.",
     subj: 'objections',
     verb: "'d like",
     obj: 'it',
@@ -10323,7 +10533,8 @@ module.exports = [
     obj: 'details',
   },
   {
-    txt: 'I have also amended the timeframes in the Credit Support Annex to 10 days instead of 2 days.',
+    txt:
+      'I have also amended the timeframes in the Credit Support Annex to 10 days instead of 2 days.',
     subj: 'I',
     verb: 'have also amended',
     obj: 'timeframes',
@@ -10365,7 +10576,8 @@ module.exports = [
     obj: 'fun',
   },
   {
-    txt: "Hope you 've been storing up sleep, cause it looks like you won't be getting much for a while.",
+    txt:
+      "Hope you 've been storing up sleep, cause it looks like you won't be getting much for a while.",
     subj: 'you',
     verb: 'Hope',
     obj: 'much',
@@ -10384,7 +10596,8 @@ module.exports = [
     obj: 'care',
   },
   {
-    txt: 'This is just to let you know that Emma gave birth at week 34 on Friday, 6th July, to our triplets :',
+    txt:
+      'This is just to let you know that Emma gave birth at week 34 on Friday, 6th July, to our triplets :',
     subj: 'Emma',
     verb: 'is just',
     obj: 'birth',
@@ -10397,7 +10610,8 @@ module.exports = [
     obj: 'weights',
   },
   {
-    txt: 'Attached are the fax cover pages for each of the Nylon and Polykron Deemed ISDAs I just sent you.',
+    txt:
+      'Attached are the fax cover pages for each of the Nylon and Polykron Deemed ISDAs I just sent you.',
     subj: 'I',
     verb: 'Attached',
     obj: 'you',
@@ -10442,7 +10656,8 @@ module.exports = [
     obj: 'that',
   },
   {
-    txt: 'Please do not hesitate to contact either Francisco Pinto - Leite or me with any questions or comments.',
+    txt:
+      'Please do not hesitate to contact either Francisco Pinto - Leite or me with any questions or comments.',
     subj: null,
     verb: 'do not hesitate',
     obj: 'Francisco',
@@ -10454,7 +10669,8 @@ module.exports = [
     obj: 'comments',
   },
   {
-    txt: 'Attached are an original and blacklined copy of your form of guaranty, which reflect our comments.',
+    txt:
+      'Attached are an original and blacklined copy of your form of guaranty, which reflect our comments.',
     subj: 'which',
     verb: 'Attached',
     obj: 'comments',
@@ -10518,7 +10734,8 @@ module.exports = [
     obj: 'that',
   },
   {
-    txt: 'I am putting the credit worksheet on the fax machine to you as soon as I send this message.',
+    txt:
+      'I am putting the credit worksheet on the fax machine to you as soon as I send this message.',
     subj: 'I',
     verb: 'am putting',
     obj: 'message',
@@ -10557,19 +10774,22 @@ module.exports = [
     obj: 'this',
   },
   {
-    txt: 'Evidently, this a problem that Stacey White has been aware of for a couple of months now.',
+    txt:
+      'Evidently, this a problem that Stacey White has been aware of for a couple of months now.',
     subj: 'Stacey',
     verb: 'problem',
     obj: 'that',
   },
   {
-    txt: 'There was a change made in the coding for the delta position and this has somehow messed up the liq value.',
+    txt:
+      'There was a change made in the coding for the delta position and this has somehow messed up the liq value.',
     subj: 'this',
     verb: 'was',
     obj: 'value',
   },
   {
-    txt: "I believe that there might be a sign - flipping problem for PUTS that's causing this whole issue.",
+    txt:
+      "I believe that there might be a sign - flipping problem for PUTS that's causing this whole issue.",
     subj: 'that',
     verb: 'believe',
     obj: 'issue',
@@ -10628,19 +10848,22 @@ module.exports = [
     obj: 'this',
   },
   {
-    txt: 'Evidently, this a problem that Stacey White has been aware of for a couple of months now.',
+    txt:
+      'Evidently, this a problem that Stacey White has been aware of for a couple of months now.',
     subj: 'Stacey',
     verb: 'problem',
     obj: 'that',
   },
   {
-    txt: 'There was a change made in the coding for the delta position and this has somehow messed up the liq value.',
+    txt:
+      'There was a change made in the coding for the delta position and this has somehow messed up the liq value.',
     subj: 'this',
     verb: 'was',
     obj: 'value',
   },
   {
-    txt: "I believe that there might be a sign - flipping problem for PUTS that's causing this whole issue.",
+    txt:
+      "I believe that there might be a sign - flipping problem for PUTS that's causing this whole issue.",
     subj: 'that',
     verb: 'believe',
     obj: 'issue',
@@ -10678,7 +10901,8 @@ module.exports = [
     obj: 'us',
   },
   {
-    txt: 'For those of you in Toronto, I apologize for not being able to schedule this over your lunch time!',
+    txt:
+      'For those of you in Toronto, I apologize for not being able to schedule this over your lunch time!',
     subj: 'I',
     verb: 'apologize',
     obj: 'this',
@@ -10727,7 +10951,8 @@ module.exports = [
     obj: 's',
   },
   {
-    txt: 'Attached is the revised draft paper that reflects our conference call with Bob Fagan earlier this week.',
+    txt:
+      'Attached is the revised draft paper that reflects our conference call with Bob Fagan earlier this week.',
     subj: 'that',
     verb: 'Attached',
     obj: 'call',
@@ -10841,7 +11066,8 @@ module.exports = [
     obj: 'you',
   },
   {
-    txt: 'FYI, we had an instructive rest of the conference call on Friday with Sue and Robbie et al.',
+    txt:
+      'FYI, we had an instructive rest of the conference call on Friday with Sue and Robbie et al.',
     subj: 'we',
     verb: 'had',
     obj: 'rest',
@@ -10885,7 +11111,8 @@ module.exports = [
     obj: 'number',
   },
   {
-    txt: 'All the outside participants will be prompted to enter their access code, which is 600-480.',
+    txt:
+      'All the outside participants will be prompted to enter their access code, which is 600-480.',
     subj: 'which',
     verb: 'prompted',
     obj: 'code',
@@ -10950,7 +11177,8 @@ module.exports = [
     obj: 'you',
   },
   {
-    txt: 'Have distributed to Western GA team (plus Steffes) for comment and thought you may have some, too.',
+    txt:
+      'Have distributed to Western GA team (plus Steffes) for comment and thought you may have some, too.',
     subj: 'you',
     verb: 'Have distributed',
     obj: 'some',
@@ -10987,7 +11215,8 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: "Let us know and we can add it, and make any other changes you'd like to make at this end.",
+    txt:
+      "Let us know and we can add it, and make any other changes you'd like to make at this end.",
     subj: 'you',
     verb: 'Let',
     obj: 'changes',
@@ -11007,7 +11236,8 @@ module.exports = [
     obj: 'that',
   },
   {
-    txt: 'However, if you use a particular logo for the on - line service, that should be registered.',
+    txt:
+      'However, if you use a particular logo for the on - line service, that should be registered.',
     subj: 'that',
     verb: 'registered',
     obj: 'logo',
@@ -11136,7 +11366,8 @@ module.exports = [
     obj: 'difficulties',
   },
   {
-    txt: 'I am going to count it as signed, since BC Gas has signed, but we still need it to be signed by ECC.',
+    txt:
+      'I am going to count it as signed, since BC Gas has signed, but we still need it to be signed by ECC.',
     subj: 'we',
     verb: 'am going',
     obj: 'it',
@@ -11176,7 +11407,8 @@ module.exports = [
     obj: 'them',
   },
   {
-    txt: "When you have a minute, I'll give me a call and I'll come around and show you how to unfreeze the panel.",
+    txt:
+      "When you have a minute, I'll give me a call and I'll come around and show you how to unfreeze the panel.",
     subj: 'I',
     verb: 'will give',
     obj: 'panel',
@@ -11195,7 +11427,8 @@ module.exports = [
     obj: 'that',
   },
   {
-    txt: 'He also said that London was going to be hiring 120 people to deal with the Credit Derivatives business.',
+    txt:
+      'He also said that London was going to be hiring 120 people to deal with the Credit Derivatives business.',
     subj: 'London',
     verb: 'also said',
     obj: 'people',
@@ -11220,7 +11453,8 @@ module.exports = [
     obj: 'update',
   },
   {
-    txt: "Torrey, as promised I have attached ARCO's suggested revisions to the Enron online trading agreement.",
+    txt:
+      "Torrey, as promised I have attached ARCO's suggested revisions to the Enron online trading agreement.",
     subj: 'I',
     verb: 'have attached',
     obj: 'revisions',
@@ -11232,7 +11466,8 @@ module.exports = [
     obj: 'file',
   },
   {
-    txt: 'We have received the executed First Amendment to ISDA Master Agreement dated as of December 1, 1999.',
+    txt:
+      'We have received the executed First Amendment to ISDA Master Agreement dated as of December 1, 1999.',
     subj: 'We',
     verb: 'have received',
     obj: 'Amendment',
@@ -11307,7 +11542,8 @@ module.exports = [
     obj: 'requirements',
   },
   {
-    txt: 'Consequently I need to inform you of, and / or require your approval for, the following :',
+    txt:
+      'Consequently I need to inform you of, and / or require your approval for, the following :',
     subj: 'I',
     verb: 'need',
     obj: 'approval',
@@ -11361,7 +11597,8 @@ module.exports = [
     obj: 'download',
   },
   {
-    txt: 'spreadsheet recalculation of OBSF option premium utilising the above manually created position analysis',
+    txt:
+      'spreadsheet recalculation of OBSF option premium utilising the above manually created position analysis',
     subj: null,
     verb: 'recalculation',
     obj: 'analysis',
@@ -11476,7 +11713,8 @@ module.exports = [
     obj: 'me',
   },
   {
-    txt: 'I would like to thank you for personally taking the time to closely review my application.',
+    txt:
+      'I would like to thank you for personally taking the time to closely review my application.',
     subj: 'I',
     verb: 'would like',
     obj: 'application',
@@ -11694,7 +11932,8 @@ module.exports = [
     obj: 'detail',
   },
   {
-    txt: 'Will we be valuing / booking a series of monthly call options or a series of daily call options?',
+    txt:
+      'Will we be valuing / booking a series of monthly call options or a series of daily call options?',
     subj: 'we',
     verb: 'Will be valuing',
     obj: 'series',
@@ -11706,7 +11945,8 @@ module.exports = [
     obj: 'Hub',
   },
   {
-    txt: 'Please send me the current fuel curve that you are converting to $ / MWh to value the deal?',
+    txt:
+      'Please send me the current fuel curve that you are converting to $ / MWh to value the deal?',
     subj: 'you',
     verb: 'send',
     obj: 'deal',
@@ -11871,7 +12111,8 @@ module.exports = [
     obj: 'access',
   },
   {
-    txt: 'Additional cost will be incurred for the remainder of this year, that I have not been able to review yet.',
+    txt:
+      'Additional cost will be incurred for the remainder of this year, that I have not been able to review yet.',
     subj: 'I',
     verb: 'incurred',
     obj: 'that',
@@ -11957,7 +12198,8 @@ module.exports = [
     obj: 'you',
   },
   {
-    txt: "Please approve Susan's attached expense report and forward to accounting with a cc : to me.",
+    txt:
+      "Please approve Susan's attached expense report and forward to accounting with a cc : to me.",
     subj: null,
     verb: 'approve',
     obj: 'report',
@@ -11969,7 +12211,8 @@ module.exports = [
     obj: 'you',
   },
   {
-    txt: "Please approve Susan's attached expense report and forward to accounting with a cc : to me.",
+    txt:
+      "Please approve Susan's attached expense report and forward to accounting with a cc : to me.",
     subj: null,
     verb: 'approve',
     obj: 'report',
@@ -11981,13 +12224,15 @@ module.exports = [
     obj: 'sort',
   },
   {
-    txt: 'Lee Huber made the same request last year and we gave her the chair (she only wanted one, however ).',
+    txt:
+      'Lee Huber made the same request last year and we gave her the chair (she only wanted one, however ).',
     subj: 'she',
     verb: 'made',
     obj: 'one',
   },
   {
-    txt: 'Susan Scott would like authorization to order an Aeron chair for each of her offices - on 47 and 41.',
+    txt:
+      'Susan Scott would like authorization to order an Aeron chair for each of her offices - on 47 and 41.',
     subj: 'Susan',
     verb: 'would like',
     obj: 'chair',
@@ -12024,13 +12269,15 @@ module.exports = [
     obj: 'sort',
   },
   {
-    txt: 'Lee Huber made the same request last year and we gave her the chair (she only wanted one, however ).',
+    txt:
+      'Lee Huber made the same request last year and we gave her the chair (she only wanted one, however ).',
     subj: 'she',
     verb: 'made',
     obj: 'one',
   },
   {
-    txt: 'Susan Scott would like authorization to order an Aeron chair for each of her offices - on 47 and 41.',
+    txt:
+      'Susan Scott would like authorization to order an Aeron chair for each of her offices - on 47 and 41.',
     subj: 'Susan',
     verb: 'would like',
     obj: 'chair',
@@ -12055,7 +12302,8 @@ module.exports = [
     obj: 'purchase',
   },
   {
-    txt: "I believe you got a copy of the John Sommer letter to producers dated Jan 6 that MKM's spies intercepted.",
+    txt:
+      "I believe you got a copy of the John Sommer letter to producers dated Jan 6 that MKM's spies intercepted.",
     subj: 'spies',
     verb: 'believe',
     obj: 'that',
@@ -12107,7 +12355,8 @@ module.exports = [
     obj: 'everything',
   },
   {
-    txt: '( Please visit our newly updated website www.caem.org for more information on the DISCO Forum . )',
+    txt:
+      '( Please visit our newly updated website www.caem.org for more information on the DISCO Forum . )',
     subj: null,
     verb: 'visit',
     obj: 'website',
@@ -12119,7 +12368,8 @@ module.exports = [
     obj: 'block',
   },
   {
-    txt: 'To reserve one of these rooms, you must inform the Wyndham staff that you are part of the CAEM group.',
+    txt:
+      'To reserve one of these rooms, you must inform the Wyndham staff that you are part of the CAEM group.',
     subj: 'you',
     verb: 'must inform',
     obj: 'staff',
@@ -12207,7 +12457,8 @@ module.exports = [
     obj: 'plan',
   },
   {
-    txt: 'We have been working closely together to identify the issues as they develop and propose solutions.',
+    txt:
+      'We have been working closely together to identify the issues as they develop and propose solutions.',
     subj: 'they',
     verb: 'have been working closely',
     obj: 'solutions',
@@ -12252,7 +12503,8 @@ module.exports = [
     obj: 'things',
   },
   {
-    txt: 'We have been working with the State Affairs legislative committee and keeping them apprised.',
+    txt:
+      'We have been working with the State Affairs legislative committee and keeping them apprised.',
     subj: 'We',
     verb: 'have been working',
     obj: 'them',
@@ -12298,7 +12550,8 @@ module.exports = [
     obj: 'way',
   },
   {
-    txt: 'As important, the new PUCT Commissioners need some help right now in messaging the market.',
+    txt:
+      'As important, the new PUCT Commissioners need some help right now in messaging the market.',
     subj: 'Commissioners',
     verb: 'need',
     obj: 'market',
@@ -12383,7 +12636,8 @@ module.exports = [
     obj: 'consumption',
   },
   {
-    txt: 'Please, let me know if you interested in introducing Peter to executives in your organization.',
+    txt:
+      'Please, let me know if you interested in introducing Peter to executives in your organization.',
     subj: 'you',
     verb: 'let',
     obj: 'Peter',
@@ -12395,7 +12649,8 @@ module.exports = [
     obj: 'arrangements',
   },
   {
-    txt: 'I enjoyed your presentation, and meeting you briefly afterwards, at the SIAM Workshop last Friday.',
+    txt:
+      'I enjoyed your presentation, and meeting you briefly afterwards, at the SIAM Workshop last Friday.',
     subj: 'I',
     verb: 'enjoyed',
     obj: 'you',
@@ -12408,7 +12663,8 @@ module.exports = [
     obj: 'experience',
   },
   {
-    txt: 'I am looking for a position that can utilize my software development and mathematical skills.',
+    txt:
+      'I am looking for a position that can utilize my software development and mathematical skills.',
     subj: 'that',
     verb: 'am looking',
     obj: 'development',
@@ -12482,7 +12738,8 @@ module.exports = [
     obj: 'goals',
   },
   {
-    txt: 'I am asking respectfully if you could give me a recommendation or referral to ETS technology department.',
+    txt:
+      'I am asking respectfully if you could give me a recommendation or referral to ETS technology department.',
     subj: 'you',
     verb: 'am asking respectfully',
     obj: 'recommendation',
@@ -12507,7 +12764,8 @@ module.exports = [
     obj: 'goals',
   },
   {
-    txt: 'I am asking respectfully if you could give me a recommendation or referral to ETS technology department.',
+    txt:
+      'I am asking respectfully if you could give me a recommendation or referral to ETS technology department.',
     subj: 'you',
     verb: 'am asking respectfully',
     obj: 'recommendation',
@@ -12519,7 +12777,8 @@ module.exports = [
     obj: 'goals',
   },
   {
-    txt: 'We would like to pursue an offer to Rick Fehl prior to the next Executive Committee meeting on May 7, 2001.',
+    txt:
+      'We would like to pursue an offer to Rick Fehl prior to the next Executive Committee meeting on May 7, 2001.',
     subj: 'We',
     verb: 'would like',
     obj: 'offer',
@@ -12581,7 +12840,8 @@ module.exports = [
     obj: 'them',
   },
   {
-    txt: "Since Debbie is a client too, I think I'll just mail them to your home unless you prefer otherwise.",
+    txt:
+      "Since Debbie is a client too, I think I'll just mail them to your home unless you prefer otherwise.",
     subj: 'you',
     verb: 'think',
     obj: 'them',
@@ -12594,7 +12854,8 @@ module.exports = [
     obj: 'Sherri',
   },
   {
-    txt: 'Please indicate below whether or not you plan to attend this meeting and through what medium.',
+    txt:
+      'Please indicate below whether or not you plan to attend this meeting and through what medium.',
     subj: 'you',
     verb: 'indicate below',
     obj: 'meeting',
@@ -12631,7 +12892,8 @@ module.exports = [
     obj: 'name',
   },
   {
-    txt: 'When the company is set up in the EOL database we link the company to the Parent and reference the CP ID.',
+    txt:
+      'When the company is set up in the EOL database we link the company to the Parent and reference the CP ID.',
     subj: 'we',
     verb: 'link',
     obj: 'ID',
@@ -12857,7 +13119,8 @@ module.exports = [
     obj: 'name',
   },
   {
-    txt: 'When the company is set up in the EOL database we link the company to the Parent and reference the CP ID.',
+    txt:
+      'When the company is set up in the EOL database we link the company to the Parent and reference the CP ID.',
     subj: 'we',
     verb: 'link',
     obj: 'ID',
@@ -12938,7 +13201,8 @@ module.exports = [
     obj: 'What',
   },
   {
-    txt: "Please send me an email response about whether you and Michelle Cash are OK with what he's written.",
+    txt:
+      "Please send me an email response about whether you and Michelle Cash are OK with what he's written.",
     subj: 'he',
     verb: 'send',
     obj: 'what',
@@ -13024,7 +13288,8 @@ module.exports = [
     obj: 'Whom',
   },
   {
-    txt: 'Through TV and newspapers, I hear constantly about identity fraud using stolen social security information.',
+    txt:
+      'Through TV and newspapers, I hear constantly about identity fraud using stolen social security information.',
     subj: 'I',
     verb: 'hear constantly',
     obj: 'information',
@@ -13043,7 +13308,8 @@ module.exports = [
     obj: 'IDs',
   },
   {
-    txt: 'For example, I am concerned when I buy the monthly bus passes and I have to fill in my SS number.',
+    txt:
+      'For example, I am concerned when I buy the monthly bus passes and I have to fill in my SS number.',
     subj: 'I',
     verb: 'am concerned',
     obj: 'number',
@@ -13075,13 +13341,15 @@ module.exports = [
     obj: 'place',
   },
   {
-    txt: 'Upon receipt, I shall forward to each of you a copy of the reviews for your respective associate.',
+    txt:
+      'Upon receipt, I shall forward to each of you a copy of the reviews for your respective associate.',
     subj: 'I',
     verb: 'shall forward',
     obj: 'copy',
   },
   {
-    txt: 'In addition they will be contacting you to discuss their participation in projects outside their rotation.',
+    txt:
+      'In addition they will be contacting you to discuss their participation in projects outside their rotation.',
     subj: 'they',
     verb: 'will be contacting',
     obj: 'participation',
@@ -13188,7 +13456,8 @@ module.exports = [
     obj: 'this',
   },
   {
-    txt: 'We understand that the pipe fitters are also planning to picket the Lake Worth, Florida project as well.',
+    txt:
+      'We understand that the pipe fitters are also planning to picket the Lake Worth, Florida project as well.',
     subj: 'fitters',
     verb: 'understand',
     obj: 'project',
@@ -13233,7 +13502,8 @@ module.exports = [
     obj: 'them',
   },
   {
-    txt: 'I have heard that the pipefitters have established a picket line at the Payne Creek site today.',
+    txt:
+      'I have heard that the pipefitters have established a picket line at the Payne Creek site today.',
     subj: 'pipefitters',
     verb: 'have heard',
     obj: 'line',
@@ -13338,7 +13608,8 @@ module.exports = [
     obj: 'attachments',
   },
   {
-    txt: 'If you think any other pertinent information could be included, please feel free to add it.',
+    txt:
+      'If you think any other pertinent information could be included, please feel free to add it.',
     subj: 'information',
     verb: 'feel',
     obj: 'it',
@@ -13350,7 +13621,8 @@ module.exports = [
     obj: 'response',
   },
   {
-    txt: 'Can we reschedule the phone call for 9 am (Houston) which is 11 am (Sao Paulo) on Friday, Sept. 17?',
+    txt:
+      'Can we reschedule the phone call for 9 am (Houston) which is 11 am (Sao Paulo) on Friday, Sept. 17?',
     subj: 'which',
     verb: 'reschedule',
     obj: 'call',
@@ -13374,7 +13646,8 @@ module.exports = [
     obj: 'guidelines',
   },
   {
-    txt: 'I am currently working on guidelines for Argentina which will address both physical and financial trading.',
+    txt:
+      'I am currently working on guidelines for Argentina which will address both physical and financial trading.',
     subj: 'which',
     verb: 'am currently working',
     obj: 'trading',
@@ -13525,7 +13798,8 @@ module.exports = [
     obj: 'gas',
   },
   {
-    txt: 'As these guidelines need to be approved by Houston, I am copying this to Mark, Alan and Jeff.',
+    txt:
+      'As these guidelines need to be approved by Houston, I am copying this to Mark, Alan and Jeff.',
     subj: 'I',
     verb: 'am copying',
     obj: 'this',
@@ -13583,7 +13857,8 @@ module.exports = [
     obj: 'holidays',
   },
   {
-    txt: 'We believe it addresses many of the issues and concerns you have raised in the workshops.',
+    txt:
+      'We believe it addresses many of the issues and concerns you have raised in the workshops.',
     subj: 'you',
     verb: 'believe',
     obj: 'many',
@@ -13596,7 +13871,8 @@ module.exports = [
     obj: 'structure',
   },
   {
-    txt: '* Offers end user transportation rates for 2003 lower for most customers than rates in effect today . *',
+    txt:
+      '* Offers end user transportation rates for 2003 lower for most customers than rates in effect today . *',
     subj: null,
     verb: 'Offers',
     obj: 'rates',
@@ -13784,7 +14060,8 @@ module.exports = [
     obj: 'guy',
   },
   {
-    txt: 'The price spikes pose real political risks for Davis and he and his folks need and want an easy way out.',
+    txt:
+      'The price spikes pose real political risks for Davis and he and his folks need and want an easy way out.',
     subj: 'he',
     verb: 'pose',
     obj: 'way',
@@ -13823,7 +14100,8 @@ module.exports = [
     obj: 'investigation',
   },
   {
-    txt: 'On the positive side, the FERC commissioners lauded Wolak, his analysis, and his remarks on the panel.',
+    txt:
+      'On the positive side, the FERC commissioners lauded Wolak, his analysis, and his remarks on the panel.',
     subj: 'commissioners',
     verb: 'lauded',
     obj: 'Wolak',
@@ -13836,7 +14114,8 @@ module.exports = [
     obj: 'participant',
   },
   {
-    txt: 'IMPLICATION -- It seems prudent for Enron to understand better its risks of getting fingered.',
+    txt:
+      'IMPLICATION -- It seems prudent for Enron to understand better its risks of getting fingered.',
     subj: 'Enron',
     verb: 'IMPLICATION',
     obj: 'risks',
@@ -13849,7 +14128,8 @@ module.exports = [
     obj: 'risks',
   },
   {
-    txt: "Rates can't go up w/out declaring the rate freeze over in some fashion --- trying to finesse it.",
+    txt:
+      "Rates can't go up w/out declaring the rate freeze over in some fashion --- trying to finesse it.",
     subj: 'Rates',
     verb: 'trying',
     obj: 'it',
@@ -13882,7 +14162,8 @@ module.exports = [
     obj: 'participation',
   },
   {
-    txt: 'Currently, I need three interviewers for Thursday, March 1st and one interviewer for Friday, March 2nd.',
+    txt:
+      'Currently, I need three interviewers for Thursday, March 1st and one interviewer for Friday, March 2nd.',
     subj: 'I',
     verb: 'need',
     obj: 'interviewers',
@@ -13901,7 +14182,8 @@ module.exports = [
     obj: 'conflicts',
   },
   {
-    txt: 'As always, thank you for your time and please contact me @ ext 58369 if you have any questions.',
+    txt:
+      'As always, thank you for your time and please contact me @ ext 58369 if you have any questions.',
     subj: 'you',
     verb: 'thank',
     obj: 'questions',
@@ -13953,7 +14235,8 @@ module.exports = [
     obj: 'production',
   },
   {
-    txt: "Plans are to build a private pipeline to Equilon's West Delta # 143 platform and then bring the oil onshore.",
+    txt:
+      "Plans are to build a private pipeline to Equilon's West Delta # 143 platform and then bring the oil onshore.",
     subj: 'Plans',
     verb: 'are',
     obj: 'oil',
@@ -14026,7 +14309,8 @@ module.exports = [
     obj: 'claim',
   },
   {
-    txt: 'the risk of losing business is far greater than the risk of a counterparty trying to get their premium back.',
+    txt:
+      'the risk of losing business is far greater than the risk of a counterparty trying to get their premium back.',
     subj: 'risk',
     verb: 'is far greater',
     obj: 'premium',
@@ -14100,13 +14384,15 @@ module.exports = [
     obj: 'things',
   },
   {
-    txt: "A bus that runs through UofH arrived and I almost got on without her, but I couldn't do it.",
+    txt:
+      "A bus that runs through UofH arrived and I almost got on without her, but I couldn't do it.",
     subj: 'I',
     verb: 'arrived',
     obj: 'it',
   },
   {
-    txt: 'Finally, I told the little girl that she would have to accompany me to school (8:30 am ).',
+    txt:
+      'Finally, I told the little girl that she would have to accompany me to school (8:30 am ).',
     subj: 'she',
     verb: 'told',
     obj: 'me',
@@ -14169,19 +14455,22 @@ module.exports = [
     obj: 'candidates',
   },
   {
-    txt: 'I am asking that you forward this note to any potential interviewers (Managers or above ).',
+    txt:
+      'I am asking that you forward this note to any potential interviewers (Managers or above ).',
     subj: 'you',
     verb: 'am asking',
     obj: 'note',
   },
   {
-    txt: 'We will conduct first round interviews in the morning and the second round interviews in the afternoon.',
+    txt:
+      'We will conduct first round interviews in the morning and the second round interviews in the afternoon.',
     subj: 'We',
     verb: 'will conduct',
     obj: 'interviews',
   },
   {
-    txt: 'Please submit your response using the buttons below and update your calendar for this date.',
+    txt:
+      'Please submit your response using the buttons below and update your calendar for this date.',
     subj: null,
     verb: 'submit',
     obj: 'calendar',
@@ -14360,7 +14649,8 @@ module.exports = [
     obj: 'this',
   },
   {
-    txt: 'If you are comfortable, we will drive these changes into our other midmarket power forms.',
+    txt:
+      'If you are comfortable, we will drive these changes into our other midmarket power forms.',
     subj: 'we',
     verb: 'will drive',
     obj: 'changes',
@@ -14392,7 +14682,8 @@ module.exports = [
     obj: 'LC',
   },
   {
-    txt: 'I understand that we are still reviewing the attachment that lists the open transactions.',
+    txt:
+      'I understand that we are still reviewing the attachment that lists the open transactions.',
     subj: 'that',
     verb: 'understand',
     obj: 'transactions',
@@ -14412,7 +14703,8 @@ module.exports = [
     obj: 'list',
   },
   {
-    txt: 'He needs more info about these trades (i.e., price info) and would like to talk with you about it.',
+    txt:
+      'He needs more info about these trades (i.e., price info) and would like to talk with you about it.',
     subj: 'He',
     verb: 'needs',
     obj: 'info',
@@ -14430,7 +14722,8 @@ module.exports = [
     obj: 'transactions',
   },
   {
-    txt: 'Do you want 6/1/01 and forward or do you want to include all of May since they have not been settled?',
+    txt:
+      'Do you want 6/1/01 and forward or do you want to include all of May since they have not been settled?',
     subj: 'they',
     verb: 'want',
     obj: 'all',
@@ -14556,7 +14849,8 @@ module.exports = [
     obj: 'Transwestern',
   },
   {
-    txt: 'If anyone has any questions or concerns about the timing of these payments, please give me a call.',
+    txt:
+      'If anyone has any questions or concerns about the timing of these payments, please give me a call.',
     subj: 'anyone',
     verb: 'give',
     obj: 'call',
@@ -14646,7 +14940,8 @@ module.exports = [
     obj: 'Transwestern',
   },
   {
-    txt: 'If anyone has any questions or concerns about the timing of these payments, please give me a call.',
+    txt:
+      'If anyone has any questions or concerns about the timing of these payments, please give me a call.',
     subj: 'anyone',
     verb: 'give',
     obj: 'call',
@@ -14826,7 +15121,8 @@ module.exports = [
     obj: 'someone',
   },
   {
-    txt: 'If you know someone who might fit the bill ask them to contact me and / or send me their resume.',
+    txt:
+      'If you know someone who might fit the bill ask them to contact me and / or send me their resume.',
     subj: 'who',
     verb: 'ask',
     obj: 'resume',
@@ -14851,13 +15147,15 @@ module.exports = [
     obj: 'material',
   },
   {
-    txt: 'Questar may be able to purchase material, but some of the items can have up to a 60 day delivery.',
+    txt:
+      'Questar may be able to purchase material, but some of the items can have up to a 60 day delivery.',
     subj: 'some',
     verb: 'may be able',
     obj: 'delivery',
   },
   {
-    txt: 'We have worked with Daniels on a chromatograph on another project and prepayment has taken 45 days alone.',
+    txt:
+      'We have worked with Daniels on a chromatograph on another project and prepayment has taken 45 days alone.',
     subj: 'prepayment',
     verb: 'have worked',
     obj: 'days',
@@ -15003,7 +15301,8 @@ module.exports = [
     obj: 'caps',
   },
   {
-    txt: '" I don\'t know how these events could have taken place without some concerted effort, " said Dunn.',
+    txt:
+      '" I don\'t know how these events could have taken place without some concerted effort, " said Dunn.',
     subj: 'Dunn',
     verb: 'said',
     obj: 'place',
@@ -15028,13 +15327,15 @@ module.exports = [
     obj: 'conduct',
   },
   {
-    txt: 'The decision was made by ISO upper management with one goal in mind : to keep the lights on.',
+    txt:
+      'The decision was made by ISO upper management with one goal in mind : to keep the lights on.',
     subj: 'decision',
     verb: 'made',
     obj: 'lights',
   },
   {
-    txt: 'At the time, generators were refusing to sell power in California because of the price caps.',
+    txt:
+      'At the time, generators were refusing to sell power in California because of the price caps.',
     subj: 'generators',
     verb: 'were refusing',
     obj: 'power',
@@ -15167,7 +15468,8 @@ module.exports = [
     obj: 'them',
   },
   {
-    txt: 'With the price caps gone, the generators filed paperwork with federal regulators justifying higher costs.',
+    txt:
+      'With the price caps gone, the generators filed paperwork with federal regulators justifying higher costs.',
     subj: 'generators',
     verb: 'filed',
     obj: 'costs',
@@ -15199,7 +15501,8 @@ module.exports = [
     obj: '$',
   },
   {
-    txt: 'Robinson said the filing - granted two hours after the request - helped rather than hurt Californians.',
+    txt:
+      'Robinson said the filing - granted two hours after the request - helped rather than hurt Californians.',
     subj: 'filing',
     verb: 'said',
     obj: 'Californians',
@@ -15257,13 +15560,15 @@ module.exports = [
     obj: 'power',
   },
   {
-    txt: 'The ISO board called an emergency meeting the next week demanding Winter explain his actions.',
+    txt:
+      'The ISO board called an emergency meeting the next week demanding Winter explain his actions.',
     subj: 'Winter',
     verb: 'called',
     obj: 'actions',
   },
   {
-    txt: "\" They filed an emergency motion, and we were not about to let California go dark, '' Hoecker said.",
+    txt:
+      "\" They filed an emergency motion, and we were not about to let California go dark, '' Hoecker said.",
     subj: 'Hoecker',
     verb: 'said',
     obj: 'California',
@@ -15275,7 +15580,8 @@ module.exports = [
     obj: 'what',
   },
   {
-    txt: "He believes memos and e-mails around the time of Winter's Dec. 8 actions should provide vital clues.",
+    txt:
+      "He believes memos and e-mails around the time of Winter's Dec. 8 actions should provide vital clues.",
     subj: 'memos',
     verb: 'believes',
     obj: 'clues',
@@ -15340,7 +15646,8 @@ module.exports = [
     obj: 'deal',
   },
   {
-    txt: "As I recall, Montavano, Shapiro and I usually make up one team, but I 'm willing to switch around a bit.",
+    txt:
+      "As I recall, Montavano, Shapiro and I usually make up one team, but I 'm willing to switch around a bit.",
     subj: 'I',
     verb: 'usually make',
     obj: 'team',
@@ -15398,7 +15705,8 @@ module.exports = [
     obj: 'number',
   },
   {
-    txt: '*** Jason Chumley - Could you forward the number of contractor hours and help / remote support hours.',
+    txt:
+      '*** Jason Chumley - Could you forward the number of contractor hours and help / remote support hours.',
     subj: 'you',
     verb: 'forward',
     obj: 'number',
@@ -15424,7 +15732,8 @@ module.exports = [
     obj: 'litgation',
   },
   {
-    txt: "I 've read the materials you sent and agree we need to address these allegations appropriately.",
+    txt:
+      "I 've read the materials you sent and agree we need to address these allegations appropriately.",
     subj: 'we',
     verb: "'ve read",
     obj: 'allegations',
@@ -15500,7 +15809,8 @@ module.exports = [
     obj: 'this',
   },
   {
-    txt: 'As I mentioned, please let me know when it is ready, and I will send someone to pick it up.',
+    txt:
+      'As I mentioned, please let me know when it is ready, and I will send someone to pick it up.',
     subj: 'I',
     verb: 'let',
     obj: 'it',
@@ -15610,7 +15920,8 @@ module.exports = [
     obj: 'deposition',
   },
   {
-    txt: 'We should be expecting a deposition notice soon if they are going to follow through on their threat.',
+    txt:
+      'We should be expecting a deposition notice soon if they are going to follow through on their threat.',
     subj: 'they',
     verb: 'should be expecting',
     obj: 'notice',
@@ -15668,7 +15979,8 @@ module.exports = [
     obj: 'details',
   },
   {
-    txt: 'We are still very interested in having Enron support our eCommerce Dispute Management Protocol .?',
+    txt:
+      'We are still very interested in having Enron support our eCommerce Dispute Management Protocol .?',
     subj: 'We',
     verb: 'are still very interested',
     obj: 'Protocol',
@@ -15755,13 +16067,15 @@ module.exports = [
     obj: 'San',
   },
   {
-    txt: 'A press conference will be held to discuss the consumer class action lawsuit to be filed today.',
+    txt:
+      'A press conference will be held to discuss the consumer class action lawsuit to be filed today.',
     subj: 'conference',
     verb: 'held',
     obj: 'lawsuit',
   },
   {
-    txt: "UCAN's executive director and the attorney team will be available to answer questions about the complaint.",
+    txt:
+      "UCAN's executive director and the attorney team will be available to answer questions about the complaint.",
     subj: 'director',
     verb: 'will be available',
     obj: 'questions',
@@ -15875,7 +16189,8 @@ module.exports = [
     obj: 'that',
   },
   {
-    txt: "Just because you 're stuck, does nt give you the right to drag down all the singles around you.",
+    txt:
+      "Just because you 're stuck, does nt give you the right to drag down all the singles around you.",
     subj: 'you',
     verb: 'does nt give',
     obj: 'singles',
@@ -15957,7 +16272,8 @@ module.exports = [
     obj: 'damage',
   },
   {
-    txt: 'The other is a new fuel tank " guaranteed " by NASA not to shed potentially fatal hunks of insulation.',
+    txt:
+      'The other is a new fuel tank " guaranteed " by NASA not to shed potentially fatal hunks of insulation.',
     subj: 'other',
     verb: 'tank',
     obj: 'hunks',
@@ -16099,13 +16415,15 @@ module.exports = [
     obj: 'Gelceuticals',
   },
   {
-    txt: 'The company has developed a unique and innovative delivery mechanism for nutritional products.',
+    txt:
+      'The company has developed a unique and innovative delivery mechanism for nutritional products.',
     subj: 'company',
     verb: 'has developed',
     obj: 'mechanism',
   },
   {
-    txt: 'This proprietary Gel Suspension technology makes possible single serving packets of Gelceuticals.',
+    txt:
+      'This proprietary Gel Suspension technology makes possible single serving packets of Gelceuticals.',
     subj: 'technology',
     verb: 'makes',
     obj: 'packets',
@@ -16118,7 +16436,8 @@ module.exports = [
     obj: 'benefits',
   },
   {
-    txt: 'Never before has such a convenient method been available for consuming nutritional products.',
+    txt:
+      'Never before has such a convenient method been available for consuming nutritional products.',
     subj: 'method',
     verb: 'been available',
     obj: 'products',
@@ -16187,7 +16506,8 @@ module.exports = [
     obj: 'possibilities',
   },
   {
-    txt: 'The call will feature a host of other field leaders, and our founder and CEO, Glen Jensen.',
+    txt:
+      'The call will feature a host of other field leaders, and our founder and CEO, Glen Jensen.',
     subj: 'call',
     verb: 'will feature',
     obj: 'host',
@@ -16218,7 +16538,8 @@ module.exports = [
     obj: 'effects',
   },
   {
-    txt: 'It is a psycho-spiritual exercise and benefiting the mind by developing stamina and strength.',
+    txt:
+      'It is a psycho-spiritual exercise and benefiting the mind by developing stamina and strength.',
     subj: 'It',
     verb: 'exercise',
     obj: 'stamina',
@@ -16409,7 +16730,8 @@ module.exports = [
     obj: 'shadow',
   },
   {
-    txt: 'The latter usually consider human beings a threat but the polar bear considers humans a snack, experts said.',
+    txt:
+      'The latter usually consider human beings a threat but the polar bear considers humans a snack, experts said.',
     subj: 'experts',
     verb: 'said',
     obj: 'humans',
@@ -16480,7 +16802,8 @@ module.exports = [
     obj: 'canoes',
   },
   {
-    txt: 'Dr. Fortier travelled another three kilometres by foot to seek help in the nearest settlement.',
+    txt:
+      'Dr. Fortier travelled another three kilometres by foot to seek help in the nearest settlement.',
     subj: 'Dr.',
     verb: 'travelled',
     obj: 'help',
@@ -16533,7 +16856,8 @@ module.exports = [
     obj: 'name',
   },
   {
-    txt: 'This name was formed by using COMp, for computer, and PAQ to denote a small integral object.',
+    txt:
+      'This name was formed by using COMp, for computer, and PAQ to denote a small integral object.',
     subj: 'name',
     verb: 'formed',
     obj: 'object',
@@ -16546,7 +16870,8 @@ module.exports = [
     obj: 'cheque',
   },
   {
-    txt: 'Founder Jack Smith got the idea of accessing e-mail via the web from a computer anywhere in the world.',
+    txt:
+      'Founder Jack Smith got the idea of accessing e-mail via the web from a computer anywhere in the world.',
     subj: 'Jack',
     verb: 'got',
     obj: 'e-mail',
@@ -16579,13 +16904,15 @@ module.exports = [
     obj: 'name',
   },
   {
-    txt: 'Coined by Bill Gates to represent the company that was devoted to MICROcomputer SOFTware.',
+    txt:
+      'Coined by Bill Gates to represent the company that was devoted to MICROcomputer SOFTware.',
     subj: 'that',
     verb: 'Coined',
     obj: 'company',
   },
   {
-    txt: 'Founder Paul Galvin came up with this name when his company started manufacturing radios for cars.',
+    txt:
+      'Founder Paul Galvin came up with this name when his company started manufacturing radios for cars.',
     subj: 'company',
     verb: 'came up',
     obj: 'radios',
@@ -16643,13 +16970,15 @@ module.exports = [
     obj: 'person',
   },
   {
-    txt: 'Yahoo! Founders Jerry Yang and David Filo selected the name because they considered themselves yahoos ...',
+    txt:
+      'Yahoo! Founders Jerry Yang and David Filo selected the name because they considered themselves yahoos ...',
     subj: 'they',
     verb: 'selected',
     obj: 'themselves',
   },
   {
-    txt: 'There are already several forums around the net focused on discussing Guild Wars, so why create a new one?',
+    txt:
+      'There are already several forums around the net focused on discussing Guild Wars, so why create a new one?',
     subj: 'forums',
     verb: 'are already',
     obj: 'one',
@@ -16682,7 +17011,8 @@ module.exports = [
     obj: 'August',
   },
   {
-    txt: 'Anyway, I tried to get a preorder but no places were selling it so I missed out on 2/3 weekend events.',
+    txt:
+      'Anyway, I tried to get a preorder but no places were selling it so I missed out on 2/3 weekend events.',
     subj: 'I',
     verb: 'tried',
     obj: 'it',
@@ -16732,7 +17062,8 @@ module.exports = [
     obj: 'look',
   },
   {
-    txt: 'I have a preorder and am even considering getting a second preorder to have multiple accounts.',
+    txt:
+      'I have a preorder and am even considering getting a second preorder to have multiple accounts.',
     subj: 'I',
     verb: 'have',
     obj: 'accounts',
@@ -16777,7 +17108,8 @@ module.exports = [
     obj: 'website',
   },
   {
-    txt: 'You are individuals of quality, and in our alliance we seek quality of member over quantity of member.',
+    txt:
+      'You are individuals of quality, and in our alliance we seek quality of member over quantity of member.',
     subj: 'we',
     verb: 'are individuals',
     obj: 'quality',
@@ -16790,7 +17122,8 @@ module.exports = [
     obj: 'yourself',
   },
   {
-    txt: 'I do hope to see you visiting us at the fire and we shall prepare a feast for you, as well.',
+    txt:
+      'I do hope to see you visiting us at the fire and we shall prepare a feast for you, as well.',
     subj: 'we',
     verb: 'do hope',
     obj: 'feast',
@@ -16844,7 +17177,8 @@ module.exports = [
     obj: 'talk',
   },
   {
-    txt: 'You who watch as budgets are cut in education and health care while you militarize a police force?',
+    txt:
+      'You who watch as budgets are cut in education and health care while you militarize a police force?',
     subj: 'you',
     verb: 'You',
     obj: 'force',
@@ -16864,7 +17198,8 @@ module.exports = [
     obj: 'those',
   },
   {
-    txt: 'More like a cohesive society with a shared sense of purpose, who can identify Us and Them?',
+    txt:
+      'More like a cohesive society with a shared sense of purpose, who can identify Us and Them?',
     subj: 'who',
     verb: 'society',
     obj: 'Us',
@@ -16884,7 +17219,8 @@ module.exports = [
     obj: 'child',
   },
   {
-    txt: 'Most of us still have hope for ourselves even when stuck in the darkest dilemmas, ruts and catch - 22s.',
+    txt:
+      'Most of us still have hope for ourselves even when stuck in the darkest dilemmas, ruts and catch - 22s.',
     subj: 'Most',
     verb: 'still have',
     obj: 'hope',
@@ -16910,7 +17246,8 @@ module.exports = [
     obj: 'families',
   },
   {
-    txt: 'Do you have the heart to face monumental failures while bravely struggling beyond where we are now?',
+    txt:
+      'Do you have the heart to face monumental failures while bravely struggling beyond where we are now?',
     subj: 'we',
     verb: 'have',
     obj: 'failures',
@@ -16928,7 +17265,8 @@ module.exports = [
     obj: 'structure',
   },
   {
-    txt: 'P.S. - I am trying to conceptualize an effective guerilla media campaign to promote this cause.',
+    txt:
+      'P.S. - I am trying to conceptualize an effective guerilla media campaign to promote this cause.',
     subj: 'I',
     verb: 'P.S.',
     obj: 'cause',
@@ -16961,7 +17299,8 @@ module.exports = [
     obj: 'some',
   },
   {
-    txt: 'This letter might surprise you because we have not met neither in person nor by correspondence.',
+    txt:
+      'This letter might surprise you because we have not met neither in person nor by correspondence.',
     subj: 'we',
     verb: 'might surprise',
     obj: 'you',
@@ -17170,7 +17509,8 @@ module.exports = [
     obj: 'Katrina',
   },
   {
-    txt: '" Some sections of the city which are dry now could see nine or 10 feet (some 3 m) of water, " he said.',
+    txt:
+      '" Some sections of the city which are dry now could see nine or 10 feet (some 3 m) of water, " he said.',
     subj: 'he',
     verb: 'said',
     obj: 'feet',
@@ -17183,13 +17523,15 @@ module.exports = [
     obj: 'evacuees',
   },
   {
-    txt: 'Heavily armed police have been trying to impose a form of martial law to stem outbreaks of looting.',
+    txt:
+      'Heavily armed police have been trying to impose a form of martial law to stem outbreaks of looting.',
     subj: 'police',
     verb: 'have been trying',
     obj: 'outbreaks',
   },
   {
-    txt: 'While some looters are stealing non-essential goods, others are simply trying to find food and water.',
+    txt:
+      'While some looters are stealing non-essential goods, others are simply trying to find food and water.',
     subj: 'others',
     verb: 'are simply trying',
     obj: 'food',
@@ -17345,7 +17687,8 @@ module.exports = [
     obj: 'which',
   },
   {
-    txt: 'Also NASA has a large outreach program for education, some people believe this is important.',
+    txt:
+      'Also NASA has a large outreach program for education, some people believe this is important.',
     subj: 'this',
     verb: 'has',
     obj: 'program',
@@ -17403,7 +17746,8 @@ module.exports = [
     obj: 'more',
   },
   {
-    txt: 'What we are trying to do is solicit votes for the band, in order to put them in first place.',
+    txt:
+      'What we are trying to do is solicit votes for the band, in order to put them in first place.',
     subj: 'we',
     verb: 'is',
     obj: 'them',
@@ -17452,13 +17796,15 @@ module.exports = [
     obj: 'validity',
   },
   {
-    txt: 'The home page for Rockin on the River is, and it lists all the acts scheduled for the season.',
+    txt:
+      'The home page for Rockin on the River is, and it lists all the acts scheduled for the season.',
     subj: 'it',
     verb: 'is',
     obj: 'acts',
   },
   {
-    txt: 'You can check that out as well, to confirm that this is all real, and for a worthy cause.',
+    txt:
+      'You can check that out as well, to confirm that this is all real, and for a worthy cause.',
     subj: 'this',
     verb: 'can check',
     obj: 'that',
@@ -17585,7 +17931,8 @@ module.exports = [
     obj: 'us',
   },
   {
-    txt: 'Cast a vote for Beyond Control, and help us provide Abby with her life saving treatments again.',
+    txt:
+      'Cast a vote for Beyond Control, and help us provide Abby with her life saving treatments again.',
     subj: null,
     verb: 'Cast',
     obj: 'Abby',
@@ -17630,7 +17977,8 @@ module.exports = [
     obj: 'attention',
   },
   {
-    txt: 'In September, China threatened to veto any move to impose sanctions on Sudan over the atrocities in Darfur.',
+    txt:
+      'In September, China threatened to veto any move to impose sanctions on Sudan over the atrocities in Darfur.',
     subj: 'China',
     verb: 'threatened',
     obj: 'sanctions',
@@ -17663,7 +18011,8 @@ module.exports = [
     obj: 'reserves',
   },
   {
-    txt: "This year it overtook Japan as the world's second largest consumer of energy, behind the US.",
+    txt:
+      "This year it overtook Japan as the world's second largest consumer of energy, behind the US.",
     subj: 'it',
     verb: 'overtook',
     obj: 'Japan',
@@ -17765,7 +18114,8 @@ module.exports = [
     obj: 'back',
   },
   {
-    txt: 'Spend a minute or so concentrating on your breath, feeling the air flowing through your nostrils.',
+    txt:
+      'Spend a minute or so concentrating on your breath, feeling the air flowing through your nostrils.',
     subj: null,
     verb: 'Spend',
     obj: 'air',
@@ -17852,7 +18202,8 @@ module.exports = [
     obj: 'body',
   },
   {
-    txt: 'Continue to feel the warmth of the sunlight all over your body, warming you deeply and gently.',
+    txt:
+      'Continue to feel the warmth of the sunlight all over your body, warming you deeply and gently.',
     subj: null,
     verb: 'Continue',
     obj: 'you',
@@ -17884,7 +18235,8 @@ module.exports = [
     obj: 'mind',
   },
   {
-    txt: 'Now feel yourself returning to where you sit ... move your hands and feet a little, stretch them.',
+    txt:
+      'Now feel yourself returning to where you sit ... move your hands and feet a little, stretch them.',
     subj: 'you',
     verb: 'Now feel',
     obj: 'them',
@@ -17953,7 +18305,8 @@ module.exports = [
     obj: 'connection',
   },
   {
-    txt: "Don't worry if you have trouble concentrating on the mantra and ideation - that's normal.",
+    txt:
+      "Don't worry if you have trouble concentrating on the mantra and ideation - that's normal.",
     subj: 'that',
     verb: "Don't worry",
     obj: 'trouble',
@@ -18000,7 +18353,8 @@ module.exports = [
     obj: 'marriage',
   },
   {
-    txt: 'At its February meeting the CHS Vestry voted unanimously to add their names to the Declaration.',
+    txt:
+      'At its February meeting the CHS Vestry voted unanimously to add their names to the Declaration.',
     subj: 'Vestry',
     verb: 'voted unanimously',
     obj: 'names',
@@ -18040,7 +18394,8 @@ module.exports = [
     obj: 'me',
   },
   {
-    txt: 'Sign - up lists will be available at the services on Feb. 27 and March 6, or you can email me.',
+    txt:
+      'Sign - up lists will be available at the services on Feb. 27 and March 6, or you can email me.',
     subj: 'you',
     verb: 'will be available',
     obj: 'me',
@@ -18093,7 +18448,8 @@ module.exports = [
     obj: 'people',
   },
   {
-    txt: 'The American laws forbidding interracial marriage, now struck down, were clearly discriminatory.',
+    txt:
+      'The American laws forbidding interracial marriage, now struck down, were clearly discriminatory.',
     subj: 'laws',
     verb: 'were clearly discriminatory',
     obj: 'marriage',
@@ -18112,13 +18468,15 @@ module.exports = [
     obj: 'injustice',
   },
   {
-    txt: 'We oppose the use of sacred texts and religious traditions to deny legal equity to same - gender couples.',
+    txt:
+      'We oppose the use of sacred texts and religious traditions to deny legal equity to same - gender couples.',
     subj: 'We',
     verb: 'oppose',
     obj: 'equity',
   },
   {
-    txt: 'As concerned citizens we affirm the liberty of adults of the same gender to love and marry.',
+    txt:
+      'As concerned citizens we affirm the liberty of adults of the same gender to love and marry.',
     subj: 'we',
     verb: 'affirm',
     obj: 'liberty',
@@ -18178,7 +18536,8 @@ module.exports = [
     obj: 'Nomination',
   },
   {
-    txt: 'He Would Tear Down Our System Of Checks And Balances, Giving Far Too Much Power To The President',
+    txt:
+      'He Would Tear Down Our System Of Checks And Balances, Giving Far Too Much Power To The President',
     subj: 'He',
     verb: 'Would Tear',
     obj: 'Power',
@@ -18256,7 +18615,8 @@ module.exports = [
     obj: 'him',
   },
   {
-    txt: "Yes, it is true that some people don't like the way they think he will vote on the Supreme Court.",
+    txt:
+      "Yes, it is true that some people don't like the way they think he will vote on the Supreme Court.",
     subj: 'he',
     verb: 'is true',
     obj: 'way',
@@ -18283,13 +18643,15 @@ module.exports = [
     obj: 'cases',
   },
   {
-    txt: 'So there is a lot of hurry - up pressure on the Senate to give its prompt vote of approval.',
+    txt:
+      'So there is a lot of hurry - up pressure on the Senate to give its prompt vote of approval.',
     subj: 'lot',
     verb: 'is',
     obj: 'vote',
   },
   {
-    txt: 'Sometimes you can make a bad decision very quickly, then regret it for many years to come.',
+    txt:
+      'Sometimes you can make a bad decision very quickly, then regret it for many years to come.',
     subj: 'you',
     verb: 'Sometimes can make',
     obj: 'it',
@@ -18302,7 +18664,8 @@ module.exports = [
     obj: 'Theory',
   },
   {
-    txt: '" He Would Tear Down Our System Of Checks And Balances, Giving Far Too Much Power To The President . "',
+    txt:
+      '" He Would Tear Down Our System Of Checks And Balances, Giving Far Too Much Power To The President . "',
     subj: 'He',
     verb: 'Would Tear',
     obj: 'Power',
@@ -18393,7 +18756,8 @@ module.exports = [
     obj: 'program',
   },
   {
-    txt: 'Dependant = NASA & Company to use " space station " model to unify the aims of different countries.',
+    txt:
+      'Dependant = NASA & Company to use " space station " model to unify the aims of different countries.',
     subj: 'NASA',
     verb: 'Dependant',
     obj: 'aims',
@@ -18425,7 +18789,8 @@ module.exports = [
     obj: 'outsiders',
   },
   {
-    txt: "China launched Shenzhou VI, its second manned spacecraft, early today in northwest China's Gansu Province.",
+    txt:
+      "China launched Shenzhou VI, its second manned spacecraft, early today in northwest China's Gansu Province.",
     subj: 'China',
     verb: 'launched',
     obj: 'VI',
@@ -18445,7 +18810,8 @@ module.exports = [
     obj: 'humans',
   },
   {
-    txt: 'Most experts believe China intends to develop a small space station of its own over the next several years.',
+    txt:
+      'Most experts believe China intends to develop a small space station of its own over the next several years.',
     subj: 'China',
     verb: 'believe',
     obj: 'station',
@@ -18458,7 +18824,8 @@ module.exports = [
     obj: 'States',
   },
   {
-    txt: 'President Bush has directed NASA to return to the moon by 2018 with a new generation of human explorers.',
+    txt:
+      'President Bush has directed NASA to return to the moon by 2018 with a new generation of human explorers.',
     subj: 'President',
     verb: 'has directed',
     obj: 'NASA',
@@ -18509,7 +18876,8 @@ module.exports = [
     obj: 'return',
   },
   {
-    txt: "He stressed, however, that NASA would not follow this week's Chinese mission through formal channels.",
+    txt:
+      "He stressed, however, that NASA would not follow this week's Chinese mission through formal channels.",
     subj: 'NASA',
     verb: 'stressed however',
     obj: 'mission',
@@ -18543,7 +18911,8 @@ module.exports = [
     obj: 'spacewalks',
   },
   {
-    txt: 'The final phase will feature the assembly and operation of a longer - duration space lab.',
+    txt:
+      'The final phase will feature the assembly and operation of a longer - duration space lab.',
     subj: 'phase',
     verb: 'will feature',
     obj: 'assembly',
@@ -18595,7 +18964,8 @@ module.exports = [
     obj: 'moon',
   },
   {
-    txt: "I 'm a member of a local animal rights news, and get regular emails from other members and the staff.",
+    txt:
+      "I 'm a member of a local animal rights news, and get regular emails from other members and the staff.",
     subj: 'I',
     verb: 'member',
     obj: 'emails',
@@ -18682,7 +19052,8 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: 'I think for starters, myself and those of you who believe in God could say a special prayer for them.',
+    txt:
+      'I think for starters, myself and those of you who believe in God could say a special prayer for them.',
     subj: 'who',
     verb: 'think',
     obj: 'prayer',
@@ -18741,7 +19112,8 @@ module.exports = [
     obj: 'hypocrisy',
   },
   {
-    txt: '" As an example, consider the treatment of the civet cat, a highly intelligent and sociable animal.',
+    txt:
+      '" As an example, consider the treatment of the civet cat, a highly intelligent and sociable animal.',
     subj: null,
     verb: 'consider',
     obj: 'treatment',
@@ -18760,7 +19132,8 @@ module.exports = [
     obj: 'mistreatment',
   },
   {
-    txt: 'These animals have the misfortune to produce a substance that is useful in the manufacture of perfume.',
+    txt:
+      'These animals have the misfortune to produce a substance that is useful in the manufacture of perfume.',
     subj: 'that',
     verb: 'have',
     obj: 'substance',
@@ -18779,7 +19152,8 @@ module.exports = [
     obj: 'one',
   },
   {
-    txt: 'This article, and specifically this piece, effected me enough to try to build a song around the topic.',
+    txt:
+      'This article, and specifically this piece, effected me enough to try to build a song around the topic.',
     subj: 'article',
     verb: 'effected',
     obj: 'song',
@@ -18867,7 +19241,8 @@ module.exports = [
     obj: '$',
   },
   {
-    txt: "This is now my fourth week and I have made a total of $ 42,000.00 and it's still coming rapidly.",
+    txt:
+      "This is now my fourth week and I have made a total of $ 42,000.00 and it's still coming rapidly.",
     subj: 'it',
     verb: 'week',
     obj: 'total',
@@ -18886,7 +19261,8 @@ module.exports = [
     obj: 'you',
   },
   {
-    txt: 'also make sure you print this out NOW, so you can get the information off of it, as you will need it.',
+    txt:
+      'also make sure you print this out NOW, so you can get the information off of it, as you will need it.',
     subj: 'you',
     verb: 'also make',
     obj: 'it',
@@ -18917,13 +19293,15 @@ module.exports = [
     obj: 'directions',
   },
   {
-    txt: 'If all the following instructions are adhered to, you will receive extraordinary dividends.',
+    txt:
+      'If all the following instructions are adhered to, you will receive extraordinary dividends.',
     subj: 'you',
     verb: 'will receive',
     obj: 'dividends',
   },
   {
-    txt: 'Please follow the directions EXACTLY, and $ 50,000 or more can be yours in 20 to 60 days.',
+    txt:
+      'Please follow the directions EXACTLY, and $ 50,000 or more can be yours in 20 to 60 days.',
     subj: '$',
     verb: 'follow',
     obj: 'directions',
@@ -18986,7 +19364,8 @@ module.exports = [
     obj: 'service',
   },
   {
-    txt: 'So I checked it out with the U.S. Post Office (1-800-238-5355) and they confirmed that it is indeed legal !!',
+    txt:
+      'So I checked it out with the U.S. Post Office (1-800-238-5355) and they confirmed that it is indeed legal !!',
     subj: 'it',
     verb: 'checked',
     obj: 'it',
@@ -19005,7 +19384,8 @@ module.exports = [
     obj: 'NAME',
   },
   {
-    txt: 'Change anything you need to but try to keep this article as close to original as possible.',
+    txt:
+      'Change anything you need to but try to keep this article as close to original as possible.',
     subj: 'you',
     verb: 'Change',
     obj: 'article',
@@ -19029,7 +19409,8 @@ module.exports = [
     obj: 'doubts',
   },
   {
-    txt: 'Keep a copy of these steps for yourself and whenever you need money, you can use it again, and again.',
+    txt:
+      'Keep a copy of these steps for yourself and whenever you need money, you can use it again, and again.',
     subj: 'you',
     verb: 'Keep',
     obj: 'it',
@@ -19061,7 +19442,8 @@ module.exports = [
     obj: 'service',
   },
   {
-    txt: '( Also, it might be a good idea to wrap the $ 1 bill in dark paper to reduce the risk of mail theft ).',
+    txt:
+      '( Also, it might be a good idea to wrap the $ 1 bill in dark paper to reduce the risk of mail theft ).',
     subj: null,
     verb: 'idea',
     obj: 'risk',
@@ -19111,7 +19493,8 @@ module.exports = [
     obj: 'paste',
   },
   {
-    txt: 'This will paste a copy of the letter into the notepad so that you will add your name to the list.',
+    txt:
+      'This will paste a copy of the letter into the notepad so that you will add your name to the list.',
     subj: 'you',
     verb: 'will paste',
     obj: 'name',
@@ -19123,7 +19506,8 @@ module.exports = [
     obj: 'file',
   },
   {
-    txt: "If you want to do your posting in different settings, you'll always have this file to go back to.",
+    txt:
+      "If you want to do your posting in different settings, you'll always have this file to go back to.",
     subj: 'you',
     verb: 'will always have',
     obj: 'file',
@@ -19157,7 +19541,8 @@ module.exports = [
     obj: 'him',
   },
   {
-    txt: 'Like UFOs or Sasquatch, several people claimed to see fleeting lone wolves, usually in Yellowstone.',
+    txt:
+      'Like UFOs or Sasquatch, several people claimed to see fleeting lone wolves, usually in Yellowstone.',
     subj: 'people',
     verb: 'claimed',
     obj: 'wolves',
@@ -19204,7 +19589,8 @@ module.exports = [
     obj: 'populations',
   },
   {
-    txt: 'Some recent research conducted by Oregon State University has given considerable credence to this idea.',
+    txt:
+      'Some recent research conducted by Oregon State University has given considerable credence to this idea.',
     subj: 'research',
     verb: 'has given',
     obj: 'credence',
@@ -19339,19 +19725,22 @@ module.exports = [
     obj: 'game',
   },
   {
-    txt: 'They even occasionally attack people, which wolves do not -- despite the propaganda from the Brothers Grimm.',
+    txt:
+      'They even occasionally attack people, which wolves do not -- despite the propaganda from the Brothers Grimm.',
     subj: 'wolves',
     verb: 'even occasionally attack',
     obj: 'which',
   },
   {
-    txt: 'Yet people seem willing -- even eager -- to accommodate mountain lions, despite the risks.',
+    txt:
+      'Yet people seem willing -- even eager -- to accommodate mountain lions, despite the risks.',
     subj: 'people',
     verb: 'seem',
     obj: 'lions',
   },
   {
-    txt: 'It remains to be seen whether they will extend the same courtesy to the arriving gray wolf.',
+    txt:
+      'It remains to be seen whether they will extend the same courtesy to the arriving gray wolf.',
     subj: 'they',
     verb: 'remains',
     obj: 'courtesy',
@@ -19452,7 +19841,8 @@ module.exports = [
     obj: 'butterfly',
   },
   {
-    txt: 'Bird and butterfly watchers are seeing many, many new species coming up from Mexico and the Caribbean . "',
+    txt:
+      'Bird and butterfly watchers are seeing many, many new species coming up from Mexico and the Caribbean . "',
     subj: 'watchers',
     verb: 'are seeing',
     obj: 'species',
@@ -19465,7 +19855,8 @@ module.exports = [
     obj: 'shifting',
   },
   {
-    txt: 'The report also found alterations of ecosystem processes such as carbon cycling and storage.',
+    txt:
+      'The report also found alterations of ecosystem processes such as carbon cycling and storage.',
     subj: 'report',
     verb: 'also found',
     obj: 'alterations',
@@ -19478,7 +19869,8 @@ module.exports = [
     obj: 'CO2',
   },
   {
-    txt: '" The impacts of global warming are affecting people now in the Arctic, " said ACIA chair Robert Corell.',
+    txt:
+      '" The impacts of global warming are affecting people now in the Arctic, " said ACIA chair Robert Corell.',
     subj: 'Robert',
     verb: 'said',
     obj: 'people',
@@ -19599,7 +19991,8 @@ module.exports = [
     obj: 'change',
   },
   {
-    txt: 'Meanwhile, President George W Bush has said he will lead an inquiry into how the disaster was handled.',
+    txt:
+      'Meanwhile, President George W Bush has said he will lead an inquiry into how the disaster was handled.',
     subj: 'disaster',
     verb: 'has said',
     obj: 'inquiry',
@@ -19674,7 +20067,8 @@ module.exports = [
     obj: 'one',
   },
   {
-    txt: '" The US will work its way through the loss of a city and we are making progress after seven short days.',
+    txt:
+      '" The US will work its way through the loss of a city and we are making progress after seven short days.',
     subj: 'we',
     verb: 'will work',
     obj: 'progress',
@@ -19705,7 +20099,8 @@ module.exports = [
     obj: 'card',
   },
   {
-    txt: 'Yes, she and her family were delighted to leave the communistic remnants in that country.',
+    txt:
+      'Yes, she and her family were delighted to leave the communistic remnants in that country.',
     subj: 'she',
     verb: 'were delighted',
     obj: 'remnants',
@@ -19751,7 +20146,8 @@ module.exports = [
     obj: 'standings',
   },
   {
-    txt: 'Unfortunately, those left behind to be filmed, where those without transportation or means.',
+    txt:
+      'Unfortunately, those left behind to be filmed, where those without transportation or means.',
     subj: 'those',
     verb: 'where',
     obj: 'those',
@@ -19763,7 +20159,8 @@ module.exports = [
     obj: 'cities',
   },
   {
-    txt: 'However, New Orleans also had many affluent people, people who left town early as they had the means.',
+    txt:
+      'However, New Orleans also had many affluent people, people who left town early as they had the means.',
     subj: 'they',
     verb: 'also had',
     obj: 'means',
@@ -19775,7 +20172,8 @@ module.exports = [
     obj: 'perceptions',
   },
   {
-    txt: 'I suspect it will not change greatly ... but you never know how much stock people put in the news.',
+    txt:
+      'I suspect it will not change greatly ... but you never know how much stock people put in the news.',
     subj: 'people',
     verb: 'suspect',
     obj: 'stock',
@@ -19807,7 +20205,8 @@ module.exports = [
     obj: 'jobs',
   },
   {
-    txt: 'Or will the nearly year - round snow be too much for those who have never experienced snow in their lives?',
+    txt:
+      'Or will the nearly year - round snow be too much for those who have never experienced snow in their lives?',
     subj: 'who',
     verb: 'be too much',
     obj: 'snow',
@@ -19820,7 +20219,8 @@ module.exports = [
     obj: 'coast',
   },
   {
-    txt: 'What will the federal government do to prevent inflation in the housing and building market?',
+    txt:
+      'What will the federal government do to prevent inflation in the housing and building market?',
     subj: 'government',
     verb: 'do',
     obj: 'inflation',
@@ -19832,7 +20232,8 @@ module.exports = [
     obj: 'something',
   },
   {
-    txt: "Okay, I 'm new to this forum and really don't like Bush, so my view point is slanted and I admit that.",
+    txt:
+      "Okay, I 'm new to this forum and really don't like Bush, so my view point is slanted and I admit that.",
     subj: 'I',
     verb: "'m new",
     obj: 'that',
@@ -19851,7 +20252,8 @@ module.exports = [
     obj: 'friend',
   },
   {
-    txt: "My friend didn't have computer capability, so I spent the day searching and posting online.",
+    txt:
+      "My friend didn't have computer capability, so I spent the day searching and posting online.",
     subj: 'I',
     verb: "didn't have",
     obj: 'day',
@@ -19864,7 +20266,8 @@ module.exports = [
     obj: 'members',
   },
   {
-    txt: 'The hope was that anyone looking for the Aunt would see the family post and know that help was available.',
+    txt:
+      'The hope was that anyone looking for the Aunt would see the family post and know that help was available.',
     subj: 'help',
     verb: 'was',
     obj: 'post',
@@ -19884,7 +20287,8 @@ module.exports = [
     obj: 'what',
   },
   {
-    txt: 'When common sense takes a back seat to politics and legal mumbo jumbo what have we become?',
+    txt:
+      'When common sense takes a back seat to politics and legal mumbo jumbo what have we become?',
     subj: 'we',
     verb: 'become',
     obj: 'what',
@@ -19896,7 +20300,8 @@ module.exports = [
     obj: 'nation',
   },
   {
-    txt: 'About 30 seconds into his address, he started flogging the terrorist issue just one more time.',
+    txt:
+      'About 30 seconds into his address, he started flogging the terrorist issue just one more time.',
     subj: 'he',
     verb: 'started',
     obj: 'issue',
@@ -19955,7 +20360,8 @@ module.exports = [
     obj: 'motto',
   },
   {
-    txt: 'All Aries natives may have to tighten their belts and curb their desire for constant expansion.',
+    txt:
+      'All Aries natives may have to tighten their belts and curb their desire for constant expansion.',
     subj: 'natives',
     verb: 'may have',
     obj: 'desire',
@@ -19974,7 +20380,8 @@ module.exports = [
     obj: 'opportunities',
   },
   {
-    txt: 'If you want to start a new creative project or business venture, your imagination will be working overtime.',
+    txt:
+      'If you want to start a new creative project or business venture, your imagination will be working overtime.',
     subj: 'imagination',
     verb: 'will be working overtime',
     obj: 'project',
@@ -20000,7 +20407,8 @@ module.exports = [
     obj: 'work',
   },
   {
-    txt: 'As a result, your finances improve - and your newfound confidence could attract new love into your life.',
+    txt:
+      'As a result, your finances improve - and your newfound confidence could attract new love into your life.',
     subj: 'confidence',
     verb: 'improve',
     obj: 'love',
@@ -20073,7 +20481,8 @@ module.exports = [
     obj: 'career',
   },
   {
-    txt: 'The most difficult thing might be deciding which path means the most to you, and where to put your focus.',
+    txt:
+      'The most difficult thing might be deciding which path means the most to you, and where to put your focus.',
     subj: 'path',
     verb: 'might be',
     obj: 'focus',
@@ -20085,7 +20494,8 @@ module.exports = [
     obj: 'opportunities',
   },
   {
-    txt: "Romance in 2005 will make it a year to remember - and you'll be the envy of all your friends.",
+    txt:
+      "Romance in 2005 will make it a year to remember - and you'll be the envy of all your friends.",
     subj: 'you',
     verb: 'will make',
     obj: 'it',
@@ -20135,7 +20545,8 @@ module.exports = [
     obj: 'lot',
   },
   {
-    txt: "By year's end, you may find yourself seriously considering a major change - all for the best.",
+    txt:
+      "By year's end, you may find yourself seriously considering a major change - all for the best.",
     subj: 'you',
     verb: 'may find',
     obj: 'change',
@@ -20193,7 +20604,8 @@ module.exports = [
     obj: 'you',
   },
   {
-    txt: 'And, a relationship you begin now will last a very long time - like, for the rest of your life.',
+    txt:
+      'And, a relationship you begin now will last a very long time - like, for the rest of your life.',
     subj: 'you',
     verb: 'now will last',
     obj: 'time',
@@ -20205,7 +20617,8 @@ module.exports = [
     obj: 'Capricorn',
   },
   {
-    txt: 'Financially, it could be a lean year, although some advance planning can help you weather the storm.',
+    txt:
+      'Financially, it could be a lean year, although some advance planning can help you weather the storm.',
     subj: 'planning',
     verb: 'year',
     obj: 'storm',
@@ -20570,7 +20983,8 @@ module.exports = [
     obj: 'note',
   },
   {
-    txt: 'He and his master dragged me to my room and held judgment upon me as a convicted traitress.',
+    txt:
+      'He and his master dragged me to my room and held judgment upon me as a convicted traitress.',
     subj: 'He',
     verb: 'dragged',
     obj: 'judgment',
@@ -20678,7 +21092,8 @@ module.exports = [
     obj: 'ship',
   },
   {
-    txt: 'From then on, the Beatles began to get involved in false religions and to preach them to the world.',
+    txt:
+      'From then on, the Beatles began to get involved in false religions and to preach them to the world.',
     subj: 'Beatles',
     verb: 'began',
     obj: 'them',
@@ -20884,13 +21299,15 @@ module.exports = [
     obj: 'life',
   },
   {
-    txt: 'He thinks he will deceive people in this way, so that the real McCartney will not be perceived.',
+    txt:
+      'He thinks he will deceive people in this way, so that the real McCartney will not be perceived.',
     subj: 'McCartney',
     verb: 'thinks',
     obj: 'people',
   },
   {
-    txt: 'Satan deceiving mankind once again, as so many other thousands of times through the centuries ....',
+    txt:
+      'Satan deceiving mankind once again, as so many other thousands of times through the centuries ....',
     subj: null,
     verb: 'Satan',
     obj: 'mankind',
@@ -21020,7 +21437,8 @@ module.exports = [
     obj: 'men',
   },
   {
-    txt: 'They include 120,000 Iranian Revolutionary Guards trained for land and naval asymmetrical warfare.',
+    txt:
+      'They include 120,000 Iranian Revolutionary Guards trained for land and naval asymmetrical warfare.',
     subj: 'They',
     verb: 'include',
     obj: 'Guards',
@@ -21116,7 +21534,8 @@ module.exports = [
     obj: 'ground',
   },
   {
-    txt: 'Missile batteries arrayed in those mountains could raise bloody havoc with any fleet deployed below.',
+    txt:
+      'Missile batteries arrayed in those mountains could raise bloody havoc with any fleet deployed below.',
     subj: 'batteries',
     verb: 'could raise',
     obj: 'havoc',
@@ -21141,7 +21560,8 @@ module.exports = [
     obj: 'ship',
   },
   {
-    txt: 'Recall that it was two Exocets that ripped the USS Stark to shreds in 1987, killing 37 sailors.',
+    txt:
+      'Recall that it was two Exocets that ripped the USS Stark to shreds in 1987, killing 37 sailors.',
     subj: 'that',
     verb: 'Recall',
     obj: 'sailors',
@@ -21216,7 +21636,8 @@ module.exports = [
     obj: 'strength',
   },
   {
-    txt: 'As of 2002, Syria had some 215,000 soldiers under arms, 4,700 tanks, and a massive artillery capability.',
+    txt:
+      'As of 2002, Syria had some 215,000 soldiers under arms, 4,700 tanks, and a massive artillery capability.',
     subj: 'Syria',
     verb: 'had',
     obj: 'soldiers',
@@ -21299,7 +21720,8 @@ module.exports = [
     obj: 'confrontation',
   },
   {
-    txt: 'More significantly, China holds a large portion of the American economy in the palm of its hand.',
+    txt:
+      'More significantly, China holds a large portion of the American economy in the palm of its hand.',
     subj: 'China',
     verb: 'holds',
     obj: 'portion',
@@ -21344,13 +21766,15 @@ module.exports = [
     obj: 'reserves',
   },
   {
-    txt: 'They would have no problem teaching a hegemonic superpower a lesson if the need arose . "',
+    txt:
+      'They would have no problem teaching a hegemonic superpower a lesson if the need arose . "',
     subj: 'need',
     verb: 'would have',
     obj: 'lesson',
   },
   {
-    txt: '" The hardest blow on Americans, " concluded Roberts, " will fall when China does revalue its currency.',
+    txt:
+      '" The hardest blow on Americans, " concluded Roberts, " will fall when China does revalue its currency.',
     subj: 'China',
     verb: 'will fall',
     obj: 'currency',
@@ -21442,7 +21866,8 @@ module.exports = [
     obj: 'threat',
   },
   {
-    txt: "Iran's position over the Gulf would make resupply by ship and air support from carriers a dangerous affair.",
+    txt:
+      "Iran's position over the Gulf would make resupply by ship and air support from carriers a dangerous affair.",
     subj: 'position',
     verb: 'would make',
     obj: 'resupply',
@@ -21567,7 +21992,8 @@ module.exports = [
     obj: 'What',
   },
   {
-    txt: '0 - Number of endangered species voluntarily added by the Bush administration since taking office.',
+    txt:
+      '0 - Number of endangered species voluntarily added by the Bush administration since taking office.',
     subj: null,
     verb: '0',
     obj: 'office',
@@ -21628,13 +22054,15 @@ module.exports = [
     obj: 'information',
   },
   {
-    txt: '34 - Percentage decline in criminal penalties for environmental crimes since Bush took office.',
+    txt:
+      '34 - Percentage decline in criminal penalties for environmental crimes since Bush took office.',
     subj: 'Bush',
     verb: '34',
     obj: 'office',
   },
   {
-    txt: '50 - Percentage decline in civil penalties for environmental crimes since Bush took office.',
+    txt:
+      '50 - Percentage decline in civil penalties for environmental crimes since Bush took office.',
     subj: 'Bush',
     verb: '50',
     obj: 'office',
@@ -21660,7 +22088,8 @@ module.exports = [
     obj: 'meetings',
   },
   {
-    txt: "6 - Number of months before 11 September that Cheney's Energy Task Force investigated Iraq's oil reserves.",
+    txt:
+      "6 - Number of months before 11 September that Cheney's Energy Task Force investigated Iraq's oil reserves.",
     subj: 'Force',
     verb: '6',
     obj: 'reserves',
@@ -21673,7 +22102,8 @@ module.exports = [
     obj: 'Negligence',
   },
   {
-    txt: '100 - Percentage of those decisions that Bush then decided to allow the government to ignore indefinitely.',
+    txt:
+      '100 - Percentage of those decisions that Bush then decided to allow the government to ignore indefinitely.',
     subj: 'Bush',
     verb: '100',
     obj: 'government',
@@ -21721,13 +22151,15 @@ module.exports = [
     obj: 'weapons',
   },
   {
-    txt: '0 - Number of times Bush mentioned Osama bin Laden in his three State of the Union addresses.',
+    txt:
+      '0 - Number of times Bush mentioned Osama bin Laden in his three State of the Union addresses.',
     subj: 'Bush',
     verb: '0',
     obj: 'Osama',
   },
   {
-    txt: '73 - Number of times that Bush mentioned terrorism or terrorists in his three State of the Union addresses.',
+    txt:
+      '73 - Number of times that Bush mentioned terrorism or terrorists in his three State of the Union addresses.',
     subj: 'Bush',
     verb: '73',
     obj: 'terrorism',
@@ -21740,7 +22172,8 @@ module.exports = [
     obj: 'Saddam',
   },
   {
-    txt: '0 - Number of times Bush mentioned Saudi Arabia in his three State of the Union addresses.',
+    txt:
+      '0 - Number of times Bush mentioned Saudi Arabia in his three State of the Union addresses.',
     subj: 'Bush',
     verb: '0',
     obj: 'Arabia',
@@ -21800,7 +22233,8 @@ module.exports = [
     obj: 'President',
   },
   {
-    txt: '2 - Number of Nations that George Bush has attacked and taken over since coming into office.',
+    txt:
+      '2 - Number of Nations that George Bush has attacked and taken over since coming into office.',
     subj: 'George',
     verb: '2',
     obj: 'that',
@@ -21826,7 +22260,8 @@ module.exports = [
     obj: 'Iraq',
   },
   {
-    txt: '$ 15 m - Amount of a contract awarded to an American firm to build a cement factory in Iraq.',
+    txt:
+      '$ 15 m - Amount of a contract awarded to an American firm to build a cement factory in Iraq.',
     subj: null,
     verb: '$',
     obj: 'factory',
@@ -21860,7 +22295,8 @@ module.exports = [
     obj: 'that',
   },
   {
-    txt: '0 - Number of memorial services for the returned dead that Bush has attended since the beginning of the war.',
+    txt:
+      '0 - Number of memorial services for the returned dead that Bush has attended since the beginning of the war.',
     subj: 'Bush',
     verb: '0',
     obj: 'that',
@@ -21879,13 +22315,15 @@ module.exports = [
     obj: 'soldiers',
   },
   {
-    txt: '62 - Percentage of gas masks that army investigators discovered did Not work properly in autumn 2002.',
+    txt:
+      '62 - Percentage of gas masks that army investigators discovered did Not work properly in autumn 2002.',
     subj: 'investigators',
     verb: '62',
     obj: 'that',
   },
   {
-    txt: '90 - Percentage of detectors which give early warning of a biological weapons attack found to be defective.',
+    txt:
+      '90 - Percentage of detectors which give early warning of a biological weapons attack found to be defective.',
     subj: 'which',
     verb: '90',
     obj: 'warning',
@@ -21964,13 +22402,15 @@ module.exports = [
     obj: 'much',
   },
   {
-    txt: '$ 5.6 t - Projected national surplus forecast by the end of the decade when Bush took office in 2001.',
+    txt:
+      '$ 5.6 t - Projected national surplus forecast by the end of the decade when Bush took office in 2001.',
     subj: 'Bush',
     verb: '$',
     obj: 'office',
   },
   {
-    txt: "87 - Percentage of American families in April 2004 who say they have felt no benefit from Bush's tax cuts.",
+    txt:
+      "87 - Percentage of American families in April 2004 who say they have felt no benefit from Bush's tax cuts.",
     subj: 'they',
     verb: '87',
     obj: 'benefit',
@@ -21990,13 +22430,15 @@ module.exports = [
     obj: '$',
   },
   {
-    txt: '2.3 m - Number of Americans who lost their jobs during first three Years of the Bush administration.',
+    txt:
+      '2.3 m - Number of Americans who lost their jobs during first three Years of the Bush administration.',
     subj: 'who',
     verb: 'm',
     obj: 'jobs',
   },
   {
-    txt: '35 m - Number of Americans that the government defines as " food insecure, " in other words, hungry.',
+    txt:
+      '35 m - Number of Americans that the government defines as " food insecure, " in other words, hungry.',
     subj: 'government',
     verb: 'm',
     obj: 'that',
@@ -22009,7 +22451,8 @@ module.exports = [
     obj: 'homes',
   },
   {
-    txt: '$ 101 m - Amount Lay made from selling his Enron shares just before the company went bankrupt.',
+    txt:
+      '$ 101 m - Amount Lay made from selling his Enron shares just before the company went bankrupt.',
     subj: 'company',
     verb: '$',
     obj: 'shares',
@@ -22029,7 +22472,8 @@ module.exports = [
     obj: 'whom',
   },
   {
-    txt: '15 - Average number of minutes Bush spent reviewing capital punishment cases while governor of Texas.',
+    txt:
+      '15 - Average number of minutes Bush spent reviewing capital punishment cases while governor of Texas.',
     subj: 'Bush',
     verb: '15',
     obj: 'cases',
@@ -22049,7 +22493,8 @@ module.exports = [
     obj: 'masks',
   },
   {
-    txt: "2.4 m - Number of Americans who lost their health insurance during Bush's first year in office.",
+    txt:
+      "2.4 m - Number of Americans who lost their health insurance during Bush's first year in office.",
     subj: 'who',
     verb: 'm',
     obj: 'insurance',
@@ -22069,7 +22514,8 @@ module.exports = [
     obj: 'image',
   },
   {
-    txt: '85 - Percentage of Indonesians who had an unfavourable image of the United States in 2003.',
+    txt:
+      '85 - Percentage of Indonesians who had an unfavourable image of the United States in 2003.',
     subj: 'who',
     verb: '85',
     obj: 'image',
@@ -22103,7 +22549,8 @@ module.exports = [
     obj: 'job',
   },
   {
-    txt: '49 - Percentage of Americans who approved of the way Bush was handling his job as president in May 2004.',
+    txt:
+      '49 - Percentage of Americans who approved of the way Bush was handling his job as president in May 2004.',
     subj: 'Bush',
     verb: '49',
     obj: 'job',
@@ -22129,7 +22576,8 @@ module.exports = [
     obj: 'market',
   },
   {
-    txt: "29 - Percentage of votes that will be cast via computer voting machines that don't produce a paper record.",
+    txt:
+      "29 - Percentage of votes that will be cast via computer voting machines that don't produce a paper record.",
     subj: 'that',
     verb: '29',
     obj: 'record',
@@ -22175,13 +22623,15 @@ module.exports = [
     obj: 'claims',
   },
   {
-    txt: '22 - Percentage of Americans who believed in May 2003 that Saddam had used his WMDs on US forces.',
+    txt:
+      '22 - Percentage of Americans who believed in May 2003 that Saddam had used his WMDs on US forces.',
     subj: 'Saddam',
     verb: '22',
     obj: 'WMDs',
   },
   {
-    txt: '85 - Percentage of American young adults who can not find Afghanistan, Iraq, or Israel on a map.',
+    txt:
+      '85 - Percentage of American young adults who can not find Afghanistan, Iraq, or Israel on a map.',
     subj: 'who',
     verb: '85',
     obj: 'Afghanistan',
@@ -22193,13 +22643,15 @@ module.exports = [
     obj: 'Ocean',
   },
   {
-    txt: "75 - Percentage of American young adults who don't know the population of the United States.",
+    txt:
+      "75 - Percentage of American young adults who don't know the population of the United States.",
     subj: 'who',
     verb: '75',
     obj: 'population',
   },
   {
-    txt: "53 - Percentage of Canadian young adults who don't know the population of the United States.",
+    txt:
+      "53 - Percentage of Canadian young adults who don't know the population of the United States.",
     subj: 'who',
     verb: '53',
     obj: 'population',
@@ -22224,7 +22676,8 @@ module.exports = [
     obj: 'themselves',
   },
   {
-    txt: '5 - Number of states that do not use the word " evolution " in public school science courses.',
+    txt:
+      '5 - Number of states that do not use the word " evolution " in public school science courses.',
     subj: 'that',
     verb: '5',
     obj: 'word',
@@ -22236,13 +22689,15 @@ module.exports = [
     obj: 'anything',
   },
   {
-    txt: 'I have 5 sisters and so including my mom ... he is the only guy in a house of six females.',
+    txt:
+      'I have 5 sisters and so including my mom ... he is the only guy in a house of six females.',
     subj: 'he',
     verb: 'have',
     obj: 'sisters',
   },
   {
-    txt: "Now I 'm the youngest and I just got my period so now we all have ours and he thinks it's a good thing ?",
+    txt:
+      "Now I 'm the youngest and I just got my period so now we all have ours and he thinks it's a good thing ?",
     subj: 'it',
     verb: 'youngest',
     obj: 'ours',
@@ -22274,7 +22729,8 @@ module.exports = [
     obj: 'HELP',
   },
   {
-    txt: 'Can somebody give me the names some collages that do post 18 (degrees or foundation degrees) in either :',
+    txt:
+      'Can somebody give me the names some collages that do post 18 (degrees or foundation degrees) in either :',
     subj: 'that',
     verb: 'give',
     obj: 'degrees',
@@ -22346,7 +22802,8 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: 'The L.I.T is so close to Moyross, yet again the ppl who talk sh*t about Moyross still go there.',
+    txt:
+      'The L.I.T is so close to Moyross, yet again the ppl who talk sh*t about Moyross still go there.',
     subj: 'who',
     verb: 'is so close',
     obj: 'sh*t',
@@ -22425,7 +22882,8 @@ module.exports = [
     obj: 'phone',
   },
   {
-    txt: 'As a mytouch 4g owner I know the phone is pretty fast and their is no point installing a rom.',
+    txt:
+      'As a mytouch 4g owner I know the phone is pretty fast and their is no point installing a rom.',
     subj: 'point',
     verb: 'know',
     obj: 'rom',
@@ -22438,7 +22896,8 @@ module.exports = [
     obj: 'penines',
   },
   {
-    txt: 'when i watched werewolf in london (great film) that was the only time i saw the yorkshire moors.',
+    txt:
+      'when i watched werewolf in london (great film) that was the only time i saw the yorkshire moors.',
     subj: 'i',
     verb: 'time',
     obj: 'moors',
@@ -22457,7 +22916,8 @@ module.exports = [
     obj: 'goodness',
   },
   {
-    txt: 'The people abandoned their farms and religious sites and the ground they stood on became moorland.',
+    txt:
+      'The people abandoned their farms and religious sites and the ground they stood on became moorland.',
     subj: 'they',
     verb: 'abandoned',
     obj: 'farms',
@@ -22475,7 +22935,8 @@ module.exports = [
     obj: 'next',
   },
   {
-    txt: 'How could I work with her to get off her four hand, get balance, and lope smoothly and slowly ??',
+    txt:
+      'How could I work with her to get off her four hand, get balance, and lope smoothly and slowly ??',
     subj: 'I',
     verb: 'work',
     obj: 'balance',
@@ -22515,7 +22976,8 @@ module.exports = [
     obj: 'camera',
   },
   {
-    txt: 'Olympus X - 940 14 Megapixel Digital Camera has filters and can do all sorts of special effects.',
+    txt:
+      'Olympus X - 940 14 Megapixel Digital Camera has filters and can do all sorts of special effects.',
     subj: 'Camera',
     verb: 'has',
     obj: 'sorts',
@@ -22585,13 +23047,15 @@ module.exports = [
     obj: 'something',
   },
   {
-    txt: "I have posted this question on the NZ visa site and can't get any info, does anyone know .???",
+    txt:
+      "I have posted this question on the NZ visa site and can't get any info, does anyone know .???",
     subj: 'anyone',
     verb: 'have posted',
     obj: 'info',
   },
   {
-    txt: 'If your visa does not restrict you from taking any work in New Zealand then you can work in any sector.',
+    txt:
+      'If your visa does not restrict you from taking any work in New Zealand then you can work in any sector.',
     subj: 'you',
     verb: 'then can work',
     obj: 'work',
@@ -22640,7 +23104,8 @@ module.exports = [
     obj: 'coupons',
   },
   {
-    txt: 'Check out http://www.restaurant.com lots of restaurants you can look at the menu and check out prices.',
+    txt:
+      'Check out http://www.restaurant.com lots of restaurants you can look at the menu and check out prices.',
     subj: 'you',
     verb: 'Check',
     obj: 'prices',
@@ -22698,7 +23163,8 @@ module.exports = [
     obj: 'animal',
   },
   {
-    txt: 'So I have a VERY long list of people I want to make Xmas gifts for and one of them is my best friend.',
+    txt:
+      'So I have a VERY long list of people I want to make Xmas gifts for and one of them is my best friend.',
     subj: 'one',
     verb: 'have',
     obj: 'gifts',
@@ -22801,7 +23267,8 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: 'He was trained to a harness / leash for outside time but he knew to use the litter pan inside.',
+    txt:
+      'He was trained to a harness / leash for outside time but he knew to use the litter pan inside.',
     subj: 'he',
     verb: 'trained',
     obj: 'pan',
@@ -22873,7 +23340,8 @@ module.exports = [
     txt:
       'http://www.solutions.com/jump.jsp?itemID=1361&itemType=PRODUCT&path=1%2C3%2C477&iProductID=1361 If anything you use has a strong or lingering fragrance it can bother or potentially injure the bird.',
     subj: 'it',
-    verb: 'http://www.solutions.com/jump.jsp?itemID=1361&itemType=PRODUCT&path=1%2C3%2C477&iProductID=1361',
+    verb:
+      'http://www.solutions.com/jump.jsp?itemID=1361&itemType=PRODUCT&path=1%2C3%2C477&iProductID=1361',
     obj: 'bird',
   },
   {
@@ -22919,7 +23387,8 @@ module.exports = [
     obj: 'stupidity',
   },
   {
-    txt: 'can i buy a laptop in u.k and then take it to rep. ireland and put a irish pay, go dongle in it?',
+    txt:
+      'can i buy a laptop in u.k and then take it to rep. ireland and put a irish pay, go dongle in it?',
     subj: 'i',
     verb: 'buy',
     obj: 'dongle',
@@ -23084,13 +23553,15 @@ module.exports = [
     obj: 'mine',
   },
   {
-    txt: 'they use them to look prickly .. would you try to eat a cactus [ if u had no knife ] i know i would nt.',
+    txt:
+      'they use them to look prickly .. would you try to eat a cactus [ if u had no knife ] i know i would nt.',
     subj: 'i',
     verb: 'use',
     obj: 'knife',
   },
   {
-    txt: 'they puff out to look bigger and badder and they can scratch you a lil if u r holding them to tight :)',
+    txt:
+      'they puff out to look bigger and badder and they can scratch you a lil if u r holding them to tight :)',
     subj: 'u',
     verb: 'puff out',
     obj: 'them',
@@ -23103,7 +23574,8 @@ module.exports = [
     obj: 'them',
   },
   {
-    txt: 'Used as a help for horses that are quite strong pullers while hacking, hunting and doing cross country.',
+    txt:
+      'Used as a help for horses that are quite strong pullers while hacking, hunting and doing cross country.',
     subj: 'that',
     verb: 'Used',
     obj: 'country',
@@ -23123,7 +23595,8 @@ module.exports = [
     obj: 'reins',
   },
   {
-    txt: 'Useful for younger kids who do not have big enough hands or the ability to handle two reins independently.',
+    txt:
+      'Useful for younger kids who do not have big enough hands or the ability to handle two reins independently.',
     subj: 'who',
     verb: 'Useful',
     obj: 'reins',
@@ -23155,7 +23628,8 @@ module.exports = [
     obj: 'dollars',
   },
   {
-    txt: 'My birthday is in november and I get about .... 150 or more since i hate my dad s family .. haha',
+    txt:
+      'My birthday is in november and I get about .... 150 or more since i hate my dad s family .. haha',
     subj: 'i',
     verb: 'november',
     obj: 'dad',
@@ -23180,7 +23654,8 @@ module.exports = [
     obj: 'camera',
   },
   {
-    txt: "If you can't even do basic math, you'll never figure out how to use a DSLR camera properly.",
+    txt:
+      "If you can't even do basic math, you'll never figure out how to use a DSLR camera properly.",
     subj: 'you',
     verb: 'will never figure',
     obj: 'camera',
@@ -23256,7 +23731,8 @@ module.exports = [
     obj: 'noise',
   },
   {
-    txt: 'How can I change my boarding station against the ticket I booked a month back from counter?',
+    txt:
+      'How can I change my boarding station against the ticket I booked a month back from counter?',
     subj: 'I',
     verb: 'change',
     obj: 'station',
@@ -23274,13 +23750,15 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: "In Calcutta there is a Foreigner's reservation office where they speak English very well.",
+    txt:
+      "In Calcutta there is a Foreigner's reservation office where they speak English very well.",
     subj: 'they',
     verb: 'is',
     obj: 'English',
   },
   {
-    txt: 'They can help you and it is close to a train station in Calcutta so check a few big ones?',
+    txt:
+      'They can help you and it is close to a train station in Calcutta so check a few big ones?',
     subj: 'it',
     verb: 'can help',
     obj: 'ones',
@@ -23325,7 +23803,8 @@ module.exports = [
     obj: 'difference',
   },
   {
-    txt: "No one's going to hire you if you can't even spell, especially if you 're a high school graduate.",
+    txt:
+      "No one's going to hire you if you can't even spell, especially if you 're a high school graduate.",
     subj: 'you',
     verb: "'s going",
     obj: 'you',
@@ -23343,7 +23822,8 @@ module.exports = [
     obj: 'application',
   },
   {
-    txt: 'I applied to get a student visa to study in Canada, I received one that is valid until October of 2015.',
+    txt:
+      'I applied to get a student visa to study in Canada, I received one that is valid until October of 2015.',
     subj: 'that',
     verb: 'applied',
     obj: 'one',
@@ -23377,7 +23857,8 @@ module.exports = [
     obj: 'videos',
   },
   {
-    txt: 'would it help getting an aquarium cage or a plastic see through box so it ca nt escape i can buy it a wheel',
+    txt:
+      'would it help getting an aquarium cage or a plastic see through box so it ca nt escape i can buy it a wheel',
     subj: 'i',
     verb: 'can buy',
     obj: 'wheel',
@@ -23409,7 +23890,8 @@ module.exports = [
     obj: 'top',
   },
   {
-    txt: 'Wire cages are NOT acceptable for dwarfs really, unless the bars have less than half a cm between them.',
+    txt:
+      'Wire cages are NOT acceptable for dwarfs really, unless the bars have less than half a cm between them.',
     subj: 'bars',
     verb: 'are NOT acceptable',
     obj: 'cm',
@@ -23439,7 +23921,8 @@ module.exports = [
     obj: 'college',
   },
   {
-    txt: 'My parents do not like me, They constantly reassure me that they will throw me out of home when I turn 18.',
+    txt:
+      'My parents do not like me, They constantly reassure me that they will throw me out of home when I turn 18.',
     subj: 'I',
     verb: 'do not like',
     obj: '18',
@@ -23487,7 +23970,8 @@ module.exports = [
     obj: 'skills',
   },
   {
-    txt: 'The Canadian Regenesis actress Mayko Nguyen has Japanese connection or is it her fake name?',
+    txt:
+      'The Canadian Regenesis actress Mayko Nguyen has Japanese connection or is it her fake name?',
     subj: 'it',
     verb: 'has',
     obj: 'connection',
@@ -23499,13 +23983,15 @@ module.exports = [
     obj: 'source',
   },
   {
-    txt: 'In Vietnam, when a baby was born, they must be named " first name " according to that of their fathers.',
+    txt:
+      'In Vietnam, when a baby was born, they must be named " first name " according to that of their fathers.',
     subj: 'they',
     verb: 'named',
     obj: 'name',
   },
   {
-    txt: "It's principle except a number of cases, for example, the babies are orphans or not to have father.",
+    txt:
+      "It's principle except a number of cases, for example, the babies are orphans or not to have father.",
     subj: 'babies',
     verb: "'s principle",
     obj: 'father',
@@ -23595,7 +24081,8 @@ module.exports = [
     obj: 'camera',
   },
   {
-    txt: "It's really difficult to find a place that is absolutely dark and accessible to you when you 're outside.",
+    txt:
+      "It's really difficult to find a place that is absolutely dark and accessible to you when you 're outside.",
     subj: 'you',
     verb: "'s really difficult",
     obj: 'place',
@@ -23638,7 +24125,8 @@ module.exports = [
     obj: 'Statue',
   },
   {
-    txt: "My argument is it's art and therefore should not be censored he's making us censor it who's right",
+    txt:
+      "My argument is it's art and therefore should not be censored he's making us censor it who's right",
     subj: 'who',
     verb: 'is',
     obj: 'it',
@@ -23677,7 +24165,8 @@ module.exports = [
     obj: 'job',
   },
   {
-    txt: 'I am taking my wife out for our first year wedding anniversary and we both agree that we want a good steak.',
+    txt:
+      'I am taking my wife out for our first year wedding anniversary and we both agree that we want a good steak.',
     subj: 'we',
     verb: 'am taking',
     obj: 'steak',
@@ -23702,7 +24191,8 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: 'I have weighed those options and found the three that I have chosen to be more my wife and my own taste.',
+    txt:
+      'I have weighed those options and found the three that I have chosen to be more my wife and my own taste.',
     subj: 'I',
     verb: 'have weighed',
     obj: 'that',
@@ -23772,7 +24262,8 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: "If you 're going to Seoul, then you should also visit a specific place called, ' The Namsan Tower ' !",
+    txt:
+      "If you 're going to Seoul, then you should also visit a specific place called, ' The Namsan Tower ' !",
     subj: 'you',
     verb: 'should also visit',
     obj: 'place',
@@ -23785,7 +24276,8 @@ module.exports = [
     obj: 'chains',
   },
   {
-    txt: "Also, don't forget to try out Korea's famous amusement parks ! : Lotte World, Everland, and Carribbean Bay !",
+    txt:
+      "Also, don't forget to try out Korea's famous amusement parks ! : Lotte World, Everland, and Carribbean Bay !",
     subj: null,
     verb: "Also don't forget",
     obj: 'parks',
@@ -23821,7 +24313,8 @@ module.exports = [
     obj: 'what',
   },
   {
-    txt: "I found this pure white bird in my neighborhood, its wing is injured, so I 'm currently taking care of it.",
+    txt:
+      "I found this pure white bird in my neighborhood, its wing is injured, so I 'm currently taking care of it.",
     subj: 'I',
     verb: 'found',
     obj: 'care',
@@ -23962,7 +24455,8 @@ module.exports = [
     obj: 'this',
   },
   {
-    txt: 'It will give you a lot more power, as well as control over how your black and white photo looks :',
+    txt:
+      'It will give you a lot more power, as well as control over how your black and white photo looks :',
     subj: 'photo',
     verb: 'will give',
     obj: 'power',
@@ -24037,7 +24531,8 @@ module.exports = [
     obj: 'operation',
   },
   {
-    txt: 'Cheapest surgeons work out of some small clinic and do not have the skills you are looking for ..',
+    txt:
+      'Cheapest surgeons work out of some small clinic and do not have the skills you are looking for ..',
     subj: 'you',
     verb: 'work',
     obj: 'skills',
@@ -24056,7 +24551,8 @@ module.exports = [
     obj: 'procedure',
   },
   {
-    txt: 'Would you choose the cheapest brakes for your expensive race car or maybe the cheapest parachute too?',
+    txt:
+      'Would you choose the cheapest brakes for your expensive race car or maybe the cheapest parachute too?',
     subj: 'you',
     verb: 'choose',
     obj: 'brakes',
@@ -24069,13 +24565,15 @@ module.exports = [
     obj: 'problems',
   },
   {
-    txt: 'Bumrungrad Hospital does some good work but all hospitals do have their problems from time to time.',
+    txt:
+      'Bumrungrad Hospital does some good work but all hospitals do have their problems from time to time.',
     subj: 'hospitals',
     verb: 'does',
     obj: 'problems',
   },
   {
-    txt: 'Maybe having an experienced doctor might be better than some guy that is cheaper but less experienced!',
+    txt:
+      'Maybe having an experienced doctor might be better than some guy that is cheaper but less experienced!',
     subj: 'that',
     verb: 'might be better',
     obj: 'doctor',
@@ -24190,7 +24688,8 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: "It doesn't matter how graceful your horse is, or how high he can jump, or how well he does a sliding stop.",
+    txt:
+      "It doesn't matter how graceful your horse is, or how high he can jump, or how well he does a sliding stop.",
     subj: 'he',
     verb: "doesn't matter how",
     obj: 'stop',
@@ -24233,7 +24732,8 @@ module.exports = [
     obj: 'everything',
   },
   {
-    txt: 'Seeing the nature and wild life that if you keep quiet you can get up close and personal.',
+    txt:
+      'Seeing the nature and wild life that if you keep quiet you can get up close and personal.',
     subj: 'you',
     verb: 'Seeing',
     obj: 'nature',
@@ -24245,7 +24745,8 @@ module.exports = [
     obj: 'encounters',
   },
   {
-    txt: 'I have a 10 gallon nano reef with 10 lbs of live fiji rock, and 10 lbs of live carribean sand.',
+    txt:
+      'I have a 10 gallon nano reef with 10 lbs of live fiji rock, and 10 lbs of live carribean sand.',
     subj: 'I',
     verb: 'have',
     obj: 'reef',
@@ -24378,19 +24879,22 @@ module.exports = [
     obj: 'fun',
   },
   {
-    txt: 'Basically Nook Tablet it has more memory, better battery life and a better processor and a microphone.',
+    txt:
+      'Basically Nook Tablet it has more memory, better battery life and a better processor and a microphone.',
     subj: 'it',
     verb: 'has',
     obj: 'memory',
   },
   {
-    txt: "Hey there, I 'm trying to find a restaurant in Philly to take my husband tomorrow for his birthday.",
+    txt:
+      "Hey there, I 'm trying to find a restaurant in Philly to take my husband tomorrow for his birthday.",
     subj: 'I',
     verb: "there 'm trying",
     obj: 'husband',
   },
   {
-    txt: 'He \'s pretty much an " I love American Food, good drinks on occasion, laid back . " kind of guy . ;)',
+    txt:
+      'He \'s pretty much an " I love American Food, good drinks on occasion, laid back . " kind of guy . ;)',
     subj: 'I',
     verb: 'back kind',
     obj: 'Food',
@@ -24421,7 +24925,8 @@ module.exports = [
     obj: 'question',
   },
   {
-    txt: 'Go to a local market or drug store, and buy this month \'s copy of the " Philadelphia Magazine ".',
+    txt:
+      'Go to a local market or drug store, and buy this month \'s copy of the " Philadelphia Magazine ".',
     subj: null,
     verb: 'Go',
     obj: 'copy',
@@ -24451,7 +24956,8 @@ module.exports = [
     obj: 'tank',
   },
   {
-    txt: "I 'm getting a 10 gallon for my betta tomorrow and I just want to know how to properly set it up.",
+    txt:
+      "I 'm getting a 10 gallon for my betta tomorrow and I just want to know how to properly set it up.",
     subj: 'I',
     verb: "'m getting",
     obj: 'it',
@@ -24633,7 +25139,8 @@ module.exports = [
     obj: 'baby',
   },
   {
-    txt: "When the male gets his titts out the female gets mad with him knowing he can't produce milk.",
+    txt:
+      "When the male gets his titts out the female gets mad with him knowing he can't produce milk.",
     subj: 'he',
     verb: 'gets mad',
     obj: 'milk',
@@ -24670,7 +25177,8 @@ module.exports = [
     obj: 'what',
   },
   {
-    txt: 'If your (US) provider has a deal with a canadian wireless company, you texts and calls will go through.',
+    txt:
+      'If your (US) provider has a deal with a canadian wireless company, you texts and calls will go through.',
     subj: 'texts',
     verb: 'will go through',
     obj: 'deal',
@@ -24819,13 +25327,15 @@ module.exports = [
     obj: 'time',
   },
   {
-    txt: "I'd be happy if someone helps, especially someone who has been to Fujairah or lives there . :)",
+    txt:
+      "I'd be happy if someone helps, especially someone who has been to Fujairah or lives there . :)",
     subj: 'who',
     verb: "'d be happy",
     obj: 'someone',
   },
   {
-    txt: 'I think 2012 is going to be a great year for Fujairah as we have A LOT of projects to be done by 2012.',
+    txt:
+      'I think 2012 is going to be a great year for Fujairah as we have A LOT of projects to be done by 2012.',
     subj: 'we',
     verb: 'think',
     obj: 'LOT',
@@ -24875,7 +25385,8 @@ module.exports = [
     obj: 'PS3',
   },
   {
-    txt: 'Microsoft has not announced there new console yet though it is believed to be in the works.',
+    txt:
+      'Microsoft has not announced there new console yet though it is believed to be in the works.',
     subj: 'it',
     verb: 'has not announced',
     obj: 'console',
@@ -24978,7 +25489,8 @@ module.exports = [
     obj: 'trust',
   },
   {
-    txt: "I thought that I had gained my cockatiel's trust, but now he's not coming to me when I open his cage.",
+    txt:
+      "I thought that I had gained my cockatiel's trust, but now he's not coming to me when I open his cage.",
     subj: 'I',
     verb: 'thought',
     obj: 'cage',
@@ -25008,13 +25520,15 @@ module.exports = [
     obj: 'cage',
   },
   {
-    txt: 'Keep his cage open and go on your computer, or read a book, etc and maybe he will come out to you.',
+    txt:
+      'Keep his cage open and go on your computer, or read a book, etc and maybe he will come out to you.',
     subj: 'he',
     verb: 'Keep',
     obj: 'book',
   },
   {
-    txt: "Let him go at his own pace, don't rush with him, and never ever resort to physical violence with your bird.",
+    txt:
+      "Let him go at his own pace, don't rush with him, and never ever resort to physical violence with your bird.",
     subj: null,
     verb: 'Let',
     obj: 'him',
@@ -25058,13 +25572,15 @@ module.exports = [
     obj: 'stable',
   },
   {
-    txt: 'My breyers need stables or barns though ..... and I need directions and materials on how to make them.',
+    txt:
+      'My breyers need stables or barns though ..... and I need directions and materials on how to make them.',
     subj: 'I',
     verb: 'need',
     obj: 'them',
   },
   {
-    txt: 'I would like maybe 5 stalls per barn so make sure the stalls are not that big so it can fit.',
+    txt:
+      'I would like maybe 5 stalls per barn so make sure the stalls are not that big so it can fit.',
     subj: 'it',
     verb: 'would like maybe',
     obj: 'stalls',
@@ -25088,25 +25604,29 @@ module.exports = [
     obj: 'best',
   },
   {
-    txt: 'sketch out floor plan, estimate size, draw front view, side view, and 3d orthographic perspective views,',
+    txt:
+      'sketch out floor plan, estimate size, draw front view, side view, and 3d orthographic perspective views,',
     subj: null,
     verb: 'sketch',
     obj: 'view',
   },
   {
-    txt: 'figure out how many stalls you want, then measure square cube sections for length and width of horse,',
+    txt:
+      'figure out how many stalls you want, then measure square cube sections for length and width of horse,',
     subj: 'you',
     verb: 'figure',
     obj: 'sections',
   },
   {
-    txt: 'measure size for platform, draw lines and mark sections, measure out wall sections and height,',
+    txt:
+      'measure size for platform, draw lines and mark sections, measure out wall sections and height,',
     subj: null,
     verb: 'measure',
     obj: 'sections',
   },
   {
-    txt: 'there are many small details, that you would have to work on as you go for doors and windows and roof,',
+    txt:
+      'there are many small details, that you would have to work on as you go for doors and windows and roof,',
     subj: 'you',
     verb: 'are',
     obj: 'that',
@@ -25150,7 +25670,8 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: 'I read somewhere that you have to hold his mouth together, and keep it that way til he panics.',
+    txt:
+      'I read somewhere that you have to hold his mouth together, and keep it that way til he panics.',
     subj: 'he',
     verb: 'read somewhere',
     obj: 'it',
@@ -25162,7 +25683,8 @@ module.exports = [
     obj: 'mouth',
   },
   {
-    txt: 'He does have toys, a scratching post, LOTS of mice, balls, yarn, a feathery birdy toy, etc.',
+    txt:
+      'He does have toys, a scratching post, LOTS of mice, balls, yarn, a feathery birdy toy, etc.',
     subj: 'He',
     verb: 'does have',
     obj: 'toys',
@@ -25206,7 +25728,8 @@ module.exports = [
     obj: 'cage',
   },
   {
-    txt: '( Apart from the wire flooring which i am going to cover) Which of these two cages is better :',
+    txt:
+      '( Apart from the wire flooring which i am going to cover) Which of these two cages is better :',
     subj: 'Which',
     verb: 'is better',
     obj: 'which',
@@ -25266,7 +25789,8 @@ module.exports = [
     obj: 'package',
   },
   {
-    txt: 'i m not worried about damaging the surface my tank is on because i can prop it up off the surface anyway.',
+    txt:
+      'i m not worried about damaging the surface my tank is on because i can prop it up off the surface anyway.',
     subj: 'i',
     verb: 'm not',
     obj: 'it',
@@ -25292,7 +25816,8 @@ module.exports = [
     obj: "UTH's",
   },
   {
-    txt: "they will move if they get too warm - it's not like a heat rock which you should avoid at all costs.",
+    txt:
+      "they will move if they get too warm - it's not like a heat rock which you should avoid at all costs.",
     subj: 'you',
     verb: 'will move',
     obj: 'which',
@@ -25316,7 +25841,8 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: 'Bottom if you are worried about the snake burning itself put something overt it like newspaper ...',
+    txt:
+      'Bottom if you are worried about the snake burning itself put something overt it like newspaper ...',
     subj: 'snake',
     verb: 'Bottom',
     obj: 'something',
@@ -25395,7 +25921,8 @@ module.exports = [
     obj: 'Us',
   },
   {
-    txt: 'Unless you plan on being late for the bridal shower you might want to post this again in the L.A. section.',
+    txt:
+      'Unless you plan on being late for the bridal shower you might want to post this again in the L.A. section.',
     subj: 'you',
     verb: 'might want',
     obj: 'this',
@@ -25414,7 +25941,8 @@ module.exports = [
     obj: 'movie',
   },
   {
-    txt: 'Today, it is the primary safety law affecting virtually all ships, regardless of country of registration.',
+    txt:
+      'Today, it is the primary safety law affecting virtually all ships, regardless of country of registration.',
     subj: 'it',
     verb: 'law',
     obj: 'ships',
@@ -25460,7 +25988,8 @@ module.exports = [
     obj: 'bands',
   },
   {
-    txt: 'Otherwise, you can do what you can do in other parts or Japan, like shopping, eating, etc.',
+    txt:
+      'Otherwise, you can do what you can do in other parts or Japan, like shopping, eating, etc.',
     subj: 'you',
     verb: 'Otherwise can do',
     obj: 'what',
@@ -25484,7 +26013,8 @@ module.exports = [
     obj: 'Fuji',
   },
   {
-    txt: 'You can find all sorts of fresh food and get a really delicious, fresh sashimi / sushi lunch upstairs.',
+    txt:
+      'You can find all sorts of fresh food and get a really delicious, fresh sashimi / sushi lunch upstairs.',
     subj: 'You',
     verb: 'can find',
     obj: 'lunch',
@@ -25515,7 +26045,8 @@ module.exports = [
     obj: 'chapter',
   },
   {
-    txt: "I was playing a video game that has a m 16 Vietnam model, and in the game it's 3 - shot burst.",
+    txt:
+      "I was playing a video game that has a m 16 Vietnam model, and in the game it's 3 - shot burst.",
     subj: 'it',
     verb: 'was playing',
     obj: 'model',
@@ -25540,13 +26071,15 @@ module.exports = [
     obj: 'type',
   },
   {
-    txt: 'He also ordered that the receiver not get a (I think chrome) coating that helped keep the gun from jamming.',
+    txt:
+      'He also ordered that the receiver not get a (I think chrome) coating that helped keep the gun from jamming.',
     subj: 'that',
     verb: 'also ordered',
     obj: 'gun',
   },
   {
-    txt: "Than the troops being issued the weapon were told it was self - cleaning, which it wasn't.",
+    txt:
+      "Than the troops being issued the weapon were told it was self - cleaning, which it wasn't.",
     subj: 'it',
     verb: 'told',
     obj: 'weapon',
@@ -25611,7 +26144,8 @@ module.exports = [
     obj: 'creams',
   },
   {
-    txt: "Just recently discovered them last time I was down there, they 're very nice) www.kaffeeeis.co.nz",
+    txt:
+      "Just recently discovered them last time I was down there, they 're very nice) www.kaffeeeis.co.nz",
     subj: 'they',
     verb: 'Just recently discovered',
     obj: 'them',
@@ -25644,7 +26178,8 @@ module.exports = [
     obj: '5',
   },
   {
-    txt: 'So don\'t be afraid to get something a little bigger than " perfect " just in case you hit a growth spurt.',
+    txt:
+      'So don\'t be afraid to get something a little bigger than " perfect " just in case you hit a growth spurt.',
     subj: 'you',
     verb: "don't be afraid",
     obj: 'spurt',
@@ -25779,7 +26314,8 @@ module.exports = [
     obj: 'feel',
   },
   {
-    txt: 'I did this at age 13 in Champagne, France and it was the most amazing experice of my upbringing.',
+    txt:
+      'I did this at age 13 in Champagne, France and it was the most amazing experice of my upbringing.',
     subj: 'it',
     verb: 'did',
     obj: 'this',
@@ -25832,7 +26368,8 @@ module.exports = [
     obj: 'who',
   },
   {
-    txt: "The below site from the US government verifies this - it's the same for Canada, too .....",
+    txt:
+      "The below site from the US government verifies this - it's the same for Canada, too .....",
     subj: 'it',
     verb: 'verifies',
     obj: 'this',
@@ -25887,7 +26424,8 @@ module.exports = [
     obj: 'them',
   },
   {
-    txt: 'Bredders take the one that in not very interested and put it alone in a breeeding tank for 3 - 5 days.',
+    txt:
+      'Bredders take the one that in not very interested and put it alone in a breeeding tank for 3 - 5 days.',
     subj: 'that',
     verb: 'take',
     obj: 'it',
@@ -25962,7 +26500,8 @@ module.exports = [
     obj: 'remedies',
   },
   {
-    txt: "I love her and want to help her but I don't know when I'll be able to take her to to vet :( please help.",
+    txt:
+      "I love her and want to help her but I don't know when I'll be able to take her to to vet :( please help.",
     subj: 'I',
     verb: 'love',
     obj: 'her',
@@ -25987,19 +26526,22 @@ module.exports = [
     obj: 'kidney',
   },
   {
-    txt: 'Signs of this can be hard to spot, and if this is true in her case she will definitely need to see a vet.',
+    txt:
+      'Signs of this can be hard to spot, and if this is true in her case she will definitely need to see a vet.',
     subj: 'she',
     verb: 'can be hard',
     obj: 'vet',
   },
   {
-    txt: 'Seizures will occur when the toxins that the kidney normally filters out are released into the blood stream.',
+    txt:
+      'Seizures will occur when the toxins that the kidney normally filters out are released into the blood stream.',
     subj: 'kidney',
     verb: 'will occur',
     obj: 'that',
   },
   {
-    txt: 'I know you are very worried, but getting her to the vet is the best thing you can do for her.',
+    txt:
+      'I know you are very worried, but getting her to the vet is the best thing you can do for her.',
     subj: 'you',
     verb: 'know',
     obj: 'her',
@@ -26024,13 +26566,15 @@ module.exports = [
     obj: 'requirements',
   },
   {
-    txt: 'And between the time I began my research and the time I applied, the minimum score did change once.',
+    txt:
+      'And between the time I began my research and the time I applied, the minimum score did change once.',
     subj: 'score',
     verb: 'did change once',
     obj: 'research',
   },
   {
-    txt: 'But I got lucky because I qualified under another category to become a permanent resident.',
+    txt:
+      'But I got lucky because I qualified under another category to become a permanent resident.',
     subj: 'I',
     verb: 'got',
     obj: 'resident',
@@ -26043,7 +26587,8 @@ module.exports = [
     obj: 'page',
   },
   {
-    txt: '" 4 . May I qualify under the Skilled Worker category even if I score less than 67 points ? "',
+    txt:
+      '" 4 . May I qualify under the Skilled Worker category even if I score less than 67 points ? "',
     subj: 'I',
     verb: 'qualify',
     obj: 'points',
@@ -26086,7 +26631,8 @@ module.exports = [
     obj: 'what',
   },
   {
-    txt: 'Alright, so my dad had been wanting me to check my e mail for a few days but I never got around to it.',
+    txt:
+      'Alright, so my dad had been wanting me to check my e mail for a few days but I never got around to it.',
     subj: 'I',
     verb: 'had been wanting',
     obj: 'e',
@@ -26099,7 +26645,8 @@ module.exports = [
     obj: 'dates',
   },
   {
-    txt: 'So I kept reading and then I saw the dates, it was from mid day Friday and arriving home mid day monday . :(',
+    txt:
+      'So I kept reading and then I saw the dates, it was from mid day Friday and arriving home mid day monday . :(',
     subj: 'it',
     verb: 'kept',
     obj: 'dates',
@@ -26130,7 +26677,8 @@ module.exports = [
     obj: 'what',
   },
   {
-    txt: 'Enjoy it while you can, and then if your family enjoys it you can go again for a longer period of time.',
+    txt:
+      'Enjoy it while you can, and then if your family enjoys it you can go again for a longer period of time.',
     subj: 'you',
     verb: 'Enjoy',
     obj: 'it',
@@ -26227,13 +26775,15 @@ module.exports = [
     obj: 'money',
   },
   {
-    txt: "I 'm really worried cause I have no idea who to talk to and want everything to go smoothly.",
+    txt:
+      "I 'm really worried cause I have no idea who to talk to and want everything to go smoothly.",
     subj: 'who',
     verb: "'m really worried",
     obj: 'everything',
   },
   {
-    txt: 'An American passport should get you right into the country, there is no need for a VISA, for six months.',
+    txt:
+      'An American passport should get you right into the country, there is no need for a VISA, for six months.',
     subj: 'need',
     verb: 'should get',
     obj: 'you',
@@ -26270,7 +26820,8 @@ module.exports = [
     obj: 'time',
   },
   {
-    txt: 'I visited London, Edinburgh, and St. Andrew s so far, and I was treated very well and with great kindness.',
+    txt:
+      'I visited London, Edinburgh, and St. Andrew s so far, and I was treated very well and with great kindness.',
     subj: 'I',
     verb: 'visited',
     obj: 'London',
@@ -26301,7 +26852,8 @@ module.exports = [
     obj: 'what',
   },
   {
-    txt: 'if you had any pics of your hens i would like to see them to compare them to mine thanks?',
+    txt:
+      'if you had any pics of your hens i would like to see them to compare them to mine thanks?',
     subj: 'i',
     verb: 'would like',
     obj: 'them',
@@ -26338,7 +26890,8 @@ module.exports = [
     obj: 'feathers',
   },
   {
-    txt: 'All offspring from this cross will have soft feathers, as hookless feathers are a recessive gene.',
+    txt:
+      'All offspring from this cross will have soft feathers, as hookless feathers are a recessive gene.',
     subj: 'feathers',
     verb: 'will have',
     obj: 'feathers',
@@ -26369,13 +26922,15 @@ module.exports = [
     obj: 'beard',
   },
   {
-    txt: 'Feathered Feet / Shanks - Chicks could have feathered feet / shanks as this is also incomplete dominate.',
+    txt:
+      'Feathered Feet / Shanks - Chicks could have feathered feet / shanks as this is also incomplete dominate.',
     subj: 'this',
     verb: 'Shanks',
     obj: 'shanks',
   },
   {
-    txt: 'Crest : Chicks could also develop a small crest due to this being another incomplete dominate gene.',
+    txt:
+      'Crest : Chicks could also develop a small crest due to this being another incomplete dominate gene.',
     subj: 'this',
     verb: 'Crest',
     obj: 'crest',
@@ -26413,7 +26968,8 @@ module.exports = [
     obj: 'toe',
   },
   {
-    txt: 'Hens make excellent mothers as they are bigger, can see better, and are smarter the Silkies.',
+    txt:
+      'Hens make excellent mothers as they are bigger, can see better, and are smarter the Silkies.',
     subj: 'they',
     verb: 'make',
     obj: 'mothers',
@@ -26451,7 +27007,8 @@ module.exports = [
     obj: 'answers',
   },
   {
-    txt: 'you need to learn about white balance, composition, angle, and work on using the camera properly ...',
+    txt:
+      'you need to learn about white balance, composition, angle, and work on using the camera properly ...',
     subj: 'you',
     verb: 'need',
     obj: 'camera',
@@ -26489,7 +27046,8 @@ module.exports = [
     obj: 'whatever',
   },
   {
-    txt: 'Using a fairly wide aperture is also helpful in blurring out unwanted background elements.',
+    txt:
+      'Using a fairly wide aperture is also helpful in blurring out unwanted background elements.',
     subj: null,
     verb: 'is also helpful',
     obj: 'elements',
@@ -26516,7 +27074,8 @@ module.exports = [
     obj: 'couple',
   },
   {
-    txt: 'The wake also included the night sit were friends and family sit up through the night with the remains.',
+    txt:
+      'The wake also included the night sit were friends and family sit up through the night with the remains.',
     subj: 'friends',
     verb: 'also included',
     obj: 'sit',
@@ -26596,7 +27155,8 @@ module.exports = [
     obj: 'movie',
   },
   {
-    txt: "I wouldn't know -- I don't particularly like scary movies, and I haven't tried this with my pet.",
+    txt:
+      "I wouldn't know -- I don't particularly like scary movies, and I haven't tried this with my pet.",
     subj: 'I',
     verb: "wouldn't know",
     obj: 'this',
@@ -26615,7 +27175,8 @@ module.exports = [
     obj: 'T.V.',
   },
   {
-    txt: 'Well, T.V. is a series of flickering pictures that are streamed together to make a moving picture.',
+    txt:
+      'Well, T.V. is a series of flickering pictures that are streamed together to make a moving picture.',
     subj: 'that',
     verb: 'series',
     obj: 'picture',
@@ -26635,7 +27196,8 @@ module.exports = [
     obj: 'film',
   },
   {
-    txt: 'So chances are that if your dog likes to watch T.V., it ’s probably because of the sounds.',
+    txt:
+      'So chances are that if your dog likes to watch T.V., it ’s probably because of the sounds.',
     subj: 'it',
     verb: 'are',
     obj: 'T.V.',
@@ -26647,7 +27209,8 @@ module.exports = [
     obj: 'that',
   },
   {
-    txt: 'i m pretty sure that they do see things on the tv screen because my cat chases things around the tv screen',
+    txt:
+      'i m pretty sure that they do see things on the tv screen because my cat chases things around the tv screen',
     subj: 'cat',
     verb: 'm pretty sure',
     obj: 'things',
@@ -26731,7 +27294,8 @@ module.exports = [
     obj: 'quote',
   },
   {
-    txt: 'Even though you may not want to use them, it will give you some idea of what it might cost and what is fair.',
+    txt:
+      'Even though you may not want to use them, it will give you some idea of what it might cost and what is fair.',
     subj: 'what',
     verb: 'will give',
     obj: 'idea',
@@ -26743,7 +27307,8 @@ module.exports = [
     obj: 'link',
   },
   {
-    txt: 'Make sure the trailer service you use is bonded / insured and knows something about first aid.',
+    txt:
+      'Make sure the trailer service you use is bonded / insured and knows something about first aid.',
     subj: 'you',
     verb: 'Make',
     obj: 'something',
@@ -26786,25 +27351,29 @@ module.exports = [
     obj: 'costs',
   },
   {
-    txt: '( Two people in a cabin will spend more onboard, so cruise lines charge you more to sail alone.',
+    txt:
+      '( Two people in a cabin will spend more onboard, so cruise lines charge you more to sail alone.',
     subj: 'lines',
     verb: 'will spend',
     obj: 'more',
   },
   {
-    txt: 'You may be able to do better on the rates if you request competitive quotes via CruiseCompete ).',
+    txt:
+      'You may be able to do better on the rates if you request competitive quotes via CruiseCompete ).',
     subj: 'you',
     verb: 'may be able',
     obj: 'quotes',
   },
   {
-    txt: "2 . Short of chartering your own ship and crew, I don't see any way you could customize your own itinerary.",
+    txt:
+      "2 . Short of chartering your own ship and crew, I don't see any way you could customize your own itinerary.",
     subj: 'you',
     verb: "don't see",
     obj: 'itinerary',
   },
   {
-    txt: 'Travelling on your own you would have to pay double as cabins are sold on the basis of double occupancy.',
+    txt:
+      'Travelling on your own you would have to pay double as cabins are sold on the basis of double occupancy.',
     subj: 'cabins',
     verb: 'would have',
     obj: 'double',
@@ -26850,7 +27419,8 @@ module.exports = [
     obj: 'barrier',
   },
   {
-    txt: 'It was not so long after Civil Rights laws against discrimination started to have an impact.',
+    txt:
+      'It was not so long after Civil Rights laws against discrimination started to have an impact.',
     subj: 'laws',
     verb: 'was not',
     obj: 'impact',
@@ -26874,7 +27444,8 @@ module.exports = [
     obj: 'people',
   },
   {
-    txt: 'We had fewer social benefits at that time for people so many immigrants were not counted.',
+    txt:
+      'We had fewer social benefits at that time for people so many immigrants were not counted.',
     subj: 'immigrants',
     verb: 'had',
     obj: 'benefits',
@@ -26901,7 +27472,8 @@ module.exports = [
     obj: 'time',
   },
   {
-    txt: 'I am thinking about getting a rabbit as a pet, but my parents said that it has to stay outside.',
+    txt:
+      'I am thinking about getting a rabbit as a pet, but my parents said that it has to stay outside.',
     subj: 'it',
     verb: 'am thinking',
     obj: 'rabbit',
@@ -26927,7 +27499,8 @@ module.exports = [
     obj: 'that',
   },
   {
-    txt: 'So, can rabbits and chickens live together as long as they have separate places for their food and water?',
+    txt:
+      'So, can rabbits and chickens live together as long as they have separate places for their food and water?',
     subj: 'they',
     verb: 'live together',
     obj: 'places',
@@ -27128,7 +27701,8 @@ module.exports = [
     obj: 'meat',
   },
   {
-    txt: 'Places like Dartmouth are supposed to be tourist towns and should provide foods for people of all religions.',
+    txt:
+      'Places like Dartmouth are supposed to be tourist towns and should provide foods for people of all religions.',
     subj: 'Places',
     verb: 'are supposed',
     obj: 'foods',
@@ -27200,7 +27774,8 @@ module.exports = [
     obj: 'law',
   },
   {
-    txt: 'If someone thinks there is a business opportunity then they will start opening halal only places.',
+    txt:
+      'If someone thinks there is a business opportunity then they will start opening halal only places.',
     subj: 'they',
     verb: 'then will start',
     obj: 'places',
@@ -27242,7 +27817,8 @@ module.exports = [
     obj: 'dude',
   },
   {
-    txt: "Maybe if they see how much time and effort you 've devoted to researching the animal they'll reconsider.",
+    txt:
+      "Maybe if they see how much time and effort you 've devoted to researching the animal they'll reconsider.",
     subj: 'they',
     verb: 'will reconsider',
     obj: 'animal',
@@ -27286,7 +27862,8 @@ module.exports = [
     obj: 'reptile',
   },
   {
-    txt: 'Do all your chores without being nagged, take care of any existing pets, keep your room clean, and so on.',
+    txt:
+      'Do all your chores without being nagged, take care of any existing pets, keep your room clean, and so on.',
     subj: null,
     verb: 'Do',
     obj: 'room',
@@ -27299,7 +27876,8 @@ module.exports = [
     obj: 'care',
   },
   {
-    txt: 'Offer to do extra chores, ask for your pet as a reward for good grades, something like that.',
+    txt:
+      'Offer to do extra chores, ask for your pet as a reward for good grades, something like that.',
     subj: null,
     verb: 'Offer',
     obj: 'chores',
@@ -27342,7 +27920,8 @@ module.exports = [
     obj: 'what',
   },
   {
-    txt: 'Just today I bought a medium rat for my beloved Ball Python Salazar (name after Harry Potter ).',
+    txt:
+      'Just today I bought a medium rat for my beloved Ball Python Salazar (name after Harry Potter ).',
     subj: 'I',
     verb: 'bought',
     obj: 'rat',
@@ -27438,7 +28017,8 @@ module.exports = [
     obj: 'bit',
   },
   {
-    txt: 'And also maybe try holding the rat in feeding prongs so your snake can get a good hold and grip on his prey.',
+    txt:
+      'And also maybe try holding the rat in feeding prongs so your snake can get a good hold and grip on his prey.',
     subj: 'snake',
     verb: 'also maybe try',
     obj: 'hold',
@@ -27494,7 +28074,8 @@ module.exports = [
     obj: 'Canadian',
   },
   {
-    txt: 'A normal processing time, unless you have an advanced degree or a " specified " skill is from 3 - 5 years.',
+    txt:
+      'A normal processing time, unless you have an advanced degree or a " specified " skill is from 3 - 5 years.',
     subj: 'you',
     verb: 'years',
     obj: 'degree',
@@ -27513,7 +28094,8 @@ module.exports = [
     obj: 's',
   },
   {
-    txt: 'You MUST apply, to become a Immigrant, and WAIT to be approved, by the Canadian Government.',
+    txt:
+      'You MUST apply, to become a Immigrant, and WAIT to be approved, by the Canadian Government.',
     subj: 'You',
     verb: 'MUST apply',
     obj: 'Immigrant',
@@ -27569,7 +28151,8 @@ module.exports = [
     obj: 'him',
   },
   {
-    txt: 'He is kind of hate walking with leash, every time I put the leash on, he will try to bite it.',
+    txt:
+      'He is kind of hate walking with leash, every time I put the leash on, he will try to bite it.',
     subj: 'he',
     verb: 'hate',
     obj: 'it',
@@ -27593,7 +28176,8 @@ module.exports = [
     obj: 'him',
   },
   {
-    txt: "And every time he see some one he will rush to people and jump on them, doesn't listen to me.",
+    txt:
+      "And every time he see some one he will rush to people and jump on them, doesn't listen to me.",
     subj: 'he',
     verb: 'will rush',
     obj: 'some',
@@ -27668,7 +28252,8 @@ module.exports = [
     obj: 'trainer',
   },
   {
-    txt: 'why do nt you get some treats that he loves and only give him them when he does something right.',
+    txt:
+      'why do nt you get some treats that he loves and only give him them when he does something right.',
     subj: 'he',
     verb: 'get',
     obj: 'something',
@@ -27694,7 +28279,8 @@ module.exports = [
     obj: 'spray',
   },
   {
-    txt: 'What sort of Hotel could I expect to find in New Delhi / Agra / Varanasi for rs 500 per night?',
+    txt:
+      'What sort of Hotel could I expect to find in New Delhi / Agra / Varanasi for rs 500 per night?',
     subj: 'I',
     verb: 'expect',
     obj: 'Hotel',
@@ -27744,19 +28330,22 @@ module.exports = [
     obj: 'hotel',
   },
   {
-    txt: "I 've stayed in a more expensive hotel there, but you can check some travelguides or tripadvisor ?",
+    txt:
+      "I 've stayed in a more expensive hotel there, but you can check some travelguides or tripadvisor ?",
     subj: 'you',
     verb: "'ve stayed",
     obj: 'travelguides',
   },
   {
-    txt: "Also, while travelling ask people where they 've been and if they have any hotel recommendations.",
+    txt:
+      "Also, while travelling ask people where they 've been and if they have any hotel recommendations.",
     subj: 'they',
     verb: 'ask',
     obj: 'recommendations',
   },
   {
-    txt: "In Agra I 've stayed in a place fellow travellers recommended, they found it in the Rough Guide.",
+    txt:
+      "In Agra I 've stayed in a place fellow travellers recommended, they found it in the Rough Guide.",
     subj: 'they',
     verb: "'ve stayed",
     obj: 'it',
@@ -27805,7 +28394,8 @@ module.exports = [
     obj: 'hamster',
   },
   {
-    txt: 'So if you lose him, he is easier to find, because smaller rodents just LOVE to escape from their cages.',
+    txt:
+      'So if you lose him, he is easier to find, because smaller rodents just LOVE to escape from their cages.',
     subj: 'rodents',
     verb: 'is easier',
     obj: 'him',
@@ -27817,7 +28407,8 @@ module.exports = [
     obj: 'what',
   },
   {
-    txt: 'Also depends on the space you have, how much time you can handle the pet, how much money you can spend, etc.',
+    txt:
+      'Also depends on the space you have, how much time you can handle the pet, how much money you can spend, etc.',
     subj: 'you',
     verb: 'Also depends',
     obj: 'money',
@@ -27829,7 +28420,8 @@ module.exports = [
     obj: 'experience',
   },
   {
-    txt: 'The only downside is they should be kept in pairs or trios and require a pretty large habitat.',
+    txt:
+      'The only downside is they should be kept in pairs or trios and require a pretty large habitat.',
     subj: 'they',
     verb: 'is',
     obj: 'habitat',
@@ -27895,7 +28487,8 @@ module.exports = [
     obj: 'babies',
   },
   {
-    txt: 'They will whistle when they hear you as an encouragement for you to give them a treat like leaf lettuce.',
+    txt:
+      'They will whistle when they hear you as an encouragement for you to give them a treat like leaf lettuce.',
     subj: 'you',
     verb: 'will whistle',
     obj: 'treat',
@@ -27945,13 +28538,15 @@ module.exports = [
     obj: 'kittens',
   },
   {
-    txt: 'This is my first experience and I have two six week old kittens right now and am at my wit s end.',
+    txt:
+      'This is my first experience and I have two six week old kittens right now and am at my wit s end.',
     subj: 'I',
     verb: 'experience',
     obj: 'kittens',
   },
   {
-    txt: 'I do not want to have to bring them back before they are eight weeks old but they are ruining my apartment.',
+    txt:
+      'I do not want to have to bring them back before they are eight weeks old but they are ruining my apartment.',
     subj: 'they',
     verb: 'do not want',
     obj: 'apartment',
@@ -27971,7 +28566,8 @@ module.exports = [
     obj: 'box',
   },
   {
-    txt: 'Any suggestions and helpful hints to make this a more positive experience would be extremely appreciated.',
+    txt:
+      'Any suggestions and helpful hints to make this a more positive experience would be extremely appreciated.',
     subj: 'suggestions',
     verb: 'would extremely appreciated',
     obj: 'this',
@@ -28025,13 +28621,15 @@ module.exports = [
     obj: 'claws',
   },
   {
-    txt: 'To some degree you can / should help teach them not to use their teeth and claws inappropriately.',
+    txt:
+      'To some degree you can / should help teach them not to use their teeth and claws inappropriately.',
     subj: 'you',
     verb: 'can should',
     obj: 'teeth',
   },
   {
-    txt: "But in the meantime, highly recommend jeans and long sleeves anytime you'll be interacting with the kittens.",
+    txt:
+      "But in the meantime, highly recommend jeans and long sleeves anytime you'll be interacting with the kittens.",
     subj: 'you',
     verb: 'highly recommend',
     obj: 'jeans',
@@ -28132,13 +28730,15 @@ module.exports = [
     obj: 'them',
   },
   {
-    txt: 'If you are just applying for a birth certificate for the first time, it s simple to do it over the computer.',
+    txt:
+      'If you are just applying for a birth certificate for the first time, it s simple to do it over the computer.',
     subj: 'you',
     verb: 's simple',
     obj: 'it',
   },
   {
-    txt: 'For $ 56 you can even have it expedited and will get in three business days or your money back.',
+    txt:
+      'For $ 56 you can even have it expedited and will get in three business days or your money back.',
     subj: 'you',
     verb: 'can even have',
     obj: 'it',
@@ -28151,7 +28751,8 @@ module.exports = [
     obj: 'questions',
   },
   {
-    txt: 'None, just walk in to the service office and present all the identification you have to prove your identity.',
+    txt:
+      'None, just walk in to the service office and present all the identification you have to prove your identity.',
     subj: 'you',
     verb: 'None just',
     obj: 'identity',
@@ -28170,7 +28771,8 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: "My parents didn't send for my birth certificate until I was 16 and needed it for summer employment.",
+    txt:
+      "My parents didn't send for my birth certificate until I was 16 and needed it for summer employment.",
     subj: 'I',
     verb: "didn't send",
     obj: 'it',
@@ -28183,7 +28785,8 @@ module.exports = [
     obj: 'citizenship',
   },
   {
-    txt: 'When a child is born in Canada the birth is registered before the baby can leave the hospital.',
+    txt:
+      'When a child is born in Canada the birth is registered before the baby can leave the hospital.',
     subj: 'baby',
     verb: 'registered',
     obj: 'hospital',
@@ -28233,7 +28836,8 @@ module.exports = [
     obj: 'that',
   },
   {
-    txt: 'Usually you have the main show and some type of entertainment before and perhaps afterward.',
+    txt:
+      'Usually you have the main show and some type of entertainment before and perhaps afterward.',
     subj: 'you',
     verb: 'have',
     obj: 'show',
@@ -28252,7 +28856,8 @@ module.exports = [
     obj: 'shows',
   },
   {
-    txt: 'Dining Room We enjoyed the atmosphere of both dining rooms on the Liberty and Mariner of the Seas.',
+    txt:
+      'Dining Room We enjoyed the atmosphere of both dining rooms on the Liberty and Mariner of the Seas.',
     subj: 'We',
     verb: 'Room',
     obj: 'atmosphere',
@@ -28283,7 +28888,8 @@ module.exports = [
     obj: 'cruise',
   },
   {
-    txt: 'Pools The Mariner of the Seas and Liberty both had salt water pools - which most cruise ships have.',
+    txt:
+      'Pools The Mariner of the Seas and Liberty both had salt water pools - which most cruise ships have.',
     subj: 'ships',
     verb: 'Pools',
     obj: 'which',
@@ -28362,7 +28968,8 @@ module.exports = [
     obj: 'trip',
   },
   {
-    txt: 'Do you want to see all the sites or simply a few photos and on your way to the next place.',
+    txt:
+      'Do you want to see all the sites or simply a few photos and on your way to the next place.',
     subj: 'you',
     verb: 'want',
     obj: 'sites',
@@ -28388,7 +28995,8 @@ module.exports = [
     obj: 'what',
   },
   {
-    txt: 'I recommend buying a single unlimited Europass and travelling anywhere in the EU your heart desires.',
+    txt:
+      'I recommend buying a single unlimited Europass and travelling anywhere in the EU your heart desires.',
     subj: 'heart',
     verb: 'recommend',
     obj: 'anywhere',
@@ -28464,7 +29072,8 @@ module.exports = [
     obj: 'him',
   },
   {
-    txt: 'he will explore the room, mark everything with his cheek, and try to make it feel like his territory.',
+    txt:
+      'he will explore the room, mark everything with his cheek, and try to make it feel like his territory.',
     subj: 'he',
     verb: 'will explore',
     obj: 'it',
@@ -28527,7 +29136,8 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: 'Let her explore when we moved my cat had to explore the entire house before she felt comfortable.',
+    txt:
+      'Let her explore when we moved my cat had to explore the entire house before she felt comfortable.',
     subj: 'she',
     verb: 'Let',
     obj: 'house',
@@ -28668,7 +29278,8 @@ module.exports = [
     obj: 'him',
   },
   {
-    txt: 'At some point he will feel ok with this and you can then close the door but not for long at all.',
+    txt:
+      'At some point he will feel ok with this and you can then close the door but not for long at all.',
     subj: 'you',
     verb: 'will feel',
     obj: 'door',
@@ -28704,7 +29315,8 @@ module.exports = [
     obj: 'classes',
   },
   {
-    txt: 'Have patience with him, you just got him and who knows how he was treated before you brought him home.',
+    txt:
+      'Have patience with him, you just got him and who knows how he was treated before you brought him home.',
     subj: 'you',
     verb: 'Have',
     obj: 'him',
@@ -28758,7 +29370,8 @@ module.exports = [
     obj: 'fun',
   },
   {
-    txt: "If you 're adventurous you can take a bus or water taxi to My Tho (near where we live) or Can Tho.",
+    txt:
+      "If you 're adventurous you can take a bus or water taxi to My Tho (near where we live) or Can Tho.",
     subj: 'we',
     verb: 'can take',
     obj: 'bus',
@@ -28777,7 +29390,8 @@ module.exports = [
     obj: 'things',
   },
   {
-    txt: 'The countryside is very beautiful, especially if you have a few months (or years) to get to know the place.',
+    txt:
+      'The countryside is very beautiful, especially if you have a few months (or years) to get to know the place.',
     subj: 'you',
     verb: 'is very beautiful especially',
     obj: 'place',
@@ -28888,7 +29502,8 @@ module.exports = [
     obj: 'saddle',
   },
   {
-    txt: 'Then a lap doing scissors, one leg forward as far as I can and the other back, then switch legs.',
+    txt:
+      'Then a lap doing scissors, one leg forward as far as I can and the other back, then switch legs.',
     subj: 'other',
     verb: 'lap',
     obj: 'legs',
@@ -28945,7 +29560,8 @@ module.exports = [
     obj: 'problem',
   },
   {
-    txt: "maybe a back brase will help, sometimes my back really gets to me and i 've thought about getting one.",
+    txt:
+      "maybe a back brase will help, sometimes my back really gets to me and i 've thought about getting one.",
     subj: 'i',
     verb: 'will help sometimes',
     obj: 'one',
@@ -28958,7 +29574,8 @@ module.exports = [
     obj: 'muscles',
   },
   {
-    txt: "You don't want to spend more than $ 20 and yet you have an expensive hobby like riding horses ?",
+    txt:
+      "You don't want to spend more than $ 20 and yet you have an expensive hobby like riding horses ?",
     subj: 'you',
     verb: "don't want",
     obj: 'horses',
@@ -28988,7 +29605,8 @@ module.exports = [
     obj: 'water',
   },
   {
-    txt: 'I took him to the Animal Hospital and they ran blood work and everything came back normal.',
+    txt:
+      'I took him to the Animal Hospital and they ran blood work and everything came back normal.',
     subj: 'everything',
     verb: 'took',
     obj: 'work',
@@ -29013,7 +29631,8 @@ module.exports = [
     obj: 'what',
   },
   {
-    txt: 'i do nt want him to get dehydrated and also should i try to give him a little bit of food?',
+    txt:
+      'i do nt want him to get dehydrated and also should i try to give him a little bit of food?',
     subj: 'i',
     verb: 'do nt want',
     obj: 'bit',
@@ -29025,7 +29644,8 @@ module.exports = [
     obj: 'you',
   },
   {
-    txt: 'They did nt take x - rays they offered them but i just could nt afford any more treatment.',
+    txt:
+      'They did nt take x - rays they offered them but i just could nt afford any more treatment.',
     subj: 'i',
     verb: 'did nt take',
     obj: 'treatment',
@@ -29050,7 +29670,8 @@ module.exports = [
     obj: 'you',
   },
   {
-    txt: 'Ok so i spoke to the vet and he said the give him white rice and boiled chicken but only a little at a time.',
+    txt:
+      'Ok so i spoke to the vet and he said the give him white rice and boiled chicken but only a little at a time.',
     subj: 'he',
     verb: 'spoke',
     obj: 'rice',
@@ -29106,7 +29727,8 @@ module.exports = [
     obj: 'him',
   },
   {
-    txt: 'He could become severly dehydrated (especially if he continues to vomit and have diarrhea ).',
+    txt:
+      'He could become severly dehydrated (especially if he continues to vomit and have diarrhea ).',
     subj: 'he',
     verb: 'could become',
     obj: 'diarrhea',
@@ -29138,7 +29760,8 @@ module.exports = [
     obj: 'IV',
   },
   {
-    txt: 'You should ABSOLUTELY call your veterinarian back immediately to clarify anything you have questions about.',
+    txt:
+      'You should ABSOLUTELY call your veterinarian back immediately to clarify anything you have questions about.',
     subj: 'you',
     verb: 'should ABSOLUTELY call',
     obj: 'questions',
@@ -29186,13 +29809,15 @@ module.exports = [
     obj: 'vet',
   },
   {
-    txt: 'I would really love to hear what the French or those who had dated the French to say something about this.',
+    txt:
+      'I would really love to hear what the French or those who had dated the French to say something about this.',
     subj: 'who',
     verb: 'would really love',
     obj: 'something',
   },
   {
-    txt: "Coming from an anglo - saxon country my version of dating is ' getting the number, asking her out, etc. . '",
+    txt:
+      "Coming from an anglo - saxon country my version of dating is ' getting the number, asking her out, etc. . '",
     subj: 'version',
     verb: 'is',
     obj: 'her',
@@ -29246,7 +29871,8 @@ module.exports = [
     obj: 'victim',
   },
   {
-    txt: 'What you have read in the internet is fairly accurate but of course it does not fit all scenarios.',
+    txt:
+      'What you have read in the internet is fairly accurate but of course it does not fit all scenarios.',
     subj: 'it',
     verb: 'is fairly accurate',
     obj: 'scenarios',
@@ -29314,7 +29940,8 @@ module.exports = [
     obj: 'reputation',
   },
   {
-    txt: "Unfair for the girl as boys don't have that kind of handicap, but that's the way our own rules work.",
+    txt:
+      "Unfair for the girl as boys don't have that kind of handicap, but that's the way our own rules work.",
     subj: 'rules',
     verb: 'Unfair',
     obj: 'kind',
@@ -29338,7 +29965,8 @@ module.exports = [
     obj: 'future',
   },
   {
-    txt: "I 'm just trying to make up my mind whether I should move to Australia or seek work in the sex industry.",
+    txt:
+      "I 'm just trying to make up my mind whether I should move to Australia or seek work in the sex industry.",
     subj: 'I',
     verb: "'m just trying",
     obj: 'work',
@@ -29350,7 +29978,8 @@ module.exports = [
     obj: 'country',
   },
   {
-    txt: "Your answer doesn't do anything but remind me that I 'm going to be $ 25,000 in debt by the time I 'm 22.",
+    txt:
+      "Your answer doesn't do anything but remind me that I 'm going to be $ 25,000 in debt by the time I 'm 22.",
     subj: 'I',
     verb: "doesn't do",
     obj: 'me',
@@ -29387,7 +30016,8 @@ module.exports = [
     obj: 'degrees',
   },
   {
-    txt: "I 've also got a bachelor s degree so I can go back and do further study or take a different profession.",
+    txt:
+      "I 've also got a bachelor s degree so I can go back and do further study or take a different profession.",
     subj: 'I',
     verb: "'ve also got",
     obj: 'profession',
@@ -29399,7 +30029,8 @@ module.exports = [
     obj: 'more',
   },
   {
-    txt: "Try living in Sydney on a teacher's salary, then compare it to somewhere like Central Otago.",
+    txt:
+      "Try living in Sydney on a teacher's salary, then compare it to somewhere like Central Otago.",
     subj: null,
     verb: 'Try',
     obj: 'it',
@@ -29544,7 +30175,8 @@ module.exports = [
     obj: 'attention',
   },
   {
-    txt: 'i have tried dipping both live and thawed pinkies in tuna juice, and in used gerbil bedding.',
+    txt:
+      'i have tried dipping both live and thawed pinkies in tuna juice, and in used gerbil bedding.',
     subj: 'i',
     verb: 'have tried',
     obj: 'pinkies',
@@ -29644,13 +30276,15 @@ module.exports = [
     obj: 'rabbit',
   },
   {
-    txt: 'i have a 1 and a half year old male neutered cat and a new 2 month old spayed female kitten.',
+    txt:
+      'i have a 1 and a half year old male neutered cat and a new 2 month old spayed female kitten.',
     subj: 'i',
     verb: 'have',
     obj: 'cat',
   },
   {
-    txt: 'the first night i brought her home i did the sniffing under the door thing and left it at that.',
+    txt:
+      'the first night i brought her home i did the sniffing under the door thing and left it at that.',
     subj: 'i',
     verb: 'did',
     obj: 'it',
@@ -29669,7 +30303,8 @@ module.exports = [
     obj: 'kitten',
   },
   {
-    txt: 'you need to do that for a least a week, or else this type of territorial fighting will happen.',
+    txt:
+      'you need to do that for a least a week, or else this type of territorial fighting will happen.',
     subj: 'type',
     verb: 'need',
     obj: 'that',
@@ -29682,7 +30317,8 @@ module.exports = [
     obj: 'place',
   },
   {
-    txt: 'right now, your male is fighting off an intruder, and he feels that all of the house is his.',
+    txt:
+      'right now, your male is fighting off an intruder, and he feels that all of the house is his.',
     subj: 'all',
     verb: 'is fighting',
     obj: 'intruder',
@@ -29713,7 +30349,8 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: "she knows she is invading someone else's territory, but can't help it, and has no where to go.",
+    txt:
+      "she knows she is invading someone else's territory, but can't help it, and has no where to go.",
     subj: 'she',
     verb: 'knows',
     obj: 'no',
@@ -29771,7 +30408,8 @@ module.exports = [
     obj: 'cats',
   },
   {
-    txt: 'The difference is when the cat hisses, that means they are annoyed and they want the other cat to go away.',
+    txt:
+      'The difference is when the cat hisses, that means they are annoyed and they want the other cat to go away.',
     subj: 'they',
     verb: 'is',
     obj: 'cat',
@@ -29818,7 +30456,8 @@ module.exports = [
     obj: 'sanctuary',
   },
   {
-    txt: 'However, Johnson would not let the military cross the borders and clean out the Communist bases.',
+    txt:
+      'However, Johnson would not let the military cross the borders and clean out the Communist bases.',
     subj: 'Johnson',
     verb: 'would not let',
     obj: 'bases',
@@ -29956,7 +30595,8 @@ module.exports = [
     obj: 'rays',
   },
   {
-    txt: 'My question is does that mean it gives him not only the heat, but the " sun rays " he needs?',
+    txt:
+      'My question is does that mean it gives him not only the heat, but the " sun rays " he needs?',
     subj: 'he',
     verb: 'is does',
     obj: 'heat',
@@ -30035,7 +30675,8 @@ module.exports = [
     obj: 'info',
   },
   {
-    txt: 'Freeze dried food is not a good staple food source ; you need to offer live feeder insects.',
+    txt:
+      'Freeze dried food is not a good staple food source ; you need to offer live feeder insects.',
     subj: 'you',
     verb: 'source',
     obj: 'insects',
@@ -30272,7 +30913,8 @@ module.exports = [
     obj: 'them',
   },
   {
-    txt: 'However if you plan on getting one, then get more than one at the same time they need company.',
+    txt:
+      'However if you plan on getting one, then get more than one at the same time they need company.',
     subj: 'they',
     verb: 'then get more',
     obj: 'company',
@@ -30327,7 +30969,8 @@ module.exports = [
     obj: 'tv',
   },
   {
-    txt: 'This way they will see that your hand is good and it s not going to grab them or hurt them.',
+    txt:
+      'This way they will see that your hand is good and it s not going to grab them or hurt them.',
     subj: 'it',
     verb: 'will see',
     obj: 'them',
@@ -30377,7 +31020,8 @@ module.exports = [
     obj: 'choice',
   },
   {
-    txt: 'When they see that you ar nt harming them, the will go up on your finger when you say up.',
+    txt:
+      'When they see that you ar nt harming them, the will go up on your finger when you say up.',
     subj: 'you',
     verb: 'will go',
     obj: 'them',
@@ -30440,7 +31084,8 @@ module.exports = [
     obj: 'idea',
   },
   {
-    txt: 'Ireland receives a lot of rain, with certain areas getting a soaking as many as 270 days of the year.',
+    txt:
+      'Ireland receives a lot of rain, with certain areas getting a soaking as many as 270 days of the year.',
     subj: 'areas',
     verb: 'receives',
     obj: 'soaking',
@@ -30513,7 +31158,8 @@ module.exports = [
     obj: 'Republic',
   },
   {
-    txt: 'Their seasons are the same as all the countries in the Northern Hemisphere but I would suggest fall.',
+    txt:
+      'Their seasons are the same as all the countries in the Northern Hemisphere but I would suggest fall.',
     subj: 'I',
     verb: 'same',
     obj: 'fall',
@@ -30540,7 +31186,8 @@ module.exports = [
     obj: 'tour',
   },
   {
-    txt: 'We only had a few sunny days this summer, barely 24 C on a few occasions, more like 14 C most days.',
+    txt:
+      'We only had a few sunny days this summer, barely 24 C on a few occasions, more like 14 C most days.',
     subj: 'We',
     verb: 'only had',
     obj: 'days',
@@ -30596,7 +31243,8 @@ module.exports = [
     obj: 'earthworms',
   },
   {
-    txt: 'Worms (and Daphnia) are also rich in Lipids, substances important in forming eggs and growing young.',
+    txt:
+      'Worms (and Daphnia) are also rich in Lipids, substances important in forming eggs and growing young.',
     subj: 'Worms',
     verb: 'are also rich',
     obj: 'young',
@@ -30633,7 +31281,8 @@ module.exports = [
     obj: 'source',
   },
   {
-    txt: 'I prefer darker colors because I can see their eggs, more easily and the fish look better next to them.',
+    txt:
+      'I prefer darker colors because I can see their eggs, more easily and the fish look better next to them.',
     subj: 'fish',
     verb: 'prefer',
     obj: 'eggs',
@@ -30660,7 +31309,8 @@ module.exports = [
     obj: 'eggs',
   },
   {
-    txt: 'Just making up examples, but if a pair is constantly together, they may lay 10 - 15 eggs a day.',
+    txt:
+      'Just making up examples, but if a pair is constantly together, they may lay 10 - 15 eggs a day.',
     subj: 'they',
     verb: 'Just making',
     obj: 'eggs',
@@ -30719,7 +31369,8 @@ module.exports = [
     obj: 'following',
   },
   {
-    txt: '1 . Is a tank mate (such as another female killie or a Cory or large snails) rating the eggs?',
+    txt:
+      '1 . Is a tank mate (such as another female killie or a Cory or large snails) rating the eggs?',
     subj: 'mate',
     verb: 'rating',
     obj: 'eggs',
@@ -30780,7 +31431,8 @@ module.exports = [
     obj: 'eggs',
   },
   {
-    txt: 'But get the eggs out, maybe rinsed in fresh tap water and then into the incubation water.',
+    txt:
+      'But get the eggs out, maybe rinsed in fresh tap water and then into the incubation water.',
     subj: null,
     verb: 'get',
     obj: 'eggs',
@@ -30793,7 +31445,8 @@ module.exports = [
     obj: 'material',
   },
   {
-    txt: 'Another problem is that sometimes bad eggs will fungus and the fungus will spread out and kill all the eggs.',
+    txt:
+      'Another problem is that sometimes bad eggs will fungus and the fungus will spread out and kill all the eggs.',
     subj: 'fungus',
     verb: 'is',
     obj: 'eggs',
@@ -30848,13 +31501,15 @@ module.exports = [
     obj: 'options',
   },
   {
-    txt: 'Especially if you are planning to spend couple days with family and kids, which best suit you can select?',
+    txt:
+      'Especially if you are planning to spend couple days with family and kids, which best suit you can select?',
     subj: 'you',
     verb: 'can select',
     obj: 'suit',
   },
   {
-    txt: 'There are many reasons to say Disney cruise is the best bet for you to have a enjoyable holiday tour.',
+    txt:
+      'There are many reasons to say Disney cruise is the best bet for you to have a enjoyable holiday tour.',
     subj: 'cruise',
     verb: 'are',
     obj: 'tour',
@@ -30867,7 +31522,8 @@ module.exports = [
     obj: 'more',
   },
   {
-    txt: 'This is a spectacular ship, a very popular choice of families to spend their leisure time.',
+    txt:
+      'This is a spectacular ship, a very popular choice of families to spend their leisure time.',
     subj: 'This',
     verb: 'ship',
     obj: 'time',
@@ -30892,7 +31548,8 @@ module.exports = [
     obj: 'comforts',
   },
   {
-    txt: 'Disney cruises offer 24 - hour room services, and the crews are ready to serve you the way you like.',
+    txt:
+      'Disney cruises offer 24 - hour room services, and the crews are ready to serve you the way you like.',
     subj: 'you',
     verb: 'offer',
     obj: 'way',
@@ -30941,7 +31598,8 @@ module.exports = [
     obj: 'facility',
   },
   {
-    txt: 'You can select the proper route and travel plans by consulting the agents prior to the booking ........',
+    txt:
+      'You can select the proper route and travel plans by consulting the agents prior to the booking ........',
     subj: 'You',
     verb: 'can select',
     obj: 'agents',
@@ -31010,7 +31668,8 @@ module.exports = [
     obj: 'room',
   },
   {
-    txt: 'You can also leave notes for the rest of your family (husband) about where you are at any given point.',
+    txt:
+      'You can also leave notes for the rest of your family (husband) about where you are at any given point.',
     subj: 'you',
     verb: 'can also leave',
     obj: 'notes',
@@ -31132,7 +31791,8 @@ module.exports = [
     obj: 'guy',
   },
   {
-    txt: 'He is my farrier (shoes my horse s feet) so I am technically a client if you want to view it that way.',
+    txt:
+      'He is my farrier (shoes my horse s feet) so I am technically a client if you want to view it that way.',
     subj: 'you',
     verb: 'farrier',
     obj: 'it',
@@ -31172,7 +31832,8 @@ module.exports = [
     obj: 'him',
   },
   {
-    txt: "Anyway, so that was 2 days ago that I called and left a message, but he still hasn't called back yet.",
+    txt:
+      "Anyway, so that was 2 days ago that I called and left a message, but he still hasn't called back yet.",
     subj: 'he',
     verb: 'ago that',
     obj: 'message',
@@ -31198,7 +31859,8 @@ module.exports = [
     obj: 'customer',
   },
   {
-    txt: "He didn't have my number either because this was the first time I 've called HIM instead of his dad.",
+    txt:
+      "He didn't have my number either because this was the first time I 've called HIM instead of his dad.",
     subj: 'I',
     verb: "didn't have",
     obj: 'HIM',
@@ -31223,7 +31885,8 @@ module.exports = [
     obj: 'nail',
   },
   {
-    txt: 'I would be a lot more concerned if the shoe fell off because it was missing one lousy nail.',
+    txt:
+      'I would be a lot more concerned if the shoe fell off because it was missing one lousy nail.',
     subj: 'it',
     verb: 'more concerned',
     obj: 'nail',
@@ -31236,13 +31899,15 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: "This is about the fourth time they 've done my horse's feet because I just switched back to them.",
+    txt:
+      "This is about the fourth time they 've done my horse's feet because I just switched back to them.",
     subj: 'I',
     verb: 'time',
     obj: 'feet',
   },
   {
-    txt: "However, he left my horse without a shoe for TWO WEEKS (now that's what I call a crap farrier ).",
+    txt:
+      "However, he left my horse without a shoe for TWO WEEKS (now that's what I call a crap farrier ).",
     subj: 'I',
     verb: 'left',
     obj: 'what',
@@ -31321,7 +31986,8 @@ module.exports = [
     obj: 'way',
   },
   {
-    txt: 'I would say if he does not call you back by friday call him again he could be playing hard to get?',
+    txt:
+      'I would say if he does not call you back by friday call him again he could be playing hard to get?',
     subj: 'he',
     verb: 'would say',
     obj: 'him',
@@ -31375,7 +32041,8 @@ module.exports = [
     obj: 'Underwear',
   },
   {
-    txt: "I m glad his butt was facing me so he couldn't see my red face I think my Mare was even laughing ..",
+    txt:
+      "I m glad his butt was facing me so he couldn't see my red face I think my Mare was even laughing ..",
     subj: 'Mare',
     verb: 'm glad',
     obj: 'face',
@@ -31388,7 +32055,8 @@ module.exports = [
     obj: 'Wholes',
   },
   {
-    txt: 'I was like Ummmm i can see your ass cheeks ... he was like Oops did i forget my Underwear ???',
+    txt:
+      'I was like Ummmm i can see your ass cheeks ... he was like Oops did i forget my Underwear ???',
     subj: 'i',
     verb: 'was',
     obj: 'Underwear',
@@ -31408,7 +32076,8 @@ module.exports = [
     obj: 'message',
   },
   {
-    txt: "From the point of view of a business, and client / operator relationships, he's doing a really shitty job.",
+    txt:
+      "From the point of view of a business, and client / operator relationships, he's doing a really shitty job.",
     subj: 'he',
     verb: "'s doing",
     obj: 'job',
@@ -31446,7 +32115,8 @@ module.exports = [
     obj: 'issues',
   },
   {
-    txt: 'I have a 5 year old that lost all of his cheek muscle on the right side about 3 - 4 months ago.',
+    txt:
+      'I have a 5 year old that lost all of his cheek muscle on the right side about 3 - 4 months ago.',
     subj: 'that',
     verb: 'have',
     obj: 'all',
@@ -31472,7 +32142,8 @@ module.exports = [
     obj: 'some',
   },
   {
-    txt: 'He is now losing the cheek muscle on the left side of his face and seems to be dropping weight by the day.',
+    txt:
+      'He is now losing the cheek muscle on the left side of his face and seems to be dropping weight by the day.',
     subj: 'He',
     verb: 'is now losing',
     obj: 'weight',
@@ -31484,7 +32155,8 @@ module.exports = [
     obj: 'him',
   },
   {
-    txt: "He can eat all his feed and doesn't drop any, but can not eat hay from lack of muscle to chew it.",
+    txt:
+      "He can eat all his feed and doesn't drop any, but can not eat hay from lack of muscle to chew it.",
     subj: 'He',
     verb: 'can eat',
     obj: 'it',
@@ -31548,7 +32220,8 @@ module.exports = [
     obj: 'copy',
   },
   {
-    txt: "I'll be having my equine chiro / acupuncturist out to do some work as well if I do get him ....",
+    txt:
+      "I'll be having my equine chiro / acupuncturist out to do some work as well if I do get him ....",
     subj: 'I',
     verb: 'will be having',
     obj: 'him',
@@ -31572,7 +32245,8 @@ module.exports = [
     obj: 'vet',
   },
   {
-    txt: "Worse comes to worse, I 'm out of the $ $ and have to put him down anyway or have a pretty pasture ornament.",
+    txt:
+      "Worse comes to worse, I 'm out of the $ $ and have to put him down anyway or have a pretty pasture ornament.",
     subj: 'I',
     verb: '$',
     obj: 'ornament',
@@ -31597,13 +32271,15 @@ module.exports = [
     obj: 'what',
   },
   {
-    txt: "She is the one that can't afford to do anything else for him in case he doesn't recover fully.",
+    txt:
+      "She is the one that can't afford to do anything else for him in case he doesn't recover fully.",
     subj: 'he',
     verb: 'one',
     obj: 'anything',
   },
   {
-    txt: "He can eat grain and I already have a feed regimen in my head for the guy since he can't eat regular hay.",
+    txt:
+      "He can eat grain and I already have a feed regimen in my head for the guy since he can't eat regular hay.",
     subj: 'he',
     verb: 'can eat',
     obj: 'hay',
@@ -31627,7 +32303,8 @@ module.exports = [
     obj: 'test',
   },
   {
-    txt: "I will also be having my other vet up who's a chiro & acupuncturist to evaluate him for wobblers.",
+    txt:
+      "I will also be having my other vet up who's a chiro & acupuncturist to evaluate him for wobblers.",
     subj: 'who',
     verb: 'will also be having',
     obj: 'him',
@@ -31653,7 +32330,8 @@ module.exports = [
     obj: 'we',
   },
   {
-    txt: "He's dropping weight, but most of that came from being at the trainer s and being ridden hard for 60 days.",
+    txt:
+      "He's dropping weight, but most of that came from being at the trainer s and being ridden hard for 60 days.",
     subj: 'most',
     verb: "'s dropping",
     obj: 'weight',
@@ -31723,13 +32401,15 @@ module.exports = [
     obj: 'treatment',
   },
   {
-    txt: 'Worst case scenario you fall in love and after spending thousands of dollars you have to put the horse down.',
+    txt:
+      'Worst case scenario you fall in love and after spending thousands of dollars you have to put the horse down.',
     subj: 'you',
     verb: 'fall',
     obj: 'horse',
   },
   {
-    txt: "If so go for it and I'll give you all the moral support I can as you figure out what is up.",
+    txt:
+      "If so go for it and I'll give you all the moral support I can as you figure out what is up.",
     subj: 'what',
     verb: 'go',
     obj: 'support',
@@ -31805,7 +32485,8 @@ module.exports = [
     obj: 'lot',
   },
   {
-    txt: 'You may want to see if you can get in touch with their EPM group and get this guy in a study.',
+    txt:
+      'You may want to see if you can get in touch with their EPM group and get this guy in a study.',
     subj: 'you',
     verb: 'may want',
     obj: 'guy',
@@ -31862,7 +32543,8 @@ module.exports = [
     obj: 'money',
   },
   {
-    txt: 'A few hundred out of pocket now will possibly save you thousands once the horse is in your name.',
+    txt:
+      'A few hundred out of pocket now will possibly save you thousands once the horse is in your name.',
     subj: 'horse',
     verb: 'now will possibly save',
     obj: 'thousands',
@@ -31880,7 +32562,8 @@ module.exports = [
     obj: 'stroke',
   },
   {
-    txt: 'I think if you can not afford to get him treated that you should not consider him as a prospect.',
+    txt:
+      'I think if you can not afford to get him treated that you should not consider him as a prospect.',
     subj: 'you',
     verb: 'think',
     obj: 'him',
@@ -31905,7 +32588,8 @@ module.exports = [
     obj: 'them',
   },
   {
-    txt: 'Dr Greenwalt fixed my neck from a snowboard injury and was way more effective that a regular doctor.',
+    txt:
+      'Dr Greenwalt fixed my neck from a snowboard injury and was way more effective that a regular doctor.',
     subj: 'Dr',
     verb: 'fixed',
     obj: 'neck',
@@ -31966,7 +32650,8 @@ module.exports = [
     obj: 'location',
   },
   {
-    txt: 'Never had a problem with the staff and found them very helpful when something went wrong.',
+    txt:
+      'Never had a problem with the staff and found them very helpful when something went wrong.',
     subj: 'something',
     verb: 'Never had',
     obj: 'them',
@@ -31984,7 +32669,8 @@ module.exports = [
     obj: 'them',
   },
   {
-    txt: 'I have used Just Like Family several times now and they have provided great care for my two dogs.',
+    txt:
+      'I have used Just Like Family several times now and they have provided great care for my two dogs.',
     subj: 'they',
     verb: 'have used',
     obj: 'care',
@@ -32015,7 +32701,8 @@ module.exports = [
     obj: 'Package',
   },
   {
-    txt: 'I enjoyed my tour and i am looking for adventure tour and India heritage tours for valuable.',
+    txt:
+      'I enjoyed my tour and i am looking for adventure tour and India heritage tours for valuable.',
     subj: 'i',
     verb: 'enjoyed',
     obj: 'tour',
@@ -32041,13 +32728,15 @@ module.exports = [
     obj: 'computer',
   },
   {
-    txt: 'He took the time to explain things to me about my computer, i would recommend you go to him.',
+    txt:
+      'He took the time to explain things to me about my computer, i would recommend you go to him.',
     subj: 'you',
     verb: 'took',
     obj: 'things',
   },
   {
-    txt: 'it s great to know you can get great service, great product, and for the best price all in one!',
+    txt:
+      'it s great to know you can get great service, great product, and for the best price all in one!',
     subj: 'you',
     verb: 's great',
     obj: 'service',
@@ -32073,7 +32762,8 @@ module.exports = [
     obj: 'result',
   },
   {
-    txt: 'I have been here 3 to 4 times and every time food they served seems warmed up not cooked after you order it.',
+    txt:
+      'I have been here 3 to 4 times and every time food they served seems warmed up not cooked after you order it.',
     subj: 'you',
     verb: 'have been here',
     obj: 'it',
@@ -32123,13 +32813,15 @@ module.exports = [
     obj: 'certificate',
   },
   {
-    txt: 'I came to La Crosse to go to college, and my mom would send me birthday flowers though here.',
+    txt:
+      'I came to La Crosse to go to college, and my mom would send me birthday flowers though here.',
     subj: 'mom',
     verb: 'came',
     obj: 'flowers',
   },
   {
-    txt: 'Now that I live here, this is my favorite place to grab flowers for friends and coworkers!',
+    txt:
+      'Now that I live here, this is my favorite place to grab flowers for friends and coworkers!',
     subj: 'this',
     verb: 'place',
     obj: 'flowers',
@@ -32167,7 +32859,8 @@ module.exports = [
     obj: 'him',
   },
   {
-    txt: 'I was experiencing severe back pain to the point I could barely walk or even bare to sit.',
+    txt:
+      'I was experiencing severe back pain to the point I could barely walk or even bare to sit.',
     subj: 'I',
     verb: 'was experiencing',
     obj: 'pain',
@@ -32256,7 +32949,8 @@ module.exports = [
     obj: 'price',
   },
   {
-    txt: 'They were accomdating with my scheduled and work with my insurance to get payment for the surgery.',
+    txt:
+      'They were accomdating with my scheduled and work with my insurance to get payment for the surgery.',
     subj: 'They',
     verb: 'were accomdating',
     obj: 'payment',
@@ -32317,7 +33011,8 @@ module.exports = [
     obj: 'car',
   },
   {
-    txt: "They are honest about ' immediate ' concerns versus ' recommended ' repairs and have very fair prices.",
+    txt:
+      "They are honest about ' immediate ' concerns versus ' recommended ' repairs and have very fair prices.",
     subj: 'They',
     verb: 'are honest',
     obj: 'prices',
@@ -32379,7 +33074,8 @@ module.exports = [
     obj: 'style',
   },
   {
-    txt: 'It is the real thing - I have been practicing Pilates for over 7 years and would not go anywhere else.',
+    txt:
+      'It is the real thing - I have been practicing Pilates for over 7 years and would not go anywhere else.',
     subj: 'I',
     verb: 'thing',
     obj: 'Pilates',
@@ -32405,13 +33101,15 @@ module.exports = [
     obj: 'PJC',
   },
   {
-    txt: 'For example, I actually forgot to feed my cat, and they went out of their way to take care of him.',
+    txt:
+      'For example, I actually forgot to feed my cat, and they went out of their way to take care of him.',
     subj: 'they',
     verb: 'actually forgot',
     obj: 'care',
   },
   {
-    txt: 'Additionally, when there was confusion (my fault ), they left me flowers along with a personalized gift.',
+    txt:
+      'Additionally, when there was confusion (my fault ), they left me flowers along with a personalized gift.',
     subj: 'they',
     verb: 'left',
     obj: 'flowers',
@@ -32569,7 +33267,8 @@ module.exports = [
     obj: 'them',
   },
   {
-    txt: "You can't go wrong with Tuesday prices, even if you get quite the mixed bag of comedians !",
+    txt:
+      "You can't go wrong with Tuesday prices, even if you get quite the mixed bag of comedians !",
     subj: 'you',
     verb: "can't go wrong",
     obj: 'bag',
@@ -32607,7 +33306,8 @@ module.exports = [
     obj: 'hair',
   },
   {
-    txt: 'The waiting staff is beyond impeccable (they refold your napkin when you go to the bathroom ).',
+    txt:
+      'The waiting staff is beyond impeccable (they refold your napkin when you go to the bathroom ).',
     subj: 'you',
     verb: 'impeccable',
     obj: 'napkin',
@@ -32657,7 +33357,8 @@ module.exports = [
     obj: 'ballet',
   },
   {
-    txt: 'The staff was very helpful and gave me exactly what I needed for my first time ballerina.',
+    txt:
+      'The staff was very helpful and gave me exactly what I needed for my first time ballerina.',
     subj: 'I',
     verb: 'was very helpful',
     obj: 'what',
@@ -32675,13 +33376,15 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: "I 've also sent over a number of friends to use the services here and everyone is extraordinarily pleased !",
+    txt:
+      "I 've also sent over a number of friends to use the services here and everyone is extraordinarily pleased !",
     subj: 'everyone',
     verb: "'ve also sent over",
     obj: 'services',
   },
   {
-    txt: 'Thanks for doing such great work on my important pieces of clothing that always look great!',
+    txt:
+      'Thanks for doing such great work on my important pieces of clothing that always look great!',
     subj: 'that',
     verb: 'Thanks',
     obj: 'work',
@@ -32720,7 +33423,8 @@ module.exports = [
     obj: 'inquires',
   },
   {
-    txt: "We just got our sunroom built by Patio World and can say that I 'm extremely happy with the whole thing.",
+    txt:
+      "We just got our sunroom built by Patio World and can say that I 'm extremely happy with the whole thing.",
     subj: 'I',
     verb: 'just got',
     obj: 'sunroom',
@@ -32746,7 +33450,8 @@ module.exports = [
     obj: 'time',
   },
   {
-    txt: 'Another person in the store stood there with an item and repeatedly tried to get a sales person s attention.',
+    txt:
+      'Another person in the store stood there with an item and repeatedly tried to get a sales person s attention.',
     subj: 'person',
     verb: 'stood there',
     obj: 'attention',
@@ -32782,7 +33487,8 @@ module.exports = [
     obj: 'test',
   },
   {
-    txt: 'Then, they sold me overpriced stuffs, such as oil tank cap, so that my car can pass it right away.',
+    txt:
+      'Then, they sold me overpriced stuffs, such as oil tank cap, so that my car can pass it right away.',
     subj: 'car',
     verb: 'sold',
     obj: 'it',
@@ -32824,7 +33530,8 @@ module.exports = [
     obj: 'him',
   },
   {
-    txt: 'I had been a patient of Dr. Olbina for 9 years and had spent thousands of dollars on crowns etc.',
+    txt:
+      'I had been a patient of Dr. Olbina for 9 years and had spent thousands of dollars on crowns etc.',
     subj: 'I',
     verb: 'patient',
     obj: 'thousands',
@@ -32861,7 +33568,8 @@ module.exports = [
     obj: 'appointment',
   },
   {
-    txt: 'If you get caught in traffic and are a couple minutes late they make you re-schedule ... for 6 weeks later.',
+    txt:
+      'If you get caught in traffic and are a couple minutes late they make you re-schedule ... for 6 weeks later.',
     subj: 'they',
     verb: 'make',
     obj: 'you',
@@ -32874,7 +33582,8 @@ module.exports = [
     obj: 'method',
   },
   {
-    txt: 'We highly recommend Joe and his wasp removal service to individual home owners and condos.',
+    txt:
+      'We highly recommend Joe and his wasp removal service to individual home owners and condos.',
     subj: 'We',
     verb: 'highly recommend',
     obj: 'Joe',
@@ -32886,7 +33595,8 @@ module.exports = [
     obj: 'bees',
   },
   {
-    txt: 'This is a nice place, and I know we will return to meet my sister - in - law from Chicago !!',
+    txt:
+      'This is a nice place, and I know we will return to meet my sister - in - law from Chicago !!',
     subj: 'we',
     verb: 'place',
     obj: 'sister',
@@ -32917,7 +33627,8 @@ module.exports = [
     obj: 'food',
   },
   {
-    txt: 'Try their weekend " tastings " which you can learn about by getting on their weekly email list.',
+    txt:
+      'Try their weekend " tastings " which you can learn about by getting on their weekly email list.',
     subj: 'you',
     verb: 'Try',
     obj: 'tastings',
@@ -33018,7 +33729,8 @@ module.exports = [
     obj: 'him',
   },
   {
-    txt: 'she did nt even let me finish a sentence without insulting me and telling me how i should have said it!',
+    txt:
+      'she did nt even let me finish a sentence without insulting me and telling me how i should have said it!',
     subj: 'i',
     verb: 'did nt even let',
     obj: 'it',
@@ -33062,7 +33774,8 @@ module.exports = [
     obj: 'buck',
   },
   {
-    txt: "After going to the hospital and paying ER prices ... there is no way I won't be back here !!",
+    txt:
+      "After going to the hospital and paying ER prices ... there is no way I won't be back here !!",
     subj: 'I',
     verb: 'is',
     obj: 'prices',
@@ -33087,7 +33800,8 @@ module.exports = [
     obj: 'warranty',
   },
   {
-    txt: 'Someone else I found that said they could do it but wanted to charge me more and give me less warranty.',
+    txt:
+      'Someone else I found that said they could do it but wanted to charge me more and give me less warranty.',
     subj: 'they',
     verb: 'Someone',
     obj: 'warranty',
@@ -33117,7 +33831,8 @@ module.exports = [
     obj: 'problem',
   },
   {
-    txt: "i coldn't find anywere else local to fix it so i took it there and they fixed it for $ 150 ...",
+    txt:
+      "i coldn't find anywere else local to fix it so i took it there and they fixed it for $ 150 ...",
     subj: 'they',
     verb: "coldn't find",
     obj: 'it',
@@ -33171,13 +33886,15 @@ module.exports = [
     obj: 'hair',
   },
   {
-    txt: 'I have gone there time and time again whenever I need to get my hair done or when I want a haircut.',
+    txt:
+      'I have gone there time and time again whenever I need to get my hair done or when I want a haircut.',
     subj: 'I',
     verb: 'have gone there',
     obj: 'haircut',
   },
   {
-    txt: 'When I get my hair done there, they use enough hairstyling products while it does not ruin your hair.',
+    txt:
+      'When I get my hair done there, they use enough hairstyling products while it does not ruin your hair.',
     subj: 'it',
     verb: 'use',
     obj: 'hair',
@@ -33221,7 +33938,8 @@ module.exports = [
     obj: 'tea',
   },
   {
-    txt: 'Even though I live pretty far from her office I still make the trip so my daughters will have the BEST!',
+    txt:
+      'Even though I live pretty far from her office I still make the trip so my daughters will have the BEST!',
     subj: 'daughters',
     verb: 'still make',
     obj: 'BEST',
@@ -33234,7 +33952,8 @@ module.exports = [
     obj: 're-wiring',
   },
   {
-    txt: 'I finally called Matt from Bonafide and he made the project both easy for us and reasonable.',
+    txt:
+      'I finally called Matt from Bonafide and he made the project both easy for us and reasonable.',
     subj: 'he',
     verb: 'finally called',
     obj: 'project',
@@ -33342,7 +34061,8 @@ module.exports = [
     obj: 'clothes',
   },
   {
-    txt: 'Especially high end keep sake sort of clothing that you just ca nt find in a lot of stores.',
+    txt:
+      'Especially high end keep sake sort of clothing that you just ca nt find in a lot of stores.',
     subj: 'you',
     verb: 'sort',
     obj: 'that',
@@ -33378,7 +34098,8 @@ module.exports = [
     obj: 'Chicago',
   },
   {
-    txt: 'I would recommend them for any custom lighting or Lighting Repair and Restoration Chicago',
+    txt:
+      'I would recommend them for any custom lighting or Lighting Repair and Restoration Chicago',
     subj: 'I',
     verb: 'would recommend',
     obj: 'Chicago',
@@ -33390,7 +34111,8 @@ module.exports = [
     obj: 'someplace',
   },
   {
-    txt: 'Brought my wife Deb with me and she like the Fried Crab Wontons and said they were good ..',
+    txt:
+      'Brought my wife Deb with me and she like the Fried Crab Wontons and said they were good ..',
     subj: 'they',
     verb: 'Brought',
     obj: 'Wontons',
@@ -33408,7 +34130,8 @@ module.exports = [
     obj: 'pork',
   },
   {
-    txt: 'I also ordered the Neptune Platter which was awesome ... so this place gets 5 out of 5 stars.',
+    txt:
+      'I also ordered the Neptune Platter which was awesome ... so this place gets 5 out of 5 stars.',
     subj: 'place',
     verb: 'also ordered',
     obj: 'stars',
@@ -33420,7 +34143,8 @@ module.exports = [
     obj: 'nails',
   },
   {
-    txt: 'I also had a pedicure, and they cut my nails too short, one of my big toes looks like it s getting infected.',
+    txt:
+      'I also had a pedicure, and they cut my nails too short, one of my big toes looks like it s getting infected.',
     subj: 'it',
     verb: 'also had',
     obj: 'nails',
@@ -33571,7 +34295,8 @@ module.exports = [
     obj: 'you',
   },
   {
-    txt: "There are so many wonderful great places to dine in houston .... don't . waste your time here.",
+    txt:
+      "There are so many wonderful great places to dine in houston .... don't . waste your time here.",
     subj: 'places',
     verb: 'are so',
     obj: 'time',
@@ -33613,7 +34338,8 @@ module.exports = [
     obj: 'attention',
   },
   {
-    txt: 'When the next hailstorm blows through, I will not hesitate to contact James at Team Texas Construction.',
+    txt:
+      'When the next hailstorm blows through, I will not hesitate to contact James at Team Texas Construction.',
     subj: 'I',
     verb: 'will not hesitate',
     obj: 'James',
@@ -33638,7 +34364,8 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: "Besides parking is a pain .. cramped and un-ruly with Kumon Parents next door .... gives me heebee gee bees'",
+    txt:
+      "Besides parking is a pain .. cramped and un-ruly with Kumon Parents next door .... gives me heebee gee bees'",
     subj: 'Kumon',
     verb: 'pain',
     obj: "bees'",
@@ -33651,13 +34378,15 @@ module.exports = [
     obj: 'issue',
   },
   {
-    txt: "I much preferred the one - on - one service here to the experiences I 've had with bigger offices and firms.",
+    txt:
+      "I much preferred the one - on - one service here to the experiences I 've had with bigger offices and firms.",
     subj: 'I',
     verb: 'much preferred',
     obj: 'service',
   },
   {
-    txt: "While I hope I don't have any need for a lawyer anytime soon, if I do I'll definitely use this firm again.",
+    txt:
+      "While I hope I don't have any need for a lawyer anytime soon, if I do I'll definitely use this firm again.",
     subj: 'I',
     verb: 'will definitely use',
     obj: 'firm',
@@ -33739,7 +34468,8 @@ module.exports = [
     obj: 'several',
   },
   {
-    txt: 'They talk down to you like they are supreme beings, if you hate your job so much then quit !!',
+    txt:
+      'They talk down to you like they are supreme beings, if you hate your job so much then quit !!',
     subj: 'you',
     verb: 'talk',
     obj: 'job',
@@ -33845,7 +34575,8 @@ module.exports = [
     obj: 'that',
   },
   {
-    txt: 'Plus she plans a monthly breakfasts and other events at the clubhouse which is a nice added benefit.',
+    txt:
+      'Plus she plans a monthly breakfasts and other events at the clubhouse which is a nice added benefit.',
     subj: 'which',
     verb: 'plans',
     obj: 'breakfasts',
@@ -33857,7 +34588,8 @@ module.exports = [
     obj: 'business',
   },
   {
-    txt: 'I have used these guys for new snows, fixing lots of flats, used replacement tires, and oil changes.',
+    txt:
+      'I have used these guys for new snows, fixing lots of flats, used replacement tires, and oil changes.',
     subj: 'I',
     verb: 'have used',
     obj: 'lots',
@@ -33869,7 +34601,8 @@ module.exports = [
     obj: 'prices',
   },
   {
-    txt: "One guy is a little surley, but who gives a crap as long as your car's work is outstanding.",
+    txt:
+      "One guy is a little surley, but who gives a crap as long as your car's work is outstanding.",
     subj: 'work',
     verb: 'surley',
     obj: 'crap',
@@ -33893,7 +34626,8 @@ module.exports = [
     obj: 'what',
   },
   {
-    txt: "I 'm assuming they are completely out of business since I can't find any contact information.",
+    txt:
+      "I 'm assuming they are completely out of business since I can't find any contact information.",
     subj: 'I',
     verb: "'m assuming",
     obj: 'information',
@@ -33939,7 +34673,8 @@ module.exports = [
     obj: 'that',
   },
   {
-    txt: 'They are dependable, have great connections in the community, and are a great resource for finding a job.',
+    txt:
+      'They are dependable, have great connections in the community, and are a great resource for finding a job.',
     subj: 'They',
     verb: 'are dependable',
     obj: 'job',
@@ -33963,7 +34698,8 @@ module.exports = [
     obj: 'lab',
   },
   {
-    txt: 'The staff was very helpful in finding the right dog for me and the care my pup received was outstanding.',
+    txt:
+      'The staff was very helpful in finding the right dog for me and the care my pup received was outstanding.',
     subj: 'pup',
     verb: 'was very helpful',
     obj: 'dog',
@@ -33981,7 +34717,8 @@ module.exports = [
     obj: 'temperment',
   },
   {
-    txt: 'No silverware, asked for a spoon for my son s mac and cheese ended up having to use my tea spoon.',
+    txt:
+      'No silverware, asked for a spoon for my son s mac and cheese ended up having to use my tea spoon.',
     subj: null,
     verb: 'silverware',
     obj: 'spoon',
@@ -34037,13 +34774,15 @@ module.exports = [
     obj: 'hose',
   },
   {
-    txt: 'Ten minutes later, I took my car down the street and it passed the emissions test with flying colors.',
+    txt:
+      'Ten minutes later, I took my car down the street and it passed the emissions test with flying colors.',
     subj: 'it',
     verb: 'took',
     obj: 'test',
   },
   {
-    txt: 'even though I have never tried hoa salon but I agree with other reviewers that they are rude.',
+    txt:
+      'even though I have never tried hoa salon but I agree with other reviewers that they are rude.',
     subj: 'they',
     verb: 'agree',
     obj: 'salon',
@@ -34089,7 +34828,8 @@ module.exports = [
     obj: 'them',
   },
   {
-    txt: 'If you must use them, be vigilant and be ready to push, if you can go elsewhere then I would.',
+    txt:
+      'If you must use them, be vigilant and be ready to push, if you can go elsewhere then I would.',
     subj: 'I',
     verb: 'be vigilant',
     obj: 'them',
@@ -34134,7 +34874,8 @@ module.exports = [
     obj: 'guests',
   },
   {
-    txt: "I highly recommend Fraiser's for anyone planning a special event for friends, family or business.",
+    txt:
+      "I highly recommend Fraiser's for anyone planning a special event for friends, family or business.",
     subj: 'I',
     verb: 'highly recommend',
     obj: 'event',
@@ -34184,7 +34925,8 @@ module.exports = [
     obj: 'them',
   },
   {
-    txt: 'They DO NOT have a return policy and even if their product SUCKS, they will NOT take it back!',
+    txt:
+      'They DO NOT have a return policy and even if their product SUCKS, they will NOT take it back!',
     subj: 'they',
     verb: 'DO NOT have',
     obj: 'it',
@@ -34251,25 +34993,29 @@ module.exports = [
     obj: 'descriptions',
   },
   {
-    txt: 'I found my initial selection satisfactory but the wine flight we chose to be poorly composed.',
+    txt:
+      'I found my initial selection satisfactory but the wine flight we chose to be poorly composed.',
     subj: 'we',
     verb: 'found',
     obj: 'selection',
   },
   {
-    txt: 'If you must go ask lots of questions about your selections since your expectations may as high as mine were.',
+    txt:
+      'If you must go ask lots of questions about your selections since your expectations may as high as mine were.',
     subj: 'mine',
     verb: 'ask',
     obj: 'lots',
   },
   {
-    txt: 'We walked in to pick our little man at 10 minutes to closing and heard laughter from kids and the staff.',
+    txt:
+      'We walked in to pick our little man at 10 minutes to closing and heard laughter from kids and the staff.',
     subj: 'We',
     verb: 'walked in',
     obj: 'laughter',
   },
   {
-    txt: 'Their sense of humour and calmness when dealing with the little ones amazes me every time I walk in.',
+    txt:
+      'Their sense of humour and calmness when dealing with the little ones amazes me every time I walk in.',
     subj: 'I',
     verb: 'amazes',
     obj: 'me',
@@ -34318,7 +35064,8 @@ module.exports = [
     obj: 'pizza',
   },
   {
-    txt: 'best quote ever My gate was stuck halfway open so I called A CLASS Garage Doors Dr Services.',
+    txt:
+      'best quote ever My gate was stuck halfway open so I called A CLASS Garage Doors Dr Services.',
     subj: 'I',
     verb: 'quote ever',
     obj: 'Services',
@@ -34337,7 +35084,8 @@ module.exports = [
     obj: 'quote',
   },
   {
-    txt: 'I know that if my garage door needs to be repaired, I will be calling A CLASS Garage Doors',
+    txt:
+      'I know that if my garage door needs to be repaired, I will be calling A CLASS Garage Doors',
     subj: 'I',
     verb: 'know',
     obj: 'Doors',
@@ -34349,13 +35097,15 @@ module.exports = [
     obj: 'experiences',
   },
   {
-    txt: 'The store manager, Jim Smith, made an excellent tire recommendation for my newly acquired Lexus.',
+    txt:
+      'The store manager, Jim Smith, made an excellent tire recommendation for my newly acquired Lexus.',
     subj: 'manager',
     verb: 'made',
     obj: 'recommendation',
   },
   {
-    txt: 'They know their job and you do not have to watch them to be sure everything is done right.',
+    txt:
+      'They know their job and you do not have to watch them to be sure everything is done right.',
     subj: 'everything',
     verb: 'know',
     obj: 'them',
@@ -34374,7 +35124,8 @@ module.exports = [
     obj: 'me',
   },
   {
-    txt: 'I highly recommend this dealership if you would not like to hassle on price and receive friendly service.',
+    txt:
+      'I highly recommend this dealership if you would not like to hassle on price and receive friendly service.',
     subj: 'you',
     verb: 'highly recommend',
     obj: 'service',
@@ -34452,7 +35203,8 @@ module.exports = [
     obj: '$',
   },
   {
-    txt: 'I have been going to Nick for 5 months now precisely because he does pay attention to detail.',
+    txt:
+      'I have been going to Nick for 5 months now precisely because he does pay attention to detail.',
     subj: 'he',
     verb: 'have been going',
     obj: 'attention',
@@ -34482,7 +35234,8 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: 'I called the store and the clerk giggled, and agreed that it was gross, but said it was not her problem.',
+    txt:
+      'I called the store and the clerk giggled, and agreed that it was gross, but said it was not her problem.',
     subj: 'it',
     verb: 'called',
     obj: 'store',
@@ -34550,7 +35303,8 @@ module.exports = [
     obj: 'lessons',
   },
   {
-    txt: 'Also, he loves teaching so much, his price is unbeatable, but that does not change his level of skill.',
+    txt:
+      'Also, he loves teaching so much, his price is unbeatable, but that does not change his level of skill.',
     subj: 'that',
     verb: 'loves',
     obj: 'level',
@@ -34638,7 +35392,8 @@ module.exports = [
     obj: 'Crepes',
   },
   {
-    txt: 'This is one of the worst places I have stayed, we cut out stay short and went to the Mulberry.',
+    txt:
+      'This is one of the worst places I have stayed, we cut out stay short and went to the Mulberry.',
     subj: 'we',
     verb: 'is one',
     obj: 'stay',
@@ -34663,7 +35418,8 @@ module.exports = [
     obj: 'place',
   },
   {
-    txt: 'I really enjoyed the staff at Wessex, also the manager Sherri was always very nice and helpful.',
+    txt:
+      'I really enjoyed the staff at Wessex, also the manager Sherri was always very nice and helpful.',
     subj: 'manager',
     verb: 'really enjoyed',
     obj: 'staff',
@@ -34700,7 +35456,8 @@ module.exports = [
     obj: 'me',
   },
   {
-    txt: 'The service department even gave me a ride home and picked me up when my car was finished.',
+    txt:
+      'The service department even gave me a ride home and picked me up when my car was finished.',
     subj: 'car',
     verb: 'even gave',
     obj: 'me',
@@ -34736,7 +35493,8 @@ module.exports = [
     obj: 'ME',
   },
   {
-    txt: 'THEY HAVE EXCELLENT SUSHI CHEF SPECIAL ROLLS FOR A FAIR PRICE AND SO IS THE GRILL ORDERS.',
+    txt:
+      'THEY HAVE EXCELLENT SUSHI CHEF SPECIAL ROLLS FOR A FAIR PRICE AND SO IS THE GRILL ORDERS.',
     subj: 'ORDERS',
     verb: 'HAVE',
     obj: 'ROLLS',
@@ -34773,7 +35531,8 @@ module.exports = [
     obj: 'few',
   },
   {
-    txt: 'The first time I used them they arrived on time and towed car for me to the destination I needed.',
+    txt:
+      'The first time I used them they arrived on time and towed car for me to the destination I needed.',
     subj: 'I',
     verb: 'arrived',
     obj: 'car',
@@ -34786,7 +35545,8 @@ module.exports = [
     obj: 'question',
   },
   {
-    txt: 'They have towed car for me a few times and I am always very satisfied with this services.',
+    txt:
+      'They have towed car for me a few times and I am always very satisfied with this services.',
     subj: 'I',
     verb: 'have towed',
     obj: 'car',
@@ -34805,7 +35565,8 @@ module.exports = [
     obj: 'Cleaning',
   },
   {
-    txt: 'They are professional, knowledgeable, and take meticulous care and pride in accomplishing their work.',
+    txt:
+      'They are professional, knowledgeable, and take meticulous care and pride in accomplishing their work.',
     subj: 'They',
     verb: 'are professional',
     obj: 'work',
@@ -34830,7 +35591,8 @@ module.exports = [
     obj: 'mary',
   },
   {
-    txt: 'I highly recommend picking up a jug of their homemade bloody mary mix - definitely the best.',
+    txt:
+      'I highly recommend picking up a jug of their homemade bloody mary mix - definitely the best.',
     subj: 'I',
     verb: 'highly recommend',
     obj: 'jug',
@@ -34843,7 +35605,8 @@ module.exports = [
     obj: 'them',
   },
   {
-    txt: 'They were very professional, respectful, completed the Job on time, and well below my budget.',
+    txt:
+      'They were very professional, respectful, completed the Job on time, and well below my budget.',
     subj: 'They',
     verb: 'were very professional',
     obj: 'Job',
@@ -34887,13 +35650,15 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: 'I am saying when comparing all other hotels in Wildwood, this hotel has everything that we are looking for.',
+    txt:
+      'I am saying when comparing all other hotels in Wildwood, this hotel has everything that we are looking for.',
     subj: 'we',
     verb: 'am saying',
     obj: 'everything',
   },
   {
-    txt: 'It is the hospitality from Tom and staff, that makes it feel like a 5 star hotel in the middle of the beach.',
+    txt:
+      'It is the hospitality from Tom and staff, that makes it feel like a 5 star hotel in the middle of the beach.',
     subj: 'that',
     verb: 'is',
     obj: 'it',
@@ -34923,7 +35688,8 @@ module.exports = [
     obj: 'language',
   },
   {
-    txt: 'You will also have the experience of learning the bella Sicilian culture, that I have fallen in luv with.',
+    txt:
+      'You will also have the experience of learning the bella Sicilian culture, that I have fallen in luv with.',
     subj: 'I',
     verb: 'will also have',
     obj: 'that',
@@ -34943,7 +35709,8 @@ module.exports = [
     obj: 'business',
   },
   {
-    txt: 'If the animals are treated in the same way the customers are treated then this leaves a lot to be desired!',
+    txt:
+      'If the animals are treated in the same way the customers are treated then this leaves a lot to be desired!',
     subj: 'this',
     verb: 'leaves',
     obj: 'lot',
@@ -34979,13 +35746,15 @@ module.exports = [
     obj: 'inventory',
   },
   {
-    txt: 'I have also had an 80 yr old that I take of sent to the ER and long stays in the hospital.',
+    txt:
+      'I have also had an 80 yr old that I take of sent to the ER and long stays in the hospital.',
     subj: 'I',
     verb: 'have also had',
     obj: 'old',
   },
   {
-    txt: 'Yes, we had to wait, but ER is a triage system that takes the most life threatening cases first.',
+    txt:
+      'Yes, we had to wait, but ER is a triage system that takes the most life threatening cases first.',
     subj: 'that',
     verb: 'had',
     obj: 'cases',
@@ -34998,7 +35767,8 @@ module.exports = [
     obj: 'Dentist',
   },
   {
-    txt: 'Dr. Taylor was not only available on a Sunday, but also was able to immediately take care of me.',
+    txt:
+      'Dr. Taylor was not only available on a Sunday, but also was able to immediately take care of me.',
     subj: 'Dr.',
     verb: 'was not',
     obj: 'care',
@@ -35042,7 +35812,8 @@ module.exports = [
     obj: 'backpacks',
   },
   {
-    txt: 'The education is horrible at best, do society a favor, and do NOT send your student here.',
+    txt:
+      'The education is horrible at best, do society a favor, and do NOT send your student here.',
     subj: 'education',
     verb: 'is horrible',
     obj: 'student',
@@ -35055,7 +35826,8 @@ module.exports = [
     obj: 'heels',
   },
   {
-    txt: "I haven't been able to find a shoe repair place in Seattle since that has been able to do it.",
+    txt:
+      "I haven't been able to find a shoe repair place in Seattle since that has been able to do it.",
     subj: 'that',
     verb: "haven't been able",
     obj: 'it',
@@ -35102,7 +35874,8 @@ module.exports = [
     obj: 'them',
   },
   {
-    txt: 'The last time I did that I was suggested to buy oblivion when I told them I was looking for a fps.',
+    txt:
+      'The last time I did that I was suggested to buy oblivion when I told them I was looking for a fps.',
     subj: 'I',
     verb: 'suggested',
     obj: 'them',
@@ -35114,7 +35887,8 @@ module.exports = [
     obj: 'guy',
   },
   {
-    txt: 'He tried to tell me it was when I told asked him if he knew what fps stood for and he had no clue.',
+    txt:
+      'He tried to tell me it was when I told asked him if he knew what fps stood for and he had no clue.',
     subj: 'he',
     verb: 'tried',
     obj: 'clue',
@@ -35139,7 +35913,8 @@ module.exports = [
     obj: 'wantons',
   },
   {
-    txt: 'Would NOT recommend this place to anyone - in fact - save your money and go somewhere else.',
+    txt:
+      'Would NOT recommend this place to anyone - in fact - save your money and go somewhere else.',
     subj: null,
     verb: 'Would NOT recommend',
     obj: 'money',
@@ -35177,13 +35952,15 @@ module.exports = [
     obj: 'Dealer',
   },
   {
-    txt: 'IF you want flashy fancy food stacked high with lots of fussy garnishes, this is not the place for you.',
+    txt:
+      'IF you want flashy fancy food stacked high with lots of fussy garnishes, this is not the place for you.',
     subj: 'this',
     verb: 'place',
     obj: 'food',
   },
   {
-    txt: "If you want perfectly executed simple dishes that feature a few exquisite ingredients, you'll love Vetri.",
+    txt:
+      "If you want perfectly executed simple dishes that feature a few exquisite ingredients, you'll love Vetri.",
     subj: 'you',
     verb: 'will love',
     obj: 'Vetri',
@@ -35195,7 +35972,8 @@ module.exports = [
     obj: 'lot',
   },
   {
-    txt: 'They have all kind of coupons available for car washes, oil changes, state inspection, etc.',
+    txt:
+      'They have all kind of coupons available for car washes, oil changes, state inspection, etc.',
     subj: 'They',
     verb: 'have',
     obj: 'kind',
@@ -35268,7 +36046,8 @@ module.exports = [
     obj: 'lot',
   },
   {
-    txt: 'He took it back and they would not honor a warranty and said it was his fault because of his shoes ??',
+    txt:
+      'He took it back and they would not honor a warranty and said it was his fault because of his shoes ??',
     subj: 'it',
     verb: 'took',
     obj: 'warranty',
@@ -35301,7 +36080,8 @@ module.exports = [
     obj: 'emergency',
   },
   {
-    txt: 'Made an appointment to have them come to the house to discuss curtain options and give an estimate.',
+    txt:
+      'Made an appointment to have them come to the house to discuss curtain options and give an estimate.',
     subj: null,
     verb: 'Made',
     obj: 'estimate',
@@ -35360,13 +36140,15 @@ module.exports = [
     obj: 'light',
   },
   {
-    txt: 'They said it was " plugs and wires " and quoted me $ 330 to do the work, including parts.',
+    txt:
+      'They said it was " plugs and wires " and quoted me $ 330 to do the work, including parts.',
     subj: 'it',
     verb: 'said',
     obj: 'work',
   },
   {
-    txt: 'I asked why so high and they said it was due to the labor of moving things out of the way.',
+    txt:
+      'I asked why so high and they said it was due to the labor of moving things out of the way.',
     subj: 'it',
     verb: 'asked why',
     obj: 'things',
@@ -35378,7 +36160,8 @@ module.exports = [
     obj: 'work',
   },
   {
-    txt: "My girlfriend and I took a chance on this place because we didn't want to wait in line at Outback.",
+    txt:
+      "My girlfriend and I took a chance on this place because we didn't want to wait in line at Outback.",
     subj: 'we',
     verb: 'took',
     obj: 'chance',
@@ -35408,7 +36191,8 @@ module.exports = [
     obj: 'one',
   },
   {
-    txt: 'It is the easiest thing that I have ever done and I tell all my friends that they should do it too.',
+    txt:
+      'It is the easiest thing that I have ever done and I tell all my friends that they should do it too.',
     subj: 'they',
     verb: 'thing',
     obj: 'it',
@@ -35477,7 +36261,8 @@ module.exports = [
     obj: 'appointment',
   },
   {
-    txt: 'I would appreciate reviews from anyone who has worked with me before in the mental health setting.',
+    txt:
+      'I would appreciate reviews from anyone who has worked with me before in the mental health setting.',
     subj: 'who',
     verb: 'would appreciate',
     obj: 'reviews',
@@ -35502,7 +36287,8 @@ module.exports = [
     obj: 'goats',
   },
   {
-    txt: "I can't say enough good things about Karla and the wonderful things she has done for me and my dog Gracee.",
+    txt:
+      "I can't say enough good things about Karla and the wonderful things she has done for me and my dog Gracee.",
     subj: 'she',
     verb: "can't say",
     obj: 'things',
@@ -35528,7 +36314,8 @@ module.exports = [
     obj: 'penny',
   },
   {
-    txt: '( to both myself and customers) 3) I have never experienced so much rudeness coming from a business.',
+    txt:
+      '( to both myself and customers) 3) I have never experienced so much rudeness coming from a business.',
     subj: 'I',
     verb: 'myself',
     obj: 'rudeness',
@@ -35705,7 +36492,8 @@ module.exports = [
     obj: 'faith',
   },
   {
-    txt: 'I spent 3 months going from shop to shop trying to get my Ferrari to run and drive the way it should.',
+    txt:
+      'I spent 3 months going from shop to shop trying to get my Ferrari to run and drive the way it should.',
     subj: 'it',
     verb: 'spent',
     obj: 'Ferrari',
@@ -35819,7 +36607,8 @@ module.exports = [
     obj: 'job',
   },
   {
-    txt: 'Holly is very experienced and talented, and I could tell she new what she was doing right off the bat.',
+    txt:
+      'Holly is very experienced and talented, and I could tell she new what she was doing right off the bat.',
     subj: 'she',
     verb: 'is very experienced',
     obj: 'what',
@@ -35858,7 +36647,8 @@ module.exports = [
     obj: 'you',
   },
   {
-    txt: 'I was born and raised in Toronto, which has a huge West Indian (Trinidadian, Jamaican, etc) population.',
+    txt:
+      'I was born and raised in Toronto, which has a huge West Indian (Trinidadian, Jamaican, etc) population.',
     subj: 'which',
     verb: 'born',
     obj: 'population',
@@ -36038,7 +36828,8 @@ module.exports = [
     obj: 'deal',
   },
   {
-    txt: 'I urge all St. Thomas the Apostle parishioners and all of South Florida residents to come see Gus !!!',
+    txt:
+      'I urge all St. Thomas the Apostle parishioners and all of South Florida residents to come see Gus !!!',
     subj: 'I',
     verb: 'urge',
     obj: 'Gus',
@@ -36068,7 +36859,8 @@ module.exports = [
     obj: 'mechanic',
   },
   {
-    txt: 'And it was great that they did not charge a service fee to diagnose the problem - an added bonus !!',
+    txt:
+      'And it was great that they did not charge a service fee to diagnose the problem - an added bonus !!',
     subj: 'they',
     verb: 'was great',
     obj: 'problem',
@@ -36220,7 +37012,8 @@ module.exports = [
     obj: 'meal',
   },
   {
-    txt: 'I got yelled at, literally yelled at because i asked if i could pick up my car 5 - 10 minutes late.',
+    txt:
+      'I got yelled at, literally yelled at because i asked if i could pick up my car 5 - 10 minutes late.',
     subj: 'i',
     verb: 'got yelled',
     obj: 'car',
@@ -36233,7 +37026,8 @@ module.exports = [
     obj: 'doors',
   },
   {
-    txt: 'Seems like all they care about is the money and getting home on time, NO care for the customers AT ALL !!!',
+    txt:
+      'Seems like all they care about is the money and getting home on time, NO care for the customers AT ALL !!!',
     subj: 'they',
     verb: 'Seems',
     obj: 'home',
@@ -36245,7 +37039,8 @@ module.exports = [
     obj: 'day',
   },
   {
-    txt: "I used Fancy Flowers for my late husband's funeral flowers as they had been recommended to me.",
+    txt:
+      "I used Fancy Flowers for my late husband's funeral flowers as they had been recommended to me.",
     subj: 'they',
     verb: 'used',
     obj: 'Flowers',
@@ -36316,7 +37111,8 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: 'Our unit reeks of old cigarette smoke and it started to become apparent a few weeks after we moved in.',
+    txt:
+      'Our unit reeks of old cigarette smoke and it started to become apparent a few weeks after we moved in.',
     subj: 'we',
     verb: 'reeks',
     obj: 'apparent',
@@ -36349,7 +37145,8 @@ module.exports = [
     obj: 'job',
   },
   {
-    txt: 'Tourists like the other reviewer might not appreciate their efficiency or quality, but I certainly do.',
+    txt:
+      'Tourists like the other reviewer might not appreciate their efficiency or quality, but I certainly do.',
     subj: 'I',
     verb: 'might not appreciate',
     obj: 'efficiency',
@@ -36385,7 +37182,8 @@ module.exports = [
     obj: 'her',
   },
   {
-    txt: "Great for the kiddies - they love the labyrinth (don't forget to tell 'em it s really a ' pagen ' thing ! ).",
+    txt:
+      "Great for the kiddies - they love the labyrinth (don't forget to tell 'em it s really a ' pagen ' thing ! ).",
     subj: 'it',
     verb: 'Great',
     obj: "'em",
@@ -36411,7 +37209,8 @@ module.exports = [
     obj: 'phone',
   },
   {
-    txt: 'She sort of appologized for Dan taking the day off to go skiing - but he could do the repair on Sunday!',
+    txt:
+      'She sort of appologized for Dan taking the day off to go skiing - but he could do the repair on Sunday!',
     subj: 'he',
     verb: 'sort of appologized',
     obj: 'repair',
@@ -36423,7 +37222,8 @@ module.exports = [
     obj: 'repair',
   },
   {
-    txt: 'I enjoyed speaking with Dan, and learning more about how the springs are sized for these doors.',
+    txt:
+      'I enjoyed speaking with Dan, and learning more about how the springs are sized for these doors.',
     subj: 'springs',
     verb: 'enjoyed',
     obj: 'more',
@@ -36482,13 +37282,15 @@ module.exports = [
     obj: 'staff',
   },
   {
-    txt: 'I came in for alterations (free, by the way) and told her about a stain I had on my new leather purse.',
+    txt:
+      'I came in for alterations (free, by the way) and told her about a stain I had on my new leather purse.',
     subj: 'I',
     verb: 'came in',
     obj: 'her',
   },
   {
-    txt: 'She immediately went to the back, brought out leather cleaner and cleaned my purse on the spot.',
+    txt:
+      'She immediately went to the back, brought out leather cleaner and cleaned my purse on the spot.',
     subj: 'She',
     verb: 'immediately went',
     obj: 'purse',
@@ -36519,7 +37321,8 @@ module.exports = [
     obj: 'plenty',
   },
   {
-    txt: 'The service was ok, our waitress kept forgetting our drinks even though we reminded her several times.',
+    txt:
+      'The service was ok, our waitress kept forgetting our drinks even though we reminded her several times.',
     subj: 'we',
     verb: 'was ok',
     obj: 'her',
@@ -36574,7 +37377,8 @@ module.exports = [
     obj: 'place',
   },
   {
-    txt: "Their Club sandwich looks tasty, maybe that'll change my mind .... and a different server.",
+    txt:
+      "Their Club sandwich looks tasty, maybe that'll change my mind .... and a different server.",
     subj: 'that',
     verb: 'looks',
     obj: 'mind',
@@ -36587,7 +37391,8 @@ module.exports = [
     obj: 'needs',
   },
   {
-    txt: 'they seemed more interested in helping me find the right car rather then just make a sale.',
+    txt:
+      'they seemed more interested in helping me find the right car rather then just make a sale.',
     subj: 'they',
     verb: 'seemed more',
     obj: 'sale',
@@ -36768,7 +37573,8 @@ module.exports = [
     obj: 'Dr',
   },
   {
-    txt: 'He instantaneously put me at ease and his ongoing treatments have been absolutely pain free.',
+    txt:
+      'He instantaneously put me at ease and his ongoing treatments have been absolutely pain free.',
     subj: 'treatments',
     verb: 'instantaneously put',
     obj: 'me',
@@ -36788,7 +37594,8 @@ module.exports = [
     obj: 'me',
   },
   {
-    txt: 'He is always prepared to go the extra mile to ensure that any patient discomfort is dealt with immediately –',
+    txt:
+      'He is always prepared to go the extra mile to ensure that any patient discomfort is dealt with immediately –',
     subj: 'discomfort',
     verb: 'is always prepared',
     obj: 'mile',
@@ -36813,13 +37620,15 @@ module.exports = [
     obj: 'review',
   },
   {
-    txt: "Very affordable (don't call it cheap) and their trimmers were quick and courteous when I got home from work.",
+    txt:
+      "Very affordable (don't call it cheap) and their trimmers were quick and courteous when I got home from work.",
     subj: 'I',
     verb: 'Very affordable do',
     obj: 'it',
   },
   {
-    txt: 'And the salsa, be sure to ask for a jar and have plenty of chips around, you will need them .....',
+    txt:
+      'And the salsa, be sure to ask for a jar and have plenty of chips around, you will need them .....',
     subj: 'you',
     verb: 'salsa be',
     obj: 'them',
@@ -36890,7 +37699,8 @@ module.exports = [
     obj: 'place',
   },
   {
-    txt: 'I am waiting longer at BNA for my pickups and last time I parked with them, they lost my car key.',
+    txt:
+      'I am waiting longer at BNA for my pickups and last time I parked with them, they lost my car key.',
     subj: 'they',
     verb: 'am waiting longer',
     obj: 'key',
@@ -37036,7 +37846,8 @@ module.exports = [
     obj: 'door',
   },
   {
-    txt: 'Since they consider this an upgrade, they let their other rooms fill up and would not change our room.',
+    txt:
+      'Since they consider this an upgrade, they let their other rooms fill up and would not change our room.',
     subj: 'they',
     verb: 'let',
     obj: 'room',
@@ -37075,13 +37886,15 @@ module.exports = [
     obj: 'tile',
   },
   {
-    txt: 'They had the work done in about half the time quoted which made me and my wife extremely happy.',
+    txt:
+      'They had the work done in about half the time quoted which made me and my wife extremely happy.',
     subj: 'which',
     verb: 'had',
     obj: 'me',
   },
   {
-    txt: 'We have had nothing but compliments on our bathroom when guest come over - who would have guessed that one?',
+    txt:
+      'We have had nothing but compliments on our bathroom when guest come over - who would have guessed that one?',
     subj: 'who',
     verb: 'have had',
     obj: 'one',
@@ -37145,7 +37958,8 @@ module.exports = [
     obj: 'seal',
   },
   {
-    txt: 'I admit that I should have paid attention to this kind of little things while test drive.',
+    txt:
+      'I admit that I should have paid attention to this kind of little things while test drive.',
     subj: 'I',
     verb: 'admit',
     obj: 'attention',
@@ -37157,7 +37971,8 @@ module.exports = [
     obj: 'car',
   },
   {
-    txt: 'They told me that this is not under warranty and want to charge me $ 175 just to diagnose the problem!',
+    txt:
+      'They told me that this is not under warranty and want to charge me $ 175 just to diagnose the problem!',
     subj: 'this',
     verb: 'told',
     obj: 'problem',
@@ -37196,7 +38011,8 @@ module.exports = [
     obj: 'feeling',
   },
   {
-    txt: 'I had my wedding luncheon at this BJ s restaurant, and it was one of the best choices that I made.',
+    txt:
+      'I had my wedding luncheon at this BJ s restaurant, and it was one of the best choices that I made.',
     subj: 'I',
     verb: 'had',
     obj: 'that',
@@ -37229,7 +38045,8 @@ module.exports = [
     obj: 'types',
   },
   {
-    txt: 'I really appreciate BJ s for making that special day even better with their wonderful food and service.',
+    txt:
+      'I really appreciate BJ s for making that special day even better with their wonderful food and service.',
     subj: 'I',
     verb: 'really appreciate',
     obj: 'day',
@@ -37285,13 +38102,15 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: 'The meal was extremely overpriced and lacked flavor, especially for being a special NYE menu.',
+    txt:
+      'The meal was extremely overpriced and lacked flavor, especially for being a special NYE menu.',
     subj: 'meal',
     verb: 'was extremely overpriced',
     obj: 'flavor',
   },
   {
-    txt: 'The limited menu had few appetizing options and the NYE special packages were way overpriced.',
+    txt:
+      'The limited menu had few appetizing options and the NYE special packages were way overpriced.',
     subj: 'packages',
     verb: 'had',
     obj: 'options',
@@ -37323,7 +38142,8 @@ module.exports = [
     obj: 'you',
   },
   {
-    txt: 'Before using FusionRetail Before installing FusionRetail store was running on a dos based software.',
+    txt:
+      'Before using FusionRetail Before installing FusionRetail store was running on a dos based software.',
     subj: 'store',
     verb: 'was running',
     obj: 'FusionRetail',
@@ -37398,7 +38218,8 @@ module.exports = [
     obj: 'Paradero',
   },
   {
-    txt: 'Disatisfied customer, I went through Kitchen Aid and used one of their recommended vendors.',
+    txt:
+      'Disatisfied customer, I went through Kitchen Aid and used one of their recommended vendors.',
     subj: 'I',
     verb: 'customer',
     obj: 'one',
@@ -37437,7 +38258,8 @@ module.exports = [
     obj: 'vendors',
   },
   {
-    txt: 'First let me start out by saying, that I have had very nice pedicures at Lovely Nails on Military Road.',
+    txt:
+      'First let me start out by saying, that I have had very nice pedicures at Lovely Nails on Military Road.',
     subj: 'I',
     verb: 'First let',
     obj: 'pedicures',
@@ -37491,7 +38313,8 @@ module.exports = [
     obj: 'plan',
   },
   {
-    txt: "The office is shared with a foot doctor and it's very sterile and medical feeling, which I liked.",
+    txt:
+      "The office is shared with a foot doctor and it's very sterile and medical feeling, which I liked.",
     subj: 'I',
     verb: 'shared',
     obj: 'which',
@@ -37503,7 +38326,8 @@ module.exports = [
     obj: 'acupuncture',
   },
   {
-    txt: 'The sessions were nice and I felt relaxed after them but did not notice any changes with my cycles.',
+    txt:
+      'The sessions were nice and I felt relaxed after them but did not notice any changes with my cycles.',
     subj: 'I',
     verb: 'were nice',
     obj: 'changes',
@@ -37554,13 +38378,15 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: 'They phoned the same day, confirmed it was the gearbox quoted me the job, I gave the go ahead.',
+    txt:
+      'They phoned the same day, confirmed it was the gearbox quoted me the job, I gave the go ahead.',
     subj: 'I',
     verb: 'phoned',
     obj: 'ahead',
   },
   {
-    txt: 'Now my car s gears and brakes have never run so well ... ever it s like driving a new car.',
+    txt:
+      'Now my car s gears and brakes have never run so well ... ever it s like driving a new car.',
     subj: 'it',
     verb: 'have never run so',
     obj: 'car',
@@ -37586,7 +38412,8 @@ module.exports = [
     obj: 'sampler',
   },
   {
-    txt: 'All were awesome, & I had a Dogwood Grilled Cheese which was enjoyable with the fine beers.',
+    txt:
+      'All were awesome, & I had a Dogwood Grilled Cheese which was enjoyable with the fine beers.',
     subj: 'which',
     verb: 'were awesome',
     obj: 'Cheese',
@@ -37604,7 +38431,8 @@ module.exports = [
     obj: 'Fusion',
   },
   {
-    txt: 'Turns out the engine had no oil, and when oil was put it, it would just run out of the filter.',
+    txt:
+      'Turns out the engine had no oil, and when oil was put it, it would just run out of the filter.',
     subj: 'it',
     verb: 'Turns',
     obj: 'oil',
@@ -37623,7 +38451,8 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: 'I would not recommend this shop for anything, not even something as simple as an oil change.',
+    txt:
+      'I would not recommend this shop for anything, not even something as simple as an oil change.',
     subj: 'I',
     verb: 'would not recommend',
     obj: 'shop',
@@ -37716,7 +38545,8 @@ module.exports = [
     obj: 'time',
   },
   {
-    txt: "I 'm sure it s not every day that a funeral director sees the same family in such a short time.",
+    txt:
+      "I 'm sure it s not every day that a funeral director sees the same family in such a short time.",
     subj: 'director',
     verb: "'m sure",
     obj: 'family',
@@ -37817,7 +38647,8 @@ module.exports = [
     obj: 'myself',
   },
   {
-    txt: 'Rate the routes, with understandable markings and a more detailed system than easy, moderate, and hard.',
+    txt:
+      'Rate the routes, with understandable markings and a more detailed system than easy, moderate, and hard.',
     subj: null,
     verb: 'Rate',
     obj: 'routes',
@@ -37836,13 +38667,15 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: 'Having a team was the best because they kept the flow of the wedding going the whole time!',
+    txt:
+      'Having a team was the best because they kept the flow of the wedding going the whole time!',
     subj: 'they',
     verb: 'best',
     obj: 'flow',
   },
   {
-    txt: "They may look young but don't let that fool you, as their knowledge of music far surpassed what we expected.",
+    txt:
+      "They may look young but don't let that fool you, as their knowledge of music far surpassed what we expected.",
     subj: 'we',
     verb: 'may look',
     obj: 'what',
@@ -37878,7 +38711,8 @@ module.exports = [
     obj: 'appointment',
   },
   {
-    txt: 'They made me feel confident in what they would do, and treated me like a member of their own family.',
+    txt:
+      'They made me feel confident in what they would do, and treated me like a member of their own family.',
     subj: 'they',
     verb: 'made',
     obj: 'me',
@@ -37942,7 +38776,8 @@ module.exports = [
     obj: 'dollars',
   },
   {
-    txt: "You'd think they would do a good job but they don't care unless they are getting paid full price.",
+    txt:
+      "You'd think they would do a good job but they don't care unless they are getting paid full price.",
     subj: 'they',
     verb: "'d think",
     obj: 'price',
@@ -37985,7 +38820,8 @@ module.exports = [
     obj: 'what',
   },
   {
-    txt: 'They eventually turned it over to a collection agency and now will not even discuss the matter.',
+    txt:
+      'They eventually turned it over to a collection agency and now will not even discuss the matter.',
     subj: 'They',
     verb: 'eventually turned',
     obj: 'matter',
@@ -38053,13 +38889,15 @@ module.exports = [
     obj: '5000',
   },
   {
-    txt: 'Because they had room to do 5000, they created the larger amount, and shipped them early.',
+    txt:
+      'Because they had room to do 5000, they created the larger amount, and shipped them early.',
     subj: 'they',
     verb: 'created',
     obj: 'them',
   },
   {
-    txt: 'I recommend this company to ANYONE and everyone that needs great work done at a reasonable rate!',
+    txt:
+      'I recommend this company to ANYONE and everyone that needs great work done at a reasonable rate!',
     subj: 'that',
     verb: 'recommend',
     obj: 'work',
@@ -38089,7 +38927,8 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: 'The next day i took it to 2 auto shops and they both told me the same thing, engine is junk.',
+    txt:
+      'The next day i took it to 2 auto shops and they both told me the same thing, engine is junk.',
     subj: 'engine',
     verb: 'took',
     obj: 'thing',
@@ -38148,7 +38987,8 @@ module.exports = [
     obj: 'you',
   },
   {
-    txt: 'On a recent event quote that I had done, they came in thousands of dollars over their local competition.',
+    txt:
+      'On a recent event quote that I had done, they came in thousands of dollars over their local competition.',
     subj: 'they',
     verb: 'came in',
     obj: 'that',
@@ -38238,7 +39078,8 @@ module.exports = [
     obj: 'facilities',
   },
   {
-    txt: 'The point is -- FHS gives you the opportunity to make it to a good college, but you need to work hard.',
+    txt:
+      'The point is -- FHS gives you the opportunity to make it to a good college, but you need to work hard.',
     subj: 'you',
     verb: 'is',
     obj: 'it',
@@ -38304,7 +39145,8 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: 'I have been going to Warner Family for a number of years and would highly recommend it to anyone.',
+    txt:
+      'I have been going to Warner Family for a number of years and would highly recommend it to anyone.',
     subj: 'I',
     verb: 'have been going',
     obj: 'it',
@@ -38344,7 +39186,8 @@ module.exports = [
     obj: 'what',
   },
   {
-    txt: 'We read the good reviews before going and had high hopes .. but to our dismay it did nt turn out that way!',
+    txt:
+      'We read the good reviews before going and had high hopes .. but to our dismay it did nt turn out that way!',
     subj: 'it',
     verb: 'read',
     obj: 'way',
@@ -38391,7 +39234,8 @@ module.exports = [
     obj: 'veggies',
   },
   {
-    txt: 'Every time we go they seem to have a different ingredient or two which keeps things interesting.',
+    txt:
+      'Every time we go they seem to have a different ingredient or two which keeps things interesting.',
     subj: 'which',
     verb: 'seem',
     obj: 'things',
@@ -38443,7 +39287,8 @@ module.exports = [
     obj: 'reviews',
   },
   {
-    txt: 'Before treatment, my food cravings were " out of control " which caused me to be stressed out.',
+    txt:
+      'Before treatment, my food cravings were " out of control " which caused me to be stressed out.',
     subj: 'which',
     verb: 'control',
     obj: 'me',
@@ -38487,7 +39332,8 @@ module.exports = [
     obj: 'role',
   },
   {
-    txt: 'The owners of Bowtie manged to add something new while preserving what was already there.',
+    txt:
+      'The owners of Bowtie manged to add something new while preserving what was already there.',
     subj: 'owners',
     verb: 'manged',
     obj: 'what',
@@ -38544,7 +39390,8 @@ module.exports = [
     obj: 'ideas',
   },
   {
-    txt: 'I bought a beginner s quilling set and like making the filigree forms you can make and add to other crafts.',
+    txt:
+      'I bought a beginner s quilling set and like making the filigree forms you can make and add to other crafts.',
     subj: 'you',
     verb: 'bought',
     obj: 'crafts',
@@ -38557,7 +39404,8 @@ module.exports = [
     obj: 'values',
   },
   {
-    txt: 'This store is a real gem and has much to offer the serious crafter or the occasional crafter.',
+    txt:
+      'This store is a real gem and has much to offer the serious crafter or the occasional crafter.',
     subj: 'store',
     verb: 'gem',
     obj: 'crafter',
@@ -38642,7 +39490,8 @@ module.exports = [
     obj: 'price',
   },
   {
-    txt: "Either these people don't know anything about what they are renting, or worse - they are bait and switching.",
+    txt:
+      "Either these people don't know anything about what they are renting, or worse - they are bait and switching.",
     subj: 'they',
     verb: "don't know",
     obj: 'what',
@@ -38655,13 +39504,15 @@ module.exports = [
     obj: 'them',
   },
   {
-    txt: 'The cost was certainly reasonable and I will continue my patronage of The Laundry Tub in the future.',
+    txt:
+      'The cost was certainly reasonable and I will continue my patronage of The Laundry Tub in the future.',
     subj: 'I',
     verb: 'was certainly reasonable',
     obj: 'patronage',
   },
   {
-    txt: "Didn't hurt any that they knew my name by my second visit and greeted me warmly then and on my third visit.",
+    txt:
+      "Didn't hurt any that they knew my name by my second visit and greeted me warmly then and on my third visit.",
     subj: 'they',
     verb: "Didn't hurt",
     obj: 'me',
@@ -38680,7 +39531,8 @@ module.exports = [
     obj: 'you',
   },
   {
-    txt: 'I recently took a rescue puppy to this Clinic and I was SHOCKED at how well Romeo and My family was treated.',
+    txt:
+      'I recently took a rescue puppy to this Clinic and I was SHOCKED at how well Romeo and My family was treated.',
     subj: 'Romeo',
     verb: 'recently took',
     obj: 'puppy',
@@ -38693,13 +39545,15 @@ module.exports = [
     obj: 'them',
   },
   {
-    txt: 'lol They where super friendly towards us and treated us like people not walking bags of cash.',
+    txt:
+      'lol They where super friendly towards us and treated us like people not walking bags of cash.',
     subj: 'They',
     verb: 'where super',
     obj: 'us',
   },
   {
-    txt: 'In this day it s rare to find such wonderful people who CARE, Not the kind of want to make cash.',
+    txt:
+      'In this day it s rare to find such wonderful people who CARE, Not the kind of want to make cash.',
     subj: 'who',
     verb: 's rare',
     obj: 'cash',
@@ -38724,7 +39578,8 @@ module.exports = [
     obj: 'them',
   },
   {
-    txt: 'In fact I look forward to taking my animals to the vet simply because of how my animals and I are treated.',
+    txt:
+      'In fact I look forward to taking my animals to the vet simply because of how my animals and I are treated.',
     subj: 'animals',
     verb: 'look forward',
     obj: 'animals',
@@ -38744,7 +39599,8 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: "Nice local pub, excellent food (especially wings ), and don't go if you have a limited amount of time.",
+    txt:
+      "Nice local pub, excellent food (especially wings ), and don't go if you have a limited amount of time.",
     subj: 'you',
     verb: 'pub',
     obj: 'amount',
@@ -38763,7 +39619,8 @@ module.exports = [
     obj: 'store',
   },
   {
-    txt: 'the staff is very personable & actually care about the customers safety rather than taking there money.',
+    txt:
+      'the staff is very personable & actually care about the customers safety rather than taking there money.',
     subj: 'staff',
     verb: 'is very personable',
     obj: 'money',
@@ -38783,7 +39640,8 @@ module.exports = [
     obj: 'yourself',
   },
   {
-    txt: 'When having your car worked on you have to trust the mechanic & this Midas is truly someone you can trust!',
+    txt:
+      'When having your car worked on you have to trust the mechanic & this Midas is truly someone you can trust!',
     subj: 'you',
     verb: 'have',
     obj: 'mechanic',
@@ -38841,7 +39699,8 @@ module.exports = [
     obj: 'answer',
   },
   {
-    txt: 'After checking for signs of fire or smoke and seeing none, I decided to just pack up and leave.',
+    txt:
+      'After checking for signs of fire or smoke and seeing none, I decided to just pack up and leave.',
     subj: 'I',
     verb: 'decided',
     obj: 'none',
@@ -38933,7 +39792,8 @@ module.exports = [
     obj: 'track',
   },
   {
-    txt: "The only reason I 'm giving 3 stars instead of 1 or 2, I should admit, nothing was broken.",
+    txt:
+      "The only reason I 'm giving 3 stars instead of 1 or 2, I should admit, nothing was broken.",
     subj: 'nothing',
     verb: 'reason',
     obj: 'stars',
@@ -39054,7 +39914,8 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: 'When I inquired he rudely replied " in the morning when things are checked out you \'ll get it back . "',
+    txt:
+      'When I inquired he rudely replied " in the morning when things are checked out you \'ll get it back . "',
     subj: 'you',
     verb: 'rudely replied',
     obj: 'it',
@@ -39104,7 +39965,8 @@ module.exports = [
     obj: 'her',
   },
   {
-    txt: "I called them back a few hours after putting my Bodhi down and they still wouldn't budge.",
+    txt:
+      "I called them back a few hours after putting my Bodhi down and they still wouldn't budge.",
     subj: 'they',
     verb: 'called',
     obj: 'Bodhi',
@@ -39136,7 +39998,8 @@ module.exports = [
     obj: 'reviews',
   },
   {
-    txt: 'I thought to get a decent pizza the only way was at a fancy restaurant, and I have to get a whole pie.',
+    txt:
+      'I thought to get a decent pizza the only way was at a fancy restaurant, and I have to get a whole pie.',
     subj: 'I',
     verb: 'thought',
     obj: 'pie',
@@ -39187,7 +40050,8 @@ module.exports = [
     obj: 'yorkedness',
   },
   {
-    txt: "We visited on 7/26/08 for dinner We received a gift certificate for the Mama Mia's on Greenfield Ave.",
+    txt:
+      "We visited on 7/26/08 for dinner We received a gift certificate for the Mama Mia's on Greenfield Ave.",
     subj: 'We',
     verb: 'visited',
     obj: 'certificate',
@@ -39225,7 +40089,8 @@ module.exports = [
     obj: 'Mia',
   },
   {
-    txt: 'There are other places with food just as good with management that values customers and employees much more.',
+    txt:
+      'There are other places with food just as good with management that values customers and employees much more.',
     subj: 'that',
     verb: 'are',
     obj: 'customers',
@@ -39286,7 +40151,8 @@ module.exports = [
     obj: 'ham',
   },
   {
-    txt: 'also, you can call em ahead of time, and then go to pick up ur food, or have it delivered **.',
+    txt:
+      'also, you can call em ahead of time, and then go to pick up ur food, or have it delivered **.',
     subj: 'you',
     verb: 'also can call',
     obj: 'it',
@@ -39298,13 +40164,15 @@ module.exports = [
     obj: 'stuff',
   },
   {
-    txt: 'it usually takes 20 mins for a mezza luna, as they have to add pure delicious extract to the mix.',
+    txt:
+      'it usually takes 20 mins for a mezza luna, as they have to add pure delicious extract to the mix.',
     subj: 'they',
     verb: 'usually takes',
     obj: 'extract',
   },
   {
-    txt: 'they do that whole thing where you sandwich the pepperoni between layers of cheese for + 32 delicious.',
+    txt:
+      'they do that whole thing where you sandwich the pepperoni between layers of cheese for + 32 delicious.',
     subj: 'you',
     verb: 'do',
     obj: 'pepperoni',
@@ -39322,13 +40190,15 @@ module.exports = [
     obj: 'blows',
   },
   {
-    txt: "This was back between '05 and '09 and I don't remember how many times we 've had it delivered.",
+    txt:
+      "This was back between '05 and '09 and I don't remember how many times we 've had it delivered.",
     subj: 'it',
     verb: "'05",
     obj: 'times',
   },
   {
-    txt: "Perhaps they don't deliver anymore, but the deliciousness of a mezza luna certainly warrants a pickup.",
+    txt:
+      "Perhaps they don't deliver anymore, but the deliciousness of a mezza luna certainly warrants a pickup.",
     subj: 'deliciousness',
     verb: "don't deliver anymore",
     obj: 'pickup',
@@ -39340,7 +40210,8 @@ module.exports = [
     obj: 'XF',
   },
   {
-    txt: 'Michael Chestney was very pleasant and patient with my wife and she suggested I go check it out.',
+    txt:
+      'Michael Chestney was very pleasant and patient with my wife and she suggested I go check it out.',
     subj: 'I',
     verb: 'was very pleasant',
     obj: 'it',
@@ -39526,13 +40397,15 @@ module.exports = [
     obj: 'what',
   },
   {
-    txt: 'It was very upsetting to see this kind of behavior especially in front of my four year old.',
+    txt:
+      'It was very upsetting to see this kind of behavior especially in front of my four year old.',
     subj: null,
     verb: 'was very upsetting',
     obj: 'kind',
   },
   {
-    txt: 'He was in the process of making me a pie and when I got home, the pie was the worst I have ever seen.',
+    txt:
+      'He was in the process of making me a pie and when I got home, the pie was the worst I have ever seen.',
     subj: 'I',
     verb: 'process',
     obj: 'pie',
@@ -39558,7 +40431,8 @@ module.exports = [
     obj: '*ss',
   },
   {
-    txt: 'A restaurant with this many patrons willing to stand in line just to order tacos must be good, right?',
+    txt:
+      'A restaurant with this many patrons willing to stand in line just to order tacos must be good, right?',
     subj: 'restaurant',
     verb: 'must be good',
     obj: 'tacos',
@@ -39577,7 +40451,8 @@ module.exports = [
     obj: 'results',
   },
   {
-    txt: "And don't even think about asking to speak to the manager because this guy is, and pardon my French, a jerk.",
+    txt:
+      "And don't even think about asking to speak to the manager because this guy is, and pardon my French, a jerk.",
     subj: 'guy',
     verb: "don't even think",
     obj: 'French',
@@ -39616,7 +40491,8 @@ module.exports = [
     obj: 'memory',
   },
   {
-    txt: 'Our friend is a world traveler and loves unpretentious dining experiences and inspired food.',
+    txt:
+      'Our friend is a world traveler and loves unpretentious dining experiences and inspired food.',
     subj: 'friend',
     verb: 'traveler',
     obj: 'experiences',
@@ -39701,7 +40577,8 @@ module.exports = [
     obj: 'operations',
   },
   {
-    txt: 'This can tend to be a stressful experience in itself let alone adding crossing boarders for the first time.',
+    txt:
+      'This can tend to be a stressful experience in itself let alone adding crossing boarders for the first time.',
     subj: 'This',
     verb: 'can tend',
     obj: 'boarders',
@@ -39714,7 +40591,8 @@ module.exports = [
     obj: 'accommodations',
   },
   {
-    txt: 'I found the hotel to be amazingly clean, not to mention very well adorned with many pleasant surprises.',
+    txt:
+      'I found the hotel to be amazingly clean, not to mention very well adorned with many pleasant surprises.',
     subj: 'I',
     verb: 'found',
     obj: 'hotel',
@@ -39753,13 +40631,15 @@ module.exports = [
     obj: 'resturant',
   },
   {
-    txt: 'Right away they told us that it was the same great food with the same prices so off we went.',
+    txt:
+      'Right away they told us that it was the same great food with the same prices so off we went.',
     subj: 'we',
     verb: 'told',
     obj: 'us',
   },
   {
-    txt: 'After looking at the menu and seeing the new menu items they had, we knew we were in for a treat!',
+    txt:
+      'After looking at the menu and seeing the new menu items they had, we knew we were in for a treat!',
     subj: 'we',
     verb: 'knew',
     obj: 'items',
@@ -39891,7 +40771,8 @@ module.exports = [
     obj: 'most',
   },
   {
-    txt: "The excellent windows have performed without any problems, but that's not why I 'm writing my review.",
+    txt:
+      "The excellent windows have performed without any problems, but that's not why I 'm writing my review.",
     subj: 'I',
     verb: 'have performed',
     obj: 'review',
@@ -39909,7 +40790,8 @@ module.exports = [
     obj: 'screen',
   },
   {
-    txt: 'Next, they tried to force the window with a pry bar and then to break the window with a hammer.',
+    txt:
+      'Next, they tried to force the window with a pry bar and then to break the window with a hammer.',
     subj: 'they',
     verb: 'tried',
     obj: 'window',
@@ -39929,7 +40811,8 @@ module.exports = [
     obj: 'me',
   },
   {
-    txt: "Lo and behold, they replaced the screen (which had to be ordered) yesterday and didn't charge me a dime.",
+    txt:
+      "Lo and behold, they replaced the screen (which had to be ordered) yesterday and didn't charge me a dime.",
     subj: 'which',
     verb: 'replaced',
     obj: 'dime',
@@ -40028,7 +40911,8 @@ module.exports = [
     obj: 'answers',
   },
   {
-    txt: "For instance I asked who owned Mazda and he said with confidence that was GM, which isn't true.",
+    txt:
+      "For instance I asked who owned Mazda and he said with confidence that was GM, which isn't true.",
     subj: 'which',
     verb: 'asked',
     obj: 'Mazda',
@@ -40041,7 +40925,8 @@ module.exports = [
     obj: 'him',
   },
   {
-    txt: 'I called in my order and upon arriving to pick it up, they got my order confused with someone else s.',
+    txt:
+      'I called in my order and upon arriving to pick it up, they got my order confused with someone else s.',
     subj: 'they',
     verb: 'called',
     obj: 'order',
@@ -40053,7 +40938,8 @@ module.exports = [
     obj: 'me',
   },
   {
-    txt: 'They also got my friend s order mixed up and wanted to charger her $ 10 more than what she had wanted.',
+    txt:
+      'They also got my friend s order mixed up and wanted to charger her $ 10 more than what she had wanted.',
     subj: 'she',
     verb: 'also got',
     obj: 'more',
@@ -40103,7 +40989,8 @@ module.exports = [
     obj: 'vehicle',
   },
   {
-    txt: 'We took it back in to have it repaired again, and less than a week later the second compressor went out.',
+    txt:
+      'We took it back in to have it repaired again, and less than a week later the second compressor went out.',
     subj: 'compressor',
     verb: 'took',
     obj: 'it',
@@ -40116,7 +41003,8 @@ module.exports = [
     obj: 'car',
   },
   {
-    txt: 'So for the 4th time in 5 months and the third time in 2 weeks, we brought the car back again.',
+    txt:
+      'So for the 4th time in 5 months and the third time in 2 weeks, we brought the car back again.',
     subj: 'we',
     verb: 'brought',
     obj: 'car',
@@ -40154,7 +41042,8 @@ module.exports = [
     obj: 'company',
   },
   {
-    txt: 'I dropped off a sheet metal piece that I needed copied due to th it was needing to be replaced.',
+    txt:
+      'I dropped off a sheet metal piece that I needed copied due to th it was needing to be replaced.',
     subj: 'it',
     verb: 'dropped',
     obj: 'that',
@@ -40178,7 +41067,8 @@ module.exports = [
     obj: 'piece',
   },
   {
-    txt: 'I took the original piece of metal and rigged it to make due since I had to complete the job.',
+    txt:
+      'I took the original piece of metal and rigged it to make due since I had to complete the job.',
     subj: 'I',
     verb: 'took',
     obj: 'job',
@@ -40215,7 +41105,8 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: 'She told me that was to bad she would do nothing to help me since she could not use or resell the piece.',
+    txt:
+      'She told me that was to bad she would do nothing to help me since she could not use or resell the piece.',
     subj: 'she',
     verb: 'told',
     obj: 'piece',
@@ -40227,7 +41118,8 @@ module.exports = [
     obj: 'credit',
   },
   {
-    txt: 'With a smirk on her face she told me NO MONEY IS BEING RETURNED and THAT IS THE WAY IT WAS.',
+    txt:
+      'With a smirk on her face she told me NO MONEY IS BEING RETURNED and THAT IS THE WAY IT WAS.',
     subj: 'IT',
     verb: 'told',
     obj: 'me',
@@ -40239,7 +41131,8 @@ module.exports = [
     obj: 'COMPANY',
   },
   {
-    txt: 'There are to many people that need our business to have to put up with this unfair treatment !!!!!',
+    txt:
+      'There are to many people that need our business to have to put up with this unfair treatment !!!!!',
     subj: 'that',
     verb: 'are to',
     obj: 'business',
@@ -40286,7 +41179,8 @@ module.exports = [
     obj: 'proof',
   },
   {
-    txt: "I would understand if I was being treated this way by a staff member but the club's actual OWNER ?!",
+    txt:
+      "I would understand if I was being treated this way by a staff member but the club's actual OWNER ?!",
     subj: 'I',
     verb: 'would understand',
     obj: 'way',
@@ -40335,7 +41229,8 @@ module.exports = [
     obj: 'you',
   },
   {
-    txt: "What was I supposed to do, say I can't afford you and walk out with crap all over my hair.",
+    txt:
+      "What was I supposed to do, say I can't afford you and walk out with crap all over my hair.",
     subj: 'I',
     verb: 'supposed',
     obj: 'you',
@@ -40348,7 +41243,8 @@ module.exports = [
     obj: 'color',
   },
   {
-    txt: "The other stylists around me kept pressuring me saying he's so wonderful, you 're going to love your hair.",
+    txt:
+      "The other stylists around me kept pressuring me saying he's so wonderful, you 're going to love your hair.",
     subj: 'you',
     verb: 'kept',
     obj: 'hair',
@@ -40360,7 +41256,8 @@ module.exports = [
     obj: 'total',
   },
   {
-    txt: 'Derrick did a terrible job, was a complete jerk the entire time, and I had no warning as to the price.',
+    txt:
+      'Derrick did a terrible job, was a complete jerk the entire time, and I had no warning as to the price.',
     subj: 'I',
     verb: 'did',
     obj: 'warning',
@@ -40372,7 +41269,8 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: 'He also told me that he worked on the cast of will and grace and that they were all jerks.',
+    txt:
+      'He also told me that he worked on the cast of will and grace and that they were all jerks.',
     subj: 'they',
     verb: 'also told',
     obj: 'me',
@@ -40384,13 +41282,15 @@ module.exports = [
     obj: 'him',
   },
   {
-    txt: 'Working with Rod Jacobsen was my first experience working with a CPA, so I did not know what to expect.',
+    txt:
+      'Working with Rod Jacobsen was my first experience working with a CPA, so I did not know what to expect.',
     subj: 'I',
     verb: 'experience',
     obj: 'what',
   },
   {
-    txt: 'However, then I asked to amend my return to apply a credit I had just become eligible for.',
+    txt:
+      'However, then I asked to amend my return to apply a credit I had just become eligible for.',
     subj: 'I',
     verb: 'asked',
     obj: 'credit',
@@ -40437,7 +41337,8 @@ module.exports = [
     obj: 'penalty',
   },
   {
-    txt: 'I may not have to pay a penalty, yet, but this is NOT what I had in mind when hired these guys.',
+    txt:
+      'I may not have to pay a penalty, yet, but this is NOT what I had in mind when hired these guys.',
     subj: 'I',
     verb: 'may not have',
     obj: 'guys',
@@ -40549,7 +41450,8 @@ module.exports = [
     obj: 'rating',
   },
   {
-    txt: 'On August 21st, 2009 I ordered furniture from Hickory Furniture Mart and contracted for HDS to deliver it.',
+    txt:
+      'On August 21st, 2009 I ordered furniture from Hickory Furniture Mart and contracted for HDS to deliver it.',
     subj: 'HDS',
     verb: 'ordered',
     obj: 'it',
@@ -40561,7 +41463,8 @@ module.exports = [
     obj: 'date',
   },
   {
-    txt: 'I spent $ 2300 on the bedroom suite, which was complete and excellent condition on the showroom floor.',
+    txt:
+      'I spent $ 2300 on the bedroom suite, which was complete and excellent condition on the showroom floor.',
     subj: 'which',
     verb: 'spent',
     obj: '$',
@@ -40601,7 +41504,8 @@ module.exports = [
     obj: 'suites',
   },
   {
-    txt: 'Maybe then they will begin to understand poor customer service and terrible sit up service.',
+    txt:
+      'Maybe then they will begin to understand poor customer service and terrible sit up service.',
     subj: 'they',
     verb: 'then will begin',
     obj: 'service',
@@ -40627,7 +41531,8 @@ module.exports = [
     obj: 'instructions',
   },
   {
-    txt: 'I called the school most probably 10 times before I finally enrolled in a 20 hour package.',
+    txt:
+      'I called the school most probably 10 times before I finally enrolled in a 20 hour package.',
     subj: 'I',
     verb: 'called',
     obj: 'school',
@@ -40647,13 +41552,15 @@ module.exports = [
     obj: 'me',
   },
   {
-    txt: 'My heart pounded as I walked down and pounded even faster upon seeing Gerry in an SUV - Lexus!',
+    txt:
+      'My heart pounded as I walked down and pounded even faster upon seeing Gerry in an SUV - Lexus!',
     subj: 'I',
     verb: 'pounded',
     obj: 'Gerry',
   },
   {
-    txt: "I thought of canceling the lesson once again because I didn't feel comfortable driving an SUV.",
+    txt:
+      "I thought of canceling the lesson once again because I didn't feel comfortable driving an SUV.",
     subj: 'I',
     verb: 'thought',
     obj: 'SUV',
@@ -40665,7 +41572,8 @@ module.exports = [
     obj: 'shot',
   },
   {
-    txt: "I trust you and believe that you'll be able to handle this and all you have to do is to reciprocate !",
+    txt:
+      "I trust you and believe that you'll be able to handle this and all you have to do is to reciprocate !",
     subj: 'you',
     verb: 'trust',
     obj: 'this',
@@ -40773,7 +41681,8 @@ module.exports = [
     obj: 'them',
   },
   {
-    txt: 'He was going to operate and replace my bicuspid aortic valve due to critical aortic stenosis.',
+    txt:
+      'He was going to operate and replace my bicuspid aortic valve due to critical aortic stenosis.',
     subj: 'He',
     verb: 'was going',
     obj: 'valve',
@@ -40792,7 +41701,8 @@ module.exports = [
     obj: 'Proxy',
   },
   {
-    txt: 'He did not even give me the chance to say i would stay on the ventilator longer, which i would have.',
+    txt:
+      'He did not even give me the chance to say i would stay on the ventilator longer, which i would have.',
     subj: 'i',
     verb: 'did not even give',
     obj: 'which',
@@ -40805,7 +41715,8 @@ module.exports = [
     obj: 'me',
   },
   {
-    txt: 'I am just middle aged and do not want to die, but thanks to this doctor i have no other alternatives.',
+    txt:
+      'I am just middle aged and do not want to die, but thanks to this doctor i have no other alternatives.',
     subj: 'i',
     verb: 'aged',
     obj: 'alternatives',
@@ -40857,7 +41768,8 @@ module.exports = [
     obj: 'dog',
   },
   {
-    txt: "I 've toured this place and was impressed by how clean the place was, and all the options for the dogs.",
+    txt:
+      "I 've toured this place and was impressed by how clean the place was, and all the options for the dogs.",
     subj: 'place',
     verb: "'ve toured",
     obj: 'place',
@@ -41002,13 +41914,15 @@ module.exports = [
     obj: 'money',
   },
   {
-    txt: 'Within a week we noticed one of the boards on our gate splitting where a nail had gone in.',
+    txt:
+      'Within a week we noticed one of the boards on our gate splitting where a nail had gone in.',
     subj: 'nail',
     verb: 'noticed',
     obj: 'one',
   },
   {
-    txt: 'We called our representative who assured me he would call the office and have it taken care of.',
+    txt:
+      'We called our representative who assured me he would call the office and have it taken care of.',
     subj: 'he',
     verb: 'called',
     obj: 'care',
@@ -41066,7 +41980,8 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: 'I called the " 207 " number and listened to the same recording loop 3 times before I gave up.',
+    txt:
+      'I called the " 207 " number and listened to the same recording loop 3 times before I gave up.',
     subj: 'I',
     verb: 'called',
     obj: 'number',
@@ -41110,7 +42025,8 @@ module.exports = [
     obj: 'us',
   },
   {
-    txt: 'We returned after 3 PM, found no one there, and a note from the innkeeper with directions to our room.',
+    txt:
+      'We returned after 3 PM, found no one there, and a note from the innkeeper with directions to our room.',
     subj: 'We',
     verb: 'returned',
     obj: 'one',
@@ -41123,7 +42039,8 @@ module.exports = [
     obj: 'can',
   },
   {
-    txt: "If they think you 've taken a soda from your room home with you, they will charge you $ 1.50 per can.",
+    txt:
+      "If they think you 've taken a soda from your room home with you, they will charge you $ 1.50 per can.",
     subj: 'they',
     verb: 'will charge',
     obj: '$',
@@ -41190,7 +42107,8 @@ module.exports = [
     obj: 'everything',
   },
   {
-    txt: "I'd go back if I could get the last minute rate again of $ 99, but I wouldn't pay their rack rate.",
+    txt:
+      "I'd go back if I could get the last minute rate again of $ 99, but I wouldn't pay their rack rate.",
     subj: 'I',
     verb: "'d go back",
     obj: 'rate',
@@ -41203,7 +42121,8 @@ module.exports = [
     obj: 'food',
   },
   {
-    txt: "Though they are mostly excellent, you generally don't get enough forkfuls to know if you really love them.",
+    txt:
+      "Though they are mostly excellent, you generally don't get enough forkfuls to know if you really love them.",
     subj: 'you',
     verb: "generally don't get",
     obj: 'them',
@@ -41255,7 +42174,8 @@ module.exports = [
     obj: 'food',
   },
   {
-    txt: 'When we arrived at 5, and left circa 7, there were the same 4 or 5 empty tables surrounding us.',
+    txt:
+      'When we arrived at 5, and left circa 7, there were the same 4 or 5 empty tables surrounding us.',
     subj: 'tables',
     verb: 'were',
     obj: 'us',
@@ -41274,7 +42194,8 @@ module.exports = [
     obj: 'time',
   },
   {
-    txt: 'At my appointment the girl helping me was unable to adequately lace up some of the dresses.',
+    txt:
+      'At my appointment the girl helping me was unable to adequately lace up some of the dresses.',
     subj: 'girl',
     verb: 'was unable',
     obj: 'some',
@@ -41314,7 +42235,8 @@ module.exports = [
     obj: 'orders',
   },
   {
-    txt: "Whatever type of operation they are running, I 'm not interested and if you 're smart, you won't be either.",
+    txt:
+      "Whatever type of operation they are running, I 'm not interested and if you 're smart, you won't be either.",
     subj: 'you',
     verb: "'m not interested",
     obj: 'type',
@@ -41393,7 +42315,8 @@ module.exports = [
     obj: 'that',
   },
   {
-    txt: 'Once I returned to pick up my car, you can believe I spent quite a bit MORE time standing around waiting.',
+    txt:
+      'Once I returned to pick up my car, you can believe I spent quite a bit MORE time standing around waiting.',
     subj: 'I',
     verb: 'can believe',
     obj: 'time',
@@ -41406,19 +42329,22 @@ module.exports = [
     obj: 'total',
   },
   {
-    txt: 'Once I actually got back in my car, it was dirty and had grease all over the steering wheel.',
+    txt:
+      'Once I actually got back in my car, it was dirty and had grease all over the steering wheel.',
     subj: 'it',
     verb: 'was dirty',
     obj: 'grease',
   },
   {
-    txt: 'The following Friday, I returned with my car to go ahead and replace the other 3 tires, which were worn.',
+    txt:
+      'The following Friday, I returned with my car to go ahead and replace the other 3 tires, which were worn.',
     subj: 'which',
     verb: 'returned',
     obj: 'tires',
   },
   {
-    txt: "I would not have gone back, but I couldn't find the particular tire they'd used in stock anywhere else.",
+    txt:
+      "I would not have gone back, but I couldn't find the particular tire they'd used in stock anywhere else.",
     subj: 'they',
     verb: 'would not have gone back',
     obj: 'tire',
@@ -41445,7 +42371,8 @@ module.exports = [
     obj: 'quote',
   },
   {
-    txt: 'So I pointed this out to him, at which point he said they only had one of the correct tires in stock.',
+    txt:
+      'So I pointed this out to him, at which point he said they only had one of the correct tires in stock.',
     subj: 'they',
     verb: 'pointed',
     obj: 'one',
@@ -41464,7 +42391,8 @@ module.exports = [
     obj: 'which',
   },
   {
-    txt: 'Of course, they would be closing in 5 minutes, so I would have to hurry up or get it the next day.',
+    txt:
+      'Of course, they would be closing in 5 minutes, so I would have to hurry up or get it the next day.',
     subj: 'I',
     verb: 'would be closing',
     obj: 'it',
@@ -41490,13 +42418,15 @@ module.exports = [
     obj: 'flat',
   },
   {
-    txt: 'On Monday I called and again it was a big to - do to find anyone who knew anything about it.',
+    txt:
+      'On Monday I called and again it was a big to - do to find anyone who knew anything about it.',
     subj: 'who',
     verb: 'called',
     obj: 'anything',
   },
   {
-    txt: "Supposedly they will be holding it for me this evening, but I 'm sure that will also be a huge ordeal.",
+    txt:
+      "Supposedly they will be holding it for me this evening, but I 'm sure that will also be a huge ordeal.",
     subj: 'that',
     verb: 'will be holding',
     obj: 'it',

@@ -66,6 +66,8 @@ module.exports = [
   { match: '(#Noun && @hasComma) #Noun (and|or) [#PresentTense]', group: 0, tag: 'Noun', reason: 'noun-list' }, //3 feet
   { match: '(right|rights) of .', tag: 'Noun', reason: 'right-of' }, // a bit
   { match: 'a [bit]', group: 0, tag: 'Noun', reason: 'bit-2' },
+  // my first thought
+  { match: '#Possessive #Ordinal [#PastTense]', group: 0, tag: 'Noun', reason: 'first-thought' },
 
   //running-a-show
   { match: '#Gerund #Determiner [#Infinitive]', group: 0, tag: 'Noun', reason: 'running-a-show' },

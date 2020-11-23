@@ -49,7 +49,6 @@ module.exports = [
     oid: Adj,
     ous: Adj,
     que: Adj,
-    rmy: Adj,
     rol: Sing,
     sis: Sing,
     zes: Pres,

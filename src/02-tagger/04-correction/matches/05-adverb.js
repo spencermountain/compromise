@@ -20,6 +20,8 @@ module.exports = [
   { match: '(barely|hardly) even', tag: 'Adverb', reason: 'barely-even' },
   //even held
   { match: '[even] #Verb', group: 0, tag: 'Adverb', reason: 'even-walk' },
+  // even left
+  { match: 'even left', tag: '#Adverb #Verb', reason: 'even-left' },
   //cheering hard - dropped -ly's
   { match: '#PresentTense [(hard|quick|long|bright|slow)]', group: 0, tag: 'Adverb', reason: 'lazy-ly' },
   // much appreciated

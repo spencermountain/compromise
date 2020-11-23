@@ -20,7 +20,7 @@ const {
 
 const termContainsTag = (term, name) =>
   Object.entries(term.tags || {})
-    .filter(([k, v]) => v)
+    .filter(([_k, v]) => v) //eslint-disable-line
     .map((entry) => entry[0].toLowerCase())
     .includes(name.toLowerCase())
 
@@ -39,10 +39,8 @@ const termContainsTag = (term, name) =>
  */
 const thread = (pc, { save = true, saved = [], groups = {}, vars = {} } = {}) => {
   const ngroups = Object.values(groups).reduce((ng, g) => {
-    ng[g.id] = {
-      ...g,
-      saved: [...g.saved],
-    }
+    ng[g.id] = Object.assign({}, g)
+    ng[g.id].saved = g.saved.slice()
     return ng
   }, {})
 
@@ -52,7 +50,7 @@ const thread = (pc, { save = true, saved = [], groups = {}, vars = {} } = {}) =>
     saved: [...saved],
     // clone groups.saved
     groups: ngroups,
-    vars: { ...vars },
+    vars: Object.assign({}, vars),
   }
 }
 
@@ -132,14 +130,12 @@ const saveMatch = (th, sp) => {
   if (!th.save) {
     return th
   }
+  // get the `saved` from the open buckets
+  let tmp = Object.values(th.groups)
+    .filter((g) => g.open)
+    .map((g) => g.saved)
 
-  const buckets = [
-    th.saved,
-    // get the `saved` from the open buckets
-    ...Object.values(th.groups)
-      .filter((g) => g.open)
-      .map((g) => g.saved),
-  ]
+  const buckets = [th.saved].concat(tmp)
   for (const saved of buckets) {
     saved.push(sp)
   }
@@ -152,7 +148,7 @@ const saveMatch = (th, sp) => {
  * @param {object[]} input - input word w/ terms
  * @returns true or false for match and saved matches
  */
-const pikevm = (prog, input, flags = []) => {
+const pikevm = (prog, input) => {
   let clist = []
   let nlist = []
   let found = false
@@ -162,7 +158,7 @@ const pikevm = (prog, input, flags = []) => {
   // helps with match end and also matches that end at exactly the end so that
   // the match function gets a chance to run.
   const END = Symbol('END')
-  input = [...input, END]
+  input = input.concat(END)
 
   addthread(prog, clist, thread(0)) // and so we begin...
   for (let i = 0; i < input.length; i++) {

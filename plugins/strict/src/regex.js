@@ -30,7 +30,7 @@ class NLPRegexP {
     if (regex.prog) {
       // take another NLPRegexP
       this.regex = regex.regex
-      this.prog = [...regex.prog]
+      this.prog = regex.prog.slice()
       return
     }
 
@@ -77,17 +77,16 @@ class NLPRegexP {
   execPhrase(phrase) {
     const { found, saved = [], groups = {} } = pikevm(this.prog, phrase.terms())
 
-    const namedGroups = Object.values(groups).reduce(
-      (arr, g) => ({
-        ...arr,
-        [parseInt(g.id)]: {
-          group: g.name || `${g.id}`,
-          start: g.saved[0] ? g.saved[0].id || 0 : 0,
-          length: g.saved.length,
-        },
-      }),
-      {}
-    )
+    const namedGroups = Object.values(groups).reduce((arr, g) => {
+      let obj = Object.assign({}, arr)
+      let num = parseInt(g.id, 10)
+      obj[num] = {
+        group: g.name || `${g.id}`,
+        start: g.saved[0] ? g.saved[0].id || 0 : 0,
+        length: g.saved.length,
+      }
+      return obj
+    }, {})
 
     return found && saved[0] && saved[0].id
       ? phrase.buildFrom(saved[0].id, saved.length, namedGroups)

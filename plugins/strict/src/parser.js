@@ -471,10 +471,10 @@ class MatchParser extends EmbeddedActionsParser {
 
       $.ACTION(() => {
         if (range.min) {
-          range.min = parseInt(range.min)
+          range.min = parseInt(range.min, 10)
         }
         if (range.max) {
-          range.max = parseInt(range.max)
+          range.max = parseInt(range.max, 10)
         }
         const { min, max } = range
         if (min && max && min > max) {

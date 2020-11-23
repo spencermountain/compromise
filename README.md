@@ -632,6 +632,12 @@ this plugin creates a wrapper around the default sentence objects.
   - **[.sentences().toStatement()](https://observablehq.com/@spencermountain/compromise-sentences)** - end sentence with a `.`
     <!-- - **[.sentences().toContinuous()](#)** - -->
 
+##### Strict-match
+
+`npm install compromise-strict`
+
+- **[.strictMatch()](https://observablehq.com/@spencermountain/compromise-strict)** - perform a compromise match using a formal parser
+
 ##### Syllables
 
 `npm install compromise-syllables`

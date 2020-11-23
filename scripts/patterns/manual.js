@@ -265,4 +265,5 @@ module.exports = [
   `John Foo`,
   `Joe K. Sombrero`,
   `Anthony de Marco`,
+  'a half millionth',
 ]

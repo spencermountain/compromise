@@ -12,6 +12,23 @@ nlp.extend(require('./plugins/sentences/src'))
 //   return spacetime(iso).format('{day-short} {nice} {year}')
 // }
 
+/*
+
+when i go fishing
+holiday-day
+a|an2
+half-ordinal
+would-be
+had-been
+have-vb
+foo-up
+foo-off
+foo-over
+foo-out
+near-paris
+at-paris
+*/
+
 // let doc = nlp('first hour of 2019')
 // let found = doc.dates().json()[0]
 // console.log(fmt(found.date.start))
@@ -26,10 +43,11 @@ nlp.extend(require('./plugins/sentences/src'))
 // let doc = nlp(`the "minimum" that the Pakistan army will accept.`)
 // let doc = nlp(`Most of those men`)
 // let doc = nlp(`Many of those men`)
-let doc = nlp(`I am in mediation.`)
+// let doc = nlp(`I am in mediation.`)
 // let doc = nlp('Wilson was claiming that he had been working for the CIA when he sold the C - 4 to Quaddaffi.')
 
+let doc = nlp(`from sydney`).debug()
 // doc.debug()
-doc.sentences().forEach(s => {
-  s.phrases().debug()
-})
+// doc.sentences().forEach(s => {
+//   s.phrases().debug()
+// })

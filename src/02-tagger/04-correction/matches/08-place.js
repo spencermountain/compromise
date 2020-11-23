@@ -1,6 +1,5 @@
-const ambig = require('../_ambig')
-const places = `(${ambig.person.places.join('|')})`
-
+// const ambig = require('../_ambig')
+// const places = `(${ambig.person.places.join('|')})`
 let list = [
   // ==== Region ====
   //West Norforlk
@@ -45,13 +44,13 @@ let list = [
   },
 
   // in houston
-  { match: `in [${places}]`, group: 0, tag: 'Place', reason: 'in-paris' },
-  { match: `near [${places}]`, group: 0, tag: 'Place', reason: 'near-paris' },
-  { match: `at [${places}]`, group: 0, tag: 'Place', reason: 'at-paris' },
-  { match: `from [${places}]`, group: 0, tag: 'Place', reason: 'from-paris' },
-  { match: `to [${places}]`, group: 0, tag: 'Place', reason: 'to-paris' },
-  { match: `#Place [${places}]`, group: 0, tag: 'Place', reason: 'tokyo-paris' },
-  // houston texas
-  { match: `[${places}] #Place`, group: 0, tag: 'Place', reason: 'paris-france' },
+  // { match: `in [${places}]`, group: 0, tag: 'Place', reason: 'in-paris' },
+  // { match: `near [${places}]`, group: 0, tag: 'Place', reason: 'near-paris' },
+  // { match: `at [${places}]`, group: 0, tag: 'Place', reason: 'at-paris' },
+  // { match: `from [${places}]`, group: 0, tag: 'Place', reason: 'from-paris' },
+  // { match: `to [${places}]`, group: 0, tag: 'Place', reason: 'to-paris' },
+  // { match: `#Place [${places}]`, group: 0, tag: 'Place', reason: 'tokyo-paris' },
+  // // houston texas
+  // { match: `[${places}] #Place`, group: 0, tag: 'Place', reason: 'paris-france' },
 ]
 module.exports = list

@@ -300,6 +300,7 @@ let patterns = [
   'firstname-titlecase',
   'n-acro-noun',
   'de-firstname',
+  'christmas eve',
 ]
 patterns = patterns.reduce((h, str) => {
   h[str] = 0

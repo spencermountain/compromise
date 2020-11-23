@@ -11,7 +11,8 @@ const tagger = function (doc) {
   // (determiners)
   doc.match('#Determiner #NounPhrase').tag('NounPhrase')
   doc.match('#Determiner #Adverb+? #Adjective+ #NounPhrase').tag('NounPhrase')
-  doc.match('(many|most|all|one) of #NounPhrase').tag('NounPhrase')
+  doc.match('(many|most|all|one|some|plenty) of #NounPhrase').tag('NounPhrase')
+  doc.match('such a #NounPhrase').tag('NounPhrase')
 
   // VerbPhrase
   doc.match('#VerbPhrase #Adverb+').tagSafe('VerbPhrase')
@@ -19,9 +20,13 @@ const tagger = function (doc) {
   doc.match('#Auxiliary+ #VerbPhrase').tagSafe('VerbPhrase')
   doc.match('#VerbPhrase no').tagSafe('VerbPhrase')
   doc.match('not #VerbPhrase').tagSafe('VerbPhrase')
+
+  // claiming that
+  doc.match('#VerbPhrase [that]', 0).unTag('NounPhrase')
   // (conjunctions)
   doc.match('#VerbPhrase #Conjunction #VerbPhrase').tagSafe('VerbPhrase')
 
+  // nouns
   doc.match('(who|what|which)').tag('NounPhrase')
 
   // Adjective

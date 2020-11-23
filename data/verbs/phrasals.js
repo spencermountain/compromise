@@ -410,6 +410,7 @@ module.exports = [
   'man up',
   'mark down',
   'mark up',
+  'marry off',
   'mash up',
   'max out',
   'measure up',

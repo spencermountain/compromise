@@ -26,7 +26,8 @@ nlp.extend(require('./plugins/sentences/src'))
 // let doc = nlp(`the "minimum" that the Pakistan army will accept.`)
 // let doc = nlp(`Most of those men`)
 // let doc = nlp(`Many of those men`)
-let doc = nlp(`a new issue is likely to deepen the rift `)
+let doc = nlp(`I am in mediation.`)
+// let doc = nlp('Wilson was claiming that he had been working for the CIA when he sold the C - 4 to Quaddaffi.')
 
 // doc.debug()
 doc.sentences().forEach(s => {

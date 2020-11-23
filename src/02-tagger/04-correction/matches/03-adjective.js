@@ -46,8 +46,8 @@ let list = [
   { match: '(found|found) it #Adverb? [#Gerund]', group: 0, tag: 'Adjective', reason: 'found-it-gerund' },
   // a bit amusing
   { match: 'a (little|bit|wee) bit? [#Gerund]', group: 0, tag: 'Adjective', reason: 'a-bit-gerund' },
-  // the rich made
-  // { match: 'the [#Adjective] #Verb', group: 0, tag: 'Noun', reason: 'the-rich' },
+  // jury is out - preposition ➔ adjective
+  { match: '#Copula #Adjective? [(out|in|through)]$', group: 0, tag: 'Adjective', reason: 'still-out' },
 ]
 
 module.exports = list

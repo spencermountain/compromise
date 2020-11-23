@@ -1,3 +1,15 @@
+// Tagger issues Nov 2020
+
+// let doc = nlp(`the latter a dire security threat`)
+// let doc = nlp(`My first thought was to push it away, he said.`)
+// let doc = nlp(`and too many of the rich made their money`)
+// let doc = nlp(`Puerto Rico only (I need historical inflation data)`)
+// let doc = nlp(`blows it up`)
+// let doc = nlp(`20 people, including many children`)
+// let doc = nlp(` with heads and arms rolling around`)
+
+// ---
+
 // let doc = nlp('i am being driven')
 // let doc = nlp('i should be driven')
 // let doc = nlp('i should have been driven')

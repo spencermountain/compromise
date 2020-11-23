@@ -1,7 +1,6 @@
 const tagger = function (doc) {
   doc.match('#Noun').tag('NounPhrase')
   doc.match('#Verb').tag('VerbPhrase')
-  doc.match('#Adjective').tag('AdjectivePhrase')
 
   // NounPhrase
   doc.match('(this|that|those|these)').tag('NounPhrase')
@@ -12,9 +11,7 @@ const tagger = function (doc) {
   // (determiners)
   doc.match('#Determiner #NounPhrase').tag('NounPhrase')
   doc.match('#Determiner #Adverb+? #Adjective+ #NounPhrase').tag('NounPhrase')
-
-  // Adjective
-  doc.match('#Adverb+ #Adjective').tag('AdjectivePhrase')
+  doc.match('(many|most|all|one) of #NounPhrase').tag('NounPhrase')
 
   // VerbPhrase
   doc.match('#VerbPhrase #Adverb+').tagSafe('VerbPhrase')
@@ -24,5 +21,12 @@ const tagger = function (doc) {
   doc.match('#VerbPhrase #Conjunction #VerbPhrase').tagSafe('VerbPhrase')
 
   doc.match('(who|what|which)').tag('NounPhrase')
+
+  // Adjective
+  doc.match('#Adverb+ #Adjective').tagSafe('AdjectivePhrase')
+  doc.match('#Adjective').tagSafe('AdjectivePhrase')
+
+  // missing
+  doc.match('#Value').tagSafe('NounPhrase')
 }
 module.exports = tagger

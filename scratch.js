@@ -17,8 +17,6 @@ nlp.extend(require('./plugins/sentences/src'))
 // console.log(fmt(found.date.start))
 // console.log(fmt(found.date.end))
 
-// let doc = nlp(`the latter a dire security threat`)
-// let doc = nlp(`My first thought was to push it away, he said.`)
 //--
 // let doc = nlp(`despite working hard, the tired old city doctor was very happy.`)
 // let doc = nlp(`Her dog, a bull mastiff, looks ridiculous with a pink bow stuck to her head`)
@@ -28,11 +26,8 @@ nlp.extend(require('./plugins/sentences/src'))
 // let doc = nlp(`the "minimum" that the Pakistan army will accept.`)
 // let doc = nlp(`Most of those men`)
 // let doc = nlp(`Many of those men`)
-let doc = nlp(`and too many of the rich made their money`)
-// let doc = nlp(`Puerto Rico CPI only (I need historical inflation data, as well )`)
-// let doc = nlp(
-//   `She then blows herself up, killing 20 people, including many children, with heads and arms rolling around in the restaurant.`
-// )
+let doc = nlp(`Can we have a meeting this week (maybe Thursday at 3:30) to discuss this?`)
+
 // doc.debug()
 doc.sentences().forEach(s => {
   s.phrases().debug()

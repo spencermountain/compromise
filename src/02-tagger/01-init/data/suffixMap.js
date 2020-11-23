@@ -31,11 +31,11 @@ module.exports = [
     oed: Past,
     ued: Past,
     xed: Past,
-
     ' so': Avb,
     "'ll": Modal,
     "'re": 'Copula',
     azy: Adj,
+    eer: Noun,
     end: Vb,
     ped: Past,
     ffy: Adj,

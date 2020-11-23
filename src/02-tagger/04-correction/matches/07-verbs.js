@@ -118,7 +118,7 @@ let list = [
   },
 
   //he quickly foo
-  { match: '#Noun #Adverb [#Noun]', group: 0, tag: 'Verb', reason: 'quickly-foo' },
+  // { match: '#Noun #Adverb [#Noun]', group: 0, tag: 'Verb', reason: 'quickly-foo' },
   //will secure our
   { match: 'will [#Adjective]', group: 0, tag: 'Verb', reason: 'will-adj' },
   //he disguised the thing

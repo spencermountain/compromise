@@ -42,7 +42,7 @@ const allLists = function (m) {
       newM.reg[i].word = w
       delete newM.reg[i].operator
       delete newM.reg[i].oneOf
-      newM.reason += '-' + w
+      // newM.reason += '-' + w
       more.push(newM)
     })
   }

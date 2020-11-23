@@ -173,4 +173,6 @@ module.exports = [
   'wine',
   'wood',
   'wool',
+  'monogamy',
+  'polygamy',
 ]

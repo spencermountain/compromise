@@ -756,6 +756,8 @@ module.exports = [
   'wear down',
   'wear in',
   'wear out',
+  'went down',
+  'went up',
   'weigh in',
   'weigh up',
   'weird out',

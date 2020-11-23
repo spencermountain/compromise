@@ -135,7 +135,7 @@ module.exports = {
     [/...lly$/, Adverb],
     [/[bszmp]{2}y$/, Adj],
     [/.(gg|bb|zz)ly$/, Adj],
-    [/.[aeiou]my$/, Adj],
+    [/.[ai]my$/, Adj],
     [/[ea]{2}zy$/, Adj],
     [/.[^aeiou]ity$/, Sing],
   ],

@@ -11,11 +11,13 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 <!-- #### [Unreleased] 
 #### 13.8.0
 - **[change]** improved support for fractions in numbers-plugin #793
-- **[change]** make negative `!foo` matches optional
 - **[change]** remove zero-width characters in normalized output #759
 - **[change]** improved Person tagging with particles #794
+- **[change]** tagger+tokenization fixes
 - **[fix]** - NumberRange tagging issue #795
 - **[new]** - new plugin `strict-match`
+
+- **[doc]** make negative `!foo` matches optional
 -->
 
 #### 13.7.0

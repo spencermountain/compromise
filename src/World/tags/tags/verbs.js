@@ -56,4 +56,9 @@ module.exports = {
   Particle: {
     isA: 'PhrasalVerb',
   },
+
+  //this can be an adverb
+  Auxiliary: {
+    notA: ['Noun', 'Adjective', 'Value'],
+  },
 }

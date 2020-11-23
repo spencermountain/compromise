@@ -24,6 +24,7 @@ module.exports = [
   'event',
   'example',
   'friend',
+  'free market',
   'girlfriend',
   'glacier',
   'god',

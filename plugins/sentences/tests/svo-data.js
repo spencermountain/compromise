@@ -597,7 +597,7 @@ module.exports = [
   {
     txt: 'The problem of mollifying the Sunnis, though, has to be solved to avoid giving al - Qaeda an entrée.',
     subj: 'problem',
-    verb: 'though has',
+    verb: 'has to',
     obj: 'entrée',
   },
   {

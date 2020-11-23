@@ -6,10 +6,11 @@ const data = require('./svo-data')
 test('phrases', function (t) {
   data.forEach((o) => {
     let doc = nlp(o.txt)
-    let m = doc.match('#NounPhrase+ !#NounPhrase #NounPhrase')
+    // let m = doc.match('#NounPhrase+ !#NounPhrase #NounPhrase')
+    let m = doc.match('#VerbPhrase+ #Conjunction #VerbPhrase')
     if (m.found) {
       m = m.eq(0)
-      // console.log(m.out('array'))
+      console.log(m.out('array'))
     }
   })
   t.end()

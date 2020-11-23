@@ -5382,7 +5382,7 @@ module.exports = [
   },
   {
     text: 'YOU have to spend the time training.',
-    tags: 'PRP, VBP, TO, VB, DT, NN, VBG',
+    tags: 'PRP, VBP, VB, VB, DT, NN, VBG',
   },
   {
     text: '10 gallon nano reef ideas?',
@@ -6507,10 +6507,10 @@ module.exports = [
     text: 'Awesome !!!!',
     tags: 'JJ',
   },
-  {
-    text: 'they save me from having to deal with Tmobile ...',
-    tags: 'PRP, VBD, PRP, IN, VBG, TO, VB, IN, NNP',
-  },
+  // {
+  //   text: 'they save me from having to deal with Tmobile ...',
+  //   tags: 'PRP, VBD, PRP, IN, VBG, TO, VB, IN, NNP',
+  // },
   {
     text: 'Great service.',
     tags: 'JJ, NN',
@@ -7708,7 +7708,7 @@ module.exports = [
   },
   {
     text: 'I have to say the value of this place always amazes me.',
-    tags: 'PRP, VBP, TO, VB, DT, NN, IN, DT, NN, RB, VBZ, PRP',
+    tags: 'PRP, VBP, VB, VB, DT, NN, IN, DT, NN, RB, VBZ, PRP',
   },
   {
     text: 'Great work and honest establishment!',
@@ -7832,7 +7832,7 @@ module.exports = [
   },
   {
     text: 'He says, I have to have an exact ADDRESS.',
-    tags: 'PRP, VBZ, PRP, VBP, TO, VB, DT, JJ, NN',
+    tags: 'PRP, VBZ, PRP, VBP, VB, VB, DT, JJ, NN',
   },
   {
     text: 'We heard nothing.',

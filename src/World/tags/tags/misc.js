@@ -92,9 +92,6 @@ module.exports = {
   },
 
   //non-exclusive
-  Auxiliary: {
-    notA: ['Noun', 'Adjective', 'Value'],
-  },
   Acronym: {
     notA: ['Plural', 'RomanNumeral'],
   },

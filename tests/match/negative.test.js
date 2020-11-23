@@ -11,7 +11,7 @@ test('! negative match syntax :', function (t) {
   t.equal(m.text(), 'one two three', 'swap-not')
 
   doc = nlp.tokenize('one two three')
-  m = doc.match('one !foo two three')
+  m = doc.match('one !foo? two three')
   t.equal(m.text(), 'one two three', 'skip-not')
 
   t.end()

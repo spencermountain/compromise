@@ -74,7 +74,7 @@ test('fancy match', function (t) {
     //negative !
     ['it really snows', 'it #Adverb snows', 3],
     ['it really snows', 'it !#Adverb snows', 0],
-    ['it really snows. it quickly goes.', 'it !#Adverb', 2],
+    ['it really snows. it quickly goes.', 'it !#Adverb', 0],
     ['it is nice.', '!#Adverb', 3],
     //max/min {}
     ['if it goes really well', 'if .{1,2} well', 0],

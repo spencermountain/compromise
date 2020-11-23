@@ -3,15 +3,11 @@ const isBoundary = /^[!?.]+$/
 const naiiveSplit = /(\S+)/
 const isSlash = /[a-z] ?\/ ?[a-z]*$/
 
-const notWord = {
-  '.': true,
-  '-': true, //dash
-  '–': true, //en-dash
-  '—': true, //em-dash
-  '--': true,
-  '...': true,
-  // '/': true, // 'one / two'
-}
+let notWord = ['.', '?', '!', ':', ';', '-', '–', '—', '--', '...', '(', ')', '[', ']', '"', "'", '`']
+notWord = notWord.reduce((h, c) => {
+  h[c] = true
+  return h
+}, {})
 
 const hasHyphen = function (str) {
   //dont split 're-do'

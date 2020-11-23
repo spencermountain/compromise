@@ -42,6 +42,7 @@ module.exports = [
   'number',
   'ocean',
   'others',
+  'overview',
   'part',
   'patent',
   'plate',

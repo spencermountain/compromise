@@ -98,6 +98,15 @@ exports.toFutureTense = function () {
   return this
 }
 
-// toContinuous() {
-//   return this
-// }
+/** the main noun of the sentence */
+exports.subjects = function () {
+  return this.map((doc) => {
+    let res = parse(doc)
+    return res.subject
+  })
+}
+
+/** return sentences that are in passive-voice */
+exports.isPassive = function () {
+  return this.if('was #Adverb? #PastTense #Adverb? by') //haha
+}

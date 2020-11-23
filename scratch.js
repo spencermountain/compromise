@@ -23,4 +23,6 @@ nlp.extend(require('./plugins/sentences/src'))
 // })
 
 let doc = nlp('He is cool.')
-doc.sentences().prepend('so i think')
+console.log(doc.sentences().json())
+// let s = doc.sentences()
+// console.log(s.toDoc())

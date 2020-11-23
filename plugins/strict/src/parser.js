@@ -1,4 +1,4 @@
-const { EmbeddedActionsParser, Lexer, createToken } = require("chevrotain")
+const { EmbeddedActionsParser, Lexer, createToken } = require('chevrotain')
 
 const {
   NOOP,
@@ -18,53 +18,53 @@ const {
   SPLIT_LT,
   LOOKAHEAD,
   NEGATIVE_LOOKAHEAD,
-} = require("./constants")
+} = require('./constants')
 
-const StartOf = createToken({ name: "StartOf", pattern: /\^/ })
-const EndOf = createToken({ name: "EndOf", pattern: /\$/ })
-const Tag = createToken({ name: "Tag", pattern: /#([_-\w]|\\.)+/ })
+const StartOf = createToken({ name: 'StartOf', pattern: /\^/ })
+const EndOf = createToken({ name: 'EndOf', pattern: /\$/ })
+const Tag = createToken({ name: 'Tag', pattern: /#([_-\w]|\\.)+/ })
 const EscapedWord = createToken({
-  name: "EscapedWord",
+  name: 'EscapedWord',
   pattern: /\\[#@]([_-\w]|\\.)+/,
 })
-const Word = createToken({ name: "Word", pattern: /([_-\w]|\\.)+/ })
-const Method = createToken({ name: "Method", pattern: /@[_-\w]+/ })
+const Word = createToken({ name: 'Word', pattern: /([_-\w]|\\.)+/ })
+const Method = createToken({ name: 'Method', pattern: /@[_-\w]+/ })
 const Question = createToken({
-  name: "Question",
+  name: 'Question',
   pattern: /\?/,
   longer_alt: Word,
 })
 const Exclamation = createToken({
-  name: "Exclamation",
+  name: 'Exclamation',
   pattern: /!/,
   longer_alt: Word,
 })
-const Equals = createToken({ name: "Equals", pattern: /=/, longer_alt: Word })
-const Pound = createToken({ name: "Pound", pattern: /#/, longer_alt: Tag })
-const Dot = createToken({ name: "Dot", pattern: /\./, longer_alt: Word })
-const Pipe = createToken({ name: "Pipe", pattern: /\|/ })
-const Comma = createToken({ name: "Comma", pattern: /,/, longer_alt: Word })
-const Colon = createToken({ name: "Colon", pattern: /:/, longer_alt: Word })
-const Plus = createToken({ name: "Plus", pattern: /\+/ })
-const Star = createToken({ name: "Star", pattern: /\*/ })
-const Zero = createToken({ name: "Zero", pattern: /0/, longer_alt: Word })
+const Equals = createToken({ name: 'Equals', pattern: /=/, longer_alt: Word })
+const Pound = createToken({ name: 'Pound', pattern: /#/, longer_alt: Tag })
+const Dot = createToken({ name: 'Dot', pattern: /\./, longer_alt: Word })
+const Pipe = createToken({ name: 'Pipe', pattern: /\|/ })
+const Comma = createToken({ name: 'Comma', pattern: /,/, longer_alt: Word })
+const Colon = createToken({ name: 'Colon', pattern: /:/, longer_alt: Word })
+const Plus = createToken({ name: 'Plus', pattern: /\+/ })
+const Star = createToken({ name: 'Star', pattern: /\*/ })
+const Zero = createToken({ name: 'Zero', pattern: /0/, longer_alt: Word })
 const PositiveInt = createToken({
-  name: "PositiveInt",
+  name: 'PositiveInt',
   pattern: /[1-9]\d*/,
   longer_alt: Word,
 })
-const LParenthesis = createToken({ name: "LParenthesis", pattern: /\(/ })
-const RParenthesis = createToken({ name: "RParenthesis", pattern: /\)/ })
-const LCurly = createToken({ name: "LCurly", pattern: /\{/ })
-const RCurly = createToken({ name: "RCurly", pattern: /\}/ })
-const NamedGroupBegin = createToken({ name: "NamedGroupBegin", pattern: /P</ })
+const LParenthesis = createToken({ name: 'LParenthesis', pattern: /\(/ })
+const RParenthesis = createToken({ name: 'RParenthesis', pattern: /\)/ })
+const LCurly = createToken({ name: 'LCurly', pattern: /\{/ })
+const RCurly = createToken({ name: 'RCurly', pattern: /\}/ })
+const NamedGroupBegin = createToken({ name: 'NamedGroupBegin', pattern: /P</ })
 const NamedGroupEnd = createToken({
-  name: "NamedGroupEnd",
+  name: 'NamedGroupEnd',
   pattern: />/,
   longer_alt: Word,
 })
 const WhiteSpace = createToken({
-  name: "WhiteSpace",
+  name: 'WhiteSpace',
   pattern: /\s+/,
   group: Lexer.SKIPPED,
 })
@@ -196,7 +196,7 @@ class MatchParser extends EmbeddedActionsParser {
      */
 
     const $ = this
-    $.RULE("matchStatement", () => {
+    $.RULE('matchStatement', () => {
       const matches = {
         startOf: false,
         prog: [],
@@ -238,7 +238,7 @@ class MatchParser extends EmbeddedActionsParser {
       return matches
     })
 
-    $.RULE("valueStatement", (prog = [], groups = [], vars = []) => {
+    $.RULE('valueStatement', (prog = [], groups = [], vars = []) => {
       const inst = []
       $.AT_LEAST_ONE({
         DEF: () => {
@@ -248,7 +248,7 @@ class MatchParser extends EmbeddedActionsParser {
       return inst
     })
 
-    $.RULE("value", (prog = [], groups = [], vars = []) => {
+    $.RULE('value', (prog = [], groups = [], vars = []) => {
       const split = { code: NOOP } // save split for modifiers
       prog.push(split)
       const start = prog.length // save start for split jmp later
@@ -269,7 +269,7 @@ class MatchParser extends EmbeddedActionsParser {
           ALT: () => {
             prog.push({
               code: MATCH_WORD,
-              value: $.CONSUME(EscapedWord).image?.substr(1),
+              value: $.CONSUME(EscapedWord).image.substr(1),
             })
           },
         },
@@ -277,7 +277,7 @@ class MatchParser extends EmbeddedActionsParser {
           ALT: () => {
             prog.push({
               code: MATCH_TAG,
-              value: $.CONSUME(Tag).image?.substr(1),
+              value: $.CONSUME(Tag).image.substr(1),
             })
           },
         },
@@ -298,7 +298,7 @@ class MatchParser extends EmbeddedActionsParser {
           ALT: () => {
             prog.push({
               code: MATCH_METHOD,
-              value: $.CONSUME(Method).image?.substr(1),
+              value: $.CONSUME(Method).image.substr(1),
             })
           },
         },
@@ -313,22 +313,22 @@ class MatchParser extends EmbeddedActionsParser {
         // TODO: could probably allow relative jmps to get rid of noop
         const { type, greedy, min, max } = $.SUBRULE($.valueModifier)
         switch (type) {
-          case "ZERO_OR_ONE":
+          case 'ZERO_OR_ONE':
             split.code = SPLIT
             split.locs = [start, prog.length]
             break
-          case "ZERO_OR_MORE":
+          case 'ZERO_OR_MORE':
             prog.push({ code: JMP, loc: start - 1 })
             split.code = SPLIT
             split.locs = [start, prog.length]
             break
-          case "ONE_OR_MORE":
+          case 'ONE_OR_MORE':
             prog.push({ code: SPLIT, locs: [start, prog.length + 1] })
             if (!greedy) {
               prog[prog.length - 1].locs.reverse()
             }
             break
-          case "RANGE":
+          case 'RANGE':
             const varId = vars.length
             vars.push(varId)
             prog.push({ code: INCV, varId }) // increment first
@@ -336,7 +336,7 @@ class MatchParser extends EmbeddedActionsParser {
             const minInst = {
               code: JMP_LT,
               varId,
-              value: min ?? 0,
+              value: min || 0,
               loc: start,
             }
             let maxInst = null
@@ -350,7 +350,7 @@ class MatchParser extends EmbeddedActionsParser {
                 // a{x}
                 prog.push(minInst)
               }
-            } else if ((min ?? 0) === 0 && max !== null) {
+            } else if ((min || 0) === 0 && max !== null) {
               // a{,y} a{0,y}
               split.code = SPLIT
               split.locs = [start, prog.length + 1]
@@ -380,8 +380,8 @@ class MatchParser extends EmbeddedActionsParser {
               prog.push(maxInst)
             }
 
-            if (!greedy) {
-              maxInst?.locs?.reverse() // reverse thread priority for greedy / non-greedy
+            if (!greedy && maxInst && maxInst.locs) {
+              maxInst.locs.reverse() // reverse thread priority for greedy / non-greedy
             }
             //{ code: SPLIT, locs: [ ] }
             //prog.push({ code: SETV_ONCE, id: rid, value: 0 });
@@ -389,38 +389,38 @@ class MatchParser extends EmbeddedActionsParser {
             //prog.push({ code: JMP_IF_GTE, id: rid, value: 0 });
             break
         }
-        if (!greedy) {
-          split?.locs?.reverse()
+        if (!greedy && split.locs) {
+          split.locs.reverse()
         }
       })
     })
 
-    $.RULE("valueModifier", () => {
+    $.RULE('valueModifier', () => {
       let result = { type: null, greedy: true }
       $.OR([
         {
           ALT: () => {
             $.CONSUME(Question)
-            result.type = "ZERO_OR_ONE"
+            result.type = 'ZERO_OR_ONE'
           },
         },
         {
           ALT: () => {
             $.CONSUME(Star)
-            result.type = "ZERO_OR_MORE"
+            result.type = 'ZERO_OR_MORE'
           },
         },
         {
           ALT: () => {
             $.CONSUME(Plus)
-            result.type = "ONE_OR_MORE"
+            result.type = 'ONE_OR_MORE'
           },
         },
         {
           ALT: () => {
             const { min, max } = $.SUBRULE($.rangeModifier)
             $.ACTION(() => {
-              result.type = "RANGE"
+              result.type = 'RANGE'
               result.min = min
               result.max = max
             })
@@ -436,7 +436,7 @@ class MatchParser extends EmbeddedActionsParser {
       return result
     })
 
-    $.RULE("rangeModifier", () => {
+    $.RULE('rangeModifier', () => {
       const range = { min: null, max: null }
       $.CONSUME(LCurly)
 
@@ -489,7 +489,7 @@ class MatchParser extends EmbeddedActionsParser {
       return range
     })
 
-    $.RULE("group", (prog = [], groups = [], vars = []) => {
+    $.RULE('group', (prog = [], groups = [], vars = []) => {
       let modifiers = {
         capture: true,
         name: null,
@@ -563,7 +563,7 @@ class MatchParser extends EmbeddedActionsParser {
       $.CONSUME(RParenthesis)
     })
 
-    $.RULE("namedGroup", () => {
+    $.RULE('namedGroup', () => {
       $.CONSUME(Question)
       $.CONSUME(NamedGroupBegin)
       const name = $.CONSUME(Word).image
@@ -571,27 +571,27 @@ class MatchParser extends EmbeddedActionsParser {
       return name
     })
 
-    $.RULE("nonCapturingGroup", () => {
+    $.RULE('nonCapturingGroup', () => {
       $.CONSUME(Question)
       $.CONSUME(Colon)
     })
 
-    $.RULE("negativeLookaheadGroup", () => {
+    $.RULE('negativeLookaheadGroup', () => {
       $.CONSUME(Question)
       $.CONSUME(Exclamation)
     })
 
-    $.RULE("positiveLookaheadGroup", () => {
+    $.RULE('positiveLookaheadGroup', () => {
       $.CONSUME(Question)
       $.CONSUME(Equals)
     })
 
-    $.RULE("commentGroup", () => {
+    $.RULE('commentGroup', () => {
       $.CONSUME(Question)
       $.CONSUME(Pound)
     })
 
-    $.RULE("groupModifier", () => {
+    $.RULE('groupModifier', () => {
       let result = {
         capture: true,
         name: null,

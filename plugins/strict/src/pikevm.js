@@ -16,10 +16,10 @@ const {
   SPLIT_LT,
   LOOKAHEAD,
   NEGATIVE_LOOKAHEAD,
-} = require("./constants")
+} = require('./constants')
 
 const termContainsTag = (term, name) =>
-  Object.entries(term?.tags ?? {})
+  Object.entries(term.tags || {})
     .filter(([k, v]) => v)
     .map((entry) => entry[0].toLowerCase())
     .includes(name.toLowerCase())
@@ -37,10 +37,7 @@ const termContainsTag = (term, name) =>
  * @param {object} groups - capture groups key of group id
  * @returns {object} thread
  */
-const thread = (
-  pc,
-  { save = true, saved = [], groups = {}, vars = {} } = {}
-) => {
+const thread = (pc, { save = true, saved = [], groups = {}, vars = {} } = {}) => {
   const ngroups = Object.values(groups).reduce((ng, g) => {
     ng[g.id] = {
       ...g,
@@ -95,7 +92,7 @@ const addthread = (prog, list, th) => {
       addthread(prog, list, thread(th.pc + 1, th))
       break
     case INCV:
-      th.vars[inst.varId] = (th.vars?.[inst.varId] ?? 0) + 1
+      th.vars[inst.varId] = (th.vars[inst.varId] || 0) + 1
       addthread(prog, list, thread(th.pc + 1, th))
       break
     case JMP_LT:
@@ -164,7 +161,7 @@ const pikevm = (prog, input, flags = []) => {
 
   // helps with match end and also matches that end at exactly the end so that
   // the match function gets a chance to run.
-  const END = Symbol("END")
+  const END = Symbol('END')
   input = [...input, END]
 
   addthread(prog, clist, thread(0)) // and so we begin...
@@ -192,7 +189,7 @@ const pikevm = (prog, input, flags = []) => {
           }
           break
         case MATCH_WORD:
-          if (sp?.text?.toLowerCase() === inst.value.toLowerCase()) {
+          if (sp.text && sp.text.toLowerCase() === inst.value.toLowerCase()) {
             // continue on next word
             addthread(prog, nlist, thread(th.pc + 1, saveMatch(th, sp)))
           }
@@ -204,7 +201,7 @@ const pikevm = (prog, input, flags = []) => {
           break
         case MATCH_METHOD:
           // call method using null coalescing on term, if it returns true continue
-          if (sp?.[inst.value]?.()) {
+          if (sp[inst.value]()) {
             addthread(prog, nlist, thread(th.pc + 1, saveMatch(th, sp)))
           }
           break

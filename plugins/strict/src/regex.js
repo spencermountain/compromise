@@ -1,6 +1,6 @@
-const { Lexer } = require("chevrotain")
-const { MatchParser, allTokens } = require("./parser")
-const { pikevm } = require("./pikevm")
+const { Lexer } = require('chevrotain')
+const { MatchParser, allTokens } = require('./parser')
+const { pikevm } = require('./pikevm')
 const NLPMatchLexer = new Lexer(allTokens)
 const parserInstance = new MatchParser()
 
@@ -55,12 +55,12 @@ class NLPRegexP {
 
   exec(docOrPhrase) {
     switch (docOrPhrase.isA.toLowerCase()) {
-      case "doc":
+      case 'doc':
         return this.execDoc(docOrPhrase)
-      case "phrase":
+      case 'phrase':
         return this.execPhrase(docOrPhrase)
       default:
-        throw new Error("Invalid type, must be Document or Phrase")
+        throw new Error('Invalid type, must be Document or Phrase')
     }
   }
 
@@ -81,8 +81,8 @@ class NLPRegexP {
       (arr, g) => ({
         ...arr,
         [parseInt(g.id)]: {
-          group: g.name ?? `${g.id}`,
-          start: g.saved[0]?.id ?? 0,
+          group: g.name || `${g.id}`,
+          start: g.saved[0] ? g.saved[0].id || 0 : 0,
           length: g.saved.length,
         },
       }),

@@ -17,12 +17,9 @@ nlp.extend(require('./plugins/sentences/src'))
 // console.log(fmt(found.date.start))
 // console.log(fmt(found.date.end))
 
-// let doc = nlp(`despite working hard, he was very happy.`)
-// doc.sentences().forEach(s => {
-//   s.phrases().debug()
-// })
-
-let doc = nlp('He is cool.')
-console.log(doc.sentences().json())
-// let s = doc.sentences()
-// console.log(s.toDoc())
+// let doc = nlp(`despite working hard, the tired old city doctor was very happy.`)
+// let doc = nlp(`Her dog, a bull mastiff, looks ridiculous with a pink bow stuck to her head`)
+let doc = nlp(`We can all go for ice cream if I can find my wallet.`)
+doc.sentences().forEach(s => {
+  s.phrases().debug()
+})

@@ -18,7 +18,12 @@ module.exports = [
   //Los Angeles's fundraiser
   { match: '#Place+ #Possessive', tag: 'Possessive', reason: 'place-possessive' },
   // assign all tasks
-  { match: '#Verb (all|every|each|most|some|no) [#PresentTense]', group: 0, tag: 'Noun', reason: 'all-presentTense' },
+  {
+    match: '(#Verb && !#Modal) (all|every|each|most|some|no) [#PresentTense]',
+    group: 0,
+    tag: 'Noun',
+    reason: 'all-presentTense',
+  },
 
   //the above is clear
   { match: '#Determiner [#Adjective] #Copula', group: 0, tag: 'Noun', reason: 'the-adj-is' },

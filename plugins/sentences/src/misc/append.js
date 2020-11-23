@@ -5,7 +5,7 @@ exports.prepend = function (str) {
     let firstTerms = doc.match('^.')
     firstTerms.not('#ProperNoun').toLowerCase()
     // actually add the word
-    firstTerms.docPrepend(str)
+    firstTerms._prepend(str)
     // add a titlecase
     firstTerms.terms(0).toTitleCase()
   })
@@ -23,8 +23,7 @@ exports.append = function (str) {
       punct = ''
     }
     // add punctuation to the end
-    end.docAppend(str + punct)
-    // end.append(str + punct)
+    end._append(str + punct)
     // remove punctuation from the former last-term
     lastTerm.post = ' '
   })

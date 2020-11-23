@@ -27,9 +27,10 @@ const plugin = function (Doc, world) {
   methods.questions = methods.isQuestion
   methods.exclamations = methods.isExclamation
   methods.statements = methods.isStatement
-  methods.docPrepend = Sentences.prototype.prepend
-  methods.docAppend = Sentences.prototype.append
-  methods.docJson = Sentences.prototype.json
+  // keep backups of these methods
+  methods._prepend = Sentences.prototype.prepend
+  methods._append = Sentences.prototype.append
+  methods._json = Sentences.prototype.json
   Object.assign(Sentences.prototype, methods)
 
   /** create a new Sentences object */

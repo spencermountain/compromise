@@ -46,7 +46,9 @@ at-paris
 // let doc = nlp(`I am in mediation.`)
 // let doc = nlp('Wilson was claiming that he had been working for the CIA when he sold the C - 4 to Quaddaffi.')
 
-let doc = nlp(`from sydney`).debug()
+// let doc = nlp(`alexandria Daddario`).debug()
+let doc = nlp(`Paris Berelc`).debug()
+// let doc = nlp(`in alexandria`).debug()
 // doc.debug()
 // doc.sentences().forEach(s => {
 //   s.phrases().debug()

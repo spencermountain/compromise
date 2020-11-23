@@ -1,6 +1,7 @@
 const ambig = require('../_ambig')
 const nouns = `(${ambig.person.nouns.join('|')})`
 const months = '(january|april|may|june|jan|sep)' //summer|autumn
+const places = `(${ambig.person.places.join('|')})`
 
 let list = [
   // ==== Honorific ====
@@ -135,5 +136,7 @@ let list = [
   { match: '#FirstName #Acronym #Noun', tag: 'Person', reason: 'n-acro-noun', safe: true },
   //Anthony de Marco
   { match: '#FirstName [(de|di|du|van|von) #Person]', group: 0, tag: 'LastName', reason: 'de-firstname' },
+  // Paris Berelc
+  { match: `[${places}] (#ProperNoun && !#Place)`, group: 0, tag: 'FirstName', reason: 'place-firstname' },
 ]
 module.exports = list

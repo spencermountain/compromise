@@ -106,6 +106,7 @@ module.exports = [
   'anissa',
   'anita',
   'anja',
+  'anjelica',
   'ann',
   'anna',
   'annabel',

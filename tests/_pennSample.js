@@ -3085,8 +3085,8 @@ module.exports = [
     tags: 'NNP, NNP, NNP',
   },
   {
-    text: 'The Transaction is for hot rolled steel with a thickness of 1 " and a width of 72 inches.',
-    tags: 'DT, NN, VBZ, IN, JJ, VBN, NN, IN, DT, NN, IN, CD, NN, CC, DT, NN, IN, CD, NNS',
+    text: 'The Transaction is for hot rolled steel with a thickness of 1" and a width of 72 inches.',
+    tags: 'DT, NN, VBZ, IN, JJ, VBN, NN, IN, DT, NN, IN, CD, CC, DT, NN, IN, CD, NNS',
   },
   {
     text: 'Each calendar month during the term of the Transaction will be a Dispatch Period.',
@@ -4550,7 +4550,7 @@ module.exports = [
   },
   {
     text: 'NORTH CAROLINA RELIGIOUS COALITION FOR MARRIAGE EQUALITY',
-    tags: 'NNP, NNP, NNP, NNP, IN, NNP, NNP',
+    tags: 'NNP, NNP, JJ, NNP, IN, NNP, NNP',
   },
   {
     text:

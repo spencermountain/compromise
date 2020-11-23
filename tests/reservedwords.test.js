@@ -70,7 +70,7 @@ test('reserved words:', function (t) {
     '&&',
     '||',
     '|',
-    "'",
+    // "'",
     '&',
     'Math.PI',
     12e34,

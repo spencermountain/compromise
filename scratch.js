@@ -1,7 +1,7 @@
 const nlp = require('./src/index')
 // const spacetime = require('/Users/spencer/mountain/spacetime/src')
 nlp.verbose(true)
-nlp.extend(require('./plugins/sentences/src'))
+// nlp.extend(require('./plugins/sentences/src'))
 // nlp.extend(require('./plugins/numbers/src'))
 // nlp.extend(require('./plugins/dates/src'))
 
@@ -21,8 +21,7 @@ nlp.extend(require('./plugins/sentences/src'))
 // let doc = nlp(`Her dog, a bull mastiff, looks ridiculous with a pink bow stuck to her head`)
 // let doc = nlp(`We can all go for ice cream if I can find my wallet.`)
 // let doc = nlp(`When the sun went down, I hurried back.`)
-let doc = nlp(`overview`)
-// let doc = nlp(`CRACKDOWN ON POLYGAMY GROUP`)
+let doc = nlp(`NORTH CAROLINA RELIGIOUS COALITION FOR MARRIAGE EQUALITY`)
 doc.debug()
 // doc.sentences().forEach(s => {
 //   s.phrases().debug()

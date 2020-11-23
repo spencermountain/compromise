@@ -26,7 +26,7 @@ nlp.extend(require('./plugins/sentences/src'))
 // let doc = nlp(`the "minimum" that the Pakistan army will accept.`)
 // let doc = nlp(`Most of those men`)
 // let doc = nlp(`Many of those men`)
-let doc = nlp(`Can we have a meeting this week (maybe Thursday at 3:30) to discuss this?`)
+let doc = nlp(`a new issue is likely to deepen the rift `)
 
 // doc.debug()
 doc.sentences().forEach(s => {

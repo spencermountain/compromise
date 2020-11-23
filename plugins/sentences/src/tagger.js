@@ -17,6 +17,8 @@ const tagger = function (doc) {
   doc.match('#VerbPhrase #Adverb+').tagSafe('VerbPhrase')
   doc.match('#Adverb+ #VerbPhrase').tagSafe('VerbPhrase')
   doc.match('#Auxiliary+ #VerbPhrase').tagSafe('VerbPhrase')
+  doc.match('#VerbPhrase no').tagSafe('VerbPhrase')
+  doc.match('not #VerbPhrase').tagSafe('VerbPhrase')
   // (conjunctions)
   doc.match('#VerbPhrase #Conjunction #VerbPhrase').tagSafe('VerbPhrase')
 
@@ -28,5 +30,7 @@ const tagger = function (doc) {
 
   // missing
   doc.match('#Value').tagSafe('NounPhrase')
+  doc.match('#Date').tagSafe('NounPhrase')
+  doc.match('#Date at #Date').tagSafe('NounPhrase')
 }
 module.exports = tagger

@@ -21,7 +21,7 @@ test('phrases', function (t) {
       .not('#Preposition')
     if (m.found) {
       m = m.eq(0)
-      console.log(m.out('array'))
+      console.log(o.txt.substr(0, 15) + '   ... ' + m.out('array')[0])
     }
 
     // let m = doc.match('#NounPhrase+ !#NounPhrase #NounPhrase')

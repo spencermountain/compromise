@@ -1,12 +1,18 @@
 const parse = require('./parse')
 const methods = require('./methods')
+const tags = require('./tags')
+const tagger = require('./tagger')
 
-const addMethod = function (Doc) {
+const addMethod = function (Doc, world) {
+  // our new tags
+  world.addTags(tags)
+  // run our tagger
+  world.postProcess(tagger)
   /**  */
   class Sentences extends Doc {
-    constructor(list, from, world) {
+    constructor(list, from, w) {
       list = list.map((p) => p.clone(true))
-      super(list, from, world)
+      super(list, from, w)
     }
 
     /** overload the original json with noun information */
@@ -81,8 +87,14 @@ const addMethod = function (Doc) {
   methods.questions = methods.isQuestion
   methods.exclamations = methods.isExclamation
   methods.statements = methods.isStatement
-
   Object.assign(Sentences.prototype, methods)
+
+  /** create a new Sentences object */
+  // Sentences.prototype.buildFrom = function (list) {
+  //   list = list.map((p) => p.clone(true))
+  //   let doc = new Sentences(list, this, this.world)
+  //   return doc
+  // }
 
   /** overload original sentences() method and return Sentence class**/
   Doc.prototype.sentences = function (n) {

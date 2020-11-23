@@ -1,8 +1,12 @@
 const nlp = require('../../src')
-const penn = require('../../tests/_pennSample')
-const patterns = require('./patterns')
+let penn = require('../../tests/_pennSample')
+let patterns = require('./patterns')
+let manual = require('./manual').map(str => {
+  return { text: str }
+})
+let texts = penn.concat(manual)
 
-penn.forEach((sentence, index) => {
+texts.forEach(sentence => {
   let doc = nlp(sentence.text)
   doc.reasons.forEach(r => {
     patterns[r] += 1

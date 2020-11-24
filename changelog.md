@@ -16,6 +16,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - **[change]** improved i18n Person names
 - **[change]** tagger+tokenization fixes
 - **[fix]** - NumberRange tagging issue #795
+- **[change]** remove empty results from .out('array') #795
 - **[new]** - new plugin `strict-match`
 - **[new]** - set NounPhrase, VerbPhrase tags in nlp-sentences plugin
 - **[new]** - `.phrases()` method in nlp-sentences plugin

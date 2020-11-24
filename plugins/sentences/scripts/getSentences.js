@@ -14,6 +14,6 @@ const shuffle = function (array) {
   return array
 }
 
-let arr = data.map(a => a[0].trim())
+let arr = data.map((a) => a[0].trim())
 arr = shuffle(arr).slice(0, 200)
 console.log(JSON.stringify(arr, null, 2))

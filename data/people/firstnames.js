@@ -35,7 +35,6 @@ module.exports = [
   'shea',
   'shelby',
   'shiloh',
-  'taylor',
   'andrea',
   'gabriele',
   'hinata',

@@ -12,8 +12,9 @@ let female = require('/Users/spencer/mountain/compromise/data/people/femaleNames
 let male = require('/Users/spencer/mountain/compromise/data/people/maleNames.js')
 let both = require('/Users/spencer/mountain/compromise/data/people/firstNames.js')
 let last = require('/Users/spencer/mountain/compromise/data/people/lastNames.js')
+let people = require('/Users/spencer/mountain/compromise/data/people/people.js')
 
-console.log(intersection(male, female))
+console.log(intersection(last, people))
 // const fmt = function (iso) {
 //   if (!iso) {
 //     return '-'

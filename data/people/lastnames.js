@@ -258,7 +258,6 @@ module.exports = [
   'szabo',
   'takahashi',
   'tanaka',
-  'taylor',
   'thatcher',
   'thompson',
   'tian',

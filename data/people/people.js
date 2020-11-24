@@ -59,4 +59,5 @@ module.exports = [
   'palmer',
   'piper',
   'sung',
+  'taylor',
 ]

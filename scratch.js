@@ -8,13 +8,18 @@ const intersection = function (arr1, arr2) {
   return arr1.filter(value => arr2.includes(value))
 }
 
-let female = require('/Users/spencer/mountain/compromise/data/people/femaleNames.js')
-let male = require('/Users/spencer/mountain/compromise/data/people/maleNames.js')
-let both = require('/Users/spencer/mountain/compromise/data/people/firstNames.js')
-let last = require('/Users/spencer/mountain/compromise/data/people/lastNames.js')
-let people = require('/Users/spencer/mountain/compromise/data/people/people.js')
+let arr = nlp('1-2').terms().json({ terms: false })
+console.log(arr)
+/*
+[
+  { text: '1-2', reduced: '1', terms: [ [Object] ] },
+  { text: '', reduced: 'to', terms: [ [Object] ] },
+  { text: '', reduced: '2', terms: [ [Object] ] }
+]
+*/
+// nlp('1-2').match('#NumberRange').out('array') \\ => ["1-2", "", ""]
 
-console.log(intersection(last, people))
+// nlp('500-600 grams').match('#NumberRange #Unit').out('array') \\ => ["grams"]
 // const fmt = function (iso) {
 //   if (!iso) {
 //     return '-'

@@ -13,7 +13,7 @@ const units = {
 
 const parseDates = function (doc, context) {
   // 'first week of 2019'
-  let m = doc.match('[<num>(#Value|first|initial)] [<unit>#DateUnit+] (of|in) [<year>#Year]')
+  let m = doc.match('[<num>(first|initial)] [<unit>#DateUnit+] (of|in) [<year>#Year]')
   if (m.found) {
     let s = spacetime(null, context.timezone, { today: context.today })
     let year = m.groups('year').text('reduced')
@@ -45,6 +45,24 @@ const parseDates = function (doc, context) {
     }
   }
 
+  // 'nth week of 2019'
+  m = doc.match('[<num>#Value] [<unit>#DateUnit+] (of|in) [<year>#Year]')
+  if (m.found) {
+    let s = spacetime(null, context.timezone, { today: context.today })
+    let year = m.groups('year').text('reduced')
+    let unit = m.groups('unit').text('reduced')
+    if (units.hasOwnProperty(unit)) {
+      let num = m.groups('num').text('reduced')
+      s = s.year(year)
+      s = s.startOf('year')
+      num = Number(num)
+      s = s.add(num, unit)
+      let d = new units[unit](s, null, context)
+      if (d.d.isValid() === true) {
+        return d
+      }
+    }
+  }
   return null
 }
 module.exports = parseDates

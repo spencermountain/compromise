@@ -1,5 +1,5 @@
-const parseDate = require('../03-parseDate')
-const Unit = require('../03-parseDate/Unit')
+const parseDate = require('./parseDate')
+const Unit = require('./parseDate/Unit')
 
 const punt = function (unit, context) {
   unit = unit.applyShift(context.punt)
@@ -7,7 +7,7 @@ const punt = function (unit, context) {
 }
 
 //
-const logic = function (doc, context) {
+const parseRange = function (doc, context) {
   // two explicit dates - 'between friday and sunday'
   let m = doc.match('between [<start>*] and [<end>*]')
   if (m.found) {
@@ -184,4 +184,4 @@ const logic = function (doc, context) {
     end: null,
   }
 }
-module.exports = logic
+module.exports = parseRange

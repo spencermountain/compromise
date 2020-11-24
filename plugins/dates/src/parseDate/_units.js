@@ -39,7 +39,7 @@ class Year extends Unit {
 }
 class Hour extends Unit {
   constructor(input, unit, context) {
-    super(input, unit, context)
+    super(input, unit, context, true)
     this.unit = 'hour'
   }
 }

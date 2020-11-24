@@ -1,5 +1,5 @@
 // handle 'one bottle', 'two bottles'
-const agreeUnits = function(agree, val, obj) {
+const agreeUnits = function (agree, val, obj) {
   if (agree === false) {
     return
   }

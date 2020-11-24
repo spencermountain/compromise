@@ -1,8 +1,8 @@
 const section = {
-  shift: require('./sections/01-shift'),
-  time: require('./sections/02-time'),
-  relative: require('./sections/03-relative'),
-  timezone: require('./sections/04-timezone'),
+  shift: require('./getParts/01-shift'),
+  time: require('./getParts/02-time'),
+  relative: require('./getParts/03-relative'),
+  timezone: require('./getParts/04-timezone'),
 }
 
 const steps = {
@@ -27,7 +27,6 @@ const parseDate = function (doc, context) {
     context.today = context.today.goto(context.timezone).set(iso)
   }
   let d = null
-
   //'in two days'
   d = d || steps.implied(doc, context, { shift, time, rel })
   // 'this month'
@@ -65,7 +64,9 @@ const parseDate = function (doc, context) {
   }
 
   // apply time
-  d.applyTime(time)
+  if (time) {
+    d.applyTime(time)
+  }
 
   return d
 }

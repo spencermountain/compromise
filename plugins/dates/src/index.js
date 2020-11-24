@@ -1,4 +1,4 @@
-const tagger = require('./01-tag')
+const tagger = require('./tagger')
 const tags = require('./data/_tags')
 const words = require('./data/words')
 const methods = require('./methods')
@@ -35,9 +35,6 @@ const addMethods = function (Doc, world) {
     context = Object.assign({}, context, opts)
     let r = this.clauses()
     let dates = r.match('#Date+')
-    if (typeof n === 'number') {
-      dates = dates.get(n)
-    }
     if (typeof n === 'number') {
       dates = dates.get(n)
     }

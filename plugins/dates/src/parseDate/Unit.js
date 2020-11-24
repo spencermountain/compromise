@@ -1,7 +1,7 @@
 const spacetime = require('spacetime')
 
 class Unit {
-  constructor(input, unit, context) {
+  constructor(input, unit, context, keepTime) {
     this.unit = unit || 'day'
     context = context || {}
     let today = {}
@@ -16,7 +16,7 @@ class Unit {
     let d = spacetime(input, context.timezone, { today: today })
 
     // set to beginning
-    if (d.isValid()) {
+    if (d.isValid() && keepTime !== true) {
       d = d.startOf(this.unit)
     }
     Object.defineProperty(this, 'd', {

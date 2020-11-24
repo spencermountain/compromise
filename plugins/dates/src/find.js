@@ -1,6 +1,20 @@
 const spacetime = require('spacetime')
-const normalize = require('./00-normalize')
-const parseRanges = require('./01-parse-range')
+const parseRanges = require('./ranges')
+
+const normalize = function (doc) {
+  doc = doc.clone()
+  if (!doc.numbers) {
+    console.warn("Compromise: compromise-dates cannot find plugin dependency 'compromise-number'")
+  } else {
+    // convert 'two' to 2
+    let num = doc.numbers()
+    num.toNumber()
+    num.toCardinal(false)
+  }
+  // remove adverbs
+  doc.adverbs().remove()
+  return doc
+}
 
 const getDate = function (doc, context) {
   // validate context a bit
@@ -8,6 +22,7 @@ const getDate = function (doc, context) {
   context.timezone = context.timezone || 'ETC/UTC'
   context.today = spacetime(context.today || null, context.timezone)
   //turn 'five' into 5..
+
   doc = normalize(doc)
   //interpret 'between [A] and [B]'...
   return parseRanges(doc, context)

@@ -4,18 +4,27 @@ nlp.verbose(true)
 nlp.extend(require('./plugins/sentences/src'))
 // nlp.extend(require('./plugins/numbers/src'))
 // nlp.extend(require('./plugins/dates/src'))
-
-const fmt = function (iso) {
-  if (!iso) {
-    return '-'
-  }
-  return spacetime(iso).format('{day-short} {nice} {year}')
+const intersection = function (arr1, arr2) {
+  return arr1.filter(value => arr2.includes(value))
 }
 
-let doc = nlp('first hour of 2019')
-let found = doc.dates().json()[0]
-console.log(fmt(found.date.start))
-console.log(fmt(found.date.end))
+let female = require('/Users/spencer/mountain/compromise/data/people/femaleNames.js')
+let male = require('/Users/spencer/mountain/compromise/data/people/maleNames.js')
+let both = require('/Users/spencer/mountain/compromise/data/people/firstNames.js')
+let last = require('/Users/spencer/mountain/compromise/data/people/lastNames.js')
+
+console.log(intersection(male, female))
+// const fmt = function (iso) {
+//   if (!iso) {
+//     return '-'
+//   }
+//   return spacetime(iso).format('{day-short} {nice} {year}')
+// }
+
+// let doc = nlp('first hour of 2019')
+// let found = doc.dates().json()[0]
+// console.log(fmt(found.date.start))
+// console.log(fmt(found.date.end))
 
 //--
 // let doc = nlp(`despite working hard, the tired old city doctor was very happy.`)

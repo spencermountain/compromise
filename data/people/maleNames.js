@@ -903,7 +903,6 @@ module.exports = [
   'sammie',
   'sammy',
   'samuel',
-  'santiago',
   'santino',
   'saqib',
   'saul',

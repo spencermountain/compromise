@@ -1092,7 +1092,6 @@ module.exports = [
   'millie',
   'milly',
   'mimi',
-  'mina',
   'mindy',
   'minerva',
   'minh',

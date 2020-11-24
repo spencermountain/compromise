@@ -1,3 +1,4 @@
+// try to hit every match in ./tagger/corrections
 const corpus = require('nlp-corpus') //install with `npm i nlp-corpus --no-save`
 const nlp = require('../../src')
 let penn = require('../../tests/_pennSample')
@@ -7,6 +8,7 @@ let manual = require('./manual').map(str => {
 })
 let texts = penn.concat(manual)
 
+// add some random texts in
 for (let i = 0; i < 1000; i++) {
   texts.push({ text: corpus.random() })
 }

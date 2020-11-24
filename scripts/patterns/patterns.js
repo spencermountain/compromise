@@ -1,3 +1,4 @@
+// list of all match patterns, Nov 2020
 let patterns = [
   'bit-4',
   'u r',

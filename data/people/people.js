@@ -44,7 +44,6 @@ module.exports = [
   'brock',
   'carson',
   'clinton',
-  'cruz',
   'dalton',
   'dante',
   'effie',
@@ -60,4 +59,5 @@ module.exports = [
   'piper',
   'sung',
   'taylor',
+  'reilly',
 ]

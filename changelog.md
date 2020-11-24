@@ -13,11 +13,12 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - **[change]** improved support for fractions in numbers-plugin #793
 - **[change]** remove zero-width characters in normalized output #759
 - **[change]** improved Person tagging with particles #794
+- **[change]** improved i18n Person names
 - **[change]** tagger+tokenization fixes
 - **[fix]** - NumberRange tagging issue #795
 - **[new]** - new plugin `strict-match`
-
-- **[doc]** make negative `!foo` matches optional
+- **[new]** - set NounPhrase, VerbPhrase tags in nlp-sentences plugin
+- **[new]** - `.phrases()` method in nlp-sentences plugin
 -->
 
 #### 13.7.0

@@ -32,7 +32,7 @@ module.exports = {
     verbs: ['pat', 'wade', 'ollie', 'will', 'rob', 'buck', 'bob', 'mark', 'jack'],
 
     // names that are verbs
-    places: ['paris', 'alexandria', 'houston', 'kobe', 'salvador', 'sydney'],
+    places: ['darwin', 'paris', 'alexandria', 'houston', 'kobe', 'salvador', 'sydney'],
 
     // names that are nouns
     nouns: [
@@ -71,6 +71,18 @@ module.exports = {
       'van',
       'viola',
       'violet',
+      // 'wood',
+      'christian',
+      'hill',
+      'brown',
+      'green',
+      'white',
+      'hall',
+      'franco',
+      'chin',
+      'wang',
+      'berg',
+      'baker',
     ],
   },
 }

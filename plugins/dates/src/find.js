@@ -13,6 +13,7 @@ const normalize = function (doc) {
   }
   // remove adverbs
   doc.adverbs().remove()
+  doc.replace('week end', 'weekend')
   return doc
 }
 

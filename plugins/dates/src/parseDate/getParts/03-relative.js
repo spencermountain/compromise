@@ -1,7 +1,7 @@
 // interpret 'this halloween' or 'next june'
 const parseRelative = function (doc) {
   // avoid parsing 'last month of 2019'
-  if (doc.has('^(this|current|next|upcoming|last|previous) #DateUnit')) {
+  if (doc.has('^(this|current|next|upcoming|last|previous) #Duration')) {
     return null
   }
 

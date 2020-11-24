@@ -108,6 +108,8 @@ const fixDates = function (doc) {
     date.match('#Date [(am|pm)]', 0).unTag('Verb').unTag('Copula').tag('Time', 'date-am')
     //feb to june
     date.match('#Date (#Preposition|to) #Date').ifNo('#Duration').tag('Date', 'date-prep-date')
+    //2nd quarter of 2019
+    // date.match('#Date of #Date').tag('Date', 'date-of-date')
   }
 
   //year/cardinal tagging

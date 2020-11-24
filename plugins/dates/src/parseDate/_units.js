@@ -43,6 +43,12 @@ class Hour extends Unit {
     this.unit = 'hour'
   }
 }
+class Minute extends Unit {
+  constructor(input, unit, context) {
+    super(input, unit, context, true)
+    this.unit = 'minute'
+  }
+}
 class WeekDay extends Unit {
   constructor(input, unit, context) {
     super(input, unit, context)
@@ -117,6 +123,7 @@ module.exports = {
   Day: Day,
   Week: Week,
   Hour: Hour,
+  Minute: Minute,
   Month: Month,
   Quarter: Quarter,
   Season: Season,

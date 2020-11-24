@@ -34,7 +34,13 @@ test('date-parse :', function (t) {
     ['27th of March', '2019-03-27T00:00:00.000Z'],
     ['february 10th', '2019-02-10T00:00:00.000Z'],
     ['february 28th', '2019-02-28T00:00:00.000Z'],
-    ['7th hour of 2019', '2019-01-01T07:00:00.000Z'],
+    // nth [] of year
+    ['first day of 2019', '2019-01-01T00:00:00.000Z'],
+    ['last day of 2019', '2019-12-31T00:00:00.000Z'],
+    ['7th hour of 2019', '2019-01-01T06:00:00.000Z'],
+    ['7th day of 2019', '2019-01-07T00:00:00.000Z'],
+    ['second quarter of 2019', '2019-04-01T00:00:00.000Z'],
+    ['30th minute of 2019', '2019-01-01T00:30:00.000Z'],
     //invalid dates
     // ['303rd of March 1969', [2, null, 1969]],
     // ['4103', [null, null, null]],

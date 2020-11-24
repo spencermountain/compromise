@@ -69,6 +69,8 @@ let list = [
   { match: `${dates} #Acronym? (#ProperNoun && !#Month)`, tag: 'Person', reason: 'june-smith-jr' },
   // 'second'
   { match: `#Cardinal [second]`, tag: 'Unit', reason: 'one-second' },
+  // second quarter
+  // { match: `#Ordinal quarter`, tag: 'Date', reason: 'second-quarter' },
 ]
 
 module.exports = list

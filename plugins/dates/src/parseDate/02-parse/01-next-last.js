@@ -1,4 +1,4 @@
-const units = require('../units/_units')
+const units = require('../units')
 const mapping = {
   week: units.Week,
   month: units.Month,
@@ -8,7 +8,7 @@ const mapping = {
 }
 
 // when a unit of time is spoken of as 'this month' - instead of 'february'
-const namedUnit = function (doc, context) {
+const nextLast = function (doc, context) {
   //this month, last quarter, next year
   let m = doc.match('^(weekday|week|month|quarter|season|year)$')
   if (m.found === true) {
@@ -32,4 +32,4 @@ const namedUnit = function (doc, context) {
   }
   return null
 }
-module.exports = namedUnit
+module.exports = nextLast

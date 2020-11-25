@@ -1,4 +1,4 @@
-const { CalendarDate } = require('../units/_units')
+const { CalendarDate } = require('../units')
 const spacetimeHoliday = require('spacetime-holiday')
 
 const parseHoliday = function (doc, context) {

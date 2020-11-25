@@ -1,6 +1,6 @@
-const { Unit } = require('../units/_units')
+const { Unit } = require('../units')
 
-const onlySection = function (doc, context, section) {
+const impliedToday = function (doc, context, section) {
   let unit = null
   if (doc.found === false) {
     // do we have just a time?
@@ -14,4 +14,4 @@ const onlySection = function (doc, context, section) {
   }
   return unit
 }
-module.exports = onlySection
+module.exports = impliedToday

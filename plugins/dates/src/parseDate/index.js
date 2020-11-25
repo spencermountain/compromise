@@ -8,10 +8,10 @@ const tokens = {
 
 const parse = {
   implied: require('./02-parse/00-implied'),
-  duration: require('./02-parse/01-duration'),
+  duration: require('./02-parse/01-next-last'),
   holiday: require('./02-parse/02-holidays'),
   yearly: require('./02-parse/03-yearly'),
-  firstLast: require('./02-parse/04-first-last'),
+  firstLast: require('./02-parse/_first-last'),
   explicit: require('./02-parse/05-explicit'),
 }
 
@@ -45,16 +45,17 @@ const parseDate = function (doc, context) {
   unit = unit || parse.firstLast(doc, context)
   // 'this june 2nd'
   unit = unit || parse.explicit(doc, context)
-  // console.log('\n\n')
-  // doc.debug()
-  // console.log('=-=-=-=-=-=Date-=-=-=-=-=-=-')
-  // console.log(`  shift:      ${JSON.stringify(shift)}`)
-  // console.log(`  counter:   `, counter)
-  // console.log(`  rel:        ${rel || '-'}`)
-  // console.log(`  time:       ${time || '-'}`)
-  // console.log(`\n  str:       '${doc.text()}'`)
-  // console.log('\n     ', unit)
-  // console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n')
+
+  console.log('\n\n')
+  doc.debug()
+  console.log('=-=-=-=-=-=Date-=-=-=-=-=-=-')
+  console.log(`  shift:      ${JSON.stringify(shift)}`)
+  console.log(`  counter:   `, counter)
+  console.log(`  rel:        ${rel || '-'}`)
+  console.log(`  time:       ${time || '-'}`)
+  console.log(`\n  str:       '${doc.text()}'`)
+  console.log('\n     ', unit)
+  console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n')
 
   if (!unit) {
     return null
@@ -75,7 +76,7 @@ const parseDate = function (doc, context) {
   if (time) {
     unit.applyTime(time)
   }
-  // apply time
+  // apply counter
   if (counter && counter.num) {
     unit = transform.counter(unit, counter)
   }

@@ -1,4 +1,4 @@
-const { Quarter, Season, Week } = require('../units/_units')
+const { Quarter, Season } = require('../units')
 const spacetime = require('spacetime')
 
 const parseYearly = function (doc, context) {

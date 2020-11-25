@@ -1,5 +1,4 @@
-const { Quarter, Season, Week, Day, Hour, CalendarDate, Minute, Month, WeekEnd } = require('../units/_units')
-const spacetime = require('spacetime')
+const { Quarter, Season, Week, Day, Hour, Minute, Month, WeekEnd } = require('../units')
 
 const units = {
   day: Day,
@@ -12,16 +11,28 @@ const units = {
   minute: Minute,
 }
 
-const oneBased = {
-  minute: true,
-}
-const applyNthUnit = function (unit, counter = {}) {
+// const oneBased = {
+//   minute: true,
+// }
+
+const applyCounter = function (unit, counter = {}) {
   let Unit = units[counter.unit]
-  if (!counter.num || !Unit) {
-    return
+  let num = counter.num
+  if (!num || !Unit) {
+    return unit
   }
-  let s = unit.d
-  let u = new Unit(s, null, unit.context)
-  console.log(u)
+  let d = unit.d
+  console.log(unit)
+
+  // support 'nth week', eg.
+  if (typeof num === 'number') {
+    d = d.add(num, counter.unit)
+  }
+
+  let u = new Unit(d, null, unit.context)
+  if (u.d.isValid() === true) {
+    return u
+  }
+  return unit //fallback
 }
-module.exports = applyNthUnit
+module.exports = applyCounter

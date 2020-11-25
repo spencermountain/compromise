@@ -23,6 +23,16 @@ const parseYearly = function (doc, context) {
       return unit
     }
   }
+  // support '4th quarter 2020'
+  m = doc.match('[<q>#Value] quarter (of|in)? [<year>#Year?]')
+  if (m.found) {
+    let q = doc.groups('q').text('reduced')
+    let s = spacetime(`q${q}`, context.timezone, { today: context.today })
+    let unit = new Quarter(s, null, context)
+    if (unit.d.isValid() === true) {
+      return unit
+    }
+  }
   // support '2020'
   m = doc.match('^#Year$')
   if (m.found) {

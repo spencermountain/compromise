@@ -61,6 +61,11 @@ const parseExplicit = function (doc, context) {
       year: context.today.year(),
     }
     let unit = new Month(obj, null, context)
+    // assume 'feb' in the future
+    if (unit.d.month() < context.today.month()) {
+      obj.year += 1
+      unit = new Month(obj, null, context)
+    }
     if (unit.d.isValid() === true) {
       return unit
     }

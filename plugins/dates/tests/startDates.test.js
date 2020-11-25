@@ -63,7 +63,7 @@ const tests = [
       ['2 oclock march 2nd', [2016, march, 2]],
       ['march 2nd 2 oclock', [2016, march, 2]],
       ['march 2nd @ 2pm', [2016, march, 2]],
-      // ['march 2nd @ 2', [2016, march, 2]],
+      ['march 2nd @2pm', [2016, march, 2]],
       ['march 2nd @ 2:02', [2016, march, 2]],
       ['march 2nd after 2:00', [2016, march, 2]],
       ['today after 2:00', [2016, february, 11]],
@@ -96,9 +96,9 @@ const tests = [
       ['13/03/2016 before 11', [2016, march, 13]],
 
       ['q1 2002', [2002, january, 1]],
-      // ['fourth quarter, 2002', [2002, october, 1]],
-      // ['fourth quarter', [2016, october, 1]],
-      // ['spring 2002', [2002, march, 1]],
+      ['fourth quarter, 2002', [2002, october, 1]],
+      ['fourth quarter', [2016, october, 1]],
+      ['spring 2002', [2002, march, 1]],
       ['this march', [2016, march, 1]],
       // ['first week of january', [2016, january, 2]],
       // ['first week of february', [2016, february, 6]],
@@ -119,7 +119,7 @@ const tests = [
       ['the day after next', [2016, february, 13]],
       ['day after tomorrow', [2016, february, 13]],
       ['the last weekend in october', [2016, october, 29]],
-      // ['the last weekend this month', [2016, february, 27]]
+      // ['the last weekend this month', [2016, february, 27]],
     ],
   },
   // {
@@ -169,7 +169,7 @@ const tests = [
   //   tests: [
   //     ['yesterday', [2011, march, 27]],
   //     ['tomorrow', [2011, march, 29]],
-  //     ['tmr', [2011, march, 29]],
+  //     // ['tmr', [2011, march, 29]],
   //     ['in 3 days', [2011, march, 31]],
   //     ['3 days ago', [2011, march, 25]],
   //     ['in 3 weeks', [2011, april, 18]],
@@ -181,7 +181,7 @@ const tests = [
   //     ['60 years ago', [1951, march, 28]],
   //     ['2 days ago', [2011, march, 26]],
   //     ['365 days from now', [2012, march, 27]],
-  //     ['100 months now', [2019, july, 28]],
+  //     // ['100 months now', [2019, july, 28]],
   //     ['100 years from now', [2111, march, 28]],
   //     ['next monday', [2011, april, 4]],
   //     ['next mon', [2011, april, 4]],
@@ -289,34 +289,34 @@ const tests = [
   //     // ['three thursdays from now', [2016, february, 25]],
   //   ],
   // },
-  // {
-  //   today: [2016, april, 19],
-  //   tests: [
-  //     ['4pm', [2016, april, 19]],
-  //     ['03/03/2016', [2016, march, 3]],
-  //     ['june fifth 2016', [2016, june, 5]],
-  //     ['june five 2016', [2016, june, 5]],
-  //     ['new years', [2017, january, 1]],
-  //     ['tomorrow', [2016, april, 20]],
-  //     ['this june', [2016, june, 1]], //relyear
-  //     ['third week of may', [2016, may, 16]], //relmonth
-  //     ['this weekend', [2016, april, 23]], //relweek
-  //     ['next weekend', [2016, april, 30]],
-  //     ['summer 1992', [1992, june, 1]],
-  //     ['one hour from today', [2016, april, 19]],
-  //     ['24 hours from today', [2016, april, 20]],
-  //     ['two days from today', [2016, april, 21]],
-  //     ['two weeks from today', [2016, may, 3]],
-  //     ['two months from today', [2016, june, 19]],
-  //     ['three years from today', [2019, april, 19]],
-  //     ['three years after yesterday', [2019, april, 18]],
-  //     ['a month after yesterday', [2016, may, 18]],
-  //     ['a month after new years', [2017, february, 1]],
-  //     // ['2 hours after midnight', [2016, april, 20]],
-  //     // ['the last weekend this month', [2016, april, 30]],
-  //     // ['the last weekend of this month', [2016, april, 30]]
-  //   ],
-  // },
+  {
+    today: [2016, april, 19],
+    tests: [
+      ['4pm', [2016, april, 19]],
+      ['03/03/2016', [2016, march, 3]],
+      ['june fifth 2016', [2016, june, 5]],
+      ['june five 2016', [2016, june, 5]],
+      ['new years', [2017, january, 1]],
+      ['tomorrow', [2016, april, 20]],
+      ['this june', [2016, june, 1]], //relyear
+      ['third week of may', [2016, may, 16]], //relmonth
+      ['this weekend', [2016, april, 23]], //relweek
+      ['next weekend', [2016, april, 30]],
+      ['summer 1992', [1992, june, 1]],
+      ['one hour from today', [2016, april, 19]],
+      ['24 hours from today', [2016, april, 20]],
+      ['two days from today', [2016, april, 21]],
+      ['two weeks from today', [2016, may, 3]],
+      ['two months from today', [2016, june, 19]],
+      ['three years from today', [2019, april, 19]],
+      ['three years after yesterday', [2019, april, 18]],
+      ['a month after yesterday', [2016, may, 18]],
+      ['a month after new years', [2017, february, 1]],
+      // ['2 hours after midnight', [2016, april, 20]],
+      // ['the last weekend this month', [2016, april, 30]],
+      // ['the last weekend of this month', [2016, april, 30]]
+    ],
+  },
   // {
   //   today: [2016, may, 11],
   //   tests: [
@@ -391,21 +391,21 @@ const tests = [
   //     ['tomorrow late at night', [2016, may, 12]],
   //   ],
   // },
-  // {
-  //   today: [2016, october, 28], //friday
-  //   tests: [
-  //     ['saturday morning', [2016, october, 29]],
-  //     ['saturday early in the day', [2016, october, 29]],
-  //     ['saturday am', [2016, october, 29]],
-  //     ['saturday pm', [2016, october, 29]],
-  //     ['saturday noon', [2016, october, 29]],
-  //     ['saturday afternoon', [2016, october, 29]],
-  //     ['saturday evening', [2016, october, 29]],
-  //     ['saturday night', [2016, october, 29]],
-  //     ['saturday late night', [2016, october, 29]],
-  //     ['saturday late at night', [2016, october, 29]],
-  //   ],
-  // },
+  {
+    today: [2016, october, 28], //friday
+    tests: [
+      ['saturday morning', [2016, october, 29]],
+      ['saturday early in the day', [2016, october, 29]],
+      ['saturday am', [2016, october, 29]],
+      ['saturday pm', [2016, october, 29]],
+      ['saturday noon', [2016, october, 29]],
+      ['saturday afternoon', [2016, october, 29]],
+      ['saturday evening', [2016, october, 29]],
+      ['saturday night', [2016, october, 29]],
+      ['saturday late night', [2016, october, 29]],
+      ['saturday late at night', [2016, october, 29]],
+    ],
+  },
   // {
   //   //this/next/last
   //   today: [2016, october, 4], //a tuesday
@@ -511,31 +511,31 @@ const tests = [
   //     // ['after tonight', [2017, october, 8]],
   //   ],
   // },
-  // {
-  //   today: [2016, october, 1],
-  //   tests: [
-  //     ['on the 1st', [2016, october, 1]],
-  //     ['on the 21st', [2016, october, 21]],
-  //     ['on the 2nd', [2016, october, 2]],
-  //     ['on the 22nd', [2016, october, 22]],
-  //     ['on the 3rd', [2016, october, 3]],
-  //     ['on the 23rd', [2016, october, 23]],
-  //   ],
-  // },
-  // {
-  //   today: [2016, october, 15],
-  //   tests: [
-  //     ['on the 1st', [2016, november, 1]],
-  //     ['on the fourteenth', [2016, november, 14]],
-  //     ['on the sixteenth', [2016, october, 16]],
-  //     ['on the 20th', [2016, october, 20]],
-  //     ['on the 30th', [2016, october, 30]],
-  //     ['on the 10th of october', [2016, october, 10]],
-  //     ['on the 10th october', [2016, october, 10]],
-  //     ['on october 10th', [2016, october, 10]],
-  //     ['on october the 10th', [2016, october, 10]],
-  //   ],
-  // },
+  {
+    today: [2016, october, 1],
+    tests: [
+      ['on the 1st', [2016, october, 1]],
+      ['on the 21st', [2016, october, 21]],
+      ['on the 2nd', [2016, october, 2]],
+      ['on the 22nd', [2016, october, 22]],
+      ['on the 3rd', [2016, october, 3]],
+      ['on the 23rd', [2016, october, 23]],
+    ],
+  },
+  {
+    today: [2016, october, 15],
+    tests: [
+      // ['on the 1st', [2016, november, 1]],
+      // ['on the fourteenth', [2016, november, 14]],
+      ['on the sixteenth', [2016, october, 16]],
+      ['on the 20th', [2016, october, 20]],
+      ['on the 30th', [2016, october, 30]],
+      ['on the 10th of october', [2016, october, 10]],
+      ['on the 10th october', [2016, october, 10]],
+      ['on october 10th', [2016, october, 10]],
+      ['on october the 10th', [2016, october, 10]],
+    ],
+  },
   // {
   //   today: [2016, october, 15], //tricky years
   //   tests: [

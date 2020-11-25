@@ -12,7 +12,17 @@ const fmt = function (iso) {
   return spacetime(iso).format('{day-short} {nice} {year}')
 }
 
-let doc = nlp('two days after halloween')
+// let doc = nlp('two days after halloween')
+// let doc = nlp('next mon')
+// let doc = nlp('this coming monday')
+// let doc = nlp('next year')
+// let doc = nlp('this month')
+// let doc = nlp('last february')
+// let doc = nlp('february')
+// let doc = nlp('friday')
+// let doc = nlp('next year in june')
+// let doc = nlp('new years')
+let doc = nlp('fourth quarter, 2002')
 let found = doc.dates().json()[0]
 console.log(fmt(found.date.start))
 console.log(fmt(found.date.end))

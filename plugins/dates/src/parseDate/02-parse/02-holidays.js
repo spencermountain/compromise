@@ -1,14 +1,14 @@
-const { CalendarDate } = require('../_units')
+const { CalendarDate } = require('../units/_units')
 const spacetimeHoliday = require('spacetime-holiday')
 
 const parseHoliday = function (doc, context) {
-  let d = null
+  let unit = null
   let str = doc.match('#Holiday+').text('reduced')
   let year = context.today.year()
   let s = spacetimeHoliday(str, year)
   if (s !== null) {
-    d = new CalendarDate(s, null, context)
+    unit = new CalendarDate(s, null, context)
   }
-  return d
+  return unit
 }
 module.exports = parseHoliday

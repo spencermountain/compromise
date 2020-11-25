@@ -1,4 +1,4 @@
-const { Quarter, Season, Week } = require('../_units')
+const { Quarter, Season, Week } = require('../units/_units')
 const spacetime = require('spacetime')
 
 const parseYearly = function (doc, context) {
@@ -7,9 +7,9 @@ const parseYearly = function (doc, context) {
   if (m.found) {
     let str = doc.text('reduced')
     let s = spacetime(str, context.timezone, { today: context.today })
-    let d = new Season(s, null, context)
-    if (d.d.isValid() === true) {
-      return d
+    let unit = new Season(s, null, context)
+    if (unit.d.isValid() === true) {
+      return unit
     }
   }
 
@@ -18,9 +18,9 @@ const parseYearly = function (doc, context) {
   if (m.found) {
     let str = doc.text('reduced')
     let s = spacetime(str, context.timezone, { today: context.today })
-    let d = new Quarter(s, null, context)
-    if (d.d.isValid() === true) {
-      return d
+    let unit = new Quarter(s, null, context)
+    if (unit.d.isValid() === true) {
+      return unit
     }
   }
 

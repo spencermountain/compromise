@@ -1,73 +1,85 @@
-const section = {
-  shift: require('./getParts/01-shift'),
-  time: require('./getParts/02-time'),
-  relative: require('./getParts/03-relative'),
-  timezone: require('./getParts/04-timezone'),
+const tokens = {
+  shift: require('./01-tokenize/01-shift'),
+  counter: require('./01-tokenize/02-counter'),
+  time: require('./01-tokenize/03-time'),
+  relative: require('./01-tokenize/04-relative'),
+  timezone: require('./01-tokenize/05-timezone'),
 }
 
-const steps = {
-  implied: require('./steps/00-implied'),
-  duration: require('./steps/01-duration'),
-  holiday: require('./steps/02-holidays'),
-  yearly: require('./steps/03-yearly'),
-  firstLast: require('./steps/04-first-last'),
-  explicit: require('./steps/05-explicit'),
+const parse = {
+  implied: require('./02-parse/00-implied'),
+  duration: require('./02-parse/01-duration'),
+  holiday: require('./02-parse/02-holidays'),
+  yearly: require('./02-parse/03-yearly'),
+  firstLast: require('./02-parse/04-first-last'),
+  explicit: require('./02-parse/05-explicit'),
+}
+
+const transform = {
+  counter: require('./03-transform/counter'),
 }
 
 const parseDate = function (doc, context) {
   //parse-out any sections
-  let shift = section.shift(doc)
-  let tz = section.timezone(doc)
-  let time = section.time(doc, context)
-  let rel = section.relative(doc)
+  let shift = tokens.shift(doc)
+  let counter = tokens.counter(doc)
+  let tz = tokens.timezone(doc)
+  let time = tokens.time(doc, context)
+  let rel = tokens.relative(doc)
   //set our new timezone
   if (tz) {
     context = Object.assign({}, context, { timezone: tz })
     let iso = context.today.format('iso-short')
     context.today = context.today.goto(context.timezone).set(iso)
   }
-  let d = null
+  let unit = null
   //'in two days'
-  d = d || steps.implied(doc, context, { shift, time, rel })
+  unit = unit || parse.implied(doc, context, { shift, time, rel })
   // 'this month'
-  d = d || steps.duration(doc, context)
+  unit = unit || parse.duration(doc, context)
   // 'this haloween'
-  d = d || steps.holiday(doc, context)
+  unit = unit || parse.holiday(doc, context)
   // 'q2 2002'
-  d = d || steps.yearly(doc, context)
+  unit = unit || parse.yearly(doc, context)
   // 'last week of 2002'
-  d = d || steps.firstLast(doc, context)
+  unit = unit || parse.firstLast(doc, context)
   // 'this june 2nd'
-  d = d || steps.explicit(doc, context)
-  // console.log('\n\n=-=-=-=-=-=Date-=-=-=-=-=-=-')
+  unit = unit || parse.explicit(doc, context)
+  // console.log('\n\n')
+  // doc.debug()
+  // console.log('=-=-=-=-=-=Date-=-=-=-=-=-=-')
   // console.log(`  shift:      ${JSON.stringify(shift)}`)
+  // console.log(`  counter:   `, counter)
   // console.log(`  rel:        ${rel || '-'}`)
   // console.log(`  time:       ${time || '-'}`)
   // console.log(`\n  str:       '${doc.text()}'`)
-  // console.log('\n     ', d)
+  // console.log('\n     ', unit)
   // console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n')
 
-  if (!d) {
+  if (!unit) {
     return null
   }
 
   // // apply relative
   if (rel === 'last') {
-    d.last()
+    unit.last()
   }
   if (rel === 'next') {
-    d.next()
+    unit.next()
   }
   // apply shift
   if (shift) {
-    d.applyShift(shift)
+    unit.applyShift(shift)
   }
-
   // apply time
   if (time) {
-    d.applyTime(time)
+    unit.applyTime(time)
+  }
+  // apply time
+  if (counter && counter.num) {
+    unit = transform.counter(unit, counter)
   }
 
-  return d
+  return unit
 }
 module.exports = parseDate

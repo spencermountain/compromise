@@ -12,8 +12,7 @@ const fmt = function (iso) {
   return spacetime(iso).format('{day-short} {nice} {year}')
 }
 
-let doc = nlp('30th minute of June')
-doc.debug()
+let doc = nlp('last minute of June')
 let found = doc.dates().json()[0]
 console.log(fmt(found.date.start))
 console.log(fmt(found.date.end))

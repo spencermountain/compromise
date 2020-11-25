@@ -1,5 +1,5 @@
 const parseDate = require('./parseDate')
-const Unit = require('./parseDate/Unit')
+const Unit = require('./parseDate/units/Unit')
 
 const punt = function (unit, context) {
   unit = unit.applyShift(context.punt)

@@ -1,4 +1,4 @@
-const { Unit, Day, CalendarDate, Month } = require('../_units')
+const { Unit, Day, CalendarDate, Month } = require('../units/_units')
 
 const knownWord = {
   today: (context) => {
@@ -30,9 +30,9 @@ const parseExplicit = function (doc, context) {
       date: m.groups('date').text(),
       year: m.groups('year').text() || impliedYear,
     }
-    let d = new CalendarDate(obj, null, context)
-    if (d.d.isValid() === true) {
-      return d
+    let unit = new CalendarDate(obj, null, context)
+    if (unit.d.isValid() === true) {
+      return unit
     }
   }
   //no-dates
@@ -43,9 +43,9 @@ const parseExplicit = function (doc, context) {
       month: m.groups('month').text(),
       year: m.groups('year').text() || impliedYear,
     }
-    let d = new Month(obj, null, context)
-    if (d.d.isValid() === true) {
-      return d
+    let unit = new Month(obj, null, context)
+    if (unit.d.isValid() === true) {
+      return unit
     }
   }
   //no-years
@@ -62,9 +62,9 @@ const parseExplicit = function (doc, context) {
       date: m.groups('date').text(),
       year: context.today.year(),
     }
-    let d = new CalendarDate(obj, null, context)
-    if (d.d.isValid() === true) {
-      return d
+    let unit = new CalendarDate(obj, null, context)
+    if (unit.d.isValid() === true) {
+      return unit
     }
   }
   // support 'december'
@@ -74,9 +74,9 @@ const parseExplicit = function (doc, context) {
       date: 1, //assume 1st
       year: context.today.year(),
     }
-    let d = new CalendarDate(obj, null, context)
-    if (d.d.isValid() === true) {
-      return d
+    let unit = new CalendarDate(obj, null, context)
+    if (unit.d.isValid() === true) {
+      return unit
     }
   }
 
@@ -100,11 +100,11 @@ const parseExplicit = function (doc, context) {
     return d
   }
   // punt it to spacetime, for the heavy-lifting
-  let d = new Unit(str, null, context)
+  let unit = new Unit(str, null, context)
   // did we find a date?
-  if (d.d.isValid() === false) {
+  if (unit.d.isValid() === false) {
     return null
   }
-  return d
+  return unit
 }
 module.exports = parseExplicit

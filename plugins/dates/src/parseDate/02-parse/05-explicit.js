@@ -1,17 +1,4 @@
-const { Unit, Day, CalendarDate, Month } = require('../units')
-
-const knownWord = {
-  today: (context) => {
-    return new Day(context.today, null, context)
-  },
-  yesterday: (context) => {
-    return new Day(context.today.minus(1, 'day'), null, context)
-  },
-  tomorrow: (context) => {
-    return new Day(context.today.plus(1, 'day'), null, context)
-  },
-}
-knownWord.tommorrow = knownWord.tomorrow
+const { Unit, CalendarDate, Month } = require('../units')
 
 // parse things like 'june 5th 2019'
 // most of this is done in spacetime
@@ -19,8 +6,8 @@ const parseExplicit = function (doc, context) {
   let impliedYear = context.today.year()
 
   // 'fifth of june 1992'
-  let m = doc.match('[<date>#Value] of? [<month>#Month] [<year>#Year]')
   // 'june the fifth 1992'
+  let m = doc.match('[<date>#Value] of? [<month>#Month] [<year>#Year]')
   if (!m.found) {
     m = doc.match('[<month>#Month] the? [<date>#Value] [<year>#Year]')
   }
@@ -35,7 +22,6 @@ const parseExplicit = function (doc, context) {
       return unit
     }
   }
-  //no-dates
   // 'march 1992'
   m = doc.match('[<month>#Month] of? [<year>#Year]')
   if (m.found) {
@@ -94,11 +80,6 @@ const parseExplicit = function (doc, context) {
     }
   }
   let str = doc.text('reduced')
-  // today, yesterday, tomorrow
-  if (knownWord.hasOwnProperty(str) === true) {
-    let d = knownWord[str](context)
-    return d
-  }
   // punt it to spacetime, for the heavy-lifting
   let unit = new Unit(str, null, context)
   // did we find a date?

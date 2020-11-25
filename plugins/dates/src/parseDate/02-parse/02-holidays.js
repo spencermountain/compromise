@@ -1,4 +1,4 @@
-const { CalendarDate } = require('../units')
+const { Holiday } = require('../units')
 const spacetimeHoliday = require('spacetime-holiday')
 
 const parseHoliday = function (doc, context) {
@@ -7,7 +7,7 @@ const parseHoliday = function (doc, context) {
   let year = context.today.year()
   let s = spacetimeHoliday(str, year)
   if (s !== null) {
-    unit = new CalendarDate(s, null, context)
+    unit = new Holiday(s, null, context)
   }
   return unit
 }

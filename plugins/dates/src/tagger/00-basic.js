@@ -141,6 +141,9 @@ const fixDates = function (doc) {
     //it was 1998
     v = cardinal.match('it (is|was) [#Cardinal]', 0)
     tagYearSafe(v, 'in-year')
+    //'2020'
+    v = cardinal.match('/^20[012][0-9]$/')
+    tagYearSafe(v, '2020-ish')
   }
 
   let time = doc.if('#Time')

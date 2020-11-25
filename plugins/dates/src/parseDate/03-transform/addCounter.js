@@ -11,24 +11,26 @@ const units = {
   minute: Minute,
 }
 
-// const oneBased = {
-//   minute: true,
-// }
-
 const applyCounter = function (unit, counter = {}) {
   let Unit = units[counter.unit]
-  let num = counter.num
-  if (!num || !Unit) {
+  if (!Unit) {
     return unit
   }
   let d = unit.d
-  console.log(unit)
 
-  // support 'nth week', eg.
-  if (typeof num === 'number') {
-    d = d.add(num, counter.unit)
+  // support 'first' or 0th
+  if (counter.dir === 'first' || counter.num === 0) {
+    console.log(d.format('nice'))
+    d = unit.start().d
+    console.log(d.format('nice'))
+    d = d.startOf(counter.unit)
+  } else if (counter.dir === 'last') {
+    d = d.endOf(unit.unit)
+    d = d.startOf(counter.unit)
+  } else if (counter.num) {
+    // support 'nth week', eg.
+    d = d.add(counter.num, counter.unit)
   }
-
   let u = new Unit(d, null, unit.context)
   if (u.d.isValid() === true) {
     return u

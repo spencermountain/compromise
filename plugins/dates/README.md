@@ -128,6 +128,44 @@ nlp('in two days')
   .json()
 ```
 
+### Method
+
+ranges:
+  * *between {} and {}*
+  * *in {}*
+  * *before {}*
+  * *after {}*
+
+tokens:
+```
+  shift:    '5 weeks before' to {weeks:-5}
+            '14 hours after' to {hours:14}
+  
+  counter:  '4th week of' to {unit:week, num:4}
+            '10th hour in' to {unit:hour, num:10}
+            'last hour in' to {unit:hour, num:'last'}
+  
+  time:      'at 5pm' to '5:00pm'
+  
+  timezone:  'EST' to 'America/New_York'
+  
+  relative:  'next wednesday'
+```
+
+Units:
+  * **Week** - 'mon-sun'
+  * **Month** - 'march 2020'
+  * **Quarter** - 'q2 2020'
+  * **Season** - 'summer'
+  * **Year** - '2019'
+  * **Weekend** - 'sat-sun'
+  * **Day** - '12:00am-11:59pm'
+  * **CalendarDate** - 'June 22'
+  * **WeekDay** - 'thursday'
+  * **Holiday** - 'easter'
+  * **Hour** - '4pm'
+  * **Minute** - '4:32pm'
+
 Work in progress.
 
 MIT

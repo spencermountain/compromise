@@ -7,16 +7,15 @@ const tokens = {
 }
 
 const parse = {
-  implied: require('./02-parse/00-implied'),
-  duration: require('./02-parse/01-next-last'),
+  today: require('./02-parse/01-today'),
   holiday: require('./02-parse/02-holidays'),
   yearly: require('./02-parse/03-yearly'),
-  firstLast: require('./02-parse/_first-last'),
+  nextLast: require('./02-parse/04-next-last'),
   explicit: require('./02-parse/05-explicit'),
 }
 
 const transform = {
-  counter: require('./03-transform/counter'),
+  counter: require('./03-transform/addCounter'),
 }
 
 const parseDate = function (doc, context) {
@@ -34,28 +33,15 @@ const parseDate = function (doc, context) {
   }
   let unit = null
   //'in two days'
-  unit = unit || parse.implied(doc, context, { shift, time, rel })
-  // 'this month'
-  unit = unit || parse.duration(doc, context)
+  unit = unit || parse.today(doc, context, { shift, time, rel })
   // 'this haloween'
   unit = unit || parse.holiday(doc, context)
   // 'q2 2002'
   unit = unit || parse.yearly(doc, context)
-  // 'last week of 2002'
-  unit = unit || parse.firstLast(doc, context)
+  // 'this month'
+  unit = unit || parse.nextLast(doc, context)
   // 'this june 2nd'
   unit = unit || parse.explicit(doc, context)
-
-  console.log('\n\n')
-  doc.debug()
-  console.log('=-=-=-=-=-=Date-=-=-=-=-=-=-')
-  console.log(`  shift:      ${JSON.stringify(shift)}`)
-  console.log(`  counter:   `, counter)
-  console.log(`  rel:        ${rel || '-'}`)
-  console.log(`  time:       ${time || '-'}`)
-  console.log(`\n  str:       '${doc.text()}'`)
-  console.log('\n     ', unit)
-  console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n')
 
   if (!unit) {
     return null
@@ -77,10 +63,19 @@ const parseDate = function (doc, context) {
     unit.applyTime(time)
   }
   // apply counter
-  if (counter && counter.num) {
+  if (counter && counter.unit) {
     unit = transform.counter(unit, counter)
   }
-
+  // debugging
+  // console.log('\n\n=-=-=-=-=-=-=-=-=-=-=-=Date-=-=-=-=-=-=-=-=-=-=-=-=-\n')
+  // console.log(`  shift:      ${JSON.stringify(shift)}`)
+  // console.log(`  counter:   `, counter)
+  // console.log(`  rel:        ${rel || '-'}`)
+  // console.log(`  time:       ${time || '-'}`)
+  // console.log(`  str:       '${doc.text()}'`)
+  // console.log('  unit:     ', unit, '\n')
+  // doc.debug()
+  // console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n')
   return unit
 }
 module.exports = parseDate

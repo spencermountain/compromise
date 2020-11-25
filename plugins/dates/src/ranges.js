@@ -1,4 +1,4 @@
-const parseDate = require('./parseDate')
+const parseDate = require('./parseDate/parse')
 const Unit = require('./parseDate/units/Unit')
 
 const punt = function (unit, context) {

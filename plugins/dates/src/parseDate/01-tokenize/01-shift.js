@@ -33,11 +33,12 @@ const parseShift = function (doc) {
   if (m.has('(before|ago)$') === true) {
     Object.keys(result).forEach((k) => (result[k] *= -1))
   }
-
+  m.remove('#Cardinal #Duration')
   // supoprt 'day after tomorrow'
   m = m.match('[<unit>#Duration] [<dir>(after|before)]')
   if (m.found) {
     let unit = m.groups('unit').text('reduced')
+    // unit = unit.replace(/s$/, '')
     let dir = m.groups('dir').text('reduced')
     if (dir === 'after') {
       result[unit] = 1

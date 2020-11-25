@@ -42,6 +42,7 @@ const parseDate = function (doc, context) {
   unit = unit || parse.nextLast(doc, context)
   // 'this june 2nd'
   unit = unit || parse.explicit(doc, context)
+  // doc.debug()
   if (!unit) {
     return null
   }
@@ -66,15 +67,15 @@ const parseDate = function (doc, context) {
     unit = transform.counter(unit, counter)
   }
   // debugging
-  console.log('\n\n=-=-=-=-=-=-=-=-=-=-=-=Date-=-=-=-=-=-=-=-=-=-=-=-=-\n')
-  console.log(`  shift:      ${JSON.stringify(shift)}`)
-  console.log(`  counter:   `, counter)
-  console.log(`  rel:        ${rel || '-'}`)
-  console.log(`  time:       ${time || '-'}`)
-  console.log(`  str:       '${doc.text()}'`)
-  console.log('  unit:     ', unit, '\n')
-  doc.debug()
-  console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n')
+  // console.log('\n\n=-=-=-=-=-=-=-=-=-=-=-=Date-=-=-=-=-=-=-=-=-=-=-=-=-\n')
+  // console.log(`  shift:      ${JSON.stringify(shift)}`)
+  // console.log(`  counter:   `, counter)
+  // console.log(`  rel:        ${rel || '-'}`)
+  // console.log(`  time:       ${time || '-'}`)
+  // console.log(`  str:       '${doc.text()}'`)
+  // console.log('  unit:     ', unit, '\n')
+  // doc.debug()
+  // console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n')
   return unit
 }
 module.exports = parseDate

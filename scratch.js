@@ -12,11 +12,8 @@ const fmt = function (iso) {
   return spacetime(iso).format('{day-short} {nice} {year}')
 }
 
-// let doc = nlp('two days after halloween')
-// let doc = nlp('next mon')
-// let doc = nlp('this coming monday')
-// let doc = nlp('next year')
-let doc = nlp('this month')
+let doc = nlp('q1 2002')
+// let doc = nlp('the last weekend in october')
 // let doc = nlp('last february')
 // let doc = nlp('friday')
 // let doc = nlp('next year in june')

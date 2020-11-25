@@ -60,7 +60,7 @@ const parseExplicit = function (doc, context) {
       date: 1, //assume 1st
       year: context.today.year(),
     }
-    let unit = new CalendarDate(obj, null, context)
+    let unit = new Month(obj, null, context)
     if (unit.d.isValid() === true) {
       return unit
     }

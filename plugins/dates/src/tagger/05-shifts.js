@@ -9,7 +9,8 @@ const shiftTagger = function (doc) {
     //two weeks and three days before
     doc.match('#Cardinal #Duration and? #DateShift').tag('#DateShift', here)
     doc.match('#DateShift and #Cardinal #Duration').tag('#DateShift', here)
-    // doc.match('#Cardinal #Duration and? #DateShift').tag('#DateShift', here)
+    // 'day after tomorrow'
+    doc.match('[#Duration (after|before)] #Date', 0).tag('#DateShift', here)
   }
   return doc
 }

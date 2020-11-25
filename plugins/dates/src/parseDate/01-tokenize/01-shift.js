@@ -17,6 +17,7 @@ const parseShift = function (doc) {
   if (m.found === false) {
     return result
   }
+  // '5 weeks'
   m.match('#Cardinal #Duration').forEach((ts) => {
     let num = ts.match('#Cardinal').text('normal')
     num = parseFloat(num)
@@ -32,8 +33,22 @@ const parseShift = function (doc) {
   if (m.has('(before|ago)$') === true) {
     Object.keys(result).forEach((k) => (result[k] *= -1))
   }
+
+  // supoprt 'day after tomorrow'
+  m = m.match('[<unit>#Duration] [<dir>(after|before)]')
+  if (m.found) {
+    let unit = m.groups('unit').text('reduced')
+    let dir = m.groups('dir').text('reduced')
+    if (dir === 'after') {
+      result[unit] = 1
+    } else if (dir === 'before') {
+      result[unit] = -1
+    }
+  }
+
   // finally, remove it from our text
   doc.remove('#DateShift')
+
   return result
 }
 module.exports = parseShift

@@ -20,9 +20,7 @@ const applyCounter = function (unit, counter = {}) {
 
   // support 'first' or 0th
   if (counter.dir === 'first' || counter.num === 0) {
-    console.log(d.format('nice'))
     d = unit.start().d
-    console.log(d.format('nice'))
     d = d.startOf(counter.unit)
   } else if (counter.dir === 'last') {
     d = d.endOf(unit.unit)

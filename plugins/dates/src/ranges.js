@@ -38,6 +38,12 @@ const parseRange = function (doc, context) {
         end = end.concat(res.year)
       }
       end = parseDate(end, context)
+      // reverse the order?
+      if (start.d.isAfter(end.d)) {
+        let tmp = start
+        start = end
+        end = tmp
+      }
       return {
         start: start,
         end: end,
@@ -123,14 +129,14 @@ const parseRange = function (doc, context) {
   // 'before june'
   m = doc.match('^due? (by|before) [*]', 0)
   if (m.found) {
-    let d = parseDate(m, context)
-    if (d) {
+    let unit = parseDate(m, context)
+    if (unit) {
       let today = new Unit(context.today, null, context)
-      if (today.d.isAfter(d.d)) {
-        today = d.clone().applyShift({ weeks: -2 })
+      if (today.d.isAfter(unit.d)) {
+        today = unit.clone().applyShift({ weeks: -2 })
       }
       // end the night before
-      let end = d.clone().applyShift({ day: -1 })
+      let end = unit.clone().applyShift({ day: -1 })
       return {
         start: today,
         end: end.end(),
@@ -141,21 +147,21 @@ const parseRange = function (doc, context) {
   // 'in june'
   m = doc.match('^(on|in|at|@) [*]', 0)
   if (m.found) {
-    let d = parseDate(m, context)
-    if (d) {
-      return { start: d, end: d.clone().end() }
+    let unit = parseDate(m, context)
+    if (unit) {
+      return { start: unit, end: unit.clone().end() }
     }
   }
 
   // 'after june'
   m = doc.match('^(after|following) [*]', 0)
   if (m.found) {
-    let d = parseDate(m, context)
-    if (d) {
-      d = d.applyShift({ day: 1 })
+    let unit = parseDate(m, context)
+    if (unit) {
+      unit = unit.applyShift({ day: 1 })
       return {
-        start: d.clone(),
-        end: punt(d.clone(), context),
+        start: unit.clone(),
+        end: punt(unit.clone(), context),
       }
     }
   }
@@ -163,20 +169,20 @@ const parseRange = function (doc, context) {
   // 'in june'
   m = doc.match('^(on|during|in) [*]', 0)
   if (m.found) {
-    let d = parseDate(m, context)
-    if (d) {
+    let unit = parseDate(m, context)
+    if (unit) {
       return {
-        start: d,
-        end: d.clone().end(),
+        start: unit,
+        end: unit.clone().end(),
       }
     }
   }
   //else, try whole thing
-  let d = parseDate(doc, context)
-  if (d) {
+  let unit = parseDate(doc, context)
+  if (unit) {
     return {
-      start: d,
-      end: d.clone().end(),
+      start: unit,
+      end: unit.clone().end(),
     }
   }
   return {

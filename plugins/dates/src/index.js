@@ -33,8 +33,8 @@ const addMethods = function (Doc, world) {
       n = null
     }
     context = Object.assign({}, context, opts)
-    let r = this.clauses()
-    let dates = r.match('#Date+')
+    // let r = this.clauses()
+    let dates = this.match('#Date+')
     if (typeof n === 'number') {
       dates = dates.get(n)
     }

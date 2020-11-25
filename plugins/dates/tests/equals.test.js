@@ -6,7 +6,7 @@ const arr = [
   [`march 2nd`, '2020-03-02T00:00:00.000Z'],
   [`2 march`, '2020-03-02T00:00:00.000Z'],
   [`tues march 2`, '2020-03-02T00:00:00.000Z'],
-  // [`march the second`, '2020-03-02T00:00:00.000Z'],
+  [`march the second`, '2020-03-02T00:00:00.000Z'],
   // [`on the 2nd`, '2020-02-02T00:00:00.000Z'],
 
   // numerical-dates
@@ -72,8 +72,8 @@ const context = {
   today: '2020-01-21',
 }
 
-test('variety', function(t) {
-  arr.forEach(a => {
+test('variety', function (t) {
+  arr.forEach((a) => {
     if (!a[1]) {
       return //skip
     }

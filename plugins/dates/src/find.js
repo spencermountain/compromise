@@ -14,6 +14,7 @@ const normalize = function (doc) {
   // remove adverbs
   doc.adverbs().remove()
   doc.replace('week end', 'weekend')
+  // doc.replace('^the', '')
   return doc
 }
 

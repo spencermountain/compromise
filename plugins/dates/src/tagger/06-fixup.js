@@ -75,6 +75,8 @@ const fixUp = function (doc) {
     // if (d.has('!#Date (in|of|by|for) !#Date')) {
     //   d.unTag('Date', 'dangling-date')
     // }
+    // the day after next
+    d.match('#Date+').match('^the').unTag('Date')
   }
   return doc
 }

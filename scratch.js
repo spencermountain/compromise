@@ -12,7 +12,7 @@ const fmt = function (iso) {
   return spacetime(iso).format('{day-short} {nice} {year}')
 }
 
-let doc = nlp('2nd hour of 2020')
+let doc = nlp('two days after halloween')
 let found = doc.dates().json()[0]
 console.log(fmt(found.date.start))
 console.log(fmt(found.date.end))

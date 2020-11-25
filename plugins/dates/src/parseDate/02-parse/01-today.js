@@ -15,7 +15,6 @@ knownWord.tommorrow = knownWord.tomorrow
 
 const today = function (doc, context, section) {
   let unit = null
-
   // is it empty?
   if (doc.found === false) {
     // do we have just a time?
@@ -31,8 +30,11 @@ const today = function (doc, context, section) {
   // today, yesterday, tomorrow
   let str = doc.text('reduced')
   if (knownWord.hasOwnProperty(str) === true) {
-    let d = knownWord[str](context)
-    return d
+    return knownWord[str](context)
+  }
+  // day after next
+  if (str === 'next' && Object.keys(section.shift).length > 0) {
+    return knownWord.tomorrow(context)
   }
   return unit
 }

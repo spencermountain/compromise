@@ -1,4 +1,4 @@
-const { Unit, CalendarDate, Month } = require('../units')
+const { Day, CalendarDate, Month, Moment } = require('../units')
 
 // parse things like 'june 5th 2019'
 // most of this is done in spacetime
@@ -83,9 +83,19 @@ const parseExplicit = function (doc, context) {
       return d
     }
   }
+  // parse ISO as a Moment
+  m = doc.match('/[0-9]{4}-[0-9]{2}-[0-9]{2}t[0-9]{2}:/')
+  if (m.found) {
+    let str = doc.text('reduced')
+    let unit = new Moment(str, null, context)
+    if (unit.d.isValid() === true) {
+      return unit
+    }
+  }
+
   let str = doc.text('reduced')
   // punt it to spacetime, for the heavy-lifting
-  let unit = new Unit(str, null, context)
+  let unit = new Day(str, null, context)
   // did we find a date?
   if (unit.d.isValid() === false) {
     return null

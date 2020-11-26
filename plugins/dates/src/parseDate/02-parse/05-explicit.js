@@ -4,7 +4,6 @@ const { Unit, CalendarDate, Month } = require('../units')
 // most of this is done in spacetime
 const parseExplicit = function (doc, context) {
   let impliedYear = context.today.year()
-
   // 'fifth of june 1992'
   // 'june the fifth 1992'
   let m = doc.match('[<date>#Value] of? [<month>#Month] [<year>#Year]')

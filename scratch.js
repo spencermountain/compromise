@@ -1,7 +1,7 @@
 const nlp = require('./src/index')
 const spacetime = require('/Users/spencer/mountain/spacetime/src')
 nlp.verbose(true)
-// nlp.extend(require('./plugins/sentences/src'))
+nlp.extend(require('./plugins/sentences/src'))
 nlp.extend(require('./plugins/numbers/src'))
 nlp.extend(require('./plugins/dates/src'))
 
@@ -12,14 +12,16 @@ const fmt = function (iso) {
   return spacetime(iso).format('{day-short} {nice} {year}')
 }
 
-let doc = nlp('Jan 22 @6pm').debug()
+let doc = nlp('2020-03-02T00:00:00.000Z').debug()
+// let doc = nlp('2pm').debug()
+// let doc = nlp('on the 20th').debug()
 // let doc = nlp('the last weekend in october')
 // let doc = nlp('last february')
 // let doc = nlp('friday')
 // let doc = nlp('next year in june')
 // let doc = nlp('new years')
 // let doc = nlp('fourth quarter, 2002')
-let found = doc.dates({ today: '2020-01-21' }).json()[0]
+let found = doc.dates({}).json()[0]
 console.log(fmt(found.date.start))
 console.log(fmt(found.date.end))
 

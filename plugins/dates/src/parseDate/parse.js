@@ -20,7 +20,7 @@ const transform = {
 
 const parseDate = function (doc, context) {
   // quick normalization
-  doc = doc.replace('^the', '')
+  doc = doc.replace('^the !#Value', '')
   //parse-out any sections
   let shift = tokens.shift(doc)
   let counter = tokens.counter(doc)

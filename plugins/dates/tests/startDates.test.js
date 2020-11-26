@@ -122,7 +122,7 @@ const tests = [
       // ['the last weekend this month', [2016, february, 27]],
     ],
   },
-  
+
   // {
   //   today: [2016, february, 10],
   //   tests: [
@@ -512,17 +512,17 @@ const tests = [
   //     // ['after tonight', [2017, october, 8]],
   //   ],
   // },
-  {
-    today: [2016, october, 1],
-    tests: [
-      ['on the 1st', [2016, october, 1]],
-      ['on the 21st', [2016, october, 21]],
-      ['on the 2nd', [2016, october, 2]],
-      ['on the 22nd', [2016, october, 22]],
-      ['on the 3rd', [2016, october, 3]],
-      ['on the 23rd', [2016, october, 23]],
-    ],
-  },
+  // {
+  //   today: [2016, october, 1],
+  //   tests: [
+  //     ['on the 1st', [2016, october, 1]],
+  //     ['on the 21st', [2016, october, 21]],
+  //     ['on the 2nd', [2016, october, 2]],
+  //     ['on the 22nd', [2016, october, 22]],
+  //     ['on the 3rd', [2016, october, 3]],
+  //     ['on the 23rd', [2016, october, 23]],
+  //   ],
+  // },
   {
     today: [2016, october, 15],
     tests: [
@@ -600,7 +600,8 @@ test('start dates', (t) => {
     }
     tests[k].tests.forEach((a) => {
       let want = spacetime(a[1], context.timezone).startOf('day').format('iso-short')
-      let json = nlp(a[0]).dates(context).json()[0] || {}
+      let doc = nlp(a[0])
+      let json = doc.dates(context).json()[0] || {}
       let start = (json.date || {}).start
       start = spacetime(start).format('iso-short')
       t.equal(start, want, a[0])

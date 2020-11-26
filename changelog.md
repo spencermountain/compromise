@@ -17,6 +17,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - **[change]** tagger+tokenization fixes
 - **[fix]** - NumberRange tagging issue #795
 - **[change]** remove empty results from .out('array') #795
+- **[change]** `.tokenize()` runs any postProcess() scripts from plugins
 - **[new]** - new plugin `strict-match`
 - **[new]** - set NounPhrase, VerbPhrase tags in nlp-sentences plugin
 - **[new]** - `.phrases()` method in nlp-sentences plugin

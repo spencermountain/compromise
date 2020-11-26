@@ -58,6 +58,7 @@ const parseTime = function (doc, context) {
   if (m.found) {
     m = m.not('oclock')
     s = s.hour(m.text('reduced'))
+    s = s.startOf('hour')
     if (s.isValid() && !s.isEqual(now)) {
       return s.time()
     }

@@ -34,7 +34,7 @@ function instance(worldInstance) {
     }
     let list = tokenize(text, w)
     let doc = new Doc(list, null, w)
-    if (lexicon) {
+    if (lexicon || doc.world.taggers.length > 0) {
       tinyTagger(doc)
     }
     return doc

@@ -2,6 +2,13 @@ const here = 'time-tagger'
 
 //
 const timeTagger = function (doc) {
+  // iso
+  // 2020-03-02T00:00:00.000Z
+  doc.match('/^[0-9]{4}[:-][0-9]{2}[:-][0-9]{2}/').tag('Date')
+  // 03/02
+  doc.match('/^[0-9]{2}/[0-9]{2}/').tag('Date').unTag('Value')
+  // @6pm
+  doc.match('/@[0-9]{1,2}/').tag('Time').unTag('AtMention')
   // quarter to seven (not march 5 to 7)
   if (doc.has('#Cardinal') && !doc.has('#Month')) {
     doc.match('(half|quarter|25|15|10|5) (past|after|to) #Cardinal').tag('Time', here)

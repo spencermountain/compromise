@@ -4,7 +4,9 @@ module.exports = [
   //web tags
   [/^[\w\.]+@[\w\.]+\.[a-z]{2,3}$/, 'Email'], //not fancy
   [/^#[a-z0-9_\u00C0-\u00FF]{2,}$/, 'HashTag'],
-  [/^@\w{2,}$/, 'AtMention'],
+  [/^@1?[0-9](am|pm)$/, 'Time'], // @6pm
+  [/^@1?[0-9]:[0-9]{2}(am|pm)?$/, 'Time'], // @6:30
+  [/^@\w{2,}$/, 'AtMention'], //@spencermountain
   [/^(https?:\/\/|www\.)\w+\.[a-z]{2,3}/, 'Url'], //with http/www
   [/^[\w./]+\.(com|net|gov|org|ly|edu|info|biz|ru|jp|de|in|uk|br)/, 'Url'], //http://mostpopularwebsites.net/top-level-domain
 

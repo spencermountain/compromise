@@ -151,7 +151,7 @@ const fixDates = function (doc) {
     //by 6pm
     time.match('(by|before|after|at|@|about) #Time').tag('Time', 'preposition-time')
     //7 7pm
-    time.match('#Cardinal #Time').not('#Year').tag('Time', 'value-time')
+    // time.match('#Cardinal #Time').not('#Year').tag('Time', 'value-time')
     //2pm est
     time.match('#Time [(eastern|pacific|central|mountain)]', 0).tag('Date', 'timezone')
     //6pm est

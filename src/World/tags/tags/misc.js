@@ -41,7 +41,7 @@ module.exports = {
   // '9:20pm'
   Time: {
     isA: ['Date'],
-    notA: ['Value'],
+    notA: ['Value', 'AtMention'],
   },
 
   //glue

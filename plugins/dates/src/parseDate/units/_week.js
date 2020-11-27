@@ -24,10 +24,10 @@ class WeekEnd extends Unit {
     this.d = this.d.day('saturday').startOf('day')
     return this
   }
-  end() {
-    this.d = this.d.day('sunday').endOf('day')
-    return this
-  }
+  // end() {
+  //   this.d = this.d.day('sunday').endOf('day')
+  //   return this
+  // }
   next() {
     this.d = this.d.add(1, this.unit)
     this.d = this.d.startOf('weekend')

@@ -50,14 +50,16 @@ const parseRange = function (doc, context) {
       }
     }
   }
+
   // one month, one year, first form - 'january 5 to 7 1998'
   m = doc.match('[<month>#Month] [<from>#Value] to [<to>#Value] of? [<year>#Year]')
   if (m.found) {
     let { month, from, to, year } = m.groups()
+    let year2 = year.clone()
     let start = from.prepend(month.text()).append(year.text())
     start = parseDate(start, context)
     if (start) {
-      let end = to.prepend(month.text()).append(year.text())
+      let end = to.prepend(month.text()).append(year2)
       end = parseDate(end, context)
       return {
         start: start,
@@ -131,14 +133,14 @@ const parseRange = function (doc, context) {
   if (m.found) {
     let unit = parseDate(m, context)
     if (unit) {
-      let today = new Unit(context.today, null, context)
-      if (today.d.isAfter(unit.d)) {
-        today = unit.clone().applyShift({ weeks: -2 })
+      let start = new Unit(context.today, null, context)
+      if (start.d.isAfter(unit.d)) {
+        start = unit.clone().applyShift({ weeks: -2 })
       }
       // end the night before
       let end = unit.clone().applyShift({ day: -1 })
       return {
-        start: today,
+        start: start,
         end: end.end(),
       }
     }

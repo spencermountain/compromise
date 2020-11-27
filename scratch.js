@@ -12,9 +12,12 @@ const fmt = function (iso) {
   return spacetime(iso).format('{day-short} {nice} {year}')
 }
 
-// let doc = nlp('july 1 2016')
-let doc = nlp('Jul 1st-31st 2016')
-// let doc = nlp('Sept 1st-30th')
+// let doc = nlp('within June 1999').debug()
+let doc = nlp('q3').debug()
 let found = doc.dates({ today: [2016, 7, 13], timezone: 'Canada/Pacific' }).json()[0]
 console.log(fmt(found.date.start))
 console.log(fmt(found.date.end))
+
+// hmmm
+// let doc = nlp('Jan 1 - Dec 31, 2018').debug() //contraction
+// let doc = nlp('by next weekend').debug() // clone issue

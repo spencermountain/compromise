@@ -28,7 +28,7 @@ exports.append = function (str = '') {
     //build it
     let phrase
     if (isObject(str) && str.isA === 'Doc') {
-      phrase = str.list[0] //use the first phrase
+      phrase = str.list[0].clone() //use the first phrase
     } else if (typeof str === 'string') {
       phrase = tokenize(str, this.world, this.pool())[0] //assume it's one sentence, for now
     }
@@ -59,7 +59,7 @@ exports.prepend = function (str) {
     //build it
     let phrase
     if (isObject(str) && str.isA === 'Doc') {
-      phrase = str.list[0] //use the first phrase
+      phrase = str.list[0].clone() //use the first phrase
     } else if (typeof str === 'string') {
       phrase = tokenize(str, this.world, this.pool())[0] //assume it's one sentence, for now
     }

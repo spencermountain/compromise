@@ -22,6 +22,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - **[new]** - new plugin `strict-match`
 - **[new]** - set NounPhrase, VerbPhrase tags in nlp-sentences plugin
 - **[new]** - `.phrases()` method in nlp-sentences plugin
+- **[new]** - support `.apppend(doc)` and `.prepend(doc)`
 -->
 
 #### 13.7.0

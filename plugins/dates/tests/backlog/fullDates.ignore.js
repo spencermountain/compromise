@@ -21,7 +21,7 @@ const tests = [
       //week, month, year, quarter..
       ['next weekend', 'Aug 20th-21st'],
       ['last weekend', 'Aug 6th-7th'],
-      ['next week', 'Aug 15th-19th'],
+      ['next week', 'Aug 15th-21st'],
       ['this month', 'Aug 1st-31st'],
       ['sometime this month', 'Aug 1st-31st'],
       ['next month', 'Sept 1st-30th'],

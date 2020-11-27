@@ -1,4 +1,7 @@
 const tokenize = require('../../../01-tokenizer')
+const isObject = function (obj) {
+  return obj && Object.prototype.toString.call(obj) === '[object Object]'
+}
 
 // if it's empty, just create the phrase
 const makeNew = function (str, doc) {
@@ -10,7 +13,7 @@ const makeNew = function (str, doc) {
 }
 
 /** add these new terms to the end*/
-exports.append = function (str) {
+exports.append = function (str = '') {
   if (!str) {
     return this
   }
@@ -23,7 +26,12 @@ exports.append = function (str) {
   //add it to end of every phrase
   this.list.forEach(p => {
     //build it
-    let phrase = tokenize(str, this.world, this.pool())[0] //assume it's one sentence, for now
+    let phrase
+    if (isObject(str) && str.isA === 'Doc') {
+      phrase = str.list[0] //use the first phrase
+    } else if (typeof str === 'string') {
+      phrase = tokenize(str, this.world, this.pool())[0] //assume it's one sentence, for now
+    }
     //tag it
     let tmpDoc = this.buildFrom([phrase])
     tmpDoc.tagger()
@@ -49,7 +57,12 @@ exports.prepend = function (str) {
   //add it to start of every phrase
   this.list.forEach(p => {
     //build it
-    let phrase = tokenize(str, this.world, this.pool())[0] //assume it's one sentence, for now
+    let phrase
+    if (isObject(str) && str.isA === 'Doc') {
+      phrase = str.list[0] //use the first phrase
+    } else if (typeof str === 'string') {
+      phrase = tokenize(str, this.world, this.pool())[0] //assume it's one sentence, for now
+    }
     //tag it
     let tmpDoc = this.buildFrom([phrase])
     tmpDoc.tagger()

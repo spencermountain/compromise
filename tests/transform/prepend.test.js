@@ -48,3 +48,21 @@ test('prepend many children', function (t) {
   t.equal(doc.text(), 'zero one two three four', 'prepended in parent')
   t.end()
 })
+
+test('prepend a doc', function (t) {
+  let doc = nlp('one two. three four')
+  let one = doc.match('one')
+  let four = doc.match('four')
+  four.prepend(one)
+  t.equal(four.text(), 'one four')
+  t.end()
+})
+
+test('append a doc', function (t) {
+  let doc = nlp('one two. three four')
+  let one = doc.match('one')
+  let four = doc.match('four')
+  one.append(four)
+  t.equal(one.text(), 'one four')
+  t.end()
+})

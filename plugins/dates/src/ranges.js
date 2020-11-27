@@ -54,7 +54,9 @@ const parseRange = function (doc, context) {
   m = doc.match('[<month>#Month] [<from>#Value] to [<to>#Value] of? [<year>#Year]')
   if (m.found) {
     let res = m.groups()
-    let start = res.month.concat(res.from, res.year)
+    let start = res.month.append(res.from).append(res.year)
+    start.debug()
+    console.log(start.text())
     start = parseDate(start, context)
     if (start) {
       let end = res.month.concat(res.to, res.year)

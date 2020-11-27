@@ -77,7 +77,6 @@ test('number-range', function (t) {
   t.equal(arr.length, 2, 'found numbers')
 
   doc = nlp('20th-21st')
-  console.log(doc.has('#NumberRange'))
   t.equal(doc.has('#NumberRange'), true, 'ordinal has NumberRange tag')
   t.equal(doc.has('#Ordinal'), true, 'has Ordinal tag')
   arr = doc.contractions().expand().terms().out('array')

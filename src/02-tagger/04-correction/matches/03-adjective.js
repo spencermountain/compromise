@@ -1,5 +1,5 @@
 const ambig = require('../_ambig')
-const adjectives = `(${ambig.person.adjectives.join('|')})`
+const adjectives = `(${ambig.personAdjective.join('|')})`
 
 let list = [
   // all fell apart

@@ -4,7 +4,9 @@ class Week extends Unit {
   constructor(input, unit, context) {
     super(input, unit, context)
     this.unit = 'week'
-    this.d = this.d.startOf('week')
+    if (this.d.isValid()) {
+      this.d = this.d.startOf('week')
+    }
   }
 }
 
@@ -13,7 +15,10 @@ class WeekEnd extends Unit {
   constructor(input, unit, context) {
     super(input, unit, context)
     this.unit = 'week'
-    this.d = this.d.day('saturday')
+    if (this.d.isValid()) {
+      this.d = this.d.day('saturday')
+      this.d = this.d.startOf('day')
+    }
   }
   start() {
     this.d = this.d.day('saturday').startOf('day')

@@ -1,5 +1,5 @@
 const ambig = require('../_ambig')
-const verbs = `(${ambig.person.verbs.join('|')})`
+const verbs = `(${ambig.personVerb.join('|')})`
 
 let list = [
   // adj -> gerund

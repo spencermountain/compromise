@@ -5,6 +5,9 @@ class Day extends Unit {
   constructor(input, unit, context) {
     super(input, unit, context)
     this.unit = 'day'
+    if (this.d.isValid()) {
+      this.d = this.d.startOf('day')
+    }
   }
 }
 
@@ -13,6 +16,9 @@ class CalendarDate extends Day {
   constructor(input, unit, context) {
     super(input, unit, context)
     this.unit = 'day'
+    if (this.d.isValid()) {
+      this.d = this.d.startOf('day')
+    }
   }
   next() {
     this.d = this.d.add(1, 'year')
@@ -40,6 +46,9 @@ class WeekDay extends Day {
       this.d = input
     }
     this.weekDay = this.d.dayName()
+    if (this.d.isValid()) {
+      this.d = this.d.startOf('day')
+    }
   }
   clone() {
     //overloaded method
@@ -67,6 +76,9 @@ class Holiday extends CalendarDate {
   constructor(input, unit, context) {
     super(input, unit, context)
     this.unit = 'day'
+    if (this.d.isValid()) {
+      this.d = this.d.startOf('day')
+    }
   }
 }
 

@@ -12,20 +12,17 @@ const fmt = function (iso) {
   return spacetime(iso).format('{day-short} {nice} {year}')
 }
 
-// let doc = nlp('march 2nd').debug()
-// let doc = nlp('2020-03-02T00:00:00.000-08:00').debug()
-// let doc = nlp('2020-03-02T00:00:00.000Z').debug()
-let doc = nlp('2020-01-21T14:00:00.000-08:00').debug()
-// let doc = nlp('on the 20th').debug()
-// let doc = nlp('the last weekend in october')
-// let doc = nlp('last february')
-// let doc = nlp('friday')
-// let doc = nlp('next year in june')
-// let doc = nlp('new years')
-// let doc = nlp('fourth quarter, 2002')
-let found = doc.dates({}).json()[0]
-console.log(fmt(found.date.start))
-console.log(fmt(found.date.end))
+// let doc = nlp('next weekend')
+let doc = nlp('20th-21st').debug()
+// let num = doc.numbers()
+// num.toNumber()
+// num.toCardinal(false)
+// doc.debug()
+doc.contractions().expand().debug()
+// let found = doc.dates({ today: [2016, 7, 13], timezone: 'Canada/Pacific' }).json()[0]
+// console.log(found.date.start)
+// console.log(fmt(found.date.start))
+// console.log(fmt(found.date.end))
 
 // let doc = nlp(`alexandria Daddario`).debug()
 // let doc = nlp(`Paris Berelc`).debug()

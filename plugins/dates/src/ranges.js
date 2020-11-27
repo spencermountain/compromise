@@ -158,7 +158,7 @@ const parseRange = function (doc, context) {
   if (m.found) {
     let unit = parseDate(m, context)
     if (unit) {
-      unit = unit.applyShift({ day: 1 })
+      unit = unit.after()
       return {
         start: unit.clone(),
         end: punt(unit.clone(), context),

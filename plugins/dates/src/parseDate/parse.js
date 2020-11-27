@@ -19,6 +19,7 @@ const transform = {
 }
 
 const parseDate = function (doc, context) {
+  // doc.debug()
   // quick normalization
   doc = doc.replace('^the !#Value', '')
   //parse-out any sections

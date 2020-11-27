@@ -1,6 +1,6 @@
 const test = require('tape')
-const nlp = require('../_lib')
-const relaxed = 14
+const nlp = require('./_lib')
+const relaxed = 15
 
 let february = 1
 //number of days between start+end

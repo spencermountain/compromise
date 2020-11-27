@@ -11,6 +11,8 @@ const normalize = function (doc) {
     num.toNumber()
     num.toCardinal(false)
   }
+  // expand 'aug 20-21'
+  doc.contractions().expand()
   // remove adverbs
   doc.adverbs().remove()
   doc.replace('week end', 'weekend')
@@ -23,7 +25,6 @@ const getDate = function (doc, context) {
   context.timezone = context.timezone || 'ETC/UTC'
   context.today = spacetime(context.today || null, context.timezone)
   //turn 'five' into 5..
-
   doc = normalize(doc)
   //interpret 'between [A] and [B]'...
   return parseRanges(doc, context)

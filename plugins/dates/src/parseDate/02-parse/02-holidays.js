@@ -9,11 +9,11 @@ const parseHoliday = function (doc, context) {
     year = Number(m.groups('year').text('reduced')) || year
   }
   let str = m.groups('holiday').text('reduced')
-  let s = spacetimeHoliday(str, year)
+  let s = spacetimeHoliday(str, year, context.timezone)
   if (s !== null) {
     // assume the year in the future..
     if (s.isBefore(context.today) && year === context.today.year()) {
-      s = spacetimeHoliday(str, year + 1)
+      s = spacetimeHoliday(str, year + 1, context.timezone)
     }
     unit = new Holiday(s, null, context)
   }

@@ -40,7 +40,6 @@ const parseExplicit = function (doc, context) {
   if (!m.found) {
     m = doc.match('[<month>#Month] the? [<date>#Value]')
   }
-  // support 'dec 5th'
   if (m.found) {
     let obj = {
       month: m.groups('month').text(),
@@ -48,6 +47,11 @@ const parseExplicit = function (doc, context) {
       year: context.today.year(),
     }
     let unit = new CalendarDate(obj, null, context)
+    // assume 'feb' in the future
+    if (unit.d.month() < context.today.month()) {
+      obj.year += 1
+      unit = new CalendarDate(obj, null, context)
+    }
     if (unit.d.isValid() === true) {
       return unit
     }

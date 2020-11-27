@@ -1,7 +1,7 @@
 const ambig = require('../_ambig')
-const nouns = `(${ambig.person.nouns.join('|')})`
-const months = '(january|april|may|june|jan|sep)' //summer|autumn
-const places = `(${ambig.person.places.join('|')})`
+const nouns = `(${ambig.personNoun.join('|')})`
+const months = `(${ambig.personMonth.join('|')})`
+const places = `(${ambig.personPlace.join('|')})`
 
 let list = [
   // ==== Honorific ====

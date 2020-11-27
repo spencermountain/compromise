@@ -1,5 +1,5 @@
 const ambig = require('../_ambig')
-const adjectives = `(${ambig.adverbs.adjectives.join('|')})`
+const adjectives = `(${ambig.adverbAdjective.join('|')})`
 
 module.exports = [
   //still good

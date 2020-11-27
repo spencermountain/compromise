@@ -1,5 +1,18 @@
 const Unit = require('./Unit')
 
+// a specific month, like 'March'
+class AnyMonth extends Unit {
+  constructor(input, unit, context) {
+    super(input, unit, context)
+    this.unit = 'month'
+    // set to beginning
+    if (this.d.isValid()) {
+      this.d = this.d.startOf(this.unit)
+    }
+  }
+}
+
+// a specific month, like 'March'
 class Month extends Unit {
   constructor(input, unit, context) {
     super(input, unit, context)
@@ -8,6 +21,16 @@ class Month extends Unit {
     if (this.d.isValid()) {
       this.d = this.d.startOf(this.unit)
     }
+  }
+  next() {
+    this.d = this.d.add(1, 'year')
+    this.d = this.d.startOf('month')
+    return this
+  }
+  last() {
+    this.d = this.d.minus(1, 'year')
+    this.d = this.d.startOf('month')
+    return this
   }
 }
 class Quarter extends Unit {
@@ -34,10 +57,14 @@ class Year extends Unit {
   constructor(input, unit, context) {
     super(input, unit, context)
     this.unit = 'year'
+    if (this.d.isValid()) {
+      this.d = this.d.startOf('year')
+    }
   }
 }
 
 module.exports = {
+  AnyMonth: AnyMonth,
   Month: Month,
   Quarter: Quarter,
   Season: Season,

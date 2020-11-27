@@ -18,7 +18,7 @@ const parseRange = function (doc, context) {
     if (start) {
       return {
         start: start,
-        end: end,
+        end: end.end(),
       }
     }
   }
@@ -46,7 +46,7 @@ const parseRange = function (doc, context) {
       }
       return {
         start: start,
-        end: end,
+        end: end.end(),
       }
     }
   }
@@ -61,7 +61,7 @@ const parseRange = function (doc, context) {
       end = parseDate(end, context)
       return {
         start: start,
-        end: end,
+        end: end.end(),
       }
     }
   }
@@ -77,7 +77,7 @@ const parseRange = function (doc, context) {
       from.d = from.d.date(fromDate.text('normal'))
       return {
         start: from,
-        end: to,
+        end: to.end(),
       }
     }
   }
@@ -92,7 +92,7 @@ const parseRange = function (doc, context) {
       from.d = from.d.date(fromDate.text('normal'))
       return {
         start: from,
-        end: to,
+        end: to.end(),
       }
     }
   }
@@ -107,7 +107,7 @@ const parseRange = function (doc, context) {
       to.d = to.d.date(toDate.text('normal'))
       return {
         start: from,
-        end: to,
+        end: to.end(),
       }
     }
   }
@@ -121,7 +121,7 @@ const parseRange = function (doc, context) {
     if (from && to) {
       return {
         start: from,
-        end: to,
+        end: to.end(),
       }
     }
   }

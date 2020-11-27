@@ -16,6 +16,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - **[change]** improved i18n Person names
 - **[change]** tagger+tokenization fixes
 - **[fix]** - NumberRange tagging issue #795
+- **[fix]** - improved support for ordinal number ranges
 - **[change]** remove empty results from .out('array') #795
 - **[change]** `.tokenize()` runs any postProcess() scripts from plugins
 - **[new]** - new plugin `strict-match`

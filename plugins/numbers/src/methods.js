@@ -93,6 +93,14 @@ let methods = {
         return
       }
       let str = makeNumber(obj, val.has('#TextValue'), false)
+      // a hack for number-ranges
+      if (val.has('#NumberRange')) {
+        let t = val.termList()[0]
+        if (t.text && t.post === '') {
+          t.post = ' '
+        }
+      }
+      // change the number text
       val.replaceWith(str, true)
       val.tag('Cardinal')
       // turn unit into plural -> 'seven beers'
@@ -109,6 +117,14 @@ let methods = {
         return
       }
       let str = makeNumber(obj, val.has('#TextValue'), true)
+      // a hack for number-ranges
+      if (val.has('#NumberRange')) {
+        let t = val.termList()[0]
+        if (t.text && t.post === '') {
+          t.post = ' '
+        }
+      }
+      // change the number text
       val.replaceWith(str, true)
       val.tag('Ordinal')
       // turn unit into singular -> 'seventh beer'

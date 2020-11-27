@@ -21,7 +21,7 @@ const isCurrency = {
   rub: true,
 }
 // convert $ to 'dollars', etc
-const prefixToText = function(obj) {
+const prefixToText = function (obj) {
   // turn 5% to 'five percent'
   if (prefixes.hasOwnProperty(obj.prefix)) {
     obj.suffix += prefixes[obj.prefix]
@@ -43,7 +43,7 @@ const prefixToText = function(obj) {
 }
 
 //business-logic for converting a cardinal-number to other forms
-const makeNumber = function(obj, isText, isOrdinal) {
+const makeNumber = function (obj, isText, isOrdinal) {
   let num = String(obj.num)
   if (isText) {
     obj = prefixToText(obj)

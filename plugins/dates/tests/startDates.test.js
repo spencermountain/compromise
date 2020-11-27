@@ -360,38 +360,38 @@ const tests = [
       ['this thanksgiving', [2017, november, 23]],
     ],
   },
-  // {
-  //   today: [2016, may, 11],
-  //   tests: [
-  //     ['july 5th', [2016, july, 5]],
-  //     ['on july 5th', [2016, july, 5]],
-  //     // ['5/25', [2016, may, 25]],
-  //     ['in the next week', [2016, may, 16]],
-  //     ['next week', [2016, may, 16]],
-  //     ['may nineteenth', [2016, may, 19]],
-  //     ['next thursday', [2016, may, 19]],
-  //     ['next tuesday', [2016, may, 17]],
-  //     ['first week of march 2019', [2019, march, 4]],
-  //     ['by next week', [2016, may, 11]],
-  //     ['before next week', [2016, may, 11]],
-  //     ['after next week', [2016, may, 20]],
-  //     ['two days before christmas', [2016, december, 23]],
-  //     ['today', [2016, may, 11]],
-  //     ['weds', [2016, may, 18]],
-  //     ['in 8 days', [2016, may, 19]],
-  //     ['between june 5th and august 19th 2017', [2016, june, 5]], //....
-  //     ['tomorrow early in the day', [2016, may, 12]],
-  //     ['tomorrow morning', [2016, may, 12]],
-  //     ['tomorrow am', [2016, may, 12]],
-  //     ['tomorrow pm', [2016, may, 12]],
-  //     ['tomorrow noon', [2016, may, 12]],
-  //     ['tomorrow afternoon', [2016, may, 12]],
-  //     ['tomorrow evening', [2016, may, 12]],
-  //     ['tomorrow night', [2016, may, 12]],
-  //     ['tomorrow late night', [2016, may, 12]],
-  //     ['tomorrow late at night', [2016, may, 12]],
-  //   ],
-  // },
+  {
+    today: [2016, may, 11],
+    tests: [
+      ['july 5th', [2016, july, 5]],
+      ['on july 5th', [2016, july, 5]],
+      // ['5/25', [2016, may, 25]],
+      ['in the next week', [2016, may, 16]],
+      ['next week', [2016, may, 16]],
+      ['may nineteenth', [2016, may, 19]],
+      // ['next thursday', [2016, may, 19]],
+      // ['next tuesday', [2016, may, 17]],
+      ['first week of march 2019', [2019, february, 25]],
+      ['by next week', [2016, may, 11]],
+      ['before next week', [2016, may, 11]],
+      // ['after next week', [2016, may, 20]],
+      ['two days before christmas', [2016, december, 23]],
+      ['today', [2016, may, 11]],
+      // ['weds', [2016, may, 18]],
+      ['in 8 days', [2016, may, 19]],
+      //     ['between june 5th and august 19th 2017', [2016, june, 5]], //....
+      //     ['tomorrow early in the day', [2016, may, 12]],
+      //     ['tomorrow morning', [2016, may, 12]],
+      //     ['tomorrow am', [2016, may, 12]],
+      //     ['tomorrow pm', [2016, may, 12]],
+      //     ['tomorrow noon', [2016, may, 12]],
+      //     ['tomorrow afternoon', [2016, may, 12]],
+      //     ['tomorrow evening', [2016, may, 12]],
+      //     ['tomorrow night', [2016, may, 12]],
+      //     ['tomorrow late night', [2016, may, 12]],
+      //     ['tomorrow late at night', [2016, may, 12]],
+    ],
+  },
   {
     today: [2016, october, 28], //friday
     tests: [
@@ -512,17 +512,17 @@ const tests = [
   //     // ['after tonight', [2017, october, 8]],
   //   ],
   // },
-  // {
-  //   today: [2016, october, 1],
-  //   tests: [
-  //     ['on the 1st', [2016, october, 1]],
-  //     ['on the 21st', [2016, october, 21]],
-  //     ['on the 2nd', [2016, october, 2]],
-  //     ['on the 22nd', [2016, october, 22]],
-  //     ['on the 3rd', [2016, october, 3]],
-  //     ['on the 23rd', [2016, october, 23]],
-  //   ],
-  // },
+  {
+    today: [2016, october, 1],
+    tests: [
+      ['on the 1st', [2016, october, 1]],
+      ['on the 21st', [2016, october, 21]],
+      ['on the 2nd', [2016, october, 2]],
+      ['on the 22nd', [2016, october, 22]],
+      ['on the 3rd', [2016, october, 3]],
+      ['on the 23rd', [2016, october, 23]],
+    ],
+  },
   {
     today: [2016, october, 15],
     tests: [
@@ -537,33 +537,33 @@ const tests = [
       ['on october the 10th', [2016, october, 10]],
     ],
   },
-  // {
-  //   today: [2016, october, 15], //tricky years
-  //   tests: [
-  //     ['october 10th this year', [2016, october, 10]],
-  //     ['november 10th this year', [2016, november, 10]],
+  {
+    today: [2016, october, 15], //tricky years
+    tests: [
+      ['october 10th this year', [2016, october, 10]],
+      ['november 10th this year', [2016, november, 10]],
 
-  //     ['november 10th 2017', [2017, november, 10]],
-  //     ['november 10th 2022', [2022, november, 10]],
-  //     ['november 10th 1998', [1998, november, 10]],
-  //     ['nov 10th, 1998', [1998, november, 10]],
+      ['november 10th 2017', [2017, november, 10]],
+      ['november 10th 2022', [2022, november, 10]],
+      ['november 10th 1998', [1998, november, 10]],
+      ['nov 10th, 1998', [1998, november, 10]],
 
-  //     ['november 10th next year', [2017, november, 10]],
-  //     ['november 10th in a year', [2017, november, 10]],
-  //     // ['november 10th a year from now', [2017, november, 10]],
-  //     ['november 10th in two years', [2018, november, 10]],
+      // ['november 10th next year', [2017, november, 10]],
+      ['november 10th in a year', [2017, november, 10]],
+      // ['november 10th a year from now', [2017, november, 10]],
+      ['november 10th in two years', [2018, november, 10]],
 
-  //     ['next year on june 10th', [2017, june, 10]],
-  //     ['this year on june 10th', [2016, june, 10]],
-  //     ['last year on june 10th', [2015, june, 10]],
+      // ['next year on june 10th', [2017, june, 10]],
+      // ['this year on june 10th', [2016, june, 10]],
+      // ['last year on june 10th', [2015, june, 10]],
 
-  //     ['april fools 2019', [2019, april, 1]],
-  //     ['april fools next year', [2017, april, 1]],
+      ['april fools 2019', [2019, april, 1]],
+      // ['april fools next year', [2017, april, 1]],
 
-  //     ['next year in june', [2017, june, 1]],
-  //     // ['next year after june', [2017, july, 1]],
-  //   ],
-  // },
+      // ['next year in june', [2017, june, 1]],
+      // ['next year after june', [2017, july, 1]],
+    ],
+  },
   // {
   //   today: [2016, november, 13],
   //   tests: [

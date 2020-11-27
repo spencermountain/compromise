@@ -19,9 +19,8 @@ const transform = {
 }
 
 const parseDate = function (doc, context) {
-  // doc.debug()
   // quick normalization
-  doc = doc.replace('^the !#Value', '')
+  doc.match('[^the] !#Value', 0).remove() // keep 'the 17th'
   //parse-out any sections
   let shift = tokens.shift(doc)
   let counter = tokens.counter(doc)

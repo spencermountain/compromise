@@ -257,39 +257,39 @@ const tests = [
       // ['2 years 4 months 5 days ago', [2008, november, 23]],
     ],
   },
-  // {
-  //   today: [2016, february, 5], // a friday
-  //   tests: [
-  //     // //referenced nearby days
-  //     ['this saturday', [2016, february, 6]], //tomorrow
-  //     ['sunday', [2016, february, 7]],
-  //     ['mon', [2016, february, 8]],
-  //     ['tuesday', [2016, february, 9]],
-  //     ['next wed', [2016, february, 10]],
-  //     ['this thurs', [2016, february, 11]],
-  //     ['this friday', [2016, february, 12]], //not today
-  //     ['next friday', [2016, february, 12]], //not today
-  //     ['friday', [2016, february, 12]], //not today
-  //     // start/end of week
-  //     ['this weekend', [2016, february, 6]], //tomorrow
-  //     ['next weekend', [2016, february, 13]],
-  //     ['end of this week', [2016, february, 5]], //friday (today)
-  //     ['next week', [2016, february, 8]], //monday
-  //     ['start of next week', [2016, february, 8]],
-  //     ['end of next week', [2016, february, 12]], //friday
-  //     //punted weeks with days
-  //     ['this monday', [2016, february, 8]],
-  //     // ['two mondays from now', [2016, february, 22]],
-  //     // ['3 mondays from now', [2016, february, 29]],
-  //     // ['three sundays from now', [2016, february, 28]],
-  //     // ['four mondays from now', [2016, march, 22]], //todo: bug
-  //     ['next monday', [2016, february, 8]],
-  //     ['monday next week', [2016, february, 8]],
-  //     ['the monday after next', [2016, february, 15]],
-  //     ['the tuesday after next', [2016, february, 16]],
-  //     // ['three thursdays from now', [2016, february, 25]],
-  //   ],
-  // },
+  {
+    today: [2016, february, 5], // a friday
+    tests: [
+      // //referenced nearby days
+      ['this saturday', [2016, february, 6]], //tomorrow
+      ['sunday', [2016, february, 7]],
+      ['mon', [2016, february, 8]],
+      ['tuesday', [2016, february, 9]],
+      // ['next wed', [2016, february, 10]],
+      // ['this thurs', [2016, february, 11]],
+      // ['this friday', [2016, february, 12]], //not today
+      ['next friday', [2016, february, 12]], //not today
+      // ['friday', [2016, february, 12]], //not today
+      //     // start/end of week
+      ['this weekend', [2016, february, 6]], //tomorrow
+      ['next weekend', [2016, february, 13]],
+      // ['end of this week', [2016, february, 5]], //friday (today)
+      ['next week', [2016, february, 8]], //monday
+      // ['start of next week', [2016, february, 8]],
+      // ['end of next week', [2016, february, 12]], //friday
+      //     //punted weeks with days
+      ['this monday', [2016, february, 8]],
+      //     // ['two mondays from now', [2016, february, 22]],
+      //     // ['3 mondays from now', [2016, february, 29]],
+      //     // ['three sundays from now', [2016, february, 28]],
+      //     // ['four mondays from now', [2016, march, 22]], //todo: bug
+      // ['next monday', [2016, february, 8]],
+      // ['monday next week', [2016, february, 8]],
+      // ['the monday after next', [2016, february, 15]],
+      // ['the tuesday after next', [2016, february, 16]],
+      //     // ['three thursdays from now', [2016, february, 25]],
+    ],
+  },
   {
     today: [2016, april, 19],
     tests: [
@@ -318,48 +318,48 @@ const tests = [
       // ['the last weekend of this month', [2016, april, 30]]
     ],
   },
-  // {
-  //   today: [2016, may, 11],
-  //   tests: [
-  //     ['on the 18th', [2016, may, 18]],
-  //     ['may 11th', [2016, may, 11]],
-  //     ['thursday the 12th', [2016, may, 12]],
-  //     ['may 13', [2016, may, 13]],
-  //     ['may the 17th', [2016, may, 17]],
-  //     ['may 18th', [2016, may, 18]],
-  //     ['may ninth', [2016, may, 9]],
-  //     ['may nineteenth', [2016, may, 19]],
-  //     ['may 24', [2016, may, 24]],
-  //     ['may twenty five', [2016, may, 25]],
-  //     ['may 26th', [2016, may, 26]],
-  //     ['this friday', [2016, may, 13]],
-  //     ['this wednesday', [2016, may, 18]],
-  //     ['next tuesday', [2016, may, 17]],
-  //     ['two days after may 26th', [2016, may, 28]],
-  //     ['two days after next tuesday', [2016, may, 19]],
-  //     ['may 12th, 2018', [2018, may, 12]],
-  //     ['last week of february', [2017, february, 20]],
-  //     ['first week of march 2019', [2019, march, 4]],
-  //     ['by next week', [2016, may, 11]],
-  //     ['before next week', [2016, may, 11]],
-  //     ['after next week', [2016, may, 20]],
-  //     // ['thanksgiving 2018', [2018, november, 22]],
-  //     // ['two weeks after thanksgiving, 2018', [2018, december, 6]],
-  //     //
-  //     ['june 5th to august 19th', [2016, june, 5]],
-  //     ['between june 5th and august 19th 2017', [2016, june, 5]],
-  //     ['two days before christmas', [2016, december, 23]],
-  //     ['christmas', [2016, december, 25]],
-  //   ],
-  // },
-  // {
-  //   today: [2017, may, 11],
-  //   tests: [
-  //     ['thanksgiving', [2017, november, 23]],
-  //     ['two weeks after thanksgiving', [2017, december, 7]],
-  //     ['this thanksgiving', [2017, november, 23]],
-  //   ],
-  // },
+  {
+    today: [2016, may, 11],
+    tests: [
+      ['on the 18th', [2016, may, 18]],
+      ['may 11th', [2016, may, 11]],
+      ['thursday the 12th', [2016, may, 12]],
+      ['may 13', [2016, may, 13]],
+      ['may the 17th', [2016, may, 17]],
+      ['may 18th', [2016, may, 18]],
+      ['may ninth', [2016, may, 9]],
+      ['may nineteenth', [2016, may, 19]],
+      ['may 24', [2016, may, 24]],
+      ['may twenty five', [2016, may, 25]],
+      ['may 26th', [2016, may, 26]],
+      ['this friday', [2016, may, 13]],
+      // ['this wednesday', [2016, may, 18]],
+      // ['next tuesday', [2016, may, 17]],
+      ['two days after may 26th', [2016, may, 28]],
+      // ['two days after next tuesday', [2016, may, 19]],
+      ['may 12th, 2018', [2018, may, 12]],
+      // ['last week of february', [2017, february, 20]],
+      // ['first week of march 2019', [2019, march, 4]],
+      ['by next week', [2016, may, 11]],
+      ['before next week', [2016, may, 11]],
+      // ['after next week', [2016, may, 20]],
+      ['thanksgiving 2018', [2018, november, 22]],
+      ['two weeks after thanksgiving, 2018', [2018, december, 6]],
+      //     //
+      ['june 5th to august 19th', [2016, june, 5]],
+      ['between june 5th and august 19th 2017', [2016, june, 5]],
+      ['two days before christmas', [2016, december, 23]],
+      ['christmas', [2016, december, 25]],
+    ],
+  },
+  {
+    today: [2017, may, 11],
+    tests: [
+      ['thanksgiving', [2017, november, 23]],
+      ['two weeks after thanksgiving', [2017, december, 7]],
+      ['this thanksgiving', [2017, november, 23]],
+    ],
+  },
   // {
   //   today: [2016, may, 11],
   //   tests: [

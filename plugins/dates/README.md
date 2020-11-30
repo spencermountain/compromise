@@ -114,6 +114,7 @@ doc.dates().json()
 * historical DST changes `Oct 22 1975 in PST` (always uses this year's DST date)
 * `3 years ago tomorrow`
 * military time formats like `2100`
+* 'bare' years like `may 97`  - ('97 is supported)
 
 ### API
 

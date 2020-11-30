@@ -5,6 +5,7 @@ const hardCoded = {
   breakfast: '8:00am',
   morning: '9:00am',
   noon: '12:00pm',
+  midday: '12:00pm',
   afternoon: '2:00pm',
   lunchtime: '12:00pm',
   evening: '6:00pm',
@@ -37,12 +38,13 @@ const halfPast = function (m, s) {
 }
 
 const parseTime = function (doc, context) {
-  let time = doc.match('(at|by|for|before)? #Time+')
+  let time = doc.match('(at|by|for|before|this)? #Time+')
   if (time.found) {
     doc.remove(time)
   }
   // get the main part of the time
-  time = time.not('(at|by|for|before|sharp)')
+  time = time.not('^(at|by|for|before|this)')
+  time = time.not('sharp')
   time = time.not('on the dot')
   let s = spacetime.now(context.timezone)
   let now = s.clone()
@@ -69,6 +71,19 @@ const parseTime = function (doc, context) {
   if (m.found) {
     s = halfPast(m, s)
     if (s.isValid() && !s.isEqual(now)) {
+      return s.time()
+    }
+  }
+  // '4 in the evening'
+  m = time.match('[<time>#Time] (in|at) the? [<desc>(morning|evening|night|nighttime)]')
+  if (m.found) {
+    let str = m.groups('time').text('reduced')
+    s = s.time(str)
+    if (s.isValid() && !s.isEqual(now)) {
+      let desc = m.groups('desc').text('reduced')
+      if (desc === 'evening' || desc === 'night') {
+        s = s.ampm('pm')
+      }
       return s.time()
     }
   }

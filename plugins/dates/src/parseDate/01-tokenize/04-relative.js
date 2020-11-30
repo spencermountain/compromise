@@ -4,7 +4,13 @@ const parseRelative = function (doc) {
   // if (doc.has('^(this|current|next|upcoming|last|previous) #Duration')) {
   //   return null
   // }
-  // avoid parsing 'day after next'
+  // parse 'this evening'
+  // let m = doc.match('^(next|last|this)$')
+  // if (m.found) {
+  //   doc.remove(m)
+  //   return doc.text('reduced')
+  // }
+  // but avoid parsing 'day after next'
   if (doc.has('(next|last|this)$')) {
     return null
   }

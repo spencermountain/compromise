@@ -11,6 +11,7 @@ module.exports = [
   'lunchtime',
   'dinnertime',
   'sometime',
+  'midday',
   'eod',
   'oclock',
   'oclock',

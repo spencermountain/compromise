@@ -21,6 +21,10 @@ let context = {
 // let doc = nlp('5pm on may 27th')
 // let doc = nlp('2 weekends ago')
 // let doc = nlp('jan 3 2010 at 4').debug()
+// let doc = nlp(`11:00 at night`)
+// let doc = nlp(`4:00 in the evening`)
+// let doc = nlp('midday February 11').debug()
+// let doc = nlp('this evening').debug()
 
 // ### should be working
 // let doc = nlp('first monday of january')
@@ -36,17 +40,15 @@ let context = {
 // let doc = nlp(`Chanukah 2018`)
 
 // ### ad-hoc
-// let doc = nlp('midday February 11')
 // let doc = nlp(`may '97`)
 // let doc = nlp('1 fortnight ago')
 // let doc = nlp('6 months hence')
 
 // ### time-parser
-// let doc = nlp(`4:00 in the evening`)
 // let doc = nlp(`a quarter past noon`)
-// let doc = nlp(`11:00 at night`)
+// let doc = nlp(`a quarter past 4`)
 // let doc = nlp(`tonight at 7`)
-// let doc = nlp('this morning')
+// let doc = nlp('this day').debug()
 // let doc = nlp('November 18th 2010 at midnight')
 
 // ### spacetime

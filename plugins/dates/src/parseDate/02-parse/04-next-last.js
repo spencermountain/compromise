@@ -2,6 +2,7 @@ const { Week, WeekEnd, AnyMonth, Quarter, Year, Season, WeekDay, Day, Hour, Minu
 const mapping = {
   day: Day,
   hour: Hour,
+  evening: Hour,
   second: Moment,
   milliscond: Moment,
   instant: Moment,
@@ -13,11 +14,12 @@ const mapping = {
   year: Year,
   season: Season,
 }
+let matchStr = `^(${Object.keys(mapping).join('|')})$`
 
 // when a unit of time is spoken of as 'this month' - instead of 'february'
 const nextLast = function (doc, context) {
   //this month, last quarter, next year
-  let m = doc.match('^(weekday|day|hour|minute|second|instant|millisecond|week|month|weekend|quarter|season|year)$')
+  let m = doc.match(matchStr)
   if (m.found === true) {
     let str = m.text('reduced')
     if (mapping.hasOwnProperty(str)) {

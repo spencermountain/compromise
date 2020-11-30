@@ -24,7 +24,7 @@ const parseRange = function (doc, context) {
   }
 
   // two months, no year - 'june 5 to june 7'
-  m = doc.match('[<from>#Month #Value] to [<to>#Month #Value] [<year>#Year?]')
+  m = doc.match('[<from>#Month #Value] (to|through|thru) [<to>#Month #Value] [<year>#Year?]')
   if (m.found) {
     let res = m.groups()
     let start = res.from
@@ -52,7 +52,7 @@ const parseRange = function (doc, context) {
   }
 
   // one month, one year, first form - 'january 5 to 7 1998'
-  m = doc.match('[<month>#Month] [<from>#Value] to [<to>#Value] of? [<year>#Year]')
+  m = doc.match('[<month>#Month] [<from>#Value] (to|through|thru) [<to>#Value] of? [<year>#Year]')
   if (m.found) {
     let { month, from, to, year } = m.groups()
     let year2 = year.clone()
@@ -69,7 +69,7 @@ const parseRange = function (doc, context) {
   }
 
   // one month, one year, second form - '5 to 7 of january 1998'
-  m = doc.match('[<from>#Value] to [<to>#Value of? #Month of? #Year]')
+  m = doc.match('[<from>#Value] (to|through|thru) [<to>#Value of? #Month of? #Year]')
   if (m.found) {
     let to = m.groups('to')
     to = parseDate(to, context)
@@ -84,7 +84,7 @@ const parseRange = function (doc, context) {
     }
   }
   // one month, no year - '5 to 7 of january'
-  m = doc.match('[<from>#Value] to [<to>#Value of? #Month]')
+  m = doc.match('[<from>#Value] (to|through|thru) [<to>#Value of? #Month]')
   if (m.found) {
     let to = m.groups('to')
     to = parseDate(to, context)
@@ -99,7 +99,7 @@ const parseRange = function (doc, context) {
     }
   }
   // one month, no year - 'january 5 to 7'
-  m = doc.match('[<from>#Month #Value] to [<to>#Value]')
+  m = doc.match('[<from>#Month #Value] (to|through|thru) [<to>#Value]')
   if (m.found) {
     let from = m.groups('from')
     from = parseDate(from, context)
@@ -114,7 +114,7 @@ const parseRange = function (doc, context) {
     }
   }
   // 'from A to B'
-  m = doc.match('from? [<from>*] (to|@hasHyphen|until|upto) [<to>*]')
+  m = doc.match('from? [<from>*] (to|@hasHyphen|until|upto|through|thru) [<to>*]')
   if (m.found) {
     let from = m.groups('from')
     let to = m.groups('to')

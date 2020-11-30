@@ -108,6 +108,11 @@ doc.dates().json()
 - `22-23 February`
 
 
+## Unsupported date formats
+* things like `not this Saturday, but the Saturday after`
+* repeating dates like `every sunday` - only contiguous times are supported
+* historical DST changes `Oct 22 1975 in PST` (always uses this year's DST date)
+
 ### API
 
 - **.dates()** - find dates like `June 8th` or `03/03/18`
@@ -173,8 +178,8 @@ Units:
 By default, weeks start on a Monday, and *'next week'* will run from Monday morning to Sunday night.
 This can be configued in spacetime, but right now we are not passing-through this config.
 
-### Implied duration
-*'after October'* returns a range starting **Nov 1st**, and ending 2-weeks after, by default.
+### Implied durations
+*'after October'* returns a range starting **Nov 1st**, and ending **2-weeks** after, by default.
 This can be configured by setting `punt` param in the context object:
 ```js
 doc.dates({punt: { month: 1 }})
@@ -183,12 +188,16 @@ doc.dates({punt: { month: 1 }})
 ### This/Next/Last
 *'this/next/last week'* is mostly straight-forward.
 
-But *'this monday'* is more ambiguous - here, it always refers to the future. On tuesday, saying 'this monday' means 'next monday'. This is, as I understand it, the most-intuitive interpretation. *'this monday'* on monday, is itself.
+But *'this monday'* and *'monday'* is more ambiguous - here, it always refers to the future. On tuesday, saying 'this monday' means 'next monday'. As I understand it, this is the most-intuitive interpretation. Saying *'this monday'* on monday, is itself.
 
 Likewise, *'this june'* in June, is itself. *'this june'* in any other month, is the nearest June in the future.
 
+Future versions of this library may look at sentence-tense to help disambiguate these dates - *'i paid on monday'* vs *'i will pay on monday'*.
+
 ### Nth Week
-The first week of a month, or a year is the first week *with a thursday in it*. This is a weird, but widely-held standard. It cannot be (easily) configued.
+The first week of a month, or a year is the first week *with a thursday in it*. This is a weird, but widely-held standard. I believe it's a military formalism. It cannot be (easily) configued. This means that the start-date for *first week of January* may be a Monday in December, etc.
+
+As expected, *first monday of January* will always be in January.
 
 ### British/American ambiguity
 by default, we use the same interpretation of dates as javascript does - we assume `01/02/2020` is Jan 2nd, (US-version) but allow `13/01/2020` to be Jan 13th (UK-version). This should be possible to configure in the near future.
@@ -199,6 +208,20 @@ Configuring the default hemisphere should be possible in the future.
 
 ### Day times
 There are some hardcoded times for *'lunch time'* and others, but mainly, a day begins at `12:00am` and ends at `11:59pm` - the last millisecond of the day.
+
+### Invalid dates
+compromise will tag anything that looks like a date, but not validate the dates until they are parsed.
+* *'january 34th 2020'* will return **Jan 31 2020**.
+* *'tomorrow at 2:62pm'* will return just return 'tomorrow'.
+* *'6th week of february* will return the 2nd week of march.
+* Setting an hour that's skipped, or repeated by a DST change will return the closest valid time to the DST change.
+
+### See also
+* [Duckling](https://duckling.wit.ai/) - by wit.ai (facebook)
+* [Chronic](https://github.com/mojombo/chronic) - by Tom Preston-Werner (Ruby)
+* [SUTime](https://nlp.stanford.edu/software/sutime.shtml) - by Angel Chang, Christopher Manning (Java)
+* [Natty](http://natty.joestelmach.com/) - by Joe Stelmach (Java)
+* [ParseDateTime](https://pypi.org/project/parsedatetime/) by Mike Taylor (Python)
 
 Work in progress.
 

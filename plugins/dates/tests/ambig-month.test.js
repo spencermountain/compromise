@@ -93,3 +93,16 @@ test('this december', function (t) {
   })
   t.end()
 })
+
+test('this september', function (t) {
+  let doc = nlp('this september')
+  let found = doc.dates({ today: [2019, 7, 4] }).json()[0]
+  t.equal(fmt(found.date.start), '2019-09-01', 'this sept - before')
+
+  found = doc.dates({ today: [2019, 8, 4] }).json()[0]
+  t.equal(fmt(found.date.start), '2019-09-01', 'this sept - during')
+
+  found = doc.dates({ today: [2019, 9, 4] }).json()[0]
+  t.equal(fmt(found.date.start), '2020-09-01', 'this sept - after')
+  t.end()
+})

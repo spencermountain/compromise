@@ -2,12 +2,26 @@ const test = require('tape')
 const nlp = require('./_lib')
 const spacetime = require('spacetime')
 
+const fmt = (iso) => (iso ? spacetime(iso).format('{iso-short}') : '-')
+
 test('misc dates', function (t) {
   let doc = nlp('my birthday is June 5th 1998')
   t.equal(doc.dates().length, 1, 'one-date')
 
   let json = doc.dates().json({ normal: true })
   t.equal(json[0].normal, 'june 5th 1998', 'date-normal')
+
+  t.end()
+})
+
+test('parsed today shorthand', function (t) {
+  let context = {
+    today: 'Dec 12th 2020',
+    timezone: 'Canada/Pacific',
+  }
+  let doc = nlp('today')
+  let found = doc.dates(context).json()[0]
+  t.equal(fmt(found.date.start), '2020-12-12', 'today shorthand')
   t.end()
 })
 

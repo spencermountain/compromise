@@ -60,28 +60,3 @@ test('next week', function (t) {
   })
   t.end()
 })
-
-test('this monday - always forward', function (t) {
-  let arr = [
-    // [2020, 11, 7], //mon
-    [2020, 11, 8], //tues
-    [2020, 11, 9], //wed
-    [2020, 11, 10], //thurs
-    [2020, 11, 11], //fri
-    [2020, 11, 12], //sat
-    [2020, 11, 13], //sun
-  ]
-  arr.forEach((a) => {
-    let doc = nlp('this monday')
-    let found = doc.dates({ today: a }).json()[0]
-    t.equal(fmt(found.date.start), '2020-12-14', 'monday-start')
-    t.equal(fmt(found.date.end), '2020-12-14', 'monday-end')
-  })
-  // 'this monday' on monday, is itself.
-  let a = [2020, 11, 7] //mon
-  let doc = nlp('this monday')
-  let found = doc.dates({ today: a }).json()[0]
-  t.equal(fmt(found.date.start), '2020-12-07', 'today-monday-start')
-  t.equal(fmt(found.date.end), '2020-12-07', 'today-monday-end')
-  t.end()
-})

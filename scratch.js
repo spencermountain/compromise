@@ -25,6 +25,8 @@ let context = {
 // let doc = nlp(`4:00 in the evening`)
 // let doc = nlp('midday February 11').debug()
 // let doc = nlp('this evening').debug()
+// let doc = nlp('this day').debug()
+// let doc = nlp('6 months hence').debug()
 
 // ### should be working
 // let doc = nlp('first monday of january')
@@ -40,18 +42,16 @@ let context = {
 // let doc = nlp(`Chanukah 2018`)
 
 // ### ad-hoc
-// let doc = nlp(`may '97`)
-// let doc = nlp('1 fortnight ago')
-// let doc = nlp('6 months hence')
+let doc = nlp(`may '97`).debug()
 
 // ### time-parser
 // let doc = nlp(`a quarter past noon`)
 // let doc = nlp(`a quarter past 4`)
 // let doc = nlp(`tonight at 7`)
-// let doc = nlp('this day').debug()
 // let doc = nlp('November 18th 2010 at midnight')
 
 // ### spacetime
+// let doc = nlp('1 fortnight ago')
 // let doc = nlp('tues')
 // let doc = nlp(`1:00:00 PM`)
 // let doc = nlp('13:45')
@@ -61,9 +61,9 @@ let context = {
 // let doc = nlp(`30-Mar-11`)
 // let doc = nlp('7/12/11')
 
-let found = doc.dates(context).json()[0]
-console.log(fmt(found.date.start))
-console.log(fmt(found.date.end))
+// let found = doc.dates(context).json()[0]
+// console.log(fmt(found.date.start))
+// console.log(fmt(found.date.end))
 
 // hmmm
 // let doc = nlp('Jan 1 - Dec 31, 2018') //contraction

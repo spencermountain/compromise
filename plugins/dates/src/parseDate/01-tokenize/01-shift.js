@@ -31,7 +31,7 @@ const parseShift = function (doc) {
     }
   })
   //is it 2 weeks ago?  → -2
-  if (m.has('(before|ago)$') === true) {
+  if (m.has('(before|ago|hence)$') === true) {
     Object.keys(result).forEach((k) => (result[k] *= -1))
   }
   m.remove('#Cardinal #Duration')

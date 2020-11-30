@@ -20,6 +20,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - **[change]** remove empty results from .out('array') #795
 - **[change]** `.tokenize()` runs any postProcess() scripts from plugins
 - **[change]** improved support for lowercase acronyms
+- **[change]** - support years like '97
 - **[new]** - new plugin `strict-match`
 - **[new]** - set NounPhrase, VerbPhrase tags in nlp-sentences plugin
 - **[new]** - `.phrases()` method in nlp-sentences plugin

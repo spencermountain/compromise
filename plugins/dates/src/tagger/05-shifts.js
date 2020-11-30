@@ -3,7 +3,7 @@ const here = 'shift-tagger'
 const shiftTagger = function (doc) {
   if (doc.has('#Date')) {
     //'two days before'/ 'nine weeks frow now'
-    doc.match('#Cardinal #Duration (before|after|ago|from)').tag('#DateShift', here)
+    doc.match('#Cardinal #Duration (before|after|ago|from|hence)').tag('#DateShift', here)
     // in two weeks
     doc.match('in #Cardinal #Duration').tag('#DateShift', here)
     //two weeks and three days before

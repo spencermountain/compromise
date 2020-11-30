@@ -12,6 +12,7 @@ const hasSlash = /\//
 const hasApostrophe = /['’]/
 const hasAcronym = /^[a-z]\.([a-z]\.)+/i
 const minusNumber = /^[-+\.][0-9]/
+const shortYear = /^'[0-9]{2}/
 
 /** turn given text into a parsed-up object
  * seperate the 'meat' of the word from the whitespace+punctuation
@@ -24,6 +25,11 @@ const parseTerm = str => {
     pre = found
     // support '-40'
     if ((pre === '-' || pre === '+' || pre === '.') && minusNumber.test(str)) {
+      pre = ''
+      return found
+    }
+    // support years like '97
+    if (pre === `'` && shortYear.test(str)) {
       pre = ''
       return found
     }

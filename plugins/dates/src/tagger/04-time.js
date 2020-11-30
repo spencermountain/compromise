@@ -14,6 +14,8 @@ const timeTagger = function (doc) {
   if (doc.has('#Date')) {
     // iso  (2020-03-02T00:00:00.000Z)
     doc.match('/^[0-9]{4}[:-][0-9]{2}[:-][0-9]{2}T[0-9]/').tag('Time')
+    // tuesday at 4
+    doc.match('#Date [at #Cardinal]', 0).notIf('#Year').tag('Time', here)
     //eastern daylight time
     doc.match('#Noun (standard|daylight|central|mountain)? time').tag('Timezone', here)
     //utc+5

@@ -63,7 +63,7 @@ const tests = [
       // ['this august', 'aug 1 2017 - aug 31 2017'],
       // ['the last weekend in october', 'Oct 28 to 29'],
       // ['the last weekend in october', 'Oct 28 to 29, 2017'],
-      ['sometime tomorrow before 3', 'Thu Nov 24th'],
+      ['sometime tomorrow', 'Thu Nov 24th'],
       ['on april fools 2020', 'Wed, Apr 1st, 2020'],
       ['april fools at 5pm', 'Wed, Apr 1st, 2017 at 5:00pm'],
       // ['on the 18th', 'Sun, Dec 18th'],

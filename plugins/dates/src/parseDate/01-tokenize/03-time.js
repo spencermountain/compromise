@@ -72,6 +72,17 @@ const parseTime = function (doc, context) {
       return s.time()
     }
   }
+
+  // 'at 4'
+  m = time.match('^#Cardinal$')
+  if (m.found) {
+    s = s.hour(m.text('reduced'))
+    s = s.startOf('hour')
+    if (s.isValid() && !s.isEqual(now)) {
+      return s.time()
+    }
+  }
+
   // parse random a time like '4:54pm'
   let str = time.text('reduced')
   s = s.time(str)

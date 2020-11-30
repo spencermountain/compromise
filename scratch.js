@@ -1,6 +1,6 @@
 const nlp = require('./src/index')
 const spacetime = require('/Users/spencer/mountain/spacetime/src')
-nlp.verbose(true)
+// nlp.verbose(true)
 // nlp.extend(require('./plugins/sentences/src'))
 nlp.extend(require('./plugins/numbers/src'))
 nlp.extend(require('./plugins/dates/src'))
@@ -20,6 +20,7 @@ let context = {
 // let doc = nlp('8:00 p.m. February 11') //.debug()
 // let doc = nlp('5pm on may 27th')
 // let doc = nlp('2 weekends ago')
+// let doc = nlp('jan 3 2010 at 4').debug()
 
 // ### should be working
 // let doc = nlp('first monday of january')
@@ -35,7 +36,6 @@ let context = {
 // let doc = nlp(`Chanukah 2018`)
 
 // ### ad-hoc
-let doc = nlp('jan 3 2010 at 4')
 // let doc = nlp('midday February 11')
 // let doc = nlp(`may '97`)
 // let doc = nlp('1 fortnight ago')

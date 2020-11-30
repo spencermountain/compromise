@@ -112,6 +112,8 @@ doc.dates().json()
 * things like `not this Saturday, but the Saturday after`
 * repeating dates like `every sunday` - only contiguous times are supported
 * historical DST changes `Oct 22 1975 in PST` (always uses this year's DST date)
+* `3 years ago tomorrow`
+* military time formats like `2100`
 
 ### API
 
@@ -184,6 +186,9 @@ This can be configured by setting `punt` param in the context object:
 ```js
 doc.dates({punt: { month: 1 }})
 ```
+
+### Future bias
+*'May 7th'* will prefer a May 7th in the future
 
 ### This/Next/Last
 *'this/next/last week'* is mostly straight-forward.

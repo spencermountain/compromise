@@ -5,16 +5,14 @@ const spacetime = require('/Users/spencer/mountain/spacetime/src')
 nlp.extend(require('./plugins/numbers/src'))
 nlp.extend(require('./plugins/dates/src'))
 
-const fmt = function (iso) {
-  if (!iso) {
-    return '-'
-  }
-  return spacetime(iso).format('{day-short} {nice} {year}')
-}
+const fmt = iso => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 
-// let doc = nlp('within June 1999').debug()
-let doc = nlp('after next week').debug()
-let found = doc.dates({ today: [], timezone: 'Canada/Pacific' }).json()[0]
+let context = {
+  today: [2020, 10, 30], //monday
+  timezone: 'Canada/Pacific',
+}
+let doc = nlp('this week').debug()
+let found = doc.dates(context).json()[0]
 console.log(fmt(found.date.start))
 console.log(fmt(found.date.end))
 

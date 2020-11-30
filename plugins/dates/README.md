@@ -166,6 +166,40 @@ Units:
   * **Hour** - '4pm'
   * **Minute** - '4:32pm'
 
+
+## Opinions
+
+### Start of week
+By default, weeks start on a Monday, and *'next week'* will run from Monday morning to Sunday night.
+This can be configued in spacetime, but right now we are not passing-through this config.
+
+### Implied duration
+*'after October'* returns a range starting **Nov 1st**, and ending 2-weeks after, by default.
+This can be configured by setting `punt` param in the context object:
+```js
+doc.dates({punt: { month: 1 }})
+```
+
+### This/Next/Last
+*'this/next/last week'* is mostly straight-forward.
+
+But *'this monday'* is more ambiguous - here, it always refers to the future. On tuesday, saying 'this monday' means 'next monday'. This is, as I understand it, the most-intuitive interpretation. *'this monday'* on monday, is itself.
+
+Likewise, *'this june'* in June, is itself. *'this june'* in any other month, is the nearest June in the future.
+
+### Nth Week
+The first week of a month, or a year is the first week *with a thursday in it*. This is a weird, but widely-held standard. It cannot be (easily) configued.
+
+### British/American ambiguity
+by default, we use the same interpretation of dates as javascript does - we assume `01/02/2020` is Jan 2nd, (US-version) but allow `13/01/2020` to be Jan 13th (UK-version). This should be possible to configure in the near future.
+
+### Seasons
+By default, *'this summer'* will return **June 1 - Sept 1**, which is northern hemisphere ISO.
+Configuring the default hemisphere should be possible in the future.
+
+### Day times
+There are some hardcoded times for *'lunch time'* and others, but mainly, a day begins at `12:00am` and ends at `11:59pm` - the last millisecond of the day.
+
 Work in progress.
 
 MIT

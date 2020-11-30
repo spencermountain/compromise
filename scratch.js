@@ -1,6 +1,6 @@
 const nlp = require('./src/index')
 const spacetime = require('/Users/spencer/mountain/spacetime/src')
-// nlp.verbose(true)
+nlp.verbose(true)
 // nlp.extend(require('./plugins/sentences/src'))
 nlp.extend(require('./plugins/numbers/src'))
 nlp.extend(require('./plugins/dates/src'))
@@ -15,18 +15,19 @@ let context = {
 // ==working now==
 // let doc = nlp('July 13 through 15')
 // let doc = nlp(`this minute`)
+// let doc = nlp('1 hour ago').debug()
+// let doc = nlp('5 days ago').debug()
+// let doc = nlp('8:00 p.m. February 11') //.debug()
+// let doc = nlp('5pm on may 27th')
+// let doc = nlp('2 weekends ago')
 
 // ### should be working
 // let doc = nlp('first monday of january')
-// let doc = nlp('8:00 pm February 11')
-// let doc = nlp('5pm on may 27th')
-let doc = nlp('an hour ago')
-// let doc = nlp('2 weekends ago')
-// let doc = nlp('Thu 16th')
 // let doc = nlp(`3rd month next year`)
 
 // ### hmmm
 // let doc = nlp('in the next three years')
+// let doc = nlp('Thu 16th')
 
 // ### year-tricky
 // let doc = nlp('last q2')
@@ -34,10 +35,9 @@ let doc = nlp('an hour ago')
 // let doc = nlp(`Chanukah 2018`)
 
 // ### ad-hoc
-// let doc = nlp('jan 3 2010 at 4')
+let doc = nlp('jan 3 2010 at 4')
 // let doc = nlp('midday February 11')
 // let doc = nlp(`may '97`)
-// let doc = nlp('tue')
 // let doc = nlp('1 fortnight ago')
 // let doc = nlp('6 months hence')
 
@@ -50,6 +50,7 @@ let doc = nlp('an hour ago')
 // let doc = nlp('November 18th 2010 at midnight')
 
 // ### spacetime
+// let doc = nlp('tues')
 // let doc = nlp(`1:00:00 PM`)
 // let doc = nlp('13:45')
 // let doc = nlp('22-aug')

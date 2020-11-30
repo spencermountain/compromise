@@ -35,6 +35,10 @@ const clean = function (str) {
   if (/^(re|un)-?[^aeiou]./.test(str) === true) {
     str = str.replace('-', '')
   }
+  //compact acronyms
+  if (isAcronym(str)) {
+    str = str.replace(/\./g, '')
+  }
   //strip leading & trailing grammatical punctuation
   if (/^[:;]/.test(str) === false) {
     str = str.replace(/\.{3,}$/g, '')
@@ -50,10 +54,7 @@ const clean = function (str) {
   if (str === '') {
     str = original
   }
-  //compact acronyms
-  if (isAcronym(str)) {
-    str = str.replace(/\./g, '')
-  }
+
   //nice-numbers
   str = str.replace(/([0-9]),([0-9])/g, '$1$2')
   return str

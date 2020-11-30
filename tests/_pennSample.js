@@ -3449,10 +3449,6 @@ module.exports = [
     tags: 'PRP, MD, VB, PRP, RB',
   },
   {
-    text: 'N.O. ? Atlanta?',
-    tags: 'NNP, NNP',
-  },
-  {
     text: 'Memphis?',
     tags: 'NNP',
   },

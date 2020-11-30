@@ -1,4 +1,4 @@
-const { Unit, Day } = require('../units')
+const { Day, Moment } = require('../units')
 
 const knownWord = {
   today: (context) => {
@@ -19,11 +19,15 @@ const today = function (doc, context, section) {
   if (doc.found === false) {
     // do we have just a time?
     if (section.time !== null) {
-      unit = new Unit(context.today, null, context) // choose today
+      unit = new Moment(context.today, null, context) // choose today
     }
     //do we just have a shift?
     if (Object.keys(section.shift).length > 0) {
-      unit = new Unit(context.today, null, context) // choose today
+      if (section.shift.hour || section.shift.minute) {
+        unit = new Moment(context.today, null, context) // choose now
+      } else {
+        unit = new Day(context.today, null, context) // choose today
+      }
     }
   }
 

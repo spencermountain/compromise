@@ -36,6 +36,10 @@ const fixDates = function (doc) {
   doc.match('in the (night|evening|morning|afternoon|day|daytime)').tag('Time', 'in-the-night')
   doc.match('(#Value|#Time) (am|pm)').tag('Time', 'value-ampm')
 
+  // misc weekday words
+  doc.match('tue').tag('WeekDay', 'misc-weekday')
+  doc.match('thu').tag('WeekDay', 'misc-weekday')
+
   //months:
   let month = doc.if('#Month')
   if (month.found === true) {

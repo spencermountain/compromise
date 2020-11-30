@@ -4,6 +4,7 @@ const knownUnits = {
   hour: true,
   day: true,
   week: true,
+  weekend: true,
   month: true,
   season: true,
   quarter: true,

@@ -43,7 +43,8 @@ class Unit {
   }
   applyShift(obj = {}) {
     Object.keys(obj).forEach((k) => {
-      this.d = this.d.add(obj[k], k)
+      let unit = k === 'weekend' ? 'week' : k
+      this.d = this.d.add(obj[k], unit)
     })
     return this
   }

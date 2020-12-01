@@ -41,6 +41,7 @@ test('has a date', function (t) {
     '13:45',
     '22 sept',
     `may '97`,
+    `Thu 16th`,
   ]
   arr.forEach(function (str) {
     const doc = nlp(str)

@@ -16,7 +16,7 @@ let context = {
 // let doc = nlp('in the next three years') //.debug()
 // let doc = nlp(`in an hour from now`) //.debug()
 // let doc = nlp(`in half an hour`).debug()
-// let doc = nlp('in 20mins').debug()
+let doc = nlp('in 20mins').debug()
 // let doc = nlp(`3-4pm`).debug()
 // let doc = nlp('2005 4th quarter')
 // let doc = nlp(`Chanukah 2018`)
@@ -27,7 +27,6 @@ let context = {
 // let doc = nlp(`13h30`).debug()
 // let doc = nlp(`November 18th 2010 midnight`).debug()
 // let doc = nlp(`between 9:30 and 11:00 on thursday`).debug()
-let doc = nlp('Thu 16th').debug()
 // let doc = nlp('Jan 1 - Dec 31, 2018') //contraction
 // let doc = nlp('by next weekend') // clone issue
 

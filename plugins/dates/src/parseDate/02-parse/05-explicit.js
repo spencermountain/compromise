@@ -74,6 +74,19 @@ const parseExplicit = function (doc, context) {
     }
   }
 
+  // support 'thursday 21st'
+  m = doc.match('#WeekDay [<date>#Value]')
+  if (m.found) {
+    let obj = {
+      month: context.today.month(),
+      date: m.groups('date').text(),
+      year: context.today.year(),
+    }
+    let d = new CalendarDate(obj, null, context)
+    if (d.d.isValid() === true) {
+      return d
+    }
+  }
   // support date-only 'the 21st'
   m = doc.match('the [<date>#Value]')
   if (m.found) {

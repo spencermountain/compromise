@@ -4,8 +4,8 @@ module.exports = [
   //web tags
   [/^[\w\.]+@[\w\.]+\.[a-z]{2,3}$/, 'Email'], //not fancy
   [/^#[a-z0-9_\u00C0-\u00FF]{2,}$/, 'HashTag'],
-  [/^@1?[0-9](am|pm)$/, 'Time'], // @6pm
-  [/^@1?[0-9]:[0-9]{2}(am|pm)?$/, 'Time'], // @6:30
+  [/^@1?[0-9](am|pm)$/i, 'Time'], // @6pm
+  [/^@1?[0-9]:[0-9]{2}(am|pm)?$/i, 'Time'], // @6:30
   [/^@\w{2,}$/, 'AtMention'], //@spencermountain
   [/^(https?:\/\/|www\.)\w+\.[a-z]{2,3}/, 'Url'], //with http/www
   [/^[\w./]+\.(com|net|gov|org|ly|edu|info|biz|ru|jp|de|in|uk|br)/, 'Url'], //http://mostpopularwebsites.net/top-level-domain
@@ -13,8 +13,8 @@ module.exports = [
   //dates/times
   [/^'[0-9]{2}$/, 'Year'], //like '97
   [/^[012]?[0-9](:[0-5][0-9])(:[0-5][0-9])$/, 'Time'], //4:32:32
-  [/^[012]?[0-9](:[0-5][0-9])?(:[0-5][0-9])? ?(am|pm)$/, 'Time'], //4pm
-  [/^[012]?[0-9](:[0-5][0-9])(:[0-5][0-9])? ?(am|pm)?$/, 'Time'], //4:00pm
+  [/^[012]?[0-9](:[0-5][0-9])?(:[0-5][0-9])? ?(am|pm)$/i, 'Time'], //4pm
+  [/^[012]?[0-9](:[0-5][0-9])(:[0-5][0-9])? ?(am|pm)?$/i, 'Time'], //4:00pm
   [/^[PMCE]ST$/, 'Time'], //PST, time zone abbrevs
   [/^utc ?[+-]?[0-9]+?$/, 'Time'], //UTC 8+
   [/^[a-z0-9]*? o\'?clock$/, 'Time'], //3 oclock

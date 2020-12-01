@@ -41,7 +41,8 @@ const arr = [
   // [`in the morning`, ''],
   [`tomorrow evening`, 'Jan 22 6pm'],
   [`aug-20`, '20-aug'],
-
+  [`in a few years`, `in 2 years`],
+  [`in a couple years`, `in 2 years`],
   // // timezone
   // [`eastern time`, ''],
   // [`est`, ''],

@@ -6,6 +6,8 @@ const timeTagger = function (doc) {
   doc.match('#Cardinal oclock').tag('Time')
   // 03/02
   doc.match('/^[0-9]{2}/[0-9]{2}/').tag('Date').unTag('Value')
+  // 3 in the morning
+  doc.match('[#Value] (in|at) the? (morning|evening|night|nighttime)').tag('Time')
   // quarter to seven (not march 5 to 7)
   if (doc.has('#Cardinal') && !doc.has('#Month')) {
     doc.match('(half|quarter|25|15|10|5) (past|after|to) #Cardinal').tag('Time', here)

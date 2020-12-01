@@ -9,7 +9,7 @@ const isArray = function (arr) {
   return Object.prototype.toString.call(arr) === '[object Array]'
 }
 
-const fmt = (iso) => (iso ? spacetime(iso).format('iso-short') : '-')
+const fmt = (iso) => (iso ? spacetime(iso).format('iso-short') : '')
 
 const mk = function (y, m, d, h, sec, mil) {
   if (isArray(y) && isArray(m)) {

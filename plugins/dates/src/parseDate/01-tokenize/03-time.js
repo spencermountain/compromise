@@ -78,7 +78,11 @@ const parseTime = function (doc, context) {
   m = time.match('[<time>#Time] (in|at) the? [<desc>(morning|evening|night|nighttime)]')
   if (m.found) {
     let str = m.groups('time').text('reduced')
-    s = s.time(str)
+    if (/^[0-9]{1,2}$/.test(str)) {
+      s = s.hour(str) //3 in the morning
+    } else {
+      s = s.time(str) // 3:30 in the morning
+    }
     if (s.isValid() && !s.isEqual(now)) {
       let desc = m.groups('desc').text('reduced')
       if (desc === 'evening' || desc === 'night') {

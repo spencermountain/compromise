@@ -6,6 +6,8 @@ const shiftTagger = function (doc) {
     doc.match('#Cardinal #Duration (before|after|ago|from|hence)').tag('#DateShift', here)
     // in two weeks
     doc.match('in #Cardinal #Duration').tag('#DateShift', here)
+    // in a few weeks
+    doc.match('in a (few|couple) of? #Duration').tag('#DateShift', here)
     //two weeks and three days before
     doc.match('#Cardinal #Duration and? #DateShift').tag('#DateShift', here)
     doc.match('#DateShift and #Cardinal #Duration').tag('#DateShift', here)

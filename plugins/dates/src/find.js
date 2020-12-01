@@ -15,8 +15,14 @@ const normalize = function (doc) {
   doc.contractions().expand()
   // remove adverbs
   doc.adverbs().remove()
-  doc.replace('week end', 'weekend')
-  // doc.replace('aug', 'august')
+  // 'week-end'
+  doc.replace('week end', 'weekend').tag('Date')
+  // 'in a few years'
+  let m = doc.match('in [a few] #Duration')
+  if (m.found) {
+    m.groups('0').replaceWith('2')
+    m.tag('DateShift')
+  }
   return doc
 }
 

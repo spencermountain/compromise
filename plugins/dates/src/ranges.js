@@ -31,13 +31,13 @@ const parseRange = function (doc, context) {
     let res = m.groups()
     let start = res.from
     if (res.year) {
-      start = start.concat(res.year)
+      start = start.append(res.year)
     }
     start = parseDate(start, context)
     if (start) {
       let end = res.to
       if (res.year) {
-        end = end.concat(res.year)
+        end = end.append(res.year)
       }
       end = parseDate(end, context)
       // reverse the order?

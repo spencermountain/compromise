@@ -1,4 +1,4 @@
-const { Week, WeekEnd, AnyMonth, Quarter, Year, Season, WeekDay, Day, Hour, Minute, Moment } = require('../units')
+const { Week, WeekEnd, AnyMonth, AnyQuarter, Year, Season, WeekDay, Day, Hour, Minute, Moment } = require('../units')
 const mapping = {
   day: Day,
   hour: Hour,
@@ -10,12 +10,12 @@ const mapping = {
   week: Week,
   weekend: WeekEnd,
   month: AnyMonth,
-  quarter: Quarter,
+  quarter: AnyQuarter,
   year: Year,
   season: Season,
   // set aliases
   yr: Year,
-  qtr: Quarter,
+  qtr: AnyQuarter,
   wk: Week,
   sec: Moment,
   hr: Hour,

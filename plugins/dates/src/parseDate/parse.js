@@ -9,8 +9,8 @@ const tokens = {
 const parse = {
   today: require('./02-parse/01-today'),
   holiday: require('./02-parse/02-holidays'),
-  yearly: require('./02-parse/03-yearly'),
-  nextLast: require('./02-parse/04-next-last'),
+  nextLast: require('./02-parse/03-next-last'),
+  yearly: require('./02-parse/04-yearly'),
   explicit: require('./02-parse/05-explicit'),
 }
 
@@ -38,10 +38,10 @@ const parseDate = function (doc, context) {
   unit = unit || parse.today(doc, context, { shift, time, rel })
   // 'this haloween'
   unit = unit || parse.holiday(doc, context)
-  // 'q2 2002'
-  unit = unit || parse.yearly(doc, context)
   // 'this month'
   unit = unit || parse.nextLast(doc, context)
+  // 'q2 2002'
+  unit = unit || parse.yearly(doc, context)
   // 'this june 2nd'
   unit = unit || parse.explicit(doc, context)
   // doc.debug()

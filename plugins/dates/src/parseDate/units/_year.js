@@ -33,6 +33,25 @@ class Month extends Unit {
     return this
   }
 }
+class AnyQuarter extends Unit {
+  constructor(input, unit, context) {
+    super(input, unit, context)
+    this.unit = 'quarter'
+    // set to beginning
+    if (this.d.isValid()) {
+      this.d = this.d.startOf(this.unit)
+    }
+  }
+  last() {
+    console.log(this.d.format())
+    this.d = this.d.minus(1, 'quarter')
+    console.log(this.d.format())
+    this.d = this.d.startOf(this.unit)
+    console.log(this.d.format())
+    return this
+  }
+}
+
 class Quarter extends Unit {
   constructor(input, unit, context) {
     super(input, unit, context)
@@ -87,6 +106,7 @@ module.exports = {
   AnyMonth: AnyMonth,
   Month: Month,
   Quarter: Quarter,
+  AnyQuarter: AnyQuarter,
   Season: Season,
   Year: Year,
 }

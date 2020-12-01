@@ -132,6 +132,9 @@ const tagDates = function (doc) {
     //scoops up a bunch
     v = cardinal.match(`#Date [#Cardinal]`, 0)
     tagYearSafe(v, 'date-year')
+    //middle of 1999
+    v = cardinal.match(`${sections} of [#Cardinal]`)
+    tagYearSafe(v, 'section-year')
     //feb 8 2018
     v = cardinal.match(`#Month #Value [#Cardinal]`, 0)
     tagYear(v, 'month-value-year')
@@ -153,6 +156,8 @@ const tagDates = function (doc) {
     //it was 1998
     v = cardinal.match('it (is|was) [#Cardinal]', 0)
     tagYearSafe(v, 'in-year-5')
+    // re-tag this part
+    cardinal.match(`${sections} of #Year`).tag('Date')
   }
 
   let time = doc.if('#Time')

@@ -8,6 +8,8 @@ const punt = function (unit, context) {
 
 //
 const parseRange = function (doc, context) {
+  // two explicit dates - 'between 9am and 10am on friday'
+
   // two explicit dates - 'between friday and sunday'
   let m = doc.match('between [<start>*] and [<end>*]')
   if (m.found) {
@@ -15,7 +17,7 @@ const parseRange = function (doc, context) {
     start = parseDate(start, context)
     let end = m.groups('end')
     end = parseDate(end, context)
-    if (start) {
+    if (start && end) {
       return {
         start: start,
         end: end.end(),

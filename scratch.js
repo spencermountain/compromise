@@ -13,24 +13,11 @@ let context = {
   timezone: 'Canada/Pacific',
 }
 // ==working now==
-// let doc = nlp('July 13 through 15')
-// let doc = nlp(`this minute`)
-// let doc = nlp('1 hour ago').debug()
-// let doc = nlp('5 days ago').debug()
-// let doc = nlp('8:00 p.m. February 11') //.debug()
-// let doc = nlp('5pm on may 27th')
-// let doc = nlp('2 weekends ago')
-// let doc = nlp('jan 3 2010 at 4').debug()
-// let doc = nlp(`11:00 at night`)
-// let doc = nlp(`4:00 in the evening`)
-// let doc = nlp('midday February 11').debug()
-// let doc = nlp('this evening').debug()
-// let doc = nlp('this day').debug()
-// let doc = nlp('6 months hence').debug()
 
 // ### should be working
 // let doc = nlp('first monday of january')
 // let doc = nlp(`3rd month next year`)
+// let doc = nlp(`Pay ABC 2000`)
 
 // ### hmmm
 // let doc = nlp('in the next three years')
@@ -42,7 +29,9 @@ let context = {
 // let doc = nlp(`Chanukah 2018`)
 
 // ### ad-hoc
-let doc = nlp(`may '97`).debug()
+// let doc = nlp(`may '97`).debug()
+// let doc = nlp(`since 1999`).debug()
+let doc = nlp(`between 9:30 and 11:00 on thursday`).debug()
 
 // ### time-parser
 // let doc = nlp(`a quarter past noon`)
@@ -61,9 +50,9 @@ let doc = nlp(`may '97`).debug()
 // let doc = nlp(`30-Mar-11`)
 // let doc = nlp('7/12/11')
 
-// let found = doc.dates(context).json()[0]
-// console.log(fmt(found.date.start))
-// console.log(fmt(found.date.end))
+let found = doc.dates(context).json()[0]
+console.log(fmt(found.date.start))
+console.log(fmt(found.date.end))
 
 // hmmm
 // let doc = nlp('Jan 1 - Dec 31, 2018') //contraction

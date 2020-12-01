@@ -43,8 +43,8 @@ const tests = [
       ['on 4:23am july 5th ', [2016, july, 5]],
       ['@ 5pm march 2nd', [2016, march, 2]],
       // ['on 5 pacific time march 2nd', [2016, march, 2]],
-      // ['around 1pm pacific time, july 5th', [2016, july, 5]],
-      // ['on the day after next', [2016, february, 13]],
+      ['around 1pm pacific time, july 5th', [2016, july, 5]],
+      ['on the day after next', [2016, february, 13]],
       // ['the last weekend in october', [2016, october, 30]],
       // ['the last weekend this month', [2016, february, 27]],
     ],
@@ -64,7 +64,7 @@ const tests = [
       ['by 1999-12-25', [1999, december, 24]],
       ['before 12/25/1999', [1999, december, 24]],
       ['by tomorrow', [2016, february, 11]],
-      // ['by the day after tomorrow', [2016, february, 12]], //by
+      ['by the day after tomorrow', [2016, february, 12]], //by
     ],
   },
 ]

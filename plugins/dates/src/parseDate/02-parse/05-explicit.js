@@ -82,9 +82,9 @@ const parseExplicit = function (doc, context) {
       date: m.groups('date').text(),
       year: context.today.year(),
     }
-    let d = new CalendarDate(obj, null, context)
-    if (d.d.isValid() === true) {
-      return d
+    let unit = new CalendarDate(obj, null, context)
+    if (unit.d.isValid() === true) {
+      return unit
     }
   }
   // support date-only 'the 21st'
@@ -95,9 +95,13 @@ const parseExplicit = function (doc, context) {
       date: m.groups('date').text(),
       year: context.today.year(),
     }
-    let d = new CalendarDate(obj, null, context)
-    if (d.d.isValid() === true) {
-      return d
+    let unit = new CalendarDate(obj, null, context)
+    if (unit.d.isValid() === true) {
+      // assume it's forward
+      if (unit.d.isBefore(context.today)) {
+        unit.d = unit.d.add(1, 'month')
+      }
+      return unit
     }
   }
   // parse ISO as a Moment

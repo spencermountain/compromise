@@ -225,6 +225,7 @@ compromise will tag anything that looks like a date, but not validate the dates 
 ### Misc
 * *'thursday the 16th'* - will set to the 16th, even if it's not thursday
 * *'in a few hours/years'* - in 2 hours/years
+* *'jan 5th 2008 to Jan 6th the following year'* - date-range explicit references
 
 ### See also
 * [Duckling](https://duckling.wit.ai/) - by wit.ai (facebook)

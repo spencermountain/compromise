@@ -10,26 +10,26 @@ const tagYear = (m, reason) => {
   if (m.found !== true) {
     return
   }
-  let term = m.termList()[0]
-  if (term) {
-    let num = parseInt(term.clean, 10)
+  m.forEach((p) => {
+    let str = p.text('reduced')
+    let num = parseInt(str, 10)
     if (num && num > 1000 && num < 3000) {
-      m.tag('Year', reason)
+      p.tag('Year', reason)
     }
-  }
+  })
 }
 //same, but for less-confident values
 const tagYearSafe = (m, reason) => {
   if (m.found !== true) {
     return
   }
-  let term = m.termList()[0]
-  if (term) {
-    let num = parseInt(term.clean, 10)
+  m.forEach((p) => {
+    let str = p.text('reduced')
+    let num = parseInt(str, 10)
     if (num && num > 1900 && num < 2030) {
-      m.tag('Year', reason)
+      p.tag('Year', reason)
     }
-  }
+  })
 }
 
 const tagDates = function (doc) {
@@ -130,8 +130,8 @@ const tagDates = function (doc) {
     let v = cardinal.match(`#Date #Value [#Cardinal]`, 0)
     tagYear(v, 'date-value-year')
     //scoops up a bunch
-    v = cardinal.match(`#Date+ [#Cardinal]`, 0)
-    tagYear(v, 'date-year')
+    v = cardinal.match(`#Date [#Cardinal]`, 0)
+    tagYearSafe(v, 'date-year')
     //feb 8 2018
     v = cardinal.match(`#Month #Value [#Cardinal]`, 0)
     tagYear(v, 'month-value-year')

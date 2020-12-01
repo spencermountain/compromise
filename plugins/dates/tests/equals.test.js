@@ -19,26 +19,24 @@ const arr = [
   [`1999-03-02`, 'march 2 1999'],
   [`03-02-1999`, 'march 2nd 1999'],
   [`03/02`, 'march 2'],
-  // [`2015.08.13`, 'aug 17 2015'],
+  [`2015.08.13`, 'aug 13 2015'],
 
   // // named-dates
   [`today`, '2020-01-21'],
   [`now`, 'right now'],
-  // [`easter`, ''],
   [`q1`, 'jan 1'],
   [`tomorrow`, '2020-01-22'],
 
   // // time
   [`2pm`, '2020-01-21T14:00:00.000-08:00'],
-  // [`2:12pm`, '2020-01-21T14:12:00.000-08:00'],
-  // [`2pm eastern time`, '2020-01-21T14:00:00.000-05:00'],
-  // [`2:12`, ''],
-  // [`02:12:00`, ''],
-  // [`2 oclock`, ''],
-  // [`before 1`, ''],
+  [`2:12pm`, '2020-01-21T14:12:00.000-08:00'],
+  [`2pm eastern time`, '2020-01-21T14:00:00.000-05:00'],
+  [`2:12 in the evening`, '2020-01-21T14:12:00.000-08:00'],
+  [`02:12:00am`, '2020-01-21T02:12:00.000-08:00'],
+  [`2 oclock am`, '2020-01-21T02:00:00.000-08:00'],
   [`noon`, 'today at 12pm'],
   [`at night`, 'today at 8:00pm'],
-  // [`in the morning`, ''],
+  // [`in the morning`, 'tomorrow at 8:00pm'],
   [`tomorrow evening`, 'Jan 22 6pm'],
   [`aug-20`, '20-aug'],
   [`in a few years`, `in 2 years`],
@@ -56,38 +54,6 @@ const arr = [
   [`next q2`, `q2 2021`],
   [`next q3`, `q3 2021`],
   [`next q4`, `q4 2021`],
-  // // timezone
-  // [`eastern time`, ''],
-  // [`est`, ''],
-  // [`peru time`, ''],
-  // [`GMT+9`, ''],
-
-  // // relative duration
-  // [`this march`, ''],
-  // [`this week`, ''],
-  // [`this sunday`, ''],
-  // [`next april`, ''],
-  // [`this past year`, ''],
-  // [`second week of march`, ''],
-  // [`last weekend of march`, ''],
-  // [`last spring`, ''],
-  // [`the saturday after next`, ''],
-
-  // // punt
-  // [`two days after tomorrow`, ''],
-  // [`in seven weeks`, ''],
-  // [`2 weeks from now`, ''],
-  // [`2 weeks after`, ''],
-  // [`2 years 4 months 5 days ago`, ''],
-  // [`a week friday`, ''],
-  // [`a week and a half before`, ''],
-  // [`on the 1st`, ''],
-
-  // // start/end
-  // [`end of the week`, ''],
-  // [`start of next year`, ''],
-  // [`start of next year`, ''],
-  // [`middle of q2 last year`, ''],
 ]
 
 test('variety', function (t) {

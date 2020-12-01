@@ -27,6 +27,7 @@ const knownWord = {
   },
 }
 knownWord.tommorrow = knownWord.tomorrow
+knownWord.tmrw = knownWord.tomorrow
 
 const today = function (doc, context, section) {
   let unit = null

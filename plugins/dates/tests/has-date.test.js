@@ -42,6 +42,38 @@ test('has a date', function (t) {
     '22 sept',
     `may '97`,
     `Thu 16th`,
+    // timezone
+    `9 eastern time`,
+    `9am est`,
+    `9am peru time`,
+    `9am GMT+9`,
+
+    // relative duration
+    `this march`,
+    `this week`,
+    `this sunday`,
+    `next april`,
+    `this past year`,
+    `second week of march`,
+    `last weekend of march`,
+    `last spring`,
+    `the saturday after next`,
+
+    // punt
+    `two days after tomorrow`,
+    `in seven weeks`,
+    `2 weeks from now`,
+    `2 weeks after`,
+    `2 years 4 months 5 days ago`,
+    `a week friday`,
+    `a week and a half before`,
+    `on the 1st`,
+
+    // start/end
+    `end of the week`,
+    `start of next year`,
+    `start of next year`,
+    `middle of q2 last year`,
   ]
   arr.forEach(function (str) {
     const doc = nlp(str)

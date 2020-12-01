@@ -25,6 +25,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - **[new]** - set NounPhrase, VerbPhrase tags in nlp-sentences plugin
 - **[new]** - `.phrases()` method in nlp-sentences plugin
 - **[new]** - support `.apppend(doc)` and `.prepend(doc)`
+- **[change]** - change tokenizer for '20-aug'
 -->
 
 #### 13.7.0

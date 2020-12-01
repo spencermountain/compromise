@@ -16,7 +16,7 @@ test('persistent-lexicon-change', function (t) {
   t.equal(doc.match('#Place+').length, 1, 'now-one-place')
   t.equal(doc.match('#Person+').length, 0, 'now-no-person')
 
-  nlp2.extend((Doc, world) => {
+  nlp2.extend((_Doc, world) => {
     world.addWords({
       foo: 'Place',
     })

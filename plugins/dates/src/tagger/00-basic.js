@@ -32,13 +32,18 @@ const tagYearSafe = (m, reason) => {
   }
 }
 
-const fixDates = function (doc) {
+const tagDates = function (doc) {
+  // in the evening
   doc.match('in the (night|evening|morning|afternoon|day|daytime)').tag('Time', 'in-the-night')
+  // 8 pm
   doc.match('(#Value|#Time) (am|pm)').tag('Time', 'value-ampm')
+  // 22-aug
+  // doc.match('/^[0-9]{2}-(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov)/').tag('Date', '20-jan')
+  // 2012-06
+  doc.match('/^[0-9]{4}-[0-9]{2}$/').tag('Date', '2012-06')
 
   // misc weekday words
-  doc.match('tue').tag('WeekDay', 'misc-weekday')
-  doc.match('thu').tag('WeekDay', 'misc-weekday')
+  doc.match('(tue|thu)').tag('WeekDay', 'misc-weekday')
 
   //months:
   let month = doc.if('#Month')
@@ -163,4 +168,4 @@ const fixDates = function (doc) {
   tagYearSafe(m, '2020-ish')
   return doc
 }
-module.exports = fixDates
+module.exports = tagDates

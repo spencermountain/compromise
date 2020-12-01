@@ -3,11 +3,13 @@ const here = 'time-tagger'
 //
 const timeTagger = function (doc) {
   // 2 oclock
-  doc.match('#Cardinal oclock').tag('Time')
+  doc.match('#Cardinal oclock').tag('Time', here)
+  // 13h30
+  doc.match('/^[0-9]{2}h[0-9]{2}$/').tag('Time', here)
   // 03/02
-  doc.match('/^[0-9]{2}/[0-9]{2}/').tag('Date').unTag('Value')
+  doc.match('/^[0-9]{2}/[0-9]{2}/').tag('Date', here).unTag('Value')
   // 3 in the morning
-  doc.match('[#Value] (in|at) the? (morning|evening|night|nighttime)').tag('Time')
+  doc.match('[#Value] (in|at) the? (morning|evening|night|nighttime)').tag('Time', here)
   // quarter to seven (not march 5 to 7)
   if (doc.has('#Cardinal') && !doc.has('#Month')) {
     doc.match('1? (half|quarter|25|15|10|5) (past|after|to) #Cardinal').tag('Time', here)
@@ -15,7 +17,7 @@ const timeTagger = function (doc) {
   //timezone
   if (doc.has('#Date')) {
     // iso  (2020-03-02T00:00:00.000Z)
-    doc.match('/^[0-9]{4}[:-][0-9]{2}[:-][0-9]{2}T[0-9]/').tag('Time')
+    doc.match('/^[0-9]{4}[:-][0-9]{2}[:-][0-9]{2}T[0-9]/').tag('Time', here)
     // tuesday at 4
     doc.match('#Date [at #Cardinal]', 0).notIf('#Year').tag('Time', here)
     // half an hour

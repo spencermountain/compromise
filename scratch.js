@@ -12,9 +12,6 @@ let context = {
   // today: [2016, 10, 23], //wed nov 23rd
 }
 // ==working now==
-// let doc = nlp(`09.08.2013`).debug()
-// let doc = nlp(`13h30`).debug()
-// let doc = nlp('last quarter').debug()
 
 // ### hmmm
 // let doc = nlp('in the next three years') //.debug()

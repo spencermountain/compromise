@@ -74,6 +74,9 @@ test('has a date', function (t) {
     `start of next year`,
     `start of next year`,
     `middle of q2 last year`,
+    `09.08.2013`,
+    `13h30`,
+    'last quarter',
   ]
   arr.forEach(function (str) {
     const doc = nlp(str)

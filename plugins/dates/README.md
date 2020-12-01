@@ -36,7 +36,7 @@ doc.dates().json()
 }]*/
 ```
 
-### Date-Formats
+### Things it does:
 
 **explicit-dates**
 - `march 2nd`
@@ -108,15 +108,19 @@ doc.dates().json()
 - `22-23 February`
 
 
-## Unsupported date formats
+### Things it does awkwardly
+* `middle of 2019/June` - tries to find the center
+* `good friday 2025` - tries to reckon astronomically-set holidays
+* historical DST changes `Oct 22 1975 in PST` (always uses this year's DST date)
+
+### Things it doesn't do
 * things like `not this Saturday, but the Saturday after`
 * repeating dates like `every sunday` - only contiguous times are supported
-* historical DST changes `Oct 22 1975 in PST` (always uses this year's DST date)
 * `3 years ago tomorrow`
 * military time formats like `2100`
-* 'bare' years like `may 97`  - ('97 is supported)
+* 'bare' 2-digit years like `may 97`  - ('97 is supported)
 
-### API
+## API
 
 - **.dates()** - find dates like `June 8th` or `03/03/18`
   - **.dates().json()** - overloaded output with date metadata

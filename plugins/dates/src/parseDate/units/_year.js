@@ -42,6 +42,16 @@ class Quarter extends Unit {
       this.d = this.d.startOf(this.unit)
     }
   }
+  next() {
+    this.d = this.d.add(1, 'year')
+    this.d = this.d.startOf(this.unit)
+    return this
+  }
+  last() {
+    this.d = this.d.minus(1, 'year')
+    this.d = this.d.startOf(this.unit)
+    return this
+  }
 }
 class Season extends Unit {
   constructor(input, unit, context) {

@@ -13,7 +13,14 @@ const mapping = {
   quarter: Quarter,
   year: Year,
   season: Season,
+  // set aliases
+  yr: Year,
+  qtr: Quarter,
+  wk: Week,
+  sec: Moment,
+  hr: Hour,
 }
+
 let matchStr = `^(${Object.keys(mapping).join('|')})$`
 
 // when a unit of time is spoken of as 'this month' - instead of 'february'

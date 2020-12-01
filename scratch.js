@@ -8,55 +8,33 @@ nlp.extend(require('./plugins/dates/src'))
 const fmt = iso => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 
 let context = {
-  // today: 'Mon November 30th 2020',
-  // today: 'Tues Dec 1st 2020',
   timezone: 'Canada/Pacific',
 }
 // ==working now==
 
-// ### should be working
-
 // ### hmmm
-// let doc = nlp('in the next three years')
-// let doc = nlp('Thu 16th')
-
-// ### year-tricky
-// let doc = nlp('last q2')
+// let doc = nlp('in the next three years') //.debug()
+// let doc = nlp(`in an hour from now`) //.debug()
+// let doc = nlp(`in half an hour`).debug()
+// let doc = nlp('in 20mins').debug()
+// let doc = nlp(`3-4pm`).debug()
 // let doc = nlp('2005 4th quarter')
 // let doc = nlp(`Chanukah 2018`)
-
-// ### ad-hoc
-let doc = nlp(`may '97`).debug()
-// let doc = nlp(`2 thursdays back`).debug()
-
-// let doc = nlp(`in half an hour`).debug()
+// let doc = nlp(`2 thursdays ago`).debug()
 // let doc = nlp(`half three`).debug()
-// let doc = nlp(`last yr`).debug()
+// let doc = nlp(`last year`).debug()
 // let doc = nlp(`09.08.2013`).debug()
 // let doc = nlp(`13h30`).debug()
-// let doc = nlp(`eom`).debug()
-// let doc = nlp(`3-4pm`).debug()
-// let doc = nlp(`30.07.2013 16:34:22`).debug()
-// let doc = nlp(`since 1999`).debug()
 // let doc = nlp(`November 18th 2010 midnight`).debug()
 // let doc = nlp(`between 9:30 and 11:00 on thursday`).debug()
-// let doc = nlp(`tomorrow at 4a.m.`).debug()
+let doc = nlp('Thu 16th').debug()
+// let doc = nlp('Jan 1 - Dec 31, 2018') //contraction
+// let doc = nlp('by next weekend') // clone issue
 
 // ### time-parser
-// let doc = nlp(`a quarter past noon`)
-// let doc = nlp(`a quarter past 4`)
-// let doc = nlp('November 18th 2010 at midnight')
-
-// ### spacetime
-// let doc = nlp('13:45')
-// let doc = nlp('22 sept')
-// let doc = nlp(`30-Mar-11`)
-// let doc = nlp('7/12/11')
+// let doc = nlp(`a quarter past noon`).debug()
+// let doc = nlp(`a quarter to 4`).debug()
 
 let found = doc.dates(context).json()[0]
 console.log(fmt(found.date.start))
 console.log(fmt(found.date.end))
-
-// hmmm
-// let doc = nlp('Jan 1 - Dec 31, 2018') //contraction
-// let doc = nlp('by next weekend') // clone issue

@@ -11,6 +11,7 @@ const hardCoded = {
   evening: '6:00pm',
   dinnertime: '6:00pm',
   night: '8:00pm',
+  eod: '10:00pm',
   midnight: '12:00am',
 }
 

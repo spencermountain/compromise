@@ -17,6 +17,8 @@ const normalize = function (doc) {
   doc.adverbs().remove()
   // 'week-end'
   doc.replace('week end', 'weekend').tag('Date')
+  // doc.match('in 1 hour ').tag('DateShift')
+  // doc.debug()
   // 'in a few years'
   let m = doc.match('in [a few] #Duration')
   if (m.found) {

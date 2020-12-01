@@ -30,6 +30,17 @@ test('has a date', function (t) {
     `in 2 years`,
     `this morning at 7:30`,
     `this evening at 7:30`,
+    `before 1999`,
+    `2 weeks back`,
+    `eom`,
+    `eod`,
+    `eoy`,
+    'next q4',
+    `last yr`,
+    `a quarter past 4`,
+    '13:45',
+    '22 sept',
+    `may '97`,
   ]
   arr.forEach(function (str) {
     const doc = nlp(str)

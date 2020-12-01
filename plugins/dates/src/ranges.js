@@ -85,6 +85,7 @@ const parseRange = function (doc, context) {
       }
     }
   }
+
   // one month, no year - '5 to 7 of january'
   m = doc.match('[<from>#Value] (to|through|thru) [<to>#Value of? #Month]')
   if (m.found) {
@@ -100,6 +101,7 @@ const parseRange = function (doc, context) {
       }
     }
   }
+
   // one month, no year - 'january 5 to 7'
   m = doc.match('[<from>#Month #Value] (to|through|thru) [<to>#Value]')
   if (m.found) {
@@ -115,6 +117,7 @@ const parseRange = function (doc, context) {
       }
     }
   }
+
   // 'from A to B'
   m = doc.match('from? [<from>*] (to|until|upto|through|thru) [<to>*]')
   if (m.found) {
@@ -169,9 +172,8 @@ const parseRange = function (doc, context) {
       }
     }
   }
-
   // 'in june'
-  m = doc.match('^(on|during|in) [*]', 0)
+  m = doc.match('^(on|during|in|during) [*]', 0)
   if (m.found) {
     let unit = parseDate(m, context)
     if (unit) {

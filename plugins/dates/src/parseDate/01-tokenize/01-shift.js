@@ -31,11 +31,11 @@ const parseShift = function (doc) {
     }
   })
   //is it 2 weeks ago?  → -2
-  if (m.has('(before|ago|hence)$') === true) {
+  if (m.has('(before|ago|hence|back)$') === true) {
     Object.keys(result).forEach((k) => (result[k] *= -1))
   }
   m.remove('#Cardinal #Duration')
-  // supoprt 'day after tomorrow'
+  // supoprt '1 day after tomorrow'
   m = m.match('[<unit>#Duration] [<dir>(after|before)]')
   if (m.found) {
     let unit = m.groups('unit').text('reduced')

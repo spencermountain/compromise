@@ -72,6 +72,9 @@ const tagDates = function (doc) {
     //may twenty five
     val.match('#TextValue #TextValue').if('#Date').tag('#Date', 'textvalue-date')
 
+    //two thursdays back
+    val.match('#Value (#WeekDay|#Duration) back').tag('#Date', '3-back')
+
     //eg 'year'
     let duration = val.if('#Duration')
     if (duration.found === true) {
@@ -136,20 +139,20 @@ const tagDates = function (doc) {
     v = cardinal.match(`#Month #Value to #Value [#Cardinal]`, 0)
     tagYear(v, 'month-range-year')
     //in 1998
-    v = cardinal.match(`(in|of|by|during|before|starting|ending|for|year) [#Cardinal]`, 0)
-    tagYear(v, 'in-year')
+    v = cardinal.match(`(in|of|by|during|before|starting|ending|for|year|since) [#Cardinal]`, 0)
+    tagYear(v, 'in-year-1')
     //q2 2009
     v = cardinal.match('(q1|q2|q3|q4) [#Cardinal]', 0)
-    tagYear(v, 'in-year')
+    tagYear(v, 'in-year-2')
     //2nd quarter 2009
     v = cardinal.match('#Ordinal quarter [#Cardinal]', 0)
-    tagYear(v, 'in-year')
+    tagYear(v, 'in-year-3')
     //in the year 1998
     v = cardinal.match('the year [#Cardinal]', 0)
-    tagYear(v, 'in-year')
+    tagYear(v, 'in-year-4')
     //it was 1998
     v = cardinal.match('it (is|was) [#Cardinal]', 0)
-    tagYearSafe(v, 'in-year')
+    tagYearSafe(v, 'in-year-5')
   }
 
   let time = doc.if('#Time')

@@ -222,6 +222,10 @@ compromise will tag anything that looks like a date, but not validate the dates 
 * *'6th week of february* will return the 2nd week of march.
 * Setting an hour that's skipped, or repeated by a DST change will return the closest valid time to the DST change.
 
+### Misc
+* *'thursday the 16th'* - will set to the 16th, even if it's not thursday
+* *'in a few hours/years'* - in 2 hours/years
+
 ### See also
 * [Duckling](https://duckling.wit.ai/) - by wit.ai (facebook)
 * [Chronic](https://github.com/mojombo/chronic) - by Tom Preston-Werner (Ruby)

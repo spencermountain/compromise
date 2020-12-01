@@ -1,4 +1,4 @@
-const { Day, Moment } = require('../units')
+const { Day, Moment, Hour } = require('../units')
 
 const knownWord = {
   today: (context) => {
@@ -9,6 +9,21 @@ const knownWord = {
   },
   tomorrow: (context) => {
     return new Day(context.today.plus(1, 'day'), null, context)
+  },
+  eom: (context) => {
+    let d = context.today.endOf('month')
+    d = d.startOf('day')
+    return new Day(d, null, context)
+  },
+  // eod: (context) => {
+  //   let d = context.today.endOf('day')
+  //   d = d.startOf('hour').minus(4, 'hours') //rough
+  //   return new Hour(d, null, context)
+  // },
+  eoy: (context) => {
+    let d = context.today.endOf('year')
+    d = d.startOf('day')
+    return new Day(d, null, context)
   },
 }
 knownWord.tommorrow = knownWord.tomorrow

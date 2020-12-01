@@ -56,6 +56,27 @@ class Unit {
     }
     return this
   }
+  applyRel(rel) {
+    if (rel === 'next') {
+      return this.next()
+    }
+    if (rel === 'last') {
+      return this.last()
+    }
+    return this
+  }
+  applySection(section) {
+    if (section === 'start') {
+      return this.start()
+    }
+    if (section === 'end') {
+      return this.end()
+    }
+    if (section === 'middle') {
+      return this.middle()
+    }
+    return this
+  }
   format(fmt) {
     return this.d.format(fmt)
   }
@@ -65,6 +86,12 @@ class Unit {
   }
   end() {
     this.d = this.d.endOf(this.unit)
+    return this
+  }
+  middle() {
+    let diff = this.d.diff(this.d.endOf(this.unit))
+    let minutes = Math.round(diff.minutes / 2)
+    this.d = this.d.add(minutes, 'minutes')
     return this
   }
   // 'before 2019'

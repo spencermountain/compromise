@@ -3,7 +3,8 @@ const tokens = {
   counter: require('./01-tokenize/02-counter'),
   time: require('./01-tokenize/03-time'),
   relative: require('./01-tokenize/04-relative'),
-  timezone: require('./01-tokenize/05-timezone'),
+  section: require('./01-tokenize/05-section'),
+  timezone: require('./01-tokenize/06-timezone'),
 }
 
 const parse = {
@@ -26,6 +27,7 @@ const parseDate = function (doc, context) {
   let counter = tokens.counter(doc)
   let tz = tokens.timezone(doc)
   let time = tokens.time(doc, context)
+  let section = tokens.section(doc, context)
   let rel = tokens.relative(doc)
   //set our new timezone
   if (tz) {
@@ -49,18 +51,19 @@ const parseDate = function (doc, context) {
     return null
   }
 
-  // // apply relative
-  if (rel === 'last') {
-    unit.last()
+  // this/next/last
+  if (rel) {
+    unit.applyRel(rel)
   }
-  if (rel === 'next') {
-    unit.next()
-  }
-  // apply shift
+  // 2 days after..
   if (shift) {
     unit.applyShift(shift)
   }
-  // apply time
+  // end of
+  if (section) {
+    unit.applySection(section)
+  }
+  // at 5:40pm
   if (time) {
     unit.applyTime(time)
   }
@@ -73,6 +76,7 @@ const parseDate = function (doc, context) {
   // console.log(`  shift:      ${JSON.stringify(shift)}`)
   // console.log(`  counter:   `, counter)
   // console.log(`  rel:        ${rel || '-'}`)
+  // console.log(`  section:    ${section || '-'}`)
   // console.log(`  time:       ${time || '-'}`)
   // console.log(`  str:       '${doc.text()}'`)
   // console.log('  unit:     ', unit, '\n')

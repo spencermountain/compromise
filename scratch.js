@@ -36,6 +36,7 @@ let context = {
 // let doc = nlp('this past mon').debug()
 // let doc = nlp('this morning').debug() // (forward)
 let doc = nlp('middle of 2019').debug()
+// let doc = nlp('middle of 2019').debug()
 // let doc = nlp('january up to june').debug()
 // let doc = nlp('1994-11-05T13:15:30Z').debug()
 // let doc = nlp('dec 23rd 2019 to dec 29').debug()

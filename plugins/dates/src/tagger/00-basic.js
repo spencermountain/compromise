@@ -145,9 +145,6 @@ const fixDates = function (doc) {
     //it was 1998
     v = cardinal.match('it (is|was) [#Cardinal]', 0)
     tagYearSafe(v, 'in-year')
-    //'2020'
-    v = cardinal.match('/^20[012][0-9]$/')
-    tagYearSafe(v, '2020-ish')
   }
 
   let time = doc.if('#Time')
@@ -161,7 +158,9 @@ const fixDates = function (doc) {
     //6pm est
     time.match('#Time [(est|pst|gmt)]', 0).tag('Date', 'timezone abbr')
   }
-
+  //'2020' bare input
+  let m = doc.match('^/^20[012][0-9]$/$')
+  tagYearSafe(m, '2020-ish')
   return doc
 }
 module.exports = fixDates

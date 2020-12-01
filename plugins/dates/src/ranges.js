@@ -116,7 +116,7 @@ const parseRange = function (doc, context) {
     }
   }
   // 'from A to B'
-  m = doc.match('from? [<from>*] (to|@hasHyphen|until|upto|through|thru) [<to>*]')
+  m = doc.match('from? [<from>*] (to|until|upto|through|thru) [<to>*]')
   if (m.found) {
     let from = m.groups('from')
     let to = m.groups('to')

@@ -1,6 +1,6 @@
 const nlp = require('./src/index')
 const spacetime = require('/Users/spencer/mountain/spacetime/src')
-// nlp.verbose(true)
+nlp.verbose(true)
 // nlp.extend(require('./plugins/sentences/src'))
 nlp.extend(require('./plugins/numbers/src'))
 nlp.extend(require('./plugins/dates/src'))
@@ -31,7 +31,8 @@ let context = {
 // ### ad-hoc
 // let doc = nlp(`may '97`).debug()
 // let doc = nlp(`since 1999`).debug()
-let doc = nlp(`between 9:30 and 11:00 on thursday`).debug()
+// let doc = nlp(`between 9:30 and 11:00 on thursday`).debug()
+// let doc = nlp(`tomorrow at 4a.m.`).debug()
 
 // ### time-parser
 // let doc = nlp(`a quarter past noon`)
@@ -40,15 +41,18 @@ let doc = nlp(`between 9:30 and 11:00 on thursday`).debug()
 // let doc = nlp('November 18th 2010 at midnight')
 
 // ### spacetime
-// let doc = nlp('1 fortnight ago')
-// let doc = nlp('tues')
-// let doc = nlp(`1:00:00 PM`)
 // let doc = nlp('13:45')
-// let doc = nlp('22-aug')
-// let doc = nlp('aug-20')
-// let doc = nlp(`2012-06`)
+// let doc = nlp('22 sept')
+let doc = nlp('Pay ABC 2000').debug()
+// let doc = nlp('22-aug').debug()
+// let doc = nlp('aug-20').debug()
 // let doc = nlp(`30-Mar-11`)
 // let doc = nlp('7/12/11')
+
+// let doc = nlp('tues')
+// let doc = nlp(`2012-06`)
+// let doc = nlp('1 fortnight ago')
+// let doc = nlp(`1:00:00 PM`)
 
 let found = doc.dates(context).json()[0]
 console.log(fmt(found.date.start))

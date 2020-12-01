@@ -14,9 +14,14 @@ const hasHyphen = function (str) {
   if (/^(re|un)-?[^aeiou]./.test(str) === true) {
     return false
   }
-  //letter-number
+  //letter-number 'aug-20'
   let reg = /^([a-z\u00C0-\u00FF`"'/]+)(-|–|—)([a-z0-9\u00C0-\u00FF].*)/i
   if (reg.test(str) === true) {
+    return true
+  }
+  //number-letter '20-aug'
+  let reg2 = /^([0-9]{1,4})(-|–|—)([a-z\u00C0-\u00FF`"'/].*)/i
+  if (reg2.test(str) === true) {
     return true
   }
   //support weird number-emdash combo '2010–2011'

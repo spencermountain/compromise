@@ -40,6 +40,7 @@ const arr = [
   [`at night`, 'today at 8:00pm'],
   // [`in the morning`, ''],
   [`tomorrow evening`, 'Jan 22 6pm'],
+  [`aug-20`, '20-aug'],
 
   // // timezone
   // [`eastern time`, ''],

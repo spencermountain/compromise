@@ -92,7 +92,30 @@ const parseTime = function (doc, context) {
     }
   }
 
-  // 'at 4'
+  // 'this morning at 4'
+  m = time.match('this? [<desc>(morning|evening|tonight)] at [<time>(#Cardinal|#Time)]')
+  if (m.found) {
+    let g = m.groups()
+    let str = g.time.text('reduced')
+    if (/^[0-9]{1,2}$/.test(str)) {
+      s = s.hour(str) //3
+      s = s.startOf('hour')
+    } else {
+      s = s.time(str) // 3:30
+    }
+    if (s.isValid() && !s.isEqual(now)) {
+      let desc = g.desc.text('reduced')
+      if (desc === 'morning') {
+        s = s.ampm('am')
+      }
+      if (desc === 'evening' || desc === 'tonight') {
+        s = s.ampm('pm')
+      }
+      return s.time()
+    }
+  }
+
+  // 'at 4' -> '4'
   m = time.match('^#Cardinal$')
   if (m.found) {
     s = s.hour(m.text('reduced'))

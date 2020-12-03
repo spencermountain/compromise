@@ -17,8 +17,8 @@ let context = {
 // ### hmmm
 // let doc = nlp('in the next three years') //.debug()
 // let doc = nlp(`in an hour from now`) //.debug()
-// let doc = nlp(`in half an hour`).debug()
-let doc = nlp('in 20min').debug()
+let doc = nlp(`in half an hour`).debug()
+// let doc = nlp('in 20min').debug()
 // doc.match('/^[0-9]+/').tag('Verb').debug()
 // doc.values().normalize().debug()
 // let doc = nlp('20 mins before tuesday at 3pm').debug()

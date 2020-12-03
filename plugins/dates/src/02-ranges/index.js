@@ -13,6 +13,7 @@ const parseRange = function (doc, context) {
       }
       let res = fmt.parse(m, context)
       if (res !== null) {
+        // console.log(fmt.match)
         return res
       }
     }

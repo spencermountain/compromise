@@ -18,7 +18,7 @@ module.exports = [
       if (start && end) {
         return {
           start: start,
-          end: end.end(),
+          end: end.before(),
         }
       }
       return null
@@ -148,6 +148,42 @@ module.exports = [
       return null
     },
   },
+
+  // {
+  //   // 'A through B' (inclusive end)
+  //   match: 'from? [<a>*] (through|thru) [<b>*]',
+  //   parse: (m, context) => {
+  //     let from = m.groups('a')
+  //     let to = m.groups('b')
+  //     from = parseDate(from, context)
+  //     to = parseDate(to, context)
+  //     if (from && to) {
+  //       return {
+  //         start: from,
+  //         end: to.end(),
+  //       }
+  //     }
+  //     return null
+  //   },
+  // },
+
+  // {
+  //   // 'A until B' (not inclusive end)
+  //   match: 'from? [<a>*] (to|until|upto) [<b>*]',
+  //   parse: (m, context) => {
+  //     let from = m.groups('a')
+  //     let to = m.groups('b')
+  //     from = parseDate(from, context)
+  //     to = parseDate(to, context)
+  //     if (from && to) {
+  //       return {
+  //         start: from,
+  //         end: to.end(),
+  //       }
+  //     }
+  //     return null
+  //   },
+  // },
 
   {
     // 'before june'

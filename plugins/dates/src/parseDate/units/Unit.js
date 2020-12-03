@@ -94,9 +94,10 @@ class Unit {
     this.d = this.d.add(minutes, 'minutes')
     return this
   }
-  // 'before 2019'
+  // the millescond before
   before() {
-    this.d = spacetime.now(this.context.timezone, { today: this.context.today }) // ???
+    this.d = this.d.minus(1, this.unit)
+    this.d = this.d.endOf(this.unit)
     return this
   }
   // 'after 2019'

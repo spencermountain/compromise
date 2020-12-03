@@ -14,6 +14,8 @@ const normalize = function (doc) {
   doc.adverbs().remove()
   // 'week-end'
   doc.replace('week end', 'weekend').tag('Date')
+  // 'a up to b'
+  doc.replace('up to', 'upto').tag('Date')
   // 'in a few years'
   let m = doc.match('in [a few] #Duration')
   if (m.found) {

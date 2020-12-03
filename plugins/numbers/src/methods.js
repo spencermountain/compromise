@@ -229,6 +229,18 @@ let methods = {
     }
     return m
   },
+  /** split-apart suffix and number */
+  normalize: function () {
+    this.forEach((val) => {
+      let obj = parseNumber(val)
+      if (obj.num !== null && obj.suffix) {
+        let prefix = obj.prefix || ''
+        val = val.replaceWith(prefix + obj.num + ' ' + obj.suffix)
+        return
+      }
+    })
+    return this
+  },
 }
 // aliases
 methods.toNice = methods.toLocaleString

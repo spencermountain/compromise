@@ -15,6 +15,7 @@ const aliases = {
   wk: 'week',
   min: 'minute',
   sec: 'second',
+  weekend: 'week', //for now...
 }
 
 //turn '5 weeks before' to {weeks:5}

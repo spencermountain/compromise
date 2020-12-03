@@ -16,9 +16,9 @@ class Unit {
     let d = spacetime(input, context.timezone, { today: today })
 
     // set to beginning
-    if (d.isValid() && keepTime !== true) {
-      d = d.startOf(this.unit)
-    }
+    // if (d.isValid() && keepTime !== true) {
+    //   d = d.startOf(this.unit)
+    // }
     Object.defineProperty(this, 'd', {
       enumerable: false,
       writable: true,
@@ -42,9 +42,8 @@ class Unit {
     return this
   }
   applyShift(obj = {}) {
-    Object.keys(obj).forEach((k) => {
-      let unit = k === 'weekend' ? 'week' : k
-      this.d = this.d.add(obj[k], unit)
+    Object.keys(obj).forEach((unit) => {
+      this.d = this.d.add(obj[unit], unit)
     })
     return this
   }

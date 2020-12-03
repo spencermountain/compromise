@@ -51,6 +51,7 @@ doc.numbers().debug()
   - **[.numbers().isOrdinal()](https://observablehq.com/@spencermountain/compromise-values)** - return only ordinal numbers
   - **[.numbers().isCardinal()](https://observablehq.com/@spencermountain/compromise-values)** - return only cardinal numbers
   - **[.numbers().toLocaleString()](https://observablehq.com/@spencermountain/compromise-values)** - add commas, or nicer formatting for numbers
+  - **[.numbers().normalize()](https://observablehq.com/@spencermountain/compromise-values)** - split-apart numbers and units `20mins` -> `20 mins`
 - **[.money()](https://observablehq.com/@spencermountain/compromise-values)** - like \$5.50 or '5 euros'
 - **[.fractions()](https://observablehq.com/@spencermountain/compromise-values)** - like '2/3rds'
 - **[.percentages()](https://observablehq.com/@spencermountain/compromise-values)** - like '2.5%'

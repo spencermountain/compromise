@@ -1,3 +1,4 @@
+const { Hour, Moment } = require('./units')
 const tokens = {
   shift: require('./01-tokenize/01-shift'),
   counter: require('./01-tokenize/02-counter'),
@@ -51,13 +52,17 @@ const parseDate = function (doc, context) {
     return null
   }
 
-  // this/next/last
-  if (rel) {
-    unit.applyRel(rel)
-  }
   // 2 days after..
   if (shift) {
     unit.applyShift(shift)
+    // if (shift.hour || shift.minute || shift.second) {
+    //   console.log(shift)
+    //   unit = new Hour(unit.d, null, unit.context)
+    // }
+  }
+  // this/next/last
+  if (rel) {
+    unit.applyRel(rel)
   }
   // end of
   if (section) {

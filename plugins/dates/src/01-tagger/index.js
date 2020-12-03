@@ -9,6 +9,9 @@ const methods = [
 ]
 // run each of the taggers
 const tagDate = function (doc) {
+  // turn '20mins' into '20 mins'
+  doc.numbers().normalize()
+  // run taggers
   methods.forEach((fn) => fn(doc))
   return doc
 }

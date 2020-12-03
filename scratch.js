@@ -12,12 +12,14 @@ let context = {
   // today: [2016, 10, 23], //wed nov 23rd
 }
 // ==working now==
+// let doc = nlp('in 20 mins').debug()
 
 // ### hmmm
 // let doc = nlp('in the next three years') //.debug()
 // let doc = nlp(`in an hour from now`) //.debug()
 // let doc = nlp(`in half an hour`).debug()
 // let doc = nlp('in 20mins').debug()
+let doc = nlp('in 20 mins').debug()
 // let doc = nlp(`3-4pm`).debug()
 // let doc = nlp(`5 to 7 of january 1998`).debug()
 // let doc = nlp('2005 4th quarter')
@@ -37,7 +39,7 @@ let context = {
 // let doc = nlp('january up to june').debug()
 // let doc = nlp('march 1st 2016 to may 31st 2016').debug()
 // let doc = nlp('this winter').debug()
-let doc = nlp('between dec and February').debug()
+// let doc = nlp('between dec and February').debug()
 // let doc = nlp('by tomorrow').debug()
 // let doc = nlp('1994-11-05T13:15:30Z').debug()
 // let doc = nlp('dec 23rd 2019 to dec 29').debug()

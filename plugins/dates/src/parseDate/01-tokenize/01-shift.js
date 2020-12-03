@@ -11,6 +11,12 @@ const knownUnits = {
   year: true,
 }
 
+const aliases = {
+  wk: 'week',
+  min: 'minute',
+  sec: 'second',
+}
+
 //turn '5 weeks before' to {weeks:5}
 const parseShift = function (doc) {
   let result = {}
@@ -25,7 +31,11 @@ const parseShift = function (doc) {
     if (num && typeof num === 'number') {
       let unit = ts.match('#Duration').text('normal')
       unit = unit.replace(/s$/, '')
-      if (unit && knownUnits.hasOwnProperty(unit)) {
+      // support shorthands like 'min'
+      if (aliases.hasOwnProperty(unit)) {
+        unit = aliases[unit]
+      }
+      if (knownUnits[unit] === true) {
         result[unit] = num
       }
     }

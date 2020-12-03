@@ -226,6 +226,9 @@ compromise will tag anything that looks like a date, but not validate the dates 
 * *'6th week of february* will return the 2nd week of march.
 * Setting an hour that's skipped, or repeated by a DST change will return the closest valid time to the DST change.
 
+### Inclusive/exclusive ranges
+*'between january and march'* will include all of march. This is usually pretty-ambiguous normally.
+
 ### Misc
 * *'thursday the 16th'* - will set to the 16th, even if it's not thursday
 * *'in a few hours/years'* - in 2 hours/years

@@ -7,15 +7,15 @@ const normalize = function (doc) {
     let num = doc.numbers()
     num.toNumber()
     num.toCardinal(false)
-    num.normalize()
+    // num.normalize()
   }
-  // expand 'aug 20-21'
+  // // expand 'aug 20-21'
   doc.contractions().expand()
-  // remove adverbs
+  // // remove adverbs
   doc.adverbs().remove()
-  // 'week-end'
+  // // 'week-end'
   doc.replace('week end', 'weekend').tag('Date')
-  // 'a up to b'
+  // // 'a up to b'
   doc.replace('up to', 'upto').tag('Date')
   // 'in a few years'
   let m = doc.match('in [a few] #Duration')

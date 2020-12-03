@@ -7,10 +7,17 @@ const methods = [
   require('./05-shifts'),
   require('./06-fixup'),
 ]
-// run each of the taggers
-const tagDate = function (doc) {
+
+// normalizations to run before tagger
+const normalize = function (doc) {
   // turn '20mins' into '20 mins'
   doc.numbers().normalize()
+  return doc
+}
+
+// run each of the taggers
+const tagDate = function (doc) {
+  doc = normalize(doc)
   // run taggers
   methods.forEach((fn) => fn(doc))
   return doc

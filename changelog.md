@@ -15,17 +15,19 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - **[change]** improved Person tagging with particles #794
 - **[change]** improved i18n Person names
 - **[change]** tagger+tokenization fixes
-- **[fix]** - NumberRange tagging issue #795
-- **[fix]** - improved support for ordinal number ranges
 - **[change]** remove empty results from .out('array') #795
 - **[change]** `.tokenize()` runs any postProcess() scripts from plugins
 - **[change]** improved support for lowercase acronyms
 - **[change]** - support years like '97
+- **[change]** - change tokenizer for '20-aug'
+- **[fix]** - NumberRange tagging issue #795
+- **[fix]** - improved support for ordinal number ranges
+- **[fix]** - improved regex support in match-syntax
 - **[new]** - new plugin `strict-match`
 - **[new]** - set NounPhrase, VerbPhrase tags in nlp-sentences plugin
 - **[new]** - `.phrases()` method in nlp-sentences plugin
 - **[new]** - support `.apppend(doc)` and `.prepend(doc)`
-- **[change]** - change tokenizer for '20-aug'
+- **[new]** - `values.normalize()` method
 -->
 
 #### 13.7.0

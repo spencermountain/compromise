@@ -174,6 +174,9 @@ const tagDates = function (doc) {
   //'2020' bare input
   let m = doc.match('^/^20[012][0-9]$/$')
   tagYearSafe(m, '2020-ish')
+
+  // in 20mins
+  doc.match('(in|after) /^[0-9]+(min|sec|wk)s?/').tag('Date', 'shift-units')
   return doc
 }
 module.exports = tagDates

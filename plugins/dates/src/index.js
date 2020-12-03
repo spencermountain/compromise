@@ -1,4 +1,4 @@
-const tagger = require('./tagger')
+const tagger = require('./01-tagger')
 const tags = require('./data/_tags')
 const words = require('./data/words')
 const methods = require('./methods')

@@ -10,6 +10,8 @@ const sectionTagger = function (doc) {
     doc.match('the? (start|end|middle|beginning) of (last|next|this|the) (#Date|#Date)').tag('Date', here)
     //this coming june
     doc.match('(the|this) #Date').tag('Date', here)
+    //january up to june
+    doc.match('#Date up to #Date').tag('Date', here)
   }
   return doc
 }

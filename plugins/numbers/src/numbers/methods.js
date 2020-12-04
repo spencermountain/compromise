@@ -241,6 +241,16 @@ let methods = {
     })
     return this
   },
+  /** retrieve the parsed number */
+  get: function (n) {
+    let arr = this.map((doc) => {
+      return parseNumber(doc).num
+    })
+    if (n !== undefined) {
+      return arr[n]
+    }
+    return arr
+  },
 }
 // aliases
 methods.toNice = methods.toLocaleString

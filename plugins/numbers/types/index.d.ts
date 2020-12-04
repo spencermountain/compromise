@@ -2,7 +2,9 @@ import nlp from 'compromise'
 
 declare class Numbers {
   /** overloaded output with number metadata */
-  json(n?: number): any
+  json(n?: number): object | object[]
+  /** retrive the parsed number */
+  get(n?: number): number | number[]
   /** grab 'kilos' from `25 kilos' */
   units(): nlp.Document
   /** things like `1/3rd` */

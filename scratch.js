@@ -51,7 +51,7 @@ let context = {
 // let doc = nlp('in about one week').debug()
 // let doc = nlp('a month and a half from now').debug()
 let doc = nlp('6 hundred dollars')
-console.log(doc.values().json())
+console.log(doc.values().get())
 
 // ### time-parser
 // let doc = nlp(`a quarter past noon`).debug()

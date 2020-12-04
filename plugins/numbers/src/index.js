@@ -1,5 +1,6 @@
-const findNumbers = require('./find')
-const methods = require('./methods')
+const findNumbers = require('./numbers/find')
+const numberMethods = require('./numbers/methods')
+const moneyMethods = require('./money/methods')
 const tagger = require('./tagger')
 const tags = require('./tags')
 
@@ -13,10 +14,11 @@ const plugin = function (Doc, world) {
 
   /** a list of number values, and their units */
   class Numbers extends Doc {}
-  //aliases
-  Object.assign(Numbers.prototype, methods)
+  Object.assign(Numbers.prototype, numberMethods)
 
   class Money extends Numbers {}
+  Object.assign(Numbers.prototype, moneyMethods)
+
   class Fraction extends Numbers {}
 
   const docMethods = {

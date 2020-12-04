@@ -17,7 +17,8 @@ let context = {
 // ### hmmm
 // let doc = nlp('in the next three years') //.debug()
 // let doc = nlp(`in an hour from now`) //.debug()
-let doc = nlp(`in half an hour`).debug()
+// let doc = nlp(`in half an hour`).debug()
+// let doc = nlp(`tomorrow at quarter past 4`).debug()
 // let doc = nlp('in 20min').debug()
 // doc.match('/^[0-9]+/').tag('Verb').debug()
 // doc.values().normalize().debug()
@@ -49,6 +50,8 @@ let doc = nlp(`in half an hour`).debug()
 // let doc = nlp('sometime during today').debug()
 // let doc = nlp('in about one week').debug()
 // let doc = nlp('a month and a half from now').debug()
+let doc = nlp('6 hundred dollars')
+console.log(doc.values().json())
 
 // ### time-parser
 // let doc = nlp(`a quarter past noon`).debug()
@@ -57,6 +60,6 @@ let doc = nlp(`in half an hour`).debug()
 
 // ### spacetime
 
-let found = doc.dates(context).json()[0]
-console.log(fmt(found.date.start))
-console.log(fmt(found.date.end))
+// let found = doc.dates(context).json()[0]
+// console.log(fmt(found.date.start))
+// console.log(fmt(found.date.end))

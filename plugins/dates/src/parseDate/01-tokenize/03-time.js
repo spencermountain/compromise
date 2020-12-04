@@ -30,6 +30,10 @@ const halfPast = function (m, s) {
   // apply it
   s = s.hour(hour)
   s = s.startOf('hour')
+  // assume 'half past 5' is 5pm
+  if (hour < 6) {
+    s = s.ampm('pm')
+  }
   if (behind) {
     s = s.subtract(mins, 'minutes')
   } else {

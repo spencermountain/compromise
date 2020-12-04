@@ -1,7 +1,7 @@
-const toNumber = require('./convert/toNumber')
+const toNumber = require('../convert/toNumber')
 
 // get a numeric value from this phrase
-const parseNumber = function(p) {
+const parseNumber = function (p) {
   let str = p.text('reduced')
   // is it in '3,123' format?
   let hasComma = /[0-9],[0-9]/.test(p.text('text'))

@@ -17,10 +17,7 @@ module.exports = {
       json.prefix = obj.prefix
       json.number = obj.num
       json.suffix = obj.suffix
-      json.cardinal = makeNumber(obj, false, false)
-      json.ordinal = makeNumber(obj, false, true)
       json.textCardinal = makeNumber(obj, true, false)
-      json.textOrdinal = makeNumber(obj, true, true)
       res.push(json)
     })
     if (n !== null) {

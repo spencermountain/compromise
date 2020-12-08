@@ -17,7 +17,7 @@ const plugin = function (Doc, world) {
   Object.assign(Numbers.prototype, numberMethods)
 
   class Money extends Numbers {}
-  Object.assign(Numbers.prototype, moneyMethods)
+  Object.assign(Money.prototype, moneyMethods)
 
   class Fraction extends Numbers {}
 

@@ -1,5 +1,4 @@
 const makeNumber = require('../numbers/convert/makeNumber')
-const parseNumber = require('../numbers/parse')
 const parseMoney = require('./parse')
 
 module.exports = {
@@ -27,7 +26,7 @@ module.exports = {
     let res = []
     this.forEach((doc) => {
       let json = doc.json(options)[0]
-      let obj = parseNumber(doc)
+      let obj = parseMoney(doc)
       json.prefix = obj.prefix
       json.number = obj.num
       json.suffix = obj.suffix

@@ -50,8 +50,19 @@ nlp.extend(require('./plugins/dates/src'))
 // let doc = nlp('sometime during today').debug()
 // let doc = nlp('in about one week').debug()
 // let doc = nlp('a month and a half from now').debug()
-let doc = nlp('6 hundred dollars')
-console.log(doc.money().json())
+
+// let doc = nlp('he looked')
+// doc.cache({ root: true })
+// doc.match('(~look~|walk)').debug()
+
+// console.log(nlp('thirty quadrillion and two hundred').values().json()[0])
+
+let cacheDocss = nlp('She is amazing. She is strong and most intelligent amongst others.')
+cacheDocss.cache({ root: true })
+
+// #### money-parser
+// let doc = nlp('6 hundred dollars')
+// console.log(doc.money().json())
 
 // ### time-parser
 // let doc = nlp(`a quarter past noon`).debug()

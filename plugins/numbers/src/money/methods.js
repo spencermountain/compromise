@@ -1,7 +1,21 @@
-const makeNumber = require('./numbers/convert/makeNumber')
+const makeNumber = require('../numbers/convert/makeNumber')
 const parseNumber = require('../numbers/parse')
+const parseMoney = require('./parse')
 
 module.exports = {
+  // /** split-apart suffix and number */
+  // normalize: function () {
+  //   this.forEach((val) => {
+  //     let obj = parseNumber(val)
+  //     if (obj.num !== null && obj.suffix) {
+  //       let prefix = obj.prefix || ''
+  //       val = val.replaceWith(prefix + obj.num + ' ' + obj.suffix)
+  //       return
+  //     }
+  //   })
+  //   return this
+  // },
+
   /** overloaded json method with additional number information */
   json: function (options) {
     let n = null

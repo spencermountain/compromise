@@ -5,12 +5,12 @@ const spacetime = require('/Users/spencer/mountain/spacetime/src')
 nlp.extend(require('./plugins/numbers/src'))
 nlp.extend(require('./plugins/dates/src'))
 
-const fmt = iso => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
+// const fmt = iso => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 
-let context = {
-  timezone: 'Canada/Pacific',
-  // today: [2016, 10, 23], //wed nov 23rd
-}
+// let context = {
+//   timezone: 'Canada/Pacific',
+//   // today: [2016, 10, 23], //wed nov 23rd
+// }
 // ==working now==
 // let doc = nlp('in 20 mins').debug()
 
@@ -51,7 +51,7 @@ let context = {
 // let doc = nlp('in about one week').debug()
 // let doc = nlp('a month and a half from now').debug()
 let doc = nlp('6 hundred dollars')
-console.log(doc.values().get())
+console.log(doc.money().json())
 
 // ### time-parser
 // let doc = nlp(`a quarter past noon`).debug()

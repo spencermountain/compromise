@@ -9,15 +9,19 @@ module.exports = [
   },
   { name: 'euro', iso: 'eur', sub: 'cent', sym: ['€'] },
   {
-    name: 'Pound sterling',
+    dem: 'british',
+    name: 'pound',
     iso: 'gbp',
     sub: 'Penny',
+    alias: { sterling: true },
     sym: ['£'],
   },
   {
     name: 'renminbi',
     iso: 'cny',
     sub: 'yuán',
+    plural: 'yuán',
+    alias: { yuan: true },
     sym: ['元'], //'¥'
   },
   {
@@ -106,6 +110,7 @@ module.exports = [
     name: 'tolar',
     iso: 'sit',
     sub: 'stotin',
+    sym: [],
   },
 
   {
@@ -117,9 +122,9 @@ module.exports = [
   },
   {
     dem: 'deutsche',
-    name: 'Mark',
+    name: 'mark',
     iso: 'dem',
-    sub: 'Pfennig',
+    sub: 'pfennig',
     sym: ['DM'],
   },
   { dem: 'thai', name: 'baht', iso: 'thb', sub: 'satang', sym: ['฿'] },
@@ -178,7 +183,7 @@ module.exports = [
     dem: 'philippine',
     name: 'peso',
     iso: 'php',
-    sub: 'Sentimo or centavo',
+    sub: 'sentimo',
     sym: ['₱'],
   },
   {
@@ -271,6 +276,7 @@ module.exports = [
     name: 'won',
     iso: 'krw',
     sub: 'jeon',
+    plural: 'won',
     sym: ['₩'],
   },
   {
@@ -278,6 +284,7 @@ module.exports = [
     name: 'won',
     iso: 'kpw',
     sub: 'chon',
+    plural: 'won',
     sym: ['₩'],
   },
 
@@ -286,6 +293,7 @@ module.exports = [
     name: 'escudo',
     iso: 'pte',
     sub: 'centavo',
+    sym: [],
   },
   {
     dem: 'ghanaian',

@@ -9,15 +9,26 @@ test('get currency ', function (t) {
     ['$50 CAD', 'CAD'],
     ['50 WON', 'KRW'],
     ['£30.50', 'GBP'],
-    // ['₩50', 'KRW'],
-    // ['$50', 'USD'],
-    // ['CAD$50', 'CAD'],
+    ['₩50', 'KRW'],
+    ['$50', 'USD'],
+    ['$50CAD', 'CAD'],
   ]
   arr.forEach((a) => {
     let doc = nlp(a[0])
     let json = doc.money().json(0)
     t.equal(a[1], json.iso, a[0])
   })
+  t.end()
+})
+
+test('money formats', function (t) {
+  let doc = nlp('£30.50')
+  let str = doc.money().json(0).textFmt
+  t.equal(str, 'thirty point five pounds')
+
+  doc = nlp('9 WON')
+  str = doc.money().json(0).textFmt
+  t.equal(str, 'nine won', '9 won')
   t.end()
 })
 

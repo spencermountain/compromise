@@ -39,16 +39,16 @@ const moneyMethods = {
       if (obj.iso) {
         json.iso = obj.iso.toUpperCase()
         json.symbol = obj.symbol
-        json.currency = titleCase(obj.currency)
-        json.demonym = titleCase(obj.demonym)
+        json.currency = titleCase(obj.demonym) + ' ' + titleCase(obj.currency)
       }
-      json.textFormat = makeNumber(obj, true, false)
-      if (obj.dem && obj.name) {
-        let str = ' ' + obj.name
-        if (obj.name !== 1) {
-          str += 's'
+      // 'thirty pounds'
+      json.textFmt = makeNumber(obj, true, false)
+      if (obj.currency) {
+        let str = obj.currency
+        if (obj.num !== 1) {
+          str = obj.plural || str + 's'
         }
-        json.textFormat += str
+        json.textFmt += ' ' + str
       }
       res.push(json)
     })

@@ -1,5 +1,13 @@
 const currencies = require('../../data/currencies')
 const parseNumber = require('../numbers/parse')
+// aggregate currency symbols for easy lookup
+const symbols = {}
+currencies.forEach((o) => {
+  o.sym.forEach((str) => {
+    symbols[str] = symbols[str] || o.iso
+  })
+  symbols[o.iso] = symbols[o.iso] || o.iso
+})
 
 // parse 'australian dollars'
 const getNamedCurrency = function (doc) {
@@ -31,18 +39,32 @@ const getNamedCurrency = function (doc) {
   })
 }
 
+// turn '£' into GBP
+const getBySymbol = function (obj) {
+  // do suffix first, for '$50CAD'
+  if (obj.suffix && symbols.hasOwnProperty(obj.suffix)) {
+    return currencies.find((o) => o.iso === symbols[obj.suffix])
+  }
+  // parse prefix for '£50'
+  if (obj.prefix && symbols.hasOwnProperty(obj.prefix)) {
+    return currencies.find((o) => o.iso === symbols[obj.prefix])
+  }
+  return null
+}
+
 const parseMoney = function (doc) {
-  let num = parseNumber(doc).num
-  let found = getNamedCurrency(doc) || {}
+  let res = parseNumber(doc)
+  let found = getBySymbol(res) || getNamedCurrency(doc) || {}
   let sym = ''
   if (found && found.sym) {
     sym = found.sym[0]
   }
   return {
-    num: num,
+    num: res.num,
     iso: found.iso,
     demonym: found.dem,
     currency: found.name,
+    plural: found.plural,
     symbol: sym,
   }
 }

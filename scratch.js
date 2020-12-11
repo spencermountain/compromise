@@ -59,9 +59,10 @@ let context = {
 // cacheDocss.cache({ root: true })
 
 // #### money-parser
-let doc = nlp('IEP will be hosting').debug()
-// let doc = nlp('6 hundred canadian dollars').debug()
-console.log(doc.money().json())
+// let doc = nlp('he sent 6 hundred canadian dollars into orbit').debug()
+// let doc = nlp('he sent 6 hundred CAD into orbit')
+let doc = nlp('you should pay sixty five dollars and four cents USD')
+console.log(doc.money().currency())
 
 // ### time-parser
 // let doc = nlp(`a quarter past noon`).debug()

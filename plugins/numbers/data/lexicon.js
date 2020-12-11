@@ -20,16 +20,16 @@ const ambig = {
 
 let lex = {}
 currencies.forEach((o) => {
-  if (o.iso && !ambig[o.iso.toLowerCase()]) {
-    lex[o.iso.toLowerCase()] = ['Acronym', 'Currency']
+  if (o.iso && !ambig[o.iso]) {
+    lex[o.iso] = ['Acronym', 'Currency']
   }
-  let name = o.name.toLowerCase()
+  let name = o.name
   if (name && !ambig[name]) {
     lex[name] = 'Currency'
     lex[name + 's'] = 'Currency'
   }
   if (o.dem) {
-    let dem = o.dem.toLowerCase()
+    let dem = o.dem
     lex[`${dem} ${name}`] = 'Currency'
     lex[`${dem} ${name}s`] = 'Currency'
   }

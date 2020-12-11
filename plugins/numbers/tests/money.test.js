@@ -1,7 +1,26 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
-test('money tests', function (t) {
+test('get currency ', function (t) {
+  let arr = [
+    ['£30.50', 'GBP'],
+    ['10.5 kronor', 'SEK'],
+    ['100 öre', 'SEK'],
+    ['$50', 'USD'],
+    ['CAD$50', 'CAD'],
+    ['$50 CAD', 'CAD'],
+    ['₩50', 'KRW'],
+    ['50 WON', 'KRW'],
+  ]
+  arr.forEach((a) => {
+    let doc = nlp(a[0])
+    let json = doc.money().json(0)
+    t.equal(a[1], json.iso, a[0])
+  })
+  t.end()
+})
+
+test('money text', function (t) {
   let doc = nlp('i paid 5 USD for the thing, and got $2.50 back.')
   let m = doc.money()
   t.equal(m.length, 2, 'both money forms')
@@ -13,24 +32,21 @@ test('money tests', function (t) {
   t.equal(m.length, 2, 'both intl money forms')
   t.equal(m.eq(0).text(), '1 peso', 'val-currency-2')
   t.equal(m.eq(1).text(), '£30', 'sybol-val-2')
-  t.end()
-})
 
-test('money-basic:', function (t) {
-  let r = nlp('it is $70.23')
-  let m = r.money()
+  doc = nlp('it is $70.23')
+  m = doc.money()
   t.equal(m.out('normal'), '$70.23', 'match-$70.23')
 
-  r = nlp('it is $703')
-  m = r.money()
+  doc = nlp('it is $703')
+  m = doc.money()
   t.equal(m.out('normal'), '$703', 'match-$703')
 
-  r = nlp('it is five euros')
-  m = r.money()
+  doc = nlp('it is five euros')
+  m = doc.money()
   t.equal(m.out('normal'), 'five euros', 'match-five-euros')
 
-  r = nlp('i said five times, you should pay 12 dollars')
-  m = r.money()
+  doc = nlp('i said five times, you should pay 12 dollars')
+  m = doc.money()
   t.equal(m.out('normal'), '12 dollars', 'match-12 dollars')
 
   // r = nlp('you should pay sixty five dollars and four cents USD')

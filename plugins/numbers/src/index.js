@@ -18,6 +18,7 @@ const plugin = function (Doc, world) {
   class Numbers extends Doc {}
   Object.assign(Numbers.prototype, numberMethods)
 
+  /** a number and a currency */
   class Money extends Numbers {}
   Object.assign(Money.prototype, moneyMethods)
 
@@ -29,23 +30,25 @@ const plugin = function (Doc, world) {
       let m = findNumbers(this, n)
       return new Numbers(m.list, this, this.world)
     },
+
     /** numbers that are percentages*/
     percentages: function (n) {
       let m = findNumbers(this, n)
       m = m.if('/%$/')
       return new Numbers(m.list, this, this.world)
     },
-    /** number + currency pair */
-    money: function () {
-      // let nums = findNumbers(this, n)
-      let m = this.match('#Money+ #Currency?')
-      // m = m.concat(nums.hasAfter('#Currency')) //'5 dollars'
-      return new Money(m.list, this, this.world)
-    },
+
     fractions: function (n) {
       let nums = findNumbers(this, n)
       let m = nums.if('#Fraction') //2/3
       return new Fraction(m.list, this, this.world)
+    },
+
+    /** number + currency pair */
+    money: function () {
+      let m = this.match('#Money+ #Currency+?')
+      m = m.if('#Value')
+      return new Money(m.list, this, this.world)
     },
   }
   // aliases

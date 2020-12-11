@@ -61,7 +61,9 @@ module.exports = {
   },
 
   // peso, euro
-  Currency: {},
+  Currency: {
+    isA: ['Noun'],
+  },
   // ughh
   Expression: {
     notA: ['Noun', 'Adjective', 'Verb', 'Adverb'],

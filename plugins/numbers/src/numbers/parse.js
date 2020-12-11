@@ -1,4 +1,4 @@
-const toNumber = require('../convert/toNumber')
+const toNumber = require('./convert/toNumber')
 
 // get a numeric value from this phrase
 const parseNumber = function (p) {

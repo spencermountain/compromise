@@ -1,6 +1,12 @@
 const makeNumber = require('../numbers/convert/makeNumber')
 const parseMoney = require('./parse')
 
+const titleCase = function (str = '') {
+  return str.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+  })
+}
+
 const moneyMethods = {
   /** which currency is this money in? */
   currency: function (n) {
@@ -31,9 +37,19 @@ const moneyMethods = {
       let obj = parseMoney(doc)
       json.number = obj.num
       if (obj.iso) {
-        json.currency = obj.iso.toUpperCase()
+        json.iso = obj.iso.toUpperCase()
+        json.symbol = obj.symbol
+        json.currency = titleCase(obj.currency)
+        json.demonym = titleCase(obj.demonym)
       }
-      json.textCardinal = makeNumber(obj, true, false)
+      json.textFormat = makeNumber(obj, true, false)
+      if (obj.dem && obj.name) {
+        let str = ' ' + obj.name
+        if (obj.name !== 1) {
+          str += 's'
+        }
+        json.textFormat += str
+      }
       res.push(json)
     })
     if (n !== null) {

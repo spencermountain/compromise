@@ -20,5 +20,10 @@ const tagger = function (doc) {
     .unTag('#Money', 'three-decimal money')
   // cleanup currency false-positives
   doc.ifNo('#Value').match('#Currency #Verb').unTag('Currency', 'no-currency')
+
+  // maybe currencies
+  let m = doc.match('[<num>#Value] [<currency>(mark|rand|won|rub|ore)]')
+  m.group('num').tag('Money')
+  m.group('currency').tag('Currency')
 }
 module.exports = tagger

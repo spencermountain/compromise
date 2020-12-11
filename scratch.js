@@ -60,9 +60,9 @@ let context = {
 
 // #### money-parser
 // let doc = nlp('he sent 6 hundred canadian dollars into orbit').debug()
-// let doc = nlp('he sent 6 hundred CAD into orbit')
-let doc = nlp('you should pay sixty five dollars and four cents USD')
-console.log(doc.money().currency())
+let doc = nlp('£30.50')
+// let doc = nlp('you should pay sixty five dollars and four cents USD')
+console.log(doc.money().json(0))
 
 // ### time-parser
 // let doc = nlp(`a quarter past noon`).debug()

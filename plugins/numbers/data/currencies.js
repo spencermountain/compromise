@@ -15,7 +15,7 @@ module.exports = [
     sym: ['£'],
   },
   {
-    name: 'Renminbi',
+    name: 'renminbi',
     iso: 'cny',
     sub: 'yuán',
     sym: ['元'], //'¥'
@@ -29,7 +29,14 @@ module.exports = [
   },
 
   // kr
-  { dem: 'swedish', name: 'krona', iso: 'sek', sub: 'öre', sym: ['kr'] },
+  {
+    dem: 'swedish',
+    name: 'krona',
+    iso: 'sek',
+    sub: 'öre',
+    alias: { ore: true, kronor: true },
+    sym: ['kr'],
+  },
   {
     dem: 'estonian',
     name: 'kroon',
@@ -46,12 +53,12 @@ module.exports = [
   },
   { dem: 'icelandic', name: 'króna', iso: 'isk', sym: ['kr'] },
   { dem: 'danish', name: 'krone', iso: 'dkk', sub: 'øre', sym: ['kr.'] },
-  {
-    dem: 'scandinavian',
-    name: 'Monetary Union',
-    sub: 'øre',
-    sym: ['kr.'],
-  },
+  // {
+  //   dem: 'scandinavian',
+  //   name: 'Monetary Union',
+  //   sub: 'øre',
+  //   sym: ['kr.'],
+  // },
 
   // 'k'
   {
@@ -251,8 +258,7 @@ module.exports = [
     iso: 'iep',
     sym: ['£', 'IR£'],
   },
-  { dem: 'korean', name: 'won', sub: 'chon' },
-  { name: 'CFP franc', iso: 'xpf', sym: ['f'] },
+  { name: 'cfp franc', iso: 'xpf', sym: ['f'] },
   {
     dem: 'south african',
     name: 'rand',

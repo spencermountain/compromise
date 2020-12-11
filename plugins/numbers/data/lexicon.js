@@ -18,7 +18,9 @@ const ambig = {
   leu: true,
 }
 
-let lex = {}
+let lex = {
+  kronor: 'Currency',
+}
 currencies.forEach((o) => {
   if (o.iso && !ambig[o.iso]) {
     lex[o.iso] = ['Acronym', 'Currency']

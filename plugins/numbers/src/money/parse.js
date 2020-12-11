@@ -8,8 +8,7 @@ const getNamedCurrency = function (doc) {
   let str = m.text('reduced')
   return currencies.find((o) => {
     // 'mexcan peso'
-    let both = `${o.dem} ${o.name}`
-    if (str === both) {
+    if (str === `${o.dem} ${o.name}`) {
       return o
     }
     // 'CAD'
@@ -20,16 +19,31 @@ const getNamedCurrency = function (doc) {
     if (str === o.sub) {
       return o
     }
+    // 'peso'
+    if (str === o.name) {
+      return o
+    }
+    // any other alt names
+    if (o.alias && o.alias[str] === true) {
+      return o
+    }
     return false
   })
 }
 
 const parseMoney = function (doc) {
   let num = parseNumber(doc).num
-  let currency = getNamedCurrency(doc) || {}
-  let res = Object.assign({}, currency, {
+  let found = getNamedCurrency(doc) || {}
+  let sym = ''
+  if (found && found.sym) {
+    sym = found.sym[0]
+  }
+  return {
     num: num,
-  })
-  return res
+    iso: found.iso,
+    demonym: found.dem,
+    currency: found.name,
+    symbol: sym,
+  }
 }
 module.exports = parseMoney

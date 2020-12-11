@@ -3,12 +3,14 @@ const numberMethods = require('./numbers/methods')
 const moneyMethods = require('./money/methods')
 const tagger = require('./tagger')
 const tags = require('./tags')
+const lexicon = require('../data/lexicon')
 
 /** adds .numbers() method */
 const plugin = function (Doc, world) {
+  // add money words to our lexicon
+  world.addWords(lexicon)
   // add tags to our tagset
   world.addTags(tags)
-
   // additional tagging before running the number-parser
   world.postProcess(tagger)
 

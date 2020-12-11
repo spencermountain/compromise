@@ -28,6 +28,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - **[new]** - `.phrases()` method in nlp-sentences plugin
 - **[new]** - support `.apppend(doc)` and `.prepend(doc)`
 - **[new]** - `values.normalize()` method
+- **[fix]** - improved support for ~soft~ match syntax #797
 -->
 
 #### 13.7.0

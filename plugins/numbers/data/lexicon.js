@@ -21,7 +21,7 @@ const ambig = {
 let lex = {}
 currencies.forEach((o) => {
   if (o.iso && !ambig[o.iso.toLowerCase()]) {
-    lex[o.iso.toLowerCase()] = ['Abbreviation', 'Currency']
+    lex[o.iso.toLowerCase()] = ['Acronym', 'Currency']
   }
   let name = o.name.toLowerCase()
   if (name && !ambig[name]) {
@@ -33,7 +33,6 @@ currencies.forEach((o) => {
     lex[`${dem} ${name}`] = 'Currency'
     lex[`${dem} ${name}s`] = 'Currency'
   }
-  console.log(lex)
 })
 
-module.exports = { lex: lex }
+module.exports = lex

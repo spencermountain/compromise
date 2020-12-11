@@ -73,8 +73,9 @@ function instance(worldInstance) {
 
   /** current version of the library */
   nlp.version = version
-  // alias
+  // aliases
   nlp.import = nlp.load
+  nlp.plugin = nlp.extend
 
   return nlp
 }

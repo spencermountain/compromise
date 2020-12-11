@@ -5,12 +5,12 @@ const spacetime = require('/Users/spencer/mountain/spacetime/src')
 nlp.extend(require('./plugins/numbers/src'))
 nlp.extend(require('./plugins/dates/src'))
 
-// const fmt = iso => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
+const fmt = iso => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 
-// let context = {
-//   timezone: 'Canada/Pacific',
-//   // today: [2016, 10, 23], //wed nov 23rd
-// }
+let context = {
+  timezone: 'Canada/Pacific',
+  // today: [2016, 10, 23], //wed nov 23rd
+}
 // ==working now==
 // let doc = nlp('in 20 mins').debug()
 
@@ -55,14 +55,13 @@ nlp.extend(require('./plugins/dates/src'))
 // doc.cache({ root: true })
 // doc.match('(~look~|walk)').debug()
 
-// console.log(nlp('thirty quadrillion and two hundred').values().json()[0])
-
-let cacheDocss = nlp('She is amazing. She is strong and most intelligent amongst others.')
-cacheDocss.cache({ root: true })
+// let cacheDocss = nlp('She looks amazing. She is strong and most intelligent amongst others.')
+// cacheDocss.cache({ root: true })
 
 // #### money-parser
-// let doc = nlp('6 hundred dollars')
-// console.log(doc.money().json())
+let doc = nlp('IEP will be hosting').debug()
+// let doc = nlp('6 hundred canadian dollars').debug()
+console.log(doc.money().json())
 
 // ### time-parser
 // let doc = nlp(`a quarter past noon`).debug()

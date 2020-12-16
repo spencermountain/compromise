@@ -27,6 +27,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - **[fix]** - improved support for ordinal number ranges
 - **[fix]** - improved regex support in match-syntax
 - **[fix]** - improved support for ~soft~ match syntax #797
+- **[fix]** - better handling of `{0,n}` match syntax
 - **[new]** - new plugin `strict-match`
 - **[new]** - set NounPhrase, VerbPhrase tags in nlp-sentences plugin
 - **[new]** - `.phrases()` method in nlp-sentences plugin

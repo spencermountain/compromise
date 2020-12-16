@@ -22,3 +22,33 @@ test('match min-max', function (t) {
 
   t.end()
 })
+
+test('min-max with 0', function (t) {
+  let arr = [
+    ['he got a car for christmas', 'a car'],
+    ['a car', 'a car'],
+    ['a really cool car', 'a really cool car'],
+    ['he got a cool car for christmas', 'a cool car'],
+    ['he got a really cool car for christmas', 'a really cool car'],
+    ['he got a really cool fast car for christmas', 'a really cool fast car'],
+    ['he got a really super cool fast car for christmas', ''],
+    // test false-negatives
+    ['he got a hat for christmas', ''],
+    ['he got a clever hat for christmas', ''],
+    ['he got a clever nice cool warm hat for christmas', ''],
+  ]
+  arr.forEach(a => {
+    let doc = nlp(a[0])
+    let m = doc.match('a .{0,3} car')
+    t.equal(m.text(), a[1], a[0])
+  })
+
+  let doc = nlp('got a car')
+  let m = doc.match('a .{0,3}? car')
+  t.equal(m.text(), 'a car', 'with-question-mark')
+
+  m = doc.match('a .{0,3} car')
+  t.equal(m.text(), 'a car', 'without-question-mark')
+
+  t.end()
+})

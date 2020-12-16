@@ -63,13 +63,11 @@ nlp.extend(require('./plugins/numbers/src'))
 // let doc = nlp('he sent 6 hundred canadian dollars into orbit').debug()
 // let doc = nlp('asdf 25% asdf').debug()
 
-// let doc = nlp('3/8th')
-let doc = nlp('apparently, 3 out of four cats do think so')
-// let doc = nlp('two thirds of a cake').debug()
-doc.fractions().normalize()
-doc.debug()
-// console.log(doc.text())
-// console.log(doc.percentages().text())
+let doc = nlp.tokenize('got a car')
+doc.match('a .{0,3} car').debug()
+
+// let doc = nlp('he got a really cool fast car for christmas')
+// doc.match('got a .{0,3}? car').debug()
 
 // ### time-parser
 // let doc = nlp(`a quarter past noon`).debug()

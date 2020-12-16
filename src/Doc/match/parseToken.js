@@ -134,7 +134,7 @@ const parseToken = function (w) {
       return obj
     }
   }
-  // support #Tag{0,9}
+  // support #Tag{1,9}
   if (hasMinMax.test(w) === true) {
     w = w.replace(hasMinMax, (a, b) => {
       let arr = b.split(/,/g)
@@ -148,7 +148,10 @@ const parseToken = function (w) {
         obj.min = Number(arr[0])
         obj.max = Number(arr[1] || 999)
       }
+      // use same method as '+'
       obj.greedy = true
+      // 0 as min means the same as '?'
+      obj.optional = true
       return ''
     })
   }

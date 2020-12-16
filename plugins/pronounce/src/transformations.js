@@ -49,7 +49,8 @@ const transformations = {
   },
   changeT: (s) => {
     s = s.replace(/t(ia[^n]|io)/g, 'x$1')
-    return s.replace(/th/, '0')
+    // return s.replace(/th/, '0')
+    return s
   },
   dropT: (s) => {
     return s.replace(/tch/g, 'ch')

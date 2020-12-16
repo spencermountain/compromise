@@ -1,4 +1,4 @@
-/* compromise-redact 0.0.2 MIT */
+/* compromise-redact 0.0.3 MIT */
 var randChar = function randChar(_char) {
   var len = Math.random() * 10;
   len = Math.ceil(len);

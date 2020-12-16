@@ -20,7 +20,6 @@ const tagger = function (doc) {
     .unTag('#Money', 'three-decimal money')
   // cleanup currency false-positives
   doc.ifNo('#Value').match('#Currency #Verb').unTag('Currency', 'no-currency')
-
   // 6 dollars and 5 cents
   doc.match('#Value #Currency [and] #Value (cents|ore|centavos|sens)', 0).tag('Money')
   // maybe currencies

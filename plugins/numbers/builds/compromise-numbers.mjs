@@ -1,4 +1,4 @@
-/* compromise-numbers 1.0.0 MIT */
+/* compromise-numbers 1.1.0 MIT */
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -66,11 +66,13 @@ function _possibleConstructorReturn(self, call) {
 }
 
 function _createSuper(Derived) {
-  return function () {
+  var hasNativeReflectConstruct = _isNativeReflectConstruct();
+
+  return function _createSuperInternal() {
     var Super = _getPrototypeOf(Derived),
         result;
 
-    if (_isNativeReflectConstruct()) {
+    if (hasNativeReflectConstruct) {
       var NewTarget = _getPrototypeOf(this).constructor;
 
       result = Reflect.construct(Super, arguments, NewTarget);
@@ -92,6 +94,8 @@ var findNumbers = function findNumbers(doc, n) {
     //a comma may mean two numbers
     if (match.has('#Value @hasComma #Value')) {
       match.splitAfter('@hasComma');
+    } else if (match.has('#NumericValue #Fraction')) {
+      match.splitAfter('#NumericValue #Fraction');
     } else {
       match = match.splitAfter('#NumericValue');
     }
@@ -493,20 +497,16 @@ var parse = function parse(str) {
 
 var toNumber = parse;
 
-var parseNumber = function parseNumber(p) {
-  var str = p.text('reduced'); // is it in '3,123' format?
-
-  var hasComma = /[0-9],[0-9]/.test(p.text('text'));
+var parseNumeric$1 = function parseNumeric(str, p) {
   str = str.replace(/,/g, ''); //parse a numeric-number (easy)
 
   var arr = str.split(/^([^0-9]*)([0-9.,]*)([^0-9]*)$/);
 
   if (arr && arr[2] && p.terms().length < 2) {
-    var _num = parseFloat(arr[2] || str); //ensure that num is an actual number
+    var num = parseFloat(arr[2] || str); //ensure that num is an actual number
 
-
-    if (typeof _num !== 'number') {
-      _num = null;
+    if (typeof num !== 'number') {
+      num = null;
     } // strip an ordinal off the suffix
 
 
@@ -518,21 +518,36 @@ var parseNumber = function parseNumber(p) {
 
 
     if (suffix === 'm' || suffix === 'M') {
-      _num *= 1000000;
+      num *= 1000000;
       suffix = '';
     }
 
     if (suffix === 'k' || suffix === 'k') {
-      _num *= 1000;
+      num *= 1000;
       suffix = '';
     }
 
     return {
-      hasComma: hasComma,
       prefix: arr[1] || '',
-      num: _num,
+      num: num,
       suffix: suffix
     };
+  }
+
+  return null;
+}; // get a numeric value from this phrase
+
+
+var parseNumber = function parseNumber(p) {
+  var str = p.text('reduced'); // is it in '3,123' format?
+
+  var hasComma = /[0-9],[0-9]/.test(p.text('text')); // parse a numeric-number like '$4.00'
+
+  var res = parseNumeric$1(str, p);
+
+  if (res !== null) {
+    res.hasComma = hasComma;
+    return res;
   } //parse a text-numer (harder)
 
 
@@ -1017,7 +1032,17 @@ var methods = {
         return;
       }
 
-      var str = makeNumber_1(obj, val.has('#TextValue'), false);
+      var str = makeNumber_1(obj, val.has('#TextValue'), false); // a hack for number-ranges
+
+      if (val.has('#NumberRange')) {
+        var t = val.termList()[0];
+
+        if (t.text && t.post === '') {
+          t.post = ' ';
+        }
+      } // change the number text
+
+
       val.replaceWith(str, true);
       val.tag('Cardinal'); // turn unit into plural -> 'seven beers'
 
@@ -1038,7 +1063,17 @@ var methods = {
         return;
       }
 
-      var str = makeNumber_1(obj, val.has('#TextValue'), true);
+      var str = makeNumber_1(obj, val.has('#TextValue'), true); // a hack for number-ranges
+
+      if (val.has('#NumberRange')) {
+        var t = val.termList()[0];
+
+        if (t.text && t.post === '') {
+          t.post = ' ';
+        }
+      } // change the number text
+
+
       val.replaceWith(str, true);
       val.tag('Ordinal'); // turn unit into singular -> 'seventh beer'
 
@@ -1161,6 +1196,34 @@ var methods = {
     }
 
     return m;
+  },
+
+  /** split-apart suffix and number */
+  normalize: function normalize() {
+    this.forEach(function (val) {
+      var obj = parse$1(val);
+
+      if (obj.num !== null && obj.suffix) {
+        var prefix = obj.prefix || '';
+        val = val.replaceWith(prefix + obj.num + ' ' + obj.suffix);
+        return;
+      }
+    });
+    return this;
+  },
+
+  /** retrieve the parsed number */
+  get: function get(n) {
+    var arr = [];
+    this.forEach(function (doc) {
+      arr.push(parse$1(doc).num);
+    });
+
+    if (n !== undefined) {
+      return arr[n];
+    }
+
+    return arr;
   }
 }; // aliases
 
@@ -1170,6 +1233,749 @@ methods.minus = methods.subtract;
 methods.plus = methods.add;
 methods.equals = methods.isEqual;
 var methods_1 = methods;
+
+//from wikipedia's {{infobox currency}}, Dec 2020
+var currencies = [{
+  dem: 'american',
+  name: 'dollar',
+  iso: 'usd',
+  sub: 'cent',
+  sym: ['$', 'US$', 'U$']
+}, {
+  name: 'euro',
+  iso: 'eur',
+  sub: 'cent',
+  sym: ['€']
+}, {
+  dem: 'british',
+  name: 'pound',
+  iso: 'gbp',
+  sub: 'penny',
+  alias: {
+    sterling: true
+  },
+  sym: ['£']
+}, {
+  name: 'renminbi',
+  iso: 'cny',
+  sub: 'yuán',
+  plural: 'yuán',
+  alias: {
+    yuan: true
+  },
+  sym: ['元'] //'¥'
+
+}, {
+  dem: 'japanese',
+  name: 'yen',
+  iso: 'jpy',
+  sub: 'sen',
+  sym: ['¥', '円', '圓']
+}, // kr
+{
+  dem: 'swedish',
+  name: 'krona',
+  iso: 'sek',
+  sub: 'öre',
+  alias: {
+    ore: true,
+    kronor: true
+  },
+  sym: ['kr']
+}, {
+  dem: 'estonian',
+  name: 'kroon',
+  iso: 'eek',
+  sub: 'sent',
+  sym: ['kr']
+}, {
+  dem: 'norwegian',
+  name: 'krone',
+  iso: 'nok',
+  sub: 'øre',
+  sym: ['kr']
+}, {
+  dem: 'icelandic',
+  name: 'króna',
+  iso: 'isk',
+  sym: ['kr']
+}, {
+  dem: 'danish',
+  name: 'krone',
+  iso: 'dkk',
+  sub: 'øre',
+  sym: ['kr.']
+}, // {
+//   dem: 'scandinavian',
+//   name: 'Monetary Union',
+//   sub: 'øre',
+//   sym: ['kr.'],
+// },
+// 'k'
+{
+  dem: 'zambian',
+  name: 'kwacha',
+  iso: 'zmw',
+  sub: 'ngwee',
+  sym: ['K']
+}, {
+  dem: 'malawian',
+  name: 'kwacha',
+  iso: 'mwk',
+  sub: 'tambala',
+  sym: ['K']
+}, // misc
+{
+  dem: 'greek',
+  name: 'drachma',
+  iso: 'grd',
+  sub: 'leptοn',
+  sym: ['Δρχ.', 'Δρ.', '₯']
+}, {
+  dem: 'eastern caribbean',
+  name: 'dollar',
+  iso: 'xcd',
+  sub: 'cent',
+  sym: ['$']
+}, {
+  dem: 'finnish',
+  name: 'markka',
+  iso: 'fim',
+  sub: 'penni',
+  sym: ['mk']
+}, {
+  dem: 'polish',
+  name: 'złoty',
+  iso: 'pln',
+  sub: 'grosz',
+  sym: ['zł']
+}, {
+  dem: 'slovenian',
+  name: 'tolar',
+  iso: 'sit',
+  sub: 'stotin',
+  sym: []
+}, {
+  dem: 'australian',
+  name: 'dollar',
+  iso: 'aud',
+  sub: 'cent',
+  sym: ['$', 'A$', 'AU$']
+}, {
+  dem: 'deutsche',
+  name: 'mark',
+  iso: 'dem',
+  sub: 'pfennig',
+  sym: ['DM']
+}, {
+  dem: 'thai',
+  name: 'baht',
+  iso: 'thb',
+  sub: 'satang',
+  sym: ['฿']
+}, {
+  dem: 'canadian',
+  name: 'dollar',
+  iso: 'cad',
+  sub: 'cent',
+  sym: ['$', 'Can$', 'C$', 'CA$', 'CAD']
+}, {
+  dem: 'mexican',
+  name: 'peso',
+  iso: 'mxn',
+  sub: 'centavo',
+  sym: ['$', 'Mex$']
+}, {
+  dem: 'spanish',
+  name: 'peseta',
+  iso: 'esp',
+  sub: 'céntimo',
+  sym: ['Pta']
+}, {
+  dem: 'new zealand',
+  name: 'dollar',
+  iso: 'nzd',
+  sub: 'cent',
+  sym: ['$', 'NZ$']
+}, {
+  dem: 'chilean',
+  name: 'peso',
+  iso: 'clp',
+  sub: 'Centavo',
+  sym: ['Cifrão', '$']
+}, {
+  dem: 'nigerian',
+  name: 'naira',
+  iso: 'ngn',
+  sub: 'kobo',
+  sym: ['₦']
+}, {
+  dem: 'austrian',
+  name: 'schilling',
+  iso: 'ats',
+  sub: 'groschen',
+  sym: ['S', 'öS']
+}, {
+  dem: 'guatemalan',
+  name: 'quetzal',
+  iso: 'gtq',
+  sub: 'centavo',
+  sym: ['Q']
+}, {
+  dem: 'philippine',
+  name: 'peso',
+  iso: 'php',
+  sub: 'sentimo',
+  sym: ['₱']
+}, {
+  dem: 'hungarian',
+  name: 'forint',
+  iso: 'huf',
+  sub: 'fillér',
+  sym: ['Ft']
+}, {
+  dem: 'russian',
+  name: 'ruble',
+  iso: 'rub',
+  sub: 'kopeyka',
+  sym: ['₽', 'руб', 'р.']
+}, {
+  dem: 'kuwaiti',
+  name: 'dinar',
+  iso: 'kwd',
+  sub: 'fils',
+  sym: ['د.ك', 'KD']
+}, {
+  dem: 'israeli',
+  name: 'new shekel',
+  iso: 'ils',
+  sub: 'agora',
+  sym: ['₪']
+}, {
+  dem: 'latvian',
+  name: 'lats',
+  iso: 'lvl',
+  sub: 'santīms',
+  sym: ['Ls']
+}, {
+  dem: 'kazakhstani',
+  name: 'tenge',
+  iso: 'kzt',
+  sub: 'tıyn',
+  sym: ['₸']
+}, {
+  dem: 'iraqi',
+  name: 'dinar',
+  iso: 'iqd',
+  sub: 'fils',
+  sym: ['د.ع']
+}, {
+  dem: 'bahamian',
+  name: 'dollar',
+  iso: 'bsd',
+  sub: 'cent',
+  sym: ['$', 'B$']
+}, {
+  dem: 'seychellois',
+  name: 'rupee',
+  iso: 'scr',
+  sub: 'cent',
+  sym: ['SCR', 'SR']
+}, {
+  dem: 'albanian',
+  name: 'lek',
+  iso: 'all',
+  sub: 'qindarkë',
+  sym: ['L']
+}, {
+  dem: 'bulgarian',
+  name: 'lev',
+  iso: 'bgn',
+  sub: 'stotinka',
+  sym: ['лв.']
+}, {
+  dem: 'irish',
+  name: 'pound',
+  iso: 'iep',
+  sym: ['£', 'IR£']
+}, {
+  name: 'cfp franc',
+  iso: 'xpf',
+  sym: ['f']
+}, {
+  dem: 'south african',
+  name: 'rand',
+  iso: 'zar',
+  sub: 'cent',
+  sym: ['R']
+}, {
+  dem: 'south korean',
+  name: 'won',
+  iso: 'krw',
+  sub: 'jeon',
+  plural: 'won',
+  sym: ['₩']
+}, {
+  dem: 'north korean',
+  name: 'won',
+  iso: 'kpw',
+  sub: 'chon',
+  plural: 'won',
+  sym: ['₩']
+}, {
+  dem: 'portuguese',
+  name: 'escudo',
+  iso: 'pte',
+  sub: 'centavo',
+  sym: []
+}, {
+  dem: 'ghanaian',
+  name: 'cedi',
+  iso: 'ghs',
+  sub: 'pesewa',
+  sym: ['GH₵']
+}, {
+  dem: 'hong kong',
+  name: 'dollar',
+  iso: 'hkd',
+  sub: '毫',
+  sym: ['$']
+}, {
+  dem: 'new taiwan',
+  name: 'dollar',
+  iso: 'twd',
+  sub: 'dime',
+  sym: ['NT$']
+}, {
+  dem: 'east german',
+  name: 'mark',
+  iso: 'ddm',
+  sub: 'pfennig',
+  sym: ['M']
+}, {
+  dem: 'namibian',
+  name: 'dollar',
+  iso: 'nad',
+  sub: 'cent',
+  sym: ['$']
+}, {
+  dem: 'malaysian',
+  name: 'ringgit',
+  iso: 'myr',
+  sub: 'sen',
+  sym: ['RM']
+}, {
+  dem: 'swiss',
+  name: 'franc',
+  iso: 'chf',
+  sym: ['Rp.']
+}, {
+  dem: 'panamanian',
+  name: 'balboa',
+  iso: 'pab',
+  sub: 'centésimo',
+  sym: ['B/.']
+}, {
+  dem: 'indonesian',
+  name: 'rupiah',
+  iso: 'idr',
+  sub: 'sen',
+  sym: ['Rp']
+}, {
+  dem: 'brunei',
+  name: 'dollar',
+  iso: 'bnd',
+  sub: 'sen',
+  sym: ['$', 'B$']
+}, {
+  dem: 'venezuelan',
+  name: 'bolívar',
+  iso: 'vef',
+  sub: 'céntimo',
+  sym: ['Bs.F', 'Bs.']
+}, {
+  dem: 'macedonian',
+  name: 'denar',
+  iso: 'mkd',
+  sub: 'deni',
+  sym: ['den']
+}, {
+  dem: 'mauritanian',
+  name: 'ouguiya',
+  iso: 'mru',
+  sub: 'khoums',
+  sym: ['UM']
+}, {
+  dem: 'argentine',
+  name: 'peso',
+  iso: 'ars',
+  sub: 'centavo',
+  sym: ['$']
+}, {
+  dem: 'libyan',
+  name: 'dinar',
+  iso: 'lyd',
+  sub: 'dirham',
+  sym: ['LD', 'ل.د']
+}, {
+  dem: 'jordanian',
+  name: 'dinar',
+  iso: 'jod',
+  sub: 'dirham',
+  sym: ['د.أ']
+}, {
+  dem: 'french',
+  name: 'franc',
+  iso: 'frf',
+  sub: 'centime',
+  sym: ['F', 'Fr', 'FF', '₣']
+}, {
+  dem: 'syrian',
+  name: 'pound',
+  iso: 'syp',
+  sub: 'piastre',
+  sym: ['LS', '£S']
+}, {
+  dem: 'belize',
+  name: 'dollar',
+  iso: 'bzd',
+  sub: 'cent',
+  sym: ['$']
+}, {
+  dem: 'saudi',
+  name: 'riyal',
+  iso: 'sar',
+  sub: 'halalah',
+  sym: ['SAR', 'ر.س', ' ﷼']
+}, {
+  dem: 'surinamese',
+  name: 'dollar',
+  iso: 'srd',
+  sub: 'cent',
+  sym: ['$']
+}, {
+  dem: 'singapore',
+  name: 'dollar',
+  iso: 'sgd',
+  sub: 'cent',
+  sym: ['S$', '$']
+}, {
+  dem: 'nepalese',
+  name: 'rupee',
+  iso: 'npr',
+  sub: 'Paisa',
+  sym: ['रु ₨', 'Re']
+}, {
+  dem: 'macanese',
+  name: 'pataca',
+  iso: 'mop',
+  sub: 'ho',
+  sym: ['MOP$']
+}, {
+  dem: 'nicaraguan',
+  name: 'córdoba',
+  iso: 'nio',
+  sub: 'centavo',
+  sym: ['C$']
+}, {
+  dem: 'bangladeshi',
+  name: 'taka',
+  iso: 'bdt',
+  sub: 'poysha',
+  sym: ['৳']
+}, {
+  dem: 'indian',
+  name: 'rupee',
+  iso: 'inr',
+  sub: 'paisa',
+  sym: ['₹']
+}, {
+  dem: 'maldivian',
+  name: 'rufiyaa',
+  iso: 'mvr',
+  sub: 'laari',
+  sym: ['Rf', 'MRf', 'MVR', '.ރ ']
+}, {
+  dem: 'sri lankan',
+  name: 'rupee',
+  iso: 'lkr',
+  sub: 'Cents',
+  sym: ['Rs', 'රු', 'ரூ']
+}, {
+  dem: 'bhutanese',
+  name: 'ngultrum',
+  iso: 'btn',
+  sub: 'chhertum',
+  sym: ['Nu.']
+}, {
+  dem: 'turkish',
+  name: 'lira',
+  iso: 'try',
+  sub: 'new kuruş',
+  sym: ['YTL']
+}, {
+  dem: 'serbian',
+  name: 'dinar',
+  iso: 'rsd',
+  sub: 'para',
+  sym: ['din', 'дин']
+}, {
+  dem: 'bosnia and herzegovina',
+  name: 'convertible mark',
+  iso: 'bam',
+  sub: 'Fening/Pfenig',
+  sym: ['KM']
+}, {
+  dem: 'botswana',
+  name: 'pula',
+  iso: 'bwp',
+  sub: 'thebe',
+  sym: ['p']
+}, {
+  dem: 'swazi',
+  name: 'lilangeni',
+  iso: 'szl',
+  sub: 'cent',
+  sym: ['L', 'E']
+}, {
+  dem: 'lithuanian',
+  name: 'litas',
+  iso: 'ltl',
+  sub: 'centas',
+  sym: ['Lt', 'ct']
+}, {
+  dem: 'mauritian',
+  name: 'rupee',
+  iso: 'mur',
+  sub: 'cent',
+  sym: ['₨']
+}, {
+  dem: 'pakistani',
+  name: 'rupee',
+  iso: 'pkr',
+  sub: 'Paisa',
+  sym: ['₨']
+}, {
+  dem: 'maltese',
+  name: 'lira',
+  iso: 'mtl',
+  sub: 'cent',
+  sym: ['₤', 'Lm']
+}, {
+  dem: 'cypriot',
+  name: 'pound',
+  iso: 'cyp',
+  sub: 'cent',
+  sym: ['£']
+}, {
+  dem: 'moldovan',
+  name: 'leu',
+  iso: 'mdl',
+  sub: 'ban',
+  sym: ['l']
+}, {
+  dem: 'croatian',
+  name: 'kuna',
+  iso: 'hrk',
+  sub: 'lipa',
+  sym: ['kn']
+}, {
+  dem: 'afghan',
+  name: 'afghani',
+  iso: 'afn',
+  sub: 'pul',
+  sym: ['؋', 'Af', 'Afs']
+}, {
+  dem: 'ecuadorian',
+  name: 'sucre',
+  iso: 'ecs',
+  sub: 'centavo',
+  sym: ['S/.']
+}, {
+  dem: 'sierra leonean',
+  name: 'leone',
+  iso: 'sll',
+  sub: 'cent',
+  sym: ['Le']
+} // {
+//
+//   name: 'European Currency Unit',
+//   iso: 'xeu',
+//   sym: ['₠'],
+// },
+// {
+//
+//   name: 'Special drawing rights',
+//   iso: 'xdr',
+//   sym: ['SDR'],
+// },
+// {
+//
+//   name: 'Unidad de Valor Constante',
+//   iso: 'ecv',
+// },
+];
+
+var symbols = {};
+currencies.forEach(function (o) {
+  o.sym.forEach(function (str) {
+    symbols[str] = symbols[str] || o.iso;
+  });
+  symbols[o.iso] = symbols[o.iso] || o.iso;
+}); // parse 'australian dollars'
+
+var getNamedCurrency = function getNamedCurrency(doc) {
+  var m = doc.match('#Currency+');
+  m.nouns().toSingular(); // 'dollars'➔'dollar'
+
+  var str = m.text('reduced');
+  return currencies.find(function (o) {
+    // 'mexcan peso'
+    if (str === "".concat(o.dem, " ").concat(o.name)) {
+      return o;
+    } // 'CAD'
+
+
+    if (str === o.iso) {
+      return o;
+    } // 'cent'
+
+
+    if (str === o.sub) {
+      return o;
+    } // 'peso'
+
+
+    if (str === o.name) {
+      return o;
+    } // any other alt names
+
+
+    if (o.alias && o.alias[str] === true) {
+      return o;
+    }
+
+    return false;
+  });
+}; // turn '£' into GBP
+
+
+var getBySymbol = function getBySymbol(obj) {
+  // do suffix first, for '$50CAD'
+  if (obj.suffix && symbols.hasOwnProperty(obj.suffix)) {
+    return currencies.find(function (o) {
+      return o.iso === symbols[obj.suffix];
+    });
+  } // parse prefix for '£50'
+
+
+  if (obj.prefix && symbols.hasOwnProperty(obj.prefix)) {
+    return currencies.find(function (o) {
+      return o.iso === symbols[obj.prefix];
+    });
+  }
+
+  return null;
+};
+
+var parseMoney = function parseMoney(doc) {
+  var res = parse$1(doc);
+  var found = getBySymbol(res) || getNamedCurrency(doc) || {};
+  var sym = '';
+
+  if (found && found.sym) {
+    sym = found.sym[0];
+  }
+
+  return {
+    num: res.num,
+    iso: found.iso,
+    demonym: found.dem,
+    currency: found.name,
+    plural: found.plural,
+    symbol: sym
+  };
+};
+
+var parse$2 = parseMoney;
+
+var titleCase = function titleCase() {
+  var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+  return str.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
+};
+
+var moneyMethods = {
+  /** which currency is this money in? */
+  currency: function currency(n) {
+    var arr = [];
+    this.forEach(function (doc) {
+      var found = parse$2(doc);
+
+      if (found) {
+        arr.push(found);
+      }
+    });
+
+    if (typeof n === 'number') {
+      return arr[n];
+    }
+
+    return arr;
+  },
+
+  /** overloaded json method with additional number information */
+  json: function json(options) {
+    var n = null;
+
+    if (typeof options === 'number') {
+      n = options;
+      options = null;
+    }
+
+    options = options || {
+      text: true,
+      normal: true,
+      trim: true,
+      terms: true
+    };
+    var res = [];
+    this.forEach(function (doc) {
+      var json = doc.json(options)[0];
+      var obj = parse$2(doc);
+      json.number = obj.num;
+
+      if (obj.iso) {
+        json.iso = obj.iso.toUpperCase();
+        json.symbol = obj.symbol;
+        json.currency = titleCase(obj.demonym) + ' ' + titleCase(obj.currency);
+      } // 'thirty pounds'
+
+
+      json.textFmt = makeNumber_1(obj, true, false);
+
+      if (obj.currency) {
+        var str = obj.currency;
+
+        if (obj.num !== 1) {
+          str = obj.plural || str + 's';
+        }
+
+        json.textFmt += ' ' + str;
+      }
+
+      res.push(json);
+    });
+
+    if (n !== null) {
+      return res[n] || {};
+    }
+
+    return res;
+  }
+};
+var methods$1 = moneyMethods;
 
 var multiples = '(hundred|thousand|million|billion|trillion|quadrillion|quintillion|sextillion|septillion)'; // improved tagging for numbers
 
@@ -1183,27 +1989,76 @@ var tagger = function tagger(doc) {
 
   doc.match('#Value and a (half|quarter)').tag('Value', 'value-and-a-half'); //one hundred and seven dollars
 
-  doc.match('#Money and #Money #Currency?').tag('Money', 'money-and-money'); // doc.debug()
-  // $5.032 is invalid money
+  doc.match('#Money and #Money #Currency?').tag('Money', 'money-and-money'); // $5.032 is invalid money
 
-  doc.match('#Money').not('#TextValue').match('/\\.[0-9]{3}$/').unTag('#Money', 'three-decimal money');
+  doc.match('#Money').not('#TextValue').match('/\\.[0-9]{3}$/').unTag('#Money', 'three-decimal money'); // cleanup currency false-positives
+
+  doc.ifNo('#Value').match('#Currency #Verb').unTag('Currency', 'no-currency'); // 6 dollars and 5 cents
+
+  doc.match('#Value #Currency [and] #Value (cents|ore|centavos|sens)', 0).tag('Money'); // maybe currencies
+
+  var m = doc.match('[<num>#Value] [<currency>(mark|rand|won|rub|ore)]');
+  m.group('num').tag('Money');
+  m.group('currency').tag('Currency');
 };
 
 var tagger_1 = tagger;
 
 var tags = {
   Fraction: {
-    isA: 'Value'
+    isA: ['Value', 'NumericValue']
   },
   Multiple: {
     isA: 'Value'
   }
 };
 
+var ambig = {
+  mark: true,
+  sucre: true,
+  leone: true,
+  afghani: true,
+  rand: true,
+  "try": true,
+  mop: true,
+  won: true,
+  all: true,
+  rub: true,
+  eek: true,
+  sit: true,
+  bam: true,
+  npr: true,
+  leu: true
+};
+var lex = {
+  kronor: 'Currency'
+};
+currencies.forEach(function (o) {
+  if (o.iso && !ambig[o.iso]) {
+    lex[o.iso] = ['Acronym', 'Currency'];
+  }
+
+  var name = o.name;
+
+  if (name && !ambig[name]) {
+    lex[name] = 'Currency';
+    lex[name + 's'] = 'Currency';
+  }
+
+  if (o.dem) {
+    var dem = o.dem;
+    lex["".concat(dem, " ").concat(name)] = 'Currency';
+    lex["".concat(dem, " ").concat(name, "s")] = 'Currency';
+  }
+});
+var lexicon = lex;
+
 /** adds .numbers() method */
 
 var plugin = function plugin(Doc, world) {
-  // add tags to our tagset
+  // add money words to our lexicon
+  world.addWords(lexicon); // add tags to our tagset
+
   world.addTags(tags); // additional tagging before running the number-parser
 
   world.postProcess(tagger_1);
@@ -1221,10 +2076,10 @@ var plugin = function plugin(Doc, world) {
     }
 
     return Numbers;
-  }(Doc); //aliases
-
+  }(Doc);
 
   Object.assign(Numbers.prototype, methods_1);
+  /** a number and a currency */
 
   var Money = /*#__PURE__*/function (_Numbers) {
     _inherits(Money, _Numbers);
@@ -1239,6 +2094,8 @@ var plugin = function plugin(Doc, world) {
 
     return Money;
   }(Numbers);
+
+  Object.assign(Money.prototype, methods$1);
 
   var Fraction = /*#__PURE__*/function (_Numbers2) {
     _inherits(Fraction, _Numbers2);
@@ -1267,19 +2124,18 @@ var plugin = function plugin(Doc, world) {
       m = m["if"]('/%$/');
       return new Numbers(m.list, this, this.world);
     },
-
-    /** number + currency pair */
-    money: function money(n) {
-      // let nums = findNumbers(this, n)
-      var m = this.match('#Money+ #Currency?'); // m = m.concat(nums.hasAfter('#Currency')) //'5 dollars'
-
-      return new Money(m.list, this, this.world);
-    },
     fractions: function fractions(n) {
       var nums = find(this, n);
       var m = nums["if"]('#Fraction'); //2/3
 
       return new Fraction(m.list, this, this.world);
+    },
+
+    /** number + currency pair */
+    money: function money() {
+      var m = this.splitOn('(#Money|#Currency)+');
+      m = m["if"]('#Money')["if"]('#Value');
+      return new Money(m.list, this, this.world);
     }
   }; // aliases
 

@@ -54,8 +54,9 @@ doc.numbers().debug()
   - **[.numbers().toLocaleString()](https://observablehq.com/@spencermountain/compromise-values)** - add commas, or nicer formatting for numbers
   - **[.numbers().normalize()](https://observablehq.com/@spencermountain/compromise-values)** - split-apart numbers and units `20mins` -> `20 mins`
 - **[.money()](https://observablehq.com/@spencermountain/compromise-values)** - like \$5.50 or '5 euros'
-  - **[.money().currency()](https://observablehq.com/@spencermountain/compromise-values)** - currency info
+  - **[.money().get()](https://observablehq.com/@spencermountain/compromise-values)** - retrieve the parsed amount(s) of money
   - **[.money().json()](https://observablehq.com/@spencermountain/compromise-values)** - currency + number info
+  - **[.money().currency()](https://observablehq.com/@spencermountain/compromise-values)** - which currency the money is in
 - **[.fractions()](https://observablehq.com/@spencermountain/compromise-values)** - like '2/3rds'
 - **[.percentages()](https://observablehq.com/@spencermountain/compromise-values)** - like '2.5%'
 

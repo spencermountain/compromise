@@ -1,4 +1,4 @@
-/* compromise-paragraphs 0.0.4 MIT */
+/* compromise-paragraphs 0.0.5 MIT */
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");

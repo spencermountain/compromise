@@ -243,8 +243,9 @@ let methods = {
   },
   /** retrieve the parsed number */
   get: function (n) {
-    let arr = this.map((doc) => {
-      return parseNumber(doc).num
+    let arr = []
+    this.forEach((doc) => {
+      arr.push(parseNumber(doc).num)
     })
     if (n !== undefined) {
       return arr[n]

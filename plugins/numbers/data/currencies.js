@@ -12,7 +12,7 @@ module.exports = [
     dem: 'british',
     name: 'pound',
     iso: 'gbp',
-    sub: 'Penny',
+    sub: 'penny',
     alias: { sterling: true },
     sym: ['£'],
   },
@@ -268,7 +268,7 @@ module.exports = [
     dem: 'south african',
     name: 'rand',
     iso: 'zar',
-    sub: 'Cent',
+    sub: 'cent',
     sym: ['R'],
   },
   {
@@ -321,7 +321,7 @@ module.exports = [
     dem: 'east german',
     name: 'mark',
     iso: 'ddm',
-    sub: 'Pfennig',
+    sub: 'pfennig',
     sym: ['M'],
   },
   {
@@ -348,7 +348,7 @@ module.exports = [
     dem: 'panamanian',
     name: 'balboa',
     iso: 'pab',
-    sub: 'Centésimo',
+    sub: 'centésimo',
     sym: ['B/.'],
   },
   {

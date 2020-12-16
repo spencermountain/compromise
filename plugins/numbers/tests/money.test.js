@@ -61,9 +61,9 @@ test('money text', function (t) {
   m = doc.money()
   t.equal(m.out('normal'), '12 dollars', 'match-12 dollars')
 
-  // r = nlp('you should pay sixty five dollars and four cents USD')
-  // m = r.money()
-  // t.equal(m.out('normal'), 'sixty five dollars and four cents usd', 'match-long-usd')
+  doc = nlp('you should pay sixty five dollars and four cents USD')
+  m = doc.money()
+  t.equal(m.out('normal'), 'sixty five dollars and four cents usd', 'match-long-usd')
 
   t.end()
 })
@@ -102,6 +102,49 @@ test('money-has:', function (t) {
     let r = nlp(a[0])
     let m = r.match('#Money')
     t.equal(m.found, a[1], "money-has: '" + a[0] + "'")
+  })
+  t.end()
+})
+
+test('money-parse:', function (t) {
+  let arr = [
+    ['i paid $5.32 for a pizza slice', 5.32],
+    ['i paid $12 for a pizza slice', 12],
+    ['it was $12.00', 12],
+    ['it was $12.00.', 12],
+    ['it was $12.00?', 12],
+    ['it was $0', 0],
+    ['it was 0 dollars', 0],
+    ['it was zero dollars', 0],
+    ['i paid fifty eight euros for it', 58],
+    ['was offered 12 thousand pounds as a reward', 12000],
+    ['£0.20', 0.2],
+  ]
+  arr.forEach((a) => {
+    let doc = nlp(a[0])
+    let amount = doc.money().get()
+    t.equal(amount.length, 1, `'${a[0]}' has 1 money result`)
+    t.equal(amount[0], a[1], a[0])
+  })
+  t.end()
+})
+
+test('money false-positive:', function (t) {
+  let arr = [
+    'i paid nothing for a pizza slice',
+    'i paid no money for a pizza slice',
+    'im a millionaire',
+    '$12.0082',
+    '008f2 dollars',
+    'canadian money',
+    'USD is on the rise',
+    'bitcoin is on the rise',
+    'money penny',
+  ]
+  arr.forEach((a) => {
+    let doc = nlp(a[0])
+    let m = doc.money()
+    t.equal(m.found, false, `not money - '${a}'`)
   })
   t.end()
 })

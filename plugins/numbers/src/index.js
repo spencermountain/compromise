@@ -46,8 +46,8 @@ const plugin = function (Doc, world) {
 
     /** number + currency pair */
     money: function () {
-      let m = this.match('#Money+ #Currency+?')
-      m = m.if('#Value')
+      let m = this.splitOn('(#Money|#Currency)+')
+      m = m.if('#Money').if('#Value')
       return new Money(m.list, this, this.world)
     },
   }

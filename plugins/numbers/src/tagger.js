@@ -21,6 +21,8 @@ const tagger = function (doc) {
   // cleanup currency false-positives
   doc.ifNo('#Value').match('#Currency #Verb').unTag('Currency', 'no-currency')
 
+  // 6 dollars and 5 cents
+  doc.match('#Value #Currency [and] #Value (cents|ore|centavos|sens)', 0).tag('Money')
   // maybe currencies
   let m = doc.match('[<num>#Value] [<currency>(mark|rand|won|rub|ore)]')
   m.group('num').tag('Money')

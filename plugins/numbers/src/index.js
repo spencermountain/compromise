@@ -35,12 +35,13 @@ const plugin = function (Doc, world) {
 
     /** return '4%' or 'four percent' etc*/
     percentages: function (n) {
-      let m = this.match('#Percentage+')
+      let m = this.match('#Percent+')
       if (typeof n === 'number') {
         m = m.eq(n)
       }
       return new Numbers(m.list, this, this.world)
     },
+
     /** return '3 out of 5' or '3/5' etc**/
     fractions: function (n) {
       let m = this.match('#Fraction+')

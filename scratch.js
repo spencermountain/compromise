@@ -63,13 +63,11 @@ nlp.extend(require('./plugins/dates/src'))
 // let doc = nlp('he sent 6 hundred canadian dollars into orbit').debug()
 // let doc = nlp('asdf 25% asdf').debug()
 
-nlp('it is 33%').percentages().debug()
-
-// let doc = nlp('3/4')
+let doc = nlp('3/4')
 // let doc = nlp('3 out of four').debug()
 // let doc = nlp('two thirds of a cake').debug()
-// console.log(doc.numbers().fractions().json())
-
+doc.numbers().fractions().normalize()
+doc.debug()
 // console.log(doc.text())
 // console.log(doc.percentages().text())
 

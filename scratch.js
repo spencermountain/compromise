@@ -1,17 +1,17 @@
 const nlp = require('./src/index')
-const spacetime = require('/Users/spencer/mountain/spacetime/src')
+// const spacetime = require('/Users/spencer/mountain/spacetime/src')
 // nlp.verbose(true)
 // nlp.extend(require('./plugins/sentences/src'))
 nlp.extend(require('./plugins/numbers/src'))
 nlp.extend(require('./plugins/dates/src'))
-nlp.extend(require('./plugins/pronounce/src'))
+// nlp.extend(require('./plugins/pronounce/src'))
 
-const fmt = iso => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
+// const fmt = iso => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 
-let context = {
-  timezone: 'Canada/Pacific',
-  // today: [2016, 10, 23], //wed nov 23rd
-}
+// let context = {
+//   timezone: 'Canada/Pacific',
+//   // today: [2016, 10, 23], //wed nov 23rd
+// }
 // ==working now==
 // let doc = nlp('in 20 mins').debug()
 
@@ -61,9 +61,17 @@ let context = {
 
 // #### money-parser
 // let doc = nlp('he sent 6 hundred canadian dollars into orbit').debug()
-let doc = nlp('Phil Collins') //.debug()
-// let doc = nlp('₩50').debug()
-console.log(doc.pronounce())
+// let doc = nlp('asdf 25% asdf').debug()
+
+nlp('it is 33%').percentages().debug()
+
+// let doc = nlp('3/4')
+// let doc = nlp('3 out of four').debug()
+// let doc = nlp('two thirds of a cake').debug()
+// console.log(doc.numbers().fractions().json())
+
+// console.log(doc.text())
+// console.log(doc.percentages().text())
 
 // ### time-parser
 // let doc = nlp(`a quarter past noon`).debug()

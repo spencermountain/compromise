@@ -11,7 +11,7 @@ const methods = [
 // normalizations to run before tagger
 const normalize = function (doc) {
   // turn '20mins' into '20 mins'
-  doc.numbers().normalize()
+  doc.numbers().normalize() // this is sorta problematic
   return doc
 }
 

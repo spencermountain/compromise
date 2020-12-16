@@ -1,6 +1,7 @@
 const findNumbers = require('./numbers/find')
 const numberMethods = require('./numbers/methods')
 const moneyMethods = require('./money/methods')
+const fractionMethods = require('./fractions/methods')
 const tagger = require('./tagger')
 const tags = require('./tags')
 const lexicon = require('../data/lexicon')
@@ -23,6 +24,7 @@ const plugin = function (Doc, world) {
   Object.assign(Money.prototype, moneyMethods)
 
   class Fraction extends Numbers {}
+  Object.assign(Fraction.prototype, fractionMethods)
 
   const docMethods = {
     /** find all numbers and values */
@@ -31,16 +33,20 @@ const plugin = function (Doc, world) {
       return new Numbers(m.list, this, this.world)
     },
 
-    /** numbers that are percentages*/
+    /** return '4%' or 'four percent' etc*/
     percentages: function (n) {
-      let m = findNumbers(this, n)
-      m = m.if('/%$/')
+      let m = this.match('#Percentage+')
+      if (typeof n === 'number') {
+        m = m.eq(n)
+      }
       return new Numbers(m.list, this, this.world)
     },
-
+    /** return '3 out of 5' or '3/5' etc**/
     fractions: function (n) {
-      let nums = findNumbers(this, n)
-      let m = nums.if('#Fraction') //2/3
+      let m = this.match('#Fraction+')
+      if (typeof n === 'number') {
+        m = m.eq(n)
+      }
       return new Fraction(m.list, this, this.world)
     },
 

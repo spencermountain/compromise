@@ -231,9 +231,12 @@ let methods = {
   },
   /** split-apart suffix and number */
   normalize: function () {
+    const keep = {
+      '%': true,
+    }
     this.forEach((val) => {
       let obj = parseNumber(val)
-      if (obj.num !== null && obj.suffix) {
+      if (obj.num !== null && obj.suffix && keep[obj.suffix] !== true) {
         let prefix = obj.prefix || ''
         val = val.replaceWith(prefix + obj.num + ' ' + obj.suffix)
         return

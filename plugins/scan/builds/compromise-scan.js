@@ -1,8 +1,8 @@
-/* compromise-scan 0.1.0 MIT */
+/* compromise-scan 0.1.1 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global = global || self, global.compromiseScan = factory());
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.compromiseScan = factory());
 }(this, (function () { 'use strict';
 
   // edited by Spencer Kelly

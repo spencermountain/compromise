@@ -4,6 +4,7 @@ const spacetime = require('/Users/spencer/mountain/spacetime/src')
 // nlp.extend(require('./plugins/sentences/src'))
 nlp.extend(require('./plugins/numbers/src'))
 nlp.extend(require('./plugins/dates/src'))
+nlp.extend(require('./plugins/pronounce/src'))
 
 const fmt = iso => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 
@@ -60,9 +61,9 @@ let context = {
 
 // #### money-parser
 // let doc = nlp('he sent 6 hundred canadian dollars into orbit').debug()
-let doc = nlp('$0')
+let doc = nlp('Phil Collins') //.debug()
 // let doc = nlp('₩50').debug()
-console.log(doc.values().get())
+console.log(doc.pronounce())
 
 // ### time-parser
 // let doc = nlp(`a quarter past noon`).debug()

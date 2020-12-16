@@ -529,6 +529,7 @@ These are some helpful extensions:
 
 - **[.numbers()](https://observablehq.com/@spencermountain/compromise-values)** - grab all written and numeric values
   - **[.numbers().json()](https://observablehq.com/@spencermountain/compromise-values)** - overloaded output with number metadata
+  - **[.numbers().get()](https://observablehq.com/@spencermountain/compromise-values)** - retrieve the parsed number(s)
   - **[.numbers().units()](https://observablehq.com/@spencermountain/compromise-values)** - grab 'kilos' from `25 kilos'`
   - **[.numbers().fractions()](https://observablehq.com/@spencermountain/compromise-values)** - things like `1/3rd`
   - **[.numbers().toText()](https://observablehq.com/@spencermountain/compromise-values)** - convert number to `five` or `fifth`
@@ -548,6 +549,11 @@ These are some helpful extensions:
   - **[.numbers().isCardinal()](https://observablehq.com/@spencermountain/compromise-values)** - return only cardinal numbers
   - **[.numbers().toLocaleString()](https://observablehq.com/@spencermountain/compromise-values)** - add commas, or nicer formatting for numbers
 - **[.money()](https://observablehq.com/@spencermountain/compromise-values)** - things like `'$2.50'`
+  - **[.money().get()](https://observablehq.com/@spencermountain/compromise-values)** - retrieve the parsed amount(s) of money
+  - **[.money().json()](https://observablehq.com/@spencermountain/compromise-values)** - currency + number info
+  - **[.money().currency()](https://observablehq.com/@spencermountain/compromise-values)** - which currency the money is in
+- **[.fractions()](https://observablehq.com/@spencermountain/compromise-values)** - like '2/3rds'
+- **[.percentages()](https://observablehq.com/@spencermountain/compromise-values)** - like '2.5%'
 
 ##### Export
 

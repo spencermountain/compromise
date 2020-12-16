@@ -1,4 +1,4 @@
-/* compromise 13.7.0 MIT */
+/* compromise 13.8.0 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -255,7 +255,7 @@
   var periodAcronym = /([A-Z]\.)+[A-Z]?,?$/;
   var oneLetterAcronym = /^[A-Z]\.,?$/;
   var noPeriodAcronym = /[A-Z]{2,}('s|,)?$/;
-  var lowerCaseAcronym = /([a-z]\.){2,}[a-z]\.?$/;
+  var lowerCaseAcronym = /([a-z]\.){1,}[a-z]\.?$/;
 
   var isAcronym = function isAcronym(str) {
     //like N.D.A
@@ -315,6 +315,11 @@
 
     if (/^(re|un)-?[^aeiou]./.test(str) === true) {
       str = str.replace('-', '');
+    } //compact acronyms
+
+
+    if (isAcronym_1(str)) {
+      str = str.replace(/\./g, '');
     } //strip leading & trailing grammatical punctuation
 
 
@@ -331,11 +336,6 @@
 
     if (str === '') {
       str = original;
-    } //compact acronyms
-
-
-    if (isAcronym_1(str)) {
-      str = str.replace(/\./g, '');
     } //nice-numbers
 
 
@@ -365,6 +365,7 @@
   var hasApostrophe = /['’]/;
   var hasAcronym = /^[a-z]\.([a-z]\.)+/i;
   var minusNumber = /^[-+\.][0-9]/;
+  var shortYear = /^'[0-9]{2}/;
   /** turn given text into a parsed-up object
    * seperate the 'meat' of the word from the whitespace+punctuation
    */
@@ -377,6 +378,12 @@
       pre = found; // support '-40'
 
       if ((pre === '-' || pre === '+' || pre === '.') && minusNumber.test(str)) {
+        pre = '';
+        return found;
+      } // support years like '97
+
+
+      if (pre === "'" && shortYear.test(str)) {
         pre = '';
         return found;
       }
@@ -433,18 +440,9 @@
 
   var parse = parseTerm;
 
-  function createCommonjsModule(fn, basedir, module) {
-  	return module = {
-  		path: basedir,
-  		exports: {},
-  		require: function (path, base) {
-  			return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
-  		}
-  	}, fn(module, module.exports), module.exports;
-  }
-
-  function commonjsRequire () {
-  	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
+  function createCommonjsModule(fn) {
+    var module = { exports: {} };
+  	return fn(module, module.exports), module.exports;
   }
 
   var _01Case = createCommonjsModule(function (module, exports) {
@@ -2638,8 +2636,34 @@
 
   var postProcess_1 = postProcess$1;
 
+  var hasReg = /[^[a-z]]\//g;
+
   var isArray$1 = function isArray(arr) {
     return Object.prototype.toString.call(arr) === '[object Array]';
+  }; // don't split up a regular expression
+
+
+  var mergeRegexes = function mergeRegexes(arr) {
+    arr.forEach(function (s, i) {
+      var m = s.match(hasReg); // has 1 slash
+
+      if (m !== null && m.length === 1 && arr[i + 1]) {
+        // merge next one
+        arr[i] += arr[i + 1];
+        arr[i + 1] = ''; // try 2nd one
+
+        m = arr[i].match(hasReg);
+
+        if (m !== null && m.length === 1) {
+          arr[i] += arr[i + 2];
+          arr[i + 2] = '';
+        }
+      }
+    });
+    arr = arr.filter(function (s) {
+      return s;
+    });
+    return arr;
   }; //split-up by (these things)
 
 
@@ -2648,6 +2672,11 @@
     arr = arr.map(function (s) {
       return s.trim();
     });
+
+    if (hasReg.test(str)) {
+      arr = mergeRegexes(arr);
+    }
+
     return arr;
   };
 
@@ -2737,12 +2766,12 @@
       input = String(input); //go for it?
     }
 
-    var tokens = byParentheses(input);
+    var tokens = byParentheses(input); // console.log(tokens)
+
     tokens = byWords(tokens);
     tokens = tokens.map(parseToken_1); //clean up anything weird
 
-    tokens = postProcess_1(tokens); // console.log(JSON.stringify(tokens, null, 2))
-
+    tokens = postProcess_1(tokens);
     return tokens;
   };
 
@@ -3242,12 +3271,19 @@
     //dont split 're-do'
     if (/^(re|un)-?[^aeiou]./.test(str) === true) {
       return false;
-    } //letter-number
+    } //letter-number 'aug-20'
 
 
     var reg = /^([a-z\u00C0-\u00FF`"'/]+)(-|–|—)([a-z0-9\u00C0-\u00FF].*)/i;
 
     if (reg.test(str) === true) {
+      return true;
+    } //number-letter '20-aug'
+
+
+    var reg2 = /^([0-9]{1,4})(-|–|—)([a-z\u00C0-\u00FF`"'/]+$)/i;
+
+    if (reg2.test(str) === true) {
       return true;
     } //support weird number-emdash combo '2010–2011'
     // let reg2 = /^([0-9]+)(–|—)([0-9].*)/i
@@ -3453,7 +3489,7 @@
 
   var fromJSON_1 = fromJSON;
 
-  var _version = '13.7.0';
+  var _version = '13.8.0';
 
   var _data = {
     "Comparative": "true¦better",
@@ -3759,7 +3795,7 @@
     // '9:20pm'
     Time: {
       isA: ['Date'],
-      notA: ['Value']
+      notA: ['AtMention']
     },
     //glue
     Determiner: {
@@ -3776,7 +3812,9 @@
       notA: ['Determiner']
     },
     // peso, euro
-    Currency: {},
+    Currency: {
+      isA: ['Noun']
+    },
     // ughh
     Expression: {
       notA: ['Noun', 'Adjective', 'Verb', 'Adverb']
@@ -4264,9 +4302,8 @@
     '20th century fox': 'Organization',
     // '3m': 'Organization',
     '7 eleven': 'Organization',
-    '7-eleven': 'Organization',
-    g8: 'Organization',
     'motel 6': 'Organization',
+    g8: 'Organization',
     vh1: 'Organization',
     q1: 'Date',
     q2: 'Date',
@@ -6032,7 +6069,9 @@
         enumerable: false,
         value: [],
         writable: true
-      }); // add our compressed data to lexicon
+      }); // add our misc word-list
+      // this.addWords(misc)
+      // add our compressed data to lexicon
 
       this.unpackWords(_data); // add our irregulars to lexicon
 
@@ -6180,8 +6219,9 @@
 
   var World_1 = World;
 
+  /** return the root, first document */
+
   var _01Utils$1 = createCommonjsModule(function (module, exports) {
-    /** return the root, first document */
     exports.all = function () {
       return this.parents()[0] || this;
     };
@@ -6247,8 +6287,9 @@
     // }
   });
 
+  /** use only the first result(s) */
+
   var _02Accessors = createCommonjsModule(function (module, exports) {
-    /** use only the first result(s) */
     exports.first = function (n) {
       if (n === undefined) {
         return this.get(0);
@@ -7127,7 +7168,7 @@
 
         if (options.root) {
           t.setRoot(_this.world);
-          words[t.root] = true;
+          words[t.root] = [i];
         }
       });
     });
@@ -7254,7 +7295,11 @@
   };
 
   var _02Insert = createCommonjsModule(function (module, exports) {
-    // if it's empty, just create the phrase
+    var isObject = function isObject(obj) {
+      return obj && Object.prototype.toString.call(obj) === '[object Object]';
+    }; // if it's empty, just create the phrase
+
+
     var makeNew = function makeNew(str, doc) {
       var phrase = _01Tokenizer(str, doc.world)[0]; //assume it's one sentence, for now
 
@@ -7266,8 +7311,10 @@
     /** add these new terms to the end*/
 
 
-    exports.append = function (str) {
+    exports.append = function () {
       var _this = this;
+
+      var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
 
       if (!str) {
         return this;
@@ -7283,8 +7330,14 @@
 
       this.list.forEach(function (p) {
         //build it
-        var phrase = _01Tokenizer(str, _this.world, _this.pool())[0]; //assume it's one sentence, for now
-        //tag it
+        var phrase;
+
+        if (isObject(str) && str.isA === 'Doc') {
+          phrase = str.list[0].clone(); //use the first phrase
+        } else if (typeof str === 'string') {
+          phrase = _01Tokenizer(str, _this.world, _this.pool())[0]; //assume it's one sentence, for now
+        } //tag it
+
 
         var tmpDoc = _this.buildFrom([phrase]);
 
@@ -7316,8 +7369,14 @@
 
       this.list.forEach(function (p) {
         //build it
-        var phrase = _01Tokenizer(str, _this2.world, _this2.pool())[0]; //assume it's one sentence, for now
-        //tag it
+        var phrase;
+
+        if (isObject(str) && str.isA === 'Doc') {
+          phrase = str.list[0].clone(); //use the first phrase
+        } else if (typeof str === 'string') {
+          phrase = _01Tokenizer(str, _this2.world, _this2.pool())[0]; //assume it's one sentence, for now
+        } //tag it
+
 
         var tmpDoc = _this2.buildFrom([phrase]);
 
@@ -7777,6 +7836,8 @@
         terms: false
       }).map(function (obj) {
         return obj.text;
+      }).filter(function (str) {
+        return str;
       });
     }
 
@@ -8449,8 +8510,9 @@
     toCamelCase: toCamelCase
   };
 
+  /** add this punctuation or whitespace before each match: */
+
   var _05Whitespace = createCommonjsModule(function (module, exports) {
-    /** add this punctuation or whitespace before each match: */
     exports.pre = function (str, concat) {
       if (str === undefined) {
         return this.list[0].terms(0).pre;
@@ -8944,15 +9006,20 @@
   // order matters.
   var startsWith = [//web tags
   [/^[\w\.]+@[\w\.]+\.[a-z]{2,3}$/, 'Email'], //not fancy
-  [/^#[a-z0-9_\u00C0-\u00FF]{2,}$/, 'HashTag'], [/^@\w{2,}$/, 'AtMention'], [/^(https?:\/\/|www\.)\w+\.[a-z]{2,3}/, 'Url'], //with http/www
+  [/^#[a-z0-9_\u00C0-\u00FF]{2,}$/, 'HashTag'], [/^@1?[0-9](am|pm)$/i, 'Time'], // @6pm
+  [/^@1?[0-9]:[0-9]{2}(am|pm)?$/i, 'Time'], // @6:30
+  [/^@\w{2,}$/, 'AtMention'], //@spencermountain
+  [/^(https?:\/\/|www\.)\w+\.[a-z]{2,3}/, 'Url'], //with http/www
   [/^[\w./]+\.(com|net|gov|org|ly|edu|info|biz|ru|jp|de|in|uk|br)/, 'Url'], //http://mostpopularwebsites.net/top-level-domain
   //dates/times
+  [/^'[0-9]{2}$/, 'Year'], //like '97
   [/^[012]?[0-9](:[0-5][0-9])(:[0-5][0-9])$/, 'Time'], //4:32:32
-  [/^[012]?[0-9](:[0-5][0-9])?(:[0-5][0-9])? ?(am|pm)$/, 'Time'], //4pm
-  [/^[012]?[0-9](:[0-5][0-9])(:[0-5][0-9])? ?(am|pm)?$/, 'Time'], //4:00pm
+  [/^[012]?[0-9](:[0-5][0-9])?(:[0-5][0-9])? ?(am|pm)$/i, 'Time'], //4pm
+  [/^[012]?[0-9](:[0-5][0-9])(:[0-5][0-9])? ?(am|pm)?$/i, 'Time'], //4:00pm
   [/^[PMCE]ST$/, 'Time'], //PST, time zone abbrevs
   [/^utc ?[+-]?[0-9]+?$/, 'Time'], //UTC 8+
   [/^[a-z0-9]*? o\'?clock$/, 'Time'], //3 oclock
+  [/^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}/i, 'Date'], // 2020-03-02T00:00:00.000Z
   [/^[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,4}$/, 'Date'], // 03-02-89
   [/^[0-9]{1,4}\/[0-9]{1,2}\/[0-9]{1,4}$/, 'Date'], // 03/02/89
   [/^[0-9]{1,4}-[a-z]{2,9}-[0-9]{1,4}$/i, 'Date'], // 03-March-89
@@ -8973,8 +9040,8 @@
   // /[\$\xA2-\xA5\u058F\u060B\u09F2\u09F3\u09FB\u0AF1\u0BF9\u0E3F\u17DB\u20A0-\u20BD\uA838\uFDFC\uFE69\uFF04\uFFE0\uFFE1\uFFE5\uFFE6]
   //like $5.30
   [/^[-+]?[\$\xA2-\xA5\u058F\u060B\u09F2\u09F3\u09FB\u0AF1\u0BF9\u0E3F\u17DB\u20A0-\u20BD\uA838\uFDFC\uFE69\uFF04\uFFE0\uFFE1\uFFE5\uFFE6][-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?(k|m|b|bn)?\+?$/, ['Money', 'Value']], //like 5.30$
-  [/^[-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?[\$\xA2-\xA5\u058F\u060B\u09F2\u09F3\u09FB\u0AF1\u0BF9\u0E3F\u17DB\u20A0-\u20BD\uA838\uFDFC\uFE69\uFF04\uFFE0\uFFE1\uFFE5\uFFE6]\+?$/, ['Money', 'Value']], //like 400usd
-  [/^[-+]?[0-9]([0-9,.])+?(usd|eur|jpy|gbp|cad|aud|chf|cny|hkd|nzd|kr|rub)$/i, ['Money', 'Value']], //numbers
+  [/^[-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?[\$\xA2-\xA5\u058F\u060B\u09F2\u09F3\u09FB\u0AF1\u0BF9\u0E3F\u17DB\u20A0-\u20BD\uA838\uFDFC\uFE69\uFF04\uFFE0\uFFE1\uFFE5\uFFE6]\+?$/, ['Money', 'Value']], //like $400usd
+  [/^[-+]?[\$£]?[0-9]([0-9,.])+?(usd|eur|jpy|gbp|cad|aud|chf|cny|hkd|nzd|kr|rub)$/i, ['Money', 'Value']], //numbers
   // 50 | -50 | 3.23  | 5,999.0  | 10+
   [/^[-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?\+?$/, ['Cardinal', 'NumericValue']], [/^[-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?(st|nd|rd|r?th)$/, ['Ordinal', 'NumericValue']], // .73th
   [/^\.[0-9]+\+?$/, ['Cardinal', 'NumericValue']], //percent
@@ -10162,7 +10229,7 @@
 
   var _05PerfectTense = checkPerfect;
 
-  var isRange = /^([0-9]{1,3})[-–—]([0-9]{1,3})$/i; //split '2-4' into '2 to 4'
+  var isRange = /^([0-9]{1,3}(?:st|nd|rd|th)?)[-–—]([0-9]{1,3}(?:st|nd|rd|th)?)$/i; //split '2-4' into '2 to 4'
 
   var checkRange = function checkRange(term) {
     if (term.tags.PhoneNumber === true) {
@@ -10223,6 +10290,7 @@
   var _07French = checkFrench;
 
   var isNumber = /^[0-9]+$/;
+  var isOrdinal = /^[0-9]+(st|nd|rd|th)$/;
 
   var createPhrase = function createPhrase(found, doc) {
     //create phrase from ['would', 'not']
@@ -10240,13 +10308,11 @@
       t.post = ''; // tag number-ranges
 
       if (isNumber.test(t.implicit)) {
-        t.tags.Value = true;
-        t.tags.Cardinal = true;
-      } // if no tag, give it a noun
-
-
-      if (Object.keys(t.tags).length === 0) {
-        t.tags.Noun = true;
+        t.tag('Cardinal', 'num-range', doc.world);
+      } else if (isOrdinal.test(t.implicit)) {
+        t.tag('Ordinal', 'ord-range', doc.world);
+      } else if (Object.keys(t.tags).length === 0) {
+        t.tags.Noun = true; // if no tag, give it a noun
       }
     });
     return phrase;
@@ -10506,25 +10572,23 @@
   var _01Misc = list;
 
   var _ambig = {
-    adverbs: {
-      // adverbs than can be adjectives
-      adjectives: ['dark', 'bright', 'flat', 'light', 'soft', 'pale', 'dead', 'dim', 'faux', 'little', 'wee', 'sheer', 'most', 'near', 'good', 'extra', 'all']
-    },
-    person: {
-      // names that are dates
-      dates: ['april', 'june', 'may', 'jan', 'august', 'eve'],
-      // names that are adjectives
-      adjectives: ['misty', 'rusty', 'dusty', 'rich', 'randy', 'young'],
-      // names that are verbs
-      verbs: ['pat', 'wade', 'ollie', 'will', 'rob', 'buck', 'bob', 'mark', 'jack'],
-      // names that are verbs
-      places: ['darwin', 'hamilton', 'paris', 'alexandria', 'houston', 'kobe', 'santiago', 'salvador', 'sydney', 'victoria'],
-      // names that are nouns
-      nouns: ['art', 'baker', 'berg', 'bill', 'brown', 'charity', 'chin', 'christian', 'cliff', 'daisy', 'dawn', 'dick', 'dolly', 'faith', 'franco', 'gene', 'green', 'hall', 'hill', 'holly', 'hope', 'jean', 'jewel', 'joy', 'kelvin', 'king', 'kitty', 'lane', 'lily', 'melody', 'mercedes', 'miles', 'olive', 'penny', 'ray', 'reed', 'robin', 'rod', 'rose', 'sky', 'summer', 'trinity', 'van', 'viola', 'violet', 'wang', 'white']
-    }
+    // adverbs than can be adjectives
+    adverbAdjective: ['dark', 'bright', 'flat', 'light', 'soft', 'pale', 'dead', 'dim', 'faux', 'little', 'wee', 'sheer', 'most', 'near', 'good', 'extra', 'all'],
+    // names that are dates
+    personDate: ['april', 'june', 'may', 'jan', 'august', 'eve'],
+    // names that may be months
+    personMonth: ['january', 'april', 'may', 'june', 'jan', 'sep'],
+    // names that are adjectives
+    personAdjective: ['misty', 'rusty', 'dusty', 'rich', 'randy', 'young'],
+    // names that are verbs
+    personVerb: ['pat', 'wade', 'ollie', 'will', 'rob', 'buck', 'bob', 'mark', 'jack'],
+    // names that are verbs
+    personPlace: ['darwin', 'hamilton', 'paris', 'alexandria', 'houston', 'kobe', 'santiago', 'salvador', 'sydney', 'victoria'],
+    // names that are nouns
+    personNoun: ['art', 'baker', 'berg', 'bill', 'brown', 'charity', 'chin', 'christian', 'cliff', 'daisy', 'dawn', 'dick', 'dolly', 'faith', 'franco', 'gene', 'green', 'hall', 'hill', 'holly', 'hope', 'jean', 'jewel', 'joy', 'kelvin', 'king', 'kitty', 'lane', 'lily', 'melody', 'mercedes', 'miles', 'olive', 'penny', 'ray', 'reed', 'robin', 'rod', 'rose', 'sky', 'summer', 'trinity', 'van', 'viola', 'violet', 'wang', 'white']
   };
 
-  var dates = "(".concat(_ambig.person.dates.join('|'), ")");
+  var dates = "(".concat(_ambig.personDate.join('|'), ")");
   var list$1 = [// ==== Holiday ====
   {
     match: '#Holiday (day|eve)',
@@ -10555,6 +10619,16 @@
     group: 0,
     tag: 'WeekDay',
     reason: 'sat'
+  }, {
+    match: "(in|by|before|during|on|until|after|of|within|all) [wed]",
+    group: 0,
+    tag: 'WeekDay',
+    reason: 'wed'
+  }, {
+    match: "(in|by|before|during|on|until|after|of|within|all) [march]",
+    group: 0,
+    tag: 'Month',
+    reason: 'march'
   }, //sat november
   {
     match: '[sat] #Date',
@@ -10675,12 +10749,12 @@
     match: "by [".concat(dates, "]"),
     group: 0,
     tag: 'Date',
-    reason: 'in-june'
+    reason: 'by-june'
   }, {
-    match: "before [".concat(dates, "]"),
+    match: "after [".concat(dates, "]"),
     group: 0,
     tag: 'Date',
-    reason: 'in-june'
+    reason: 'after-june'
   }, {
     match: "#Date [".concat(dates, "]"),
     group: 0,
@@ -10711,10 +10785,17 @@
     match: "#Cardinal [second]",
     tag: 'Unit',
     reason: 'one-second'
+  }, // second quarter
+  // { match: `#Ordinal quarter`, tag: 'Date', reason: 'second-quarter' },
+  // 'aug 20-21'
+  {
+    match: "#Month #NumberRange",
+    tag: 'Date',
+    reason: 'aug 20-21'
   }];
   var _02Dates = list$1;
 
-  var adjectives$1 = "(".concat(_ambig.person.adjectives.join('|'), ")");
+  var adjectives$1 = "(".concat(_ambig.personAdjective.join('|'), ")");
   var list$2 = [// all fell apart
   {
     match: '[all] #Determiner? #Noun',
@@ -11227,7 +11308,7 @@
     reason: 'co-noun'
   }];
 
-  var adjectives$2 = "(".concat(_ambig.adverbs.adjectives.join('|'), ")");
+  var adjectives$2 = "(".concat(_ambig.adverbAdjective.join('|'), ")");
   var _05Adverb = [//still good
   {
     match: '[still] #Adjective',
@@ -11424,7 +11505,7 @@
     reason: 'a-is-one'
   }];
 
-  var verbs$1 = "(".concat(_ambig.person.verbs.join('|'), ")");
+  var verbs$1 = "(".concat(_ambig.personVerb.join('|'), ")");
   var list$3 = [// adj -> gerund
   // amusing his aunt
   {
@@ -11796,10 +11877,9 @@
     reason: 'noun-public-school'
   }];
 
-  var nouns$1 = "(".concat(_ambig.person.nouns.join('|'), ")");
-  var months = '(january|april|may|june|jan|sep)'; //summer|autumn
-
-  var places = "(".concat(_ambig.person.places.join('|'), ")");
+  var nouns$1 = "(".concat(_ambig.personNoun.join('|'), ")");
+  var months = "(".concat(_ambig.personMonth.join('|'), ")");
+  var places = "(".concat(_ambig.personPlace.join('|'), ")");
   var list$5 = [// ==== Honorific ====
   {
     match: '[(1st|2nd|first|second)] #Honorific',
@@ -14318,7 +14398,11 @@
 
   var smallTagger = function smallTagger(doc) {
     var terms = doc.termList();
-    _01Lexicon(terms, doc.world);
+    _01Lexicon(terms, doc.world); // run any user-given tagger functions
+
+    doc.world.taggers.forEach(function (fn) {
+      fn(doc);
+    });
     return doc;
   };
 
@@ -14359,7 +14443,7 @@
       var list = _01Tokenizer(text, w);
       var doc = new Doc_1(list, null, w);
 
-      if (lexicon) {
+      if (lexicon || doc.world.taggers.length > 0) {
         tiny(doc);
       }
 
@@ -14408,9 +14492,10 @@
     /** current version of the library */
 
 
-    nlp.version = _version; // alias
+    nlp.version = _version; // aliases
 
     nlp["import"] = nlp.load;
+    nlp.plugin = nlp.extend;
     return nlp;
   }
 

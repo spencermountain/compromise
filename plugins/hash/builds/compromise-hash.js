@@ -1,8 +1,8 @@
-/* compromise-hash 0.0.1 MIT */
+/* compromise-hash 0.0.2 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global = global || self, global.compromiseHash = factory());
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.compromiseHash = factory());
 }(this, (function () { 'use strict';
 
   function _typeof(obj) {
@@ -23,12 +23,9 @@
 
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-  function unwrapExports (x) {
-  	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
-  }
-
-  function createCommonjsModule(fn, module) {
-  	return module = { exports: {} }, fn(module, module.exports), module.exports;
+  function createCommonjsModule(fn) {
+    var module = { exports: {} };
+  	return fn(module, module.exports), module.exports;
   }
 
   var lib = createCommonjsModule(function (module, exports) {
@@ -191,7 +188,6 @@
       }]);
     });
   });
-  unwrapExports(lib);
 
   var md5 = lib.md5;
 

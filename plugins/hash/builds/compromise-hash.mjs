@@ -1,4 +1,4 @@
-/* compromise-hash 0.0.1 MIT */
+/* compromise-hash 0.0.2 MIT */
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
@@ -17,12 +17,9 @@ function _typeof(obj) {
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-function unwrapExports (x) {
-	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
-}
-
-function createCommonjsModule(fn, module) {
-	return module = { exports: {} }, fn(module, module.exports), module.exports;
+function createCommonjsModule(fn) {
+  var module = { exports: {} };
+	return fn(module, module.exports), module.exports;
 }
 
 var lib = createCommonjsModule(function (module, exports) {
@@ -185,7 +182,6 @@ var lib = createCommonjsModule(function (module, exports) {
     }]);
   });
 });
-unwrapExports(lib);
 
 var md5 = lib.md5;
 

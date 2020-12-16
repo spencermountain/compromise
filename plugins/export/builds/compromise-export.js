@@ -1,8 +1,8 @@
-/* compromise-export 0.0.1 MIT */
+/* compromise-export 0.0.2 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global = global || self, global.compromiseExport = factory());
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.compromiseExport = factory());
 }(this, (function () { 'use strict';
 
   var reduceWords = function reduceWords(allWords) {
@@ -176,6 +176,8 @@
       var json = _import(data, this.world);
       return nlp.fromJSON(json);
     };
+
+    nlp.load = nlp["import"];
   };
 
   var src = addMethods;

@@ -9,7 +9,9 @@ compromise uses semver, and pushes to npm frequently
 While all _Major_ releases should be reviewed, our only two _large_ releases are **v6** in 2016 and and **v12** in 2019. Others have been mostly incremental, or niche.
 
 <!-- #### [Unreleased] 
-#### 13.8.0
+-->
+
+#### 13.8.0 [Dec 2020]
 - **[change]** improved support for fractions in numbers-plugin #793
 - **[change]** remove zero-width characters in normalized output #759
 - **[change]** improved Person tagging with particles #794
@@ -20,16 +22,17 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - **[change]** improved support for lowercase acronyms
 - **[change]** - support years like '97
 - **[change]** - change tokenizer for '20-aug'
+- **[change]** - update deps of all plugins
 - **[fix]** - NumberRange tagging issue #795
 - **[fix]** - improved support for ordinal number ranges
 - **[fix]** - improved regex support in match-syntax
+- **[fix]** - improved support for ~soft~ match syntax #797
 - **[new]** - new plugin `strict-match`
 - **[new]** - set NounPhrase, VerbPhrase tags in nlp-sentences plugin
 - **[new]** - `.phrases()` method in nlp-sentences plugin
 - **[new]** - support `.apppend(doc)` and `.prepend(doc)`
 - **[new]** - `values.normalize()` method
-- **[fix]** - improved support for ~soft~ match syntax #797
--->
+
 
 #### 13.7.0
 - **[change]** many misc tagging fixes

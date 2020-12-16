@@ -1,8 +1,8 @@
-/* compromise-adjectives 0.0.5 MIT */
+/* compromise-adjectives 0.0.6 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global = global || self, global.compromiseAdjectives = factory());
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.compromiseAdjectives = factory());
 }(this, (function () { 'use strict';
 
   function _classCallCheck(instance, Constructor) {
@@ -58,6 +58,19 @@
     return _setPrototypeOf(o, p);
   }
 
+  function _isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   function _assertThisInitialized(self) {
     if (self === void 0) {
       throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -72,6 +85,25 @@
     }
 
     return _assertThisInitialized(self);
+  }
+
+  function _createSuper(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct();
+
+    return function _createSuperInternal() {
+      var Super = _getPrototypeOf(Derived),
+          result;
+
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf(this).constructor;
+
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
+
+      return _possibleConstructorReturn(this, result);
+    };
   }
 
   //turn 'quick' into 'quickly'
@@ -220,7 +252,7 @@
     ed: true,
     nt: true
   };
-  var blacklist = {
+  var banList = {
     random: true,
     wild: true
   };
@@ -244,7 +276,7 @@
       return null;
     }
 
-    if (blacklist.hasOwnProperty(str) === true) {
+    if (banList.hasOwnProperty(str) === true) {
       return null;
     } //suffixes to avoid
 
@@ -270,15 +302,15 @@
 
   var addMethods = function addMethods(Doc) {
     /**  */
-    var Adjective =
-    /*#__PURE__*/
-    function (_Doc) {
+    var Adjective = /*#__PURE__*/function (_Doc) {
       _inherits(Adjective, _Doc);
+
+      var _super = _createSuper(Adjective);
 
       function Adjective() {
         _classCallCheck(this, Adjective);
 
-        return _possibleConstructorReturn(this, _getPrototypeOf(Adjective).apply(this, arguments));
+        return _super.apply(this, arguments);
       }
 
       _createClass(Adjective, [{

@@ -1,6 +1,6 @@
 const parseToken = require('./parseToken')
 const postProcess = require('./postProcess')
-const hasReg = /\//g
+const hasReg = /[^[a-z]]\//g
 
 const isArray = function (arr) {
   return Object.prototype.toString.call(arr) === '[object Array]'

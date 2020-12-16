@@ -26,6 +26,10 @@ const methods = {
   normalize: function () {
     this.forEach((m) => {
       let found = parse(m)
+      if (found && typeof found.numerator === 'number' && typeof found.denominator === 'number') {
+        let str = `${found.numerator}/${found.denominator}`
+        this.replace(m, str)
+      }
     })
     return this
   },

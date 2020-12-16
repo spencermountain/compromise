@@ -2,7 +2,7 @@ const endS = /s$/
 
 const slashForm = function (m) {
   let str = m.text('reduced')
-  let found = str.match(/^([-+]?[0-9]+)\/([-+]?[0-9]+)$/)
+  let found = str.match(/^([-+]?[0-9]+)\/([-+]?[0-9]+)(st|nd|rd|th)?s?$/)
   if (found && found[1] && found[0]) {
     return {
       numerator: Number(found[1]),

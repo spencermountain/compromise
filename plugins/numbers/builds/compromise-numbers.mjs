@@ -1200,10 +1200,13 @@ var methods = {
 
   /** split-apart suffix and number */
   normalize: function normalize() {
+    var keep = {
+      '%': true
+    };
     this.forEach(function (val) {
       var obj = parse$1(val);
 
-      if (obj.num !== null && obj.suffix) {
+      if (obj.num !== null && obj.suffix && keep[obj.suffix] !== true) {
         var prefix = obj.prefix || '';
         val = val.replaceWith(prefix + obj.num + ' ' + obj.suffix);
         return;
@@ -1977,12 +1980,165 @@ var moneyMethods = {
 };
 var methods$1 = moneyMethods;
 
-var multiples = '(hundred|thousand|million|billion|trillion|quadrillion|quintillion|sextillion|septillion)'; // improved tagging for numbers
+var endS = /s$/;
+
+var slashForm = function slashForm(m) {
+  var str = m.text('reduced');
+  var found = str.match(/^([-+]?[0-9]+)\/([-+]?[0-9]+)(st|nd|rd|th)?s?$/);
+
+  if (found && found[1] && found[0]) {
+    return {
+      numerator: Number(found[1]),
+      denominator: Number(found[2])
+    };
+  }
+
+  return null;
+}; // parse '4 out of 4'
+
+
+var textForm1 = function textForm1(m) {
+  var found = m.match('[<num>#Value+] out of every? [<den>#Value+]');
+
+  if (found.found !== true) {
+    return null;
+  }
+
+  var _found$groups = found.groups(),
+      num = _found$groups.num,
+      den = _found$groups.den;
+
+  num = num.numbers().get(0);
+  den = den.numbers().get(0);
+
+  if (typeof num === 'number' && typeof den === 'number') {
+    return {
+      numerator: num,
+      denominator: den
+    };
+  }
+
+  return null;
+}; // parse 'a third'
+
+
+var textForm2 = function textForm2(m) {
+  var found = m.match('[<num>(#Cardinal|a)+] [<den>#Ordinal+]');
+
+  if (found.found !== true) {
+    return null;
+  }
+
+  var _found$groups2 = found.groups(),
+      num = _found$groups2.num,
+      den = _found$groups2.den; // quick-support for 'a third'
+
+
+  if (num.has('a')) {
+    num = 1;
+  } else {
+    num = num.numbers().get(0);
+  } // turn 'thirds' into third
+
+
+  var str = den.text('reduced');
+
+  if (endS.test(str)) {
+    str = str.replace(endS, '');
+    den.replaceWith(str);
+  } // support 'one half' as '1/2'
+
+
+  if (den.has('half')) {
+    den = 2;
+  } else {
+    den = den.numbers().get(0);
+  }
+
+  if (typeof num === 'number' && typeof den === 'number') {
+    return {
+      numerator: num,
+      denominator: den
+    };
+  }
+
+  return null;
+};
+
+var parseFraction = function parseFraction(m) {
+  return slashForm(m) || textForm1(m) || textForm2(m) || null;
+};
+
+var parse$3 = parseFraction;
+
+var methods$2 = {
+  /** overloaded json method with additional number information */
+  json: function json(options) {
+    var n = null;
+
+    if (typeof options === 'number') {
+      n = options;
+      options = null;
+    }
+
+    options = options || {
+      text: true,
+      normal: true,
+      trim: true,
+      terms: true
+    };
+    var res = [];
+    this.forEach(function (m) {
+      var json = m.json(options)[0];
+      var found = parse$3(m) || {};
+      json.numerator = found.numerator;
+      json.denominator = found.denominator;
+      res.push(json);
+    });
+
+    if (n !== null) {
+      return res[n] || {};
+    }
+
+    return res;
+  },
+
+  /** change 'four out of 10' to 4/10 */
+  normalize: function normalize() {
+    var _this = this;
+
+    this.forEach(function (m) {
+      var found = parse$3(m);
+
+      if (found && typeof found.numerator === 'number' && typeof found.denominator === 'number') {
+        var str = "".concat(found.numerator, "/").concat(found.denominator);
+
+        _this.replace(m, str);
+      }
+    });
+    return this;
+  }
+};
+var methods_1$1 = methods$2;
+
+var here = 'number-tag';
+var multiples = '(hundred|thousand|million|billion|trillion|quadrillion|quintillion|sextillion|septillion)'; //support 'two thirds'
+// (do this conservatively)
+
+var ordinals = ['half', 'third', 'fourth', 'quarter', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'hundredth', 'thousandth', 'millionth']; // add plural forms
+
+var len = ordinals.length;
+
+for (var i = 0; i < len; i += 1) {
+  ordinals.push(ordinals[i] + 's');
+}
+
+ordinals = "(".concat(ordinals.join('|'), ")"); // improved tagging for numbers
 
 var tagger = function tagger(doc) {
-  doc.match(multiples).tag('#Multiple'); //  in the 400s
+  doc.match(multiples).tag('#Multiple', here); //  in the 400s
 
-  doc.match('the [/[0-9]+s$/]').tag('#Plural'); //half a million
+  doc.match('the [/[0-9]+s$/]').tag('#Plural', here); //half a million
 
   doc.match('half a? #Value').tag('Value', 'half-a-value'); //(quarter not ready)
   //five and a half
@@ -1995,11 +2151,17 @@ var tagger = function tagger(doc) {
 
   doc.ifNo('#Value').match('#Currency #Verb').unTag('Currency', 'no-currency'); // 6 dollars and 5 cents
 
-  doc.match('#Value #Currency [and] #Value (cents|ore|centavos|sens)', 0).tag('Money'); // maybe currencies
+  doc.match('#Value #Currency [and] #Value (cents|ore|centavos|sens)', 0).tag('Money', here); // maybe currencies
 
   var m = doc.match('[<num>#Value] [<currency>(mark|rand|won|rub|ore)]');
-  m.group('num').tag('Money');
-  m.group('currency').tag('Currency');
+  m.group('num').tag('Money', here);
+  m.group('currency').tag('Currency', here); // fraction - '3 out of 5'
+
+  doc.match('#Cardinal+ out of every? #Cardinal').tag('Fraction', here); // fraction - 'a third of a slice'
+
+  m = doc.match("[(#Cardinal|a) ".concat(ordinals, "] of (a|an|the)"), 0).tag('Fraction', here); // tag 'thirds' as a ordinal
+
+  m.match('.$').tag('Ordinal', 'plural-ordinal');
 };
 
 var tagger_1 = tagger;
@@ -2111,6 +2273,7 @@ var plugin = function plugin(Doc, world) {
     return Fraction;
   }(Numbers);
 
+  Object.assign(Fraction.prototype, methods_1$1);
   var docMethods = {
     /** find all numbers and values */
     numbers: function numbers(n) {
@@ -2118,15 +2281,24 @@ var plugin = function plugin(Doc, world) {
       return new Numbers(m.list, this, this.world);
     },
 
-    /** numbers that are percentages*/
+    /** return '4%' or 'four percent' etc*/
     percentages: function percentages(n) {
-      var m = find(this, n);
-      m = m["if"]('/%$/');
+      var m = this.match('#Percent+');
+
+      if (typeof n === 'number') {
+        m = m.eq(n);
+      }
+
       return new Numbers(m.list, this, this.world);
     },
+
+    /** return '3 out of 5' or '3/5' etc**/
     fractions: function fractions(n) {
-      var nums = find(this, n);
-      var m = nums["if"]('#Fraction'); //2/3
+      var m = this.match('#Fraction+');
+
+      if (typeof n === 'number') {
+        m = m.eq(n);
+      }
 
       return new Fraction(m.list, this, this.world);
     },

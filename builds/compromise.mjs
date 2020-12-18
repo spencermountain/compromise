@@ -2484,7 +2484,7 @@ var parseToken = function parseToken(w) {
       obj.word = w;
       return obj;
     }
-  } // support #Tag{0,9}
+  } // support #Tag{1,9}
 
 
   if (hasMinMax.test(w) === true) {
@@ -2500,9 +2500,12 @@ var parseToken = function parseToken(w) {
         // '{3,}' Three or more times
         obj.min = Number(arr[0]);
         obj.max = Number(arr[1] || 999);
-      }
+      } // use same method as '+'
 
-      obj.greedy = true;
+
+      obj.greedy = true; // 0 as min means the same as '?'
+
+      obj.optional = true;
       return '';
     });
   } //do the actual token content
@@ -2765,7 +2768,8 @@ var syntax = function syntax(input) {
   tokens = byWords(tokens);
   tokens = tokens.map(parseToken_1); //clean up anything weird
 
-  tokens = postProcess_1(tokens);
+  tokens = postProcess_1(tokens); // console.log(tokens)
+
   return tokens;
 };
 
@@ -9042,7 +9046,7 @@ var startsWith = [//web tags
 [/^[-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?%\+?$/, ['Percent', 'Cardinal', 'NumericValue']], //7%  ..
 [/^\.[0-9]+%$/, ['Percent', 'Cardinal', 'NumericValue']], //.7%  ..
 //fraction
-[/^[0-9]{1,4}\/[0-9]{1,4}$/, 'Fraction'], //3/2ths
+[/^[0-9]{1,4}\/[0-9]{1,4}(st|nd|rd|th)?s?$/, 'Fraction'], //3/2ths
 //range
 [/^[0-9.]{1,2}[-–][0-9]{1,2}$/, ['Value', 'NumberRange']], //7-8
 [/^[0-9.]{1,3}(st|nd|rd|th)?[-–][0-9\.]{1,3}(st|nd|rd|th)?$/, 'NumberRange'], //5-7

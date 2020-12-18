@@ -36,6 +36,10 @@ test('percent-conversion:', function (t) {
   r = nlp(str).values().toText().all()
   t.equal(r.out(), 'around one hundred percent of the budget', 'to text')
 
+  str = 'around 100 percent of the budget'
+  r = nlp(str).values().toText().all()
+  t.equal(r.out(), 'around one hundred percent of the budget', 'to text')
+
   t.end()
 })
 
@@ -46,13 +50,15 @@ test('percent-tag:', function (t) {
     ['2.22%', true],
     ['.2%', true],
     ['0.2%', true],
+    ['fifteen percent', true],
+    ['one hundred and ten percent', true],
     ['2,999%', true],
     ['2asdf99%', false],
     ['99%3', false],
   ]
   tests.forEach(function (a) {
     let r = nlp(a[0])
-    t.equal(r.has('#Percent'), a[1], "Percent-has: '" + a[0] + "'")
+    t.equal(r.percentages().found, a[1], "Percent-has: '" + a[0] + "'")
   })
   t.end()
 })

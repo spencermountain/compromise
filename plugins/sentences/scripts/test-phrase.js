@@ -1,6 +1,6 @@
 const fs = require('fs')
 // parse training data from UD into json
-let path = `/Users/spencer/Downloads/Universal Dependencies 2.6/ud-treebanks-v2.6/UD_English-EWT/en_ewt-ud-train.conllu`
+let path = `./en_ewt-ud-train.conllu`
 const conllu = require('conllu-stream')
 
 const haveBefore = {
@@ -22,10 +22,10 @@ let result = []
 fs.createReadStream(path)
   .pipe(conllu())
   .on('data', function (sentence) {
-    let terms = Object.keys(sentence.tokens).map(k => {
+    let terms = Object.keys(sentence.tokens).map((k) => {
       return sentence.tokens[k]
     })
-    terms = terms.filter(t => t.type === 'word' && t.upostag !== 'PUNCT')
+    terms = terms.filter((t) => t.type === 'word' && t.upostag !== 'PUNCT')
     let subj = null
     let root = null
     let obj = null
@@ -97,7 +97,7 @@ fs.createReadStream(path)
     // let obj = result[135]
     // // console.log(obj)
     // console.log(result[20])
-    result = result.filter(o => o.verb && o.obj && o.verb)
+    result = result.filter((o) => o.verb && o.obj && o.verb)
 
     console.log(JSON.stringify(result, null, 2))
   })

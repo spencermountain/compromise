@@ -2284,6 +2284,7 @@ var plugin = function plugin(Doc, world) {
     /** return '4%' or 'four percent' etc*/
     percentages: function percentages(n) {
       var m = this.match('#Percent+');
+      m = m.concat(this.match('[#Cardinal] percent', 0));
 
       if (typeof n === 'number') {
         m = m.eq(n);

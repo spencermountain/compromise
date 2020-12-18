@@ -1,0 +1,17 @@
+exports.NOOP = Symbol("NOOP") // basically continue
+exports.MATCH_ANY = Symbol("MATCH_ANY")
+exports.MATCH_WORD = Symbol("MATCH_WORD")
+exports.MATCH_TAG = Symbol("MATCH_TAG")
+exports.MATCH_METHOD = Symbol("MATCH_METHOD")
+exports.MATCH_END = Symbol("MATCH_END")
+exports.JMP = Symbol("JMP")
+exports.SPLIT = Symbol("SPLIT")
+exports.GLOBAL_SAVE = Symbol("GLOBAL_SAVE") // Set global save value, if true saves results.
+exports.MATCH = Symbol("MATCH")
+exports.OGROUP = Symbol("OGROUP") // open group
+exports.CGROUP = Symbol("CGROUP") // close group
+exports.INCV = Symbol("INCV") // increment a value, set to 0 by default
+exports.JMP_LT = Symbol("JMP_LT") // jmp if a variable is less than value else continue
+exports.SPLIT_LT = Symbol("SPLIT_LT") // split if a variable is less than value else continue
+exports.LOOKAHEAD = Symbol("LOOKAHEAD")
+exports.NEGATIVE_LOOKAHEAD = Symbol("NEGATIVE_LOOKAHEAD")

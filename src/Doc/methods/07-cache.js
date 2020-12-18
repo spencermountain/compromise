@@ -26,7 +26,7 @@ exports.cache = function (options) {
       // cache root-form on Term, too
       if (options.root) {
         t.setRoot(this.world)
-        words[t.root] = true
+        words[t.root] = [i]
       }
     })
   })

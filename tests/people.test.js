@@ -22,6 +22,10 @@ test('people:', function (t) {
   arr = doc.people().toLowerCase().out('text')
   t.deepEqual(arr, 'rod l. macdonald', 'the-rod-2')
 
+  doc = nlp('Francine du Plessix')
+  arr = doc.people().text()
+  t.deepEqual(arr, 'Francine du Plessix', 'name-du-person')
+
   doc = nlp("Matt 'the doctor' Smith lasted three seasons.")
   arr = doc.people().toLowerCase().out()
   t.deepEqual(arr, "matt 'the doctor' smith", 'nickname-1')

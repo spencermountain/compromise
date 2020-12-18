@@ -22,7 +22,9 @@ exports.out = function (method) {
     return this.json({ offset: true })
   }
   if (method === 'array') {
-    return this.json({ terms: false }).map(obj => obj.text)
+    return this.json({ terms: false })
+      .map(obj => obj.text)
+      .filter(str => str)
   }
   if (method === 'freq' || method === 'frequency') {
     return topk(this)

@@ -1,0 +1,67 @@
+{
+  "name": "compromise-strict",
+  "description": "Formal parser for the compromise match syntax",
+  "version": "0.0.2",
+  "author": "Kelvin Hammond <hammond.kelvin@gmail.com>",
+  "main": "builds/compromise-strict.js",
+  "unpkg": "builds/compromise-strict.min.js",
+  "module": "builds/compromise-strict.mjs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spencermountain/compromise.git"
+  },
+  "scripts": {
+    "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
+    "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
+    "watch": "amble ./scratch.js",
+    "build": "rollup -c --silent",
+    "bench": "node bench.js"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": true,
+    "printWidth": 100
+  },
+  "keywords": [
+    "compromise",
+    "nlp-compromise",
+    "regex",
+    "match",
+    "nlp",
+    "natural-language-parsing",
+    "natural",
+    "language",
+    "pikevm"
+  ],
+  "bugs": {
+    "url": "https://github.com/spencermountain/compromise/issues"
+  },
+  "homepage": "https://github.com/spencermountain/compromise#readme",
+  "files": [
+    "builds/"
+  ],
+  "eslintIgnore": [
+    "builds/*.js"
+  ],
+  "dependencies": {
+    "chevrotain": "7.0.3"
+  },
+  "devDependencies": {
+    "@babel/core": "7.12.10",
+    "@babel/preset-env": "7.12.11",
+    "@rollup/plugin-commonjs": "17.0.0",
+    "@rollup/plugin-node-resolve": "11.0.1",
+    "babel-jest": "26.6.3",
+    "benchmark": "^2.1.4",
+    "compromise": "13.7.0",
+    "prettier": "2.2.1",
+    "rollup": "2.35.1",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-terser": "7.0.2",
+    "tap-dancer": "0.3.1",
+    "tape": "5.0.1"
+  },
+  "license": "GPL-3.0-or-later"
+}

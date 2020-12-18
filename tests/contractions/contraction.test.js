@@ -71,6 +71,16 @@ test('number-range', function (t) {
   let doc = nlp(`between 5-7.`)
   t.equal(doc.has('5 to 7'), true, 'range-preposition-match')
   t.equal(doc.has('#NumberRange'), true, 'has NumberRange tag')
+  t.equal(doc.has('#Value'), true, 'has Value tag')
+
+  let arr = nlp('1-2').contractions().expand().match('#Value').out('array')
+  t.equal(arr.length, 2, 'found numbers')
+
+  doc = nlp('20th-21st')
+  t.equal(doc.has('#NumberRange'), true, 'ordinal has NumberRange tag')
+  t.equal(doc.has('#Ordinal'), true, 'has Ordinal tag')
+  arr = doc.contractions().expand().terms().out('array')
+  t.deepEqual(arr, ['20th', 'to', '21st'])
   t.end()
 })
 

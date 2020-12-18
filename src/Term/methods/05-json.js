@@ -24,7 +24,7 @@ exports.json = function (options, world) {
     result.text = this.text
   }
   if (options.normal) {
-    result.normal = this.normal
+    result.normal = this.clean
   }
 
   if (options.tags) {

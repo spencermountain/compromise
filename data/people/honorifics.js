@@ -4,7 +4,6 @@ module.exports = [
   'ayatullah',
   'brigadier',
   'captain',
-  'captain',
   'chancellor',
   'colonel',
   'commander',

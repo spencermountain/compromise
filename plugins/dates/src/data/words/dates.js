@@ -12,6 +12,8 @@ module.exports = [
 
   'eod',
   'eom',
+  'eoy',
   'standard time',
   'daylight time',
+  'tommorrow',
 ]

@@ -1,4 +1,4 @@
-const parse = require('./02-getDate')
+const parse = require('./find')
 const abbrevs = require('./data/_abbrevs')
 
 module.exports = {

@@ -18,7 +18,6 @@ test('tokenize() runs without pos-tagging', function (t) {
   t.equal(r.out('text'), str, 'tokenize output is same')
 
   t.equal(r.list.length, 1, 'sentence-parser-working')
-
   const found = r.match('#Noun').found
   t.equal(found, false, 'no sneaky-tagging')
 

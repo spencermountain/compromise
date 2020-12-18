@@ -1,30 +1,14 @@
-/* compromise-sentences 0.1.0 MIT */
+/* compromise-sentences 0.1.1 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global = global || self, global.compromiseSentences = factory());
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.compromiseSentences = factory());
 }(this, (function () { 'use strict';
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
       throw new TypeError("Cannot call a class as a function");
     }
-  }
-
-  function _defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }
-
-  function _createClass(Constructor, protoProps, staticProps) {
-    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) _defineProperties(Constructor, staticProps);
-    return Constructor;
   }
 
   function _inherits(subClass, superClass) {
@@ -106,6 +90,109 @@
     };
   }
 
+  var tags = {
+    // Phrase: {},
+    NounPhrase: {
+      // isA: 'Phrase',
+      notA: ['VerbPhrase', 'AdjectivePhrase'],
+      color: 'blue'
+    },
+    VerbPhrase: {
+      // isA: 'Phrase',
+      notA: ['AdjectivePhrase', 'NounPhrase'],
+      color: 'green'
+    },
+    AdjectivePhrase: {
+      // isA: 'Phrase',
+      notA: ['VerbPhrase', 'NounPhrase'],
+      color: 'magenta'
+    },
+    Subordinate: {
+      // isA: 'Phrase',
+      notA: [] // color: '',
+
+    }
+  };
+
+  var tagger = function tagger(doc) {
+    doc.match('#Noun').tag('NounPhrase');
+    doc.match('#Verb').tag('VerbPhrase'); // NounPhrase
+
+    doc.match('(this|that|those|these)').tag('NounPhrase');
+    doc.match('#Adjective+ #NounPhrase').tagSafe('NounPhrase');
+    doc.match('#NounPhrase #Adjective+').tagSafe('NounPhrase'); // numbers
+
+    doc.match('#Value #NounPhrase').tag('NounPhrase'); // (determiners)
+
+    doc.match('#Determiner #NounPhrase').tag('NounPhrase');
+    doc.match('#Determiner #Adverb+? #Adjective+ #NounPhrase').tag('NounPhrase');
+    doc.match('(many|most|all|one|some|plenty) of #NounPhrase').tag('NounPhrase');
+    doc.match('such a #NounPhrase').tag('NounPhrase'); // VerbPhrase
+
+    doc.match('#VerbPhrase #Adverb+').tagSafe('VerbPhrase');
+    doc.match('#Adverb+ #VerbPhrase').tagSafe('VerbPhrase');
+    doc.match('#Auxiliary+ #VerbPhrase').tagSafe('VerbPhrase');
+    doc.match('#VerbPhrase no').tagSafe('VerbPhrase');
+    doc.match('not #VerbPhrase').tagSafe('VerbPhrase'); // claiming that
+
+    doc.match('#VerbPhrase [that]', 0).unTag('NounPhrase'); // (conjunctions)
+
+    doc.match('#VerbPhrase #Conjunction #VerbPhrase').tagSafe('VerbPhrase'); // nouns
+
+    doc.match('(who|what|which)').tag('NounPhrase'); // Adjective
+
+    doc.match('#Adverb+ #Adjective').tagSafe('AdjectivePhrase');
+    doc.match('#Adjective').tagSafe('AdjectivePhrase'); // missing
+
+    doc.match('#Value').tagSafe('NounPhrase');
+    doc.match('#Date').tagSafe('NounPhrase');
+    doc.match('#Date at #Date').tagSafe('NounPhrase');
+  };
+
+  var tagger_1 = tagger;
+
+  /** add a word to the start of this sentence */
+  var prepend = function prepend(str) {
+    this.forEach(function (doc) {
+      // repair the titlecase
+      var firstTerms = doc.match('^.');
+      firstTerms.not('#ProperNoun').toLowerCase(); // actually add the word
+
+      firstTerms._prepend(str); // add a titlecase
+
+
+      firstTerms.terms(0).toTitleCase();
+    });
+    return this;
+  };
+  /** add a word to the end of this sentence */
+
+
+  var append_1 = function append_1(str) {
+    var hasEnd = /[.?!]\s*$/.test(str);
+    this.forEach(function (doc) {
+      var end = doc.match('.$');
+      var lastTerm = end.termList(0);
+      var punct = lastTerm.post;
+
+      if (hasEnd === true) {
+        punct = '';
+      } // add punctuation to the end
+
+
+      end._append(str + punct); // remove punctuation from the former last-term
+
+
+      lastTerm.post = ' ';
+    });
+    return this;
+  };
+
+  var append = {
+    prepend: prepend,
+    append: append_1
+  };
+
   // if a clause starts with these, it's not a main clause
   var subordinate = "(after|although|as|because|before|if|since|than|that|though|when|whenever|where|whereas|wherever|whether|while|why|unless|until|once)";
   var relative = "(that|which|whichever|who|whoever|whom|whose|whomever)"; //try to remove secondary clauses
@@ -174,6 +261,44 @@
 
   var parse_1 = parse;
 
+  /** overload the original json with noun information */
+
+  var json_1 = function json_1(options) {
+    var n = null;
+
+    if (typeof options === 'number') {
+      n = options;
+      options = null;
+    }
+
+    options = options || {
+      text: true,
+      normal: true,
+      trim: true,
+      terms: true
+    };
+    var res = [];
+    this.forEach(function (doc) {
+      var json = doc._json(options)[0];
+
+      var obj = parse_1(doc);
+      json.subject = obj.subject.json(options)[0];
+      json.verb = obj.verb.json(options)[0];
+      json.object = obj.object.json(options)[0];
+      res.push(json);
+    });
+
+    if (n !== null) {
+      return res[n];
+    }
+
+    return res;
+  };
+
+  var json = {
+    json: json_1
+  };
+
   /** he walks -> he did not walk */
 
   var toNegative = function toNegative() {
@@ -198,7 +323,7 @@
     return this;
   };
 
-  var negate = {
+  var negative = {
     toNegative: toNegative,
     toPositive: toPositive
   };
@@ -310,7 +435,7 @@
     return this;
   };
 
-  var types = {
+  var questions = {
     isQuestion: isQuestion_1$1,
     isExclamation: isExclamation,
     isStatement: isStatement,
@@ -342,10 +467,10 @@
         vb = vb.verbs().toParticiple();
         obj.verb.replaceWith(vb, false);
       } else {
-        //do a normal conjugation
+        //   //do a normal conjugation
         vb = vb.verbs().toPastTense();
         obj.verb.replaceWith(vb, false);
-      } // trailing gerund/future/present are okay, but 'walked and eats' is not
+      } // // trailing gerund/future/present are okay, but 'walked and eats' is not
 
 
       if (obj.object && obj.object.found && obj.object.has('#PresentTense')) {
@@ -422,126 +547,69 @@
       }
     });
     return this;
-  }; // toContinuous() {
-  //   return this
-  // }
+  };
+  /** the main noun of the sentence */
 
+
+  var subjects = function subjects() {
+    return this.map(function (doc) {
+      var res = parse_1(doc);
+      return res.subject;
+    });
+  };
+  /** return sentences that are in passive-voice */
+
+
+  var isPassive = function isPassive() {
+    return this["if"]('was #Adverb? #PastTense #Adverb? by'); //haha
+  };
 
   var tense = {
     toPastTense: toPastTense,
     toParticiple: toParticiple,
     toPresentTense: toPresentTense,
-    toFutureTense: toFutureTense
+    toFutureTense: toFutureTense,
+    subjects: subjects,
+    isPassive: isPassive
   };
 
-  var methods = Object.assign({}, negate, types, tense);
+  var phrases_1 = function phrases_1() {
+    var arr = [];
+    this.forEach(function (s) {
+      s = s.splitOn('#VerbPhrase+');
+      s = s.splitOn('#NounPhrase+');
+      s = s.splitOn('#AdjectivePhrase+');
+      arr = arr.concat(s.list);
+    });
+    return this.buildFrom(arr);
+  };
 
-  var addMethod = function addMethod(Doc) {
+  var phrases = {
+    phrases: phrases_1
+  };
+
+  var methods = Object.assign({}, append, json, negative, questions, tense, phrases);
+
+  var plugin = function plugin(Doc, world) {
+    // our new tags
+    world.addTags(tags); // run our tagger
+
+    world.postProcess(tagger_1);
     /**  */
+
     var Sentences = /*#__PURE__*/function (_Doc) {
       _inherits(Sentences, _Doc);
 
       var _super = _createSuper(Sentences);
 
-      function Sentences(list, from, world) {
+      function Sentences(list, from, w) {
         _classCallCheck(this, Sentences);
 
         list = list.map(function (p) {
           return p.clone(true);
         });
-        return _super.call(this, list, from, world);
+        return _super.call(this, list, from, w);
       }
-      /** overload the original json with noun information */
-
-
-      _createClass(Sentences, [{
-        key: "json",
-        value: function json(options) {
-          var n = null;
-
-          if (typeof options === 'number') {
-            n = options;
-            options = null;
-          }
-
-          options = options || {
-            text: true,
-            normal: true,
-            trim: true,
-            terms: true
-          };
-          var res = [];
-          this.forEach(function (doc) {
-            var json = doc.json(options)[0];
-            var obj = parse_1(doc);
-            json.subject = obj.subject.json(options)[0];
-            json.verb = obj.verb.json(options)[0];
-            json.object = obj.object.json(options)[0];
-            res.push(json);
-          });
-
-          if (n !== null) {
-            return res[n];
-          }
-
-          return res;
-        }
-        /** the main noun of the sentence */
-
-      }, {
-        key: "subjects",
-        value: function subjects() {
-          return this.map(function (doc) {
-            var res = parse_1(doc);
-            return res.subject;
-          });
-        }
-        /** return sentences that are in passive-voice */
-
-      }, {
-        key: "isPassive",
-        value: function isPassive() {
-          return this["if"]('was #Adverb? #PastTense #Adverb? by'); //haha
-        }
-        /** add a word to the start of this sentence */
-
-      }, {
-        key: "prepend",
-        value: function prepend(str) {
-          this.forEach(function (doc) {
-            // repair the titlecase
-            var firstTerms = doc.match('^.');
-            firstTerms.not('#ProperNoun').toLowerCase(); // actually add the word
-
-            firstTerms.prepend(str); // add a titlecase
-
-            firstTerms.terms(0).toTitleCase();
-          });
-          return this;
-        }
-        /** add a word to the end of this sentence */
-
-      }, {
-        key: "append",
-        value: function append(str) {
-          var hasEnd = /[.?!]\s*$/.test(str);
-          this.forEach(function (doc) {
-            var end = doc.match('.$');
-            var lastTerm = end.termList(0);
-            var punct = lastTerm.post;
-
-            if (hasEnd === true) {
-              punct = '';
-            } // add punctuation to the end
-
-
-            end.append(str + punct); // remove punctuation from the former last-term
-
-            lastTerm.post = ' ';
-          });
-          return this;
-        }
-      }]);
 
       return Sentences;
     }(Doc); // add some aliases
@@ -549,16 +617,35 @@
 
     methods.questions = methods.isQuestion;
     methods.exclamations = methods.isExclamation;
-    methods.statements = methods.isStatement;
+    methods.statements = methods.isStatement; // keep backups of these methods
+
+    methods._prepend = Sentences.prototype.prepend;
+    methods._append = Sentences.prototype.append;
+    methods._json = Sentences.prototype.json;
     Object.assign(Sentences.prototype, methods);
+    /** create a new Sentences object */
+
+    Sentences.prototype.buildFrom = function (list) {
+      list = list.map(function (p) {
+        return p.clone(true);
+      });
+      var doc = new Sentences(list, this, this.world);
+      return doc;
+    };
+    /** create a new Doc object */
+
+
+    Sentences.prototype.toDoc = function () {
+      return Doc.prototype.buildFrom(this.list);
+    };
     /** overload original sentences() method and return Sentence class**/
+
 
     Doc.prototype.sentences = function (n) {
       var arr = [];
       this.list.forEach(function (p) {
         arr.push(p.fullSentence());
-      }); //grab (n)th result
-
+      });
       var s = new Sentences(arr, this, this.world);
 
       if (typeof n === 'number') {
@@ -571,7 +658,7 @@
     return Doc;
   };
 
-  var src = addMethod;
+  var src = plugin;
 
   return src;
 

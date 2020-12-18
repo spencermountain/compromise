@@ -41,7 +41,7 @@ const list = [
   //folks like her
   { match: '#Noun [like] #Noun', group: 0, tag: 'Preposition', reason: 'noun-like' },
   //fix for busted-up phrasalVerbs
-  { match: '#Noun [#Particle]', group: 0, tag: 'Preposition', reason: 'repair-noPhrasal' },
+  // { match: '#Noun [#Particle]', group: 0, tag: 'Preposition', reason: 'repair-noPhrasal' },
 
   // ==== Conditions ====
   // had he survived,
@@ -55,7 +55,7 @@ const list = [
   { match: '[how] (#Determiner|#Copula|#Modal|#PastTense)', group: 0, tag: 'QuestionWord', reason: 'how-is' },
   // //the word 'which'
   { match: '^which', tag: 'QuestionWord', reason: 'which-question' },
-  { match: '[which] . (#Noun)+ #Pronoun', group: 0, tag: 'QuestionWord', reason: 'which-question2' },
+  // { match: '[which] . (#Noun)+ #Pronoun', group: 0, tag: 'QuestionWord', reason: 'which-question2' },
   // { match: 'which', tag: 'QuestionWord', reason: 'which-question3' },
 
   // ==== Conjunctions ====
@@ -67,12 +67,12 @@ const list = [
     tag: 'Conjunction',
     reason: 'how-he-is-x',
   },
-  {
-    match: '[(who|what|where|why|how|when)] #Noun #Adverb? #Infinitive not? #Gerund',
-    group: 0,
-    tag: 'Conjunction',
-    reason: 'when i go fishing',
-  },
+  // {
+  //   match: '[(who|what|where|why|how|when)] #Noun #Adverb? #Infinitive not? #Gerund',
+  //   group: 0,
+  //   tag: 'Conjunction',
+  //   reason: 'when-i-go-fishing',
+  // },
 ]
 
 module.exports = list

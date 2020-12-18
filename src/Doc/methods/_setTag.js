@@ -5,6 +5,8 @@ const tagTerms = function (tag, doc, safe, reason) {
     tagList = tag.split(' ')
   }
 
+  // doc.parents()[0].reasons.push(reason)
+
   //do indepenent tags for each term:
   doc.list.forEach(p => {
     let terms = p.terms()

@@ -13,7 +13,7 @@
   "extends": [],
   "rules": {
     "semi": ["warn", "never"],
-    "indent": ["error", 2],
+    "indent": ["error", 2, { "SwitchCase": 1 }],
     "spaced-comment": 0,
     "no-cond-assign": 2,
     "no-var": 1,

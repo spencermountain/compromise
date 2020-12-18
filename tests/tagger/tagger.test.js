@@ -204,7 +204,7 @@ test('pos-basic-tag:', function (t) {
     [`it was redefining`, ['Pronoun', 'Copula', 'Adjective']],
     [`it was a redefining moment`, ['Pronoun', 'Copula', 'Determiner', 'Adjective', 'Noun']],
     [`he is redefining art`, ['Pronoun', 'Copula', 'Verb', 'Noun']],
-    [`revealing his guts`, ['Gerund', 'Possessive', 'Plural']],
+    [`revealing his guts`, ['Verb', 'Possessive', 'Plural']],
     // [`the ruling party`, ['Determiner', 'Adjective', 'Singular']],
     [`i found it isolating`, ['Noun', 'PastTense', 'Noun', 'Adjective']],
     // [`promising to leave`, ['Gerund', 'Conjunction', 'Verb']],

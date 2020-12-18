@@ -35,22 +35,26 @@ const clean = function (str) {
   if (/^(re|un)-?[^aeiou]./.test(str) === true) {
     str = str.replace('-', '')
   }
+  //compact acronyms
+  if (isAcronym(str)) {
+    str = str.replace(/\./g, '')
+  }
   //strip leading & trailing grammatical punctuation
   if (/^[:;]/.test(str) === false) {
     str = str.replace(/\.{3,}$/g, '')
     str = str.replace(/[",\.!:;\?\)]+$/g, '')
     str = str.replace(/^['"\(]+/g, '')
   }
+  // remove zero-width characters
+  str = str.replace(/[\u200B-\u200D\uFEFF]/g, '')
+
   //do this again..
   str = str.trim()
   //oh shucks,
   if (str === '') {
     str = original
   }
-  //compact acronyms
-  if (isAcronym(str)) {
-    str = str.replace(/\./g, '')
-  }
+
   //nice-numbers
   str = str.replace(/([0-9]),([0-9])/g, '$1$2')
   return str

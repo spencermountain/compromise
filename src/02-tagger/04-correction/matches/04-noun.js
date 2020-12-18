@@ -18,7 +18,12 @@ module.exports = [
   //Los Angeles's fundraiser
   { match: '#Place+ #Possessive', tag: 'Possessive', reason: 'place-possessive' },
   // assign all tasks
-  { match: '#Verb (all|every|each|most|some|no) [#PresentTense]', group: 0, tag: 'Noun', reason: 'all-presentTense' },
+  {
+    match: '(#Verb && !#Modal) (all|every|each|most|some|no) [#PresentTense]',
+    group: 0,
+    tag: 'Noun',
+    reason: 'all-presentTense',
+  },
 
   //the above is clear
   { match: '#Determiner [#Adjective] #Copula', group: 0, tag: 'Noun', reason: 'the-adj-is' },
@@ -61,6 +66,8 @@ module.exports = [
   { match: '(#Noun && @hasComma) #Noun (and|or) [#PresentTense]', group: 0, tag: 'Noun', reason: 'noun-list' }, //3 feet
   { match: '(right|rights) of .', tag: 'Noun', reason: 'right-of' }, // a bit
   { match: 'a [bit]', group: 0, tag: 'Noun', reason: 'bit-2' },
+  // my first thought
+  { match: '#Possessive #Ordinal [#PastTense]', group: 0, tag: 'Noun', reason: 'first-thought' },
 
   //running-a-show
   { match: '#Gerund #Determiner [#Infinitive]', group: 0, tag: 'Noun', reason: 'running-a-show' },
@@ -127,7 +134,7 @@ module.exports = [
   // goes to sleep
   { match: '(go|goes|went) to [#Infinitive]', group: 0, tag: 'Noun', reason: 'goes-to-verb' },
   //a great run
-  { match: '(a|an) #Adjective [(#Infinitive|#PresentTense)]', tag: 'Noun', reason: 'a|an2' },
+  // { match: '(a|an) #Adjective [(#Infinitive|#PresentTense)]', tag: 'Noun', reason: 'a|an2' },
   //a tv show
   { match: '(a|an) #Noun [#Infinitive]', group: 0, tag: 'Noun', reason: 'a-noun-inf' },
   //do so

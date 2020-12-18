@@ -35,6 +35,7 @@ doc.numbers().debug()
 
 - **[.numbers()](https://observablehq.com/@spencermountain/compromise-values)** - grab all written and numeric values
   - **[.numbers().json()](https://observablehq.com/@spencermountain/compromise-values)** - overloaded output with number metadata
+  - **[.numbers().get()](https://observablehq.com/@spencermountain/compromise-values)** - retrieve the parsed number(s)
   - **[.numbers().fractions()](https://observablehq.com/@spencermountain/compromise-values)** - things like `1/3rd`
   - **[.numbers().toText()](https://observablehq.com/@spencermountain/compromise-values)** - convert number to `five` or `fifth`
   - **[.numbers().toNumber()](https://observablehq.com/@spencermountain/compromise-values)** - convert number to `5` or `5th`
@@ -51,22 +52,37 @@ doc.numbers().debug()
   - **[.numbers().isOrdinal()](https://observablehq.com/@spencermountain/compromise-values)** - return only ordinal numbers
   - **[.numbers().isCardinal()](https://observablehq.com/@spencermountain/compromise-values)** - return only cardinal numbers
   - **[.numbers().toLocaleString()](https://observablehq.com/@spencermountain/compromise-values)** - add commas, or nicer formatting for numbers
+  - **[.numbers().normalize()](https://observablehq.com/@spencermountain/compromise-values)** - split-apart numbers and units `20mins` -> `20 mins`
 - **[.money()](https://observablehq.com/@spencermountain/compromise-values)** - like \$5.50 or '5 euros'
+  - **[.money().get()](https://observablehq.com/@spencermountain/compromise-values)** - retrieve the parsed amount(s) of money
+  - **[.money().json()](https://observablehq.com/@spencermountain/compromise-values)** - currency + number info
+  - **[.money().currency()](https://observablehq.com/@spencermountain/compromise-values)** - which currency the money is in
 - **[.fractions()](https://observablehq.com/@spencermountain/compromise-values)** - like '2/3rds'
 - **[.percentages()](https://observablehq.com/@spencermountain/compromise-values)** - like '2.5%'
 
-### Notes:
+### Opinions:
 
 if a number is changed within a sentence, attempts are made at sentence-agreement - in both a leading determiner, and the plurality of a following noun.
 This is done safely, but it may have sneaky or unintended effects for some applications.
 
 **money, fractions, and percentages** will be returned and work fine in `.numbers()`, but can be isolated with `.money()`, `.fractions()` and `.percentages()`
 
+### Ambiguous currencies
+many currency symbols are re-used, for different countries. We try to make some safe assumptions about this. compromise-numbers assumes a naked `$` is USD, `£` is GBP, `₩` is South Korean, and `'kr'` is Swedish Krona.
+
+Configuring this should be possible in future versions.
+
+### Years and Time
 **times** like `5pm` are parsed and handled by [compromise-dates](https://observablehq.com/@spencermountain/compromise-dates) and are not returned by `.numbers()`.
 
+### Decimal seperators
 compromise-numbers uses the [period decimal point](https://en.wikipedia.org/wiki/Decimal_separator) and supports comma as a thousands-seperator.
 Some european or latin-american number formats like comma-decimals, or space-separated-thousands do not parse properly.
 
+### Serial numbers
 attempts are made to ignore phone-numbers, postal-codes and credit-card numbers from `.numbers()` results, but there may be numbers used in other ways that are not accounted for.
+
+
+work in progress!
 
 MIT

@@ -8,7 +8,7 @@ test('organization test', function (t) {
     'Capital One',
     'HSBC',
     'NASA',
-    '7-eleven',
+    // '7-eleven',
     'al qaeda',
     'FBI',
     'monsanto',

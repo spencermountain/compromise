@@ -13,7 +13,6 @@ module.exports = [
   'hulk hogan',
   'kanye west',
   'kiefer sutherland',
-  'jk rowling',
   'kobe bryant',
   'lebron james',
   'messiaen',
@@ -44,7 +43,6 @@ module.exports = [
   'brock',
   'carson',
   'clinton',
-  'cruz',
   'dalton',
   'dante',
   'effie',
@@ -59,4 +57,6 @@ module.exports = [
   'palmer',
   'piper',
   'sung',
+  'taylor',
+  'reilly',
 ]

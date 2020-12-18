@@ -1,4 +1,5 @@
-/* compromise-pronounce 0.0.2 MIT */
+/* compromise-pronounce 0.0.3 MIT */
+//individual manipulations of the text
 var transformations = {
   dedup: function dedup(s) {
     return s.replace(/([^c])\1/g, '$1');
@@ -49,8 +50,9 @@ var transformations = {
     return s.replace(/s(h|io|ia)/g, 'x$1');
   },
   changeT: function changeT(s) {
-    s = s.replace(/t(ia[^n]|io)/g, 'x$1');
-    return s.replace(/th/, '0');
+    s = s.replace(/t(ia[^n]|io)/g, 'x$1'); // return s.replace(/th/, '0')
+
+    return s;
   },
   dropT: function dropT(s) {
     return s.replace(/tch/g, 'ch');
@@ -82,7 +84,6 @@ var transformations_1 = transformations;
 
 //adapted from the work of Chris Umbel
 // https://github.com/NaturalNode/natural/blob/master/lib/natural/phonetics/metaphone.js
-
 
 var metaphone = function metaphone(s) {
   s = transformations_1.dedup(s);

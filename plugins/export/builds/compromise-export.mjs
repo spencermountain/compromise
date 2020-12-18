@@ -1,4 +1,4 @@
-/* compromise-export 0.0.1 MIT */
+/* compromise-export 0.0.2 MIT */
 var reduceWords = function reduceWords(allWords) {
   var topWords = Object.keys(allWords).filter(function (str) {
     return allWords[str] >= 2;
@@ -170,6 +170,8 @@ var addMethods = function addMethods(Doc, world, nlp) {
     var json = _import(data, this.world);
     return nlp.fromJSON(json);
   };
+
+  nlp.load = nlp["import"];
 };
 
 var src = addMethods;

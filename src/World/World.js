@@ -59,6 +59,8 @@ class World {
       value: [],
       writable: true,
     })
+    // add our misc word-list
+    // this.addWords(misc)
     // add our compressed data to lexicon
     this.unpackWords(lexData)
     // add our irregulars to lexicon

@@ -1,13 +1,11 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
-const cardinal = function(str) {
-  return nlp(str)
-    .values()
-    .json(0).number
+const cardinal = function (str) {
+  return nlp(str).values().json(0).number
 }
 
-test('a very large cardinal', function(t) {
+test('a very large cardinal', function (t) {
   t.equal(cardinal('nine trillion two hundred'), 9000000000200, 'trillion')
   t.equal(cardinal('nine quadrillion two thousand and six'), 9000000000002006, 'quadrillion')
   t.equal(cardinal('ninety quintillion two thousand and six'), 90000000000000002006, 'quintilion')
@@ -24,37 +22,18 @@ test('a very large cardinal', function(t) {
   t.end()
 })
 
-test('number ordinal', function(t) {
+test('number ordinal', function (t) {
+  t.equal(nlp('two hundred trillion').values().toOrdinal().toNice().text(), '200,000,000,000,000th')
   t.equal(
-    nlp('two hundred trillion')
-      .values()
-      .toOrdinal()
-      .toNice()
-      .text(),
-    '200,000,000,000,000th'
-  )
-  t.equal(
-    nlp('thirty seven quadrillion and two hundred')
-      .values()
-      .toOrdinal()
-      .toNice()
-      .text(),
+    nlp('thirty seven quadrillion and two hundred').values().toOrdinal().toNice().text(),
     '37,000,000,000,000,200th'
   )
   t.equal(
-    nlp('thirty seven quadrillion, two thousand')
-      .values()
-      .toOrdinal()
-      .toNice()
-      .text(),
+    nlp('thirty seven quadrillion, two thousand').values().toOrdinal().toNice().text(),
     '37,000,000,000,002,000th'
   )
   t.equal(
-    nlp('ninety nine quadrillion, two hundred thousand')
-      .values()
-      .toOrdinal()
-      .toNice()
-      .text(),
+    nlp('ninety nine quadrillion, two hundred thousand').values().toOrdinal().toNice().text(),
     '99,000,000,000,200,000th'
   )
   //javascript math can't do this.
@@ -63,77 +42,30 @@ test('number ordinal', function(t) {
   t.end()
 })
 
-test('text ordinal', function(t) {
+test('text ordinal', function (t) {
   t.equal(
-    nlp('thirty quadrillion and two hundred')
-      .values()
-      .json()[0].textOrdinal,
+    nlp('thirty quadrillion and two hundred').values().json()[0].textOrdinal,
     'thirty quadrillion two hundredth'
   )
   t.equal(
-    nlp('nine trillion seven hundred fifty')
-      .values()
-      .json()[0].textOrdinal,
+    nlp('nine trillion seven hundred fifty').values().json()[0].textOrdinal,
     'nine trillion seven hundred and fiftieth'
   )
+  t.equal(nlp('a quintillion').values().json()[0].textOrdinal, 'one quintillionth')
   t.equal(
-    nlp('a quintillion')
-      .values()
-      .json()[0].textOrdinal,
-    'one quintillionth'
-  )
-  t.equal(
-    nlp('seventy-two quintillion')
-      .values()
-      .json()[0].textOrdinal,
+    nlp('seventy-two quintillion').values().json()[0].textOrdinal,
     'seventy two quintillionth'
   )
   t.end()
 })
 
-test('from number', function(t) {
-  t.equal(
-    nlp('9000000000200')
-      .values()
-      .toText()
-      .out(),
-    'nine trillion two hundred'
-  )
-  t.equal(
-    nlp('70000000000200')
-      .values()
-      .toText()
-      .out(),
-    'seventy trillion two hundred'
-  )
-  t.equal(
-    nlp('9000000000002006')
-      .values()
-      .toText()
-      .out(),
-    'nine quadrillion two thousand and six'
-  )
-  t.equal(
-    nlp('900,000,000')
-      .values()
-      .toText()
-      .out(),
-    'nine hundred million'
-  )
-  t.equal(
-    nlp('9,000,000,030')
-      .values()
-      .toText()
-      .out(),
-    'nine billion and thirty'
-  )
-  t.equal(
-    nlp('10,000,000,000')
-      .values()
-      .toText()
-      .out(),
-    'ten billion'
-  )
+test('from number', function (t) {
+  t.equal(nlp('9000000000200').values().toText().out(), 'nine trillion two hundred')
+  t.equal(nlp('70000000000200').values().toText().out(), 'seventy trillion two hundred')
+  t.equal(nlp('9000000000002006').values().toText().out(), 'nine quadrillion two thousand and six')
+  t.equal(nlp('900,000,000').values().toText().out(), 'nine hundred million')
+  t.equal(nlp('9,000,000,030').values().toText().out(), 'nine billion and thirty')
+  t.equal(nlp('10,000,000,000').values().toText().out(), 'ten billion')
   // t.equal(nlp('900,000,000,037').values().toText().out(), 'nine hundred billion and thirty seven');
   //javascript can't do this
   // t.equal(nlp('90000000000000002006').values().toText().out(), 'ninety quintillion two thousand and six');

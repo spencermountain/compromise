@@ -21,9 +21,9 @@ const myPlugin = function (Doc, world) {
     'minnie mouse': 'Character',
   })
   /** post-process tagger */
-  world.postProcess(doc => {
-    doc.match('light the lights').tag('#Verb . #Plural')
-  })
+  // world.postProcess(doc => {
+  //   doc.match('light the lights').tag('#Verb . #Plural')
+  // })
 }
 
 nlp.extend(myPlugin)

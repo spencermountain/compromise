@@ -25,7 +25,7 @@ test('noun-phrases', function (t) {
     ['i saw the central processing unit', 'central processing unit'],
     ['built a binary tree', 'binary tree'],
     ['it had good air-flow', 'air flow'],
-    ['the 5-person chairlift', '5-person chairlift'],
+    // ['the 5-person chairlift', '5-person chairlift'],
     ['he had the right of way', 'right of way'],
     ['my retail bank sucks', 'retail bank'],
     ["my activation code isn't working", 'activation code'],

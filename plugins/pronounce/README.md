@@ -24,14 +24,22 @@ it is a [metaphone](https://en.wikipedia.org/wiki/Metaphone) implementation in j
 
 ```javascript
 var nlp = require('compromise')
-var nlpPronounce = require('compromise-pronounce')
-nlp.extend(nlpPronounce)
-var texxt = 'Phil Collins'
-var doc = nlp(texxt)
+var plugin = require('compromise-pronounce')
+nlp.extend(plugin)
+
+var doc = nlp('Phil Collins')
 console.log(doc.pronounce())
+/*[{
+    text: 'Phil Collins',
+    pronounce: 'fil kolins'
+  }]
+*/
 ```
 
 it also takes advantage of the tokenization & cleverness of nlp_compromise.
 
 it's not been properly tested.
+
+Note that 'th' is transformed to `0` [1](https://en.wikipedia.org/wiki/Metaphone)
+
 MIT

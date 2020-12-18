@@ -8,9 +8,34 @@ compromise uses semver, and pushes to npm frequently
 
 While all _Major_ releases should be reviewed, our only two _large_ releases are **v6** in 2016 and and **v12** in 2019. Others have been mostly incremental, or niche.
 
-<!-- #### [Unreleased] -->
+<!-- #### [Unreleased] 
+-->
 
-#### 13.7.0
+#### 13.8.0 [Dec 2020]
+- **[change]** improved support for fractions in numbers-plugin #793
+- **[change]** remove zero-width characters in normalized output #759
+- **[change]** improved Person tagging with particles #794
+- **[change]** improved i18n Person names
+- **[change]** tagger+tokenization fixes
+- **[change]** remove empty results from .out('array') #795
+- **[change]** `.tokenize()` runs any postProcess() scripts from plugins
+- **[change]** improved support for lowercase acronyms
+- **[change]** - support years like '97
+- **[change]** - change tokenizer for '20-aug'
+- **[change]** - update deps of all plugins
+- **[fix]** - NumberRange tagging issue #795
+- **[fix]** - improved support for ordinal number ranges
+- **[fix]** - improved regex support in match-syntax
+- **[fix]** - improved support for ~soft~ match syntax #797
+- **[fix]** - better handling of `{0,n}` match syntax
+- **[new]** - new plugin `strict-match`
+- **[new]** - set NounPhrase, VerbPhrase tags in nlp-sentences plugin
+- **[new]** - `.phrases()` method in nlp-sentences plugin
+- **[new]** - support `.apppend(doc)` and `.prepend(doc)`
+- **[new]** - `values.normalize()` method
+
+
+#### 13.7.0 [Oct 2020]
 - **[change]** many misc tagging fixes
   - 'if' is now a #Preposition
   - possessive pronouns are #Pronoun and #Possessive
@@ -20,7 +45,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - **[change]** `@hasHyphen` returns false for sentence dashes
 - a lot more testing
 
-#### 13.6.0
+#### 13.6.0 [Oct 2020]
 
 - **[new]** first-attempt at `verbs().subject()` method
 - **[change]** avoid conjugating imperative tense - 'please close the door'
@@ -29,11 +54,11 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - **[change]** NumberRange must be < 4 digits #735
 - **[change]** reduction in #Person tag false-positives
 
-#### 13.5.0
+#### 13.5.0 [Sep 2020]
 
 - **[new]** add `.parseMatch()` method for pre-parsing match statements
 
-#### 13.4.0
+#### 13.4.0 [Sep 2020]
 
 - **[change]** stop including adverbs and some auxiliaries in `.conjugate()` results
 - **[change]** .append() and .prepend() on an empty doc now creates a new doc
@@ -43,27 +68,27 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - **[fix]** contractions issue in `.clone()`
 - **[fix]** try harder to retain modal-verbs in conjugation - 'i should drive' no-longer becomes 'i will drive'
 
-#### 13.3.2
+#### 13.3.2 [Aug 2020]
 
 - fix for offset issue #771
 - fix for `{min,max}` syntax #767
 - typescript fixes
 - update deps
 
-#### 13.3.1
+#### 13.3.1 [June 2020]
 
 -support unicode spaces for #759
 
 - major improvements to `compromise-plugin-dates` (1.0.0)
 
-#### 13.3.0
+#### 13.3.0 [June 2020]
 
 - bugfixes (conjugation and tagging) 752, 737, 725, 751, 743 748, 755, 758, 706, 761
 - support tokenized array as input
 - update deps
 - bugfix updates to `plugin-sentences`, and `plugin-dates`
 
-#### 13.2.0
+#### 13.2.0 [May 2020]
 
 - deprecate `.money()` and favour overloaded method in compromise-numbers plugin
 - add `.percentages()` and `.fractions()` to compromise-numbers plugin
@@ -95,7 +120,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - adds 'oneOf' match syntax param
 - fixes `[word?]` syntax parsing
 
-### 13.0.0
+### 13.0.0 [Feb 2020]
 
 _major changes to `.export()` and `[capture] group` match-syntax._
 
@@ -108,8 +133,8 @@ _major changes to `.export()` and `[capture] group` match-syntax._
 
 modifications:
 
-- fix nlp.clone() - hasn't worked properly, since v12. (@Drache93)
-- fix issues with greedy capture [*] and [.+] -(@Drache93) 💛
+- **[fix]** -  nlp.clone() - hasn't worked properly, since v12. (@Drache93)
+- **[fix]** -  issues with greedy capture [*] and [.+] -(@Drache93) 💛
 - add whitespace properties (pre+post) to default json output (suppress with `.json({ whitespace: false })`)
 - `.lookup({ key: val })` with an object now returns an object back ({val: Doc})
 - add nlp constructor as a third param to `.extend()`
@@ -118,21 +143,14 @@ modifications:
 - improved typescript types
 - add support for some french contractions like `j'aime -> je aime`
 - allow null results in `.map()` function
-
-new things:
-
-- add new named-match syntax, with .groups() method (@Drache93)
-- add `nlp.fromJSON()` method
-- add a new `compromise-tokenize.js` build, without the tagger, or data included.
-
-#### 12.4.0
-
-- adds proper `nlp.clone()` support (thanks @Drache93!)
 - better typescript support
 - allow longer acronyms
-- fix offset length issue
+- **[fix]** -  offset length issue
+- **[new]** -  add new named-match syntax, with .groups() method (@Drache93)
+- **[new]** -  add `nlp.fromJSON()` method
+- **[new]** -  add a new `compromise-tokenize.js` build, without the tagger, or data included.
 
-#### 12.3.0
+#### 12.3.0 [Jan 2020]
 
 - prefer `@titleCase` instead of `#TitleCase` tag
 - update dependencies
@@ -147,7 +165,7 @@ new things:
 - verb conjugation and tagger bugfixes
 - disambiguate between acronyms & yelling
 
-##### 12.2.1
+##### 12.2.1 [Dec 2019]
 
 - fix 'aint' contraction
 - make Doc.world writable
@@ -159,7 +177,7 @@ new things:
 - tag 'cookin', 'hootin' as `Gerund`
 - support unicode single-quote symbols in contractions
 
-#### 12.2.0
+#### 12.2.0 [Dec 2019]
 
 - improved splitting in .nouns()
 - add `.nouns().adjectives()` method
@@ -168,7 +186,7 @@ new things:
 - fix matches with optional-end `foo?$` match syntax
 - add typescript types for subsets
 
-#### 12.1.0
+#### 12.1.0 [Nov 2019]
 
 - add 'sideEffect:false' flag to build
 - considerable speedup (20%) in tagger
@@ -176,7 +194,7 @@ new things:
 - fix client-side logging
 - more flexible params to `replace()` and `replaceWith()`
 
-### 12.0.0 &nbsp; :postal_horn:
+### 12.0.0 &nbsp; :postal_horn: [Nov 2019]
 
 - see **[Release Notes](https://github.com/spencermountain/compromise/wiki/v12-Release-Notes)**
 

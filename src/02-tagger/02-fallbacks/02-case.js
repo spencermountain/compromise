@@ -8,7 +8,7 @@ const checkCase = function (doc) {
     let terms = p.terms()
     for (let i = 1; i < terms.length; i++) {
       const term = terms[i]
-      if (titleCase.test(term.text) === true && hasNumber.test(term.text) === false) {
+      if (titleCase.test(term.text) === true && hasNumber.test(term.text) === false && term.tags.Date === undefined) {
         term.tag('ProperNoun', 'titlecase-noun', world)
       }
     }

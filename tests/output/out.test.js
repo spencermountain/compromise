@@ -17,3 +17,10 @@ test('out-topk', function (t) {
   t.equal(out[0].count, 2, 'got count')
   t.end()
 })
+
+test('out-array', function (t) {
+  let arr = nlp('1-2').terms().out('array')
+  t.equal(arr.length, 1, 'one result')
+  t.equal(arr[0], '1-2', 'got contraction text')
+  t.end()
+})

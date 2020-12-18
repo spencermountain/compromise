@@ -1151,10 +1151,10 @@ module.exports = [
     text: 'It should be 4 - easy.',
     tags: 'PRP, MD, VB, CD, JJ',
   },
-  {
-    text: '1579-EBS Network Co. Division of 17H.',
-    tags: 'NNP, NNP, NNP, NN, IN, NN',
-  },
+  // {
+  //   text: '1579-EBS Network Co. Division of 17H.',
+  //   tags: 'NNP, NNP, NNP, NN, IN, NN',
+  // },
   {
     text: '1691-EPI-EBS Europe',
     tags: 'NNP, NNP',
@@ -3085,8 +3085,8 @@ module.exports = [
     tags: 'NNP, NNP, NNP',
   },
   {
-    text: 'The Transaction is for hot rolled steel with a thickness of 1 " and a width of 72 inches.',
-    tags: 'DT, NN, VBZ, IN, JJ, VBN, NN, IN, DT, NN, IN, CD, NN, CC, DT, NN, IN, CD, NNS',
+    text: 'The Transaction is for hot rolled steel with a thickness of 1" and a width of 72 inches.',
+    tags: 'DT, NN, VBZ, IN, JJ, VBN, NN, IN, DT, NN, IN, CD, CC, DT, NN, IN, CD, NNS',
   },
   {
     text: 'Each calendar month during the term of the Transaction will be a Dispatch Period.',
@@ -3447,10 +3447,6 @@ module.exports = [
   {
     text: "I'll call you shortly.",
     tags: 'PRP, MD, VB, PRP, RB',
-  },
-  {
-    text: 'N.O. ? Atlanta?',
-    tags: 'NNP, NNP',
   },
   {
     text: 'Memphis?',
@@ -4550,7 +4546,7 @@ module.exports = [
   },
   {
     text: 'NORTH CAROLINA RELIGIOUS COALITION FOR MARRIAGE EQUALITY',
-    tags: 'NNP, NNP, NNP, NNP, IN, NNP, NNP',
+    tags: 'NNP, NNP, JJ, NNP, IN, NNP, NNP',
   },
   {
     text:
@@ -5382,7 +5378,7 @@ module.exports = [
   },
   {
     text: 'YOU have to spend the time training.',
-    tags: 'PRP, VBP, TO, VB, DT, NN, VBG',
+    tags: 'PRP, VBP, VB, VB, DT, NN, VBG',
   },
   {
     text: '10 gallon nano reef ideas?',
@@ -6507,10 +6503,10 @@ module.exports = [
     text: 'Awesome !!!!',
     tags: 'JJ',
   },
-  {
-    text: 'they save me from having to deal with Tmobile ...',
-    tags: 'PRP, VBD, PRP, IN, VBG, TO, VB, IN, NNP',
-  },
+  // {
+  //   text: 'they save me from having to deal with Tmobile ...',
+  //   tags: 'PRP, VBD, PRP, IN, VBG, TO, VB, IN, NNP',
+  // },
   {
     text: 'Great service.',
     tags: 'JJ, NN',
@@ -7708,7 +7704,7 @@ module.exports = [
   },
   {
     text: 'I have to say the value of this place always amazes me.',
-    tags: 'PRP, VBP, TO, VB, DT, NN, IN, DT, NN, RB, VBZ, PRP',
+    tags: 'PRP, VBP, VB, VB, DT, NN, IN, DT, NN, RB, VBZ, PRP',
   },
   {
     text: 'Great work and honest establishment!',
@@ -7832,7 +7828,7 @@ module.exports = [
   },
   {
     text: 'He says, I have to have an exact ADDRESS.',
-    tags: 'PRP, VBZ, PRP, VBP, TO, VB, DT, JJ, NN',
+    tags: 'PRP, VBZ, PRP, VBP, VB, VB, DT, JJ, NN',
   },
   {
     text: 'We heard nothing.',

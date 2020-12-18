@@ -1,6 +1,7 @@
 const ambig = require('../_ambig')
-const nouns = `(${ambig.person.nouns.join('|')})`
-const months = '(january|april|may|june|jan|sep)' //summer|autumn
+const nouns = `(${ambig.personNoun.join('|')})`
+const months = `(${ambig.personMonth.join('|')})`
+const places = `(${ambig.personPlace.join('|')})`
 
 let list = [
   // ==== Honorific ====
@@ -47,7 +48,7 @@ let list = [
   //remove single 'mr'
   { match: '#Honorific #Acronym', tag: 'Person', reason: 'Honorific-TitleCase' },
   //j.k Rowling
-  { match: '#Noun van der? #Noun', tag: 'Person', reason: 'von der noun', safe: true },
+  { match: '#Noun van der? #Noun', tag: 'Person', reason: 'van der noun', safe: true },
   //king of spain
   { match: '(king|queen|prince|saint|lady) of #Noun', tag: 'Person', reason: 'king-of-noun', safe: true },
   //lady Florence
@@ -133,5 +134,9 @@ let list = [
   { match: '#FirstName (#Noun && #ProperNoun) #ProperNoun?', tag: 'Person', reason: 'firstname-titlecase' },
   //Joe K. Sombrero
   { match: '#FirstName #Acronym #Noun', tag: 'Person', reason: 'n-acro-noun', safe: true },
+  //Anthony de Marco
+  { match: '#FirstName [(de|di|du|van|von) #Person]', group: 0, tag: 'LastName', reason: 'de-firstname' },
+  // Paris Berelc
+  { match: `[${places}] (#ProperNoun && !#Place)`, group: 0, tag: 'FirstName', reason: 'place-firstname' },
 ]
 module.exports = list

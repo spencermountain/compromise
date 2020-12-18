@@ -34,7 +34,7 @@ function instance(worldInstance) {
     }
     let list = tokenize(text, w)
     let doc = new Doc(list, null, w)
-    if (lexicon) {
+    if (lexicon || doc.world.taggers.length > 0) {
       tinyTagger(doc)
     }
     return doc
@@ -73,8 +73,9 @@ function instance(worldInstance) {
 
   /** current version of the library */
   nlp.version = version
-  // alias
+  // aliases
   nlp.import = nlp.load
+  nlp.plugin = nlp.extend
 
   return nlp
 }

@@ -1,5 +1,5 @@
 const ambig = require('../_ambig')
-const adjectives = `(${ambig.person.adjectives.join('|')})`
+const adjectives = `(${ambig.personAdjective.join('|')})`
 
 let list = [
   // all fell apart
@@ -46,6 +46,8 @@ let list = [
   { match: '(found|found) it #Adverb? [#Gerund]', group: 0, tag: 'Adjective', reason: 'found-it-gerund' },
   // a bit amusing
   { match: 'a (little|bit|wee) bit? [#Gerund]', group: 0, tag: 'Adjective', reason: 'a-bit-gerund' },
+  // jury is out - preposition ➔ adjective
+  { match: '#Copula #Adjective? [(out|in|through)]$', group: 0, tag: 'Adjective', reason: 'still-out' },
 ]
 
 module.exports = list

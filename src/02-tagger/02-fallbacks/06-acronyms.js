@@ -19,6 +19,10 @@ const isAcronym = function (term, world) {
   if (world.words[str]) {
     return false
   }
+  // long capitalized words are not usually either
+  if (str.length > 5) {
+    return false
+  }
   return term.isAcronym()
 }
 

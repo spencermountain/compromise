@@ -41,7 +41,7 @@ module.exports = {
   // '9:20pm'
   Time: {
     isA: ['Date'],
-    notA: ['Value'],
+    notA: ['AtMention'],
   },
 
   //glue
@@ -61,7 +61,9 @@ module.exports = {
   },
 
   // peso, euro
-  Currency: {},
+  Currency: {
+    isA: ['Noun'],
+  },
   // ughh
   Expression: {
     notA: ['Noun', 'Adjective', 'Verb', 'Adverb'],
@@ -92,9 +94,6 @@ module.exports = {
   },
 
   //non-exclusive
-  Auxiliary: {
-    notA: ['Noun', 'Adjective', 'Value'],
-  },
   Acronym: {
     notA: ['Plural', 'RomanNumeral'],
   },

@@ -1,6 +1,6 @@
 //Dates: 'june' or 'may'
 const ambig = require('../_ambig')
-const dates = `(${ambig.person.dates.join('|')})`
+const dates = `(${ambig.personDate.join('|')})`
 
 let list = [
   // ==== Holiday ====
@@ -15,6 +15,8 @@ let list = [
   { match: '#Date (on|this|next|last|during)? [sun]', group: 0, tag: 'WeekDay', reason: '1pm-sun' },
   //this sat
   { match: `(in|by|before|during|on|until|after|of|within|all) [sat]`, group: 0, tag: 'WeekDay', reason: 'sat' },
+  { match: `(in|by|before|during|on|until|after|of|within|all) [wed]`, group: 0, tag: 'WeekDay', reason: 'wed' },
+  { match: `(in|by|before|during|on|until|after|of|within|all) [march]`, group: 0, tag: 'Month', reason: 'march' },
   //sat november
   { match: '[sat] #Date', group: 0, tag: 'WeekDay', reason: 'sat-feb' },
 
@@ -57,8 +59,8 @@ let list = [
   { match: `in [${dates}]`, group: 0, tag: 'Date', reason: 'in-june' },
   { match: `during [${dates}]`, group: 0, tag: 'Date', reason: 'in-june' },
   { match: `on [${dates}]`, group: 0, tag: 'Date', reason: 'in-june' },
-  { match: `by [${dates}]`, group: 0, tag: 'Date', reason: 'in-june' },
-  { match: `before [${dates}]`, group: 0, tag: 'Date', reason: 'in-june' },
+  { match: `by [${dates}]`, group: 0, tag: 'Date', reason: 'by-june' },
+  { match: `after [${dates}]`, group: 0, tag: 'Date', reason: 'after-june' },
   { match: `#Date [${dates}]`, group: 0, tag: 'Date', reason: 'in-june' },
   // june 1992
   { match: `${dates} #Value`, tag: 'Date', reason: 'june-5th' },
@@ -69,6 +71,10 @@ let list = [
   { match: `${dates} #Acronym? (#ProperNoun && !#Month)`, tag: 'Person', reason: 'june-smith-jr' },
   // 'second'
   { match: `#Cardinal [second]`, tag: 'Unit', reason: 'one-second' },
+  // second quarter
+  // { match: `#Ordinal quarter`, tag: 'Date', reason: 'second-quarter' },
+  // 'aug 20-21'
+  { match: `#Month #NumberRange`, tag: 'Date', reason: 'aug 20-21' },
 ]
 
 module.exports = list

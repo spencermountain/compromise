@@ -100,10 +100,11 @@ module.exports = {
   ],
   r: [
     [/.[bdfklmst]ler$/, 'Noun'],
-    [/.[ilk]er$/, 'Comparative'],
     [/[aeiou][pns]er$/, Sing],
     [/[^i]fer$/, Inf],
     [/.[^aeiou][ao]pher$/, Actor],
+    [/.[lk]er$/, 'Noun'],
+    [/.ier$/, 'Comparative'],
   ],
   t: [
     [/.[di]est$/, 'Superlative'],
@@ -135,7 +136,7 @@ module.exports = {
     [/...lly$/, Adverb],
     [/[bszmp]{2}y$/, Adj],
     [/.(gg|bb|zz)ly$/, Adj],
-    [/.[aeiou]my$/, Adj],
+    [/.[ai]my$/, Adj],
     [/[ea]{2}zy$/, Adj],
     [/.[^aeiou]ity$/, Sing],
   ],

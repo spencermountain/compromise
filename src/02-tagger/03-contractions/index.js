@@ -8,6 +8,7 @@ const checkPerfect = require('./05-perfectTense')
 const checkRange = require('./06-ranges')
 const checkFrench = require('./07-french')
 const isNumber = /^[0-9]+$/
+const isOrdinal = /^[0-9]+(st|nd|rd|th)$/
 
 const createPhrase = function (found, doc) {
   //create phrase from ['would', 'not']
@@ -25,12 +26,11 @@ const createPhrase = function (found, doc) {
     t.post = ''
     // tag number-ranges
     if (isNumber.test(t.implicit)) {
-      t.tags.Number = true
-      t.tags.Cardinal = true
-    }
-    // if no tag, give it a noun
-    if (Object.keys(t.tags).length === 0) {
-      t.tags.Noun = true
+      t.tag('Cardinal', 'num-range', doc.world)
+    } else if (isOrdinal.test(t.implicit)) {
+      t.tag('Ordinal', 'ord-range', doc.world)
+    } else if (Object.keys(t.tags).length === 0) {
+      t.tags.Noun = true // if no tag, give it a noun
     }
   })
   return phrase

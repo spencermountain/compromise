@@ -1,10 +1,10 @@
 const ambig = require('../_ambig')
-const verbs = `(${ambig.person.verbs.join('|')})`
+const verbs = `(${ambig.personVerb.join('|')})`
 
 let list = [
   // adj -> gerund
   // amusing his aunt
-  { match: '[#Adjective] #Possessive #Noun', group: 0, tag: 'Gerund', reason: 'gerund-his-noun' },
+  { match: '[#Adjective] #Possessive #Noun', group: 0, tag: 'Verb', reason: 'gerund-his-noun' },
   // loving you
   { match: '[#Adjective] (us|you)', group: 0, tag: 'Gerund', reason: 'loving-you' },
   // slowly stunning
@@ -44,14 +44,14 @@ let list = [
     reason: 'would-have',
   },
   //would be walking
-  { match: `#Modal (#Adverb|not)+? be (#Adverb|not)+? #Verb`, group: 0, tag: 'Auxiliary', reason: 'would-be' },
+  // { match: `#Modal (#Adverb|not)+? be (#Adverb|not)+? #Verb`, group: 0, tag: 'Auxiliary', reason: 'would-be' },
   //had been walking
-  {
-    match: `(#Modal|had|has) (#Adverb|not)+? been (#Adverb|not)+? #Verb`,
-    group: 0,
-    tag: 'Auxiliary',
-    reason: 'had-been',
-  },
+  // {
+  //   match: `(#Modal|had|has) (#Adverb|not)+? been (#Adverb|not)+? #Verb`,
+  //   group: 0,
+  //   tag: 'Auxiliary',
+  //   reason: 'had-been',
+  // },
   //support a splattering of auxillaries before a verb
   { match: `[(has|had) (#Adverb|not)+?] #PastTense`, group: 0, tag: 'Auxiliary', reason: 'had-walked' },
   // will walk
@@ -63,7 +63,7 @@ let list = [
   //were being run
   { match: `(were|was) being [#PresentTense]`, group: 0, tag: 'PastTense', reason: 'was-being' },
   //have run
-  { match: `have #PresentTense`, group: 0, tag: 'PastTense', reason: 'have-vb' },
+  // { match: `have #PresentTense`, group: 0, tag: 'PastTense', reason: 'have-vb' },
   //would have had
   {
     match: `[#Modal (#Adverb|not)+? have (#Adverb|not)+? had (#Adverb|not)+?] #Verb`,
@@ -84,10 +84,10 @@ let list = [
 
   // ==== Phrasal ====
   //'foo-up'
-  { match: '(#Verb && @hasHyphen) up', group: 0, tag: 'PhrasalVerb', reason: 'foo-up' },
-  { match: '(#Verb && @hasHyphen) off', group: 0, tag: 'PhrasalVerb', reason: 'foo-off' },
-  { match: '(#Verb && @hasHyphen) over', group: 0, tag: 'PhrasalVerb', reason: 'foo-over' },
-  { match: '(#Verb && @hasHyphen) out', group: 0, tag: 'PhrasalVerb', reason: 'foo-out' },
+  { match: '(#Verb && @hasHyphen) up', tag: 'PhrasalVerb', reason: 'foo-up' },
+  { match: '(#Verb && @hasHyphen) off', tag: 'PhrasalVerb', reason: 'foo-off' },
+  { match: '(#Verb && @hasHyphen) over', tag: 'PhrasalVerb', reason: 'foo-over' },
+  { match: '(#Verb && @hasHyphen) out', tag: 'PhrasalVerb', reason: 'foo-out' },
   //fall over
   { match: '#PhrasalVerb [#PhrasalVerb]', group: 0, tag: 'Particle', reason: 'phrasal-particle' },
   //back it up
@@ -118,7 +118,7 @@ let list = [
   },
 
   //he quickly foo
-  { match: '#Noun #Adverb [#Noun]', group: 0, tag: 'Verb', reason: 'quickly-foo' },
+  // { match: '#Noun #Adverb [#Noun]', group: 0, tag: 'Verb', reason: 'quickly-foo' },
   //will secure our
   { match: 'will [#Adjective]', group: 0, tag: 'Verb', reason: 'will-adj' },
   //he disguised the thing

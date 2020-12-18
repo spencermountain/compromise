@@ -1,14 +1,39 @@
 const parseToken = require('./parseToken')
 const postProcess = require('./postProcess')
+const hasReg = /[^[a-z]]\//g
 
 const isArray = function (arr) {
   return Object.prototype.toString.call(arr) === '[object Array]'
+}
+
+// don't split up a regular expression
+const mergeRegexes = function (arr) {
+  arr.forEach((s, i) => {
+    let m = s.match(hasReg)
+    // has 1 slash
+    if (m !== null && m.length === 1 && arr[i + 1]) {
+      // merge next one
+      arr[i] += arr[i + 1]
+      arr[i + 1] = ''
+      // try 2nd one
+      m = arr[i].match(hasReg)
+      if (m !== null && m.length === 1) {
+        arr[i] += arr[i + 2]
+        arr[i + 2] = ''
+      }
+    }
+  })
+  arr = arr.filter(s => s)
+  return arr
 }
 
 //split-up by (these things)
 const byParentheses = function (str) {
   let arr = str.split(/([\^\[\!]*(?:<\S+>)?\(.*?\)[?+*]*\]?\$?)/)
   arr = arr.map(s => s.trim())
+  if (hasReg.test(str)) {
+    arr = mergeRegexes(arr)
+  }
   return arr
 }
 
@@ -85,11 +110,12 @@ const syntax = function (input) {
     input = String(input) //go for it?
   }
   let tokens = byParentheses(input)
+  // console.log(tokens)
   tokens = byWords(tokens)
   tokens = tokens.map(parseToken)
   //clean up anything weird
   tokens = postProcess(tokens)
-  // console.log(JSON.stringify(tokens, null, 2))
+  // console.log(tokens)
   return tokens
 }
 

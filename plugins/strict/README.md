@@ -92,6 +92,7 @@ console.log(doc.text());
       still maintining a match.
     - **Note**: repeatedly matched groups will overwrite and save only the last value.
 - EndOf: `$` - end of string
+- TermMethods: `@` at start of string
 
 ### Railroad diagrams
 

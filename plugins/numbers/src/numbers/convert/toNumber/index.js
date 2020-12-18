@@ -3,6 +3,7 @@ const words = require('./data')
 const isValid = require('./validate')
 const parseDecimals = require('./parseDecimals')
 const parseNumeric = require('./parseNumeric')
+const parseFraction = require('./parseFractions')
 const improperFraction = /^([0-9,\. ]+)\/([0-9,\. ]+)$/
 
 //some numbers we know
@@ -12,6 +13,10 @@ const casualForms = {
   'a dozen': 12,
   'two dozen': 24,
   zero: 0,
+}
+
+const findFraction = (terms) => {
+  return !!words.fractions[terms[terms.length - 1]] || !!words.fractions[terms[terms.length - 1].slice(0, -1)]
 }
 
 // a 'section' is something like 'fifty-nine thousand'
@@ -40,6 +45,7 @@ const parse = function(str) {
   let sum = 0
   let isNegative = false
   const terms = str.split(/[ -]/)
+  const isFraction = findFraction(terms)
   for (let i = 0; i < terms.length; i++) {
     let w = terms[i]
     w = parseNumeric(w)
@@ -61,6 +67,16 @@ const parse = function(str) {
       sum *= modifier.amount
       return sum
     }
+
+    if (isFraction) {
+      let fractionAmount = parseFraction(terms.slice(i + 1, terms.length))
+      if (fractionAmount) {
+        sum += section_sum(has)
+        sum += fractionAmount
+        return sum
+      }
+    }
+
     //improper fraction
     const fm = w.match(improperFraction)
     if (fm) {

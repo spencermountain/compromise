@@ -1,7 +1,7 @@
 <div align="center">
   <img src="https://cloud.githubusercontent.com/assets/399657/23590290/ede73772-01aa-11e7-8915-181ef21027bc.png" />
 
-  <div>date-parsing plugin for <a href="https://github.com/spencermountain/compromise/">compromise</a></div>
+  <div>WIP date-parsing plugin for <a href="https://github.com/spencermountain/compromise/">compromise</a></div>
   
   <!-- npm version -->
   <a href="https://npmjs.org/package/compromise-dates">
@@ -18,10 +18,14 @@
 <div align="center">
   <code>npm install compromise-dates</code>
 </div>
+
 `compromise-date` also depends on [compromise-numbers](../numbers)
+
 <div align="center">
   <code>npm install compromise-numbers</code>
 </div>
+
+`compromise-dates` can turn natural-language date forms like `June ninth-fourteenth` into parsed ISO dates with start+end times.
 
 ```js
 const nlp = require('compromise')

@@ -1,5 +1,20 @@
 const parse = require('./parse')
+const parseNumber = require('../numbers/parse')
+const makeNumber = require('../numbers/convert/makeNumber')
+
 const methods = {
+  toNumber() {
+    this.forEach((val) => {
+      let obj = parseNumber(val, val.has('#Fraction'))
+      if (obj.num === null) {
+        return
+      }
+      let str = makeNumber(obj, false)
+      val.replaceWith(str, true)
+      val.tag('NumericValue')
+    })
+    return this
+  },
   /** overloaded json method with additional number information */
   json: function (options) {
     let n = null

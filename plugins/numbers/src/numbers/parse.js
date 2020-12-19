@@ -34,7 +34,7 @@ const parseNumeric = function (str, p) {
 }
 
 // get a numeric value from this phrase
-const parseNumber = function (p) {
+const parseNumber = function (p, isFraction = false) {
   let str = p.text('reduced')
   // is it in '3,123' format?
   let hasComma = /[0-9],[0-9]/.test(p.text('text'))
@@ -45,7 +45,7 @@ const parseNumber = function (p) {
     return res
   }
   //parse a text-numer (harder)
-  let num = toNumber(str)
+  let num = toNumber(str, isFraction)
   return {
     hasComma: hasComma,
     prefix: '',

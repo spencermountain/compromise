@@ -28,8 +28,9 @@ ordinals = `(${ordinals.join('|')})`
 
 // improved tagging for numbers
 const tagger = function (doc) {
-
-  doc.match('and? [(a|#Cardinal+) (#Ordinal|half|quarter|#Fraction)] (of a)?', 0).tag('Fraction', here)
+  doc.match('#Value+? (second|seconds)').tag('Duration', here)
+  doc.match('(a|#Cardinal+)? (#Ordinal|half|quarter|#Fraction)').tag('Fraction', here)
+  doc.match('#Duration+').unTag('Fraction', here)
 
   doc.match(multiples).tag('#Multiple', here)
 

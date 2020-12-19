@@ -53,7 +53,7 @@ const textForm2 = function (m) {
   if (den.has('half')) {
     den = 2
   } else {
-    den = 1 / den.numbers().get(0)
+    den = den.numbers().get(0)
   }
   if (typeof num === 'number' && typeof den === 'number') {
     return {

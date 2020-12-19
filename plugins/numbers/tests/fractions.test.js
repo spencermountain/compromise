@@ -37,6 +37,23 @@ test('fraction-normalize:', function (t) {
   t.end()
 })
 
+// test('fraction-to-float:', function(t) {
+//   let arr = [
+//     ['one thousandth of a parsec', '0.001 of a parsec'],
+//     ['1000th of a parsec', '0.001 of a parsec'],
+//     ['five thousandths of a foot', '0.005 of a foot'],
+//     ['six thirty seconds of an inch', '0.1875 of an inch'],
+//     ['a millionth of a degree', '0.000001 of a degree']
+//   ]
+
+//   arr.forEach((a) => {
+//     let doc = nlp(a[0])
+//     doc.fractions().toNumber()
+//     t.equal(doc.text(), a[1], a[1])
+//   })
+//   t.end()
+// })
+
 // test('do-math:', function (t) {
 //   let arr = nlp('1/2').fractions().json()
 //   t.equal(arr[0].number, 0.5)

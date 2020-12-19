@@ -15,9 +15,9 @@ const casualForms = {
   zero: 0,
 }
 
-const findFraction = (terms) => {
-  return !!words.fractions[terms[terms.length - 1]] || !!words.fractions[terms[terms.length - 1].slice(0, -1)]
-}
+// const findFraction = (terms) => {
+//   return terms.length > 1 && !!words.fractions[terms[terms.length - 1]] || !!words.fractions[terms[terms.length - 1].slice(0, -1)]
+// }
 
 // a 'section' is something like 'fifty-nine thousand'
 // turn a section into something we can add to - like 59000
@@ -29,7 +29,7 @@ const section_sum = obj => {
 }
 
 //turn a string into a number
-const parse = function(str) {
+const parse = function(str, isFraction) {
   //convert some known-numbers
   if (casualForms.hasOwnProperty(str) === true) {
     return casualForms[str]
@@ -45,7 +45,7 @@ const parse = function(str) {
   let sum = 0
   let isNegative = false
   const terms = str.split(/[ -]/)
-  const isFraction = findFraction(terms)
+  // const isFraction = findFraction(terms)
   for (let i = 0; i < terms.length; i++) {
     let w = terms[i]
     w = parseNumeric(w)

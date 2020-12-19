@@ -1,5 +1,6 @@
 module.exports = [
   'halfs',
+  'seconds',
   'quarters',
   'thirds',
   'fourths',

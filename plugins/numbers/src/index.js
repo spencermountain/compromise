@@ -46,6 +46,7 @@ const plugin = function (Doc, world) {
     /** return '3 out of 5' or '3/5' etc**/
     fractions: function (n) {
       let m = this.match('#Fraction+')
+      this.match('and #Fraction+').tag('Fraction')
       if (typeof n === 'number') {
         m = m.eq(n)
       }

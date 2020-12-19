@@ -12,7 +12,7 @@ module.exports = {
   },
   Fraction: {
     isA: 'Value',
-    notA: ['Ordinal', 'Noun'],
+    notA: ['Noun'],
   },
   RomanNumeral: {
     isA: 'Cardinal', //can be a person, too

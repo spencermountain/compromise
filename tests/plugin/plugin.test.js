@@ -138,3 +138,13 @@ test('basic-plugin', function (t) {
   t.equal(doc.match('#Animal').out('normal'), 'trex', 'tagset-works')
   t.end()
 })
+
+test('addConjugations', function (t) {
+  nlp.extend((_Doc, world) => {
+    world.addConjugations({ swell: { PastTense: 'got swol' } })
+  })
+  const doc = nlp('swell').tag('Verb')
+  let obj = doc.verbs().conjugate()[0]
+  t.equal(obj.PastTense, 'got swol', 'custom past-tense')
+  t.end()
+})

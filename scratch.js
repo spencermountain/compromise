@@ -62,11 +62,17 @@ nlp.extend(require('./plugins/numbers/src'))
 // let doc = nlp('he sent 6 hundred canadian dollars into orbit').debug()
 // let doc = nlp('asdf 25% asdf').debug()
 
-let str = '100 percent of the budget'
-let doc = nlp(str).debug().values().toText().all()
-doc.debug()
-console.log(doc.text())
+// const doc = nlp('allow')
+// const doc = nlp('follow')
+// const doc = nlp('vow')
+// const doc = nlp('grow')
+// const doc = nlp('mellow')
+// const doc = nlp('school')
+const doc = nlp('swell').tag('verb')
+doc.world.addConjugations({ swell: { PastTense: 'got swol' } })
+console.log(doc.verbs().conjugate())
 
+// doc.world.irregulars.verbs.patrol = { PastTense: 'patrolorama!' }
 // ### time-parser
 // let doc = nlp(`a quarter past noon`).debug()
 // let doc = nlp(`a quarter to 4`).debug()

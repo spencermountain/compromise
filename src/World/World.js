@@ -64,7 +64,7 @@ class World {
     // add our compressed data to lexicon
     this.unpackWords(lexData)
     // add our irregulars to lexicon
-    this.addIrregulars()
+    addIrregulars(this)
 
     // cache our abbreviations for our sentence-parser
     Object.defineProperty(this, 'cache', {
@@ -124,8 +124,9 @@ class World {
     }
   }
 
-  addIrregulars() {
-    addIrregulars(this)
+  /** add new custom conjugations */
+  addConjugations(obj) {
+    Object.assign(this.irregulars.verbs, obj)
     return this
   }
 

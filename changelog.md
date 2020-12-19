@@ -9,6 +9,7 @@ compromise uses semver, and pushes to npm frequently
 While all _Major_ releases should be reviewed, our only two _large_ releases are **v6** in 2016 and and **v12** in 2019. Others have been mostly incremental, or niche.
 
 <!-- #### [Unreleased] 
+- **[new]** - World.addConjugations() method
 -->
 
 #### 13.8.0 [Dec 2020]

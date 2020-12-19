@@ -269,7 +269,14 @@ const endsWith = {
 
   w: [
     {
-      reg: /(..)(ow)$/i,
+      reg: /(.llow)$/i, //follow, allow
+      repl: {
+        pr: '$1s',
+        pa: '$1ed',
+      },
+    },
+    {
+      reg: /(..)(ow)$/i, //grow
       repl: {
         pr: '$1$2s',
         pa: '$1ew',

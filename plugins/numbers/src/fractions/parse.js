@@ -32,7 +32,7 @@ const textForm1 = function (m) {
 
 // parse 'a third'
 const textForm2 = function (m) {
-  let found = m.match('[<num>(#Cardinal|a)+] [<den>#Ordinal+]')
+  let found = m.match('[<num>(#Cardinal|a)+] [<den>#Fraction+]')
   if (found.found !== true) {
     return null
   }
@@ -53,7 +53,7 @@ const textForm2 = function (m) {
   if (den.has('half')) {
     den = 2
   } else {
-    den = den.numbers().get(0)
+    den = 1 / den.numbers().get(0)
   }
   if (typeof num === 'number' && typeof den === 'number') {
     return {

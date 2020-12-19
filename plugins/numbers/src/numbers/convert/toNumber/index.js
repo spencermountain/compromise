@@ -49,6 +49,19 @@ const parse = function(str) {
   for (let i = 0; i < terms.length; i++) {
     let w = terms[i]
     w = parseNumeric(w)
+
+    if ((w === 'and' || terms.indexOf('and') < 0) && isFraction) {
+      let fractionalTerms = terms
+      if (w === 'and') {
+        fractionalTerms = terms.slice(i + 1, terms.length)
+      }
+      let fractionAmount = parseFraction(fractionalTerms)
+      if (fractionAmount) {
+        sum += section_sum(has)
+        sum += fractionAmount
+        return sum
+      }
+    }
     if (!w || w === 'and') {
       continue
     }
@@ -66,15 +79,6 @@ const parse = function(str) {
       sum += parseDecimals(terms.slice(i + 1, terms.length))
       sum *= modifier.amount
       return sum
-    }
-
-    if (isFraction) {
-      let fractionAmount = parseFraction(terms.slice(i + 1, terms.length))
-      if (fractionAmount) {
-        sum += section_sum(has)
-        sum += fractionAmount
-        return sum
-      }
     }
 
     //improper fraction

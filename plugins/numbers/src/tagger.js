@@ -29,7 +29,7 @@ ordinals = `(${ordinals.join('|')})`
 // improved tagging for numbers
 const tagger = function (doc) {
 
-  doc.match('and? (a|#Cardinal+) (#Ordinal|half|quarter|#Fraction)').tag('#Fraction')
+  doc.match('and? [(a|#Cardinal+) (#Ordinal|half|quarter|#Fraction)] (of a)?', 0).tag('Fraction', here)
 
   doc.match(multiples).tag('#Multiple', here)
 
@@ -59,7 +59,7 @@ const tagger = function (doc) {
   // fraction - '3 out of 5'
   doc.match('#Cardinal+ out of every? #Cardinal').tag('Fraction', here)
   // fraction - 'a third of a slice'
-  m = doc.match(`[(#Cardinal|a) ${ordinals}] of (a|an|the)`, 0).tag('Fraction', here)
+  // m = doc.match(`[(#Cardinal|a) ${ordinals}] of (a|an|the)`, 0).tag('Fraction', here)
   // tag 'thirds' as a ordinal
   m.match('.$').tag('Ordinal', 'plural-ordinal')
 }

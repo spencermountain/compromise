@@ -68,9 +68,10 @@ nlp.extend(require('./plugins/numbers/src'))
 // const doc = nlp('grow')
 // const doc = nlp('mellow')
 // const doc = nlp('school')
-const doc = nlp('swell').tag('verb')
-doc.world.addConjugations({ swell: { PastTense: 'got swol' } })
-console.log(doc.verbs().conjugate())
+
+const doc = nlp('neglectee')
+doc.world.addPlurals({ neglectee: 'neglectorinos' })
+console.log(doc.nouns().toPlural().text())
 
 // doc.world.irregulars.verbs.patrol = { PastTense: 'patrolorama!' }
 // ### time-parser

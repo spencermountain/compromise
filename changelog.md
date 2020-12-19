@@ -10,6 +10,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 
 <!-- #### [Unreleased] 
 - **[new]** - World.addConjugations() method
+- **[new]** - World.addPlurals() method
 -->
 
 #### 13.8.0 [Dec 2020]

@@ -129,6 +129,11 @@ class World {
     Object.assign(this.irregulars.verbs, obj)
     return this
   }
+  /** add new custom plural/singular pairs */
+  addPlurals(obj) {
+    Object.assign(this.irregulars.nouns, obj)
+    return this
+  }
 
   /** extend the compromise tagset */
   addTags(tags) {

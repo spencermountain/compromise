@@ -148,3 +148,17 @@ test('addConjugations', function (t) {
   t.equal(obj.PastTense, 'got swol', 'custom past-tense')
   t.end()
 })
+
+test('addPlurals', function (t) {
+  nlp.extend((_Doc, world) => {
+    world.addPlurals({ neglectee: 'neglecterinos' })
+  })
+  let doc = nlp('neglectee')
+  let str = doc.nouns().toPlural().text()
+  t.equal(str, 'neglecterinos', 'custom toPlural')
+
+  doc = nlp('neglecterinos')
+  str = doc.nouns().toSingular().text()
+  t.equal(str, 'neglectee', 'custom toSingular')
+  t.end()
+})

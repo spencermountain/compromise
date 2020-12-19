@@ -153,7 +153,6 @@ const endsWith = {
       },
     },
   ],
-
   m: [
     {
       reg: /([^aeiou][aeiou])m$/i,

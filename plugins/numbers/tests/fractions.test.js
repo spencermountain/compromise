@@ -37,22 +37,48 @@ test('fraction-normalize:', function (t) {
   t.end()
 })
 
-// test('fraction-to-float:', function(t) {
-//   let arr = [
-//     ['one thousandth of a parsec', '0.001 of a parsec'],
-//     ['1000th of a parsec', '0.001 of a parsec'],
-//     ['five thousandths of a foot', '0.005 of a foot'],
-//     ['six thirty seconds of an inch', '0.1875 of an inch'],
-//     ['a millionth of a degree', '0.000001 of a degree']
-//   ]
+test('fraction-to-float:', function (t) {
+  let arr = [
+    ['one and a half', '1.5'],
+    ['one thousandth of a parsec', '0.001 of a parsec'],
+    ['1000th of a parsec', '0.001 of a parsec'],
+    ['five thousandths of a foot', '0.005 of a foot'],
+    ['one thirty third', '0.0303'],
+    ['one thirty second of an inch', '0.03125 of an inch'],
+    ['six thirty seconds of an inch', '0.1875 of an inch'],
+    ['two hundred and twelve and one twentieth', '212.05'],
+    ['two hundred and twelve and five hundred thousandths', '212.5'],
+    ['two hundred and twelve and five hundred and one thousandths', '212.501'],
+    ['a millionth of a degree', '0.000001 of a degree'],
+    ['a sixteenth', '0.0625'],
+    ['three quarters', '0.75'],
+    ['fifty fourths', '0.01852'],
+  ]
 
-//   arr.forEach((a) => {
-//     let doc = nlp(a[0])
-//     doc.fractions().toNumber()
-//     t.equal(doc.text(), a[1], a[1])
-//   })
-//   t.end()
-// })
+  arr.forEach((a) => {
+    let doc = nlp(a[0])
+    doc.fractions().toNumber()
+    t.equal(doc.text(), a[1], a[1])
+  })
+  t.end()
+})
+
+test('seconds-edge-case', function (t) {
+  // shouldn't mangle the 'second'
+  let arr = [
+    ['one fifth of a second', '1/5 of a second'],
+    ['thirty seconds', 'thirty seconds'],
+    ['one thirty second of an inch', '1/32 of an inch'],
+    ['three thirty seconds of an inch', '3/32 of an inch'],
+  ]
+
+  arr.forEach((a) => {
+    let doc = nlp(a[0])
+    doc.fractions().normalize()
+    t.equal(doc.text(), a[1], a[1])
+  })
+  t.end()
+})
 
 // test('do-math:', function (t) {
 //   let arr = nlp('1/2').fractions().json()

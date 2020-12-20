@@ -15,13 +15,13 @@ const casualForms = {
   zero: 0,
 }
 
-// const findFraction = (terms) => {
-//   return terms.length > 1 && !!words.fractions[terms[terms.length - 1]] || !!words.fractions[terms[terms.length - 1].slice(0, -1)]
-// }
+const isFractional = (term) => {
+  return term !== 'a' && (!!words.fractions[term] || !!words.fractions[term.slice(0, -1)])
+}
 
 // a 'section' is something like 'fifty-nine thousand'
 // turn a section into something we can add to - like 59000
-const section_sum = obj => {
+const section_sum = (obj) => {
   return Object.keys(obj).reduce((sum, k) => {
     sum += obj[k]
     return sum
@@ -29,7 +29,7 @@ const section_sum = obj => {
 }
 
 //turn a string into a number
-const parse = function(str, isFraction) {
+const parse = function (str, isFraction, depth = 0) {
   //convert some known-numbers
   if (casualForms.hasOwnProperty(str) === true) {
     return casualForms[str]
@@ -50,18 +50,6 @@ const parse = function(str, isFraction) {
     let w = terms[i]
     w = parseNumeric(w)
 
-    if ((w === 'and' || terms.indexOf('and') < 0) && isFraction) {
-      let fractionalTerms = terms
-      if (w === 'and') {
-        fractionalTerms = terms.slice(i + 1, terms.length)
-      }
-      let fractionAmount = parseFraction(fractionalTerms)
-      if (fractionAmount) {
-        sum += section_sum(has)
-        sum += fractionAmount
-        return sum
-      }
-    }
     if (!w || w === 'and') {
       continue
     }
@@ -73,6 +61,7 @@ const parse = function(str, isFraction) {
       isNegative = true
       w = w.substr(1)
     }
+
     //decimal mode
     if (w === 'point') {
       sum += section_sum(has)
@@ -91,10 +80,34 @@ const parse = function(str, isFraction) {
       }
       continue
     }
-    //prevent mismatched units, like 'seven eleven'
-    if (isValid(w, has) === false) {
-      return null
+
+    if (isFraction && terms.length === 1 && isFractional(w)) {
+      return parseFraction([terms[terms.length - 1]])
     }
+
+    //prevent mismatched units, like 'seven eleven' if not a fraction
+    if (isValid(w, has) === false || (isFraction && isFractional(w) && terms.length > 1)) {
+      if (isFraction) {
+        sum += section_sum(has)
+        let fractional = parse(terms.slice(i).join(' '), isFraction, depth + 1)
+        let prev = parse(terms[i - 1])
+        if (
+          sum === 0 ||
+          terms[i - 1] === 'and' ||
+          (terms[i - 2] === 'and' && terms[i - 1] === 'a')
+        ) {
+          sum += fractional
+        } else if (prev > 19 && prev < 100) {
+          sum = (1 / (sum + 1 / fractional)).toPrecision(4)
+        } else {
+          sum *= fractional
+        }
+        return sum
+      } else {
+        return null
+      }
+    }
+
     //buildOut section, collect 'has' values
     if (/^[0-9\.]+$/.test(w)) {
       has['ones'] = parseFloat(w) //not technically right
@@ -108,8 +121,16 @@ const parse = function(str, isFraction) {
       let mult = words.multiples[w]
 
       //something has gone wrong : 'two hundred five hundred'
+      //possibly because it's a fraction
       if (mult === last_mult) {
-        return null
+        if (isFraction) {
+          has = {}
+          let fractional = parse(terms.slice(i - 1).join(' '), isFraction)
+          sum += fractional
+          return sum
+        } else {
+          return null
+        }
       }
       //support 'hundred thousand'
       //this one is tricky..

@@ -1,7 +1,9 @@
 const words = require('./data')
 
 //concatenate into a string with leading '0.'
-const parseFractions = function(arr) {
+const parseFractions = function (arr) {
+  // console.log('parsing fraction:')
+  // console.log(arr)
   let multiplier = 1
   for (let i = 0; i < arr.length; i++) {
     let w = arr[i]

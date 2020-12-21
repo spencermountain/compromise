@@ -39,26 +39,30 @@ test('fraction-normalize:', function (t) {
 
 test('fraction-to-float:', function (t) {
   let arr = [
-    ['one and a half', '1.5'],
-    ['one thousandth of a parsec', '0.001 of a parsec'],
-    ['1000th of a parsec', '0.001 of a parsec'],
-    ['five thousandths of a foot', '0.005 of a foot'],
-    ['one thirty third', '0.0303'],
-    ['one thirty second of an inch', '0.03125 of an inch'],
-    ['six thirty seconds of an inch', '0.1875 of an inch'],
-    ['two hundred and twelve and one twentieth', '212.05'],
-    ['two hundred and twelve and five hundred thousandths', '212.5'],
-    ['two hundred and twelve and five hundred and one thousandths', '212.501'],
-    ['a millionth of a degree', '0.000001 of a degree'],
-    ['a sixteenth', '0.0625'],
-    ['three quarters', '0.75'],
-    ['fifty fourths', '0.01852'],
+    ['one and a half', '1.5', 1.5],
+    ['one thousandth of a parsec', '0.001 of a parsec', 0.001],
+    ['1000th of a parsec', '0.001 of a parsec', 0.001],
+    ['five thousandths of a foot', '0.005 of a foot', 0.005],
+    ['one thirty third', '0.0303', 0.0303],
+    ['one thirty second of an inch', '0.03125 of an inch', 0.03125],
+    ['six thirty seconds of an inch', '0.1875 of an inch', 0.1875],
+    ['two hundred and twelve and one twentieth', '212.05', 212.05],
+    ['two hundred and twelve and five hundred thousandths', '212.5', 212.5],
+    ['two hundred and twelve and five hundred and one thousandths', '212.501', 212.501],
+    ['a millionth of a degree', '0.000001 of a degree', 0.000001],
+    ['a sixteenth', '0.0625', 0.0625],
+    ['three quarters', '0.75', 0.75],
+    ['fifty fourths', '0.01852', 0.01852],
+    ['1 and a half', '1.5', 1.5],
+    ['five hundredths', '0.05', 0.05],
+    ['half', '0.5', 0.5],
   ]
 
   arr.forEach((a) => {
     let doc = nlp(a[0])
     doc.fractions().toNumber()
     t.equal(doc.text(), a[1], a[1])
+    t.equal(nlp(a[0]).fractions().json()[0].number, a[2], a[2])
   })
   t.end()
 })

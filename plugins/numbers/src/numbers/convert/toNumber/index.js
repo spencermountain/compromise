@@ -19,6 +19,10 @@ const isFractional = (term) => {
   return term !== 'a' && (!!words.fractions[term] || !!words.fractions[term.slice(0, -1)])
 }
 
+const toPrecisionNumber = (num) => {
+  return Number(num.toPrecision(4))
+}
+
 // a 'section' is something like 'fifty-nine thousand'
 // turn a section into something we can add to - like 59000
 const section_sum = (obj) => {
@@ -30,6 +34,7 @@ const section_sum = (obj) => {
 
 //turn a string into a number
 const parse = function (str, isFraction, depth = 0) {
+  // console.log(`parsing: '${str}', depth: ${depth}, isFraction: ${isFraction}`)
   //convert some known-numbers
   if (casualForms.hasOwnProperty(str) === true) {
     return casualForms[str]
@@ -89,7 +94,9 @@ const parse = function (str, isFraction, depth = 0) {
     if (isValid(w, has) === false || (isFraction && isFractional(w) && terms.length > 1)) {
       if (isFraction) {
         sum += section_sum(has)
-        let fractional = parse(terms.slice(i).join(' '), isFraction, depth + 1)
+        let subterms = terms.slice(i)
+        // console.log(subterms)
+        let fractional = parse(subterms.join(' '), isFraction, depth + 1)
         let prev = parse(terms[i - 1])
         if (
           sum === 0 ||
@@ -98,7 +105,7 @@ const parse = function (str, isFraction, depth = 0) {
         ) {
           sum += fractional
         } else if (prev > 19 && prev < 100) {
-          sum = (1 / (sum + 1 / fractional)).toPrecision(4)
+          sum = toPrecisionNumber(1 / toPrecisionNumber(sum + 1 / fractional))
         } else {
           sum *= fractional
         }
@@ -123,23 +130,18 @@ const parse = function (str, isFraction, depth = 0) {
       //something has gone wrong : 'two hundred five hundred'
       //possibly because it's a fraction
       if (mult === last_mult) {
-        if (isFraction) {
-          has = {}
-          let fractional = parse(terms.slice(i - 1).join(' '), isFraction)
-          sum += fractional
-          return sum
-        } else {
-          return null
-        }
+        return null
       }
       //support 'hundred thousand'
       //this one is tricky..
       if (mult === 100 && terms[i + 1] !== undefined) {
-        // has['hundreds']=
-        const w2 = terms[i + 1]
-        if (words.multiples[w2]) {
-          mult *= words.multiples[w2] //hundredThousand/hundredMillion
-          i += 1
+        if (!isFraction || !isFractional(terms[i + 1])) {
+          // has['hundreds']=
+          const w2 = terms[i + 1]
+          if (words.multiples[w2]) {
+            mult *= words.multiples[w2] //hundredThousand/hundredMillion
+            i += 1
+          }
         }
       }
       //natural order of things

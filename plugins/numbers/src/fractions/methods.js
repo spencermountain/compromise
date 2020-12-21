@@ -12,6 +12,7 @@ const methods = {
       let str = makeNumber(obj, false)
       val.replaceWith(str, true)
       val.tag('NumericValue')
+      val.unTag('Fraction')
     })
     return this
   },
@@ -27,7 +28,7 @@ const methods = {
     this.forEach((m) => {
       let json = m.json(options)[0]
       let found = parse(m) || {}
-      let obj = parseNumber(m)
+      let obj = parseNumber(m, m.has('#Fraction'))
       json.numerator = found.numerator
       json.denominator = found.denominator
       json.number = obj.num
@@ -51,6 +52,17 @@ const methods = {
       }
     })
     return this
+  },
+
+  get: function (n) {
+    let arr = []
+    this.forEach((doc) => {
+      arr.push(parseNumber(doc, doc.has('#Fraction')).num)
+    })
+    if (n !== undefined) {
+      return arr[n]
+    }
+    return arr
   },
 }
 module.exports = methods

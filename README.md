@@ -817,11 +817,14 @@ nlpEx('This is type safe!').numbers()
 
 #### See Also:
 
+- &nbsp; **[en-pos](https://github.com/finnlp/en-pos)** - very-clever javascript pos-tagger by [Alex Corvi](https://github.com/alexcorvi)
 - &nbsp; **[naturalNode](https://github.com/NaturalNode/natural)** - fancier statistical nlp in javascript
-- &nbsp; **[superScript](http://superscriptjs.com/)** - clever conversation engine in js
+- &nbsp; **[compendium-js](https://github.com/Ulflander/compendium-js)** - POS and sentiment analysis in javascript
 - &nbsp; **[nodeBox linguistics](https://www.nodebox.net/code/index.php/Linguistics)** - conjugation, inflection in javascript
 - &nbsp; **[reText](https://github.com/wooorm/retext)** - very impressive [text utilities](https://github.com/wooorm/retext/blob/master/doc/plugins.md) in javascript
+- &nbsp; **[superScript](http://superscriptjs.com/)** - conversation engine in js
 - &nbsp; **[jsPos](https://code.google.com/archive/p/jspos/)** - javascript build of the time-tested Brill-tagger
+
 - &nbsp; **[spaCy](https://spacy.io/)** - speedy, multilingual tagger in C/python
 - &nbsp; **[Prose](https://github.com/jdkato/prose/)** - quick tagger in Go by Joseph Kato
 

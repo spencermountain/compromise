@@ -42,7 +42,8 @@ const fillGroups = function (tokens) {
   return tokens
 }
 
-const useOneOf = function (tokens) {
+// this is a faster 'or' lookup, when the (a|b|c) list is simple
+const doFastOrMode = function (tokens) {
   return tokens.map(token => {
     if (token.choices !== undefined) {
       // are they all straight non-optional words?
@@ -50,7 +51,7 @@ const useOneOf = function (tokens) {
       if (shouldPack === true) {
         let oneOf = {}
         token.choices.forEach(c => (oneOf[c.word] = true))
-        token.oneOf = oneOf
+        token.fastOr = oneOf
         delete token.choices
       }
     }
@@ -65,8 +66,8 @@ const postProcess = function (tokens) {
   if (count > 0) {
     tokens = fillGroups(tokens)
   }
-  // convert 'choices' format to 'oneOf' format
-  tokens = useOneOf(tokens)
+  // convert 'choices' format to 'fastOr' format
+  tokens = doFastOrMode(tokens)
   // console.log(tokens)
 
   return tokens

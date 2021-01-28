@@ -13,6 +13,8 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - **[new]** - World.addPlurals() method
 - **[fix]** - conjugations fixes #800
 - **[new]** - compromise-penn-tags plugin
+- **[new]** - add fuzzy option to match commands
+- **[change] (internal)** - rename 'oneOf' match syntax to 'fastOr' 
 -->
 
 #### 13.8.0 [Dec 2020]

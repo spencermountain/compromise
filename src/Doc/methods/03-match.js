@@ -1,5 +1,5 @@
-const parseSyntax = require('../match/syntax')
-const checkCache = require('../match/checkCache')
+const parseSyntax = require('../syntax')
+const checkCache = require('./_failFast')
 
 /** return a new Doc, with this one as a parent */
 exports.match = function (reg, opts = {}) {

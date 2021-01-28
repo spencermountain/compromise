@@ -1,4 +1,4 @@
-const parseSyntax = require('../../../Doc/match/syntax')
+const parseSyntax = require('../../../Doc/syntax')
 const unique = require('../_unique')
 let matches = []
 matches = matches.concat(require('./01-misc'))
@@ -30,18 +30,19 @@ const cacheRequired = function (reg) {
   return { tags: unique(needTags), words: unique(needWords) }
 }
 
+// for speed, enumerate (a|b|c) to three matches
 const allLists = function (m) {
   let more = []
-  let lists = m.reg.filter(r => r.oneOf !== undefined)
+  let lists = m.reg.filter(r => r.fastOr !== undefined)
   if (lists.length === 1) {
-    let i = m.reg.findIndex(r => r.oneOf !== undefined)
-    Object.keys(m.reg[i].oneOf).forEach(w => {
+    let i = m.reg.findIndex(r => r.fastOr !== undefined)
+    Object.keys(m.reg[i].fastOr).forEach(w => {
       let newM = Object.assign({}, m)
       newM.reg = newM.reg.slice(0)
       newM.reg[i] = Object.assign({}, newM.reg[i])
       newM.reg[i].word = w
       delete newM.reg[i].operator
-      delete newM.reg[i].oneOf
+      delete newM.reg[i].fastOr
       // newM.reason += '-' + w
       more.push(newM)
     })

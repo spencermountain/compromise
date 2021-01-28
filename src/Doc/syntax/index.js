@@ -1,5 +1,5 @@
-const parseToken = require('./parseToken')
-const postProcess = require('./postProcess')
+const parseToken = require('./01-parseToken')
+const postProcess = require('./02-postProcess')
 const hasReg = /[^[a-z]]\//g
 
 const isArray = function (arr) {
@@ -79,6 +79,10 @@ const fromDoc = function (doc) {
 }
 
 const addOptions = function (tokens, opts) {
+  // add default fuzzy-search limit
+  if (opts.fuzzy === true) {
+    opts.fuzzy = 0.85
+  }
   if (typeof opts.fuzzy === 'number') {
     tokens = tokens.map(reg => {
       // add a fuzzy-match on 'word' tokens
@@ -125,7 +129,7 @@ const syntax = function (input, opts = {}) {
   let tokens = byParentheses(input)
   // console.log(tokens)
   tokens = byWords(tokens)
-  tokens = tokens.map(parseToken)
+  tokens = tokens.map(str => parseToken(str, opts))
   //clean up anything weird
   tokens = postProcess(tokens)
   // add fuzzy limits, etc

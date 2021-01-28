@@ -41,6 +41,13 @@ const doesMatch = function (t, reg, index, length) {
       if (score > reg.fuzzy) {
         return true
       }
+      // support fuzzy + soft match
+      if (reg.soft === true) {
+        score = fuzzy(reg.word, t.root)
+        if (score > reg.fuzzy) {
+          return true
+        }
+      }
     }
     //match either .clean or .text
     return reg.word === t.clean || reg.word === t.text || reg.word === t.reduced
@@ -61,8 +68,8 @@ const doesMatch = function (t, reg, index, length) {
     return reg.regex.test(t.clean)
   }
   // support optimized (one|two)
-  if (reg.oneOf !== undefined) {
-    return reg.oneOf.hasOwnProperty(t.reduced) || reg.oneOf.hasOwnProperty(t.text)
+  if (reg.fastOr !== undefined) {
+    return reg.fastOr.hasOwnProperty(t.reduced) || reg.fastOr.hasOwnProperty(t.text)
   }
   //support (one|two)
   if (reg.choices !== undefined) {

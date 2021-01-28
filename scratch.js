@@ -1,8 +1,8 @@
 const nlp = require('./src/index')
 const spacetime = require('/Users/spencer/mountain/spacetime/src')
 // nlp.verbose(true)
-nlp.extend(require('./plugins/numbers/src'))
-nlp.extend(require('./plugins/dates/src'))
+// nlp.extend(require('./plugins/numbers/src'))
+// nlp.extend(require('./plugins/dates/src'))
 
 // const fmt = iso => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 // const context = {
@@ -16,7 +16,10 @@ nlp.extend(require('./plugins/dates/src'))
 // console.log('start: ', fmt(dates.date.start))
 // console.log('  end: ', fmt(dates.date.end))
 
-nlp('a walk').match('a talk', { fuzzy: 0.7 }).text()
+nlp.parseMatch('a (football|walk)')
+nlp.parseMatch('a (football|walk|#Noun)')
+
+// nlp.tokenize('a walk').match('a (football|talk)', { fuzzy: 0.7 }).text()
 // 'a walk'
 
 // ==working now==

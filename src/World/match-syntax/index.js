@@ -89,6 +89,12 @@ const addOptions = function (tokens, opts) {
       if (opts.fuzzy > 0 && reg.word) {
         reg.fuzzy = opts.fuzzy
       }
+      //add it to or|and choices too
+      if (reg.choices) {
+        reg.choices.forEach(r => {
+          r.fuzzy = opts.fuzzy
+        })
+      }
       return reg
     })
   }

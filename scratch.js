@@ -17,8 +17,7 @@ const spacetime = require('/Users/spencer/mountain/spacetime/src')
 // console.log('  end: ', fmt(dates.date.end))
 
 // nlp.parseMatch('a (football|walk)')
-let reg = nlp.parseMatch('a (football|walk|climb)', { fuzzy: 60 })
-console.log(reg[1])
+let reg = nlp.parseMatch('a (football|walk|climb)', { fuzzy: 0.7 })
 nlp('a talk').match(reg).debug()
 
 // nlp.tokenize('a walk').match('a (football|talk)', { fuzzy: 0.7 }).text()

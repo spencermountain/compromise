@@ -1,18 +1,25 @@
 const nlp = require('./src/index')
-// const spacetime = require('/Users/spencer/mountain/spacetime/src')
+const spacetime = require('/Users/spencer/mountain/spacetime/src')
 // nlp.verbose(true)
-// nlp.extend(require('./plugins/sentences/src'))
-nlp.extend(require('./plugins/sentences/src'))
-// nlp.extend(require('./plugins/dates/src'))
+nlp.extend(require('./plugins/numbers/src'))
+nlp.extend(require('./plugins/dates/src'))
 
 // const fmt = iso => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
-
-// let context = {
+// const context = {
+//   today: '2020-01-21',
 //   timezone: 'Canada/Pacific',
-//   // today: [2016, 10, 23], //wed nov 23rd
 // }
+
+// let doc = nlp('march 2').debug()
+// let doc = nlp('03/02').debug()
+// let dates = doc.dates(context).json()[0]
+// console.log('start: ', fmt(dates.date.start))
+// console.log('  end: ', fmt(dates.date.end))
+
+nlp('a walk').match('a talk', { fuzzy: 0.7 }).text()
+// 'a walk'
+
 // ==working now==
-// let doc = nlp('in 20 mins').debug()
 
 // ### hmmm
 // let doc = nlp('in the next three years') //.debug()
@@ -75,8 +82,11 @@ nlp.extend(require('./plugins/sentences/src'))
 
 // let nlp = require('compromise');
 // nlp('foo-bar').match('@hasDash').debug()
-let doc = nlp('you take 11 hours to provide feedback').debug()
-doc.sentences().toPastTense().debug()
+// let doc = nlp('you take 11 hours to provide feedback').debug()
+// doc.sentences().toPastTense().debug()
+
+// nlp('i will go').match('i will !not go')
+
 // let doc1 = nlp('An 80 year old from Panadura has died')
 // let doc3 = nlp('A 79 years old woman from Colombo 13 has died in her r')
 

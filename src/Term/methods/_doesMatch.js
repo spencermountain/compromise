@@ -1,3 +1,5 @@
+const fuzzy = require('./_fuzzy')
+
 //declare it up here
 let wrapMatch = function () {}
 
@@ -32,6 +34,13 @@ const doesMatch = function (t, reg, index, length) {
     // support ~ match
     if (reg.soft === true && reg.word === t.root) {
       return true
+    }
+    // support fuzzy match param
+    if (reg.fuzzy !== undefined) {
+      let score = fuzzy(reg.word, t.reduced)
+      if (score > reg.fuzzy) {
+        return true
+      }
     }
     //match either .clean or .text
     return reg.word === t.clean || reg.word === t.text || reg.word === t.reduced

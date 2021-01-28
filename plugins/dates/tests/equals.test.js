@@ -56,7 +56,7 @@ const arr = [
   [`next q4`, `q4 2021`],
 ]
 
-test('variety', function (t) {
+test('date-variety', function (t) {
   arr.forEach((a) => {
     let left = nlp(a[0]).dates(context).json()[0] || {}
     let right = nlp(a[1]).dates(context).json()[0] || {}

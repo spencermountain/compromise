@@ -2,9 +2,15 @@ const parseSyntax = require('../match/syntax')
 const checkCache = require('../match/checkCache')
 
 /** return a new Doc, with this one as a parent */
-exports.match = function (reg, name) {
+exports.match = function (reg, opts = {}) {
+  // support '0' shorthand for named-groups
+  if (typeof opts === 'string' || typeof opts === 'number' || opts === null) {
+    opts = {
+      group: opts,
+    }
+  }
   //parse-up the input expression
-  let regs = parseSyntax(reg)
+  let regs = parseSyntax(reg, opts)
   if (regs.length === 0) {
     return this.buildFrom([])
   }
@@ -17,16 +23,17 @@ exports.match = function (reg, name) {
     return arr.concat(p.match(regs))
   }, [])
 
-  if (name !== undefined && name !== null && name !== '') {
-    return this.buildFrom(matches).groups(name)
+  // support returning named groups
+  if (opts.group !== undefined && opts.group !== null && opts.group !== '') {
+    return this.buildFrom(matches).groups(opts.group)
   }
   return this.buildFrom(matches)
 }
 
 /** return all results except for this */
-exports.not = function (reg) {
+exports.not = function (reg, opts = {}) {
   //parse-up the input expression
-  let regs = parseSyntax(reg)
+  let regs = parseSyntax(reg, opts)
   //if it's empty, return them all!
   if (regs.length === 0 || checkCache(this, regs) === false) {
     return this
@@ -39,8 +46,8 @@ exports.not = function (reg) {
 }
 
 /** return only the first match */
-exports.matchOne = function (reg) {
-  let regs = parseSyntax(reg)
+exports.matchOne = function (reg, opts = {}) {
+  let regs = parseSyntax(reg, opts)
   //check our cache, if it exists
   if (checkCache(this, regs) === false) {
     return this.buildFrom([])
@@ -53,8 +60,8 @@ exports.matchOne = function (reg) {
 }
 
 /** return each current phrase, only if it contains this match */
-exports.if = function (reg) {
-  let regs = parseSyntax(reg)
+exports.if = function (reg, opts = {}) {
+  let regs = parseSyntax(reg, opts)
   //consult our cache, if it exists
   if (checkCache(this, regs) === false) {
     return this.buildFrom([])
@@ -64,15 +71,15 @@ exports.if = function (reg) {
 }
 
 /** Filter-out any current phrases that have this match*/
-exports.ifNo = function (reg) {
-  let regs = parseSyntax(reg)
+exports.ifNo = function (reg, opts = {}) {
+  let regs = parseSyntax(reg, opts)
   let found = this.list.filter(p => p.has(regs) === false)
   return this.buildFrom(found)
 }
 
 /**Return a boolean if this match exists */
-exports.has = function (reg) {
-  let regs = parseSyntax(reg)
+exports.has = function (reg, opts = {}) {
+  let regs = parseSyntax(reg, opts)
   //consult our cache, if it exists
   if (checkCache(this, regs) === false) {
     return false

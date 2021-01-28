@@ -78,8 +78,21 @@ const fromDoc = function (doc) {
   return [{ choices: ids, greedy: true }]
 }
 
+const addOptions = function (tokens, opts) {
+  if (typeof opts.fuzzy === 'number') {
+    tokens = tokens.map(reg => {
+      // add a fuzzy-match on 'word' tokens
+      if (opts.fuzzy > 0 && reg.word) {
+        reg.fuzzy = opts.fuzzy
+      }
+      return reg
+    })
+  }
+  return tokens
+}
+
 /** parse a match-syntax string into json */
-const syntax = function (input) {
+const syntax = function (input, opts = {}) {
   // fail-fast
   if (input === null || input === undefined || input === '') {
     return []
@@ -115,6 +128,8 @@ const syntax = function (input) {
   tokens = tokens.map(parseToken)
   //clean up anything weird
   tokens = postProcess(tokens)
+  // add fuzzy limits, etc
+  tokens = addOptions(tokens, opts)
   // console.log(tokens)
   return tokens
 }

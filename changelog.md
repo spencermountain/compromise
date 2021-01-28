@@ -12,6 +12,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - **[new]** - World.addConjugations() method
 - **[new]** - World.addPlurals() method
 - **[fix]** - conjugations fixes #800
+- **[new]** - compromise-penn-tags plugin
 -->
 
 #### 13.8.0 [Dec 2020]

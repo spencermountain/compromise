@@ -7,7 +7,7 @@ const Phrase = require('./Phrase/Phrase')
 const Term = require('./Term/Term')
 const Pool = require('./01-tokenizer/Pool')
 const tinyTagger = require('./02-tagger/tiny')
-const parseMatch = require('./Doc/syntax')
+const parseMatch = require('./World/match-syntax')
 
 function instance(worldInstance) {
   //blast-out our word-lists, just once

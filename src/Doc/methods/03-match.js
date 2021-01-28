@@ -1,4 +1,4 @@
-const parseSyntax = require('../syntax')
+const parseSyntax = require('../../World/match-syntax')
 const checkCache = require('./_failFast')
 
 /** return a new Doc, with this one as a parent */

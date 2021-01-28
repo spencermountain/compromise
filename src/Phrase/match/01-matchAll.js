@@ -1,7 +1,7 @@
 const failFast = require('./02-failFast')
 const tryMatch = require('./03-tryMatch')
 const postProcess = require('./04-postProcess')
-const syntax = require('../../Doc/syntax')
+const syntax = require('../../World/match-syntax')
 
 /**  returns a simple array of arrays */
 const matchAll = function (p, regs, matchOne = false) {

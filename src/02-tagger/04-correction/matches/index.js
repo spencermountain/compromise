@@ -1,4 +1,4 @@
-const parseSyntax = require('../../../Doc/syntax')
+const parseSyntax = require('../../../World/match-syntax')
 const unique = require('../_unique')
 let matches = []
 matches = matches.concat(require('./01-misc'))

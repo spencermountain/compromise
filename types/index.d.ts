@@ -44,7 +44,7 @@ declare interface nlp<D extends object, W extends object, Ph extends Object> {
   /** grab the document's context data */
   world(): W
   /** pre-parse a match statement, for faster lookups*/
-  parseMatch(str: string): nlp<D, W, Ph>
+  parseMatch(str: string, options?:object): nlp<D, W, Ph>
 }
 
 declare function nlp(text?: string, lexicon?: Lexicon): nlp.DefaultDocument
@@ -196,26 +196,28 @@ declare module nlp {
     pool(): Pool
 
     // Match
-    /**  return a new Doc, with this one as a parent */
-    match(match: string | ExtendedDocument<Ext, W, Ph>): ExtendedDocument<Ext, W, Ph>
+    /**  return matching patterns in this doc */
+    match(match: string | ExtendedDocument<Ext, W, Ph>, options:any): ExtendedDocument<Ext, W, Ph>
+    /**  return a named group in a match */
+    match(match: string | ExtendedDocument<Ext, W, Ph>, group:string|number): ExtendedDocument<Ext, W, Ph>
     /**  return all results except for this */
-    not(match: string | ExtendedDocument<Ext, W, Ph>): ExtendedDocument<Ext, W, Ph>
+    not(match: string | ExtendedDocument<Ext, W, Ph>, options:any): ExtendedDocument<Ext, W, Ph>
     /**  return only the first match */
-    matchOne(match: string | ExtendedDocument<Ext, W, Ph>): ExtendedDocument<Ext, W, Ph>
+    matchOne(match: string | ExtendedDocument<Ext, W, Ph>, options:any): ExtendedDocument<Ext, W, Ph>
     /**  return each current phrase, only if it contains this match */
-    if(match: string | ExtendedDocument<Ext, W, Ph>): ExtendedDocument<Ext, W, Ph>
+    if(match: string | ExtendedDocument<Ext, W, Ph>, options:any): ExtendedDocument<Ext, W, Ph>
     /**  Filter-out any current phrases that have this match */
-    ifNo(match: string | ExtendedDocument<Ext, W, Ph>): ExtendedDocument<Ext, W, Ph>
+    ifNo(match: string | ExtendedDocument<Ext, W, Ph>, options:any): ExtendedDocument<Ext, W, Ph>
     /**  Return a boolean if this match exists */
-    has(match: string | ExtendedDocument<Ext, W, Ph>): boolean
+    has(match: string | ExtendedDocument<Ext, W, Ph>, options:any): boolean
     /**  search through earlier terms, in the sentence */
-    lookBehind(match: string | ExtendedDocument<Ext, W, Ph>): ExtendedDocument<Ext, W, Ph>
+    lookBehind(match: string | ExtendedDocument<Ext, W, Ph>, options:any): ExtendedDocument<Ext, W, Ph>
     /**  search through following terms, in the sentence */
-    lookAhead(match: string | ExtendedDocument<Ext, W, Ph>): ExtendedDocument<Ext, W, Ph>
+    lookAhead(match: string | ExtendedDocument<Ext, W, Ph>, options:any): ExtendedDocument<Ext, W, Ph>
     /**  return the terms before each match */
-    before(match: string | ExtendedDocument<Ext, W, Ph>): ExtendedDocument<Ext, W, Ph>
+    before(match: string | ExtendedDocument<Ext, W, Ph>, options:any): ExtendedDocument<Ext, W, Ph>
     /**  return the terms after each match */
-    after(match: string | ExtendedDocument<Ext, W, Ph>): ExtendedDocument<Ext, W, Ph>
+    after(match: string | ExtendedDocument<Ext, W, Ph>, options:any): ExtendedDocument<Ext, W, Ph>
     /** quick find for an array of string matches */
     lookup(matches: string[]): ExtendedDocument<Ext, W, Ph>
     /** quick find for an object of key-value matches */

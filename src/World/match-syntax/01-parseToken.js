@@ -42,7 +42,7 @@ const stripBoth = function (str) {
 }
 
 //
-const parseToken = function (w, opts) {
+const parseToken = function (w) {
   let obj = {}
   //collect any flags (do it twice)
   for (let i = 0; i < 2; i += 1) {

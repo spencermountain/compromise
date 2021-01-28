@@ -131,7 +131,7 @@ const syntax = function (input, opts = {}) {
   tokens = byWords(tokens)
   tokens = tokens.map(str => parseToken(str, opts))
   //clean up anything weird
-  tokens = postProcess(tokens)
+  tokens = postProcess(tokens, opts)
   // add fuzzy limits, etc
   tokens = addOptions(tokens, opts)
   // console.log(tokens)

@@ -67,10 +67,8 @@ function instance(worldInstance) {
     return world
   }
   /** pre-parse any match statements */
-  nlp.parseMatch = function (str) {
-    let res = parseMatch(str)
-    // console.log(res)
-    return res
+  nlp.parseMatch = function (str, opts) {
+    return parseMatch(str, opts)
   }
 
   /** current version of the library */

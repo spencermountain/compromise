@@ -9,6 +9,7 @@ const tryHere = function (terms, regs, index, length) {
     t: 0,
     terms: terms,
     regs: regs,
+    length: length,
   }
   let previousGroupId = null
 
@@ -43,7 +44,7 @@ const tryHere = function (terms, regs, index, length) {
 
     //support 'unspecific greedy' .* properly
     if (reg.anything === true && reg.greedy === true) {
-      let skipto = logic.greedyTo(state.terms, state.t, regs[r + 1], reg, index, length)
+      let skipto = logic.greedyTo(state, regs[r + 1], reg, index)
       // ensure it's long enough
       if (reg.min !== undefined && skipto - state.t < reg.min) {
         return [false, null]
@@ -74,7 +75,7 @@ const tryHere = function (terms, regs, index, length) {
 
     // try to support (a|b|foo bar)
     if (reg.multiword === true) {
-      let skipNum = logic.doMultiWord(state.terms, state.t, reg, length)
+      let skipNum = logic.doMultiWord(state, reg)
       if (skipNum) {
         const g = logic.getOrCreateGroup(state.groups, namedGroupId, state.terms, state.t, reg.named)
         g.length += skipNum
@@ -85,7 +86,7 @@ const tryHere = function (terms, regs, index, length) {
       }
     }
 
-    if (reg.anything === true || logic.isEndGreedy(reg, index, state.t, state.terms, length)) {
+    if (reg.anything === true || logic.isEndGreedy(reg, index, state)) {
       let startAt = state.t
       // okay, it was a match, but if it optional too,
       // we should check the next reg too, to skip it?
@@ -118,14 +119,7 @@ const tryHere = function (terms, regs, index, length) {
         // value, and leaving it can cause failures for anchored greedy
         // matches.  ditto for end-greedy matches: we need an earlier non-
         // ending match to succceed until we get to the actual end.
-        state.t = logic.getGreedy(
-          state.terms,
-          state.t,
-          Object.assign({}, reg, { start: false, end: false }),
-          regs[r + 1],
-          index,
-          length
-        )
+        state.t = logic.getGreedy(state, Object.assign({}, reg, { start: false, end: false }), regs[r + 1], index)
         if (state.t === null) {
           return [false, null] //greedy was too short
         }

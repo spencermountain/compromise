@@ -1,3 +1,5 @@
+const hasASpace = / /
+
 // name any [unnamed] capture-groups with a number
 const nameGroups = function (tokens) {
   let convert = false
@@ -42,13 +44,14 @@ const simpleWord = function (reg) {
   if (reg.negative === true) {
     return false
   }
-  if (reg.word !== undefined) {
+  // if it's a basic single word
+  if (reg.word !== undefined && hasASpace.test(reg.word) === false) {
     return true
   }
   return false
 }
 
-// this is a faster 'or' lookup, when the (a|b|c) list is simple
+// optimize an 'or' lookup, when the (a|b|c) list is simple or multi-word
 const doFastOrMode = function (tokens) {
   return tokens.map(token => {
     if (token.choices !== undefined) {
@@ -59,6 +62,27 @@ const doFastOrMode = function (tokens) {
         token.choices.forEach(c => (oneOf[c.word] = true))
         token.fastOr = oneOf
         delete token.choices
+      }
+    }
+    return token
+  })
+}
+
+// allow multiword OR (foo|one two)
+const doMultiWord = function (tokens) {
+  return tokens.map(token => {
+    if (token.choices !== undefined) {
+      let isMulti = token.choices.find(o => hasASpace.test(o.word)) || false
+      if (isMulti !== false) {
+        token.multiword = true
+        // turn all choices into arrays
+        token.choices = token.choices.map(choice => {
+          if (choice.word) {
+            choice.sequence = choice.word.split(hasASpace)
+            delete choice.word
+          }
+          return choice
+        })
       }
     }
     return token
@@ -76,8 +100,9 @@ const postProcess = function (tokens, opts = {}) {
   if (!opts.fuzzy) {
     tokens = doFastOrMode(tokens)
   }
+  // support multiword OR (foo bar|baz)
+  tokens = doMultiWord(tokens)
   // console.log(tokens)
-
   return tokens
 }
 module.exports = postProcess

@@ -17,8 +17,13 @@ const spacetime = require('/Users/spencer/mountain/spacetime/src')
 // console.log('  end: ', fmt(dates.date.end))
 
 // nlp.parseMatch('a (football|walk)')
-let reg = nlp.parseMatch('a (football|walk|climb)', { fuzzy: 0.7 })
-nlp('a talk').match(reg).debug()
+// let reg = nlp.parseMatch('a (soccer|rugby game|football|#Noun)')
+// reg[1].greedy = true
+// console.log(reg[1])
+// nlp('a football game').match(reg).debug()
+
+nlp('the canadian senate').match('the (united states|canadian) senate').debug()
+nlp('the united states senate').match('the (united states|canadian) senate').debug()
 
 // nlp.tokenize('a walk').match('a (football|talk)', { fuzzy: 0.7 }).text()
 // 'a walk'

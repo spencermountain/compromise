@@ -26,6 +26,11 @@ const getGreedy = function (terms, t, reg, until, index, length) {
   return t
 }
 
+// support (a|b|foo bar)
+const tryMultiWord = function (terms, t, reg) {
+  return t
+}
+
 //'unspecific greedy' is a weird situation.
 const greedyTo = function (terms, t, nextReg, index, length) {
   //if there's no next one, just go off the end!
@@ -73,6 +78,33 @@ const getOrCreateGroup = function (namedGroups, namedGroupId, terms, startIndex,
     length: 0,
   }
   return namedGroups[namedGroupId]
+}
+
+const doMultiWord = function (terms, t, reg, length) {
+  // do each multiword sequence
+  for (let c = 0; c < reg.choices.length; c += 1) {
+    let cr = reg.choices[c]
+    // try a list of words
+    if (cr.sequence) {
+      let found = cr.sequence.every((w, w_index) => {
+        let tryTerm = t + w_index
+        if (terms[tryTerm] === undefined) {
+          return false
+        }
+        if (terms[tryTerm].doesMatch({ word: w }, tryTerm, length)) {
+          return true
+        }
+        return false
+      })
+      if (found) {
+        return cr.sequence.length
+      }
+    } else if (terms[t].doesMatch(cr, t, length)) {
+      // try a normal match in a multiword
+      return 1
+    }
+  }
+  return false
 }
 
 /** tries to match a sequence of terms, starting from here */
@@ -141,6 +173,15 @@ const tryHere = function (terms, regs, index, length) {
     }
     //if it looks like a match, continue
 
+    // try to support (a|b|foo bar)
+    if (reg.multiword === true) {
+      let skipNum = doMultiWord(terms, t, reg, length)
+      if (skipNum) {
+        t += skipNum
+        continue
+      }
+    }
+
     if (reg.anything === true || isEndGreedy(reg, index, t, terms, length)) {
       let startAt = t
       // okay, it was a match, but if it optional too,
@@ -184,6 +225,7 @@ const tryHere = function (terms, regs, index, length) {
           return [false, null] //greedy didn't reach the end
         }
       }
+
       if (isNamedGroup) {
         // Get or create capture group
         const g = getOrCreateGroup(namedGroups, namedGroupId, terms, startAt, reg.named)

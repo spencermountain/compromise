@@ -71,8 +71,11 @@ const doesMatch = function (t, reg, index, length) {
   if (reg.fastOr !== undefined) {
     return reg.fastOr.hasOwnProperty(t.reduced) || reg.fastOr.hasOwnProperty(t.text)
   }
-  //support (one|two)
+  //support slower (one|two)
   if (reg.choices !== undefined) {
+    // if (reg.multiword) {
+    // console.log()
+    // }
     // try to support && operator
     if (reg.operator === 'and') {
       // must match them all

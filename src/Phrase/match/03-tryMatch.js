@@ -83,7 +83,7 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
     }
 
     // support AND (#Noun && foo) blocks
-    if (reg.choices !== undefined && reg.operator === 'or') {
+    if (reg.choices !== undefined && reg.operator === 'and') {
       let skipNum = logic.doAndBlock(state)
       if (skipNum) {
         const g = logic.getGroup(state, state.t, reg.named)

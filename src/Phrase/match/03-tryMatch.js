@@ -3,18 +3,19 @@ const logic = require('./_match-logic')
 // i formally apologize for how complicated this is.
 
 /** tries to match a sequence of terms, starting from here */
-const tryHere = function (terms, regs, index, length) {
+const tryHere = function (terms, regs, start_i, phrase_length) {
   // all the variables that matter
   let state = {
-    t: 0,
-    terms: terms,
-    regs: regs,
+    t: 0, //the term index we're on
+    terms: terms, //the working slice of term objects
+    r: 0, // the reg index we're on
+    regs: regs, //our match conditions
     groups: {}, //all named-group matches
-    index: index, //sentence index we're starting from
-    length: length, //phrase length
+    start_i: start_i, // term index we're starting from
+    phrase_length: phrase_length, // # of terms in the sentence
+    hasGroup: false,
     groupId: null,
     previousGroup: null,
-    r: 0,
   }
 
   // we must satisfy each rule in 'regs'
@@ -22,10 +23,10 @@ const tryHere = function (terms, regs, index, length) {
     let reg = regs[state.r]
 
     // Check if this reg has a named capture group
-    const isNamedGroup = typeof reg.named === 'string' || typeof reg.named === 'number'
+    state.hasGroup = typeof reg.named === 'string' || typeof reg.named === 'number'
 
     // Reuse previous capture group if same
-    if (isNamedGroup) {
+    if (state.hasGroup === true) {
       const prev = regs[state.r - 1]
       if (prev && prev.named === reg.named && state.previousGroup) {
         state.groupId = state.previousGroup
@@ -34,15 +35,14 @@ const tryHere = function (terms, regs, index, length) {
         state.previousGroup = state.groupId
       }
     }
-    //should we fail here?
+    //hve we run-out of terms?
     if (!state.terms[state.t]) {
       //are all remaining regs optional?
-      const hasNeeds = regs.slice(state.r).some(remain => !remain.optional)
-      if (hasNeeds === false) {
-        break
+      const haveNeeds = regs.slice(state.r).some(remain => !remain.optional)
+      if (haveNeeds === false) {
+        break //done!
       }
-      // have unmet needs
-      return null
+      return null // die
     }
 
     //support 'unspecific greedy' .* properly
@@ -57,28 +57,23 @@ const tryHere = function (terms, regs, index, length) {
         state.t = state.t + reg.max
         continue
       }
-
       if (skipto === null) {
         return null //couldn't find it
       }
-
       // is it really this easy?....
-      if (isNamedGroup) {
-        const g = logic.getOrCreateGroup(state, state.t, reg.named)
+      if (state.hasGroup === true) {
+        const g = logic.getGroup(state, state.t, reg.named)
         g.length = skipto - state.t
       }
-
       state.t = skipto
-
       continue
     }
-    //if it looks like a match, continue
 
-    // try to support (a|b|foo bar)
+    // support multi-word OR (a|b|foo bar)
     if (reg.multiword === true) {
-      let skipNum = logic.doMultiWord(state, reg)
+      let skipNum = logic.doMultiWord(state)
       if (skipNum) {
-        const g = logic.getOrCreateGroup(state, state.t, reg.named)
+        const g = logic.getGroup(state, state.t, reg.named)
         g.length += skipNum
         state.t += skipNum
         continue
@@ -93,12 +88,12 @@ const tryHere = function (terms, regs, index, length) {
       // we should check the next reg too, to skip it?
       if (reg.optional && regs[state.r + 1]) {
         // does the next reg match it too?
-        if (state.terms[state.t].doesMatch(regs[state.r + 1], state.index + state.t, state.length)) {
+        if (state.terms[state.t].doesMatch(regs[state.r + 1], state.start_i + state.t, state.phrase_length)) {
           // but does the next reg match the next term??
           // only skip if it doesn't
           if (
             !state.terms[state.t + 1] ||
-            !state.terms[state.t + 1].doesMatch(regs[state.r + 1], state.index + state.t, state.length)
+            !state.terms[state.t + 1].doesMatch(regs[state.r + 1], state.start_i + state.t, state.phrase_length)
           ) {
             state.r += 1
           }
@@ -125,14 +120,14 @@ const tryHere = function (terms, regs, index, length) {
         }
         // if this was also an end-anchor match, check to see we really
         // reached the end
-        if (reg.end === true && state.index + state.t !== length) {
+        if (reg.end === true && state.start_i + state.t !== phrase_length) {
           return null //greedy didn't reach the end
         }
       }
 
-      if (isNamedGroup) {
+      if (state.hasGroup === true) {
         // Get or create capture group
-        const g = logic.getOrCreateGroup(state, startAt, reg.named)
+        const g = logic.getGroup(state, startAt, reg.named)
         // Update group - add greedy or increment length
         if (state.t > 1 && reg.greedy) {
           g.length += state.t - startAt
@@ -150,7 +145,7 @@ const tryHere = function (terms, regs, index, length) {
     // should we skip-over an implicit word?
     if (state.terms[state.t].isImplicit() && regs[state.r - 1] && state.terms[state.t + 1]) {
       // does the next one match?
-      if (state.terms[state.t + 1].doesMatch(reg, state.index + state.t, length)) {
+      if (state.terms[state.t + 1].doesMatch(reg, state.start_i + state.t, state.phrase_length)) {
         state.t += 2
         continue
       }

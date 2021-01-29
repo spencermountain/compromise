@@ -77,7 +77,7 @@ exports.doOrBlock = function (state, skipN = 0) {
       if (state.terms[tryTerm] === undefined) {
         return false
       }
-      return state.terms[tryTerm].doesMatch(cr, tryTerm, state.phrase_length)
+      return state.terms[tryTerm].doesMatch(cr, tryTerm + state.start_i, state.phrase_length)
     })
     if (wasFound) {
       skipN += block.length

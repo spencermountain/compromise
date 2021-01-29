@@ -9,7 +9,7 @@ nlp.verbose(true)
 //
 //
 
-let doc = nlp(`a priest`).debug()
-// doc.match('#Determiner #Adjective (#Copula|#PastTense|#Auxiliary)').debug()
-// doc.cache({ root: true })
-// doc.match('~walk~ into').debug()
+let doc = nlp("matt does but matthew doesn't")
+let reg = nlp.parseMatch('(^#Person|#Person$)')
+console.log(JSON.stringify(reg, null, 2))
+doc.match(reg).debug()

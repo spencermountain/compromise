@@ -59,6 +59,7 @@ matches.forEach(m => {
     all = all.concat(enumerated)
   } else {
     all.push(m)
+    // console.log(m)
   }
 })
 
@@ -67,4 +68,6 @@ all.forEach(m => {
   return m
 })
 
+// console.log(all.length)
+// console.log(all[all.length - 1])
 module.exports = all

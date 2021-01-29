@@ -54,17 +54,22 @@ const byWords = function (arr) {
 
 //turn an array into a 'choices' list
 const byArray = function (arr) {
+  let blocks = arr.map(s => {
+    return [
+      {
+        word: s,
+      },
+    ]
+  })
   return [
     {
-      choices: arr.map(s => {
-        return {
-          word: s,
-        }
-      }),
+      choices: blocks,
+      operator: 'or',
     },
   ]
 }
 
+// turn a Doc object into a reg of ids to lookup
 const fromDoc = function (doc) {
   if (!doc || !doc.list || !doc.list[0]) {
     return []
@@ -75,9 +80,10 @@ const fromDoc = function (doc) {
       ids.push({ id: t.id })
     })
   })
-  return [{ choices: ids, greedy: true }]
+  return [{ choices: [ids], greedy: true }]
 }
 
+// add fuzziness etc to each reg
 const addOptions = function (tokens, opts) {
   // add default fuzzy-search limit
   if (opts.fuzzy === true) {

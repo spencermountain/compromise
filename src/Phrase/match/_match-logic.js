@@ -65,15 +65,12 @@ exports.isEndGreedy = function (reg, state) {
 }
 
 // match complex OR cases like (a|b|foo bar)
-exports.doBlocks = function (state) {
+exports.doOrBlock = function (state) {
   let reg = state.regs[state.r]
   // do each multiword sequence
   for (let c = 0; c < reg.choices.length; c += 1) {
-    // try this list of tokens
+    // try to match this list of tokens
     let block = reg.choices[c]
-    if (!block.every) {
-      console.log(reg)
-    }
     let wasFound = block.every((cr, w_index) => {
       let tryTerm = state.t + w_index
       if (state.terms[tryTerm] === undefined) {
@@ -85,6 +82,31 @@ exports.doBlocks = function (state) {
       return block.length
     }
   }
+  return false
+}
+// match AND cases like (#Noun && foo)
+exports.doAndBlock = function (state) {
+  let longest = 0
+  // all blocks must match, and we return the greediest match
+  let reg = state.regs[state.r]
+  let allDidMatch = reg.choices.every(block => {
+    //  for multi-word blocks, all must match
+    let allWords = block.every((cr, w_index) => {
+      let tryTerm = state.t + w_index
+      if (state.terms[tryTerm] === undefined) {
+        return false
+      }
+      return state.terms[tryTerm].doesMatch(cr, tryTerm, state.phrase_length)
+    })
+    if (allWords === true && block.length > longest) {
+      longest = block.length
+    }
+    return allWords
+  })
+  if (allDidMatch === true) {
+    return longest
+  }
+
   return false
 }
 

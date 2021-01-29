@@ -2,6 +2,7 @@ const failFast = require('./02-failFast')
 const tryMatch = require('./03-tryMatch')
 const postProcess = require('./04-postProcess')
 const syntax = require('../../World/match-syntax')
+const idLookup = require('./idLookup')
 
 /**  returns a simple array of arrays */
 const matchAll = function (p, regs, matchOne = false) {
@@ -19,6 +20,14 @@ const matchAll = function (p, regs, matchOne = false) {
   let terms = p.terms()
   let matches = []
 
+  // these id-lookups can be super-fast
+  if (regs[0].idBlocks) {
+    let res = idLookup(terms, regs)
+    if (res && res.length > 0) {
+      return postProcess(terms, regs, res)
+    }
+  }
+
   //optimisation for '^' start logic
   if (regs[0].start === true) {
     let res = tryMatch(terms, regs, 0, terms.length)
@@ -35,6 +44,7 @@ const matchAll = function (p, regs, matchOne = false) {
     if (i + minLength > terms.length) {
       break
     }
+
     //try it!
     let res = tryMatch(terms.slice(i), regs, i, terms.length)
     if (res && res.match && res.match.length > 0) {

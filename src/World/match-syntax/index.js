@@ -74,15 +74,15 @@ const fromDoc = function (doc) {
   if (!doc || !doc.list || !doc.list[0]) {
     return []
   }
-  let ids = []
+  let regs = []
   doc.list.forEach(p => {
+    let ids = []
     p.terms().forEach(t => {
-      ids.push({ id: t.id })
+      ids.push(t.id)
     })
+    regs.push(ids)
   })
-  return ids
-  // console.log(ids)
-  // return [{ choices: [ids], greedy: true }]
+  return [{ idBlocks: regs }]
 }
 
 // add fuzziness etc to each reg

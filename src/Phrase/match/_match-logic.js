@@ -113,7 +113,6 @@ exports.doAndBlock = function (state) {
   if (allDidMatch === true) {
     return longest
   }
-
   return false
 }
 

@@ -8,14 +8,10 @@ const nlp = require('./src/index')
 //
 //
 //
-const doc = nlp('he is from Phoenix')
-const m = doc.match('#City')
+
+let doc = nlp('if so, he is the best, that i see. he is the greatest')
+let m = doc.match('he is the .')
 let reg = nlp.parseMatch(m)
-// let reg = nlp.parseMatch('(#City)')
-console.log(JSON.stringify(reg, null, 2))
+// let reg = nlp.parseMatch('cool id')
+// console.log(JSON.stringify(reg, null, 2))
 doc.match(reg).debug()
-// let terms = doc.termList()
-// console.log(terms[terms.length - 1])
-// const without = doc.not(m).debug()
-// let doc = nlp('is really not quickly walking')
-// doc.match(reg).debug()

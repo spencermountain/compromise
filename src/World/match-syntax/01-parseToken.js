@@ -116,7 +116,9 @@ const parseToken = function (w) {
       obj.choices = obj.choices.map(s => s.trim())
       obj.choices = obj.choices.filter(s => s)
       //recursion alert!
-      obj.choices = obj.choices.map(parseToken)
+      obj.choices = obj.choices.map(str => {
+        return str.split(/ /g).map(parseToken)
+      })
       w = ''
     }
 

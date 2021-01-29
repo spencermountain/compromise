@@ -64,34 +64,57 @@ exports.isEndGreedy = function (reg, state) {
   return false
 }
 
-// match multiword OR cases like (a|b|foo bar)
-exports.doMultiWord = function (state) {
+// match complex OR cases like (a|b|foo bar)
+exports.doBlocks = function (state) {
   let reg = state.regs[state.r]
   // do each multiword sequence
   for (let c = 0; c < reg.choices.length; c += 1) {
-    let cr = reg.choices[c]
-    // try a list of words
-    if (cr.sequence) {
-      let found = cr.sequence.every((w, w_index) => {
-        let tryTerm = state.t + w_index
-        if (state.terms[tryTerm] === undefined) {
-          return false
-        }
-        if (state.terms[tryTerm].doesMatch({ word: w }, tryTerm, state.phrase_length)) {
-          return true
-        }
+    // try this list of tokens
+    let block = reg.choices[c]
+    if (!block.every) {
+      console.log(reg)
+    }
+    let wasFound = block.every((cr, w_index) => {
+      let tryTerm = state.t + w_index
+      if (state.terms[tryTerm] === undefined) {
         return false
-      })
-      if (found) {
-        return cr.sequence.length
       }
-    } else if (state.terms[state.t].doesMatch(cr, state.t, state.phrase_length)) {
-      // try a normal match in a multiword
-      return 1
+      return state.terms[tryTerm].doesMatch(cr, tryTerm, state.phrase_length)
+    })
+    if (wasFound) {
+      return block.length
     }
   }
   return false
 }
+
+// exports.doMultiWord = function (state) {
+//   let reg = state.regs[state.r]
+//   // do each multiword sequence
+//   for (let c = 0; c < reg.choices.length; c += 1) {
+//     let cr = reg.choices[c]
+//     // try a list of words
+//     if (cr.sequence) {
+//       let found = cr.sequence.every((w, w_index) => {
+//         let tryTerm = state.t + w_index
+//         if (state.terms[tryTerm] === undefined) {
+//           return false
+//         }
+//         if (state.terms[tryTerm].doesMatch({ word: w }, tryTerm, state.phrase_length)) {
+//           return true
+//         }
+//         return false
+//       })
+//       if (found) {
+//         return cr.sequence.length
+//       }
+//     } else if (state.terms[state.t].doesMatch(cr, state.t, state.phrase_length)) {
+//       // try a normal match in a multiword
+//       return 1
+//     }
+//   }
+//   return false
+// }
 
 // get or create named group
 exports.getGroup = function (state, term_index, name) {

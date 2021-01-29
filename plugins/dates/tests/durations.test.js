@@ -17,6 +17,9 @@ test('durations normalize', function (t) {
     ['12.3 years', '12.3 years'],
     ['12 years and one month', '12 years and 1 month'],
     ['12 yrs and 2 hrs', '12 years and 2 hours'],
+    ['2mins please', '2 minutes please'],
+    ['5yrs and 3 months', '5 years and 3 months'],
+    ['three quarters', '3 quarters'],
     // no duration
     ['food wholesale prices for hours', 'food wholesale prices for hours'],
   ]

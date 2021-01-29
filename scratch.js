@@ -10,26 +10,30 @@ nlp.extend(require('./plugins/dates/src'))
 //   timezone: 'Canada/Pacific',
 // }
 
-let doc = nlp('blah blah two hours and 8 mins foobar') //.durations().debug()
+// let doc = nlp('2mins from now') //.durations().debug()
 // console.log(doc.durations().json())
-doc.durations().normalize()
-doc.debug()
-console.log(doc.text())
+// doc.durations().normalize()
+// doc.debug()
+// console.log(doc.text())
 
-// let doc = nlp('2 hours 8 minutes')
-// doc.match('[#Value #Duration]*').debug()
-// console.log(nlp.parseMatch('(#Value #Duration)?')[0])
+// nlp('foo foot gun baz').match('foo (foot gun|shoe)? baz').debug()
+// nlp('foo shoe baz').match('foo (foot gun|shoe)? baz').debug()
 
 // let doc = nlp('03/02').debug()
 // let dates = doc.dates(context).json()[0]
 // console.log('start: ', fmt(dates.date.start))
 // console.log('  end: ', fmt(dates.date.end))
 
-// nlp.parseMatch('a (football|walk)')
-// let reg = nlp.parseMatch('a (soccer|rugby game|football|#Noun)')
-// reg[1].greedy = true
-// console.log(reg[1])
-// nlp('a football game').match(reg).debug()
+// doc.match('a (football|walk|climb)', { fuzzy: 0.74 })
+
+// m = doc.match('(@hasPeriod|cool)')
+let reg = nlp.parseMatch('(@hasPeriod|cool)')
+// let reg = nlp.parseMatch('a (football .|cool #Noun)')
+// let reg = nlp.parseMatch('a (football|walk|climb)')
+console.log(JSON.stringify(reg, null, 2))
+nlp("jamie's much, much better.").match(reg).debug()
+
+// nlp('a talk').match('a (football|walk|climb)', { fuzzy: 0.4 }).debug()
 
 // console.log(nlp.parseMatch('the [(united states|canadian)] senate'))
 // nlp('the canadian senate').match('the [(united states|canadian)] senate', 0).debug()

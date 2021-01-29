@@ -91,8 +91,10 @@ const addOptions = function (tokens, opts) {
       }
       //add it to or|and choices too
       if (reg.choices) {
-        reg.choices.forEach(r => {
-          r.fuzzy = opts.fuzzy
+        reg.choices.forEach(block => {
+          block.forEach(r => {
+            r.fuzzy = opts.fuzzy
+          })
         })
       }
       return reg

@@ -70,8 +70,8 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
     }
 
     // support multi-word OR (a|b|foo bar)
-    if (reg.multiword === true) {
-      let skipNum = logic.doMultiWord(state)
+    if (reg.choices !== undefined) {
+      let skipNum = logic.doBlocks(state)
       if (skipNum) {
         const g = logic.getGroup(state, state.t, reg.named)
         g.length += skipNum
@@ -81,6 +81,18 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
         return null
       }
     }
+    // // support multi-word OR (a|b|foo bar)
+    // if (reg.multiword === true) {
+    //   let skipNum = logic.doMultiWord(state)
+    //   if (skipNum) {
+    //     const g = logic.getGroup(state, state.t, reg.named)
+    //     g.length += skipNum
+    //     state.t += skipNum
+    //     continue
+    //   } else if (!reg.optional) {
+    //     return null
+    //   }
+    // }
 
     if (reg.anything === true || logic.isEndGreedy(reg, state)) {
       let startAt = state.t

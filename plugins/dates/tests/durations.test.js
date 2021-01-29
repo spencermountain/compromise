@@ -1,60 +1,29 @@
 const test = require('tape')
 const nlp = require('./_lib')
-const relaxed = 15
 
-let february = 1
-//number of days between start+end
-const tests = [
-  {
-    //for reference: https://calendar.google.com/calendar/render#main_7%7Cmonth-3+23617+23654+23617
-    today: [2016, february, 11],
-    tests: [
-      ['today', 1],
-      ['tomorrow', 1],
-      ['next week', 7],
-      ['sometime next week', 7],
-      ['on october 22nd', 1],
-      ['on feb 22 2019', 1],
-      ['july 3rd', 1],
-      ['2/12/2018', 1],
-      ['on 22/2/2016', 1],
-      ['before tomorrow', 1],
-      ['next month', 31], //march
-      ['this march', 31],
-      ['this september', 30],
-      ['next march', 31],
-      ['in july', 31],
-      ['next february', 28],
-      ['february 12th', 1],
-      //'by' includes today
-      ['by february 12th', 1],
-      ['by february 21', 10],
-      ['before february 22', 11],
-      ['before march', 19],
+test('durations json', function (t) {
+  let doc = nlp('blah blah two hours and 8 mins foobar')
+  let json = doc.durations().json(0)
+  t.equal(json.duration.hour, 2, '2 hours')
+  t.equal(json.duration.minute, 8, '8 minute')
+  t.end()
+})
 
-      ['on february 22', 1],
-      ['first week of september', 7],
-      ['second week of october', 7],
-      ['third week of june', 7],
-      ['fourth week of july', 7],
-      ['last week of july', 7],
-      ['after july', relaxed],
-      ['after september 4rth 2016', relaxed],
-    ],
-  },
-]
-
-test('date durations', (t) => {
-  tests.forEach((obj) => {
-    const context = {
-      today: obj.today,
-    }
-    obj.tests.forEach((a) => {
-      let json = nlp(a[0]).dates(context).json()[0] || {}
-      let date = json.date || {}
-      date.duration = date.duration || {}
-      t.equal(date.duration.days, a[1] - 1, a[0])
-    })
+test('durations normalize', function (t) {
+  let arr = [
+    ['blah blah two hours and 8 mins foobar', 'blah blah 2 hours and 8 minutes foobar'],
+    ['seventy-two years', '72 years'],
+    ['12 years and 2 months', '12 years and 2 months'],
+    ['12.3 years', '12.3 years'],
+    ['12 years and one month', '12 years and 1 month'],
+    ['12 yrs and 2 hrs', '12 years and 2 hours'],
+    // no duration
+    ['food wholesale prices for hours', 'food wholesale prices for hours'],
+  ]
+  arr.forEach((a) => {
+    let doc = nlp(a[0])
+    doc.durations().normalize()
+    t.equal(doc.text(), a[1], a[0])
   })
   t.end()
 })

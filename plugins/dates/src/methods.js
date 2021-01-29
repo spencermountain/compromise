@@ -2,7 +2,7 @@ const parse = require('./find')
 const abbrevs = require('./data/_abbrevs')
 
 module.exports = {
-  /** overload the original json with noun information */
+  /** overload the original json with date information */
   json: function (options) {
     let n = null
     if (typeof options === 'number') {

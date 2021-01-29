@@ -1,8 +1,8 @@
 const nlp = require('./src/index')
 const spacetime = require('/Users/spencer/mountain/spacetime/src')
 // nlp.verbose(true)
-// nlp.extend(require('./plugins/numbers/src'))
-// nlp.extend(require('./plugins/dates/src'))
+nlp.extend(require('./plugins/numbers/src'))
+nlp.extend(require('./plugins/dates/src'))
 
 // const fmt = iso => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 // const context = {
@@ -10,7 +10,16 @@ const spacetime = require('/Users/spencer/mountain/spacetime/src')
 //   timezone: 'Canada/Pacific',
 // }
 
-// let doc = nlp('march 2').debug()
+let doc = nlp('blah blah two hours and 8 mins foobar') //.durations().debug()
+// console.log(doc.durations().json())
+doc.durations().normalize()
+doc.debug()
+console.log(doc.text())
+
+// let doc = nlp('2 hours 8 minutes')
+// doc.match('[#Value #Duration]*').debug()
+// console.log(nlp.parseMatch('(#Value #Duration)?')[0])
+
 // let doc = nlp('03/02').debug()
 // let dates = doc.dates(context).json()[0]
 // console.log('start: ', fmt(dates.date.start))
@@ -23,7 +32,7 @@ const spacetime = require('/Users/spencer/mountain/spacetime/src')
 // nlp('a football game').match(reg).debug()
 
 // console.log(nlp.parseMatch('the [(united states|canadian)] senate'))
-nlp('the canadian senate').match('the [(united states|canadian)] senate', 0).debug()
+// nlp('the canadian senate').match('the [(united states|canadian)] senate', 0).debug()
 // nlp('the united states senate').match('the (united states|canadian) senate').debug()
 
 // nlp.tokenize('a walk').match('a (football|talk)', { fuzzy: 0.7 }).text()

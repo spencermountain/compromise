@@ -2,6 +2,7 @@ const tagger = require('./01-tagger')
 const tags = require('./data/_tags')
 const words = require('./data/words')
 const methods = require('./methods')
+const addDurations = require('./durations')
 const spacetime = require('spacetime')
 
 const opts = {
@@ -16,7 +17,10 @@ const addMethods = function (Doc, world) {
   // run our tagger
   world.postProcess(tagger)
 
-  /**  */
+  // add .durations() class + methods
+  addDurations(Doc, world)
+
+  /** phraes like 'nov 2nd' or 'on tuesday' */
   class Dates extends Doc {
     constructor(list, from, w) {
       super(list, from, w)

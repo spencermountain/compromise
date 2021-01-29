@@ -1,9 +1,9 @@
 //found a match? it's greedy? keep going!
-exports.getGreedy = function (state, reg, until, index) {
+exports.getGreedy = function (state, reg, until) {
   let start = state.t
   for (; state.t < state.terms.length; state.t += 1) {
     //stop for next-reg match
-    if (until && state.terms[state.t].doesMatch(until, index + state.t, state.length)) {
+    if (until && state.terms[state.t].doesMatch(until, state.index + state.t, state.length)) {
       return state.t
     }
     let count = state.t - start + 1
@@ -12,7 +12,7 @@ exports.getGreedy = function (state, reg, until, index) {
       return state.t
     }
     //stop here
-    if (state.terms[state.t].doesMatch(reg, index + state.t, state.length) === false) {
+    if (state.terms[state.t].doesMatch(reg, state.index + state.t, state.length) === false) {
       // is it too short?
       if (reg.min !== undefined && count < reg.min) {
         return null
@@ -24,7 +24,7 @@ exports.getGreedy = function (state, reg, until, index) {
 }
 
 //'unspecific greedy' is a weird situation.
-exports.greedyTo = function (state, nextReg, index) {
+exports.greedyTo = function (state, nextReg) {
   let t = state.t
   //if there's no next one, just go off the end!
   if (!nextReg) {
@@ -32,7 +32,7 @@ exports.greedyTo = function (state, nextReg, index) {
   }
   //otherwise, we're looking for the next one
   for (; t < state.terms.length; t += 1) {
-    if (state.terms[t].doesMatch(nextReg, index + t, state.length) === true) {
+    if (state.terms[t].doesMatch(nextReg, state.index + t, state.length) === true) {
       return t
     }
   }
@@ -44,33 +44,33 @@ exports.greedyTo = function (state, nextReg, index) {
 //start matching before the actual end; we do this by (temporarily!)
 //removing the "end" property from the matching token... since this is
 //very situation-specific, we *only* do this when we really need to.
-exports.isEndGreedy = function (reg, index, state) {
+exports.isEndGreedy = function (reg, state) {
   if (reg.end === true && reg.greedy === true) {
-    if (index + state.t < state.length - 1) {
+    if (state.index + state.t < state.length - 1) {
       let tmpReg = Object.assign({}, reg, { end: false })
-      if (state.terms[state.t].doesMatch(tmpReg, index + state.t, state.length) === true) {
+      if (state.terms[state.t].doesMatch(tmpReg, state.index + state.t, state.length) === true) {
         return true
       }
     }
   }
-  if (state.terms[state.t].doesMatch(reg, index + state.t, state.length) === true) {
+  if (state.terms[state.t].doesMatch(reg, state.index + state.t, state.length) === true) {
     return true
   }
   return false
 }
 
 // get or create named group
-exports.getOrCreateGroup = function (namedGroups, namedGroupId, terms, startIndex, group) {
-  if (namedGroups[namedGroupId]) {
-    return namedGroups[namedGroupId]
+exports.getOrCreateGroup = function (state, term_index, group) {
+  if (state.groups[state.groupId]) {
+    return state.groups[state.groupId]
   }
-  const { id } = terms[startIndex]
-  namedGroups[namedGroupId] = {
+  const { id } = state.terms[term_index]
+  state.groups[state.groupId] = {
     group: String(group),
     start: id,
     length: 0,
   }
-  return namedGroups[namedGroupId]
+  return state.groups[state.groupId]
 }
 
 exports.doMultiWord = function (state, reg) {

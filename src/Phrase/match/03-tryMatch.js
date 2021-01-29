@@ -6,10 +6,10 @@ const logic = require('./_match-logic')
 const tryHere = function (terms, regs, index, length) {
   // all the variables that matter
   let state = {
-    groups: {},
     t: 0,
     terms: terms,
     regs: regs,
+    groups: {}, //all named-group matches
     index: index, //sentence index we're starting from
     length: length, //phrase length
     groupId: null,
@@ -42,15 +42,15 @@ const tryHere = function (terms, regs, index, length) {
         break
       }
       // have unmet needs
-      return [false, null]
+      return null
     }
 
     //support 'unspecific greedy' .* properly
     if (reg.anything === true && reg.greedy === true) {
-      let skipto = logic.greedyTo(state, regs[state.r + 1], reg, state.index)
+      let skipto = logic.greedyTo(state, regs[state.r + 1])
       // ensure it's long enough
       if (reg.min !== undefined && skipto - state.t < reg.min) {
-        return [false, null]
+        return null
       }
       // reduce it back, if it's too long
       if (reg.max !== undefined && skipto - state.t > reg.max) {
@@ -59,14 +59,12 @@ const tryHere = function (terms, regs, index, length) {
       }
 
       if (skipto === null) {
-        return [false, null] //couldn't find it
+        return null //couldn't find it
       }
 
       // is it really this easy?....
       if (isNamedGroup) {
         const g = logic.getOrCreateGroup(state, state.t, reg.named)
-
-        // Update group
         g.length = skipto - state.t
       }
 
@@ -85,7 +83,7 @@ const tryHere = function (terms, regs, index, length) {
         state.t += skipNum
         continue
       } else if (!reg.optional) {
-        return [false, null]
+        return null
       }
     }
 
@@ -95,12 +93,12 @@ const tryHere = function (terms, regs, index, length) {
       // we should check the next reg too, to skip it?
       if (reg.optional && regs[state.r + 1]) {
         // does the next reg match it too?
-        if (state.terms[state.t].doesMatch(regs[state.r + 1], state.index + state.t, length) === true) {
+        if (state.terms[state.t].doesMatch(regs[state.r + 1], state.index + state.t, state.length)) {
           // but does the next reg match the next term??
           // only skip if it doesn't
           if (
             !state.terms[state.t + 1] ||
-            state.terms[state.t + 1].doesMatch(regs[state.r + 1], state.index + state.t, length) === false
+            !state.terms[state.t + 1].doesMatch(regs[state.r + 1], state.index + state.t, state.length)
           ) {
             state.r += 1
           }
@@ -112,35 +110,29 @@ const tryHere = function (terms, regs, index, length) {
       if (reg.end === true) {
         //if this isn't the last term, refuse the match
         if (state.t !== state.terms.length && reg.greedy !== true) {
-          return [false, null]
+          return null //die
         }
       }
 
       //try keep it going!
       if (reg.greedy === true) {
-        // for greedy checking, we no longer care about the reg.start
-        // value, and leaving it can cause failures for anchored greedy
-        // matches.  ditto for end-greedy matches: we need an earlier non-
-        // ending match to succceed until we get to the actual end.
-        let tmpReg = Object.assign({}, reg, { start: false, end: false })
-        state.t = logic.getGreedy(state, tmpReg, regs[state.r + 1])
+        state.t = logic.getGreedy(state, regs[state.r + 1])
         if (state.t === null) {
-          return [false, null] //greedy was too short
+          return null //greedy was too short
         }
         if (reg.min && reg.min > state.t) {
-          return [false, null] //greedy was too short
+          return null //greedy was too short
         }
         // if this was also an end-anchor match, check to see we really
         // reached the end
         if (reg.end === true && state.index + state.t !== length) {
-          return [false, null] //greedy didn't reach the end
+          return null //greedy didn't reach the end
         }
       }
 
       if (isNamedGroup) {
         // Get or create capture group
         const g = logic.getOrCreateGroup(state, startAt, reg.named)
-
         // Update group - add greedy or increment length
         if (state.t > 1 && reg.greedy) {
           g.length += state.t - startAt
@@ -163,12 +155,10 @@ const tryHere = function (terms, regs, index, length) {
         continue
       }
     }
-
-    // console.log('   ❌\n\n')
-    return [false, null]
+    return null //die
   }
 
   //return our result
-  return [state.terms.slice(0, state.t), state.groups]
+  return { match: state.terms.slice(0, state.t), groups: state.groups }
 }
 module.exports = tryHere

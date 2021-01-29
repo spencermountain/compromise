@@ -21,10 +21,10 @@ const matchAll = function (p, regs, matchOne = false) {
 
   //optimisation for '^' start logic
   if (regs[0].start === true) {
-    let [match, groups] = tryMatch(terms, regs, 0, terms.length)
-    if (match !== false && match.length > 0) {
-      match = match.filter(m => m)
-      matches.push({ match, groups })
+    let res = tryMatch(terms, regs, 0, terms.length)
+    if (res && res.match && res.match.length > 0) {
+      res.match = res.match.filter(m => m)
+      matches.push(res)
     }
 
     return postProcess(terms, regs, matches)
@@ -36,13 +36,13 @@ const matchAll = function (p, regs, matchOne = false) {
       break
     }
     //try it!
-    let [match, groups] = tryMatch(terms.slice(i), regs, i, terms.length)
-    if (match !== false && match.length > 0) {
+    let res = tryMatch(terms.slice(i), regs, i, terms.length)
+    if (res && res.match && res.match.length > 0) {
       //zoom forward!
-      i += match.length - 1
+      i += res.match.length - 1
       //[capture-groups] return some null responses
-      match = match.filter(m => m)
-      matches.push({ match, groups })
+      res.match = res.match.filter(m => m)
+      matches.push(res)
 
       //ok, maybe that's enough?
       if (matchOne === true) {

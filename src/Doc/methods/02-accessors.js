@@ -84,6 +84,7 @@ const getGroups = function (doc) {
   return res
 }
 
+/** lookup a named-group, by its name */
 const getOneName = function (doc, name) {
   const arr = []
   for (let i = 0; i < doc.list.length; i++) {

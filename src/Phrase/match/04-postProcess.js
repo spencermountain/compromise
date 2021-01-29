@@ -1,3 +1,4 @@
+// final checks on the validity of our results
 const postProcess = function (terms, regs, matches) {
   if (!matches || matches.length === 0) {
     return matches

@@ -1,9 +1,14 @@
 //found a match? it's greedy? keep going!
-exports.getGreedy = function (state, reg, until) {
+exports.getGreedy = function (state, endReg) {
+  // for greedy checking, we no longer care about the reg.start
+  // value, and leaving it can cause failures for anchored greedy
+  // matches.  ditto for end-greedy matches: we need an earlier non-
+  // ending match to succceed until we get to the actual end.
+  let reg = Object.assign({}, state.regs[state.r], { start: false, end: false })
   let start = state.t
   for (; state.t < state.terms.length; state.t += 1) {
     //stop for next-reg match
-    if (until && state.terms[state.t].doesMatch(until, state.index + state.t, state.length)) {
+    if (endReg && state.terms[state.t].doesMatch(endReg, state.index + state.t, state.length)) {
       return state.t
     }
     let count = state.t - start + 1
@@ -60,14 +65,14 @@ exports.isEndGreedy = function (reg, state) {
 }
 
 // get or create named group
-exports.getOrCreateGroup = function (state, term_index, group) {
+exports.getOrCreateGroup = function (state, term_index, name) {
   if (state.groups[state.groupId]) {
     return state.groups[state.groupId]
   }
-  const { id } = state.terms[term_index]
+  const termId = state.terms[term_index].id
   state.groups[state.groupId] = {
-    group: String(group),
-    start: id,
+    group: String(name),
+    start: termId,
     length: 0,
   }
   return state.groups[state.groupId]

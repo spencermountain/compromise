@@ -9,7 +9,7 @@ const idLookup = function (terms, regs) {
         return terms[t + i].id === id
       })
       if (foundAll) {
-        matches.push({ match: terms.slice(0, block.length) })
+        matches.push({ match: terms.slice(t, t + block.length) })
       }
     })
   }

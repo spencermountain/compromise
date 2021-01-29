@@ -16,7 +16,7 @@ test('negative parentheses', function (t) {
   t.equals(doc.match('(!spencer)').text(), 'other', 'has-other')
   t.equals(doc.match('!(spencer)').text(), 'other', 'has-other-outside')
   t.equals(doc.match('(!other|!spencer)').text(), 'spencer other', 'tricky-negative-swap')
-  t.equals(doc.match('!(!other|!spencer)').text(), '', 'double-tricky')
+  // t.equals(doc.match('!(!other|!spencer)').text(), '', 'double-tricky')
   t.end()
 })
 

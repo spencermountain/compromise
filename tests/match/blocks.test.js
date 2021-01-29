@@ -38,6 +38,29 @@ test('single OR block', function (t) {
   t.end()
 })
 
+test('not block', function (t) {
+  let doc = nlp('before two words after')
+  let m = doc.match(`before (#Value words) after`)
+  t.equal(m.text(), 'before two words after', 'normally matches')
+
+  m = doc.match(`before !(#Value words) after`)
+  t.equal(m.text(), '', 'negative doesnt match')
+
+  m = doc.match(`before (two && #Value) words after`)
+  t.equal(m.text(), 'before two words after', 'AND matches')
+
+  m = doc.match(`before !(two && #Value) words after`)
+  t.equal(m.text(), '', 'negative AND doesnt match')
+
+  m = doc.match(`before (foo|two|#Person) words after`)
+  t.equal(m.text(), 'before two words after', 'OR matches')
+
+  m = doc.match(`before !(foo|two|#Person) words after`)
+  t.equal(m.text(), '', 'negative OR doesnt match')
+
+  t.end()
+})
+
 test('greedy OR block', function (t) {
   let doc = nlp('is walking')
   let m = doc.match('is (#Adverb|not)+? walking')
@@ -56,6 +79,10 @@ test('greedy OR block', function (t) {
   doc = nlp('is really not quickly walking')
   m = doc.match('is (#Adverb|not)+ walking')
   t.equal(m.text(), 'is really not quickly walking', 'greedy 3')
+
+  doc = nlp('1 house, 2 boats, 3 farms')
+  t.equal(doc.match(`(#Value .)`).length, 3, '3 non-greedy')
+  t.equal(doc.match(`(#Value .)+`).length, 1, '1 greedy')
 
   t.end()
 })

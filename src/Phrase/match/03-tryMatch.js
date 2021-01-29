@@ -73,6 +73,10 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
     if (reg.choices !== undefined && reg.operator === 'or') {
       let skipNum = logic.doOrBlock(state)
       if (skipNum) {
+        // handle 'not' logic
+        if (reg.negative === true) {
+          return null // die
+        }
         if (state.hasGroup === true) {
           const g = logic.getGroup(state, state.t, reg.named)
           g.length += skipNum
@@ -88,6 +92,10 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
     if (reg.choices !== undefined && reg.operator === 'and') {
       let skipNum = logic.doAndBlock(state)
       if (skipNum) {
+        // handle 'not' logic
+        if (reg.negative === true) {
+          return null // die
+        }
         if (state.hasGroup === true) {
           const g = logic.getGroup(state, state.t, reg.named)
           g.length += skipNum

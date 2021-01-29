@@ -102,7 +102,6 @@ const postProcess = function (tokens, opts = {}) {
   }
   // support multiword OR (foo bar|baz)
   tokens = doMultiWord(tokens)
-  // console.log(tokens)
   return tokens
 }
 module.exports = postProcess

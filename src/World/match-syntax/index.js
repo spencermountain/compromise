@@ -41,7 +41,7 @@ const byWords = function (arr) {
   let words = []
   arr.forEach(a => {
     //keep brackets lumped together
-    if (/^[[^_/]?\(/.test(a[0])) {
+    if (/\(.*\)/.test(a)) {
       words.push(a)
       return
     }
@@ -145,3 +145,4 @@ const syntax = function (input, opts = {}) {
 }
 
 module.exports = syntax
+// console.log(syntax('before [(united states|canadian)] after'))

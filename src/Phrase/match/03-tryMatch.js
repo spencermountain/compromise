@@ -177,8 +177,12 @@ const tryHere = function (terms, regs, index, length) {
     if (reg.multiword === true) {
       let skipNum = doMultiWord(terms, t, reg, length)
       if (skipNum) {
+        const g = getOrCreateGroup(namedGroups, namedGroupId, terms, t, reg.named)
+        g.length += skipNum
         t += skipNum
         continue
+      } else if (!reg.optional) {
+        return [false, null]
       }
     }
 

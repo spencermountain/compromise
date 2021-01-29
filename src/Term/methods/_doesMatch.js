@@ -73,9 +73,6 @@ const doesMatch = function (t, reg, index, length) {
   }
   //support slower (one|two)
   if (reg.choices !== undefined) {
-    // if (reg.multiword) {
-    // console.log()
-    // }
     // try to support && operator
     if (reg.operator === 'and') {
       // must match them all

@@ -80,7 +80,9 @@ const fromDoc = function (doc) {
       ids.push({ id: t.id })
     })
   })
-  return [{ choices: [ids], greedy: true }]
+  return ids
+  // console.log(ids)
+  // return [{ choices: [ids], greedy: true }]
 }
 
 // add fuzziness etc to each reg

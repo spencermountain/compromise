@@ -78,7 +78,7 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
         state.t += skipNum
         continue
       } else if (!reg.optional) {
-        return null
+        return null //die
       }
     }
 
@@ -91,7 +91,7 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
         state.t += skipNum
         continue
       } else if (!reg.optional) {
-        return null
+        return null //die
       }
     }
 

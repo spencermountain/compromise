@@ -37,3 +37,25 @@ test('single OR block', function (t) {
   t.equal(m.text(), 'start three four end', 'single optional complex-block found')
   t.end()
 })
+
+test('greedy OR block', function (t) {
+  let doc = nlp('is walking')
+  let m = doc.match('is (#Adverb|not)+? walking')
+  t.equal(m.text(), 'is walking', 'greedy 0')
+  m = doc.match('is (#Adverb|not)?+ walking')
+  t.equal(m.text(), 'is walking', 'greedy 0 again')
+
+  doc = nlp('is really walking')
+  m = doc.match('is (#Adverb|not)+ walking')
+  t.equal(m.text(), 'is really walking', 'greedy 1')
+
+  doc = nlp('is really not walking')
+  m = doc.match('is (#Adverb|not)+? walking')
+  t.equal(m.text(), 'is really not walking', 'greedy 2')
+
+  doc = nlp('is really not quickly walking')
+  m = doc.match('is (#Adverb|not)+ walking')
+  t.equal(m.text(), 'is really not quickly walking', 'greedy 3')
+
+  t.end()
+})

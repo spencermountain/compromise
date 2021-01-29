@@ -65,25 +65,32 @@ exports.isEndGreedy = function (reg, state) {
 }
 
 // match complex OR cases like (a|b|foo bar)
-exports.doOrBlock = function (state) {
+exports.doOrBlock = function (state, skipN = 0) {
   let reg = state.regs[state.r]
+  let wasFound = false
   // do each multiword sequence
   for (let c = 0; c < reg.choices.length; c += 1) {
     // try to match this list of tokens
     let block = reg.choices[c]
-    let wasFound = block.every((cr, w_index) => {
-      let tryTerm = state.t + w_index
+    wasFound = block.every((cr, w_index) => {
+      let tryTerm = state.t + w_index + skipN
       if (state.terms[tryTerm] === undefined) {
         return false
       }
       return state.terms[tryTerm].doesMatch(cr, tryTerm, state.phrase_length)
     })
     if (wasFound) {
-      return block.length
+      skipN += block.length
+      break
     }
   }
-  return false
+  // we found a match -  is it greedy though?
+  if (wasFound && reg.greedy === true) {
+    return exports.doOrBlock(state, skipN) // try it again!
+  }
+  return skipN
 }
+
 // match AND cases like (#Noun && foo)
 exports.doAndBlock = function (state) {
   let longest = 0
@@ -109,34 +116,6 @@ exports.doAndBlock = function (state) {
 
   return false
 }
-
-// exports.doMultiWord = function (state) {
-//   let reg = state.regs[state.r]
-//   // do each multiword sequence
-//   for (let c = 0; c < reg.choices.length; c += 1) {
-//     let cr = reg.choices[c]
-//     // try a list of words
-//     if (cr.sequence) {
-//       let found = cr.sequence.every((w, w_index) => {
-//         let tryTerm = state.t + w_index
-//         if (state.terms[tryTerm] === undefined) {
-//           return false
-//         }
-//         if (state.terms[tryTerm].doesMatch({ word: w }, tryTerm, state.phrase_length)) {
-//           return true
-//         }
-//         return false
-//       })
-//       if (found) {
-//         return cr.sequence.length
-//       }
-//     } else if (state.terms[state.t].doesMatch(cr, state.t, state.phrase_length)) {
-//       // try a normal match in a multiword
-//       return 1
-//     }
-//   }
-//   return false
-// }
 
 // get or create named group
 exports.getGroup = function (state, term_index, name) {

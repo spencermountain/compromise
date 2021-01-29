@@ -16,6 +16,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - **[new]** - add fuzzy option to match commands
 - **[change] (internal)** - rename 'oneOf' match syntax to 'fastOr' 
 - **[new]** - support multiple-word matches in OR matches (a|b|foo bar|c)
+- **[change]** - use new export maps format
 -->
 
 #### 13.8.0 [Dec 2020]

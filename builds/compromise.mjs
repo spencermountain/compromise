@@ -116,62 +116,6 @@ function _createSuper(Derived) {
   };
 }
 
-function _slicedToArray(arr, i) {
-  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-}
-
-function _arrayWithHoles(arr) {
-  if (Array.isArray(arr)) return arr;
-}
-
-function _iterableToArrayLimit(arr, i) {
-  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
-  var _arr = [];
-  var _n = true;
-  var _d = false;
-  var _e = undefined;
-
-  try {
-    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-      _arr.push(_s.value);
-
-      if (i && _arr.length === i) break;
-    }
-  } catch (err) {
-    _d = true;
-    _e = err;
-  } finally {
-    try {
-      if (!_n && _i["return"] != null) _i["return"]();
-    } finally {
-      if (_d) throw _e;
-    }
-  }
-
-  return _arr;
-}
-
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(o);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-
-  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
-
-  return arr2;
-}
-
-function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-
 //this is a not-well-thought-out way to reduce our dependence on `object===object` stuff
 var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'.split(''); //generates a unique id for this term
 
@@ -582,7 +526,100 @@ var _02Punctuation = createCommonjsModule(function (module, exports) {
   };
 });
 
-//declare it up here
+// fuzzy-match (damerau-levenshtein)
+// Based on  tad-lispy /node-damerau-levenshtein
+// https://github.com/tad-lispy/node-damerau-levenshtein/blob/master/index.js
+// count steps (insertions, deletions, substitutions, or transpositions)
+var editDistance = function editDistance(strA, strB) {
+  var aLength = strA.length,
+      bLength = strB.length; // fail-fast
+
+  if (aLength === 0) {
+    return bLength;
+  }
+
+  if (bLength === 0) {
+    return aLength;
+  } // If the limit is not defined it will be calculate from this and that args.
+
+
+  var limit = (bLength > aLength ? bLength : aLength) + 1;
+
+  if (Math.abs(aLength - bLength) > (limit || 100)) {
+    return limit || 100;
+  } // init the array
+
+
+  var matrix = [];
+
+  for (var i = 0; i < limit; i++) {
+    matrix[i] = [i];
+    matrix[i].length = limit;
+  }
+
+  for (var _i = 0; _i < limit; _i++) {
+    matrix[0][_i] = _i;
+  } // Calculate matrix.
+
+
+  var j, a_index, b_index, cost, min, t;
+
+  for (var _i2 = 1; _i2 <= aLength; ++_i2) {
+    a_index = strA[_i2 - 1];
+
+    for (j = 1; j <= bLength; ++j) {
+      // Check the jagged distance total so far
+      if (_i2 === j && matrix[_i2][j] > 4) {
+        return aLength;
+      }
+
+      b_index = strB[j - 1];
+      cost = a_index === b_index ? 0 : 1; // Step 5
+      // Calculate the minimum (much faster than Math.min(...)).
+
+      min = matrix[_i2 - 1][j] + 1; // Deletion.
+
+      if ((t = matrix[_i2][j - 1] + 1) < min) min = t; // Insertion.
+
+      if ((t = matrix[_i2 - 1][j - 1] + cost) < min) min = t; // Substitution.
+      // Update matrix.
+
+      var shouldUpdate = _i2 > 1 && j > 1 && a_index === strB[j - 2] && strA[_i2 - 2] === b_index && (t = matrix[_i2 - 2][j - 2] + cost) < min;
+
+      if (shouldUpdate) {
+        matrix[_i2][j] = t;
+      } else {
+        matrix[_i2][j] = min;
+      }
+    }
+  } // return number of steps
+
+
+  return matrix[aLength][bLength];
+}; // score similarity by from 0-1 (steps/length)
+
+
+var fuzzyMatch = function fuzzyMatch(strA, strB) {
+  var minLength = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 3;
+
+  if (strA === strB) {
+    return 1;
+  } //don't even bother on tiny strings
+
+
+  if (strA.length < minLength || strB.length < minLength) {
+    return 0;
+  }
+
+  var steps = editDistance(strA, strB);
+  var length = Math.max(strA.length, strB.length);
+  var relative = length === 0 ? 0 : steps / length;
+  var similarity = 1 - relative;
+  return similarity;
+};
+
+var _fuzzy = fuzzyMatch; // console.log(fuzzyMatch('test', 'test')) //exact match
+
 var wrapMatch = function wrapMatch() {};
 /** ignore optional/greedy logic, straight-up term match*/
 
@@ -623,6 +660,24 @@ var doesMatch = function doesMatch(t, reg, index, length) {
 
     if (reg.soft === true && reg.word === t.root) {
       return true;
+    } // support fuzzy match param
+
+
+    if (reg.fuzzy !== undefined) {
+      var score = _fuzzy(reg.word, t.reduced);
+
+      if (score > reg.fuzzy) {
+        return true;
+      } // support fuzzy + soft match
+
+
+      if (reg.soft === true) {
+        score = _fuzzy(reg.word, t.root);
+
+        if (score > reg.fuzzy) {
+          return true;
+        }
+      }
     } //match either .clean or .text
 
 
@@ -649,9 +704,9 @@ var doesMatch = function doesMatch(t, reg, index, length) {
   } // support optimized (one|two)
 
 
-  if (reg.oneOf !== undefined) {
-    return reg.oneOf.hasOwnProperty(t.reduced) || reg.oneOf.hasOwnProperty(t.text);
-  } //support (one|two)
+  if (reg.fastOr !== undefined) {
+    return reg.fastOr.hasOwnProperty(t.reduced) || reg.fastOr.hasOwnProperty(t.text);
+  } //support slower (one|two)
 
 
   if (reg.choices !== undefined) {
@@ -2063,223 +2118,349 @@ var failFast = function failFast(p, regs) {
 
 var _02FailFast = failFast;
 
-//found a match? it's greedy? keep going!
+var _matchLogic = createCommonjsModule(function (module, exports) {
+  //found a match? it's greedy? keep going!
+  exports.getGreedy = function (state, endReg) {
+    // for greedy checking, we no longer care about the reg.start
+    // value, and leaving it can cause failures for anchored greedy
+    // matches.  ditto for end-greedy matches: we need an earlier non-
+    // ending match to succceed until we get to the actual end.
+    var reg = Object.assign({}, state.regs[state.r], {
+      start: false,
+      end: false
+    });
+    var start = state.t;
 
-var getGreedy = function getGreedy(terms, t, reg, until, index, length) {
-  var start = t;
-
-  for (; t < terms.length; t += 1) {
-    //stop for next-reg match
-    if (until && terms[t].doesMatch(until, index + t, length)) {
-      return t;
-    }
-
-    var count = t - start + 1; // is it max-length now?
-
-    if (reg.max !== undefined && count === reg.max) {
-      return t;
-    } //stop here
-
-
-    if (terms[t].doesMatch(reg, index + t, length) === false) {
-      // is it too short?
-      if (reg.min !== undefined && count < reg.min) {
-        return null;
+    for (; state.t < state.terms.length; state.t += 1) {
+      //stop for next-reg match
+      if (endReg && state.terms[state.t].doesMatch(endReg, state.start_i + state.t, state.phrase_length)) {
+        return state.t;
       }
 
-      return t;
+      var count = state.t - start + 1; // is it max-length now?
+
+      if (reg.max !== undefined && count === reg.max) {
+        return state.t;
+      } //stop here
+
+
+      if (state.terms[state.t].doesMatch(reg, state.start_i + state.t, state.phrase_length) === false) {
+        // is it too short?
+        if (reg.min !== undefined && count < reg.min) {
+          return null;
+        }
+
+        return state.t;
+      }
     }
-  }
 
-  return t;
-}; //'unspecific greedy' is a weird situation.
-
-
-var greedyTo = function greedyTo(terms, t, nextReg, index, length) {
-  //if there's no next one, just go off the end!
-  if (!nextReg) {
-    return terms.length;
-  } //otherwise, we're looking for the next one
+    return state.t;
+  }; //'unspecific greedy' is a weird situation.
 
 
-  for (; t < terms.length; t += 1) {
-    if (terms[t].doesMatch(nextReg, index + t, length) === true) {
-      return t;
+  exports.greedyTo = function (state, nextReg) {
+    var t = state.t; //if there's no next one, just go off the end!
+
+    if (!nextReg) {
+      return state.terms.length;
+    } //otherwise, we're looking for the next one
+
+
+    for (; t < state.terms.length; t += 1) {
+      if (state.terms[t].doesMatch(nextReg, state.start_i + t, state.phrase_length) === true) {
+        return t;
+      }
+    } //guess it doesn't exist, then.
+
+
+    return null;
+  }; //we have a special case where an end-anchored greedy match may need to
+  //start matching before the actual end; we do this by (temporarily!)
+  //removing the "end" property from the matching token... since this is
+  //very situation-specific, we *only* do this when we really need to.
+
+
+  exports.isEndGreedy = function (reg, state) {
+    if (reg.end === true && reg.greedy === true) {
+      if (state.start_i + state.t < state.phrase_length - 1) {
+        var tmpReg = Object.assign({}, reg, {
+          end: false
+        });
+
+        if (state.terms[state.t].doesMatch(tmpReg, state.start_i + state.t, state.phrase_length) === true) {
+          return true;
+        }
+      }
     }
-  } //guess it doesn't exist, then.
+
+    if (state.terms[state.t].doesMatch(reg, state.start_i + state.t, state.phrase_length) === true) {
+      return true;
+    }
+
+    return false;
+  }; // match complex OR cases like (a|b|foo bar)
 
 
-  return null;
-}; //we have a special case where an end-anchored greedy match may need to
-//start matching before the actual end; we do this by (temporarily!)
-//removing the "end" property from the matching token... since this is
-//very situation-specific, we *only* do this when we really need to.
+  exports.doOrBlock = function (state) {
+    var skipN = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+    var reg = state.regs[state.r];
+    var wasFound = false; // do each multiword sequence
 
+    for (var c = 0; c < reg.choices.length; c += 1) {
+      // try to match this list of tokens
+      var block = reg.choices[c];
+      wasFound = block.every(function (cr, w_index) {
+        var tryTerm = state.t + w_index + skipN;
 
-var isEndGreedy = function isEndGreedy(reg, index, t, terms, length) {
-  if (reg.end === true && reg.greedy === true) {
-    if (index + t < length - 1) {
-      var tmpReg = Object.assign({}, reg, {
-        end: false
+        if (state.terms[tryTerm] === undefined) {
+          return false;
+        }
+
+        return state.terms[tryTerm].doesMatch(cr, tryTerm + state.start_i, state.phrase_length);
       });
 
-      if (terms[t].doesMatch(tmpReg, index + t, length) === true) {
-        return true;
+      if (wasFound) {
+        skipN += block.length;
+        break;
       }
+    } // we found a match -  is it greedy though?
+
+
+    if (wasFound && reg.greedy === true) {
+      return exports.doOrBlock(state, skipN); // try it again!
     }
-  }
 
-  if (terms[t].doesMatch(reg, index + t, length) === true) {
-    return true;
-  }
-
-  return false;
-}; // get or create named group
+    return skipN;
+  }; // match AND cases like (#Noun && foo)
 
 
-var getOrCreateGroup = function getOrCreateGroup(namedGroups, namedGroupId, terms, startIndex, group) {
-  if (namedGroups[namedGroupId]) {
-    return namedGroups[namedGroupId];
-  }
+  exports.doAndBlock = function (state) {
+    var longest = 0; // all blocks must match, and we return the greediest match
 
-  var id = terms[startIndex].id;
-  namedGroups[namedGroupId] = {
-    group: String(group),
-    start: id,
-    length: 0
+    var reg = state.regs[state.r];
+    var allDidMatch = reg.choices.every(function (block) {
+      //  for multi-word blocks, all must match
+      var allWords = block.every(function (cr, w_index) {
+        var tryTerm = state.t + w_index;
+
+        if (state.terms[tryTerm] === undefined) {
+          return false;
+        }
+
+        return state.terms[tryTerm].doesMatch(cr, tryTerm, state.phrase_length);
+      });
+
+      if (allWords === true && block.length > longest) {
+        longest = block.length;
+      }
+
+      return allWords;
+    });
+
+    if (allDidMatch === true) {
+      return longest;
+    }
+
+    return false;
+  }; // get or create named group
+
+
+  exports.getGroup = function (state, term_index, name) {
+    if (state.groups[state.groupId]) {
+      return state.groups[state.groupId];
+    }
+
+    var termId = state.terms[term_index].id;
+    state.groups[state.groupId] = {
+      group: String(name),
+      start: termId,
+      length: 0
+    };
+    return state.groups[state.groupId];
   };
-  return namedGroups[namedGroupId];
-};
+});
+
 /** tries to match a sequence of terms, starting from here */
 
+var tryHere = function tryHere(terms, regs, start_i, phrase_length) {
+  // all the variables that matter
+  var state = {
+    t: 0,
+    //the term index we're on
+    terms: terms,
+    //the working slice of term objects
+    r: 0,
+    // the reg index we're on
+    regs: regs,
+    //our match conditions
+    groups: {},
+    //all named-group matches
+    start_i: start_i,
+    // term index we're starting from
+    phrase_length: phrase_length,
+    // # of terms in the sentence
+    hasGroup: false,
+    groupId: null,
+    previousGroup: null
+  }; // we must satisfy each rule in 'regs'
 
-var tryHere = function tryHere(terms, regs, index, length) {
-  var namedGroups = {};
-  var previousGroupId = null;
-  var t = 0; // we must satisfy each rule in 'regs'
+  for (; state.r < regs.length; state.r += 1) {
+    var reg = regs[state.r]; // Check if this reg has a named capture group
 
-  for (var r = 0; r < regs.length; r += 1) {
-    var reg = regs[r]; // Check if this reg has a named capture group
+    state.hasGroup = typeof reg.named === 'string' || typeof reg.named === 'number'; // Reuse previous capture group if same
 
-    var isNamedGroup = typeof reg.named === 'string' || typeof reg.named === 'number';
-    var namedGroupId = null; // Reuse previous capture group if same
+    if (state.hasGroup === true) {
+      var prev = regs[state.r - 1];
 
-    if (isNamedGroup) {
-      var prev = regs[r - 1];
-
-      if (prev && prev.named === reg.named && previousGroupId) {
-        namedGroupId = previousGroupId;
+      if (prev && prev.named === reg.named && state.previousGroup) {
+        state.groupId = state.previousGroup;
       } else {
-        namedGroupId = _id(reg.named);
-        previousGroupId = namedGroupId;
+        state.groupId = _id(reg.named);
+        state.previousGroup = state.groupId;
       }
-    } //should we fail here?
+    } //hve we run-out of terms?
 
 
-    if (!terms[t]) {
+    if (!state.terms[state.t]) {
       //are all remaining regs optional?
-      var hasNeeds = regs.slice(r).some(function (remain) {
+      var haveNeeds = regs.slice(state.r).some(function (remain) {
         return !remain.optional;
       });
 
-      if (hasNeeds === false) {
-        break;
-      } // have unmet needs
+      if (haveNeeds === false) {
+        break; //done!
+      }
 
-
-      return [false, null];
+      return null; // die
     } //support 'unspecific greedy' .* properly
 
 
     if (reg.anything === true && reg.greedy === true) {
-      var skipto = greedyTo(terms, t, regs[r + 1], reg, index); // ensure it's long enough
+      var skipto = _matchLogic.greedyTo(state, regs[state.r + 1]); // ensure it's long enough
 
-      if (reg.min !== undefined && skipto - t < reg.min) {
-        return [false, null];
+      if (reg.min !== undefined && skipto - state.t < reg.min) {
+        return null;
       } // reduce it back, if it's too long
 
 
-      if (reg.max !== undefined && skipto - t > reg.max) {
-        t = t + reg.max;
+      if (reg.max !== undefined && skipto - state.t > reg.max) {
+        state.t = state.t + reg.max;
         continue;
       }
 
       if (skipto === null) {
-        return [false, null]; //couldn't find it
+        return null; //couldn't find it
       } // is it really this easy?....
 
 
-      if (isNamedGroup) {
-        var g = getOrCreateGroup(namedGroups, namedGroupId, terms, t, reg.named); // Update group
-
-        g.length = skipto - t;
+      if (state.hasGroup === true) {
+        var g = _matchLogic.getGroup(state, state.t, reg.named);
+        g.length = skipto - state.t;
       }
 
-      t = skipto;
+      state.t = skipto;
       continue;
-    } //if it looks like a match, continue
+    } // support multi-word OR (a|b|foo bar)
 
 
-    if (reg.anything === true || isEndGreedy(reg, index, t, terms, length)) {
-      var startAt = t; // okay, it was a match, but if it optional too,
+    if (reg.choices !== undefined && reg.operator === 'or') {
+      var skipNum = _matchLogic.doOrBlock(state);
+
+      if (skipNum) {
+        // handle 'not' logic
+        if (reg.negative === true) {
+          return null; // die
+        }
+
+        if (state.hasGroup === true) {
+          var _g = _matchLogic.getGroup(state, state.t, reg.named);
+
+          _g.length += skipNum;
+        }
+
+        state.t += skipNum;
+        continue;
+      } else if (!reg.optional) {
+        return null; //die
+      }
+    } // support AND (#Noun && foo) blocks
+
+
+    if (reg.choices !== undefined && reg.operator === 'and') {
+      var _skipNum = _matchLogic.doAndBlock(state);
+
+      if (_skipNum) {
+        // handle 'not' logic
+        if (reg.negative === true) {
+          return null; // die
+        }
+
+        if (state.hasGroup === true) {
+          var _g2 = _matchLogic.getGroup(state, state.t, reg.named);
+
+          _g2.length += _skipNum;
+        }
+
+        state.t += _skipNum;
+        continue;
+      } else if (!reg.optional) {
+        return null; //die
+      }
+    }
+
+    if (reg.anything === true || _matchLogic.isEndGreedy(reg, state)) {
+      var startAt = state.t; // okay, it was a match, but if it optional too,
       // we should check the next reg too, to skip it?
 
-      if (reg.optional && regs[r + 1]) {
+      if (reg.optional && regs[state.r + 1]) {
         // does the next reg match it too?
-        if (terms[t].doesMatch(regs[r + 1], index + t, length) === true) {
+        if (state.terms[state.t].doesMatch(regs[state.r + 1], state.start_i + state.t, state.phrase_length)) {
           // but does the next reg match the next term??
           // only skip if it doesn't
-          if (!terms[t + 1] || terms[t + 1].doesMatch(regs[r + 1], index + t, length) === false) {
-            r += 1;
+          if (!state.terms[state.t + 1] || !state.terms[state.t + 1].doesMatch(regs[state.r + 1], state.start_i + state.t, state.phrase_length)) {
+            state.r += 1;
           }
         }
       } //advance to the next term!
 
 
-      t += 1; //check any ending '$' flags
+      state.t += 1; //check any ending '$' flags
 
       if (reg.end === true) {
         //if this isn't the last term, refuse the match
-        if (t !== terms.length && reg.greedy !== true) {
-          return [false, null];
+        if (state.t !== state.terms.length && reg.greedy !== true) {
+          return null; //die
         }
       } //try keep it going!
 
 
       if (reg.greedy === true) {
-        // for greedy checking, we no longer care about the reg.start
-        // value, and leaving it can cause failures for anchored greedy
-        // matches.  ditto for end-greedy matches: we need an earlier non-
-        // ending match to succceed until we get to the actual end.
-        t = getGreedy(terms, t, Object.assign({}, reg, {
-          start: false,
-          end: false
-        }), regs[r + 1], index, length);
+        state.t = _matchLogic.getGreedy(state, regs[state.r + 1]);
 
-        if (t === null) {
-          return [false, null]; //greedy was too short
+        if (state.t === null) {
+          return null; //greedy was too short
         }
 
-        if (reg.min && reg.min > t) {
-          return [false, null]; //greedy was too short
+        if (reg.min && reg.min > state.t) {
+          return null; //greedy was too short
         } // if this was also an end-anchor match, check to see we really
         // reached the end
 
 
-        if (reg.end === true && index + t !== length) {
-          return [false, null]; //greedy didn't reach the end
+        if (reg.end === true && state.start_i + state.t !== phrase_length) {
+          return null; //greedy didn't reach the end
         }
       }
 
-      if (isNamedGroup) {
+      if (state.hasGroup === true) {
         // Get or create capture group
-        var _g = getOrCreateGroup(namedGroups, namedGroupId, terms, startAt, reg.named); // Update group - add greedy or increment length
+        var _g3 = _matchLogic.getGroup(state, startAt, reg.named); // Update group - add greedy or increment length
 
 
-        if (t > 1 && reg.greedy) {
-          _g.length += t - startAt;
+        if (state.t > 1 && reg.greedy) {
+          _g3.length += state.t - startAt;
         } else {
-          _g.length++;
+          _g3.length++;
         }
       }
 
@@ -2292,24 +2473,27 @@ var tryHere = function tryHere(terms, regs, index, length) {
     } // should we skip-over an implicit word?
 
 
-    if (terms[t].isImplicit() && regs[r - 1] && terms[t + 1]) {
+    if (state.terms[state.t].isImplicit() && regs[state.r - 1] && state.terms[state.t + 1]) {
       // does the next one match?
-      if (terms[t + 1].doesMatch(reg, index + t, length)) {
-        t += 2;
+      if (state.terms[state.t + 1].doesMatch(reg, state.start_i + state.t, state.phrase_length)) {
+        state.t += 2;
         continue;
       }
-    } // console.log('   ❌\n\n')
+    }
 
-
-    return [false, null];
+    return null; //die
   } //return our result
 
 
-  return [terms.slice(0, t), namedGroups];
+  return {
+    match: state.terms.slice(0, state.t),
+    groups: state.groups
+  };
 };
 
 var _03TryMatch = tryHere;
 
+// final checks on the validity of our results
 var postProcess = function postProcess(terms, regs, matches) {
   if (!matches || matches.length === 0) {
     return matches;
@@ -2465,7 +2649,9 @@ var parseToken = function parseToken(w) {
         return s;
       }); //recursion alert!
 
-      obj.choices = obj.choices.map(parseToken);
+      obj.choices = obj.choices.map(function (str) {
+        return str.split(/ /g).map(parseToken);
+      });
       w = '';
     } //regex
 
@@ -2546,32 +2732,29 @@ var parseToken = function parseToken(w) {
   return obj;
 };
 
-var parseToken_1 = parseToken;
+var _01ParseToken = parseToken;
 
-var isNamed = function isNamed(capture) {
-  return typeof capture === 'string' || typeof capture === 'number';
-};
-
-var fillGroups = function fillGroups(tokens) {
+// name any [unnamed] capture-groups with a number
+var nameGroups = function nameGroups(tokens) {
   var convert = false;
   var index = -1;
   var current; //'fill in' capture groups between start-end
 
   for (var i = 0; i < tokens.length; i++) {
-    var n = tokens[i]; // Give name to un-named single tokens
+    var token = tokens[i]; // Give name to un-named single tokens
 
-    if (n.groupType === 'single' && n.named === true) {
+    if (token.groupType === 'single' && token.named === true) {
       index += 1;
-      n.named = index;
+      token.named = index;
       continue;
     } // Start converting tokens
 
 
-    if (n.groupType === 'start') {
+    if (token.groupType === 'start') {
       convert = true;
 
-      if (isNamed(n.named)) {
-        current = n.named;
+      if (typeof token.named === 'string' || typeof token.named === 'number') {
+        current = token.named;
       } else {
         index += 1;
         current = index;
@@ -2580,41 +2763,82 @@ var fillGroups = function fillGroups(tokens) {
 
 
     if (convert) {
-      n.named = current;
+      token.named = current;
     } // Stop converting tokens
 
 
-    if (n.groupType === 'end') {
+    if (token.groupType === 'end') {
       convert = false;
     }
   }
 
   return tokens;
-};
+}; // optimize an 'or' lookup, when the (a|b|c) list is simple or multi-word
 
-var useOneOf = function useOneOf(tokens) {
+
+var doFastOrMode = function doFastOrMode(tokens) {
   return tokens.map(function (token) {
     if (token.choices !== undefined) {
-      // are they all straight non-optional words?
-      var shouldPack = token.choices.every(function (c) {
-        return c.optional !== true && c.negative !== true && c.word !== undefined;
+      // are they all straight-up words? then optimize them.
+      var shouldPack = token.choices.every(function (block) {
+        if (block.length !== 1) {
+          return false;
+        }
+
+        var reg = block[0];
+
+        if (reg.word !== undefined && reg.negative !== true && reg.optional !== true && reg.method !== true) {
+          return true; //reg is simple-enough
+        }
+
+        return false;
       });
 
       if (shouldPack === true) {
         var oneOf = {};
-        token.choices.forEach(function (c) {
-          return oneOf[c.word] = true;
+        token.choices.forEach(function (block) {
+          oneOf[block[0].word] = true;
         });
-        token.oneOf = oneOf;
+        token.fastOr = oneOf;
         delete token.choices;
       }
     }
 
     return token;
   });
-};
+}; // allow multiword OR (foo|one two)
+// const doMultiWord = function (tokens) {
+//   return tokens.map(token => {
+//     if (token.choices !== undefined) {
+//       let isMulti = token.choices.find(o => hasASpace.test(o.word)) || false
+//       if (isMulti !== false) {
+//         token.multiword = true
+//         // turn all choices into arrays
+//         token.choices = token.choices.map(choice => {
+//           if (choice.word) {
+//             choice.sequence = choice.word.split(hasASpace)
+//             delete choice.word
+//           }
+//           return choice
+//         })
+//       }
+//     }
+//     return token
+//   })
+// }
+// const doBlockMode = function (tokens) {
+//   return tokens.map(token => {
+//     // we've already setup fastOr mode
+//     if (token.choices !== undefined) {
+//       // console.log(token)
+//     }
+//     return token
+//   })
+// }
+
 
 var postProcess$1 = function postProcess(tokens) {
+  var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   // ensure all capture groups are filled between start and end
   // give all capture groups names
   var count = tokens.filter(function (t) {
@@ -2622,16 +2846,22 @@ var postProcess$1 = function postProcess(tokens) {
   }).length;
 
   if (count > 0) {
-    tokens = fillGroups(tokens);
-  } // convert 'choices' format to 'oneOf' format
+    tokens = nameGroups(tokens);
+  } // convert 'choices' format to 'fastOr' format
 
 
-  tokens = useOneOf(tokens); // console.log(tokens)
+  if (!opts.fuzzy) {
+    tokens = doFastOrMode(tokens);
+  } // support multiword OR (foo bar|baz)
+  // tokens = doMultiWord(tokens)
+  // support (one two three)
+  // tokens = doBlockMode(tokens)
+
 
   return tokens;
 };
 
-var postProcess_1 = postProcess$1;
+var _02PostProcess = postProcess$1;
 
 var hasReg = /[^[a-z]]\//g;
 
@@ -2681,7 +2911,7 @@ var byWords = function byWords(arr) {
   var words = [];
   arr.forEach(function (a) {
     //keep brackets lumped together
-    if (/^[[^_/]?\(/.test(a[0])) {
+    if (/\(.*\)/.test(a)) {
       words.push(a);
       return;
     }
@@ -2697,37 +2927,71 @@ var byWords = function byWords(arr) {
 
 
 var byArray = function byArray(arr) {
+  var blocks = arr.map(function (s) {
+    return [{
+      word: s
+    }];
+  });
   return [{
-    choices: arr.map(function (s) {
-      return {
-        word: s
-      };
-    })
+    choices: blocks,
+    operator: 'or'
   }];
-};
+}; // turn a Doc object into a reg of ids to lookup
+
 
 var fromDoc = function fromDoc(doc) {
   if (!doc || !doc.list || !doc.list[0]) {
     return [];
   }
 
-  var ids = [];
+  var regs = [];
   doc.list.forEach(function (p) {
+    var ids = [];
     p.terms().forEach(function (t) {
-      ids.push({
-        id: t.id
-      });
+      ids.push(t.id);
     });
+    regs.push(ids);
   });
   return [{
-    choices: ids,
-    greedy: true
+    idBlocks: regs
   }];
+}; // add fuzziness etc to each reg
+
+
+var addOptions = function addOptions(tokens, opts) {
+  // add default fuzzy-search limit
+  if (opts.fuzzy === true) {
+    opts.fuzzy = 0.85;
+  }
+
+  if (typeof opts.fuzzy === 'number') {
+    tokens = tokens.map(function (reg) {
+      // add a fuzzy-match on 'word' tokens
+      if (opts.fuzzy > 0 && reg.word) {
+        reg.fuzzy = opts.fuzzy;
+      } //add it to or|and choices too
+
+
+      if (reg.choices) {
+        reg.choices.forEach(function (block) {
+          block.forEach(function (r) {
+            r.fuzzy = opts.fuzzy;
+          });
+        });
+      }
+
+      return reg;
+    });
+  }
+
+  return tokens;
 };
 /** parse a match-syntax string into json */
 
 
 var syntax = function syntax(input) {
+  var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
   // fail-fast
   if (input === null || input === undefined || input === '') {
     return [];
@@ -2766,14 +3030,47 @@ var syntax = function syntax(input) {
   var tokens = byParentheses(input); // console.log(tokens)
 
   tokens = byWords(tokens);
-  tokens = tokens.map(parseToken_1); //clean up anything weird
+  tokens = tokens.map(function (str) {
+    return _01ParseToken(str);
+  }); //clean up anything weird
 
-  tokens = postProcess_1(tokens); // console.log(tokens)
+  tokens = _02PostProcess(tokens, opts); // add fuzzy limits, etc
+
+  tokens = addOptions(tokens, opts); // console.log(tokens)
 
   return tokens;
 };
 
-var syntax_1 = syntax;
+var matchSyntax = syntax; // console.log(syntax('before [(united states|canadian)] after'))
+
+// match an explicit sequence of term ids
+// take a phrase and find any of the idBlocks in it
+var idLookup = function idLookup(terms, regs) {
+  var matches = [];
+  var blocklist = regs[0].idBlocks;
+
+  var _loop = function _loop(t) {
+    blocklist.forEach(function (block) {
+      var foundAll = block.every(function (id, i) {
+        return terms[t + i].id === id;
+      });
+
+      if (foundAll) {
+        matches.push({
+          match: terms.slice(t, t + block.length)
+        });
+      }
+    });
+  };
+
+  for (var t = 0; t < terms.length; t += 1) {
+    _loop(t);
+  }
+
+  return matches;
+};
+
+var idLookup_1 = idLookup;
 
 /**  returns a simple array of arrays */
 
@@ -2782,7 +3079,7 @@ var matchAll = function matchAll(p, regs) {
 
   //if we forgot to parse it..
   if (typeof regs === 'string') {
-    regs = syntax_1(regs);
+    regs = matchSyntax(regs);
   } //try to dismiss it, at-once
 
 
@@ -2795,22 +3092,25 @@ var matchAll = function matchAll(p, regs) {
     return r.optional !== true && r.negative !== true;
   }).length;
   var terms = p.terms();
-  var matches = []; //optimisation for '^' start logic
+  var matches = []; // these id-lookups can be super-fast
+
+  if (regs[0].idBlocks) {
+    var res = idLookup_1(terms, regs);
+
+    if (res && res.length > 0) {
+      return _04PostProcess(terms, regs, res);
+    }
+  } //optimisation for '^' start logic
+
 
   if (regs[0].start === true) {
-    var _tryMatch = _03TryMatch(terms, regs, 0, terms.length),
-        _tryMatch2 = _slicedToArray(_tryMatch, 2),
-        match = _tryMatch2[0],
-        groups = _tryMatch2[1];
+    var _res = _03TryMatch(terms, regs, 0, terms.length);
 
-    if (match !== false && match.length > 0) {
-      match = match.filter(function (m) {
+    if (_res && _res.match && _res.match.length > 0) {
+      _res.match = _res.match.filter(function (m) {
         return m;
       });
-      matches.push({
-        match: match,
-        groups: groups
-      });
+      matches.push(_res);
     }
 
     return _04PostProcess(terms, regs, matches);
@@ -2824,22 +3124,16 @@ var matchAll = function matchAll(p, regs) {
     } //try it!
 
 
-    var _tryMatch3 = _03TryMatch(terms.slice(i), regs, i, terms.length),
-        _tryMatch4 = _slicedToArray(_tryMatch3, 2),
-        _match = _tryMatch4[0],
-        _groups = _tryMatch4[1];
+    var _res2 = _03TryMatch(terms.slice(i), regs, i, terms.length);
 
-    if (_match !== false && _match.length > 0) {
+    if (_res2 && _res2.match && _res2.match.length > 0) {
       //zoom forward!
-      i += _match.length - 1; //[capture-groups] return some null responses
+      i += _res2.match.length - 1; //[capture-groups] return some null responses
 
-      _match = _match.filter(function (m) {
+      _res2.match = _res2.match.filter(function (m) {
         return m;
       });
-      matches.push({
-        match: _match,
-        groups: _groups
-      }); //ok, maybe that's enough?
+      matches.push(_res2); //ok, maybe that's enough?
 
       if (matchOne === true) {
         return _04PostProcess(terms, regs, matches);
@@ -3506,13 +3800,13 @@ var _data = {
   "Conjunction": "true¦&,aFbBcuz,how9in caEno8o7p5supposing,t2v1wh0yet;eth9ile;ers4s;h0o;eref9o0;!uC;l0rovided that;us;r,therwi6; matt1r;!ev0;er;e0ut;cau1f0;ore;se;lthou1nd,s 0;far as,if;gh",
   "Abbreviation": "true¦a0Tb0Qc0Kd0Ie0Ff0Cg0Ah08i06j04k02l00mRnOoNpIqHrFs9t6u5v2w0yb,µg;is0r,y0L;!c;a,b,e1i0ol,s,t;tro,vo;r,t;niv,safa,t;b1ce,d,e0sp;l,mp,nn,x;!l,sp;ask,e3fc,gt,i2q1r,s,t,u0;pt,rg;! ft;r,tu;c,nVp0;!t;b,d,e0;pSs,v;t,ue;a,d,enn3hd,l,p,r1s0t,vt;!eud;ef,o0;b,f,n;!a;ct,kla,nt,z;e0ov;b0e;!r;a7b,d,essrs,g,i4l3m2p1rHs0t;!tr;h,s;!e;!le;!n1s0;c,ter;!n;!j,r,sc;at,b,it,lb,m,ng,t0x;!d;an6b,g,m0;!ph;an,d,r,u0;l,n;a,da,e,n0;c,f;g,on,r0wy,z;!s;a0b,en,ov;!l;e1ig,l0m,r,t,y;! oz,a;b,m;a,g,ng,s1tc,x0;!p;p,q,t;ak,e0g,ist,l,m,r;c,f,pt,t;a3ca,g,l,m2o0pl,res,yn;!l0mdr,nn,rp;!o;!dr;!l0pt;!if;a,c,l1r0;ig,os;!dg,vd;d4l3p2r1ss0tty,ug,ve;n,t;c,iz;prox,r,t;!ta;!j,m,v",
   "Pronoun": "true¦'em,elle,h4i3me,ourselves,she5th1us,we,you0;!rself;e0ou;m,y;!l,t;e0im;!'s",
-  "Singular": "true¦0:14;1:17;a13b0Rc0Id0Be08f03gYhUiTjel0kitty,lRmNnMoLpGquestionFrDs8t5u3w2;ay,om01;nc0Xs 2;doll0Jst0L; rex,a3h2ic,ragedy,v show;ere,i1;l0x return;i5ky,omeoLt2uper bowl,yst12;ep3ri1u2;de0Vff;faRmoR;st0Rze;al0i1o2;om,se;! mark;a5i0Nla4r3u2;dOrpoG;erogaZobl0S;te,y0K;rt,te0L;bjVceIthers,verview;othi1umb0H;a4ee07o2;del,m2nopo0rni1th0F;!my;n,yf0;i2unch;ne;ci1nsect;ead start,o2uman right;l0me3u2;se;! run;adf0entlem5irl00laci05od,rand3u2;l0y; slam,fa2mo2;th02;an;a5ella,ly,ol0r3un2;di1;ee market,iUo2;ntiXsO;mi0thW;conomy,gg,ner6ven3x2;ampRecu8;i1t;ad7e4innSo2ragonf0ude;cumentFg2i0l0or;gy;ath,t2;ec2;tive;!dy;a8eili1h6i4o2redit card;ttage,u2;riJsin;ty,vil w2;ar;andeliGocol2;ate;n2rD;ary;aAel0lesHo6r4u2;n2tterf0;ti1;eakfast,o2;!th8;dy,tt4y2;!fri2;end;le;nki1r2;ri2;er;d4l0noma0u2;nt;ly; homin4verti2;si1;ng;em",
-  "FemaleName": "true¦0:J3;1:J7;2:IG;3:IF;4:IX;5:IK;6:JO;7:H0;8:JK;9:JG;A:HN;B:HY;C:IT;D:JD;E:IP;F:HC;G:I0;aGRbFLcDPdCYeBOfB4gADh9Ti9Gj8Gk7Gl60m49n3No3Jp37qu36r2Ds16t0Eu0Cv02wVxiTyOzH;aLeIineb,oHsof2;e3Uf2la,ra;h3iKlIna,ynH;ab,ep;da,ma;da,h3iHra;nab;aKeJi0Fol5BuIvH;etAonDO;i0na;le0sen2;el,gm3Jn,rGJs8W;aoHme0nyi;m62yAE;aMendDYhiDFiH;dele9lJnH;if48niHo0;e,f47;a,helmi0lHma;a,ow;ka0nB;aNeKiHusa5;cIktoriBMlAole7viH;anC3enJ0;kF9tor2;da,lA9nus,rHs0;a,nHoniH4;a,iFQ;leHnesH4;nIHrH;i1y;g9rHxH5;su5te;aYeUhRiNoLrIuHy3;i,la;acIZiHu0L;c2na,sH;hBPta;nHr0H;iBNya;aJffaEOnHs6;a,gtiH;ng;!nFQra;aIeHomasi0;a,l9Po8Ares1;l2ndolwethu;g9Go88rIssH;!a,ie;eHi,ri8;sa,za;bPlNmLnJrIs6tHwa0;ia0um;a63yn;iHya;a,ka,s6;arB6e3iHmEDra;!ka;a,iH;a,t6;at6it6;a0Fcarlet3We0BhXiTkye,neza0oRtNuIyH;bIBlvi1;e,ha,mayIEni7sIzH;an3MetAie,y;anHi8;!a,e,nH;aEe;aJeH;fHl5GphH;an4;cHZr5;b2fiA8m0OnHphi1;d3ia,ja,ya;er3lJmon1nIobh8PtH;a,i;dy;lEPv2;aMeIirHo0risF7y5;a,lDK;ba,e0i5lJrH;iHrDOyl;!d8Hfa;ia,lDX;hd,iMki3nJrIu0w0yH;la,ma,na;i,le9on,ron;aIda,ia,nHon;a,on;!ya;k6mH;!aa;lJrItaye81vH;da,inj;e0ife;en1i0ma;anA5bNd3Nh1RiBkMlLmJndIrHs6vannaE;aEi0;ra,y;aHi3;nt6ra;lDKma,ome;ee0in8Ru3;in1ri0;a05e00hYiVoIuH;by,thDH;bScRghQl2KnPsJwIxH;anAXie,y;an,e0;aIeHie,lD; merBLann8ll1marDBt7;!lHnn1;iHyn;e,nH;a,d9K;da,i,na;ayy8D;hel62io;bDKer7yn;a,cIkHmas,n9Fta,ya;ki,o;helGki;ea,iannGDoH;da,n1K;an0bJem9Agi0iInHta,y0;a88ee;han83na;a,eH;cEAkaE;bi0chIe,i0mo0nHquEKvCy0;di,ia;aEIelHiB;!e,le;een4ia0;aNeMhKipaluk,oJrHute66;iHudenCQ;scil3LyamvaB;lly,rt2;ilome0oebe,ylH;is,lis;arl,ggy,nelope,r5t3;ige,m0TnKo5rvaDGtIulH;a,etAin1;ricHsy,tBY;a,e,ia;do3i06;ctav2dIfCZis6lHphCZumC3yunbileg;a,ga,iv2;eHvAC;l2tA;aWeUiMoIurHy5;!ay,ul;a,eJor,rIuH;f,r;aEeCma;ll1mi;aNcLhariBOkKlaJna,sHta,vi;anHha;ur;!y;a,iDTki;hoGk9VolH;a,eDJ;!mh;hir,lHna,risFsreC;!a,lBT;asuLdKh2i6CnJomi8rgEPtHzanin zah3;aHhal4;li1s6;cy,etA;a,e9iEV;nngu30;a09ckenz4e01iMoJrignayani,uriDDyH;a,rH;a,lNna,tG;bi0i3llBInH;a,iH;ca,ka,qD3;a,cTkaSlNmi,nLrItzi,yH;ar;aIiam,lH;anEO;!l,nB;dy,eHh,n4;nhGrva;aKdJiCPlH;iHy;cent,e;red;!gros;!e5;ae5hH;ae5el3Z;ag5EgNi,lKrH;edi79iIjem,on,yH;em,l;em,sF;an4iHliF;nHsCE;a,da;!an,han;b0DcASd0Be,g09ha,i08ja,l06n04rLsoum60tKuIv82x9IyHz4;a,bell,ra,soB9;de,rH;a,eC;h8Fild1t4;a,cYgUiKjor4l7Sn4s6tJwa,yH;!aHbe6Wja9lAE;m,nBH;a,ha,in1;!aJbCBeIja,lDna,sHt64;!a,ol,sa;!l1H;! Jh,mInH;!a,e,n1;!awit,i;aliAHcJeduarBfernIjHlui5Y;o6Ful2;anB;ecil2la3;arJeIie,oHr44ueriA;!t;!ry;et42i37;el4Ui76y;dHon,ue5;akran7y;ak,en,iHk,lo3O;a,ka,nB;a,re,s4te;daHg4;!l3A;alDd4elHge,isDBon0;ei9in1yn;el,le;a0Ne0CiYoQuLyH;d2la,nH;!a,dIeBGnHsCL;!a,eBF;a,sCJ;aCWcJel0PiFlIna,pHz;e,i7;a,u,wa;iHy;a0Se,ja,l2JnB;is,l1SrJttIuHvel4;el5is1;e,ie;aKeIi8na,rH;a86i8;lHn1t7;ei;!in1;aSbb9CdRepa,lMnJsIv2zH;!a,be5LetAz4;a,etA;!a,dH;a,sHy;ay,ey,i,y;a,iJja,lHy;iHy;aA0e;!aH;!n5F;ia,ya;!nH;!a,ne;aPda,e0iNjYla,nMoKsJtHx4y5;iHt4;c2t2;e2LlCG;la,nHra;a,ie,o3;a,or1;a,gh,laH;!ni;!h,nH;a,d3e,n5P;cOdon97iNkes6mi9Ana,rMtJurIvHxmi,y5;ern1in2;a,e54ie,yn;as6iIoH;nya,ya;fa,s6;a,isF;a,la;ey,ie,y;a04eZhXiOlAKoNrJyH;lHra;a,ee,ie;istHy6D;a,en,iIyH;!na;!e,n59;nul,ri,urtnB0;aOerNlAZmJrHzzy;a,stH;en,in;!berlImernH;aq;eHi,y;e,y;a,stC;!na,ra;aHei3ongordzol;dij1w5;el7QiKjsi,lJnIrH;a,i,ri;d3na,za;ey,i,lBDs4y;ra,s6;bi7cAJdiat7IeB2iRlQmPnyakuma19rNss6KtKvi7yH;!e,lH;a,eH;e,i8L;a6DeIhHi4NlDri0y;ar6Ber6Bie,leCrB2y;!lyn8Gri0;a,en,iHl5Soli0yn;!ma,n3VsF;a5il1;ei8Ei,l4;a,tl6L;a07eYiVoNuH;anLdKliHst63;a8HeHsF;!n9tH;!a,te;e5Ji3Jy;a,i7;!anNcelDd6RelGhan7RlLni,sIva0yH;a,ce;eHie;fHlDph5U;a,in1;eHie;en,n1;!a,e,n41;lHng;!i1ClH;!i1B;anMle0nJrIsH;i8Csi8C;i,ri;!a,elGif2CnH;a,etAiHy;!e,f2A;a,e8EiInH;a,e8DiH;e,n1;cMd1mi,nIque4Xsmin3Ovie3y9zH;min8;a8eIiH;ce,e,n1s;!lHsFt0F;e,le;inIk4lDquelH;in1yn;da,ta;lRmPnOo0rNsIvaHzaro;!a0lu,na;aJiIlaHob84;!n9N;do3;!belHdo3;!a,e,l39;a77en1i0ma;a,di3es,gr6Yji;a9elBogH;en1;a,e9iHo0se;a0na;aSeOiJoHusFyacin2B;da,ll4rten23snH;a,i9Q;lImaH;ri;aIdHlaI;a,egard;ry;ath1CiJlInriet7rmi9sH;sa,t1B;en2Sga,mi;di;bi2Dil8IlNnMrJsItHwa,yl8Iz7H;i5St4;n5Yti;iHmo51ri52;etH;!te;aEnaE;a,ey,l4;a03eXiSlQoOrKunJwH;enHyne1Q;!dolD;ay,el;acIetHiselB;a,chC;e,ieH;!la;ld1AogooH;sh;adys,enHor2yn2H;a,da,na;aKgi,lIna,ov89selHta;a,e,le;da,liH;an;!n0;mLnJorgIrH;ald3Pi,m3Ctru8B;etAi4W;a,eHna;s26vieve;ma;bIil,le,mHrnet,yG;al5Ni5;i5FrielH;a,l1;aVeSiRloOoz2rH;anJeIiH;da,eB;da,ja;!cH;esIiHoi0O;n1s61;!ca;!rH;a,encH;e,ia;en,o0;lIn0rnH;!anB;ec2ic2;jr,n7rKtHy8;emIiHma,ouma7;ha,ma,n;eh;ah,iBrah,za0;cr4Nd0Ne0Mi0Lk7l04mWn4YrTsNtMuLvH;aJelIiH;!e,ta;in0Gyn;!ngel2S;geni1la,ni45;h5Sta;mLperanKtH;eIhHrel5;er;l30r8;za;a,eralB;iHma,nest2Jyn;cHka,n;a,ka;a,eMiJmH;aHie,y;!li9;lHn1;ee,iHy;a,e,ja;lHrald;da,y;aWeUiNlMma,no3oKsJvH;a,iH;na,ra;a,ie;iHuiH;se;a,en,ie,y;a0c2da,f,nMsJzaH;!betHve7;e,h;aHe,ka;!beH;th;!a,or;anor,nH;!a;!in1na;leCs6;vi;eIiHna,wi0;e,th;l,n;aYeMh2iLjeneKoHul30;lor5Tminiq4In3FrHtt4;a,eCis,la,othHthy;ea,y;ba;an0AnaEon9x4ya;anQbPde,eOiMja,lJmetr2nHsir5K;a,iH;ce,se;a,iIla,orHphi9;es,is;a,l6D;dHrdH;re;!d5Cna;!b2HoraEra;a,d3nH;!a,e;hl2i0l0HmNnLphn1rIvi1XyH;le,na;a,by,cIia,lH;a,en1;ey,ie;a,etAiH;!ca,el1Cka,z;arHia;is;a0Se0Oh05i03lVoKrIynH;di,th2;istHy05;al,i0;lPnMrIurH;tn1E;aJd2NiHn2Nri9;!nH;a,e,n1;!l1X;cepci59n4sH;tanHuelo;ce,za;eHleC;en,tA;aJeoIotH;il51;!pat3;ir8rJudH;etAiH;a,ne;a,e,iH;ce,sZ;a3er3ndH;i,y;aReNloe,rH;isJyH;stH;al;sy,tH;a1Ren,iHy;!an1e,n1;deJlseIrH;!i8yl;a,y;li9;nMrH;isKlImH;ai9;a,eHotA;n1tA;!sa;d3elGtH;al,elG;cIlH;esAi44;el2ilH;e,ia,y;itlZlYmilXndWrOsMtHy5;aKeJhHri0;erHleCrDy;in1;ri0;li0ri0;a33sH;a32ie;a,iNlLmeJolIrH;ie,ol;!e,in1yn;lHn;!a,la;a,eHie,o7y;ne,y;na,sF;a0Hi0H;a,e,l1;is7l4;in,yn;a0Ie02iZlXoUrH;andSeQiJoIyH;an0nn;nwDok8;an3DdgLg0XtH;n2XtH;!aInH;ey,i,y;ny;etH;!t8;an0e,nH;da,na;i8y;bbi8glarIlo05nH;i7n4;ka;ancHossom,ythe;a,he;an17lja0nHsm3I;i7tH;ou;aUcky,linTni7rPssOtJulaEvH;!erlH;ey,y;hJsy,tH;e,iHy8;e,na;!anH;ie,y;!ie;nHt6yl;adIiH;ce;etAi9;ay,da;!triH;ce,z;rbJyaH;rmH;aa;a3ie,o3ra;a2Sb2Md23g1Zi1Qj5l16m0Xn09oi,r04sUtTuPvOwa,yIzH;ra,u0;aKes6gJlIseH;!l;in;un;!nH;a,na;a,i2Ir2J;drJgus1RrIsteH;ja;el2;a,ey,i,y;aahua,he0;hIi2Gja,mi7s2DtrH;id;aMlIraqHt21;at;eIi8yH;!n;e,iHy;gh;!nH;ti;iJleIo6pi7;ta;en,n1tA;aHelG;!n1J;a00dje5eYgUiSjQnJohito,toHya;inetAnH;el5ia;!aKeIiHmJ;e,ka;!mHtA;ar4;!belIliFmU;sa;!le;a,eliH;ca;ka,sHta;a,sa;elHie;a,iH;a,ca,n1qH;ue;!tA;te;! JbImHstasiNya;ar2;el;cla3jul2pau5;aLberKeliJiHy;e,l2naH;!ta;a,ja;!ly;hGiIl2nB;da;a,ra;le;aWba,ePiMlKma,thJyH;a,c2sH;a,on,sa;ea;iHys0N;e,s0M;a,cIn1sHza;a,e,ha,on,sa;e,ia,ja;c2is6jaKksaKna,sJxH;aHia;!nd3;ia,saH;nd3;ra;ia;i0nIyH;ah,na;a,is,naEoud;la;c6da,leCmNnLsH;haElH;inHyY;g,n;!h;a,o,slH;ey;ee;en;at6g4nIusH;ti0;es;ie;aWdiTelMrH;eJiH;anMenH;a,e,ne;an0;na;!aLeKiIyH;nn;a,n1;a,e;!ne;!iH;de;e,lDsH;on;yn;!lH;i9yn;ne;aKbIiHrL;!gaK;ey,i8y;!e;gaH;il;dKliyJradhIs6;ha;ya;ah;a,ya",
+  "Singular": "true¦0:15;1:12;2:18;a15b0Sc0Jd0Ce09f04gZhViUjel0kitty,lSmOnNoMpHquestionGrEs9t6u4w3;ay,om02;nc0Zs 3;doll0Kst0M; rex,a4h3ic,ragedy,v show;ere,i2;l0x return;i6ky,omeoMt3uper bowl,yst14;ep4ri2u3;de0Xff;faSmoS;st1ze;al0i2o3;om,se;! mark;a6i1la5r4u3;dPrpoH;eroga00ie0Gobl0U;te,y1;rt,te0N;bjWceJthers,verview;othi2umb1;a5ee08o3;del,m3nopo0rni2th1;!my;n,yf0;i3unch;ne;ci2nsect;ead start,o3uman right;l0me4u3;se;! run;adf0entlem6irl02laci1od,rand4u3;l0y; slam,fa3mo3;th1;an;a6ella,ly,ol0r4un3;di2;ee market,iWo3;nti1sP;mi0th1;conomy,gg,ner7ven4x3;ampTecu9;i2t;ad8e5inn1o3ragonf0ude;cumentGg3i0l0or;gy;ath,t3;ec3;tive;!dy;a9eili2h7i5o3redit card;ttage,u3;ri1sin;ty,vil w3;ar;andeli1ocol3;ate;n3rF;ary;aCel0lesJo8r5u3;n3tterf0;ti2;eakfa4o3;!th1;st;dy,tt5y3;!fri3;end;le;nki2r3;ri1;er;d5l0noma0u3;nt;ly; homin5verti3;si2;ng;em",
+  "FemaleName": "true¦0:J3;1:J7;2:IG;3:IF;4:IX;5:IK;6:JO;7:H0;8:JG;9:JK;A:HN;B:HY;C:IT;D:IP;E:JD;F:HC;G:I0;aGRbFLcDPdCYeBOfB4gADh9Ti9Gj8Gk7Gl60m49n3No3Jp37qu36r2Ds16t0Eu0Cv02wVxiTyOzH;aLeIineb,oHsof2;e3Uf2la,ra;h3iKlIna,ynH;ab,ep;da,ma;da,h3iHra;nab;aKeJi0Fol5BuIvH;etAonDO;i0na;le0sen2;el,gm3Jn,rGJs8W;aoHme0nyi;m62yAE;aMendDYhiDFiH;dele8lJnH;if48niHo0;e,f47;a,helmi0lHma;a,ow;ka0nB;aNeKiHusa5;cIktoriBMlAole7viH;anC3enJ0;kF9tor2;da,lA9nus,rHs0;a,nHoniH4;a,iFQ;leHnesH4;nIHrH;i1y;g8rHxH5;su5te;aYeUhRiNoLrIuHy3;i,la;acIZiHu0L;c2na,sH;hBPta;nHr0H;iBNya;aJffaEOnHs6;a,gtiH;ng;!nFQra;aIeHomasi0;a,l9Po8Ares1;l2ndolwethu;g9Go88rIssH;!a,ie;eHi,ri9;sa,za;bPlNmLnJrIs6tHwa0;ia0um;a63yn;iHya;a,ka,s6;arB6e3iHmEDra;!ka;a,iH;a,t6;at6it6;a0Fcarlet3We0BhXiTkye,neza0oRtNuIyH;bIBlvi1;e,ha,mayIEni7sIzH;an3MetAie,y;anHi9;!a,e,nH;aDe;aJeH;fHl5GphH;an4;cHZr5;b2fiA8m0OnHphi1;d3ia,ja,ya;er3lJmon1nIobh8PtH;a,i;dy;lEPv2;aMeIirHo0risF7y5;a,lDK;ba,e0i5lJrH;iHrDOyl;!d8Hfa;ia,lDX;hd,iMki3nJrIu0w0yH;la,ma,na;i,le8on,ron;aIda,ia,nHon;a,on;!ya;k6mH;!aa;lJrItaye81vH;da,inj;e0ife;en1i0ma;anA5bNd3Nh1RiBkMlLmJndIrHs6vannaD;aDi0;ra,y;aHi3;nt6ra;lDKma,ome;ee0in8Ru3;in1ri0;a05e00hYiVoIuH;by,thDH;bScRghQl2KnPsJwIxH;anAXie,y;an,e0;aIeHie,lE; merBLann9ll1marDBt7;!lHnn1;iHyn;e,nH;a,d9K;da,i,na;ayy8D;hel62io;bDKer7yn;a,cIkHmas,n9Fta,ya;ki,o;helGki;ea,iannGDoH;da,n1K;an0bJem9Agi0iInHta,y0;a88ee;han83na;a,eH;cEAkaD;bi0chIe,i0mo0nHquEKvCy0;di,ia;aEIelHiB;!e,le;een4ia0;aNeMhKipaluk,oJrHute66;iHudenCQ;scil3LyamvaB;lly,rt2;ilome0oebe,ylH;is,lis;arl,ggy,nelope,r5t3;ige,m0TnKo5rvaDGtIulH;a,etAin1;ricHsy,tBY;a,e,ia;do3i06;ctav2dIfCZis6lHphCZumC3yunbileg;a,ga,iv2;eHvAC;l2tA;aWeUiMoIurHy5;!ay,ul;a,eJor,rIuH;f,r;aDeCma;ll1mi;aNcLhariBOkKlaJna,sHta,vi;anHha;ur;!y;a,iDTki;hoGk9VolH;a,eDJ;!mh;hir,lHna,risFsreC;!a,lBT;asuLdKh2i6CnJomi9rgEPtHzanin zah3;aHhal4;li1s6;cy,etA;a,e8iEV;nngu30;a09ckenz4e01iMoJrignayani,uriDDyH;a,rH;a,lNna,tG;bi0i3llBInH;a,iH;ca,ka,qD3;a,cTkaSlNmi,nLrItzi,yH;ar;aIiam,lH;anEO;!l,nB;dy,eHh,n4;nhGrva;aKdJiCPlH;iHy;cent,e;red;!gros;!e5;ae5hH;ae5el3Z;ag5EgNi,lKrH;edi79iIjem,on,yH;em,l;em,sF;an4iHliF;nHsCE;a,da;!an,han;b0DcASd0Be,g09ha,i08ja,l06n04rLsoum60tKuIv82x9IyHz4;a,bell,ra,soB9;de,rH;a,eC;h8Fild1t4;a,cYgUiKjor4l7Sn4s6tJwa,yH;!aHbe6Wja8lAE;m,nBH;a,ha,in1;!aJbCBeIja,lEna,sHt64;!a,ol,sa;!l1H;! Jh,mInH;!a,e,n1;!awit,i;aliAHcJeduarBfernIjHlui5Y;o6Ful2;anB;ecil2la3;arJeIie,oHr44ueriA;!t;!ry;et42i37;el4Ui76y;dHon,ue5;akran7y;ak,en,iHk,lo3O;a,ka,nB;a,re,s4te;daHg4;!l3A;alEd4elHge,isDBon0;ei8in1yn;el,le;a0Ne0CiYoQuLyH;d2la,nH;!a,dIeBGnHsCL;!a,eBF;a,sCJ;aCWcJel0PiFlIna,pHz;e,i7;a,u,wa;iHy;a0Se,ja,l2JnB;is,l1SrJttIuHvel4;el5is1;e,ie;aKeIi9na,rH;a86i9;lHn1t7;ei;!in1;aSbb9CdRepa,lMnJsIv2zH;!a,be5LetAz4;a,etA;!a,dH;a,sHy;ay,ey,i,y;a,iJja,lHy;iHy;aA0e;!aH;!n5F;ia,ya;!nH;!a,ne;aPda,e0iNjYla,nMoKsJtHx4y5;iHt4;c2t2;e2LlCG;la,nHra;a,ie,o3;a,or1;a,gh,laH;!ni;!h,nH;a,d3e,n5P;cOdon97iNkes6mi9Ana,rMtJurIvHxmi,y5;ern1in2;a,e54ie,yn;as6iIoH;nya,ya;fa,s6;a,isF;a,la;ey,ie,y;a04eZhXiOlAKoNrJyH;lHra;a,ee,ie;istHy6D;a,en,iIyH;!na;!e,n59;nul,ri,urtnB0;aOerNlAZmJrHzzy;a,stH;en,in;!berlImernH;aq;eHi,y;e,y;a,stC;!na,ra;aHei3ongordzol;dij1w5;el7QiKjsi,lJnIrH;a,i,ri;d3na,za;ey,i,lBDs4y;ra,s6;bi7cAJdiat7IeB2iRlQmPnyakuma19rNss6KtKvi7yH;!e,lH;a,eH;e,i8L;a6DeIhHi4NlEri0y;ar6Ber6Bie,leCrB2y;!lyn8Gri0;a,en,iHl5Soli0yn;!ma,n3VsF;a5il1;ei8Ei,l4;a,tl6L;a07eYiVoNuH;anLdKliHst63;a8HeHsF;!n8tH;!a,te;e5Ji3Jy;a,i7;!anNcelEd6RelGhan7RlLni,sIva0yH;a,ce;eHie;fHlEph5U;a,in1;eHie;en,n1;!a,e,n41;lHng;!i1ClH;!i1B;anMle0nJrIsH;i8Csi8C;i,ri;!a,elGif2CnH;a,etAiHy;!e,f2A;a,e8EiInH;a,e8DiH;e,n1;cMd1mi,nIque4Xsmin3Ovie3y8zH;min9;a9eIiH;ce,e,n1s;!lHsFt0F;e,le;inIk4lEquelH;in1yn;da,ta;lRmPnOo0rNsIvaHzaro;!a0lu,na;aJiIlaHob84;!n9N;do3;!belHdo3;!a,e,l39;a77en1i0ma;a,di3es,gr6Yji;a8elBogH;en1;a,e8iHo0se;a0na;aSeOiJoHusFyacin2B;da,ll4rten23snH;a,i9Q;lImaH;ri;aIdHlaI;a,egard;ry;ath1CiJlInriet7rmi8sH;sa,t1B;en2Sga,mi;di;bi2Dil8IlNnMrJsItHwa,yl8Iz7H;i5St4;n5Yti;iHmo51ri52;etH;!te;aDnaD;a,ey,l4;a03eXiSlQoOrKunJwH;enHyne1Q;!dolE;ay,el;acIetHiselB;a,chC;e,ieH;!la;ld1AogooH;sh;adys,enHor2yn2H;a,da,na;aKgi,lIna,ov89selHta;a,e,le;da,liH;an;!n0;mLnJorgIrH;ald3Pi,m3Ctru8B;etAi4W;a,eHna;s26vieve;ma;bIil,le,mHrnet,yG;al5Ni5;i5FrielH;a,l1;aVeSiRloOoz2rH;anJeIiH;da,eB;da,ja;!cH;esIiHoi0O;n1s61;!ca;!rH;a,encH;e,ia;en,o0;lIn0rnH;!anB;ec2ic2;jr,n7rKtHy9;emIiHma,ouma7;ha,ma,n;eh;ah,iBrah,za0;cr4Nd0Ne0Mi0Lk7l04mWn4YrTsNtMuLvH;aJelIiH;!e,ta;in0Gyn;!ngel2S;geni1la,ni45;h5Sta;mLperanKtH;eIhHrel5;er;l30r9;za;a,eralB;iHma,nest2Jyn;cHka,n;a,ka;a,eMiJmH;aHie,y;!li8;lHn1;ee,iHy;a,e,ja;lHrald;da,y;aWeUiNlMma,no3oKsJvH;a,iH;na,ra;a,ie;iHuiH;se;a,en,ie,y;a0c2da,f,nMsJzaH;!betHve7;e,h;aHe,ka;!beH;th;!a,or;anor,nH;!a;!in1na;leCs6;vi;eIiHna,wi0;e,th;l,n;aYeMh2iLjeneKoHul30;lor5Tminiq4In3FrHtt4;a,eCis,la,othHthy;ea,y;ba;an0AnaDon8x4ya;anQbPde,eOiMja,lJmetr2nHsir5K;a,iH;ce,se;a,iIla,orHphi8;es,is;a,l6D;dHrdH;re;!d5Cna;!b2HoraDra;a,d3nH;!a,e;hl2i0l0HmNnLphn1rIvi1XyH;le,na;a,by,cIia,lH;a,en1;ey,ie;a,etAiH;!ca,el1Cka,z;arHia;is;a0Se0Oh05i03lVoKrIynH;di,th2;istHy05;al,i0;lPnMrIurH;tn1E;aJd2NiHn2Nri8;!nH;a,e,n1;!l1X;cepci59n4sH;tanHuelo;ce,za;eHleC;en,tA;aJeoIotH;il51;!pat3;ir9rJudH;etAiH;a,ne;a,e,iH;ce,sZ;a3er3ndH;i,y;aReNloe,rH;isJyH;stH;al;sy,tH;a1Ren,iHy;!an1e,n1;deJlseIrH;!i9yl;a,y;li8;nMrH;isKlImH;ai8;a,eHotA;n1tA;!sa;d3elGtH;al,elG;cIlH;esAi44;el2ilH;e,ia,y;itlZlYmilXndWrOsMtHy5;aKeJhHri0;erHleCrEy;in1;ri0;li0ri0;a33sH;a32ie;a,iNlLmeJolIrH;ie,ol;!e,in1yn;lHn;!a,la;a,eHie,o7y;ne,y;na,sF;a0Hi0H;a,e,l1;is7l4;in,yn;a0Ie02iZlXoUrH;andSeQiJoIyH;an0nn;nwEok9;an3DdgLg0XtH;n2XtH;!aInH;ey,i,y;ny;etH;!t9;an0e,nH;da,na;i9y;bbi9glarIlo05nH;i7n4;ka;ancHossom,ythe;a,he;an17lja0nHsm3I;i7tH;ou;aUcky,linTni7rPssOtJulaDvH;!erlH;ey,y;hJsy,tH;e,iHy9;e,na;!anH;ie,y;!ie;nHt6yl;adIiH;ce;etAi8;ay,da;!triH;ce,z;rbJyaH;rmH;aa;a3ie,o3ra;a2Sb2Md23g1Zi1Qj5l16m0Xn09oi,r04sUtTuPvOwa,yIzH;ra,u0;aKes6gJlIseH;!l;in;un;!nH;a,na;a,i2Ir2J;drJgus1RrIsteH;ja;el2;a,ey,i,y;aahua,he0;hIi2Gja,mi7s2DtrH;id;aMlIraqHt21;at;eIi9yH;!n;e,iHy;gh;!nH;ti;iJleIo6pi7;ta;en,n1tA;aHelG;!n1J;a00dje5eYgUiSjQnJohito,toHya;inetAnH;el5ia;!aKeIiHmJ;e,ka;!mHtA;ar4;!belIliFmU;sa;!le;a,eliH;ca;ka,sHta;a,sa;elHie;a,iH;a,ca,n1qH;ue;!tA;te;! JbImHstasiNya;ar2;el;cla3jul2pau5;aLberKeliJiHy;e,l2naH;!ta;a,ja;!ly;hGiIl2nB;da;a,ra;le;aWba,ePiMlKma,thJyH;a,c2sH;a,on,sa;ea;iHys0N;e,s0M;a,cIn1sHza;a,e,ha,on,sa;e,ia,ja;c2is6jaKksaKna,sJxH;aHia;!nd3;ia,saH;nd3;ra;ia;i0nIyH;ah,na;a,is,naDoud;la;c6da,leCmNnLsH;haDlH;inHyY;g,n;!h;a,o,slH;ey;ee;en;at6g4nIusH;ti0;es;ie;aWdiTelMrH;eJiH;anMenH;a,e,ne;an0;na;!aLeKiIyH;nn;a,n1;a,e;!ne;!iH;de;e,lEsH;on;yn;!lH;i8yn;ne;aKbIiHrL;!gaK;ey,i9y;!e;gaH;il;dKliyJradhIs6;ha;ya;ah;a,ya",
   "Actor": "true¦aJbGcFdCengineIfAgardenIh9instructPjournalLlawyIm8nurse,opeOp5r3s1t0;echnCherapK;ailNcientJecretary,oldiGu0;pervKrgeon;e0oofE;ceptionGsearC;hotographClumbColi1r0sychologF;actitionBogrammB;cem6t5;echanic,inist9us4;airdress8ousekeep8;arm7ire0;fight6m2;eputy,iet0;ici0;an;arpent2lerk;ricklay1ut0;ch0;er;ccoun6d2ge7r0ssis6ttenda7;chitect,t0;ist;minist1v0;is1;rat0;or;ta0;nt",
   "Honorific": "true¦a01bYcQdPeOfiJgIhon,jr,king,lHmCoffic00p7queen,r3s0taoiseach,vice6;e1fc,gt,ir,r,u0;ltRpt,rg;cond liInBrgeaJ;abbi,e0;ar1p9s,v0;!erend; admirX;astOhd,r0vt;esideDi1of0;!essM;me mini4nce0;!ss;a3essrs,i2lle,me,r1s0;!tr;!s;stK;gistrate,j,r6yF;i3lb,t;en,ov;eld mar3rst l0;ady,i0;eutena0;nt;shG;sq,xcellency;et,oct6r,utchess;apt6hance4mdr,o0pl;lonel,m2ngress0unci3;m0wom0;an;dr,mand5;ll0;or;!ain;ldg,rig0;!adi0;er;d0sst,tty,yatullah;j,m0v;!ir0;al",
   "SportsTeam": "true¦0:1A;1:1H;2:1G;a1Eb16c0Td0Kfc dallas,g0Ihouston 0Hindiana0Gjacksonville jagua0k0El0Bm01newToQpJqueens parkIreal salt lake,sAt5utah jazz,vancouver whitecaps,w3yW;ashington 3est ham0Rh10;natio1Oredski2wizar0W;ampa bay 6e5o3;ronto 3ttenham hotspur;blue ja0Mrapto0;nnessee tita2xasC;buccanee0ra0K;a7eattle 5heffield0Kporting kansas0Wt3;. louis 3oke0V;c1Frams;marine0s3;eah15ounG;cramento Rn 3;antonio spu0diego 3francisco gJjose earthquak1;char08paA; ran07;a8h5ittsburgh 4ortland t3;imbe0rail blaze0;pirat1steele0;il3oenix su2;adelphia 3li1;eagl1philNunE;dr1;akland 3klahoma city thunder,rlando magic;athle0Mrai3;de0; 3castle01;england 7orleans 6york 3;city fc,g4je0FknXme0Fred bul0Yy3;anke1;ian0D;pelica2sain0C;patrio0Brevolut3;ion;anchester Be9i3ontreal impact;ami 7lwaukee b6nnesota 3;t4u0Fvi3;kings;imberwolv1wi2;rewe0uc0K;dolphi2heat,marli2;mphis grizz3ts;li1;cXu08;a4eicesterVos angeles 3;clippe0dodDla9; galaxy,ke0;ansas city 3nE;chiefs,roya0E; pace0polis colU;astr06dynamo,rockeTtexa2;olden state warrio0reen bay pac3;ke0;.c.Aallas 7e3i05od5;nver 5troit 3;lio2pisto2ti3;ge0;broncZnuggeM;cowbo4maver3;ic00;ys; uQ;arCelKh8incinnati 6leveland 5ol3;orado r3umbus crew sc;api5ocki1;brow2cavalie0india2;bengaWre3;ds;arlotte horAicago 3;b4cubs,fire,wh3;iteB;ea0ulR;diff3olina panthe0; c3;ity;altimore 9lackburn rove0oston 5rooklyn 3uffalo bilN;ne3;ts;cel4red3; sox;tics;rs;oriol1rave2;rizona Ast8tlanta 3;brav1falco2h4u3;nited;aw9;ns;es;on villa,r3;os;c5di3;amondbac3;ks;ardi3;na3;ls",
-  "Uncountable": "true¦0:1I;1:1X;2:16;a1Rb1Jc1Ad17e10f0Ug0Nh0Ii0Ej0Dknowled1Ql08mYnews,oXpTrOsDt8vi7w3;a5ea0Bi4oo3;d,l;ldlife,ne;rmth,t0;neg17ol0Ctae;e6h5oothpaste,r3una;affTou3;ble,sers,t;ermod1Mund0;a,nnis;aBcene0Aeri2hAil9kittl2now,o8p6t4u3;g10nshi0Q;ati1Le3;am,el;ace1Ee3;ci2ed;ap,cc0;k,v0;eep,ingl2;d0Dfe18l3nd;m11t;a6e4ic3;e,ke0M;c3laxa0Isearch;ogni0Hrea0H;bi2in;aPe5hys1last9o3ress04;l3rk,w0;it1yA;a12trZ;bstetr1il,xygen;aAe8ilk,o5u3;mps,s3;ic;n3o0I;ey,o3;gamy;a3chan1;sl2t;chine3il,themat1; learn0Bry;aught0e5i4ogi0Su3;ck,g0I;ce,ghtn08ngui0QteratN;a3isM;th0;ewelAusti0L;ce,mp3nformaUtself;a3ortan0J;ti3;en0H;a6isto5o3;ck3mework,n3spitali0B;ey;ry;ir,libut,ppiD;ene6o4r3um,ymna0D;aCound;l3ssip;d,f; 3t1;editQpo3;ol;i7lour,o4urnit3;ure;od,rgive3uri0wl;ne3;ss;c9sh;conom1duca8lectr7n5quip6th1very3;body,o3thH;ne;joy3tertain3;ment;iciPon1;tiI;ar4iabet2raugh4;es;ts;aAelcius,h6iv1l5o3urrency;al,ld w3nfusiDttD;ar;ass1oth5;aos,e3;e4w3;ing;se;r7sh;a7eef,i4lood,owls,read,utt0;er;lliar4s3;on;ds;g3ss;ga3;ge;c8dvi7ero5ir4mnes3rt,thlet1;ty;craft;b1d3naut1;ynam1;ce;id,ou3;st1;ics",
-  "Infinitive": "true¦0:6R;1:75;2:5B;3:73;4:72;5:66;6:6E;7:71;8:6X;9:6P;A:6Z;B:6W;C:5W;D:76;E:6K;F:5A;a6Jb65c56d4Ce3Wf3Ig3Ch36i2Tj2Rk2Pl2Gm25n22o1Xp1Ir0Qs05tXuSvOwHyG;awn,ield;aJe1Yhist6iIoGre6C;nd0rG;k,ry;pe,sh,th0;lk,nHrGsh,tEve;n,raD;d0t;aIiGo7;eGsB;!w;l6Jry;nHpGr4se;gra4Pli41;dGi7lo5Zpub3Q;erGo;mi5Cw1I;aMeLhKig5SoJrHuGwi8;ne,rn;aGe0Mi5Uu8y;de,in,nsf0p,v5J;r2ZuE;ank,reatC;nd,st;lk,rg1Qs7;aZcWeVhTi4Dkip,lSmRnee3Lo52pQtJuGwitE;bmBck,ff0gge8ppHrGspe5;ge,pri1rou4Zvi3;ly,o36;aLeKoJrHuG;dy,mb6;aFeGi3;ngthCss,tE;p,re;m,p;in,ke,r0Qy;la58oil,rink6;e1Zi6o3J;am,ip;a2iv0oG;ck,rtCut;arEem,le5n1r3tt6;aHo2rG;atEew;le,re;il,ve;a05eIisk,oHuG;in,le,sh;am,ll;a01cZdu9fYgXje5lUmTnt,pQquPsKtJvGwa5V;eGiew,o36;al,l,rG;se,t;aFi2u44;eJi8oItG;!o2rG;i5uc20;l3rt;mb6nt,r3;e8i2;air,eHlGo43r0K;a9y;at;aFemb0i3Zo3;aHeGi3y;a1nt;te,x;a5Dr0J;act1Yer,le5u1;a13ei3k5PoGyc6;gni2Cnci6rd;ch,li2Bs5N;i1nG;ge,k;aTerSiRlOoMrIuG;b21ll,mp,rGsh;cha1s4Q;ai1eIiDoG;cGdu9greAhibBmi1te8vi2W;eAlaim;di5pa2ss,veD;iDp,rtr46sGur;e,t;aHead,uG;g,n4;n,y;ck,le;fo34mBsi8;ck,iDrt4Mss,u1;bJccur,ff0pera7utweIverGwe;co47lap,ta22u1wG;helm;igh;ser3taF;eHotG;e,i9;ed,gle5;aMeLiIoHuG;ltip3Grd0;nit13ve;nHrr12sreprG;eseD;d,g6us;asu2lt,n0Nr4;intaFna4rHtG;ch,t0;ch,kGry;et;aMeLiJoGu1C;aHck,oGve;k,sC;d,n;ft,g35ke,mBnk,st2YveG;!n;a2Fc0Et;b0Nck,uG;gh,nE;iGno34;ck,ll,ss;am,oFuG;d4mp;gno2mQnGss3H;cOdica7flu0MhNsKtIvG;eGol3;nt,st;erGrodu9;a5fe2;i8tG;aGru5;ll;abBibB;lu1Fr1D;agi24pG;lemeDo22ro3;aKeIi2oHuG;nt,rry;n02pe,st;aGlp;d,t;nd6ppCrm,te;aKloAove1PrIuG;arGeAi15;ant39d;aGip,umb6;b,sp;in,th0ze;aReaQiOlMoJrHuncG;ti3J;acGeshC;tu2;cus,lHrG;ce,eca8m,s30;d,l24;a1ZoG;at,od,w;gu2lGni1Xt,x;e,l;r,tu2;il,stCvG;or;a15cho,le5mSnPstNvalua7xG;a0AcLerKi8pGte19;a18eHi2laFoGreA;rt,se;ct,riG;en9;ci1t;el,han4;abGima7;li1J;ab6couXdHfor9ga4han9j03riEsu2t0vG;isi2Vy;!u2;body,er4pG;hasiGow0;ze;a07eUiLoKrHuG;mp;aHeAiG;ft;g,in;d4ubt;ff0p,re5sHvG;iZor9;aKcHliGmiApl1Btingui14;ke;oGuA;uGv0;ra4;gr1YppG;ear,ro3;cOeNfLliv0ma0Fny,pKsHterG;mi0G;cribe,er3iHtrG;oy;gn,re;a0Be0Ai5osB;eGi0By;at,ct;m,pC;iIlHrG;ea1;a2i06;de;ma4n9rGte;e,kC;a0Ae09h06i7l04oJrG;aHeGoAu0Hy;a7dB;ck,ve;llZmSnHok,py,uGv0;gh,nt;cePdu5fMsKtIvG;eGin9;rt,y;aFin0VrG;a8ibu7ol;iGtitu7;d0st;iHoGroD;rm;gu2rm;rn;biLfoKmaJpG;a2laF;in;re;nd;rt;ne;ap1e5;aGip,o1;im,w;aHeG;at,ck,w;llen4n4r4se;a1nt0;ll,ncIrGt0u1;eGry;!en;el;aSePloOoMrIuG;lGry;ly;igHuG;sh;htC;en;a8mb,o8rrGth0un9;ow;ck;ar,lHnefBtrG;ay;ie3ong;ng,se;band0Jc0Bd06ffo05gr04id,l01mu1nYppTrQsKttGvoid,waB;acIeHra5;ct;m0Fnd;h,k;k,sG;eIiHocia7uG;me;gn,st;mb6rt;le;chHgGri3;ue;!i3;eaJlIroG;aEve;ch;aud,y;l,r;noun9sw0tG;icipa7;ce;lHt0;er;e4ow;ee;rd;aRdIju8mBoR;it;st;!reA;ss;cJhie3knowled4tiva7;te;ge;ve;eIouDu1;se;nt;pt;on",
+  "Uncountable": "true¦0:1I;1:16;2:1X;a1Rb1Jc1Ad17e10f0Ug0Nh0Ii0Ej0Dknowled1Ql08mYnews,oXpTrOsDt8vi7w3;a5ea0Bi4oo3;d,l;ldlife,ne;rmth,t0;neg17ol0Ctae;e6h5oothpaste,r3una;affTou3;ble,sers,t;ermod1Mund0;a,nnis;aBcene0Aeri1hAil9kittl1now,o8p6t4u3;g10nshi0Q;ati1Le3;am,el;ace1Ee3;ci1ed;ap,cc0;k,v0;eep,ingl1;d0Dfe18l3nd;m11t;a6e4ic3;e,ke0M;c3laxa0Isearch;ogni0Hrea0H;bi1in;aPe5hys2last9o3ress04;l3rk,w0;it2yA;a12trZ;bstetr2il,xygen;aAe8ilk,o5u3;mps,s3;ic;n3o0I;ey,o3;gamy;a3chan2;sl1t;chine3il,themat2; learn0Bry;aught0e5i4ogi0Su3;ck,g0I;ce,ghtn08ngui0QteratN;a3isM;th0;ewelAusti0L;ce,mp3nformaUtself;a3ortan0J;ti3;en0H;a6isto5o3;ck3mework,n3spitali0B;ey;ry;ir,libut,ppiD;ene6o4r3um,ymna0D;aCound;l3ssip;d,f; 3t2;editQpo3;ol;i7lour,o4urnit3;ure;od,rgive3uri0wl;ne3;ss;c9sh;conom2duca8lectr7n5quip6th2very3;body,o3thH;ne;joy3tertain3;ment;iciPon2;tiI;ar4iabet1raugh4;es;ts;aAelcius,h6iv2l5o3urrency;al,ld w3nfusiDttD;ar;ass2oth5;aos,e3;e4w3;ing;se;r7sh;a7eef,i4lood,owls,read,utt0;er;lliar4s3;on;ds;g3ss;ga3;ge;c8dvi7ero5ir4mnes3rt,thlet2;ty;craft;b2d3naut2;ynam2;ce;id,ou3;st2;ics",
+  "Infinitive": "true¦0:6S;1:76;2:5C;3:74;4:73;5:67;6:6F;7:6Y;8:6Q;9:72;A:70;B:5X;C:6X;D:6L;E:77;F:5B;a6Kb66c57d4De3Xf3Jg3Dh37i2Uj2Sk2Ql2Hm26n23o1Yp1Jr0Rs06tYuTvOwHyG;awn,ield;aJe1Zhist6iIoGre6D;nd0rG;k,ry;pe,sh,th0;lk,nHrGsh,tDve;n,raE;d0t;aJiHoG;te,w;eGsC;!w;l6Jry;nHpGr4se;gra4Pli41;dGi9lo5Zpub3Q;erGo;mi5Cw1I;aMeLhKig5SoJrHuGwi7;ne,rn;aGe0Mi5Uu7y;de,in,nsf0p,v5J;r2ZuD;ank,reatB;nd,st;lk,rg1Qs9;aZcWeVhTi4Dkip,lSmRnee3Lo52pQtJuGwitD;bmCck,ff0gge7ppHrGspe5;ge,pri1rou4Zvi3;ly,o36;aLeKoJrHuG;dy,mb6;aFeGi3;ngthBss,tD;p,re;m,p;in,ke,r0Qy;la58oil,rink6;e1Zi6o3J;am,ip;a2iv0oG;ck,rtBut;arDem,le5n1r3tt6;aHo2rG;atDew;le,re;il,ve;a05eIisk,oHuG;in,le,sh;am,ll;a01cZdu8fYgXje5lUmTnt,pQquPsKtJvGwa5V;eGiew,o36;al,l,rG;se,t;aFi2u44;eJi7oItG;!o2rG;i5uc20;l3rt;mb6nt,r3;e7i2;air,eHlGo43r0K;a8y;at;aFemb0i3Zo3;aHeGi3y;a1nt;te,x;a5Dr0J;act1Yer,le5u1;a13ei3k5PoGyc6;gni2Cnci6rd;ch,li2Bs5N;i1nG;ge,k;aTerSiRlOoMrIuG;b21ll,mp,rGsh;cha1s4Q;ai1eIiEoG;cGdu8greAhibCmi1te7vi2W;eAlaim;di5pa2ss,veE;iEp,rtr46sGur;e,t;aHead,uG;g,n4;n,y;ck,le;fo34mCsi7;ck,iErt4Mss,u1;bJccur,ff0pera9utweIverGwe;co47lap,ta22u1wG;helm;igh;ser3taF;eHotG;e,i8;ed,gle5;aMeLiIoHuG;ltip3Grd0;nit13ve;nHrr12sreprG;eseE;d,g6us;asu2lt,n0Nr4;intaFna4rHtG;ch,t0;ch,kGry;et;aMeLiJoGu1C;aHck,oGve;k,sB;d,n;ft,g35ke,mCnk,st2YveG;!n;a2Fc0Et;b0Nck,uG;gh,nD;iGno34;ck,ll,ss;am,oFuG;d4mp;gno2mQnGss3H;cOdica9flu0MhNsKtIvG;eGol3;nt,st;erGrodu8;a5fe2;i7tG;aGru5;ll;abCibC;lu1Fr1D;agi24pG;lemeEo22ro3;aKeIi2oHuG;nt,rry;n02pe,st;aGlp;d,t;nd6ppBrm,te;aKloAove1PrIuG;arGeAi15;ant39d;aGip,ow,umb6;b,sp;in,th0ze;aReaQiOlMoJrHuncG;ti3J;acGeshB;tu2;cus,lHrG;ce,eca7m,s30;d,l24;a1ZoG;at,od,w;gu2lGni1Xt,x;e,l;r,tu2;il,stBvG;or;a15cho,le5mSnPstNvalua9xG;a0AcLerKi7pGte19;a18eHi2laFoGreA;rt,se;ct,riG;en8;ci1t;el,han4;abGima9;li1J;ab6couXdHfor8ga4han8j03riDsu2t0vG;isi2Vy;!u2;body,er4pG;hasiGow0;ze;a07eUiLoKrHuG;mp;aHeAiG;ft;g,in;d4ubt;ff0p,re5sHvG;iZor8;aKcHliGmiApl1Btingui14;ke;oGuA;uGv0;ra4;gr1YppG;ear,ro3;cOeNfLliv0ma0Fny,pKsHterG;mi0G;cribe,er3iHtrG;oy;gn,re;a0Be0Ai5osC;eGi0By;at,ct;m,pB;iIlHrG;ea1;a2i06;de;ma4n8rGte;e,kB;a0Ae09h06i9l04oJrG;aHeGoAu0Hy;a9dC;ck,ve;llZmSnHok,py,uGv0;gh,nt;cePdu5fMsKtIvG;eGin8;rt,y;aFin0VrG;a7ibu9ol;iGtitu9;d0st;iHoGroE;rm;gu2rm;rn;biLfoKmaJpG;a2laF;in;re;nd;rt;ne;ap1e5;aGip,o1;im,w;aHeG;at,ck,w;llen4n4r4se;a1nt0;ll,ncIrGt0u1;eGry;!en;el;aSePloOoMrIuG;lGry;ly;igHuG;sh;htB;en;a7mb,o7rrGth0un8;ow;ck;ar,lHnefCtrG;ay;ie3ong;ng,se;band0Jc0Bd06ffo05gr04id,l01mu1nYppTrQsKttGvoid,waC;acIeHra5;ct;m0Fnd;h,k;k,sG;eIiHocia9uG;me;gn,st;mb6rt;le;chHgGri3;ue;!i3;eaJlIroG;aDve;ch;aud,y;l,r;noun8sw0tG;icipa9;ce;lHt0;er;e4ow;ee;rd;aRdIju7mCoR;it;st;!reA;ss;cJhie3knowled4tiva9;te;ge;ve;eIouEu1;se;nt;pt;on",
   "Unit": "true¦0:19;a14b12c0Od0Ne0Lf0Gg0Ch09in0Hjoule0k02l00mNnMoLpIqHsqCt7volts,w6y4z3°2µ1;g,s;c,f,n;b,e2;a0Nb,d0Dears old,o1;tt0H;att0b;able4b3d,e2on1sp;!ne0;a2r0D;!l,sp;spo04; ft,uare 1;c0Id0Hf3i0Fkilo0Jm1ya0E;e0Mil1;e0li0H;eet0o0D;t,uart0;ascals,e2i1ou0Pt;c0Mnt0;rcent,t02;hms,uYz;an0JewtT;/s,b,e9g,i3l,m2p1²,³;h,s;!²;!/h,cro5l1;e1li08;! pFs1²;! 1;anEpD;g06s0B;gQter1;! 2s1;! 1;per second;b,i00m,u1x;men0x0;b,elvin0g,ilo2m1nR;!/h,ph,²;byZgXmeter1;! p2s1;! p1;er1; hour;e1g,r0z;ct1rtz0;aXogQ;al2b,igAra1;in0m0;!l1;on0;a4emtPl2t1;²,³; oz,uid ou1;nce0;hrenheit0rad0;b,x1;abyH;eciCg,l,mA;arat0eAg,m9oulomb0u1;bic 1p0;c5d4fo3i2meAya1;rd0;nch0;ot0;eci2;enti1;me4;!²,³;lsius0nti1;g2li1me1;ter0;ram0;bl,y1;te0;c4tt1;os1;eco1;nd0;re0;!s",
   "Organization": "true¦0:46;a3Ab2Qc2Ad21e1Xf1Tg1Lh1Gi1Dj19k17l13m0Sn0Go0Dp07qu06rZsStFuBv8w3y1;amaha,m0Xou1w0X;gov,tu2S;a3e1orld trade organizati41;lls fargo,st1;fie22inghou16;l1rner br3D;-m11gree31l street journ25m11;an halNeriz3Wisa,o1;dafo2Gl1;kswagLvo;bs,kip,n2ps,s1;a tod2Rps;es35i1;lev2Xted natio2Uv; mobi2Kaco bePd bMeAgi frida9h3im horto2Tmz,o1witt2W;shiba,y1;ota,s r Y;e 1in lizzy;b3carpen33daily ma2Xguess w2holli0rolling st1Ms1w2;mashing pumpki2Ouprem0;ho;ea1lack eyed pe3Fyrds;ch bo1tl0;ys;l2s1;co,la m12;efoni07us;a6e4ieme2Gnp,o2pice gir5ta1ubaru;rbucks,to2N;ny,undgard1;en;a2Rx pisto1;ls;few25insbu26msu1X;.e.m.,adiohead,b6e3oyal 1yan2X;b1dutch she4;ank;/max,aders dige1Ed 1vl32;bu1c1Uhot chili peppe2Klobst28;ll;c,s;ant2Vizno2F;an5bs,e3fiz24hilip morrBi2r1;emier27octer & gamb1Rudenti14;nk floyd,zza hut;psi28tro1uge08;br2Qchina,n2Q; 2ason1Xda2G;ld navy,pec,range juli2xf1;am;us;a9b8e5fl,h4i3o1sa,wa;kia,tre dame,vart1;is;ke,ntendo,ss0K;l,s;c,st1Etflix,w1; 1sweek;kids on the block,york08;a,c;nd1Us2t1;ional aca2Fo,we0Q;a,cYd0O;aAcdonald9e5i3lb,o1tv,yspace;b1Nnsanto,ody blu0t1;ley crue,or0O;crosoft,t1;as,subisO;dica3rcedes2talli1;ca;!-benz;id,re;'s,s;c's milk,tt13z1Y;'ore09a3e1g,ittle caesa1Ktd;novo,x1;is,mark; pres5-z-boy,bour party;atv,fc,kk,m1od1K;art;iffy lu0Lo3pmorgan1sa;! cha1;se;hnson & johns1Sy d1R;bm,hop,n1tv;c,g,te1;l,rpol; & m,asbro,ewlett-packaTi3o1sbc,yundai;me dep1n1J;ot;tac1zbollah;hi;eneral 6hq,l5mb,o2reen d0Iu1;cci,ns n ros0;ldman sachs,o1;dye1g0B;ar;axo smith kliZencore;electr0Im1;oto0V;a3bi,da,edex,i1leetwood mac,oGrito-l0A;at,nancial1restoV; tim0;cebook,nnie mae;b06sa,u3xxon1; m1m1;ob0H;!rosceptics;aiml0Ae5isney,o3u1;nkin donuts,po0Wran dur1;an;j,w j1;on0;a,f leppa3ll,p2r spiegZstiny's chi1;ld;eche mode,t;rd;aEbc,hBi9nn,o3r1;aigsli5eedence clearwater reviv1ossra05;al;!ca c5l4m1o0Ast05;ca2p1;aq;st;dplMgate;ola;a,sco1tigroup;! systems;ev2i1;ck fil-a,na daily;r0Hy;dbury,pital o1rl's jr;ne;aGbc,eCfAl6mw,ni,o2p,r1;exiteeWos;ei3mbardiJston 1;glo1pizza;be;ng;ack & deckFo2ue c1;roX;ckbuster video,omingda1;le; g1g1;oodriN;cht3e ge0n & jer2rkshire hathaw1;ay;ryH;el;nana republ3s1xt5y5;f,kin robbi1;ns;ic;bXcSdidRerosmith,ig,lLmFnheuser-busEol,ppleAr7s3t&t,v2y1;er;is,on;hland2s1;n,ociated F; o1;il;by4g2m1;co;os; compu2bee1;'s;te1;rs;ch;c,d,erican3t1;!r1;ak; ex1;pre1;ss; 4catel2t1;air;!-luce1;nt;jazeera,qae1;da;as;/dc,a3er,t1;ivisi1;on;demy of scienc0;es;ba,c",
   "Demonym": "true¦0:16;1:13;a0Wb0Nc0Cd0Ae09f07g04h02iYjVkTlPmLnIomHpDqatari,rBs7t5u4v3wel0Rz2;am0Fimbabwe0;enezuel0ietnam0H;g9krai1;aiwThai,rinida0Iu2;ni0Qrkmen;a4cot0Ke3ingapoOlovak,oma0Tpa05udRw2y0X;edi0Kiss;negal0Br08;mo0uU;o6us0Lw2;and0;a3eru0Hhilipp0Po2;li0Ertugu06;kist3lesti1na2raguay0;ma1;ani;amiZi2orweP;caragu0geri2;an,en;a3ex0Mo2;ngo0Erocc0;cedo1la2;gasy,y08;a4eb9i2;b2thua1;e0Dy0;o,t02;azakh,eny0o2uwaiti;re0;a2orda1;ma0Bp2;anN;celandic,nd4r2sraeli,ta02vo06;a2iT;ni0qi;i0oneV;aiDin2ondur0unN;di;amDe2hanai0reek,uatemal0;or2rm0;gi0;i2ren7;lipino,n4;cuadoVgyp6ngliJsto1thiopi0urope0;a2ominXut4;niH;a9h6o4roa3ub0ze2;ch;ti0;lom2ngol5;bi0;a6i2;le0n2;ese;lifor1m2na3;bo2eroo1;di0;angladeshi,el8o6r3ul2;gaG;aziBi2;ti2;sh;li2s1;vi0;aru2gi0;si0;fAl7merBngol0r5si0us2;sie,tr2;a2i0;li0;gent2me1;ine;ba1ge2;ri0;ni0;gh0r2;ic0;an",
@@ -3526,14 +3820,14 @@ var _data = {
   "Month": "true¦aBdec9feb7j2mar,nov9oct1sep0;!t8;!o8;an3u0;l1n0;!e;!y;!u1;!ru0;ary;!em0;ber;pr1ug0;!ust;!il",
   "Date": "true¦ago,t2week0yesterd4; e0e0;nd;mr2o0;d0morrow;ay;!w",
   "FirstName": "true¦aKblair,cGdevFgabrieEhinaDjBk8l7m3nelly,quinn,re2sh0;ay,e0iloh;a,lby;g6ne;a1el0ina,org5;!okuh9;naia,r0;ion,lo;ashawn,uca;asCe1ir0rE;an;lsAnyat2rry;am0ess6ie,ude;ie,m5;ta;le;an,on;as2h0;arl0eyenne;ie;ey,sidy;lex2ndr1ubr0;ey;a,ea;is",
-  "LastName": "true¦0:9F;1:9V;2:9X;3:9H;4:9N;5:8J;6:9K;7:A0;8:9E;9:88;A:77;B:6E;C:6J;a9Ub8Lc7Kd6Xe6Rf6Dg5Vh58i54j4Pk45l3Nm2Rn2Eo26p1Nquispe,r17s0Ft05vVwOxNyGzD;aytsADhD;aDou,u;ng,o;aGeun7ZiDoshiA9un;!lD;diDmaz;rim,z;maDng;da,guc97mo6UsDzaA;aAhiA7;iao,u;aHeGiEoDright,u;jc8Sng;lDmm0nkl0sniewsA;liA1s2;b0iss,lt0;a5Rgn0lDng,tanabe;k0sh;aHeGiEoDukB;lk5roby5;dBllalDnogr2Zr0Zss0val37;ba,obos;lasEsel7N;lGn dFrg8EsEzD;qu7;ily9Oqu7silj9O;en b35ijk,yk;enzue95verde;aLeix1JhHi4j6ka3IoGrFsui,uD;om4ZrD;c4n0un1;an,embl8TynisA;dor95lst31m3rr9th;at5Mi7LoD;mErD;are6Ylaci64;ps2s0Y;hirBkah8Dnaka;a00chWeThPiNmKoItFuEvDzabo;en8Aobod34;ar7bot3lliv4zuA;aEein0oD;i67j3Lyan8V;l6rm0;kol5lovy5re6Psa,to,uD;ng,sa;iDy5Z;rn5tD;!h;l5YmDngh,rbu;mo6Do6J;aFeDimizu;hu,vchD;en7Cuk;la,r17;gu8mDoh,pulve8Trra4R;jDyD;on5;evi6Filtz,miDneid0roed0ulz,warz;dEtD;!z;!t;ar42h6ito,lFnDr3saAto,v3;ch7d0AtDz;a4Pe,os;as,ihBm3Zo0Q;aOeNiKoGuEyD;a66oo,u;bio,iz,sD;so,u;bEc7Bdrigue57g03j73mDosevelt,ssi,ta7Nux,w3Z;a4Be0O;ertsDins2;!on;bei0LcEes,vDzzo;as,e8;ci,hards2;ag4es,it0ut0y9;dFmEnDsmu7Zv5F;tan1;ir7os;ic,u;aSeLhJiGoErDut6;asad,if5Zochazk1W;lishc24pDrti62u55we66;e2Tov48;cEe09nD;as,to;as60hl0;aDillips;k,m,n5K;de3AetIna,rGtD;ersErovDtersC;!a,ic;en,on;eDic,ry,ss2;i8ra,tz,z;ers;h71k,rk0tEvD;ic,l3T;el,t2O;bJconnor,g2ClGnei5PrEzD;demir,turk;ella3MtDwe5N;ega,iz;iDof6GsC;vDyn1F;ei8;aPri1;aLeJguy1iFoDune44ym4;rodahl,vDwak;ak3Uik5otn56;eEkolDlsCx2;ic,ov6X;ls1miD;!n1;ils2mD;co42ec;gy,kaEray4varD;ro;jiDmu8shiD;ma;aXcVeQiPoIuD;lGnFrDssoli5T;atDpUr68;i,ov3;oz,te4B;d0l0;h4lIo0HrEsDza0Z;er,s;aFeEiDoz5r3Ete4B;!n6F;au,i8no,t4M;!l9;i2Rl0;crac5Ohhail5kke3Qll0;hmeGij0j2ElFndErci0ssiDyer19;!er;e3Bo2Z;n0Io;dBti;cartDlaughl6;hy;dMe6Dgnu5Ei0jer34kLmJnci59rFtEyD;er,r;ei,ic,su1N;iEkBqu9roqu6tinD;ez,s;a54c,nD;!o;a52mD;ad5;e5Oin1;rig4Ns1;aSeMiIoGuEyD;!nch;k3nDo;d,gu;mbarDpe2Rvr3;di;!nDu,yana1R;coln,dD;bDholm;erg;bed5TfeGhtFitn0kaEn6rDw2G;oy;!j;in1on1;bvDvD;re;iDmmy,rsCu,voie;ne,t11;aTennedy,h4iSlQnez46oJrGuEvar4woD;k,n;cerDmar58znets5;a,o2G;aDem0i2Zyeziu;sni3PvD;ch3U;bay4Frh0Jsk0TvaFwalDzl5;czDsA;yk;cFlD;!cDen3Q;huk;!ev3ic,s;e6uiveD;rt;eff0l3mu8nnun1;hn,lloe,minsArEstra31to,ur,yDzl5;a,s0;j0GlsC;aMenLha2Pim0QoEuD;ng,r3;e2JhFnErge2Ju2NvD;anB;es,ss2;anEnsD;en,on,t2;nesDsC;en,s1;ki26s1;cGkob3RnsDrv06;en,sD;enDon;!s;ks2obs1;brahimBglesi3Ake4Ll0CnoZoneFshikEto,vanoD;u,v4A;awa;scu;aPeIitchcock,jaltal6oFrist46uD;!aDb0gh9ynh;m4ng;a23dz3fEjga2Sk,rDx3B;ak0Yvat;er,fm3B;iGmingw3NnErD;nand7re8;dDriks1;ers2;kkiEnD;on1;la,n1;dz3g1lvoLmJnsCqIrr0SsFuEyD;as36es;g1ng;anEhiD;mo0Q;i,ov08;ue;alaD;in1;rs1;aMeorgLheorghe,iJjonIoGrEuDw2;o,staf2Utierr7zm4;ayDg3iffitUub0;li1G;lub3Rme0JnD;calv9zale0I;aj,i;l,mDordaL;en7;iev3B;gnJlGmaFnd2No,rDs2Nuthi0;cDza;ia;ge;eaElD;agh0i,o;no;e,on;ab0erMiIjeldsted,lor9oGrFuD;cDent9ji3F;hs;an1Wiedm4;ntaDrt6st0urni0;na;lipEsD;ch0;ovD;!ic;hatBnandeVrD;arDei8;a,i;ov3;dHinste6riksCsDva0D;cob2ZpDtra2X;inoDosiM;za;en,s2;er,is2wards;aUeMiKjurhuJoHrisco0YuEvorakD;!oQ;arte,boEmitru,rDt2U;and,ic;is;g4he0Hmingu7n2Ord19tD;to;us;aDmitr29ssanayake;s,z; GbnaFlEmirDrvis1Lvi,w4;!ov3;gado,ic;th;bo0groot,jo03lEsilDvri9;va;a cruz,e2uD;ca;hl,mcevsAnErw6t2EviD;d5es,s;ieDku1S;ls1;ki;a05e00hNiobMlarkLoFrD;ivDuz;elli;h1lGntFop0rDs26x;byn,reD;a,ia;i,rer0O;em4liD;ns;!e;anu;aLeIiu,oGriDuJwe;stD;eDiaD;ns1;i,ng,uFwDy;!dhury;!n,onEuD;ng;!g;kEnDtterjee,v7;!d,g;ma,raboD;rty;bGl09ng3rD;eghetEnD;a,y;ti;an,ota0M;cer9lder2mpbeIrFstDvadi08;iDro;llo;doEt0uDvalho;so;so,zo;ll;es;a09eXhUiSlNoGrFyD;rne,tyD;qi;ank5iem,ooks,yant;gdan5nFruya,su,uchEyHziD;c,n5;ard;darDik;enD;ko;ov;aEondD;al;nEzD;ev3;co;ancRshwD;as;a01oDuiy4;umDwmD;ik;ckNethov1gu,ktLnJrD;gGisFnD;ascoDds1;ni;ha;er,mD;ann;gtDit7nett;ss2;asD;hi;er,ham;b3ch,ez,hMiley,kk0nHrDu0;bEnDua;es,i0;ieDosa;ri;dDik;a8yopadhyD;ay;ra;er;k,ng;ic;cosZdYguilXkhtXlSnJrGsl4yD;aEd6;in;la;aEsl4;an;ujo,ya;dFgelD;ovD;!a;ersGov,reD;aDjL;ss1;en;en,on,s2;on;eksejGiyGmeiFvD;ar7es;ez;da;ev;ar;ams;ta",
-  "MaleName": "true¦0:E5;1:D6;2:DO;3:AY;4:D2;5:CG;6:CW;7:C8;8:B6;9:DL;A:DK;B:A6;C:C2;aCObBLcAJd9He8Nf85g7Ih6Ui6Ej5Ek52l4Dm35n2To2Np2Fqu2Dr1Ls11t0Eu0Dv07wTxSyIzD;aDor0;cDh9Tkaria,n5W;hEkD;!aCM;ar5WeCL;aLoFuD;sDu2KvBY;if,uf;nFsEusD;ouf,sD;ef;aDg;s,tD;an,h0;hli,nBMssX;avi3ho4;aMeKiFoDyaC2;jcie8Clfgang,odrow,utD;!er;lDnst1;bFey,frD1lD;aBDiD;am,e,s;e9Fur;i,nde8sD;!l7t1;de,lErr9yD;l1ne;lDt3;aAAy;aGiDladimir,ojte7Z;cEha0kt69nceDrgAJva0;!nt;e3Vt67;lentDnA5;in4Y;ghBVlyss5Cnax,sm0;aXeShOiMoHrFuEyD;!l3ro6s1;nAr5C;avAWeDist0oy,um0;ntAOv5Zy;bGdFmDny;!as,mDoharu;aCTie,y;!d;iBy;mDt5;!my,othy;adFeoEia8GomD;!as;!do8P;!de5;dGrD;en9LrD;an9KeDy;ll,n9J;!dy;dgh,ha,iDnn3req,tsu4T;cB5ka;aTcotRePhLiJoHpenc3tDur1Vylve9Kzym1;anFeDua8D;f0phBTvDwa8C;e62ie;!islaw,l7;lom1nBFuD;leyma6ta;dDlBm1yabonga;!dhart7Bn7;aFeD;lDrm0;d1t1;h7Une,qu10un,wn,y6;aDbasti0k2Al4Rrg4Oth,ymoAU;m5n;!tD;!ie,y;lEmDnti2Eq5Bul;!ke5MmCu4;ik,vato7X;aYeUheAAiQoHuEyD;an,ou;b7NdEf5pe7SssD;!elBZ;ol3Fy;an,bKcJdIel,geHh0landBQmGnFry,sEyD;!ce;coe,s;!aAHnC;an,eo;l47r;e5Og3n7olfo,ri7A;co,ky;bCeB7;cDl7;ar6Pc6OhEkDo;!ey,ie,y;a99ie;gEid,ub9x,yDza;an1InY;gA8iD;naA4s;ch70fa4lHmGndFpha4sEul,wi2HyD;an,mo82;h7Vm5;alBDol2Uy;iATon;f,ph;ent2inD;cy,t1;aIeGhilFier72ol,rD;aka16eD;m,st1;!ip,lip;dALrcy,tD;ar,e3Gr1X;b4Kdra7Ft4ZulD;!o17;ctav3Fi3liv3mAFndrej,rHsEtDumAw9;is,to;aEcAkAm0vD;al5Z;ma;i,l53vL;aLeJiFoDu3A;aDel,j5l0ma0r3K;h,m;cEg4i49kD;!au,h7Uola;holBkDolB;!olB;al,d,il,ls1vD;il8Y;hom,thD;anDy;!a4i4;aZeWiMoHuEyD;l2Jr1;hamEr6XstaD;fa,p5C;ed,mH;di0We,hamFis2FntEsDussa;es,he;e,y;ad,ed,mD;ad,ed;cIgu4hai,kGlFnEtchD;!e8;a8Aik;house,o0Bt1;ae5YeA4olD;aj;ah,hDk7;aEeD;al,l;el,l;hElv2rD;le,ri8v2;di,met;ay0ck,hTjd,ks2DlRmadWnQrKs1tFuricExD;!imilian9Nwe8;e,io;eGhEiBtDus,yB;!eo,hew,ia;eDis;us,w;j,o;cHio,kGlFqu7Dsha8tDv2;iDy;!m,n;in,on;!el,oPus;!el9IoOus;iGu4;achDcolm,ik;ai,y;amEdi,eDmoud;sh;adDm5T;ou;aXeQiOlo3EoKuEyD;le,nd1;cGiFkDth3uk;aDe;!s;gi,s,z;as,iaD;no;g0nn7SrenFuDv8Jwe8;!iD;e,s;!zo;am,oD;n4r;a8Cevi,la5JnIoGst3thaFvD;eDi;nte;bo;!nD;!a6Sel;!ny;mFnErDur5Hwr5H;ry,s;ce,d1;ar,o5A;aLeGhaled,iDrist5Iu4Vy6X;er0p,rD;by,k,ollD;os;en0iGnDrmit,v44;!dEnDt5Z;e1Ay;a8ri59;r,th;cp3j5m66na73rEspAthem,uD;ri;im,l;a02eUiSoGuD;an,lDst2;en,iD;an,en,o,us;aNeLhnKkubBnIrGsD;eEhDi8Bue;!ua;!ph;dDge;an,i,on;!aDny;h,s,th5I;!ath5Hie,nC;!l,sDy;ph;o,qu2;an,mD;!mC;d,ffIrFsD;sDus;!e;a6BemEmai6oDry;me,ni0Y;i7Ty;!e60rD;ey,y;cKd9kImHrFsEvi3yD;!d9s1;on,p3;ed,od,rDv56;e5Nod;al,es4Xis1;a,e,oDub;b,v;k,ob,quD;es;aWbQchiPgNkeMlija,nuLonut,rJsFtDv0;ai,suD;ki;aEha0i7DmaDsac;el,il;ac,iaD;h,s;a,vinDw2;!g;k,nngu5S;!r;nacDor;io;ka;ai,rahD;im;aPeJoIuDydA;be2KgGmber4WsD;eyEsD;a2e2;in,n;h,o;m3ra3Gsse2wa4B;aHctGitGnrErD;be2Dm0;iDy;!q11;or;th;bMlLmza,nKo,rFsEyD;a4Jd9;an,s0;lGo50rFuDv7;hi4Gki,tD;a,o;is1y;an,ey;k,s;!im;ib;aVeRiPlenOoLrHuD;ilEsD;!tavo;herme,lerD;mo;aFegDov3;!g,orD;io,y;dy,h5Wnt;nzaErD;an,d1;lo;!n;lbe5Ano,oD;rg3Hvan5A;ne,oFrD;aDry;ld,rd5H;ffr7rge;brEl9rDv2;la28r3Sth,y;e3EielD;!i5;aTePiNlLorr0NrD;anFedDitz;!dCeDri2B;ri2A;cFkD;!ie,lD;in,yn;esLisD;!co,z36;etch3oD;yd;d4lDnn,onn;ip;deriFliEng,rnD;an06;pe,x;co;bi0di,hd;ar04dZfrYit0lSmKnHo2rFsteb0th0uge6vDym9zra;an,eD;ns,re36;gi,i0DnDrol,v2w2;est4Pie;oEriqDzo;ue;ch;aJerIiEmD;aIe2Z;lErD;!h0;!iD;o,s;s1y;nu4;be0Cd1iGliFmEt1viDwood;n,s;er,o;ot1Ys;!as,j4NsD;ha;a2en;!dCgAmGoEuEwD;a2Din;arD;do;o0Wu0W;l,nD;est;a01eRiOoHrGuFwEylD;an,l0;ay6ight;a6dl7nc0st2;ag0ew;minGnEri0ugDvydBy2D;!lB;!a2MnDov0;e8ie,y;go,iDykB;cDk;!k;armuEeDll1on,rk;go;id;anKj0lbeJmetri5nHon,rGsFvEwDxt3;ay6ey;en,in;hawn,mo0B;ek,ri0I;is,nDv3;is,y;rt;!dD;re;an,lNmLnKrGvD;e,iD;! lucDd;as,ca;en,iFne8rDyl;eDin,yl;l3Bn;n,o,us;!e,i4ny;iDon;an,en,on;e,lB;as;a09e07hYiar0lNoIrGuEyrD;il,us;rtD;!is;aDistob0U;ig;dy,lGnErD;ey,neli5y;or,rD;ad;by,e,in,l2t1;aIeFiDyK;fDnt;fo0Ft1;meEt5velaD;nd;nt;rFuEyD;!t1;de;enD;ce;aIeGrisEuD;ck;!tD;i0oph3;st3;er;d,rDs;b4leD;s,y;cDdric,sA;il;lGmer1rD;ey,lEro8y;ll;!os,t1;eb,v2;a07eZiVlaUoRrEuDyr1;ddy,rtK;aLeGiFuEyD;an,ce,on;ce,no;an,ce;nEtD;!t;dEtD;!on;an,on;dEndD;en,on;!foDl7y;rd;bErDyd;is;!by;i6ke;bFlEshD;al;al,lC;ek;nHrDshoi;at,nEtD;!r1C;aDie;rd14;!edict,iEjam2nC;ie,y;to;kaMlazs,nHrD;n7rDt;eDy;tt;ey;dDeE;ar,iD;le;ar17b0Vd0Rf0Pgust2hm0Mi0Jja0Il04m00nSputsiRrIsaHuFveEyDziz;a0kh0;ry;gust5st2;us;hi;aKchJiIjun,maHnFon,tDy0;hDu09;ur;av,oD;ld;an,nd0H;!el,ki;ie;ta;aq;as,dIgel0CtD;hoGoD;i6nD;!i09y;ne;ny;er,reDy;!as,i,s,w;iFmaDos;nu4r;el;ne,r,t;an,bePd9eJfHi,lGonFphXt1vD;aNin;on;so,zo;an,en;onTrD;edU;c,jaGksandFssaGxD;!andD;er,ru;ar,er;ndD;ro;rtN;ni;d9mA;ar;en;ad,eD;d,t;in;onD;so;aEi,olfDri0vik;!o;mDn;!a;dHeGraEuD;!bakr,lfazl;hDm;am;!l;allIelFoulaye,ulD;!lDrF;ah,o;! rD;ahm0;an;ah;av,on",
+  "LastName": "true¦0:9F;1:9V;2:9H;3:9X;4:9N;5:8J;6:9K;7:A0;8:9E;9:88;A:6E;B:77;C:6J;a9Ub8Lc7Kd6Xe6Rf6Dg5Vh58i54j4Pk45l3Nm2Rn2Eo26p1Nquispe,r17s0Ft05vVwOxNyGzD;aytsADhD;aDou,u;ng,o;aGeun7ZiDoshiA9un;!lD;diDmaz;rim,z;maDng;da,guc97mo6UsDzaB;aBhiA7;iao,u;aHeGiEoDright,u;jc8Sng;lDmm0nkl0sniewsB;liA1s3;b0iss,lt0;a5Rgn0lDng,tanabe;k0sh;aHeGiEoDukA;lk5roby5;dAllalDnogr2Zr0Zss0val37;ba,obos;lasEsel7N;lGn dFrg8EsEzD;qu7;ily9Oqu7silj9O;en b35ijk,yk;enzue95verde;aLeix1JhHi4j6ka3IoGrFsui,uD;om4ZrD;c4n0un1;an,embl8TynisB;dor95lst31m2rr9th;at5Mi7LoD;mErD;are6Ylaci64;ps3s0Y;hirAkah8Dnaka;a00chWeThPiNmKoItFuEvDzabo;en8Aobod34;ar7bot2lliv4zuB;aEein0oD;i67j3Lyan8V;l6rm0;kol5lovy5re6Psa,to,uD;ng,sa;iDy5Z;rn5tD;!h;l5YmDngh,rbu;mo6Do6J;aFeDimizu;hu,vchD;en7Cuk;la,r17;gu8mDoh,pulve8Trra4R;jDyD;on5;evi6Filtz,miDneid0roed0ulz,warz;dEtD;!z;!t;ar42h6ito,lFnDr2saBto,v2;ch7d0AtDz;a4Pe,os;as,ihAm3Zo0Q;aOeNiKoGuEyD;a66oo,u;bio,iz,sD;so,u;bEc7Bdrigue57g03j73mDosevelt,ssi,ta7Nux,w3Z;a4Be0O;ertsDins3;!on;bei0LcEes,vDzzo;as,e8;ci,hards3;ag4es,it0ut0y9;dFmEnDsmu7Zv5F;tan1;ir7os;ic,u;aSeLhJiGoErDut6;asad,if5Zochazk1W;lishc24pDrti62u55we66;e2Tov48;cEe09nD;as,to;as60hl0;aDillips;k,m,n5K;de3AetIna,rGtD;ersErovDtersC;!a,ic;en,on;eDic,ry,ss3;i8ra,tz,z;ers;h71k,rk0tEvD;ic,l3T;el,t2O;bJconnor,g2ClGnei5PrEzD;demir,turk;ella3MtDwe5N;ega,iz;iDof6GsC;vDyn1F;ei8;aPri1;aLeJguy1iFoDune44ym4;rodahl,vDwak;ak3Uik5otn56;eEkolDlsCx3;ic,ov6X;ls1miD;!n1;ils3mD;co42ec;gy,kaEray4varD;ro;jiDmu8shiD;ma;aXcVeQiPoIuD;lGnFrDssoli5T;atDpUr68;i,ov2;oz,te4B;d0l0;h4lIo0HrEsDza0Z;er,s;aFeEiDoz5r3Ete4B;!n6F;au,i8no,t4M;!l9;i2Rl0;crac5Ohhail5kke3Qll0;hmeGij0j2ElFndErci0ssiDyer19;!er;e3Bo2Z;n0Io;dAti;cartDlaughl6;hy;dMe6Dgnu5Ei0jer34kLmJnci59rFtEyD;er,r;ei,ic,su1N;iEkAqu9roqu6tinD;ez,s;a54c,nD;!o;a52mD;ad5;e5Oin1;rig4Ns1;aSeMiIoGuEyD;!nch;k2nDo;d,gu;mbarDpe2Rvr2;di;!nDu,yana1R;coln,dD;bDholm;erg;bed5TfeGhtFitn0kaEn6rDw2G;oy;!j;in1on1;bvDvD;re;iDmmy,rsCu,voie;ne,t11;aTennedy,h4iSlQnez46oJrGuEvar4woD;k,n;cerDmar58znets5;a,o2G;aDem0i2Zyeziu;sni3PvD;ch3U;bay4Frh0Jsk0TvaFwalDzl5;czDsB;yk;cFlD;!cDen3Q;huk;!ev2ic,s;e6uiveD;rt;eff0l2mu8nnun1;hn,lloe,minsBrEstra31to,ur,yDzl5;a,s0;j0GlsC;aMenLha2Pim0QoEuD;ng,r2;e2JhFnErge2Ju2NvD;anA;es,ss3;anEnsD;en,on,t3;nesDsC;en,s1;ki26s1;cGkob3RnsDrv06;en,sD;enDon;!s;ks3obs1;brahimAglesi3Ake4Ll0CnoZoneFshikEto,vanoD;u,v4A;awa;scu;aPeIitchcock,jaltal6oFrist46uD;!aDb0gh9ynh;m4ng;a23dz2fEjga2Sk,rDx3B;ak0Yvat;er,fm3B;iGmingw3NnErD;nand7re8;dDriks1;ers3;kkiEnD;on1;la,n1;dz2g1lvoLmJnsCqIrr0SsFuEyD;as36es;g1ng;anEhiD;mo0Q;i,ov08;ue;alaD;in1;rs1;aMeorgLheorghe,iJjonIoGrEuDw3;o,staf2Utierr7zm4;ayDg2iffitUub0;li1G;lub3Rme0JnD;calv9zale0I;aj,i;l,mDordaL;en7;iev3B;gnJlGmaFnd2No,rDs2Nuthi0;cDza;ia;ge;eaElD;agh0i,o;no;e,on;ab0erMiIjeldsted,lor9oGrFuD;cDent9ji3F;hs;an1Wiedm4;ntaDrt6st0urni0;na;lipEsD;ch0;ovD;!ic;hatAnandeVrD;arDei8;a,i;ov2;dHinste6riksCsDva0D;cob2ZpDtra2X;inoDosiM;za;en,s3;er,is3wards;aUeMiKjurhuJoHrisco0YuEvorakD;!oQ;arte,boEmitru,rDt2U;and,ic;is;g4he0Hmingu7n2Ord19tD;to;us;aDmitr29ssanayake;s,z; GbnaFlEmirDrvis1Lvi,w4;!ov2;gado,ic;th;bo0groot,jo03lEsilDvri9;va;a cruz,e3uD;ca;hl,mcevsBnErw6t2EviD;d5es,s;ieDku1S;ls1;ki;a05e00hNiobMlarkLoFrD;ivDuz;elli;h1lGntFop0rDs26x;byn,reD;a,ia;i,rer0O;em4liD;ns;!e;anu;aLeIiu,oGriDuJwe;stD;eDiaD;ns1;i,ng,uFwDy;!dhury;!n,onEuD;ng;!g;kEnDtterjee,v7;!d,g;ma,raboD;rty;bGl09ng2rD;eghetEnD;a,y;ti;an,ota0M;cer9lder3mpbeIrFstDvadi08;iDro;llo;doEt0uDvalho;so;so,zo;ll;es;a09eXhUiSlNoGrFyD;rne,tyD;qi;ank5iem,ooks,yant;gdan5nFruya,su,uchEyHziD;c,n5;ard;darDik;enD;ko;ov;aEondD;al;nEzD;ev2;co;ancRshwD;as;a01oDuiy4;umDwmD;ik;ckNethov1gu,ktLnJrD;gGisFnD;ascoDds1;ni;ha;er,mD;ann;gtDit7nett;ss3;asD;hi;er,ham;b2ch,ez,hMiley,kk0nHrDu0;bEnDua;es,i0;ieDosa;ri;dDik;a8yopadhyD;ay;ra;er;k,ng;ic;cosZdYguilXkhtXlSnJrGsl4yD;aEd6;in;la;aEsl4;an;ujo,ya;dFgelD;ovD;!a;ersGov,reD;aDjL;ss1;en;en,on,s3;on;eksejGiyGmeiFvD;ar7es;ez;da;ev;ar;ams;ta",
+  "MaleName": "true¦0:E5;1:D6;2:DO;3:AY;4:D2;5:CG;6:B6;7:CW;8:C8;9:DK;A:DL;B:A6;C:C2;aCObBLcAJd9He8Nf85g7Ih6Ui6Ej5Ek52l4Dm35n2To2Np2Fqu2Dr1Ls11t0Eu0Dv07wTxSyIzD;aDor0;cDh9Tkaria,n5W;hEkD;!aCM;ar5WeCL;aLoFuD;sDu2KvBY;if,uf;nFsEusD;ouf,sD;ef;aDg;s,tD;an,h0;hli,nBMssX;avi3ho4;aMeKiFoDyaC2;jcie8Clfgang,odrow,utD;!er;lDnst1;bFey,frD1lD;aBDiD;am,e,s;e9Fur;i,nde6sD;!l8t1;de,lErrAyD;l1ne;lDt3;aAAy;aGiDladimir,ojte7Z;cEha0kt69nceDrgAJva0;!nt;e3Vt67;lentDnA5;in4Y;ghBVlyss5Cnax,sm0;aXeShOiMoHrFuEyD;!l3ro7s1;n9r5C;avAWeDist0oy,um0;ntAOv5Zy;bGdFmDny;!as,mDoharu;aCTie,y;!d;iBy;mDt5;!my,othy;adFeoEia8GomD;!as;!do8P;!de5;dGrD;en9LrD;an9KeDy;ll,n9J;!dy;dgh,ha,iDnn3req,tsu4T;cB5ka;aTcotRePhLiJoHpenc3tDur1Vylve9Kzym1;anFeDua8D;f0phBTvDwa8C;e62ie;!islaw,l8;lom1nBFuD;leyma7ta;dDlBm1yabonga;!dhart7Bn8;aFeD;lDrm0;d1t1;h7Une,qu10un,wn,y7;aDbasti0k2Al4Rrg4Oth,ymoAU;m5n;!tD;!ie,y;lEmDnti2Eq5Bul;!ke5MmCu4;ik,vato7X;aYeUheAAiQoHuEyD;an,ou;b7NdEf5pe7SssD;!elBZ;ol3Fy;an,bKcJdIel,geHh0landBQmGnFry,sEyD;!ce;coe,s;!aAHnC;an,eo;l47r;e5Og3n8olfo,ri7A;co,ky;bCeB7;cDl8;ar6Pc6OhEkDo;!ey,ie,y;a99ie;gEid,ubAx,yDza;an1InY;gA8iD;naA4s;ch70fa4lHmGndFpha4sEul,wi2HyD;an,mo82;h7Vm5;alBDol2Uy;iATon;f,ph;ent2inD;cy,t1;aIeGhilFier72ol,rD;aka16eD;m,st1;!ip,lip;dALrcy,tD;ar,e3Gr1X;b4Kdra7Ft4ZulD;!o17;ctav3Fi3liv3mAFndrej,rHsEtDum9wA;is,to;aEc9k9m0vD;al5Z;ma;i,l53vL;aLeJiFoDu3A;aDel,j5l0ma0r3K;h,m;cEg4i49kD;!au,h7Uola;holBkDolB;!olB;al,d,il,ls1vD;il8Y;hom,thD;anDy;!a4i4;aZeWiMoHuEyD;l2Jr1;hamEr6XstaD;fa,p5C;ed,mH;di0We,hamFis2FntEsDussa;es,he;e,y;ad,ed,mD;ad,ed;cIgu4hai,kGlFnEtchD;!e6;a8Aik;house,o0Bt1;ae5YeA4olD;aj;ah,hDk8;aEeD;al,l;el,l;hElv2rD;le,ri6v2;di,met;ay0ck,hTjd,ks2DlRmadWnQrKs1tFuricExD;!imilian9Nwe6;e,io;eGhEiBtDus,yB;!eo,hew,ia;eDis;us,w;j,o;cHio,kGlFqu7Dsha6tDv2;iDy;!m,n;in,on;!el,oPus;!el9IoOus;iGu4;achDcolm,ik;ai,y;amEdi,eDmoud;sh;adDm5T;ou;aXeQiOlo3EoKuEyD;le,nd1;cGiFkDth3uk;aDe;!s;gi,s,z;as,iaD;no;g0nn7SrenFuDv8Jwe6;!iD;e,s;!zo;am,oD;n4r;a8Cevi,la5JnIoGst3thaFvD;eDi;nte;bo;!nD;!a6Sel;!ny;mFnErDur5Hwr5H;ry,s;ce,d1;ar,o5A;aLeGhaled,iDrist5Iu4Vy6X;er0p,rD;by,k,ollD;os;en0iGnDrmit,v44;!dEnDt5Z;e1Ay;a6ri59;r,th;cp3j5m66na73rEsp9them,uD;ri;im,l;a02eUiSoGuD;an,lDst2;en,iD;an,en,o,us;aNeLhnKkubBnIrGsD;eEhDi8Bue;!ua;!ph;dDge;an,i,on;!aDny;h,s,th5I;!ath5Hie,nC;!l,sDy;ph;o,qu2;an,mD;!mC;d,ffIrFsD;sDus;!e;a6BemEmai7oDry;me,ni0Y;i7Ty;!e60rD;ey,y;cKdAkImHrFsEvi3yD;!dAs1;on,p3;ed,od,rDv56;e5Nod;al,es4Xis1;a,e,oDub;b,v;k,ob,quD;es;aWbQchiPgNkeMlija,nuLonut,rJsFtDv0;ai,suD;ki;aEha0i7DmaDsac;el,il;ac,iaD;h,s;a,vinDw2;!g;k,nngu5S;!r;nacDor;io;ka;ai,rahD;im;aPeJoIuDyd9;be2KgGmber4WsD;eyEsD;a2e2;in,n;h,o;m3ra3Gsse2wa4B;aHctGitGnrErD;be2Dm0;iDy;!q11;or;th;bMlLmza,nKo,rFsEyD;a4JdA;an,s0;lGo50rFuDv8;hi4Gki,tD;a,o;is1y;an,ey;k,s;!im;ib;aVeRiPlenOoLrHuD;ilEsD;!tavo;herme,lerD;mo;aFegDov3;!g,orD;io,y;dy,h5Wnt;nzaErD;an,d1;lo;!n;lbe5Ano,oD;rg3Hvan5A;ne,oFrD;aDry;ld,rd5H;ffr8rge;brElArDv2;la28r3Sth,y;e3EielD;!i5;aTePiNlLorr0NrD;anFedDitz;!dCeDri2B;ri2A;cFkD;!ie,lD;in,yn;esLisD;!co,z36;etch3oD;yd;d4lDnn,onn;ip;deriFliEng,rnD;an06;pe,x;co;bi0di,hd;ar04dZfrYit0lSmKnHo2rFsteb0th0uge7vDymAzra;an,eD;ns,re36;gi,i0DnDrol,v2w2;est4Pie;oEriqDzo;ue;ch;aJerIiEmD;aIe2Z;lErD;!h0;!iD;o,s;s1y;nu4;be0Cd1iGliFmEt1viDwood;n,s;er,o;ot1Ys;!as,j4NsD;ha;a2en;!dCg9mGoEuEwD;a2Din;arD;do;o0Wu0W;l,nD;est;a01eRiOoHrGuFwEylD;an,l0;ay7ight;a7dl8nc0st2;ag0ew;minGnEri0ugDvydBy2D;!lB;!a2MnDov0;e6ie,y;go,iDykB;cDk;!k;armuEeDll1on,rk;go;id;anKj0lbeJmetri5nHon,rGsFvEwDxt3;ay7ey;en,in;hawn,mo0B;ek,ri0I;is,nDv3;is,y;rt;!dD;re;an,lNmLnKrGvD;e,iD;! lucDd;as,ca;en,iFne6rDyl;eDin,yl;l3Bn;n,o,us;!e,i4ny;iDon;an,en,on;e,lB;as;a09e07hYiar0lNoIrGuEyrD;il,us;rtD;!is;aDistob0U;ig;dy,lGnErD;ey,neli5y;or,rD;ad;by,e,in,l2t1;aIeFiDyK;fDnt;fo0Ft1;meEt5velaD;nd;nt;rFuEyD;!t1;de;enD;ce;aIeGrisEuD;ck;!tD;i0oph3;st3;er;d,rDs;b4leD;s,y;cDdric,s9;il;lGmer1rD;ey,lEro6y;ll;!os,t1;eb,v2;a07eZiVlaUoRrEuDyr1;ddy,rtK;aLeGiFuEyD;an,ce,on;ce,no;an,ce;nEtD;!t;dEtD;!on;an,on;dEndD;en,on;!foDl8y;rd;bErDyd;is;!by;i7ke;bFlEshD;al;al,lC;ek;nHrDshoi;at,nEtD;!r1C;aDie;rd14;!edict,iEjam2nC;ie,y;to;kaMlazs,nHrD;n8rDt;eDy;tt;ey;dDeE;ar,iD;le;ar17b0Vd0Rf0Pgust2hm0Mi0Jja0Il04m00nSputsiRrIsaHuFveEyDziz;a0kh0;ry;gust5st2;us;hi;aKchJiIjun,maHnFon,tDy0;hDu09;ur;av,oD;ld;an,nd0H;!el,ki;ie;ta;aq;as,dIgel0CtD;hoGoD;i7nD;!i09y;ne;ny;er,reDy;!as,i,s,w;iFmaDos;nu4r;el;ne,r,t;an,bePdAeJfHi,lGonFphXt1vD;aNin;on;so,zo;an,en;onTrD;edU;c,jaGksandFssaGxD;!andD;er,ru;ar,er;ndD;ro;rtN;ni;dAm9;ar;en;ad,eD;d,t;in;onD;so;aEi,olfDri0vik;!o;mDn;!a;dHeGraEuD;!bakr,lfazl;hDm;am;!l;allIelFoulaye,ulD;!lDrF;ah,o;! rD;ahm0;an;ah;av,on",
   "Person": "true¦ashton kutchTbScNdLeJgastOhHinez,jFkEleDmCnettKoBp9r4s3t2v0;a0irgin maH;lentino rossi,n go3;aylor,heresa may,iger woods,yra banks;addam hussain,carlett johanssKlobodan milosevic,uC;ay romano,e3o1ush limbau0;gh;d stewart,nald0;inho,o;ese witherspoFilly;a0ipJ;lmIris hiltD;prah winfrFra;essiaen,itt romnEubarek;bron james,e;anye west,iefer sutherland,obe bryant;aime,effers8k rowli0;ng;alle ber0itlBulk hogan;ry;ff0meril lagasse,zekiel;ie;a0enzel washingt2ick wolf;lt1nte;ar1lint0;on;dinal wols1son0;! palm2;ey;arack obama,rock;er",
   "Verb": "true¦awak9born,cannot,fr8g7h5k3le2m1s0wors9;e8h3;ake sure,sg;ngth6ss6;eep tabs,n0;own;as0e2;!t2;iv1onna;ight0;en",
-  "PhrasalVerb": "true¦0:7E;1:72;2:7Q;3:7G;4:6V;5:7T;6:7I;7:71;8:6O;9:6P;A:5T;B:7L;C:7J;D:7D;E:7C;F:6Q;G:7S;H:46;a7Yb6Jc5Sd5Oe5Mf4Lg43h3Miron0j3Ik3Dl2Xm2Ln2Jo2Hp1ZquietFr1Ms0FtVuTvacuum 1wLyammerEzI;eroAip JonI;e0k0;by,up;aOeLhKiJorIrit5H;d 1k35;mp0n2Xpe0r8s8;eel Dip G;aJiIn2L;gh 0Crd0;n Dr 3S;it 60k8lk6rm 6Bsh 7Lt6Ov53;rgeEsI;e 9herA;aXeVhTiPoNrKuIype 68;ckArn I;d2in,o3Vup;aJiIot0y 2L;ckleFp G;ckFde 02;neFp Is4Q;d2o71up;ck KdJe Igh69me0p o0Kre0;aw3ba4d2in,up;e 60y 1;by,oC;ink Irow 6B;ba4ov7up;aIe 4Vll52;m 1r 01;ckEke Jlk I;ov7u53;aIba4d2in,o3Fup;ba4ft7p58w3;a0Nc0Me0Gh0Ci09l05m04n03o02pXquare WtOuMwI;earKiI;ngJtch I;aw3ba4o75; by;ck Iit 1m 1ss0;in,up;aNe10iMoKrIucH;aigh1ZiI;ke 6En3C;p Irm22;by,in,oC;nHr 1tc3V;cHmp0nd Ir6Xve6y 1;ba4d2up;d2oCup;arHeLiKlJrIurE;ingEuc8;a3Hit 47;l16n 1;e5Qll0;be4Prt0;ap 4Row D;ash 5Doke0;eep JiIow 9;c3Yp 1;in,oI;ff,v7;gn 4WngJt Iz8;d2o5up; al52le0;aKoIu4S;ot Iut0w 6B;aw3ba4f3IoC;cHdeAk56ve6;e Mll0nd LtI; Itl4G;d2in,o5upI;!on;aw3ba4d2in,o2Aup;o5to;al4Zout0rap4Z;il6v8;aTeQiPoLuI;b 4Sle0n Istl8;aIba4d2in5Ho3Tt3Bu3R;c29w3;ll Kot JuI;g2Vnd6;a29f32o5;arBin,o5;ng 51p6;aIel6inAnt0;c5Bd I;o33u0L;cHt0;aVeUiTlRoPrMsyc2JuI;ll Kt I;aIba4d2in,o1Rt3Fup;p3Kw3;ap3Jd2in,o5t3Dup;attleEess JiLoI;p 1;ah1Ron;iIp 5Fr3XurFwer 5F;nt0;ay4BuI;gAmp 9;ck Gg0leEn 9p48;el 4JncilA;c41ir 2Rn0ss KtJy I;ba4oC; d2c27;aw3ba4o1C;pIw3W;e3Vt D;arrowFerd0oI;d6teF;aQeNiMoKuI;ddl8lI;l 3I;cHp 1uth6ve I;al3Md2in,o5up;ss0x 1;asur8lJss I;a1Jup;t 9;ke Jn 9rIs1Sx0;k 9ry6;do,o47up;aVeTiOoIuck0;aMc3Gg LoIse0;k Ise3E;aft7ba4d2forw2Jin45ov7uI;nd7p;in,o0Q;d 9;e LghtKnJsIv1Y;ten G;e 1k 1; 1e36;arBd2;av1Mt 36velI; o3T;c8p 1sh ItchEugh6y20;in3To5;eJick6nock I;d2o3P;eIyA;l 2Pp I;aw3ba4d2fXin,o0Bto,up;aKoJuI;ic8mpA;ke30tF;c39zz 1;aUePiMoJuI;nkerFrry 1s0Z;lIneArse2W;d Ie 1;ba4d2fast,o05up;de Jt I;ba4on,up;aw3o5;aIlp0;d Kl 2Ar It 1;fIof;rom;in,oXu1H;cHm 1nJve Iz25;it,to;d Ig 2EkerK;d2in,o5;aWeQive Oloss 22oKrJunI; f0Q;in3Gow 2A; Iof 0Y;aJb1Dit,oIrBt0Su18;ff,n,v7;bo5ft7hOw3;aw3ba4d2in,oIup,w3;ff,n,ut;a1Dek0t I;aJb17d2oIrBup;ff,n,ut,v7;cJhIl1WrBt,w3;ead;ross;d aJnI;g 1;bo5;a0Ce05iWlSoOrKuI;cHel 1;k 1;eJighten IownEy 1;aw3oC;eIshe1N; 1z8;lKol I;aIwi1G;bo5rB;d 9low 1;aJeIip0;sh0;g 9ke0mIrI;e G;gPlNnLrJsIzzle0;h G;e Im 1;aw3ba4up;d0isI;h 1;e Il 19;aw3fN;ht ba4ure0;eNnJsI;s 1;cKd I;fIoC;or;e D;dWl 1;cMll Irm0t0W;ap05bKd2in,oJtI;hrough;ff,ut,v7;a4ehi20;e J;at0dge0nd Iy8;oCup;oKrI;ess 9op I;aw3bUin,o1D; 0Eubl8;aYhVlean 9oIross Dut 10;me LoJuntI; o1T;k 1l I;d2oC;aObNforLin,oKtJuI;nd7;ogeth7;ut,v7;th,wI;ard;a4y;pIrBw3;art;eIipA;ck DeI;r 1;lOncel0rLsKtch JveA; in;o1Cup;h Dt6;ry JvI;e 01;aw3o18;l ImF;aIba4d2o16up;rBw3;a0Ne0El07oYrNuI;bblKcklZil05lk 9ndlZrn 0Bst JtIy Gzz6;t D;in,o5up;e I;ov7;anReaPiIush6;ghMng I;aJba4d2forIin,o5up;th;bo5lIrBw3;ong;teI;n 1;k I;d2in,o5up;ch0;arPgFil 9n8oLssKttlJunce Ix D;aw3ba4;e 9; arB;k Dt 1;e 1;d2up; d2;d 1;aNeed0oIurt0;cKw I;aw3ba4d2o5up;ck;k I;in,oP;ck0nk0st6; oOaLef 1nd I;d2ov7up;er;up;r0t I;d2in,oIup;ff,ut;ff,nI;to;ck Oil0nKrgJsI;h D;ainEe D;g DkE; on;in,o5; o5;aw3d2o5up;ay;cRdNsk Kuction6; oC;ff;arBo5;ouI;nd;d I;d2oIup;ff,n;own;t G;o5up;ut",
+  "PhrasalVerb": "true¦0:7E;1:72;2:7Q;3:7G;4:6V;5:7T;6:7I;7:6O;8:71;9:6P;A:5T;B:7C;C:7J;D:6Q;E:7L;F:7D;G:7S;H:46;a7Yb6Jc5Sd5Oe5Mf4Lg43h3Miron0j3Ik3Dl2Xm2Ln2Jo2Hp1ZquietDr1Ms0FtVuTvacuum 1wLyammerBzI;eroAip JonI;e0k0;by,up;aOeLhKiJorIrit5H;d 1k35;mp0n2Xpe0r7s7;eel Fip G;aJiIn2L;gh 0Crd0;n Fr 3S;it 60k7lk6rm 6Bsh 7Lt6Ov53;rgeBsI;e 9herA;aXeVhTiPoNrKuIype 68;ckArn I;d2in,o3Vup;aJiIot0y 2L;ckleDp G;ckDde 02;neDp Is4Q;d2o71up;ck KdJe Igh69me0p o0Kre0;aw3ba4d2in,up;e 60y 1;by,oC;ink Irow 6B;ba4ov8up;aIe 4Vll52;m 1r 01;ckBke Jlk I;ov8u53;aIba4d2in,o3Fup;ba4ft8p58w3;a0Nc0Me0Gh0Ci09l05m04n03o02pXquare WtOuMwI;earKiI;ngJtch I;aw3ba4o75; by;ck Iit 1m 1ss0;in,up;aNe10iMoKrIucH;aigh1ZiI;ke 6En3C;p Irm22;by,in,oC;nHr 1tc3V;cHmp0nd Ir6Xve6y 1;ba4d2up;d2oCup;arHeLiKlJrIurB;ingBuc7;a3Hit 47;l16n 1;e5Qll0;be4Prt0;ap 4Row F;ash 5Doke0;eep JiIow 9;c3Yp 1;in,oI;ff,v8;gn 4WngJt Iz7;d2o5up; al52le0;aKoIu4S;ot Iut0w 6B;aw3ba4f3IoC;cHdeAk56ve6;e Mll0nd LtI; Itl4G;d2in,o5upI;!on;aw3ba4d2in,o2Aup;o5to;al4Zout0rap4Z;il6v7;aTeQiPoLuI;b 4Sle0n Istl7;aIba4d2in5Ho3Tt3Bu3R;c29w3;ll Kot JuI;g2Vnd6;a29f32o5;arEin,o5;ng 51p6;aIel6inAnt0;c5Bd I;o33u0L;cHt0;aVeUiTlRoPrMsyc2JuI;ll Kt I;aIba4d2in,o1Rt3Fup;p3Kw3;ap3Jd2in,o5t3Dup;attleBess JiLoI;p 1;ah1Ron;iIp 5Fr3XurDwer 5F;nt0;ay4BuI;gAmp 9;ck Gg0leBn 9p48;el 4JncilA;c41ir 2Rn0ss KtJy I;ba4oC; d2c27;aw3ba4o1C;pIw3W;e3Vt F;arrowDerd0oI;d6teD;aQeNiMoKuI;ddl7lI;l 3I;cHp 1uth6ve I;al3Md2in,o5up;ss0x 1;asur7lJss I;a1Jup;t 9;ke Jn 9rIs1Sx0;k 9ry6;do,o47up;aVeTiOoIuck0;aMc3Gg LoIse0;k Ise3E;aft8ba4d2forw2Jin45ov8uI;nd8p;in,o0Q;d 9;e LghtKnJsIv1Y;ten G;e 1k 1; 1e36;arEd2;av1Mt 36velI; o3T;c7p 1sh ItchBugh6y20;in3To5;eJick6nock I;d2o3P;eIyA;l 2Pp I;aw3ba4d2fXin,o0Bto,up;aKoJuI;ic7mpA;ke30tD;c39zz 1;aUePiMoJuI;nkerDrry 1s0Z;lIneArse2W;d Ie 1;ba4d2fast,o05up;de Jt I;ba4on,up;aw3o5;aIlp0;d Kl 2Ar It 1;fIof;rom;in,oXu1H;cHm 1nJve Iz25;it,to;d Ig 2EkerK;d2in,o5;aWeQive Oloss 22oKrJunI; f0Q;in3Gow 2A; Iof 0Y;aJb1Dit,oIrEt0Su18;ff,n,v8;bo5ft8hOw3;aw3ba4d2in,oIup,w3;ff,n,ut;a1Dek0t I;aJb17d2oIrEup;ff,n,ut,v8;cJhIl1WrEt,w3;ead;ross;d aJnI;g 1;bo5;a0Ce05iWlSoOrKuI;cHel 1;k 1;eJighten IownBy 1;aw3oC;eIshe1N; 1z7;lKol I;aIwi1G;bo5rE;d 9low 1;aJeIip0;sh0;g 9ke0mIrI;e G;gPlNnLrJsIzzle0;h G;e Im 1;aw3ba4up;d0isI;h 1;e Il 19;aw3fN;ht ba4ure0;eNnJsI;s 1;cKd I;fIoC;or;e F;dWl 1;cMll Irm0t0W;ap05bKd2in,oJtI;hrough;ff,ut,v8;a4ehi20;e J;at0dge0nd Iy7;oCup;oKrI;ess 9op I;aw3bUin,o1D; 0Eubl7;aYhVlean 9oIross Fut 10;me LoJuntI; o1T;k 1l I;d2oC;aObNforLin,oKtJuI;nd8;ogeth8;ut,v8;th,wI;ard;a4y;pIrEw3;art;eIipA;ck FeI;r 1;lOncel0rLsKtch JveA; in;o1Cup;h Ft6;ry JvI;e 01;aw3o18;l ImD;aIba4d2o16up;rEw3;a0Ne0El07oYrNuI;bblKcklZil05lk 9ndlZrn 0Bst JtIy Gzz6;t F;in,o5up;e I;ov8;anReaPiIush6;ghMng I;aJba4d2forIin,o5up;th;bo5lIrEw3;ong;teI;n 1;k I;d2in,o5up;ch0;arPgDil 9n7oLssKttlJunce Ix F;aw3ba4;e 9; arE;k Ft 1;e 1;d2up; d2;d 1;aNeed0oIurt0;cKw I;aw3ba4d2o5up;ck;k I;in,oP;ck0nk0st6; oOaLef 1nd I;d2ov8up;er;up;r0t I;d2in,oIup;ff,ut;ff,nI;to;ck Oil0nKrgJsI;h F;ainBe F;g FkB; on;in,o5; o5;aw3d2o5up;ay;cRdNsk Kuction6; oC;ff;arEo5;ouI;nd;d I;d2oIup;ff,n;own;t G;o5up;ut",
   "Modal": "true¦c5lets,m4ought3sh1w0;ill,o5;a0o4;ll,nt;! to,a;ay,ight,ust;an,o0;uld",
-  "Adjective": "true¦0:7P;1:84;2:83;3:8A;4:7W;5:5S;6:58;7:4O;8:4N;9:81;A:6I;a6Wb6Gc63d5Je54f4Hg49h3Wi39j37k36l2Vm2Ln2Bo1Wp1Dquack,r12s0Ft07uMvJwByear5;arp0eFholeEiDoB;man5oBu6P;d6Rzy;despr7Ls5S;!sa7;eClBste2A;co1Nl o4W;!k5;aCiBola4M;b89ce versa,ol5H;ca3gabo6Gnilla;ltUnHpCrb5Msu4tterB;!mo7G; Eb1SpDsBti1M;ca7etBide dKtairs;!ti2;er,i3U;f36to da1;aLbeco75convin29deIeHfair,ivers4knGprecedVrEsCwB;iel3Nritt6A;i1XuB;pervis0spec3Y;eBu5;cognHgul6Tl6T;own;ndi2v64xpect0;cid0rB;!grou5ZsB;iz0tood;b7pp0Dssu6UuthorB;iz0;i26ra;aGeEhDi6AoCrB;i1oubl0us3M;geth6p,rp6Vuc67;ough4Wril33;en60l32mpBrr2X;o6Ati2;boo,lBn;ent0;aWcVeThSiQmug,nobbi3LoOpNqueami3LtFuBymb6H;bDi gener5DpBrpri6D;erBre0N;! dup6b,i2C;du0seq52;anda77eGiFrBunni2y3F;aightCiB;ki2p0; fBfB;or5K;ll,r5S;aBreotyp0;dfa6Cmi2;a55ec2Gir1Hlend6Cot on; call0le,mb6phist1XrBu0Vvi48;d6Ary;gnifica3nB;ce51g7;am2Re6ocki2ut;cBda1em5lfi32ni1Wpa6Jre8;o1Er42;at5Gient28reec5G;cr0me;aJeEiCoB;bu60tt51uQy4;ghtBv4;!-2BfA;ar,bel,condi1du6Dfres5AlEpublic42sCtard0vB;ea26;is4CoB;lu1na3;aQe1Cuc4A;b5TciBllyi2;al,st;aOeLicayu8lac5Ropuli5QrCuB;bl5Jmp0n51;eGiDoB;!b07fu5RmiBp6;ne3si2;mCor,sBva1;ti8;a53e;ci5MmB;a0EiB;er,um;ac20rBti1;fe9ma2XpleBv38;xi2;rBst;allelDtB;-tiBi4;me;!ed;bLffJkIld fashion0nHpGrg1Eth6utFvB;al,erB;!all,niCt,wB;eiBrouB;ght;do0Ter,g2Qsi4B;en,posi1; boa5Og2Oli8;!ay; gua5MbBli8;eat;eDsB;cBer0Eole1;e8u3O;d2Xse;aJeIiHoBua4X;nFrCtB;ab7;thB;!eB;rn;chala3descri58stop;ght5;arby,cessa44ighbor5xt;k0usia1A;aIeGiDoBultip7;bi7derBl0Vnth5ot,st;a1n;nBx0;dblo0RiaBor;tu37;ande3Qdi4NnaBre;ci2;cBgenta,in,j01keshift,le,mmoth,ny,sculi8;ab33ho;aKeFiCoBu15;uti14vi2;mCteraB;l,te;it0;ftEgBth4;al,eCitiB;ma1;nda3K;!-0C;ngu3Zst,tt6;ap1Xind5no0A;agg0uB;niMstifi0veni7;de4gno4Klleg4mQnEpso 20rB;a1rB;eleBita0J;va3; KaJbr0corIdGfluenQiQnFsEtCviB;go0Fti2;a9en3SoxB;ic3B;a8i2Vul0D;a1er,oce3;iCoB;or;re9;deq3Qppr33;fBsitu,vitro;ro3;mFpB;arDerfe9oBrop6;li1rtB;a3ed;ti4;eBi0S;d2Vn3C;aIeFiDoBumdr3I;ne36ok0rrBs08ur5;if2Z;ghfalut1QspB;an2X;aClB;liYpfA;li2;lEnDrB;d04roB;wi2;dy;f,low0;ainfAener2Oiga24lHoGraDuB;ilBng ho;ty;cCtB;efAis;efA;ne,od;ea2Iob4;aTeNinMlKoFrB;a1VeDoz1MustB;raB;ti2;e2Gq10tfA;oDrB; keeps,eBm6tuna1;g03ign;liB;sh;aBue3;g31tte1P;al,i1;dFmCrB;ti7;a7ini8;ne;le; up;bl0i3l27r Cux,voB;ri1uri1;oBreac1E;ff;aLfficie3lKmHnFre9there4veExB;a9cess,pe1QtraCuB;be2Nl0E;!va1E;n,ryday; BcouraEti0O;rou1sui1;erCiB;ne3;gi2;abo23dMe17i1;g6sB;t,ygB;oi2;er;aReJiDoBrea14ue;mina3ne,ubB;le,tfA;dact1Bfficu1OsCvB;er1K;creDeas0gruntl0hone1FordCtB;a3ressM;er5;et; HadpGfFgene1PliDrang0spe1PtCvoB;ut;ail0ermin0;be1Mca1ghB;tfA;ia3;an;facto;i5magBngeroUs0G;ed,i2;ly;ertaMhief,ivil,oDrB;aBowd0u0G;mp0vZz0;loImGnCrrBve0P;e9u1I;cre1fu0LgrDsCtB;empo0Dra0E;ta3;ue3;mer08pleB;te,x;ni4ss4;in;aNeIizarHlFoCrB;and new,isk,okN;gCna fiUttom,urgeoB;is;us;ank,indB;!i2;re;autifAhiDloCnBst,yoD;eUt;v0w;nd;ul;ckCnkru0WrrB;en;!wards; priori,b0Mc0Jd09fra08g04h03lYmWntiquVppSrMsIttracti06utheHvEwB;aCkB;wa0T;ke,re;ant garCerB;age;de;ntU;leep,piDsuDtonB;isB;hi2;ri2;ab,bitEroDtiB;fiB;ci4;ga3;raB;ry;are3etiNrB;oprB;ia1;at0;aJuB;si2;arEcohCeBiIl,oof;rt;olB;ic;mi2;ead;ainDgressiConiB;zi2;ve;st;id; IeGuFvB;aCerB;se;nc0;ed;lt;pt,qB;ua1;hoc,infinitB;um;cuCtu4u1;al;ra1;erLlKoIruHsCuB;nda3;e3oCtra9;ct;lu1rbi2;ng;te;pt;aBve;rd;aze,e;ra3;nt",
-  "Comparable": "true¦0:41;1:4I;2:45;3:4B;4:3X;5:2Y;a4Ob44c3Od3De35f2Rg2Fh24i1Vj1Uk1Rl1Jm1Dn17o15p0Vqu0Tr0KsTtMuIvFw7y6za13;ell27ou3;aBe9hi1Yi7r6;o3y;ck0Ode,l6n1ry,se;d,y;a6i4Mt;k,ry;n1Tr6sK;m,y;a7e6ulgar;nge4rda2xi3;g9in,st;g0n6pco3Mse4;like0t6;i1r6;ue;aAen9hi8i7ough,r6;anqu2Oen1ue;dy,g3Sme0ny,r09;ck,n,rs2P;d40se;ll,me,rt,s6wd45;te4;aVcarUeThRiQkin0FlMmKoHpGqua1FtAu7w6;eet,ift;b7dd13per0Gr6;e,re2H;sta2Ft5;aAe9iff,r7u6;pXr1;a6ict,o3;ig3Fn0U;a1ep,rn;le,rk;e22i3Fright0;ci28ft,l7o6re,ur;n,thi3;emn,id;a6el0ooth;ll,rt;e8i6ow,y;ck,g35m6;!y;ek,nd3D;ck,l0mp5;a6iTort,rill,y;dy,ll0Xrp;cu0Rve0Rxy;ce,ed,y;d,fe,int0l1Vv14;aBe9i8o6ude;mantic,o1Isy,u6;gh,nd;ch,pe,tzy;a6d,mo0H;dy,l;gg7ndom,p6re,w;id;ed;ai2i6;ck,et;aEhoDi1QlCoBr8u6;ny,r6;e,p5;egna2ic7o6;fouYud;ey,k0;li04or,te1B;ain,easa2;ny;in4le;dd,f6i0ld,ranQ;fi10;aAe8i7o6;b5isy,rm15sy;ce,mb5;a6w;r,t;ive,rr01;aAe8ild,o7u6;nda19te;ist,o1;a6ek,llX;n,s0ty;d,tuQ;aBeAi9o6ucky;f0Un7o1Du6ve0w17y0T;d,sy;e0g;g1Tke0tt5ve0;an,wd;me,r6te;ge;e7i6;nd;en;ol0ui1P;cy,ll,n6;sBt6;e6ima8;llege2r6;es7media6;te;ti3;ecu6ta2;re;aEeBiAo8u6;ge,m6ng1R;b5id;ll6me0t;ow;gh,l0;a6f04sita2;dy,v6;en0y;nd1Hppy,r6te4;d,sh;aGenFhDiClBoofy,r6;a9e8is0o6ue1E;o6ss;vy;at,en,y;nd,y;ad,ib,ooI;a2d1;a6o6;st0;t5uiY;u1y;aIeeb5iDlat,oAr8u6;ll,n6r14;!ny;aHe6iend0;e,sh;a7r6ul;get4mG;my;erce8n6rm;an6e;ciC;! ;le;ir,ke,n0Fr,st,t,ulA;aAerie,mp9sse7v6xtre0Q;il;nti6;al;ty;r7s6;tern,y;ly,th0;aFeCi9r7u6;ll,mb;u6y;nk;r7vi6;ne;e,ty;a6ep,nD;d6f,r;!ly;mp,pp03rk;aHhDlAo8r7u6;dd0r0te;isp,uel;ar6ld,mmon,ol,st0ward0zy;se;e6ou1;a6vW;n,r;ar8e6il0;ap,e6;sy;mi3;gey,lm8r6;e4i3;ful;!i3;aNiLlIoEr8u6;r0sy;ly;aAi7o6;ad,wn;ef,g7llia2;nt;ht;sh,ve;ld,r7un6;cy;ed,i3;ng;a7o6ue;nd,o1;ck,nd;g,tt6;er;d,ld,w1;dy;bsu9ng8we6;so6;me;ry;rd",
+  "Adjective": "true¦0:7P;1:84;2:83;3:8A;4:7W;5:5S;6:4N;7:4O;8:58;9:6I;A:81;a6Wb6Gc63d5Je54f4Hg49h3Wi39j37k36l2Vm2Ln2Bo1Wp1Dquack,r12s0Ft07uMvJwByear5;arp0eFholeEiDoB;man5oBu6P;d6Rzy;despr7Ls5S;!sa7;eClBste2A;co1Nl o4W;!k5;aCiBola4M;b89ce versa,ol5H;ca3gabo6Gnilla;ltUnHpCrb5Msu4tterB;!mo7G; Eb1SpDsBti1M;ca7etBide dKtairs;!ti2;er,i3U;f36to da1;aLbeco75convin29deIeHfair,ivers4knGprecedVrEsCwB;iel3Nritt6A;i1XuB;pervis0spec3Y;eBu5;cognHgul6Tl6T;own;ndi2v64xpect0;cid0rB;!grou5ZsB;iz0tood;b7pp0Dssu6UuthorB;iz0;i26ra;aGeEhDi6AoCrB;i1oubl0us3M;geth8p,rp6Vuc67;ough4Wril33;en60l32mpBrr2X;o6Ati2;boo,lBn;ent0;aWcVeThSiQmug,nobbi3LoOpNqueami3LtFuBymb6H;bDi gener5DpBrpri6D;erBre0N;! dup8b,i2C;du0seq52;anda77eGiFrBunni2y3F;aightCiB;ki2p0; fBfB;or5K;ll,r5S;aBreotyp0;dfa6Cmi2;a55ec2Gir1Hlend6Cot on; call0le,mb8phist1XrBu0Vvi48;d6Ary;gnifica3nB;ce51g7;am2Re8ocki2ut;cBda1em5lfi32ni1Wpa6Jre6;o1Er42;at5Gient28reec5G;cr0me;aJeEiCoB;bu60tt51uQy4;ghtBv4;!-2Bf9;ar,bel,condi1du6Dfres5AlEpublic42sCtard0vB;ea26;is4CoB;lu1na3;aQe1Cuc4A;b5TciBllyi2;al,st;aOeLicayu6lac5Ropuli5QrCuB;bl5Jmp0n51;eGiDoB;!b07fu5RmiBp8;ne3si2;mCor,sBva1;ti6;a53e;ci5MmB;a0EiB;er,um;ac20rBti1;feAma2XpleBv38;xi2;rBst;allelDtB;-tiBi4;me;!ed;bLffJkIld fashion0nHpGrg1Eth8utFvB;al,erB;!all,niCt,wB;eiBrouB;ght;do0Ter,g2Qsi4B;en,posi1; boa5Og2Oli6;!ay; gua5MbBli6;eat;eDsB;cBer0Eole1;e6u3O;d2Xse;aJeIiHoBua4X;nFrCtB;ab7;thB;!eB;rn;chala3descri58stop;ght5;arby,cessa44ighbor5xt;k0usia1A;aIeGiDoBultip7;bi7derBl0Vnth5ot,st;a1n;nBx0;dblo0RiaBor;tu37;ande3Qdi4NnaBre;ci2;cBgenta,in,j01keshift,le,mmoth,ny,sculi6;ab33ho;aKeFiCoBu15;uti14vi2;mCteraB;l,te;it0;ftEgBth4;al,eCitiB;ma1;nda3K;!-0C;ngu3Zst,tt8;ap1Xind5no0A;agg0uB;niMstifi0veni7;de4gno4Klleg4mQnEpso 20rB;a1rB;eleBita0J;va3; KaJbr0corIdGfluenQiQnFsEtCviB;go0Fti2;aAen3SoxB;ic3B;a6i2Vul0D;a1er,oce3;iCoB;or;reA;deq3Qppr33;fBsitu,vitro;ro3;mFpB;arDerfeAoBrop8;li1rtB;a3ed;ti4;eBi0S;d2Vn3C;aIeFiDoBumdr3I;ne36ok0rrBs08ur5;if2Z;ghfalut1QspB;an2X;aClB;liYpf9;li2;lEnDrB;d04roB;wi2;dy;f,low0;ainf9ener2Oiga24lHoGraDuB;ilBng ho;ty;cCtB;ef9is;ef9;ne,od;ea2Iob4;aTeNinMlKoFrB;a1VeDoz1MustB;raB;ti2;e2Gq10tf9;oDrB; keeps,eBm8tuna1;g03ign;liB;sh;aBue3;g31tte1P;al,i1;dFmCrB;ti7;a7ini6;ne;le; up;bl0i3l27r Cux,voB;ri1uri1;oBreac1E;ff;aLfficie3lKmHnFreAthere4veExB;aAcess,pe1QtraCuB;be2Nl0E;!va1E;n,ryday; BcouraEti0O;rou1sui1;erCiB;ne3;gi2;abo23dMe17i1;g8sB;t,ygB;oi2;er;aReJiDoBrea14ue;mina3ne,ubB;le,tf9;dact1Bfficu1OsCvB;er1K;creDeas0gruntl0hone1FordCtB;a3ressM;er5;et; HadpGfFgene1PliDrang0spe1PtCvoB;ut;ail0ermin0;be1Mca1ghB;tf9;ia3;an;facto;i5magBngeroUs0G;ed,i2;ly;ertaMhief,ivil,oDrB;aBowd0u0G;mp0vZz0;loImGnCrrBve0P;eAu1I;cre1fu0LgrDsCtB;empo0Dra0E;ta3;ue3;mer08pleB;te,x;ni4ss4;in;aNeIizarHlFoCrB;and new,isk,okN;gCna fiUttom,urgeoB;is;us;ank,indB;!i2;re;autif9hiDloCnBst,yoD;eUt;v0w;nd;ul;ckCnkru0WrrB;en;!wards; priori,b0Mc0Jd09fra08g04h03lYmWntiquVppSrMsIttracti06utheHvEwB;aCkB;wa0T;ke,re;ant garCerB;age;de;ntU;leep,piDsuDtonB;isB;hi2;ri2;ab,bitEroDtiB;fiB;ci4;ga3;raB;ry;are3etiNrB;oprB;ia1;at0;aJuB;si2;arEcohCeBiIl,oof;rt;olB;ic;mi2;ead;ainDgressiConiB;zi2;ve;st;id; IeGuFvB;aCerB;se;nc0;ed;lt;pt,qB;ua1;hoc,infinitB;um;cuCtu4u1;al;ra1;erLlKoIruHsCuB;nda3;e3oCtraA;ct;lu1rbi2;ng;te;pt;aBve;rd;aze,e;ra3;nt",
+  "Comparable": "true¦0:41;1:4I;2:45;3:2Y;4:4B;5:3X;a4Ob44c3Od3De35f2Rg2Fh24i1Vj1Uk1Rl1Jm1Dn17o15p0Vqu0Tr0KsTtMuIvFw7y6za13;ell27ou4;aBe9hi1Yi7r6;o4y;ck0Ode,l6n1ry,se;d,y;a6i4Mt;k,ry;n1Tr6sK;m,y;a7e6ulgar;nge5rda2xi4;g9in,st;g0n6pco3Mse5;like0t6;i1r6;ue;aAen9hi8i7ough,r6;anqu2Oen1ue;dy,g3Sme0ny,r09;ck,n,rs2P;d40se;ll,me,rt,s6wd45;te5;aVcarUeThRiQkin0FlMmKoHpGqua1FtAu7w6;eet,ift;b7dd13per0Gr6;e,re2H;sta2Ft3;aAe9iff,r7u6;pXr1;a6ict,o4;ig3Fn0U;a1ep,rn;le,rk;e22i3Fright0;ci28ft,l7o6re,ur;n,thi4;emn,id;a6el0ooth;ll,rt;e8i6ow,y;ck,g35m6;!y;ek,nd3D;ck,l0mp3;a6iTort,rill,y;dy,ll0Xrp;cu0Rve0Rxy;ce,ed,y;d,fe,int0l1Vv14;aBe9i8o6ude;mantic,o1Isy,u6;gh,nd;ch,pe,tzy;a6d,mo0H;dy,l;gg7ndom,p6re,w;id;ed;ai2i6;ck,et;aEhoDi1QlCoBr8u6;ny,r6;e,p3;egna2ic7o6;fouYud;ey,k0;li04or,te1B;ain,easa2;ny;in5le;dd,f6i0ld,ranQ;fi10;aAe8i7o6;b3isy,rm15sy;ce,mb3;a6w;r,t;ive,rr01;aAe8ild,o7u6;nda19te;ist,o1;a6ek,llX;n,s0ty;d,tuQ;aBeAi9o6ucky;f0Un7o1Du6ve0w17y0T;d,sy;e0g;g1Tke0tt3ve0;an,wd;me,r6te;ge;e7i6;nd;en;ol0ui1P;cy,ll,n6;sBt6;e6ima8;llege2r6;es7media6;te;ti4;ecu6ta2;re;aEeBiAo8u6;ge,m6ng1R;b3id;ll6me0t;ow;gh,l0;a6f04sita2;dy,v6;en0y;nd1Hppy,r6te5;d,sh;aGenFhDiClBoofy,r6;a9e8is0o6ue1E;o6ss;vy;at,en,y;nd,y;ad,ib,ooI;a2d1;a6o6;st0;t3uiY;u1y;aIeeb3iDlat,oAr8u6;ll,n6r14;!ny;aHe6iend0;e,sh;a7r6ul;get5mG;my;erce8n6rm;an6e;ciC;! ;le;ir,ke,n0Fr,st,t,ulA;aAerie,mp9sse7v6xtre0Q;il;nti6;al;ty;r7s6;tern,y;ly,th0;aFeCi9r7u6;ll,mb;u6y;nk;r7vi6;ne;e,ty;a6ep,nD;d6f,r;!ly;mp,pp03rk;aHhDlAo8r7u6;dd0r0te;isp,uel;ar6ld,mmon,ol,st0ward0zy;se;e6ou1;a6vW;n,r;ar8e6il0;ap,e6;sy;mi4;gey,lm8r6;e5i4;ful;!i4;aNiLlIoEr8u6;r0sy;ly;aAi7o6;ad,wn;ef,g7llia2;nt;ht;sh,ve;ld,r7un6;cy;ed,i4;ng;a7o6ue;nd,o1;ck,nd;g,tt6;er;d,ld,w1;dy;bsu9ng8we6;so6;me;ry;rd",
   "TextValue": "true¦bOeJfDhundredNmOninAone,qu8s6t0zeroN;enMh3rNw0;e0o;l0ntD;fHve;ir0ousandKree;d,t6;e0ix8;cond,pt1ven7xt1;adr0int0;illionD;e0th;!t0;e9ie8y;i3o0;rt1ur0;!t2;ie4y;ft0rst,ve;e3h,ie2y;ight0lev2;!e1h,ie0y;th;en0;!th;illion0;!s,th",
   "Ordinal": "true¦bGeDf9hundredHmGnin7qu6s4t0zeroH;enGh1rFwe0;lfFn9;ir0ousandE;d,t4;e0ixt9;cond,ptAvent8xtA;adr9int9;et0th;e6ie8;i2o0;r0urt3;tie5;ft1rst;ight0lev1;e0h,ie2;en1;illion0;th",
   "Cardinal": "true¦bHeEf8hundred,mHnineAone,qu6s4t0zero;en,h2rGw0;e0o;lve,n8;irt9ousandEree;e0ix5;pt1ven4xt1;adr0int0;illion;i3o0;r1ur0;!t2;ty;ft0ve;e2y;ight0lev1;!e0y;en;illion0;!s",
@@ -4695,6 +4989,9 @@ var conjugations = {
   grow: {
     prt: '_n'
   },
+  guide: {
+    pst: '_d'
+  },
   hang: {
     pst: 'hung',
     prt: 'hung'
@@ -4804,6 +5101,10 @@ var conjugations = {
   name: {
     g: 'naming'
   },
+  patrol: {
+    g: '_ling',
+    pst: '_led'
+  },
   pay: {
     pst: 'paid',
     prt: 'paid'
@@ -4826,6 +5127,9 @@ var conjugations = {
   },
   ride: {
     prt: 'ridden'
+  },
+  reside: {
+    pst: '_d'
   },
   ring: {
     pst: 'rang',
@@ -5335,7 +5639,15 @@ var endsWith = {
     }
   }],
   w: [{
+    reg: /(.llow)$/i,
+    //follow, allow
+    repl: {
+      pr: '$1s',
+      pa: '$1ed'
+    }
+  }, {
     reg: /(..)(ow)$/i,
+    //grow
     repl: {
       pr: '$1$2s',
       pa: '$1ew',
@@ -6073,7 +6385,7 @@ var World = /*#__PURE__*/function () {
 
     this.unpackWords(_data); // add our irregulars to lexicon
 
-    this.addIrregulars(); // cache our abbreviations for our sentence-parser
+    addIrregulars_1(this); // cache our abbreviations for our sentence-parser
 
     Object.defineProperty(this, 'cache', {
       enumerable: false,
@@ -6150,11 +6462,20 @@ var World = /*#__PURE__*/function () {
         addWords.addMore(word, obj[keys[i]], this);
       }
     }
-  }, {
-    key: "addIrregulars",
-    value: function addIrregulars() {
-      addIrregulars_1(this);
+    /** add new custom conjugations */
 
+  }, {
+    key: "addConjugations",
+    value: function addConjugations(obj) {
+      Object.assign(this.irregulars.verbs, obj);
+      return this;
+    }
+    /** add new custom plural/singular pairs */
+
+  }, {
+    key: "addPlurals",
+    value: function addPlurals(obj) {
+      Object.assign(this.irregulars.nouns, obj);
       return this;
     }
     /** extend the compromise tagset */
@@ -6400,6 +6721,8 @@ var _02Accessors = createCommonjsModule(function (module, exports) {
 
     return res;
   };
+  /** lookup a named-group, by its name */
+
 
   var getOneName = function getOneName(doc, name) {
     var arr = [];
@@ -6476,7 +6799,8 @@ var cacheRequired = function cacheRequired(reg) {
     tags: needTags,
     words: needWords
   };
-};
+}; // try to pre-fail as many matches as possible, without doing them
+
 
 var failFast$1 = function failFast(doc, regs) {
   if (doc._cache && doc._cache.set === true) {
@@ -6502,30 +6826,39 @@ var failFast$1 = function failFast(doc, regs) {
   return true;
 };
 
-var checkCache = failFast$1;
+var _failFast = failFast$1;
 
 var _03Match = createCommonjsModule(function (module, exports) {
   /** return a new Doc, with this one as a parent */
-  exports.match = function (reg, name) {
-    //parse-up the input expression
-    var regs = syntax_1(reg);
+  exports.match = function (reg) {
+    var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+    // support '0' shorthand for named-groups
+    if (typeof opts === 'string' || typeof opts === 'number' || opts === null) {
+      opts = {
+        group: opts
+      };
+    } //parse-up the input expression
+
+
+    var regs = matchSyntax(reg, opts);
 
     if (regs.length === 0) {
       return this.buildFrom([]);
     } //check our cache, if it exists
 
 
-    if (checkCache(this, regs) === false) {
+    if (_failFast(this, regs) === false) {
       return this.buildFrom([]);
     } //try expression on each phrase
 
 
     var matches = this.list.reduce(function (arr, p) {
       return arr.concat(p.match(regs));
-    }, []);
+    }, []); // support returning named groups
 
-    if (name !== undefined && name !== null && name !== '') {
-      return this.buildFrom(matches).groups(name);
+    if (opts.group !== undefined && opts.group !== null && opts.group !== '') {
+      return this.buildFrom(matches).groups(opts.group);
     }
 
     return this.buildFrom(matches);
@@ -6534,10 +6867,11 @@ var _03Match = createCommonjsModule(function (module, exports) {
 
 
   exports.not = function (reg) {
+    var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     //parse-up the input expression
-    var regs = syntax_1(reg); //if it's empty, return them all!
+    var regs = matchSyntax(reg, opts); //if it's empty, return them all!
 
-    if (regs.length === 0 || checkCache(this, regs) === false) {
+    if (regs.length === 0 || _failFast(this, regs) === false) {
       return this;
     } //try expression on each phrase
 
@@ -6551,9 +6885,10 @@ var _03Match = createCommonjsModule(function (module, exports) {
 
 
   exports.matchOne = function (reg) {
-    var regs = syntax_1(reg); //check our cache, if it exists
+    var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var regs = matchSyntax(reg, opts); //check our cache, if it exists
 
-    if (checkCache(this, regs) === false) {
+    if (_failFast(this, regs) === false) {
       return this.buildFrom([]);
     }
 
@@ -6568,9 +6903,10 @@ var _03Match = createCommonjsModule(function (module, exports) {
 
 
   exports["if"] = function (reg) {
-    var regs = syntax_1(reg); //consult our cache, if it exists
+    var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var regs = matchSyntax(reg, opts); //consult our cache, if it exists
 
-    if (checkCache(this, regs) === false) {
+    if (_failFast(this, regs) === false) {
       return this.buildFrom([]);
     }
 
@@ -6583,7 +6919,8 @@ var _03Match = createCommonjsModule(function (module, exports) {
 
 
   exports.ifNo = function (reg) {
-    var regs = syntax_1(reg);
+    var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var regs = matchSyntax(reg, opts);
     var found = this.list.filter(function (p) {
       return p.has(regs) === false;
     });
@@ -6593,9 +6930,10 @@ var _03Match = createCommonjsModule(function (module, exports) {
 
 
   exports.has = function (reg) {
-    var regs = syntax_1(reg); //consult our cache, if it exists
+    var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var regs = matchSyntax(reg, opts); //consult our cache, if it exists
 
-    if (checkCache(this, regs) === false) {
+    if (_failFast(this, regs) === false) {
       return false;
     }
 
@@ -6607,12 +6945,14 @@ var _03Match = createCommonjsModule(function (module, exports) {
 
 
   exports.lookAhead = function (reg) {
+    var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
     // find everything afterwards, by default
     if (!reg) {
       reg = '.*';
     }
 
-    var regs = syntax_1(reg);
+    var regs = matchSyntax(reg, opts);
     var matches = [];
     this.list.forEach(function (p) {
       matches = matches.concat(p.lookAhead(regs));
@@ -6627,12 +6967,14 @@ var _03Match = createCommonjsModule(function (module, exports) {
   /** match any terms before our matches, within the sentence */
 
   exports.lookBehind = function (reg) {
+    var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
     // find everything afterwards, by default
     if (!reg) {
       reg = '.*';
     }
 
-    var regs = syntax_1(reg);
+    var regs = matchSyntax(reg, opts);
     var matches = [];
     this.list.forEach(function (p) {
       matches = matches.concat(p.lookBehind(regs));
@@ -6647,7 +6989,8 @@ var _03Match = createCommonjsModule(function (module, exports) {
   /** return all terms before a match, in each phrase */
 
   exports.before = function (reg) {
-    var regs = syntax_1(reg); //only the phrases we care about
+    var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var regs = matchSyntax(reg, opts); //only the phrases we care about
 
     var phrases = this["if"](regs).list;
     var befores = phrases.map(function (p) {
@@ -6673,7 +7016,8 @@ var _03Match = createCommonjsModule(function (module, exports) {
 
 
   exports.after = function (reg) {
-    var regs = syntax_1(reg); //only the phrases we care about
+    var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var regs = matchSyntax(reg, opts); //only the phrases we care about
 
     var phrases = this["if"](regs).list;
     var befores = phrases.map(function (p) {
@@ -6703,16 +7047,18 @@ var _03Match = createCommonjsModule(function (module, exports) {
 
 
   exports.hasAfter = function (reg) {
+    var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     return this.filter(function (doc) {
-      return doc.lookAfter(reg).found;
+      return doc.lookAfter(reg, opts).found;
     });
   };
   /** return only results with this match before it */
 
 
   exports.hasBefore = function (reg) {
+    var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     return this.filter(function (doc) {
-      return doc.lookBefore(reg).found;
+      return doc.lookBefore(reg, opts).found;
     });
   };
 });
@@ -8296,7 +8642,7 @@ var _03Split = createCommonjsModule(function (module, exports) {
     } //start looking for a match..
 
 
-    var regs = syntax_1(reg);
+    var regs = matchSyntax(reg);
     var matches = [];
     this.list.forEach(function (p) {
       var foundEm = p.match(regs); //no match here, add full sentence
@@ -8342,7 +8688,7 @@ var _03Split = createCommonjsModule(function (module, exports) {
     } // start looking for our matches
 
 
-    var regs = syntax_1(reg);
+    var regs = matchSyntax(reg);
     var matches = [];
     this.list.forEach(function (p) {
       var foundEm = p.match(regs); //no match here, add full sentence
@@ -8388,7 +8734,7 @@ var _03Split = createCommonjsModule(function (module, exports) {
     } //start looking for a match..
 
 
-    var regs = syntax_1(reg);
+    var regs = matchSyntax(reg);
     var matches = [];
     this.list.forEach(function (p) {
       var foundEm = p.match(regs); //no match here, add full sentence
@@ -12223,25 +12569,26 @@ var cacheRequired$1 = function cacheRequired(reg) {
     tags: _unique(needTags),
     words: _unique(needWords)
   };
-};
+}; // for speed, enumerate (a|b|c) to three matches
+
 
 var allLists = function allLists(m) {
   var more = [];
   var lists = m.reg.filter(function (r) {
-    return r.oneOf !== undefined;
+    return r.fastOr !== undefined;
   });
 
   if (lists.length === 1) {
     var i = m.reg.findIndex(function (r) {
-      return r.oneOf !== undefined;
+      return r.fastOr !== undefined;
     });
-    Object.keys(m.reg[i].oneOf).forEach(function (w) {
+    Object.keys(m.reg[i].fastOr).forEach(function (w) {
       var newM = Object.assign({}, m);
       newM.reg = newM.reg.slice(0);
       newM.reg[i] = Object.assign({}, newM.reg[i]);
       newM.reg[i].word = w;
       delete newM.reg[i].operator;
-      delete newM.reg[i].oneOf; // newM.reason += '-' + w
+      delete newM.reg[i].fastOr; // newM.reason += '-' + w
 
       more.push(newM);
     });
@@ -12253,19 +12600,21 @@ var allLists = function allLists(m) {
 
 var all = [];
 matches.forEach(function (m) {
-  m.reg = syntax_1(m.match);
+  m.reg = matchSyntax(m.match);
   var enumerated = allLists(m);
 
   if (enumerated.length > 0) {
     all = all.concat(enumerated);
   } else {
-    all.push(m);
+    all.push(m); // console.log(m)
   }
 });
 all.forEach(function (m) {
   m.required = cacheRequired$1(m.reg);
   return m;
-});
+}); // console.log(all.length)
+// console.log(all[all.length - 1])
+
 var matches_1 = all;
 
 var hasEvery = function hasEvery(chances) {
@@ -14484,8 +14833,8 @@ function instance(worldInstance) {
   /** pre-parse any match statements */
 
 
-  nlp.parseMatch = function (str) {
-    return syntax_1(str);
+  nlp.parseMatch = function (str, opts) {
+    return matchSyntax(str, opts);
   };
   /** current version of the library */
 

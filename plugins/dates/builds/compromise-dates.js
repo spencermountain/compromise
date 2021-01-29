@@ -1559,19 +1559,19 @@
           return "".concat(sign).concat(hours).concat(delimiter).concat(minutes);
         };
       });
-      var fns_1 = fns.isLeapYear;
-      var fns_2 = fns.isDate;
-      var fns_3 = fns.isArray;
-      var fns_4 = fns.isObject;
-      var fns_5 = fns.isBoolean;
-      var fns_6 = fns.zeroPad;
-      var fns_7 = fns.titleCase;
-      var fns_8 = fns.ordinal;
-      var fns_9 = fns.toCardinal;
-      var fns_10 = fns.normalize;
-      var fns_11 = fns.getEpoch;
-      var fns_12 = fns.beADate;
-      var fns_13 = fns.formatTimezone;
+      fns.isLeapYear;
+      fns.isDate;
+      fns.isArray;
+      fns.isObject;
+      fns.isBoolean;
+      fns.zeroPad;
+      fns.titleCase;
+      fns.ordinal;
+      fns.toCardinal;
+      fns.normalize;
+      fns.getEpoch;
+      fns.beADate;
+      fns.formatTimezone;
       var isLeapYear = fns.isLeapYear; //given a month, return whether day number exists in it
 
       var hasDate = function hasDate(obj) {
@@ -6412,8 +6412,8 @@
   }, _day, _year, _week, _time);
 
   var Day$1 = units.Day,
-      Moment$1 = units.Moment,
-      Hour$1 = units.Hour;
+      Moment$1 = units.Moment;
+      units.Hour;
   var knownWord = {
     today: function today(context) {
       return new Day$1(context.today, null, context);
@@ -6978,13 +6978,13 @@
       Season$1 = units.Season,
       WeekDay$1 = units.WeekDay,
       Day$2 = units.Day,
-      Hour$2 = units.Hour,
+      Hour$1 = units.Hour,
       Minute$1 = units.Minute,
       Moment$2 = units.Moment;
   var mapping = {
     day: Day$2,
-    hour: Hour$2,
-    evening: Hour$2,
+    hour: Hour$1,
+    evening: Hour$1,
     second: Moment$2,
     milliscond: Moment$2,
     instant: Moment$2,
@@ -7000,7 +7000,7 @@
     qtr: AnyQuarter$1,
     wk: Week$1,
     sec: Moment$2,
-    hr: Hour$2
+    hr: Hour$1
   };
   var matchStr = "^(".concat(Object.keys(mapping).join('|'), ")$"); // when a unit of time is spoken of as 'this month' - instead of 'february'
 
@@ -7301,7 +7301,7 @@
       Season$3 = units.Season,
       Week$2 = units.Week,
       Day$4 = units.Day,
-      Hour$3 = units.Hour,
+      Hour$2 = units.Hour,
       Minute$2 = units.Minute,
       Month$2 = units.Month,
       WeekEnd$2 = units.WeekEnd;
@@ -7312,7 +7312,7 @@
     month: Month$2,
     quarter: Quarter$2,
     season: Season$3,
-    hour: Hour$3,
+    hour: Hour$2,
     minute: Minute$2
   };
 
@@ -7817,7 +7817,7 @@
   var _abbrevs = arr;
 
   var methods$1 = {
-    /** overload the original json with noun information */
+    /** overload the original json with date information */
     json: function json(options) {
       var _this = this;
 
@@ -7910,6 +7910,147 @@
     }
   };
 
+  var known = {
+    century: true,
+    day: true,
+    decade: true,
+    hour: true,
+    millisecond: true,
+    minute: true,
+    month: true,
+    second: true,
+    weekend: true,
+    week: true,
+    year: true,
+    quarter: true,
+    season: true
+  };
+  var mapping$1 = {
+    hr: 'hour',
+    min: 'minute',
+    sec: 'second',
+    'week end': 'weekend',
+    wk: 'week',
+    yr: 'year',
+    qtr: 'quarter'
+  }; // add plurals
+
+  Object.keys(mapping$1).forEach(function (k) {
+    mapping$1[k + 's'] = mapping$1[k];
+  });
+
+  var parse$1 = function parse(doc) {
+    var duration = {}; //parse '8 minutes'
+
+    doc.match('#Value+ #Duration').forEach(function (m) {
+      var num = m.numbers().get(0);
+      var unit = m.match('#Duration').nouns().toSingular().text(); // turn 'mins' into 'minute'
+
+      if (mapping$1.hasOwnProperty(unit)) {
+        unit = mapping$1[unit];
+      }
+
+      if (known.hasOwnProperty(unit) && num) {
+        duration[unit] = num;
+      }
+    });
+    return duration;
+  };
+
+  var parse_1$1 = parse$1;
+
+  var methods$2 = {
+    /** overload the original json with duration information */
+    json: function json(options) {
+      var n = null;
+
+      if (typeof options === 'number') {
+        n = options;
+        options = null;
+      }
+
+      options = options || {
+        terms: false
+      };
+      var res = [];
+      this.forEach(function (doc) {
+        var json = doc.json(options);
+        json.duration = parse_1$1(doc);
+        res.push(json);
+      });
+
+      if (n !== null) {
+        return res[n];
+      }
+
+      return res;
+    },
+
+    /** change to a standard duration format */
+    normalize: function normalize() {
+      this.forEach(function (doc) {
+        var duration = parse_1$1(doc);
+        var list = [];
+        Object.keys(duration).forEach(function (unit) {
+          var num = duration[unit];
+          var word = unit;
+
+          if (num !== 1) {
+            word += 's';
+          }
+
+          list.push("".concat(num, " ").concat(word));
+        }); // splice-in an 'and'
+
+        if (list.length > 1) {
+          var beforeEnd = list.length - 1;
+          list.splice(beforeEnd, 0, 'and');
+        }
+
+        var text = list.join(' ');
+        doc.replaceWith(text);
+      });
+      return this;
+    }
+  };
+
+  var addDurations = function addDurations(Doc) {
+    /** phrases like '2 months', or '2mins' */
+    var Durations = /*#__PURE__*/function (_Doc) {
+      _inherits(Durations, _Doc);
+
+      var _super = _createSuper(Durations);
+
+      function Durations(list, from, w) {
+        var _this;
+
+        _classCallCheck(this, Durations);
+
+        _this = _super.call(this, list, from, w);
+        _this.context = {};
+        return _this;
+      }
+
+      return Durations;
+    }(Doc); //add-in methods
+
+
+    Object.assign(Durations.prototype, methods$2);
+    /** phrases like '2 months' */
+
+    Doc.prototype.durations = function (n) {
+      var m = this.match('#Value+ #Duration and? #Value+? #Duration?');
+
+      if (typeof n === 'number') {
+        m = m.get(n);
+      }
+
+      return new Durations(m.list, this, this.world);
+    };
+  };
+
+  var durations$1 = addDurations;
+
   var opts = {
     punt: {
       weeks: 2
@@ -7922,8 +8063,10 @@
 
     world.addWords(words); // run our tagger
 
-    world.postProcess(_01Tagger);
-    /**  */
+    world.postProcess(_01Tagger); // add .durations() class + methods
+
+    durations$1(Doc);
+    /** phraes like 'nov 2nd' or 'on tuesday' */
 
     var Dates = /*#__PURE__*/function (_Doc) {
       _inherits(Dates, _Doc);

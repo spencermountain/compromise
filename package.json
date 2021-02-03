@@ -11,6 +11,7 @@
   "sideEffects": false,
   "exports": {
     ".": {
+      "default": "./builds/compromise.js",
       "require": "./builds/compromise.js",
       "import": "./builds/compromise.mjs"
     },

@@ -6,7 +6,7 @@ nlp.extend(require('../../plugins/dates/src'))
 
 const fmt = (iso) => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 const context = {
-  today: '2020-01-21',
+  today: '2018-01-21',
   timezone: 'Canada/Pacific',
 }
 

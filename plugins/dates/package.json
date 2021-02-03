@@ -40,7 +40,7 @@
     "@rollup/plugin-commonjs": "17.1.0",
     "@rollup/plugin-json": "4.1.0",
     "@rollup/plugin-node-resolve": "11.1.1",
-    "rollup": "2.38.1",
+    "rollup": "2.38.4",
     "rollup-plugin-babel": "4.4.0",
     "rollup-plugin-filesize-check": "0.0.1",
     "rollup-plugin-terser": "7.0.2",
@@ -48,7 +48,7 @@
     "tape": "5.1.1"
   },
   "dependencies": {
-    "spacetime": "6.12.2",
+    "spacetime": "6.12.3",
     "spacetime-holiday": "0.1.0"
   },
   "license": "MIT"

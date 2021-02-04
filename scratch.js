@@ -25,8 +25,12 @@ nlp.extend(require('./plugins/penn-tags/src'))
 // console.log(`|${m.text()}|`)
 // m.debug()
 
-let doc = nlp(`is not foobar isn't`)
-doc = doc.terms().unique().debug()
+let str = `Leonard's was Randall`
+let doc = nlp(str)
+console.log(doc.match('#Noun').text())
+
+// let doc = nlp(`is not foobar isn't`)
+// doc = doc.terms().unique().debug()
 // console.log('|' + nlp(`isn't`).text('implicit') + '|')
 
 // console.log(`|${doc.text()}|`)

@@ -37,7 +37,7 @@ export default [
         file: `builds/${name}.js`,
         format: 'umd',
         sourcemap: true,
-        name: 'compromiseParagraphs',
+        name: 'compromisePennTags',
         banner: banner,
       },
     ],
@@ -58,7 +58,7 @@ export default [
       {
         file: `builds/${name}.min.js`,
         format: 'umd',
-        name: 'compromiseParagraphs',
+        name: 'compromisePennTags',
       },
     ],
     plugins: [

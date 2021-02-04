@@ -1,4 +1,4 @@
-/* compromise-penn-tags 0.0.5 MIT */
+/* compromise-penn-tags 0.0.1 MIT */
 // order here matters
 var mapping = [// adverbs
 ['Comparative', 'RBR'], ['Superlative', 'RBS'], ['Adverb', 'RB'], // adjectives

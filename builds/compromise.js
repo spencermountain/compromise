@@ -1,4 +1,4 @@
-/* compromise 13.8.0 MIT */
+/* compromise 13.9.0 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -3796,7 +3796,7 @@
 
   var fromJSON_1 = fromJSON;
 
-  var _version = '13.8.0';
+  var _version = '13.9.0';
 
   var _data = {
     "Comparative": "true¦better",

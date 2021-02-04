@@ -36,6 +36,13 @@ exports.text = function (options = {}, isFirst, isLast) {
         implicit: true,
         reduced: true,
       }
+    } else if (options === 'implicit') {
+      options = {
+        punctuation: true,
+        implicit: true,
+        whitespace: true,
+        trim: true,
+      }
     } else if (options === 'root') {
       options = {
         titlecase: false,
@@ -57,6 +64,10 @@ exports.text = function (options = {}, isFirst, isLast) {
     isFull = true
   }
   let text = terms.reduce((str, t, i) => {
+    // don't output intro space for a contraction-match  i'm good => "[am] good"
+    if (i === 0 && t.text === '' && t.implicit !== null && !options.implicit) {
+      return str
+    }
     options.last = isLast && i === terms.length - 1
     let showPre = true
     let showPost = true
@@ -71,6 +82,7 @@ exports.text = function (options = {}, isFirst, isLast) {
       }
     }
     let txt = t.textOut(options, showPre, showPost)
+    // console.log(terms)
     // if (options.titlecase && i === 0) {
     // txt = titleCase(txt)
     // }

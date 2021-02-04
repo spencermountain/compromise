@@ -1,4 +1,4 @@
-/* compromise 13.9.0 MIT */
+/* compromise 13.9.1 MIT */
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
@@ -1552,6 +1552,13 @@ var text = function text() {
         implicit: true,
         reduced: true
       };
+    } else if (options === 'implicit') {
+      options = {
+        punctuation: true,
+        implicit: true,
+        whitespace: true,
+        trim: true
+      };
     } else if (options === 'root') {
       options = {
         titlecase: false,
@@ -1576,6 +1583,11 @@ var text = function text() {
   }
 
   var text = terms.reduce(function (str, t, i) {
+    // don't output intro space for a contraction-match  i'm good => "[am] good"
+    if (i === 0 && t.text === '' && t.implicit !== null && !options.implicit) {
+      return str;
+    }
+
     options.last = isLast && i === terms.length - 1;
     var showPre = true;
     var showPost = true;
@@ -1592,7 +1604,8 @@ var text = function text() {
       }
     }
 
-    var txt = t.textOut(options, showPre, showPost); // if (options.titlecase && i === 0) {
+    var txt = t.textOut(options, showPre, showPost); // console.log(terms)
+    // if (options.titlecase && i === 0) {
     // txt = titleCase(txt)
     // }
 
@@ -1970,6 +1983,10 @@ var json$1 = function json() {
 
   if (options.reduced) {
     res.reduced = this.text('reduced');
+  }
+
+  if (options.implicit) {
+    res.implicit = this.text('implicit');
   }
 
   if (options.root) {
@@ -2474,7 +2491,13 @@ var tryHere = function tryHere(terms, regs, start_i, phrase_length) {
 
 
     if (state.terms[state.t].isImplicit() && regs[state.r - 1] && state.terms[state.t + 1]) {
+      // if the last match was implicit too, we're missing a word.
+      if (state.terms[state.t - 1] && state.terms[state.t - 1].implicit === regs[state.r - 1].word) {
+        return null;
+      } // console.log(state.terms[state.t])
       // does the next one match?
+
+
       if (state.terms[state.t + 1].doesMatch(reg, state.start_i + state.t, state.phrase_length)) {
         state.t += 2;
         continue;
@@ -3790,7 +3813,7 @@ var fromJSON = function fromJSON(json, world) {
 
 var fromJSON_1 = fromJSON;
 
-var _version = '13.9.0';
+var _version = '13.9.1';
 
 var _data = {
   "Comparative": "true¦better",
@@ -8392,7 +8415,7 @@ var unique$4 = function unique() {
   var list = [].concat(this.list);
   var obj = {};
   list = list.filter(function (p) {
-    var str = p.text('reduced').trim();
+    var str = p.text('reduced').trim() || p.text('implicit').trim();
 
     if (obj.hasOwnProperty(str) === true) {
       return false;
@@ -13005,9 +13028,9 @@ var addMethod$4 = function addMethod(Doc) {
 
     _createClass(Lists, [{
       key: "conjunctions",
-
+      value:
       /** coordinating conjunction */
-      value: function conjunctions() {
+      function conjunctions() {
         return this.match('(and|or)');
       }
       /** split-up by list object */
@@ -13487,9 +13510,9 @@ var addMethod$6 = function addMethod(Doc) {
 
     _createClass(Parentheses, [{
       key: "unwrap",
-
+      value:
       /** remove the parentheses characters */
-      value: function unwrap() {
+      function unwrap() {
         this.list.forEach(function (p) {
           var first = p.terms(0);
           first.pre = first.pre.replace(open, '');
@@ -13661,9 +13684,9 @@ var addMethod$8 = function addMethod(Doc) {
 
     _createClass(Quotations, [{
       key: "unwrap",
-
+      value:
       /** remove the quote characters */
-      value: function unwrap() {
+      function unwrap() {
         return this;
       }
     }]);

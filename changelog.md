@@ -11,6 +11,10 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 <!-- #### [Unreleased] 
 -->
 
+#### 13.9.1 [Feb 2021]
+- **[fix]** - matches over a contraction 
+- **[new]** - add 'implicit' text output
+
 #### 13.9.0 [Feb 2021]
 - **[new]** - World.addConjugations() method
 - **[new]** - World.addPlurals() method

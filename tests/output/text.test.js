@@ -71,6 +71,14 @@ test('text-reduced', function (t) {
   t.end()
 })
 
+test('text-implicit', function (t) {
+  let doc = nlp(`My dog isn't good, he's the best!`)
+  const str = 'My dog is not good, he is the best!'
+  t.equal(doc.json({ implicit: true })[0].implicit, str, 'json(implicit)')
+  t.equal(doc.text('implicit'), str, 'text(implicit): ')
+  t.end()
+})
+
 test('text-root', function (t) {
   let doc = nlp(`My dog LOVES pizza, and grapes!!`)
   const str = 'my dog love pizza and grape'

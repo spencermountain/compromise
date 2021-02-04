@@ -301,6 +301,10 @@ nlp.extend((Doc, world) => {
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221848-11404200-ffb8-11e9-90cd-3adee8d8564f.png"/>
 </div>
 
+<!-- spacer -->
+<div >
+  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+</div>
 
 
 ### Docs:
@@ -330,7 +334,7 @@ nlp.extend((Doc, world) => {
 | [Tagger](https://observablehq.com/@spencermountain/compromise-tagger) | [Sorting](https://observablehq.com/@spencermountain/compromise-sorting) | [Syllables](https://observablehq.com/@spencermountain/compromise-syllables)| [Tags](https://observablehq.com/@spencermountain/compromise-tags) | [Split](https://observablehq.com/@spencermountain/compromise-split) |
 | [Tokenization](https://observablehq.com/@spencermountain/compromise-tokenization) | [Text](https://observablehq.com/@spencermountain/compromise-text) | [Pronounce](https://observablehq.com/@spencermountain/compromise-pronounce)
 | [Named-Entities](https://observablehq.com/@spencermountain/compromise-topics) | [Utils](https://observablehq.com/@spencermountain/compromise-utils) | [Strict](https://observablehq.com/@spencermountain/compromise-strict)
-| [Whitespace](https://observablehq.com/@spencermountain/compromise-whitespace) | [Verbs](https://observablehq.com/@spencermountain/verbs) |
+| [Whitespace](https://observablehq.com/@spencermountain/compromise-whitespace) | [Verbs](https://observablehq.com/@spencermountain/verbs) | [Penn-tags](https://observablehq.com/@spencermountain/compromise-penn-tags)
 | [World](https://observablehq.com/@spencermountain/compromise-world) | [Normalization](https://observablehq.com/@spencermountain/compromise/Normalization) |
 |  |[Typescript](https://observablehq.com/@spencermountain/compromise-typescript) |
 
@@ -373,6 +377,10 @@ nlp.extend((Doc, world) => {
   <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
   <hr/>
 </div>
+<div align="center">
+  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221632-b9094000-ffb7-11e9-99e0-b48edd6cdf8a.png"/>
+</div>
+
 
 ### API:
 
@@ -713,11 +721,6 @@ this plugin creates a wrapper around the default sentence objects.
   <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
   <hr/>
   <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-</div>
-
-<!-- spacer -->
-<div >
-  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 </div>
 
 ### Typescript

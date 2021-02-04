@@ -11,13 +11,10 @@ nlp.extend(require('./plugins/penn-tags/src'))
 //
 //
 
+console.log(nlp('in the town where I was born').pennTags({ offset: true })[0])
 // let reg = nlp.parseMatch(`before (#Value .) after`)
 // // console.log(JSON.stringify(reg, null, 2))
 // doc.match(reg).debug()
-
-// #801
-nlp('79-years-old').debug()
-// nlp('foo-bar').match('@hasDash').debug()
 
 // #802
 // nlp('are you available').sentences().toFutureTense().debug()

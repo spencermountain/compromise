@@ -20,9 +20,20 @@
 </div>
 
 ```js
-let doc = nlp("pour through a book").pennTags()
-
+nlp("pour through a book").pennTags()
+/*
+[{
+  text: 'pour through a book',
+  terms: [
+    { text: 'pour', penn: 'VBP', tags: [Array] },
+    { text: 'through', penn: 'IN', tags: [Array] },
+    { text: 'a', penn: 'WDT', tags: [Array] },
+    { text: 'book', penn: 'NN', tags: [Array] }
+  ]
+}]
+*/
 ```
+### [Demo](https://observablehq.com/@spencermountain/compromise-penn-tags)
 
 This plugin is meant to supply a mapping between the standard [Penn Tagset](https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html) and the [custom tagset](https://observablehq.com/@spencermountain/compromise-tags) in compromise.
 
@@ -35,6 +46,26 @@ Compromise makes some [unique decisions](https://observablehq.com/@spencermounta
 Unlike most pos-taggers, compromise terms have many tags, including descendent, or assumed tags.
 
 Compromise is also less-confident than most libraries about declaring whether a Noun is a Singular or Plural - if the penn-tag is `NNPS` compromise may return `NNP` instead.
+
+the `.pennTags()` method accepts the same options as the [.json() method does](https://observablehq.com/@spencermountain/compromise-json).
+```js
+nlp('in the town where I was born').pennTags({offset:true})
+/*
+[{
+  text: 'in the town where I was born',
+  terms: [
+    { text: 'in', penn: 'IN', tags: [Array] },
+    { text: 'the', penn: 'WDT', tags: [Array] },
+    { text: 'town', penn: 'NN', tags: [Array] },
+    { text: 'where', penn: 'CC', tags: [Array] },
+    { text: 'I', penn: 'PRP', tags: [Array] },
+    { text: 'was', penn: 'VB', tags: [Array] },
+    { text: 'born', penn: 'VB', tags: [Array] }
+  ],
+  offset: { index: 0, start: 0, length: 28 }
+}]
+*/
+```
 
 work-in-progress
 

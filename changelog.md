@@ -9,6 +9,9 @@ compromise uses semver, and pushes to npm frequently
 While all _Major_ releases should be reviewed, our only two _large_ releases are **v6** in 2016 and and **v12** in 2019. Others have been mostly incremental, or niche.
 
 <!-- #### [Unreleased] 
+-->
+
+#### 13.9.0 [Feb 2021]
 - **[new]** - World.addConjugations() method
 - **[new]** - World.addPlurals() method
 - **[fix]** - conjugations fixes #800
@@ -17,7 +20,6 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - **[change] (internal)** - rename 'oneOf' match syntax to 'fastOr' 
 - **[new]** - support multiple-word matches in OR matches (a|b|foo bar|c)
 - **[change]** - use new export maps format
--->
 
 #### 13.8.0 [Dec 2020]
 - **[change]** improved support for fractions in numbers-plugin #793

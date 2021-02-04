@@ -70,3 +70,22 @@ test('i am contraction', function (t) {
   t.equal(m.text(), ``, 'i glad')
   t.end()
 })
+
+test('contraction-optional', function (t) {
+  let doc = nlp(`so i'm glad`)
+  let m = doc.match(`i am?`)
+  t.equal(m.text(), `i'm`, 'i am?')
+
+  m = doc.match(`i am?`)
+  t.equal(m.text(), `i'm`, `i am?`)
+
+  m = doc.match(`am glad?`)
+  t.equal(m.text(), ` glad`, `am glad?`)
+
+  m = doc.match(`i am? glad`)
+  t.equal(m.text(), `i'm glad`, `i am? glad`)
+
+  m = doc.match(`i glad?`)
+  t.equal(m.text(), `i'm`, 'i glad?')
+  t.end()
+})

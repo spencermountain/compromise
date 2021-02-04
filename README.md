@@ -55,18 +55,17 @@
 
 ### .match():
 
-compromise makes it simple to interpret and match text:
+interpret and match text:
 
 ```js
 let doc = nlp(entireNovel)
-
-doc.if('the #Adjective of times').text()
-// "it was the blurst of times??"
+doc.match('the #Adjective of times').text()
+// "the blurst of times?"
 ```
 
 ```js
-if (doc.has('simon says #Verb')) {
-  return true
+if (doc.has('simon says #Verb') === false) {
+  return null
 }
 ```
 
@@ -115,7 +114,7 @@ doc.text()
 
 ### .numbers():
 
-interpret plaintext numbers
+interpret plain-text numbers
 
 ```js
 nlp.extend(require('compromise-numbers'))
@@ -135,7 +134,7 @@ doc.text()
 
 ### .topics():
 
-grab subjects in a text:
+grab the big subjects:
 
 ```js
 let doc = nlp(buddyHolly)
@@ -164,7 +163,7 @@ doc.topics().json()
 
 ### .contractions():
 
-work with contracted and implicit words:
+handle implicit words:
 
 ```js
 let doc = nlp("we're not gonna take it, no we ain't gonna take it.")
@@ -202,7 +201,7 @@ Use it on the client-side:
 </script>
 ```
 
-or as an es-module:
+as an es-module:
 
 ```typescript
 import nlp from 'compromise'
@@ -232,7 +231,7 @@ it's pretty fast. It can run on keypress:
   </a>
 </div>
 
-it works mainly by <a href="https://observablehq.com/@spencermountain/verbs">conjugating many forms</a> of a basic word list.
+it works mainly by <a href="https://observablehq.com/@spencermountain/verbs">conjugating all forms</a> of a basic word list.
 
 The final lexicon is <a href="https://observablehq.com/@spencermountain/compromise-lexicon">~14,000 words</a>:
 
@@ -240,7 +239,7 @@ The final lexicon is <a href="https://observablehq.com/@spencermountain/compromi
   <img width="600" src="https://user-images.githubusercontent.com/399657/68234805-0d201e80-ffd0-11e9-8dc6-f7a600352555.png"/>
 </div>
 
-you can read more about how it works, [here](https://observablehq.com/@spencermountain/compromise-internals).
+you can read more about how it works, [here](https://observablehq.com/@spencermountain/compromise-internals). it's weird.
 
 <!-- spacer -->
   <!-- <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/> -->
@@ -250,7 +249,7 @@ you can read more about how it works, [here](https://observablehq.com/@spencermo
 
 ### .extend():
 
-set a custom interpretation of your own words:
+decide how words get interpreted:
 
 ```js
 let myWords = {
@@ -260,7 +259,7 @@ let myWords = {
 let doc = nlp(muppetText, myWords)
 ```
 
-or make more changes with a [compromise-plugin](https://observablehq.com/@spencermountain/compromise-plugins).
+or make heavier changes with a [compromise-plugin](https://observablehq.com/@spencermountain/compromise-plugins).
 
 ```js
 const nlp = require('compromise')
@@ -309,11 +308,11 @@ nlp.extend((Doc, world) => {
 
 ### Docs:
 
-##### Warm introduction:
+##### gentle introduction:
 
-- **[#1 Input → output](https://docs.compromise.cool/tutorial-1)**
-- **[#2 Match & transform](https://docs.compromise.cool/compromise-tutorial-2)**
-- **[#3 Making a chat-bot](https://docs.compromise.cool/compromise-making-a-bot)**
+- **[#1) Input → output](https://docs.compromise.cool/tutorial-1)**
+- **[#2) Match & transform](https://docs.compromise.cool/compromise-tutorial-2)**
+- **[#3) Making a chat-bot](https://docs.compromise.cool/compromise-making-a-bot)**
   <!-- * **[Tutorial #4]()**  -  Making a plugin -->
 
 <div >
@@ -339,7 +338,7 @@ nlp.extend((Doc, world) => {
 | [Tokenization](https://observablehq.com/@spencermountain/compromise-tokenization) | [Text](https://observablehq.com/@spencermountain/compromise-text) | [Pronounce](https://observablehq.com/@spencermountain/compromise-pronounce)
 | [Named-Entities](https://observablehq.com/@spencermountain/compromise-topics) | [Utils](https://observablehq.com/@spencermountain/compromise-utils) | [Strict](https://observablehq.com/@spencermountain/compromise-strict)
 | [Whitespace](https://observablehq.com/@spencermountain/compromise-whitespace) | [Verbs](https://observablehq.com/@spencermountain/verbs) | [Penn-tags](https://observablehq.com/@spencermountain/compromise-penn-tags)
-| [World](https://observablehq.com/@spencermountain/compromise-world) | [Normalization](https://observablehq.com/@spencermountain/compromise/Normalization) |
+| [World data](https://observablehq.com/@spencermountain/compromise-world) | [Normalization](https://observablehq.com/@spencermountain/compromise/Normalization) |
 | [Fuzzy-matching](https://observablehq.com/@spencermountain/compromise-fuzzy-matching) |[Typescript](https://observablehq.com/@spencermountain/compromise-typescript) |
 
 
@@ -726,7 +725,6 @@ this plugin creates a wrapper around the default sentence objects.
 <div >
   <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
   <hr/>
-  <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 </div>
 
 ### Typescript
@@ -760,7 +758,7 @@ or if you don't care about POS-tagging, you can use the tokenize-only build: (90
   //you can see the text has no tags
   console.log(doc.has('#Noun')) //false
 
-  //but the whole api still works
+  //the rest of the api still works
   console.log(doc.has('my .* is .? named /^b[oa]rt/')) //true
 </script>
 ```
@@ -860,7 +858,7 @@ or if you don't care about POS-tagging, you can use the tokenize-only build: (90
 
 #### See Also:
 
-- &nbsp; **[en-pos](https://github.com/finnlp/en-pos)** - very-clever javascript pos-tagger by *[Alex Corvi](https://github.com/alexcorvi)*
+- &nbsp; **[en-pos](https://github.com/finnlp/en-pos)** - very clever javascript pos-tagger *by [Alex Corvi](https://github.com/alexcorvi)*
 - &nbsp; **[naturalNode](https://github.com/NaturalNode/natural)** - fancier statistical nlp in javascript
 - &nbsp; **[compendium-js](https://github.com/Ulflander/compendium-js)** - POS and sentiment analysis in javascript
 - &nbsp; **[nodeBox linguistics](https://www.nodebox.net/code/index.php/Linguistics)** - conjugation, inflection in javascript

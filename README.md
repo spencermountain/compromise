@@ -340,7 +340,7 @@ nlp.extend((Doc, world) => {
 | [Named-Entities](https://observablehq.com/@spencermountain/compromise-topics) | [Utils](https://observablehq.com/@spencermountain/compromise-utils) | [Strict](https://observablehq.com/@spencermountain/compromise-strict)
 | [Whitespace](https://observablehq.com/@spencermountain/compromise-whitespace) | [Verbs](https://observablehq.com/@spencermountain/verbs) | [Penn-tags](https://observablehq.com/@spencermountain/compromise-penn-tags)
 | [World](https://observablehq.com/@spencermountain/compromise-world) | [Normalization](https://observablehq.com/@spencermountain/compromise/Normalization) |
-|  |[Typescript](https://observablehq.com/@spencermountain/compromise-typescript) |
+| [Fuzzy-matching](https://observablehq.com/@spencermountain/compromise-fuzzy-matching) |[Typescript](https://observablehq.com/@spencermountain/compromise-typescript) |
 
 
 ##### Talks:

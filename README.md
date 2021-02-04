@@ -826,7 +826,7 @@ or if you don't care about POS-tagging, you can use the tokenize-only build: (90
       <summary>✨ Partial builds?</summary>
       <p></p>
       <ul>
-        we do offer a [compromise-tokenize](./builds/compromise-tokenize.js) build, which has the POS-tagger pulled-out.
+        we do offer a <a href="./builds/compromise-tokenize.js">compromise-tokenize</a> build, which has the POS-tagger pulled-out.
         <br/> 
         but otherwise, compromise isn't easily tree-shaken.
         <br/> 

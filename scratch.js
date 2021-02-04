@@ -1,5 +1,6 @@
 const nlp = require('./src/index')
 nlp.extend(require('./plugins/sentences/src'))
+nlp.extend(require('./plugins/penn-tags/src'))
 // nlp.verbose(true)
 
 //
@@ -15,7 +16,7 @@ nlp.extend(require('./plugins/sentences/src'))
 // doc.match(reg).debug()
 
 // #801
-// nlp('79-years-old').debug()
+nlp('79-years-old').debug()
 // nlp('foo-bar').match('@hasDash').debug()
 
 // #802

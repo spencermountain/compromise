@@ -1151,14 +1151,6 @@ module.exports = [
     text: 'It should be 4 - easy.',
     tags: 'PRP, MD, VB, CD, JJ',
   },
-  // {
-  //   text: '1579-EBS Network Co. Division of 17H.',
-  //   tags: 'NNP, NNP, NNP, NN, IN, NN',
-  // },
-  {
-    text: '1691-EPI-EBS Europe',
-    tags: 'NNP, NNP',
-  },
   {
     text: 'Set up last month to centralize merchant asset activities.',
     tags: 'VBN, RP, JJ, NN, TO, VB, NN, NN, NNS',
@@ -1166,14 +1158,6 @@ module.exports = [
   {
     text: 'Broke out the activities of 1179.',
     tags: 'VBD, RP, DT, NNS, IN, CD',
-  },
-  {
-    text: '1307-EBIC-Apache, LLC',
-    tags: 'NNP, NNP',
-  },
-  {
-    text: '1689-EPI-EBS Ventures, LLC',
-    tags: 'NNP, NNPS, NNP',
   },
   {
     text: 'Set up last month to centralize merchant asset activities.',

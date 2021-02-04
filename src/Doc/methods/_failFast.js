@@ -16,6 +16,7 @@ const cacheRequired = function (reg) {
   return { tags: needTags, words: needWords }
 }
 
+// try to pre-fail as many matches as possible, without doing them
 const failFast = function (doc, regs) {
   if (doc._cache && doc._cache.set === true) {
     let { words, tags } = cacheRequired(regs)

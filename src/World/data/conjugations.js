@@ -297,6 +297,9 @@ let conjugations = {
   grow: {
     prt: '_n',
   },
+  guide: {
+    pst: '_d',
+  },
   hang: {
     pst: 'hung',
     prt: 'hung',
@@ -406,6 +409,10 @@ let conjugations = {
   name: {
     g: 'naming',
   },
+  patrol: {
+    g: '_ling',
+    pst: '_led',
+  },
   pay: {
     pst: 'paid',
     prt: 'paid',
@@ -428,6 +435,9 @@ let conjugations = {
   },
   ride: {
     prt: 'ridden',
+  },
+  reside: {
+    pst: '_d',
   },
   ring: {
     pst: 'rang',

@@ -1,196 +1,161 @@
 const makeId = require('../../Term/_id')
+const logic = require('./_match-logic')
 // i formally apologize for how complicated this is.
 
-//found a match? it's greedy? keep going!
-const getGreedy = function (terms, t, reg, until, index, length) {
-  let start = t
-  for (; t < terms.length; t += 1) {
-    //stop for next-reg match
-    if (until && terms[t].doesMatch(until, index + t, length)) {
-      return t
-    }
-    let count = t - start + 1
-    // is it max-length now?
-    if (reg.max !== undefined && count === reg.max) {
-      return t
-    }
-    //stop here
-    if (terms[t].doesMatch(reg, index + t, length) === false) {
-      // is it too short?
-      if (reg.min !== undefined && count < reg.min) {
-        return null
-      }
-      return t
-    }
-  }
-  return t
-}
-
-//'unspecific greedy' is a weird situation.
-const greedyTo = function (terms, t, nextReg, index, length) {
-  //if there's no next one, just go off the end!
-  if (!nextReg) {
-    return terms.length
-  }
-  //otherwise, we're looking for the next one
-  for (; t < terms.length; t += 1) {
-    if (terms[t].doesMatch(nextReg, index + t, length) === true) {
-      return t
-    }
-  }
-  //guess it doesn't exist, then.
-  return null
-}
-
-//we have a special case where an end-anchored greedy match may need to
-//start matching before the actual end; we do this by (temporarily!)
-//removing the "end" property from the matching token... since this is
-//very situation-specific, we *only* do this when we really need to.
-const isEndGreedy = function (reg, index, t, terms, length) {
-  if (reg.end === true && reg.greedy === true) {
-    if (index + t < length - 1) {
-      let tmpReg = Object.assign({}, reg, { end: false })
-      if (terms[t].doesMatch(tmpReg, index + t, length) === true) {
-        return true
-      }
-    }
-  }
-  if (terms[t].doesMatch(reg, index + t, length) === true) {
-    return true
-  }
-  return false
-}
-
-// get or create named group
-const getOrCreateGroup = function (namedGroups, namedGroupId, terms, startIndex, group) {
-  if (namedGroups[namedGroupId]) {
-    return namedGroups[namedGroupId]
-  }
-  const { id } = terms[startIndex]
-  namedGroups[namedGroupId] = {
-    group: String(group),
-    start: id,
-    length: 0,
-  }
-  return namedGroups[namedGroupId]
-}
-
 /** tries to match a sequence of terms, starting from here */
-const tryHere = function (terms, regs, index, length) {
-  const namedGroups = {}
-  let previousGroupId = null
-  let t = 0
+const tryHere = function (terms, regs, start_i, phrase_length) {
+  // all the variables that matter
+  let state = {
+    t: 0, //the term index we're on
+    terms: terms, //the working slice of term objects
+    r: 0, // the reg index we're on
+    regs: regs, //our match conditions
+    groups: {}, //all named-group matches
+    start_i: start_i, // term index we're starting from
+    phrase_length: phrase_length, // # of terms in the sentence
+    hasGroup: false,
+    groupId: null,
+    previousGroup: null,
+  }
 
   // we must satisfy each rule in 'regs'
-  for (let r = 0; r < regs.length; r += 1) {
-    let reg = regs[r]
+  for (; state.r < regs.length; state.r += 1) {
+    let reg = regs[state.r]
 
     // Check if this reg has a named capture group
-    const isNamedGroup = typeof reg.named === 'string' || typeof reg.named === 'number'
-    let namedGroupId = null
+    state.hasGroup = typeof reg.named === 'string' || typeof reg.named === 'number'
 
     // Reuse previous capture group if same
-    if (isNamedGroup) {
-      const prev = regs[r - 1]
-      if (prev && prev.named === reg.named && previousGroupId) {
-        namedGroupId = previousGroupId
+    if (state.hasGroup === true) {
+      const prev = regs[state.r - 1]
+      if (prev && prev.named === reg.named && state.previousGroup) {
+        state.groupId = state.previousGroup
       } else {
-        namedGroupId = makeId(reg.named)
-        previousGroupId = namedGroupId
+        state.groupId = makeId(reg.named)
+        state.previousGroup = state.groupId
       }
     }
-    //should we fail here?
-    if (!terms[t]) {
+    //hve we run-out of terms?
+    if (!state.terms[state.t]) {
       //are all remaining regs optional?
-      const hasNeeds = regs.slice(r).some(remain => !remain.optional)
-      if (hasNeeds === false) {
-        break
+      const haveNeeds = regs.slice(state.r).some(remain => !remain.optional)
+      if (haveNeeds === false) {
+        break //done!
       }
-      // have unmet needs
-      return [false, null]
+      return null // die
     }
 
     //support 'unspecific greedy' .* properly
     if (reg.anything === true && reg.greedy === true) {
-      let skipto = greedyTo(terms, t, regs[r + 1], reg, index, length)
+      let skipto = logic.greedyTo(state, regs[state.r + 1])
       // ensure it's long enough
-      if (reg.min !== undefined && skipto - t < reg.min) {
-        return [false, null]
+      if (reg.min !== undefined && skipto - state.t < reg.min) {
+        return null
       }
       // reduce it back, if it's too long
-      if (reg.max !== undefined && skipto - t > reg.max) {
-        t = t + reg.max
+      if (reg.max !== undefined && skipto - state.t > reg.max) {
+        state.t = state.t + reg.max
         continue
       }
-
       if (skipto === null) {
-        return [false, null] //couldn't find it
+        return null //couldn't find it
       }
-
       // is it really this easy?....
-      if (isNamedGroup) {
-        const g = getOrCreateGroup(namedGroups, namedGroupId, terms, t, reg.named)
-
-        // Update group
-        g.length = skipto - t
+      if (state.hasGroup === true) {
+        const g = logic.getGroup(state, state.t, reg.named)
+        g.length = skipto - state.t
       }
-
-      t = skipto
-
+      state.t = skipto
       continue
     }
-    //if it looks like a match, continue
 
-    if (reg.anything === true || isEndGreedy(reg, index, t, terms, length)) {
-      let startAt = t
+    // support multi-word OR (a|b|foo bar)
+    if (reg.choices !== undefined && reg.operator === 'or') {
+      let skipNum = logic.doOrBlock(state)
+      if (skipNum) {
+        // handle 'not' logic
+        if (reg.negative === true) {
+          return null // die
+        }
+        if (state.hasGroup === true) {
+          const g = logic.getGroup(state, state.t, reg.named)
+          g.length += skipNum
+        }
+        state.t += skipNum
+        continue
+      } else if (!reg.optional) {
+        return null //die
+      }
+    }
+
+    // support AND (#Noun && foo) blocks
+    if (reg.choices !== undefined && reg.operator === 'and') {
+      let skipNum = logic.doAndBlock(state)
+      if (skipNum) {
+        // handle 'not' logic
+        if (reg.negative === true) {
+          return null // die
+        }
+        if (state.hasGroup === true) {
+          const g = logic.getGroup(state, state.t, reg.named)
+          g.length += skipNum
+        }
+        state.t += skipNum
+        continue
+      } else if (!reg.optional) {
+        return null //die
+      }
+    }
+
+    if (reg.anything === true || logic.isEndGreedy(reg, state)) {
+      let startAt = state.t
       // okay, it was a match, but if it optional too,
       // we should check the next reg too, to skip it?
-      if (reg.optional && regs[r + 1]) {
+      if (reg.optional && regs[state.r + 1]) {
         // does the next reg match it too?
-        if (terms[t].doesMatch(regs[r + 1], index + t, length) === true) {
+        if (state.terms[state.t].doesMatch(regs[state.r + 1], state.start_i + state.t, state.phrase_length)) {
           // but does the next reg match the next term??
           // only skip if it doesn't
-          if (!terms[t + 1] || terms[t + 1].doesMatch(regs[r + 1], index + t, length) === false) {
-            r += 1
+          if (
+            !state.terms[state.t + 1] ||
+            !state.terms[state.t + 1].doesMatch(regs[state.r + 1], state.start_i + state.t, state.phrase_length)
+          ) {
+            state.r += 1
           }
         }
       }
       //advance to the next term!
-      t += 1
+      state.t += 1
       //check any ending '$' flags
       if (reg.end === true) {
         //if this isn't the last term, refuse the match
-        if (t !== terms.length && reg.greedy !== true) {
-          return [false, null]
+        if (state.t !== state.terms.length && reg.greedy !== true) {
+          return null //die
         }
       }
 
       //try keep it going!
       if (reg.greedy === true) {
-        // for greedy checking, we no longer care about the reg.start
-        // value, and leaving it can cause failures for anchored greedy
-        // matches.  ditto for end-greedy matches: we need an earlier non-
-        // ending match to succceed until we get to the actual end.
-        t = getGreedy(terms, t, Object.assign({}, reg, { start: false, end: false }), regs[r + 1], index, length)
-        if (t === null) {
-          return [false, null] //greedy was too short
+        state.t = logic.getGreedy(state, regs[state.r + 1])
+        if (state.t === null) {
+          return null //greedy was too short
         }
-        if (reg.min && reg.min > t) {
-          return [false, null] //greedy was too short
+        if (reg.min && reg.min > state.t) {
+          return null //greedy was too short
         }
         // if this was also an end-anchor match, check to see we really
         // reached the end
-        if (reg.end === true && index + t !== length) {
-          return [false, null] //greedy didn't reach the end
+        if (reg.end === true && state.start_i + state.t !== phrase_length) {
+          return null //greedy didn't reach the end
         }
       }
-      if (isNamedGroup) {
-        // Get or create capture group
-        const g = getOrCreateGroup(namedGroups, namedGroupId, terms, startAt, reg.named)
 
+      if (state.hasGroup === true) {
+        // Get or create capture group
+        const g = logic.getGroup(state, startAt, reg.named)
         // Update group - add greedy or increment length
-        if (t > 1 && reg.greedy) {
-          g.length += t - startAt
+        if (state.t > 1 && reg.greedy) {
+          g.length += state.t - startAt
         } else {
           g.length++
         }
@@ -203,19 +168,17 @@ const tryHere = function (terms, regs, index, length) {
       continue
     }
     // should we skip-over an implicit word?
-    if (terms[t].isImplicit() && regs[r - 1] && terms[t + 1]) {
+    if (state.terms[state.t].isImplicit() && regs[state.r - 1] && state.terms[state.t + 1]) {
       // does the next one match?
-      if (terms[t + 1].doesMatch(reg, index + t, length)) {
-        t += 2
+      if (state.terms[state.t + 1].doesMatch(reg, state.start_i + state.t, state.phrase_length)) {
+        state.t += 2
         continue
       }
     }
-
-    // console.log('   ❌\n\n')
-    return [false, null]
+    return null //die
   }
 
   //return our result
-  return [terms.slice(0, t), namedGroups]
+  return { match: state.terms.slice(0, state.t), groups: state.groups }
 }
 module.exports = tryHere

@@ -49,6 +49,7 @@ module.exports = [
   'plate',
   'player',
   'problem',
+  'priest',
   'purpose',
   'question',
   'question mark',

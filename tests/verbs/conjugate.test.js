@@ -3,6 +3,48 @@ const nlp = require('../_lib')
 
 const arr = [
   {
+    Infinitive: 'allow',
+    PresentTense: 'allows',
+    Gerund: 'allowing',
+    PastTense: 'allowed',
+  },
+  {
+    Infinitive: 'vow',
+    PresentTense: 'vows',
+    Gerund: 'vowing',
+    PastTense: 'vowed',
+  },
+  {
+    Infinitive: 'grow',
+    PresentTense: 'grows',
+    Gerund: 'growing',
+    PastTense: 'grew',
+  },
+  {
+    Infinitive: 'overthrow',
+    PresentTense: 'overthrows',
+    Gerund: 'overthrowing',
+    PastTense: 'overthrew',
+  },
+  {
+    Infinitive: 'patrol',
+    PresentTense: 'patrols',
+    Gerund: 'patrolling',
+    PastTense: 'patrolled',
+  },
+  {
+    Infinitive: 'guide',
+    PresentTense: 'guides',
+    Gerund: 'guiding',
+    PastTense: 'guided',
+  },
+  {
+    Infinitive: 'swallow',
+    PresentTense: 'swallows',
+    Gerund: 'swallowing',
+    PastTense: 'swallowed',
+  },
+  {
     Infinitive: 'convolute',
     PresentTense: 'convolutes',
     Gerund: 'convoluting',

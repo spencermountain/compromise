@@ -27,6 +27,10 @@ test('em-dash, en-dash', function (t) {
   t.equal(doc.terms().length, 3, 'en-dash-num')
   doc = nlp('20—20')
   t.equal(doc.terms().length, 3, 'em-dash-num')
+
+  doc = nlp('79-years-old')
+  t.equal(doc.terms().length, 3, 'x-years-old')
+
   t.end()
 })
 

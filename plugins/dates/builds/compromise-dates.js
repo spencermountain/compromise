@@ -626,7 +626,7 @@
   	return fn(module, module.exports), module.exports;
   }
 
-  /* spencermountain/spacetime 6.12.2 Apache 2.0 */
+  /* spencermountain/spacetime 6.12.3 Apache 2.0 */
   var spacetime = createCommonjsModule(function (module, exports) {
     (function (global, factory) {
        module.exports = factory() ;
@@ -753,7 +753,7 @@
       var _build = {
         "9|s": "2/dili,2/jayapura",
         "9|n": "2/chita,2/khandyga,2/pyongyang,2/seoul,2/tokyo,11/palau",
-        "9.5|s|04/05:03->10/04:02": "4/adelaide,4/broken_hill,4/south,4/yancowinna",
+        "9.5|s|04/04:03->10/03:02": "4/adelaide,4/broken_hill,4/south,4/yancowinna",
         "9.5|s": "4/darwin,4/north",
         "8|s|03/08:01->10/04:00": "12/casey",
         "8|s": "2/kuala_lumpur,2/makassar,2/singapore,4/perth,4/west",
@@ -771,79 +771,79 @@
         "5.5|n": "2/calcutta,2/colombo,2/kolkata",
         "4|s": "9/reunion",
         "4|n": "2/dubai,2/muscat,2/tbilisi,2/yerevan,8/astrakhan,8/samara,8/saratov,8/ulyanovsk,8/volgograd,2/volgograd,9/mahe,9/mauritius",
-        "4.5|n|03/21:00->09/20:24": "2/tehran",
+        "4.5|n|03/22:00->09/21:24": "2/tehran",
         "4.5|n": "2/kabul",
         "3|s": "12/syowa,9/antananarivo",
-        "3|n|03/29:03->10/25:04": "2/famagusta,2/nicosia,8/athens,8/bucharest,8/helsinki,8/kiev,8/mariehamn,8/nicosia,8/riga,8/sofia,8/tallinn,8/uzhgorod,8/vilnius,8/zaporozhye",
-        "3|n|03/29:02->10/25:03": "8/chisinau,8/tiraspol",
-        "3|n|03/29:00->10/24:24": "2/beirut",
-        "3|n|03/28:00->10/24:01": "2/gaza,2/hebron",
-        "3|n|03/27:02->10/25:02": "2/jerusalem,2/tel_aviv",
-        "3|n|03/27:00->10/30:01": "2/amman",
-        "3|n|03/27:00->10/29:24": "2/damascus",
+        "3|n|03/28:03->10/31:04": "2/famagusta,2/nicosia,8/athens,8/bucharest,8/helsinki,8/kiev,8/mariehamn,8/nicosia,8/riga,8/sofia,8/tallinn,8/uzhgorod,8/vilnius,8/zaporozhye",
+        "3|n|03/28:02->10/31:03": "8/chisinau,8/tiraspol",
+        "3|n|03/28:00->10/30:24": "2/beirut",
+        "3|n|03/27:00->10/30:01": "2/gaza,2/hebron",
+        "3|n|03/26:02->10/31:02": "2/jerusalem,2/tel_aviv",
+        "3|n|03/26:00->10/29:01": "2/amman",
+        "3|n|03/26:00->10/28:24": "2/damascus",
         "3|n": "0/addis_ababa,0/asmara,0/asmera,0/dar_es_salaam,0/djibouti,0/juba,0/kampala,0/mogadishu,0/nairobi,2/aden,2/baghdad,2/bahrain,2/istanbul,2/kuwait,2/qatar,2/riyadh,8/istanbul,8/kirov,8/minsk,8/moscow,8/simferopol,9/comoro,9/mayotte",
-        "2|s|03/29:02->10/25:02": "12/troll",
+        "2|s|03/28:02->10/31:02": "12/troll",
         "2|s": "0/gaborone,0/harare,0/johannesburg,0/lubumbashi,0/lusaka,0/maputo,0/maseru,0/mbabane",
-        "2|n|03/29:02->10/25:03": "0/ceuta,arctic/longyearbyen,3/jan_mayen,8/amsterdam,8/andorra,8/belgrade,8/berlin,8/bratislava,8/brussels,8/budapest,8/busingen,8/copenhagen,8/gibraltar,8/ljubljana,8/luxembourg,8/madrid,8/malta,8/monaco,8/oslo,8/paris,8/podgorica,8/prague,8/rome,8/san_marino,8/sarajevo,8/skopje,8/stockholm,8/tirane,8/vaduz,8/vatican,8/vienna,8/warsaw,8/zagreb,8/zurich",
+        "2|n|03/28:02->10/31:03": "0/ceuta,arctic/longyearbyen,3/jan_mayen,8/amsterdam,8/andorra,8/belgrade,8/berlin,8/bratislava,8/brussels,8/budapest,8/busingen,8/copenhagen,8/gibraltar,8/ljubljana,8/luxembourg,8/madrid,8/malta,8/monaco,8/oslo,8/paris,8/podgorica,8/prague,8/rome,8/san_marino,8/sarajevo,8/skopje,8/stockholm,8/tirane,8/vaduz,8/vatican,8/vienna,8/warsaw,8/zagreb,8/zurich",
         "2|n": "0/blantyre,0/bujumbura,0/cairo,0/khartoum,0/kigali,0/tripoli,8/kaliningrad",
         "1|s|04/02:01->09/03:03": "0/windhoek",
         "1|s": "0/kinshasa,0/luanda",
-        "1|n|04/19:03->05/31:02": "0/casablanca,0/el_aaiun",
-        "1|n|03/29:01->10/25:02": "3/canary,3/faeroe,3/faroe,3/madeira,8/belfast,8/dublin,8/guernsey,8/isle_of_man,8/jersey,8/lisbon,8/london",
+        "1|n|04/11:03->05/16:02": "0/casablanca,0/el_aaiun",
+        "1|n|03/28:01->10/31:02": "3/canary,3/faeroe,3/faroe,3/madeira,8/belfast,8/dublin,8/guernsey,8/isle_of_man,8/jersey,8/lisbon,8/london",
         "1|n": "0/algiers,0/bangui,0/brazzaville,0/douala,0/lagos,0/libreville,0/malabo,0/ndjamena,0/niamey,0/porto-novo,0/tunis",
         "14|n": "11/kiritimati",
-        "13|s|04/05:04->09/27:03": "11/apia",
+        "13|s|04/04:04->09/26:03": "11/apia",
         "13|s|01/15:02->11/05:03": "11/tongatapu",
         "13|n": "11/enderbury,11/fakaofo",
-        "12|s|04/05:03->09/27:02": "12/mcmurdo,12/south_pole,11/auckland",
-        "12|s|01/12:03->12/20:02": "11/fiji",
+        "12|s|04/04:03->09/26:02": "12/mcmurdo,12/south_pole,11/auckland",
+        "12|s|01/17:03->11/14:02": "11/fiji",
         "12|n": "2/anadyr,2/kamchatka,2/srednekolymsk,11/funafuti,11/kwajalein,11/majuro,11/nauru,11/tarawa,11/wake,11/wallis",
-        "12.75|s|04/05:03->04/05:02": "11/chatham",
-        "11|s|04/05:03->10/04:02": "12/macquarie",
+        "12.75|s|04/04:03->04/04:02": "11/chatham",
+        "11|s|04/04:03->10/03:02": "12/macquarie",
         "11|s": "11/bougainville",
         "11|n": "2/magadan,2/sakhalin,11/efate,11/guadalcanal,11/kosrae,11/noumea,11/pohnpei,11/ponape",
-        "11.5|n|04/05:03->10/04:02": "11/norfolk",
-        "10|s|04/05:03->10/04:02": "4/act,4/canberra,4/currie,4/hobart,4/melbourne,4/nsw,4/sydney,4/tasmania,4/victoria",
+        "11.5|n|04/04:03->10/03:02": "11/norfolk",
+        "10|s|04/04:03->10/03:02": "4/act,4/canberra,4/currie,4/hobart,4/melbourne,4/nsw,4/sydney,4/tasmania,4/victoria",
         "10|s": "12/dumontdurville,4/brisbane,4/lindeman,4/queensland",
         "10|n": "2/ust-nera,2/vladivostok,2/yakutsk,11/chuuk,11/guam,11/port_moresby,11/saipan,11/truk,11/yap",
-        "10.5|s|04/05:01->10/04:02": "4/lhi,4/lord_howe",
-        "0|n|03/29:00->10/25:01": "1/scoresbysund,3/azores",
+        "10.5|s|04/04:01->10/03:02": "4/lhi,4/lord_howe",
+        "0|n|03/28:00->10/31:01": "1/scoresbysund,3/azores",
         "0|n": "0/abidjan,0/accra,0/bamako,0/banjul,0/bissau,0/conakry,0/dakar,0/freetown,0/lome,0/monrovia,0/nouakchott,0/ouagadougou,0/sao_tome,0/timbuktu,1/danmarkshavn,3/reykjavik,3/st_helena,13/gmt,13/gmt+0,13/gmt-0,13/gmt0,13/greenwich,13/utc,13/universal,13/zulu",
-        "-9|n|03/08:02->11/01:02": "1/adak,1/atka",
+        "-9|n|03/14:02->11/07:02": "1/adak,1/atka",
         "-9|n": "11/gambier",
         "-9.5|n": "11/marquesas",
-        "-8|n|03/08:02->11/01:02": "1/anchorage,1/juneau,1/metlakatla,1/nome,1/sitka,1/yakutat",
+        "-8|n|03/14:02->11/07:02": "1/anchorage,1/juneau,1/metlakatla,1/nome,1/sitka,1/yakutat",
         "-8|n": "11/pitcairn",
-        "-7|n|03/08:02->11/01:02": "1/ensenada,1/los_angeles,1/santa_isabel,1/tijuana,1/vancouver,6/pacific,10/bajanorte",
+        "-7|n|03/14:02->11/07:02": "1/ensenada,1/los_angeles,1/santa_isabel,1/tijuana,1/vancouver,6/pacific,10/bajanorte",
         "-7|n|03/08:02->11/01:01": "1/dawson,1/whitehorse,6/yukon",
         "-7|n": "1/creston,1/dawson_creek,1/fort_nelson,1/hermosillo,1/phoenix",
-        "-6|s|04/04:22->09/05:22": "7/easterisland,11/easter",
-        "-6|n|04/05:02->10/25:02": "1/chihuahua,1/mazatlan,10/bajasur",
-        "-6|n|03/08:02->11/01:02": "1/boise,1/cambridge_bay,1/denver,1/edmonton,1/inuvik,1/ojinaga,1/shiprock,1/yellowknife,6/mountain",
+        "-6|s|04/03:22->09/04:22": "7/easterisland,11/easter",
+        "-6|n|04/04:02->10/31:02": "1/chihuahua,1/mazatlan,10/bajasur",
+        "-6|n|03/14:02->11/07:02": "1/boise,1/cambridge_bay,1/denver,1/edmonton,1/inuvik,1/ojinaga,1/shiprock,1/yellowknife,6/mountain",
         "-6|n": "1/belize,1/costa_rica,1/el_salvador,1/guatemala,1/managua,1/regina,1/swift_current,1/tegucigalpa,6/east-saskatchewan,6/saskatchewan,11/galapagos",
         "-5|s": "1/lima,1/rio_branco,5/acre",
-        "-5|n|04/05:02->10/25:02": "1/bahia_banderas,1/merida,1/mexico_city,1/monterrey,10/general",
+        "-5|n|04/04:02->10/31:02": "1/bahia_banderas,1/merida,1/mexico_city,1/monterrey,10/general",
+        "-5|n|03/14:02->11/07:02": "1/chicago,1/knox_in,1/matamoros,1/menominee,1/rainy_river,1/rankin_inlet,1/resolute,1/winnipeg,6/central",
         "-5|n|03/12:03->11/05:01": "1/north_dakota",
-        "-5|n|03/08:02->11/01:02": "1/chicago,1/knox_in,1/matamoros,1/menominee,1/rainy_river,1/rankin_inlet,1/resolute,1/winnipeg,6/central",
         "-5|n": "1/atikokan,1/bogota,1/cancun,1/cayman,1/coral_harbour,1/eirunepe,1/guayaquil,1/jamaica,1/panama,1/porto_acre",
         "-4|s|05/13:23->08/13:01": "12/palmer",
-        "-4|s|04/04:24->09/06:00": "1/santiago,7/continental",
-        "-4|s|03/21:24->10/04:00": "1/asuncion",
+        "-4|s|04/03:24->09/05:00": "1/santiago,7/continental",
+        "-4|s|03/27:24->10/03:00": "1/asuncion",
         "-4|s|02/16:24->11/03:00": "1/campo_grande,1/cuiaba",
         "-4|s": "1/la_paz,1/manaus,5/west",
+        "-4|n|03/14:02->11/07:02": "1/detroit,1/fort_wayne,1/grand_turk,1/indianapolis,1/iqaluit,1/louisville,1/montreal,1/nassau,1/new_york,1/nipigon,1/pangnirtung,1/port-au-prince,1/thunder_bay,1/toronto,6/eastern",
+        "-4|n|03/14:00->11/07:01": "1/havana",
         "-4|n|03/12:03->11/05:01": "1/indiana,1/kentucky",
-        "-4|n|03/08:02->11/01:02": "1/detroit,1/fort_wayne,1/grand_turk,1/indianapolis,1/iqaluit,1/louisville,1/montreal,1/nassau,1/new_york,1/nipigon,1/pangnirtung,1/port-au-prince,1/thunder_bay,1/toronto,6/eastern",
-        "-4|n|03/08:00->11/01:01": "1/havana",
         "-4|n": "1/anguilla,1/antigua,1/aruba,1/barbados,1/blanc-sablon,1/boa_vista,1/caracas,1/curacao,1/dominica,1/grenada,1/guadeloupe,1/guyana,1/kralendijk,1/lower_princes,1/marigot,1/martinique,1/montserrat,1/port_of_spain,1/porto_velho,1/puerto_rico,1/santo_domingo,1/st_barthelemy,1/st_kitts,1/st_lucia,1/st_thomas,1/st_vincent,1/tortola,1/virgin",
         "-3|s": "1/argentina,1/buenos_aires,1/cordoba,1/fortaleza,1/montevideo,1/punta_arenas,1/sao_paulo,12/rothera,3/stanley,5/east",
-        "-3|n|03/28:22->10/24:23": "1/nuuk",
-        "-3|n|03/08:02->11/01:02": "1/glace_bay,1/goose_bay,1/halifax,1/moncton,1/thule,3/bermuda,6/atlantic",
+        "-3|n|03/27:22->10/30:23": "1/nuuk",
+        "-3|n|03/14:02->11/07:02": "1/glace_bay,1/goose_bay,1/halifax,1/moncton,1/thule,3/bermuda,6/atlantic",
         "-3|n": "1/araguaina,1/bahia,1/belem,1/catamarca,1/cayenne,1/jujuy,1/maceio,1/mendoza,1/paramaribo,1/recife,1/rosario,1/santarem",
         "-2|s": "5/denoronha",
-        "-2|n|03/28:22->10/24:23": "1/godthab",
-        "-2|n|03/08:02->11/01:02": "1/miquelon",
+        "-2|n|03/27:22->10/30:23": "1/godthab",
+        "-2|n|03/14:02->11/07:02": "1/miquelon",
         "-2|n": "1/noronha,3/south_georgia",
-        "-2.5|n|03/08:02->11/01:02": "1/st_johns,6/newfoundland",
+        "-2.5|n|03/14:02->11/07:02": "1/st_johns,6/newfoundland",
         "-1|n": "3/cape_verde",
         "-11|n": "11/midway,11/niue,11/pago_pago,11/samoa",
         "-10|n": "11/honolulu,11/johnston,11/rarotonga,11/tahiti"
@@ -1559,19 +1559,19 @@
           return "".concat(sign).concat(hours).concat(delimiter).concat(minutes);
         };
       });
-      var fns_1 = fns.isLeapYear;
-      var fns_2 = fns.isDate;
-      var fns_3 = fns.isArray;
-      var fns_4 = fns.isObject;
-      var fns_5 = fns.isBoolean;
-      var fns_6 = fns.zeroPad;
-      var fns_7 = fns.titleCase;
-      var fns_8 = fns.ordinal;
-      var fns_9 = fns.toCardinal;
-      var fns_10 = fns.normalize;
-      var fns_11 = fns.getEpoch;
-      var fns_12 = fns.beADate;
-      var fns_13 = fns.formatTimezone;
+      fns.isLeapYear;
+      fns.isDate;
+      fns.isArray;
+      fns.isObject;
+      fns.isBoolean;
+      fns.zeroPad;
+      fns.titleCase;
+      fns.ordinal;
+      fns.toCardinal;
+      fns.normalize;
+      fns.getEpoch;
+      fns.beADate;
+      fns.formatTimezone;
       var isLeapYear = fns.isLeapYear; //given a month, return whether day number exists in it
 
       var hasDate = function hasDate(obj) {
@@ -1674,7 +1674,7 @@
             month = parseInt(arr[2], 10) - 1;
           }
 
-          var year = arr[3] || new Date().getFullYear();
+          var year = parseYear(arr[3], s._today) || new Date().getFullYear();
           var obj = {
             year: year,
             month: month,
@@ -2355,6 +2355,9 @@
         nice: function nice(s) {
           return "".concat(months["short"]()[s.month()], " ").concat(fns.ordinal(s.date()), ", ").concat(s.time());
         },
+        'nice-24': function nice24(s) {
+          return "".concat(months["short"]()[s.month()], " ").concat(fns.ordinal(s.date()), ", ").concat(s.hour24(), ":").concat(fns.zeroPad(s.minute()));
+        },
         'nice-year': function niceYear(s) {
           return "".concat(months["short"]()[s.month()], " ").concat(fns.ordinal(s.date()), ", ").concat(s.year());
         },
@@ -2363,6 +2366,9 @@
         },
         'nice-full': function niceFull(s) {
           return "".concat(s.dayName(), " ").concat(applyCaseFormat(s.monthName()), " ").concat(fns.ordinal(s.date()), ", ").concat(s.time());
+        },
+        'nice-full-24': function niceFull24(s) {
+          return "".concat(s.dayName(), " ").concat(applyCaseFormat(s.monthName()), " ").concat(fns.ordinal(s.date()), ", ").concat(s.hour24(), ":").concat(fns.zeroPad(s.minute()));
         }
       }; //aliases
 
@@ -2379,6 +2385,7 @@
         'month-iso': 'iso-month',
         'year-iso': 'iso-year',
         'nice-short': 'nice',
+        'nice-short-24': 'nice-24',
         mdy: 'numeric-us',
         dmy: 'numeric-uk',
         ymd: 'numeric',
@@ -2422,7 +2429,13 @@
             fmt = fmt.toLowerCase().trim();
 
             if (format.hasOwnProperty(fmt)) {
-              return String(format[fmt](s));
+              var _out = String(format[fmt](s));
+
+              if (fmt !== 'ampm') {
+                return applyCaseFormat(_out);
+              }
+
+              return _out;
             }
 
             return '';
@@ -4915,7 +4928,7 @@
       };
 
       var whereIts_1 = whereIts;
-      var _version = '6.12.2';
+      var _version = '6.12.3';
 
       var main$1 = function main(input, tz, options) {
         return new spacetime(input, tz, options);
@@ -4960,6 +4973,11 @@
           spacetime.prototype[k] = obj[k];
         });
         return this;
+      };
+
+      main$1.timezones = function () {
+        var s = new spacetime();
+        return s.timezones;
       }; //find tz by time
 
 
@@ -5727,7 +5745,7 @@
   var _06Timezone = parseTimezone;
 
   var Unit = /*#__PURE__*/function () {
-    function Unit(input, unit, context, keepTime) {
+    function Unit(input, unit, context) {
       _classCallCheck(this, Unit);
 
       this.unit = unit || 'day';
@@ -5745,7 +5763,7 @@
 
       var d = spacetime(input, context.timezone, {
         today: today
-      }); // set to beginning
+      }); // set to beginning?
       // if (d.isValid() && keepTime !== true) {
       //   d = d.startOf(this.unit)
       // }
@@ -6412,8 +6430,8 @@
   }, _day, _year, _week, _time);
 
   var Day$1 = units.Day,
-      Moment$1 = units.Moment,
-      Hour$1 = units.Hour;
+      Moment$1 = units.Moment;
+      units.Hour;
   var knownWord = {
     today: function today(context) {
       return new Day$1(context.today, null, context);
@@ -6978,13 +6996,13 @@
       Season$1 = units.Season,
       WeekDay$1 = units.WeekDay,
       Day$2 = units.Day,
-      Hour$2 = units.Hour,
+      Hour$1 = units.Hour,
       Minute$1 = units.Minute,
       Moment$2 = units.Moment;
   var mapping = {
     day: Day$2,
-    hour: Hour$2,
-    evening: Hour$2,
+    hour: Hour$1,
+    evening: Hour$1,
     second: Moment$2,
     milliscond: Moment$2,
     instant: Moment$2,
@@ -7000,7 +7018,7 @@
     qtr: AnyQuarter$1,
     wk: Week$1,
     sec: Moment$2,
-    hr: Hour$2
+    hr: Hour$1
   };
   var matchStr = "^(".concat(Object.keys(mapping).join('|'), ")$"); // when a unit of time is spoken of as 'this month' - instead of 'february'
 
@@ -7286,7 +7304,8 @@
 
     var str = doc.text('reduced'); // punt it to spacetime, for the heavy-lifting
 
-    var unit = new Day$3(str, null, context); // did we find a date?
+    var unit = new Day$3(str, null, context); // console.log(str, unit, context.today.year())
+    // did we find a date?
 
     if (unit.d.isValid() === false) {
       return null;
@@ -7301,7 +7320,7 @@
       Season$3 = units.Season,
       Week$2 = units.Week,
       Day$4 = units.Day,
-      Hour$3 = units.Hour,
+      Hour$2 = units.Hour,
       Minute$2 = units.Minute,
       Month$2 = units.Month,
       WeekEnd$2 = units.WeekEnd;
@@ -7312,7 +7331,7 @@
     month: Month$2,
     quarter: Quarter$2,
     season: Season$3,
-    hour: Hour$3,
+    hour: Hour$2,
     minute: Minute$2
   };
 
@@ -7817,7 +7836,7 @@
   var _abbrevs = arr;
 
   var methods$1 = {
-    /** overload the original json with noun information */
+    /** overload the original json with date information */
     json: function json(options) {
       var _this = this;
 
@@ -7910,6 +7929,147 @@
     }
   };
 
+  var known = {
+    century: true,
+    day: true,
+    decade: true,
+    hour: true,
+    millisecond: true,
+    minute: true,
+    month: true,
+    second: true,
+    weekend: true,
+    week: true,
+    year: true,
+    quarter: true,
+    season: true
+  };
+  var mapping$1 = {
+    hr: 'hour',
+    min: 'minute',
+    sec: 'second',
+    'week end': 'weekend',
+    wk: 'week',
+    yr: 'year',
+    qtr: 'quarter'
+  }; // add plurals
+
+  Object.keys(mapping$1).forEach(function (k) {
+    mapping$1[k + 's'] = mapping$1[k];
+  });
+
+  var parse$1 = function parse(doc) {
+    var duration = {}; //parse '8 minutes'
+
+    doc.match('#Value+ #Duration').forEach(function (m) {
+      var num = m.numbers().get(0);
+      var unit = m.match('#Duration').nouns().toSingular().text(); // turn 'mins' into 'minute'
+
+      if (mapping$1.hasOwnProperty(unit)) {
+        unit = mapping$1[unit];
+      }
+
+      if (known.hasOwnProperty(unit) && num) {
+        duration[unit] = num;
+      }
+    });
+    return duration;
+  };
+
+  var parse_1$1 = parse$1;
+
+  var methods$2 = {
+    /** overload the original json with duration information */
+    json: function json(options) {
+      var n = null;
+
+      if (typeof options === 'number') {
+        n = options;
+        options = null;
+      }
+
+      options = options || {
+        terms: false
+      };
+      var res = [];
+      this.forEach(function (doc) {
+        var json = doc.json(options);
+        json.duration = parse_1$1(doc);
+        res.push(json);
+      });
+
+      if (n !== null) {
+        return res[n];
+      }
+
+      return res;
+    },
+
+    /** change to a standard duration format */
+    normalize: function normalize() {
+      this.forEach(function (doc) {
+        var duration = parse_1$1(doc);
+        var list = [];
+        Object.keys(duration).forEach(function (unit) {
+          var num = duration[unit];
+          var word = unit;
+
+          if (num !== 1) {
+            word += 's';
+          }
+
+          list.push("".concat(num, " ").concat(word));
+        }); // splice-in an 'and'
+
+        if (list.length > 1) {
+          var beforeEnd = list.length - 1;
+          list.splice(beforeEnd, 0, 'and');
+        }
+
+        var text = list.join(' ');
+        doc.replaceWith(text);
+      });
+      return this;
+    }
+  };
+
+  var addDurations = function addDurations(Doc) {
+    /** phrases like '2 months', or '2mins' */
+    var Durations = /*#__PURE__*/function (_Doc) {
+      _inherits(Durations, _Doc);
+
+      var _super = _createSuper(Durations);
+
+      function Durations(list, from, w) {
+        var _this;
+
+        _classCallCheck(this, Durations);
+
+        _this = _super.call(this, list, from, w);
+        _this.context = {};
+        return _this;
+      }
+
+      return Durations;
+    }(Doc); //add-in methods
+
+
+    Object.assign(Durations.prototype, methods$2);
+    /** phrases like '2 months' */
+
+    Doc.prototype.durations = function (n) {
+      var m = this.match('#Value+ #Duration and? #Value+? #Duration?');
+
+      if (typeof n === 'number') {
+        m = m.get(n);
+      }
+
+      return new Durations(m.list, this, this.world);
+    };
+  };
+
+  var durations$1 = addDurations;
+
   var opts = {
     punt: {
       weeks: 2
@@ -7922,8 +8082,10 @@
 
     world.addWords(words); // run our tagger
 
-    world.postProcess(_01Tagger);
-    /**  */
+    world.postProcess(_01Tagger); // add .durations() class + methods
+
+    durations$1(Doc);
+    /** phraes like 'nov 2nd' or 'on tuesday' */
 
     var Dates = /*#__PURE__*/function (_Doc) {
       _inherits(Dates, _Doc);

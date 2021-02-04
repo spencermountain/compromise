@@ -138,3 +138,27 @@ test('basic-plugin', function (t) {
   t.equal(doc.match('#Animal').out('normal'), 'trex', 'tagset-works')
   t.end()
 })
+
+test('addConjugations', function (t) {
+  nlp.extend((_Doc, world) => {
+    world.addConjugations({ swell: { PastTense: 'got swol' } })
+  })
+  const doc = nlp('swell').tag('Verb')
+  let obj = doc.verbs().conjugate()[0]
+  t.equal(obj.PastTense, 'got swol', 'custom past-tense')
+  t.end()
+})
+
+test('addPlurals', function (t) {
+  nlp.extend((_Doc, world) => {
+    world.addPlurals({ neglectee: 'neglecterinos' })
+  })
+  let doc = nlp('neglectee')
+  let str = doc.nouns().toPlural().text()
+  t.equal(str, 'neglecterinos', 'custom toPlural')
+
+  doc = nlp('neglecterinos')
+  str = doc.nouns().toSingular().text()
+  t.equal(str, 'neglectee', 'custom toSingular')
+  t.end()
+})

@@ -117,6 +117,7 @@ const parseExplicit = function (doc, context) {
   let str = doc.text('reduced')
   // punt it to spacetime, for the heavy-lifting
   let unit = new Day(str, null, context)
+  // console.log(str, unit, context.today.year())
   // did we find a date?
   if (unit.d.isValid() === false) {
     return null

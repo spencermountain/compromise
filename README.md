@@ -212,21 +212,6 @@ doc.verbs().toNegative()
 // 'London is not calling'
 ```
 
-or if you don't care about POS-tagging, you can use the tokenize-only build: (90kb!)
-
-```html
-<script src="https://unpkg.com/compromise/builds/compromise-tokenize.js"></script>
-<script>
-  var doc = nlp('No, my son is also named Bort.')
-
-  //you can see the text has no tags
-  console.log(doc.has('#Noun')) //false
-
-  //but the whole api still works
-  console.log(doc.has('my .* is .? named /^b[oa]rt/')) //true
-</script>
-```
-
 <!-- spacer -->
 <img height="30" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
@@ -315,6 +300,87 @@ nlp.extend((Doc, world) => {
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221848-11404200-ffb8-11e9-90cd-3adee8d8564f.png"/>
 </div>
+
+<!-- spacer -->
+<div >
+  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+</div>
+
+
+### Docs:
+
+##### Warm introduction:
+
+- **[#1 Input → output](https://docs.compromise.cool/tutorial-1)**
+- **[#2 Match & transform](https://docs.compromise.cool/compromise-tutorial-2)**
+- **[#3 Making a chat-bot](https://docs.compromise.cool/compromise-making-a-bot)**
+  <!-- * **[Tutorial #4]()**  -  Making a plugin -->
+
+<div >
+  <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+</div>
+
+##### Documentation:
+
+| Concepts | API   | Plugins |
+| ------------- |:-------------:| -----:|
+| [Accuracy](https://observablehq.com/@spencermountain/compromise-accuracy) | [Accessors](https://observablehq.com/@spencermountain/compromise-accessors) | [Adjectives](https://observablehq.com/@spencermountain/compromise-adjectives)
+| [Caching](https://observablehq.com/@spencermountain/compromise-cache) | [Constructor-methods](https://observablehq.com/@spencermountain/compromise-constructor-methods) | [Dates](https://observablehq.com/@spencermountain/compromise-dates)
+| [Case](https://observablehq.com/@spencermountain/compromise-case) | [Contractions](https://observablehq.com/@spencermountain/compromise-contractions) | [Export](https://observablehq.com/@spencermountain/compromise-export)
+| [Filesize](https://observablehq.com/@spencermountain/compromise-filesize) | [Insert](https://observablehq.com/@spencermountain/compromise-insert) | [Hash](https://observablehq.com/@spencermountain/compromise-hash)
+| [Internals](https://observablehq.com/@spencermountain/compromise-internals) | [Json](https://observablehq.com/@spencermountain/compromise-json) | [Html](https://observablehq.com/@spencermountain/compromise-html)
+| [Justification](https://observablehq.com/@spencermountain/compromise-justification) | [Lists](https://observablehq.com/@spencermountain/compromise-lists) | [Keypress](https://observablehq.com/@spencermountain/compromise-keypress)
+| [Lexicon](https://observablehq.com/@spencermountain/compromise-lexicon) | [Loops](https://observablehq.com/@spencermountain/compromise-loops) | [Ngrams](https://observablehq.com/@spencermountain/compromise-ngram)
+| [Match-syntax](https://observablehq.com/@spencermountain/compromise-match-syntax) | [Match](https://observablehq.com/@spencermountain/compromise-match) | [Numbers](https://observablehq.com/@spencermountain/compromise-values)
+| [Performance](https://observablehq.com/@spencermountain/compromise-performance) | [Nouns](https://observablehq.com/@spencermountain/nouns) | [Paragraphs](https://observablehq.com/@spencermountain/compromise-paragraphs)
+| [Plugins](https://observablehq.com/@spencermountain/compromise-plugins) | [Output](https://observablehq.com/@spencermountain/compromise-output) | [Scan](https://observablehq.com/@spencermountain/compromise-scan)
+| [Projects](https://observablehq.com/@spencermountain/compromise-projects) | [Selections](https://observablehq.com/@spencermountain/compromise-selections) | [Sentences](https://observablehq.com/@spencermountain/compromise-sentences)
+| [Tagger](https://observablehq.com/@spencermountain/compromise-tagger) | [Sorting](https://observablehq.com/@spencermountain/compromise-sorting) | [Syllables](https://observablehq.com/@spencermountain/compromise-syllables)| [Tags](https://observablehq.com/@spencermountain/compromise-tags) | [Split](https://observablehq.com/@spencermountain/compromise-split) |
+| [Tokenization](https://observablehq.com/@spencermountain/compromise-tokenization) | [Text](https://observablehq.com/@spencermountain/compromise-text) | [Pronounce](https://observablehq.com/@spencermountain/compromise-pronounce)
+| [Named-Entities](https://observablehq.com/@spencermountain/compromise-topics) | [Utils](https://observablehq.com/@spencermountain/compromise-utils) | [Strict](https://observablehq.com/@spencermountain/compromise-strict)
+| [Whitespace](https://observablehq.com/@spencermountain/compromise-whitespace) | [Verbs](https://observablehq.com/@spencermountain/verbs) | [Penn-tags](https://observablehq.com/@spencermountain/compromise-penn-tags)
+| [World](https://observablehq.com/@spencermountain/compromise-world) | [Normalization](https://observablehq.com/@spencermountain/compromise/Normalization) |
+| [Fuzzy-matching](https://observablehq.com/@spencermountain/compromise-fuzzy-matching) |[Typescript](https://observablehq.com/@spencermountain/compromise-typescript) |
+
+
+##### Talks:
+
+- **[Language as an Interface](https://www.youtube.com/watch?v=WuPVS2tCg8s)** - by Spencer Kelly
+- **[Coding Chat Bots](https://www.youtube.com/watch?v=c_hmwFwvO0U)** - by KahWee Teng
+- **[On Typing and data](https://vimeo.com/496095722)** - by Spencer Kelly
+
+##### Articles:
+- **[Geocoding Social Conversations with NLP and JavaScript](http://compromise.cool)** - by Microsoft
+- **[Microservice Recipe](https://eventn.com/recipes/text-parsing-with-nlp-compromise)** - by Eventn
+- **[Adventure Game Sentence Parsing with Compromise](https://killalldefects.com/2020/02/20/adventure-game-sentence-parsing-with-compromise/)**
+- **[Building Text-Based Games](https://killalldefects.com/2019/09/24/building-text-based-games-with-compromise-nlp/)** - by Matt Eland
+- **[Fun with javascript in BigQuery](https://medium.com/@hoffa/new-in-bigquery-persistent-udfs-c9ea4100fd83#6e09)** - by Felipe Hoffa
+- **[Natural Language Processing... in the Browser?](https://dev.to/charlesdlandau/natural-language-processing-in-the-browser-52hj)** - by Charles Landau
+
+
+##### Some fun Applications:
+
+- **[Chat dialogue framework](http://superscriptjs.com/)** - by Rob Ellis
+- **[Automated Bechdel Test](https://github.com/guardian/bechdel-test)** - by The Guardian
+- **[Story generation framework](https://perchance.org/welcome)** - by Jose Phrocca
+- **[Tumbler blog of lists](https://leanstooneside.tumblr.com/)** - horse-ebooks-like lists - by Michael Paulukonis
+- **[Video Editing from Transcription](https://newtheory.io/)** - by New Theory
+- **[Browser extension Fact-checking](https://github.com/AlexanderKidd/FactoidL)** - by Alexander Kidd
+- **[Siri shortcut](https://routinehub.co/shortcut/3260)** - by Michael Byrns
+- **[Amazon skill](https://github.com/tajddin/voiceplay)** - by Tajddin Maghni
+- **[Tasking Slack-bot](https://github.com/kevinsuh/toki)** - by Kevin Suh
+[[see more]](https://observablehq.com/@spencermountain/compromise-projects)
+
+
+<!-- spacer -->
+<div align="center">
+  <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+  <hr/>
+</div>
+<div align="center">
+  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221632-b9094000-ffb7-11e9-99e0-b48edd6cdf8a.png"/>
+</div>
+
 
 ### API:
 
@@ -650,16 +716,17 @@ this plugin creates a wrapper around the default sentence objects.
 
 - **[.syllables()](https://observablehq.com/@spencermountain/compromise-syllables)** - split each term by its typical pronounciation
 
+##### Penn-tags
+
+`npm install compromise-penn-tags`
+
+- **[.pennTags()](https://observablehq.com/@spencermountain/compromise-penn-tags)** - return POS tags from the Penn Tagset
+
 <!-- spacer -->
 <div >
   <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
   <hr/>
   <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-</div>
-
-<!-- spacer -->
-<div >
-  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 </div>
 
 ### Typescript
@@ -681,49 +748,25 @@ nlpEx('This is type safe!').numbers()
   <a href="https://docs.compromise.cool/compromise-typescript">typescript docs</a>
 </div>
 
-### Docs:
 
-##### Tutorials:
+### Partial-builds
+or if you don't care about POS-tagging, you can use the tokenize-only build: (90kb!)
 
-- **[Tutorial #1](https://docs.compromise.cool/tutorial-1)** - Input → output
-- **[Tutorial #2](https://docs.compromise.cool/compromise-tutorial-2)** - Match & transform
-- **[Tutorial #3](https://docs.compromise.cool/compromise-making-a-bot)** - Making a chat-bot
-  <!-- * **[Tutorial #4]()**  -  Making a plugin -->
+```html
+<script src="https://unpkg.com/compromise/builds/compromise-tokenize.js"></script>
+<script>
+  var doc = nlp('No, my son is also named Bort.')
 
-##### 3rd party:
+  //you can see the text has no tags
+  console.log(doc.has('#Noun')) //false
 
-- **[Geocoding Social Conversations with NLP and JavaScript](http://compromise.cool)** - by Microsoft
-- **[Microservice Recipe](https://eventn.com/recipes/text-parsing-with-nlp-compromise)** - by Eventn
-- \*\*[Adventure Game Sentence Parsing with Compromise](https://killalldefects.com/2020/02/20/adventure-game-sentence-parsing-with-compromise/)
-- **[Building Text-Based Games](https://killalldefects.com/2019/09/24/building-text-based-games-with-compromise-nlp/)** - by Matt Eland
-- **[Fun with javascript in BigQuery](https://medium.com/@hoffa/new-in-bigquery-persistent-udfs-c9ea4100fd83#6e09)** - by Felipe Hoffa
-- **[Natural Language Processing... in the Browser???](https://dev.to/charlesdlandau/natural-language-processing-in-the-browser-52hj)** - by Charles Landau
+  //but the whole api still works
+  console.log(doc.has('my .* is .? named /^b[oa]rt/')) //true
+</script>
+```
 
-##### Talks:
-
-- **[Language as an Interface](https://www.youtube.com/watch?v=WuPVS2tCg8s)** - by Spencer Kelly
-- **[Coding Chat Bots](https://www.youtube.com/watch?v=c_hmwFwvO0U)** - by KahWee Teng
-
-<div align="center">
-  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221824-09809d80-ffb8-11e9-9ef0-6ed3574b0ce8.png"/>
-</div>
-
-##### Some fun Applications:
-
-- **[Chat dialogue framework](http://superscriptjs.com/)** - by Rob Ellis
-- **[Automated Bechdel Test](https://github.com/guardian/bechdel-test)** - by The Guardian
-- **[Story generation framework](https://perchance.org/welcome)** - by Jose Phrocca
-- **[Tumbler blog of lists](https://leanstooneside.tumblr.com/)** - horse-ebooks-like lists - by Michael Paulukonis
-- **[Video Editing from Transcription](https://newtheory.io/)** - by New Theory
-- **[Browser extension Fact-checking](https://github.com/AlexanderKidd/FactoidL)** - by Alexander Kidd
-- **[Siri shortcut](https://routinehub.co/shortcut/3260)** - by Michael Byrns
-- **[Amazon skill](https://github.com/tajddin/voiceplay)** - by Tajddin Maghni
-- **[Tasking Slack-bot](https://github.com/kevinsuh/toki)** - by Kevin Suh
-
-<!-- spacer -->
-<div align="center">
-  <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-  <hr/>
+<div >
+  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 </div>
 
 #### Limitations:
@@ -796,7 +839,7 @@ nlpEx('This is type safe!').numbers()
       <summary>✨ Partial builds?</summary>
       <p></p>
       <ul>
-        we do offer a [compromise-tokenize](./builds/compromise-tokenize.js) build, which has the POS-tagger pulled-out.
+        we do offer a <a href="./builds/compromise-tokenize.js">compromise-tokenize</a> build, which has the POS-tagger pulled-out.
         <br/> 
         but otherwise, compromise isn't easily tree-shaken.
         <br/> 
@@ -817,11 +860,14 @@ nlpEx('This is type safe!').numbers()
 
 #### See Also:
 
+- &nbsp; **[en-pos](https://github.com/finnlp/en-pos)** - very-clever javascript pos-tagger by *[Alex Corvi](https://github.com/alexcorvi)*
 - &nbsp; **[naturalNode](https://github.com/NaturalNode/natural)** - fancier statistical nlp in javascript
-- &nbsp; **[superScript](http://superscriptjs.com/)** - clever conversation engine in js
+- &nbsp; **[compendium-js](https://github.com/Ulflander/compendium-js)** - POS and sentiment analysis in javascript
 - &nbsp; **[nodeBox linguistics](https://www.nodebox.net/code/index.php/Linguistics)** - conjugation, inflection in javascript
 - &nbsp; **[reText](https://github.com/wooorm/retext)** - very impressive [text utilities](https://github.com/wooorm/retext/blob/master/doc/plugins.md) in javascript
+- &nbsp; **[superScript](http://superscriptjs.com/)** - conversation engine in js
 - &nbsp; **[jsPos](https://code.google.com/archive/p/jspos/)** - javascript build of the time-tested Brill-tagger
+
 - &nbsp; **[spaCy](https://spacy.io/)** - speedy, multilingual tagger in C/python
 - &nbsp; **[Prose](https://github.com/jdkato/prose/)** - quick tagger in Go by Joseph Kato
 

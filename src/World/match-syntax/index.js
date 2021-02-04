@@ -1,5 +1,5 @@
-const parseToken = require('./parseToken')
-const postProcess = require('./postProcess')
+const parseToken = require('./01-parseToken')
+const postProcess = require('./02-postProcess')
 const hasReg = /[^[a-z]]\//g
 
 const isArray = function (arr) {
@@ -41,7 +41,7 @@ const byWords = function (arr) {
   let words = []
   arr.forEach(a => {
     //keep brackets lumped together
-    if (/^[[^_/]?\(/.test(a[0])) {
+    if (/\(.*\)/.test(a)) {
       words.push(a)
       return
     }
@@ -54,32 +54,65 @@ const byWords = function (arr) {
 
 //turn an array into a 'choices' list
 const byArray = function (arr) {
+  let blocks = arr.map(s => {
+    return [
+      {
+        word: s,
+      },
+    ]
+  })
   return [
     {
-      choices: arr.map(s => {
-        return {
-          word: s,
-        }
-      }),
+      choices: blocks,
+      operator: 'or',
     },
   ]
 }
 
+// turn a Doc object into a reg of ids to lookup
 const fromDoc = function (doc) {
   if (!doc || !doc.list || !doc.list[0]) {
     return []
   }
-  let ids = []
+  let regs = []
   doc.list.forEach(p => {
+    let ids = []
     p.terms().forEach(t => {
-      ids.push({ id: t.id })
+      ids.push(t.id)
     })
+    regs.push(ids)
   })
-  return [{ choices: ids, greedy: true }]
+  return [{ idBlocks: regs }]
+}
+
+// add fuzziness etc to each reg
+const addOptions = function (tokens, opts) {
+  // add default fuzzy-search limit
+  if (opts.fuzzy === true) {
+    opts.fuzzy = 0.85
+  }
+  if (typeof opts.fuzzy === 'number') {
+    tokens = tokens.map(reg => {
+      // add a fuzzy-match on 'word' tokens
+      if (opts.fuzzy > 0 && reg.word) {
+        reg.fuzzy = opts.fuzzy
+      }
+      //add it to or|and choices too
+      if (reg.choices) {
+        reg.choices.forEach(block => {
+          block.forEach(r => {
+            r.fuzzy = opts.fuzzy
+          })
+        })
+      }
+      return reg
+    })
+  }
+  return tokens
 }
 
 /** parse a match-syntax string into json */
-const syntax = function (input) {
+const syntax = function (input, opts = {}) {
   // fail-fast
   if (input === null || input === undefined || input === '') {
     return []
@@ -112,11 +145,14 @@ const syntax = function (input) {
   let tokens = byParentheses(input)
   // console.log(tokens)
   tokens = byWords(tokens)
-  tokens = tokens.map(parseToken)
+  tokens = tokens.map(str => parseToken(str, opts))
   //clean up anything weird
-  tokens = postProcess(tokens)
+  tokens = postProcess(tokens, opts)
+  // add fuzzy limits, etc
+  tokens = addOptions(tokens, opts)
   // console.log(tokens)
   return tokens
 }
 
 module.exports = syntax
+// console.log(syntax('before [(united states|canadian)] after'))

@@ -129,6 +129,9 @@ doc.dates().json()
 - **.dates()** - find dates like `June 8th` or `03/03/18`
   - **.dates().json()** - overloaded output with date metadata
   - **.dates().format('')** - convert the dates to specific formats
+- **.durations()** - find unspecified lengths of time like `two hours and 30mins`
+  - **.durations().json()** - overloaded output with duration metadata
+  - **.durations().normalize()** - turn 3mins into 3 minutes
 
 `.dates()` accepts an optional object, that lets you set the context for the date parsing.
 

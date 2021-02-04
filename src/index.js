@@ -7,7 +7,7 @@ const Phrase = require('./Phrase/Phrase')
 const Term = require('./Term/Term')
 const Pool = require('./01-tokenizer/Pool')
 const tinyTagger = require('./02-tagger/tiny')
-const parseMatch = require('./Doc/match/syntax')
+const parseMatch = require('./World/match-syntax')
 
 function instance(worldInstance) {
   //blast-out our word-lists, just once
@@ -67,8 +67,8 @@ function instance(worldInstance) {
     return world
   }
   /** pre-parse any match statements */
-  nlp.parseMatch = function (str) {
-    return parseMatch(str)
+  nlp.parseMatch = function (str, opts) {
+    return parseMatch(str, opts)
   }
 
   /** current version of the library */

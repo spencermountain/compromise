@@ -1,7 +1,8 @@
 const failFast = require('./02-failFast')
 const tryMatch = require('./03-tryMatch')
 const postProcess = require('./04-postProcess')
-const syntax = require('../../Doc/match/syntax')
+const syntax = require('../../World/match-syntax')
+const idLookup = require('./idLookup')
 
 /**  returns a simple array of arrays */
 const matchAll = function (p, regs, matchOne = false) {
@@ -19,12 +20,20 @@ const matchAll = function (p, regs, matchOne = false) {
   let terms = p.terms()
   let matches = []
 
+  // these id-lookups can be super-fast
+  if (regs[0].idBlocks) {
+    let res = idLookup(terms, regs)
+    if (res && res.length > 0) {
+      return postProcess(terms, regs, res)
+    }
+  }
+
   //optimisation for '^' start logic
   if (regs[0].start === true) {
-    let [match, groups] = tryMatch(terms, regs, 0, terms.length)
-    if (match !== false && match.length > 0) {
-      match = match.filter(m => m)
-      matches.push({ match, groups })
+    let res = tryMatch(terms, regs, 0, terms.length)
+    if (res && res.match && res.match.length > 0) {
+      res.match = res.match.filter(m => m)
+      matches.push(res)
     }
 
     return postProcess(terms, regs, matches)
@@ -35,14 +44,15 @@ const matchAll = function (p, regs, matchOne = false) {
     if (i + minLength > terms.length) {
       break
     }
+
     //try it!
-    let [match, groups] = tryMatch(terms.slice(i), regs, i, terms.length)
-    if (match !== false && match.length > 0) {
+    let res = tryMatch(terms.slice(i), regs, i, terms.length)
+    if (res && res.match && res.match.length > 0) {
       //zoom forward!
-      i += match.length - 1
+      i += res.match.length - 1
       //[capture-groups] return some null responses
-      match = match.filter(m => m)
-      matches.push({ match, groups })
+      res.match = res.match.filter(m => m)
+      matches.push(res)
 
       //ok, maybe that's enough?
       if (matchOne === true) {

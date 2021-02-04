@@ -11,6 +11,17 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 <!-- #### [Unreleased] 
 -->
 
+#### 13.9.0 [Feb 2021]
+- **[new]** - World.addConjugations() method
+- **[new]** - World.addPlurals() method
+- **[new]** - start compromise-penn-tags plugin
+- **[new]** - add fuzzy option to match commands
+- **[new]** - support multiple-word matches in OR matches (a|b|foo bar|c)
+- **[change] (internal)** - rename 'oneOf' match syntax to 'fastOr' 
+- **[change]** - use new export maps format
+- **[fix]** - conjugations fixes #800
+- **[fix]** - tokenization fixes #801
+
 #### 13.8.0 [Dec 2020]
 - **[change]** improved support for fractions in numbers-plugin #793
 - **[change]** remove zero-width characters in normalized output #759

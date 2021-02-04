@@ -11,8 +11,17 @@ nlp.extend(require('./plugins/penn-tags/src'))
 //
 //
 
+/*
+  have  - false
+  [not] - true
+  done  - false
+*/
+
 let doc = nlp(`haven't done`)
 doc.match(`have done`).debug()
+// doc.termList().forEach(t => {
+//   console.log(t.text, t.isImplicit())
+// })
 
 // console.log(nlp('in the town where I was born').pennTags({ offset: true })[0])
 // let reg = nlp.parseMatch(`before (#Value .) after`)

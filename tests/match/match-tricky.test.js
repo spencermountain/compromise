@@ -151,13 +151,37 @@ test('post-process', function (t) {
   t.end()
 })
 
-test('text-as-input', function (t) {
+test('doc-as-input', function (t) {
   const doc = nlp('he is from Phoenix AZ')
   const m = doc.match('#City')
   const matchWith = doc.match(m).out('normal')
   const without = doc.not(m).out('text')
   t.equal(matchWith, 'phoenix', 'text-as-match')
   t.equal(without, 'he is from AZ', 'text-as-not')
+  t.end()
+})
+
+test('multi-doc-as-input', function (t) {
+  const doc = nlp('before three farms after. foo bar farms baz')
+  let a = doc.match('.')
+  let b = doc.match(a)
+  t.equal(a.length, b.length, 'match single terms')
+
+  a = doc.match('. .')
+  b = doc.match(a)
+  t.equal(a.length, b.length, 'match double terms')
+
+  a = doc.match('. . .')
+  b = doc.match(a)
+  t.equal(a.length, b.length, 'match triple terms')
+
+  a = doc.match('farms')
+  b = doc.match(a)
+  t.equal(a.length, b.length, 'match terms two-places')
+
+  a = doc.terms().not('farms')
+  b = doc.match(a)
+  t.equal(a.length, b.length, 'match skip terms')
   t.end()
 })
 

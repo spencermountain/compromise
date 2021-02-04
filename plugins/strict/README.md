@@ -22,6 +22,10 @@
   <code>npm install compromise-strict</code>
 </div>
 
+
+### [Demo](https://observablehq.com/@spencermountain/compromise-strict)
+
+
 The <a href="https://observablehq.com/@spencermountain/compromise-match-syntax">compromise match syntax</a> is a custom language for matching and querying tags and metadata in a document.
 
 This plugin is an experimental re-write of this syntax using a formal parser (<a href="https://github.com/SAP/chevrotain">chevrotrain</a>) and a strict spec.

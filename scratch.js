@@ -10,7 +10,6 @@ nlp.extend(require('./plugins/sentences/src'))
 //
 //
 
-// let doc = nlp('before three farms after')
 // let reg = nlp.parseMatch(`before (#Value .) after`)
 // // console.log(JSON.stringify(reg, null, 2))
 // doc.match(reg).debug()

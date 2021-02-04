@@ -12,7 +12,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - **[new]** - World.addConjugations() method
 - **[new]** - World.addPlurals() method
 - **[fix]** - conjugations fixes #800
-- **[new]** - compromise-penn-tags plugin
+- **[new]** - start compromise-penn-tags plugin
 - **[new]** - add fuzzy option to match commands
 - **[change] (internal)** - rename 'oneOf' match syntax to 'fastOr' 
 - **[new]** - support multiple-word matches in OR matches (a|b|foo bar|c)

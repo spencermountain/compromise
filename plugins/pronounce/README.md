@@ -22,6 +22,9 @@ an [nlp_compromise](https://github.com/nlp-compromise/nlp_compromise) plugin for
 
 it is a [metaphone](https://en.wikipedia.org/wiki/Metaphone) implementation in javascript, based on Chris Umbel's great work in [naturalNode](https://github.com/NaturalNode/natural/blob/master/lib/natural/phonetics/metaphone.js)
 
+
+### [Demo](https://observablehq.com/@spencermountain/compromise-pronounce)
+
 ```javascript
 var nlp = require('compromise')
 var plugin = require('compromise-pronounce')

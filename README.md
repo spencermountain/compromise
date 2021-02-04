@@ -316,6 +316,10 @@ nlp.extend((Doc, world) => {
 - **[#3 Making a chat-bot](https://docs.compromise.cool/compromise-making-a-bot)**
   <!-- * **[Tutorial #4]()**  -  Making a plugin -->
 
+<div >
+  <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+</div>
+
 ##### Documentation:
 
 | Concepts | API   | Plugins |
@@ -353,10 +357,6 @@ nlp.extend((Doc, world) => {
 - **[Fun with javascript in BigQuery](https://medium.com/@hoffa/new-in-bigquery-persistent-udfs-c9ea4100fd83#6e09)** - by Felipe Hoffa
 - **[Natural Language Processing... in the Browser?](https://dev.to/charlesdlandau/natural-language-processing-in-the-browser-52hj)** - by Charles Landau
 
-
-<div align="center">
-  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221824-09809d80-ffb8-11e9-9ef0-6ed3574b0ce8.png"/>
-</div>
 
 ##### Some fun Applications:
 
@@ -716,6 +716,12 @@ this plugin creates a wrapper around the default sentence objects.
 
 - **[.syllables()](https://observablehq.com/@spencermountain/compromise-syllables)** - split each term by its typical pronounciation
 
+##### Penn-tags
+
+`npm install compromise-penn-tags`
+
+- **[.pennTags()](https://observablehq.com/@spencermountain/compromise-penn-tags)** - return POS tags from the Penn Tagset
+
 <!-- spacer -->
 <div >
   <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
@@ -758,6 +764,10 @@ or if you don't care about POS-tagging, you can use the tokenize-only build: (90
   console.log(doc.has('my .* is .? named /^b[oa]rt/')) //true
 </script>
 ```
+
+<div >
+  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+</div>
 
 #### Limitations:
 
@@ -850,7 +860,7 @@ or if you don't care about POS-tagging, you can use the tokenize-only build: (90
 
 #### See Also:
 
-- &nbsp; **[en-pos](https://github.com/finnlp/en-pos)** - very-clever javascript pos-tagger by [Alex Corvi](https://github.com/alexcorvi)
+- &nbsp; **[en-pos](https://github.com/finnlp/en-pos)** - very-clever javascript pos-tagger by *[Alex Corvi](https://github.com/alexcorvi)*
 - &nbsp; **[naturalNode](https://github.com/NaturalNode/natural)** - fancier statistical nlp in javascript
 - &nbsp; **[compendium-js](https://github.com/Ulflander/compendium-js)** - POS and sentiment analysis in javascript
 - &nbsp; **[nodeBox linguistics](https://www.nodebox.net/code/index.php/Linguistics)** - conjugation, inflection in javascript

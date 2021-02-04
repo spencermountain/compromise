@@ -10,7 +10,7 @@ test('match-contractions', function (t) {
   t.equal(m.text(), `haven't`, 'first-half-found')
 
   m = doc.match(`not done`)
-  t.equal(m.text(), ` done`, 'second-half-found')
+  t.equal(m.text(), `done`, 'second-half-found')
 
   m = doc.match(`haven't`)
   t.equal(m.text(), `haven't`, 'match-contraction')
@@ -80,7 +80,7 @@ test('contraction-optional', function (t) {
   t.equal(m.text(), `i'm`, `i am?`)
 
   m = doc.match(`am glad?`)
-  t.equal(m.text(), ` glad`, `am glad?`)
+  t.equal(m.text(), `glad`, `am glad?`)
 
   m = doc.match(`i am? glad`)
   t.equal(m.text(), `i'm glad`, `i am? glad`)

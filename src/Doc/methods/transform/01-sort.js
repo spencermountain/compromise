@@ -131,7 +131,7 @@ exports.unique = function () {
   let list = [].concat(this.list)
   let obj = {}
   list = list.filter(p => {
-    let str = p.text('reduced').trim()
+    let str = p.text('reduced').trim() || p.text('implicit').trim()
     if (obj.hasOwnProperty(str) === true) {
       return false
     }

@@ -26,5 +26,6 @@ test('unique-normalize', function (t) {
   doc = nlp(`is not isn't`)
   doc = doc.terms().unique()
   t.equal(doc.text(), 'is not', 'normalize-contraction')
+  t.equal(doc.length, 2, 'implicit words are uniqued')
   t.end()
 })

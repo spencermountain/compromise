@@ -14,6 +14,9 @@ exports.json = function (options = {}, world) {
   if (options.reduced) {
     res.reduced = this.text('reduced')
   }
+  if (options.implicit) {
+    res.implicit = this.text('implicit')
+  }
   if (options.root) {
     res.root = this.text('root')
   }

@@ -32,7 +32,7 @@ const textForm1 = function (m) {
 
 // parse 'a third'
 const textForm2 = function (m) {
-  let found = m.match('[<num>(#Cardinal|a)+] [<den>#Ordinal+]')
+  let found = m.match('[<num>(#Cardinal|a)+] [<den>#Fraction+]')
   if (found.found !== true) {
     return null
   }

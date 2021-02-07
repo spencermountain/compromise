@@ -1,5 +1,21 @@
 const parse = require('./parse')
+const parseNumber = require('../numbers/parse')
+const makeNumber = require('../numbers/convert/makeNumber')
+
 const methods = {
+  toNumber() {
+    this.forEach((val) => {
+      let obj = parseNumber(val, val.has('#Fraction'))
+      if (obj.num === null) {
+        return
+      }
+      let str = makeNumber(obj, false)
+      val.replaceWith(str, true)
+      val.tag('NumericValue')
+      val.unTag('Fraction')
+    })
+    return this
+  },
   /** overloaded json method with additional number information */
   json: function (options) {
     let n = null
@@ -12,8 +28,12 @@ const methods = {
     this.forEach((m) => {
       let json = m.json(options)[0]
       let found = parse(m) || {}
+      let obj = parseNumber(m, m.has('#Fraction'))
       json.numerator = found.numerator
       json.denominator = found.denominator
+      json.number = obj.num
+      json.cardinal = makeNumber(obj, false, false)
+      json.textCardinal = makeNumber(obj, true, false)
       res.push(json)
     })
     if (n !== null) {
@@ -32,6 +52,17 @@ const methods = {
       }
     })
     return this
+  },
+
+  get: function (n) {
+    let arr = []
+    this.forEach((doc) => {
+      arr.push(parseNumber(doc, doc.has('#Fraction')).num)
+    })
+    if (n !== undefined) {
+      return arr[n]
+    }
+    return arr
   },
 }
 module.exports = methods

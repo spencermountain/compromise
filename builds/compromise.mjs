@@ -1,4 +1,4 @@
-/* compromise 13.9.1 MIT */
+/* compromise 13.9.2 MIT */
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
@@ -3813,7 +3813,7 @@ var fromJSON = function fromJSON(json, world) {
 
 var fromJSON_1 = fromJSON;
 
-var _version = '13.9.1';
+var _version = '13.9.2';
 
 var _data = {
   "Comparative": "true¦better",

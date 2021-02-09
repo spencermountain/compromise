@@ -24,7 +24,7 @@ const methods = {
     let res = []
     this.forEach((doc) => {
       let json = doc.json(options)
-      json.time = parse(doc)
+      json.time = parse(doc, this.context)
       res.push(json)
     })
     if (n !== null) {
@@ -32,10 +32,11 @@ const methods = {
     }
     return res
   },
+
   /** change to a standard duration format */
   normalize: function () {
     this.forEach((doc) => {
-      let duration = parse(doc)
+      // let duration = parse(doc)
       // doc.replaceWith(text)
     })
     return this
@@ -55,7 +56,8 @@ const addTimes = function (Doc) {
 
   /** phrases like '4pm' */
   Doc.prototype.times = function (n) {
-    let m = this.match('#Time+')
+    let m = this.match('#Time+ (am|pm)?')
+    // m.debug()
     if (typeof n === 'number') {
       m = m.get(n)
     }

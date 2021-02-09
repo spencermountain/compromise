@@ -65,7 +65,7 @@ const tagger = function (doc) {
   // fraction - '3 out of 5'
   doc.match('#Cardinal+ out of every? #Cardinal').tag('Fraction', here)
   // fraction - 'a third of a slice'
-  // m = doc.match(`[(#Cardinal|a) ${ordinals}] of (a|an|the)`, 0).tag('Fraction', here)
+  m = doc.match(`[(#Cardinal|a) ${ordinals}] of (a|an|the)`, 0).tag('Fraction', here)
   // tag 'thirds' as a ordinal
   m.match('.$').tag('Ordinal', 'plural-ordinal')
 }

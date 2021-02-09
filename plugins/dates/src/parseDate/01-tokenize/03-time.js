@@ -67,6 +67,8 @@ const parseTime = function (doc, context) {
     s = s.hour(m.text('reduced'))
     s = s.startOf('hour')
     if (s.isValid() && !s.isEqual(now)) {
+      let ampm = m.match('(am|pm)').text('reduced')
+      s = s.ampm(ampm)
       return s.time()
     }
   }
@@ -85,6 +87,7 @@ const parseTime = function (doc, context) {
     let str = m.groups('time').text('reduced')
     if (/^[0-9]{1,2}$/.test(str)) {
       s = s.hour(str) //3 in the morning
+      s = s.startOf('hour')
     } else {
       s = s.time(str) // 3:30 in the morning
     }

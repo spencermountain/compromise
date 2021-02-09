@@ -1,16 +1,14 @@
 const parse = require('./parse')
 const parseNumber = require('../numbers/parse')
 const makeNumber = require('../numbers/convert/makeNumber')
+const lib = require('./_lib')
 
 const methods = {
   toNumber() {
     this.forEach((val) => {
       let obj = parseNumber(val, val.has('#Fraction'))
-      if (obj.num === null) {
-        return
-      }
-      let str = makeNumber(obj, false)
-      val.replaceWith(str, true)
+      let num = lib.toFraction(obj)
+      val.replaceWith(String(num), true)
       val.tag('NumericValue')
       val.unTag('Fraction')
     })
@@ -28,10 +26,11 @@ const methods = {
     this.forEach((m) => {
       let json = m.json(options)[0]
       let found = parse(m) || {}
+      let num = lib.toFraction(found)
       let obj = parseNumber(m, m.has('#Fraction'))
       json.numerator = found.numerator
       json.denominator = found.denominator
-      json.number = obj.num
+      json.number = num
       json.cardinal = makeNumber(obj, false, false)
       json.textCardinal = makeNumber(obj, true, false)
       res.push(json)
@@ -57,7 +56,23 @@ const methods = {
   get: function (n) {
     let arr = []
     this.forEach((doc) => {
-      arr.push(parseNumber(doc, doc.has('#Fraction')).num)
+      arr.push(parseNumber(doc, true).num)
+    })
+    if (n !== undefined) {
+      return arr[n]
+    }
+    return arr
+  },
+
+  // turn the fraction into 'five tenths'
+  toText: function (n) {
+    let arr = []
+    this.forEach((doc) => {
+      let obj = parse(doc) || {}
+      // create [one] [fifth]
+      let str = lib.toText(obj)
+      doc.replaceWith(str, true)
+      doc.tag('Fraction')
     })
     if (n !== undefined) {
       return arr[n]

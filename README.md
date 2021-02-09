@@ -583,10 +583,17 @@ These are some helpful extensions:
 `npm install compromise-dates`
 
 - **[.dates()](https://observablehq.com/@spencermountain/compromise-dates)** - find dates like `June 8th` or `03/03/18`
+  - **[.dates().get()](https://observablehq.com/@spencermountain/compromise-dates)** - simple start/end json result
   - **[.dates().json()](https://observablehq.com/@spencermountain/compromise-dates)** - overloaded output with date metadata
   - **[.dates().format('')](https://observablehq.com/@spencermountain/compromise-dates)** - convert the dates to specific formats
   - **[.dates().toShortForm()](https://observablehq.com/@spencermountain/compromise-dates)** - convert 'Wednesday' to 'Wed', etc
   - **[.dates().toLongForm()](https://observablehq.com/@spencermountain/compromise-dates)** - convert 'Feb' to 'February', etc
+- **[.durations()](https://observablehq.com/@spencermountain/compromise-dates)** - `2 weeks` or `5mins`
+  - **[.durations().get()](https://observablehq.com/@spencermountain/compromise-dates)** - return simple json for duration
+  - **[.durations().json()](https://observablehq.com/@spencermountain/compromise-dates)** - overloaded output with duration metadata
+- **[.times()](https://observablehq.com/@spencermountain/compromise-dates)** - `4:30pm` or `half past five`
+  - **[.durations().get()](https://observablehq.com/@spencermountain/compromise-dates)** - return simple json for times
+  - **[.times().json()](https://observablehq.com/@spencermountain/compromise-dates)** - overloaded output with time metadata
 
 ##### Numbers
 

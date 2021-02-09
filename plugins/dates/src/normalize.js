@@ -7,7 +7,7 @@ const normalize = function (doc) {
     let hour = m.groups('hour')
     let min = m.groups('min')
     let num = hour.values().get(0)
-    if (num > 0 && num >= 12) {
+    if (num > 0 && num <= 12) {
       let mins = min.values().get(0)
       let str = `${num}:${mins}`
       m.replaceWith(str)

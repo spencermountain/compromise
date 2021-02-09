@@ -10,12 +10,13 @@ const context = {
   timezone: 'Canada/Pacific',
 }
 
-let doc = nlp('tomorrow at four thirty').debug()
-let dates = doc.dates(context).json()[0]
-console.log('start: ', fmt(dates.date.start))
-console.log('  end: ', fmt(dates.date.end))
+// let doc = nlp('tomorrow at four thirty').debug()
+// let dates = doc.dates(context).json()[0]
+// console.log('start: ', fmt(dates.date.start))
+// console.log('  end: ', fmt(dates.date.end))
 
-// console.log(nlp('around four thirty').debug().times().get())
+console.log(nlp('it was ten after 9').debug().times().get())
+// console.log(nlp('around four oclock').times().get())
 // console.log(nlp('five hundred').numbers().get())
 
 // ### hmmm

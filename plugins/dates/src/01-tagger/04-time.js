@@ -32,6 +32,8 @@ const timeTagger = function (doc) {
     // 2pm eastern
     doc.match('#Time [(eastern|mountain|pacific|central)]', 0).tag('Timezone', here)
   }
+  // around four thirty
+  // doc.match('(at|around|near) [#Cardinal (thirty|fifteen) (am|pm)?]', 0).tag('Time', here)
   return doc
 }
 module.exports = timeTagger

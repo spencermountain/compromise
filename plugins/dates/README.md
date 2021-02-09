@@ -186,6 +186,21 @@ Units:
   * **Minute** - '4:32pm'
 
 
+## API
+- **[.dates()](https://observablehq.com/@spencermountain/compromise-dates)** - 'June 2021', 'next week'
+  - **[.dates().json()](https://observablehq.com/@spencermountain/compromise-dates)** - overloaded output with date metadata
+  - **[.dates().format('')](https://observablehq.com/@spencermountain/compromise-dates)** - convert the dates to specific formats
+  - **[.dates().toShortForm()](https://observablehq.com/@spencermountain/compromise-dates)** - convert 'Wednesday' to 'Wed', etc
+  - **[.dates().toLongForm()](https://observablehq.com/@spencermountain/compromise-dates)** - convert 'Feb' to 'February', etc
+- **.durations()** - 'seven days and two hours', '30mins'
+  - **.json()** - 
+  - **.get()** - 
+- **.times()** - 'three pm', '9 oclock'
+  - **.json()** - 
+  - **.get()** - 
+
+
+
 ## Opinions
 
 ### Start of week
@@ -250,5 +265,9 @@ compromise will tag anything that looks like a date, but not validate the dates 
 * [ParseDateTime](https://pypi.org/project/parsedatetime/) by Mike Taylor (Python)
 
 Work in progress.
+
+
+Work on compromise-date is sponsored by [Simform](https://www.simform.com/)
+<img src="https://user-images.githubusercontent.com/399657/107404468-4f3de700-6ad4-11eb-9d60-7a90625b57d6.png" width="150px"/>
 
 MIT

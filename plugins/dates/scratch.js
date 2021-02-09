@@ -1,5 +1,5 @@
 const nlp = require('../../src/index')
-const spacetime = require('/Users/spencer/mountain/spacetime/src')
+const spacetime = require('spacetime')
 // nlp.verbose(true)
 nlp.extend(require('../../plugins/numbers/src'))
 nlp.extend(require('../../plugins/dates/src'))
@@ -10,10 +10,13 @@ const context = {
   timezone: 'Canada/Pacific',
 }
 
-let doc = nlp('03/02').debug()
+let doc = nlp('tomorrow at four thirty').debug()
 let dates = doc.dates(context).json()[0]
 console.log('start: ', fmt(dates.date.start))
 console.log('  end: ', fmt(dates.date.end))
+
+// console.log(nlp('around four thirty').debug().times().get())
+// console.log(nlp('five hundred').numbers().get())
 
 // ### hmmm
 // let doc = nlp('in the next three years') //.debug()

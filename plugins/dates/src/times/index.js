@@ -5,7 +5,7 @@ const methods = {
   get: function (options) {
     let arr = []
     this.forEach((doc) => {
-      let res = parse(doc)
+      let res = parse(doc, this.context)
       arr.push(res)
     })
     if (typeof options === 'number') {
@@ -24,7 +24,7 @@ const methods = {
     let res = []
     this.forEach((doc) => {
       let json = doc.json(options)
-      json.duration = parse(doc)
+      json.time = parse(doc)
       res.push(json)
     })
     if (n !== null) {
@@ -36,45 +36,30 @@ const methods = {
   normalize: function () {
     this.forEach((doc) => {
       let duration = parse(doc)
-      let list = []
-      Object.keys(duration).forEach((unit) => {
-        let num = duration[unit]
-        let word = unit
-        if (num !== 1) {
-          word += 's'
-        }
-        list.push(`${num} ${word}`)
-      })
-      // splice-in an 'and'
-      if (list.length > 1) {
-        let beforeEnd = list.length - 1
-        list.splice(beforeEnd, 0, 'and')
-      }
-      let text = list.join(' ')
-      doc.replaceWith(text)
+      // doc.replaceWith(text)
     })
     return this
   },
 }
 
-const addDurations = function (Doc) {
+const addTimes = function (Doc) {
   /** phrases like '2 months', or '2mins' */
-  class Durations extends Doc {
+  class Times extends Doc {
     constructor(list, from, w) {
       super(list, from, w)
       this.context = {}
     }
   }
   //add-in methods
-  Object.assign(Durations.prototype, methods)
+  Object.assign(Times.prototype, methods)
 
-  /** phrases like '2 months' */
-  Doc.prototype.durations = function (n) {
-    let m = this.match('#Value+ #Duration and? #Value+? #Duration?')
+  /** phrases like '4pm' */
+  Doc.prototype.times = function (n) {
+    let m = this.match('#Time+')
     if (typeof n === 'number') {
       m = m.get(n)
     }
-    return new Durations(m.list, this, this.world)
+    return new Times(m.list, this, this.world)
   }
 }
-module.exports = addDurations
+module.exports = addTimes

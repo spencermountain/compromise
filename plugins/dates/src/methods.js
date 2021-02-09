@@ -2,6 +2,18 @@ const parse = require('./find')
 const abbrevs = require('./data/_abbrevs')
 
 module.exports = {
+  /** easy getter for the start/end dates */
+  get: function (options) {
+    let arr = []
+    this.forEach((doc) => {
+      let res = parse(doc, this.context)
+      arr.push(res)
+    })
+    if (typeof options === 'number') {
+      return arr[options]
+    }
+    return arr
+  },
   /** overload the original json with date information */
   json: function (options) {
     let n = null

@@ -28,13 +28,13 @@ ordinals = `(${ordinals.join('|')})`
 
 // improved tagging for numbers
 const tagger = function (doc) {
-  doc.match('a? (#Ordinal|half|quarter|#Fraction)').tag('Fraction', here)
-  doc.match('#Value+ and #Value+ (#Ordinal|half|quarter|#Fraction)').tag('Fraction', here)
-  doc.match('#Value+ (#Ordinal|half|quarter|#Fraction)').tag('Fraction', here)
+  doc.match('a? (#Ordinal|half|quarter|#Fraction)').tag('Fraction', 'a-quarter')
+  doc.match('#Value+ and #Value+ (#Ordinal|half|quarter|#Fraction)').tag('Fraction', 'val-and-ord')
+  doc.match('#Value+ (#Ordinal|half|quarter|#Fraction)').tag('Fraction', '4-fifths')
 
   doc.match('#Cardinal+? (second|seconds)').unTag('Fraction', here)
   doc.match('#Ordinal #Ordinal+').unTag('Fraction')
-  doc.match('#Fraction && #Ordinal').unTag('Ordinal')
+  doc.match('#Fraction && #Ordinal') //.unTag('Ordinal')
 
   doc.match('[#Cardinal+? (second|seconds)] of (a|an)', 0).tag('Fraction', here)
   doc.match(multiples).tag('#Multiple', here)
@@ -65,8 +65,12 @@ const tagger = function (doc) {
   // fraction - '3 out of 5'
   doc.match('#Cardinal+ out of every? #Cardinal').tag('Fraction', here)
   // fraction - 'a third of a slice'
-  m = doc.match(`[(#Cardinal|a) ${ordinals}] of (a|an|the)`, 0).tag('Fraction', here)
+  m = doc.match(`[(#Cardinal|a) ${ordinals}] of (a|an|the)`, 0).tag('Fraction', 'ord-of')
   // tag 'thirds' as a ordinal
   m.match('.$').tag('Ordinal', 'plural-ordinal')
+  // one and a half
+  doc.match('#Cardinal and a (#Fraction && #Value)').tag('Fraction', here)
+  // three quarters
+  // doc.match('#Cardinal #Fraction)').tag('Fraction', here)
 }
 module.exports = tagger

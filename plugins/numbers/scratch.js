@@ -9,8 +9,12 @@ nlp.extend(require('./src'))
 
 // let doc = nlp('2/3 of a slice').debug()
 // let doc = nlp('2 thirds of a slice').debug()
-let doc = nlp('2 out of three').debug()
+let doc = nlp('23/32').debug()
+// let doc = nlp('hundredth of a parsec').debug()
 // doc.fractions().toText()
+
+// doc.fractions().toDecimal()
 console.log(doc.fractions().json())
+
 // doc.fractions().toNumber()
 // console.log(doc.text())

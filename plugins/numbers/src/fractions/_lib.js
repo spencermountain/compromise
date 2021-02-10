@@ -2,7 +2,7 @@ const toText = require('../numbers/convert/toText')
 const toOrdinal = require('../numbers/convert/toOrdinal/textOrdinal')
 // do some fraction-work
 
-const round = (n) => Math.round(n * 100) / 100
+const round = (n) => Math.round(n * 1000) / 1000
 
 // create 'one thirds' from {1,3}
 exports.toText = function (obj) {
@@ -13,6 +13,10 @@ exports.toText = function (obj) {
   // create [two] [fifths]
   let start = toText(obj.numerator)
   let end = toOrdinal(obj.denominator)
+  // 'one secondth' -> 'one half'
+  if (obj.denominator === 2) {
+    end = 'half'
+  }
   if (start && end) {
     if (obj.numerator !== 1) {
       end += 's'

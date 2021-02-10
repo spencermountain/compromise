@@ -47,7 +47,7 @@ const plugin = function (Doc, world) {
     fractions: function (n) {
       let m = this.match('#Fraction+')
       this.match('and #Fraction+').tag('Fraction')
-      this.match('#Fraction+').unTag('Ordinal')
+      this.match('#Fraction+') //.unTag('Ordinal')
       if (typeof n === 'number') {
         m = m.eq(n)
       }

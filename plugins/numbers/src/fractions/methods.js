@@ -16,10 +16,12 @@ const methods = {
   toDecimal() {
     this.forEach((val) => {
       let obj = parse(val)
-      let num = lib.toDecimal(obj)
-      val.replaceWith(String(num), true)
-      val.tag('NumericValue')
-      val.unTag('Fraction')
+      if (obj) {
+        let num = lib.toDecimal(obj)
+        val.replaceWith(String(num), true)
+        val.tag('NumericValue')
+        val.unTag('Fraction')
+      }
     })
     return this
   },

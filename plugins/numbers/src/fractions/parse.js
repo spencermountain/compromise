@@ -1,5 +1,10 @@
 const endS = /s$/
 
+let mapping = {
+  half: 2,
+  quarter: 4,
+}
+
 const slashForm = function (m) {
   let str = m.text('reduced')
   let found = str.match(/^([-+]?[0-9]+)\/([-+]?[0-9]+)(st|nd|rd|th)?s?$/)
@@ -30,13 +35,13 @@ const nOutOfN = function (m) {
   return null
 }
 
-// parse 'a third'
+// parse 'five thirds'
 const nOrinalth = function (m) {
-  let found = m.match('[<num>(#Cardinal|a)+] [<den>#Fraction+]')
+  let found = m.match('[<num>(#Cardinal|a)+] [<dem>#Fraction+]')
   if (found.found !== true) {
     return null
   }
-  let { num, den } = found.groups()
+  let { num, dem } = found.groups()
   // quick-support for 'a third'
   if (num.has('a')) {
     num = 1
@@ -44,27 +49,53 @@ const nOrinalth = function (m) {
     num = num.numbers().get(0)
   }
   // turn 'thirds' into third
-  let str = den.text('reduced')
+  let str = dem.text('reduced')
   if (endS.test(str)) {
     str = str.replace(endS, '')
-    den.replaceWith(str)
+    dem.replaceWith(str)
   }
   // support 'one half' as '1/2'
-  if (den.has('half')) {
-    den = 2
+  if (mapping.hasOwnProperty(str)) {
+    dem = mapping[str]
   } else {
-    den = den.numbers().get(0)
+    dem = dem.numbers().get(0)
   }
-  if (typeof num === 'number' && typeof den === 'number') {
+  if (typeof num === 'number' && typeof dem === 'number') {
     return {
       numerator: num,
-      denominator: den,
+      denominator: dem,
     }
   }
   return null
 }
 
+// implied 1 in '100th of a', 'fifth of a'
+const oneNth = function (m) {
+  let found = m.match('^#Ordinal$')
+  if (found.found !== true) {
+    return null
+  }
+  // ensure it's '100th of a '
+  if (m.lookAhead('^of .')) {
+    let num = found.numbers().get(0)
+    return {
+      numerator: 1,
+      denominator: num,
+    }
+  }
+  return null
+}
+
+// 'half'
+const named = function (m) {
+  let str = m.text('reduced')
+  if (mapping.hasOwnProperty(str)) {
+    return { numerator: 1, denominator: mapping[str] }
+  }
+  return null
+}
+
 const parseFraction = function (m) {
-  return slashForm(m) || nOutOfN(m) || nOrinalth(m) || null
+  return named(m) || slashForm(m) || nOutOfN(m) || nOrinalth(m) || oneNth(m) || null
 }
 module.exports = parseFraction

@@ -1,5 +1,7 @@
 const toNumber = require('./convert/toNumber')
 
+// const round = (n) => Math.round(n * 10) / 10
+
 const parseNumeric = function (str, p, isFraction) {
   str = str.replace(/,/g, '')
   //parse a numeric-number (easy)
@@ -24,9 +26,12 @@ const parseNumeric = function (str, p, isFraction) {
       num *= 1000
       suffix = ''
     }
+    num = isFraction ? 1 / num : num
+    // console.log(num)
+    // num = round(num)
     return {
       prefix: arr[1] || '',
-      num: isFraction ? 1 / num : num,
+      num: num,
       suffix: suffix,
     }
   }

@@ -1,5 +1,4 @@
 const test = require('tape')
-const spacetime = require('spacetime')
 const nlp = require('./_lib')
 
 test('times test', function (t) {

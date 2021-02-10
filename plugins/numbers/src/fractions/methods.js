@@ -1,13 +1,22 @@
 const parse = require('./parse')
-const parseNumber = require('../numbers/parse')
-const makeNumber = require('../numbers/convert/makeNumber')
 const lib = require('./_lib')
 
 const methods = {
-  toNumber() {
+  get: function (n) {
+    let arr = []
+    this.forEach((doc) => {
+      arr.push(parse(doc))
+    })
+    if (n !== undefined) {
+      return arr[n]
+    }
+    return arr
+  },
+  // become 0.5
+  toDecimal() {
     this.forEach((val) => {
-      let obj = parseNumber(val, val.has('#Fraction'))
-      let num = lib.toFraction(obj)
+      let obj = parse(val)
+      let num = lib.toDecimal(obj)
       val.replaceWith(String(num), true)
       val.tag('NumericValue')
       val.unTag('Fraction')
@@ -26,13 +35,13 @@ const methods = {
     this.forEach((m) => {
       let json = m.json(options)[0]
       let found = parse(m) || {}
-      let num = lib.toFraction(found)
-      let obj = parseNumber(m, m.has('#Fraction'))
+      let num = lib.toDecimal(found)
+      // let obj = parseNumber(m, m.has('#Fraction'))
       json.numerator = found.numerator
       json.denominator = found.denominator
       json.number = num
-      json.cardinal = makeNumber(obj, false, false)
-      json.textCardinal = makeNumber(obj, true, false)
+      json.textOrdinal = lib.toText(found)
+      json.textCardinal = lib.textCardinal(found)
       res.push(json)
     })
     if (n !== null) {
@@ -53,17 +62,6 @@ const methods = {
     return this
   },
 
-  get: function (n) {
-    let arr = []
-    this.forEach((doc) => {
-      arr.push(parseNumber(doc, true).num)
-    })
-    if (n !== undefined) {
-      return arr[n]
-    }
-    return arr
-  },
-
   // turn the fraction into 'five tenths'
   toText: function (n) {
     let arr = []
@@ -80,4 +78,6 @@ const methods = {
     return arr
   },
 }
+// aliases
+methods.toNumber = methods.toDecimal
 module.exports = methods

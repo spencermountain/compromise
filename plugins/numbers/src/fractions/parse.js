@@ -13,7 +13,7 @@ const slashForm = function (m) {
 }
 
 // parse '4 out of 4'
-const textForm1 = function (m) {
+const nOutOfN = function (m) {
   let found = m.match('[<num>#Value+] out of every? [<den>#Value+]')
   if (found.found !== true) {
     return null
@@ -31,7 +31,7 @@ const textForm1 = function (m) {
 }
 
 // parse 'a third'
-const textForm2 = function (m) {
+const nOrinalth = function (m) {
   let found = m.match('[<num>(#Cardinal|a)+] [<den>#Fraction+]')
   if (found.found !== true) {
     return null
@@ -65,6 +65,6 @@ const textForm2 = function (m) {
 }
 
 const parseFraction = function (m) {
-  return slashForm(m) || textForm1(m) || textForm2(m) || null
+  return slashForm(m) || nOutOfN(m) || nOrinalth(m) || null
 }
 module.exports = parseFraction

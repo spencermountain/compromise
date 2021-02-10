@@ -7,8 +7,10 @@ nlp.extend(require('./src'))
 //
 //
 
-let doc = nlp('2/3 of a slice').debug()
+// let doc = nlp('2/3 of a slice').debug()
+// let doc = nlp('2 thirds of a slice').debug()
+let doc = nlp('2 out of three').debug()
 // doc.fractions().toText()
-doc.fractions().toNumber()
-// console.log(doc.text())
 console.log(doc.fractions().json())
+// doc.fractions().toNumber()
+// console.log(doc.text())

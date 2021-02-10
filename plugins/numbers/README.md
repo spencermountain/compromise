@@ -57,7 +57,14 @@ doc.numbers().debug()
   - **[.money().get()](https://observablehq.com/@spencermountain/compromise-values)** - retrieve the parsed amount(s) of money
   - **[.money().json()](https://observablehq.com/@spencermountain/compromise-values)** - currency + number info
   - **[.money().currency()](https://observablehq.com/@spencermountain/compromise-values)** - which currency the money is in
-- **[.fractions()](https://observablehq.com/@spencermountain/compromise-values)** - like '2/3rds'
+
+- **[.fractions()](https://observablehq.com/@spencermountain/compromise-values)** - like '2/3rds' or 'one out of five'
+  - **[.fractions().get()](https://observablehq.com/@spencermountain/compromise-values)** - simple numerator, denomenator data
+  - **[.fractions().json()](https://observablehq.com/@spencermountain/compromise-values)** - json method overloaded with fractions data
+  - **[.fractions().toDecimal()](https://observablehq.com/@spencermountain/compromise-values)** -  '2/3' -> '0.66'
+  - **[.fractions().normalize()](https://observablehq.com/@spencermountain/compromise-values)** -  'four out of 10' -> '4/10'
+  - **[.fractions().toText()](https://observablehq.com/@spencermountain/compromise-values)** -  '4/10' -> 'four tenths'
+
 - **[.percentages()](https://observablehq.com/@spencermountain/compromise-values)** - like '2.5%'
 
 ### Opinions:

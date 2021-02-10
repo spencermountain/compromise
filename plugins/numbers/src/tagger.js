@@ -32,9 +32,11 @@ const tagger = function (doc) {
   doc.match('#Value+ and #Value+ (#Ordinal|half|quarter|#Fraction)').tag('Fraction', 'val-and-ord')
   doc.match('#Value+ (#Ordinal|half|quarter|#Fraction)').tag('Fraction', '4-fifths')
 
-  doc.match('#Cardinal+? (second|seconds)').unTag('Fraction', here)
+  // fixups
+  doc.match('#Cardinal+? (second|seconds)').unTag('Fraction', '3 seconds')
+  doc.match('#Ordinal (half|quarter)').unTag('Fraction', '2nd quarter')
   doc.match('#Ordinal #Ordinal+').unTag('Fraction')
-  doc.match('#Fraction && #Ordinal') //.unTag('Ordinal')
+  // doc.match('#Fraction && #Ordinal') //.unTag('Ordinal')
 
   doc.match('[#Cardinal+? (second|seconds)] of (a|an)', 0).tag('Fraction', here)
   doc.match(multiples).tag('#Multiple', here)

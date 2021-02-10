@@ -15,9 +15,9 @@ const context = {
 // console.log('start: ', fmt(dates.date.start))
 // console.log('  end: ', fmt(dates.date.end))
 
-console.log(nlp('it was ten after 9').debug().times().get())
+// console.log(nlp('it was ten after 9').debug().times().get())
 // console.log(nlp('around four oclock').times().get())
-// console.log(nlp('five hundred').numbers().get())
+nlp('fourth quarter, 2002').debug()
 
 // ### hmmm
 // let doc = nlp('in the next three years') //.debug()

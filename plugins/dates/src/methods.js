@@ -6,8 +6,10 @@ module.exports = {
   get: function (options) {
     let arr = []
     this.forEach((doc) => {
-      let res = parse(doc, this.context)
-      arr.push(res)
+      let obj = parse(doc, this.context)
+      let start = obj.start ? obj.start.format('iso') : null
+      let end = obj.end ? obj.end.format('iso') : null
+      arr.push({ start: start, end: end })
     })
     if (typeof options === 'number') {
       return arr[options]

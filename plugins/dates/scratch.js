@@ -8,16 +8,18 @@ const fmt = (iso) => (iso ? spacetime(iso).format('{day-short} {nice} {year}') :
 const context = {
   today: '2018-01-21',
   timezone: 'Canada/Pacific',
+  dayStart: '8:00am',
+  dayEnd: '5:00pm',
 }
 
-// let doc = nlp('tomorrow at four thirty').debug()
-// let dates = doc.dates(context).json()[0]
-// console.log('start: ', fmt(dates.date.start))
-// console.log('  end: ', fmt(dates.date.end))
+let doc = nlp('next tuesday').debug()
+let dates = doc.dates(context).json()[0]
+console.log('start: ', fmt(dates.date.start))
+console.log('  end: ', fmt(dates.date.end))
 
 // console.log(nlp('it was ten after 9').debug().times().get())
 // console.log(nlp('around four oclock').times().get())
-nlp('fourth quarter, 2002').debug()
+// nlp('fourth quarter, 2002').debug()
 
 // ### hmmm
 // let doc = nlp('in the next three years') //.debug()

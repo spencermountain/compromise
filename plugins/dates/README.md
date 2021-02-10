@@ -140,6 +140,8 @@ const context = {
   timezone: 'Canada/Eastern', //the default timezone is 'ETC/UTC'
   today: '2020-02-20', //the implicit, or reference day/year
   punt: { weeks: 2 }, // the implied duration to use for 'after june 2nd'
+  dayStart: '8:00am',
+  dayEndt: '5:30pm'
 }
 
 nlp('in two days')

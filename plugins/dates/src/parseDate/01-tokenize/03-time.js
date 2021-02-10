@@ -139,6 +139,10 @@ const parseTime = function (doc, context) {
   if (s.isValid() && !s.isEqual(now)) {
     return s.time()
   }
+  // should we fallback to a dayStart default?
+  if (context.dayStart) {
+    return context.dayStart
+  }
   return null
 }
 module.exports = parseTime

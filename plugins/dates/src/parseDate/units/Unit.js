@@ -81,10 +81,16 @@ class Unit {
   }
   start() {
     this.d = this.d.startOf(this.unit)
+    if (this.context.dayStart) {
+      this.d = this.d.time(this.context.dayStart)
+    }
     return this
   }
   end() {
     this.d = this.d.endOf(this.unit)
+    if (this.context.dayEnd) {
+      this.d = this.d.time(this.context.dayEnd)
+    }
     return this
   }
   middle() {

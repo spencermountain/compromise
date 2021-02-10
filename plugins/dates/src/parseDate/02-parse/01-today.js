@@ -1,4 +1,4 @@
-const { Day, Moment, Hour } = require('../units')
+const { Day, Moment } = require('../units')
 
 const knownWord = {
   today: (context) => {

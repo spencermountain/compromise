@@ -57,6 +57,9 @@ class WeekDay extends Day {
   end() {
     //overloaded method
     this.d = this.d.endOf('day')
+    if (this.context.dayEnd) {
+      this.d = this.d.time(this.context.dayEnd)
+    }
     return this
   }
   next() {

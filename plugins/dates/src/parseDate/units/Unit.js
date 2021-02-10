@@ -103,6 +103,9 @@ class Unit {
   before() {
     this.d = this.d.minus(1, this.unit)
     this.d = this.d.endOf(this.unit)
+    if (this.context.dayEnd) {
+      this.d = this.d.time(this.context.dayEnd)
+    }
     return this
   }
   // 'after 2019'

@@ -12,7 +12,7 @@ const context = {
   dayEnd: '5:00pm',
 }
 
-let doc = nlp('next tuesday').debug()
+let doc = nlp('q4').debug()
 let dates = doc.dates(context).json()[0]
 console.log('start: ', fmt(dates.date.start))
 console.log('  end: ', fmt(dates.date.end))

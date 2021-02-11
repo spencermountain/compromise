@@ -1,7 +1,6 @@
 const nlp = require('./src/index')
-nlp.extend(require('./plugins/sentences/src'))
-nlp.extend(require('./plugins/penn-tags/src'))
-// nlp.verbose(true)
+// nlp.extend(require('./plugins/numbers/src'))
+nlp.verbose(true)
 
 //
 //
@@ -11,23 +10,9 @@ nlp.extend(require('./plugins/penn-tags/src'))
 //
 //
 
-/*
-  have  - false
-  [not] - true
-  done  - false
-*/
-
-// let doc = nlp(`haven't done`)
-// doc.match(`have done`).debug()
-
-// let doc = nlp(`i haven't done it`)
-// let m = doc.match(`not done`)
-// console.log(`|${m.text()}|`)
-// m.debug()
-
-let str = `Leonard's was Randall`
-let doc = nlp(str)
-console.log(doc.match('#Noun').text())
+// let doc = nlp('twelve and one twentieth').debug()
+let doc = nlp('seventeenths').debug()
+// console.log(doc.fractions().json())
 
 // let doc = nlp(`is not foobar isn't`)
 // doc = doc.terms().unique().debug()

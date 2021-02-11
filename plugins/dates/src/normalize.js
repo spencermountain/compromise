@@ -21,7 +21,6 @@ const normalize = function (doc) {
     let num = doc.numbers()
     num.toNumber()
     num.toCardinal(false)
-    // num.normalize()
   }
   // // expand 'aug 20-21'
   doc.contractions().expand()

@@ -420,10 +420,13 @@
 
     doc.match('/^[0-9]{2}/[0-9]{2}/').tag('Date', here$3).unTag('Value'); // 3 in the morning
 
-    doc.match('[#Value] (in|at) the? (morning|evening|night|nighttime)').tag('Time', here$3); // quarter to seven (not march 5 to 7)
+    doc.match('[#Value] (in|at) the? (morning|evening|night|nighttime)').tag('Time', here$3);
 
     if (doc.has('#Cardinal') && !doc.has('#Month')) {
-      doc.match('1? (half|quarter|25|15|10|5) (past|after|to) #Cardinal').tag('Time', here$3);
+      // quarter to seven (not march 5 to 7)
+      doc.match('1? (half|quarter|25|15|10|5) (past|after|to) #Cardinal').tag('Time', here$3); // ten to seven
+
+      doc.match('(5|10|15|20|five|ten|fifteen|20) (to|after|past) [<hour>#Cardinal]').tag('Time', here$3); //add check for 1 to 1 etc.
     } //timezone
 
 
@@ -442,8 +445,10 @@
       doc.match('(in|for|by|near|at) #Timezone').tag('Timezone', here$3); // 2pm eastern
 
       doc.match('#Time [(eastern|mountain|pacific|central)]', 0).tag('Timezone', here$3);
-    }
+    } // around four thirty
 
+
+    doc.match('(at|around|near) [#Cardinal (thirty|fifteen) (am|pm)?]', 0).tag('Time', here$3);
     return doc;
   };
 
@@ -588,7 +593,8 @@
 
   var _tags = {
     FinancialQuarter: {
-      isA: 'Date'
+      isA: 'Date',
+      notA: 'Fraction'
     },
     // 'summer'
     Season: {
@@ -5498,6 +5504,8 @@
       s = s.startOf('hour');
 
       if (s.isValid() && !s.isEqual(now)) {
+        var ampm = m.match('(am|pm)').text('reduced');
+        s = s.ampm(ampm);
         return s.time();
       }
     } // 'quarter to two'
@@ -5521,6 +5529,8 @@
 
       if (/^[0-9]{1,2}$/.test(_str)) {
         s = s.hour(_str); //3 in the morning
+
+        s = s.startOf('hour');
       } else {
         s = s.time(_str); // 3:30 in the morning
       }
@@ -5585,6 +5595,11 @@
 
     if (s.isValid() && !s.isEqual(now)) {
       return s.time();
+    } // should we fallback to a dayStart default?
+
+
+    if (context.dayStart) {
+      return context.dayStart;
     }
 
     return null;
@@ -5856,12 +5871,22 @@
       key: "start",
       value: function start() {
         this.d = this.d.startOf(this.unit);
+
+        if (this.context.dayStart) {
+          this.d = this.d.time(this.context.dayStart);
+        }
+
         return this;
       }
     }, {
       key: "end",
       value: function end() {
         this.d = this.d.endOf(this.unit);
+
+        if (this.context.dayEnd) {
+          this.d = this.d.time(this.context.dayEnd);
+        }
+
         return this;
       }
     }, {
@@ -5878,6 +5903,11 @@
       value: function before() {
         this.d = this.d.minus(1, this.unit);
         this.d = this.d.endOf(this.unit);
+
+        if (this.context.dayEnd) {
+          this.d = this.d.time(this.context.dayEnd);
+        }
+
         return this;
       } // 'after 2019'
 
@@ -6016,6 +6046,11 @@
       value: function end() {
         //overloaded method
         this.d = this.d.endOf('day');
+
+        if (this.context.dayEnd) {
+          this.d = this.d.time(this.context.dayEnd);
+        }
+
         return this;
       }
     }, {
@@ -6154,11 +6189,8 @@
     _createClass(AnyQuarter, [{
       key: "last",
       value: function last() {
-        console.log(this.d.format());
         this.d = this.d.minus(1, 'quarter');
-        console.log(this.d.format());
         this.d = this.d.startOf(this.unit);
-        console.log(this.d.format());
         return this;
       }
     }]);
@@ -6431,7 +6463,6 @@
 
   var Day$1 = units.Day,
       Moment$1 = units.Moment;
-      units.Hour;
   var knownWord = {
     today: function today(context) {
       return new Day$1(context.today, null, context);
@@ -7781,15 +7812,32 @@
   var _02Ranges = parseRange;
 
   var normalize$1 = function normalize(doc) {
-    doc = doc.clone();
+    doc = doc.clone(); // 'four thirty' -> 4:30
+
+    var m = doc.match('[<hour>#Cardinal] [<min>(thirty|fifteen)]').match('#Time+');
+
+    if (m.found) {
+      var hour = m.groups('hour');
+      var min = m.groups('min');
+      var num = hour.values().get(0);
+
+      if (num > 0 && num <= 12) {
+        var mins = min.values().get(0);
+        var str = "".concat(num, ":").concat(mins);
+        m.replaceWith(str);
+      }
+    }
 
     if (!doc.numbers) {
       console.warn("Compromise: compromise-dates cannot find plugin dependency 'compromise-number'");
     } else {
       // convert 'two' to 2
-      var num = doc.numbers();
-      num.toNumber();
-      num.toCardinal(false); // num.normalize()
+      var _num = doc.numbers();
+
+      _num.toNumber();
+
+      _num.toCardinal(false); // num.normalize()
+
     } // // expand 'aug 20-21'
 
 
@@ -7801,7 +7849,7 @@
 
     doc.replace('up to', 'upto').tag('Date'); // 'in a few years'
 
-    var m = doc.match('in [a few] #Duration');
+    m = doc.match('in [a few] #Duration');
 
     if (m.found) {
       m.groups('0').replaceWith('2');
@@ -7836,9 +7884,31 @@
   var _abbrevs = arr;
 
   var methods$1 = {
+    /** easy getter for the start/end dates */
+    get: function get(options) {
+      var _this = this;
+
+      var arr = [];
+      this.forEach(function (doc) {
+        var obj = find(doc, _this.context);
+        var start = obj.start ? obj.start.format('iso') : null;
+        var end = obj.end ? obj.end.format('iso') : null;
+        arr.push({
+          start: start,
+          end: end
+        });
+      });
+
+      if (typeof options === 'number') {
+        return arr[options];
+      }
+
+      return arr;
+    },
+
     /** overload the original json with date information */
     json: function json(options) {
-      var _this = this;
+      var _this2 = this;
 
       var n = null;
 
@@ -7854,7 +7924,7 @@
       var format = options.format || 'iso';
       this.forEach(function (doc) {
         var json = doc.json(options)[0];
-        var obj = find(doc, _this.context);
+        var obj = find(doc, _this2.context);
         var start = obj.start ? obj.start.format(format) : null;
         var end = obj.end ? obj.end.format(format) : null; // set iso strings to json result
 
@@ -7882,10 +7952,10 @@
 
     /** render all dates according to a specific format */
     format: function format(fmt) {
-      var _this2 = this;
+      var _this3 = this;
 
       this.forEach(function (doc) {
-        var obj = find(doc, _this2.context);
+        var obj = find(doc, _this3.context);
         var str = '';
 
         if (obj.start) {
@@ -7910,20 +7980,20 @@
 
     /** replace 'Fri' with 'Friday', etc*/
     toLongForm: function toLongForm() {
-      var _this3 = this;
+      var _this4 = this;
 
       _abbrevs.forEach(function (a) {
-        _this3.replace(a["short"], a["long"], true);
+        _this4.replace(a["short"], a["long"], true);
       });
       return this;
     },
 
     /** replace 'Friday' with 'Fri', etc*/
     toShortForm: function toShortForm() {
-      var _this4 = this;
+      var _this5 = this;
 
       _abbrevs.forEach(function (a) {
-        _this4.replace(a["long"], a["short"], true);
+        _this5.replace(a["long"], a["short"], true);
       });
       return this;
     }
@@ -7979,6 +8049,21 @@
   var parse_1$1 = parse$1;
 
   var methods$2 = {
+    /** easy getter for the time */
+    get: function get(options) {
+      var arr = [];
+      this.forEach(function (doc) {
+        var res = parse_1$1(doc);
+        arr.push(res);
+      });
+
+      if (typeof options === 'number') {
+        return arr[options];
+      }
+
+      return arr;
+    },
+
     /** overload the original json with duration information */
     json: function json(options) {
       var n = null;
@@ -8070,6 +8155,106 @@
 
   var durations$1 = addDurations;
 
+  var parse$2 = function parse(m, context) {
+    m = normalize_1(m);
+    var res = _03Time(m, context);
+    return res;
+  };
+
+  var parse_1$2 = parse$2;
+
+  var methods$3 = {
+    /** easy getter for the time */
+    get: function get(options) {
+      var _this = this;
+
+      var arr = [];
+      this.forEach(function (doc) {
+        var res = parse_1$2(doc, _this.context);
+        arr.push(res);
+      });
+
+      if (typeof options === 'number') {
+        return arr[options];
+      }
+
+      return arr;
+    },
+
+    /** overload the original json with duration information */
+    json: function json(options) {
+      var _this2 = this;
+
+      var n = null;
+
+      if (typeof options === 'number') {
+        n = options;
+        options = null;
+      }
+
+      options = options || {
+        terms: false
+      };
+      var res = [];
+      this.forEach(function (doc) {
+        var json = doc.json(options);
+        json.time = parse_1$2(doc, _this2.context);
+        res.push(json);
+      });
+
+      if (n !== null) {
+        return res[n];
+      }
+
+      return res;
+    },
+
+    /** change to a standard duration format */
+    normalize: function normalize() {
+      this.forEach(function (doc) {// let duration = parse(doc)
+        // doc.replaceWith(text)
+      });
+      return this;
+    }
+  };
+
+  var addTimes = function addTimes(Doc) {
+    /** phrases like '2 months', or '2mins' */
+    var Times = /*#__PURE__*/function (_Doc) {
+      _inherits(Times, _Doc);
+
+      var _super = _createSuper(Times);
+
+      function Times(list, from, w) {
+        var _this3;
+
+        _classCallCheck(this, Times);
+
+        _this3 = _super.call(this, list, from, w);
+        _this3.context = {};
+        return _this3;
+      }
+
+      return Times;
+    }(Doc); //add-in methods
+
+
+    Object.assign(Times.prototype, methods$3);
+    /** phrases like '4pm' */
+
+    Doc.prototype.times = function (n) {
+      var m = this.match('#Time+ (am|pm)?'); // m.debug()
+
+      if (typeof n === 'number') {
+        m = m.get(n);
+      }
+
+      return new Times(m.list, this, this.world);
+    };
+  };
+
+  var times$1 = addTimes;
+
   var opts = {
     punt: {
       weeks: 2
@@ -8084,7 +8269,9 @@
 
     world.postProcess(_01Tagger); // add .durations() class + methods
 
-    durations$1(Doc);
+    durations$1(Doc); // add .times() class + methods
+
+    times$1(Doc);
     /** phraes like 'nov 2nd' or 'on tuesday' */
 
     var Dates = /*#__PURE__*/function (_Doc) {

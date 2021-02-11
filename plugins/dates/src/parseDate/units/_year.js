@@ -43,11 +43,8 @@ class AnyQuarter extends Unit {
     }
   }
   last() {
-    console.log(this.d.format())
     this.d = this.d.minus(1, 'quarter')
-    console.log(this.d.format())
     this.d = this.d.startOf(this.unit)
-    console.log(this.d.format())
     return this
   }
 }

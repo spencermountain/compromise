@@ -43,7 +43,6 @@ const data = [
   //numbers
   [require('./numbers/ordinals'), 'TextOrdinal'],
   [require('./numbers/cardinals'), 'Cardinal'],
-  // [require('./numbers/fractions'), ['TextValue', 'Fraction']],
   //abbreviations
   [require('./abbreviations/misc'), 'Abbreviation'],
   [require('./abbreviations/units'), 'Unit'],

@@ -1,5 +1,5 @@
 const defaultTags = require('./tags')
-let unpack = require('./unpack')
+const unpack = require('./unpack')
 const addIrregulars = require('./addIrregulars')
 const inferTagSet = require('./tags/inference')
 
@@ -79,8 +79,15 @@ class World {
   }
 
   /** put new words into our lexicon, properly */
-  addWords(obj) {
-    unpack.addWords(obj, this.words, this)
+  addWords(wordObj) {
+    // clean them up a bit
+    let cleaned = {}
+    Object.keys(wordObj).forEach(w => {
+      let tag = wordObj[w]
+      w = w.toLowerCase().trim()
+      cleaned[w] = tag
+    })
+    unpack.addWords(cleaned, this.words, this)
   }
 
   /** add new custom conjugations */

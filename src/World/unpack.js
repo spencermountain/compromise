@@ -25,8 +25,8 @@ const fancy = {
     let conj = world.transforms.conjugate(w, world)
     let tags = Object.keys(conj)
     for (let i = 0; i < tags.length; i++) {
-      let w = conj[tags[i]]
-      lex[w] = lex[w] || tags[i] // only if it's safe
+      let str = conj[tags[i]]
+      lex[str] = lex[str] || tags[i] // only if it's safe
     }
   },
   // conjugate other Adjectival forms
@@ -41,21 +41,19 @@ const fancy = {
   },
   //conjugate phrasal-verbs
   PhrasalVerb: (lex, w, world) => {
-    lex[w] = 'PhrasalVerb'
+    // whole thing
+    lex[w] = ['PhrasalVerb', 'Infinitive']
     //add original form
-    // addWord(w, 'Infinitive', lex)
+    let words = w.split(' ')
+    // lex[words[0]] = lex[words[0]] || 'Infinitive'
     // //conjugate first word
-    // let conj = world.transforms.conjugate(words[0], world)
-    // let tags = Object.keys(conj)
-    // for (let i = 0; i < tags.length; i++) {
-    //   //add it to our cache
-    //   world.hasCompound[conj[tags[i]]] = true
-    //   //first + last words
-    //   let w = conj[tags[i]] + ' ' + words[1]
-
-    //   addWord(w, tags[i], lex)
-    //   addWord(w, 'PhrasalVerb', lex)
-    // }
+    let conj = world.transforms.conjugate(words[0], world)
+    let tags = Object.keys(conj)
+    for (let i = 0; i < tags.length; i++) {
+      let str = conj[tags[i]] + ' ' + words[1]
+      lex[str] = lex[str] || ['PhrasalVerb', tags[i]]
+      world.hasCompound[conj[tags[i]]] = true
+    }
   },
   // inflect our demonyms - 'germans'
   Demonym: (lex, w, world) => {
@@ -103,10 +101,9 @@ const addWords = function (wordsObj, lex, world) {
 
 // we do some ad-hoc stuff here, building-up our word-list
 const buildOut = function (world) {
-  let lexicon = Object.assign({}, misc) //our bag of words
-  // let compounds = {} //cache these for fast-lookups
-  // let abbr = {} //used in the sentence-parser
-
+  //our bag of words
+  let lexicon = Object.assign({}, misc)
+  // start adding words to the lex
   Object.keys(lexData).forEach(tag => {
     let wordsObj = unpack(lexData[tag])
     // this part sucks
@@ -115,6 +112,7 @@ const buildOut = function (world) {
     })
     addWords(wordsObj, lexicon, world)
   })
+  // console.log(Object.keys(lexicon).length)
   return lexicon
 }
 

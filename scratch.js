@@ -1,6 +1,6 @@
 const nlp = require('./src/index')
 // nlp.extend(require('./plugins/numbers/src'))
-nlp.verbose(true)
+// nlp.verbose(true)
 
 //
 //
@@ -9,9 +9,19 @@ nlp.verbose(true)
 //
 //
 //
+
+const lexicon = {
+  'Jardas al Abid': 'Place',
+  'Umm Ar Rizam': 'Place',
+  Tobruk: 'Place',
+}
+
+const sentence = 'hello Jardas-al-Abid yes.'
+nlp(sentence, lexicon).debug()
 
 // let doc = nlp('twelve and one twentieth').debug()
-let doc = nlp('seventeenths').debug()
+// let doc = nlp('in time').debug()
+// console.log(nlp.world().words['falls over'])
 // console.log(doc.fractions().json())
 
 // let doc = nlp(`is not foobar isn't`)

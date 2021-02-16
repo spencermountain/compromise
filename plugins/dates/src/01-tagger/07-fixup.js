@@ -69,6 +69,9 @@ const fixUp = function (doc) {
       d.match('about').unTag('#Date', 'about-thanksgiving')
     }
 
+    // second quarter of 2020
+    d.match('#Ordinal quarter of? #Year').unTag('Fraction')
+
     // a month from now
     d.match('(from|by|before) now').unTag('Time')
     // dangling date-chunks

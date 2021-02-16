@@ -41,13 +41,13 @@ module.exports = {
   format: function (fmt) {
     this.forEach((doc) => {
       let obj = parse(doc, this.context)
-      let str = ''
       if (obj.start) {
-        let start = spacetime(obj.start, this.context.timezone).format(fmt)
+        let start = spacetime(obj.start, this.context.timezone)
+        let str = start.format(fmt)
         if (obj.end) {
-          let end = spacetime(obj.end, this.context.timezone).format(fmt)
-          if (str !== end) {
-            str += ' to ' + end
+          let end = spacetime(obj.end, this.context.timezone)
+          if (start.isSame(end, 'day') === false) {
+            str += ' to ' + end.format(fmt)
           }
         }
         doc.replaceWith(str, { keepTags: true, keepCase: false })

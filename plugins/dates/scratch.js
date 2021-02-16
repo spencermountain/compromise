@@ -13,11 +13,15 @@ const context = {
   max_repeat: 50,
 }
 
+let doc = nlp(`skiing November 1st 2019`)
+doc.dates().format('{day} {month} {date-ordinal}, {time}')
+console.log(doc.text())
+
 // let doc = nlp('next monday')
-let doc = nlp('second quarter of 2019').debug()
-let dates = doc.dates(context).debug()
-let json = dates.json()[0]
-console.log(json.date)
+// let doc = nlp('second quarter').debug()
+// let dates = doc.dates(context)
+// let json = dates.json()[0]
+// console.log(json.date)
 // console.log(JSON.stringify(json.date, null, 2))
 // console.log('start: ', fmt(json.date.start))
 // console.log('  end: ', fmt(json.date.end))

@@ -138,7 +138,7 @@ const tests = [
       // ['this fall', 'September 1 2017 to November 30 2017'],
       // ['next winter', 'dec 1st 2018 to February 28 2019'],
       // ['winter 2020', 'dec 1st 2020 to February 28 2021'],
-      ['winter of 1992', 'dec 1st 1992 to February 28 1993'],
+      // ['winter of 1992', 'dec 1st 1992 to February 28 1993'],
       // ['spring 2015', 'March 1 2015 to May 31 2015'],
       // ['fall 2012', 'September 1 2012 to November 30 2012'],
       // ['autumn of 2013', 'September 1 2013 to November 30 2013'],

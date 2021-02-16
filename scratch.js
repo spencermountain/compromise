@@ -8,20 +8,24 @@ const nlp = require('./src/index')
 //
 //
 //
+
+// (i|we|and) (am|have) !not? * (booked|appointment|booking) this? the? (him|her|them|patient)? for? (this|him|her|them|#Noun),positive,I have booked him for this,
+// (i|we|and) (am|have) !not? * (booked|appointment|booking) this? the? (him|her|them|patient)? for? (this|him|her|them|#Noun),negative,I have not booked him for this,
 //
 
-const lexicon = {
-  'Jardas al Abid': 'Place',
-  'Umm Ar Rizam': 'Place',
-  Tobruk: 'Place',
-}
+// let match = `(i|we|and) (am|have) !not? * (booked|appointment|booking) this? the? (him|her|them|patient)? for? (this|him|her|them|#Noun)`
+// let text = `I have booked him for this,`
+// let doc = nlp(text).match(match).debug()
 
-const sentence = 'hello Jardas-al-Abid yes.'
-nlp(sentence, lexicon).debug()
+let doc = nlp(`I have not booked him`)
+
+console.log(doc.match(`have !not? * booked`).found)
+// true
+console.log(doc.match(`have !not? booked`).found)
+//false
 
 // let doc = nlp('twelve and one twentieth').debug()
-// let doc = nlp('in time').debug()
-// console.log(nlp.world().words['falls over'])
+// let doc = nlp('fifty one twentieth').debug()
 // console.log(doc.fractions().json())
 
 // let doc = nlp(`is not foobar isn't`)

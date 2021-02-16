@@ -148,7 +148,7 @@ const tagDates = function (doc) {
     v = cardinal.match('(q1|q2|q3|q4) [#Cardinal]', 0)
     tagYear(v, 'in-year-2')
     //2nd quarter 2009
-    v = cardinal.match('#Ordinal quarter [#Cardinal]', 0)
+    v = cardinal.match('#Ordinal quarter of? [#Cardinal]', 0)
     tagYear(v, 'in-year-3')
     //in the year 1998
     v = cardinal.match('the year [#Cardinal]', 0)

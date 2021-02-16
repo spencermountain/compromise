@@ -39,13 +39,21 @@ const nextLast = function (doc, context) {
     }
   }
 
-  //try this version - 'next friday, last thursday'
+  //'next friday, last thursday'
   m = doc.match('^#WeekDay$')
   if (m.found === true) {
     let str = m.text('reduced')
     let unit = new WeekDay(str, null, context)
     return unit
   }
+
+  // tuesday next week
+  // m = doc.match('^#WeekDay (this|next)')
+  // if (m.found === true) {
+  //   let str = m.text('reduced')
+  //   let unit = new WeekDay(str, null, context)
+  //   return unit
+  // }
   return null
 }
 module.exports = nextLast

@@ -1,8 +1,5 @@
 const test = require('tape')
 const nlp = require('./_lib')
-const spacetime = require('spacetime')
-
-const fmt = (iso) => (iso ? spacetime(iso).format('{iso-short}') : '-')
 
 test('count generated dates', function (t) {
   let context = {

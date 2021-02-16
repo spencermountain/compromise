@@ -55,6 +55,16 @@ class Unit {
     }
     return this
   }
+  applyWeekDay(day) {
+    if (day) {
+      let epoch = this.d.epoch
+      this.d = this.d.day(day)
+      if (this.d.epoch < epoch) {
+        this.d = this.d.add(1, 'week')
+      }
+    }
+    return this
+  }
   applyRel(rel) {
     if (rel === 'next') {
       return this.next()

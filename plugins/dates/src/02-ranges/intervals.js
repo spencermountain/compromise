@@ -7,6 +7,13 @@ const dayNames = {
   fri: 'friday',
   sat: 'saturday',
   sun: 'sunday',
+  monday: 'monday',
+  tuesday: 'tuesday',
+  wednesday: 'wednesday',
+  thursday: 'thursday',
+  friday: 'friday',
+  saturday: 'saturday',
+  sunday: 'sunday',
 }
 // 'any tuesday' vs 'every tuesday'
 const parseLogic = function (m) {
@@ -20,7 +27,7 @@ const parseLogic = function (m) {
 }
 
 // parse repeating dates, like 'every week'
-const parseIntervals = function (doc, context) {
+const parseIntervals = function (doc) {
   // 'every week'
   let m = doc.match('[<logic>(every|any|each)] [<skip>other?] [<unit>#Duration] (starting|beginning|commencing)?')
   if (m.found) {
@@ -54,13 +61,13 @@ const parseIntervals = function (doc, context) {
   if (m.found) {
     let repeat = { interval: { day: 1 }, filter: { weekDays: {} } }
     let str = m.groups('day').text('reduced')
-    if (dayNames.hasOwnProperty(str)) {
-      str = dayNames[str]
+    str = dayNames[str] //normalize it
+    if (str) {
+      repeat.filter.weekDays[str] = true
+      repeat.choose = parseLogic(m)
+      doc = doc.remove(m)
+      return { repeat: repeat }
     }
-    repeat.filter.weekDays[str] = true
-    repeat.choose = parseLogic(m)
-    doc = doc.remove(m)
-    return { repeat: repeat }
   }
 
   // 'every weekday'

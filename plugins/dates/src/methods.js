@@ -1,4 +1,4 @@
-const parse = require('./find')
+const parse = require('./parse')
 const spacetime = require('spacetime')
 const abbrevs = require('./data/_abbrevs')
 
@@ -24,7 +24,6 @@ module.exports = {
     }
     options = options || { terms: false }
     let res = []
-    let format = options.format || 'iso'
     this.forEach((doc) => {
       let json = doc.json(options)[0]
       let found = parse(doc, this.context)

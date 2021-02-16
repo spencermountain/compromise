@@ -1,7 +1,7 @@
 const spacetime = require('spacetime')
 const maxDate = 8640000000000000
 
-const shouldPick = function (s, byDay, end) {
+const shouldPick = function (s, byDay) {
   if (byDay && byDay[s.dayName()] !== true) {
     return false
   }
@@ -26,6 +26,7 @@ const generateDates = function (result, context) {
     byDay = result.repeat.filter.weekDays
   }
   // start going!
+  let loops = 0
   while (list.length < max_count && s.epoch < end.epoch) {
     if (shouldPick(s, byDay, end)) {
       list.push(s.iso())
@@ -33,6 +34,12 @@ const generateDates = function (result, context) {
     toAdd.forEach((unit) => {
       s = s.add(result.repeat.interval[unit], unit)
     })
+    loops += 1
+    if (loops > 10000) {
+      console.warn('Warning: Possible infinite loop in date-parser')
+      console.log(result.repeat)
+      break
+    }
   }
   result.repeat.generated = list
   return result

@@ -6,10 +6,8 @@ nlp.extend(require('../../plugins/dates/src'))
 
 const fmt = (iso) => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 
-let october = 9
-let march = 2
 const context = {
-  today: [2011, march, 28], //monday
+  // today: [2011, march, 28], //monday
   // today: '2000-01-01',
   // today: [2016, october, 4], //a tuesday
   timezone: 'Canada/Pacific',
@@ -18,9 +16,9 @@ const context = {
   // max_repeat: 50,
 }
 
-// let doc = nlp(`tuesday next week`)
+let doc = nlp(`any monday starting march 5th`)
 // let doc = nlp(`tuesday and wednesday next week`)
-let doc = nlp(`this coming mon`)
+// let doc = nlp(`this coming mon`)
 // let doc = nlp(`may to august 1996`)
 // let doc = nlp(`august to may 1996`)
 let dates = doc.dates(context) //.debug()
@@ -29,6 +27,7 @@ console.log(date)
 // console.log(JSON.stringify(json.date, null, 2))
 console.log('start: ', fmt(date.start))
 console.log('  end: ', fmt(date.end))
+console.log('=-=-=-= here -=-=-=-')
 
 // console.log(nlp('it was ten after 9').debug().times().get())
 // console.log(nlp('around four oclock').times().get())

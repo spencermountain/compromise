@@ -22,6 +22,8 @@ test('count generated dates', function (t) {
   arr.forEach((a) => {
     let doc = nlp(a[0])
     let dates = doc.dates(context).get(0)
+    dates.repeat = dates.repeat || {}
+    dates.repeat.generated = dates.repeat.generated || []
     t.equal(dates.repeat.generated.length, a[1], a[0])
   })
   t.end()

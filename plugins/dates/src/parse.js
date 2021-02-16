@@ -1,7 +1,7 @@
 const spacetime = require('spacetime')
 const parseRanges = require('./02-ranges')
 const normalize = require('./normalize')
-const doInterval = require('./generate')
+const generate = require('./generate')
 
 const addDuration = function (start, end) {
   let duration = {}
@@ -37,7 +37,7 @@ const getDate = function (doc, context) {
   result.end = toISO(result.end)
   // generate interval dates
   if (result.repeat) {
-    result = doInterval(result, context)
+    result = generate(result, context)
   }
 
   return result

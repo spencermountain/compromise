@@ -272,7 +272,7 @@ var tagDates = function tagDates(doc) {
     v = cardinal.match('(q1|q2|q3|q4) [#Cardinal]', 0);
     tagYear(v, 'in-year-2'); //2nd quarter 2009
 
-    v = cardinal.match('#Ordinal quarter [#Cardinal]', 0);
+    v = cardinal.match('#Ordinal quarter of? [#Cardinal]', 0);
     tagYear(v, 'in-year-3'); //in the year 1998
 
     v = cardinal.match('the year [#Cardinal]', 0);
@@ -281,7 +281,12 @@ var tagDates = function tagDates(doc) {
     v = cardinal.match('it (is|was) [#Cardinal]', 0);
     tagYearSafe(v, 'in-year-5'); // re-tag this part
 
-    cardinal.match("".concat(sections, " of #Year")).tag('Date');
+    cardinal.match("".concat(sections, " of #Year")).tag('Date'); //between 1999 and 1998
+
+    var _m = cardinal.match('between [#Cardinal] and [#Cardinal]');
+
+    tagYear(_m.groups('0'), 'between-year-and-year-1');
+    tagYear(_m.groups('1'), 'between-year-and-year-2');
   }
 
   var time = doc["if"]('#Time');
@@ -472,6 +477,19 @@ var shiftTagger = function shiftTagger(doc) {
 
 var _05Shifts = shiftTagger;
 
+var tagIntervals = function tagIntervals(doc) {
+  // every other week
+  doc.match('every other #Duration').tag('Date', 'every-other'); // every weekend
+
+  doc.match('(every|any|each|a) (day|weekday|week day|weekend|weekend day)').tag('Date', 'any-weekday'); // any-wednesday
+
+  doc.match('(every|any|each|a) (#WeekDay)').tag('Date', 'any-wednesday'); // any week
+
+  doc.match('(every|any|each|a) (#Duration)').tag('Date', 'any-week');
+};
+
+var _06Intervals = tagIntervals;
+
 var here$5 = 'fix-tagger'; //
 
 var fixUp = function fixUp(doc) {
@@ -547,8 +565,10 @@ var fixUp = function fixUp(doc) {
 
     if (d.has('about #Holiday')) {
       d.match('about').unTag('#Date', 'about-thanksgiving');
-    } // a month from now
+    } // second quarter of 2020
 
+
+    d.match('#Ordinal quarter of? #Year').unTag('Fraction'); // a month from now
 
     d.match('(from|by|before) now').unTag('Time'); // dangling date-chunks
     // if (d.has('!#Date (in|of|by|for) !#Date')) {
@@ -562,9 +582,9 @@ var fixUp = function fixUp(doc) {
   return doc;
 };
 
-var _06Fixup = fixUp;
+var _07Fixup = fixUp;
 
-var methods = [_00Basic, _01Values, _02Dates, _03Sections, _04Time, _05Shifts, _06Fixup]; // normalizations to run before tagger
+var methods = [_00Basic, _01Values, _02Dates, _03Sections, _04Time, _05Shifts, _06Intervals, _07Fixup]; // normalizations to run before tagger
 
 var normalize = function normalize(doc) {
   // turn '20mins' into '20 mins'
@@ -626,10 +646,10 @@ function createCommonjsModule(fn) {
 	return fn(module, module.exports), module.exports;
 }
 
-/* spencermountain/spacetime 6.12.3 Apache 2.0 */
+/* spencermountain/spacetime 6.12.5 Apache 2.0 */
 var spacetime = createCommonjsModule(function (module, exports) {
   (function (global, factory) {
-     module.exports = factory() ;
+    module.exports = factory() ;
   })(commonjsGlobal, function () {
 
     function _slicedToArray(arr, i) {
@@ -710,8 +730,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
     var inSummerTime = function inSummerTime(epoch, start, end, summerOffset, winterOffset) {
       var year = new Date(epoch).getUTCFullYear();
       var startUtc = toUtc(start, winterOffset, year);
-      var endUtc = toUtc(end, summerOffset, year); // console.log(epoch, endUtc)
-      // simple number comparison now
+      var endUtc = toUtc(end, summerOffset, year); // simple number comparison now
 
       return epoch >= startUtc && epoch < endUtc;
     };
@@ -1175,7 +1194,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
 
           if (startUnit !== s.d.getFullYear()) {
             s.epoch = original;
-          } //incriment by day
+          } //increment by day
 
 
           while (s.d.getMonth() < n) {
@@ -3245,10 +3264,11 @@ var spacetime = createCommonjsModule(function (module, exports) {
       unit = fns.normalize(unit);
 
       if (units$2[unit]) {
+        // go to beginning, go to next one, step back 1ms
         s = units$2[unit](s); // startof
 
         s = s.add(1, unit);
-        s = s.subtract(1, 'milliseconds');
+        s = s.subtract(1, 'millisecond');
         return s;
       }
 
@@ -4546,7 +4566,13 @@ var spacetime = createCommonjsModule(function (module, exports) {
         }
 
         var old = this.clone();
-        unit = fns.normalize(unit); // support 'fortnight' alias
+        unit = fns.normalize(unit);
+
+        if (unit === 'millisecond') {
+          s.epoch += num;
+          return s;
+        } // support 'fortnight' alias
+
 
         if (unit === 'fortnight') {
           num *= 2;
@@ -4559,7 +4585,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
         } else if (unit === 'week') {
           s.epoch += milliseconds.day * (num * 7);
         } else if (unit === 'quarter' || unit === 'season') {
-          s.epoch += milliseconds.month * (num * 3.1); //go a little too-far
+          s.epoch += milliseconds.month * (num * 3);
         } else if (unit === 'quarterhour') {
           s.epoch += milliseconds.minute * 15 * num;
         } //now ensure our milliseconds/etc are in-line
@@ -4608,22 +4634,40 @@ var spacetime = createCommonjsModule(function (module, exports) {
             if (num !== 0 && old.isSame(s, 'day')) {
               want.date = old.date() + num;
             }
-          } //ensure year has changed (leap-years)
-          else if (unit === 'year') {
-              var wantYear = old.year() + num;
-              var haveYear = s.year();
+          } // ensure a quarter is 3 months over
+          else if (unit === 'quarter') {
+              want.month = old.month() + num * 3;
+              want.year = old.year(); // handle rollover
 
-              if (haveYear < wantYear) {
-                s.epoch += milliseconds.day;
-              } else if (haveYear > wantYear) {
-                s.epoch += milliseconds.day;
+              if (want.month < 0) {
+                var years = Math.floor(want.month / 12);
+                var remainder = want.month + Math.abs(years) * 12;
+                want.month = remainder;
+                want.year += years;
+              } else if (want.month >= 12) {
+                var _years = Math.floor(want.month / 12);
+
+                want.month = want.month % 12;
+                want.year += _years;
               }
-            } //these are easier
-            else if (unit === 'decade') {
-                want.year = s.year() + 10;
-              } else if (unit === 'century') {
-                want.year = s.year() + 100;
-              } //keep current date, unless the month doesn't have it.
+
+              want.date = old.date();
+            } //ensure year has changed (leap-years)
+            else if (unit === 'year') {
+                var wantYear = old.year() + num;
+                var haveYear = s.year();
+
+                if (haveYear < wantYear) {
+                  s.epoch += milliseconds.day;
+                } else if (haveYear > wantYear) {
+                  s.epoch += milliseconds.day;
+                }
+              } //these are easier
+              else if (unit === 'decade') {
+                  want.year = s.year() + 10;
+                } else if (unit === 'century') {
+                  want.year = s.year() + 100;
+                } //keep current date, unless the month doesn't have it.
 
 
         if (keepDate[unit]) {
@@ -4635,7 +4679,10 @@ var spacetime = createCommonjsModule(function (module, exports) {
           }
         }
 
-        walk_1(s, want);
+        if (Object.keys(want).length > 1) {
+          walk_1(s, want);
+        }
+
         return s;
       }; //subtract is only add *-1
 
@@ -4928,7 +4975,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
     };
 
     var whereIts_1 = whereIts;
-    var _version = '6.12.3';
+    var _version = '6.12.5';
 
     var main$1 = function main(input, tz, options) {
       return new spacetime(input, tz, options);
@@ -6524,7 +6571,7 @@ var _01Today = today;
 
 var spacetimeHoliday = createCommonjsModule(function (module, exports) {
   (function (global, factory) {
-     module.exports = factory(spacetime) ;
+    module.exports = factory(spacetime) ;
   })(commonjsGlobal, function (spacetime) {
 
     function _interopDefaultLegacy(e) {
@@ -7495,6 +7542,139 @@ var parseDate = function parseDate(doc, context) {
 
 var parse_1 = parseDate;
 
+var dayNames = {
+  mon: 'monday',
+  tue: 'tuesday',
+  tues: 'wednesday',
+  wed: 'wednesday',
+  thu: 'thursday',
+  fri: 'friday',
+  sat: 'saturday',
+  sun: 'sunday'
+}; // 'any tuesday' vs 'every tuesday'
+
+var parseLogic = function parseLogic(m) {
+  if (m.match('(every|each)').found) {
+    return 'AND';
+  }
+
+  if (m.match('(any|a)').found) {
+    return 'OR';
+  }
+
+  return null;
+}; // parse repeating dates, like 'every week'
+
+
+var parseIntervals = function parseIntervals(doc, context) {
+  // 'every week'
+  var m = doc.match('[<logic>(every|any|each)] [<skip>other?] [<unit>#Duration] (starting|beginning|commencing)?');
+
+  if (m.found) {
+    var repeat = {
+      interval: {}
+    };
+    var unit = m.groups('unit').text('reduced');
+    repeat.interval[unit] = 1;
+    repeat.choose = parseLogic(m); // 'every other week'
+
+    if (m.groups('skip').found) {
+      repeat.interval[unit] = 2;
+    }
+
+    doc = doc.remove(m);
+    return {
+      repeat: repeat
+    };
+  } // 'every two weeks'
+
+
+  m = doc.match('[<logic>(every|any|each)] [<num>#Value] [<unit>#Duration] (starting|beginning|commencing)?');
+
+  if (m.found) {
+    var _repeat = {
+      interval: {}
+    };
+    var units = m.groups('unit');
+    units.nouns().toSingular();
+
+    var _unit = units.text('reduced');
+
+    _repeat.interval[_unit] = m.groups('num').numbers().get(0);
+    _repeat.choose = parseLogic(m);
+    doc = doc.remove(m);
+    return {
+      repeat: _repeat
+    };
+  } // 'every friday'
+
+
+  m = doc.match('[<logic>(every|any|each|a)] [<skip>other?] [<day>#WeekDay+] (starting|beginning|commencing)?');
+
+  if (m.found) {
+    var _repeat2 = {
+      interval: {
+        day: 1
+      },
+      filter: {
+        weekDays: {}
+      }
+    };
+    var str = m.groups('day').text('reduced');
+
+    if (dayNames.hasOwnProperty(str)) {
+      str = dayNames[str];
+    }
+
+    _repeat2.filter.weekDays[str] = true;
+    _repeat2.choose = parseLogic(m);
+    doc = doc.remove(m);
+    return {
+      repeat: _repeat2
+    };
+  } // 'every weekday'
+
+
+  m = doc.match('[<logic>(every|any|each|a)] [<day>(weekday|week day|weekend|weekend day)] (starting|beginning|commencing)?');
+
+  if (m.found) {
+    var _repeat3 = {
+      interval: {
+        day: 1
+      },
+      filter: {
+        weekDays: {}
+      }
+    };
+    var day = m.groups('day');
+
+    if (day.has('(weekday|week day)')) {
+      _repeat3.filter.weekDays = {
+        monday: true,
+        tuesday: true,
+        wednesday: true,
+        thursday: true,
+        friday: true
+      };
+    } else if (day.has('(weekend|weekend day)')) {
+      _repeat3.filter.weekDays = {
+        saturday: true,
+        sunday: true
+      };
+    }
+
+    _repeat3.choose = parseLogic(m);
+    doc = doc.remove(m);
+    return {
+      repeat: _repeat3
+    };
+  }
+
+  return null;
+};
+
+var intervals = parseIntervals;
+
 var punt = function punt(unit, context) {
   unit = unit.applyShift(context.punt);
   return unit;
@@ -7768,7 +7948,9 @@ var ranges = [{
 }];
 
 var parseRange = function parseRange(doc, context) {
-  // try each template in order
+  // parse-out 'every week ..'
+  var interval = intervals(doc) || {}; // try each template in order
+
   for (var i = 0; i < ranges.length; i += 1) {
     var fmt = ranges[i];
     var m = doc.match(fmt.match);
@@ -7778,29 +7960,31 @@ var parseRange = function parseRange(doc, context) {
         m = m.groups(fmt.group);
       }
 
-      var res = fmt.parse(m, context);
+      var _res = fmt.parse(m, context);
 
-      if (res !== null) {
+      if (_res !== null) {
         // console.log(fmt.match)
-        return res;
+        return Object.assign({}, interval, _res);
       }
     }
   } //else, try whole thing
 
 
+  var res = {
+    start: null,
+    end: null
+  };
   var unit = parse_1(doc, context);
 
   if (unit) {
-    return {
+    res = {
       start: unit,
       end: unit.clone().end()
     };
   }
 
-  return {
-    start: null,
-    end: null
-  };
+  var combined = Object.assign({}, interval, res);
+  return combined;
 };
 
 var _02Ranges = parseRange;
@@ -7830,8 +8014,7 @@ var normalize$1 = function normalize(doc) {
 
     _num.toNumber();
 
-    _num.toCardinal(false); // num.normalize()
-
+    _num.toCardinal(false);
   } // // expand 'aug 20-21'
 
 
@@ -7855,6 +8038,75 @@ var normalize$1 = function normalize(doc) {
 
 var normalize_1 = normalize$1;
 
+var maxDate = 8640000000000000;
+
+var shouldPick = function shouldPick(s, byDay, end) {
+  if (byDay && byDay[s.dayName()] !== true) {
+    return false;
+  }
+
+  return true;
+}; // list possible dates of a repeating date
+
+
+var generateDates = function generateDates(result, context) {
+  var list = [];
+  var max_count = context.max_repeat || 12;
+  var s = spacetime(result.start || context.today, context.timezone); // should we stop at the end date?
+
+  var end = spacetime(result.end, context.timezone);
+  var toAdd = Object.keys(result.repeat.interval);
+
+  if (toAdd[0] && s.isSame(end, toAdd[0]) === true) {
+    // ignore the end date!
+    end = spacetime(maxDate, context.timezone);
+  } // should we only include these days?
+
+
+  var byDay = null;
+
+  if (result.repeat.filter) {
+    byDay = result.repeat.filter.weekDays;
+  } // start going!
+
+
+  while (list.length < max_count && s.epoch < end.epoch) {
+    if (shouldPick(s, byDay)) {
+      list.push(s.iso());
+    }
+
+    toAdd.forEach(function (unit) {
+      s = s.add(result.repeat.interval[unit], unit);
+    });
+  }
+
+  result.repeat.generated = list;
+  return result;
+};
+
+var generate = generateDates;
+
+var addDuration = function addDuration(start, end) {
+  var duration = {};
+
+  if (start && end) {
+    duration = start.d.diff(end.d); // we don't need these
+
+    delete duration.milliseconds;
+    delete duration.seconds;
+  }
+
+  return duration;
+};
+
+var toISO = function toISO(unit) {
+  if (unit && unit.d) {
+    return unit.d.format('iso');
+  }
+
+  return null;
+};
+
 var getDate = function getDate(doc, context) {
   // validate context a bit
   context = context || {};
@@ -7863,7 +8115,18 @@ var getDate = function getDate(doc, context) {
 
   doc = normalize_1(doc); //interpret 'between [A] and [B]'...
 
-  return _02Ranges(doc, context);
+  var result = _02Ranges(doc, context); // add duration
+
+  result.duration = addDuration(result.start, result.end); // format as iso
+
+  result.start = toISO(result.start);
+  result.end = toISO(result.end); // generate interval dates
+
+  if (result.repeat) {
+    result = generate(result, context);
+  }
+
+  return result;
 };
 
 var find = getDate;
@@ -7884,13 +8147,8 @@ var methods$1 = {
 
     var arr = [];
     this.forEach(function (doc) {
-      var obj = find(doc, _this.context);
-      var start = obj.start ? obj.start.format('iso') : null;
-      var end = obj.end ? obj.end.format('iso') : null;
-      arr.push({
-        start: start,
-        end: end
-      });
+      var found = find(doc, _this.context);
+      arr.push(found);
     });
 
     if (typeof options === 'number') {
@@ -7915,25 +8173,11 @@ var methods$1 = {
       terms: false
     };
     var res = [];
-    var format = options.format || 'iso';
+    options.format || 'iso';
     this.forEach(function (doc) {
       var json = doc.json(options)[0];
-      var obj = find(doc, _this2.context);
-      var start = obj.start ? obj.start.format(format) : null;
-      var end = obj.end ? obj.end.format(format) : null; // set iso strings to json result
-
-      json.date = {
-        start: start,
-        end: end
-      }; // add duration
-
-      if (start && end) {
-        json.date.duration = obj.start.d.diff(obj.end.d); // we don't need these
-
-        delete json.date.duration.milliseconds;
-        delete json.date.duration.seconds;
-      }
-
+      var found = find(doc, _this2.context);
+      json.date = found;
       res.push(json);
     });
 
@@ -7950,16 +8194,16 @@ var methods$1 = {
 
     this.forEach(function (doc) {
       var obj = find(doc, _this3.context);
-      var str = '';
 
       if (obj.start) {
-        str = obj.start.format(fmt);
+        var start = spacetime(obj.start, _this3.context.timezone);
+        var str = start.format(fmt);
 
         if (obj.end) {
-          var end = obj.start.format(fmt);
+          var end = spacetime(obj.end, _this3.context.timezone);
 
-          if (str !== end) {
-            str += ' to ' + end;
+          if (start.isSame(end, 'day') === false) {
+            str += ' to ' + end.format(fmt);
           }
         }
 

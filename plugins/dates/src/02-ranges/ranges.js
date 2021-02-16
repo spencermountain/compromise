@@ -27,7 +27,7 @@ module.exports = [
 
   {
     // two months, no year - 'june 5 to june 7'
-    match: '[<from>#Month #Value] (to|through|thru) [<to>#Month #Value] [<year>#Year?]',
+    match: '[<from>#Month #Value] (to|through|thru|and) [<to>#Month #Value] [<year>#Year?]',
     parse: (m, context) => {
       let res = m.groups()
       let start = res.from
@@ -76,7 +76,7 @@ module.exports = [
   },
   {
     // one month, one year, second form - '5 to 7 of january 1998'
-    match: '[<from>#Value] (to|through|thru) [<to>#Value of? #Month of? #Year]',
+    match: '[<from>#Value] (to|through|thru|and) [<to>#Value of? #Month of? #Year]',
     parse: (m, context) => {
       let to = m.groups('to')
       to = parseDate(to, context)
@@ -95,7 +95,7 @@ module.exports = [
 
   {
     // one month, no year - '5 to 7 of january'
-    match: '[<from>#Value] (to|through|thru) [<to>#Value of? #Month]',
+    match: '[<from>#Value] (to|through|thru|and) [<to>#Value of? #Month]',
     parse: (m, context) => {
       let to = m.groups('to')
       to = parseDate(to, context)
@@ -114,7 +114,7 @@ module.exports = [
 
   {
     // one month, no year - 'january 5 to 7'
-    match: '[<from>#Month #Value] (to|through|thru) [<to>#Value]',
+    match: '[<from>#Month #Value] (to|through|thru|and) [<to>#Value]',
     parse: (m, context) => {
       let from = m.groups('from')
       from = parseDate(from, context)
@@ -132,8 +132,35 @@ module.exports = [
   },
 
   {
+    // 'january to may 2020'
+    match: 'from? [<from>#Month] (to|until|upto|through|thru|and) [<to>#Month] [<year>#Year]',
+    parse: (m, context) => {
+      let from = m.groups('from')
+      let year = from.groups('year').numbers().get(0)
+      let to = m.groups('to')
+      from = parseDate(from, context)
+      to = parseDate(to, context)
+      from.d = from.d.year(year)
+      to.d = to.d.year(year)
+      if (from && to) {
+        // reverse the order?
+        if (from.d.isAfter(to.d)) {
+          let tmp = from
+          from = to
+          to = tmp
+        }
+        return {
+          start: from,
+          end: to.end(),
+        }
+      }
+      return null
+    },
+  },
+
+  {
     // 'from A to B'
-    match: 'from? [<from>*] (to|until|upto|through|thru) [<to>*]',
+    match: 'from? [<from>*] (to|until|upto|through|thru|and) [<to>*]',
     parse: (m, context) => {
       let from = m.groups('from')
       let to = m.groups('to')

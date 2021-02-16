@@ -1,4 +1,6 @@
 const tagIntervals = function (doc) {
+  // july 3rd and 4th
+  doc.match('#Month #Ordinal and #Ordinal').tag('Date', 'ord-and-ord')
   // every other week
   doc.match('every other #Duration').tag('Date', 'every-other')
   // every weekend

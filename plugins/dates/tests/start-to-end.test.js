@@ -33,6 +33,8 @@ const tests = [
       ['before march', 19],
 
       ['on february 22', 1],
+      ['march 3rd and 4th', 2],
+      // ['tuesday and wednesday', 2],
       ['first week of september', 7],
       ['second week of october', 7],
       ['third week of june', 7],

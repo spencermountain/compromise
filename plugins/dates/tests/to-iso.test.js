@@ -45,6 +45,8 @@ test('date-parse :', function (t) {
     ['5th day of q1 2002', '2002-01-05T00:00:00.000Z'],
     ['5th hour of March 3rd 2002', '2002-03-03T04:00:00.000Z'],
     ['last hour of March 2021', '2021-03-31T23:00:00.000Z'],
+    ['may to august 1996', '1996-05-01T00:00:00.000Z'],
+    ['august to may 1996', '1996-05-01T00:00:00.000Z'],
   ]
   arr.forEach(function (a) {
     let json = nlp(a[0]).dates(context).json()[0]

@@ -12,10 +12,12 @@ const context = {
   dayEnd: '5:00pm',
 }
 
-let doc = nlp('q4').debug()
-let dates = doc.dates(context).json()[0]
-console.log('start: ', fmt(dates.date.start))
-console.log('  end: ', fmt(dates.date.end))
+let doc = nlp('foobar every monday in july foobar')
+let dates = doc.dates(context).debug()
+let json = dates.json()[0]
+console.log(JSON.stringify(json.date, null, 2))
+// console.log('start: ', fmt(json.date.start))
+// console.log('  end: ', fmt(json.date.end))
 
 // console.log(nlp('it was ten after 9').debug().times().get())
 // console.log(nlp('around four oclock').times().get())

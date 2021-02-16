@@ -28,21 +28,20 @@ module.exports = {
     let format = options.format || 'iso'
     this.forEach((doc) => {
       let json = doc.json(options)[0]
-      let obj = parse(doc, this.context)
-      let start = obj.start ? obj.start.format(format) : null
-      let end = obj.end ? obj.end.format(format) : null
-      // set iso strings to json result
-      json.date = {
-        start: start,
-        end: end,
-      }
+      let found = parse(doc, this.context)
+      json.date = Object.assign({}, found)
+      let start = found.start ? found.start.format(format) : null
+      let end = found.end ? found.end.format(format) : null
       // add duration
       if (start && end) {
-        json.date.duration = obj.start.d.diff(obj.end.d)
+        json.date.duration = found.start.d.diff(found.end.d)
         // we don't need these
         delete json.date.duration.milliseconds
         delete json.date.duration.seconds
       }
+      json.date.start = start
+      json.date.end = end
+
       res.push(json)
     })
     if (n !== null) {

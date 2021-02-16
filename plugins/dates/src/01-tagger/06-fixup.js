@@ -1,6 +1,9 @@
 const here = 'fix-tagger'
 //
 const fixUp = function (doc) {
+  // every other week
+  doc.match('every other #Duration').tag('Date', 'every-other')
+
   //fixups
   if (doc.has('#Date')) {
     //first day by monday

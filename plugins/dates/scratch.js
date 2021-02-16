@@ -6,13 +6,14 @@ nlp.extend(require('../../plugins/dates/src'))
 
 const fmt = (iso) => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 const context = {
-  today: '2018-01-21',
+  // today: '2018-01-21',
   timezone: 'Canada/Pacific',
   dayStart: '8:00am',
   dayEnd: '5:00pm',
+  max_repeat: 5,
 }
 
-let doc = nlp('foobar every monday in july foobar')
+let doc = nlp('every tuesday')
 let dates = doc.dates(context).debug()
 let json = dates.json()[0]
 console.log(JSON.stringify(json.date, null, 2))

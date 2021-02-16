@@ -13,7 +13,7 @@ const parseLogic = function (m) {
   if (m.match('(every|each)').found) {
     return 'AND'
   }
-  if (m.match('any)').found) {
+  if (m.match('(any|a)').found) {
     return 'OR'
   }
   return null
@@ -24,38 +24,66 @@ const parseIntervals = function (doc, context) {
   // 'every week'
   let m = doc.match('[<logic>(every|any|each)] [<skip>other?] [<unit>#Duration] (starting|beginning|commencing)?')
   if (m.found) {
-    let repeat = { duration: {} }
+    let repeat = { interval: {} }
     let unit = m.groups('unit').text('reduced')
-    repeat.duration[unit] = 1
+    repeat.interval[unit] = 1
     repeat.choose = parseLogic(m)
     // 'every other week'
     if (m.groups('skip').found) {
-      repeat.duration[unit] = 2
+      repeat.interval[unit] = 2
     }
     doc = doc.remove(m)
     return { repeat: repeat }
   }
+
   // 'every two weeks'
   m = doc.match('[<logic>(every|any|each)] [<num>#Value] [<unit>#Duration] (starting|beginning|commencing)?')
   if (m.found) {
-    let repeat = { duration: {} }
+    let repeat = { interval: {} }
     let units = m.groups('unit')
     units.nouns().toSingular()
     let unit = units.text('reduced')
-    repeat.duration[unit] = m.groups('num').numbers().get(0)
+    repeat.interval[unit] = m.groups('num').numbers().get(0)
     repeat.choose = parseLogic(m)
     doc = doc.remove(m)
     return { repeat: repeat }
   }
+
   // 'every friday'
-  m = doc.match('[<logic>(every|any|each)] [<skip>other?] [<day>#WeekDay] (starting|beginning|commencing)?')
+  m = doc.match('[<logic>(every|any|each|a)] [<skip>other?] [<day>#WeekDay+] (starting|beginning|commencing)?')
   if (m.found) {
-    let repeat = { duration: { day: 1 }, filter: { weekDays: {} } }
+    let repeat = { interval: { day: 1 }, filter: { weekDays: {} } }
     let str = m.groups('day').text('reduced')
     if (dayNames.hasOwnProperty(str)) {
       str = dayNames[str]
     }
     repeat.filter.weekDays[str] = true
+    repeat.choose = parseLogic(m)
+    doc = doc.remove(m)
+    return { repeat: repeat }
+  }
+
+  // 'every weekday'
+  m = doc.match(
+    '[<logic>(every|any|each|a)] [<day>(weekday|week day|weekend|weekend day)] (starting|beginning|commencing)?'
+  )
+  if (m.found) {
+    let repeat = { interval: { day: 1 }, filter: { weekDays: {} } }
+    let day = m.groups('day')
+    if (day.has('(weekday|week day)')) {
+      repeat.filter.weekDays = {
+        monday: true,
+        tuesday: true,
+        wednesday: true,
+        thursday: true,
+        friday: true,
+      }
+    } else if (day.has('(weekend|weekend day)')) {
+      repeat.filter.weekDays = {
+        saturday: true,
+        sunday: true,
+      }
+    }
     repeat.choose = parseLogic(m)
     doc = doc.remove(m)
     return { repeat: repeat }

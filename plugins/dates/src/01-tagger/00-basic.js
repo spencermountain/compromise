@@ -158,6 +158,10 @@ const tagDates = function (doc) {
     tagYearSafe(v, 'in-year-5')
     // re-tag this part
     cardinal.match(`${sections} of #Year`).tag('Date')
+    //between 1999 and 1998
+    let m = cardinal.match('between [#Cardinal] and [#Cardinal]')
+    tagYear(m.groups('0'), 'between-year-and-year-1')
+    tagYear(m.groups('1'), 'between-year-and-year-2')
   }
 
   let time = doc.if('#Time')

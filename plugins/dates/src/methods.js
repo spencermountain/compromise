@@ -1,4 +1,5 @@
 const parse = require('./find')
+const spacetime = require('spacetime')
 const abbrevs = require('./data/_abbrevs')
 
 module.exports = {
@@ -6,10 +7,8 @@ module.exports = {
   get: function (options) {
     let arr = []
     this.forEach((doc) => {
-      let obj = parse(doc, this.context)
-      let start = obj.start ? obj.start.format('iso') : null
-      let end = obj.end ? obj.end.format('iso') : null
-      arr.push({ start: start, end: end })
+      let found = parse(doc, this.context)
+      arr.push(found)
     })
     if (typeof options === 'number') {
       return arr[options]
@@ -29,19 +28,7 @@ module.exports = {
     this.forEach((doc) => {
       let json = doc.json(options)[0]
       let found = parse(doc, this.context)
-      json.date = Object.assign({}, found)
-      let start = found.start ? found.start.format(format) : null
-      let end = found.end ? found.end.format(format) : null
-      // add duration
-      if (start && end) {
-        json.date.duration = found.start.d.diff(found.end.d)
-        // we don't need these
-        delete json.date.duration.milliseconds
-        delete json.date.duration.seconds
-      }
-      json.date.start = start
-      json.date.end = end
-
+      json.date = found
       res.push(json)
     })
     if (n !== null) {
@@ -56,9 +43,9 @@ module.exports = {
       let obj = parse(doc, this.context)
       let str = ''
       if (obj.start) {
-        str = obj.start.format(fmt)
+        let start = spacetime(obj.start, this.context.timezone).format(fmt)
         if (obj.end) {
-          let end = obj.start.format(fmt)
+          let end = spacetime(obj.end, this.context.timezone).format(fmt)
           if (str !== end) {
             str += ' to ' + end
           }

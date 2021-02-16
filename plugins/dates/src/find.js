@@ -1,32 +1,24 @@
 const spacetime = require('spacetime')
 const parseRanges = require('./02-ranges')
 const normalize = require('./normalize')
-const maxDate = 8640000000000000
+const doInterval = require('./generate')
 
-// generate possible dates for a repeating date
-const generateDates = function (result, context) {
-  let max_count = context.max_repeat || 12
-  let list = []
-  // console.log(result.start.d)
-  let s = spacetime(result.start.d || context.today, context.timezone)
-  // let end = spacetime(result.end || maxDate, context.timezone)
-  let toAdd = Object.keys(result.repeat.interval)
-  // start going!
-  let days = result.repeat.filter.weekDays
-  while (list.length < max_count) {
-    if (days) {
-      if (days[s.dayName()] === true) {
-        list.push(s.iso())
-      }
-    } else {
-      list.push(s.iso())
-    }
-    toAdd.forEach((unit) => {
-      s = s.add(result.repeat.interval[unit], unit)
-    })
+const addDuration = function (start, end) {
+  let duration = {}
+  if (start && end) {
+    duration = start.d.diff(end.d)
+    // we don't need these
+    delete duration.milliseconds
+    delete duration.seconds
   }
-  result.repeat.generated = list
-  return result
+  return duration
+}
+
+const toISO = function (unit) {
+  if (unit && unit.d) {
+    return unit.d.format('iso')
+  }
+  return null
 }
 
 const getDate = function (doc, context) {
@@ -38,9 +30,16 @@ const getDate = function (doc, context) {
   doc = normalize(doc)
   //interpret 'between [A] and [B]'...
   let result = parseRanges(doc, context)
+  // add duration
+  result.duration = addDuration(result.start, result.end)
+  // format as iso
+  result.start = toISO(result.start)
+  result.end = toISO(result.end)
+  // generate interval dates
   if (result.repeat) {
-    result = generateDates(result, context)
+    result = doInterval(result, context)
   }
+
   return result
 }
 module.exports = getDate

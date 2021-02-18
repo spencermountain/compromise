@@ -16,11 +16,8 @@ const context = {
   // max_repeat: 50,
 }
 
-let doc = nlp(`any monday starting march 5th`)
-// let doc = nlp(`tuesday and wednesday next week`)
-// let doc = nlp(`this coming mon`)
-// let doc = nlp(`may to august 1996`)
-// let doc = nlp(`august to may 1996`)
+// let doc = nlp(`any mondays`)
+let doc = nlp(`any monday in June`)
 let dates = doc.dates(context) //.debug()
 let date = dates.get(0)
 console.log(date)

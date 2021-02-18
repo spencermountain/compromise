@@ -12,6 +12,9 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - **[new]** - #Fraction tag and improved fraction support (thanks Jakeii!)
 -->
 
+#### 13.9.2 [Feb 2021]
+- **[fix]** - fix weird ordering issue with named exports #815
+  
 #### 13.9.1 [Feb 2021]
 - **[fix]** - matches over a contraction 
 - **[new]** - add 'implicit' text output

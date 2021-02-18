@@ -2,7 +2,7 @@
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "modest natural language processing",
-  "version": "13.9.2",
+  "version": "13.9.3",
   "main": "./builds/compromise.js",
   "unpkg": "./builds/compromise.min.js",
   "module": "./builds/compromise.mjs",
@@ -11,12 +11,12 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "default": "./builds/compromise.js",
       "require": "./builds/compromise.js",
-      "import": "./builds/compromise.mjs"
+      "import": "./builds/compromise.mjs",
+      "default": "./builds/compromise.js"
     },
     "./tokenize": {
-      "require": "./builds/compromise-tokenize.js"
+      "default": "./builds/compromise-tokenize.js"
     }
   },
   "repository": {

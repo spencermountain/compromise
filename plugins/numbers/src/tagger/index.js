@@ -9,7 +9,7 @@ const tagger = function (doc) {
   //  in the 400s
   doc.match('the [/[0-9]+s$/]').tag('#Plural', here)
   //half a million
-  doc.match('half a? #Value?').tag('Value', 'half-a-value') //(quarter not ready)
+  doc.match('half a? #Value').tag('Value', 'half-a-value') //(quarter not ready)
   //five and a half
   doc.match('#Value and a (half|quarter)').tag('Value', 'value-and-a-half')
   // add #Fraction tags

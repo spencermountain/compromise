@@ -4,6 +4,8 @@ const here = 'fraction-tagger'
 
 // plural-ordinals like 'hundredths' are already tagged as Fraction by compromise
 const tagFractions = function (doc) {
+  // hundred
+  doc.match(multiples).tag('#Multiple', here)
   // new words
   // doc.match('(half|quarter)').tag('Fraction', 'millionth')
   // a fifth

@@ -9,11 +9,11 @@ nlp.extend(require('./plugins/numbers/src'))
 // 'three out of eight'
 //
 
-let doc = nlp('one hundred').debug()
+let doc = nlp('half a penny').debug()
 // let doc = nlp('seven tenths of an inch').debug()
 // let doc = nlp('a third of a slice').debug()
 // let doc = nlp('seven out of ten apples').debug()
-console.log(doc.fractions().get(0))
+console.log(doc.numbers().get(0))
 
 // let doc = nlp(`I have not booked him`)
 

@@ -6,8 +6,11 @@ const here = 'fraction-tagger'
 const tagFractions = function (doc) {
   // hundred
   doc.match(multiples).tag('#Multiple', here)
-  // new words
-  // doc.match('(half|quarter)').tag('Fraction', 'millionth')
+
+  // half a penny
+  doc.match('[(half|quarter)] of? (a|an)', 0).tag('Fraction', 'millionth')
+  // two-halves
+  doc.match('#Value (halves|halfs|quarters)').tag('Fraction', 'two-halves')
   // a fifth
   doc.match('a #Ordinal').tag('Fraction', 'a-quarter')
 

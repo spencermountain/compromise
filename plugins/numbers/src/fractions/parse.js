@@ -2,6 +2,7 @@ const endS = /s$/
 
 let mapping = {
   half: 2,
+  halve: 2,
   quarter: 4,
 }
 

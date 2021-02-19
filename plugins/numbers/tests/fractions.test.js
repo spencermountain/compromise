@@ -40,6 +40,7 @@ test('fraction-normalize:', function (t) {
 test('fraction-to-float:', function (t) {
   let arr = [
     ['one and a half', '1.5', 1.5],
+    ['two halves', '1', 1],
     ['one thousandth of a parsec', '0.001 of a parsec', 0.001],
     ['1000th of a parsec', '0.001 of a parsec', 0.001],
     ['five thousandths of a foot', '0.005 of a foot', 0.005],

@@ -1,6 +1,4 @@
-const toNumber = require('./convert/toNumber')
-
-// const round = (n) => Math.round(n * 10) / 10
+const parseText = require('./convert/toNumber')
 
 const parseNumeric = function (str, p, isFraction) {
   str = str.replace(/,/g, '')
@@ -27,8 +25,6 @@ const parseNumeric = function (str, p, isFraction) {
       suffix = ''
     }
     num = isFraction ? 1 / num : num
-    // console.log(num)
-    // num = round(num)
     return {
       prefix: arr[1] || '',
       num: num,
@@ -39,12 +35,12 @@ const parseNumeric = function (str, p, isFraction) {
 }
 
 // get a numeric value from this phrase
-const parseNumber = function (p, isFraction = false) {
+const parseNumber = function (p) {
   let str = p.text('reduced')
   // is it in '3,123' format?
   let hasComma = /[0-9],[0-9]/.test(p.text('text'))
   // parse a numeric-number like '$4.00'
-  let res = parseNumeric(str, p, isFraction)
+  let res = parseNumeric(str, p)
   if (res !== null) {
     res.hasComma = hasComma
     return res
@@ -52,7 +48,7 @@ const parseNumber = function (p, isFraction = false) {
   //parse a text-numer (harder)
   // p.debug()
   // isFraction = p.has('#Fraction')
-  let num = toNumber(str, isFraction)
+  let num = parseText(str)
   return {
     hasComma: hasComma,
     prefix: '',

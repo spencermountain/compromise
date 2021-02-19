@@ -34,6 +34,7 @@ const section_sum = (obj) => {
 
 //turn a string into a number
 const parse = function (str, isFraction, depth = 0) {
+  isFraction = false
   // console.log(`parsing: '${str}', depth: ${depth}, isFraction: ${isFraction}`)
   //convert some known-numbers
   if (casualForms.hasOwnProperty(str) === true) {

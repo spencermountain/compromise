@@ -35,20 +35,36 @@ const parseNumeric = function (str, p, isFraction) {
 }
 
 // get a numeric value from this phrase
-const parseNumber = function (p) {
-  let str = p.text('reduced')
+const parseNumber = function (m) {
+  let str = m.text('reduced')
   // is it in '3,123' format?
-  let hasComma = /[0-9],[0-9]/.test(p.text('text'))
+  let hasComma = /[0-9],[0-9]/.test(m.text('text'))
   // parse a numeric-number like '$4.00'
-  let res = parseNumeric(str, p)
+  let res = parseNumeric(str, m)
   if (res !== null) {
     res.hasComma = hasComma
     return res
   }
-  //parse a text-numer (harder)
-  // p.debug()
-  // isFraction = p.has('#Fraction')
-  let num = parseText(str)
+  // -- parse text-formats --
+  // Fractions: remove 'and a half' etc. from the end
+  let frPart = m.match('#Fraction #Fraction+$')
+  frPart = frPart.found === false ? m.match('^#Fraction$') : frPart
+  let fraction = null
+  if (frPart.found) {
+    fraction = frPart.fractions().get(0)
+    // remove it from our string
+    m = m.not(frPart)
+    m = m.not('and$')
+    str = m.text('reduced')
+  }
+  let num = 0
+  if (str) {
+    num = parseText(str) || 0
+  }
+  // apply numeric fraction
+  if (fraction && fraction.decimal) {
+    num += fraction.decimal
+  }
   return {
     hasComma: hasComma,
     prefix: '',

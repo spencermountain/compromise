@@ -33,8 +33,8 @@ const section_sum = (obj) => {
 }
 
 //turn a string into a number
-const parse = function (str, isFraction, depth = 0) {
-  isFraction = false
+const parse = function (str, depth = 0) {
+  let isFraction = false
   // console.log(`parsing: '${str}', depth: ${depth}, isFraction: ${isFraction}`)
   //convert some known-numbers
   if (casualForms.hasOwnProperty(str) === true) {
@@ -97,7 +97,7 @@ const parse = function (str, isFraction, depth = 0) {
         sum += section_sum(has)
         let subterms = terms.slice(i)
         // console.log(subterms)
-        let fractional = parse(subterms.join(' '), isFraction, depth + 1)
+        let fractional = parse(subterms.join(' '), depth + 1)
         let prev = parse(terms[i - 1])
         if (
           sum === 0 ||

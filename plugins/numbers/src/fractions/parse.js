@@ -1,4 +1,12 @@
 const endS = /s$/
+const parseText = require('../numbers/convert/toNumber')
+
+// just using .toNumber() again may risk an infinite-loop
+const parseNumber = function (m) {
+  // let tmp = m.clone().unTag('Fraction')
+  // num = tmp.numbers().get(0)
+  return parseText(m.text('reduced'))
+}
 
 let mapping = {
   half: 2,
@@ -25,8 +33,10 @@ const nOutOfN = function (m) {
     return null
   }
   let { num, den } = found.groups()
-  num = num.numbers().get(0)
-  den = den.numbers().get(0)
+  // num = num.numbers().get(0)
+  // den = den.numbers().get(0)
+  num = parseNumber(num)
+  den = parseNumber(den)
   if (typeof num === 'number' && typeof den === 'number') {
     return {
       numerator: num,
@@ -43,12 +53,17 @@ const nOrinalth = function (m) {
     return null
   }
   let { num, dem } = found.groups()
+  // -- parse numerator---
   // quick-support for 'a third'
   if (num.has('a')) {
     num = 1
   } else {
-    num = num.numbers().get(0)
+    // abuse the number-parser for 'thirty three'
+    // let tmp = num.clone().unTag('Fraction')
+    // num = tmp.numbers().get(0)
+    num = parseNumber(num)
   }
+  // -- parse denominator --
   // turn 'thirds' into third
   let str = dem.text('reduced')
   if (endS.test(str)) {
@@ -59,7 +74,8 @@ const nOrinalth = function (m) {
   if (mapping.hasOwnProperty(str)) {
     dem = mapping[str]
   } else {
-    dem = dem.numbers().get(0)
+    // dem = dem.numbers().get(0)
+    dem = parseNumber(dem)
   }
   if (typeof num === 'number' && typeof dem === 'number') {
     return {
@@ -78,7 +94,8 @@ const oneNth = function (m) {
   }
   // ensure it's '100th of a '
   if (m.lookAhead('^of .')) {
-    let num = found.numbers().get(0)
+    // let num = found.numbers().get(0)
+    let num = parseNumber(found)
     return {
       numerator: 1,
       denominator: num,
@@ -96,7 +113,25 @@ const named = function (m) {
   return null
 }
 
+const round = (n) => {
+  let rounded = Math.round(n * 1000) / 1000
+  // don't round 1 millionth down into 0
+  if (rounded === 0 && n !== 0) {
+    return n
+  }
+  return rounded
+}
+
 const parseFraction = function (m) {
-  return named(m) || slashForm(m) || nOutOfN(m) || nOrinalth(m) || oneNth(m) || null
+  m = m.clone()
+  let res = named(m) || slashForm(m) || nOutOfN(m) || nOrinalth(m) || oneNth(m) || null
+  if (res !== null) {
+    // do the math
+    if (res.numerator && res.denominator) {
+      res.decimal = res.numerator / res.denominator
+      res.decimal = round(res.decimal)
+    }
+  }
+  return res
 }
 module.exports = parseFraction

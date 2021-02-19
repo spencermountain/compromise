@@ -34,9 +34,10 @@ const findNumbers = function (doc, n) {
     if (match.has('(' + tens + ') (' + teens + ')')) {
       match = match.splitAfter('(' + tens + ')')
     }
+
     //"72 82"
     let double = match.match('#Cardinal #Cardinal')
-    if (double.found && !match.has('(point|decimal)')) {
+    if (double.found && !match.has('(point|decimal|#Fraction)')) {
       //not 'two hundred'
       if (!double.has('#Cardinal (#Multiple|point|decimal)')) {
         //one proper way, 'twenty one', or 'hundred one'
@@ -48,6 +49,7 @@ const findNumbers = function (doc, n) {
         }
       }
     }
+
     //seventh fifth
     if (match.match('#Ordinal #Ordinal').match('#TextValue').found && !match.has('#Multiple')) {
       //the one proper way, 'twenty first'

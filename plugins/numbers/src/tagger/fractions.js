@@ -9,18 +9,27 @@ const tagFractions = function (doc) {
 
   // half a penny
   doc.match('[(half|quarter)] of? (a|an)', 0).tag('Fraction', 'millionth')
+  // nearly half
+  doc.match('#Adverb [half]', 0).tag('Fraction', 'nearly-half')
+  // half the
+  doc.match('[half] the', 0).tag('Fraction', 'half-the')
   // two-halves
   doc.match('#Value (halves|halfs|quarters)').tag('Fraction', 'two-halves')
+
+  // ---ordinals as fractions---
   // a fifth
   doc.match('a #Ordinal').tag('Fraction', 'a-quarter')
-
-  // doc.debug()
-
-  let values = doc.match('#Value+')
   // seven fifths
-  values.if('#Ordinal$').tag('Fraction', '4-fifths')
+  doc.match('(#Fraction && /s$/)').lookBefore('#Cardinal+$').tag('Fraction')
+  // one third of ..
+  doc.match('[#Cardinal+ #Ordinal] of .', 0).tag('Fraction', 'ordinal-of')
+  // a twenty fifth
+  doc.match('(a|one) #Cardinal?+ #Ordinal').tag('Fraction', 'a-ordinal')
+  // doc.match('(a|one) [#Ordinal]', 0).tag('Fraction', 'a-ordinal')
+
+  // values.if('#Ordinal$').tag('Fraction', '4-fifths')
   // seven quarters
-  values.if('#Fraction$').tag('Fraction', '4-quarters')
+  // values.tag('Fraction', '4-quarters')
 
   // doc.match('(#Value && !#Ordinal)+ (#Ordinal|#Fraction)').tag('Fraction', '4-fifths')
   // 12 and seven fifths

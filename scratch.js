@@ -1,7 +1,7 @@
 const nlp = require('./src/index')
 nlp.extend(require('./plugins/numbers/src'))
 nlp.extend(require('./plugins/dates/src'))
-nlp.verbose(true)
+// nlp.verbose(true)
 
 //
 // '3/8ths'
@@ -10,12 +10,16 @@ nlp.verbose(true)
 // 'three out of eight'
 //
 
+// complex denominators - 'one fifty fourths', 'one thirty third'
+//
+
 // let doc = nlp('thirty two eighths of an inch').debug()
-// let doc = nlp('two and a half').debug()
-let doc = nlp('two and two thirds').debug()
-// console.log(doc.fractions().get(0))
-console.log(doc.numbers().get(0))
-// console.log(doc.fractions().toDecimal().text())
+// let doc = nlp('one thirty third').debug()
+let doc = nlp('1000th of a parsec').debug()
+// let doc = nlp('two hundred and twelve and five hundred and one thousandths').debug()
+// let doc = nlp('six thirty seconds of an inch').debug()
+console.log(doc.fractions().get(0))
+// console.log(doc.numbers().get(0))
 
 // let doc = nlp(`I have not booked him`)
 

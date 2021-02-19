@@ -33,7 +33,7 @@ module.exports = [
   'yr',
   'yrs',
   'quarter',
-  'quarters',
+  // 'quarters',
   'qtr',
   'qtrs',
   'season',

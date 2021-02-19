@@ -34,7 +34,7 @@ const tagFractions = function (doc) {
   // doc.match(multiples).tag('#Multiple', here)
 
   // //  '3 out of 5'
-  // doc.match('#Cardinal+ out of every? #Cardinal').tag('Fraction', here)
+  doc.match('#Cardinal+ out? of every? #Cardinal').tag('Fraction', here)
   // // one and a half
   // doc.match('#Cardinal and a (#Fraction && #Value)').tag('Fraction', here)
   // fraction - 'a third of a slice'

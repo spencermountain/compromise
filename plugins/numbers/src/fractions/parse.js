@@ -3,9 +3,8 @@ const parseText = require('../numbers/convert/toNumber')
 
 // just using .toNumber() again may risk an infinite-loop
 const parseNumber = function (m) {
-  // let tmp = m.clone().unTag('Fraction')
-  // num = tmp.numbers().get(0)
-  return parseText(m.text('reduced'))
+  let str = m.text('reduced')
+  return parseText(str)
 }
 
 let mapping = {

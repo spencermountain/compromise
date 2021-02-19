@@ -40,7 +40,7 @@ test('fraction-normalize:', function (t) {
 test('parse fractions:', function (t) {
   let arr = [
     ['1000th of a parsec', '0.001 of a parsec', 0.001],
-    // complex denomintors
+    // complex denominators
     // ['one fifty fourths', '0.018', 0.018],
     // ['one thirty third', '0.03', 0.03],
     // ['one thirty second of an inch', '0.031 of an inch', 0.031],

@@ -23,6 +23,8 @@ const tagFractions = function (doc) {
   doc.match('(#Fraction && /s$/)').lookBefore('#Cardinal+$').tag('Fraction')
   // one third of ..
   doc.match('[#Cardinal+ #Ordinal] of .', 0).tag('Fraction', 'ordinal-of')
+  // 100th of
+  doc.match('[(#NumericValue && #Ordinal)] of .', 0).tag('Fraction', 'num-ordinal-of')
   // a twenty fifth
   doc.match('(a|one) #Cardinal?+ #Ordinal').tag('Fraction', 'a-ordinal')
   // doc.match('(a|one) [#Ordinal]', 0).tag('Fraction', 'a-ordinal')

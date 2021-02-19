@@ -15,7 +15,7 @@ nlp.extend(require('./plugins/dates/src'))
 
 // let doc = nlp('thirty two eighths of an inch').debug()
 // let doc = nlp('one thirty third').debug()
-let doc = nlp('1000th of a parsec').debug()
+let doc = nlp('one fifty fourths').debug()
 // let doc = nlp('two hundred and twelve and five hundred and one thousandths').debug()
 // let doc = nlp('six thirty seconds of an inch').debug()
 console.log(doc.fractions().get(0))

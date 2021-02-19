@@ -50,6 +50,8 @@ const parseNumber = function (p, isFraction = false) {
     return res
   }
   //parse a text-numer (harder)
+  // p.debug()
+  // isFraction = p.has('#Fraction')
   let num = toNumber(str, isFraction)
   return {
     hasComma: hasComma,

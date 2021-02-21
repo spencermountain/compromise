@@ -79,6 +79,19 @@ const methods = {
     }
     return arr
   },
+
+  // turn 8/10 into 80%
+  toPercentage: function () {
+    this.forEach((m) => {
+      let found = parse(m)
+      if (found.decimal || found.decimal === 0) {
+        let num = found.decimal * 100
+        num = Math.round(num * 100) / 100
+        this.replace(m, `${num}%`)
+      }
+    })
+    return this
+  },
 }
 // aliases
 methods.toNumber = methods.toDecimal

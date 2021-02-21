@@ -6,15 +6,15 @@ test('percent-basic:', function (t) {
   t.equal(m.out('normal'), '33%', 'match-33%')
 
   //parse number
-  let arr = nlp('it is 50% of our budget').values().json()
-  t.equal(arr[0].number, 50, 'match-50')
+  let arr = nlp('it is 50% of our budget').percentages().json()
+  t.equal(arr[0].number, 0.5, 'match-50')
 
-  arr = nlp('it is 9,000% of our budget').values().json()
-  t.equal(arr[0].number, 9000, 'match-9000')
+  arr = nlp('it is 9,000% of our budget').percentages().json()
+  t.equal(arr[0].number, 90, 'match-9000')
 
   //percent-decimal
-  arr = nlp('it is 0.5% of our budget').values().json()
-  t.equal(arr[0].number, 0.5, 'match-0.5')
+  arr = nlp('it is 0.5% of our budget').percentages().json()
+  t.equal(arr[0].number, 0.005, 'match-0.5')
 
   t.end()
 })

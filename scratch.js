@@ -13,14 +13,10 @@ nlp.extend(require('./plugins/dates/src'))
 // complex denominators - 'one fifty fourths', 'one thirty third'
 //
 
-let doc = nlp('six grosz') //.debug()
-doc.money() //.debug()
-console.log(doc.money().get())
-// doc.money().add(1)
-// doc.debug()
-// console.log(doc.fractions().get(0))
-// doc.numbers().toNumber()
-// console.log(doc.text())
+let doc = nlp('4/100')
+// doc.percentages().toFraction().debug()
+// doc.fractions().toPercentage().debug()
+console.log(doc.fractions().json())
 
 //
 //

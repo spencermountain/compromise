@@ -13,11 +13,19 @@ nlp.extend(require('./plugins/dates/src'))
 // complex denominators - 'one fifty fourths', 'one thirty third'
 //
 
+// greedy bug
+// let regs = nlp.parseMatch('(and foo+)')
+// console.log(regs[0].choices)
+
+// let doc = nlp('and foo foo') //.debug()
+// doc.match('(and foo+)').debug()
+
+let doc = nlp('and foo foo foo bar foo ')
+doc.match('(and foo+)').debug()
+
 // let doc = nlp('eight dollars and five cents') //.debug()
-let doc = nlp('eight hundred dollars and five cents') //.debug()
-// let doc = nlp('100 öre').debug()
-doc.money().debug()
-console.log(doc.money().get())
+// doc.money().debug()
+// console.log(doc.money().get())
 // doc.money().add(1)
 // doc.debug()
 // console.log(doc.fractions().get(0))

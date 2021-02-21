@@ -77,7 +77,19 @@ exports.doOrBlock = function (state, skipN = 0) {
       if (state.terms[tryTerm] === undefined) {
         return false
       }
-      return state.terms[tryTerm].doesMatch(cr, tryTerm + state.start_i, state.phrase_length)
+      let foundBlock = state.terms[tryTerm].doesMatch(cr, tryTerm + state.start_i, state.phrase_length)
+      // this can be greedy - '(foo+ bar)'
+      if (foundBlock === true && cr.greedy === true) {
+        for (let i = tryTerm + 1; i < state.terms.length; i += 1) {
+          let keepGoing = state.terms[i].doesMatch(cr, state.start_i + i, state.phrase_length)
+          if (keepGoing === true) {
+            skipN += i
+          } else {
+            break
+          }
+        }
+      }
+      return foundBlock
     })
     if (wasFound) {
       skipN += block.length

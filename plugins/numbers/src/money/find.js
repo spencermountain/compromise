@@ -1,6 +1,6 @@
 const findMoney = function (doc, n) {
   // five dollars
-  let res = doc.match('#Value+? #Money+ #Currency+ (and #Money #Currency+)+?')
+  let res = doc.match('#Value+? #Money+ #Currency+ (and #Money+ #Currency+)+?')
   // let res = doc.match('#Value+? #Money+ #Currency+ (and #Money #Money? #Currency+)+?')
   // res.debug()
   // $5.05

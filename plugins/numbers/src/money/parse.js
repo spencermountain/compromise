@@ -56,7 +56,7 @@ const getBySymbol = function (obj) {
 const parseMoney = function (doc) {
   // support 'and five cents' as a decimal
   let decimal = 0
-  let decM = doc.match('and #Money (cent|cents)')
+  let decM = doc.match('and #Money+ (cent|cents)')
   if (decM.found) {
     doc = doc.not(decM)
     let res = parseNumber(decM.match('#Value+'))

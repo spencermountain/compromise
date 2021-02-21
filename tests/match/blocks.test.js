@@ -89,6 +89,11 @@ test('greedy inside a block', function (t) {
   doc = nlp('and foo foo')
   m = doc.match('(and foo*?)')
   t.equal(m.text(), 'and foo foo', 'astrix optional')
+
+  doc = nlp('and foo1 foo2 foo3 foo4 bar foo ')
+  m = doc.match('(and /foo/+)')
+  t.equal(m.text(), 'and foo1 foo2 foo3 foo4', 'greedy found four')
+
   t.end()
 })
 

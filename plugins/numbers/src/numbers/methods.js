@@ -251,9 +251,9 @@ let methods = {
       arr.push(parseNumber(doc).num)
     })
     if (n !== undefined) {
-      return arr[n]
+      return arr[n] || null
     }
-    return arr
+    return arr || null
   },
 }
 // aliases

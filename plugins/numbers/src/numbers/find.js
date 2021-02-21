@@ -1,79 +1,88 @@
+const ones = 'one|two|three|four|five|six|seven|eight|nine'
 const tens = 'twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|fourty'
 const teens = 'eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen'
 
 // this is a bit of a mess
 const findNumbers = function (doc, n) {
-  let match = doc.match('#Value+')
+  let m = doc.match('#Value+')
 
   //"50 83"
-  if (match.has('#NumericValue #NumericValue')) {
+  if (m.has('#NumericValue #NumericValue')) {
     //a comma may mean two numbers
-    if (match.has('#Value @hasComma #Value')) {
-      match.splitAfter('@hasComma')
-    } else if (match.has('#NumericValue #Fraction')) {
-      match.splitAfter('#NumericValue #Fraction')
+    if (m.has('#Value @hasComma #Value')) {
+      m.splitAfter('@hasComma')
+    } else if (m.has('#NumericValue #Fraction')) {
+      m.splitAfter('#NumericValue #Fraction')
     } else {
-      match = match.splitAfter('#NumericValue')
+      m = m.splitAfter('#NumericValue')
     }
   }
+
   //three-length
-  if (match.has('#Value #Value #Value') && !match.has('#Multiple')) {
+  if (m.has('#Value #Value #Value') && !m.has('#Multiple')) {
     //twenty-five-twenty
-    if (match.has('(' + tens + ') #Cardinal #Cardinal')) {
-      match = match.splitAfter('(' + tens + ') #Cardinal')
+    if (m.has('(' + tens + ') #Cardinal #Cardinal')) {
+      m = m.splitAfter('(' + tens + ') #Cardinal')
     }
   }
 
   //two-length ones
-  if (match.has('#Value #Value')) {
+  if (m.has('#Value #Value')) {
     //june 21st 1992 is two seperate values
-    if (match.has('#NumericValue #NumericValue')) {
-      match = match.splitOn('#Year')
+    if (m.has('#NumericValue #NumericValue')) {
+      m = m.splitOn('#Year')
     }
     //sixty fifteen
-    if (match.has('(' + tens + ') (' + teens + ')')) {
-      match = match.splitAfter('(' + tens + ')')
+    if (m.has('(' + tens + ') (' + teens + ')')) {
+      m = m.splitAfter('(' + tens + ')')
     }
 
     //"72 82"
-    let double = match.match('#Cardinal #Cardinal')
-    if (double.found && !match.has('(point|decimal|#Fraction)')) {
+    let double = m.match('#Cardinal #Cardinal')
+    if (double.found && !m.has('(point|decimal|#Fraction)')) {
       //not 'two hundred'
       if (!double.has('#Cardinal (#Multiple|point|decimal)')) {
+        // two fifty five
+        let noMultiple = m.has(`(${ones}) (${tens})`)
+        // twenty one
+        let tensVal = double.has('(' + tens + ') #Cardinal')
+        // hundredOne
+        let multVal = double.has('#Multiple #Value')
         //one proper way, 'twenty one', or 'hundred one'
-        if (!double.has('(' + tens + ') #Cardinal') && !double.has('#Multiple #Value')) {
+        if (!noMultiple && !tensVal && !multVal) {
           // double = double.firstTerm()
           double.terms().forEach((d) => {
-            match = match.splitOn(d)
+            m = m.splitOn(d)
           })
         }
       }
     }
 
     //seventh fifth
-    if (match.match('#Ordinal #Ordinal').match('#TextValue').found && !match.has('#Multiple')) {
+    if (m.match('#Ordinal #Ordinal').match('#TextValue').found && !m.has('#Multiple')) {
       //the one proper way, 'twenty first'
-      if (!match.has('(' + tens + ') #Ordinal')) {
-        match = match.splitAfter('#Ordinal')
+      if (!m.has('(' + tens + ') #Ordinal')) {
+        m = m.splitAfter('#Ordinal')
       }
     }
     //fifth five
-    if (match.has('#Ordinal #Cardinal')) {
-      match = match.splitBefore('#Cardinal+')
+    if (m.has('#Ordinal #Cardinal')) {
+      m = m.splitBefore('#Cardinal+')
     }
     //five 2017 (support '5 hundred', and 'twenty 5'
-    if (match.has('#TextValue #NumericValue') && !match.has('(' + tens + '|#Multiple)')) {
-      match = match.splitBefore('#NumericValue+')
+    if (m.has('#TextValue #NumericValue') && !m.has('(' + tens + '|#Multiple)')) {
+      m = m.splitBefore('#NumericValue+')
     }
   }
+
   //5-8
-  if (match.has('#NumberRange')) {
-    match = match.splitAfter('#NumberRange')
+  if (m.has('#NumberRange')) {
+    m = m.splitAfter('#NumberRange')
   }
   //grab (n)th result
   if (typeof n === 'number') {
-    match = match.get(n)
+    m = m.get(n)
   }
-  return match
+  return m
 }
 module.exports = findNumbers

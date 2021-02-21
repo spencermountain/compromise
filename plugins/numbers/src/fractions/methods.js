@@ -8,9 +8,9 @@ const methods = {
       arr.push(parse(doc))
     })
     if (n !== undefined) {
-      return arr[n]
+      return arr[n] || null
     }
-    return arr
+    return arr || null
   },
   // become 0.5
   toDecimal() {

@@ -1,4 +1,5 @@
 const parseText = require('./convert/toNumber')
+const parseFraction = require('../fractions/parse')
 
 const parseNumeric = function (str, p, isFraction) {
   str = str.replace(/,/g, '')
@@ -51,7 +52,8 @@ const parseNumber = function (m) {
   frPart = frPart.found === false ? m.match('^#Fraction$') : frPart
   let fraction = null
   if (frPart.found) {
-    fraction = frPart.fractions().get(0)
+    // fraction = frPart.fractions().get(0)
+    fraction = parseFraction(frPart)
     // remove it from our string
     m = m.not(frPart)
     m = m.not('and$')

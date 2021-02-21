@@ -1,7 +1,13 @@
+const findMoney = require('./money/find')
 const findNumbers = require('./numbers/find')
+const findFractions = require('./fractions/find')
+const findPercentages = require('./percentage/find')
+
 const numberMethods = require('./numbers/methods')
+const percentageMethods = require('./percentage/methods')
 const moneyMethods = require('./money/methods')
 const fractionMethods = require('./fractions/methods')
+
 const tagger = require('./tagger')
 const tags = require('./tags')
 const lexicon = require('../data/lexicon')
@@ -23,8 +29,13 @@ const plugin = function (Doc, world) {
   class Money extends Numbers {}
   Object.assign(Money.prototype, moneyMethods)
 
+  /**  */
   class Fraction extends Numbers {}
   Object.assign(Fraction.prototype, fractionMethods)
+
+  /**  */
+  class Percentage extends Numbers {}
+  Object.assign(Percentage.prototype, percentageMethods)
 
   const docMethods = {
     /** find all numbers and values */
@@ -35,29 +46,19 @@ const plugin = function (Doc, world) {
 
     /** return '4%' or 'four percent' etc*/
     percentages: function (n) {
-      let m = this.match('#Percent+')
-      m = m.concat(this.match('[#Cardinal] percent', 0))
-      if (typeof n === 'number') {
-        m = m.eq(n)
-      }
-      return new Numbers(m.list, this, this.world)
+      let m = findPercentages(this, n)
+      return new Percentage(m.list, this, this.world)
     },
 
     /** return '3 out of 5' or '3/5' etc**/
     fractions: function (n) {
-      let m = this.match('#Fraction+')
-      this.match('and #Fraction+').tag('Fraction')
-      this.match('#Fraction+') //.unTag('Ordinal')
-      if (typeof n === 'number') {
-        m = m.eq(n)
-      }
+      let m = findFractions(this, n)
       return new Fraction(m.list, this, this.world)
     },
 
     /** number + currency pair */
-    money: function () {
-      let m = this.splitOn('(#Money|#Currency)+')
-      m = m.if('#Money').if('#Value')
+    money: function (n) {
+      let m = findMoney(this, n)
       return new Money(m.list, this, this.world)
     },
   }

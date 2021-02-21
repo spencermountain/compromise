@@ -18,9 +18,9 @@ const moneyMethods = {
       }
     })
     if (typeof n === 'number') {
-      return arr[n]
+      return arr[n] || null
     }
-    return arr
+    return arr || null
   },
 
   /** overloaded json method with additional number information */

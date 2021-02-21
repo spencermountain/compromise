@@ -75,6 +75,13 @@ const parse = function (str) {
       }
       continue
     }
+    // try to support 'two fifty'
+    if (words.tens.hasOwnProperty(w)) {
+      if (has.ones && Object.keys(has).length === 1) {
+        sum = has.ones * 100
+        has = {}
+      }
+    }
 
     //prevent mismatched units, like 'seven eleven' if not a fraction
     if (isValid(w, has) === false) {

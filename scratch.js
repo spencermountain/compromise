@@ -14,8 +14,9 @@ nlp.extend(require('./plugins/dates/src'))
 //
 
 let doc = nlp('two fifty') //.debug()
-doc.numbers()
-// console.log(doc.numbers().get(0))
+// let doc = nlp('fifteen ten') //.debug()
+// doc.numbers()
+console.log(doc.numbers().get(0))
 // console.log(doc.fractions().get(0))
 // doc.numbers().toNumber()
 // console.log(doc.text())

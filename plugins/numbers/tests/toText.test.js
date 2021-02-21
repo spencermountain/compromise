@@ -1,7 +1,7 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
-test('to_text:', function(t) {
+test('to_text:', function (t) {
   let arr = [
     // [-5, 'negative five'],
     [5, 'five'],
@@ -27,18 +27,16 @@ test('to_text:', function(t) {
     [90000000, 'ninety million'],
     [900000000, 'nine hundred million'],
     [900000080, 'nine hundred million and eighty'],
+    [250, 'two hundred and fifty'],
   ]
-  arr.forEach(function(a) {
-    const str = nlp(a[0])
-      .values()
-      .toText()
-      .out('text')
+  arr.forEach(function (a) {
+    const str = nlp(a[0]).values().toText().out('text')
     t.equal(str, a[1], a[0])
   })
   t.end()
 })
 
-test('all-to-text:', function(t) {
+test('all-to-text:', function (t) {
   let arr = [
     'one',
     '1',
@@ -46,42 +44,27 @@ test('all-to-text:', function(t) {
     '1st',
     'first',
   ]
-  arr.forEach(txt => {
-    const str = nlp(txt)
-      .values()
-      .toText()
-      .toCardinal()
-      .text()
+  arr.forEach((txt) => {
+    const str = nlp(txt).values().toText().toCardinal().text()
     t.equal(str, 'one', txt + ' -> one')
   })
 
   arr = ['500', '500.0', '500th', 'five hundred', 'five hundredth']
-  arr.forEach(txt => {
-    const str = nlp(txt)
-      .values()
-      .toText()
-      .toCardinal()
-      .text()
+  arr.forEach((txt) => {
+    const str = nlp(txt).values().toText().toCardinal().text()
     t.equal(str, 'five hundred', txt + ' -> five hundred')
   })
 
   arr = ['2012', '2012.0', '2,012', '2012th', 'two thousand and twelve', 'two thousand and twelfth']
-  arr.forEach(txt => {
-    const str = nlp(txt)
-      .values()
-      .toText()
-      .toCardinal()
-      .text()
+  arr.forEach((txt) => {
+    const str = nlp(txt).values().toText().toCardinal().text()
     t.equal(str, 'two thousand and twelve', txt)
   })
   t.end()
 })
 
-test('big number:', function(t) {
-  const str = nlp('twenty-three quadrillion')
-    .values()
-    .toText()
-    .out()
+test('big number:', function (t) {
+  const str = nlp('twenty-three quadrillion').values().toText().out()
   t.equal(str, 'twenty three quadrillion', 'quadrillion')
 
   // str = nlp('nine quintillion two hundred').values().toText().out();

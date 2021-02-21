@@ -4,8 +4,8 @@ const nlp = require('./_lib')
 test('number-fraction overlap', function (t) {
   let arr = [
     ['fifty five and two eighths', 55.25],
-    ['two fifty five and a third', 255.33],
-    ['two fifty five and five thirds', 256.66],
+    ['two fifty five and a third', 255.333],
+    ['two fifty five and five thirds', 256.667],
   ]
 
   arr.forEach((a) => {

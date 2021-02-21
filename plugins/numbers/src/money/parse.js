@@ -1,4 +1,4 @@
-const currencies = require('../../data/currencies')
+const currencies = require('./data/currencies')
 const parseNumber = require('../numbers/parse')
 // aggregate currency symbols for easy lookup
 const symbols = {}
@@ -52,15 +52,29 @@ const getBySymbol = function (obj) {
   return null
 }
 
+// five dollars and six cents -> 5.06
 const parseMoney = function (doc) {
+  // support 'and five cents' as a decimal
+  let decimal = 0
+  let decM = doc.match('and #Money (cent|cents)')
+  if (decM.found) {
+    doc = doc.not(decM)
+    let res = parseNumber(decM.match('#Value+'))
+    if (res && res.num) {
+      decimal = res.num / 100
+    }
+  }
   let res = parseNumber(doc)
+  let num = res.num || 0
+  num += decimal
+
   let found = getBySymbol(res) || getNamedCurrency(doc) || {}
   let sym = ''
   if (found && found.sym) {
     sym = found.sym[0]
   }
   return {
-    num: res.num,
+    num: num,
     iso: found.iso,
     demonym: found.dem,
     currency: found.name,

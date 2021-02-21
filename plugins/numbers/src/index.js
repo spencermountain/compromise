@@ -10,7 +10,7 @@ const fractionMethods = require('./fractions/methods')
 
 const tagger = require('./tagger')
 const tags = require('./tags')
-const lexicon = require('../data/lexicon')
+const lexicon = require('./money/data/lexicon')
 
 /** adds .numbers() method */
 const plugin = function (Doc, world) {

@@ -8,6 +8,17 @@ const titleCase = function (str = '') {
 }
 
 const moneyMethods = {
+  /** get the money info */
+  get: function (n) {
+    let arr = []
+    this.forEach((doc) => {
+      arr.push(parseMoney(doc))
+    })
+    if (n !== undefined) {
+      return arr[n] || null
+    }
+    return arr || null
+  },
   /** which currency is this money in? */
   currency: function (n) {
     let arr = []

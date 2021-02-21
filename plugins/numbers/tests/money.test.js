@@ -115,6 +115,12 @@ test('money-parse:', function (t) {
     ['it was $12.00?', 12],
     ['it was $0', 0],
     ['it was 0 dollars', 0],
+    ['five dollars and thirty-five cents', 5.35],
+    ['eight dollars and five cents', 8.05],
+    ['eight hundred dollars and five cents', 800.05],
+    ['eight hundred and twenty dollars and fifteen cents', 820.15],
+    ['eight hundred and twenty five dollars and thirty cents', 825.3],
+    ['eight hundred and twenty five dollars and thirty five cents', 825.35],
     ['it was zero dollars', 0],
     ['i paid fifty eight euros for it', 58],
     ['was offered 12 thousand pounds as a reward', 12000],
@@ -124,7 +130,7 @@ test('money-parse:', function (t) {
     let doc = nlp(a[0])
     let amount = doc.money().get()
     t.equal(amount.length, 1, `'${a[0]}' has 1 money result`)
-    t.equal(amount[0], a[1], a[0])
+    t.equal(amount[0].num, a[1], a[0])
   })
   t.end()
 })

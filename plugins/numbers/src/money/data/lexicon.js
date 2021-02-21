@@ -35,6 +35,9 @@ currencies.forEach((o) => {
     lex[`${dem} ${name}`] = 'Currency'
     lex[`${dem} ${name}s`] = 'Currency'
   }
+  if (o.sub) {
+    lex[o.sub] = 'Currency'
+  }
 })
 
 module.exports = lex

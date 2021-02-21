@@ -125,6 +125,14 @@ test('money-parse:', function (t) {
     ['i paid fifty eight euros for it', 58],
     ['was offered 12 thousand pounds as a reward', 12000],
     ['£0.20', 0.2],
+    // pennies/cents
+    ['50 cents', 0.5],
+    ['99 cents', 0.99],
+    ['two pennies', 0.02],
+    ['six grosz', 0.06],
+    ['six grosz', 0.06],
+    ['120 öre', 1.2],
+    ['200 dirham', 2],
   ]
   arr.forEach((a) => {
     let doc = nlp(a[0])

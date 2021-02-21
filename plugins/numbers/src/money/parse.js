@@ -1,13 +1,26 @@
 const currencies = require('./data/currencies')
 const parseNumber = require('../numbers/parse')
+
+// const isPenny = `(cent|cents|penny|pennies|ore|sent|ngwee|tambala|penni|grosz|pfennig)`
+
 // aggregate currency symbols for easy lookup
+// const subs = {
+//   pennies: true,
+// }
 const symbols = {}
+
+let pennies = {}
 currencies.forEach((o) => {
   o.sym.forEach((str) => {
     symbols[str] = symbols[str] || o.iso
   })
   symbols[o.iso] = symbols[o.iso] || o.iso
+  if (o.sub) {
+    pennies[o.sub] = true
+  }
 })
+// create a match statement with all the penny-units
+let isPenny = `(${Object.keys(pennies).join('|')})`
 
 // parse 'australian dollars'
 const getNamedCurrency = function (doc) {
@@ -56,10 +69,10 @@ const getBySymbol = function (obj) {
 const parseMoney = function (doc) {
   // support 'and five cents' as a decimal
   let decimal = 0
-  let decM = doc.match('and #Money+ (cent|cents)')
-  if (decM.found) {
-    doc = doc.not(decM)
-    let res = parseNumber(decM.match('#Value+'))
+  let decimalEnd = doc.match(`and #Money+ ${isPenny}`)
+  if (decimalEnd.found) {
+    doc = doc.not(decimalEnd)
+    let res = parseNumber(decimalEnd.match('#Value+'))
     if (res && res.num) {
       decimal = res.num / 100
     }
@@ -72,6 +85,10 @@ const parseMoney = function (doc) {
   let sym = ''
   if (found && found.sym) {
     sym = found.sym[0]
+    // make '50 cents' -> 0.50
+    if (num && doc.has(`${isPenny}`)) {
+      num = num / 100
+    }
   }
   return {
     num: num,

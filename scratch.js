@@ -13,8 +13,8 @@ nlp.extend(require('./plugins/dates/src'))
 // complex denominators - 'one fifty fourths', 'one thirty third'
 //
 
-let doc = nlp('five dollars and thirty-five cents') //.debug()
-doc.money().debug()
+let doc = nlp('six grosz') //.debug()
+doc.money() //.debug()
 console.log(doc.money().get())
 // doc.money().add(1)
 // doc.debug()

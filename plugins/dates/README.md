@@ -195,11 +195,11 @@ Units:
   - **[.dates().toShortForm()](https://observablehq.com/@spencermountain/compromise-dates)** - convert 'Wednesday' to 'Wed', etc
   - **[.dates().toLongForm()](https://observablehq.com/@spencermountain/compromise-dates)** - convert 'Feb' to 'February', etc
 - **.durations()** - 'seven days and two hours', '30mins'
-  - **.json()** - 
-  - **.get()** - 
+  - **.json()** - overloaded json output with duration info
+  - **.get()** - grab parsed duration
 - **.times()** - 'three pm', '9 oclock'
-  - **.json()** - 
-  - **.get()** - 
+  - **.json()** - overloaded json output with time info
+  - **.get()** - grab parsed time
 
 
 

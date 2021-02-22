@@ -16,5 +16,4 @@ nlp.extend(require('./plugins/dates/src'))
 let doc = nlp.tokenize(`one after`)
 console.log('\n\n============\n\n')
 console.log('|' + doc.match(`one !foo? moo? after`).text() + '|')
-
-// console.log('|' + doc.match(`one !foo? after`).text() + '|')
+console.log('|' + doc.match(`one !foo? after`).text() + '|')

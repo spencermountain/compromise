@@ -113,16 +113,16 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
     let doesMatch = term.doesMatch(reg, state.start_i + state.t, state.phrase_length)
     if (reg.anything === true || doesMatch === true || logic.isEndGreedy(reg, state)) {
       let startAt = state.t
+      // if it's a negative optional match... :0
+      if (reg.optional && regs[state.r + 1] && reg.negative) {
+        continue
+      }
       // okay, it was a match, but if it's optional too,
       // we should check the next reg too, to skip it?
       if (reg.optional && regs[state.r + 1]) {
-        // if it's a negative optional match
-        // if (reg.negative) {
-        //   console.log(reg, state.terms[state.t].text)
-        // }
         // does the next reg match it too?
         let nextRegMatched = term.doesMatch(regs[state.r + 1], state.start_i + state.t, state.phrase_length)
-        if (nextRegMatched) {
+        if (reg.negative || nextRegMatched) {
           // but does the next reg match the next term??
           // only skip if it doesn't
           let nextTerm = state.terms[state.t + 1]

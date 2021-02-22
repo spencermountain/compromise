@@ -16,3 +16,14 @@ test('! negative match syntax :', function (t) {
 
   t.end()
 })
+
+test('negative optional logic', function (t) {
+  let doc = nlp.tokenize(`one after`)
+  let m = doc.match(`one !foo? moo? after`)
+  t.equal(m.text(), 'one after', 'optional-after')
+
+  m = doc.match(`one !foo? after`)
+  t.equal(m.text(), 'one after', 'not-optional-after')
+
+  t.end()
+})

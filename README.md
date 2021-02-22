@@ -600,8 +600,8 @@ These are some helpful extensions:
 `npm install compromise-numbers`
 
 - **[.numbers()](https://observablehq.com/@spencermountain/compromise-values)** - grab all written and numeric values
-  - **[.numbers().json()](https://observablehq.com/@spencermountain/compromise-values)** - overloaded output with number metadata
   - **[.numbers().get()](https://observablehq.com/@spencermountain/compromise-values)** - retrieve the parsed number(s)
+  - **[.numbers().json()](https://observablehq.com/@spencermountain/compromise-values)** - overloaded output with number metadata
   - **[.numbers().units()](https://observablehq.com/@spencermountain/compromise-values)** - grab 'kilos' from `25 kilos'`
   - **[.numbers().fractions()](https://observablehq.com/@spencermountain/compromise-values)** - things like `1/3rd`
   - **[.numbers().toText()](https://observablehq.com/@spencermountain/compromise-values)** - convert number to `five` or `fifth`
@@ -624,8 +624,17 @@ These are some helpful extensions:
   - **[.money().get()](https://observablehq.com/@spencermountain/compromise-values)** - retrieve the parsed amount(s) of money
   - **[.money().json()](https://observablehq.com/@spencermountain/compromise-values)** - currency + number info
   - **[.money().currency()](https://observablehq.com/@spencermountain/compromise-values)** - which currency the money is in
-- **[.fractions()](https://observablehq.com/@spencermountain/compromise-values)** - like '2/3rds'
+- **[.fractions()](https://observablehq.com/@spencermountain/compromise-values)** - like '2/3rds' or 'one out of five'
+  - **[.fractions().get()](https://observablehq.com/@spencermountain/compromise-values)** - simple numerator, denomenator data
+  - **[.fractions().json()](https://observablehq.com/@spencermountain/compromise-values)** - json method overloaded with fractions data
+  - **[.fractions().toDecimal()](https://observablehq.com/@spencermountain/compromise-values)** -  '2/3' -> '0.66'
+  - **[.fractions().normalize()](https://observablehq.com/@spencermountain/compromise-values)** -  'four out of 10' -> '4/10'
+  - **[.fractions().toText()](https://observablehq.com/@spencermountain/compromise-values)** -  '4/10' -> 'four tenths'
+  - **[.fractions().toPercentage()](https://observablehq.com/@spencermountain/compromise-values)** -  '4/10' -> '40%'
 - **[.percentages()](https://observablehq.com/@spencermountain/compromise-values)** - like '2.5%'
+  - **[.fractions().get()](https://observablehq.com/@spencermountain/compromise-values)** - return the percentage number / 100
+  - **[.fractions().json()](https://observablehq.com/@spencermountain/compromise-values)** - json overloaded with percentage information
+  - **[.fractions().toFraction()](https://observablehq.com/@spencermountain/compromise-values)** - '80%' -> '8/10'
 
 ##### Export
 

@@ -1,6 +1,7 @@
 module.exports = {
   FinancialQuarter: {
     isA: 'Date',
+    notA: 'Fraction',
   },
   // 'summer'
   Season: {

@@ -1,5 +1,5 @@
 const test = require('tape')
-const nlp = require('../_lib')
+const nlp = require('../_lib').clone()
 
 test('tagset-change-isA-basic', function (t) {
   nlp.extend((Doc, world) => {

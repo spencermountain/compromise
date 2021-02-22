@@ -3,7 +3,7 @@ const nlp = require('./_lib')
 
 const globalPlugin = (Doc, world) => {
   world.addWords({
-    marko: 'Place',
+    fargo: 'Place',
   })
 }
 
@@ -17,9 +17,9 @@ test('nlp-global', function (t) {
   const instance = nlp.clone().extend(plugin)
   const instance2 = nlp.clone()
 
-  t.equal(nlp().world.words.marko.includes('Place'), true)
-  t.equal(instance().world.words.marko.includes('Place'), true)
-  t.equal(instance2().world.words.marko.includes('Place'), true)
+  t.equal(nlp().world.words.fargo.includes('Place'), true)
+  t.equal(instance().world.words.fargo.includes('Place'), true)
+  t.equal(instance2().world.words.fargo.includes('Place'), true)
 
   t.end()
 })

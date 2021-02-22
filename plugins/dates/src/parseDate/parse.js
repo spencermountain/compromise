@@ -1,4 +1,4 @@
-// const { Hour, Moment } = require('./units')
+const { WeekDay } = require('./units')
 const tokens = {
   shift: require('./01-tokenize/01-shift'),
   counter: require('./01-tokenize/02-counter'),
@@ -6,6 +6,7 @@ const tokens = {
   relative: require('./01-tokenize/04-relative'),
   section: require('./01-tokenize/05-section'),
   timezone: require('./01-tokenize/06-timezone'),
+  weekday: require('./01-tokenize/07-weekday'),
 }
 
 const parse = {
@@ -28,6 +29,7 @@ const parseDate = function (doc, context) {
   let counter = tokens.counter(doc)
   let tz = tokens.timezone(doc)
   let time = tokens.time(doc, context)
+  let weekDay = tokens.weekday(doc, context)
   let section = tokens.section(doc, context)
   let rel = tokens.relative(doc)
   //set our new timezone
@@ -47,7 +49,6 @@ const parseDate = function (doc, context) {
   unit = unit || parse.yearly(doc, context)
   // 'this june 2nd'
   unit = unit || parse.explicit(doc, context)
-  // doc.debug()
   if (!unit) {
     return null
   }
@@ -59,6 +60,12 @@ const parseDate = function (doc, context) {
     //   console.log(shift)
     //   unit = new Hour(unit.d, null, unit.context)
     // }
+  }
+  // wednesday next week
+  if (weekDay && unit.unit !== 'day') {
+    unit.applyWeekDay(weekDay)
+    unit = new WeekDay(unit.d, null, unit.context)
+    // console.log(rel, unit.d.format())
   }
   // this/next/last
   if (rel) {

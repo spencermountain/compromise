@@ -33,6 +33,10 @@ const tests = [
       ['before march', 19],
 
       ['on february 22', 1],
+      ['march 3rd and 4th', 2],
+      ['monday and tuesday', 2],
+      ['tuesday and wednesday next week', 2],
+      ['march and april 2022', 61],
       ['first week of september', 7],
       ['second week of october', 7],
       ['third week of june', 7],
@@ -49,11 +53,12 @@ test('date durations', (t) => {
     const context = {
       today: obj.today,
     }
+    let today = obj.today.join('-')
     obj.tests.forEach((a) => {
       let json = nlp(a[0]).dates(context).json()[0] || {}
       let date = json.date || {}
       date.duration = date.duration || {}
-      t.equal(date.duration.days, a[1] - 1, a[0])
+      t.equal(date.duration.days, a[1] - 1, `[${today}] ${a[0]}`)
     })
   })
   t.end()

@@ -10,6 +10,10 @@ module.exports = {
     isA: 'Value',
     notA: ['Ordinal'],
   },
+  Fraction: {
+    isA: 'Value',
+    notA: ['Noun'],
+  },
   RomanNumeral: {
     isA: 'Cardinal', //can be a person, too
     notA: ['Ordinal', 'TextValue'],

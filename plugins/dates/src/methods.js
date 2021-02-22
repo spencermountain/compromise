@@ -1,7 +1,20 @@
-const parse = require('./find')
+const parse = require('./parse')
+const spacetime = require('spacetime')
 const abbrevs = require('./data/_abbrevs')
 
 module.exports = {
+  /** easy getter for the start/end dates */
+  get: function (options) {
+    let arr = []
+    this.forEach((doc) => {
+      let found = parse(doc, this.context)
+      arr.push(found)
+    })
+    if (typeof options === 'number') {
+      return arr[options]
+    }
+    return arr
+  },
   /** overload the original json with date information */
   json: function (options) {
     let n = null
@@ -11,24 +24,10 @@ module.exports = {
     }
     options = options || { terms: false }
     let res = []
-    let format = options.format || 'iso'
     this.forEach((doc) => {
       let json = doc.json(options)[0]
-      let obj = parse(doc, this.context)
-      let start = obj.start ? obj.start.format(format) : null
-      let end = obj.end ? obj.end.format(format) : null
-      // set iso strings to json result
-      json.date = {
-        start: start,
-        end: end,
-      }
-      // add duration
-      if (start && end) {
-        json.date.duration = obj.start.d.diff(obj.end.d)
-        // we don't need these
-        delete json.date.duration.milliseconds
-        delete json.date.duration.seconds
-      }
+      let found = parse(doc, this.context)
+      json.date = found
       res.push(json)
     })
     if (n !== null) {
@@ -41,13 +40,13 @@ module.exports = {
   format: function (fmt) {
     this.forEach((doc) => {
       let obj = parse(doc, this.context)
-      let str = ''
       if (obj.start) {
-        str = obj.start.format(fmt)
+        let start = spacetime(obj.start, this.context.timezone)
+        let str = start.format(fmt)
         if (obj.end) {
-          let end = obj.start.format(fmt)
-          if (str !== end) {
-            str += ' to ' + end
+          let end = spacetime(obj.end, this.context.timezone)
+          if (start.isSame(end, 'day') === false) {
+            str += ' to ' + end.format(fmt)
           }
         }
         doc.replaceWith(str, { keepTags: true, keepCase: false })

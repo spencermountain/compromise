@@ -140,6 +140,8 @@ const context = {
   timezone: 'Canada/Eastern', //the default timezone is 'ETC/UTC'
   today: '2020-02-20', //the implicit, or reference day/year
   punt: { weeks: 2 }, // the implied duration to use for 'after june 2nd'
+  dayStart: '8:00am',
+  dayEndt: '5:30pm'
 }
 
 nlp('in two days')
@@ -184,6 +186,21 @@ Units:
   * **Holiday** - 'easter'
   * **Hour** - '4pm'
   * **Minute** - '4:32pm'
+
+
+## API
+- **[.dates()](https://observablehq.com/@spencermountain/compromise-dates)** - 'June 2021', 'next week'
+  - **[.dates().json()](https://observablehq.com/@spencermountain/compromise-dates)** - overloaded output with date metadata
+  - **[.dates().format('')](https://observablehq.com/@spencermountain/compromise-dates)** - convert the dates to specific formats
+  - **[.dates().toShortForm()](https://observablehq.com/@spencermountain/compromise-dates)** - convert 'Wednesday' to 'Wed', etc
+  - **[.dates().toLongForm()](https://observablehq.com/@spencermountain/compromise-dates)** - convert 'Feb' to 'February', etc
+- **.durations()** - 'seven days and two hours', '30mins'
+  - **.json()** - overloaded json output with duration info
+  - **.get()** - grab parsed duration
+- **.times()** - 'three pm', '9 oclock'
+  - **.json()** - overloaded json output with time info
+  - **.get()** - grab parsed time
+
 
 
 ## Opinions
@@ -250,5 +267,9 @@ compromise will tag anything that looks like a date, but not validate the dates 
 * [ParseDateTime](https://pypi.org/project/parsedatetime/) by Mike Taylor (Python)
 
 Work in progress.
+
+
+Work on compromise-date is sponsored by [Simform](https://www.simform.com/)
+<img src="https://user-images.githubusercontent.com/399657/107404468-4f3de700-6ad4-11eb-9d60-7a90625b57d6.png" width="150px"/>
 
 MIT

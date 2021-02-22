@@ -70,7 +70,7 @@ test('pos from-lexicon', function (t) {
   ]
   arr.forEach(function (a) {
     const term = nlp(a[0]).termList()[0]
-    t.equal(term.tags[a[1]], true, a[0])
+    t.equal(term.tags[a[1]], true, a[0] + ' lexicon')
   })
   t.end()
 })

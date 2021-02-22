@@ -148,7 +148,7 @@ const tagDates = function (doc) {
     v = cardinal.match('(q1|q2|q3|q4) [#Cardinal]', 0)
     tagYear(v, 'in-year-2')
     //2nd quarter 2009
-    v = cardinal.match('#Ordinal quarter [#Cardinal]', 0)
+    v = cardinal.match('#Ordinal quarter of? [#Cardinal]', 0)
     tagYear(v, 'in-year-3')
     //in the year 1998
     v = cardinal.match('the year [#Cardinal]', 0)
@@ -158,6 +158,10 @@ const tagDates = function (doc) {
     tagYearSafe(v, 'in-year-5')
     // re-tag this part
     cardinal.match(`${sections} of #Year`).tag('Date')
+    //between 1999 and 1998
+    let m = cardinal.match('between [#Cardinal] and [#Cardinal]')
+    tagYear(m.groups('0'), 'between-year-and-year-1')
+    tagYear(m.groups('1'), 'between-year-and-year-2')
   }
 
   let time = doc.if('#Time')

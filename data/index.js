@@ -41,11 +41,11 @@ const data = [
   [require('./adjectives/adjectives'), 'Adjective'],
   [require('./adjectives/comparables'), 'Comparable'],
   //numbers
-  [require('./numbers/ordinals'), ['TextValue', 'Ordinal']],
-  [require('./numbers/cardinals'), ['TextValue', 'Cardinal']],
+  [require('./numbers/ordinals'), 'TextOrdinal'],
+  [require('./numbers/cardinals'), 'Cardinal'],
   //abbreviations
   [require('./abbreviations/misc'), 'Abbreviation'],
-  [require('./abbreviations/units'), ['Abbreviation', 'Unit']],
+  [require('./abbreviations/units'), 'Unit'],
   [require('./abbreviations/nouns'), ['Abbreviation', 'Noun']],
   [require('./abbreviations/honorifics'), ['Abbreviation', 'Honorific']],
   [require('./abbreviations/months'), ['Abbreviation', 'Month']],

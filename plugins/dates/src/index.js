@@ -3,6 +3,7 @@ const tags = require('./data/_tags')
 const words = require('./data/words')
 const methods = require('./methods')
 const addDurations = require('./durations')
+const addTimes = require('./times')
 const spacetime = require('spacetime')
 
 const opts = {
@@ -19,6 +20,8 @@ const addMethods = function (Doc, world) {
 
   // add .durations() class + methods
   addDurations(Doc, world)
+  // add .times() class + methods
+  addTimes(Doc, world)
 
   /** phraes like 'nov 2nd' or 'on tuesday' */
   class Dates extends Doc {

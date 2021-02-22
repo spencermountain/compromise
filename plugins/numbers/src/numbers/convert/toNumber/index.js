@@ -7,7 +7,7 @@ const improperFraction = /^([0-9,\. ]+)\/([0-9,\. ]+)$/
 
 //some numbers we know
 const casualForms = {
-  // 'a few': 3,
+  'a few': 3,
   'a couple': 2,
   'a dozen': 12,
   'two dozen': 24,
@@ -16,7 +16,7 @@ const casualForms = {
 
 // a 'section' is something like 'fifty-nine thousand'
 // turn a section into something we can add to - like 59000
-const section_sum = obj => {
+const section_sum = (obj) => {
   return Object.keys(obj).reduce((sum, k) => {
     sum += obj[k]
     return sum
@@ -24,7 +24,7 @@ const section_sum = obj => {
 }
 
 //turn a string into a number
-const parse = function(str) {
+const parse = function (str) {
   //convert some known-numbers
   if (casualForms.hasOwnProperty(str) === true) {
     return casualForms[str]
@@ -40,9 +40,11 @@ const parse = function(str) {
   let sum = 0
   let isNegative = false
   const terms = str.split(/[ -]/)
+  // const isFraction = findFraction(terms)
   for (let i = 0; i < terms.length; i++) {
     let w = terms[i]
     w = parseNumeric(w)
+
     if (!w || w === 'and') {
       continue
     }
@@ -54,6 +56,7 @@ const parse = function(str) {
       isNegative = true
       w = w.substr(1)
     }
+
     //decimal mode
     if (w === 'point') {
       sum += section_sum(has)
@@ -61,6 +64,7 @@ const parse = function(str) {
       sum *= modifier.amount
       return sum
     }
+
     //improper fraction
     const fm = w.match(improperFraction)
     if (fm) {
@@ -71,10 +75,19 @@ const parse = function(str) {
       }
       continue
     }
-    //prevent mismatched units, like 'seven eleven'
+    // try to support 'two fifty'
+    if (words.tens.hasOwnProperty(w)) {
+      if (has.ones && Object.keys(has).length === 1) {
+        sum = has.ones * 100
+        has = {}
+      }
+    }
+
+    //prevent mismatched units, like 'seven eleven' if not a fraction
     if (isValid(w, has) === false) {
       return null
     }
+
     //buildOut section, collect 'has' values
     if (/^[0-9\.]+$/.test(w)) {
       has['ones'] = parseFloat(w) //not technically right
@@ -88,13 +101,13 @@ const parse = function(str) {
       let mult = words.multiples[w]
 
       //something has gone wrong : 'two hundred five hundred'
+      //possibly because it's a fraction
       if (mult === last_mult) {
         return null
       }
       //support 'hundred thousand'
       //this one is tricky..
       if (mult === 100 && terms[i + 1] !== undefined) {
-        // has['hundreds']=
         const w2 = terms[i + 1]
         if (words.multiples[w2]) {
           mult *= words.multiples[w2] //hundredThousand/hundredMillion

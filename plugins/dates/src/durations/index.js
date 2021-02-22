@@ -1,6 +1,18 @@
 const parse = require('./parse')
 
 const methods = {
+  /** easy getter for the time */
+  get: function (options) {
+    let arr = []
+    this.forEach((doc) => {
+      let res = parse(doc)
+      arr.push(res)
+    })
+    if (typeof options === 'number') {
+      return arr[options]
+    }
+    return arr
+  },
   /** overload the original json with duration information */
   json: function (options) {
     let n = null

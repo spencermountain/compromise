@@ -1,11 +1,7 @@
-const lexData = require('./_data')
 const defaultTags = require('./tags')
-const unpack = require('efrt-unpack')
-const addLex = require('./addWords')
+const unpack = require('./unpack')
 const addIrregulars = require('./addIrregulars')
 const inferTagSet = require('./tags/inference')
-
-let misc = require('./data/misc')
 
 //these let users change inflection / verb conjugation
 const irregulars = {
@@ -30,7 +26,7 @@ class World {
     // quiet these properties from a console.log
     Object.defineProperty(this, 'words', {
       enumerable: false,
-      value: misc,
+      value: {},
       writable: true,
     })
     Object.defineProperty(this, 'hasCompound', {
@@ -53,26 +49,24 @@ class World {
       value: transforms,
       writable: true,
     })
-
     Object.defineProperty(this, 'taggers', {
       enumerable: false,
       value: [],
       writable: true,
     })
-    // add our misc word-list
-    // this.addWords(misc)
-    // add our compressed data to lexicon
-    this.unpackWords(lexData)
-    // add our irregulars to lexicon
-    addIrregulars(this)
-
     // cache our abbreviations for our sentence-parser
     Object.defineProperty(this, 'cache', {
       enumerable: false,
       value: {
-        abbreviations: this.getByTag('Abbreviation'),
+        abbreviations: {},
       },
     })
+
+    // add our compressed data to lexicon
+    this.words = unpack.buildOut(this)
+
+    // add our irregulars to lexicon
+    addIrregulars(this)
   }
 
   /** more logs for debugging */
@@ -84,44 +78,16 @@ class World {
     return isVerbose
   }
 
-  /** get all terms in our lexicon with this tag */
-  getByTag(tag) {
-    let lex = this.words
-    let res = {}
-    let words = Object.keys(lex)
-    for (let i = 0; i < words.length; i++) {
-      if (typeof lex[words[i]] === 'string') {
-        if (lex[words[i]] === tag) {
-          res[words[i]] = true
-        }
-      } else if (lex[words[i]].some(t => t === tag)) {
-        res[words[i]] = true
-      }
-    }
-    return res
-  }
-
-  /** augment our lingustic data with new data */
-  unpackWords(lex) {
-    let tags = Object.keys(lex)
-    for (let i = 0; i < tags.length; i++) {
-      let words = Object.keys(unpack(lex[tags[i]]))
-      for (let w = 0; w < words.length; w++) {
-        addLex.addWord(words[w], tags[i], this.words)
-        // do some fancier stuff
-        addLex.addMore(words[w], tags[i], this)
-      }
-    }
-  }
   /** put new words into our lexicon, properly */
-  addWords(obj) {
-    let keys = Object.keys(obj)
-    for (let i = 0; i < keys.length; i++) {
-      let word = keys[i].toLowerCase()
-      addLex.addWord(word, obj[keys[i]], this.words)
-      // do some fancier stuff
-      addLex.addMore(word, obj[keys[i]], this)
-    }
+  addWords(wordObj) {
+    // clean them up a bit
+    let cleaned = {}
+    Object.keys(wordObj).forEach(w => {
+      let tag = wordObj[w]
+      w = w.toLowerCase().trim()
+      cleaned[w] = tag
+    })
+    unpack.addWords(cleaned, this.words, this)
   }
 
   /** add new custom conjugations */

@@ -44,7 +44,7 @@
   it is
   <a href="https://docs.compromise.cool/compromise-filesize">small,
   <a href="https://docs.compromise.cool/compromise-performance">quick</a>,
-  and <a href="https://docs.compromise.cool/compromise-accuracy">usually good-enough</a>.
+  and often <a href="https://docs.compromise.cool/compromise-accuracy">good-enough</a>.
 </div>
 
 <!-- spacer -->
@@ -55,18 +55,17 @@
 
 ### .match():
 
-compromise makes it simple to interpret and match text:
+interpret and match text:
 
 ```js
 let doc = nlp(entireNovel)
-
-doc.if('the #Adjective of times').text()
-// "it was the blurst of times??"
+doc.match('the #Adjective of times').text()
+// "the blurst of times?"
 ```
 
 ```js
-if (doc.has('simon says #Verb')) {
-  return true
+if (doc.has('simon says #Verb') === false) {
+  return null
 }
 ```
 
@@ -115,7 +114,7 @@ doc.text()
 
 ### .numbers():
 
-interpret plaintext numbers
+interpret plain-text numbers
 
 ```js
 nlp.extend(require('compromise-numbers'))
@@ -135,7 +134,7 @@ doc.text()
 
 ### .topics():
 
-grab subjects in a text:
+grab the big subjects:
 
 ```js
 let doc = nlp(buddyHolly)
@@ -164,7 +163,7 @@ doc.topics().json()
 
 ### .contractions():
 
-work with contracted and implicit words:
+handle implicit words:
 
 ```js
 let doc = nlp("we're not gonna take it, no we ain't gonna take it.")
@@ -202,7 +201,7 @@ Use it on the client-side:
 </script>
 ```
 
-or as an es-module:
+as an es-module:
 
 ```typescript
 import nlp from 'compromise'
@@ -232,7 +231,7 @@ it's pretty fast. It can run on keypress:
   </a>
 </div>
 
-it works mainly by <a href="https://observablehq.com/@spencermountain/verbs">conjugating many forms</a> of a basic word list.
+it works mainly by <a href="https://observablehq.com/@spencermountain/verbs">conjugating all forms</a> of a basic word list.
 
 The final lexicon is <a href="https://observablehq.com/@spencermountain/compromise-lexicon">~14,000 words</a>:
 
@@ -240,7 +239,7 @@ The final lexicon is <a href="https://observablehq.com/@spencermountain/compromi
   <img width="600" src="https://user-images.githubusercontent.com/399657/68234805-0d201e80-ffd0-11e9-8dc6-f7a600352555.png"/>
 </div>
 
-you can read more about how it works, [here](https://observablehq.com/@spencermountain/compromise-internals).
+you can read more about how it works, [here](https://observablehq.com/@spencermountain/compromise-internals). it's weird.
 
 <!-- spacer -->
   <!-- <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/> -->
@@ -250,7 +249,7 @@ you can read more about how it works, [here](https://observablehq.com/@spencermo
 
 ### .extend():
 
-set a custom interpretation of your own words:
+decide how words get interpreted:
 
 ```js
 let myWords = {
@@ -260,7 +259,7 @@ let myWords = {
 let doc = nlp(muppetText, myWords)
 ```
 
-or make more changes with a [compromise-plugin](https://observablehq.com/@spencermountain/compromise-plugins).
+or make heavier changes with a [compromise-plugin](https://observablehq.com/@spencermountain/compromise-plugins).
 
 ```js
 const nlp = require('compromise')
@@ -309,11 +308,11 @@ nlp.extend((Doc, world) => {
 
 ### Docs:
 
-##### Warm introduction:
+##### gentle introduction:
 
-- **[#1 Input → output](https://docs.compromise.cool/tutorial-1)**
-- **[#2 Match & transform](https://docs.compromise.cool/compromise-tutorial-2)**
-- **[#3 Making a chat-bot](https://docs.compromise.cool/compromise-making-a-bot)**
+- **[#1) Input → output](https://docs.compromise.cool/tutorial-1)**
+- **[#2) Match & transform](https://docs.compromise.cool/compromise-tutorial-2)**
+- **[#3) Making a chat-bot](https://docs.compromise.cool/compromise-making-a-bot)**
   <!-- * **[Tutorial #4]()**  -  Making a plugin -->
 
 <div >
@@ -339,7 +338,7 @@ nlp.extend((Doc, world) => {
 | [Tokenization](https://observablehq.com/@spencermountain/compromise-tokenization) | [Text](https://observablehq.com/@spencermountain/compromise-text) | [Pronounce](https://observablehq.com/@spencermountain/compromise-pronounce)
 | [Named-Entities](https://observablehq.com/@spencermountain/compromise-topics) | [Utils](https://observablehq.com/@spencermountain/compromise-utils) | [Strict](https://observablehq.com/@spencermountain/compromise-strict)
 | [Whitespace](https://observablehq.com/@spencermountain/compromise-whitespace) | [Verbs](https://observablehq.com/@spencermountain/verbs) | [Penn-tags](https://observablehq.com/@spencermountain/compromise-penn-tags)
-| [World](https://observablehq.com/@spencermountain/compromise-world) | [Normalization](https://observablehq.com/@spencermountain/compromise/Normalization) |
+| [World data](https://observablehq.com/@spencermountain/compromise-world) | [Normalization](https://observablehq.com/@spencermountain/compromise/Normalization) |
 | [Fuzzy-matching](https://observablehq.com/@spencermountain/compromise-fuzzy-matching) |[Typescript](https://observablehq.com/@spencermountain/compromise-typescript) |
 
 
@@ -584,18 +583,25 @@ These are some helpful extensions:
 `npm install compromise-dates`
 
 - **[.dates()](https://observablehq.com/@spencermountain/compromise-dates)** - find dates like `June 8th` or `03/03/18`
+  - **[.dates().get()](https://observablehq.com/@spencermountain/compromise-dates)** - simple start/end json result
   - **[.dates().json()](https://observablehq.com/@spencermountain/compromise-dates)** - overloaded output with date metadata
   - **[.dates().format('')](https://observablehq.com/@spencermountain/compromise-dates)** - convert the dates to specific formats
   - **[.dates().toShortForm()](https://observablehq.com/@spencermountain/compromise-dates)** - convert 'Wednesday' to 'Wed', etc
   - **[.dates().toLongForm()](https://observablehq.com/@spencermountain/compromise-dates)** - convert 'Feb' to 'February', etc
+- **[.durations()](https://observablehq.com/@spencermountain/compromise-dates)** - `2 weeks` or `5mins`
+  - **[.durations().get()](https://observablehq.com/@spencermountain/compromise-dates)** - return simple json for duration
+  - **[.durations().json()](https://observablehq.com/@spencermountain/compromise-dates)** - overloaded output with duration metadata
+- **[.times()](https://observablehq.com/@spencermountain/compromise-dates)** - `4:30pm` or `half past five`
+  - **[.durations().get()](https://observablehq.com/@spencermountain/compromise-dates)** - return simple json for times
+  - **[.times().json()](https://observablehq.com/@spencermountain/compromise-dates)** - overloaded output with time metadata
 
 ##### Numbers
 
 `npm install compromise-numbers`
 
 - **[.numbers()](https://observablehq.com/@spencermountain/compromise-values)** - grab all written and numeric values
-  - **[.numbers().json()](https://observablehq.com/@spencermountain/compromise-values)** - overloaded output with number metadata
   - **[.numbers().get()](https://observablehq.com/@spencermountain/compromise-values)** - retrieve the parsed number(s)
+  - **[.numbers().json()](https://observablehq.com/@spencermountain/compromise-values)** - overloaded output with number metadata
   - **[.numbers().units()](https://observablehq.com/@spencermountain/compromise-values)** - grab 'kilos' from `25 kilos'`
   - **[.numbers().fractions()](https://observablehq.com/@spencermountain/compromise-values)** - things like `1/3rd`
   - **[.numbers().toText()](https://observablehq.com/@spencermountain/compromise-values)** - convert number to `five` or `fifth`
@@ -618,8 +624,17 @@ These are some helpful extensions:
   - **[.money().get()](https://observablehq.com/@spencermountain/compromise-values)** - retrieve the parsed amount(s) of money
   - **[.money().json()](https://observablehq.com/@spencermountain/compromise-values)** - currency + number info
   - **[.money().currency()](https://observablehq.com/@spencermountain/compromise-values)** - which currency the money is in
-- **[.fractions()](https://observablehq.com/@spencermountain/compromise-values)** - like '2/3rds'
+- **[.fractions()](https://observablehq.com/@spencermountain/compromise-values)** - like '2/3rds' or 'one out of five'
+  - **[.fractions().get()](https://observablehq.com/@spencermountain/compromise-values)** - simple numerator, denomenator data
+  - **[.fractions().json()](https://observablehq.com/@spencermountain/compromise-values)** - json method overloaded with fractions data
+  - **[.fractions().toDecimal()](https://observablehq.com/@spencermountain/compromise-values)** -  '2/3' -> '0.66'
+  - **[.fractions().normalize()](https://observablehq.com/@spencermountain/compromise-values)** -  'four out of 10' -> '4/10'
+  - **[.fractions().toText()](https://observablehq.com/@spencermountain/compromise-values)** -  '4/10' -> 'four tenths'
+  - **[.fractions().toPercentage()](https://observablehq.com/@spencermountain/compromise-values)** -  '4/10' -> '40%'
 - **[.percentages()](https://observablehq.com/@spencermountain/compromise-values)** - like '2.5%'
+  - **[.fractions().get()](https://observablehq.com/@spencermountain/compromise-values)** - return the percentage number / 100
+  - **[.fractions().json()](https://observablehq.com/@spencermountain/compromise-values)** - json overloaded with percentage information
+  - **[.fractions().toFraction()](https://observablehq.com/@spencermountain/compromise-values)** - '80%' -> '8/10'
 
 ##### Export
 
@@ -726,7 +741,6 @@ this plugin creates a wrapper around the default sentence objects.
 <div >
   <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
   <hr/>
-  <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 </div>
 
 ### Typescript
@@ -760,7 +774,7 @@ or if you don't care about POS-tagging, you can use the tokenize-only build: (90
   //you can see the text has no tags
   console.log(doc.has('#Noun')) //false
 
-  //but the whole api still works
+  //the rest of the api still works
   console.log(doc.has('my .* is .? named /^b[oa]rt/')) //true
 </script>
 ```
@@ -860,7 +874,7 @@ or if you don't care about POS-tagging, you can use the tokenize-only build: (90
 
 #### See Also:
 
-- &nbsp; **[en-pos](https://github.com/finnlp/en-pos)** - very-clever javascript pos-tagger by *[Alex Corvi](https://github.com/alexcorvi)*
+- &nbsp; **[en-pos](https://github.com/finnlp/en-pos)** - very clever javascript pos-tagger *by [Alex Corvi](https://github.com/alexcorvi)*
 - &nbsp; **[naturalNode](https://github.com/NaturalNode/natural)** - fancier statistical nlp in javascript
 - &nbsp; **[compendium-js](https://github.com/Ulflander/compendium-js)** - POS and sentiment analysis in javascript
 - &nbsp; **[nodeBox linguistics](https://www.nodebox.net/code/index.php/Linguistics)** - conjugation, inflection in javascript

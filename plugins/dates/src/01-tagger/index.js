@@ -5,7 +5,8 @@ const methods = [
   require('./03-sections'),
   require('./04-time'),
   require('./05-shifts'),
-  require('./06-fixup'),
+  require('./06-intervals'),
+  require('./07-fixup'),
 ]
 
 // normalizations to run before tagger

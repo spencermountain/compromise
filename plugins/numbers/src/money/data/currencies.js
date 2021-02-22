@@ -19,8 +19,8 @@ module.exports = [
   {
     name: 'renminbi',
     iso: 'cny',
-    sub: 'yuán',
     plural: 'yuán',
+    // sub: 'yuán',
     alias: { yuan: true },
     sym: ['元'], //'¥'
   },
@@ -160,7 +160,7 @@ module.exports = [
     dem: 'chilean',
     name: 'peso',
     iso: 'clp',
-    sub: 'Centavo',
+    sub: 'centavo',
     sym: ['Cifrão', '$'],
   },
   { dem: 'nigerian', name: 'naira', iso: 'ngn', sub: 'kobo', sym: ['₦'] },
@@ -190,7 +190,7 @@ module.exports = [
     dem: 'hungarian',
     name: 'forint',
     iso: 'huf',
-    sub: 'fillér',
+    // sub: 'fillér',
     sym: ['Ft'],
   },
   {
@@ -447,16 +447,16 @@ module.exports = [
     dem: 'nepalese',
     name: 'rupee',
     iso: 'npr',
-    sub: 'Paisa',
+    sub: 'paisa',
     sym: ['रु ₨', 'Re'],
   },
-  {
-    dem: 'macanese',
-    name: 'pataca',
-    iso: 'mop',
-    sub: 'ho',
-    sym: ['MOP$'],
-  },
+  // {
+  //   dem: 'macanese',
+  //   name: 'pataca',
+  //   iso: 'mop',
+  //   sub: 'ho',
+  //   sym: ['MOP$'],
+  // },
   {
     dem: 'nicaraguan',
     name: 'córdoba',
@@ -489,7 +489,7 @@ module.exports = [
     dem: 'sri lankan',
     name: 'rupee',
     iso: 'lkr',
-    sub: 'Cents',
+    sub: 'cents',
     sym: ['Rs', 'රු', 'ரூ'],
   },
   {
@@ -503,7 +503,7 @@ module.exports = [
     dem: 'turkish',
     name: 'lira',
     iso: 'try',
-    sub: 'new kuruş',
+    sub: 'kuruş',
     sym: ['YTL'],
   },
   {
@@ -517,7 +517,7 @@ module.exports = [
     dem: 'bosnia and herzegovina',
     name: 'convertible mark',
     iso: 'bam',
-    sub: 'Fening/Pfenig',
+    sub: 'fening',
     sym: ['KM'],
   },
   { dem: 'botswana', name: 'pula', iso: 'bwp', sub: 'thebe', sym: ['p'] },
@@ -546,7 +546,7 @@ module.exports = [
     dem: 'pakistani',
     name: 'rupee',
     iso: 'pkr',
-    sub: 'Paisa',
+    sub: 'paisa',
     sym: ['₨'],
   },
   {
@@ -557,7 +557,13 @@ module.exports = [
     sym: ['₤', 'Lm'],
   },
   { dem: 'cypriot', name: 'pound', iso: 'cyp', sub: 'cent', sym: ['£'] },
-  { dem: 'moldovan', name: 'leu', iso: 'mdl', sub: 'ban', sym: ['l'] },
+  {
+    dem: 'moldovan',
+    name: 'leu',
+    iso: 'mdl',
+    // sub: 'ban',
+    sym: ['l'],
+  },
   { dem: 'croatian', name: 'kuna', iso: 'hrk', sub: 'lipa', sym: ['kn'] },
   {
     dem: 'afghan',

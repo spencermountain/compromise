@@ -43,6 +43,10 @@ const miscCorrection = function (doc) {
 
   // well i've been...
   doc.match('^(well|so|okay)').tag('Expression', 'well-')
+  // 10th of a second
+  doc.match('#Value [of a second]', 0).unTag('Value', 'of-a-second')
+  // 30 seconds
+  doc.match('#Value [seconds]', 0).unTag('Value', '30-seconds').tag(['Unit', 'Plural'])
 
   //been walking
   m = hasTag(doc, 'Gerund')

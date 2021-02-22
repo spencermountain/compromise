@@ -1,53 +1,30 @@
 const nlp = require('./src/index')
-nlp.extend(require('./plugins/sentences/src'))
-nlp.extend(require('./plugins/penn-tags/src'))
+nlp.extend(require('./plugins/numbers/src'))
+nlp.extend(require('./plugins/dates/src'))
 // nlp.verbose(true)
 
 //
+// '3/8ths'
+// 'three eighths of -'
+// '- and three eighths'
+// 'three out of eight'
 //
-//
-//
-//
-//
+
+// complex denominators - 'one fifty fourths', 'one thirty third'
 //
 
-/*
-  have  - false
-  [not] - true
-  done  - false
-*/
+// let doc = nlp.tokenize(`one after`)
+// console.log('\n\n============\n\n')
+// console.log('|' + doc.match(`one !foo? moo? after`).text() + '|')
+// console.log('|' + doc.match(`one !foo? after`).text() + '|')
 
-// let doc = nlp(`haven't done`)
-// doc.match(`have done`).debug()
+let doc = nlp.tokenize(`have not booked him`)
+console.log('\n\n\n======\n')
+// console.log(doc.match(`have !not? * booked`).found)
+// true
+// console.log('|' + doc.match(`have !not? *? booked`).text() + '|')
+//false
 
-// let doc = nlp(`i haven't done it`)
-// let m = doc.match(`not done`)
-// console.log(`|${m.text()}|`)
-// m.debug()
-
-let str = `Leonard's was Randall`
-let doc = nlp(str)
-console.log(doc.match('#Noun').text())
-
-// let doc = nlp(`is not foobar isn't`)
-// doc = doc.terms().unique().debug()
-// console.log('|' + nlp(`isn't`).text('implicit') + '|')
-
-// console.log(`|${doc.text()}|`)
-
-// doc.termList().forEach(t => {
-//   console.log(t.text, t.isImplicit())
-// })
-
-// console.log(nlp('in the town where I was born').pennTags({ offset: true })[0])
-// let reg = nlp.parseMatch(`before (#Value .) after`)
-// // console.log(JSON.stringify(reg, null, 2))
-// doc.match(reg).debug()
-
-// #802
-// nlp('are you available').sentences().toFutureTense().debug()
-
-// #737
-// nlp('i am being driven').sentences().toPastTense().debug()
-// nlp('i should drive').sentences().toFutureTense().debug()
-// nlp('i should have been driven').sentences().toFutureTense().debug()
+doc = nlp.tokenize('spencer other')
+// t.equals(doc.match('(cool|spencer)').text(), 'spencer', 'optional-true')
+console.log(doc.match('!(cool|spencer)').text() + '|')

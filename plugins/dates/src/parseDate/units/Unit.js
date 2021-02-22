@@ -55,6 +55,16 @@ class Unit {
     }
     return this
   }
+  applyWeekDay(day) {
+    if (day) {
+      let epoch = this.d.epoch
+      this.d = this.d.day(day)
+      if (this.d.epoch < epoch) {
+        this.d = this.d.add(1, 'week')
+      }
+    }
+    return this
+  }
   applyRel(rel) {
     if (rel === 'next') {
       return this.next()
@@ -81,10 +91,16 @@ class Unit {
   }
   start() {
     this.d = this.d.startOf(this.unit)
+    if (this.context.dayStart) {
+      this.d = this.d.time(this.context.dayStart)
+    }
     return this
   }
   end() {
     this.d = this.d.endOf(this.unit)
+    if (this.context.dayEnd) {
+      this.d = this.d.time(this.context.dayEnd)
+    }
     return this
   }
   middle() {
@@ -97,6 +113,9 @@ class Unit {
   before() {
     this.d = this.d.minus(1, this.unit)
     this.d = this.d.endOf(this.unit)
+    if (this.context.dayEnd) {
+      this.d = this.d.time(this.context.dayEnd)
+    }
     return this
   }
   // 'after 2019'

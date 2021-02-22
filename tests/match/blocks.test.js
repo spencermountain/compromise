@@ -61,6 +61,42 @@ test('not block', function (t) {
   t.end()
 })
 
+test('greedy inside a block', function (t) {
+  let doc = nlp('and foo foo')
+  let m = doc.match('(and foo+)')
+  t.equal(m.text(), 'and foo foo', 'greedy found two')
+
+  doc = nlp('and foo foo foo bar foo ')
+  m = doc.match('(and foo+)')
+  t.equal(m.text(), 'and foo foo foo', 'greedy found three')
+
+  doc = nlp('and foo otherwise foo')
+  m = doc.match('(and foo+)')
+  t.equal(m.text(), 'and foo', 'greedy found once')
+
+  doc = nlp('and otherwise foo foo')
+  m = doc.match('(and foo+)')
+  t.equal(m.text(), '', 'greedy unfound')
+
+  doc = nlp('and otherwise foo foo bar')
+  m = doc.match('(and foo+)+')
+  t.equal(m.text(), '', 'greedy outside and inside')
+
+  doc = nlp('and otherwise foo foo bar')
+  m = doc.match('(and foo)+')
+  t.equal(m.text(), '', 'greedy outside')
+
+  doc = nlp('and foo foo')
+  m = doc.match('(and foo*?)')
+  t.equal(m.text(), 'and foo foo', 'astrix optional')
+
+  doc = nlp('and foo1 foo2 foo3 foo4 bar foo ')
+  m = doc.match('(and /foo/+)')
+  t.equal(m.text(), 'and foo1 foo2 foo3 foo4', 'greedy found four')
+
+  t.end()
+})
+
 test('greedy OR block', function (t) {
   let doc = nlp('is walking')
   let m = doc.match('is (#Adverb|not)+? walking')

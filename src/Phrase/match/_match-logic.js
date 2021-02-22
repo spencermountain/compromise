@@ -58,34 +58,48 @@ exports.isEndGreedy = function (reg, state) {
       }
     }
   }
-  if (state.terms[state.t].doesMatch(reg, state.start_i + state.t, state.phrase_length) === true) {
-    return true
-  }
   return false
 }
 
 // match complex OR cases like (a|b|foo bar)
 exports.doOrBlock = function (state, skipN = 0) {
-  let reg = state.regs[state.r]
+  let block = state.regs[state.r]
   let wasFound = false
   // do each multiword sequence
-  for (let c = 0; c < reg.choices.length; c += 1) {
+  for (let c = 0; c < block.choices.length; c += 1) {
     // try to match this list of tokens
-    let block = reg.choices[c]
-    wasFound = block.every((cr, w_index) => {
-      let tryTerm = state.t + w_index + skipN
-      if (state.terms[tryTerm] === undefined) {
+    let regs = block.choices[c]
+    wasFound = regs.every((cr, w_index) => {
+      let extra = 0
+      let t = state.t + w_index + skipN + extra
+      if (state.terms[t] === undefined) {
         return false
       }
-      return state.terms[tryTerm].doesMatch(cr, tryTerm + state.start_i, state.phrase_length)
+      let foundBlock = state.terms[t].doesMatch(cr, t + state.start_i, state.phrase_length)
+      // this can be greedy - '(foo+ bar)'
+      if (foundBlock === true && cr.greedy === true) {
+        for (let i = 1; i < state.terms.length; i += 1) {
+          let term = state.terms[t + i]
+          if (term) {
+            let keepGoing = term.doesMatch(cr, state.start_i + i, state.phrase_length)
+            if (keepGoing === true) {
+              extra += 1
+            } else {
+              break
+            }
+          }
+        }
+      }
+      skipN += extra
+      return foundBlock
     })
     if (wasFound) {
-      skipN += block.length
+      skipN += regs.length
       break
     }
   }
   // we found a match -  is it greedy though?
-  if (wasFound && reg.greedy === true) {
+  if (wasFound && block.greedy === true) {
     return exports.doOrBlock(state, skipN) // try it again!
   }
   return skipN

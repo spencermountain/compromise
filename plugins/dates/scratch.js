@@ -1,19 +1,34 @@
 const nlp = require('../../src/index')
-const spacetime = require('/Users/spencer/mountain/spacetime/src')
+const spacetime = require('spacetime')
 // nlp.verbose(true)
 nlp.extend(require('../../plugins/numbers/src'))
 nlp.extend(require('../../plugins/dates/src'))
 
 const fmt = (iso) => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
+
 const context = {
-  today: '2018-01-21',
+  // today: [2011, march, 28], //monday
+  // today: '2000-01-01',
+  // today: [2016, october, 4], //a tuesday
   timezone: 'Canada/Pacific',
+  // dayStart: '8:00am',
+  // dayEnd: '5:00pm',
+  // max_repeat: 50,
 }
 
-let doc = nlp('03/02').debug()
-let dates = doc.dates(context).json()[0]
-console.log('start: ', fmt(dates.date.start))
-console.log('  end: ', fmt(dates.date.end))
+// let doc = nlp(`any mondays`)
+let doc = nlp(`any monday in June`)
+let dates = doc.dates(context) //.debug()
+let date = dates.get(0)
+console.log(date)
+// console.log(JSON.stringify(json.date, null, 2))
+console.log('start: ', fmt(date.start))
+console.log('  end: ', fmt(date.end))
+console.log('=-=-=-= here -=-=-=-')
+
+// console.log(nlp('it was ten after 9').debug().times().get())
+// console.log(nlp('around four oclock').times().get())
+// nlp('fourth quarter, 2002').debug()
 
 // ### hmmm
 // let doc = nlp('in the next three years') //.debug()

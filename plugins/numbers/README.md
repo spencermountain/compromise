@@ -81,9 +81,11 @@ This is done safely, but it may have sneaky or unintended effects for some appli
 ### Fractions
 **.fractions()** will parse things like   *'1/3'*, *'one out of three'*, and *'one third'*.
 
-it will not pluck the fraction from the end of a number, like *'six and one third'*.
+it will not pluck the fraction from the end of a number, like *'six and one third'*. 'one third' will still have a **#Fraction** tag.
 
 Things can get pretty crazy - and there are some human-ambiguous fractions like *'five hundred thousandths'*. In these cases it tries its best. 
+
+Attempts are also made to avoid conversational fractions, like 'half time show' or dates like '3rd quarter 2020'.
 
 ### Money
 

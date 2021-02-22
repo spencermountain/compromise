@@ -35,16 +35,17 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
         state.previousGroup = state.groupId
       }
     }
-    //hve we run-out of terms?
+    //have we run-out of terms?
     if (!state.terms[state.t]) {
-      //are all remaining regs optional?
+      //are all remaining regs optional or negative?
       const haveNeeds = regs.slice(state.r).some(remain => !remain.optional)
       if (haveNeeds === false) {
         break //done!
       }
+      // console.log('=-=-=-= dead -=-=-=-')
       return null // die
     }
-
+    // console.log(reg, state.terms[state.t].text)
     //support 'unspecific greedy' .* properly
     if (reg.anything === true && reg.greedy === true) {
       let skipto = logic.greedyTo(state, regs[state.r + 1])
@@ -107,19 +108,25 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
       }
     }
 
-    if (reg.anything === true || logic.isEndGreedy(reg, state)) {
+    // ok, finally test the term/reg
+    let term = state.terms[state.t]
+    let doesMatch = term.doesMatch(reg, state.start_i + state.t, state.phrase_length)
+    if (reg.anything === true || doesMatch === true || logic.isEndGreedy(reg, state)) {
       let startAt = state.t
-      // okay, it was a match, but if it optional too,
+      // okay, it was a match, but if it's optional too,
       // we should check the next reg too, to skip it?
       if (reg.optional && regs[state.r + 1]) {
+        // if it's a negative optional match
+        // if (reg.negative) {
+        //   console.log(reg, state.terms[state.t].text)
+        // }
         // does the next reg match it too?
-        if (state.terms[state.t].doesMatch(regs[state.r + 1], state.start_i + state.t, state.phrase_length)) {
+        let nextRegMatched = term.doesMatch(regs[state.r + 1], state.start_i + state.t, state.phrase_length)
+        if (nextRegMatched) {
           // but does the next reg match the next term??
           // only skip if it doesn't
-          if (
-            !state.terms[state.t + 1] ||
-            !state.terms[state.t + 1].doesMatch(regs[state.r + 1], state.start_i + state.t, state.phrase_length)
-          ) {
+          let nextTerm = state.terms[state.t + 1]
+          if (!nextTerm || !nextTerm.doesMatch(regs[state.r + 1], state.start_i + state.t, state.phrase_length)) {
             state.r += 1
           }
         }

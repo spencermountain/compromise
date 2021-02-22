@@ -58,9 +58,6 @@ exports.isEndGreedy = function (reg, state) {
       }
     }
   }
-  if (state.terms[state.t].doesMatch(reg, state.start_i + state.t, state.phrase_length) === true) {
-    return true
-  }
   return false
 }
 

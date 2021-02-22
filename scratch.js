@@ -13,18 +13,8 @@ nlp.extend(require('./plugins/dates/src'))
 // complex denominators - 'one fifty fourths', 'one thirty third'
 //
 
-let doc = nlp('4/100')
-// doc.percentages().toFraction().debug()
-// doc.fractions().toPercentage().debug()
-console.log(doc.fractions().json())
+let doc = nlp.tokenize(`one after`)
+console.log('\n\n============\n\n')
+console.log('|' + doc.match(`one !foo? moo? after`).text() + '|')
 
-//
-//
-//
-//
-
-// let doc = nlp(`I have not booked him`)
-// console.log(doc.match(`have !not? * booked`).found)
-// // true
-// console.log(doc.match(`have !not? booked`).found)
-// //false
+// console.log('|' + doc.match(`one !foo? after`).text() + '|')

@@ -36,7 +36,7 @@ jobs:
         run: |
           npm ci
           npm i --no-save eslint ts-node typescript
-          npm run plugins:ci
+          # npm run plugins:ci
 
       - name: static checks
         run: |

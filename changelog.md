@@ -15,6 +15,8 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 #### 13.10.0 [Feb 2021]
 - **[new]** - #Fraction tag and improved fraction support (thanks Jakeii!)
 - **[fix]** - edge-case match issues with `!` syntax
+- **[change]** - update deps
+- updates for `compromise-dates@1.4.0`, `compromise-numbers@1.2.0`
 
 #### 13.9.3 [Feb 2021]
 - **[fix]** - fix weird ordering issue with named exports #815

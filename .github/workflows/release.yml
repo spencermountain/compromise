@@ -45,7 +45,7 @@ jobs:
       - name: build
         run: |
           npm run build
-          npm run plugins:build
+          # npm run plugins:build
 
       - name: test
         run: |

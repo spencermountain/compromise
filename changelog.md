@@ -9,8 +9,12 @@ compromise uses semver, and pushes to npm frequently
 While all _Major_ releases should be reviewed, our only two _large_ releases are **v6** in 2016 and and **v12** in 2019. Others have been mostly incremental, or niche.
 
 <!-- #### [Unreleased] 
-- **[new]** - #Fraction tag and improved fraction support (thanks Jakeii!)
+
 -->
+
+#### 13.10.0 [Feb 2021]
+- **[new]** - #Fraction tag and improved fraction support (thanks Jakeii!)
+- **[fix]** - edge-case match issues with `!` syntax
 
 #### 13.9.3 [Feb 2021]
 - **[fix]** - fix weird ordering issue with named exports #815

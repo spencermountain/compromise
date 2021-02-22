@@ -42,10 +42,8 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
       if (haveNeeds === false) {
         break //done!
       }
-      // console.log('=-=-=-= dead -=-=-=-')
       return null // die
     }
-    // console.log(reg, state.terms[state.t].text)
     //support 'unspecific greedy' .* properly
     if (reg.anything === true && reg.greedy === true) {
       let skipto = logic.greedyTo(state, regs[state.r + 1])
@@ -169,6 +167,17 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
       }
       continue
     }
+    // ok, it doesn't match.
+
+    // did it *actually match* a negative?
+    if (reg.negative) {
+      let tmpReg = Object.assign({}, reg)
+      tmpReg.negative = false // try removing it
+      let foundNeg = state.terms[state.t].doesMatch(tmpReg, state.start_i + state.t, state.phrase_length)
+      if (foundNeg === true) {
+        return null //bye!
+      }
+    }
 
     //bah, who cares, keep going
     if (reg.optional === true) {
@@ -180,7 +189,6 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
       if (state.terms[state.t - 1] && state.terms[state.t - 1].implicit === regs[state.r - 1].word) {
         return null
       }
-      // console.log(state.terms[state.t])
       // does the next one match?
       if (state.terms[state.t + 1].doesMatch(reg, state.start_i + state.t, state.phrase_length)) {
         state.t += 2

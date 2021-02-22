@@ -44,7 +44,7 @@
   it is
   <a href="https://docs.compromise.cool/compromise-filesize">small,
   <a href="https://docs.compromise.cool/compromise-performance">quick</a>,
-  and often <a href="https://docs.compromise.cool/compromise-accuracy">good-enough</a>.
+  and often <i><a href="https://docs.compromise.cool/compromise-accuracy">good-enough</a></i>.
 </div>
 
 <!-- spacer -->

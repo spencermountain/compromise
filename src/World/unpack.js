@@ -35,8 +35,8 @@ const fancy = {
     let conj = world.transforms.adjectives(w)
     let tags = Object.keys(conj)
     for (let i = 0; i < tags.length; i++) {
-      let w = conj[tags[i]]
-      lex[w] = lex[w] || tags[i] // only if it's safe
+      let word = conj[tags[i]]
+      lex[word] = lex[word] || tags[i] // only if it's safe
     }
   },
   //conjugate phrasal-verbs

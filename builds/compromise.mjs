@@ -4583,8 +4583,8 @@ var fancy = {
     var tags = Object.keys(conj);
 
     for (var i = 0; i < tags.length; i++) {
-      var _w = conj[tags[i]];
-      lex[_w] = lex[_w] || tags[i]; // only if it's safe
+      var word = conj[tags[i]];
+      lex[word] = lex[word] || tags[i]; // only if it's safe
     }
   },
   //conjugate phrasal-verbs

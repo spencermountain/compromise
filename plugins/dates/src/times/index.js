@@ -32,15 +32,6 @@ const methods = {
     }
     return res
   },
-
-  /** change to a standard duration format */
-  normalize: function () {
-    this.forEach((doc) => {
-      // let duration = parse(doc)
-      // doc.replaceWith(text)
-    })
-    return this
-  },
 }
 
 const addTimes = function (Doc) {

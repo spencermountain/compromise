@@ -8545,15 +8545,16 @@
       }
 
       return res;
-    },
-
-    /** change to a standard duration format */
-    normalize: function normalize() {
-      this.forEach(function (doc) {// let duration = parse(doc)
-        // doc.replaceWith(text)
-      });
-      return this;
     }
+    /** change to a standard duration format */
+    // normalize: function () {
+    //   this.forEach((doc) => {
+    //     // let duration = parse(doc)
+    //     // doc.replaceWith(text)
+    //   })
+    //   return this
+    // },
+
   };
 
   var addTimes = function addTimes(Doc) {

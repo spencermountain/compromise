@@ -38,3 +38,14 @@ test('never allow end > start', (t) => {
   })
   t.end()
 })
+
+test('durations are not dates', function (t) {
+  let doc = nlp('it took 20 minutes')
+  t.equal(doc.dates().length, 0, 'no-dates')
+  t.equal(doc.durations().length, 1, 'one-duration')
+
+  doc = nlp('it took 20mins')
+  t.equal(doc.dates().length, 0, 'no-dates-compact')
+  t.equal(doc.durations().length, 1, 'one-duration-compact')
+  t.end()
+})

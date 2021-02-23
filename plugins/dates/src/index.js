@@ -42,6 +42,15 @@ const addMethods = function (Doc, world) {
     context = Object.assign({}, context, opts)
     // let r = this.clauses()
     let dates = this.match('#Date+')
+    // ignore only-durations like '20 minutes'
+    dates = dates.filter((m) => {
+      let isDuration = m.has('^#Duration+$') || m.has('^#Value #Duration+$')
+      // allow 'q4', etc
+      if (isDuration === true && m.has('#FinancialQuarter')) {
+        isDuration = false
+      }
+      return isDuration === false
+    })
     if (typeof n === 'number') {
       dates = dates.get(n)
     }

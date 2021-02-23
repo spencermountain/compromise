@@ -16,8 +16,8 @@ const context = {
   // max_repeat: 50,
 }
 
-let doc = nlp(`20m`).tag('Duration').debug()
-console.log(doc.durations().get(0))
+let doc = nlp(`q4`).debug()
+console.log(doc.dates().get(0))
 
 // let doc = nlp(`any mondays`)
 // let dates = doc.dates(context) //.debug()

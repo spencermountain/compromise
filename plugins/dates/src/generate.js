@@ -27,6 +27,7 @@ const generateDates = function (result, context) {
   }
   // start going!
   let loops = 0
+  // TODO: learn how to write better software.
   while (list.length < max_count && s.epoch < end.epoch) {
     if (shouldPick(s, byDay, end)) {
       list.push(s.iso())

@@ -9,6 +9,24 @@ test('durations json', function (t) {
   t.end()
 })
 
+test('one-word durations', function (t) {
+  let arr = [
+    ['20m', { minute: 20 }],
+    ['20min', { minute: 20 }],
+    ['20mins', { minute: 20 }],
+    ['10mins', { minute: 10 }],
+    ['1min', { minute: 1 }],
+    ['1sec', { second: 1 }],
+    ['1 sec', { second: 1 }],
+  ]
+  arr.forEach((a) => {
+    let doc = nlp(a[0]).tag('Duration')
+    let found = doc.durations().get(0)
+    t.deepEqual(found, a[1], a[0])
+  })
+  t.end()
+})
+
 test('durations normalize', function (t) {
   let arr = [
     ['blah blah two hours and 8 mins foobar', 'blah blah 2 hours and 8 minutes foobar'],

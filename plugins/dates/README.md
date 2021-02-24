@@ -1,8 +1,8 @@
 <div align="center">
   <img src="https://cloud.githubusercontent.com/assets/399657/23590290/ede73772-01aa-11e7-8915-181ef21027bc.png" />
 
-  <div>date-parsing plugin for <a href="https://github.com/spencermountain/compromise/">compromise</a></div>
-  
+  <div>date-parsing plugin for <a href="https://github.com/spencermountain/compromise/">compromise</a></div> 
+
   <!-- npm version -->
   <a href="https://npmjs.org/package/compromise-dates">
     <img src="https://img.shields.io/npm/v/compromise-dates.svg?style=flat-square" />
@@ -12,48 +12,17 @@
   <a href="https://unpkg.com/compromise-dates/builds/compromise-dates.min.js">
     <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/plugins/dates/builds/compromise-dates.min.js" />
   </a>
-   <hr/>
+
+  <div align="center">
+    <code>npm install compromise-dates</code>
+  </div>
 </div>
 
-
 <!-- spacer -->
-<img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+<img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 This library is an earnest attempt to get date information out of text, in a clear way.
 
-<!-- spacer -->
-<img height="10px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-
-
-<div align="left">
-  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>1 - <b>Regular-expressions</b> are the wrong way to parse dates.
-</div>
-
-<div align="left">
-  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>2 - <b>Neural-nets</b> are the wrong way to parse dates.
-</div>
-
-<div align="left">
-  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>3 - A <b>startup</b> is the wrong place to build a universal date-parser.
-</div>
-
-
-<!-- spacer -->
-<img height="40px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-
-Parsing <ins>*dates*</ins>, <ins>*times*</ins>, and <ins>*durations*</ins> from natural language can be a solved-problem.
-
-A rule-based, community open-source library - *one based on simple NLP* - is the best way to build a natural language date parser -  commercial, or otherwise - for the frontend, or the backend.
-
-The *[match-syntax](https://observablehq.com/@spencermountain/compromise-match-syntax)* is effective and easy, *javascript* is prevailing, and the more people who contribute, the better.
-
-<!-- spacer -->
-<img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-
-<div align="center">
-  <code>npm install compromise-dates</code>
-  <!-- <code>npm install compromise-numbers</code> -->
-</div>
 
 <!-- spacer -->
 <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
@@ -72,15 +41,41 @@ doc.dates().get(0)
 
 <img height="10px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
----
+<img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
+
+<div align="center">
+  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221632-b9094000-ffb7-11e9-99e0-b48edd6cdf8a.png"/>
+</div>
+
+<div align="left">
+  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>• <b><i>Timezone</i></b> and <b><i>DST</i></b> reckoning with <a href="https://github.com/spencermountain/spacetime">spacetime <sup>[1]</sup></a>
+</div>
+<div align="left">
+  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>• <b><i>Number-parsing</i></b> with <i><a href="https://github.com/spencermountain/compromise/tree/master/plugins/numbers">compromise-numbers <sup>[1]</sup></a></i>
+</div>
+<div align="left">
+  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>• <b><i>Tokenization</i></b> and <b><i>disambiguation</i></b> with compromise</i>.
+</div>
+
+<div align="left">
+  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>• Intuitive <b><i>timezone reconciliation</i></b> with <a href="https://github.com/spencermountain/spacetime-informal">spacetime-informal <sup>[1]</sup></a>
+</div>
+
+<img height="55px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
+<img  src="https://user-images.githubusercontent.com/399657/109049133-e5156c80-76a5-11eb-9690-e8af1e3764b1.png" />
+
+<img height="35px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
+
+<div align="center">
+<h3><a href="#">Demo</a></h3>
+</div>
 
 <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-### *This parser is getting really good:*
-
-<img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-
-#### Things it does well:
+#### *Things it does well:*
 
 | `explicit-dates` | <sup>*description*</sup> | `Start`   | `End` |
 | ------------- |:-------------:| -----:| -----:|
@@ -292,6 +287,35 @@ compromise will tag anything that looks like a date, but not validate the dates 
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221632-b9094000-ffb7-11e9-99e0-b48edd6cdf8a.png"/>
 </div>
+
+
+
+<!-- spacer -->
+<img height="10px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
+
+<div align="left">
+  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>1 - <b>Regular-expressions</b> are the wrong way to parse dates.
+</div>
+
+<div align="left">
+  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>2 - <b>Neural-nets</b> are the wrong way to parse dates.
+</div>
+
+<div align="left">
+  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>3 - A <b>startup</b> is the wrong place to build a universal date-parser.
+</div>
+
+
+<!-- spacer -->
+<img height="40px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
+Parsing <ins>*dates*</ins>, <ins>*times*</ins>, and <ins>*durations*</ins> from natural language can be a solved-problem.
+
+A rule-based, community open-source library - *one based on simple NLP* - is the best way to build a natural language date parser -  commercial, or otherwise - for the frontend, or the backend.
+
+The *[match-syntax](https://observablehq.com/@spencermountain/compromise-match-syntax)* is effective and easy, *javascript* is prevailing, and the more people who contribute, the better.
+
 
 
 ### See also

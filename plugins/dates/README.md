@@ -23,7 +23,7 @@
 
 This library is an earnest attempt to get date information out of text, in a clear way -
 <div >
-<img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>- including all informal formats, and folksy shorthands.
+<img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>- including all informal text formats, and folksy shorthands.
 </div>
 
 <!-- spacer -->
@@ -71,7 +71,7 @@ doc.dates().get(0)
 
 
 <div align="center">
-<h3><a href="#">Demo</a></h3>
+<h2><a href="#">Demo</a></h2>
 </div>
 
 <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
@@ -91,7 +91,7 @@ doc.dates().get(0)
 | *2020-03-02* | | '' | ''
 | *03-02-2020* |<sup>*british formats*</sup> | '' | ''
 | *03/02* | | '' | ''
-| *2020.08.13* | | '' | ''
+| *2020.08.13* | <sup>*alt-ISO*</sup>| '' | ''
 |<br/>**`named-dates:`**| |
 | *today* | | - | -
 | *tomorrow* | | '' | ''
@@ -102,18 +102,21 @@ doc.dates().get(0)
 | *2pm* | | '' | ''
 | *2:12pm* | | '' | ''
 | *2:12* | | '' | ''
-| *02:12:00* | | '' | ''
-| *2 oclock* | | '' | ''
+| *02:12:00* | <sup>*weird iso-times*</sup>| '' | ''
+| *two oclock* |<sup>*written formats*</sup> | '' | ''
 | *before 1* | | '' | ''
 | *noon* | | '' | ''
-| *at night* | | '' | ''
+| *at night* | <sup>*informal daytimes*</sup> | '' | ''
 | *in the morning* | | '' | ''
 | *tomorrow evening* | | '' | ''
 |<br/>**`timezones:`**| |
-| *eastern time* | | '' | '' 
-| *est* | | '' | '' 
+| *eastern time* | <sup>*informal zone support*</sup>| '' | '' 
+| *est* |<sup>*TZ shorthands*</sup> | '' | '' 
 | *peru time* | | '' | '' 
-| *GMT+9* | | '' | '' 
+| *..in beirut* | <sup>*by location*</sup> | '' | '' 
+| *GMT+9* | <sup>*by UTC/GMT offset*</sup>| '' | '' 
+| *-4h* | '' | '' | '' 
+| *Canada/Eastern* | <sup>*IANA codes*</sup>| '' | '' 
 |<br/>**`relative durations:`**| |
 | *this march* | | '' | ''
 | *this week* | | '' | ''
@@ -125,30 +128,34 @@ doc.dates().get(0)
 | *last spring* | | '' | ''
 | *the saturday after next* | | '' | ''
 |<br/>**`punted dates:`**| |
-| *two days after tomorrow* | | '' | '' 
-| *in seven weeks* | | '' | '' 
+| *in seven weeks* | <sup>*now+duration*</sup>| '' | '' 
+| *two days after june 6th* | <sup>*date+duration*</sup>| '' | '' 
 | *2 weeks from now* | | '' | '' 
-| *2 weeks after* | | '' | '' 
-| *2 years 4 months 5 days ago* | | '' | '' 
-| *a week friday* | | '' | '' 
-| *a week and a half before* | | '' | '' 
-| *on the 1st* | | '' | '' 
+| *2 weeks after june* | | '' | '' 
+| *2 years, 4 months, and 5 days ago* | <sup>*complex durations*</sup>| '' | '' 
+| *a week and a half before* | <sup>*written-out numbers*</sup>| '' | '' 
+| *a week friday* | <sup>*idiom format*</sup>| '' | '' 
 |<br/>**`start/end:`**| |
-| *end of the week* | | '' | '' 
-| *start of next year* | | '' | '' 
-| *start of next year* | | '' | '' 
-| *middle of q2 last year* | | '' | '' 
+| *end of the week* | <sup>*up-against the ending*</sup> | '' | '' 
+| *start of next year* | <sup>*lean-toward starting*</sup>| '' | '' 
+| *middle of q2 last year* |<sup>*rough-center calculation*</sup> | '' | '' 
 |<br/>**`date-ranges:`**| |
-| *between [june] and [july]* | | '' | ''
-| *from [today] to [haloween]* | | '' | ''
-| *[aug 1] - [aug 31]* | | '' | ''
-| *[today] to [next friday]* | | '' | ''
-| *during june`* | | '' | ''
-| *before [2019]* | | '' | ''
-| *by march* | | '' | ''
-| *after february* | | '' | ''
+| *between june and july* |<sup>*explicit ranges*</sup> | '' | ''
+| *from today to next haloween* | | '' | ''
+| *aug 1 - aug 31* | <sup>*dash-ranges*</sup>| '' | ''
 | *22-23 February* | | '' | ''
-
+| *today to next friday* | | '' | ''
+| *during june* | | '' | ''
+| *aug to june 1999* | <sup>*shared range info*</sup>| '' | ''
+| *before [2019]* |<sup>*up-to a date*</sup> | '' | ''
+| *by march* | | '' | ''
+| *after february* | <sup>*date-to-infinity*</sup>| '' | ''
+|<br/>**`repeating-intervals:`**| |
+| *any wednesday* | <sup>*n-repeating dates*</sup> |  | 
+| *any day in June* | <sup>*repeating-date in range*</sup> | June 1 ... | .. June 30
+| *any wednesday this week* | | '' | ''
+| *weekends in July* | <sup>*more-complex interval*</sup>| '' | ''
+| *every weekday until February* | <sup>*interval until date*</sup>| '' | ''
 
 <!-- spacer -->
 <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
@@ -156,7 +163,7 @@ doc.dates().get(0)
 ### *Things it does awkwardly:*
 | *`hmmm,`* | <sup>*description*</sup> | `Start`   | `End` |
 | ------------- |:-------------:| :-------------:|  :-------------:| 
-| *middle of 2019/June* | tries to find the sorta-center | 'June 15' | '' |
+| *middle of 2019/June* | tries to find the sorta-center | June 15 | '' |
 | *good friday 2025* | tries to reckon astronomically-set holidays| '' | '' |
 | *Oct 22 1975 2am in PST* | historical DST changes (assumes current dates) | '' | '' |
 
@@ -196,23 +203,26 @@ doc.dates().get(0)
   - **.times().json()** - overloaded json output with time metadata
   - **.times().normalize()** - turn 3mins into 3 minutes
 
-`.dates()` accepts an optional object, that lets you set the context for the date parsing.
 
 
 <!-- spacer -->
 <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 ### Configuration:
+`.dates()` accepts an optional object, that lets you set the context for the date parsing.
 ```js
 const context = {
   timezone: 'Canada/Eastern', //the default timezone is 'ETC/UTC'
   today: '2020-02-20', //the implicit, or reference day/year
   punt: { weeks: 2 }, // the implied duration to use for 'after june 2nd'
   dayStart: '8:00am',
-  dayEndt: '5:30pm'
+  dayEnd: '5:30pm'
 }
 
-nlp('in two days').dates(context).json()
+nlp('in two days').dates(context).get()
+/*
+  [{ start: '2020-02-22T08:00:00.000+5:00', end: '2020-02-22T17:30:00.000+5:00' }]
+*/
 ```
 
 
@@ -223,18 +233,18 @@ nlp('in two days').dates(context).json()
 </div>
 
 ## API
-- **[.dates()](https://observablehq.com/@spencermountain/compromise-dates)** - 'June 2021', 'next week'
+- **[.dates()](https://observablehq.com/@spencermountain/compromise-dates)** - find dates like `June 8th` or `03/03/18`
+  - **[.dates().get()](https://observablehq.com/@spencermountain/compromise-dates)** - simple start/end json result
   - **[.dates().json()](https://observablehq.com/@spencermountain/compromise-dates)** - overloaded output with date metadata
   - **[.dates().format('')](https://observablehq.com/@spencermountain/compromise-dates)** - convert the dates to specific formats
   - **[.dates().toShortForm()](https://observablehq.com/@spencermountain/compromise-dates)** - convert 'Wednesday' to 'Wed', etc
   - **[.dates().toLongForm()](https://observablehq.com/@spencermountain/compromise-dates)** - convert 'Feb' to 'February', etc
-- **.durations()** - 'seven days and two hours', '30mins'
-  - **.json()** - overloaded json output with duration info
-  - **.get()** - grab parsed duration
-- **.times()** - 'three pm', '9 oclock'
-  - **.json()** - overloaded json output with time info
-  - **.get()** - grab parsed time
-
+- **[.durations()](https://observablehq.com/@spencermountain/compromise-dates)** - `2 weeks` or `5mins`
+  - **[.durations().get()](https://observablehq.com/@spencermountain/compromise-dates)** - return simple json for duration
+  - **[.durations().json()](https://observablehq.com/@spencermountain/compromise-dates)** - overloaded output with duration metadata
+- **[.times()](https://observablehq.com/@spencermountain/compromise-dates)** - `4:30pm` or `half past five`
+  - **[.durations().get()](https://observablehq.com/@spencermountain/compromise-dates)** - return simple json for times
+  - **[.times().json()](https://observablehq.com/@spencermountain/compromise-dates)** - overloaded output with time metadata
 
 
 

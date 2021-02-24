@@ -21,8 +21,8 @@
 <!-- spacer -->
 <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-This library is an earnest attempt to get date information out of text, in a clear way.
-
+This library is an earnest attempt to get date information out of text, in a clear way -
+<img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>- including all informal formats, and folksy shorthands.
 
 <!-- spacer -->
 <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
@@ -49,17 +49,16 @@ doc.dates().get(0)
 </div>
 
 <div align="left">
+  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>• <b><i>Tokenization</i></b> and <b><i>disambiguation</i></b> with compromise</i>.
+</div>
+<div align="left">
   <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>• <b><i>Timezone</i></b> and <b><i>DST</i></b> reckoning with <a href="https://github.com/spencermountain/spacetime">spacetime <sup>[1]</sup></a>
 </div>
 <div align="left">
   <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>• <b><i>Number-parsing</i></b> with <i><a href="https://github.com/spencermountain/compromise/tree/master/plugins/numbers">compromise-numbers <sup>[1]</sup></a></i>
 </div>
 <div align="left">
-  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>• <b><i>Tokenization</i></b> and <b><i>disambiguation</i></b> with compromise</i>.
-</div>
-
-<div align="left">
-  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>• Intuitive <b><i>timezone reconciliation</i></b> with <a href="https://github.com/spencermountain/spacetime-informal">spacetime-informal <sup>[1]</sup></a>
+  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>• <b><i>Timezone reconciliation</i></b> with <a href="https://github.com/spencermountain/spacetime-informal">spacetime-informal <sup>[1]</sup></a>
 </div>
 
 <img height="55px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
@@ -85,18 +84,19 @@ doc.dates().get(0)
 | *march the second* | <sup>*natural-language number*</sup> | '' | ''
 | *on the 2nd* | <sup>*implicit months*</sup> | '' | ''
 | *tuesday the 2nd* | <sup>*date-reckoning*</sup> | '' | ''
-|**`numeric-dates:`**| |
+|<br/>**`numeric-dates:`**| |
 | *2020/03/02* |<sup>*iso formats*</sup> | '' | ''
 | *2020-03-02* | | '' | ''
 | *03-02-2020* |<sup>*british formats*</sup> | '' | ''
 | *03/02* | | '' | ''
 | *2020.08.13* | | '' | ''
-|**`named-dates:`**| |
-| *today* | | '' | ''
-| *easter* | | '' | ''
-| *q1* | | '' | ''
+|<br/>**`named-dates:`**| |
+| *today* | | - | -
 | *tomorrow* | | '' | ''
-|**`times:`**| |
+| *christmas eve* |<sup>*calendar-holidays*</sup> | Dec 24, 12:00am | Dec 24, 11:59pm
+| *easter* |<sup>*astronomical holidays*</sup> | -depends- | -
+| *q1* | | Jan 1, 12:00am | Mar 31, 11:59pm
+|<br/>**`times:`**| |
 | *2pm* | | '' | ''
 | *2:12pm* | | '' | ''
 | *2:12* | | '' | ''
@@ -107,12 +107,12 @@ doc.dates().get(0)
 | *at night* | | '' | ''
 | *in the morning* | | '' | ''
 | *tomorrow evening* | | '' | ''
-|**`timezones:`**| |
+|<br/>**`timezones:`**| |
 | *eastern time* | | '' | '' 
 | *est* | | '' | '' 
 | *peru time* | | '' | '' 
 | *GMT+9* | | '' | '' 
-|**`relative durations:`**| |
+|<br/>**`relative durations:`**| |
 | *this march* | | '' | ''
 | *this week* | | '' | ''
 | *this sunday* | | '' | ''
@@ -122,7 +122,7 @@ doc.dates().get(0)
 | *last weekend of march* | | '' | ''
 | *last spring* | | '' | ''
 | *the saturday after next* | | '' | ''
-|**`punted dates:`**| |
+|<br/>**`punted dates:`**| |
 | *two days after tomorrow* | | '' | '' 
 | *in seven weeks* | | '' | '' 
 | *2 weeks from now* | | '' | '' 
@@ -131,12 +131,12 @@ doc.dates().get(0)
 | *a week friday* | | '' | '' 
 | *a week and a half before* | | '' | '' 
 | *on the 1st* | | '' | '' 
-|**`start/end:`**| |
+|<br/>**`start/end:`**| |
 | *end of the week* | | '' | '' 
 | *start of next year* | | '' | '' 
 | *start of next year* | | '' | '' 
 | *middle of q2 last year* | | '' | '' 
-|**`date-ranges:`**| |
+|<br/>**`date-ranges:`**| |
 | *between [june] and [july]* | | '' | ''
 | *from [today] to [haloween]* | | '' | ''
 | *[aug 1] - [aug 31]* | | '' | ''
@@ -148,15 +148,21 @@ doc.dates().get(0)
 | *22-23 February* | | '' | ''
 
 
-### Things it does awkwardly:
-|  | <sup>*description*</sup> | `Start`   | `End` |
+<!-- spacer -->
+<img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
+### *Things it does awkwardly:*
+| *`hmmm,`* | <sup>*description*</sup> | `Start`   | `End` |
 | ------------- |:-------------:| :-------------:|  :-------------:| 
 | *middle of 2019/June* | tries to find the center | '' | '' |
 | *good friday 2025* | tries to reckon astronomically-set holidays| '' | '' |
 | *Oct 22 1975 in PST* | historical DST changes | '' | '' |
 
-### Things it doesn't do:
-|  | <sup>*description*</sup> | `Start`   | `End` |
+<!-- spacer -->
+<img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
+### *Things it doesn't do:*
+| *😓,* | <sup>*description*</sup> | `Start`   | `End` |
 | ------------- |:-------------:| :-------------:|  :-------------:| 
 | *middle of 2019/June* | tries to find the center | '' | '' |
 | *not this Saturday, but the Saturday after* | internal logic | '' | '' |

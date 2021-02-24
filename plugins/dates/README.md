@@ -1,7 +1,7 @@
 <div align="center">
   <img src="https://cloud.githubusercontent.com/assets/399657/23590290/ede73772-01aa-11e7-8915-181ef21027bc.png" />
 
-  <div>WIP date-parsing plugin for <a href="https://github.com/spencermountain/compromise/">compromise</a></div>
+  <div>date-parsing plugin for <a href="https://github.com/spencermountain/compromise/">compromise</a></div>
   
   <!-- npm version -->
   <a href="https://npmjs.org/package/compromise-dates">
@@ -15,126 +15,188 @@
    <hr/>
 </div>
 
+
+<!-- spacer -->
+<img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
+This library is an earnest attempt to get date information out of text, in a clear way.
+
+<!-- spacer -->
+<img height="10px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
+
+<div align="left">
+  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>1 - <b>Regular-expressions</b> are the wrong way to parse dates.
+</div>
+
+<div align="left">
+  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>2 - <b>Neural-nets</b> are the wrong way to parse dates.
+</div>
+
+<div align="left">
+  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>3 - A <b>startup</b> is the wrong place to build a universal date-parser.
+</div>
+
+
+<!-- spacer -->
+<img height="40px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
+Parsing <ins>*dates*</ins>, <ins>*times*</ins>, and <ins>*durations*</ins> from natural language can be a solved-problem.
+
+A rule-based, community open-source library - *one based on simple NLP* - is the best way to build a natural language date parser -  commercial, or otherwise - for the frontend, or the backend.
+
+The *[match-syntax](https://observablehq.com/@spencermountain/compromise-match-syntax)* is effective and easy, *javascript* is prevailing, and the more people who contribute, the better.
+
+<!-- spacer -->
+<img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
 <div align="center">
   <code>npm install compromise-dates</code>
+  <!-- <code>npm install compromise-numbers</code> -->
 </div>
 
-`compromise-date` also depends on [compromise-numbers](../numbers)
+<!-- spacer -->
+<img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-<div align="center">
-  <code>npm install compromise-numbers</code>
-</div>
-
-`compromise-dates` can turn natural-language date forms like `June ninth-fourteenth` into parsed ISO dates with start+end times.
 
 ```js
 const nlp = require('compromise')
 nlp.extend(require('compromise-dates'))
-nlp.extend(require('compromise-numbers'))
 
-let doc = nlp('my birthday is June 5th 1998')
-doc.dates().json()
-/*[{ 
-  text: 'June 5th 1998',
-  date: { start: '1998-06-05T00:00:00.000-04:00', end: null } 
-}]*/
+let doc = nlp('the second monday of february')
+doc.dates().get(0)
+/*
+  {}
+*/
 ```
 
-### Things it does:
+<img height="10px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-**explicit-dates**
-- `march 2nd`
-- `2 march`
-- `tues march 2`
-- `march the second`
-- `on the 2nd`
-**numerical-dates**
-- `1999/03/02`
-- `1999-03-02`
-- `03-02-1999`
-- `03/02`
-- `2015.08.13`
-**named-dates**
-- `today`
-- `easter`
-- `q1`
-- `tomorrow`
-**time:**
-- `2pm`
-- `2:12pm`
-- `2:12`
-- `02:12:00`
-- `2 oclock`
-- `before 1`
-- `noon`
-- `at night`
-- `in the morning`
-- `tomorrow evening`
-**timezone:**
-- `eastern time`
-- `est`
-- `peru time`
-- `GMT+9`
-**relative duration**
-- `this march`
-- `this week`
-- `this sunday`
-- `next april`
-- `this past year`
-- `second week of march`
-- `last weekend of march`
-- `last spring`
-- `the saturday after next`
-**punt**
-- `two days after tomorrow`
-- `in seven weeks`
-- `2 weeks from now`
-- `2 weeks after`
-- `2 years 4 months 5 days ago`
-- `a week friday`
-- `a week and a half before`
-- `on the 1st`
-**start/end**
-- `end of the week`
-- `start of next year`
-- `start of next year`
-- `middle of q2 last year`
+---
 
-#### Date-ranges
-- `between [june] and [july]`
-- `from [today] to [haloween]`
-- `[aug 1] - [aug 31]`
-- `[today] to [next friday]`
-- `during june` 
-- `before [2019]`
-- `by march`
-- `after february`
-- `22-23 February`
+<img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
+### *This parser is getting really good:*
+
+<img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
+#### Things it does well:
+
+| `explicit-dates` | <sup>*description*</sup> | `Start`   | `End` |
+| ------------- |:-------------:| -----:| -----:|
+| *march 2nd* | |March 2, 12:00am | March 2, 11:59pm
+| *2 march* | | '' | ''
+| *tues march 2*| | '' | ''
+| *march the second* | <sup>*natural-language number*</sup> | '' | ''
+| *on the 2nd* | <sup>*implicit months*</sup> | '' | ''
+| *tuesday the 2nd* | <sup>*date-reckoning*</sup> | '' | ''
+|**`numeric-dates:`**| |
+| *2020/03/02* |<sup>*iso formats*</sup> | '' | ''
+| *2020-03-02* | | '' | ''
+| *03-02-2020* |<sup>*british formats*</sup> | '' | ''
+| *03/02* | | '' | ''
+| *2020.08.13* | | '' | ''
+|**`named-dates:`**| |
+| *today* | | '' | ''
+| *easter* | | '' | ''
+| *q1* | | '' | ''
+| *tomorrow* | | '' | ''
+|**`times:`**| |
+| *2pm* | | '' | ''
+| *2:12pm* | | '' | ''
+| *2:12* | | '' | ''
+| *02:12:00* | | '' | ''
+| *2 oclock* | | '' | ''
+| *before 1* | | '' | ''
+| *noon* | | '' | ''
+| *at night* | | '' | ''
+| *in the morning* | | '' | ''
+| *tomorrow evening* | | '' | ''
+|**`timezones:`**| |
+| *eastern time* | | '' | '' 
+| *est* | | '' | '' 
+| *peru time* | | '' | '' 
+| *GMT+9* | | '' | '' 
+|**`relative durations:`**| |
+| *this march* | | '' | ''
+| *this week* | | '' | ''
+| *this sunday* | | '' | ''
+| *next april* | | '' | ''
+| *this past year* | | '' | ''
+| *second week of march* | | '' | ''
+| *last weekend of march* | | '' | ''
+| *last spring* | | '' | ''
+| *the saturday after next* | | '' | ''
+|**`punted dates:`**| |
+| *two days after tomorrow* | | '' | '' 
+| *in seven weeks* | | '' | '' 
+| *2 weeks from now* | | '' | '' 
+| *2 weeks after* | | '' | '' 
+| *2 years 4 months 5 days ago* | | '' | '' 
+| *a week friday* | | '' | '' 
+| *a week and a half before* | | '' | '' 
+| *on the 1st* | | '' | '' 
+|**`start/end:`**| |
+| *end of the week* | | '' | '' 
+| *start of next year* | | '' | '' 
+| *start of next year* | | '' | '' 
+| *middle of q2 last year* | | '' | '' 
+|**`date-ranges:`**| |
+| *between [june] and [july]* | | '' | ''
+| *from [today] to [haloween]* | | '' | ''
+| *[aug 1] - [aug 31]* | | '' | ''
+| *[today] to [next friday]* | | '' | ''
+| *during june`* | | '' | ''
+| *before [2019]* | | '' | ''
+| *by march* | | '' | ''
+| *after february* | | '' | ''
+| *22-23 February* | | '' | ''
 
 
-### Things it does awkwardly
-* `middle of 2019/June` - tries to find the center
-* `good friday 2025` - tries to reckon astronomically-set holidays
-* historical DST changes `Oct 22 1975 in PST` (always uses this year's DST date)
+### Things it does awkwardly:
+|  | <sup>*description*</sup> | `Start`   | `End` |
+| ------------- |:-------------:| :-------------:|  :-------------:| 
+| *middle of 2019/June* | tries to find the center | '' | '' |
+| *good friday 2025* | tries to reckon astronomically-set holidays| '' | '' |
+| *Oct 22 1975 in PST* | historical DST changes | '' | '' |
 
-### Things it doesn't do
-* things like `not this Saturday, but the Saturday after`
-* repeating dates like `every sunday` - only contiguous times are supported
-* `3 years ago tomorrow`
-* military time formats like `2100`
-* 'bare' 2-digit years like `may 97`  - ('97 is supported)
+### Things it doesn't do:
+|  | <sup>*description*</sup> | `Start`   | `End` |
+| ------------- |:-------------:| :-------------:|  :-------------:| 
+| *middle of 2019/June* | tries to find the center | '' | '' |
+| *not this Saturday, but the Saturday after* | internal logic | '' | '' |
+| *3 years ago tomorrow* | folksy short-hand  | '' | '' |
+| *2100* | military time formats  | '' | '' |
+| *may 97* | 'bare' 2-digit years  | '' | '' |
+
+
+<img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
+<div align="center">
+<!-- spacer -->
+  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221848-11404200-ffb8-11e9-90cd-3adee8d8564f.png"/>
+</div>
 
 ## API
 
 - **.dates()** - find dates like `June 8th` or `03/03/18`
-  - **.dates().json()** - overloaded output with date metadata
+  - **.dates().get()** - parsed dates as json
+  - **.dates().json()** - overloaded json output with date metadata
   - **.dates().format('')** - convert the dates to specific formats
+ 
 - **.durations()** - find unspecified lengths of time like `two hours and 30mins`
-  - **.durations().json()** - overloaded output with duration metadata
+  - **.durations().get()** - parsed durations as json
+  - **.durations().json()** - overloaded json output with duration metadata
   - **.durations().normalize()** - turn 3mins into 3 minutes
+ 
+- **.times()** - find day-times like `three oclock`
+  - **.times().get()** - parsed times as json
+  - **.times().json()** - overloaded json output with time metadata
+  - **.times().normalize()** - turn 3mins into 3 minutes
 
 `.dates()` accepts an optional object, that lets you set the context for the date parsing.
 
+### Configuration:
 ```js
 const context = {
   timezone: 'Canada/Eastern', //the default timezone is 'ETC/UTC'
@@ -144,49 +206,8 @@ const context = {
   dayEndt: '5:30pm'
 }
 
-nlp('in two days')
-  .dates(context)
-  .json()
+nlp('in two days').dates(context).json()
 ```
-
-### Method
-
-ranges:
-  * *between {} and {}*
-  * *in {}*
-  * *before {}*
-  * *after {}*
-
-tokens:
-```
-  shift:    '5 weeks before' to {weeks:-5}
-            '14 hours after' to {hours:14}
-  
-  counter:  '4th week of' to {unit:week, num:4}
-            '10th hour in' to {unit:hour, num:10}
-            'last hour in' to {unit:hour, num:'last'}
-  
-  time:      'at 5pm' to '5:00pm'
-  
-  timezone:  'EST' to 'America/New_York'
-  
-  relative:  'next wednesday'
-```
-
-Units:
-  * **Week** - 'mon-sun'
-  * **Month** - 'march 2020'
-  * **Quarter** - 'q2 2020'
-  * **Season** - 'summer'
-  * **Year** - '2019'
-  * **Weekend** - 'sat-sun'
-  * **Day** - '12:00am-11:59pm'
-  * **CalendarDate** - 'June 22'
-  * **WeekDay** - 'thursday'
-  * **Holiday** - 'easter'
-  * **Hour** - '4pm'
-  * **Minute** - '4:32pm'
-
 
 ## API
 - **[.dates()](https://observablehq.com/@spencermountain/compromise-dates)** - 'June 2021', 'next week'
@@ -203,23 +224,27 @@ Units:
 
 
 
-## Opinions
 
-### Start of week
+
+<img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
+## *Opinions*:
+
+#### *Start of week:*
 By default, weeks start on a Monday, and *'next week'* will run from Monday morning to Sunday night.
 This can be configued in spacetime, but right now we are not passing-through this config.
 
-### Implied durations
+#### *Implied durations*
 *'after October'* returns a range starting **Nov 1st**, and ending **2-weeks** after, by default.
 This can be configured by setting `punt` param in the context object:
 ```js
 doc.dates({punt: { month: 1 }})
 ```
 
-### Future bias
+#### *Future bias*
 *'May 7th'* will prefer a May 7th in the future
 
-### This/Next/Last
+#### *This/Next/Last*
 *'this/next/last week'* is mostly straight-forward.
 
 But *'this monday'* and *'monday'* is more ambiguous - here, it always refers to the future. On tuesday, saying 'this monday' means 'next monday'. As I understand it, this is the most-intuitive interpretation. Saying *'this monday'* on monday, is itself.
@@ -228,36 +253,46 @@ Likewise, *'this june'* in June, is itself. *'this june'* in any other month, is
 
 Future versions of this library may look at sentence-tense to help disambiguate these dates - *'i paid on monday'* vs *'i will pay on monday'*.
 
-### Nth Week
+#### *Nth Week*
 The first week of a month, or a year is the first week *with a thursday in it*. This is a weird, but widely-held standard. I believe it's a military formalism. It cannot be (easily) configued. This means that the start-date for *first week of January* may be a Monday in December, etc.
 
 As expected, *first monday of January* will always be in January.
 
-### British/American ambiguity
+#### *British/American ambiguity*
 by default, we use the same interpretation of dates as javascript does - we assume `01/02/2020` is Jan 2nd, (US-version) but allow `13/01/2020` to be Jan 13th (UK-version). This should be possible to configure in the near future.
 
-### Seasons
+#### *Seasons*
 By default, *'this summer'* will return **June 1 - Sept 1**, which is northern hemisphere ISO.
 Configuring the default hemisphere should be possible in the future.
 
-### Day times
+#### *Day times*
 There are some hardcoded times for *'lunch time'* and others, but mainly, a day begins at `12:00am` and ends at `11:59pm` - the last millisecond of the day.
 
-### Invalid dates
+#### *Invalid dates*
 compromise will tag anything that looks like a date, but not validate the dates until they are parsed.
 * *'january 34th 2020'* will return **Jan 31 2020**.
 * *'tomorrow at 2:62pm'* will return just return 'tomorrow'.
 * *'6th week of february* will return the 2nd week of march.
 * Setting an hour that's skipped, or repeated by a DST change will return the closest valid time to the DST change.
 
-### Inclusive/exclusive ranges
+#### *Inclusive/exclusive ranges*
 *'between january and march'* will include all of march. This is usually pretty-ambiguous normally.
 
-### Misc
+#### *Misc*
 * *'thursday the 16th'* - will set to the 16th, even if it's not thursday
 * *'in a few hours/years'* - in 2 hours/years
 * *'jan 5th 2008 to Jan 6th the following year'* - date-range explicit references
 * assume *'half past 5'* is 5pm
+
+<!-- spacer -->
+<div align="center">
+  <img height="40px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+  <hr/>
+</div>
+<div align="center">
+  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221632-b9094000-ffb7-11e9-99e0-b48edd6cdf8a.png"/>
+</div>
+
 
 ### See also
 * [Duckling](https://duckling.wit.ai/) - by wit.ai (facebook)
@@ -265,11 +300,14 @@ compromise will tag anything that looks like a date, but not validate the dates 
 * [SUTime](https://nlp.stanford.edu/software/sutime.shtml) - by Angel Chang, Christopher Manning (Java)
 * [Natty](http://natty.joestelmach.com/) - by Joe Stelmach (Java)
 * [ParseDateTime](https://pypi.org/project/parsedatetime/) by Mike Taylor (Python)
+* [rrule](https://github.com/jakubroztocil/rrule) - repeating date-interval handler (js)
 
-Work in progress.
-
+<div align="center">
+  <img height="40px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+</div>
 
 Work on compromise-date is sponsored by [Simform](https://www.simform.com/)
-<img src="https://user-images.githubusercontent.com/399657/107404468-4f3de700-6ad4-11eb-9d60-7a90625b57d6.png" width="150px"/>
+<a href="https://www.simform.com/">
+<img src="https://user-images.githubusercontent.com/399657/107404468-4f3de700-6ad4-11eb-9d60-7a90625b57d6.png" width="150px"/></a>
 
-MIT
+**MIT** licenced

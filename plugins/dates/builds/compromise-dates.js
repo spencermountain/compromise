@@ -8162,7 +8162,7 @@
     } // start going!
 
 
-    var loops = 0;
+    var loops = 0; // TODO: learn how to write better software.
 
     while (list.length < max_count && s.epoch < end.epoch) {
       if (shouldPick(s, byDay)) {
@@ -8353,6 +8353,8 @@
     season: true
   };
   var mapping$1 = {
+    m: 'minute',
+    h: 'hour',
     hr: 'hour',
     min: 'minute',
     sec: 'second',
@@ -8369,18 +8371,44 @@
   var parse$2 = function parse(doc) {
     var duration = {}; //parse '8 minutes'
 
-    doc.match('#Value+ #Duration').forEach(function (m) {
-      var num = m.numbers().get(0);
-      var unit = m.match('#Duration').nouns().toSingular().text(); // turn 'mins' into 'minute'
+    var twoWord = doc.match('#Value+ #Duration');
 
-      if (mapping$1.hasOwnProperty(unit)) {
-        unit = mapping$1[unit];
-      }
+    if (twoWord.found) {
+      twoWord.forEach(function (m) {
+        var num = m.numbers().get(0);
+        var unit = m.terms().last().nouns().toSingular().text(); // turn 'mins' into 'minute'
 
-      if (known.hasOwnProperty(unit) && num) {
-        duration[unit] = num;
+        if (mapping$1.hasOwnProperty(unit)) {
+          unit = mapping$1[unit];
+        }
+
+        if (known.hasOwnProperty(unit) && num !== null) {
+          duration[unit] = num;
+        }
+      });
+    } else {
+      var oneWord = doc.match('(#Duration && /[0-9][a-z]+$/)');
+
+      if (oneWord.found) {
+        var str = doc.text();
+        var num = str.match(/([0-9]+)/);
+        var unit = str.match(/([a-z]+)/);
+
+        if (num && unit) {
+          num = num[0] || null;
+          unit = unit[0] || null;
+
+          if (mapping$1.hasOwnProperty(unit)) {
+            unit = mapping$1[unit];
+          }
+
+          if (known.hasOwnProperty(unit) && num !== null) {
+            duration[unit] = Number(num);
+          }
+        }
       }
-    });
+    }
+
     return duration;
   };
 
@@ -8481,7 +8509,9 @@
     /** phrases like '2 months' */
 
     Doc.prototype.durations = function (n) {
-      var m = this.match('#Value+ #Duration and? #Value+? #Duration?');
+      var m = this.match('#Value+ #Duration (and? #Value+ #Duration)?'); // add '20mins'
+
+      m = m.concat(this.match('(#Duration && /[0-9][a-z]+$/)'));
 
       if (typeof n === 'number') {
         m = m.get(n);
@@ -8635,7 +8665,17 @@
 
       context = Object.assign({}, context, opts); // let r = this.clauses()
 
-      var dates = this.match('#Date+');
+      var dates = this.match('#Date+'); // ignore only-durations like '20 minutes'
+
+      dates = dates.filter(function (m) {
+        var isDuration = m.has('^#Duration+$') || m.has('^#Value #Duration+$'); // allow 'q4', etc
+
+        if (isDuration === true && m.has('#FinancialQuarter')) {
+          isDuration = false;
+        }
+
+        return isDuration === false;
+      });
 
       if (typeof n === 'number') {
         dates = dates.get(n);

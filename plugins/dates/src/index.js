@@ -5,6 +5,7 @@ const methods = require('./methods')
 const addDurations = require('./durations')
 const addTimes = require('./times')
 const spacetime = require('spacetime')
+const findDates = require('./find')
 
 const opts = {
   punt: { weeks: 2 },
@@ -40,8 +41,8 @@ const addMethods = function (Doc, world) {
       n = null
     }
     context = Object.assign({}, context, opts)
-    // let r = this.clauses()
-    let dates = this.match('#Date+')
+
+    let dates = findDates(this)
     if (typeof n === 'number') {
       dates = dates.get(n)
     }

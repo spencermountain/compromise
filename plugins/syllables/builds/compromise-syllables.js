@@ -1,4 +1,4 @@
-/* compromise-syllables 0.0.5 MIT */
+/* compromise-syllables 0.0.6 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -11,8 +11,8 @@
   var cvcv_same_vowel = /^[^aeiouy]([aeiouy])[^aeiouy]\1/;
   var cvcv_known_consonants = /^([tg][aeiouy]){2}/;
   var only_one_or_more_c = /^[^aeiouy]+$/;
-  var ends_with_vowel = /[aeiouy]$/;
-  var starts_with_consonant_vowel = /^[^aeiouy][h]?[aeiouy]/;
+  var ends_with_vowel$1 = /[aeiouy]$/;
+  var starts_with_consonant_vowel$1 = /^[^aeiouy][h]?[aeiouy]/;
   var ones = [/^[^aeiou]?ion/, /^[^aeiou]?ised/, /^[^aeiou]?iled/, // -ing, -ent
   /[aeiou][n][gt]$/, // -ate, -age
   /\wa[gt]e$/]; //suffix fixes
@@ -44,7 +44,7 @@
 
 
     if (arr.length > 1) {
-      var first_is_open = (arr[0].length === 1 || arr[0].match(starts_with_consonant_vowel)) && arr[0].match(ends_with_vowel);
+      var first_is_open = (arr[0].length === 1 || arr[0].match(starts_with_consonant_vowel$1)) && arr[0].match(ends_with_vowel$1);
       var second_is_joining = arr[1].match(joining_consonant_vowel);
 
       if (first_is_open && second_is_joining) {
@@ -59,7 +59,7 @@
     }
 
     if (arr.length > 1) {
-      var second_to_last_is_open = arr[arr.length - 2].match(starts_with_consonant_vowel) && arr[arr.length - 2].match(ends_with_vowel);
+      var second_to_last_is_open = arr[arr.length - 2].match(starts_with_consonant_vowel$1) && arr[arr.length - 2].match(ends_with_vowel$1);
       var last_is_joining = arr[arr.length - 1].match(joining_consonant_vowel) && ones.every(function (re) {
         return !arr[arr.length - 1].match(re);
       });
@@ -98,8 +98,8 @@
   var postProcess = postprocess;
 
   var all_spaces = / +/g;
-  var ends_with_vowel$1 = /[aeiouy]$/;
-  var starts_with_consonant_vowel$1 = /^[^aeiouy][h]?[aeiouy]/;
+  var ends_with_vowel = /[aeiouy]$/;
+  var starts_with_consonant_vowel = /^[^aeiouy][h]?[aeiouy]/;
   var starts_with_e_then_specials = /^e[sm]/;
   var starts_with_e = /^e/;
   var ends_with_noisy_vowel_combos = /(eo|eu|ia|oa|ua|ui)$/i;
@@ -120,7 +120,7 @@
       after = chars.slice(i + 1, chars.length).join('');
       var candidate = before + chars[i]; //it's a consonant that comes after a vowel
 
-      if (before.match(ends_with_vowel$1) && !current.match(ends_with_vowel$1)) {
+      if (before.match(ends_with_vowel) && !current.match(ends_with_vowel)) {
         if (after.match(starts_with_e_then_specials)) {
           candidate += 'e';
           after = after.replace(starts_with_e, '');
@@ -139,7 +139,7 @@
       } // if candidate is followed by a CV, assume consecutive open syllables
 
 
-      if (candidate.match(ends_with_vowel$1) && after.match(starts_with_consonant_vowel$1)) {
+      if (candidate.match(ends_with_vowel) && after.match(starts_with_consonant_vowel)) {
         all.push(candidate);
         return all.concat(doWord(after));
       }

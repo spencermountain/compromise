@@ -1,6 +1,6 @@
-/* compromise-penn-tags 0.0.1 MIT */
+/* compromise-penn-tags 0.0.2 MIT */
 // order here matters
-var mapping = [// adverbs
+var mapping$1 = [// adverbs
 ['Comparative', 'RBR'], ['Superlative', 'RBS'], ['Adverb', 'RB'], // adjectives
 ['Comparative', 'JJR'], ['Superlative', 'JJS'], ['Adjective', 'JJ'], ['TO', 'Conjunction'], // verbs
 ['Modal', 'MD'], ['Auxiliary', 'MD'], ['Gerund', 'VBG'], //throwing
@@ -20,9 +20,9 @@ var mapping = [// adverbs
 // ['Noun', 'SYM'], //symbol
 // ['Noun', 'NFP'], //
 ];
-var tags = mapping;
+var tags = mapping$1;
 
-var mapping$1 = tags.reduce(function (h, a) {
+var mapping = tags.reduce(function (h, a) {
   h[a[0]] = a[1];
   return h;
 }, {});
@@ -35,13 +35,13 @@ var addMethods = function addMethods(Doc) {
     var json = this.json(opts);
     return json.map(function (obj) {
       obj.terms = obj.terms.map(function (o) {
-        var penn = mapping$1[o.bestTag];
+        var penn = mapping[o.bestTag];
 
         if (!penn) {
           var found = o.tags.find(function (tag) {
-            return mapping$1[tag];
+            return mapping[tag];
           });
-          penn = mapping$1[found];
+          penn = mapping[found];
         }
 
         return {

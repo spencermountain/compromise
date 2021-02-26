@@ -1,4 +1,4 @@
-/* compromise-pronounce 0.0.3 MIT */
+/* compromise-pronounce 0.0.5 MIT */
 //individual manipulations of the text
 var transformations = {
   dedup: function dedup(s) {

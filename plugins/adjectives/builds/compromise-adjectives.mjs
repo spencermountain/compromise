@@ -1,4 +1,4 @@
-/* compromise-adjectives 0.0.6 MIT */
+/* compromise-adjectives 0.0.7 MIT */
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -309,9 +309,9 @@ var addMethods = function addMethods(Doc) {
 
     _createClass(Adjective, [{
       key: "json",
-
+      value:
       /** overload the original json with noun information */
-      value: function json(options) {
+      function json(options) {
         var n = null;
 
         if (typeof options === 'number') {

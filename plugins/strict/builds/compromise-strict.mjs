@@ -1,4 +1,4 @@
-/* compromise-strict 0.0.2 GPLv3 */
+/* compromise-strict 0.0.3 GPLv3 */
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
@@ -74,7 +74,7 @@ function _isNativeReflectConstruct() {
   if (typeof Proxy === "function") return true;
 
   try {
-    Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+    Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
     return true;
   } catch (e) {
     return false;
@@ -248,7 +248,7 @@ function _createForOfIteratorHelper(o, allowArrayLike) {
 // needs a separate module as this is required inside chevrotain productive code
 // and also in the entry point for webpack(api.ts).
 // A separate file avoids cyclic dependencies and webpack errors.
-var VERSION = "7.0.3";
+var VERSION = "7.1.2";
 
 /*
  Utils using lodash style API. (not necessarily 100% compliant) for functional and other utils.
@@ -314,7 +314,7 @@ function flatten(arr) {
 
   return result;
 }
-function first(arr) {
+function first$1(arr) {
   return isEmpty(arr) ? undefined : arr[0];
 }
 function last(arr) {
@@ -628,7 +628,7 @@ function merge(obj1, obj2) {
 
   return result;
 }
-function NOOP() {}
+function NOOP$3() {}
 function IDENTITY(item) {
   return item;
 }
@@ -740,7 +740,7 @@ var regexpToAst = createCommonjsModule(function (module) {
 
   (function (root, factory) {
     // istanbul ignore next
-    if ( module.exports) {
+    if (module.exports) {
       module.exports = factory();
     } else {
       // istanbul ignore next
@@ -1860,7 +1860,7 @@ function clearRegExpParserCache() {
   regExpAstCache = {};
 }
 
-var __extends = undefined && undefined.__extends || function () {
+var __extends$a = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
     _extendStatics = Object.setPrototypeOf || {
       __proto__: []
@@ -1902,13 +1902,13 @@ function getOptimizedStartCodesIndices(regExp, ensureOptimizations) {
     // TODO: only the else branch needs to be ignored, try to fix with newer prettier / tsc
     if (e.message === complementErrorMessage) {
       if (ensureOptimizations) {
-        PRINT_WARNING("" + failedOptimizationPrefixMsg + ("\tUnable to optimize: < " + regExp.toString() + " >\n") + "\tComplement Sets cannot be automatically optimized.\n" + "\tThis will disable the lexer's first char optimizations.\n" + "\tSee: https://sap.github.io/chevrotain/docs/guide/resolving_lexer_errors.html#COMPLEMENT for details.");
+        PRINT_WARNING("" + failedOptimizationPrefixMsg + ("\tUnable to optimize: < " + regExp.toString() + " >\n") + "\tComplement Sets cannot be automatically optimized.\n" + "\tThis will disable the lexer's first char optimizations.\n" + "\tSee: https://chevrotain.io/docs/guide/resolving_lexer_errors.html#COMPLEMENT for details.");
       }
     } else {
       var msgSuffix = "";
 
       if (ensureOptimizations) {
-        msgSuffix = "\n\tThis will disable the lexer's first char optimizations.\n" + "\tSee: https://sap.github.io/chevrotain/docs/guide/resolving_lexer_errors.html#REGEXP_PARSING for details.";
+        msgSuffix = "\n\tThis will disable the lexer's first char optimizations.\n" + "\tSee: https://chevrotain.io/docs/guide/resolving_lexer_errors.html#REGEXP_PARSING for details.";
       }
 
       PRINT_ERROR(failedOptimizationPrefixMsg + "\n" + ("\tFailed parsing: < " + regExp.toString() + " >\n") + ("\tUsing the regexp-to-ast library version: " + regexpToAst.VERSION + "\n") + "\tPlease open an issue at: https://github.com/bd82/regexp-to-ast/issues" + msgSuffix);
@@ -2084,7 +2084,7 @@ function isWholeOptional(ast) {
 var CharCodeFinder =
 /** @class */
 function (_super) {
-  __extends(CharCodeFinder, _super);
+  __extends$a(CharCodeFinder, _super);
 
   function CharCodeFinder(targetCharCodes) {
     var _this = _super.call(this) || this;
@@ -2149,7 +2149,7 @@ function canMatchCharCode(charCodes, pattern) {
   }
 }
 
-var __extends$1 = undefined && undefined.__extends || function () {
+var __extends$9 = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
     _extendStatics = Object.setPrototypeOf || {
       __proto__: []
@@ -2196,7 +2196,7 @@ function analyzeTokenTypes(tokenTypes, options) {
   var onlyRelevantTypes;
   tracer("Reject Lexer.NA", function () {
     onlyRelevantTypes = reject(tokenTypes, function (currType) {
-      return currType[PATTERN] === Lexer.NA;
+      return currType[PATTERN] === Lexer$2.NA;
     });
   });
   var hasCustom = false;
@@ -2258,7 +2258,7 @@ function analyzeTokenTypes(tokenTypes, options) {
       var groupName = clazz.GROUP;
       /* istanbul ignore next */
 
-      if (groupName === Lexer.SKIPPED) {
+      if (groupName === Lexer$2.SKIPPED) {
         return undefined;
       } else if (isString(groupName)) {
         return groupName;
@@ -2312,7 +2312,7 @@ function analyzeTokenTypes(tokenTypes, options) {
     emptyGroups = reduce(onlyRelevantTypes, function (acc, clazz) {
       var groupName = clazz.GROUP;
 
-      if (isString(groupName) && !(groupName === Lexer.SKIPPED)) {
+      if (isString(groupName) && !(groupName === Lexer$2.SKIPPED)) {
         acc[groupName] = [];
       }
 
@@ -2363,7 +2363,7 @@ function analyzeTokenTypes(tokenTypes, options) {
             canBeOptimized = false;
 
             if (options.ensureOptimizations) {
-              PRINT_ERROR("" + failedOptimizationPrefixMsg + ("\tUnable to analyze < " + currTokType.PATTERN.toString() + " > pattern.\n") + "\tThe regexp unicode flag is not currently supported by the regexp-to-ast library.\n" + "\tThis will disable the lexer's first char optimizations.\n" + "\tFor details See: https://sap.github.io/chevrotain/docs/guide/resolving_lexer_errors.html#UNICODE_OPTIMIZE");
+              PRINT_ERROR("" + failedOptimizationPrefixMsg + ("\tUnable to analyze < " + currTokType.PATTERN.toString() + " > pattern.\n") + "\tThe regexp unicode flag is not currently supported by the regexp-to-ast library.\n" + "\tThis will disable the lexer's first char optimizations.\n" + "\tFor details See: https://chevrotain.io/docs/guide/resolving_lexer_errors.html#UNICODE_OPTIMIZE");
             }
           } else {
             var optimizedCodes = getOptimizedStartCodesIndices(currTokType.PATTERN, options.ensureOptimizations);
@@ -2384,7 +2384,7 @@ function analyzeTokenTypes(tokenTypes, options) {
           }
         } else {
           if (options.ensureOptimizations) {
-            PRINT_ERROR("" + failedOptimizationPrefixMsg + ("\tTokenType: <" + currTokType.name + "> is using a custom token pattern without providing <start_chars_hint> parameter.\n") + "\tThis will disable the lexer's first char optimizations.\n" + "\tFor details See: https://sap.github.io/chevrotain/docs/guide/resolving_lexer_errors.html#CUSTOM_OPTIMIZE");
+            PRINT_ERROR("" + failedOptimizationPrefixMsg + ("\tTokenType: <" + currTokType.name + "> is using a custom token pattern without providing <start_chars_hint> parameter.\n") + "\tThis will disable the lexer's first char optimizations.\n" + "\tFor details See: https://chevrotain.io/docs/guide/resolving_lexer_errors.html#CUSTOM_OPTIMIZE");
           }
 
           canBeOptimized = false;
@@ -2473,7 +2473,7 @@ function findEndOfInputAnchor(tokenTypes) {
   var EndAnchorFinder =
   /** @class */
   function (_super) {
-    __extends$1(EndAnchorFinder, _super);
+    __extends$9(EndAnchorFinder, _super);
 
     function EndAnchorFinder() {
       var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -2506,7 +2506,7 @@ function findEndOfInputAnchor(tokenTypes) {
   });
   var errors = map(invalidRegex, function (currType) {
     return {
-      message: "Unexpected RegExp Anchor Error:\n" + "\tToken Type: ->" + currType.name + "<- static 'PATTERN' cannot contain end of input anchor '$'\n" + "\tSee sap.github.io/chevrotain/docs/guide/resolving_lexer_errors.html#ANCHORS" + "\tfor details.",
+      message: "Unexpected RegExp Anchor Error:\n" + "\tToken Type: ->" + currType.name + "<- static 'PATTERN' cannot contain end of input anchor '$'\n" + "\tSee chevrotain.io/docs/guide/resolving_lexer_errors.html#ANCHORS" + "\tfor details.",
       type: LexerDefinitionErrorType.EOI_ANCHOR_FOUND,
       tokenTypes: [currType]
     };
@@ -2532,7 +2532,7 @@ function findStartOfInputAnchor(tokenTypes) {
   var StartAnchorFinder =
   /** @class */
   function (_super) {
-    __extends$1(StartAnchorFinder, _super);
+    __extends$9(StartAnchorFinder, _super);
 
     function StartAnchorFinder() {
       var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -2565,7 +2565,7 @@ function findStartOfInputAnchor(tokenTypes) {
   });
   var errors = map(invalidRegex, function (currType) {
     return {
-      message: "Unexpected RegExp Anchor Error:\n" + "\tToken Type: ->" + currType.name + "<- static 'PATTERN' cannot contain start of input anchor '^'\n" + "\tSee https://sap.github.io/chevrotain/docs/guide/resolving_lexer_errors.html#ANCHORS" + "\tfor details.",
+      message: "Unexpected RegExp Anchor Error:\n" + "\tToken Type: ->" + currType.name + "<- static 'PATTERN' cannot contain start of input anchor '^'\n" + "\tSee https://chevrotain.io/docs/guide/resolving_lexer_errors.html#ANCHORS" + "\tfor details.",
       type: LexerDefinitionErrorType.SOI_ANCHOR_FOUND,
       tokenTypes: [currType]
     };
@@ -2591,7 +2591,7 @@ function findDuplicatePatterns(tokenTypes) {
   var found = [];
   var identicalPatterns = map(tokenTypes, function (outerType) {
     return reduce(tokenTypes, function (result, innerType) {
-      if (outerType.PATTERN.source === innerType.PATTERN.source && !contains(found, innerType) && innerType.PATTERN !== Lexer.NA) {
+      if (outerType.PATTERN.source === innerType.PATTERN.source && !contains(found, innerType) && innerType.PATTERN !== Lexer$2.NA) {
         // this avoids duplicates in the result, each Token Type may only appear in one "set"
         // in essence we are creating Equivalence classes on equality relation.
         found.push(innerType);
@@ -2610,7 +2610,7 @@ function findDuplicatePatterns(tokenTypes) {
     var tokenTypeNames = map(setOfIdentical, function (currType) {
       return currType.name;
     });
-    var dupPatternSrc = first(setOfIdentical).PATTERN;
+    var dupPatternSrc = first$1(setOfIdentical).PATTERN;
     return {
       message: "The same RegExp pattern ->" + dupPatternSrc + "<-" + ("has been used in all of the following Token Types: " + tokenTypeNames.join(", ") + " <-"),
       type: LexerDefinitionErrorType.DUPLICATE_PATTERNS_FOUND,
@@ -2626,7 +2626,7 @@ function findInvalidGroupType(tokenTypes) {
     }
 
     var group = clazz.GROUP;
-    return group !== Lexer.SKIPPED && group !== Lexer.NA && !isString(group);
+    return group !== Lexer$2.SKIPPED && group !== Lexer$2.NA && !isString(group);
   });
   var errors = map(invalidTypes, function (currType) {
     return {
@@ -2656,7 +2656,7 @@ function findUnreachablePatterns(tokenTypes) {
   var canBeTested = reduce(tokenTypes, function (result, tokType, idx) {
     var pattern = tokType.PATTERN;
 
-    if (pattern === Lexer.NA) {
+    if (pattern === Lexer$2.NA) {
       return result;
     } // a more comprehensive validation for all forms of regExps would require
     // deeper regExp analysis capabilities
@@ -2685,7 +2685,7 @@ function findUnreachablePatterns(tokenTypes) {
           tokenType = _a.tokenType;
 
       if (testIdx < idx && testTokenType(str, tokType.PATTERN)) {
-        var msg = "Token: ->" + tokenType.name + "<- can never be matched.\n" + ("Because it appears AFTER the Token Type ->" + tokType.name + "<-") + "in the lexer's definition.\n" + "See https://sap.github.io/chevrotain/docs/guide/resolving_lexer_errors.html#UNREACHABLE";
+        var msg = "Token: ->" + tokenType.name + "<- can never be matched.\n" + ("Because it appears AFTER the Token Type ->" + tokType.name + "<-") + "in the lexer's definition.\n" + "See https://chevrotain.io/docs/guide/resolving_lexer_errors.html#UNREACHABLE";
         errors.push({
           message: msg,
           type: LexerDefinitionErrorType.UNREACHABLE_PATTERN,
@@ -2781,7 +2781,7 @@ function performWarningRuntimeChecks(lexerDefinition, trackLines, lineTerminator
     return tokTypes;
   })));
   var concreteTokenTypes = reject(allTokenTypes, function (currType) {
-    return currType[PATTERN] === Lexer.NA;
+    return currType[PATTERN] === Lexer$2.NA;
   });
   var terminatorCharCodes = getCharCodes(lineTerminatorCharacters);
 
@@ -2814,7 +2814,7 @@ function performWarningRuntimeChecks(lexerDefinition, trackLines, lineTerminator
 
   if (trackLines && !hasAnyLineBreak) {
     warnings.push({
-      message: "Warning: No LINE_BREAKS Found.\n" + "\tThis Lexer has been defined to track line and column information,\n" + "\tBut none of the Token Types can be identified as matching a line terminator.\n" + "\tSee https://sap.github.io/chevrotain/docs/guide/resolving_lexer_errors.html#LINE_BREAKS \n" + "\tfor details.",
+      message: "Warning: No LINE_BREAKS Found.\n" + "\tThis Lexer has been defined to track line and column information,\n" + "\tBut none of the Token Types can be identified as matching a line terminator.\n" + "\tSee https://chevrotain.io/docs/guide/resolving_lexer_errors.html#LINE_BREAKS \n" + "\tfor details.",
       type: LexerDefinitionErrorType.NO_LINE_BREAKS_FLAGS
     });
   }
@@ -2929,9 +2929,9 @@ function checkLineBreaksIssues(tokType, lineTerminatorCharCodes) {
 function buildLineBreakIssueMessage(tokType, details) {
   /* istanbul ignore else */
   if (details.issue === LexerDefinitionErrorType.IDENTIFY_TERMINATOR) {
-    return "Warning: unable to identify line terminator usage in pattern.\n" + ("\tThe problem is in the <" + tokType.name + "> Token Type\n") + ("\t Root cause: " + details.errMsg + ".\n") + "\tFor details See: https://sap.github.io/chevrotain/docs/guide/resolving_lexer_errors.html#IDENTIFY_TERMINATOR";
+    return "Warning: unable to identify line terminator usage in pattern.\n" + ("\tThe problem is in the <" + tokType.name + "> Token Type\n") + ("\t Root cause: " + details.errMsg + ".\n") + "\tFor details See: https://chevrotain.io/docs/guide/resolving_lexer_errors.html#IDENTIFY_TERMINATOR";
   } else if (details.issue === LexerDefinitionErrorType.CUSTOM_LINE_BREAK) {
-    return "Warning: A Custom Token Pattern should specify the <line_breaks> option.\n" + ("\tThe problem is in the <" + tokType.name + "> Token Type\n") + "\tFor details See: https://sap.github.io/chevrotain/docs/guide/resolving_lexer_errors.html#CUSTOM_LINE_BREAK";
+    return "Warning: A Custom Token Pattern should specify the <line_breaks> option.\n" + ("\tThe problem is in the <" + tokType.name + "> Token Type\n") + "\tFor details See: https://chevrotain.io/docs/guide/resolving_lexer_errors.html#CUSTOM_LINE_BREAK";
   } else {
     throw Error("non exhaustive match");
   }
@@ -3161,7 +3161,7 @@ var DEFAULT_LEXER_CONFIG = {
 };
 Object.freeze(DEFAULT_LEXER_CONFIG);
 
-var Lexer =
+var Lexer$2 =
 /** @class */
 function () {
   function Lexer(lexerDefinition, config) {
@@ -3211,7 +3211,7 @@ function () {
           _this.config.lineTerminatorsPattern = LineTerminatorOptimizedTester;
         } else {
           if (_this.config.lineTerminatorCharacters === DEFAULT_LEXER_CONFIG.lineTerminatorCharacters) {
-            throw Error("Error: Missing <lineTerminatorCharacters> property on the Lexer config.\n" + "\tFor details See: https://sap.github.io/chevrotain/docs/guide/resolving_lexer_errors.html#MISSING_LINE_TERM_CHARS");
+            throw Error("Error: Missing <lineTerminatorCharacters> property on the Lexer config.\n" + "\tFor details See: https://chevrotain.io/docs/guide/resolving_lexer_errors.html#MISSING_LINE_TERM_CHARS");
           }
         }
 
@@ -3313,12 +3313,12 @@ function () {
           _this.chopInput = IDENTITY;
           _this.match = _this.matchWithTest;
         } else {
-          _this.updateLastIndex = NOOP;
+          _this.updateLastIndex = NOOP$3;
           _this.match = _this.matchWithExec;
         }
 
         if (hasOnlySingleMode) {
-          _this.handleModes = NOOP;
+          _this.handleModes = NOOP$3;
         }
 
         if (_this.trackStartLines === false) {
@@ -3326,7 +3326,7 @@ function () {
         }
 
         if (_this.trackEndLines === false) {
-          _this.updateTokenEndLineColumnLocation = NOOP;
+          _this.updateTokenEndLineColumnLocation = NOOP$3;
         }
 
         if (/full/i.test(_this.config.positionTracking)) {
@@ -3394,7 +3394,7 @@ function () {
   Lexer.prototype.tokenizeInternal = function (text, initialMode) {
     var _this = this;
 
-    var i, j, matchAltImage, longerAltIdx, matchedImage, payload, altPayload, imageLength, group, tokType, newToken, errLength, droppedChar, msg, match;
+    var i, j, matchAltImage, longerAltIdx, matchedImage, payload, altPayload, imageLength, group, tokType, newToken, errLength, msg, match;
     var orgText = text;
     var orgLength = orgText.length;
     var offset = 0;
@@ -3620,7 +3620,7 @@ function () {
 
         while (!foundResyncPoint && offset < orgLength) {
           // drop chars until we succeed in matching something
-          droppedChar = orgText.charCodeAt(offset); // Identity Func (when sticky flag is enabled)
+          orgText.charCodeAt(offset); // Identity Func (when sticky flag is enabled)
 
           text = this.chopInput(text, 1);
           offset++;
@@ -3881,7 +3881,7 @@ var POP_MODE = "pop_mode";
 var LONGER_ALT = "longer_alt";
 var LINE_BREAKS = "line_breaks";
 var START_CHARS_HINT = "start_chars_hint";
-function createToken(config) {
+function createToken$1(config) {
   return createTokenInternal(config);
 }
 
@@ -3895,7 +3895,7 @@ function createTokenInternal(config) {
   }
 
   if (has(config, PARENT)) {
-    throw "The parent property is no longer supported.\n" + "See: https://github.com/SAP/chevrotain/issues/564#issuecomment-349062346 for details.";
+    throw "The parent property is no longer supported.\n" + "See: https://github.com/chevrotain/chevrotain/issues/564#issuecomment-349062346 for details.";
   }
 
   if (has(config, CATEGORIES)) {
@@ -3936,9 +3936,9 @@ function createTokenInternal(config) {
   return tokenType;
 }
 
-var EOF = createToken({
+var EOF = createToken$1({
   name: "EOF",
-  pattern: Lexer.NA
+  pattern: Lexer$2.NA
 });
 augmentTokenTypes([EOF]);
 function createTokenInstance(tokType, image, startOffset, endOffset, startLine, endLine, startColumn, endColumn) {
@@ -3958,7 +3958,7 @@ function tokenMatcher(token, tokType) {
   return tokenStructuredMatcher(token, tokType);
 }
 
-var __extends$2 = undefined && undefined.__extends || function () {
+var __extends$8 = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
     _extendStatics = Object.setPrototypeOf || {
       __proto__: []
@@ -4015,7 +4015,7 @@ function () {
 var NonTerminal =
 /** @class */
 function (_super) {
-  __extends$2(NonTerminal, _super);
+  __extends$8(NonTerminal, _super);
 
   function NonTerminal(options) {
     var _this = _super.call(this, []) || this;
@@ -4051,7 +4051,7 @@ function (_super) {
 var Rule =
 /** @class */
 function (_super) {
-  __extends$2(Rule, _super);
+  __extends$8(Rule, _super);
 
   function Rule(options) {
     var _this = _super.call(this, options.definition) || this;
@@ -4069,7 +4069,7 @@ function (_super) {
 var Alternative =
 /** @class */
 function (_super) {
-  __extends$2(Alternative, _super);
+  __extends$8(Alternative, _super);
 
   function Alternative(options) {
     var _this = _super.call(this, options.definition) || this;
@@ -4087,7 +4087,7 @@ function (_super) {
 var Option =
 /** @class */
 function (_super) {
-  __extends$2(Option, _super);
+  __extends$8(Option, _super);
 
   function Option(options) {
     var _this = _super.call(this, options.definition) || this;
@@ -4105,7 +4105,7 @@ function (_super) {
 var RepetitionMandatory =
 /** @class */
 function (_super) {
-  __extends$2(RepetitionMandatory, _super);
+  __extends$8(RepetitionMandatory, _super);
 
   function RepetitionMandatory(options) {
     var _this = _super.call(this, options.definition) || this;
@@ -4123,7 +4123,7 @@ function (_super) {
 var RepetitionMandatoryWithSeparator =
 /** @class */
 function (_super) {
-  __extends$2(RepetitionMandatoryWithSeparator, _super);
+  __extends$8(RepetitionMandatoryWithSeparator, _super);
 
   function RepetitionMandatoryWithSeparator(options) {
     var _this = _super.call(this, options.definition) || this;
@@ -4141,7 +4141,7 @@ function (_super) {
 var Repetition =
 /** @class */
 function (_super) {
-  __extends$2(Repetition, _super);
+  __extends$8(Repetition, _super);
 
   function Repetition(options) {
     var _this = _super.call(this, options.definition) || this;
@@ -4159,7 +4159,7 @@ function (_super) {
 var RepetitionWithSeparator =
 /** @class */
 function (_super) {
-  __extends$2(RepetitionWithSeparator, _super);
+  __extends$8(RepetitionWithSeparator, _super);
 
   function RepetitionWithSeparator(options) {
     var _this = _super.call(this, options.definition) || this;
@@ -4177,7 +4177,7 @@ function (_super) {
 var Alternation =
 /** @class */
 function (_super) {
-  __extends$2(Alternation, _super);
+  __extends$8(Alternation, _super);
 
   function Alternation(options) {
     var _this = _super.call(this, options.definition) || this;
@@ -4497,7 +4497,7 @@ function () {
   return GAstVisitor;
 }();
 
-var __extends$3 = undefined && undefined.__extends || function () {
+var __extends$7 = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
     _extendStatics = Object.setPrototypeOf || {
       __proto__: []
@@ -4588,7 +4588,7 @@ function getProductionDslName(prod) {
 var DslMethodsCollectorVisitor =
 /** @class */
 function (_super) {
-  __extends$3(DslMethodsCollectorVisitor, _super);
+  __extends$7(DslMethodsCollectorVisitor, _super);
 
   function DslMethodsCollectorVisitor() {
     var _this = _super !== null && _super.apply(this, arguments) || this; // A minus is never valid in an identifier name
@@ -4673,7 +4673,7 @@ function collectMethods(rule) {
   return dslMethods;
 }
 
-function first$1(prod) {
+function first(prod) {
   /* istanbul ignore else */
   if (prod instanceof NonTerminal) {
     // this could in theory cause infinite loops if
@@ -4684,7 +4684,7 @@ function first$1(prod) {
     // looking ahead for the next optional part and will never exit
     // currently there is no safeguard for this unique edge case because
     // (1) not sure a grammar in which this can happen is useful for anything (productive)
-    return first$1(prod.referencedRule);
+    return first(prod.referencedRule);
   } else if (prod instanceof Terminal) {
     return firstForTerminal(prod);
   } else if (isSequenceProd(prod)) {
@@ -4707,7 +4707,7 @@ function firstForSequence(prod) {
   while (hasInnerProdsRemaining && isLastInnerProdOptional) {
     currSubProd = seq[nextSubProdIdx];
     isLastInnerProdOptional = isOptionalProd(currSubProd);
-    firstSet = firstSet.concat(first$1(currSubProd));
+    firstSet = firstSet.concat(first(currSubProd));
     nextSubProdIdx = nextSubProdIdx + 1;
     hasInnerProdsRemaining = seq.length > nextSubProdIdx;
   }
@@ -4716,7 +4716,7 @@ function firstForSequence(prod) {
 }
 function firstForBranching(prod) {
   var allAlternativesFirsts = map(prod.definition, function (innerProd) {
-    return first$1(innerProd);
+    return first(innerProd);
   });
   return uniq(flatten(allAlternativesFirsts));
 }
@@ -4727,7 +4727,7 @@ function firstForTerminal(terminal) {
 // TODO: can this be removed? where is it used?
 var IN = "_~IN~_";
 
-var __extends$4 = undefined && undefined.__extends || function () {
+var __extends$6 = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
     _extendStatics = Object.setPrototypeOf || {
       __proto__: []
@@ -4757,7 +4757,7 @@ var __extends$4 = undefined && undefined.__extends || function () {
 var ResyncFollowsWalker =
 /** @class */
 function (_super) {
-  __extends$4(ResyncFollowsWalker, _super);
+  __extends$6(ResyncFollowsWalker, _super);
 
   function ResyncFollowsWalker(topProd) {
     var _this = _super.call(this) || this;
@@ -4781,7 +4781,7 @@ function (_super) {
     var restProd = new Alternative({
       definition: fullRest
     });
-    var t_in_topProd_follows = first$1(restProd);
+    var t_in_topProd_follows = first(restProd);
     this.follows[followName] = t_in_topProd_follows;
   };
 
@@ -4802,28 +4802,28 @@ function buildBetweenProdsFollowPrefix(inner, occurenceInParent) {
 var defaultParserErrorProvider = {
   buildMismatchTokenMessage: function buildMismatchTokenMessage(_a) {
     var expected = _a.expected,
-        actual = _a.actual,
-        previous = _a.previous,
-        ruleName = _a.ruleName;
+        actual = _a.actual;
+        _a.previous;
+        _a.ruleName;
     var hasLabel = hasTokenLabel(expected);
     var expectedMsg = hasLabel ? "--> " + tokenLabel(expected) + " <--" : "token of type --> " + expected.name + " <--";
     var msg = "Expecting " + expectedMsg + " but found --> '" + actual.image + "' <--";
     return msg;
   },
   buildNotAllInputParsedMessage: function buildNotAllInputParsedMessage(_a) {
-    var firstRedundant = _a.firstRedundant,
-        ruleName = _a.ruleName;
+    var firstRedundant = _a.firstRedundant;
+        _a.ruleName;
     return "Redundant input, expecting EOF but found: " + firstRedundant.image;
   },
   buildNoViableAltMessage: function buildNoViableAltMessage(_a) {
     var expectedPathsPerAlt = _a.expectedPathsPerAlt,
-        actual = _a.actual,
-        previous = _a.previous,
-        customUserDescription = _a.customUserDescription,
-        ruleName = _a.ruleName;
+        actual = _a.actual;
+        _a.previous;
+        var customUserDescription = _a.customUserDescription;
+        _a.ruleName;
     var errPrefix = "Expecting: "; // TODO: issue: No Viable Alternative Error may have incomplete details. #502
 
-    var actualText = first(actual).image;
+    var actualText = first$1(actual).image;
     var errSuffix = "\nbut found: '" + actualText + "'";
 
     if (customUserDescription) {
@@ -4847,11 +4847,11 @@ var defaultParserErrorProvider = {
   buildEarlyExitMessage: function buildEarlyExitMessage(_a) {
     var expectedIterationPaths = _a.expectedIterationPaths,
         actual = _a.actual,
-        customUserDescription = _a.customUserDescription,
-        ruleName = _a.ruleName;
+        customUserDescription = _a.customUserDescription;
+        _a.ruleName;
     var errPrefix = "Expecting: "; // TODO: issue: No Viable Alternative Error may have incomplete details. #502
 
-    var actualText = first(actual).image;
+    var actualText = first$1(actual).image;
     var errSuffix = "\nbut found: '" + actualText + "'";
 
     if (customUserDescription) {
@@ -4887,12 +4887,12 @@ var defaultGrammarValidatorErrorProvider = {
     }
 
     var topLevelName = topLevelRule.name;
-    var duplicateProd = first(duplicateProds);
+    var duplicateProd = first$1(duplicateProds);
     var index = duplicateProd.idx;
     var dslName = getProductionDslName(duplicateProd);
     var extraArgument = getExtraProductionArgument(duplicateProd);
     var hasExplicitIndex = index > 0;
-    var msg = "->" + dslName + (hasExplicitIndex ? index : "") + "<- " + (extraArgument ? "with argument: ->" + extraArgument + "<-" : "") + "\n                  appears more than once (" + duplicateProds.length + " times) in the top level rule: ->" + topLevelName + "<-.                  \n                  For further details see: https://sap.github.io/chevrotain/docs/FAQ.html#NUMERICAL_SUFFIXES \n                  "; // white space trimming time! better to trim afterwards as it allows to use WELL formatted multi line template strings...
+    var msg = "->" + dslName + (hasExplicitIndex ? index : "") + "<- " + (extraArgument ? "with argument: ->" + extraArgument + "<-" : "") + "\n                  appears more than once (" + duplicateProds.length + " times) in the top level rule: ->" + topLevelName + "<-.                  \n                  For further details see: https://chevrotain.io/docs/FAQ.html#NUMERICAL_SUFFIXES \n                  "; // white space trimming time! better to trim afterwards as it allows to use WELL formatted multi line template strings...
 
     msg = msg.replace(/[ \t]+/g, " ");
     msg = msg.replace(/\s\s+/g, "\n");
@@ -4907,7 +4907,7 @@ var defaultGrammarValidatorErrorProvider = {
       return tokenLabel(currTok);
     }).join(", ");
     var occurrence = options.alternation.idx === 0 ? "" : options.alternation.idx;
-    var errMsg = "Ambiguous alternatives: <" + options.ambiguityIndices.join(" ,") + "> due to common lookahead prefix\n" + ("in <OR" + occurrence + "> inside <" + options.topLevelRule.name + "> Rule,\n") + ("<" + pathMsg + "> may appears as a prefix path in all these alternatives.\n") + "See: https://sap.github.io/chevrotain/docs/guide/resolving_grammar_errors.html#COMMON_PREFIX\n" + "For Further details.";
+    var errMsg = "Ambiguous alternatives: <" + options.ambiguityIndices.join(" ,") + "> due to common lookahead prefix\n" + ("in <OR" + occurrence + "> inside <" + options.topLevelRule.name + "> Rule,\n") + ("<" + pathMsg + "> may appears as a prefix path in all these alternatives.\n") + "See: https://chevrotain.io/docs/guide/resolving_grammar_errors.html#COMMON_PREFIX\n" + "For Further details.";
     return errMsg;
   },
   buildAlternationAmbiguityError: function buildAlternationAmbiguityError(options) {
@@ -4916,7 +4916,7 @@ var defaultGrammarValidatorErrorProvider = {
     }).join(", ");
     var occurrence = options.alternation.idx === 0 ? "" : options.alternation.idx;
     var currMessage = "Ambiguous Alternatives Detected: <" + options.ambiguityIndices.join(" ,") + "> in <OR" + occurrence + ">" + (" inside <" + options.topLevelRule.name + "> Rule,\n") + ("<" + pathMsg + "> may appears as a prefix path in all these alternatives.\n");
-    currMessage = currMessage + "See: https://sap.github.io/chevrotain/docs/guide/resolving_grammar_errors.html#AMBIGUOUS_ALTERNATIVES\n" + "For Further details.";
+    currMessage = currMessage + "See: https://chevrotain.io/docs/guide/resolving_grammar_errors.html#AMBIGUOUS_ALTERNATIVES\n" + "For Further details.";
     return currMessage;
   },
   buildEmptyRepetitionError: function buildEmptyRepetitionError(options) {
@@ -4929,10 +4929,11 @@ var defaultGrammarValidatorErrorProvider = {
     var errMsg = "The repetition <" + dslName + "> within Rule <" + options.topLevelRule.name + "> can never consume any tokens.\n" + "This could lead to an infinite loop.";
     return errMsg;
   },
+  // TODO: remove - `errors_public` from nyc.config.js exclude
+  //       once this method is fully removed from this file
   buildTokenNameError: function buildTokenNameError(options) {
-    var tokTypeName = options.tokenType.name;
-    var errMsg = "Invalid Grammar Token name: ->" + tokTypeName + "<- it must match the pattern: ->" + options.expectedPattern.toString() + "<-";
-    return errMsg;
+    /* istanbul ignore next */
+    return "deprecated";
   },
   buildEmptyAlternationError: function buildEmptyAlternationError(options) {
     var errMsg = "Ambiguous empty alternative: <" + (options.emptyChoiceIdx + 1) + ">" + (" in <OR" + options.alternation.idx + "> inside <" + options.topLevelRule.name + "> Rule.\n") + "Only the last alternative may be an empty alternative.";
@@ -4951,11 +4952,11 @@ var defaultGrammarValidatorErrorProvider = {
     var errMsg = "Left Recursion found in grammar.\n" + ("rule: <" + ruleName + "> can be invoked from itself (directly or indirectly)\n") + ("without consuming any Tokens. The grammar path that causes this is: \n " + leftRecursivePath + "\n") + " To fix this refactor your grammar to remove the left recursion.\n" + "see: https://en.wikipedia.org/wiki/LL_parser#Left_Factoring.";
     return errMsg;
   },
+  // TODO: remove - `errors_public` from nyc.config.js exclude
+  //       once this method is fully removed from this file
   buildInvalidRuleNameError: function buildInvalidRuleNameError(options) {
-    var ruleName = options.topLevelRule.name;
-    var expectedPatternString = options.expectedPattern.toString();
-    var errMsg = "Invalid grammar rule name: ->" + ruleName + "<- it must match the pattern: ->" + expectedPatternString + "<-";
-    return errMsg;
+    /* istanbul ignore next */
+    return "deprecated";
   },
   buildDuplicateRuleNameError: function buildDuplicateRuleNameError(options) {
     var ruleName;
@@ -4996,7 +4997,7 @@ var __extends$5 = undefined && undefined.__extends || function () {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
 }();
-function resolveGrammar(topLevels, errMsgProvider) {
+function resolveGrammar$1(topLevels, errMsgProvider) {
   var refResolver = new GastRefResolverVisitor(topLevels, errMsgProvider);
   refResolver.resolveRefs();
   return refResolver.errors;
@@ -5044,7 +5045,7 @@ function (_super) {
   return GastRefResolverVisitor;
 }(GAstVisitor);
 
-var __extends$6 = undefined && undefined.__extends || function () {
+var __extends$4 = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
     _extendStatics = Object.setPrototypeOf || {
       __proto__: []
@@ -5073,7 +5074,7 @@ var __extends$6 = undefined && undefined.__extends || function () {
 var AbstractNextPossibleTokensWalker =
 /** @class */
 function (_super) {
-  __extends$6(AbstractNextPossibleTokensWalker, _super);
+  __extends$4(AbstractNextPossibleTokensWalker, _super);
 
   function AbstractNextPossibleTokensWalker(topProd, path) {
     var _this = _super.call(this) || this;
@@ -5148,7 +5149,7 @@ function (_super) {
 var NextAfterTokenWalker =
 /** @class */
 function (_super) {
-  __extends$6(NextAfterTokenWalker, _super);
+  __extends$4(NextAfterTokenWalker, _super);
 
   function NextAfterTokenWalker(topProd, path) {
     var _this = _super.call(this, topProd, path) || this;
@@ -5167,7 +5168,7 @@ function (_super) {
       var restProd = new Alternative({
         definition: fullRest
       });
-      this.possibleTokTypes = first$1(restProd);
+      this.possibleTokTypes = first(restProd);
       this.found = true;
     }
   };
@@ -5182,7 +5183,7 @@ function (_super) {
 var AbstractNextTerminalAfterProductionWalker =
 /** @class */
 function (_super) {
-  __extends$6(AbstractNextTerminalAfterProductionWalker, _super);
+  __extends$4(AbstractNextTerminalAfterProductionWalker, _super);
 
   function AbstractNextTerminalAfterProductionWalker(topRule, occurrence) {
     var _this = _super.call(this) || this;
@@ -5208,7 +5209,7 @@ function (_super) {
 var NextTerminalAfterManyWalker =
 /** @class */
 function (_super) {
-  __extends$6(NextTerminalAfterManyWalker, _super);
+  __extends$4(NextTerminalAfterManyWalker, _super);
 
   function NextTerminalAfterManyWalker() {
     return _super !== null && _super.apply(this, arguments) || this;
@@ -5216,7 +5217,7 @@ function (_super) {
 
   NextTerminalAfterManyWalker.prototype.walkMany = function (manyProd, currRest, prevRest) {
     if (manyProd.idx === this.occurrence) {
-      var firstAfterMany = first(currRest.concat(prevRest));
+      var firstAfterMany = first$1(currRest.concat(prevRest));
 
       this.result.isEndOfRule = firstAfterMany === undefined;
 
@@ -5235,7 +5236,7 @@ function (_super) {
 var NextTerminalAfterManySepWalker =
 /** @class */
 function (_super) {
-  __extends$6(NextTerminalAfterManySepWalker, _super);
+  __extends$4(NextTerminalAfterManySepWalker, _super);
 
   function NextTerminalAfterManySepWalker() {
     return _super !== null && _super.apply(this, arguments) || this;
@@ -5243,7 +5244,7 @@ function (_super) {
 
   NextTerminalAfterManySepWalker.prototype.walkManySep = function (manySepProd, currRest, prevRest) {
     if (manySepProd.idx === this.occurrence) {
-      var firstAfterManySep = first(currRest.concat(prevRest));
+      var firstAfterManySep = first$1(currRest.concat(prevRest));
 
       this.result.isEndOfRule = firstAfterManySep === undefined;
 
@@ -5262,7 +5263,7 @@ function (_super) {
 var NextTerminalAfterAtLeastOneWalker =
 /** @class */
 function (_super) {
-  __extends$6(NextTerminalAfterAtLeastOneWalker, _super);
+  __extends$4(NextTerminalAfterAtLeastOneWalker, _super);
 
   function NextTerminalAfterAtLeastOneWalker() {
     return _super !== null && _super.apply(this, arguments) || this;
@@ -5270,7 +5271,7 @@ function (_super) {
 
   NextTerminalAfterAtLeastOneWalker.prototype.walkAtLeastOne = function (atLeastOneProd, currRest, prevRest) {
     if (atLeastOneProd.idx === this.occurrence) {
-      var firstAfterAtLeastOne = first(currRest.concat(prevRest));
+      var firstAfterAtLeastOne = first$1(currRest.concat(prevRest));
 
       this.result.isEndOfRule = firstAfterAtLeastOne === undefined;
 
@@ -5289,7 +5290,7 @@ function (_super) {
 var NextTerminalAfterAtLeastOneSepWalker =
 /** @class */
 function (_super) {
-  __extends$6(NextTerminalAfterAtLeastOneSepWalker, _super);
+  __extends$4(NextTerminalAfterAtLeastOneSepWalker, _super);
 
   function NextTerminalAfterAtLeastOneSepWalker() {
     return _super !== null && _super.apply(this, arguments) || this;
@@ -5297,7 +5298,7 @@ function (_super) {
 
   NextTerminalAfterAtLeastOneSepWalker.prototype.walkAtLeastOneSep = function (atleastOneSepProd, currRest, prevRest) {
     if (atleastOneSepProd.idx === this.occurrence) {
-      var firstAfterfirstAfterAtLeastOneSep = first(currRest.concat(prevRest));
+      var firstAfterfirstAfterAtLeastOneSep = first$1(currRest.concat(prevRest));
 
       this.result.isEndOfRule = firstAfterfirstAfterAtLeastOneSep === undefined;
 
@@ -5634,7 +5635,7 @@ function expandTopLevelRule(topRule, currIdx, currRuleStack, currOccurrenceStack
   };
 }
 
-var __extends$7 = undefined && undefined.__extends || function () {
+var __extends$3 = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
     _extendStatics = Object.setPrototypeOf || {
       __proto__: []
@@ -5891,7 +5892,7 @@ function buildSingleAlternativeLookaheadFunction(alt, tokenMatcher, dynamicToken
 var RestDefinitionFinderWalker =
 /** @class */
 function (_super) {
-  __extends$7(RestDefinitionFinderWalker, _super);
+  __extends$3(RestDefinitionFinderWalker, _super);
 
   function RestDefinitionFinderWalker(topProd, targetOccurrence, targetProdType) {
     var _this = _super.call(this) || this;
@@ -5957,7 +5958,7 @@ function (_super) {
 var InsideDefinitionFinderVisitor =
 /** @class */
 function (_super) {
-  __extends$7(InsideDefinitionFinderVisitor, _super);
+  __extends$3(InsideDefinitionFinderVisitor, _super);
 
   function InsideDefinitionFinderVisitor(targetOccurrence, targetProdType, targetRef) {
     var _this = _super.call(this) || this;
@@ -6189,7 +6190,7 @@ function areTokenCategoriesNotUsed(lookAheadPaths) {
   });
 }
 
-var __extends$8 = undefined && undefined.__extends || function () {
+var __extends$2 = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
     _extendStatics = Object.setPrototypeOf || {
       __proto__: []
@@ -6214,7 +6215,7 @@ var __extends$8 = undefined && undefined.__extends || function () {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
 }();
-function validateGrammar(topLevels, globalMaxLookahead, tokenTypes, errMsgProvider, grammarName) {
+function validateGrammar$1(topLevels, globalMaxLookahead, tokenTypes, errMsgProvider, grammarName) {
   var duplicateErrors = map(topLevels, function (currTopLevel) {
     return validateDuplicateProductions(currTopLevel, errMsgProvider);
   });
@@ -6237,19 +6238,13 @@ function validateGrammar(topLevels, globalMaxLookahead, tokenTypes, errMsgProvid
   }
 
   var termsNamespaceConflictErrors = checkTerminalAndNoneTerminalsNameSpace(topLevels, tokenTypes, errMsgProvider);
-  var tokenNameErrors = map(tokenTypes, function (currTokType) {
-    return validateTokenName(currTokType, errMsgProvider);
-  });
   var tooManyAltsErrors = map(topLevels, function (curRule) {
     return validateTooManyAlts(curRule, errMsgProvider);
-  });
-  var ruleNameErrors = map(topLevels, function (curRule) {
-    return validateRuleName(curRule, errMsgProvider);
   });
   var duplicateRulesError = map(topLevels, function (curRule) {
     return validateRuleDoesNotAlreadyExist(curRule, topLevels, grammarName, errMsgProvider);
   });
-  return flatten(duplicateErrors.concat(tokenNameErrors, emptyRepetitionErrors, leftRecursionErrors, emptyAltErrors, ambiguousAltsErrors, termsNamespaceConflictErrors, tooManyAltsErrors, ruleNameErrors, duplicateRulesError));
+  return flatten(duplicateErrors.concat(emptyRepetitionErrors, leftRecursionErrors, emptyAltErrors, ambiguousAltsErrors, termsNamespaceConflictErrors, tooManyAltsErrors, duplicateRulesError));
 }
 
 function validateDuplicateProductions(topLevelRule, errMsgProvider) {
@@ -6261,7 +6256,7 @@ function validateDuplicateProductions(topLevelRule, errMsgProvider) {
     return currGroup.length > 1;
   });
   var errors = map(values(duplicates), function (currDuplicates) {
-    var firstProd = first(currDuplicates);
+    var firstProd = first$1(currDuplicates);
     var msg = errMsgProvider.buildDuplicateFoundError(topLevelRule, currDuplicates);
     var dslName = getProductionDslName(firstProd);
     var defError = {
@@ -6299,7 +6294,7 @@ function getExtraProductionArgument(prod) {
 var OccurrenceValidationCollector =
 /** @class */
 function (_super) {
-  __extends$8(OccurrenceValidationCollector, _super);
+  __extends$2(OccurrenceValidationCollector, _super);
 
   function OccurrenceValidationCollector() {
     var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -6342,42 +6337,6 @@ function (_super) {
 
   return OccurrenceValidationCollector;
 }(GAstVisitor);
-var validTermsPattern = /^[a-zA-Z_]\w*$/; // TODO: remove this limitation now that we use recorders
-
-function validateRuleName(rule, errMsgProvider) {
-  var errors = [];
-  var ruleName = rule.name;
-
-  if (!ruleName.match(validTermsPattern)) {
-    errors.push({
-      message: errMsgProvider.buildInvalidRuleNameError({
-        topLevelRule: rule,
-        expectedPattern: validTermsPattern
-      }),
-      type: ParserDefinitionErrorType.INVALID_RULE_NAME,
-      ruleName: ruleName
-    });
-  }
-
-  return errors;
-} // TODO: remove this limitation now that we use recorders
-
-function validateTokenName(tokenType, errMsgProvider) {
-  var errors = [];
-  var tokTypeName = tokenType.name;
-
-  if (!tokTypeName.match(validTermsPattern)) {
-    errors.push({
-      message: errMsgProvider.buildTokenNameError({
-        tokenType: tokenType,
-        expectedPattern: validTermsPattern
-      }),
-      type: ParserDefinitionErrorType.INVALID_TOKEN_NAME
-    });
-  }
-
-  return errors;
-}
 function validateRuleDoesNotAlreadyExist(rule, allRules, className, errMsgProvider) {
   var errors = [];
   var occurrences = reduce(allRules, function (result, curRule) {
@@ -6463,7 +6422,7 @@ function getFirstNoneTerminal(definition) {
     return result;
   }
 
-  var firstProd = first(definition);
+  var firstProd = first$1(definition);
   /* istanbul ignore else */
 
   if (firstProd instanceof NonTerminal) {
@@ -6493,7 +6452,7 @@ function getFirstNoneTerminal(definition) {
 var OrCollector =
 /** @class */
 function (_super) {
-  __extends$8(OrCollector, _super);
+  __extends$2(OrCollector, _super);
 
   function OrCollector() {
     var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -6542,7 +6501,7 @@ function validateAmbiguousAlternationAlternatives(topLevelRule, globalMaxLookahe
   var orCollector = new OrCollector();
   topLevelRule.accept(orCollector);
   var ors = orCollector.alternations; // New Handling of ignoring ambiguities
-  // - https://github.com/SAP/chevrotain/issues/869
+  // - https://github.com/chevrotain/chevrotain/issues/869
 
   ors = reject(ors, function (currOr) {
     return currOr.ignoreAmbiguities === true;
@@ -6561,7 +6520,7 @@ function validateAmbiguousAlternationAlternatives(topLevelRule, globalMaxLookahe
 var RepetionCollector =
 /** @class */
 function (_super) {
-  __extends$8(RepetionCollector, _super);
+  __extends$2(RepetionCollector, _super);
 
   function RepetionCollector() {
     var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -6757,7 +6716,7 @@ function checkTerminalAndNoneTerminalsNameSpace(topLevels, tokenTypes, errMsgPro
   return errors;
 }
 
-function resolveGrammar$1(options) {
+function resolveGrammar(options) {
   options = defaults(options, {
     errMsgProvider: defaultGrammarResolverErrorProvider
   });
@@ -6765,13 +6724,13 @@ function resolveGrammar$1(options) {
   forEach(options.rules, function (rule) {
     topRulesTable[rule.name] = rule;
   });
-  return resolveGrammar(topRulesTable, options.errMsgProvider);
+  return resolveGrammar$1(topRulesTable, options.errMsgProvider);
 }
-function validateGrammar$1(options) {
+function validateGrammar(options) {
   options = defaults(options, {
     errMsgProvider: defaultGrammarValidatorErrorProvider
   });
-  return validateGrammar(options.rules, options.maxLookahead, options.tokenTypes, options.errMsgProvider, options.grammarName);
+  return validateGrammar$1(options.rules, options.maxLookahead, options.tokenTypes, options.errMsgProvider, options.grammarName);
 }
 function assignOccurrenceIndices(options) {
   forEach(options.rules, function (currRule) {
@@ -6785,6 +6744,31 @@ function assignOccurrenceIndices(options) {
   });
 }
 
+var __extends$1 = undefined && undefined.__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) {
+        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+      }
+    };
+
+    return _extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    _extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
 var MISMATCHED_TOKEN_EXCEPTION = "MismatchedTokenException";
 var NO_VIABLE_ALT_EXCEPTION = "NoViableAltException";
 var EARLY_EXIT_EXCEPTION = "EarlyExitException";
@@ -6796,39 +6780,95 @@ function isRecognitionException(error) {
   // can't do instanceof on hacked custom js exceptions
   return contains(RECOGNITION_EXCEPTION_NAMES, error.name);
 }
-function MismatchedTokenException(message, token, previousToken) {
-  this.name = MISMATCHED_TOKEN_EXCEPTION;
-  this.message = message;
-  this.token = token;
-  this.previousToken = previousToken;
-  this.resyncedTokens = [];
-} // must use the "Error.prototype" instead of "new Error"
-// because the stack trace points to where "new Error" was invoked"
 
-MismatchedTokenException.prototype = Error.prototype;
-function NoViableAltException(message, token, previousToken) {
-  this.name = NO_VIABLE_ALT_EXCEPTION;
-  this.message = message;
-  this.token = token;
-  this.previousToken = previousToken;
-  this.resyncedTokens = [];
-}
-NoViableAltException.prototype = Error.prototype;
-function NotAllInputParsedException(message, token) {
-  this.name = NOT_ALL_INPUT_PARSED_EXCEPTION;
-  this.message = message;
-  this.token = token;
-  this.resyncedTokens = [];
-}
-NotAllInputParsedException.prototype = Error.prototype;
-function EarlyExitException(message, token, previousToken) {
-  this.name = EARLY_EXIT_EXCEPTION;
-  this.message = message;
-  this.token = token;
-  this.previousToken = previousToken;
-  this.resyncedTokens = [];
-}
-EarlyExitException.prototype = Error.prototype;
+var RecognitionException =
+/** @class */
+function (_super) {
+  __extends$1(RecognitionException, _super);
+
+  function RecognitionException(message, token) {
+    var _newTarget = this.constructor;
+
+    var _this = _super.call(this, message) || this;
+
+    _this.token = token;
+    _this.resyncedTokens = []; // fix prototype chain when typescript target is ES5
+
+    Object.setPrototypeOf(_this, _newTarget.prototype);
+    /* istanbul ignore next - V8 workaround to remove constructor from stacktrace when typescript target is ES5 */
+
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(_this, _this.constructor);
+    }
+
+    return _this;
+  }
+
+  return RecognitionException;
+}(Error);
+
+var MismatchedTokenException =
+/** @class */
+function (_super) {
+  __extends$1(MismatchedTokenException, _super);
+
+  function MismatchedTokenException(message, token, previousToken) {
+    var _this = _super.call(this, message, token) || this;
+
+    _this.previousToken = previousToken;
+    _this.name = MISMATCHED_TOKEN_EXCEPTION;
+    return _this;
+  }
+
+  return MismatchedTokenException;
+}(RecognitionException);
+
+var NoViableAltException =
+/** @class */
+function (_super) {
+  __extends$1(NoViableAltException, _super);
+
+  function NoViableAltException(message, token, previousToken) {
+    var _this = _super.call(this, message, token) || this;
+
+    _this.previousToken = previousToken;
+    _this.name = NO_VIABLE_ALT_EXCEPTION;
+    return _this;
+  }
+
+  return NoViableAltException;
+}(RecognitionException);
+
+var NotAllInputParsedException =
+/** @class */
+function (_super) {
+  __extends$1(NotAllInputParsedException, _super);
+
+  function NotAllInputParsedException(message, token) {
+    var _this = _super.call(this, message, token) || this;
+
+    _this.name = NOT_ALL_INPUT_PARSED_EXCEPTION;
+    return _this;
+  }
+
+  return NotAllInputParsedException;
+}(RecognitionException);
+
+var EarlyExitException =
+/** @class */
+function (_super) {
+  __extends$1(EarlyExitException, _super);
+
+  function EarlyExitException(message, token, previousToken) {
+    var _this = _super.call(this, message, token) || this;
+
+    _this.previousToken = previousToken;
+    _this.name = EARLY_EXIT_EXCEPTION;
+    return _this;
+  }
+
+  return EarlyExitException;
+}(RecognitionException);
 
 var EOF_FOLLOW_KEY = {};
 var IN_RULE_RECOVERY_EXCEPTION = "InRuleRecoveryException";
@@ -7534,9 +7574,9 @@ function validateRedundantMethods(visitorInstance, ruleNames) {
   var errors = [];
 
   for (var prop in visitorInstance) {
-    if (validTermsPattern.test(prop) && isFunction(visitorInstance[prop]) && !contains(VALID_PROP_NAMES, prop) && !contains(ruleNames, prop)) {
+    if (isFunction(visitorInstance[prop]) && !contains(VALID_PROP_NAMES, prop) && !contains(ruleNames, prop)) {
       errors.push({
-        msg: "Redundant visitor method: <" + prop + "> on " + functionName(visitorInstance.constructor) + " CST Visitor\n" + "There is no Grammar Rule corresponding to this method's name.\n" + ("For utility methods on visitor classes use methods names that do not match /" + validTermsPattern.source + "/."),
+        msg: "Redundant visitor method: <" + prop + "> on " + functionName(visitorInstance.constructor) + " CST Visitor\n" + "There is no Grammar Rule corresponding to this method's name.\n",
         type: CstVisitorDefinitionError.REDUNDANT_METHOD,
         methodName: prop
       });
@@ -7562,21 +7602,21 @@ function () {
     this.nodeLocationTracking = has(config, "nodeLocationTracking") ? config.nodeLocationTracking : DEFAULT_PARSER_CONFIG.nodeLocationTracking;
 
     if (!this.outputCst) {
-      this.cstInvocationStateUpdate = NOOP;
-      this.cstFinallyStateUpdate = NOOP;
-      this.cstPostTerminal = NOOP;
-      this.cstPostNonTerminal = NOOP;
-      this.cstPostRule = NOOP;
+      this.cstInvocationStateUpdate = NOOP$3;
+      this.cstFinallyStateUpdate = NOOP$3;
+      this.cstPostTerminal = NOOP$3;
+      this.cstPostNonTerminal = NOOP$3;
+      this.cstPostRule = NOOP$3;
     } else {
       if (/full/i.test(this.nodeLocationTracking)) {
         if (this.recoveryEnabled) {
           this.setNodeLocationFromToken = setNodeLocationFull;
           this.setNodeLocationFromNode = setNodeLocationFull;
-          this.cstPostRule = NOOP;
+          this.cstPostRule = NOOP$3;
           this.setInitialNodeLocation = this.setInitialNodeLocationFullRecovery;
         } else {
-          this.setNodeLocationFromToken = NOOP;
-          this.setNodeLocationFromNode = NOOP;
+          this.setNodeLocationFromToken = NOOP$3;
+          this.setNodeLocationFromNode = NOOP$3;
           this.cstPostRule = this.cstPostRuleFull;
           this.setInitialNodeLocation = this.setInitialNodeLocationFullRegular;
         }
@@ -7584,19 +7624,19 @@ function () {
         if (this.recoveryEnabled) {
           this.setNodeLocationFromToken = setNodeLocationOnlyOffset;
           this.setNodeLocationFromNode = setNodeLocationOnlyOffset;
-          this.cstPostRule = NOOP;
+          this.cstPostRule = NOOP$3;
           this.setInitialNodeLocation = this.setInitialNodeLocationOnlyOffsetRecovery;
         } else {
-          this.setNodeLocationFromToken = NOOP;
-          this.setNodeLocationFromNode = NOOP;
+          this.setNodeLocationFromToken = NOOP$3;
+          this.setNodeLocationFromNode = NOOP$3;
           this.cstPostRule = this.cstPostRuleOnlyOffset;
           this.setInitialNodeLocation = this.setInitialNodeLocationOnlyOffsetRegular;
         }
       } else if (/none/i.test(this.nodeLocationTracking)) {
-        this.setNodeLocationFromToken = NOOP;
-        this.setNodeLocationFromNode = NOOP;
-        this.cstPostRule = NOOP;
-        this.setInitialNodeLocation = NOOP;
+        this.setNodeLocationFromToken = NOOP$3;
+        this.setNodeLocationFromNode = NOOP$3;
+        this.cstPostRule = NOOP$3;
+        this.setInitialNodeLocation = NOOP$3;
       } else {
         throw Error("Invalid <nodeLocationTracking> config option: \"" + config.nodeLocationTracking + "\"");
       }
@@ -8292,7 +8332,7 @@ function () {
     this.gastProductionsCache = {};
 
     if (has(config, "serializedGrammar")) {
-      throw Error("The Parser's configuration can no longer contain a <serializedGrammar> property.\n" + "\tSee: https://sap.github.io/chevrotain/docs/changes/BREAKING_CHANGES.html#_6-0-0\n" + "\tFor Further details.");
+      throw Error("The Parser's configuration can no longer contain a <serializedGrammar> property.\n" + "\tSee: https://chevrotain.io/docs/changes/BREAKING_CHANGES.html#_6-0-0\n" + "\tFor Further details.");
     }
 
     if (isArray(tokenVocabulary)) {
@@ -8304,7 +8344,7 @@ function () {
       }
 
       if (typeof tokenVocabulary[0].startOffset === "number") {
-        throw Error("The Parser constructor no longer accepts a token vector as the first argument.\n" + "\tSee: https://sap.github.io/chevrotain/docs/changes/BREAKING_CHANGES.html#_4-0-0\n" + "\tFor Further details.");
+        throw Error("The Parser constructor no longer accepts a token vector as the first argument.\n" + "\tSee: https://chevrotain.io/docs/changes/BREAKING_CHANGES.html#_4-0-0\n" + "\tFor Further details.");
       }
     }
 
@@ -8935,7 +8975,7 @@ function () {
 
 
   ContentAssist.prototype.getNextPossibleTokenTypes = function (grammarPath) {
-    var topRuleName = first(grammarPath.ruleStack);
+    var topRuleName = first$1(grammarPath.ruleStack);
     var gastProductions = this.getGAstProductions();
     var topProduction = gastProductions[topRuleName];
     var nextPossibleTokenTypes = new NextAfterTokenWalker(topProduction, grammarPath).startWalking();
@@ -8951,17 +8991,17 @@ var RECORDING_NULL_OBJECT = {
 Object.freeze(RECORDING_NULL_OBJECT);
 var HANDLE_SEPARATOR = true;
 var MAX_METHOD_IDX = Math.pow(2, BITS_FOR_OCCURRENCE_IDX) - 1;
-var RFT = createToken({
+var RFT = createToken$1({
   name: "RECORDING_PHASE_TOKEN",
-  pattern: Lexer.NA
+  pattern: Lexer$2.NA
 });
 augmentTokenTypes([RFT]);
-var RECORDING_PHASE_TOKEN = createTokenInstance(RFT, "This IToken indicates the Parser is in Recording Phase\n\t" + "" + "See: https://sap.github.io/chevrotain/docs/guide/internals.html#grammar-recording for details", // Using "-1" instead of NaN (as in EOF) because an actual number is less likely to
+var RECORDING_PHASE_TOKEN = createTokenInstance(RFT, "This IToken indicates the Parser is in Recording Phase\n\t" + "" + "See: https://chevrotain.io/docs/guide/internals.html#grammar-recording for details", // Using "-1" instead of NaN (as in EOF) because an actual number is less likely to
 // cause errors if the output of LA or CONSUME would be (incorrectly) used during the recording phase.
 -1, -1, -1, -1, -1, -1);
 Object.freeze(RECORDING_PHASE_TOKEN);
 var RECORDING_PHASE_CSTNODE = {
-  name: "This CSTNode indicates the Parser is in Recording Phase\n\t" + "See: https://sap.github.io/chevrotain/docs/guide/internals.html#grammar-recording for details",
+  name: "This CSTNode indicates the Parser is in Recording Phase\n\t" + "See: https://chevrotain.io/docs/guide/internals.html#grammar-recording for details",
   children: {}
 };
 /**
@@ -9134,7 +9174,7 @@ function () {
     } catch (originalError) {
       if (originalError.KNOWN_RECORDER_ERROR !== true) {
         try {
-          originalError.message = originalError.message + '\n\t This error was thrown during the "grammar recording phase" For more info see:\n\t' + "https://sap.github.io/chevrotain/docs/guide/internals.html#grammar-recording";
+          originalError.message = originalError.message + '\n\t This error was thrown during the "grammar recording phase" For more info see:\n\t' + "https://chevrotain.io/docs/guide/internals.html#grammar-recording";
         } catch (mutabilityError) {
           // We may not be able to modify the original error object
           throw originalError;
@@ -9354,7 +9394,7 @@ function () {
   return PerformanceTracer;
 }();
 
-var __extends$9 = undefined && undefined.__extends || function () {
+var __extends = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
     _extendStatics = Object.setPrototypeOf || {
       __proto__: []
@@ -9425,7 +9465,7 @@ function EMPTY_ALT(value) {
   };
 }
 
-var Parser =
+var Parser$1 =
 /** @class */
 function () {
   function Parser(tokenVocabulary, config) {
@@ -9443,7 +9483,7 @@ function () {
     that.initPerformanceTracer(config);
 
     if (has(config, "ignoredIssues")) {
-      throw new Error("The <ignoredIssues> IParserConfig property has been deprecated.\n\t" + "Please use the <IGNORE_AMBIGUITIES> flag on the relevant DSL method instead.\n\t" + "See: https://sap.github.io/chevrotain/docs/guide/resolving_grammar_errors.html#IGNORING_AMBIGUITIES\n\t" + "For further details.");
+      throw new Error("The <ignoredIssues> IParserConfig property has been deprecated.\n\t" + "Please use the <IGNORE_AMBIGUITIES> flag on the relevant DSL method instead.\n\t" + "See: https://chevrotain.io/docs/guide/resolving_grammar_errors.html#IGNORING_AMBIGUITIES\n\t" + "For further details.");
     }
 
     this.skipValidations = has(config, "skipValidations") ? config.skipValidations : DEFAULT_PARSER_CONFIG.skipValidations;
@@ -9496,7 +9536,7 @@ function () {
       var resolverErrors = [];
 
       _this.TRACE_INIT("Grammar Resolving", function () {
-        resolverErrors = resolveGrammar$1({
+        resolverErrors = resolveGrammar({
           rules: values(_this.gastProductionsCache)
         });
 
@@ -9508,7 +9548,7 @@ function () {
         // only perform additional grammar validations IFF no resolving errors have occurred.
         // as unresolved grammar may lead to unhandled runtime exceptions in the follow up validations.
         if (isEmpty(resolverErrors) && _this.skipValidations === false) {
-          var validationErrors = validateGrammar$1({
+          var validationErrors = validateGrammar({
             rules: values(_this.gastProductionsCache),
             maxLookahead: _this.maxLookahead,
             tokenTypes: values(_this.tokensMap),
@@ -9554,12 +9594,12 @@ function () {
   Parser.DEFER_DEFINITION_ERRORS_HANDLING = false;
   return Parser;
 }();
-applyMixins(Parser, [Recoverable, LooksAhead, TreeBuilder, LexerAdapter, RecognizerEngine, RecognizerApi, ErrorHandler, ContentAssist, GastRecorder, PerformanceTracer]);
+applyMixins(Parser$1, [Recoverable, LooksAhead, TreeBuilder, LexerAdapter, RecognizerEngine, RecognizerApi, ErrorHandler, ContentAssist, GastRecorder, PerformanceTracer]);
 
 var CstParser =
 /** @class */
 function (_super) {
-  __extends$9(CstParser, _super);
+  __extends(CstParser, _super);
 
   function CstParser(tokenVocabulary, config) {
     if (config === void 0) {
@@ -9575,12 +9615,12 @@ function (_super) {
   }
 
   return CstParser;
-}(Parser);
+}(Parser$1);
 
-var EmbeddedActionsParser =
+var EmbeddedActionsParser$1 =
 /** @class */
 function (_super) {
-  __extends$9(EmbeddedActionsParser, _super);
+  __extends(EmbeddedActionsParser, _super);
 
   function EmbeddedActionsParser(tokenVocabulary, config) {
     if (config === void 0) {
@@ -9596,7 +9636,7 @@ function (_super) {
   }
 
   return EmbeddedActionsParser;
-}(Parser);
+}(Parser$1);
 
 function createSyntaxDiagramsCode(grammar, _a) {
   var _b = _a === void 0 ? {} : _a,
@@ -9757,11 +9797,11 @@ function clearCache() {
   console.warn("The clearCache function was 'soft' removed from the Chevrotain API." + "\n\t It performs no action other than printing this message." + "\n\t Please avoid using it as it will be completely removed in the future");
 }
 
-var Parser$1 =
+var Parser =
 /** @class */
 function () {
   function Parser() {
-    throw new Error("The Parser class has been deprecated, use CstParser or EmbeddedActionsParser instead.\t\n" + "See: https://sap.github.io/chevrotain/docs/changes/BREAKING_CHANGES.html#_7-0-0");
+    throw new Error("The Parser class has been deprecated, use CstParser or EmbeddedActionsParser instead.\t\n" + "See: https://chevrotain.io/docs/changes/BREAKING_CHANGES.html#_7-0-0");
   }
 
   return Parser;
@@ -9770,15 +9810,15 @@ function () {
 var api = /*#__PURE__*/Object.freeze({
   __proto__: null,
   clearCache: clearCache,
-  Parser: Parser$1,
+  Parser: Parser,
   VERSION: VERSION,
   CstParser: CstParser,
-  EmbeddedActionsParser: EmbeddedActionsParser,
+  EmbeddedActionsParser: EmbeddedActionsParser$1,
   get ParserDefinitionErrorType () { return ParserDefinitionErrorType; },
   EMPTY_ALT: EMPTY_ALT,
-  Lexer: Lexer,
+  Lexer: Lexer$2,
   get LexerDefinitionErrorType () { return LexerDefinitionErrorType; },
-  createToken: createToken,
+  createToken: createToken$1,
   createTokenInstance: createTokenInstance,
   EOF: EOF,
   tokenLabel: tokenLabel,
@@ -9807,63 +9847,63 @@ var api = /*#__PURE__*/Object.freeze({
   serializeProduction: serializeProduction,
   GAstVisitor: GAstVisitor,
   assignOccurrenceIndices: assignOccurrenceIndices,
-  resolveGrammar: resolveGrammar$1,
-  validateGrammar: validateGrammar$1,
+  resolveGrammar: resolveGrammar,
+  validateGrammar: validateGrammar,
   createSyntaxDiagramsCode: createSyntaxDiagramsCode,
   generateParserFactory: generateParserFactory,
   generateParserModule: generateParserModule
 });
 
-var NOOP$1 = Symbol("NOOP"); // basically continue
+var NOOP$2 = Symbol("NOOP"); // basically continue
 
-var MATCH_ANY = Symbol("MATCH_ANY");
-var MATCH_WORD = Symbol("MATCH_WORD");
-var MATCH_TAG = Symbol("MATCH_TAG");
-var MATCH_METHOD = Symbol("MATCH_METHOD");
-var MATCH_END = Symbol("MATCH_END");
-var JMP = Symbol("JMP");
-var SPLIT = Symbol("SPLIT");
-var GLOBAL_SAVE = Symbol("GLOBAL_SAVE"); // Set global save value, if true saves results.
+var MATCH_ANY$2 = Symbol("MATCH_ANY");
+var MATCH_WORD$2 = Symbol("MATCH_WORD");
+var MATCH_TAG$2 = Symbol("MATCH_TAG");
+var MATCH_METHOD$2 = Symbol("MATCH_METHOD");
+var MATCH_END$2 = Symbol("MATCH_END");
+var JMP$2 = Symbol("JMP");
+var SPLIT$2 = Symbol("SPLIT");
+var GLOBAL_SAVE$2 = Symbol("GLOBAL_SAVE"); // Set global save value, if true saves results.
 
-var MATCH = Symbol("MATCH");
-var OGROUP = Symbol("OGROUP"); // open group
+var MATCH$2 = Symbol("MATCH");
+var OGROUP$2 = Symbol("OGROUP"); // open group
 
-var CGROUP = Symbol("CGROUP"); // close group
+var CGROUP$2 = Symbol("CGROUP"); // close group
 
-var INCV = Symbol("INCV"); // increment a value, set to 0 by default
+var INCV$2 = Symbol("INCV"); // increment a value, set to 0 by default
 
-var JMP_LT = Symbol("JMP_LT"); // jmp if a variable is less than value else continue
+var JMP_LT$2 = Symbol("JMP_LT"); // jmp if a variable is less than value else continue
 
-var SPLIT_LT = Symbol("SPLIT_LT"); // split if a variable is less than value else continue
+var SPLIT_LT$2 = Symbol("SPLIT_LT"); // split if a variable is less than value else continue
 
-var LOOKAHEAD = Symbol("LOOKAHEAD");
-var NEGATIVE_LOOKAHEAD = Symbol("NEGATIVE_LOOKAHEAD");
+var LOOKAHEAD$2 = Symbol("LOOKAHEAD");
+var NEGATIVE_LOOKAHEAD$2 = Symbol("NEGATIVE_LOOKAHEAD");
 var constants = {
-  NOOP: NOOP$1,
-  MATCH_ANY: MATCH_ANY,
-  MATCH_WORD: MATCH_WORD,
-  MATCH_TAG: MATCH_TAG,
-  MATCH_METHOD: MATCH_METHOD,
-  MATCH_END: MATCH_END,
-  JMP: JMP,
-  SPLIT: SPLIT,
-  GLOBAL_SAVE: GLOBAL_SAVE,
-  MATCH: MATCH,
-  OGROUP: OGROUP,
-  CGROUP: CGROUP,
-  INCV: INCV,
-  JMP_LT: JMP_LT,
-  SPLIT_LT: SPLIT_LT,
-  LOOKAHEAD: LOOKAHEAD,
-  NEGATIVE_LOOKAHEAD: NEGATIVE_LOOKAHEAD
+  NOOP: NOOP$2,
+  MATCH_ANY: MATCH_ANY$2,
+  MATCH_WORD: MATCH_WORD$2,
+  MATCH_TAG: MATCH_TAG$2,
+  MATCH_METHOD: MATCH_METHOD$2,
+  MATCH_END: MATCH_END$2,
+  JMP: JMP$2,
+  SPLIT: SPLIT$2,
+  GLOBAL_SAVE: GLOBAL_SAVE$2,
+  MATCH: MATCH$2,
+  OGROUP: OGROUP$2,
+  CGROUP: CGROUP$2,
+  INCV: INCV$2,
+  JMP_LT: JMP_LT$2,
+  SPLIT_LT: SPLIT_LT$2,
+  LOOKAHEAD: LOOKAHEAD$2,
+  NEGATIVE_LOOKAHEAD: NEGATIVE_LOOKAHEAD$2
 };
 
 var require$$0 = /*@__PURE__*/getAugmentedNamespace(api);
 
-var EmbeddedActionsParser$1 = require$$0.EmbeddedActionsParser,
+var EmbeddedActionsParser = require$$0.EmbeddedActionsParser,
     Lexer$1 = require$$0.Lexer,
-    createToken$1 = require$$0.createToken;
-var NOOP$2 = constants.NOOP,
+    createToken = require$$0.createToken;
+var NOOP$1 = constants.NOOP,
     MATCH_ANY$1 = constants.MATCH_ANY,
     MATCH_TAG$1 = constants.MATCH_TAG,
     MATCH_WORD$1 = constants.MATCH_WORD,
@@ -9880,118 +9920,118 @@ var NOOP$2 = constants.NOOP,
     SPLIT_LT$1 = constants.SPLIT_LT,
     LOOKAHEAD$1 = constants.LOOKAHEAD,
     NEGATIVE_LOOKAHEAD$1 = constants.NEGATIVE_LOOKAHEAD;
-var StartOf = createToken$1({
+var StartOf = createToken({
   name: 'StartOf',
   pattern: /\^/
 });
-var EndOf = createToken$1({
+var EndOf = createToken({
   name: 'EndOf',
   pattern: /\$/
 });
-var Tag = createToken$1({
+var Tag = createToken({
   name: 'Tag',
   pattern: /#([_-\w]|\\.)+/
 });
-var EscapedWord = createToken$1({
+var EscapedWord = createToken({
   name: 'EscapedWord',
   pattern: /\\[#@]([_-\w]|\\.)+/
 });
-var Word = createToken$1({
+var Word = createToken({
   name: 'Word',
   pattern: /([_-\w]|\\.)+/
 });
-var Method = createToken$1({
+var Method = createToken({
   name: 'Method',
   pattern: /@[_-\w]+/
 });
-var Question = createToken$1({
+var Question = createToken({
   name: 'Question',
   pattern: /\?/,
   longer_alt: Word
 });
-var Exclamation = createToken$1({
+var Exclamation = createToken({
   name: 'Exclamation',
   pattern: /!/,
   longer_alt: Word
 });
-var Equals = createToken$1({
+var Equals = createToken({
   name: 'Equals',
   pattern: /=/,
   longer_alt: Word
 });
-var Pound = createToken$1({
+var Pound = createToken({
   name: 'Pound',
   pattern: /#/,
   longer_alt: Tag
 });
-var Dot = createToken$1({
+var Dot = createToken({
   name: 'Dot',
   pattern: /\./,
   longer_alt: Word
 });
-var Pipe = createToken$1({
+var Pipe = createToken({
   name: 'Pipe',
   pattern: /\|/
 });
-var Comma = createToken$1({
+var Comma = createToken({
   name: 'Comma',
   pattern: /,/,
   longer_alt: Word
 });
-var Colon = createToken$1({
+var Colon = createToken({
   name: 'Colon',
   pattern: /:/,
   longer_alt: Word
 });
-var Plus = createToken$1({
+var Plus = createToken({
   name: 'Plus',
   pattern: /\+/
 });
-var Star = createToken$1({
+var Star = createToken({
   name: 'Star',
   pattern: /\*/
 });
-var Zero = createToken$1({
+var Zero = createToken({
   name: 'Zero',
   pattern: /0/,
   longer_alt: Word
 });
-var PositiveInt = createToken$1({
+var PositiveInt = createToken({
   name: 'PositiveInt',
   pattern: /[1-9]\d*/,
   longer_alt: Word
 });
-var LParenthesis = createToken$1({
+var LParenthesis = createToken({
   name: 'LParenthesis',
   pattern: /\(/
 });
-var RParenthesis = createToken$1({
+var RParenthesis = createToken({
   name: 'RParenthesis',
   pattern: /\)/
 });
-var LCurly = createToken$1({
+var LCurly = createToken({
   name: 'LCurly',
   pattern: /\{/
 });
-var RCurly = createToken$1({
+var RCurly = createToken({
   name: 'RCurly',
   pattern: /\}/
 });
-var NamedGroupBegin = createToken$1({
+var NamedGroupBegin = createToken({
   name: 'NamedGroupBegin',
   pattern: /P</
 });
-var NamedGroupEnd = createToken$1({
+var NamedGroupEnd = createToken({
   name: 'NamedGroupEnd',
   pattern: />/,
   longer_alt: Word
 });
-var WhiteSpace = createToken$1({
+var WhiteSpace = createToken({
   name: 'WhiteSpace',
   pattern: /\s+/,
   group: Lexer$1.SKIPPED
 });
-var allTokens = [NamedGroupBegin, NamedGroupEnd, WhiteSpace, StartOf, EndOf, Zero, PositiveInt, Dot, EscapedWord, Word, Method, Tag, Exclamation, Equals, Pound, Colon, Question, Plus, Star, Comma, Pipe, LParenthesis, RParenthesis, LCurly, RCurly]; // Notes or something like it, may not be accurate.
+var allTokens$1 = [NamedGroupBegin, NamedGroupEnd, WhiteSpace, StartOf, EndOf, Zero, PositiveInt, Dot, EscapedWord, Word, Method, Tag, Exclamation, Equals, Pound, Colon, Question, Plus, Star, Comma, Pipe, LParenthesis, RParenthesis, LCurly, RCurly]; // Notes or something like it, may not be accurate.
 // (a|b)
 // 0. split 1, 3
 // 1. char a
@@ -10053,7 +10093,7 @@ var allTokens = [NamedGroupBegin, NamedGroupEnd, WhiteSpace, StartOf, EndOf, Zer
 // 2.1. if found stop, else continue at current sp
 //
 
-var MatchParser = /*#__PURE__*/function (_EmbeddedActionsParse) {
+var MatchParser$1 = /*#__PURE__*/function (_EmbeddedActionsParse) {
   _inherits(MatchParser, _EmbeddedActionsParse);
 
   var _super = _createSuper(MatchParser);
@@ -10063,7 +10103,7 @@ var MatchParser = /*#__PURE__*/function (_EmbeddedActionsParse) {
 
     _classCallCheck(this, MatchParser);
 
-    _this = _super.call(this, allTokens);
+    _this = _super.call(this, allTokens$1);
     /*
      * '.'
      * '^remind #Noun$'
@@ -10174,7 +10214,7 @@ var MatchParser = /*#__PURE__*/function (_EmbeddedActionsParse) {
       var groups = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
       var vars = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
       var split = {
-        code: NOOP$2
+        code: NOOP$1
       }; // save split for modifiers
 
       prog.push(split);
@@ -10495,7 +10535,7 @@ var MatchParser = /*#__PURE__*/function (_EmbeddedActionsParse) {
       }); // make split noop when just one in group
 
       if (split.locs.length === 1) {
-        split.code = NOOP$2;
+        split.code = NOOP$1;
         delete split.locs;
       } // remove last jmp so it continues
 
@@ -10600,36 +10640,36 @@ var MatchParser = /*#__PURE__*/function (_EmbeddedActionsParse) {
   }
 
   return MatchParser;
-}(EmbeddedActionsParser$1);
+}(EmbeddedActionsParser);
 
 var parser = {
-  allTokens: allTokens,
-  MatchParser: MatchParser
+  allTokens: allTokens$1,
+  MatchParser: MatchParser$1
 };
 
-var NOOP$3 = constants.NOOP,
-    MATCH_ANY$2 = constants.MATCH_ANY,
-    MATCH_TAG$2 = constants.MATCH_TAG,
-    MATCH_WORD$2 = constants.MATCH_WORD,
-    MATCH_METHOD$2 = constants.MATCH_METHOD,
-    MATCH_END$2 = constants.MATCH_END,
-    JMP$2 = constants.JMP,
-    SPLIT$2 = constants.SPLIT,
-    GLOBAL_SAVE$2 = constants.GLOBAL_SAVE,
-    MATCH$2 = constants.MATCH,
-    OGROUP$2 = constants.OGROUP,
-    CGROUP$2 = constants.CGROUP,
-    INCV$2 = constants.INCV,
-    JMP_LT$2 = constants.JMP_LT,
-    SPLIT_LT$2 = constants.SPLIT_LT,
-    LOOKAHEAD$2 = constants.LOOKAHEAD,
-    NEGATIVE_LOOKAHEAD$2 = constants.NEGATIVE_LOOKAHEAD;
+var NOOP = constants.NOOP,
+    MATCH_ANY = constants.MATCH_ANY,
+    MATCH_TAG = constants.MATCH_TAG,
+    MATCH_WORD = constants.MATCH_WORD,
+    MATCH_METHOD = constants.MATCH_METHOD,
+    MATCH_END = constants.MATCH_END,
+    JMP = constants.JMP,
+    SPLIT = constants.SPLIT,
+    GLOBAL_SAVE = constants.GLOBAL_SAVE,
+    MATCH = constants.MATCH,
+    OGROUP = constants.OGROUP,
+    CGROUP = constants.CGROUP,
+    INCV = constants.INCV,
+    JMP_LT = constants.JMP_LT,
+    SPLIT_LT = constants.SPLIT_LT,
+    LOOKAHEAD = constants.LOOKAHEAD,
+    NEGATIVE_LOOKAHEAD = constants.NEGATIVE_LOOKAHEAD;
 
 var termContainsTag = function termContainsTag(term, name) {
   return Object.entries(term.tags || {}).filter(function (_ref) {
-    var _ref2 = _slicedToArray(_ref, 2),
-        _k = _ref2[0],
-        v = _ref2[1];
+    var _ref2 = _slicedToArray(_ref, 2);
+        _ref2[0];
+        var v = _ref2[1];
 
     return v;
   }) //eslint-disable-line
@@ -10683,20 +10723,20 @@ var addthread = function addthread(prog, list, th) {
   //console.log("  inst:", inst);
 
   switch (inst.code) {
-    case GLOBAL_SAVE$2:
+    case GLOBAL_SAVE:
       th.save = inst.value;
       addthread(prog, list, thread(th.pc + 1, th));
       break;
 
-    case NOOP$3:
+    case NOOP:
       addthread(prog, list, thread(th.pc + 1, th));
       break;
 
-    case JMP$2:
+    case JMP:
       addthread(prog, list, thread(inst.loc, th));
       break;
 
-    case SPLIT$2:
+    case SPLIT:
       var _iterator = _createForOfIteratorHelper(inst.locs),
           _step;
 
@@ -10713,7 +10753,7 @@ var addthread = function addthread(prog, list, th) {
 
       break;
 
-    case OGROUP$2:
+    case OGROUP:
       // again (see below comment in pikevm match), can modify thread
       // because it ends here
       th.groups[inst.id] = {
@@ -10725,17 +10765,17 @@ var addthread = function addthread(prog, list, th) {
       addthread(prog, list, thread(th.pc + 1, th));
       break;
 
-    case CGROUP$2:
+    case CGROUP:
       th.groups[inst.id].open = false;
       addthread(prog, list, thread(th.pc + 1, th));
       break;
 
-    case INCV$2:
+    case INCV:
       th.vars[inst.varId] = (th.vars[inst.varId] || 0) + 1;
       addthread(prog, list, thread(th.pc + 1, th));
       break;
 
-    case JMP_LT$2:
+    case JMP_LT:
       if (th.vars[inst.varId] < inst.value) {
         // jump!
         addthread(prog, list, thread(inst.loc, th));
@@ -10746,7 +10786,7 @@ var addthread = function addthread(prog, list, th) {
 
       break;
 
-    case SPLIT_LT$2:
+    case SPLIT_LT:
       if (th.vars[inst.varId] < inst.value) {
         // split!
         var _iterator2 = _createForOfIteratorHelper(inst.locs),
@@ -10820,7 +10860,7 @@ var saveMatch = function saveMatch(th, sp) {
  */
 
 
-var pikevm = function pikevm(prog, input) {
+var pikevm$1 = function pikevm(prog, input) {
   var clist = [];
   var nlist = [];
   var found = false;
@@ -10848,7 +10888,7 @@ var pikevm = function pikevm(prog, input) {
       var gotoNextWord = false;
 
       switch (inst.code) {
-        case MATCH_ANY$2:
+        case MATCH_ANY:
           // Note: can call save match like this without worrying about other
           // threads because this thread ends here and another will be created
           // in its place
@@ -10858,7 +10898,7 @@ var pikevm = function pikevm(prog, input) {
 
           break;
 
-        case MATCH_WORD$2:
+        case MATCH_WORD:
           if (sp.text && sp.text.toLowerCase() === inst.value.toLowerCase()) {
             // continue on next word
             addthread(prog, nlist, thread(th.pc + 1, saveMatch(th, sp)));
@@ -10866,14 +10906,14 @@ var pikevm = function pikevm(prog, input) {
 
           break;
 
-        case MATCH_TAG$2:
+        case MATCH_TAG:
           if (termContainsTag(sp, inst.value)) {
             addthread(prog, nlist, thread(th.pc + 1, saveMatch(th, sp)));
           }
 
           break;
 
-        case MATCH_METHOD$2:
+        case MATCH_METHOD:
           // call method using null coalescing on term, if it returns true continue
           if (sp[inst.value]()) {
             addthread(prog, nlist, thread(th.pc + 1, saveMatch(th, sp)));
@@ -10881,7 +10921,7 @@ var pikevm = function pikevm(prog, input) {
 
           break;
 
-        case MATCH_END$2:
+        case MATCH_END:
           if (sp === END) {
             // continue
             addthread(prog, clist, thread(th.pc + 1, th));
@@ -10889,7 +10929,7 @@ var pikevm = function pikevm(prog, input) {
 
           break;
 
-        case LOOKAHEAD$2:
+        case LOOKAHEAD:
           var mla = pikevm(inst.prog, input.slice(i));
 
           if (mla.found) {
@@ -10898,7 +10938,7 @@ var pikevm = function pikevm(prog, input) {
 
           break;
 
-        case NEGATIVE_LOOKAHEAD$2:
+        case NEGATIVE_LOOKAHEAD:
           var mnla = pikevm(inst.prog, input.slice(i));
 
           if (!mnla.found) {
@@ -10909,7 +10949,7 @@ var pikevm = function pikevm(prog, input) {
 
           break;
 
-        case MATCH$2:
+        case MATCH:
           saved = th.saved;
           groups = th.groups;
           found = true; // Go to the next word which causes all pending threads in the
@@ -10947,15 +10987,15 @@ var pikevm = function pikevm(prog, input) {
 
 var pikevm_1 = {
   termContainsTag: termContainsTag,
-  pikevm: pikevm
+  pikevm: pikevm$1
 };
 
-var Lexer$2 = require$$0.Lexer;
-var MatchParser$1 = parser.MatchParser,
-    allTokens$1 = parser.allTokens;
-var pikevm$1 = pikevm_1.pikevm;
-var NLPMatchLexer = new Lexer$2(allTokens$1);
-var parserInstance = new MatchParser$1();
+var Lexer = require$$0.Lexer;
+var MatchParser = parser.MatchParser,
+    allTokens = parser.allTokens;
+var pikevm = pikevm_1.pikevm;
+var NLPMatchLexer = new Lexer(allTokens);
+var parserInstance = new MatchParser();
 
 var NLPRegexParseError = /*#__PURE__*/function () {
   function NLPRegexParseError(errors) {
@@ -10965,14 +11005,14 @@ var NLPRegexParseError = /*#__PURE__*/function () {
   }
 
   _createClass(NLPRegexParseError, [{
-    key: "toString",
-    value: function toString() {
-      return "NLP RegexP Parsing error: ".concat(this.message);
-    }
-  }, {
     key: "message",
     get: function get() {
       return this.errors[0].message;
+    }
+  }, {
+    key: "toString",
+    value: function toString() {
+      return "NLP RegexP Parsing error: ".concat(this.message);
     }
   }]);
 
@@ -10983,7 +11023,7 @@ var NLPRegexParseError = /*#__PURE__*/function () {
  */
 
 
-var NLPRegexP = /*#__PURE__*/function () {
+var NLPRegexP$1 = /*#__PURE__*/function () {
   /**
    * @param {string} regex - regular expression like string for matching nlp
    * terms.
@@ -11047,7 +11087,7 @@ var NLPRegexP = /*#__PURE__*/function () {
   }, {
     key: "execPhrase",
     value: function execPhrase(phrase) {
-      var _pikevm = pikevm$1(this.prog, phrase.terms()),
+      var _pikevm = pikevm(this.prog, phrase.terms()),
           found = _pikevm.found,
           _pikevm$saved = _pikevm.saved,
           saved = _pikevm$saved === void 0 ? [] : _pikevm$saved,
@@ -11075,21 +11115,21 @@ var regex = {
   NLPMatchLexer: NLPMatchLexer,
   parserInstance: parserInstance,
   NLPRegexParseError: NLPRegexParseError,
-  NLPRegexP: NLPRegexP
+  NLPRegexP: NLPRegexP$1
 };
 
-var NLPRegexP$1 = regex.NLPRegexP; // nlp compromise plugin
+var NLPRegexP = regex.NLPRegexP; // nlp compromise plugin
 
 var plugin = function plugin(Doc, _world, nlp, Phrase) {
   var preCompile = function preCompile(regex) {
-    return new NLPRegexP$1(regex);
+    return new NLPRegexP(regex);
   };
 
   nlp.preCompile = preCompile;
 
   var strictMatch = function strictMatch(regex) {
     // function, non arrow, need bind for this which is doc/phrase
-    regex = new NLPRegexP$1(regex); // coerce the value
+    regex = new NLPRegexP(regex); // coerce the value
 
     return regex.exec(this);
   };

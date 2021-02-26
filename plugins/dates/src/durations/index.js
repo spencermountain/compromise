@@ -70,7 +70,13 @@ const addDurations = function (Doc) {
 
   /** phrases like '2 months' */
   Doc.prototype.durations = function (n) {
-    let m = this.match('#Value+ #Duration and? #Value+? #Duration?')
+    let m = this.match('#Value+ #Duration (and? #Value+ #Duration)?')
+    // add '20mins'
+    m = m.concat(this.match('(#Duration && /[0-9][a-z]+$/)'))
+
+    // not 'in 20 minutes'
+    m = m.notIf('#DateShift')
+
     if (typeof n === 'number') {
       m = m.get(n)
     }

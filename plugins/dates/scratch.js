@@ -16,15 +16,16 @@ const context = {
   // max_repeat: 50,
 }
 
+let doc = nlp('2nd monday of february')
 // let doc = nlp(`any mondays`)
-let doc = nlp(`any monday in June`)
+
 let dates = doc.dates(context) //.debug()
 let date = dates.get(0)
 console.log(date)
 // console.log(JSON.stringify(json.date, null, 2))
 console.log('start: ', fmt(date.start))
 console.log('  end: ', fmt(date.end))
-console.log('=-=-=-= here -=-=-=-')
+// console.log('=-=-=-= here -=-=-=-')
 
 // console.log(nlp('it was ten after 9').debug().times().get())
 // console.log(nlp('around four oclock').times().get())

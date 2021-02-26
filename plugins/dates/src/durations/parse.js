@@ -15,6 +15,8 @@ const known = {
 }
 
 let mapping = {
+  m: 'minute',
+  h: 'hour',
   hr: 'hour',
   min: 'minute',
   sec: 'second',
@@ -31,17 +33,37 @@ Object.keys(mapping).forEach((k) => {
 const parse = function (doc) {
   let duration = {}
   //parse '8 minutes'
-  doc.match('#Value+ #Duration').forEach((m) => {
-    let num = m.numbers().get(0)
-    let unit = m.match('#Duration').nouns().toSingular().text()
-    // turn 'mins' into 'minute'
-    if (mapping.hasOwnProperty(unit)) {
-      unit = mapping[unit]
+  let twoWord = doc.match('#Value+ #Duration')
+  if (twoWord.found) {
+    twoWord.forEach((m) => {
+      let num = m.numbers().get(0)
+      let unit = m.terms().last().nouns().toSingular().text()
+      // turn 'mins' into 'minute'
+      if (mapping.hasOwnProperty(unit)) {
+        unit = mapping[unit]
+      }
+      if (known.hasOwnProperty(unit) && num !== null) {
+        duration[unit] = num
+      }
+    })
+  } else {
+    let oneWord = doc.match('(#Duration && /[0-9][a-z]+$/)')
+    if (oneWord.found) {
+      let str = doc.text()
+      let num = str.match(/([0-9]+)/)
+      let unit = str.match(/([a-z]+)/)
+      if (num && unit) {
+        num = num[0] || null
+        unit = unit[0] || null
+        if (mapping.hasOwnProperty(unit)) {
+          unit = mapping[unit]
+        }
+        if (known.hasOwnProperty(unit) && num !== null) {
+          duration[unit] = Number(num)
+        }
+      }
     }
-    if (known.hasOwnProperty(unit) && num) {
-      duration[unit] = num
-    }
-  })
+  }
   return duration
 }
 module.exports = parse

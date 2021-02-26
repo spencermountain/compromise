@@ -1,4 +1,4 @@
-/* compromise-html 0.0.2 MIT */
+/* compromise-html 0.0.3 MIT */
 function _taggedTemplateLiteral(strings, raw) {
   if (!raw) {
     raw = strings.slice(0);
@@ -127,25 +127,7 @@ var vhtml = createCommonjsModule(function (module, exports) {
   });
 });
 
-function _templateObject2() {
-  var data = _taggedTemplateLiteral(["<pre>", "</pre>"]);
-
-  _templateObject2 = function _templateObject2() {
-    return data;
-  };
-
-  return data;
-}
-
-function _templateObject() {
-  var data = _taggedTemplateLiteral(["<span class=", ">", "</span>"]);
-
-  _templateObject = function _templateObject() {
-    return data;
-  };
-
-  return data;
-}
+var _templateObject, _templateObject2;
 
 var toHtml = function toHtml(doc, segments, options) {
   var h = htm.bind(vhtml);
@@ -157,10 +139,10 @@ var toHtml = function toHtml(doc, segments, options) {
   var html = [];
   var arr = doc.segment(segments);
   arr.forEach(function (o) {
-    var str = h(_templateObject(), o.segment, o.text);
+    var str = h(_templateObject || (_templateObject = _taggedTemplateLiteral(["<span class=", ">", "</span>"])), o.segment, o.text);
     html.push(str);
   });
-  return h(_templateObject2(), html);
+  return h(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["<pre>", "</pre>"])), html);
 };
 
 var html = toHtml;

@@ -1,4 +1,4 @@
-/* compromise-scan 0.1.1 MIT */
+/* compromise-scan 0.1.2 MIT */
 // edited by Spencer Kelly
 // credit to https://github.com/BrunoRB/ahocorasick by Bruno Roberto Búrigo.
 // object v. array

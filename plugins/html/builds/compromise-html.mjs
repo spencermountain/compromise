@@ -25,7 +25,7 @@ var n = function n(t, s, r, e) {
 },
     t = new Map();
 
-function htm_module (s) {
+function htm (s) {
   var r = t.get(this);
   return r || (r = new Map(), t.set(this, r)), (r = n(this, r.get(s) || (r.set(s, r = function (n) {
     for (var t, s, r = 1, e = "", u = "", h = [0], p = function p(n) {
@@ -42,36 +42,15 @@ function htm_module (s) {
   }(s)), r), arguments, [])).length > 1 ? r : r[0];
 }
 
-var htm_module$1 = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  'default': htm_module
-});
-
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-function getAugmentedNamespace(n) {
-	if (n.__esModule) return n;
-	var a = Object.defineProperty({}, '__esModule', {value: true});
-	Object.keys(n).forEach(function (k) {
-		var d = Object.getOwnPropertyDescriptor(n, k);
-		Object.defineProperty(a, k, d.get ? d : {
-			enumerable: true,
-			get: function () {
-				return n[k];
-			}
-		});
-	});
-	return a;
-}
-
-function createCommonjsModule(fn) {
-  var module = { exports: {} };
-	return fn(module, module.exports), module.exports;
+function createCommonjsModule(fn, module) {
+	return module = { exports: {} }, fn(module, module.exports), module.exports;
 }
 
 var vhtml = createCommonjsModule(function (module, exports) {
   (function (global, factory) {
-    module.exports = factory() ;
+     module.exports = factory() ;
   })(commonjsGlobal, function () {
 
     var emptyTags = ['area', 'base', 'br', 'col', 'command', 'embed', 'hr', 'img', 'input', 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr'];
@@ -147,8 +126,6 @@ var vhtml = createCommonjsModule(function (module, exports) {
     return h;
   });
 });
-
-var htm = /*@__PURE__*/getAugmentedNamespace(htm_module$1);
 
 var _templateObject, _templateObject2;
 

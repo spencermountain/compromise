@@ -2,7 +2,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.compromiseHtml = factory());
+  (global = global || self, global.compromiseHtml = factory());
 }(this, (function () { 'use strict';
 
   function _taggedTemplateLiteral(strings, raw) {
@@ -55,29 +55,17 @@
 
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-  function getAugmentedNamespace(n) {
-  	if (n.__esModule) return n;
-  	var a = Object.defineProperty({}, '__esModule', {value: true});
-  	Object.keys(n).forEach(function (k) {
-  		var d = Object.getOwnPropertyDescriptor(n, k);
-  		Object.defineProperty(a, k, d.get ? d : {
-  			enumerable: true,
-  			get: function () {
-  				return n[k];
-  			}
-  		});
-  	});
-  	return a;
+  function createCommonjsModule(fn, module) {
+  	return module = { exports: {} }, fn(module, module.exports), module.exports;
   }
 
-  function createCommonjsModule(fn) {
-    var module = { exports: {} };
-  	return fn(module, module.exports), module.exports;
+  function getCjsExportFromNamespace (n) {
+  	return n && n['default'] || n;
   }
 
   var vhtml = createCommonjsModule(function (module, exports) {
     (function (global, factory) {
-      module.exports = factory() ;
+       module.exports = factory() ;
     })(commonjsGlobal, function () {
 
       var emptyTags = ['area', 'base', 'br', 'col', 'command', 'embed', 'hr', 'img', 'input', 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr'];
@@ -154,7 +142,7 @@
     });
   });
 
-  var htm = /*@__PURE__*/getAugmentedNamespace(htm_module$1);
+  var htm = getCjsExportFromNamespace(htm_module$1);
 
   var _templateObject, _templateObject2;
 

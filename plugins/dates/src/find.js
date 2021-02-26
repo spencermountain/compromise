@@ -38,6 +38,12 @@ const findDate = function (doc) {
     dates = dates.splitOn('#WeekDay')
     dates = dates.not('^(and|or)')
   }
+
+  // for 20 minutes
+  m = dates.match('for #Cardinal #Duration')
+  if (m.found) {
+    dates = dates.not(m)
+  }
   // // 'january, february'
   // m = dates.match('^[#Month] (and|or)? #Month$', 0)
   // if (m.found) {

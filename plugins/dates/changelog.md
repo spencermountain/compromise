@@ -1,6 +1,12 @@
 
 <!-- #### [Unreleased] 
 -->
+### 1.4.1 [Jan 2021]
+- **[change]** - date tokenization of multiple AND and OR dates
+- **[change]** - smart tokenization of duration and date
+- **[change]** - 'in 2 minutes' vs 'for 2 minutes'
+
+
 ### 1.4.0 [Jan 2021]
 - **[new]** - `.durations()` method
 - **[new]** - `.times()` method

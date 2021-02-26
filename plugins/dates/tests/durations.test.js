@@ -19,6 +19,17 @@ test('durations vs dates', function (t) {
   t.end()
 })
 
+test('in 4 mins', function (t) {
+  let doc = nlp(`in 20 mins`)
+  t.equal(doc.dates().found, true, 'in-20 mins Date')
+  t.equal(doc.durations().found, false, 'in-20 mins !Duration')
+
+  doc = nlp(`for 20 mins`)
+  t.equal(doc.dates().found, false, 'for-20 mins !Date')
+  t.equal(doc.durations().found, true, 'for-20 mins Duration')
+  t.end()
+})
+
 test('durations json', function (t) {
   let doc = nlp('blah blah two hours and 8 mins foobar')
   let json = doc.durations().json(0)

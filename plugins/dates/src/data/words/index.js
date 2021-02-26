@@ -8,6 +8,7 @@ const data = [
 ]
 let lex = {
   'a couple': 'Value',
+  thur: 'WeekDay',
 }
 data.forEach((a) => {
   for (let i = 0; i < a[0].length; i++) {

@@ -16,6 +16,7 @@
   <div align="center">
     <code>npm install compromise-dates</code>
   </div>
+  Work-in-Progress
 </div>
 
 <!-- spacer -->

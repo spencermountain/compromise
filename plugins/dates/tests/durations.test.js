@@ -27,6 +27,10 @@ test('in 4 mins', function (t) {
   doc = nlp(`for 20 mins`)
   t.equal(doc.dates().found, false, 'for-20 mins !Date')
   t.equal(doc.durations().found, true, 'for-20 mins Duration')
+
+  doc = nlp(`20 minutes`)
+  t.equal(doc.dates().found, false, '20 mins !Date')
+  t.equal(doc.durations().found, true, '20 mins Duration')
   t.end()
 })
 

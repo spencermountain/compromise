@@ -1,4 +1,4 @@
-/* compromise-dates 1.4.0 MIT */
+/* compromise-dates 1.4.1 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -5313,7 +5313,8 @@
 
   var data = [[dates, '#Date'], [durations, '#Duration'], [holidays, '#Holiday'], [times, '#Time'], [Object.keys(_timezones), '#Timezone']];
   var lex = {
-    'a couple': 'Value'
+    'a couple': 'Value',
+    thur: 'WeekDay'
   };
   data.forEach(function (a) {
     for (var i = 0; i < a[0].length; i++) {
@@ -8511,7 +8512,9 @@
     Doc.prototype.durations = function (n) {
       var m = this.match('#Value+ #Duration (and? #Value+ #Duration)?'); // add '20mins'
 
-      m = m.concat(this.match('(#Duration && /[0-9][a-z]+$/)'));
+      m = m.concat(this.match('(#Duration && /[0-9][a-z]+$/)')); // not 'in 20 minutes'
+
+      m = m.notIf('#DateShift');
 
       if (typeof n === 'number') {
         m = m.get(n);
@@ -8615,6 +8618,74 @@
 
   var times$1 = addTimes;
 
+  var findDate = function findDate(doc) {
+    // let r = this.clauses()
+    var dates = doc.match('#Date+'); // ignore only-durations like '20 minutes'
+
+    dates = dates.filter(function (m) {
+      var isDuration = m.has('^#Duration+$') || m.has('^#Value #Duration+$'); // allow 'q4', etc
+
+      if (isDuration === true && m.has('(#FinancialQuarter|quarter)')) {
+        return true;
+      }
+
+      return isDuration === false;
+    }); // 30 minutes on tuesday
+
+    var m = dates.match('[#Cardinal #Duration (in|on|this|next|during|for)] #Date', 0);
+
+    if (m.found) {
+      dates = dates.not(m);
+    } // 30 minutes tuesday
+
+
+    m = dates.match('[#Cardinal #Duration] #WeekDay', 0);
+
+    if (m.found) {
+      dates = dates.not(m);
+    } // tuesday for 30 mins
+
+
+    m = dates.match('#Date [for #Value #Duration]$', 0);
+
+    if (m.found) {
+      dates = dates.not(m);
+    } // 'tuesday, wednesday'
+
+
+    m = dates.match('^[#WeekDay] #WeekDay$', 0);
+
+    if (m.found) {
+      dates = dates.splitAfter(m);
+      dates = dates.not('^(and|or)');
+    } // 'tuesday, wednesday, and friday'
+
+
+    m = dates.match('#WeekDay #WeekDay and #WeekDay');
+
+    if (m.found) {
+      dates = dates.splitOn('#WeekDay');
+      dates = dates.not('^(and|or)');
+    } // for 20 minutes
+
+
+    m = dates.match('for #Cardinal #Duration');
+
+    if (m.found) {
+      dates = dates.not(m);
+    } // // 'january, february'
+    // m = dates.match('^[#Month] (and|or)? #Month$', 0)
+    // if (m.found) {
+    //   dates = dates.splitAfter(m)
+    //   dates = dates.not('^(and|or)')
+    // }
+
+
+    return dates;
+  };
+
+  var find = findDate;
+
   var opts = {
     punt: {
       weeks: 2
@@ -8663,19 +8734,8 @@
         n = null;
       }
 
-      context = Object.assign({}, context, opts); // let r = this.clauses()
-
-      var dates = this.match('#Date+'); // ignore only-durations like '20 minutes'
-
-      dates = dates.filter(function (m) {
-        var isDuration = m.has('^#Duration+$') || m.has('^#Value #Duration+$'); // allow 'q4', etc
-
-        if (isDuration === true && m.has('#FinancialQuarter')) {
-          isDuration = false;
-        }
-
-        return isDuration === false;
-      });
+      context = Object.assign({}, context, opts);
+      var dates = find(this);
 
       if (typeof n === 'number') {
         dates = dates.get(n);

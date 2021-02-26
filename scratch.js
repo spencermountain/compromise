@@ -14,7 +14,7 @@ nlp.extend(require('./plugins/dates/src'))
 //
 
 // let doc = nlp(`30mins tuesday`).debug()
-let doc = nlp(`q4`)
+let doc = nlp(`fourth quarter`)
 // let doc = nlp(`january and march`)
-console.log(doc.dates().debug().get())
+console.log(doc.dates({ today: '1999-02-03' }).debug().get())
 // console.log(doc.durations().get(0))

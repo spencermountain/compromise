@@ -32,12 +32,14 @@ const parseDate = function (doc, context) {
   let weekDay = tokens.weekday(doc, context)
   let section = tokens.section(doc, context)
   let rel = tokens.relative(doc)
+
   //set our new timezone
   if (tz) {
     context = Object.assign({}, context, { timezone: tz })
     let iso = context.today.format('iso-short')
     context.today = context.today.goto(context.timezone).set(iso)
   }
+
   let unit = null
   //'in two days'
   unit = unit || parse.today(doc, context, { shift, time, rel })
@@ -49,6 +51,7 @@ const parseDate = function (doc, context) {
   unit = unit || parse.yearly(doc, context)
   // 'this june 2nd'
   unit = unit || parse.explicit(doc, context)
+
   if (!unit) {
     return null
   }

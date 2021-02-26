@@ -1,4 +1,4 @@
-/* compromise-dates 1.4.1 MIT */
+/* compromise-dates 1.4.2 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -318,37 +318,37 @@
 
   var _00Basic = tagDates;
 
-  var here = 'date-values'; //
+  var here$5 = 'date-values'; //
 
   var values = function values(doc) {
     // a year ago
     if (!doc.has('once [a] #Duration')) {
-      doc.match('[a] #Duration', 0).replaceWith('1').tag('Cardinal', here);
+      doc.match('[a] #Duration', 0).replaceWith('1').tag('Cardinal', here$5);
     }
 
     if (doc.has('#Value')) {
       //june 5 to 7th
-      doc.match('#Month #Value to #Value of? #Year?').tag('Date', here); //5 to 7th june
+      doc.match('#Month #Value to #Value of? #Year?').tag('Date', here$5); //5 to 7th june
 
-      doc.match('#Value to #Value of? #Month #Year?').tag('Date', here); //third week of may
+      doc.match('#Value to #Value of? #Month #Year?').tag('Date', here$5); //third week of may
 
-      doc.match('#Value #Duration of #Date').tag('Date', here); //two days after
+      doc.match('#Value #Duration of #Date').tag('Date', here$5); //two days after
 
-      doc.match('#Value+ #Duration (after|before|into|later|afterwards|ago)?').tag('Date', here); //two days
+      doc.match('#Value+ #Duration (after|before|into|later|afterwards|ago)?').tag('Date', here$5); //two days
 
-      doc.match('#Value #Date').tag('Date', here); //june 5th
+      doc.match('#Value #Date').tag('Date', here$5); //june 5th
 
-      doc.match('#Date #Value').tag('Date', here); //tuesday at 5
+      doc.match('#Date #Value').tag('Date', here$5); //tuesday at 5
 
-      doc.match('#Date #Preposition #Value').tag('Date', here); //tomorrow before 3
+      doc.match('#Date #Preposition #Value').tag('Date', here$5); //tomorrow before 3
 
-      doc.match('#Date (after|before|during|on|in) #Value').tag('Date', here); //a year and a half
+      doc.match('#Date (after|before|during|on|in) #Value').tag('Date', here$5); //a year and a half
 
-      doc.match('#Value (year|month|week|day) and a half').tag('Date', here); //5 and a half years
+      doc.match('#Value (year|month|week|day) and a half').tag('Date', here$5); //5 and a half years
 
-      doc.match('#Value and a half (years|months|weeks|days)').tag('Date', here); //on the fifth
+      doc.match('#Value and a half (years|months|weeks|days)').tag('Date', here$5); //on the fifth
 
-      doc.match('on the #Ordinal').tag('Date', here);
+      doc.match('on the #Ordinal').tag('Date', here$5);
     }
 
     return doc;
@@ -356,37 +356,37 @@
 
   var _01Values = values;
 
-  var here$1 = 'date-tagger'; //
+  var here$4 = 'date-tagger'; //
 
   var dateTagger = function dateTagger(doc) {
-    doc.match('(spring|summer|winter|fall|autumn|springtime|wintertime|summertime)').match('#Noun').tag('Season', here$1);
-    doc.match('(q1|q2|q3|q4)').tag('FinancialQuarter', here$1);
-    doc.match('(this|next|last|current) quarter').tag('FinancialQuarter', here$1);
-    doc.match('(this|next|last|current) season').tag('Season', here$1);
+    doc.match('(spring|summer|winter|fall|autumn|springtime|wintertime|summertime)').match('#Noun').tag('Season', here$4);
+    doc.match('(q1|q2|q3|q4)').tag('FinancialQuarter', here$4);
+    doc.match('(this|next|last|current) quarter').tag('FinancialQuarter', here$4);
+    doc.match('(this|next|last|current) season').tag('Season', here$4);
 
     if (doc.has('#Date')) {
       //friday to sunday
-      doc.match('#Date #Preposition #Date').tag('Date', here$1); //once a day..
+      doc.match('#Date #Preposition #Date').tag('Date', here$4); //once a day..
 
-      doc.match('(once|twice) (a|an|each) #Date').tag('Date', here$1); //TODO:fixme
+      doc.match('(once|twice) (a|an|each) #Date').tag('Date', here$4); //TODO:fixme
 
-      doc.match('(by|until|on|in|at|during|over|every|each|due) the? #Date').tag('Date', here$1); //tuesday
+      doc.match('(by|until|on|in|at|during|over|every|each|due) the? #Date').tag('Date', here$4); //tuesday
 
-      doc.match('#Date+').tag('Date', here$1); //by June
+      doc.match('#Date+').tag('Date', here$4); //by June
 
-      doc.match('(by|until|on|in|at|during|over|every|each|due) the? #Date').tag('Date', here$1); //a year after..
+      doc.match('(by|until|on|in|at|during|over|every|each|due) the? #Date').tag('Date', here$4); //a year after..
 
-      doc.match('a #Duration').tag('Date', here$1); //between x and y
+      doc.match('a #Duration').tag('Date', here$4); //between x and y
 
-      doc.match('(between|from) #Date').tag('Date', here$1);
-      doc.match('(to|until|upto) #Date').tag('Date', here$1);
-      doc.match('#Date and #Date').tag('Date', here$1); //during this june
+      doc.match('(between|from) #Date').tag('Date', here$4);
+      doc.match('(to|until|upto) #Date').tag('Date', here$4);
+      doc.match('#Date and #Date').tag('Date', here$4); //during this june
 
-      doc.match('(by|until|after|before|during|on|in|following|since) (next|this|last)? (#Date|#Date)').tag('Date', here$1); //day after next
+      doc.match('(by|until|after|before|during|on|in|following|since) (next|this|last)? (#Date|#Date)').tag('Date', here$4); //day after next
 
-      doc.match('the? #Date after next one?').tag('Date', here$1); //approximately...
+      doc.match('the? #Date after next one?').tag('Date', here$4); //approximately...
 
-      doc.match('(about|approx|approximately|around) #Date').tag('Date', here$1);
+      doc.match('(about|approx|approximately|around) #Date').tag('Date', here$4);
     }
 
     return doc;
@@ -394,20 +394,20 @@
 
   var _02Dates = dateTagger;
 
-  var here$2 = 'section-tagger'; //
+  var here$3 = 'section-tagger'; //
 
   var sectionTagger = function sectionTagger(doc) {
     if (doc.has('#Date')) {
       // //next september
-      doc.match('this? (last|next|past|this|previous|current|upcoming|coming|the) #Date').tag('Date', here$2); //starting this june
+      doc.match('this? (last|next|past|this|previous|current|upcoming|coming|the) #Date').tag('Date', here$3); //starting this june
 
-      doc.match('(starting|beginning|ending) #Date').tag('Date', here$2); //start of june
+      doc.match('(starting|beginning|ending) #Date').tag('Date', here$3); //start of june
 
-      doc.match('the? (start|end|middle|beginning) of (last|next|this|the) (#Date|#Date)').tag('Date', here$2); //this coming june
+      doc.match('the? (start|end|middle|beginning) of (last|next|this|the) (#Date|#Date)').tag('Date', here$3); //this coming june
 
-      doc.match('(the|this) #Date').tag('Date', here$2); //january up to june
+      doc.match('(the|this) #Date').tag('Date', here$3); //january up to june
 
-      doc.match('#Date up to #Date').tag('Date', here$2);
+      doc.match('#Date up to #Date').tag('Date', here$3);
     }
 
     return doc;
@@ -415,67 +415,67 @@
 
   var _03Sections = sectionTagger;
 
-  var here$3 = 'time-tagger'; //
+  var here$2 = 'time-tagger'; //
 
   var timeTagger = function timeTagger(doc) {
     // 2 oclock
-    doc.match('#Cardinal oclock').tag('Time', here$3); // 13h30
+    doc.match('#Cardinal oclock').tag('Time', here$2); // 13h30
 
-    doc.match('/^[0-9]{2}h[0-9]{2}$/').tag('Time', here$3); // 03/02
+    doc.match('/^[0-9]{2}h[0-9]{2}$/').tag('Time', here$2); // 03/02
 
-    doc.match('/^[0-9]{2}/[0-9]{2}/').tag('Date', here$3).unTag('Value'); // 3 in the morning
+    doc.match('/^[0-9]{2}/[0-9]{2}/').tag('Date', here$2).unTag('Value'); // 3 in the morning
 
-    doc.match('[#Value] (in|at) the? (morning|evening|night|nighttime)').tag('Time', here$3);
+    doc.match('[#Value] (in|at) the? (morning|evening|night|nighttime)').tag('Time', here$2);
 
     if (doc.has('#Cardinal') && !doc.has('#Month')) {
       // quarter to seven (not march 5 to 7)
-      doc.match('1? (half|quarter|25|15|10|5) (past|after|to) #Cardinal').tag('Time', here$3); // ten to seven
+      doc.match('1? (half|quarter|25|15|10|5) (past|after|to) #Cardinal').tag('Time', here$2); // ten to seven
 
-      doc.match('(5|10|15|20|five|ten|fifteen|20) (to|after|past) [<hour>#Cardinal]').tag('Time', here$3); //add check for 1 to 1 etc.
+      doc.match('(5|10|15|20|five|ten|fifteen|20) (to|after|past) [<hour>#Cardinal]').tag('Time', here$2); //add check for 1 to 1 etc.
     } //timezone
 
 
     if (doc.has('#Date')) {
       // iso  (2020-03-02T00:00:00.000Z)
-      doc.match('/^[0-9]{4}[:-][0-9]{2}[:-][0-9]{2}T[0-9]/').tag('Time', here$3); // tuesday at 4
+      doc.match('/^[0-9]{4}[:-][0-9]{2}[:-][0-9]{2}T[0-9]/').tag('Time', here$2); // tuesday at 4
 
-      doc.match('#Date [at #Cardinal]', 0).notIf('#Year').tag('Time', here$3); // half an hour
+      doc.match('#Date [at #Cardinal]', 0).notIf('#Year').tag('Time', here$2); // half an hour
 
-      doc.match('half an (hour|minute|second)').tag('Date', here$3); //eastern daylight time
+      doc.match('half an (hour|minute|second)').tag('Date', here$2); //eastern daylight time
 
-      doc.match('#Noun (standard|daylight|central|mountain)? time').tag('Timezone', here$3); //utc+5
+      doc.match('#Noun (standard|daylight|central|mountain)? time').tag('Timezone', here$2); //utc+5
 
-      doc.match('/^utc[+-][0-9]/').tag('Timezone', here$3);
-      doc.match('/^gmt[+-][0-9]/').tag('Timezone', here$3);
-      doc.match('(in|for|by|near|at) #Timezone').tag('Timezone', here$3); // 2pm eastern
+      doc.match('/^utc[+-][0-9]/').tag('Timezone', here$2);
+      doc.match('/^gmt[+-][0-9]/').tag('Timezone', here$2);
+      doc.match('(in|for|by|near|at) #Timezone').tag('Timezone', here$2); // 2pm eastern
 
-      doc.match('#Time [(eastern|mountain|pacific|central)]', 0).tag('Timezone', here$3);
+      doc.match('#Time [(eastern|mountain|pacific|central)]', 0).tag('Timezone', here$2);
     } // around four thirty
 
 
-    doc.match('(at|around|near) [#Cardinal (thirty|fifteen) (am|pm)?]', 0).tag('Time', here$3);
+    doc.match('(at|around|near) [#Cardinal (thirty|fifteen) (am|pm)?]', 0).tag('Time', here$2);
     return doc;
   };
 
   var _04Time = timeTagger;
 
-  var here$4 = 'shift-tagger'; //
+  var here$1 = 'shift-tagger'; //
 
   var shiftTagger = function shiftTagger(doc) {
     if (doc.has('#Date')) {
       //'two days before'/ 'nine weeks frow now'
-      doc.match('#Cardinal #Duration (before|after|ago|from|hence|back)').tag('DateShift', here$4); // in two weeks
+      doc.match('#Cardinal #Duration (before|after|ago|from|hence|back)').tag('DateShift', here$1); // in two weeks
 
-      doc.match('in #Cardinal #Duration').tag('DateShift', here$4); // in a few weeks
+      doc.match('in #Cardinal #Duration').tag('DateShift', here$1); // in a few weeks
 
-      doc.match('in a (few|couple) of? #Duration').tag('DateShift', here$4); //two weeks and three days before
+      doc.match('in a (few|couple) of? #Duration').tag('DateShift', here$1); //two weeks and three days before
 
-      doc.match('#Cardinal #Duration and? #DateShift').tag('DateShift', here$4);
-      doc.match('#DateShift and #Cardinal #Duration').tag('DateShift', here$4); // 'day after tomorrow'
+      doc.match('#Cardinal #Duration and? #DateShift').tag('DateShift', here$1);
+      doc.match('#DateShift and #Cardinal #Duration').tag('DateShift', here$1); // 'day after tomorrow'
 
-      doc.match('[#Duration (after|before)] #Date', 0).tag('DateShift', here$4); // in half an hour
+      doc.match('[#Duration (after|before)] #Date', 0).tag('DateShift', here$1); // in half an hour
 
-      doc.match('in half (a|an) #Duration').tag('DateShift', here$4);
+      doc.match('in half (a|an) #Duration').tag('DateShift', here$1);
     }
 
     return doc;
@@ -498,7 +498,7 @@
 
   var _06Intervals = tagIntervals;
 
-  var here$5 = 'fix-tagger'; //
+  var here = 'fix-tagger'; //
 
   var fixUp = function fixUp(doc) {
     //fixups
@@ -533,31 +533,31 @@
       } //tomorrow on 5
 
 
-      d.match("on #Cardinal$").unTag('Date', here$5); //this tomorrow
+      d.match("on #Cardinal$").unTag('Date', here); //this tomorrow
 
       d.match("this tomorrow").terms(0).unTag('Date', 'this-tomorrow'); //q2 2019
 
-      d.match("(q1|q2|q3|q4) #Year").tag('Date', here$5); //5 tuesday
+      d.match("(q1|q2|q3|q4) #Year").tag('Date', here); //5 tuesday
       // d.match(`^#Value #WeekDay`).terms(0).unTag('Date');
       //5 next week
 
-      d.match("^#Value (this|next|last)").terms(0).unTag('Date', here$5);
+      d.match("^#Value (this|next|last)").terms(0).unTag('Date', here);
 
       if (d.has('(last|this|next)')) {
         //this month 7
-        d.match("(last|this|next) #Duration #Value").terms(2).unTag('Date', here$5); //7 this month
+        d.match("(last|this|next) #Duration #Value").terms(2).unTag('Date', here); //7 this month
 
-        d.match("!#Month #Value (last|this|next) #Date").terms(0).unTag('Date', here$5);
+        d.match("!#Month #Value (last|this|next) #Date").terms(0).unTag('Date', here);
       } //january 5 5
 
 
       if (d.has('(#Year|#Time|#TextValue|#NumberRange)') === false) {
-        d.match('(#Month|#WeekDay) #Value #Value').terms(2).unTag('Date', here$5);
+        d.match('(#Month|#WeekDay) #Value #Value').terms(2).unTag('Date', here);
       } //between june
 
 
       if (d.has('^between') && !d.has('and .')) {
-        d.unTag('Date', here$5);
+        d.unTag('Date', here);
       } //june june
 
 
@@ -592,9 +592,9 @@
 
   var _07Fixup = fixUp;
 
-  var methods = [_00Basic, _01Values, _02Dates, _03Sections, _04Time, _05Shifts, _06Intervals, _07Fixup]; // normalizations to run before tagger
+  var methods$3 = [_00Basic, _01Values, _02Dates, _03Sections, _04Time, _05Shifts, _06Intervals, _07Fixup]; // normalizations to run before tagger
 
-  var normalize = function normalize(doc) {
+  var normalize$1 = function normalize(doc) {
     // turn '20mins' into '20 mins'
     doc.numbers().normalize(); // this is sorta problematic
 
@@ -603,9 +603,9 @@
 
 
   var tagDate = function tagDate(doc) {
-    doc = normalize(doc); // run taggers
+    doc = normalize$1(doc); // run taggers
 
-    methods.forEach(function (fn) {
+    methods$3.forEach(function (fn) {
       return fn(doc);
     });
     return doc;
@@ -5296,7 +5296,7 @@
 
   var dates = ['weekday', 'summer', 'winter', 'autumn', 'some day', 'one day', 'all day', 'some point', 'eod', 'eom', 'eoy', 'standard time', 'daylight time', 'tommorrow'];
 
-  var durations = ['centuries', 'century', 'day', 'days', 'decade', 'decades', 'hour', 'hours', 'hr', 'hrs', 'millisecond', 'milliseconds', 'minute', 'minutes', 'min', 'mins', 'month', 'months', 'seconds', 'sec', 'secs', 'week end', 'week ends', 'weekend', 'weekends', 'week', 'weeks', 'wk', 'wks', 'year', 'years', 'yr', 'yrs', 'quarter', // 'quarters',
+  var durations$1 = ['centuries', 'century', 'day', 'days', 'decade', 'decades', 'hour', 'hours', 'hr', 'hrs', 'millisecond', 'milliseconds', 'minute', 'minutes', 'min', 'mins', 'month', 'months', 'seconds', 'sec', 'secs', 'week end', 'week ends', 'weekend', 'weekends', 'week', 'weeks', 'wk', 'wks', 'year', 'years', 'yr', 'yrs', 'quarter', // 'quarters',
   'qtr', 'qtrs', 'season', 'seasons'];
 
   var holidays = ['all hallows eve', 'all saints day', 'all sts day', 'april fools', 'armistice day', 'australia day', 'bastille day', 'boxing day', 'canada day', 'christmas eve', 'christmas', 'cinco de mayo', 'day of the dead', 'dia de muertos', 'dieciseis de septiembre', 'emancipation day', 'grito de dolores', 'groundhog day', 'halloween', 'harvey milk day', 'inauguration day', 'independence day', 'independents day', 'juneteenth', 'labour day', 'national freedom day', 'national nurses day', 'new years eve', 'new years', 'purple heart day', 'rememberance day', 'rosa parks day', 'saint andrews day', 'saint patricks day', 'saint stephens day', 'saint valentines day', 'st andrews day', 'st patricks day', 'st stephens day', 'st valentines day ', 'valentines day', 'valentines', 'veterans day', 'victoria day', 'womens equality day', 'xmas', // Fixed religious and cultural holidays
@@ -5309,9 +5309,9 @@
   'isra and miraj', 'lailat al-qadr', 'eid al-fitr', 'id al-Fitr', 'eid ul-Fitr', 'ramadan', 'eid al-adha', 'muharram', 'the prophets birthday', 'ostara', 'march equinox', 'vernal equinox', 'litha', 'june solistice', 'summer solistice', 'mabon', 'september equinox', 'fall equinox', 'autumnal equinox', 'yule', 'december solstice', 'winter solstice', // Additional important holidays
   'chinese new year', 'diwali'];
 
-  var times = ['noon', 'midnight', 'now', 'morning', 'tonight', 'evening', 'afternoon', 'night', 'breakfast time', 'lunchtime', 'dinnertime', 'sometime', 'midday', 'eod', 'oclock', 'oclock', 'all day', 'at night'];
+  var times$1 = ['noon', 'midnight', 'now', 'morning', 'tonight', 'evening', 'afternoon', 'night', 'breakfast time', 'lunchtime', 'dinnertime', 'sometime', 'midday', 'eod', 'oclock', 'oclock', 'all day', 'at night'];
 
-  var data = [[dates, '#Date'], [durations, '#Duration'], [holidays, '#Holiday'], [times, '#Time'], [Object.keys(_timezones), '#Timezone']];
+  var data = [[dates, '#Date'], [durations$1, '#Duration'], [holidays, '#Holiday'], [times$1, '#Time'], [Object.keys(_timezones), '#Timezone']];
   var lex = {
     'a couple': 'Value',
     thur: 'WeekDay'
@@ -5519,7 +5519,7 @@
 
   var Unit_1 = Unit;
 
-  var Day = /*#__PURE__*/function (_Unit) {
+  var Day$4 = /*#__PURE__*/function (_Unit) {
     _inherits(Day, _Unit);
 
     var _super = _createSuper(Day);
@@ -5543,7 +5543,7 @@
   }(Unit_1); // like 'feb 2'
 
 
-  var CalendarDate = /*#__PURE__*/function (_Day) {
+  var CalendarDate$1 = /*#__PURE__*/function (_Day) {
     _inherits(CalendarDate, _Day);
 
     var _super2 = _createSuper(CalendarDate);
@@ -5578,9 +5578,9 @@
     }]);
 
     return CalendarDate;
-  }(Day);
+  }(Day$4);
 
-  var WeekDay = /*#__PURE__*/function (_Day2) {
+  var WeekDay$2 = /*#__PURE__*/function (_Day2) {
     _inherits(WeekDay, _Day2);
 
     var _super3 = _createSuper(WeekDay);
@@ -5648,10 +5648,10 @@
     }]);
 
     return WeekDay;
-  }(Day); // like 'haloween'
+  }(Day$4); // like 'haloween'
 
 
-  var Holiday = /*#__PURE__*/function (_CalendarDate) {
+  var Holiday$1 = /*#__PURE__*/function (_CalendarDate) {
     _inherits(Holiday, _CalendarDate);
 
     var _super4 = _createSuper(Holiday);
@@ -5672,16 +5672,16 @@
     }
 
     return Holiday;
-  }(CalendarDate);
+  }(CalendarDate$1);
 
   var _day = {
-    Day: Day,
-    WeekDay: WeekDay,
-    CalendarDate: CalendarDate,
-    Holiday: Holiday
+    Day: Day$4,
+    WeekDay: WeekDay$2,
+    CalendarDate: CalendarDate$1,
+    Holiday: Holiday$1
   };
 
-  var AnyMonth = /*#__PURE__*/function (_Unit) {
+  var AnyMonth$1 = /*#__PURE__*/function (_Unit) {
     _inherits(AnyMonth, _Unit);
 
     var _super = _createSuper(AnyMonth);
@@ -5705,7 +5705,7 @@
   }(Unit_1); // a specific month, like 'March'
 
 
-  var Month = /*#__PURE__*/function (_Unit2) {
+  var Month$2 = /*#__PURE__*/function (_Unit2) {
     _inherits(Month, _Unit2);
 
     var _super2 = _createSuper(Month);
@@ -5744,7 +5744,7 @@
     return Month;
   }(Unit_1);
 
-  var AnyQuarter = /*#__PURE__*/function (_Unit3) {
+  var AnyQuarter$1 = /*#__PURE__*/function (_Unit3) {
     _inherits(AnyQuarter, _Unit3);
 
     var _super3 = _createSuper(AnyQuarter);
@@ -5776,7 +5776,7 @@
     return AnyQuarter;
   }(Unit_1);
 
-  var Quarter = /*#__PURE__*/function (_Unit4) {
+  var Quarter$2 = /*#__PURE__*/function (_Unit4) {
     _inherits(Quarter, _Unit4);
 
     var _super4 = _createSuper(Quarter);
@@ -5815,7 +5815,7 @@
     return Quarter;
   }(Unit_1);
 
-  var Season = /*#__PURE__*/function (_Unit5) {
+  var Season$3 = /*#__PURE__*/function (_Unit5) {
     _inherits(Season, _Unit5);
 
     var _super5 = _createSuper(Season);
@@ -5854,7 +5854,7 @@
     return Season;
   }(Unit_1);
 
-  var Year = /*#__PURE__*/function (_Unit6) {
+  var Year$2 = /*#__PURE__*/function (_Unit6) {
     _inherits(Year, _Unit6);
 
     var _super6 = _createSuper(Year);
@@ -5878,15 +5878,15 @@
   }(Unit_1);
 
   var _year = {
-    AnyMonth: AnyMonth,
-    Month: Month,
-    Quarter: Quarter,
-    AnyQuarter: AnyQuarter,
-    Season: Season,
-    Year: Year
+    AnyMonth: AnyMonth$1,
+    Month: Month$2,
+    Quarter: Quarter$2,
+    AnyQuarter: AnyQuarter$1,
+    Season: Season$3,
+    Year: Year$2
   };
 
-  var Week = /*#__PURE__*/function (_Unit) {
+  var Week$2 = /*#__PURE__*/function (_Unit) {
     _inherits(Week, _Unit);
 
     var _super = _createSuper(Week);
@@ -5910,7 +5910,7 @@
   }(Unit_1); //may need some work
 
 
-  var WeekEnd = /*#__PURE__*/function (_Unit2) {
+  var WeekEnd$2 = /*#__PURE__*/function (_Unit2) {
     _inherits(WeekEnd, _Unit2);
 
     var _super2 = _createSuper(WeekEnd);
@@ -5961,11 +5961,11 @@
   }(Unit_1);
 
   var _week = {
-    Week: Week,
-    WeekEnd: WeekEnd
+    Week: Week$2,
+    WeekEnd: WeekEnd$2
   };
 
-  var Hour = /*#__PURE__*/function (_Unit) {
+  var Hour$2 = /*#__PURE__*/function (_Unit) {
     _inherits(Hour, _Unit);
 
     var _super = _createSuper(Hour);
@@ -5988,7 +5988,7 @@
     return Hour;
   }(Unit_1);
 
-  var Minute = /*#__PURE__*/function (_Unit2) {
+  var Minute$2 = /*#__PURE__*/function (_Unit2) {
     _inherits(Minute, _Unit2);
 
     var _super2 = _createSuper(Minute);
@@ -6011,7 +6011,7 @@
     return Minute;
   }(Unit_1);
 
-  var Moment = /*#__PURE__*/function (_Unit3) {
+  var Moment$3 = /*#__PURE__*/function (_Unit3) {
     _inherits(Moment, _Unit3);
 
     var _super3 = _createSuper(Moment);
@@ -6030,12 +6030,12 @@
   }(Unit_1);
 
   var _time = {
-    Hour: Hour,
-    Minute: Minute,
-    Moment: Moment
+    Hour: Hour$2,
+    Minute: Minute$2,
+    Moment: Moment$3
   };
 
-  var units = Object.assign({
+  var units$1 = Object.assign({
     Unit: Unit_1
   }, _day, _year, _week, _time);
 
@@ -6545,22 +6545,22 @@
 
   var _07Weekday = parseWeekday;
 
-  var Day$1 = units.Day,
-      Moment$1 = units.Moment;
+  var Day$3 = units$1.Day,
+      Moment$2 = units$1.Moment;
   var knownWord = {
     today: function today(context) {
-      return new Day$1(context.today, null, context);
+      return new Day$3(context.today, null, context);
     },
     yesterday: function yesterday(context) {
-      return new Day$1(context.today.minus(1, 'day'), null, context);
+      return new Day$3(context.today.minus(1, 'day'), null, context);
     },
     tomorrow: function tomorrow(context) {
-      return new Day$1(context.today.plus(1, 'day'), null, context);
+      return new Day$3(context.today.plus(1, 'day'), null, context);
     },
     eom: function eom(context) {
       var d = context.today.endOf('month');
       d = d.startOf('day');
-      return new Day$1(d, null, context);
+      return new Day$3(d, null, context);
     },
     // eod: (context) => {
     //   let d = context.today.endOf('day')
@@ -6570,7 +6570,7 @@
     eoy: function eoy(context) {
       var d = context.today.endOf('year');
       d = d.startOf('day');
-      return new Day$1(d, null, context);
+      return new Day$3(d, null, context);
     }
   };
   knownWord.tommorrow = knownWord.tomorrow;
@@ -6582,15 +6582,15 @@
     if (doc.found === false) {
       // do we have just a time?
       if (section.time !== null) {
-        unit = new Moment$1(context.today, null, context); // choose today
+        unit = new Moment$2(context.today, null, context); // choose today
       } //do we just have a shift?
 
 
       if (Object.keys(section.shift).length > 0) {
         if (section.shift.hour || section.shift.minute) {
-          unit = new Moment$1(context.today, null, context); // choose now
+          unit = new Moment$2(context.today, null, context); // choose now
         } else {
-          unit = new Day$1(context.today, null, context); // choose today
+          unit = new Day$3(context.today, null, context); // choose today
         }
       }
     } // today, yesterday, tomorrow
@@ -7075,7 +7075,7 @@
     });
   });
 
-  var Holiday$1 = units.Holiday;
+  var Holiday = units$1.Holiday;
 
   var parseHoliday = function parseHoliday(doc, context) {
     var unit = null;
@@ -7095,7 +7095,7 @@
         s = spacetimeHoliday(str, year + 1, context.timezone);
       }
 
-      unit = new Holiday$1(s, null, context);
+      unit = new Holiday(s, null, context);
     }
 
     return unit;
@@ -7103,39 +7103,39 @@
 
   var _02Holidays = parseHoliday;
 
-  var Week$1 = units.Week,
-      WeekEnd$1 = units.WeekEnd,
-      AnyMonth$1 = units.AnyMonth,
-      AnyQuarter$1 = units.AnyQuarter,
-      Year$1 = units.Year,
-      Season$1 = units.Season,
-      WeekDay$1 = units.WeekDay,
-      Day$2 = units.Day,
-      Hour$1 = units.Hour,
-      Minute$1 = units.Minute,
-      Moment$2 = units.Moment;
-  var mapping = {
+  var Week$1 = units$1.Week,
+      WeekEnd$1 = units$1.WeekEnd,
+      AnyMonth = units$1.AnyMonth,
+      AnyQuarter = units$1.AnyQuarter,
+      Year$1 = units$1.Year,
+      Season$2 = units$1.Season,
+      WeekDay$1 = units$1.WeekDay,
+      Day$2 = units$1.Day,
+      Hour$1 = units$1.Hour,
+      Minute$1 = units$1.Minute,
+      Moment$1 = units$1.Moment;
+  var mapping$1 = {
     day: Day$2,
     hour: Hour$1,
     evening: Hour$1,
-    second: Moment$2,
-    milliscond: Moment$2,
-    instant: Moment$2,
+    second: Moment$1,
+    milliscond: Moment$1,
+    instant: Moment$1,
     minute: Minute$1,
     week: Week$1,
     weekend: WeekEnd$1,
-    month: AnyMonth$1,
-    quarter: AnyQuarter$1,
+    month: AnyMonth,
+    quarter: AnyQuarter,
     year: Year$1,
-    season: Season$1,
+    season: Season$2,
     // set aliases
     yr: Year$1,
-    qtr: AnyQuarter$1,
+    qtr: AnyQuarter,
     wk: Week$1,
-    sec: Moment$2,
+    sec: Moment$1,
     hr: Hour$1
   };
-  var matchStr = "^(".concat(Object.keys(mapping).join('|'), ")$"); // when a unit of time is spoken of as 'this month' - instead of 'february'
+  var matchStr = "^(".concat(Object.keys(mapping$1).join('|'), ")$"); // when a unit of time is spoken of as 'this month' - instead of 'february'
 
   var nextLast = function nextLast(doc, context) {
     //this month, last quarter, next year
@@ -7144,8 +7144,8 @@
     if (m.found === true) {
       var str = m.text('reduced');
 
-      if (mapping.hasOwnProperty(str)) {
-        var Model = mapping[str];
+      if (mapping$1.hasOwnProperty(str)) {
+        var Model = mapping$1[str];
 
         if (!Model) {
           return null;
@@ -7179,9 +7179,9 @@
 
   var _03NextLast = nextLast;
 
-  var Quarter$1 = units.Quarter,
-      Season$2 = units.Season,
-      Year$2 = units.Year;
+  var Quarter$1 = units$1.Quarter,
+      Season$1 = units$1.Season,
+      Year = units$1.Year;
 
   var fmtToday = function fmtToday(context) {
     return {
@@ -7200,7 +7200,7 @@
       var s = spacetime(str, context.timezone, {
         today: fmtToday(context)
       });
-      var unit = new Season$2(s, null, context);
+      var unit = new Season$1(s, null, context);
 
       if (unit.d.isValid() === true) {
         return unit;
@@ -7264,7 +7264,7 @@
 
       _s3 = _s3.year(_str2);
 
-      var _unit3 = new Year$2(_s3, null, context);
+      var _unit3 = new Year(_s3, null, context);
 
       if (_unit3.d.isValid() === true) {
         return _unit3;
@@ -7276,10 +7276,10 @@
 
   var _04Yearly = parseYearly;
 
-  var Day$3 = units.Day,
-      CalendarDate$1 = units.CalendarDate,
-      Month$1 = units.Month,
-      Moment$3 = units.Moment; // parse things like 'june 5th 2019'
+  var Day$1 = units$1.Day,
+      CalendarDate = units$1.CalendarDate,
+      Month$1 = units$1.Month,
+      Moment = units$1.Moment; // parse things like 'june 5th 2019'
   // most of this is done in spacetime
 
   var parseExplicit = function parseExplicit(doc, context) {
@@ -7299,7 +7299,7 @@
         year: m.groups('year').text() || impliedYear
       };
 
-      var _unit = new CalendarDate$1(obj, null, context);
+      var _unit = new CalendarDate(obj, null, context);
 
       if (_unit.d.isValid() === true) {
         return _unit;
@@ -7337,12 +7337,12 @@
         year: context.today.year()
       };
 
-      var _unit3 = new CalendarDate$1(_obj2, null, context); // assume 'feb' in the future
+      var _unit3 = new CalendarDate(_obj2, null, context); // assume 'feb' in the future
 
 
       if (_unit3.d.month() < context.today.month()) {
         _obj2.year += 1;
-        _unit3 = new CalendarDate$1(_obj2, null, context);
+        _unit3 = new CalendarDate(_obj2, null, context);
       }
 
       if (_unit3.d.isValid() === true) {
@@ -7382,7 +7382,7 @@
         year: context.today.year()
       };
 
-      var _unit5 = new CalendarDate$1(_obj4, null, context);
+      var _unit5 = new CalendarDate(_obj4, null, context);
 
       if (_unit5.d.isValid() === true) {
         return _unit5;
@@ -7399,7 +7399,7 @@
         year: context.today.year()
       };
 
-      var _unit6 = new CalendarDate$1(_obj5, null, context);
+      var _unit6 = new CalendarDate(_obj5, null, context);
 
       if (_unit6.d.isValid() === true) {
         // assume it's forward
@@ -7417,7 +7417,7 @@
     if (m.found) {
       var _str = doc.text('reduced');
 
-      var _unit7 = new Moment$3(_str, null, context);
+      var _unit7 = new Moment(_str, null, context);
 
       if (_unit7.d.isValid() === true) {
         return _unit7;
@@ -7426,7 +7426,7 @@
 
     var str = doc.text('reduced'); // punt it to spacetime, for the heavy-lifting
 
-    var unit = new Day$3(str, null, context); // console.log(str, unit, context.today.year())
+    var unit = new Day$1(str, null, context); // console.log(str, unit, context.today.year())
     // did we find a date?
 
     if (unit.d.isValid() === false) {
@@ -7438,28 +7438,28 @@
 
   var _05Explicit = parseExplicit;
 
-  var Quarter$2 = units.Quarter,
-      Season$3 = units.Season,
-      Week$2 = units.Week,
-      Day$4 = units.Day,
-      Hour$2 = units.Hour,
-      Minute$2 = units.Minute,
-      Month$2 = units.Month,
-      WeekEnd$2 = units.WeekEnd;
-  var units$1 = {
-    day: Day$4,
-    week: Week$2,
-    weekend: WeekEnd$2,
-    month: Month$2,
-    quarter: Quarter$2,
-    season: Season$3,
-    hour: Hour$2,
-    minute: Minute$2
+  var Quarter = units$1.Quarter,
+      Season = units$1.Season,
+      Week = units$1.Week,
+      Day = units$1.Day,
+      Hour = units$1.Hour,
+      Minute = units$1.Minute,
+      Month = units$1.Month,
+      WeekEnd = units$1.WeekEnd;
+  var units = {
+    day: Day,
+    week: Week,
+    weekend: WeekEnd,
+    month: Month,
+    quarter: Quarter,
+    season: Season,
+    hour: Hour,
+    minute: Minute
   };
 
   var applyCounter = function applyCounter(unit) {
     var counter = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    var Unit = units$1[counter.unit];
+    var Unit = units[counter.unit];
 
     if (!Unit) {
       return unit;
@@ -7489,7 +7489,7 @@
 
   var addCounter = applyCounter;
 
-  var WeekDay$2 = units.WeekDay;
+  var WeekDay = units$1.WeekDay;
   var tokens = {
     shift: _01Shift,
     counter: _02Counter,
@@ -7499,7 +7499,7 @@
     timezone: _06Timezone,
     weekday: _07Weekday
   };
-  var parse = {
+  var parse$3 = {
     today: _01Today,
     holiday: _02Holidays,
     nextLast: _03NextLast,
@@ -7533,19 +7533,19 @@
 
     var unit = null; //'in two days'
 
-    unit = unit || parse.today(doc, context, {
+    unit = unit || parse$3.today(doc, context, {
       shift: shift,
       time: time,
       rel: rel
     }); // 'this haloween'
 
-    unit = unit || parse.holiday(doc, context); // 'this month'
+    unit = unit || parse$3.holiday(doc, context); // 'this month'
 
-    unit = unit || parse.nextLast(doc, context); // 'q2 2002'
+    unit = unit || parse$3.nextLast(doc, context); // 'q2 2002'
 
-    unit = unit || parse.yearly(doc, context); // 'this june 2nd'
+    unit = unit || parse$3.yearly(doc, context); // 'this june 2nd'
 
-    unit = unit || parse.explicit(doc, context);
+    unit = unit || parse$3.explicit(doc, context);
 
     if (!unit) {
       return null;
@@ -7562,7 +7562,7 @@
 
     if (weekDay && unit.unit !== 'day') {
       unit.applyWeekDay(weekDay);
-      unit = new WeekDay$2(unit.d, null, unit.context); // console.log(rel, unit.d.format())
+      unit = new WeekDay(unit.d, null, unit.context); // console.log(rel, unit.d.format())
     } // this/next/last
 
 
@@ -7599,7 +7599,7 @@
     return unit;
   };
 
-  var parse_1 = parseDate;
+  var parse_1$2 = parseDate;
 
   var dayNames = {
     mon: 'monday',
@@ -7750,9 +7750,9 @@
     match: 'between [<start>*] and [<end>*]',
     parse: function parse(m, context) {
       var start = m.groups('start');
-      start = parse_1(start, context);
+      start = parse_1$2(start, context);
       var end = m.groups('end');
-      end = parse_1(end, context);
+      end = parse_1$2(end, context);
 
       if (start && end) {
         return {
@@ -7774,7 +7774,7 @@
         start = start.append(res.year);
       }
 
-      start = parse_1(start, context);
+      start = parse_1$2(start, context);
 
       if (start) {
         var end = res.to;
@@ -7783,7 +7783,7 @@
           end = end.append(res.year);
         }
 
-        end = parse_1(end, context); // reverse the order?
+        end = parse_1$2(end, context); // reverse the order?
 
         if (start.d.isAfter(end.d)) {
           var tmp = start;
@@ -7811,11 +7811,11 @@
 
       var year2 = year.clone();
       var start = from.prepend(month.text()).append(year.text());
-      start = parse_1(start, context);
+      start = parse_1$2(start, context);
 
       if (start) {
         var end = to.prepend(month.text()).append(year2);
-        end = parse_1(end, context);
+        end = parse_1$2(end, context);
         return {
           start: start,
           end: end.end()
@@ -7829,7 +7829,7 @@
     match: '[<from>#Value] (to|through|thru|and) [<to>#Value of? #Month of? #Year]',
     parse: function parse(m, context) {
       var to = m.groups('to');
-      to = parse_1(to, context);
+      to = parse_1$2(to, context);
 
       if (to) {
         var fromDate = m.groups('to');
@@ -7848,7 +7848,7 @@
     match: '[<from>#Value] (to|through|thru|and) [<to>#Value of? #Month]',
     parse: function parse(m, context) {
       var to = m.groups('to');
-      to = parse_1(to, context);
+      to = parse_1$2(to, context);
 
       if (to) {
         var fromDate = m.groups('from');
@@ -7867,7 +7867,7 @@
     match: '[<from>#Month #Value] (to|through|thru|and) [<to>#Value]',
     parse: function parse(m, context) {
       var from = m.groups('from');
-      from = parse_1(from, context);
+      from = parse_1$2(from, context);
 
       if (from) {
         var toDate = m.groups('to');
@@ -7888,8 +7888,8 @@
       var from = m.groups('from');
       var year = from.groups('year').numbers().get(0);
       var to = m.groups('to');
-      from = parse_1(from, context);
-      to = parse_1(to, context);
+      from = parse_1$2(from, context);
+      to = parse_1$2(to, context);
       from.d = from.d.year(year);
       to.d = to.d.year(year);
 
@@ -7915,8 +7915,8 @@
     parse: function parse(m, context) {
       var from = m.groups('from');
       var to = m.groups('to');
-      from = parse_1(from, context);
-      to = parse_1(to, context);
+      from = parse_1$2(from, context);
+      to = parse_1$2(to, context);
 
       if (from && to) {
         return {
@@ -7966,7 +7966,7 @@
     match: '^due? (by|before) [*]',
     group: 0,
     parse: function parse(m, context) {
-      var unit = parse_1(m, context);
+      var unit = parse_1$2(m, context);
 
       if (unit) {
         var start = new Unit_1(context.today, null, context);
@@ -7994,7 +7994,7 @@
     match: '^(on|in|at|@) [*]',
     group: 0,
     parse: function parse(m, context) {
-      var unit = parse_1(m, context);
+      var unit = parse_1$2(m, context);
 
       if (unit) {
         return {
@@ -8010,7 +8010,7 @@
     match: '^(after|following) [*]',
     group: 0,
     parse: function parse(m, context) {
-      var unit = parse_1(m, context);
+      var unit = parse_1$2(m, context);
 
       if (unit) {
         unit = unit.after();
@@ -8027,7 +8027,7 @@
     match: '^(on|during|in|during) [*]',
     group: 0,
     parse: function parse(m, context) {
-      var unit = parse_1(m, context);
+      var unit = parse_1$2(m, context);
 
       if (unit) {
         return {
@@ -8067,7 +8067,7 @@
       start: null,
       end: null
     };
-    var unit = parse_1(doc, context);
+    var unit = parse_1$2(doc, context);
 
     if (unit) {
       res = {
@@ -8082,7 +8082,7 @@
 
   var _02Ranges = parseRange;
 
-  var normalize$1 = function normalize(doc) {
+  var normalize = function normalize(doc) {
     doc = doc.clone(); // 'four thirty' -> 4:30
 
     var m = doc.match('[<hour>#Cardinal] [<min>(thirty|fifteen)]').match('#Time+');
@@ -8129,7 +8129,7 @@
     return doc;
   };
 
-  var normalize_1 = normalize$1;
+  var normalize_1 = normalize;
 
   var maxDate = 8640000000000000;
 
@@ -8231,7 +8231,7 @@
     return result;
   };
 
-  var parse$1 = getDate;
+  var parse$2 = getDate;
 
   var arr = [['mon', 'monday'], ['tue', 'tuesday'], ['tues', 'tuesday'], ['wed', 'wednesday'], ['thu', 'thursday'], ['thurs', 'thursday'], ['fri', 'friday'], ['sat', 'saturday'], ['sun', 'sunday'], ['jan', 'january'], ['feb', 'february'], ['mar', 'march'], ['apr', 'april'], ['jun', 'june'], ['jul', 'july'], ['aug', 'august'], ['sep', 'september'], ['sept', 'september'], ['oct', 'october'], ['nov', 'november'], ['dec', 'december']];
   arr = arr.map(function (a) {
@@ -8242,14 +8242,14 @@
   });
   var _abbrevs = arr;
 
-  var methods$1 = {
+  var methods$2 = {
     /** easy getter for the start/end dates */
     get: function get(options) {
       var _this = this;
 
       var arr = [];
       this.forEach(function (doc) {
-        var found = parse$1(doc, _this.context);
+        var found = parse$2(doc, _this.context);
         arr.push(found);
       });
 
@@ -8277,7 +8277,7 @@
       var res = [];
       this.forEach(function (doc) {
         var json = doc.json(options)[0];
-        var found = parse$1(doc, _this2.context);
+        var found = parse$2(doc, _this2.context);
         json.date = found;
         res.push(json);
       });
@@ -8294,7 +8294,7 @@
       var _this3 = this;
 
       this.forEach(function (doc) {
-        var obj = parse$1(doc, _this3.context);
+        var obj = parse$2(doc, _this3.context);
 
         if (obj.start) {
           var start = spacetime(obj.start, _this3.context.timezone);
@@ -8353,7 +8353,7 @@
     quarter: true,
     season: true
   };
-  var mapping$1 = {
+  var mapping = {
     m: 'minute',
     h: 'hour',
     hr: 'hour',
@@ -8365,11 +8365,11 @@
     qtr: 'quarter'
   }; // add plurals
 
-  Object.keys(mapping$1).forEach(function (k) {
-    mapping$1[k + 's'] = mapping$1[k];
+  Object.keys(mapping).forEach(function (k) {
+    mapping[k + 's'] = mapping[k];
   });
 
-  var parse$2 = function parse(doc) {
+  var parse$1 = function parse(doc) {
     var duration = {}; //parse '8 minutes'
 
     var twoWord = doc.match('#Value+ #Duration');
@@ -8379,8 +8379,8 @@
         var num = m.numbers().get(0);
         var unit = m.terms().last().nouns().toSingular().text(); // turn 'mins' into 'minute'
 
-        if (mapping$1.hasOwnProperty(unit)) {
-          unit = mapping$1[unit];
+        if (mapping.hasOwnProperty(unit)) {
+          unit = mapping[unit];
         }
 
         if (known.hasOwnProperty(unit) && num !== null) {
@@ -8399,8 +8399,8 @@
           num = num[0] || null;
           unit = unit[0] || null;
 
-          if (mapping$1.hasOwnProperty(unit)) {
-            unit = mapping$1[unit];
+          if (mapping.hasOwnProperty(unit)) {
+            unit = mapping[unit];
           }
 
           if (known.hasOwnProperty(unit) && num !== null) {
@@ -8413,9 +8413,9 @@
     return duration;
   };
 
-  var parse_1$1 = parse$2;
+  var parse_1$1 = parse$1;
 
-  var methods$2 = {
+  var methods$1 = {
     /** easy getter for the time */
     get: function get(options) {
       var arr = [];
@@ -8506,7 +8506,7 @@
     }(Doc); //add-in methods
 
 
-    Object.assign(Durations.prototype, methods$2);
+    Object.assign(Durations.prototype, methods$1);
     /** phrases like '2 months' */
 
     Doc.prototype.durations = function (n) {
@@ -8524,24 +8524,24 @@
     };
   };
 
-  var durations$1 = addDurations;
+  var durations = addDurations;
 
-  var parse$3 = function parse(m, context) {
+  var parse = function parse(m, context) {
     m = normalize_1(m);
     var res = _03Time(m, context);
     return res;
   };
 
-  var parse_1$2 = parse$3;
+  var parse_1 = parse;
 
-  var methods$3 = {
+  var methods = {
     /** easy getter for the time */
     get: function get(options) {
       var _this = this;
 
       var arr = [];
       this.forEach(function (doc) {
-        var res = parse_1$2(doc, _this.context);
+        var res = parse_1(doc, _this.context);
         arr.push(res);
       });
 
@@ -8569,7 +8569,7 @@
       var res = [];
       this.forEach(function (doc) {
         var json = doc.json(options);
-        json.time = parse_1$2(doc, _this2.context);
+        json.time = parse_1(doc, _this2.context);
         res.push(json);
       });
 
@@ -8602,7 +8602,7 @@
     }(Doc); //add-in methods
 
 
-    Object.assign(Times.prototype, methods$3);
+    Object.assign(Times.prototype, methods);
     /** phrases like '4pm' */
 
     Doc.prototype.times = function (n) {
@@ -8616,7 +8616,7 @@
     };
   };
 
-  var times$1 = addTimes;
+  var times = addTimes;
 
   var findDate = function findDate(doc) {
     // let r = this.clauses()
@@ -8700,9 +8700,9 @@
 
     world.postProcess(_01Tagger); // add .durations() class + methods
 
-    durations$1(Doc); // add .times() class + methods
+    durations(Doc); // add .times() class + methods
 
-    times$1(Doc);
+    times(Doc);
     /** phraes like 'nov 2nd' or 'on tuesday' */
 
     var Dates = /*#__PURE__*/function (_Doc) {
@@ -8724,7 +8724,7 @@
     }(Doc); //add-in methods
 
 
-    Object.assign(Dates.prototype, methods$1);
+    Object.assign(Dates.prototype, methods$2);
 
     Doc.prototype.dates = function (n) {
       var context = {};

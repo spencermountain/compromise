@@ -1,4 +1,4 @@
-/* compromise-hash 0.0.2 MIT */
+/* compromise-hash 0.0.3 MIT */
 function _typeof(obj) {
   "@babel/helpers - typeof";
 

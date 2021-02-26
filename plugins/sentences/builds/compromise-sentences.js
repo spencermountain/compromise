@@ -1,4 +1,4 @@
-/* compromise-sentences 0.1.1 MIT */
+/* compromise-sentences 0.2.0 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -386,13 +386,13 @@
     return false;
   };
 
-  var isQuestion_1 = isQuestion;
+  var isQuestion_1$1 = isQuestion;
 
   /** return sentences ending with '?' */
 
-  var isQuestion_1$1 = function isQuestion_1$1() {
+  var isQuestion_1 = function isQuestion_1() {
     return this.filter(function (d) {
-      return isQuestion_1(d);
+      return isQuestion_1$1(d);
     });
   };
   /** return sentences ending with '!' */
@@ -436,7 +436,7 @@
   };
 
   var questions = {
-    isQuestion: isQuestion_1$1,
+    isQuestion: isQuestion_1,
     isExclamation: isExclamation,
     isStatement: isStatement,
     toExclamation: toExclamation,

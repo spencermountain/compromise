@@ -1,4 +1,4 @@
-/* compromise-sentences 0.1.1 MIT */
+/* compromise-sentences 0.2.0 MIT */
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -380,13 +380,13 @@ var isQuestion = function isQuestion(doc) {
   return false;
 };
 
-var isQuestion_1 = isQuestion;
+var isQuestion_1$1 = isQuestion;
 
 /** return sentences ending with '?' */
 
-var isQuestion_1$1 = function isQuestion_1$1() {
+var isQuestion_1 = function isQuestion_1() {
   return this.filter(function (d) {
-    return isQuestion_1(d);
+    return isQuestion_1$1(d);
   });
 };
 /** return sentences ending with '!' */
@@ -430,7 +430,7 @@ var toStatement = function toStatement() {
 };
 
 var questions = {
-  isQuestion: isQuestion_1$1,
+  isQuestion: isQuestion_1,
   isExclamation: isExclamation,
   isStatement: isStatement,
   toExclamation: toExclamation,

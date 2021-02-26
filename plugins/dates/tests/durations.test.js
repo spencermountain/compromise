@@ -1,6 +1,24 @@
 const test = require('tape')
 const nlp = require('./_lib')
 
+test('durations vs dates', function (t) {
+  let arr = [
+    `30mins tuesday`,
+    `30 minutes on tuesday`,
+    `30 minutes on january 2nd`,
+    `tuesday for 30 mins`,
+    `january 1st 2020 for 30 mins`,
+  ]
+  arr.forEach((str) => {
+    let doc = nlp(str)
+    let dates = doc.dates().get(0)
+    let durations = doc.durations().get(0)
+    t.ok(dates.start, `[date] ${str}`)
+    t.equal(durations.minute, 30, `[duration] ${str}`)
+  })
+  t.end()
+})
+
 test('durations json', function (t) {
   let doc = nlp('blah blah two hours and 8 mins foobar')
   let json = doc.durations().json(0)

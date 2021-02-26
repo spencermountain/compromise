@@ -37,7 +37,7 @@ nlp.extend(require('compromise-dates'))
 let doc = nlp('the second monday of february')
 doc.dates().get(0)
 /*
-  {}
+  { start: '2021-02-08T00:00:00.000Z', end: '2021-02-08T23:59:59.999Z'}
 */
 ```
 
@@ -323,22 +323,22 @@ compromise will tag anything that looks like a date, but not validate the dates 
 
 
 <div align="left">
-  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>1 - <b>Regular-expressions</b> are the wrong way to parse dates.
+  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>1 - <b>Regular-expressions</b> are too-brittle to parse dates.
 </div>
 
 <div align="left">
-  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>2 - <b>Neural-nets</b> are the wrong way to parse dates.
+  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>2 - <b>Neural-nets</b> are too-wonky to parse dates.
 </div>
 
 <div align="left">
-  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>3 - A <b>startup</b> is the wrong place to build a universal date-parser.
+  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>3 - A <b>corporation</b>, or <b>startup</b> is the wrong place to build a universal date-parser.
 </div>
 
 
 <!-- spacer -->
 <img height="40px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-Parsing <ins>*dates*</ins>, <ins>*times*</ins>, and <ins>*durations*</ins> from natural language can be a solved-problem.
+Parsing <ins>*dates*</ins>, <ins>*times*</ins>, <ins>*durations*</ins>, and <ins>*intervals*</ins> from natural language can be a solved-problem.
 
 A rule-based, community open-source library - *one based on simple NLP* - is the best way to build a natural language date parser -  commercial, or otherwise - for the frontend, or the backend.
 
@@ -352,13 +352,13 @@ The *[match-syntax](https://observablehq.com/@spencermountain/compromise-match-s
 * [Chronic](https://github.com/mojombo/chronic) - by Tom Preston-Werner (Ruby)
 * [SUTime](https://nlp.stanford.edu/software/sutime.shtml) - by Angel Chang, Christopher Manning (Java)
 * [Natty](http://natty.joestelmach.com/) - by Joe Stelmach (Java)
-* [ParseDateTime](https://pypi.org/project/parsedatetime/) by Mike Taylor (Python)
 * [rrule](https://github.com/jakubroztocil/rrule) - repeating date-interval handler (js)
+* [ParseDateTime](https://pypi.org/project/parsedatetime/) by Mike Taylor (Python)
 
 <div align="center">
   <img height="40px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 </div>
 
-Work on compromise-date is sponsored by <a href="https://www.simform.com/"><img src="https://user-images.githubusercontent.com/399657/107404468-4f3de700-6ad4-11eb-9d60-7a90625b57d6.png" width="150px"/></a>
+compromise-date is sponsored by <a href="https://www.simform.com/"><img src="https://user-images.githubusercontent.com/399657/107404468-4f3de700-6ad4-11eb-9d60-7a90625b57d6.png" width="150px"/></a>
 
 **MIT** licenced

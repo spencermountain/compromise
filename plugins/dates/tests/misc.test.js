@@ -49,3 +49,13 @@ test('durations are not dates', function (t) {
   t.equal(doc.durations().length, 1, 'one-duration-compact')
   t.end()
 })
+
+test('lists of days', function (t) {
+  let doc = nlp('tuesday, wednesday, or friday')
+  t.equal(doc.dates().length, 3, '3-dates in list')
+
+  doc = nlp('wednesday, friday, and sunday')
+  t.equal(doc.dates().length, 3, '3-dates in AND list')
+
+  t.end()
+})

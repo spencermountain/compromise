@@ -1,4 +1,4 @@
-/* compromise-adjectives 0.0.6 MIT */
+/* compromise-adjectives 0.0.7 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -315,9 +315,9 @@
 
       _createClass(Adjective, [{
         key: "json",
-
+        value:
         /** overload the original json with noun information */
-        value: function json(options) {
+        function json(options) {
           var n = null;
 
           if (typeof options === 'number') {

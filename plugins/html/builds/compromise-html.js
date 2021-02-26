@@ -1,8 +1,8 @@
-/* compromise-html 0.0.2 MIT */
+/* compromise-html 0.0.3 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global = global || self, global.compromiseHtml = factory());
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.compromiseHtml = factory());
 }(this, (function () { 'use strict';
 
   function _taggedTemplateLiteral(strings, raw) {
@@ -55,17 +55,29 @@
 
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-  function createCommonjsModule(fn, module) {
-  	return module = { exports: {} }, fn(module, module.exports), module.exports;
+  function getAugmentedNamespace(n) {
+  	if (n.__esModule) return n;
+  	var a = Object.defineProperty({}, '__esModule', {value: true});
+  	Object.keys(n).forEach(function (k) {
+  		var d = Object.getOwnPropertyDescriptor(n, k);
+  		Object.defineProperty(a, k, d.get ? d : {
+  			enumerable: true,
+  			get: function () {
+  				return n[k];
+  			}
+  		});
+  	});
+  	return a;
   }
 
-  function getCjsExportFromNamespace (n) {
-  	return n && n['default'] || n;
+  function createCommonjsModule(fn) {
+    var module = { exports: {} };
+  	return fn(module, module.exports), module.exports;
   }
 
   var vhtml = createCommonjsModule(function (module, exports) {
     (function (global, factory) {
-       module.exports = factory() ;
+      module.exports = factory() ;
     })(commonjsGlobal, function () {
 
       var emptyTags = ['area', 'base', 'br', 'col', 'command', 'embed', 'hr', 'img', 'input', 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr'];
@@ -142,27 +154,9 @@
     });
   });
 
-  var htm = getCjsExportFromNamespace(htm_module$1);
+  var htm = /*@__PURE__*/getAugmentedNamespace(htm_module$1);
 
-  function _templateObject2() {
-    var data = _taggedTemplateLiteral(["<pre>", "</pre>"]);
-
-    _templateObject2 = function _templateObject2() {
-      return data;
-    };
-
-    return data;
-  }
-
-  function _templateObject() {
-    var data = _taggedTemplateLiteral(["<span class=", ">", "</span>"]);
-
-    _templateObject = function _templateObject() {
-      return data;
-    };
-
-    return data;
-  }
+  var _templateObject, _templateObject2;
 
   var toHtml = function toHtml(doc, segments, options) {
     var h = htm.bind(vhtml);
@@ -174,10 +168,10 @@
     var html = [];
     var arr = doc.segment(segments);
     arr.forEach(function (o) {
-      var str = h(_templateObject(), o.segment, o.text);
+      var str = h(_templateObject || (_templateObject = _taggedTemplateLiteral(["<span class=", ">", "</span>"])), o.segment, o.text);
       html.push(str);
     });
-    return h(_templateObject2(), html);
+    return h(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["<pre>", "</pre>"])), html);
   };
 
   var html = toHtml;

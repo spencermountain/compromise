@@ -81,6 +81,19 @@ class WeekDay extends Day {
     }
     return this
   }
+  applyRel(rel) {
+    // console.log('=-=-=-= here -=-=-=-')
+    if (rel === 'next') {
+      return this.next()
+    }
+    if (rel === 'last') {
+      return this.last()
+    }
+    if (rel === 'this-past') {
+      return this.last()
+    }
+    return this
+  }
 }
 
 // like 'haloween'

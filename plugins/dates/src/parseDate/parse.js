@@ -39,7 +39,6 @@ const parseDate = function (doc, context) {
     let iso = context.today.format('iso-short')
     context.today = context.today.goto(context.timezone).set(iso)
   }
-
   let unit = null
   //'in two days'
   unit = unit || parse.today(doc, context, { shift, time, rel })
@@ -51,6 +50,17 @@ const parseDate = function (doc, context) {
   unit = unit || parse.yearly(doc, context)
   // 'this june 2nd'
   unit = unit || parse.explicit(doc, context)
+  // debugging
+  // console.log('\n\n=-=-=-=-=-=-=-=-=-=-=-=Date-=-=-=-=-=-=-=-=-=-=-=-=-\n')
+  // console.log(`  shift:      ${JSON.stringify(shift)}`)
+  // console.log(`  counter:   `, counter)
+  // console.log(`  rel:        ${rel || '-'}`)
+  // console.log(`  section:    ${section || '-'}`)
+  // console.log(`  time:       ${time || '-'}`)
+  // console.log(`  str:       '${doc.text()}'`)
+  // console.log('  unit:     ', unit, '\n')
+  // doc.debug()
+  // console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n')
 
   if (!unit) {
     return null
@@ -86,17 +96,6 @@ const parseDate = function (doc, context) {
   if (counter && counter.unit) {
     unit = transform.counter(unit, counter)
   }
-  // debugging
-  // console.log('\n\n=-=-=-=-=-=-=-=-=-=-=-=Date-=-=-=-=-=-=-=-=-=-=-=-=-\n')
-  // console.log(`  shift:      ${JSON.stringify(shift)}`)
-  // console.log(`  counter:   `, counter)
-  // console.log(`  rel:        ${rel || '-'}`)
-  // console.log(`  section:    ${section || '-'}`)
-  // console.log(`  time:       ${time || '-'}`)
-  // console.log(`  str:       '${doc.text()}'`)
-  // console.log('  unit:     ', unit, '\n')
-  // doc.debug()
-  // console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n')
   return unit
 }
 module.exports = parseDate

@@ -72,6 +72,9 @@ class Unit {
     if (rel === 'last') {
       return this.last()
     }
+    if (rel === 'this-past') {
+      return this.last()
+    }
     return this
   }
   applySection(section) {

@@ -334,6 +334,28 @@ compromise will tag anything that looks like a date, but not validate the dates 
 ### *Inclusive/exclusive ranges:*
 *'between january and march'* will include all of march. This is usually pretty-ambiguous normally.
 
+### *Date greediness:*
+This library makes no assumptions about the input text, and is careful to avoid false-positive dates.
+If you know your text is a date, you can crank-up the date-tagger with a [compromise-plugin](https://observablehq.com/@spencermountain/compromise-plugins), like so:
+```js
+nlp.extend(function (Doc, world) {
+  // ambiguous words
+  world.addWords({
+    weds: 'WeekDay',
+    wed: 'WeekDay',
+    sat: 'WeekDay',
+    sun: 'WeekDay',
+  })
+  world.postProcess((doc) => {
+    // tag '2nd quarter' as a date
+    doc.match('#Ordinal quarter').tag('#Date')
+    // tag '2/2' as a date (not a fraction)
+    doc.match('/[0-9]{1,2}/[0-9]{1,2}/').tag('#Date')
+  })
+})
+```
+
+
 ### *Misc:*
 * *'thursday the 16th'* - will set to the 16th, even if it's not thursday
 * *'in a few hours/years'* - in 2 hours/years

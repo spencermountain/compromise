@@ -16,20 +16,13 @@ const context = {
   // max_repeat: 50,
 }
 
-let doc = nlp('2nd monday of february')
-// let doc = nlp(`any mondays`)
-
-let dates = doc.dates(context) //.debug()
-let date = dates.get(0)
-console.log(date)
-// console.log(JSON.stringify(json.date, null, 2))
-console.log('start: ', fmt(date.start))
-console.log('  end: ', fmt(date.end))
-// console.log('=-=-=-= here -=-=-=-')
-
-// console.log(nlp('it was ten after 9').debug().times().get())
-// console.log(nlp('around four oclock').times().get())
-// nlp('fourth quarter, 2002').debug()
+let doc = nlp('tuesday - wednesday')
+let dates = doc.dates(context).debug().get()
+// console.log(dates)
+dates.forEach((date) => {
+  console.log('start: ', fmt(date.start))
+  console.log('  end: ', fmt(date.end))
+})
 
 // ### hmmm
 // let doc = nlp('in the next three years') //.debug()

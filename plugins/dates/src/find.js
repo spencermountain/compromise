@@ -29,14 +29,27 @@ const findDate = function (doc) {
   // 'tuesday, wednesday'
   m = dates.match('^[#WeekDay] #WeekDay$', 0)
   if (m.found) {
-    dates = dates.splitAfter(m)
-    dates = dates.not('^(and|or)')
+    if (m.first().has('@hasDash') === false) {
+      dates = dates.splitAfter(m)
+      dates = dates.not('^(and|or)')
+    }
   }
+
   // 'tuesday, wednesday, and friday'
-  m = dates.match('#WeekDay #WeekDay and #WeekDay')
+  m = dates.match('#WeekDay #WeekDay and? #WeekDay')
   if (m.found) {
     dates = dates.splitOn('#WeekDay')
     dates = dates.not('^(and|or)')
+  }
+  // 'june 5th, june 10th'
+  m = dates.match('[#Month #Value] #Month', 0)
+  if (m.found) {
+    dates = dates.splitAfter(m)
+  }
+  // 'june, august'
+  m = dates.match('[#Month] #Month', 0)
+  if (m.found) {
+    dates = dates.splitAfter(m)
   }
 
   // for 20 minutes

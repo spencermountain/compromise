@@ -12,7 +12,7 @@ const context = {
   today: '2016-03-05', //on friday
 }
 
-let doc = nlp('next monday')
+let doc = nlp('10 mins from now')
 let dates = doc.dates(context).get()
 dates.forEach((date) => {
   console.log('start: ', fmt(date.start))

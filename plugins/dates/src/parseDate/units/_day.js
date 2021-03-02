@@ -83,16 +83,21 @@ class WeekDay extends Day {
   }
   applyRel(rel) {
     if (rel === 'next') {
-      return this.next()
+      let tooFar = this.context.today.endOf('week').add(1, 'week')
+      this.next()
+      //  did we go too-far?
+      if (this.d.isAfter(tooFar)) {
+        this.last() // go back
+      }
+      return this
     }
     // the closest-one backwards
     if (rel === 'this-past') {
       return this.last()
     }
     if (rel === 'last') {
-      let start = this.context.today.startOf('week') //.minus(1, 'second')
+      let start = this.context.today.startOf('week')
       this.last()
-      // now we are in the past.
       // are we still in 'this week' though?
       if (this.d.isBefore(start) === false) {
         this.last() // do it again

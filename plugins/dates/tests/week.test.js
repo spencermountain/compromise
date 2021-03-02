@@ -98,10 +98,10 @@ test('week-logic', function (t) {
         ['this past sunday', 'sunday', -5],
         // //'next'
         ['next week', 'monday', 3],
-        ['next monday', 'monday', 3 + 7], //hmm
-        // ['next tuesday', 'tuesday', 8],
-        // ['next wednesday', 'wednesday', 9],
-        // ['next thursday', 'thursday', 10],
+        ['next monday', 'monday', 3],
+        ['next tuesday', 'tuesday', 4],
+        ['next wednesday', 'wednesday', 5],
+        ['next thursday', 'thursday', 6],
         ['next friday', 'friday', 7],
         ['next weekend', 'saturday', 8],
         ['next saturday', 'saturday', 8],

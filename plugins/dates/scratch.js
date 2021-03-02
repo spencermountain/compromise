@@ -7,19 +7,13 @@ nlp.extend(require('../../plugins/dates/src'))
 const fmt = (iso) => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 
 const context = {
-  // today: '2021-03-05', //on friday
-  // today: '2000-01-01',
-  // today: [2016, october, 4], //a tuesday
-  // timezone: 'Canada/Pacific',
-  // dayStart: '8:00am',
-  // dayEnd: '5:00pm',
-  // max_repeat: 50,
+  // today: '2021-03-01', //monday
+  // today: '2021-03-02', //tuesday
+  today: '2016-03-05', //on friday
 }
 
-// let doc = nlp('this last monday')
-let doc = nlp('this past monday')
+let doc = nlp('next monday')
 let dates = doc.dates(context).get()
-// console.log(dates)
 dates.forEach((date) => {
   console.log('start: ', fmt(date.start))
   console.log('  end: ', fmt(date.end))

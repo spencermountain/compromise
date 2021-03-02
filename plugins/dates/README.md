@@ -254,55 +254,87 @@ nlp('in two days').dates(context).get()
 
 ## *Opinions*:
 
-#### *Start of week:*
+### *Start of week:*
 By default, weeks start on a Monday, and *'next week'* will run from Monday morning to Sunday night.
 This can be configued in spacetime, but right now we are not passing-through this config.
 
-#### *Implied durations:*
+### *Implied durations:*
 *'after October'* returns a range starting **Nov 1st**, and ending **2-weeks** after, by default.
 This can be configured by setting `punt` param in the context object:
 ```js
 doc.dates({punt: { month: 1 }})
 ```
 
-#### *Future bias:*
-*'May 7th'* will prefer a May 7th in the future
+### *Future bias:*
+*'May 7th'* will prefer a May 7th in the future.
 
-#### *This/Next/Last:*
-*'this/next/last week'* is mostly straight-forward.
+The parser will return a past-date though, in the current-month:
+```js
+// from march 2nd
+nlp('feb 30th').dates({today: '2021-02-01'}).get()
 
-But *'this monday'* and *'monday'* is more ambiguous - here, it always refers to the future. On tuesday, saying 'this monday' means 'next monday'. As I understand it, this is the most-intuitive interpretation. Saying *'this monday'* on monday, is itself.
+```
+
+### *This/Next/Last:*
+named-weeks or months eg *'this/next/last week'* are mostly straight-forward.
+
+#### *This monday*
+A bare 'monday' will always refer to itself, or the upcoming monday. 
+
+* Saying *'this monday'* on monday, is itself.
+* Saying *'this monday'* on tuesday , is next week.
 
 Likewise, *'this june'* in June, is itself. *'this june'* in any other month, is the nearest June in the future.
 
-Future versions of this library may look at sentence-tense to help disambiguate these dates - *'i paid on monday'* vs *'i will pay on monday'*.
+Future versions of this library could look at sentence-tense to help disambiguate these dates - *'i paid on monday'* vs *'i will pay on monday'*.
 
-#### *Nth Week:*
+#### *Last monday*
+If it's Tuesday, *'last monday'* will not mean yesterday.
+
+* Saying *'last monday'* on a tuesday will be -1 week.
+* Saying *'a week ago monday'* will also work.
+* Saying *'this past monday'* will return yesterday.
+
+For reference, **Wit.ai** & **chronic** libraries both return yesterday. **Natty** and **SugarJs** returns -1 week, like we do.
+
+*'last X'* can be less than 7 days backward, if it crosses a week starting-point:
+* Saying *'last friday'* on a monday will be only a few days back.
+
+#### *Next Friday*
+If it's Tuesday, *'next wednesday'* will not be tomorrow. It will be a week after tomorrow.
+
+* Saying *'next wednesday'* on a tuesday, will be +1 week.
+* Saying *'a week wednesday'* will also be +1 week.
+* Saying *'this coming wednesday'* will be tomorrow.
+
+For reference, **Wit.ai**, **chronic**, and **Natty** libraries all return tomorrow. **SugarJs** returns +1 week, like we do.
+
+### *Nth Week:*
 The first week of a month, or a year is the first week *with a thursday in it*. This is a weird, but widely-held standard. I believe it's a military formalism. It cannot be (easily) configued. This means that the start-date for *first week of January* may be a Monday in December, etc.
 
 As expected, *first monday of January* will always be in January.
 
-#### *British/American ambiguity:*
+### *British/American ambiguity:*
 by default, we use the same interpretation of dates as javascript does - we assume `01/02/2020` is Jan 2nd, (US-version) but allow `13/01/2020` to be Jan 13th (UK-version). This should be possible to configure in the near future.
 
-#### *Seasons:*
+### *Seasons:*
 By default, *'this summer'* will return **June 1 - Sept 1**, which is northern hemisphere ISO.
 Configuring the default hemisphere should be possible in the future.
 
-#### *Day times:*
+### *Day times:*
 There are some hardcoded times for *'lunch time'* and others, but mainly, a day begins at `12:00am` and ends at `11:59pm` - the last millisecond of the day.
 
-#### *Invalid dates:*
+### *Invalid dates:*
 compromise will tag anything that looks like a date, but not validate the dates until they are parsed.
 * *'january 34th 2020'* will return **Jan 31 2020**.
 * *'tomorrow at 2:62pm'* will return just return 'tomorrow'.
 * *'6th week of february* will return the 2nd week of march.
 * Setting an hour that's skipped, or repeated by a DST change will return the closest valid time to the DST change.
 
-#### *Inclusive/exclusive ranges:*
+### *Inclusive/exclusive ranges:*
 *'between january and march'* will include all of march. This is usually pretty-ambiguous normally.
 
-#### *Misc:*
+### *Misc:*
 * *'thursday the 16th'* - will set to the 16th, even if it's not thursday
 * *'in a few hours/years'* - in 2 hours/years
 * *'jan 5th 2008 to Jan 6th the following year'* - date-range explicit references
@@ -350,6 +382,7 @@ The *[match-syntax](https://observablehq.com/@spencermountain/compromise-match-s
 
 ### See also
 * [Duckling](https://duckling.wit.ai/) - by wit.ai (facebook)
+* [Sugarjs/dates](https://sugarjs.com/dates/) - by Andrew Plummer (js)
 * [Chronic](https://github.com/mojombo/chronic) - by Tom Preston-Werner (Ruby)
 * [SUTime](https://nlp.stanford.edu/software/sutime.shtml) - by Angel Chang, Christopher Manning (Java)
 * [Natty](http://natty.joestelmach.com/) - by Joe Stelmach (Java)

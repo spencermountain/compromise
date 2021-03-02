@@ -1,5 +1,7 @@
 
 <!-- #### [Unreleased] 
+- **[change]** - consecutive date tokenization changes
+- **[change]** - fixes to 'this/next/last x'  logic
 -->
 ### 1.4.1 [Jan 2021]
 - **[change]** - date tokenization of multiple AND and OR dates

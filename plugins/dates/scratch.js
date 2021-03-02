@@ -16,7 +16,7 @@ const context = {
   // max_repeat: 50,
 }
 
-let doc = nlp('tuesday - wednesday')
+let doc = nlp('between monday and tuesday')
 let dates = doc.dates(context).debug().get()
 // console.log(dates)
 dates.forEach((date) => {

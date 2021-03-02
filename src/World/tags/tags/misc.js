@@ -29,7 +29,7 @@ module.exports = {
   // Dates:
   //not a noun, but usually is
   Date: {
-    notA: ['Verb', 'Conjunction', 'Adverb', 'Preposition', 'Adjective'],
+    notA: ['Verb', 'Adverb', 'Preposition', 'Adjective'],
   },
   Month: {
     isA: ['Date', 'Singular'],

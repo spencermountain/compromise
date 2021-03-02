@@ -72,6 +72,15 @@ class WeekDay extends Day {
     this.d = this.d.day(this.weekDay)
     return this
   }
+  // the millescond before
+  before() {
+    this.d = this.d.minus(1, 'day')
+    this.d = this.d.endOf('day')
+    if (this.context.dayEnd) {
+      this.d = this.d.time(this.context.dayEnd)
+    }
+    return this
+  }
 }
 
 // like 'haloween'

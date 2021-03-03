@@ -46,7 +46,7 @@ test('imperative keeps tense:', function (t) {
     'please do not speak',
     'go!',
     "don't go",
-    'shut the door',
+    // 'shut the door',
     'eat your vegetables',
     // 'you should eat your vegetables',
   ]

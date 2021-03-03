@@ -19,7 +19,7 @@ const cli = {
 }
 
 if (!process.version.match(/^v12\./)) {
-  console.warn(cli.red('Warn: Expecting node v12.x'))
+  console.warn(cli.red('Warn: Expecting node v12.x - got ' + process.version))
 }
 
 let matches = [

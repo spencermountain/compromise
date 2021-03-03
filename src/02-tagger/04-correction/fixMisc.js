@@ -11,9 +11,8 @@ const hasTag = function (doc, tag) {
 
 //mostly pos-corections here
 const miscCorrection = function (doc) {
-  doc.cache()
   // imperative-form
-  let m = doc.if('#Infinitive')
+  let m = hasTag(doc, 'Infinitive')
   if (m.found) {
     // you eat?
     m = m.ifNo('@hasQuestionMark')

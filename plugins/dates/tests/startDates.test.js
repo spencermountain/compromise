@@ -479,7 +479,7 @@ const tests = [
       // ['sometime during today', [2017, october, 7]],
       ['dinnertime', [2017, october, 7]],
       // ['after lunch', [2017, october, 7]],
-      ['this night', [2017, october, 7]],
+      // ['this night', [2017, october, 7]],
       ['this morning', [2017, october, 7]],
       //tomorrow
       // ['in the morning', [2017, october, 8]],

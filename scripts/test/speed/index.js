@@ -2,6 +2,8 @@
 const reset = '\x1b[0m'
 const fetch = require('./_fetch')
 let nlp = require('../../../tests/_lib')
+nlp.extend(require('../../../plugins/numbers/src'))
+nlp.extend(require('../../../plugins/dates/src'))
 const highlight = 5
 const shouldFail = -10
 
@@ -81,6 +83,9 @@ console.log('\n\nrunning speed-test:\n')
       matches.forEach(reg => {
         doc.match(reg).text()
       })
+      let dates = doc.dates().json()
+      console.log(dates.map(obj => obj.text))
+      // fs.writeFileSync('./file.txt', txt, { flag: 'a' })
     })
     texts.forEach(txt => {
       let doc = _nlp(txt)

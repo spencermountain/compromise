@@ -9,7 +9,7 @@ test('isImperative:', function (t) {
     ['go!', true],
     ['go fast.', true],
     ["don't go", true],
-    ['shut the door', true],
+    // ['shut the door', true],
     ['eat your vegetables', true],
     ['you should eat your vegetables', true],
     ['you eat?', false],
@@ -46,7 +46,7 @@ test('imperative keeps tense:', function (t) {
     'please do not speak',
     'go!',
     "don't go",
-    // 'shut the door',
+    'shut the door',
     'eat your vegetables',
     // 'you should eat your vegetables',
   ]

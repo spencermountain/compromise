@@ -36,7 +36,6 @@ const normalize = function (doc) {
     m.groups('0').replaceWith('2')
     m.tag('DateShift')
   }
-
   return doc
 }
 module.exports = normalize

@@ -1,65 +1,105 @@
-const nlp = require('../../../tests/_lib')
-const fs = require('fs')
-const path = require('path')
+// https://stackoverflow.com/questions/9781218/how-to-change-node-jss-console-font-color
+const reset = '\x1b[0m'
 const fetch = require('./_fetch')
-const calculateRegression = require('./_regression')
+let nlp = require('../../../tests/_lib')
+const highlight = 5
+const shouldFail = -10
 
-const TEST_COUNT = 5
-const node_version = 'v10.13.0'
-if (node_version !== process.version) {
-  console.log("\n(running '" + process.version + "' instead of '" + node_version + "')\n")
+//cheaper than requiring chalk
+const cli = {
+  green: function (str) {
+    return '\x1b[32m' + str + reset
+  },
+  red: function (str) {
+    return '\x1b[31m' + str + reset
+  },
+  grey: function (str) {
+    return '\x1b[90m' + str + reset
+  },
 }
 
-fetch('https://unpkg.com/nlp-corpus@3.3.0/builds/nlp-corpus-1.json').then(res => {
-  const outputPath = path.join(__dirname, './_performance.json')
-  let expected = {}
-  if (fs.existsSync(outputPath)) {
-    expected = JSON.parse(fs.readFileSync(outputPath))
-  }
+if (!process.version.match(/^v12\./)) {
+  console.warn(cli.red('Warn: Expecting node v12.x'))
+}
 
-  const textArr = res.sort((a, b) => a.length - b.length)
-  const x = []
-  const y = []
+let matches = [
+  'out of range',
+  '#Person #Person',
+  '. of the world',
+  '#Noun+ house',
+  'range #Noun+',
+  'doubt . of #Verb',
+  '(watch|house|#Verb) .',
+  '(watch|house|#Verb)?',
+  '(watch a film|eat a cake)+',
+  '(#Noun of #Noun)+',
+  '. @hasQuestionMark',
+  'the .+',
+  'keep a #Noun',
+]
 
-  const full = Date.now()
-  for (let i = 0; i < textArr.length; i++) {
-    const text = textArr[i]
-    const yI = []
+let documents = [
+  ['nlp-corpus-1.json', 5.2],
+  ['nlp-corpus-2.json', 5.5],
+  ['nlp-corpus-3.json', 4.6],
+  ['nlp-corpus-4.json', 4.6],
+  ['nlp-corpus-5.json', 4.5],
+  ['nlp-corpus-6.json', 4.7],
+  ['nlp-corpus-7.json', 4.3],
+  ['nlp-corpus-8.json', 4.5],
+  ['nlp-corpus-9.json', 4.1],
+  ['nlp-corpus-10.json', 4.3],
+]
+const round = n => Math.round(n * 100) / 100
 
-    console.group('Text', i)
-
-    for (let j = 0; j < TEST_COUNT; j++) {
-      const _nlp = nlp.clone() // Avoid caching?
-      const start = Date.now()
-      _nlp(text)
-      const end = Date.now()
-      const diff = end - start
-      console.log('  ' + diff + ' ms')
-      yI.push(diff)
+const nice = function (n) {
+  if (n > highlight) {
+    n = cli.red('+' + Math.abs(n) + '%')
+  } else if (n < -highlight) {
+    n = cli.green('' + n + '%')
+  } else {
+    if (n > 0) {
+      n = '+' + n
     }
-
-    x.push(text.length)
-    y.push(yI.reduce((acc, v) => acc + v, 0) / yI.length)
-
-    console.groupEnd()
+    n = cli.grey(' ' + n + '%')
   }
+  return n
+}
 
-  const regression = calculateRegression(x, y)
-  const diff = Math.abs(regression.average - expected.average).toFixed(5)
-  const results = Object.assign({ x, y, key: { x: 'Length', y: 'Time' }, diff }, regression)
+console.log('\n\nrunning speed-test:\n')
+;(async () => {
+  let sum = 0
+  // do each document
+  for (let n = 0; n < documents.length; n += 1) {
+    let a = documents[n]
+    let texts = await fetch(`https://unpkg.com/nlp-corpus@3.3.0/builds/${a[0]}`)
+    const _nlp = nlp.clone()
+    //start testing the speed
+    let begin = new Date()
+    texts.forEach(txt => {
+      let doc = _nlp(txt)
+      matches.forEach(reg => {
+        doc.match(reg).text()
+      })
+    })
+    texts.forEach(txt => {
+      let doc = _nlp(txt)
+      doc.json()
+    })
+    let end = new Date()
+    // calculate diff
+    let time = (end.getTime() - begin.getTime()) / 1000
+    // console.log('\n ' + n + 'ms  ' + time, a[1])
+    let diff = round(time - a[1])
+    let percent = round((diff / time) * 100, 10)
+    sum += percent
+    console.log(`${a[0]}:   ${nice(percent)}`)
+  }
+  let avg = round(sum / documents.length)
+  console.log(`\n ${nice(avg)} avg difference\n`)
 
-  // fs.writeFileSync(outputPath, JSON.stringify(results, null, 2))
-
-  console.log('\n')
-  console.log('Expected:', Math.ceil(expected.average) + 'ms')
-  console.log('Current :', Math.ceil(results.average) + 'ms')
-  console.log('Diff:', Math.ceil(diff) + 'ms\n')
-  let all = Math.ceil(Date.now() - full) / 1000
-  console.log('Full thing: ' + all + 's\n')
-
-  // Should we decide on a good value to check against? Might as well just log it for now
-  //t.true(diff < 20, 'perfomance is stable')
-  // if (diff > 30) {
-  //   throw 'speed-difference of ' + diff
-  // }
-})
+  // if it's a bad difference, fail
+  if (avg < shouldFail) {
+    process.exit(1)
+  }
+})()

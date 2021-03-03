@@ -10,6 +10,9 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 
 <!-- #### [Unreleased] 
 - **[change]** - #Date terms can still be a #Conjunction
+- **[new]** - `.verbs().isImperative()` method
+
+releases:  dates
 -->
 
 #### 13.10.0 [Feb 2021]

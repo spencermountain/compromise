@@ -6,6 +6,7 @@ nlp.extend(require('../../../plugins/numbers/src'))
 nlp.extend(require('../../../plugins/dates/src'))
 const highlight = 5
 const shouldFail = -10
+// const fs = require('fs')
 
 //cheaper than requiring chalk
 const cli = {
@@ -83,9 +84,13 @@ console.log('\n\nrunning speed-test:\n')
       matches.forEach(reg => {
         doc.match(reg).text()
       })
-      let dates = doc.dates().json()
-      console.log(dates.map(obj => obj.text))
-      // fs.writeFileSync('./file.txt', txt, { flag: 'a' })
+      // let m = doc
+      //   .filter(s => {
+      //     return s.dates().found
+      //   })
+      //   .json()
+      // let rows = m.map(obj => obj.text).join('\n')
+      // fs.writeFileSync('./dates.txt', rows, { flag: 'a' })
     })
     texts.forEach(txt => {
       let doc = _nlp(txt)

@@ -2,7 +2,7 @@ const nlp = require('./src/index')
 nlp.extend(require('./plugins/numbers/src'))
 nlp.extend(require('./plugins/dates/src'))
 // nlp.extend(require('./plugins/sentences/src'))
-// nlp.verbose(true)
+nlp.verbose(true)
 
 //
 // '3/8ths'
@@ -19,7 +19,7 @@ nlp.extend(require('./plugins/dates/src'))
 
 // let doc = nlp(`shut the door`).debug()
 // let doc = nlp(`do you eat?`) //.debug()
-let doc = nlp(`it's time`).debug()
+let doc = nlp(`it ranks third today.`).debug()
 console.log(doc.dates().get())
 // console.log(doc.verbs().isImperative())
 

@@ -11,12 +11,10 @@ const dateTagger = function (doc) {
     doc.match('#Date #Preposition #Date').tag('Date', here)
     //once a day..
     doc.match('(once|twice) (a|an|each) #Date').tag('Date', here)
-    //TODO:fixme
-    doc.match('(by|until|on|in|at|during|over|every|each|due) the? #Date').tag('Date', here)
     //tuesday
     doc.match('#Date+').tag('Date', here)
     //by June
-    doc.match('(by|until|on|in|at|during|over|every|each|due) the? #Date').tag('Date', here)
+    doc.match('(by|until|on|in|at|during|over|every|each|due) the? #Date').tag('Date', 'until-june')
     //a year after..
     doc.match('a #Duration').tag('Date', here)
     //between x and y

@@ -23,6 +23,7 @@
     "type": "git",
     "url": "git://github.com/spencermountain/compromise.git"
   },
+  "homepage": "https://github.com/spencermountain/compromise",
   "engines": {
     "node": ">=6.0.0"
   },

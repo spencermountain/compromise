@@ -72,7 +72,7 @@ doc.dates().get(0)
 
 
 <div align="center">
-<h2><a href="#">Demo</a></h2>
+<h2><a href="http://compromise.cool/dates/">Demo</a></h2>
 </div>
 
 <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>

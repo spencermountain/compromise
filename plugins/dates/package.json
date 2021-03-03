@@ -11,6 +11,7 @@
     "type": "git",
     "url": "git://github.com/spencermountain/compromise.git"
   },
+  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/dates",
   "scripts": {
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
     "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer  --color always",

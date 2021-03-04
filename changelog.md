@@ -9,11 +9,16 @@ compromise uses semver, and pushes to npm frequently
 While all _Major_ releases should be reviewed, our only two _large_ releases are **v6** in 2016 and and **v12** in 2019. Others have been mostly incremental, or niche.
 
 <!-- #### [Unreleased] 
-- **[change]** - #Date terms can still be a #Conjunction
-- **[new]** - `.verbs().isImperative()` method
 
-releases:  dates
 -->
+
+#### 13.10.1 [March 2021]
+- **[change]** - #Date terms can still be a #Conjunction
+- **[new]** - #Imperative tag and `.verbs().isImperative()` method
+- **[fix]** - some tagger issues
+- update deps
+*plugin-releases*:  dates
+
 
 #### 13.10.0 [Feb 2021]
 - **[new]** - #Fraction tag and improved fraction support (thanks Jakeii!)

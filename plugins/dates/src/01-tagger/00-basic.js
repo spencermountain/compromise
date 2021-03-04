@@ -181,6 +181,12 @@ const tagDates = function (doc) {
 
   // in 20mins
   doc.match('(in|after) /^[0-9]+(min|sec|wk)s?/').tag('Date', 'shift-units')
+  //tuesday night
+  doc.match('#Date [(now|night|sometime)]', 0).tag('Time', 'date-now')
+  // 4 days from now
+  doc.match('(from|starting|until|by) now').tag('Date', 'for-now')
+  // every night
+  doc.match('(each|every) night').tag('Date', 'for-now')
   return doc
 }
 module.exports = tagDates

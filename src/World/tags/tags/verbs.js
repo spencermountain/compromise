@@ -12,6 +12,11 @@ module.exports = {
     isA: 'PresentTense',
     notA: ['PastTense', 'Gerund'],
   },
+  //close the door!
+  Imperative: {
+    isA: 'Infinitive',
+    // notA: ['PresentTense', 'PastTense', 'FutureTense', 'Gerund'],
+  },
   // walking
   Gerund: {
     isA: 'PresentTense',

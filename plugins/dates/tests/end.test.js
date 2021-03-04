@@ -19,7 +19,7 @@ let december = 11
 
 const tests = [
   {
-    today: [2016, february, 11],
+    today: [2016, february, 11], //thursday
     tests: [
       ['on october 2nd', [2016, october, 2]],
       ['on 2nd of march', [2016, march, 2]],
@@ -47,6 +47,7 @@ const tests = [
       ['on the day after next', [2016, february, 13]],
       // ['the last weekend in october', [2016, october, 30]],
       // ['the last weekend this month', [2016, february, 27]],
+      ['between monday and tuesday', [2016, february, 15]], //'exclusive' between
     ],
   },
   {

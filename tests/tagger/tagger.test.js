@@ -223,6 +223,14 @@ test('pos-basic-tag:', function (t) {
     ['is well made', ['Copula', 'Adverb', 'Adjective']],
     ['at some point', ['Preposition', 'Determiner', 'Noun']],
     ['to a point', ['Conjunction', 'Determiner', 'Noun']],
+
+    // infinitive-noun
+    [`a tv show`, ['Determiner', 'Noun', 'Noun']],
+    [`send me a currency report.`, ['Infinitive', 'Pronoun', 'Determiner', 'Noun', 'Noun']],
+    // [`a close watch on`, ['Determiner', 'Adjective', 'Noun', 'Preposition']],
+    [` a surgery date of`, ['Determiner', 'Noun', 'Noun', 'Preposition']],
+    [`A girl hit a boy.`, ['Determiner', 'Noun', 'Infinitive', 'Determiner', 'Noun']],
+    [`a auto repair shop.`, ['Determiner', 'Noun', 'Noun', 'Noun']],
   ]
   arr.forEach(function (a) {
     let terms = nlp(a[0]).json(0).terms

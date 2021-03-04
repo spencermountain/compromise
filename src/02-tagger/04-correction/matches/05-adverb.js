@@ -23,7 +23,12 @@ module.exports = [
   // even left
   { match: 'even left', tag: '#Adverb #Verb', reason: 'even-left' },
   //cheering hard - dropped -ly's
-  { match: '#PresentTense [(hard|quick|long|bright|slow)]', group: 0, tag: 'Adverb', reason: 'lazy-ly' },
+  {
+    match: '(#PresentTense && !#Copula) [(hard|quick|long|bright|slow|fast|backwards|forwards)]',
+    group: 0,
+    tag: 'Adverb',
+    reason: 'lazy-ly',
+  },
   // much appreciated
   { match: '[much] #Adjective', group: 0, tag: 'Adverb', reason: 'bit-1' },
   // is well

@@ -12,6 +12,14 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 
 -->
 
+#### 13.10.1 [March 2021]
+- **[change]** - #Date terms can still be a #Conjunction
+- **[new]** - #Imperative tag and `.verbs().isImperative()` method
+- **[fix]** - some tagger issues
+- update deps
+*plugin-releases*:  dates
+
+
 #### 13.10.0 [Feb 2021]
 - **[new]** - #Fraction tag and improved fraction support (thanks Jakeii!)
 - **[fix]** - edge-case match issues with `!` syntax

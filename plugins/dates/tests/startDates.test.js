@@ -346,7 +346,7 @@ const tests = [
     ],
   },
   {
-    today: [2016, may, 11],
+    today: [2016, may, 11], //wednesday
     tests: [
       ['july 5th', [2016, july, 5]],
       ['on july 5th', [2016, july, 5]],
@@ -362,7 +362,7 @@ const tests = [
       // ['after next week', [2016, may, 20]],
       ['two days before christmas', [2016, december, 23]],
       ['today', [2016, may, 11]],
-      // ['weds', [2016, may, 18]],
+      ['wednesday', [2016, may, 11]],
       ['in 8 days', [2016, may, 19]],
       ['between june 5th and august 19th 2017', [2016, june, 5]], //....
       ['tomorrow early in the day', [2016, may, 12]],
@@ -403,7 +403,7 @@ const tests = [
       ['on sat', [2016, october, 8]],
       ['sunday', [2016, october, 9]],
       ['monday', [2016, october, 10]],
-      // ['tuesday', [2016, october, 11]],
+      ['tuesday', [2016, october, 4]],
       //this
       ['this wednesday', [2016, october, 5]],
       ['this thurs', [2016, october, 6]],
@@ -411,7 +411,7 @@ const tests = [
       ['this saturday', [2016, october, 8]],
       ['this sunday', [2016, october, 9]],
       ['this monday', [2016, october, 10]],
-      // ['this tuesday', [2016, october, 11]],
+      ['this tuesday', [2016, october, 4]],
       //next
       ['next wednesday', [2016, october, 12]],
       ['next thurs', [2016, october, 13]],
@@ -426,7 +426,7 @@ const tests = [
       ['last friday', [2016, september, 30]],
       ['last saturday', [2016, october, 1]],
       ['last sunday', [2016, october, 2]],
-      ['last monday', [2016, october, 3]],
+      ['last monday', [2016, september, 26]],
       ['last tuesday', [2016, september, 27]],
       //same logic for months
       ['this october', [2016, october, 1]],
@@ -479,7 +479,7 @@ const tests = [
       // ['sometime during today', [2017, october, 7]],
       ['dinnertime', [2017, october, 7]],
       // ['after lunch', [2017, october, 7]],
-      ['this night', [2017, october, 7]],
+      // ['this night', [2017, october, 7]],
       ['this morning', [2017, october, 7]],
       //tomorrow
       // ['in the morning', [2017, october, 8]],
@@ -593,7 +593,9 @@ test('start dates', (t) => {
       let doc = nlp(a[0])
       let json = doc.dates(context).json()[0] || {}
       let start = (json.date || {}).start
-      start = spacetime(start).format('iso-short')
+      if (start) {
+        start = spacetime(start).format('iso-short')
+      }
       t.equal(start, want, `[${today}] ${a[0]}`)
     })
   })

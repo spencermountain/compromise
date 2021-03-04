@@ -133,16 +133,14 @@ module.exports = [
   { match: '[#Verb] than', group: 0, tag: 'Noun', reason: 'correction' },
   // goes to sleep
   { match: '(go|goes|went) to [#Infinitive]', group: 0, tag: 'Noun', reason: 'goes-to-verb' },
-  //a great run
-  // { match: '(a|an) #Adjective [(#Infinitive|#PresentTense)]', tag: 'Noun', reason: 'a|an2' },
+  //a close watch on
+  { match: '(a|an) #Noun [#Infinitive] (#Preposition|#Noun)', group: 0, tag: 'Noun', reason: 'a-noun-inf' },
   //a tv show
-  { match: '(a|an) #Noun [#Infinitive]', group: 0, tag: 'Noun', reason: 'a-noun-inf' },
+  { match: '(a|an) #Noun [#Infinitive]$', group: 0, tag: 'Noun', reason: 'a-noun-inf2' },
   //do so
   { match: 'do [so]', group: 0, tag: 'Noun', reason: 'so-noun' },
   //is mark hughes
   { match: '#Copula [#Infinitive] #Noun', group: 0, tag: 'Noun', reason: 'is-pres-noun' },
-  //
-  // { match: '[#Infinitive] #Copula', group: 0, tag: 'Noun', reason: 'inf-copula' },
   //a close
   { match: '#Determiner #Adverb? [close]', group: 0, tag: 'Adjective', reason: 'a-close' },
   // what the hell

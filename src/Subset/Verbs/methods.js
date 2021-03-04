@@ -3,7 +3,6 @@ const parseVerb = require('./parse')
 const isPlural = require('./isPlural')
 const getSubject = require('./getSubject')
 const conjugate = require('./conjugate')
-const isImperative = require('./conjugate/imperative').isImperative
 const { toParticiple, useParticiple } = require('./participle')
 
 // remove any tense-information in auxiliary verbs
@@ -116,7 +115,7 @@ module.exports = {
         toParticiple(parsed, this.world)
         return
       }
-      if (isImperative(parsed)) {
+      if (vb.has('#Imperative')) {
         return
       }
       // don't conjugate 'to be'
@@ -233,6 +232,10 @@ module.exports = {
   /**  return only verbs without 'not'*/
   isPositive: function () {
     return this.ifNo('#Negative')
+  },
+  /**  return only commands - verbs in imperative mood */
+  isImperative: function () {
+    return this.if('#Imperative')
   },
   /** add a 'not' to these verbs */
   toNegative: function () {

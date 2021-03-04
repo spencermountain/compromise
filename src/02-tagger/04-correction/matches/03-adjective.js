@@ -48,6 +48,8 @@ let list = [
   { match: 'a (little|bit|wee) bit? [#Gerund]', group: 0, tag: 'Adjective', reason: 'a-bit-gerund' },
   // jury is out - preposition ➔ adjective
   { match: '#Copula #Adjective? [(out|in|through)]$', group: 0, tag: 'Adjective', reason: 'still-out' },
+  // shut the door
+  { match: '^[#Adjective] (the|your) #Noun', group: 0, tag: 'Infinitive', reason: 'shut-the' },
 ]
 
 module.exports = list

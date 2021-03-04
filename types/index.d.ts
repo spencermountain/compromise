@@ -440,6 +440,8 @@ declare module nlp {
     toNegative(): ExtendedDocument<Ext, W, Ph>
     /** "didn't study" → 'studied' */
     toPositive(): ExtendedDocument<Ext, W, Ph>
+    /** only verbs that are instructions*/
+    isImperative(): ExtendedDocument<Ext, W, Ph>
   }
 
   interface Abbreviations<Ext extends object = {}, W extends World = World, Ph extends Phrase = Phrase>

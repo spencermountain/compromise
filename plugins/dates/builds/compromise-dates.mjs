@@ -1,4 +1,4 @@
-/* compromise-dates 1.4.2 MIT */
+/* compromise-dates 1.4.3 MIT */
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
@@ -306,7 +306,13 @@ var tagDates = function tagDates(doc) {
   var m = doc.match('^/^20[012][0-9]$/$');
   tagYearSafe(m, '2020-ish'); // in 20mins
 
-  doc.match('(in|after) /^[0-9]+(min|sec|wk)s?/').tag('Date', 'shift-units');
+  doc.match('(in|after) /^[0-9]+(min|sec|wk)s?/').tag('Date', 'shift-units'); //tuesday night
+
+  doc.match('#Date [(now|night|sometime)]', 0).tag('Time', 'date-now'); // 4 days from now
+
+  doc.match('(from|starting|until|by) now').tag('Date', 'for-now'); // every night
+
+  doc.match('(each|every) night').tag('Date', 'for-now');
   return doc;
 };
 
@@ -362,13 +368,11 @@ var dateTagger = function dateTagger(doc) {
     //friday to sunday
     doc.match('#Date #Preposition #Date').tag('Date', here$4); //once a day..
 
-    doc.match('(once|twice) (a|an|each) #Date').tag('Date', here$4); //TODO:fixme
-
-    doc.match('(by|until|on|in|at|during|over|every|each|due) the? #Date').tag('Date', here$4); //tuesday
+    doc.match('(once|twice) (a|an|each) #Date').tag('Date', here$4); //tuesday
 
     doc.match('#Date+').tag('Date', here$4); //by June
 
-    doc.match('(by|until|on|in|at|during|over|every|each|due) the? #Date').tag('Date', here$4); //a year after..
+    doc.match('(by|until|on|in|at|during|over|every|each|due) the? #Date').tag('Date', 'until-june'); //a year after..
 
     doc.match('a #Duration').tag('Date', here$4); //between x and y
 
@@ -648,11 +652,27 @@ function createCommonjsModule(fn) {
 	return fn(module, module.exports), module.exports;
 }
 
-/* spencermountain/spacetime 6.12.5 Apache 2.0 */
+/* spencermountain/spacetime 6.13.0 Apache 2.0 */
 var spacetime = createCommonjsModule(function (module, exports) {
   (function (global, factory) {
     module.exports = factory() ;
   })(commonjsGlobal, function () {
+
+    function _typeof(obj) {
+      "@babel/helpers - typeof";
+
+      if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+        _typeof = function _typeof(obj) {
+          return typeof obj;
+        };
+      } else {
+        _typeof = function _typeof(obj) {
+          return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+        };
+      }
+
+      return _typeof(obj);
+    }
 
     function _slicedToArray(arr, i) {
       return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
@@ -996,7 +1016,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
       return null;
     };
 
-    var parseOffset = function parseOffset(tz) {
+    var parseOffset$1 = function parseOffset(tz) {
       // '+5hrs'
       var m = tz.match(isOffset);
 
@@ -1029,7 +1049,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
       return null;
     };
 
-    var parseOffset_1 = parseOffset;
+    var parseOffset_1$1 = parseOffset$1;
     var local = guessTz_1(); //add all the city names by themselves
 
     var cities = Object.keys(unpack).reduce(function (h, k) {
@@ -1086,7 +1106,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
 
 
       if (/[0-9]/.test(tz) === true) {
-        var id = parseOffset_1(tz);
+        var id = parseOffset_1$1(tz);
 
         if (id) {
           return id;
@@ -1166,7 +1186,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
     }; //find the desired date by a increment/check while loop
 
 
-    var units = {
+    var units$3 = {
       year: {
         valid: function valid(n) {
           return n > -4000 && n < 4000;
@@ -1253,7 +1273,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
     };
 
     var walkTo = function walkTo(s, wants) {
-      var keys = Object.keys(units);
+      var keys = Object.keys(units$3);
       var old = s.clone();
 
       for (var i = 0; i < keys.length; i++) {
@@ -1269,7 +1289,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
         } //make-sure it's valid
 
 
-        if (!units[k].valid(n)) {
+        if (!units$3[k].valid(n)) {
           s.epoch = null;
 
           if (s.silent === false) {
@@ -1279,7 +1299,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
           return;
         }
 
-        units[k].walkTo(s, n);
+        units$3[k].walkTo(s, n);
       }
 
       return;
@@ -1306,7 +1326,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
       return obj;
     }
 
-    var months = {
+    var months$1 = {
       "short": function _short() {
         return shortMonths;
       },
@@ -1322,7 +1342,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
       }
     }; //pull-apart ISO offsets, like "+0100"
 
-    var parseOffset$1 = function parseOffset(s, offset) {
+    var parseOffset = function parseOffset(s, offset) {
       if (!offset) {
         return s;
       } //this is a fancy-move
@@ -1380,7 +1400,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
       return s;
     };
 
-    var parseOffset_1$1 = parseOffset$1;
+    var parseOffset_1 = parseOffset;
 
     var parseTime = function parseTime(s) {
       var str = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
@@ -1593,7 +1613,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
     fns.getEpoch;
     fns.beADate;
     fns.formatTimezone;
-    var isLeapYear = fns.isLeapYear; //given a month, return whether day number exists in it
+    var isLeapYear$2 = fns.isLeapYear; //given a month, return whether day number exists in it
 
     var hasDate = function hasDate(obj) {
       //invalid values
@@ -1603,7 +1623,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
 
 
       if (obj.month === 1) {
-        if (isLeapYear(obj.year) && obj.date <= 29) {
+        if (isLeapYear$2(obj.year) && obj.date <= 29) {
           return true;
         } else {
           return obj.date <= 28;
@@ -1621,7 +1641,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
     };
 
     var hasDate_1 = hasDate;
-    var months$1 = months.mapping();
+    var months = months$1.mapping();
 
     var parseYear = function parseYear() {
       var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
@@ -1653,7 +1673,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
           return s;
         }
 
-        parseOffset_1$1(s, arr[5]);
+        parseOffset_1(s, arr[5]);
         walk_1(s, obj);
         s = parseTime_1(s, arr[4]);
         return s;
@@ -1727,7 +1747,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
           return s;
         }
 
-        parseOffset_1$1(s, arr[5]);
+        parseOffset_1(s, arr[5]);
         walk_1(s, obj);
         s = parseTime_1(s, arr[4]);
         return s;
@@ -1736,7 +1756,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
     {
       reg: /^([0-9]{1,2})[\-\/]([a-z]+)[\-\/]?([0-9]{4})?$/i,
       parse: function parse(s, arr) {
-        var month = months$1[arr[2].toLowerCase()];
+        var month = months[arr[2].toLowerCase()];
         var year = parseYear(arr[3], s._today);
         var obj = {
           year: year,
@@ -1757,7 +1777,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
     {
       reg: /^([a-z]+)[\-\/]([0-9]{1,2})[\-\/]?([0-9]{4})?$/i,
       parse: function parse(s, arr) {
-        var month = months$1[arr[1].toLowerCase()];
+        var month = months[arr[1].toLowerCase()];
         var year = parseYear(arr[3], s._today);
         var obj = {
           year: year,
@@ -1779,7 +1799,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
     {
       reg: /^([a-z]+) ([0-9]{1,2}(?:st|nd|rd|th)?),?( [0-9]{4})?( ([0-9:]+( ?am| ?pm| ?gmt)?))?$/i,
       parse: function parse(s, arr) {
-        var month = months$1[arr[1].toLowerCase()];
+        var month = months[arr[1].toLowerCase()];
         var year = parseYear(arr[3], s._today);
         var obj = {
           year: year,
@@ -1800,7 +1820,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
     {
       reg: /^([a-z]+) ([0-9]{4})$/i,
       parse: function parse(s, arr) {
-        var month = months$1[arr[1].toLowerCase()];
+        var month = months[arr[1].toLowerCase()];
         var year = parseYear(arr[2], s._today);
         var obj = {
           year: year,
@@ -1821,7 +1841,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
     {
       reg: /^([0-9]{1,2}(?:st|nd|rd|th)?) ([a-z]+),?( [0-9]{4})?,? ?([0-9]{1,2}:[0-9]{2}:?[0-9]{0,2}? ?(am|pm|gmt))?$/i,
       parse: function parse(s, arr) {
-        var month = months$1[arr[2].toLowerCase()];
+        var month = months[arr[2].toLowerCase()];
 
         if (!month) {
           return null;
@@ -2173,7 +2193,16 @@ var spacetime = createCommonjsModule(function (module, exports) {
         longDays = i18n["long"] || longDays;
       },
       aliases: {
+        mo: 1,
+        tu: 2,
+        we: 3,
+        th: 4,
+        fr: 5,
+        sa: 6,
+        su: 7,
         tues: 2,
+        weds: 3,
+        wedn: 3,
         thur: 4,
         thurs: 4
       }
@@ -2233,7 +2262,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
         return applyCaseFormat(s.monthName());
       },
       'month-short': function monthShort(s) {
-        return applyCaseFormat(months["short"]()[s.month()]);
+        return applyCaseFormat(months$1["short"]()[s.month()]);
       },
       'month-number': function monthNumber(s) {
         return s.month();
@@ -2374,16 +2403,16 @@ var spacetime = createCommonjsModule(function (module, exports) {
       },
       //i made these up
       nice: function nice(s) {
-        return "".concat(months["short"]()[s.month()], " ").concat(fns.ordinal(s.date()), ", ").concat(s.time());
+        return "".concat(months$1["short"]()[s.month()], " ").concat(fns.ordinal(s.date()), ", ").concat(s.time());
       },
       'nice-24': function nice24(s) {
-        return "".concat(months["short"]()[s.month()], " ").concat(fns.ordinal(s.date()), ", ").concat(s.hour24(), ":").concat(fns.zeroPad(s.minute()));
+        return "".concat(months$1["short"]()[s.month()], " ").concat(fns.ordinal(s.date()), ", ").concat(s.hour24(), ":").concat(fns.zeroPad(s.minute()));
       },
       'nice-year': function niceYear(s) {
-        return "".concat(months["short"]()[s.month()], " ").concat(fns.ordinal(s.date()), ", ").concat(s.year());
+        return "".concat(months$1["short"]()[s.month()], " ").concat(fns.ordinal(s.date()), ", ").concat(s.year());
       },
       'nice-day': function niceDay(s) {
-        return "".concat(days["short"]()[s.day()], " ").concat(applyCaseFormat(months["short"]()[s.month()]), " ").concat(fns.ordinal(s.date()));
+        return "".concat(days["short"]()[s.day()], " ").concat(applyCaseFormat(months$1["short"]()[s.month()]), " ").concat(fns.ordinal(s.date()));
       },
       'nice-full': function niceFull(s) {
         return "".concat(s.dayName(), " ").concat(applyCaseFormat(s.monthName()), " ").concat(fns.ordinal(s.date()), ", ").concat(s.time());
@@ -2756,7 +2785,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
     };
 
     var unixFmt_1 = unixFmt;
-    var units$1 = ['year', 'season', 'quarter', 'month', 'week', 'day', 'quarterHour', 'hour', 'minute'];
+    var units$2 = ['year', 'season', 'quarter', 'month', 'week', 'day', 'quarterHour', 'hour', 'minute'];
 
     var doUnit = function doUnit(s, k) {
       var start = s.clone().startOf(k);
@@ -2774,7 +2803,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
       }
 
       var obj = {};
-      units$1.forEach(function (k) {
+      units$2.forEach(function (k) {
         obj[k] = doUnit(s, k);
       });
       return obj;
@@ -2854,7 +2883,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
     // ... then ms-math for any very-small units
 
 
-    var diff = function diff(a, b) {
+    var diff$1 = function diff(a, b) {
       // an hour is always the same # of milliseconds
       // so these units can be 'pre-calculated'
       var msDiff = b.epoch - a.epoch;
@@ -2884,7 +2913,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
       return obj;
     };
 
-    var waterfall = diff;
+    var waterfall = diff$1;
 
     var reverseDiff = function reverseDiff(obj) {
       Object.keys(obj).forEach(function (k) {
@@ -2896,7 +2925,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
     // '1 year' means 366 days in a leap year
 
 
-    var main = function main(a, b, unit) {
+    var main$1 = function main(a, b, unit) {
       b = fns.beADate(b, a); //reverse values, if necessary
 
       var reversed = false;
@@ -2934,7 +2963,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
       return obj;
     };
 
-    var diff$1 = main; //our conceptual 'break-points' for each unit
+    var diff = main$1; //our conceptual 'break-points' for each unit
 
     var qualifiers = {
       months: {
@@ -3097,7 +3126,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
     [6, 1], //july 1
     [9, 1] //oct 1
     ];
-    var units$2 = {
+    var units$1 = {
       minute: function minute(s) {
         walk_1(s, {
           second: 0,
@@ -3242,19 +3271,19 @@ var spacetime = createCommonjsModule(function (module, exports) {
         return s;
       }
     };
-    units$2.date = units$2.day;
+    units$1.date = units$1.day;
 
     var startOf = function startOf(a, unit) {
       var s = a.clone();
       unit = fns.normalize(unit);
 
-      if (units$2[unit]) {
-        return units$2[unit](s);
+      if (units$1[unit]) {
+        return units$1[unit](s);
       }
 
       if (unit === 'summer' || unit === 'winter') {
         s = s.season(unit);
-        return units$2.season(s);
+        return units$1.season(s);
       }
 
       return s;
@@ -3265,9 +3294,9 @@ var spacetime = createCommonjsModule(function (module, exports) {
       var s = a.clone();
       unit = fns.normalize(unit);
 
-      if (units$2[unit]) {
+      if (units$1[unit]) {
         // go to beginning, go to next one, step back 1ms
-        s = units$2[unit](s); // startof
+        s = units$1[unit](s); // startof
 
         s = s.add(1, unit);
         s = s.subtract(1, 'millisecond');
@@ -3431,9 +3460,9 @@ var spacetime = createCommonjsModule(function (module, exports) {
     };
 
     var timezone_1 = timezone;
-    var units$3 = ['century', 'decade', 'year', 'month', 'date', 'day', 'hour', 'minute', 'second', 'millisecond']; //the spacetime instance methods (also, the API)
+    var units = ['century', 'decade', 'year', 'month', 'date', 'day', 'hour', 'minute', 'second', 'millisecond']; //the spacetime instance methods (also, the API)
 
-    var methods = {
+    var methods$4 = {
       set: function set(input$1, tz) {
         var s = this.clone();
         s = input(s, input$1, null);
@@ -3481,8 +3510,8 @@ var spacetime = createCommonjsModule(function (module, exports) {
       nearest: function nearest(unit) {
         return nearest_1(this, unit);
       },
-      diff: function diff(d, unit) {
-        return diff$1(this, d, unit);
+      diff: function diff$1(d, unit) {
+        return diff(this, d, unit);
       },
       since: function since(d) {
         if (!d) {
@@ -3517,6 +3546,13 @@ var spacetime = createCommonjsModule(function (module, exports) {
       },
       //get each week/month/day between a -> b
       every: function every(unit, to) {
+        // allow swapping these params:
+        if (_typeof(unit) === 'object' && typeof to === 'string') {
+          var tmp = to;
+          to = unit;
+          unit = tmp;
+        }
+
         return every_1(this, unit, to);
       },
       isAwake: function isAwake() {
@@ -3545,7 +3581,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
       json: function json() {
         var _this = this;
 
-        return units$3.reduce(function (h, unit) {
+        return units.reduce(function (h, unit) {
           h[unit] = _this[unit]();
           return h;
         }, {});
@@ -3595,10 +3631,10 @@ var spacetime = createCommonjsModule(function (module, exports) {
       }
     }; // aliases
 
-    methods.inDST = methods.isDST;
-    methods.round = methods.nearest;
-    methods.each = methods.every;
-    var methods_1 = methods; //these methods wrap around them.
+    methods$4.inDST = methods$4.isDST;
+    methods$4.round = methods$4.nearest;
+    methods$4.each = methods$4.every;
+    var methods_1 = methods$4; //these methods wrap around them.
 
     var isLeapYear$1 = fns.isLeapYear;
 
@@ -3611,11 +3647,11 @@ var spacetime = createCommonjsModule(function (module, exports) {
       return n;
     };
 
-    var order = ['year', 'month', 'date', 'hour', 'minute', 'second', 'millisecond']; //reduce hostile micro-changes when moving dates by millisecond
+    var order$1 = ['year', 'month', 'date', 'hour', 'minute', 'second', 'millisecond']; //reduce hostile micro-changes when moving dates by millisecond
 
     var confirm = function confirm(s, tmp, unit) {
-      var n = order.indexOf(unit);
-      var arr = order.slice(n, order.length);
+      var n = order$1.indexOf(unit);
+      var arr = order$1.slice(n, order$1.length);
 
       for (var i = 0; i < arr.length; i++) {
         var want = tmp[arr[i]]();
@@ -3767,7 +3803,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
       //this one's tricky
       month: function month(s, n) {
         if (typeof n === 'string') {
-          n = months.mapping()[n.toLowerCase()];
+          n = months$1.mapping()[n.toLowerCase()];
         }
 
         n = validate(n); //don't go past december
@@ -3831,7 +3867,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
         return s.epoch;
       }
     };
-    var methods$1 = {
+    var methods$3 = {
       millisecond: function millisecond(num) {
         if (num !== undefined) {
           var s = this.clone();
@@ -4026,7 +4062,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
         return this.format('iso');
       }
     };
-    var _01Time = methods$1;
+    var _01Time = methods$3;
     var methods$2 = {
       // # day in the month
       date: function date(num) {
@@ -4103,7 +4139,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
       return s;
     };
 
-    var methods$3 = {
+    var methods$1 = {
       // day 0-366
       dayOfYear: function dayOfYear(num) {
         if (num !== undefined) {
@@ -4185,7 +4221,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
         tmp.epoch += milliseconds.week * skipWeeks;
         i += skipWeeks;
 
-        for (; i < 52; i++) {
+        for (; i <= 52; i++) {
           if (tmp.epoch > thisOne) {
             return i + toAdd;
           }
@@ -4198,7 +4234,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
       //'january'
       monthName: function monthName(input) {
         if (input === undefined) {
-          return months["long"]()[this.month()];
+          return months$1["long"]()[this.month()];
         }
 
         var s = this.clone();
@@ -4416,30 +4452,30 @@ var spacetime = createCommonjsModule(function (module, exports) {
         return num;
       }
     };
-    var _03Year = methods$3;
-    var methods$4 = Object.assign({}, _01Time, _02Date, _03Year); //aliases
+    var _03Year = methods$1;
+    var methods = Object.assign({}, _01Time, _02Date, _03Year); //aliases
 
-    methods$4.milliseconds = methods$4.millisecond;
-    methods$4.seconds = methods$4.second;
-    methods$4.minutes = methods$4.minute;
-    methods$4.hours = methods$4.hour;
-    methods$4.hour24 = methods$4.hour;
-    methods$4.h12 = methods$4.hour12;
-    methods$4.h24 = methods$4.hour24;
-    methods$4.days = methods$4.day;
+    methods.milliseconds = methods.millisecond;
+    methods.seconds = methods.second;
+    methods.minutes = methods.minute;
+    methods.hours = methods.hour;
+    methods.hour24 = methods.hour;
+    methods.h12 = methods.hour12;
+    methods.h24 = methods.hour24;
+    methods.days = methods.day;
 
-    var addMethods = function addMethods(Space) {
+    var addMethods$4 = function addMethods(Space) {
       //hook the methods into prototype
-      Object.keys(methods$4).forEach(function (k) {
-        Space.prototype[k] = methods$4[k];
+      Object.keys(methods).forEach(function (k) {
+        Space.prototype[k] = methods[k];
       });
     };
 
-    var query = addMethods;
-    var isLeapYear$2 = fns.isLeapYear;
+    var query = addMethods$4;
+    var isLeapYear = fns.isLeapYear;
 
     var getMonthLength = function getMonthLength(month, year) {
-      if (month === 1 && isLeapYear$2(year)) {
+      if (month === 1 && isLeapYear(year)) {
         return 29;
       }
 
@@ -4526,19 +4562,19 @@ var spacetime = createCommonjsModule(function (module, exports) {
     // we 'model' the calendar here only a little bit
     // and that usually works-out...
 
-    var order$1 = ['millisecond', 'second', 'minute', 'hour', 'date', 'month'];
+    var order = ['millisecond', 'second', 'minute', 'hour', 'date', 'month'];
     var keep = {
-      second: order$1.slice(0, 1),
-      minute: order$1.slice(0, 2),
-      quarterhour: order$1.slice(0, 2),
-      hour: order$1.slice(0, 3),
-      date: order$1.slice(0, 4),
-      month: order$1.slice(0, 4),
-      quarter: order$1.slice(0, 4),
-      season: order$1.slice(0, 4),
-      year: order$1,
-      decade: order$1,
-      century: order$1
+      second: order.slice(0, 1),
+      minute: order.slice(0, 2),
+      quarterhour: order.slice(0, 2),
+      hour: order.slice(0, 3),
+      date: order.slice(0, 4),
+      month: order.slice(0, 4),
+      quarter: order.slice(0, 4),
+      season: order.slice(0, 4),
+      year: order,
+      decade: order,
+      century: order
     };
     keep.week = keep.hour;
     keep.season = keep.date;
@@ -4559,7 +4595,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
       year: true
     };
 
-    var addMethods$1 = function addMethods(SpaceTime) {
+    var addMethods$3 = function addMethods(SpaceTime) {
       SpaceTime.prototype.add = function (num, unit) {
         var s = this.clone();
 
@@ -4699,7 +4735,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
       SpaceTime.prototype.plus = SpaceTime.prototype.add;
     };
 
-    var add = addMethods$1; //make a string, for easy comparison between dates
+    var add = addMethods$3; //make a string, for easy comparison between dates
 
     var print = {
       millisecond: function millisecond(s) {
@@ -4739,6 +4775,13 @@ var spacetime = createCommonjsModule(function (module, exports) {
 
         if (!unit) {
           return null;
+        } // support swapped params
+
+
+        if (typeof b === 'string' && _typeof(unit) === 'object') {
+          var tmp = b;
+          b = unit;
+          unit = tmp;
         }
 
         if (typeof b === 'string' || typeof b === 'number') {
@@ -4763,7 +4806,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
 
     var same = addMethods$2;
 
-    var addMethods$3 = function addMethods(SpaceTime) {
+    var addMethods$1 = function addMethods(SpaceTime) {
       var methods = {
         isAfter: function isAfter(d) {
           d = fns.beADate(d, this);
@@ -4824,9 +4867,9 @@ var spacetime = createCommonjsModule(function (module, exports) {
       });
     };
 
-    var compare = addMethods$3;
+    var compare = addMethods$1;
 
-    var addMethods$4 = function addMethods(SpaceTime) {
+    var addMethods = function addMethods(SpaceTime) {
       var methods = {
         i18n: function i18n(data) {
           //change the day names
@@ -4836,7 +4879,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
 
 
           if (fns.isObject(data.months)) {
-            months.set(data.months);
+            months$1.set(data.months);
           } // change the the display style of the month / day names
 
 
@@ -4851,7 +4894,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
       });
     };
 
-    var i18n = addMethods$4;
+    var i18n = addMethods;
     var timezones = unpack; //fake timezone-support, for fakers (es5 class)
 
     var SpaceTime = function SpaceTime(input$1, tz) {
@@ -4977,9 +5020,9 @@ var spacetime = createCommonjsModule(function (module, exports) {
     };
 
     var whereIts_1 = whereIts;
-    var _version = '6.12.5';
+    var _version = '6.13.0';
 
-    var main$1 = function main(input, tz, options) {
+    var main = function main(input, tz, options) {
       return new spacetime(input, tz, options);
     }; // set all properties of a given 'today' object
 
@@ -4993,48 +5036,48 @@ var spacetime = createCommonjsModule(function (module, exports) {
     }; //some helper functions on the main method
 
 
-    main$1.now = function (tz, options) {
+    main.now = function (tz, options) {
       var s = new spacetime(new Date().getTime(), tz, options);
       s = setToday(s);
       return s;
     };
 
-    main$1.today = function (tz, options) {
+    main.today = function (tz, options) {
       var s = new spacetime(new Date().getTime(), tz, options);
       s = setToday(s);
       return s.startOf('day');
     };
 
-    main$1.tomorrow = function (tz, options) {
+    main.tomorrow = function (tz, options) {
       var s = new spacetime(new Date().getTime(), tz, options);
       s = setToday(s);
       return s.add(1, 'day').startOf('day');
     };
 
-    main$1.yesterday = function (tz, options) {
+    main.yesterday = function (tz, options) {
       var s = new spacetime(new Date().getTime(), tz, options);
       s = setToday(s);
       return s.subtract(1, 'day').startOf('day');
     };
 
-    main$1.extend = function (obj) {
+    main.extend = function (obj) {
       Object.keys(obj).forEach(function (k) {
         spacetime.prototype[k] = obj[k];
       });
       return this;
     };
 
-    main$1.timezones = function () {
+    main.timezones = function () {
       var s = new spacetime();
       return s.timezones;
     }; //find tz by time
 
 
-    main$1.whereIts = whereIts_1;
-    main$1.version = _version; //aliases:
+    main.whereIts = whereIts_1;
+    main.version = _version; //aliases:
 
-    main$1.plugin = main$1.extend;
-    var src = main$1;
+    main.plugin = main.extend;
+    var src = main;
     return src;
   });
 });
@@ -5303,7 +5346,11 @@ var holidays = ['all hallows eve', 'all saints day', 'all sts day', 'april fools
 'isra and miraj', 'lailat al-qadr', 'eid al-fitr', 'id al-Fitr', 'eid ul-Fitr', 'ramadan', 'eid al-adha', 'muharram', 'the prophets birthday', 'ostara', 'march equinox', 'vernal equinox', 'litha', 'june solistice', 'summer solistice', 'mabon', 'september equinox', 'fall equinox', 'autumnal equinox', 'yule', 'december solstice', 'winter solstice', // Additional important holidays
 'chinese new year', 'diwali'];
 
-var times$1 = ['noon', 'midnight', 'now', 'morning', 'tonight', 'evening', 'afternoon', 'night', 'breakfast time', 'lunchtime', 'dinnertime', 'sometime', 'midday', 'eod', 'oclock', 'oclock', 'all day', 'at night'];
+var times$1 = ['noon', 'midnight', 'morning', 'tonight', 'evening', 'afternoon', 'breakfast time', 'lunchtime', 'dinnertime', 'midday', 'eod', 'oclock', 'oclock', 'at night' // 'now',
+// 'night',
+// 'sometime',
+// 'all day',
+];
 
 var data = [[dates, '#Date'], [durations$1, '#Duration'], [holidays, '#Holiday'], [times$1, '#Time'], [Object.keys(_timezones), '#Timezone']];
 var lex = {
@@ -5411,7 +5458,8 @@ var Unit = /*#__PURE__*/function () {
         return this.next();
       }
 
-      if (rel === 'last') {
+      if (rel === 'last' || rel === 'this-past') {
+        // special 'this past' logic is handled in WeekDay
         return this.last();
       }
 
@@ -5637,6 +5685,51 @@ var WeekDay$2 = /*#__PURE__*/function (_Day2) {
     value: function last() {
       this.d = this.d.minus(7, 'days');
       this.d = this.d.day(this.weekDay);
+      return this;
+    } // the millescond before
+
+  }, {
+    key: "before",
+    value: function before() {
+      this.d = this.d.minus(1, 'day');
+      this.d = this.d.endOf('day');
+
+      if (this.context.dayEnd) {
+        this.d = this.d.time(this.context.dayEnd);
+      }
+
+      return this;
+    }
+  }, {
+    key: "applyRel",
+    value: function applyRel(rel) {
+      if (rel === 'next') {
+        var tooFar = this.context.today.endOf('week').add(1, 'week');
+        this.next(); //  did we go too-far?
+
+        if (this.d.isAfter(tooFar)) {
+          this.last(); // go back
+        }
+
+        return this;
+      } // the closest-one backwards
+
+
+      if (rel === 'this-past') {
+        return this.last();
+      }
+
+      if (rel === 'last') {
+        var start = this.context.today.startOf('week');
+        this.last(); // are we still in 'this week' though?
+
+        if (this.d.isBefore(start) === false) {
+          this.last(); // do it again
+        }
+
+        return this;
+      }
+
       return this;
     }
   }]);
@@ -6370,46 +6463,44 @@ var _03Time = parseTime;
 
 // interpret 'this halloween' or 'next june'
 var parseRelative = function parseRelative(doc) {
-  // avoid parsing 'last month of 2019'
-  // if (doc.has('^(this|current|next|upcoming|last|previous) #Duration')) {
-  //   return null
-  // }
-  // parse 'this evening'
-  // let m = doc.match('^(next|last|this)$')
-  // if (m.found) {
-  //   doc.remove(m)
-  //   return doc.text('reduced')
-  // }
-  // but avoid parsing 'day after next'
+  // avoid parsing 'day after next'
   if (doc.has('(next|last|this)$')) {
     return null;
-  }
+  } // next monday
 
-  var rel = null;
+
   var m = doc.match('^this? (next|upcoming|coming)');
 
   if (m.found) {
-    rel = 'next';
     doc.remove(m);
-  }
+    return 'next';
+  } // 'this past monday' is not-always 'last monday'
+
+
+  m = doc.match('^this? (past)');
+
+  if (m.found) {
+    doc.remove(m);
+    return 'this-past';
+  } // last monday
+
 
   m = doc.match('^this? (last|previous)');
 
   if (m.found) {
-    rel = 'last';
     doc.remove(m);
-  }
+    return 'last';
+  } // this monday
+
 
   m = doc.match('^(this|current)');
 
   if (m.found) {
-    rel = 'this';
     doc.remove(m);
-  } // finally, remove it from our text
-  // doc.remove('^(this|current|next|upcoming|last|previous)')
+    return 'this';
+  }
 
-
-  return rel;
+  return null;
 };
 
 var _04Relative = parseRelative;
@@ -6526,7 +6617,7 @@ var parseWeekday = function parseWeekday(doc) {
 
   if (day.found && !doc.has('^#WeekDay$')) {
     // handle relative-day logic elsewhere.
-    if (doc.has('(this|next|last) (next|upcoming|coming)? #WeekDay')) {
+    if (doc.has('(this|next|last) (next|upcoming|coming|past)? #WeekDay')) {
       return null;
     }
 
@@ -7539,7 +7630,17 @@ var parseDate = function parseDate(doc, context) {
 
   unit = unit || parse$3.yearly(doc, context); // 'this june 2nd'
 
-  unit = unit || parse$3.explicit(doc, context);
+  unit = unit || parse$3.explicit(doc, context); // debugging
+  // console.log('\n\n=-=-=-=-=-=-=-=-=-=-=-=Date-=-=-=-=-=-=-=-=-=-=-=-=-\n')
+  // console.log(`  shift:      ${JSON.stringify(shift)}`)
+  // console.log(`  counter:   `, counter)
+  // console.log(`  rel:        ${rel || '-'}`)
+  // console.log(`  section:    ${section || '-'}`)
+  // console.log(`  time:       ${time || '-'}`)
+  // console.log(`  str:       '${doc.text()}'`)
+  // console.log('  unit:     ', unit, '\n')
+  // doc.debug()
+  // console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n')
 
   if (!unit) {
     return null;
@@ -7577,18 +7678,7 @@ var parseDate = function parseDate(doc, context) {
 
   if (counter && counter.unit) {
     unit = transform.counter(unit, counter);
-  } // debugging
-  // console.log('\n\n=-=-=-=-=-=-=-=-=-=-=-=Date-=-=-=-=-=-=-=-=-=-=-=-=-\n')
-  // console.log(`  shift:      ${JSON.stringify(shift)}`)
-  // console.log(`  counter:   `, counter)
-  // console.log(`  rel:        ${rel || '-'}`)
-  // console.log(`  section:    ${section || '-'}`)
-  // console.log(`  time:       ${time || '-'}`)
-  // console.log(`  str:       '${doc.text()}'`)
-  // console.log('  unit:     ', unit, '\n')
-  // doc.debug()
-  // console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n')
-
+  }
 
   return unit;
 };
@@ -7747,11 +7837,12 @@ var ranges = [{
     start = parse_1$2(start, context);
     var end = m.groups('end');
     end = parse_1$2(end, context);
+    end = end.before();
 
     if (start && end) {
       return {
         start: start,
-        end: end.before()
+        end: end
       };
     }
 
@@ -8647,19 +8738,43 @@ var findDate = function findDate(doc) {
   } // 'tuesday, wednesday'
 
 
-  m = dates.match('^[#WeekDay] #WeekDay$', 0);
+  m = dates.match('^[#WeekDay] and? #WeekDay$', 0);
+
+  if (m.found) {
+    if (m.first().has('@hasDash') === false) {
+      dates = dates.splitAfter(m);
+      dates = dates.not('^and');
+    }
+  } // 'june, august'
+
+
+  m = dates.match('^[#Month] and? #Month #Ordinal?$', 0);
 
   if (m.found) {
     dates = dates.splitAfter(m);
-    dates = dates.not('^(and|or)');
+    dates = dates.not('^and');
   } // 'tuesday, wednesday, and friday'
 
 
-  m = dates.match('#WeekDay #WeekDay and #WeekDay');
+  m = dates.match('#WeekDay #WeekDay and? #WeekDay');
 
   if (m.found) {
     dates = dates.splitOn('#WeekDay');
-    dates = dates.not('^(and|or)');
+    dates = dates.not('^and');
+  } // 'june 5th, june 10th'
+
+
+  m = dates.match('[#Month #Value] #Month', 0);
+
+  if (m.found) {
+    dates = dates.splitAfter(m);
+  } // '20 minutes june 5th'
+
+
+  m = dates.match('[#Cardinal #Duration] #Date', 0); //but allow '20 minutes ago'
+
+  if (m.found && !dates.has('#Cardinal #Duration] (ago|from|before|after|back)')) {
+    dates = dates.not(m);
   } // for 20 minutes
 
 

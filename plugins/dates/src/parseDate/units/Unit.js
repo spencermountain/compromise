@@ -69,7 +69,8 @@ class Unit {
     if (rel === 'next') {
       return this.next()
     }
-    if (rel === 'last') {
+    if (rel === 'last' || rel === 'this-past') {
+      // special 'this past' logic is handled in WeekDay
       return this.last()
     }
     return this

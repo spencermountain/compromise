@@ -7,29 +7,17 @@ nlp.extend(require('../../plugins/dates/src'))
 const fmt = (iso) => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 
 const context = {
-  // today: [2011, march, 28], //monday
-  // today: '2000-01-01',
-  // today: [2016, october, 4], //a tuesday
-  timezone: 'Canada/Pacific',
-  // dayStart: '8:00am',
-  // dayEnd: '5:00pm',
-  // max_repeat: 50,
+  // today: '2021-03-01', //monday
+  // today: '2021-03-02', //tuesday
+  today: '2016-03-05', //on friday
 }
 
-let doc = nlp('2nd monday of february')
-// let doc = nlp(`any mondays`)
-
-let dates = doc.dates(context) //.debug()
-let date = dates.get(0)
-console.log(date)
-// console.log(JSON.stringify(json.date, null, 2))
-console.log('start: ', fmt(date.start))
-console.log('  end: ', fmt(date.end))
-// console.log('=-=-=-= here -=-=-=-')
-
-// console.log(nlp('it was ten after 9').debug().times().get())
-// console.log(nlp('around four oclock').times().get())
-// nlp('fourth quarter, 2002').debug()
+let doc = nlp('weds').debug()
+let dates = doc.dates(context).get()
+dates.forEach((date) => {
+  console.log('start: ', fmt(date.start))
+  console.log('  end: ', fmt(date.end))
+})
 
 // ### hmmm
 // let doc = nlp('in the next three years') //.debug()

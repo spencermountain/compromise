@@ -72,6 +72,40 @@ class WeekDay extends Day {
     this.d = this.d.day(this.weekDay)
     return this
   }
+  // the millescond before
+  before() {
+    this.d = this.d.minus(1, 'day')
+    this.d = this.d.endOf('day')
+    if (this.context.dayEnd) {
+      this.d = this.d.time(this.context.dayEnd)
+    }
+    return this
+  }
+  applyRel(rel) {
+    if (rel === 'next') {
+      let tooFar = this.context.today.endOf('week').add(1, 'week')
+      this.next()
+      //  did we go too-far?
+      if (this.d.isAfter(tooFar)) {
+        this.last() // go back
+      }
+      return this
+    }
+    // the closest-one backwards
+    if (rel === 'this-past') {
+      return this.last()
+    }
+    if (rel === 'last') {
+      let start = this.context.today.startOf('week')
+      this.last()
+      // are we still in 'this week' though?
+      if (this.d.isBefore(start) === false) {
+        this.last() // do it again
+      }
+      return this
+    }
+    return this
+  }
 }
 
 // like 'haloween'

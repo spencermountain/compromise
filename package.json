@@ -2,7 +2,7 @@
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "modest natural language processing",
-  "version": "13.10.0",
+  "version": "13.10.1",
   "main": "./builds/compromise.js",
   "unpkg": "./builds/compromise.min.js",
   "module": "./builds/compromise.mjs",
@@ -23,6 +23,7 @@
     "type": "git",
     "url": "git://github.com/spencermountain/compromise.git"
   },
+  "homepage": "https://github.com/spencermountain/compromise",
   "engines": {
     "node": ">=6.0.0"
   },
@@ -39,8 +40,8 @@
     "coverage:html": "nyc --reporter=html tape \"./tests/**/*.test.js\" | tap-dancer --color always",
     "coverage": "nyc -r lcov -n 'src/**/*' -n 'plugins/**/*' npm run test",
     "codecov": "npm run coverage && codecov -t 15039ad1-b495-48cd-b4a0-bcf124c9b318",
-    "perf": "node ./scripts/test/speed/index.js",
-    "perf:build": "node ./scripts/test/speed/build-speed.js",
+    "perf": "node ./scripts/test/perf/index.js",
+    "perf:build": "node ./scripts/test/perf/build-speed.js",
     "lint": "eslint ./src/ && eslint ./plugins/**/src/",
     "watch": "amble ./scratch.js",
     "build:all": "node ./scripts/build/build-all.js && npm run build --silent",
@@ -69,8 +70,8 @@
     "efrt-unpack": "2.2.0"
   },
   "devDependencies": {
-    "@babel/core": "7.12.17",
-    "@babel/preset-env": "7.12.17",
+    "@babel/core": "7.13.8",
+    "@babel/preset-env": "7.13.9",
     "@rollup/plugin-alias": "3.1.2",
     "@rollup/plugin-commonjs": "17.1.0",
     "@rollup/plugin-json": "4.1.0",
@@ -79,13 +80,13 @@
     "codecov": "3.8.1",
     "efrt": "2.2.2",
     "nyc": "^15.1.0",
-    "rollup": "2.39.0",
+    "rollup": "2.40.0",
     "rollup-plugin-babel": "4.4.0",
     "rollup-plugin-filesize-check": "0.0.1",
     "rollup-plugin-terser": "7.0.2",
     "shelljs": "0.8.4",
     "tap-dancer": "0.3.1",
-    "tape": "5.2.0"
+    "tape": "5.2.2"
   },
   "eslintIgnore": [
     "builds/*.js",

@@ -11,8 +11,25 @@ const hasTag = function (doc, tag) {
 
 //mostly pos-corections here
 const miscCorrection = function (doc) {
+  // imperative-form
+  let m = hasTag(doc, 'Infinitive')
+  if (m.found) {
+    // you eat?
+    m = m.ifNo('@hasQuestionMark')
+    // i speak
+    m = m.ifNo('(i|we|they)')
+    // shut the door!
+    m.match('[#Infinitive] (#Determiner|#Possessive) #Noun', 0).tag('Imperative', 'shut-the')
+    // go-fast
+    m.match('^[#Infinitive] #Adverb?$', 0).tag('Imperative', 'go-fast')
+    // do not go
+    m.match('[(do && #Infinitive)] not? #Verb', 0).tag('Imperative', 'do-not')
+    // do it
+    m.match('[#Infinitive] (it|some)', 0).tag('Imperative', 'do-it')
+  }
+
   //exactly like
-  let m = hasWord(doc, 'like')
+  m = hasWord(doc, 'like')
   m.match('#Adverb like')
     .notIf('(really|generally|typically|usually|sometimes|often|just) [like]')
     .tag('Adverb', 'adverb-like')

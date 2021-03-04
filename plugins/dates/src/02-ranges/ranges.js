@@ -15,10 +15,11 @@ module.exports = [
       start = parseDate(start, context)
       let end = m.groups('end')
       end = parseDate(end, context)
+      end = end.before()
       if (start && end) {
         return {
           start: start,
-          end: end.before(),
+          end: end,
         }
       }
       return null

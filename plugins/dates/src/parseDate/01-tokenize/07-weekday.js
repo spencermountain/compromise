@@ -3,7 +3,7 @@ const parseWeekday = function (doc) {
   let day = doc.match('#WeekDay')
   if (day.found && !doc.has('^#WeekDay$')) {
     // handle relative-day logic elsewhere.
-    if (doc.has('(this|next|last) (next|upcoming|coming)? #WeekDay')) {
+    if (doc.has('(this|next|last) (next|upcoming|coming|past)? #WeekDay')) {
       return null
     }
     doc.remove(day)

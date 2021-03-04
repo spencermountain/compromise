@@ -134,6 +134,7 @@ module.exports = [
   'safety',
   'salmon',
   'salt',
+  'satish',
   'sand',
   'scenery',
   'series',

@@ -19,8 +19,8 @@ nlp.verbose(true)
 
 // let doc = nlp(`shut the door`).debug()
 // let doc = nlp(`do you eat?`) //.debug()
-let doc = nlp(`it ranks third today.`).debug()
-console.log(doc.dates().get())
+let doc = nlp(`gagan`).debug()
+// console.log(doc.dates().get())
 // console.log(doc.verbs().isImperative())
 
 // let vb = doc.verbs().clone(true)

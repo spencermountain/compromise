@@ -16,7 +16,7 @@ const context = {
 }
 
 // let doc = nlp('end of april')
-let doc = nlp('any monday')
+let doc = nlp('One Saturday he had been to market')
 
 let dates = doc.dates(context).get()
 console.log(dates)

@@ -1,4 +1,4 @@
-/* compromise-dates 1.5.0 MIT */
+/* compromise-dates 1.5.1 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -8199,7 +8199,7 @@
     var combined = Object.assign({}, interval, res); // ensure start is not after end
     // console.log(combined)
 
-    if (combined.start.d.epoch > combined.end.d.epoch) {
+    if (combined.start && combined.end && combined.start.d.epoch > combined.end.d.epoch) {
       // console.warn('Warning: Start date is after End date')
       combined.start = combined.start.start(); // combined.end = combined.start.clone()
     }
@@ -8849,13 +8849,15 @@
 
     if (m.found) {
       dates = dates.not(m);
-    } // // 'january, february'
+    } // 'one saturday'
+
+
+    dates = dates.notIf('^one (#WeekDay|#Month)$'); // // 'january, february'
     // m = dates.match('^[#Month] (and|or)? #Month$', 0)
     // if (m.found) {
     //   dates = dates.splitAfter(m)
     //   dates = dates.not('^(and|or)')
     // }
-
 
     return dates;
   };

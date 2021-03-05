@@ -46,7 +46,7 @@ const parseRange = function (doc, context) {
 
   // ensure start is not after end
   // console.log(combined)
-  if (combined.start.d.epoch > combined.end.d.epoch) {
+  if (combined.start && combined.end && combined.start.d.epoch > combined.end.d.epoch) {
     // console.warn('Warning: Start date is after End date')
     combined.start = combined.start.start()
     // combined.end = combined.start.clone()

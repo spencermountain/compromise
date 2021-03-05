@@ -29,6 +29,7 @@ test('no dates', function (t) {
     '4a.',
     'A4 A5',
     'palm',
+    // 'One Saturday he had been to market',
   ]
   arr.forEach(function (str) {
     const doc = nlp(str)

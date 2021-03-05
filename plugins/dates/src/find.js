@@ -67,13 +67,14 @@ const findDate = function (doc) {
   if (m.found) {
     dates = dates.not(m)
   }
+  // 'one saturday'
+  dates = dates.notIf('^one (#WeekDay|#Month)$')
   // // 'january, february'
   // m = dates.match('^[#Month] (and|or)? #Month$', 0)
   // if (m.found) {
   //   dates = dates.splitAfter(m)
   //   dates = dates.not('^(and|or)')
   // }
-
   return dates
 }
 module.exports = findDate

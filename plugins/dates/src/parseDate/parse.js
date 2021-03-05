@@ -69,16 +69,11 @@ const parseDate = function (doc, context) {
   // 2 days after..
   if (shift) {
     unit.applyShift(shift)
-    // if (shift.hour || shift.minute || shift.second) {
-    //   console.log(shift)
-    //   unit = new Hour(unit.d, null, unit.context)
-    // }
   }
   // wednesday next week
   if (weekDay && unit.unit !== 'day') {
     unit.applyWeekDay(weekDay)
     unit = new WeekDay(unit.d, null, unit.context)
-    // console.log(rel, unit.d.format())
   }
   // this/next/last
   if (rel) {

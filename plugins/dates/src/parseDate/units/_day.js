@@ -51,11 +51,9 @@ class WeekDay extends Day {
     }
   }
   clone() {
-    //overloaded method
     return new WeekDay(this.d, this.unit, this.context)
   }
   end() {
-    //overloaded method
     this.d = this.d.endOf('day')
     if (this.context.dayEnd) {
       this.d = this.d.time(this.context.dayEnd)

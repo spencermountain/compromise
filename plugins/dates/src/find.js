@@ -47,12 +47,16 @@ const findDate = function (doc) {
     dates = dates.splitOn('#WeekDay')
     dates = dates.not('^and')
   }
+  // '5 june, 10 june'
+  m = dates.match('[#Value #Month] #Value #Month', 0)
+  if (m.found) {
+    dates = dates.splitAfter(m)
+  }
   // 'june 5th, june 10th'
   m = dates.match('[#Month #Value] #Month', 0)
   if (m.found) {
     dates = dates.splitAfter(m)
   }
-
   // '20 minutes june 5th'
   m = dates.match('[#Cardinal #Duration] #Date', 0) //but allow '20 minutes ago'
   if (m.found && !dates.has('#Cardinal #Duration] (ago|from|before|after|back)')) {

@@ -110,6 +110,17 @@ class Unit {
     this.d = this.d.add(minutes, 'minutes')
     return this
   }
+  // move it to 3/4s through
+  beforeEnd() {
+    let diff = this.d.startOf(this.unit).diff(this.d.endOf(this.unit))
+    let mins = Math.round(diff.minutes / 4)
+    this.d = this.d.endOf(this.unit)
+    this.d = this.d.minus(mins, 'minutes')
+    if (this.context.dayStart) {
+      this.d = this.d.time(this.context.dayStart)
+    }
+    return this
+  }
   // the millescond before
   before() {
     this.d = this.d.minus(1, this.unit)

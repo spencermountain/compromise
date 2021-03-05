@@ -1,4 +1,4 @@
-/* compromise-dates 1.4.4 MIT */
+/* compromise-dates 1.5.0 MIT */
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
@@ -8142,7 +8142,15 @@ var ranges = [{
 
 var parseRange = function parseRange(doc, context) {
   // parse-out 'every week ..'
-  var interval = intervals(doc) || {}; // try each template in order
+  var interval = intervals(doc) || {}; // if it's *only* an interval response
+
+  if (doc.found === false) {
+    return Object.assign({}, interval, {
+      start: null,
+      end: null
+    });
+  } // try each template in order
+
 
   for (var i = 0; i < ranges.length; i += 1) {
     var fmt = ranges[i];
@@ -8245,6 +8253,7 @@ var normalize = function normalize(doc) {
 var normalize_1 = normalize;
 
 var maxDate = 8640000000000000;
+var max_loops = 500;
 
 var shouldPick = function shouldPick(s, byDay) {
   if (byDay && byDay[s.dayName()] !== true) {
@@ -8258,7 +8267,13 @@ var shouldPick = function shouldPick(s, byDay) {
 var generateDates = function generateDates(result, context) {
   var list = [];
   var max_count = context.max_repeat || 12;
-  var s = spacetime(result.start || context.today, context.timezone); // should we stop at the end date?
+  var s = spacetime(result.start || context.today, context.timezone);
+  s = s.startOf('day');
+
+  if (context.dayStart) {
+    s = s.time(context.dayStart);
+  } // should we stop at the end date?
+
 
   var end = spacetime(result.end, context.timezone);
   var toAdd = Object.keys(result.repeat.interval);
@@ -8278,7 +8293,11 @@ var generateDates = function generateDates(result, context) {
 
   var loops = 0; // TODO: learn how to write better software.
 
-  while (list.length < max_count && s.epoch < end.epoch) {
+  for (var i = 0; i < max_loops; i += 1) {
+    if (list.length >= max_count || s.epoch >= end.epoch) {
+      break;
+    }
+
     if (shouldPick(s, byDay)) {
       list.push(s.iso());
     }
@@ -8295,7 +8314,14 @@ var generateDates = function generateDates(result, context) {
     }
   }
 
-  result.repeat.generated = list;
+  result.repeat.generated = list; // if we got an interval, but not a start/end
+
+  if (!result.start && result.repeat.generated && result.repeat.generated.length > 1) {
+    var arr = result.repeat.generated;
+    result.start = arr[0];
+    result.end = arr[arr.length - 1];
+  }
+
   return result;
 };
 
@@ -8878,7 +8904,12 @@ var addMethods = function addMethods(Doc, world) {
       n = null;
     }
 
-    context = Object.assign({}, context, opts);
+    context = Object.assign({}, context, opts); // use the user's timezone, by default
+
+    if (context.timezone === undefined) {
+      context.timezone = spacetime().timezone().name;
+    }
+
     var dates = find(this);
 
     if (typeof n === 'number') {

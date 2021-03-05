@@ -1,5 +1,6 @@
 const spacetime = require('spacetime')
 const maxDate = 8640000000000000
+const max_loops = 500
 
 const shouldPick = function (s, byDay) {
   if (byDay && byDay[s.dayName()] !== true) {
@@ -32,8 +33,10 @@ const generateDates = function (result, context) {
   // start going!
   let loops = 0
   // TODO: learn how to write better software.
-
-  while (list.length < max_count && s.epoch < end.epoch) {
+  for (let i = 0; i < max_loops; i += 1) {
+    if (list.length >= max_count || s.epoch >= end.epoch) {
+      break
+    }
     if (shouldPick(s, byDay, end)) {
       list.push(s.iso())
     }

@@ -6,6 +6,10 @@ const ranges = require('./ranges')
 const parseRange = function (doc, context) {
   // parse-out 'every week ..'
   let interval = parseInterval(doc, context) || {}
+  // if it's *only* an interval response
+  if (doc.found === false) {
+    return Object.assign({}, interval, { start: null, end: null })
+  }
   // try each template in order
   for (let i = 0; i < ranges.length; i += 1) {
     let fmt = ranges[i]

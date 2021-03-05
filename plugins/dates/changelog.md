@@ -2,6 +2,9 @@
 <!-- #### [Unreleased] 
 
 -->
+### 1.5.0 [March 2021]
+- **[change]** - return dates in computer's timezone, unless set
+  
 ### 1.4.3 [March 2021]
 - **[change]** - consecutive date tokenization changes
 - **[change]** - fixes to 'this/next/last x'  logic

@@ -10,15 +10,16 @@ const context = {
   // today: '2021-03-01', //monday
   // today: '2021-03-02', //tuesday
   // today: '2016-03-05', //on friday
-
+  // timezone: null,
   dayStart: '10am',
   dayEnd: '5pm',
 }
 
 // let doc = nlp('end of april')
-let doc = nlp('saturday evening')
+let doc = nlp('any monday')
 
 let dates = doc.dates(context).get()
+console.log(dates)
 dates.forEach((date) => {
   console.log('start: ', fmt(date.start))
   console.log('  end: ', fmt(date.end))

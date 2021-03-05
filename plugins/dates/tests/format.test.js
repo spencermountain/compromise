@@ -28,7 +28,7 @@ test('short+long form', function (t) {
   t.equal('April, June, and September', str, 'toShortForm-comma')
 
   doc = nlp('January 10, 2018 7:20 AM')
-  let start = doc.dates().json()[0].date.start
+  let start = doc.dates({ timezone: null }).json()[0].date.start
   t.equal(start, '2018-01-10T07:20:00.000Z', '7:20am')
 
   t.end()

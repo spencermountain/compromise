@@ -3,6 +3,7 @@ const nlp = require('./_lib')
 
 const context = {
   today: { year: 2019 },
+  timezone: null,
 }
 
 test('date-parse :', function (t) {

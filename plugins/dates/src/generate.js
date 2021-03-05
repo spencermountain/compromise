@@ -13,6 +13,10 @@ const generateDates = function (result, context) {
   let list = []
   let max_count = context.max_repeat || 12
   let s = spacetime(result.start || context.today, context.timezone)
+  s = s.startOf('day')
+  if (context.dayStart) {
+    s = s.time(context.dayStart)
+  }
   // should we stop at the end date?
   let end = spacetime(result.end, context.timezone)
   let toAdd = Object.keys(result.repeat.interval)
@@ -28,6 +32,7 @@ const generateDates = function (result, context) {
   // start going!
   let loops = 0
   // TODO: learn how to write better software.
+
   while (list.length < max_count && s.epoch < end.epoch) {
     if (shouldPick(s, byDay, end)) {
       list.push(s.iso())
@@ -43,6 +48,12 @@ const generateDates = function (result, context) {
     }
   }
   result.repeat.generated = list
+  // if we got an interval, but not a start/end
+  if (!result.start && result.repeat.generated && result.repeat.generated.length > 1) {
+    let arr = result.repeat.generated
+    result.start = arr[0]
+    result.end = arr[arr.length - 1]
+  }
   return result
 }
 module.exports = generateDates

@@ -1,4 +1,4 @@
-/* compromise-dates 1.4.3 MIT */
+/* compromise-dates 1.4.4 MIT */
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
@@ -74,7 +74,7 @@ function _isNativeReflectConstruct() {
   if (typeof Proxy === "function") return true;
 
   try {
-    Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+    Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
     return true;
   } catch (e) {
     return false;
@@ -652,7 +652,7 @@ function createCommonjsModule(fn) {
 	return fn(module, module.exports), module.exports;
 }
 
-/* spencermountain/spacetime 6.13.0 Apache 2.0 */
+/* spencermountain/spacetime 6.13.1 Apache 2.0 */
 var spacetime = createCommonjsModule(function (module, exports) {
   (function (global, factory) {
     module.exports = factory() ;
@@ -4068,7 +4068,12 @@ var spacetime = createCommonjsModule(function (module, exports) {
       date: function date(num) {
         if (num !== undefined) {
           var s = this.clone();
-          s.epoch = set.date(s, num);
+          num = parseInt(num, 10);
+
+          if (num) {
+            s.epoch = set.date(s, num);
+          }
+
           return s;
         }
 
@@ -5020,7 +5025,7 @@ var spacetime = createCommonjsModule(function (module, exports) {
     };
 
     var whereIts_1 = whereIts;
-    var _version = '6.13.0';
+    var _version = '6.13.1';
 
     var main = function main(input, tz, options) {
       return new spacetime(input, tz, options);
@@ -5516,6 +5521,21 @@ var Unit = /*#__PURE__*/function () {
       var minutes = Math.round(diff.minutes / 2);
       this.d = this.d.add(minutes, 'minutes');
       return this;
+    } // move it to 3/4s through
+
+  }, {
+    key: "beforeEnd",
+    value: function beforeEnd() {
+      var diff = this.d.startOf(this.unit).diff(this.d.endOf(this.unit));
+      var mins = Math.round(diff.minutes / 4);
+      this.d = this.d.endOf(this.unit);
+      this.d = this.d.minus(mins, 'minutes');
+
+      if (this.context.dayStart) {
+        this.d = this.d.time(this.context.dayStart);
+      }
+
+      return this;
     } // the millescond before
 
   }, {
@@ -5658,13 +5678,11 @@ var WeekDay$2 = /*#__PURE__*/function (_Day2) {
   _createClass(WeekDay, [{
     key: "clone",
     value: function clone() {
-      //overloaded method
       return new WeekDay(this.d, this.unit, this.context);
     }
   }, {
     key: "end",
     value: function end() {
-      //overloaded method
       this.d = this.d.endOf('day');
 
       if (this.context.dayEnd) {
@@ -7648,16 +7666,13 @@ var parseDate = function parseDate(doc, context) {
 
 
   if (shift) {
-    unit.applyShift(shift); // if (shift.hour || shift.minute || shift.second) {
-    //   console.log(shift)
-    //   unit = new Hour(unit.d, null, unit.context)
-    // }
+    unit.applyShift(shift);
   } // wednesday next week
 
 
   if (weekDay && unit.unit !== 'day') {
     unit.applyWeekDay(weekDay);
-    unit = new WeekDay(unit.d, null, unit.context); // console.log(rel, unit.d.format())
+    unit = new WeekDay(unit.d, null, unit.context);
   } // this/next/last
 
 
@@ -8155,13 +8170,26 @@ var parseRange = function parseRange(doc, context) {
   var unit = parse_1$2(doc, context);
 
   if (unit) {
+    var end = unit.clone().end(); // 'end of x' shift-up a little bit
+
+    if (end.d.epoch === unit.d.epoch) {
+      unit = unit.beforeEnd();
+    }
+
     res = {
       start: unit,
-      end: unit.clone().end()
+      end: end
     };
   }
 
-  var combined = Object.assign({}, interval, res);
+  var combined = Object.assign({}, interval, res); // ensure start is not after end
+  // console.log(combined)
+
+  if (combined.start.d.epoch > combined.end.d.epoch) {
+    // console.warn('Warning: Start date is after End date')
+    combined.start = combined.start.start(); // combined.end = combined.start.clone()
+  }
+
   return combined;
 };
 
@@ -8761,6 +8789,13 @@ var findDate = function findDate(doc) {
   if (m.found) {
     dates = dates.splitOn('#WeekDay');
     dates = dates.not('^and');
+  } // '5 june, 10 june'
+
+
+  m = dates.match('[#Value #Month] #Value #Month', 0);
+
+  if (m.found) {
+    dates = dates.splitAfter(m);
   } // 'june 5th, june 10th'
 
 

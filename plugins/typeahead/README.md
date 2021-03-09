@@ -48,6 +48,10 @@ console.log(m.text('implicit'))
 
 Work in progress!
 
+<div align="center">
+  <h2><a href="https://observablehq.com/@spencermountain/compromise-typeahead">Demo</a></h2>
+</div>
+
 ### See Also
 * [compromise-keypress](../keypress) - a on-type caching plugin
 

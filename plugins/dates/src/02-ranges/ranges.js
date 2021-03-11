@@ -276,4 +276,20 @@ module.exports = [
       return null
     },
   },
+  {
+    // 'tuesday before noon'
+    match: '* before #Time+$',
+    parse: (m, context) => {
+      let unit = parseDate(m, context)
+      let end = unit.clone()
+      let start = unit.start()
+      if (unit) {
+        return {
+          start: start,
+          end: end,
+        }
+      }
+      return null
+    },
+  },
 ]

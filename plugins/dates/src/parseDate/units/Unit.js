@@ -91,10 +91,15 @@ class Unit {
     return this.d.format(fmt)
   }
   start() {
-    this.d = this.d.startOf(this.unit)
+    // do we have a custom day-start?
     if (this.context.dayStart) {
-      this.d = this.d.time(this.context.dayStart)
+      let dayStart = this.d.time(this.context.dayStart)
+      if (dayStart.isBefore(this.d)) {
+        this.d = dayStart
+        return this
+      }
     }
+    this.d = this.d.startOf(this.unit)
     return this
   }
   end() {

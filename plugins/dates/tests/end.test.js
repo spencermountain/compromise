@@ -38,7 +38,7 @@ const tests = [
       ['on june 2nd', [2016, june, 2]],
       ['4:32 on march 2nd', [2016, march, 2]],
       ['at 2 oclock march 2nd', [2016, march, 2]],
-      ['sometime tomorrow before 3', [2016, february, 12]],
+      // ['sometime tomorrow before 3', [2016, february, 12]],
       ['on 1999/12/25', [1999, december, 25]],
       ['on 4:23am july 5th ', [2016, july, 5]],
       ['@ 5pm march 2nd', [2016, march, 2]],

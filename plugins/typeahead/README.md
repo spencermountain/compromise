@@ -46,11 +46,56 @@ console.log(m.text('implicit'))
 // 'buckinghamshire'
 ```
 
-Work in progress!
+You can see, a passed-in [lexicon](https://observablehq.com/@spencermountain/compromise-lexicon) will automatically tag the assumed word.
+If this is not required, you can simply pass-in an array of terms instead.
+
 
 <div align="center">
   <h2><a href="https://observablehq.com/@spencermountain/compromise-typeahead">Demo</a></h2>
 </div>
+
+
+### Caution
+Typeahead is a dangerous game. Making assumptions about a text, based on prefix, is very error-prone, especially at small-prefixes.
+
+Great care should be taken when selecting words for typeahead. You may see a list of misc words by prefix using [this tool](https://observablehq.com/@spencermountain/prefix-word-lookup). But even then, it's nearly impossible to predict misunderstandings when the interpreter is being greedy.
+
+There are three things this plugin does to decrease the chances of misunderstanding - 
+
+* The plugin will not make predictions for any overlapping prefixes, in the given terms.
+if **'milan'** and **'milwaukee'** are both given, **'mil'** will not be triggered for anything.
+```js
+nlp.typeahead(['milan', 'milwaukee'])
+nlp('mil').has('(milan|milwaukee)') //false
+```
+
+* by default, prefixes shorter than 3 chars will be ignored.
+you can set a lower, or higher minimum with:
+```js
+nlp.typeahead(['toronto'], { min: 4 })
+nlp('tor').has('toronto') //false
+nlp('toro').has('toronto') //true
+```
+* by default, any prefixes that exist in the compromise lexicon will also be ignored.
+these are assumed to be pretty common, full words.
+
+You can disable this by passing-in `safe:false`
+```js
+// 'swim' is it's own word.
+nlp.typeahead(['swimsuit'])
+nlp('swim').has('swimsuit') //false
+nlp('swimsu').has('swimsuit') //true
+
+// who cares - do it anyways
+nlp.typeahead(['swimsuit'], { safe:false })
+nlp('swim').has('swimsuit') //true
+```
+the compromise lexicon includes ~14k words, but very-few common nouns, and is not meant to be a perfect-guard against prefix-collisions, like this.
+So please don't lean on this feature too-hard.
+
+---
+
+Work in progress!
 
 ### See Also
 * [compromise-keypress](../keypress) - a on-type caching plugin

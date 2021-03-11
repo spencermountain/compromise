@@ -33,17 +33,12 @@ const parseRange = function (doc, context) {
   let unit = parseDate(doc, context)
   if (unit) {
     let end = unit.clone().end()
-    // 'end of x' shift-up a little bit
-    if (end.d.epoch === unit.d.epoch) {
-      unit = unit.beforeEnd()
-    }
     res = {
       start: unit,
       end: end,
     }
   }
   let combined = Object.assign({}, interval, res)
-
   // ensure start is not after end
   // console.log(combined)
   if (combined.start && combined.end && combined.start.d.epoch > combined.end.d.epoch) {

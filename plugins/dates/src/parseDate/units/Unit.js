@@ -98,10 +98,15 @@ class Unit {
     return this
   }
   end() {
-    this.d = this.d.endOf(this.unit)
+    // do we have a custom day-end?
     if (this.context.dayEnd) {
-      this.d = this.d.time(this.context.dayEnd)
+      let dayEnd = this.d.time(this.context.dayEnd)
+      if (dayEnd.isAfter(this.d)) {
+        this.d = dayEnd
+        return this
+      }
     }
+    this.d = this.d.endOf(this.unit)
     return this
   }
   middle() {

@@ -260,4 +260,20 @@ module.exports = [
       return null
     },
   },
+  {
+    // 'tuesday after 5pm'
+    match: '* after #Time+$',
+    parse: (m, context) => {
+      let unit = parseDate(m, context)
+      let start = unit.clone()
+      let end = unit.end()
+      if (unit) {
+        return {
+          start: start,
+          end: end,
+        }
+      }
+      return null
+    },
+  },
 ]

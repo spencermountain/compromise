@@ -7,4 +7,4 @@ nlp.extend(require('./plugins/typeahead/src'))
 
 nlp.typeahead(['milan', 'milwaukee'], { min: 1 })
 // console.log(nlp('mila').has('milan'))
-console.log(nlp('milw').has('(milan|milwaukee)'))
+console.log(nlp('milw').has('(milan|milwaukee|foot ball)'))

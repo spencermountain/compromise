@@ -13,8 +13,8 @@
     <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/plugins/scan/builds/compromise-typeahead.min.js" />
   </a>
   <div align="center">
-    <div >Work in progress</div>
     <code>npm install compromise-typeahead</code>
+    <div >Work in progress</div>
   </div>
    <hr/>
 </div>
@@ -23,7 +23,7 @@
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 </div>
 
-a plugin that allows assuming a word, before it is fully-typed.
+a plugin that allows *assuming a word*, before it is fully-typed.
 <div align="center">
   <h4><a href="https://observablehq.com/@spencermountain/compromise-typeahead">Demo</a></h4>
 </div>
@@ -60,32 +60,40 @@ console.log(m.text('implicit'))
 ```
 You can see, it just kind of pretends the word is there. It uses the same 'implicit' scheme that [contractions do](https://observablehq.com/@spencermountain/compromise-contractions).
 
+It only applies to the end of the document, for now.
+
 In addition to assuming the word, a passed-in [lexicon](https://observablehq.com/@spencermountain/compromise-lexicon) will also tag it automatically. If this is not required, you can simply pass-in an array of terms instead.
 
+<!-- spacer -->
+<div >
+  <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+</div>
 cool!
 <!-- spacer -->
 <div >
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 </div>
 
-### Notes
-Typeahead is a dangerous game. Making assumptions about a text, based on prefix, is very error-prone, especially for small-prefixes.
+## Notes:
+Typeahead is a dangerous game. Making assumptions about a user's text based on prefix, is very error-prone, especially for small-prefixes.
 
-Great care should be taken when selecting words for typeahead. 
+Great care should be taken when selecting your words for typeahead. 
 
-[This tool](https://observablehq.com/@spencermountain/prefix-word-lookup) may help reviewing a list of prefix-collisions. 
+**[This tool](https://observablehq.com/@spencermountain/prefix-word-lookup)** may help in reviewing a list of potential prefix-collisions. 
 
-...but even then, it's nearly impossible to predict misunderstandings when the interpreter is being greedy.
+...ya but even then, - it's nearly impossible to predict misunderstandings when the interpreter is being greedy.
 
 <!-- spacer -->
 <div >
   <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 </div>
 
-There are three things this plugin does to decrease false-positive matches - 
+So, heads-up.
 
-##### Block the overlap:
-* The plugin will not make predictions for any overlapping prefixes, in the given terms.
+Three things it does to decrease false-positives - 
+
+##### Block any overlap:
+The plugin will not make predictions for any overlapping prefixes, in the given terms.
 if **'milan'** and **'milwaukee'** are both given, **'mil'** will not be triggered for anything.
 ```js
 nlp.typeahead(['milan', 'milwaukee'])
@@ -93,7 +101,8 @@ nlp('mil').has('(milan|milwaukee)') //false
 ```
 
 ##### Ignore 2-char prefixes:
-* by default, prefixes shorter than 3 chars will be ignored.
+Prefixes shorter than 3 chars will be ignored.
+
 you can set a lower, or higher minimum with:
 ```js
 nlp.typeahead(['toronto'], { min: 4 })
@@ -102,10 +111,11 @@ nlp('toro').has('toronto') //true
 ```
 
 ##### Block known words:
-* by default, any prefixes that exist in the compromise lexicon will also be ignored.
+Prefixes that exist in the compromise lexicon will also be ignored.
+
 these are assumed to be pretty common, full words.
 
-You can disable this by passing-in `safe:false`
+You can disable this by passing-in `safe:false`.
 ```js
 // 'swim' is it's own word.
 nlp.typeahead(['swimsuit'])
@@ -116,8 +126,8 @@ nlp('swimsu').has('swimsuit') //true
 nlp.typeahead(['swimsuit'], { safe:false })
 nlp('swim').has('swimsuit') //true
 ```
-the compromise lexicon includes ~14k words, but very-few common nouns, and is not meant to be a perfect-guard against prefix-collisions, like this.
-So please don't lean on this feature too-hard.
+the compromise lexicon includes ~14k words, but very few common nouns. It is not meant to be a perfect-guard against prefix-collisions, like this.
+So please don't lean on this safe feature too-hard.
 
 <!-- spacer -->
 <div >
@@ -130,9 +140,8 @@ So please don't lean on this feature too-hard.
   <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 </div>
 
-Work in progress!
 
-### See Also
-* [compromise-keypress](../keypress) - a on-type caching plugin
+## See Also
+* [compromise-keypress](../keypress) - a caching plugin for on-type parsing
 
-MIT
+**MIT**

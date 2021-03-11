@@ -103,7 +103,7 @@ const tagDates = function (doc) {
     //june the 5th
     date.match('#Date the? #Ordinal').tag('Date', 'correction')
     //last month
-    date.match(`${thisNext} #Date`).tag('Date', 'thisNext')
+    date.match(`${thisNext} #Date`).tag('Date', 'thisNext-date')
     //by 5 March
     date.match('due? (by|before|after|until) #Date').tag('Date', 'by')
     //next feb

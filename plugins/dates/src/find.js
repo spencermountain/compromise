@@ -69,12 +69,22 @@ const findDate = function (doc) {
   }
   // 'one saturday'
   dates = dates.notIf('^one (#WeekDay|#Month)$')
-  // // 'january, february'
-  // m = dates.match('^[#Month] (and|or)? #Month$', 0)
-  // if (m.found) {
-  //   dates = dates.splitAfter(m)
-  //   dates = dates.not('^(and|or)')
-  // }
+
+  // next week tomorrow
+  m = dates.match('(this|next) #Duration [(today|tomorrow|yesterday)]', 0)
+  if (m.found) {
+    dates = dates.splitBefore(m)
+  }
+  // tomorrow 15 march
+  m = dates.match('[(today|tomorrow|yesterday)] #Value #Month', 0)
+  if (m.found) {
+    dates = dates.splitAfter(m)
+  }
+  // tomorrow yesterday
+  m = dates.match('[(today|tomorrow|yesterday)] (today|tomorrow|yesterday)', 0)
+  if (m.found) {
+    dates = dates.splitAfter(m)
+  }
   return dates
 }
 module.exports = findDate

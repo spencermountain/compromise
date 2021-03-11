@@ -29,7 +29,7 @@ const fixUp = function (doc) {
       //   .unTag('Date')
       //   .lastTerm()
       //   .tag('Date', here)
-      d.match(`(this|last|next) #Date ${knownDate}$`).unTag('Date').lastTerm().tag('Date', 'this month yesterday')
+      // d.match(`(this|last|next) #Date ${knownDate}$`).unTag('Date').lastTerm().tag('Date', 'this month yesterday')
     }
     //tomorrow on 5
     d.match(`on #Cardinal$`).unTag('Date', here)

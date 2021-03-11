@@ -177,42 +177,6 @@ module.exports = [
     },
   },
 
-  // {
-  //   // 'A through B' (inclusive end)
-  //   match: 'from? [<a>*] (through|thru) [<b>*]',
-  //   parse: (m, context) => {
-  //     let from = m.groups('a')
-  //     let to = m.groups('b')
-  //     from = parseDate(from, context)
-  //     to = parseDate(to, context)
-  //     if (from && to) {
-  //       return {
-  //         start: from,
-  //         end: to.end(),
-  //       }
-  //     }
-  //     return null
-  //   },
-  // },
-
-  // {
-  //   // 'A until B' (not inclusive end)
-  //   match: 'from? [<a>*] (to|until|upto) [<b>*]',
-  //   parse: (m, context) => {
-  //     let from = m.groups('a')
-  //     let to = m.groups('b')
-  //     from = parseDate(from, context)
-  //     to = parseDate(to, context)
-  //     if (from && to) {
-  //       return {
-  //         start: from,
-  //         end: to.end(),
-  //       }
-  //     }
-  //     return null
-  //   },
-  // },
-
   {
     // 'before june'
     match: '^due? (by|before) [*]',
@@ -274,6 +238,23 @@ module.exports = [
         return {
           start: unit,
           end: unit.clone().end(),
+        }
+      }
+      return null
+    },
+  },
+  {
+    // 'middle of'
+    match: '^(middle|center|midpoint) of [*]',
+    group: 0,
+    parse: (m, context) => {
+      let unit = parseDate(m, context)
+      let start = unit.clone().middle()
+      let end = unit.beforeEnd()
+      if (unit) {
+        return {
+          start: start,
+          end: end,
         }
       }
       return null

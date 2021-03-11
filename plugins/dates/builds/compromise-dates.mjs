@@ -1,4 +1,4 @@
-/* compromise-dates 1.5.1 MIT */
+/* compromise-dates 1.5.2 MIT */
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
@@ -227,7 +227,7 @@ var tagDates = function tagDates(doc) {
     //june the 5th
     date.match('#Date the? #Ordinal').tag('Date', 'correction'); //last month
 
-    date.match("".concat(thisNext, " #Date")).tag('Date', 'thisNext'); //by 5 March
+    date.match("".concat(thisNext, " #Date")).tag('Date', 'thisNext-date'); //by 5 March
 
     date.match('due? (by|before|after|until) #Date').tag('Date', 'by'); //next feb
 
@@ -526,8 +526,7 @@ var fixUp = function fixUp(doc) {
       //   .unTag('Date')
       //   .lastTerm()
       //   .tag('Date', here)
-
-      d.match("(this|last|next) #Date ".concat(knownDate, "$")).unTag('Date').lastTerm().tag('Date', 'this month yesterday');
+      // d.match(`(this|last|next) #Date ${knownDate}$`).unTag('Date').lastTerm().tag('Date', 'this month yesterday')
     } //tomorrow on 5
 
 
@@ -5495,23 +5494,33 @@ var Unit = /*#__PURE__*/function () {
   }, {
     key: "start",
     value: function start() {
-      this.d = this.d.startOf(this.unit);
-
+      // do we have a custom day-start?
       if (this.context.dayStart) {
-        this.d = this.d.time(this.context.dayStart);
+        var dayStart = this.d.time(this.context.dayStart);
+
+        if (dayStart.isBefore(this.d)) {
+          this.d = dayStart;
+          return this;
+        }
       }
 
+      this.d = this.d.startOf(this.unit);
       return this;
     }
   }, {
     key: "end",
     value: function end() {
-      this.d = this.d.endOf(this.unit);
-
+      // do we have a custom day-end?
       if (this.context.dayEnd) {
-        this.d = this.d.time(this.context.dayEnd);
+        var dayEnd = this.d.time(this.context.dayEnd);
+
+        if (dayEnd.isAfter(this.d)) {
+          this.d = dayEnd;
+          return this;
+        }
       }
 
+      this.d = this.d.endOf(this.unit);
       return this;
     }
   }, {
@@ -5601,6 +5610,20 @@ var Day$4 = /*#__PURE__*/function (_Unit) {
     return _this;
   }
 
+  _createClass(Day, [{
+    key: "middle",
+    value: function middle() {
+      this.d = this.d.time('10am');
+      return this;
+    }
+  }, {
+    key: "beforeEnd",
+    value: function beforeEnd() {
+      this.d = this.d.time('2pm');
+      return this;
+    }
+  }]);
+
   return Day;
 }(Unit_1); // like 'feb 2'
 
@@ -5653,7 +5676,7 @@ var WeekDay$2 = /*#__PURE__*/function (_Day2) {
     _classCallCheck(this, WeekDay);
 
     _this3 = _super3.call(this, input, unit, context);
-    _this3.unit = 'week'; // is the input just a weekday?
+    _this3.unit = 'day'; // is the input just a weekday?
 
     if (typeof input === 'string') {
       _this3.d = spacetime(context.today, context.timezone);
@@ -5679,17 +5702,6 @@ var WeekDay$2 = /*#__PURE__*/function (_Day2) {
     key: "clone",
     value: function clone() {
       return new WeekDay(this.d, this.unit, this.context);
-    }
-  }, {
-    key: "end",
-    value: function end() {
-      this.d = this.d.endOf('day');
-
-      if (this.context.dayEnd) {
-        this.d = this.d.time(this.context.dayEnd);
-      }
-
-      return this;
     }
   }, {
     key: "next",
@@ -6010,6 +6022,27 @@ var Week$2 = /*#__PURE__*/function (_Unit) {
 
     return _this;
   }
+
+  _createClass(Week, [{
+    key: "clone",
+    value: function clone() {
+      return new Week(this.d, this.unit, this.context);
+    }
+  }, {
+    key: "middle",
+    value: function middle() {
+      this.d = this.d.add(2, 'days'); //wednesday
+
+      return this;
+    } // move it to 3/4s through
+
+  }, {
+    key: "beforeEnd",
+    value: function beforeEnd() {
+      this.d = this.d.day('friday');
+      return this;
+    }
+  }]);
 
   return Week;
 }(Unit_1); //may need some work
@@ -8027,41 +8060,7 @@ var ranges = [{
 
     return null;
   }
-}, // {
-//   // 'A through B' (inclusive end)
-//   match: 'from? [<a>*] (through|thru) [<b>*]',
-//   parse: (m, context) => {
-//     let from = m.groups('a')
-//     let to = m.groups('b')
-//     from = parseDate(from, context)
-//     to = parseDate(to, context)
-//     if (from && to) {
-//       return {
-//         start: from,
-//         end: to.end(),
-//       }
-//     }
-//     return null
-//   },
-// },
-// {
-//   // 'A until B' (not inclusive end)
-//   match: 'from? [<a>*] (to|until|upto) [<b>*]',
-//   parse: (m, context) => {
-//     let from = m.groups('a')
-//     let to = m.groups('b')
-//     from = parseDate(from, context)
-//     to = parseDate(to, context)
-//     if (from && to) {
-//       return {
-//         start: from,
-//         end: to.end(),
-//       }
-//     }
-//     return null
-//   },
-// },
-{
+}, {
   // 'before june'
   match: '^due? (by|before) [*]',
   group: 0,
@@ -8138,6 +8137,58 @@ var ranges = [{
 
     return null;
   }
+}, {
+  // 'middle of'
+  match: '^(middle|center|midpoint) of [*]',
+  group: 0,
+  parse: function parse(m, context) {
+    var unit = parse_1$2(m, context);
+    var start = unit.clone().middle();
+    var end = unit.beforeEnd();
+
+    if (unit) {
+      return {
+        start: start,
+        end: end
+      };
+    }
+
+    return null;
+  }
+}, {
+  // 'tuesday after 5pm'
+  match: '* after #Time+$',
+  parse: function parse(m, context) {
+    var unit = parse_1$2(m, context);
+    var start = unit.clone();
+    var end = unit.end();
+
+    if (unit) {
+      return {
+        start: start,
+        end: end
+      };
+    }
+
+    return null;
+  }
+}, {
+  // 'tuesday before noon'
+  match: '* before #Time+$',
+  parse: function parse(m, context) {
+    var unit = parse_1$2(m, context);
+    var end = unit.clone();
+    var start = unit.start();
+
+    if (unit) {
+      return {
+        start: start,
+        end: end
+      };
+    }
+
+    return null;
+  }
 }];
 
 var parseRange = function parseRange(doc, context) {
@@ -8178,12 +8229,7 @@ var parseRange = function parseRange(doc, context) {
   var unit = parse_1$2(doc, context);
 
   if (unit) {
-    var end = unit.clone().end(); // 'end of x' shift-up a little bit
-
-    if (end.d.epoch === unit.d.epoch) {
-      unit = unit.beforeEnd();
-    }
-
+    var end = unit.clone().end();
     res = {
       start: unit,
       end: end
@@ -8846,12 +8892,27 @@ var findDate = function findDate(doc) {
   } // 'one saturday'
 
 
-  dates = dates.notIf('^one (#WeekDay|#Month)$'); // // 'january, february'
-  // m = dates.match('^[#Month] (and|or)? #Month$', 0)
-  // if (m.found) {
-  //   dates = dates.splitAfter(m)
-  //   dates = dates.not('^(and|or)')
-  // }
+  dates = dates.notIf('^one (#WeekDay|#Month)$'); // next week tomorrow
+
+  m = dates.match('(this|next) #Duration [(today|tomorrow|yesterday)]', 0);
+
+  if (m.found) {
+    dates = dates.splitBefore(m);
+  } // tomorrow 15 march
+
+
+  m = dates.match('[(today|tomorrow|yesterday)] #Value #Month', 0);
+
+  if (m.found) {
+    dates = dates.splitAfter(m);
+  } // tomorrow yesterday
+
+
+  m = dates.match('[(today|tomorrow|yesterday)] (today|tomorrow|yesterday)', 0);
+
+  if (m.found) {
+    dates = dates.splitAfter(m);
+  }
 
   return dates;
 };

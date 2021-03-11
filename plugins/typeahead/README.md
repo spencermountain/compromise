@@ -12,20 +12,27 @@
   <a href="https://unpkg.com/compromise-typeahead/builds/compromise-typeahead.min.js">
     <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/plugins/scan/builds/compromise-typeahead.min.js" />
   </a>
+  <div align="center">
+    <div >Work in progress</div>
+    <code>npm install compromise-typeahead</code>
+  </div>
    <hr/>
 </div>
-
-<div align="center">
-<div >Work in progress</div>
-  <code>npm install compromise-typeahead</code>
+<!-- spacer -->
+<div >
+  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 </div>
 
 a plugin to allow interpreting a word before it is fully-typed.
+<div align="center">
+  <h2><a href="https://observablehq.com/@spencermountain/compromise-typeahead">Demo</a></h2>
+</div>
 
 ```js
 const nlp = require('compromise')
 nlp.extend(require('compromise-typeahead'))
 
+// a bunch of words we're expecting
 const lexicon = {
   bedfordshire: 'Town',
   aberdeenshire: 'Town',
@@ -35,9 +42,10 @@ const lexicon = {
   cheshire: 'Town',
   ayrshire: 'Town',
 }
-// add the words we should predict from
+// add the words we should predict
 nlp.typeahead(lexicon, { min: 3 })
-// create a document
+
+// ok, create a document
 let doc = nlp('i went to bucking', lexicon)
 let m = doc.match('#Town')
 console.log(m.text())
@@ -46,22 +54,26 @@ console.log(m.text('implicit'))
 // 'buckinghamshire'
 ```
 
-You can see, a passed-in [lexicon](https://observablehq.com/@spencermountain/compromise-lexicon) will automatically tag the assumed word.
-If this is not required, you can simply pass-in an array of terms instead.
+In addition to assuming a word, a passed-in [lexicon](https://observablehq.com/@spencermountain/compromise-lexicon) will automatically tag it. If this is not required, you can simply pass-in an array of terms instead.
 
 
-<div align="center">
-  <h2><a href="https://observablehq.com/@spencermountain/compromise-typeahead">Demo</a></h2>
+### Notes
+Typeahead is a dangerous game. Making assumptions about a text, based on prefix, is very error-prone, especially for small-prefixes.
+
+Great care should be taken when selecting words for typeahead. 
+
+[This tool](https://observablehq.com/@spencermountain/prefix-word-lookup) may help reviewing a list of prefix-collisions. 
+
+...but even then, it's nearly impossible to predict misunderstandings when the interpreter is being greedy.
+
+<!-- spacer -->
+<div >
+  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 </div>
 
+There are three things this plugin does to decrease false-positive matches - 
 
-### Caution
-Typeahead is a dangerous game. Making assumptions about a text, based on prefix, is very error-prone, especially at small-prefixes.
-
-Great care should be taken when selecting words for typeahead. You may see a list of misc words by prefix using [this tool](https://observablehq.com/@spencermountain/prefix-word-lookup). But even then, it's nearly impossible to predict misunderstandings when the interpreter is being greedy.
-
-There are three things this plugin does to decrease the chances of misunderstanding - 
-
+##### Block any overlap
 * The plugin will not make predictions for any overlapping prefixes, in the given terms.
 if **'milan'** and **'milwaukee'** are both given, **'mil'** will not be triggered for anything.
 ```js
@@ -69,6 +81,7 @@ nlp.typeahead(['milan', 'milwaukee'])
 nlp('mil').has('(milan|milwaukee)') //false
 ```
 
+##### Ignore 2-char prefixes
 * by default, prefixes shorter than 3 chars will be ignored.
 you can set a lower, or higher minimum with:
 ```js
@@ -76,6 +89,8 @@ nlp.typeahead(['toronto'], { min: 4 })
 nlp('tor').has('toronto') //false
 nlp('toro').has('toronto') //true
 ```
+
+##### Block known words
 * by default, any prefixes that exist in the compromise lexicon will also be ignored.
 these are assumed to be pretty common, full words.
 

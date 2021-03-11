@@ -68,10 +68,13 @@ In addition to assuming the word, a passed-in [lexicon](https://observablehq.com
 <div >
   <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 </div>
-cool!
+<i>cool!</i>
 <!-- spacer -->
 <div >
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+</div>
+<div align="center">
+  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221848-11404200-ffb8-11e9-90cd-3adee8d8564f.png"/>
 </div>
 
 ## Notes:
@@ -81,7 +84,7 @@ Great care should be taken when selecting your words for typeahead.
 
 **[This tool](https://observablehq.com/@spencermountain/prefix-word-lookup)** may help in reviewing a list of potential prefix-collisions. 
 
-...ya but even then, - it's nearly impossible to predict misunderstandings when the interpreter is being greedy.
+...ya but even then.. - it's nearly impossible to predict misunderstandings when the interpreter is being greedy.
 
 <!-- spacer -->
 <div >
@@ -92,7 +95,7 @@ So, heads-up.
 
 Three things it does to decrease false-positives - 
 
-##### Block any overlap:
+#### Block any overlap:
 The plugin will not make predictions for any overlapping prefixes, in the given terms.
 if **'milan'** and **'milwaukee'** are both given, **'mil'** will not be triggered for anything.
 ```js
@@ -100,7 +103,7 @@ nlp.typeahead(['milan', 'milwaukee'])
 nlp('mil').has('(milan|milwaukee)') //false
 ```
 
-##### Ignore 2-char prefixes:
+#### Ignore 2-char prefixes:
 Prefixes shorter than 3 chars will be ignored.
 
 you can set a lower, or higher minimum with:
@@ -110,7 +113,7 @@ nlp('tor').has('toronto') //false
 nlp('toro').has('toronto') //true
 ```
 
-##### Block known words:
+#### Block known words:
 Prefixes that exist in the compromise lexicon will also be ignored.
 
 these are assumed to be pretty common, full words.
@@ -138,11 +141,13 @@ nlp.typeahead(['grey', 'gold', 'red'], { min: 2 })
 // layer-two, a little safer
 nlp.typeahead(['greyhound', 'goldendoodle', 'poodle'], { min: 3 })
 
+// first-layer is sneaky
 nlp('re').has('red')//true
+// second-layer is less-sneaky
 nlp('po').has('poodle')//false
 
 nlp('gr').has('grey')//true
-nlp('gre').has('(grey|greyhound)')//false (collision of terms)
+nlp('gre').has('(grey|greyhound)')//false (collision of two layers)
 nlp('golde').has('goldendoodle')//true
 ```
 Adding more matches will merge into existing prefixes, and automatically remove collisions. 
@@ -154,17 +159,16 @@ nlp('').world.prefixes = {} //whoosh!
 
 <!-- spacer -->
 <div >
-  <img height="20px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-</div>
----
-
-<!-- spacer -->
-<div >
-  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 </div>
 
 
 ## See Also
 * [compromise-keypress](../keypress) - a caching plugin for on-type parsing
+  
+<!-- spacer -->
+<div >
+  <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+</div>
 
 **MIT**

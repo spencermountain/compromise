@@ -1,9 +1,14 @@
 const tryPrefix = function (doc, lex) {
   let world = doc.world
+  world.prefixes = world.prefixes || {}
   // get end-part of text
   let end = doc.last()
   let m = end.terms().last()
-  let json = m.json({ terms: { normal: true } })[0].terms[0]
+  let json = m.json({ terms: { normal: true } })
+  if (!json[0] || !json[0].terms) {
+    return
+  }
+  json = json[0].terms[0]
   // if we've already put whitespace, end.
   if (json.post) {
     return

@@ -1,7 +1,7 @@
 {
   "name": "compromise-typeahead",
   "description": "plugin for nlp-compromise",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "main": "./builds/compromise-typeahead.js",
   "unpkg": "./builds/compromise-typeahead.min.js",

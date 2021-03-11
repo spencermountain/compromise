@@ -43,6 +43,12 @@ test('min test', function (t) {
   nlp.typeahead(['toronto'], { min: 4 })
   t.equal(nlp('tor').has('toronto'), false, 'min-block')
   t.equal(nlp('toro').has('toronto'), true, 'min-continue')
+
+  nlp.typeahead(['lettuce', 'fettucini', 'falafel'], { min: 1 })
+  t.equal(nlp('l').has('lettuce'), true, 'one-word-match')
+  t.equal(nlp('t').has('lettuce'), false, 'one-word-nope')
+  t.equal(nlp('f').has('lettuce'), false, 'one-word-collision')
+  t.equal(nlp('fe').has('fettucini'), true, 'min-continue')
   t.end()
 })
 
@@ -52,9 +58,25 @@ test('lexicon-guard test', function (t) {
   t.equal(nlp('swim').has('swimsuit'), false, 'lexicon-block')
   t.equal(nlp('swimsu').has('swimsuit'), true, 'lexicon-continue')
 
+  nlp('').world.prefixes = {} //whoosh!
   // who cares - do it anyways
   nlp.typeahead(['swimsuit'], { safe: false })
   t.equal(nlp('swim').has('swimsuit'), true, 'safemode-off')
   t.equal(nlp('swimsu').has('swimsuit'), true, 'lexicon-continue-2')
+  t.end()
+})
+
+test('prefix layer test', function (t) {
+  // layer-one, quite-greedy
+  nlp.typeahead(['grey', 'gold', 'red'], { min: 2 })
+  // layer-two, a little safer
+  nlp.typeahead(['greyhound', 'goldendoodle', 'poodle'], { min: 3 })
+
+  t.equal(nlp('re').has('red'), true, '2-match')
+  t.equal(nlp('po').has('poodle'), false, '2-match not found')
+
+  t.equal(nlp('gr').has('grey'), true, '2-match-sneaky')
+  t.equal(nlp('gre').has('grey') || nlp('gre').has('greyhound'), false, 'collision') // (collision of terms)
+  t.equal(nlp('golde').has('goldendoodle'), true, 'long-match')
   t.end()
 })

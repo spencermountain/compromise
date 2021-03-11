@@ -1,4 +1,4 @@
-/* compromise-typeahead 0.1.0 MIT */
+/* compromise-typeahead 0.2.0 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -6,7 +6,8 @@
 }(this, (function () { 'use strict';
 
   var tryPrefix = function tryPrefix(doc, lex) {
-    var world = doc.world; // get end-part of text
+    var world = doc.world;
+    world.prefixes = world.prefixes || {}; // get end-part of text
 
     var end = doc.last();
     var m = end.terms().last();
@@ -14,7 +15,13 @@
       terms: {
         normal: true
       }
-    })[0].terms[0]; // if we've already put whitespace, end.
+    });
+
+    if (!json[0] || !json[0].terms) {
+      return;
+    }
+
+    json = json[0].terms[0]; // if we've already put whitespace, end.
 
     if (json.post) {
       return;
@@ -38,6 +45,7 @@
   var createIndex = function createIndex(arr, opts, world) {
     var index = {};
     var collisions = [];
+    var existing = world.prefixes || {};
     arr.forEach(function (str) {
       str = str.toLowerCase().trim();
       var max = str.length;
@@ -46,22 +54,29 @@
         max = opts.max;
       }
 
-      var min = opts.min;
-
-      for (var size = min; size < max; size += 1) {
+      for (var size = opts.min; size < max; size += 1) {
         var prefix = str.substr(0, size); // ensure prefix is not a word
 
         if (opts.safe && world.words.hasOwnProperty(prefix)) {
+          continue;
+        } // does it already exist?
+
+
+        if (existing.hasOwnProperty(prefix) === true) {
+          collisions.push(prefix);
           continue;
         }
 
         if (index.hasOwnProperty(prefix) === true) {
           collisions.push(prefix);
+          continue;
         }
 
         index[prefix] = str;
       }
-    }); // remove ambiguous-prefixes
+    }); // merge with existing prefixes
+
+    index = Object.assign({}, existing, index); // remove ambiguous-prefixes
 
     collisions.forEach(function (str) {
       delete index[str];

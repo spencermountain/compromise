@@ -129,6 +129,29 @@ nlp('swim').has('swimsuit') //true
 the compromise lexicon includes ~14k words, but very few common nouns. It is not meant to be a perfect-guard against prefix-collisions, like this.
 So please don't lean on this safe feature too-hard.
 
+
+#### Layering prefixes carefully
+you may want to conjure-up a scheme where some words are matched greedier than others.
+```js
+// layer-one, quite-greedy
+nlp.typeahead(['grey', 'gold', 'red'], { min: 2 })
+// layer-two, a little safer
+nlp.typeahead(['greyhound', 'goldendoodle', 'poodle'], { min: 3 })
+
+nlp('re').has('red')//true
+nlp('po').has('poodle')//false
+
+nlp('gr').has('grey')//true
+nlp('gre').has('(grey|greyhound)')//false (collision of terms)
+nlp('golde').has('goldendoodle')//true
+```
+Adding more matches will merge into existing prefixes, and automatically remove collisions. 
+
+If you want to get rid of them, you can set the property on the [World object](https://observablehq.com/@spencermountain/compromise-world) directly:
+```js
+nlp('').world.prefixes = {} //whoosh!
+```
+
 <!-- spacer -->
 <div >
   <img height="20px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>

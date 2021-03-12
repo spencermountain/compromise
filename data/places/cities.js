@@ -493,5 +493,4 @@ module.exports = [
   'ranchi',
   'shillong',
   'shimla',
-  'thiruvananthapuram',
 ]

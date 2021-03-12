@@ -12,7 +12,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 
 -->
 
-#### 13.10.2
+#### 13.10.2  [March 2021]
 - **[fix]** - support matching implicit terms in (or|blocks)
 - **[change]** - add #Timezone tag (from date-plugin)
 - **[change]** - add many more cities and regions

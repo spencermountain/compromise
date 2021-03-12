@@ -1,4 +1,4 @@
-/* compromise-dates 1.5.2 MIT */
+/* compromise-dates 1.5.3 MIT */
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
@@ -295,11 +295,10 @@ var tagDates = function tagDates(doc) {
     //by 6pm
     time.match('(by|before|after|at|@|about) #Time').tag('Time', 'preposition-time'); //7 7pm
     // time.match('#Cardinal #Time').not('#Year').tag('Time', 'value-time')
-    //2pm est
-
-    time.match('#Time [(eastern|pacific|central|mountain)]', 0).tag('Date', 'timezone'); //6pm est
-
-    time.match('#Time [(est|pst|gmt)]', 0).tag('Date', 'timezone abbr');
+    // //2pm est
+    // time.match('#Time [(eastern|pacific|central|mountain)]', 0).tag('Date', 'timezone')
+    // //6pm est
+    // time.match('#Time [(est|pst|gmt)]', 0).tag('Date', 'timezone abbr')
   } //'2020' bare input
 
 
@@ -439,15 +438,9 @@ var timeTagger = function timeTagger(doc) {
 
     doc.match('#Date [at #Cardinal]', 0).notIf('#Year').tag('Time', here$2); // half an hour
 
-    doc.match('half an (hour|minute|second)').tag('Date', here$2); //eastern daylight time
+    doc.match('half an (hour|minute|second)').tag('Date', here$2); // in eastern time
 
-    doc.match('#Noun (standard|daylight|central|mountain)? time').tag('Timezone', here$2); //utc+5
-
-    doc.match('/^utc[+-][0-9]/').tag('Timezone', here$2);
-    doc.match('/^gmt[+-][0-9]/').tag('Timezone', here$2);
-    doc.match('(in|for|by|near|at) #Timezone').tag('Timezone', here$2); // 2pm eastern
-
-    doc.match('#Time [(eastern|mountain|pacific|central)]', 0).tag('Timezone', here$2);
+    doc.match('(in|for|by|near|at) #Timezone').tag('Timezone', here$2);
   } // around four thirty
 
 
@@ -495,6 +488,28 @@ var tagIntervals = function tagIntervals(doc) {
 };
 
 var _06Intervals = tagIntervals;
+
+// timezone abbreviations
+// (from spencermountain/timezone-soft)
+var zones = ['act', 'aft', 'akst', 'anat', 'art', 'azot', 'azt', 'bnt', 'bot', 'bt', 'cast', 'cat', 'cct', 'chast', 'chut', 'ckt', 'cvt', 'cxt', 'davt', 'eat', 'ect', 'fjt', 'fkst', 'fnt', 'gamt', 'get', 'gft', 'gilt', 'gyt', 'hast', 'hncu', 'hneg', 'hnnomx', 'hnog', 'hnpm', 'hnpmx', 'hntn', 'hovt', 'iot', 'irkt', 'jst', 'kgt', 'kost', 'lint', 'magt', 'mart', 'mawt', 'mmt', 'nct', 'nft', 'novt', 'npt', 'nrt', 'nut', 'nzst', 'omst', 'pet', 'pett', 'phot', 'phst', 'pont', 'pwt', 'ret', 'sakt', 'samt', 'sbt', 'sct', 'sret', 'srt', 'syot', 'taht', 'tft', 'tjt', 'tkt', 'tlt', 'tmt', 'tot', 'tvt', 'ulat', 'vut', 'wakt', 'wat', 'wet', 'wft', 'wit', 'wst', 'yekt'].reduce(function (h, str) {
+  h[str] = true;
+  return h;
+}, {});
+
+var tagTz = function tagTz(doc) {
+  // 4pm PST
+  var m = doc.match('#Time [#Acronym]', 0);
+
+  if (m.found) {
+    var str = m.text('reduced');
+
+    if (zones[str] === true) {
+      m.tag('Timezone', 'tz-abbr');
+    }
+  }
+};
+
+var _07Timezone = tagTz;
 
 var here = 'fix-tagger'; //
 
@@ -587,13 +602,17 @@ var fixUp = function fixUp(doc) {
   return doc;
 };
 
-var _07Fixup = fixUp;
+var _08Fixup = fixUp;
 
-var methods$3 = [_00Basic, _01Values, _02Dates, _03Sections, _04Time, _05Shifts, _06Intervals, _07Fixup]; // normalizations to run before tagger
+var methods$3 = [_00Basic, _01Values, _02Dates, _03Sections, _04Time, _05Shifts, _06Intervals, _07Timezone, _08Fixup]; // normalizations to run before tagger
 
 var normalize$1 = function normalize(doc) {
   // turn '20mins' into '20 mins'
-  doc.numbers().normalize(); // this is sorta problematic
+  if (typeof doc.numbers === 'function') {
+    doc.numbers().normalize();
+  } else {
+    console.warn("Warning: compromise-numbers plugin is not loaded.\n   You should load this plugin \n     - https://bit.ly/3t8RfFG");
+  }
 
   return doc;
 }; // run each of the taggers
@@ -631,11 +650,6 @@ var _tags = {
   // 'easter'
   Holiday: {
     isA: ['Date', 'Noun']
-  },
-  // 'PST'
-  Timezone: {
-    isA: ['Date', 'Noun'],
-    notA: ['Adjective', 'DateShift']
   },
   // 'two weeks before'
   DateShift: {

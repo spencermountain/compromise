@@ -75,6 +75,9 @@ let list = [
   // { match: `#Ordinal quarter`, tag: 'Date', reason: 'second-quarter' },
   // 'aug 20-21'
   { match: `#Month #NumberRange`, tag: 'Date', reason: 'aug 20-21' },
+
+  // timezones
+  { match: `(#Place|#Demonmym) (standard|daylight|central|mountain)? time`, tag: 'Timezone', reason: 'std-time' },
 ]
 
 module.exports = list

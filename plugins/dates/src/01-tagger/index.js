@@ -12,7 +12,7 @@ const methods = [
 // normalizations to run before tagger
 const normalize = function (doc) {
   // turn '20mins' into '20 mins'
-  if (typeof doc.nubers === 'function') {
+  if (typeof doc.numbers === 'function') {
     doc.numbers().normalize()
   } else {
     console.warn(

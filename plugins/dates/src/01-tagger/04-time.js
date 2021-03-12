@@ -25,7 +25,7 @@ const timeTagger = function (doc) {
     // half an hour
     doc.match('half an (hour|minute|second)').tag('Date', here)
     //eastern daylight time
-    doc.match('#Noun (standard|daylight|central|mountain)? time').tag('Timezone', here)
+    // doc.match('#Noun (standard|daylight|central|mountain)? time').tag('Timezone', here)
     //utc+5
     doc.match('/^utc[+-][0-9]/').tag('Timezone', here)
     doc.match('/^gmt[+-][0-9]/').tag('Timezone', here)

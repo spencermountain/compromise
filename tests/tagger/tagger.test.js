@@ -231,6 +231,13 @@ test('pos-basic-tag:', function (t) {
     [` a surgery date of`, ['Determiner', 'Noun', 'Noun', 'Preposition']],
     [`A girl hit a boy.`, ['Determiner', 'Noun', 'Infinitive', 'Determiner', 'Noun']],
     [`a auto repair shop.`, ['Determiner', 'Noun', 'Noun', 'Noun']],
+    // timezones
+    ['Morocco Standard Time', ['Timezone', 'Timezone', 'Timezone']],
+    ['GMT+9', ['Timezone']],
+    ['3pm EST', ['Time', 'Timezone']],
+    ['3pm eastern time', ['Time', 'Timezone', 'Timezone']],
+    ['pacific standard time', ['Timezone', 'Timezone', 'Timezone']],
+    ['korea daylight time', ['Timezone', 'Timezone', 'Timezone']],
   ]
   arr.forEach(function (a) {
     let terms = nlp(a[0]).json(0).terms

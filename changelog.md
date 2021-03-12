@@ -12,6 +12,11 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 
 -->
 
+#### 13.10.2  [March 2021]
+- **[fix]** - support matching implicit terms in (or|blocks)
+- **[change]** - add #Timezone tag (from date-plugin)
+- **[change]** - add many more cities and regions
+
 #### 13.10.1 [March 2021]
 - **[change]** - #Date terms can still be a #Conjunction
 - **[new]** - #Imperative tag and `.verbs().isImperative()` method

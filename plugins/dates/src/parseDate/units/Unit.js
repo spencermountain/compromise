@@ -91,23 +91,44 @@ class Unit {
     return this.d.format(fmt)
   }
   start() {
-    this.d = this.d.startOf(this.unit)
+    // do we have a custom day-start?
     if (this.context.dayStart) {
-      this.d = this.d.time(this.context.dayStart)
+      let dayStart = this.d.time(this.context.dayStart)
+      if (dayStart.isBefore(this.d)) {
+        this.d = dayStart
+        return this
+      }
     }
+    this.d = this.d.startOf(this.unit)
     return this
   }
   end() {
-    this.d = this.d.endOf(this.unit)
+    // do we have a custom day-end?
     if (this.context.dayEnd) {
-      this.d = this.d.time(this.context.dayEnd)
+      let dayEnd = this.d.time(this.context.dayEnd)
+      if (dayEnd.isAfter(this.d)) {
+        this.d = dayEnd
+        return this
+      }
     }
+    this.d = this.d.endOf(this.unit)
     return this
   }
   middle() {
     let diff = this.d.diff(this.d.endOf(this.unit))
     let minutes = Math.round(diff.minutes / 2)
     this.d = this.d.add(minutes, 'minutes')
+    return this
+  }
+  // move it to 3/4s through
+  beforeEnd() {
+    let diff = this.d.startOf(this.unit).diff(this.d.endOf(this.unit))
+    let mins = Math.round(diff.minutes / 4)
+    this.d = this.d.endOf(this.unit)
+    this.d = this.d.minus(mins, 'minutes')
+    if (this.context.dayStart) {
+      this.d = this.d.time(this.context.dayStart)
+    }
     return this
   }
   // the millescond before

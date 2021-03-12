@@ -75,6 +75,20 @@ let list = [
   // { match: `#Ordinal quarter`, tag: 'Date', reason: 'second-quarter' },
   // 'aug 20-21'
   { match: `#Month #NumberRange`, tag: 'Date', reason: 'aug 20-21' },
+
+  // timezones
+  // china standard time
+  { match: `(#Place|#Demonmym|#Time) (standard|daylight|central|mountain)? time`, tag: 'Timezone', reason: 'std-time' },
+  // eastern time
+  {
+    match: `(eastern|mountain|pacific|central|atlantic) (standard|daylight|summer)? time`,
+    tag: 'Timezone',
+    reason: 'eastern-time',
+  },
+  // 5pm central
+  { match: `#Time [(eastern|mountain|pacific|central|est|pst|gmt)]`, group: 0, tag: 'Timezone', reason: '5pm-central' },
+  // central european time
+  { match: `(central|western|eastern) european time`, tag: 'Timezone', reason: 'cet' },
 ]
 
 module.exports = list

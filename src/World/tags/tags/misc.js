@@ -38,6 +38,11 @@ module.exports = {
   WeekDay: {
     isA: ['Date', 'Noun'],
   },
+  // 'PST'
+  Timezone: {
+    isA: ['Date', 'Noun'],
+    notA: ['Adjective', 'ProperNoun'],
+  },
   // '9:20pm'
   Time: {
     isA: ['Date'],

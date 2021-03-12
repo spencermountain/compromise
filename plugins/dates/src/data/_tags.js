@@ -20,11 +20,6 @@ module.exports = {
   Holiday: {
     isA: ['Date', 'Noun'],
   },
-  // 'PST'
-  Timezone: {
-    isA: ['Date', 'Noun'],
-    notA: ['Adjective', 'DateShift'],
-  },
   // 'two weeks before'
   DateShift: {
     isA: ['Date'],

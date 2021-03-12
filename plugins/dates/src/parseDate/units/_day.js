@@ -9,6 +9,14 @@ class Day extends Unit {
       this.d = this.d.startOf('day')
     }
   }
+  middle() {
+    this.d = this.d.time('10am')
+    return this
+  }
+  beforeEnd() {
+    this.d = this.d.time('2pm')
+    return this
+  }
 }
 
 // like 'feb 2'
@@ -33,7 +41,7 @@ class CalendarDate extends Day {
 class WeekDay extends Day {
   constructor(input, unit, context) {
     super(input, unit, context)
-    this.unit = 'week'
+    this.unit = 'day'
     // is the input just a weekday?
     if (typeof input === 'string') {
       this.d = spacetime(context.today, context.timezone)
@@ -51,16 +59,7 @@ class WeekDay extends Day {
     }
   }
   clone() {
-    //overloaded method
     return new WeekDay(this.d, this.unit, this.context)
-  }
-  end() {
-    //overloaded method
-    this.d = this.d.endOf('day')
-    if (this.context.dayEnd) {
-      this.d = this.d.time(this.context.dayEnd)
-    }
-    return this
   }
   next() {
     this.d = this.d.add(7, 'days')

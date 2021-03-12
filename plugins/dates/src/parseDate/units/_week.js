@@ -8,6 +8,18 @@ class Week extends Unit {
       this.d = this.d.startOf('week')
     }
   }
+  clone() {
+    return new Week(this.d, this.unit, this.context)
+  }
+  middle() {
+    this.d = this.d.add(2, 'days') //wednesday
+    return this
+  }
+  // move it to 3/4s through
+  beforeEnd() {
+    this.d = this.d.day('friday')
+    return this
+  }
 }
 
 //may need some work

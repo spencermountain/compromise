@@ -1,17 +1,16 @@
 {
-  "name": "compromise-dates",
+  "name": "compromise-typeahead",
   "description": "plugin for nlp-compromise",
-  "version": "1.5.3",
+  "version": "0.2.0",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
-  "main": "./builds/compromise-dates.js",
-  "unpkg": "./builds/compromise-dates.min.js",
-  "module": "./builds/compromise-dates.mjs",
+  "main": "./builds/compromise-typeahead.js",
+  "unpkg": "./builds/compromise-typeahead.min.js",
+  "module": "./builds/compromise-typeahead.mjs",
   "types": "types/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git://github.com/spencermountain/compromise.git"
   },
-  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/dates",
   "scripts": {
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
     "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
@@ -23,7 +22,7 @@
     "tabWidth": 2,
     "semi": false,
     "singleQuote": true,
-    "printWidth": 120
+    "printWidth": 100
   },
   "files": [
     "builds/",
@@ -33,24 +32,19 @@
     "builds/*.js"
   ],
   "peerDependencies": {
-    "compromise": ">=12.0.0",
-    "compromise-numbers": ">=1.0.0"
+    "compromise": ">=12.0.0"
   },
+  "dependencies": {},
   "devDependencies": {
-    "@rollup/plugin-alias": "3.1.2",
     "@rollup/plugin-commonjs": "17.1.0",
     "@rollup/plugin-json": "4.1.0",
     "@rollup/plugin-node-resolve": "11.2.0",
-    "rollup": "2.41.2",
+    "rollup": "2.40.0",
     "rollup-plugin-babel": "4.4.0",
     "rollup-plugin-filesize-check": "0.0.1",
     "rollup-plugin-terser": "7.0.2",
     "tap-dancer": "0.3.1",
-    "tape": "5.2.2"
-  },
-  "dependencies": {
-    "spacetime": "6.13.1",
-    "spacetime-holiday": "0.1.0"
+    "tape": "5.2.0"
   },
   "license": "MIT"
 }

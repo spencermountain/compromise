@@ -1,4 +1,4 @@
-/* compromise-dates 1.4.3 MIT */
+/* compromise-dates 1.5.3 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -80,7 +80,7 @@
     if (typeof Proxy === "function") return true;
 
     try {
-      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
       return true;
     } catch (e) {
       return false;
@@ -233,7 +233,7 @@
       //june the 5th
       date.match('#Date the? #Ordinal').tag('Date', 'correction'); //last month
 
-      date.match("".concat(thisNext, " #Date")).tag('Date', 'thisNext'); //by 5 March
+      date.match("".concat(thisNext, " #Date")).tag('Date', 'thisNext-date'); //by 5 March
 
       date.match('due? (by|before|after|until) #Date').tag('Date', 'by'); //next feb
 
@@ -301,11 +301,10 @@
       //by 6pm
       time.match('(by|before|after|at|@|about) #Time').tag('Time', 'preposition-time'); //7 7pm
       // time.match('#Cardinal #Time').not('#Year').tag('Time', 'value-time')
-      //2pm est
-
-      time.match('#Time [(eastern|pacific|central|mountain)]', 0).tag('Date', 'timezone'); //6pm est
-
-      time.match('#Time [(est|pst|gmt)]', 0).tag('Date', 'timezone abbr');
+      // //2pm est
+      // time.match('#Time [(eastern|pacific|central|mountain)]', 0).tag('Date', 'timezone')
+      // //6pm est
+      // time.match('#Time [(est|pst|gmt)]', 0).tag('Date', 'timezone abbr')
     } //'2020' bare input
 
 
@@ -445,15 +444,9 @@
 
       doc.match('#Date [at #Cardinal]', 0).notIf('#Year').tag('Time', here$2); // half an hour
 
-      doc.match('half an (hour|minute|second)').tag('Date', here$2); //eastern daylight time
+      doc.match('half an (hour|minute|second)').tag('Date', here$2); // in eastern time
 
-      doc.match('#Noun (standard|daylight|central|mountain)? time').tag('Timezone', here$2); //utc+5
-
-      doc.match('/^utc[+-][0-9]/').tag('Timezone', here$2);
-      doc.match('/^gmt[+-][0-9]/').tag('Timezone', here$2);
-      doc.match('(in|for|by|near|at) #Timezone').tag('Timezone', here$2); // 2pm eastern
-
-      doc.match('#Time [(eastern|mountain|pacific|central)]', 0).tag('Timezone', here$2);
+      doc.match('(in|for|by|near|at) #Timezone').tag('Timezone', here$2);
     } // around four thirty
 
 
@@ -502,6 +495,28 @@
 
   var _06Intervals = tagIntervals;
 
+  // timezone abbreviations
+  // (from spencermountain/timezone-soft)
+  var zones = ['act', 'aft', 'akst', 'anat', 'art', 'azot', 'azt', 'bnt', 'bot', 'bt', 'cast', 'cat', 'cct', 'chast', 'chut', 'ckt', 'cvt', 'cxt', 'davt', 'eat', 'ect', 'fjt', 'fkst', 'fnt', 'gamt', 'get', 'gft', 'gilt', 'gyt', 'hast', 'hncu', 'hneg', 'hnnomx', 'hnog', 'hnpm', 'hnpmx', 'hntn', 'hovt', 'iot', 'irkt', 'jst', 'kgt', 'kost', 'lint', 'magt', 'mart', 'mawt', 'mmt', 'nct', 'nft', 'novt', 'npt', 'nrt', 'nut', 'nzst', 'omst', 'pet', 'pett', 'phot', 'phst', 'pont', 'pwt', 'ret', 'sakt', 'samt', 'sbt', 'sct', 'sret', 'srt', 'syot', 'taht', 'tft', 'tjt', 'tkt', 'tlt', 'tmt', 'tot', 'tvt', 'ulat', 'vut', 'wakt', 'wat', 'wet', 'wft', 'wit', 'wst', 'yekt'].reduce(function (h, str) {
+    h[str] = true;
+    return h;
+  }, {});
+
+  var tagTz = function tagTz(doc) {
+    // 4pm PST
+    var m = doc.match('#Time [#Acronym]', 0);
+
+    if (m.found) {
+      var str = m.text('reduced');
+
+      if (zones[str] === true) {
+        m.tag('Timezone', 'tz-abbr');
+      }
+    }
+  };
+
+  var _07Timezone = tagTz;
+
   var here = 'fix-tagger'; //
 
   var fixUp = function fixUp(doc) {
@@ -532,8 +547,7 @@
         //   .unTag('Date')
         //   .lastTerm()
         //   .tag('Date', here)
-
-        d.match("(this|last|next) #Date ".concat(knownDate, "$")).unTag('Date').lastTerm().tag('Date', 'this month yesterday');
+        // d.match(`(this|last|next) #Date ${knownDate}$`).unTag('Date').lastTerm().tag('Date', 'this month yesterday')
       } //tomorrow on 5
 
 
@@ -594,13 +608,17 @@
     return doc;
   };
 
-  var _07Fixup = fixUp;
+  var _08Fixup = fixUp;
 
-  var methods$3 = [_00Basic, _01Values, _02Dates, _03Sections, _04Time, _05Shifts, _06Intervals, _07Fixup]; // normalizations to run before tagger
+  var methods$3 = [_00Basic, _01Values, _02Dates, _03Sections, _04Time, _05Shifts, _06Intervals, _07Timezone, _08Fixup]; // normalizations to run before tagger
 
   var normalize$1 = function normalize(doc) {
     // turn '20mins' into '20 mins'
-    doc.numbers().normalize(); // this is sorta problematic
+    if (typeof doc.numbers === 'function') {
+      doc.numbers().normalize();
+    } else {
+      console.warn("Warning: compromise-numbers plugin is not loaded.\n   You should load this plugin \n     - https://bit.ly/3t8RfFG");
+    }
 
     return doc;
   }; // run each of the taggers
@@ -639,11 +657,6 @@
     Holiday: {
       isA: ['Date', 'Noun']
     },
-    // 'PST'
-    Timezone: {
-      isA: ['Date', 'Noun'],
-      notA: ['Adjective', 'DateShift']
-    },
     // 'two weeks before'
     DateShift: {
       isA: ['Date'],
@@ -658,7 +671,7 @@
   	return fn(module, module.exports), module.exports;
   }
 
-  /* spencermountain/spacetime 6.13.0 Apache 2.0 */
+  /* spencermountain/spacetime 6.13.1 Apache 2.0 */
   var spacetime = createCommonjsModule(function (module, exports) {
     (function (global, factory) {
       module.exports = factory() ;
@@ -4074,7 +4087,12 @@
         date: function date(num) {
           if (num !== undefined) {
             var s = this.clone();
-            s.epoch = set.date(s, num);
+            num = parseInt(num, 10);
+
+            if (num) {
+              s.epoch = set.date(s, num);
+            }
+
             return s;
           }
 
@@ -5026,7 +5044,7 @@
       };
 
       var whereIts_1 = whereIts;
-      var _version = '6.13.0';
+      var _version = '6.13.1';
 
       var main = function main(input, tz, options) {
         return new spacetime(input, tz, options);
@@ -5496,23 +5514,33 @@
     }, {
       key: "start",
       value: function start() {
-        this.d = this.d.startOf(this.unit);
-
+        // do we have a custom day-start?
         if (this.context.dayStart) {
-          this.d = this.d.time(this.context.dayStart);
+          var dayStart = this.d.time(this.context.dayStart);
+
+          if (dayStart.isBefore(this.d)) {
+            this.d = dayStart;
+            return this;
+          }
         }
 
+        this.d = this.d.startOf(this.unit);
         return this;
       }
     }, {
       key: "end",
       value: function end() {
-        this.d = this.d.endOf(this.unit);
-
+        // do we have a custom day-end?
         if (this.context.dayEnd) {
-          this.d = this.d.time(this.context.dayEnd);
+          var dayEnd = this.d.time(this.context.dayEnd);
+
+          if (dayEnd.isAfter(this.d)) {
+            this.d = dayEnd;
+            return this;
+          }
         }
 
+        this.d = this.d.endOf(this.unit);
         return this;
       }
     }, {
@@ -5521,6 +5549,21 @@
         var diff = this.d.diff(this.d.endOf(this.unit));
         var minutes = Math.round(diff.minutes / 2);
         this.d = this.d.add(minutes, 'minutes');
+        return this;
+      } // move it to 3/4s through
+
+    }, {
+      key: "beforeEnd",
+      value: function beforeEnd() {
+        var diff = this.d.startOf(this.unit).diff(this.d.endOf(this.unit));
+        var mins = Math.round(diff.minutes / 4);
+        this.d = this.d.endOf(this.unit);
+        this.d = this.d.minus(mins, 'minutes');
+
+        if (this.context.dayStart) {
+          this.d = this.d.time(this.context.dayStart);
+        }
+
         return this;
       } // the millescond before
 
@@ -5587,6 +5630,20 @@
       return _this;
     }
 
+    _createClass(Day, [{
+      key: "middle",
+      value: function middle() {
+        this.d = this.d.time('10am');
+        return this;
+      }
+    }, {
+      key: "beforeEnd",
+      value: function beforeEnd() {
+        this.d = this.d.time('2pm');
+        return this;
+      }
+    }]);
+
     return Day;
   }(Unit_1); // like 'feb 2'
 
@@ -5639,7 +5696,7 @@
       _classCallCheck(this, WeekDay);
 
       _this3 = _super3.call(this, input, unit, context);
-      _this3.unit = 'week'; // is the input just a weekday?
+      _this3.unit = 'day'; // is the input just a weekday?
 
       if (typeof input === 'string') {
         _this3.d = spacetime(context.today, context.timezone);
@@ -5664,20 +5721,7 @@
     _createClass(WeekDay, [{
       key: "clone",
       value: function clone() {
-        //overloaded method
         return new WeekDay(this.d, this.unit, this.context);
-      }
-    }, {
-      key: "end",
-      value: function end() {
-        //overloaded method
-        this.d = this.d.endOf('day');
-
-        if (this.context.dayEnd) {
-          this.d = this.d.time(this.context.dayEnd);
-        }
-
-        return this;
       }
     }, {
       key: "next",
@@ -5998,6 +6042,27 @@
 
       return _this;
     }
+
+    _createClass(Week, [{
+      key: "clone",
+      value: function clone() {
+        return new Week(this.d, this.unit, this.context);
+      }
+    }, {
+      key: "middle",
+      value: function middle() {
+        this.d = this.d.add(2, 'days'); //wednesday
+
+        return this;
+      } // move it to 3/4s through
+
+    }, {
+      key: "beforeEnd",
+      value: function beforeEnd() {
+        this.d = this.d.day('friday');
+        return this;
+      }
+    }]);
 
     return Week;
   }(Unit_1); //may need some work
@@ -7654,16 +7719,13 @@
 
 
     if (shift) {
-      unit.applyShift(shift); // if (shift.hour || shift.minute || shift.second) {
-      //   console.log(shift)
-      //   unit = new Hour(unit.d, null, unit.context)
-      // }
+      unit.applyShift(shift);
     } // wednesday next week
 
 
     if (weekDay && unit.unit !== 'day') {
       unit.applyWeekDay(weekDay);
-      unit = new WeekDay(unit.d, null, unit.context); // console.log(rel, unit.d.format())
+      unit = new WeekDay(unit.d, null, unit.context);
     } // this/next/last
 
 
@@ -8018,41 +8080,7 @@
 
       return null;
     }
-  }, // {
-  //   // 'A through B' (inclusive end)
-  //   match: 'from? [<a>*] (through|thru) [<b>*]',
-  //   parse: (m, context) => {
-  //     let from = m.groups('a')
-  //     let to = m.groups('b')
-  //     from = parseDate(from, context)
-  //     to = parseDate(to, context)
-  //     if (from && to) {
-  //       return {
-  //         start: from,
-  //         end: to.end(),
-  //       }
-  //     }
-  //     return null
-  //   },
-  // },
-  // {
-  //   // 'A until B' (not inclusive end)
-  //   match: 'from? [<a>*] (to|until|upto) [<b>*]',
-  //   parse: (m, context) => {
-  //     let from = m.groups('a')
-  //     let to = m.groups('b')
-  //     from = parseDate(from, context)
-  //     to = parseDate(to, context)
-  //     if (from && to) {
-  //       return {
-  //         start: from,
-  //         end: to.end(),
-  //       }
-  //     }
-  //     return null
-  //   },
-  // },
-  {
+  }, {
     // 'before june'
     match: '^due? (by|before) [*]',
     group: 0,
@@ -8129,11 +8157,71 @@
 
       return null;
     }
+  }, {
+    // 'middle of'
+    match: '^(middle|center|midpoint) of [*]',
+    group: 0,
+    parse: function parse(m, context) {
+      var unit = parse_1$2(m, context);
+      var start = unit.clone().middle();
+      var end = unit.beforeEnd();
+
+      if (unit) {
+        return {
+          start: start,
+          end: end
+        };
+      }
+
+      return null;
+    }
+  }, {
+    // 'tuesday after 5pm'
+    match: '* after #Time+$',
+    parse: function parse(m, context) {
+      var unit = parse_1$2(m, context);
+      var start = unit.clone();
+      var end = unit.end();
+
+      if (unit) {
+        return {
+          start: start,
+          end: end
+        };
+      }
+
+      return null;
+    }
+  }, {
+    // 'tuesday before noon'
+    match: '* before #Time+$',
+    parse: function parse(m, context) {
+      var unit = parse_1$2(m, context);
+      var end = unit.clone();
+      var start = unit.start();
+
+      if (unit) {
+        return {
+          start: start,
+          end: end
+        };
+      }
+
+      return null;
+    }
   }];
 
   var parseRange = function parseRange(doc, context) {
     // parse-out 'every week ..'
-    var interval = intervals(doc) || {}; // try each template in order
+    var interval = intervals(doc) || {}; // if it's *only* an interval response
+
+    if (doc.found === false) {
+      return Object.assign({}, interval, {
+        start: null,
+        end: null
+      });
+    } // try each template in order
+
 
     for (var i = 0; i < ranges.length; i += 1) {
       var fmt = ranges[i];
@@ -8161,13 +8249,21 @@
     var unit = parse_1$2(doc, context);
 
     if (unit) {
+      var end = unit.clone().end();
       res = {
         start: unit,
-        end: unit.clone().end()
+        end: end
       };
     }
 
-    var combined = Object.assign({}, interval, res);
+    var combined = Object.assign({}, interval, res); // ensure start is not after end
+    // console.log(combined)
+
+    if (combined.start && combined.end && combined.start.d.epoch > combined.end.d.epoch) {
+      // console.warn('Warning: Start date is after End date')
+      combined.start = combined.start.start(); // combined.end = combined.start.clone()
+    }
+
     return combined;
   };
 
@@ -8223,6 +8319,7 @@
   var normalize_1 = normalize;
 
   var maxDate = 8640000000000000;
+  var max_loops = 500;
 
   var shouldPick = function shouldPick(s, byDay) {
     if (byDay && byDay[s.dayName()] !== true) {
@@ -8236,7 +8333,13 @@
   var generateDates = function generateDates(result, context) {
     var list = [];
     var max_count = context.max_repeat || 12;
-    var s = spacetime(result.start || context.today, context.timezone); // should we stop at the end date?
+    var s = spacetime(result.start || context.today, context.timezone);
+    s = s.startOf('day');
+
+    if (context.dayStart) {
+      s = s.time(context.dayStart);
+    } // should we stop at the end date?
+
 
     var end = spacetime(result.end, context.timezone);
     var toAdd = Object.keys(result.repeat.interval);
@@ -8256,7 +8359,11 @@
 
     var loops = 0; // TODO: learn how to write better software.
 
-    while (list.length < max_count && s.epoch < end.epoch) {
+    for (var i = 0; i < max_loops; i += 1) {
+      if (list.length >= max_count || s.epoch >= end.epoch) {
+        break;
+      }
+
       if (shouldPick(s, byDay)) {
         list.push(s.iso());
       }
@@ -8273,7 +8380,14 @@
       }
     }
 
-    result.repeat.generated = list;
+    result.repeat.generated = list; // if we got an interval, but not a start/end
+
+    if (!result.start && result.repeat.generated && result.repeat.generated.length > 1) {
+      var arr = result.repeat.generated;
+      result.start = arr[0];
+      result.end = arr[arr.length - 1];
+    }
+
     return result;
   };
 
@@ -8767,6 +8881,13 @@
     if (m.found) {
       dates = dates.splitOn('#WeekDay');
       dates = dates.not('^and');
+    } // '5 june, 10 june'
+
+
+    m = dates.match('[#Value #Month] #Value #Month', 0);
+
+    if (m.found) {
+      dates = dates.splitAfter(m);
     } // 'june 5th, june 10th'
 
 
@@ -8788,13 +8909,30 @@
 
     if (m.found) {
       dates = dates.not(m);
-    } // // 'january, february'
-    // m = dates.match('^[#Month] (and|or)? #Month$', 0)
-    // if (m.found) {
-    //   dates = dates.splitAfter(m)
-    //   dates = dates.not('^(and|or)')
-    // }
+    } // 'one saturday'
 
+
+    dates = dates.notIf('^one (#WeekDay|#Month)$'); // next week tomorrow
+
+    m = dates.match('(this|next) #Duration [(today|tomorrow|yesterday)]', 0);
+
+    if (m.found) {
+      dates = dates.splitBefore(m);
+    } // tomorrow 15 march
+
+
+    m = dates.match('[(today|tomorrow|yesterday)] #Value #Month', 0);
+
+    if (m.found) {
+      dates = dates.splitAfter(m);
+    } // tomorrow yesterday
+
+
+    m = dates.match('[(today|tomorrow|yesterday)] (today|tomorrow|yesterday)', 0);
+
+    if (m.found) {
+      dates = dates.splitAfter(m);
+    }
 
     return dates;
   };
@@ -8849,7 +8987,12 @@
         n = null;
       }
 
-      context = Object.assign({}, context, opts);
+      context = Object.assign({}, context, opts); // use the user's timezone, by default
+
+      if (context.timezone === undefined) {
+        context.timezone = spacetime().timezone().name;
+      }
+
       var dates = find(this);
 
       if (typeof n === 'number') {

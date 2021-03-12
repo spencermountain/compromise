@@ -2,6 +2,13 @@
 <!-- #### [Unreleased] 
 
 -->
+### 1.5.3 [March 2021]
+- **[change]** - move Timezone tag to main lib
+- **[change]** - support timezone-abbrevations
+
+### 1.5.0 [March 2021]
+- **[change]** - return dates in computer's timezone, unless set
+  
 ### 1.4.3 [March 2021]
 - **[change]** - consecutive date tokenization changes
 - **[change]** - fixes to 'this/next/last x'  logic

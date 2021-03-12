@@ -4385,10 +4385,6 @@ module.exports = [
     tags: 'VB, DT, NN',
   },
   {
-    text: 'Hundreds of people are feared dead in Mississippi, and the Louisiana city of New Orleans is badly flooded.',
-    tags: 'NNS, IN, NNS, VBP, VBN, JJ, IN, NNP, CC, DT, NNP, NN, IN, NNP, NNP, VBZ, RB, VBN',
-  },
-  {
     text: 'The Superdome stadium is without power, and toilets are overflowing.',
     tags: 'DT, NNP, NN, VBZ, IN, NN, CC, NNS, VBP, VBG',
   },

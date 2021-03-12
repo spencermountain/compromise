@@ -41,6 +41,10 @@ const addMethods = function (Doc, world) {
       n = null
     }
     context = Object.assign({}, context, opts)
+    // use the user's timezone, by default
+    if (context.timezone === undefined) {
+      context.timezone = spacetime().timezone().name
+    }
 
     let dates = findDates(this)
     if (typeof n === 'number') {

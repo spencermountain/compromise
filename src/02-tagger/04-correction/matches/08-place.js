@@ -9,10 +9,17 @@ let list = [
   },
   //some us-state acronyms (exlude: al, in, la, mo, hi, me, md, ok..)
   {
-    match: '#City [(al|ak|az|ar|ca|ct|dc|fl|ga|id|il|nv|nh|nj|ny|oh|or|pa|sc|tn|tx|ut|vt|pr)]',
+    match: '#City [(al|ak|az|ar|ca|ct|dc|fl|ga|id|il|nv|nh|nj|ny|oh|pa|sc|tn|tx|ut|vt|pr)]',
     group: 0,
     tag: 'Region',
     reason: 'us-state',
+  },
+  // portland oregon
+  {
+    match: 'portland [or]',
+    group: 0,
+    tag: 'Region',
+    reason: 'portland-or',
   },
   //Foo District
   {

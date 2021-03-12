@@ -12,7 +12,13 @@ const methods = [
 // normalizations to run before tagger
 const normalize = function (doc) {
   // turn '20mins' into '20 mins'
-  doc.numbers().normalize() // this is sorta problematic
+  if (typeof doc.nubers === 'function') {
+    doc.numbers().normalize()
+  } else {
+    console.warn(
+      `Warning: compromise-numbers plugin is not loaded.\n   You should load this plugin \n     - https://bit.ly/3t8RfFG`
+    )
+  }
   return doc
 }
 

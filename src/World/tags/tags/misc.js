@@ -41,7 +41,7 @@ module.exports = {
   // 'PST'
   Timezone: {
     isA: ['Date', 'Noun'],
-    notA: ['Adjective'],
+    notA: ['Adjective', 'ProperNoun'],
   },
   // '9:20pm'
   Time: {

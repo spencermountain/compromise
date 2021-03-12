@@ -77,7 +77,16 @@ let list = [
   { match: `#Month #NumberRange`, tag: 'Date', reason: 'aug 20-21' },
 
   // timezones
-  { match: `(#Place|#Demonmym) (standard|daylight|central|mountain)? time`, tag: 'Timezone', reason: 'std-time' },
+  // china standard time
+  { match: `(#Place|#Demonmym|#Time) (standard|daylight|central|mountain)? time`, tag: 'Timezone', reason: 'std-time' },
+  // eastern time
+  {
+    match: `(eastern|mountain|pacific|central) (standard|daylight|summer)? time`,
+    tag: 'Timezone',
+    reason: 'eastern-time',
+  },
+  // 5pm central
+  { match: `#Time [(eastern|mountain|pacific|central|est|pst|gmt)]`, group: 0, tag: 'Timezone', reason: '5pm-central' },
 ]
 
 module.exports = list

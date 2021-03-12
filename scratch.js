@@ -11,4 +11,4 @@ require('/Users/spencer/mountain/timezone-soft/data/metazone/index.js').forEach(
   // console.log(obj.name)
   // }
 })
-let doc = nlp('Morocco Standard Time').debug()
+let doc = nlp('korea').debug()

@@ -200,6 +200,7 @@ module.exports = [
   'somalia',
   'south africa',
   'south korea',
+  'korea',
   'south sudan',
   'spain',
   'sri lanka',

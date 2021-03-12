@@ -9,9 +9,13 @@ compromise uses semver, and pushes to npm frequently
 While all _Major_ releases should be reviewed, our only two _large_ releases are **v6** in 2016 and and **v12** in 2019. Others have been mostly incremental, or niche.
 
 <!-- #### [Unreleased] 
+
+-->
+
 #### 13.10.2
 - **[fix]** - support matching implicit terms in (or|blocks)
--->
+- **[change]** - add #Timezone tag (from date-plugin)
+- **[change]** - add many more cities and regions
 
 #### 13.10.1 [March 2021]
 - **[change]** - #Date terms can still be a #Conjunction

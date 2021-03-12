@@ -24,15 +24,8 @@ const timeTagger = function (doc) {
     doc.match('#Date [at #Cardinal]', 0).notIf('#Year').tag('Time', here)
     // half an hour
     doc.match('half an (hour|minute|second)').tag('Date', here)
-    //eastern daylight time
-    // doc.match('#Noun (standard|daylight|central|mountain)? time').tag('Timezone', here)
-    //utc+5
-    doc.match('/^utc[+-][0-9]/').tag('Timezone', here)
-    doc.match('/^gmt[+-][0-9]/').tag('Timezone', here)
-
+    // in eastern time
     doc.match('(in|for|by|near|at) #Timezone').tag('Timezone', here)
-    // 2pm eastern
-    doc.match('#Time [(eastern|mountain|pacific|central)]', 0).tag('Timezone', here)
   }
   // around four thirty
   doc.match('(at|around|near) [#Cardinal (thirty|fifteen) (am|pm)?]', 0).tag('Time', here)

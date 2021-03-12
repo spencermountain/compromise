@@ -23,6 +23,9 @@ module.exports = [
   [/^[0-9]{1,4}\/[0-9]{1,2}\/[0-9]{1,4}$/, 'Date'], // 03/02/89
   [/^[0-9]{1,4}-[a-z]{2,9}-[0-9]{1,4}$/i, 'Date'], // 03-March-89
 
+  [/^gmt[+-][0-9][0-9]?$/i, 'Timezone'], // gmt-3
+  [/^utc[+-][0-9][0-9]?$/i, 'Timezone'], // utc-3
+
   //names
   [/^ma?c\'.*/, 'LastName'], //mc'adams
   [/^o\'[drlkn].*/, 'LastName'], //o'douggan

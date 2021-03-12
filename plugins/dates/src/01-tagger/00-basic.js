@@ -170,10 +170,10 @@ const tagDates = function (doc) {
     time.match('(by|before|after|at|@|about) #Time').tag('Time', 'preposition-time')
     //7 7pm
     // time.match('#Cardinal #Time').not('#Year').tag('Time', 'value-time')
-    //2pm est
-    time.match('#Time [(eastern|pacific|central|mountain)]', 0).tag('Date', 'timezone')
-    //6pm est
-    time.match('#Time [(est|pst|gmt)]', 0).tag('Date', 'timezone abbr')
+    // //2pm est
+    // time.match('#Time [(eastern|pacific|central|mountain)]', 0).tag('Date', 'timezone')
+    // //6pm est
+    // time.match('#Time [(est|pst|gmt)]', 0).tag('Date', 'timezone abbr')
   }
   //'2020' bare input
   let m = doc.match('^/^20[012][0-9]$/$')

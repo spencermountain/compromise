@@ -37,3 +37,32 @@ test('start-end parentheses', function (t) {
   t.equals(m.out('normal'), 'matthew', 'matthew-end-outside')
   t.end()
 })
+
+let parse = require('/Users/spencer/mountain/compromise/src/World/match-syntax/00-parseBlocks.js')
+
+test('regex tokenization', function (t) {
+  let arr = [
+    ['this/isoneword', 1],
+    ['this/isone/word', 1],
+    ['thisis(one)word', 1],
+    ['(thisisoneword)', 1],
+    ['(this/is/oneword)', 1],
+    ['one /two/ three', 3],
+    ['one /t(foob)3(2)*kwo/ three', 3],
+    ['one /^t*.(.)+kwo$/ three', 3],
+    ['/flubber trouble/', 1],
+    ['one /reg with spaces/ three', 3],
+    ['one (block with spaces) three', 3],
+    ['one (/block/ with /spaces/) three', 3],
+    ['one (/block/|with|/^spa(ce)?s/) three', 3],
+    ['one (a|/block/  |./) three f', 4],
+    ['before /foo bar/ and  (yes sir)', 4],
+    ['before /foo  (bar)/ and (yes |/foo bar/|sir)', 4],
+  ]
+  arr.forEach(a => {
+    // let regs = nlp.parseMatch(a[0])
+    let regs = parse(a[0])
+    t.equals(regs.length, a[1], a[0])
+  })
+  t.end()
+})

@@ -2591,6 +2591,62 @@
 
   var _04PostProcess = postProcess$1;
 
+  // supported suffix-flags:
+  // suffixes:     ? ] + * $ {2,6} ~
+  //     [\?\]\+\*\$~]*
+  // prefixes: ! [ ^
+  //     [\!\[\^]*
+  // match  'foo /yes/' and not 'foo/no/bar'
+  var bySlashes = /(?:^|\s)([\!\[\^]*(?:<[^<]*>)?\/.*?[^\\\/]\/[\?\]\+\*\$~]*)(?:\s|$)/g; // match '(yes) but not foo(no)bar'
+
+  var byParentheses = /(?:^|\s)([\!\[\^]*(?:<[^<]*>)?\(.*?[^\\\)]\)[\?\]\+\*\$~]*)(?:\s|$)/g; // okay
+
+  var byWord = / /g;
+
+  var isBlock = function isBlock(str) {
+    return /^[\!\[\^]*(<[^<]*>)?\(/.test(str) && /\)[\?\]\+\*\$~]*$/.test(str);
+  };
+
+  var isReg = function isReg(str) {
+    return /^[\!\[\^]*(<[^<]*>)?\//.test(str) && /\/[\?\]\+\*\$~]*$/.test(str);
+  };
+
+  var cleanUp = function cleanUp(arr) {
+    arr = arr.map(function (str) {
+      return str.trim();
+    });
+    arr = arr.filter(function (str) {
+      return str;
+    });
+    return arr;
+  };
+
+  var parseBlocks = function parseBlocks(txt) {
+    // parse by /regex/ first
+    var arr = txt.split(bySlashes);
+    var res = []; // parse by (blocks), next
+
+    arr.forEach(function (str) {
+      res = res.concat(str.split(byParentheses));
+    });
+    res = cleanUp(res); // split by spaces, now
+
+    var _final = [];
+    res.forEach(function (str) {
+      if (isBlock(str)) {
+        _final.push(str);
+      } else if (isReg(str)) {
+        _final.push(str);
+      } else {
+        _final = _final.concat(str.split(byWord));
+      }
+    });
+    _final = cleanUp(_final);
+    return _final;
+  };
+
+  var _01ParseBlocks = parseBlocks; // console.log(parseBlocks(`[<num>#Value] [<currency>(mark|rand|won|rub|ore)] foo`))
+
   /* break-down a match expression into this:
   {
     word:'',
@@ -2610,7 +2666,7 @@
   */
   var hasMinMax = /\{([0-9]+,?[0-9]*)\}/;
   var andSign = /&&/;
-  var captureName = new RegExp(/^<(\S+)>/);
+  var captureName = new RegExp(/^< *?(\S+) *?>/);
 
   var titleCase$2 = function titleCase(str) {
     return str.charAt(0).toUpperCase() + str.substr(1);
@@ -2806,7 +2862,7 @@
     return obj;
   };
 
-  var _01ParseToken = parseToken;
+  var _02ParseToken = parseToken;
 
   // name any [unnamed] capture-groups with a number
   var nameGroups = function nameGroups(tokens) {
@@ -2935,68 +2991,10 @@
     return tokens;
   };
 
-  var _02PostProcess = postProcess;
-
-  var hasReg = /[^[a-z]]\//g;
+  var _03PostProcess = postProcess;
 
   var isArray$2 = function isArray(arr) {
     return Object.prototype.toString.call(arr) === '[object Array]';
-  }; // don't split up a regular expression
-
-
-  var mergeRegexes = function mergeRegexes(arr) {
-    arr.forEach(function (s, i) {
-      var m = s.match(hasReg); // has 1 slash
-
-      if (m !== null && m.length === 1 && arr[i + 1]) {
-        // merge next one
-        arr[i] += arr[i + 1];
-        arr[i + 1] = ''; // try 2nd one
-
-        m = arr[i].match(hasReg);
-
-        if (m !== null && m.length === 1) {
-          arr[i] += arr[i + 2];
-          arr[i + 2] = '';
-        }
-      }
-    });
-    arr = arr.filter(function (s) {
-      return s;
-    });
-    return arr;
-  }; //split-up by (these things)
-
-
-  var byParentheses = function byParentheses(str) {
-    var arr = str.split(/([\^\[\!]*(?:<\S+>)?\(.*?\)[?+*]*\]?\$?)/);
-    arr = arr.map(function (s) {
-      return s.trim();
-    });
-
-    if (hasReg.test(str)) {
-      arr = mergeRegexes(arr);
-    }
-
-    return arr;
-  };
-
-  var byWords = function byWords(arr) {
-    var words = [];
-    arr.forEach(function (a) {
-      //keep brackets lumped together
-      if (/\(.*\)/.test(a)) {
-        words.push(a);
-        return;
-      }
-
-      var list = a.split(' ');
-      list = list.filter(function (w) {
-        return w;
-      });
-      words = words.concat(list);
-    });
-    return words;
   }; //turn an array into a 'choices' list
 
 
@@ -3101,21 +3099,20 @@
       input = String(input); //go for it?
     }
 
-    var tokens = byParentheses(input); // console.log(tokens)
+    var tokens = _01ParseBlocks(input); //turn them into objects
 
-    tokens = byWords(tokens);
     tokens = tokens.map(function (str) {
-      return _01ParseToken(str);
+      return _02ParseToken(str);
     }); //clean up anything weird
 
-    tokens = _02PostProcess(tokens, opts); // add fuzzy limits, etc
+    tokens = _03PostProcess(tokens, opts); // add fuzzy limits, etc
 
     tokens = addOptions(tokens, opts); // console.log(tokens)
 
     return tokens;
   };
 
-  var matchSyntax = syntax; // console.log(syntax('before [(united states|canadian)] after'))
+  var matchSyntax = syntax; // console.log(syntax('[#Copula (#Adverb|not)+?] (#Gerund|#PastTense)'))
 
   // match an explicit sequence of term ids
   // take a phrase and find any of the idBlocks in it

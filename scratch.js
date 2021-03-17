@@ -24,3 +24,10 @@ nlp.verbose(true)
 let doc = nlp('120 öre').debug()
 // doc.match('(been|am|#Auxiliary) #Gerund').debug()
 doc.money().debug()
+
+const prefetch = async function () {
+  let docs = []
+  for (let i = 0; i <= 5; i += 1) {
+    let txt = await fetch(`https://unpkg.com/nlp-corpus@3.3.0/builds/nlp-corpus-${i}.json`)
+  }
+}

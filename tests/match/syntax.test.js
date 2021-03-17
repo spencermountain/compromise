@@ -66,6 +66,7 @@ test('regex tokenization', function (t) {
     ['before [<w>(one two)] after', 3],
     ['before [< word >/one two/] after', 3],
     ['[#Copula (#Adverb|not)+?] (#Gerund|#PastTense)', 3],
+    ['[<num>#Value] [<currency>(mark|rand|won|rub|ore)] foo', 3],
   ]
   arr.forEach(a => {
     let regs = nlp.parseMatch(a[0])

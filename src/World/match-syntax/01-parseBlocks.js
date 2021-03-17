@@ -1,23 +1,23 @@
 // supported suffix-flags:
 
 // suffixes:     ? ] + * $ {2,6} ~
-//     [\?\]\+\*\$~]?
+//     [\?\]\+\*\$~]*
 
 // prefixes: ! [ ^
-//     [\!\[\^]
+//     [\!\[\^]*
 
 // match  'foo /yes/' and not 'foo/no/bar'
-const bySlashes = /(?:^|\s)([\!\[\^]?(?:<.*?>)?\/.*?[^\\\/]\/[\?\]\+\*\$~]*)(?:\s|$)/g
+const bySlashes = /(?:^|\s)([\!\[\^]*(?:<[^<]*>)?\/.*?[^\\\/]\/[\?\]\+\*\$~]*)(?:\s|$)/g
 // match '(yes) but not foo(no)bar'
-const byParentheses = /(?:^|\s)([\!\[\^]?(?:<.*?>)?\(.*?[^\\\)]\)[\?\]\+\*\$~]*)(?:\s|$)/g
+const byParentheses = /(?:^|\s)([\!\[\^]*(?:<[^<]*>)?\(.*?[^\\\)]\)[\?\]\+\*\$~]*)(?:\s|$)/g
 // okay
 const byWord = / /g
 
 const isBlock = str => {
-  return /^[\!\[\^]?(<.*?>)?\(/.test(str) && /\)[\?\]\+\*\$~]?$/.test(str)
+  return /^[\!\[\^]*(<[^<]*>)?\(/.test(str) && /\)[\?\]\+\*\$~]*$/.test(str)
 }
 const isReg = str => {
-  return /^[\!\[\^]?(<.*?>)?\//.test(str) && /\/[\?\]\+\*\$~]?$/.test(str)
+  return /^[\!\[\^]*(<[^<]*>)?\//.test(str) && /\/[\?\]\+\*\$~]*$/.test(str)
 }
 
 const cleanUp = function (arr) {
@@ -51,5 +51,4 @@ const parseBlocks = function (txt) {
 }
 module.exports = parseBlocks
 
-// console.log(parseBlocks(`before [<w>(one two)] after`))
-// console.log(parseBlocks('[#Copula (#Adverb|not)+?] (#Gerund|#PastTense)'))
+// console.log(parseBlocks(`[<num>#Value] [<currency>(mark|rand|won|rub|ore)] foo`))

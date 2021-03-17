@@ -63,6 +63,9 @@ test('regex tokenization', function (t) {
     ['one [(inside two)] three', 3],
     // named-groups
     ['i saw [<match>(the person|#Pronoun|tina turner)]', 3],
+    ['before [<w>(one two)] after', 3],
+    ['before [< word >/one two/] after', 3],
+    ['[#Copula (#Adverb|not)+?] (#Gerund|#PastTense)', 3],
   ]
   arr.forEach(a => {
     let regs = nlp.parseMatch(a[0])

@@ -7,14 +7,18 @@
 //     [\!\[\^]
 
 // match  'foo /yes/' and not 'foo/no/bar'
-const bySlashes = /(?:^|\s)([\!\[\^]?\/.*?[^\\\/]\/[\?\]\+\*\$~]?)(?:\s|$)/g
+const bySlashes = /(?:^|\s)([\!\[\^]?(?:<.*?>)?\/.*?[^\\\/]\/[\?\]\+\*\$~]*)(?:\s|$)/g
 // match '(yes) but not foo(no)bar'
-const byParentheses = /(?:^|\s)([\!\[\^]?\(.*?[^\\\)]\)[\?\]\+\*\$~]?)(?:\s|$)/g
+const byParentheses = /(?:^|\s)([\!\[\^]?(?:<.*?>)?\(.*?[^\\\)]\)[\?\]\+\*\$~]*)(?:\s|$)/g
 // okay
 const byWord = / /g
 
-const isBlock = str => /^[\!\[\^]?\(/.test(str) && /\)[\?\]\+\*\$~]?$/.test(str)
-const isReg = str => /^[\!\[\^]?\//.test(str) && /\/[\?\]\+\*\$~]?$/.test(str)
+const isBlock = str => {
+  return /^[\!\[\^]?(<.*?>)?\(/.test(str) && /\)[\?\]\+\*\$~]?$/.test(str)
+}
+const isReg = str => {
+  return /^[\!\[\^]?(<.*?>)?\//.test(str) && /\/[\?\]\+\*\$~]?$/.test(str)
+}
 
 const cleanUp = function (arr) {
   arr = arr.map(str => str.trim())
@@ -31,7 +35,6 @@ const parseBlocks = function (txt) {
     res = res.concat(str.split(byParentheses))
   })
   res = cleanUp(res)
-  console.log(res)
   // split by spaces, now
   let final = []
   res.forEach(str => {
@@ -48,4 +51,5 @@ const parseBlocks = function (txt) {
 }
 module.exports = parseBlocks
 
-parseBlocks(`before [<w>(one two)] after`)
+// console.log(parseBlocks(`before [<w>(one two)] after`))
+// console.log(parseBlocks('[#Copula (#Adverb|not)+?] (#Gerund|#PastTense)'))

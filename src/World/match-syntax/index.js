@@ -108,4 +108,4 @@ const syntax = function (input, opts = {}) {
 }
 
 module.exports = syntax
-// console.log(syntax('before [(united states|canadian)] after'))
+// console.log(syntax('[#Copula (#Adverb|not)+?] (#Gerund|#PastTense)'))

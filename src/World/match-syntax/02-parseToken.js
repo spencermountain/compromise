@@ -17,7 +17,7 @@
 */
 const hasMinMax = /\{([0-9]+,?[0-9]*)\}/
 const andSign = /&&/
-const captureName = new RegExp(/^<(\S+)>/)
+const captureName = new RegExp(/^< *?(\S+) *?>/)
 
 const titleCase = str => {
   return str.charAt(0).toUpperCase() + str.substr(1)
@@ -72,7 +72,6 @@ const parseToken = function (w) {
       // Use capture group name
       if (start(w) === '<') {
         const res = captureName.exec(w)
-
         if (res.length >= 2) {
           obj.named = res[1]
           w = w.replace(res[0], '')

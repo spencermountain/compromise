@@ -1,12 +1,20 @@
+// supported suffix-flags:
+
+// suffixes:     ? ] + * $ {2,6} ~
+//     [\?\]\+\*\$~]?
+
+// prefixes: ! [ ^
+//     [\!\[\^]
+
 // match  'foo /yes/' and not 'foo/no/bar'
-const bySlashes = /(?:^|\s)(\/.*?[^\\\/]\/)(?:\s|$)/g
+const bySlashes = /(?:^|\s)([\!\[\^]?\/.*?[^\\\/]\/[\?\]\+\*\$~]?)(?:\s|$)/g
 // match '(yes) but not foo(no)bar'
-const byParentheses = /(?:^|\s)(\(.*?[^\\\)]\))(?:\s|$)/g
+const byParentheses = /(?:^|\s)([\!\[\^]?\(.*?[^\\\)]\)[\?\]\+\*\$~]?)(?:\s|$)/g
 // okay
 const byWord = / /g
 
-const isBlock = str => /^\(/.test(str) && /\)$/.test(str)
-const isReg = str => /^\//.test(str) && /\/$/.test(str)
+const isBlock = str => /^[\!\[\^]?\(/.test(str) && /\)[\?\]\+\*\$~]?$/.test(str)
+const isReg = str => /^[\!\[\^]?\//.test(str) && /\/[\?\]\+\*\$~]?$/.test(str)
 
 const cleanUp = function (arr) {
   arr = arr.map(str => str.trim())
@@ -15,14 +23,16 @@ const cleanUp = function (arr) {
 }
 
 const parseBlocks = function (txt) {
-  // parse by regex, first
+  // parse by /regex/ first
   let arr = txt.split(bySlashes)
   let res = []
+  // parse by (blocks), next
   arr.forEach(str => {
     res = res.concat(str.split(byParentheses))
   })
   res = cleanUp(res)
-  // split by word, now
+  console.log(res)
+  // split by spaces, now
   let final = []
   res.forEach(str => {
     if (isBlock(str)) {
@@ -38,5 +48,4 @@ const parseBlocks = function (txt) {
 }
 module.exports = parseBlocks
 
-console.log(parseBlocks(`before /foo bar/ and (yes sir)`))
-// console.log(parseBlocks(`before (yes) no(t)here (no but (here/here\\) foo`))
+parseBlocks(`before [<w>(one two)] after`)

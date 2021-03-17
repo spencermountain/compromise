@@ -38,8 +38,6 @@ test('start-end parentheses', function (t) {
   t.end()
 })
 
-let parse = require('/Users/spencer/mountain/compromise/src/World/match-syntax/00-parseBlocks.js')
-
 test('regex tokenization', function (t) {
   let arr = [
     ['this/isoneword', 1],
@@ -58,10 +56,17 @@ test('regex tokenization', function (t) {
     ['one (a|/block/  |./) three f', 4],
     ['before /foo bar/ and  (yes sir)', 4],
     ['before /foo  (bar)/ and (yes |/foo bar/|sir)', 4],
+    // prefix/suffix
+    ['one /optional reg/? three', 3],
+    ['one (optional /block/)? three', 3],
+    ['one !(optional two|!#Block)* three', 3],
+    ['one [(inside two)] three', 3],
+    // named-groups
+    ['i saw [<match>(the person|#Pronoun|tina turner)]', 3],
   ]
   arr.forEach(a => {
-    // let regs = nlp.parseMatch(a[0])
-    let regs = parse(a[0])
+    let regs = nlp.parseMatch(a[0])
+    // let regs = parse(a[0])
     t.equals(regs.length, a[1], a[0])
   })
   t.end()

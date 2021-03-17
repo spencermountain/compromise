@@ -1,4 +1,4 @@
-/* compromise 13.10.2 MIT */
+/* compromise 13.10.3 MIT */
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
@@ -3855,7 +3855,7 @@ var fromJSON = function fromJSON(json, world) {
 
 var fromJSON_1 = fromJSON;
 
-var _version = '13.10.2';
+var _version = '13.10.3';
 
 var entity = ['Person', 'Place', 'Organization'];
 var nouns$1 = {

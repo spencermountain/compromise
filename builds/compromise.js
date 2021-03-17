@@ -1,4 +1,4 @@
-/* compromise 13.10.2 MIT */
+/* compromise 13.10.3 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -3861,7 +3861,7 @@
 
   var fromJSON_1 = fromJSON;
 
-  var _version = '13.10.2';
+  var _version = '13.10.3';
 
   var entity = ['Person', 'Place', 'Organization'];
   var nouns$1 = {

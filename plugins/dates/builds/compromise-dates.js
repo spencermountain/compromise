@@ -1,4 +1,4 @@
-/* compromise-dates 1.5.3 MIT */
+/* compromise-dates 1.5.4 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -671,7 +671,7 @@
   	return fn(module, module.exports), module.exports;
   }
 
-  /* spencermountain/spacetime 6.13.1 Apache 2.0 */
+  /* spencermountain/spacetime 6.14.0 Apache 2.0 */
   var spacetime = createCommonjsModule(function (module, exports) {
     (function (global, factory) {
       module.exports = factory() ;
@@ -816,97 +816,93 @@
         "9.5|s|04/04:03->10/03:02": "4/adelaide,4/broken_hill,4/south,4/yancowinna",
         "9.5|s": "4/darwin,4/north",
         "8|s|03/08:01->10/04:00": "12/casey",
-        "8|s": "2/kuala_lumpur,2/makassar,2/singapore,4/perth,4/west",
-        "8|n|03/25:03->09/29:23": "2/ulan_bator",
-        "8|n": "2/brunei,2/choibalsan,2/chongqing,2/chungking,2/harbin,2/hong_kong,2/irkutsk,2/kuching,2/macao,2/macau,2/manila,2/shanghai,2/taipei,2/ujung_pandang,2/ulaanbaatar",
+        "8|s": "2/kuala_lumpur,2/makassar,2/singapore,4/perth,2/ujung_pandang,4/west",
+        "8|n": "2/brunei,2/choibalsan,2/hong_kong,2/irkutsk,2/kuching,2/macau,2/manila,2/shanghai,2/taipei,2/ulaanbaatar,2/chongqing,2/chungking,2/harbin,2/macao,2/ulan_bator",
         "8.75|s": "4/eucla",
         "7|s": "12/davis,2/jakarta,9/christmas",
-        "7|n": "2/bangkok,2/barnaul,2/ho_chi_minh,2/hovd,2/krasnoyarsk,2/novokuznetsk,2/novosibirsk,2/phnom_penh,2/pontianak,2/saigon,2/tomsk,2/vientiane",
+        "7|n": "2/bangkok,2/barnaul,2/hovd,2/krasnoyarsk,2/novokuznetsk,2/novosibirsk,2/phnom_penh,2/pontianak,2/saigon,2/tomsk,2/vientiane,2/ho_chi_minh",
         "6|s": "12/vostok",
-        "6|n": "2/almaty,2/bishkek,2/dacca,2/dhaka,2/kashgar,2/omsk,2/qyzylorda,2/qostanay,2/thimbu,2/thimphu,2/urumqi,9/chagos",
-        "6.5|n": "2/rangoon,2/yangon,9/cocos",
+        "6|n": "2/almaty,2/bishkek,2/dhaka,2/omsk,2/qyzylorda,2/qostanay,2/thimphu,2/urumqi,9/chagos,2/dacca,2/kashgar,2/thimbu",
+        "6.5|n": "2/rangoon,9/cocos,2/yangon",
         "5|s": "12/mawson,9/kerguelen",
-        "5|n": "2/aqtau,2/aqtobe,2/ashgabat,2/ashkhabad,2/atyrau,2/baku,2/dushanbe,2/karachi,2/oral,2/samarkand,2/tashkent,2/yekaterinburg,9/maldives",
-        "5.75|n": "2/kathmandu,2/katmandu",
+        "5|n": "2/aqtau,2/aqtobe,2/ashgabat,2/atyrau,2/baku,2/dushanbe,2/karachi,2/oral,2/samarkand,2/tashkent,2/yekaterinburg,9/maldives,2/ashkhabad",
+        "5.75|n": "2/katmandu,2/kathmandu",
         "5.5|n": "2/calcutta,2/colombo,2/kolkata",
         "4|s": "9/reunion",
         "4|n": "2/dubai,2/muscat,2/tbilisi,2/yerevan,8/astrakhan,8/samara,8/saratov,8/ulyanovsk,8/volgograd,2/volgograd,9/mahe,9/mauritius",
         "4.5|n|03/22:00->09/21:24": "2/tehran",
         "4.5|n": "2/kabul",
         "3|s": "12/syowa,9/antananarivo",
-        "3|n|03/28:03->10/31:04": "2/famagusta,2/nicosia,8/athens,8/bucharest,8/helsinki,8/kiev,8/mariehamn,8/nicosia,8/riga,8/sofia,8/tallinn,8/uzhgorod,8/vilnius,8/zaporozhye",
+        "3|n|03/28:03->10/31:04": "2/famagusta,2/nicosia,8/athens,8/bucharest,8/helsinki,8/kiev,8/mariehamn,8/riga,8/sofia,8/tallinn,8/uzhgorod,8/vilnius,8/zaporozhye,8/nicosia",
         "3|n|03/28:02->10/31:03": "8/chisinau,8/tiraspol",
         "3|n|03/28:00->10/30:24": "2/beirut",
         "3|n|03/27:00->10/30:01": "2/gaza,2/hebron",
         "3|n|03/26:02->10/31:02": "2/jerusalem,2/tel_aviv",
         "3|n|03/26:00->10/29:01": "2/amman",
         "3|n|03/26:00->10/28:24": "2/damascus",
-        "3|n": "0/addis_ababa,0/asmara,0/asmera,0/dar_es_salaam,0/djibouti,0/juba,0/kampala,0/mogadishu,0/nairobi,2/aden,2/baghdad,2/bahrain,2/istanbul,2/kuwait,2/qatar,2/riyadh,8/istanbul,8/kirov,8/minsk,8/moscow,8/simferopol,9/comoro,9/mayotte",
+        "3|n": "0/addis_ababa,0/asmera,0/dar_es_salaam,0/djibouti,0/juba,0/kampala,0/mogadishu,0/nairobi,2/aden,2/baghdad,2/bahrain,2/kuwait,2/qatar,2/riyadh,8/istanbul,8/kirov,8/minsk,8/moscow,8/simferopol,9/comoro,9/mayotte,0/asmara,2/istanbul",
         "2|s|03/28:02->10/31:02": "12/troll",
         "2|s": "0/gaborone,0/harare,0/johannesburg,0/lubumbashi,0/lusaka,0/maputo,0/maseru,0/mbabane",
-        "2|n|03/28:02->10/31:03": "0/ceuta,arctic/longyearbyen,3/jan_mayen,8/amsterdam,8/andorra,8/belgrade,8/berlin,8/bratislava,8/brussels,8/budapest,8/busingen,8/copenhagen,8/gibraltar,8/ljubljana,8/luxembourg,8/madrid,8/malta,8/monaco,8/oslo,8/paris,8/podgorica,8/prague,8/rome,8/san_marino,8/sarajevo,8/skopje,8/stockholm,8/tirane,8/vaduz,8/vatican,8/vienna,8/warsaw,8/zagreb,8/zurich",
+        "2|n|03/28:02->10/31:03": "0/ceuta,arctic/longyearbyen,8/amsterdam,8/andorra,8/belgrade,8/berlin,8/bratislava,8/brussels,8/budapest,8/busingen,8/copenhagen,8/gibraltar,8/ljubljana,8/luxembourg,8/madrid,8/malta,8/monaco,8/oslo,8/paris,8/podgorica,8/prague,8/rome,8/san_marino,8/sarajevo,8/skopje,8/stockholm,8/tirane,8/vaduz,8/vatican,8/vienna,8/warsaw,8/zagreb,8/zurich,3/jan_mayen",
         "2|n": "0/blantyre,0/bujumbura,0/cairo,0/khartoum,0/kigali,0/tripoli,8/kaliningrad",
-        "1|s|04/02:01->09/03:03": "0/windhoek",
-        "1|s": "0/kinshasa,0/luanda",
+        "1|s": "0/brazzaville,0/kinshasa,0/luanda,0/windhoek",
         "1|n|04/11:03->05/16:02": "0/casablanca,0/el_aaiun",
-        "1|n|03/28:01->10/31:02": "3/canary,3/faeroe,3/faroe,3/madeira,8/belfast,8/dublin,8/guernsey,8/isle_of_man,8/jersey,8/lisbon,8/london",
-        "1|n": "0/algiers,0/bangui,0/brazzaville,0/douala,0/lagos,0/libreville,0/malabo,0/ndjamena,0/niamey,0/porto-novo,0/tunis",
+        "1|n|03/28:01->10/31:02": "3/canary,3/faeroe,3/madeira,8/dublin,8/guernsey,8/isle_of_man,8/jersey,8/lisbon,8/london,3/faroe,8/belfast",
+        "1|n": "0/algiers,0/bangui,0/douala,0/lagos,0/libreville,0/malabo,0/ndjamena,0/niamey,0/porto-novo,0/tunis",
         "14|n": "11/kiritimati",
         "13|s|04/04:04->09/26:03": "11/apia",
         "13|s|01/15:02->11/05:03": "11/tongatapu",
         "13|n": "11/enderbury,11/fakaofo",
-        "12|s|04/04:03->09/26:02": "12/mcmurdo,12/south_pole,11/auckland",
+        "12|s|04/04:03->09/26:02": "12/mcmurdo,11/auckland,12/south_pole",
         "12|s|01/17:03->11/14:02": "11/fiji",
         "12|n": "2/anadyr,2/kamchatka,2/srednekolymsk,11/funafuti,11/kwajalein,11/majuro,11/nauru,11/tarawa,11/wake,11/wallis",
         "12.75|s|04/04:03->04/04:02": "11/chatham",
         "11|s|04/04:03->10/03:02": "12/macquarie",
         "11|s": "11/bougainville",
-        "11|n": "2/magadan,2/sakhalin,11/efate,11/guadalcanal,11/kosrae,11/noumea,11/pohnpei,11/ponape",
+        "11|n": "2/magadan,2/sakhalin,11/efate,11/guadalcanal,11/kosrae,11/noumea,11/ponape,11/pohnpei",
         "11.5|n|04/04:03->10/03:02": "11/norfolk",
-        "10|s|04/04:03->10/03:02": "4/act,4/canberra,4/currie,4/hobart,4/melbourne,4/nsw,4/sydney,4/tasmania,4/victoria",
-        "10|s": "12/dumontdurville,4/brisbane,4/lindeman,4/queensland",
-        "10|n": "2/ust-nera,2/vladivostok,2/yakutsk,11/chuuk,11/guam,11/port_moresby,11/saipan,11/truk,11/yap",
-        "10.5|s|04/04:01->10/03:02": "4/lhi,4/lord_howe",
+        "10|s|04/04:03->10/03:02": "4/currie,4/hobart,4/melbourne,4/sydney,4/act,4/canberra,4/nsw,4/tasmania,4/victoria",
+        "10|s": "12/dumontdurville,4/brisbane,4/lindeman,11/port_moresby,4/queensland",
+        "10|n": "2/ust-nera,2/vladivostok,2/yakutsk,11/guam,11/saipan,11/truk,11/chuuk,11/yap",
+        "10.5|s|04/04:01->10/03:02": "4/lord_howe,4/lhi",
         "0|n|03/28:00->10/31:01": "1/scoresbysund,3/azores",
-        "0|n": "0/abidjan,0/accra,0/bamako,0/banjul,0/bissau,0/conakry,0/dakar,0/freetown,0/lome,0/monrovia,0/nouakchott,0/ouagadougou,0/sao_tome,0/timbuktu,1/danmarkshavn,3/reykjavik,3/st_helena,13/gmt,13/gmt+0,13/gmt-0,13/gmt0,13/greenwich,13/utc,13/universal,13/zulu",
-        "-9|n|03/14:02->11/07:02": "1/adak,1/atka",
+        "0|n": "0/abidjan,0/accra,0/bamako,0/banjul,0/bissau,0/conakry,0/dakar,0/freetown,0/lome,0/monrovia,0/nouakchott,0/ouagadougou,0/sao_tome,1/danmarkshavn,3/reykjavik,3/st_helena,13/gmt,13/utc,0/timbuktu,13/gmt-0,13/gmt+0,13/gmt0,13/greenwich,13/uct,13/universal,13/zulu",
+        "-9|n|03/14:02->11/07:02": "1/adak,1/atka,us/aleutian",
         "-9|n": "11/gambier",
         "-9.5|n": "11/marquesas",
-        "-8|n|03/14:02->11/07:02": "1/anchorage,1/juneau,1/metlakatla,1/nome,1/sitka,1/yakutat",
+        "-8|n|03/14:02->11/07:02": "1/anchorage,1/juneau,1/metlakatla,1/nome,1/sitka,1/yakutat,us/alaska",
         "-8|n": "11/pitcairn",
-        "-7|n|03/14:02->11/07:02": "1/ensenada,1/los_angeles,1/santa_isabel,1/tijuana,1/vancouver,6/pacific,10/bajanorte",
+        "-7|n|03/14:02->11/07:02": "1/los_angeles,1/santa_isabel,1/tijuana,1/vancouver,1/ensenada,6/pacific,10/bajanorte,us/pacific-new,us/pacific",
         "-7|n|03/08:02->11/01:01": "1/dawson,1/whitehorse,6/yukon",
-        "-7|n": "1/creston,1/dawson_creek,1/fort_nelson,1/hermosillo,1/phoenix",
-        "-6|s|04/03:22->09/04:22": "7/easterisland,11/easter",
+        "-7|n": "1/creston,1/dawson_creek,1/fort_nelson,1/hermosillo,1/phoenix,us/arizona",
+        "-6|s|04/03:22->09/04:22": "11/easter,7/easterisland",
         "-6|n|04/04:02->10/31:02": "1/chihuahua,1/mazatlan,10/bajasur",
-        "-6|n|03/14:02->11/07:02": "1/boise,1/cambridge_bay,1/denver,1/edmonton,1/inuvik,1/ojinaga,1/shiprock,1/yellowknife,6/mountain",
-        "-6|n": "1/belize,1/costa_rica,1/el_salvador,1/guatemala,1/managua,1/regina,1/swift_current,1/tegucigalpa,6/east-saskatchewan,6/saskatchewan,11/galapagos",
-        "-5|s": "1/lima,1/rio_branco,5/acre",
+        "-6|n|03/14:02->11/07:02": "1/boise,1/cambridge_bay,1/denver,1/edmonton,1/inuvik,1/ojinaga,1/yellowknife,1/shiprock,6/mountain,us/mountain",
+        "-6|n": "1/belize,1/costa_rica,1/el_salvador,1/guatemala,1/managua,1/regina,1/swift_current,1/tegucigalpa,11/galapagos,6/east-saskatchewan,6/saskatchewan",
+        "-5|s": "1/lima,1/rio_branco,1/porto_acre,5/acre",
         "-5|n|04/04:02->10/31:02": "1/bahia_banderas,1/merida,1/mexico_city,1/monterrey,10/general",
-        "-5|n|03/14:02->11/07:02": "1/chicago,1/knox_in,1/matamoros,1/menominee,1/rainy_river,1/rankin_inlet,1/resolute,1/winnipeg,6/central",
+        "-5|n|03/14:02->11/07:02": "1/chicago,1/matamoros,1/menominee,1/rainy_river,1/rankin_inlet,1/resolute,1/winnipeg,1/indiana/knox,1/indiana/tell_city,1/north_dakota/beulah,1/north_dakota/center,1/north_dakota/new_salem,1/knox_in,6/central,us/central,us/indiana-starke",
         "-5|n|03/12:03->11/05:01": "1/north_dakota",
-        "-5|n": "1/atikokan,1/bogota,1/cancun,1/cayman,1/coral_harbour,1/eirunepe,1/guayaquil,1/jamaica,1/panama,1/porto_acre",
+        "-5|n": "1/bogota,1/cancun,1/cayman,1/coral_harbour,1/eirunepe,1/guayaquil,1/jamaica,1/panama,1/atikokan",
         "-4|s|05/13:23->08/13:01": "12/palmer",
         "-4|s|04/03:24->09/05:00": "1/santiago,7/continental",
         "-4|s|03/27:24->10/03:00": "1/asuncion",
         "-4|s|02/16:24->11/03:00": "1/campo_grande,1/cuiaba",
         "-4|s": "1/la_paz,1/manaus,5/west",
-        "-4|n|03/14:02->11/07:02": "1/detroit,1/fort_wayne,1/grand_turk,1/indianapolis,1/iqaluit,1/louisville,1/montreal,1/nassau,1/new_york,1/nipigon,1/pangnirtung,1/port-au-prince,1/thunder_bay,1/toronto,6/eastern",
+        "-4|n|03/14:02->11/07:02": "1/detroit,1/grand_turk,1/indianapolis,1/iqaluit,1/louisville,1/montreal,1/nassau,1/new_york,1/nipigon,1/pangnirtung,1/port-au-prince,1/thunder_bay,1/toronto,1/indiana/marengo,1/indiana/petersburg,1/indiana/vevay,1/indiana/vincennes,1/indiana/winamac,1/kentucky/monticello,1/fort_wayne,1/indiana/indianapolis,1/kentucky/louisville,6/eastern,us/east-indiana,us/eastern,us/michigan",
         "-4|n|03/14:00->11/07:01": "1/havana",
         "-4|n|03/12:03->11/05:01": "1/indiana,1/kentucky",
         "-4|n": "1/anguilla,1/antigua,1/aruba,1/barbados,1/blanc-sablon,1/boa_vista,1/caracas,1/curacao,1/dominica,1/grenada,1/guadeloupe,1/guyana,1/kralendijk,1/lower_princes,1/marigot,1/martinique,1/montserrat,1/port_of_spain,1/porto_velho,1/puerto_rico,1/santo_domingo,1/st_barthelemy,1/st_kitts,1/st_lucia,1/st_thomas,1/st_vincent,1/tortola,1/virgin",
-        "-3|s": "1/argentina,1/buenos_aires,1/cordoba,1/fortaleza,1/montevideo,1/punta_arenas,1/sao_paulo,12/rothera,3/stanley,5/east",
-        "-3|n|03/27:22->10/30:23": "1/nuuk",
+        "-3|s": "1/argentina,1/buenos_aires,1/catamarca,1/cordoba,1/fortaleza,1/jujuy,1/mendoza,1/montevideo,1/punta_arenas,1/sao_paulo,12/rothera,3/stanley,1/argentina/la_rioja,1/argentina/rio_gallegos,1/argentina/salta,1/argentina/san_juan,1/argentina/san_luis,1/argentina/tucuman,1/argentina/ushuaia,1/argentina/buenos_aires,1/argentina/catamarca,1/argentina/comodrivadavia,1/argentina/cordoba,1/argentina/jujuy,1/argentina/mendoza,1/rosario,5/east",
         "-3|n|03/14:02->11/07:02": "1/glace_bay,1/goose_bay,1/halifax,1/moncton,1/thule,3/bermuda,6/atlantic",
-        "-3|n": "1/araguaina,1/bahia,1/belem,1/catamarca,1/cayenne,1/jujuy,1/maceio,1/mendoza,1/paramaribo,1/recife,1/rosario,1/santarem",
-        "-2|s": "5/denoronha",
-        "-2|n|03/27:22->10/30:23": "1/godthab",
+        "-3|n": "1/araguaina,1/bahia,1/belem,1/cayenne,1/maceio,1/paramaribo,1/recife,1/santarem",
+        "-2|n|03/27:22->10/30:23": "1/godthab,1/nuuk",
         "-2|n|03/14:02->11/07:02": "1/miquelon",
-        "-2|n": "1/noronha,3/south_georgia",
+        "-2|n": "1/noronha,3/south_georgia,5/denoronha",
         "-2.5|n|03/14:02->11/07:02": "1/st_johns,6/newfoundland",
         "-1|n": "3/cape_verde",
-        "-11|n": "11/midway,11/niue,11/pago_pago,11/samoa",
-        "-10|n": "11/honolulu,11/johnston,11/rarotonga,11/tahiti"
+        "-11|n": "11/midway,11/niue,11/pago_pago,11/samoa,us/samoa",
+        "-10|n": "11/honolulu,11/johnston,11/rarotonga,11/tahiti,us/hawaii"
       };
 
       var _build$1 = /*#__PURE__*/Object.freeze({
@@ -1098,12 +1094,11 @@
           console.error("Timezone must be a string - recieved: '", str, "'\n");
         }
 
-        var tz = str.trim();
-        var split = str.split('/'); //support long timezones like 'America/Argentina/Rio_Gallegos'
-
-        if (split.length > 2 && zones.hasOwnProperty(tz) === false) {
-          tz = split[0] + '/' + split[1];
-        }
+        var tz = str.trim(); // let split = str.split('/')
+        //support long timezones like 'America/Argentina/Rio_Gallegos'
+        // if (split.length > 2 && zones.hasOwnProperty(tz) === false) {
+        //   tz = split[0] + '/' + split[1]
+        // }
 
         tz = tz.toLowerCase();
 
@@ -5044,7 +5039,7 @@
       };
 
       var whereIts_1 = whereIts;
-      var _version = '6.13.1';
+      var _version = '6.14.0';
 
       var main = function main(input, tz, options) {
         return new spacetime(input, tz, options);
@@ -5094,6 +5089,18 @@
       main.timezones = function () {
         var s = new spacetime();
         return s.timezones;
+      };
+
+      main.max = function (tz, options) {
+        var s = new spacetime(null, tz, options);
+        s.epoch = 8640000000000000;
+        return s;
+      };
+
+      main.min = function (tz, options) {
+        var s = new spacetime(null, tz, options);
+        s.epoch = -8640000000000000;
+        return s;
       }; //find tz by time
 
 
@@ -5531,7 +5538,10 @@
       key: "end",
       value: function end() {
         // do we have a custom day-end?
+        this.d = this.d.endOf(this.unit);
+
         if (this.context.dayEnd) {
+          this.d = this.d.startOf('day');
           var dayEnd = this.d.time(this.context.dayEnd);
 
           if (dayEnd.isAfter(this.d)) {
@@ -5540,7 +5550,6 @@
           }
         }
 
-        this.d = this.d.endOf(this.unit);
         return this;
       }
     }, {
@@ -9015,4 +9024,3 @@
   return src;
 
 })));
-//# sourceMappingURL=compromise-dates.js.map

@@ -1,0 +1,32 @@
+{
+  "name": "perf",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "compromise13.0.0": "npm:compromise@13.0.0",
+    "compromise13.1.0": "npm:compromise@13.1.0",
+    "compromise13.1.1": "npm:compromise@13.1.1",
+    "compromise13.10.0": "npm:compromise@13.10.0",
+    "compromise13.10.1": "npm:compromise@13.10.1",
+    "compromise13.10.2": "npm:compromise@13.10.2",
+    "compromise13.2.0": "npm:compromise@13.2.0",
+    "compromise13.3.0": "npm:compromise@13.3.0",
+    "compromise13.3.1": "npm:compromise@13.3.1",
+    "compromise13.3.2": "npm:compromise@13.3.2",
+    "compromise13.4.0": "npm:compromise@13.4.0",
+    "compromise13.5.0": "npm:compromise@13.5.0",
+    "compromise13.6.0": "npm:compromise@13.6.0",
+    "compromise13.7.0": "npm:compromise@13.7.0",
+    "compromise13.8.0": "npm:compromise@13.8.0",
+    "compromise13.9.0": "npm:compromise@13.9.0",
+    "compromise13.9.1": "npm:compromise@13.9.1",
+    "compromise13.9.2": "npm:compromise@13.9.2",
+    "compromise13.9.3": "npm:compromise@13.9.3"
+  }
+}

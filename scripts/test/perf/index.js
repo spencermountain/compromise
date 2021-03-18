@@ -2,8 +2,8 @@
 const reset = '\x1b[0m'
 const fetch = require('./_fetch')
 let nlp = require('../../../tests/_lib')
-nlp.extend(require('../../../plugins/numbers/src'))
-nlp.extend(require('../../../plugins/dates/src'))
+// nlp.extend(require('../../../plugins/numbers/src'))
+// nlp.extend(require('../../../plugins/dates/src'))
 const highlight = 5
 const shouldFail = -10
 // const fs = require('fs')

@@ -43,7 +43,6 @@ export default [
       {
         file: `builds/${name}.js`,
         format: 'umd',
-        sourcemap: true,
         name: 'compromiseDates',
         banner: banner,
       },

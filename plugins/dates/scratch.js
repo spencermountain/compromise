@@ -15,8 +15,9 @@ const context = {
   dayEnd: '5pm',
 }
 
-// let doc = nlp('end of april')
-let doc = nlp('middle of next quarter') //.debug()
+// let doc = nlp('june 5th') //.debug()
+let doc = nlp('middle of june') //.debug()
+// let doc = nlp('next week') //.debug()
 
 let dates = doc.dates(context)
 dates = dates.get()

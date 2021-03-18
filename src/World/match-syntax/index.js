@@ -1,55 +1,9 @@
-const parseToken = require('./01-parseToken')
-const postProcess = require('./02-postProcess')
-const hasReg = /[^[a-z]]\//g
+const parseBlocks = require('./01-parseBlocks')
+const parseToken = require('./02-parseToken')
+const postProcess = require('./03-postProcess')
 
 const isArray = function (arr) {
   return Object.prototype.toString.call(arr) === '[object Array]'
-}
-
-// don't split up a regular expression
-const mergeRegexes = function (arr) {
-  arr.forEach((s, i) => {
-    let m = s.match(hasReg)
-    // has 1 slash
-    if (m !== null && m.length === 1 && arr[i + 1]) {
-      // merge next one
-      arr[i] += arr[i + 1]
-      arr[i + 1] = ''
-      // try 2nd one
-      m = arr[i].match(hasReg)
-      if (m !== null && m.length === 1) {
-        arr[i] += arr[i + 2]
-        arr[i + 2] = ''
-      }
-    }
-  })
-  arr = arr.filter(s => s)
-  return arr
-}
-
-//split-up by (these things)
-const byParentheses = function (str) {
-  let arr = str.split(/([\^\[\!]*(?:<\S+>)?\(.*?\)[?+*]*\]?\$?)/)
-  arr = arr.map(s => s.trim())
-  if (hasReg.test(str)) {
-    arr = mergeRegexes(arr)
-  }
-  return arr
-}
-
-const byWords = function (arr) {
-  let words = []
-  arr.forEach(a => {
-    //keep brackets lumped together
-    if (/\(.*\)/.test(a)) {
-      words.push(a)
-      return
-    }
-    let list = a.split(' ')
-    list = list.filter(w => w)
-    words = words.concat(list)
-  })
-  return words
 }
 
 //turn an array into a 'choices' list
@@ -142,9 +96,8 @@ const syntax = function (input, opts = {}) {
   if (typeof input === 'number') {
     input = String(input) //go for it?
   }
-  let tokens = byParentheses(input)
-  // console.log(tokens)
-  tokens = byWords(tokens)
+  let tokens = parseBlocks(input)
+  //turn them into objects
   tokens = tokens.map(str => parseToken(str, opts))
   //clean up anything weird
   tokens = postProcess(tokens, opts)
@@ -155,4 +108,4 @@ const syntax = function (input, opts = {}) {
 }
 
 module.exports = syntax
-// console.log(syntax('before [(united states|canadian)] after'))
+// console.log(syntax('[#Copula (#Adverb|not)+?] (#Gerund|#PastTense)'))

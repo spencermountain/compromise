@@ -37,3 +37,41 @@ test('start-end parentheses', function (t) {
   t.equals(m.out('normal'), 'matthew', 'matthew-end-outside')
   t.end()
 })
+
+test('regex tokenization', function (t) {
+  let arr = [
+    ['this/isoneword', 1],
+    ['this/isone/word', 1],
+    ['thisis(one)word', 1],
+    ['(thisisoneword)', 1],
+    ['(this/is/oneword)', 1],
+    ['one /two/ three', 3],
+    ['one /t(foob)3(2)*kwo/ three', 3],
+    ['one /^t*.(.)+kwo$/ three', 3],
+    ['/flubber trouble/', 1],
+    ['one /reg with spaces/ three', 3],
+    ['one (block with spaces) three', 3],
+    ['one (/block/ with /spaces/) three', 3],
+    ['one (/block/|with|/^spa(ce)?s/) three', 3],
+    ['one (a|/block/  |./) three f', 4],
+    ['before /foo bar/ and  (yes sir)', 4],
+    ['before /foo  (bar)/ and (yes |/foo bar/|sir)', 4],
+    // prefix/suffix
+    ['one /optional reg/? three', 3],
+    ['one (optional /block/)? three', 3],
+    ['one !(optional two|!#Block)* three', 3],
+    ['one [(inside two)] three', 3],
+    // named-groups
+    ['i saw [<match>(the person|#Pronoun|tina turner)]', 3],
+    ['before [<w>(one two)] after', 3],
+    ['before [< word >/one two/] after', 3],
+    ['[#Copula (#Adverb|not)+?] (#Gerund|#PastTense)', 3],
+    ['[<num>#Value] [<currency>(mark|rand|won|rub|ore)] foo', 3],
+  ]
+  arr.forEach(a => {
+    let regs = nlp.parseMatch(a[0])
+    // let regs = parse(a[0])
+    t.equals(regs.length, a[1], a[0])
+  })
+  t.end()
+})

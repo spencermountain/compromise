@@ -55,6 +55,10 @@ const parseTime = function (doc, context) {
   let time = doc.match('(at|by|for|before|this)? #Time+')
   if (time.found) {
     doc.remove(time)
+    // '4pm on tuesday'
+    doc.remove('^sharp')
+    doc.remove('^on')
+    doc.remove('on the dot')
   }
   // get the main part of the time
   time = time.not('^(at|by|for|before|this)')

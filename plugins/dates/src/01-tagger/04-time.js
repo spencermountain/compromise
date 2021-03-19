@@ -29,6 +29,8 @@ const timeTagger = function (doc) {
   }
   // around four thirty
   doc.match('(at|around|near) [#Cardinal (thirty|fifteen) (am|pm)?]', 0).tag('Time', here)
+  // 4pm sharp
+  doc.match('#Time [(sharp|on the dot)]', 0).tag('Time', here)
   return doc
 }
 module.exports = timeTagger

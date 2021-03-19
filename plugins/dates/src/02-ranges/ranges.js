@@ -170,15 +170,17 @@ module.exports = [
       let time = m.groups('time')
       let to = m.groups('to')
       let end = parseDate(to, context)
-      let start = end.clone()
-      start.applyTime(time.text())
-      if (start && end) {
-        let obj = {
-          start: start,
-          end: end,
+      if (end) {
+        let start = end.clone()
+        start.applyTime(time.text())
+        if (start) {
+          let obj = {
+            start: start,
+            end: end,
+          }
+          obj = reverseMaybe(obj)
+          return obj
         }
-        obj = reverseMaybe(obj)
-        return obj
       }
       return null
     },
@@ -190,15 +192,17 @@ module.exports = [
       let from = m.groups('from')
       let to = m.groups('to')
       from = parseDate(from, context)
-      let end = from.clone()
-      end.applyTime(to.text())
-      if (from && end) {
-        let obj = {
-          start: from,
-          end: end,
+      if (from) {
+        let end = from.clone()
+        end.applyTime(to.text())
+        if (end) {
+          let obj = {
+            start: from,
+            end: end,
+          }
+          obj = reverseMaybe(obj)
+          return obj
         }
-        obj = reverseMaybe(obj)
-        return obj
       }
       return null
     },

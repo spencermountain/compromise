@@ -57,6 +57,7 @@ const parseDate = function (doc, context) {
   // console.log(`  rel:        ${rel || '-'}`)
   // console.log(`  section:    ${section || '-'}`)
   // console.log(`  time:       ${time || '-'}`)
+  // console.log(`  weekDay:    ${weekDay || '-'}`)
   // console.log(`  str:       '${doc.text()}'`)
   // console.log('  unit:     ', unit, '\n')
   // doc.debug()

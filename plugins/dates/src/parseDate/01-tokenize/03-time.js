@@ -15,6 +15,15 @@ const hardCoded = {
   midnight: '12:00am',
 }
 
+// choose ambiguous ampm
+const ampmChooser = function (s) {
+  let early = s.time('6:00am')
+  if (s.isBefore(early)) {
+    return s.ampm('pm')
+  }
+  return s
+}
+
 const halfPast = function (m, s) {
   let hour = m.match('#Cardinal$').text('reduced')
 
@@ -67,8 +76,12 @@ const parseTime = function (doc, context) {
     s = s.hour(m.text('reduced'))
     s = s.startOf('hour')
     if (s.isValid() && !s.isEqual(now)) {
-      let ampm = m.match('(am|pm)').text('reduced')
-      s = s.ampm(ampm)
+      let ampm = m.match('(am|pm)')
+      if (ampm.found) {
+        s = s.ampm(ampm.text('reduced'))
+      } else {
+        s = ampmChooser(s)
+      }
       return s.time()
     }
   }
@@ -78,6 +91,8 @@ const parseTime = function (doc, context) {
   if (m.found) {
     s = halfPast(m, s)
     if (s.isValid() && !s.isEqual(now)) {
+      // choose ambiguous ampm
+      s = ampmChooser(s)
       return s.time()
     }
   }
@@ -126,9 +141,14 @@ const parseTime = function (doc, context) {
   // 'at 4' -> '4'
   m = time.match('^#Cardinal$')
   if (m.found) {
-    s = s.hour(m.text('reduced'))
+    let str = m.text('reduced')
+    s = s.hour(str)
     s = s.startOf('hour')
     if (s.isValid() && !s.isEqual(now)) {
+      // choose ambiguous ampm
+      if (/(am|pm)/i.test(str) === false) {
+        s = ampmChooser(s)
+      }
       return s.time()
     }
   }
@@ -137,6 +157,10 @@ const parseTime = function (doc, context) {
   let str = time.text('reduced')
   s = s.time(str)
   if (s.isValid() && !s.isEqual(now)) {
+    // choose ambiguous ampm
+    if (/(am|pm)/i.test(str) === false) {
+      s = ampmChooser(s)
+    }
     return s.time()
   }
   // should we fallback to a dayStart default?

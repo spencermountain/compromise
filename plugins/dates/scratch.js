@@ -11,12 +11,18 @@ const context = {
   // today: '2021-03-02', //tuesday
   // today: '2016-03-05', //on friday
   // timezone: null,
-  dayStart: '10am',
-  dayEnd: '5pm',
+  // dayStart: '10am',
+  // dayEnd: '5pm',
+  // timezone: 'Asia/Shanghai',
+  // today: '2021-02-19', //friday
+  // dayStart: '8:00am',
+  // dayEnd: '8:00pm',
 }
 
 // let doc = nlp('june 5th') //.debug()
-let doc = nlp('middle of june') //.debug()
+// let doc = nlp('tuesday at 3:30') //.debug()
+// let doc = nlp('9am to 5pm feb 26th') //.debug()
+let doc = nlp('9am to 5am') //.debug()
 // let doc = nlp('next week') //.debug()
 
 let dates = doc.dates(context)

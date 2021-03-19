@@ -1,8 +1,8 @@
 const txt = require('./_sotu-text')
-const version = require('../../../package.json').version
+const version = require('../../package.json').version
 
 const paths = {}
-paths[version] = '../../../src'
+paths[version] = '../../src'
 // v12build: '../../../builds/compromise.min.js',
 
 function test(build) {

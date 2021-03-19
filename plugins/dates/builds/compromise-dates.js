@@ -1,4 +1,4 @@
-/* compromise-dates 1.5.5 MIT */
+/* compromise-dates 1.5.6 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -450,7 +450,9 @@
     } // around four thirty
 
 
-    doc.match('(at|around|near) [#Cardinal (thirty|fifteen) (am|pm)?]', 0).tag('Time', here$2);
+    doc.match('(at|around|near) [#Cardinal (thirty|fifteen) (am|pm)?]', 0).tag('Time', here$2); // 4pm sharp
+
+    doc.match('#Time [(sharp|on the dot)]', 0).tag('Time', here$2);
     return doc;
   };
 
@@ -6423,7 +6425,11 @@
     var time = doc.match('(at|by|for|before|this)? #Time+');
 
     if (time.found) {
-      doc.remove(time);
+      doc.remove(time); // '4pm on tuesday'
+
+      doc.remove('^sharp');
+      doc.remove('^on');
+      doc.remove('on the dot');
     } // get the main part of the time
 
 
@@ -7747,6 +7753,7 @@
     // console.log(`  rel:        ${rel || '-'}`)
     // console.log(`  section:    ${section || '-'}`)
     // console.log(`  time:       ${time || '-'}`)
+    // console.log(`  weekDay:    ${weekDay || '-'}`)
     // console.log(`  str:       '${doc.text()}'`)
     // console.log('  unit:     ', unit, '\n')
     // doc.debug()
@@ -8112,16 +8119,19 @@
       var time = m.groups('time');
       var to = m.groups('to');
       var end = parse_1$2(to, context);
-      var start = end.clone();
-      start.applyTime(time.text());
 
-      if (start && end) {
-        var obj = {
-          start: start,
-          end: end
-        };
-        obj = reverseMaybe(obj);
-        return obj;
+      if (end) {
+        var start = end.clone();
+        start.applyTime(time.text());
+
+        if (start) {
+          var obj = {
+            start: start,
+            end: end
+          };
+          obj = reverseMaybe(obj);
+          return obj;
+        }
       }
 
       return null;
@@ -8133,16 +8143,19 @@
       var from = m.groups('from');
       var to = m.groups('to');
       from = parse_1$2(from, context);
-      var end = from.clone();
-      end.applyTime(to.text());
 
-      if (from && end) {
-        var obj = {
-          start: from,
-          end: end
-        };
-        obj = reverseMaybe(obj);
-        return obj;
+      if (from) {
+        var end = from.clone();
+        end.applyTime(to.text());
+
+        if (end) {
+          var obj = {
+            start: from,
+            end: end
+          };
+          obj = reverseMaybe(obj);
+          return obj;
+        }
       }
 
       return null;

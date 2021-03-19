@@ -7,9 +7,9 @@
 //     [\!\[\^]*
 
 // match  'foo /yes/' and not 'foo/no/bar'
-const bySlashes = /(?:^|\s)([\!\[\^]*(?:<[^<]*>)?\/.*?[^\\\/]\/[\?\]\+\*\$~]*)(?:\s|$)/g
+const bySlashes = /(?:^|\s)([\!\[\^]*(?:<[^<]*>)?\/.*?[^\\\/]\/[\?\]\+\*\$~]*)(?:\s|$)/
 // match '(yes) but not foo(no)bar'
-const byParentheses = /(?:^|\s)([\!\[\^]*(?:<[^<]*>)?\(.*?[^\\\)]\)[\?\]\+\*\$~]*)(?:\s|$)/g
+const byParentheses = /([\!\[\^]*(?:<[^<]*>)?\([^\)]+[^\\\)]\)[\?\]\+\*\$~]*)(?:\s|$)/
 // okay
 const byWord = / /g
 
@@ -32,6 +32,10 @@ const parseBlocks = function (txt) {
   let res = []
   // parse by (blocks), next
   arr.forEach(str => {
+    if (isReg(str)) {
+      res.push(str)
+      return
+    }
     res = res.concat(str.split(byParentheses))
   })
   res = cleanUp(res)
@@ -51,4 +55,6 @@ const parseBlocks = function (txt) {
 }
 module.exports = parseBlocks
 
-// console.log(parseBlocks(`[<num>#Value] [<currency>(mark|rand|won|rub|ore)] foo`))
+// console.log('(one two) (upto) [<snooze_to>#Date+]'.split(byParentheses))
+// console.log(parseBlocks('(one|two) (in side) [<snooze>foo]'))
+// console.log(parseBlocks('(one|two) (in side) fl(atul)'))

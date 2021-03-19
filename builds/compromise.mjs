@@ -1,4 +1,4 @@
-/* compromise 13.10.3 MIT */
+/* compromise 13.10.4 MIT */
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
@@ -2591,9 +2591,9 @@ var _04PostProcess = postProcess$1;
 // prefixes: ! [ ^
 //     [\!\[\^]*
 // match  'foo /yes/' and not 'foo/no/bar'
-var bySlashes = /(?:^|\s)([\!\[\^]*(?:<[^<]*>)?\/.*?[^\\\/]\/[\?\]\+\*\$~]*)(?:\s|$)/g; // match '(yes) but not foo(no)bar'
+var bySlashes = /(?:^|\s)([\!\[\^]*(?:<[^<]*>)?\/.*?[^\\\/]\/[\?\]\+\*\$~]*)(?:\s|$)/; // match '(yes) but not foo(no)bar'
 
-var byParentheses = /(?:^|\s)([\!\[\^]*(?:<[^<]*>)?\(.*?[^\\\)]\)[\?\]\+\*\$~]*)(?:\s|$)/g; // okay
+var byParentheses = /([\!\[\^]*(?:<[^<]*>)?\([^\)]+[^\\\)]\)[\?\]\+\*\$~]*)(?:\s|$)/; // okay
 
 var byWord = / /g;
 
@@ -2621,6 +2621,11 @@ var parseBlocks = function parseBlocks(txt) {
   var res = []; // parse by (blocks), next
 
   arr.forEach(function (str) {
+    if (isReg(str)) {
+      res.push(str);
+      return;
+    }
+
     res = res.concat(str.split(byParentheses));
   });
   res = cleanUp(res); // split by spaces, now
@@ -2639,7 +2644,7 @@ var parseBlocks = function parseBlocks(txt) {
   return _final;
 };
 
-var _01ParseBlocks = parseBlocks; // console.log(parseBlocks(`[<num>#Value] [<currency>(mark|rand|won|rub|ore)] foo`))
+var _01ParseBlocks = parseBlocks; // console.log('(one two) (upto) [<snooze_to>#Date+]'.split(byParentheses))
 
 /* break-down a match expression into this:
 {
@@ -3855,7 +3860,7 @@ var fromJSON = function fromJSON(json, world) {
 
 var fromJSON_1 = fromJSON;
 
-var _version = '13.10.3';
+var _version = '13.10.4';
 
 var entity = ['Person', 'Place', 'Organization'];
 var nouns$1 = {

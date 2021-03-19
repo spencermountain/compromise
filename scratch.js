@@ -1,22 +1,29 @@
 const nlp = require('./src/index')
-nlp.extend(require('./plugins/numbers/src'))
-// nlp.extend(require('./plugins/typeahead/src'))
+// nlp.extend(require('./plugins/numbers/src'))
 // nlp.extend(require('./plugins/dates/src'))
-// nlp.extend(require('./plugins/sentences/src'))
-// nlp.verbose(true)
-// nlp.typeahead({ march: 'Date' }, { min: 1, safe: false })
-// let str =
-//   '/^(?=d)(?:(?:31(?!.(?:0?[2469]|11))|(?:30|29)(?!.0?2)|29(?=.0?2.(?:(?:(?:1[6-9]|[2-9]d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00)))(?:\x20|$))|(?:2[0-8]|1d|0?[1-9]))([-./])(?:1[012]|0?[1-9])\1(?:1[6-9]|[2-9]d)?dd(?:(?=\x20d)\x20|$))?(((0?[1-9]|1[012])(:[0-5]d){0,2}(\x20[AP]M))|([01]d|2[0-3])(:[0-5]d){1,2})?$/'
-// let r = new RegExp(str)
-// // console.log(r)
-// let res = nlp.parseMatch(`start (one|two|three four)? end`)
-// console.log(res)
+nlp.extend(require('./plugins/match-runner/src'))
+const text = require('/Users/spencer/mountain/compromise/scripts/perf/flame/_sotu-text.js')
 
-// let doc = nlp.tokenize('16 marc')
-// doc.match()
+// let list = [
+//   // ==== Holiday ====
+//   { match: '#Holiday (day|eve)', tag: 'Holiday', reason: 'holiday-day' }, // the captain who
 
-// const doc = nlp('i was walking')
-// const m = doc.normalize({
-//   verbs: true,
-// })
-// m.debug()
+//   // ==== WeekDay ====
+//   // sun the 5th
+//   { match: '[sun] the #Ordinal', tag: 'WeekDay', reason: 'sun-the-5th' },
+//   //sun feb 2
+//   { match: '[sun] #Date', group: 0, tag: 'WeekDay', reason: 'sun-feb' },
+// ]
+
+// let doc = nlp('no one tunes into their 2nd favourite no-radio station. no lyin!')
+// doc.matchRunner(list)
+// doc.debug()
+// nlp(text)
+
+// const reg = /(?:^|\s)([\!\[\^]*(?:<[^<]*>)?\([^\)]+[^\\\)]\)[\?\]\+\*\$~]*)(?:\s|$)/g
+
+// let str = '(one two) (upto) snooz(et)oDate'
+// console.log(str.split(/(\(.*?\))/))
+// console.log(str.split(/(?:^|\s)([\!\[\^]*\(.*?[^\\\)]\)[\?\]\+\*\$~]*)(?:\s|$)/))
+// console.log(str.split(/(?:^|\s)([\!\[\^]*(?:<[^<]*>)?\([^\)]+[^\\\)]\)[\?\]\+\*\$~]*)(?:\s|$)/))
+// console.log(nlp.parseMatch('(snooze|wait|delay|punt|later|sleep) (up to) [<snooze_to>#Date+]'))

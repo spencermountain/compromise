@@ -18,4 +18,5 @@ const fetch = function (url) {
       })
   })
 }
+
 module.exports = fetch

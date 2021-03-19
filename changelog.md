@@ -10,7 +10,10 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 
 <!-- #### [Unreleased] 
 -->
-
+#### 13.10.4  [March 2021]
+- **[fix]** - match syntax tokenization fix
+- **[change]** - improved performance monitoring
+  
 #### 13.10.3  [March 2021]
 - **[fix]** - support complicated regular-expressions in match syntax
 - improved performance testing

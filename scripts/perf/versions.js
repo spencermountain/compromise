@@ -40,7 +40,7 @@ let matches = [
 let nlps = versions.map(version => {
   return require('compromise' + version)
 })
-nlps.push(require('../../..'))
+nlps.push(require('../../types'))
 
 const testOne = function (nlp, texts) {
   let begin = new Date()

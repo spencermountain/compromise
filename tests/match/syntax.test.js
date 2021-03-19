@@ -67,6 +67,10 @@ test('regex tokenization', function (t) {
     ['before [< word >/one two/] after', 3],
     ['[#Copula (#Adverb|not)+?] (#Gerund|#PastTense)', 3],
     ['[<num>#Value] [<currency>(mark|rand|won|rub|ore)] foo', 3],
+    ['(snooze|wait|delay|punt|later|sleep) (up to) [<snooze_to>#Date+]', 3],
+    ['(snooze sleep) (up to) [<snooze_to>#Date+]?', 3],
+    ['(snooze sleep) (up|to) [<snooze_to>#Date+]? (fourth)?', 4],
+    // ['/snooze sleep/ /up to/ [<snooze_to>#Date+]?', 3], //known issue
   ]
   arr.forEach(a => {
     let regs = nlp.parseMatch(a[0])

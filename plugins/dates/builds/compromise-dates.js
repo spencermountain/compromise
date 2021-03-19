@@ -1,4 +1,4 @@
-/* compromise-dates 1.5.4 MIT */
+/* compromise-dates 1.5.5 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -6376,6 +6376,16 @@
     night: '8:00pm',
     eod: '10:00pm',
     midnight: '12:00am'
+  }; // choose ambiguous ampm
+
+  var ampmChooser = function ampmChooser(s) {
+    var early = s.time('6:00am');
+
+    if (s.isBefore(early)) {
+      return s.ampm('pm');
+    }
+
+    return s;
   };
 
   var halfPast = function halfPast(m, s) {
@@ -6438,8 +6448,14 @@
       s = s.startOf('hour');
 
       if (s.isValid() && !s.isEqual(now)) {
-        var ampm = m.match('(am|pm)').text('reduced');
-        s = s.ampm(ampm);
+        var ampm = m.match('(am|pm)');
+
+        if (ampm.found) {
+          s = s.ampm(ampm.text('reduced'));
+        } else {
+          s = ampmChooser(s);
+        }
+
         return s.time();
       }
     } // 'quarter to two'
@@ -6451,6 +6467,8 @@
       s = halfPast(m, s);
 
       if (s.isValid() && !s.isEqual(now)) {
+        // choose ambiguous ampm
+        s = ampmChooser(s);
         return s.time();
       }
     } // '4 in the evening'
@@ -6515,10 +6533,17 @@
     m = time.match('^#Cardinal$');
 
     if (m.found) {
-      s = s.hour(m.text('reduced'));
+      var _str3 = m.text('reduced');
+
+      s = s.hour(_str3);
       s = s.startOf('hour');
 
       if (s.isValid() && !s.isEqual(now)) {
+        // choose ambiguous ampm
+        if (/(am|pm)/i.test(_str3) === false) {
+          s = ampmChooser(s);
+        }
+
         return s.time();
       }
     } // parse random a time like '4:54pm'
@@ -6528,6 +6553,11 @@
     s = s.time(str);
 
     if (s.isValid() && !s.isEqual(now)) {
+      // choose ambiguous ampm
+      if (/(am|pm)/i.test(str) === false) {
+        s = ampmChooser(s);
+      }
+
       return s.time();
     } // should we fallback to a dayStart default?
 
@@ -7901,6 +7931,19 @@
 
   var intervals = parseIntervals;
 
+  var reverseMaybe = function reverseMaybe(obj) {
+    var start = obj.start;
+    var end = obj.end;
+
+    if (start.d.isAfter(end.d)) {
+      var tmp = start;
+      obj.start = end;
+      obj.end = tmp;
+    }
+
+    return obj;
+  };
+
   var punt = function punt(unit, context) {
     unit = unit.applyShift(context.punt);
     return unit;
@@ -7945,18 +7988,13 @@
           end = end.append(res.year);
         }
 
-        end = parse_1$2(end, context); // reverse the order?
-
-        if (start.d.isAfter(end.d)) {
-          var tmp = start;
-          start = end;
-          end = tmp;
-        }
-
-        return {
+        end = parse_1$2(end, context);
+        var obj = {
           start: start,
           end: end.end()
         };
+        obj = reverseMaybe(obj);
+        return obj;
       }
 
       return null;
@@ -8056,17 +8094,55 @@
       to.d = to.d.year(year);
 
       if (from && to) {
-        // reverse the order?
-        if (from.d.isAfter(to.d)) {
-          var tmp = from;
-          from = to;
-          to = tmp;
-        }
-
-        return {
+        var obj = {
           start: from,
           end: to.end()
+        }; // reverse the order?
+
+        obj = reverseMaybe(obj);
+        return obj;
+      }
+
+      return null;
+    }
+  }, {
+    // '3pm to 4pm january 5th'
+    match: '^from? [<time>#Time+] (to|until|upto|through|thru|and) [<to>#Time+ #Date+]',
+    parse: function parse(m, context) {
+      var time = m.groups('time');
+      var to = m.groups('to');
+      var end = parse_1$2(to, context);
+      var start = end.clone();
+      start.applyTime(time.text());
+
+      if (start && end) {
+        var obj = {
+          start: start,
+          end: end
         };
+        obj = reverseMaybe(obj);
+        return obj;
+      }
+
+      return null;
+    }
+  }, {
+    // 'january from 3pm to 4pm'
+    match: '^from? [<from>*] (to|until|upto|through|thru|and) [<to>#Time+]',
+    parse: function parse(m, context) {
+      var from = m.groups('from');
+      var to = m.groups('to');
+      from = parse_1$2(from, context);
+      var end = from.clone();
+      end.applyTime(to.text());
+
+      if (from && end) {
+        var obj = {
+          start: from,
+          end: end
+        };
+        obj = reverseMaybe(obj);
+        return obj;
       }
 
       return null;
@@ -8081,10 +8157,12 @@
       to = parse_1$2(to, context);
 
       if (from && to) {
-        return {
+        var obj = {
           start: from,
           end: to.end()
         };
+        obj = reverseMaybe(obj);
+        return obj;
       }
 
       return null;

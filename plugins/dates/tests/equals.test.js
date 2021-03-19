@@ -54,6 +54,16 @@ const arr = [
   [`next q2`, `q2 2021`],
   [`next q3`, `q3 2021`],
   [`next q4`, `q4 2021`],
+  [`tuesday at 3`, `tuesday 3:00pm`],
+  [`tuesday at 4:00`, `tuesday 4:00pm`],
+  [`5:30`, `today at 5:30pm`],
+  [`tuesday at 3am`, `tuesday 3:00am`],
+  [`5 oclock`, `today at 5:00pm`],
+  [`5 oclock am`, `today at 5:00am`],
+  [`10 oclock`, `today at 10:00am`],
+  [`11:30`, `today at 11:30am`],
+  [`11:30pm`, `today at 11:30pm`],
+  [`tuesday at 1`, `tuesday at 1pm`],
 ]
 
 test('date-variety', function (t) {

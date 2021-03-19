@@ -1,6 +1,17 @@
 const parseDate = require('../parseDate/parse')
 const Unit = require('../parseDate/units/Unit')
 
+const reverseMaybe = function (obj) {
+  let start = obj.start
+  let end = obj.end
+  if (start.d.isAfter(end.d)) {
+    let tmp = start
+    obj.start = end
+    obj.end = tmp
+  }
+  return obj
+}
+
 const punt = function (unit, context) {
   unit = unit.applyShift(context.punt)
   return unit
@@ -42,16 +53,12 @@ module.exports = [
           end = end.append(res.year)
         }
         end = parseDate(end, context)
-        // reverse the order?
-        if (start.d.isAfter(end.d)) {
-          let tmp = start
-          start = end
-          end = tmp
-        }
-        return {
+        let obj = {
           start: start,
           end: end.end(),
         }
+        obj = reverseMaybe(obj)
+        return obj
       }
       return null
     },
@@ -144,21 +151,58 @@ module.exports = [
       from.d = from.d.year(year)
       to.d = to.d.year(year)
       if (from && to) {
-        // reverse the order?
-        if (from.d.isAfter(to.d)) {
-          let tmp = from
-          from = to
-          to = tmp
-        }
-        return {
+        let obj = {
           start: from,
           end: to.end(),
         }
+        // reverse the order?
+        obj = reverseMaybe(obj)
+        return obj
       }
       return null
     },
   },
 
+  {
+    // '3pm to 4pm january 5th'
+    match: '^from? [<time>#Time+] (to|until|upto|through|thru|and) [<to>#Time+ #Date+]',
+    parse: (m, context) => {
+      let time = m.groups('time')
+      let to = m.groups('to')
+      let end = parseDate(to, context)
+      let start = end.clone()
+      start.applyTime(time.text())
+      if (start && end) {
+        let obj = {
+          start: start,
+          end: end,
+        }
+        obj = reverseMaybe(obj)
+        return obj
+      }
+      return null
+    },
+  },
+  {
+    // 'january from 3pm to 4pm'
+    match: '^from? [<from>*] (to|until|upto|through|thru|and) [<to>#Time+]',
+    parse: (m, context) => {
+      let from = m.groups('from')
+      let to = m.groups('to')
+      from = parseDate(from, context)
+      let end = from.clone()
+      end.applyTime(to.text())
+      if (from && end) {
+        let obj = {
+          start: from,
+          end: end,
+        }
+        obj = reverseMaybe(obj)
+        return obj
+      }
+      return null
+    },
+  },
   {
     // 'from A to B'
     match: 'from? [<from>*] (to|until|upto|through|thru|and) [<to>*]',
@@ -168,10 +212,12 @@ module.exports = [
       from = parseDate(from, context)
       to = parseDate(to, context)
       if (from && to) {
-        return {
+        let obj = {
           start: from,
           end: to.end(),
         }
+        obj = reverseMaybe(obj)
+        return obj
       }
       return null
     },

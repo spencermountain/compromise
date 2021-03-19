@@ -2,6 +2,11 @@
 <!-- #### [Unreleased] 
 
 -->
+### 1.5.5 [March 2021]
+- **[change]** -  use more-intuitive choices for ampm 
+- **[change]** -  support more time-range formats
+- **[change]** -  reverse upsidedown date-ranges
+  
 ### 1.5.3 [March 2021]
 - **[change]** - move Timezone tag to main lib
 - **[change]** - support timezone-abbrevations

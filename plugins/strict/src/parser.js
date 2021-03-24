@@ -22,13 +22,13 @@ const {
 
 const StartOf = createToken({ name: 'StartOf', pattern: /\^/ })
 const EndOf = createToken({ name: 'EndOf', pattern: /\$/ })
-const Tag = createToken({ name: 'Tag', pattern: /#([_-\w]|\\.)+/ })
+const Tag = createToken({ name: 'Tag', pattern: /#([-\w]|\\.)+/ })
 const EscapedWord = createToken({
   name: 'EscapedWord',
-  pattern: /\\[#@]([_-\w]|\\.)+/,
+  pattern: /\\[#@]([-\w]|\\.)+/,
 })
-const Word = createToken({ name: 'Word', pattern: /([_-\w]|\\.)+/ })
-const Method = createToken({ name: 'Method', pattern: /@[_-\w]+/ })
+const Word = createToken({ name: 'Word', pattern: /([-\w]|\\.)+/ })
+const Method = createToken({ name: 'Method', pattern: /@[-\w]+/ })
 const Question = createToken({
   name: 'Question',
   pattern: /\?/,

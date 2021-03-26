@@ -30,12 +30,15 @@ const timeTagger = function (doc) {
     doc.match('(in|for|by|near|at) #Timezone').tag('Timezone', here)
     // 4pm sharp
     doc.match('#Time [(sharp|on the dot)]', 0).tag('Time', here)
+    let m = doc.if('#NumberRange')
     // 3-4 on tuesday
-    doc.match('[#NumberRange+] (on|near|by|at)? #WeekDay', 0).tag('Time', '3-4-tuesday')
+    m.match('[#NumberRange+] (on|near|by|at)? #WeekDay', 0).tag('Time', '3-4-tuesday')
     // 3-4 on march 2nd
-    doc.match('[#NumberRange+] (on|near|by|at)? #Month #Value', 0).tag('Time', '3-4-mar-3')
+    m.match('[#NumberRange+] (on|near|by|at)? #Month #Value', 0).tag('Time', '3-4-mar-3')
     // 3-4pm
-    doc.match('[#NumberRange] to (#NumberRange && #Time)', 0).tag('Time', '3-4pm')
+    m.match('[#NumberRange] to (#NumberRange && #Time)', 0).tag('Time', '3-4pm')
+    // 3pm-5
+    m.match('(#NumberRange && #Time) to [#NumberRange]', 0).tag('Time', '3pm-4')
   }
   // around four thirty
   doc.match('(at|around|near) [#Cardinal (thirty|fifteen) (am|pm)?]', 0).tag('Time', here)

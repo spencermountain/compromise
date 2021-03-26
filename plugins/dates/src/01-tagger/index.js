@@ -10,9 +10,22 @@ const methods = [
   require('./08-fixup'),
 ]
 
+// normalizations to run before tagger
+const normalize = function (doc) {
+  // turn '20mins' into '20 mins'
+  if (typeof doc.numbers === 'function') {
+    doc.numbers().normalize()
+  } else {
+    console.warn(
+      `Warning: compromise-numbers plugin is not loaded.\n   You should load this plugin \n     - https://bit.ly/3t8RfFG`
+    )
+  }
+  return doc
+}
+
 // run each of the taggers
 const tagDate = function (doc) {
-  // doc = normalize(doc)
+  doc = normalize(doc)
   // run taggers
   methods.forEach((fn) => fn(doc))
   return doc

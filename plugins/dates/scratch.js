@@ -23,16 +23,16 @@ const context = {
 // let doc = nlp('tuesday at 3:30') //.debug()
 // let doc = nlp('9am to 5pm feb 26th') //.debug()
 // let doc = nlp('3:00 to 4pm on tuesday') //.debug()
-let doc = nlp('4pm on the dot on tuesday').debug()
+let doc = nlp('2020') //.debug()
 // let doc = nlp('next week') //.debug()
 
 let dates = doc.dates(context)
-dates = dates.get()
-console.log(dates)
-dates.forEach((date) => {
-  console.log('start: ', fmt(date.start))
-  console.log('  end: ', fmt(date.end))
-})
+dates = dates.json()
+console.log(dates[0])
+// dates.forEach((date) => {
+//   console.log('start: ', fmt(date.start))
+//   console.log('  end: ', fmt(date.end))
+// })
 
 // ### hmmm
 // let doc = nlp('in the next three years') //.debug()

@@ -36,6 +36,7 @@ const parseRange = function (doc, context) {
     res = {
       start: unit,
       end: end,
+      unit: unit.unit,
     }
   }
   let combined = Object.assign({}, interval, res)

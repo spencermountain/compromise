@@ -2,6 +2,11 @@
 <!-- #### [Unreleased] 
 
 -->
+### 2.0.0 [March 2021]
+- **[breaking]** - flatten json date results
+- **[breaking]** - remove duration from .get results
+- **[new]** - return unit information
+
 ### 1.5.5 [March 2021]
 - **[change]** -  use more-intuitive choices for ampm 
 - **[change]** -  support more time-range formats

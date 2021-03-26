@@ -80,8 +80,7 @@ test('end dates', (t) => {
     tests[k].tests.forEach((a) => {
       let want = spacetime(a[1], context.timezone).endOf('day').iso()
       let json = nlp(a[0]).dates(context).json()[0]
-      let end = json.date.end
-      t.equal(end, want, `[${today}] ${a[0]}`)
+      t.equal(json.end, want, `[${today}] ${a[0]}`)
     })
   })
   t.end()

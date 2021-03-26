@@ -2,6 +2,19 @@ const parse = require('./parse')
 const spacetime = require('spacetime')
 const abbrevs = require('./data/_abbrevs')
 
+const addDuration = function (start, end) {
+  let duration = {}
+  if (start && end) {
+    start = spacetime(start)
+    end = spacetime(end)
+    duration = start.diff(end)
+    // we don't need these
+    delete duration.milliseconds
+    delete duration.seconds
+  }
+  return duration
+}
+
 module.exports = {
   /** easy getter for the start/end dates */
   get: function (options) {
@@ -27,7 +40,10 @@ module.exports = {
     this.forEach((doc) => {
       let json = doc.json(options)[0]
       let found = parse(doc, this.context)
-      json.date = found
+      json = Object.assign(json, found)
+      // json.date = found
+      // add duration
+      json.duration = addDuration(json.start, json.end)
       res.push(json)
     })
     if (n !== null) {

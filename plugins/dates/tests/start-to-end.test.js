@@ -57,9 +57,7 @@ test('date durations', (t) => {
     let today = obj.today.join('-')
     obj.tests.forEach((a) => {
       let json = nlp(a[0]).dates(context).json()[0] || {}
-      let date = json.date || {}
-      date.duration = date.duration || {}
-      t.equal(date.duration.days, a[1] - 1, `[${today}] ${a[0]}`)
+      t.equal(json.duration.days, a[1] - 1, `[${today}] ${a[0]}`)
     })
   })
   t.end()

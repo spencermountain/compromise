@@ -34,8 +34,7 @@ test('chronic-tests-one', (t) => {
       today: [2006, 8, 24],
     }
     let found = nlp(str).dates(context).json()[0] || {}
-    found.date = found.date || {}
-    return fmt(found.date.start)
+    return fmt(found.start)
   }
 
   t.equal(nlpDate('2012-08-02T13:00:00'), mk(2012, 8, 2, 13))
@@ -157,8 +156,7 @@ test('chronic-tests-two', (t) => {
       today: [2006, 7, 16],
     }
     let found = nlp(str).dates(context).json()[0] || {}
-    found.date = found.date || {}
-    return fmt(found.date.start)
+    return fmt(found.start)
   }
   // t.equal(nlpDate('9am on Saturday'), mk(2006, 8, 19, 9))
   t.equal(nlpDate('on Tuesday'), mk(2006, 8, 22, 12))

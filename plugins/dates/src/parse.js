@@ -3,17 +3,6 @@ const parseRanges = require('./02-ranges')
 const normalize = require('./normalize')
 const generate = require('./generate')
 
-const addDuration = function (start, end) {
-  let duration = {}
-  if (start && end) {
-    duration = start.d.diff(end.d)
-    // we don't need these
-    delete duration.milliseconds
-    delete duration.seconds
-  }
-  return duration
-}
-
 const toISO = function (unit) {
   if (unit && unit.d) {
     return unit.d.format('iso')
@@ -30,8 +19,6 @@ const getDate = function (doc, context) {
   doc = normalize(doc)
   //interpret 'between [A] and [B]'...
   let result = parseRanges(doc, context)
-  // add duration
-  result.duration = addDuration(result.start, result.end)
   // format as iso
   result.start = toISO(result.start)
   result.end = toISO(result.end)

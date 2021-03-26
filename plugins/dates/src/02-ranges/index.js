@@ -20,7 +20,9 @@ const parseRange = function (doc, context) {
       }
       let res = fmt.parse(m, context)
       if (res !== null) {
-        // console.log(fmt.match)
+        if (doc.world.isVerbose() === 'date') {
+          console.log(`  ---[${fmt.match}]---`)
+        }
         return Object.assign({}, interval, res)
       }
     }
@@ -32,11 +34,14 @@ const parseRange = function (doc, context) {
   }
   let unit = parseDate(doc, context)
   if (unit) {
+    if (doc.world.isVerbose() === 'date') {
+      console.log(`  --[no-range]--`)
+    }
     let end = unit.clone().end()
     res = {
       start: unit,
       end: end,
-      unit: unit.unit,
+      unit: unit.setTime ? 'time' : unit.unit,
     }
   }
   let combined = Object.assign({}, interval, res)

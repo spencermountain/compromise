@@ -1,10 +1,11 @@
 const nlp = require('../../src/index')
-const spacetime = require('spacetime')
+// const spacetime = require('spacetime')
 // nlp.verbose(true)
 nlp.extend(require('../../plugins/numbers/src'))
 nlp.extend(require('../../plugins/dates/src'))
+nlp.verbose('date')
 
-const fmt = (iso) => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
+// const fmt = (iso) => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 
 const context = {
   // today: '2021-03-01', //monday
@@ -26,7 +27,7 @@ const context = {
 // let doc = nlp('3:00 to 4pm on tuesday') //.debug()
 let doc = nlp('next tuesday at 3pm') //.debug()
 // let doc = nlp('next week') //.debug()
-
+// console.log(doc.world.isVerbose())
 let dates = doc.dates(context)
 dates = dates.json()
 console.log(dates[0])

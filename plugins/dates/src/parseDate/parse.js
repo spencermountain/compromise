@@ -51,18 +51,19 @@ const parseDate = function (doc, context) {
   // 'this june 2nd'
   unit = unit || parse.explicit(doc, context)
   // debugging
-  // console.log('\n\n=-=-=-=-=-=-=-=-=-=-=-=Date-=-=-=-=-=-=-=-=-=-=-=-=-\n')
-  // console.log(`  shift:      ${JSON.stringify(shift)}`)
-  // console.log(`  counter:   `, counter)
-  // console.log(`  rel:        ${rel || '-'}`)
-  // console.log(`  section:    ${section || '-'}`)
-  // console.log(`  time:       ${time || '-'}`)
-  // console.log(`  weekDay:    ${weekDay || '-'}`)
-  // console.log(`  str:       '${doc.text()}'`)
-  // console.log('  unit:     ', unit, '\n')
-  // doc.debug()
-  // console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n')
-
+  if (doc.world.isVerbose() === 'date') {
+    console.log('\n\n=-=-=-=-=-=-=-=-=-=-=-=Date-=-=-=-=-=-=-=-=-=-=-=-=-')
+    console.log(`  shift:      ${JSON.stringify(shift)}`)
+    console.log(`  counter:   `, counter)
+    console.log(`  rel:        ${rel || '-'}`)
+    console.log(`  section:    ${section || '-'}`)
+    console.log(`  time:       ${time || '-'}`)
+    console.log(`  weekDay:    ${weekDay || '-'}`)
+    console.log(`  str:       '${doc.text()}'`)
+    console.log('  unit:     ', unit)
+    console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n')
+    // doc.debug()
+  }
   if (!unit) {
     return null
   }
@@ -87,6 +88,7 @@ const parseDate = function (doc, context) {
   // at 5:40pm
   if (time) {
     unit.applyTime(time)
+    // unit = new Minute(unit.d, null, unit.context)
   }
   // apply counter
   if (counter && counter.unit) {

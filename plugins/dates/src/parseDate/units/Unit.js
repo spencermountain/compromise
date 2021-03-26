@@ -3,6 +3,7 @@ const spacetime = require('spacetime')
 class Unit {
   constructor(input, unit, context) {
     this.unit = unit || 'day'
+    this.setTime = false
     context = context || {}
     let today = {}
     if (context.today) {
@@ -14,11 +15,6 @@ class Unit {
     }
     // set it to the beginning of the given unit
     let d = spacetime(input, context.timezone, { today: today })
-
-    // set to beginning?
-    // if (d.isValid() && keepTime !== true) {
-    //   d = d.startOf(this.unit)
-    // }
     Object.defineProperty(this, 'd', {
       enumerable: false,
       writable: true,
@@ -53,6 +49,7 @@ class Unit {
     } else {
       this.d = this.d.startOf('day') //zero-out time
     }
+    this.setTime = true
     return this
   }
   applyWeekDay(day) {

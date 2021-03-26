@@ -11,6 +11,7 @@ const context = {
   // today: '2021-03-01', //monday
   // today: '2021-03-02', //tuesday
   // today: '2016-03-05', //on friday
+  today: '2021-02-19',
   // timezone: null,
   // dayStart: '10am',
   // today: [2016, 1, 11],
@@ -25,7 +26,7 @@ const context = {
 // let doc = nlp('tuesday at 3:30') //.debug()
 // let doc = nlp('9am to 5pm feb 26th') //.debug()
 // let doc = nlp('3:00 to 4pm on tuesday') //.debug()
-let doc = nlp('3-4 on tuesday') //.debug()
+let doc = nlp('3-4pm').debug()
 // let doc = nlp('next week') //.debug()
 // console.log(doc.world.isVerbose())
 let dates = doc.dates(context)

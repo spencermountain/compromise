@@ -1,8 +1,9 @@
 const nlp = require('./src/index')
 // nlp.extend(require('./plugins/numbers/src'))
-// nlp.extend(require('./plugins/dates/src'))
-nlp.extend(require('./plugins/match-runner/src'))
-const text = require('/Users/spencer/mountain/compromise/scripts/perf/flame/_sotu-text.js')
+nlp.extend(require('./plugins/dates/src'))
+// nlp.extend(require('./plugins/match-runner/src'))
+// const text = require('/Users/spencer/mountain/compromise/scripts/perf/flame/_sotu-text.js')
+// nlp.verbose()
 
 // let list = [
 //   // ==== Holiday ====
@@ -15,7 +16,8 @@ const text = require('/Users/spencer/mountain/compromise/scripts/perf/flame/_sot
 //   { match: '[sun] #Date', group: 0, tag: 'WeekDay', reason: 'sun-feb' },
 // ]
 
-// let doc = nlp('no one tunes into their 2nd favourite no-radio station. no lyin!')
+// let doc = nlp('3-4').debug()
+let doc = nlp('3-4pm').debug()
 // doc.matchRunner(list)
 // doc.debug()
 // nlp(text)
@@ -27,3 +29,9 @@ const text = require('/Users/spencer/mountain/compromise/scripts/perf/flame/_sot
 // console.log(str.split(/(?:^|\s)([\!\[\^]*\(.*?[^\\\)]\)[\?\]\+\*\$~]*)(?:\s|$)/))
 // console.log(str.split(/(?:^|\s)([\!\[\^]*(?:<[^<]*>)?\([^\)]+[^\\\)]\)[\?\]\+\*\$~]*)(?:\s|$)/))
 // console.log(nlp.parseMatch('(snooze|wait|delay|punt|later|sleep) (up to) [<snooze_to>#Date+]'))
+
+// const hasLetter = /[a-z0-9\u00C0-\u00FF\u00a9\u00ae\u2000-\u3300\ud000-\udfff]/i
+// const hasLetter = /[\p{Letter}\d]/u
+// const hasLetter = /\p{Word}/u
+// let str = ' ę'
+// console.log(hasLetter.test(str))

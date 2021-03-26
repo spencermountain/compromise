@@ -16,7 +16,7 @@ const context = {
   // dayStart: '10am',
   // today: [2016, 1, 11],
   // dayEnd: '5pm',
-  // timezone: 'Asia/Shanghai',
+  timezone: null, //'Asia/Shanghai',
   // today: '2021-02-19', //friday
   // dayStart: '8:00am',
   // dayEnd: '8:00pm',
@@ -26,7 +26,8 @@ const context = {
 // let doc = nlp('tuesday at 3:30') //.debug()
 // let doc = nlp('9am to 5pm feb 26th') //.debug()
 // let doc = nlp('3:00 to 4pm on tuesday') //.debug()
-let doc = nlp('at five past').debug()
+// let doc = nlp('feb 28').debug()
+let doc = nlp('at five past ten').debug()
 // let doc = nlp('30mins').debug()
 // console.log(doc.durations().get())
 // let doc = nlp('next week') //.debug()

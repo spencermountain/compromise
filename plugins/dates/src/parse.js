@@ -13,7 +13,6 @@ const toISO = function (unit) {
 const getDate = function (doc, context) {
   // validate context a bit
   context = context || {}
-  context.timezone = context.timezone || 'ETC/UTC'
   context.today = spacetime(context.today || null, context.timezone)
   //turn 'five' into 5..
   doc = normalize(doc)

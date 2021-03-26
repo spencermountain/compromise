@@ -16,7 +16,7 @@ const timeTagger = function (doc) {
     // quarter to seven (not march 5 to 7)
     doc.match('1? (half|quarter|25|15|10|5) (past|after|to) #Cardinal').tag('Time', here)
     // ten to seven
-    doc.match('(5|10|15|20|five|ten|fifteen|20) (to|after|past) [<hour>#Cardinal]').tag('Time', here) //add check for 1 to 1 etc.
+    doc.match('(5|10|15|20|five|ten|fifteen|20) (to|after|past) #Cardinal').tag('Time', here) //add check for 1 to 1 etc.
   }
   //timezone
   if (doc.has('#Date')) {

@@ -25,9 +25,9 @@ const ampmChooser = function (s) {
 }
 
 const halfPast = function (m, s) {
-  let hour = m.match('#Cardinal$').text('reduced')
-
-  let term = m.match('(half|quarter|25|15|10|5)')
+  let hour = m.match('#Cardinal$')
+  let term = m.not(hour).match('(half|quarter|25|15|10|5)')
+  hour = hour.text('reduced')
   let mins = term.text('reduced')
   if (term.has('half')) {
     mins = '30'

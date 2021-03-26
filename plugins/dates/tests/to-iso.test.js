@@ -47,6 +47,7 @@ test('date-parse :', function (t) {
     ['5th hour of March 3rd 2002', '2002-03-03T04:00:00.000Z'],
     ['last hour of March 2021', '2021-03-31T23:00:00.000Z'],
     ['may to august 1996', '1996-05-01T00:00:00.000Z'],
+    ['half past 4', '2019-02-02T16:30:00.000Z'],
     // ['august to may 1996', '1996-05-01T00:00:00.000Z'],
   ]
   arr.forEach(function (a) {

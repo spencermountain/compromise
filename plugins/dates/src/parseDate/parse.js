@@ -52,7 +52,7 @@ const parseDate = function (doc, context) {
   unit = unit || parse.explicit(doc, context)
   // debugging
   if (doc.world.isVerbose() === 'date') {
-    console.log('\n\n=-=-=-=-=-=-=-=-=-=-=-=Date-=-=-=-=-=-=-=-=-=-=-=-=-')
+    console.log('\n\n=-=-=-=-=-=-=-=-=-=-=Date-=-=-=-=-=-=-=-=-')
     console.log(`  shift:      ${JSON.stringify(shift)}`)
     console.log(`  counter:   `, counter)
     console.log(`  rel:        ${rel || '-'}`)
@@ -61,7 +61,7 @@ const parseDate = function (doc, context) {
     console.log(`  weekDay:    ${weekDay || '-'}`)
     console.log(`  str:       '${doc.text()}'`)
     console.log('  unit:     ', unit)
-    console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n')
+    console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n')
     // doc.debug()
   }
   if (!unit) {

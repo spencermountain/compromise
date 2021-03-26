@@ -11,7 +11,7 @@ const context = {
   // today: '2021-03-01', //monday
   // today: '2021-03-02', //tuesday
   // today: '2016-03-05', //on friday
-  today: '2021-02-19',
+  // today: '2021-02-19',
   // timezone: null,
   // dayStart: '10am',
   // today: [2016, 1, 11],
@@ -27,7 +27,7 @@ const context = {
 // let doc = nlp('9am to 5pm feb 26th') //.debug()
 // let doc = nlp('3:00 to 4pm on tuesday') //.debug()
 // let doc = nlp('feb 28').debug()
-let doc = nlp('at five past ten').debug()
+let doc = nlp('jan 1 2020 to dec 31 2020').debug()
 // let doc = nlp('30mins').debug()
 // console.log(doc.durations().get())
 // let doc = nlp('next week') //.debug()

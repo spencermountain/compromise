@@ -20,7 +20,7 @@ const punt = function (unit, context) {
 module.exports = [
   {
     // two explicit dates - 'between friday and sunday'
-    match: 'between [<start>*] and [<end>*]',
+    match: 'between [<start>.+] and [<end>.+]',
     parse: (m, context) => {
       let start = m.groups('start')
       start = parseDate(start, context)
@@ -191,7 +191,7 @@ module.exports = [
   },
   {
     // 'january from 3pm to 4pm'
-    match: '^from? [<from>*] (to|until|upto|through|thru|and) [<to>#Time+]',
+    match: '^from? [<from>.+] (to|until|upto|through|thru|and) [<to>#Time+]',
     parse: (m, context) => {
       let from = m.groups('from')
       let to = m.groups('to')
@@ -214,7 +214,7 @@ module.exports = [
   },
   {
     // 'from A to B'
-    match: 'from? [<from>*] (to|until|upto|through|thru|and) [<to>*]',
+    match: 'from? [<from>*] (to|until|upto|through|thru|and) [<to>.+]',
     parse: (m, context) => {
       let from = m.groups('from')
       let to = m.groups('to')
@@ -234,7 +234,7 @@ module.exports = [
 
   {
     // 'before june'
-    match: '^due? (by|before) [*]',
+    match: '^due? (by|before) [.+]',
     group: 0,
     parse: (m, context) => {
       let unit = parseDate(m, context)
@@ -256,7 +256,7 @@ module.exports = [
 
   {
     // 'in june'
-    match: '^(on|in|at|@|during) [*]',
+    match: '^(on|in|at|@|during) [.+]',
     group: 0,
     parse: (m, context) => {
       let unit = parseDate(m, context)
@@ -268,7 +268,7 @@ module.exports = [
   },
   {
     // 'after june'
-    match: '^(after|following) [*]',
+    match: '^(after|following) [.+]',
     group: 0,
     parse: (m, context) => {
       let unit = parseDate(m, context)
@@ -284,7 +284,7 @@ module.exports = [
   },
   {
     // 'middle of'
-    match: '^(middle|center|midpoint) of [*]',
+    match: '^(middle|center|midpoint) of [.+]',
     group: 0,
     parse: (m, context) => {
       let unit = parseDate(m, context)
@@ -301,7 +301,7 @@ module.exports = [
   },
   {
     // 'tuesday after 5pm'
-    match: '* after #Time+$',
+    match: '.+ after #Time+$',
     parse: (m, context) => {
       let unit = parseDate(m, context)
       let start = unit.clone()
@@ -318,7 +318,7 @@ module.exports = [
   },
   {
     // 'tuesday before noon'
-    match: '* before #Time+$',
+    match: '.+ before #Time+$',
     parse: (m, context) => {
       let unit = parseDate(m, context)
       let end = unit.clone()

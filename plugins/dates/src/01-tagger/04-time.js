@@ -12,11 +12,13 @@ const timeTagger = function (doc) {
   doc.match('[#Value] (in|at) the? (morning|evening|night|nighttime)').tag('Time', here)
   // 4-5pm
   // doc.match('/[0-9](am|pm)?-[0-9](am|pm)/').tag(['DateRange', 'Time'], '3-4pm')
-  if (doc.has('#Cardinal') && !doc.has('#Month')) {
-    // quarter to seven (not march 5 to 7)
-    doc.match('1? (half|quarter|25|15|10|5) (past|after|to) #Cardinal').tag('Time', here)
+  if (!doc.has('#Month')) {
     // ten to seven
-    doc.match('(5|10|15|20|five|ten|fifteen|20) (to|after|past) #Cardinal').tag('Time', here) //add check for 1 to 1 etc.
+    doc.match('(5|10|15|20|five|ten|fifteen|quarter|twenty|half) (to|after|past) #Cardinal').tag('Time', here) //add check for 1 to 1 etc.
+    // at 10 past
+    doc
+      .match('(at|by|before) (5|10|15|20|five|ten|fifteen|twenty|quarter|half) (after|past|to)')
+      .tag('Time', 'at-20-past')
   }
   //timezone
   if (doc.has('#Date')) {

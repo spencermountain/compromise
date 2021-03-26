@@ -16,6 +16,7 @@ const getDate = function (doc, context) {
   context.today = spacetime(context.today || null, context.timezone)
   //turn 'five' into 5..
   doc = normalize(doc)
+
   //interpret 'between [A] and [B]'...
   let result = parseRanges(doc, context)
   // format as iso

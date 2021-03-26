@@ -168,9 +168,9 @@ module.exports = [
 
   {
     // '3pm to 4pm january 5th'
-    match: '^from? [<time>#Time+] (to|until|upto|through|thru|and) [<to>#Time+ #Date+]',
+    match: '^from? [<from>#Time+] (to|until|upto|through|thru|and) [<to>#Time+ #Date+]',
     parse: (m, context) => {
-      let time = m.groups('time')
+      let time = m.groups('from')
       let to = m.groups('to')
       let end = parseDate(to, context)
       if (end) {
@@ -178,9 +178,9 @@ module.exports = [
         start.applyTime(time.text())
         if (start) {
           let obj = {
-            unit: 'time',
             start: start,
             end: end,
+            unit: 'time',
           }
           obj = reverseMaybe(obj)
           return obj
@@ -201,9 +201,9 @@ module.exports = [
         end.applyTime(to.text())
         if (end) {
           let obj = {
-            unit: 'time',
             start: from,
             end: end,
+            unit: 'time',
           }
           obj = reverseMaybe(obj)
           return obj
@@ -308,9 +308,9 @@ module.exports = [
       let end = unit.end()
       if (unit) {
         return {
-          unit: 'time',
           start: start,
           end: end,
+          unit: 'time',
         }
       }
       return null
@@ -325,9 +325,9 @@ module.exports = [
       let start = unit.start()
       if (unit) {
         return {
-          unit: 'time',
           start: start,
           end: end,
+          unit: 'time',
         }
       }
       return null

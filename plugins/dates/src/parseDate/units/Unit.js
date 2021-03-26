@@ -45,7 +45,24 @@ class Unit {
   }
   applyTime(str) {
     if (str) {
-      this.d = this.d.time(str)
+      let justHour = /^[0-9]{1,2}$/
+      if (justHour.test(str)) {
+        this.d = this.d.hour(str)
+      } else {
+        this.d = this.d.time(str)
+      }
+      // wiggle the best am/pm
+      let amPM = /[ap]m/.test(str)
+      if (!amPM) {
+        let tooEarly = this.d.time('6:00am')
+        if (this.d.isBefore(tooEarly)) {
+          this.d = this.d.ampm('pm')
+        }
+        let tooLate = this.d.time('10:00pm')
+        if (this.d.isAfter(tooLate)) {
+          this.d = this.d.ampm('am')
+        }
+      }
     } else {
       this.d = this.d.startOf('day') //zero-out time
     }

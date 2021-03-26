@@ -12,6 +12,7 @@ const context = {
   // today: '2016-03-05', //on friday
   // timezone: null,
   // dayStart: '10am',
+  // today: [2016, 1, 11],
   // dayEnd: '5pm',
   // timezone: 'Asia/Shanghai',
   // today: '2021-02-19', //friday
@@ -23,7 +24,7 @@ const context = {
 // let doc = nlp('tuesday at 3:30') //.debug()
 // let doc = nlp('9am to 5pm feb 26th') //.debug()
 // let doc = nlp('3:00 to 4pm on tuesday') //.debug()
-let doc = nlp('2020') //.debug()
+let doc = nlp('next tuesday at 3pm') //.debug()
 // let doc = nlp('next week') //.debug()
 
 let dates = doc.dates(context)

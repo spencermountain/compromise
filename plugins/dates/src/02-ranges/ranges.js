@@ -53,11 +53,14 @@ module.exports = [
           end = end.append(res.year)
         }
         end = parseDate(end, context)
+        // assume end is after start
+        if (start.d.isAfter(end.d)) {
+          end.d = end.d.add(1, 'year')
+        }
         let obj = {
           start: start,
           end: end.end(),
         }
-        obj = reverseMaybe(obj)
         return obj
       }
       return null
@@ -175,6 +178,7 @@ module.exports = [
         start.applyTime(time.text())
         if (start) {
           let obj = {
+            unit: 'time',
             start: start,
             end: end,
           }
@@ -197,6 +201,7 @@ module.exports = [
         end.applyTime(to.text())
         if (end) {
           let obj = {
+            unit: 'time',
             start: from,
             end: end,
           }
@@ -251,17 +256,16 @@ module.exports = [
 
   {
     // 'in june'
-    match: '^(on|in|at|@) [*]',
+    match: '^(on|in|at|@|during) [*]',
     group: 0,
     parse: (m, context) => {
       let unit = parseDate(m, context)
       if (unit) {
-        return { start: unit, end: unit.clone().end() }
+        return { start: unit, end: unit.clone().end(), unit: unit.unit }
       }
       return null
     },
   },
-
   {
     // 'after june'
     match: '^(after|following) [*]',
@@ -273,21 +277,6 @@ module.exports = [
         return {
           start: unit.clone(),
           end: punt(unit.clone(), context),
-        }
-      }
-      return null
-    },
-  },
-  {
-    // 'in june'
-    match: '^(on|during|in|during) [*]',
-    group: 0,
-    parse: (m, context) => {
-      let unit = parseDate(m, context)
-      if (unit) {
-        return {
-          start: unit,
-          end: unit.clone().end(),
         }
       }
       return null
@@ -319,6 +308,7 @@ module.exports = [
       let end = unit.end()
       if (unit) {
         return {
+          unit: 'time',
           start: start,
           end: end,
         }
@@ -335,6 +325,7 @@ module.exports = [
       let start = unit.start()
       if (unit) {
         return {
+          unit: 'time',
           start: start,
           end: end,
         }

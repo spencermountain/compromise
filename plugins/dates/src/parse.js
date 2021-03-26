@@ -26,6 +26,8 @@ const getDate = function (doc, context) {
   if (result.repeat) {
     result = generate(result, context)
   }
+  // add timezone
+  result.tz = context.timezone
 
   return result
 }

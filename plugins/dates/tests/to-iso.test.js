@@ -51,8 +51,7 @@ test('date-parse :', function (t) {
   ]
   arr.forEach(function (a) {
     let json = nlp(a[0]).dates(context).json()[0]
-    let start = json.date.start
-    t.equal(start, a[1], a[0])
+    t.equal(json.start, a[1], a[0])
   })
   t.end()
 })

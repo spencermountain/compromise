@@ -21,7 +21,7 @@ test('test first generated-date', function (t) {
     let dates = doc.dates(context).get(0)
     dates.repeat = dates.repeat || {}
     dates.repeat.generated = dates.repeat.generated || []
-    t.equal(dates.repeat.generated[0], a[1], a[0])
+    t.equal(dates.repeat.generated[0].start, a[1], a[0])
   })
   t.end()
 })

@@ -31,8 +31,6 @@ const generateDates = function (result, context) {
     byDay = result.repeat.filter.weekDays
   }
   // start going!
-  let loops = 0
-  // TODO: learn how to write better software.
   for (let i = 0; i < max_loops; i += 1) {
     if (list.length >= max_count || s.epoch >= end.epoch) {
       break
@@ -43,19 +41,19 @@ const generateDates = function (result, context) {
     toAdd.forEach((unit) => {
       s = s.add(result.repeat.interval[unit], unit)
     })
-    loops += 1
-    if (loops > 10000) {
-      console.warn('Warning: Possible infinite loop in date-parser')
-      console.log(result.repeat)
-      break
-    }
   }
-  result.repeat.generated = list
+  // add end-times to list
+  result.repeat.generated = list.map((start) => {
+    return {
+      start: start,
+      end: spacetime(start, context.timezone).endOf('day').iso(),
+    }
+  })
   // if we got an interval, but not a start/end
   if (!result.start && result.repeat.generated && result.repeat.generated.length > 1) {
     let arr = result.repeat.generated
-    result.start = arr[0]
-    result.end = arr[arr.length - 1]
+    result.start = arr[0].start
+    result.end = arr[0].end
   }
   return result
 }

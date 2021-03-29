@@ -5,6 +5,7 @@
 ### 2.0.0 [March 2021]
 - **[breaking]** - flatten json date results
 - **[breaking]** - remove duration from .get results
+- **[breaking]** - make repeating dates objects w/ start/end dates
 - **[new]** - return date unit information
 - **[change]** - include assumed iana timezone in results
 

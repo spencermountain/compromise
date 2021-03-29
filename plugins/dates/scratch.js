@@ -1,37 +1,27 @@
 const nlp = require('../../src/index')
-const spacetime = require('spacetime')
+// const spacetime = require('spacetime')
 // nlp.verbose(true)
 nlp.extend(require('../../plugins/numbers/src'))
 nlp.extend(require('../../plugins/dates/src'))
+// nlp.verbose('date')
 
-const fmt = (iso) => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
+// const fmt = (iso) => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 
 const context = {
-  // today: '2021-03-01', //monday
-  // today: '2021-03-02', //tuesday
-  // today: '2016-03-05', //on friday
-  // timezone: null,
-  // dayStart: '10am',
-  // dayEnd: '5pm',
-  // timezone: 'Asia/Shanghai',
+  timezone: null, //'Asia/Shanghai',
   // today: '2021-02-19', //friday
   // dayStart: '8:00am',
   // dayEnd: '8:00pm',
 }
 
-// let doc = nlp('june 5th') //.debug()
-// let doc = nlp('tuesday at 3:30') //.debug()
-// let doc = nlp('9am to 5pm feb 26th') //.debug()
-let doc = nlp('9am to 5am') //.debug()
-// let doc = nlp('next week') //.debug()
-
+let doc = nlp('tuesday from 4 to 5pm').debug()
 let dates = doc.dates(context)
 dates = dates.get()
-console.log(dates)
-dates.forEach((date) => {
-  console.log('start: ', fmt(date.start))
-  console.log('  end: ', fmt(date.end))
-})
+console.log(dates[0])
+// dates.forEach((date) => {
+//   console.log('start: ', fmt(date.start))
+//   console.log('  end: ', fmt(date.end))
+// })
 
 // ### hmmm
 // let doc = nlp('in the next three years') //.debug()

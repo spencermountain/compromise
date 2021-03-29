@@ -95,6 +95,27 @@ const parseIntervals = function (doc) {
     doc = doc.remove(m)
     return { repeat: repeat }
   }
+
+  // mondays
+  m = doc.match(
+    '[<day>(mondays|tuesdays|wednesdays|thursdays|fridays|saturdays|sundays)] (at|near|after)? [<time>#Time+?]'
+  )
+  if (m.found) {
+    let repeat = { interval: { day: 1 }, filter: { weekDays: {} } }
+    let str = m.groups('day').text('reduced')
+    str = str.replace(/s$/, '')
+    str = dayNames[str] //normalize it
+    if (str) {
+      repeat.filter.weekDays[str] = true
+      repeat.choose = 'OR'
+      doc = doc.remove(m)
+      let time = m.groups('time')
+      if (time.found) {
+        repeat.time = time.text('reduced')
+      }
+      return { repeat: repeat }
+    }
+  }
   return null
 }
 module.exports = parseIntervals

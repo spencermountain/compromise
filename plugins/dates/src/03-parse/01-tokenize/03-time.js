@@ -14,6 +14,10 @@ const hardCoded = {
   eod: '10:00pm',
   midnight: '12:00am',
 }
+const minMap = {
+  quarter: 15,
+  half: 30,
+}
 
 // choose ambiguous ampm
 const ampmChooser = function (s) {
@@ -24,16 +28,16 @@ const ampmChooser = function (s) {
   return s
 }
 
+// parse 'twenty past 2'
 const halfPast = function (m, s) {
-  let hour = m.match('#Cardinal$').text('reduced')
-
-  let term = m.match('(half|quarter|25|15|10|5)')
-  let mins = term.text('reduced')
-  if (term.has('half')) {
-    mins = '30'
-  }
-  if (term.has('quarter')) {
-    mins = '15'
+  let hour = m.match('#Cardinal$')
+  let punt = m.not(hour).match('(half|quarter|25|20|15|10|5)')
+  // get the mins, and the hour
+  hour = hour.text('reduced')
+  let mins = punt.text('reduced')
+  // support 'quarter'
+  if (minMap.hasOwnProperty(mins)) {
+    mins = minMap[mins]
   }
   let behind = m.has('to')
   // apply it
@@ -52,12 +56,16 @@ const halfPast = function (m, s) {
 }
 
 const parseTime = function (doc, context) {
-  let time = doc.match('(at|by|for|before|this)? #Time+')
+  let time = doc.match('(at|by|for|before|this|after)? #Time+')
   if (time.found) {
     doc.remove(time)
+    // '4pm on tuesday'
+    doc.remove('^sharp')
+    doc.remove('^on')
+    doc.remove('on the dot')
   }
   // get the main part of the time
-  time = time.not('^(at|by|for|before|this)')
+  time = time.not('^(at|by|for|before|this|after)')
   time = time.not('sharp')
   time = time.not('on the dot')
   let s = spacetime.now(context.timezone)
@@ -68,7 +76,6 @@ const parseTime = function (doc, context) {
   if (hardCoded.hasOwnProperty(timeStr)) {
     return hardCoded[timeStr]
   }
-
   // '5 oclock'
   let m = time.match('^#Cardinal oclock (am|pm)?')
   if (m.found) {
@@ -87,13 +94,41 @@ const parseTime = function (doc, context) {
   }
 
   // 'quarter to two'
-  m = time.match('(half|quarter|25|15|10|5) (past|after|to) #Cardinal')
+  m = time.match('(half|quarter|25|20|15|10|5) (past|after|to) #Cardinal')
   if (m.found) {
     s = halfPast(m, s)
     if (s.isValid() && !s.isEqual(now)) {
       // choose ambiguous ampm
       s = ampmChooser(s)
       return s.time()
+    }
+  }
+  // 'twenty past'
+  m = time.match('[<min>(half|quarter|25|20|15|10|5)] (past|after)')
+  if (m.found) {
+    let min = m.groups('min').text('reduced')
+    let d = spacetime(context.today)
+    // support 'quarter', etc.
+    if (minMap.hasOwnProperty(min)) {
+      min = minMap[min]
+    }
+    d = d.next('hour').startOf('hour').minute(min)
+    if (d.isValid() && !d.isEqual(now)) {
+      return d.time()
+    }
+  }
+  // 'ten to'
+  m = time.match('[<min>(half|quarter|25|20|15|10|5)] to')
+  if (m.found) {
+    let min = m.groups('min').text('reduced')
+    let d = spacetime(context.today)
+    // support 'quarter', etc.
+    if (minMap.hasOwnProperty(min)) {
+      min = minMap[min]
+    }
+    d = d.next('hour').startOf('hour').minus(min, 'minutes')
+    if (d.isValid() && !d.isEqual(now)) {
+      return d.time()
     }
   }
   // '4 in the evening'

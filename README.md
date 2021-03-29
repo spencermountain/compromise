@@ -26,17 +26,36 @@
   <a href="https://bundlephobia.com/result?p=compromise">
     <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/builds/compromise.min.js" />
   </a>
-  <a href="https://spectrum.chat/nlp-compromise">
-    <img src="https://img.shields.io/badge/spectrum-chat-%23b14344" />
-  </a>
   </div>
 </div>
 
 <!-- spacer -->
-<img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+<img height="85px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 <div align="left">
-  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>compromise <a href="https://observablehq.com/@spencermountain/compromise-justification">tries its best</a>.
+isn't it weird how we can <i>write text</i>, but not parse it?
+<br/>
+<ul>
+   <i>↬<sub>ᔐᖜ</sub>↬-</i> and how we can't get the information <i>back out</i>?⇬
+</ul>
+</div>
+<img height="55px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
+<div align="center">
+it's like we've agreed that
+<div>
+text is a dead-end.
+</div>
+<sub>and the knowledge in it</sub>
+<br/>
+<sub>should not really be used.</sub>
+</div>
+
+<!-- spacer -->
+<img height="45px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
+<div align="left">
+  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>compromise <a href="https://observablehq.com/@spencermountain/compromise-justification">tries its best</a> to parse text.
 </div>
 
 <div align="left">
@@ -45,7 +64,13 @@
   <a href="https://docs.compromise.cool/compromise-filesize">small,
   <a href="https://docs.compromise.cool/compromise-performance">quick</a>,
   and often <i><a href="https://docs.compromise.cool/compromise-accuracy">good-enough</a></i>.
-</div>
+  <br/>
+   <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/> it is not as smart as you'd think.
+   <br/>
+   <!-- spacer -->
+<!-- <img height="45px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+   it is though - very open-ended, hackable, and open to engineering. -->
+   </div>
 
 <!-- spacer -->
 <img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
@@ -96,7 +121,7 @@ doc.text()
 
 ### .nouns():
 
-transform nouns to plural and possessive forms:
+play between plural, singular and possessive forms:
 
 ```js
 let doc = nlp('the purple dinosaur')
@@ -134,7 +159,7 @@ doc.text()
 
 ### .topics():
 
-grab the big subjects:
+names/places/orgs, tldr:
 
 ```js
 let doc = nlp(buddyHolly)
@@ -163,7 +188,7 @@ doc.topics().json()
 
 ### .contractions():
 
-handle implicit words:
+handle implicit terms:
 
 ```js
 let doc = nlp("we're not gonna take it, no we ain't gonna take it.")
@@ -792,7 +817,7 @@ or if you don't care about POS-tagging, you can use the tokenize-only build: (90
 
 - **inter-sentence match:**
   By default, sentences are the top-level abstraction.
-  Inter-sentence, or multi-sentence matches aren't supported:
+  Inter-sentence, or multi-sentence matches aren't supported without <a href="https://github.com/spencermountain/compromise/tree/master/plugins/paragraphs">a plugin</a>:
   <code>nlp("that's it. Back to Winnipeg!").has('it back')//false</code>
 
 - **nested match syntax:**

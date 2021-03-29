@@ -15,13 +15,14 @@ test('test first generated-date', function (t) {
     ['every hour tomorrow', '2021-02-17T08:00:00.000+05:30'],
     ['any month this year', '2021-01-01T08:00:00.000+05:30'],
     ['any month next year', '2022-01-01T08:00:00.000+05:30'],
+    ['every thursday at 2pm', '2021-02-18T14:00:00.000+05:30'],
   ]
   arr.forEach((a) => {
     let doc = nlp(a[0])
     let dates = doc.dates(context).get(0)
     dates.repeat = dates.repeat || {}
     dates.repeat.generated = dates.repeat.generated || []
-    t.equal(dates.repeat.generated[0], a[1], a[0])
+    t.equal(dates.repeat.generated[0].start, a[1], a[0])
   })
   t.end()
 })

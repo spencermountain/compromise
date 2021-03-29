@@ -17,8 +17,8 @@ test('this monday', function (t) {
   arr.forEach((a) => {
     let doc = nlp('this monday')
     let found = doc.dates({ today: a[0] }).json()[0]
-    t.equal(fmt(found.date.start), a[1], 'monday-start')
-    t.equal(fmt(found.date.end), a[1], 'monday-end')
+    t.equal(fmt(found.start), a[1], 'monday-start')
+    t.equal(fmt(found.end), a[1], 'monday-end')
   })
   t.end()
 })

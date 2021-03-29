@@ -28,6 +28,8 @@ const knownWord = {
 }
 knownWord.tommorrow = knownWord.tomorrow
 knownWord.tmrw = knownWord.tomorrow
+knownWord.anytime = knownWord.today
+knownWord.sometime = knownWord.today
 
 const today = function (doc, context, section) {
   let unit = null

@@ -58,9 +58,9 @@ class WeekDay extends Day {
       this.d = this.d.startOf('day')
     }
   }
-  clone() {
-    return new WeekDay(this.d, this.unit, this.context)
-  }
+  // clone() {
+  //   return new WeekDay(this.d, this.unit, this.context)
+  // }
   next() {
     this.d = this.d.add(7, 'days')
     this.d = this.d.day(this.weekDay)

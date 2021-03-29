@@ -286,7 +286,7 @@ const endsWith = {
   ],
   y: [
     {
-      reg: /([i|f|rr])y$/i,
+      reg: /(i|f|rr)y$/i,
       repl: {
         pr: '$1ies',
         pa: '$1ied',

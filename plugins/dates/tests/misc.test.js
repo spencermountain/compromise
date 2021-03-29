@@ -21,7 +21,7 @@ test('parsed today shorthand', function (t) {
   }
   let doc = nlp('today')
   let found = doc.dates(context).json()[0]
-  t.equal(fmt(found.date.start), '2020-12-12', 'today shorthand')
+  t.equal(fmt(found.start), '2020-12-12', 'today shorthand')
   t.end()
 })
 
@@ -32,8 +32,8 @@ test('never allow end > start', (t) => {
   let arr = ['eat eggs june 5th to june 7th', 'eat eggs june 5th to 7th', 'eat eggs june 7th to june 5th']
   arr.forEach((str) => {
     let json = nlp(str).dates(context).json()[0]
-    let start = spacetime(json.date.start)
-    let end = spacetime(json.date.end)
+    let start = spacetime(json.start)
+    let end = spacetime(json.end)
     t.equal(start.isBefore(end), true, str)
   })
   t.end()

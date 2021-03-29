@@ -592,7 +592,7 @@ test('start dates', (t) => {
       let want = spacetime(a[1], context.timezone).startOf('day').format('iso-short')
       let doc = nlp(a[0])
       let json = doc.dates(context).json()[0] || {}
-      let start = (json.date || {}).start
+      let start = json.start
       if (start) {
         start = spacetime(start).format('iso-short')
       }

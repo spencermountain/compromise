@@ -16,7 +16,7 @@ test('text sets timezone', function (t) {
   arr.forEach((a) => {
     let doc = nlp(a[0])
     let json = doc.dates(context).json()[0]
-    t.equal(json.date.start, a[1], a[0])
+    t.equal(json.start, a[1], a[0])
   })
   t.end()
 })
@@ -24,10 +24,10 @@ test('text sets timezone', function (t) {
 test('set timezone context', function (t) {
   let doc = nlp('April 7th 2018')
   let json = doc.dates({ timezone: 'Asia/Karachi' }).json()[0]
-  t.equal(json.date.start, '2018-04-07T00:00:00.000+05:00', '+5hrs')
+  t.equal(json.start, '2018-04-07T00:00:00.000+05:00', '+5hrs')
 
   json = doc.dates({ timezone: 'Asia/Vladivostok' }).json()[0]
-  t.equal(json.date.start, '2018-04-07T00:00:00.000+10:00', '+10hrs')
+  t.equal(json.start, '2018-04-07T00:00:00.000+10:00', '+10hrs')
 
   t.end()
 })

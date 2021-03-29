@@ -81,6 +81,18 @@ test('number-range', function (t) {
   t.equal(doc.has('#Ordinal'), true, 'has Ordinal tag')
   arr = doc.contractions().expand().terms().out('array')
   t.deepEqual(arr, ['20th', 'to', '21st'])
+
+  doc = nlp('4-5pm')
+  t.equal(doc.has('#NumberRange'), true, 'time has NumberRange tag')
+  t.equal(doc.has('#Ordinal'), false, 'time is not an Ordinal tag')
+  arr = doc.contractions().expand().terms().out('array')
+  t.deepEqual(arr, ['4', 'to', '5pm'])
+
+  doc = nlp('3:45-11pm')
+  t.equal(doc.has('#NumberRange'), true, 'time has NumberRange tag')
+  t.equal(doc.has('#Time'), true, 'time tag')
+  arr = doc.contractions().expand().terms().out('array')
+  t.deepEqual(arr, ['3:45', 'to', '11pm'])
   t.end()
 })
 

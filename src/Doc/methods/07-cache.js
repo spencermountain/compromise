@@ -17,12 +17,10 @@ exports.cache = function (options) {
       }
       words[t.reduced] = words[t.reduced] || []
       words[t.reduced].push(i)
-
       Object.keys(t.tags).forEach(tag => {
         tags[tag] = tags[tag] || []
         tags[tag].push(i)
       })
-
       // cache root-form on Term, too
       if (options.root) {
         t.setRoot(this.world)
@@ -32,7 +30,6 @@ exports.cache = function (options) {
   })
   return this
 }
-
 /** un-freezes the current state of the document, so it may be transformed */
 exports.uncache = function () {
   this._cache = {}

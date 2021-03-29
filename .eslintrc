@@ -6,12 +6,13 @@
     "node": true
   },
   "parserOptions": {
-    "ecmaVersion": 2017,
+    "ecmaVersion": 2018,
     "sourceType": "module",
     "ecmaFeatures": {}
   },
   "extends": [],
   "rules": {
+    "regexp/prefer-d": 0,
     "semi": ["warn", "never"],
     "indent": ["error", 2, { "SwitchCase": 1 }],
     "spaced-comment": 0,

@@ -2,7 +2,7 @@ const test = require('tape')
 const nlp = require('./_lib')
 
 const context = {
-  today: '2019-02-02',
+  today: '2019-02-02T03:40:00.000Z',
   timezone: null,
 }
 
@@ -47,12 +47,17 @@ test('date-parse :', function (t) {
     ['5th hour of March 3rd 2002', '2002-03-03T04:00:00.000Z'],
     ['last hour of March 2021', '2021-03-31T23:00:00.000Z'],
     ['may to august 1996', '1996-05-01T00:00:00.000Z'],
+    ['half past 4', '2019-02-02T16:30:00.000Z'],
+    ['20 past 2', '2019-02-02T14:20:00.000Z'],
+    ['at 20 past', '2019-02-02T04:20:00.000Z'],
+    ['at half past', '2019-02-02T04:30:00.000Z'],
+    ['at quarter to', '2019-02-02T03:45:00.000Z'],
+    ['at quarter after', '2019-02-02T04:15:00.000Z'],
     // ['august to may 1996', '1996-05-01T00:00:00.000Z'],
   ]
   arr.forEach(function (a) {
-    let json = nlp(a[0]).dates(context).json()[0]
-    let start = json.date.start
-    t.equal(start, a[1], a[0])
+    let json = nlp(a[0]).dates(context).json()[0] || {}
+    t.equal(json.start, a[1], a[0])
   })
   t.end()
 })

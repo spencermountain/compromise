@@ -1,29 +1,19 @@
 const nlp = require('./src/index')
-// nlp.extend(require('./plugins/numbers/src'))
-// nlp.extend(require('./plugins/dates/src'))
-nlp.extend(require('./plugins/match-runner/src'))
-const text = require('/Users/spencer/mountain/compromise/scripts/perf/flame/_sotu-text.js')
+nlp.extend(require('./plugins/numbers/src'))
+nlp.extend(require('./plugins/dates/src'))
+const spacetime = require('/Users/spencer/mountain/spacetime')
+// nlp.extend(require('./plugins/match-runner/src'))
+// const text = require('/Users/spencer/mountain/compromise/scripts/perf/flame/_sotu-text.js')
+const fmt = iso => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
+// nlp.verbose('date')
 
-// let list = [
-//   // ==== Holiday ====
-//   { match: '#Holiday (day|eve)', tag: 'Holiday', reason: 'holiday-day' }, // the captain who
+let doc = nlp('every thursday at 2pm').debug()
+// let doc = nlp('tuesdays at 2pm').debug()
+let dates = doc.dates({ dayEnd: '8pm' }).get()
+console.log(dates[0].repeat)
+// dates.forEach(date => {
+//   console.log('start: ', fmt(date.start))
+//   console.log('  end: ', fmt(date.end))
+// })
 
-//   // ==== WeekDay ====
-//   // sun the 5th
-//   { match: '[sun] the #Ordinal', tag: 'WeekDay', reason: 'sun-the-5th' },
-//   //sun feb 2
-//   { match: '[sun] #Date', group: 0, tag: 'WeekDay', reason: 'sun-feb' },
-// ]
-
-// let doc = nlp('no one tunes into their 2nd favourite no-radio station. no lyin!')
-// doc.matchRunner(list)
-// doc.debug()
-// nlp(text)
-
-// const reg = /(?:^|\s)([\!\[\^]*(?:<[^<]*>)?\([^\)]+[^\\\)]\)[\?\]\+\*\$~]*)(?:\s|$)/g
-
-// let str = '(one two) (upto) snooz(et)oDate'
-// console.log(str.split(/(\(.*?\))/))
-// console.log(str.split(/(?:^|\s)([\!\[\^]*\(.*?[^\\\)]\)[\?\]\+\*\$~]*)(?:\s|$)/))
-// console.log(str.split(/(?:^|\s)([\!\[\^]*(?:<[^<]*>)?\([^\)]+[^\\\)]\)[\?\]\+\*\$~]*)(?:\s|$)/))
-// console.log(nlp.parseMatch('(snooze|wait|delay|punt|later|sleep) (up to) [<snooze_to>#Date+]'))
+// doc.match('^[<date>#Date+] (from|between) [<from>#Time+] (to|until|upto|through|thru|and) [<to>#Time+]').debug()

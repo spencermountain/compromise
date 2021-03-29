@@ -1,14 +1,17 @@
-const parse = require('./parse')
+const parse = require('./getDates')
 const spacetime = require('spacetime')
 const abbrevs = require('./data/_abbrevs')
+const addDuration = require('./metadata/duration')
+const addUnit = require('./metadata/unit')
 
 module.exports = {
   /** easy getter for the start/end dates */
   get: function (options) {
     let arr = []
     this.forEach((doc) => {
-      let found = parse(doc, this.context)
-      arr.push(found)
+      let date = parse(doc, this.context)
+      date.unit = addUnit(date)
+      arr.push(date)
     })
     if (typeof options === 'number') {
       return arr[options]
@@ -27,7 +30,10 @@ module.exports = {
     this.forEach((doc) => {
       let json = doc.json(options)[0]
       let found = parse(doc, this.context)
-      json.date = found
+      json = Object.assign(json, found)
+      // add more data
+      json.duration = addDuration(json)
+      json.unit = addUnit(json)
       res.push(json)
     })
     if (n !== null) {

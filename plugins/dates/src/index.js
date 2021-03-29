@@ -45,6 +45,10 @@ const addMethods = function (Doc, world) {
     if (context.timezone === undefined) {
       context.timezone = spacetime().timezone().name
     }
+    // allow null to mean utc
+    if (context.timezone === null) {
+      context.timezone = 'ETC/UTC'
+    }
 
     let dates = findDates(this)
     if (typeof n === 'number') {

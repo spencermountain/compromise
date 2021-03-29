@@ -15,8 +15,11 @@ const normalize = function (doc) {
   }
 
   if (!doc.numbers) {
-    console.warn("Compromise: compromise-dates cannot find plugin dependency 'compromise-number'")
+    console.warn(
+      `Warning: compromise-numbers plugin is not loaded.\n   You should load this plugin \n     - https://bit.ly/3t8RfFG`
+    )
   } else {
+    // doc.numbers().normalize()
     // convert 'two' to 2
     let num = doc.numbers()
     num.toNumber()

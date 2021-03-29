@@ -3,6 +3,7 @@ const spacetime = require('spacetime')
 class Unit {
   constructor(input, unit, context) {
     this.unit = unit || 'day'
+    this.setTime = false
     context = context || {}
     let today = {}
     if (context.today) {
@@ -14,11 +15,6 @@ class Unit {
     }
     // set it to the beginning of the given unit
     let d = spacetime(input, context.timezone, { today: today })
-
-    // set to beginning?
-    // if (d.isValid() && keepTime !== true) {
-    //   d = d.startOf(this.unit)
-    // }
     Object.defineProperty(this, 'd', {
       enumerable: false,
       writable: true,
@@ -49,10 +45,28 @@ class Unit {
   }
   applyTime(str) {
     if (str) {
-      this.d = this.d.time(str)
+      let justHour = /^[0-9]{1,2}$/
+      if (justHour.test(str)) {
+        this.d = this.d.hour(str)
+      } else {
+        this.d = this.d.time(str)
+      }
+      // wiggle the best am/pm
+      let amPM = /[ap]m/.test(str)
+      if (!amPM) {
+        let tooEarly = this.d.time('6:00am')
+        if (this.d.isBefore(tooEarly)) {
+          this.d = this.d.ampm('pm')
+        }
+        let tooLate = this.d.time('10:00pm')
+        if (this.d.isAfter(tooLate)) {
+          this.d = this.d.ampm('am')
+        }
+      }
     } else {
       this.d = this.d.startOf('day') //zero-out time
     }
+    this.setTime = true
     return this
   }
   applyWeekDay(day) {

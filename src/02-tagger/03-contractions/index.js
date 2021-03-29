@@ -9,6 +9,7 @@ const checkRange = require('./06-ranges')
 const checkFrench = require('./07-french')
 const isNumber = /^[0-9]+$/
 const isOrdinal = /^[0-9]+(st|nd|rd|th)$/
+const isTime = /^[0-9:]+(am|pm)$/
 
 const createPhrase = function (found, doc) {
   //create phrase from ['would', 'not']
@@ -29,6 +30,8 @@ const createPhrase = function (found, doc) {
       t.tag('Cardinal', 'num-range', doc.world)
     } else if (isOrdinal.test(t.implicit)) {
       t.tag('Ordinal', 'ord-range', doc.world)
+    } else if (isTime.test(t.implicit)) {
+      t.tag('Time', 'time-range', doc.world)
     } else if (Object.keys(t.tags).length === 0) {
       t.tags.Noun = true // if no tag, give it a noun
     }

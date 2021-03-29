@@ -68,8 +68,8 @@ text is a dead-end.
    <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/> it is not as smart as you'd think.
    <br/>
    <!-- spacer -->
-<img height="45px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-   it is though - very open-ended, hackable, and open to engineering.
+<!-- <img height="45px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+   it is though - very open-ended, hackable, and open to engineering. -->
    </div>
 
 <!-- spacer -->
@@ -121,7 +121,7 @@ doc.text()
 
 ### .nouns():
 
-transform nouns to plural and possessive forms:
+play between plural, singular and possessive forms:
 
 ```js
 let doc = nlp('the purple dinosaur')
@@ -159,7 +159,7 @@ doc.text()
 
 ### .topics():
 
-grab the big subjects:
+names/places/orgs, tldr:
 
 ```js
 let doc = nlp(buddyHolly)
@@ -188,7 +188,7 @@ doc.topics().json()
 
 ### .contractions():
 
-handle implicit words:
+handle implicit terms:
 
 ```js
 let doc = nlp("we're not gonna take it, no we ain't gonna take it.")
@@ -817,7 +817,7 @@ or if you don't care about POS-tagging, you can use the tokenize-only build: (90
 
 - **inter-sentence match:**
   By default, sentences are the top-level abstraction.
-  Inter-sentence, or multi-sentence matches aren't supported:
+  Inter-sentence, or multi-sentence matches aren't supported without <a href="https://github.com/spencermountain/compromise/tree/master/plugins/paragraphs">a plugin</a>:
   <code>nlp("that's it. Back to Winnipeg!").has('it back')//false</code>
 
 - **nested match syntax:**

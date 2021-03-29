@@ -7,6 +7,7 @@
 - **[breaking]** - remove duration from .get results
 - **[breaking]** - make repeating dates objects w/ start/end dates
 - **[new]** - return date unit information
+- **[new]** - custom time for repeating dates
 - **[change]** - include assumed iana timezone in results
 
 ### 1.5.5 [March 2021]

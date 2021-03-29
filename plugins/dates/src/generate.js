@@ -9,14 +9,28 @@ const shouldPick = function (s, byDay) {
   return true
 }
 
+const hasTime = {
+  millisecond: true,
+  hour: true,
+  time: true,
+}
+
 // list possible dates of a repeating date
 const generateDates = function (result, context) {
   let list = []
   let max_count = context.max_repeat || 12
   let s = spacetime(result.start || context.today, context.timezone)
-  s = s.startOf('day')
-  if (context.dayStart) {
-    s = s.time(context.dayStart)
+
+  if (result.repeat.time) {
+    s = s.time(result.repeat.time)
+  } else if (hasTime[result.unit] === true) {
+    result.repeat.time = s.time()
+  } else {
+    s = s.startOf('day')
+    let time = s.time()
+    if (time === '12:00am' && context.dayStart) {
+      s = s.time(context.dayStart)
+    }
   }
   // should we stop at the end date?
   let end = spacetime(result.end, context.timezone)
@@ -44,9 +58,15 @@ const generateDates = function (result, context) {
   }
   // add end-times to list
   result.repeat.generated = list.map((start) => {
+    let eod = spacetime(start, context.timezone)
+    if (context.dayEnd) {
+      eod = eod.time(context.dayEnd)
+    } else {
+      eod = eod.endOf('day')
+    }
     return {
       start: start,
-      end: spacetime(start, context.timezone).endOf('day').iso(),
+      end: eod.iso(),
     }
   })
   // if we got an interval, but not a start/end

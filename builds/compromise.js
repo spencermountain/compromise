@@ -1,4 +1,4 @@
-/* compromise 13.10.4 MIT */
+/* compromise 13.10.5 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -199,7 +199,7 @@
   var periodAcronym = /([A-Z]\.)+[A-Z]?,?$/;
   var oneLetterAcronym$1 = /^[A-Z]\.,?$/;
   var noPeriodAcronym = /[A-Z]{2,}('s|,)?$/;
-  var lowerCaseAcronym = /([a-z]\.){1,}[a-z]\.?$/;
+  var lowerCaseAcronym = /([a-z]\.)+[a-z]\.?$/;
 
   var isAcronym$2 = function isAcronym(str) {
     //like N.D.A
@@ -302,8 +302,8 @@
   //all punctuation marks, from https://en.wikipedia.org/wiki/Punctuation
   //we have slightly different rules for start/end - like #hashtags.
 
-  var startings = /^[ \n\t\.’'\[\](){}⟨⟩:,،、‒–—―…!.‹›«»‐\-?‘’;\/⁄·&*•^†‡°¡¿※№÷×ºª%‰+−=‱¶′″‴§~|‖¦©℗®℠™¤₳฿\u0022|\uFF02|\u0027|\u201C|\u2018|\u201F|\u201B|\u201E|\u2E42|\u201A|\u00AB|\u2039|\u2035|\u2036|\u2037|\u301D|\u0060|\u301F]+/;
-  var endings = /[ \n\t\.’'\[\](){}⟨⟩:,،、‒–—―…!.‹›«»‐\-?‘’;\/⁄·&*@•^†‡°¡¿※#№÷×ºª‰+−=‱¶′″‴§~|‖¦©℗®℠™¤₳฿\u0022|\uFF02|\u0027|\u201D|\u2019|\u201D|\u2019|\u201D|\u201D|\u2019|\u00BB|\u203A|\u2032|\u2033|\u2034|\u301E|\u00B4|\u301E]+$/; //money = ₵¢₡₢$₫₯֏₠€ƒ₣₲₴₭₺₾ℳ₥₦₧₱₰£៛₽₹₨₪৳₸₮₩¥
+  var startings = /^[ \n\t\.\[\](){}⟨⟩:,،、‒–—―…!‹›«»‐\-?‘’;\/⁄·&*•^†‡°¡¿※№÷×ºª%‰+−=‱¶′″‴§~\|‖¦©℗®℠™¤₳฿\u0022\uFF02\u0027\u201C\u201F\u201B\u201E\u2E42\u201A\u2035\u2036\u2037\u301D\u0060\u301F]+/;
+  var endings = /[ \n\t\.'\[\](){}⟨⟩:,،、‒–—―…!‹›«»‐\-?‘’;\/⁄·&*@•^†‡°¡¿※#№÷×ºª‰+−=‱¶′″‴§~\|‖¦©℗®℠™¤₳฿\u0022\uFF02\u201D\u00B4\u301E]+$/; //money = ₵¢₡₢$₫₯֏₠€ƒ₣₲₴₭₺₾ℳ₥₦₧₱₰£៛₽₹₨₪৳₸₮₩¥
 
   var hasSlash = /\//;
   var hasApostrophe = /['’]/;
@@ -1710,7 +1710,7 @@
   }; // avoid stretching a phrase twice.
 
 
-  var unique$5 = function unique(list) {
+  var unique$6 = function unique(list) {
     return list.filter(function (o, i) {
       return list.indexOf(o) === i;
     });
@@ -1739,7 +1739,7 @@
       toStretch = toStretch.concat(shouldChange);
     }); // don't double-count a phrase
 
-    toStretch = unique$5(toStretch);
+    toStretch = unique$6(toStretch);
     toStretch.forEach(function (p) {
       p.length += newPhrase.length;
     });
@@ -1785,7 +1785,7 @@
     main.terms(0).prev = lastTerm.id;
   };
 
-  var unique$4 = function unique(list) {
+  var unique$5 = function unique(list) {
     return list.filter(function (o, i) {
       return list.indexOf(o) === i;
     });
@@ -1811,7 +1811,7 @@
       toStretch = toStretch.concat(shouldChange);
     }); // don't double-count
 
-    toStretch = unique$4(toStretch); // stretch these phrases
+    toStretch = unique$5(toStretch); // stretch these phrases
 
     toStretch.forEach(function (p) {
       p.length += newPhrase.length; // change the start too, if necessary
@@ -2671,7 +2671,7 @@
   */
   var hasMinMax = /\{([0-9]+,?[0-9]*)\}/;
   var andSign = /&&/;
-  var captureName = new RegExp(/^< *?(\S+) *?>/);
+  var captureName = new RegExp(/^<\s*?(\S+)\s*?>/);
 
   var titleCase$2 = function titleCase(str) {
     return str.charAt(0).toUpperCase() + str.substr(1);
@@ -3504,7 +3504,7 @@
   var hasEllipse = /(?:\u2026|\.{2,}) *$/;
   var newLine = /((?:\r?\n|\r)+)/; // Match different new-line formats
 
-  var hasLetter = /[a-z0-9\u00C0-\u00FF\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff]/i;
+  var hasLetter = /[a-z0-9\u00C0-\u00FF\u00a9\u00ae\u2000-\u3300\ud000-\udfff]/i;
   var startWhitespace = /^\s+/; // Start with a regex:
 
   var naiive_split = function naiive_split(text) {
@@ -3866,7 +3866,7 @@
 
   var fromJSON_1 = fromJSON;
 
-  var _version = '13.10.4';
+  var _version = '13.10.5';
 
   var entity = ['Person', 'Place', 'Organization'];
   var nouns$1 = {
@@ -4236,7 +4236,7 @@
 
   var _color = addColors;
 
-  var unique$3 = function unique(arr) {
+  var unique$4 = function unique(arr) {
     return arr.filter(function (v, i, a) {
       return a.indexOf(v) === i;
     });
@@ -4257,14 +4257,14 @@
       } // clean it up
 
 
-      tag.isA = unique$3(tag.isA);
+      tag.isA = unique$4(tag.isA);
     });
     return tags;
   };
 
   var _isA = inferIsA;
 
-  var unique$2 = function unique(arr) {
+  var unique$3 = function unique(arr) {
     return arr.filter(function (v, i, a) {
       return a.indexOf(v) === i;
     });
@@ -4294,7 +4294,7 @@
       } // clean it up
 
 
-      tag.notA = unique$2(tag.notA);
+      tag.notA = unique$3(tag.notA);
     });
     return tags;
   };
@@ -5780,7 +5780,7 @@
       }
     }],
     y: [{
-      reg: /([i|f|rr])y$/i,
+      reg: /(i|f|rr)y$/i,
       repl: {
         pr: '$1ies',
         pa: '$1ied',
@@ -7565,16 +7565,18 @@
     exports.lookUp = exports.lookup;
   });
 
+  var unique$2 = function unique(set) {
+    return Array.from(set);
+  };
   /** freeze the current state of the document, for speed-purposes*/
+
+
   var cache = function cache(options) {
     var _this = this;
 
     options = options || {};
     var words = {};
     var tags = {};
-    this._cache.words = words;
-    this._cache.tags = tags;
-    this._cache.set = true;
     this.list.forEach(function (p, i) {
       p.cache = p.cache || {}; //p.terms get cached automatically
 
@@ -7585,11 +7587,11 @@
           return; //skip prototype words
         }
 
-        words[t.reduced] = words[t.reduced] || [];
-        words[t.reduced].push(i);
+        words[t.reduced] = words[t.reduced] || new Set();
+        words[t.reduced].add(i);
         Object.keys(t.tags).forEach(function (tag) {
-          tags[tag] = tags[tag] || [];
-          tags[tag].push(i);
+          tags[tag] = tags[tag] || new Set();
+          tags[tag].add(i);
         }); // cache root-form on Term, too
 
         if (options.root) {
@@ -7597,7 +7599,17 @@
           words[t.root] = [i];
         }
       });
+    }); // unique the arrays
+
+    Object.keys(words).forEach(function (k) {
+      words[k] = unique$2(words[k]);
     });
+    Object.keys(tags).forEach(function (k) {
+      tags[k] = unique$2(tags[k]);
+    });
+    this._cache.words = words;
+    this._cache.tags = tags;
+    this._cache.set = true;
     return this;
   };
   /** un-freezes the current state of the document, so it may be transformed */
@@ -9478,8 +9490,9 @@
   //fraction
   [/^[0-9]{1,4}\/[0-9]{1,4}(st|nd|rd|th)?s?$/, ['Fraction', 'NumericValue']], //3/2ths
   //range
-  [/^[0-9.]{1,2}[-–][0-9]{1,2}$/, ['Value', 'NumberRange']], //7-8
-  [/^[0-9.]{1,3}(st|nd|rd|th)?[-–][0-9\.]{1,3}(st|nd|rd|th)?$/, 'NumberRange'], //5-7
+  [/^[0-9.]{1,3}[a-z]{0,2}[-–—][0-9]{1,3}[a-z]{0,2}$/, ['Value', 'NumberRange']], //7th-8th
+  //time-range
+  [/^[0-9][0-9]?(:[0-9][0-9])?(am|pm)?[-–—][0-9][0-9]?(:[0-9][0-9])?(am|pm)?$/, ['Time', 'NumberRange']], //7pm-8:30
   //with unit
   [/^[0-9.]+([a-z]{1,4})$/, 'Value'] //like 5tbsp
   //ordinal
@@ -10657,7 +10670,8 @@
 
   var _05PerfectTense = checkPerfect;
 
-  var isRange = /^([0-9]{1,3}(?:st|nd|rd|th)?)[-–—]([0-9]{1,3}(?:st|nd|rd|th)?)$/i; //split '2-4' into '2 to 4'
+  var isRange = /^([0-9.]{1,3}[a-z]{0,2})[-–—]([0-9]{1,3}[a-z]{0,2})$/i;
+  var timeRange = /^([0-9][0-9]?(:[0-9][0-9])?(am|pm)?)[-–—]([0-9][0-9]?(:[0-9][0-9])?(am|pm)?)$/i; //split '2-4' into '2 to 4'
 
   var checkRange = function checkRange(term) {
     if (term.tags.PhoneNumber === true) {
@@ -10668,6 +10682,12 @@
 
     if (parts !== null) {
       return [parts[1], 'to', parts[2]];
+    } else {
+      parts = term.text.match(timeRange);
+
+      if (parts !== null) {
+        return [parts[1], 'to', parts[4]];
+      }
     }
 
     return null;
@@ -10719,6 +10739,7 @@
 
   var isNumber = /^[0-9]+$/;
   var isOrdinal = /^[0-9]+(st|nd|rd|th)$/;
+  var isTime = /^[0-9:]+(am|pm)$/;
 
   var createPhrase = function createPhrase(found, doc) {
     //create phrase from ['would', 'not']
@@ -10739,6 +10760,8 @@
         t.tag('Cardinal', 'num-range', doc.world);
       } else if (isOrdinal.test(t.implicit)) {
         t.tag('Ordinal', 'ord-range', doc.world);
+      } else if (isTime.test(t.implicit)) {
+        t.tag('Time', 'time-range', doc.world);
       } else if (Object.keys(t.tags).length === 0) {
         t.tags.Noun = true; // if no tag, give it a noun
       }

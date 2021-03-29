@@ -1,4 +1,4 @@
-/* compromise-dates 1.5.6 MIT */
+/* compromise-dates 2.0.0 MIT */
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
@@ -422,31 +422,55 @@ var timeTagger = function timeTagger(doc) {
 
   doc.match('/^[0-9]{2}/[0-9]{2}/').tag('Date', here$2).unTag('Value'); // 3 in the morning
 
-  doc.match('[#Value] (in|at) the? (morning|evening|night|nighttime)').tag('Time', here$2);
+  doc.match('[#Value] (in|at) the? (morning|evening|night|nighttime)').tag('Time', here$2); // 4-5pm
+  // doc.match('/[0-9](am|pm)?-[0-9](am|pm)/').tag(['DateRange', 'Time'], '3-4pm')
 
-  if (doc.has('#Cardinal') && !doc.has('#Month')) {
-    // quarter to seven (not march 5 to 7)
-    doc.match('1? (half|quarter|25|15|10|5) (past|after|to) #Cardinal').tag('Time', here$2); // ten to seven
+  if (!doc.has('#Month')) {
+    // ten to seven
+    doc.match('(5|10|15|20|five|ten|fifteen|quarter|twenty|half) (to|after|past) #Cardinal').tag('Time', here$2); //add check for 1 to 1 etc.
+    // at 10 past
 
-    doc.match('(5|10|15|20|five|ten|fifteen|20) (to|after|past) [<hour>#Cardinal]').tag('Time', here$2); //add check for 1 to 1 etc.
-  } //timezone
+    doc.match('(at|by|before) (5|10|15|20|five|ten|fifteen|twenty|quarter|half) (after|past|to)').tag('Time', 'at-20-past');
+  }
 
+  var date = doc["if"]('#Date');
 
-  if (doc.has('#Date')) {
+  if (date.found) {
+    //--timezone--
     // iso  (2020-03-02T00:00:00.000Z)
-    doc.match('/^[0-9]{4}[:-][0-9]{2}[:-][0-9]{2}T[0-9]/').tag('Time', here$2); // tuesday at 4
+    date.match('/^[0-9]{4}[:-][0-9]{2}[:-][0-9]{2}T[0-9]/').tag('Time', here$2); // tuesday at 4
 
-    doc.match('#Date [at #Cardinal]', 0).notIf('#Year').tag('Time', here$2); // half an hour
+    date.match('#Date [at #Cardinal]', 0).notIf('#Year').tag('Time', here$2); // half an hour
 
-    doc.match('half an (hour|minute|second)').tag('Date', here$2); // in eastern time
+    date.match('half an (hour|minute|second)').tag('Date', here$2); // in eastern time
 
-    doc.match('(in|for|by|near|at) #Timezone').tag('Timezone', here$2);
+    date.match('(in|for|by|near|at) #Timezone').tag('Timezone', here$2); //--time-ranges--
+    // 4pm sharp
+
+    date.match('#Time [(sharp|on the dot)]', 0).tag('Time', here$2);
+    var range = date["if"]('#NumberRange');
+
+    if (range.found) {
+      // 3-4 on tuesday
+      range.match('[#NumberRange+] (on|near|by|at)? #WeekDay', 0).tag('Time', '3-4-tuesday'); // 3-4 on march 2nd
+
+      range.match('[#NumberRange+] (on|near|by|at)? #Month #Value', 0).tag('Time', '3-4-mar-3'); // 3-4pm
+
+      range.match('[#NumberRange] to (#NumberRange && #Time)', 0).tag('Time', '3-4pm'); // 3pm-5
+
+      range.match('(#NumberRange && #Time) to [#NumberRange]', 0).tag('Time', '3pm-4');
+    } // from 4 to 5 tomorrow
+
+
+    date.match('(from|between) #NumericValue and #NumericValue (in|on)? (#WeekDay|tomorrow|yesterday)').tag('Date', '4-to-5pm').match('#NumericValue').tag('Time', here$2); // from 4 to 5pm
+
+    date.match('(from|between) [#NumericValue] (to|and) #Time', 0).tag('Time', '4-to-5pm');
   } // around four thirty
 
 
-  doc.match('(at|around|near) [#Cardinal (thirty|fifteen) (am|pm)?]', 0).tag('Time', here$2); // 4pm sharp
+  doc.match('(at|around|near|#Date) [#Cardinal (thirty|fifteen) (am|pm)?]', 0).tag('Time', here$2); //anytime around 3
 
-  doc.match('#Time [(sharp|on the dot)]', 0).tag('Time', here$2);
+  doc.match('(anytime|sometime) (before|after|near) #Cardinal').tag('Date', 'antime-after-3').lastTerm().tag('Time');
   return doc;
 };
 
@@ -5396,6 +5420,7 @@ var Unit = /*#__PURE__*/function () {
     _classCallCheck(this, Unit);
 
     this.unit = unit || 'day';
+    this.setTime = false;
     context = context || {};
     var today = {};
 
@@ -5410,11 +5435,7 @@ var Unit = /*#__PURE__*/function () {
 
     var d = spacetime(input, context.timezone, {
       today: today
-    }); // set to beginning?
-    // if (d.isValid() && keepTime !== true) {
-    //   d = d.startOf(this.unit)
-    // }
-
+    });
     Object.defineProperty(this, 'd', {
       enumerable: false,
       writable: true,
@@ -5457,11 +5478,35 @@ var Unit = /*#__PURE__*/function () {
     key: "applyTime",
     value: function applyTime(str) {
       if (str) {
-        this.d = this.d.time(str);
+        var justHour = /^[0-9]{1,2}$/;
+
+        if (justHour.test(str)) {
+          this.d = this.d.hour(str);
+        } else {
+          this.d = this.d.time(str);
+        } // wiggle the best am/pm
+
+
+        var amPM = /[ap]m/.test(str);
+
+        if (!amPM) {
+          var tooEarly = this.d.time('6:00am');
+
+          if (this.d.isBefore(tooEarly)) {
+            this.d = this.d.ampm('pm');
+          }
+
+          var tooLate = this.d.time('10:00pm');
+
+          if (this.d.isAfter(tooLate)) {
+            this.d = this.d.ampm('am');
+          }
+        }
       } else {
         this.d = this.d.startOf('day'); //zero-out time
       }
 
+      this.setTime = true;
       return this;
     }
   }, {
@@ -5721,14 +5766,12 @@ var WeekDay$2 = /*#__PURE__*/function (_Day2) {
     }
 
     return _this3;
-  }
+  } // clone() {
+  //   return new WeekDay(this.d, this.unit, this.context)
+  // }
+
 
   _createClass(WeekDay, [{
-    key: "clone",
-    value: function clone() {
-      return new WeekDay(this.d, this.unit, this.context);
-    }
-  }, {
     key: "next",
     value: function next() {
       this.d = this.d.add(7, 'days');
@@ -6372,6 +6415,10 @@ var hardCoded = {
   night: '8:00pm',
   eod: '10:00pm',
   midnight: '12:00am'
+};
+var minMap = {
+  quarter: 15,
+  half: 30
 }; // choose ambiguous ampm
 
 var ampmChooser = function ampmChooser(s) {
@@ -6382,19 +6429,18 @@ var ampmChooser = function ampmChooser(s) {
   }
 
   return s;
-};
+}; // parse 'twenty past 2'
+
 
 var halfPast = function halfPast(m, s) {
-  var hour = m.match('#Cardinal$').text('reduced');
-  var term = m.match('(half|quarter|25|15|10|5)');
-  var mins = term.text('reduced');
+  var hour = m.match('#Cardinal$');
+  var punt = m.not(hour).match('(half|quarter|25|20|15|10|5)'); // get the mins, and the hour
 
-  if (term.has('half')) {
-    mins = '30';
-  }
+  hour = hour.text('reduced');
+  var mins = punt.text('reduced'); // support 'quarter'
 
-  if (term.has('quarter')) {
-    mins = '15';
+  if (minMap.hasOwnProperty(mins)) {
+    mins = minMap[mins];
   }
 
   var behind = m.has('to'); // apply it
@@ -6416,7 +6462,7 @@ var halfPast = function halfPast(m, s) {
 };
 
 var parseTime = function parseTime(doc, context) {
-  var time = doc.match('(at|by|for|before|this)? #Time+');
+  var time = doc.match('(at|by|for|before|this|after)? #Time+');
 
   if (time.found) {
     doc.remove(time); // '4pm on tuesday'
@@ -6427,7 +6473,7 @@ var parseTime = function parseTime(doc, context) {
   } // get the main part of the time
 
 
-  time = time.not('^(at|by|for|before|this)');
+  time = time.not('^(at|by|for|before|this|after)');
   time = time.not('sharp');
   time = time.not('on the dot');
   var s = spacetime.now(context.timezone);
@@ -6461,7 +6507,7 @@ var parseTime = function parseTime(doc, context) {
   } // 'quarter to two'
 
 
-  m = time.match('(half|quarter|25|15|10|5) (past|after|to) #Cardinal');
+  m = time.match('(half|quarter|25|20|15|10|5) (past|after|to) #Cardinal');
 
   if (m.found) {
     s = halfPast(m, s);
@@ -6470,6 +6516,44 @@ var parseTime = function parseTime(doc, context) {
       // choose ambiguous ampm
       s = ampmChooser(s);
       return s.time();
+    }
+  } // 'twenty past'
+
+
+  m = time.match('[<min>(half|quarter|25|20|15|10|5)] (past|after)');
+
+  if (m.found) {
+    var min = m.groups('min').text('reduced');
+    var d = spacetime(context.today); // support 'quarter', etc.
+
+    if (minMap.hasOwnProperty(min)) {
+      min = minMap[min];
+    }
+
+    d = d.next('hour').startOf('hour').minute(min);
+
+    if (d.isValid() && !d.isEqual(now)) {
+      return d.time();
+    }
+  } // 'ten to'
+
+
+  m = time.match('[<min>(half|quarter|25|20|15|10|5)] to');
+
+  if (m.found) {
+    var _min = m.groups('min').text('reduced');
+
+    var _d = spacetime(context.today); // support 'quarter', etc.
+
+
+    if (minMap.hasOwnProperty(_min)) {
+      _min = minMap[_min];
+    }
+
+    _d = _d.next('hour').startOf('hour').minus(_min, 'minutes');
+
+    if (_d.isValid() && !_d.isEqual(now)) {
+      return _d.time();
     }
   } // '4 in the evening'
 
@@ -6770,6 +6854,8 @@ var knownWord = {
 };
 knownWord.tommorrow = knownWord.tomorrow;
 knownWord.tmrw = knownWord.tomorrow;
+knownWord.anytime = knownWord.today;
+knownWord.sometime = knownWord.today;
 
 var today = function today(doc, context, section) {
   var unit = null; // is it empty?
@@ -7694,7 +7780,7 @@ var tokens = {
   timezone: _06Timezone,
   weekday: _07Weekday
 };
-var parse$3 = {
+var parse$2 = {
   today: _01Today,
   holiday: _02Holidays,
   nextLast: _03NextLast,
@@ -7706,7 +7792,11 @@ var transform = {
 };
 
 var parseDate = function parseDate(doc, context) {
-  // quick normalization
+  if (doc.world.isVerbose() === 'date') {
+    console.log("     str:   '".concat(doc.text(), "'"));
+  } // quick normalization
+
+
   doc.match('[^the] !#Value', 0).remove(); // keep 'the 17th'
   //parse-out any sections
 
@@ -7728,30 +7818,39 @@ var parseDate = function parseDate(doc, context) {
 
   var unit = null; //'in two days'
 
-  unit = unit || parse$3.today(doc, context, {
+  unit = unit || parse$2.today(doc, context, {
     shift: shift,
     time: time,
     rel: rel
   }); // 'this haloween'
 
-  unit = unit || parse$3.holiday(doc, context); // 'this month'
+  unit = unit || parse$2.holiday(doc, context); // 'this month'
 
-  unit = unit || parse$3.nextLast(doc, context); // 'q2 2002'
+  unit = unit || parse$2.nextLast(doc, context); // 'q2 2002'
 
-  unit = unit || parse$3.yearly(doc, context); // 'this june 2nd'
+  unit = unit || parse$2.yearly(doc, context); // 'this june 2nd'
 
-  unit = unit || parse$3.explicit(doc, context); // debugging
-  // console.log('\n\n=-=-=-=-=-=-=-=-=-=-=-=Date-=-=-=-=-=-=-=-=-=-=-=-=-\n')
-  // console.log(`  shift:      ${JSON.stringify(shift)}`)
-  // console.log(`  counter:   `, counter)
-  // console.log(`  rel:        ${rel || '-'}`)
-  // console.log(`  section:    ${section || '-'}`)
-  // console.log(`  time:       ${time || '-'}`)
-  // console.log(`  weekDay:    ${weekDay || '-'}`)
-  // console.log(`  str:       '${doc.text()}'`)
-  // console.log('  unit:     ', unit, '\n')
-  // doc.debug()
-  // console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n')
+  unit = unit || parse$2.explicit(doc, context);
+
+  if (!unit && weekDay) {
+    unit = new WeekDay(weekDay, null, context);
+    weekDay = null;
+  } // debugging
+
+
+  if (doc.world.isVerbose() === 'date') {
+    // console.log('\n\n=-= - - - - - =-=-')
+    console.log("     str:   '".concat(doc.text(), "'")); // console.log(`  shift:      ${JSON.stringify(shift)}`)
+    // console.log(`  counter:   `, counter)
+    // console.log(`  rel:        ${rel || '-'}`)
+    // console.log(`  section:    ${section || '-'}`)
+
+    console.log("     time:       ".concat(time || '-'));
+    console.log("     weekDay:    ".concat(weekDay || '-'));
+    console.log('     unit:     ', unit); // doc.debug()
+
+    console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n');
+  }
 
   if (!unit) {
     return null;
@@ -7780,7 +7879,7 @@ var parseDate = function parseDate(doc, context) {
 
 
   if (time) {
-    unit.applyTime(time);
+    unit.applyTime(time); // unit = new Minute(unit.d, null, unit.context)
   } // apply counter
 
 
@@ -7791,7 +7890,7 @@ var parseDate = function parseDate(doc, context) {
   return unit;
 };
 
-var parse_1$2 = parseDate;
+var _03Parse = parseDate;
 
 var dayNames = {
   mon: 'monday',
@@ -7925,12 +8024,46 @@ var parseIntervals = function parseIntervals(doc) {
     return {
       repeat: _repeat3
     };
+  } // mondays
+
+
+  m = doc.match('[<day>(mondays|tuesdays|wednesdays|thursdays|fridays|saturdays|sundays)] (at|near|after)? [<time>#Time+?]');
+
+  if (m.found) {
+    var _repeat4 = {
+      interval: {
+        day: 1
+      },
+      filter: {
+        weekDays: {}
+      }
+    };
+
+    var _str = m.groups('day').text('reduced');
+
+    _str = _str.replace(/s$/, '');
+    _str = dayNames[_str]; //normalize it
+
+    if (_str) {
+      _repeat4.filter.weekDays[_str] = true;
+      _repeat4.choose = 'OR';
+      doc = doc.remove(m);
+      var time = m.groups('time');
+
+      if (time.found) {
+        _repeat4.time = time.text('reduced');
+      }
+
+      return {
+        repeat: _repeat4
+      };
+    }
   }
 
   return null;
 };
 
-var intervals = parseIntervals;
+var _00Repeats = parseIntervals;
 
 var reverseMaybe = function reverseMaybe(obj) {
   var start = obj.start;
@@ -7945,22 +8078,100 @@ var reverseMaybe = function reverseMaybe(obj) {
   return obj;
 };
 
-var punt = function punt(unit, context) {
-  unit = unit.applyShift(context.punt);
-  return unit;
-};
+var _reverse = reverseMaybe;
 
-var ranges = [{
+var _01TwoTimes = [// {
+//   // 'january from 3pm to 4pm'
+//   match: '^[<date>#Date+] (from|between) [<from>#Time+] (to|until|upto|through|thru|and) [<to>#Time+]',
+//   desc: 'tuesday between 3 and 4',
+//   parse: (m, context) => {
+//     let date = m.groups('date')
+//     console.log('=-=-=-= here -=-=-=-')
+//     let from = m.groups('from')
+//     let to = m.groups('to')
+//     from = parseDate(from, context)
+//     if (from) {
+//       let end = from.clone()
+//       end.applyTime(to.text())
+//       if (end) {
+//         let obj = {
+//           start: from,
+//           end: end,
+//           unit: 'time',
+//         }
+//         obj = reverseMaybe(obj)
+//         return obj
+//       }
+//     }
+//     return null
+//   },
+// },
+{
+  // '3pm to 4pm january 5th'
+  match: '[<from>#Time+] (to|until|upto|through|thru|and) [<to>#Time+ #Date+]',
+  desc: '3pm to 4pm january 5th',
+  parse: function parse(m, context) {
+    var time = m.groups('from');
+    var to = m.groups('to');
+    var end = _03Parse(to, context);
+
+    if (end) {
+      var start = end.clone();
+      start.applyTime(time.text());
+
+      if (start) {
+        var obj = {
+          start: start,
+          end: end,
+          unit: 'time'
+        };
+        obj = _reverse(obj);
+        return obj;
+      }
+    }
+
+    return null;
+  }
+}, {
+  // 'january from 3pm to 4pm'
+  match: '[<from>#Date+] (to|until|upto|through|thru|and) [<to>#Time+]',
+  desc: 'january from 3pm to 4pm',
+  parse: function parse(m, context) {
+    var from = m.groups('from');
+    var to = m.groups('to');
+    from = _03Parse(from, context);
+
+    if (from) {
+      var end = from.clone();
+      end.applyTime(to.text());
+
+      if (end) {
+        var obj = {
+          start: from,
+          end: end,
+          unit: 'time'
+        };
+        obj = _reverse(obj);
+        return obj;
+      }
+    }
+
+    return null;
+  }
+}];
+
+var _02TwoDate = [{
   // two explicit dates - 'between friday and sunday'
-  match: 'between [<start>*] and [<end>*]',
+  match: 'between [<start>.+] and [<end>.+]',
+  desc: 'between friday and sunday',
   parse: function parse(m, context) {
     var start = m.groups('start');
-    start = parse_1$2(start, context);
+    start = _03Parse(start, context);
     var end = m.groups('end');
-    end = parse_1$2(end, context);
-    end = end.before();
+    end = _03Parse(end, context);
 
     if (start && end) {
+      end = end.before();
       return {
         start: start,
         end: end
@@ -7972,6 +8183,7 @@ var ranges = [{
 }, {
   // two months, no year - 'june 5 to june 7'
   match: '[<from>#Month #Value] (to|through|thru|and) [<to>#Month #Value] [<year>#Year?]',
+  desc: 'june 5 to june 7',
   parse: function parse(m, context) {
     var res = m.groups();
     var start = res.from;
@@ -7980,7 +8192,7 @@ var ranges = [{
       start = start.append(res.year);
     }
 
-    start = parse_1$2(start, context);
+    start = _03Parse(start, context);
 
     if (start) {
       var end = res.to;
@@ -7989,13 +8201,20 @@ var ranges = [{
         end = end.append(res.year);
       }
 
-      end = parse_1$2(end, context);
-      var obj = {
-        start: start,
-        end: end.end()
-      };
-      obj = reverseMaybe(obj);
-      return obj;
+      end = _03Parse(end, context);
+
+      if (end) {
+        // assume end is after start
+        if (start.d.isAfter(end.d)) {
+          end.d = end.d.add(1, 'year');
+        }
+
+        var obj = {
+          start: start,
+          end: end.end()
+        };
+        return obj;
+      }
     }
 
     return null;
@@ -8003,6 +8222,7 @@ var ranges = [{
 }, {
   // one month, one year, first form - 'january 5 to 7 1998'
   match: '[<month>#Month] [<from>#Value] (to|through|thru) [<to>#Value] of? [<year>#Year]',
+  desc: 'january 5 to 7 1998',
   parse: function parse(m, context) {
     var _m$groups = m.groups(),
         month = _m$groups.month,
@@ -8012,11 +8232,11 @@ var ranges = [{
 
     var year2 = year.clone();
     var start = from.prepend(month.text()).append(year.text());
-    start = parse_1$2(start, context);
+    start = _03Parse(start, context);
 
     if (start) {
       var end = to.prepend(month.text()).append(year2);
-      end = parse_1$2(end, context);
+      end = _03Parse(end, context);
       return {
         start: start,
         end: end.end()
@@ -8028,9 +8248,10 @@ var ranges = [{
 }, {
   // one month, one year, second form - '5 to 7 of january 1998'
   match: '[<from>#Value] (to|through|thru|and) [<to>#Value of? #Month of? #Year]',
+  desc: '5 to 7 of january 1998',
   parse: function parse(m, context) {
     var to = m.groups('to');
-    to = parse_1$2(to, context);
+    to = _03Parse(to, context);
 
     if (to) {
       var fromDate = m.groups('to');
@@ -8047,9 +8268,10 @@ var ranges = [{
 }, {
   // one month, no year - '5 to 7 of january'
   match: '[<from>#Value] (to|through|thru|and) [<to>#Value of? #Month]',
+  desc: '5 to 7 of january',
   parse: function parse(m, context) {
     var to = m.groups('to');
-    to = parse_1$2(to, context);
+    to = _03Parse(to, context);
 
     if (to) {
       var fromDate = m.groups('from');
@@ -8066,9 +8288,10 @@ var ranges = [{
 }, {
   // one month, no year - 'january 5 to 7'
   match: '[<from>#Month #Value] (to|through|thru|and) [<to>#Value]',
+  desc: 'january 5 to 7',
   parse: function parse(m, context) {
     var from = m.groups('from');
-    from = parse_1$2(from, context);
+    from = _03Parse(from, context);
 
     if (from) {
       var toDate = m.groups('to');
@@ -8085,12 +8308,13 @@ var ranges = [{
 }, {
   // 'january to may 2020'
   match: 'from? [<from>#Month] (to|until|upto|through|thru|and) [<to>#Month] [<year>#Year]',
+  desc: 'january to may 2020',
   parse: function parse(m, context) {
     var from = m.groups('from');
     var year = from.groups('year').numbers().get(0);
     var to = m.groups('to');
-    from = parse_1$2(from, context);
-    to = parse_1$2(to, context);
+    from = _03Parse(from, context);
+    to = _03Parse(to, context);
     from.d = from.d.year(year);
     to.d = to.d.year(year);
 
@@ -8100,75 +8324,35 @@ var ranges = [{
         end: to.end()
       }; // reverse the order?
 
-      obj = reverseMaybe(obj);
+      obj = _reverse(obj);
       return obj;
     }
 
     return null;
   }
-}, {
-  // '3pm to 4pm january 5th'
-  match: '^from? [<time>#Time+] (to|until|upto|through|thru|and) [<to>#Time+ #Date+]',
-  parse: function parse(m, context) {
-    var time = m.groups('time');
-    var to = m.groups('to');
-    var end = parse_1$2(to, context);
+}];
 
-    if (end) {
-      var start = end.clone();
-      start.applyTime(time.text());
+var punt = function punt(unit, context) {
+  unit = unit.applyShift(context.punt);
+  return unit;
+};
 
-      if (start) {
-        var obj = {
-          start: start,
-          end: end
-        };
-        obj = reverseMaybe(obj);
-        return obj;
-      }
-    }
-
-    return null;
-  }
-}, {
-  // 'january from 3pm to 4pm'
-  match: '^from? [<from>*] (to|until|upto|through|thru|and) [<to>#Time+]',
-  parse: function parse(m, context) {
-    var from = m.groups('from');
-    var to = m.groups('to');
-    from = parse_1$2(from, context);
-
-    if (from) {
-      var end = from.clone();
-      end.applyTime(to.text());
-
-      if (end) {
-        var obj = {
-          start: from,
-          end: end
-        };
-        obj = reverseMaybe(obj);
-        return obj;
-      }
-    }
-
-    return null;
-  }
-}, {
+var _03OneDate = [{
   // 'from A to B'
-  match: 'from? [<from>*] (to|until|upto|through|thru|and) [<to>*]',
+  match: 'from? [<from>.+] (to|until|upto|through|thru|and) [<to>.+]',
+  desc: 'from A to B',
   parse: function parse(m, context) {
     var from = m.groups('from');
     var to = m.groups('to');
-    from = parse_1$2(from, context);
-    to = parse_1$2(to, context);
+    from = _03Parse(from, context);
+    to = _03Parse(to, context);
 
     if (from && to) {
       var obj = {
         start: from,
         end: to.end()
       };
-      obj = reverseMaybe(obj);
+      obj = _reverse(obj);
       return obj;
     }
 
@@ -8176,10 +8360,11 @@ var ranges = [{
   }
 }, {
   // 'before june'
-  match: '^due? (by|before) [*]',
+  match: '^due? (by|before) [.+]',
+  desc: 'before june',
   group: 0,
   parse: function parse(m, context) {
-    var unit = parse_1$2(m, context);
+    var unit = _03Parse(m, context);
 
     if (unit) {
       var start = new Unit_1(context.today, null, context);
@@ -8204,15 +8389,17 @@ var ranges = [{
   }
 }, {
   // 'in june'
-  match: '^(on|in|at|@) [*]',
+  match: '^(on|in|at|@|during) [.+]',
+  desc: 'in june',
   group: 0,
   parse: function parse(m, context) {
-    var unit = parse_1$2(m, context);
+    var unit = _03Parse(m, context);
 
     if (unit) {
       return {
         start: unit,
-        end: unit.clone().end()
+        end: unit.clone().end(),
+        unit: unit.unit
       };
     }
 
@@ -8220,10 +8407,11 @@ var ranges = [{
   }
 }, {
   // 'after june'
-  match: '^(after|following) [*]',
+  match: '^(after|following) [.+]',
+  desc: 'after june',
   group: 0,
   parse: function parse(m, context) {
-    var unit = parse_1$2(m, context);
+    var unit = _03Parse(m, context);
 
     if (unit) {
       unit = unit.after();
@@ -8236,27 +8424,12 @@ var ranges = [{
     return null;
   }
 }, {
-  // 'in june'
-  match: '^(on|during|in|during) [*]',
-  group: 0,
-  parse: function parse(m, context) {
-    var unit = parse_1$2(m, context);
-
-    if (unit) {
-      return {
-        start: unit,
-        end: unit.clone().end()
-      };
-    }
-
-    return null;
-  }
-}, {
   // 'middle of'
-  match: '^(middle|center|midpoint) of [*]',
+  match: '^(middle|center|midpoint) of [.+]',
+  desc: 'middle of',
   group: 0,
   parse: function parse(m, context) {
-    var unit = parse_1$2(m, context);
+    var unit = _03Parse(m, context);
     var start = unit.clone().middle();
     var end = unit.beforeEnd();
 
@@ -8271,16 +8444,18 @@ var ranges = [{
   }
 }, {
   // 'tuesday after 5pm'
-  match: '* after #Time+$',
+  match: '.+ after #Time+$',
+  desc: 'tuesday after 5pm',
   parse: function parse(m, context) {
-    var unit = parse_1$2(m, context);
-    var start = unit.clone();
-    var end = unit.end();
+    var unit = _03Parse(m, context);
 
     if (unit) {
+      var start = unit.clone();
+      var end = unit.end();
       return {
         start: start,
-        end: end
+        end: end,
+        unit: 'time'
       };
     }
 
@@ -8288,16 +8463,18 @@ var ranges = [{
   }
 }, {
   // 'tuesday before noon'
-  match: '* before #Time+$',
+  match: '.+ before #Time+$',
+  desc: 'tuesday before noon',
   parse: function parse(m, context) {
-    var unit = parse_1$2(m, context);
+    var unit = _03Parse(m, context);
     var end = unit.clone();
     var start = unit.start();
 
     if (unit) {
       return {
         start: start,
-        end: end
+        end: end,
+        unit: 'time'
       };
     }
 
@@ -8305,12 +8482,14 @@ var ranges = [{
   }
 }];
 
+var ranges = [].concat(_01TwoTimes, _02TwoDate, _03OneDate); // loop thru each range template
+
 var parseRange = function parseRange(doc, context) {
   // parse-out 'every week ..'
-  var interval = intervals(doc) || {}; // if it's *only* an interval response
+  var repeats = _00Repeats(doc) || {}; // if it's *only* an interval response
 
   if (doc.found === false) {
-    return Object.assign({}, interval, {
+    return Object.assign({}, repeats, {
       start: null,
       end: null
     });
@@ -8326,11 +8505,14 @@ var parseRange = function parseRange(doc, context) {
         m = m.groups(fmt.group);
       }
 
+      if (doc.world.isVerbose() === 'date') {
+        console.log("  ---[".concat(fmt.desc, "]---"));
+      }
+
       var _res = fmt.parse(m, context);
 
       if (_res !== null) {
-        // console.log(fmt.match)
-        return Object.assign({}, interval, _res);
+        return Object.assign({}, repeats, _res);
       }
     }
   } //else, try whole thing
@@ -8340,17 +8522,22 @@ var parseRange = function parseRange(doc, context) {
     start: null,
     end: null
   };
-  var unit = parse_1$2(doc, context);
+  var unit = _03Parse(doc, context);
 
   if (unit) {
+    if (doc.world.isVerbose() === 'date') {
+      console.log("  --[no-range]--");
+    }
+
     var end = unit.clone().end();
     res = {
       start: unit,
-      end: end
+      end: end,
+      unit: unit.setTime ? 'time' : unit.unit
     };
   }
 
-  var combined = Object.assign({}, interval, res); // ensure start is not after end
+  var combined = Object.assign({}, repeats, res); // ensure start is not after end
   // console.log(combined)
 
   if (combined.start && combined.end && combined.start.d.epoch > combined.end.d.epoch) {
@@ -8381,8 +8568,9 @@ var normalize = function normalize(doc) {
   }
 
   if (!doc.numbers) {
-    console.warn("Compromise: compromise-dates cannot find plugin dependency 'compromise-number'");
+    console.warn("Warning: compromise-numbers plugin is not loaded.\n   You should load this plugin \n     - https://bit.ly/3t8RfFG");
   } else {
+    // doc.numbers().normalize()
     // convert 'two' to 2
     var _num = doc.numbers();
 
@@ -8421,17 +8609,30 @@ var shouldPick = function shouldPick(s, byDay) {
   }
 
   return true;
-}; // list possible dates of a repeating date
+};
 
+var hasTime = {
+  millisecond: true,
+  hour: true,
+  time: true
+}; // list possible dates of a repeating date
 
 var generateDates = function generateDates(result, context) {
   var list = [];
   var max_count = context.max_repeat || 12;
   var s = spacetime(result.start || context.today, context.timezone);
-  s = s.startOf('day');
 
-  if (context.dayStart) {
-    s = s.time(context.dayStart);
+  if (result.repeat.time) {
+    s = s.time(result.repeat.time);
+  } else if (hasTime[result.unit] === true) {
+    result.repeat.time = s.time();
+  } else {
+    s = s.startOf('day');
+    var time = s.time();
+
+    if (time === '12:00am' && context.dayStart) {
+      s = s.time(context.dayStart);
+    }
   } // should we stop at the end date?
 
 
@@ -8451,8 +8652,6 @@ var generateDates = function generateDates(result, context) {
   } // start going!
 
 
-  var loops = 0; // TODO: learn how to write better software.
-
   for (var i = 0; i < max_loops; i += 1) {
     if (list.length >= max_count || s.epoch >= end.epoch) {
       break;
@@ -8465,40 +8664,34 @@ var generateDates = function generateDates(result, context) {
     toAdd.forEach(function (unit) {
       s = s.add(result.repeat.interval[unit], unit);
     });
-    loops += 1;
+  } // add end-times to list
 
-    if (loops > 10000) {
-      console.warn('Warning: Possible infinite loop in date-parser');
-      console.log(result.repeat);
-      break;
+
+  result.repeat.generated = list.map(function (start) {
+    var eod = spacetime(start, context.timezone);
+
+    if (context.dayEnd) {
+      eod = eod.time(context.dayEnd);
+    } else {
+      eod = eod.endOf('day');
     }
-  }
 
-  result.repeat.generated = list; // if we got an interval, but not a start/end
+    return {
+      start: start,
+      end: eod.iso()
+    };
+  }); // if we got an interval, but not a start/end
 
   if (!result.start && result.repeat.generated && result.repeat.generated.length > 1) {
     var arr = result.repeat.generated;
-    result.start = arr[0];
-    result.end = arr[arr.length - 1];
+    result.start = arr[0].start;
+    result.end = arr[0].end;
   }
 
   return result;
 };
 
 var generate = generateDates;
-
-var addDuration = function addDuration(start, end) {
-  var duration = {};
-
-  if (start && end) {
-    duration = start.d.diff(end.d); // we don't need these
-
-    delete duration.milliseconds;
-    delete duration.seconds;
-  }
-
-  return duration;
-};
 
 var toISO = function toISO(unit) {
   if (unit && unit.d) {
@@ -8511,26 +8704,25 @@ var toISO = function toISO(unit) {
 var getDate = function getDate(doc, context) {
   // validate context a bit
   context = context || {};
-  context.timezone = context.timezone || 'ETC/UTC';
   context.today = spacetime(context.today || null, context.timezone); //turn 'five' into 5..
 
   doc = normalize_1(doc); //interpret 'between [A] and [B]'...
 
-  var result = _02Ranges(doc, context); // add duration
-
-  result.duration = addDuration(result.start, result.end); // format as iso
+  var result = _02Ranges(doc, context); // format as iso
 
   result.start = toISO(result.start);
   result.end = toISO(result.end); // generate interval dates
 
   if (result.repeat) {
     result = generate(result, context);
-  }
+  } // add timezone
 
+
+  result.tz = context.timezone;
   return result;
 };
 
-var parse$2 = getDate;
+var getDates = getDate;
 
 var arr = [['mon', 'monday'], ['tue', 'tuesday'], ['tues', 'tuesday'], ['wed', 'wednesday'], ['thu', 'thursday'], ['thurs', 'thursday'], ['fri', 'friday'], ['sat', 'saturday'], ['sun', 'sunday'], ['jan', 'january'], ['feb', 'february'], ['mar', 'march'], ['apr', 'april'], ['jun', 'june'], ['jul', 'july'], ['aug', 'august'], ['sep', 'september'], ['sept', 'september'], ['oct', 'october'], ['nov', 'november'], ['dec', 'december']];
 arr = arr.map(function (a) {
@@ -8541,6 +8733,86 @@ arr = arr.map(function (a) {
 });
 var _abbrevs = arr;
 
+var getDuration = function getDuration(date) {
+  var start = date.start;
+  var end = date.end;
+  var duration = {};
+
+  if (start && end) {
+    start = spacetime(start);
+    end = spacetime(end).add(1, 'millisecond');
+    duration = start.diff(end); // we don't need these
+
+    delete duration.milliseconds;
+    delete duration.seconds;
+    Object.keys(duration).forEach(function (k) {
+      if (duration[k] === 0) {
+        delete duration[k];
+      }
+    });
+  }
+
+  return duration;
+};
+
+var duration = getDuration;
+
+var mapUnits = {
+  millisecond: 'time',
+  hour: 'time',
+  minute: 'time'
+}; // try to decide what 'thing' this date-range is
+
+var getUnit = function getUnit(date) {
+  if (date.unit) {
+    if (mapUnits.hasOwnProperty(date.unit)) {
+      return mapUnits[date.unit];
+    }
+
+    return date.unit;
+  }
+
+  var duration$1 = date.duration;
+
+  if (!duration$1) {
+    duration$1 = duration(date);
+  }
+
+  var start = spacetime(date.start);
+  var end = spacetime(date.end); // 2021-2022
+
+  if (duration$1.years) {
+    if (start.isSame('year', end)) {
+      return 'year';
+    }
+
+    return 'years';
+  } // june-july
+
+
+  if (duration$1.months) {
+    if (start.isSame('month', end)) {
+      return 'month';
+    }
+
+    return 'months';
+  } // june 4-19th
+
+
+  if (duration$1.days) {
+    return 'days';
+  } // just a matter of hours
+
+
+  if (start.isSame('day', end)) {
+    return 'time';
+  }
+
+  return null;
+};
+
+var unit = getUnit;
+
 var methods$2 = {
   /** easy getter for the start/end dates */
   get: function get(options) {
@@ -8548,8 +8820,9 @@ var methods$2 = {
 
     var arr = [];
     this.forEach(function (doc) {
-      var found = parse$2(doc, _this.context);
-      arr.push(found);
+      var date = getDates(doc, _this.context);
+      date.unit = unit(date);
+      arr.push(date);
     });
 
     if (typeof options === 'number') {
@@ -8576,8 +8849,11 @@ var methods$2 = {
     var res = [];
     this.forEach(function (doc) {
       var json = doc.json(options)[0];
-      var found = parse$2(doc, _this2.context);
-      json.date = found;
+      var found = getDates(doc, _this2.context);
+      json = Object.assign(json, found); // add more data
+
+      json.duration = duration(json);
+      json.unit = unit(json);
       res.push(json);
     });
 
@@ -8593,7 +8869,7 @@ var methods$2 = {
     var _this3 = this;
 
     this.forEach(function (doc) {
-      var obj = parse$2(doc, _this3.context);
+      var obj = getDates(doc, _this3.context);
 
       if (obj.start) {
         var start = spacetime(obj.start, _this3.context.timezone);
@@ -9085,6 +9361,11 @@ var addMethods = function addMethods(Doc, world) {
 
     if (context.timezone === undefined) {
       context.timezone = spacetime().timezone().name;
+    } // allow null to mean utc
+
+
+    if (context.timezone === null) {
+      context.timezone = 'ETC/UTC';
     }
 
     var dates = find(this);

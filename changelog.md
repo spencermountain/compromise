@@ -10,6 +10,9 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 
 <!-- #### [Unreleased] 
 -->
+#### 13.10.5  [March 2021]
+- **[new]** - support Time-range like '3pm-4pm'
+  
 #### 13.10.4  [March 2021]
 - **[fix]** - match syntax tokenization fix
 - **[change]** - improved performance monitoring

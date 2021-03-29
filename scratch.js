@@ -3,7 +3,7 @@ nlp.extend(require('./plugins/numbers/src'))
 nlp.extend(require('./plugins/dates/src'))
 // nlp.extend(require('./plugins/match-runner/src'))
 // const text = require('/Users/spencer/mountain/compromise/scripts/perf/flame/_sotu-text.js')
-// nlp.verbose()
+nlp.verbose('tagger')
 
 let doc = nlp('tuesday from 4 to 5pm').debug()
 console.log(doc.dates().json(0))

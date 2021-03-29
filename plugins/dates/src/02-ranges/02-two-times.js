@@ -1,4 +1,4 @@
-const parseDate = require('../parseDate/parse')
+const parseDate = require('../03-parseDate')
 const reverseMaybe = require('./_reverse')
 
 module.exports = [

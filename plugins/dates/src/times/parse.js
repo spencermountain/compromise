@@ -1,5 +1,5 @@
 const normalize = require('../normalize')
-const parseTime = require('../parseDate/01-tokenize/03-time')
+const parseTime = require('../03-parseDate/01-tokenize/03-time')
 
 const parse = function (m, context) {
   m = normalize(m)

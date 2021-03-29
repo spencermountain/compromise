@@ -72,7 +72,7 @@ module.exports = [
   //fraction
   [/^[0-9]{1,4}\/[0-9]{1,4}(st|nd|rd|th)?s?$/, ['Fraction', 'NumericValue']], //3/2ths
   //range
-  [/^[0-9.]{1,3}[a-z]{0,2}[-–][0-9]{1,3}[a-z]{0,2}$/, ['Value', 'NumberRange']], //7th-8th
+  [/^[0-9.]{1,3}[a-z]{0,2}[-–—][0-9]{1,3}[a-z]{0,2}$/, ['Value', 'NumberRange']], //7th-8th
   //with unit
   [/^[0-9.]+([a-z]{1,4})$/, 'Value'], //like 5tbsp
   //ordinal

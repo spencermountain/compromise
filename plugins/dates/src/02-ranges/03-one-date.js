@@ -1,6 +1,6 @@
-const parseDate = require('../parseDate/parse')
+const parseDate = require('../03-parseDate')
 const reverseMaybe = require('./_reverse')
-const Unit = require('../parseDate/units/Unit')
+const Unit = require('../03-parseDate/units/Unit')
 
 const punt = function (unit, context) {
   unit = unit.applyShift(context.punt)
@@ -10,7 +10,7 @@ const punt = function (unit, context) {
 module.exports = [
   {
     // 'from A to B'
-    match: 'from? [<from>*] (to|until|upto|through|thru|and) [<to>.+]',
+    match: 'from? [<from>.+] (to|until|upto|through|thru|and) [<to>.+]',
     parse: (m, context) => {
       let from = m.groups('from')
       let to = m.groups('to')

@@ -22,6 +22,9 @@ const transform = {
 }
 
 const parseDate = function (doc, context) {
+  if (doc.world.isVerbose() === 'date') {
+    console.log(`  str:   '${doc.text()}'\n`)
+  }
   // quick normalization
   doc.match('[^the] !#Value', 0).remove() // keep 'the 17th'
   //parse-out any sections
@@ -50,19 +53,25 @@ const parseDate = function (doc, context) {
   unit = unit || parse.yearly(doc, context)
   // 'this june 2nd'
   unit = unit || parse.explicit(doc, context)
+
+  if (!unit && weekDay) {
+    unit = new WeekDay(weekDay, null, context)
+    weekDay = null
+  }
+
   // debugging
   if (doc.world.isVerbose() === 'date') {
-    console.log('\n\n=-=-=-=-=-=-=-=-=-=-=Date-=-=-=-=-=-=-=-=-')
+    console.log('\n\n=-= ------------ =-=-')
+    console.log(`  str:       '${doc.text()}'`)
     console.log(`  shift:      ${JSON.stringify(shift)}`)
     console.log(`  counter:   `, counter)
     console.log(`  rel:        ${rel || '-'}`)
     console.log(`  section:    ${section || '-'}`)
     console.log(`  time:       ${time || '-'}`)
     console.log(`  weekDay:    ${weekDay || '-'}`)
-    console.log(`  str:       '${doc.text()}'`)
     console.log('  unit:     ', unit)
     console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n')
-    // doc.debug()
+    doc.debug()
   }
   if (!unit) {
     return null

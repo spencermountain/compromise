@@ -1,4 +1,4 @@
-const parse = require('./parse')
+const parse = require('./getDates')
 const spacetime = require('spacetime')
 const abbrevs = require('./data/_abbrevs')
 const addDuration = require('./metadata/duration')

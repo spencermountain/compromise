@@ -1,4 +1,4 @@
-const parseDate = require('../parseDate/parse')
+const parseDate = require('../03-parseDate')
 const parseInterval = require('./intervals')
 const ranges = [].concat(require('./01-two-date'), require('./02-two-times'), require('./03-one-date'))
 
@@ -18,11 +18,11 @@ const parseRange = function (doc, context) {
       if (fmt.group !== undefined) {
         m = m.groups(fmt.group)
       }
+      if (doc.world.isVerbose() === 'date') {
+        console.log(`  ---[${fmt.match}]---`)
+      }
       let res = fmt.parse(m, context)
       if (res !== null) {
-        if (doc.world.isVerbose() === 'date') {
-          console.log(`  ---[${fmt.match}]---`)
-        }
         return Object.assign({}, interval, res)
       }
     }

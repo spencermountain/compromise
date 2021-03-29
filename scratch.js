@@ -5,9 +5,9 @@ const spacetime = require('/Users/spencer/mountain/spacetime')
 // nlp.extend(require('./plugins/match-runner/src'))
 // const text = require('/Users/spencer/mountain/compromise/scripts/perf/flame/_sotu-text.js')
 const fmt = iso => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
-// nlp.verbose('date')
+nlp.verbose('date')
 
-let doc = nlp('tuesday from 4 to 5pm').debug()
+let doc = nlp('between 2 and 5 tomorrow').debug()
 let dates = doc.dates().get()
 // console.log(doc.dates().get(0))
 dates.forEach(date => {

@@ -41,8 +41,14 @@ const timeTagger = function (doc) {
     m.match('[#NumberRange] to (#NumberRange && #Time)', 0).tag('Time', '3-4pm')
     // 3pm-5
     m.match('(#NumberRange && #Time) to [#NumberRange]', 0).tag('Time', '3pm-4')
+    // from 4 to 5 tomorrow
+    doc
+      .match('(from|between) #NumericValue and #NumericValue (in|on)? (#WeekDay|tomorrow|yesterday)')
+      .tag('Date', '4-to-5pm')
+      .match('#NumericValue')
+      .tag('Time', here)
     // from 4 to 5pm
-    doc.match('from [#NumericValue] to #Time', 0).tag('Time', '4-to-5pm')
+    doc.match('(from|between) [#NumericValue] to #Time', 0).tag('Time', '4-to-5pm')
   }
   // around four thirty
   doc.match('(at|around|near) [#Cardinal (thirty|fifteen) (am|pm)?]', 0).tag('Time', here)

@@ -1,17 +1,18 @@
-const parseDate = require('../03-parseDate')
+const parseDate = require('../03-parse')
 const reverseMaybe = require('./_reverse')
 
 module.exports = [
   {
     // two explicit dates - 'between friday and sunday'
     match: 'between [<start>.+] and [<end>.+]',
+    desc: 'between friday and sunday',
     parse: (m, context) => {
       let start = m.groups('start')
       start = parseDate(start, context)
       let end = m.groups('end')
       end = parseDate(end, context)
-      end = end.before()
       if (start && end) {
+        end = end.before()
         return {
           start: start,
           end: end,
@@ -24,6 +25,7 @@ module.exports = [
   {
     // two months, no year - 'june 5 to june 7'
     match: '[<from>#Month #Value] (to|through|thru|and) [<to>#Month #Value] [<year>#Year?]',
+    desc: 'june 5 to june 7',
     parse: (m, context) => {
       let res = m.groups()
       let start = res.from
@@ -37,15 +39,17 @@ module.exports = [
           end = end.append(res.year)
         }
         end = parseDate(end, context)
-        // assume end is after start
-        if (start.d.isAfter(end.d)) {
-          end.d = end.d.add(1, 'year')
+        if (end) {
+          // assume end is after start
+          if (start.d.isAfter(end.d)) {
+            end.d = end.d.add(1, 'year')
+          }
+          let obj = {
+            start: start,
+            end: end.end(),
+          }
+          return obj
         }
-        let obj = {
-          start: start,
-          end: end.end(),
-        }
-        return obj
       }
       return null
     },
@@ -53,6 +57,7 @@ module.exports = [
   {
     // one month, one year, first form - 'january 5 to 7 1998'
     match: '[<month>#Month] [<from>#Value] (to|through|thru) [<to>#Value] of? [<year>#Year]',
+    desc: 'january 5 to 7 1998',
     parse: (m, context) => {
       let { month, from, to, year } = m.groups()
       let year2 = year.clone()
@@ -72,6 +77,7 @@ module.exports = [
   {
     // one month, one year, second form - '5 to 7 of january 1998'
     match: '[<from>#Value] (to|through|thru|and) [<to>#Value of? #Month of? #Year]',
+    desc: '5 to 7 of january 1998',
     parse: (m, context) => {
       let to = m.groups('to')
       to = parseDate(to, context)
@@ -91,6 +97,7 @@ module.exports = [
   {
     // one month, no year - '5 to 7 of january'
     match: '[<from>#Value] (to|through|thru|and) [<to>#Value of? #Month]',
+    desc: '5 to 7 of january',
     parse: (m, context) => {
       let to = m.groups('to')
       to = parseDate(to, context)
@@ -110,6 +117,7 @@ module.exports = [
   {
     // one month, no year - 'january 5 to 7'
     match: '[<from>#Month #Value] (to|through|thru|and) [<to>#Value]',
+    desc: 'january 5 to 7',
     parse: (m, context) => {
       let from = m.groups('from')
       from = parseDate(from, context)
@@ -129,6 +137,7 @@ module.exports = [
   {
     // 'january to may 2020'
     match: 'from? [<from>#Month] (to|until|upto|through|thru|and) [<to>#Month] [<year>#Year]',
+    desc: 'january to may 2020',
     parse: (m, context) => {
       let from = m.groups('from')
       let year = from.groups('year').numbers().get(0)

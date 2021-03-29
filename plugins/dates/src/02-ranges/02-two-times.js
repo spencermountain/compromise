@@ -1,10 +1,13 @@
-const parseDate = require('../03-parseDate')
+const parseDate = require('../03-parse')
 const reverseMaybe = require('./_reverse')
+
+// const swapAMPM = function (start) {}
 
 module.exports = [
   {
     // '3pm to 4pm january 5th'
-    match: '^from? [<from>#Time+] (to|until|upto|through|thru|and) [<to>#Time+ #Date+]',
+    match: '^(between|from)? [<from>#Time+] (to|until|upto|through|thru|and) [<to>#Time+ #Date+]',
+    desc: '3pm to 4pm january 5th',
     parse: (m, context) => {
       let time = m.groups('from')
       let to = m.groups('to')
@@ -27,7 +30,8 @@ module.exports = [
   },
   {
     // 'january from 3pm to 4pm'
-    match: '^from? [<from>.+] (to|until|upto|through|thru|and) [<to>#Time+]',
+    match: '^(from|between)? [<from>.+] (to|until|upto|through|thru|and) [<to>#Time+]',
+    desc: 'january from 3pm to 4pm',
     parse: (m, context) => {
       let from = m.groups('from')
       let to = m.groups('to')

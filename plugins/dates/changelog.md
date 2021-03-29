@@ -5,7 +5,8 @@
 ### 2.0.0 [March 2021]
 - **[breaking]** - flatten json date results
 - **[breaking]** - remove duration from .get results
-- **[new]** - return unit information
+- **[new]** - return date unit information
+- **[change]** - include assumed iana timezone in results
 
 ### 1.5.5 [March 2021]
 - **[change]** -  use more-intuitive choices for ampm 

@@ -8,30 +8,13 @@ nlp.extend(require('../../plugins/dates/src'))
 // const fmt = (iso) => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 
 const context = {
-  // today: '2021-03-01', //monday
-  // today: '2021-03-02', //tuesday
-  // today: '2016-03-05', //on friday
-  // today: '2021-02-19',
-  // timezone: null,
-  // dayStart: '10am',
-  // today: [2016, 1, 11],
-  // dayEnd: '5pm',
   timezone: null, //'Asia/Shanghai',
   // today: '2021-02-19', //friday
   // dayStart: '8:00am',
   // dayEnd: '8:00pm',
 }
 
-// let doc = nlp('june 5th') //.debug()
-// let doc = nlp('tuesday at 3:30') //.debug()
-// let doc = nlp('9am to 5pm feb 26th') //.debug()
-// let doc = nlp('3:00 to 4pm on tuesday') //.debug()
-// let doc = nlp('feb 28').debug()
-let doc = nlp('jan 1 2020 to dec 31 2020').debug()
-// let doc = nlp('30mins').debug()
-// console.log(doc.durations().get())
-// let doc = nlp('next week') //.debug()
-// console.log(doc.world.isVerbose())
+let doc = nlp('tuesday from 4 to 5pm').debug()
 let dates = doc.dates(context)
 dates = dates.get()
 console.log(dates[0])

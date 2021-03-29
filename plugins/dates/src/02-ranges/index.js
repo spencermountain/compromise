@@ -1,6 +1,6 @@
 const parseDate = require('../parseDate/parse')
 const parseInterval = require('./intervals')
-const ranges = require('./ranges')
+const ranges = [].concat(require('./01-two-date'), require('./02-two-times'), require('./03-one-date'))
 
 // loop thru each range template
 const parseRange = function (doc, context) {

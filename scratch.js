@@ -7,10 +7,12 @@ const spacetime = require('/Users/spencer/mountain/spacetime')
 const fmt = iso => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 nlp.verbose('date')
 
-let doc = nlp('between 2 and 5 tomorrow').debug()
+let doc = nlp('anytime after 3').debug()
 let dates = doc.dates().get()
 // console.log(doc.dates().get(0))
 dates.forEach(date => {
   console.log('start: ', fmt(date.start))
   console.log('  end: ', fmt(date.end))
 })
+
+// doc.match('^[<date>#Date+] (from|between) [<from>#Time+] (to|until|upto|through|thru|and) [<to>#Time+]').debug()

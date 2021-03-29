@@ -106,9 +106,9 @@ module.exports = [
     desc: 'tuesday after 5pm',
     parse: (m, context) => {
       let unit = parseDate(m, context)
-      let start = unit.clone()
-      let end = unit.end()
       if (unit) {
+        let start = unit.clone()
+        let end = unit.end()
         return {
           start: start,
           end: end,

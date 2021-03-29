@@ -62,7 +62,7 @@ const parseDate = function (doc, context) {
   // debugging
   if (doc.world.isVerbose() === 'date') {
     // console.log('\n\n=-= - - - - - =-=-')
-    // console.log(`  str:       '${doc.text()}'`)
+    console.log(`     str:   '${doc.text()}'`)
     // console.log(`  shift:      ${JSON.stringify(shift)}`)
     // console.log(`  counter:   `, counter)
     // console.log(`  rel:        ${rel || '-'}`)

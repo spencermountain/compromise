@@ -56,7 +56,7 @@ const halfPast = function (m, s) {
 }
 
 const parseTime = function (doc, context) {
-  let time = doc.match('(at|by|for|before|this)? #Time+')
+  let time = doc.match('(at|by|for|before|this|after)? #Time+')
   if (time.found) {
     doc.remove(time)
     // '4pm on tuesday'
@@ -65,7 +65,7 @@ const parseTime = function (doc, context) {
     doc.remove('on the dot')
   }
   // get the main part of the time
-  time = time.not('^(at|by|for|before|this)')
+  time = time.not('^(at|by|for|before|this|after)')
   time = time.not('sharp')
   time = time.not('on the dot')
   let s = spacetime.now(context.timezone)

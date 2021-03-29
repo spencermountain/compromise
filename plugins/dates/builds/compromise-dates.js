@@ -1,4 +1,4 @@
-/* compromise-dates 2.0.0 MIT */
+/* compromise-dates 2.0.1 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -468,9 +468,13 @@
       } // from 4 to 5 tomorrow
 
 
-      date.match('(from|between) #NumericValue and #NumericValue (in|on)? (#WeekDay|tomorrow|yesterday)').tag('Date', '4-to-5pm').match('#NumericValue').tag('Time', here$2); // from 4 to 5pm
+      date.match('(from|between) #Cardinal and #Cardinal (in|on)? (#WeekDay|tomorrow|yesterday)').tag('Date', '4-to-5pm').match('#NumericValue').tag('Time', here$2); // from 4 to 5pm
 
-      date.match('(from|between) [#NumericValue] (to|and) #Time', 0).tag('Time', '4-to-5pm');
+      date.match('(from|between) [#NumericValue] (to|and) #Time', 0).tag('Time', '4-to-5pm'); // wed from 3 to 4
+
+      date.match('#Date from? (#Cardinal|#Time) to (#Cardinal|#Time)').tag('Date', here$2).match('#Cardinal').tag('#Time', 'from 3'); // 3 to 4 on wednesday
+
+      date.match('(#Cardinal|#Time) to (#Cardinal|#Time) on? #Date').tag('Date', here$2).match('#Cardinal').tag('#Time', 'from 3');
     } // around four thirty
 
 
@@ -8086,44 +8090,31 @@
 
   var _reverse = reverseMaybe;
 
-  var _01TwoTimes = [// {
-  //   // 'january from 3pm to 4pm'
-  //   match: '^[<date>#Date+] (from|between) [<from>#Time+] (to|until|upto|through|thru|and) [<to>#Time+]',
-  //   desc: 'tuesday between 3 and 4',
-  //   parse: (m, context) => {
-  //     let date = m.groups('date')
-  //     console.log('=-=-=-= here -=-=-=-')
-  //     let from = m.groups('from')
-  //     let to = m.groups('to')
-  //     from = parseDate(from, context)
-  //     if (from) {
-  //       let end = from.clone()
-  //       end.applyTime(to.text())
-  //       if (end) {
-  //         let obj = {
-  //           start: from,
-  //           end: end,
-  //           unit: 'time',
-  //         }
-  //         obj = reverseMaybe(obj)
-  //         return obj
-  //       }
-  //     }
-  //     return null
-  //   },
-  // },
-  {
+  var moveToPM = function moveToPM(obj) {
+    var start = obj.start;
+    var end = obj.end;
+
+    if (start.d.isAfter(end.d)) {
+      if (end.d.hour() < 10) {
+        end.d = end.d.ampm('pm');
+      }
+    }
+
+    return obj;
+  };
+
+  var _01TwoTimes = [{
     // '3pm to 4pm january 5th'
     match: '[<from>#Time+] (to|until|upto|through|thru|and) [<to>#Time+ #Date+]',
     desc: '3pm to 4pm january 5th',
     parse: function parse(m, context) {
-      var time = m.groups('from');
+      var from = m.groups('from');
       var to = m.groups('to');
       var end = _03Parse(to, context);
 
       if (end) {
         var start = end.clone();
-        start.applyTime(time.text());
+        start.applyTime(from.text());
 
         if (start) {
           var obj = {
@@ -8131,6 +8122,11 @@
             end: end,
             unit: 'time'
           };
+
+          if (/(am|pm)/.test(to) === false) {
+            obj = moveToPM(obj);
+          }
+
           obj = _reverse(obj);
           return obj;
         }
@@ -8157,6 +8153,11 @@
             end: end,
             unit: 'time'
           };
+
+          if (/(am|pm)/.test(to.text()) === false) {
+            obj = moveToPM(obj);
+          }
+
           obj = _reverse(obj);
           return obj;
         }

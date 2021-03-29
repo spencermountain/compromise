@@ -2,6 +2,9 @@
 <!-- #### [Unreleased] 
 
 -->
+### 2.0.1 [March 2021]
+- **[change]** - better am/pm choices in ambiguous time-ranges
+
 ### 2.0.0 [March 2021]
 - **[breaking]** - flatten json date results
 - **[breaking]** - remove duration from .get results

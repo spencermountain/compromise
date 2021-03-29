@@ -49,12 +49,24 @@ const timeTagger = function (doc) {
 
     // from 4 to 5 tomorrow
     date
-      .match('(from|between) #NumericValue and #NumericValue (in|on)? (#WeekDay|tomorrow|yesterday)')
+      .match('(from|between) #Cardinal and #Cardinal (in|on)? (#WeekDay|tomorrow|yesterday)')
       .tag('Date', '4-to-5pm')
       .match('#NumericValue')
       .tag('Time', here)
     // from 4 to 5pm
     date.match('(from|between) [#NumericValue] (to|and) #Time', 0).tag('Time', '4-to-5pm')
+    // wed from 3 to 4
+    date
+      .match('#Date from? (#Cardinal|#Time) to (#Cardinal|#Time)')
+      .tag('Date', here)
+      .match('#Cardinal')
+      .tag('#Time', 'from 3')
+    // 3 to 4 on wednesday
+    date
+      .match('(#Cardinal|#Time) to (#Cardinal|#Time) on? #Date')
+      .tag('Date', here)
+      .match('#Cardinal')
+      .tag('#Time', 'from 3')
   }
   // around four thirty
   doc.match('(at|around|near|#Date) [#Cardinal (thirty|fifteen) (am|pm)?]', 0).tag('Time', here)

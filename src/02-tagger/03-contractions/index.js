@@ -9,7 +9,7 @@ const checkRange = require('./06-ranges')
 const checkFrench = require('./07-french')
 const isNumber = /^[0-9]+$/
 const isOrdinal = /^[0-9]+(st|nd|rd|th)$/
-const isTime = /^[0-9]+(am|pm)$/
+const isTime = /^[0-9:]+(am|pm)$/
 
 const createPhrase = function (found, doc) {
   //create phrase from ['would', 'not']

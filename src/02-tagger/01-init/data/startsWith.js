@@ -73,6 +73,8 @@ module.exports = [
   [/^[0-9]{1,4}\/[0-9]{1,4}(st|nd|rd|th)?s?$/, ['Fraction', 'NumericValue']], //3/2ths
   //range
   [/^[0-9.]{1,3}[a-z]{0,2}[-–—][0-9]{1,3}[a-z]{0,2}$/, ['Value', 'NumberRange']], //7th-8th
+  //time-range
+  [/^[0-9][0-9]?(:[0-9][0-9])?(am|pm)?[-–—][0-9][0-9]?(:[0-9][0-9])?(am|pm)?$/, ['Time', 'NumberRange']], //7pm-8:30
   //with unit
   [/^[0-9.]+([a-z]{1,4})$/, 'Value'], //like 5tbsp
   //ordinal

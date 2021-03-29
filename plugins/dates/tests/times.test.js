@@ -20,7 +20,7 @@ test('times of start and end', function (t) {
     ['any tuesday from 2 to 7pm', '2:00pm'],
     ['anytime after 3', '3:00pm'],
     ['3pm-3:30', '3:00pm'],
-    ['3:30pm-3:45', '3:00pm'],
+    ['3:30pm-3:45', '3:30pm'],
   ]
   arr.forEach((a) => {
     let doc = nlp(a[0])

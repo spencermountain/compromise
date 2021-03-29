@@ -1704,7 +1704,7 @@ var stitchIn$1 = function stitchIn(beforeTerms, newTerms, pool) {
 }; // avoid stretching a phrase twice.
 
 
-var unique$6 = function unique(list) {
+var unique$5 = function unique(list) {
   return list.filter(function (o, i) {
     return list.indexOf(o) === i;
   });
@@ -1733,7 +1733,7 @@ var appendPhrase = function appendPhrase(before, newPhrase, doc) {
     toStretch = toStretch.concat(shouldChange);
   }); // don't double-count a phrase
 
-  toStretch = unique$6(toStretch);
+  toStretch = unique$5(toStretch);
   toStretch.forEach(function (p) {
     p.length += newPhrase.length;
   });
@@ -1779,7 +1779,7 @@ var stitchIn = function stitchIn(main, newPhrase, newTerms) {
   main.terms(0).prev = lastTerm.id;
 };
 
-var unique$5 = function unique(list) {
+var unique$4 = function unique(list) {
   return list.filter(function (o, i) {
     return list.indexOf(o) === i;
   });
@@ -1805,7 +1805,7 @@ var joinPhrase = function joinPhrase(original, newPhrase, doc) {
     toStretch = toStretch.concat(shouldChange);
   }); // don't double-count
 
-  toStretch = unique$5(toStretch); // stretch these phrases
+  toStretch = unique$4(toStretch); // stretch these phrases
 
   toStretch.forEach(function (p) {
     p.length += newPhrase.length; // change the start too, if necessary
@@ -4230,7 +4230,7 @@ var addColors = function addColors(tags) {
 
 var _color = addColors;
 
-var unique$4 = function unique(arr) {
+var unique$3 = function unique(arr) {
   return arr.filter(function (v, i, a) {
     return a.indexOf(v) === i;
   });
@@ -4251,14 +4251,14 @@ var inferIsA = function inferIsA(tags) {
     } // clean it up
 
 
-    tag.isA = unique$4(tag.isA);
+    tag.isA = unique$3(tag.isA);
   });
   return tags;
 };
 
 var _isA = inferIsA;
 
-var unique$3 = function unique(arr) {
+var unique$2 = function unique(arr) {
   return arr.filter(function (v, i, a) {
     return a.indexOf(v) === i;
   });
@@ -4288,7 +4288,7 @@ var inferNotA = function inferNotA(tags) {
     } // clean it up
 
 
-    tag.notA = unique$3(tag.notA);
+    tag.notA = unique$2(tag.notA);
   });
   return tags;
 };
@@ -7559,18 +7559,16 @@ var _06Lookup = createCommonjsModule(function (module, exports) {
   exports.lookUp = exports.lookup;
 });
 
-var unique$2 = function unique(set) {
-  return Array.from(set);
-};
 /** freeze the current state of the document, for speed-purposes*/
-
-
 var cache = function cache(options) {
   var _this = this;
 
   options = options || {};
   var words = {};
   var tags = {};
+  this._cache.words = words;
+  this._cache.tags = tags;
+  this._cache.set = true;
   this.list.forEach(function (p, i) {
     p.cache = p.cache || {}; //p.terms get cached automatically
 
@@ -7581,11 +7579,11 @@ var cache = function cache(options) {
         return; //skip prototype words
       }
 
-      words[t.reduced] = words[t.reduced] || new Set();
-      words[t.reduced].add(i);
+      words[t.reduced] = words[t.reduced] || [];
+      words[t.reduced].push(i);
       Object.keys(t.tags).forEach(function (tag) {
-        tags[tag] = tags[tag] || new Set();
-        tags[tag].add(i);
+        tags[tag] = tags[tag] || [];
+        tags[tag].push(i);
       }); // cache root-form on Term, too
 
       if (options.root) {
@@ -7593,17 +7591,7 @@ var cache = function cache(options) {
         words[t.root] = [i];
       }
     });
-  }); // unique the arrays
-
-  Object.keys(words).forEach(function (k) {
-    words[k] = unique$2(words[k]);
   });
-  Object.keys(tags).forEach(function (k) {
-    tags[k] = unique$2(tags[k]);
-  });
-  this._cache.words = words;
-  this._cache.tags = tags;
-  this._cache.set = true;
   return this;
 };
 /** un-freezes the current state of the document, so it may be transformed */

@@ -1,13 +1,11 @@
-const unique = function (set) {
-  return Array.from(set)
-}
-
 /** freeze the current state of the document, for speed-purposes*/
 exports.cache = function (options) {
   options = options || {}
   let words = {}
   let tags = {}
-
+  this._cache.words = words
+  this._cache.tags = tags
+  this._cache.set = true
   this.list.forEach((p, i) => {
     p.cache = p.cache || {}
     //p.terms get cached automatically
@@ -17,14 +15,12 @@ exports.cache = function (options) {
       if (words[t.reduced] && !words.hasOwnProperty(t.reduced)) {
         return //skip prototype words
       }
-      words[t.reduced] = words[t.reduced] || new Set()
-      words[t.reduced].add(i)
-
+      words[t.reduced] = words[t.reduced] || []
+      words[t.reduced].push(i)
       Object.keys(t.tags).forEach(tag => {
-        tags[tag] = tags[tag] || new Set()
-        tags[tag].add(i)
+        tags[tag] = tags[tag] || []
+        tags[tag].push(i)
       })
-
       // cache root-form on Term, too
       if (options.root) {
         t.setRoot(this.world)
@@ -32,19 +28,8 @@ exports.cache = function (options) {
       }
     })
   })
-  // unique the arrays
-  Object.keys(words).forEach(k => {
-    words[k] = unique(words[k])
-  })
-  Object.keys(tags).forEach(k => {
-    tags[k] = unique(tags[k])
-  })
-  this._cache.words = words
-  this._cache.tags = tags
-  this._cache.set = true
   return this
 }
-
 /** un-freezes the current state of the document, so it may be transformed */
 exports.uncache = function () {
   this._cache = {}

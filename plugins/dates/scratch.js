@@ -14,7 +14,7 @@ const context = {
   // dayEnd: '8:00pm',
 }
 
-let doc = nlp('between 4pm and 5pm').debug()
+let doc = nlp('wednesdays at 3').debug()
 let dates = doc.dates(context)
 dates = dates.get()
 console.log(dates[0])
@@ -33,7 +33,7 @@ dates.forEach((date) => {
 // doc.values().normalize().debug()
 // let doc = nlp('20 mins before tuesday at 3pm').debug()
 // let doc = nlp(`3-4pm`).debug()
-// let doc = nlp(`5 to 7 of january 1998`).debug()
+// let doc = nlp(`5 to 7 of january 1998`).debug()gs
 // let doc = nlp('2005 4th quarter')
 // let doc = nlp(`Chanukah 2018`)
 // let doc = nlp(`2 thursdays ago`).debug()

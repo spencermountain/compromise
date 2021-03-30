@@ -31,7 +31,8 @@ const timeTagger = function (doc) {
     date.match('half an (hour|minute|second)').tag('Date', here)
     // in eastern time
     date.match('(in|for|by|near|at) #Timezone').tag('Timezone', here)
-
+    // 3pm to 4pm
+    date.debug().match('#Time to #Time').tag('Date', here)
     //--time-ranges--
     // 4pm sharp
     date.match('#Time [(sharp|on the dot)]', 0).tag('Time', here)

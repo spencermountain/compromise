@@ -14,7 +14,7 @@ const context = {
   // dayEnd: '8:00pm',
 }
 
-let doc = nlp('11am to 9 january 5th').debug()
+let doc = nlp('3pm-3:30').debug()
 let dates = doc.dates(context)
 dates = dates.get()
 console.log(dates[0])

@@ -9,7 +9,7 @@ const checkRange = require('./06-ranges')
 const checkFrench = require('./07-french')
 const isNumber = /^[0-9]+$/
 const isOrdinal = /^[0-9]+(st|nd|rd|th)$/
-const isTime = /^[0-9:]+(am|pm)$/
+const isTime = /^[0-9:]+(am|pm)?$/
 
 const createPhrase = function (found, doc) {
   //create phrase from ['would', 'not']
@@ -17,6 +17,20 @@ const createPhrase = function (found, doc) {
   //tag it
   let terms = phrase.terms()
   checkLexicon(terms, doc.world)
+
+  let term = terms[0]
+  // tag number-ranges
+  if (isOrdinal.test(term.text)) {
+    terms[0].tag('Ordinal', 'ord-range', doc.world)
+    terms[2].tag('Ordinal', 'ord-range', doc.world)
+  } else if (isNumber.test(term.text)) {
+    terms[0].tag('Cardinal', 'num-range', doc.world)
+    terms[2].tag('Cardinal', 'num-range', doc.world)
+  } else if (isTime.test(term.text)) {
+    terms[0].tag('Time', 'time-range', doc.world)
+    terms[1].tag('Date', 'time-range', doc.world)
+    terms[2].tag('Time', 'time-range', doc.world)
+  }
   //make these terms implicit
   terms.forEach(t => {
     t.implicit = t.text
@@ -25,14 +39,7 @@ const createPhrase = function (found, doc) {
     // remove whitespace for implicit terms
     t.pre = ''
     t.post = ''
-    // tag number-ranges
-    if (isNumber.test(t.implicit)) {
-      t.tag('Cardinal', 'num-range', doc.world)
-    } else if (isOrdinal.test(t.implicit)) {
-      t.tag('Ordinal', 'ord-range', doc.world)
-    } else if (isTime.test(t.implicit)) {
-      t.tag('Time', 'time-range', doc.world)
-    } else if (Object.keys(t.tags).length === 0) {
+    if (Object.keys(t.tags).length === 0) {
       t.tags.Noun = true // if no tag, give it a noun
     }
   })

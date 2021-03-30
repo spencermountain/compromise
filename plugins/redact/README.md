@@ -51,7 +51,7 @@ let m = doc.redact({
     return person
   },
 })
-m.debug()
+m.debug() //show interpretation
 ```
 
 ### Considerations

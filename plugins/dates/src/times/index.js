@@ -48,7 +48,6 @@ const addTimes = function (Doc) {
   /** phrases like '4pm' */
   Doc.prototype.times = function (n) {
     let m = this.match('#Time+ (am|pm)?')
-    // m.debug()
     if (typeof n === 'number') {
       m = m.get(n)
     }

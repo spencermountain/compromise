@@ -22,6 +22,7 @@ const transform = {
 }
 
 const parseDate = function (doc, context) {
+  doc = doc.clone()
   if (doc.world.isVerbose() === 'date') {
     console.log(`     str:   '${doc.text()}'`)
   }
@@ -70,7 +71,6 @@ const parseDate = function (doc, context) {
     console.log(`     time:       ${time || '-'}`)
     console.log(`     weekDay:    ${weekDay || '-'}`)
     console.log('     unit:     ', unit)
-    // doc.debug()
     console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n')
   }
   if (!unit) {

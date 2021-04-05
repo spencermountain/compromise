@@ -1,4 +1,4 @@
-const { WeekDay } = require('./units')
+const { WeekDay, Hour, Day } = require('./units')
 const tokens = {
   shift: require('./01-tokenize/01-shift'),
   counter: require('./01-tokenize/02-counter'),
@@ -80,6 +80,12 @@ const parseDate = function (doc, context) {
   // 2 days after..
   if (shift) {
     unit.applyShift(shift)
+    // allow shift to change our unit size
+    if (shift.hour || shift.minute) {
+      unit = new Hour(unit.d, null, unit.context)
+    } else if (shift.week || shift.day || shift.month) {
+      unit = new Day(unit.d, null, unit.context)
+    }
   }
   // wednesday next week
   if (weekDay && unit.unit !== 'day') {

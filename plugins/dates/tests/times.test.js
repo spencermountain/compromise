@@ -53,13 +53,13 @@ test('times of start and end', function (t) {
     ['sometime after 4', '4:00pm'],
     ['sometime after 11pm', '11:00pm'],
     ['ten past three', '3:10pm'],
-    ['in a hour', '11:05pm'],
-    ['in an hour from now', '11:05pm'],
-    ['in one hour from now', '11:05pm'],
-    ['in half an hour from now', '10:35pm'],
+    ['in a hour', '11:05am'],
+    ['in an hour from now', '11:05am'],
+    ['in one hour from now', '11:05am'],
+    ['in half an hour from now', '10:35am'],
     ['next monday at 9', '9:00am'],
     // ['half three', '3:30pm'],
-    // ['at 10 to three', '3:10pm'],
+    ['at 10 to three', '2:50pm'],
   ]
   arr.forEach((a) => {
     let doc = nlp(a[0])

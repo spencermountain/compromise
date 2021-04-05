@@ -10,13 +10,14 @@ const fmt = (iso) => (iso ? spacetime(iso).format('{day-short} {nice} {year}') :
 const context = {
   // timezone: null, //'Asia/Shanghai',
   // today: '2021-02-19', //friday
+  today: '2018-01-19T10:05:00',
   // dayStart: '8:00am',
   // dayEnd: '8:00pm',
 }
 
-let doc = nlp('in 3 weeks').debug()
+let doc = nlp('2 hours from now')
 // let doc = nlp('two years ago').debug()
-console.log(doc.text())
+// console.log(doc.text())
 let dates = doc.dates(context)
 dates = dates.get()
 // console.log(dates[0])

@@ -116,7 +116,7 @@ const parseExplicit = function (doc, context) {
 
   let str = doc.text('reduced')
   if (!str) {
-    return new Moment(str, null, context)
+    return new Moment(context.today, null, context)
   }
   // punt it to spacetime, for the heavy-lifting
   let unit = new Day(str, null, context)

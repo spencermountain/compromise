@@ -1,4 +1,3 @@
-const spacetime = require('spacetime')
 const parseTime = require('../times/parse')
 
 const dayNames = {

@@ -56,6 +56,8 @@ const timeTagger = function (doc) {
       .tag('Time', here)
     // from 4 to 5pm
     date.match('(from|between) [#NumericValue] (to|and) #Time', 0).tag('Time', '4-to-5pm')
+
+    // date.match('#Cardinal to #Time')
     // wed from 3 to 4
     date
       .match('(#WeekDay|tomorrow|yesterday) from? (#Cardinal|#Time) to (#Cardinal|#Time)')
@@ -66,10 +68,18 @@ const timeTagger = function (doc) {
     let m = date.match('#Month #Value+ from [<time>(#Cardinal|#Time) to (#Cardinal|#Time)]')
     m.tag('Date', here)
     m.group('time').match('#Cardinal').tag('#Time', 'from-3-5')
-    // 3 to 4 on wednesday
-    m = date.match('(#Cardinal|#Time) to (#Cardinal|#Time) on? #Date')
+    // 3pm to 4 on wednesday
+    m = date.match('#Time to #Cardinal on? #Date')
     m.tag('Date', here)
-    m.match('#Cardinal').tag('#Time', 'from 3')
+    m.match('#Cardinal').tag('#Time', '3pm to 4')
+    // 3 to 4pm on wednesday
+    m = date.match('#Cardinal to #Time on? #Date')
+    m.tag('Date', here)
+    m.match('#Cardinal').tag('#Time', '3 to 4pm')
+    // 3 to 4p on wednesday
+    m = date.match('#Cardinal to #Cardinal on? (#WeekDay|#Month)')
+    m.tag('Date', here)
+    m.match('#Cardinal').tag('#Time', '3 to 4 wed')
   }
   // around four thirty
   doc.match('(at|around|near|#Date) [#Cardinal (thirty|fifteen) (am|pm)?]', 0).tag('Time', here)

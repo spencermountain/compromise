@@ -59,3 +59,13 @@ test('lists of days', function (t) {
 
   t.end()
 })
+
+test('tagger does not mutate text', function (t) {
+  let arr = ['in a hour', 'in an hour', 'jan and tues the third', 'tmrw the second', 'JAN and WeD']
+  arr.forEach((str) => {
+    let doc = nlp(str)
+    doc.dates()
+    t.equal(doc.text(), str, str)
+  })
+  t.end()
+})

@@ -5,7 +5,7 @@ const nlp = require('./_lib')
 test('times of start and end', function (t) {
   let context = {
     timezone: 'Asia/Shanghai',
-    today: '2018-01-19',
+    today: '2018-01-19T10:05:00',
   }
   let arr = [
     ['tuesday at 4', '4:00pm'],
@@ -52,6 +52,14 @@ test('times of start and end', function (t) {
     ['between 3 and 6 tuesday', '3:00pm', '6:00pm'],
     ['sometime after 4', '4:00pm'],
     ['sometime after 11pm', '11:00pm'],
+    ['ten past three', '3:10pm'],
+    ['in a hour', '11:05pm'],
+    ['in an hour from now', '11:05pm'],
+    ['in one hour from now', '11:05pm'],
+    ['in half an hour from now', '10:35pm'],
+    ['next monday at 9', '9:00am'],
+    // ['half three', '3:30pm'],
+    // ['at 10 to three', '3:10pm'],
   ]
   arr.forEach((a) => {
     let doc = nlp(a[0])

@@ -1,5 +1,6 @@
 
 <!-- #### [Unreleased] 
+- **[change]** - null timezone is now the same as undefined timezone
 
 -->
 ### 2.0.1 [March 2021]

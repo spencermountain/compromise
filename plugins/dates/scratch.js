@@ -3,7 +3,7 @@ const spacetime = require('spacetime')
 nlp.extend(require('../../plugins/numbers/src'))
 nlp.extend(require('../../plugins/dates/src'))
 // nlp.verbose(true)
-nlp.verbose('date')
+// nlp.verbose('date')
 
 const fmt = (iso) => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 
@@ -15,7 +15,7 @@ const context = {
   // dayEnd: '8:00pm',
 }
 
-let doc = nlp('2 hours from now')
+let doc = nlp('at twenty to three').debug()
 // let doc = nlp('two years ago').debug()
 // console.log(doc.text())
 let dates = doc.dates(context)

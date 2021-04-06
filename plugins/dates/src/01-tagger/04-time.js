@@ -54,6 +54,13 @@ const timeTagger = function (doc) {
       .tag('Date', '4-to-5pm')
       .match('#NumericValue')
       .tag('Time', here)
+
+    // 9 to 5 tomorrow
+    doc
+      .match('#Cardinal to #Cardinal (#WeekDay|tomorrow|yesterday)')
+      .tag('Date', '4-to-5pm')
+      .match('#NumericValue')
+      .tag('Time', here)
     // from 4 to 5pm
     date.match('(from|between) [#NumericValue] (to|and) #Time', 0).tag('Time', '4-to-5pm')
 

@@ -15,7 +15,7 @@ const context = {
   // dayEnd: '8:00pm',
 }
 
-let doc = nlp('monday to wednesday').debug()
+let doc = nlp('22-23 Feb').debug()
 let dates = doc.dates(context)
 dates = dates.get()
 dates.forEach((date) => {

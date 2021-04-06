@@ -1,5 +1,6 @@
 const test = require('tape')
 const nlp = require('./_lib')
+const spacetime = require('spacetime')
 
 //number of days between start+end
 const tests = [
@@ -37,14 +38,15 @@ const tests = [
       // ['after next weekend', 'Aug 21st - Sept 4th 2016'],
       ['september 5th 2018', 'on Wed, Sept 5th, 2018'],
       ['on april fools 2020', 'on Wed, Apr 1st, 2020'],
-      // // ['june 5-7 1999', 'Jun 5-7, 1999'],
+      // ['june 5-7 1999', 'Jun 5-7, 1999'],
       // ['june 5 to 7, 1999', 'Jun 5-7, 1999'],
       // ['june 5th to 7, 1999', 'Jun 5-7, 1999'],
-      // // ['june 5th-7th 2017', 'Jun 5-7, 2017'],
+      // ['june 5th-7th 2017', 'Jun 5-7, 2017'],
       // ['5th to 7 june, 1999', 'Jun 5-7, 1999'],
       // ['5 to 7 august 1999', 'Aug 5-7, 1999'],
       // ['15 to 20 of august 1999', 'Aug 15-20, 1999'],
       // ['15th - 20th of august', 'Aug 15-20'],
+      // ['monday to wednesday', 'Aug 15th to Aug 17th'],
     ],
   },
   {
@@ -150,6 +152,10 @@ const tests = [
   },
 ]
 
+const fmt = function (str) {
+  return spacetime(str).format('nice')
+}
+
 test('full-dates', (t) => {
   tests.forEach((obj) => {
     const context = {
@@ -166,8 +172,8 @@ test('full-dates', (t) => {
       let right = nlp(a[1]).dates(context).json()[0] || {}
       left.date = left.date || {}
       right.date = right.date || {}
-      t.equal(left.date.start, right.date.start, 'start: ' + a[0])
-      t.equal(left.date.end, right.date.end, 'end: ' + a[0])
+      t.equal(fmt(left.start), fmt(right.start), '[start] ' + a[0])
+      t.equal(fmt(left.end), fmt(right.end), '[end] ' + a[0])
     })
   })
   t.end()

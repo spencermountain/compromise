@@ -76,28 +76,8 @@ module.exports = [
   },
   {
     // one month, one year, second form - '5 to 7 of january 1998'
-    match: '[<from>#Value] (to|through|thru|and) [<to>#Value of? #Month of? #Year]',
+    match: '[<from>#Value] (to|through|thru|and) [<to>#Value of? #Month of? #Year?]',
     desc: '5 to 7 of january 1998',
-    parse: (m, context) => {
-      let to = m.groups('to')
-      to = parseDate(to, context)
-      if (to) {
-        let fromDate = m.groups('to')
-        let from = to.clone()
-        from.d = from.d.date(fromDate.text('normal'))
-        return {
-          start: from,
-          end: to.end(),
-        }
-      }
-      return null
-    },
-  },
-
-  {
-    // one month, no year - '5 to 7 of january'
-    match: '[<from>#Value] (to|through|thru|and) [<to>#Value of? #Month]',
-    desc: '5 to 7 of january',
     parse: (m, context) => {
       let to = m.groups('to')
       to = parseDate(to, context)

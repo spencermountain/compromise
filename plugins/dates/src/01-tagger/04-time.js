@@ -42,21 +42,26 @@ const timeTagger = function (doc) {
     date.match('(in|for|by|near|at) #Timezone').tag('Timezone', here)
     // 3pm to 4pm
     date.match('#Time to #Time').tag('Date', here)
-    //--time-ranges--
     // 4pm sharp
     date.match('#Time [(sharp|on the dot)]', 0).tag('Time', here)
+
+    // ==time-ranges=
+    //   --number-ranges--
     let range = date.if('#NumberRange')
     if (range.found) {
       // 3-4 on tuesday
-      range.match('[#NumberRange+] (on|near|by|at)? #WeekDay', 0).tag('Time', '3-4-tuesday')
+      let m = range.match('[#NumberRange+] (on|by|at)? #WeekDay', 0)
+      tagTimeRange(m, '3-4-tuesday')
       // 3-4 on march 2nd
-      range.match('[#NumberRange+] (on|near|by|at)? #Month #Value', 0).tag('Time', '3-4-mar-3')
+      range.match('[#NumberRange+] (on|by|at)? #Month #Value', 0)
+      tagTimeRange(m, '3-4 mar 3')
       // 3-4pm
-      range.match('[#NumberRange] to (#NumberRange && #Time)', 0).tag('Time', '3-4pm')
+      range.match('[#NumberRange] to (#NumberRange && #Time)', 0)
+      tagTimeRange(m, '3-4pm')
       // 3pm-5
-      range.match('(#NumberRange && #Time) to [#NumberRange]', 0).tag('Time', '3pm-4')
+      range.match('(#NumberRange && #Time) to [#NumberRange]', 0)
+      tagTimeRange(m, '3pm-4')
     }
-    // ==time-ranges=
     // from 4 to 5 tomorrow
     let m = date.match('(from|between) #Cardinal and #Cardinal (in|on)? (#WeekDay|tomorrow|yesterday)')
     tagTimeRange(m, 'from 9-5 tues')
@@ -70,8 +75,7 @@ const timeTagger = function (doc) {
     m = date.match('(#WeekDay|tomorrow|yesterday) (from|between)? (#Cardinal|#Time) (and|to) (#Cardinal|#Time)')
     tagTimeRange(m, 'tues 3-5')
     // june 5 from 3 to 4
-    m = date.match('#Month #Value+ (from|between) [<time>(#Cardinal|#Time) (and|to) (#Cardinal|#Time)]')
-    m = m.tag('Date', here).group('time')
+    m = date.match('#Month #Value+ (from|between) [<time>(#Cardinal|#Time) (and|to) (#Cardinal|#Time)]').group('time')
     tagTimeRange(m, 'sep 4 from 9-5')
     // 3pm to 4 on wednesday
     m = date.match('#Time to #Cardinal on? #Date')

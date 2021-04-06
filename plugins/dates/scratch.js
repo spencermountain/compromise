@@ -1,27 +1,30 @@
 const nlp = require('../../src/index')
-// const spacetime = require('spacetime')
-// nlp.verbose(true)
+const spacetime = require('spacetime')
 nlp.extend(require('../../plugins/numbers/src'))
 nlp.extend(require('../../plugins/dates/src'))
+// nlp.verbose(true)
 // nlp.verbose('date')
 
-// const fmt = (iso) => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
+const fmt = (iso) => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 
 const context = {
-  timezone: null, //'Asia/Shanghai',
+  // timezone: null, //'Asia/Shanghai',
   // today: '2021-02-19', //friday
+  today: '2018-01-19T10:05:00',
   // dayStart: '8:00am',
   // dayEnd: '8:00pm',
 }
 
-let doc = nlp('tuesday from 4 to 5pm').debug()
+let doc = nlp('at twenty to three').debug()
+// let doc = nlp('two years ago').debug()
+// console.log(doc.text())
 let dates = doc.dates(context)
 dates = dates.get()
-console.log(dates[0])
-// dates.forEach((date) => {
-//   console.log('start: ', fmt(date.start))
-//   console.log('  end: ', fmt(date.end))
-// })
+// console.log(dates[0])
+dates.forEach((date) => {
+  console.log('start: ', fmt(date.start))
+  console.log('  end: ', fmt(date.end))
+})
 
 // ### hmmm
 // let doc = nlp('in the next three years') //.debug()
@@ -33,7 +36,7 @@ console.log(dates[0])
 // doc.values().normalize().debug()
 // let doc = nlp('20 mins before tuesday at 3pm').debug()
 // let doc = nlp(`3-4pm`).debug()
-// let doc = nlp(`5 to 7 of january 1998`).debug()
+// let doc = nlp(`5 to 7 of january 1998`).debug()gs
 // let doc = nlp('2005 4th quarter')
 // let doc = nlp(`Chanukah 2018`)
 // let doc = nlp(`2 thursdays ago`).debug()

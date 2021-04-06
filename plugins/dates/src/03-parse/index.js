@@ -1,4 +1,4 @@
-const { WeekDay } = require('./units')
+const { WeekDay, Moment, Day } = require('./units')
 const tokens = {
   shift: require('./01-tokenize/01-shift'),
   counter: require('./01-tokenize/02-counter'),
@@ -22,6 +22,7 @@ const transform = {
 }
 
 const parseDate = function (doc, context) {
+  doc = doc.clone()
   if (doc.world.isVerbose() === 'date') {
     console.log(`     str:   '${doc.text()}'`)
   }
@@ -63,14 +64,13 @@ const parseDate = function (doc, context) {
   if (doc.world.isVerbose() === 'date') {
     // console.log('\n\n=-= - - - - - =-=-')
     console.log(`     str:   '${doc.text()}'`)
-    // console.log(`  shift:      ${JSON.stringify(shift)}`)
-    // console.log(`  counter:   `, counter)
-    // console.log(`  rel:        ${rel || '-'}`)
-    // console.log(`  section:    ${section || '-'}`)
+    console.log(`     shift:      ${JSON.stringify(shift)}`)
+    console.log(`     counter:   `, counter)
+    console.log(`     rel:        ${rel || '-'}`)
+    console.log(`     section:    ${section || '-'}`)
     console.log(`     time:       ${time || '-'}`)
     console.log(`     weekDay:    ${weekDay || '-'}`)
     console.log('     unit:     ', unit)
-    // doc.debug()
     console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n')
   }
   if (!unit) {
@@ -80,6 +80,12 @@ const parseDate = function (doc, context) {
   // 2 days after..
   if (shift) {
     unit.applyShift(shift)
+    // allow shift to change our unit size
+    if (shift.hour || shift.minute) {
+      unit = new Moment(unit.d, null, unit.context)
+    } else if (shift.week || shift.day || shift.month) {
+      unit = new Day(unit.d, null, unit.context)
+    }
   }
   // wednesday next week
   if (weekDay && unit.unit !== 'day') {

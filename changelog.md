@@ -8,62 +8,78 @@ compromise uses semver, and pushes to npm frequently
 
 While all _Major_ releases should be reviewed, our only two _large_ releases are **v6** in 2016 and and **v12** in 2019. Others have been mostly incremental, or niche.
 
-<!-- #### [Unreleased] 
+<!-- #### [Unreleased]
 -->
-#### 13.10.5  [March 2021]
+
+#### 13.10.6 [April 2021]
+
+- **[fix]** - support more time-ranges
+  _plugin-releases_: dates@2.0.2
+
+#### 13.10.5 [March 2021]
+
 - **[new]** - support Time-range like '3pm-4pm'
 - **[change]** - cleanup some unicode regexes
-*plugin-releases*:  dates
+  _plugin-releases_: dates
 
-#### 13.10.4  [March 2021]
+#### 13.10.4 [March 2021]
+
 - **[fix]** - match syntax tokenization fix
 - **[change]** - improved performance monitoring
-  
-#### 13.10.3  [March 2021]
+
+#### 13.10.3 [March 2021]
+
 - **[fix]** - support complicated regular-expressions in match syntax
 - improved performance testing
-  
-#### 13.10.2  [March 2021]
+
+#### 13.10.2 [March 2021]
+
 - **[fix]** - support matching implicit terms in (or|blocks)
 - **[change]** - add #Timezone tag (from date-plugin)
 - **[change]** - add many more cities and regions
 
 #### 13.10.1 [March 2021]
+
 - **[change]** - #Date terms can still be a #Conjunction
 - **[new]** - #Imperative tag and `.verbs().isImperative()` method
 - **[fix]** - some tagger issues
 - update deps
-*plugin-releases*:  dates
-
+  _plugin-releases_: dates
 
 #### 13.10.0 [Feb 2021]
+
 - **[new]** - #Fraction tag and improved fraction support (thanks Jakeii!)
 - **[fix]** - edge-case match issues with `!` syntax
 - **[change]** - update deps
 - updates for `compromise-dates@1.4.0`, `compromise-numbers@1.2.0`
 
 #### 13.9.3 [Feb 2021]
+
 - **[fix]** - fix weird ordering issue with named exports #815
-  
+
 #### 13.9.2 [Feb 2021]
+
 - **[fix]** - typescript issue
-  
+
 #### 13.9.1 [Feb 2021]
-- **[fix]** - matches over a contraction 
+
+- **[fix]** - matches over a contraction
 - **[new]** - add 'implicit' text output
 
 #### 13.9.0 [Feb 2021]
+
 - **[new]** - World.addConjugations() method
 - **[new]** - World.addPlurals() method
 - **[new]** - start compromise-penn-tags plugin
 - **[new]** - add fuzzy option to match commands
 - **[new]** - support multiple-word matches in OR matches (a|b|foo bar|c)
-- **[change] (internal)** - rename 'oneOf' match syntax to 'fastOr' 
+- **[change] (internal)** - rename 'oneOf' match syntax to 'fastOr'
 - **[change]** - use new export maps format
 - **[fix]** - conjugations fixes #800
 - **[fix]** - tokenization fixes #801
 
 #### 13.8.0 [Dec 2020]
+
 - **[change]** improved support for fractions in numbers-plugin #793
 - **[change]** remove zero-width characters in normalized output #759
 - **[change]** improved Person tagging with particles #794
@@ -86,8 +102,8 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - **[new]** - support `.apppend(doc)` and `.prepend(doc)`
 - **[new]** - `values.normalize()` method
 
-
 #### 13.7.0 [Oct 2020]
+
 - **[change]** many misc tagging fixes
   - 'if' is now a #Preposition
   - possessive pronouns are #Pronoun and #Possessive
@@ -185,8 +201,8 @@ _major changes to `.export()` and `[capture] group` match-syntax._
 
 modifications:
 
-- **[fix]** -  nlp.clone() - hasn't worked properly, since v12. (@Drache93)
-- **[fix]** -  issues with greedy capture [*] and [.+] -(@Drache93) 💛
+- **[fix]** - nlp.clone() - hasn't worked properly, since v12. (@Drache93)
+- **[fix]** - issues with greedy capture [*] and [.+] -(@Drache93) 💛
 - add whitespace properties (pre+post) to default json output (suppress with `.json({ whitespace: false })`)
 - `.lookup({ key: val })` with an object now returns an object back ({val: Doc})
 - add nlp constructor as a third param to `.extend()`
@@ -197,10 +213,10 @@ modifications:
 - allow null results in `.map()` function
 - better typescript support
 - allow longer acronyms
-- **[fix]** -  offset length issue
-- **[new]** -  add new named-match syntax, with .groups() method (@Drache93)
-- **[new]** -  add `nlp.fromJSON()` method
-- **[new]** -  add a new `compromise-tokenize.js` build, without the tagger, or data included.
+- **[fix]** - offset length issue
+- **[new]** - add new named-match syntax, with .groups() method (@Drache93)
+- **[new]** - add `nlp.fromJSON()` method
+- **[new]** - add a new `compromise-tokenize.js` build, without the tagger, or data included.
 
 #### 12.3.0 [Jan 2020]
 

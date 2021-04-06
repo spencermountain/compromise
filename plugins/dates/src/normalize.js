@@ -1,3 +1,5 @@
+const tagger = require('./01-tagger')
+
 const normalize = function (doc) {
   doc = doc.clone()
 
@@ -25,19 +27,24 @@ const normalize = function (doc) {
     num.toNumber()
     num.toCardinal(false)
   }
-  // // expand 'aug 20-21'
+  // expand 'aug 20-21'
   doc.contractions().expand()
-  // // remove adverbs
+  // remove adverbs
   doc.adverbs().remove()
-  // // 'week-end'
+  // 'week-end'
   doc.replace('week end', 'weekend').tag('Date')
-  // // 'a up to b'
+  // 'a up to b'
   doc.replace('up to', 'upto').tag('Date')
+  // 'a year ago'
+  if (doc.has('once (a|an) #Duration') === false) {
+    doc.match('[(a|an)] #Duration', 0).replaceWith('1')
+    tagger(doc)
+  }
   // 'in a few years'
   m = doc.match('in [a few] #Duration')
   if (m.found) {
     m.groups('0').replaceWith('2')
-    m.tag('DateShift')
+    tagger(doc)
   }
   return doc
 }

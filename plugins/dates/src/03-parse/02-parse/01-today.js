@@ -25,6 +25,9 @@ const knownWord = {
     d = d.startOf('day')
     return new Day(d, null, context)
   },
+  now: (context) => {
+    return new Moment(context.today, null, context) // should we set the current hour?
+  },
 }
 knownWord.tommorrow = knownWord.tomorrow
 knownWord.tmrw = knownWord.tomorrow
@@ -33,6 +36,7 @@ knownWord.sometime = knownWord.today
 
 const today = function (doc, context, section) {
   let unit = null
+
   // is it empty?
   if (doc.found === false) {
     // do we have just a time?

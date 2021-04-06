@@ -29,6 +29,7 @@ class Unit {
   // make a new one
   clone() {
     let d = new Unit(this.d, this.unit, this.context)
+    d.setTime = this.setTime
     return d
   }
   log() {
@@ -40,6 +41,9 @@ class Unit {
   applyShift(obj = {}) {
     Object.keys(obj).forEach((unit) => {
       this.d = this.d.add(obj[unit], unit)
+      if (unit === 'hour' || unit === 'minute') {
+        this.setTime = true
+      }
     })
     return this
   }

@@ -1,4 +1,4 @@
-/* compromise-dates 2.0.0 MIT */
+/* compromise-dates 2.0.2 MIT */
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
@@ -320,11 +320,6 @@ var _00Basic = tagDates;
 var here$5 = 'date-values'; //
 
 var values = function values(doc) {
-  // a year ago
-  if (!doc.has('once [a] #Duration')) {
-    doc.match('[a] #Duration', 0).replaceWith('1').tag('Cardinal', here$5);
-  }
-
   if (doc.has('#Value')) {
     //june 5 to 7th
     doc.match('#Month #Value to #Value of? #Year?').tag('Date', here$5); //5 to 7th june
@@ -444,7 +439,9 @@ var timeTagger = function timeTagger(doc) {
 
     date.match('half an (hour|minute|second)').tag('Date', here$2); // in eastern time
 
-    date.match('(in|for|by|near|at) #Timezone').tag('Timezone', here$2); //--time-ranges--
+    date.match('(in|for|by|near|at) #Timezone').tag('Timezone', here$2); // 3pm to 4pm
+
+    date.match('#Time to #Time').tag('Date', here$2); //--time-ranges--
     // 4pm sharp
 
     date.match('#Time [(sharp|on the dot)]', 0).tag('Time', here$2);
@@ -462,9 +459,28 @@ var timeTagger = function timeTagger(doc) {
     } // from 4 to 5 tomorrow
 
 
-    date.match('(from|between) #NumericValue and #NumericValue (in|on)? (#WeekDay|tomorrow|yesterday)').tag('Date', '4-to-5pm').match('#NumericValue').tag('Time', here$2); // from 4 to 5pm
+    date.match('(from|between) #Cardinal and #Cardinal (in|on)? (#WeekDay|tomorrow|yesterday)').tag('Date', '4-to-5pm').match('#NumericValue').tag('Time', here$2); // from 4 to 5pm
 
-    date.match('(from|between) [#NumericValue] (to|and) #Time', 0).tag('Time', '4-to-5pm');
+    date.match('(from|between) [#NumericValue] (to|and) #Time', 0).tag('Time', '4-to-5pm'); // date.match('#Cardinal to #Time')
+    // wed from 3 to 4
+
+    date.match('(#WeekDay|tomorrow|yesterday) from? (#Cardinal|#Time) to (#Cardinal|#Time)').tag('Date', here$2).match('#Cardinal').tag('#Time', 'tues 3-5'); // june 5 from 3 to 4
+
+    var m = date.match('#Month #Value+ from [<time>(#Cardinal|#Time) to (#Cardinal|#Time)]');
+    m.tag('Date', here$2);
+    m.group('time').match('#Cardinal').tag('#Time', 'from-3-5'); // 3pm to 4 on wednesday
+
+    m = date.match('#Time to #Cardinal on? #Date');
+    m.tag('Date', here$2);
+    m.match('#Cardinal').tag('#Time', '3pm to 4'); // 3 to 4pm on wednesday
+
+    m = date.match('#Cardinal to #Time on? #Date');
+    m.tag('Date', here$2);
+    m.match('#Cardinal').tag('#Time', '3 to 4pm'); // 3 to 4p on wednesday
+
+    m = date.match('#Cardinal to #Cardinal on? (#WeekDay|#Month)');
+    m.tag('Date', here$2);
+    m.match('#Cardinal').tag('#Time', '3 to 4 wed');
   } // around four thirty
 
 
@@ -5453,6 +5469,7 @@ var Unit = /*#__PURE__*/function () {
     key: "clone",
     value: function clone() {
       var d = new Unit(this.d, this.unit, this.context);
+      d.setTime = this.setTime;
       return d;
     }
   }, {
@@ -5471,6 +5488,10 @@ var Unit = /*#__PURE__*/function () {
       var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       Object.keys(obj).forEach(function (unit) {
         _this.d = _this.d.add(obj[unit], unit);
+
+        if (unit === 'hour' || unit === 'minute') {
+          _this.setTime = true;
+        }
       });
       return this;
     }
@@ -5660,7 +5681,7 @@ var Unit = /*#__PURE__*/function () {
 
 var Unit_1 = Unit;
 
-var Day$4 = /*#__PURE__*/function (_Unit) {
+var Day$5 = /*#__PURE__*/function (_Unit) {
   _inherits(Day, _Unit);
 
   var _super = _createSuper(Day);
@@ -5733,7 +5754,7 @@ var CalendarDate$1 = /*#__PURE__*/function (_Day) {
   }]);
 
   return CalendarDate;
-}(Day$4);
+}(Day$5);
 
 var WeekDay$2 = /*#__PURE__*/function (_Day2) {
   _inherits(WeekDay, _Day2);
@@ -5833,7 +5854,7 @@ var WeekDay$2 = /*#__PURE__*/function (_Day2) {
   }]);
 
   return WeekDay;
-}(Day$4); // like 'haloween'
+}(Day$5); // like 'haloween'
 
 
 var Holiday$1 = /*#__PURE__*/function (_CalendarDate) {
@@ -5860,7 +5881,7 @@ var Holiday$1 = /*#__PURE__*/function (_CalendarDate) {
 }(CalendarDate$1);
 
 var _day = {
-  Day: Day$4,
+  Day: Day$5,
   WeekDay: WeekDay$2,
   CalendarDate: CalendarDate$1,
   Holiday: Holiday$1
@@ -6217,7 +6238,7 @@ var Minute$2 = /*#__PURE__*/function (_Unit2) {
   return Minute;
 }(Unit_1);
 
-var Moment$3 = /*#__PURE__*/function (_Unit3) {
+var Moment$4 = /*#__PURE__*/function (_Unit3) {
   _inherits(Moment, _Unit3);
 
   var _super3 = _createSuper(Moment);
@@ -6238,7 +6259,7 @@ var Moment$3 = /*#__PURE__*/function (_Unit3) {
 var _time = {
   Hour: Hour$2,
   Minute: Minute$2,
-  Moment: Moment$3
+  Moment: Moment$4
 };
 
 var units$1 = Object.assign({
@@ -6824,22 +6845,22 @@ var parseWeekday = function parseWeekday(doc) {
 
 var _07Weekday = parseWeekday;
 
-var Day$3 = units$1.Day,
-    Moment$2 = units$1.Moment;
+var Day$4 = units$1.Day,
+    Moment$3 = units$1.Moment;
 var knownWord = {
   today: function today(context) {
-    return new Day$3(context.today, null, context);
+    return new Day$4(context.today, null, context);
   },
   yesterday: function yesterday(context) {
-    return new Day$3(context.today.minus(1, 'day'), null, context);
+    return new Day$4(context.today.minus(1, 'day'), null, context);
   },
   tomorrow: function tomorrow(context) {
-    return new Day$3(context.today.plus(1, 'day'), null, context);
+    return new Day$4(context.today.plus(1, 'day'), null, context);
   },
   eom: function eom(context) {
     var d = context.today.endOf('month');
     d = d.startOf('day');
-    return new Day$3(d, null, context);
+    return new Day$4(d, null, context);
   },
   // eod: (context) => {
   //   let d = context.today.endOf('day')
@@ -6849,7 +6870,10 @@ var knownWord = {
   eoy: function eoy(context) {
     var d = context.today.endOf('year');
     d = d.startOf('day');
-    return new Day$3(d, null, context);
+    return new Day$4(d, null, context);
+  },
+  now: function now(context) {
+    return new Moment$3(context.today, null, context); // should we set the current hour?
   }
 };
 knownWord.tommorrow = knownWord.tomorrow;
@@ -6863,15 +6887,15 @@ var today = function today(doc, context, section) {
   if (doc.found === false) {
     // do we have just a time?
     if (section.time !== null) {
-      unit = new Moment$2(context.today, null, context); // choose today
+      unit = new Moment$3(context.today, null, context); // choose today
     } //do we just have a shift?
 
 
     if (Object.keys(section.shift).length > 0) {
       if (section.shift.hour || section.shift.minute) {
-        unit = new Moment$2(context.today, null, context); // choose now
+        unit = new Moment$3(context.today, null, context); // choose now
       } else {
-        unit = new Day$3(context.today, null, context); // choose today
+        unit = new Day$4(context.today, null, context); // choose today
       }
     }
   } // today, yesterday, tomorrow
@@ -7391,17 +7415,17 @@ var Week$1 = units$1.Week,
     Year$1 = units$1.Year,
     Season$2 = units$1.Season,
     WeekDay$1 = units$1.WeekDay,
-    Day$2 = units$1.Day,
+    Day$3 = units$1.Day,
     Hour$1 = units$1.Hour,
     Minute$1 = units$1.Minute,
-    Moment$1 = units$1.Moment;
+    Moment$2 = units$1.Moment;
 var mapping$1 = {
-  day: Day$2,
+  day: Day$3,
   hour: Hour$1,
   evening: Hour$1,
-  second: Moment$1,
-  milliscond: Moment$1,
-  instant: Moment$1,
+  second: Moment$2,
+  milliscond: Moment$2,
+  instant: Moment$2,
   minute: Minute$1,
   week: Week$1,
   weekend: WeekEnd$1,
@@ -7413,7 +7437,7 @@ var mapping$1 = {
   yr: Year$1,
   qtr: AnyQuarter,
   wk: Week$1,
-  sec: Moment$1,
+  sec: Moment$2,
   hr: Hour$1
 };
 var matchStr = "^(".concat(Object.keys(mapping$1).join('|'), ")$"); // when a unit of time is spoken of as 'this month' - instead of 'february'
@@ -7557,10 +7581,10 @@ var parseYearly = function parseYearly(doc, context) {
 
 var _04Yearly = parseYearly;
 
-var Day$1 = units$1.Day,
+var Day$2 = units$1.Day,
     CalendarDate = units$1.CalendarDate,
     Month$1 = units$1.Month,
-    Moment = units$1.Moment; // parse things like 'june 5th 2019'
+    Moment$1 = units$1.Moment; // parse things like 'june 5th 2019'
 // most of this is done in spacetime
 
 var parseExplicit = function parseExplicit(doc, context) {
@@ -7698,16 +7722,21 @@ var parseExplicit = function parseExplicit(doc, context) {
   if (m.found) {
     var _str = doc.text('reduced');
 
-    var _unit7 = new Moment(_str, null, context);
+    var _unit7 = new Moment$1(_str, null, context);
 
     if (_unit7.d.isValid() === true) {
       return _unit7;
     }
   }
 
-  var str = doc.text('reduced'); // punt it to spacetime, for the heavy-lifting
+  var str = doc.text('reduced');
 
-  var unit = new Day$1(str, null, context); // console.log(str, unit, context.today.year())
+  if (!str) {
+    return new Moment$1(context.today, null, context);
+  } // punt it to spacetime, for the heavy-lifting
+
+
+  var unit = new Day$2(str, null, context); // console.log(str, unit, context.today.year())
   // did we find a date?
 
   if (unit.d.isValid() === false) {
@@ -7722,13 +7751,13 @@ var _05Explicit = parseExplicit;
 var Quarter = units$1.Quarter,
     Season = units$1.Season,
     Week = units$1.Week,
-    Day = units$1.Day,
+    Day$1 = units$1.Day,
     Hour = units$1.Hour,
     Minute = units$1.Minute,
     Month = units$1.Month,
     WeekEnd = units$1.WeekEnd;
 var units = {
-  day: Day,
+  day: Day$1,
   week: Week,
   weekend: WeekEnd,
   month: Month,
@@ -7770,7 +7799,9 @@ var applyCounter = function applyCounter(unit) {
 
 var addCounter = applyCounter;
 
-var WeekDay = units$1.WeekDay;
+var WeekDay = units$1.WeekDay,
+    Moment = units$1.Moment,
+    Day = units$1.Day;
 var tokens = {
   shift: _01Shift,
   counter: _02Counter,
@@ -7792,6 +7823,8 @@ var transform = {
 };
 
 var parseDate = function parseDate(doc, context) {
+  doc = doc.clone();
+
   if (doc.world.isVerbose() === 'date') {
     console.log("     str:   '".concat(doc.text(), "'"));
   } // quick normalization
@@ -7840,15 +7873,14 @@ var parseDate = function parseDate(doc, context) {
 
   if (doc.world.isVerbose() === 'date') {
     // console.log('\n\n=-= - - - - - =-=-')
-    console.log("     str:   '".concat(doc.text(), "'")); // console.log(`  shift:      ${JSON.stringify(shift)}`)
-    // console.log(`  counter:   `, counter)
-    // console.log(`  rel:        ${rel || '-'}`)
-    // console.log(`  section:    ${section || '-'}`)
-
+    console.log("     str:   '".concat(doc.text(), "'"));
+    console.log("     shift:      ".concat(JSON.stringify(shift)));
+    console.log("     counter:   ", counter);
+    console.log("     rel:        ".concat(rel || '-'));
+    console.log("     section:    ".concat(section || '-'));
     console.log("     time:       ".concat(time || '-'));
     console.log("     weekDay:    ".concat(weekDay || '-'));
-    console.log('     unit:     ', unit); // doc.debug()
-
+    console.log('     unit:     ', unit);
     console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n');
   }
 
@@ -7858,7 +7890,13 @@ var parseDate = function parseDate(doc, context) {
 
 
   if (shift) {
-    unit.applyShift(shift);
+    unit.applyShift(shift); // allow shift to change our unit size
+
+    if (shift.hour || shift.minute) {
+      unit = new Moment(unit.d, null, unit.context);
+    } else if (shift.week || shift.day || shift.month) {
+      unit = new Day(unit.d, null, unit.context);
+    }
   } // wednesday next week
 
 
@@ -7892,6 +7930,70 @@ var parseDate = function parseDate(doc, context) {
 
 var _03Parse = parseDate;
 
+var normalize = function normalize(doc) {
+  doc = doc.clone(); // 'four thirty' -> 4:30
+
+  var m = doc.match('[<hour>#Cardinal] [<min>(thirty|fifteen)]').match('#Time+');
+
+  if (m.found) {
+    var hour = m.groups('hour');
+    var min = m.groups('min');
+    var num = hour.values().get(0);
+
+    if (num > 0 && num <= 12) {
+      var mins = min.values().get(0);
+      var str = "".concat(num, ":").concat(mins);
+      m.replaceWith(str);
+    }
+  }
+
+  if (!doc.numbers) {
+    console.warn("Warning: compromise-numbers plugin is not loaded.\n   You should load this plugin \n     - https://bit.ly/3t8RfFG");
+  } else {
+    // doc.numbers().normalize()
+    // convert 'two' to 2
+    var _num = doc.numbers();
+
+    _num.toNumber();
+
+    _num.toCardinal(false);
+  } // expand 'aug 20-21'
+
+
+  doc.contractions().expand(); // remove adverbs
+
+  doc.adverbs().remove(); // 'week-end'
+
+  doc.replace('week end', 'weekend').tag('Date'); // 'a up to b'
+
+  doc.replace('up to', 'upto').tag('Date'); // 'a year ago'
+
+  if (doc.has('once (a|an) #Duration') === false) {
+    doc.match('[(a|an)] #Duration', 0).replaceWith('1');
+    _01Tagger(doc);
+  } // 'in a few years'
+
+
+  m = doc.match('in [a few] #Duration');
+
+  if (m.found) {
+    m.groups('0').replaceWith('2');
+    _01Tagger(doc);
+  }
+
+  return doc;
+};
+
+var normalize_1 = normalize;
+
+var parse$1 = function parse(m, context) {
+  m = normalize_1(m);
+  var res = _03Time(m, context);
+  return res;
+};
+
+var parse_1$1 = parse$1;
+
 var dayNames = {
   mon: 'monday',
   tue: 'tuesday',
@@ -7923,7 +8025,7 @@ var parseLogic = function parseLogic(m) {
 }; // parse repeating dates, like 'every week'
 
 
-var parseIntervals = function parseIntervals(doc) {
+var parseIntervals = function parseIntervals(doc, context) {
   // 'every week'
   var m = doc.match('[<logic>(every|any|each)] [<skip>other?] [<unit>#Duration] (starting|beginning|commencing)?');
 
@@ -8051,7 +8153,7 @@ var parseIntervals = function parseIntervals(doc) {
       var time = m.groups('time');
 
       if (time.found) {
-        _repeat4.time = time.text('reduced');
+        _repeat4.time = parse_1$1(time, context);
       }
 
       return {
@@ -8080,44 +8182,31 @@ var reverseMaybe = function reverseMaybe(obj) {
 
 var _reverse = reverseMaybe;
 
-var _01TwoTimes = [// {
-//   // 'january from 3pm to 4pm'
-//   match: '^[<date>#Date+] (from|between) [<from>#Time+] (to|until|upto|through|thru|and) [<to>#Time+]',
-//   desc: 'tuesday between 3 and 4',
-//   parse: (m, context) => {
-//     let date = m.groups('date')
-//     console.log('=-=-=-= here -=-=-=-')
-//     let from = m.groups('from')
-//     let to = m.groups('to')
-//     from = parseDate(from, context)
-//     if (from) {
-//       let end = from.clone()
-//       end.applyTime(to.text())
-//       if (end) {
-//         let obj = {
-//           start: from,
-//           end: end,
-//           unit: 'time',
-//         }
-//         obj = reverseMaybe(obj)
-//         return obj
-//       }
-//     }
-//     return null
-//   },
-// },
-{
+var moveToPM = function moveToPM(obj) {
+  var start = obj.start;
+  var end = obj.end;
+
+  if (start.d.isAfter(end.d)) {
+    if (end.d.hour() < 10) {
+      end.d = end.d.ampm('pm');
+    }
+  }
+
+  return obj;
+};
+
+var _01TwoTimes = [{
   // '3pm to 4pm january 5th'
   match: '[<from>#Time+] (to|until|upto|through|thru|and) [<to>#Time+ #Date+]',
   desc: '3pm to 4pm january 5th',
   parse: function parse(m, context) {
-    var time = m.groups('from');
+    var from = m.groups('from');
     var to = m.groups('to');
     var end = _03Parse(to, context);
 
     if (end) {
       var start = end.clone();
-      start.applyTime(time.text());
+      start.applyTime(from.text());
 
       if (start) {
         var obj = {
@@ -8125,6 +8214,11 @@ var _01TwoTimes = [// {
           end: end,
           unit: 'time'
         };
+
+        if (/(am|pm)/.test(to) === false) {
+          obj = moveToPM(obj);
+        }
+
         obj = _reverse(obj);
         return obj;
       }
@@ -8151,6 +8245,11 @@ var _01TwoTimes = [// {
           end: end,
           unit: 'time'
         };
+
+        if (/(am|pm)/.test(to.text()) === false) {
+          obj = moveToPM(obj);
+        }
+
         obj = _reverse(obj);
         return obj;
       }
@@ -8486,7 +8585,7 @@ var ranges = [].concat(_01TwoTimes, _02TwoDate, _03OneDate); // loop thru each r
 
 var parseRange = function parseRange(doc, context) {
   // parse-out 'every week ..'
-  var repeats = _00Repeats(doc) || {}; // if it's *only* an interval response
+  var repeats = _00Repeats(doc, context) || {}; // if it's *only* an interval response
 
   if (doc.found === false) {
     return Object.assign({}, repeats, {
@@ -8549,56 +8648,6 @@ var parseRange = function parseRange(doc, context) {
 };
 
 var _02Ranges = parseRange;
-
-var normalize = function normalize(doc) {
-  doc = doc.clone(); // 'four thirty' -> 4:30
-
-  var m = doc.match('[<hour>#Cardinal] [<min>(thirty|fifteen)]').match('#Time+');
-
-  if (m.found) {
-    var hour = m.groups('hour');
-    var min = m.groups('min');
-    var num = hour.values().get(0);
-
-    if (num > 0 && num <= 12) {
-      var mins = min.values().get(0);
-      var str = "".concat(num, ":").concat(mins);
-      m.replaceWith(str);
-    }
-  }
-
-  if (!doc.numbers) {
-    console.warn("Warning: compromise-numbers plugin is not loaded.\n   You should load this plugin \n     - https://bit.ly/3t8RfFG");
-  } else {
-    // doc.numbers().normalize()
-    // convert 'two' to 2
-    var _num = doc.numbers();
-
-    _num.toNumber();
-
-    _num.toCardinal(false);
-  } // // expand 'aug 20-21'
-
-
-  doc.contractions().expand(); // // remove adverbs
-
-  doc.adverbs().remove(); // // 'week-end'
-
-  doc.replace('week end', 'weekend').tag('Date'); // // 'a up to b'
-
-  doc.replace('up to', 'upto').tag('Date'); // 'in a few years'
-
-  m = doc.match('in [a few] #Duration');
-
-  if (m.found) {
-    m.groups('0').replaceWith('2');
-    m.tag('DateShift');
-  }
-
-  return doc;
-};
-
-var normalize_1 = normalize;
 
 var maxDate = 8640000000000000;
 var max_loops = 500;
@@ -8944,7 +8993,7 @@ Object.keys(mapping).forEach(function (k) {
   mapping[k + 's'] = mapping[k];
 });
 
-var parse$1 = function parse(doc) {
+var parse = function parse(doc) {
   var duration = {}; //parse '8 minutes'
 
   var twoWord = doc.match('#Value+ #Duration');
@@ -8988,14 +9037,14 @@ var parse$1 = function parse(doc) {
   return duration;
 };
 
-var parse_1$1 = parse$1;
+var parse_1 = parse;
 
 var methods$1 = {
   /** easy getter for the time */
   get: function get(options) {
     var arr = [];
     this.forEach(function (doc) {
-      var res = parse_1$1(doc);
+      var res = parse_1(doc);
       arr.push(res);
     });
 
@@ -9021,7 +9070,7 @@ var methods$1 = {
     var res = [];
     this.forEach(function (doc) {
       var json = doc.json(options);
-      json.duration = parse_1$1(doc);
+      json.duration = parse_1(doc);
       res.push(json);
     });
 
@@ -9035,7 +9084,7 @@ var methods$1 = {
   /** change to a standard duration format */
   normalize: function normalize() {
     this.forEach(function (doc) {
-      var duration = parse_1$1(doc);
+      var duration = parse_1(doc);
       var list = [];
       Object.keys(duration).forEach(function (unit) {
         var num = duration[unit];
@@ -9101,14 +9150,6 @@ var addDurations = function addDurations(Doc) {
 
 var durations = addDurations;
 
-var parse = function parse(m, context) {
-  m = normalize_1(m);
-  var res = _03Time(m, context);
-  return res;
-};
-
-var parse_1 = parse;
-
 var methods = {
   /** easy getter for the time */
   get: function get(options) {
@@ -9116,7 +9157,7 @@ var methods = {
 
     var arr = [];
     this.forEach(function (doc) {
-      var res = parse_1(doc, _this.context);
+      var res = parse_1$1(doc, _this.context);
       arr.push(res);
     });
 
@@ -9144,7 +9185,7 @@ var methods = {
     var res = [];
     this.forEach(function (doc) {
       var json = doc.json(options);
-      json.time = parse_1(doc, _this2.context);
+      json.time = parse_1$1(doc, _this2.context);
       res.push(json);
     });
 
@@ -9181,7 +9222,7 @@ var addTimes = function addTimes(Doc) {
   /** phrases like '4pm' */
 
   Doc.prototype.times = function (n) {
-    var m = this.match('#Time+ (am|pm)?'); // m.debug()
+    var m = this.match('#Time+ (am|pm)?');
 
     if (typeof n === 'number') {
       m = m.get(n);
@@ -9364,7 +9405,7 @@ var addMethods = function addMethods(Doc, world) {
     } // allow null to mean utc
 
 
-    if (context.timezone === null) {
+    if (context.timezone === false) {
       context.timezone = 'ETC/UTC';
     }
 

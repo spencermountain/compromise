@@ -1,4 +1,4 @@
-/* compromise 13.10.5 MIT */
+/* compromise 13.10.6 MIT */
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
@@ -3860,7 +3860,7 @@ var fromJSON = function fromJSON(json, world) {
 
 var fromJSON_1 = fromJSON;
 
-var _version = '13.10.5';
+var _version = '13.10.6';
 
 var entity = ['Person', 'Place', 'Organization'];
 var nouns$1 = {
@@ -10721,14 +10721,28 @@ var _07French = checkFrench;
 
 var isNumber = /^[0-9]+$/;
 var isOrdinal = /^[0-9]+(st|nd|rd|th)$/;
-var isTime = /^[0-9:]+(am|pm)$/;
+var isTime = /^[0-9:]+(am|pm)?$/;
 
 var createPhrase = function createPhrase(found, doc) {
   //create phrase from ['would', 'not']
   var phrase = _01Tokenizer(found.join(' '), doc.world, doc.pool())[0]; //tag it
 
   var terms = phrase.terms();
-  _01Lexicon(terms, doc.world); //make these terms implicit
+  _01Lexicon(terms, doc.world);
+  var term = terms[0]; // tag number-ranges
+
+  if (isOrdinal.test(term.text)) {
+    terms[0].tag('Ordinal', 'ord-range', doc.world);
+    terms[2].tag('Ordinal', 'ord-range', doc.world);
+  } else if (isNumber.test(term.text)) {
+    terms[0].tag('Cardinal', 'num-range', doc.world);
+    terms[2].tag('Cardinal', 'num-range', doc.world);
+  } else if (isTime.test(term.text)) {
+    terms[0].tag('Time', 'time-range', doc.world);
+    terms[1].tag('Date', 'time-range', doc.world);
+    terms[2].tag('Time', 'time-range', doc.world);
+  } //make these terms implicit
+
 
   terms.forEach(function (t) {
     t.implicit = t.text;
@@ -10736,15 +10750,9 @@ var createPhrase = function createPhrase(found, doc) {
     t.clean = ''; // remove whitespace for implicit terms
 
     t.pre = '';
-    t.post = ''; // tag number-ranges
+    t.post = '';
 
-    if (isNumber.test(t.implicit)) {
-      t.tag('Cardinal', 'num-range', doc.world);
-    } else if (isOrdinal.test(t.implicit)) {
-      t.tag('Ordinal', 'ord-range', doc.world);
-    } else if (isTime.test(t.implicit)) {
-      t.tag('Time', 'time-range', doc.world);
-    } else if (Object.keys(t.tags).length === 0) {
+    if (Object.keys(t.tags).length === 0) {
       t.tags.Noun = true; // if no tag, give it a noun
     }
   });
@@ -13858,9 +13866,7 @@ var Quotations = addMethod$2;
 
 // walked => walk  - turn a verb into it's root form
 var toInfinitive = function toInfinitive(parsed, world) {
-  var verb = parsed.verb; // console.log(parsed)
-  // verb.debug()
-  //1. if it's already infinitive
+  var verb = parsed.verb; //1. if it's already infinitive
 
   var str = verb.text('reduced');
 

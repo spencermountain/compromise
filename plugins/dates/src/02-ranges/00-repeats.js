@@ -1,3 +1,5 @@
+const parseTime = require('../times/parse')
+
 const dayNames = {
   mon: 'monday',
   tue: 'tuesday',
@@ -27,7 +29,7 @@ const parseLogic = function (m) {
 }
 
 // parse repeating dates, like 'every week'
-const parseIntervals = function (doc) {
+const parseIntervals = function (doc, context) {
   // 'every week'
   let m = doc.match('[<logic>(every|any|each)] [<skip>other?] [<unit>#Duration] (starting|beginning|commencing)?')
   if (m.found) {
@@ -111,7 +113,7 @@ const parseIntervals = function (doc) {
       doc = doc.remove(m)
       let time = m.groups('time')
       if (time.found) {
-        repeat.time = time.text('reduced')
+        repeat.time = parseTime(time, context)
       }
       return { repeat: repeat }
     }

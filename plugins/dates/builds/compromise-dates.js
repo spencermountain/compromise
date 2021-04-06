@@ -1,4 +1,4 @@
-/* compromise-dates 2.0.2 MIT */
+/* compromise-dates 2.0.3 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -465,7 +465,9 @@
       } // from 4 to 5 tomorrow
 
 
-      date.match('(from|between) #Cardinal and #Cardinal (in|on)? (#WeekDay|tomorrow|yesterday)').tag('Date', '4-to-5pm').match('#NumericValue').tag('Time', here$2); // from 4 to 5pm
+      date.match('(from|between) #Cardinal and #Cardinal (in|on)? (#WeekDay|tomorrow|yesterday)').tag('Date', '4-to-5pm').match('#NumericValue').tag('Time', here$2); // 9 to 5 tomorrow
+
+      doc.match('#Cardinal to #Cardinal (#WeekDay|tomorrow|yesterday)').tag('Date', '4-to-5pm').match('#NumericValue').tag('Time', here$2); // from 4 to 5pm
 
       date.match('(from|between) [#NumericValue] (to|and) #Time', 0).tag('Time', '4-to-5pm'); // date.match('#Cardinal to #Time')
       // wed from 3 to 4

@@ -60,6 +60,21 @@ test('times of start and end', function (t) {
     ['next monday at 9', '9:00am'],
     // ['half three', '3:30pm'],
     // ['at 10 to three', '2:50pm'],
+    [`@2:99`, '2:59pm'],
+    [`ten to 4pm`, '3:50pm'],
+    [`9am to 5:49pm`, '9:00am', '5:49pm'],
+    // [`ten to 4 in the morning`, ''],
+    [`wed between 2 - 5pm`, '2:00pm', '5:00pm'],
+    // [`slots 10 11 12 after 2pm`, ''],
+    // [`wed thurs next fri from 3-4pm`, ''],
+    // [`tuesday at 3 and friday at 4pm`, '3:00pm'],
+    // [`next friday, this friday`, ''],
+    // [`slots for this friday, mon`, ''],
+    // [`slots for this friday, tuesday, or monday`, ''],
+    // [`slots for 12, 15 wed`, ''],
+    [`tues at 3pm to 5pm`, '3:00pm', '5:00pm'],
+    [`june 4 at 2pm - 9pm`, '2:00pm', '9:00pm'],
+    [`june 4 at ten past 8`, '8:10pm'],
   ]
   arr.forEach((a) => {
     let doc = nlp(a[0])

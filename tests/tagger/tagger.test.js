@@ -238,6 +238,12 @@ test('pos-basic-tag:', function (t) {
     ['3pm eastern time', ['Time', 'Timezone', 'Timezone']],
     ['pacific standard time', ['Timezone', 'Timezone', 'Timezone']],
     ['korea daylight time', ['Timezone', 'Timezone', 'Timezone']],
+    // urls
+    ['https://www.f3schools.com', ['Url']],
+    ['https://f3scho0ls.com', ['Url']],
+    ['https://www.fu4bar.f3scho0ls.com', ['Url']],
+    ['http://compromise.cool', ['Url']],
+    ['http://a.jp', ['Url']],
   ]
   arr.forEach(function (a) {
     let terms = nlp(a[0]).json(0).terms

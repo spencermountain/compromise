@@ -24,7 +24,11 @@ const applyCounter = function (unit, counter = {}) {
     d = d.startOf(counter.unit)
   } else if (counter.dir === 'last') {
     d = d.endOf(unit.unit)
-    d = d.startOf(counter.unit)
+    if (counter.unit === 'weekend') {
+      d = d.day('saturday', false)
+    } else {
+      d = d.startOf(counter.unit)
+    }
   } else if (counter.num) {
     // support 'nth week', eg.
     d = d.add(counter.num, counter.unit)

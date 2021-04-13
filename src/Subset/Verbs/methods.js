@@ -115,6 +115,7 @@ module.exports = {
         toParticiple(parsed, this.world)
         return
       }
+      // don't conjugate 'go away'.
       if (vb.has('#Imperative')) {
         return
       }

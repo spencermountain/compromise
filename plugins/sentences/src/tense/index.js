@@ -21,14 +21,19 @@ exports.toPastTense = function () {
       vb = vb.verbs().toParticiple()
       obj.verb.replaceWith(vb, false)
     } else {
-      //   //do a normal conjugation
+      //do a normal conjugation
       vb = vb.verbs().toPastTense()
       obj.verb.replaceWith(vb, false)
     }
-    // // trailing gerund/future/present are okay, but 'walked and eats' is not
+    // force agreement with any 2nd/3rd verbs:
+    // trailing gerund/future/present are okay, but 'walked and eats' is not
     if (obj.object && obj.object.found && obj.object.has('#PresentTense')) {
       let verbs = obj.object.verbs()
-      verbs.if('#PresentTense').verbs().toPastTense()
+      // sorta infinitive - 'to engage'
+      if (verbs.lookBehind('to$').found) {
+        return
+      }
+      verbs.if('#PresentTense').notIf('#Gerund').verbs().toPastTense()
     }
   })
   return this

@@ -81,7 +81,7 @@ exports.toPresentTense = function () {
     // future is okay, but 'walks and ate' -> 'walks and eats'
     if (obj.object && obj.object.found && obj.object.has('#PastTense')) {
       let verbs = obj.object.verbs()
-      verbs.if('#PastTense').verbs().toPresentTense()
+      verbs.if('#PastTense').notIf('#Gerund').verbs().toPresentTense()
     }
   })
   return this
@@ -97,7 +97,7 @@ exports.toFutureTense = function () {
     //Present is okay, but 'will walk and ate' -> 'will walk and eat'
     if (obj.object && obj.object.found && obj.object.has('(#PastTense|#PresentTense)')) {
       let verbs = obj.object.verbs()
-      verbs.if('(#PastTense|#PresentTense)').verbs().toInfinitive()
+      verbs.if('(#PastTense|#PresentTense)').notIf('#Gerund').verbs().toInfinitive()
     }
   })
   return this

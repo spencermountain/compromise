@@ -19,7 +19,11 @@ const miscCorrection = function (doc) {
     // i speak
     m = m.ifNo('(i|we|they)')
     // shut the door!
-    m.not('will be').match('[#Infinitive] (#Determiner|#Possessive) #Noun', 0).tag('Imperative', 'shut-the')
+    m.not('will be')
+      .match('[#Infinitive] (#Determiner|#Possessive) #Noun')
+      .notIf('(our|their)')
+      .match('#Infinitive')
+      .tag('Imperative', 'shut-the')
     // go-fast
     m.match('^[#Infinitive] #Adverb?$', 0).tag('Imperative', 'go-fast')
     // do not go

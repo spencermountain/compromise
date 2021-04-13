@@ -21,6 +21,11 @@ test('sentence-change-tense:', function (t) {
       'Capital punishment, also known as the death penalty, will be the state-sanctioned killing of a person as punishment for a crime.',
     ],
     [
+      `A greeting is an act of communication in which human beings intentionally make their presence known`,
+      `A greeting was an act of communication in which human beings intentionally made their presence known`,
+      `A greeting will be an act of communication in which human beings intentionally make their presence known`,
+    ],
+    [
       //infinitives
       // ['he does what he can to stop', 'he did what he could to stop', 'he will do what he can to stop'],
       'goes to sleep',
@@ -49,15 +54,15 @@ test('sentence-change-tense:', function (t) {
 
     r.toPastTense()
     let str = r.out('text')
-    t.equal(str, a[1], 'pastTense-' + str)
+    t.equal(str, a[1], '[pres->pastTense] ' + str)
 
     r.toFutureTense()
     str = r.out('text')
-    t.equal(str, a[2], 'futureTense-' + str)
+    t.equal(str, a[2], '[past->future] ' + str)
 
     r.toPresentTense()
     str = r.out('text')
-    t.equal(str, a[0], 'presentTense-' + str)
+    t.equal(str, a[0], '[future->present] ' + str)
   })
   t.end()
 })

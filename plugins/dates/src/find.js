@@ -53,7 +53,7 @@ const findDate = function (doc) {
     dates = dates.splitAfter(m)
   }
   // 'june 5th, june 10th'
-  m = dates.match('[#Month #Value] #Month', 0)
+  m = dates.match('[#Month #Value] #Month', 0).ifNo('@hasDash$')
   if (m.found) {
     dates = dates.splitAfter(m)
   }

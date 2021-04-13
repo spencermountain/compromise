@@ -9,6 +9,9 @@ const fixUp = function (doc) {
       oops.match('^#Date+').unTag('Date', 'by-monday')
     }
 
+    // wed nov
+    doc.match('[(wed|sat)] (#Month|#Year)', 0).tag('WeekDay', 'wed')
+
     let d = doc.match('#Date+')
     //'spa day'
     d.match('^day$').unTag('Date', 'spa-day')

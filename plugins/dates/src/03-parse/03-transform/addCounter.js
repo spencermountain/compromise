@@ -17,7 +17,6 @@ const applyCounter = function (unit, counter = {}) {
     return unit
   }
   let d = unit.d
-
   // support 'first' or 0th
   if (counter.dir === 'first' || counter.num === 0) {
     d = unit.start().d
@@ -30,6 +29,9 @@ const applyCounter = function (unit, counter = {}) {
       d = d.startOf(counter.unit)
     }
   } else if (counter.num) {
+    if (counter.unit === 'weekend') {
+      d = d.day('saturday', true).add(1, 'day') //fix bug
+    }
     // support 'nth week', eg.
     d = d.add(counter.num, counter.unit)
   }

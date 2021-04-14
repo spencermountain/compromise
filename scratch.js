@@ -7,9 +7,13 @@ nlp.extend(require('./plugins/sentences/src'))
 // const fmt = iso => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 // nlp.verbose(true)
 
-let doc = nlp('punishment will be the killing.').debug()
-// let doc = nlp('Temptation is a desire to engage').debug()
+// let doc = nlp(`human beings intentionally make their presence known`)
+let doc = nlp(
+  `Checkmate is a game position in chess and other chess-like games in which a player's king is in check (threatened with capture) and there is no way to avoid the threat.`
+).debug()
 doc.sentences().toPastTense()
+// doc.sentences().toPresentTense()
+// doc.sentences().toFutureTense()
 console.log(doc.text())
 // let doc = nlp('2am - 5pm').debug()
 // let doc = nlp('9-5pm tuesday').debug()

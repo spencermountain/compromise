@@ -25,13 +25,18 @@ test('sentence-change-tense:', function (t) {
       `A greeting was an act of communication in which human beings intentionally made their presence known`,
       `A greeting will be an act of communication in which human beings intentionally make their presence known`,
     ],
-    [
-      //infinitives
-      // ['he does what he can to stop', 'he did what he could to stop', 'he will do what he can to stop'],
-      'goes to sleep',
-      'went to sleep',
-      'will go to sleep',
-    ],
+    // [
+    //   `Checkmate is a game position in chess in which a player's king is in check and there is no way to avoid the threat.`,
+    //   `Checkmate was a game position in chess in which a player's king was in check and there was no way to avoid the threat.`,
+    //   `Checkmate will be a game position in chess in which a player's king will be in check and there will be no way to avoid the threat.`,
+    // ],
+    //infinitives
+    // [
+    //   'he does what he can to stop',
+    //   'he did what he could to stop',
+    //   'he will do what he can to stop',
+    // ],
+    ['goes to sleep', 'went to sleep', 'will go to sleep'],
 
     //passive
     // ['cardboard is made of tree fibre', 'cardboard was made of tree fibre', 'cardboard will be made of tree fibre'],

@@ -136,7 +136,8 @@ let list = [
   { match: `#Adverb [${verbs}]`, group: 0, tag: 'Verb', reason: 'really-mark' },
   //to mark
   { match: '(to|#Modal) [mark]', group: 0, tag: 'PresentTense', reason: 'to-mark' },
-
+  // checkmate is
+  { match: '^[#Infinitive] (is|was)', group: 0, tag: 'Noun', reason: 'checkmate-is' },
   // wade smith
   { match: `${verbs} #Person`, tag: 'Person', reason: 'rob-smith' },
   // wade m. Cooper

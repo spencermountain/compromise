@@ -25,6 +25,11 @@ test('sentence-change-tense:', function (t) {
       `A greeting was an act of communication in which human beings intentionally made their presence known`,
       `A greeting will be an act of communication in which human beings intentionally make their presence known`,
     ],
+    [
+      'Pigeonholing is a process that attempts to classify disparate entities',
+      'Pigeonholing was a process that attempted to classify disparate entities',
+      'Pigeonholing will be a process that attempts to classify disparate entities',
+    ],
     // [
     //   `Checkmate is a game position in chess in which a player's king is in check and there is no way to avoid the threat.`,
     //   `Checkmate was a game position in chess in which a player's king was in check and there was no way to avoid the threat.`,

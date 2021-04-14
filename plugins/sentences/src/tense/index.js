@@ -29,10 +29,10 @@ exports.toPastTense = function () {
     // trailing gerund/future/present are okay, but 'walked and eats' is not
     if (obj.object && obj.object.found && obj.object.has('#PresentTense')) {
       let verbs = obj.object.verbs()
-      // sorta infinitive - 'to engage'
-      if (verbs.lookBehind('to$').found) {
-        return
-      }
+      // remove any sorta infinitive - 'to engage'
+      verbs = verbs.filter((v) => {
+        return !v.lookBehind('to$').found
+      })
       verbs.if('#PresentTense').notIf('#Gerund').verbs().toPastTense()
     }
   })
@@ -97,7 +97,15 @@ exports.toFutureTense = function () {
     //Present is okay, but 'will walk and ate' -> 'will walk and eat'
     if (obj.object && obj.object.found && obj.object.has('(#PastTense|#PresentTense)')) {
       let verbs = obj.object.verbs()
-      verbs.if('(#PastTense|#PresentTense)').notIf('#Gerund').verbs().toInfinitive()
+      // add 'that attempts'
+      verbs = verbs.if('(#PastTense|#PresentTense)').notIf('#Gerund')
+      verbs.forEach((v) => {
+        if (v.lookBehind('(that|which)$').found === true) {
+          v.verbs().toPresentTense()
+        } else {
+          v.verbs().toInfinitive()
+        }
+      })
     }
   })
   return this

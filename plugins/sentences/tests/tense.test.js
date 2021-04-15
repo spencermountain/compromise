@@ -10,8 +10,67 @@ test('sentence-change-tense:', function (t) {
     ['i usually use the stairs', 'i usually used the stairs', 'i usually will use the stairs'],
     ['he finishes first', 'he finished first', 'he will finish first'],
     ['our house looks great', 'our house looked great', 'our house will look great'],
+    [
+      'temptation is a desire to engage',
+      'temptation was a desire to engage',
+      'temptation will be a desire to engage',
+    ],
+    [
+      'Capital punishment, also known as the death penalty, is the state-sanctioned killing of a person as punishment for a crime.',
+      'Capital punishment, also known as the death penalty, was the state-sanctioned killing of a person as punishment for a crime.',
+      'Capital punishment, also known as the death penalty, will be the state-sanctioned killing of a person as punishment for a crime.',
+    ],
+    [
+      `A greeting is an act of communication in which human beings intentionally make their presence known`,
+      `A greeting was an act of communication in which human beings intentionally made their presence known`,
+      `A greeting will be an act of communication in which human beings intentionally make their presence known`,
+    ],
+    [
+      'Pigeonholing is a process that attempts to classify disparate entities',
+      'Pigeonholing was a process that attempted to classify disparate entities',
+      'Pigeonholing will be a process that attempts to classify disparate entities',
+    ],
+    [
+      `Breathing is the process of moving air into and out of the lungs to facilitate gas exchange with the internal environment`,
+      `Breathing was the process of moving air into and out of the lungs to facilitate gas exchange with the internal environment`,
+      `Breathing will be the process of moving air into and out of the lungs to facilitate gas exchange with the internal environment`,
+    ],
+    [
+      `A shoehorn or shoe horn is a tool with a short handle that flares into a longer spoon-like head`,
+      `A shoehorn or shoe horn was a tool with a short handle that flared into a longer spoon-like head`,
+      `A shoehorn or shoe horn will be a tool with a short handle that flares into a longer spoon-like head`,
+    ],
+    [
+      `A hinge is a mechanical bearing that connects two solid objects, typically allowing only a limited angle of rotation between them.`,
+      `A hinge was a mechanical bearing that connected two solid objects, typically allowing only a limited angle of rotation between them.`,
+      `A hinge will be a mechanical bearing that connects two solid objects, typically allowing only a limited angle of rotation between them.`,
+    ],
+    [
+      `Sugaring is a food preservation method similar to pickling.`,
+      `Sugaring was a food preservation method similar to pickling.`,
+      `Sugaring will be a food preservation method similar to pickling.`,
+    ],
+    [
+      `Sugaring is the process of desiccating a food by first dehydrating it, then packing it with pure sugar.`,
+      `Sugaring was the process of desiccating a food by first dehydrating it, then packing it with pure sugar.`,
+      `Sugaring will be the process of desiccating a food by first dehydrating it, then packing it with pure sugar.`,
+    ],
+    // [
+    //   `A Bank is a financial institution that accepts deposits from the public and creates a demand deposit while simultaneously making loans.`,
+    //   `A Bank was a financial institution that accepted deposits from the public and created a demand deposit while simultaneously making loans.`,
+    //   `A Bank will be a financial institution that accepts deposits from the public and creates a demand deposit while simultaneously making loans.`,
+    // ],
+    // [
+    //   `Checkmate is a game position in chess in which a player's king is in check and there is no way to avoid the threat.`,
+    //   `Checkmate was a game position in chess in which a player's king was in check and there was no way to avoid the threat.`,
+    //   `Checkmate will be a game position in chess in which a player's king will be in check and there will be no way to avoid the threat.`,
+    // ],
     //infinitives
-    // ['he does what he can to stop', 'he did what he could to stop', 'he will do what he can to stop'],
+    // [
+    //   'he does what he can to stop',
+    //   'he did what he could to stop',
+    //   'he will do what he can to stop',
+    // ],
     ['goes to sleep', 'went to sleep', 'will go to sleep'],
 
     //passive
@@ -35,15 +94,15 @@ test('sentence-change-tense:', function (t) {
 
     r.toPastTense()
     let str = r.out('text')
-    t.equal(str, a[1], 'pastTense-' + str)
+    t.equal(str, a[1], '[pres->pastTense] ' + str)
 
     r.toFutureTense()
     str = r.out('text')
-    t.equal(str, a[2], 'futureTense-' + str)
+    t.equal(str, a[2], '[past->future] ' + str)
 
     r.toPresentTense()
     str = r.out('text')
-    t.equal(str, a[0], 'presentTense-' + str)
+    t.equal(str, a[0], '[future->present] ' + str)
   })
   t.end()
 })

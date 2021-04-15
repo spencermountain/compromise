@@ -11,7 +11,11 @@ notWord = notWord.reduce((h, c) => {
 
 const hasHyphen = function (str) {
   //dont split 're-do'
-  if (/^(re|un)-?[^aeiou]./.test(str) === true) {
+  if (/^(re|un|micro|macro|trans|bi|mono|over)-?[^aeiou]./.test(str) === true) {
+    return false
+  }
+  //dont split 'bat-like'
+  if (/^([a-z\u00C0-\u00FF/]+)(-|–|—)(like|ish|less|able)/i.test(str) === true) {
     return false
   }
   //letter-number 'aug-20'
@@ -24,12 +28,20 @@ const hasHyphen = function (str) {
   if (reg2.test(str) === true) {
     return true
   }
-  //support weird number-emdash combo '2010–2011'
-  // let reg2 = /^([0-9]+)(–|—)([0-9].*)/i
-  // if (reg2.test(str)) {
-  //   return true
-  // }
   return false
+}
+
+// combine '2 - 5' like '2-5' is
+const combineRanges = function (arr) {
+  const startRange = /^[0-9]{1,4}(:[0-9][0-9])?([a-z]{1,2})? ?(-|–|—) ?$/
+  const endRange = /^[0-9]{1,4}([a-z]{1,2})? ?$/
+  for (let i = 0; i < arr.length - 1; i += 1) {
+    if (arr[i + 1] && startRange.test(arr[i]) && endRange.test(arr[i + 1])) {
+      arr[i] = arr[i] + arr[i + 1]
+      arr[i + 1] = null
+    }
+  }
+  return arr
 }
 
 // 'he / she' should be one word
@@ -117,6 +129,7 @@ const splitWords = function (str) {
   }
   // combine 'one / two'
   result = combineSlashes(result)
+  result = combineRanges(result)
   // remove empty results
   result = result.filter(s => s)
   return result

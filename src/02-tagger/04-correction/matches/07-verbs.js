@@ -90,6 +90,8 @@ let list = [
   { match: '(#Verb && @hasHyphen) out', tag: 'PhrasalVerb', reason: 'foo-out' },
   //fall over
   { match: '#PhrasalVerb [#PhrasalVerb]', group: 0, tag: 'Particle', reason: 'phrasal-particle' },
+  // went on for
+  { match: '(lived|went|crept|go) [on] for', group: 0, tag: 'PhrasalVerb', reason: 'went-on' },
   //back it up
   {
     match: '#Verb (him|her|it|us|himself|herself|itself|everything|something) [(up|down)]',
@@ -136,7 +138,8 @@ let list = [
   { match: `#Adverb [${verbs}]`, group: 0, tag: 'Verb', reason: 'really-mark' },
   //to mark
   { match: '(to|#Modal) [mark]', group: 0, tag: 'PresentTense', reason: 'to-mark' },
-
+  // checkmate is
+  { match: '^[#Infinitive] (is|was)', group: 0, tag: 'Noun', reason: 'checkmate-is' },
   // wade smith
   { match: `${verbs} #Person`, tag: 'Person', reason: 'rob-smith' },
   // wade m. Cooper

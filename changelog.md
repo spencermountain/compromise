@@ -9,7 +9,25 @@ compromise uses semver, and pushes to npm frequently
 While all _Major_ releases should be reviewed, our only two _large_ releases are **v6** in 2016 and and **v12** in 2019. Others have been mostly incremental, or niche.
 
 <!-- #### [Unreleased]
+
 -->
+
+#### 13.11.0 [April 2021]
+
+- **[change]** - use babel default build target (drop ie11 polyfill)
+- **[change]** - dont compile esm build w/ babel anymore
+- **[fix]** - sentence conjugation fixes
+- **[fix]** - improvements to phrasal verbs
+- **[change]** - keep tokenization for some more dashed suffixes like 'snail-like'
+  _plugin-releases_: dates, numbers, sentences
+
+#### 13.10.7 [April 2021]
+
+- **[change]** - tokenize '2 - 5' as NumerRange, like '2-5' is
+- **[fix]** - edge-cases for URLs with numbers
+- **[fix]** - some sentences.toPastTense() fixes
+- **[fix]** - 'n weekends from now' math in plugin-date
+  _plugin-releases_: dates, sentences
 
 #### 13.10.6 [April 2021]
 

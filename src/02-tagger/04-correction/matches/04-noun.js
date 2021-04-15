@@ -157,4 +157,13 @@ module.exports = [
   { match: `(have|had) [#Adjective] #Preposition .`, group: 0, tag: 'Noun', reason: 'have-fun' },
   // co-founder
   { match: `co #Noun`, tag: 'Actor', reason: 'co-noun' },
+  // to facilitate gas exchange with
+  { match: `to #PresentTense #Noun [#PresentTense] #Preposition`, group: 0, tag: 'Noun', reason: 'gas-exchange' },
+  // in various sensory functions
+  // {
+  //   match: `#Preposition #Determiner #Singular [#PresentTense]`,
+  //   group: 0,
+  //   tag: 'Noun',
+  //   reason: 'various-word-functions',
+  // },
 ]

@@ -96,6 +96,20 @@ test('number-range', function (t) {
   t.end()
 })
 
+test('number-range with spaces', function (t) {
+  let doc = nlp('12 - 14')
+  t.equal(doc.has('#Value to #NumberRange'), true, 'has NumberRange tags')
+  t.equal(doc.text(), '12 - 14', 'text is normal')
+  t.equal(doc.contractions().expand().text(), '12 to 14', 'contraction expands')
+
+  doc = nlp('4 - 5pm')
+  t.equal(doc.has('#Value to #NumberRange'), true, 'has NumberRange tags #2')
+  t.equal(doc.text(), '4 - 5pm', 'text is proper #2')
+  t.equal(doc.contractions().expand().text(), '4 to 5pm', 'contraction expands #2')
+
+  t.end()
+})
+
 test('french-contraction', function (t) {
   let doc = nlp(`oh j'aime ca`)
   t.equal(doc.has('aime'), true, 'has verb')

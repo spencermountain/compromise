@@ -7,8 +7,8 @@ module.exports = [
   [/^@1?[0-9](am|pm)$/i, 'Time'], // @6pm
   [/^@1?[0-9]:[0-9]{2}(am|pm)?$/i, 'Time'], // @6:30
   [/^@\w{2,}$/, 'AtMention'], //@spencermountain
-  [/^(https?:\/\/|www\.)\w+\.[a-z]{2,3}/, 'Url'], //with http/www
-  [/^[\w./]+\.(com|net|gov|org|ly|edu|info|biz|ru|jp|de|in|uk|br)/, 'Url'], //http://mostpopularwebsites.net/top-level-domain
+  [/^(https?:\/\/|www\.)+\w+\.[a-z]{2,3}/, 'Url'], //with http/www
+  [/^[a-z0-9./]+\.(com|net|gov|org|ly|edu|info|biz|ru|jp|de|in|uk|br)/, 'Url'], //http://mostpopularwebsites.net/top-level-domain
 
   //dates/times
   [/^'[0-9]{2}$/, 'Year'], //like '97
@@ -74,7 +74,7 @@ module.exports = [
   //range
   [/^[0-9.]{1,3}[a-z]{0,2}[-–—][0-9]{1,3}[a-z]{0,2}$/, ['Value', 'NumberRange']], //7th-8th
   //time-range
-  [/^[0-9][0-9]?(:[0-9][0-9])?(am|pm)?[-–—][0-9][0-9]?(:[0-9][0-9])?(am|pm)?$/, ['Time', 'NumberRange']], //7pm-8:30
+  [/^[0-9][0-9]?(:[0-9][0-9])?(am|pm)? ?[-–—] ?[0-9][0-9]?(:[0-9][0-9])?(am|pm)?$/, ['Time', 'NumberRange']], //7pm-8:30
   //with unit
   [/^[0-9.]+([a-z]{1,4})$/, 'Value'], //like 5tbsp
   //ordinal

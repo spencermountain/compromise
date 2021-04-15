@@ -1,7 +1,12 @@
 <!-- #### [Unreleased]
-- **[change]** - null timezone is now the same as undefined timezone
 
 -->
+
+### 2.1.0 [April 2021]
+
+- **[change]** - null timezone is now the same as undefined timezone
+- **[change]** - drop ie11 support
+- **[change]** - dont babel esm build anymore
 
 ### 2.0.2 [April 2021]
 

@@ -1,5 +1,6 @@
 const test = require('tape')
 const nlp = require('./_lib')
+const spacetime = require('spacetime')
 
 //number of days between start+end
 const tests = [
@@ -37,40 +38,41 @@ const tests = [
       // ['after next weekend', 'Aug 21st - Sept 4th 2016'],
       ['september 5th 2018', 'on Wed, Sept 5th, 2018'],
       ['on april fools 2020', 'on Wed, Apr 1st, 2020'],
-      // // ['june 5-7 1999', 'Jun 5-7, 1999'],
-      // ['june 5 to 7, 1999', 'Jun 5-7, 1999'],
-      // ['june 5th to 7, 1999', 'Jun 5-7, 1999'],
-      // // ['june 5th-7th 2017', 'Jun 5-7, 2017'],
+      ['june 5-7 1999', 'Jun 5-7, 1999'],
+      ['june 5 to 7, 1999', 'Jun 5-7, 1999'],
+      ['june 5th to 7, 1999', 'Jun 5-7, 1999'],
+      ['june 5th-7th 2017', 'Jun 5-7, 2017'],
       // ['5th to 7 june, 1999', 'Jun 5-7, 1999'],
       // ['5 to 7 august 1999', 'Aug 5-7, 1999'],
       // ['15 to 20 of august 1999', 'Aug 15-20, 1999'],
-      // ['15th - 20th of august', 'Aug 15-20'],
+      ['15th - 20th of august', 'Aug 15-20'],
+      ['monday to wednesday', 'Aug 15th to Aug 17th'],
     ],
   },
   {
     today: [2016, 10, 23], //wed nov 23rd
     tests: [
       ['this month', 'nov 1 to nov 30'],
-      // ['june twenty-first 1992', 'june 21 1992 - june 21 1992'],
-      // ['this august', 'aug 1 2017 - aug 31 2017'],
-      // ['the last weekend in october', 'Oct 28 to 29'],
-      // ['the last weekend in october', 'Oct 28 to 29, 2017'],
+      ['june twenty-first 1992', 'june 21 1992 - june 21 1992'],
+      ['this august', 'aug 1 2017 to aug 31 2017'],
+      ['the last weekend in october', 'Oct 28 to 29'],
+      ['the last weekend in october 2017', 'Oct 28 to 29, 2017'],
       ['sometime tomorrow', 'Thu Nov 24th'],
       ['on april fools 2020', 'Wed, Apr 1st, 2020'],
       ['april fools at 5pm', 'Wed, Apr 1st, 2017 at 5:00pm'],
       ['on the 18th', 'Sun, Dec 18th'],
       ['this quarter', 'Oct 1st 2016 to Dec 31st 2016'],
-      // ['this morning', 'Nov 23rd @ 9am'],
+      // ['this morning at 9', 'Nov 23rd @ 9am'],
       ['10 August 2012', 'Aug 10 2012'],
       ['Sunday, March 6, 2016', 'Mar 6 2016'],
       ['August 10 to 22, 2012', 'Aug 10 2012 to Aug 22 2012'],
       ['May eighth, 2010', 'May 8 2010'],
       ['May twenty-fourth, 2010', 'May 24 2010'],
       ['Sep 2012', 'Sep 1 2012 to Sep 30 2012'],
-      // ['Sept, 2012', 'Sep 1 2012 - Sep 30 2012'],
+      ['Sept, 2012', 'Sep 1 2012 - Sep 30 2012'],
       ['Sep-2012', 'Sep 1 2012 to Sep 30 2012'],
       ['20/10/2012', 'Oct 20 2012'],
-      // ['8/10/2012 - 8/15/2012', 'Aug 10 2012 - Aug 15 2012'],
+      ['8/10/2012 - 8/15/2012', 'Aug 10 2012 - Aug 15 2012'],
       ['05-25-2015', 'May 25 2015'],
       ['5 Days ago', 'Nov 18 2016 to Nov 18 2016'],
       ['Sunday 12/7/2014', 'Dec 7 2014 to Dec 7 2014'],
@@ -81,9 +83,9 @@ const tests = [
       // ['second weekend in 2019', 'Jan 12 to Jan 13, 2019'],
       ['Jan 12 to Jan 13', 'Jan 12 2017 to Jan 13 2017'],
       ['Jan 22 2017 to Jan 13 2018', 'January 22 2017 to January 13 2018'],
-      // ['5 to 7 of january 1998', 'Jan 5th 1998 to Jan 7 1998'],
-      // ['january 5 to 7 1998', 'Jan 5th 1998, to Jan 7 1998'],
-      // ['third quarter 1998', 'july 1st 1998 to september 30th 1998'],
+      ['5 to 7 of january 1998', 'Jan 5th 1998 to Jan 7 1998'],
+      ['january 5 to 7 1998', 'Jan 5th 1998, to Jan 7 1998'],
+      ['third quarter 1998', 'july 1st 1998 to september 30th 1998'],
       // ['middle of q1 2019', 'feb 12 2019'],
       ['third day of 2019', 'jan 3rd 2019'],
       ['third week of 2019', 'jan 14th to 20th 2019'],
@@ -96,16 +98,16 @@ const tests = [
       // ['this spring', 'march 1st 2016 to may 31st 2016'],
       // ['next spring', 'march 1st 2017 to may 31st 2017'],
       ['the first week of june', 'May 29th 2017 to June 4th 2017'],
-      ['22-23 Feb at 7pm', 'Feb 22 2017 until Feb 23 2017'],
+      ['22-23 Feb at 7pm', 'Feb 22 2017 7pm until Feb 23 2017'],
       // ['22-23 Feb 2016 at 7pm', 'Feb 22 2016 to Feb 23 2016'],
       ['Tuesday, 10 January', 'Jan 10 2017'],
-      // ['Monday - Wednesday', 'Nov 28 - Nov 30'],
+      ['Monday - Wednesday', 'Nov 28 - Nov 30'],
       ['today to next friday', 'Nov 23 to Dec 2'],
       // ['middle of q1 1998', 'Feb 12 1998'],
       // ['within two weeks', 'Nov 23 to Dec 8'],
       // ['within a month', 'Nov 23 - Dec 23'],
       // ['within a few months', 'Nov 23 - Jan 23 2017'],
-      // ['1994-11-05T13:15:30Z', 'Nov 5 1994'],
+      // ['1994-11-05T13:15:000Z', 'Nov 5 1994 1:15pm'],
       ['August 10 to 22, 2012', 'Aug 10 2012 to Aug 22 2012'],
       ['August 10-22, 2012', 'Aug 10 2012 to Aug 22 2012'],
       // ['August 10 - November 12', 'Aug 10 2017 - Nov 12 2017'], //tricky
@@ -150,6 +152,10 @@ const tests = [
   },
 ]
 
+const fmt = function (str) {
+  return spacetime(str).format('nice')
+}
+
 test('full-dates', (t) => {
   tests.forEach((obj) => {
     const context = {
@@ -166,8 +172,8 @@ test('full-dates', (t) => {
       let right = nlp(a[1]).dates(context).json()[0] || {}
       left.date = left.date || {}
       right.date = right.date || {}
-      t.equal(left.date.start, right.date.start, 'start: ' + a[0])
-      t.equal(left.date.end, right.date.end, 'end: ' + a[0])
+      t.equal(fmt(left.start), fmt(right.start), '[start] ' + a[0])
+      t.equal(fmt(left.end), fmt(right.end), '[end] ' + a[0])
     })
   })
   t.end()

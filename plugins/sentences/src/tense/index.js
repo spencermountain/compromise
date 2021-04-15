@@ -21,14 +21,19 @@ exports.toPastTense = function () {
       vb = vb.verbs().toParticiple()
       obj.verb.replaceWith(vb, false)
     } else {
-      //   //do a normal conjugation
+      //do a normal conjugation
       vb = vb.verbs().toPastTense()
       obj.verb.replaceWith(vb, false)
     }
-    // // trailing gerund/future/present are okay, but 'walked and eats' is not
+    // force agreement with any 2nd/3rd verbs:
+    // trailing gerund/future/present are okay, but 'walked and eats' is not
     if (obj.object && obj.object.found && obj.object.has('#PresentTense')) {
       let verbs = obj.object.verbs()
-      verbs.if('#PresentTense').verbs().toPastTense()
+      // remove any sorta infinitive - 'to engage'
+      verbs = verbs.filter((v) => {
+        return !v.lookBehind('to$').found
+      })
+      verbs.if('#PresentTense').notIf('#Gerund').verbs().toPastTense()
     }
   })
   return this
@@ -76,7 +81,7 @@ exports.toPresentTense = function () {
     // future is okay, but 'walks and ate' -> 'walks and eats'
     if (obj.object && obj.object.found && obj.object.has('#PastTense')) {
       let verbs = obj.object.verbs()
-      verbs.if('#PastTense').verbs().toPresentTense()
+      verbs.if('#PastTense').notIf('#Gerund').verbs().toPresentTense()
     }
   })
   return this
@@ -92,7 +97,15 @@ exports.toFutureTense = function () {
     //Present is okay, but 'will walk and ate' -> 'will walk and eat'
     if (obj.object && obj.object.found && obj.object.has('(#PastTense|#PresentTense)')) {
       let verbs = obj.object.verbs()
-      verbs.if('(#PastTense|#PresentTense)').verbs().toInfinitive()
+      // add 'that attempts'
+      verbs = verbs.if('(#PastTense|#PresentTense)').notIf('#Gerund')
+      verbs.forEach((v) => {
+        if (v.lookBehind('(that|which|who|whom)$').found === true) {
+          v.verbs().toPresentTense()
+        } else {
+          v.verbs().toInfinitive()
+        }
+      })
     }
   })
   return this

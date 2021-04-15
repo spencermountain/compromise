@@ -47,16 +47,7 @@ export default [
   {
     input: 'src/index.js',
     output: [{ banner: banner, file: 'builds/compromise.mjs', format: 'esm' }],
-    plugins: [
-      resolve(),
-      json(),
-      commonjs(),
-      babel({
-        babelrc: false,
-        presets: ['@babel/preset-env'],
-      }),
-      sizeCheck({ expect: 330, warn: 10 }),
-    ],
+    plugins: [resolve(), json(), commonjs(), terser(), sizeCheck({ expect: 192, warn: 10 })],
   },
   {
     input: 'src/index.js',
@@ -84,7 +75,7 @@ export default [
         presets: ['@babel/preset-env'],
       }),
       terser(),
-      sizeCheck({ expect: 173, warn: 10 }),
+      sizeCheck({ expect: 183, warn: 10 }),
     ],
   },
 ]

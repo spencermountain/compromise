@@ -124,7 +124,7 @@ const endsWith = {
 
   g: [
     {
-      reg: /([^aeiou][ou])g$/i,
+      reg: /([^aeiou][aou])g$/i,
       repl: {
         pr: '$1gs',
         pa: '$1gged',

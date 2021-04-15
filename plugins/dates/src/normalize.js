@@ -46,6 +46,9 @@ const normalize = function (doc) {
     m.groups('0').replaceWith('2')
     tagger(doc)
   }
+  // jan - feb
+  doc.match('@hasDash').insertAfter('to').tag('Date')
+  // doc.debug()
   return doc
 }
 module.exports = normalize

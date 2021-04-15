@@ -20,7 +20,7 @@ module.exports = {
   },
 
   NumberRange: {
-    isA: ['Contraction'],
+    // isA: ['Contraction'],
   },
   Adverb: {
     notA: ['Noun', 'Verb', 'Adjective', 'Value'],

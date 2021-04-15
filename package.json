@@ -2,7 +2,7 @@
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "modest natural language processing",
-  "version": "13.10.6",
+  "version": "13.11.0",
   "main": "./builds/compromise.js",
   "unpkg": "./builds/compromise.min.js",
   "module": "./builds/compromise.mjs",
@@ -24,8 +24,13 @@
     "url": "git://github.com/spencermountain/compromise.git"
   },
   "homepage": "https://github.com/spencermountain/compromise",
+  "browserslist": [
+    "defaults",
+    "not IE 11",
+    "maintained node versions"
+  ],
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=8.0.0"
   },
   "scripts": {
     "build": "node ./scripts/build && rollup -c --silent && npm run test:smoke --silent",

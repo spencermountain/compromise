@@ -19,16 +19,7 @@ export default [
         banner: banner,
       },
     ],
-    plugins: [
-      resolve(),
-      json(),
-      commonjs(),
-      babel({
-        babelrc: false,
-        presets: ['@babel/preset-env'],
-      }),
-      sizeCheck(),
-    ],
+    plugins: [resolve(), json(), commonjs(), terser(), sizeCheck()],
   },
   {
     input: 'src/index.js',

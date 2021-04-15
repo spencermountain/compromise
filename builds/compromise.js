@@ -1968,7 +1968,7 @@
   var _04Insert = {
     append: append_1,
     prepend: prepend_1,
-    "delete": _delete,
+    delete: _delete,
     replace: replace$1,
     splitOn: splitOn
   };
@@ -2636,18 +2636,18 @@
     });
     res = cleanUp(res); // split by spaces, now
 
-    var _final = [];
+    var final = [];
     res.forEach(function (str) {
       if (isBlock(str)) {
-        _final.push(str);
+        final.push(str);
       } else if (isReg(str)) {
-        _final.push(str);
+        final.push(str);
       } else {
-        _final = _final.concat(str.split(byWord));
+        final = final.concat(str.split(byWord));
       }
     });
-    _final = cleanUp(_final);
-    return _final;
+    final = cleanUp(final);
+    return final;
   };
 
   var _01ParseBlocks = parseBlocks; // console.log('(one two) (upto) [<snooze_to>#Date+]'.split(byParentheses))
@@ -3646,7 +3646,12 @@
 
   var hasHyphen = function hasHyphen(str) {
     //dont split 're-do'
-    if (/^(re|un)-?[^aeiou]./.test(str) === true) {
+    if (/^(re|un|micro|macro|trans|bi|mono|over)-?[^aeiou]./.test(str) === true) {
+      return false;
+    } //dont split 'bat-like'
+
+
+    if (/^([a-z\u00C0-\u00FF/]+)(-|–|—)(like|ish|less|able)/i.test(str) === true) {
       return false;
     } //letter-number 'aug-20'
 
@@ -3662,14 +3667,24 @@
 
     if (reg2.test(str) === true) {
       return true;
-    } //support weird number-emdash combo '2010–2011'
-    // let reg2 = /^([0-9]+)(–|—)([0-9].*)/i
-    // if (reg2.test(str)) {
-    //   return true
-    // }
-
+    }
 
     return false;
+  }; // combine '2 - 5' like '2-5' is
+
+
+  var combineRanges = function combineRanges(arr) {
+    var startRange = /^[0-9]{1,4}(:[0-9][0-9])?([a-z]{1,2})? ?(-|–|—) ?$/;
+    var endRange = /^[0-9]{1,4}([a-z]{1,2})? ?$/;
+
+    for (var i = 0; i < arr.length - 1; i += 1) {
+      if (arr[i + 1] && startRange.test(arr[i]) && endRange.test(arr[i + 1])) {
+        arr[i] = arr[i] + arr[i + 1];
+        arr[i + 1] = null;
+      }
+    }
+
+    return arr;
   }; // 'he / she' should be one word
 
 
@@ -3770,7 +3785,8 @@
     } // combine 'one / two'
 
 
-    result = combineSlashes(result); // remove empty results
+    result = combineSlashes(result);
+    result = combineRanges(result); // remove empty results
 
     result = result.filter(function (s) {
       return s;
@@ -4107,8 +4123,7 @@
       isA: ['Adjective'],
       notA: ['Comparative']
     },
-    NumberRange: {
-      isA: ['Contraction']
+    NumberRange: {// isA: ['Contraction'],
     },
     Adverb: {
       notA: ['Noun', 'Verb', 'Adjective', 'Value']
@@ -4417,7 +4432,7 @@
     "FirstName": "true¦aKblair,cGdevFgabrieEhinaDjBk8l7m3nelly,quinn,re2sh0;ay,e0iloh;a,lby;g6ne;a1el0ina,org5;!okuh9;naia,r0;ion,lo;ashawn,uca;asCe1ir0rE;an;lsAnyat2rry;am0ess6ie,ude;ie,m5;ta;le;an,on;as2h0;arl0eyenne;ie;ey,sidy;lex2ndr1ubr0;ey;a,ea;is",
     "Person": "true¦ashton kutchTbScNdLeJgastOhHinez,jFkEleDmCnettKoBp9r4s3t2v0;a0irgin maH;lentino rossi,n go3;aylor,heresa may,iger woods,yra banks;addam hussain,carlett johanssKlobodan milosevic,uC;ay romano,e3o1ush limbau0;gh;d stewart,nald0;inho,o;ese witherspoFilly;a0ipJ;lmIris hiltD;prah winfrFra;essiaen,itt romnEubarek;bron james,e;anye west,iefer sutherland,obe bryant;aime,effers8k rowli0;ng;alle ber0itlBulk hogan;ry;ff0meril lagasse,zekiel;ie;a0enzel washingt2ick wolf;lt1nte;ar1lint0;on;dinal wols1son0;! palm2;ey;arack obama,rock;er",
     "Verb": "true¦awak9born,cannot,fr8g7h5k3le2m1s0wors9;e8h3;ake sure,sg;ngth6ss6;eep tabs,n0;own;as0e2;!t2;iv1onna;ight0;en",
-    "PhrasalVerb": "true¦0:7E;1:72;2:7Q;3:7G;4:6V;5:7T;6:7I;7:71;8:6O;9:6P;A:5T;B:7L;C:7J;D:7D;E:7C;F:6Q;G:7S;H:46;a7Yb6Jc5Sd5Oe5Mf4Lg43h3Miron0j3Ik3Dl2Xm2Ln2Jo2Hp1ZquietFr1Ms0FtVuTvacuum 1wLyammerEzI;eroAip JonI;e0k0;by,up;aOeLhKiJorIrit5H;d 1k35;mp0n2Xpe0r8s8;eel Dip G;aJiIn2L;gh 0Crd0;n Dr 3S;it 60k8lk6rm 6Bsh 7Lt6Ov53;rgeEsI;e 9herA;aXeVhTiPoNrKuIype 68;ckArn I;d2in,o3Vup;aJiIot0y 2L;ckleFp G;ckFde 02;neFp Is4Q;d2o71up;ck KdJe Igh69me0p o0Kre0;aw3ba4d2in,up;e 60y 1;by,oC;ink Irow 6B;ba4ov7up;aIe 4Vll52;m 1r 01;ckEke Jlk I;ov7u53;aIba4d2in,o3Fup;ba4ft7p58w3;a0Nc0Me0Gh0Ci09l05m04n03o02pXquare WtOuMwI;earKiI;ngJtch I;aw3ba4o75; by;ck Iit 1m 1ss0;in,up;aNe10iMoKrIucH;aigh1ZiI;ke 6En3C;p Irm22;by,in,oC;nHr 1tc3V;cHmp0nd Ir6Xve6y 1;ba4d2up;d2oCup;arHeLiKlJrIurE;ingEuc8;a3Hit 47;l16n 1;e5Qll0;be4Prt0;ap 4Row D;ash 5Doke0;eep JiIow 9;c3Yp 1;in,oI;ff,v7;gn 4WngJt Iz8;d2o5up; al52le0;aKoIu4S;ot Iut0w 6B;aw3ba4f3IoC;cHdeAk56ve6;e Mll0nd LtI; Itl4G;d2in,o5upI;!on;aw3ba4d2in,o2Aup;o5to;al4Zout0rap4Z;il6v8;aTeQiPoLuI;b 4Sle0n Istl8;aIba4d2in5Ho3Tt3Bu3R;c29w3;ll Kot JuI;g2Vnd6;a29f32o5;arBin,o5;ng 51p6;aIel6inAnt0;c5Bd I;o33u0L;cHt0;aVeUiTlRoPrMsyc2JuI;ll Kt I;aIba4d2in,o1Rt3Fup;p3Kw3;ap3Jd2in,o5t3Dup;attleEess JiLoI;p 1;ah1Ron;iIp 5Fr3XurFwer 5F;nt0;ay4BuI;gAmp 9;ck Gg0leEn 9p48;el 4JncilA;c41ir 2Rn0ss KtJy I;ba4oC; d2c27;aw3ba4o1C;pIw3W;e3Vt D;arrowFerd0oI;d6teF;aQeNiMoKuI;ddl8lI;l 3I;cHp 1uth6ve I;al3Md2in,o5up;ss0x 1;asur8lJss I;a1Jup;t 9;ke Jn 9rIs1Sx0;k 9ry6;do,o47up;aVeTiOoIuck0;aMc3Gg LoIse0;k Ise3E;aft7ba4d2forw2Jin45ov7uI;nd7p;in,o0Q;d 9;e LghtKnJsIv1Y;ten G;e 1k 1; 1e36;arBd2;av1Mt 36velI; o3T;c8p 1sh ItchEugh6y20;in3To5;eJick6nock I;d2o3P;eIyA;l 2Pp I;aw3ba4d2fXin,o0Bto,up;aKoJuI;ic8mpA;ke30tF;c39zz 1;aUePiMoJuI;nkerFrry 1s0Z;lIneArse2W;d Ie 1;ba4d2fast,o05up;de Jt I;ba4on,up;aw3o5;aIlp0;d Kl 2Ar It 1;fIof;rom;in,oXu1H;cHm 1nJve Iz25;it,to;d Ig 2EkerK;d2in,o5;aWeQive Oloss 22oKrJunI; f0Q;in3Gow 2A; Iof 0Y;aJb1Dit,oIrBt0Su18;ff,n,v7;bo5ft7hOw3;aw3ba4d2in,oIup,w3;ff,n,ut;a1Dek0t I;aJb17d2oIrBup;ff,n,ut,v7;cJhIl1WrBt,w3;ead;ross;d aJnI;g 1;bo5;a0Ce05iWlSoOrKuI;cHel 1;k 1;eJighten IownEy 1;aw3oC;eIshe1N; 1z8;lKol I;aIwi1G;bo5rB;d 9low 1;aJeIip0;sh0;g 9ke0mIrI;e G;gPlNnLrJsIzzle0;h G;e Im 1;aw3ba4up;d0isI;h 1;e Il 19;aw3fN;ht ba4ure0;eNnJsI;s 1;cKd I;fIoC;or;e D;dWl 1;cMll Irm0t0W;ap05bKd2in,oJtI;hrough;ff,ut,v7;a4ehi20;e J;at0dge0nd Iy8;oCup;oKrI;ess 9op I;aw3bUin,o1D; 0Eubl8;aYhVlean 9oIross Dut 10;me LoJuntI; o1T;k 1l I;d2oC;aObNforLin,oKtJuI;nd7;ogeth7;ut,v7;th,wI;ard;a4y;pIrBw3;art;eIipA;ck DeI;r 1;lOncel0rLsKtch JveA; in;o1Cup;h Dt6;ry JvI;e 01;aw3o18;l ImF;aIba4d2o16up;rBw3;a0Ne0El07oYrNuI;bblKcklZil05lk 9ndlZrn 0Bst JtIy Gzz6;t D;in,o5up;e I;ov7;anReaPiIush6;ghMng I;aJba4d2forIin,o5up;th;bo5lIrBw3;ong;teI;n 1;k I;d2in,o5up;ch0;arPgFil 9n8oLssKttlJunce Ix D;aw3ba4;e 9; arB;k Dt 1;e 1;d2up; d2;d 1;aNeed0oIurt0;cKw I;aw3ba4d2o5up;ck;k I;in,oP;ck0nk0st6; oOaLef 1nd I;d2ov7up;er;up;r0t I;d2in,oIup;ff,ut;ff,nI;to;ck Oil0nKrgJsI;h D;ainEe D;g DkE; on;in,o5; o5;aw3d2o5up;ay;cRdNsk Kuction6; oC;ff;arBo5;ouI;nd;d I;d2oIup;ff,n;own;t G;o5up;ut",
+    "PhrasalVerb": "true¦0:7L;1:79;2:7X;3:7N;4:72;5:80;6:7P;7:78;8:6V;9:7J;A:6W;B:5Z;C:7S;D:7Q;a81b6Lc5Rd5Me5Lf4Kg41h3Kiron0j3Gk3Bl2Vm2Jn2Ho2Fp1Wquiet7Ar1Js0CtSuQvacuum 1wHyammer9zE;eroBip FonE;e0k0;by,up;aLeHhGiForErit5G;d 1k33;mp0n2Vpe0r8s8;eel 7Qip 85;aFiEn2J;gh 09rd0;n 7Nr E;d2in,o5J;it 61k8lk6rm 6Csh 7Nt6Qv51;rge9sE;e AherB;aTeRhPiLoJrGuEype 69;ckBrn E;d2in,o3Sup;aFiEot0y 2I;ckle6Rp 7T;ck6Qde Y;ne6Pp Es4O;d2o73up;ck GdFe Egh6Bme0p o0Gre0;aw3ba4d2in,up;e 61y 1;by,oD;ink Erow 6D;ba4ov7up;aEe 5Zll53;m 1r X;ck9ke Flk E;ov7u54;aEba4d2in,o3Cup;ba4ft7p59w3;a0Jc0Ie0Ch08i05l01m00nZoYpTquare StKuIwE;earGiE;ngFtch E;aw3ba4o77; by;ck Eit 1m 1ss0;in,up;aJe0WiIoGrEuc3G;aigh1WiE;ke 6Gn3A;p Erm1Z;by,in,oD;n3Br 1tc3T;c3Amp0nd Er6Zve6y 1;ba4d2up;d2oDup;ar37eHiGlFrEur9;ing9uc8;a3Fit 5B;l13n 1;e5Sll0;be2Wrt0;ap 4Sow 6C;ash 5Foke0;eep FiEow A;c3Wp 1;in,oE;ff,v7;gn 4XngFt Ez8;d2o5up; al54le0;aGoEu4T;ot Eut0w 6D;aw3ba4f3GoD;c2PdeBk58ve6;e Ill1And HtE; Etl4H;d2in,o5upE;!on;aw3ba4d2in,o27up;o5Mto;al51out0rap51;il6v8;aPeMiLoHuE;b 4Ule0n Estl8;aEba4d2in5Jo3Ut39u3S;c26w3;ll Got FuE;g2Tnd6;a27f30o5;arCin,o5;ng 53p6;aEel6inBnt0;c5Dd E;o31u0I;c24t0;aSeRiPlNoLrIsyc2HuE;ll Gt E;aEba4d2in,o1Ot3Gup;p3Lw3;ap3Kd2in,o5t3Eup;attle9ess FiHoE;p 1;ah1Oon;iEp 5Hr3Yur4Jwer 5H;nt0;ay4DuE;gBmp A;ck Eg0le9n Ap4A;o2Yup;el 4KncilB;c42ir 3Un0ss GtFy E;ba4oD; d2c24;aw3ba4o18;pEw3X;e3Wt 4U;arrow46erd0oE;d6te45;aMeJiIoGuE;ddl8lE;l 3I;c1Dp 1uth6ve E;al3Nd2in,o5up;ss0x 1;asur8lFss E;a1Gup;t A;ke Fn ArEs1Px0;k Ary6;do,o48up;aRePiKoEuck0;aIc3Hg HoEse0;k Ese3F;aft7ba4d2forw2Jin46ov7uE;nd7p;in,o0M;d A;e HghtGnFsEv1V;ten 4M;e 1k 1; 1e37;arCd2;av1Jt 37velE; o3U;c8p 1sh Etch9ugh6y20;in3Uo5;eFick6nock E;d2o3Q;eEyB;l 2Pp E;aw3ba4d2fTin,o07to,up;aGoFuE;ic8mpB;ke31t35;c3Azz 1;aQeLiIoFuE;nker32rry 1s0W;lEneBrse2X;d Ee 1;ba4d2fast,o01up;de Ft E;ba4on,up;aw3o5;aElp0;d Gl 2Ar Et 1;fEof;rom;in,oTu1H;c02m 1nFve Ez25;it,to;d Eg 2FkerG;d2in,o5;aTeMive Kloss 22oGrFunE; f0N;in3How 2B; Eof 21;aFb1Dit,oErCt0Pu18;ff,n,v7;bo5ft7hKw3;aw3ba4d2in,oEup,w3;ff,n,ut;aJek0t E;aFb17d2oErCup;ff,n,ut,v7;cFhEl1XrCt,w3;ead;ross;r 1;d aFnE;g 1;bo5;a08e01iSlOoKrGuE;cEel 1;k 1;eFighten Eown9y 1;aw3oD;eEshe1N; 1z8;lGol E;aEwi1G;bo5rC;d Alow 1;aFeEip0;sh0;g Ake0mErE;e 2R;gLlJnHrFsEzzle0;h 2P;e Em 1;aw3ba4up;d0isE;h 1;e El 19;aw3fJ;ht ba4ure0;eJnFsE;s 1;cGd E;fEoD;or;e 1X;dVl 1;cIll Erm0t0W;ap04bGd2in,oFtE;hrough;ff,ut,v7;a4ehi20;e 0L;at0dge0nd 0Ky8;oHrE;aFess Aop E;aw3bUin,o1E;g9w9; 0Dubl8;aXhUlean AoHrEut 10;ack9eep Eoss 1I;by,d2oEup;n,ut;me HoFuntE; o1Q;k 1l E;d2oD;aKbJforHin,oGtFuE;nd7;ogeth7;ut,v7;th,wE;ard;a4y;pErCw3;art;eEipB;ck 11er E;on,up;lKncel0rHsGtch FveB; in;o19up;h 0Wt6;ry FvE;e Y;aw3o15;l Em05;aEba4d2o13up;rCw3;a0Ke0Bl04oVrJuE;bblGcklWil02lk AndlWrn 08st FtEy 13zz6;t 0N;in,o5up;e E;ov7;anOeaMiFush E;oDup;ghIng E;aFba4d2forEin,o5up;th;bo5lErCw3;ong;teE;n 1;k E;d2in,o5up;ch0;arLgKil An8oHssGttlFunce Ex 07;aw3ba4;e A; arC;k 03t 1;e 1;d2up; d2;d 1;aJeed0oEurt0;cGw E;aw3ba4d2o5up;ck;k E;in,oL;ck0nk0st6; oKaHef 1nd E;d2ov7up;er;up;r0t E;d2in,oEup;ff,ut;ff,nE;to;ck Kil0nGrgFsE;h H;ain9e G;g Fk9; on;in,o5; o5;aw3d2o5up;ay;cNdJsk Guction6; oD;ff;arCo5;ouE;nd;d E;d2oEup;ff,n;own;t E;o5up;ut",
     "Modal": "true¦c5lets,m4ought3sh1w0;ill,o5;a0o4;ll,nt;! to,a;ay,ight,ust;an,o0;uld",
     "Adjective": "true¦0:7P;1:84;2:83;3:8A;4:7W;5:5S;6:58;7:4O;8:4N;9:81;A:6I;a6Wb6Gc63d5Je54f4Hg49h3Wi39j37k36l2Vm2Ln2Bo1Wp1Dquack,r12s0Ft07uMvJwByear5;arp0eFholeEiDoB;man5oBu6P;d6Rzy;despr7Ls5S;!sa7;eClBste2A;co1Nl o4W;!k5;aCiBola4M;b89ce versa,ol5H;ca3gabo6Gnilla;ltUnHpCrb5Msu4tterB;!mo7G; Eb1SpDsBti1M;ca7etBide dKtairs;!ti2;er,i3U;f36to da1;aLbeco75convin29deIeHfair,ivers4knGprecedVrEsCwB;iel3Nritt6A;i1XuB;pervis0spec3Y;eBu5;cognHgul6Tl6T;own;ndi2v64xpect0;cid0rB;!grou5ZsB;iz0tood;b7pp0Dssu6UuthorB;iz0;i26ra;aGeEhDi6AoCrB;i1oubl0us3M;geth6p,rp6Vuc67;ough4Wril33;en60l32mpBrr2X;o6Ati2;boo,lBn;ent0;aWcVeThSiQmug,nobbi3LoOpNqueami3LtFuBymb6H;bDi gener5DpBrpri6D;erBre0N;! dup6b,i2C;du0seq52;anda77eGiFrBunni2y3F;aightCiB;ki2p0; fBfB;or5K;ll,r5S;aBreotyp0;dfa6Cmi2;a55ec2Gir1Hlend6Cot on; call0le,mb6phist1XrBu0Vvi48;d6Ary;gnifica3nB;ce51g7;am2Re6ocki2ut;cBda1em5lfi32ni1Wpa6Jre8;o1Er42;at5Gient28reec5G;cr0me;aJeEiCoB;bu60tt51uQy4;ghtBv4;!-2BfA;ar,bel,condi1du6Dfres5AlEpublic42sCtard0vB;ea26;is4CoB;lu1na3;aQe1Cuc4A;b5TciBllyi2;al,st;aOeLicayu8lac5Ropuli5QrCuB;bl5Jmp0n51;eGiDoB;!b07fu5RmiBp6;ne3si2;mCor,sBva1;ti8;a53e;ci5MmB;a0EiB;er,um;ac20rBti1;fe9ma2XpleBv38;xi2;rBst;allelDtB;-tiBi4;me;!ed;bLffJkIld fashion0nHpGrg1Eth6utFvB;al,erB;!all,niCt,wB;eiBrouB;ght;do0Ter,g2Qsi4B;en,posi1; boa5Og2Oli8;!ay; gua5MbBli8;eat;eDsB;cBer0Eole1;e8u3O;d2Xse;aJeIiHoBua4X;nFrCtB;ab7;thB;!eB;rn;chala3descri58stop;ght5;arby,cessa44ighbor5xt;k0usia1A;aIeGiDoBultip7;bi7derBl0Vnth5ot,st;a1n;nBx0;dblo0RiaBor;tu37;ande3Qdi4NnaBre;ci2;cBgenta,in,j01keshift,le,mmoth,ny,sculi8;ab33ho;aKeFiCoBu15;uti14vi2;mCteraB;l,te;it0;ftEgBth4;al,eCitiB;ma1;nda3K;!-0C;ngu3Zst,tt6;ap1Xind5no0A;agg0uB;niMstifi0veni7;de4gno4Klleg4mQnEpso 20rB;a1rB;eleBita0J;va3; KaJbr0corIdGfluenQiQnFsEtCviB;go0Fti2;a9en3SoxB;ic3B;a8i2Vul0D;a1er,oce3;iCoB;or;re9;deq3Qppr33;fBsitu,vitro;ro3;mFpB;arDerfe9oBrop6;li1rtB;a3ed;ti4;eBi0S;d2Vn3C;aIeFiDoBumdr3I;ne36ok0rrBs08ur5;if2Z;ghfalut1QspB;an2X;aClB;liYpfA;li2;lEnDrB;d04roB;wi2;dy;f,low0;ainfAener2Oiga24lHoGraDuB;ilBng ho;ty;cCtB;efAis;efA;ne,od;ea2Iob4;aTeNinMlKoFrB;a1VeDoz1MustB;raB;ti2;e2Gq10tfA;oDrB; keeps,eBm6tuna1;g03ign;liB;sh;aBue3;g31tte1P;al,i1;dFmCrB;ti7;a7ini8;ne;le; up;bl0i3l27r Cux,voB;ri1uri1;oBreac1E;ff;aLfficie3lKmHnFre9there4veExB;a9cess,pe1QtraCuB;be2Nl0E;!va1E;n,ryday; BcouraEti0O;rou1sui1;erCiB;ne3;gi2;abo23dMe17i1;g6sB;t,ygB;oi2;er;aReJiDoBrea14ue;mina3ne,ubB;le,tfA;dact1Bfficu1OsCvB;er1K;creDeas0gruntl0hone1FordCtB;a3ressM;er5;et; HadpGfFgene1PliDrang0spe1PtCvoB;ut;ail0ermin0;be1Mca1ghB;tfA;ia3;an;facto;i5magBngeroUs0G;ed,i2;ly;ertaMhief,ivil,oDrB;aBowd0u0G;mp0vZz0;loImGnCrrBve0P;e9u1I;cre1fu0LgrDsCtB;empo0Dra0E;ta3;ue3;mer08pleB;te,x;ni4ss4;in;aNeIizarHlFoCrB;and new,isk,okN;gCna fiUttom,urgeoB;is;us;ank,indB;!i2;re;autifAhiDloCnBst,yoD;eUt;v0w;nd;ul;ckCnkru0WrrB;en;!wards; priori,b0Mc0Jd09fra08g04h03lYmWntiquVppSrMsIttracti06utheHvEwB;aCkB;wa0T;ke,re;ant garCerB;age;de;ntU;leep,piDsuDtonB;isB;hi2;ri2;ab,bitEroDtiB;fiB;ci4;ga3;raB;ry;are3etiNrB;oprB;ia1;at0;aJuB;si2;arEcohCeBiIl,oof;rt;olB;ic;mi2;ead;ainDgressiConiB;zi2;ve;st;id; IeGuFvB;aCerB;se;nc0;ed;lt;pt,qB;ua1;hoc,infinitB;um;cuCtu4u1;al;ra1;erLlKoIruHsCuB;nda3;e3oCtra9;ct;lu1rbi2;ng;te;pt;aBve;rd;aze,e;ra3;nt",
     "Comparable": "true¦0:41;1:4I;2:45;3:4B;4:3X;5:2Y;a4Ob44c3Od3De35f2Rg2Fh24i1Vj1Uk1Rl1Jm1Dn17o15p0Vqu0Tr0KsTtMuIvFw7y6za13;ell27ou3;aBe9hi1Yi7r6;o3y;ck0Ode,l6n1ry,se;d,y;a6i4Mt;k,ry;n1Tr6sK;m,y;a7e6ulgar;nge4rda2xi3;g9in,st;g0n6pco3Mse4;like0t6;i1r6;ue;aAen9hi8i7ough,r6;anqu2Oen1ue;dy,g3Sme0ny,r09;ck,n,rs2P;d40se;ll,me,rt,s6wd45;te4;aVcarUeThRiQkin0FlMmKoHpGqua1FtAu7w6;eet,ift;b7dd13per0Gr6;e,re2H;sta2Ft5;aAe9iff,r7u6;pXr1;a6ict,o3;ig3Fn0U;a1ep,rn;le,rk;e22i3Fright0;ci28ft,l7o6re,ur;n,thi3;emn,id;a6el0ooth;ll,rt;e8i6ow,y;ck,g35m6;!y;ek,nd3D;ck,l0mp5;a6iTort,rill,y;dy,ll0Xrp;cu0Rve0Rxy;ce,ed,y;d,fe,int0l1Vv14;aBe9i8o6ude;mantic,o1Isy,u6;gh,nd;ch,pe,tzy;a6d,mo0H;dy,l;gg7ndom,p6re,w;id;ed;ai2i6;ck,et;aEhoDi1QlCoBr8u6;ny,r6;e,p5;egna2ic7o6;fouYud;ey,k0;li04or,te1B;ain,easa2;ny;in4le;dd,f6i0ld,ranQ;fi10;aAe8i7o6;b5isy,rm15sy;ce,mb5;a6w;r,t;ive,rr01;aAe8ild,o7u6;nda19te;ist,o1;a6ek,llX;n,s0ty;d,tuQ;aBeAi9o6ucky;f0Un7o1Du6ve0w17y0T;d,sy;e0g;g1Tke0tt5ve0;an,wd;me,r6te;ge;e7i6;nd;en;ol0ui1P;cy,ll,n6;sBt6;e6ima8;llege2r6;es7media6;te;ti3;ecu6ta2;re;aEeBiAo8u6;ge,m6ng1R;b5id;ll6me0t;ow;gh,l0;a6f04sita2;dy,v6;en0y;nd1Hppy,r6te4;d,sh;aGenFhDiClBoofy,r6;a9e8is0o6ue1E;o6ss;vy;at,en,y;nd,y;ad,ib,ooI;a2d1;a6o6;st0;t5uiY;u1y;aIeeb5iDlat,oAr8u6;ll,n6r14;!ny;aHe6iend0;e,sh;a7r6ul;get4mG;my;erce8n6rm;an6e;ciC;! ;le;ir,ke,n0Fr,st,t,ulA;aAerie,mp9sse7v6xtre0Q;il;nti6;al;ty;r7s6;tern,y;ly,th0;aFeCi9r7u6;ll,mb;u6y;nk;r7vi6;ne;e,ty;a6ep,nD;d6f,r;!ly;mp,pp03rk;aHhDlAo8r7u6;dd0r0te;isp,uel;ar6ld,mmon,ol,st0ward0zy;se;e6ou1;a6vW;n,r;ar8e6il0;ap,e6;sy;mi3;gey,lm8r6;e4i3;ful;!i3;aNiLlIoEr8u6;r0sy;ly;aAi7o6;ad,wn;ef,g7llia2;nt;ht;sh,ve;ld,r7un6;cy;ed,i3;ng;a7o6ue;nd,o1;ck,nd;g,tt6;er;d,ld,w1;dy;bsu9ng8we6;so6;me;ry;rd",
@@ -4917,7 +4932,7 @@
     brake: {
       prt: 'broken'
     },
-    "break": {
+    break: {
       pst: 'broke'
     },
     breed: {
@@ -4956,7 +4971,7 @@
       pluperf: 'could',
       pres: '_'
     },
-    "catch": {
+    catch: {
       pst: 'caught'
     },
     choose: {
@@ -5007,7 +5022,7 @@
     dive: {
       prt: '_d'
     },
-    "do": {
+    do: {
       pst: 'did',
       pres: '_es'
     },
@@ -5521,16 +5536,16 @@
 
   var _loop = function _loop(i) {
     var inf = keys[i];
-    var _final = {};
+    var final = {};
     Object.keys(conjugations[inf]).forEach(function (key) {
       var str = conjugations[inf][key]; //swap-in infinitives for '_'
 
       str = str.replace('_', inf);
       var full = mapping$1[key];
-      _final[full] = str;
+      final[full] = str;
     }); //over-write original
 
-    conjugations[inf] = _final;
+    conjugations[inf] = final;
   };
 
   for (var i = 0; i < keys.length; i++) {
@@ -5647,7 +5662,7 @@
       }
     }],
     g: [{
-      reg: /([^aeiou][ou])g$/i,
+      reg: /([^aeiou][aou])g$/i,
       repl: {
         pr: '$1gs',
         pa: '$1gged',
@@ -6984,7 +6999,7 @@
     /** return each current phrase, only if it contains this match */
 
 
-    exports["if"] = function (reg) {
+    exports.if = function (reg) {
       var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
       var regs = matchSyntax(reg, opts); //consult our cache, if it exists
 
@@ -7074,7 +7089,7 @@
       var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
       var regs = matchSyntax(reg, opts); //only the phrases we care about
 
-      var phrases = this["if"](regs).list;
+      var phrases = this.if(regs).list;
       var befores = phrases.map(function (p) {
         var ids = p.terms().map(function (t) {
           return t.id;
@@ -7101,7 +7116,7 @@
       var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
       var regs = matchSyntax(reg, opts); //only the phrases we care about
 
-      var phrases = this["if"](regs).list;
+      var phrases = this.if(regs).list;
       var befores = phrases.map(function (p) {
         var terms = p.terms();
         var ids = terms.map(function (t) {
@@ -7635,7 +7650,7 @@
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
     if (!replace) {
-      return this["delete"]();
+      return this.delete();
     } //support old-style params
 
 
@@ -7840,7 +7855,7 @@
     /** fully remove these terms from the document */
 
 
-    exports["delete"] = function (match) {
+    exports.delete = function (match) {
       var _this3 = this;
 
       // clear the cache
@@ -7852,13 +7867,13 @@
       }
 
       toRemove.list.forEach(function (phrase) {
-        return phrase["delete"](_this3);
+        return phrase.delete(_this3);
       });
       return this;
     }; // aliases
 
 
-    exports.remove = exports["delete"];
+    exports.remove = exports.delete;
   });
 
   var shouldTrim = {
@@ -8366,7 +8381,7 @@
   var byFreq = function byFreq(doc) {
     var counts = {};
     var options = {
-      "case": true,
+      case: true,
       punctuation: false,
       whitespace: true,
       unicode: true
@@ -8586,7 +8601,7 @@
     acronyms: true,
     abbreviations: true,
     // medium
-    "case": false,
+    case: false,
     contractions: false,
     parentheses: false,
     quotations: false,
@@ -8601,7 +8616,7 @@
   var mapping = {
     light: {},
     medium: {
-      "case": true,
+      case: true,
       contractions: true,
       parentheses: true,
       quotations: true,
@@ -8629,7 +8644,7 @@
     this.uncache();
     var termList = this.termList(); // lowercase things
 
-    if (options["case"]) {
+    if (options.case) {
       this.toLowerCase();
     } //whitespace
 
@@ -9435,8 +9450,8 @@
   [/^#[a-z0-9_\u00C0-\u00FF]{2,}$/, 'HashTag'], [/^@1?[0-9](am|pm)$/i, 'Time'], // @6pm
   [/^@1?[0-9]:[0-9]{2}(am|pm)?$/i, 'Time'], // @6:30
   [/^@\w{2,}$/, 'AtMention'], //@spencermountain
-  [/^(https?:\/\/|www\.)\w+\.[a-z]{2,3}/, 'Url'], //with http/www
-  [/^[\w./]+\.(com|net|gov|org|ly|edu|info|biz|ru|jp|de|in|uk|br)/, 'Url'], //http://mostpopularwebsites.net/top-level-domain
+  [/^(https?:\/\/|www\.)+\w+\.[a-z]{2,3}/, 'Url'], //with http/www
+  [/^[a-z0-9./]+\.(com|net|gov|org|ly|edu|info|biz|ru|jp|de|in|uk|br)/, 'Url'], //http://mostpopularwebsites.net/top-level-domain
   //dates/times
   [/^'[0-9]{2}$/, 'Year'], //like '97
   [/^[012]?[0-9](:[0-5][0-9])(:[0-5][0-9])$/, 'Time'], //4:32:32
@@ -9480,7 +9495,7 @@
   //range
   [/^[0-9.]{1,3}[a-z]{0,2}[-–—][0-9]{1,3}[a-z]{0,2}$/, ['Value', 'NumberRange']], //7th-8th
   //time-range
-  [/^[0-9][0-9]?(:[0-9][0-9])?(am|pm)?[-–—][0-9][0-9]?(:[0-9][0-9])?(am|pm)?$/, ['Time', 'NumberRange']], //7pm-8:30
+  [/^[0-9][0-9]?(:[0-9][0-9])?(am|pm)? ?[-–—] ?[0-9][0-9]?(:[0-9][0-9])?(am|pm)?$/, ['Time', 'NumberRange']], //7pm-8:30
   //with unit
   [/^[0-9.]+([a-z]{1,4})$/, 'Value'] //like 5tbsp
   //ordinal
@@ -9561,10 +9576,11 @@
     [/.[cdlmnprstv]ied$/, Past$1], //rallied
     [/[^aeiou]ard$/, Sing$1], //card
     [/[aeiou][^aeiou]id$/, Adj$1], [/.[vrl]id$/, Adj$1]],
-    e: [[/.[lnr]ize$/, Inf$1], [/.[^aeiou]ise$/, Inf$1], [/.[aeiou]te$/, Inf$1], [/.[^aeiou][ai]ble$/, Adj$1], [/.[^aeiou]eable$/, Adj$1], [/.[ts]ive$/, Adj$1]],
+    e: [[/.[lnr]ize$/, Inf$1], [/.[^aeiou]ise$/, Inf$1], [/.[aeiou]te$/, Inf$1], [/.[^aeiou][ai]ble$/, Adj$1], [/.[^aeiou]eable$/, Adj$1], [/.[ts]ive$/, Adj$1], [/[a-z]-like$/, Adj$1]],
     h: [[/.[^aeiouf]ish$/, Adj$1], [/.v[iy]ch$/, Last$1], //east-europe
     [/^ug?h+$/, Exp], //uhh
-    [/^uh[ -]?oh$/, Exp] //uhoh
+    [/^uh[ -]?oh$/, Exp], //uhoh
+    [/[a-z]-ish$/, Adj$1] //cartoon-ish
     ],
     i: [[/.[oau][wvl]ski$/, Last$1] //polish (male)
     ],
@@ -9729,14 +9745,14 @@
 
   var endRegexs = function endRegexs(term, world) {
     var str = term.clean;
-    var _char = str[str.length - 1];
+    var char = str[str.length - 1];
 
-    if (endsWith.hasOwnProperty(_char) === true) {
-      var regs = endsWith[_char];
+    if (endsWith.hasOwnProperty(char) === true) {
+      var regs = endsWith[char];
 
       for (var r = 0; r < regs.length; r += 1) {
         if (regs[r][0].test(str) === true) {
-          term.tagSafe(regs[r][1], "endReg ".concat(_char, " #").concat(r), world);
+          term.tagSafe(regs[r][1], "endReg ".concat(char, " #").concat(r), world);
           break;
         }
       }
@@ -9940,13 +9956,13 @@
     //33%
     because: 'Noun',
     //31%
-    "if": 'Noun',
+    if: 'Noun',
     //32%
     but: 'Noun',
     //26%
     who: 'Verb',
     //40%
-    "this": 'Noun',
+    this: 'Noun',
     //37%
     his: 'Noun',
     //48%
@@ -10357,7 +10373,7 @@
 
   var step = {
     neighbours: _01Neighbours,
-    "case": _02Case,
+    case: _02Case,
     stem: _03Stem,
     plural: _04Plurals,
     organizations: _05Organizations,
@@ -10369,7 +10385,7 @@
 
     step.neighbours(terms, world); // is there a case-sensitive clue?
 
-    step["case"](doc); // check 'rewatch' as 'watch'
+    step.case(doc); // check 'rewatch' as 'watch'
 
     step.stem(terms, world); // ... fallback to a noun!
 
@@ -10658,8 +10674,8 @@
 
   var _05PerfectTense = checkPerfect;
 
-  var isRange = /^([0-9.]{1,3}[a-z]{0,2})[-–—]([0-9]{1,3}[a-z]{0,2})$/i;
-  var timeRange = /^([0-9][0-9]?(:[0-9][0-9])?(am|pm)?)[-–—]([0-9][0-9]?(:[0-9][0-9])?(am|pm)?)$/i; //split '2-4' into '2 to 4'
+  var isRange = /^([0-9.]{1,3}[a-z]{0,2}) ?[-–—] ?([0-9]{1,3}[a-z]{0,2})$/i;
+  var timeRange = /^([0-9][0-9]?(:[0-9][0-9])?(am|pm)?) ?[-–—] ?([0-9][0-9]?(:[0-9][0-9])?(am|pm)?)$/i; //split '2-4' into '2 to 4'
 
   var checkRange = function checkRange(term) {
     if (term.tags.PhoneNumber === true) {
@@ -10828,7 +10844,7 @@
 
       m = m.ifNo('(i|we|they)'); // shut the door!
 
-      m.match('[#Infinitive] (#Determiner|#Possessive) #Noun', 0).tag('Imperative', 'shut-the'); // go-fast
+      m.not('will be').match('[#Infinitive] (#Determiner|#Possessive) #Noun').notIf('(our|their)').match('#Infinitive').tag('Imperative', 'shut-the'); // go-fast
 
       m.match('^[#Infinitive] #Adverb?$', 0).tag('Imperative', 'go-fast'); // do not go
 
@@ -11805,7 +11821,20 @@
     match: "co #Noun",
     tag: 'Actor',
     reason: 'co-noun'
-  }];
+  }, // to facilitate gas exchange with
+  {
+    match: "to #PresentTense #Noun [#PresentTense] #Preposition",
+    group: 0,
+    tag: 'Noun',
+    reason: 'gas-exchange'
+  } // in various sensory functions
+  // {
+  //   match: `#Preposition #Determiner #Singular [#PresentTense]`,
+  //   group: 0,
+  //   tag: 'Noun',
+  //   reason: 'various-word-functions',
+  // },
+  ];
 
   var adjectives = "(".concat(_ambig.adverbAdjective.join('|'), ")");
   var _05Adverb = [//still good
@@ -12170,6 +12199,12 @@
     group: 0,
     tag: 'Particle',
     reason: 'phrasal-particle'
+  }, // went on for
+  {
+    match: '(lived|went|crept|go) [on] for',
+    group: 0,
+    tag: 'PhrasalVerb',
+    reason: 'went-on'
   }, //back it up
   {
     match: '#Verb (him|her|it|us|himself|herself|itself|everything|something) [(up|down)]',
@@ -12257,6 +12292,12 @@
     group: 0,
     tag: 'PresentTense',
     reason: 'to-mark'
+  }, // checkmate is
+  {
+    match: '^[#Infinitive] (is|was)',
+    group: 0,
+    tag: 'Noun',
+    reason: 'checkmate-is'
   }, // wade smith
   {
     match: "".concat(verbs, " #Person"),
@@ -12996,7 +13037,7 @@
     /** split into approximate sub-sentence phrases */
     Doc.prototype.clauses = function (n) {
       // an awkward way to disambiguate a comma use
-      var commas = this["if"]('@hasComma').notIf('@hasComma @hasComma') //fun, cool...
+      var commas = this.if('@hasComma').notIf('@hasComma @hasComma') //fun, cool...
       .notIf('@hasComma . .? (and|or) .') //cool, and fun
       .notIf('(#City && @hasComma) #Country') //'toronto, canada'
       .notIf('(#WeekDay && @hasComma) #Date') //'tuesday, march 2nd'
@@ -13009,10 +13050,10 @@
       var parentheses = found.parentheses();
       found = found.splitOn(parentheses); // it is cool and it is ..
 
-      var conjunctions = found["if"]('#Copula #Adjective #Conjunction (#Pronoun|#Determiner) #Verb').match('#Conjunction');
+      var conjunctions = found.if('#Copula #Adjective #Conjunction (#Pronoun|#Determiner) #Verb').match('#Conjunction');
       found = found.splitBefore(conjunctions); // if it is this then that
 
-      var condition = found["if"]('if .{2,9} then .').match('then');
+      var condition = found.if('if .{2,9} then .').match('then');
       found = found.splitBefore(condition); // misc clause partitions
 
       found = found.splitBefore('as well as .');
@@ -13194,7 +13235,7 @@
       }, {
         key: "remove",
         value: function remove(match) {
-          return this.items()["if"](match).remove();
+          return this.items().if(match).remove();
         }
         /** return only lists that use a serial comma */
 
@@ -13238,14 +13279,14 @@
     Lists.prototype.things = Lists.prototype.items;
 
     Doc.prototype.lists = function (n) {
-      var m = this["if"]('@hasComma+ .? (and|or) not? .'); // person-list
+      var m = this.if('@hasComma+ .? (and|or) not? .'); // person-list
 
-      var nounList = m.match('(#Noun|#Adjective|#Determiner|#Article)+ #Conjunction not? (#Article|#Determiner)? #Adjective? #Noun+')["if"]('#Noun');
+      var nounList = m.match('(#Noun|#Adjective|#Determiner|#Article)+ #Conjunction not? (#Article|#Determiner)? #Adjective? #Noun+').if('#Noun');
       var adjList = m.match('(#Adjective|#Adverb)+ #Conjunction not? #Adverb? #Adjective+');
       var verbList = m.match('(#Verb|#Adverb)+ #Conjunction not? #Adverb? #Verb+');
       var result = nounList.concat(adjList);
       result = result.concat(verbList);
-      result = result["if"]('@hasComma');
+      result = result.if('@hasComma');
 
       if (typeof n === 'number') {
         result = m.get(n);
@@ -13481,7 +13522,7 @@
       return list.sort('index');
     },
     isPlural: function isPlural() {
-      return this["if"]('#Plural'); //assume tagger has run?
+      return this.if('#Plural'); //assume tagger has run?
     },
     hasPlural: function hasPlural() {
       return this.filter(function (d) {
@@ -13832,8 +13873,8 @@
           var t = terms[i];
 
           if (hasOpen.test(t.pre)) {
-            var _char = (t.pre.match(hasOpen) || [])[0];
-            var want = pairs[_char]; // if (!want) {
+            var char = (t.pre.match(hasOpen) || [])[0];
+            var want = pairs[char]; // if (!want) {
             //   console.warn('missing quote char ' + char)
             // }
             //look for the closing bracket..
@@ -14444,7 +14485,8 @@
           _toParticiple(parsed, _this5.world);
 
           return;
-        }
+        } // don't conjugate 'go away'.
+
 
         if (vb.has('#Imperative')) {
           return;
@@ -14589,7 +14631,7 @@
 
     /** return only verbs with 'not'*/
     isNegative: function isNegative() {
-      return this["if"]('#Negative');
+      return this.if('#Negative');
     },
 
     /**  return only verbs without 'not'*/
@@ -14599,7 +14641,7 @@
 
     /**  return only commands - verbs in imperative mood */
     isImperative: function isImperative() {
-      return this["if"]('#Imperative');
+      return this.if('#Imperative');
     },
 
     /** add a 'not' to these verbs */
@@ -14684,7 +14726,7 @@
       m.sort('index'); //handle slashes?
       //ensure there's actually a verb
 
-      m = m["if"]('#Verb'); // the reason he will is ...
+      m = m.if('#Verb'); // the reason he will is ...
 
       if (m.has('(is|was)$')) {
         m = m.splitBefore('(is|was)$');
@@ -14970,7 +15012,7 @@
 
     nlp.version = _version; // aliases
 
-    nlp["import"] = nlp.load;
+    nlp.import = nlp.load;
     nlp.plugin = nlp.extend;
     return nlp;
   }

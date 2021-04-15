@@ -1,94 +1,9 @@
-/* compromise-sentences 0.2.0 MIT */
+/* compromise-sentences 0.3.0 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.compromiseSentences = factory());
 }(this, (function () { 'use strict';
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function");
-    }
-
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) _setPrototypeOf(subClass, superClass);
-  }
-
-  function _getPrototypeOf(o) {
-    _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
-      return o.__proto__ || Object.getPrototypeOf(o);
-    };
-    return _getPrototypeOf(o);
-  }
-
-  function _setPrototypeOf(o, p) {
-    _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
-      o.__proto__ = p;
-      return o;
-    };
-
-    return _setPrototypeOf(o, p);
-  }
-
-  function _isNativeReflectConstruct() {
-    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-    if (Reflect.construct.sham) return false;
-    if (typeof Proxy === "function") return true;
-
-    try {
-      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-
-  function _assertThisInitialized(self) {
-    if (self === void 0) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
-
-    return self;
-  }
-
-  function _possibleConstructorReturn(self, call) {
-    if (call && (typeof call === "object" || typeof call === "function")) {
-      return call;
-    }
-
-    return _assertThisInitialized(self);
-  }
-
-  function _createSuper(Derived) {
-    var hasNativeReflectConstruct = _isNativeReflectConstruct();
-
-    return function _createSuperInternal() {
-      var Super = _getPrototypeOf(Derived),
-          result;
-
-      if (hasNativeReflectConstruct) {
-        var NewTarget = _getPrototypeOf(this).constructor;
-
-        result = Reflect.construct(Super, arguments, NewTarget);
-      } else {
-        result = Super.apply(this, arguments);
-      }
-
-      return _possibleConstructorReturn(this, result);
-    };
-  }
 
   var tags = {
     // Phrase: {},
@@ -114,7 +29,7 @@
     }
   };
 
-  var tagger = function tagger(doc) {
+  const tagger = function (doc) {
     doc.match('#Noun').tag('NounPhrase');
     doc.match('#Verb').tag('VerbPhrase'); // NounPhrase
 
@@ -152,10 +67,10 @@
   var tagger_1 = tagger;
 
   /** add a word to the start of this sentence */
-  var prepend = function prepend(str) {
-    this.forEach(function (doc) {
+  var prepend = function (str) {
+    this.forEach(doc => {
       // repair the titlecase
-      var firstTerms = doc.match('^.');
+      let firstTerms = doc.match('^.');
       firstTerms.not('#ProperNoun').toLowerCase(); // actually add the word
 
       firstTerms._prepend(str); // add a titlecase
@@ -168,12 +83,12 @@
   /** add a word to the end of this sentence */
 
 
-  var append_1 = function append_1(str) {
-    var hasEnd = /[.?!]\s*$/.test(str);
-    this.forEach(function (doc) {
-      var end = doc.match('.$');
-      var lastTerm = end.termList(0);
-      var punct = lastTerm.post;
+  var append_1 = function (str) {
+    let hasEnd = /[.?!]\s*$/.test(str);
+    this.forEach(doc => {
+      let end = doc.match('.$');
+      let lastTerm = end.termList(0);
+      let punct = lastTerm.post;
 
       if (hasEnd === true) {
         punct = '';
@@ -194,18 +109,18 @@
   };
 
   // if a clause starts with these, it's not a main clause
-  var subordinate = "(after|although|as|because|before|if|since|than|that|though|when|whenever|where|whereas|wherever|whether|while|why|unless|until|once)";
-  var relative = "(that|which|whichever|who|whoever|whom|whose|whomever)"; //try to remove secondary clauses
+  const subordinate = `(after|although|as|because|before|if|since|than|that|though|when|whenever|where|whereas|wherever|whether|while|why|unless|until|once)`;
+  const relative = `(that|which|whichever|who|whoever|whom|whose|whomever)`; //try to remove secondary clauses
 
-  var mainClause = function mainClause(og) {
-    var m = og.clone(true);
+  const mainClause = function (og) {
+    let m = og.clone(true);
 
     if (m.length === 1) {
       return m;
     } // if there's no verb?
 
 
-    m = m["if"]('#Verb');
+    m = m.if('#Verb');
 
     if (m.length === 1) {
       return m;
@@ -246,11 +161,11 @@
 
   var mainClause_1 = mainClause;
 
-  var parse = function parse(doc) {
-    var clauses = doc.clauses();
-    var main = mainClause_1(clauses);
-    var nouns = main.match('#Determiner? (#Noun|#Adjective)+')["if"]('#Noun');
-    var verb = main.verbs().eq(0); // match('(do|will)? not? #Verb+ not?').eq(0)
+  const parse = function (doc) {
+    let clauses = doc.clauses();
+    let main = mainClause_1(clauses);
+    let nouns = main.match('#Determiner? (#Noun|#Adjective)+').if('#Noun');
+    let verb = main.verbs().eq(0); // match('(do|will)? not? #Verb+ not?').eq(0)
 
     return {
       subject: nouns.eq(0),
@@ -263,8 +178,8 @@
 
   /** overload the original json with noun information */
 
-  var json_1 = function json_1(options) {
-    var n = null;
+  var json_1 = function (options) {
+    let n = null;
 
     if (typeof options === 'number') {
       n = options;
@@ -277,11 +192,11 @@
       trim: true,
       terms: true
     };
-    var res = [];
-    this.forEach(function (doc) {
-      var json = doc._json(options)[0];
+    let res = [];
+    this.forEach(doc => {
+      let json = doc._json(options)[0];
 
-      var obj = parse_1(doc);
+      let obj = parse_1(doc);
       json.subject = obj.subject.json(options)[0];
       json.verb = obj.verb.json(options)[0];
       json.object = obj.object.json(options)[0];
@@ -301,10 +216,10 @@
 
   /** he walks -> he did not walk */
 
-  var toNegative = function toNegative() {
-    this.forEach(function (doc) {
-      var obj = parse_1(doc);
-      var vb = obj.verb.clone();
+  var toNegative = function () {
+    this.forEach(doc => {
+      let obj = parse_1(doc);
+      let vb = obj.verb.clone();
       vb = vb.verbs().toNegative();
       obj.verb.replaceWith(vb, false);
     });
@@ -313,10 +228,10 @@
   /** he doesn't walk -> he walks */
 
 
-  var toPositive = function toPositive() {
-    this.forEach(function (doc) {
-      var obj = parse_1(doc);
-      var vb = obj.verb.clone();
+  var toPositive = function () {
+    this.forEach(doc => {
+      let obj = parse_1(doc);
+      let vb = obj.verb.clone();
       vb = vb.verbs().toPositive();
       obj.verb.replaceWith(vb, false);
     });
@@ -329,9 +244,9 @@
   };
 
   //is this sentence asking a question?
-  var isQuestion = function isQuestion(doc) {
-    var endPunct = doc.post();
-    var clauses = doc.clauses();
+  const isQuestion = function (doc) {
+    let endPunct = doc.post();
+    let clauses = doc.clauses();
 
     if (/\?/.test(endPunct) === true) {
       return true;
@@ -390,47 +305,45 @@
 
   /** return sentences ending with '?' */
 
-  var isQuestion_1 = function isQuestion_1() {
-    return this.filter(function (d) {
-      return isQuestion_1$1(d);
-    });
+  var isQuestion_1 = function () {
+    return this.filter(d => isQuestion_1$1(d));
   };
   /** return sentences ending with '!' */
 
 
-  var isExclamation = function isExclamation() {
-    return this.filter(function (doc) {
-      var term = doc.lastTerm().termList(0);
+  var isExclamation = function () {
+    return this.filter(doc => {
+      let term = doc.lastTerm().termList(0);
       return term.hasPost('!');
     });
   };
   /** return sentences with neither a question or an exclamation */
 
 
-  var isStatement = function isStatement() {
-    return this.filter(function (doc) {
-      var term = doc.lastTerm().termList(0);
+  var isStatement = function () {
+    return this.filter(doc => {
+      let term = doc.lastTerm().termList(0);
       return !term.hasPost('?') && !term.hasPost('!');
     });
   };
   /** 'he is.' -> 'he is!' */
 
 
-  var toExclamation = function toExclamation() {
+  var toExclamation = function () {
     this.post('!');
     return this;
   };
   /** 'he is.' -> 'he is?' */
 
 
-  var toQuestion = function toQuestion() {
+  var toQuestion = function () {
     this.post('?');
     return this;
   };
   /** 'he is?' -> 'he is.' */
 
 
-  var toStatement = function toStatement() {
+  var toStatement = function () {
     this.post('.');
     return this;
   };
@@ -444,7 +357,7 @@
     toStatement: toStatement
   };
 
-  var useParticiple = function useParticiple(vb) {
+  const useParticiple = function (vb) {
     if (vb.has('(could|should|would|may|can|must)')) {
       return true;
     }
@@ -454,28 +367,33 @@
   /** he walks -> he walked */
 
 
-  var toPastTense = function toPastTense() {
-    this.forEach(function (doc) {
+  var toPastTense = function () {
+    this.forEach(doc => {
       if (doc.has('#PastTense')) {
         return;
       }
 
-      var obj = parse_1(doc);
-      var vb = obj.verb.clone(); // support 'he could drive' -> 'he could have driven'
+      let obj = parse_1(doc);
+      let vb = obj.verb.clone(); // support 'he could drive' -> 'he could have driven'
 
       if (useParticiple(vb)) {
         vb = vb.verbs().toParticiple();
         obj.verb.replaceWith(vb, false);
       } else {
-        //   //do a normal conjugation
+        //do a normal conjugation
         vb = vb.verbs().toPastTense();
         obj.verb.replaceWith(vb, false);
-      } // // trailing gerund/future/present are okay, but 'walked and eats' is not
+      } // force agreement with any 2nd/3rd verbs:
+      // trailing gerund/future/present are okay, but 'walked and eats' is not
 
 
       if (obj.object && obj.object.found && obj.object.has('#PresentTense')) {
-        var verbs = obj.object.verbs();
-        verbs["if"]('#PresentTense').verbs().toPastTense();
+        let verbs = obj.object.verbs(); // remove any sorta infinitive - 'to engage'
+
+        verbs = verbs.filter(v => {
+          return !v.lookBehind('to$').found;
+        });
+        verbs.if('#PresentTense').notIf('#Gerund').verbs().toPastTense();
       }
     });
     return this;
@@ -483,20 +401,20 @@
   /** he drives -> he has driven */
 
 
-  var toParticiple = function toParticiple() {
-    this.forEach(function (doc) {
+  var toParticiple = function () {
+    this.forEach(doc => {
       if (doc.has('has #Participle')) {
         return;
       }
 
-      var obj = parse_1(doc);
-      var vb = obj.verb.clone();
+      let obj = parse_1(doc);
+      let vb = obj.verb.clone();
       vb = vb.verbs().toParticiple();
       obj.verb.replaceWith(vb, false); // trailing gerund/future/present are okay, but 'walked and eats' is not
 
       if (obj.object && obj.object.found && obj.object.has('#PresentTense')) {
-        var verbs = obj.object.verbs();
-        verbs["if"]('#PresentTense').verbs().toParticiple();
+        let verbs = obj.object.verbs();
+        verbs.if('#PresentTense').verbs().toParticiple();
       }
     });
     return this;
@@ -504,11 +422,11 @@
   /** he walked -> he walks */
 
 
-  var toPresentTense = function toPresentTense() {
-    this.forEach(function (doc) {
-      var obj = parse_1(doc);
-      var isPlural = obj.verb.lookBehind('(i|we) (#Adverb|#Verb)?$').found;
-      var vb = obj.verb.clone(); // 'i look', not 'i looks'
+  var toPresentTense = function () {
+    this.forEach(doc => {
+      let obj = parse_1(doc);
+      let isPlural = obj.verb.lookBehind('(i|we) (#Adverb|#Verb)?$').found;
+      let vb = obj.verb.clone(); // 'i look', not 'i looks'
 
       if (isPlural) {
         //quick hack for copula verb - be/am
@@ -525,8 +443,8 @@
       obj.verb.replaceWith(vb, false); // future is okay, but 'walks and ate' -> 'walks and eats'
 
       if (obj.object && obj.object.found && obj.object.has('#PastTense')) {
-        var verbs = obj.object.verbs();
-        verbs["if"]('#PastTense').verbs().toPresentTense();
+        let verbs = obj.object.verbs();
+        verbs.if('#PastTense').notIf('#Gerund').verbs().toPresentTense();
       }
     });
     return this;
@@ -534,16 +452,24 @@
   /**he walked -> he will walk */
 
 
-  var toFutureTense = function toFutureTense() {
-    this.forEach(function (doc) {
-      var obj = parse_1(doc);
-      var vb = obj.verb.clone();
+  var toFutureTense = function () {
+    this.forEach(doc => {
+      let obj = parse_1(doc);
+      let vb = obj.verb.clone();
       vb = vb.verbs().toFutureTense();
       obj.verb.replaceWith(vb, false); //Present is okay, but 'will walk and ate' -> 'will walk and eat'
 
       if (obj.object && obj.object.found && obj.object.has('(#PastTense|#PresentTense)')) {
-        var verbs = obj.object.verbs();
-        verbs["if"]('(#PastTense|#PresentTense)').verbs().toInfinitive();
+        let verbs = obj.object.verbs(); // add 'that attempts'
+
+        verbs = verbs.if('(#PastTense|#PresentTense)').notIf('#Gerund');
+        verbs.forEach(v => {
+          if (v.lookBehind('(that|which|who|whom)$').found === true) {
+            v.verbs().toPresentTense();
+          } else {
+            v.verbs().toInfinitive();
+          }
+        });
       }
     });
     return this;
@@ -551,17 +477,17 @@
   /** the main noun of the sentence */
 
 
-  var subjects = function subjects() {
-    return this.map(function (doc) {
-      var res = parse_1(doc);
+  var subjects = function () {
+    return this.map(doc => {
+      let res = parse_1(doc);
       return res.subject;
     });
   };
   /** return sentences that are in passive-voice */
 
 
-  var isPassive = function isPassive() {
-    return this["if"]('was #Adverb? #PastTense #Adverb? by'); //haha
+  var isPassive = function () {
+    return this.if('was #Adverb? #PastTense #Adverb? by'); //haha
   };
 
   var tense = {
@@ -573,9 +499,9 @@
     isPassive: isPassive
   };
 
-  var phrases_1 = function phrases_1() {
-    var arr = [];
-    this.forEach(function (s) {
+  var phrases_1 = function () {
+    let arr = [];
+    this.forEach(s => {
       s = s.splitOn('#VerbPhrase+');
       s = s.splitOn('#NounPhrase+');
       s = s.splitOn('#AdjectivePhrase+');
@@ -588,31 +514,22 @@
     phrases: phrases_1
   };
 
-  var methods = Object.assign({}, append, json, negative, questions, tense, phrases);
+  const methods = Object.assign({}, append, json, negative, questions, tense, phrases);
 
-  var plugin = function plugin(Doc, world) {
+  const plugin = function (Doc, world) {
     // our new tags
     world.addTags(tags); // run our tagger
 
     world.postProcess(tagger_1);
     /**  */
 
-    var Sentences = /*#__PURE__*/function (_Doc) {
-      _inherits(Sentences, _Doc);
-
-      var _super = _createSuper(Sentences);
-
-      function Sentences(list, from, w) {
-        _classCallCheck(this, Sentences);
-
-        list = list.map(function (p) {
-          return p.clone(true);
-        });
-        return _super.call(this, list, from, w);
+    class Sentences extends Doc {
+      constructor(list, from, w) {
+        list = list.map(p => p.clone(true));
+        super(list, from, w);
       }
 
-      return Sentences;
-    }(Doc); // add some aliases
+    } // add some aliases
 
 
     methods.questions = methods.isQuestion;
@@ -626,10 +543,8 @@
     /** create a new Sentences object */
 
     Sentences.prototype.buildFrom = function (list) {
-      list = list.map(function (p) {
-        return p.clone(true);
-      });
-      var doc = new Sentences(list, this, this.world);
+      list = list.map(p => p.clone(true));
+      let doc = new Sentences(list, this, this.world);
       return doc;
     };
     /** create a new Doc object */
@@ -642,11 +557,11 @@
 
 
     Doc.prototype.sentences = function (n) {
-      var arr = [];
-      this.list.forEach(function (p) {
+      let arr = [];
+      this.list.forEach(p => {
         arr.push(p.fullSentence());
       });
-      var s = new Sentences(arr, this, this.world);
+      let s = new Sentences(arr, this, this.world);
 
       if (typeof n === 'number') {
         s = s.get(n);

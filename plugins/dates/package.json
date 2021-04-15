@@ -32,6 +32,11 @@
   "eslintIgnore": [
     "builds/*.js"
   ],
+  "browserslist": [
+    "defaults",
+    "not IE 11",
+    "maintained node versions"
+  ],
   "peerDependencies": {
     "compromise": ">=12.0.0",
     "compromise-numbers": ">=1.0.0"

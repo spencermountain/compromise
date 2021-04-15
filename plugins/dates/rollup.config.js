@@ -30,10 +30,7 @@ export default [
       resolve(),
       json(),
       commonjs(),
-      babel({
-        babelrc: false,
-        presets: ['@babel/preset-env'],
-      }),
+      terser(),
       sizeCheck(),
     ],
   },

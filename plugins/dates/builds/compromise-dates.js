@@ -5,141 +5,24 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.compromiseDates = factory());
 }(this, (function () { 'use strict';
 
-  function _typeof(obj) {
-    "@babel/helpers - typeof";
-
-    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-      _typeof = function (obj) {
-        return typeof obj;
-      };
-    } else {
-      _typeof = function (obj) {
-        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-      };
-    }
-
-    return _typeof(obj);
-  }
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  function _defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }
-
-  function _createClass(Constructor, protoProps, staticProps) {
-    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) _defineProperties(Constructor, staticProps);
-    return Constructor;
-  }
-
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function");
-    }
-
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) _setPrototypeOf(subClass, superClass);
-  }
-
-  function _getPrototypeOf(o) {
-    _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
-      return o.__proto__ || Object.getPrototypeOf(o);
-    };
-    return _getPrototypeOf(o);
-  }
-
-  function _setPrototypeOf(o, p) {
-    _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
-      o.__proto__ = p;
-      return o;
-    };
-
-    return _setPrototypeOf(o, p);
-  }
-
-  function _isNativeReflectConstruct() {
-    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-    if (Reflect.construct.sham) return false;
-    if (typeof Proxy === "function") return true;
-
-    try {
-      Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-
-  function _assertThisInitialized(self) {
-    if (self === void 0) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
-
-    return self;
-  }
-
-  function _possibleConstructorReturn(self, call) {
-    if (call && (typeof call === "object" || typeof call === "function")) {
-      return call;
-    }
-
-    return _assertThisInitialized(self);
-  }
-
-  function _createSuper(Derived) {
-    var hasNativeReflectConstruct = _isNativeReflectConstruct();
-
-    return function _createSuperInternal() {
-      var Super = _getPrototypeOf(Derived),
-          result;
-
-      if (hasNativeReflectConstruct) {
-        var NewTarget = _getPrototypeOf(this).constructor;
-
-        result = Reflect.construct(Super, arguments, NewTarget);
-      } else {
-        result = Super.apply(this, arguments);
-      }
-
-      return _possibleConstructorReturn(this, result);
-    };
-  }
-
   //ambiguous 'may' and 'march'
-  var preps = '(in|by|before|during|on|until|after|of|within|all)'; //6
+  const preps = '(in|by|before|during|on|until|after|of|within|all)'; //6
 
-  var thisNext = '(last|next|this|previous|current|upcoming|coming)'; //2
+  const thisNext = '(last|next|this|previous|current|upcoming|coming)'; //2
 
-  var sections = '(start|end|middle|starting|ending|midpoint|beginning)'; //2
+  const sections = '(start|end|middle|starting|ending|midpoint|beginning)'; //2
 
-  var seasons = '(spring|summer|winter|fall|autumn)'; //ensure a year is approximately typical for common years
+  const seasons = '(spring|summer|winter|fall|autumn)'; //ensure a year is approximately typical for common years
   //please change in one thousand years
 
-  var tagYear = function tagYear(m, reason) {
+  const tagYear = (m, reason) => {
     if (m.found !== true) {
       return;
     }
 
-    m.forEach(function (p) {
-      var str = p.text('reduced');
-      var num = parseInt(str, 10);
+    m.forEach(p => {
+      let str = p.text('reduced');
+      let num = parseInt(str, 10);
 
       if (num && num > 1000 && num < 3000) {
         p.tag('Year', reason);
@@ -148,14 +31,14 @@
   }; //same, but for less-confident values
 
 
-  var tagYearSafe = function tagYearSafe(m, reason) {
+  const tagYearSafe = (m, reason) => {
     if (m.found !== true) {
       return;
     }
 
-    m.forEach(function (p) {
-      var str = p.text('reduced');
-      var num = parseInt(str, 10);
+    m.forEach(p => {
+      let str = p.text('reduced');
+      let num = parseInt(str, 10);
 
       if (num && num > 1900 && num < 2030) {
         p.tag('Year', reason);
@@ -163,7 +46,7 @@
     });
   };
 
-  var tagDates = function tagDates(doc) {
+  const tagDates = function (doc) {
     // in the evening
     doc.match('in the (night|evening|morning|afternoon|day|daytime)').tag('Time', 'in-the-night'); // 8 pm
 
@@ -175,11 +58,11 @@
 
     doc.match('(tue|thu)').tag('WeekDay', 'misc-weekday'); //months:
 
-    var month = doc["if"]('#Month');
+    let month = doc.if('#Month');
 
     if (month.found === true) {
       //June 5-7th
-      month.match("#Month #Date+").tag('Date', 'correction-numberRange'); //5th of March
+      month.match(`#Month #Date+`).tag('Date', 'correction-numberRange'); //5th of March
 
       month.match('#Value of #Month').tag('Date', 'value-of-month'); //5 March
 
@@ -191,7 +74,7 @@
     } //months:
 
 
-    var val = doc["if"]('#Value');
+    let val = doc.if('#Value');
 
     if (val.found === true) {
       //june 7
@@ -199,11 +82,11 @@
 
       val.match('#Value (#WeekDay|#Month)').ifNo('#Money').tag('Date', 'value-date'); //may twenty five
 
-      val.match('#TextValue #TextValue')["if"]('#Date').tag('#Date', 'textvalue-date'); //two thursdays back
+      val.match('#TextValue #TextValue').if('#Date').tag('#Date', 'textvalue-date'); //two thursdays back
 
       val.match('#Value (#WeekDay|#Duration) back').tag('#Date', '3-back'); //eg 'year'
 
-      var duration = val["if"]('#Duration');
+      let duration = val.if('#Duration');
 
       if (duration.found === true) {
         //for 4 months
@@ -211,35 +94,35 @@
 
         duration.match('#Value #Duration #Conjunction').tag('Date', 'val-duration-conjunction'); //for four days
 
-        duration.match("".concat(preps, "? #Value #Duration")).tag('Date', 'value-duration'); //two years old
+        duration.match(`${preps}? #Value #Duration`).tag('Date', 'value-duration'); //two years old
 
         duration.match('#Value #Duration old').unTag('Date', 'val-years-old');
       }
     } //seasons
 
 
-    var season = doc["if"](seasons);
+    let season = doc.if(seasons);
 
     if (season.found === true) {
-      season.match("".concat(preps, "? ").concat(thisNext, " ").concat(seasons)).tag('Date', 'thisNext-season');
-      season.match("the? ".concat(sections, " of ").concat(seasons)).tag('Date', 'section-season');
-      season.match("".concat(seasons, " ").concat(preps, "? #Cardinal")).tag('Date', 'season-year');
+      season.match(`${preps}? ${thisNext} ${seasons}`).tag('Date', 'thisNext-season');
+      season.match(`the? ${sections} of ${seasons}`).tag('Date', 'section-season');
+      season.match(`${seasons} ${preps}? #Cardinal`).tag('Date', 'season-year');
     } //rest-dates
 
 
-    var date = doc["if"]('#Date');
+    let date = doc.if('#Date');
 
     if (date.found === true) {
       //june the 5th
       date.match('#Date the? #Ordinal').tag('Date', 'correction'); //last month
 
-      date.match("".concat(thisNext, " #Date")).tag('Date', 'thisNext-date'); //by 5 March
+      date.match(`${thisNext} #Date`).tag('Date', 'thisNext-date'); //by 5 March
 
       date.match('due? (by|before|after|until) #Date').tag('Date', 'by'); //next feb
 
       date.match('(last|next|this|previous|current|upcoming|coming|the) #Date').tag('Date', 'next-feb'); //start of june
 
-      date.match("the? ".concat(sections, " of #Date")).tag('Date', 'section-of'); //fifth week in 1998
+      date.match(`the? ${sections} of #Date`).tag('Date', 'section-of'); //fifth week in 1998
 
       date.match('#Ordinal #Duration in #Date').tag('Date', 'duration-in'); //early in june
 
@@ -254,25 +137,25 @@
     } //year/cardinal tagging
 
 
-    var cardinal = doc["if"]('#Cardinal');
+    let cardinal = doc.if('#Cardinal');
 
     if (cardinal.found === true) {
-      var v = cardinal.match("#Date #Value [#Cardinal]", 0);
+      let v = cardinal.match(`#Date #Value [#Cardinal]`, 0);
       tagYear(v, 'date-value-year'); //scoops up a bunch
 
-      v = cardinal.match("#Date [#Cardinal]", 0);
+      v = cardinal.match(`#Date [#Cardinal]`, 0);
       tagYearSafe(v, 'date-year'); //middle of 1999
 
-      v = cardinal.match("".concat(sections, " of [#Cardinal]"));
+      v = cardinal.match(`${sections} of [#Cardinal]`);
       tagYearSafe(v, 'section-year'); //feb 8 2018
 
-      v = cardinal.match("#Month #Value [#Cardinal]", 0);
+      v = cardinal.match(`#Month #Value [#Cardinal]`, 0);
       tagYear(v, 'month-value-year'); //feb 8 to 10th 2018
 
-      v = cardinal.match("#Month #Value to #Value [#Cardinal]", 0);
+      v = cardinal.match(`#Month #Value to #Value [#Cardinal]`, 0);
       tagYear(v, 'month-range-year'); //in 1998
 
-      v = cardinal.match("(in|of|by|during|before|starting|ending|for|year|since) [#Cardinal]", 0);
+      v = cardinal.match(`(in|of|by|during|before|starting|ending|for|year|since) [#Cardinal]`, 0);
       tagYear(v, 'in-year-1'); //q2 2009
 
       v = cardinal.match('(q1|q2|q3|q4) [#Cardinal]', 0);
@@ -287,15 +170,14 @@
       v = cardinal.match('it (is|was) [#Cardinal]', 0);
       tagYearSafe(v, 'in-year-5'); // re-tag this part
 
-      cardinal.match("".concat(sections, " of #Year")).tag('Date'); //between 1999 and 1998
+      cardinal.match(`${sections} of #Year`).tag('Date'); //between 1999 and 1998
 
-      var _m = cardinal.match('between [#Cardinal] and [#Cardinal]');
-
-      tagYear(_m.groups('0'), 'between-year-and-year-1');
-      tagYear(_m.groups('1'), 'between-year-and-year-2');
+      let m = cardinal.match('between [#Cardinal] and [#Cardinal]');
+      tagYear(m.groups('0'), 'between-year-and-year-1');
+      tagYear(m.groups('1'), 'between-year-and-year-2');
     }
 
-    var time = doc["if"]('#Time');
+    let time = doc.if('#Time');
 
     if (time.found === true) {
       //by 6pm
@@ -308,7 +190,7 @@
     } //'2020' bare input
 
 
-    var m = doc.match('^/^20[012][0-9]$/$');
+    let m = doc.match('^/^20[012][0-9]$/$');
     tagYearSafe(m, '2020-ish'); // in 20mins
 
     doc.match('(in|after) /^[0-9]+(min|sec|wk)s?/').tag('Date', 'shift-units'); //tuesday night
@@ -323,9 +205,9 @@
 
   var _00Basic = tagDates;
 
-  var here$5 = 'date-values'; //
+  const here$5 = 'date-values'; //
 
-  var values = function values(doc) {
+  const values = function (doc) {
     if (doc.has('#Value')) {
       //june 5 to 7th
       doc.match('#Month #Value to #Value of? #Year?').tag('Date', here$5); //5 to 7th june
@@ -356,9 +238,9 @@
 
   var _01Values = values;
 
-  var here$4 = 'date-tagger'; //
+  const here$4 = 'date-tagger'; //
 
-  var dateTagger = function dateTagger(doc) {
+  const dateTagger = function (doc) {
     doc.match('(spring|summer|winter|fall|autumn|springtime|wintertime|summertime)').match('#Noun').tag('Season', here$4);
     doc.match('(q1|q2|q3|q4)').tag('FinancialQuarter', here$4);
     doc.match('(this|next|last|current) quarter').tag('FinancialQuarter', here$4);
@@ -372,7 +254,7 @@
 
       doc.match('#Date+').tag('Date', here$4); //by June
 
-      doc.match('(by|until|on|in|at|during|over|every|each|due) the? #Date').tag('Date', 'until-june'); //a year after..
+      doc.match('(by|until|on|in|at|during|over|every|each|due) the? #Date').notIf('#PhrasalVerb').tag('Date', 'until-june'); //a year after..
 
       doc.match('a #Duration').tag('Date', here$4); //between x and y
 
@@ -380,7 +262,7 @@
       doc.match('(to|until|upto) #Date').tag('Date', here$4);
       doc.match('#Date and #Date').tag('Date', here$4); //during this june
 
-      doc.match('(by|until|after|before|during|on|in|following|since) (next|this|last)? (#Date|#Date)').tag('Date', here$4); //day after next
+      doc.match('(by|until|after|before|during|on|in|following|since) (next|this|last)? (#Date|#Date)').notIf('#PhrasalVerb').tag('Date', here$4); //day after next
 
       doc.match('the? #Date after next one?').tag('Date', here$4); //approximately...
 
@@ -392,9 +274,9 @@
 
   var _02Dates = dateTagger;
 
-  var here$3 = 'section-tagger'; //
+  const here$3 = 'section-tagger'; //
 
-  var sectionTagger = function sectionTagger(doc) {
+  const sectionTagger = function (doc) {
     if (doc.has('#Date')) {
       // //next september
       doc.match('this? (last|next|past|this|previous|current|upcoming|coming|the) #Date').tag('Date', here$3); //starting this june
@@ -413,9 +295,18 @@
 
   var _03Sections = sectionTagger;
 
-  var here$2 = 'time-tagger'; //
+  const here$2 = 'time-tagger'; // 3-4 can be a time-range, sometimes
 
-  var timeTagger = function timeTagger(doc) {
+  const tagTimeRange = function (m, reason) {
+    if (m.found) {
+      m.tag('Date', reason);
+      let nums = m.numbers().lessThan(31).ifNo('#Year');
+      nums.tag('#Time', reason);
+    }
+  }; //
+
+
+  const timeTagger = function (doc) {
     // 2 oclock
     doc.match('#Cardinal oclock').tag('Time', here$2); // 13h30
 
@@ -434,7 +325,7 @@
       doc.match('(at|by|before) (5|10|15|20|five|ten|fifteen|twenty|quarter|half) (after|past|to)').tag('Time', 'at-20-past');
     }
 
-    var date = doc["if"]('#Date');
+    let date = doc.if('#Date');
 
     if (date.found) {
       //--timezone--
@@ -447,48 +338,52 @@
 
       date.match('(in|for|by|near|at) #Timezone').tag('Timezone', here$2); // 3pm to 4pm
 
-      date.match('#Time to #Time').tag('Date', here$2); //--time-ranges--
-      // 4pm sharp
+      date.match('#Time to #Time').tag('Date', here$2); // 4pm sharp
 
-      date.match('#Time [(sharp|on the dot)]', 0).tag('Time', here$2);
-      var range = date["if"]('#NumberRange');
+      date.match('#Time [(sharp|on the dot)]', 0).tag('Time', here$2); // ==time-ranges=
+      //   --number-ranges--
+
+      let range = date.if('#NumberRange');
 
       if (range.found) {
         // 3-4 on tuesday
-        range.match('[#NumberRange+] (on|near|by|at)? #WeekDay', 0).tag('Time', '3-4-tuesday'); // 3-4 on march 2nd
+        let m = range.match('[#NumberRange+] (on|by|at)? #WeekDay', 0);
+        tagTimeRange(m, '3-4-tuesday'); // 3-4 on march 2nd
 
-        range.match('[#NumberRange+] (on|near|by|at)? #Month #Value', 0).tag('Time', '3-4-mar-3'); // 3-4pm
+        range.match('[#NumberRange+] (on|by|at)? #Month #Value', 0);
+        tagTimeRange(m, '3-4 mar 3'); // 3-4pm
 
-        range.match('[#NumberRange] to (#NumberRange && #Time)', 0).tag('Time', '3-4pm'); // 3pm-5
+        range.match('[#NumberRange] to (#NumberRange && #Time)', 0);
+        tagTimeRange(m, '3-4pm'); // 3pm-5
 
-        range.match('(#NumberRange && #Time) to [#NumberRange]', 0).tag('Time', '3pm-4');
+        range.match('(#NumberRange && #Time) to [#NumberRange]', 0);
+        tagTimeRange(m, '3pm-4');
       } // from 4 to 5 tomorrow
 
 
-      date.match('(from|between) #Cardinal and #Cardinal (in|on)? (#WeekDay|tomorrow|yesterday)').tag('Date', '4-to-5pm').match('#NumericValue').tag('Time', here$2); // 9 to 5 tomorrow
+      let m = date.match('(from|between) #Cardinal and #Cardinal (in|on)? (#WeekDay|tomorrow|yesterday)');
+      tagTimeRange(m, 'from 9-5 tues'); // 9 to 5 tomorrow
 
-      doc.match('#Cardinal to #Cardinal (#WeekDay|tomorrow|yesterday)').tag('Date', '4-to-5pm').match('#NumericValue').tag('Time', here$2); // from 4 to 5pm
+      m = doc.match('#Cardinal to #Cardinal (#WeekDay|tomorrow|yesterday)');
+      tagTimeRange(m, '9-5 tues'); // from 4 to 5pm
 
-      date.match('(from|between) [#NumericValue] (to|and) #Time', 0).tag('Time', '4-to-5pm'); // date.match('#Cardinal to #Time')
-      // wed from 3 to 4
+      m = date.match('(from|between) [#NumericValue] (to|and) #Time', 0).tag('Time', '4-to-5pm');
+      tagTimeRange(m, 'from 9-5pm'); // wed from 3 to 4
 
-      date.match('(#WeekDay|tomorrow|yesterday) from? (#Cardinal|#Time) to (#Cardinal|#Time)').tag('Date', here$2).match('#Cardinal').tag('#Time', 'tues 3-5'); // june 5 from 3 to 4
+      m = date.match('(#WeekDay|tomorrow|yesterday) (from|between)? (#Cardinal|#Time) (and|to) (#Cardinal|#Time)');
+      tagTimeRange(m, 'tues 3-5'); // june 5 from 3 to 4
 
-      var m = date.match('#Month #Value+ from [<time>(#Cardinal|#Time) to (#Cardinal|#Time)]');
-      m.tag('Date', here$2);
-      m.group('time').match('#Cardinal').tag('#Time', 'from-3-5'); // 3pm to 4 on wednesday
+      m = date.match('#Month #Value+ (from|between) [<time>(#Cardinal|#Time) (and|to) (#Cardinal|#Time)]').group('time');
+      tagTimeRange(m, 'sep 4 from 9-5'); // 3pm to 4 on wednesday
 
       m = date.match('#Time to #Cardinal on? #Date');
-      m.tag('Date', here$2);
-      m.match('#Cardinal').tag('#Time', '3pm to 4'); // 3 to 4pm on wednesday
+      tagTimeRange(m, '3pm-4 wed'); // 3 to 4pm on wednesday
 
       m = date.match('#Cardinal to #Time on? #Date');
-      m.tag('Date', here$2);
-      m.match('#Cardinal').tag('#Time', '3 to 4pm'); // 3 to 4p on wednesday
+      tagTimeRange(m, '3-4pm wed'); // 3 to 4 on wednesday
 
-      m = date.match('#Cardinal to #Cardinal on? (#WeekDay|#Month)');
-      m.tag('Date', here$2);
-      m.match('#Cardinal').tag('#Time', '3 to 4 wed');
+      m = date.match('#Cardinal to #Cardinal on? (#WeekDay|#Month #Value)');
+      tagTimeRange(m, '3-4 wed');
     } // around four thirty
 
 
@@ -500,9 +395,9 @@
 
   var _04Time = timeTagger;
 
-  var here$1 = 'shift-tagger'; //
+  const here$1 = 'shift-tagger'; //
 
-  var shiftTagger = function shiftTagger(doc) {
+  const shiftTagger = function (doc) {
     if (doc.has('#Date')) {
       //'two days before'/ 'nine weeks frow now'
       doc.match('#Cardinal #Duration (before|after|ago|from|hence|back)').tag('DateShift', here$1); // in two weeks
@@ -524,7 +419,7 @@
 
   var _05Shifts = shiftTagger;
 
-  var tagIntervals = function tagIntervals(doc) {
+  const tagIntervals = function (doc) {
     // july 3rd and 4th
     doc.match('#Month #Ordinal and #Ordinal').tag('Date', 'ord-and-ord'); // every other week
 
@@ -541,17 +436,17 @@
 
   // timezone abbreviations
   // (from spencermountain/timezone-soft)
-  var zones = ['act', 'aft', 'akst', 'anat', 'art', 'azot', 'azt', 'bnt', 'bot', 'bt', 'cast', 'cat', 'cct', 'chast', 'chut', 'ckt', 'cvt', 'cxt', 'davt', 'eat', 'ect', 'fjt', 'fkst', 'fnt', 'gamt', 'get', 'gft', 'gilt', 'gyt', 'hast', 'hncu', 'hneg', 'hnnomx', 'hnog', 'hnpm', 'hnpmx', 'hntn', 'hovt', 'iot', 'irkt', 'jst', 'kgt', 'kost', 'lint', 'magt', 'mart', 'mawt', 'mmt', 'nct', 'nft', 'novt', 'npt', 'nrt', 'nut', 'nzst', 'omst', 'pet', 'pett', 'phot', 'phst', 'pont', 'pwt', 'ret', 'sakt', 'samt', 'sbt', 'sct', 'sret', 'srt', 'syot', 'taht', 'tft', 'tjt', 'tkt', 'tlt', 'tmt', 'tot', 'tvt', 'ulat', 'vut', 'wakt', 'wat', 'wet', 'wft', 'wit', 'wst', 'yekt'].reduce(function (h, str) {
+  const zones = ['act', 'aft', 'akst', 'anat', 'art', 'azot', 'azt', 'bnt', 'bot', 'bt', 'cast', 'cat', 'cct', 'chast', 'chut', 'ckt', 'cvt', 'cxt', 'davt', 'eat', 'ect', 'fjt', 'fkst', 'fnt', 'gamt', 'get', 'gft', 'gilt', 'gyt', 'hast', 'hncu', 'hneg', 'hnnomx', 'hnog', 'hnpm', 'hnpmx', 'hntn', 'hovt', 'iot', 'irkt', 'jst', 'kgt', 'kost', 'lint', 'magt', 'mart', 'mawt', 'mmt', 'nct', 'nft', 'novt', 'npt', 'nrt', 'nut', 'nzst', 'omst', 'pet', 'pett', 'phot', 'phst', 'pont', 'pwt', 'ret', 'sakt', 'samt', 'sbt', 'sct', 'sret', 'srt', 'syot', 'taht', 'tft', 'tjt', 'tkt', 'tlt', 'tmt', 'tot', 'tvt', 'ulat', 'vut', 'wakt', 'wat', 'wet', 'wft', 'wit', 'wst', 'yekt'].reduce((h, str) => {
     h[str] = true;
     return h;
   }, {});
 
-  var tagTz = function tagTz(doc) {
+  const tagTz = function (doc) {
     // 4pm PST
-    var m = doc.match('#Time [#Acronym]', 0);
+    let m = doc.match('#Time [#Acronym]', 0);
 
     if (m.found) {
-      var str = m.text('reduced');
+      let str = m.text('reduced');
 
       if (zones[str] === true) {
         m.tag('Timezone', 'tz-abbr');
@@ -561,32 +456,34 @@
 
   var _07Timezone = tagTz;
 
-  var here = 'fix-tagger'; //
+  const here = 'fix-tagger'; //
 
-  var fixUp = function fixUp(doc) {
+  const fixUp = function (doc) {
     //fixups
     if (doc.has('#Date')) {
       //first day by monday
-      var oops = doc.match('#Date+ by #Date+');
+      let oops = doc.match('#Date+ by #Date+');
 
       if (oops.found && !oops.has('^due')) {
         oops.match('^#Date+').unTag('Date', 'by-monday');
-      }
+      } // wed nov
 
-      var d = doc.match('#Date+'); //'spa day'
+
+      doc.match('[(wed|sat)] (#Month|#Year)', 0).tag('WeekDay', 'wed');
+      let d = doc.match('#Date+'); //'spa day'
 
       d.match('^day$').unTag('Date', 'spa-day'); // tomorrow's meeting
 
       d.match('(in|of|by|for)? (#Possessive && #Date)').unTag('Date', 'tomorrows meeting');
-      var knownDate = '(yesterday|today|tomorrow)';
+      let knownDate = '(yesterday|today|tomorrow)';
 
       if (d.has(knownDate)) {
         //yesterday 7
-        d.match("".concat(knownDate, " [#Value]$")).unTag('Date', 'yesterday-7'); //7 yesterday
+        d.match(`${knownDate} [#Value]$`).unTag('Date', 'yesterday-7'); //7 yesterday
 
-        d.match("^[#Value] ".concat(knownDate, "$"), 0).unTag('Date', '7 yesterday'); //friday yesterday
+        d.match(`^[#Value] ${knownDate}$`, 0).unTag('Date', '7 yesterday'); //friday yesterday
 
-        d.match("#WeekDay+ ".concat(knownDate, "$")).unTag('Date').lastTerm().tag('Date', 'fri-yesterday'); // yesterday yesterday
+        d.match(`#WeekDay+ ${knownDate}$`).unTag('Date').lastTerm().tag('Date', 'fri-yesterday'); // yesterday yesterday
         // d.match(`${knownDate}+ ${knownDate}$`)
         //   .unTag('Date')
         //   .lastTerm()
@@ -595,21 +492,21 @@
       } //tomorrow on 5
 
 
-      d.match("on #Cardinal$").unTag('Date', here); //this tomorrow
+      d.match(`on #Cardinal$`).unTag('Date', here); //this tomorrow
 
-      d.match("this tomorrow").terms(0).unTag('Date', 'this-tomorrow'); //q2 2019
+      d.match(`this tomorrow`).terms(0).unTag('Date', 'this-tomorrow'); //q2 2019
 
-      d.match("(q1|q2|q3|q4) #Year").tag('Date', here); //5 tuesday
+      d.match(`(q1|q2|q3|q4) #Year`).tag('Date', here); //5 tuesday
       // d.match(`^#Value #WeekDay`).terms(0).unTag('Date');
       //5 next week
 
-      d.match("^#Value (this|next|last)").terms(0).unTag('Date', here);
+      d.match(`^#Value (this|next|last)`).terms(0).unTag('Date', here);
 
       if (d.has('(last|this|next)')) {
         //this month 7
-        d.match("(last|this|next) #Duration #Value").terms(2).unTag('Date', here); //7 this month
+        d.match(`(last|this|next) #Duration #Value`).terms(2).unTag('Date', here); //7 this month
 
-        d.match("!#Month #Value (last|this|next) #Date").terms(0).unTag('Date', here);
+        d.match(`!#Month #Value (last|this|next) #Date`).terms(0).unTag('Date', here);
       } //january 5 5
 
 
@@ -625,8 +522,10 @@
 
       if (d.has('#Month #Month') && !d.has('@hasHyphen') && !d.has('@hasComma')) {
         d.match('#Month').lastTerm().unTag('Date', 'month-month');
-      } // log the hours
+      } // over the years
 
+
+      d.match('(in|over) the #Duration #Date+?').unTag('Date', 'over-the-duration'); // log the hours
 
       if (d.has('(minutes|seconds|weeks|hours|days|months)') && !d.has('#Value #Duration')) {
         d.match('(minutes|seconds|weeks|hours|days|months)').unTag('Date', 'log-hours');
@@ -654,26 +553,24 @@
 
   var _08Fixup = fixUp;
 
-  var methods$3 = [_00Basic, _01Values, _02Dates, _03Sections, _04Time, _05Shifts, _06Intervals, _07Timezone, _08Fixup]; // normalizations to run before tagger
+  const methods$3 = [_00Basic, _01Values, _02Dates, _03Sections, _04Time, _05Shifts, _06Intervals, _07Timezone, _08Fixup]; // normalizations to run before tagger
 
-  var normalize$1 = function normalize(doc) {
+  const normalize$1 = function (doc) {
     // turn '20mins' into '20 mins'
     if (typeof doc.numbers === 'function') {
       doc.numbers().normalize();
     } else {
-      console.warn("Warning: compromise-numbers plugin is not loaded.\n   You should load this plugin \n     - https://bit.ly/3t8RfFG");
+      console.warn(`Warning: compromise-numbers plugin is not loaded.\n   You should load this plugin \n     - https://bit.ly/3t8RfFG`);
     }
 
     return doc;
   }; // run each of the taggers
 
 
-  var tagDate = function tagDate(doc) {
+  const tagDate = function (doc) {
     doc = normalize$1(doc); // run taggers
 
-    methods$3.forEach(function (fn) {
-      return fn(doc);
-    });
+    methods$3.forEach(fn => fn(doc));
     return doc;
   };
 
@@ -715,116 +612,34 @@
   	return fn(module, module.exports), module.exports;
   }
 
-  /* spencermountain/spacetime 6.14.0 Apache 2.0 */
+  /* spencermountain/spacetime 6.16.0 Apache 2.0 */
   var spacetime = createCommonjsModule(function (module, exports) {
     (function (global, factory) {
       module.exports = factory() ;
     })(commonjsGlobal, function () {
 
-      function _typeof(obj) {
-        "@babel/helpers - typeof";
+      const MSEC_IN_HOUR = 60 * 60 * 1000; //convert our local date syntax a javascript UTC date
 
-        if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-          _typeof = function _typeof(obj) {
-            return typeof obj;
-          };
-        } else {
-          _typeof = function _typeof(obj) {
-            return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-          };
-        }
-
-        return _typeof(obj);
-      }
-
-      function _slicedToArray(arr, i) {
-        return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-      }
-
-      function _arrayWithHoles(arr) {
-        if (Array.isArray(arr)) return arr;
-      }
-
-      function _iterableToArrayLimit(arr, i) {
-        if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
-        var _arr = [];
-        var _n = true;
-        var _d = false;
-        var _e = undefined;
-
-        try {
-          for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-            _arr.push(_s.value);
-
-            if (i && _arr.length === i) break;
-          }
-        } catch (err) {
-          _d = true;
-          _e = err;
-        } finally {
-          try {
-            if (!_n && _i["return"] != null) _i["return"]();
-          } finally {
-            if (_d) throw _e;
-          }
-        }
-
-        return _arr;
-      }
-
-      function _unsupportedIterableToArray(o, minLen) {
-        if (!o) return;
-        if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-        var n = Object.prototype.toString.call(o).slice(8, -1);
-        if (n === "Object" && o.constructor) n = o.constructor.name;
-        if (n === "Map" || n === "Set") return Array.from(o);
-        if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-      }
-
-      function _arrayLikeToArray(arr, len) {
-        if (len == null || len > arr.length) len = arr.length;
-
-        for (var i = 0, arr2 = new Array(len); i < len; i++) {
-          arr2[i] = arr[i];
-        }
-
-        return arr2;
-      }
-
-      function _nonIterableRest() {
-        throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-      }
-
-      var MSEC_IN_HOUR = 60 * 60 * 1000; //convert our local date syntax a javascript UTC date
-
-      var toUtc = function toUtc(dstChange, offset, year) {
-        var _dstChange$split = dstChange.split('/'),
-            _dstChange$split2 = _slicedToArray(_dstChange$split, 2),
-            month = _dstChange$split2[0],
-            rest = _dstChange$split2[1];
-
-        var _rest$split = rest.split(':'),
-            _rest$split2 = _slicedToArray(_rest$split, 2),
-            day = _rest$split2[0],
-            hour = _rest$split2[1];
-
+      const toUtc = (dstChange, offset, year) => {
+        const [month, rest] = dstChange.split('/');
+        const [day, hour] = rest.split(':');
         return Date.UTC(year, month - 1, day, hour) - offset * MSEC_IN_HOUR;
       }; // compare epoch with dst change events (in utc)
 
 
-      var inSummerTime = function inSummerTime(epoch, start, end, summerOffset, winterOffset) {
-        var year = new Date(epoch).getUTCFullYear();
-        var startUtc = toUtc(start, winterOffset, year);
-        var endUtc = toUtc(end, summerOffset, year); // simple number comparison now
+      const inSummerTime = (epoch, start, end, summerOffset, winterOffset) => {
+        const year = new Date(epoch).getUTCFullYear();
+        const startUtc = toUtc(start, winterOffset, year);
+        const endUtc = toUtc(end, summerOffset, year); // simple number comparison now
 
         return epoch >= startUtc && epoch < endUtc;
       };
 
       var summerTime = inSummerTime; // it reproduces some things in ./index.js, but speeds up spacetime considerably
 
-      var quickOffset = function quickOffset(s) {
-        var zones = s.timezones;
-        var obj = zones[s.tz];
+      const quickOffset = s => {
+        let zones = s.timezones;
+        let obj = zones[s.tz];
 
         if (obj === undefined) {
           console.warn("Warning: couldn't find timezone " + s.tz);
@@ -836,15 +651,15 @@
         } //get our two possible offsets
 
 
-        var jul = obj.offset;
-        var dec = obj.offset + 1; // assume it's the same for now
+        let jul = obj.offset;
+        let dec = obj.offset + 1; // assume it's the same for now
 
         if (obj.hem === 'n') {
           dec = jul - 1;
         }
 
-        var split = obj.dst.split('->');
-        var inSummer = summerTime(s.epoch, split[0], split[1], jul, dec);
+        let split = obj.dst.split('->');
+        let inSummer = summerTime(s.epoch, split[0], split[1], jul, dec);
 
         if (inSummer === true) {
           return jul;
@@ -900,7 +715,7 @@
         "12|s|04/04:03->09/26:02": "12/mcmurdo,11/auckland,12/south_pole",
         "12|s|01/17:03->11/14:02": "11/fiji",
         "12|n": "2/anadyr,2/kamchatka,2/srednekolymsk,11/funafuti,11/kwajalein,11/majuro,11/nauru,11/tarawa,11/wake,11/wallis",
-        "12.75|s|04/04:03->04/04:02": "11/chatham",
+        "12.75|s|04/04:03->09/26:02": "11/chatham",
         "11|s|04/04:03->10/03:02": "12/macquarie",
         "11|s": "11/bougainville",
         "11|n": "2/magadan,2/sakhalin,11/efate,11/guadalcanal,11/kosrae,11/noumea,11/ponape,11/pohnpei",
@@ -968,10 +783,10 @@
       }
 
       var data = getCjsExportFromNamespace(_build$1);
-      var all = {};
-      Object.keys(data).forEach(function (k) {
-        var split = k.split('|');
-        var obj = {
+      let all = {};
+      Object.keys(data).forEach(k => {
+        let split = k.split('|');
+        let obj = {
           offset: Number(split[0]),
           hem: split[1]
         };
@@ -980,9 +795,9 @@
           obj.dst = split[2];
         }
 
-        var names = data[k].split(',');
-        names.forEach(function (str) {
-          str = str.replace(/(^[0-9]+)\//, function (before, num) {
+        let names = data[k].split(',');
+        names.forEach(str => {
+          str = str.replace(/(^[0-9]+)\//, (before, num) => {
             num = Number(num);
             return _prefixes[num] + '/';
           });
@@ -995,14 +810,14 @@
 
       }; //add etc/gmt+n
 
-      for (var i = -14; i <= 14; i += 0.5) {
-        var num = i;
+      for (let i = -14; i <= 14; i += 0.5) {
+        let num = i;
 
         if (num > 0) {
           num = '+' + num;
         }
 
-        var name = 'etc/gmt' + num;
+        let name = 'etc/gmt' + num;
         all[name] = {
           offset: i * -1,
           //they're negative!
@@ -1021,21 +836,21 @@
       //safely query the Intl object
       //based on - https://bitbucket.org/pellepim/jstimezonedetect/src
 
-      var fallbackTZ = 'utc'; //
+      const fallbackTZ = 'utc'; //
       //this Intl object is not supported often, yet
 
-      var safeIntl = function safeIntl() {
+      const safeIntl = () => {
         if (typeof Intl === 'undefined' || typeof Intl.DateTimeFormat === 'undefined') {
           return null;
         }
 
-        var format = Intl.DateTimeFormat();
+        let format = Intl.DateTimeFormat();
 
         if (typeof format === 'undefined' || typeof format.resolvedOptions === 'undefined') {
           return null;
         }
 
-        var timezone = format.resolvedOptions().timeZone;
+        let timezone = format.resolvedOptions().timeZone;
 
         if (!timezone) {
           return null;
@@ -1044,8 +859,8 @@
         return timezone.toLowerCase();
       };
 
-      var guessTz = function guessTz() {
-        var timezone = safeIntl();
+      const guessTz = () => {
+        let timezone = safeIntl();
 
         if (timezone === null) {
           return fallbackTZ;
@@ -1056,12 +871,12 @@
 
 
       var guessTz_1 = guessTz;
-      var isOffset = /(\-?[0-9]+)h(rs)?/i;
-      var isNumber = /(\-?[0-9]+)/;
-      var utcOffset = /utc([\-+]?[0-9]+)/i;
-      var gmtOffset = /gmt([\-+]?[0-9]+)/i;
+      const isOffset = /(\-?[0-9]+)h(rs)?/i;
+      const isNumber = /(\-?[0-9]+)/;
+      const utcOffset = /utc([\-+]?[0-9]+)/i;
+      const gmtOffset = /gmt([\-+]?[0-9]+)/i;
 
-      var toIana = function toIana(num) {
+      const toIana = function (num) {
         num = Number(num);
 
         if (num >= -13 && num <= 13) {
@@ -1075,9 +890,9 @@
         return null;
       };
 
-      var parseOffset$1 = function parseOffset(tz) {
+      const parseOffset$2 = function (tz) {
         // '+5hrs'
-        var m = tz.match(isOffset);
+        let m = tz.match(isOffset);
 
         if (m !== null) {
           return toIana(m[1]);
@@ -1094,7 +909,7 @@
         m = tz.match(gmtOffset);
 
         if (m !== null) {
-          var num = Number(m[1]) * -1;
+          let num = Number(m[1]) * -1;
           return toIana(num);
         } // '+5'
 
@@ -1108,17 +923,17 @@
         return null;
       };
 
-      var parseOffset_1$1 = parseOffset$1;
-      var local = guessTz_1(); //add all the city names by themselves
+      var parseOffset_1$1 = parseOffset$2;
+      const local = guessTz_1(); //add all the city names by themselves
 
-      var cities = Object.keys(unpack).reduce(function (h, k) {
-        var city = k.split('/')[1] || '';
+      const cities = Object.keys(unpack).reduce((h, k) => {
+        let city = k.split('/')[1] || '';
         city = city.replace(/_/g, ' ');
         h[city] = k;
         return h;
       }, {}); //try to match these against iana form
 
-      var normalize = function normalize(tz) {
+      const normalize$1 = tz => {
         tz = tz.replace(/ time/g, '');
         tz = tz.replace(/ (standard|daylight|summer)/g, '');
         tz = tz.replace(/\b(east|west|north|south)ern/g, '$1');
@@ -1129,7 +944,7 @@
       }; // try our best to reconcile the timzone to this given string
 
 
-      var lookupTz = function lookupTz(str, zones) {
+      const lookupTz = (str, zones) => {
         if (!str) {
           return local;
         }
@@ -1138,7 +953,7 @@
           console.error("Timezone must be a string - recieved: '", str, "'\n");
         }
 
-        var tz = str.trim(); // let split = str.split('/')
+        let tz = str.trim(); // let split = str.split('/')
         //support long timezones like 'America/Argentina/Rio_Gallegos'
         // if (split.length > 2 && zones.hasOwnProperty(tz) === false) {
         //   tz = split[0] + '/' + split[1]
@@ -1151,7 +966,7 @@
         } //lookup more loosely..
 
 
-        tz = normalize(tz);
+        tz = normalize$1(tz);
 
         if (zones.hasOwnProperty(tz) === true) {
           return tz;
@@ -1164,7 +979,7 @@
 
 
         if (/[0-9]/.test(tz) === true) {
-          var id = parseOffset_1$1(tz);
+          let id = parseOffset_1$1(tz);
 
           if (id) {
             return id;
@@ -1175,7 +990,260 @@
       };
 
       var find = lookupTz;
-      var o = {
+      var fns = createCommonjsModule(function (module, exports) {
+        //git:blame @JuliasCaesar https://www.timeanddate.com/date/leapyear.html
+        exports.isLeapYear = year => year % 4 === 0 && year % 100 !== 0 || year % 400 === 0; // unsurprisingly-nasty `typeof date` call
+
+
+        exports.isDate = d => Object.prototype.toString.call(d) === '[object Date]' && !isNaN(d.valueOf());
+
+        exports.isArray = input => Object.prototype.toString.call(input) === '[object Array]';
+
+        exports.isObject = input => Object.prototype.toString.call(input) === '[object Object]';
+
+        exports.isBoolean = input => Object.prototype.toString.call(input) === '[object Boolean]';
+
+        exports.zeroPad = (str, len = 2) => {
+          let pad = '0';
+          str = str + '';
+          return str.length >= len ? str : new Array(len - str.length + 1).join(pad) + str;
+        };
+
+        exports.titleCase = str => {
+          if (!str) {
+            return '';
+          }
+
+          return str[0].toUpperCase() + str.substr(1);
+        };
+
+        exports.ordinal = i => {
+          let j = i % 10;
+          let k = i % 100;
+
+          if (j === 1 && k !== 11) {
+            return i + 'st';
+          }
+
+          if (j === 2 && k !== 12) {
+            return i + 'nd';
+          }
+
+          if (j === 3 && k !== 13) {
+            return i + 'rd';
+          }
+
+          return i + 'th';
+        }; //strip 'st' off '1st'..
+
+
+        exports.toCardinal = str => {
+          str = String(str);
+          str = str.replace(/([0-9])(st|nd|rd|th)$/i, '$1');
+          return parseInt(str, 10);
+        }; //used mostly for cleanup of unit names, like 'months'
+
+
+        exports.normalize = (str = '') => {
+          str = str.toLowerCase().trim();
+          str = str.replace(/ies$/, 'y'); //'centuries'
+
+          str = str.replace(/s$/, '');
+          str = str.replace(/-/g, '');
+
+          if (str === 'day' || str === 'days') {
+            return 'date';
+          }
+
+          if (str === 'min' || str === 'mins') {
+            return 'minute';
+          }
+
+          return str;
+        };
+
+        exports.getEpoch = tmp => {
+          //support epoch
+          if (typeof tmp === 'number') {
+            return tmp;
+          } //suport date objects
+
+
+          if (exports.isDate(tmp)) {
+            return tmp.getTime();
+          }
+
+          if (tmp.epoch) {
+            return tmp.epoch;
+          }
+
+          return null;
+        }; //make sure this input is a spacetime obj
+
+
+        exports.beADate = (d, s) => {
+          if (exports.isObject(d) === false) {
+            return s.clone().set(d);
+          }
+
+          return d;
+        };
+
+        exports.formatTimezone = (offset, delimiter = '') => {
+          const sign = offset > 0 ? '+' : '-';
+          const absOffset = Math.abs(offset);
+          const hours = exports.zeroPad(parseInt('' + absOffset, 10));
+          const minutes = exports.zeroPad(absOffset % 1 * 60);
+          return "".concat(sign).concat(hours).concat(delimiter).concat(minutes);
+        };
+      });
+      fns.isLeapYear;
+      fns.isDate;
+      fns.isArray;
+      fns.isObject;
+      fns.isBoolean;
+      fns.zeroPad;
+      fns.titleCase;
+      fns.ordinal;
+      fns.toCardinal;
+      fns.normalize;
+      fns.getEpoch;
+      fns.beADate;
+      fns.formatTimezone;
+      const defaults$1 = {
+        year: new Date().getFullYear(),
+        month: 0,
+        date: 1
+      }; //support [2016, 03, 01] format
+
+      const parseArray$1 = (s, arr, today) => {
+        if (arr.length === 0) {
+          return s;
+        }
+
+        let order = ['year', 'month', 'date', 'hour', 'minute', 'second', 'millisecond'];
+
+        for (let i = 0; i < order.length; i++) {
+          let num = arr[i] || today[order[i]] || defaults$1[order[i]] || 0;
+          s = s[order[i]](num);
+        }
+
+        return s;
+      }; //support {year:2016, month:3} format
+
+
+      const parseObject$1 = (s, obj, today) => {
+        // if obj is empty, do nothing
+        if (Object.keys(obj).length === 0) {
+          return s;
+        }
+
+        obj = Object.assign({}, defaults$1, today, obj);
+        let keys = Object.keys(obj);
+
+        for (let i = 0; i < keys.length; i++) {
+          let unit = keys[i]; //make sure we have this method
+
+          if (s[unit] === undefined || typeof s[unit] !== 'function') {
+            continue;
+          } //make sure the value is a number
+
+
+          if (obj[unit] === null || obj[unit] === undefined || obj[unit] === '') {
+            continue;
+          }
+
+          let num = obj[unit] || today[unit] || defaults$1[unit] || 0;
+          s = s[unit](num);
+        }
+
+        return s;
+      }; // this may seem like an arbitrary number, but it's 'within jan 1970'
+      // this is only really ambiguous until 2054 or so
+
+
+      const parseNumber$1 = function (s, input) {
+        const minimumEpoch = 2500000000; // if the given epoch is really small, they've probably given seconds and not milliseconds
+        // anything below this number is likely (but not necessarily) a mistaken input.
+
+        if (input > 0 && input < minimumEpoch && s.silent === false) {
+          console.warn('  - Warning: You are setting the date to January 1970.');
+          console.warn('       -   did input seconds instead of milliseconds?');
+        }
+
+        s.epoch = input;
+        return s;
+      };
+
+      var helpers = {
+        parseArray: parseArray$1,
+        parseObject: parseObject$1,
+        parseNumber: parseNumber$1
+      }; // pull in 'today' data for the baseline moment
+
+      const getNow = function (s) {
+        s.epoch = Date.now();
+        Object.keys(s._today || {}).forEach(k => {
+          if (typeof s[k] === 'function') {
+            s = s[k](s._today[k]);
+          }
+        });
+        return s;
+      };
+
+      const dates = {
+        now: s => {
+          return getNow(s);
+        },
+        today: s => {
+          return getNow(s);
+        },
+        tonight: s => {
+          s = getNow(s);
+          s = s.hour(18); //6pm
+
+          return s;
+        },
+        tomorrow: s => {
+          s = getNow(s);
+          s = s.add(1, 'day');
+          s = s.startOf('day');
+          return s;
+        },
+        yesterday: s => {
+          s = getNow(s);
+          s = s.subtract(1, 'day');
+          s = s.startOf('day');
+          return s;
+        },
+        christmas: s => {
+          let year = getNow(s).year();
+          s = s.set([year, 11, 25, 18, 0, 0]); // Dec 25
+
+          return s;
+        },
+        'new years': s => {
+          let year = getNow(s).year();
+          s = s.set([year, 11, 31, 18, 0, 0]); // Dec 31
+
+          return s;
+        }
+      };
+      dates['new years eve'] = dates['new years'];
+      var namedDates = dates; //little cleanup..
+
+      const normalize = function (str) {
+        // remove all day-names
+        str = str.replace(/\b(mon|tues?|wed|wednes|thur?s?|fri|sat|satur|sun)(day)?\b/i, ''); //remove ordinal ending
+
+        str = str.replace(/([0-9])(th|rd|st|nd)/, '$1');
+        str = str.replace(/,/g, '');
+        str = str.replace(/ +/g, ' ').trim();
+        return str;
+      };
+
+      var normalize_1 = normalize;
+      let o = {
         millisecond: 1
       };
       o.second = 1000;
@@ -1191,22 +1259,22 @@
       o.year = 3.154e10; // leap-years are supported post-hoc
       //add plurals
 
-      Object.keys(o).forEach(function (k) {
+      Object.keys(o).forEach(k => {
         o[k + 's'] = o[k];
       });
       var milliseconds = o;
 
-      var walk = function walk(s, n, fn, unit, previous) {
-        var current = s.d[fn]();
+      const walk = (s, n, fn, unit, previous) => {
+        let current = s.d[fn]();
 
         if (current === n) {
           return; //already there
         }
 
-        var startUnit = previous === null ? null : s.d[previous]();
-        var original = s.epoch; //try to get it as close as we can
+        let startUnit = previous === null ? null : s.d[previous]();
+        let original = s.epoch; //try to get it as close as we can
 
-        var diff = n - current;
+        let diff = n - current;
         s.epoch += milliseconds[unit] * diff; //DST edge-case: if we are going many days, be a little conservative
         // console.log(unit, diff)
 
@@ -1226,7 +1294,7 @@
         //(go by half-steps, just in case)
 
 
-        var halfStep = milliseconds[unit] / 2;
+        const halfStep = milliseconds[unit] / 2;
 
         while (s.d[fn]() < n) {
           s.epoch += halfStep;
@@ -1244,31 +1312,25 @@
       }; //find the desired date by a increment/check while loop
 
 
-      var units$3 = {
+      const units$3 = {
         year: {
-          valid: function valid(n) {
-            return n > -4000 && n < 4000;
-          },
-          walkTo: function walkTo(s, n) {
-            return walk(s, n, 'getFullYear', 'year', null);
-          }
+          valid: n => n > -4000 && n < 4000,
+          walkTo: (s, n) => walk(s, n, 'getFullYear', 'year', null)
         },
         month: {
-          valid: function valid(n) {
-            return n >= 0 && n <= 11;
-          },
-          walkTo: function walkTo(s, n) {
-            var d = s.d;
-            var current = d.getMonth();
-            var original = s.epoch;
-            var startUnit = d.getFullYear();
+          valid: n => n >= 0 && n <= 11,
+          walkTo: (s, n) => {
+            let d = s.d;
+            let current = d.getMonth();
+            let original = s.epoch;
+            let startUnit = d.getFullYear();
 
             if (current === n) {
               return;
             } //try to get it as close as we can..
 
 
-            var diff = n - current;
+            let diff = n - current;
             s.epoch += milliseconds.day * (diff * 28); //special case
             //oops, did we change the year? revert it.
 
@@ -1287,56 +1349,40 @@
           }
         },
         date: {
-          valid: function valid(n) {
-            return n > 0 && n <= 31;
-          },
-          walkTo: function walkTo(s, n) {
-            return walk(s, n, 'getDate', 'day', 'getMonth');
-          }
+          valid: n => n > 0 && n <= 31,
+          walkTo: (s, n) => walk(s, n, 'getDate', 'day', 'getMonth')
         },
         hour: {
-          valid: function valid(n) {
-            return n >= 0 && n < 24;
-          },
-          walkTo: function walkTo(s, n) {
-            return walk(s, n, 'getHours', 'hour', 'getDate');
-          }
+          valid: n => n >= 0 && n < 24,
+          walkTo: (s, n) => walk(s, n, 'getHours', 'hour', 'getDate')
         },
         minute: {
-          valid: function valid(n) {
-            return n >= 0 && n < 60;
-          },
-          walkTo: function walkTo(s, n) {
-            return walk(s, n, 'getMinutes', 'minute', 'getHours');
-          }
+          valid: n => n >= 0 && n < 60,
+          walkTo: (s, n) => walk(s, n, 'getMinutes', 'minute', 'getHours')
         },
         second: {
-          valid: function valid(n) {
-            return n >= 0 && n < 60;
-          },
-          walkTo: function walkTo(s, n) {
+          valid: n => n >= 0 && n < 60,
+          walkTo: (s, n) => {
             //do this one directly
             s.epoch = s.seconds(n).epoch;
           }
         },
         millisecond: {
-          valid: function valid(n) {
-            return n >= 0 && n < 1000;
-          },
-          walkTo: function walkTo(s, n) {
+          valid: n => n >= 0 && n < 1000,
+          walkTo: (s, n) => {
             //do this one directly
             s.epoch = s.milliseconds(n).epoch;
           }
         }
       };
 
-      var walkTo = function walkTo(s, wants) {
-        var keys = Object.keys(units$3);
-        var old = s.clone();
+      const walkTo = (s, wants) => {
+        let keys = Object.keys(units$3);
+        let old = s.clone();
 
-        for (var i = 0; i < keys.length; i++) {
-          var k = keys[i];
-          var n = wants[k];
+        for (let i = 0; i < keys.length; i++) {
+          let k = keys[i];
+          let n = wants[k];
 
           if (n === undefined) {
             n = old[k]();
@@ -1364,43 +1410,52 @@
       };
 
       var walk_1 = walkTo;
-      var shortMonths = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sept', 'oct', 'nov', 'dec'];
-      var longMonths = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
+      const monthLengths = [31, // January - 31 days
+      28, // February - 28 days in a common year and 29 days in leap years
+      31, // March - 31 days
+      30, // April - 30 days
+      31, // May - 31 days
+      30, // June - 30 days
+      31, // July - 31 days
+      31, // August - 31 days
+      30, // September - 30 days
+      31, // October - 31 days
+      30, // November - 30 days
+      31 // December - 31 days
+      ];
+      var monthLengths_1 = monthLengths; // 28 - feb
+
+      let shortMonths = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sept', 'oct', 'nov', 'dec'];
+      let longMonths = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
 
       function buildMapping() {
-        var obj = {
+        const obj = {
           sep: 8 //support this format
 
         };
 
-        for (var i = 0; i < shortMonths.length; i++) {
+        for (let i = 0; i < shortMonths.length; i++) {
           obj[shortMonths[i]] = i;
         }
 
-        for (var _i = 0; _i < longMonths.length; _i++) {
-          obj[longMonths[_i]] = _i;
+        for (let i = 0; i < longMonths.length; i++) {
+          obj[longMonths[i]] = i;
         }
 
         return obj;
       }
 
       var months$1 = {
-        "short": function _short() {
-          return shortMonths;
-        },
-        "long": function _long() {
-          return longMonths;
-        },
-        mapping: function mapping() {
-          return buildMapping();
-        },
-        set: function set(i18n) {
-          shortMonths = i18n["short"] || shortMonths;
-          longMonths = i18n["long"] || longMonths;
+        short: () => shortMonths,
+        long: () => longMonths,
+        mapping: () => buildMapping(),
+        set: i18n => {
+          shortMonths = i18n.short || shortMonths;
+          longMonths = i18n.long || longMonths;
         }
       }; //pull-apart ISO offsets, like "+0100"
 
-      var parseOffset = function parseOffset(s, offset) {
+      const parseOffset$1 = (s, offset) => {
         if (!offset) {
           return s;
         } //this is a fancy-move
@@ -1412,7 +1467,7 @@
         // so need few more steps before the calculation.
 
 
-        var num = 0; // for (+-)hh:mm
+        let num = 0; // for (+-)hh:mm
 
         if (/^[\+-]?[0-9]{2}:[0-9]{2}$/.test(offset)) {
           //support "+01:00"
@@ -1446,8 +1501,8 @@
           num = '+' + num;
         }
 
-        var tz = 'etc/gmt' + num;
-        var zones = s.timezones;
+        let tz = 'etc/gmt' + num;
+        let zones = s.timezones;
 
         if (zones[tz]) {
           // log a warning if we're over-writing a given timezone?
@@ -1458,24 +1513,23 @@
         return s;
       };
 
-      var parseOffset_1 = parseOffset;
+      var parseOffset_1 = parseOffset$1;
 
-      var parseTime = function parseTime(s) {
-        var str = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-        str = str.replace(/^\s+/, '').toLowerCase(); //trim
-        //formal time formats - 04:30.23
+      const parseTime$4 = (s, str = '') => {
+        // remove all whitespace
+        str = str.replace(/^\s+/, '').toLowerCase(); //formal time format - 04:30.23
 
-        var arr = str.match(/([0-9]{1,2}):([0-9]{1,2}):?([0-9]{1,2})?[:\.]?([0-9]{1,4})?/);
+        let arr = str.match(/([0-9]{1,2}):([0-9]{1,2}):?([0-9]{1,2})?[:\.]?([0-9]{1,4})?/);
 
         if (arr !== null) {
           //validate it a little
-          var h = Number(arr[1]);
+          let h = Number(arr[1]);
 
           if (h < 0 || h > 24) {
             return s.startOf('day');
           }
 
-          var m = Number(arr[2]); //don't accept '5:3pm'
+          let m = Number(arr[2]); //don't accept '5:3pm'
 
           if (arr[2].length < 2 || m < 0 || m > 59) {
             return s.startOf('day');
@@ -1491,7 +1545,7 @@
           s = s.seconds(arr[3] || 0);
           s = s.millisecond(arr[4] || 0); //parse-out am/pm
 
-          var ampm = str.match(/[\b0-9](am|pm)\b/);
+          let ampm = str.match(/[\b0-9](am|pm)\b/);
 
           if (ampm !== null && ampm[1]) {
             s = s.ampm(ampm[1]);
@@ -1504,10 +1558,9 @@
         arr = str.match(/([0-9]+) ?(am|pm)/);
 
         if (arr !== null && arr[1]) {
-          var _h = Number(arr[1]); //validate it a little..
+          let h = Number(arr[1]); //validate it a little..
 
-
-          if (_h > 12 || _h < 1) {
+          if (h > 12 || h < 1) {
             return s.startOf('day');
           }
 
@@ -1522,158 +1575,11 @@
         return s;
       };
 
-      var parseTime_1 = parseTime;
-      var monthLengths = [31, // January - 31 days
-      28, // February - 28 days in a common year and 29 days in leap years
-      31, // March - 31 days
-      30, // April - 30 days
-      31, // May - 31 days
-      30, // June - 30 days
-      31, // July - 31 days
-      31, // August - 31 days
-      30, // September - 30 days
-      31, // October - 31 days
-      30, // November - 30 days
-      31 // December - 31 days
-      ];
-      var monthLengths_1 = monthLengths; // 28 - feb
+      var parseTime_1 = parseTime$4;
+      const isLeapYear$2 = fns.isLeapYear;
+      const months = months$1.mapping(); //given a month, return whether day number exists in it
 
-      var fns = createCommonjsModule(function (module, exports) {
-        //git:blame @JuliasCaesar https://www.timeanddate.com/date/leapyear.html
-        exports.isLeapYear = function (year) {
-          return year % 4 === 0 && year % 100 !== 0 || year % 400 === 0;
-        }; // unsurprisingly-nasty `typeof date` call
-
-
-        exports.isDate = function (d) {
-          return Object.prototype.toString.call(d) === '[object Date]' && !isNaN(d.valueOf());
-        };
-
-        exports.isArray = function (input) {
-          return Object.prototype.toString.call(input) === '[object Array]';
-        };
-
-        exports.isObject = function (input) {
-          return Object.prototype.toString.call(input) === '[object Object]';
-        };
-
-        exports.isBoolean = function (input) {
-          return Object.prototype.toString.call(input) === '[object Boolean]';
-        };
-
-        exports.zeroPad = function (str) {
-          var len = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
-          var pad = '0';
-          str = str + '';
-          return str.length >= len ? str : new Array(len - str.length + 1).join(pad) + str;
-        };
-
-        exports.titleCase = function (str) {
-          if (!str) {
-            return '';
-          }
-
-          return str[0].toUpperCase() + str.substr(1);
-        };
-
-        exports.ordinal = function (i) {
-          var j = i % 10;
-          var k = i % 100;
-
-          if (j === 1 && k !== 11) {
-            return i + 'st';
-          }
-
-          if (j === 2 && k !== 12) {
-            return i + 'nd';
-          }
-
-          if (j === 3 && k !== 13) {
-            return i + 'rd';
-          }
-
-          return i + 'th';
-        }; //strip 'st' off '1st'..
-
-
-        exports.toCardinal = function (str) {
-          str = String(str);
-          str = str.replace(/([0-9])(st|nd|rd|th)$/i, '$1');
-          return parseInt(str, 10);
-        }; //used mostly for cleanup of unit names, like 'months'
-
-
-        exports.normalize = function () {
-          var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-          str = str.toLowerCase().trim();
-          str = str.replace(/ies$/, 'y'); //'centuries'
-
-          str = str.replace(/s$/, '');
-          str = str.replace(/-/g, '');
-
-          if (str === 'day' || str === 'days') {
-            return 'date';
-          }
-
-          if (str === 'min' || str === 'mins') {
-            return 'minute';
-          }
-
-          return str;
-        };
-
-        exports.getEpoch = function (tmp) {
-          //support epoch
-          if (typeof tmp === 'number') {
-            return tmp;
-          } //suport date objects
-
-
-          if (exports.isDate(tmp)) {
-            return tmp.getTime();
-          }
-
-          if (tmp.epoch) {
-            return tmp.epoch;
-          }
-
-          return null;
-        }; //make sure this input is a spacetime obj
-
-
-        exports.beADate = function (d, s) {
-          if (exports.isObject(d) === false) {
-            return s.clone().set(d);
-          }
-
-          return d;
-        };
-
-        exports.formatTimezone = function (offset) {
-          var delimiter = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-          var sign = offset > 0 ? '+' : '-';
-          var absOffset = Math.abs(offset);
-          var hours = exports.zeroPad(parseInt('' + absOffset, 10));
-          var minutes = exports.zeroPad(absOffset % 1 * 60);
-          return "".concat(sign).concat(hours).concat(delimiter).concat(minutes);
-        };
-      });
-      fns.isLeapYear;
-      fns.isDate;
-      fns.isArray;
-      fns.isObject;
-      fns.isBoolean;
-      fns.zeroPad;
-      fns.titleCase;
-      fns.ordinal;
-      fns.toCardinal;
-      fns.normalize;
-      fns.getEpoch;
-      fns.beADate;
-      fns.formatTimezone;
-      var isLeapYear$2 = fns.isLeapYear; //given a month, return whether day number exists in it
-
-      var hasDate = function hasDate(obj) {
+      const validate$5 = obj => {
         //invalid values
         if (monthLengths_1.hasOwnProperty(obj.month) !== true) {
           return false;
@@ -1689,7 +1595,7 @@
         } //is this date too-big for this month?
 
 
-        var max = monthLengths_1[obj.month] || 0;
+        let max = monthLengths_1[obj.month] || 0;
 
         if (obj.date <= max) {
           return true;
@@ -1698,13 +1604,20 @@
         return false;
       };
 
-      var hasDate_1 = hasDate;
-      var months = months$1.mapping();
+      const parseYear$4 = (str = '', today) => {
+        str = str.trim(); // parse '86 shorthand
 
-      var parseYear = function parseYear() {
-        var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-        var today = arguments.length > 1 ? arguments[1] : undefined;
-        var year = parseInt(str.trim(), 10); // use a given year from options.today
+        if (/^'[0-9][0-9]$/.test(str) === true) {
+          let num = Number(str.replace(/'/, ''));
+
+          if (num > 50) {
+            return 1900 + num;
+          }
+
+          return 2000 + num;
+        }
+
+        let year = parseInt(str, 10); // use a given year from options.today
 
         if (!year && today) {
           year = today.year;
@@ -1715,219 +1628,311 @@
         return year;
       };
 
-      var strFmt = [//iso-this 1998-05-30T22:00:00:000Z, iso-that 2017-04-03T08:00:00-0700
+      const parseMonth$4 = function (str) {
+        str = str.toLowerCase().trim();
+        return months[str];
+      };
+
+      const parsers = {
+        parseOffset: parseOffset_1,
+        parseTime: parseTime_1,
+        parseYear: parseYear$4,
+        parseMonth: parseMonth$4,
+        validate: validate$5
+      };
+      var _parsers = parsers;
+      const {
+        validate: validate$4,
+        parseTime: parseTime$3,
+        parseYear: parseYear$3,
+        parseMonth: parseMonth$3,
+        parseOffset
+      } = _parsers;
+      var _01Ymd = [// =====
+      //  y-m-d
+      // =====
+      //iso-this 1998-05-30T22:00:00:000Z, iso-that 2017-04-03T08:00:00-0700
       {
         reg: /^(\-?0?0?[0-9]{3,4})-([0-9]{1,2})-([0-9]{1,2})[T| ]([0-9.:]+)(Z|[0-9\-\+:]+)?$/i,
-        parse: function parse(s, arr, givenTz, options) {
-          var month = parseInt(arr[2], 10) - 1;
-          var obj = {
-            year: arr[1],
-            month: month,
-            date: arr[3]
+        parse: (s, m) => {
+          let obj = {
+            year: m[1],
+            month: parseInt(m[2], 10) - 1,
+            date: m[3]
           };
 
-          if (hasDate_1(obj) === false) {
+          if (validate$4(obj) === false) {
             s.epoch = null;
             return s;
           }
 
-          parseOffset_1(s, arr[5]);
+          parseOffset(s, m[5]);
           walk_1(s, obj);
-          s = parseTime_1(s, arr[4]);
+          s = parseTime$3(s, m[4]);
           return s;
         }
-      }, //iso "2015-03-25" or "2015/03/25" or "2015/03/25 12:26:14 PM"
+      }, //short-iso "2015-03-25" or "2015/03/25" or "2015/03/25 12:26:14 PM"
       {
-        reg: /^([0-9]{4})[\-\/.]([0-9]{1,2})[\-\/.]([0-9]{1,2}),?( [0-9]{1,2}:[0-9]{2}:?[0-9]{0,2}? ?(am|pm|gmt))?$/i,
-        parse: function parse(s, arr) {
-          var obj = {
-            year: arr[1],
-            month: parseInt(arr[2], 10) - 1,
-            date: parseInt(arr[3], 10)
+        reg: /^([0-9]{4})[\-\/\. ]([0-9]{1,2})[\-\/\. ]([0-9]{1,2})( [0-9]{1,2}(:[0-9]{0,2})?(:[0-9]{0,3})? ?(am|pm)?)?$/i,
+        parse: (s, m) => {
+          let obj = {
+            year: m[1],
+            month: parseInt(m[2], 10) - 1,
+            date: parseInt(m[3], 10)
           };
 
           if (obj.month >= 12) {
             //support yyyy/dd/mm (weird, but ok)
-            obj.date = parseInt(arr[2], 10);
-            obj.month = parseInt(arr[3], 10) - 1;
+            obj.date = parseInt(m[2], 10);
+            obj.month = parseInt(m[3], 10) - 1;
           }
 
-          if (hasDate_1(obj) === false) {
+          if (validate$4(obj) === false) {
             s.epoch = null;
             return s;
           }
 
           walk_1(s, obj);
-          s = parseTime_1(s, arr[4]);
+          s = parseTime$3(s, m[4]);
           return s;
         }
-      }, //mm/dd/yyyy - uk/canada "6/28/2019, 12:26:14 PM"
+      }, //text-month "2015-feb-25"
       {
-        reg: /^([0-9]{1,2})[\-\/.]([0-9]{1,2})[\-\/.]?([0-9]{4})?,?( [0-9]{1,2}:[0-9]{2}:?[0-9]{0,2}? ?(am|pm|gmt))?$/i,
-        parse: function parse(s, arr) {
-          var month = parseInt(arr[1], 10) - 1;
-          var date = parseInt(arr[2], 10); //support dd/mm/yyy
+        reg: /^([0-9]{4})[\-\/\. ]([a-z]+)[\-\/\. ]([0-9]{1,2})( [0-9]{1,2}(:[0-9]{0,2})?(:[0-9]{0,3})? ?(am|pm)?)?$/i,
+        parse: (s, m) => {
+          let obj = {
+            year: parseYear$3(m[1], s._today),
+            month: parseMonth$3(m[2]),
+            date: fns.toCardinal(m[3] || '')
+          };
+
+          if (validate$4(obj) === false) {
+            s.epoch = null;
+            return s;
+          }
+
+          walk_1(s, obj);
+          s = parseTime$3(s, m[4]);
+          return s;
+        }
+      }];
+      const {
+        validate: validate$3,
+        parseTime: parseTime$2,
+        parseYear: parseYear$2,
+        parseMonth: parseMonth$2
+      } = _parsers;
+      var _02Mdy = [// =====
+      //  m-d-y
+      // =====
+      //mm/dd/yyyy - uk/canada "6/28/2019, 12:26:14 PM"
+      {
+        reg: /^([0-9]{1,2})[\-\/.]([0-9]{1,2})[\-\/.]?([0-9]{4})?( [0-9]{1,2}:[0-9]{2}:?[0-9]{0,2}? ?(am|pm|gmt))?$/i,
+        parse: (s, arr) => {
+          let month = parseInt(arr[1], 10) - 1;
+          let date = parseInt(arr[2], 10); //support dd/mm/yyy
 
           if (s.british || month >= 12) {
             date = parseInt(arr[1], 10);
             month = parseInt(arr[2], 10) - 1;
           }
 
-          var year = parseYear(arr[3], s._today) || new Date().getFullYear();
-          var obj = {
-            year: year,
-            month: month,
-            date: date
+          let obj = {
+            date,
+            month,
+            year: parseYear$2(arr[3], s._today) || new Date().getFullYear()
           };
 
-          if (hasDate_1(obj) === false) {
+          if (validate$3(obj) === false) {
             s.epoch = null;
             return s;
           }
 
           walk_1(s, obj);
-          s = parseTime_1(s, arr[4]);
-          return s;
-        }
-      }, // '2012-06' last attempt at iso-like format
-      {
-        reg: /^([0-9]{4})[\-\/]([0-9]{2})$/i,
-        parse: function parse(s, arr, givenTz, options) {
-          var month = parseInt(arr[2], 10) - 1;
-          var obj = {
-            year: arr[1],
-            month: month,
-            date: 1
-          };
-
-          if (hasDate_1(obj) === false) {
-            s.epoch = null;
-            return s;
-          }
-
-          parseOffset_1(s, arr[5]);
-          walk_1(s, obj);
-          s = parseTime_1(s, arr[4]);
-          return s;
-        }
-      }, //common british format - "25-feb-2015"
-      {
-        reg: /^([0-9]{1,2})[\-\/]([a-z]+)[\-\/]?([0-9]{4})?$/i,
-        parse: function parse(s, arr) {
-          var month = months[arr[2].toLowerCase()];
-          var year = parseYear(arr[3], s._today);
-          var obj = {
-            year: year,
-            month: month,
-            date: fns.toCardinal(arr[1] || '')
-          };
-
-          if (hasDate_1(obj) === false) {
-            s.epoch = null;
-            return s;
-          }
-
-          walk_1(s, obj);
-          s = parseTime_1(s, arr[4]);
+          s = parseTime$2(s, arr[4]);
           return s;
         }
       }, //alt short format - "feb-25-2015"
       {
-        reg: /^([a-z]+)[\-\/]([0-9]{1,2})[\-\/]?([0-9]{4})?$/i,
-        parse: function parse(s, arr) {
-          var month = months[arr[1].toLowerCase()];
-          var year = parseYear(arr[3], s._today);
-          var obj = {
-            year: year,
-            month: month,
+        reg: /^([a-z]+)[\-\/\. ]([0-9]{1,2})[\-\/\. ]?([0-9]{4}|'[0-9]{2})?( [0-9]{1,2}(:[0-9]{0,2})?(:[0-9]{0,3})? ?(am|pm)?)?$/i,
+        parse: (s, arr) => {
+          let obj = {
+            year: parseYear$2(arr[3], s._today),
+            month: parseMonth$2(arr[1]),
             date: fns.toCardinal(arr[2] || '')
           };
 
-          if (hasDate_1(obj) === false) {
+          if (validate$3(obj) === false) {
             s.epoch = null;
             return s;
           }
 
           walk_1(s, obj);
-          s = parseTime_1(s, arr[4]);
+          s = parseTime$2(s, arr[4]);
           return s;
         }
       }, //Long "Mar 25 2015"
       //February 22, 2017 15:30:00
       {
-        reg: /^([a-z]+) ([0-9]{1,2}(?:st|nd|rd|th)?),?( [0-9]{4})?( ([0-9:]+( ?am| ?pm| ?gmt)?))?$/i,
-        parse: function parse(s, arr) {
-          var month = months[arr[1].toLowerCase()];
-          var year = parseYear(arr[3], s._today);
-          var obj = {
-            year: year,
-            month: month,
+        reg: /^([a-z]+) ([0-9]{1,2})( [0-9]{4})?( ([0-9:]+( ?am| ?pm| ?gmt)?))?$/i,
+        parse: (s, arr) => {
+          let obj = {
+            year: parseYear$2(arr[3], s._today),
+            month: parseMonth$2(arr[1]),
             date: fns.toCardinal(arr[2] || '')
           };
 
-          if (hasDate_1(obj) === false) {
+          if (validate$3(obj) === false) {
             s.epoch = null;
             return s;
           }
 
           walk_1(s, obj);
-          s = parseTime_1(s, arr[4]);
+          s = parseTime$2(s, arr[4]);
+          return s;
+        }
+      }, // 'Sun Mar 14 15:09:48 +0000 2021'
+      {
+        reg: /^([a-z]+) ([0-9]{1,2})( [0-9:]+)?( \+[0-9]{4})?( [0-9]{4})?$/i,
+        parse: (s, arr) => {
+          let obj = {
+            year: parseYear$2(arr[5], s._today),
+            month: parseMonth$2(arr[1]),
+            date: fns.toCardinal(arr[2] || '')
+          };
+
+          if (validate$3(obj) === false) {
+            s.epoch = null;
+            return s;
+          }
+
+          walk_1(s, obj);
+          s = parseTime$2(s, arr[3]);
+          return s;
+        }
+      }];
+      const {
+        validate: validate$2,
+        parseTime: parseTime$1,
+        parseYear: parseYear$1,
+        parseMonth: parseMonth$1
+      } = _parsers;
+      var _03Dmy = [// =====
+      //  d-m-y
+      // =====
+      //common british format - "25-feb-2015"
+      {
+        reg: /^([0-9]{1,2})[\-\/]([a-z]+)[\-\/]?([0-9]{4})?$/i,
+        parse: (s, m) => {
+          let obj = {
+            year: parseYear$1(m[3], s._today),
+            month: parseMonth$1(m[2]),
+            date: fns.toCardinal(m[1] || '')
+          };
+
+          if (validate$2(obj) === false) {
+            s.epoch = null;
+            return s;
+          }
+
+          walk_1(s, obj);
+          s = parseTime$1(s, m[4]);
+          return s;
+        }
+      }, // "25 Mar 2015"
+      {
+        reg: /^([0-9]{1,2})( [a-z]+)( [0-9]{4}| '[0-9]{2})? ?([0-9]{1,2}:[0-9]{2}:?[0-9]{0,2}? ?(am|pm|gmt))?$/i,
+        parse: (s, m) => {
+          let obj = {
+            year: parseYear$1(m[3], s._today),
+            month: parseMonth$1(m[2]),
+            date: fns.toCardinal(m[1])
+          };
+
+          if (!obj.month || validate$2(obj) === false) {
+            s.epoch = null;
+            return s;
+          }
+
+          walk_1(s, obj);
+          s = parseTime$1(s, m[4]);
+          return s;
+        }
+      }, // 01-jan-2020
+      {
+        reg: /^([0-9]{1,2})[\. -/]([a-z]+)[\. -/]([0-9]{4})?( [0-9]{1,2}(:[0-9]{0,2})?(:[0-9]{0,3})? ?(am|pm)?)?$/i,
+        parse: (s, m) => {
+          let obj = {
+            date: Number(m[1]),
+            month: parseMonth$1(m[2]),
+            year: Number(m[3])
+          };
+
+          if (validate$2(obj) === false) {
+            s.epoch = null;
+            return s;
+          }
+
+          walk_1(s, obj);
+          s = s.startOf('day');
+          s = parseTime$1(s, m[4]);
+          return s;
+        }
+      }];
+      const {
+        validate: validate$1,
+        parseTime,
+        parseYear,
+        parseMonth
+      } = _parsers;
+      var _04Misc = [// =====
+      // no dates
+      // =====
+      // '2012-06' month-only
+      {
+        reg: /^([0-9]{4})[\-\/]([0-9]{2})$/i,
+        parse: (s, m) => {
+          let obj = {
+            year: m[1],
+            month: parseInt(m[2], 10) - 1,
+            date: 1
+          };
+
+          if (validate$1(obj) === false) {
+            s.epoch = null;
+            return s;
+          }
+
+          walk_1(s, obj);
+          s = parseTime(s, m[4]);
           return s;
         }
       }, //February 2017 (implied date)
       {
         reg: /^([a-z]+) ([0-9]{4})$/i,
-        parse: function parse(s, arr) {
-          var month = months[arr[1].toLowerCase()];
-          var year = parseYear(arr[2], s._today);
-          var obj = {
-            year: year,
-            month: month,
+        parse: (s, arr) => {
+          let obj = {
+            year: parseYear(arr[2], s._today),
+            month: parseMonth(arr[1]),
             date: s._today.date || 1
           };
 
-          if (hasDate_1(obj) === false) {
+          if (validate$1(obj) === false) {
             s.epoch = null;
             return s;
           }
 
           walk_1(s, obj);
-          s = parseTime_1(s, arr[4]);
-          return s;
-        }
-      }, //Long "25 Mar 2015"
-      {
-        reg: /^([0-9]{1,2}(?:st|nd|rd|th)?) ([a-z]+),?( [0-9]{4})?,? ?([0-9]{1,2}:[0-9]{2}:?[0-9]{0,2}? ?(am|pm|gmt))?$/i,
-        parse: function parse(s, arr) {
-          var month = months[arr[2].toLowerCase()];
-
-          if (!month) {
-            return null;
-          }
-
-          var year = parseYear(arr[3], s._today);
-          var obj = {
-            year: year,
-            month: month,
-            date: fns.toCardinal(arr[1])
-          };
-
-          if (hasDate_1(obj) === false) {
-            s.epoch = null;
-            return s;
-          }
-
-          walk_1(s, obj);
-          s = parseTime_1(s, arr[4]);
+          s = parseTime(s, arr[4]);
           return s;
         }
       }, {
         // 'q2 2002'
         reg: /^(q[0-9])( of)?( [0-9]{4})?/i,
-        parse: function parse(s, arr) {
-          var quarter = arr[1] || '';
+        parse: (s, arr) => {
+          let quarter = arr[1] || '';
           s = s.quarter(quarter);
-          var year = arr[3] || '';
+          let year = arr[3] || '';
 
           if (year) {
             year = year.trim();
@@ -1939,10 +1944,10 @@
       }, {
         // 'summer 2002'
         reg: /^(spring|summer|winter|fall|autumn)( of)?( [0-9]{4})?/i,
-        parse: function parse(s, arr) {
-          var season = arr[1] || '';
+        parse: (s, arr) => {
+          let season = arr[1] || '';
           s = s.season(season);
-          var year = arr[3] || '';
+          let year = arr[3] || '';
 
           if (year) {
             year = year.trim();
@@ -1954,215 +1959,134 @@
       }, {
         // '200bc'
         reg: /^[0-9,]+ ?b\.?c\.?$/i,
-        parse: function parse(s, arr) {
-          var str = arr[0] || ''; //make negative-year
+        parse: (s, arr) => {
+          let str = arr[0] || ''; //make year-negative
 
-          str = str.replace(/^([0-9,]+) ?b\.?c\.?$/i, '-$1'); //remove commas
-
-          str = str.replace(/,/g, '');
-          var year = parseInt(str.trim(), 10);
-          var d = new Date();
-          var obj = {
-            year: year,
+          str = str.replace(/^([0-9,]+) ?b\.?c\.?$/i, '-$1');
+          let d = new Date();
+          let obj = {
+            year: parseInt(str.trim(), 10),
             month: d.getMonth(),
             date: d.getDate()
           };
 
-          if (hasDate_1(obj) === false) {
+          if (validate$1(obj) === false) {
             s.epoch = null;
             return s;
           }
 
           walk_1(s, obj);
-          s = parseTime_1(s);
+          s = parseTime(s);
           return s;
         }
       }, {
         // '200ad'
         reg: /^[0-9,]+ ?(a\.?d\.?|c\.?e\.?)$/i,
-        parse: function parse(s, arr) {
-          var str = arr[0] || ''; //remove commas
+        parse: (s, arr) => {
+          let str = arr[0] || ''; //remove commas
 
           str = str.replace(/,/g, '');
-          var year = parseInt(str.trim(), 10);
-          var d = new Date();
-          var obj = {
-            year: year,
+          let d = new Date();
+          let obj = {
+            year: parseInt(str.trim(), 10),
             month: d.getMonth(),
             date: d.getDate()
           };
 
-          if (hasDate_1(obj) === false) {
+          if (validate$1(obj) === false) {
             s.epoch = null;
             return s;
           }
 
           walk_1(s, obj);
-          s = parseTime_1(s);
+          s = parseTime(s);
           return s;
         }
       }, {
         // '1992'
         reg: /^[0-9]{4}( ?a\.?d\.?)?$/i,
-        parse: function parse(s, arr) {
-          var today = s._today;
-          var year = parseYear(arr[0], today);
-          var d = new Date(); // using today's date, but a new month is awkward.
+        parse: (s, arr) => {
+          let today = s._today; // using today's date, but a new month is awkward.
 
           if (today.month && !today.date) {
             today.date = 1;
           }
 
-          var obj = {
-            year: year,
+          let d = new Date();
+          let obj = {
+            year: parseYear(arr[0], today),
             month: today.month || d.getMonth(),
             date: today.date || d.getDate()
           };
 
-          if (hasDate_1(obj) === false) {
+          if (validate$1(obj) === false) {
             s.epoch = null;
             return s;
           }
 
           walk_1(s, obj);
-          s = parseTime_1(s);
+          s = parseTime(s);
           return s;
         }
       }];
-      var strParse = strFmt; // pull in 'today' data for the baseline moment
+      var formats = [].concat(_01Ymd, _02Mdy, _03Dmy, _04Misc);
 
-      var getNow = function getNow(s) {
-        s.epoch = Date.now();
-        Object.keys(s._today || {}).forEach(function (k) {
-          if (typeof s[k] === 'function') {
-            s = s[k](s._today[k]);
+      const parseString = function (s, input, givenTz) {
+        // let parsers = s.parsers || []
+        //try each text-parse template, use the first good result
+        for (let i = 0; i < formats.length; i++) {
+          let m = input.match(formats[i].reg);
+
+          if (m) {
+            // console.log(parsers[i].reg)
+            let res = formats[i].parse(s, m, givenTz);
+
+            if (res !== null && res.isValid()) {
+              return res;
+            }
           }
-        });
+        }
+
+        if (s.silent === false) {
+          console.warn("Warning: couldn't parse date-string: '" + input + "'");
+        }
+
+        s.epoch = null;
         return s;
       };
 
-      var dates = {
-        now: function now(s) {
-          return getNow(s);
-        },
-        today: function today(s) {
-          return getNow(s);
-        },
-        tonight: function tonight(s) {
-          s = getNow(s);
-          s = s.hour(18); //6pm
-
-          return s;
-        },
-        tomorrow: function tomorrow(s) {
-          s = getNow(s);
-          s = s.add(1, 'day');
-          s = s.startOf('day');
-          return s;
-        },
-        yesterday: function yesterday(s) {
-          s = getNow(s);
-          s = s.subtract(1, 'day');
-          s = s.startOf('day');
-          return s;
-        },
-        christmas: function christmas(s) {
-          var year = getNow(s).year();
-          s = s.set([year, 11, 25, 18, 0, 0]); // Dec 25
-
-          return s;
-        },
-        'new years': function newYears(s) {
-          var year = getNow(s).year();
-          s = s.set([year, 11, 31, 18, 0, 0]); // Dec 31
-
-          return s;
-        }
-      };
-      dates['new years eve'] = dates['new years'];
-      var namedDates = dates; //  -  can't use built-in js parser ;(
+      var parse = parseString;
+      const {
+        parseArray,
+        parseObject,
+        parseNumber
+      } = helpers; //we have to actually parse these inputs ourselves
+      //  -  can't use built-in js parser ;(
       //=========================================
       // ISO Date	  "2015-03-25"
       // Short Date	"03/25/2015" or "2015/03/25"
       // Long Date	"Mar 25 2015" or "25 Mar 2015"
       // Full Date	"Wednesday March 25 2015"
       //=========================================
-      //-- also -
-      // if the given epoch is really small, they've probably given seconds and not milliseconds
-      // anything below this number is likely (but not necessarily) a mistaken input.
-      // this may seem like an arbitrary number, but it's 'within jan 1970'
-      // this is only really ambiguous until 2054 or so
 
-      var minimumEpoch = 2500000000;
-      var defaults = {
+      const defaults = {
         year: new Date().getFullYear(),
         month: 0,
         date: 1
-      }; //support [2016, 03, 01] format
-
-      var handleArray = function handleArray(s, arr, today) {
-        if (arr.length === 0) {
-          return s;
-        }
-
-        var order = ['year', 'month', 'date', 'hour', 'minute', 'second', 'millisecond'];
-
-        for (var i = 0; i < order.length; i++) {
-          var num = arr[i] || today[order[i]] || defaults[order[i]] || 0;
-          s = s[order[i]](num);
-        }
-
-        return s;
-      }; //support {year:2016, month:3} format
-
-
-      var handleObject = function handleObject(s, obj, today) {
-        // if obj is empty, do nothing
-        if (Object.keys(obj).length === 0) {
-          return s;
-        }
-
-        obj = Object.assign({}, defaults, today, obj);
-        var keys = Object.keys(obj);
-
-        for (var i = 0; i < keys.length; i++) {
-          var unit = keys[i]; //make sure we have this method
-
-          if (s[unit] === undefined || typeof s[unit] !== 'function') {
-            continue;
-          } //make sure the value is a number
-
-
-          if (obj[unit] === null || obj[unit] === undefined || obj[unit] === '') {
-            continue;
-          }
-
-          var num = obj[unit] || today[unit] || defaults[unit] || 0;
-          s = s[unit](num);
-        }
-
-        return s;
       }; //find the epoch from different input styles
 
-
-      var parseInput = function parseInput(s, input, givenTz) {
-        var today = s._today || defaults; //if we've been given a epoch number, it's easy
+      const parseInput = (s, input) => {
+        let today = s._today || defaults; //if we've been given a epoch number, it's easy
 
         if (typeof input === 'number') {
-          if (input > 0 && input < minimumEpoch && s.silent === false) {
-            console.warn('  - Warning: You are setting the date to January 1970.');
-            console.warn('       -   did input seconds instead of milliseconds?');
-          }
-
-          s.epoch = input;
-          return s;
+          return parseNumber(s, input);
         } //set tmp time
 
 
         s.epoch = Date.now(); // overwrite tmp time with 'today' value, if exists
 
         if (s._today && fns.isObject(s._today) && Object.keys(s._today).length > 0) {
-          var res = handleObject(s, today, defaults);
+          let res = parseObject(s, today, defaults);
 
           if (res.isValid()) {
             s.epoch = res.epoch;
@@ -2182,7 +2106,7 @@
 
 
         if (fns.isArray(input) === true) {
-          s = handleArray(s, input, today);
+          s = parseArray(s, input, today);
           return s;
         } //support {year:2016, month:3} format
 
@@ -2195,7 +2119,7 @@
             return s;
           }
 
-          s = handleObject(s, input, today);
+          s = parseObject(s, input, today);
           return s;
         } //input as a string..
 
@@ -2205,9 +2129,7 @@
         } //little cleanup..
 
 
-        input = input.replace(/\b(mon|tues|wed|wednes|thu|thurs|fri|sat|satur|sun)(day)?\b/i, '');
-        input = input.replace(/,/g, '');
-        input = input.replace(/ +/g, ' ').trim(); //try some known-words, like 'now'
+        input = normalize_1(input); //try some known-words, like 'now'
 
         if (namedDates.hasOwnProperty(input) === true) {
           s = namedDates[input](s);
@@ -2215,40 +2137,18 @@
         } //try each text-parse template, use the first good result
 
 
-        for (var i = 0; i < strParse.length; i++) {
-          var m = input.match(strParse[i].reg);
-
-          if (m) {
-            // console.log(strFmt[i].reg)
-            var _res = strParse[i].parse(s, m, givenTz);
-
-            if (_res !== null && _res.isValid()) {
-              return _res;
-            }
-          }
-        }
-
-        if (s.silent === false) {
-          console.warn("Warning: couldn't parse date-string: '" + input + "'");
-        }
-
-        s.epoch = null;
-        return s;
+        return parse(s, input);
       };
 
       var input = parseInput;
-      var shortDays = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
-      var longDays = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+      let shortDays = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+      let longDays = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
       var days = {
-        "short": function _short2() {
-          return shortDays;
-        },
-        "long": function _long2() {
-          return longDays;
-        },
-        set: function set(i18n) {
-          shortDays = i18n["short"] || shortDays;
-          longDays = i18n["long"] || longDays;
+        short: () => shortDays,
+        long: () => longDays,
+        set: i18n => {
+          shortDays = i18n.short || shortDays;
+          longDays = i18n.long || longDays;
         },
         aliases: {
           mo: 1,
@@ -2265,25 +2165,23 @@
           thurs: 4
         }
       };
-      var titleCaseEnabled = true;
+      let titleCaseEnabled = true;
       var caseFormat = {
-        useTitleCase: function useTitleCase() {
-          return titleCaseEnabled;
-        },
-        set: function set(useTitleCase) {
+        useTitleCase: () => titleCaseEnabled,
+        set: useTitleCase => {
           titleCaseEnabled = useTitleCase;
         }
       }; // it's kind of nuts how involved this is
       // "+01:00", "+0100", or simply "+01"
 
-      var isoOffset = function isoOffset(s) {
-        var offset = s.timezone().current.offset;
+      const isoOffset = s => {
+        let offset = s.timezone().current.offset;
         return !offset ? 'Z' : fns.formatTimezone(offset, ':');
       };
 
       var _offset = isoOffset;
 
-      var applyCaseFormat = function applyCaseFormat(str) {
+      const applyCaseFormat = str => {
         if (caseFormat.useTitleCase()) {
           return fns.titleCase(str);
         }
@@ -2291,52 +2189,24 @@
         return str;
       };
 
-      var format = {
-        day: function day(s) {
-          return applyCaseFormat(s.dayName());
-        },
-        'day-short': function dayShort(s) {
-          return applyCaseFormat(days["short"]()[s.day()]);
-        },
-        'day-number': function dayNumber(s) {
-          return s.day();
-        },
-        'day-ordinal': function dayOrdinal(s) {
-          return fns.ordinal(s.day());
-        },
-        'day-pad': function dayPad(s) {
-          return fns.zeroPad(s.day());
-        },
-        date: function date(s) {
-          return s.date();
-        },
-        'date-ordinal': function dateOrdinal(s) {
-          return fns.ordinal(s.date());
-        },
-        'date-pad': function datePad(s) {
-          return fns.zeroPad(s.date());
-        },
-        month: function month(s) {
-          return applyCaseFormat(s.monthName());
-        },
-        'month-short': function monthShort(s) {
-          return applyCaseFormat(months$1["short"]()[s.month()]);
-        },
-        'month-number': function monthNumber(s) {
-          return s.month();
-        },
-        'month-ordinal': function monthOrdinal(s) {
-          return fns.ordinal(s.month());
-        },
-        'month-pad': function monthPad(s) {
-          return fns.zeroPad(s.month());
-        },
-        'iso-month': function isoMonth(s) {
-          return fns.zeroPad(s.month() + 1);
-        },
+      const format = {
+        day: s => applyCaseFormat(s.dayName()),
+        'day-short': s => applyCaseFormat(days.short()[s.day()]),
+        'day-number': s => s.day(),
+        'day-ordinal': s => fns.ordinal(s.day()),
+        'day-pad': s => fns.zeroPad(s.day()),
+        date: s => s.date(),
+        'date-ordinal': s => fns.ordinal(s.date()),
+        'date-pad': s => fns.zeroPad(s.date()),
+        month: s => applyCaseFormat(s.monthName()),
+        'month-short': s => applyCaseFormat(months$1.short()[s.month()]),
+        'month-number': s => s.month(),
+        'month-ordinal': s => fns.ordinal(s.month()),
+        'month-pad': s => fns.zeroPad(s.month()),
+        'iso-month': s => fns.zeroPad(s.month() + 1),
         //1-based months
-        year: function year(s) {
-          var year = s.year();
+        year: s => {
+          let year = s.year();
 
           if (year > 0) {
             return year;
@@ -2345,8 +2215,8 @@
           year = Math.abs(year);
           return year + ' BC';
         },
-        'year-short': function yearShort(s) {
-          var year = s.year();
+        'year-short': s => {
+          let year = s.year();
 
           if (year > 0) {
             return "'".concat(String(s.year()).substr(2, 4));
@@ -2355,10 +2225,10 @@
           year = Math.abs(year);
           return year + ' BC';
         },
-        'iso-year': function isoYear(s) {
-          var year = s.year();
-          var isNegative = year < 0;
-          var str = fns.zeroPad(Math.abs(year), 4); //0-padded
+        'iso-year': s => {
+          let year = s.year();
+          let isNegative = year < 0;
+          let str = fns.zeroPad(Math.abs(year), 4); //0-padded
 
           if (isNegative) {
             //negative years are for some reason 6-digits ('-00008')
@@ -2368,119 +2238,65 @@
 
           return str;
         },
-        time: function time(s) {
-          return s.time();
-        },
-        'time-24': function time24(s) {
-          return "".concat(s.hour24(), ":").concat(fns.zeroPad(s.minute()));
-        },
-        hour: function hour(s) {
-          return s.hour12();
-        },
-        'hour-pad': function hourPad(s) {
-          return fns.zeroPad(s.hour12());
-        },
-        'hour-24': function hour24(s) {
-          return s.hour24();
-        },
-        'hour-24-pad': function hour24Pad(s) {
-          return fns.zeroPad(s.hour24());
-        },
-        minute: function minute(s) {
-          return s.minute();
-        },
-        'minute-pad': function minutePad(s) {
-          return fns.zeroPad(s.minute());
-        },
-        second: function second(s) {
-          return s.second();
-        },
-        'second-pad': function secondPad(s) {
-          return fns.zeroPad(s.second());
-        },
-        ampm: function ampm(s) {
-          return s.ampm();
-        },
-        quarter: function quarter(s) {
-          return 'Q' + s.quarter();
-        },
-        season: function season(s) {
-          return s.season();
-        },
-        era: function era(s) {
-          return s.era();
-        },
-        json: function json(s) {
-          return s.json();
-        },
-        timezone: function timezone(s) {
-          return s.timezone().name;
-        },
-        offset: function offset(s) {
-          return _offset(s);
-        },
-        numeric: function numeric(s) {
-          return "".concat(s.year(), "/").concat(fns.zeroPad(s.month() + 1), "/").concat(fns.zeroPad(s.date()));
-        },
+        time: s => s.time(),
+        'time-24': s => "".concat(s.hour24(), ":").concat(fns.zeroPad(s.minute())),
+        hour: s => s.hour12(),
+        'hour-pad': s => fns.zeroPad(s.hour12()),
+        'hour-24': s => s.hour24(),
+        'hour-24-pad': s => fns.zeroPad(s.hour24()),
+        minute: s => s.minute(),
+        'minute-pad': s => fns.zeroPad(s.minute()),
+        second: s => s.second(),
+        'second-pad': s => fns.zeroPad(s.second()),
+        ampm: s => s.ampm(),
+        quarter: s => 'Q' + s.quarter(),
+        season: s => s.season(),
+        era: s => s.era(),
+        json: s => s.json(),
+        timezone: s => s.timezone().name,
+        offset: s => _offset(s),
+        numeric: s => "".concat(s.year(), "/").concat(fns.zeroPad(s.month() + 1), "/").concat(fns.zeroPad(s.date())),
         // yyyy/mm/dd
-        'numeric-us': function numericUs(s) {
-          return "".concat(fns.zeroPad(s.month() + 1), "/").concat(fns.zeroPad(s.date()), "/").concat(s.year());
-        },
+        'numeric-us': s => "".concat(fns.zeroPad(s.month() + 1), "/").concat(fns.zeroPad(s.date()), "/").concat(s.year()),
         // mm/dd/yyyy
-        'numeric-uk': function numericUk(s) {
-          return "".concat(fns.zeroPad(s.date()), "/").concat(fns.zeroPad(s.month() + 1), "/").concat(s.year());
-        },
+        'numeric-uk': s => "".concat(fns.zeroPad(s.date()), "/").concat(fns.zeroPad(s.month() + 1), "/").concat(s.year()),
         //dd/mm/yyyy
-        'mm/dd': function mmDd(s) {
-          return "".concat(fns.zeroPad(s.month() + 1), "/").concat(fns.zeroPad(s.date()));
-        },
+        'mm/dd': s => "".concat(fns.zeroPad(s.month() + 1), "/").concat(fns.zeroPad(s.date())),
         //mm/dd
         // ... https://en.wikipedia.org/wiki/ISO_8601 ;(((
-        iso: function iso(s) {
-          var year = s.format('iso-year');
-          var month = fns.zeroPad(s.month() + 1); //1-based months
+        iso: s => {
+          let year = s.format('iso-year');
+          let month = fns.zeroPad(s.month() + 1); //1-based months
 
-          var date = fns.zeroPad(s.date());
-          var hour = fns.zeroPad(s.h24());
-          var minute = fns.zeroPad(s.minute());
-          var second = fns.zeroPad(s.second());
-          var ms = fns.zeroPad(s.millisecond(), 3);
+          let date = fns.zeroPad(s.date());
+          let hour = fns.zeroPad(s.h24());
+          let minute = fns.zeroPad(s.minute());
+          let second = fns.zeroPad(s.second());
+          let ms = fns.zeroPad(s.millisecond(), 3);
 
-          var offset = _offset(s);
+          let offset = _offset(s);
 
           return "".concat(year, "-").concat(month, "-").concat(date, "T").concat(hour, ":").concat(minute, ":").concat(second, ".").concat(ms).concat(offset); //2018-03-09T08:50:00.000-05:00
         },
-        'iso-short': function isoShort(s) {
-          var month = fns.zeroPad(s.month() + 1); //1-based months
+        'iso-short': s => {
+          let month = fns.zeroPad(s.month() + 1); //1-based months
 
-          var date = fns.zeroPad(s.date());
+          let date = fns.zeroPad(s.date());
           return "".concat(s.year(), "-").concat(month, "-").concat(date); //2017-02-15
         },
-        'iso-utc': function isoUtc(s) {
+        'iso-utc': s => {
           return new Date(s.epoch).toISOString(); //2017-03-08T19:45:28.367Z
         },
         //i made these up
-        nice: function nice(s) {
-          return "".concat(months$1["short"]()[s.month()], " ").concat(fns.ordinal(s.date()), ", ").concat(s.time());
-        },
-        'nice-24': function nice24(s) {
-          return "".concat(months$1["short"]()[s.month()], " ").concat(fns.ordinal(s.date()), ", ").concat(s.hour24(), ":").concat(fns.zeroPad(s.minute()));
-        },
-        'nice-year': function niceYear(s) {
-          return "".concat(months$1["short"]()[s.month()], " ").concat(fns.ordinal(s.date()), ", ").concat(s.year());
-        },
-        'nice-day': function niceDay(s) {
-          return "".concat(days["short"]()[s.day()], " ").concat(applyCaseFormat(months$1["short"]()[s.month()]), " ").concat(fns.ordinal(s.date()));
-        },
-        'nice-full': function niceFull(s) {
-          return "".concat(s.dayName(), " ").concat(applyCaseFormat(s.monthName()), " ").concat(fns.ordinal(s.date()), ", ").concat(s.time());
-        },
-        'nice-full-24': function niceFull24(s) {
-          return "".concat(s.dayName(), " ").concat(applyCaseFormat(s.monthName()), " ").concat(fns.ordinal(s.date()), ", ").concat(s.hour24(), ":").concat(fns.zeroPad(s.minute()));
-        }
+        nice: s => "".concat(months$1.short()[s.month()], " ").concat(fns.ordinal(s.date()), ", ").concat(s.time()),
+        'nice-24': s => "".concat(months$1.short()[s.month()], " ").concat(fns.ordinal(s.date()), ", ").concat(s.hour24(), ":").concat(fns.zeroPad(s.minute())),
+        'nice-year': s => "".concat(months$1.short()[s.month()], " ").concat(fns.ordinal(s.date()), ", ").concat(s.year()),
+        'nice-day': s => "".concat(days.short()[s.day()], " ").concat(applyCaseFormat(months$1.short()[s.month()]), " ").concat(fns.ordinal(s.date())),
+        'nice-full': s => "".concat(s.dayName(), " ").concat(applyCaseFormat(s.monthName()), " ").concat(fns.ordinal(s.date()), ", ").concat(s.time()),
+        'nice-full-24': s => "".concat(s.dayName(), " ").concat(applyCaseFormat(s.monthName()), " ").concat(fns.ordinal(s.date()), ", ").concat(s.hour24(), ":").concat(fns.zeroPad(s.minute()))
       }; //aliases
 
-      var aliases = {
+      const aliases = {
         'day-name': 'day',
         'month-name': 'month',
         'iso 8601': 'iso',
@@ -2504,20 +2320,17 @@
         'big-endian': 'numeric',
         'day-nice': 'nice-day'
       };
-      Object.keys(aliases).forEach(function (k) {
-        return format[k] = format[aliases[k]];
-      });
+      Object.keys(aliases).forEach(k => format[k] = format[aliases[k]]);
 
-      var printFormat = function printFormat(s) {
-        var str = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : ''; //don't print anything if it's an invalid date
-
+      const printFormat = (s, str = '') => {
+        //don't print anything if it's an invalid date
         if (s.isValid() !== true) {
           return '';
         } //support .format('month')
 
 
         if (format.hasOwnProperty(str)) {
-          var out = format[str](s) || '';
+          let out = format[str](s) || '';
 
           if (str !== 'json') {
             out = String(out);
@@ -2532,18 +2345,18 @@
 
 
         if (str.indexOf('{') !== -1) {
-          var sections = /\{(.+?)\}/g;
-          str = str.replace(sections, function (_, fmt) {
+          let sections = /\{(.+?)\}/g;
+          str = str.replace(sections, (_, fmt) => {
             fmt = fmt.toLowerCase().trim();
 
             if (format.hasOwnProperty(fmt)) {
-              var _out = String(format[fmt](s));
+              let out = String(format[fmt](s));
 
               if (fmt !== 'ampm') {
-                return applyCaseFormat(_out);
+                return applyCaseFormat(out);
               }
 
-              return _out;
+              return out;
             }
 
             return '';
@@ -2555,204 +2368,96 @@
       };
 
       var format_1 = printFormat;
-      var pad = fns.zeroPad;
-      var formatTimezone = fns.formatTimezone; //parse this insane unix-time-templating thing, from the 19th century
+      const pad = fns.zeroPad;
+      const formatTimezone = fns.formatTimezone; //parse this insane unix-time-templating thing, from the 19th century
       //http://unicode.org/reports/tr35/tr35-25.html#Date_Format_Patterns
       //time-symbols we support
 
-      var mapping = {
-        G: function G(s) {
-          return s.era();
-        },
-        GG: function GG(s) {
-          return s.era();
-        },
-        GGG: function GGG(s) {
-          return s.era();
-        },
-        GGGG: function GGGG(s) {
-          return s.era() === 'AD' ? 'Anno Domini' : 'Before Christ';
-        },
+      const mapping = {
+        G: s => s.era(),
+        GG: s => s.era(),
+        GGG: s => s.era(),
+        GGGG: s => s.era() === 'AD' ? 'Anno Domini' : 'Before Christ',
         //year
-        y: function y(s) {
-          return s.year();
-        },
-        yy: function yy(s) {
+        y: s => s.year(),
+        yy: s => {
           //last two chars
           return parseInt(String(s.year()).substr(2, 4), 10);
         },
-        yyy: function yyy(s) {
-          return s.year();
-        },
-        yyyy: function yyyy(s) {
-          return s.year();
-        },
-        yyyyy: function yyyyy(s) {
-          return '0' + s.year();
-        },
+        yyy: s => s.year(),
+        yyyy: s => s.year(),
+        yyyyy: s => '0' + s.year(),
         // u: (s) => {},//extended non-gregorian years
         //quarter
-        Q: function Q(s) {
-          return s.quarter();
-        },
-        QQ: function QQ(s) {
-          return s.quarter();
-        },
-        QQQ: function QQQ(s) {
-          return s.quarter();
-        },
-        QQQQ: function QQQQ(s) {
-          return s.quarter();
-        },
+        Q: s => s.quarter(),
+        QQ: s => s.quarter(),
+        QQQ: s => s.quarter(),
+        QQQQ: s => s.quarter(),
         //month
-        M: function M(s) {
-          return s.month() + 1;
-        },
-        MM: function MM(s) {
-          return pad(s.month() + 1);
-        },
-        MMM: function MMM(s) {
-          return s.format('month-short');
-        },
-        MMMM: function MMMM(s) {
-          return s.format('month');
-        },
+        M: s => s.month() + 1,
+        MM: s => pad(s.month() + 1),
+        MMM: s => s.format('month-short'),
+        MMMM: s => s.format('month'),
         //week
-        w: function w(s) {
-          return s.week();
-        },
-        ww: function ww(s) {
-          return pad(s.week());
-        },
+        w: s => s.week(),
+        ww: s => pad(s.week()),
         //week of month
         // W: (s) => s.week(),
         //date of month
-        d: function d(s) {
-          return s.date();
-        },
-        dd: function dd(s) {
-          return pad(s.date());
-        },
+        d: s => s.date(),
+        dd: s => pad(s.date()),
         //date of year
-        D: function D(s) {
-          return s.dayOfYear();
-        },
-        DD: function DD(s) {
-          return pad(s.dayOfYear());
-        },
-        DDD: function DDD(s) {
-          return pad(s.dayOfYear(), 3);
-        },
+        D: s => s.dayOfYear(),
+        DD: s => pad(s.dayOfYear()),
+        DDD: s => pad(s.dayOfYear(), 3),
         // F: (s) => {},//date of week in month
         // g: (s) => {},//modified julian day
         //day
-        E: function E(s) {
-          return s.format('day-short');
-        },
-        EE: function EE(s) {
-          return s.format('day-short');
-        },
-        EEE: function EEE(s) {
-          return s.format('day-short');
-        },
-        EEEE: function EEEE(s) {
-          return s.format('day');
-        },
-        EEEEE: function EEEEE(s) {
-          return s.format('day')[0];
-        },
-        e: function e(s) {
-          return s.day();
-        },
-        ee: function ee(s) {
-          return s.day();
-        },
-        eee: function eee(s) {
-          return s.format('day-short');
-        },
-        eeee: function eeee(s) {
-          return s.format('day');
-        },
-        eeeee: function eeeee(s) {
-          return s.format('day')[0];
-        },
+        E: s => s.format('day-short'),
+        EE: s => s.format('day-short'),
+        EEE: s => s.format('day-short'),
+        EEEE: s => s.format('day'),
+        EEEEE: s => s.format('day')[0],
+        e: s => s.day(),
+        ee: s => s.day(),
+        eee: s => s.format('day-short'),
+        eeee: s => s.format('day'),
+        eeeee: s => s.format('day')[0],
         //am/pm
-        a: function a(s) {
-          return s.ampm().toUpperCase();
-        },
-        aa: function aa(s) {
-          return s.ampm().toUpperCase();
-        },
-        aaa: function aaa(s) {
-          return s.ampm().toUpperCase();
-        },
-        aaaa: function aaaa(s) {
-          return s.ampm().toUpperCase();
-        },
+        a: s => s.ampm().toUpperCase(),
+        aa: s => s.ampm().toUpperCase(),
+        aaa: s => s.ampm().toUpperCase(),
+        aaaa: s => s.ampm().toUpperCase(),
         //hour
-        h: function h(s) {
-          return s.h12();
-        },
-        hh: function hh(s) {
-          return pad(s.h12());
-        },
-        H: function H(s) {
-          return s.hour();
-        },
-        HH: function HH(s) {
-          return pad(s.hour());
-        },
+        h: s => s.h12(),
+        hh: s => pad(s.h12()),
+        H: s => s.hour(),
+        HH: s => pad(s.hour()),
         // j: (s) => {},//weird hour format
-        m: function m(s) {
-          return s.minute();
-        },
-        mm: function mm(s) {
-          return pad(s.minute());
-        },
-        s: function s(_s) {
-          return _s.second();
-        },
-        ss: function ss(s) {
-          return pad(s.second());
-        },
+        m: s => s.minute(),
+        mm: s => pad(s.minute()),
+        s: s => s.second(),
+        ss: s => pad(s.second()),
         //milliseconds in the day
-        A: function A(s) {
-          return s.epoch - s.startOf('day').epoch;
-        },
+        A: s => s.epoch - s.startOf('day').epoch,
         //timezone
-        z: function z(s) {
-          return s.timezone().name;
-        },
-        zz: function zz(s) {
-          return s.timezone().name;
-        },
-        zzz: function zzz(s) {
-          return s.timezone().name;
-        },
-        zzzz: function zzzz(s) {
-          return s.timezone().name;
-        },
-        Z: function Z(s) {
-          return formatTimezone(s.timezone().current.offset);
-        },
-        ZZ: function ZZ(s) {
-          return formatTimezone(s.timezone().current.offset);
-        },
-        ZZZ: function ZZZ(s) {
-          return formatTimezone(s.timezone().current.offset);
-        },
-        ZZZZ: function ZZZZ(s) {
-          return formatTimezone(s.timezone().current.offset, ':');
-        }
+        z: s => s.timezone().name,
+        zz: s => s.timezone().name,
+        zzz: s => s.timezone().name,
+        zzzz: s => s.timezone().name,
+        Z: s => formatTimezone(s.timezone().current.offset),
+        ZZ: s => formatTimezone(s.timezone().current.offset),
+        ZZZ: s => formatTimezone(s.timezone().current.offset),
+        ZZZZ: s => formatTimezone(s.timezone().current.offset, ':')
       };
 
-      var addAlias = function addAlias(_char, to, n) {
-        var name = _char;
-        var toName = to;
+      const addAlias = (char, to, n) => {
+        let name = char;
+        let toName = to;
 
-        for (var i = 0; i < n; i += 1) {
+        for (let i = 0; i < n; i += 1) {
           mapping[name] = mapping[toName];
-          name += _char;
+          name += char;
           toName += to;
         }
       };
@@ -2767,11 +2472,11 @@
       addAlias('v', 'z', 4);
       addAlias('V', 'Z', 4); // support unix-style escaping with ' character
 
-      var escapeChars = function escapeChars(arr) {
-        for (var i = 0; i < arr.length; i += 1) {
+      const escapeChars = function (arr) {
+        for (let i = 0; i < arr.length; i += 1) {
           if (arr[i] === "'") {
             // greedy-search for next apostrophe
-            for (var o = i + 1; o < arr.length; o += 1) {
+            for (let o = i + 1; o < arr.length; o += 1) {
               if (arr[o]) {
                 arr[i] += arr[o];
               }
@@ -2786,17 +2491,15 @@
           }
         }
 
-        return arr.filter(function (ch) {
-          return ch;
-        });
+        return arr.filter(ch => ch);
       }; //combine consecutive chars, like 'yyyy' as one.
 
 
-      var combineRepeated = function combineRepeated(arr) {
-        for (var i = 0; i < arr.length; i += 1) {
-          var c = arr[i]; // greedy-forward
+      const combineRepeated = function (arr) {
+        for (let i = 0; i < arr.length; i += 1) {
+          let c = arr[i]; // greedy-forward
 
-          for (var o = i + 1; o < arr.length; o += 1) {
+          for (let o = i + 1; o < arr.length; o += 1) {
             if (arr[o] === c) {
               arr[i] += arr[o];
               arr[o] = null;
@@ -2807,10 +2510,8 @@
         } // '' means one apostrophe
 
 
-        arr = arr.filter(function (ch) {
-          return ch;
-        });
-        arr = arr.map(function (str) {
+        arr = arr.filter(ch => ch);
+        arr = arr.map(str => {
           if (str === "''") {
             str = "'";
           }
@@ -2820,13 +2521,13 @@
         return arr;
       };
 
-      var unixFmt = function unixFmt(s, str) {
-        var arr = str.split(''); // support character escaping
+      const unixFmt = (s, str) => {
+        let arr = str.split(''); // support character escaping
 
         arr = escapeChars(arr); //combine 'yyyy' as string.
 
         arr = combineRepeated(arr);
-        return arr.reduce(function (txt, c) {
+        return arr.reduce((txt, c) => {
           if (mapping[c] !== undefined) {
             txt += mapping[c](s) || '';
           } else {
@@ -2843,25 +2544,25 @@
       };
 
       var unixFmt_1 = unixFmt;
-      var units$2 = ['year', 'season', 'quarter', 'month', 'week', 'day', 'quarterHour', 'hour', 'minute'];
+      const units$2 = ['year', 'season', 'quarter', 'month', 'week', 'day', 'quarterHour', 'hour', 'minute'];
 
-      var doUnit = function doUnit(s, k) {
-        var start = s.clone().startOf(k);
-        var end = s.clone().endOf(k);
-        var duration = end.epoch - start.epoch;
-        var percent = (s.epoch - start.epoch) / duration;
+      const doUnit = function (s, k) {
+        let start = s.clone().startOf(k);
+        let end = s.clone().endOf(k);
+        let duration = end.epoch - start.epoch;
+        let percent = (s.epoch - start.epoch) / duration;
         return parseFloat(percent.toFixed(2));
       }; //how far it is along, from 0-1
 
 
-      var progress = function progress(s, unit) {
+      const progress = (s, unit) => {
         if (unit) {
           unit = fns.normalize(unit);
           return doUnit(s, unit);
         }
 
-        var obj = {};
-        units$2.forEach(function (k) {
+        let obj = {};
+        units$2.forEach(k => {
           obj[k] = doUnit(s, k);
         });
         return obj;
@@ -2869,9 +2570,9 @@
 
       var progress_1 = progress;
 
-      var nearest = function nearest(s, unit) {
+      const nearest = (s, unit) => {
         //how far have we gone?
-        var prog = s.progress();
+        let prog = s.progress();
         unit = fns.normalize(unit); //fix camel-case for this one
 
         if (unit === 'quarterhour') {
@@ -2895,8 +2596,8 @@
 
       var nearest_1 = nearest; //increment until dates are the same
 
-      var climb = function climb(a, b, unit) {
-        var i = 0;
+      const climb = (a, b, unit) => {
+        let i = 0;
         a = a.clone();
 
         while (a.isBefore(b)) {
@@ -2915,7 +2616,7 @@
       // for speed-reasons, only used on day, month, week.
 
 
-      var diffOne = function diffOne(a, b, unit) {
+      const diffOne = (a, b, unit) => {
         if (a.isBefore(b)) {
           return climb(a, b, unit);
         } else {
@@ -2926,8 +2627,8 @@
       var one = diffOne; // 2020 - 2019 may be 1 year, or 0 years
       // - '1 year difference' means 366 days during a leap year
 
-      var fastYear = function fastYear(a, b) {
-        var years = b.year() - a.year(); // should we decrement it by 1?
+      const fastYear = (a, b) => {
+        let years = b.year() - a.year(); // should we decrement it by 1?
 
         a = a.year(b.year());
 
@@ -2941,18 +2642,18 @@
       // ... then ms-math for any very-small units
 
 
-      var diff$1 = function diff(a, b) {
+      const diff$1 = function (a, b) {
         // an hour is always the same # of milliseconds
         // so these units can be 'pre-calculated'
-        var msDiff = b.epoch - a.epoch;
-        var obj = {
+        let msDiff = b.epoch - a.epoch;
+        let obj = {
           milliseconds: msDiff,
           seconds: parseInt(msDiff / 1000, 10)
         };
         obj.minutes = parseInt(obj.seconds / 60, 10);
         obj.hours = parseInt(obj.minutes / 60, 10); //do the year
 
-        var tmp = a.clone();
+        let tmp = a.clone();
         obj.years = fastYear(tmp, b);
         tmp = a.add(obj.years, 'year'); //there's always 12 months in a year...
 
@@ -2973,8 +2674,8 @@
 
       var waterfall = diff$1;
 
-      var reverseDiff = function reverseDiff(obj) {
-        Object.keys(obj).forEach(function (k) {
+      const reverseDiff = function (obj) {
+        Object.keys(obj).forEach(k => {
           obj[k] *= -1;
         });
         return obj;
@@ -2983,20 +2684,20 @@
       // '1 year' means 366 days in a leap year
 
 
-      var main$1 = function main(a, b, unit) {
+      const main$1 = function (a, b, unit) {
         b = fns.beADate(b, a); //reverse values, if necessary
 
-        var reversed = false;
+        let reversed = false;
 
         if (a.isAfter(b)) {
-          var tmp = a;
+          let tmp = a;
           a = b;
           b = tmp;
           reversed = true;
         } //compute them all (i know!)
 
 
-        var obj = waterfall(a, b);
+        let obj = waterfall(a, b);
 
         if (reversed) {
           obj = reverseDiff(obj);
@@ -3023,7 +2724,7 @@
 
       var diff = main$1; //our conceptual 'break-points' for each unit
 
-      var qualifiers = {
+      const qualifiers = {
         months: {
           almost: 10,
           over: 4
@@ -3047,11 +2748,11 @@
       }; //get number of hours/minutes... between the two dates
 
       function getDiff(a, b) {
-        var isBefore = a.isBefore(b);
-        var later = isBefore ? b : a;
-        var earlier = isBefore ? a : b;
+        const isBefore = a.isBefore(b);
+        const later = isBefore ? b : a;
+        let earlier = isBefore ? a : b;
         earlier = earlier.clone();
-        var diff = {
+        const diff = {
           years: 0,
           months: 0,
           days: 0,
@@ -3059,18 +2760,18 @@
           minutes: 0,
           seconds: 0
         };
-        Object.keys(diff).forEach(function (unit) {
+        Object.keys(diff).forEach(unit => {
           if (earlier.isSame(later, unit)) {
             return;
           }
 
-          var max = earlier.diff(later, unit);
+          let max = earlier.diff(later, unit);
           earlier = earlier.add(max, unit);
           diff[unit] = max;
         }); //reverse it, if necessary
 
         if (isBefore) {
-          Object.keys(diff).forEach(function (u) {
+          Object.keys(diff).forEach(u => {
             if (diff[u] !== 0) {
               diff[u] *= -1;
             }
@@ -3090,35 +2791,33 @@
       } //create the human-readable diff between the two dates
 
 
-      var since = function since(start, end) {
+      const since = (start, end) => {
         end = fns.beADate(end, start);
-        var diff = getDiff(start, end);
-        var isNow = Object.keys(diff).every(function (u) {
-          return !diff[u];
-        });
+        const diff = getDiff(start, end);
+        const isNow = Object.keys(diff).every(u => !diff[u]);
 
         if (isNow === true) {
           return {
-            diff: diff,
+            diff,
             rounded: 'now',
             qualified: 'now',
             precise: 'now'
           };
         }
 
-        var rounded;
-        var qualified;
-        var precise;
-        var englishValues = []; //go through each value and create its text-representation
+        let rounded;
+        let qualified;
+        let precise;
+        let englishValues = []; //go through each value and create its text-representation
 
-        Object.keys(diff).forEach(function (unit, i, units) {
-          var value = Math.abs(diff[unit]);
+        Object.keys(diff).forEach((unit, i, units) => {
+          const value = Math.abs(diff[unit]);
 
           if (value === 0) {
             return;
           }
 
-          var englishValue = pluralize(value, unit);
+          const englishValue = pluralize(value, unit);
           englishValues.push(englishValue);
 
           if (!rounded) {
@@ -3129,8 +2828,8 @@
             } //is it a 'almost' something, etc?
 
 
-            var nextUnit = units[i + 1];
-            var nextValue = Math.abs(diff[nextUnit]);
+            const nextUnit = units[i + 1];
+            const nextValue = Math.abs(diff[nextUnit]);
 
             if (nextValue > qualifiers[nextUnit].almost) {
               rounded = pluralize(value + 1, unit);
@@ -3152,10 +2851,10 @@
         }
 
         return {
-          diff: diff,
-          rounded: rounded,
-          qualified: qualified,
-          precise: precise
+          diff,
+          rounded,
+          qualified,
+          precise
         };
       };
 
@@ -3184,16 +2883,16 @@
       [6, 1], //july 1
       [9, 1] //oct 1
       ];
-      var units$1 = {
-        minute: function minute(s) {
+      const units$1 = {
+        minute: s => {
           walk_1(s, {
             second: 0,
             millisecond: 0
           });
           return s;
         },
-        quarterhour: function quarterhour(s) {
-          var minute = s.minutes();
+        quarterhour: s => {
+          let minute = s.minutes();
 
           if (minute >= 45) {
             s = s.minutes(45);
@@ -3211,7 +2910,7 @@
           });
           return s;
         },
-        hour: function hour(s) {
+        hour: s => {
           walk_1(s, {
             minute: 0,
             second: 0,
@@ -3219,7 +2918,7 @@
           });
           return s;
         },
-        day: function day(s) {
+        day: s => {
           walk_1(s, {
             hour: 0,
             minute: 0,
@@ -3228,8 +2927,8 @@
           });
           return s;
         },
-        week: function week(s) {
-          var original = s.clone();
+        week: s => {
+          let original = s.clone();
           s = s.day(s._weekStart); //monday
 
           if (s.isAfter(original)) {
@@ -3244,7 +2943,7 @@
           });
           return s;
         },
-        month: function month(s) {
+        month: s => {
           walk_1(s, {
             date: 1,
             hour: 0,
@@ -3254,8 +2953,8 @@
           });
           return s;
         },
-        quarter: function quarter(s) {
-          var q = s.quarter();
+        quarter: s => {
+          let q = s.quarter();
 
           if (quarters[q]) {
             walk_1(s, {
@@ -3270,25 +2969,25 @@
 
           return s;
         },
-        season: function season(s) {
-          var current = s.season();
-          var hem = 'north';
+        season: s => {
+          let current = s.season();
+          let hem = 'north';
 
           if (s.hemisphere() === 'South') {
             hem = 'south';
           }
 
-          for (var i = 0; i < seasons[hem].length; i++) {
+          for (let i = 0; i < seasons[hem].length; i++) {
             if (seasons[hem][i][0] === current) {
               //winter goes between years
-              var year = s.year();
+              let year = s.year();
 
               if (current === 'winter' && s.month() < 3) {
                 year -= 1;
               }
 
               walk_1(s, {
-                year: year,
+                year,
                 month: seasons[hem][i][1],
                 date: seasons[hem][i][2],
                 hour: 0,
@@ -3302,7 +3001,7 @@
 
           return s;
         },
-        year: function year(s) {
+        year: s => {
           walk_1(s, {
             month: 0,
             date: 1,
@@ -3313,26 +3012,26 @@
           });
           return s;
         },
-        decade: function decade(s) {
+        decade: s => {
           s = s.startOf('year');
-          var year = s.year();
-          var decade = parseInt(year / 10, 10) * 10;
+          let year = s.year();
+          let decade = parseInt(year / 10, 10) * 10;
           s = s.year(decade);
           return s;
         },
-        century: function century(s) {
+        century: s => {
           s = s.startOf('year');
-          var year = s.year(); // near 0AD goes '-1 | +1'
+          let year = s.year(); // near 0AD goes '-1 | +1'
 
-          var decade = parseInt(year / 100, 10) * 100;
+          let decade = parseInt(year / 100, 10) * 100;
           s = s.year(decade);
           return s;
         }
       };
       units$1.date = units$1.day;
 
-      var startOf = function startOf(a, unit) {
-        var s = a.clone();
+      const startOf = (a, unit) => {
+        let s = a.clone();
         unit = fns.normalize(unit);
 
         if (units$1[unit]) {
@@ -3348,8 +3047,8 @@
       }; //piggy-backs off startOf
 
 
-      var endOf = function endOf(a, unit) {
-        var s = a.clone();
+      const endOf = (a, unit) => {
+        let s = a.clone();
         unit = fns.normalize(unit);
 
         if (units$1[unit]) {
@@ -3365,20 +3064,16 @@
       };
 
       var startOf_1 = {
-        startOf: startOf,
-        endOf: endOf
+        startOf,
+        endOf
       };
 
-      var isDay = function isDay(unit) {
-        if (days["short"]().find(function (s) {
-          return s === unit;
-        })) {
+      const isDay = function (unit) {
+        if (days.short().find(s => s === unit)) {
           return true;
         }
 
-        if (days["long"]().find(function (s) {
-          return s === unit;
-        })) {
+        if (days.long().find(s => s === unit)) {
           return true;
         }
 
@@ -3387,10 +3082,7 @@
       // returns spacetime objects in the timezone of the input
 
 
-      var every = function every(start) {
-        var unit = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-        var end = arguments.length > 2 ? arguments[2] : undefined;
-
+      const every = function (start, unit = '', end) {
         if (!unit || !end) {
           return [];
         } //cleanup unit param
@@ -3401,13 +3093,13 @@
         end = start.clone().set(end); //swap them, if they're backwards
 
         if (start.isAfter(end)) {
-          var tmp = start;
+          let tmp = start;
           start = end;
           end = tmp;
         } //support 'every wednesday'
 
 
-        var d = start.clone();
+        let d = start.clone();
 
         if (isDay(unit)) {
           d = d.next(unit);
@@ -3417,7 +3109,7 @@
         } //okay, actually start doing it
 
 
-        var result = [];
+        let result = [];
 
         while (d.isBefore(end)) {
           result.push(d);
@@ -3429,7 +3121,7 @@
 
       var every_1 = every;
 
-      var parseDst = function parseDst(dst) {
+      const parseDst = dst => {
         if (!dst) {
           return [];
         }
@@ -3437,19 +3129,19 @@
         return dst.split('->');
       };
 
-      var titleCase = function titleCase(str) {
+      const titleCase = str => {
         str = str[0].toUpperCase() + str.substr(1);
         str = str.replace(/\/gmt/, '/GMT');
-        str = str.replace(/[\/_]([a-z])/gi, function (s) {
+        str = str.replace(/[\/_]([a-z])/gi, s => {
           return s.toUpperCase();
         });
         return str;
       }; //get metadata about this timezone
 
 
-      var timezone = function timezone(s) {
-        var zones = s.timezones;
-        var tz = s.tz;
+      const timezone = s => {
+        let zones = s.timezones;
+        let tz = s.tz;
 
         if (zones.hasOwnProperty(tz) === false) {
           tz = find(s.tz, zones);
@@ -3467,8 +3159,8 @@
           };
         }
 
-        var found = zones[tz];
-        var result = {
+        let found = zones[tz];
+        let result = {
           name: titleCase(tz),
           hasDst: Boolean(found.dst),
           default_offset: found.offset,
@@ -3478,7 +3170,7 @@
         };
 
         if (result.hasDst) {
-          var arr = parseDst(found.dst);
+          let arr = parseDst(found.dst);
           result.change = {
             start: arr[0],
             back: arr[1]
@@ -3487,9 +3179,9 @@
         //(these variable names are north-centric)
 
 
-        var summer = found.offset; // (july)
+        let summer = found.offset; // (july)
 
-        var winter = summer; // (january) assume it's the same for now
+        let winter = summer; // (january) assume it's the same for now
 
         if (result.hasDst === true) {
           if (result.hemisphere === 'North') {
@@ -3518,12 +3210,12 @@
       };
 
       var timezone_1 = timezone;
-      var units = ['century', 'decade', 'year', 'month', 'date', 'day', 'hour', 'minute', 'second', 'millisecond']; //the spacetime instance methods (also, the API)
+      const units = ['century', 'decade', 'year', 'month', 'date', 'day', 'hour', 'minute', 'second', 'millisecond']; //the spacetime instance methods (also, the API)
 
-      var methods$4 = {
-        set: function set(input$1, tz) {
-          var s = this.clone();
-          s = input(s, input$1, null);
+      const methods$4 = {
+        set: function (input$1, tz) {
+          let s = this.clone();
+          s = input(s, input$1);
 
           if (tz) {
             this.tz = find(tz);
@@ -3531,63 +3223,63 @@
 
           return s;
         },
-        timezone: function timezone() {
+        timezone: function () {
           return timezone_1(this);
         },
-        isDST: function isDST() {
+        isDST: function () {
           return timezone_1(this).current.isDST;
         },
-        hasDST: function hasDST() {
+        hasDST: function () {
           return timezone_1(this).hasDst;
         },
-        offset: function offset() {
+        offset: function () {
           return timezone_1(this).current.offset * 60;
         },
-        hemisphere: function hemisphere() {
+        hemisphere: function () {
           return timezone_1(this).hemisphere;
         },
-        format: function format(fmt) {
+        format: function (fmt) {
           return format_1(this, fmt);
         },
-        unixFmt: function unixFmt(fmt) {
+        unixFmt: function (fmt) {
           return unixFmt_1(this, fmt);
         },
-        startOf: function startOf(unit) {
+        startOf: function (unit) {
           return startOf_1.startOf(this, unit);
         },
-        endOf: function endOf(unit) {
+        endOf: function (unit) {
           return startOf_1.endOf(this, unit);
         },
-        leapYear: function leapYear() {
-          var year = this.year();
+        leapYear: function () {
+          let year = this.year();
           return fns.isLeapYear(year);
         },
-        progress: function progress(unit) {
+        progress: function (unit) {
           return progress_1(this, unit);
         },
-        nearest: function nearest(unit) {
+        nearest: function (unit) {
           return nearest_1(this, unit);
         },
-        diff: function diff$1(d, unit) {
+        diff: function (d, unit) {
           return diff(this, d, unit);
         },
-        since: function since(d) {
+        since: function (d) {
           if (!d) {
             d = this.clone().set();
           }
 
           return since_1(this, d);
         },
-        next: function next(unit) {
-          var s = this.add(1, unit);
+        next: function (unit) {
+          let s = this.add(1, unit);
           return s.startOf(unit);
         },
         //the start of the previous year/week/century
-        last: function last(unit) {
-          var s = this.subtract(1, unit);
+        last: function (unit) {
+          let s = this.subtract(1, unit);
           return s.startOf(unit);
         },
-        isValid: function isValid() {
+        isValid: function () {
           //null/undefined epochs
           if (!this.epoch && this.epoch !== 0) {
             return false;
@@ -3596,25 +3288,25 @@
           return !isNaN(this.d.getTime());
         },
         //travel to this timezone
-        "goto": function _goto(tz) {
-          var s = this.clone();
+        goto: function (tz) {
+          let s = this.clone();
           s.tz = find(tz, s.timezones); //science!
 
           return s;
         },
         //get each week/month/day between a -> b
-        every: function every(unit, to) {
+        every: function (unit, to) {
           // allow swapping these params:
-          if (_typeof(unit) === 'object' && typeof to === 'string') {
-            var tmp = to;
+          if (typeof unit === 'object' && typeof to === 'string') {
+            let tmp = to;
             to = unit;
             unit = tmp;
           }
 
           return every_1(this, unit, to);
         },
-        isAwake: function isAwake() {
-          var hour = this.hour(); //10pm -> 8am
+        isAwake: function () {
+          let hour = this.hour(); //10pm -> 8am
 
           if (hour < 8 || hour > 22) {
             return false;
@@ -3622,45 +3314,43 @@
 
           return true;
         },
-        isAsleep: function isAsleep() {
+        isAsleep: function () {
           return !this.isAwake();
         },
         //pretty-printing
-        log: function log() {
+        log: function () {
           console.log('');
           console.log(format_1(this, 'nice-short'));
           return this;
         },
-        logYear: function logYear() {
+        logYear: function () {
           console.log('');
           console.log(format_1(this, 'full-short'));
           return this;
         },
-        json: function json() {
-          var _this = this;
-
-          return units.reduce(function (h, unit) {
-            h[unit] = _this[unit]();
+        json: function () {
+          return units.reduce((h, unit) => {
+            h[unit] = this[unit]();
             return h;
           }, {});
         },
-        debug: function debug() {
-          var tz = this.timezone();
-          var date = this.format('MM') + ' ' + this.format('date-ordinal') + ' ' + this.year();
+        debug: function () {
+          let tz = this.timezone();
+          let date = this.format('MM') + ' ' + this.format('date-ordinal') + ' ' + this.year();
           date += '\n     - ' + this.format('time');
           console.log('\n\n', date + '\n     - ' + tz.name + ' (' + tz.current.offset + ')');
           return this;
         },
         //alias of 'since' but opposite - like moment.js
-        from: function from(d) {
+        from: function (d) {
           d = this.clone().set(d);
           return d.since(this);
         },
-        fromNow: function fromNow() {
-          var d = this.clone().set(Date.now());
+        fromNow: function () {
+          let d = this.clone().set(Date.now());
           return d.since(this);
         },
-        weekStart: function weekStart(input) {
+        weekStart: function (input) {
           //accept a number directly
           if (typeof input === 'number') {
             this._weekStart = input;
@@ -3670,10 +3360,10 @@
           if (typeof input === 'string') {
             // accept 'wednesday'
             input = input.toLowerCase().trim();
-            var num = days["short"]().indexOf(input);
+            let num = days.short().indexOf(input);
 
             if (num === -1) {
-              num = days["long"]().indexOf(input);
+              num = days.long().indexOf(input);
             }
 
             if (num === -1) {
@@ -3694,9 +3384,9 @@
       methods$4.each = methods$4.every;
       var methods_1 = methods$4; //these methods wrap around them.
 
-      var isLeapYear$1 = fns.isLeapYear;
+      const isLeapYear$1 = fns.isLeapYear;
 
-      var validate = function validate(n) {
+      const validate = n => {
         //handle number as a string
         if (typeof n === 'string') {
           n = parseInt(n, 10);
@@ -3705,51 +3395,61 @@
         return n;
       };
 
-      var order$1 = ['year', 'month', 'date', 'hour', 'minute', 'second', 'millisecond']; //reduce hostile micro-changes when moving dates by millisecond
+      const order$1 = ['year', 'month', 'date', 'hour', 'minute', 'second', 'millisecond']; //reduce hostile micro-changes when moving dates by millisecond
 
-      var confirm = function confirm(s, tmp, unit) {
-        var n = order$1.indexOf(unit);
-        var arr = order$1.slice(n, order$1.length);
+      const confirm = (s, tmp, unit) => {
+        let n = order$1.indexOf(unit);
+        let arr = order$1.slice(n, order$1.length);
 
-        for (var i = 0; i < arr.length; i++) {
-          var want = tmp[arr[i]]();
+        for (let i = 0; i < arr.length; i++) {
+          let want = tmp[arr[i]]();
           s[arr[i]](want);
+        }
+
+        return s;
+      }; // allow specifying setter direction
+
+
+      const fwdBkwd = function (s, old, goFwd, unit) {
+        if (goFwd === true && s.isBefore(old)) {
+          s = s.add(1, unit);
+        } else if (goFwd === false && s.isAfter(old)) {
+          s = s.minus(1, unit);
         }
 
         return s;
       };
 
       var set = {
-        milliseconds: function milliseconds(s, n) {
+        milliseconds: (s, n) => {
           n = validate(n);
-          var current = s.millisecond();
-          var diff = current - n; //milliseconds to shift by
+          let current = s.millisecond();
+          let diff = current - n; //milliseconds to shift by
 
           return s.epoch - diff;
         },
-        seconds: function seconds(s, n) {
+        seconds: (s, n, goFwd) => {
           n = validate(n);
-          var diff = s.second() - n;
-          var shift = diff * milliseconds.second;
-          return s.epoch - shift;
-        },
-        minutes: function minutes(s, n) {
-          n = validate(n);
-          var old = s.clone();
-          var diff = s.minute() - n;
-          var shift = diff * milliseconds.minute;
-          s.epoch -= shift; // check against a screw-up
-          // if (old.hour() != s.hour()) {
-          //   walkTo(old, {
-          //     minute: n
-          //   })
-          //   return old.epoch
-          // }
+          let old = s.clone();
+          let diff = s.second() - n;
+          let shift = diff * milliseconds.second;
+          s.epoch = s.epoch - shift;
+          s = fwdBkwd(s, old, goFwd, 'minute'); // specify direction
 
-          confirm(s, old, 'second');
           return s.epoch;
         },
-        hours: function hours(s, n) {
+        minutes: (s, n, goFwd) => {
+          n = validate(n);
+          let old = s.clone();
+          let diff = s.minute() - n;
+          let shift = diff * milliseconds.minute;
+          s.epoch -= shift;
+          confirm(s, old, 'second');
+          s = fwdBkwd(s, old, goFwd, 'hour'); // specify direction
+
+          return s.epoch;
+        },
+        hours: (s, n, goFwd) => {
           n = validate(n);
 
           if (n >= 24) {
@@ -3758,9 +3458,9 @@
             n = 0;
           }
 
-          var old = s.clone();
-          var diff = s.hour() - n;
-          var shift = diff * milliseconds.hour;
+          let old = s.clone();
+          let diff = s.hour() - n;
+          let shift = diff * milliseconds.hour;
           s.epoch -= shift; // oops, did we change the day?
 
           if (s.date() !== old.date()) {
@@ -3782,11 +3482,13 @@
             hour: n
           });
           confirm(s, old, 'minute');
+          s = fwdBkwd(s, old, goFwd, 'day'); // specify direction
+
           return s.epoch;
         },
-        //support setting time by '4:25pm' - this isn't very-well developed..
-        time: function time(s, str) {
-          var m = str.match(/([0-9]{1,2})[:h]([0-9]{1,2})(:[0-9]{1,2})? ?(am|pm)?/);
+        //support setting time by '4:25pm'
+        time: (s, str, goFwd) => {
+          let m = str.match(/([0-9]{1,2})[:h]([0-9]{1,2})(:[0-9]{1,2})? ?(am|pm)?/);
 
           if (!m) {
             //fallback to support just '2am'
@@ -3801,9 +3503,13 @@
             m.splice(3, 0, ''); //add implicit seconds
           }
 
-          var h24 = false;
-          var hour = parseInt(m[1], 10);
-          var minute = parseInt(m[2], 10);
+          let h24 = false;
+          let hour = parseInt(m[1], 10);
+          let minute = parseInt(m[2], 10);
+
+          if (minute >= 60) {
+            minute = 59;
+          }
 
           if (hour > 12) {
             h24 = true;
@@ -3825,19 +3531,22 @@
 
           m[3] = m[3] || '';
           m[3] = m[3].replace(/:/, '');
-          var sec = parseInt(m[3], 10) || 0;
+          let sec = parseInt(m[3], 10) || 0;
+          let old = s.clone();
           s = s.hour(hour);
           s = s.minute(minute);
           s = s.second(sec);
           s = s.millisecond(0);
+          s = fwdBkwd(s, old, goFwd, 'day'); // specify direction
+
           return s.epoch;
         },
-        date: function date(s, n) {
+        date: (s, n, goFwd) => {
           n = validate(n); //avoid setting february 31st
 
           if (n > 28) {
-            var month = s.month();
-            var max = monthLengths_1[month]; // support leap day in february
+            let month = s.month();
+            let max = monthLengths_1[month]; // support leap day in february
 
             if (month === 1 && n === 29 && isLeapYear$1(s.year())) {
               max = 29;
@@ -3853,13 +3562,16 @@
             n = 1;
           }
 
+          let old = s.clone();
           walk_1(s, {
             date: n
           });
+          s = fwdBkwd(s, old, goFwd, 'month'); // specify direction
+
           return s.epoch;
         },
         //this one's tricky
-        month: function month(s, n) {
+        month: (s, n, goFwd) => {
           if (typeof n === 'string') {
             n = months$1.mapping()[n.toLowerCase()];
           }
@@ -3874,20 +3586,23 @@
             n = 0;
           }
 
-          var date = s.date(); //there's no 30th of february, etc.
+          let date = s.date(); //there's no 30th of february, etc.
 
           if (date > monthLengths_1[n]) {
             //make it as close as we can..
             date = monthLengths_1[n];
           }
 
+          let old = s.clone();
           walk_1(s, {
             month: n,
-            date: date
+            date
           });
+          s = fwdBkwd(s, old, goFwd, 'year'); // specify direction
+
           return s.epoch;
         },
-        year: function year(s, n) {
+        year: (s, n) => {
           // support '97
           if (typeof n === 'string' && /^'[0-9]{2}$/.test(n)) {
             n = n.replace(/'/, '').trim();
@@ -3908,9 +3623,31 @@
           });
           return s.epoch;
         },
-        dayOfYear: function dayOfYear(s, n) {
+        // go to the nth week of the year
+        week: (s, n, goFwd) => {
+          let old = s.clone();
           n = validate(n);
-          var old = s.clone();
+          s = s.month(0);
+          s = s.date(1);
+          s = s.day('monday'); //first week starts first Thurs in Jan
+          // so mon dec 28th is 1st week
+          // so mon dec 29th is not the week
+
+          if (s.monthName() === 'december' && s.date() >= 28) {
+            s = s.add(1, 'week');
+          }
+
+          n -= 1; //1-based
+
+          s = s.add(n, 'weeks');
+          s = fwdBkwd(s, old, goFwd, 'year'); // specify direction
+
+          return s.epoch;
+        },
+        // go to the nth day of the year
+        dayOfYear: (s, n, goFwd) => {
+          n = validate(n);
+          let old = s.clone();
           n -= 1; //days are 1-based
 
           if (n <= 0) {
@@ -3922,94 +3659,92 @@
           s = s.startOf('year');
           s = s.add(n, 'day');
           confirm(s, old, 'hour');
+          s = fwdBkwd(s, old, goFwd, 'year'); // specify direction
+
           return s.epoch;
         }
       };
-      var methods$3 = {
-        millisecond: function millisecond(num) {
+      const methods$3 = {
+        millisecond: function (num) {
           if (num !== undefined) {
-            var s = this.clone();
+            let s = this.clone();
             s.epoch = set.milliseconds(s, num);
             return s;
           }
 
           return this.d.getMilliseconds();
         },
-        second: function second(num) {
+        second: function (num, goFwd) {
           if (num !== undefined) {
-            var s = this.clone();
-            s.epoch = set.seconds(s, num);
+            let s = this.clone();
+            s.epoch = set.seconds(s, num, goFwd);
             return s;
           }
 
           return this.d.getSeconds();
         },
-        minute: function minute(num) {
+        minute: function (num, goFwd) {
           if (num !== undefined) {
-            var s = this.clone();
-            s.epoch = set.minutes(s, num);
+            let s = this.clone();
+            s.epoch = set.minutes(s, num, goFwd);
             return s;
           }
 
           return this.d.getMinutes();
         },
-        hour: function hour(num) {
-          var d = this.d;
+        hour: function (num, goFwd) {
+          let d = this.d;
 
           if (num !== undefined) {
-            var s = this.clone();
-            s.epoch = set.hours(s, num);
+            let s = this.clone();
+            s.epoch = set.hours(s, num, goFwd);
             return s;
           }
 
           return d.getHours();
         },
         //'3:30' is 3.5
-        hourFloat: function hourFloat(num) {
+        hourFloat: function (num, goFwd) {
           if (num !== undefined) {
-            var s = this.clone();
-
-            var _minute = num % 1;
-
-            _minute = _minute * 60;
-
-            var _hour = parseInt(num, 10);
-
-            s.epoch = set.hours(s, _hour);
-            s.epoch = set.minutes(s, _minute);
+            let s = this.clone();
+            let minute = num % 1;
+            minute = minute * 60;
+            let hour = parseInt(num, 10);
+            s.epoch = set.hours(s, hour, goFwd);
+            s.epoch = set.minutes(s, minute, goFwd);
             return s;
           }
 
-          var d = this.d;
-          var hour = d.getHours();
-          var minute = d.getMinutes();
+          let d = this.d;
+          let hour = d.getHours();
+          let minute = d.getMinutes();
           minute = minute / 60;
           return hour + minute;
         },
         // hour in 12h format
-        hour12: function hour12(str) {
-          var d = this.d;
+        hour12: function (str, goFwd) {
+          let d = this.d;
 
           if (str !== undefined) {
-            var s = this.clone();
+            let s = this.clone();
             str = '' + str;
-            var m = str.match(/^([0-9]+)(am|pm)$/);
+            let m = str.match(/^([0-9]+)(am|pm)$/);
 
             if (m) {
-              var hour = parseInt(m[1], 10);
+              let hour = parseInt(m[1], 10);
 
               if (m[2] === 'pm') {
                 hour += 12;
               }
 
-              s.epoch = set.hours(s, hour);
+              s.epoch = set.hours(s, hour, goFwd);
             }
 
             return s;
           } //get the hour
 
 
-          var hour12 = d.getHours();
+          let hour12 = d.getHours();
 
           if (hour12 > 12) {
             hour12 = hour12 - 12;
@@ -4022,20 +3757,20 @@
           return hour12;
         },
         //some ambiguity here with 12/24h
-        time: function time(str) {
+        time: function (str, goFwd) {
           if (str !== undefined) {
-            var s = this.clone();
+            let s = this.clone();
             str = str.toLowerCase().trim();
-            s.epoch = set.time(s, str);
+            s.epoch = set.time(s, str, goFwd);
             return s;
           }
 
           return "".concat(this.h12(), ":").concat(fns.zeroPad(this.minute())).concat(this.ampm());
         },
         // either 'am' or 'pm'
-        ampm: function ampm(input) {
-          var which = 'am';
-          var hour = this.hour();
+        ampm: function (input, goFwd) {
+          let which = 'am';
+          let hour = this.hour();
 
           if (hour >= 12) {
             which = 'pm';
@@ -4046,27 +3781,27 @@
           } //okay, we're doing a setter
 
 
-          var s = this.clone();
+          let s = this.clone();
           input = input.toLowerCase().trim(); //ampm should never change the day
           // - so use `.hour(n)` instead of `.minus(12,'hour')`
 
           if (hour >= 12 && input === 'am') {
             //noon is 12pm
             hour -= 12;
-            return s.hour(hour);
+            return s.hour(hour, goFwd);
           }
 
           if (hour < 12 && input === 'pm') {
             hour += 12;
-            return s.hour(hour);
+            return s.hour(hour, goFwd);
           }
 
           return s;
         },
         //some hard-coded times of day, like 'noon'
-        dayTime: function dayTime(str) {
+        dayTime: function (str, goFwd) {
           if (str !== undefined) {
-            var times = {
+            const times = {
               morning: '7:00am',
               breakfast: '7:00am',
               noon: '12:00am',
@@ -4077,18 +3812,18 @@
               night: '11:00pm',
               midnight: '23:59pm'
             };
-            var s = this.clone();
+            let s = this.clone();
             str = str || '';
             str = str.toLowerCase();
 
             if (times.hasOwnProperty(str) === true) {
-              s = s.time(times[str]);
+              s = s.time(times[str], goFwd);
             }
 
             return s;
           }
 
-          var h = this.hour();
+          let h = this.hour();
 
           if (h < 6) {
             return 'night';
@@ -4112,7 +3847,7 @@
           return 'night';
         },
         //parse a proper iso string
-        iso: function iso(num) {
+        iso: function (num) {
           if (num !== undefined) {
             return this.set(num);
           }
@@ -4121,15 +3856,15 @@
         }
       };
       var _01Time = methods$3;
-      var methods$2 = {
+      const methods$2 = {
         // # day in the month
-        date: function date(num) {
+        date: function (num, goFwd) {
           if (num !== undefined) {
-            var s = this.clone();
+            let s = this.clone();
             num = parseInt(num, 10);
 
             if (num) {
-              s.epoch = set.date(s, num);
+              s.epoch = set.date(s, num, goFwd);
             }
 
             return s;
@@ -4138,13 +3873,13 @@
           return this.d.getDate();
         },
         //like 'wednesday' (hard!)
-        day: function day(input) {
+        day: function (input, goFwd) {
           if (input === undefined) {
             return this.d.getDay();
           }
 
-          var original = this.clone();
-          var want = input; // accept 'wednesday'
+          let original = this.clone();
+          let want = input; // accept 'wednesday'
 
           if (typeof input === 'string') {
             input = input.toLowerCase();
@@ -4152,18 +3887,27 @@
             if (days.aliases.hasOwnProperty(input)) {
               want = days.aliases[input];
             } else {
-              want = days["short"]().indexOf(input);
+              want = days.short().indexOf(input);
 
               if (want === -1) {
-                want = days["long"]().indexOf(input);
+                want = days.long().indexOf(input);
               }
             }
           } //move approx
 
 
-          var day = this.d.getDay();
-          var diff = day - want;
-          var s = this.subtract(diff, 'days'); //tighten it back up
+          let day = this.d.getDay();
+          let diff = day - want;
+
+          if (goFwd === true && diff > 0) {
+            diff = diff - 7;
+          }
+
+          if (goFwd === false && diff < 0) {
+            diff = diff + 7;
+          }
+
+          let s = this.subtract(diff, 'days'); //tighten it back up
 
           walk_1(s, {
             hour: original.hour(),
@@ -4173,50 +3917,40 @@
           return s;
         },
         //these are helpful name-wrappers
-        dayName: function dayName(input) {
+        dayName: function (input, goFwd) {
           if (input === undefined) {
-            return days["long"]()[this.day()];
+            return days.long()[this.day()];
           }
 
-          var s = this.clone();
-          s = s.day(input);
+          let s = this.clone();
+          s = s.day(input, goFwd);
           return s;
-        },
-        //either name or number
-        month: function month(input) {
-          if (input !== undefined) {
-            var s = this.clone();
-            s.epoch = set.month(s, input);
-            return s;
-          }
-
-          return this.d.getMonth();
         }
       };
       var _02Date = methods$2;
 
-      var clearMinutes = function clearMinutes(s) {
+      const clearMinutes = s => {
         s = s.minute(0);
         s = s.second(0);
         s = s.millisecond(1);
         return s;
       };
 
-      var methods$1 = {
+      const methods$1 = {
         // day 0-366
-        dayOfYear: function dayOfYear(num) {
+        dayOfYear: function (num, goFwd) {
           if (num !== undefined) {
-            var s = this.clone();
-            s.epoch = set.dayOfYear(s, num);
+            let s = this.clone();
+            s.epoch = set.dayOfYear(s, num, goFwd);
             return s;
           } //days since newyears - jan 1st is 1, jan 2nd is 2...
 
 
-          var sum = 0;
-          var month = this.d.getMonth();
-          var tmp; //count the num days in each month
+          let sum = 0;
+          let month = this.d.getMonth();
+          let tmp; //count the num days in each month
 
-          for (var i = 1; i <= month; i++) {
+          for (let i = 1; i <= month; i++) {
             tmp = new Date();
             tmp.setDate(1);
             tmp.setFullYear(this.d.getFullYear()); //the year matters, because leap-years
@@ -4232,29 +3966,17 @@
           return sum + this.d.getDate();
         },
         //since the start of the year
-        week: function week(num) {
+        week: function (num, goFwd) {
           // week-setter
           if (num !== undefined) {
-            var s = this.clone();
-            s = s.month(0);
-            s = s.date(1);
-            s = s.day('monday');
-            s = clearMinutes(s); //first week starts first Thurs in Jan
-            // so mon dec 28th is 1st week
-            // so mon dec 29th is not the week
-
-            if (s.monthName() === 'december' && s.date() >= 28) {
-              s = s.add(1, 'week');
-            }
-
-            num -= 1; //1-based
-
-            s = s.add(num, 'weeks');
+            let s = this.clone();
+            s.epoch = set.week(this, num, goFwd);
+            s = clearMinutes(s);
             return s;
           } //find-out which week it is
 
 
-          var tmp = this.clone();
+          let tmp = this.clone();
           tmp = tmp.month(0);
           tmp = tmp.date(1);
           tmp = clearMinutes(tmp);
@@ -4265,22 +3987,22 @@
           } // is first monday the 1st?
 
 
-          var toAdd = 1;
+          let toAdd = 1;
 
           if (tmp.date() === 1) {
             toAdd = 0;
           }
 
           tmp = tmp.minus(1, 'second');
-          var thisOne = this.epoch; //if the week technically hasn't started yet
+          const thisOne = this.epoch; //if the week technically hasn't started yet
 
           if (tmp.epoch > thisOne) {
             return 1;
           } //speed it up, if we can
 
 
-          var i = 0;
-          var skipWeeks = this.month() * 4;
+          let i = 0;
+          let skipWeeks = this.month() * 4;
           tmp.epoch += milliseconds.week * skipWeeks;
           i += skipWeeks;
 
@@ -4294,18 +4016,28 @@
 
           return 52;
         },
-        //'january'
-        monthName: function monthName(input) {
-          if (input === undefined) {
-            return months$1["long"]()[this.month()];
+        //either name or number
+        month: function (input, goFwd) {
+          if (input !== undefined) {
+            let s = this.clone();
+            s.epoch = set.month(s, input, goFwd);
+            return s;
           }
 
-          var s = this.clone();
-          s = s.month(input);
-          return s;
+          return this.d.getMonth();
+        },
+        //'january'
+        monthName: function (input, goFwd) {
+          if (input !== undefined) {
+            let s = this.clone();
+            s = s.month(input, goFwd);
+            return s;
+          }
+
+          return months$1.long()[this.month()];
         },
         //q1, q2, q3, q4
-        quarter: function quarter(num) {
+        quarter: function (num, goFwd) {
           if (num !== undefined) {
             if (typeof num === 'string') {
               num = num.replace(/^q/i, '');
@@ -4313,18 +4045,18 @@
             }
 
             if (quarters[num]) {
-              var s = this.clone();
-              var _month = quarters[num][0];
-              s = s.month(_month);
-              s = s.date(1);
+              let s = this.clone();
+              let month = quarters[num][0];
+              s = s.month(month, goFwd);
+              s = s.date(1, goFwd);
               s = s.startOf('day');
               return s;
             }
           }
 
-          var month = this.d.getMonth();
+          let month = this.d.getMonth();
 
-          for (var i = 1; i < quarters.length; i++) {
+          for (let i = 1; i < quarters.length; i++) {
             if (month < quarters[i][0]) {
               return i - 1;
             }
@@ -4333,19 +4065,19 @@
           return 4;
         },
         //spring, summer, winter, fall
-        season: function season(input) {
-          var hem = 'north';
+        season: function (input, goFwd) {
+          let hem = 'north';
 
           if (this.hemisphere() === 'South') {
             hem = 'south';
           }
 
           if (input !== undefined) {
-            var s = this.clone();
+            let s = this.clone();
 
-            for (var i = 0; i < seasons[hem].length; i++) {
+            for (let i = 0; i < seasons[hem].length; i++) {
               if (input === seasons[hem][i][0]) {
-                s = s.month(seasons[hem][i][1]);
+                s = s.month(seasons[hem][i][1], goFwd);
                 s = s.date(1);
                 s = s.startOf('day');
               }
@@ -4354,20 +4086,20 @@
             return s;
           }
 
-          var month = this.d.getMonth();
+          let month = this.d.getMonth();
 
-          for (var _i = 0; _i < seasons[hem].length - 1; _i++) {
-            if (month >= seasons[hem][_i][1] && month < seasons[hem][_i + 1][1]) {
-              return seasons[hem][_i][0];
+          for (let i = 0; i < seasons[hem].length - 1; i++) {
+            if (month >= seasons[hem][i][1] && month < seasons[hem][i + 1][1]) {
+              return seasons[hem][i][0];
             }
           }
 
           return 'winter';
         },
         //the year number
-        year: function year(num) {
+        year: function (num) {
           if (num !== undefined) {
-            var s = this.clone();
+            let s = this.clone();
             s.epoch = set.year(s, num);
             return s;
           }
@@ -4375,12 +4107,12 @@
           return this.d.getFullYear();
         },
         //bc/ad years
-        era: function era(str) {
+        era: function (str) {
           if (str !== undefined) {
-            var s = this.clone();
+            let s = this.clone();
             str = str.toLowerCase(); //TODO: there is no year-0AD i think. may have off-by-1 error here
 
-            var year = s.d.getFullYear(); //make '1992' into 1992bc..
+            let year = s.d.getFullYear(); //make '1992' into 1992bc..
 
             if (str === 'bc' && year > 0) {
               s.epoch = set.year(s, year * -1);
@@ -4401,7 +4133,7 @@
           return 'AD';
         },
         // 2019 -> 2010
-        decade: function decade(input) {
+        decade: function (input) {
           if (input !== undefined) {
             input = String(input);
             input = input.replace(/([0-9])'?s$/, '$1'); //1950's
@@ -4418,7 +4150,7 @@
               input = '19' + input;
             }
 
-            var year = Number(input);
+            let year = Number(input);
 
             if (isNaN(year)) {
               return this;
@@ -4432,12 +4164,12 @@
           return this.startOf('decade').year();
         },
         // 1950 -> 19+1
-        century: function century(input) {
+        century: function (input) {
           if (input !== undefined) {
             if (typeof input === 'string') {
               input = input.replace(/([0-9])(th|rd|st|nd)/, '$1'); //fix ordinals
 
-              input = input.replace(/([0-9]+) ?(b\.?c\.?|a\.?d\.?)/i, function (a, b, c) {
+              input = input.replace(/([0-9]+) ?(b\.?c\.?|a\.?d\.?)/i, (a, b, c) => {
                 if (c.match(/b\.?c\.?/i)) {
                   b = '-' + b;
                 }
@@ -4447,7 +4179,7 @@
               input = input.replace(/c$/, ''); //20thC
             }
 
-            var year = Number(input);
+            let year = Number(input);
 
             if (isNaN(input)) {
               console.warn('Spacetime: Invalid century input');
@@ -4469,7 +4201,7 @@
           } // century getter
 
 
-          var num = this.startOf('century').year();
+          let num = this.startOf('century').year();
           num = Math.floor(num / 100);
 
           if (num < 0) {
@@ -4479,7 +4211,7 @@
           return num + 1;
         },
         // 2019 -> 2+1
-        millenium: function millenium(input) {
+        millenium: function (input) {
           if (input !== undefined) {
             if (typeof input === 'string') {
               input = input.replace(/([0-9])(th|rd|st|nd)/, '$1'); //fix ordinals
@@ -4496,7 +4228,7 @@
               input -= 1;
             }
 
-            var year = input * 1000; // there is no year 0
+            let year = input * 1000; // there is no year 0
 
             if (year === 0) {
               year = 1;
@@ -4506,7 +4238,7 @@
           } // get the current millenium
 
 
-          var num = Math.floor(this.year() / 1000);
+          let num = Math.floor(this.year() / 1000);
 
           if (num >= 0) {
             num += 1;
@@ -4516,7 +4248,7 @@
         }
       };
       var _03Year = methods$1;
-      var methods = Object.assign({}, _01Time, _02Date, _03Year); //aliases
+      const methods = Object.assign({}, _01Time, _02Date, _03Year); //aliases
 
       methods.milliseconds = methods.millisecond;
       methods.seconds = methods.second;
@@ -4527,17 +4259,17 @@
       methods.h24 = methods.hour24;
       methods.days = methods.day;
 
-      var addMethods$4 = function addMethods(Space) {
+      const addMethods$4 = Space => {
         //hook the methods into prototype
-        Object.keys(methods).forEach(function (k) {
+        Object.keys(methods).forEach(k => {
           Space.prototype[k] = methods[k];
         });
       };
 
       var query = addMethods$4;
-      var isLeapYear = fns.isLeapYear;
+      const isLeapYear = fns.isLeapYear;
 
-      var getMonthLength = function getMonthLength(month, year) {
+      const getMonthLength = function (month, year) {
         if (month === 1 && isLeapYear(year)) {
           return 29;
         }
@@ -4547,18 +4279,17 @@
       //- because ms-shifting can be off by enough
 
 
-      var rollMonth = function rollMonth(want, old) {
+      const rollMonth = (want, old) => {
         //increment year
         if (want.month > 0) {
-          var years = parseInt(want.month / 12, 10);
+          let years = parseInt(want.month / 12, 10);
           want.year = old.year() + years;
           want.month = want.month % 12;
         } else if (want.month < 0) {
           //decrement year
-          var _years = Math.floor(Math.abs(want.month) / 13, 10);
-
-          _years = Math.abs(_years) + 1;
-          want.year = old.year() - _years; //ignore extras
+          let years = Math.floor(Math.abs(want.month) / 13, 10);
+          years = Math.abs(years) + 1;
+          want.year = old.year() - years; //ignore extras
 
           want.month = want.month % 12;
           want.month = want.month + 12;
@@ -4572,10 +4303,10 @@
       }; // briefly support day=-2 (this does not need to be perfect.)
 
 
-      var rollDaysDown = function rollDaysDown(want, old, sum) {
+      const rollDaysDown = (want, old, sum) => {
         want.year = old.year();
         want.month = old.month();
-        var date = old.date();
+        let date = old.date();
         want.date = date - Math.abs(sum);
 
         while (want.date < 1) {
@@ -4586,7 +4317,7 @@
             want.year -= 1;
           }
 
-          var max = getMonthLength(want.month, want.year);
+          let max = getMonthLength(want.month, want.year);
           want.date += max;
         }
 
@@ -4594,10 +4325,10 @@
       }; // briefly support day=33 (this does not need to be perfect.)
 
 
-      var rollDaysUp = function rollDaysUp(want, old, sum) {
-        var year = old.year();
-        var month = old.month();
-        var max = getMonthLength(month, year);
+      const rollDaysUp = (want, old, sum) => {
+        let year = old.year();
+        let month = old.month();
+        let max = getMonthLength(month, year);
 
         while (sum > max) {
           sum -= max;
@@ -4625,8 +4356,8 @@
       // we 'model' the calendar here only a little bit
       // and that usually works-out...
 
-      var order = ['millisecond', 'second', 'minute', 'hour', 'date', 'month'];
-      var keep = {
+      const order = ['millisecond', 'second', 'minute', 'hour', 'date', 'month'];
+      let keep = {
         second: order.slice(0, 1),
         minute: order.slice(0, 2),
         quarterhour: order.slice(0, 2),
@@ -4643,7 +4374,7 @@
       keep.season = keep.date;
       keep.quarter = keep.date; // Units need to be dst adjuested
 
-      var dstAwareUnits = {
+      const dstAwareUnits = {
         year: true,
         quarter: true,
         season: true,
@@ -4651,22 +4382,22 @@
         week: true,
         day: true
       };
-      var keepDate = {
+      const keepDate = {
         month: true,
         quarter: true,
         season: true,
         year: true
       };
 
-      var addMethods$3 = function addMethods(SpaceTime) {
+      const addMethods$3 = SpaceTime => {
         SpaceTime.prototype.add = function (num, unit) {
-          var s = this.clone();
+          let s = this.clone();
 
           if (!unit || num === 0) {
             return s; //don't bother
           }
 
-          var old = this.clone();
+          let old = this.clone();
           unit = fns.normalize(unit);
 
           if (unit === 'millisecond') {
@@ -4683,7 +4414,7 @@
 
           if (milliseconds[unit]) {
             s.epoch += milliseconds[unit] * num;
-          } else if (unit === 'week') {
+          } else if (unit === 'week' || unit === 'weekend') {
             s.epoch += milliseconds.day * (num * 7);
           } else if (unit === 'quarter' || unit === 'season') {
             s.epoch += milliseconds.month * (num * 3);
@@ -4692,16 +4423,16 @@
           } //now ensure our milliseconds/etc are in-line
 
 
-          var want = {};
+          let want = {};
 
           if (keep[unit]) {
-            keep[unit].forEach(function (u) {
+            keep[unit].forEach(u => {
               want[u] = old[u]();
             });
           }
 
           if (dstAwareUnits[unit]) {
-            var diff = old.timezone().current.offset - s.timezone().current.offset;
+            const diff = old.timezone().current.offset - s.timezone().current.offset;
             s.epoch += diff * 3600 * 1000;
           } //ensure month/year has ticked-over
 
@@ -4714,21 +4445,24 @@
 
 
           if (unit === 'week') {
-            var sum = old.date() + num * 7;
+            let sum = old.date() + num * 7;
 
             if (sum <= 28 && sum > 1) {
               want.date = sum;
             }
+          }
+
+          if (unit === 'weekend' && s.dayName() !== 'saturday') {
+            s = s.day('saturday', true); //ensure it's saturday
           } //support 25-hour day-changes on dst-changes
           else if (unit === 'date') {
               if (num < 0) {
                 want = _model.daysBack(want, old, num);
               } else {
                 //specify a naive date number, if it's easy to do...
-                var _sum = old.date() + num; // ok, model this one too
+                let sum = old.date() + num; // ok, model this one too
 
-
-                want = _model.days(want, old, _sum);
+                want = _model.days(want, old, sum);
               } //manually punt it if we haven't moved at all..
 
 
@@ -4741,22 +4475,21 @@
                 want.year = old.year(); // handle rollover
 
                 if (want.month < 0) {
-                  var years = Math.floor(want.month / 12);
-                  var remainder = want.month + Math.abs(years) * 12;
+                  let years = Math.floor(want.month / 12);
+                  let remainder = want.month + Math.abs(years) * 12;
                   want.month = remainder;
                   want.year += years;
                 } else if (want.month >= 12) {
-                  var _years = Math.floor(want.month / 12);
-
+                  let years = Math.floor(want.month / 12);
                   want.month = want.month % 12;
-                  want.year += _years;
+                  want.year += years;
                 }
 
                 want.date = old.date();
               } //ensure year has changed (leap-years)
               else if (unit === 'year') {
-                  var wantYear = old.year() + num;
-                  var haveYear = s.year();
+                  let wantYear = old.year() + num;
+                  let haveYear = s.year();
 
                   if (haveYear < wantYear) {
                     s.epoch += milliseconds.day;
@@ -4772,7 +4505,7 @@
 
 
           if (keepDate[unit]) {
-            var max = monthLengths_1[want.month];
+            let max = monthLengths_1[want.month];
             want.date = old.date();
 
             if (want.date > max) {
@@ -4789,7 +4522,7 @@
 
 
         SpaceTime.prototype.subtract = function (num, unit) {
-          var s = this.clone();
+          let s = this.clone();
           return s.add(num * -1, unit);
         }; //add aliases
 
@@ -4800,49 +4533,48 @@
 
       var add = addMethods$3; //make a string, for easy comparison between dates
 
-      var print = {
-        millisecond: function millisecond(s) {
+      const print = {
+        millisecond: s => {
           return s.epoch;
         },
-        second: function second(s) {
+        second: s => {
           return [s.year(), s.month(), s.date(), s.hour(), s.minute(), s.second()].join('-');
         },
-        minute: function minute(s) {
+        minute: s => {
           return [s.year(), s.month(), s.date(), s.hour(), s.minute()].join('-');
         },
-        hour: function hour(s) {
+        hour: s => {
           return [s.year(), s.month(), s.date(), s.hour()].join('-');
         },
-        day: function day(s) {
+        day: s => {
           return [s.year(), s.month(), s.date()].join('-');
         },
-        week: function week(s) {
+        week: s => {
           return [s.year(), s.week()].join('-');
         },
-        month: function month(s) {
+        month: s => {
           return [s.year(), s.month()].join('-');
         },
-        quarter: function quarter(s) {
+        quarter: s => {
           return [s.year(), s.quarter()].join('-');
         },
-        year: function year(s) {
+        year: s => {
           return s.year();
         }
       };
       print.date = print.day;
 
-      var addMethods$2 = function addMethods(SpaceTime) {
-        SpaceTime.prototype.isSame = function (b, unit) {
-          var tzAware = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-          var a = this;
+      const addMethods$2 = SpaceTime => {
+        SpaceTime.prototype.isSame = function (b, unit, tzAware = true) {
+          let a = this;
 
           if (!unit) {
             return null;
           } // support swapped params
 
 
-          if (typeof b === 'string' && _typeof(unit) === 'object') {
-            var tmp = b;
+          if (typeof b === 'string' && typeof unit === 'object') {
+            let tmp = b;
             b = unit;
             unit = tmp;
           }
@@ -4869,11 +4601,11 @@
 
       var same = addMethods$2;
 
-      var addMethods$1 = function addMethods(SpaceTime) {
-        var methods = {
-          isAfter: function isAfter(d) {
+      const addMethods$1 = SpaceTime => {
+        const methods = {
+          isAfter: function (d) {
             d = fns.beADate(d, this);
-            var epoch = fns.getEpoch(d);
+            let epoch = fns.getEpoch(d);
 
             if (epoch === null) {
               return null;
@@ -4881,9 +4613,9 @@
 
             return this.epoch > epoch;
           },
-          isBefore: function isBefore(d) {
+          isBefore: function (d) {
             d = fns.beADate(d, this);
-            var epoch = fns.getEpoch(d);
+            let epoch = fns.getEpoch(d);
 
             if (epoch === null) {
               return null;
@@ -4891,9 +4623,9 @@
 
             return this.epoch < epoch;
           },
-          isEqual: function isEqual(d) {
+          isEqual: function (d) {
             d = fns.beADate(d, this);
-            var epoch = fns.getEpoch(d);
+            let epoch = fns.getEpoch(d);
 
             if (epoch === null) {
               return null;
@@ -4901,17 +4633,16 @@
 
             return this.epoch === epoch;
           },
-          isBetween: function isBetween(start, end) {
-            var isInclusive = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+          isBetween: function (start, end, isInclusive = false) {
             start = fns.beADate(start, this);
             end = fns.beADate(end, this);
-            var startEpoch = fns.getEpoch(start);
+            let startEpoch = fns.getEpoch(start);
 
             if (startEpoch === null) {
               return null;
             }
 
-            var endEpoch = fns.getEpoch(end);
+            let endEpoch = fns.getEpoch(end);
 
             if (endEpoch === null) {
               return null;
@@ -4925,16 +4656,16 @@
           }
         }; //hook them into proto
 
-        Object.keys(methods).forEach(function (k) {
+        Object.keys(methods).forEach(k => {
           SpaceTime.prototype[k] = methods[k];
         });
       };
 
       var compare = addMethods$1;
 
-      var addMethods = function addMethods(SpaceTime) {
-        var methods = {
-          i18n: function i18n(data) {
+      const addMethods = SpaceTime => {
+        const methods = {
+          i18n: data => {
             //change the day names
             if (fns.isObject(data.days)) {
               days.set(data.days);
@@ -4952,17 +4683,16 @@
           }
         }; //hook them into proto
 
-        Object.keys(methods).forEach(function (k) {
+        Object.keys(methods).forEach(k => {
           SpaceTime.prototype[k] = methods[k];
         });
       };
 
       var i18n = addMethods;
-      var timezones = unpack; //fake timezone-support, for fakers (es5 class)
+      let timezones = unpack; //fake timezone-support, for fakers (es5 class)
 
-      var SpaceTime = function SpaceTime(input$1, tz) {
-        var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {}; //the holy moment
-
+      const SpaceTime = function (input$1, tz, options = {}) {
+        //the holy moment
         this.epoch = null; //the shift for the given timezone
 
         this.tz = find(tz, timezones); //whether to output warnings to console
@@ -4982,43 +4712,47 @@
 
         if (options.today !== undefined) {
           this._today = options.today;
-        } //add getter/setters
+        } // dunno if this is a good idea, or not
+        // Object.defineProperty(this, 'parsers', {
+        //   enumerable: false,
+        //   writable: true,
+        //   value: parsers
+        // })
+        //add getter/setters
 
 
         Object.defineProperty(this, 'd', {
           //return a js date object
-          get: function get() {
-            var offset = quick(this); //every computer is somewhere- get this computer's built-in offset
+          get: function () {
+            let offset = quick(this); //every computer is somewhere- get this computer's built-in offset
 
-            var bias = new Date(this.epoch).getTimezoneOffset() || 0; //movement
+            let bias = new Date(this.epoch).getTimezoneOffset() || 0; //movement
 
-            var shift = bias + offset * 60; //in minutes
+            let shift = bias + offset * 60; //in minutes
 
             shift = shift * 60 * 1000; //in ms
             //remove this computer's offset
 
-            var epoch = this.epoch + shift;
-            var d = new Date(epoch);
+            let epoch = this.epoch + shift;
+            let d = new Date(epoch);
             return d;
           }
         }); //add this data on the object, to allow adding new timezones
 
         Object.defineProperty(this, 'timezones', {
-          get: function get() {
-            return timezones;
-          },
-          set: function set(obj) {
+          get: () => timezones,
+          set: obj => {
             timezones = obj;
             return obj;
           }
         }); //parse the various formats
 
-        var tmp = input(this, input$1, tz);
+        let tmp = input(this, input$1);
         this.epoch = tmp.epoch;
       }; //(add instance methods to prototype)
 
 
-      Object.keys(methods_1).forEach(function (k) {
+      Object.keys(methods_1).forEach(k => {
         SpaceTime.prototype[k] = methods_1[k];
       }); // ¯\_(ツ)_/¯
 
@@ -5026,7 +4760,8 @@
         return new SpaceTime(this.epoch, this.tz, {
           silent: this.silent,
           weekStart: this._weekStart,
-          today: this._today
+          today: this._today,
+          parsers: this.parsers
         });
       }; //return native date object at the same epoch
 
@@ -5043,9 +4778,9 @@
       i18n(SpaceTime);
       var spacetime = SpaceTime;
 
-      var whereIts = function whereIts(a, b) {
-        var start = new spacetime(null);
-        var end = new spacetime(null);
+      const whereIts = (a, b) => {
+        let start = new spacetime(null);
+        let end = new spacetime(null);
         start = start.time(a); //if b is undefined, use as 'within one hour'
 
         if (b) {
@@ -5054,15 +4789,15 @@
           end = start.add(59, 'minutes');
         }
 
-        var startHour = start.hour();
-        var endHour = end.hour();
-        var tzs = Object.keys(start.timezones).filter(function (tz) {
+        let startHour = start.hour();
+        let endHour = end.hour();
+        let tzs = Object.keys(start.timezones).filter(tz => {
           if (tz.indexOf('/') === -1) {
             return false;
           }
 
-          var m = new spacetime(null, tz);
-          var hour = m.hour(); //do 'calendar-compare' not real-time-compare
+          let m = new spacetime(null, tz);
+          let hour = m.hour(); //do 'calendar-compare' not real-time-compare
 
           if (hour >= startHour && hour <= endHour) {
             //test minutes too, if applicable
@@ -5083,66 +4818,64 @@
       };
 
       var whereIts_1 = whereIts;
-      var _version = '6.14.0';
+      var _version = '6.16.0';
 
-      var main = function main(input, tz, options) {
-        return new spacetime(input, tz, options);
-      }; // set all properties of a given 'today' object
+      const main = (input, tz, options) => new spacetime(input, tz, options); // set all properties of a given 'today' object
 
 
-      var setToday = function setToday(s) {
-        var today = s._today || {};
-        Object.keys(today).forEach(function (k) {
+      const setToday = function (s) {
+        let today = s._today || {};
+        Object.keys(today).forEach(k => {
           s = s[k](today[k]);
         });
         return s;
       }; //some helper functions on the main method
 
 
-      main.now = function (tz, options) {
-        var s = new spacetime(new Date().getTime(), tz, options);
+      main.now = (tz, options) => {
+        let s = new spacetime(new Date().getTime(), tz, options);
         s = setToday(s);
         return s;
       };
 
-      main.today = function (tz, options) {
-        var s = new spacetime(new Date().getTime(), tz, options);
+      main.today = (tz, options) => {
+        let s = new spacetime(new Date().getTime(), tz, options);
         s = setToday(s);
         return s.startOf('day');
       };
 
-      main.tomorrow = function (tz, options) {
-        var s = new spacetime(new Date().getTime(), tz, options);
+      main.tomorrow = (tz, options) => {
+        let s = new spacetime(new Date().getTime(), tz, options);
         s = setToday(s);
         return s.add(1, 'day').startOf('day');
       };
 
-      main.yesterday = function (tz, options) {
-        var s = new spacetime(new Date().getTime(), tz, options);
+      main.yesterday = (tz, options) => {
+        let s = new spacetime(new Date().getTime(), tz, options);
         s = setToday(s);
         return s.subtract(1, 'day').startOf('day');
       };
 
-      main.extend = function (obj) {
-        Object.keys(obj).forEach(function (k) {
+      main.extend = function (obj = {}) {
+        Object.keys(obj).forEach(k => {
           spacetime.prototype[k] = obj[k];
         });
         return this;
       };
 
       main.timezones = function () {
-        var s = new spacetime();
+        let s = new spacetime();
         return s.timezones;
       };
 
       main.max = function (tz, options) {
-        var s = new spacetime(null, tz, options);
+        let s = new spacetime(null, tz, options);
         s.epoch = 8640000000000000;
         return s;
       };
 
       main.min = function (tz, options) {
-        var s = new spacetime(null, tz, options);
+        let s = new spacetime(null, tz, options);
         s.epoch = -8640000000000000;
         return s;
       }; //find tz by time
@@ -5160,13 +4893,13 @@
   // these timezone abbreviations are wholly made-up by me, Spencer Kelly, with no expertise in geography
   // generated humbly from https://github.com/spencermountain/spacetime-informal
 
-  var america = 'America/';
-  var asia = 'Asia/';
-  var europe = 'Europe/';
-  var africa = 'Africa/';
-  var aus = 'Australia/';
-  var pac = 'Pacific/';
-  var informal = {
+  const america = 'America/';
+  const asia = 'Asia/';
+  const europe = 'Europe/';
+  const africa = 'Africa/';
+  const aus = 'Australia/';
+  const pac = 'Pacific/';
+  const informal = {
     //europe
     'british summer time': europe + 'London',
     bst: europe + 'London',
@@ -5398,8 +5131,8 @@
     pgt: pac + 'Bougainville'
   }; //add the official iana zonefile names
 
-  var iana = spacetime().timezones;
-  var formal = Object.keys(iana).reduce(function (h, k) {
+  let iana = spacetime().timezones;
+  let formal = Object.keys(iana).reduce((h, k) => {
     h[k] = k;
     return h;
   }, {});
@@ -5427,26 +5160,24 @@
   // 'all day',
   ];
 
-  var data = [[dates, '#Date'], [durations$1, '#Duration'], [holidays, '#Holiday'], [times$1, '#Time'], [Object.keys(_timezones), '#Timezone']];
-  var lex = {
+  const data = [[dates, '#Date'], [durations$1, '#Duration'], [holidays, '#Holiday'], [times$1, '#Time'], [Object.keys(_timezones), '#Timezone']];
+  let lex = {
     'a couple': 'Value',
     thur: 'WeekDay'
   };
-  data.forEach(function (a) {
-    for (var i = 0; i < a[0].length; i++) {
+  data.forEach(a => {
+    for (let i = 0; i < a[0].length; i++) {
       lex[a[0][i]] = a[1];
     }
   });
   var words = lex;
 
-  var Unit = /*#__PURE__*/function () {
-    function Unit(input, unit, context) {
-      _classCallCheck(this, Unit);
-
+  class Unit {
+    constructor(input, unit, context) {
       this.unit = unit || 'day';
       this.setTime = false;
       context = context || {};
-      var today = {};
+      let today = {};
 
       if (context.today) {
         today = {
@@ -5457,7 +5188,7 @@
       } // set it to the beginning of the given unit
 
 
-      var d = spacetime(input, context.timezone, {
+      let d = spacetime(input, context.timezone, {
         today: today
       });
       Object.defineProperty(this, 'd', {
@@ -5473,420 +5204,340 @@
     } // make a new one
 
 
-    _createClass(Unit, [{
-      key: "clone",
-      value: function clone() {
-        var d = new Unit(this.d, this.unit, this.context);
-        d.setTime = this.setTime;
-        return d;
-      }
-    }, {
-      key: "log",
-      value: function log() {
-        console.log('--');
-        this.d.log();
-        console.log('\n');
-        return this;
-      }
-    }, {
-      key: "applyShift",
-      value: function applyShift() {
-        var _this = this;
+    clone() {
+      let d = new Unit(this.d, this.unit, this.context);
+      d.setTime = this.setTime;
+      return d;
+    }
 
-        var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-        Object.keys(obj).forEach(function (unit) {
-          _this.d = _this.d.add(obj[unit], unit);
+    log() {
+      console.log('--');
+      this.d.log();
+      console.log('\n');
+      return this;
+    }
 
-          if (unit === 'hour' || unit === 'minute') {
-            _this.setTime = true;
-          }
-        });
-        return this;
-      }
-    }, {
-      key: "applyTime",
-      value: function applyTime(str) {
-        if (str) {
-          var justHour = /^[0-9]{1,2}$/;
+    applyShift(obj = {}) {
+      Object.keys(obj).forEach(unit => {
+        this.d = this.d.add(obj[unit], unit);
 
-          if (justHour.test(str)) {
-            this.d = this.d.hour(str);
-          } else {
-            this.d = this.d.time(str);
-          } // wiggle the best am/pm
+        if (unit === 'hour' || unit === 'minute') {
+          this.setTime = true;
+        }
+      });
+      return this;
+    }
 
+    applyTime(str) {
+      if (str) {
+        let justHour = /^[0-9]{1,2}$/;
 
-          var amPM = /[ap]m/.test(str);
-
-          if (!amPM) {
-            var tooEarly = this.d.time('6:00am');
-
-            if (this.d.isBefore(tooEarly)) {
-              this.d = this.d.ampm('pm');
-            }
-
-            var tooLate = this.d.time('10:00pm');
-
-            if (this.d.isAfter(tooLate)) {
-              this.d = this.d.ampm('am');
-            }
-          }
+        if (justHour.test(str)) {
+          this.d = this.d.hour(str);
         } else {
-          this.d = this.d.startOf('day'); //zero-out time
-        }
+          this.d = this.d.time(str);
+        } // wiggle the best am/pm
 
-        this.setTime = true;
-        return this;
-      }
-    }, {
-      key: "applyWeekDay",
-      value: function applyWeekDay(day) {
-        if (day) {
-          var epoch = this.d.epoch;
-          this.d = this.d.day(day);
 
-          if (this.d.epoch < epoch) {
-            this.d = this.d.add(1, 'week');
+        let amPM = /[ap]m/.test(str);
+
+        if (!amPM) {
+          let tooEarly = this.d.time('6:00am');
+
+          if (this.d.isBefore(tooEarly)) {
+            this.d = this.d.ampm('pm');
+          }
+
+          let tooLate = this.d.time('10:00pm');
+
+          if (this.d.isAfter(tooLate)) {
+            this.d = this.d.ampm('am');
           }
         }
-
-        return this;
+      } else {
+        this.d = this.d.startOf('day'); //zero-out time
       }
-    }, {
-      key: "applyRel",
-      value: function applyRel(rel) {
-        if (rel === 'next') {
-          return this.next();
-        }
 
-        if (rel === 'last' || rel === 'this-past') {
-          // special 'this past' logic is handled in WeekDay
-          return this.last();
-        }
+      this.setTime = true;
+      return this;
+    }
 
-        return this;
+    applyWeekDay(day) {
+      if (day) {
+        let epoch = this.d.epoch;
+        this.d = this.d.day(day);
+
+        if (this.d.epoch < epoch) {
+          this.d = this.d.add(1, 'week');
+        }
       }
-    }, {
-      key: "applySection",
-      value: function applySection(section) {
-        if (section === 'start') {
-          return this.start();
-        }
 
-        if (section === 'end') {
-          return this.end();
-        }
+      return this;
+    }
 
-        if (section === 'middle') {
-          return this.middle();
-        }
-
-        return this;
+    applyRel(rel) {
+      if (rel === 'next') {
+        return this.next();
       }
-    }, {
-      key: "format",
-      value: function format(fmt) {
-        return this.d.format(fmt);
+
+      if (rel === 'last' || rel === 'this-past') {
+        // special 'this past' logic is handled in WeekDay
+        return this.last();
       }
-    }, {
-      key: "start",
-      value: function start() {
-        // do we have a custom day-start?
-        if (this.context.dayStart) {
-          var dayStart = this.d.time(this.context.dayStart);
 
-          if (dayStart.isBefore(this.d)) {
-            this.d = dayStart;
-            return this;
-          }
-        }
+      return this;
+    }
 
-        this.d = this.d.startOf(this.unit);
-        return this;
+    applySection(section) {
+      if (section === 'start') {
+        return this.start();
       }
-    }, {
-      key: "end",
-      value: function end() {
-        // do we have a custom day-end?
-        this.d = this.d.endOf(this.unit);
 
-        if (this.context.dayEnd) {
-          this.d = this.d.startOf('day');
-          var dayEnd = this.d.time(this.context.dayEnd);
-
-          if (dayEnd.isAfter(this.d)) {
-            this.d = dayEnd;
-            return this;
-          }
-        }
-
-        return this;
+      if (section === 'end') {
+        return this.end();
       }
-    }, {
-      key: "middle",
-      value: function middle() {
-        var diff = this.d.diff(this.d.endOf(this.unit));
-        var minutes = Math.round(diff.minutes / 2);
-        this.d = this.d.add(minutes, 'minutes');
-        return this;
-      } // move it to 3/4s through
 
-    }, {
-      key: "beforeEnd",
-      value: function beforeEnd() {
-        var diff = this.d.startOf(this.unit).diff(this.d.endOf(this.unit));
-        var mins = Math.round(diff.minutes / 4);
-        this.d = this.d.endOf(this.unit);
-        this.d = this.d.minus(mins, 'minutes');
-
-        if (this.context.dayStart) {
-          this.d = this.d.time(this.context.dayStart);
-        }
-
-        return this;
-      } // the millescond before
-
-    }, {
-      key: "before",
-      value: function before() {
-        this.d = this.d.minus(1, this.unit);
-        this.d = this.d.endOf(this.unit);
-
-        if (this.context.dayEnd) {
-          this.d = this.d.time(this.context.dayEnd);
-        }
-
-        return this;
-      } // 'after 2019'
-
-    }, {
-      key: "after",
-      value: function after() {
-        this.d = this.d.add(1, this.unit);
-        this.d = this.d.startOf(this.unit);
-        return this;
-      } // tricky: 'next june' 'next tuesday'
-
-    }, {
-      key: "next",
-      value: function next() {
-        this.d = this.d.add(1, this.unit);
-        this.d = this.d.startOf(this.unit);
-        return this;
-      } // tricky: 'last june' 'last tuesday'
-
-    }, {
-      key: "last",
-      value: function last() {
-        this.d = this.d.minus(1, this.unit);
-        this.d = this.d.startOf(this.unit);
-        return this;
+      if (section === 'middle') {
+        return this.middle();
       }
-    }]);
 
-    return Unit;
-  }();
+      return this;
+    }
+
+    format(fmt) {
+      return this.d.format(fmt);
+    }
+
+    start() {
+      // do we have a custom day-start?
+      if (this.context.dayStart) {
+        let dayStart = this.d.time(this.context.dayStart);
+
+        if (dayStart.isBefore(this.d)) {
+          this.d = dayStart;
+          return this;
+        }
+      }
+
+      this.d = this.d.startOf(this.unit);
+      return this;
+    }
+
+    end() {
+      // do we have a custom day-end?
+      this.d = this.d.endOf(this.unit);
+
+      if (this.context.dayEnd) {
+        this.d = this.d.startOf('day');
+        let dayEnd = this.d.time(this.context.dayEnd);
+
+        if (dayEnd.isAfter(this.d)) {
+          this.d = dayEnd;
+          return this;
+        }
+      }
+
+      return this;
+    }
+
+    middle() {
+      let diff = this.d.diff(this.d.endOf(this.unit));
+      let minutes = Math.round(diff.minutes / 2);
+      this.d = this.d.add(minutes, 'minutes');
+      return this;
+    } // move it to 3/4s through
+
+
+    beforeEnd() {
+      let diff = this.d.startOf(this.unit).diff(this.d.endOf(this.unit));
+      let mins = Math.round(diff.minutes / 4);
+      this.d = this.d.endOf(this.unit);
+      this.d = this.d.minus(mins, 'minutes');
+
+      if (this.context.dayStart) {
+        this.d = this.d.time(this.context.dayStart);
+      }
+
+      return this;
+    } // the millescond before
+
+
+    before() {
+      this.d = this.d.minus(1, this.unit);
+      this.d = this.d.endOf(this.unit);
+
+      if (this.context.dayEnd) {
+        this.d = this.d.time(this.context.dayEnd);
+      }
+
+      return this;
+    } // 'after 2019'
+
+
+    after() {
+      this.d = this.d.add(1, this.unit);
+      this.d = this.d.startOf(this.unit);
+      return this;
+    } // tricky: 'next june' 'next tuesday'
+
+
+    next() {
+      this.d = this.d.add(1, this.unit);
+      this.d = this.d.startOf(this.unit);
+      return this;
+    } // tricky: 'last june' 'last tuesday'
+
+
+    last() {
+      this.d = this.d.minus(1, this.unit);
+      this.d = this.d.startOf(this.unit);
+      return this;
+    }
+
+  }
 
   var Unit_1 = Unit;
 
-  var Day$5 = /*#__PURE__*/function (_Unit) {
-    _inherits(Day, _Unit);
+  class Day$5 extends Unit_1 {
+    constructor(input, unit, context) {
+      super(input, unit, context);
+      this.unit = 'day';
 
-    var _super = _createSuper(Day);
-
-    function Day(input, unit, context) {
-      var _this;
-
-      _classCallCheck(this, Day);
-
-      _this = _super.call(this, input, unit, context);
-      _this.unit = 'day';
-
-      if (_this.d.isValid()) {
-        _this.d = _this.d.startOf('day');
+      if (this.d.isValid()) {
+        this.d = this.d.startOf('day');
       }
-
-      return _this;
     }
 
-    _createClass(Day, [{
-      key: "middle",
-      value: function middle() {
-        this.d = this.d.time('10am');
-        return this;
-      }
-    }, {
-      key: "beforeEnd",
-      value: function beforeEnd() {
-        this.d = this.d.time('2pm');
-        return this;
-      }
-    }]);
-
-    return Day;
-  }(Unit_1); // like 'feb 2'
-
-
-  var CalendarDate$1 = /*#__PURE__*/function (_Day) {
-    _inherits(CalendarDate, _Day);
-
-    var _super2 = _createSuper(CalendarDate);
-
-    function CalendarDate(input, unit, context) {
-      var _this2;
-
-      _classCallCheck(this, CalendarDate);
-
-      _this2 = _super2.call(this, input, unit, context);
-      _this2.unit = 'day';
-
-      if (_this2.d.isValid()) {
-        _this2.d = _this2.d.startOf('day');
-      }
-
-      return _this2;
+    middle() {
+      this.d = this.d.time('10am');
+      return this;
     }
 
-    _createClass(CalendarDate, [{
-      key: "next",
-      value: function next() {
-        this.d = this.d.add(1, 'year');
-        return this;
+    beforeEnd() {
+      this.d = this.d.time('2pm');
+      return this;
+    }
+
+  } // like 'feb 2'
+
+
+  class CalendarDate$1 extends Day$5 {
+    constructor(input, unit, context) {
+      super(input, unit, context);
+      this.unit = 'day';
+
+      if (this.d.isValid()) {
+        this.d = this.d.startOf('day');
       }
-    }, {
-      key: "last",
-      value: function last() {
-        this.d = this.d.minus(1, 'year');
-        return this;
-      }
-    }]);
+    }
 
-    return CalendarDate;
-  }(Day$5);
+    next() {
+      this.d = this.d.add(1, 'year');
+      return this;
+    }
 
-  var WeekDay$2 = /*#__PURE__*/function (_Day2) {
-    _inherits(WeekDay, _Day2);
+    last() {
+      this.d = this.d.minus(1, 'year');
+      return this;
+    }
 
-    var _super3 = _createSuper(WeekDay);
+  }
 
-    function WeekDay(input, unit, context) {
-      var _this3;
-
-      _classCallCheck(this, WeekDay);
-
-      _this3 = _super3.call(this, input, unit, context);
-      _this3.unit = 'day'; // is the input just a weekday?
+  class WeekDay$2 extends Day$5 {
+    constructor(input, unit, context) {
+      super(input, unit, context);
+      this.unit = 'day'; // is the input just a weekday?
 
       if (typeof input === 'string') {
-        _this3.d = spacetime(context.today, context.timezone);
-        _this3.d = _this3.d.day(input); // assume a wednesday in the future
+        this.d = spacetime(context.today, context.timezone);
+        this.d = this.d.day(input); // assume a wednesday in the future
 
-        if (_this3.d.isBefore(context.today)) {
-          _this3.d = _this3.d.add(7, 'days');
+        if (this.d.isBefore(context.today)) {
+          this.d = this.d.add(7, 'days');
         }
       } else {
-        _this3.d = input;
+        this.d = input;
       }
 
-      _this3.weekDay = _this3.d.dayName();
+      this.weekDay = this.d.dayName();
 
-      if (_this3.d.isValid()) {
-        _this3.d = _this3.d.startOf('day');
+      if (this.d.isValid()) {
+        this.d = this.d.startOf('day');
       }
-
-      return _this3;
     } // clone() {
     //   return new WeekDay(this.d, this.unit, this.context)
     // }
 
 
-    _createClass(WeekDay, [{
-      key: "next",
-      value: function next() {
-        this.d = this.d.add(7, 'days');
-        this.d = this.d.day(this.weekDay);
-        return this;
-      }
-    }, {
-      key: "last",
-      value: function last() {
-        this.d = this.d.minus(7, 'days');
-        this.d = this.d.day(this.weekDay);
-        return this;
-      } // the millescond before
-
-    }, {
-      key: "before",
-      value: function before() {
-        this.d = this.d.minus(1, 'day');
-        this.d = this.d.endOf('day');
-
-        if (this.context.dayEnd) {
-          this.d = this.d.time(this.context.dayEnd);
-        }
-
-        return this;
-      }
-    }, {
-      key: "applyRel",
-      value: function applyRel(rel) {
-        if (rel === 'next') {
-          var tooFar = this.context.today.endOf('week').add(1, 'week');
-          this.next(); //  did we go too-far?
-
-          if (this.d.isAfter(tooFar)) {
-            this.last(); // go back
-          }
-
-          return this;
-        } // the closest-one backwards
-
-
-        if (rel === 'this-past') {
-          return this.last();
-        }
-
-        if (rel === 'last') {
-          var start = this.context.today.startOf('week');
-          this.last(); // are we still in 'this week' though?
-
-          if (this.d.isBefore(start) === false) {
-            this.last(); // do it again
-          }
-
-          return this;
-        }
-
-        return this;
-      }
-    }]);
-
-    return WeekDay;
-  }(Day$5); // like 'haloween'
-
-
-  var Holiday$1 = /*#__PURE__*/function (_CalendarDate) {
-    _inherits(Holiday, _CalendarDate);
-
-    var _super4 = _createSuper(Holiday);
-
-    function Holiday(input, unit, context) {
-      var _this4;
-
-      _classCallCheck(this, Holiday);
-
-      _this4 = _super4.call(this, input, unit, context);
-      _this4.unit = 'day';
-
-      if (_this4.d.isValid()) {
-        _this4.d = _this4.d.startOf('day');
-      }
-
-      return _this4;
+    next() {
+      this.d = this.d.add(7, 'days');
+      this.d = this.d.day(this.weekDay);
+      return this;
     }
 
-    return Holiday;
-  }(CalendarDate$1);
+    last() {
+      this.d = this.d.minus(7, 'days');
+      this.d = this.d.day(this.weekDay);
+      return this;
+    } // the millescond before
+
+
+    before() {
+      this.d = this.d.minus(1, 'day');
+      this.d = this.d.endOf('day');
+
+      if (this.context.dayEnd) {
+        this.d = this.d.time(this.context.dayEnd);
+      }
+
+      return this;
+    }
+
+    applyRel(rel) {
+      if (rel === 'next') {
+        let tooFar = this.context.today.endOf('week').add(1, 'week');
+        this.next(); //  did we go too-far?
+
+        if (this.d.isAfter(tooFar)) {
+          this.last(); // go back
+        }
+
+        return this;
+      } // the closest-one backwards
+
+
+      if (rel === 'this-past') {
+        return this.last();
+      }
+
+      if (rel === 'last') {
+        let start = this.context.today.startOf('week');
+        this.last(); // are we still in 'this week' though?
+
+        if (this.d.isBefore(start) === false) {
+          this.last(); // do it again
+        }
+
+        return this;
+      }
+
+      return this;
+    }
+
+  } // like 'haloween'
+
+
+  class Holiday$1 extends CalendarDate$1 {
+    constructor(input, unit, context) {
+      super(input, unit, context);
+      this.unit = 'day';
+
+      if (this.d.isValid()) {
+        this.d = this.d.startOf('day');
+      }
+    }
+
+  }
 
   var _day = {
     Day: Day$5,
@@ -5895,201 +5546,120 @@
     Holiday: Holiday$1
   };
 
-  var AnyMonth$1 = /*#__PURE__*/function (_Unit) {
-    _inherits(AnyMonth, _Unit);
+  class AnyMonth$1 extends Unit_1 {
+    constructor(input, unit, context) {
+      super(input, unit, context);
+      this.unit = 'month'; // set to beginning
 
-    var _super = _createSuper(AnyMonth);
-
-    function AnyMonth(input, unit, context) {
-      var _this;
-
-      _classCallCheck(this, AnyMonth);
-
-      _this = _super.call(this, input, unit, context);
-      _this.unit = 'month'; // set to beginning
-
-      if (_this.d.isValid()) {
-        _this.d = _this.d.startOf(_this.unit);
-      }
-
-      return _this;
-    }
-
-    return AnyMonth;
-  }(Unit_1); // a specific month, like 'March'
-
-
-  var Month$2 = /*#__PURE__*/function (_Unit2) {
-    _inherits(Month, _Unit2);
-
-    var _super2 = _createSuper(Month);
-
-    function Month(input, unit, context) {
-      var _this2;
-
-      _classCallCheck(this, Month);
-
-      _this2 = _super2.call(this, input, unit, context);
-      _this2.unit = 'month'; // set to beginning
-
-      if (_this2.d.isValid()) {
-        _this2.d = _this2.d.startOf(_this2.unit);
-      }
-
-      return _this2;
-    }
-
-    _createClass(Month, [{
-      key: "next",
-      value: function next() {
-        this.d = this.d.add(1, 'year');
-        this.d = this.d.startOf('month');
-        return this;
-      }
-    }, {
-      key: "last",
-      value: function last() {
-        this.d = this.d.minus(1, 'year');
-        this.d = this.d.startOf('month');
-        return this;
-      }
-    }]);
-
-    return Month;
-  }(Unit_1);
-
-  var AnyQuarter$1 = /*#__PURE__*/function (_Unit3) {
-    _inherits(AnyQuarter, _Unit3);
-
-    var _super3 = _createSuper(AnyQuarter);
-
-    function AnyQuarter(input, unit, context) {
-      var _this3;
-
-      _classCallCheck(this, AnyQuarter);
-
-      _this3 = _super3.call(this, input, unit, context);
-      _this3.unit = 'quarter'; // set to beginning
-
-      if (_this3.d.isValid()) {
-        _this3.d = _this3.d.startOf(_this3.unit);
-      }
-
-      return _this3;
-    }
-
-    _createClass(AnyQuarter, [{
-      key: "last",
-      value: function last() {
-        this.d = this.d.minus(1, 'quarter');
+      if (this.d.isValid()) {
         this.d = this.d.startOf(this.unit);
-        return this;
       }
-    }]);
-
-    return AnyQuarter;
-  }(Unit_1);
-
-  var Quarter$2 = /*#__PURE__*/function (_Unit4) {
-    _inherits(Quarter, _Unit4);
-
-    var _super4 = _createSuper(Quarter);
-
-    function Quarter(input, unit, context) {
-      var _this4;
-
-      _classCallCheck(this, Quarter);
-
-      _this4 = _super4.call(this, input, unit, context);
-      _this4.unit = 'quarter'; // set to beginning
-
-      if (_this4.d.isValid()) {
-        _this4.d = _this4.d.startOf(_this4.unit);
-      }
-
-      return _this4;
     }
 
-    _createClass(Quarter, [{
-      key: "next",
-      value: function next() {
-        this.d = this.d.add(1, 'year');
+  } // a specific month, like 'March'
+
+
+  class Month$2 extends Unit_1 {
+    constructor(input, unit, context) {
+      super(input, unit, context);
+      this.unit = 'month'; // set to beginning
+
+      if (this.d.isValid()) {
         this.d = this.d.startOf(this.unit);
-        return this;
       }
-    }, {
-      key: "last",
-      value: function last() {
-        this.d = this.d.minus(1, 'year');
-        this.d = this.d.startOf(this.unit);
-        return this;
-      }
-    }]);
-
-    return Quarter;
-  }(Unit_1);
-
-  var Season$3 = /*#__PURE__*/function (_Unit5) {
-    _inherits(Season, _Unit5);
-
-    var _super5 = _createSuper(Season);
-
-    function Season(input, unit, context) {
-      var _this5;
-
-      _classCallCheck(this, Season);
-
-      _this5 = _super5.call(this, input, unit, context);
-      _this5.unit = 'season'; // set to beginning
-
-      if (_this5.d.isValid()) {
-        _this5.d = _this5.d.startOf(_this5.unit);
-      }
-
-      return _this5;
     }
 
-    _createClass(Season, [{
-      key: "next",
-      value: function next() {
-        this.d = this.d.add(1, 'year');
-        this.d = this.d.startOf(this.unit);
-        return this;
-      }
-    }, {
-      key: "last",
-      value: function last() {
-        this.d = this.d.minus(1, 'year');
-        this.d = this.d.startOf(this.unit);
-        return this;
-      }
-    }]);
-
-    return Season;
-  }(Unit_1);
-
-  var Year$2 = /*#__PURE__*/function (_Unit6) {
-    _inherits(Year, _Unit6);
-
-    var _super6 = _createSuper(Year);
-
-    function Year(input, unit, context) {
-      var _this6;
-
-      _classCallCheck(this, Year);
-
-      _this6 = _super6.call(this, input, unit, context);
-      _this6.unit = 'year';
-
-      if (_this6.d.isValid()) {
-        _this6.d = _this6.d.startOf('year');
-      }
-
-      return _this6;
+    next() {
+      this.d = this.d.add(1, 'year');
+      this.d = this.d.startOf('month');
+      return this;
     }
 
-    return Year;
-  }(Unit_1);
+    last() {
+      this.d = this.d.minus(1, 'year');
+      this.d = this.d.startOf('month');
+      return this;
+    }
+
+  }
+
+  class AnyQuarter$1 extends Unit_1 {
+    constructor(input, unit, context) {
+      super(input, unit, context);
+      this.unit = 'quarter'; // set to beginning
+
+      if (this.d.isValid()) {
+        this.d = this.d.startOf(this.unit);
+      }
+    }
+
+    last() {
+      this.d = this.d.minus(1, 'quarter');
+      this.d = this.d.startOf(this.unit);
+      return this;
+    }
+
+  }
+
+  class Quarter$2 extends Unit_1 {
+    constructor(input, unit, context) {
+      super(input, unit, context);
+      this.unit = 'quarter'; // set to beginning
+
+      if (this.d.isValid()) {
+        this.d = this.d.startOf(this.unit);
+      }
+    }
+
+    next() {
+      this.d = this.d.add(1, 'year');
+      this.d = this.d.startOf(this.unit);
+      return this;
+    }
+
+    last() {
+      this.d = this.d.minus(1, 'year');
+      this.d = this.d.startOf(this.unit);
+      return this;
+    }
+
+  }
+
+  class Season$3 extends Unit_1 {
+    constructor(input, unit, context) {
+      super(input, unit, context);
+      this.unit = 'season'; // set to beginning
+
+      if (this.d.isValid()) {
+        this.d = this.d.startOf(this.unit);
+      }
+    }
+
+    next() {
+      this.d = this.d.add(1, 'year');
+      this.d = this.d.startOf(this.unit);
+      return this;
+    }
+
+    last() {
+      this.d = this.d.minus(1, 'year');
+      this.d = this.d.startOf(this.unit);
+      return this;
+    }
+
+  }
+
+  class Year$2 extends Unit_1 {
+    constructor(input, unit, context) {
+      super(input, unit, context);
+      this.unit = 'year';
+
+      if (this.d.isValid()) {
+        this.d = this.d.startOf('year');
+      }
+    }
+
+  }
 
   var _year = {
     AnyMonth: AnyMonth$1,
@@ -6100,169 +5670,105 @@
     Year: Year$2
   };
 
-  var Week$2 = /*#__PURE__*/function (_Unit) {
-    _inherits(Week, _Unit);
+  class Week$2 extends Unit_1 {
+    constructor(input, unit, context) {
+      super(input, unit, context);
+      this.unit = 'week';
 
-    var _super = _createSuper(Week);
-
-    function Week(input, unit, context) {
-      var _this;
-
-      _classCallCheck(this, Week);
-
-      _this = _super.call(this, input, unit, context);
-      _this.unit = 'week';
-
-      if (_this.d.isValid()) {
-        _this.d = _this.d.startOf('week');
+      if (this.d.isValid()) {
+        this.d = this.d.startOf('week');
       }
-
-      return _this;
     }
 
-    _createClass(Week, [{
-      key: "clone",
-      value: function clone() {
-        return new Week(this.d, this.unit, this.context);
-      }
-    }, {
-      key: "middle",
-      value: function middle() {
-        this.d = this.d.add(2, 'days'); //wednesday
-
-        return this;
-      } // move it to 3/4s through
-
-    }, {
-      key: "beforeEnd",
-      value: function beforeEnd() {
-        this.d = this.d.day('friday');
-        return this;
-      }
-    }]);
-
-    return Week;
-  }(Unit_1); //may need some work
-
-
-  var WeekEnd$2 = /*#__PURE__*/function (_Unit2) {
-    _inherits(WeekEnd, _Unit2);
-
-    var _super2 = _createSuper(WeekEnd);
-
-    function WeekEnd(input, unit, context) {
-      var _this2;
-
-      _classCallCheck(this, WeekEnd);
-
-      _this2 = _super2.call(this, input, unit, context);
-      _this2.unit = 'week';
-
-      if (_this2.d.isValid()) {
-        _this2.d = _this2.d.day('saturday');
-        _this2.d = _this2.d.startOf('day');
-      }
-
-      return _this2;
+    clone() {
+      return new Week$2(this.d, this.unit, this.context);
     }
 
-    _createClass(WeekEnd, [{
-      key: "start",
-      value: function start() {
-        this.d = this.d.day('saturday').startOf('day');
-        return this;
-      } // end() {
-      //   this.d = this.d.day('sunday').endOf('day')
-      //   return this
-      // }
+    middle() {
+      this.d = this.d.add(2, 'days'); //wednesday
 
-    }, {
-      key: "next",
-      value: function next() {
-        this.d = this.d.add(1, this.unit);
-        this.d = this.d.startOf('weekend');
-        return this;
-      }
-    }, {
-      key: "last",
-      value: function last() {
-        this.d = this.d.minus(1, this.unit);
-        this.d = this.d.startOf('weekend');
-        return this;
-      }
-    }]);
+      return this;
+    } // move it to 3/4s through
 
-    return WeekEnd;
-  }(Unit_1);
+
+    beforeEnd() {
+      this.d = this.d.day('friday');
+      return this;
+    }
+
+  } //may need some work
+
+
+  class WeekEnd$2 extends Unit_1 {
+    constructor(input, unit, context) {
+      super(input, unit, context);
+      this.unit = 'week';
+
+      if (this.d.isValid()) {
+        this.d = this.d.day('saturday');
+        this.d = this.d.startOf('day');
+      }
+    }
+
+    start() {
+      this.d = this.d.day('saturday').startOf('day');
+      return this;
+    } // end() {
+    //   this.d = this.d.day('sunday').endOf('day')
+    //   return this
+    // }
+
+
+    next() {
+      this.d = this.d.add(1, this.unit);
+      this.d = this.d.startOf('weekend');
+      return this;
+    }
+
+    last() {
+      this.d = this.d.minus(1, this.unit);
+      this.d = this.d.startOf('weekend');
+      return this;
+    }
+
+  }
 
   var _week = {
     Week: Week$2,
     WeekEnd: WeekEnd$2
   };
 
-  var Hour$2 = /*#__PURE__*/function (_Unit) {
-    _inherits(Hour, _Unit);
+  class Hour$2 extends Unit_1 {
+    constructor(input, unit, context) {
+      super(input, unit, context, true);
+      this.unit = 'hour';
 
-    var _super = _createSuper(Hour);
-
-    function Hour(input, unit, context) {
-      var _this;
-
-      _classCallCheck(this, Hour);
-
-      _this = _super.call(this, input, unit, context, true);
-      _this.unit = 'hour';
-
-      if (_this.d.isValid()) {
-        _this.d = _this.d.startOf('hour');
+      if (this.d.isValid()) {
+        this.d = this.d.startOf('hour');
       }
-
-      return _this;
     }
 
-    return Hour;
-  }(Unit_1);
+  }
 
-  var Minute$2 = /*#__PURE__*/function (_Unit2) {
-    _inherits(Minute, _Unit2);
+  class Minute$2 extends Unit_1 {
+    constructor(input, unit, context) {
+      super(input, unit, context, true);
+      this.unit = 'minute';
 
-    var _super2 = _createSuper(Minute);
-
-    function Minute(input, unit, context) {
-      var _this2;
-
-      _classCallCheck(this, Minute);
-
-      _this2 = _super2.call(this, input, unit, context, true);
-      _this2.unit = 'minute';
-
-      if (_this2.d.isValid()) {
-        _this2.d = _this2.d.startOf('minute');
+      if (this.d.isValid()) {
+        this.d = this.d.startOf('minute');
       }
-
-      return _this2;
     }
 
-    return Minute;
-  }(Unit_1);
+  }
 
-  var Moment$4 = /*#__PURE__*/function (_Unit3) {
-    _inherits(Moment, _Unit3);
-
-    var _super3 = _createSuper(Moment);
-
-    function Moment(input, unit, context) {
-      var _this3;
-
-      _classCallCheck(this, Moment);
-
-      _this3 = _super3.call(this, input, unit, context, true);
-      _this3.unit = 'millisecond';
-      return _this3;
+  class Moment$4 extends Unit_1 {
+    constructor(input, unit, context) {
+      super(input, unit, context, true);
+      this.unit = 'millisecond';
     }
 
-    return Moment;
-  }(Unit_1);
+  }
 
   var _time = {
     Hour: Hour$2,
@@ -6274,7 +5780,7 @@
     Unit: Unit_1
   }, _day, _year, _week, _time);
 
-  var knownUnits = {
+  const knownUnits = {
     second: true,
     minute: true,
     hour: true,
@@ -6286,7 +5792,7 @@
     quarter: true,
     year: true
   };
-  var aliases = {
+  const aliases = {
     wk: 'week',
     min: 'minute',
     sec: 'second',
@@ -6294,8 +5800,8 @@
 
   };
 
-  var parseUnit = function parseUnit(m) {
-    var unit = m.match('#Duration').text('normal');
+  const parseUnit = function (m) {
+    let unit = m.match('#Duration').text('normal');
     unit = unit.replace(/s$/, ''); // support shorthands like 'min'
 
     if (aliases.hasOwnProperty(unit)) {
@@ -6306,21 +5812,21 @@
   }; //turn '5 weeks before' to {weeks:5}
 
 
-  var parseShift = function parseShift(doc) {
-    var result = {};
-    var shift = doc.match('#DateShift+');
+  const parseShift = function (doc) {
+    let result = {};
+    let shift = doc.match('#DateShift+');
 
     if (shift.found === false) {
       return result;
     } // '5 weeks'
 
 
-    shift.match('#Cardinal #Duration').forEach(function (ts) {
-      var num = ts.match('#Cardinal').text('normal');
+    shift.match('#Cardinal #Duration').forEach(ts => {
+      let num = ts.match('#Cardinal').text('normal');
       num = parseFloat(num);
 
       if (num && typeof num === 'number') {
-        var unit = parseUnit(ts);
+        let unit = parseUnit(ts);
 
         if (knownUnits[unit] === true) {
           result[unit] = num;
@@ -6329,19 +5835,17 @@
     }); //is it 2 weeks ago?  → -2
 
     if (shift.has('(before|ago|hence|back)$') === true) {
-      Object.keys(result).forEach(function (k) {
-        return result[k] *= -1;
-      });
+      Object.keys(result).forEach(k => result[k] *= -1);
     }
 
     shift.remove('#Cardinal #Duration'); // supoprt '1 day after tomorrow'
 
-    var m = shift.match('[<unit>#Duration] [<dir>(after|before)]');
+    let m = shift.match('[<unit>#Duration] [<dir>(after|before)]');
 
     if (m.found) {
-      var unit = m.groups('unit').text('reduced'); // unit = unit.replace(/s$/, '')
+      let unit = m.groups('unit').text('reduced'); // unit = unit.replace(/s$/, '')
 
-      var dir = m.groups('dir').text('reduced');
+      let dir = m.groups('dir').text('reduced');
 
       if (dir === 'after') {
         result[unit] = 1;
@@ -6354,9 +5858,8 @@
     m = shift.match('half (a|an) [#Duration]', 0);
 
     if (m.found) {
-      var _unit = parseUnit(m);
-
-      result[_unit] = 0.5;
+      let unit = parseUnit(m);
+      result[unit] = 0.5;
     } // finally, remove it from our text
 
 
@@ -6374,19 +5877,19 @@
     * 
   unlike a shift, like "2 weeks after x"
   */
-  var oneBased = {
+  const oneBased = {
     minute: true
   };
 
-  var getCounter = function getCounter(doc) {
+  const getCounter = function (doc) {
     // 7th week of
-    var m = doc.match('[<num>#Value] [<unit>#Duration+] (of|in)');
+    let m = doc.match('[<num>#Value] [<unit>#Duration+] (of|in)');
 
     if (m.found) {
-      var obj = m.groups();
-      var num = obj.num.text('reduced');
-      var unit = obj.unit.text('reduced');
-      var found = {
+      let obj = m.groups();
+      let num = obj.num.text('reduced');
+      let unit = obj.unit.text('reduced');
+      let found = {
         unit: unit,
         num: Number(num) || 0
       }; // 0-based or 1-based units
@@ -6403,11 +5906,9 @@
     m = doc.match('[<dir>(first|initial|last|final)] [<unit>#Duration+] (of|in)');
 
     if (m.found) {
-      var _obj = m.groups();
-
-      var dir = _obj.dir.text('reduced');
-
-      var _unit = _obj.unit.text('reduced');
+      let obj = m.groups();
+      let dir = obj.dir.text('reduced');
+      let unit = obj.unit.text('reduced');
 
       if (dir === 'initial') {
         dir = 'first';
@@ -6417,12 +5918,12 @@
         dir = 'last';
       }
 
-      var _found = {
-        unit: _unit,
+      let found = {
+        unit: unit,
         dir: dir
       };
       doc = doc.remove(m);
-      return _found;
+      return found;
     }
 
     return {};
@@ -6430,7 +5931,7 @@
 
   var _02Counter = getCounter;
 
-  var hardCoded = {
+  const hardCoded = {
     daybreak: '7:00am',
     //ergh
     breakfast: '8:00am',
@@ -6445,13 +5946,13 @@
     eod: '10:00pm',
     midnight: '12:00am'
   };
-  var minMap = {
+  const minMap = {
     quarter: 15,
     half: 30
   }; // choose ambiguous ampm
 
-  var ampmChooser = function ampmChooser(s) {
-    var early = s.time('6:00am');
+  const ampmChooser = function (s) {
+    let early = s.time('6:00am');
 
     if (s.isBefore(early)) {
       return s.ampm('pm');
@@ -6461,18 +5962,18 @@
   }; // parse 'twenty past 2'
 
 
-  var halfPast = function halfPast(m, s) {
-    var hour = m.match('#Cardinal$');
-    var punt = m.not(hour).match('(half|quarter|25|20|15|10|5)'); // get the mins, and the hour
+  const halfPast = function (m, s) {
+    let hour = m.match('#Cardinal$');
+    let punt = m.not(hour).match('(half|quarter|25|20|15|10|5)'); // get the mins, and the hour
 
     hour = hour.text('reduced');
-    var mins = punt.text('reduced'); // support 'quarter'
+    let mins = punt.text('reduced'); // support 'quarter'
 
     if (minMap.hasOwnProperty(mins)) {
       mins = minMap[mins];
     }
 
-    var behind = m.has('to'); // apply it
+    let behind = m.has('to'); // apply it
 
     s = s.hour(hour);
     s = s.startOf('hour'); // assume 'half past 5' is 5pm
@@ -6490,8 +5991,8 @@
     return s;
   };
 
-  var parseTime = function parseTime(doc, context) {
-    var time = doc.match('(at|by|for|before|this|after)? #Time+');
+  const parseTime = function (doc, context) {
+    let time = doc.match('(at|by|for|before|this|after)? #Time+');
 
     if (time.found) {
       doc.remove(time); // '4pm on tuesday'
@@ -6505,17 +6006,17 @@
     time = time.not('^(at|by|for|before|this|after)');
     time = time.not('sharp');
     time = time.not('on the dot');
-    var s = spacetime.now(context.timezone);
-    var now = s.clone(); // check for known-times (like 'today')
+    let s = spacetime.now(context.timezone);
+    let now = s.clone(); // check for known-times (like 'today')
 
-    var timeStr = time.text('reduced');
+    let timeStr = time.text('reduced');
 
     if (hardCoded.hasOwnProperty(timeStr)) {
       return hardCoded[timeStr];
     } // '5 oclock'
 
 
-    var m = time.match('^#Cardinal oclock (am|pm)?');
+    let m = time.match('^#Cardinal oclock (am|pm)?');
 
     if (m.found) {
       m = m.not('oclock');
@@ -6523,7 +6024,7 @@
       s = s.startOf('hour');
 
       if (s.isValid() && !s.isEqual(now)) {
-        var ampm = m.match('(am|pm)');
+        let ampm = m.match('(am|pm)');
 
         if (ampm.found) {
           s = s.ampm(ampm.text('reduced'));
@@ -6552,8 +6053,8 @@
     m = time.match('[<min>(half|quarter|25|20|15|10|5)] (past|after)');
 
     if (m.found) {
-      var min = m.groups('min').text('reduced');
-      var d = spacetime(context.today); // support 'quarter', etc.
+      let min = m.groups('min').text('reduced');
+      let d = spacetime(context.today); // support 'quarter', etc.
 
       if (minMap.hasOwnProperty(min)) {
         min = minMap[min];
@@ -6570,19 +6071,17 @@
     m = time.match('[<min>(half|quarter|25|20|15|10|5)] to');
 
     if (m.found) {
-      var _min = m.groups('min').text('reduced');
+      let min = m.groups('min').text('reduced');
+      let d = spacetime(context.today); // support 'quarter', etc.
 
-      var _d = spacetime(context.today); // support 'quarter', etc.
-
-
-      if (minMap.hasOwnProperty(_min)) {
-        _min = minMap[_min];
+      if (minMap.hasOwnProperty(min)) {
+        min = minMap[min];
       }
 
-      _d = _d.next('hour').startOf('hour').minus(_min, 'minutes');
+      d = d.next('hour').startOf('hour').minus(min, 'minutes');
 
-      if (_d.isValid() && !_d.isEqual(now)) {
-        return _d.time();
+      if (d.isValid() && !d.isEqual(now)) {
+        return d.time();
       }
     } // '4 in the evening'
 
@@ -6590,18 +6089,18 @@
     m = time.match('[<time>#Time] (in|at) the? [<desc>(morning|evening|night|nighttime)]');
 
     if (m.found) {
-      var _str = m.groups('time').text('reduced');
+      let str = m.groups('time').text('reduced');
 
-      if (/^[0-9]{1,2}$/.test(_str)) {
-        s = s.hour(_str); //3 in the morning
+      if (/^[0-9]{1,2}$/.test(str)) {
+        s = s.hour(str); //3 in the morning
 
         s = s.startOf('hour');
       } else {
-        s = s.time(_str); // 3:30 in the morning
+        s = s.time(str); // 3:30 in the morning
       }
 
       if (s.isValid() && !s.isEqual(now)) {
-        var desc = m.groups('desc').text('reduced');
+        let desc = m.groups('desc').text('reduced');
 
         if (desc === 'evening' || desc === 'night') {
           s = s.ampm('pm');
@@ -6615,26 +6114,25 @@
     m = time.match('this? [<desc>(morning|evening|tonight)] at [<time>(#Cardinal|#Time)]');
 
     if (m.found) {
-      var g = m.groups();
+      let g = m.groups();
+      let str = g.time.text('reduced');
 
-      var _str2 = g.time.text('reduced');
-
-      if (/^[0-9]{1,2}$/.test(_str2)) {
-        s = s.hour(_str2); //3
+      if (/^[0-9]{1,2}$/.test(str)) {
+        s = s.hour(str); //3
 
         s = s.startOf('hour');
       } else {
-        s = s.time(_str2); // 3:30
+        s = s.time(str); // 3:30
       }
 
       if (s.isValid() && !s.isEqual(now)) {
-        var _desc = g.desc.text('reduced');
+        let desc = g.desc.text('reduced');
 
-        if (_desc === 'morning') {
+        if (desc === 'morning') {
           s = s.ampm('am');
         }
 
-        if (_desc === 'evening' || _desc === 'tonight') {
+        if (desc === 'evening' || desc === 'tonight') {
           s = s.ampm('pm');
         }
 
@@ -6646,14 +6144,13 @@
     m = time.match('^#Cardinal$');
 
     if (m.found) {
-      var _str3 = m.text('reduced');
-
-      s = s.hour(_str3);
+      let str = m.text('reduced');
+      s = s.hour(str);
       s = s.startOf('hour');
 
       if (s.isValid() && !s.isEqual(now)) {
         // choose ambiguous ampm
-        if (/(am|pm)/i.test(_str3) === false) {
+        if (/(am|pm)/i.test(str) === false) {
           s = ampmChooser(s);
         }
 
@@ -6662,7 +6159,7 @@
     } // parse random a time like '4:54pm'
 
 
-    var str = time.text('reduced');
+    let str = time.text('reduced');
     s = s.time(str);
 
     if (s.isValid() && !s.isEqual(now)) {
@@ -6685,14 +6182,14 @@
   var _03Time = parseTime;
 
   // interpret 'this halloween' or 'next june'
-  var parseRelative = function parseRelative(doc) {
+  const parseRelative = function (doc) {
     // avoid parsing 'day after next'
     if (doc.has('(next|last|this)$')) {
       return null;
     } // next monday
 
 
-    var m = doc.match('^this? (next|upcoming|coming)');
+    let m = doc.match('^this? (next|upcoming|coming)');
 
     if (m.found) {
       doc.remove(m);
@@ -6729,9 +6226,9 @@
   var _04Relative = parseRelative;
 
   // 'start of october', 'middle of june 1st'
-  var parseSection = function parseSection(doc) {
+  const parseSection = function (doc) {
     // start of 2019
-    var m = doc.match('[(start|beginning) of] .', 0);
+    let m = doc.match('[(start|beginning) of] .', 0);
 
     if (m.found) {
       doc.remove(m);
@@ -6759,12 +6256,12 @@
 
   var _05Section = parseSection;
 
-  var isOffset = /(\-?[0-9]+)h(rs)?/i;
-  var isNumber = /(\-?[0-9]+)/;
-  var utcOffset = /utc([\-+]?[0-9]+)/i;
-  var gmtOffset = /gmt([\-+]?[0-9]+)/i;
+  const isOffset = /(\-?[0-9]+)h(rs)?/i;
+  const isNumber = /(\-?[0-9]+)/;
+  const utcOffset = /utc([\-+]?[0-9]+)/i;
+  const gmtOffset = /gmt([\-+]?[0-9]+)/i;
 
-  var toIana = function toIana(num) {
+  const toIana = function (num) {
     num = Number(num);
 
     if (num > -13 && num < 13) {
@@ -6778,9 +6275,9 @@
     return null;
   };
 
-  var parseOffset = function parseOffset(tz) {
+  const parseOffset = function (tz) {
     // '+5hrs'
-    var m = tz.match(isOffset);
+    let m = tz.match(isOffset);
 
     if (m !== null) {
       return toIana(m[1]);
@@ -6797,7 +6294,7 @@
     m = tz.match(gmtOffset);
 
     if (m !== null) {
-      var num = Number(m[1]) * -1;
+      let num = Number(m[1]) * -1;
       return toIana(num);
     } // '+5'
 
@@ -6811,11 +6308,11 @@
     return null;
   };
 
-  var parseTimezone = function parseTimezone(doc) {
-    var m = doc.match('#Timezone+'); //remove prepositions
+  const parseTimezone = function (doc) {
+    let m = doc.match('#Timezone+'); //remove prepositions
 
     m = m.remove('(in|for|by|near|at)');
-    var str = m.text('reduced'); // remove it from our doc, either way
+    let str = m.text('reduced'); // remove it from our doc, either way
 
     doc.remove('#Timezone+'); // check our list of informal tz names
 
@@ -6823,7 +6320,7 @@
       return _timezones[str];
     }
 
-    var tz = parseOffset(str);
+    let tz = parseOffset(str);
 
     if (tz) {
       return tz;
@@ -6835,8 +6332,8 @@
   var _06Timezone = parseTimezone;
 
   // pull-out 'thurs' from 'thurs next week'
-  var parseWeekday = function parseWeekday(doc) {
-    var day = doc.match('#WeekDay');
+  const parseWeekday = function (doc) {
+    let day = doc.match('#WeekDay');
 
     if (day.found && !doc.has('^#WeekDay$')) {
       // handle relative-day logic elsewhere.
@@ -6853,20 +6350,22 @@
 
   var _07Weekday = parseWeekday;
 
-  var Day$4 = units$1.Day,
-      Moment$3 = units$1.Moment;
-  var knownWord = {
-    today: function today(context) {
+  const {
+    Day: Day$4,
+    Moment: Moment$3
+  } = units$1;
+  const knownWord = {
+    today: context => {
       return new Day$4(context.today, null, context);
     },
-    yesterday: function yesterday(context) {
+    yesterday: context => {
       return new Day$4(context.today.minus(1, 'day'), null, context);
     },
-    tomorrow: function tomorrow(context) {
+    tomorrow: context => {
       return new Day$4(context.today.plus(1, 'day'), null, context);
     },
-    eom: function eom(context) {
-      var d = context.today.endOf('month');
+    eom: context => {
+      let d = context.today.endOf('month');
       d = d.startOf('day');
       return new Day$4(d, null, context);
     },
@@ -6875,12 +6374,12 @@
     //   d = d.startOf('hour').minus(4, 'hours') //rough
     //   return new Hour(d, null, context)
     // },
-    eoy: function eoy(context) {
-      var d = context.today.endOf('year');
+    eoy: context => {
+      let d = context.today.endOf('year');
       d = d.startOf('day');
       return new Day$4(d, null, context);
     },
-    now: function now(context) {
+    now: context => {
       return new Moment$3(context.today, null, context); // should we set the current hour?
     }
   };
@@ -6889,8 +6388,8 @@
   knownWord.anytime = knownWord.today;
   knownWord.sometime = knownWord.today;
 
-  var today = function today(doc, context, section) {
-    var unit = null; // is it empty?
+  const today = function (doc, context, section) {
+    let unit = null; // is it empty?
 
     if (doc.found === false) {
       // do we have just a time?
@@ -6909,7 +6408,7 @@
     } // today, yesterday, tomorrow
 
 
-    var str = doc.text('reduced');
+    let str = doc.text('reduced');
 
     if (knownWord.hasOwnProperty(str) === true) {
       return knownWord[str](context);
@@ -6931,7 +6430,7 @@
     })(commonjsGlobal, function (spacetime) {
 
       function _interopDefaultLegacy(e) {
-        return e && _typeof(e) === 'object' && 'default' in e ? e : {
+        return e && typeof e === 'object' && 'default' in e ? e : {
           'default': e
         };
       }
@@ -7388,19 +6887,21 @@
     });
   });
 
-  var Holiday = units$1.Holiday;
+  const {
+    Holiday
+  } = units$1;
 
-  var parseHoliday = function parseHoliday(doc, context) {
-    var unit = null;
-    var m = doc.match('[<holiday>#Holiday+] [<year>#Year?]');
-    var year = context.today.year();
+  const parseHoliday = function (doc, context) {
+    let unit = null;
+    let m = doc.match('[<holiday>#Holiday+] [<year>#Year?]');
+    let year = context.today.year();
 
     if (m.groups('year').found) {
       year = Number(m.groups('year').text('reduced')) || year;
     }
 
-    var str = m.groups('holiday').text('reduced');
-    var s = spacetimeHoliday(str, year, context.timezone);
+    let str = m.groups('holiday').text('reduced');
+    let s = spacetimeHoliday(str, year, context.timezone);
 
     if (s !== null) {
       // assume the year in the future..
@@ -7416,18 +6917,20 @@
 
   var _02Holidays = parseHoliday;
 
-  var Week$1 = units$1.Week,
-      WeekEnd$1 = units$1.WeekEnd,
-      AnyMonth = units$1.AnyMonth,
-      AnyQuarter = units$1.AnyQuarter,
-      Year$1 = units$1.Year,
-      Season$2 = units$1.Season,
-      WeekDay$1 = units$1.WeekDay,
-      Day$3 = units$1.Day,
-      Hour$1 = units$1.Hour,
-      Minute$1 = units$1.Minute,
-      Moment$2 = units$1.Moment;
-  var mapping$1 = {
+  const {
+    Week: Week$1,
+    WeekEnd: WeekEnd$1,
+    AnyMonth,
+    AnyQuarter,
+    Year: Year$1,
+    Season: Season$2,
+    WeekDay: WeekDay$1,
+    Day: Day$3,
+    Hour: Hour$1,
+    Minute: Minute$1,
+    Moment: Moment$2
+  } = units$1;
+  const mapping$1 = {
     day: Day$3,
     hour: Hour$1,
     evening: Hour$1,
@@ -7448,23 +6951,23 @@
     sec: Moment$2,
     hr: Hour$1
   };
-  var matchStr = "^(".concat(Object.keys(mapping$1).join('|'), ")$"); // when a unit of time is spoken of as 'this month' - instead of 'february'
+  let matchStr = `^(${Object.keys(mapping$1).join('|')})$`; // when a unit of time is spoken of as 'this month' - instead of 'february'
 
-  var nextLast = function nextLast(doc, context) {
+  const nextLast = function (doc, context) {
     //this month, last quarter, next year
-    var m = doc.match(matchStr);
+    let m = doc.match(matchStr);
 
     if (m.found === true) {
-      var str = m.text('reduced');
+      let str = m.text('reduced');
 
       if (mapping$1.hasOwnProperty(str)) {
-        var Model = mapping$1[str];
+        let Model = mapping$1[str];
 
         if (!Model) {
           return null;
         }
 
-        var unit = new Model(null, str, context);
+        let unit = new Model(null, str, context);
         return unit;
       }
     } //'next friday, last thursday'
@@ -7473,11 +6976,9 @@
     m = doc.match('^#WeekDay$');
 
     if (m.found === true) {
-      var _str = m.text('reduced');
-
-      var _unit = new WeekDay$1(_str, null, context);
-
-      return _unit;
+      let str = m.text('reduced');
+      let unit = new WeekDay$1(str, null, context);
+      return unit;
     } // tuesday next week
     // m = doc.match('^#WeekDay (this|next)')
     // if (m.found === true) {
@@ -7492,11 +6993,13 @@
 
   var _03NextLast = nextLast;
 
-  var Quarter$1 = units$1.Quarter,
-      Season$1 = units$1.Season,
-      Year = units$1.Year;
+  const {
+    Quarter: Quarter$1,
+    Season: Season$1,
+    Year
+  } = units$1;
 
-  var fmtToday = function fmtToday(context) {
+  const fmtToday = function (context) {
     return {
       date: context.today.date(),
       month: context.today.month(),
@@ -7504,16 +7007,16 @@
     };
   };
 
-  var parseYearly = function parseYearly(doc, context) {
+  const parseYearly = function (doc, context) {
     // support 'summer 2002'
-    var m = doc.match('(spring|summer|winter|fall|autumn) [<year>#Year?]');
+    let m = doc.match('(spring|summer|winter|fall|autumn) [<year>#Year?]');
 
     if (m.found) {
-      var str = doc.text('reduced');
-      var s = spacetime(str, context.timezone, {
+      let str = doc.text('reduced');
+      let s = spacetime(str, context.timezone, {
         today: fmtToday(context)
       });
-      var unit = new Season$1(s, null, context);
+      let unit = new Season$1(s, null, context);
 
       if (unit.d.isValid() === true) {
         return unit;
@@ -7524,21 +7027,20 @@
     m = doc.match('[<q>#FinancialQuarter] [<year>#Year?]');
 
     if (m.found) {
-      var _str = m.groups('q').text('reduced');
-
-      var _s = spacetime(_str, context.timezone, {
+      let str = m.groups('q').text('reduced');
+      let s = spacetime(str, context.timezone, {
         today: fmtToday(context)
       });
 
       if (m.groups('year')) {
-        var year = Number(m.groups('year').text()) || context.today.year();
-        _s = _s.year(year);
+        let year = Number(m.groups('year').text()) || context.today.year();
+        s = s.year(year);
       }
 
-      var _unit = new Quarter$1(_s, null, context);
+      let unit = new Quarter$1(s, null, context);
 
-      if (_unit.d.isValid() === true) {
-        return _unit;
+      if (unit.d.isValid() === true) {
+        return unit;
       }
     } // support '4th quarter 2020'
 
@@ -7546,22 +7048,20 @@
     m = doc.match('[<q>#Value] quarter (of|in)? [<year>#Year?]');
 
     if (m.found) {
-      var q = m.groups('q').text('reduced');
-
-      var _s2 = spacetime("q".concat(q), context.timezone, {
+      let q = m.groups('q').text('reduced');
+      let s = spacetime(`q${q}`, context.timezone, {
         today: fmtToday(context)
       });
 
       if (m.groups('year')) {
-        var _year = Number(m.groups('year').text()) || context.today.year();
-
-        _s2 = _s2.year(_year);
+        let year = Number(m.groups('year').text()) || context.today.year();
+        s = s.year(year);
       }
 
-      var _unit2 = new Quarter$1(_s2, null, context);
+      let unit = new Quarter$1(s, null, context);
 
-      if (_unit2.d.isValid() === true) {
-        return _unit2;
+      if (unit.d.isValid() === true) {
+        return unit;
       }
     } // support '2020'
 
@@ -7569,18 +7069,15 @@
     m = doc.match('^#Year$');
 
     if (m.found) {
-      var _str2 = doc.text('reduced');
-
-      var _s3 = spacetime(null, context.timezone, {
+      let str = doc.text('reduced');
+      let s = spacetime(null, context.timezone, {
         today: fmtToday(context)
       });
+      s = s.year(str);
+      let unit = new Year(s, null, context);
 
-      _s3 = _s3.year(_str2);
-
-      var _unit3 = new Year(_s3, null, context);
-
-      if (_unit3.d.isValid() === true) {
-        return _unit3;
+      if (unit.d.isValid() === true) {
+        return unit;
       }
     }
 
@@ -7589,33 +7086,34 @@
 
   var _04Yearly = parseYearly;
 
-  var Day$2 = units$1.Day,
-      CalendarDate = units$1.CalendarDate,
-      Month$1 = units$1.Month,
-      Moment$1 = units$1.Moment; // parse things like 'june 5th 2019'
+  const {
+    Day: Day$2,
+    CalendarDate,
+    Month: Month$1,
+    Moment: Moment$1
+  } = units$1; // parse things like 'june 5th 2019'
   // most of this is done in spacetime
 
-  var parseExplicit = function parseExplicit(doc, context) {
-    var impliedYear = context.today.year(); // 'fifth of june 1992'
+  const parseExplicit = function (doc, context) {
+    let impliedYear = context.today.year(); // 'fifth of june 1992'
     // 'june the fifth 1992'
 
-    var m = doc.match('[<date>#Value] of? [<month>#Month] [<year>#Year]');
+    let m = doc.match('[<date>#Value] of? [<month>#Month] [<year>#Year]');
 
     if (!m.found) {
       m = doc.match('[<month>#Month] the? [<date>#Value] [<year>#Year]');
     }
 
     if (m.found) {
-      var obj = {
+      let obj = {
         month: m.groups('month').text(),
         date: m.groups('date').text(),
         year: m.groups('year').text() || impliedYear
       };
+      let unit = new CalendarDate(obj, null, context);
 
-      var _unit = new CalendarDate(obj, null, context);
-
-      if (_unit.d.isValid() === true) {
-        return _unit;
+      if (unit.d.isValid() === true) {
+        return unit;
       }
     } // 'march 1992'
 
@@ -7623,15 +7121,14 @@
     m = doc.match('[<month>#Month] of? [<year>#Year]');
 
     if (m.found) {
-      var _obj = {
+      let obj = {
         month: m.groups('month').text(),
         year: m.groups('year').text() || impliedYear
       };
+      let unit = new Month$1(obj, null, context);
 
-      var _unit2 = new Month$1(_obj, null, context);
-
-      if (_unit2.d.isValid() === true) {
-        return _unit2;
+      if (unit.d.isValid() === true) {
+        return unit;
       }
     } //no-years
     // 'fifth of june'
@@ -7644,44 +7141,40 @@
     }
 
     if (m.found) {
-      var _obj2 = {
+      let obj = {
         month: m.groups('month').text(),
         date: m.groups('date').text(),
         year: context.today.year()
       };
+      let unit = new CalendarDate(obj, null, context); // assume 'feb' in the future
 
-      var _unit3 = new CalendarDate(_obj2, null, context); // assume 'feb' in the future
-
-
-      if (_unit3.d.month() < context.today.month()) {
-        _obj2.year += 1;
-        _unit3 = new CalendarDate(_obj2, null, context);
+      if (unit.d.month() < context.today.month()) {
+        obj.year += 1;
+        unit = new CalendarDate(obj, null, context);
       }
 
-      if (_unit3.d.isValid() === true) {
-        return _unit3;
+      if (unit.d.isValid() === true) {
+        return unit;
       }
     } // support 'december'
 
 
     if (doc.has('#Month')) {
-      var _obj3 = {
+      let obj = {
         month: doc.match('#Month').text(),
         date: 1,
         //assume 1st
         year: context.today.year()
       };
+      let unit = new Month$1(obj, null, context); // assume 'feb' in the future
 
-      var _unit4 = new Month$1(_obj3, null, context); // assume 'feb' in the future
-
-
-      if (_unit4.d.month() < context.today.month()) {
-        _obj3.year += 1;
-        _unit4 = new Month$1(_obj3, null, context);
+      if (unit.d.month() < context.today.month()) {
+        obj.year += 1;
+        unit = new Month$1(obj, null, context);
       }
 
-      if (_unit4.d.isValid() === true) {
-        return _unit4;
+      if (unit.d.isValid() === true) {
+        return unit;
       }
     } // support 'thursday 21st'
 
@@ -7689,16 +7182,15 @@
     m = doc.match('#WeekDay [<date>#Value]');
 
     if (m.found) {
-      var _obj4 = {
+      let obj = {
         month: context.today.month(),
         date: m.groups('date').text(),
         year: context.today.year()
       };
+      let unit = new CalendarDate(obj, null, context);
 
-      var _unit5 = new CalendarDate(_obj4, null, context);
-
-      if (_unit5.d.isValid() === true) {
-        return _unit5;
+      if (unit.d.isValid() === true) {
+        return unit;
       }
     } // support date-only 'the 21st'
 
@@ -7706,21 +7198,20 @@
     m = doc.match('the [<date>#Value]');
 
     if (m.found) {
-      var _obj5 = {
+      let obj = {
         month: context.today.month(),
         date: m.groups('date').text(),
         year: context.today.year()
       };
+      let unit = new CalendarDate(obj, null, context);
 
-      var _unit6 = new CalendarDate(_obj5, null, context);
-
-      if (_unit6.d.isValid() === true) {
+      if (unit.d.isValid() === true) {
         // assume it's forward
-        if (_unit6.d.isBefore(context.today)) {
-          _unit6.d = _unit6.d.add(1, 'month');
+        if (unit.d.isBefore(context.today)) {
+          unit.d = unit.d.add(1, 'month');
         }
 
-        return _unit6;
+        return unit;
       }
     } // parse ISO as a Moment
 
@@ -7728,23 +7219,22 @@
     m = doc.match('/[0-9]{4}-[0-9]{2}-[0-9]{2}t[0-9]{2}:/');
 
     if (m.found) {
-      var _str = doc.text('reduced');
+      let str = doc.text('reduced');
+      let unit = new Moment$1(str, null, context);
 
-      var _unit7 = new Moment$1(_str, null, context);
-
-      if (_unit7.d.isValid() === true) {
-        return _unit7;
+      if (unit.d.isValid() === true) {
+        return unit;
       }
     }
 
-    var str = doc.text('reduced');
+    let str = doc.text('reduced');
 
     if (!str) {
       return new Moment$1(context.today, null, context);
     } // punt it to spacetime, for the heavy-lifting
 
 
-    var unit = new Day$2(str, null, context); // console.log(str, unit, context.today.year())
+    let unit = new Day$2(str, null, context); // console.log(str, unit, context.today.year())
     // did we find a date?
 
     if (unit.d.isValid() === false) {
@@ -7756,15 +7246,17 @@
 
   var _05Explicit = parseExplicit;
 
-  var Quarter = units$1.Quarter,
-      Season = units$1.Season,
-      Week = units$1.Week,
-      Day$1 = units$1.Day,
-      Hour = units$1.Hour,
-      Minute = units$1.Minute,
-      Month = units$1.Month,
-      WeekEnd = units$1.WeekEnd;
-  var units = {
+  const {
+    Quarter,
+    Season,
+    Week,
+    Day: Day$1,
+    Hour,
+    Minute,
+    Month,
+    WeekEnd
+  } = units$1;
+  const units = {
     day: Day$1,
     week: Week,
     weekend: WeekEnd,
@@ -7775,28 +7267,36 @@
     minute: Minute
   };
 
-  var applyCounter = function applyCounter(unit) {
-    var counter = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    var Unit = units[counter.unit];
+  const applyCounter = function (unit, counter = {}) {
+    let Unit = units[counter.unit];
 
     if (!Unit) {
       return unit;
     }
 
-    var d = unit.d; // support 'first' or 0th
+    let d = unit.d; // support 'first' or 0th
 
     if (counter.dir === 'first' || counter.num === 0) {
       d = unit.start().d;
       d = d.startOf(counter.unit);
     } else if (counter.dir === 'last') {
       d = d.endOf(unit.unit);
-      d = d.startOf(counter.unit);
+
+      if (counter.unit === 'weekend') {
+        d = d.day('saturday', false);
+      } else {
+        d = d.startOf(counter.unit);
+      }
     } else if (counter.num) {
-      // support 'nth week', eg.
+      if (counter.unit === 'weekend') {
+        d = d.day('saturday', true).add(1, 'day'); //fix bug
+      } // support 'nth week', eg.
+
+
       d = d.add(counter.num, counter.unit);
     }
 
-    var u = new Unit(d, null, unit.context);
+    let u = new Unit(d, null, unit.context);
 
     if (u.d.isValid() === true) {
       return u;
@@ -7807,10 +7307,12 @@
 
   var addCounter = applyCounter;
 
-  var WeekDay = units$1.WeekDay,
-      Moment = units$1.Moment,
-      Day = units$1.Day;
-  var tokens = {
+  const {
+    WeekDay,
+    Moment,
+    Day
+  } = units$1;
+  const tokens = {
     shift: _01Shift,
     counter: _02Counter,
     time: _03Time,
@@ -7819,50 +7321,50 @@
     timezone: _06Timezone,
     weekday: _07Weekday
   };
-  var parse$2 = {
+  const parse$2 = {
     today: _01Today,
     holiday: _02Holidays,
     nextLast: _03NextLast,
     yearly: _04Yearly,
     explicit: _05Explicit
   };
-  var transform = {
+  const transform = {
     counter: addCounter
   };
 
-  var parseDate = function parseDate(doc, context) {
+  const parseDate = function (doc, context) {
     doc = doc.clone();
 
     if (doc.world.isVerbose() === 'date') {
-      console.log("     str:   '".concat(doc.text(), "'"));
+      console.log(`     str:   '${doc.text()}'`);
     } // quick normalization
 
 
     doc.match('[^the] !#Value', 0).remove(); // keep 'the 17th'
     //parse-out any sections
 
-    var shift = tokens.shift(doc);
-    var counter = tokens.counter(doc);
-    var tz = tokens.timezone(doc);
-    var time = tokens.time(doc, context);
-    var weekDay = tokens.weekday(doc, context);
-    var section = tokens.section(doc, context);
-    var rel = tokens.relative(doc); //set our new timezone
+    let shift = tokens.shift(doc);
+    let counter = tokens.counter(doc);
+    let tz = tokens.timezone(doc);
+    let time = tokens.time(doc, context);
+    let weekDay = tokens.weekday(doc, context);
+    let section = tokens.section(doc, context);
+    let rel = tokens.relative(doc); //set our new timezone
 
     if (tz) {
       context = Object.assign({}, context, {
         timezone: tz
       });
-      var iso = context.today.format('iso-short');
-      context.today = context.today["goto"](context.timezone).set(iso);
+      let iso = context.today.format('iso-short');
+      context.today = context.today.goto(context.timezone).set(iso);
     }
 
-    var unit = null; //'in two days'
+    let unit = null; //'in two days'
 
     unit = unit || parse$2.today(doc, context, {
-      shift: shift,
-      time: time,
-      rel: rel
+      shift,
+      time,
+      rel
     }); // 'this haloween'
 
     unit = unit || parse$2.holiday(doc, context); // 'this month'
@@ -7881,13 +7383,13 @@
 
     if (doc.world.isVerbose() === 'date') {
       // console.log('\n\n=-= - - - - - =-=-')
-      console.log("     str:   '".concat(doc.text(), "'"));
-      console.log("     shift:      ".concat(JSON.stringify(shift)));
-      console.log("     counter:   ", counter);
-      console.log("     rel:        ".concat(rel || '-'));
-      console.log("     section:    ".concat(section || '-'));
-      console.log("     time:       ".concat(time || '-'));
-      console.log("     weekDay:    ".concat(weekDay || '-'));
+      console.log(`     str:   '${doc.text()}'`);
+      console.log(`     shift:      ${JSON.stringify(shift)}`);
+      console.log(`     counter:   `, counter);
+      console.log(`     rel:        ${rel || '-'}`);
+      console.log(`     section:    ${section || '-'}`);
+      console.log(`     time:       ${time || '-'}`);
+      console.log(`     weekDay:    ${weekDay || '-'}`);
       console.log('     unit:     ', unit);
       console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n');
     }
@@ -7938,33 +7440,31 @@
 
   var _03Parse = parseDate;
 
-  var normalize = function normalize(doc) {
+  const normalize = function (doc) {
     doc = doc.clone(); // 'four thirty' -> 4:30
 
-    var m = doc.match('[<hour>#Cardinal] [<min>(thirty|fifteen)]').match('#Time+');
+    let m = doc.match('[<hour>#Cardinal] [<min>(thirty|fifteen)]').match('#Time+');
 
     if (m.found) {
-      var hour = m.groups('hour');
-      var min = m.groups('min');
-      var num = hour.values().get(0);
+      let hour = m.groups('hour');
+      let min = m.groups('min');
+      let num = hour.values().get(0);
 
       if (num > 0 && num <= 12) {
-        var mins = min.values().get(0);
-        var str = "".concat(num, ":").concat(mins);
+        let mins = min.values().get(0);
+        let str = `${num}:${mins}`;
         m.replaceWith(str);
       }
     }
 
     if (!doc.numbers) {
-      console.warn("Warning: compromise-numbers plugin is not loaded.\n   You should load this plugin \n     - https://bit.ly/3t8RfFG");
+      console.warn(`Warning: compromise-numbers plugin is not loaded.\n   You should load this plugin \n     - https://bit.ly/3t8RfFG`);
     } else {
       // doc.numbers().normalize()
       // convert 'two' to 2
-      var _num = doc.numbers();
-
-      _num.toNumber();
-
-      _num.toCardinal(false);
+      let num = doc.numbers();
+      num.toNumber();
+      num.toCardinal(false);
     } // expand 'aug 20-21'
 
 
@@ -7987,22 +7487,25 @@
     if (m.found) {
       m.groups('0').replaceWith('2');
       _01Tagger(doc);
-    }
+    } // jan - feb
+
+
+    doc.match('@hasDash').insertAfter('to').tag('Date'); // doc.debug()
 
     return doc;
   };
 
   var normalize_1 = normalize;
 
-  var parse$1 = function parse(m, context) {
+  const parse$1 = function (m, context) {
     m = normalize_1(m);
-    var res = _03Time(m, context);
+    let res = _03Time(m, context);
     return res;
   };
 
   var parse_1$1 = parse$1;
 
-  var dayNames = {
+  const dayNames = {
     mon: 'monday',
     tue: 'tuesday',
     tues: 'wednesday',
@@ -8020,7 +7523,7 @@
     sunday: 'sunday'
   }; // 'any tuesday' vs 'every tuesday'
 
-  var parseLogic = function parseLogic(m) {
+  const parseLogic = function (m) {
     if (m.match('(every|each)').found) {
       return 'AND';
     }
@@ -8033,15 +7536,15 @@
   }; // parse repeating dates, like 'every week'
 
 
-  var parseIntervals = function parseIntervals(doc, context) {
+  const parseIntervals = function (doc, context) {
     // 'every week'
-    var m = doc.match('[<logic>(every|any|each)] [<skip>other?] [<unit>#Duration] (starting|beginning|commencing)?');
+    let m = doc.match('[<logic>(every|any|each)] [<skip>other?] [<unit>#Duration] (starting|beginning|commencing)?');
 
     if (m.found) {
-      var repeat = {
+      let repeat = {
         interval: {}
       };
-      var unit = m.groups('unit').text('reduced');
+      let unit = m.groups('unit').text('reduced');
       repeat.interval[unit] = 1;
       repeat.choose = parseLogic(m); // 'every other week'
 
@@ -8059,19 +7562,17 @@
     m = doc.match('[<logic>(every|any|each)] [<num>#Value] [<unit>#Duration] (starting|beginning|commencing)?');
 
     if (m.found) {
-      var _repeat = {
+      let repeat = {
         interval: {}
       };
-      var units = m.groups('unit');
+      let units = m.groups('unit');
       units.nouns().toSingular();
-
-      var _unit = units.text('reduced');
-
-      _repeat.interval[_unit] = m.groups('num').numbers().get(0);
-      _repeat.choose = parseLogic(m);
+      let unit = units.text('reduced');
+      repeat.interval[unit] = m.groups('num').numbers().get(0);
+      repeat.choose = parseLogic(m);
       doc = doc.remove(m);
       return {
-        repeat: _repeat
+        repeat: repeat
       };
     } // 'every friday'
 
@@ -8079,7 +7580,7 @@
     m = doc.match('[<logic>(every|any|each|a)] [<skip>other?] [<day>#WeekDay+] (starting|beginning|commencing)?');
 
     if (m.found) {
-      var _repeat2 = {
+      let repeat = {
         interval: {
           day: 1
         },
@@ -8087,15 +7588,15 @@
           weekDays: {}
         }
       };
-      var str = m.groups('day').text('reduced');
+      let str = m.groups('day').text('reduced');
       str = dayNames[str]; //normalize it
 
       if (str) {
-        _repeat2.filter.weekDays[str] = true;
-        _repeat2.choose = parseLogic(m);
+        repeat.filter.weekDays[str] = true;
+        repeat.choose = parseLogic(m);
         doc = doc.remove(m);
         return {
-          repeat: _repeat2
+          repeat: repeat
         };
       }
     } // 'every weekday'
@@ -8104,7 +7605,7 @@
     m = doc.match('[<logic>(every|any|each|a)] [<day>(weekday|week day|weekend|weekend day)] (starting|beginning|commencing)?');
 
     if (m.found) {
-      var _repeat3 = {
+      let repeat = {
         interval: {
           day: 1
         },
@@ -8112,10 +7613,10 @@
           weekDays: {}
         }
       };
-      var day = m.groups('day');
+      let day = m.groups('day');
 
       if (day.has('(weekday|week day)')) {
-        _repeat3.filter.weekDays = {
+        repeat.filter.weekDays = {
           monday: true,
           tuesday: true,
           wednesday: true,
@@ -8123,16 +7624,16 @@
           friday: true
         };
       } else if (day.has('(weekend|weekend day)')) {
-        _repeat3.filter.weekDays = {
+        repeat.filter.weekDays = {
           saturday: true,
           sunday: true
         };
       }
 
-      _repeat3.choose = parseLogic(m);
+      repeat.choose = parseLogic(m);
       doc = doc.remove(m);
       return {
-        repeat: _repeat3
+        repeat: repeat
       };
     } // mondays
 
@@ -8140,7 +7641,7 @@
     m = doc.match('[<day>(mondays|tuesdays|wednesdays|thursdays|fridays|saturdays|sundays)] (at|near|after)? [<time>#Time+?]');
 
     if (m.found) {
-      var _repeat4 = {
+      let repeat = {
         interval: {
           day: 1
         },
@@ -8148,24 +7649,22 @@
           weekDays: {}
         }
       };
+      let str = m.groups('day').text('reduced');
+      str = str.replace(/s$/, '');
+      str = dayNames[str]; //normalize it
 
-      var _str = m.groups('day').text('reduced');
-
-      _str = _str.replace(/s$/, '');
-      _str = dayNames[_str]; //normalize it
-
-      if (_str) {
-        _repeat4.filter.weekDays[_str] = true;
-        _repeat4.choose = 'OR';
+      if (str) {
+        repeat.filter.weekDays[str] = true;
+        repeat.choose = 'OR';
         doc = doc.remove(m);
-        var time = m.groups('time');
+        let time = m.groups('time');
 
         if (time.found) {
-          _repeat4.time = parse_1$1(time, context);
+          repeat.time = parse_1$1(time, context);
         }
 
         return {
-          repeat: _repeat4
+          repeat: repeat
         };
       }
     }
@@ -8175,12 +7674,20 @@
 
   var _00Repeats = parseIntervals;
 
-  var reverseMaybe = function reverseMaybe(obj) {
-    var start = obj.start;
-    var end = obj.end;
+  // somewhat-intellegent response to end-before-start situations
+  const reverseMaybe = function (obj) {
+    let start = obj.start;
+    let end = obj.end;
 
     if (start.d.isAfter(end.d)) {
-      var tmp = start;
+      // wednesday to sunday -> move end up a week
+      if (start.constructor.name === 'WeekDay' && end.constructor.name === 'WeekDay') {
+        obj.end.next();
+        return obj;
+      } // else, reverse them
+
+
+      let tmp = start;
       obj.start = end;
       obj.end = tmp;
     }
@@ -8190,9 +7697,9 @@
 
   var _reverse = reverseMaybe;
 
-  var moveToPM = function moveToPM(obj) {
-    var start = obj.start;
-    var end = obj.end;
+  const moveToPM = function (obj) {
+    let start = obj.start;
+    let end = obj.end;
 
     if (start.d.isAfter(end.d)) {
       if (end.d.hour() < 10) {
@@ -8207,17 +7714,17 @@
     // '3pm to 4pm january 5th'
     match: '[<from>#Time+] (to|until|upto|through|thru|and) [<to>#Time+ #Date+]',
     desc: '3pm to 4pm january 5th',
-    parse: function parse(m, context) {
-      var from = m.groups('from');
-      var to = m.groups('to');
-      var end = _03Parse(to, context);
+    parse: (m, context) => {
+      let from = m.groups('from');
+      let to = m.groups('to');
+      let end = _03Parse(to, context);
 
       if (end) {
-        var start = end.clone();
+        let start = end.clone();
         start.applyTime(from.text());
 
         if (start) {
-          var obj = {
+          let obj = {
             start: start,
             end: end,
             unit: 'time'
@@ -8238,17 +7745,17 @@
     // 'january from 3pm to 4pm'
     match: '[<from>#Date+] (to|until|upto|through|thru|and) [<to>#Time+]',
     desc: 'january from 3pm to 4pm',
-    parse: function parse(m, context) {
-      var from = m.groups('from');
-      var to = m.groups('to');
+    parse: (m, context) => {
+      let from = m.groups('from');
+      let to = m.groups('to');
       from = _03Parse(from, context);
 
       if (from) {
-        var end = from.clone();
+        let end = from.clone();
         end.applyTime(to.text());
 
         if (end) {
-          var obj = {
+          let obj = {
             start: from,
             end: end,
             unit: 'time'
@@ -8271,10 +7778,10 @@
     // two explicit dates - 'between friday and sunday'
     match: 'between [<start>.+] and [<end>.+]',
     desc: 'between friday and sunday',
-    parse: function parse(m, context) {
-      var start = m.groups('start');
+    parse: (m, context) => {
+      let start = m.groups('start');
       start = _03Parse(start, context);
-      var end = m.groups('end');
+      let end = m.groups('end');
       end = _03Parse(end, context);
 
       if (start && end) {
@@ -8291,9 +7798,9 @@
     // two months, no year - 'june 5 to june 7'
     match: '[<from>#Month #Value] (to|through|thru|and) [<to>#Month #Value] [<year>#Year?]',
     desc: 'june 5 to june 7',
-    parse: function parse(m, context) {
-      var res = m.groups();
-      var start = res.from;
+    parse: (m, context) => {
+      let res = m.groups();
+      let start = res.from;
 
       if (res.year) {
         start = start.append(res.year);
@@ -8302,7 +7809,7 @@
       start = _03Parse(start, context);
 
       if (start) {
-        var end = res.to;
+        let end = res.to;
 
         if (res.year) {
           end = end.append(res.year);
@@ -8316,7 +7823,7 @@
             end.d = end.d.add(1, 'year');
           }
 
-          var obj = {
+          let obj = {
             start: start,
             end: end.end()
           };
@@ -8330,19 +7837,19 @@
     // one month, one year, first form - 'january 5 to 7 1998'
     match: '[<month>#Month] [<from>#Value] (to|through|thru) [<to>#Value] of? [<year>#Year]',
     desc: 'january 5 to 7 1998',
-    parse: function parse(m, context) {
-      var _m$groups = m.groups(),
-          month = _m$groups.month,
-          from = _m$groups.from,
-          to = _m$groups.to,
-          year = _m$groups.year;
-
-      var year2 = year.clone();
-      var start = from.prepend(month.text()).append(year.text());
+    parse: (m, context) => {
+      let {
+        month,
+        from,
+        to,
+        year
+      } = m.groups();
+      let year2 = year.clone();
+      let start = from.prepend(month.text()).append(year.text());
       start = _03Parse(start, context);
 
       if (start) {
-        var end = to.prepend(month.text()).append(year2);
+        let end = to.prepend(month.text()).append(year2);
         end = _03Parse(end, context);
         return {
           start: start,
@@ -8354,35 +7861,15 @@
     }
   }, {
     // one month, one year, second form - '5 to 7 of january 1998'
-    match: '[<from>#Value] (to|through|thru|and) [<to>#Value of? #Month of? #Year]',
+    match: '[<from>#Value] (to|through|thru|and) [<to>#Value of? #Month #Date+?]',
     desc: '5 to 7 of january 1998',
-    parse: function parse(m, context) {
-      var to = m.groups('to');
+    parse: (m, context) => {
+      let to = m.groups('to');
       to = _03Parse(to, context);
 
       if (to) {
-        var fromDate = m.groups('to');
-        var from = to.clone();
-        from.d = from.d.date(fromDate.text('normal'));
-        return {
-          start: from,
-          end: to.end()
-        };
-      }
-
-      return null;
-    }
-  }, {
-    // one month, no year - '5 to 7 of january'
-    match: '[<from>#Value] (to|through|thru|and) [<to>#Value of? #Month]',
-    desc: '5 to 7 of january',
-    parse: function parse(m, context) {
-      var to = m.groups('to');
-      to = _03Parse(to, context);
-
-      if (to) {
-        var fromDate = m.groups('from');
-        var from = to.clone();
+        let fromDate = m.groups('from');
+        let from = to.clone();
         from.d = from.d.date(fromDate.text('normal'));
         return {
           start: from,
@@ -8396,13 +7883,13 @@
     // one month, no year - 'january 5 to 7'
     match: '[<from>#Month #Value] (to|through|thru|and) [<to>#Value]',
     desc: 'january 5 to 7',
-    parse: function parse(m, context) {
-      var from = m.groups('from');
+    parse: (m, context) => {
+      let from = m.groups('from');
       from = _03Parse(from, context);
 
       if (from) {
-        var toDate = m.groups('to');
-        var to = from.clone();
+        let toDate = m.groups('to');
+        let to = from.clone();
         to.d = to.d.date(toDate.text('normal'));
         return {
           start: from,
@@ -8416,17 +7903,17 @@
     // 'january to may 2020'
     match: 'from? [<from>#Month] (to|until|upto|through|thru|and) [<to>#Month] [<year>#Year]',
     desc: 'january to may 2020',
-    parse: function parse(m, context) {
-      var from = m.groups('from');
-      var year = from.groups('year').numbers().get(0);
-      var to = m.groups('to');
+    parse: (m, context) => {
+      let from = m.groups('from');
+      let year = from.groups('year').numbers().get(0);
+      let to = m.groups('to');
       from = _03Parse(from, context);
       to = _03Parse(to, context);
       from.d = from.d.year(year);
       to.d = to.d.year(year);
 
       if (from && to) {
-        var obj = {
+        let obj = {
           start: from,
           end: to.end()
         }; // reverse the order?
@@ -8439,7 +7926,7 @@
     }
   }];
 
-  var punt = function punt(unit, context) {
+  const punt = function (unit, context) {
     unit = unit.applyShift(context.punt);
     return unit;
   };
@@ -8448,14 +7935,14 @@
     // 'from A to B'
     match: 'from? [<from>.+] (to|until|upto|through|thru|and) [<to>.+]',
     desc: 'from A to B',
-    parse: function parse(m, context) {
-      var from = m.groups('from');
-      var to = m.groups('to');
+    parse: (m, context) => {
+      let from = m.groups('from');
+      let to = m.groups('to');
       from = _03Parse(from, context);
       to = _03Parse(to, context);
 
       if (from && to) {
-        var obj = {
+        let obj = {
           start: from,
           end: to.end()
         };
@@ -8470,11 +7957,11 @@
     match: '^due? (by|before) [.+]',
     desc: 'before june',
     group: 0,
-    parse: function parse(m, context) {
-      var unit = _03Parse(m, context);
+    parse: (m, context) => {
+      let unit = _03Parse(m, context);
 
       if (unit) {
-        var start = new Unit_1(context.today, null, context);
+        let start = new Unit_1(context.today, null, context);
 
         if (start.d.isAfter(unit.d)) {
           start = unit.clone().applyShift({
@@ -8483,7 +7970,7 @@
         } // end the night before
 
 
-        var end = unit.clone().applyShift({
+        let end = unit.clone().applyShift({
           day: -1
         });
         return {
@@ -8499,8 +7986,8 @@
     match: '^(on|in|at|@|during) [.+]',
     desc: 'in june',
     group: 0,
-    parse: function parse(m, context) {
-      var unit = _03Parse(m, context);
+    parse: (m, context) => {
+      let unit = _03Parse(m, context);
 
       if (unit) {
         return {
@@ -8517,8 +8004,8 @@
     match: '^(after|following) [.+]',
     desc: 'after june',
     group: 0,
-    parse: function parse(m, context) {
-      var unit = _03Parse(m, context);
+    parse: (m, context) => {
+      let unit = _03Parse(m, context);
 
       if (unit) {
         unit = unit.after();
@@ -8535,10 +8022,10 @@
     match: '^(middle|center|midpoint) of [.+]',
     desc: 'middle of',
     group: 0,
-    parse: function parse(m, context) {
-      var unit = _03Parse(m, context);
-      var start = unit.clone().middle();
-      var end = unit.beforeEnd();
+    parse: (m, context) => {
+      let unit = _03Parse(m, context);
+      let start = unit.clone().middle();
+      let end = unit.beforeEnd();
 
       if (unit) {
         return {
@@ -8553,12 +8040,12 @@
     // 'tuesday after 5pm'
     match: '.+ after #Time+$',
     desc: 'tuesday after 5pm',
-    parse: function parse(m, context) {
-      var unit = _03Parse(m, context);
+    parse: (m, context) => {
+      let unit = _03Parse(m, context);
 
       if (unit) {
-        var start = unit.clone();
-        var end = unit.end();
+        let start = unit.clone();
+        let end = unit.end();
         return {
           start: start,
           end: end,
@@ -8572,10 +8059,10 @@
     // 'tuesday before noon'
     match: '.+ before #Time+$',
     desc: 'tuesday before noon',
-    parse: function parse(m, context) {
-      var unit = _03Parse(m, context);
-      var end = unit.clone();
-      var start = unit.start();
+    parse: (m, context) => {
+      let unit = _03Parse(m, context);
+      let end = unit.clone();
+      let start = unit.start();
 
       if (unit) {
         return {
@@ -8589,11 +8076,11 @@
     }
   }];
 
-  var ranges = [].concat(_01TwoTimes, _02TwoDate, _03OneDate); // loop thru each range template
+  const ranges = [].concat(_01TwoTimes, _02TwoDate, _03OneDate); // loop thru each range template
 
-  var parseRange = function parseRange(doc, context) {
+  const parseRange = function (doc, context) {
     // parse-out 'every week ..'
-    var repeats = _00Repeats(doc, context) || {}; // if it's *only* an interval response
+    let repeats = _00Repeats(doc, context) || {}; // if it's *only* an interval response
 
     if (doc.found === false) {
       return Object.assign({}, repeats, {
@@ -8603,9 +8090,9 @@
     } // try each template in order
 
 
-    for (var i = 0; i < ranges.length; i += 1) {
-      var fmt = ranges[i];
-      var m = doc.match(fmt.match);
+    for (let i = 0; i < ranges.length; i += 1) {
+      let fmt = ranges[i];
+      let m = doc.match(fmt.match);
 
       if (m.found) {
         if (fmt.group !== undefined) {
@@ -8613,30 +8100,30 @@
         }
 
         if (doc.world.isVerbose() === 'date') {
-          console.log("  ---[".concat(fmt.desc, "]---"));
+          console.log(`  ---[${fmt.desc}]---`);
         }
 
-        var _res = fmt.parse(m, context);
+        let res = fmt.parse(m, context);
 
-        if (_res !== null) {
-          return Object.assign({}, repeats, _res);
+        if (res !== null) {
+          return Object.assign({}, repeats, res);
         }
       }
     } //else, try whole thing
 
 
-    var res = {
+    let res = {
       start: null,
       end: null
     };
-    var unit = _03Parse(doc, context);
+    let unit = _03Parse(doc, context);
 
     if (unit) {
       if (doc.world.isVerbose() === 'date') {
-        console.log("  --[no-range]--");
+        console.log(`  --[no-range]--`);
       }
 
-      var end = unit.clone().end();
+      let end = unit.clone().end();
       res = {
         start: unit,
         end: end,
@@ -8644,7 +8131,7 @@
       };
     }
 
-    var combined = Object.assign({}, repeats, res); // ensure start is not after end
+    let combined = Object.assign({}, repeats, res); // ensure start is not after end
     // console.log(combined)
 
     if (combined.start && combined.end && combined.start.d.epoch > combined.end.d.epoch) {
@@ -8657,10 +8144,10 @@
 
   var _02Ranges = parseRange;
 
-  var maxDate = 8640000000000000;
-  var max_loops = 500;
+  const maxDate = 8640000000000000;
+  const max_loops = 500;
 
-  var shouldPick = function shouldPick(s, byDay) {
+  const shouldPick = function (s, byDay) {
     if (byDay && byDay[s.dayName()] !== true) {
       return false;
     }
@@ -8668,16 +8155,16 @@
     return true;
   };
 
-  var hasTime = {
+  const hasTime = {
     millisecond: true,
     hour: true,
     time: true
   }; // list possible dates of a repeating date
 
-  var generateDates = function generateDates(result, context) {
-    var list = [];
-    var max_count = context.max_repeat || 12;
-    var s = spacetime(result.start || context.today, context.timezone);
+  const generateDates = function (result, context) {
+    let list = [];
+    let max_count = context.max_repeat || 12;
+    let s = spacetime(result.start || context.today, context.timezone);
 
     if (result.repeat.time) {
       s = s.time(result.repeat.time);
@@ -8685,7 +8172,7 @@
       result.repeat.time = s.time();
     } else {
       s = s.startOf('day');
-      var time = s.time();
+      let time = s.time();
 
       if (time === '12:00am' && context.dayStart) {
         s = s.time(context.dayStart);
@@ -8693,8 +8180,8 @@
     } // should we stop at the end date?
 
 
-    var end = spacetime(result.end, context.timezone);
-    var toAdd = Object.keys(result.repeat.interval);
+    let end = spacetime(result.end, context.timezone);
+    let toAdd = Object.keys(result.repeat.interval);
 
     if (toAdd[0] && s.isSame(end, toAdd[0]) === true) {
       // ignore the end date!
@@ -8702,14 +8189,14 @@
     } // should we only include these days?
 
 
-    var byDay = null;
+    let byDay = null;
 
     if (result.repeat.filter) {
       byDay = result.repeat.filter.weekDays;
     } // start going!
 
 
-    for (var i = 0; i < max_loops; i += 1) {
+    for (let i = 0; i < max_loops; i += 1) {
       if (list.length >= max_count || s.epoch >= end.epoch) {
         break;
       }
@@ -8718,14 +8205,14 @@
         list.push(s.iso());
       }
 
-      toAdd.forEach(function (unit) {
+      toAdd.forEach(unit => {
         s = s.add(result.repeat.interval[unit], unit);
       });
     } // add end-times to list
 
 
-    result.repeat.generated = list.map(function (start) {
-      var eod = spacetime(start, context.timezone);
+    result.repeat.generated = list.map(start => {
+      let eod = spacetime(start, context.timezone);
 
       if (context.dayEnd) {
         eod = eod.time(context.dayEnd);
@@ -8740,7 +8227,7 @@
     }); // if we got an interval, but not a start/end
 
     if (!result.start && result.repeat.generated && result.repeat.generated.length > 1) {
-      var arr = result.repeat.generated;
+      let arr = result.repeat.generated;
       result.start = arr[0].start;
       result.end = arr[0].end;
     }
@@ -8750,7 +8237,7 @@
 
   var generate = generateDates;
 
-  var toISO = function toISO(unit) {
+  const toISO = function (unit) {
     if (unit && unit.d) {
       return unit.d.format('iso');
     }
@@ -8758,14 +8245,14 @@
     return null;
   };
 
-  var getDate = function getDate(doc, context) {
+  const getDate = function (doc, context) {
     // validate context a bit
     context = context || {};
     context.today = spacetime(context.today || null, context.timezone); //turn 'five' into 5..
 
     doc = normalize_1(doc); //interpret 'between [A] and [B]'...
 
-    var result = _02Ranges(doc, context); // format as iso
+    let result = _02Ranges(doc, context); // format as iso
 
     result.start = toISO(result.start);
     result.end = toISO(result.end); // generate interval dates
@@ -8781,19 +8268,19 @@
 
   var getDates = getDate;
 
-  var arr = [['mon', 'monday'], ['tue', 'tuesday'], ['tues', 'tuesday'], ['wed', 'wednesday'], ['thu', 'thursday'], ['thurs', 'thursday'], ['fri', 'friday'], ['sat', 'saturday'], ['sun', 'sunday'], ['jan', 'january'], ['feb', 'february'], ['mar', 'march'], ['apr', 'april'], ['jun', 'june'], ['jul', 'july'], ['aug', 'august'], ['sep', 'september'], ['sept', 'september'], ['oct', 'october'], ['nov', 'november'], ['dec', 'december']];
-  arr = arr.map(function (a) {
+  let arr = [['mon', 'monday'], ['tue', 'tuesday'], ['tues', 'tuesday'], ['wed', 'wednesday'], ['thu', 'thursday'], ['thurs', 'thursday'], ['fri', 'friday'], ['sat', 'saturday'], ['sun', 'sunday'], ['jan', 'january'], ['feb', 'february'], ['mar', 'march'], ['apr', 'april'], ['jun', 'june'], ['jul', 'july'], ['aug', 'august'], ['sep', 'september'], ['sept', 'september'], ['oct', 'october'], ['nov', 'november'], ['dec', 'december']];
+  arr = arr.map(a => {
     return {
-      "short": a[0],
-      "long": a[1]
+      short: a[0],
+      long: a[1]
     };
   });
   var _abbrevs = arr;
 
-  var getDuration = function getDuration(date) {
-    var start = date.start;
-    var end = date.end;
-    var duration = {};
+  const getDuration = function (date) {
+    let start = date.start;
+    let end = date.end;
+    let duration = {};
 
     if (start && end) {
       start = spacetime(start);
@@ -8802,7 +8289,7 @@
 
       delete duration.milliseconds;
       delete duration.seconds;
-      Object.keys(duration).forEach(function (k) {
+      Object.keys(duration).forEach(k => {
         if (duration[k] === 0) {
           delete duration[k];
         }
@@ -8814,13 +8301,13 @@
 
   var duration = getDuration;
 
-  var mapUnits = {
+  const mapUnits = {
     millisecond: 'time',
     hour: 'time',
     minute: 'time'
   }; // try to decide what 'thing' this date-range is
 
-  var getUnit = function getUnit(date) {
+  const getUnit = function (date) {
     if (date.unit) {
       if (mapUnits.hasOwnProperty(date.unit)) {
         return mapUnits[date.unit];
@@ -8829,14 +8316,14 @@
       return date.unit;
     }
 
-    var duration$1 = date.duration;
+    let duration$1 = date.duration;
 
     if (!duration$1) {
       duration$1 = duration(date);
     }
 
-    var start = spacetime(date.start);
-    var end = spacetime(date.end); // 2021-2022
+    let start = spacetime(date.start);
+    let end = spacetime(date.end); // 2021-2022
 
     if (duration$1.years) {
       if (start.isSame('year', end)) {
@@ -8872,12 +8359,10 @@
 
   var methods$2 = {
     /** easy getter for the start/end dates */
-    get: function get(options) {
-      var _this = this;
-
-      var arr = [];
-      this.forEach(function (doc) {
-        var date = getDates(doc, _this.context);
+    get: function (options) {
+      let arr = [];
+      this.forEach(doc => {
+        let date = getDates(doc, this.context);
         date.unit = unit(date);
         arr.push(date);
       });
@@ -8890,10 +8375,8 @@
     },
 
     /** overload the original json with date information */
-    json: function json(options) {
-      var _this2 = this;
-
-      var n = null;
+    json: function (options) {
+      let n = null;
 
       if (typeof options === 'number') {
         n = options;
@@ -8903,10 +8386,10 @@
       options = options || {
         terms: false
       };
-      var res = [];
-      this.forEach(function (doc) {
-        var json = doc.json(options)[0];
-        var found = getDates(doc, _this2.context);
+      let res = [];
+      this.forEach(doc => {
+        let json = doc.json(options)[0];
+        let found = getDates(doc, this.context);
         json = Object.assign(json, found); // add more data
 
         json.duration = duration(json);
@@ -8922,18 +8405,16 @@
     },
 
     /** render all dates according to a specific format */
-    format: function format(fmt) {
-      var _this3 = this;
-
-      this.forEach(function (doc) {
-        var obj = getDates(doc, _this3.context);
+    format: function (fmt) {
+      this.forEach(doc => {
+        let obj = getDates(doc, this.context);
 
         if (obj.start) {
-          var start = spacetime(obj.start, _this3.context.timezone);
-          var str = start.format(fmt);
+          let start = spacetime(obj.start, this.context.timezone);
+          let str = start.format(fmt);
 
           if (obj.end) {
-            var end = spacetime(obj.end, _this3.context.timezone);
+            let end = spacetime(obj.end, this.context.timezone);
 
             if (start.isSame(end, 'day') === false) {
               str += ' to ' + end.format(fmt);
@@ -8950,27 +8431,23 @@
     },
 
     /** replace 'Fri' with 'Friday', etc*/
-    toLongForm: function toLongForm() {
-      var _this4 = this;
-
-      _abbrevs.forEach(function (a) {
-        _this4.replace(a["short"], a["long"], true);
+    toLongForm: function () {
+      _abbrevs.forEach(a => {
+        this.replace(a.short, a.long, true);
       });
       return this;
     },
 
     /** replace 'Friday' with 'Fri', etc*/
-    toShortForm: function toShortForm() {
-      var _this5 = this;
-
-      _abbrevs.forEach(function (a) {
-        _this5.replace(a["long"], a["short"], true);
+    toShortForm: function () {
+      _abbrevs.forEach(a => {
+        this.replace(a.long, a.short, true);
       });
       return this;
     }
   };
 
-  var known = {
+  const known = {
     century: true,
     day: true,
     decade: true,
@@ -8985,7 +8462,7 @@
     quarter: true,
     season: true
   };
-  var mapping = {
+  let mapping = {
     m: 'minute',
     h: 'hour',
     hr: 'hour',
@@ -8997,19 +8474,19 @@
     qtr: 'quarter'
   }; // add plurals
 
-  Object.keys(mapping).forEach(function (k) {
+  Object.keys(mapping).forEach(k => {
     mapping[k + 's'] = mapping[k];
   });
 
-  var parse = function parse(doc) {
-    var duration = {}; //parse '8 minutes'
+  const parse = function (doc) {
+    let duration = {}; //parse '8 minutes'
 
-    var twoWord = doc.match('#Value+ #Duration');
+    let twoWord = doc.match('#Value+ #Duration');
 
     if (twoWord.found) {
-      twoWord.forEach(function (m) {
-        var num = m.numbers().get(0);
-        var unit = m.terms().last().nouns().toSingular().text(); // turn 'mins' into 'minute'
+      twoWord.forEach(m => {
+        let num = m.numbers().get(0);
+        let unit = m.terms().last().nouns().toSingular().text(); // turn 'mins' into 'minute'
 
         if (mapping.hasOwnProperty(unit)) {
           unit = mapping[unit];
@@ -9020,12 +8497,12 @@
         }
       });
     } else {
-      var oneWord = doc.match('(#Duration && /[0-9][a-z]+$/)');
+      let oneWord = doc.match('(#Duration && /[0-9][a-z]+$/)');
 
       if (oneWord.found) {
-        var str = doc.text();
-        var num = str.match(/([0-9]+)/);
-        var unit = str.match(/([a-z]+)/);
+        let str = doc.text();
+        let num = str.match(/([0-9]+)/);
+        let unit = str.match(/([a-z]+)/);
 
         if (num && unit) {
           num = num[0] || null;
@@ -9047,12 +8524,12 @@
 
   var parse_1 = parse;
 
-  var methods$1 = {
+  const methods$1 = {
     /** easy getter for the time */
-    get: function get(options) {
-      var arr = [];
-      this.forEach(function (doc) {
-        var res = parse_1(doc);
+    get: function (options) {
+      let arr = [];
+      this.forEach(doc => {
+        let res = parse_1(doc);
         arr.push(res);
       });
 
@@ -9064,8 +8541,8 @@
     },
 
     /** overload the original json with duration information */
-    json: function json(options) {
-      var n = null;
+    json: function (options) {
+      let n = null;
 
       if (typeof options === 'number') {
         n = options;
@@ -9075,9 +8552,9 @@
       options = options || {
         terms: false
       };
-      var res = [];
-      this.forEach(function (doc) {
-        var json = doc.json(options);
+      let res = [];
+      this.forEach(doc => {
+        let json = doc.json(options);
         json.duration = parse_1(doc);
         res.push(json);
       });
@@ -9090,59 +8567,49 @@
     },
 
     /** change to a standard duration format */
-    normalize: function normalize() {
-      this.forEach(function (doc) {
-        var duration = parse_1(doc);
-        var list = [];
-        Object.keys(duration).forEach(function (unit) {
-          var num = duration[unit];
-          var word = unit;
+    normalize: function () {
+      this.forEach(doc => {
+        let duration = parse_1(doc);
+        let list = [];
+        Object.keys(duration).forEach(unit => {
+          let num = duration[unit];
+          let word = unit;
 
           if (num !== 1) {
             word += 's';
           }
 
-          list.push("".concat(num, " ").concat(word));
+          list.push(`${num} ${word}`);
         }); // splice-in an 'and'
 
         if (list.length > 1) {
-          var beforeEnd = list.length - 1;
+          let beforeEnd = list.length - 1;
           list.splice(beforeEnd, 0, 'and');
         }
 
-        var text = list.join(' ');
+        let text = list.join(' ');
         doc.replaceWith(text);
       });
       return this;
     }
   };
 
-  var addDurations = function addDurations(Doc) {
+  const addDurations = function (Doc) {
     /** phrases like '2 months', or '2mins' */
-    var Durations = /*#__PURE__*/function (_Doc) {
-      _inherits(Durations, _Doc);
-
-      var _super = _createSuper(Durations);
-
-      function Durations(list, from, w) {
-        var _this;
-
-        _classCallCheck(this, Durations);
-
-        _this = _super.call(this, list, from, w);
-        _this.context = {};
-        return _this;
+    class Durations extends Doc {
+      constructor(list, from, w) {
+        super(list, from, w);
+        this.context = {};
       }
 
-      return Durations;
-    }(Doc); //add-in methods
+    } //add-in methods
 
 
     Object.assign(Durations.prototype, methods$1);
     /** phrases like '2 months' */
 
     Doc.prototype.durations = function (n) {
-      var m = this.match('#Value+ #Duration (and? #Value+ #Duration)?'); // add '20mins'
+      let m = this.match('#Value+ #Duration (and? #Value+ #Duration)?'); // add '20mins'
 
       m = m.concat(this.match('(#Duration && /[0-9][a-z]+$/)')); // not 'in 20 minutes'
 
@@ -9158,14 +8625,12 @@
 
   var durations = addDurations;
 
-  var methods = {
+  const methods = {
     /** easy getter for the time */
-    get: function get(options) {
-      var _this = this;
-
-      var arr = [];
-      this.forEach(function (doc) {
-        var res = parse_1$1(doc, _this.context);
+    get: function (options) {
+      let arr = [];
+      this.forEach(doc => {
+        let res = parse_1$1(doc, this.context);
         arr.push(res);
       });
 
@@ -9177,10 +8642,8 @@
     },
 
     /** overload the original json with duration information */
-    json: function json(options) {
-      var _this2 = this;
-
-      var n = null;
+    json: function (options) {
+      let n = null;
 
       if (typeof options === 'number') {
         n = options;
@@ -9190,10 +8653,10 @@
       options = options || {
         terms: false
       };
-      var res = [];
-      this.forEach(function (doc) {
-        var json = doc.json(options);
-        json.time = parse_1$1(doc, _this2.context);
+      let res = [];
+      this.forEach(doc => {
+        let json = doc.json(options);
+        json.time = parse_1$1(doc, this.context);
         res.push(json);
       });
 
@@ -9205,32 +8668,22 @@
     }
   };
 
-  var addTimes = function addTimes(Doc) {
+  const addTimes = function (Doc) {
     /** phrases like '2 months', or '2mins' */
-    var Times = /*#__PURE__*/function (_Doc) {
-      _inherits(Times, _Doc);
-
-      var _super = _createSuper(Times);
-
-      function Times(list, from, w) {
-        var _this3;
-
-        _classCallCheck(this, Times);
-
-        _this3 = _super.call(this, list, from, w);
-        _this3.context = {};
-        return _this3;
+    class Times extends Doc {
+      constructor(list, from, w) {
+        super(list, from, w);
+        this.context = {};
       }
 
-      return Times;
-    }(Doc); //add-in methods
+    } //add-in methods
 
 
     Object.assign(Times.prototype, methods);
     /** phrases like '4pm' */
 
     Doc.prototype.times = function (n) {
-      var m = this.match('#Time+ (am|pm)?');
+      let m = this.match('#Time+ (am|pm)?');
 
       if (typeof n === 'number') {
         m = m.get(n);
@@ -9242,12 +8695,12 @@
 
   var times = addTimes;
 
-  var findDate = function findDate(doc) {
+  const findDate = function (doc) {
     // let r = this.clauses()
-    var dates = doc.match('#Date+'); // ignore only-durations like '20 minutes'
+    let dates = doc.match('#Date+'); // ignore only-durations like '20 minutes'
 
-    dates = dates.filter(function (m) {
-      var isDuration = m.has('^#Duration+$') || m.has('^#Value #Duration+$'); // allow 'q4', etc
+    dates = dates.filter(m => {
+      let isDuration = m.has('^#Duration+$') || m.has('^#Value #Duration+$'); // allow 'q4', etc
 
       if (isDuration === true && m.has('(#FinancialQuarter|quarter)')) {
         return true;
@@ -9256,7 +8709,7 @@
       return isDuration === false;
     }); // 30 minutes on tuesday
 
-    var m = dates.match('[#Cardinal #Duration (in|on|this|next|during|for)] #Date', 0);
+    let m = dates.match('[#Cardinal #Duration (in|on|this|next|during|for)] #Date', 0);
 
     if (m.found) {
       dates = dates.not(m);
@@ -9310,7 +8763,7 @@
     } // 'june 5th, june 10th'
 
 
-    m = dates.match('[#Month #Value] #Month', 0);
+    m = dates.match('[#Month #Value] #Month', 0).ifNo('@hasDash$');
 
     if (m.found) {
       dates = dates.splitAfter(m);
@@ -9358,13 +8811,13 @@
 
   var find = findDate;
 
-  var opts = {
+  const opts = {
     punt: {
       weeks: 2
     }
   };
 
-  var addMethods = function addMethods(Doc, world) {
+  const addMethods = function (Doc, world) {
     // our new tags
     world.addTags(_tags); // add info for the date plugin
 
@@ -9377,31 +8830,21 @@
     times(Doc);
     /** phraes like 'nov 2nd' or 'on tuesday' */
 
-    var Dates = /*#__PURE__*/function (_Doc) {
-      _inherits(Dates, _Doc);
-
-      var _super = _createSuper(Dates);
-
-      function Dates(list, from, w) {
-        var _this;
-
-        _classCallCheck(this, Dates);
-
-        _this = _super.call(this, list, from, w);
-        _this.context = opts;
-        return _this;
+    class Dates extends Doc {
+      constructor(list, from, w) {
+        super(list, from, w);
+        this.context = opts;
       }
 
-      return Dates;
-    }(Doc); //add-in methods
+    } //add-in methods
 
 
     Object.assign(Dates.prototype, methods$2);
 
     Doc.prototype.dates = function (n) {
-      var context = {};
+      let context = {};
 
-      if (n && _typeof(n) === 'object') {
+      if (n && typeof n === 'object') {
         context = n;
         n = null;
       }
@@ -9417,13 +8860,13 @@
         context.timezone = 'ETC/UTC';
       }
 
-      var dates = find(this);
+      let dates = find(this);
 
       if (typeof n === 'number') {
         dates = dates.get(n);
       }
 
-      var d = new Dates(dates.list, this, this.world);
+      let d = new Dates(dates.list, this, this.world);
 
       if (context.today) {
         context.today = spacetime(context.today, context.timezone);

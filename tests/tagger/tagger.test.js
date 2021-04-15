@@ -244,6 +244,13 @@ test('pos-basic-tag:', function (t) {
     ['https://www.fu4bar.f3scho0ls.com', ['Url']],
     ['http://compromise.cool', ['Url']],
     ['http://a.jp', ['Url']],
+    // hyphens
+    ['cartoon-ish', ['Adjective']],
+    ['over-joyous', ['Adjective']],
+    ['walk-able', ['Adjective']],
+    ['trans-national', ['Adjective']],
+    ['re-create', ['Verb']],
+    ['micro-computer', ['Noun']],
   ]
   arr.forEach(function (a) {
     let terms = nlp(a[0]).json(0).terms

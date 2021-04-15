@@ -157,4 +157,6 @@ module.exports = [
   { match: `(have|had) [#Adjective] #Preposition .`, group: 0, tag: 'Noun', reason: 'have-fun' },
   // co-founder
   { match: `co #Noun`, tag: 'Actor', reason: 'co-noun' },
+  // to facilitate gas exchange with
+  { match: `to #PresentTense #Noun [#PresentTense] #Preposition`, group: 0, tag: 'Noun', reason: 'gas-exchange' },
 ]

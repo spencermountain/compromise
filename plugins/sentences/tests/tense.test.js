@@ -30,6 +30,21 @@ test('sentence-change-tense:', function (t) {
       'Pigeonholing was a process that attempted to classify disparate entities',
       'Pigeonholing will be a process that attempts to classify disparate entities',
     ],
+    [
+      `Breathing is the process of moving air into and out of the lungs to facilitate gas exchange with the internal environment`,
+      `Breathing was the process of moving air into and out of the lungs to facilitate gas exchange with the internal environment`,
+      `Breathing will be the process of moving air into and out of the lungs to facilitate gas exchange with the internal environment`,
+    ],
+    [
+      `A shoehorn or shoe horn is a tool with a short handle that flares into a longer spoon-like head`,
+      `A shoehorn or shoe horn was a tool with a short handle that flared into a longer spoon-like head`,
+      `A shoehorn or shoe horn will be a tool with a short handle that will flare into a longer spoon-like head`,
+    ],
+    // [
+    //   `A Bank is a financial institution that accepts deposits from the public and creates a demand deposit while simultaneously making loans.`,
+    //   `A Bank was a financial institution that accepted deposits from the public and created a demand deposit while simultaneously making loans.`,
+    //   `A Bank will be a financial institution that accepts deposits from the public and creates a demand deposit while simultaneously making loans.`,
+    // ],
     // [
     //   `Checkmate is a game position in chess in which a player's king is in check and there is no way to avoid the threat.`,
     //   `Checkmate was a game position in chess in which a player's king was in check and there was no way to avoid the threat.`,

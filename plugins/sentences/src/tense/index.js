@@ -100,7 +100,7 @@ exports.toFutureTense = function () {
       // add 'that attempts'
       verbs = verbs.if('(#PastTense|#PresentTense)').notIf('#Gerund')
       verbs.forEach((v) => {
-        if (v.lookBehind('(that|which)$').found === true) {
+        if (v.lookBehind('(that|which|who|whom)$').found === true) {
           v.verbs().toPresentTense()
         } else {
           v.verbs().toInfinitive()

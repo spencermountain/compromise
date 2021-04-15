@@ -63,12 +63,14 @@ module.exports = {
     [/.[^aeiou][ai]ble$/, Adj],
     [/.[^aeiou]eable$/, Adj],
     [/.[ts]ive$/, Adj],
+    [/[a-z]-like$/, Adj],
   ],
   h: [
     [/.[^aeiouf]ish$/, Adj],
     [/.v[iy]ch$/, Last], //east-europe
     [/^ug?h+$/, Exp], //uhh
     [/^uh[ -]?oh$/, Exp], //uhoh
+    [/[a-z]-ish$/, Adj], //cartoon-ish
   ],
   i: [
     [/.[oau][wvl]ski$/, Last], //polish (male)

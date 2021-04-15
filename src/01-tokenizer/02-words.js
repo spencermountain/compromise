@@ -11,7 +11,11 @@ notWord = notWord.reduce((h, c) => {
 
 const hasHyphen = function (str) {
   //dont split 're-do'
-  if (/^(re|un)-?[^aeiou]./.test(str) === true) {
+  if (/^(re|un|micro|macro|trans|bi|mono|over)-?[^aeiou]./.test(str) === true) {
+    return false
+  }
+  //dont split 'bat-like'
+  if (/^([a-z\u00C0-\u00FF/]+)(-|–|—)(like|ish|less|able)/i.test(str) === true) {
     return false
   }
   //letter-number 'aug-20'
@@ -24,11 +28,6 @@ const hasHyphen = function (str) {
   if (reg2.test(str) === true) {
     return true
   }
-  //support weird number-emdash combo '2010–2011'
-  // let reg2 = /^([0-9]+)(–|—)([0-9].*)/i
-  // if (reg2.test(str)) {
-  //   return true
-  // }
   return false
 }
 

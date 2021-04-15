@@ -15,7 +15,10 @@ const context = {
   // dayEnd: '8:00pm',
 }
 
-let doc = nlp('22-23 Feb 2016 at 7pm')
+// let doc = nlp('22-23 Feb 2016 at 7pm')
+// let doc = nlp('ten to 4 in the morning')
+// let doc = nlp('february 5th or 7th')
+let doc = nlp('2016-feb-01')
 let dates = doc.dates(context).debug()
 dates = dates.get()
 dates.forEach((date) => {

@@ -98,7 +98,7 @@ const tests = [
       // ['this spring', 'march 1st 2016 to may 31st 2016'],
       // ['next spring', 'march 1st 2017 to may 31st 2017'],
       ['the first week of june', 'May 29th 2017 to June 4th 2017'],
-      ['22-23 Feb at 7pm', 'Feb 22 2017 until Feb 23 2017'],
+      ['22-23 Feb at 7pm', 'Feb 22 2017 7pm until Feb 23 2017'],
       // ['22-23 Feb 2016 at 7pm', 'Feb 22 2016 to Feb 23 2016'],
       ['Tuesday, 10 January', 'Jan 10 2017'],
       ['Monday - Wednesday', 'Nov 28 - Nov 30'],
@@ -107,7 +107,7 @@ const tests = [
       // ['within two weeks', 'Nov 23 to Dec 8'],
       // ['within a month', 'Nov 23 - Dec 23'],
       // ['within a few months', 'Nov 23 - Jan 23 2017'],
-      // ['1994-11-05T13:15:30Z', 'Nov 5 1994'],
+      // ['1994-11-05T13:15:000Z', 'Nov 5 1994 1:15pm'],
       ['August 10 to 22, 2012', 'Aug 10 2012 to Aug 22 2012'],
       ['August 10-22, 2012', 'Aug 10 2012 to Aug 22 2012'],
       // ['August 10 - November 12', 'Aug 10 2017 - Nov 12 2017'], //tricky

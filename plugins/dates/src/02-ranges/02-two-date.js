@@ -76,7 +76,7 @@ module.exports = [
   },
   {
     // one month, one year, second form - '5 to 7 of january 1998'
-    match: '[<from>#Value] (to|through|thru|and) [<to>#Value of? #Month of? #Year?]',
+    match: '[<from>#Value] (to|through|thru|and) [<to>#Value of? #Month #Date+?]',
     desc: '5 to 7 of january 1998',
     parse: (m, context) => {
       let to = m.groups('to')

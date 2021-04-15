@@ -19,7 +19,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - **[fix]** - sentence conjugation fixes
 - **[fix]** - improvements to phrasal verbs
 - **[change]** - keep tokenization for some more dashed suffixes like 'snail-like'
-  _plugin-releases_: dates, sentences
+  _plugin-releases_: dates, numbers, sentences
 
 #### 13.10.7 [April 2021]
 

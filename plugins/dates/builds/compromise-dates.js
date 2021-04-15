@@ -1,4 +1,4 @@
-/* compromise-dates 2.0.3 MIT */
+/* compromise-dates 2.1.0 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -7492,8 +7492,7 @@
     } // jan - feb
 
 
-    doc.match('@hasDash').insertAfter('to').tag('Date'); // console.log('=-=-=-= here -=-=-=-')
-    // doc.debug()
+    doc.match('@hasDash').insertAfter('to').tag('Date'); // doc.debug()
 
     return doc;
   };

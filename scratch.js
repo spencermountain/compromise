@@ -8,6 +8,7 @@ nlp.extend(require('./plugins/numbers/src'))
 // nlp.verbose(true)
 
 let doc = nlp('they dragged on for 1 year or two ').debug()
+// console.log(nlp('drag').verbs().conjugate())
 // doc.dates().debug()
 // let doc = nlp('9-5pm tuesday').debug()
 // let m = doc.match('to 5pm tuesday').debug()

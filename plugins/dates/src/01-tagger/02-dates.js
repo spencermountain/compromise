@@ -14,7 +14,10 @@ const dateTagger = function (doc) {
     //tuesday
     doc.match('#Date+').tag('Date', here)
     //by June
-    doc.match('(by|until|on|in|at|during|over|every|each|due) the? #Date').tag('Date', 'until-june')
+    doc
+      .match('(by|until|on|in|at|during|over|every|each|due) the? #Date')
+      .notIf('#PhrasalVerb')
+      .tag('Date', 'until-june')
     //a year after..
     doc.match('a #Duration').tag('Date', here)
     //between x and y
@@ -22,7 +25,10 @@ const dateTagger = function (doc) {
     doc.match('(to|until|upto) #Date').tag('Date', here)
     doc.match('#Date and #Date').tag('Date', here)
     //during this june
-    doc.match('(by|until|after|before|during|on|in|following|since) (next|this|last)? (#Date|#Date)').tag('Date', here)
+    doc
+      .match('(by|until|after|before|during|on|in|following|since) (next|this|last)? (#Date|#Date)')
+      .notIf('#PhrasalVerb')
+      .tag('Date', here)
     //day after next
     doc.match('the? #Date after next one?').tag('Date', here)
     //approximately...

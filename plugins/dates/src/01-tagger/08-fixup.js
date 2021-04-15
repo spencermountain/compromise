@@ -63,6 +63,8 @@ const fixUp = function (doc) {
     if (d.has('#Month #Month') && !d.has('@hasHyphen') && !d.has('@hasComma')) {
       d.match('#Month').lastTerm().unTag('Date', 'month-month')
     }
+    // over the years
+    d.match('(in|over) the #Duration #Date+?').unTag('Date', 'over-the-duration')
     // log the hours
     if (d.has('(minutes|seconds|weeks|hours|days|months)') && !d.has('#Value #Duration')) {
       d.match('(minutes|seconds|weeks|hours|days|months)').unTag('Date', 'log-hours')

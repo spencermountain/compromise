@@ -90,6 +90,8 @@ let list = [
   { match: '(#Verb && @hasHyphen) out', tag: 'PhrasalVerb', reason: 'foo-out' },
   //fall over
   { match: '#PhrasalVerb [#PhrasalVerb]', group: 0, tag: 'Particle', reason: 'phrasal-particle' },
+  // went on for
+  { match: '(lived|went|crept|go) [on] for', group: 0, tag: 'PhrasalVerb', reason: 'went-on' },
   //back it up
   {
     match: '#Verb (him|her|it|us|himself|herself|itself|everything|something) [(up|down)]',

@@ -8,9 +8,11 @@ nlp.extend(require('./plugins/sentences/src'))
 // nlp.verbose(true)
 
 // let doc = nlp(`human beings intentionally make their presence known`)
-let doc = nlp(`a longer spoon-like head`).debug()
-// let doc = nlp(`a longer great head`).debug()
+let doc = nlp(
+  `Sugaring is the process of desiccating a food by first dehydrating it, then packing it with pure sugar. `
+).debug()
 doc.sentences().toPastTense()
+// doc.sentences().toPastTense()
 // doc.sentences().toPresentTense()
 // doc.sentences().toFutureTense()
 console.log(doc.text())

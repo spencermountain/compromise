@@ -38,7 +38,22 @@ test('sentence-change-tense:', function (t) {
     [
       `A shoehorn or shoe horn is a tool with a short handle that flares into a longer spoon-like head`,
       `A shoehorn or shoe horn was a tool with a short handle that flared into a longer spoon-like head`,
-      `A shoehorn or shoe horn will be a tool with a short handle that will flare into a longer spoon-like head`,
+      `A shoehorn or shoe horn will be a tool with a short handle that flares into a longer spoon-like head`,
+    ],
+    [
+      `A hinge is a mechanical bearing that connects two solid objects, typically allowing only a limited angle of rotation between them.`,
+      `A hinge was a mechanical bearing that connected two solid objects, typically allowing only a limited angle of rotation between them.`,
+      `A hinge will be a mechanical bearing that connects two solid objects, typically allowing only a limited angle of rotation between them.`,
+    ],
+    [
+      `Sugaring is a food preservation method similar to pickling.`,
+      `Sugaring was a food preservation method similar to pickling.`,
+      `Sugaring will be a food preservation method similar to pickling.`,
+    ],
+    [
+      `Sugaring is the process of desiccating a food by first dehydrating it, then packing it with pure sugar.`,
+      `Sugaring was the process of desiccating a food by first dehydrating it, then packing it with pure sugar.`,
+      `Sugaring will be the process of desiccating a food by first dehydrating it, then packing it with pure sugar.`,
     ],
     // [
     //   `A Bank is a financial institution that accepts deposits from the public and creates a demand deposit while simultaneously making loans.`,

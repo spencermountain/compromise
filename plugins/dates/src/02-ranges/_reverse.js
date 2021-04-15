@@ -4,7 +4,7 @@ const reverseMaybe = function (obj) {
   let end = obj.end
   if (start.d.isAfter(end.d)) {
     // wednesday to sunday -> move end up a week
-    if (start.constructor.name === 'WeekDay' && end.constructor.name === 'WeekDay') {
+    if (start.isWeekDay && end.isWeekDay) {
       obj.end.next()
       return obj
     }

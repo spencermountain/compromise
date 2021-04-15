@@ -5446,7 +5446,9 @@
   class WeekDay$2 extends Day$5 {
     constructor(input, unit, context) {
       super(input, unit, context);
-      this.unit = 'day'; // is the input just a weekday?
+      this.unit = 'day';
+      this.isWeekDay = true; //cool.
+      // is the input just a weekday?
 
       if (typeof input === 'string') {
         this.d = spacetime(context.today, context.timezone);
@@ -7490,7 +7492,8 @@
     } // jan - feb
 
 
-    doc.match('@hasDash').insertAfter('to').tag('Date'); // doc.debug()
+    doc.match('@hasDash').insertAfter('to').tag('Date'); // console.log('=-=-=-= here -=-=-=-')
+    // doc.debug()
 
     return doc;
   };
@@ -7681,7 +7684,7 @@
 
     if (start.d.isAfter(end.d)) {
       // wednesday to sunday -> move end up a week
-      if (start.constructor.name === 'WeekDay' && end.constructor.name === 'WeekDay') {
+      if (start.isWeekDay && end.isWeekDay) {
         obj.end.next();
         return obj;
       } // else, reverse them

@@ -42,6 +42,7 @@ class WeekDay extends Day {
   constructor(input, unit, context) {
     super(input, unit, context)
     this.unit = 'day'
+    this.isWeekDay = true //cool.
     // is the input just a weekday?
     if (typeof input === 'string') {
       this.d = spacetime(context.today, context.timezone)

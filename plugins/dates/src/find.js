@@ -1,7 +1,7 @@
 const findDate = function (doc) {
+  // doc.debug()
   // let r = this.clauses()
   let dates = doc.match('#Date+')
-
   // ignore only-durations like '20 minutes'
   dates = dates.filter((m) => {
     let isDuration = m.has('^#Duration+$') || m.has('^#Value #Duration+$')
@@ -45,6 +45,12 @@ const findDate = function (doc) {
   m = dates.match('#WeekDay #WeekDay and? #WeekDay')
   if (m.found) {
     dates = dates.splitOn('#WeekDay')
+    dates = dates.not('^and')
+  }
+  // monday, wednesday
+  m = dates.match('[#WeekDay] #WeekDay', 0).ifNo('@hasDash$')
+  if (m.found) {
+    dates = dates.splitAfter('#WeekDay')
     dates = dates.not('^and')
   }
   // '5 june, 10 june'

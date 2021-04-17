@@ -1,4 +1,4 @@
-const parseTime = require('../times/parse')
+const parseTime = require('../../times/parse')
 
 const dayNames = {
   mon: 'monday',

@@ -1,6 +1,15 @@
 const parseDate = require('../03-parse')
-const repeating = require('./00-repeats')
-const ranges = [].concat(require('./01-two-times'), require('./02-two-date'), require('./03-one-date'))
+const repeating = require('./intervals')
+const ranges = [].concat(
+  require('./01-two-times'),
+  // require('./02-and-dates'),
+  require('./02-date-range'),
+  require('./03-one-date')
+)
+
+// const isArray = function (arr) {
+//   return Object.prototype.toString.call(arr) === '[object Array]'
+// }
 
 // loop thru each range template
 const parseRange = function (doc, context) {
@@ -23,6 +32,8 @@ const parseRange = function (doc, context) {
       }
       let res = fmt.parse(m, context)
       if (res !== null) {
+        // did it return more than one date?
+
         return Object.assign({}, repeats, res)
       }
     }

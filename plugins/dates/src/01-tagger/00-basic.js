@@ -33,6 +33,7 @@ const tagYearSafe = (m, reason) => {
 }
 
 const tagDates = function (doc) {
+  // doc.debug()
   // in the evening
   doc.match('in the (night|evening|morning|afternoon|day|daytime)').tag('Time', 'in-the-night')
   // 8 pm
@@ -44,6 +45,9 @@ const tagDates = function (doc) {
 
   // misc weekday words
   doc.match('(tue|thu)').tag('WeekDay', 'misc-weekday')
+
+  // april should almost-always be a date
+  // doc.match('[april] !#LastName?', 0).tag('Month', 'april')
 
   //months:
   let month = doc.if('#Month')
@@ -58,6 +62,8 @@ const tagDates = function (doc) {
     month.match('#Month #Value to #Value').tag('Date', 'value-to-value')
     //march the 12th
     month.match('#Month the #Value').tag('Date', 'month-the-value')
+    // march to april
+    month.match('march to #Month').tag(['Month', 'Date', 'Month'], 'march-to')
   }
 
   //months:
@@ -187,6 +193,10 @@ const tagDates = function (doc) {
   doc.match('(from|starting|until|by) now').tag('Date', 'for-now')
   // every night
   doc.match('(each|every) night').tag('Date', 'for-now')
+
+  // 'jan 5 or 8'
+  doc.match('#Month #Value or #Value').tag('Date', 'date-or-date')
+  // doc.debug()
   return doc
 }
 module.exports = tagDates

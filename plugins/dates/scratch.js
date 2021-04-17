@@ -3,13 +3,13 @@ const spacetime = require('spacetime')
 nlp.extend(require('../../plugins/numbers/src'))
 nlp.extend(require('../../plugins/dates/src'))
 // nlp.verbose(true)
-// nlp.verbose('date')
+nlp.verbose('date')
 
 const fmt = (iso) => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 
 const context = {
   // timezone: null, //'Asia/Shanghai',
-  today: '2020-01-21',
+  // today: '2020-01-21',
   // today: [2016, 10, 23], //wed nov 23rd
   // today: '2018-01-19T10:05:00',
   // dayStart: '8:00am',
@@ -18,10 +18,11 @@ const context = {
 
 // let doc = nlp('22-23 Feb 2016 at 7pm')
 // let doc = nlp('ten to 4 in the morning')
-// let doc = nlp('february 5th or 7th')
-// let doc = nlp('march to april').debug()
+// let doc = nlp('february 5th, 6th or 7th') //.debug()
+let doc = nlp('feb 2 or third') //.tag('Cool') //.debug()
+// let doc = nlp('march to april')
 // let doc = nlp('next friday, this monday').debug()
-let doc = nlp('wednesdays at 3') //.debug()
+// let doc = nlp('wednesdays at 3') //.debug()
 let dates = doc.dates(context) //.debug()
 // console.log(dates.json(0))
 dates = dates.get()

@@ -194,8 +194,6 @@ const tagDates = function (doc) {
   // every night
   doc.match('(each|every) night').tag('Date', 'for-now')
 
-  // 'jan 5 or 8'
-  doc.match('#Month #Value or #Value').tag('Date', 'date-or-date')
   // doc.debug()
   return doc
 }

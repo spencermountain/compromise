@@ -1,6 +1,10 @@
 const split = require('./split')
 
 const findDate = function (doc) {
+  if (doc.world.isVerbose() === 'date') {
+    doc.debug()
+    console.log('          ---')
+  }
   let dates = doc.match('#Date+')
   // ignore only-durations like '20 minutes'
   dates = dates.filter((m) => {

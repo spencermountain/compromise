@@ -1,4 +1,4 @@
-/* compromise-dates 2.1.0 MIT */
+/* compromise-dates 2.2.0 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -47,6 +47,7 @@
   };
 
   const tagDates = function (doc) {
+    // doc.debug()
     // in the evening
     doc.match('in the (night|evening|morning|afternoon|day|daytime)').tag('Time', 'in-the-night'); // 8 pm
 
@@ -56,7 +57,10 @@
 
     doc.match('/^[0-9]{4}-[0-9]{2}$/').tag('Date', '2012-06'); // misc weekday words
 
-    doc.match('(tue|thu)').tag('WeekDay', 'misc-weekday'); //months:
+    doc.match('(tue|thu)').tag('WeekDay', 'misc-weekday');
+    doc.match('(march|april|may) (and|to|or|through|until)? (march|april|may)').tag('Date').match('(march|april|may)').tag('Month', 'march|april|may'); // april should almost-always be a date
+    // doc.match('[april] !#LastName?', 0).tag('Month', 'april')
+    //months:
 
     let month = doc.if('#Month');
 
@@ -68,9 +72,15 @@
 
       month.match('#Cardinal #Month').tag('Date', 'cardinal-month'); //march 5 to 7
 
-      month.match('#Month #Value to #Value').tag('Date', 'value-to-value'); //march the 12th
+      month.match('#Month #Value (and|or|to)? #Value+').tag('Date', 'value-to-value'); //march the 12th
 
-      month.match('#Month the #Value').tag('Date', 'month-the-value');
+      month.match('#Month the #Value').tag('Date', 'month-the-value'); // march to april
+
+      month.match('(march|may) to? #Date').tag('Date').match('^.').tag('Month', 'march-to'); // 'march'
+
+      month.match('^(march|may)$').tag('Month', 'single-march'); //March or June
+
+      month.match('#Month or #Month').tag('Date', 'month-or-month');
     } //months:
 
 
@@ -199,7 +209,8 @@
 
     doc.match('(from|starting|until|by) now').tag('Date', 'for-now'); // every night
 
-    doc.match('(each|every) night').tag('Date', 'for-now');
+    doc.match('(each|every) night').tag('Date', 'for-now'); // doc.debug()
+
     return doc;
   };
 
@@ -230,7 +241,9 @@
 
       doc.match('#Value and a half (years|months|weeks|days)').tag('Date', here$5); //on the fifth
 
-      doc.match('on the #Ordinal').tag('Date', here$5);
+      doc.match('on the #Ordinal').tag('Date', here$5); // 'jan 5 or 8'
+
+      doc.match('#Month #Value+ (and|or) #Value').tag('Date', 'date-or-date');
     }
 
     return doc;
@@ -492,7 +505,7 @@
       } //tomorrow on 5
 
 
-      d.match(`on #Cardinal$`).unTag('Date', here); //this tomorrow
+      d.match(`on #Cardinal$`).unTag('Date', 'on 5'); //this tomorrow
 
       d.match(`this tomorrow`).terms(0).unTag('Date', 'this-tomorrow'); //q2 2019
 
@@ -500,29 +513,27 @@
       // d.match(`^#Value #WeekDay`).terms(0).unTag('Date');
       //5 next week
 
-      d.match(`^#Value (this|next|last)`).terms(0).unTag('Date', here);
+      d.match(`^#Value (this|next|last)`).terms(0).unTag('Date', '4 next');
 
       if (d.has('(last|this|next)')) {
         //this month 7
-        d.match(`(last|this|next) #Duration #Value`).terms(2).unTag('Date', here); //7 this month
+        d.match(`(last|this|next) #Duration #Value`).terms(2).unTag('Date', 'this month 7'); //7 this month
 
-        d.match(`!#Month #Value (last|this|next) #Date`).terms(0).unTag('Date', here);
+        d.match(`!#Month #Value (last|this|next) #Date`).terms(0).unTag('Date', '7 this month');
       } //january 5 5
-
-
-      if (d.has('(#Year|#Time|#TextValue|#NumberRange)') === false) {
-        d.match('(#Month|#WeekDay) #Value #Value').terms(2).unTag('Date', here);
-      } //between june
+      // if (d.has('(#Year|#Time|#TextValue|#NumberRange)') === false) {
+      //   d.match('(#Month|#WeekDay) #Value #Value !(or|and)?').terms(2).unTag('Date', 'jan 5 5')
+      // }
+      //between june
 
 
       if (d.has('^between') && !d.has('and .')) {
         d.unTag('Date', here);
       } //june june
-
-
-      if (d.has('#Month #Month') && !d.has('@hasHyphen') && !d.has('@hasComma')) {
-        d.match('#Month').lastTerm().unTag('Date', 'month-month');
-      } // over the years
+      // if (d.has('#Month #Month') && !d.has('@hasHyphen') && !d.has('@hasComma')) {
+      //   d.match('#Month').lastTerm().unTag('Date', 'month-month')
+      // }
+      // over the years
 
 
       d.match('(in|over) the #Duration #Date+?').unTag('Date', 'over-the-duration'); // log the hours
@@ -575,6 +586,156 @@
   };
 
   var _01Tagger = tagDate;
+
+  // chop things up into bite-size pieces
+  const split = function (dates) {
+    let m = null; // don't split anything if it looks like a range
+
+    if (dates.has('^(between|within) #Date')) {
+      return dates;
+    }
+
+    if (dates.has('#Month')) {
+      // 'june 5, june 10'
+      m = dates.match('[#Month #Value] and? #Month', 0).ifNo('@hasDash$');
+
+      if (m.found) {
+        dates = dates.splitAfter(m);
+      } // '5 june, 10 june'
+
+
+      m = dates.match('[#Value #Month] and? #Value #Month', 0);
+
+      if (m.found) {
+        dates = dates.splitAfter(m);
+      } // 'june, august'
+
+
+      m = dates.match('^[#Month] and? #Month #Ordinal?$', 0);
+
+      if (m.found) {
+        dates = dates.splitAfter(m);
+      } // 'june 5th, june 10th'
+
+
+      m = dates.match('[#Month #Value] #Month', 0).ifNo('@hasDash$');
+
+      if (m.found) {
+        dates = dates.splitAfter(m);
+      }
+    }
+
+    if (dates.has('#WeekDay')) {
+      // 'tuesday, wednesday'
+      m = dates.match('^[#WeekDay] and? #WeekDay$', 0).ifNo('@hasDash$');
+
+      if (m.found) {
+        dates = dates.splitAfter(m);
+      } // 'tuesday, wednesday, and friday'
+
+
+      m = dates.match('#WeekDay #WeekDay and? #WeekDay');
+
+      if (m.found) {
+        dates = dates.splitOn('#WeekDay');
+      } // monday, wednesday
+
+
+      m = dates.match('[#WeekDay] (and|or|this|next)? #WeekDay', 0).ifNo('@hasDash$');
+
+      if (m.found) {
+        dates = dates.splitAfter('#WeekDay');
+      }
+    } // next week tomorrow
+
+
+    m = dates.match('(this|next) #Duration [(today|tomorrow|yesterday)]', 0);
+
+    if (m.found) {
+      dates = dates.splitBefore(m);
+    } // tomorrow 15 march
+
+
+    m = dates.match('[(today|tomorrow|yesterday)] #Value #Month', 0);
+
+    if (m.found) {
+      dates = dates.splitAfter(m);
+    } // tomorrow yesterday
+
+
+    m = dates.match('[(today|tomorrow|yesterday)] (today|tomorrow|yesterday|#WeekDay)', 0).ifNo('@hasDash$');
+
+    if (m.found) {
+      dates = dates.splitAfter(m);
+    } // cleanup any splits
+
+
+    dates = dates.not('^and');
+    return dates;
+  };
+
+  var split_1 = split;
+
+  const findDate = function (doc) {
+    if (doc.world.isVerbose() === 'date') {
+      doc.debug();
+      console.log('          ---');
+    }
+
+    let dates = doc.match('#Date+'); // ignore only-durations like '20 minutes'
+
+    dates = dates.filter(m => {
+      let isDuration = m.has('^#Duration+$') || m.has('^#Value #Duration+$'); // allow 'q4', etc
+
+      if (isDuration === true && m.has('(#FinancialQuarter|quarter)')) {
+        return true;
+      }
+
+      return isDuration === false;
+    }); // 30 minutes on tuesday
+
+    let m = dates.match('[#Cardinal #Duration (in|on|this|next|during|for)] #Date', 0);
+
+    if (m.found) {
+      dates = dates.not(m);
+    } // 30 minutes tuesday
+
+
+    m = dates.match('[#Cardinal #Duration] #WeekDay', 0);
+
+    if (m.found) {
+      dates = dates.not(m);
+    } // tuesday for 30 mins
+
+
+    m = dates.match('#Date [for #Value #Duration]$', 0);
+
+    if (m.found) {
+      dates = dates.not(m);
+    } // '20 minutes june 5th'
+
+
+    m = dates.match('[#Cardinal #Duration] #Date', 0); //but allow '20 minutes ago'
+
+    if (m.found && !dates.has('#Cardinal #Duration] (ago|from|before|after|back)')) {
+      dates = dates.not(m);
+    } // for 20 minutes
+
+
+    m = dates.match('for #Cardinal #Duration');
+
+    if (m.found) {
+      dates = dates.not(m);
+    } // 'one saturday'
+
+
+    dates = dates.notIf('^one (#WeekDay|#Month)$'); // tokenize the dates
+
+    dates = split_1(dates);
+    return dates;
+  };
+
+  var _02Find = findDate;
 
   var _tags = {
     FinancialQuarter: {
@@ -7108,8 +7269,8 @@
 
     if (m.found) {
       let obj = {
-        month: m.groups('month').text(),
-        date: m.groups('date').text(),
+        month: m.groups('month').text('reduced'),
+        date: m.groups('date').text('reduced'),
         year: m.groups('year').text() || impliedYear
       };
       let unit = new CalendarDate(obj, null, context);
@@ -7124,8 +7285,8 @@
 
     if (m.found) {
       let obj = {
-        month: m.groups('month').text(),
-        year: m.groups('year').text() || impliedYear
+        month: m.groups('month').text('reduced'),
+        year: m.groups('year').text('reduced') || impliedYear
       };
       let unit = new Month$1(obj, null, context);
 
@@ -7144,8 +7305,8 @@
 
     if (m.found) {
       let obj = {
-        month: m.groups('month').text(),
-        date: m.groups('date').text(),
+        month: m.groups('month').text('reduced'),
+        date: m.groups('date').text('reduced'),
         year: context.today.year()
       };
       let unit = new CalendarDate(obj, null, context); // assume 'feb' in the future
@@ -7163,7 +7324,7 @@
 
     if (doc.has('#Month')) {
       let obj = {
-        month: doc.match('#Month').text(),
+        month: doc.match('#Month').text('reduced'),
         date: 1,
         //assume 1st
         year: context.today.year()
@@ -7186,7 +7347,7 @@
     if (m.found) {
       let obj = {
         month: context.today.month(),
-        date: m.groups('date').text(),
+        date: m.groups('date').text('reduced'),
         year: context.today.year()
       };
       let unit = new CalendarDate(obj, null, context);
@@ -7202,7 +7363,7 @@
     if (m.found) {
       let obj = {
         month: context.today.month(),
-        date: m.groups('date').text(),
+        date: m.groups('date').text('reduced'),
         year: context.today.year()
       };
       let unit = new CalendarDate(obj, null, context);
@@ -7385,15 +7546,15 @@
 
     if (doc.world.isVerbose() === 'date') {
       // console.log('\n\n=-= - - - - - =-=-')
-      console.log(`     str:   '${doc.text()}'`);
-      console.log(`     shift:      ${JSON.stringify(shift)}`);
-      console.log(`     counter:   `, counter);
-      console.log(`     rel:        ${rel || '-'}`);
-      console.log(`     section:    ${section || '-'}`);
-      console.log(`     time:       ${time || '-'}`);
-      console.log(`     weekDay:    ${weekDay || '-'}`);
+      // console.log(`     str:   '${doc.text()}'`)
+      // console.log(`     shift:      ${JSON.stringify(shift)}`)
+      // console.log(`     counter:   `, counter)
+      // console.log(`     rel:        ${rel || '-'}`)
+      // console.log(`     section:    ${section || '-'}`)
+      // console.log(`     time:       ${time || '-'}`)
+      // console.log(`     weekDay:    ${weekDay || '-'}`)
       console.log('     unit:     ', unit);
-      console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n');
+      console.log(''); // console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n')
     }
 
     if (!unit) {
@@ -7440,7 +7601,7 @@
     return unit;
   };
 
-  var _03Parse = parseDate;
+  var _04Parse = parseDate;
 
   const normalize = function (doc) {
     doc = doc.clone(); // 'four thirty' -> 4:30
@@ -7474,22 +7635,20 @@
 
     doc.adverbs().remove(); // 'week-end'
 
-    doc.replace('week end', 'weekend').tag('Date'); // 'a up to b'
+    doc.replace('week end', 'weekend', true).tag('Date'); // 'a up to b'
 
-    doc.replace('up to', 'upto').tag('Date'); // 'a year ago'
+    doc.replace('up to', 'upto', true).tag('Date'); // 'a year ago'
 
     if (doc.has('once (a|an) #Duration') === false) {
       doc.match('[(a|an)] #Duration', 0).replaceWith('1');
       _01Tagger(doc);
     } // 'in a few years'
-
-
-    m = doc.match('in [a few] #Duration');
-
-    if (m.found) {
-      m.groups('0').replaceWith('2');
-      _01Tagger(doc);
-    } // jan - feb
+    // m = doc.match('in [a few] #Duration')
+    // if (m.found) {
+    //   m.groups('0').replaceWith('2')
+    //   tagger(doc)
+    // }
+    // jan - feb
 
 
     doc.match('@hasDash').insertAfter('to').tag('Date'); // doc.debug()
@@ -7674,7 +7833,7 @@
     return null;
   };
 
-  var _00Repeats = parseIntervals;
+  var intervals = parseIntervals;
 
   // somewhat-intellegent response to end-before-start situations
   const reverseMaybe = function (obj) {
@@ -7719,11 +7878,11 @@
     parse: (m, context) => {
       let from = m.groups('from');
       let to = m.groups('to');
-      let end = _03Parse(to, context);
+      let end = _04Parse(to, context);
 
       if (end) {
         let start = end.clone();
-        start.applyTime(from.text());
+        start.applyTime(from.text('reduced'));
 
         if (start) {
           let obj = {
@@ -7750,11 +7909,11 @@
     parse: (m, context) => {
       let from = m.groups('from');
       let to = m.groups('to');
-      from = _03Parse(from, context);
+      from = _04Parse(from, context);
 
       if (from) {
         let end = from.clone();
-        end.applyTime(to.text());
+        end.applyTime(to.text('reduced'));
 
         if (end) {
           let obj = {
@@ -7776,15 +7935,126 @@
     }
   }];
 
-  var _02TwoDate = [{
+  // and not a start-end range.
+
+  var combos = [{
+    // 'jan, or march 1999'
+    match: '^during? #Month+ (or|and) #Month [<year>#Year]?',
+    desc: 'march or june',
+    parse: (m, context) => {
+      let before = m.match('^during? [#Month]', 0);
+      m = m.not('(or|and)');
+      let start = _04Parse(before, context);
+
+      if (start) {
+        let result = [{
+          start: start,
+          end: start.clone().end(),
+          unit: start.unit
+        }]; // add more run-on numbers?
+
+        let more = m.not(before);
+
+        if (more.found) {
+          more.match('#Month').forEach(month => {
+            let s = _04Parse(month, context); // s.d = s.d.month(month.text('reduced'))
+
+            result.push({
+              start: s,
+              end: s.clone().end(),
+              unit: s.unit
+            });
+          });
+        } // apply the year
+
+
+        let year = m.match('#Year$');
+
+        if (year.found) {
+          year = year.text('reduced');
+          result.forEach(o => {
+            o.start.d = o.start.d.year(year);
+            o.end.d = o.end.d.year(year);
+          });
+        }
+
+        return result;
+      }
+
+      return null;
+    }
+  }, {
+    // 'jan 5 or 8'  - (one month, shared dates)
+    match: '^#Month #Value+ (or|and)? #Value$',
+    desc: 'jan 5 or 8',
+    parse: (m, context) => {
+      m = m.not('(or|and)');
+      let before = m.match('^#Month #Value');
+      let start = _04Parse(before, context);
+
+      if (start) {
+        let result = [{
+          start: start,
+          end: start.clone().end(),
+          unit: start.unit
+        }]; // add more run-on numbers?
+
+        let more = m.not(before);
+
+        if (more.found) {
+          more.match('#Value').forEach(v => {
+            let s = start.clone();
+            s.d = s.d.date(v.text('reduced'));
+            result.push({
+              start: s,
+              end: s.clone().end(),
+              unit: s.unit
+            });
+          });
+        }
+
+        return result;
+      }
+
+      return null;
+    }
+  }, {
+    // 'june or july 2019'
+    match: '^!(between|from|during)? [<from>#Date+] (and|or) [<to>#Date+]$',
+    desc: 'A or B',
+    parse: (m, context) => {
+      let fromDoc = m.groups('from');
+      let toDoc = m.groups('to');
+      let from = _04Parse(fromDoc, context);
+      let to = _04Parse(toDoc, context);
+
+      if (from && to) {
+        // make their years agree....
+        // if (toDoc.has('#Year') && !fromDoc.has('#Year') && from.d.isSame(to.d, 'year') === false) {
+        //   from.d = from.d.year(to.d.year())
+        // }
+        return [{
+          start: from,
+          end: from.clone().end()
+        }, {
+          start: to,
+          end: to.clone().end()
+        }];
+      }
+
+      return null;
+    }
+  }];
+
+  var _02DateRange = [{
     // two explicit dates - 'between friday and sunday'
     match: 'between [<start>.+] and [<end>.+]',
     desc: 'between friday and sunday',
     parse: (m, context) => {
       let start = m.groups('start');
-      start = _03Parse(start, context);
+      start = _04Parse(start, context);
       let end = m.groups('end');
-      end = _03Parse(end, context);
+      end = _04Parse(end, context);
 
       if (start && end) {
         end = end.before();
@@ -7798,7 +8068,7 @@
     }
   }, {
     // two months, no year - 'june 5 to june 7'
-    match: '[<from>#Month #Value] (to|through|thru|and) [<to>#Month #Value] [<year>#Year?]',
+    match: '[<from>#Month #Value] (to|through|thru) [<to>#Month #Value] [<year>#Year?]',
     desc: 'june 5 to june 7',
     parse: (m, context) => {
       let res = m.groups();
@@ -7808,7 +8078,7 @@
         start = start.append(res.year);
       }
 
-      start = _03Parse(start, context);
+      start = _04Parse(start, context);
 
       if (start) {
         let end = res.to;
@@ -7817,7 +8087,7 @@
           end = end.append(res.year);
         }
 
-        end = _03Parse(end, context);
+        end = _04Parse(end, context);
 
         if (end) {
           // assume end is after start
@@ -7848,11 +8118,11 @@
       } = m.groups();
       let year2 = year.clone();
       let start = from.prepend(month.text()).append(year.text());
-      start = _03Parse(start, context);
+      start = _04Parse(start, context);
 
       if (start) {
         let end = to.prepend(month.text()).append(year2);
-        end = _03Parse(end, context);
+        end = _04Parse(end, context);
         return {
           start: start,
           end: end.end()
@@ -7863,11 +8133,11 @@
     }
   }, {
     // one month, one year, second form - '5 to 7 of january 1998'
-    match: '[<from>#Value] (to|through|thru|and) [<to>#Value of? #Month #Date+?]',
+    match: '[<from>#Value] (to|through|thru) [<to>#Value of? #Month #Date+?]',
     desc: '5 to 7 of january 1998',
     parse: (m, context) => {
       let to = m.groups('to');
-      to = _03Parse(to, context);
+      to = _04Parse(to, context);
 
       if (to) {
         let fromDate = m.groups('from');
@@ -7883,11 +8153,11 @@
     }
   }, {
     // one month, no year - 'january 5 to 7'
-    match: '[<from>#Month #Value] (to|through|thru|and) [<to>#Value]',
+    match: '[<from>#Month #Value] (to|through|thru) [<to>#Value]',
     desc: 'january 5 to 7',
     parse: (m, context) => {
       let from = m.groups('from');
-      from = _03Parse(from, context);
+      from = _04Parse(from, context);
 
       if (from) {
         let toDate = m.groups('to');
@@ -7903,14 +8173,14 @@
     }
   }, {
     // 'january to may 2020'
-    match: 'from? [<from>#Month] (to|until|upto|through|thru|and) [<to>#Month] [<year>#Year]',
+    match: 'from? [<from>#Month] (to|until|upto|through|thru) [<to>#Month] [<year>#Year]',
     desc: 'january to may 2020',
     parse: (m, context) => {
       let from = m.groups('from');
       let year = from.groups('year').numbers().get(0);
       let to = m.groups('to');
-      from = _03Parse(from, context);
-      to = _03Parse(to, context);
+      from = _04Parse(from, context);
+      to = _04Parse(to, context);
       from.d = from.d.year(year);
       to.d = to.d.year(year);
 
@@ -7935,13 +8205,13 @@
 
   var _03OneDate = [{
     // 'from A to B'
-    match: 'from? [<from>.+] (to|until|upto|through|thru|and) [<to>.+]',
+    match: 'from? [<from>.+] (to|until|upto|through|thru) [<to>.+]',
     desc: 'from A to B',
     parse: (m, context) => {
       let from = m.groups('from');
       let to = m.groups('to');
-      from = _03Parse(from, context);
-      to = _03Parse(to, context);
+      from = _04Parse(from, context);
+      to = _04Parse(to, context);
 
       if (from && to) {
         let obj = {
@@ -7958,9 +8228,9 @@
     // 'before june'
     match: '^due? (by|before) [.+]',
     desc: 'before june',
-    group: 0,
     parse: (m, context) => {
-      let unit = _03Parse(m, context);
+      m = m.group(0);
+      let unit = _04Parse(m, context);
 
       if (unit) {
         let start = new Unit_1(context.today, null, context);
@@ -7987,9 +8257,9 @@
     // 'in june'
     match: '^(on|in|at|@|during) [.+]',
     desc: 'in june',
-    group: 0,
     parse: (m, context) => {
-      let unit = _03Parse(m, context);
+      m = m.group(0);
+      let unit = _04Parse(m, context);
 
       if (unit) {
         return {
@@ -8005,9 +8275,9 @@
     // 'after june'
     match: '^(after|following) [.+]',
     desc: 'after june',
-    group: 0,
     parse: (m, context) => {
-      let unit = _03Parse(m, context);
+      m = m.group(0);
+      let unit = _04Parse(m, context);
 
       if (unit) {
         unit = unit.after();
@@ -8023,9 +8293,9 @@
     // 'middle of'
     match: '^(middle|center|midpoint) of [.+]',
     desc: 'middle of',
-    group: 0,
     parse: (m, context) => {
-      let unit = _03Parse(m, context);
+      m = m.group(0);
+      let unit = _04Parse(m, context);
       let start = unit.clone().middle();
       let end = unit.beforeEnd();
 
@@ -8043,7 +8313,7 @@
     match: '.+ after #Time+$',
     desc: 'tuesday after 5pm',
     parse: (m, context) => {
-      let unit = _03Parse(m, context);
+      let unit = _04Parse(m, context);
 
       if (unit) {
         let start = unit.clone();
@@ -8062,7 +8332,7 @@
     match: '.+ before #Time+$',
     desc: 'tuesday before noon',
     parse: (m, context) => {
-      let unit = _03Parse(m, context);
+      let unit = _04Parse(m, context);
       let end = unit.clone();
       let start = unit.start();
 
@@ -8078,47 +8348,24 @@
     }
   }];
 
-  const ranges = [].concat(_01TwoTimes, _02TwoDate, _03OneDate); // loop thru each range template
+  const ranges = [].concat(_01TwoTimes, combos, _02DateRange, _03OneDate);
 
-  const parseRange = function (doc, context) {
-    // parse-out 'every week ..'
-    let repeats = _00Repeats(doc, context) || {}; // if it's *only* an interval response
-
-    if (doc.found === false) {
-      return Object.assign({}, repeats, {
-        start: null,
-        end: null
-      });
-    } // try each template in order
+  const isArray = function (arr) {
+    return Object.prototype.toString.call(arr) === '[object Array]';
+  }; //else, try whole thing, non ranges
 
 
-    for (let i = 0; i < ranges.length; i += 1) {
-      let fmt = ranges[i];
-      let m = doc.match(fmt.match);
-
-      if (m.found) {
-        if (fmt.group !== undefined) {
-          m = m.groups(fmt.group);
-        }
-
-        if (doc.world.isVerbose() === 'date') {
-          console.log(`  ---[${fmt.desc}]---`);
-        }
-
-        let res = fmt.parse(m, context);
-
-        if (res !== null) {
-          return Object.assign({}, repeats, res);
-        }
-      }
-    } //else, try whole thing
-
-
+  const tryFull = function (doc, context) {
     let res = {
       start: null,
       end: null
     };
-    let unit = _03Parse(doc, context);
+
+    if (!doc.found) {
+      return res;
+    }
+
+    let unit = _04Parse(doc, context);
 
     if (unit) {
       if (doc.world.isVerbose() === 'date') {
@@ -8133,18 +8380,59 @@
       };
     }
 
-    let combined = Object.assign({}, repeats, res); // ensure start is not after end
-    // console.log(combined)
-
-    if (combined.start && combined.end && combined.start.d.epoch > combined.end.d.epoch) {
-      // console.warn('Warning: Start date is after End date')
-      combined.start = combined.start.start(); // combined.end = combined.start.clone()
-    }
-
-    return combined;
+    return res;
   };
 
-  var _02Ranges = parseRange;
+  const tryRanges = function (doc, context) {
+    // try each template in order
+    for (let i = 0; i < ranges.length; i += 1) {
+      let fmt = ranges[i];
+      let m = doc.match(fmt.match);
+
+      if (m.found) {
+        if (doc.world.isVerbose() === 'date') {
+          console.log(`  ---[${fmt.desc}]---`);
+        }
+
+        let res = fmt.parse(m, context);
+
+        if (res !== null) {
+          // did it return more than one date?
+          if (!isArray(res)) {
+            res = [res];
+          }
+
+          return res;
+        }
+      }
+    }
+
+    return null;
+  }; // loop thru each range template
+
+
+  const parseRanges = function (doc, context) {
+    // parse-out 'every week ..'
+    let repeats = intervals(doc, context) || {}; // try picking-apart ranges
+
+    let found = tryRanges(doc, context);
+
+    if (!found) {
+      found = [tryFull(doc, context)];
+    } // add the repeat info to each date
+
+
+    found = found.map(o => Object.assign({}, repeats, o)); // ensure start is not after end
+
+    found.forEach(res => {
+      if (res.start && res.end && res.start.d.epoch > res.end.d.epoch) {
+        res.start = res.start.start();
+      }
+    });
+    return found;
+  };
+
+  var _03Ranges = parseRanges;
 
   const maxDate = 8640000000000000;
   const max_loops = 500;
@@ -8254,18 +8542,21 @@
 
     doc = normalize_1(doc); //interpret 'between [A] and [B]'...
 
-    let result = _02Ranges(doc, context); // format as iso
+    let results = _03Ranges(doc, context); // who knows
 
-    result.start = toISO(result.start);
-    result.end = toISO(result.end); // generate interval dates
+    results.forEach(result => {
+      // format as iso
+      result.start = toISO(result.start);
+      result.end = toISO(result.end); // generate interval dates
 
-    if (result.repeat) {
-      result = generate(result, context);
-    } // add timezone
+      if (result.repeat) {
+        result = generate(result, context);
+      } // add timezone
 
 
-    result.tz = context.timezone;
-    return result;
+      result.tz = context.timezone;
+    });
+    return results;
   };
 
   var getDates = getDate;
@@ -8364,9 +8655,11 @@
     get: function (options) {
       let arr = [];
       this.forEach(doc => {
-        let date = getDates(doc, this.context);
-        date.unit = unit(date);
-        arr.push(date);
+        let dates = getDates(doc, this.context);
+        dates.forEach(date => {
+          date.unit = unit(date);
+        });
+        arr = arr.concat(dates);
       });
 
       if (typeof options === 'number') {
@@ -8391,8 +8684,9 @@
       let res = [];
       this.forEach(doc => {
         let json = doc.json(options)[0];
-        let found = getDates(doc, this.context);
-        json = Object.assign(json, found); // add more data
+        let date = getDates(doc, this.context)[0]; //FIX: return all the dates!
+
+        json = Object.assign(json, date); // add more data
 
         json.duration = duration(json);
         json.unit = unit(json);
@@ -8409,25 +8703,26 @@
     /** render all dates according to a specific format */
     format: function (fmt) {
       this.forEach(doc => {
-        let obj = getDates(doc, this.context);
+        let dates = getDates(doc, this.context);
+        dates.forEach(obj => {
+          if (obj.start) {
+            let start = spacetime(obj.start, this.context.timezone);
+            let str = start.format(fmt);
 
-        if (obj.start) {
-          let start = spacetime(obj.start, this.context.timezone);
-          let str = start.format(fmt);
+            if (obj.end) {
+              let end = spacetime(obj.end, this.context.timezone);
 
-          if (obj.end) {
-            let end = spacetime(obj.end, this.context.timezone);
-
-            if (start.isSame(end, 'day') === false) {
-              str += ' to ' + end.format(fmt);
+              if (start.isSame(end, 'day') === false) {
+                str += ' to ' + end.format(fmt);
+              }
             }
-          }
 
-          doc.replaceWith(str, {
-            keepTags: true,
-            keepCase: false
-          });
-        }
+            doc.replaceWith(str, {
+              keepTags: true,
+              keepCase: false
+            });
+          }
+        });
       });
       return this;
     },
@@ -8488,7 +8783,7 @@
     if (twoWord.found) {
       twoWord.forEach(m => {
         let num = m.numbers().get(0);
-        let unit = m.terms().last().nouns().toSingular().text(); // turn 'mins' into 'minute'
+        let unit = m.terms().last().nouns().toSingular().text('reduced'); // turn 'mins' into 'minute'
 
         if (mapping.hasOwnProperty(unit)) {
           unit = mapping[unit];
@@ -8697,122 +8992,6 @@
 
   var times = addTimes;
 
-  const findDate = function (doc) {
-    // let r = this.clauses()
-    let dates = doc.match('#Date+'); // ignore only-durations like '20 minutes'
-
-    dates = dates.filter(m => {
-      let isDuration = m.has('^#Duration+$') || m.has('^#Value #Duration+$'); // allow 'q4', etc
-
-      if (isDuration === true && m.has('(#FinancialQuarter|quarter)')) {
-        return true;
-      }
-
-      return isDuration === false;
-    }); // 30 minutes on tuesday
-
-    let m = dates.match('[#Cardinal #Duration (in|on|this|next|during|for)] #Date', 0);
-
-    if (m.found) {
-      dates = dates.not(m);
-    } // 30 minutes tuesday
-
-
-    m = dates.match('[#Cardinal #Duration] #WeekDay', 0);
-
-    if (m.found) {
-      dates = dates.not(m);
-    } // tuesday for 30 mins
-
-
-    m = dates.match('#Date [for #Value #Duration]$', 0);
-
-    if (m.found) {
-      dates = dates.not(m);
-    } // 'tuesday, wednesday'
-
-
-    m = dates.match('^[#WeekDay] and? #WeekDay$', 0);
-
-    if (m.found) {
-      if (m.first().has('@hasDash') === false) {
-        dates = dates.splitAfter(m);
-        dates = dates.not('^and');
-      }
-    } // 'june, august'
-
-
-    m = dates.match('^[#Month] and? #Month #Ordinal?$', 0);
-
-    if (m.found) {
-      dates = dates.splitAfter(m);
-      dates = dates.not('^and');
-    } // 'tuesday, wednesday, and friday'
-
-
-    m = dates.match('#WeekDay #WeekDay and? #WeekDay');
-
-    if (m.found) {
-      dates = dates.splitOn('#WeekDay');
-      dates = dates.not('^and');
-    } // '5 june, 10 june'
-
-
-    m = dates.match('[#Value #Month] #Value #Month', 0);
-
-    if (m.found) {
-      dates = dates.splitAfter(m);
-    } // 'june 5th, june 10th'
-
-
-    m = dates.match('[#Month #Value] #Month', 0).ifNo('@hasDash$');
-
-    if (m.found) {
-      dates = dates.splitAfter(m);
-    } // '20 minutes june 5th'
-
-
-    m = dates.match('[#Cardinal #Duration] #Date', 0); //but allow '20 minutes ago'
-
-    if (m.found && !dates.has('#Cardinal #Duration] (ago|from|before|after|back)')) {
-      dates = dates.not(m);
-    } // for 20 minutes
-
-
-    m = dates.match('for #Cardinal #Duration');
-
-    if (m.found) {
-      dates = dates.not(m);
-    } // 'one saturday'
-
-
-    dates = dates.notIf('^one (#WeekDay|#Month)$'); // next week tomorrow
-
-    m = dates.match('(this|next) #Duration [(today|tomorrow|yesterday)]', 0);
-
-    if (m.found) {
-      dates = dates.splitBefore(m);
-    } // tomorrow 15 march
-
-
-    m = dates.match('[(today|tomorrow|yesterday)] #Value #Month', 0);
-
-    if (m.found) {
-      dates = dates.splitAfter(m);
-    } // tomorrow yesterday
-
-
-    m = dates.match('[(today|tomorrow|yesterday)] (today|tomorrow|yesterday)', 0);
-
-    if (m.found) {
-      dates = dates.splitAfter(m);
-    }
-
-    return dates;
-  };
-
-  var find = findDate;
-
   const opts = {
     punt: {
       weeks: 2
@@ -8862,7 +9041,7 @@
         context.timezone = 'ETC/UTC';
       }
 
-      let dates = find(this);
+      let dates = _02Find(this);
 
       if (typeof n === 'number') {
         dates = dates.get(n);

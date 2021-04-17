@@ -23,7 +23,7 @@ module.exports = [
       let end = parseDate(to, context)
       if (end) {
         let start = end.clone()
-        start.applyTime(from.text())
+        start.applyTime(from.text('reduced'))
         if (start) {
           let obj = {
             start: start,
@@ -51,7 +51,7 @@ module.exports = [
       from = parseDate(from, context)
       if (from) {
         let end = from.clone()
-        end.applyTime(to.text())
+        end.applyTime(to.text('reduced'))
         if (end) {
           let obj = {
             start: from,

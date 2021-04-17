@@ -46,6 +46,11 @@ const tagDates = function (doc) {
   // misc weekday words
   doc.match('(tue|thu)').tag('WeekDay', 'misc-weekday')
 
+  doc
+    .match('(march|april|may) (and|to)? (march|april|may)')
+    .tag('Date')
+    .match('(march|april|may)')
+    .tag('Month', 'march|april|may')
   // april should almost-always be a date
   // doc.match('[april] !#LastName?', 0).tag('Month', 'april')
 

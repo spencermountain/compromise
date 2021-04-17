@@ -60,9 +60,9 @@ const fixUp = function (doc) {
       d.unTag('Date', here)
     }
     //june june
-    if (d.has('#Month #Month') && !d.has('@hasHyphen') && !d.has('@hasComma')) {
-      d.match('#Month').lastTerm().unTag('Date', 'month-month')
-    }
+    // if (d.has('#Month #Month') && !d.has('@hasHyphen') && !d.has('@hasComma')) {
+    //   d.match('#Month').lastTerm().unTag('Date', 'month-month')
+    // }
     // over the years
     d.match('(in|over) the #Duration #Date+?').unTag('Date', 'over-the-duration')
     // log the hours

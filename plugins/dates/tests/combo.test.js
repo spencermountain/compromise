@@ -19,7 +19,8 @@ const arr = [
   ['jan or feb', ['jan 1', 'feb 1']],
   ['january and in feb', ['jan 1', 'feb 1']],
   ['during march or september', ['march 1', 'september 1']],
-  // ['march, may, or june', ['march', 'may', 'june']],
+  ['march, may, or june', ['march 1', 'may 1', 'june 1']],
+  [' may or june', ['may 1', 'june 1']],
 
   // dependant date combos
   ['march 3rd and 4th', ['mar 3', 'mar 4']],

@@ -12,8 +12,8 @@ const parseExplicit = function (doc, context) {
   }
   if (m.found) {
     let obj = {
-      month: m.groups('month').text(),
-      date: m.groups('date').text(),
+      month: m.groups('month').text('reduced'),
+      date: m.groups('date').text('reduced'),
       year: m.groups('year').text() || impliedYear,
     }
     let unit = new CalendarDate(obj, null, context)
@@ -25,8 +25,8 @@ const parseExplicit = function (doc, context) {
   m = doc.match('[<month>#Month] of? [<year>#Year]')
   if (m.found) {
     let obj = {
-      month: m.groups('month').text(),
-      year: m.groups('year').text() || impliedYear,
+      month: m.groups('month').text('reduced'),
+      year: m.groups('year').text('reduced') || impliedYear,
     }
     let unit = new Month(obj, null, context)
     if (unit.d.isValid() === true) {
@@ -42,8 +42,8 @@ const parseExplicit = function (doc, context) {
   }
   if (m.found) {
     let obj = {
-      month: m.groups('month').text(),
-      date: m.groups('date').text(),
+      month: m.groups('month').text('reduced'),
+      date: m.groups('date').text('reduced'),
       year: context.today.year(),
     }
     let unit = new CalendarDate(obj, null, context)
@@ -59,7 +59,7 @@ const parseExplicit = function (doc, context) {
   // support 'december'
   if (doc.has('#Month')) {
     let obj = {
-      month: doc.match('#Month').text(),
+      month: doc.match('#Month').text('reduced'),
       date: 1, //assume 1st
       year: context.today.year(),
     }
@@ -79,7 +79,7 @@ const parseExplicit = function (doc, context) {
   if (m.found) {
     let obj = {
       month: context.today.month(),
-      date: m.groups('date').text(),
+      date: m.groups('date').text('reduced'),
       year: context.today.year(),
     }
     let unit = new CalendarDate(obj, null, context)
@@ -92,7 +92,7 @@ const parseExplicit = function (doc, context) {
   if (m.found) {
     let obj = {
       month: context.today.month(),
-      date: m.groups('date').text(),
+      date: m.groups('date').text('reduced'),
       year: context.today.year(),
     }
     let unit = new CalendarDate(obj, null, context)

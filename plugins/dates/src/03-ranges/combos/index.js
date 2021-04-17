@@ -4,12 +4,12 @@ const parseDate = require('../../04-parse')
 module.exports = [
   {
     // jan 5 or 8  - (one month, shared dates)
-    match: '[<start>#Month #Value+] [<prep>(or|and)] [<end>#Value]',
+    match: '^#Month #Value+ (or|and)? #Value$',
     desc: 'jan 5 or 8',
     parse: (m, context) => {
-      let before = m.groups('start')
-      let match = before.match('[<top>#Month #Value] [<more>#Value+?]')
-      let start = parseDate(match.groups('top'), context)
+      m = m.not('(or|and)')
+      let before = m.match('^#Month #Value')
+      let start = parseDate(before, context)
       if (start) {
         let result = [
           {
@@ -19,7 +19,7 @@ module.exports = [
           },
         ]
         // add more run-on numbers?
-        let more = match.groups('more')
+        let more = m.not(before)
         if (more.found) {
           more.match('#Value').forEach((v) => {
             let s = start.clone()
@@ -31,25 +31,14 @@ module.exports = [
             })
           })
         }
-        // do end-date
-        let end = start.clone()
-        end.d = end.d.date(m.groups('end').text())
-        end = end.start()
-        if (end.d.isValid()) {
-          result.push({
-            start: end,
-            end: end.clone().end(),
-            unit: end.unit,
-          })
-          return result
-        }
+        return result
       }
       return null
     },
   },
 
   {
-    // 'from A to B'
+    // 'A or B'
     match: '^!(between|from)? [<from>#Date+] (and|or) [<to>#Date+]$',
     desc: 'A or B',
     parse: (m, context) => {

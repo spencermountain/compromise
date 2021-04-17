@@ -52,9 +52,9 @@ const fixUp = function (doc) {
       d.match(`!#Month #Value (last|this|next) #Date`).terms(0).unTag('Date', '7 this month')
     }
     //january 5 5
-    if (d.has('(#Year|#Time|#TextValue|#NumberRange)') === false) {
-      d.match('(#Month|#WeekDay) #Value #Value !(or|and)?').terms(2).unTag('Date', 'jan 5 5')
-    }
+    // if (d.has('(#Year|#Time|#TextValue|#NumberRange)') === false) {
+    //   d.match('(#Month|#WeekDay) #Value #Value !(or|and)?').terms(2).unTag('Date', 'jan 5 5')
+    // }
     //between june
     if (d.has('^between') && !d.has('and .')) {
       d.unTag('Date', here)

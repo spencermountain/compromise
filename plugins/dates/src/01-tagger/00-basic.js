@@ -59,7 +59,7 @@ const tagDates = function (doc) {
     //5 March
     month.match('#Cardinal #Month').tag('Date', 'cardinal-month')
     //march 5 to 7
-    month.match('#Month #Value to #Value').tag('Date', 'value-to-value')
+    month.match('#Month #Value (and|or|to)? #Value+').tag('Date', 'value-to-value')
     //march the 12th
     month.match('#Month the #Value').tag('Date', 'month-the-value')
     // march to april

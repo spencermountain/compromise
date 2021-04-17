@@ -1,10 +1,10 @@
-const parseDate = require('../03-parse')
+const parseDate = require('../../04-parse')
 // const reverseMaybe = require('./_reverse')
 
 module.exports = [
   {
     // jan 5 or 8
-    match: '[<start>#Month #Value] or [<end>#Value]',
+    match: '[<start>#Month #Value] (<prep>or|and) [<end>#Value]',
     desc: 'jan 5 or 8',
     parse: (m, context) => {
       let start = m.groups('start')

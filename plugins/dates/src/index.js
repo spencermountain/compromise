@@ -5,7 +5,7 @@ const methods = require('./methods')
 const addDurations = require('./durations')
 const addTimes = require('./times')
 const spacetime = require('spacetime')
-const findDates = require('./find')
+const findDates = require('./02-find')
 
 const opts = {
   punt: { weeks: 2 },

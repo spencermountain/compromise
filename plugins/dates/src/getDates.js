@@ -1,5 +1,5 @@
 const spacetime = require('spacetime')
-const parseRanges = require('./02-ranges')
+const parseRanges = require('./03-ranges')
 const normalize = require('./normalize')
 const generate = require('./generate')
 

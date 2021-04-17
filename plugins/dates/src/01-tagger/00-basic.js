@@ -33,6 +33,7 @@ const tagYearSafe = (m, reason) => {
 }
 
 const tagDates = function (doc) {
+  // doc.debug()
   // in the evening
   doc.match('in the (night|evening|morning|afternoon|day|daytime)').tag('Time', 'in-the-night')
   // 8 pm
@@ -45,6 +46,14 @@ const tagDates = function (doc) {
   // misc weekday words
   doc.match('(tue|thu)').tag('WeekDay', 'misc-weekday')
 
+  doc
+    .match('(march|april|may) (and|to|or|through|until)? (march|april|may)')
+    .tag('Date')
+    .match('(march|april|may)')
+    .tag('Month', 'march|april|may')
+  // april should almost-always be a date
+  // doc.match('[april] !#LastName?', 0).tag('Month', 'april')
+
   //months:
   let month = doc.if('#Month')
   if (month.found === true) {
@@ -55,9 +64,15 @@ const tagDates = function (doc) {
     //5 March
     month.match('#Cardinal #Month').tag('Date', 'cardinal-month')
     //march 5 to 7
-    month.match('#Month #Value to #Value').tag('Date', 'value-to-value')
+    month.match('#Month #Value (and|or|to)? #Value+').tag('Date', 'value-to-value')
     //march the 12th
     month.match('#Month the #Value').tag('Date', 'month-the-value')
+    // march to april
+    month.match('(march|may) to? #Date').tag('Date').match('^.').tag('Month', 'march-to')
+    // 'march'
+    month.match('^(march|may)$').tag('Month', 'single-march')
+    //March or June
+    month.match('#Month or #Month').tag('Date', 'month-or-month')
   }
 
   //months:
@@ -187,6 +202,8 @@ const tagDates = function (doc) {
   doc.match('(from|starting|until|by) now').tag('Date', 'for-now')
   // every night
   doc.match('(each|every) night').tag('Date', 'for-now')
+
+  // doc.debug()
   return doc
 }
 module.exports = tagDates

@@ -1,11 +1,11 @@
 const tagger = require('./01-tagger')
+const findDates = require('./02-find')
 const tags = require('./data/_tags')
 const words = require('./data/words')
 const methods = require('./methods')
 const addDurations = require('./durations')
 const addTimes = require('./times')
 const spacetime = require('spacetime')
-const findDates = require('./find')
 
 const opts = {
   punt: { weeks: 2 },

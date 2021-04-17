@@ -35,7 +35,7 @@ const fixUp = function (doc) {
       // d.match(`(this|last|next) #Date ${knownDate}$`).unTag('Date').lastTerm().tag('Date', 'this month yesterday')
     }
     //tomorrow on 5
-    d.match(`on #Cardinal$`).unTag('Date', here)
+    d.match(`on #Cardinal$`).unTag('Date', 'on 5')
     //this tomorrow
     d.match(`this tomorrow`).terms(0).unTag('Date', 'this-tomorrow')
     //q2 2019
@@ -43,26 +43,26 @@ const fixUp = function (doc) {
     //5 tuesday
     // d.match(`^#Value #WeekDay`).terms(0).unTag('Date');
     //5 next week
-    d.match(`^#Value (this|next|last)`).terms(0).unTag('Date', here)
+    d.match(`^#Value (this|next|last)`).terms(0).unTag('Date', '4 next')
 
     if (d.has('(last|this|next)')) {
       //this month 7
-      d.match(`(last|this|next) #Duration #Value`).terms(2).unTag('Date', here)
+      d.match(`(last|this|next) #Duration #Value`).terms(2).unTag('Date', 'this month 7')
       //7 this month
-      d.match(`!#Month #Value (last|this|next) #Date`).terms(0).unTag('Date', here)
+      d.match(`!#Month #Value (last|this|next) #Date`).terms(0).unTag('Date', '7 this month')
     }
     //january 5 5
-    if (d.has('(#Year|#Time|#TextValue|#NumberRange)') === false) {
-      d.match('(#Month|#WeekDay) #Value #Value').terms(2).unTag('Date', here)
-    }
+    // if (d.has('(#Year|#Time|#TextValue|#NumberRange)') === false) {
+    //   d.match('(#Month|#WeekDay) #Value #Value !(or|and)?').terms(2).unTag('Date', 'jan 5 5')
+    // }
     //between june
     if (d.has('^between') && !d.has('and .')) {
       d.unTag('Date', here)
     }
     //june june
-    if (d.has('#Month #Month') && !d.has('@hasHyphen') && !d.has('@hasComma')) {
-      d.match('#Month').lastTerm().unTag('Date', 'month-month')
-    }
+    // if (d.has('#Month #Month') && !d.has('@hasHyphen') && !d.has('@hasComma')) {
+    //   d.match('#Month').lastTerm().unTag('Date', 'month-month')
+    // }
     // over the years
     d.match('(in|over) the #Duration #Date+?').unTag('Date', 'over-the-duration')
     // log the hours

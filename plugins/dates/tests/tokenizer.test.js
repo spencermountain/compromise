@@ -1,6 +1,6 @@
 const test = require('tape')
 const nlp = require('./_lib')
-const spacetime = require('spacetime')
+// const spacetime = require('spacetime')
 
 test('date-tokenizer', function (t) {
   let arr = [
@@ -10,7 +10,7 @@ test('date-tokenizer', function (t) {
     ['monday, wednesday, and friday', 3],
     ['between monday and friday', 1],
     ['june to august', 1],
-    ['june or august', 2],
+    ['june or august', 1],
     ['june through august', 1],
     ['june 2020 or august', 2],
     ['mon tue fri', 3],

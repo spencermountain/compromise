@@ -32,20 +32,20 @@ const normalize = function (doc) {
   // remove adverbs
   doc.adverbs().remove()
   // 'week-end'
-  doc.replace('week end', 'weekend').tag('Date')
+  doc.replace('week end', 'weekend', true).tag('Date')
   // 'a up to b'
-  doc.replace('up to', 'upto').tag('Date')
+  doc.replace('up to', 'upto', true).tag('Date')
   // 'a year ago'
   if (doc.has('once (a|an) #Duration') === false) {
     doc.match('[(a|an)] #Duration', 0).replaceWith('1')
     tagger(doc)
   }
   // 'in a few years'
-  m = doc.match('in [a few] #Duration')
-  if (m.found) {
-    m.groups('0').replaceWith('2')
-    tagger(doc)
-  }
+  // m = doc.match('in [a few] #Duration')
+  // if (m.found) {
+  //   m.groups('0').replaceWith('2')
+  //   tagger(doc)
+  // }
   // jan - feb
   doc.match('@hasDash').insertAfter('to').tag('Date')
   // doc.debug()

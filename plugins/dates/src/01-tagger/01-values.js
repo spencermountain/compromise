@@ -24,6 +24,8 @@ const values = function (doc) {
     doc.match('#Value and a half (years|months|weeks|days)').tag('Date', here)
     //on the fifth
     doc.match('on the #Ordinal').tag('Date', here)
+    // 'jan 5 or 8'
+    doc.match('#Month #Value+ (and|or) #Value').tag('Date', 'date-or-date')
   }
   return doc
 }

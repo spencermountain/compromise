@@ -15,6 +15,7 @@ const arr = [
   ['jan 6 and jan 9', ['jan 6th', 'jan 9th']],
   ['between jan 5 and jan 10', ['jan 5-10']],
   ['feb 5 or next weekend', ['february 5', 'apr 24']],
+  // ['march, may, or june', ['march', 'may', 'june']],
 
   // dependant date combos
   ['march 3rd and 4th', ['mar 3', 'mar 4']],

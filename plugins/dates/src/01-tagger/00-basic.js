@@ -63,7 +63,7 @@ const tagDates = function (doc) {
     //march the 12th
     month.match('#Month the #Value').tag('Date', 'month-the-value')
     // march to april
-    month.match('march to #Month').tag(['Month', 'Date', 'Month'], 'march-to')
+    month.match('(march|may) to? #Date').tag('Date').match('^.').tag('Month', 'march-to')
   }
 
   //months:

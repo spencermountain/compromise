@@ -24,8 +24,8 @@ const arr = [
   // dependant date combos
   ['march 3rd and 4th', ['mar 3', 'mar 4']],
   ['feb 2 or third', ['feb 2nd', 'feb 3']],
-  // ['february 5th, 6th or 7th', ['feb 5', 'feb 6', 'feb 7']],
-  // ['february 5th, 6th and 7th', ['feb 5', 'feb 6', 'feb 7']],
+  ['february 5th, 6th or 7th', ['feb 5', 'feb 6', 'feb 7']],
+  ['february 5th, 6th and 7th', ['feb 5', 'feb 6', 'feb 7']],
   // ['', ['', '', '']],
 ]
 
@@ -35,7 +35,7 @@ test('multi-dates', function (t) {
     t.equal(found.length, a[1].length, '[length] ' + a[0])
     a[1].forEach((str, i) => {
       let one = nlp(str).dates(context).get(0)
-      t.equal((found[i] || {}).start, one.start, `[combo: ${i}] ` + str)
+      t.equal((found[i] || {}).start, one.start, `[combo: ${str}] '${a[0]}'`)
     })
   })
   t.end()

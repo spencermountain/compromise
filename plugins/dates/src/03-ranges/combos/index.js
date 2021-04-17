@@ -4,28 +4,44 @@ const parseDate = require('../../04-parse')
 module.exports = [
   {
     // jan 5 or 8  - (one month, shared dates)
-    match: '[<start>#Month #Value] [<prep>(or|and)] [<end>#Value]',
+    match: '[<start>#Month #Value+] [<prep>(or|and)] [<end>#Value]',
     desc: 'jan 5 or 8',
     parse: (m, context) => {
-      let start = m.groups('start')
-      start = parseDate(start, context)
+      let before = m.groups('start')
+      let match = before.match('[<top>#Month #Value] [<more>#Value+?]')
+      let start = parseDate(match.groups('top'), context)
       if (start) {
+        let result = [
+          {
+            start: start,
+            end: start.clone().end(),
+            unit: start.unit,
+          },
+        ]
+        // add more run-on numbers?
+        let more = match.groups('more')
+        if (more.found) {
+          more.match('#Value').forEach((v) => {
+            let s = start.clone()
+            s.d = s.d.date(v.text('reduced'))
+            result.push({
+              start: s,
+              end: s.clone().end(),
+              unit: s.unit,
+            })
+          })
+        }
+        // do end-date
         let end = start.clone()
         end.d = end.d.date(m.groups('end').text())
         end = end.start()
         if (end.d.isValid()) {
-          return [
-            {
-              start: start,
-              end: start.clone().end(),
-              unit: start.unit,
-            },
-            {
-              start: end,
-              end: end.clone().end(),
-              unit: end.unit,
-            },
-          ]
+          result.push({
+            start: end,
+            end: end.clone().end(),
+            unit: end.unit,
+          })
+          return result
         }
       }
       return null

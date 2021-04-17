@@ -27,6 +27,7 @@ const arr = [
   ['feb 2 or third', ['feb 2nd', 'feb 3']],
   ['february 5th, 6th or 7th', ['feb 5', 'feb 6', 'feb 7']],
   ['february 5th, 6th and 7th', ['feb 5', 'feb 6', 'feb 7']],
+  ['sept or june 1998', ['sept 1 1998', 'june 1 1998']],
   // ['jan 22, 23, 28', ['jan 22', 'jan 23', 'jan 28']],
   // ['', ['', '', '']],
 ]

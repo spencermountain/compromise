@@ -2,9 +2,9 @@ const parseDate = require('../04-parse')
 const repeating = require('./intervals')
 const ranges = [].concat(
   require('./01-two-times'),
+  require('./combos'),
   require('./02-date-range'),
-  require('./03-one-date'),
-  require('./combos')
+  require('./03-one-date')
 )
 
 const isArray = function (arr) {

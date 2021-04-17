@@ -33,7 +33,6 @@ const tests = [
       ['before march', 19],
 
       ['on february 22', 1],
-      ['march 3rd and 4th', 2],
       ['between monday and tuesday', 1],
       ['between monday and wednesday', 2],
       ['tuesday and wednesday next week', 2],

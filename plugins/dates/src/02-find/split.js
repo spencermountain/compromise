@@ -46,7 +46,7 @@ const split = function (dates) {
     }
 
     // monday, wednesday
-    m = dates.match('[#WeekDay] #WeekDay', 0).ifNo('@hasDash$')
+    m = dates.match('[#WeekDay] (and|or|this|next)? #WeekDay', 0).ifNo('@hasDash$')
     if (m.found) {
       dates = dates.splitAfter('#WeekDay')
     }

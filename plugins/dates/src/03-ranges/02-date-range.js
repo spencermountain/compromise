@@ -24,7 +24,7 @@ module.exports = [
 
   {
     // two months, no year - 'june 5 to june 7'
-    match: '[<from>#Month #Value] (to|through|thru|and) [<to>#Month #Value] [<year>#Year?]',
+    match: '[<from>#Month #Value] (to|through|thru) [<to>#Month #Value] [<year>#Year?]',
     desc: 'june 5 to june 7',
     parse: (m, context) => {
       let res = m.groups()
@@ -76,7 +76,7 @@ module.exports = [
   },
   {
     // one month, one year, second form - '5 to 7 of january 1998'
-    match: '[<from>#Value] (to|through|thru|and) [<to>#Value of? #Month #Date+?]',
+    match: '[<from>#Value] (to|through|thru) [<to>#Value of? #Month #Date+?]',
     desc: '5 to 7 of january 1998',
     parse: (m, context) => {
       let to = m.groups('to')
@@ -96,7 +96,7 @@ module.exports = [
 
   {
     // one month, no year - 'january 5 to 7'
-    match: '[<from>#Month #Value] (to|through|thru|and) [<to>#Value]',
+    match: '[<from>#Month #Value] (to|through|thru) [<to>#Value]',
     desc: 'january 5 to 7',
     parse: (m, context) => {
       let from = m.groups('from')
@@ -116,7 +116,7 @@ module.exports = [
 
   {
     // 'january to may 2020'
-    match: 'from? [<from>#Month] (to|until|upto|through|thru|and) [<to>#Month] [<year>#Year]',
+    match: 'from? [<from>#Month] (to|until|upto|through|thru) [<to>#Month] [<year>#Year]',
     desc: 'january to may 2020',
     parse: (m, context) => {
       let from = m.groups('from')

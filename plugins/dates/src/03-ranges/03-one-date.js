@@ -10,7 +10,7 @@ const punt = function (unit, context) {
 module.exports = [
   {
     // 'from A to B'
-    match: 'from? [<from>.+] (to|until|upto|through|thru|and) [<to>.+]',
+    match: 'from? [<from>.+] (to|until|upto|through|thru) [<to>.+]',
     desc: 'from A to B',
     parse: (m, context) => {
       let from = m.groups('from')

@@ -35,7 +35,7 @@ const tests = [
       ['on february 22', 1],
       ['between monday and tuesday', 1],
       ['between monday and wednesday', 2],
-      ['tuesday and wednesday next week', 2],
+      // ['tuesday and wednesday next week', 2],
       // ['march and april 2022', 61],
       ['first week of september', 7],
       ['second week of october', 7],

@@ -3,7 +3,7 @@ const parseDate = require('../../04-parse')
 
 module.exports = [
   {
-    // jan 5 or 8
+    // jan 5 or 8  - (one month, shared dates)
     match: '[<start>#Month #Value] [<prep>(or|and)] [<end>#Value]',
     desc: 'jan 5 or 8',
     parse: (m, context) => {
@@ -27,6 +27,31 @@ module.exports = [
             },
           ]
         }
+      }
+      return null
+    },
+  },
+
+  {
+    // 'from A to B'
+    match: '^!(between|from)? [<from>#Date+] (and|or) [<to>#Date+]$',
+    desc: 'A or B',
+    parse: (m, context) => {
+      let from = m.groups('from')
+      let to = m.groups('to')
+      from = parseDate(from, context)
+      to = parseDate(to, context)
+      if (from && to) {
+        return [
+          {
+            start: from,
+            end: from.clone().end(),
+          },
+          {
+            start: to,
+            end: to.clone().end(),
+          },
+        ]
       }
       return null
     },

@@ -15,6 +15,10 @@ const arr = [
   ['jan 6 and jan 9', ['jan 6th', 'jan 9th']],
   ['between jan 5 and jan 10', ['jan 5-10']],
   ['feb 5 or next weekend', ['february 5', 'apr 24']],
+  ['next friday, this monday', ['fri 23', 'mon 19']],
+  ['jan or feb', ['jan 1', 'feb 1']],
+  ['january and in feb', ['jan 1', 'feb 1']],
+  ['during march or september', ['march 1', 'september 1']],
   // ['march, may, or june', ['march', 'may', 'june']],
 
   // dependant date combos
@@ -28,7 +32,7 @@ const arr = [
 test('multi-dates', function (t) {
   arr.forEach((a) => {
     let found = nlp(a[0]).dates(context).get()
-    t.equal(found.length, a[1].length, '[lenth] ' + a[0])
+    t.equal(found.length, a[1].length, '[length] ' + a[0])
     a[1].forEach((str, i) => {
       let one = nlp(str).dates(context).get(0)
       t.equal((found[i] || {}).start, one.start, `[combo: ${i}] ` + str)

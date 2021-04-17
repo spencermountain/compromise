@@ -31,7 +31,7 @@ module.exports = {
     let res = []
     this.forEach((doc) => {
       let json = doc.json(options)[0]
-      let date = getDates(doc, this.context)[0]
+      let date = getDates(doc, this.context)[0] //FIX: return all the dates!
       json = Object.assign(json, date)
       // add more data
       json.duration = addDuration(json)

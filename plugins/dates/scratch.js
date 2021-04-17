@@ -21,9 +21,9 @@ const context = {
 // let doc = nlp('february 5th or 7th')
 // let doc = nlp('march to april').debug()
 // let doc = nlp('next friday, this monday').debug()
-let doc = nlp('dec 5 to 7') //.debug()
-let dates = doc.dates(context).debug()
-console.log(dates.json(0))
+let doc = nlp('wednesdays at 3') //.debug()
+let dates = doc.dates(context) //.debug()
+// console.log(dates.json(0))
 dates = dates.get()
 // console.log(dates)
 dates.forEach((date) => {

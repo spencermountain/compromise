@@ -17,6 +17,9 @@ const tryFull = function (doc, context) {
     start: null,
     end: null,
   }
+  if (!doc.found) {
+    return res
+  }
   let unit = parseDate(doc, context)
   if (unit) {
     if (doc.world.isVerbose() === 'date') {

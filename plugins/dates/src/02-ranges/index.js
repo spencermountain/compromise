@@ -1,15 +1,6 @@
 const parseDate = require('../03-parse')
 const repeating = require('./intervals')
-const ranges = [].concat(
-  require('./01-two-times'),
-  // require('./02-and-dates'),
-  require('./02-date-range'),
-  require('./03-one-date')
-)
-
-// const isArray = function (arr) {
-//   return Object.prototype.toString.call(arr) === '[object Array]'
-// }
+const ranges = [].concat(require('./01-two-times'), require('./02-date-range'), require('./03-one-date'))
 
 // loop thru each range template
 const parseRange = function (doc, context) {
@@ -24,9 +15,6 @@ const parseRange = function (doc, context) {
     let fmt = ranges[i]
     let m = doc.match(fmt.match)
     if (m.found) {
-      if (fmt.group !== undefined) {
-        m = m.groups(fmt.group)
-      }
       if (doc.world.isVerbose() === 'date') {
         console.log(`  ---[${fmt.desc}]---`)
       }

@@ -9,7 +9,6 @@ const fmt = (iso) => (iso ? spacetime(iso).format('{day-short} {nice} {year}') :
 
 const context = {
   // timezone: null, //'Asia/Shanghai',
-
   today: '2020-01-21',
   // today: '2018-01-19T10:05:00',
   // dayStart: '8:00am',
@@ -22,10 +21,10 @@ const context = {
 // let doc = nlp('march to april').debug()
 // let doc = nlp('next friday, this monday').debug()
 // let doc = nlp('dec 5 or 7').debug()
-let doc = nlp('tuesday - friday').debug()
-let dates = doc.dates(context) //.debug()
+let doc = nlp('june 9 and june 10') //.debug()
+let dates = doc.dates(context).debug()
 dates = dates.get()
-console.log(dates)
+// console.log(dates)
 dates.forEach((date) => {
   console.log('start: ', fmt(date.start))
   console.log('  end: ', fmt(date.end))

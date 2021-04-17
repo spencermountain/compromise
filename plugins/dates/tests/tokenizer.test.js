@@ -1,6 +1,6 @@
 const test = require('tape')
 const nlp = require('./_lib')
-const spacetime = require('spacetime')
+// const spacetime = require('spacetime')
 
 test('date-tokenizer', function (t) {
   let arr = [

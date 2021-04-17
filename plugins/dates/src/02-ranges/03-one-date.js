@@ -33,8 +33,8 @@ module.exports = [
     // 'before june'
     match: '^due? (by|before) [.+]',
     desc: 'before june',
-    group: 0,
     parse: (m, context) => {
+      m = m.group(0)
       let unit = parseDate(m, context)
       if (unit) {
         let start = new Unit(context.today, null, context)
@@ -56,8 +56,8 @@ module.exports = [
     // 'in june'
     match: '^(on|in|at|@|during) [.+]',
     desc: 'in june',
-    group: 0,
     parse: (m, context) => {
+      m = m.group(0)
       let unit = parseDate(m, context)
       if (unit) {
         return { start: unit, end: unit.clone().end(), unit: unit.unit }
@@ -69,8 +69,8 @@ module.exports = [
     // 'after june'
     match: '^(after|following) [.+]',
     desc: 'after june',
-    group: 0,
     parse: (m, context) => {
+      m = m.group(0)
       let unit = parseDate(m, context)
       if (unit) {
         unit = unit.after()
@@ -86,8 +86,8 @@ module.exports = [
     // 'middle of'
     match: '^(middle|center|midpoint) of [.+]',
     desc: 'middle of',
-    group: 0,
     parse: (m, context) => {
+      m = m.group(0)
       let unit = parseDate(m, context)
       let start = unit.clone().middle()
       let end = unit.beforeEnd()

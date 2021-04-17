@@ -87,7 +87,7 @@ const findDate = function (doc) {
     dates = dates.splitAfter(m)
   }
   // tomorrow yesterday
-  m = dates.match('[(today|tomorrow|yesterday)] (today|tomorrow|yesterday)', 0)
+  m = dates.match('[(today|tomorrow|yesterday)] (today|tomorrow|yesterday|#WeekDay)', 0).ifNo('@hasDash$')
   if (m.found) {
     dates = dates.splitAfter(m)
   }

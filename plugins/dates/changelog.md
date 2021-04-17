@@ -2,6 +2,10 @@
 - **[breaking]** - return array in .json().dates
 -->
 
+### 2.2.0 [April 2021]
+
+- **[new]** - start parsing or/and date combos
+
 ### 2.1.0 [April 2021]
 
 - **[change]** - null timezone is now the same as undefined timezone

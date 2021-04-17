@@ -23,8 +23,8 @@ module.exports = [
         let more = m.not(before)
         if (more.found) {
           more.match('#Month').forEach((month) => {
-            let s = start.clone()
-            s.d = s.d.month(month.text('reduced'))
+            let s = parseDate(month, context)
+            // s.d = s.d.month(month.text('reduced'))
             result.push({
               start: s,
               end: s.clone().end(),

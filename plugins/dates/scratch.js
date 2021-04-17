@@ -9,8 +9,8 @@ const fmt = (iso) => (iso ? spacetime(iso).format('{day-short} {nice} {year}') :
 
 const context = {
   // timezone: null, //'Asia/Shanghai',
-  // today: '2020-01-21',
-  today: [2016, 10, 23], //wed nov 23rd
+  today: '2020-01-21',
+  // today: [2016, 10, 23], //wed nov 23rd
   // today: '2018-01-19T10:05:00',
   // dayStart: '8:00am',
   // dayEnd: '8:00pm',
@@ -21,10 +21,9 @@ const context = {
 // let doc = nlp('february 5th or 7th')
 // let doc = nlp('march to april').debug()
 // let doc = nlp('next friday, this monday').debug()
-// let doc = nlp('dec 5 or 7').debug()
-// ['Monday - Wednesday', 'Nov 28 - Nov 30'],
-let doc = nlp('Nov 28 - Nov 30').debug()
+let doc = nlp('dec 5 to 7') //.debug()
 let dates = doc.dates(context).debug()
+console.log(dates.json(0))
 dates = dates.get()
 // console.log(dates)
 dates.forEach((date) => {

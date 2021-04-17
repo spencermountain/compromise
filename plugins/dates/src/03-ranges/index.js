@@ -7,31 +7,12 @@ const ranges = [].concat(
   require('./03-one-date')
 )
 
-// loop thru each range template
-const parseRange = function (doc, context) {
-  // parse-out 'every week ..'
-  let repeats = repeating(doc, context) || {}
-  // if it's *only* an interval response
-  if (doc.found === false) {
-    return Object.assign({}, repeats, { start: null, end: null })
-  }
-  // try each template in order
-  for (let i = 0; i < ranges.length; i += 1) {
-    let fmt = ranges[i]
-    let m = doc.match(fmt.match)
-    if (m.found) {
-      if (doc.world.isVerbose() === 'date') {
-        console.log(`  ---[${fmt.desc}]---`)
-      }
-      let res = fmt.parse(m, context)
-      if (res !== null) {
-        // did it return more than one date?
+const isArray = function (arr) {
+  return Object.prototype.toString.call(arr) === '[object Array]'
+}
 
-        return Object.assign({}, repeats, res)
-      }
-    }
-  }
-  //else, try whole thing
+//else, try whole thing, non ranges
+const tryFull = function (doc, context) {
   let res = {
     start: null,
     end: null,
@@ -48,15 +29,49 @@ const parseRange = function (doc, context) {
       unit: unit.setTime ? 'time' : unit.unit,
     }
   }
-  let combined = Object.assign({}, repeats, res)
-  // ensure start is not after end
-  // console.log(combined)
-  if (combined.start && combined.end && combined.start.d.epoch > combined.end.d.epoch) {
-    // console.warn('Warning: Start date is after End date')
-    combined.start = combined.start.start()
-    // combined.end = combined.start.clone()
-  }
-
-  return combined
+  return res
 }
-module.exports = parseRange
+
+const tryRanges = function (doc, context) {
+  // try each template in order
+  for (let i = 0; i < ranges.length; i += 1) {
+    let fmt = ranges[i]
+    let m = doc.match(fmt.match)
+    if (m.found) {
+      if (doc.world.isVerbose() === 'date') {
+        console.log(`  ---[${fmt.desc}]---`)
+      }
+      let res = fmt.parse(m, context)
+      if (res !== null) {
+        // did it return more than one date?
+        if (!isArray(res)) {
+          res = [res]
+        }
+        return res
+      }
+    }
+  }
+  return null
+}
+
+// loop thru each range template
+const parseRanges = function (doc, context) {
+  // parse-out 'every week ..'
+  let repeats = repeating(doc, context) || {}
+  // try picking-apart ranges
+  let found = tryRanges(doc, context)
+  if (!found) {
+    found = [tryFull(doc, context)]
+  }
+  // add the repeat info to each date
+  found = found.map((o) => Object.assign({}, repeats, o))
+
+  // ensure start is not after end
+  found.forEach((res) => {
+    if (res.start && res.end && res.start.d.epoch > res.end.d.epoch) {
+      res.start = res.start.start()
+    }
+  })
+  return found
+}
+module.exports = parseRanges

@@ -1,4 +1,4 @@
-const parse = require('./getDates')
+const getDates = require('./getDates')
 const spacetime = require('spacetime')
 const abbrevs = require('./data/_abbrevs')
 const addDuration = require('./metadata/duration')
@@ -9,9 +9,11 @@ module.exports = {
   get: function (options) {
     let arr = []
     this.forEach((doc) => {
-      let date = parse(doc, this.context)
-      date.unit = addUnit(date)
-      arr.push(date)
+      let dates = getDates(doc, this.context)
+      dates.forEach((date) => {
+        date.unit = addUnit(date)
+      })
+      arr = arr.concat(dates)
     })
     if (typeof options === 'number') {
       return arr[options]
@@ -29,8 +31,8 @@ module.exports = {
     let res = []
     this.forEach((doc) => {
       let json = doc.json(options)[0]
-      let found = parse(doc, this.context)
-      json = Object.assign(json, found)
+      let date = getDates(doc, this.context)[0]
+      json = Object.assign(json, date)
       // add more data
       json.duration = addDuration(json)
       json.unit = addUnit(json)
@@ -45,18 +47,20 @@ module.exports = {
   /** render all dates according to a specific format */
   format: function (fmt) {
     this.forEach((doc) => {
-      let obj = parse(doc, this.context)
-      if (obj.start) {
-        let start = spacetime(obj.start, this.context.timezone)
-        let str = start.format(fmt)
-        if (obj.end) {
-          let end = spacetime(obj.end, this.context.timezone)
-          if (start.isSame(end, 'day') === false) {
-            str += ' to ' + end.format(fmt)
+      let dates = getDates(doc, this.context)
+      dates.forEach((obj) => {
+        if (obj.start) {
+          let start = spacetime(obj.start, this.context.timezone)
+          let str = start.format(fmt)
+          if (obj.end) {
+            let end = spacetime(obj.end, this.context.timezone)
+            if (start.isSame(end, 'day') === false) {
+              str += ' to ' + end.format(fmt)
+            }
           }
+          doc.replaceWith(str, { keepTags: true, keepCase: false })
         }
-        doc.replaceWith(str, { keepTags: true, keepCase: false })
-      }
+      })
     })
     return this
   },

@@ -29,9 +29,11 @@ class Term {
   /** set the text of the Term to something else*/
   set(str) {
     let obj = parseTerm(str)
-
     this.text = obj.text
     this.clean = obj.clean
+    this.reduced = obj.reduced
+    this.root = obj.root || null
+    this.implicit = obj.implicit || null
     return this
   }
 }

@@ -1,4 +1,4 @@
-/* compromise-typeahead 0.3.0 MIT */
+/* compromise-typeahead 0.3.1 MIT */
 const tryPrefix = function (doc, lex) {
   let world = doc.world;
   world.prefixes = world.prefixes || {}; // get end-part of text
@@ -113,7 +113,7 @@ const plugin = function (Doc, world, _nlp) {
   Doc.prototype.autoFill = function () {
     this.termList().forEach(t => {
       if (t.typeAhead === true && t.implicit) {
-        t.text = t.implicit;
+        t.set(t.implicit);
         t.implicit = null;
         t.typeAhead = undefined;
       }

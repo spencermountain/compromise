@@ -31,7 +31,7 @@ const plugin = function (Doc, world, _nlp) {
   Doc.prototype.autoFill = function () {
     this.termList().forEach((t) => {
       if (t.typeAhead === true && t.implicit) {
-        t.text = t.implicit
+        t.set(t.implicit)
         t.implicit = null
         t.typeAhead = undefined
       }

@@ -49,5 +49,15 @@ test('tricky capture', function (t) {
   let doc = nlp.tokenize('during august')
   let m = doc.match('^(on|during|in) [.]', 0)
   t.equal(m.text('normal'), 'august', 'found capture')
+
+  // test for this weird non-match
+  doc = nlp(`to foo`)
+  m = doc.match('[.+] to')
+  t.equal(m.text(), '', 'optional-group not found')
+  // this is a creepy bug
+  m = doc.match('[.+] to', 0)
+  m.clone().text()
+  t.ok(true, 'creepy-group bug')
+
   t.end()
 })

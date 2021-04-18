@@ -12,6 +12,11 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 
 -->
 
+#### 13.11.1 [April 2021]
+
+- **[fix]** - obscure runtime error in capture-groups
+  _plugin-releases_: typeahead
+
 #### 13.11.0 [April 2021]
 
 - **[change]** - use babel default build target (drop ie11 polyfill)

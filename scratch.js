@@ -9,31 +9,8 @@ nlp.extend(require('./plugins/typeahead/src'))
 // nlp.verbose(true)
 
 // runtime error:
-/*
 let doc = nlp(`to foo`)
-let m = doc.match('[.+] to', 0)
-console.log(m)
-m.clone().debug()
-*/
-
-// create a newton plugin
-const plugin = function (_Doc, world, _nlp) {
-  let obj = {
-    size: 2,
-    words: {
-      july: 'Month',
-      august: 'Month',
-      september: 'Month',
-    },
-  }
-  _nlp.typeahead(obj.words, { min: obj.size, safe: false })
-}
-nlp.extend(plugin)
-let doc = nlp('20 septem')
-doc.autoFill()
-doc.debug()
-console.log(doc.termList(1))
-console.log(doc.dates().get())
+// let m = doc.match('[.+] to').debug()
 
 // doc.clone().dates()
 // console.log(doc.text())

@@ -18,6 +18,7 @@ const tryPrefix = function (doc, lex) {
     let found = world.prefixes[json.normal]
     // add full-word as an implicit result
     m.termList()[0].implicit = found
+    m.termList()[0].typeAhead = true
     // tag it too?
     if (lex.hasOwnProperty(found)) {
       m.tag(lex[found], 'typeahead')

@@ -23,7 +23,8 @@
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 </div>
 
-a plugin that allows *assuming a word*, before it is fully-typed.
+a plugin that allows _assuming a word_, before it is fully-typed.
+
 <div align="center">
   <h4><a href="https://observablehq.com/@spencermountain/compromise-typeahead">Demo</a></h4>
 </div>
@@ -48,7 +49,7 @@ nlp.typeahead(lexicon, { min: 3 })
 // ok, create a document
 let doc = nlp('i went to bucking', lexicon)
 
-doc.has('buckinghamshire') 
+doc.has('buckinghamshire')
 //true!
 
 let m = doc.match('#Town')
@@ -58,6 +59,7 @@ console.log(m.text())
 console.log(m.text('implicit'))
 // 'buckinghamshire'
 ```
+
 You can see, it just kind of pretends the word is there. It uses the same 'implicit' scheme that [contractions do](https://observablehq.com/@spencermountain/compromise-contractions).
 
 It only applies to the end of the document, for now.
@@ -73,16 +75,36 @@ In addition to assuming the word, a passed-in [lexicon](https://observablehq.com
 <div >
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 </div>
+
+### autoFill
+
+words found in typeahead are available in `.match()`, and visible with `.text('implicit')`.
+You'll notice that they do not appear in regular `.text()` output though. This is done on purpose, to retain the original input. If you want the over-write the text, so the assumed words are fully-loaded, run `.autoFill()`:
+
+```js
+let words = {
+  july: 'Month',
+  august: 'Month',
+  september: 'Month',
+}
+nlp.typeahead(words, { min: 2, safe: false })
+let doc = nlp('on the 5th of septem')
+doc.autoFill() //boom.
+doc.text()
+//  'on the 5th of september',
+```
+
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221848-11404200-ffb8-11e9-90cd-3adee8d8564f.png"/>
 </div>
 
 ## Notes:
+
 Typeahead is a dangerous game. Making assumptions about a user's text based on prefix, is very error-prone, especially for small-prefixes.
 
-Great care should be taken when selecting your words for typeahead. 
+Great care should be taken when selecting your words for typeahead.
 
-**[This tool](https://observablehq.com/@spencermountain/prefix-word-lookup)** may help in reviewing a list of potential prefix-collisions. 
+**[This tool](https://observablehq.com/@spencermountain/prefix-word-lookup)** may help in reviewing a list of potential prefix-collisions.
 
 ...ya but even then.. - it's nearly impossible to predict misunderstandings when the interpreter is being greedy.
 
@@ -93,20 +115,24 @@ Great care should be taken when selecting your words for typeahead.
 
 So, heads-up.
 
-Three things it does to decrease false-positives - 
+Three things it does to decrease false-positives -
 
 #### Block any overlap:
+
 The plugin will not make predictions for any overlapping prefixes, in the given terms.
 if **'milan'** and **'milwaukee'** are both given, **'mil'** will not be triggered for anything.
+
 ```js
 nlp.typeahead(['milan', 'milwaukee'])
 nlp('mil').has('(milan|milwaukee)') //false
 ```
 
 #### Ignore 2-char prefixes:
+
 Prefixes shorter than 3 chars will be ignored.
 
 you can set a lower, or higher minimum with:
+
 ```js
 nlp.typeahead(['toronto'], { min: 4 })
 nlp('tor').has('toronto') //false
@@ -114,11 +140,13 @@ nlp('toro').has('toronto') //true
 ```
 
 #### Block known words:
+
 Prefixes that exist in the compromise lexicon will also be ignored.
 
 these are assumed to be pretty common, full words.
 
 You can disable this by passing-in `safe:false`.
+
 ```js
 // 'swim' is it's own word.
 nlp.typeahead(['swimsuit'])
@@ -126,15 +154,17 @@ nlp('swim').has('swimsuit') //false
 nlp('swimsu').has('swimsuit') //true
 
 // who cares - do it anyways
-nlp.typeahead(['swimsuit'], { safe:false })
+nlp.typeahead(['swimsuit'], { safe: false })
 nlp('swim').has('swimsuit') //true
 ```
+
 the compromise lexicon includes ~14k words, but very few common nouns. It is not meant to be a perfect-guard against prefix-collisions, like this.
 So please don't lean on this safe feature too-hard.
 
-
 #### Layering prefixes carefully
+
 you may want to conjure-up a scheme where some words are matched greedier than others.
+
 ```js
 // layer-one, quite-greedy
 nlp.typeahead(['grey', 'gold', 'red'], { min: 2 })
@@ -142,17 +172,19 @@ nlp.typeahead(['grey', 'gold', 'red'], { min: 2 })
 nlp.typeahead(['greyhound', 'goldendoodle', 'poodle'], { min: 3 })
 
 // first-layer is sneaky
-nlp('re').has('red')//true
+nlp('re').has('red') //true
 // second-layer is less-sneaky
-nlp('po').has('poodle')//false
+nlp('po').has('poodle') //false
 
-nlp('gr').has('grey')//true
-nlp('gre').has('(grey|greyhound)')//false (collision of two layers)
-nlp('golde').has('goldendoodle')//true
+nlp('gr').has('grey') //true
+nlp('gre').has('(grey|greyhound)') //false (collision of two layers)
+nlp('golde').has('goldendoodle') //true
 ```
-Adding more matches will merge into existing prefixes, and automatically remove collisions. 
+
+Adding more matches will merge into existing prefixes, and automatically remove collisions.
 
 If you want to get rid of them, you can set the property on the [World object](https://observablehq.com/@spencermountain/compromise-world) directly:
+
 ```js
 nlp('').world.prefixes = {} //whoosh!
 ```
@@ -162,10 +194,10 @@ nlp('').world.prefixes = {} //whoosh!
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 </div>
 
-
 ## See Also
-* [compromise-keypress](../keypress) - a caching plugin for on-type parsing
-  
+
+- [compromise-keypress](../keypress) - a caching plugin for on-type parsing
+
 <!-- spacer -->
 <div >
   <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>

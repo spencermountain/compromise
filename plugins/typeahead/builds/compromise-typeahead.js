@@ -1,17 +1,17 @@
-/* compromise-typeahead 0.2.0 MIT */
+/* compromise-typeahead 0.3.1 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.compromiseTypeahead = factory());
 }(this, (function () { 'use strict';
 
-  var tryPrefix = function tryPrefix(doc, lex) {
-    var world = doc.world;
+  const tryPrefix = function (doc, lex) {
+    let world = doc.world;
     world.prefixes = world.prefixes || {}; // get end-part of text
 
-    var end = doc.last();
-    var m = end.terms().last();
-    var json = m.json({
+    let end = doc.last();
+    let m = end.terms().last();
+    let json = m.json({
       terms: {
         normal: true
       }
@@ -29,9 +29,10 @@
 
 
     if (world.prefixes.hasOwnProperty(json.normal)) {
-      var found = world.prefixes[json.normal]; // add full-word as an implicit result
+      let found = world.prefixes[json.normal]; // add full-word as an implicit result
 
-      m.termList()[0].implicit = found; // tag it too?
+      m.termList()[0].implicit = found;
+      m.termList()[0].typeAhead = true; // tag it too?
 
       if (lex.hasOwnProperty(found)) {
         m.tag(lex[found], 'typeahead');
@@ -42,20 +43,20 @@
   var tryPrefix_1 = tryPrefix;
 
   // generate all the possible prefixes up-front
-  var createIndex = function createIndex(arr, opts, world) {
-    var index = {};
-    var collisions = [];
-    var existing = world.prefixes || {};
-    arr.forEach(function (str) {
+  const createIndex = function (arr, opts, world) {
+    let index = {};
+    let collisions = [];
+    let existing = world.prefixes || {};
+    arr.forEach(str => {
       str = str.toLowerCase().trim();
-      var max = str.length;
+      let max = str.length;
 
       if (opts.max && max > opts.max) {
         max = opts.max;
       }
 
-      for (var size = opts.min; size < max; size += 1) {
-        var prefix = str.substr(0, size); // ensure prefix is not a word
+      for (let size = opts.min; size < max; size += 1) {
+        let prefix = str.substr(0, size); // ensure prefix is not a word
 
         if (opts.safe && world.words.hasOwnProperty(prefix)) {
           continue;
@@ -78,7 +79,7 @@
 
     index = Object.assign({}, existing, index); // remove ambiguous-prefixes
 
-    collisions.forEach(function (str) {
+    collisions.forEach(str => {
       delete index[str];
     });
     return index;
@@ -86,21 +87,19 @@
 
   var getPrefixes = createIndex;
 
-  var isObject = function isObject(obj) {
+  const isObject = function (obj) {
     return obj && Object.prototype.toString.call(obj) === '[object Object]';
   };
 
-  var defaults = {
+  const defaults = {
     safe: true,
     min: 3
   };
 
-  var plugin = function plugin(Doc, world, _nlp) {
+  const plugin = function (Doc, world, _nlp) {
     /** add words that can be predicted from their prefix */
-    _nlp.typeahead = function () {
-      var arr = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-      var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var lex = {};
+    _nlp.typeahead = function (arr = [], opts = {}) {
+      let lex = {};
       opts = Object.assign({}, defaults, opts); // wiggle-out our params
 
       if (isObject(arr)) {
@@ -111,8 +110,19 @@
 
       world.prefixes = getPrefixes(arr, opts, world); // each keypress, try the end
 
-      world.postProcess(function (doc) {
+      world.postProcess(doc => {
         tryPrefix_1(doc, lex);
+      });
+    }; //assume the typeahead as a full-word
+
+
+    Doc.prototype.autoFill = function () {
+      this.termList().forEach(t => {
+        if (t.typeAhead === true && t.implicit) {
+          t.set(t.implicit);
+          t.implicit = null;
+          t.typeAhead = undefined;
+        }
       });
     }; // alias
 

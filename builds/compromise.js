@@ -1,4 +1,4 @@
-/* compromise 13.11.0 MIT */
+/* compromise 13.11.1 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -1190,6 +1190,9 @@
       let obj = parse$2(str);
       this.text = obj.text;
       this.clean = obj.clean;
+      this.reduced = obj.reduced;
+      this.root = null;
+      this.implicit = null;
       return this;
     }
 
@@ -2223,7 +2226,12 @@
 
 
       if (reg.anything === true && reg.greedy === true) {
-        let skipto = _matchLogic.greedyTo(state, regs[state.r + 1]); // ensure it's long enough
+        let skipto = _matchLogic.greedyTo(state, regs[state.r + 1]); //maybe we couldn't find it
+
+        if (skipto === null || skipto === 0) {
+          return null;
+        } // ensure it's long enough
+
 
         if (reg.min !== undefined && skipto - state.t < reg.min) {
           return null;
@@ -2233,10 +2241,6 @@
         if (reg.max !== undefined && skipto - state.t > reg.max) {
           state.t = state.t + reg.max;
           continue;
-        }
-
-        if (skipto === null) {
-          return null; //couldn't find it
         } // is it really this easy?....
 
 
@@ -3656,7 +3660,7 @@
 
   var fromJSON_1 = fromJSON;
 
-  var _version = '13.11.0';
+  var _version = '13.11.1';
 
   const entity = ['Person', 'Place', 'Organization'];
   var nouns$1 = {

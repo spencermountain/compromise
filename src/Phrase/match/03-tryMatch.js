@@ -47,6 +47,10 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
     //support 'unspecific greedy' .* properly
     if (reg.anything === true && reg.greedy === true) {
       let skipto = logic.greedyTo(state, regs[state.r + 1])
+      //maybe we couldn't find it
+      if (skipto === null || skipto === 0) {
+        return null
+      }
       // ensure it's long enough
       if (reg.min !== undefined && skipto - state.t < reg.min) {
         return null
@@ -55,9 +59,6 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
       if (reg.max !== undefined && skipto - state.t > reg.max) {
         state.t = state.t + reg.max
         continue
-      }
-      if (skipto === null) {
-        return null //couldn't find it
       }
       // is it really this easy?....
       if (state.hasGroup === true) {

@@ -80,3 +80,28 @@ test('prefix layer test', function (t) {
   t.equal(nlp('golde').has('goldendoodle'), true, 'long-match')
   t.end()
 })
+
+test('prefix layer test', function (t) {
+  let words = {
+    august: 'Month',
+    september: 'Month',
+  }
+  nlp.typeahead(words, { min: 2, safe: false })
+  let doc = nlp('on the 4th of septem')
+  doc.autoFill()
+  t.equal(doc.text(), 'on the 4th of september', 'autofill')
+  t.end()
+})
+
+test('prefix false-positive test', function (t) {
+  let words = {
+    august: 'Month',
+    september: 'Month',
+  }
+  nlp.typeahead(words, { min: 2, safe: false })
+  let str = `i've got a feelin' that we're gonna get through`
+  let doc = nlp(str)
+  doc.autoFill()
+  t.equal(doc.text(), str, 'contraction-safe')
+  t.end()
+})

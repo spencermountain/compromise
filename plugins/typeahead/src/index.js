@@ -27,6 +27,17 @@ const plugin = function (Doc, world, _nlp) {
       tryPrefix(doc, lex)
     })
   }
+  //assume the typeahead as a full-word
+  Doc.prototype.autoFill = function () {
+    this.termList().forEach((t) => {
+      if (t.typeAhead === true && t.implicit) {
+        t.set(t.implicit)
+        t.implicit = null
+        t.typeAhead = undefined
+      }
+    })
+  }
+
   // alias
   _nlp.typeAhead = Doc.prototype.typeahead
 }

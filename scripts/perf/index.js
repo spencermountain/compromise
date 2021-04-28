@@ -1,10 +1,11 @@
 const Pool = require('./pool/pool')
 const fetch = require('./_fetch')
 
-const BASELINE = 92 //node 12
+// const BASELINE = 92 //node 12, 2017 macbook
+const BASELINE = 67 //node 12, 2020 mac mini
 
-if (!process.version.match(/^v12\./)) {
-  console.warn('Warn: Expecting node v12.x - got ' + process.version)
+if (!process.version.match(/^v16\./)) {
+  console.warn('Warn: Expecting node v16.x - got ' + process.version)
 }
 
 let docs = [

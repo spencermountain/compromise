@@ -1,7 +1,7 @@
 const nlp = require('./src/index')
-nlp.extend(require('./plugins/numbers/src'))
-nlp.extend(require('./plugins/dates/src'))
-nlp.extend(require('./plugins/typeahead/src'))
+// nlp.extend(require('./plugins/numbers/src'))
+// nlp.extend(require('./plugins/dates/src'))
+// nlp.extend(require('./plugins/typeahead/src'))
 // const spacetime = require('/Users/spencer/mountain/spacetime')
 // nlp.extend(require('./plugins/sentences/src'))
 // const text = require('/Users/spencer/mountain/compromise/scripts/perf/flame/_sotu-text.js')
@@ -9,7 +9,9 @@ nlp.extend(require('./plugins/typeahead/src'))
 // nlp.verbose(true)
 
 // runtime error:
-let doc = nlp(`to foo`)
+
+nlp('visit https://en.m.wikipedia.org').debug()
+// let doc = nlp(`to foo`)
 // let m = doc.match('[.+] to').debug()
 
 // doc.clone().dates()

@@ -86,6 +86,9 @@ const conjugate = function (parsed, world) {
   if (isNegative) {
     forms.Infinitive = 'not ' + forms.Infinitive
   }
+  console.log(forms)
+
+  // parsed.subject.debug()
   return forms
 }
 module.exports = conjugate

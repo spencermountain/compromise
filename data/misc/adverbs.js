@@ -66,7 +66,6 @@ module.exports = [
   'randomly',
   'rather',
   'really',
-  'several',
   'so',
   'somehow',
   'sometimes',

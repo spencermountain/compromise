@@ -1,6 +1,7 @@
 const toInfinitive = require('../toInfinitive')
 const toBe = require('./toBe')
 const doModal = require('./doModal')
+const isPlural = require('../isPlural')
 
 const conjugate = function (parsed, world) {
   let verb = parsed.verb
@@ -42,16 +43,21 @@ const conjugate = function (parsed, world) {
   //   return res
   // }
 
-  let hasHyphen = parsed.verb.termList(0).hasHyphen()
-
+  // get the root form
   let infinitive = toInfinitive(parsed, world)
   if (!infinitive) {
     return {}
   }
   let forms = world.transforms.conjugate(infinitive, world)
   forms.Infinitive = infinitive
+  // Singular: the dog chases
+  // Plural: the dogs chase
+  if (isPlural(parsed, world) === true) {
+    forms.PresentTense = forms.Infinitive // the dogs chase
+  }
 
   // add particle to phrasal verbs ('fall over')
+  let hasHyphen = parsed.verb.termList(0).hasHyphen()
   if (parsed.particle.found) {
     let particle = parsed.particle.text()
     let space = hasHyphen === true ? '-' : ' '
@@ -86,7 +92,7 @@ const conjugate = function (parsed, world) {
   if (isNegative) {
     forms.Infinitive = 'not ' + forms.Infinitive
   }
-  console.log(forms)
+  // console.log(forms)
 
   // parsed.subject.debug()
   return forms

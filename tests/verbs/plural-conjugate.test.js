@@ -71,6 +71,8 @@ test('plural-verbs toPresent:', function (t) {
     ['the library did not provide', 'the library does not provide'],
     ['the library clearly will not provide', 'the library clearly does not provide'],
     ['this union had disrupted', 'this union has disrupted'],
+    ['john wrote everyday', 'john writes everyday'],
+    // ['spencer and john wrote everyday', 'spencer and john write everyday'],
   ]
   arr.forEach(a => {
     let doc = nlp(a[0])

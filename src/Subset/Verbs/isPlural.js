@@ -20,8 +20,14 @@ const isPlural = function (parsed) {
   }
   //consider its prior noun
   let noun = findNoun(vb)
+  if (noun.has('(he|she|many|both)')) {
+    return false
+  }
   if (noun.has('(we|they|you)')) {
     return true
+  }
+  if (noun.has('#Person')) {
+    return false
   }
   if (noun.has('#Plural')) {
     return true

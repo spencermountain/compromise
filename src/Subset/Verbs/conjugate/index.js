@@ -31,18 +31,6 @@ const conjugate = function (parsed, world) {
     return doModal(parsed, world)
   }
 
-  // dont conjugate imperative form - 'close the door'
-  // if (parsed.auxiliary.has('do')) {
-  //   let str = parsed.original.text()
-  //   let res = {
-  //     PastTense: str,
-  //     PresentTense: str,
-  //     FutureTense: str,
-  //     Infinitive: str,
-  //   }
-  //   return res
-  // }
-
   // get the root form
   let infinitive = toInfinitive(parsed, world)
   if (!infinitive) {
@@ -52,7 +40,8 @@ const conjugate = function (parsed, world) {
   forms.Infinitive = infinitive
   // Singular: the dog chases
   // Plural: the dogs chase
-  if (isPlural(parsed, world) === true) {
+  let bePlural = isPlural(parsed, world)
+  if (bePlural === true) {
     forms.PresentTense = forms.Infinitive // the dogs chase
   }
 
@@ -63,38 +52,23 @@ const conjugate = function (parsed, world) {
     let space = hasHyphen === true ? '-' : ' '
     Object.keys(forms).forEach(k => (forms[k] += space + particle))
   }
-  //put the adverb at the end?
-  // if (parsed.adverb.found) {
-  // let adverb = parsed.adverb.text()
-  // let space = hasHyphen === true ? '-' : ' '
-  // if (parsed.adverbAfter === true) {
-  //   Object.keys(forms).forEach(k => (forms[k] += space + adverb))
-  // } else {
-  //   Object.keys(forms).forEach(k => (forms[k] = adverb + space + forms[k]))
-  // }
-  // }
 
   //apply negative
   const isNegative = parsed.negative.found
+  forms.FutureTense = forms.FutureTense || 'will ' + forms.Infinitive
   if (isNegative) {
     forms.PastTense = 'did not ' + forms.Infinitive
-    forms.PresentTense = 'does not ' + forms.Infinitive
+    forms.FutureTense = 'will not ' + forms.Infinitive
+    if (bePlural) {
+      forms.PresentTense = 'do not ' + forms.Infinitive
+      forms.Infinitive = 'do not ' + forms.Infinitive
+    } else {
+      forms.PresentTense = 'does not ' + forms.Infinitive
+      forms.Infinitive = 'does not ' + forms.Infinitive
+    }
     forms.Gerund = 'not ' + forms.Gerund
   }
-  //future Tense is pretty straightforward
-  if (!forms.FutureTense) {
-    if (isNegative) {
-      forms.FutureTense = 'will not ' + forms.Infinitive
-    } else {
-      forms.FutureTense = 'will ' + forms.Infinitive
-    }
-  }
-  if (isNegative) {
-    forms.Infinitive = 'not ' + forms.Infinitive
-  }
-  // console.log(forms)
 
-  // parsed.subject.debug()
   return forms
 }
 module.exports = conjugate

@@ -10,6 +10,13 @@ const parseVerb = function (vb) {
     original: vb,
     subject: getSubject(vb),
   }
+  // parsed.subject.debug()
+
+  // for conjugation purposes,
+  // 'should start looking' -> 'should start'
+  if (parsed.verb.has('(#PresentTense|#PastTense|#Infinitive) #Gerund$')) {
+    parsed.verb = parsed.verb.not('#Gerund$')
+  }
   // fallback, if no verb found
   if (!parsed.verb.found) {
     // blank-everything

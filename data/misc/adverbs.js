@@ -71,6 +71,7 @@ module.exports = [
   'sometimes',
   'somewhat',
   'sort of',
+  'seldom',
   'such',
   'then',
   'thus',

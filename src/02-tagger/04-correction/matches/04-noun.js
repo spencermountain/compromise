@@ -159,6 +159,9 @@ module.exports = [
   { match: `co #Noun`, tag: 'Actor', reason: 'co-noun' },
   // to facilitate gas exchange with
   { match: `to #PresentTense #Noun [#PresentTense] #Preposition`, group: 0, tag: 'Noun', reason: 'gas-exchange' },
+  // a comdominium, or simply condo
+  { match: `a #Noun+ or #Adverb+? [#Verb]`, group: 0, tag: 'Noun', reason: 'noun-or-noun' },
+
   // in various sensory functions
   // {
   //   match: `#Preposition #Determiner #Singular [#PresentTense]`,

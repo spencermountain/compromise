@@ -1,6 +1,6 @@
 module.exports = {
   Verb: {
-    notA: ['Noun', 'Adjective', 'Adverb', 'Value'],
+    notA: ['Noun', 'Adjective', 'Adverb', 'Value', 'Expression'],
   },
   // walks
   PresentTense: {

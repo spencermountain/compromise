@@ -80,6 +80,58 @@ module.exports = [
       return null
     },
   },
+  {
+    // 'jan 5, 8'  - (similar to above)
+    match: '^#Month+ #Value #Value+$',
+    desc: 'jan 5 8',
+    parse: (m, context) => {
+      let month = m.match('#Month')
+      let year = m.match('#Year')
+      m = m.not('#Year')
+      let results = []
+      m.match('#Value').forEach((val) => {
+        let d = val.append(month)
+        if (year.found) {
+          d.append(year)
+        }
+        let start = parseDate(d, context)
+        if (start) {
+          results.push({
+            start: start,
+            end: start.clone().end(),
+            unit: start.unit,
+          })
+        }
+      })
+      return results
+    },
+  },
+  {
+    // '5 or 8 of jan'  - (one month, shared dates)
+    match: '^#Value+ (or|and)? #Value of #Month #Year?$',
+    desc: '5 or 8 of Jan',
+    parse: (m, context) => {
+      let month = m.match('#Month')
+      let year = m.match('#Year')
+      m = m.not('#Year')
+      let results = []
+      m.match('#Value').forEach((val) => {
+        let d = val.append(month)
+        if (year.found) {
+          d.append(year)
+        }
+        let start = parseDate(d, context)
+        if (start) {
+          results.push({
+            start: start,
+            end: start.clone().end(),
+            unit: start.unit,
+          })
+        }
+      })
+      return results
+    },
+  },
 
   {
     // 'june or july 2019'
@@ -91,10 +143,6 @@ module.exports = [
       let from = parseDate(fromDoc, context)
       let to = parseDate(toDoc, context)
       if (from && to) {
-        // make their years agree....
-        // if (toDoc.has('#Year') && !fromDoc.has('#Year') && from.d.isSame(to.d, 'year') === false) {
-        //   from.d = from.d.year(to.d.year())
-        // }
         return [
           {
             start: from,

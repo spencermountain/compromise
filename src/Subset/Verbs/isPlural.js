@@ -15,18 +15,28 @@ const isPlural = function (parsed) {
   if (vb.has('(are|were|does)') || parsed.auxiliary.has('(are|were|does)')) {
     return true
   }
-  if (vb.has('(is|am|do|was)') || parsed.auxiliary.has('(is|am|do|was)')) {
-    return false
-  }
+
   //consider its prior noun
   let noun = findNoun(vb)
-  if (noun.has('(we|they|you)')) {
+  if (noun.has('(he|she|many|both)')) {
+    return false
+  }
+  if (noun.has('(we|they|you|i)')) {
     return true
+  }
+  if (noun.has('#Person')) {
+    return false
   }
   if (noun.has('#Plural')) {
     return true
   }
   if (noun.has('#Singular')) {
+    return false
+  }
+  if (vb.has('(is|am|do|was)')) {
+    return false
+  }
+  if (parsed.auxiliary.has('(is|am|do|was)') && !parsed.negative.found) {
     return false
   }
   return null

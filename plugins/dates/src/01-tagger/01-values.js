@@ -26,6 +26,8 @@ const values = function (doc) {
     doc.match('on the #Ordinal').tag('Date', here)
     // 'jan 5 or 8'
     doc.match('#Month #Value+ (and|or) #Value').tag('Date', 'date-or-date')
+    // 5 or 8 of jan
+    doc.match('#Value+ (and|or) #Value of #Month ').tag('Date', 'date-and-date')
   }
   return doc
 }

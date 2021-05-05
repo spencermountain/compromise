@@ -68,7 +68,6 @@ const conjugate = function (parsed, world) {
     }
     forms.Gerund = 'not ' + forms.Gerund
   }
-
   return forms
 }
 module.exports = conjugate

@@ -12,13 +12,10 @@ const nlp = require('./src/index')
 // let doc = nlp('i do not really yell').debug()
 // let doc = nlp('i did not really yell').debug()
 
-let doc = nlp(`john does not walk quickly`).debug()
-doc.verbs().toFutureTense()
-console.log(doc.text())
-
-// let doc = nlp('we will not do that')
+let doc = nlp(`council votes to deny it`).debug()
 // doc.verbs().toPresentTense()
-// console.log(doc.text())
+doc.verbs().toPastTense()
+console.log(doc.text())
 
 // let doc = nlp('I will never do that')
 // doc.verbs().toInfinitive()

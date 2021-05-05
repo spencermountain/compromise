@@ -140,6 +140,10 @@ module.exports = {
   /** walk ➔ walks */
   toPresentTense: function () {
     this.forEach(vb => {
+      // don't conjugate 'go away'.
+      if (vb.has('#Imperative')) {
+        return
+      }
       let parsed = parseVerb(vb)
       let obj = conjugate(parsed, this.world)
       let str = obj.PresentTense
@@ -175,6 +179,10 @@ module.exports = {
       if (useParticiple(parsed)) {
         return
       }
+      // don't conjugate 'go away'.
+      if (vb.has('#Imperative')) {
+        return
+      }
       let str = conjugate(parsed, this.world).FutureTense
       if (str) {
         parsed = makeNeutral(parsed)
@@ -182,6 +190,7 @@ module.exports = {
         parsed.auxiliary.remove('#Modal')
         parsed.verb.replaceWith(str, false)
         parsed.verb.tag('FutureTense')
+        parsed.auxiliary.remove('(do|did|will)') //??
         // parsed.auxiliary.remove('(do|did|will)') //??
       }
     })

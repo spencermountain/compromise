@@ -55,12 +55,20 @@ test('is-url:', function (t) {
     [`woohoo.biz`, true],
     [`woop.org/news`, true],
     [`http://woop.org/news?foo=bar`, true],
-    [`http:subdomain.cool.com/`],
-    [`coolcom`],
+    [`http:subdomain.cool.com/`, true],
+    [`http://subdomain.cool.com/`, true],
+    [`https://en.m.wikipedia.org`, true],
+    [`https://en.m.wikipedia.org/wiki`, true],
+    [`en.m.wikipedia.org/wiki?`, true],
+    [`coolcom`, false],
+    [`egg./com`, false],
+    [`foo,org`, false],
+    [`.com`, false],
+    [`.com/path`, false],
   ].forEach(function (a) {
     const term = nlp(a[0]).list[0].terms(0)
     const msg = a[0] + ' is url: ' + a[1]
-    t.equal(term.tags['Url'], a[1], msg)
+    t.equal(term.tags['Url'] || false, a[1], msg)
   })
   t.end()
 })

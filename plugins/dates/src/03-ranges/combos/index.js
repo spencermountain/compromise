@@ -90,11 +90,11 @@ module.exports = [
       m = m.not('#Year')
       let results = []
       m.match('#Value').forEach((val) => {
-        let m = val.append(month)
+        let d = val.append(month)
         if (year.found) {
-          m.append(year)
+          d.append(year)
         }
-        let start = parseDate(m, context)
+        let start = parseDate(d, context)
         if (start) {
           results.push({
             start: start,
@@ -116,11 +116,11 @@ module.exports = [
       m = m.not('#Year')
       let results = []
       m.match('#Value').forEach((val) => {
-        let m = val.append(month)
+        let d = val.append(month)
         if (year.found) {
-          m.append(year)
+          d.append(year)
         }
-        let start = parseDate(m, context)
+        let start = parseDate(d, context)
         if (start) {
           results.push({
             start: start,
@@ -143,10 +143,6 @@ module.exports = [
       let from = parseDate(fromDoc, context)
       let to = parseDate(toDoc, context)
       if (from && to) {
-        // make their years agree....
-        // if (toDoc.has('#Year') && !fromDoc.has('#Year') && from.d.isSame(to.d, 'year') === false) {
-        //   from.d = from.d.year(to.d.year())
-        // }
         return [
           {
             start: from,

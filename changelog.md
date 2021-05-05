@@ -12,6 +12,14 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 
 -->
 
+#### 13.11.2 [May 2021]
+
+- **[fix]** - verbphrase conjugation fixes
+- **[fix]** - verbphrase tagger fixes
+- **[fix]** - url tagging regex improvements (thanks Axay!)
+  update deps
+  _plugin-releases_: dates
+
 #### 13.11.1 [April 2021]
 
 - **[fix]** - obscure runtime error in capture-groups

@@ -12,7 +12,7 @@ const nlp = require('./src/index')
 // let doc = nlp('i do not really yell').debug()
 // let doc = nlp('i did not really yell').debug()
 
-let doc = nlp(`council votes to deny it`).debug()
+let doc = nlp(`http:subdomain.cool.com/`).debug()
 // doc.verbs().toPresentTense()
 doc.verbs().toPastTense()
 console.log(doc.text())

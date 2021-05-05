@@ -15,6 +15,7 @@ module.exports = [
   'own',
   'plenty',
   'some',
+  'several',
   'that',
   'the',
   'these',

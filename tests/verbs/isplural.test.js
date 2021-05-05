@@ -2,9 +2,9 @@ const test = require('tape')
 const nlp = require('../_lib')
 
 test('plural-verbs:', function (t) {
-  let r = nlp('i look at')
+  let r = nlp('i look. Spencer looks.')
   let len = r.verbs().isPlural().length
-  t.equal(len, 0, 'i singular')
+  t.equal(len, 1, 'i singular')
 
   r = nlp('we look at it. They report on it')
   len = r.verbs().isPlural().length

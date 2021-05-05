@@ -20,10 +20,10 @@ const addMethod = function (Doc) {
     // // but split the other commas
     let m = match.not(keep).splitAfter('@hasComma')
     // i was shocked looking at...
-    let gerund = m.match('#PastTense #Gerund')
-    if (!gerund.has('(been|am|#Auxiliary) #Gerund')) {
-      m = m.splitBefore(gerund.match('#Gerund'))
-    }
+    // let gerund = m.match('#PastTense #Gerund')
+    // if (!gerund.has('(been|am|#Auxiliary) #Gerund')) {
+    //   m = m.splitBefore(gerund.match('#Gerund'))
+    // }
     // combine them back together
     m = m.concat(keep)
     m.sort('index')
@@ -41,7 +41,6 @@ const addMethod = function (Doc) {
     if (m.has('#PresentTense #Adverb #PresentTense')) {
       m = m.splitBefore('#Adverb #PresentTense')
     }
-
     //grab (n)th result
     if (typeof n === 'number') {
       m = m.get(n)

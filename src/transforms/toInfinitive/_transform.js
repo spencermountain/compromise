@@ -152,6 +152,10 @@ let rules = {
       to: 'ue',
     },
     {
+      reg: /ea(rn|l|m)ed$/i, //ea - earned, healed, sreamed
+      to: 'ea$1',
+    },
+    {
       reg: /a([^aeiouy])ed$/i,
       to: 'a$1e',
     },

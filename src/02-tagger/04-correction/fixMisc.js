@@ -29,7 +29,7 @@ const miscCorrection = function (doc) {
     // do not go
     m.match('[(do && #Infinitive)] not? #Verb', 0).tag('Imperative', 'do-not')
     // do it
-    m.match('[#Infinitive] (it|some)', 0).tag('Imperative', 'do-it')
+    m.match('[#Infinitive] (it|some) (#Comparative|#Preposition|please|now|again)', 0).tag('Imperative', 'do-it')
   }
 
   //exactly like

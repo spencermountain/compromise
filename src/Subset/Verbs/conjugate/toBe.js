@@ -10,7 +10,7 @@ const toBe = parsed => {
   //   isI = true;
   // }
   // 'i look', not 'i looks'
-  if (parsed.verb.lookBehind('(i|we) (#Adverb|#Verb)?$').found) {
+  if (parsed.verb.lookBehind('i (#Adverb|#Verb)?$').found) {
     isI = true
   }
 
@@ -24,15 +24,17 @@ const toBe = parsed => {
     PerfectTense: 'been',
     Pluperfect: 'been',
   }
-  //"i is" -> "i am"
-  if (isI === true) {
-    obj.PresentTense = 'am'
-    obj.Infinitive = 'am'
-  }
+
   if (plural) {
     obj.PastTense = 'were'
     obj.PresentTense = 'are'
     obj.Infinitive = 'are'
+  }
+  //"i is" -> "i am"
+  if (isI === true) {
+    obj.PastTense = 'was'
+    obj.PresentTense = 'am'
+    obj.Infinitive = 'am'
   }
   if (isNegative) {
     obj.PastTense += ' not'

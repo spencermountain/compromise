@@ -1,4 +1,4 @@
-/* compromise-dates 2.2.0 MIT */
+/* compromise-dates 2.2.1 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -243,7 +243,9 @@
 
       doc.match('on the #Ordinal').tag('Date', here$5); // 'jan 5 or 8'
 
-      doc.match('#Month #Value+ (and|or) #Value').tag('Date', 'date-or-date');
+      doc.match('#Month #Value+ (and|or) #Value').tag('Date', 'date-or-date'); // 5 or 8 of jan
+
+      doc.match('#Value+ (and|or) #Value of #Month ').tag('Date', 'date-and-date');
     }
 
     return doc;
@@ -5470,17 +5472,12 @@
     }
 
     start() {
-      // do we have a custom day-start?
-      if (this.context.dayStart) {
-        let dayStart = this.d.time(this.context.dayStart);
+      this.d = this.d.startOf(this.unit); // do we have a custom day-start?
 
-        if (dayStart.isBefore(this.d)) {
-          this.d = dayStart;
-          return this;
-        }
+      if (this.context.dayStart) {
+        this.d = this.d.time(this.context.dayStart);
       }
 
-      this.d = this.d.startOf(this.unit);
       return this;
     }
 
@@ -8017,6 +8014,62 @@
       }
 
       return null;
+    }
+  }, {
+    // 'jan 5, 8'  - (similar to above)
+    match: '^#Month+ #Value #Value+$',
+    desc: 'jan 5 8',
+    parse: (m, context) => {
+      let month = m.match('#Month');
+      let year = m.match('#Year');
+      m = m.not('#Year');
+      let results = [];
+      m.match('#Value').forEach(val => {
+        let m = val.append(month);
+
+        if (year.found) {
+          m.append(year);
+        }
+
+        let start = _04Parse(m, context);
+
+        if (start) {
+          results.push({
+            start: start,
+            end: start.clone().end(),
+            unit: start.unit
+          });
+        }
+      });
+      return results;
+    }
+  }, {
+    // '5 or 8 of jan'  - (one month, shared dates)
+    match: '^#Value+ (or|and)? #Value of #Month #Year?$',
+    desc: '5 or 8 of Jan',
+    parse: (m, context) => {
+      let month = m.match('#Month');
+      let year = m.match('#Year');
+      m = m.not('#Year');
+      let results = [];
+      m.match('#Value').forEach(val => {
+        let m = val.append(month);
+
+        if (year.found) {
+          m.append(year);
+        }
+
+        let start = _04Parse(m, context);
+
+        if (start) {
+          results.push({
+            start: start,
+            end: start.clone().end(),
+            unit: start.unit
+          });
+        }
+      });
+      return results;
     }
   }, {
     // 'june or july 2019'

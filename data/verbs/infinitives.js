@@ -575,5 +575,6 @@ module.exports = [
   'worry',
   'wreck',
   'yawn',
+  'yell',
   'yield',
 ]

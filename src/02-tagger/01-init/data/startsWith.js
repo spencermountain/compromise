@@ -8,7 +8,7 @@ module.exports = [
   [/^@1?[0-9]:[0-9]{2}(am|pm)?$/i, 'Time'], // @6:30
   [/^@\w{2,}$/, 'AtMention'], //@spencermountain
   [/^(https?:\/\/|www\.)+\w+\.[a-z]{2,3}/, 'Url'], //with http/www
-  [/^[a-z0-9./].+\.(com|net|gov|org|ly|edu|info|biz|dev|ru|jp|de|in|uk|br|io|ai)/, 'Url'], //http://mostpopularwebsites.net/top-level-domain ^[a-z0-9./].+\.(com|net|gov|org|dev|ly|edu|info|biz|ru|jp|de|in|uk|br)
+  [/^[a-z0-9./]+\.(com|net|gov|org|ly|edu|info|biz|dev|ru|jp|de|in|uk|br|io|ai)/, 'Url'], //http://mostpopularwebsites.net/top-level-domain ^[a-z0-9./].+\.(com|net|gov|org|dev|ly|edu|info|biz|ru|jp|de|in|uk|br)
 
   //dates/times
   [/^'[0-9]{2}$/, 'Year'], //like '97

@@ -6,13 +6,21 @@ const union = sets => {
   sets.forEach(S => S.forEach(e => result.add(e)))
   return result
 }
+function intersection(sets) {
+  if (!sets.length) return new Set()
+  const index = sets.reduce((m, s, i) => (s.size < sets[m].size ? i : m), 0)
+  const [smallest] = sets.splice(index, 1)
+  const res = new Set()
+  for (let val of smallest) if (sets.every(s => s.has(val))) res.add(val)
+  return res
+}
 
 // return intersection of array-of-arrays
 const hasEvery = function (chances) {
   if (chances.length === 0) {
     return []
   }
-  let res = union(chances)
+  let res = intersection(chances)
   return Array.from(res)
   // chances.forEach(set => {
   // arr = unique(arr)

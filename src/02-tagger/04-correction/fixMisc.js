@@ -1,10 +1,18 @@
 const hasWord = function (doc, word) {
-  let arr = doc._cache.words[word] || []
+  let found = doc._cache.words[word]
+  if (!found) {
+    return doc.buildFrom([])
+  }
+  let arr = Array.from(found)
   arr = arr.map(i => doc.list[i])
   return doc.buildFrom(arr)
 }
 const hasTag = function (doc, tag) {
-  let arr = doc._cache.tags[tag] || []
+  let found = doc._cache.tags[tag]
+  if (!found) {
+    return doc.buildFrom([])
+  }
+  let arr = Array.from(found)
   arr = arr.map(i => doc.list[i])
   return doc.buildFrom(arr)
 }

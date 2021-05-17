@@ -1,23 +1,30 @@
 const matches = require('./matches')
 const unique = require('./_unique')
 
+const union = sets => {
+  let result = new Set()
+  sets.forEach(S => S.forEach(e => result.add(e)))
+  return result
+}
+
 // return intersection of array-of-arrays
 const hasEvery = function (chances) {
   if (chances.length === 0) {
     return []
   }
-  let obj = {}
-  chances.forEach(arr => {
-    arr = unique(arr)
-    for (let i = 0; i < arr.length; i++) {
-      obj[arr[i]] = obj[arr[i]] || 0
-      obj[arr[i]] += 1
-    }
-  })
-  let res = Object.keys(obj)
-  res = res.filter(k => obj[k] === chances.length)
-  res = res.map(num => Number(num))
-  return res
+  let res = union(chances)
+  return Array.from(res)
+  // chances.forEach(set => {
+  // arr = unique(arr)
+  // for (let i = 0; i < arr.length; i++) {
+  //   obj[arr[i]] = obj[arr[i]] || 0
+  //   obj[arr[i]] += 1
+  // }
+  // })
+  // let res = Object.keys(obj)
+  // res = res.filter(k => obj[k] === chances.length)
+  // res = res.map(num => Number(num))
+  // return res
 }
 
 const runner = function (doc) {
@@ -25,12 +32,15 @@ const runner = function (doc) {
   matches.forEach(m => {
     let allChances = []
     m.required.words.forEach(w => {
-      allChances.push(doc._cache.words[w] || [])
+      if (doc._cache.words[w]) {
+        allChances.push(doc._cache.words[w])
+      }
     })
     m.required.tags.forEach(tag => {
-      allChances.push(doc._cache.tags[tag] || [])
+      if (doc._cache.tags[tag]) {
+        allChances.push(doc._cache.tags[tag])
+      }
     })
-
     let worthIt = hasEvery(allChances)
     if (worthIt.length === 0) {
       return

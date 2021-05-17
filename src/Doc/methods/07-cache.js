@@ -15,11 +15,11 @@ exports.cache = function (options) {
       if (words[t.reduced] && !words.hasOwnProperty(t.reduced)) {
         return //skip prototype words
       }
-      words[t.reduced] = words[t.reduced] || []
-      words[t.reduced].push(i)
+      words[t.reduced] = words[t.reduced] || new Set()
+      words[t.reduced].add(i)
       Object.keys(t.tags).forEach(tag => {
-        tags[tag] = tags[tag] || []
-        tags[tag].push(i)
+        tags[tag] = tags[tag] || new Set()
+        tags[tag].add(i)
       })
       // cache root-form on Term, too
       if (options.root) {

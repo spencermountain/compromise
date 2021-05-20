@@ -1,11 +1,6 @@
 const matches = require('./matches')
 const unique = require('./_unique')
-
-const union = sets => {
-  let result = new Set()
-  sets.forEach(S => S.forEach(e => result.add(e)))
-  return result
-}
+console.log(matches[4])
 function intersection(sets) {
   if (!sets.length) return new Set()
   const index = sets.reduce((m, s, i) => (s.size < sets[m].size ? i : m), 0)

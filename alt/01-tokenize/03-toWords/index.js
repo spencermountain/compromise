@@ -1,19 +1,21 @@
-const doPunct = require('./01-punctuation')
-const killUnicode = require('./02-unicode')
-const normalize = require('./03-normalize')
-const reduce = require('./05-reduce')
-
+const tokenize = require('./tokenize')
 const hasSlash = /\//
-// basically, tokenize for terms.
+
+/** reduced is one step further than clean */
+const reduce = function (str) {
+  // remove apostrophes
+  str = str.replace(/['’]s$/, '')
+  str = str.replace(/s['’]$/, 's')
+  return str
+}
 
 /** turn given text into a parsed-up object
  * seperate the 'meat' of the word from the whitespace+punctuation
  */
-const parseTerm = txt => {
+const parseTerm = (txt, normalize) => {
   // cleanup any punctuation as whitespace
-  let { str, pre, post } = doPunct(txt)
-  //(very) rough ASCII transliteration -  bjŏrk -> bjork
-  str = killUnicode(str)
+  let { str, pre, post } = tokenize(txt)
+
   // create the various forms of our text,
   let clean = normalize(str)
   const parsed = {

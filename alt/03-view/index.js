@@ -1,7 +1,8 @@
 class View {
-  constructor(document, desc = '') {
+  constructor(document, pointer, model, methods) {
     this.document = document
-    this.desc = desc
+    this.model = model
+    this.methods = methods
   }
 }
 

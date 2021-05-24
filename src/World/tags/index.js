@@ -1,22 +1,11 @@
-const nouns = require('./tags/nouns')
-const verbs = require('./tags/verbs')
-const values = require('./tags/values')
-const misc = require('./tags/misc')
-const inferTags = require('./inference/index')
-
-//extend tagset with new tags
-const addIn = function (obj, tags) {
-  Object.keys(obj).forEach(k => {
-    tags[k] = obj[k]
-  })
-}
+const nouns = require('./nouns')
+const verbs = require('./verbs')
+const values = require('./values')
+const misc = require('./misc')
+const inferTags = require('./inference')
 
 const build = () => {
-  let tags = {}
-  addIn(nouns, tags)
-  addIn(verbs, tags)
-  addIn(values, tags)
-  addIn(misc, tags)
+  let tags = Object.assign({}, nouns, verbs, values, misc)
   // do the graph-stuff
   tags = inferTags(tags)
   return tags

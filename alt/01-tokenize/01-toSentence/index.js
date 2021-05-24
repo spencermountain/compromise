@@ -9,7 +9,7 @@ const basicSplit = require('./01-basic')
 const isSentence = require('./02-test')
 
 const splitSentences = function (text, world) {
-  let abbrevs = world.abbreviations
+  let abbrevs = world._cache.abbreviations
 
   text = text || ''
   text = String(text)

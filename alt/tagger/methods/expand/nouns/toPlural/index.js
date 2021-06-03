@@ -1,4 +1,4 @@
-const model = require('../../../model')
+const model = require('../../../../model')
 const rules = require('./_rules')
 const addE = /(x|ch|sh|s|z)$/
 

@@ -13,6 +13,7 @@ const nlp = require('./alt')
 // let doc = nlp('i do not really yell').debug()
 // let doc = nlp('i did not really yell').debug()
 
+// delete nlp.methods().termNormalize
 let doc = nlp(`it is like. i am too`)
 console.log(doc.json())
 

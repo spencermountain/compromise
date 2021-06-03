@@ -1,14 +1,9 @@
-const tokenizer = require('../tokenize')
 let methods = {}
 let model = {}
 let process = []
 
-// apply our only default plugin
-tokenizer(methods, model, process)
-
 class View {
   constructor(document, pointer) {
-    // pre-process
     this.process = process
     this.document = document
     this.methods = methods
@@ -26,9 +21,10 @@ class View {
   json() {
     return this.document
   }
+  fork() {
+    this.document = JSON.parse(JSON.stringify(this.document))
+    return this
+  }
 }
 
-// const factory = function (doc) {
-//   return new View(doc)
-// }
 module.exports = View

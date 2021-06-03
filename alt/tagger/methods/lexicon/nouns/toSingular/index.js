@@ -7,8 +7,8 @@ const invertObj = function (obj) {
   }, {})
 }
 
-const toSingular = function (str, world) {
-  let irregulars = world.irregulars.nouns
+const toSingular = function (str, model) {
+  let irregulars = model.irregularNouns
   let invert = invertObj(irregulars) //(not very efficient)
 
   // check irregulars list

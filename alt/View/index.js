@@ -18,6 +18,7 @@ class View {
     })
   }
 
+  /** return data */
   json() {
     return this.document
   }

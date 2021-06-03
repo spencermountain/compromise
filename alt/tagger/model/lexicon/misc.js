@@ -1,5 +1,5 @@
 //words that can't be compressed, for whatever reason
-module.exports = {
+let misc = {
   // numbers
   '20th century fox': 'Organization',
   // '3m': 'Organization',
@@ -20,3 +20,5 @@ module.exports = {
   my: ['Possessive', 'Pronoun'],
   its: ['Possessive', 'Pronoun'],
 }
+
+module.exports = misc

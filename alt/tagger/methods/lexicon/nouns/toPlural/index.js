@@ -1,4 +1,3 @@
-const model = require('../../../../model')
 const rules = require('./_rules')
 const addE = /(x|ch|sh|s|z)$/
 
@@ -14,11 +13,10 @@ const trySuffix = function (str) {
   }
   return null
 }
-console.log(model)
 /** Turn a singular noun into a plural
  * assume the given string is singular
  */
-const pluralize = function (str = '') {
+const pluralize = function (str = '', model) {
   let irregulars = model.irregular.plurals
 
   // check irregulars list

@@ -1,6 +1,6 @@
 const lexData = require('./_data')
 const unpack = require('efrt-unpack')
-const expand = require('./expand')
+// const expand = require('./expand')
 let misc = require('./misc')
 
 // let a user explode their lexicon, too
@@ -18,10 +18,10 @@ const addWords = function (wordsObj, lex) {
     // }
 
     // do some ad-hoc work before adding it
-    if (expand[tag] !== undefined) {
-      expand[tag](lex, word)
-      return
-    }
+    // if (expand[tag] !== undefined) {
+    // expand[tag](lex, word)
+    //   return
+    // }
     //set it in our lexicon, basic
     if (lex[word] === undefined) {
       lex[word] = tag
@@ -44,13 +44,13 @@ const addWords = function (wordsObj, lex) {
 //our bag of words
 let lexicon = Object.assign({}, misc)
 // start adding words to the lex
-// Object.keys(lexData).forEach(tag => {
-//   let wordsObj = unpack(lexData[tag])
-//   // this part sucks
-//   Object.keys(wordsObj).forEach(w => {
-//     wordsObj[w] = tag
-//   })
-//   addWords(wordsObj, lexicon)
-// })
+Object.keys(lexData).forEach(tag => {
+  let wordsObj = unpack(lexData[tag])
+  //   // this part sucks
+  Object.keys(wordsObj).forEach(w => {
+    wordsObj[w] = tag
+  })
+  addWords(wordsObj, lexicon)
+})
 // console.log(Object.keys(lexicon).length)
 module.exports = lexicon

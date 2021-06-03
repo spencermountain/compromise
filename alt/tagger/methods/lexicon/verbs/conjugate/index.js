@@ -3,13 +3,13 @@ const genericFill = require('./02-generic')
 
 //we run this on every verb in the lexicon, so please keep it fast
 //we assume the input word is a proper infinitive
-const conjugate = function (inf = '', world) {
+const conjugate = function (inf = '', model) {
   let found = {}
   // 1. look at irregulars
   //the lexicon doesn't pass this in
-  if (world && world.irregulars) {
-    if (world.irregulars.verbs.hasOwnProperty(inf) === true) {
-      found = Object.assign({}, world.irregulars.verbs[inf])
+  if (model.irregularVerbs) {
+    if (model.irregularVerbs.verbs.hasOwnProperty(inf) === true) {
+      found = Object.assign({}, model.irregularVerbs.verbs[inf])
     }
   }
   //2. rule-based regex

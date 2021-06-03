@@ -1,6 +1,4 @@
 module.exports = {
-  contraction: {
-    mapping: require('./mapping'),
-    patterns: require('./patterns'),
-  },
+  contractionMapping: require('./mapping'),
+  contractionPatterns: require('./patterns'),
 }

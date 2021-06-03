@@ -14,7 +14,10 @@ const nlp = require('./alt')
 // let doc = nlp('i did not really yell').debug()
 
 // delete nlp.methods().termNormalize
-let doc = nlp(`it is like. i am too`)
+let doc = nlp(`it is 9pm. i am homebound`)
 console.log(doc.json())
+// console.log(JSON.stringify(doc.json(), null, 2))
+// console.log(Object.keys(doc.model))
+// console.log(doc.model.lexicon)
 
 // let pointer = [{ start: '/0/1' }]

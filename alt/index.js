@@ -1,11 +1,6 @@
-const tokenize = require('./01-tokenize')
-const model = require('./model')
-const methods = require('./methods')
-const toView = require('./03-view')
+const View = require('./View')
 
-const nlp = function (str) {
-  let doc = tokenize(str, model, methods)
-  doc = toView(doc, model, methods)
-  return doc
+const nlp = function (input) {
+  return new View(input)
 }
 module.exports = nlp

@@ -14,11 +14,6 @@ const nlp = require('./alt')
 // let doc = nlp('i did not really yell').debug()
 
 let doc = nlp(`it is like. i am too`)
-console.log(doc)
-// doc.cache()
-// console.log(doc._cache)
-// console.log(doc.list[0].cache)
+console.log(doc.json())
 
-// let doc = nlp('I will never do that')
-// doc.verbs().toInfinitive()
-// console.log(doc.text())
+// let pointer = [{ start: '/0/1' }]

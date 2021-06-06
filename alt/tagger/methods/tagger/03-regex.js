@@ -10,7 +10,7 @@ const endsWith = function (term, byEnd) {
   let str = term.normal || ''
   let char = str[str.length - 1]
   if (byEnd.hasOwnProperty(char) === true) {
-    let regs = endsWith[char]
+    let regs = endsWith[char] || []
     for (let r = 0; r < regs.length; r += 1) {
       if (regs[r][0].test(str) === true) {
         return regs[r]

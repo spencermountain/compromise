@@ -12,7 +12,7 @@ class View {
       value: model,
       writable: true,
     })
-    // vroom!
+    // vroom!)
     this.process.forEach(fn => {
       fn(this)
     })

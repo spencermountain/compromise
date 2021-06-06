@@ -1,6 +1,7 @@
 const View = require('./View')
 // our default plugins
 const tokenize = require('./tokenize')
+const contractions = require('./contractions')
 const tagger = require('./tagger')
 
 const nlp = function (input) {
@@ -21,6 +22,7 @@ nlp.methods = function (fn) {
 
 // apply our only default plugin
 nlp.plugin(tokenize)
+nlp.plugin(contractions)
 nlp.plugin(tagger)
 
 module.exports = nlp

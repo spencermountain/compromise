@@ -1,4 +1,7 @@
 // combine '2 - 5' like '2-5' is
+
+// 2-4: 2, 4
+
 const combineRanges = function (arr) {
   const startRange = /^[0-9]{1,4}(:[0-9][0-9])?([a-z]{1,2})? ?(-|–|—) ?$/
   const endRange = /^[0-9]{1,4}([a-z]{1,2})? ?$/

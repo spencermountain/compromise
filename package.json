@@ -74,8 +74,7 @@
     "arrowParens": "avoid"
   },
   "dependencies": {
-    "efrt-unpack": "2.2.0",
-    "garbage-patch": "^0.0.1"
+    "efrt-unpack": "2.2.0"
   },
   "devDependencies": {
     "@babel/core": "7.14.0",

@@ -9,12 +9,19 @@ const nlp = require('./alt')
 // const fmt = iso => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 // nlp.verbose(true)
 
-// let doc = nlp('the dogs chased')
-// let doc = nlp('i do not really yell').debug()
-// let doc = nlp('i did not really yell').debug()
+const { get, make } = require('garbage-patch')
 
-// delete nlp.methods().termNormalize
-let doc = nlp(`it is 9pm. i am homebound`)
+let pointer = [
+  '/1/2:4',
+  {
+    start: make([1, 2]),
+    end: make([1, 3]),
+  },
+]
+// console.log(pointer)
+
+let doc = nlp(`it is 9pm. i cannot go`)
+// console.log(get(pointer, doc.document))
 console.log(doc.json())
 // console.log(JSON.stringify(doc.json(), null, 2))
 // console.log(Object.keys(doc.model))

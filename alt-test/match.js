@@ -344,11 +344,16 @@ let arr = [
   ['micro-computer', '#Noun'],
 
   // contractions
+  // 't
   ["we ain't", 'we are not'],
   ["she ain't", 'she is not'],
   ["she really ain't", 'she really is not'],
   ["we really ain't", 'we really are not'],
   ["the hotels really ain't", 'the hotels really are not'],
   ["the boxer really ain't", 'the boxer really is not'],
+  // 's
+  [`spencer's buritto`, `spencer's buritto`],
+  [`spencer's walked`, `spencer has walked`],
+  [`spencer's nice`, `spencer is nice`],
 ]
 module.exports = arr

@@ -10,6 +10,7 @@ const insertContraction = function (document, point, words, model) {
       post: '', //assumed
       normal: '',
       implicit: word,
+      tags: new Set(),
     }
   })
   // move whitespace over
@@ -22,9 +23,24 @@ const insertContraction = function (document, point, words, model) {
   document[n].splice(w, 1, ...words)
 }
 
+const reTag = function (terms, model, methods) {
+  // lookup known words
+  if (methods.checkLexicon) {
+    methods.checkLexicon(terms, model)
+  }
+  // look at word ending
+  if (methods.checkSuffix) {
+    methods.checkSuffix(terms, model)
+  }
+  // try look-like rules
+  if (methods.checkRegex) {
+    methods.checkRegex(terms, model)
+  }
+}
+
 module.exports = {
   //really easy ones
-  simpleContractions: (document = [], model) => {
+  simpleContractions: (document = [], model, methods) => {
     let list = model.contractions
     document.forEach((terms, n) => {
       // loop through terms backwards
@@ -40,17 +56,23 @@ module.exports = {
         list.find(o => {
           // look for word-word match (cannot-> [can, not])
           if (o.word === terms[i].normal) {
-            insertContraction(document, [n, i], o.out, model)
+            insertContraction(document, [n, i], o.out, methods)
+            reTag(terms, model, methods)
+            return
           }
           // look for after-match ('re -> [_, are])
           if (after === o.after && after !== null) {
             let out = typeof o.out === 'string' ? [before, o.out] : o.out(terms, i)
             insertContraction(document, [n, i], out, model)
+            reTag(terms, model, methods)
+            return
           }
           // look for before-match (l' -> [le, _])
           if (before === o.before && before !== null) {
             let out = typeof o.out === 'string' ? [o.out, after] : o.out(terms, i)
             insertContraction(document, [n, i], out, model)
+            reTag(terms, model, methods)
+            return
           }
         })
       }

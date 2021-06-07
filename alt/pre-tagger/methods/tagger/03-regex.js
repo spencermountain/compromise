@@ -1,13 +1,12 @@
 // normal regexes
-const startsWith = function (term, regs) {
+const startsWith = function (str, regs) {
   return regs.find(r => {
-    return r[0].test(term.normal) === true
+    return r[0].test(str) === true
   })
 }
 
 // suffix-regexes, indexed by last-character
-const endsWith = function (term, byEnd) {
-  let str = term.normal || ''
+const endsWith = function (str, byEnd) {
   let char = str[str.length - 1]
   if (byEnd.hasOwnProperty(char) === true) {
     let regs = endsWith[char] || []
@@ -23,7 +22,8 @@ const endsWith = function (term, byEnd) {
 const checkRegex = function (terms, model) {
   terms.forEach(t => {
     if (t.tags.size === 0) {
-      let tag = startsWith(t, model.startsWith) || endsWith(t, model.endsWith)
+      let str = t.normal || t.implicit
+      let tag = startsWith(str, model.startsWith) || endsWith(str, model.endsWith)
       if (tag !== undefined) {
         t.tags.add(tag)
       }

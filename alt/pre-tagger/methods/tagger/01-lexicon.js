@@ -6,6 +6,14 @@ const checkLexicon = function (terms, model) {
       t.tags = t.tags || new Set()
       t.tags.add(tag)
     }
+    // look at implied words in contractions
+    if (t.implicit !== undefined) {
+      if (model.lexicon[t.implicit] !== undefined && model.lexicon.hasOwnProperty(t.implicit)) {
+        let tag = model.lexicon[t.implicit]
+        t.tags = t.tags || new Set()
+        t.tags.add(tag)
+      }
+    }
   })
 }
 module.exports = checkLexicon

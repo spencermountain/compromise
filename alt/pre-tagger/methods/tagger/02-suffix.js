@@ -1,14 +1,14 @@
 //sweep-through all suffixes
-const suffixLoop = function (term, suffixes) {
-  const len = term.normal.length
+const suffixLoop = function (str, suffixes) {
+  const len = str.length
   let max = 7
   if (len <= max) {
     max = len - 1
   }
   for (let i = max; i > 1; i -= 1) {
-    let str = term.normal.substr(len - i, len)
-    if (suffixes[str.length].hasOwnProperty(str) === true) {
-      let tag = suffixes[str.length][str]
+    let suffix = str.substr(len - i, len)
+    if (suffixes[suffix.length].hasOwnProperty(suffix) === true) {
+      let tag = suffixes[suffix.length][suffix]
       return tag
     }
   }
@@ -19,9 +19,16 @@ const suffixLoop = function (term, suffixes) {
 const tagBySuffix = function (terms, model) {
   terms.forEach(t => {
     if (t.tags.size === 0) {
-      let tag = suffixLoop(t, model.suffixes)
+      let tag = suffixLoop(t.normal, model.suffixes)
       if (tag !== null) {
         t.tags.add(tag)
+      }
+      // try implicit form of word, too
+      if (t.implicit) {
+        tag = suffixLoop(t.implicit, model.suffixes)
+        if (tag !== null) {
+          t.tags.add(tag)
+        }
       }
     }
   })

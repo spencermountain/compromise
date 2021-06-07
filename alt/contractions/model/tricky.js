@@ -9,8 +9,8 @@ const after = {
 
   // apostrophe d
   d: (terms, i) => {
-    let before = terms[i].normal.split(hasContraction)[0]
     // had/would/did
+    let before = terms[i].normal.split(hasContraction)[0]
     return [before, 'would']
   },
   // apostrophe t

@@ -24,6 +24,16 @@ const preTagger = function (view) {
   if (methods.checkRegex) {
     methods.checkRegex(terms, model)
   }
+  //  fallback methods
+  if (methods.checkCase) {
+    methods.checkCase(document)
+  }
+  if (methods.checkAcronym) {
+    methods.checkAcronym(terms, model)
+  }
+  if (methods.checkNeighbours) {
+    methods.checkNeighbours(document, model)
+  }
 }
 
 const plugin = function (methods, model, process) {

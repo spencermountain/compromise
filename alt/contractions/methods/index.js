@@ -39,22 +39,28 @@ module.exports = {
           // look for word-word match (cannot-> [can, not])
           if (o.word === terms[i].normal) {
             let out = isArray(o.out) ? o.out : o.out(terms, i)
-            insertContraction(document, [n, i], out, methods)
-            reTag(terms, model, methods)
+            if (out) {
+              insertContraction(document, [n, i], out, methods)
+              reTag(terms, model, methods)
+            }
             return
           }
           // look for after-match ('re -> [_, are])
           if (after === o.after && after !== null) {
             let out = typeof o.out === 'string' ? [before, o.out] : o.out(terms, i)
-            insertContraction(document, [n, i], out, model)
-            reTag(terms, model, methods)
+            if (out) {
+              insertContraction(document, [n, i], out, model)
+              reTag(terms, model, methods)
+            }
             return
           }
           // look for before-match (l' -> [le, _])
           if (before === o.before && before !== null) {
             let out = typeof o.out === 'string' ? [o.out, after] : o.out(terms, i)
-            insertContraction(document, [n, i], out, model)
-            reTag(terms, model, methods)
+            if (out) {
+              insertContraction(document, [n, i], out, model)
+              reTag(terms, model, methods)
+            }
             return
           }
         })

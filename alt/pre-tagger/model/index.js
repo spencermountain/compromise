@@ -4,6 +4,7 @@ module.exports = {
   irregularConjugations: require('./irregulars/conjugations'),
   lexicon: require('./lexicon'),
   suffixes: require('./patterns/suffixes'),
-  startsWith: require('./patterns/startsWith'),
+  regex: require('./patterns/regex'),
   endsWith: require('./patterns/endsWith'),
+  neighbours: require('./patterns/neighbours'),
 }

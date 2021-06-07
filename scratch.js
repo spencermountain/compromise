@@ -14,7 +14,7 @@ const nlp = require('./alt')
 let pointer = ['/1/2:4']
 // console.log(pointer)
 
-let doc = nlp(`vivre d'ameriques foo`)
+let doc = nlp(`asdfasdf man`)
 // console.log(get(pointer, doc.document))
 // console.log(doc.json())
 doc.debug()

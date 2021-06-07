@@ -23,7 +23,7 @@ const checkRegex = function (terms, model) {
   terms.forEach(t => {
     if (t.tags.size === 0) {
       let str = t.normal || t.implicit
-      let tag = startsWith(str, model.startsWith) || endsWith(str, model.endsWith)
+      let tag = startsWith(str, model.regex) || endsWith(str, model.endsWith)
       if (tag !== undefined) {
         t.tags.add(tag)
       }

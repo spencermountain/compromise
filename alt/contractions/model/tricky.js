@@ -1,11 +1,15 @@
 const hasContraction = /'/
+const isPossessive = require('./isPossessive')
 
 const post = {
   // apostrophe s
-  s: () => {
-    // !possessive,
-    // is/has
-    return []
+  s: (terms, i) => {
+    // !possessive, is/has
+    let before = terms[i].normal.split(hasContraction)[0]
+    if (isPossessive(terms, i) === true) {
+      return null
+    }
+    return [before, 'is']
   },
 
   // apostrophe d
@@ -14,10 +18,22 @@ const post = {
     let before = terms[i].normal.split(hasContraction)[0]
     return [before, 'would']
   },
+
   // apostrophe t
   t: (terms, i) => {
     //ain't -> are/is not
     if (terms[i].normal === "ain't" || terms[i].normal === 'aint') {
+      if (terms[i - 1]) {
+        // plural/singular pronouns
+        if (terms[i - 1].normal === 'we' || terms[i - 1].normal === 'they') {
+          return ['are', 'not']
+        }
+        // plural/singular tags
+        if (terms[i - 1].tags && terms[i - 1].tags.has('Plural')) {
+          return ['are', 'not']
+        }
+      }
+      return ['is', 'not']
     }
     let before = terms[i].normal.replace(/n't/, '')
     return [before, 'not']
@@ -35,6 +51,7 @@ const pre = {
     }
     return ['le', after]
   },
+
   // d'
   d: (terms, i) => {
     let after = terms[i].normal.split(hasContraction)[1]

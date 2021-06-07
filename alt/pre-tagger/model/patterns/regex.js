@@ -80,4 +80,7 @@ module.exports = [
   //ordinal
   // [/^[0-9][0-9,.]*(st|nd|rd|r?th)$/, ['NumericValue', 'Ordinal']], //like 5th
   // [/^[0-9]+(st|nd|rd|th)$/, 'Ordinal'], //like 5th
+
+  // period-ones acronyms - f.b.i.
+  [/^([A-Z]\.){2}[A-Z]?/i, 'Acronym'], //ascii-only
 ]

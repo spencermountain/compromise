@@ -43,7 +43,7 @@ const contractions = (document = [], model, methods) => {
         after = split[1]
       }
 
-      list.find(o => {
+      list.some(o => {
         let words = null
         // look for word-word match (cannot-> [can, not])
         if (o.word === terms[i].normal) {

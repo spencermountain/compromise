@@ -5,8 +5,12 @@ const contractions = require('./contractions')
 const preTagger = require('./pre-tagger')
 let { methods, model, parsers } = require('./world')
 
-const nlp = function (input) {
-  return new View(input, null, methods, model, parsers)
+const nlp = function (document) {
+  // vroom!)
+  parsers.forEach(fn => {
+    document = fn(document, methods, model)
+  })
+  return new View(document, null)
 }
 
 /** extend compromise functionality */

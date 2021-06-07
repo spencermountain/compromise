@@ -11,10 +11,6 @@ class View {
       value: model,
       writable: true,
     })
-    // vroom!)
-    this.parsers.forEach(fn => {
-      fn(this)
-    })
   }
 }
 addMethods(View)

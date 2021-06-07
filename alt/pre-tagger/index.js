@@ -1,8 +1,7 @@
 const _model = require('./model')
 const _methods = require('./methods')
 
-const preTagger = function (view) {
-  let { document, methods, model } = view
+const preTagger = function (document, methods, model) {
   // start with all terms
   let terms = []
   for (let i = 0; i < document.length; i += 1) {
@@ -28,11 +27,13 @@ const preTagger = function (view) {
   methods.checkNeighbours(document, model)
   //  ¯\_(ツ)_/¯
   methods.nounFallback(terms)
+
+  return document
 }
 
-const plugin = function (methods, model, process) {
+const plugin = function (methods, model, parsers) {
   methods = Object.assign(methods, _methods)
   model = Object.assign(model, _model)
-  process.push(preTagger)
+  parsers.push(preTagger)
 }
 module.exports = plugin

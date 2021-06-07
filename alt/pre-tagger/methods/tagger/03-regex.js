@@ -1,6 +1,6 @@
 // normal regexes
 const startsWith = function (str, regs) {
-  return regs.find(r => {
+  return regs.some(r => {
     return r[0].test(str) === true
   })
 }

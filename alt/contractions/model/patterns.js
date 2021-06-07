@@ -31,6 +31,11 @@ module.exports = [
   { word: "where'd", out: ['where', 'did'] },
   { word: "won't", out: ['will', 'not'] },
 
+  { word: "'tis", out: ['it', 'is'] },
+  { word: "'twas", out: ['it', 'was'] },
+  { word: "ne'er", out: ['never'] },
+  { word: "o'er ", out: ['over'] },
+
   // contraction-part mappings
   { after: 'll', out: 'will' }, //i'll
   { after: 've', out: 'have' }, //i've

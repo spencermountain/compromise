@@ -65,7 +65,7 @@ const isPossessive = (terms, i) => {
 const isHas = (terms, i) => {
   //look for a past-tense verb
   let after = terms.slice(i + 1, i + 3)
-  return after.find(t => t.tags.has('PastTense'))
+  return after.some(t => t.tags.has('PastTense'))
 }
 
 // 's -> [possessive, 'has', or 'is']

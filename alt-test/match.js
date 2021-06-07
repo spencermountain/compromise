@@ -355,5 +355,9 @@ let arr = [
   [`spencer's buritto`, `spencer's buritto`],
   [`spencer's walked`, `spencer has walked`],
   [`spencer's nice`, `spencer is nice`],
+  // 'd
+  [`i'd really walked`, `i had really walked`],
+  [`i'd really see`, `i would really see`],
+  [`how'd she do`, `how did she do`],
 ]
 module.exports = arr

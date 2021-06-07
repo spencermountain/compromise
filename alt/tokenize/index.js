@@ -2,13 +2,12 @@ const _model = require('./model')
 const _methods = require('./methods')
 
 // turn a string input into a 'document' json format
-const tokenize = function (view) {
-  let { document, methods, model } = view
+const tokenize = function (document, methods, model) {
   if (typeof document === 'string') {
     // split into sentences
     let sentences = methods.splitSentences(document, model)
     // split into word objects
-    view.document = sentences.map(txt => {
+    document = sentences.map(txt => {
       let terms = methods.splitTerms(txt)
       terms = terms.map(str => {
         // split into [pre-text-post]
@@ -22,11 +21,12 @@ const tokenize = function (view) {
       return terms
     })
   }
+  return document
 }
 
-const plugin = function (methods, model, process) {
+const plugin = function (methods, model, parsers) {
   methods = Object.assign(methods, _methods)
   model = Object.assign(model, _model)
-  process.push(tokenize)
+  parsers.push(tokenize)
 }
 module.exports = plugin

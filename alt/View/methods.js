@@ -3,7 +3,12 @@ const debug = require('./methods/debug')
 const methods = {
   /** return data */
   json: function () {
-    return this.document
+    return this.document.map(terms => {
+      return terms.map(t => {
+        t.tags = Array.from(t.tags)
+        return t
+      })
+    })
   },
   text: function () {
     return this.document.reduce((txt, terms) => {

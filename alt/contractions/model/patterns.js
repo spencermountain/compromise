@@ -1,4 +1,4 @@
-const { before, after } = require('./tricky')
+const { pre, post } = require('./tricky')
 
 module.exports = [
   // simple mappings
@@ -38,13 +38,13 @@ module.exports = [
   { after: 've', out: 'have' }, //i've
   { after: 're', out: 'are' }, //we're
   { after: 'm', out: 'am' }, //i'm
-  { after: 's', out: after.s }, //spencer's
-  { after: 'd', out: after.d }, //i'd
-  { after: 't', out: after.t }, //isn't
+  { after: 's', out: post.s }, //spencer's
+  { after: 'd', out: post.d }, //i'd
+  { after: 't', out: post.t }, //isn't
 
   // french contractions
-  { before: 'l', out: before.l }, // l'amour
-  { before: 'd', out: before.d }, // d'amerique
+  { before: 'l', out: pre.l }, // l'amour
+  { before: 'd', out: pre.d }, // d'amerique
   { before: 'c', out: 'ce' }, // c'est
   { before: 'm', out: 'me' }, // m'appelle
   { before: 'n', out: 'ne' }, // n'est

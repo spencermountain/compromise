@@ -1,10 +1,11 @@
 const hasContraction = /'/
 
-const after = {
+const post = {
   // apostrophe s
   s: () => {
     // !possessive,
     // is/has
+    return []
   },
 
   // apostrophe d
@@ -23,14 +24,27 @@ const after = {
   },
 }
 
-const before = {
+const pre = {
   // l'
-  l: () => {
+  l: (terms, i) => {
     // le/la
+    let after = terms[i].normal.split(hasContraction)[1]
+    // quick french gender disambig (rough)
+    if (after && after.endsWith('e')) {
+      return ['la', after]
+    }
+    return ['le', after]
   },
   // d'
-  d: () => {
-    // de/du/des
+  d: (terms, i) => {
+    let after = terms[i].normal.split(hasContraction)[1]
+    // quick guess for noun-agreement (rough)
+    if (after && after.endsWith('e')) {
+      return ['du', after]
+    } else if (after && after.endsWith('s')) {
+      return ['des', after]
+    }
+    return ['de', after]
   },
 }
-module.exports = { before, after }
+module.exports = { pre, post }

@@ -1,27 +1,5 @@
 const hasContraction = /'/
-
-// put n new words where 1 word was
-const insertContraction = function (document, point, words, model) {
-  let [n, w] = point
-  words = words.map(word => {
-    return {
-      text: '',
-      pre: '',
-      post: '', //assumed
-      normal: '',
-      implicit: word,
-      tags: new Set(),
-    }
-  })
-  // move whitespace over
-  words[0].pre = document[n][w].pre
-  words[words.length - 1].post = document[n][w].post
-  // add the text/normal to the first term
-  words[0].text = document[n][w].text
-  words[0].normal = document[n][w].normal // move tags too?
-  // do the splice
-  document[n].splice(w, 1, ...words)
-}
+const insertContraction = require('./_splice')
 
 const reTag = function (terms, model, methods) {
   // lookup known words
@@ -36,6 +14,10 @@ const reTag = function (terms, model, methods) {
   if (methods.checkRegex) {
     methods.checkRegex(terms, model)
   }
+}
+
+const isArray = function (arr) {
+  return Object.prototype.toString.call(arr) === '[object Array]'
 }
 
 module.exports = {
@@ -56,7 +38,8 @@ module.exports = {
         list.find(o => {
           // look for word-word match (cannot-> [can, not])
           if (o.word === terms[i].normal) {
-            insertContraction(document, [n, i], o.out, methods)
+            let out = isArray(o.out) ? o.out : o.out(terms, i)
+            insertContraction(document, [n, i], out, methods)
             reTag(terms, model, methods)
             return
           }

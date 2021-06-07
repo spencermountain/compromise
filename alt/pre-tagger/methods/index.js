@@ -5,7 +5,9 @@ module.exports = {
   checkRegex: require('./tagger/03-regex'),
   checkCase: require('./tagger/04-case'),
   checkAcronym: require('./tagger/05-acronym'),
-  checkNeighbours: require('./tagger/06-neighbour'),
+  checkPrefix: require('./tagger/06-prefix'),
+  checkNeighbours: require('./tagger/07-neighbour'),
+  nounFallback: require('./tagger/08-fallback'),
 
   // lexicon creation methods
   nounToPlural: require('./lexicon/nouns/toPlural'),

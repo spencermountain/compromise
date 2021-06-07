@@ -1,11 +1,9 @@
 const _model = require('./model')
-const _methods = require('./methods')
+const _methods = require('./methods/')
 
 const simpleContractions = function (view) {
   let { document, methods, model } = view
-  if (methods.simpleContractions) {
-    methods.simpleContractions(document, model, methods)
-  }
+  methods.contractions(document, model, methods)
 }
 
 const plugin = function (methods, model, process) {

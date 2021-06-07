@@ -1,6 +1,9 @@
 const debug = require('./methods/debug')
 
 const methods = {
+  found: function () {
+    // return this.
+  },
   /** return data */
   json: function () {
     return this.document.map(terms => {

@@ -2,16 +2,16 @@
 // credit to https://github.com/BrunoRB/ahocorasick by Bruno Roberto Búrigo.
 
 // object v. array
-const isObject = function(obj) {
+const isObject = function (obj) {
   return obj && Object.prototype.toString.call(obj) === '[object Object]'
 }
 
 // turn an array or object into a compressed aho-corasick structure
-const buildTrie = function(keywords) {
+const buildTrie = function (keywords) {
   let values = []
   const isObj = isObject(keywords)
   if (isObj === true) {
-    keywords = Object.keys(keywords).map(k => {
+    keywords = Object.keys(keywords).map((k) => {
       values.push(keywords[k])
       return k
     })
@@ -22,7 +22,7 @@ const buildTrie = function(keywords) {
   let output = {}
 
   let state = 0
-  keywords.forEach(function(word, w) {
+  keywords.forEach(function (word, w) {
     let value = true
     if (values[w] !== undefined) {
       value = values[w]
@@ -85,3 +85,5 @@ const buildTrie = function(keywords) {
   }
 }
 module.exports = buildTrie
+
+// console.log(buildTrie(['smart and cool', 'smart and nice']))

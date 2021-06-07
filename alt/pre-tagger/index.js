@@ -13,27 +13,21 @@ const preTagger = function (view) {
     }
   }
   // lookup known words
-  if (methods.checkLexicon) {
-    methods.checkLexicon(terms, model)
-  }
+  methods.checkLexicon(terms, model)
   // look at word ending
-  if (methods.checkSuffix) {
-    methods.checkSuffix(terms, model)
-  }
+  methods.checkSuffix(terms, model)
   // try look-like rules
-  if (methods.checkRegex) {
-    methods.checkRegex(terms, model)
-  }
+  methods.checkRegex(terms, model)
   //  fallback methods
-  if (methods.checkCase) {
-    methods.checkCase(document)
-  }
-  if (methods.checkAcronym) {
-    methods.checkAcronym(terms, model)
-  }
-  if (methods.checkNeighbours) {
-    methods.checkNeighbours(document, model)
-  }
+  methods.checkCase(document)
+  // more-involved regexes
+  methods.checkAcronym(terms, model)
+  // check for stem in lexicon
+  methods.checkPrefix(terms, model)
+  // quick markov fallback
+  methods.checkNeighbours(document, model)
+  //  ¯\_(ツ)_/¯
+  methods.nounFallback(terms)
 }
 
 const plugin = function (methods, model, process) {

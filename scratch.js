@@ -11,10 +11,10 @@ const nlp = require('./alt')
 
 // const { get, make } = require('garbage-patch')
 
-// let pointer = ['/1/2:4']
+let pointer = ['/1/2:4']
 // console.log(pointer)
 
-let doc = nlp(`he'fed really see`)
+let doc = nlp(`he'd really see. I know number two how.`)
 // console.log(get(pointer, doc.document))
 // console.log(doc.json())
 doc.debug()

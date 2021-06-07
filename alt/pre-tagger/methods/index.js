@@ -18,4 +18,6 @@ module.exports = {
 
   adjToSuperlative: require('./lexicon/adjectives/toSuperlative'),
   adjToComparative: require('./lexicon/adjectives/toComparative'),
+
+  // expand: require('./lexicon/'),
 }

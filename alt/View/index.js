@@ -1,9 +1,8 @@
 const addMethods = require('./methods')
-let { methods, model, parsers } = require('../world')
+let { methods, model } = require('../world')
 
 class View {
   constructor(document, pointer) {
-    this.parsers = parsers
     this.document = document
     this.methods = methods
     Object.defineProperty(this, 'model', {
@@ -11,6 +10,7 @@ class View {
       value: model,
       writable: true,
     })
+    this.pointer = pointer
   }
 }
 addMethods(View)

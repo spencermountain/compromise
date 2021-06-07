@@ -1,7 +1,7 @@
 const _model = require('./model')
 const _methods = require('./methods')
 
-const tagger = function (view) {
+const preTagger = function (view) {
   let { document, methods, model } = view
   // start with all terms
   let terms = []
@@ -29,6 +29,6 @@ const tagger = function (view) {
 const plugin = function (methods, model, process) {
   methods = Object.assign(methods, _methods)
   model = Object.assign(model, _model)
-  process.push(tagger)
+  process.push(preTagger)
 }
 module.exports = plugin

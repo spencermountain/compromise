@@ -1,10 +1,9 @@
-let methods = {}
-let model = {}
-let process = []
+const addMethods = require('./methods')
+let { methods, model, parsers } = require('../world')
 
 class View {
   constructor(document, pointer) {
-    this.process = process
+    this.parsers = parsers
     this.document = document
     this.methods = methods
     Object.defineProperty(this, 'model', {
@@ -13,19 +12,11 @@ class View {
       writable: true,
     })
     // vroom!)
-    this.process.forEach(fn => {
+    this.parsers.forEach(fn => {
       fn(this)
     })
   }
-
-  /** return data */
-  json() {
-    return this.document
-  }
-  fork() {
-    this.document = JSON.parse(JSON.stringify(this.document))
-    return this
-  }
 }
+addMethods(View)
 
 module.exports = View

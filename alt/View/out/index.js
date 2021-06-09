@@ -3,7 +3,7 @@ const debug = require('./debug')
 const methods = {
   /** return data */
   json: function () {
-    return this.doc.map(terms => {
+    return this.docs.map(terms => {
       return terms.map(t => {
         t.tags = Array.from(t.tags)
         return t
@@ -12,7 +12,7 @@ const methods = {
   },
   /** */
   text: function () {
-    return this.doc.reduce((txt, terms) => {
+    return this.docs.reduce((txt, terms) => {
       terms.forEach(t => (txt += t.pre + t.text + t.post))
       return txt
     }, '')

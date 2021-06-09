@@ -131,15 +131,15 @@ exports.doAndBlock = function (state) {
 }
 
 // get or create named group
-exports.getGroup = function (state, term_index, name) {
-  if (state.groups[state.groupId]) {
-    return state.groups[state.groupId]
+exports.getGroup = function (state, term_index) {
+  // console.log(state.inGroup)
+  if (state.groups[state.inGroup]) {
+    return state.groups[state.inGroup]
   }
-  const termId = state.terms[term_index].id
-  state.groups[state.groupId] = {
-    group: String(name),
-    start: termId,
+  // const termId = state.terms[term_index].id
+  state.groups[state.inGroup] = {
+    start: term_index,
     length: 0,
   }
-  return state.groups[state.groupId]
+  return state.groups[state.inGroup]
 }

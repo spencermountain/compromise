@@ -59,12 +59,13 @@ const parseToken = function (w) {
     }
     //capture group (this one can span multiple-terms)
     if (start(w) === '[' || end(w) === ']') {
-      obj.named = true
+      obj.group = null
 
       if (start(w) === '[') {
-        obj.groupType = end(w) === ']' ? 'single' : 'start'
-      } else {
-        obj.groupType = 'end'
+        obj.groupStart = true
+      }
+      if (end(w) === ']') {
+        obj.groupEnd = true
       }
 
       w = w.replace(/^\[/, '')
@@ -74,7 +75,7 @@ const parseToken = function (w) {
       if (start(w) === '<') {
         const res = captureName.exec(w)
         if (res.length >= 2) {
-          obj.named = res[1]
+          obj.group = res[1]
           w = w.replace(res[0], '')
         }
       }

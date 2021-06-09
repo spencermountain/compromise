@@ -1,19 +1,24 @@
-const runMatch = require('./match-runner')
+// const runMatch = require('./match-runner')
+const matchOne = require('././match-runner/matchOne')
+const parseMatch = require('./match-syntax')
+
+const _parseMatch = function (regs) {
+  if (typeof regs === 'string') {
+    return parseMatch(regs)
+  }
+  return regs
+}
 
 /** return an array of matching phrases */
-exports.match = function (regs, justOne = false) {
-  let matches = runMatch(this, regs, justOne)
-  //make them phrase objects
-  matches = matches.map(({ match, groups }) => {
-    let p = this.buildFrom(match[0].id, match.length, groups)
-    p.cache.terms = match
-    return p
-  })
-  return matches
+exports.match = function (regs) {
+  regs = _parseMatch(regs)
+  let pointers = matchOne(this, regs)
+  console.log(pointers)
+  return this.update(pointers)
 }
 
 /** return boolean if one match is found */
 exports.has = function (regs) {
-  let matches = runMatch(this, regs, true)
+  let matches = matchOne(this, regs)
   return matches.length > 0
 }

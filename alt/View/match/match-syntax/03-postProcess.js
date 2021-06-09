@@ -1,37 +1,25 @@
 // name any [unnamed] capture-groups with a number
-const nameGroups = function (tokens) {
-  let convert = false
-  let index = -1
-  let current
+const nameGroups = function (regs) {
+  let index = 0
+  let inGroup = null
   //'fill in' capture groups between start-end
-  for (let i = 0; i < tokens.length; i++) {
-    const token = tokens[i]
-    // Give name to un-named single tokens
-    if (token.groupType === 'single' && token.named === true) {
-      index += 1
-      token.named = index
-      continue
-    }
-    // Start converting tokens
-    if (token.groupType === 'start') {
-      convert = true
-      if (typeof token.named === 'string' || typeof token.named === 'number') {
-        current = token.named
-      } else {
+  for (let i = 0; i < regs.length; i++) {
+    const token = regs[i]
+    if (token.groupStart === true) {
+      inGroup = token.group
+      if (inGroup === null) {
         index += 1
-        current = index
+        inGroup = String(index)
       }
     }
-    // Ensure this token has the right name
-    if (convert) {
-      token.named = current
+    if (inGroup !== null) {
+      token.group = inGroup
     }
-    // Stop converting tokens
-    if (token.groupType === 'end') {
-      convert = false
+    if (token.groupEnd === true) {
+      inGroup = null
     }
   }
-  return tokens
+  return regs
 }
 
 // optimize an 'or' lookup, when the (a|b|c) list is simple or multi-word
@@ -62,17 +50,13 @@ const doFastOrMode = function (tokens) {
   })
 }
 
-const postProcess = function (tokens, opts = {}) {
-  // ensure all capture groups are filled between start and end
-  // give all capture groups names
-  let count = tokens.filter(t => t.groupType).length
-  if (count > 0) {
-    tokens = nameGroups(tokens)
-  }
+const postProcess = function (regs, opts = {}) {
+  // ensure all capture groups names are filled between start and end
+  regs = nameGroups(regs)
   // convert 'choices' format to 'fastOr' format
   if (!opts.fuzzy) {
-    tokens = doFastOrMode(tokens)
+    regs = doFastOrMode(regs)
   }
-  return tokens
+  return regs
 }
 module.exports = postProcess

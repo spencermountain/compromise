@@ -1,4 +1,22 @@
+const cacheView = require('./cache')
+
 const methods = {
+  /** */
+  termList: function () {
+    let arr = []
+    this.docs.forEach(terms => arr.concat(terms))
+    return arr
+  },
+  /** */
+  cache: function () {
+    this._cache = cacheView(this)
+    return this
+  },
+  /** */
+  uncache: function () {
+    this._cache = null
+    return this
+  },
   /** */
   eq: function (n) {
     let ptr = this.pointer[n]

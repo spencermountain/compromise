@@ -11,13 +11,11 @@ const nlp = require('./alt')
 
 // const { get, make } = require('garbage-patch')
 
-let doc = nlp(`he'd really see. I know his number really now.`)
-// doc.cache()
-// console.log(doc._cache)
-// console.log(doc.found)
-// console.log(doc.json())
-// doc = doc.update(['/0/2'])
-console.log(doc.match('know his [<foo>number] really? [now]', '1').text())
+let doc = nlp(`one foo two three. foo four five six.`)
+let m = doc.match('[foo] .', 0)
+console.log(m.text())
+// console.log(m._groups)
+// console.log(m.groups('word').text())
 // console.log(doc.text())
 
 // console.log(nlp.parseMatch('no [#Noun] and [<foo>cool] [fun and stuff]'))

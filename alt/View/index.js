@@ -4,12 +4,21 @@ const addMethods = require('./methods')
 const addAliases = require('./aliases')
 
 class View {
-  constructor(document, pointer) {
+  constructor(document, pointer, groups = {}) {
     this.document = document
-    this.methods = methods
     Object.defineProperty(this, 'model', {
       enumerable: false,
       value: model,
+      writable: true,
+    })
+    Object.defineProperty(this, 'methods', {
+      enumerable: false,
+      value: methods,
+      writable: true,
+    })
+    Object.defineProperty(this, '_groups', {
+      enumerable: false,
+      value: groups,
       writable: true,
     })
     Object.defineProperty(this, '_cache', {

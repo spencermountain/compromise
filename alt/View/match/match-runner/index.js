@@ -9,7 +9,9 @@ const failFast = function (terms, regs, minLength) {
   return false
 }
 
-const matchOne = function (view, regs) {
+// ok, here we go.
+const runMatch = function (view, regs, justOne = false) {
+  let results = []
   let docs = view.docs
   const minLength = regs.filter(r => r.optional !== true && r.negative !== true).length
 
@@ -29,10 +31,14 @@ const matchOne = function (view, regs) {
         Object.keys(res.groups).forEach(k => {
           res.groups[k] = `/${n}/` + res.groups[k]
         })
-        return res
+        results.push(res)
+        // should we stop here?
+        if (justOne === true) {
+          return results
+        }
       }
     }
   }
-  return null
+  return results
 }
-module.exports = matchOne
+module.exports = runMatch

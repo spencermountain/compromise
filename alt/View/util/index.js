@@ -18,6 +18,19 @@ const methods = {
     return this
   },
   /** */
+  groups: function (group) {
+    if (group) {
+      return this.update(this._groups[group] || [])
+    }
+    // return an object of Views
+    let res = {}
+    Object.keys(this._groups).forEach(k => {
+      res[k] = this.update(this._groups[k])
+    })
+    // this._groups = null
+    return res
+  },
+  /** */
   eq: function (n) {
     let ptr = this.pointer[n]
     if (ptr) {

@@ -11,5 +11,8 @@ const nlp = require('./alt')
 
 // const { get, make } = require('garbage-patch')
 
-let doc = nlp(`he'd really see. I know his number now.`, ['/0/3:4', '/1'])
-console.log(doc.doc)
+let doc = nlp(`he'd really see. I know his number now.`)
+console.log(doc.found)
+// console.log(doc.text())
+// doc = doc.update(['/0/2'])
+// console.log(doc.text())

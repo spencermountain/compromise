@@ -1,12 +1,9 @@
-const debug = require('./methods/debug')
+const debug = require('./out/debug')
 
 const methods = {
-  found: function () {
-    // return this.
-  },
   /** return data */
   json: function () {
-    return this.document.map(terms => {
+    return this.doc.map(terms => {
       return terms.map(t => {
         t.tags = Array.from(t.tags)
         return t
@@ -14,7 +11,7 @@ const methods = {
     })
   },
   text: function () {
-    return this.document.reduce((txt, terms) => {
+    return this.doc.reduce((txt, terms) => {
       terms.forEach(t => (txt += t.pre + t.text + t.post))
       return txt
     }, '')

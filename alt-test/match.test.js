@@ -1,3 +1,5 @@
+const { testMatches } = require('./runners')
+
 let arr = [
   ['toronto', '#City'],
   ['mexico', '#Country'],
@@ -360,4 +362,5 @@ let arr = [
   [`i'd really see`, `i would really see`],
   [`how'd she do`, `how did she do`],
 ]
-module.exports = arr
+
+testMatches(arr)

@@ -196,11 +196,12 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
     return null //die
   }
 
-  //return our result, as a pointer
+  //return our results, as pointers
   let pntr = `${start_i}:${state.t}`
-  let groups = Object.keys(state.groups).map(k => {
+  let groups = {}
+  Object.keys(state.groups).forEach(k => {
     let o = state.groups[k]
-    return { name: k, pointer: `${o.start}:${o.start + o.length}` }
+    groups[k] = `${o.start}:${o.start + o.length}`
   })
   return { pointer: pntr, groups: groups }
 }

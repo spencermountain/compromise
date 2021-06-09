@@ -10,29 +10,29 @@ const failFast = function (terms, regs, minLength) {
 }
 
 const matchOne = function (view, regs) {
-  let pointers = []
+  let docs = view.docs
   const minLength = regs.filter(r => r.optional !== true && r.negative !== true).length
-  view.docs.forEach((terms, n) => {
+
+  for (let n = 0; n < docs.length; n += 1) {
+    let terms = docs[n]
     //try starting the match, from every term
     for (let i = 0; i < terms.length; i += 1) {
       let slice = terms.slice(i)
       // first, quick-pass for validity
       if (failFast(slice, regs, minLength)) {
-        return
+        continue
       }
       let res = fromHere(slice, regs, i, terms.length)
       if (res) {
+        // make proper pointers
         res.pointer = `/${n}/` + res.pointer
-        res.groups.forEach(o => (o.pointer = `/${n}/` + o.pointer))
-        console.log(res)
-        return
+        Object.keys(res.groups).forEach(k => {
+          res.groups[k] = `/${n}/` + res.groups[k]
+        })
+        return res
       }
     }
-  })
-  // empty response
-  if (pointers.length === 0) {
-    return null
   }
-  return pointers
+  return null
 }
 module.exports = matchOne

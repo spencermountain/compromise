@@ -10,11 +10,14 @@ const _parseMatch = function (regs) {
 }
 
 /** return an array of matching phrases */
-exports.match = function (regs) {
+exports.match = function (regs, group) {
   regs = _parseMatch(regs)
-  let pointers = matchOne(this, regs)
-  console.log(pointers)
-  return this.update(pointers)
+  let res = matchOne(this, regs) || {}
+  let ptr = res.pointer
+  if (group) {
+    ptr = res.groups[group] || ''
+  }
+  return this.update([ptr])
 }
 
 /** return boolean if one match is found */

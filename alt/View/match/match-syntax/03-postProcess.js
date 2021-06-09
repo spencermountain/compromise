@@ -8,8 +8,8 @@ const nameGroups = function (regs) {
     if (token.groupStart === true) {
       inGroup = token.group
       if (inGroup === null) {
-        index += 1
         inGroup = String(index)
+        index += 1
       }
     }
     if (inGroup !== null) {

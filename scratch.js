@@ -17,7 +17,7 @@ let doc = nlp(`he'd really see. I know his number really now.`)
 // console.log(doc.found)
 // console.log(doc.json())
 // doc = doc.update(['/0/2'])
-console.log(doc.match('know his [<foo>number really] [now]').text())
+console.log(doc.match('know his [<foo>number] really? [now]', '1').text())
 // console.log(doc.text())
 
 // console.log(nlp.parseMatch('no [#Noun] and [<foo>cool] [fun and stuff]'))

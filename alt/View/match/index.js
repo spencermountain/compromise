@@ -13,7 +13,7 @@ const _getPointers = function (res, group) {
   let ptrs = []
   let byGroup = {}
   if (res.length === 0) {
-    return ptrs
+    return { ptrs, byGroup }
   }
   if (typeof group === 'number') {
     group = String(group)
@@ -41,7 +41,9 @@ exports.matchOne = function (regs, group) {
   regs = _parseMatch(regs)
   let res = runMatch(this, regs, true)
   let { ptrs, byGroup } = _getPointers(res, group)
-  return this.update(ptrs)
+  let view = this.update(ptrs)
+  view._groups = byGroup
+  return view
 }
 
 /** return an array of matching phrases */
@@ -58,6 +60,6 @@ exports.match = function (regs, group) {
 exports.has = function (regs, group) {
   regs = _parseMatch(regs)
   let res = runMatch(this, regs)
-  let { ptrs, byGroup } = _getPointers(res, group)
+  let { ptrs } = _getPointers(res, group)
   return ptrs.length > 0
 }

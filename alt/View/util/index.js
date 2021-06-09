@@ -48,9 +48,15 @@ const methods = {
     return this.eq(n)
   },
   /** */
+  parent: function () {
+    return this.update()
+  },
+  /** */
   fork: function () {
-    this.document = JSON.parse(JSON.stringify(this.document))
-    return this
+    let document = JSON.parse(JSON.stringify(this.document))
+    let view = this.update(this.pointer)
+    view.document = document
+    return
   },
 }
 module.exports = methods

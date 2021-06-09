@@ -50,7 +50,9 @@ class View {
   }
   // create a new View, from this one
   update(pointer) {
-    return new View(this.document, pointer)
+    let m = new View(this.document, pointer)
+    m._cache = this._cache // pass this by pointer
+    return m
   }
 }
 addMethods(View)

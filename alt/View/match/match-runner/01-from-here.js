@@ -14,9 +14,6 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
     start_i: start_i, // term index we're starting from
     phrase_length: phrase_length, // # of terms in the sentence
     inGroup: null,
-    // hasGroup: false,
-    // groupId: null,
-    // previousGroup: null,
   }
 
   // we must satisfy each rule in 'regs'
@@ -171,7 +168,7 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
     if (reg.negative) {
       let tmpReg = Object.assign({}, reg)
       tmpReg.negative = false // try removing it
-      let foundNeg = state.terms[state.t].doesMatch(tmpReg, state.start_i + state.t, state.phrase_length)
+      let foundNeg = matchTerm(state.terms[state.t], tmpReg, state.start_i + state.t, state.phrase_length)
       if (foundNeg === true) {
         return null //bye!
       }
@@ -188,7 +185,7 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
         return null
       }
       // does the next one match?
-      if (state.terms[state.t + 1].doesMatch(reg, state.start_i + state.t, state.phrase_length)) {
+      if (matchTerm(state.terms[state.t + 1], reg, state.start_i + state.t, state.phrase_length)) {
         state.t += 2
         continue
       }
@@ -201,7 +198,8 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
   let groups = {}
   Object.keys(state.groups).forEach(k => {
     let o = state.groups[k]
-    groups[k] = `${o.start}:${o.start + o.length}`
+    let start = start_i + o.start
+    groups[k] = `${start}:${start + o.length}`
   })
   return { pointer: pntr, groups: groups }
 }

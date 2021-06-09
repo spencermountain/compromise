@@ -1,5 +1,8 @@
 const oneLetterAcronym = /^[A-Z]('s|,)?$/
 const isUpperCase = /^[A-Z-]+$/
+const periodAcronym = /([A-Z]\.)+[A-Z]?,?$/
+const noPeriodAcronym = /[A-Z]{2,}('s|,)?$/
+const lowerCaseAcronym = /([a-z]\.)+[a-z]\.?$/
 
 const oneLetterWord = {
   I: true,
@@ -7,7 +10,7 @@ const oneLetterWord = {
 }
 
 // just uppercase acronyms, no periods - 'UNOCHA'
-const noPeriodAcronym = function (term, model) {
+const isNoPeriodAcronym = function (term, model) {
   let str = term.text
   // ensure it's all upper-case
   if (isUpperCase.test(str) === false) {
@@ -21,7 +24,24 @@ const noPeriodAcronym = function (term, model) {
   if (model.lexicon.hasOwnProperty(str)) {
     return false
   }
-  return term.isAcronym()
+  //like N.D.A
+  if (periodAcronym.test(str) === true) {
+    return true
+  }
+  //like c.e.o
+  if (lowerCaseAcronym.test(str) === true) {
+    return true
+  }
+  //like 'F.'
+  if (oneLetterAcronym.test(str) === true) {
+    return true
+  }
+  //like NDA
+  if (noPeriodAcronym.test(str) === true) {
+    return true
+  }
+  return false
+  // return term.isAcronym()
 }
 
 const isAcronym = function (terms, model) {
@@ -31,7 +51,7 @@ const isAcronym = function (terms, model) {
       return
     }
     //non-period ones are harder
-    if (noPeriodAcronym(term, model)) {
+    if (isNoPeriodAcronym(term, model)) {
       term.tags.add('Acronym')
       term.tags.add('Noun')
       return

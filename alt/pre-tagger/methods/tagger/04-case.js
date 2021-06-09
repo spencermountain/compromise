@@ -11,7 +11,6 @@ const checkCase = function (document) {
         if (titleCase.test(str) === true && hasNumber.test(str) === false && terms[i].tags.has('Date') === false) {
           terms[i].tags.add('ProperNoun')
         }
-        console.log(terms[i])
       }
     }
   })

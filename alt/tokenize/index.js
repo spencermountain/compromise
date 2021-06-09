@@ -1,5 +1,5 @@
-const _model = require('./model')
 const _methods = require('./methods')
+const _model = { abbreviations: require('./model/abbreviations') }
 
 // turn a string input into a 'document' json format
 const tokenize = function (document, methods, model) {

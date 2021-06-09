@@ -16,7 +16,6 @@ const _apostropheD = function (terms, i) {
   if (before === 'how' || before === 'what') {
     return [before, 'did']
   }
-  console.log(hasPastTense(terms, i))
   if (hasPastTense(terms, i) === true) {
     return [before, 'had']
   }

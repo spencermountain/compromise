@@ -1,37 +1,11 @@
-## View
+> todo:
 
-```
-  View (input) {
-    parsers
-    methods
-    model
-      - -
-    document
-    pointer
-  }
-```
+- lexicon expand
 
-### Plugin
+- multi-word lexicon
 
-```js
-// apply a plugin
-plugin(methods, model, process)
-```
+- tag deduction
 
-### Pointer
+> questions:
 
-[
-'/1/2:4',
-'/0/foo:bar',
-
-]
-
-groups = {foo: [pntr, pntr]}
-
-### View change
-
-match(regs, view<document, pointer>)
-
-### Reg
-
-'#Noun foo' -> {hasTag:['Noun'], hasWord:['foo'], regs:[{}, {}] }
+- how should pointers work?

@@ -24,8 +24,7 @@ const methods = {
     return this
   },
   debug: function () {
-    debug(this)
-    return this
+    return debug(this)
   },
 }
 

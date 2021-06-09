@@ -11,16 +11,5 @@ const nlp = require('./alt')
 
 // const { get, make } = require('garbage-patch')
 
-let pointer = ['/1/2:4']
-// console.log(pointer)
-
-let doc = nlp(`he'd really see. I know number two how.`)
-// console.log(get(pointer, doc.document))
-// console.log(doc.json())
-doc.debug()
-// console.log(JSON.stringify(doc.json(), null, 2))
-// console.log(Object.keys(doc.model))
-// console.log(doc.model.lexicon)
-
-// let pointer = [{ start: '/0/1' }]
-console.log(doc.parsers)
+let doc = nlp(`he'd really see. I know his number now.`, ['/0/3:4', '/1'])
+console.log(doc.doc)

@@ -1,5 +1,5 @@
-const _model = require('./model')
 const _methods = require('./methods/')
+const _model = { contractions: require('./model/contractions') }
 
 const simpleContractions = function (document, methods, model) {
   methods.contractions(document, model, methods)

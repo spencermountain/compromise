@@ -31,7 +31,7 @@ const isArray = function (arr) {
 
 //really easy ones
 const contractions = (document = [], model, methods) => {
-  let list = model.contractions
+  let list = model.contractions || []
   document.forEach((terms, n) => {
     // loop through terms backwards
     for (let i = terms.length - 1; i >= 0; i -= 1) {

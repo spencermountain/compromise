@@ -42,7 +42,6 @@ const toInfinitive = function (str, model, tense) {
     for (let i = 0; i < rules[tense].length; i++) {
       const rule = rules[tense][i]
       if (rule.reg.test(str) === true) {
-        // console.log(rule.reg)
         return str.replace(rule.reg, rule.to)
       }
     }

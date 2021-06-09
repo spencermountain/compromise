@@ -1,4 +1,3 @@
-const makeId = require('../../Term/_id')
 const logic = require('./_match-logic')
 // i formally apologize for how complicated this is.
 
@@ -31,7 +30,7 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
       if (prev && prev.named === reg.named && state.previousGroup) {
         state.groupId = state.previousGroup
       } else {
-        state.groupId = makeId(reg.named)
+        // state.groupId = makeId(reg.named)
         state.previousGroup = state.groupId
       }
     }

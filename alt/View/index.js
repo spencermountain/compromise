@@ -1,6 +1,7 @@
-const addMethods = require('./methods')
 let { methods, model } = require('../world')
-const getPointer = require('./pointer')
+const getPointer = require('./_pointer')
+const addMethods = require('./methods')
+const addAliases = require('./aliases')
 
 class View {
   constructor(document, pointer) {
@@ -39,5 +40,6 @@ class View {
   }
 }
 addMethods(View)
+addAliases(View)
 
 module.exports = View

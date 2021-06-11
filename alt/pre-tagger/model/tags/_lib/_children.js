@@ -4,9 +4,9 @@ const inferChildren = function (tags) {
   keys.forEach(k => {
     let tag = tags[k]
     tag.children = []
-    // find all tags with it in their 'isA' set
+    // find all tags with it in their parents set
     for (let i = 0; i < keys.length; i++) {
-      if (tags[keys[i]].isA.indexOf(k) !== -1) {
+      if (tags[keys[i]].parents.indexOf(k) !== -1) {
         tag.children.push(keys[i])
       }
     }

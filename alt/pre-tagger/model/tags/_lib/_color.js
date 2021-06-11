@@ -29,7 +29,7 @@ const addColors = function (tags) {
       tags[k].color = colorMap[k]
       return
     }
-    tags[k].isA.some(t => {
+    tags[k].parents.some(t => {
       if (colorMap[t]) {
         tags[k].color = colorMap[t]
         return true

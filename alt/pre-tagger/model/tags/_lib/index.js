@@ -1,21 +1,21 @@
 const inferColor = require('./_color')
-const inferIsA = require('./_isA')
-const inferNotA = require('./_notA')
+const inferParents = require('./_parents')
+const inferNotTags = require('./_not')
 const lineage = require('./_children')
 
 const validate = function (tags) {
   // cleanup format
   Object.keys(tags).forEach(k => {
     let tag = tags[k]
-    // ensure isA is an array
-    tag.isA = tag.isA || []
-    if (typeof tag.isA === 'string') {
-      tag.isA = [tag.isA]
+    // ensure parents is an array
+    tag.parents = tag.parents || []
+    if (typeof tag.parents === 'string') {
+      tag.parents = [tag.parents]
     }
     // ensure notA is an array
-    tag.notA = tag.notA || []
-    if (typeof tag.notA === 'string') {
-      tag.notA = [tag.notA]
+    tag.not = tag.not || []
+    if (typeof tag.not === 'string') {
+      tag.not = [tag.not]
     }
   })
   return tags
@@ -26,9 +26,9 @@ const inferTags = function (tags) {
   // validate data
   tags = validate(tags)
   // build its 'down tags'
-  tags = inferIsA(tags)
+  tags = inferParents(tags)
   // infer the conflicts
-  tags = inferNotA(tags)
+  tags = inferNotTags(tags)
   // debug tag color
   tags = inferColor(tags)
   // find incoming links

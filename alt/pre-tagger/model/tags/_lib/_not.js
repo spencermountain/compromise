@@ -4,28 +4,28 @@ const unique = function (arr) {
 
 // crawl the tag-graph and infer any conflicts
 // faster than doing this at tag-time
-const inferNotA = function (tags) {
+const inferNotTags = function (tags) {
   let keys = Object.keys(tags)
   keys.forEach(k => {
     let tag = tags[k]
-    tag.notA = tag.notA || []
-    tag.isA.forEach(down => {
-      if (tags[down] && tags[down].notA) {
+    tag.not = tag.not || []
+    tag.parents.forEach(down => {
+      if (tags[down] && tags[down].not) {
         // borrow its conflicts
-        let notA = typeof tags[down].notA === 'string' ? [tags[down].isA] : tags[down].notA || []
-        tag.notA = tag.notA.concat(notA)
+        let not = typeof tags[down].not === 'string' ? [tags[down].parents] : tags[down].not || []
+        tag.not = tag.not.concat(not)
       }
     })
     // any tag that lists us as a conflict, we conflict it back.
     for (let i = 0; i < keys.length; i++) {
       const key = keys[i]
-      if (tags[key].notA.indexOf(k) !== -1) {
-        tag.notA.push(key)
+      if (tags[key].not.indexOf(k) !== -1) {
+        tag.not.push(key)
       }
     }
     // clean it up
-    tag.notA = unique(tag.notA)
+    tag.not = unique(tag.not)
   })
   return tags
 }
-module.exports = inferNotA
+module.exports = inferNotTags

@@ -3,19 +3,19 @@ const unique = function (arr) {
 }
 
 //add 'downward' tags (that immediately depend on this one)
-const inferIsA = function (tags) {
+const inferParents = function (tags) {
   Object.keys(tags).forEach(k => {
     let tag = tags[k]
-    let len = tag.isA.length
+    let len = tag.parents.length
     for (let i = 0; i < len; i++) {
-      let down = tag.isA[i]
+      let down = tag.parents[i]
       if (tags[down]) {
-        tag.isA = tag.isA.concat(tags[down].isA)
+        tag.parents = tag.parents.concat(tags[down].parents)
       }
     }
     // clean it up
-    tag.isA = unique(tag.isA)
+    tag.parents = unique(tag.parents)
   })
   return tags
 }
-module.exports = inferIsA
+module.exports = inferParents

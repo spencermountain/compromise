@@ -67,7 +67,7 @@ const isAcronym = function (terms, model) {
       term.tags.add('Acronym')
       return
     }
-    if (term.tags.has('Organization') && term.isUpperCase() && term.text.length <= 6) {
+    if (term.tags.has('Organization') && isUpperCase.test(term.text) && term.text.length <= 6) {
       term.tags.add('Acronym')
     }
   })

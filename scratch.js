@@ -9,13 +9,7 @@ const nlp = require('./alt')
 // const fmt = iso => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 // nlp.verbose(true)
 
-let doc = nlp(`one two foo three. foo five. six foo seven`)
-doc.cache()
-let m = doc.match('six foo')
-console.log(m.out('array'))
-
-// console.log(m._groups)
-// console.log(m.groups('word').text())
-// console.log(doc.text())
-
-// console.log(nlp.parseMatch('no [#Noun] and [<foo>cool] [fun and stuff]'))
+// let doc = nlp(`he walked to a mall`)
+nlp(`3pm`).debug()
+// doc.match('#Noun').debug()
+// doc.debug()

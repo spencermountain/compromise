@@ -87,13 +87,13 @@ const tagString = function (tags, model) {
 //output some helpful stuff to the console
 const debug = function () {
   let view = this
-  let { document, model } = view
+  let { docs, model } = view
   if (isClientSide()) {
     logClientSide(view)
     return view
   }
   console.log(cli.blue('====='))
-  document.forEach(terms => {
+  docs.forEach(terms => {
     console.log(cli.blue('  -----'))
     terms.forEach(t => {
       let tags = [...(t.tags || [])]

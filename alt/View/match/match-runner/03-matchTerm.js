@@ -54,7 +54,7 @@ const doesMatch = function (t, reg, index, length) {
   }
   //support #Tag
   if (reg.tag !== undefined) {
-    return t.tags[reg.tag] === true
+    return t.tags.has(reg.tag) === true
   }
   //support @method
   if (reg.method !== undefined) {

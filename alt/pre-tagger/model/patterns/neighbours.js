@@ -31,6 +31,8 @@ const leftWords = [
   ['old', 'Noun'], //51%
   ['never', 'Verb'], //42%
   ['before', 'Noun'], //28%
+  ['a', 'Singular'],
+  ['the', 'Singular'],
 ]
 
 // looking at the next word:

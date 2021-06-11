@@ -7,6 +7,7 @@ module.exports = {
   checkAcronym: require('./tagger/05-acronym'),
   checkPrefix: require('./tagger/06-prefix'),
   nounFallback: require('./tagger/07-fallback'),
+  fillTags: require('./tagger/08-fillTags'),
 
   // lexicon creation methods
   nounToPlural: require('./lexicon/nouns/toPlural'),

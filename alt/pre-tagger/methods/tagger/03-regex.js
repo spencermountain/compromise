@@ -1,6 +1,6 @@
 // normal regexes
 const startsWith = function (str, regs) {
-  return regs.some(r => {
+  return regs.find(r => {
     return r[0].test(str) === true
   })
 }
@@ -19,13 +19,21 @@ const endsWith = function (str, byEnd) {
   return undefined
 }
 
+const isArray = function (arr) {
+  return Object.prototype.toString.call(arr) === '[object Array]'
+}
+
 const checkRegex = function (terms, model) {
   terms.forEach(t => {
     if (t.tags.size === 0) {
       let str = t.normal || t.implicit
-      let tag = startsWith(str, model.regex) || endsWith(str, model.endsWith)
-      if (tag !== undefined) {
-        t.tags.add(tag)
+      let arr = startsWith(str, model.regex) || endsWith(str, model.endsWith)
+      if (arr !== undefined) {
+        if (isArray(arr[1])) {
+          arr[1].forEach(tag => t.tags.add(tag))
+        } else {
+          t.tags.add(arr[1])
+        }
       }
     }
   })

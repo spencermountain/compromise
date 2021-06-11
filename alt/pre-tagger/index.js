@@ -24,7 +24,9 @@ const preTagger = function (document, methods, model) {
   // check for stem in lexicon
   methods.checkPrefix(terms, model)
   //  ¯\_(ツ)_/¯
-  methods.nounFallback(terms)
+  methods.nounFallback(document, model)
+  // deduce parent tags
+  methods.fillTags(terms, model)
 
   return document
 }

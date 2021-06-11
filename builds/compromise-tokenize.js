@@ -1,1 +1,9020 @@
-!function(t,e){"object"==typeof exports&&"undefined"!=typeof module?module.exports=e():"function"==typeof define&&define.amd?define(e):(t="undefined"!=typeof globalThis?globalThis:t||self).nlp=e()}(this,(function(){"use strict";const t="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".split("");var e=function(e){let r=(e=e||"_")+"-";for(let e=0;e<7;e++)r+=t[Math.floor(Math.random()*t.length)];return r};let r={"!":"¡","?":"¿Ɂ",'"':'“”"❝❞',"'":"‘‛❛❜","-":"—–",a:"ªÀÁÂÃÄÅàáâãäåĀāĂăĄąǍǎǞǟǠǡǺǻȀȁȂȃȦȧȺΆΑΔΛάαλАадѦѧӐӑӒӓƛɅæ",b:"ßþƀƁƂƃƄƅɃΒβϐϦБВЪЬвъьѢѣҌҍ",c:"¢©ÇçĆćĈĉĊċČčƆƇƈȻȼͻͼͽϲϹϽϾСсєҀҁҪҫ",d:"ÐĎďĐđƉƊȡƋƌǷ",e:"ÈÉÊËèéêëĒēĔĕĖėĘęĚěƎƏƐǝȄȅȆȇȨȩɆɇΈΕΞΣέεξϱϵ϶ЀЁЕЭеѐёҼҽҾҿӖӗӘәӚӛӬӭ",f:"ƑƒϜϝӺӻҒғſ",g:"ĜĝĞğĠġĢģƓǤǥǦǧǴǵ",h:"ĤĥĦħƕǶȞȟΉΗЂЊЋНнђћҢңҤҥҺһӉӊ",I:"ÌÍÎÏ",i:"ìíîïĨĩĪīĬĭĮįİıƖƗȈȉȊȋΊΐΪίιϊІЇії",j:"ĴĵǰȷɈɉϳЈј",k:"ĶķĸƘƙǨǩΚκЌЖКжкќҚқҜҝҞҟҠҡ",l:"ĹĺĻļĽľĿŀŁłƚƪǀǏǐȴȽΙӀӏ",m:"ΜϺϻМмӍӎ",n:"ÑñŃńŅņŇňŉŊŋƝƞǸǹȠȵΝΠήηϞЍИЙЛПийлпѝҊҋӅӆӢӣӤӥπ",o:"ÒÓÔÕÖØðòóôõöøŌōŎŏŐőƟƠơǑǒǪǫǬǭǾǿȌȍȎȏȪȫȬȭȮȯȰȱΌΘΟθοσόϕϘϙϬϭϴОФоѲѳӦӧӨөӪӫ",p:"ƤƿΡρϷϸϼРрҎҏÞ",q:"Ɋɋ",r:"ŔŕŖŗŘřƦȐȑȒȓɌɍЃГЯгяѓҐґ",s:"ŚśŜŝŞşŠšƧƨȘșȿЅѕ",t:"ŢţŤťŦŧƫƬƭƮȚțȶȾΓΤτϮТт",u:"µÙÚÛÜùúûüŨũŪūŬŭŮůŰűŲųƯưƱƲǓǔǕǖǗǘǙǚǛǜȔȕȖȗɄΰμυϋύ",v:"νѴѵѶѷ",w:"ŴŵƜωώϖϢϣШЩшщѡѿ",x:"×ΧχϗϰХхҲҳӼӽӾӿ",y:"ÝýÿŶŷŸƳƴȲȳɎɏΎΥΫγψϒϓϔЎУучўѰѱҮүҰұӮӯӰӱӲӳ",z:"ŹźŻżŽžƩƵƶȤȥɀΖζ"},n={};Object.keys(r).forEach((function(t){r[t].split("").forEach((function(e){n[e]=t}))}));var i=t=>{let e=t.split("");return e.forEach((t,r)=>{n[t]&&(e[r]=n[t])}),e.join("")};const s=/([A-Z]\.)+[A-Z]?,?$/,o=/^[A-Z]\.,?$/,a=/[A-Z]{2,}('s|,)?$/,l=/([a-z]\.)+[a-z]\.?$/;var u=function(t){return!0===s.test(t)||(!0===l.test(t)||(!0===o.test(t)||!0===a.test(t)))};const h=/[a-z\u00C0-\u00FF] ?\/ ?[a-z\u00C0-\u00FF]/;var c=function(t){let e=t=(t=(t=t||"").toLowerCase()).trim();return t=i(t),!0===h.test(t)&&(t=t.replace(/\/.*/,"")),t=(t=(t=(t=(t=(t=(t=t.replace(/^[#@]/,"")).replace(/[,;.!?]+$/,"")).replace(/[\u0027\u0060\u00B4\u2018\u2019\u201A\u201B\u2032\u2035\u2039\u203A]+/g,"'")).replace(/[\u0022\u00AB\u00BB\u201C\u201D\u201E\u201F\u2033\u2034\u2036\u2037\u2E42\u301D\u301E\u301F\uFF02]+/g,'"')).replace(/\u2026/g,"...")).replace(/\u2013/g,"-")).replace(/([aeiou][ktrp])in$/,"$1ing"),!0===/^(re|un)-?[^aeiou]./.test(t)&&(t=t.replace("-","")),u(t)&&(t=t.replace(/\./g,"")),!1===/^[:;]/.test(t)&&(t=(t=(t=t.replace(/\.{3,}$/g,"")).replace(/[",\.!:;\?\)]+$/g,"")).replace(/^['"\(]+/g,"")),""===(t=(t=t.replace(/[\u200B-\u200D\uFEFF]/g,"")).trim())&&(t=e),t=t.replace(/([0-9]),([0-9])/g,"$1$2")};var f=function(t){return t=(t=t.replace(/['’]s$/,"")).replace(/s['’]$/,"s")};const p=/^[ \n\t\.\[\](){}⟨⟩:,،、‒–—―…!‹›«»‐\-?‘’;\/⁄·&*•^†‡°¡¿※№÷×ºª%‰+−=‱¶′″‴§~\|‖¦©℗®℠™¤₳฿\u0022\uFF02\u0027\u201C\u201F\u201B\u201E\u2E42\u201A\u2035\u2036\u2037\u301D\u0060\u301F]+/,d=/[ \n\t\.'\[\](){}⟨⟩:,،、‒–—―…!‹›«»‐\-?‘’;\/⁄·&*@•^†‡°¡¿※#№÷×ºª‰+−=‱¶′″‴§~\|‖¦©℗®℠™¤₳฿\u0022\uFF02\u201D\u00B4\u301E]+$/,m=/\//,g=/['’]/,v=/^[a-z]\.([a-z]\.)+/i,b=/^[-+\.][0-9]/,y=/^'[0-9]{2}/;var A=t=>{let e=t,r="",n="";""===(t=(t=t.replace(p,e=>(r=e,"-"!==r&&"+"!==r&&"."!==r||!b.test(t)?"'"===r&&y.test(t)?(r="",e):"":(r="",e)))).replace(d,i=>(n=i,g.test(i)&&/[sn]['’]$/.test(e)&&!1===g.test(r)?(n=n.replace(g,""),"'"):!0===v.test(t)?(n=n.replace(/\./,""),"."):"")))&&(e=e.replace(/ *$/,t=>(n=t||"","")),t=e,r="",n=n);let i=c(t);const s={text:t,clean:i,reduced:f(i),pre:r,post:n};return m.test(t)&&t.split(m).forEach(t=>{s.alias=s.alias||{},s.alias[t.trim()]=!0}),s};function w(t){var e={exports:{}};return t(e,e.exports),e.exports}var x=w((function(t,e){const r=/^[A-Z][a-z'\u00C0-\u00FF]/,n=/^[A-Z]+s?$/;e.toUpperCase=function(){return this.text=this.text.toUpperCase(),this},e.toLowerCase=function(){return this.text=this.text.toLowerCase(),this},e.toTitleCase=function(){return this.text=this.text.replace(/^ *[a-z\u00C0-\u00FF]/,t=>t.toUpperCase()),this},e.isUpperCase=function(){return n.test(this.text)},e.isTitleCase=function(){return r.test(this.text)},e.titleCase=e.isTitleCase})),P=w((function(t,e){const r=/(\u0022|\uFF02|\u0027|\u201C|\u2018|\u201F|\u201B|\u201E|\u2E42|\u201A|\u00AB|\u2039|\u2035|\u2036|\u2037|\u301D|\u0060|\u301F)/,n=/(\u0022|\uFF02|\u0027|\u201D|\u2019|\u201D|\u2019|\u201D|\u201D|\u2019|\u00BB|\u203A|\u2032|\u2033|\u2034|\u301E|\u00B4|\u301E)/;e.hasPost=function(t){return-1!==this.post.indexOf(t)},e.hasPre=function(t){return-1!==this.pre.indexOf(t)},e.hasQuote=function(){return r.test(this.pre)||n.test(this.post)},e.hasQuotation=e.hasQuote,e.hasComma=function(){return this.hasPost(",")},e.hasPeriod=function(){return!0===this.hasPost(".")&&!1===this.hasPost("...")},e.hasExclamation=function(){return this.hasPost("!")},e.hasQuestionMark=function(){return this.hasPost("?")||this.hasPost("¿")},e.hasEllipses=function(){return this.hasPost("..")||this.hasPost("…")||this.hasPre("..")||this.hasPre("…")},e.hasSemicolon=function(){return this.hasPost(";")},e.hasSlash=function(){return/\//.test(this.text)},e.hasHyphen=function(){const t=/^(-|–|—)$/;return t.test(this.post)||t.test(this.pre)},e.hasDash=function(){const t=/ (-|–|—) /;return t.test(this.post)||t.test(this.pre)},e.hasContraction=function(){return Boolean(this.implicit)},e.addPunctuation=function(t){return","!==t&&";"!==t||(this.post=this.post.replace(t,"")),this.post=t+this.post,this}}));var j=function(t,e,r=3){if(t===e)return 1;if(t.length<r||e.length<r)return 0;const n=function(t,e){let r=t.length,n=e.length;if(0===r)return n;if(0===n)return r;let i=(n>r?n:r)+1;if(Math.abs(r-n)>(i||100))return i||100;let s,o,a,l,u,h,c=[];for(let t=0;t<i;t++)c[t]=[t],c[t].length=i;for(let t=0;t<i;t++)c[0][t]=t;for(let i=1;i<=r;++i)for(o=t[i-1],s=1;s<=n;++s){if(i===s&&c[i][s]>4)return r;a=e[s-1],l=o===a?0:1,u=c[i-1][s]+1,(h=c[i][s-1]+1)<u&&(u=h),(h=c[i-1][s-1]+l)<u&&(u=h);let n=i>1&&s>1&&o===e[s-2]&&t[i-2]===a&&(h=c[i-2][s-2]+l)<u;c[i][s]=n?h:u}return c[r][n]}(t,e);let i=Math.max(t.length,e.length);return 1-(0===i?0:n/i)};let E=function(){};E=function(t,e,r,n){let i=function(t,e,r,n){if(e.id===t.id)return!0;if(!0===e.anything)return!0;if(!0===e.start&&0!==r)return!1;if(!0===e.end&&r!==n-1)return!1;if(void 0!==e.word){if(null!==t.implicit&&t.implicit===e.word)return!0;if(void 0!==t.alias&&t.alias.hasOwnProperty(e.word))return!0;if(!0===e.soft&&e.word===t.root)return!0;if(void 0!==e.fuzzy){let r=j(e.word,t.reduced);if(r>e.fuzzy)return!0;if(!0===e.soft&&(r=j(e.word,t.root),r>e.fuzzy))return!0}return e.word===t.clean||e.word===t.text||e.word===t.reduced}return void 0!==e.tag?!0===t.tags[e.tag]:void 0!==e.method?"function"==typeof t[e.method]&&!0===t[e.method]():void 0!==e.regex?e.regex.test(t.clean):void 0!==e.fastOr?!(!t.implicit||!0!==e.fastOr.hasOwnProperty(t.implicit))||e.fastOr.hasOwnProperty(t.reduced)||e.fastOr.hasOwnProperty(t.text):void 0!==e.choices&&("and"===e.operator?e.choices.every(e=>E(t,e,r,n)):e.choices.some(e=>E(t,e,r,n)))}(t,e,r,n);return!0===e.negative?!i:i};var O=E;const C={};var F={doesMatch:function(t,e,r){return O(this,t,e,r)},isAcronym:function(){return u(this.text)},isImplicit:function(){return""===this.text&&Boolean(this.implicit)},isKnown:function(){return Object.keys(this.tags).some(t=>!0!==C[t])},setRoot:function(t){let e=t.transforms,r=this.implicit||this.clean;if(this.tags.Plural&&(r=e.toSingular(r,t)),this.tags.Verb&&!this.tags.Negative&&!this.tags.Infinitive){let n=null;this.tags.PastTense?n="PastTense":this.tags.Gerund?n="Gerund":this.tags.PresentTense?n="PresentTense":this.tags.Participle?n="Participle":this.tags.Actor&&(n="Actor"),r=e.toInfinitive(r,t,n)}this.root=r}};const T=/[\s-]/,k=/^[A-Z-]+$/;var N={textOut:function(t,e,r){t=t||{};let n=this.text,s=this.pre,o=this.post;return!0===t.reduced&&(n=this.reduced||""),!0===t.root&&(n=this.root||""),!0===t.implicit&&this.implicit&&(n=this.implicit||""),!0===t.normal&&(n=this.clean||this.text||""),!0===t.root&&(n=this.root||this.reduced||""),!0===t.unicode&&(n=i(n)),!0===t.titlecase&&(this.tags.ProperNoun&&!this.titleCase()||(this.tags.Acronym?n=n.toUpperCase():k.test(n)&&!this.tags.Acronym&&(n=n.toLowerCase()))),!0===t.lowercase&&(n=n.toLowerCase()),!0===t.acronyms&&this.tags.Acronym&&(n=n.replace(/\./g,"")),!0!==t.whitespace&&!0!==t.root||(s="",o=" ",!1!==T.test(this.post)&&!t.last||this.implicit||(o="")),!0!==t.punctuation||t.root||(!0===this.hasPost(".")?o="."+o:!0===this.hasPost("?")?o="?"+o:!0===this.hasPost("!")?o="!"+o:!0===this.hasPost(",")?o=","+o:!0===this.hasEllipses()&&(o="..."+o)),!0!==e&&(s=""),!0!==r&&(o=""),!0===t.abbreviations&&this.tags.Abbreviation&&(o=o.replace(/^\./,"")),s+n+o}};const $={Auxiliary:1,Possessive:1};var V=function(t,e){let r=Object.keys(t.tags);const n=e.tags;return r=r.sort((t,e)=>$[e]||!n[e]?-1:n[e]?n[t]?n[t].lineage.length>n[e].lineage.length?1:n[t].isA.length>n[e].isA.length?-1:0:0:1),r};const I={text:!0,tags:!0,implicit:!0,whitespace:!0,clean:!1,id:!1,index:!1,offset:!1,bestTag:!1};var B={json:function(t,e){t=t||{};let r={};return(t=Object.assign({},I,t)).text&&(r.text=this.text),t.normal&&(r.normal=this.clean),t.tags&&(r.tags=Object.keys(this.tags)),t.clean&&(r.clean=this.clean),(t.id||t.offset)&&(r.id=this.id),t.implicit&&null!==this.implicit&&(r.implicit=this.implicit),t.whitespace&&(r.pre=this.pre,r.post=this.post),t.bestTag&&(r.bestTag=V(this,e)[0]),r}},z=Object.assign({},x,P,F,N,B);function S(){return"undefined"!=typeof window&&window.document}const D=function(t,e){for(t=t.toString();t.length<e;)t+=" ";return t};var M=function(t,e,r){if(S())return void console.log("%c"+D(t.clean,3)+"  + "+e+" ","color: #6accb2;");let n="[33m"+D(t.clean,15)+"[0m + [32m"+e+"[0m ";r&&(n=D(n,35)+" "+r),console.log(n)},_=function(t,e,r){if(S())return void console.log("%c"+D(t.clean,3)+"  - "+e+" ","color: #AB5850;");let n="[33m"+D(t.clean,3)+" [31m - #"+e+"[0m ";r&&(n=D(n,35)+" "+r),console.log(n)},G=t=>t.charAt(0).toUpperCase()+t.substr(1);const q=function(t,e,r,n){let i=n.tags;if(""===e||"."===e||"-"===e)return;if("#"===e[0]&&(e=e.replace(/^#/,"")),e=G(e),!0===t.tags[e])return;const s=n.isVerbose();!0===s&&M(t,e,r),t.tags[e]=!0,!0===i.hasOwnProperty(e)&&(i[e].isA.forEach(e=>{t.tags[e]=!0,!0===s&&M(t,"→ "+e)}),t.unTag(i[e].notA,"←",n))};var L=function(t,e,r,n){if("string"!=typeof e)for(let i=0;i<e.length;i++)q(t,e[i],r,n);else q(t,e,r,n)};const W=/^[a-z]/,U=function(t,e,r,n){const i=n.isVerbose();if("*"===e)return t.tags={},t;var s;e=e.replace(/^#/,""),!0===W.test(e)&&(e=(s=e).charAt(0).toUpperCase()+s.substr(1)),!0===t.tags[e]&&(delete t.tags[e],!0===i&&_(t,e,r));const o=n.tags;if(o[e]){let r=o[e].lineage;for(let e=0;e<r.length;e++)!0===t.tags[r[e]]&&(delete t.tags[r[e]],!0===i&&_(t," - "+r[e]))}return t};var H=function(t,e,r,n){if("string"!=typeof e&&e)for(let i=0;i<e.length;i++)U(t,e[i],r,n);else U(t,e,r,n)};const R=function(t,e,r){const n=r.tags;if("#"===e[0]&&(e=e.replace(/^#/,"")),void 0===n[e])return!0;let i=n[e].notA||[];for(let e=0;e<i.length;e++)if(!0===t.tags[i[e]])return!1;return void 0===n[e].isA||R(t,n[e].isA,r)};var Q=R,Z={tag:function(t,e,r){return L(this,t,e,r),this},tagSafe:function(t,e,r){return Q(this,t,r)&&L(this,t,e,r),this},unTag:function(t,e,r){return H(this,t,e,r),this},canBe:function(t,e){return Q(this,t,e)}};class J{constructor(t=""){t=String(t);let r=A(t);this.text=r.text||"",this.clean=r.clean,this.reduced=r.reduced,this.root=null,this.implicit=null,this.pre=r.pre||"",this.post=r.post||"",this.tags={},this.prev=null,this.next=null,this.id=e(r.clean),this.isA="Term",r.alias&&(this.alias=r.alias)}set(t){let e=A(t);return this.text=e.text,this.clean=e.clean,this.reduced=e.reduced,this.root=null,this.implicit=null,this}}J.prototype.clone=function(){let t=new J(this.text);return t.pre=this.pre,t.post=this.post,t.clean=this.clean,t.reduced=this.reduced,t.root=this.root,t.implicit=this.implicit,t.tags=Object.assign({},this.tags),t},Object.assign(J.prototype,z),Object.assign(J.prototype,Z);var Y=J,K={terms:function(t){if(0===this.length)return[];if(this.cache.terms)return void 0!==t?this.cache.terms[t]:this.cache.terms;let e=[this.pool.get(this.start)];for(let r=0;r<this.length-1;r+=1){let n=e[e.length-1].next;if(null===n){console.error("Compromise error: Linked list broken in phrase '"+this.start+"'");break}let i=this.pool.get(n);if(e.push(i),void 0!==t&&t===r)return e[t]}return void 0===t&&(this.cache.terms=e),void 0!==t?e[t]:e},clone:function(t){if(t){let t=this.buildFrom(this.start,this.length);return t.cache=this.cache,t}let e=this.terms().map(t=>t.clone());return e.forEach((t,r)=>{this.pool.add(t),e[r+1]&&(t.next=e[r+1].id),e[r-1]&&(t.prev=e[r-1].id)}),this.buildFrom(e[0].id,e.length)},lastTerm:function(){let t=this.terms();return t[t.length-1]},hasId:function(t){if(0===this.length||!t)return!1;if(this.start===t)return!0;if(this.cache.terms){let e=this.cache.terms;for(let r=0;r<e.length;r++)if(e[r].id===t)return!0;return!1}let e=this.start;for(let r=0;r<this.length-1;r+=1){let r=this.pool.get(e);if(void 0===r)return console.error(`Compromise error: Linked list broken. Missing term '${e}' in phrase '${this.start}'\n`),!1;if(r.next===t)return!0;e=r.next}return!1},wordCount:function(){return this.terms().filter(t=>""!==t.text).length},fullSentence:function(){let t=this.terms(0);for(;t.prev;)t=this.pool.get(t.prev);let e=t.id,r=1;for(;t.next;)t=this.pool.get(t.next),r+=1;return this.buildFrom(e,r)}};var X={text:function(t={},e,r){"string"==typeof t&&(t="normal"===t?{whitespace:!0,unicode:!0,lowercase:!0,punctuation:!0,acronyms:!0,abbreviations:!0,implicit:!0,normal:!0}:"clean"===t?{titlecase:!1,lowercase:!0,punctuation:!0,whitespace:!0,unicode:!0,implicit:!0,normal:!0}:"reduced"===t?{punctuation:!1,titlecase:!1,lowercase:!0,whitespace:!0,unicode:!0,implicit:!0,reduced:!0}:"implicit"===t?{punctuation:!0,implicit:!0,whitespace:!0,trim:!0}:"root"===t?{titlecase:!1,lowercase:!0,punctuation:!0,whitespace:!0,unicode:!0,implicit:!0,root:!0}:{});let n=this.terms(),i=!1;n[0]&&null===n[0].prev&&null===n[n.length-1].next&&(i=!0);let s=n.reduce((s,o,a)=>{if(0===a&&""===o.text&&null!==o.implicit&&!t.implicit)return s;t.last=r&&a===n.length-1;let l=!0,u=!0;return!1===i&&(0===a&&e&&(l=!1),a===n.length-1&&r&&(u=!1)),s+o.textOut(t,l,u)},"");return!0===i&&r&&(s=s.replace(/ +$/,"")),!0===t.trim&&(s=s.trim()),s}},tt={trim:function(){let t=this.terms();if(t.length>0){t[0].pre=t[0].pre.replace(/^\s+/,"");let e=t[t.length-1];e.post=e.post.replace(/\s+$/,"")}return this}};const et=/[.?!]\s*$/,rt=function(t,e){e[0].pre=t[0].pre;let r=t[t.length-1],n=e[e.length-1];n.post=function(t,e){if(et.test(e))return e+t.match(/\s*$/);return t}(r.post,n.post),r.post="",""===r.post&&(r.post+=" ")};var nt=function(t,e,r){let n=t.terms(),i=e.terms();rt(n,i),function(t,e,r){let n=t[t.length-1],i=e[e.length-1],s=n.next;n.next=e[0].id,i.next=s,s&&(r.get(s).prev=i.id);let o=t[0].id;o&&(e[0].prev=o)}(n,i,t.pool);let s=[t],o=t.start,a=[r];var l;return a=a.concat(r.parents()),a.forEach(t=>{let e=t.list.filter(t=>t.hasId(o));s=s.concat(e)}),s=(l=s).filter((t,e)=>l.indexOf(t)===e),s.forEach(t=>{t.length+=e.length}),t.cache={},t};const it=/ /;var st=function(t,e,r){const n=t.start;let i=e.terms();!function(t){let e=t[t.length-1];!1===it.test(e.post)&&(e.post+=" ")}(i),function(t,e,r){let n=r[r.length-1];n.next=t.start;let i=t.pool,s=i.get(t.start);s.prev&&(i.get(s.prev).next=e.start);r[0].prev=t.terms(0).prev,t.terms(0).prev=n.id}(t,e,i);let s=[t],o=[r];var a;return o=o.concat(r.parents()),o.forEach(t=>{let r=t.list.filter(t=>t.hasId(n)||t.hasId(e.start));s=s.concat(r)}),s=(a=s).filter((t,e)=>a.indexOf(t)===e),s.forEach(t=>{t.length+=e.length,t.start===n&&(t.start=e.start),t.cache={}}),t};var ot=function(t,e){let r=e.pool(),n=t.terms(),i=r.get(n[0].prev)||{},s=r.get(n[n.length-1].next)||{};n[0].implicit&&i.implicit&&(i.set(i.implicit),i.post+=" "),function(t,e,r,n){let i=t.parents();i.push(t),i.forEach(t=>{let i=t.list.find(t=>t.hasId(e));i&&(i.length-=r,i.start===e&&(i.start=n.id),i.cache={})}),t.list=t.list.filter(t=>!(!t.start||!t.length))}(e,t.start,t.length,s),i&&(i.next=s.id),s&&(s.prev=i.id)},at={append:function(t,e){return nt(this,t,e),this},prepend:function(t,e){return st(this,t,e),this},delete:function(t){return ot(this,t),this},replace:function(t,e){let r=this.length;nt(this,t,e);let n=this.buildFrom(this.start,this.length);n.length=r,ot(n,e)},splitOn:function(t){let e=this.terms(),r={before:null,match:null,after:null},n=e.findIndex(e=>e.id===t.start);if(-1===n)return r;let i=e.slice(0,n);i.length>0&&(r.before=this.buildFrom(i[0].id,i.length));let s=e.slice(n,n+t.length);s.length>0&&(r.match=this.buildFrom(s[0].id,s.length));let o=e.slice(n+t.length,e.length);return o.length>0&&(r.after=this.buildFrom(o[0].id,o.length,this.pool)),r}},lt={json:function(t={},e){let r={};return t.text&&(r.text=this.text()),t.normal&&(r.normal=this.text("normal")),t.clean&&(r.clean=this.text("clean")),t.reduced&&(r.reduced=this.text("reduced")),t.implicit&&(r.implicit=this.text("implicit")),t.root&&(r.root=this.text("root")),t.trim&&(r.text&&(r.text=r.text.trim()),r.normal&&(r.normal=r.normal.trim()),r.reduced&&(r.reduced=r.reduced.trim())),t.terms&&(!0===t.terms&&(t.terms={}),r.terms=this.terms().map(r=>r.json(t.terms,e))),r}},ut={lookAhead:function(t){t||(t=".*");let e=this.pool,r=[];const n=function(t){let i=e.get(t);i&&(r.push(i),i.prev&&n(i.next))};let i=this.terms(),s=i[i.length-1];return n(s.next),0===r.length?[]:this.buildFrom(r[0].id,r.length).match(t)},lookBehind:function(t){t||(t=".*");let e=this.pool,r=[];const n=function(t){let i=e.get(t);i&&(r.push(i),i.prev&&n(i.prev))};let i=e.get(this.start);return n(i.prev),0===r.length?[]:this.buildFrom(r[r.length-1].id,r.length).match(t)}},ht=Object.assign({},K,X,tt,at,lt,ut);var ct=function(t,e){if(0===e.length)return!0;for(let t=0;t<e.length;t+=1){let r=e[t];if(!0!==r.optional&&!0!==r.negative&&!0===r.start&&t>0)return!0;if(!0===r.anything&&!0===r.negative)return!0}return!1},ft=w((function(t,e){e.getGreedy=function(t,e){let r=Object.assign({},t.regs[t.r],{start:!1,end:!1}),n=t.t;for(;t.t<t.terms.length;t.t+=1){if(e&&t.terms[t.t].doesMatch(e,t.start_i+t.t,t.phrase_length))return t.t;let i=t.t-n+1;if(void 0!==r.max&&i===r.max)return t.t;if(!1===t.terms[t.t].doesMatch(r,t.start_i+t.t,t.phrase_length))return void 0!==r.min&&i<r.min?null:t.t}return t.t},e.greedyTo=function(t,e){let r=t.t;if(!e)return t.terms.length;for(;r<t.terms.length;r+=1)if(!0===t.terms[r].doesMatch(e,t.start_i+r,t.phrase_length))return r;return null},e.isEndGreedy=function(t,e){if(!0===t.end&&!0===t.greedy&&e.start_i+e.t<e.phrase_length-1){let r=Object.assign({},t,{end:!1});if(!0===e.terms[e.t].doesMatch(r,e.start_i+e.t,e.phrase_length))return!0}return!1},e.doOrBlock=function(t,r=0){let n=t.regs[t.r],i=!1;for(let e=0;e<n.choices.length;e+=1){let s=n.choices[e];if(i=s.every((e,n)=>{let i=0,s=t.t+n+r+i;if(void 0===t.terms[s])return!1;let o=t.terms[s].doesMatch(e,s+t.start_i,t.phrase_length);if(!0===o&&!0===e.greedy)for(let r=1;r<t.terms.length;r+=1){let n=t.terms[s+r];if(n){if(!0!==n.doesMatch(e,t.start_i+r,t.phrase_length))break;i+=1}}return r+=i,o}),i){r+=s.length;break}}return i&&!0===n.greedy?e.doOrBlock(t,r):r},e.doAndBlock=function(t){let e=0;return!0===t.regs[t.r].choices.every(r=>{let n=r.every((e,r)=>{let n=t.t+r;return void 0!==t.terms[n]&&t.terms[n].doesMatch(e,n,t.phrase_length)});return!0===n&&r.length>e&&(e=r.length),n})&&e},e.getGroup=function(t,e,r){if(t.groups[t.groupId])return t.groups[t.groupId];const n=t.terms[e].id;return t.groups[t.groupId]={group:String(r),start:n,length:0},t.groups[t.groupId]}}));var pt=function(t,r,n,i){let s={t:0,terms:t,r:0,regs:r,groups:{},start_i:n,phrase_length:i,hasGroup:!1,groupId:null,previousGroup:null};for(;s.r<r.length;s.r+=1){let t=r[s.r];if(s.hasGroup="string"==typeof t.named||"number"==typeof t.named,!0===s.hasGroup){const n=r[s.r-1];n&&n.named===t.named&&s.previousGroup?s.groupId=s.previousGroup:(s.groupId=e(t.named),s.previousGroup=s.groupId)}if(!s.terms[s.t]){if(!1===r.slice(s.r).some(t=>!t.optional))break;return null}if(!0===t.anything&&!0===t.greedy){let e=ft.greedyTo(s,r[s.r+1]);if(null===e||0===e)return null;if(void 0!==t.min&&e-s.t<t.min)return null;if(void 0!==t.max&&e-s.t>t.max){s.t=s.t+t.max;continue}if(!0===s.hasGroup){ft.getGroup(s,s.t,t.named).length=e-s.t}s.t=e;continue}if(void 0!==t.choices&&"or"===t.operator){let e=ft.doOrBlock(s);if(e){if(!0===t.negative)return null;if(!0===s.hasGroup){ft.getGroup(s,s.t,t.named).length+=e}s.t+=e;continue}if(!t.optional)return null}if(void 0!==t.choices&&"and"===t.operator){let e=ft.doAndBlock(s);if(e){if(!0===t.negative)return null;if(!0===s.hasGroup){ft.getGroup(s,s.t,t.named).length+=e}s.t+=e;continue}if(!t.optional)return null}let n=s.terms[s.t],o=n.doesMatch(t,s.start_i+s.t,s.phrase_length);if(!0===t.anything||!0===o||ft.isEndGreedy(t,s)){let e=s.t;if(t.optional&&r[s.r+1]&&t.negative)continue;if(t.optional&&r[s.r+1]){let e=n.doesMatch(r[s.r+1],s.start_i+s.t,s.phrase_length);if(t.negative||e){let t=s.terms[s.t+1];t&&t.doesMatch(r[s.r+1],s.start_i+s.t,s.phrase_length)||(s.r+=1)}}if(s.t+=1,!0===t.end&&s.t!==s.terms.length&&!0!==t.greedy)return null;if(!0===t.greedy){if(s.t=ft.getGreedy(s,r[s.r+1]),null===s.t)return null;if(t.min&&t.min>s.t)return null;if(!0===t.end&&s.start_i+s.t!==i)return null}if(!0===s.hasGroup){const r=ft.getGroup(s,e,t.named);s.t>1&&t.greedy?r.length+=s.t-e:r.length++}}else{if(t.negative){let e=Object.assign({},t);if(e.negative=!1,!0===s.terms[s.t].doesMatch(e,s.start_i+s.t,s.phrase_length))return null}if(!0!==t.optional){if(s.terms[s.t].isImplicit()&&r[s.r-1]&&s.terms[s.t+1]){if(s.terms[s.t-1]&&s.terms[s.t-1].implicit===r[s.r-1].word)return null;if(s.terms[s.t+1].doesMatch(t,s.start_i+s.t,s.phrase_length)){s.t+=2;continue}}return null}}}return{match:s.terms.slice(0,s.t),groups:s.groups}};var dt=function(t,e,r){if(!r||0===r.length)return r;if(e.some(t=>t.end)){let e=t[t.length-1];r=r.filter(({match:t})=>-1!==t.indexOf(e))}return r};const mt=/(?:^|\s)([\!\[\^]*(?:<[^<]*>)?\/.*?[^\\\/]\/[\?\]\+\*\$~]*)(?:\s|$)/,gt=/([\!\[\^]*(?:<[^<]*>)?\([^\)]+[^\\\)]\)[\?\]\+\*\$~]*)(?:\s|$)/,vt=/ /g,bt=t=>/^[\!\[\^]*(<[^<]*>)?\//.test(t)&&/\/[\?\]\+\*\$~]*$/.test(t),yt=function(t){return t=(t=t.map(t=>t.trim())).filter(t=>t)};var At=function(t){let e=t.split(mt),r=[];e.forEach(t=>{bt(t)?r.push(t):r=r.concat(t.split(gt))}),r=yt(r);let n=[];return r.forEach(t=>{(t=>/^[\!\[\^]*(<[^<]*>)?\(/.test(t)&&/\)[\?\]\+\*\$~]*$/.test(t))(t)||bt(t)?n.push(t):n=n.concat(t.split(vt))}),n=yt(n),n};const wt=/\{([0-9]+,?[0-9]*)\}/,xt=/&&/,Pt=new RegExp(/^<\s*?(\S+)\s*?>/),jt=function(t){return t[t.length-1]},Et=function(t){return t[0]},Ot=function(t){return t.substr(1)},Ct=function(t){return t.substr(0,t.length-1)},Ft=function(t){return t=Ot(t),t=Ct(t)},Tt=function(t){let e={};for(let r=0;r<2;r+=1){if("$"===jt(t)&&(e.end=!0,t=Ct(t)),"^"===Et(t)&&(e.start=!0,t=Ot(t)),("["===Et(t)||"]"===jt(t))&&(e.named=!0,"["===Et(t)?e.groupType="]"===jt(t)?"single":"start":e.groupType="end",t=(t=t.replace(/^\[/,"")).replace(/\]$/,""),"<"===Et(t))){const r=Pt.exec(t);r.length>=2&&(e.named=r[1],t=t.replace(r[0],""))}if("+"===jt(t)&&(e.greedy=!0,t=Ct(t)),"*"!==t&&"*"===jt(t)&&"\\*"!==t&&(e.greedy=!0,t=Ct(t)),"?"===jt(t)&&(e.optional=!0,t=Ct(t)),"!"===Et(t)&&(e.negative=!0,t=Ot(t)),"("===Et(t)&&")"===jt(t)){xt.test(t)?(e.choices=t.split(xt),e.operator="and"):(e.choices=t.split("|"),e.operator="or"),e.choices[0]=Ot(e.choices[0]);let r=e.choices.length-1;e.choices[r]=Ct(e.choices[r]),e.choices=e.choices.map(t=>t.trim()),e.choices=e.choices.filter(t=>t),e.choices=e.choices.map(t=>t.split(/ /g).map(Tt)),t=""}if("/"===Et(t)&&"/"===jt(t))return t=Ft(t),e.regex=new RegExp(t),e;if("~"===Et(t)&&"~"===jt(t))return t=Ft(t),e.soft=!0,e.word=t,e}return!0===wt.test(t)&&(t=t.replace(wt,(t,r)=>{let n=r.split(/,/g);return 1===n.length?(e.min=Number(n[0]),e.max=Number(n[0])):(e.min=Number(n[0]),e.max=Number(n[1]||999)),e.greedy=!0,e.optional=!0,""})),"#"===Et(t)?(e.tag=Ot(t),e.tag=(r=e.tag).charAt(0).toUpperCase()+r.substr(1),e):"@"===Et(t)?(e.method=Ot(t),e):"."===t?(e.anything=!0,e):"*"===t?(e.anything=!0,e.greedy=!0,e.optional=!0,e):(t&&(t=(t=t.replace("\\*","*")).replace("\\.","."),e.word=t.toLowerCase()),e);var r};var kt=Tt;var Nt=function(t,e={}){return t.filter(t=>t.groupType).length>0&&(t=function(t){let e,r=!1,n=-1;for(let i=0;i<t.length;i++){const s=t[i];"single"!==s.groupType||!0!==s.named?("start"===s.groupType&&(r=!0,"string"==typeof s.named||"number"==typeof s.named?e=s.named:(n+=1,e=n)),r&&(s.named=e),"end"===s.groupType&&(r=!1)):(n+=1,s.named=n)}return t}(t)),e.fuzzy||(t=function(t){return t.map(t=>{if(void 0!==t.choices&&!0===t.choices.every(t=>{if(1!==t.length)return!1;let e=t[0];return void 0!==e.word&&!0!==e.negative&&!0!==e.optional&&!0!==e.method})){let e={};t.choices.forEach(t=>{e[t[0].word]=!0}),t.fastOr=e,delete t.choices}return t})}(t)),t};var $t=function(t,e={}){if(null==t||""===t)return[];if("object"==typeof t){if(function(t){return"[object Array]"===Object.prototype.toString.call(t)}(t)){if(0===t.length||!t[0])return[];if("object"==typeof t[0])return t;if("string"==typeof t[0])return function(t){return[{choices:t.map(t=>[{word:t}]),operator:"or"}]}(t)}return t&&"Doc"===t.isA?function(t){if(!t||!t.list||!t.list[0])return[];let e=[];return t.list.forEach(t=>{let r=[];t.terms().forEach(t=>{r.push(t.id)}),e.push(r)}),[{idBlocks:e}]}(t):[]}"number"==typeof t&&(t=String(t));let r=At(t);return r=r.map(t=>kt(t)),r=Nt(r,e),r=function(t,e){return!0===e.fuzzy&&(e.fuzzy=.85),"number"==typeof e.fuzzy&&(t=t.map(t=>(e.fuzzy>0&&t.word&&(t.fuzzy=e.fuzzy),t.choices&&t.choices.forEach(t=>{t.forEach(t=>{t.fuzzy=e.fuzzy})}),t))),t}(r,e),r};var Vt=function(t,e){let r=[],n=e[0].idBlocks;for(let e=0;e<t.length;e+=1)n.forEach(n=>{if(0===n.length)return;n.every((r,n)=>t[e+n].id===r)&&(r.push({match:t.slice(e,e+n.length)}),e+=n.length-1)});return r};var It=function(t,e,r=!1){if("string"==typeof e&&(e=$t(e)),!0===ct(t,e))return[];const n=e.filter(t=>!0!==t.optional&&!0!==t.negative).length;let i=t.terms(),s=[];if(e[0].idBlocks){let t=Vt(i,e);if(t&&t.length>0)return dt(i,e,t)}if(!0===e[0].start){let t=pt(i,e,0,i.length);return t&&t.match&&t.match.length>0&&(t.match=t.match.filter(t=>t),s.push(t)),dt(i,e,s)}for(let t=0;t<i.length&&!(t+n>i.length);t+=1){let n=pt(i.slice(t),e,t,i.length);if(n&&n.match&&n.match.length>0&&(t+=n.match.length-1,n.match=n.match.filter(t=>t),s.push(n),!0===r))return dt(i,e,s)}return dt(i,e,s)};var Bt=function(t,e){let r={};It(t,e).forEach(({match:t})=>{t.forEach(t=>{r[t.id]=!0})});let n=t.terms(),i=[],s=[];return n.forEach(t=>{!0!==r[t.id]?s.push(t):s.length>0&&(i.push(s),s=[])}),s.length>0&&i.push(s),i},zt={match:function(t,e=!1){let r=It(this,t,e);return r=r.map(({match:t,groups:e})=>{let r=this.buildFrom(t[0].id,t.length,e);return r.cache.terms=t,r}),r},has:function(t){return It(this,t,!0).length>0},not:function(t){let e=Bt(this,t);return e=e.map(t=>this.buildFrom(t[0].id,t.length)),e},canBe:function(t,e){let r=[],n=this.terms(),i=!1;for(let s=0;s<n.length;s+=1){let o=n[s].canBe(t,e);!0===o&&(!0===i?r[r.length-1].push(n[s]):r.push([n[s]]),i=o)}return r=r.filter(t=>t.length>0).map(t=>this.buildFrom(t[0].id,t.length)),r}};class St{constructor(t,e,r){this.start=t,this.length=e,this.isA="Phrase",Object.defineProperty(this,"pool",{enumerable:!1,writable:!0,value:r}),Object.defineProperty(this,"cache",{enumerable:!1,writable:!0,value:{}}),Object.defineProperty(this,"groups",{enumerable:!1,writable:!0,value:{}})}}St.prototype.buildFrom=function(t,e,r){let n=new St(t,e,this.pool);return r&&Object.keys(r).length>0?n.groups=r:n.groups=this.groups,n},Object.assign(St.prototype,zt),Object.assign(St.prototype,ht);const Dt={term:"terms"};Object.keys(Dt).forEach(t=>St.prototype[t]=St.prototype[Dt[t]]);var Mt=St;class _t{constructor(t={}){Object.defineProperty(this,"words",{enumerable:!1,value:t})}add(t){return this.words[t.id]=t,this}get(t){return this.words[t]}remove(t){delete this.words[t]}merge(t){return Object.assign(this.words,t.words),this}stats(){return{words:Object.keys(this.words).length}}}_t.prototype.clone=function(){let t=Object.keys(this.words).reduce((t,e)=>{let r=this.words[e].clone();return t[r.id]=r,t},{});return new _t(t)};var Gt=_t;var qt=t=>{t.forEach((e,r)=>{r>0&&(e.prev=t[r-1].id),t[r+1]&&(e.next=t[r+1].id)})};const Lt=/(\S.+?[.!?\u203D\u2E18\u203C\u2047-\u2049])(?=\s+|$)/g,Wt=/\S/,Ut=/[ .][A-Z]\.? *$/i,Ht=/(?:\u2026|\.{2,}) *$/,Rt=/((?:\r?\n|\r)+)/,Qt=/[a-z0-9\u00C0-\u00FF\u00a9\u00ae\u2000-\u3300\ud000-\udfff]/i,Zt=/^\s+/,Jt=function(t,e){if(!0===Ut.test(t))return!1;if(!0===Ht.test(t))return!1;if(!1===Qt.test(t))return!1;let r=t.replace(/[.!?\u203D\u2E18\u203C\u2047-\u2049] *$/,"").split(" "),n=r[r.length-1].toLowerCase();return!e.hasOwnProperty(n)};var Yt=function(t,e){let r=e.cache.abbreviations;t=t||"";let n=[],i=[];if(!(t=String(t))||"string"!=typeof t||!1===Wt.test(t))return n;let s=function(t){let e=[],r=t.split(Rt);for(let t=0;t<r.length;t++){let n=r[t].split(Lt);for(let t=0;t<n.length;t++)e.push(n[t])}return e}(t=t.replace(" "," "));for(let t=0;t<s.length;t++){let e=s[t];if(void 0!==e&&""!==e){if(!1===Wt.test(e)){if(i[i.length-1]){i[i.length-1]+=e;continue}if(s[t+1]){s[t+1]=e+s[t+1];continue}}i.push(e)}}for(let t=0;t<i.length;t++){let e=i[t];i[t+1]&&!1===Jt(e,r)?i[t+1]=e+(i[t+1]||""):e&&e.length>0&&(n.push(e),i[t]="")}if(0===n.length)return[t];for(let t=1;t<n.length;t+=1){let e=n[t].match(Zt);null!==e&&(n[t-1]+=e[0],n[t]=n[t].replace(Zt,""))}return n};const Kt=/\S/,Xt=/^[!?.]+$/,te=/(\S+)/,ee=/[a-z] ?\/ ?[a-z]*$/;let re=[".","?","!",":",";","-","–","—","--","...","(",")","[","]",'"',"'","`"];re=re.reduce((t,e)=>(t[e]=!0,t),{});const ne=function(t){if(!0===/^(re|un|micro|macro|trans|bi|mono|over)-?[^aeiou]./.test(t))return!1;if(!0===/^([a-z\u00C0-\u00FF/]+)(-|–|—)(like|ish|less|able)/i.test(t))return!1;if(!0===/^([a-z\u00C0-\u00FF`"'/]+)(-|–|—)([a-z0-9\u00C0-\u00FF].*)/i.test(t))return!0;return!0===/^([0-9]{1,4})(-|–|—)([a-z\u00C0-\u00FF`"'/-]+$)/i.test(t)},ie=function(t){let e=[];const r=t.split(/[-–—]/);let n="-",i=t.match(/[-–—]/);i&&i[0]&&(n=i);for(let t=0;t<r.length;t++)t===r.length-1?e.push(r[t]):e.push(r[t]+n);return e};var se=function(t){let e=[],r=[];if("number"==typeof(t=t||"")&&(t=String(t)),function(t){return"[object Array]"===Object.prototype.toString.call(t)}(t))return t;const n=t.split(te);for(let t=0;t<n.length;t++)!0!==ne(n[t])?r.push(n[t]):r=r.concat(ie(n[t]));let i="";for(let t=0;t<r.length;t++){let n=r[t];!0===Kt.test(n)&&!1===re.hasOwnProperty(n)&&!1===Xt.test(n)?(e.length>0?(e[e.length-1]+=i,e.push(n)):e.push(i+n),i=""):i+=n}return i&&(0===e.length&&(e[0]=""),e[e.length-1]+=i),e=function(t){for(let e=1;e<t.length-1;e++)ee.test(t[e])&&(t[e-1]+=t[e]+t[e+1],t[e]=null,t[e+1]=null);return t}(e),e=function(t){const e=/^[0-9]{1,4}(:[0-9][0-9])?([a-z]{1,2})? ?(-|–|—) ?$/,r=/^[0-9]{1,4}([a-z]{1,2})? ?$/;for(let n=0;n<t.length-1;n+=1)t[n+1]&&e.test(t[n])&&r.test(t[n+1])&&(t[n]=t[n]+t[n+1],t[n+1]=null);return t}(e),e=e.filter(t=>t),e};var oe=function(t="",e,r){let n=null;return"string"!=typeof t&&("number"==typeof t?t=String(t):function(t){return"[object Array]"===Object.prototype.toString.call(t)}(t)&&(n=t)),n=n||Yt(t,e),n=n.map(t=>se(t)),r=r||new Gt,n.map(t=>{t=t.map(t=>{let e=new Y(t);return r.add(e),e}),qt(t);let e=new Mt(t[0].id,t.length,r);return e.cache.terms=t,e})};var ae=function(t,e){let r=new Gt;return t.map((t,n)=>{let i=t.terms.map((i,s)=>{let o=new Y(i.text);return o.pre=void 0!==i.pre?i.pre:"",void 0===i.post&&(i.post=" ",s>=t.terms.length-1&&(i.post=". ",n>=t.terms.length-1&&(i.post="."))),o.post=void 0!==i.post?i.post:" ",i.tags&&i.tags.forEach(t=>o.tag(t,"",e)),r.add(o),o});return qt(i),new Mt(i[0].id,i.length,r)})};const le=["Person","Place","Organization"];var ue={Noun:{notA:["Verb","Adjective","Adverb"]},Singular:{isA:"Noun",notA:"Plural"},ProperNoun:{isA:"Noun"},Person:{isA:["ProperNoun","Singular"],notA:["Place","Organization","Date"]},FirstName:{isA:"Person"},MaleName:{isA:"FirstName",notA:["FemaleName","LastName"]},FemaleName:{isA:"FirstName",notA:["MaleName","LastName"]},LastName:{isA:"Person",notA:["FirstName"]},NickName:{isA:"Person",notA:["FirstName","LastName"]},Honorific:{isA:"Noun",notA:["FirstName","LastName","Value"]},Place:{isA:"Singular",notA:["Person","Organization"]},Country:{isA:["Place","ProperNoun"],notA:["City"]},City:{isA:["Place","ProperNoun"],notA:["Country"]},Region:{isA:["Place","ProperNoun"]},Address:{isA:"Place"},Organization:{isA:["Singular","ProperNoun"],notA:["Person","Place"]},SportsTeam:{isA:"Organization"},School:{isA:"Organization"},Company:{isA:"Organization"},Plural:{isA:"Noun",notA:["Singular"]},Uncountable:{isA:"Noun"},Pronoun:{isA:"Noun",notA:le},Actor:{isA:"Noun",notA:le},Activity:{isA:"Noun",notA:["Person","Place"]},Unit:{isA:"Noun",notA:le},Demonym:{isA:["Noun","ProperNoun"],notA:le},Possessive:{isA:"Noun"}},he={Verb:{notA:["Noun","Adjective","Adverb","Value","Expression"]},PresentTense:{isA:"Verb",notA:["PastTense","FutureTense"]},Infinitive:{isA:"PresentTense",notA:["PastTense","Gerund"]},Imperative:{isA:"Infinitive"},Gerund:{isA:"PresentTense",notA:["PastTense","Copula","FutureTense"]},PastTense:{isA:"Verb",notA:["FutureTense"]},FutureTense:{isA:"Verb"},Copula:{isA:"Verb"},Modal:{isA:"Verb",notA:["Infinitive"]},PerfectTense:{isA:"Verb",notA:"Gerund"},Pluperfect:{isA:"Verb"},Participle:{isA:"PastTense"},PhrasalVerb:{isA:"Verb"},Particle:{isA:"PhrasalVerb"},Auxiliary:{notA:["Noun","Adjective","Value"]}},ce={Value:{notA:["Verb","Adjective","Adverb"]},Ordinal:{isA:"Value",notA:["Cardinal"]},Cardinal:{isA:"Value",notA:["Ordinal"]},Fraction:{isA:"Value",notA:["Noun"]},RomanNumeral:{isA:"Cardinal",notA:["Ordinal","TextValue"]},TextValue:{isA:"Value",notA:["NumericValue"]},NumericValue:{isA:"Value",notA:["TextValue"]},Money:{isA:"Cardinal"},Percent:{isA:"Value"}};const fe=["Noun","Verb","Adjective","Adverb","Value","QuestionWord"];var pe={Adjective:{notA:["Noun","Verb","Adverb","Value"]},Comparable:{isA:["Adjective"]},Comparative:{isA:["Adjective"]},Superlative:{isA:["Adjective"],notA:["Comparative"]},NumberRange:{},Adverb:{notA:["Noun","Verb","Adjective","Value"]},Date:{notA:["Verb","Adverb","Preposition","Adjective"]},Month:{isA:["Date","Singular"],notA:["Year","WeekDay","Time"]},WeekDay:{isA:["Date","Noun"]},Timezone:{isA:["Date","Noun"],notA:["Adjective","ProperNoun"]},Time:{isA:["Date"],notA:["AtMention"]},Determiner:{notA:fe},Conjunction:{notA:fe},Preposition:{notA:fe},QuestionWord:{notA:["Determiner"]},Currency:{isA:["Noun"]},Expression:{notA:["Noun","Adjective","Verb","Adverb"]},Abbreviation:{},Url:{notA:["HashTag","PhoneNumber","Verb","Adjective","Value","AtMention","Email"]},PhoneNumber:{notA:["HashTag","Verb","Adjective","Value","AtMention","Email"]},HashTag:{},AtMention:{isA:["Noun"],notA:["HashTag","Verb","Adjective","Value","Email"]},Emoji:{notA:["HashTag","Verb","Adjective","Value","AtMention"]},Emoticon:{notA:["HashTag","Verb","Adjective","Value","AtMention"]},Email:{notA:["HashTag","Verb","Adjective","Value","AtMention"]},Acronym:{notA:["Plural","RomanNumeral"]},Negative:{notA:["Noun","Adjective","Value"]},Condition:{notA:["Verb","Adjective","Noun","Value"]}};const de={Noun:"blue",Verb:"green",Negative:"green",Date:"red",Value:"red",Adjective:"magenta",Preposition:"cyan",Conjunction:"cyan",Determiner:"cyan",Adverb:"cyan"};var me=function(t){return Object.keys(t).forEach(e=>{t[e].color?t[e].color=t[e].color:de[e]?t[e].color=de[e]:t[e].isA.some(r=>!!de[r]&&(t[e].color=de[r],!0))}),t};var ge=function(t){return Object.keys(t).forEach(e=>{let r=t[e],n=r.isA.length;for(let e=0;e<n;e++){let n=r.isA[e];t[n]&&(r.isA=r.isA.concat(t[n].isA))}r.isA=function(t){return t.filter((t,e,r)=>r.indexOf(t)===e)}(r.isA)}),t};var ve=function(t){let e=Object.keys(t);return e.forEach(r=>{let n=t[r];n.notA=n.notA||[],n.isA.forEach(e=>{if(t[e]&&t[e].notA){let r="string"==typeof t[e].notA?[t[e].isA]:t[e].notA||[];n.notA=n.notA.concat(r)}});for(let i=0;i<e.length;i++){const s=e[i];-1!==t[s].notA.indexOf(r)&&n.notA.push(s)}n.notA=function(t){return t.filter((t,e,r)=>r.indexOf(t)===e)}(n.notA)}),t};var be=function(t){let e=Object.keys(t);return e.forEach(r=>{let n=t[r];n.lineage=[];for(let i=0;i<e.length;i++)-1!==t[e[i]].isA.indexOf(r)&&n.lineage.push(e[i])}),t};var ye=function(t){return t=function(t){return Object.keys(t).forEach(e=>{let r=t[e];r.isA=r.isA||[],"string"==typeof r.isA&&(r.isA=[r.isA]),r.notA=r.notA||[],"string"==typeof r.notA&&(r.notA=[r.notA])}),t}(t),t=ge(t),t=ve(t),t=me(t),t=be(t)};const Ae=function(t,e){Object.keys(t).forEach(r=>{e[r]=t[r]})};var we=(()=>{let t={};return Ae(ue,t),Ae(he,t),Ae(ce,t),Ae(pe,t),t=ye(t),t})(),xe={},Pe=t=>t;const je={Unit:(t,e)=>{t[e]=["Abbreviation","Unit"]},Cardinal:(t,e)=>{t[e]=["TextValue","Cardinal"]},TextOrdinal:(t,e)=>{t[e]=["Ordinal","TextValue"],t[e+"s"]=["TextValue","Fraction"]},Singular:(t,e,r)=>{t[e]="Singular";let n=r.transforms.toPlural(e,r);t[n]=t[n]||"Plural"},Infinitive:(t,e,r)=>{t[e]="Infinitive";let n=r.transforms.conjugate(e,r),i=Object.keys(n);for(let e=0;e<i.length;e++){let r=n[i[e]];t[r]=t[r]||i[e]}},Comparable:(t,e,r)=>{t[e]="Comparable";let n=r.transforms.adjectives(e),i=Object.keys(n);for(let e=0;e<i.length;e++){let r=n[i[e]];t[r]=t[r]||i[e]}},PhrasalVerb:(t,e,r)=>{t[e]=["PhrasalVerb","Infinitive"];let n=e.split(" "),i=r.transforms.conjugate(n[0],r),s=Object.keys(i);for(let e=0;e<s.length;e++){let o=i[s[e]]+" "+n[1];t[o]=t[o]||["PhrasalVerb",s[e]],r.hasCompound[i[s[e]]]=!0}},Demonym:(t,e,r)=>{t[e]="Demonym";let n=r.transforms.toPlural(e,r);t[n]=t[n]||["Demonym","Plural"]}},Ee=function(t,e,r){Object.keys(t).forEach(n=>{let i=t[n];"Abbreviation"!==i&&"Unit"!==i||(r.cache.abbreviations[n]=!0);let s=n.split(" ");s.length>1&&(r.hasCompound[s[0]]=!0),void 0===je[i]?void 0!==e[n]?("string"==typeof e[n]&&(e[n]=[e[n]]),"string"==typeof i?e[n].push(i):e[n]=e[n].concat(i)):e[n]=i:je[i](e,n,r)})};var Oe=function(t){let e=Object.assign({},xe);return Object.keys(xe).forEach(r=>{let n=xe[r];Object.keys(n).forEach(t=>{n[t]=r}),Ee(n,e,t)}),e},Ce=Ee;var Fe=function(t){let e=t.irregulars.nouns,r=Object.keys(e);for(let n=0;n<r.length;n++){const i=r[n];t.words[i]="Singular",t.words[e[i]]="Plural"}let n=t.irregulars.verbs,i=Object.keys(n);for(let e=0;e<i.length;e++){const r=i[e];t.words[r]=t.words[r]||"Infinitive";let s=t.transforms.conjugate(r,t);s=Object.assign(s,n[r]),Object.keys(s).forEach(e=>{t.words[s[e]]=t.words[s[e]]||e,"Participle"===t.words[s[e]]&&(t.words[s[e]]=e)})}};const Te={nouns:xe,verbs:xe},ke={conjugate:Pe,adjectives:Pe,toPlural:Pe,toSingular:Pe,toInfinitive:Pe};let Ne=!1;class $e{constructor(){Object.defineProperty(this,"words",{enumerable:!1,value:{},writable:!0}),Object.defineProperty(this,"hasCompound",{enumerable:!1,value:{},writable:!0}),Object.defineProperty(this,"irregulars",{enumerable:!1,value:Te,writable:!0}),Object.defineProperty(this,"tags",{enumerable:!1,value:Object.assign({},we),writable:!0}),Object.defineProperty(this,"transforms",{enumerable:!1,value:ke,writable:!0}),Object.defineProperty(this,"taggers",{enumerable:!1,value:[],writable:!0}),Object.defineProperty(this,"cache",{enumerable:!1,value:{abbreviations:{}}}),this.words=Oe(this),Fe(this)}verbose(t){return Ne=t,this}isVerbose(){return Ne}addWords(t){let e={};Object.keys(t).forEach(r=>{let n=t[r];r=r.toLowerCase().trim(),e[r]=n}),Ce(e,this.words,this)}addConjugations(t){return Object.assign(this.irregulars.verbs,t),this}addPlurals(t){return Object.assign(this.irregulars.nouns,t),this}addTags(t){return t=Object.assign({},t),this.tags=Object.assign(this.tags,t),this.tags=ye(this.tags),this}postProcess(t){return this.taggers.push(t),this}stats(){return{words:Object.keys(this.words).length,plurals:Object.keys(this.irregulars.nouns).length,conjugations:Object.keys(this.irregulars.verbs).length,compounds:Object.keys(this.hasCompound).length,postProcessors:this.taggers.length}}}const Ve=function(t){return JSON.parse(JSON.stringify(t))};$e.prototype.clone=function(){let t=new $e;return t.words=Object.assign({},this.words),t.hasCompound=Object.assign({},this.hasCompound),t.irregulars=Ve(this.irregulars),t.tags=Ve(this.tags),t.transforms=this.transforms,t.taggers=this.taggers,t};var Ie=$e,Be=w((function(t,e){e.all=function(){return this.parents()[0]||this},e.parent=function(){return this.from?this.from:this},e.parents=function(t){let e=[];const r=function(t){t.from&&(e.push(t.from),r(t.from))};return r(this),e=e.reverse(),"number"==typeof t?e[t]:e},e.clone=function(t){let e=this.list.map(e=>e.clone(t));return this.buildFrom(e)},e.wordCount=function(){return this.list.reduce((t,e)=>t+=e.wordCount(),0)},e.wordcount=e.wordCount})),ze=w((function(t,e){e.first=function(t){return void 0===t?this.get(0):this.slice(0,t)},e.last=function(t){if(void 0===t)return this.get(this.list.length-1);let e=this.list.length;return this.slice(e-t,e)},e.slice=function(t,e){let r=this.list.slice(t,e);return this.buildFrom(r)},e.eq=function(t){let e=this.list[t];return void 0===e?this.buildFrom([]):this.buildFrom([e])},e.get=e.eq,e.firstTerms=function(){return this.match("^.")},e.firstTerm=e.firstTerms,e.lastTerms=function(){return this.match(".$")},e.lastTerm=e.lastTerms,e.termList=function(t){let e=[];for(let r=0;r<this.list.length;r++){let n=this.list[r].terms();for(let r=0;r<n.length;r++)if(e.push(n[r]),void 0!==t&&void 0!==e[t])return e[t]}return e};e.groups=function(t){return void 0===t?function(t){let e={};const r={};for(let e=0;e<t.list.length;e++){const n=t.list[e],i=Object.keys(n.groups).map(t=>n.groups[t]);for(let t=0;t<i.length;t++){const{group:e,start:s,length:o}=i[t];r[e]||(r[e]=[]),r[e].push(n.buildFrom(s,o))}}const n=Object.keys(r);for(let i=0;i<n.length;i++){const s=n[i];e[s]=t.buildFrom(r[s])}return e}(this):("number"==typeof t&&(t=String(t)),function(t,e){const r=[];for(let n=0;n<t.list.length;n++){const i=t.list[n];let s=Object.keys(i.groups);s=s.filter(t=>i.groups[t].group===e),s.forEach(t=>{r.push(i.buildFrom(i.groups[t].start,i.groups[t].length))})}return t.buildFrom(r)}(this,t)||this.buildFrom([]))},e.group=e.groups,e.sentences=function(t){let e=[];return this.list.forEach(t=>{e.push(t.fullSentence())}),"number"==typeof t?this.buildFrom([e[t]]):this.buildFrom(e)},e.sentence=e.sentences}));var Se=function(t,e){if(t._cache&&!0===t._cache.set){let{words:r,tags:n}=function(t){let e=[],r=[];return t.forEach(t=>{!0!==t.optional&&!0!==t.negative&&(void 0!==t.tag&&e.push(t.tag),void 0!==t.word&&r.push(t.word))}),{tags:e,words:r}}(e);for(let e=0;e<r.length;e++)if(void 0===t._cache.words[r[e]])return!1;for(let e=0;e<n.length;e++)if(void 0===t._cache.tags[n[e]])return!1}return!0},De=w((function(t,e){e.match=function(t,e={}){"string"!=typeof e&&"number"!=typeof e&&null!==e||(e={group:e});let r=$t(t,e);if(0===r.length)return this.buildFrom([]);if(!1===Se(this,r))return this.buildFrom([]);let n=this.list.reduce((t,e)=>t.concat(e.match(r)),[]);return void 0!==e.group&&null!==e.group&&""!==e.group?this.buildFrom(n).groups(e.group):this.buildFrom(n)},e.not=function(t,e={}){let r=$t(t,e);if(0===r.length||!1===Se(this,r))return this;let n=this.list.reduce((t,e)=>t.concat(e.not(r)),[]);return this.buildFrom(n)},e.matchOne=function(t,e={}){let r=$t(t,e);if(!1===Se(this,r))return this.buildFrom([]);for(let t=0;t<this.list.length;t++){let e=this.list[t].match(r,!0);return this.buildFrom(e)}return this.buildFrom([])},e.if=function(t,e={}){let r=$t(t,e);if(!1===Se(this,r))return this.buildFrom([]);let n=this.list.filter(t=>!0===t.has(r));return this.buildFrom(n)},e.ifNo=function(t,e={}){let r=$t(t,e),n=this.list.filter(t=>!1===t.has(r));return this.buildFrom(n)},e.has=function(t,e={}){let r=$t(t,e);return!1!==Se(this,r)&&this.list.some(t=>!0===t.has(r))},e.lookAhead=function(t,e={}){t||(t=".*");let r=$t(t,e),n=[];return this.list.forEach(t=>{n=n.concat(t.lookAhead(r))}),n=n.filter(t=>t),this.buildFrom(n)},e.lookAfter=e.lookAhead,e.lookBehind=function(t,e={}){t||(t=".*");let r=$t(t,e),n=[];return this.list.forEach(t=>{n=n.concat(t.lookBehind(r))}),n=n.filter(t=>t),this.buildFrom(n)},e.lookBefore=e.lookBehind,e.before=function(t,e={}){let r=$t(t,e),n=this.if(r).list.map(t=>{let e=t.terms().map(t=>t.id),n=t.match(r)[0],i=e.indexOf(n.start);return 0===i||-1===i?null:t.buildFrom(t.start,i)});return n=n.filter(t=>null!==t),this.buildFrom(n)},e.after=function(t,e={}){let r=$t(t,e),n=this.if(r).list.map(t=>{let e=t.terms(),n=e.map(t=>t.id),i=t.match(r)[0],s=n.indexOf(i.start);if(-1===s||!e[s+i.length])return null;let o=e[s+i.length].id,a=t.length-s-i.length;return t.buildFrom(o,a)});return n=n.filter(t=>null!==t),this.buildFrom(n)},e.hasAfter=function(t,e={}){return this.filter(r=>r.lookAfter(t,e).found)},e.hasBefore=function(t,e={}){return this.filter(r=>r.lookBefore(t,e).found)}}));var Me=function(t,e,r,n){let i=[];"string"==typeof t&&(i=t.split(" ")),e.list.forEach(s=>{let o=s.terms();!0===r&&(o=o.filter(r=>r.canBe(t,e.world))),o.forEach((r,s)=>{i.length>1?i[s]&&"."!==i[s]&&r.tag(i[s],n,e.world):r.tag(t,n,e.world)})})},_e={tag:function(t,e){return t?(Me(t,this,!1,e),this):this},tagSafe:function(t,e){return t?(Me(t,this,!0,e),this):this},unTag:function(t,e){return this.list.forEach(r=>{r.terms().forEach(r=>r.unTag(t,e,this.world))}),this},canBe:function(t){if(!t)return this;let e=this.world,r=this.list.reduce((r,n)=>r.concat(n.canBe(t,e)),[]);return this.buildFrom(r)}},Ge={map:function(t){if(!t)return this;let e=this.list.map((e,r)=>{let n=this.buildFrom([e]);n.from=null;let i=t(n,r);return i&&i.list&&i.list[0]?i.list[0]:i});return e=e.filter(t=>t),0===e.length?this.buildFrom(e):"object"!=typeof e[0]||"Phrase"!==e[0].isA?e:this.buildFrom(e)},forEach:function(t,e){return t?(this.list.forEach((r,n)=>{let i=this.buildFrom([r]);!0===e&&(i.from=null),t(i,n)}),this):this},filter:function(t){if(!t)return this;let e=this.list.filter((e,r)=>{let n=this.buildFrom([e]);return n.from=null,t(n,r)});return this.buildFrom(e)},find:function(t){if(!t)return this;let e=this.list.find((e,r)=>{let n=this.buildFrom([e]);return n.from=null,t(n,r)});return e?this.buildFrom([e]):void 0},some:function(t){return t?this.list.some((e,r)=>{let n=this.buildFrom([e]);return n.from=null,t(n,r)}):this},random:function(t){if(!this.found)return this;let e=Math.floor(Math.random()*this.list.length);if(void 0===t){let t=[this.list[e]];return this.buildFrom(t)}return e+t>this.length&&(e=this.length-t,e=e<0?0:e),this.slice(e,e+t)}};var qe=function(t,e,r){let n=function(t,e=[]){let r={};return t.forEach((t,n)=>{let i=!0;void 0!==e[n]&&(i=e[n]);let s=function(t){return t.split(/[ -]/g)}(t=(t=(t||"").toLowerCase()).replace(/[,;.!?]+$/,"")).map(t=>t.trim());r[s[0]]=r[s[0]]||{},1===s.length?r[s[0]].value=i:(r[s[0]].more=r[s[0]].more||[],r[s[0]].more.push({rest:s.slice(1),value:i}))}),r}(t,e),i=[];for(let t=0;t<r.list.length;t++){const e=r.list[t];let s=e.terms().map(t=>t.reduced);for(let t=0;t<s.length;t++)void 0!==n[s[t]]&&(void 0!==n[s[t]].more&&n[s[t]].more.forEach(r=>{if(void 0===s[t+r.rest.length])return;!0===r.rest.every((e,r)=>e===s[t+r+1])&&i.push({id:e.terms()[t].id,value:r.value,length:r.rest.length+1})}),void 0!==n[s[t]].value&&i.push({id:e.terms()[t].id,value:n[s[t]].value,length:1}))}return i},Le=w((function(t,e){e.lookup=function(t){let e=[],r=(n=t)&&"[object Object]"===Object.prototype.toString.call(n);var n;!0===r&&(t=Object.keys(t).map(r=>(e.push(t[r]),r))),"string"==typeof t&&(t=[t]),!0!==this._cache.set&&this.cache();let i=qe(t,e,this),s=this.list[0];if(!0===r){let t={};return i.forEach(e=>{t[e.value]=t[e.value]||[],t[e.value].push(s.buildFrom(e.id,e.length))}),Object.keys(t).forEach(e=>{t[e]=this.buildFrom(t[e])}),t}return i=i.map(t=>s.buildFrom(t.id,t.length)),this.buildFrom(i)},e.lookUp=e.lookup})),We={cache:function(t){t=t||{};let e={},r={};return this._cache.words=e,this._cache.tags=r,this._cache.set=!0,this.list.forEach((n,i)=>{n.cache=n.cache||{},n.terms().forEach(n=>{e[n.reduced]&&!e.hasOwnProperty(n.reduced)||(e[n.reduced]=e[n.reduced]||[],e[n.reduced].push(i),Object.keys(n.tags).forEach(t=>{r[t]=r[t]||[],r[t].push(i)}),t.root&&(n.setRoot(this.world),e[n.root]=[i]))})}),this},uncache:function(){return this._cache={},this.list.forEach(t=>{t.cache={}}),this.parents().forEach(t=>{t._cache={},t.list.forEach(t=>{t.cache={}})}),this}};var Ue={replaceWith:function(t,e={}){return t?(!0===e&&(e={keepTags:!0}),!1===e&&(e={keepTags:!1}),e=e||{},this.uncache(),this.list.forEach(r=>{let n,i=t;if("function"==typeof t&&(i=t(r)),i&&"object"==typeof i&&"Doc"===i.isA)n=i.list,this.pool().merge(i.pool());else{if("string"!=typeof i)return;{!1!==e.keepCase&&r.terms(0).isTitleCase()&&(i=(s=i).charAt(0).toUpperCase()+s.substr(1)),n=oe(i,this.world,this.pool());let t=this.buildFrom(n);t.tagger(),n=t.list}}var s;if(!0===e.keepTags){let t=r.json({terms:{tags:!0}}).terms;n[0].terms().forEach((e,r)=>{t[r]&&e.tagSafe(t[r].tags,"keptTag",this.world)})}r.replace(n[0],this)}),this):this.delete()},replace:function(t,e,r){return void 0===e?this.replaceWith(t,r):(this.match(t).replaceWith(e,r),this)}},He=w((function(t,e){const r=function(t){return t&&"[object Object]"===Object.prototype.toString.call(t)},n=function(t,e){let r=oe(t,e.world)[0],n=e.buildFrom([r]);return n.tagger(),e.list=n.list,e};e.append=function(t=""){return t?this.found?(this.uncache(),this.list.forEach(e=>{let n;r(t)&&"Doc"===t.isA?n=t.list[0].clone():"string"==typeof t&&(n=oe(t,this.world,this.pool())[0]),this.buildFrom([n]).tagger(),e.append(n,this)}),this):n(t,this):this},e.insertAfter=e.append,e.insertAt=e.append,e.prepend=function(t){return t?this.found?(this.uncache(),this.list.forEach(e=>{let n;r(t)&&"Doc"===t.isA?n=t.list[0].clone():"string"==typeof t&&(n=oe(t,this.world,this.pool())[0]),this.buildFrom([n]).tagger(),e.prepend(n,this)}),this):n(t,this):this},e.insertBefore=e.prepend,e.concat=function(){this.uncache();let t=this.list.slice(0);for(let e=0;e<arguments.length;e++){let r=arguments[e];if("string"==typeof r){let e=oe(r,this.world);t=t.concat(e)}else"Doc"===r.isA?t=t.concat(r.list):"Phrase"===r.isA&&t.push(r)}return this.buildFrom(t)},e.delete=function(t){this.uncache();let e=this;return t&&(e=this.match(t)),e.list.forEach(t=>t.delete(this)),this},e.remove=e.delete}));const Re={clean:!0,reduced:!0,root:!0};var Qe={text:function(t){t=t||{};let e=!1;0===this.parents().length&&(e=!0),("root"===t||"object"==typeof t&&t.root)&&this.list.forEach(t=>{t.terms().forEach(t=>{null===t.root&&t.setRoot(this.world)})});let r=this.list.reduce((r,n,i)=>{const s=!e&&0===i,o=!e&&i===this.list.length-1;return r+n.text(t,s,o)},"");return!0!==Re[t]&&!0!==t.reduced&&!0!==t.clean&&!0!==t.root||(r=r.trim()),r}};var Ze=function(t,e,r){let n=function(t){let e=0,r=0,n={};return t.termList().forEach(t=>{n[t.id]={index:r,start:e+t.pre.length,length:t.text.length},e+=t.pre.length+t.text.length+t.post.length,r+=1}),n}(t.all());(r.terms.index||r.index)&&e.forEach(t=>{t.terms.forEach(t=>{t.index=n[t.id].index}),t.index=t.terms[0].index}),(r.terms.offset||r.offset)&&e.forEach(t=>{t.terms.forEach(t=>{t.offset=n[t.id]||{}}),t.offset={index:t.terms[0].offset.index,start:t.terms[0].offset.start-t.text.indexOf(t.terms[0].text),length:t.text.length}})},Je=w((function(t,e){const r={text:!0,terms:!0,trim:!0};e.json=function(t={}){if("number"==typeof t&&this.list[t])return this.list[t].json(r);!0===(t=function(t){return(t=Object.assign({},r,t)).unique&&(t.reduced=!0),t.offset&&(t.text=!0,t.terms&&!0!==t.terms||(t.terms={}),t.terms.offset=!0),(t.index||t.terms.index)&&(t.terms=!0===t.terms?{}:t.terms,t.terms.id=!0),t}(t)).root&&this.list.forEach(t=>{t.terms().forEach(t=>{null===t.root&&t.setRoot(this.world)})});let e=this.list.map(e=>e.json(t,this.world));if((t.terms.offset||t.offset||t.terms.index||t.index)&&Ze(this,e,t),t.frequency||t.freq||t.count){let t={};this.list.forEach(e=>{let r=e.text("reduced");t[r]=t[r]||0,t[r]+=1}),this.list.forEach((r,n)=>{e[n].count=t[r.text("reduced")]})}if(t.unique){let t={};e=e.filter(e=>!0!==t[e.reduced]&&(t[e.reduced]=!0,!0))}return e},e.data=e.json})),Ye=w((function(t){const e="[0m",r=function(t,e){for(t=t.toString();t.length<e;)t+=" ";return t};const n={green:"#7f9c6c",red:"#914045",blue:"#6699cc",magenta:"#6D5685",cyan:"#2D85A8",yellow:"#e6d7b3",black:"#303b50"},i={green:function(t){return"[32m"+t+e},red:function(t){return"[31m"+t+e},blue:function(t){return"[34m"+t+e},magenta:function(t){return"[35m"+t+e},cyan:function(t){return"[36m"+t+e},yellow:function(t){return"[33m"+t+e},black:function(t){return"[30m"+t+e}};t.exports=function(t){return"undefined"!=typeof window&&window.document?(function(t){let e=t.world.tags;t.list.forEach(t=>{console.log('\n%c"'+t.text()+'"',"color: #e6d7b3;"),t.terms().forEach(t=>{let i=Object.keys(t.tags),s=t.text||"-";t.implicit&&(s="["+t.implicit+"]");let o="'"+s+"'";o=r(o,8);let a=i.find(t=>e[t]&&e[t].color),l="steelblue";e[a]&&(l=e[a].color,l=n[l]),console.log(`   ${o}  -  %c${i.join(", ")}`,`color: ${l||"steelblue"};`)})})}(t),t):(console.log(i.blue("=====")),t.list.forEach(e=>{console.log(i.blue("  -----")),e.terms().forEach(e=>{let n=Object.keys(e.tags),s=e.text||"-";e.implicit&&(s="["+e.implicit+"]"),s=i.yellow(s);let o="'"+s+"'";o=r(o,18);let a=i.blue("  ｜ ")+o+"  - "+function(t,e){return(t=t.map(t=>{if(!e.tags.hasOwnProperty(t))return t;const r=e.tags[t].color||"blue";return i[r](t)})).join(", ")}(n,t.world);console.log(a)})}),console.log(""),t)}}));var Ke=function(t){let e=t.json({text:!1,terms:!1,reduced:!0}),r={};e.forEach(t=>{r[t.reduced]||(t.count=0,r[t.reduced]=t),r[t.reduced].count+=1});let n=Object.keys(r).map(t=>r[t]);return n.sort((t,e)=>t.count>e.count?-1:t.count<e.count?1:0),n},Xe={debug:function(){return Ye(this),this},out:function(t){if("text"===t)return this.text();if("normal"===t)return this.text("normal");if("json"===t)return this.json();if("offset"===t||"offsets"===t)return this.json({offset:!0});if("array"===t)return this.json({terms:!1}).map(t=>t.text).filter(t=>t);if("freq"===t||"frequency"===t)return Ke(this);if("terms"===t){let t=[];return this.json({text:!1,terms:{text:!0}}).forEach(e=>{let r=e.terms.map(t=>t.text);r=r.filter(t=>t),t=t.concat(r)}),t}return"tags"===t?this.list.map(t=>t.terms().reduce((t,e)=>(t[e.clean||e.implicit]=Object.keys(e.tags),t),{})):"debug"===t?(Ye(this),this):this.text()}};const tr={alpha:(t,e)=>{let r=t.text("clean"),n=e.text("clean");return r<n?-1:r>n?1:0},length:(t,e)=>{let r=t.text().trim().length,n=e.text().trim().length;return r<n?1:r>n?-1:0},wordCount:(t,e)=>{let r=t.wordCount(),n=e.wordCount();return r<n?1:r>n?-1:0}};tr.alphabetical=tr.alpha,tr.wordcount=tr.wordCount;const er={index:!0,sequence:!0,seq:!0,sequential:!0,chron:!0,chronological:!0};var rr={sort:function(t){return"freq"===(t=t||"alpha")||"frequency"===t||"topk"===t?function(t){let e={};const r={case:!0,punctuation:!1,whitespace:!0,unicode:!0};return t.list.forEach(t=>{let n=t.text(r);e[n]=e[n]||0,e[n]+=1}),t.list.sort((t,n)=>{let i=e[t.text(r)],s=e[n.text(r)];return i<s?1:i>s?-1:0}),t}(this):er.hasOwnProperty(t)?function(t){let e={};return t.json({terms:{offset:!0}}).forEach(t=>{e[t.terms[0].id]=t.terms[0].offset.start}),t.list=t.list.sort((t,r)=>e[t.start]>e[r.start]?1:e[t.start]<e[r.start]?-1:0),t}(this):"function"==typeof(t=tr[t]||t)?(this.list=this.list.sort(t),this):this},reverse:function(){let t=[].concat(this.list);return t=t.reverse(),this.buildFrom(t)},unique:function(){let t=[].concat(this.list),e={};return t=t.filter(t=>{let r=t.text("reduced").trim()||t.text("implicit").trim();return!0!==e.hasOwnProperty(r)&&(e[r]=!0,!0)}),this.buildFrom(t)}};const nr=/[\[\]{}⟨⟩:,،、‒–—―…‹›«»‐\-;\/⁄·*\•^†‡°¡¿※№÷×ºª%‰=‱¶§~|‖¦©℗®℠™¤₳฿]/g,ir=/['‘’“”"′″‴]+/g;var sr={whitespace:function(t){let e=t.list.map(t=>t.terms());e.forEach((t,r)=>{t.forEach((n,i)=>{!0!==n.hasDash()?(n.pre=n.pre.replace(/\s/g,""),n.post=n.post.replace(/\s/g,""),(t.length-1!==i||e[r+1])&&(n.implicit&&!0===Boolean(n.text)||!0!==n.hasHyphen()&&(n.post+=" "))):n.post=" - "})})},punctuation:function(t){t.forEach(t=>{!0===t.hasHyphen()&&(t.post=" "),t.pre=t.pre.replace(nr,""),t.post=t.post.replace(nr,""),t.post=t.post.replace(/\.\.\./,""),!0===/!/.test(t.post)&&(t.post=t.post.replace(/!/g,""),t.post="!"+t.post),!0===/\?/.test(t.post)&&(t.post=t.post.replace(/[\?!]*/,""),t.post="?"+t.post)})},unicode:function(t){t.forEach(t=>{!0!==t.isImplicit()&&(t.text=i(t.text))})},quotations:function(t){t.forEach(t=>{t.post=t.post.replace(ir,""),t.pre=t.pre.replace(ir,"")})},adverbs:function(t){t.match("#Adverb").not("(not|nary|seldom|never|barely|almost|basically|so)").remove()},abbreviations:function(t){t.list.forEach(t=>{let e=t.terms();e.forEach((t,r)=>{!0===t.tags.Abbreviation&&e[r+1]&&(t.post=t.post.replace(/^\./,""))})})}};const or={whitespace:!0,unicode:!0,punctuation:!0,emoji:!0,acronyms:!0,abbreviations:!0,case:!1,contractions:!1,parentheses:!1,quotations:!1,adverbs:!1,possessives:!1,verbs:!1,nouns:!1,honorifics:!1},ar={light:{},medium:{case:!0,contractions:!0,parentheses:!0,quotations:!0,adverbs:!0}};ar.heavy=Object.assign({},ar.medium,{possessives:!0,verbs:!0,nouns:!0,honorifics:!0});var lr={normalize:function(t){"string"==typeof(t=t||{})&&(t=ar[t]||{}),t=Object.assign({},or,t),this.uncache();let e=this.termList();return t.case&&this.toLowerCase(),t.whitespace&&sr.whitespace(this),t.unicode&&sr.unicode(e),t.punctuation&&sr.punctuation(e),t.emoji&&this.remove("(#Emoji|#Emoticon)"),t.acronyms&&this.acronyms().strip(),t.abbreviations&&sr.abbreviations(this),(t.contraction||t.contractions)&&this.contractions().expand(),t.parentheses&&this.parentheses().unwrap(),(t.quotations||t.quotes)&&sr.quotations(e),t.adverbs&&sr.adverbs(this),(t.possessive||t.possessives)&&this.possessives().strip(),t.verbs&&this.verbs().toInfinitive(),(t.nouns||t.plurals)&&this.nouns().toSingular(),t.honorifics&&this.remove("#Honorific"),this}},ur=w((function(t,e){e.splitOn=function(t){if(!t){return this.parent().splitOn(this)}let e=$t(t),r=[];return this.list.forEach(t=>{let n=t.match(e);if(0===n.length)return void r.push(t);let i=t;n.forEach(t=>{let e=i.splitOn(t);e.before&&r.push(e.before),e.match&&r.push(e.match),i=e.after}),i&&r.push(i)}),this.buildFrom(r)},e.splitAfter=function(t){if(!t){return this.parent().splitAfter(this)}let e=$t(t),r=[];return this.list.forEach(t=>{let n=t.match(e);if(0===n.length)return void r.push(t);let i=t;n.forEach(t=>{let e=i.splitOn(t);e.before&&e.match?(e.before.length+=e.match.length,r.push(e.before)):e.match&&r.push(e.match),i=e.after}),i&&r.push(i)}),this.buildFrom(r)},e.split=e.splitAfter,e.splitBefore=function(t){if(!t){return this.parent().splitBefore(this)}let e=$t(t),r=[];return this.list.forEach(t=>{let n=t.match(e);if(0===n.length)return void r.push(t);let i=t;n.forEach(t=>{let e=i.splitOn(t);e.before&&r.push(e.before),e.match&&e.after&&(e.match.length+=e.after.length),i=e.match}),i&&r.push(i)}),this.buildFrom(r)},e.segment=function(t,e){t=t||{},e=e||{text:!0};let r=this,n=Object.keys(t);return n.forEach(t=>{r=r.splitOn(t)}),r.list.forEach(e=>{for(let r=0;r<n.length;r+=1)if(e.has(n[r]))return void(e.segment=t[n[r]])}),r.list.map(t=>{let r=t.json(e);return r.segment=t.segment||null,r})}}));const hr=function(t,e){let r=t.world;return t.list.forEach(t=>{t.terms().forEach(t=>t[e](r))}),t};var cr={toLowerCase:function(){return hr(this,"toLowerCase")},toUpperCase:function(){return hr(this,"toUpperCase")},toTitleCase:function(){return hr(this,"toTitleCase")},toCamelCase:function(){return this.list.forEach(t=>{let e=t.terms();e.forEach((t,r)=>{0!==r&&t.toTitleCase(),r!==e.length-1&&(t.post="")})}),this}},fr=w((function(t,e){e.pre=function(t,e){return void 0===t?this.list[0].terms(0).pre:(this.list.forEach(r=>{let n=r.terms(0);!0===e?n.pre+=t:n.pre=t}),this)},e.post=function(t,e){return void 0===t?this.list.map(t=>{let e=t.terms();return e[e.length-1].post}):(this.list.forEach(r=>{let n=r.terms(),i=n[n.length-1];!0===e?i.post+=t:i.post=t}),this)},e.trim=function(){return this.list=this.list.map(t=>t.trim()),this},e.hyphenate=function(){return this.list.forEach(t=>{let e=t.terms();e.forEach((t,r)=>{0!==r&&(t.pre=""),e[r+1]&&(t.post="-")})}),this},e.dehyphenate=function(){const t=/(-|–|—)/;return this.list.forEach(e=>{e.terms().forEach(e=>{t.test(e.post)&&(e.post=" ")})}),this},e.deHyphenate=e.dehyphenate,e.toQuotations=function(t,e){return t=t||'"',e=e||'"',this.list.forEach(r=>{let n=r.terms();n[0].pre=t+n[0].pre;let i=n[n.length-1];i.post=e+i.post}),this},e.toQuotation=e.toQuotations,e.toParentheses=function(t,e){return t=t||"(",e=e||")",this.list.forEach(r=>{let n=r.terms();n[0].pre=t+n[0].pre;let i=n[n.length-1];i.post=e+i.post}),this}})),pr={join:function(t){this.uncache();let e=this.list[0],r=e.length,n={};for(let r=1;r<this.list.length;r++){const i=this.list[r];n[i.start]=!0;let s=e.lastTerm();t&&(s.post+=t),s.next=i.start,i.terms(0).prev=s.id,e.length+=i.length,e.cache={}}let i=e.length-r;return this.parents().forEach(t=>{t.list.forEach(t=>{let r=t.terms();for(let n=0;n<r.length;n++)if(r[n].id===e.start){t.length+=i;break}t.cache={}}),t.list=t.list.filter(t=>!0!==n[t.start])}),this.buildFrom([e])}};const dr=/[,\)"';:\-–—\.…]/,mr=function(t,e){if(!t.found)return;let r=t.termList();for(let t=0;t<r.length-1;t++){const e=r[t];if(dr.test(e.post))return}r.forEach(t=>{t.implicit=t.clean}),r[0].text+=e,r.slice(1).forEach(t=>{t.text=""});for(let t=0;t<r.length-1;t++){const e=r[t];e.post=e.post.replace(/ /,"")}};var gr={contract:function(){let t=this.not("@hasContraction"),e=t.match("(we|they|you) are");return mr(e,"'re"),e=t.match("(he|she|they|it|we|you) will"),mr(e,"'ll"),e=t.match("(he|she|they|it|we) is"),mr(e,"'s"),e=t.match("#Person is"),mr(e,"'s"),e=t.match("#Person would"),mr(e,"'d"),e=t.match("(is|was|had|would|should|could|do|does|have|has|can) not"),mr(e,"n't"),e=t.match("(i|we|they) have"),mr(e,"'ve"),e=t.match("(would|should|could) have"),mr(e,"'ve"),e=t.match("i am"),mr(e,"'m"),e=t.match("going to"),this}},vr=Object.assign({},Be,ze,De,_e,Ge,Le,We,Ue,He,Qe,Je,Xe,rr,lr,ur,cr,fr,pr,gr);let br={};[["terms","."],["hyphenated","@hasHyphen ."],["adjectives","#Adjective"],["hashTags","#HashTag"],["emails","#Email"],["emoji","#Emoji"],["emoticons","#Emoticon"],["atMentions","#AtMention"],["urls","#Url"],["adverbs","#Adverb"],["pronouns","#Pronoun"],["conjunctions","#Conjunction"],["prepositions","#Preposition"]].forEach(t=>{br[t[0]]=function(e){let r=this.match(t[1]);return"number"==typeof e&&(r=r.get(e)),r}}),br.emojis=br.emoji,br.atmentions=br.atMentions,br.words=br.terms,br.phoneNumbers=function(t){let e=this.splitAfter("@hasComma");return e=e.match("#PhoneNumber+"),"number"==typeof t&&(e=e.get(t)),e},br.money=function(t){let e=this.match("#Money #Currency?");return"number"==typeof t&&(e=e.get(t)),e},br.places=function(t){let e=this.match("(#City && @hasComma) (#Region|#Country)"),r=this.not(e).splitAfter("@hasComma");return r=r.concat(e),r.sort("index"),r=r.match("#Place+"),"number"==typeof t&&(r=r.get(t)),r},br.organizations=function(t){let e=this.clauses();return e=e.match("#Organization+"),"number"==typeof t&&(e=e.get(t)),e},br.entities=function(t){let e=this.clauses(),r=e.people();r=r.concat(e.places()),r=r.concat(e.organizations());return r=r.not(["someone","man","woman","mother","brother","sister","father"]),r.sort("sequence"),"number"==typeof t&&(r=r.get(t)),r},br.things=br.entities,br.topics=br.entities;var yr=br;const Ar=/^(under|over)-?/,wr=function(t,e,r){let n=r.words,i=t[e].reduced+" "+t[e+1].reduced;return void 0!==n[i]&&!0===n.hasOwnProperty(i)?(t[e].tag(n[i],"lexicon-two",r),t[e+1].tag(n[i],"lexicon-two",r),1):e+2<t.length&&(i+=" "+t[e+2].reduced,void 0!==n[i]&&!0===n.hasOwnProperty(i))?(t[e].tag(n[i],"lexicon-three",r),t[e+1].tag(n[i],"lexicon-three",r),t[e+2].tag(n[i],"lexicon-three",r),2):e+3<t.length&&(i+=" "+t[e+3].reduced,void 0!==n[i]&&!0===n.hasOwnProperty(i))?(t[e].tag(n[i],"lexicon-four",r),t[e+1].tag(n[i],"lexicon-four",r),t[e+2].tag(n[i],"lexicon-four",r),t[e+3].tag(n[i],"lexicon-four",r),3):0};var xr=function(t,e){let r=e.words,n=e.hasCompound;for(let i=0;i<t.length;i+=1){let s=t[i].clean;if(!0===n[s]&&i+1<t.length){let r=wr(t,i,e);if(r>0){i+=r;continue}}if(void 0===r[s]||!0!==r.hasOwnProperty(s))if(s===t[i].reduced||!0!==r.hasOwnProperty(t[i].reduced)){if(!0===Ar.test(s)){let n=s.replace(Ar,"");!0===r.hasOwnProperty(n)&&t[i].tag(r[n],"noprefix-lexicon",e)}}else t[i].tag(r[t[i].reduced],"lexicon",e);else t[i].tag(r[s],"lexicon",e)}return t};var Pr=function(t){let e=t.termList();return xr(e,t.world),t.world.taggers.forEach(e=>{e(t)}),t};var jr=function(t){class e extends t{stripPeriods(){return this.termList().forEach(t=>{!0===t.tags.Abbreviation&&t.next&&(t.post=t.post.replace(/^\./,""));let e=t.text.replace(/\./,"");t.set(e)}),this}addPeriods(){return this.termList().forEach(t=>{t.post=t.post.replace(/^\./,""),t.post="."+t.post}),this}}return e.prototype.unwrap=e.prototype.stripPeriods,t.prototype.abbreviations=function(t){let r=this.match("#Abbreviation");return"number"==typeof t&&(r=r.get(t)),new e(r.list,this,this.world)},t};const Er=/\./;var Or=function(t){class e extends t{stripPeriods(){return this.termList().forEach(t=>{let e=t.text.replace(/\./g,"");t.set(e)}),this}addPeriods(){return this.termList().forEach(t=>{let e=t.text.replace(/\./g,"");e=e.split("").join("."),!1===Er.test(t.post)&&(e+="."),t.set(e)}),this}}return e.prototype.unwrap=e.prototype.stripPeriods,e.prototype.strip=e.prototype.stripPeriods,t.prototype.acronyms=function(t){let r=this.match("#Acronym");return"number"==typeof t&&(r=r.get(t)),new e(r.list,this,this.world)},t};var Cr=function(t){return t.prototype.clauses=function(e){let r=this.if("@hasComma").notIf("@hasComma @hasComma").notIf("@hasComma . .? (and|or) .").notIf("(#City && @hasComma) #Country").notIf("(#WeekDay && @hasComma) #Date").notIf("(#Date && @hasComma) #Year").notIf("@hasComma (too|also)$").match("@hasComma"),n=this.splitAfter(r),i=n.quotations();n=n.splitOn(i);let s=n.parentheses();n=n.splitOn(s);let o=n.if("#Copula #Adjective #Conjunction (#Pronoun|#Determiner) #Verb").match("#Conjunction");n=n.splitBefore(o);let a=n.if("if .{2,9} then .").match("then");n=n.splitBefore(a),n=n.splitBefore("as well as ."),n=n.splitBefore("such as ."),n=n.splitBefore("in addition to ."),n=n.splitAfter("@hasSemicolon"),n=n.splitAfter("@hasDash");let l=n.filter(t=>t.wordCount()>5&&t.match("#Verb+").length>=2);if(l.found){let t=l.splitAfter("#Noun .* #Verb .* #Noun+");n=n.splitOn(t.eq(0))}return"number"==typeof e&&(n=n.get(e)),new t(n.list,this,this.world)},t};var Fr=function(t){class e extends t{constructor(t,e,r){super(t,e,r),this.contracted=null}expand(){return this.list.forEach(t=>{let e=t.terms(),r=e[0].isTitleCase();e.forEach((t,r)=>{t.set(t.implicit||t.text),t.implicit=void 0,r<e.length-1&&""===t.post&&(t.post+=" ")}),r&&e[0].toTitleCase()}),this}}return t.prototype.contractions=function(t){let r=this.match("@hasContraction+");return"number"==typeof t&&(r=r.get(t)),new e(r.list,this,this.world)},t.prototype.expanded=t.prototype.isExpanded,t.prototype.contracted=t.prototype.isContracted,t};var Tr=function(t){const e=function(t){let e=t.splitAfter("@hasComma").splitOn("(and|or) not?").not("(and|or) not?"),r=t.match("[.] (and|or)",0);return{things:e,conjunction:t.match("(and|or) not?"),beforeLast:r,hasOxford:r.has("@hasComma")}};class r extends t{conjunctions(){return this.match("(and|or)")}parts(){return this.splitAfter("@hasComma").splitOn("(and|or) not?")}items(){return e(this).things}add(t){return this.forEach(r=>{let n=e(r).beforeLast;n.append(t),n.termList(0).addPunctuation(",")}),this}remove(t){return this.items().if(t).remove()}hasOxfordComma(){return this.filter(t=>e(t).hasOxford)}addOxfordComma(){let t=this.items(),e=t.eq(t.length-2);return e.found&&!1===e.has("@hasComma")&&e.post(", "),this}removeOxfordComma(){let t=this.items(),e=t.eq(t.length-2);return e.found&&!0===e.has("@hasComma")&&e.post(" "),this}}return r.prototype.things=r.prototype.items,t.prototype.lists=function(t){let e=this.if("@hasComma+ .? (and|or) not? ."),n=e.match("(#Noun|#Adjective|#Determiner|#Article)+ #Conjunction not? (#Article|#Determiner)? #Adjective? #Noun+").if("#Noun"),i=e.match("(#Adjective|#Adverb)+ #Conjunction not? #Adverb? #Adjective+"),s=e.match("(#Verb|#Adverb)+ #Conjunction not? #Adverb? #Verb+"),o=n.concat(i);return o=o.concat(s),o=o.if("@hasComma"),"number"==typeof t&&(o=e.get(t)),new r(o.list,this,this.world)},t};var kr=function(t){return!0===t.has("#Plural")||!0!==t.has("(#Pronoun|#Place|#Value|#Person|#Uncountable|#Month|#WeekDay|#Holiday|#Possessive)")};const Nr={hour:"an",heir:"an",heirloom:"an",honest:"an",honour:"an",honor:"an",uber:"an"},$r={a:!0,e:!0,f:!0,h:!0,i:!0,l:!0,m:!0,n:!0,o:!0,r:!0,s:!0,x:!0},Vr=[/^onc?e/i,/^u[bcfhjkqrstn][aeiou]/i,/^eul/i];var Ir=function(t){if(t.has("#Person")||t.has("#Place"))return"";if(t.has("#Plural"))return"the";let e=t.text("normal").trim();if(Nr.hasOwnProperty(e))return Nr[e];let r=e.substr(0,1);if(t.has("^@isAcronym")&&$r.hasOwnProperty(r))return"an";for(let t=0;t<Vr.length;t++)if(Vr[t].test(e))return"a";return/^[aeiou]/i.test(e)?"an":"a"};var Br={isSingular:[/(ax|test)is$/i,/(octop|vir|radi|nucle|fung|cact|stimul)us$/i,/(octop|vir)i$/i,/(rl)f$/i,/(alias|status)$/i,/(bu)s$/i,/(al|ad|at|er|et|ed|ad)o$/i,/(ti)um$/i,/(ti)a$/i,/sis$/i,/(?:(^f)fe|(lr)f)$/i,/hive$/i,/(^aeiouy|qu)y$/i,/(x|ch|ss|sh|z)$/i,/(matr|vert|ind|cort)(ix|ex)$/i,/(m|l)ouse$/i,/(m|l)ice$/i,/(antenn|formul|nebul|vertebr|vit)a$/i,/.sis$/i,/^(?!talis|.*hu)(.*)man$/i],isPlural:[/(antenn|formul|nebul|vertebr|vit)ae$/i,/(octop|vir|radi|nucle|fung|cact|stimul)i$/i,/men$/i,/.tia$/i,/(m|l)ice$/i]};const zr=/s$/;var Sr=function(t){return!Br.isSingular.find(e=>e.test(t))&&(!0===zr.test(t)||(!!Br.isPlural.find(e=>e.test(t))||null))};const Dr={he:"his",she:"hers",they:"theirs",we:"ours",i:"mine",you:"yours",her:"hers",their:"theirs",our:"ours",my:"mine",your:"yours"};var Mr=function(t){let e=t.text("text").trim();return Dr.hasOwnProperty(e)?(t.replaceWith(Dr[e],!0),void t.tag("Possessive","toPossessive")):/s$/.test(e)?(e+="'",t.replaceWith(e,!0),void t.tag("Possessive","toPossessive")):(e+="'s",t.replaceWith(e,!0),void t.tag("Possessive","toPossessive"))};var _r=function(t){let e={main:t};if(t.has("#Noun (of|by|for) .")){let r=t.splitAfter("[#Noun+]",0);e.main=r.eq(0),e.post=r.eq(1)}return e};var Gr={json:function(t){let e=null;"number"==typeof t&&(e=t,t=null),t=t||{text:!0,normal:!0,trim:!0,terms:!0};let r=[];return this.forEach(e=>{let n=e.json(t)[0];n.article=Ir(e),r.push(n)}),null!==e?r[e]:r},adjectives:function(){let t=this.lookAhead("^(that|who|which)? (was|is|will)? be? #Adverb? #Adjective+");return t=t.concat(this.lookBehind("#Adjective+ #Adverb?$")),t=t.match("#Adjective"),t.sort("index")},isPlural:function(){return this.if("#Plural")},hasPlural:function(){return this.filter(t=>kr(t))},toPlural:function(t){let e=this.world.transforms.toPlural;return this.forEach(r=>{if(r.has("#Plural")||!1===kr(r))return;let n=_r(r).main,i=n.text("reduced");if((n.has("#Singular")||!0!==Sr(i))&&(i=e(i,this.world),n.replace(i).tag("#Plural"),t)){let t=n.lookBefore("(an|a) #Adjective?$").not("#Adjective");!0===t.found&&t.remove()}}),this},toSingular:function(t){let e=this.world.transforms.toSingular;return this.forEach(r=>{if(r.has("^#Singular+$")||!1===kr(r))return;let n=_r(r).main,i=n.text("reduced");if((n.has("#Plural")||!0===Sr(i))&&(i=e(i,this.world),n.replace(i).tag("#Singular"),t)){let t=r,e=r.lookBefore("#Adjective");e.found&&(t=e);let n=Ir(t);t.insertBefore(n)}}),this},toPossessive:function(){return this.forEach(t=>{Mr(t)}),this}};var qr=function(t){class e extends t{}return Object.assign(e.prototype,Gr),t.prototype.nouns=function(t,r={}){let n=this.match("(#City && @hasComma) (#Region|#Country)"),i=this.not(n).splitAfter("@hasComma");i=i.concat(n);let s=i.quotations();return s.found&&(i=i.splitOn(s.eq(0))),i=i.match("#Noun+ (of|by)? the? #Noun+?"),!0!==r.keep_anaphora&&(i=i.not("#Pronoun"),i=i.not("(there|these)"),i=i.not("(#Month|#WeekDay)"),i=i.not("(my|our|your|their|her|his)")),i=i.not("(of|for|by|the)$"),"number"==typeof t&&(i=i.get(t)),new e(i.list,this,this.world)},t};const Lr=/\(/,Wr=/\)/;var Ur=function(t){class e extends t{unwrap(){return this.list.forEach(t=>{let e=t.terms(0);e.pre=e.pre.replace(Lr,"");let r=t.lastTerm();r.post=r.post.replace(Wr,"")}),this}}return t.prototype.parentheses=function(t){let r=[];return this.list.forEach(t=>{let e=t.terms();for(let n=0;n<e.length;n+=1){const i=e[n];if(Lr.test(i.pre))for(let s=n;s<e.length;s+=1)if(Wr.test(e[s].post)){let e=s-n+1;r.push(t.buildFrom(i.id,e)),n=s;break}}}),"number"==typeof t?(r=r[t]?[r[t]]:[],new e(r,this,this.world)):new e(r,this,this.world)},t};var Hr=function(t){class e extends t{constructor(t,e,r){super(t,e,r),this.contracted=null}strip(){return this.list.forEach(t=>{t.terms().forEach(t=>{let e=t.text.replace(/'s$/,"");t.set(e||t.text)})}),this}}return t.prototype.possessives=function(t){let r=this.match("#Noun+? #Possessive");return"number"==typeof t&&(r=r.get(t)),new e(r.list,this,this.world)},t};const Rr={'"':'"',"＂":"＂","'":"'","“":"”","‘":"’","‟":"”","‛":"’","„":"”","⹂":"”","‚":"’","«":"»","‹":"›","‵":"′","‶":"″","‷":"‴","〝":"〞","`":"´","〟":"〞"},Qr=RegExp("("+Object.keys(Rr).join("|")+")");var Zr=function(t){class e extends t{unwrap(){return this}}return t.prototype.quotations=function(t){let r=[];return this.list.forEach(t=>{let e=t.terms();for(let n=0;n<e.length;n+=1){const i=e[n];if(Qr.test(i.pre)){let s=(i.pre.match(Qr)||[])[0],o=Rr[s];for(let s=n;s<e.length;s+=1)if(-1!==e[s].post.indexOf(o)){let e=s-n+1;r.push(t.buildFrom(i.id,e)),n=s;break}}}}),"number"==typeof t?(r=r[t]?[r[t]]:[],new e(r,this,this.world)):new e(r,this,this.world)},t.prototype.quotes=t.prototype.quotations,t};var Jr=function(t,e){let r=t.verb,n=r.text("reduced");if(r.has("#Infinitive"))return n;let i=null;return r.has("#PastTense")?i="PastTense":r.has("#Gerund")?i="Gerund":r.has("#PresentTense")?i="PresentTense":r.has("#Participle")?i="Participle":r.has("#Actor")&&(i="Actor"),e.transforms.toInfinitive(n,e,i)};var Yr=function(t){let e=t.verb;if(e.has("(are|were|does)")||t.auxiliary.has("(are|were|does)"))return!0;let r=function(t){return t.lookBehind("#Noun+").last()}(e);return!r.has("(he|she|many|both)")&&(!!r.has("(we|they|you|i)")||!r.has("#Person")&&(!!r.has("#Plural")||!r.has("#Singular")&&(!e.has("(is|am|do|was)")&&(!(t.auxiliary.has("(is|am|do|was)")&&!t.negative.found)&&null))))};var Kr=function(t,e){let r=t.verb;if(!t.negative.found){if(t.auxiliary.found)return t.auxiliary.eq(0).append("not"),void(t.auxiliary.has("#Modal have not")&&t.auxiliary.replace("have not","not have"));if(r.has("(#Copula|will|has|had|do)"))r.append("not");else{if(r.has("#PastTense")){let n=Jr(t,e);return r.replaceWith(n,!0),void r.prepend("did not")}if(r.has("#PresentTense")){let n=Jr(t,e);return r.replaceWith(n,!0),void(Yr(t)?r.prepend("do not"):r.prepend("does not"))}if(r.has("#Gerund")){let n=Jr(t,e);return r.replaceWith(n,!0),void r.prepend("not")}Yr(t)?r.prepend("does not"):r.prepend("do not")}}};var Xr=function(t){let e=t.lookBehind(),r=e.nouns(null,{keep_anaphora:!0}).last();return r.found||(r=e.match("(that|this|each)").last(),r=r.tag("#Noun").nouns()),r};var tn=function(t){let e={adverb:t.match("#Adverb+"),negative:t.match("#Negative"),auxiliary:t.match("#Auxiliary+").not("(#Negative|#Adverb)"),particle:t.match("#Particle"),verb:t.match("#Verb+").not("(#Adverb|#Negative|#Auxiliary|#Particle)"),original:t,subject:Xr(t)};if(e.verb.has("(#PresentTense|#PastTense|#Infinitive) #Gerund$")&&(e.verb=e.verb.not("#Gerund$")),!e.verb.found)return Object.keys(e).forEach(t=>{e[t]=e[t].not(".")}),e.verb=t,e;if(e.adverb&&e.adverb.found){let r=e.adverb.text("reduced")+"$";t.has(r)&&(e.adverbAfter=!0)}return e};var en=t=>{let e=!1,r=Yr(t),n=t.negative.found;t.verb.lookBehind("i (#Adverb|#Verb)?$").found&&(e=!0);let i={PastTense:"was",PresentTense:"is",FutureTense:"will be",Infinitive:"is",Gerund:"being",Actor:"",PerfectTense:"been",Pluperfect:"been"};return r&&(i.PastTense="were",i.PresentTense="are",i.Infinitive="are"),!0===e&&(i.PastTense="was",i.PresentTense="am",i.Infinitive="am"),n&&(i.PastTense+=" not",i.PresentTense+=" not",i.FutureTense="will not be",i.Infinitive+=" not",i.PerfectTense="not "+i.PerfectTense,i.Pluperfect="not "+i.Pluperfect,i.Gerund="not "+i.Gerund),i};var rn=function(t){let e=t.verb.text();return{PastTense:e+" have",PresentTense:e,FutureTense:e,Infinitive:e}};var nn=function(t,e){let r=t.verb;if(r.has("#Copula")||"be"===r.out("normal")&&t.auxiliary.has("will"))return en(t);if(t.auxiliary.has("are")&&r.has("#Gerund")){let r=t.original.clone(),n=r.clone().replace("are","were"),i=r.clone().replace("are","will be"),s=Jr(t,e);return{PastTense:n.text(),PresentTense:r.text(),FutureTense:i.text(),Infinitive:s}}if(r.has("#Modal"))return rn(t);let n=Jr(t,e);if(!n)return{};let i=e.transforms.conjugate(n,e);i.Infinitive=n;let s=Yr(t);!0===s&&(i.PresentTense=i.Infinitive);let o=t.verb.termList(0).hasHyphen();if(t.particle.found){let e=t.particle.text(),r=!0===o?"-":" ";Object.keys(i).forEach(t=>i[t]+=r+e)}const a=t.negative.found;return i.FutureTense=i.FutureTense||"will "+i.Infinitive,a&&(i.PastTense="did not "+i.Infinitive,i.FutureTense="will not "+i.Infinitive,s?(i.PresentTense="do not "+i.Infinitive,i.Infinitive="do not "+i.Infinitive):(i.PresentTense="does not "+i.Infinitive,i.Infinitive="does not "+i.Infinitive),i.Gerund="not "+i.Gerund),i};var sn={useParticiple:function(t){return!!t.auxiliary.has("(could|should|would|may|can|must)")||(!!t.auxiliary.has("am .+? being")||!!t.auxiliary.has("had .+? been"))},toParticiple:function(t,e){if(t.auxiliary.has("(have|had)")&&t.verb.has("#Participle"))return;let r=nn(t,e),n=r.Participle||r.PastTense;n&&t.verb.replaceWith(n,!1),t.auxiliary.has("am .+? being")&&(t.auxiliary.remove("am"),t.auxiliary.replace("being","have been")),t.auxiliary.has("have")||t.auxiliary.append("have"),t.verb.tag("Participle","toParticiple"),t.auxiliary.replace("can","could"),t.auxiliary.replace("be have","have been"),t.auxiliary.replace("not have","have not"),t.auxiliary.tag("Auxiliary")}};const{toParticiple:on,useParticiple:an}=sn,ln=function(t){return t.auxiliary.remove("(will|are|am|being)"),t.auxiliary.remove("(did|does)"),t.auxiliary.remove("(had|has|have)"),t.particle.remove(),t.negative.remove(),t};var un={json:function(t){let e=null;"number"==typeof t&&(e=t,t=null),t=t||{text:!0,normal:!0,trim:!0,terms:!0};let r=[];return this.forEach(e=>{let n=e.json(t)[0],i=tn(e);n.parts={},Object.keys(i).forEach(t=>{i[t]&&"Doc"===i[t].isA?n.parts[t]=i[t].text("normal"):n.parts[t]=i[t]}),n.isNegative=e.has("#Negative"),n.conjugations=nn(i,this.world),r.push(n)}),null!==e?r[e]:r},adverbs:function(){let t=[];this.forEach(e=>{let r=tn(e).adverb;r.found&&(t=t.concat(r.list))});let e=this.lookBehind("#Adverb+$");return e.found&&(t=e.list.concat(t)),e=this.lookAhead("^#Adverb+"),e.found&&(t=t.concat(e.list)),this.buildFrom(t)},isPlural:function(){let t=[];return this.forEach(e=>{let r=tn(e);!0===Yr(r,this.world)&&t.push(e.list[0])}),this.buildFrom(t)},isSingular:function(){let t=[];return this.forEach(e=>{let r=tn(e);!1===Yr(r,this.world)&&t.push(e.list[0])}),this.buildFrom(t)},conjugate:function(){let t=[];return this.forEach(e=>{let r=tn(e),n=nn(r,this.world);t.push(n)}),t},toPastTense:function(){return this.forEach(t=>{let e=tn(t);if(an(e))return void on(e,this.world);if(t.has("#Imperative"))return;if(t.has("be")&&t.lookBehind("to$").found)return;if(e.verb.has("#Gerund")&&e.auxiliary.has("(is|will|was)"))return void t.replace("is","was");let r=nn(e,this.world).PastTense;r&&(e=ln(e),e.verb.replaceWith(r,!1),e.auxiliary.remove("(do|did|will)"))}),this},toPresentTense:function(){return this.forEach(t=>{if(t.has("#Imperative"))return;let e=tn(t),r=nn(e,this.world),n=r.PresentTense;if(t.lookBehind("(i|we) (#Adverb|#Verb)?$").found&&(n=r.Infinitive),n){if(e.auxiliary.has("(have|had) been"))return e.auxiliary.replace("(have|had) been","am being"),void(r.Particle&&(n=r.Particle||r.PastTense));e.verb.replaceWith(n,!1),e.verb.tag("PresentTense"),e=ln(e),e.auxiliary.remove("#Modal"),e.auxiliary.remove("(do|did|will)")}}),this},toFutureTense:function(){return this.forEach(t=>{let e=tn(t);if(an(e))return;if(t.has("#Imperative"))return;let r=nn(e,this.world).FutureTense;r&&(e=ln(e),e.auxiliary.remove("#Modal"),e.verb.replaceWith(r,!1),e.verb.tag("FutureTense"),e.auxiliary.remove("(do|did|will)"))}),this},toInfinitive:function(){return this.forEach(t=>{let e=tn(t),r=nn(e,this.world).Infinitive;r&&(t.replaceWith(r,!1),t.tag("Infinitive"))}),this},toGerund:function(){return this.forEach(t=>{let e=tn(t),r=nn(e,this.world).Gerund;r&&(t.replaceWith(r,!1),t.tag("Gerund"))}),this},toParticiple:function(){return this.forEach(t=>{let e=tn(t),r=!e.auxiliary.found;on(e,this.world),r&&(e.verb.prepend(e.auxiliary.text()),e.auxiliary.remove())}),this},isNegative:function(){return this.if("#Negative")},isPositive:function(){return this.ifNo("#Negative")},isImperative:function(){return this.if("#Imperative")},toNegative:function(){return this.list.forEach(t=>{let e=this.buildFrom([t]),r=tn(e);Kr(r,e.world)}),this},toPositive:function(){let t=this.match("do not #Verb");return t.found&&t.remove("do not"),this.remove("#Negative")},subject:function(){let t=[];return this.forEach(e=>{let r=Xr(e);r.list[0]&&t.push(r.list[0])}),this.buildFrom(t)}};const hn=[jr,Or,Cr,Fr,Tr,qr,Ur,Hr,Zr,function(t){class e extends t{}return Object.assign(e.prototype,un),e.prototype.negate=e.prototype.toNegative,t.prototype.verbs=function(t){let r=this.match("(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+");r=r.not("^#Adverb+"),r=r.not("#Adverb+$");let n=r.match("(#Adverb && @hasComma) #Adverb"),i=r.not(n).splitAfter("@hasComma");return i=i.concat(n),i.sort("index"),i=i.if("#Verb"),i.has("(is|was)$")&&(i=i.splitBefore("(is|was)$")),i.has("#PresentTense #Adverb #PresentTense")&&(i=i.splitBefore("#Adverb #PresentTense")),"number"==typeof t&&(i=i.get(t)),new e(i.list,this,this.world)},t},function(t){class e extends t{}return t.prototype.people=function(t){let r=this.splitAfter("@hasComma");return r=r.match("#Person+"),"number"==typeof t&&(r=r.get(t)),new e(r.list,this,this.world)},t}];var cn=function(t){return Object.keys(yr).forEach(e=>t.prototype[e]=yr[e]),hn.forEach(e=>e(t)),t};const fn={misc:vr,selections:yr};class pn{constructor(t,e,r){this.list=t,Object.defineProperty(this,"from",{enumerable:!1,value:e,writable:!0}),void 0===r&&void 0!==e&&(r=e.world),Object.defineProperty(this,"world",{enumerable:!1,value:r,writable:!0}),Object.defineProperty(this,"_cache",{enumerable:!1,writable:!0,value:{}}),Object.defineProperty(this,"found",{get:()=>this.list.length>0}),Object.defineProperty(this,"length",{get:()=>this.list.length}),Object.defineProperty(this,"isA",{get:()=>"Doc"})}tagger(){return Pr(this)}pool(){return this.list.length>0?this.list[0].pool:this.all().list[0].pool}}pn.prototype.buildFrom=function(t){return t=t.map(t=>t.clone(!0)),new pn(t,this,this.world)},pn.prototype.fromText=function(t){let e=oe(t,this.world,this.pool());return this.buildFrom(e)},Object.assign(pn.prototype,fn.misc),Object.assign(pn.prototype,fn.selections),cn(pn);const dn={untag:"unTag",and:"match",notIf:"ifNo",only:"if",onlyIf:"if"};Object.keys(dn).forEach(t=>pn.prototype[t]=pn.prototype[dn[t]]);var mn=pn;return function t(e){let r=e;const n=function(t="",e){e&&r.addWords(e);let n=oe(t,r),i=new mn(n,null,r);return i.tagger(),i};return n.tokenize=function(t="",e){let n=r;e&&(n=n.clone(),n.words={},n.addWords(e));let i=oe(t,n),s=new mn(i,null,n);return(e||s.world.taggers.length>0)&&Pr(s),s},n.extend=function(t){return t(mn,r,this,Mt,Y,Gt),this},n.fromJSON=function(t){let e=ae(t,r);return new mn(e,null,r)},n.clone=function(){return t(r.clone())},n.verbose=function(t=!0){return r.verbose(t),this},n.world=function(){return r},n.parseMatch=function(t,e){return $t(t,e)},n.version="13.11.2",n.import=n.load,n.plugin=n.extend,n}(new Ie)}));
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+  typeof define === 'function' && define.amd ? define(factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.nlp = factory());
+}(this, (function () { 'use strict';
+
+  //this is a not-well-thought-out way to reduce our dependence on `object===object` stuff
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'.split(''); //generates a unique id for this term
+
+  function makeId(str) {
+    str = str || '_';
+    let text = str + '-';
+
+    for (let i = 0; i < 7; i++) {
+      text += chars[Math.floor(Math.random() * chars.length)];
+    }
+
+    return text;
+  }
+
+  var _id = makeId;
+
+  //a hugely-ignorant, and widely subjective transliteration of latin, cryllic, greek unicode characters to english ascii.
+  //approximate visual (not semantic or phonetic) relationship between unicode and ascii characters
+  //http://en.wikipedia.org/wiki/List_of_Unicode_characters
+  //https://docs.google.com/spreadsheet/ccc?key=0Ah46z755j7cVdFRDM1A2YVpwa1ZYWlpJM2pQZ003M0E
+  let compact = {
+    '!': '¡',
+    '?': '¿Ɂ',
+    '"': '“”"❝❞',
+    "'": '‘‛❛❜',
+    '-': '—–',
+    a: 'ªÀÁÂÃÄÅàáâãäåĀāĂăĄąǍǎǞǟǠǡǺǻȀȁȂȃȦȧȺΆΑΔΛάαλАадѦѧӐӑӒӓƛɅæ',
+    b: 'ßþƀƁƂƃƄƅɃΒβϐϦБВЪЬвъьѢѣҌҍ',
+    c: '¢©ÇçĆćĈĉĊċČčƆƇƈȻȼͻͼͽϲϹϽϾСсєҀҁҪҫ',
+    d: 'ÐĎďĐđƉƊȡƋƌǷ',
+    e: 'ÈÉÊËèéêëĒēĔĕĖėĘęĚěƎƏƐǝȄȅȆȇȨȩɆɇΈΕΞΣέεξϱϵ϶ЀЁЕЭеѐёҼҽҾҿӖӗӘәӚӛӬӭ',
+    f: 'ƑƒϜϝӺӻҒғſ',
+    g: 'ĜĝĞğĠġĢģƓǤǥǦǧǴǵ',
+    h: 'ĤĥĦħƕǶȞȟΉΗЂЊЋНнђћҢңҤҥҺһӉӊ',
+    I: 'ÌÍÎÏ',
+    i: 'ìíîïĨĩĪīĬĭĮįİıƖƗȈȉȊȋΊΐΪίιϊІЇії',
+    j: 'ĴĵǰȷɈɉϳЈј',
+    k: 'ĶķĸƘƙǨǩΚκЌЖКжкќҚқҜҝҞҟҠҡ',
+    l: 'ĹĺĻļĽľĿŀŁłƚƪǀǏǐȴȽΙӀӏ',
+    m: 'ΜϺϻМмӍӎ',
+    n: 'ÑñŃńŅņŇňŉŊŋƝƞǸǹȠȵΝΠήηϞЍИЙЛПийлпѝҊҋӅӆӢӣӤӥπ',
+    o: 'ÒÓÔÕÖØðòóôõöøŌōŎŏŐőƟƠơǑǒǪǫǬǭǾǿȌȍȎȏȪȫȬȭȮȯȰȱΌΘΟθοσόϕϘϙϬϭϴОФоѲѳӦӧӨөӪӫ',
+    p: 'ƤƿΡρϷϸϼРрҎҏÞ',
+    q: 'Ɋɋ',
+    r: 'ŔŕŖŗŘřƦȐȑȒȓɌɍЃГЯгяѓҐґ',
+    s: 'ŚśŜŝŞşŠšƧƨȘșȿЅѕ',
+    t: 'ŢţŤťŦŧƫƬƭƮȚțȶȾΓΤτϮТт',
+    u: 'µÙÚÛÜùúûüŨũŪūŬŭŮůŰűŲųƯưƱƲǓǔǕǖǗǘǙǚǛǜȔȕȖȗɄΰμυϋύ',
+    v: 'νѴѵѶѷ',
+    w: 'ŴŵƜωώϖϢϣШЩшщѡѿ',
+    x: '×ΧχϗϰХхҲҳӼӽӾӿ',
+    y: 'ÝýÿŶŷŸƳƴȲȳɎɏΎΥΫγψϒϓϔЎУучўѰѱҮүҰұӮӯӰӱӲӳ',
+    z: 'ŹźŻżŽžƩƵƶȤȥɀΖζ'
+  }; //decompress data into two hashes
+
+  let unicode = {};
+  Object.keys(compact).forEach(function (k) {
+    compact[k].split('').forEach(function (s) {
+      unicode[s] = k;
+    });
+  });
+
+  const killUnicode = str => {
+    let chars = str.split('');
+    chars.forEach((s, i) => {
+      if (unicode[s]) {
+        chars[i] = unicode[s];
+      }
+    });
+    return chars.join('');
+  };
+
+  var unicode_1 = killUnicode; // console.log(killUnicode('bjŏȒk—Ɏó'));
+
+  const periodAcronym = /([A-Z]\.)+[A-Z]?,?$/;
+  const oneLetterAcronym = /^[A-Z]\.,?$/;
+  const noPeriodAcronym = /[A-Z]{2,}('s|,)?$/;
+  const lowerCaseAcronym = /([a-z]\.)+[a-z]\.?$/;
+
+  const isAcronym$1 = function (str) {
+    //like N.D.A
+    if (periodAcronym.test(str) === true) {
+      return true;
+    } //like c.e.o
+
+
+    if (lowerCaseAcronym.test(str) === true) {
+      return true;
+    } //like 'F.'
+
+
+    if (oneLetterAcronym.test(str) === true) {
+      return true;
+    } //like NDA
+
+
+    if (noPeriodAcronym.test(str) === true) {
+      return true;
+    }
+
+    return false;
+  };
+
+  var isAcronym_1$1 = isAcronym$1;
+
+  const hasSlash$1 = /[a-z\u00C0-\u00FF] ?\/ ?[a-z\u00C0-\u00FF]/;
+  /** some basic operations on a string to reduce noise */
+
+  const clean = function (str) {
+    str = str || '';
+    str = str.toLowerCase();
+    str = str.trim();
+    let original = str; //(very) rough ASCII transliteration -  bjŏrk -> bjork
+
+    str = unicode_1(str); //rough handling of slashes - 'see/saw'
+
+    if (hasSlash$1.test(str) === true) {
+      str = str.replace(/\/.*/, '');
+    } //#tags, @mentions
+
+
+    str = str.replace(/^[#@]/, ''); //punctuation
+
+    str = str.replace(/[,;.!?]+$/, ''); // coerce single curly quotes
+
+    str = str.replace(/[\u0027\u0060\u00B4\u2018\u2019\u201A\u201B\u2032\u2035\u2039\u203A]+/g, "'"); // coerce double curly quotes
+
+    str = str.replace(/[\u0022\u00AB\u00BB\u201C\u201D\u201E\u201F\u2033\u2034\u2036\u2037\u2E42\u301D\u301E\u301F\uFF02]+/g, '"'); //coerce Unicode ellipses
+
+    str = str.replace(/\u2026/g, '...'); //en-dash
+
+    str = str.replace(/\u2013/g, '-'); //lookin'->looking (make it easier for conjugation)
+
+    str = str.replace(/([aeiou][ktrp])in$/, '$1ing'); //turn re-enactment to reenactment
+
+    if (/^(re|un)-?[^aeiou]./.test(str) === true) {
+      str = str.replace('-', '');
+    } //compact acronyms
+
+
+    if (isAcronym_1$1(str)) {
+      str = str.replace(/\./g, '');
+    } //strip leading & trailing grammatical punctuation
+
+
+    if (/^[:;]/.test(str) === false) {
+      str = str.replace(/\.{3,}$/g, '');
+      str = str.replace(/[",\.!:;\?\)]+$/g, '');
+      str = str.replace(/^['"\(]+/g, '');
+    } // remove zero-width characters
+
+
+    str = str.replace(/[\u200B-\u200D\uFEFF]/g, ''); //do this again..
+
+    str = str.trim(); //oh shucks,
+
+    if (str === '') {
+      str = original;
+    } //nice-numbers
+
+
+    str = str.replace(/([0-9]),([0-9])/g, '$1$2');
+    return str;
+  };
+
+  var clean_1 = clean; // console.log(normalize('Dr. V Cooper'));
+
+  /** reduced is one step further than clean */
+  const reduced = function (str) {
+    // remove apostrophes
+    str = str.replace(/['’]s$/, '');
+    str = str.replace(/s['’]$/, 's');
+    return str;
+  };
+
+  var reduce = reduced;
+
+  //all punctuation marks, from https://en.wikipedia.org/wiki/Punctuation
+  //we have slightly different rules for start/end - like #hashtags.
+
+  const startings = /^[ \n\t\.\[\](){}⟨⟩:,،、‒–—―…!‹›«»‐\-?‘’;\/⁄·&*•^†‡°¡¿※№÷×ºª%‰+−=‱¶′″‴§~\|‖¦©℗®℠™¤₳฿\u0022\uFF02\u0027\u201C\u201F\u201B\u201E\u2E42\u201A\u2035\u2036\u2037\u301D\u0060\u301F]+/;
+  const endings = /[ \n\t\.'\[\](){}⟨⟩:,،、‒–—―…!‹›«»‐\-?‘’;\/⁄·&*@•^†‡°¡¿※#№÷×ºª‰+−=‱¶′″‴§~\|‖¦©℗®℠™¤₳฿\u0022\uFF02\u201D\u00B4\u301E]+$/; //money = ₵¢₡₢$₫₯֏₠€ƒ₣₲₴₭₺₾ℳ₥₦₧₱₰£៛₽₹₨₪৳₸₮₩¥
+
+  const hasSlash = /\//;
+  const hasApostrophe = /['’]/;
+  const hasAcronym = /^[a-z]\.([a-z]\.)+/i;
+  const minusNumber = /^[-+\.][0-9]/;
+  const shortYear = /^'[0-9]{2}/;
+  /** turn given text into a parsed-up object
+   * seperate the 'meat' of the word from the whitespace+punctuation
+   */
+
+  const parseTerm = str => {
+    let original = str;
+    let pre = '';
+    let post = '';
+    str = str.replace(startings, found => {
+      pre = found; // support '-40'
+
+      if ((pre === '-' || pre === '+' || pre === '.') && minusNumber.test(str)) {
+        pre = '';
+        return found;
+      } // support years like '97
+
+
+      if (pre === `'` && shortYear.test(str)) {
+        pre = '';
+        return found;
+      }
+
+      return '';
+    });
+    str = str.replace(endings, found => {
+      post = found; // keep s-apostrophe - "flanders'" or "chillin'"
+
+      if (hasApostrophe.test(found) && /[sn]['’]$/.test(original) && hasApostrophe.test(pre) === false) {
+        post = post.replace(hasApostrophe, '');
+        return `'`;
+      } //keep end-period in acronym
+
+
+      if (hasAcronym.test(str) === true) {
+        post = post.replace(/\./, '');
+        return '.';
+      }
+
+      return '';
+    }); //we went too far..
+
+    if (str === '') {
+      // do a very mild parse, and hope for the best.
+      original = original.replace(/ *$/, after => {
+        post = after || '';
+        return '';
+      });
+      str = original;
+      pre = '';
+      post = post;
+    } // create the various forms of our text,
+
+
+    let clean = clean_1(str);
+    const parsed = {
+      text: str,
+      clean: clean,
+      reduced: reduce(clean),
+      pre: pre,
+      post: post
+    }; // support aliases for slashes
+
+    if (hasSlash.test(str)) {
+      str.split(hasSlash).forEach(word => {
+        parsed.alias = parsed.alias || {};
+        parsed.alias[word.trim()] = true;
+      });
+    }
+
+    return parsed;
+  };
+
+  var parse$2 = parseTerm;
+
+  function createCommonjsModule(fn) {
+    var module = { exports: {} };
+  	return fn(module, module.exports), module.exports;
+  }
+
+  var _01Case = createCommonjsModule(function (module, exports) {
+    const titleCase = /^[A-Z][a-z'\u00C0-\u00FF]/;
+    const upperCase = /^[A-Z]+s?$/;
+    /** convert all text to uppercase */
+
+    exports.toUpperCase = function () {
+      this.text = this.text.toUpperCase();
+      return this;
+    };
+    /** convert all text to lowercase */
+
+
+    exports.toLowerCase = function () {
+      this.text = this.text.toLowerCase();
+      return this;
+    };
+    /** only set the first letter to uppercase
+     * leave any existing uppercase alone
+     */
+
+
+    exports.toTitleCase = function () {
+      this.text = this.text.replace(/^ *[a-z\u00C0-\u00FF]/, x => x.toUpperCase()); //support unicode?
+
+      return this;
+    };
+    /** if all letters are uppercase */
+
+
+    exports.isUpperCase = function () {
+      return upperCase.test(this.text);
+    };
+    /** if the first letter is uppercase, and the rest are lowercase */
+
+
+    exports.isTitleCase = function () {
+      return titleCase.test(this.text);
+    };
+
+    exports.titleCase = exports.isTitleCase;
+  });
+
+  var _02Punctuation = createCommonjsModule(function (module, exports) {
+    // these methods are called with '@hasComma' in the match syntax
+    // various unicode quotation-mark formats
+    const startQuote = /(\u0022|\uFF02|\u0027|\u201C|\u2018|\u201F|\u201B|\u201E|\u2E42|\u201A|\u00AB|\u2039|\u2035|\u2036|\u2037|\u301D|\u0060|\u301F)/;
+    const endQuote = /(\u0022|\uFF02|\u0027|\u201D|\u2019|\u201D|\u2019|\u201D|\u201D|\u2019|\u00BB|\u203A|\u2032|\u2033|\u2034|\u301E|\u00B4|\u301E)/;
+    /** search the term's 'post' punctuation  */
+
+    exports.hasPost = function (punct) {
+      return this.post.indexOf(punct) !== -1;
+    };
+    /** search the term's 'pre' punctuation  */
+
+
+    exports.hasPre = function (punct) {
+      return this.pre.indexOf(punct) !== -1;
+    };
+    /** does it have a quotation symbol?  */
+
+
+    exports.hasQuote = function () {
+      return startQuote.test(this.pre) || endQuote.test(this.post);
+    };
+
+    exports.hasQuotation = exports.hasQuote;
+    /** does it have a comma?  */
+
+    exports.hasComma = function () {
+      return this.hasPost(',');
+    };
+    /** does it end in a period? */
+
+
+    exports.hasPeriod = function () {
+      return this.hasPost('.') === true && this.hasPost('...') === false;
+    };
+    /** does it end in an exclamation */
+
+
+    exports.hasExclamation = function () {
+      return this.hasPost('!');
+    };
+    /** does it end with a question mark? */
+
+
+    exports.hasQuestionMark = function () {
+      return this.hasPost('?') || this.hasPost('¿');
+    };
+    /** is there a ... at the end? */
+
+
+    exports.hasEllipses = function () {
+      return this.hasPost('..') || this.hasPost('…') || this.hasPre('..') || this.hasPre('…');
+    };
+    /** is there a semicolon after this word? */
+
+
+    exports.hasSemicolon = function () {
+      return this.hasPost(';');
+    };
+    /** is there a slash '/' in this word? */
+
+
+    exports.hasSlash = function () {
+      return /\//.test(this.text);
+    };
+    /** a hyphen connects two words like-this */
+
+
+    exports.hasHyphen = function () {
+      const hyphen = /^(-|–|—)$/;
+      return hyphen.test(this.post) || hyphen.test(this.pre);
+    };
+    /** a dash separates words - like that */
+
+
+    exports.hasDash = function () {
+      const hyphen = / (-|–|—) /;
+      return hyphen.test(this.post) || hyphen.test(this.pre);
+    };
+    /** is it multiple words combinded */
+
+
+    exports.hasContraction = function () {
+      return Boolean(this.implicit);
+    };
+    /** try to sensibly put this punctuation mark into the term */
+
+
+    exports.addPunctuation = function (punct) {
+      // dont add doubles
+      if (punct === ',' || punct === ';') {
+        this.post = this.post.replace(punct, '');
+      }
+
+      this.post = punct + this.post;
+      return this;
+    };
+  });
+
+  // fuzzy-match (damerau-levenshtein)
+  // Based on  tad-lispy /node-damerau-levenshtein
+  // https://github.com/tad-lispy/node-damerau-levenshtein/blob/master/index.js
+  // count steps (insertions, deletions, substitutions, or transpositions)
+  const editDistance = function (strA, strB) {
+    let aLength = strA.length,
+        bLength = strB.length; // fail-fast
+
+    if (aLength === 0) {
+      return bLength;
+    }
+
+    if (bLength === 0) {
+      return aLength;
+    } // If the limit is not defined it will be calculate from this and that args.
+
+
+    let limit = (bLength > aLength ? bLength : aLength) + 1;
+
+    if (Math.abs(aLength - bLength) > (limit || 100)) {
+      return limit || 100;
+    } // init the array
+
+
+    let matrix = [];
+
+    for (let i = 0; i < limit; i++) {
+      matrix[i] = [i];
+      matrix[i].length = limit;
+    }
+
+    for (let i = 0; i < limit; i++) {
+      matrix[0][i] = i;
+    } // Calculate matrix.
+
+
+    let j, a_index, b_index, cost, min, t;
+
+    for (let i = 1; i <= aLength; ++i) {
+      a_index = strA[i - 1];
+
+      for (j = 1; j <= bLength; ++j) {
+        // Check the jagged distance total so far
+        if (i === j && matrix[i][j] > 4) {
+          return aLength;
+        }
+
+        b_index = strB[j - 1];
+        cost = a_index === b_index ? 0 : 1; // Step 5
+        // Calculate the minimum (much faster than Math.min(...)).
+
+        min = matrix[i - 1][j] + 1; // Deletion.
+
+        if ((t = matrix[i][j - 1] + 1) < min) min = t; // Insertion.
+
+        if ((t = matrix[i - 1][j - 1] + cost) < min) min = t; // Substitution.
+        // Update matrix.
+
+        let shouldUpdate = i > 1 && j > 1 && a_index === strB[j - 2] && strA[i - 2] === b_index && (t = matrix[i - 2][j - 2] + cost) < min;
+
+        if (shouldUpdate) {
+          matrix[i][j] = t;
+        } else {
+          matrix[i][j] = min;
+        }
+      }
+    } // return number of steps
+
+
+    return matrix[aLength][bLength];
+  }; // score similarity by from 0-1 (steps/length)
+
+
+  const fuzzyMatch = function (strA, strB, minLength = 3) {
+    if (strA === strB) {
+      return 1;
+    } //don't even bother on tiny strings
+
+
+    if (strA.length < minLength || strB.length < minLength) {
+      return 0;
+    }
+
+    const steps = editDistance(strA, strB);
+    let length = Math.max(strA.length, strB.length);
+    let relative = length === 0 ? 0 : steps / length;
+    let similarity = 1 - relative;
+    return similarity;
+  };
+
+  var _fuzzy = fuzzyMatch; // console.log(fuzzyMatch('test', 'test')) //exact match
+
+  let wrapMatch = function () {};
+  /** ignore optional/greedy logic, straight-up term match*/
+
+
+  const doesMatch = function (t, reg, index, length) {
+    // support id matches
+    if (reg.id === t.id) {
+      return true;
+    } // support '.'
+
+
+    if (reg.anything === true) {
+      return true;
+    } // support '^' (in parentheses)
+
+
+    if (reg.start === true && index !== 0) {
+      return false;
+    } // support '$' (in parentheses)
+
+
+    if (reg.end === true && index !== length - 1) {
+      return false;
+    } //support a text match
+
+
+    if (reg.word !== undefined) {
+      //match contractions
+      if (t.implicit !== null && t.implicit === reg.word) {
+        return true;
+      } // term aliases for slashes and things
+
+
+      if (t.alias !== undefined && t.alias.hasOwnProperty(reg.word)) {
+        return true;
+      } // support ~ match
+
+
+      if (reg.soft === true && reg.word === t.root) {
+        return true;
+      } // support fuzzy match param
+
+
+      if (reg.fuzzy !== undefined) {
+        let score = _fuzzy(reg.word, t.reduced);
+
+        if (score > reg.fuzzy) {
+          return true;
+        } // support fuzzy + soft match
+
+
+        if (reg.soft === true) {
+          score = _fuzzy(reg.word, t.root);
+
+          if (score > reg.fuzzy) {
+            return true;
+          }
+        }
+      } //match either .clean or .text
+
+
+      return reg.word === t.clean || reg.word === t.text || reg.word === t.reduced;
+    } //support #Tag
+
+
+    if (reg.tag !== undefined) {
+      return t.tags[reg.tag] === true;
+    } //support @method
+
+
+    if (reg.method !== undefined) {
+      if (typeof t[reg.method] === 'function' && t[reg.method]() === true) {
+        return true;
+      }
+
+      return false;
+    } //support /reg/
+
+
+    if (reg.regex !== undefined) {
+      return reg.regex.test(t.clean);
+    } // support optimized (one|two)
+
+
+    if (reg.fastOr !== undefined) {
+      if (t.implicit && reg.fastOr.hasOwnProperty(t.implicit) === true) {
+        return true;
+      }
+
+      return reg.fastOr.hasOwnProperty(t.reduced) || reg.fastOr.hasOwnProperty(t.text);
+    } //support slower (one|two)
+
+
+    if (reg.choices !== undefined) {
+      // try to support && operator
+      if (reg.operator === 'and') {
+        // must match them all
+        return reg.choices.every(r => wrapMatch(t, r, index, length));
+      } // or must match one
+
+
+      return reg.choices.some(r => wrapMatch(t, r, index, length));
+    }
+
+    return false;
+  }; // wrap result for !negative match logic
+
+
+  wrapMatch = function (t, reg, index, length) {
+    let result = doesMatch(t, reg, index, length);
+
+    if (reg.negative === true) {
+      return !result;
+    }
+
+    return result;
+  };
+
+  var _doesMatch = wrapMatch;
+
+  const boring = {};
+  /** check a match object against this term */
+
+  var doesMatch_1 = function (reg, index, length) {
+    return _doesMatch(this, reg, index, length);
+  };
+  /** does this term look like an acronym? */
+
+
+  var isAcronym_1 = function () {
+    return isAcronym_1$1(this.text);
+  };
+  /** is this term implied by a contraction? */
+
+
+  var isImplicit = function () {
+    return this.text === '' && Boolean(this.implicit);
+  };
+  /** does the term have at least one good tag? */
+
+
+  var isKnown = function () {
+    return Object.keys(this.tags).some(t => boring[t] !== true);
+  };
+  /** cache the root property of the term */
+
+
+  var setRoot = function (world) {
+    let transform = world.transforms;
+    let str = this.implicit || this.clean;
+
+    if (this.tags.Plural) {
+      str = transform.toSingular(str, world);
+    }
+
+    if (this.tags.Verb && !this.tags.Negative && !this.tags.Infinitive) {
+      let tense = null;
+
+      if (this.tags.PastTense) {
+        tense = 'PastTense';
+      } else if (this.tags.Gerund) {
+        tense = 'Gerund';
+      } else if (this.tags.PresentTense) {
+        tense = 'PresentTense';
+      } else if (this.tags.Participle) {
+        tense = 'Participle';
+      } else if (this.tags.Actor) {
+        tense = 'Actor';
+      }
+
+      str = transform.toInfinitive(str, world, tense);
+    }
+
+    this.root = str;
+  };
+
+  var _03Misc = {
+    doesMatch: doesMatch_1,
+    isAcronym: isAcronym_1,
+    isImplicit: isImplicit,
+    isKnown: isKnown,
+    setRoot: setRoot
+  };
+
+  const hasSpace$1 = /[\s-]/;
+  const isUpperCase = /^[A-Z-]+$/; // const titleCase = str => {
+  //   return str.charAt(0).toUpperCase() + str.substr(1)
+  // }
+
+  /** return various text formats of this term */
+
+  var textOut = function (options, showPre, showPost) {
+    options = options || {};
+    let word = this.text;
+    let before = this.pre;
+    let after = this.post; // -word-
+
+    if (options.reduced === true) {
+      word = this.reduced || '';
+    }
+
+    if (options.root === true) {
+      word = this.root || '';
+    }
+
+    if (options.implicit === true && this.implicit) {
+      word = this.implicit || '';
+    }
+
+    if (options.normal === true) {
+      word = this.clean || this.text || '';
+    }
+
+    if (options.root === true) {
+      word = this.root || this.reduced || '';
+    }
+
+    if (options.unicode === true) {
+      word = unicode_1(word);
+    } // cleanup case
+
+
+    if (options.titlecase === true) {
+      if (this.tags.ProperNoun && !this.titleCase()) ; else if (this.tags.Acronym) {
+        word = word.toUpperCase(); //uppercase acronyms
+      } else if (isUpperCase.test(word) && !this.tags.Acronym) {
+        // lowercase everything else
+        word = word.toLowerCase();
+      }
+    }
+
+    if (options.lowercase === true) {
+      word = word.toLowerCase();
+    } // remove the '.'s from 'F.B.I.' (safely)
+
+
+    if (options.acronyms === true && this.tags.Acronym) {
+      word = word.replace(/\./g, '');
+    } // -before/after-
+
+
+    if (options.whitespace === true || options.root === true) {
+      before = '';
+      after = ' ';
+
+      if ((hasSpace$1.test(this.post) === false || options.last) && !this.implicit) {
+        after = '';
+      }
+    }
+
+    if (options.punctuation === true && !options.root) {
+      //normalized end punctuation
+      if (this.hasPost('.') === true) {
+        after = '.' + after;
+      } else if (this.hasPost('?') === true) {
+        after = '?' + after;
+      } else if (this.hasPost('!') === true) {
+        after = '!' + after;
+      } else if (this.hasPost(',') === true) {
+        after = ',' + after;
+      } else if (this.hasEllipses() === true) {
+        after = '...' + after;
+      }
+    }
+
+    if (showPre !== true) {
+      before = '';
+    }
+
+    if (showPost !== true) {
+      // let keep = after.match(/\)/) || ''
+      after = ''; //keep //after.replace(/[ .?!,]+/, '')
+    } // remove the '.' from 'Mrs.' (safely)
+
+
+    if (options.abbreviations === true && this.tags.Abbreviation) {
+      after = after.replace(/^\./, '');
+    }
+
+    return before + word + after;
+  };
+
+  var _04Text = {
+    textOut: textOut
+  };
+
+  const boringTags = {
+    Auxiliary: 1,
+    Possessive: 1
+  };
+  /** a subjective ranking of tags kinda tfidf-based */
+
+  const rankTags = function (term, world) {
+    let tags = Object.keys(term.tags);
+    const tagSet = world.tags;
+    tags = tags.sort((a, b) => {
+      //bury the tags we dont want
+      if (boringTags[b] || !tagSet[b]) {
+        return -1;
+      } // unknown tags are interesting
+
+
+      if (!tagSet[b]) {
+        return 1;
+      }
+
+      if (!tagSet[a]) {
+        return 0;
+      } // then sort by #of parent tags (most-specific tags first)
+
+
+      if (tagSet[a].lineage.length > tagSet[b].lineage.length) {
+        return 1;
+      }
+
+      if (tagSet[a].isA.length > tagSet[b].isA.length) {
+        return -1;
+      }
+
+      return 0;
+    });
+    return tags;
+  };
+
+  var _bestTag = rankTags;
+
+  const jsonDefault = {
+    text: true,
+    tags: true,
+    implicit: true,
+    whitespace: true,
+    clean: false,
+    id: false,
+    index: false,
+    offset: false,
+    bestTag: false
+  };
+  /** return various metadata for this term */
+
+  var json$1 = function (options, world) {
+    options = options || {};
+    options = Object.assign({}, jsonDefault, options);
+    let result = {}; // default on
+
+    if (options.text) {
+      result.text = this.text;
+    }
+
+    if (options.normal) {
+      result.normal = this.clean;
+    }
+
+    if (options.tags) {
+      result.tags = Object.keys(this.tags);
+    } // default off
+
+
+    if (options.clean) {
+      result.clean = this.clean;
+    }
+
+    if (options.id || options.offset) {
+      result.id = this.id;
+    }
+
+    if (options.implicit && this.implicit !== null) {
+      result.implicit = this.implicit;
+    }
+
+    if (options.whitespace) {
+      result.pre = this.pre;
+      result.post = this.post;
+    }
+
+    if (options.bestTag) {
+      result.bestTag = _bestTag(this, world)[0];
+    }
+
+    return result;
+  };
+
+  var _05Json$1 = {
+    json: json$1
+  };
+
+  var methods$8 = Object.assign({}, _01Case, _02Punctuation, _03Misc, _04Text, _05Json$1);
+
+  function isClientSide() {
+    return typeof window !== 'undefined' && window.document;
+  }
+  /** add spaces at the end */
+
+
+  const padEnd = function (str, width) {
+    str = str.toString();
+
+    while (str.length < width) {
+      str += ' ';
+    }
+
+    return str;
+  };
+  /** output for verbose-mode */
+
+
+  var logTag = function (t, tag, reason) {
+    if (isClientSide()) {
+      console.log('%c' + padEnd(t.clean, 3) + '  + ' + tag + ' ', 'color: #6accb2;');
+      return;
+    } //server-side
+
+
+    let log = '\x1b[33m' + padEnd(t.clean, 15) + '\x1b[0m + \x1b[32m' + tag + '\x1b[0m ';
+
+    if (reason) {
+      log = padEnd(log, 35) + ' ' + reason + '';
+    }
+
+    console.log(log);
+  };
+  /** output for verbose mode  */
+
+
+  var logUntag = function (t, tag, reason) {
+    if (isClientSide()) {
+      console.log('%c' + padEnd(t.clean, 3) + '  - ' + tag + ' ', 'color: #AB5850;');
+      return;
+    } //server-side
+
+
+    let log = '\x1b[33m' + padEnd(t.clean, 3) + ' \x1b[31m - #' + tag + '\x1b[0m ';
+
+    if (reason) {
+      log = padEnd(log, 35) + ' ' + reason;
+    }
+
+    console.log(log);
+  };
+
+  var isArray$3 = function (arr) {
+    return Object.prototype.toString.call(arr) === '[object Array]';
+  };
+
+  var titleCase$3 = str => {
+    return str.charAt(0).toUpperCase() + str.substr(1);
+  };
+
+  var fns = {
+    logTag: logTag,
+    logUntag: logUntag,
+    isArray: isArray$3,
+    titleCase: titleCase$3
+  };
+
+  /** add a tag, and its descendents, to a term */
+
+  const addTag = function (t, tag, reason, world) {
+    let tagset = world.tags; //support '.' or '-' notation for skipping the tag
+
+    if (tag === '' || tag === '.' || tag === '-') {
+      return;
+    }
+
+    if (tag[0] === '#') {
+      tag = tag.replace(/^#/, '');
+    }
+
+    tag = fns.titleCase(tag); //if we already got this one
+
+    if (t.tags[tag] === true) {
+      return;
+    } // log it?
+
+
+    const isVerbose = world.isVerbose();
+
+    if (isVerbose === true) {
+      fns.logTag(t, tag, reason);
+    } //add tag
+
+
+    t.tags[tag] = true; //whee!
+    //check tagset for any additional things to do...
+
+    if (tagset.hasOwnProperty(tag) === true) {
+      //add parent Tags
+      tagset[tag].isA.forEach(down => {
+        t.tags[down] = true;
+
+        if (isVerbose === true) {
+          fns.logTag(t, '→ ' + down);
+        }
+      }); //remove any contrary tags
+
+      t.unTag(tagset[tag].notA, '←', world);
+    }
+  };
+  /** support an array of tags */
+
+
+  const addTags = function (term, tags, reason, world) {
+    if (typeof tags !== 'string') {
+      for (let i = 0; i < tags.length; i++) {
+        addTag(term, tags[i], reason, world);
+      } // tags.forEach(tag => addTag(term, tag, reason, world))
+
+    } else {
+      addTag(term, tags, reason, world);
+    }
+  };
+
+  var add = addTags;
+
+  const lowerCase = /^[a-z]/;
+
+  const titleCase$2 = str => {
+    return str.charAt(0).toUpperCase() + str.substr(1);
+  };
+  /** remove this tag, and its descentents from the term */
+
+
+  const unTag$1 = function (t, tag, reason, world) {
+    const isVerbose = world.isVerbose(); //support '*' for removing all tags
+
+    if (tag === '*') {
+      t.tags = {};
+      return t;
+    }
+
+    tag = tag.replace(/^#/, '');
+
+    if (lowerCase.test(tag) === true) {
+      tag = titleCase$2(tag);
+    } // remove the tag
+
+
+    if (t.tags[tag] === true) {
+      delete t.tags[tag]; //log in verbose-mode
+
+      if (isVerbose === true) {
+        fns.logUntag(t, tag, reason);
+      }
+    } //delete downstream tags too
+
+
+    const tagset = world.tags;
+
+    if (tagset[tag]) {
+      let lineage = tagset[tag].lineage;
+
+      for (let i = 0; i < lineage.length; i++) {
+        if (t.tags[lineage[i]] === true) {
+          delete t.tags[lineage[i]];
+
+          if (isVerbose === true) {
+            fns.logUntag(t, ' - ' + lineage[i]);
+          }
+        }
+      }
+    }
+
+    return t;
+  }; //handle an array of tags
+
+
+  const untagAll = function (term, tags, reason, world) {
+    if (typeof tags !== 'string' && tags) {
+      for (let i = 0; i < tags.length; i++) {
+        unTag$1(term, tags[i], reason, world);
+      }
+
+      return;
+    }
+
+    unTag$1(term, tags, reason, world);
+  };
+
+  var unTag_1$1 = untagAll;
+
+  const canBe$2 = function (term, tag, world) {
+    const tagset = world.tags; // cleanup tag
+
+    if (tag[0] === '#') {
+      tag = tag.replace(/^#/, '');
+    } //fail-fast
+
+
+    if (tagset[tag] === undefined) {
+      return true;
+    } //loop through tag's contradictory tags
+
+
+    let enemies = tagset[tag].notA || [];
+
+    for (let i = 0; i < enemies.length; i++) {
+      if (term.tags[enemies[i]] === true) {
+        return false;
+      }
+    }
+
+    if (tagset[tag].isA !== undefined) {
+      return canBe$2(term, tagset[tag].isA, world); //recursive
+    }
+
+    return true;
+  };
+
+  var canBe_1$1 = canBe$2;
+
+  /** add a tag or tags, and their descendents to this term
+   * @param  {string | string[]} tags - a tag or tags
+   * @param {string?} [reason] a clue for debugging
+   */
+
+  var tag_1 = function (tags, reason, world) {
+    add(this, tags, reason, world);
+    return this;
+  };
+  /** only tag this term if it's consistent with it's current tags */
+
+
+  var tagSafe$1 = function (tags, reason, world) {
+    if (canBe_1$1(this, tags, world)) {
+      add(this, tags, reason, world);
+    }
+
+    return this;
+  };
+  /** remove a tag or tags, and their descendents from this term
+   * @param {string | string[]} tags  - a tag or tags
+   * @param {string?} [reason] a clue for debugging
+   */
+
+
+  var unTag_1 = function (tags, reason, world) {
+    unTag_1$1(this, tags, reason, world);
+    return this;
+  };
+  /** is this tag consistent with the word's current tags?
+   * @param {string | string[]} tags - a tag or tags
+   * @returns {boolean}
+   */
+
+
+  var canBe_1 = function (tags, world) {
+    return canBe_1$1(this, tags, world);
+  };
+
+  var tag$1 = {
+    tag: tag_1,
+    tagSafe: tagSafe$1,
+    unTag: unTag_1,
+    canBe: canBe_1
+  };
+
+  class Term {
+    constructor(text = '') {
+      text = String(text);
+      let obj = parse$2(text); // the various forms of our text
+
+      this.text = obj.text || '';
+      this.clean = obj.clean;
+      this.reduced = obj.reduced;
+      this.root = null;
+      this.implicit = null;
+      this.pre = obj.pre || '';
+      this.post = obj.post || '';
+      this.tags = {};
+      this.prev = null;
+      this.next = null;
+      this.id = _id(obj.clean);
+      this.isA = 'Term'; // easier than .constructor...
+      // support alternative matches
+
+      if (obj.alias) {
+        this.alias = obj.alias;
+      }
+    }
+    /** set the text of the Term to something else*/
+
+
+    set(str) {
+      let obj = parse$2(str);
+      this.text = obj.text;
+      this.clean = obj.clean;
+      this.reduced = obj.reduced;
+      this.root = null;
+      this.implicit = null;
+      return this;
+    }
+
+  }
+  /** create a deep-copy of this term */
+
+
+  Term.prototype.clone = function () {
+    let term = new Term(this.text);
+    term.pre = this.pre;
+    term.post = this.post;
+    term.clean = this.clean;
+    term.reduced = this.reduced;
+    term.root = this.root;
+    term.implicit = this.implicit;
+    term.tags = Object.assign({}, this.tags); //use the old id, so it can be matched with .match(doc)
+    // term.id = this.id
+
+    return term;
+  };
+
+  Object.assign(Term.prototype, methods$8);
+  Object.assign(Term.prototype, tag$1);
+  var Term_1 = Term;
+
+  /** return a flat array of Term objects */
+  var terms = function (n) {
+    if (this.length === 0) {
+      return [];
+    } // use cache, if it exists
+
+
+    if (this.cache.terms) {
+      if (n !== undefined) {
+        return this.cache.terms[n];
+      }
+
+      return this.cache.terms;
+    }
+
+    let terms = [this.pool.get(this.start)];
+
+    for (let i = 0; i < this.length - 1; i += 1) {
+      let id = terms[terms.length - 1].next;
+
+      if (id === null) {
+        // throw new Error('linked-list broken')
+        console.error("Compromise error: Linked list broken in phrase '" + this.start + "'");
+        break;
+      }
+
+      let term = this.pool.get(id);
+      terms.push(term); //return this one?
+
+      if (n !== undefined && n === i) {
+        return terms[n];
+      }
+    }
+
+    if (n === undefined) {
+      this.cache.terms = terms;
+    }
+
+    if (n !== undefined) {
+      return terms[n];
+    }
+
+    return terms;
+  };
+  /** return a shallow or deep copy of this phrase  */
+
+
+  var clone$1 = function (isShallow) {
+    if (isShallow) {
+      let p = this.buildFrom(this.start, this.length);
+      p.cache = this.cache;
+      return p;
+    } //how do we clone part of the pool?
+
+
+    let terms = this.terms();
+    let newTerms = terms.map(t => t.clone()); // console.log(newTerms)
+    //connect these new ids up
+
+    newTerms.forEach((t, i) => {
+      //add it to the pool..
+      this.pool.add(t);
+
+      if (newTerms[i + 1]) {
+        t.next = newTerms[i + 1].id;
+      }
+
+      if (newTerms[i - 1]) {
+        t.prev = newTerms[i - 1].id;
+      }
+    });
+    return this.buildFrom(newTerms[0].id, newTerms.length);
+  };
+  /** return last term object */
+
+
+  var lastTerm = function () {
+    let terms = this.terms();
+    return terms[terms.length - 1];
+  };
+  /** quick lookup for a term id */
+
+
+  var hasId = function (wantId) {
+    if (this.length === 0 || !wantId) {
+      return false;
+    }
+
+    if (this.start === wantId) {
+      return true;
+    } // use cache, if available
+
+
+    if (this.cache.terms) {
+      let terms = this.cache.terms;
+
+      for (let i = 0; i < terms.length; i++) {
+        if (terms[i].id === wantId) {
+          return true;
+        }
+      }
+
+      return false;
+    } // otherwise, go through each term
+
+
+    let lastId = this.start;
+
+    for (let i = 0; i < this.length - 1; i += 1) {
+      let term = this.pool.get(lastId);
+
+      if (term === undefined) {
+        console.error(`Compromise error: Linked list broken. Missing term '${lastId}' in phrase '${this.start}'\n`); // throw new Error('linked List error')
+
+        return false;
+      }
+
+      if (term.next === wantId) {
+        return true;
+      }
+
+      lastId = term.next;
+    }
+
+    return false;
+  };
+  /** how many seperate, non-empty words is it? */
+
+
+  var wordCount = function () {
+    return this.terms().filter(t => t.text !== '').length;
+  };
+  /** get the full-sentence this phrase belongs to */
+
+
+  var fullSentence = function () {
+    let t = this.terms(0); //find first term in sentence
+
+    while (t.prev) {
+      t = this.pool.get(t.prev);
+    }
+
+    let start = t.id;
+    let len = 1; //go to end of sentence
+
+    while (t.next) {
+      t = this.pool.get(t.next);
+      len += 1;
+    }
+
+    return this.buildFrom(start, len);
+  };
+
+  var _01Utils$1 = {
+    terms: terms,
+    clone: clone$1,
+    lastTerm: lastTerm,
+    hasId: hasId,
+    wordCount: wordCount,
+    fullSentence: fullSentence
+  };
+
+  const trimEnd = function (str) {
+    return str.replace(/ +$/, '');
+  };
+  /** produce output in the given format */
+
+
+  var text$1 = function (options = {}, isFirst, isLast) {
+    if (typeof options === 'string') {
+      if (options === 'normal') {
+        options = {
+          whitespace: true,
+          unicode: true,
+          lowercase: true,
+          punctuation: true,
+          acronyms: true,
+          abbreviations: true,
+          implicit: true,
+          normal: true
+        };
+      } else if (options === 'clean') {
+        options = {
+          titlecase: false,
+          lowercase: true,
+          punctuation: true,
+          whitespace: true,
+          unicode: true,
+          implicit: true,
+          normal: true
+        };
+      } else if (options === 'reduced') {
+        options = {
+          punctuation: false,
+          //Hmm: is this reversed?
+          titlecase: false,
+          lowercase: true,
+          whitespace: true,
+          unicode: true,
+          implicit: true,
+          reduced: true
+        };
+      } else if (options === 'implicit') {
+        options = {
+          punctuation: true,
+          implicit: true,
+          whitespace: true,
+          trim: true
+        };
+      } else if (options === 'root') {
+        options = {
+          titlecase: false,
+          lowercase: true,
+          punctuation: true,
+          whitespace: true,
+          unicode: true,
+          implicit: true,
+          root: true
+        };
+      } else {
+        options = {};
+      }
+    }
+
+    let terms = this.terms(); //this this phrase a complete sentence?
+
+    let isFull = false;
+
+    if (terms[0] && terms[0].prev === null && terms[terms.length - 1].next === null) {
+      isFull = true;
+    }
+
+    let text = terms.reduce((str, t, i) => {
+      // don't output intro space for a contraction-match  i'm good => "[am] good"
+      if (i === 0 && t.text === '' && t.implicit !== null && !options.implicit) {
+        return str;
+      }
+
+      options.last = isLast && i === terms.length - 1;
+      let showPre = true;
+      let showPost = true;
+
+      if (isFull === false) {
+        // dont show beginning whitespace
+        if (i === 0 && isFirst) {
+          showPre = false;
+        } // dont show end-whitespace
+
+
+        if (i === terms.length - 1 && isLast) {
+          showPost = false;
+        }
+      }
+
+      let txt = t.textOut(options, showPre, showPost); // console.log(terms)
+      // if (options.titlecase && i === 0) {
+      // txt = titleCase(txt)
+      // }
+
+      return str + txt;
+    }, ''); //full-phrases show punctuation, but not whitespace
+
+    if (isFull === true && isLast) {
+      text = trimEnd(text);
+    }
+
+    if (options.trim === true) {
+      text = text.trim();
+    }
+
+    return text;
+  };
+
+  var _02Text = {
+    text: text$1
+  };
+
+  /** remove start and end whitespace */
+  var trim = function () {
+    let terms = this.terms();
+
+    if (terms.length > 0) {
+      //trim starting
+      terms[0].pre = terms[0].pre.replace(/^\s+/, ''); //trim ending
+
+      let lastTerm = terms[terms.length - 1];
+      lastTerm.post = lastTerm.post.replace(/\s+$/, '');
+    }
+
+    return this;
+  };
+
+  var _03Change = {
+    trim: trim
+  };
+
+  const endOfSentence = /[.?!]\s*$/; // replacing a 'word.' with a 'word!'
+
+  const combinePost = function (before, after) {
+    //only transfer the whitespace
+    if (endOfSentence.test(after)) {
+      let whitespace = before.match(/\s*$/);
+      return after + whitespace;
+    }
+
+    return before;
+  }; //add whitespace to the start of the second bit
+
+
+  const addWhitespace$1 = function (beforeTerms, newTerms) {
+    // add any existing pre-whitespace to beginning
+    newTerms[0].pre = beforeTerms[0].pre;
+    let lastTerm = beforeTerms[beforeTerms.length - 1]; //add any existing punctuation to end of our new terms
+
+    let newTerm = newTerms[newTerms.length - 1];
+    newTerm.post = combinePost(lastTerm.post, newTerm.post); // remove existing punctuation
+
+    lastTerm.post = ''; //before ←[space]  - after
+
+    if (lastTerm.post === '') {
+      lastTerm.post += ' ';
+    }
+  }; //insert this segment into the linked-list
+
+
+  const stitchIn$1 = function (beforeTerms, newTerms, pool) {
+    let lastBefore = beforeTerms[beforeTerms.length - 1];
+    let lastNew = newTerms[newTerms.length - 1];
+    let afterId = lastBefore.next; //connect ours in (main → newPhrase)
+
+    lastBefore.next = newTerms[0].id; //stich the end in  (newPhrase → after)
+
+    lastNew.next = afterId; //do it backwards, too
+
+    if (afterId) {
+      // newPhrase ← after
+      let afterTerm = pool.get(afterId);
+      afterTerm.prev = lastNew.id;
+    } // before ← newPhrase
+
+
+    let beforeId = beforeTerms[0].id;
+
+    if (beforeId) {
+      let newTerm = newTerms[0];
+      newTerm.prev = beforeId;
+    }
+  }; // avoid stretching a phrase twice.
+
+
+  const unique$4 = function (list) {
+    return list.filter((o, i) => {
+      return list.indexOf(o) === i;
+    });
+  }; //append one phrase onto another.
+
+
+  const appendPhrase = function (before, newPhrase, doc) {
+    let beforeTerms = before.terms();
+    let newTerms = newPhrase.terms(); //spruce-up the whitespace issues
+
+    addWhitespace$1(beforeTerms, newTerms); //insert this segment into the linked-list
+
+    stitchIn$1(beforeTerms, newTerms, before.pool); // stretch!
+    // make each effected phrase longer
+
+    let toStretch = [before];
+    let hasId = before.start;
+    let docs = [doc];
+    docs = docs.concat(doc.parents()); // find them all!
+
+    docs.forEach(parent => {
+      // only the phrases that should change
+      let shouldChange = parent.list.filter(p => {
+        return p.hasId(hasId);
+      });
+      toStretch = toStretch.concat(shouldChange);
+    }); // don't double-count a phrase
+
+    toStretch = unique$4(toStretch);
+    toStretch.forEach(p => {
+      p.length += newPhrase.length;
+    });
+    before.cache = {};
+    return before;
+  };
+
+  var append = appendPhrase;
+
+  const hasSpace = / /; //a new space needs to be added, either on the new phrase, or the old one
+  // '[new] [◻old]'   -or-   '[old] [◻new] [old]'
+
+  const addWhitespace = function (newTerms) {
+    //add a space before our new text?
+    // add a space after our text
+    let lastTerm = newTerms[newTerms.length - 1];
+
+    if (hasSpace.test(lastTerm.post) === false) {
+      lastTerm.post += ' ';
+    }
+
+    return;
+  }; //insert this segment into the linked-list
+
+
+  const stitchIn = function (main, newPhrase, newTerms) {
+    // [newPhrase] → [main]
+    let lastTerm = newTerms[newTerms.length - 1];
+    lastTerm.next = main.start; // [before] → [main]
+
+    let pool = main.pool;
+    let start = pool.get(main.start);
+
+    if (start.prev) {
+      let before = pool.get(start.prev);
+      before.next = newPhrase.start;
+    } //do it backwards, too
+    // before ← newPhrase
+
+
+    newTerms[0].prev = main.terms(0).prev; // newPhrase ← main
+
+    main.terms(0).prev = lastTerm.id;
+  };
+
+  const unique$3 = function (list) {
+    return list.filter((o, i) => {
+      return list.indexOf(o) === i;
+    });
+  }; //append one phrase onto another
+
+
+  const joinPhrase = function (original, newPhrase, doc) {
+    const starterId = original.start;
+    let newTerms = newPhrase.terms(); //spruce-up the whitespace issues
+
+    addWhitespace(newTerms); //insert this segment into the linked-list
+
+    stitchIn(original, newPhrase, newTerms); //increase the length of our phrases
+
+    let toStretch = [original];
+    let docs = [doc];
+    docs = docs.concat(doc.parents());
+    docs.forEach(d => {
+      // only the phrases that should change
+      let shouldChange = d.list.filter(p => {
+        return p.hasId(starterId) || p.hasId(newPhrase.start);
+      });
+      toStretch = toStretch.concat(shouldChange);
+    }); // don't double-count
+
+    toStretch = unique$3(toStretch); // stretch these phrases
+
+    toStretch.forEach(p => {
+      p.length += newPhrase.length; // change the start too, if necessary
+
+      if (p.start === starterId) {
+        p.start = newPhrase.start;
+      }
+
+      p.cache = {};
+    });
+    return original;
+  };
+
+  var prepend = joinPhrase;
+
+  //recursively decrease the length of all the parent phrases
+  const shrinkAll = function (doc, id, deleteLength, after) {
+    let arr = doc.parents();
+    arr.push(doc);
+    arr.forEach(d => {
+      //find our phrase to shrink
+      let phrase = d.list.find(p => p.hasId(id));
+
+      if (!phrase) {
+        return;
+      }
+
+      phrase.length -= deleteLength; // does it start with this soon-removed word?
+
+      if (phrase.start === id) {
+        phrase.start = after.id;
+      }
+
+      phrase.cache = {};
+    }); // cleanup empty phrase objects
+
+    doc.list = doc.list.filter(p => {
+      if (!p.start || !p.length) {
+        return false;
+      }
+
+      return true;
+    });
+  };
+  /** wrap the linked-list around these terms
+   * so they don't appear any more
+   */
+
+
+  const deletePhrase = function (phrase, doc) {
+    let pool = doc.pool();
+    let terms = phrase.terms(); //grab both sides of the chain,
+
+    let prev = pool.get(terms[0].prev) || {};
+    let after = pool.get(terms[terms.length - 1].next) || {};
+
+    if (terms[0].implicit && prev.implicit) {
+      prev.set(prev.implicit);
+      prev.post += ' ';
+    } // //first, change phrase lengths
+
+
+    shrinkAll(doc, phrase.start, phrase.length, after); // connect [prev]->[after]
+
+    if (prev) {
+      prev.next = after.id;
+    } // connect [prev]<-[after]
+
+
+    if (after) {
+      after.prev = prev.id;
+    } // lastly, actually delete the terms from the pool?
+    // for (let i = 0; i < terms.length; i++) {
+    //   pool.remove(terms[i].id)
+    // }
+
+  };
+
+  var _delete$1 = deletePhrase;
+
+  /** put this text at the end */
+
+  var append_1 = function (newPhrase, doc) {
+    append(this, newPhrase, doc);
+    return this;
+  };
+  /** add this text to the beginning */
+
+
+  var prepend_1 = function (newPhrase, doc) {
+    prepend(this, newPhrase, doc);
+    return this;
+  };
+
+  var _delete = function (doc) {
+    _delete$1(this, doc);
+    return this;
+  }; // stich-in newPhrase, stretch 'doc' + parents
+
+
+  var replace$1 = function (newPhrase, doc) {
+    //add it do the end
+    let firstLength = this.length;
+    append(this, newPhrase, doc); //delete original terms
+
+    let tmp = this.buildFrom(this.start, this.length);
+    tmp.length = firstLength;
+    _delete$1(tmp, doc);
+  };
+  /**
+   * Turn this phrase object into 3 phrase objects
+   */
+
+
+  var splitOn = function (p) {
+    let terms = this.terms();
+    let result = {
+      before: null,
+      match: null,
+      after: null
+    };
+    let index = terms.findIndex(t => t.id === p.start);
+
+    if (index === -1) {
+      return result;
+    } //make all three sections into phrase-objects
+
+
+    let start = terms.slice(0, index);
+
+    if (start.length > 0) {
+      result.before = this.buildFrom(start[0].id, start.length);
+    }
+
+    let match = terms.slice(index, index + p.length);
+
+    if (match.length > 0) {
+      result.match = this.buildFrom(match[0].id, match.length);
+    }
+
+    let end = terms.slice(index + p.length, terms.length);
+
+    if (end.length > 0) {
+      result.after = this.buildFrom(end[0].id, end.length, this.pool);
+    }
+
+    return result;
+  };
+
+  var _04Insert = {
+    append: append_1,
+    prepend: prepend_1,
+    delete: _delete,
+    replace: replace$1,
+    splitOn: splitOn
+  };
+
+  /** return json metadata for this phrase */
+  var json = function (options = {}, world) {
+    let res = {}; // text data
+
+    if (options.text) {
+      res.text = this.text();
+    }
+
+    if (options.normal) {
+      res.normal = this.text('normal');
+    }
+
+    if (options.clean) {
+      res.clean = this.text('clean');
+    }
+
+    if (options.reduced) {
+      res.reduced = this.text('reduced');
+    }
+
+    if (options.implicit) {
+      res.implicit = this.text('implicit');
+    }
+
+    if (options.root) {
+      res.root = this.text('root');
+    }
+
+    if (options.trim) {
+      if (res.text) {
+        res.text = res.text.trim();
+      }
+
+      if (res.normal) {
+        res.normal = res.normal.trim();
+      }
+
+      if (res.reduced) {
+        res.reduced = res.reduced.trim();
+      }
+    } // terms data
+
+
+    if (options.terms) {
+      if (options.terms === true) {
+        options.terms = {};
+      }
+
+      res.terms = this.terms().map(t => t.json(options.terms, world));
+    }
+
+    return res;
+  };
+
+  var _05Json = {
+    json: json
+  };
+
+  /** match any terms after this phrase */
+  var lookAhead = function (regs) {
+    // if empty match string, return everything after
+    if (!regs) {
+      regs = '.*';
+    }
+
+    let pool = this.pool; // get a list of all terms preceding our start
+
+    let terms = [];
+
+    const getAfter = function (id) {
+      let term = pool.get(id);
+
+      if (!term) {
+        return;
+      }
+
+      terms.push(term);
+
+      if (term.prev) {
+        getAfter(term.next); //recursion
+      }
+    };
+
+    let all = this.terms();
+    let lastTerm = all[all.length - 1];
+    getAfter(lastTerm.next);
+
+    if (terms.length === 0) {
+      return [];
+    } // got the terms, make a phrase from them
+
+
+    let p = this.buildFrom(terms[0].id, terms.length);
+    return p.match(regs);
+  };
+  /** match any terms before this phrase */
+
+
+  var lookBehind = function (regs) {
+    // if empty match string, return everything before
+    if (!regs) {
+      regs = '.*';
+    }
+
+    let pool = this.pool; // get a list of all terms preceding our start
+
+    let terms = [];
+
+    const getBefore = function (id) {
+      let term = pool.get(id);
+
+      if (!term) {
+        return;
+      }
+
+      terms.push(term);
+
+      if (term.prev) {
+        getBefore(term.prev); //recursion
+      }
+    };
+
+    let term = pool.get(this.start);
+    getBefore(term.prev);
+
+    if (terms.length === 0) {
+      return [];
+    } // got the terms, make a phrase from them
+
+
+    let p = this.buildFrom(terms[terms.length - 1].id, terms.length);
+    return p.match(regs);
+  };
+
+  var _06Lookahead = {
+    lookAhead: lookAhead,
+    lookBehind: lookBehind
+  };
+
+  var methods$7 = Object.assign({}, _01Utils$1, _02Text, _03Change, _04Insert, _05Json, _06Lookahead);
+
+  // try to avoid doing the match
+  const failFast$1 = function (p, regs) {
+    if (regs.length === 0) {
+      return true;
+    }
+
+    for (let i = 0; i < regs.length; i += 1) {
+      let reg = regs[i]; //logical quick-ones
+
+      if (reg.optional !== true && reg.negative !== true) {
+        //start/end impossibilites
+        if (reg.start === true && i > 0) {
+          return true;
+        }
+      } //this is not possible
+
+
+      if (reg.anything === true && reg.negative === true) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
+  var _02FailFast = failFast$1;
+
+  var _matchLogic = createCommonjsModule(function (module, exports) {
+    //found a match? it's greedy? keep going!
+    exports.getGreedy = function (state, endReg) {
+      // for greedy checking, we no longer care about the reg.start
+      // value, and leaving it can cause failures for anchored greedy
+      // matches.  ditto for end-greedy matches: we need an earlier non-
+      // ending match to succceed until we get to the actual end.
+      let reg = Object.assign({}, state.regs[state.r], {
+        start: false,
+        end: false
+      });
+      let start = state.t;
+
+      for (; state.t < state.terms.length; state.t += 1) {
+        //stop for next-reg match
+        if (endReg && state.terms[state.t].doesMatch(endReg, state.start_i + state.t, state.phrase_length)) {
+          return state.t;
+        }
+
+        let count = state.t - start + 1; // is it max-length now?
+
+        if (reg.max !== undefined && count === reg.max) {
+          return state.t;
+        } //stop here
+
+
+        if (state.terms[state.t].doesMatch(reg, state.start_i + state.t, state.phrase_length) === false) {
+          // is it too short?
+          if (reg.min !== undefined && count < reg.min) {
+            return null;
+          }
+
+          return state.t;
+        }
+      }
+
+      return state.t;
+    }; //'unspecific greedy' is a weird situation.
+
+
+    exports.greedyTo = function (state, nextReg) {
+      let t = state.t; //if there's no next one, just go off the end!
+
+      if (!nextReg) {
+        return state.terms.length;
+      } //otherwise, we're looking for the next one
+
+
+      for (; t < state.terms.length; t += 1) {
+        if (state.terms[t].doesMatch(nextReg, state.start_i + t, state.phrase_length) === true) {
+          return t;
+        }
+      } //guess it doesn't exist, then.
+
+
+      return null;
+    }; //we have a special case where an end-anchored greedy match may need to
+    //start matching before the actual end; we do this by (temporarily!)
+    //removing the "end" property from the matching token... since this is
+    //very situation-specific, we *only* do this when we really need to.
+
+
+    exports.isEndGreedy = function (reg, state) {
+      if (reg.end === true && reg.greedy === true) {
+        if (state.start_i + state.t < state.phrase_length - 1) {
+          let tmpReg = Object.assign({}, reg, {
+            end: false
+          });
+
+          if (state.terms[state.t].doesMatch(tmpReg, state.start_i + state.t, state.phrase_length) === true) {
+            return true;
+          }
+        }
+      }
+
+      return false;
+    }; // match complex OR cases like (a|b|foo bar)
+
+
+    exports.doOrBlock = function (state, skipN = 0) {
+      let block = state.regs[state.r];
+      let wasFound = false; // do each multiword sequence
+
+      for (let c = 0; c < block.choices.length; c += 1) {
+        // try to match this list of tokens
+        let regs = block.choices[c];
+        wasFound = regs.every((cr, w_index) => {
+          let extra = 0;
+          let t = state.t + w_index + skipN + extra;
+
+          if (state.terms[t] === undefined) {
+            return false;
+          }
+
+          let foundBlock = state.terms[t].doesMatch(cr, t + state.start_i, state.phrase_length); // this can be greedy - '(foo+ bar)'
+
+          if (foundBlock === true && cr.greedy === true) {
+            for (let i = 1; i < state.terms.length; i += 1) {
+              let term = state.terms[t + i];
+
+              if (term) {
+                let keepGoing = term.doesMatch(cr, state.start_i + i, state.phrase_length);
+
+                if (keepGoing === true) {
+                  extra += 1;
+                } else {
+                  break;
+                }
+              }
+            }
+          }
+
+          skipN += extra;
+          return foundBlock;
+        });
+
+        if (wasFound) {
+          skipN += regs.length;
+          break;
+        }
+      } // we found a match -  is it greedy though?
+
+
+      if (wasFound && block.greedy === true) {
+        return exports.doOrBlock(state, skipN); // try it again!
+      }
+
+      return skipN;
+    }; // match AND cases like (#Noun && foo)
+
+
+    exports.doAndBlock = function (state) {
+      let longest = 0; // all blocks must match, and we return the greediest match
+
+      let reg = state.regs[state.r];
+      let allDidMatch = reg.choices.every(block => {
+        //  for multi-word blocks, all must match
+        let allWords = block.every((cr, w_index) => {
+          let tryTerm = state.t + w_index;
+
+          if (state.terms[tryTerm] === undefined) {
+            return false;
+          }
+
+          return state.terms[tryTerm].doesMatch(cr, tryTerm, state.phrase_length);
+        });
+
+        if (allWords === true && block.length > longest) {
+          longest = block.length;
+        }
+
+        return allWords;
+      });
+
+      if (allDidMatch === true) {
+        return longest;
+      }
+
+      return false;
+    }; // get or create named group
+
+
+    exports.getGroup = function (state, term_index, name) {
+      if (state.groups[state.groupId]) {
+        return state.groups[state.groupId];
+      }
+
+      const termId = state.terms[term_index].id;
+      state.groups[state.groupId] = {
+        group: String(name),
+        start: termId,
+        length: 0
+      };
+      return state.groups[state.groupId];
+    };
+  });
+
+  /** tries to match a sequence of terms, starting from here */
+
+  const tryHere = function (terms, regs, start_i, phrase_length) {
+    // all the variables that matter
+    let state = {
+      t: 0,
+      //the term index we're on
+      terms: terms,
+      //the working slice of term objects
+      r: 0,
+      // the reg index we're on
+      regs: regs,
+      //our match conditions
+      groups: {},
+      //all named-group matches
+      start_i: start_i,
+      // term index we're starting from
+      phrase_length: phrase_length,
+      // # of terms in the sentence
+      hasGroup: false,
+      groupId: null,
+      previousGroup: null
+    }; // we must satisfy each rule in 'regs'
+
+    for (; state.r < regs.length; state.r += 1) {
+      let reg = regs[state.r]; // Check if this reg has a named capture group
+
+      state.hasGroup = typeof reg.named === 'string' || typeof reg.named === 'number'; // Reuse previous capture group if same
+
+      if (state.hasGroup === true) {
+        const prev = regs[state.r - 1];
+
+        if (prev && prev.named === reg.named && state.previousGroup) {
+          state.groupId = state.previousGroup;
+        } else {
+          state.groupId = _id(reg.named);
+          state.previousGroup = state.groupId;
+        }
+      } //have we run-out of terms?
+
+
+      if (!state.terms[state.t]) {
+        //are all remaining regs optional or negative?
+        const haveNeeds = regs.slice(state.r).some(remain => !remain.optional);
+
+        if (haveNeeds === false) {
+          break; //done!
+        }
+
+        return null; // die
+      } //support 'unspecific greedy' .* properly
+
+
+      if (reg.anything === true && reg.greedy === true) {
+        let skipto = _matchLogic.greedyTo(state, regs[state.r + 1]); //maybe we couldn't find it
+
+        if (skipto === null || skipto === 0) {
+          return null;
+        } // ensure it's long enough
+
+
+        if (reg.min !== undefined && skipto - state.t < reg.min) {
+          return null;
+        } // reduce it back, if it's too long
+
+
+        if (reg.max !== undefined && skipto - state.t > reg.max) {
+          state.t = state.t + reg.max;
+          continue;
+        } // is it really this easy?....
+
+
+        if (state.hasGroup === true) {
+          const g = _matchLogic.getGroup(state, state.t, reg.named);
+          g.length = skipto - state.t;
+        }
+
+        state.t = skipto;
+        continue;
+      } // support multi-word OR (a|b|foo bar)
+
+
+      if (reg.choices !== undefined && reg.operator === 'or') {
+        let skipNum = _matchLogic.doOrBlock(state);
+
+        if (skipNum) {
+          // handle 'not' logic
+          if (reg.negative === true) {
+            return null; // die
+          }
+
+          if (state.hasGroup === true) {
+            const g = _matchLogic.getGroup(state, state.t, reg.named);
+            g.length += skipNum;
+          }
+
+          state.t += skipNum;
+          continue;
+        } else if (!reg.optional) {
+          return null; //die
+        }
+      } // support AND (#Noun && foo) blocks
+
+
+      if (reg.choices !== undefined && reg.operator === 'and') {
+        let skipNum = _matchLogic.doAndBlock(state);
+
+        if (skipNum) {
+          // handle 'not' logic
+          if (reg.negative === true) {
+            return null; // die
+          }
+
+          if (state.hasGroup === true) {
+            const g = _matchLogic.getGroup(state, state.t, reg.named);
+            g.length += skipNum;
+          }
+
+          state.t += skipNum;
+          continue;
+        } else if (!reg.optional) {
+          return null; //die
+        }
+      } // ok, finally test the term/reg
+
+
+      let term = state.terms[state.t];
+      let doesMatch = term.doesMatch(reg, state.start_i + state.t, state.phrase_length);
+
+      if (reg.anything === true || doesMatch === true || _matchLogic.isEndGreedy(reg, state)) {
+        let startAt = state.t; // if it's a negative optional match... :0
+
+        if (reg.optional && regs[state.r + 1] && reg.negative) {
+          continue;
+        } // okay, it was a match, but if it's optional too,
+        // we should check the next reg too, to skip it?
+
+
+        if (reg.optional && regs[state.r + 1]) {
+          // does the next reg match it too?
+          let nextRegMatched = term.doesMatch(regs[state.r + 1], state.start_i + state.t, state.phrase_length);
+
+          if (reg.negative || nextRegMatched) {
+            // but does the next reg match the next term??
+            // only skip if it doesn't
+            let nextTerm = state.terms[state.t + 1];
+
+            if (!nextTerm || !nextTerm.doesMatch(regs[state.r + 1], state.start_i + state.t, state.phrase_length)) {
+              state.r += 1;
+            }
+          }
+        } //advance to the next term!
+
+
+        state.t += 1; //check any ending '$' flags
+
+        if (reg.end === true) {
+          //if this isn't the last term, refuse the match
+          if (state.t !== state.terms.length && reg.greedy !== true) {
+            return null; //die
+          }
+        } //try keep it going!
+
+
+        if (reg.greedy === true) {
+          state.t = _matchLogic.getGreedy(state, regs[state.r + 1]);
+
+          if (state.t === null) {
+            return null; //greedy was too short
+          }
+
+          if (reg.min && reg.min > state.t) {
+            return null; //greedy was too short
+          } // if this was also an end-anchor match, check to see we really
+          // reached the end
+
+
+          if (reg.end === true && state.start_i + state.t !== phrase_length) {
+            return null; //greedy didn't reach the end
+          }
+        }
+
+        if (state.hasGroup === true) {
+          // Get or create capture group
+          const g = _matchLogic.getGroup(state, startAt, reg.named); // Update group - add greedy or increment length
+
+          if (state.t > 1 && reg.greedy) {
+            g.length += state.t - startAt;
+          } else {
+            g.length++;
+          }
+        }
+
+        continue;
+      } // ok, it doesn't match.
+      // did it *actually match* a negative?
+
+
+      if (reg.negative) {
+        let tmpReg = Object.assign({}, reg);
+        tmpReg.negative = false; // try removing it
+
+        let foundNeg = state.terms[state.t].doesMatch(tmpReg, state.start_i + state.t, state.phrase_length);
+
+        if (foundNeg === true) {
+          return null; //bye!
+        }
+      } //bah, who cares, keep going
+
+
+      if (reg.optional === true) {
+        continue;
+      } // should we skip-over an implicit word?
+
+
+      if (state.terms[state.t].isImplicit() && regs[state.r - 1] && state.terms[state.t + 1]) {
+        // if the last match was implicit too, we're missing a word.
+        if (state.terms[state.t - 1] && state.terms[state.t - 1].implicit === regs[state.r - 1].word) {
+          return null;
+        } // does the next one match?
+
+
+        if (state.terms[state.t + 1].doesMatch(reg, state.start_i + state.t, state.phrase_length)) {
+          state.t += 2;
+          continue;
+        }
+      }
+
+      return null; //die
+    } //return our result
+
+
+    return {
+      match: state.terms.slice(0, state.t),
+      groups: state.groups
+    };
+  };
+
+  var _03TryMatch = tryHere;
+
+  // final checks on the validity of our results
+  const postProcess$1 = function (terms, regs, matches) {
+    if (!matches || matches.length === 0) {
+      return matches;
+    } // ensure end reg has the end term
+
+
+    let atEnd = regs.some(r => r.end);
+
+    if (atEnd) {
+      let lastTerm = terms[terms.length - 1];
+      matches = matches.filter(({
+        match: arr
+      }) => arr.indexOf(lastTerm) !== -1);
+    }
+
+    return matches;
+  };
+
+  var _04PostProcess = postProcess$1;
+
+  // supported suffix-flags:
+  // suffixes:     ? ] + * $ {2,6} ~
+  //     [\?\]\+\*\$~]*
+  // prefixes: ! [ ^
+  //     [\!\[\^]*
+  // match  'foo /yes/' and not 'foo/no/bar'
+  const bySlashes = /(?:^|\s)([\!\[\^]*(?:<[^<]*>)?\/.*?[^\\\/]\/[\?\]\+\*\$~]*)(?:\s|$)/; // match '(yes) but not foo(no)bar'
+
+  const byParentheses = /([\!\[\^]*(?:<[^<]*>)?\([^\)]+[^\\\)]\)[\?\]\+\*\$~]*)(?:\s|$)/; // okay
+
+  const byWord = / /g;
+
+  const isBlock = str => {
+    return /^[\!\[\^]*(<[^<]*>)?\(/.test(str) && /\)[\?\]\+\*\$~]*$/.test(str);
+  };
+
+  const isReg = str => {
+    return /^[\!\[\^]*(<[^<]*>)?\//.test(str) && /\/[\?\]\+\*\$~]*$/.test(str);
+  };
+
+  const cleanUp = function (arr) {
+    arr = arr.map(str => str.trim());
+    arr = arr.filter(str => str);
+    return arr;
+  };
+
+  const parseBlocks = function (txt) {
+    // parse by /regex/ first
+    let arr = txt.split(bySlashes);
+    let res = []; // parse by (blocks), next
+
+    arr.forEach(str => {
+      if (isReg(str)) {
+        res.push(str);
+        return;
+      }
+
+      res = res.concat(str.split(byParentheses));
+    });
+    res = cleanUp(res); // split by spaces, now
+
+    let final = [];
+    res.forEach(str => {
+      if (isBlock(str)) {
+        final.push(str);
+      } else if (isReg(str)) {
+        final.push(str);
+      } else {
+        final = final.concat(str.split(byWord));
+      }
+    });
+    final = cleanUp(final);
+    return final;
+  };
+
+  var _01ParseBlocks = parseBlocks; // console.log('(one two) (upto) [<snooze_to>#Date+]'.split(byParentheses))
+
+  /* break-down a match expression into this:
+  {
+    word:'',
+    tag:'',
+    regex:'',
+
+    start:false,
+    end:false,
+    negative:false,
+    anything:false,
+    greedy:false,
+    optional:false,
+
+    named:'',
+    choices:[],
+  }
+  */
+  const hasMinMax = /\{([0-9]+,?[0-9]*)\}/;
+  const andSign = /&&/;
+  const captureName = new RegExp(/^<\s*?(\S+)\s*?>/);
+
+  const titleCase$1 = str => {
+    return str.charAt(0).toUpperCase() + str.substr(1);
+  };
+
+  const end = function (str) {
+    return str[str.length - 1];
+  };
+
+  const start = function (str) {
+    return str[0];
+  };
+
+  const stripStart = function (str) {
+    return str.substr(1);
+  };
+
+  const stripEnd = function (str) {
+    return str.substr(0, str.length - 1);
+  };
+
+  const stripBoth = function (str) {
+    str = stripStart(str);
+    str = stripEnd(str);
+    return str;
+  }; //
+
+
+  const parseToken = function (w) {
+    let obj = {}; //collect any flags (do it twice)
+
+    for (let i = 0; i < 2; i += 1) {
+      //end-flag
+      if (end(w) === '$') {
+        obj.end = true;
+        w = stripEnd(w);
+      } //front-flag
+
+
+      if (start(w) === '^') {
+        obj.start = true;
+        w = stripStart(w);
+      } //capture group (this one can span multiple-terms)
+
+
+      if (start(w) === '[' || end(w) === ']') {
+        obj.named = true;
+
+        if (start(w) === '[') {
+          obj.groupType = end(w) === ']' ? 'single' : 'start';
+        } else {
+          obj.groupType = 'end';
+        }
+
+        w = w.replace(/^\[/, '');
+        w = w.replace(/\]$/, ''); // Use capture group name
+
+        if (start(w) === '<') {
+          const res = captureName.exec(w);
+
+          if (res.length >= 2) {
+            obj.named = res[1];
+            w = w.replace(res[0], '');
+          }
+        }
+      } //back-flags
+
+
+      if (end(w) === '+') {
+        obj.greedy = true;
+        w = stripEnd(w);
+      }
+
+      if (w !== '*' && end(w) === '*' && w !== '\\*') {
+        obj.greedy = true;
+        w = stripEnd(w);
+      }
+
+      if (end(w) === '?') {
+        obj.optional = true;
+        w = stripEnd(w);
+      }
+
+      if (start(w) === '!') {
+        obj.negative = true; // obj.optional = true
+
+        w = stripStart(w);
+      } //wrapped-flags
+
+
+      if (start(w) === '(' && end(w) === ')') {
+        // support (one && two)
+        if (andSign.test(w)) {
+          obj.choices = w.split(andSign);
+          obj.operator = 'and';
+        } else {
+          obj.choices = w.split('|');
+          obj.operator = 'or';
+        } //remove '(' and ')'
+
+
+        obj.choices[0] = stripStart(obj.choices[0]);
+        let last = obj.choices.length - 1;
+        obj.choices[last] = stripEnd(obj.choices[last]); // clean up the results
+
+        obj.choices = obj.choices.map(s => s.trim());
+        obj.choices = obj.choices.filter(s => s); //recursion alert!
+
+        obj.choices = obj.choices.map(str => {
+          return str.split(/ /g).map(parseToken);
+        });
+        w = '';
+      } //regex
+
+
+      if (start(w) === '/' && end(w) === '/') {
+        w = stripBoth(w);
+        obj.regex = new RegExp(w); //potential vuln - security/detect-non-literal-regexp
+
+        return obj;
+      } //soft-match
+
+
+      if (start(w) === '~' && end(w) === '~') {
+        w = stripBoth(w);
+        obj.soft = true;
+        obj.word = w;
+        return obj;
+      }
+    } // support #Tag{1,9}
+
+
+    if (hasMinMax.test(w) === true) {
+      w = w.replace(hasMinMax, (a, b) => {
+        let arr = b.split(/,/g);
+
+        if (arr.length === 1) {
+          // '{3}'	Exactly three times
+          obj.min = Number(arr[0]);
+          obj.max = Number(arr[0]);
+        } else {
+          // '{2,4}' Two to four times
+          // '{3,}' Three or more times
+          obj.min = Number(arr[0]);
+          obj.max = Number(arr[1] || 999);
+        } // use same method as '+'
+
+
+        obj.greedy = true; // 0 as min means the same as '?'
+
+        obj.optional = true;
+        return '';
+      });
+    } //do the actual token content
+
+
+    if (start(w) === '#') {
+      obj.tag = stripStart(w);
+      obj.tag = titleCase$1(obj.tag);
+      return obj;
+    } //dynamic function on a term object
+
+
+    if (start(w) === '@') {
+      obj.method = stripStart(w);
+      return obj;
+    }
+
+    if (w === '.') {
+      obj.anything = true;
+      return obj;
+    } //support alone-astrix
+
+
+    if (w === '*') {
+      obj.anything = true;
+      obj.greedy = true;
+      obj.optional = true;
+      return obj;
+    }
+
+    if (w) {
+      //somehow handle encoded-chars?
+      w = w.replace('\\*', '*');
+      w = w.replace('\\.', '.');
+      obj.word = w.toLowerCase();
+    }
+
+    return obj;
+  };
+
+  var _02ParseToken = parseToken;
+
+  // name any [unnamed] capture-groups with a number
+  const nameGroups = function (tokens) {
+    let convert = false;
+    let index = -1;
+    let current; //'fill in' capture groups between start-end
+
+    for (let i = 0; i < tokens.length; i++) {
+      const token = tokens[i]; // Give name to un-named single tokens
+
+      if (token.groupType === 'single' && token.named === true) {
+        index += 1;
+        token.named = index;
+        continue;
+      } // Start converting tokens
+
+
+      if (token.groupType === 'start') {
+        convert = true;
+
+        if (typeof token.named === 'string' || typeof token.named === 'number') {
+          current = token.named;
+        } else {
+          index += 1;
+          current = index;
+        }
+      } // Ensure this token has the right name
+
+
+      if (convert) {
+        token.named = current;
+      } // Stop converting tokens
+
+
+      if (token.groupType === 'end') {
+        convert = false;
+      }
+    }
+
+    return tokens;
+  }; // optimize an 'or' lookup, when the (a|b|c) list is simple or multi-word
+
+
+  const doFastOrMode = function (tokens) {
+    return tokens.map(token => {
+      if (token.choices !== undefined) {
+        // are they all straight-up words? then optimize them.
+        let shouldPack = token.choices.every(block => {
+          if (block.length !== 1) {
+            return false;
+          }
+
+          let reg = block[0];
+
+          if (reg.word !== undefined && reg.negative !== true && reg.optional !== true && reg.method !== true) {
+            return true; //reg is simple-enough
+          }
+
+          return false;
+        });
+
+        if (shouldPack === true) {
+          let oneOf = {};
+          token.choices.forEach(block => {
+            oneOf[block[0].word] = true;
+          });
+          token.fastOr = oneOf;
+          delete token.choices;
+        }
+      }
+
+      return token;
+    });
+  }; // allow multiword OR (foo|one two)
+  // const doMultiWord = function (tokens) {
+  //   return tokens.map(token => {
+  //     if (token.choices !== undefined) {
+  //       let isMulti = token.choices.find(o => hasASpace.test(o.word)) || false
+  //       if (isMulti !== false) {
+  //         token.multiword = true
+  //         // turn all choices into arrays
+  //         token.choices = token.choices.map(choice => {
+  //           if (choice.word) {
+  //             choice.sequence = choice.word.split(hasASpace)
+  //             delete choice.word
+  //           }
+  //           return choice
+  //         })
+  //       }
+  //     }
+  //     return token
+  //   })
+  // }
+  // const doBlockMode = function (tokens) {
+  //   return tokens.map(token => {
+  //     // we've already setup fastOr mode
+  //     if (token.choices !== undefined) {
+  //       // console.log(token)
+  //     }
+  //     return token
+  //   })
+  // }
+
+
+  const postProcess = function (tokens, opts = {}) {
+    // ensure all capture groups are filled between start and end
+    // give all capture groups names
+    let count = tokens.filter(t => t.groupType).length;
+
+    if (count > 0) {
+      tokens = nameGroups(tokens);
+    } // convert 'choices' format to 'fastOr' format
+
+
+    if (!opts.fuzzy) {
+      tokens = doFastOrMode(tokens);
+    } // support multiword OR (foo bar|baz)
+    // tokens = doMultiWord(tokens)
+    // support (one two three)
+    // tokens = doBlockMode(tokens)
+
+
+    return tokens;
+  };
+
+  var _03PostProcess = postProcess;
+
+  const isArray$2 = function (arr) {
+    return Object.prototype.toString.call(arr) === '[object Array]';
+  }; //turn an array into a 'choices' list
+
+
+  const byArray = function (arr) {
+    let blocks = arr.map(s => {
+      return [{
+        word: s
+      }];
+    });
+    return [{
+      choices: blocks,
+      operator: 'or'
+    }];
+  }; // turn a Doc object into a reg of ids to lookup
+
+
+  const fromDoc = function (doc) {
+    if (!doc || !doc.list || !doc.list[0]) {
+      return [];
+    }
+
+    let regs = [];
+    doc.list.forEach(p => {
+      let ids = [];
+      p.terms().forEach(t => {
+        ids.push(t.id);
+      });
+      regs.push(ids);
+    });
+    return [{
+      idBlocks: regs
+    }];
+  }; // add fuzziness etc to each reg
+
+
+  const addOptions = function (tokens, opts) {
+    // add default fuzzy-search limit
+    if (opts.fuzzy === true) {
+      opts.fuzzy = 0.85;
+    }
+
+    if (typeof opts.fuzzy === 'number') {
+      tokens = tokens.map(reg => {
+        // add a fuzzy-match on 'word' tokens
+        if (opts.fuzzy > 0 && reg.word) {
+          reg.fuzzy = opts.fuzzy;
+        } //add it to or|and choices too
+
+
+        if (reg.choices) {
+          reg.choices.forEach(block => {
+            block.forEach(r => {
+              r.fuzzy = opts.fuzzy;
+            });
+          });
+        }
+
+        return reg;
+      });
+    }
+
+    return tokens;
+  };
+  /** parse a match-syntax string into json */
+
+
+  const syntax = function (input, opts = {}) {
+    // fail-fast
+    if (input === null || input === undefined || input === '') {
+      return [];
+    } //try to support a ton of different formats:
+
+
+    if (typeof input === 'object') {
+      if (isArray$2(input)) {
+        if (input.length === 0 || !input[0]) {
+          return [];
+        } //is it a pre-parsed reg-list?
+
+
+        if (typeof input[0] === 'object') {
+          return input;
+        } //support a flat array of normalized words
+
+
+        if (typeof input[0] === 'string') {
+          return byArray(input);
+        }
+      } //support passing-in a compromise object as a match
+
+
+      if (input && input.isA === 'Doc') {
+        return fromDoc(input);
+      }
+
+      return [];
+    }
+
+    if (typeof input === 'number') {
+      input = String(input); //go for it?
+    }
+
+    let tokens = _01ParseBlocks(input); //turn them into objects
+
+    tokens = tokens.map(str => _02ParseToken(str)); //clean up anything weird
+
+    tokens = _03PostProcess(tokens, opts); // add fuzzy limits, etc
+
+    tokens = addOptions(tokens, opts); // console.log(tokens)
+
+    return tokens;
+  };
+
+  var matchSyntax = syntax; // console.log(syntax('[#Copula (#Adverb|not)+?] (#Gerund|#PastTense)'))
+
+  // match an explicit sequence of term ids
+  // take a phrase and find any of the idBlocks in it
+  const idLookup = function (terms, regs) {
+    let matches = [];
+    let blocklist = regs[0].idBlocks;
+
+    for (let t = 0; t < terms.length; t += 1) {
+      blocklist.forEach(block => {
+        if (block.length === 0) {
+          return;
+        }
+
+        let foundAll = block.every((id, i) => {
+          return terms[t + i].id === id;
+        });
+
+        if (foundAll) {
+          matches.push({
+            match: terms.slice(t, t + block.length)
+          }); //  skip top-loop forward
+
+          t += block.length - 1;
+        }
+      });
+    }
+
+    return matches;
+  };
+
+  var idLookup_1 = idLookup;
+
+  /**  returns a simple array of arrays */
+
+  const matchAll = function (p, regs, matchOne = false) {
+    //if we forgot to parse it..
+    if (typeof regs === 'string') {
+      regs = matchSyntax(regs);
+    } //try to dismiss it, at-once
+
+
+    if (_02FailFast(p, regs) === true) {
+      return [];
+    } //any match needs to be this long, at least
+
+
+    const minLength = regs.filter(r => r.optional !== true && r.negative !== true).length;
+    let terms = p.terms();
+    let matches = []; // these id-lookups can be super-fast
+
+    if (regs[0].idBlocks) {
+      let res = idLookup_1(terms, regs);
+
+      if (res && res.length > 0) {
+        return _04PostProcess(terms, regs, res);
+      }
+    } //optimisation for '^' start logic
+
+
+    if (regs[0].start === true) {
+      let res = _03TryMatch(terms, regs, 0, terms.length);
+
+      if (res && res.match && res.match.length > 0) {
+        res.match = res.match.filter(m => m);
+        matches.push(res);
+      }
+
+      return _04PostProcess(terms, regs, matches);
+    } //try starting, from every term
+
+
+    for (let i = 0; i < terms.length; i += 1) {
+      // slice may be too short
+      if (i + minLength > terms.length) {
+        break;
+      } //try it!
+
+
+      let res = _03TryMatch(terms.slice(i), regs, i, terms.length);
+
+      if (res && res.match && res.match.length > 0) {
+        //zoom forward!
+        i += res.match.length - 1; //[capture-groups] return some null responses
+
+        res.match = res.match.filter(m => m);
+        matches.push(res); //ok, maybe that's enough?
+
+        if (matchOne === true) {
+          return _04PostProcess(terms, regs, matches);
+        }
+      }
+    }
+
+    return _04PostProcess(terms, regs, matches);
+  };
+
+  var _01MatchAll = matchAll;
+
+  /** return anything that doesn't match.
+   * returns a simple array of arrays
+   */
+
+  const notMatch = function (p, regs) {
+    let found = {};
+    let arr = _01MatchAll(p, regs);
+    arr.forEach(({
+      match: ts
+    }) => {
+      ts.forEach(t => {
+        found[t.id] = true;
+      });
+    }); //return anything not found
+
+    let terms = p.terms();
+    let result = [];
+    let current = [];
+    terms.forEach(t => {
+      if (found[t.id] === true) {
+        if (current.length > 0) {
+          result.push(current);
+          current = [];
+        }
+
+        return;
+      }
+
+      current.push(t);
+    });
+
+    if (current.length > 0) {
+      result.push(current);
+    }
+
+    return result;
+  };
+
+  var not$1 = notMatch;
+
+  /** return an array of matching phrases */
+
+  var match_1 = function (regs, justOne = false) {
+    let matches = _01MatchAll(this, regs, justOne); //make them phrase objects
+
+    matches = matches.map(({
+      match,
+      groups
+    }) => {
+      let p = this.buildFrom(match[0].id, match.length, groups);
+      p.cache.terms = match;
+      return p;
+    });
+    return matches;
+  };
+  /** return boolean if one match is found */
+
+
+  var has = function (regs) {
+    let matches = _01MatchAll(this, regs, true);
+    return matches.length > 0;
+  };
+  /** remove all matches from the result */
+
+
+  var not = function (regs) {
+    let matches = not$1(this, regs); //make them phrase objects
+
+    matches = matches.map(list => {
+      return this.buildFrom(list[0].id, list.length);
+    });
+    return matches;
+  };
+  /** return a list of phrases that can have this tag */
+
+
+  var canBe$1 = function (tag, world) {
+    let results = [];
+    let terms = this.terms();
+    let previous = false;
+
+    for (let i = 0; i < terms.length; i += 1) {
+      let can = terms[i].canBe(tag, world);
+
+      if (can === true) {
+        if (previous === true) {
+          //add it to the end
+          results[results.length - 1].push(terms[i]);
+        } else {
+          results.push([terms[i]]); //make a new one
+        }
+
+        previous = can;
+      }
+    } //turn them into Phrase objects
+
+
+    results = results.filter(a => a.length > 0).map(arr => {
+      return this.buildFrom(arr[0].id, arr.length);
+    });
+    return results;
+  };
+
+  var match = {
+    match: match_1,
+    has: has,
+    not: not,
+    canBe: canBe$1
+  };
+
+  class Phrase {
+    constructor(id, length, pool) {
+      this.start = id;
+      this.length = length;
+      this.isA = 'Phrase'; // easier than .constructor...
+
+      Object.defineProperty(this, 'pool', {
+        enumerable: false,
+        writable: true,
+        value: pool
+      });
+      Object.defineProperty(this, 'cache', {
+        enumerable: false,
+        writable: true,
+        value: {}
+      });
+      Object.defineProperty(this, 'groups', {
+        enumerable: false,
+        writable: true,
+        value: {}
+      });
+    }
+
+  }
+  /** create a new Phrase object from an id and length */
+
+
+  Phrase.prototype.buildFrom = function (id, length, groups) {
+    let p = new Phrase(id, length, this.pool); //copy-over or replace capture-groups too
+
+    if (groups && Object.keys(groups).length > 0) {
+      p.groups = groups;
+    } else {
+      p.groups = this.groups;
+    }
+
+    return p;
+  }; //apply methods
+
+
+  Object.assign(Phrase.prototype, match);
+  Object.assign(Phrase.prototype, methods$7); //apply aliases
+
+  const aliases$1 = {
+    term: 'terms'
+  };
+  Object.keys(aliases$1).forEach(k => Phrase.prototype[k] = Phrase.prototype[aliases$1[k]]);
+  var Phrase_1 = Phrase;
+
+  /** a key-value store of all terms in our Document */
+  class Pool {
+    constructor(words = {}) {
+      //quiet this property in console.logs
+      Object.defineProperty(this, 'words', {
+        enumerable: false,
+        value: words
+      });
+    }
+    /** throw a new term object in */
+
+
+    add(term) {
+      this.words[term.id] = term;
+      return this;
+    }
+    /** find a term by it's id */
+
+
+    get(id) {
+      return this.words[id];
+    }
+    /** find a term by it's id */
+
+
+    remove(id) {
+      delete this.words[id];
+    }
+
+    merge(pool) {
+      Object.assign(this.words, pool.words);
+      return this;
+    }
+    /** helper method */
+
+
+    stats() {
+      return {
+        words: Object.keys(this.words).length
+      };
+    }
+
+  }
+  /** make a deep-copy of all terms */
+
+
+  Pool.prototype.clone = function () {
+    let keys = Object.keys(this.words);
+    let words = keys.reduce((h, k) => {
+      let t = this.words[k].clone();
+      h[t.id] = t;
+      return h;
+    }, {});
+    return new Pool(words);
+  };
+
+  var Pool_1 = Pool;
+
+  //add forward/backward 'linked-list' prev/next ids
+  const linkTerms = terms => {
+    terms.forEach((term, i) => {
+      if (i > 0) {
+        term.prev = terms[i - 1].id;
+      }
+
+      if (terms[i + 1]) {
+        term.next = terms[i + 1].id;
+      }
+    });
+  };
+
+  var _linkTerms = linkTerms;
+
+  //(Rule-based sentence boundary segmentation) - chop given text into its proper sentences.
+  // Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
+  // @spencermountain 2017 MIT
+  //proper nouns with exclamation marks
+  // const blacklist = {
+  //   yahoo: true,
+  //   joomla: true,
+  //   jeopardy: true,
+  // }
+  //regs-
+  const initSplit = /(\S.+?[.!?\u203D\u2E18\u203C\u2047-\u2049])(?=\s+|$)/g;
+  const hasSomething = /\S/;
+  const isAcronym = /[ .][A-Z]\.? *$/i;
+  const hasEllipse = /(?:\u2026|\.{2,}) *$/;
+  const newLine = /((?:\r?\n|\r)+)/; // Match different new-line formats
+
+  const hasLetter = /[a-z0-9\u00C0-\u00FF\u00a9\u00ae\u2000-\u3300\ud000-\udfff]/i;
+  const startWhitespace = /^\s+/; // Start with a regex:
+
+  const naiive_split = function (text) {
+    let all = []; //first, split by newline
+
+    let lines = text.split(newLine);
+
+    for (let i = 0; i < lines.length; i++) {
+      //split by period, question-mark, and exclamation-mark
+      let arr = lines[i].split(initSplit);
+
+      for (let o = 0; o < arr.length; o++) {
+        all.push(arr[o]);
+      }
+    }
+
+    return all;
+  };
+  /** does this look like a sentence? */
+
+
+  const isSentence = function (str, abbrevs) {
+    // check for 'F.B.I.'
+    if (isAcronym.test(str) === true) {
+      return false;
+    } //check for '...'
+
+
+    if (hasEllipse.test(str) === true) {
+      return false;
+    } // must have a letter
+
+
+    if (hasLetter.test(str) === false) {
+      return false;
+    }
+
+    let txt = str.replace(/[.!?\u203D\u2E18\u203C\u2047-\u2049] *$/, '');
+    let words = txt.split(' ');
+    let lastWord = words[words.length - 1].toLowerCase(); // check for 'Mr.'
+
+    if (abbrevs.hasOwnProperty(lastWord)) {
+      return false;
+    } // //check for jeopardy!
+    // if (blacklist.hasOwnProperty(lastWord)) {
+    //   return false
+    // }
+
+
+    return true;
+  };
+
+  const splitSentences = function (text, world) {
+    let abbrevs = world.cache.abbreviations;
+    text = text || '';
+    text = String(text);
+    let sentences = []; // First do a greedy-split..
+
+    let chunks = []; // Ensure it 'smells like' a sentence
+
+    if (!text || typeof text !== 'string' || hasSomething.test(text) === false) {
+      return sentences;
+    } // cleanup unicode-spaces
+
+
+    text = text.replace('\xa0', ' '); // Start somewhere:
+
+    let splits = naiive_split(text); // Filter-out the crap ones
+
+    for (let i = 0; i < splits.length; i++) {
+      let s = splits[i];
+
+      if (s === undefined || s === '') {
+        continue;
+      } //this is meaningful whitespace
+
+
+      if (hasSomething.test(s) === false) {
+        //add it to the last one
+        if (chunks[chunks.length - 1]) {
+          chunks[chunks.length - 1] += s;
+          continue;
+        } else if (splits[i + 1]) {
+          //add it to the next one
+          splits[i + 1] = s + splits[i + 1];
+          continue;
+        }
+      } //else, only whitespace, no terms, no sentence
+
+
+      chunks.push(s);
+    } //detection of non-sentence chunks:
+    //loop through these chunks, and join the non-sentence chunks back together..
+
+
+    for (let i = 0; i < chunks.length; i++) {
+      let c = chunks[i]; //should this chunk be combined with the next one?
+
+      if (chunks[i + 1] && isSentence(c, abbrevs) === false) {
+        chunks[i + 1] = c + (chunks[i + 1] || '');
+      } else if (c && c.length > 0) {
+        //&& hasLetter.test(c)
+        //this chunk is a proper sentence..
+        sentences.push(c);
+        chunks[i] = '';
+      }
+    } //if we never got a sentence, return the given text
+
+
+    if (sentences.length === 0) {
+      return [text];
+    } //move whitespace to the ends of sentences, when possible
+    //['hello',' world'] -> ['hello ','world']
+
+
+    for (let i = 1; i < sentences.length; i += 1) {
+      let ws = sentences[i].match(startWhitespace);
+
+      if (ws !== null) {
+        sentences[i - 1] += ws[0];
+        sentences[i] = sentences[i].replace(startWhitespace, '');
+      }
+    }
+
+    return sentences;
+  };
+
+  var _01Sentences = splitSentences; // console.log(sentence_parser('john f. kennedy'));
+
+  const wordlike = /\S/;
+  const isBoundary = /^[!?.]+$/;
+  const naiiveSplit = /(\S+)/;
+  const isSlash = /[a-z] ?\/ ?[a-z]*$/;
+  let notWord = ['.', '?', '!', ':', ';', '-', '–', '—', '--', '...', '(', ')', '[', ']', '"', "'", '`'];
+  notWord = notWord.reduce((h, c) => {
+    h[c] = true;
+    return h;
+  }, {});
+
+  const hasHyphen = function (str) {
+    //dont split 're-do'
+    if (/^(re|un|micro|macro|trans|bi|mono|over)-?[^aeiou]./.test(str) === true) {
+      return false;
+    } //dont split 'bat-like'
+
+
+    if (/^([a-z\u00C0-\u00FF/]+)(-|–|—)(like|ish|less|able)/i.test(str) === true) {
+      return false;
+    } //letter-number 'aug-20'
+
+
+    let reg = /^([a-z\u00C0-\u00FF`"'/]+)(-|–|—)([a-z0-9\u00C0-\u00FF].*)/i;
+
+    if (reg.test(str) === true) {
+      return true;
+    } //number-letter '20-aug'
+
+
+    let reg2 = /^([0-9]{1,4})(-|–|—)([a-z\u00C0-\u00FF`"'/-]+$)/i;
+
+    if (reg2.test(str) === true) {
+      return true;
+    }
+
+    return false;
+  }; // combine '2 - 5' like '2-5' is
+
+
+  const combineRanges = function (arr) {
+    const startRange = /^[0-9]{1,4}(:[0-9][0-9])?([a-z]{1,2})? ?(-|–|—) ?$/;
+    const endRange = /^[0-9]{1,4}([a-z]{1,2})? ?$/;
+
+    for (let i = 0; i < arr.length - 1; i += 1) {
+      if (arr[i + 1] && startRange.test(arr[i]) && endRange.test(arr[i + 1])) {
+        arr[i] = arr[i] + arr[i + 1];
+        arr[i + 1] = null;
+      }
+    }
+
+    return arr;
+  }; // 'he / she' should be one word
+
+
+  const combineSlashes = function (arr) {
+    for (let i = 1; i < arr.length - 1; i++) {
+      if (isSlash.test(arr[i])) {
+        arr[i - 1] += arr[i] + arr[i + 1];
+        arr[i] = null;
+        arr[i + 1] = null;
+      }
+    }
+
+    return arr;
+  };
+
+  const splitHyphens = function (word) {
+    let arr = []; //support multiple-hyphenated-terms
+
+    const hyphens = word.split(/[-–—]/);
+    let whichDash = '-';
+    let found = word.match(/[-–—]/);
+
+    if (found && found[0]) {
+      whichDash = found;
+    }
+
+    for (let o = 0; o < hyphens.length; o++) {
+      if (o === hyphens.length - 1) {
+        arr.push(hyphens[o]);
+      } else {
+        arr.push(hyphens[o] + whichDash);
+      }
+    }
+
+    return arr;
+  };
+
+  const isArray$1 = function (arr) {
+    return Object.prototype.toString.call(arr) === '[object Array]';
+  }; //turn a string into an array of strings (naiive for now, lumped later)
+
+
+  const splitWords = function (str) {
+    let result = [];
+    let arr = []; //start with a naiive split
+
+    str = str || '';
+
+    if (typeof str === 'number') {
+      str = String(str);
+    }
+
+    if (isArray$1(str)) {
+      return str;
+    }
+
+    const words = str.split(naiiveSplit);
+
+    for (let i = 0; i < words.length; i++) {
+      //split 'one-two'
+      if (hasHyphen(words[i]) === true) {
+        arr = arr.concat(splitHyphens(words[i]));
+        continue;
+      }
+
+      arr.push(words[i]);
+    } //greedy merge whitespace+arr to the right
+
+
+    let carry = '';
+
+    for (let i = 0; i < arr.length; i++) {
+      let word = arr[i]; //if it's more than a whitespace
+
+      if (wordlike.test(word) === true && notWord.hasOwnProperty(word) === false && isBoundary.test(word) === false) {
+        //put whitespace on end of previous term, if possible
+        if (result.length > 0) {
+          result[result.length - 1] += carry;
+          result.push(word);
+        } else {
+          //otherwise, but whitespace before
+          result.push(carry + word);
+        }
+
+        carry = '';
+      } else {
+        carry += word;
+      }
+    } //handle last one
+
+
+    if (carry) {
+      if (result.length === 0) {
+        result[0] = '';
+      }
+
+      result[result.length - 1] += carry; //put it on the end
+    } // combine 'one / two'
+
+
+    result = combineSlashes(result);
+    result = combineRanges(result); // remove empty results
+
+    result = result.filter(s => s);
+    return result;
+  };
+
+  var _02Words = splitWords;
+
+  const isArray = function (arr) {
+    return Object.prototype.toString.call(arr) === '[object Array]';
+  };
+  /** turn a string into an array of Phrase objects */
+
+
+  const fromText = function (text = '', world, pool) {
+    let sentences = null; //a bit of validation, first
+
+    if (typeof text !== 'string') {
+      if (typeof text === 'number') {
+        text = String(text);
+      } else if (isArray(text)) {
+        sentences = text;
+      }
+    } //tokenize into words
+
+
+    sentences = sentences || _01Sentences(text, world);
+    sentences = sentences.map(str => _02Words(str)); //turn them into proper objects
+
+    pool = pool || new Pool_1();
+    let phrases = sentences.map(terms => {
+      terms = terms.map(str => {
+        let term = new Term_1(str);
+        pool.add(term);
+        return term;
+      }); //add next/previous ids
+
+      _linkTerms(terms); //return phrase objects
+
+      let p = new Phrase_1(terms[0].id, terms.length, pool);
+      p.cache.terms = terms;
+      return p;
+    }); //return them ready for a Document object
+
+    return phrases;
+  };
+
+  var _01Tokenizer = fromText;
+
+  const fromJSON = function (json, world) {
+    let pool = new Pool_1();
+    let phrases = json.map((p, k) => {
+      let terms = p.terms.map((o, i) => {
+        let term = new Term_1(o.text);
+        term.pre = o.pre !== undefined ? o.pre : '';
+
+        if (o.post === undefined) {
+          o.post = ' '; //no given space for very last term
+
+          if (i >= p.terms.length - 1) {
+            o.post = '. ';
+
+            if (k >= p.terms.length - 1) {
+              o.post = '.';
+            }
+          }
+        }
+
+        term.post = o.post !== undefined ? o.post : ' ';
+
+        if (o.tags) {
+          o.tags.forEach(tag => term.tag(tag, '', world));
+        }
+
+        pool.add(term);
+        return term;
+      }); //add prev/next links
+
+      _linkTerms(terms); // return a proper Phrase object
+
+      return new Phrase_1(terms[0].id, terms.length, pool);
+    });
+    return phrases;
+  };
+
+  var fromJSON_1 = fromJSON;
+
+  var _version = '13.11.2';
+
+  const entity = ['Person', 'Place', 'Organization'];
+  var nouns = {
+    Noun: {
+      notA: ['Verb', 'Adjective', 'Adverb']
+    },
+    // - singular
+    Singular: {
+      isA: 'Noun',
+      notA: 'Plural'
+    },
+    //a specific thing that's capitalized
+    ProperNoun: {
+      isA: 'Noun'
+    },
+    // -- people
+    Person: {
+      isA: ['ProperNoun', 'Singular'],
+      notA: ['Place', 'Organization', 'Date']
+    },
+    FirstName: {
+      isA: 'Person'
+    },
+    MaleName: {
+      isA: 'FirstName',
+      notA: ['FemaleName', 'LastName']
+    },
+    FemaleName: {
+      isA: 'FirstName',
+      notA: ['MaleName', 'LastName']
+    },
+    LastName: {
+      isA: 'Person',
+      notA: ['FirstName']
+    },
+    NickName: {
+      isA: 'Person',
+      notA: ['FirstName', 'LastName']
+    },
+    Honorific: {
+      isA: 'Noun',
+      notA: ['FirstName', 'LastName', 'Value']
+    },
+    // -- places
+    Place: {
+      isA: 'Singular',
+      notA: ['Person', 'Organization']
+    },
+    Country: {
+      isA: ['Place', 'ProperNoun'],
+      notA: ['City']
+    },
+    City: {
+      isA: ['Place', 'ProperNoun'],
+      notA: ['Country']
+    },
+    Region: {
+      isA: ['Place', 'ProperNoun']
+    },
+    Address: {
+      isA: 'Place'
+    },
+    //---Orgs---
+    Organization: {
+      isA: ['Singular', 'ProperNoun'],
+      notA: ['Person', 'Place']
+    },
+    SportsTeam: {
+      isA: 'Organization'
+    },
+    School: {
+      isA: 'Organization'
+    },
+    Company: {
+      isA: 'Organization'
+    },
+    // - plural
+    Plural: {
+      isA: 'Noun',
+      notA: ['Singular']
+    },
+    //(not plural or singular)
+    Uncountable: {
+      isA: 'Noun'
+    },
+    Pronoun: {
+      isA: 'Noun',
+      notA: entity
+    },
+    //a word for someone doing something -'plumber'
+    Actor: {
+      isA: 'Noun',
+      notA: entity
+    },
+    //a gerund-as-noun - 'swimming'
+    Activity: {
+      isA: 'Noun',
+      notA: ['Person', 'Place']
+    },
+    //'kilograms'
+    Unit: {
+      isA: 'Noun',
+      notA: entity
+    },
+    //'Canadians'
+    Demonym: {
+      isA: ['Noun', 'ProperNoun'],
+      notA: entity
+    },
+    //`john's`
+    Possessive: {
+      isA: 'Noun' // notA: 'Pronoun',
+
+    }
+  };
+
+  var verbs = {
+    Verb: {
+      notA: ['Noun', 'Adjective', 'Adverb', 'Value', 'Expression']
+    },
+    // walks
+    PresentTense: {
+      isA: 'Verb',
+      notA: ['PastTense', 'FutureTense']
+    },
+    // neutral form - 'walk'
+    Infinitive: {
+      isA: 'PresentTense',
+      notA: ['PastTense', 'Gerund']
+    },
+    //close the door!
+    Imperative: {
+      isA: 'Infinitive' // notA: ['PresentTense', 'PastTense', 'FutureTense', 'Gerund'],
+
+    },
+    // walking
+    Gerund: {
+      isA: 'PresentTense',
+      notA: ['PastTense', 'Copula', 'FutureTense']
+    },
+    // walked
+    PastTense: {
+      isA: 'Verb',
+      notA: ['FutureTense']
+    },
+    // will walk
+    FutureTense: {
+      isA: 'Verb'
+    },
+    // is
+    Copula: {
+      isA: 'Verb'
+    },
+    // would have
+    Modal: {
+      isA: 'Verb',
+      notA: ['Infinitive']
+    },
+    // had walked
+    PerfectTense: {
+      isA: 'Verb',
+      notA: 'Gerund'
+    },
+    Pluperfect: {
+      isA: 'Verb'
+    },
+    // shown
+    Participle: {
+      isA: 'PastTense'
+    },
+    // show up
+    PhrasalVerb: {
+      isA: 'Verb'
+    },
+    //'up' part
+    Particle: {
+      isA: 'PhrasalVerb'
+    },
+    //this can be an adverb
+    Auxiliary: {
+      notA: ['Noun', 'Adjective', 'Value']
+    }
+  };
+
+  var values = {
+    Value: {
+      notA: ['Verb', 'Adjective', 'Adverb']
+    },
+    Ordinal: {
+      isA: 'Value',
+      notA: ['Cardinal']
+    },
+    Cardinal: {
+      isA: 'Value',
+      notA: ['Ordinal']
+    },
+    Fraction: {
+      isA: 'Value',
+      notA: ['Noun']
+    },
+    RomanNumeral: {
+      isA: 'Cardinal',
+      //can be a person, too
+      notA: ['Ordinal', 'TextValue']
+    },
+    TextValue: {
+      isA: 'Value',
+      notA: ['NumericValue']
+    },
+    NumericValue: {
+      isA: 'Value',
+      notA: ['TextValue']
+    },
+    Money: {
+      isA: 'Cardinal'
+    },
+    Percent: {
+      isA: 'Value'
+    }
+  };
+
+  const anything = ['Noun', 'Verb', 'Adjective', 'Adverb', 'Value', 'QuestionWord'];
+  var misc = {
+    //--Adjectives--
+    Adjective: {
+      notA: ['Noun', 'Verb', 'Adverb', 'Value']
+    },
+    // adjectives that can conjugate
+    Comparable: {
+      isA: ['Adjective']
+    },
+    // better
+    Comparative: {
+      isA: ['Adjective']
+    },
+    // best
+    Superlative: {
+      isA: ['Adjective'],
+      notA: ['Comparative']
+    },
+    NumberRange: {// isA: ['Contraction'],
+    },
+    Adverb: {
+      notA: ['Noun', 'Verb', 'Adjective', 'Value']
+    },
+    // Dates:
+    //not a noun, but usually is
+    Date: {
+      notA: ['Verb', 'Adverb', 'Preposition', 'Adjective']
+    },
+    Month: {
+      isA: ['Date', 'Singular'],
+      notA: ['Year', 'WeekDay', 'Time']
+    },
+    WeekDay: {
+      isA: ['Date', 'Noun']
+    },
+    // 'PST'
+    Timezone: {
+      isA: ['Date', 'Noun'],
+      notA: ['Adjective', 'ProperNoun']
+    },
+    // '9:20pm'
+    Time: {
+      isA: ['Date'],
+      notA: ['AtMention']
+    },
+    //glue
+    Determiner: {
+      notA: anything
+    },
+    Conjunction: {
+      notA: anything
+    },
+    Preposition: {
+      notA: anything
+    },
+    // what, who, why
+    QuestionWord: {
+      notA: ['Determiner']
+    },
+    // peso, euro
+    Currency: {
+      isA: ['Noun']
+    },
+    // ughh
+    Expression: {
+      notA: ['Noun', 'Adjective', 'Verb', 'Adverb']
+    },
+    // dr.
+    Abbreviation: {},
+    // internet tags
+    Url: {
+      notA: ['HashTag', 'PhoneNumber', 'Verb', 'Adjective', 'Value', 'AtMention', 'Email']
+    },
+    PhoneNumber: {
+      notA: ['HashTag', 'Verb', 'Adjective', 'Value', 'AtMention', 'Email']
+    },
+    HashTag: {},
+    AtMention: {
+      isA: ['Noun'],
+      notA: ['HashTag', 'Verb', 'Adjective', 'Value', 'Email']
+    },
+    Emoji: {
+      notA: ['HashTag', 'Verb', 'Adjective', 'Value', 'AtMention']
+    },
+    Emoticon: {
+      notA: ['HashTag', 'Verb', 'Adjective', 'Value', 'AtMention']
+    },
+    Email: {
+      notA: ['HashTag', 'Verb', 'Adjective', 'Value', 'AtMention']
+    },
+    //non-exclusive
+    Acronym: {
+      notA: ['Plural', 'RomanNumeral']
+    },
+    Negative: {
+      notA: ['Noun', 'Adjective', 'Value']
+    },
+    // if, unless, were
+    Condition: {
+      notA: ['Verb', 'Adjective', 'Noun', 'Value']
+    }
+  };
+
+  // i just made these up
+  const colorMap = {
+    Noun: 'blue',
+    Verb: 'green',
+    Negative: 'green',
+    Date: 'red',
+    Value: 'red',
+    Adjective: 'magenta',
+    Preposition: 'cyan',
+    Conjunction: 'cyan',
+    Determiner: 'cyan',
+    Adverb: 'cyan'
+  };
+  /** add a debug color to some tags */
+
+  const addColors = function (tags) {
+    Object.keys(tags).forEach(k => {
+      // assigned from plugin, for example
+      if (tags[k].color) {
+        tags[k].color = tags[k].color;
+        return;
+      } // defined above
+
+
+      if (colorMap[k]) {
+        tags[k].color = colorMap[k];
+        return;
+      }
+
+      tags[k].isA.some(t => {
+        if (colorMap[t]) {
+          tags[k].color = colorMap[t];
+          return true;
+        }
+
+        return false;
+      });
+    });
+    return tags;
+  };
+
+  var _color = addColors;
+
+  const unique$2 = function (arr) {
+    return arr.filter((v, i, a) => a.indexOf(v) === i);
+  }; //add 'downward' tags (that immediately depend on this one)
+
+
+  const inferIsA = function (tags) {
+    Object.keys(tags).forEach(k => {
+      let tag = tags[k];
+      let len = tag.isA.length;
+
+      for (let i = 0; i < len; i++) {
+        let down = tag.isA[i];
+
+        if (tags[down]) {
+          tag.isA = tag.isA.concat(tags[down].isA);
+        }
+      } // clean it up
+
+
+      tag.isA = unique$2(tag.isA);
+    });
+    return tags;
+  };
+
+  var _isA = inferIsA;
+
+  const unique$1 = function (arr) {
+    return arr.filter((v, i, a) => a.indexOf(v) === i);
+  }; // crawl the tag-graph and infer any conflicts
+  // faster than doing this at tag-time
+
+
+  const inferNotA = function (tags) {
+    let keys = Object.keys(tags);
+    keys.forEach(k => {
+      let tag = tags[k];
+      tag.notA = tag.notA || [];
+      tag.isA.forEach(down => {
+        if (tags[down] && tags[down].notA) {
+          // borrow its conflicts
+          let notA = typeof tags[down].notA === 'string' ? [tags[down].isA] : tags[down].notA || [];
+          tag.notA = tag.notA.concat(notA);
+        }
+      }); // any tag that lists us as a conflict, we conflict it back.
+
+      for (let i = 0; i < keys.length; i++) {
+        const key = keys[i];
+
+        if (tags[key].notA.indexOf(k) !== -1) {
+          tag.notA.push(key);
+        }
+      } // clean it up
+
+
+      tag.notA = unique$1(tag.notA);
+    });
+    return tags;
+  };
+
+  var _notA = inferNotA;
+
+  // a lineage is all 'incoming' tags that have this as 'isA'
+  const inferLineage = function (tags) {
+    let keys = Object.keys(tags);
+    keys.forEach(k => {
+      let tag = tags[k];
+      tag.lineage = []; // find all tags with it in their 'isA' set
+
+      for (let i = 0; i < keys.length; i++) {
+        if (tags[keys[i]].isA.indexOf(k) !== -1) {
+          tag.lineage.push(keys[i]);
+        }
+      }
+    });
+    return tags;
+  };
+
+  var _lineage = inferLineage;
+
+  const validate = function (tags) {
+    // cleanup format
+    Object.keys(tags).forEach(k => {
+      let tag = tags[k]; // ensure isA is an array
+
+      tag.isA = tag.isA || [];
+
+      if (typeof tag.isA === 'string') {
+        tag.isA = [tag.isA];
+      } // ensure notA is an array
+
+
+      tag.notA = tag.notA || [];
+
+      if (typeof tag.notA === 'string') {
+        tag.notA = [tag.notA];
+      }
+    });
+    return tags;
+  }; // build-out the tag-graph structure
+
+
+  const inferTags = function (tags) {
+    // validate data
+    tags = validate(tags); // build its 'down tags'
+
+    tags = _isA(tags); // infer the conflicts
+
+    tags = _notA(tags); // debug tag color
+
+    tags = _color(tags); // find incoming links
+
+    tags = _lineage(tags);
+    return tags;
+  };
+
+  var inference = inferTags;
+
+  const addIn = function (obj, tags) {
+    Object.keys(obj).forEach(k => {
+      tags[k] = obj[k];
+    });
+  };
+
+  const build = () => {
+    let tags = {};
+    addIn(nouns, tags);
+    addIn(verbs, tags);
+    addIn(values, tags);
+    addIn(misc, tags); // do the graph-stuff
+
+    tags = inference(tags);
+    return tags;
+  };
+
+  var tags = build();
+
+  var _object = {};
+
+  var _function = n => n;
+
+  const fancy = {
+    Unit: (lex, w) => {
+      lex[w] = ['Abbreviation', 'Unit'];
+    },
+    Cardinal: (lex, w) => {
+      lex[w] = ['TextValue', 'Cardinal'];
+    },
+    TextOrdinal: (lex, w) => {
+      lex[w] = ['Ordinal', 'TextValue'];
+      lex[w + 's'] = ['TextValue', 'Fraction']; // add 'millionths'
+    },
+    // add plural/singular forms
+    Singular: (lex, w, world) => {
+      lex[w] = 'Singular';
+      let plural = world.transforms.toPlural(w, world);
+      lex[plural] = lex[plural] || 'Plural';
+    },
+    // conjugate these verbs
+    Infinitive: (lex, w, world) => {
+      lex[w] = 'Infinitive';
+      let conj = world.transforms.conjugate(w, world);
+      let tags = Object.keys(conj);
+
+      for (let i = 0; i < tags.length; i++) {
+        let str = conj[tags[i]];
+        lex[str] = lex[str] || tags[i]; // only if it's safe
+      }
+    },
+    // conjugate other Adjectival forms
+    Comparable: (lex, w, world) => {
+      lex[w] = 'Comparable';
+      let conj = world.transforms.adjectives(w);
+      let tags = Object.keys(conj);
+
+      for (let i = 0; i < tags.length; i++) {
+        let word = conj[tags[i]];
+        lex[word] = lex[word] || tags[i]; // only if it's safe
+      }
+    },
+    //conjugate phrasal-verbs
+    PhrasalVerb: (lex, w, world) => {
+      // whole thing
+      lex[w] = ['PhrasalVerb', 'Infinitive']; //add original form
+
+      let words = w.split(' '); // lex[words[0]] = lex[words[0]] || 'Infinitive'
+      // //conjugate first word
+
+      let conj = world.transforms.conjugate(words[0], world);
+      let tags = Object.keys(conj);
+
+      for (let i = 0; i < tags.length; i++) {
+        let str = conj[tags[i]] + ' ' + words[1];
+        lex[str] = lex[str] || ['PhrasalVerb', tags[i]];
+        world.hasCompound[conj[tags[i]]] = true;
+      }
+    },
+    // inflect our demonyms - 'germans'
+    Demonym: (lex, w, world) => {
+      lex[w] = 'Demonym';
+      let plural = world.transforms.toPlural(w, world);
+      lex[plural] = lex[plural] || ['Demonym', 'Plural']; // only if it's safe
+    }
+  }; // let a user explode their lexicon, too
+
+  const addWords = function (wordsObj, lex, world) {
+    Object.keys(wordsObj).forEach(word => {
+      let tag = wordsObj[word]; // abbreviation-words are used in our tokenizer
+
+      if (tag === 'Abbreviation' || tag === 'Unit') {
+        world.cache.abbreviations[word] = true;
+      } // cache multi-words
+
+
+      let multi = word.split(' ');
+
+      if (multi.length > 1) {
+        world.hasCompound[multi[0]] = true;
+      } // do some ad-hoc work before adding it
+
+
+      if (fancy[tag] !== undefined) {
+        fancy[tag](lex, word, world);
+        return;
+      } //set it in our lexicon, basic
+
+
+      if (lex[word] === undefined) {
+        lex[word] = tag;
+        return;
+      } // if we already have that word
+
+
+      if (typeof lex[word] === 'string') {
+        lex[word] = [lex[word]];
+      }
+
+      if (typeof tag === 'string') {
+        lex[word].push(tag);
+      } else {
+        lex[word] = lex[word].concat(tag);
+      }
+    });
+  }; // we do some ad-hoc stuff here, building-up our word-list
+
+
+  const buildOut = function (world) {
+    //our bag of words
+    let lexicon = Object.assign({}, _object); // start adding words to the lex
+
+    Object.keys(_object).forEach(tag => {
+      let wordsObj = _function(_object[tag]); // this part sucks
+
+      Object.keys(wordsObj).forEach(w => {
+        wordsObj[w] = tag;
+      });
+      addWords(wordsObj, lexicon, world);
+    }); // console.log(Object.keys(lexicon).length)
+
+    return lexicon;
+  };
+
+  var unpack_1 = {
+    buildOut: buildOut,
+    addWords: addWords
+  };
+
+  // add words from plurals and conjugations data
+  const addIrregulars = function (world) {
+    //add irregular plural nouns
+    let nouns = world.irregulars.nouns;
+    let words = Object.keys(nouns);
+
+    for (let i = 0; i < words.length; i++) {
+      const w = words[i];
+      world.words[w] = 'Singular';
+      world.words[nouns[w]] = 'Plural';
+    } // add irregular verb conjugations
+
+
+    let verbs = world.irregulars.verbs;
+    let keys = Object.keys(verbs);
+
+    for (let i = 0; i < keys.length; i++) {
+      const inf = keys[i]; //add only if it it's safe...
+
+      world.words[inf] = world.words[inf] || 'Infinitive';
+      let forms = world.transforms.conjugate(inf, world);
+      forms = Object.assign(forms, verbs[inf]); //add the others
+
+      Object.keys(forms).forEach(tag => {
+        world.words[forms[tag]] = world.words[forms[tag]] || tag; // lexicon should prefer other tags, over participle
+
+        if (world.words[forms[tag]] === 'Participle') {
+          world.words[forms[tag]] = tag;
+        }
+      });
+    }
+  };
+
+  var addIrregulars_1 = addIrregulars;
+
+  const irregulars$1 = {
+    nouns: _object,
+    verbs: _object
+  }; //these behaviours are configurable & shared across some plugins
+
+  const transforms = {
+    conjugate: _function,
+    adjectives: _function,
+    toPlural: _function,
+    toSingular: _function,
+    toInfinitive: _function
+  };
+  let isVerbose = false;
+  /** all configurable linguistic data */
+
+  class World {
+    constructor() {
+      // quiet these properties from a console.log
+      Object.defineProperty(this, 'words', {
+        enumerable: false,
+        value: {},
+        writable: true
+      });
+      Object.defineProperty(this, 'hasCompound', {
+        enumerable: false,
+        value: {},
+        writable: true
+      });
+      Object.defineProperty(this, 'irregulars', {
+        enumerable: false,
+        value: irregulars$1,
+        writable: true
+      });
+      Object.defineProperty(this, 'tags', {
+        enumerable: false,
+        value: Object.assign({}, tags),
+        writable: true
+      });
+      Object.defineProperty(this, 'transforms', {
+        enumerable: false,
+        value: transforms,
+        writable: true
+      });
+      Object.defineProperty(this, 'taggers', {
+        enumerable: false,
+        value: [],
+        writable: true
+      }); // cache our abbreviations for our sentence-parser
+
+      Object.defineProperty(this, 'cache', {
+        enumerable: false,
+        value: {
+          abbreviations: {}
+        }
+      }); // add our compressed data to lexicon
+
+      this.words = unpack_1.buildOut(this); // add our irregulars to lexicon
+
+      addIrregulars_1(this);
+    }
+    /** more logs for debugging */
+
+
+    verbose(bool) {
+      isVerbose = bool;
+      return this;
+    }
+
+    isVerbose() {
+      return isVerbose;
+    }
+    /** put new words into our lexicon, properly */
+
+
+    addWords(wordObj) {
+      // clean them up a bit
+      let cleaned = {};
+      Object.keys(wordObj).forEach(w => {
+        let tag = wordObj[w];
+        w = w.toLowerCase().trim();
+        cleaned[w] = tag;
+      });
+      unpack_1.addWords(cleaned, this.words, this);
+    }
+    /** add new custom conjugations */
+
+
+    addConjugations(obj) {
+      Object.assign(this.irregulars.verbs, obj);
+      return this;
+    }
+    /** add new custom plural/singular pairs */
+
+
+    addPlurals(obj) {
+      Object.assign(this.irregulars.nouns, obj);
+      return this;
+    }
+    /** extend the compromise tagset */
+
+
+    addTags(tags) {
+      tags = Object.assign({}, tags);
+      this.tags = Object.assign(this.tags, tags); // calculate graph implications for the new tags
+
+      this.tags = inference(this.tags);
+      return this;
+    }
+    /** call methods after tagger runs */
+
+
+    postProcess(fn) {
+      this.taggers.push(fn);
+      return this;
+    }
+    /** helper method for logging + debugging */
+
+
+    stats() {
+      return {
+        words: Object.keys(this.words).length,
+        plurals: Object.keys(this.irregulars.nouns).length,
+        conjugations: Object.keys(this.irregulars.verbs).length,
+        compounds: Object.keys(this.hasCompound).length,
+        postProcessors: this.taggers.length
+      };
+    }
+
+  } //  ¯\_(:/)_/¯
+
+
+  const clone = function (obj) {
+    return JSON.parse(JSON.stringify(obj));
+  };
+  /** produce a deep-copy of all lingustic data */
+
+
+  World.prototype.clone = function () {
+    let w2 = new World(); // these are simple to copy:
+
+    w2.words = Object.assign({}, this.words);
+    w2.hasCompound = Object.assign({}, this.hasCompound); //these ones are nested:
+
+    w2.irregulars = clone(this.irregulars);
+    w2.tags = clone(this.tags); // these are functions
+
+    w2.transforms = this.transforms;
+    w2.taggers = this.taggers;
+    return w2;
+  };
+
+  var World_1 = World;
+
+  /** return the root, first document */
+
+  var _01Utils = createCommonjsModule(function (module, exports) {
+    exports.all = function () {
+      return this.parents()[0] || this;
+    };
+    /** return the previous result */
+
+
+    exports.parent = function () {
+      if (this.from) {
+        return this.from;
+      }
+
+      return this;
+    };
+    /**  return a list of all previous results */
+
+
+    exports.parents = function (n) {
+      let arr = [];
+
+      const addParent = function (doc) {
+        if (doc.from) {
+          arr.push(doc.from);
+          addParent(doc.from);
+        }
+      };
+
+      addParent(this);
+      arr = arr.reverse();
+
+      if (typeof n === 'number') {
+        return arr[n];
+      }
+
+      return arr;
+    };
+    /** deep-copy the document, so that no references remain */
+
+
+    exports.clone = function (doShallow) {
+      let list = this.list.map(ts => ts.clone(doShallow));
+      let tmp = this.buildFrom(list);
+      return tmp;
+    };
+    /** how many seperate terms does the document have? */
+
+
+    exports.wordCount = function () {
+      return this.list.reduce((count, p) => {
+        count += p.wordCount();
+        return count;
+      }, 0);
+    };
+
+    exports.wordcount = exports.wordCount;
+    /** turn on logging for decision-debugging */
+    // exports.verbose = function(bool) {
+    //   if (bool === undefined) {
+    //     bool = true
+    //   }
+    //   this.world.verbose = bool
+    // }
+  });
+
+  /** use only the first result(s) */
+
+  var _02Accessors = createCommonjsModule(function (module, exports) {
+    exports.first = function (n) {
+      if (n === undefined) {
+        return this.get(0);
+      }
+
+      return this.slice(0, n);
+    };
+    /** use only the last result(s) */
+
+
+    exports.last = function (n) {
+      if (n === undefined) {
+        return this.get(this.list.length - 1);
+      }
+
+      let end = this.list.length;
+      return this.slice(end - n, end);
+    };
+    /** grab a given subset of the results*/
+
+
+    exports.slice = function (start, end) {
+      let list = this.list.slice(start, end);
+      return this.buildFrom(list);
+    };
+    /* grab nth result */
+
+
+    exports.eq = function (n) {
+      let p = this.list[n];
+
+      if (p === undefined) {
+        return this.buildFrom([]);
+      }
+
+      return this.buildFrom([p]);
+    };
+
+    exports.get = exports.eq;
+    /** grab term[0] for every match */
+
+    exports.firstTerms = function () {
+      return this.match('^.');
+    };
+
+    exports.firstTerm = exports.firstTerms;
+    /** grab the last term for every match  */
+
+    exports.lastTerms = function () {
+      return this.match('.$');
+    };
+
+    exports.lastTerm = exports.lastTerms;
+    /** return a flat array of term objects */
+
+    exports.termList = function (num) {
+      let arr = []; //'reduce' but faster
+
+      for (let i = 0; i < this.list.length; i++) {
+        let terms = this.list[i].terms();
+
+        for (let o = 0; o < terms.length; o++) {
+          arr.push(terms[o]); //support .termList(4)
+
+          if (num !== undefined && arr[num] !== undefined) {
+            return arr[num];
+          }
+        }
+      }
+
+      return arr;
+    };
+    /* grab named capture group terms as object */
+
+
+    const getGroups = function (doc) {
+      let res = {};
+      const allGroups = {};
+
+      for (let i = 0; i < doc.list.length; i++) {
+        const phrase = doc.list[i];
+        const groups = Object.keys(phrase.groups).map(k => phrase.groups[k]);
+
+        for (let j = 0; j < groups.length; j++) {
+          const {
+            group,
+            start,
+            length
+          } = groups[j];
+
+          if (!allGroups[group]) {
+            allGroups[group] = [];
+          }
+
+          allGroups[group].push(phrase.buildFrom(start, length));
+        }
+      }
+
+      const keys = Object.keys(allGroups);
+
+      for (let i = 0; i < keys.length; i++) {
+        const key = keys[i];
+        res[key] = doc.buildFrom(allGroups[key]);
+      }
+
+      return res;
+    };
+    /** lookup a named-group, by its name */
+
+
+    const getOneName = function (doc, name) {
+      const arr = [];
+
+      for (let i = 0; i < doc.list.length; i++) {
+        const phrase = doc.list[i];
+        let keys = Object.keys(phrase.groups);
+        keys = keys.filter(id => phrase.groups[id].group === name);
+        keys.forEach(id => {
+          arr.push(phrase.buildFrom(phrase.groups[id].start, phrase.groups[id].length));
+        });
+      }
+
+      return doc.buildFrom(arr);
+    };
+    /** grab named capture group results */
+
+
+    exports.groups = function (target) {
+      if (target === undefined) {
+        return getGroups(this);
+      }
+
+      if (typeof target === 'number') {
+        target = String(target);
+      }
+
+      return getOneName(this, target) || this.buildFrom([]);
+    };
+
+    exports.group = exports.groups;
+    /** get the full-sentence each phrase belongs to */
+
+    exports.sentences = function (n) {
+      let arr = [];
+      this.list.forEach(p => {
+        arr.push(p.fullSentence());
+      });
+
+      if (typeof n === 'number') {
+        return this.buildFrom([arr[n]]);
+      }
+
+      return this.buildFrom(arr);
+    };
+
+    exports.sentence = exports.sentences;
+  });
+
+  // cache the easier conditions up-front
+  const cacheRequired = function (reg) {
+    let needTags = [];
+    let needWords = [];
+    reg.forEach(obj => {
+      if (obj.optional === true || obj.negative === true) {
+        return;
+      }
+
+      if (obj.tag !== undefined) {
+        needTags.push(obj.tag);
+      }
+
+      if (obj.word !== undefined) {
+        needWords.push(obj.word);
+      }
+    });
+    return {
+      tags: needTags,
+      words: needWords
+    };
+  }; // try to pre-fail as many matches as possible, without doing them
+
+
+  const failFast = function (doc, regs) {
+    if (doc._cache && doc._cache.set === true) {
+      let {
+        words,
+        tags
+      } = cacheRequired(regs); //check required words
+
+      for (let i = 0; i < words.length; i++) {
+        if (doc._cache.words[words[i]] === undefined) {
+          return false;
+        }
+      } //check required tags
+
+
+      for (let i = 0; i < tags.length; i++) {
+        if (doc._cache.tags[tags[i]] === undefined) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  };
+
+  var _failFast = failFast;
+
+  var _03Match = createCommonjsModule(function (module, exports) {
+    /** return a new Doc, with this one as a parent */
+    exports.match = function (reg, opts = {}) {
+      // support '0' shorthand for named-groups
+      if (typeof opts === 'string' || typeof opts === 'number' || opts === null) {
+        opts = {
+          group: opts
+        };
+      } //parse-up the input expression
+
+
+      let regs = matchSyntax(reg, opts);
+
+      if (regs.length === 0) {
+        return this.buildFrom([]);
+      } //check our cache, if it exists
+
+
+      if (_failFast(this, regs) === false) {
+        return this.buildFrom([]);
+      } //try expression on each phrase
+
+
+      let matches = this.list.reduce((arr, p) => {
+        return arr.concat(p.match(regs));
+      }, []); // support returning named groups
+
+      if (opts.group !== undefined && opts.group !== null && opts.group !== '') {
+        return this.buildFrom(matches).groups(opts.group);
+      }
+
+      return this.buildFrom(matches);
+    };
+    /** return all results except for this */
+
+
+    exports.not = function (reg, opts = {}) {
+      //parse-up the input expression
+      let regs = matchSyntax(reg, opts); //if it's empty, return them all!
+
+      if (regs.length === 0 || _failFast(this, regs) === false) {
+        return this;
+      } //try expression on each phrase
+
+
+      let matches = this.list.reduce((arr, p) => {
+        return arr.concat(p.not(regs));
+      }, []);
+      return this.buildFrom(matches);
+    };
+    /** return only the first match */
+
+
+    exports.matchOne = function (reg, opts = {}) {
+      let regs = matchSyntax(reg, opts); //check our cache, if it exists
+
+      if (_failFast(this, regs) === false) {
+        return this.buildFrom([]);
+      }
+
+      for (let i = 0; i < this.list.length; i++) {
+        let match = this.list[i].match(regs, true);
+        return this.buildFrom(match);
+      }
+
+      return this.buildFrom([]);
+    };
+    /** return each current phrase, only if it contains this match */
+
+
+    exports.if = function (reg, opts = {}) {
+      let regs = matchSyntax(reg, opts); //consult our cache, if it exists
+
+      if (_failFast(this, regs) === false) {
+        return this.buildFrom([]);
+      }
+
+      let found = this.list.filter(p => p.has(regs) === true);
+      return this.buildFrom(found);
+    };
+    /** Filter-out any current phrases that have this match*/
+
+
+    exports.ifNo = function (reg, opts = {}) {
+      let regs = matchSyntax(reg, opts);
+      let found = this.list.filter(p => p.has(regs) === false);
+      return this.buildFrom(found);
+    };
+    /**Return a boolean if this match exists */
+
+
+    exports.has = function (reg, opts = {}) {
+      let regs = matchSyntax(reg, opts); //consult our cache, if it exists
+
+      if (_failFast(this, regs) === false) {
+        return false;
+      }
+
+      return this.list.some(p => p.has(regs) === true);
+    };
+    /** match any terms after our matches, within the sentence */
+
+
+    exports.lookAhead = function (reg, opts = {}) {
+      // find everything afterwards, by default
+      if (!reg) {
+        reg = '.*';
+      }
+
+      let regs = matchSyntax(reg, opts);
+      let matches = [];
+      this.list.forEach(p => {
+        matches = matches.concat(p.lookAhead(regs));
+      });
+      matches = matches.filter(p => p);
+      return this.buildFrom(matches);
+    };
+
+    exports.lookAfter = exports.lookAhead;
+    /** match any terms before our matches, within the sentence */
+
+    exports.lookBehind = function (reg, opts = {}) {
+      // find everything afterwards, by default
+      if (!reg) {
+        reg = '.*';
+      }
+
+      let regs = matchSyntax(reg, opts);
+      let matches = [];
+      this.list.forEach(p => {
+        matches = matches.concat(p.lookBehind(regs));
+      });
+      matches = matches.filter(p => p);
+      return this.buildFrom(matches);
+    };
+
+    exports.lookBefore = exports.lookBehind;
+    /** return all terms before a match, in each phrase */
+
+    exports.before = function (reg, opts = {}) {
+      let regs = matchSyntax(reg, opts); //only the phrases we care about
+
+      let phrases = this.if(regs).list;
+      let befores = phrases.map(p => {
+        let ids = p.terms().map(t => t.id); //run the search again
+
+        let m = p.match(regs)[0];
+        let index = ids.indexOf(m.start); //nothing is before a first-term match
+
+        if (index === 0 || index === -1) {
+          return null;
+        }
+
+        return p.buildFrom(p.start, index);
+      });
+      befores = befores.filter(p => p !== null);
+      return this.buildFrom(befores);
+    };
+    /** return all terms after a match, in each phrase */
+
+
+    exports.after = function (reg, opts = {}) {
+      let regs = matchSyntax(reg, opts); //only the phrases we care about
+
+      let phrases = this.if(regs).list;
+      let befores = phrases.map(p => {
+        let terms = p.terms();
+        let ids = terms.map(t => t.id); //run the search again
+
+        let m = p.match(regs)[0];
+        let index = ids.indexOf(m.start); //skip if nothing is after it
+
+        if (index === -1 || !terms[index + m.length]) {
+          return null;
+        } //create the new phrase, after our match.
+
+
+        let id = terms[index + m.length].id;
+        let len = p.length - index - m.length;
+        return p.buildFrom(id, len);
+      });
+      befores = befores.filter(p => p !== null);
+      return this.buildFrom(befores);
+    };
+    /** return only results with this match afterwards */
+
+
+    exports.hasAfter = function (reg, opts = {}) {
+      return this.filter(doc => {
+        return doc.lookAfter(reg, opts).found;
+      });
+    };
+    /** return only results with this match before it */
+
+
+    exports.hasBefore = function (reg, opts = {}) {
+      return this.filter(doc => {
+        return doc.lookBefore(reg, opts).found;
+      });
+    };
+  });
+
+  /** apply a tag, or tags to all terms */
+  const tagTerms = function (tag, doc, safe, reason) {
+    let tagList = [];
+
+    if (typeof tag === 'string') {
+      tagList = tag.split(' ');
+    } // doc.parents()[0].reasons.push(reason)
+    //do indepenent tags for each term:
+
+
+    doc.list.forEach(p => {
+      let terms = p.terms(); // tagSafe - apply only to fitting terms
+
+      if (safe === true) {
+        terms = terms.filter(t => t.canBe(tag, doc.world));
+      }
+
+      terms.forEach((t, i) => {
+        //fancy version:
+        if (tagList.length > 1) {
+          if (tagList[i] && tagList[i] !== '.') {
+            t.tag(tagList[i], reason, doc.world);
+          }
+        } else {
+          //non-fancy version (same tag for all terms)
+          t.tag(tag, reason, doc.world);
+        }
+      });
+    });
+    return;
+  };
+
+  var _setTag = tagTerms;
+
+  /** Give all terms the given tag */
+
+  var tag = function (tags, why) {
+    if (!tags) {
+      return this;
+    }
+
+    _setTag(tags, this, false, why);
+    return this;
+  };
+  /** Only apply tag to terms if it is consistent with current tags */
+
+
+  var tagSafe = function (tags, why) {
+    if (!tags) {
+      return this;
+    }
+
+    _setTag(tags, this, true, why);
+    return this;
+  };
+  /** Remove this term from the given terms */
+
+
+  var unTag = function (tags, why) {
+    this.list.forEach(p => {
+      p.terms().forEach(t => t.unTag(tags, why, this.world));
+    });
+    return this;
+  };
+  /** return only the terms that can be this tag*/
+
+
+  var canBe = function (tag) {
+    if (!tag) {
+      return this;
+    }
+
+    let world = this.world;
+    let matches = this.list.reduce((arr, p) => {
+      return arr.concat(p.canBe(tag, world));
+    }, []);
+    return this.buildFrom(matches);
+  };
+
+  var _04Tag = {
+    tag: tag,
+    tagSafe: tagSafe,
+    unTag: unTag,
+    canBe: canBe
+  };
+
+  /* run each phrase through a function, and create a new document */
+  var map = function (fn) {
+    if (!fn) {
+      return this;
+    }
+
+    let list = this.list.map((p, i) => {
+      let doc = this.buildFrom([p]);
+      doc.from = null; //it's not a child/parent
+
+      let res = fn(doc, i); // if its a doc, return one result
+
+      if (res && res.list && res.list[0]) {
+        return res.list[0];
+      }
+
+      return res;
+    }); //remove nulls
+
+    list = list.filter(x => x); // return an empty response
+
+    if (list.length === 0) {
+      return this.buildFrom(list);
+    } // if it is not a list of Phrase objects, then don't try to make a Doc object
+
+
+    if (typeof list[0] !== 'object' || list[0].isA !== 'Phrase') {
+      return list;
+    }
+
+    return this.buildFrom(list);
+  };
+  /** run a function on each phrase */
+
+
+  var forEach = function (fn, detachParent) {
+    if (!fn) {
+      return this;
+    }
+
+    this.list.forEach((p, i) => {
+      let sub = this.buildFrom([p]); // if we're doing fancy insertions, we may want to skip updating the parent each time.
+
+      if (detachParent === true) {
+        sub.from = null; //
+      }
+
+      fn(sub, i);
+    });
+    return this;
+  };
+  /** return only the phrases that return true */
+
+
+  var filter = function (fn) {
+    if (!fn) {
+      return this;
+    }
+
+    let list = this.list.filter((p, i) => {
+      let doc = this.buildFrom([p]);
+      doc.from = null; //it's not a child/parent
+
+      return fn(doc, i);
+    });
+    return this.buildFrom(list);
+  };
+  /** return a document with only the first phrase that matches */
+
+
+  var find = function (fn) {
+    if (!fn) {
+      return this;
+    }
+
+    let phrase = this.list.find((p, i) => {
+      let doc = this.buildFrom([p]);
+      doc.from = null; //it's not a child/parent
+
+      return fn(doc, i);
+    });
+
+    if (phrase) {
+      return this.buildFrom([phrase]);
+    }
+
+    return undefined;
+  };
+  /** return true or false if there is one matching phrase */
+
+
+  var some = function (fn) {
+    if (!fn) {
+      return this;
+    }
+
+    return this.list.some((p, i) => {
+      let doc = this.buildFrom([p]);
+      doc.from = null; //it's not a child/parent
+
+      return fn(doc, i);
+    });
+  };
+  /** sample a subset of the results */
+
+
+  var random = function (n) {
+    if (!this.found) {
+      return this;
+    }
+
+    let r = Math.floor(Math.random() * this.list.length);
+
+    if (n === undefined) {
+      let list = [this.list[r]];
+      return this.buildFrom(list);
+    } //prevent it from going over the end
+
+
+    if (r + n > this.length) {
+      r = this.length - n;
+      r = r < 0 ? 0 : r;
+    }
+
+    return this.slice(r, r + n);
+  };
+  /** combine each phrase into a new data-structure */
+  // exports.reduce = function(fn, h) {
+  //   let list = this.list.reduce((_h, ts) => {
+  //     let doc = this.buildFrom([ts])
+  //     doc.from = null //it's not a child/parent
+  //     return fn(_h, doc)
+  //   }, h)
+  //   return this.buildFrom(list)
+  // }
+
+
+  var _05Loops = {
+    map: map,
+    forEach: forEach,
+    filter: filter,
+    find: find,
+    some: some,
+    random: random
+  };
+
+  // const tokenize = require('../../01-tokenizer/02-words')
+  const tokenize = function (str) {
+    return str.split(/[ -]/g);
+  }; // take a list of strings
+  // look them up in the document
+
+
+  const buildTree = function (termList, values = []) {
+    let root = {}; // parse our input
+
+    termList.forEach((str, i) => {
+      let val = true;
+
+      if (values[i] !== undefined) {
+        val = values[i];
+      } // some rough normalization
+
+
+      str = (str || '').toLowerCase();
+      str = str.replace(/[,;.!?]+$/, '');
+      let arr = tokenize(str).map(s => s.trim());
+      root[arr[0]] = root[arr[0]] || {};
+
+      if (arr.length === 1) {
+        root[arr[0]].value = val;
+      } else {
+        root[arr[0]].more = root[arr[0]].more || [];
+        root[arr[0]].more.push({
+          rest: arr.slice(1),
+          value: val
+        });
+      }
+    }); // sort by longest-first?
+    // console.log(JSON.stringify(root, null, 2))
+
+    return root;
+  };
+
+  const fastLookup = function (termList, values, doc) {
+    let root = buildTree(termList, values);
+    let found = []; // each phrase
+
+    for (let i = 0; i < doc.list.length; i++) {
+      const p = doc.list[i];
+      let terms = p.terms();
+      let words = terms.map(t => t.reduced); // each word
+
+      for (let w = 0; w < words.length; w++) {
+        if (root[words[w]] !== undefined) {
+          // is it a multi-word match?
+          if (root[words[w]].more !== undefined) {
+            root[words[w]].more.forEach(more => {
+              // is it too-long?
+              if (words[w + more.rest.length] === undefined) {
+                return;
+              } // compare each subsequent term
+
+
+              let everyTerm = more.rest.every((word, r) => {
+                return word === words[w + r + 1];
+              });
+
+              if (everyTerm === true) {
+                found.push({
+                  id: p.terms()[w].id,
+                  value: more.value,
+                  length: more.rest.length + 1
+                });
+              }
+            });
+          } // is it a single-word match?
+
+
+          if (root[words[w]].value !== undefined) {
+            found.push({
+              id: p.terms()[w].id,
+              value: root[words[w]].value,
+              length: 1
+            });
+          }
+        }
+      }
+    }
+
+    return found;
+  };
+
+  var _lookup = fastLookup;
+
+  var _06Lookup = createCommonjsModule(function (module, exports) {
+    // compare one term and one match
+    // const doesMatch = function(term, str) {
+    //   if (str === '') {
+    //     return false
+    //   }
+    //   return term.reduced === str || term.implicit === str || term.root === str || term.text.toLowerCase() === str
+    // }
+    const isObject = function (obj) {
+      return obj && Object.prototype.toString.call(obj) === '[object Object]';
+    };
+    /** lookup an array of words or phrases */
+
+
+    exports.lookup = function (arr) {
+      let values = []; //is it a {key:val} object?
+
+      let isObj = isObject(arr);
+
+      if (isObj === true) {
+        arr = Object.keys(arr).map(k => {
+          values.push(arr[k]);
+          return k;
+        });
+      } // support .lookup('foo')
+
+
+      if (typeof arr === 'string') {
+        arr = [arr];
+      } //make sure we go fast.
+
+
+      if (this._cache.set !== true) {
+        this.cache();
+      }
+
+      let found = _lookup(arr, values, this);
+      let p = this.list[0]; // make object response
+
+      if (isObj === true) {
+        let byVal = {};
+        found.forEach(o => {
+          byVal[o.value] = byVal[o.value] || [];
+          byVal[o.value].push(p.buildFrom(o.id, o.length));
+        });
+        Object.keys(byVal).forEach(k => {
+          byVal[k] = this.buildFrom(byVal[k]);
+        });
+        return byVal;
+      } // otherwise, make array response:
+
+
+      found = found.map(o => p.buildFrom(o.id, o.length));
+      return this.buildFrom(found);
+    };
+
+    exports.lookUp = exports.lookup;
+  });
+
+  /** freeze the current state of the document, for speed-purposes*/
+  var cache = function (options) {
+    options = options || {};
+    let words = {};
+    let tags = {};
+    this._cache.words = words;
+    this._cache.tags = tags;
+    this._cache.set = true;
+    this.list.forEach((p, i) => {
+      p.cache = p.cache || {}; //p.terms get cached automatically
+
+      let terms = p.terms(); // cache all the terms
+
+      terms.forEach(t => {
+        if (words[t.reduced] && !words.hasOwnProperty(t.reduced)) {
+          return; //skip prototype words
+        }
+
+        words[t.reduced] = words[t.reduced] || [];
+        words[t.reduced].push(i);
+        Object.keys(t.tags).forEach(tag => {
+          tags[tag] = tags[tag] || [];
+          tags[tag].push(i);
+        }); // cache root-form on Term, too
+
+        if (options.root) {
+          t.setRoot(this.world);
+          words[t.root] = [i];
+        }
+      });
+    });
+    return this;
+  };
+  /** un-freezes the current state of the document, so it may be transformed */
+
+
+  var uncache = function () {
+    this._cache = {};
+    this.list.forEach(p => {
+      p.cache = {};
+    }); // do parents too?
+
+    this.parents().forEach(doc => {
+      doc._cache = {};
+      doc.list.forEach(p => {
+        p.cache = {};
+      });
+    });
+    return this;
+  };
+
+  var _07Cache = {
+    cache: cache,
+    uncache: uncache
+  };
+
+  const titleCase = str => {
+    return str.charAt(0).toUpperCase() + str.substr(1);
+  };
+  /** substitute-in new content */
+
+
+  var replaceWith = function (replace, options = {}) {
+    if (!replace) {
+      return this.delete();
+    } //support old-style params
+
+
+    if (options === true) {
+      options = {
+        keepTags: true
+      };
+    }
+
+    if (options === false) {
+      options = {
+        keepTags: false
+      };
+    }
+
+    options = options || {}; // clear the cache
+
+    this.uncache(); // return this
+
+    this.list.forEach(p => {
+      let input = replace; // accept a function for replace
+
+      if (typeof replace === 'function') {
+        input = replace(p);
+      }
+
+      let newPhrases; // accept a Doc object to replace
+
+      if (input && typeof input === 'object' && input.isA === 'Doc') {
+        newPhrases = input.list;
+        this.pool().merge(input.pool());
+      } else if (typeof input === 'string') {
+        //input is a string
+        if (options.keepCase !== false && p.terms(0).isTitleCase()) {
+          input = titleCase(input);
+        }
+
+        newPhrases = _01Tokenizer(input, this.world, this.pool()); //tag the new phrases
+
+        let tmpDoc = this.buildFrom(newPhrases);
+        tmpDoc.tagger();
+        newPhrases = tmpDoc.list;
+      } else {
+        return; //don't even bother
+      } // try to keep its old tags, if appropriate
+
+
+      if (options.keepTags === true) {
+        let oldTags = p.json({
+          terms: {
+            tags: true
+          }
+        }).terms;
+        newPhrases[0].terms().forEach((t, i) => {
+          if (oldTags[i]) {
+            t.tagSafe(oldTags[i].tags, 'keptTag', this.world);
+          }
+        });
+      }
+
+      p.replace(newPhrases[0], this); //Oneday: support multi-sentence replacements
+    });
+    return this;
+  };
+  /** search and replace match with new content */
+
+
+  var replace = function (match, replace, options) {
+    // if there's no 2nd param, use replaceWith
+    if (replace === undefined) {
+      return this.replaceWith(match, options);
+    }
+
+    this.match(match).replaceWith(replace, options);
+    return this;
+  };
+
+  var _01Replace = {
+    replaceWith: replaceWith,
+    replace: replace
+  };
+
+  var _02Insert = createCommonjsModule(function (module, exports) {
+    const isObject = function (obj) {
+      return obj && Object.prototype.toString.call(obj) === '[object Object]';
+    }; // if it's empty, just create the phrase
+
+
+    const makeNew = function (str, doc) {
+      let phrase = _01Tokenizer(str, doc.world)[0]; //assume it's one sentence, for now
+
+      let tmpDoc = doc.buildFrom([phrase]);
+      tmpDoc.tagger();
+      doc.list = tmpDoc.list;
+      return doc;
+    };
+    /** add these new terms to the end*/
+
+
+    exports.append = function (str = '') {
+      if (!str) {
+        return this;
+      } // if it's empty, just create the phrase
+
+
+      if (!this.found) {
+        return makeNew(str, this);
+      } // clear the cache
+
+
+      this.uncache(); //add it to end of every phrase
+
+      this.list.forEach(p => {
+        //build it
+        let phrase;
+
+        if (isObject(str) && str.isA === 'Doc') {
+          phrase = str.list[0].clone(); //use the first phrase
+        } else if (typeof str === 'string') {
+          phrase = _01Tokenizer(str, this.world, this.pool())[0]; //assume it's one sentence, for now
+        } //tag it
+
+
+        let tmpDoc = this.buildFrom([phrase]);
+        tmpDoc.tagger(); // push it onto the end
+
+        p.append(phrase, this);
+      });
+      return this;
+    };
+
+    exports.insertAfter = exports.append;
+    exports.insertAt = exports.append;
+    /** add these new terms to the front*/
+
+    exports.prepend = function (str) {
+      if (!str) {
+        return this;
+      } // if it's empty, just create the phrase
+
+
+      if (!this.found) {
+        return makeNew(str, this);
+      } // clear the cache
+
+
+      this.uncache(); //add it to start of every phrase
+
+      this.list.forEach(p => {
+        //build it
+        let phrase;
+
+        if (isObject(str) && str.isA === 'Doc') {
+          phrase = str.list[0].clone(); //use the first phrase
+        } else if (typeof str === 'string') {
+          phrase = _01Tokenizer(str, this.world, this.pool())[0]; //assume it's one sentence, for now
+        } //tag it
+
+
+        let tmpDoc = this.buildFrom([phrase]);
+        tmpDoc.tagger(); // add it to the start
+
+        p.prepend(phrase, this);
+      });
+      return this;
+    };
+
+    exports.insertBefore = exports.prepend;
+    /** add these new things to the end*/
+
+    exports.concat = function () {
+      // clear the cache
+      this.uncache();
+      let list = this.list.slice(0); //repeat for any number of params
+
+      for (let i = 0; i < arguments.length; i++) {
+        let arg = arguments[i]; //support a fresh string
+
+        if (typeof arg === 'string') {
+          let arr = _01Tokenizer(arg, this.world); //TODO: phrase.tagger()?
+
+          list = list.concat(arr);
+        } else if (arg.isA === 'Doc') {
+          list = list.concat(arg.list);
+        } else if (arg.isA === 'Phrase') {
+          list.push(arg);
+        }
+      }
+
+      return this.buildFrom(list);
+    };
+    /** fully remove these terms from the document */
+
+
+    exports.delete = function (match) {
+      // clear the cache
+      this.uncache();
+      let toRemove = this;
+
+      if (match) {
+        toRemove = this.match(match);
+      }
+
+      toRemove.list.forEach(phrase => phrase.delete(this));
+      return this;
+    }; // aliases
+
+
+    exports.remove = exports.delete;
+  });
+
+  const shouldTrim = {
+    clean: true,
+    reduced: true,
+    root: true
+  };
+  /** return the document as text */
+
+  var text = function (options) {
+    options = options || {}; //are we showing every phrase?
+
+    let showFull = false;
+
+    if (this.parents().length === 0) {
+      showFull = true;
+    } // cache roots, if necessary
+
+
+    if (options === 'root' || typeof options === 'object' && options.root) {
+      this.list.forEach(p => {
+        p.terms().forEach(t => {
+          if (t.root === null) {
+            t.setRoot(this.world);
+          }
+        });
+      });
+    }
+
+    let txt = this.list.reduce((str, p, i) => {
+      const trimPre = !showFull && i === 0;
+      const trimPost = !showFull && i === this.list.length - 1;
+      return str + p.text(options, trimPre, trimPost);
+    }, ''); // clumsy final trim of leading/trailing whitespace
+
+    if (shouldTrim[options] === true || options.reduced === true || options.clean === true || options.root === true) {
+      txt = txt.trim();
+    }
+
+    return txt;
+  };
+
+  var _01Text = {
+    text: text
+  };
+
+  // get all character startings in doc
+  const termOffsets = function (doc) {
+    let elapsed = 0;
+    let index = 0;
+    let offsets = {};
+    doc.termList().forEach(term => {
+      offsets[term.id] = {
+        index: index,
+        start: elapsed + term.pre.length,
+        length: term.text.length
+      };
+      elapsed += term.pre.length + term.text.length + term.post.length;
+      index += 1;
+    });
+    return offsets;
+  };
+
+  const calcOffset = function (doc, result, options) {
+    // calculate offsets for each term
+    let offsets = termOffsets(doc.all()); // add index values
+
+    if (options.terms.index || options.index) {
+      result.forEach(o => {
+        o.terms.forEach(t => {
+          t.index = offsets[t.id].index;
+        });
+        o.index = o.terms[0].index;
+      });
+    } // add offset values
+
+
+    if (options.terms.offset || options.offset) {
+      result.forEach(o => {
+        o.terms.forEach(t => {
+          t.offset = offsets[t.id] || {};
+        }); // let len = o.terms.reduce((n, t, i) => {
+        //   n += t.offset.length || 0
+        //   //add whitespace, too
+        //   console.log(t.post)
+        //   return n
+        // }, 0)
+        // The offset information for the entire doc starts at (or just before)
+        // the first term, and is as long as the whole text.  The code originally
+        // copied the entire offset value from terms[0], but since we're now
+        // overriding 2 of the three fields, it's cleaner to just create an all-
+        // new object and not pretend it's "just" the same as terms[0].
+
+        o.offset = {
+          index: o.terms[0].offset.index,
+          start: o.terms[0].offset.start - o.text.indexOf(o.terms[0].text),
+          length: o.text.length
+        };
+      });
+    }
+  };
+
+  var _offset = calcOffset;
+
+  var _02Json = createCommonjsModule(function (module, exports) {
+    const jsonDefaults = {
+      text: true,
+      terms: true,
+      trim: true
+    }; //some options have dependents
+
+    const setOptions = function (options) {
+      options = Object.assign({}, jsonDefaults, options);
+
+      if (options.unique) {
+        options.reduced = true;
+      } //offset calculation requires these options to be on
+
+
+      if (options.offset) {
+        options.text = true;
+
+        if (!options.terms || options.terms === true) {
+          options.terms = {};
+        }
+
+        options.terms.offset = true;
+      }
+
+      if (options.index || options.terms.index) {
+        options.terms = options.terms === true ? {} : options.terms;
+        options.terms.id = true;
+      }
+
+      return options;
+    };
+    /** pull out desired metadata from the document */
+
+
+    exports.json = function (options = {}) {
+      //support json(3) format
+      if (typeof options === 'number' && this.list[options]) {
+        return this.list[options].json(jsonDefaults);
+      }
+
+      options = setOptions(options); // cache root strings beforehand, if necessary
+
+      if (options.root === true) {
+        this.list.forEach(p => {
+          p.terms().forEach(t => {
+            if (t.root === null) {
+              t.setRoot(this.world);
+            }
+          });
+        });
+      }
+
+      let result = this.list.map(p => {
+        return p.json(options, this.world);
+      }); // add offset and index data for each term
+
+      if (options.terms.offset || options.offset || options.terms.index || options.index) {
+        _offset(this, result, options);
+      } // add frequency #s
+
+
+      if (options.frequency || options.freq || options.count) {
+        let obj = {};
+        this.list.forEach(p => {
+          let str = p.text('reduced');
+          obj[str] = obj[str] || 0;
+          obj[str] += 1;
+        });
+        this.list.forEach((p, i) => {
+          result[i].count = obj[p.text('reduced')];
+        });
+      } // remove duplicates
+
+
+      if (options.unique) {
+        let already = {};
+        result = result.filter(o => {
+          if (already[o.reduced] === true) {
+            return false;
+          }
+
+          already[o.reduced] = true;
+          return true;
+        });
+      }
+
+      return result;
+    }; //aliases
+
+
+    exports.data = exports.json;
+  });
+
+  var _debug = createCommonjsModule(function (module) {
+    // https://stackoverflow.com/questions/9781218/how-to-change-node-jss-console-font-color
+    const reset = '\x1b[0m';
+
+    const padEnd = function (str, width) {
+      str = str.toString();
+
+      while (str.length < width) {
+        str += ' ';
+      }
+
+      return str;
+    };
+
+    function isClientSide() {
+      return typeof window !== 'undefined' && window.document;
+    } // some nice colors for client-side debug
+
+
+    const css = {
+      green: '#7f9c6c',
+      red: '#914045',
+      blue: '#6699cc',
+      magenta: '#6D5685',
+      cyan: '#2D85A8',
+      yellow: '#e6d7b3',
+      black: '#303b50'
+    };
+
+    const logClientSide = function (doc) {
+      let tagset = doc.world.tags;
+      doc.list.forEach(p => {
+        console.log('\n%c"' + p.text() + '"', 'color: #e6d7b3;');
+        let terms = p.terms();
+        terms.forEach(t => {
+          let tags = Object.keys(t.tags);
+          let text = t.text || '-';
+
+          if (t.implicit) {
+            text = '[' + t.implicit + ']';
+          }
+
+          let word = "'" + text + "'";
+          word = padEnd(word, 8);
+          let found = tags.find(tag => tagset[tag] && tagset[tag].color);
+          let color = 'steelblue';
+
+          if (tagset[found]) {
+            color = tagset[found].color;
+            color = css[color];
+          }
+
+          console.log(`   ${word}  -  %c${tags.join(', ')}`, `color: ${color || 'steelblue'};`);
+        });
+      });
+    }; //cheaper than requiring chalk
+
+
+    const cli = {
+      green: function (str) {
+        return '\x1b[32m' + str + reset;
+      },
+      red: function (str) {
+        return '\x1b[31m' + str + reset;
+      },
+      blue: function (str) {
+        return '\x1b[34m' + str + reset;
+      },
+      magenta: function (str) {
+        return '\x1b[35m' + str + reset;
+      },
+      cyan: function (str) {
+        return '\x1b[36m' + str + reset;
+      },
+      yellow: function (str) {
+        return '\x1b[33m' + str + reset;
+      },
+      black: function (str) {
+        return '\x1b[30m' + str + reset;
+      }
+    };
+
+    const tagString = function (tags, world) {
+      tags = tags.map(tag => {
+        if (!world.tags.hasOwnProperty(tag)) {
+          return tag;
+        }
+
+        const c = world.tags[tag].color || 'blue';
+        return cli[c](tag);
+      });
+      return tags.join(', ');
+    }; //output some helpful stuff to the console
+
+
+    const debug = function (doc) {
+      if (isClientSide()) {
+        logClientSide(doc);
+        return doc;
+      }
+
+      console.log(cli.blue('====='));
+      doc.list.forEach(p => {
+        console.log(cli.blue('  -----'));
+        let terms = p.terms();
+        terms.forEach(t => {
+          let tags = Object.keys(t.tags);
+          let text = t.text || '-';
+
+          if (t.implicit) {
+            text = '[' + t.implicit + ']';
+          }
+
+          {
+            text = cli.yellow(text);
+          }
+
+          let word = "'" + text + "'";
+          word = padEnd(word, 18);
+          let str = cli.blue('  ｜ ') + word + '  - ' + tagString(tags, doc.world);
+          console.log(str);
+        });
+      });
+      console.log('');
+      return doc;
+    };
+
+    module.exports = debug;
+  });
+
+  const topk = function (doc) {
+    let list = doc.json({
+      text: false,
+      terms: false,
+      reduced: true
+    }); // combine them
+
+    let obj = {};
+    list.forEach(o => {
+      if (!obj[o.reduced]) {
+        o.count = 0;
+        obj[o.reduced] = o;
+      }
+
+      obj[o.reduced].count += 1;
+    });
+    let arr = Object.keys(obj).map(k => obj[k]); // sort them
+
+    arr.sort((a, b) => {
+      if (a.count > b.count) {
+        return -1;
+      } else if (a.count < b.count) {
+        return 1;
+      }
+
+      return 0;
+    });
+    return arr;
+  };
+
+  var _topk = topk;
+
+  /** pretty-print the current document and its tags */
+
+  var debug_1 = function () {
+    _debug(this);
+    return this;
+  };
+  /** some named output formats */
+
+
+  var out = function (method) {
+    if (method === 'text') {
+      return this.text();
+    }
+
+    if (method === 'normal') {
+      return this.text('normal');
+    }
+
+    if (method === 'json') {
+      return this.json();
+    }
+
+    if (method === 'offset' || method === 'offsets') {
+      return this.json({
+        offset: true
+      });
+    }
+
+    if (method === 'array') {
+      return this.json({
+        terms: false
+      }).map(obj => obj.text).filter(str => str);
+    }
+
+    if (method === 'freq' || method === 'frequency') {
+      return _topk(this);
+    }
+
+    if (method === 'terms') {
+      let list = [];
+      this.json({
+        text: false,
+        terms: {
+          text: true
+        }
+      }).forEach(obj => {
+        let terms = obj.terms.map(t => t.text);
+        terms = terms.filter(t => t);
+        list = list.concat(terms);
+      });
+      return list;
+    }
+
+    if (method === 'tags') {
+      return this.list.map(p => {
+        return p.terms().reduce((h, t) => {
+          h[t.clean || t.implicit] = Object.keys(t.tags);
+          return h;
+        }, {});
+      });
+    }
+
+    if (method === 'debug') {
+      _debug(this);
+      return this;
+    }
+
+    return this.text();
+  };
+
+  var _03Out = {
+    debug: debug_1,
+    out: out
+  };
+
+  const methods$6 = {
+    /** alphabetical order */
+    alpha: (a, b) => {
+      let left = a.text('clean');
+      let right = b.text('clean');
+
+      if (left < right) {
+        return -1;
+      }
+
+      if (left > right) {
+        return 1;
+      }
+
+      return 0;
+    },
+
+    /** count the # of characters of each match */
+    length: (a, b) => {
+      let left = a.text().trim().length;
+      let right = b.text().trim().length;
+
+      if (left < right) {
+        return 1;
+      }
+
+      if (left > right) {
+        return -1;
+      }
+
+      return 0;
+    },
+
+    /** count the # of terms in each match */
+    wordCount: (a, b) => {
+      let left = a.wordCount();
+      let right = b.wordCount();
+
+      if (left < right) {
+        return 1;
+      }
+
+      if (left > right) {
+        return -1;
+      }
+
+      return 0;
+    }
+  };
+  /** sort by # of duplicates in the document*/
+
+  const byFreq = function (doc) {
+    let counts = {};
+    const options = {
+      case: true,
+      punctuation: false,
+      whitespace: true,
+      unicode: true
+    };
+    doc.list.forEach(p => {
+      let str = p.text(options);
+      counts[str] = counts[str] || 0;
+      counts[str] += 1;
+    }); // sort by freq
+
+    doc.list.sort((a, b) => {
+      let left = counts[a.text(options)];
+      let right = counts[b.text(options)];
+
+      if (left < right) {
+        return 1;
+      }
+
+      if (left > right) {
+        return -1;
+      }
+
+      return 0;
+    });
+    return doc;
+  }; // order results 'chronologically', or document-order
+
+
+  const sortSequential = function (doc) {
+    let order = {};
+    doc.json({
+      terms: {
+        offset: true
+      }
+    }).forEach(o => {
+      order[o.terms[0].id] = o.terms[0].offset.start;
+    });
+    doc.list = doc.list.sort((a, b) => {
+      if (order[a.start] > order[b.start]) {
+        return 1;
+      } else if (order[a.start] < order[b.start]) {
+        return -1;
+      }
+
+      return 0;
+    });
+    return doc;
+  }; //aliases
+
+
+  methods$6.alphabetical = methods$6.alpha;
+  methods$6.wordcount = methods$6.wordCount; // aliases for sequential ordering
+
+  const seqNames = {
+    index: true,
+    sequence: true,
+    seq: true,
+    sequential: true,
+    chron: true,
+    chronological: true
+  };
+  /** re-arrange the order of the matches (in place) */
+
+  var sort = function (input) {
+    input = input || 'alpha'; //do this one up-front
+
+    if (input === 'freq' || input === 'frequency' || input === 'topk') {
+      return byFreq(this);
+    }
+
+    if (seqNames.hasOwnProperty(input)) {
+      return sortSequential(this);
+    }
+
+    input = methods$6[input] || input; // apply sort method on each phrase
+
+    if (typeof input === 'function') {
+      this.list = this.list.sort(input);
+      return this;
+    }
+
+    return this;
+  };
+  /** reverse the order of the matches, but not the words */
+
+
+  var reverse = function () {
+    let list = [].concat(this.list);
+    list = list.reverse();
+    return this.buildFrom(list);
+  };
+  /** remove any duplicate matches */
+
+
+  var unique = function () {
+    let list = [].concat(this.list);
+    let obj = {};
+    list = list.filter(p => {
+      let str = p.text('reduced').trim() || p.text('implicit').trim();
+
+      if (obj.hasOwnProperty(str) === true) {
+        return false;
+      }
+
+      obj[str] = true;
+      return true;
+    });
+    return this.buildFrom(list);
+  };
+
+  var _01Sort = {
+    sort: sort,
+    reverse: reverse,
+    unique: unique
+  };
+
+  const isPunct = /[\[\]{}⟨⟩:,،、‒–—―…‹›«»‐\-;\/⁄·*\•^†‡°¡¿※№÷×ºª%‰=‱¶§~|‖¦©℗®℠™¤₳฿]/g;
+  const quotes = /['‘’“”"′″‴]+/g;
+  const methods$5 = {
+    // cleanup newlines and extra spaces
+    whitespace: function (doc) {
+      let termArr = doc.list.map(ts => ts.terms());
+      termArr.forEach((terms, o) => {
+        terms.forEach((t, i) => {
+          // keep dashes between words
+          if (t.hasDash() === true) {
+            t.post = ' - ';
+            return;
+          } // remove existing spaces
+
+
+          t.pre = t.pre.replace(/\s/g, '');
+          t.post = t.post.replace(/\s/g, ''); //last word? ensure there's a next sentence.
+
+          if (terms.length - 1 === i && !termArr[o + 1]) {
+            return;
+          } // no extra spaces for contractions
+
+
+          if (t.implicit && Boolean(t.text) === true) {
+            return;
+          } // no extra spaces for hyphenated words
+
+
+          if (t.hasHyphen() === true) {
+            return;
+          }
+
+          t.post += ' ';
+        });
+      });
+    },
+    punctuation: function (termList) {
+      termList.forEach(t => {
+        // space between hyphenated words
+        if (t.hasHyphen() === true) {
+          t.post = ' ';
+        }
+
+        t.pre = t.pre.replace(isPunct, '');
+        t.post = t.post.replace(isPunct, ''); // elipses
+
+        t.post = t.post.replace(/\.\.\./, ''); // only allow one exclamation
+
+        if (/!/.test(t.post) === true) {
+          t.post = t.post.replace(/!/g, '');
+          t.post = '!' + t.post;
+        } // only allow one question mark
+
+
+        if (/\?/.test(t.post) === true) {
+          t.post = t.post.replace(/[\?!]*/, '');
+          t.post = '?' + t.post;
+        }
+      });
+    },
+    unicode: function (termList) {
+      termList.forEach(t => {
+        if (t.isImplicit() === true) {
+          return;
+        }
+
+        t.text = unicode_1(t.text);
+      });
+    },
+    quotations: function (termList) {
+      termList.forEach(t => {
+        t.post = t.post.replace(quotes, '');
+        t.pre = t.pre.replace(quotes, '');
+      });
+    },
+    adverbs: function (doc) {
+      doc.match('#Adverb').not('(not|nary|seldom|never|barely|almost|basically|so)').remove();
+    },
+    // remove the '.' from 'Mrs.' (safely)
+    abbreviations: function (doc) {
+      doc.list.forEach(ts => {
+        let terms = ts.terms();
+        terms.forEach((t, i) => {
+          if (t.tags.Abbreviation === true && terms[i + 1]) {
+            t.post = t.post.replace(/^\./, '');
+          }
+        });
+      });
+    }
+  };
+  var _methods = methods$5;
+
+  const defaults = {
+    // light
+    whitespace: true,
+    unicode: true,
+    punctuation: true,
+    emoji: true,
+    acronyms: true,
+    abbreviations: true,
+    // medium
+    case: false,
+    contractions: false,
+    parentheses: false,
+    quotations: false,
+    adverbs: false,
+    // heavy (loose legibility)
+    possessives: false,
+    verbs: false,
+    nouns: false,
+    honorifics: false // pronouns: true,
+
+  };
+  const mapping = {
+    light: {},
+    medium: {
+      case: true,
+      contractions: true,
+      parentheses: true,
+      quotations: true,
+      adverbs: true
+    }
+  };
+  mapping.heavy = Object.assign({}, mapping.medium, {
+    possessives: true,
+    verbs: true,
+    nouns: true,
+    honorifics: true
+  });
+  /** common ways to clean-up the document, and reduce noise */
+
+  var normalize = function (options) {
+    options = options || {}; // support named forms
+
+    if (typeof options === 'string') {
+      options = mapping[options] || {};
+    } // set defaults
+
+
+    options = Object.assign({}, defaults, options); // clear the cache
+
+    this.uncache();
+    let termList = this.termList(); // lowercase things
+
+    if (options.case) {
+      this.toLowerCase();
+    } //whitespace
+
+
+    if (options.whitespace) {
+      _methods.whitespace(this);
+    } // unicode: é -> e
+
+
+    if (options.unicode) {
+      _methods.unicode(termList);
+    } //punctuation - keep sentence punctation, quotes, parenths
+
+
+    if (options.punctuation) {
+      _methods.punctuation(termList);
+    } // remove ':)'
+
+
+    if (options.emoji) {
+      this.remove('(#Emoji|#Emoticon)');
+    } // 'f.b.i.' -> 'FBI'
+
+
+    if (options.acronyms) {
+      this.acronyms().strip(); // .toUpperCase()
+    } // remove period from abbreviations
+
+
+    if (options.abbreviations) {
+      _methods.abbreviations(this);
+    } // --Medium methods--
+    // `isn't` -> 'is not'
+
+
+    if (options.contraction || options.contractions) {
+      this.contractions().expand();
+    } // '(word)' -> 'word'
+
+
+    if (options.parentheses) {
+      this.parentheses().unwrap();
+    } // remove "" punctuation
+
+
+    if (options.quotations || options.quotes) {
+      _methods.quotations(termList);
+    } // remove any un-necessary adverbs
+
+
+    if (options.adverbs) {
+      _methods.adverbs(this);
+    } // --Heavy methods--
+    // `cory hart's -> cory hart'
+
+
+    if (options.possessive || options.possessives) {
+      this.possessives().strip();
+    } // 'he walked' -> 'he walk'
+
+
+    if (options.verbs) {
+      this.verbs().toInfinitive();
+    } // 'three dogs' -> 'three dog'
+
+
+    if (options.nouns || options.plurals) {
+      this.nouns().toSingular();
+    } // remove 'Mr.' from 'Mr John Smith'
+
+
+    if (options.honorifics) {
+      this.remove('#Honorific');
+    }
+
+    return this;
+  };
+
+  var _02Normalize = {
+    normalize: normalize
+  };
+
+  var _03Split = createCommonjsModule(function (module, exports) {
+    /** return a Document with three parts for every match
+     * seperate everything before the word, as a new phrase
+     */
+    exports.splitOn = function (reg) {
+      // if there's no match, split parent, instead
+      if (!reg) {
+        let parent = this.parent();
+        return parent.splitOn(this);
+      } //start looking for a match..
+
+
+      let regs = matchSyntax(reg);
+      let matches = [];
+      this.list.forEach(p => {
+        let foundEm = p.match(regs); //no match here, add full sentence
+
+        if (foundEm.length === 0) {
+          matches.push(p);
+          return;
+        } // we found something here.
+
+
+        let carry = p;
+        foundEm.forEach(found => {
+          let parts = carry.splitOn(found); // add em in
+
+          if (parts.before) {
+            matches.push(parts.before);
+          }
+
+          if (parts.match) {
+            matches.push(parts.match);
+          } // start matching now on the end
+
+
+          carry = parts.after;
+        }); // add that last part
+
+        if (carry) {
+          matches.push(carry);
+        }
+      });
+      return this.buildFrom(matches);
+    };
+    /** return a Document with two parts for every match
+     * seperate everything after the word, as a new phrase
+     */
+
+
+    exports.splitAfter = function (reg) {
+      // if there's no match, split parent, instead
+      if (!reg) {
+        let parent = this.parent();
+        return parent.splitAfter(this);
+      } // start looking for our matches
+
+
+      let regs = matchSyntax(reg);
+      let matches = [];
+      this.list.forEach(p => {
+        let foundEm = p.match(regs); //no match here, add full sentence
+
+        if (foundEm.length === 0) {
+          matches.push(p);
+          return;
+        } // we found something here.
+
+
+        let carry = p;
+        foundEm.forEach(found => {
+          let parts = carry.splitOn(found); // add em in
+
+          if (parts.before && parts.match) {
+            // merge these two together
+            parts.before.length += parts.match.length;
+            matches.push(parts.before);
+          } else if (parts.match) {
+            matches.push(parts.match);
+          } // start matching now on the end
+
+
+          carry = parts.after;
+        }); // add that last part
+
+        if (carry) {
+          matches.push(carry);
+        }
+      });
+      return this.buildFrom(matches);
+    };
+
+    exports.split = exports.splitAfter; //i guess?
+
+    /** return a Document with two parts for every match */
+
+    exports.splitBefore = function (reg) {
+      // if there's no match, split parent, instead
+      if (!reg) {
+        let parent = this.parent();
+        return parent.splitBefore(this);
+      } //start looking for a match..
+
+
+      let regs = matchSyntax(reg);
+      let matches = [];
+      this.list.forEach(p => {
+        let foundEm = p.match(regs); //no match here, add full sentence
+
+        if (foundEm.length === 0) {
+          matches.push(p);
+          return;
+        } // we found something here.
+
+
+        let carry = p;
+        foundEm.forEach(found => {
+          let parts = carry.splitOn(found); // add before part in
+
+          if (parts.before) {
+            matches.push(parts.before);
+          } // merge match+after
+
+
+          if (parts.match && parts.after) {
+            parts.match.length += parts.after.length;
+          } // start matching now on the end
+
+
+          carry = parts.match;
+        }); // add that last part
+
+        if (carry) {
+          matches.push(carry);
+        }
+      });
+      return this.buildFrom(matches);
+    };
+    /** split a document into labeled sections */
+
+
+    exports.segment = function (regs, options) {
+      regs = regs || {};
+      options = options || {
+        text: true
+      };
+      let doc = this;
+      let keys = Object.keys(regs); // split em
+
+      keys.forEach(k => {
+        doc = doc.splitOn(k);
+      }); //add labels for each section
+
+      doc.list.forEach(p => {
+        for (let i = 0; i < keys.length; i += 1) {
+          if (p.has(keys[i])) {
+            p.segment = regs[keys[i]];
+            return;
+          }
+        }
+      });
+      return doc.list.map(p => {
+        let res = p.json(options);
+        res.segment = p.segment || null;
+        return res;
+      });
+    };
+  });
+
+  const eachTerm = function (doc, fn) {
+    let world = doc.world;
+    doc.list.forEach(p => {
+      p.terms().forEach(t => t[fn](world));
+    });
+    return doc;
+  };
+  /** turn every letter of every term to lower-cse */
+
+
+  var toLowerCase = function () {
+    return eachTerm(this, 'toLowerCase');
+  };
+  /** turn every letter of every term to upper case */
+
+
+  var toUpperCase = function () {
+    return eachTerm(this, 'toUpperCase');
+  };
+  /** upper-case the first letter of each term */
+
+
+  var toTitleCase = function () {
+    return eachTerm(this, 'toTitleCase');
+  };
+  /** remove whitespace and title-case each term */
+
+
+  var toCamelCase = function () {
+    this.list.forEach(p => {
+      //remove whitespace
+      let terms = p.terms();
+      terms.forEach((t, i) => {
+        if (i !== 0) {
+          t.toTitleCase();
+        }
+
+        if (i !== terms.length - 1) {
+          t.post = '';
+        }
+      });
+    }); // this.tag('#CamelCase', 'toCamelCase')
+
+    return this;
+  };
+
+  var _04Case = {
+    toLowerCase: toLowerCase,
+    toUpperCase: toUpperCase,
+    toTitleCase: toTitleCase,
+    toCamelCase: toCamelCase
+  };
+
+  /** add this punctuation or whitespace before each match: */
+
+  var _05Whitespace = createCommonjsModule(function (module, exports) {
+    exports.pre = function (str, concat) {
+      if (str === undefined) {
+        return this.list[0].terms(0).pre;
+      }
+
+      this.list.forEach(p => {
+        let term = p.terms(0);
+
+        if (concat === true) {
+          term.pre += str;
+        } else {
+          term.pre = str;
+        }
+      });
+      return this;
+    };
+    /** add this punctuation or whitespace after each match: */
+
+
+    exports.post = function (str, concat) {
+      // return array of post strings
+      if (str === undefined) {
+        return this.list.map(p => {
+          let terms = p.terms();
+          let term = terms[terms.length - 1];
+          return term.post;
+        });
+      } // set post string on all ends
+
+
+      this.list.forEach(p => {
+        let terms = p.terms();
+        let term = terms[terms.length - 1];
+
+        if (concat === true) {
+          term.post += str;
+        } else {
+          term.post = str;
+        }
+      });
+      return this;
+    };
+    /** remove start and end whitespace */
+
+
+    exports.trim = function () {
+      this.list = this.list.map(p => p.trim());
+      return this;
+    };
+    /** connect words with hyphen, and remove whitespace */
+
+
+    exports.hyphenate = function () {
+      this.list.forEach(p => {
+        let terms = p.terms(); //remove whitespace
+
+        terms.forEach((t, i) => {
+          if (i !== 0) {
+            t.pre = '';
+          }
+
+          if (terms[i + 1]) {
+            t.post = '-';
+          }
+        });
+      });
+      return this;
+    };
+    /** remove hyphens between words, and set whitespace */
+
+
+    exports.dehyphenate = function () {
+      const hasHyphen = /(-|–|—)/;
+      this.list.forEach(p => {
+        let terms = p.terms(); //remove whitespace
+
+        terms.forEach(t => {
+          if (hasHyphen.test(t.post)) {
+            t.post = ' ';
+          }
+        });
+      });
+      return this;
+    };
+
+    exports.deHyphenate = exports.dehyphenate;
+    /** add quotations around these matches */
+
+    exports.toQuotations = function (start, end) {
+      start = start || `"`;
+      end = end || `"`;
+      this.list.forEach(p => {
+        let terms = p.terms();
+        terms[0].pre = start + terms[0].pre;
+        let last = terms[terms.length - 1];
+        last.post = end + last.post;
+      });
+      return this;
+    };
+
+    exports.toQuotation = exports.toQuotations;
+    /** add brackets around these matches */
+
+    exports.toParentheses = function (start, end) {
+      start = start || `(`;
+      end = end || `)`;
+      this.list.forEach(p => {
+        let terms = p.terms();
+        terms[0].pre = start + terms[0].pre;
+        let last = terms[terms.length - 1];
+        last.post = end + last.post;
+      });
+      return this;
+    };
+  });
+
+  /** make all phrases into one phrase */
+  var join = function (str) {
+    // clear the cache
+    this.uncache(); // make one large phrase - 'main'
+
+    let main = this.list[0];
+    let before = main.length;
+    let removed = {};
+
+    for (let i = 1; i < this.list.length; i++) {
+      const p = this.list[i];
+      removed[p.start] = true;
+      let term = main.lastTerm(); // add whitespace between them
+
+      if (str) {
+        term.post += str;
+      } //  main -> p
+
+
+      term.next = p.start; // main <- p
+
+      p.terms(0).prev = term.id;
+      main.length += p.length;
+      main.cache = {};
+    } // parents are bigger than than their children.
+    // when we increase a child, we increase their parent too.
+
+
+    let increase = main.length - before;
+    this.parents().forEach(doc => {
+      // increase length on each effected phrase
+      doc.list.forEach(p => {
+        let terms = p.terms();
+
+        for (let i = 0; i < terms.length; i++) {
+          if (terms[i].id === main.start) {
+            p.length += increase;
+            break;
+          }
+        }
+
+        p.cache = {};
+      }); // remove redundant phrases now
+
+      doc.list = doc.list.filter(p => removed[p.start] !== true);
+    }); // return one major phrase
+
+    return this.buildFrom([main]);
+  };
+
+  var _06Join = {
+    join: join
+  };
+
+  const postPunct = /[,\)"';:\-–—\.…]/; // const irregulars = {
+  //   'will not': `won't`,
+  //   'i am': `i'm`,
+  // }
+
+  const setContraction = function (m, suffix) {
+    if (!m.found) {
+      return;
+    }
+
+    let terms = m.termList(); //avoid any problematic punctuation
+
+    for (let i = 0; i < terms.length - 1; i++) {
+      const t = terms[i];
+
+      if (postPunct.test(t.post)) {
+        return;
+      }
+    } // set them as implict
+
+
+    terms.forEach(t => {
+      t.implicit = t.clean;
+    }); // perform the contraction
+
+    terms[0].text += suffix; // clean-up the others
+
+    terms.slice(1).forEach(t => {
+      t.text = '';
+    });
+
+    for (let i = 0; i < terms.length - 1; i++) {
+      const t = terms[i];
+      t.post = t.post.replace(/ /, '');
+    }
+  };
+  /** turn 'i am' into i'm */
+
+
+  var contract = function () {
+    let doc = this.not('@hasContraction'); // we are -> we're
+
+    let m = doc.match('(we|they|you) are');
+    setContraction(m, `'re`); // they will -> they'll
+
+    m = doc.match('(he|she|they|it|we|you) will');
+    setContraction(m, `'ll`); // she is -> she's
+
+    m = doc.match('(he|she|they|it|we) is');
+    setContraction(m, `'s`); // spencer is -> spencer's
+
+    m = doc.match('#Person is');
+    setContraction(m, `'s`); // spencer would -> spencer'd
+
+    m = doc.match('#Person would');
+    setContraction(m, `'d`); // would not -> wouldn't
+
+    m = doc.match('(is|was|had|would|should|could|do|does|have|has|can) not');
+    setContraction(m, `n't`); // i have -> i've
+
+    m = doc.match('(i|we|they) have');
+    setContraction(m, `'ve`); // would have -> would've
+
+    m = doc.match('(would|should|could) have');
+    setContraction(m, `'ve`); // i am -> i'm
+
+    m = doc.match('i am');
+    setContraction(m, `'m`); // going to -> gonna
+
+    m = doc.match('going to');
+    return this;
+  };
+
+  var _07Contract = {
+    contract: contract
+  };
+
+  var methods$4 = Object.assign({}, _01Utils, _02Accessors, _03Match, _04Tag, _05Loops, _06Lookup, _07Cache, _01Replace, _02Insert, _01Text, _02Json, _03Out, _01Sort, _02Normalize, _03Split, _04Case, _05Whitespace, _06Join, _07Contract);
+
+  let methods$3 = {}; // allow helper methods like .adjectives() and .adverbs()
+
+  const arr = [['terms', '.'], ['hyphenated', '@hasHyphen .'], ['adjectives', '#Adjective'], ['hashTags', '#HashTag'], ['emails', '#Email'], ['emoji', '#Emoji'], ['emoticons', '#Emoticon'], ['atMentions', '#AtMention'], ['urls', '#Url'], ['adverbs', '#Adverb'], ['pronouns', '#Pronoun'], ['conjunctions', '#Conjunction'], ['prepositions', '#Preposition']];
+  arr.forEach(a => {
+    methods$3[a[0]] = function (n) {
+      let m = this.match(a[1]);
+
+      if (typeof n === 'number') {
+        m = m.get(n);
+      }
+
+      return m;
+    };
+  }); // aliases
+
+  methods$3.emojis = methods$3.emoji;
+  methods$3.atmentions = methods$3.atMentions;
+  methods$3.words = methods$3.terms;
+  /** return anything tagged as a phone number */
+
+  methods$3.phoneNumbers = function (n) {
+    let m = this.splitAfter('@hasComma');
+    m = m.match('#PhoneNumber+');
+
+    if (typeof n === 'number') {
+      m = m.get(n);
+    }
+
+    return m;
+  };
+  /** Deprecated: please use compromise-numbers plugin */
+
+
+  methods$3.money = function (n) {
+    let m = this.match('#Money #Currency?');
+
+    if (typeof n === 'number') {
+      m = m.get(n);
+    }
+
+    return m;
+  };
+  /** return all cities, countries, addresses, and regions */
+
+
+  methods$3.places = function (n) {
+    // don't split 'paris, france'
+    let keep = this.match('(#City && @hasComma) (#Region|#Country)'); // but split the other commas
+
+    let m = this.not(keep).splitAfter('@hasComma'); // combine them back together
+
+    m = m.concat(keep);
+    m.sort('index');
+    m = m.match('#Place+');
+
+    if (typeof n === 'number') {
+      m = m.get(n);
+    }
+
+    return m;
+  };
+  /** return all schools, businesses and institutions */
+
+
+  methods$3.organizations = function (n) {
+    let m = this.clauses();
+    m = m.match('#Organization+');
+
+    if (typeof n === 'number') {
+      m = m.get(n);
+    }
+
+    return m;
+  }; //combine them with .topics() method
+
+
+  methods$3.entities = function (n) {
+    let r = this.clauses(); // Find people, places, and organizations
+
+    let yup = r.people();
+    yup = yup.concat(r.places());
+    yup = yup.concat(r.organizations());
+    let ignore = ['someone', 'man', 'woman', 'mother', 'brother', 'sister', 'father'];
+    yup = yup.not(ignore); //return them to normal ordering
+
+    yup.sort('sequence'); // yup.unique() //? not sure
+
+    if (typeof n === 'number') {
+      yup = yup.get(n);
+    }
+
+    return yup;
+  }; //aliases
+
+
+  methods$3.things = methods$3.entities;
+  methods$3.topics = methods$3.entities;
+  var _simple = methods$3;
+
+  const underOver = /^(under|over)-?/;
+  /** match a word-sequence, like 'super bowl' in the lexicon */
+
+  const tryMultiple = function (terms, t, world) {
+    let lex = world.words; //try a two-word version
+
+    let txt = terms[t].reduced + ' ' + terms[t + 1].reduced;
+
+    if (lex[txt] !== undefined && lex.hasOwnProperty(txt) === true) {
+      terms[t].tag(lex[txt], 'lexicon-two', world);
+      terms[t + 1].tag(lex[txt], 'lexicon-two', world);
+      return 1;
+    } //try a three-word version?
+
+
+    if (t + 2 < terms.length) {
+      txt += ' ' + terms[t + 2].reduced;
+
+      if (lex[txt] !== undefined && lex.hasOwnProperty(txt) === true) {
+        terms[t].tag(lex[txt], 'lexicon-three', world);
+        terms[t + 1].tag(lex[txt], 'lexicon-three', world);
+        terms[t + 2].tag(lex[txt], 'lexicon-three', world);
+        return 2;
+      }
+    } //try a four-word version?
+
+
+    if (t + 3 < terms.length) {
+      txt += ' ' + terms[t + 3].reduced;
+
+      if (lex[txt] !== undefined && lex.hasOwnProperty(txt) === true) {
+        terms[t].tag(lex[txt], 'lexicon-four', world);
+        terms[t + 1].tag(lex[txt], 'lexicon-four', world);
+        terms[t + 2].tag(lex[txt], 'lexicon-four', world);
+        terms[t + 3].tag(lex[txt], 'lexicon-four', world);
+        return 3;
+      }
+    }
+
+    return 0;
+  };
+  /** look at each word in our list of known-words */
+
+
+  const checkLexicon = function (terms, world) {
+    let lex = world.words;
+    let hasCompound = world.hasCompound; // use reduced?
+    //go through each term, and check the lexicon
+
+    for (let t = 0; t < terms.length; t += 1) {
+      let str = terms[t].clean; //is it the start of a compound word, like 'super bowl'?
+
+      if (hasCompound[str] === true && t + 1 < terms.length) {
+        let foundWords = tryMultiple(terms, t, world);
+
+        if (foundWords > 0) {
+          t += foundWords; //skip any already-found words
+
+          continue;
+        }
+      } //try one-word lexicon
+
+
+      if (lex[str] !== undefined && lex.hasOwnProperty(str) === true) {
+        terms[t].tag(lex[str], 'lexicon', world);
+        continue;
+      } // look at reduced version of term, too
+
+
+      if (str !== terms[t].reduced && lex.hasOwnProperty(terms[t].reduced) === true) {
+        terms[t].tag(lex[terms[t].reduced], 'lexicon', world);
+        continue;
+      } // prefix strip: try to match 'take' for 'undertake'
+
+
+      if (underOver.test(str) === true) {
+        let noPrefix = str.replace(underOver, '');
+
+        if (lex.hasOwnProperty(noPrefix) === true) {
+          terms[t].tag(lex[noPrefix], 'noprefix-lexicon', world);
+        }
+      }
+    }
+
+    return terms;
+  };
+
+  var _01Lexicon = checkLexicon;
+
+  const smallTagger = function (doc) {
+    let terms = doc.termList();
+    _01Lexicon(terms, doc.world); // run any user-given tagger functions
+
+    doc.world.taggers.forEach(fn => {
+      fn(doc);
+    });
+    return doc;
+  };
+
+  var tiny = smallTagger;
+
+  const addMethod$a = function (Doc) {
+    /**  */
+    class Abbreviations extends Doc {
+      stripPeriods() {
+        this.termList().forEach(t => {
+          if (t.tags.Abbreviation === true && t.next) {
+            t.post = t.post.replace(/^\./, '');
+          }
+
+          let str = t.text.replace(/\./, '');
+          t.set(str);
+        });
+        return this;
+      }
+
+      addPeriods() {
+        this.termList().forEach(t => {
+          t.post = t.post.replace(/^\./, '');
+          t.post = '.' + t.post;
+        });
+        return this;
+      }
+
+    }
+
+    Abbreviations.prototype.unwrap = Abbreviations.prototype.stripPeriods;
+
+    Doc.prototype.abbreviations = function (n) {
+      let match = this.match('#Abbreviation');
+
+      if (typeof n === 'number') {
+        match = match.get(n);
+      }
+
+      return new Abbreviations(match.list, this, this.world);
+    };
+
+    return Doc;
+  };
+
+  var Abbreviations = addMethod$a;
+
+  const hasPeriod = /\./;
+
+  const addMethod$9 = function (Doc) {
+    /**  */
+    class Acronyms extends Doc {
+      stripPeriods() {
+        this.termList().forEach(t => {
+          let str = t.text.replace(/\./g, '');
+          t.set(str);
+        });
+        return this;
+      }
+
+      addPeriods() {
+        this.termList().forEach(t => {
+          let str = t.text.replace(/\./g, '');
+          str = str.split('').join('.'); // don't add a end-period if there's a sentence-end one
+
+          if (hasPeriod.test(t.post) === false) {
+            str += '.';
+          }
+
+          t.set(str);
+        });
+        return this;
+      }
+
+    }
+
+    Acronyms.prototype.unwrap = Acronyms.prototype.stripPeriods;
+    Acronyms.prototype.strip = Acronyms.prototype.stripPeriods;
+
+    Doc.prototype.acronyms = function (n) {
+      let match = this.match('#Acronym');
+
+      if (typeof n === 'number') {
+        match = match.get(n);
+      }
+
+      return new Acronyms(match.list, this, this.world);
+    };
+
+    return Doc;
+  };
+
+  var Acronyms = addMethod$9;
+
+  const addMethod$8 = function (Doc) {
+    /** split into approximate sub-sentence phrases */
+    Doc.prototype.clauses = function (n) {
+      // an awkward way to disambiguate a comma use
+      let commas = this.if('@hasComma').notIf('@hasComma @hasComma') //fun, cool...
+      .notIf('@hasComma . .? (and|or) .') //cool, and fun
+      .notIf('(#City && @hasComma) #Country') //'toronto, canada'
+      .notIf('(#WeekDay && @hasComma) #Date') //'tuesday, march 2nd'
+      .notIf('(#Date && @hasComma) #Year') //'july 6, 1992'
+      .notIf('@hasComma (too|also)$') //at end of sentence
+      .match('@hasComma');
+      let found = this.splitAfter(commas);
+      let quotes = found.quotations();
+      found = found.splitOn(quotes);
+      let parentheses = found.parentheses();
+      found = found.splitOn(parentheses); // it is cool and it is ..
+
+      let conjunctions = found.if('#Copula #Adjective #Conjunction (#Pronoun|#Determiner) #Verb').match('#Conjunction');
+      found = found.splitBefore(conjunctions); // if it is this then that
+
+      let condition = found.if('if .{2,9} then .').match('then');
+      found = found.splitBefore(condition); // misc clause partitions
+
+      found = found.splitBefore('as well as .');
+      found = found.splitBefore('such as .');
+      found = found.splitBefore('in addition to .'); // semicolons, dashes
+
+      found = found.splitAfter('@hasSemicolon');
+      found = found.splitAfter('@hasDash'); // passive voice verb - '.. which was robbed is empty'
+      // let passive = found.match('#Noun (which|that) (was|is) #Adverb? #PastTense #Adverb?')
+      // if (passive.found) {
+      //   found = found.splitAfter(passive)
+      // }
+      // //which the boy robbed
+      // passive = found.match('#Noun (which|that) the? #Noun+ #Adverb? #PastTense #Adverb?')
+      // if (passive.found) {
+      //   found = found.splitAfter(passive)
+      // }
+      // does there appear to have relative/subordinate clause still?
+
+      let tooLong = found.filter(d => d.wordCount() > 5 && d.match('#Verb+').length >= 2);
+
+      if (tooLong.found) {
+        let m = tooLong.splitAfter('#Noun .* #Verb .* #Noun+');
+        found = found.splitOn(m.eq(0));
+      }
+
+      if (typeof n === 'number') {
+        found = found.get(n);
+      }
+
+      return new Doc(found.list, this, this.world);
+    };
+
+    return Doc;
+  };
+
+  var Clauses = addMethod$8;
+
+  const addMethod$7 = function (Doc) {
+    /**  */
+    class Contractions extends Doc {
+      constructor(list, from, world) {
+        super(list, from, world);
+        this.contracted = null;
+      }
+      /** turn didn't into 'did not' */
+
+
+      expand() {
+        this.list.forEach(p => {
+          let terms = p.terms(); //change the case?
+
+          let isTitlecase = terms[0].isTitleCase();
+          terms.forEach((t, i) => {
+            //use the implicit text
+            t.set(t.implicit || t.text);
+            t.implicit = undefined; //add whitespace
+
+            if (i < terms.length - 1 && t.post === '') {
+              t.post += ' ';
+            }
+          }); //set titlecase
+
+          if (isTitlecase) {
+            terms[0].toTitleCase();
+          }
+        });
+        return this;
+      }
+
+    } //find contractable, expanded-contractions
+    // const findExpanded = r => {
+    //   let remain = r.not('#Contraction')
+    //   let m = remain.match('(#Noun|#QuestionWord) (#Copula|did|do|have|had|could|would|will)')
+    //   m.concat(remain.match('(they|we|you|i) have'))
+    //   m.concat(remain.match('i am'))
+    //   m.concat(remain.match('(#Copula|#Modal|do|does|have|has|can|will) not'))
+    //   return m
+    // }
+
+
+    Doc.prototype.contractions = function (n) {
+      //find currently-contracted
+      let found = this.match('@hasContraction+'); //(may want to split these up)
+      //todo: split consecutive contractions
+
+      if (typeof n === 'number') {
+        found = found.get(n);
+      }
+
+      return new Contractions(found.list, this, this.world);
+    }; //aliases
+
+
+    Doc.prototype.expanded = Doc.prototype.isExpanded;
+    Doc.prototype.contracted = Doc.prototype.isContracted;
+    return Doc;
+  };
+
+  var Contractions = addMethod$7;
+
+  const addMethod$6 = function (Doc) {
+    //pull it apart..
+    const parse = function (doc) {
+      let things = doc.splitAfter('@hasComma').splitOn('(and|or) not?').not('(and|or) not?');
+      let beforeLast = doc.match('[.] (and|or)', 0);
+      return {
+        things: things,
+        conjunction: doc.match('(and|or) not?'),
+        beforeLast: beforeLast,
+        hasOxford: beforeLast.has('@hasComma')
+      };
+    };
+    /** cool, fun, and nice */
+
+
+    class Lists extends Doc {
+      /** coordinating conjunction */
+      conjunctions() {
+        return this.match('(and|or)');
+      }
+      /** split-up by list object */
+
+
+      parts() {
+        return this.splitAfter('@hasComma').splitOn('(and|or) not?');
+      }
+      /** remove the conjunction */
+
+
+      items() {
+        return parse(this).things;
+      }
+      /** add a new unit to the list */
+
+
+      add(str) {
+        this.forEach(p => {
+          let beforeLast = parse(p).beforeLast;
+          beforeLast.append(str); //add a comma to it
+
+          beforeLast.termList(0).addPunctuation(',');
+        });
+        return this;
+      }
+      /** remove any matching unit from the list */
+
+
+      remove(match) {
+        return this.items().if(match).remove();
+      }
+      /** return only lists that use a serial comma */
+
+
+      hasOxfordComma() {
+        return this.filter(doc => parse(doc).hasOxford);
+      }
+
+      addOxfordComma() {
+        let items = this.items();
+        let needsComma = items.eq(items.length - 2);
+
+        if (needsComma.found && needsComma.has('@hasComma') === false) {
+          needsComma.post(', ');
+        }
+
+        return this;
+      }
+
+      removeOxfordComma() {
+        let items = this.items();
+        let needsComma = items.eq(items.length - 2);
+
+        if (needsComma.found && needsComma.has('@hasComma') === true) {
+          needsComma.post(' ');
+        }
+
+        return this;
+      }
+
+    } // aliases
+
+
+    Lists.prototype.things = Lists.prototype.items;
+
+    Doc.prototype.lists = function (n) {
+      let m = this.if('@hasComma+ .? (and|or) not? .'); // person-list
+
+      let nounList = m.match('(#Noun|#Adjective|#Determiner|#Article)+ #Conjunction not? (#Article|#Determiner)? #Adjective? #Noun+').if('#Noun');
+      let adjList = m.match('(#Adjective|#Adverb)+ #Conjunction not? #Adverb? #Adjective+');
+      let verbList = m.match('(#Verb|#Adverb)+ #Conjunction not? #Adverb? #Verb+');
+      let result = nounList.concat(adjList);
+      result = result.concat(verbList);
+      result = result.if('@hasComma');
+
+      if (typeof n === 'number') {
+        result = m.get(n);
+      }
+
+      return new Lists(result.list, this, this.world);
+    };
+
+    return Doc;
+  };
+
+  var Lists = addMethod$6;
+
+  const noPlural = '(#Pronoun|#Place|#Value|#Person|#Uncountable|#Month|#WeekDay|#Holiday|#Possessive)'; //certain words can't be plural, like 'peace'
+
+  const hasPlural = function (doc) {
+    if (doc.has('#Plural') === true) {
+      return true;
+    } // these can't be plural
+
+
+    if (doc.has(noPlural) === true) {
+      return false;
+    }
+
+    return true;
+  };
+
+  var hasPlural_1 = hasPlural;
+
+  const irregulars = {
+    hour: 'an',
+    heir: 'an',
+    heirloom: 'an',
+    honest: 'an',
+    honour: 'an',
+    honor: 'an',
+    uber: 'an' //german u
+
+  }; //pronounced letters of acronyms that get a 'an'
+
+  const an_acronyms = {
+    a: true,
+    e: true,
+    f: true,
+    h: true,
+    i: true,
+    l: true,
+    m: true,
+    n: true,
+    o: true,
+    r: true,
+    s: true,
+    x: true
+  }; //'a' regexes
+
+  const a_regexs = [/^onc?e/i, //'wu' sound of 'o'
+  /^u[bcfhjkqrstn][aeiou]/i, // 'yu' sound for hard 'u'
+  /^eul/i];
+
+  const makeArticle = function (doc) {
+    //no 'the john smith', but 'a london hotel'
+    if (doc.has('#Person') || doc.has('#Place')) {
+      return '';
+    } //no a/an if it's plural
+
+
+    if (doc.has('#Plural')) {
+      return 'the';
+    }
+
+    let str = doc.text('normal').trim(); //explicit irregular forms
+
+    if (irregulars.hasOwnProperty(str)) {
+      return irregulars[str];
+    } //spelled-out acronyms
+
+
+    let firstLetter = str.substr(0, 1);
+
+    if (doc.has('^@isAcronym') && an_acronyms.hasOwnProperty(firstLetter)) {
+      return 'an';
+    } //'a' regexes
+
+
+    for (let i = 0; i < a_regexs.length; i++) {
+      if (a_regexs[i].test(str)) {
+        return 'a';
+      }
+    } //basic vowel-startings
+
+
+    if (/^[aeiou]/i.test(str)) {
+      return 'an';
+    }
+
+    return 'a';
+  };
+
+  var getArticle = makeArticle;
+
+  //similar to plural/singularize rules, but not the same
+  const isPlural$2 = [/(antenn|formul|nebul|vertebr|vit)ae$/i, /(octop|vir|radi|nucle|fung|cact|stimul)i$/i, /men$/i, /.tia$/i, /(m|l)ice$/i]; //similar to plural/singularize rules, but not the same
+
+  const isSingular = [/(ax|test)is$/i, /(octop|vir|radi|nucle|fung|cact|stimul)us$/i, /(octop|vir)i$/i, /(rl)f$/i, /(alias|status)$/i, /(bu)s$/i, /(al|ad|at|er|et|ed|ad)o$/i, /(ti)um$/i, /(ti)a$/i, /sis$/i, /(?:(^f)fe|(lr)f)$/i, /hive$/i, /(^aeiouy|qu)y$/i, /(x|ch|ss|sh|z)$/i, /(matr|vert|ind|cort)(ix|ex)$/i, /(m|l)ouse$/i, /(m|l)ice$/i, /(antenn|formul|nebul|vertebr|vit)a$/i, /.sis$/i, /^(?!talis|.*hu)(.*)man$/i];
+  var _rules = {
+    isSingular: isSingular,
+    isPlural: isPlural$2
+  };
+
+  const endS = /s$/; // double-check this term, if it is not plural, or singular.
+  // (this is a partial copy of ./tagger/fallbacks/plural)
+  // fallback plural if it ends in an 's'.
+
+  const isPlural$1 = function (str) {
+    // isSingular suffix rules
+    if (_rules.isSingular.find(reg => reg.test(str))) {
+      return false;
+    } // does it end in an s?
+
+
+    if (endS.test(str) === true) {
+      return true;
+    } // is it a plural like 'fungi'?
+
+
+    if (_rules.isPlural.find(reg => reg.test(str))) {
+      return true;
+    }
+
+    return null;
+  };
+
+  var isPlural_1$1 = isPlural$1;
+
+  const exceptions = {
+    he: 'his',
+    she: 'hers',
+    they: 'theirs',
+    we: 'ours',
+    i: 'mine',
+    you: 'yours',
+    her: 'hers',
+    their: 'theirs',
+    our: 'ours',
+    my: 'mine',
+    your: 'yours'
+  }; // turn "David" to "David's"
+
+  const toPossessive = function (doc) {
+    let str = doc.text('text').trim(); // exceptions
+
+    if (exceptions.hasOwnProperty(str)) {
+      doc.replaceWith(exceptions[str], true);
+      doc.tag('Possessive', 'toPossessive');
+      return;
+    } // flanders'
+
+
+    if (/s$/.test(str)) {
+      str += "'";
+      doc.replaceWith(str, true);
+      doc.tag('Possessive', 'toPossessive');
+      return;
+    } //normal form:
+
+
+    str += "'s";
+    doc.replaceWith(str, true);
+    doc.tag('Possessive', 'toPossessive');
+    return;
+  };
+
+  var toPossessive_1 = toPossessive;
+
+  // .nouns() supports some noun-phrase-ish groupings
+  // pull these apart, if necessary
+  const parse$1 = function (doc) {
+    let res = {
+      main: doc
+    }; //support 'mayor of chicago' as one noun-phrase
+
+    if (doc.has('#Noun (of|by|for) .')) {
+      let m = doc.splitAfter('[#Noun+]', 0);
+      res.main = m.eq(0);
+      res.post = m.eq(1);
+    }
+
+    return res;
+  };
+
+  var parse_1 = parse$1;
+
+  const methods$2 = {
+    /** overload the original json with noun information */
+    json: function (options) {
+      let n = null;
+
+      if (typeof options === 'number') {
+        n = options;
+        options = null;
+      }
+
+      options = options || {
+        text: true,
+        normal: true,
+        trim: true,
+        terms: true
+      };
+      let res = [];
+      this.forEach(doc => {
+        let json = doc.json(options)[0];
+        json.article = getArticle(doc);
+        res.push(json);
+      });
+
+      if (n !== null) {
+        return res[n];
+      }
+
+      return res;
+    },
+
+    /** get all adjectives describing this noun*/
+    adjectives: function () {
+      let list = this.lookAhead('^(that|who|which)? (was|is|will)? be? #Adverb? #Adjective+');
+      list = list.concat(this.lookBehind('#Adjective+ #Adverb?$'));
+      list = list.match('#Adjective');
+      return list.sort('index');
+    },
+    isPlural: function () {
+      return this.if('#Plural'); //assume tagger has run?
+    },
+    hasPlural: function () {
+      return this.filter(d => hasPlural_1(d));
+    },
+    toPlural: function (agree) {
+      let toPlural = this.world.transforms.toPlural;
+      this.forEach(doc => {
+        if (doc.has('#Plural') || hasPlural_1(doc) === false) {
+          return;
+        } // double-check it isn't an un-tagged plural
+
+
+        let main = parse_1(doc).main;
+        let str = main.text('reduced');
+
+        if (!main.has('#Singular') && isPlural_1$1(str) === true) {
+          return;
+        }
+
+        str = toPlural(str, this.world);
+        main.replace(str).tag('#Plural'); // 'an apple' -> 'apples'
+
+        if (agree) {
+          let an = main.lookBefore('(an|a) #Adjective?$').not('#Adjective');
+
+          if (an.found === true) {
+            an.remove();
+          }
+        }
+      });
+      return this;
+    },
+    toSingular: function (agree) {
+      let toSingular = this.world.transforms.toSingular;
+      this.forEach(doc => {
+        if (doc.has('^#Singular+$') || hasPlural_1(doc) === false) {
+          return;
+        } // double-check it isn't an un-tagged plural
+
+
+        let main = parse_1(doc).main;
+        let str = main.text('reduced');
+
+        if (!main.has('#Plural') && isPlural_1$1(str) !== true) {
+          return;
+        }
+
+        str = toSingular(str, this.world);
+        main.replace(str).tag('#Singular'); // add an article
+
+        if (agree) {
+          // 'apples' -> 'an apple'
+          let start = doc;
+          let adj = doc.lookBefore('#Adjective');
+
+          if (adj.found) {
+            start = adj;
+          }
+
+          let article = getArticle(start);
+          start.insertBefore(article);
+        }
+      });
+      return this;
+    },
+    toPossessive: function () {
+      this.forEach(d => {
+        toPossessive_1(d);
+      });
+      return this;
+    }
+  };
+  var methods_1 = methods$2;
+
+  const addMethod$5 = function (Doc) {
+    /**  */
+    class Nouns extends Doc {} // add-in our methods
+
+
+    Object.assign(Nouns.prototype, methods_1);
+
+    Doc.prototype.nouns = function (n, opts = {}) {
+      // don't split 'paris, france'
+      let keep = this.match('(#City && @hasComma) (#Region|#Country)'); // but split the other commas
+
+      let m = this.not(keep).splitAfter('@hasComma'); // combine them back together
+
+      m = m.concat(keep); // don't combine over scare-quotes
+
+      let quotes = m.quotations();
+
+      if (quotes.found) {
+        m = m.splitOn(quotes.eq(0));
+      }
+
+      m = m.match('#Noun+ (of|by)? the? #Noun+?'); //nouns that we don't want in these results, for weird reasons
+
+      if (opts.keep_anaphora !== true) {
+        m = m.not('#Pronoun');
+        m = m.not('(there|these)');
+        m = m.not('(#Month|#WeekDay)'); //allow Durations, Holidays
+        // //allow possessives like "spencer's", but not generic ones like,
+
+        m = m.not('(my|our|your|their|her|his)');
+      }
+
+      m = m.not('(of|for|by|the)$');
+
+      if (typeof n === 'number') {
+        m = m.get(n);
+      }
+
+      return new Nouns(m.list, this, this.world);
+    };
+
+    return Doc;
+  };
+
+  var Nouns = addMethod$5;
+
+  const open = /\(/;
+  const close = /\)/;
+
+  const addMethod$4 = function (Doc) {
+    /** anything between (these things) */
+    class Parentheses extends Doc {
+      /** remove the parentheses characters */
+      unwrap() {
+        this.list.forEach(p => {
+          let first = p.terms(0);
+          first.pre = first.pre.replace(open, '');
+          let last = p.lastTerm();
+          last.post = last.post.replace(close, '');
+        });
+        return this;
+      }
+
+    }
+
+    Doc.prototype.parentheses = function (n) {
+      let list = [];
+      this.list.forEach(p => {
+        let terms = p.terms(); //look for opening brackets
+
+        for (let i = 0; i < terms.length; i += 1) {
+          const t = terms[i];
+
+          if (open.test(t.pre)) {
+            //look for the closing bracket..
+            for (let o = i; o < terms.length; o += 1) {
+              if (close.test(terms[o].post)) {
+                let len = o - i + 1;
+                list.push(p.buildFrom(t.id, len));
+                i = o;
+                break;
+              }
+            }
+          }
+        }
+      }); //support nth result
+
+      if (typeof n === 'number') {
+        if (list[n]) {
+          list = [list[n]];
+        } else {
+          list = [];
+        }
+
+        return new Parentheses(list, this, this.world);
+      }
+
+      return new Parentheses(list, this, this.world);
+    };
+
+    return Doc;
+  };
+
+  var Parentheses = addMethod$4;
+
+  const addMethod$3 = function (Doc) {
+    /**  */
+    class Possessives extends Doc {
+      constructor(list, from, world) {
+        super(list, from, world);
+        this.contracted = null;
+      }
+      /** turn didn't into 'did not' */
+
+
+      strip() {
+        this.list.forEach(p => {
+          let terms = p.terms();
+          terms.forEach(t => {
+            let str = t.text.replace(/'s$/, '');
+            t.set(str || t.text);
+          });
+        });
+        return this;
+      }
+
+    } //find contractable, expanded-contractions
+    // const findExpanded = r => {
+    //   let remain = r.not('#Contraction')
+    //   let m = remain.match('(#Noun|#QuestionWord) (#Copula|did|do|have|had|could|would|will)')
+    //   m.concat(remain.match('(they|we|you|i) have'))
+    //   m.concat(remain.match('i am'))
+    //   m.concat(remain.match('(#Copula|#Modal|do|does|have|has|can|will) not'))
+    //   return m
+    // }
+
+
+    Doc.prototype.possessives = function (n) {
+      //find currently-contracted
+      let found = this.match('#Noun+? #Possessive'); //todo: split consecutive contractions
+
+      if (typeof n === 'number') {
+        found = found.get(n);
+      }
+
+      return new Possessives(found.list, this, this.world);
+    };
+
+    return Doc;
+  };
+
+  var Possessives = addMethod$3;
+
+  const pairs = {
+    '\u0022': '\u0022',
+    // 'StraightDoubleQuotes'
+    '\uFF02': '\uFF02',
+    // 'StraightDoubleQuotesWide'
+    '\u0027': '\u0027',
+    // 'StraightSingleQuotes'
+    '\u201C': '\u201D',
+    // 'CommaDoubleQuotes'
+    '\u2018': '\u2019',
+    // 'CommaSingleQuotes'
+    '\u201F': '\u201D',
+    // 'CurlyDoubleQuotesReversed'
+    '\u201B': '\u2019',
+    // 'CurlySingleQuotesReversed'
+    '\u201E': '\u201D',
+    // 'LowCurlyDoubleQuotes'
+    '\u2E42': '\u201D',
+    // 'LowCurlyDoubleQuotesReversed'
+    '\u201A': '\u2019',
+    // 'LowCurlySingleQuotes'
+    '\u00AB': '\u00BB',
+    // 'AngleDoubleQuotes'
+    '\u2039': '\u203A',
+    // 'AngleSingleQuotes'
+    // Prime 'non quotation'
+    '\u2035': '\u2032',
+    // 'PrimeSingleQuotes'
+    '\u2036': '\u2033',
+    // 'PrimeDoubleQuotes'
+    '\u2037': '\u2034',
+    // 'PrimeTripleQuotes'
+    // Prime 'quotation' variation
+    '\u301D': '\u301E',
+    // 'PrimeDoubleQuotes'
+    '\u0060': '\u00B4',
+    // 'PrimeSingleQuotes'
+    '\u301F': '\u301E' // 'LowPrimeDoubleQuotesReversed'
+
+  };
+  const hasOpen = RegExp('(' + Object.keys(pairs).join('|') + ')');
+
+  const addMethod$2 = function (Doc) {
+    /** "these things" */
+    class Quotations extends Doc {
+      /** remove the quote characters */
+      unwrap() {
+        return this;
+      }
+
+    }
+
+    Doc.prototype.quotations = function (n) {
+      let list = [];
+      this.list.forEach(p => {
+        let terms = p.terms(); //look for opening quotes
+
+        for (let i = 0; i < terms.length; i += 1) {
+          const t = terms[i];
+
+          if (hasOpen.test(t.pre)) {
+            let char = (t.pre.match(hasOpen) || [])[0];
+            let want = pairs[char]; // if (!want) {
+            //   console.warn('missing quote char ' + char)
+            // }
+            //look for the closing bracket..
+
+            for (let o = i; o < terms.length; o += 1) {
+              if (terms[o].post.indexOf(want) !== -1) {
+                let len = o - i + 1;
+                list.push(p.buildFrom(t.id, len));
+                i = o;
+                break;
+              }
+            }
+          }
+        }
+      }); //support nth result
+
+      if (typeof n === 'number') {
+        if (list[n]) {
+          list = [list[n]];
+        } else {
+          list = [];
+        }
+
+        return new Quotations(list, this, this.world);
+      }
+
+      return new Quotations(list, this, this.world);
+    }; // alias
+
+
+    Doc.prototype.quotes = Doc.prototype.quotations;
+    return Doc;
+  };
+
+  var Quotations = addMethod$2;
+
+  // walked => walk  - turn a verb into it's root form
+  const toInfinitive = function (parsed, world) {
+    let verb = parsed.verb; //1. if it's already infinitive
+
+    let str = verb.text('reduced');
+
+    if (verb.has('#Infinitive')) {
+      return str;
+    } // 2. world transform does the heavy-lifting
+
+
+    let tense = null;
+
+    if (verb.has('#PastTense')) {
+      tense = 'PastTense';
+    } else if (verb.has('#Gerund')) {
+      tense = 'Gerund';
+    } else if (verb.has('#PresentTense')) {
+      tense = 'PresentTense';
+    } else if (verb.has('#Participle')) {
+      tense = 'Participle';
+    } else if (verb.has('#Actor')) {
+      tense = 'Actor';
+    }
+
+    return world.transforms.toInfinitive(str, world, tense);
+  };
+
+  var toInfinitive_1 = toInfinitive;
+
+  // spencer walks -> singular
+  // we walk -> plural
+  // the most-recent noun-phrase, before this verb.
+  const findNoun = function (vb) {
+    let noun = vb.lookBehind('#Noun+').last();
+    return noun;
+  }; //sometimes you can tell if a verb is plural/singular, just by the verb
+  // i am / we were
+  // othertimes you need its subject 'we walk' vs 'i walk'
+
+
+  const isPlural = function (parsed) {
+    let vb = parsed.verb;
+
+    if (vb.has('(are|were|does)') || parsed.auxiliary.has('(are|were|does)')) {
+      return true;
+    } //consider its prior noun
+
+
+    let noun = findNoun(vb);
+
+    if (noun.has('(he|she|many|both)')) {
+      return false;
+    }
+
+    if (noun.has('(we|they|you|i)')) {
+      return true;
+    }
+
+    if (noun.has('#Person')) {
+      return false;
+    }
+
+    if (noun.has('#Plural')) {
+      return true;
+    }
+
+    if (noun.has('#Singular')) {
+      return false;
+    }
+
+    if (vb.has('(is|am|do|was)')) {
+      return false;
+    }
+
+    if (parsed.auxiliary.has('(is|am|do|was)') && !parsed.negative.found) {
+      return false;
+    }
+
+    return null;
+  };
+
+  var isPlural_1 = isPlural;
+
+  // #Copula : is           -> 'is not'
+  // #PastTense : walked    -> did not walk
+  // #PresentTense : walks  -> does not walk
+  // #Gerund : walking:     -> not walking
+  // #Infinitive : walk     -> do not walk
+
+  const toNegative = function (parsed, world) {
+    let vb = parsed.verb; // if it's already negative...
+
+    if (parsed.negative.found) {
+      return;
+    } // would walk -> would not walk
+
+
+    if (parsed.auxiliary.found) {
+      parsed.auxiliary.eq(0).append('not'); // 'would not have' ➔ 'would not have'
+
+      if (parsed.auxiliary.has('#Modal have not')) {
+        parsed.auxiliary.replace('have not', 'not have');
+      }
+
+      return;
+    } // is walking -> is not walking
+
+
+    if (vb.has('(#Copula|will|has|had|do)')) {
+      vb.append('not');
+      return;
+    } // walked -> did not walk
+
+
+    if (vb.has('#PastTense')) {
+      let inf = toInfinitive_1(parsed, world);
+      vb.replaceWith(inf, true);
+      vb.prepend('did not');
+      return;
+    } // walks -> does not walk
+
+
+    if (vb.has('#PresentTense')) {
+      let inf = toInfinitive_1(parsed, world);
+      vb.replaceWith(inf, true);
+
+      if (isPlural_1(parsed)) {
+        vb.prepend('do not');
+      } else {
+        vb.prepend('does not');
+      }
+
+      return;
+    } //walking -> not walking
+
+
+    if (vb.has('#Gerund')) {
+      let inf = toInfinitive_1(parsed, world);
+      vb.replaceWith(inf, true);
+      vb.prepend('not');
+      return;
+    } //fallback 1:  walk -> does not walk
+
+
+    if (isPlural_1(parsed)) {
+      vb.prepend('does not');
+      return;
+    } //fallback 2:  walk -> do not walk
+
+
+    vb.prepend('do not');
+    return;
+  };
+
+  var toNegative_1 = toNegative;
+
+  // who/what is doing this verb?
+  // get the prior verb most-likely doing this action
+  // (it can not-exist - 'close the door')
+  const getSubject = function (vb) {
+    let behind = vb.lookBehind();
+    let lastNoun = behind.nouns(null, {
+      keep_anaphora: true
+    }).last(); // support 'that' and 'this'
+
+    if (!lastNoun.found) {
+      lastNoun = behind.match('(that|this|each)').last();
+      lastNoun = lastNoun.tag('#Noun').nouns();
+    }
+
+    return lastNoun;
+  };
+
+  var getSubject_1 = getSubject;
+
+  const parseVerb = function (vb) {
+    let parsed = {
+      adverb: vb.match('#Adverb+'),
+      // 'really'
+      negative: vb.match('#Negative'),
+      // 'not'
+      auxiliary: vb.match('#Auxiliary+').not('(#Negative|#Adverb)'),
+      // 'will' of 'will go'
+      particle: vb.match('#Particle'),
+      // 'up' of 'pull up'
+      verb: vb.match('#Verb+').not('(#Adverb|#Negative|#Auxiliary|#Particle)'),
+      original: vb,
+      subject: getSubject_1(vb)
+    }; // parsed.subject.debug()
+    // for conjugation purposes,
+    // 'should start looking' -> 'should start'
+
+    if (parsed.verb.has('(#PresentTense|#PastTense|#Infinitive) #Gerund$')) {
+      parsed.verb = parsed.verb.not('#Gerund$');
+    } // fallback, if no verb found
+
+
+    if (!parsed.verb.found) {
+      // blank-everything
+      Object.keys(parsed).forEach(k => {
+        parsed[k] = parsed[k].not('.');
+      }); // it's all the verb
+
+      parsed.verb = vb;
+      return parsed;
+    } //
+
+
+    if (parsed.adverb && parsed.adverb.found) {
+      let match = parsed.adverb.text('reduced') + '$';
+
+      if (vb.has(match)) {
+        parsed.adverbAfter = true;
+      }
+    }
+
+    return parsed;
+  };
+
+  var parse = parseVerb;
+
+  /** too many special cases for is/was/will be*/
+
+  const toBe = parsed => {
+    let isI = false;
+    let plural = isPlural_1(parsed);
+    let isNegative = parsed.negative.found; //account for 'i is' -> 'i am' irregular
+    // if (vb.parent && vb.parent.has('i #Adverb? #Copula')) {
+    //   isI = true;
+    // }
+    // 'i look', not 'i looks'
+
+    if (parsed.verb.lookBehind('i (#Adverb|#Verb)?$').found) {
+      isI = true;
+    }
+
+    let obj = {
+      PastTense: 'was',
+      PresentTense: 'is',
+      FutureTense: 'will be',
+      Infinitive: 'is',
+      Gerund: 'being',
+      Actor: '',
+      PerfectTense: 'been',
+      Pluperfect: 'been'
+    };
+
+    if (plural) {
+      obj.PastTense = 'were';
+      obj.PresentTense = 'are';
+      obj.Infinitive = 'are';
+    } //"i is" -> "i am"
+
+
+    if (isI === true) {
+      obj.PastTense = 'was';
+      obj.PresentTense = 'am';
+      obj.Infinitive = 'am';
+    }
+
+    if (isNegative) {
+      obj.PastTense += ' not';
+      obj.PresentTense += ' not';
+      obj.FutureTense = 'will not be';
+      obj.Infinitive += ' not';
+      obj.PerfectTense = 'not ' + obj.PerfectTense;
+      obj.Pluperfect = 'not ' + obj.Pluperfect;
+      obj.Gerund = 'not ' + obj.Gerund;
+    }
+
+    return obj;
+  };
+
+  var toBe_1 = toBe;
+
+  // 'may/could/should' -> 'may/could/should have'
+  const doModal = function (parsed) {
+    let str = parsed.verb.text();
+    let res = {
+      PastTense: str + ' have',
+      PresentTense: str,
+      FutureTense: str,
+      Infinitive: str // Gerund: ,
+      // Actor: '',
+      // PerfectTense: '',
+      // Pluperfect: '',
+
+    };
+    return res;
+  };
+
+  var doModal_1 = doModal;
+
+  const conjugate = function (parsed, world) {
+    let verb = parsed.verb; //special handling of 'is', 'will be', etc.
+
+    if (verb.has('#Copula') || verb.out('normal') === 'be' && parsed.auxiliary.has('will')) {
+      return toBe_1(parsed);
+    } // special handling of 'are walking'
+
+
+    if (parsed.auxiliary.has('are') && verb.has('#Gerund')) {
+      let og = parsed.original.clone();
+      let past = og.clone().replace('are', 'were');
+      let fut = og.clone().replace('are', 'will be');
+      let infinitive = toInfinitive_1(parsed, world);
+      let res = {
+        PastTense: past.text(),
+        PresentTense: og.text(),
+        FutureTense: fut.text(),
+        Infinitive: infinitive
+      };
+      return res;
+    } // special handling of 'he could.'
+
+
+    if (verb.has('#Modal')) {
+      return doModal_1(parsed);
+    } // get the root form
+
+
+    let infinitive = toInfinitive_1(parsed, world);
+
+    if (!infinitive) {
+      return {};
+    }
+
+    let forms = world.transforms.conjugate(infinitive, world);
+    forms.Infinitive = infinitive; // Singular: the dog chases
+    // Plural: the dogs chase
+
+    let bePlural = isPlural_1(parsed);
+
+    if (bePlural === true) {
+      forms.PresentTense = forms.Infinitive; // the dogs chase
+    } // add particle to phrasal verbs ('fall over')
+
+
+    let hasHyphen = parsed.verb.termList(0).hasHyphen();
+
+    if (parsed.particle.found) {
+      let particle = parsed.particle.text();
+      let space = hasHyphen === true ? '-' : ' ';
+      Object.keys(forms).forEach(k => forms[k] += space + particle);
+    } //apply negative
+
+
+    const isNegative = parsed.negative.found;
+    forms.FutureTense = forms.FutureTense || 'will ' + forms.Infinitive;
+
+    if (isNegative) {
+      forms.PastTense = 'did not ' + forms.Infinitive;
+      forms.FutureTense = 'will not ' + forms.Infinitive;
+
+      if (bePlural) {
+        forms.PresentTense = 'do not ' + forms.Infinitive;
+        forms.Infinitive = 'do not ' + forms.Infinitive;
+      } else {
+        forms.PresentTense = 'does not ' + forms.Infinitive;
+        forms.Infinitive = 'does not ' + forms.Infinitive;
+      }
+
+      forms.Gerund = 'not ' + forms.Gerund;
+    }
+
+    return forms;
+  };
+
+  var conjugate_1 = conjugate;
+
+  // if something is 'modal-ish' we are forced to use past-participle
+  // ('i could drove' is wrong)
+
+  const useParticiple$1 = function (parsed) {
+    if (parsed.auxiliary.has('(could|should|would|may|can|must)')) {
+      return true;
+    }
+
+    if (parsed.auxiliary.has('am .+? being')) {
+      return true;
+    }
+
+    if (parsed.auxiliary.has('had .+? been')) {
+      return true;
+    }
+
+    return false;
+  }; // conjugate 'drive' ➔ 'have driven'
+
+
+  const toParticiple$1 = function (parsed, world) {
+    //is it already a participle?
+    if (parsed.auxiliary.has('(have|had)') && parsed.verb.has('#Participle')) {
+      return;
+    } // try to swap the main verb to its participle form
+
+
+    let obj = conjugate_1(parsed, world);
+    let str = obj.Participle || obj.PastTense;
+
+    if (str) {
+      parsed.verb.replaceWith(str, false);
+    } // 'am being driven' ➔ 'have been driven'
+
+
+    if (parsed.auxiliary.has('am .+? being')) {
+      parsed.auxiliary.remove('am');
+      parsed.auxiliary.replace('being', 'have been');
+    } // add a 'have'
+
+
+    if (!parsed.auxiliary.has('have')) {
+      parsed.auxiliary.append('have');
+    } // tag it as a participle
+
+
+    parsed.verb.tag('Participle', 'toParticiple'); // turn 'i can swim' to -> 'i could swim'
+
+    parsed.auxiliary.replace('can', 'could'); //'must be' ➔ 'must have been'
+
+    parsed.auxiliary.replace('be have', 'have been'); //'not have' ➔ 'have not'
+
+    parsed.auxiliary.replace('not have', 'have not'); // ensure all new words are tagged right
+
+    parsed.auxiliary.tag('Auxiliary');
+  };
+
+  var participle = {
+    useParticiple: useParticiple$1,
+    toParticiple: toParticiple$1
+  };
+
+  const {
+    toParticiple,
+    useParticiple
+  } = participle; // remove any tense-information in auxiliary verbs
+
+  const makeNeutral = function (parsed) {
+    //remove tense-info from auxiliaries
+    parsed.auxiliary.remove('(will|are|am|being)');
+    parsed.auxiliary.remove('(did|does)');
+    parsed.auxiliary.remove('(had|has|have)'); //our conjugation includes the 'not' and the phrasal-verb particle
+
+    parsed.particle.remove();
+    parsed.negative.remove();
+    return parsed;
+  };
+
+  var methods$1 = {
+    /** overload the original json with verb information */
+    json: function (options) {
+      let n = null;
+
+      if (typeof options === 'number') {
+        n = options;
+        options = null;
+      }
+
+      options = options || {
+        text: true,
+        normal: true,
+        trim: true,
+        terms: true
+      };
+      let res = [];
+      this.forEach(p => {
+        let json = p.json(options)[0];
+        let parsed = parse(p);
+        json.parts = {};
+        Object.keys(parsed).forEach(k => {
+          if (parsed[k] && parsed[k].isA === 'Doc') {
+            json.parts[k] = parsed[k].text('normal');
+          } else {
+            json.parts[k] = parsed[k];
+          }
+        });
+        json.isNegative = p.has('#Negative');
+        json.conjugations = conjugate_1(parsed, this.world);
+        res.push(json);
+      });
+
+      if (n !== null) {
+        return res[n];
+      }
+
+      return res;
+    },
+
+    /** grab the adverbs describing these verbs */
+    adverbs: function () {
+      let list = []; // look at internal adverbs
+
+      this.forEach(vb => {
+        let advb = parse(vb).adverb;
+
+        if (advb.found) {
+          list = list.concat(advb.list);
+        }
+      }); // look for leading adverbs
+
+      let m = this.lookBehind('#Adverb+$');
+
+      if (m.found) {
+        list = m.list.concat(list);
+      } // look for trailing adverbs
+
+
+      m = this.lookAhead('^#Adverb+');
+
+      if (m.found) {
+        list = list.concat(m.list);
+      }
+
+      return this.buildFrom(list);
+    },
+    /// Verb Inflection
+
+    /**return verbs like 'we walk' and not 'spencer walks' */
+    isPlural: function () {
+      let list = [];
+      this.forEach(vb => {
+        let parsed = parse(vb);
+
+        if (isPlural_1(parsed, this.world) === true) {
+          list.push(vb.list[0]);
+        }
+      });
+      return this.buildFrom(list);
+    },
+
+    /** return verbs like 'spencer walks' and not 'we walk' */
+    isSingular: function () {
+      let list = [];
+      this.forEach(vb => {
+        let parsed = parse(vb);
+
+        if (isPlural_1(parsed, this.world) === false) {
+          list.push(vb.list[0]);
+        }
+      });
+      return this.buildFrom(list);
+    },
+    /// Conjugation
+
+    /** return all forms of this verb  */
+    conjugate: function () {
+      let result = [];
+      this.forEach(vb => {
+        let parsed = parse(vb);
+        let forms = conjugate_1(parsed, this.world);
+        result.push(forms);
+      });
+      return result;
+    },
+
+    /** walk ➔ walked*/
+    toPastTense: function () {
+      this.forEach(vb => {
+        let parsed = parse(vb); // should we support 'would swim' ➔ 'would have swam'
+
+        if (useParticiple(parsed)) {
+          toParticiple(parsed, this.world);
+          return;
+        } // don't conjugate 'go away'.
+
+
+        if (vb.has('#Imperative')) {
+          return;
+        } // don't conjugate 'to be'
+
+
+        if (vb.has('be') && vb.lookBehind('to$').found) {
+          return;
+        } // handle 'is raining' -> 'was raining'
+
+
+        if (parsed.verb.has('#Gerund') && parsed.auxiliary.has('(is|will|was)')) {
+          vb.replace('is', 'was');
+          return;
+        }
+
+        let str = conjugate_1(parsed, this.world).PastTense;
+
+        if (str) {
+          parsed = makeNeutral(parsed);
+          parsed.verb.replaceWith(str, false);
+          parsed.auxiliary.remove('(do|did|will)'); //??
+        }
+      });
+      return this;
+    },
+
+    /** walk ➔ walks */
+    toPresentTense: function () {
+      this.forEach(vb => {
+        // don't conjugate 'go away'.
+        if (vb.has('#Imperative')) {
+          return;
+        }
+
+        let parsed = parse(vb);
+        let obj = conjugate_1(parsed, this.world);
+        let str = obj.PresentTense; // 'i look', not 'i looks'
+
+        if (vb.lookBehind('(i|we) (#Adverb|#Verb)?$').found) {
+          str = obj.Infinitive;
+        }
+
+        if (str) {
+          //awkward support for present-participle form
+          // -- should we support 'have been swimming' ➔ 'am swimming'
+          if (parsed.auxiliary.has('(have|had) been')) {
+            parsed.auxiliary.replace('(have|had) been', 'am being');
+
+            if (obj.Particle) {
+              str = obj.Particle || obj.PastTense;
+            }
+
+            return;
+          }
+
+          parsed.verb.replaceWith(str, false);
+          parsed.verb.tag('PresentTense');
+          parsed = makeNeutral(parsed); // avoid 'he would walks'
+
+          parsed.auxiliary.remove('#Modal');
+          parsed.auxiliary.remove('(do|did|will)'); //??
+        }
+      });
+      return this;
+    },
+
+    /** walk ➔ will walk*/
+    toFutureTense: function () {
+      this.forEach(vb => {
+        let parsed = parse(vb); // 'i should drive' is already future-enough
+
+        if (useParticiple(parsed)) {
+          return;
+        } // don't conjugate 'go away'.
+
+
+        if (vb.has('#Imperative')) {
+          return;
+        }
+
+        let str = conjugate_1(parsed, this.world).FutureTense;
+
+        if (str) {
+          parsed = makeNeutral(parsed); // avoid 'he would will go'
+
+          parsed.auxiliary.remove('#Modal');
+          parsed.verb.replaceWith(str, false);
+          parsed.verb.tag('FutureTense');
+          parsed.auxiliary.remove('(do|did|will)'); //??
+          // parsed.auxiliary.remove('(do|did|will)') //??
+        }
+      });
+      return this;
+    },
+
+    /** walks ➔ walk */
+    toInfinitive: function () {
+      this.forEach(vb => {
+        let parsed = parse(vb);
+        let str = conjugate_1(parsed, this.world).Infinitive;
+
+        if (str) {
+          vb.replaceWith(str, false);
+          vb.tag('Infinitive');
+        }
+      });
+      return this;
+    },
+
+    /** walk ➔ walking */
+    toGerund: function () {
+      this.forEach(vb => {
+        let parsed = parse(vb);
+        let str = conjugate_1(parsed, this.world).Gerund;
+
+        if (str) {
+          vb.replaceWith(str, false);
+          vb.tag('Gerund');
+        }
+      });
+      return this;
+    },
+
+    /** drive ➔ driven - naked past-participle if it exists, otherwise past-tense */
+    toParticiple: function () {
+      this.forEach(vb => {
+        let parsed = parse(vb);
+        let noAux = !parsed.auxiliary.found;
+        toParticiple(parsed, this.world); // dirty trick to  ensure our new auxiliary is found
+
+        if (noAux) {
+          parsed.verb.prepend(parsed.auxiliary.text());
+          parsed.auxiliary.remove();
+        }
+      });
+      return this;
+    },
+    /// Negation
+
+    /** return only verbs with 'not'*/
+    isNegative: function () {
+      return this.if('#Negative');
+    },
+
+    /**  return only verbs without 'not'*/
+    isPositive: function () {
+      return this.ifNo('#Negative');
+    },
+
+    /**  return only commands - verbs in imperative mood */
+    isImperative: function () {
+      return this.if('#Imperative');
+    },
+
+    /** add a 'not' to these verbs */
+    toNegative: function () {
+      this.list.forEach(p => {
+        let doc = this.buildFrom([p]);
+        let parsed = parse(doc);
+        toNegative_1(parsed, doc.world);
+      });
+      return this;
+    },
+
+    /** remove 'not' from these verbs */
+    toPositive: function () {
+      let m = this.match('do not #Verb');
+
+      if (m.found) {
+        m.remove('do not');
+      }
+
+      return this.remove('#Negative');
+    },
+
+    /** who, or what is doing this action? */
+    subject: function () {
+      let list = [];
+      this.forEach(p => {
+        let found = getSubject_1(p);
+
+        if (found.list[0]) {
+          list.push(found.list[0]);
+        }
+      });
+      return this.buildFrom(list);
+    }
+  };
+
+  const addMethod$1 = function (Doc) {
+    /**  */
+    class Verbs extends Doc {} // add-in our methods
+
+
+    Object.assign(Verbs.prototype, methods$1); // aliases
+
+    Verbs.prototype.negate = Verbs.prototype.toNegative;
+
+    Doc.prototype.verbs = function (n) {
+      let match = this.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+'); // try to ignore leading and trailing adverbs
+
+      match = match.not('^#Adverb+');
+      match = match.not('#Adverb+$'); // handle commas:
+      // don't split 'really, really'
+
+      let keep = match.match('(#Adverb && @hasComma) #Adverb'); // // but split the other commas
+
+      let m = match.not(keep).splitAfter('@hasComma'); // i was shocked looking at...
+      // let gerund = m.match('#PastTense #Gerund')
+      // if (!gerund.has('(been|am|#Auxiliary) #Gerund')) {
+      //   m = m.splitBefore(gerund.match('#Gerund'))
+      // }
+      // combine them back together
+
+      m = m.concat(keep);
+      m.sort('index'); //handle slashes?
+      //ensure there's actually a verb
+
+      m = m.if('#Verb'); // the reason he will is ...
+
+      if (m.has('(is|was)$')) {
+        m = m.splitBefore('(is|was)$');
+      } //ensure it's not two verbs
+
+
+      if (m.has('#PresentTense #Adverb #PresentTense')) {
+        m = m.splitBefore('#Adverb #PresentTense');
+      } //grab (n)th result
+
+
+      if (typeof n === 'number') {
+        m = m.get(n);
+      }
+
+      let vb = new Verbs(m.list, this, this.world);
+      return vb;
+    };
+
+    return Doc;
+  };
+
+  var Verbs = addMethod$1;
+
+  const addMethod = function (Doc) {
+    /**  */
+    class People extends Doc {// honorifics(){}
+      // firstNames(){}
+      // lastNames(){}
+      // pronouns(){}
+      // toPronoun(){}
+      // fromPronoun(){}
+    }
+
+    Doc.prototype.people = function (n) {
+      let match = this.splitAfter('@hasComma');
+      match = match.match('#Person+'); //grab (n)th result
+
+      if (typeof n === 'number') {
+        match = match.get(n);
+      }
+
+      return new People(match.list, this, this.world);
+    };
+
+    return Doc;
+  };
+
+  var People = addMethod;
+
+  const subclass = [Abbreviations, Acronyms, Clauses, Contractions, Lists, Nouns, Parentheses, Possessives, Quotations, Verbs, People];
+
+  const extend = function (Doc) {
+    // add basic methods
+    Object.keys(_simple).forEach(k => Doc.prototype[k] = _simple[k]); // add subclassed methods
+
+    subclass.forEach(addFn => addFn(Doc));
+    return Doc;
+  };
+
+  var Subset = extend;
+
+  const methods = {
+    misc: methods$4,
+    selections: _simple
+  };
+  /** a parsed text object */
+
+  class Doc {
+    constructor(list, from, world) {
+      this.list = list; // this.reasons = []
+      //quiet these properties in console.logs
+
+      Object.defineProperty(this, 'from', {
+        enumerable: false,
+        value: from,
+        writable: true
+      }); //borrow some missing data from parent
+
+      if (world === undefined && from !== undefined) {
+        world = from.world;
+      } //'world' getter
+
+
+      Object.defineProperty(this, 'world', {
+        enumerable: false,
+        value: world,
+        writable: true
+      }); //fast-scans for our data
+
+      Object.defineProperty(this, '_cache', {
+        enumerable: false,
+        writable: true,
+        value: {}
+      }); //'found' getter
+
+      Object.defineProperty(this, 'found', {
+        get: () => this.list.length > 0
+      }); //'length' getter
+
+      Object.defineProperty(this, 'length', {
+        get: () => this.list.length
+      }); // this is way easier than .constructor.name...
+
+      Object.defineProperty(this, 'isA', {
+        get: () => 'Doc'
+      });
+    }
+    /** run part-of-speech tagger on all results*/
+
+
+    tagger() {
+      return tiny(this);
+    }
+    /** pool is stored on phrase objects */
+
+
+    pool() {
+      if (this.list.length > 0) {
+        return this.list[0].pool;
+      }
+
+      return this.all().list[0].pool;
+    }
+
+  }
+  /** create a new Document object */
+
+
+  Doc.prototype.buildFrom = function (list) {
+    list = list.map(p => p.clone(true)); // new this.constructor()
+
+    let doc = new Doc(list, this, this.world);
+    return doc;
+  };
+  /** create a new Document from plaintext. */
+
+
+  Doc.prototype.fromText = function (str) {
+    let list = _01Tokenizer(str, this.world, this.pool());
+    return this.buildFrom(list);
+  };
+
+  Object.assign(Doc.prototype, methods.misc);
+  Object.assign(Doc.prototype, methods.selections); //add sub-classes
+
+  Subset(Doc); //aliases
+
+  const aliases = {
+    untag: 'unTag',
+    and: 'match',
+    notIf: 'ifNo',
+    only: 'if',
+    onlyIf: 'if'
+  };
+  Object.keys(aliases).forEach(k => Doc.prototype[k] = Doc.prototype[aliases[k]]);
+  var Doc_1 = Doc;
+
+  function instance(worldInstance) {
+    //blast-out our word-lists, just once
+    let world = worldInstance;
+    /** parse and tag text into a compromise object  */
+
+    const nlp = function (text = '', lexicon) {
+      if (lexicon) {
+        world.addWords(lexicon);
+      }
+
+      let list = _01Tokenizer(text, world);
+      let doc = new Doc_1(list, null, world);
+      doc.tagger();
+      return doc;
+    };
+    /** parse text into a compromise object, without running POS-tagging */
+
+
+    nlp.tokenize = function (text = '', lexicon) {
+      let w = world;
+
+      if (lexicon) {
+        w = w.clone();
+        w.words = {};
+        w.addWords(lexicon);
+      }
+
+      let list = _01Tokenizer(text, w);
+      let doc = new Doc_1(list, null, w);
+
+      if (lexicon || doc.world.taggers.length > 0) {
+        tiny(doc);
+      }
+
+      return doc;
+    };
+    /** mix in a compromise-plugin */
+
+
+    nlp.extend = function (fn) {
+      fn(Doc_1, world, this, Phrase_1, Term_1, Pool_1);
+      return this;
+    };
+    /** create a compromise Doc object from .json() results */
+
+
+    nlp.fromJSON = function (json) {
+      let list = fromJSON_1(json, world);
+      return new Doc_1(list, null, world);
+    };
+    /** make a deep-copy of the library state */
+
+
+    nlp.clone = function () {
+      return instance(world.clone());
+    };
+    /** log our decision-making for debugging */
+
+
+    nlp.verbose = function (bool = true) {
+      world.verbose(bool);
+      return this;
+    };
+    /** grab currently-used World object */
+
+
+    nlp.world = function () {
+      return world;
+    };
+    /** pre-parse any match statements */
+
+
+    nlp.parseMatch = function (str, opts) {
+      return matchSyntax(str, opts);
+    };
+    /** current version of the library */
+
+
+    nlp.version = _version; // aliases
+
+    nlp.import = nlp.load;
+    nlp.plugin = nlp.extend;
+    return nlp;
+  }
+
+  var src = instance(new World_1());
+
+  return src;
+
+})));

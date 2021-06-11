@@ -13,6 +13,23 @@ const banner = '/* compromise ' + version + ' MIT */'
 const noop = __dirname + '/scripts/build/no-ops/_function'
 const noobj = __dirname + '/scripts/build/no-ops/_object'
 
+const tokenizeAliasOptions = {
+  //remove a bunch of imports with no-ops
+  entries: [
+    { find: './data/conjugations', replacement: noobj },
+    { find: './data/plurals', replacement: noobj },
+    { find: './data/misc', replacement: noobj },
+    { find: '../transforms/conjugate', replacement: noop },
+    { find: '../transforms/adjectives', replacement: noop },
+    { find: '../transforms/toPlural', replacement: noop },
+    { find: '../transforms/toSingular', replacement: noop },
+    { find: '../transforms/toInfinitive', replacement: noop },
+    { find: './_data', replacement: noobj },
+    { find: '../02-tagger', replacement: __dirname + '/src/02-tagger/tiny' },
+    { find: 'efrt-unpack', replacement: noop },
+  ],
+}
+
 export default [
   {
     input: 'src/index.js',
@@ -24,30 +41,53 @@ export default [
         babelrc: false,
         presets: ['@babel/preset-env'],
       }),
-      alias({
-        //remove a bunch of imports with no-ops
-        entries: [
-          { find: './data/conjugations', replacement: noobj },
-          { find: './data/plurals', replacement: noobj },
-          { find: './data/misc', replacement: noobj },
-          { find: '../transforms/conjugate', replacement: noop },
-          { find: '../transforms/adjectives', replacement: noop },
-          { find: '../transforms/toPlural', replacement: noop },
-          { find: '../transforms/toSingular', replacement: noop },
-          { find: '../transforms/toInfinitive', replacement: noop },
-          { find: './_data', replacement: noobj },
-          { find: '../02-tagger', replacement: __dirname + '/src/02-tagger/tiny' },
-          { find: 'efrt-unpack', replacement: noop },
-        ],
+      alias(tokenizeAliasOptions),,
+      sizeCheck({ expect: 219, warn: 5 }),
+    ],
+  },
+  {
+    input: 'src/index.js',
+    output: [{ file: 'builds/compromise-tokenize.min.js', format: 'umd', sourcemap: false, name: 'nlp' }],
+    plugins: [
+      json(),
+      commonjs(),
+      babel({
+        babelrc: false,
+        presets: ['@babel/preset-env'],
       }),
+      alias(tokenizeAliasOptions),
       terser(),
       sizeCheck({ expect: 82, warn: 5 }),
     ],
   },
   {
     input: 'src/index.js',
-    output: [{ banner: banner, file: 'builds/compromise.mjs', format: 'esm' }],
-    plugins: [resolve(), json(), commonjs(), terser(), sizeCheck({ expect: 192, warn: 10 })],
+    output: [{ banner: banner, file: 'builds/compromise-tokenize.mjs', format: 'esm' }],
+    plugins: [
+      json(),
+      commonjs(),
+      babel({
+        babelrc: false,
+        presets: ['@babel/preset-env'],
+      }),
+      alias(tokenizeAliasOptions),
+      sizeCheck({ expect: 206, warn: 5 }),
+    ],
+  },
+  {
+    input: 'src/index.js',
+    output: [{ banner: banner, file: 'builds/compromise-tokenize.min.mjs', format: 'esm' }],
+    plugins: [
+      json(),
+      commonjs(),
+      babel({
+        babelrc: false,
+        presets: ['@babel/preset-env'],
+      }),
+      alias(tokenizeAliasOptions),
+      terser(),
+      sizeCheck({ expect: 82, warn: 5 }),
+    ],
   },
   {
     input: 'src/index.js',
@@ -76,6 +116,27 @@ export default [
       }),
       terser(),
       sizeCheck({ expect: 183, warn: 10 }),
+    ],
+  },
+  {
+    input: 'src/index.js',
+    output: [{ banner: banner, file: 'builds/compromise.mjs', format: 'esm' }],
+    plugins: [
+      resolve(),
+      json(),
+      commonjs(),
+      sizeCheck({ expect: 365, warn: 10 })
+    ],
+  },
+  {
+    input: 'src/index.js',
+    output: [{ banner: banner, file: 'builds/compromise.min.mjs', format: 'esm' }],
+    plugins: [
+      resolve(),
+      json(),
+      commonjs(),
+      terser(),
+      sizeCheck({ expect: 192, warn: 10 })
     ],
   },
 ]

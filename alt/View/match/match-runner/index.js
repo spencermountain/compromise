@@ -1,30 +1,28 @@
-const fromHere = require('./01-from-here')
-//
-// validity checks
-//
-const failFast = function (terms, regs, minLength) {
-  if (terms.length < minLength) {
-    return true
-  }
-  return false
-}
+const fromHere = require('./02-from-here')
+const failFast = require('./01-failFast')
 
 // ok, here we go.
 const runMatch = function (view, regs, justOne = false) {
   let results = []
   let docs = view.docs
+  let cache = view._cache || []
   const minLength = regs.filter(r => r.optional !== true && r.negative !== true).length
 
   for (let n = 0; n < docs.length; n += 1) {
     let terms = docs[n]
+    // can we skip this sentence?
+    if (cache[n] && failFast(regs, cache[n])) {
+      continue
+    }
     //try starting the match, from every term
     for (let i = 0; i < terms.length; i += 1) {
       let slice = terms.slice(i)
-      // first, quick-pass for validity
-      if (failFast(slice, regs, minLength)) {
-        continue
+      // ensure it's long-enough
+      if (slice.length < minLength) {
+        break
       }
       let res = fromHere(slice, regs, i, terms.length)
+      // did we find a result?
       if (res) {
         // make proper pointers
         res.pointer = `/${n}/` + res.pointer
@@ -36,7 +34,7 @@ const runMatch = function (view, regs, justOne = false) {
         if (justOne === true) {
           return results
         }
-        // skip ahead, over matched results
+        // skip ahead, over these results
         let split = res.pointer.split(/[/:]/)
         let end = Number(split[3]) || terms.length
         i = Math.abs(end - 1)

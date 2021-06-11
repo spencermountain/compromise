@@ -10,8 +10,8 @@ const nlp = require('./alt')
 // nlp.verbose(true)
 
 let doc = nlp(`one two foo three. foo five. six foo seven`)
-// doc.cache()
-let m = doc.match('[foo] [. .?]', 1)
+doc.cache()
+let m = doc.match('six foo')
 console.log(m.out('array'))
 
 // console.log(m._groups)

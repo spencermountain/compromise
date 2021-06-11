@@ -1,4 +1,5 @@
 const debug = require('./debug')
+const out = require('./out')
 
 const methods = {
   /** return data */
@@ -18,8 +19,8 @@ const methods = {
     }, '')
   },
   /** */
-  debug: function () {
-    return debug(this)
-  },
+  debug: debug,
+  /** */
+  out: out,
 }
 module.exports = methods

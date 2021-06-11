@@ -36,6 +36,10 @@ const runMatch = function (view, regs, justOne = false) {
         if (justOne === true) {
           return results
         }
+        // skip ahead, over matched results
+        let split = res.pointer.split(/[/:]/)
+        let end = Number(split[3]) || terms.length
+        i = Math.abs(end - 1)
       }
     }
   }

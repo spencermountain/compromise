@@ -85,7 +85,8 @@ const tagString = function (tags, model) {
 }
 
 //output some helpful stuff to the console
-const debug = function (view) {
+const debug = function () {
+  let view = this
   let { document, model } = view
   if (isClientSide()) {
     logClientSide(view)

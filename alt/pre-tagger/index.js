@@ -23,8 +23,6 @@ const preTagger = function (document, methods, model) {
   methods.checkAcronym(terms, model)
   // check for stem in lexicon
   methods.checkPrefix(terms, model)
-  // quick markov fallback
-  methods.checkNeighbours(document, model)
   //  ¯\_(ツ)_/¯
   methods.nounFallback(terms)
 

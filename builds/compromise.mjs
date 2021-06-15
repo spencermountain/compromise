@@ -1,1 +1,12969 @@
-const e="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".split("");var t=function(t){let r=(t=t||"_")+"-";for(let t=0;t<7;t++)r+=e[Math.floor(Math.random()*e.length)];return r};let r={"!":"¡","?":"¿Ɂ",'"':'“”"❝❞',"'":"‘‛❛❜","-":"—–",a:"ªÀÁÂÃÄÅàáâãäåĀāĂăĄąǍǎǞǟǠǡǺǻȀȁȂȃȦȧȺΆΑΔΛάαλАадѦѧӐӑӒӓƛɅæ",b:"ßþƀƁƂƃƄƅɃΒβϐϦБВЪЬвъьѢѣҌҍ",c:"¢©ÇçĆćĈĉĊċČčƆƇƈȻȼͻͼͽϲϹϽϾСсєҀҁҪҫ",d:"ÐĎďĐđƉƊȡƋƌǷ",e:"ÈÉÊËèéêëĒēĔĕĖėĘęĚěƎƏƐǝȄȅȆȇȨȩɆɇΈΕΞΣέεξϱϵ϶ЀЁЕЭеѐёҼҽҾҿӖӗӘәӚӛӬӭ",f:"ƑƒϜϝӺӻҒғſ",g:"ĜĝĞğĠġĢģƓǤǥǦǧǴǵ",h:"ĤĥĦħƕǶȞȟΉΗЂЊЋНнђћҢңҤҥҺһӉӊ",I:"ÌÍÎÏ",i:"ìíîïĨĩĪīĬĭĮįİıƖƗȈȉȊȋΊΐΪίιϊІЇії",j:"ĴĵǰȷɈɉϳЈј",k:"ĶķĸƘƙǨǩΚκЌЖКжкќҚқҜҝҞҟҠҡ",l:"ĹĺĻļĽľĿŀŁłƚƪǀǏǐȴȽΙӀӏ",m:"ΜϺϻМмӍӎ",n:"ÑñŃńŅņŇňŉŊŋƝƞǸǹȠȵΝΠήηϞЍИЙЛПийлпѝҊҋӅӆӢӣӤӥπ",o:"ÒÓÔÕÖØðòóôõöøŌōŎŏŐőƟƠơǑǒǪǫǬǭǾǿȌȍȎȏȪȫȬȭȮȯȰȱΌΘΟθοσόϕϘϙϬϭϴОФоѲѳӦӧӨөӪӫ",p:"ƤƿΡρϷϸϼРрҎҏÞ",q:"Ɋɋ",r:"ŔŕŖŗŘřƦȐȑȒȓɌɍЃГЯгяѓҐґ",s:"ŚśŜŝŞşŠšƧƨȘșȿЅѕ",t:"ŢţŤťŦŧƫƬƭƮȚțȶȾΓΤτϮТт",u:"µÙÚÛÜùúûüŨũŪūŬŭŮůŰűŲųƯưƱƲǓǔǕǖǗǘǙǚǛǜȔȕȖȗɄΰμυϋύ",v:"νѴѵѶѷ",w:"ŴŵƜωώϖϢϣШЩшщѡѿ",x:"×ΧχϗϰХхҲҳӼӽӾӿ",y:"ÝýÿŶŷŸƳƴȲȳɎɏΎΥΫγψϒϓϔЎУучўѰѱҮүҰұӮӯӰӱӲӳ",z:"ŹźŻżŽžƩƵƶȤȥɀΖζ"},a={};Object.keys(r).forEach((function(e){r[e].split("").forEach((function(t){a[t]=e}))}));var n=e=>{let t=e.split("");return t.forEach((e,r)=>{a[e]&&(t[r]=a[e])}),t.join("")};const i=/([A-Z]\.)+[A-Z]?,?$/,o=/^[A-Z]\.,?$/,s=/[A-Z]{2,}('s|,)?$/,l=/([a-z]\.)+[a-z]\.?$/;var u=function(e){return!0===i.test(e)||(!0===l.test(e)||(!0===o.test(e)||!0===s.test(e)))};const c=/[a-z\u00C0-\u00FF] ?\/ ?[a-z\u00C0-\u00FF]/;var h=function(e){let t=e=(e=(e=e||"").toLowerCase()).trim();return e=n(e),!0===c.test(e)&&(e=e.replace(/\/.*/,"")),e=(e=(e=(e=(e=(e=(e=e.replace(/^[#@]/,"")).replace(/[,;.!?]+$/,"")).replace(/[\u0027\u0060\u00B4\u2018\u2019\u201A\u201B\u2032\u2035\u2039\u203A]+/g,"'")).replace(/[\u0022\u00AB\u00BB\u201C\u201D\u201E\u201F\u2033\u2034\u2036\u2037\u2E42\u301D\u301E\u301F\uFF02]+/g,'"')).replace(/\u2026/g,"...")).replace(/\u2013/g,"-")).replace(/([aeiou][ktrp])in$/,"$1ing"),!0===/^(re|un)-?[^aeiou]./.test(e)&&(e=e.replace("-","")),u(e)&&(e=e.replace(/\./g,"")),!1===/^[:;]/.test(e)&&(e=(e=(e=e.replace(/\.{3,}$/g,"")).replace(/[",\.!:;\?\)]+$/g,"")).replace(/^['"\(]+/g,"")),""===(e=(e=e.replace(/[\u200B-\u200D\uFEFF]/g,"")).trim())&&(e=t),e=e.replace(/([0-9]),([0-9])/g,"$1$2")};var d=function(e){return e=(e=e.replace(/['’]s$/,"")).replace(/s['’]$/,"s")};const g=/^[ \n\t\.\[\](){}⟨⟩:,،、‒–—―…!‹›«»‐\-?‘’;\/⁄·&*•^†‡°¡¿※№÷×ºª%‰+−=‱¶′″‴§~\|‖¦©℗®℠™¤₳฿\u0022\uFF02\u0027\u201C\u201F\u201B\u201E\u2E42\u201A\u2035\u2036\u2037\u301D\u0060\u301F]+/,p=/[ \n\t\.'\[\](){}⟨⟩:,،、‒–—―…!‹›«»‐\-?‘’;\/⁄·&*@•^†‡°¡¿※#№÷×ºª‰+−=‱¶′″‴§~\|‖¦©℗®℠™¤₳฿\u0022\uFF02\u201D\u00B4\u301E]+$/,m=/\//,f=/['’]/,b=/^[a-z]\.([a-z]\.)+/i,v=/^[-+\.][0-9]/,y=/^'[0-9]{2}/;var w=e=>{let t=e,r="",a="";""===(e=(e=e.replace(g,t=>(r=t,"-"!==r&&"+"!==r&&"."!==r||!v.test(e)?"'"===r&&y.test(e)?(r="",t):"":(r="",t)))).replace(p,n=>(a=n,f.test(n)&&/[sn]['’]$/.test(t)&&!1===f.test(r)?(a=a.replace(f,""),"'"):!0===b.test(e)?(a=a.replace(/\./,""),"."):"")))&&(t=t.replace(/ *$/,e=>(a=e||"","")),e=t,r="",a=a);let n=h(e);const i={text:e,clean:n,reduced:d(n),pre:r,post:a};return m.test(e)&&e.split(m).forEach(e=>{i.alias=i.alias||{},i.alias[e.trim()]=!0}),i};function k(e){var t={exports:{}};return e(t,t.exports),t.exports}var A=k((function(e,t){const r=/^[A-Z][a-z'\u00C0-\u00FF]/,a=/^[A-Z]+s?$/;t.toUpperCase=function(){return this.text=this.text.toUpperCase(),this},t.toLowerCase=function(){return this.text=this.text.toLowerCase(),this},t.toTitleCase=function(){return this.text=this.text.replace(/^ *[a-z\u00C0-\u00FF]/,e=>e.toUpperCase()),this},t.isUpperCase=function(){return a.test(this.text)},t.isTitleCase=function(){return r.test(this.text)},t.titleCase=t.isTitleCase})),D=k((function(e,t){const r=/(\u0022|\uFF02|\u0027|\u201C|\u2018|\u201F|\u201B|\u201E|\u2E42|\u201A|\u00AB|\u2039|\u2035|\u2036|\u2037|\u301D|\u0060|\u301F)/,a=/(\u0022|\uFF02|\u0027|\u201D|\u2019|\u201D|\u2019|\u201D|\u201D|\u2019|\u00BB|\u203A|\u2032|\u2033|\u2034|\u301E|\u00B4|\u301E)/;t.hasPost=function(e){return-1!==this.post.indexOf(e)},t.hasPre=function(e){return-1!==this.pre.indexOf(e)},t.hasQuote=function(){return r.test(this.pre)||a.test(this.post)},t.hasQuotation=t.hasQuote,t.hasComma=function(){return this.hasPost(",")},t.hasPeriod=function(){return!0===this.hasPost(".")&&!1===this.hasPost("...")},t.hasExclamation=function(){return this.hasPost("!")},t.hasQuestionMark=function(){return this.hasPost("?")||this.hasPost("¿")},t.hasEllipses=function(){return this.hasPost("..")||this.hasPost("…")||this.hasPre("..")||this.hasPre("…")},t.hasSemicolon=function(){return this.hasPost(";")},t.hasSlash=function(){return/\//.test(this.text)},t.hasHyphen=function(){const e=/^(-|–|—)$/;return e.test(this.post)||e.test(this.pre)},t.hasDash=function(){const e=/ (-|–|—) /;return e.test(this.post)||e.test(this.pre)},t.hasContraction=function(){return Boolean(this.implicit)},t.addPunctuation=function(e){return","!==e&&";"!==e||(this.post=this.post.replace(e,"")),this.post=e+this.post,this}}));var $=function(e,t,r=3){if(e===t)return 1;if(e.length<r||t.length<r)return 0;const a=function(e,t){let r=e.length,a=t.length;if(0===r)return a;if(0===a)return r;let n=(a>r?a:r)+1;if(Math.abs(r-a)>(n||100))return n||100;let i,o,s,l,u,c,h=[];for(let e=0;e<n;e++)h[e]=[e],h[e].length=n;for(let e=0;e<n;e++)h[0][e]=e;for(let n=1;n<=r;++n)for(o=e[n-1],i=1;i<=a;++i){if(n===i&&h[n][i]>4)return r;s=t[i-1],l=o===s?0:1,u=h[n-1][i]+1,(c=h[n][i-1]+1)<u&&(u=c),(c=h[n-1][i-1]+l)<u&&(u=c);let a=n>1&&i>1&&o===t[i-2]&&e[n-2]===s&&(c=h[n-2][i-2]+l)<u;h[n][i]=a?c:u}return h[r][a]}(e,t);let n=Math.max(e.length,t.length);return 1-(0===n?0:a/n)};let P=function(){};P=function(e,t,r,a){let n=function(e,t,r,a){if(t.id===e.id)return!0;if(!0===t.anything)return!0;if(!0===t.start&&0!==r)return!1;if(!0===t.end&&r!==a-1)return!1;if(void 0!==t.word){if(null!==e.implicit&&e.implicit===t.word)return!0;if(void 0!==e.alias&&e.alias.hasOwnProperty(t.word))return!0;if(!0===t.soft&&t.word===e.root)return!0;if(void 0!==t.fuzzy){let r=$(t.word,e.reduced);if(r>t.fuzzy)return!0;if(!0===t.soft&&(r=$(t.word,e.root),r>t.fuzzy))return!0}return t.word===e.clean||t.word===e.text||t.word===e.reduced}return void 0!==t.tag?!0===e.tags[t.tag]:void 0!==t.method?"function"==typeof e[t.method]&&!0===e[t.method]():void 0!==t.regex?t.regex.test(e.clean):void 0!==t.fastOr?!(!e.implicit||!0!==t.fastOr.hasOwnProperty(e.implicit))||t.fastOr.hasOwnProperty(e.reduced)||t.fastOr.hasOwnProperty(e.text):void 0!==t.choices&&("and"===t.operator?t.choices.every(t=>P(e,t,r,a)):t.choices.some(t=>P(e,t,r,a)))}(e,t,r,a);return!0===t.negative?!n:n};var E=P;const H={};var j={doesMatch:function(e,t,r){return E(this,e,t,r)},isAcronym:function(){return u(this.text)},isImplicit:function(){return""===this.text&&Boolean(this.implicit)},isKnown:function(){return Object.keys(this.tags).some(e=>!0!==H[e])},setRoot:function(e){let t=e.transforms,r=this.implicit||this.clean;if(this.tags.Plural&&(r=t.toSingular(r,e)),this.tags.Verb&&!this.tags.Negative&&!this.tags.Infinitive){let a=null;this.tags.PastTense?a="PastTense":this.tags.Gerund?a="Gerund":this.tags.PresentTense?a="PresentTense":this.tags.Participle?a="Participle":this.tags.Actor&&(a="Actor"),r=t.toInfinitive(r,e,a)}this.root=r}};const N=/[\s-]/,x=/^[A-Z-]+$/;var F={textOut:function(e,t,r){e=e||{};let a=this.text,i=this.pre,o=this.post;return!0===e.reduced&&(a=this.reduced||""),!0===e.root&&(a=this.root||""),!0===e.implicit&&this.implicit&&(a=this.implicit||""),!0===e.normal&&(a=this.clean||this.text||""),!0===e.root&&(a=this.root||this.reduced||""),!0===e.unicode&&(a=n(a)),!0===e.titlecase&&(this.tags.ProperNoun&&!this.titleCase()||(this.tags.Acronym?a=a.toUpperCase():x.test(a)&&!this.tags.Acronym&&(a=a.toLowerCase()))),!0===e.lowercase&&(a=a.toLowerCase()),!0===e.acronyms&&this.tags.Acronym&&(a=a.replace(/\./g,"")),!0!==e.whitespace&&!0!==e.root||(i="",o=" ",!1!==N.test(this.post)&&!e.last||this.implicit||(o="")),!0!==e.punctuation||e.root||(!0===this.hasPost(".")?o="."+o:!0===this.hasPost("?")?o="?"+o:!0===this.hasPost("!")?o="!"+o:!0===this.hasPost(",")?o=","+o:!0===this.hasEllipses()&&(o="..."+o)),!0!==t&&(i=""),!0!==r&&(o=""),!0===e.abbreviations&&this.tags.Abbreviation&&(o=o.replace(/^\./,"")),i+a+o}};const C={Auxiliary:1,Possessive:1};var B=function(e,t){let r=Object.keys(e.tags);const a=t.tags;return r=r.sort((e,t)=>C[t]||!a[t]?-1:a[t]?a[e]?a[e].lineage.length>a[t].lineage.length?1:a[e].isA.length>a[t].isA.length?-1:0:0:1),r};const G={text:!0,tags:!0,implicit:!0,whitespace:!0,clean:!1,id:!1,index:!1,offset:!1,bestTag:!1};var z={json:function(e,t){e=e||{};let r={};return(e=Object.assign({},G,e)).text&&(r.text=this.text),e.normal&&(r.normal=this.clean),e.tags&&(r.tags=Object.keys(this.tags)),e.clean&&(r.clean=this.clean),(e.id||e.offset)&&(r.id=this.id),e.implicit&&null!==this.implicit&&(r.implicit=this.implicit),e.whitespace&&(r.pre=this.pre,r.post=this.post),e.bestTag&&(r.bestTag=B(this,t)[0]),r}},I=Object.assign({},A,D,j,F,z);function O(){return"undefined"!=typeof window&&window.document}const T=function(e,t){for(e=e.toString();e.length<t;)e+=" ";return e};var V=function(e,t,r){if(O())return void console.log("%c"+T(e.clean,3)+"  + "+t+" ","color: #6accb2;");let a="[33m"+T(e.clean,15)+"[0m + [32m"+t+"[0m ";r&&(a=T(a,35)+" "+r),console.log(a)},M=function(e,t,r){if(O())return void console.log("%c"+T(e.clean,3)+"  - "+t+" ","color: #AB5850;");let a="[33m"+T(e.clean,3)+" [31m - #"+t+"[0m ";r&&(a=T(a,35)+" "+r),console.log(a)},J=e=>e.charAt(0).toUpperCase()+e.substr(1);const L=function(e,t,r,a){let n=a.tags;if(""===t||"."===t||"-"===t)return;if("#"===t[0]&&(t=t.replace(/^#/,"")),t=J(t),!0===e.tags[t])return;const i=a.isVerbose();!0===i&&V(e,t,r),e.tags[t]=!0,!0===n.hasOwnProperty(t)&&(n[t].isA.forEach(t=>{e.tags[t]=!0,!0===i&&V(e,"→ "+t)}),e.unTag(n[t].notA,"←",a))};var S=function(e,t,r,a){if("string"!=typeof t)for(let n=0;n<t.length;n++)L(e,t[n],r,a);else L(e,t,r,a)};const _=/^[a-z]/,K=function(e,t,r,a){const n=a.isVerbose();if("*"===t)return e.tags={},e;var i;t=t.replace(/^#/,""),!0===_.test(t)&&(t=(i=t).charAt(0).toUpperCase()+i.substr(1)),!0===e.tags[t]&&(delete e.tags[t],!0===n&&M(e,t,r));const o=a.tags;if(o[t]){let r=o[t].lineage;for(let t=0;t<r.length;t++)!0===e.tags[r[t]]&&(delete e.tags[r[t]],!0===n&&M(e," - "+r[t]))}return e};var q=function(e,t,r,a){if("string"!=typeof t&&t)for(let n=0;n<t.length;n++)K(e,t[n],r,a);else K(e,t,r,a)};const W=function(e,t,r){const a=r.tags;if("#"===t[0]&&(t=t.replace(/^#/,"")),void 0===a[t])return!0;let n=a[t].notA||[];for(let t=0;t<n.length;t++)if(!0===e.tags[n[t]])return!1;return void 0===a[t].isA||W(e,a[t].isA,r)};var R=W,U={tag:function(e,t,r){return S(this,e,t,r),this},tagSafe:function(e,t,r){return R(this,e,r)&&S(this,e,t,r),this},unTag:function(e,t,r){return q(this,e,t,r),this},canBe:function(e,t){return R(this,e,t)}};class Q{constructor(e=""){e=String(e);let r=w(e);this.text=r.text||"",this.clean=r.clean,this.reduced=r.reduced,this.root=null,this.implicit=null,this.pre=r.pre||"",this.post=r.post||"",this.tags={},this.prev=null,this.next=null,this.id=t(r.clean),this.isA="Term",r.alias&&(this.alias=r.alias)}set(e){let t=w(e);return this.text=t.text,this.clean=t.clean,this.reduced=t.reduced,this.root=null,this.implicit=null,this}}Q.prototype.clone=function(){let e=new Q(this.text);return e.pre=this.pre,e.post=this.post,e.clean=this.clean,e.reduced=this.reduced,e.root=this.root,e.implicit=this.implicit,e.tags=Object.assign({},this.tags),e},Object.assign(Q.prototype,I),Object.assign(Q.prototype,U);var Z=Q,X={terms:function(e){if(0===this.length)return[];if(this.cache.terms)return void 0!==e?this.cache.terms[e]:this.cache.terms;let t=[this.pool.get(this.start)];for(let r=0;r<this.length-1;r+=1){let a=t[t.length-1].next;if(null===a){console.error("Compromise error: Linked list broken in phrase '"+this.start+"'");break}let n=this.pool.get(a);if(t.push(n),void 0!==e&&e===r)return t[e]}return void 0===e&&(this.cache.terms=t),void 0!==e?t[e]:t},clone:function(e){if(e){let e=this.buildFrom(this.start,this.length);return e.cache=this.cache,e}let t=this.terms().map(e=>e.clone());return t.forEach((e,r)=>{this.pool.add(e),t[r+1]&&(e.next=t[r+1].id),t[r-1]&&(e.prev=t[r-1].id)}),this.buildFrom(t[0].id,t.length)},lastTerm:function(){let e=this.terms();return e[e.length-1]},hasId:function(e){if(0===this.length||!e)return!1;if(this.start===e)return!0;if(this.cache.terms){let t=this.cache.terms;for(let r=0;r<t.length;r++)if(t[r].id===e)return!0;return!1}let t=this.start;for(let r=0;r<this.length-1;r+=1){let r=this.pool.get(t);if(void 0===r)return console.error(`Compromise error: Linked list broken. Missing term '${t}' in phrase '${this.start}'\n`),!1;if(r.next===e)return!0;t=r.next}return!1},wordCount:function(){return this.terms().filter(e=>""!==e.text).length},fullSentence:function(){let e=this.terms(0);for(;e.prev;)e=this.pool.get(e.prev);let t=e.id,r=1;for(;e.next;)e=this.pool.get(e.next),r+=1;return this.buildFrom(t,r)}};var Y={text:function(e={},t,r){"string"==typeof e&&(e="normal"===e?{whitespace:!0,unicode:!0,lowercase:!0,punctuation:!0,acronyms:!0,abbreviations:!0,implicit:!0,normal:!0}:"clean"===e?{titlecase:!1,lowercase:!0,punctuation:!0,whitespace:!0,unicode:!0,implicit:!0,normal:!0}:"reduced"===e?{punctuation:!1,titlecase:!1,lowercase:!0,whitespace:!0,unicode:!0,implicit:!0,reduced:!0}:"implicit"===e?{punctuation:!0,implicit:!0,whitespace:!0,trim:!0}:"root"===e?{titlecase:!1,lowercase:!0,punctuation:!0,whitespace:!0,unicode:!0,implicit:!0,root:!0}:{});let a=this.terms(),n=!1;a[0]&&null===a[0].prev&&null===a[a.length-1].next&&(n=!0);let i=a.reduce((i,o,s)=>{if(0===s&&""===o.text&&null!==o.implicit&&!e.implicit)return i;e.last=r&&s===a.length-1;let l=!0,u=!0;return!1===n&&(0===s&&t&&(l=!1),s===a.length-1&&r&&(u=!1)),i+o.textOut(e,l,u)},"");return!0===n&&r&&(i=i.replace(/ +$/,"")),!0===e.trim&&(i=i.trim()),i}},ee={trim:function(){let e=this.terms();if(e.length>0){e[0].pre=e[0].pre.replace(/^\s+/,"");let t=e[e.length-1];t.post=t.post.replace(/\s+$/,"")}return this}};const te=/[.?!]\s*$/,re=function(e,t){t[0].pre=e[0].pre;let r=e[e.length-1],a=t[t.length-1];a.post=function(e,t){if(te.test(t))return t+e.match(/\s*$/);return e}(r.post,a.post),r.post="",""===r.post&&(r.post+=" ")};var ae=function(e,t,r){let a=e.terms(),n=t.terms();re(a,n),function(e,t,r){let a=e[e.length-1],n=t[t.length-1],i=a.next;a.next=t[0].id,n.next=i,i&&(r.get(i).prev=n.id);let o=e[0].id;o&&(t[0].prev=o)}(a,n,e.pool);let i=[e],o=e.start,s=[r];return s=s.concat(r.parents()),s.forEach(e=>{let t=e.list.filter(e=>e.hasId(o));i=i.concat(t)}),i=function(e){return e.filter((t,r)=>e.indexOf(t)===r)}(i),i.forEach(e=>{e.length+=t.length}),e.cache={},e};const ne=/ /;var ie=function(e,t,r){const a=e.start;let n=t.terms();!function(e){let t=e[e.length-1];!1===ne.test(t.post)&&(t.post+=" ")}(n),function(e,t,r){let a=r[r.length-1];a.next=e.start;let n=e.pool,i=n.get(e.start);i.prev&&(n.get(i.prev).next=t.start);r[0].prev=e.terms(0).prev,e.terms(0).prev=a.id}(e,t,n);let i=[e],o=[r];return o=o.concat(r.parents()),o.forEach(e=>{let r=e.list.filter(e=>e.hasId(a)||e.hasId(t.start));i=i.concat(r)}),i=function(e){return e.filter((t,r)=>e.indexOf(t)===r)}(i),i.forEach(e=>{e.length+=t.length,e.start===a&&(e.start=t.start),e.cache={}}),e};var oe=function(e,t){let r=t.pool(),a=e.terms(),n=r.get(a[0].prev)||{},i=r.get(a[a.length-1].next)||{};a[0].implicit&&n.implicit&&(n.set(n.implicit),n.post+=" "),function(e,t,r,a){let n=e.parents();n.push(e),n.forEach(e=>{let n=e.list.find(e=>e.hasId(t));n&&(n.length-=r,n.start===t&&(n.start=a.id),n.cache={})}),e.list=e.list.filter(e=>!(!e.start||!e.length))}(t,e.start,e.length,i),n&&(n.next=i.id),i&&(i.prev=n.id)},se={append:function(e,t){return ae(this,e,t),this},prepend:function(e,t){return ie(this,e,t),this},delete:function(e){return oe(this,e),this},replace:function(e,t){let r=this.length;ae(this,e,t);let a=this.buildFrom(this.start,this.length);a.length=r,oe(a,t)},splitOn:function(e){let t=this.terms(),r={before:null,match:null,after:null},a=t.findIndex(t=>t.id===e.start);if(-1===a)return r;let n=t.slice(0,a);n.length>0&&(r.before=this.buildFrom(n[0].id,n.length));let i=t.slice(a,a+e.length);i.length>0&&(r.match=this.buildFrom(i[0].id,i.length));let o=t.slice(a+e.length,t.length);return o.length>0&&(r.after=this.buildFrom(o[0].id,o.length,this.pool)),r}},le={json:function(e={},t){let r={};return e.text&&(r.text=this.text()),e.normal&&(r.normal=this.text("normal")),e.clean&&(r.clean=this.text("clean")),e.reduced&&(r.reduced=this.text("reduced")),e.implicit&&(r.implicit=this.text("implicit")),e.root&&(r.root=this.text("root")),e.trim&&(r.text&&(r.text=r.text.trim()),r.normal&&(r.normal=r.normal.trim()),r.reduced&&(r.reduced=r.reduced.trim())),e.terms&&(!0===e.terms&&(e.terms={}),r.terms=this.terms().map(r=>r.json(e.terms,t))),r}},ue={lookAhead:function(e){e||(e=".*");let t=this.pool,r=[];const a=function(e){let n=t.get(e);n&&(r.push(n),n.prev&&a(n.next))};let n=this.terms(),i=n[n.length-1];return a(i.next),0===r.length?[]:this.buildFrom(r[0].id,r.length).match(e)},lookBehind:function(e){e||(e=".*");let t=this.pool,r=[];const a=function(e){let n=t.get(e);n&&(r.push(n),n.prev&&a(n.prev))};let n=t.get(this.start);return a(n.prev),0===r.length?[]:this.buildFrom(r[r.length-1].id,r.length).match(e)}},ce=Object.assign({},X,Y,ee,se,le,ue);var he=function(e,t){if(0===t.length)return!0;for(let e=0;e<t.length;e+=1){let r=t[e];if(!0!==r.optional&&!0!==r.negative&&!0===r.start&&e>0)return!0;if(!0===r.anything&&!0===r.negative)return!0}return!1},de=k((function(e,t){t.getGreedy=function(e,t){let r=Object.assign({},e.regs[e.r],{start:!1,end:!1}),a=e.t;for(;e.t<e.terms.length;e.t+=1){if(t&&e.terms[e.t].doesMatch(t,e.start_i+e.t,e.phrase_length))return e.t;let n=e.t-a+1;if(void 0!==r.max&&n===r.max)return e.t;if(!1===e.terms[e.t].doesMatch(r,e.start_i+e.t,e.phrase_length))return void 0!==r.min&&n<r.min?null:e.t}return e.t},t.greedyTo=function(e,t){let r=e.t;if(!t)return e.terms.length;for(;r<e.terms.length;r+=1)if(!0===e.terms[r].doesMatch(t,e.start_i+r,e.phrase_length))return r;return null},t.isEndGreedy=function(e,t){if(!0===e.end&&!0===e.greedy&&t.start_i+t.t<t.phrase_length-1){let r=Object.assign({},e,{end:!1});if(!0===t.terms[t.t].doesMatch(r,t.start_i+t.t,t.phrase_length))return!0}return!1},t.doOrBlock=function(e,r=0){let a=e.regs[e.r],n=!1;for(let t=0;t<a.choices.length;t+=1){let i=a.choices[t];if(n=i.every((t,a)=>{let n=0,i=e.t+a+r+n;if(void 0===e.terms[i])return!1;let o=e.terms[i].doesMatch(t,i+e.start_i,e.phrase_length);if(!0===o&&!0===t.greedy)for(let r=1;r<e.terms.length;r+=1){let a=e.terms[i+r];if(a){if(!0!==a.doesMatch(t,e.start_i+r,e.phrase_length))break;n+=1}}return r+=n,o}),n){r+=i.length;break}}return n&&!0===a.greedy?t.doOrBlock(e,r):r},t.doAndBlock=function(e){let t=0;return!0===e.regs[e.r].choices.every(r=>{let a=r.every((t,r)=>{let a=e.t+r;return void 0!==e.terms[a]&&e.terms[a].doesMatch(t,a,e.phrase_length)});return!0===a&&r.length>t&&(t=r.length),a})&&t},t.getGroup=function(e,t,r){if(e.groups[e.groupId])return e.groups[e.groupId];const a=e.terms[t].id;return e.groups[e.groupId]={group:String(r),start:a,length:0},e.groups[e.groupId]}}));var ge=function(e,r,a,n){let i={t:0,terms:e,r:0,regs:r,groups:{},start_i:a,phrase_length:n,hasGroup:!1,groupId:null,previousGroup:null};for(;i.r<r.length;i.r+=1){let e=r[i.r];if(i.hasGroup="string"==typeof e.named||"number"==typeof e.named,!0===i.hasGroup){const a=r[i.r-1];a&&a.named===e.named&&i.previousGroup?i.groupId=i.previousGroup:(i.groupId=t(e.named),i.previousGroup=i.groupId)}if(!i.terms[i.t]){if(!1===r.slice(i.r).some(e=>!e.optional))break;return null}if(!0===e.anything&&!0===e.greedy){let t=de.greedyTo(i,r[i.r+1]);if(null===t||0===t)return null;if(void 0!==e.min&&t-i.t<e.min)return null;if(void 0!==e.max&&t-i.t>e.max){i.t=i.t+e.max;continue}if(!0===i.hasGroup){de.getGroup(i,i.t,e.named).length=t-i.t}i.t=t;continue}if(void 0!==e.choices&&"or"===e.operator){let t=de.doOrBlock(i);if(t){if(!0===e.negative)return null;if(!0===i.hasGroup){de.getGroup(i,i.t,e.named).length+=t}i.t+=t;continue}if(!e.optional)return null}if(void 0!==e.choices&&"and"===e.operator){let t=de.doAndBlock(i);if(t){if(!0===e.negative)return null;if(!0===i.hasGroup){de.getGroup(i,i.t,e.named).length+=t}i.t+=t;continue}if(!e.optional)return null}let a=i.terms[i.t],o=a.doesMatch(e,i.start_i+i.t,i.phrase_length);if(!0===e.anything||!0===o||de.isEndGreedy(e,i)){let t=i.t;if(e.optional&&r[i.r+1]&&e.negative)continue;if(e.optional&&r[i.r+1]){let t=a.doesMatch(r[i.r+1],i.start_i+i.t,i.phrase_length);if(e.negative||t){let e=i.terms[i.t+1];e&&e.doesMatch(r[i.r+1],i.start_i+i.t,i.phrase_length)||(i.r+=1)}}if(i.t+=1,!0===e.end&&i.t!==i.terms.length&&!0!==e.greedy)return null;if(!0===e.greedy){if(i.t=de.getGreedy(i,r[i.r+1]),null===i.t)return null;if(e.min&&e.min>i.t)return null;if(!0===e.end&&i.start_i+i.t!==n)return null}if(!0===i.hasGroup){const r=de.getGroup(i,t,e.named);i.t>1&&e.greedy?r.length+=i.t-t:r.length++}}else{if(e.negative){let t=Object.assign({},e);if(t.negative=!1,!0===i.terms[i.t].doesMatch(t,i.start_i+i.t,i.phrase_length))return null}if(!0!==e.optional){if(i.terms[i.t].isImplicit()&&r[i.r-1]&&i.terms[i.t+1]){if(i.terms[i.t-1]&&i.terms[i.t-1].implicit===r[i.r-1].word)return null;if(i.terms[i.t+1].doesMatch(e,i.start_i+i.t,i.phrase_length)){i.t+=2;continue}}return null}}}return{match:i.terms.slice(0,i.t),groups:i.groups}};var pe=function(e,t,r){if(!r||0===r.length)return r;if(t.some(e=>e.end)){let t=e[e.length-1];r=r.filter(({match:e})=>-1!==e.indexOf(t))}return r};const me=/(?:^|\s)([\!\[\^]*(?:<[^<]*>)?\/.*?[^\\\/]\/[\?\]\+\*\$~]*)(?:\s|$)/,fe=/([\!\[\^]*(?:<[^<]*>)?\([^\)]+[^\\\)]\)[\?\]\+\*\$~]*)(?:\s|$)/,be=/ /g,ve=e=>/^[\!\[\^]*(<[^<]*>)?\//.test(e)&&/\/[\?\]\+\*\$~]*$/.test(e),ye=function(e){return e=(e=e.map(e=>e.trim())).filter(e=>e)};var we=function(e){let t=e.split(me),r=[];t.forEach(e=>{ve(e)?r.push(e):r=r.concat(e.split(fe))}),r=ye(r);let a=[];return r.forEach(e=>{(e=>/^[\!\[\^]*(<[^<]*>)?\(/.test(e)&&/\)[\?\]\+\*\$~]*$/.test(e))(e)||ve(e)?a.push(e):a=a.concat(e.split(be))}),a=ye(a),a};const ke=/\{([0-9]+,?[0-9]*)\}/,Ae=/&&/,De=new RegExp(/^<\s*?(\S+)\s*?>/),$e=function(e){return e[e.length-1]},Pe=function(e){return e[0]},Ee=function(e){return e.substr(1)},He=function(e){return e.substr(0,e.length-1)},je=function(e){return e=Ee(e),e=He(e)},Ne=function(e){let t={};for(let r=0;r<2;r+=1){if("$"===$e(e)&&(t.end=!0,e=He(e)),"^"===Pe(e)&&(t.start=!0,e=Ee(e)),("["===Pe(e)||"]"===$e(e))&&(t.named=!0,"["===Pe(e)?t.groupType="]"===$e(e)?"single":"start":t.groupType="end",e=(e=e.replace(/^\[/,"")).replace(/\]$/,""),"<"===Pe(e))){const r=De.exec(e);r.length>=2&&(t.named=r[1],e=e.replace(r[0],""))}if("+"===$e(e)&&(t.greedy=!0,e=He(e)),"*"!==e&&"*"===$e(e)&&"\\*"!==e&&(t.greedy=!0,e=He(e)),"?"===$e(e)&&(t.optional=!0,e=He(e)),"!"===Pe(e)&&(t.negative=!0,e=Ee(e)),"("===Pe(e)&&")"===$e(e)){Ae.test(e)?(t.choices=e.split(Ae),t.operator="and"):(t.choices=e.split("|"),t.operator="or"),t.choices[0]=Ee(t.choices[0]);let r=t.choices.length-1;t.choices[r]=He(t.choices[r]),t.choices=t.choices.map(e=>e.trim()),t.choices=t.choices.filter(e=>e),t.choices=t.choices.map(e=>e.split(/ /g).map(Ne)),e=""}if("/"===Pe(e)&&"/"===$e(e))return e=je(e),t.regex=new RegExp(e),t;if("~"===Pe(e)&&"~"===$e(e))return e=je(e),t.soft=!0,t.word=e,t}return!0===ke.test(e)&&(e=e.replace(ke,(e,r)=>{let a=r.split(/,/g);return 1===a.length?(t.min=Number(a[0]),t.max=Number(a[0])):(t.min=Number(a[0]),t.max=Number(a[1]||999)),t.greedy=!0,t.optional=!0,""})),"#"===Pe(e)?(t.tag=Ee(e),t.tag=(r=t.tag).charAt(0).toUpperCase()+r.substr(1),t):"@"===Pe(e)?(t.method=Ee(e),t):"."===e?(t.anything=!0,t):"*"===e?(t.anything=!0,t.greedy=!0,t.optional=!0,t):(e&&(e=(e=e.replace("\\*","*")).replace("\\.","."),t.word=e.toLowerCase()),t);var r};var xe=Ne;var Fe=function(e,t={}){return e.filter(e=>e.groupType).length>0&&(e=function(e){let t,r=!1,a=-1;for(let n=0;n<e.length;n++){const i=e[n];"single"!==i.groupType||!0!==i.named?("start"===i.groupType&&(r=!0,"string"==typeof i.named||"number"==typeof i.named?t=i.named:(a+=1,t=a)),r&&(i.named=t),"end"===i.groupType&&(r=!1)):(a+=1,i.named=a)}return e}(e)),t.fuzzy||(e=function(e){return e.map(e=>{if(void 0!==e.choices&&!0===e.choices.every(e=>{if(1!==e.length)return!1;let t=e[0];return void 0!==t.word&&!0!==t.negative&&!0!==t.optional&&!0!==t.method})){let t={};e.choices.forEach(e=>{t[e[0].word]=!0}),e.fastOr=t,delete e.choices}return e})}(e)),e};var Ce=function(e,t={}){if(null==e||""===e)return[];if("object"==typeof e){if(function(e){return"[object Array]"===Object.prototype.toString.call(e)}(e)){if(0===e.length||!e[0])return[];if("object"==typeof e[0])return e;if("string"==typeof e[0])return function(e){return[{choices:e.map(e=>[{word:e}]),operator:"or"}]}(e)}return e&&"Doc"===e.isA?function(e){if(!e||!e.list||!e.list[0])return[];let t=[];return e.list.forEach(e=>{let r=[];e.terms().forEach(e=>{r.push(e.id)}),t.push(r)}),[{idBlocks:t}]}(e):[]}"number"==typeof e&&(e=String(e));let r=we(e);return r=r.map(e=>xe(e)),r=Fe(r,t),r=function(e,t){return!0===t.fuzzy&&(t.fuzzy=.85),"number"==typeof t.fuzzy&&(e=e.map(e=>(t.fuzzy>0&&e.word&&(e.fuzzy=t.fuzzy),e.choices&&e.choices.forEach(e=>{e.forEach(e=>{e.fuzzy=t.fuzzy})}),e))),e}(r,t),r};var Be=function(e,t){let r=[],a=t[0].idBlocks;for(let t=0;t<e.length;t+=1)a.forEach(a=>{if(0===a.length)return;a.every((r,a)=>e[t+a].id===r)&&(r.push({match:e.slice(t,t+a.length)}),t+=a.length-1)});return r};var Ge=function(e,t,r=!1){if("string"==typeof t&&(t=Ce(t)),!0===he(e,t))return[];const a=t.filter(e=>!0!==e.optional&&!0!==e.negative).length;let n=e.terms(),i=[];if(t[0].idBlocks){let e=Be(n,t);if(e&&e.length>0)return pe(n,t,e)}if(!0===t[0].start){let e=ge(n,t,0,n.length);return e&&e.match&&e.match.length>0&&(e.match=e.match.filter(e=>e),i.push(e)),pe(n,t,i)}for(let e=0;e<n.length&&!(e+a>n.length);e+=1){let a=ge(n.slice(e),t,e,n.length);if(a&&a.match&&a.match.length>0&&(e+=a.match.length-1,a.match=a.match.filter(e=>e),i.push(a),!0===r))return pe(n,t,i)}return pe(n,t,i)};var ze=function(e,t){let r={};Ge(e,t).forEach(({match:e})=>{e.forEach(e=>{r[e.id]=!0})});let a=e.terms(),n=[],i=[];return a.forEach(e=>{!0!==r[e.id]?i.push(e):i.length>0&&(n.push(i),i=[])}),i.length>0&&n.push(i),n},Ie={match:function(e,t=!1){let r=Ge(this,e,t);return r=r.map(({match:e,groups:t})=>{let r=this.buildFrom(e[0].id,e.length,t);return r.cache.terms=e,r}),r},has:function(e){return Ge(this,e,!0).length>0},not:function(e){let t=ze(this,e);return t=t.map(e=>this.buildFrom(e[0].id,e.length)),t},canBe:function(e,t){let r=[],a=this.terms(),n=!1;for(let i=0;i<a.length;i+=1){let o=a[i].canBe(e,t);!0===o&&(!0===n?r[r.length-1].push(a[i]):r.push([a[i]]),n=o)}return r=r.filter(e=>e.length>0).map(e=>this.buildFrom(e[0].id,e.length)),r}};class Oe{constructor(e,t,r){this.start=e,this.length=t,this.isA="Phrase",Object.defineProperty(this,"pool",{enumerable:!1,writable:!0,value:r}),Object.defineProperty(this,"cache",{enumerable:!1,writable:!0,value:{}}),Object.defineProperty(this,"groups",{enumerable:!1,writable:!0,value:{}})}}Oe.prototype.buildFrom=function(e,t,r){let a=new Oe(e,t,this.pool);return r&&Object.keys(r).length>0?a.groups=r:a.groups=this.groups,a},Object.assign(Oe.prototype,Ie),Object.assign(Oe.prototype,ce);const Te={term:"terms"};Object.keys(Te).forEach(e=>Oe.prototype[e]=Oe.prototype[Te[e]]);var Ve=Oe;class Me{constructor(e={}){Object.defineProperty(this,"words",{enumerable:!1,value:e})}add(e){return this.words[e.id]=e,this}get(e){return this.words[e]}remove(e){delete this.words[e]}merge(e){return Object.assign(this.words,e.words),this}stats(){return{words:Object.keys(this.words).length}}}Me.prototype.clone=function(){let e=Object.keys(this.words).reduce((e,t)=>{let r=this.words[t].clone();return e[r.id]=r,e},{});return new Me(e)};var Je=Me;var Le=e=>{e.forEach((t,r)=>{r>0&&(t.prev=e[r-1].id),e[r+1]&&(t.next=e[r+1].id)})};const Se=/(\S.+?[.!?\u203D\u2E18\u203C\u2047-\u2049])(?=\s+|$)/g,_e=/\S/,Ke=/[ .][A-Z]\.? *$/i,qe=/(?:\u2026|\.{2,}) *$/,We=/((?:\r?\n|\r)+)/,Re=/[a-z0-9\u00C0-\u00FF\u00a9\u00ae\u2000-\u3300\ud000-\udfff]/i,Ue=/^\s+/,Qe=function(e,t){if(!0===Ke.test(e))return!1;if(!0===qe.test(e))return!1;if(!1===Re.test(e))return!1;let r=e.replace(/[.!?\u203D\u2E18\u203C\u2047-\u2049] *$/,"").split(" "),a=r[r.length-1].toLowerCase();return!t.hasOwnProperty(a)};var Ze=function(e,t){let r=t.cache.abbreviations;e=e||"";let a=[],n=[];if(!(e=String(e))||"string"!=typeof e||!1===_e.test(e))return a;let i=function(e){let t=[],r=e.split(We);for(let e=0;e<r.length;e++){let a=r[e].split(Se);for(let e=0;e<a.length;e++)t.push(a[e])}return t}(e=e.replace(" "," "));for(let e=0;e<i.length;e++){let t=i[e];if(void 0!==t&&""!==t){if(!1===_e.test(t)){if(n[n.length-1]){n[n.length-1]+=t;continue}if(i[e+1]){i[e+1]=t+i[e+1];continue}}n.push(t)}}for(let e=0;e<n.length;e++){let t=n[e];n[e+1]&&!1===Qe(t,r)?n[e+1]=t+(n[e+1]||""):t&&t.length>0&&(a.push(t),n[e]="")}if(0===a.length)return[e];for(let e=1;e<a.length;e+=1){let t=a[e].match(Ue);null!==t&&(a[e-1]+=t[0],a[e]=a[e].replace(Ue,""))}return a};const Xe=/\S/,Ye=/^[!?.]+$/,et=/(\S+)/,tt=/[a-z] ?\/ ?[a-z]*$/;let rt=[".","?","!",":",";","-","–","—","--","...","(",")","[","]",'"',"'","`"];rt=rt.reduce((e,t)=>(e[t]=!0,e),{});const at=function(e){if(!0===/^(re|un|micro|macro|trans|bi|mono|over)-?[^aeiou]./.test(e))return!1;if(!0===/^([a-z\u00C0-\u00FF/]+)(-|–|—)(like|ish|less|able)/i.test(e))return!1;if(!0===/^([a-z\u00C0-\u00FF`"'/]+)(-|–|—)([a-z0-9\u00C0-\u00FF].*)/i.test(e))return!0;return!0===/^([0-9]{1,4})(-|–|—)([a-z\u00C0-\u00FF`"'/-]+$)/i.test(e)},nt=function(e){let t=[];const r=e.split(/[-–—]/);let a="-",n=e.match(/[-–—]/);n&&n[0]&&(a=n);for(let e=0;e<r.length;e++)e===r.length-1?t.push(r[e]):t.push(r[e]+a);return t};var it=function(e){let t=[],r=[];if("number"==typeof(e=e||"")&&(e=String(e)),function(e){return"[object Array]"===Object.prototype.toString.call(e)}(e))return e;const a=e.split(et);for(let e=0;e<a.length;e++)!0!==at(a[e])?r.push(a[e]):r=r.concat(nt(a[e]));let n="";for(let e=0;e<r.length;e++){let a=r[e];!0===Xe.test(a)&&!1===rt.hasOwnProperty(a)&&!1===Ye.test(a)?(t.length>0?(t[t.length-1]+=n,t.push(a)):t.push(n+a),n=""):n+=a}return n&&(0===t.length&&(t[0]=""),t[t.length-1]+=n),t=function(e){for(let t=1;t<e.length-1;t++)tt.test(e[t])&&(e[t-1]+=e[t]+e[t+1],e[t]=null,e[t+1]=null);return e}(t),t=function(e){const t=/^[0-9]{1,4}(:[0-9][0-9])?([a-z]{1,2})? ?(-|–|—) ?$/,r=/^[0-9]{1,4}([a-z]{1,2})? ?$/;for(let a=0;a<e.length-1;a+=1)e[a+1]&&t.test(e[a])&&r.test(e[a+1])&&(e[a]=e[a]+e[a+1],e[a+1]=null);return e}(t),t=t.filter(e=>e),t};var ot=function(e="",t,r){let a=null;return"string"!=typeof e&&("number"==typeof e?e=String(e):function(e){return"[object Array]"===Object.prototype.toString.call(e)}(e)&&(a=e)),a=a||Ze(e,t),a=a.map(e=>it(e)),r=r||new Je,a.map(e=>{e=e.map(e=>{let t=new Z(e);return r.add(t),t}),Le(e);let t=new Ve(e[0].id,e.length,r);return t.cache.terms=e,t})};var st=function(e,t){let r=new Je;return e.map((e,a)=>{let n=e.terms.map((n,i)=>{let o=new Z(n.text);return o.pre=void 0!==n.pre?n.pre:"",void 0===n.post&&(n.post=" ",i>=e.terms.length-1&&(n.post=". ",a>=e.terms.length-1&&(n.post="."))),o.post=void 0!==n.post?n.post:" ",n.tags&&n.tags.forEach(e=>o.tag(e,"",t)),r.add(o),o});return Le(n),new Ve(n[0].id,n.length,r)})};const lt=["Person","Place","Organization"];var ut={Noun:{notA:["Verb","Adjective","Adverb"]},Singular:{isA:"Noun",notA:"Plural"},ProperNoun:{isA:"Noun"},Person:{isA:["ProperNoun","Singular"],notA:["Place","Organization","Date"]},FirstName:{isA:"Person"},MaleName:{isA:"FirstName",notA:["FemaleName","LastName"]},FemaleName:{isA:"FirstName",notA:["MaleName","LastName"]},LastName:{isA:"Person",notA:["FirstName"]},NickName:{isA:"Person",notA:["FirstName","LastName"]},Honorific:{isA:"Noun",notA:["FirstName","LastName","Value"]},Place:{isA:"Singular",notA:["Person","Organization"]},Country:{isA:["Place","ProperNoun"],notA:["City"]},City:{isA:["Place","ProperNoun"],notA:["Country"]},Region:{isA:["Place","ProperNoun"]},Address:{isA:"Place"},Organization:{isA:["Singular","ProperNoun"],notA:["Person","Place"]},SportsTeam:{isA:"Organization"},School:{isA:"Organization"},Company:{isA:"Organization"},Plural:{isA:"Noun",notA:["Singular"]},Uncountable:{isA:"Noun"},Pronoun:{isA:"Noun",notA:lt},Actor:{isA:"Noun",notA:lt},Activity:{isA:"Noun",notA:["Person","Place"]},Unit:{isA:"Noun",notA:lt},Demonym:{isA:["Noun","ProperNoun"],notA:lt},Possessive:{isA:"Noun"}},ct={Verb:{notA:["Noun","Adjective","Adverb","Value","Expression"]},PresentTense:{isA:"Verb",notA:["PastTense","FutureTense"]},Infinitive:{isA:"PresentTense",notA:["PastTense","Gerund"]},Imperative:{isA:"Infinitive"},Gerund:{isA:"PresentTense",notA:["PastTense","Copula","FutureTense"]},PastTense:{isA:"Verb",notA:["FutureTense"]},FutureTense:{isA:"Verb"},Copula:{isA:"Verb"},Modal:{isA:"Verb",notA:["Infinitive"]},PerfectTense:{isA:"Verb",notA:"Gerund"},Pluperfect:{isA:"Verb"},Participle:{isA:"PastTense"},PhrasalVerb:{isA:"Verb"},Particle:{isA:"PhrasalVerb"},Auxiliary:{notA:["Noun","Adjective","Value"]}},ht={Value:{notA:["Verb","Adjective","Adverb"]},Ordinal:{isA:"Value",notA:["Cardinal"]},Cardinal:{isA:"Value",notA:["Ordinal"]},Fraction:{isA:"Value",notA:["Noun"]},RomanNumeral:{isA:"Cardinal",notA:["Ordinal","TextValue"]},TextValue:{isA:"Value",notA:["NumericValue"]},NumericValue:{isA:"Value",notA:["TextValue"]},Money:{isA:"Cardinal"},Percent:{isA:"Value"}};const dt=["Noun","Verb","Adjective","Adverb","Value","QuestionWord"];var gt={Adjective:{notA:["Noun","Verb","Adverb","Value"]},Comparable:{isA:["Adjective"]},Comparative:{isA:["Adjective"]},Superlative:{isA:["Adjective"],notA:["Comparative"]},NumberRange:{},Adverb:{notA:["Noun","Verb","Adjective","Value"]},Date:{notA:["Verb","Adverb","Preposition","Adjective"]},Month:{isA:["Date","Singular"],notA:["Year","WeekDay","Time"]},WeekDay:{isA:["Date","Noun"]},Timezone:{isA:["Date","Noun"],notA:["Adjective","ProperNoun"]},Time:{isA:["Date"],notA:["AtMention"]},Determiner:{notA:dt},Conjunction:{notA:dt},Preposition:{notA:dt},QuestionWord:{notA:["Determiner"]},Currency:{isA:["Noun"]},Expression:{notA:["Noun","Adjective","Verb","Adverb"]},Abbreviation:{},Url:{notA:["HashTag","PhoneNumber","Verb","Adjective","Value","AtMention","Email"]},PhoneNumber:{notA:["HashTag","Verb","Adjective","Value","AtMention","Email"]},HashTag:{},AtMention:{isA:["Noun"],notA:["HashTag","Verb","Adjective","Value","Email"]},Emoji:{notA:["HashTag","Verb","Adjective","Value","AtMention"]},Emoticon:{notA:["HashTag","Verb","Adjective","Value","AtMention"]},Email:{notA:["HashTag","Verb","Adjective","Value","AtMention"]},Acronym:{notA:["Plural","RomanNumeral"]},Negative:{notA:["Noun","Adjective","Value"]},Condition:{notA:["Verb","Adjective","Noun","Value"]}};const pt={Noun:"blue",Verb:"green",Negative:"green",Date:"red",Value:"red",Adjective:"magenta",Preposition:"cyan",Conjunction:"cyan",Determiner:"cyan",Adverb:"cyan"};var mt=function(e){return Object.keys(e).forEach(t=>{e[t].color?e[t].color=e[t].color:pt[t]?e[t].color=pt[t]:e[t].isA.some(r=>!!pt[r]&&(e[t].color=pt[r],!0))}),e};var ft=function(e){return Object.keys(e).forEach(t=>{let r=e[t],a=r.isA.length;for(let t=0;t<a;t++){let a=r.isA[t];e[a]&&(r.isA=r.isA.concat(e[a].isA))}r.isA=function(e){return e.filter((e,t,r)=>r.indexOf(e)===t)}(r.isA)}),e};var bt=function(e){let t=Object.keys(e);return t.forEach(r=>{let a=e[r];a.notA=a.notA||[],a.isA.forEach(t=>{if(e[t]&&e[t].notA){let r="string"==typeof e[t].notA?[e[t].isA]:e[t].notA||[];a.notA=a.notA.concat(r)}});for(let n=0;n<t.length;n++){const i=t[n];-1!==e[i].notA.indexOf(r)&&a.notA.push(i)}a.notA=function(e){return e.filter((e,t,r)=>r.indexOf(e)===t)}(a.notA)}),e};var vt=function(e){let t=Object.keys(e);return t.forEach(r=>{let a=e[r];a.lineage=[];for(let n=0;n<t.length;n++)-1!==e[t[n]].isA.indexOf(r)&&a.lineage.push(t[n])}),e};var yt=function(e){return e=function(e){return Object.keys(e).forEach(t=>{let r=e[t];r.isA=r.isA||[],"string"==typeof r.isA&&(r.isA=[r.isA]),r.notA=r.notA||[],"string"==typeof r.notA&&(r.notA=[r.notA])}),e}(e),e=ft(e),e=bt(e),e=mt(e),e=vt(e)};const wt=function(e,t){Object.keys(e).forEach(r=>{t[r]=e[r]})};var kt=(()=>{let e={};return wt(ut,e),wt(ct,e),wt(ht,e),wt(gt,e),e=yt(e),e})(),At={Comparative:"true¦better",Superlative:"true¦earlier",PresentTense:"true¦is,sounds",Value:"true¦a few",Noun:"true¦a5b4c2f1here,ie,lit,m0no doubt,pd,tce;a,d;t,y;a,ca,o0;l,rp;a,l;d,l,rc",Copula:"true¦a1is,w0;as,ere;m,re",PastTense:"true¦be3came,d2had,lied,meant,sa2taken,w0;as,e0;nt,re;id;en,gan",Condition:"true¦if,lest,unless",Preposition:"true¦'o,-,aLbIcHdGexcept,fFiDmidQnotwithstandiRoBpSqua,sAt6u3vi2w0;/o,hereNith0;!in,oR;a,s-a-vis;n1p0;!on;like,til;h0ill,owards;an,r0;ough0u;!oJ;ans,ince,o that;',f0n2ut;!f;f,n0;!to;or,rom;espite,own,u3;hez,irca;ar1e0oAy;sides,tween;ri6;',bo7cross,ft6lo5m3propos,round,s1t0;!op;! long 0;as;id0ong0;!st;ng;er;ut",Gerund:"true¦accord0be0develop0go0result0stain0;ing",Negative:"true¦n0;ever,o0;!n,t",QuestionWord:"true¦how3wh0;at,e1ich,o0y;!m,se;n,re; come,'s",Plural:"true¦records",Conjunction:"true¦&,aFbBcuz,how9in caEno8o7p5supposing,t2v1wh0yet;eth9ile;ers4s;h0o;eref9o0;!uC;l0rovided that;us;r,therwi6; matt1r;!ev0;er;e0ut;cau1f0;ore;se;lthou1nd,s 0;far as,if;gh",Abbreviation:"true¦a0Jb0Gc0Ad08e05f02g01h00iYjWkanVlTmNnKoJpFque,rDs8t6u5v2w0;is0r,y0B;!c;a,b,e1i0ol,s,t;tro,vo;r,t;niv,safa,t;ce,e0;l,mp,nn,x;ask,e2fc,gt,i1q,r,s,t,u0;pt,rg;r,tu;c,nJp0;!t;b,d,e0;pGs,v;a,d,ennNhd,l,p,r1s0vt;!eud;ef,o0;b,f,n;ct,kla,nt;e0ov;b0e;!r;a4d,essrs,i1lle,me,r7s0t;!tr;n1s0;c,ter;!n;!j,r,sc;at,it,lb,ng,t0;!d;!s;an,d,r,u0;l,n;a,da,e,n0;c,f;on,wy;a,en,ov;e1ig,l0m,r,t,y;!a;b,m;a,g,ng,s1tc,x0;!p;p,q,t;ak,e0ist,r;c,f,pt,t;a3ca,l,m2o0pl,res,yn;!l0m1nn,rp;!o;dr;!l0pt;!if;a,c,l1r0;ig,os;!dg,vd;d4l3p2r1ss0tty,ug,ve;n,t;c,iz;prox,r,t;!ta;!j,m,v",Pronoun:"true¦'em,elle,h4i3me,ourselves,she5th1us,we,you0;!rself;e0ou;m,y;!l,t;e0im;!'s",Singular:"true¦0:15;1:18;2:12;a15b0Sc0Jd0Ce09f04gZhViUjel0kitty,lSmOnNoMpHquestionGrEs9t6u4w3;ay,om02;nc0Zs 3;doll0Kst0M; rex,a4h3ic,ragedy,v show;ere,i1;l0x return;i6ky,omeoMt3uper bowl,yst14;ep4ri1u3;de0Xff;faSmoS;st2ze;al0i1o3;om,se;! mark;a6i2la5r4u3;dPrpoH;eroga00ie0Gobl0U;te,y2;rt,te0N;bjWceJthers,verview;othi1umb2;a5ee08o3;del,m3nopo0rni1th2;!my;n,yf0;i3unch;ne;ci1nsect;ead start,o3uman right;l0me4u3;se;! run;adf0entlem6irl02laci2od,rand4u3;l0y; slam,fa3mo3;th2;an;a6ella,ly,ol0r4un3;di1;ee market,iWo3;nti2sP;mi0th2;conomy,gg,ner7ven4x3;ampTecu9;i1t;ad8e5inn2o3ragonf0ude;cumentGg3i0l0or;gy;ath,t3;ec3;tive;!dy;a9eili1h7i5o3redit card;ttage,u3;ri2sin;ty,vil w3;ar;andeli2ocol3;ate;n3rF;ary;aCel0lesJo8r5u3;n3tterf0;ti1;eakfa4o3;!th2;st;dy,tt5y3;!fri3;end;le;nki1r3;ri2;er;d5l0noma0u3;nt;ly; homin5verti3;si1;ng;em",FemaleName:"true¦0:J3;1:J7;2:IG;3:IF;4:IX;5:IK;6:JO;7:H0;8:JK;9:JG;A:HN;B:HY;C:IT;D:JD;E:IP;F:HC;G:I0;aGRbFLcDPdCYeBOfB4gADh9Ti9Gj8Gk7Gl60m49n3No3Jp37qu36r2Ds16t0Eu0Cv02wVxiTyOzH;aLeIineb,oHsof2;e3Uf2la,ra;h3iKlIna,ynH;ab,ep;da,ma;da,h3iHra;nab;aKeJi0Fol5BuIvH;etAonDO;i0na;le0sen2;el,gm3Jn,rGJs8W;aoHme0nyi;m62yAE;aMendDYhiDFiH;dele9lJnH;if48niHo0;e,f47;a,helmi0lHma;a,ow;ka0nB;aNeKiHusa5;cIktoriBMlAole7viH;anC3enJ0;kF9tor2;da,lA9nus,rHs0;a,nHoniH4;a,iFQ;leHnesH4;nIHrH;i1y;g9rHxH5;su5te;aYeUhRiNoLrIuHy3;i,la;acIZiHu0L;c2na,sH;hBPta;nHr0H;iBNya;aJffaEOnHs6;a,gtiH;ng;!nFQra;aIeHomasi0;a,l9Po8Ares1;l2ndolwethu;g9Go88rIssH;!a,ie;eHi,ri8;sa,za;bPlNmLnJrIs6tHwa0;ia0um;a63yn;iHya;a,ka,s6;arB6e3iHmEDra;!ka;a,iH;a,t6;at6it6;a0Fcarlet3We0BhXiTkye,neza0oRtNuIyH;bIBlvi1;e,ha,mayIEni7sIzH;an3MetAie,y;anHi8;!a,e,nH;aEe;aJeH;fHl5GphH;an4;cHZr5;b2fiA8m0OnHphi1;d3ia,ja,ya;er3lJmon1nIobh8PtH;a,i;dy;lEPv2;aMeIirHo0risF7y5;a,lDK;ba,e0i5lJrH;iHrDOyl;!d8Hfa;ia,lDX;hd,iMki3nJrIu0w0yH;la,ma,na;i,le9on,ron;aIda,ia,nHon;a,on;!ya;k6mH;!aa;lJrItaye81vH;da,inj;e0ife;en1i0ma;anA5bNd3Nh1RiBkMlLmJndIrHs6vannaE;aEi0;ra,y;aHi3;nt6ra;lDKma,ome;ee0in8Ru3;in1ri0;a05e00hYiVoIuH;by,thDH;bScRghQl2KnPsJwIxH;anAXie,y;an,e0;aIeHie,lD; merBLann8ll1marDBt7;!lHnn1;iHyn;e,nH;a,d9K;da,i,na;ayy8D;hel62io;bDKer7yn;a,cIkHmas,n9Fta,ya;ki,o;helGki;ea,iannGDoH;da,n1K;an0bJem9Agi0iInHta,y0;a88ee;han83na;a,eH;cEAkaE;bi0chIe,i0mo0nHquEKvCy0;di,ia;aEIelHiB;!e,le;een4ia0;aNeMhKipaluk,oJrHute66;iHudenCQ;scil3LyamvaB;lly,rt2;ilome0oebe,ylH;is,lis;arl,ggy,nelope,r5t3;ige,m0TnKo5rvaDGtIulH;a,etAin1;ricHsy,tBY;a,e,ia;do3i06;ctav2dIfCZis6lHphCZumC3yunbileg;a,ga,iv2;eHvAC;l2tA;aWeUiMoIurHy5;!ay,ul;a,eJor,rIuH;f,r;aEeCma;ll1mi;aNcLhariBOkKlaJna,sHta,vi;anHha;ur;!y;a,iDTki;hoGk9VolH;a,eDJ;!mh;hir,lHna,risFsreC;!a,lBT;asuLdKh2i6CnJomi8rgEPtHzanin zah3;aHhal4;li1s6;cy,etA;a,e9iEV;nngu30;a09ckenz4e01iMoJrignayani,uriDDyH;a,rH;a,lNna,tG;bi0i3llBInH;a,iH;ca,ka,qD3;a,cTkaSlNmi,nLrItzi,yH;ar;aIiam,lH;anEO;!l,nB;dy,eHh,n4;nhGrva;aKdJiCPlH;iHy;cent,e;red;!gros;!e5;ae5hH;ae5el3Z;ag5EgNi,lKrH;edi79iIjem,on,yH;em,l;em,sF;an4iHliF;nHsCE;a,da;!an,han;b0DcASd0Be,g09ha,i08ja,l06n04rLsoum60tKuIv82x9IyHz4;a,bell,ra,soB9;de,rH;a,eC;h8Fild1t4;a,cYgUiKjor4l7Sn4s6tJwa,yH;!aHbe6Wja9lAE;m,nBH;a,ha,in1;!aJbCBeIja,lDna,sHt64;!a,ol,sa;!l1H;! Jh,mInH;!a,e,n1;!awit,i;aliAHcJeduarBfernIjHlui5Y;o6Ful2;anB;ecil2la3;arJeIie,oHr44ueriA;!t;!ry;et42i37;el4Ui76y;dHon,ue5;akran7y;ak,en,iHk,lo3O;a,ka,nB;a,re,s4te;daHg4;!l3A;alDd4elHge,isDBon0;ei9in1yn;el,le;a0Ne0CiYoQuLyH;d2la,nH;!a,dIeBGnHsCL;!a,eBF;a,sCJ;aCWcJel0PiFlIna,pHz;e,i7;a,u,wa;iHy;a0Se,ja,l2JnB;is,l1SrJttIuHvel4;el5is1;e,ie;aKeIi8na,rH;a86i8;lHn1t7;ei;!in1;aSbb9CdRepa,lMnJsIv2zH;!a,be5LetAz4;a,etA;!a,dH;a,sHy;ay,ey,i,y;a,iJja,lHy;iHy;aA0e;!aH;!n5F;ia,ya;!nH;!a,ne;aPda,e0iNjYla,nMoKsJtHx4y5;iHt4;c2t2;e2LlCG;la,nHra;a,ie,o3;a,or1;a,gh,laH;!ni;!h,nH;a,d3e,n5P;cOdon97iNkes6mi9Ana,rMtJurIvHxmi,y5;ern1in2;a,e54ie,yn;as6iIoH;nya,ya;fa,s6;a,isF;a,la;ey,ie,y;a04eZhXiOlAKoNrJyH;lHra;a,ee,ie;istHy6D;a,en,iIyH;!na;!e,n59;nul,ri,urtnB0;aOerNlAZmJrHzzy;a,stH;en,in;!berlImernH;aq;eHi,y;e,y;a,stC;!na,ra;aHei3ongordzol;dij1w5;el7QiKjsi,lJnIrH;a,i,ri;d3na,za;ey,i,lBDs4y;ra,s6;bi7cAJdiat7IeB2iRlQmPnyakuma19rNss6KtKvi7yH;!e,lH;a,eH;e,i8L;a6DeIhHi4NlDri0y;ar6Ber6Bie,leCrB2y;!lyn8Gri0;a,en,iHl5Soli0yn;!ma,n3VsF;a5il1;ei8Ei,l4;a,tl6L;a07eYiVoNuH;anLdKliHst63;a8HeHsF;!n9tH;!a,te;e5Ji3Jy;a,i7;!anNcelDd6RelGhan7RlLni,sIva0yH;a,ce;eHie;fHlDph5U;a,in1;eHie;en,n1;!a,e,n41;lHng;!i1ClH;!i1B;anMle0nJrIsH;i8Csi8C;i,ri;!a,elGif2CnH;a,etAiHy;!e,f2A;a,e8EiInH;a,e8DiH;e,n1;cMd1mi,nIque4Xsmin3Ovie3y9zH;min8;a8eIiH;ce,e,n1s;!lHsFt0F;e,le;inIk4lDquelH;in1yn;da,ta;lRmPnOo0rNsIvaHzaro;!a0lu,na;aJiIlaHob84;!n9N;do3;!belHdo3;!a,e,l39;a77en1i0ma;a,di3es,gr6Yji;a9elBogH;en1;a,e9iHo0se;a0na;aSeOiJoHusFyacin2B;da,ll4rten23snH;a,i9Q;lImaH;ri;aIdHlaI;a,egard;ry;ath1CiJlInriet7rmi9sH;sa,t1B;en2Sga,mi;di;bi2Dil8IlNnMrJsItHwa,yl8Iz7H;i5St4;n5Yti;iHmo51ri52;etH;!te;aEnaE;a,ey,l4;a03eXiSlQoOrKunJwH;enHyne1Q;!dolD;ay,el;acIetHiselB;a,chC;e,ieH;!la;ld1AogooH;sh;adys,enHor2yn2H;a,da,na;aKgi,lIna,ov89selHta;a,e,le;da,liH;an;!n0;mLnJorgIrH;ald3Pi,m3Ctru8B;etAi4W;a,eHna;s26vieve;ma;bIil,le,mHrnet,yG;al5Ni5;i5FrielH;a,l1;aVeSiRloOoz2rH;anJeIiH;da,eB;da,ja;!cH;esIiHoi0O;n1s61;!ca;!rH;a,encH;e,ia;en,o0;lIn0rnH;!anB;ec2ic2;jr,n7rKtHy8;emIiHma,ouma7;ha,ma,n;eh;ah,iBrah,za0;cr4Nd0Ne0Mi0Lk7l04mWn4YrTsNtMuLvH;aJelIiH;!e,ta;in0Gyn;!ngel2S;geni1la,ni45;h5Sta;mLperanKtH;eIhHrel5;er;l30r8;za;a,eralB;iHma,nest2Jyn;cHka,n;a,ka;a,eMiJmH;aHie,y;!li9;lHn1;ee,iHy;a,e,ja;lHrald;da,y;aWeUiNlMma,no3oKsJvH;a,iH;na,ra;a,ie;iHuiH;se;a,en,ie,y;a0c2da,f,nMsJzaH;!betHve7;e,h;aHe,ka;!beH;th;!a,or;anor,nH;!a;!in1na;leCs6;vi;eIiHna,wi0;e,th;l,n;aYeMh2iLjeneKoHul30;lor5Tminiq4In3FrHtt4;a,eCis,la,othHthy;ea,y;ba;an0AnaEon9x4ya;anQbPde,eOiMja,lJmetr2nHsir5K;a,iH;ce,se;a,iIla,orHphi9;es,is;a,l6D;dHrdH;re;!d5Cna;!b2HoraEra;a,d3nH;!a,e;hl2i0l0HmNnLphn1rIvi1XyH;le,na;a,by,cIia,lH;a,en1;ey,ie;a,etAiH;!ca,el1Cka,z;arHia;is;a0Se0Oh05i03lVoKrIynH;di,th2;istHy05;al,i0;lPnMrIurH;tn1E;aJd2NiHn2Nri9;!nH;a,e,n1;!l1X;cepci59n4sH;tanHuelo;ce,za;eHleC;en,tA;aJeoIotH;il51;!pat3;ir8rJudH;etAiH;a,ne;a,e,iH;ce,sZ;a3er3ndH;i,y;aReNloe,rH;isJyH;stH;al;sy,tH;a1Ren,iHy;!an1e,n1;deJlseIrH;!i8yl;a,y;li9;nMrH;isKlImH;ai9;a,eHotA;n1tA;!sa;d3elGtH;al,elG;cIlH;esAi44;el2ilH;e,ia,y;itlZlYmilXndWrOsMtHy5;aKeJhHri0;erHleCrDy;in1;ri0;li0ri0;a33sH;a32ie;a,iNlLmeJolIrH;ie,ol;!e,in1yn;lHn;!a,la;a,eHie,o7y;ne,y;na,sF;a0Hi0H;a,e,l1;is7l4;in,yn;a0Ie02iZlXoUrH;andSeQiJoIyH;an0nn;nwDok8;an3DdgLg0XtH;n2XtH;!aInH;ey,i,y;ny;etH;!t8;an0e,nH;da,na;i8y;bbi8glarIlo05nH;i7n4;ka;ancHossom,ythe;a,he;an17lja0nHsm3I;i7tH;ou;aUcky,linTni7rPssOtJulaEvH;!erlH;ey,y;hJsy,tH;e,iHy8;e,na;!anH;ie,y;!ie;nHt6yl;adIiH;ce;etAi9;ay,da;!triH;ce,z;rbJyaH;rmH;aa;a3ie,o3ra;a2Sb2Md23g1Zi1Qj5l16m0Xn09oi,r04sUtTuPvOwa,yIzH;ra,u0;aKes6gJlIseH;!l;in;un;!nH;a,na;a,i2Ir2J;drJgus1RrIsteH;ja;el2;a,ey,i,y;aahua,he0;hIi2Gja,mi7s2DtrH;id;aMlIraqHt21;at;eIi8yH;!n;e,iHy;gh;!nH;ti;iJleIo6pi7;ta;en,n1tA;aHelG;!n1J;a00dje5eYgUiSjQnJohito,toHya;inetAnH;el5ia;!aKeIiHmJ;e,ka;!mHtA;ar4;!belIliFmU;sa;!le;a,eliH;ca;ka,sHta;a,sa;elHie;a,iH;a,ca,n1qH;ue;!tA;te;! JbImHstasiNya;ar2;el;cla3jul2pau5;aLberKeliJiHy;e,l2naH;!ta;a,ja;!ly;hGiIl2nB;da;a,ra;le;aWba,ePiMlKma,thJyH;a,c2sH;a,on,sa;ea;iHys0N;e,s0M;a,cIn1sHza;a,e,ha,on,sa;e,ia,ja;c2is6jaKksaKna,sJxH;aHia;!nd3;ia,saH;nd3;ra;ia;i0nIyH;ah,na;a,is,naEoud;la;c6da,leCmNnLsH;haElH;inHyY;g,n;!h;a,o,slH;ey;ee;en;at6g4nIusH;ti0;es;ie;aWdiTelMrH;eJiH;anMenH;a,e,ne;an0;na;!aLeKiIyH;nn;a,n1;a,e;!ne;!iH;de;e,lDsH;on;yn;!lH;i9yn;ne;aKbIiHrL;!gaK;ey,i8y;!e;gaH;il;dKliyJradhIs6;ha;ya;ah;a,ya",Actor:"true¦aJbGcFdCengineIfAgardenIh9instructPjournalLlawyIm8nurse,opeOp5r3s1t0;echnCherapK;ailNcientJecretary,oldiGu0;pervKrgeon;e0oofE;ceptionGsearC;hotographClumbColi1r0sychologF;actitionBogrammB;cem6t5;echanic,inist9us4;airdress8ousekeep8;arm7ire0;fight6m2;eputy,iet0;ici0;an;arpent2lerk;ricklay1ut0;ch0;er;ccoun6d2ge7r0ssis6ttenda7;chitect,t0;ist;minist1v0;is1;rat0;or;ta0;nt",Honorific:"true¦a01bYcQdPeOfiJgIhon,jr,king,lHmCoffic00p7queen,r3s0taoiseach,vice6;e1fc,gt,ir,r,u0;ltRpt,rg;cond liInBrgeaJ;abbi,e0;ar1p9s,v0;!erend; admirX;astOhd,r0vt;esideDi1of0;!essM;me mini4nce0;!ss;a3essrs,i2lle,me,r1s0;!tr;!s;stK;gistrate,j,r6yF;i3lb,t;en,ov;eld mar3rst l0;ady,i0;eutena0;nt;shG;sq,xcellency;et,oct6r,utchess;apt6hance4mdr,o0pl;lonel,m2ngress0unci3;m0wom0;an;dr,mand5;ll0;or;!ain;ldg,rig0;!adi0;er;d0sst,tty,yatullah;j,m0v;!ir0;al",SportsTeam:"true¦0:1A;1:1H;2:1G;a1Eb16c0Td0Kfc dallas,g0Ihouston 0Hindiana0Gjacksonville jagua0k0El0Bm01newToQpJqueens parkIreal salt lake,sAt5utah jazz,vancouver whitecaps,w3yW;ashington 3est ham0Rh10;natio1Oredski2wizar0W;ampa bay 6e5o3;ronto 3ttenham hotspur;blue ja0Mrapto0;nnessee tita2xasC;buccanee0ra0K;a7eattle 5heffield0Kporting kansas0Wt3;. louis 3oke0V;c1Frams;marine0s3;eah15ounG;cramento Rn 3;antonio spu0diego 3francisco gJjose earthquak1;char08paA; ran07;a8h5ittsburgh 4ortland t3;imbe0rail blaze0;pirat1steele0;il3oenix su2;adelphia 3li1;eagl1philNunE;dr1;akland 3klahoma city thunder,rlando magic;athle0Mrai3;de0; 3castle01;england 7orleans 6york 3;city fc,g4je0FknXme0Fred bul0Yy3;anke1;ian0D;pelica2sain0C;patrio0Brevolut3;ion;anchester Be9i3ontreal impact;ami 7lwaukee b6nnesota 3;t4u0Fvi3;kings;imberwolv1wi2;rewe0uc0K;dolphi2heat,marli2;mphis grizz3ts;li1;cXu08;a4eicesterVos angeles 3;clippe0dodDla9; galaxy,ke0;ansas city 3nE;chiefs,roya0E; pace0polis colU;astr06dynamo,rockeTtexa2;olden state warrio0reen bay pac3;ke0;.c.Aallas 7e3i05od5;nver 5troit 3;lio2pisto2ti3;ge0;broncZnuggeM;cowbo4maver3;ic00;ys; uQ;arCelKh8incinnati 6leveland 5ol3;orado r3umbus crew sc;api5ocki1;brow2cavalie0india2;bengaWre3;ds;arlotte horAicago 3;b4cubs,fire,wh3;iteB;ea0ulR;diff3olina panthe0; c3;ity;altimore 9lackburn rove0oston 5rooklyn 3uffalo bilN;ne3;ts;cel4red3; sox;tics;rs;oriol1rave2;rizona Ast8tlanta 3;brav1falco2h4u3;nited;aw9;ns;es;on villa,r3;os;c5di3;amondbac3;ks;ardi3;na3;ls",Uncountable:"true¦0:1I;1:1X;2:16;a1Rb1Jc1Ad17e10f0Ug0Nh0Ii0Ej0Dknowled1Ql08mYnews,oXpTrOsDt8vi7w3;a5ea0Bi4oo3;d,l;ldlife,ne;rmth,t0;neg17ol0Ctae;e6h5oothpaste,r3una;affTou3;ble,sers,t;ermod1Mund0;a,nnis;aBcene0Aeri2hAil9kittl2now,o8p6t4u3;g10nshi0Q;ati1Le3;am,el;ace1Ee3;ci2ed;ap,cc0;k,v0;eep,ingl2;d0Dfe18l3nd,tish;m11t;a6e4ic3;e,ke0M;c3laxa0Isearch;ogni0Hrea0H;bi2in;aPe5hys1last9o3ress04;l3rk,w0;it1yA;a12trZ;bstetr1il,xygen;aAe8ilk,o5u3;mps,s3;ic;n3o0I;ey,o3;gamy;a3chan1;sl2t;chine3il,themat1; learn0Bry;aught0e5i4ogi0Su3;ck,g0I;ce,ghtn08ngui0QteratN;a3isM;th0;ewelAusti0L;ce,mp3nformaUtself;a3ortan0J;ti3;en0H;a6isto5o3;ck3mework,n3spitali0B;ey;ry;ir,libut,ppiD;ene6o4r3um,ymna0D;aCound;l3ssip;d,f; 3t1;editQpo3;ol;i7lour,o4urnit3;ure;od,rgive3uri0wl;ne3;ss;c9sh;conom1duca8lectr7n5quip6th1very3;body,o3thH;ne;joy3tertain3;ment;iciPon1;tiI;ar4iabet2raugh4;es;ts;aAelcius,h6iv1l5o3urrency;al,ld w3nfusiDttD;ar;ass1oth5;aos,e3;e4w3;ing;se;r7sh;a7eef,i4lood,owls,read,utt0;er;lliar4s3;on;ds;g3ss;ga3;ge;c8dvi7ero5ir4mnes3rt,thlet1;ty;craft;b1d3naut1;ynam1;ce;id,ou3;st1;ics",Infinitive:"true¦0:6S;1:76;2:5C;3:74;4:73;5:67;6:6F;7:6Y;8:6Q;9:72;A:70;B:6X;C:5X;D:77;E:6L;F:5B;a6Kb66c57d4De3Xf3Jg3Dh37i2Uj2Sk2Ql2Hm26n23o1Yp1Jr0Rs06tYuTvOwHyG;awn,e31ield;aJe1Zhist6iIoGre6D;nd0rG;k,ry;pe,sh,th0;lk,nHrGsh,tEve;n,raD;d0t;aJiHoG;te,w;eGsB;!w;l6Jry;nHpGr4se;gra4Pli41;dGi9lo5Zpub3Q;erGo;mi5Cw1I;aMeLhKig5SoJrHuGwi7;ne,rn;aGe0Mi5Uu7y;de,in,nsf0p,v5J;r2ZuE;ank,reatC;nd,st;lk,rg1Qs9;aZcWeVhTi4Dkip,lSmRnee3Lo52pQtJuGwitE;bmBck,ff0gge7ppHrGspe5;ge,pri1rou4Zvi3;ly,o36;aLeKoJrHuG;dy,mb6;aFeGi3;ngthCss,tE;p,re;m,p;in,ke,r0Qy;la58oil,rink6;e1Zi6o3J;am,ip;a2iv0oG;ck,rtCut;arEem,le5n1r3tt6;aHo2rG;atEew;le,re;il,ve;a05eIisk,oHuG;in,le,sh;am,ll;a01cZdu8fYgXje5lUmTnt,pQquPsKtJvGwa5V;eGiew,o36;al,l,rG;se,t;aFi2u44;eJi7oItG;!o2rG;i5uc20;l3rt;mb6nt,r3;e7i2;air,eHlGo43r0K;a8y;at;aFemb0i3Zo3;aHeGi3y;a1nt;te,x;a5Dr0J;act1Yer,le5u1;a13ei3k5PoGyc6;gni2Cnci6rd;ch,li2Bs5N;i1nG;ge,k;aTerSiRlOoMrIuG;b21ll,mp,rGsh;cha1s4Q;ai1eIiDoG;cGdu8greAhibBmi1te7vi2W;eAlaim;di5pa2ss,veD;iDp,rtr46sGur;e,t;aHead,uG;g,n4;n,y;ck,le;fo34mBsi7;ck,iDrt4Mss,u1;bJccur,ff0pera9utweIverGwe;co47lap,ta22u1wG;helm;igh;ser3taF;eHotG;e,i8;ed,gle5;aMeLiIoHuG;ltip3Grd0;nit13ve;nHrr12sreprG;eseD;d,g6us;asu2lt,n0Nr4;intaFna4rHtG;ch,t0;ch,kGry;et;aMeLiJoGu1C;aHck,oGve;k,sC;d,n;ft,g35ke,mBnk,st2YveG;!n;a2Fc0Et;b0Nck,uG;gh,nE;iGno34;ck,ll,ss;am,oFuG;d4mp;gno2mQnGss3H;cOdica9flu0MhNsKtIvG;eGol3;nt,st;erGrodu8;a5fe2;i7tG;aGru5;ll;abBibB;lu1Fr1D;agi24pG;lemeDo22ro3;aKeIi2oHuG;nt,rry;n02pe,st;aGlp;d,t;nd6ppCrm,te;aKloAove1PrIuG;arGeAi15;ant39d;aGip,ow,umb6;b,sp;in,th0ze;aReaQiOlMoJrHuncG;ti3J;acGeshC;tu2;cus,lHrG;ce,eca7m,s30;d,l24;a1ZoG;at,od,w;gu2lGni1Xt,x;e,l;r,tu2;il,stCvG;or;a15cho,le5mSnPstNvalua9xG;a0AcLerKi7pGte19;a18eHi2laFoGreA;rt,se;ct,riG;en8;ci1t;el,han4;abGima9;li1J;ab6couXdHfor8ga4han8j03riEsu2t0vG;isi2Vy;!u2;body,er4pG;hasiGow0;ze;a07eUiLoKrHuG;mp;aHeAiG;ft;g,in;d4ubt;ff0p,re5sHvG;iZor8;aKcHliGmiApl1Btingui14;ke;oGuA;uGv0;ra4;gr1YppG;ear,ro3;cOeNfLliv0ma0Fny,pKsHterG;mi0G;cribe,er3iHtrG;oy;gn,re;a0Be0Ai5osB;eGi0By;at,ct;m,pC;iIlHrG;ea1;a2i06;de;ma4n8rGte;e,kC;a0Ae09h06i9l04oJrG;aHeGoAu0Hy;a9dB;ck,ve;llZmSnHok,py,uGv0;gh,nt;cePdu5fMsKtIvG;eGin8;rt,y;aFin0VrG;a7ibu9ol;iGtitu9;d0st;iHoGroD;rm;gu2rm;rn;biLfoKmaJpG;a2laF;in;re;nd;rt;ne;ap1e5;aGip,o1;im,w;aHeG;at,ck,w;llen4n4r4se;a1nt0;ll,ncIrGt0u1;eGry;!en;el;aSePloOoMrIuG;lGry;ly;igHuG;sh;htC;en;a7mb,o7rrGth0un8;ow;ck;ar,lHnefBtrG;ay;ie3ong;ng,se;band0Jc0Bd06ffo05gr04id,l01mu1nYppTrQsKttGvoid,waB;acIeHra5;ct;m0Fnd;h,k;k,sG;eIiHocia9uG;me;gn,st;mb6rt;le;chHgGri3;ue;!i3;eaJlIroG;aEve;ch;aud,y;l,r;noun8sw0tG;icipa9;ce;lHt0;er;e4ow;ee;rd;aRdIju7mBoR;it;st;!reA;ss;cJhie3knowled4tiva9;te;ge;ve;eIouDu1;se;nt;pt;on",Unit:"true¦0:19;a14b12c0Od0Ne0Lf0Gg0Ch09in0Hjoule0k02l00mNnMoLpIqHsqCt7volts,w6y4z3°2µ1;g,s;c,f,n;b,e2;a0Nb,d0Dears old,o1;tt0H;att0b;able4b3d,e2on1sp;!ne0;a2r0D;!l,sp;spo04; ft,uare 1;c0Id0Hf3i0Fkilo0Jm1ya0E;e0Mil1;e0li0H;eet0o0D;t,uart0;ascals,e2i1ou0Pt;c0Mnt0;rcent,t02;hms,uYz;an0JewtT;/s,b,e9g,i3l,m2p1²,³;h,s;!²;!/h,cro5l1;e1li08;! pFs1²;! 1;anEpD;g06s0B;gQter1;! 2s1;! 1;per second;b,i00m,u1x;men0x0;b,elvin0g,ilo2m1nR;!/h,ph,²;byZgXmeter1;! p2s1;! p1;er1; hour;e1g,r0z;ct1rtz0;aXogQ;al2b,igAra1;in0m0;!l1;on0;a4emtPl2t1;²,³; oz,uid ou1;nce0;hrenheit0rad0;b,x1;abyH;eciCg,l,mA;arat0eAg,m9oulomb0u1;bic 1p0;c5d4fo3i2meAya1;rd0;nch0;ot0;eci2;enti1;me4;!²,³;lsius0nti1;g2li1me1;ter0;ram0;bl,y1;te0;c4tt1;os1;eco1;nd0;re0;!s",Organization:"true¦0:46;a3Ab2Qc2Ad21e1Xf1Tg1Lh1Gi1Dj19k17l13m0Sn0Go0Dp07qu06rZsStFuBv8w3y1;amaha,m0Xou1w0X;gov,tu2S;a3e1orld trade organizati41;lls fargo,st1;fie22inghou16;l1rner br3D;-m11gree31l street journ25m11;an halNeriz3Wisa,o1;dafo2Gl1;kswagLvo;bs,kip,n2ps,s1;a tod2Rps;es35i1;lev2Xted natio2Uv; mobi2Kaco bePd bMeAgi frida9h3im horto2Tmz,o1witt2W;shiba,y1;ota,s r Y;e 1in lizzy;b3carpen33daily ma2Xguess w2holli0rolling st1Ms1w2;mashing pumpki2Ouprem0;ho;ea1lack eyed pe3Fyrds;ch bo1tl0;ys;l2s1;co,la m12;efoni07us;a6e4ieme2Gnp,o2pice gir5ta1ubaru;rbucks,to2N;ny,undgard1;en;a2Rx pisto1;ls;few25insbu26msu1X;.e.m.,adiohead,b6e3oyal 1yan2X;b1dutch she4;ank;/max,aders dige1Ed 1vl32;bu1c1Uhot chili peppe2Klobst28;ll;c,s;ant2Vizno2F;an5bs,e3fiz24hilip morrBi2r1;emier27octer & gamb1Rudenti14;nk floyd,zza hut;psi28tro1uge08;br2Qchina,n2Q; 2ason1Xda2G;ld navy,pec,range juli2xf1;am;us;a9b8e5fl,h4i3o1sa,wa;kia,tre dame,vart1;is;ke,ntendo,ss0K;l,s;c,st1Etflix,w1; 1sweek;kids on the block,york08;a,c;nd1Us2t1;ional aca2Fo,we0Q;a,cYd0O;aAcdonald9e5i3lb,o1tv,yspace;b1Nnsanto,ody blu0t1;ley crue,or0O;crosoft,t1;as,subisO;dica3rcedes2talli1;ca;!-benz;id,re;'s,s;c's milk,tt13z1Y;'ore09a3e1g,ittle caesa1Ktd;novo,x1;is,mark; pres5-z-boy,bour party;atv,fc,kk,m1od1K;art;iffy lu0Lo3pmorgan1sa;! cha1;se;hnson & johns1Sy d1R;bm,hop,n1tv;c,g,te1;l,rpol; & m,asbro,ewlett-packaTi3o1sbc,yundai;me dep1n1J;ot;tac1zbollah;hi;eneral 6hq,l5mb,o2reen d0Iu1;cci,ns n ros0;ldman sachs,o1;dye1g0B;ar;axo smith kliZencore;electr0Im1;oto0V;a3bi,da,edex,i1leetwood mac,oGrito-l0A;at,nancial1restoV; tim0;cebook,nnie mae;b06sa,u3xxon1; m1m1;ob0H;!rosceptics;aiml0Ae5isney,o3u1;nkin donuts,po0Wran dur1;an;j,w j1;on0;a,f leppa3ll,p2r spiegZstiny's chi1;ld;eche mode,t;rd;aEbc,hBi9nn,o3r1;aigsli5eedence clearwater reviv1ossra05;al;!ca c5l4m1o0Ast05;ca2p1;aq;st;dplMgate;ola;a,sco1tigroup;! systems;ev2i1;ck fil-a,na daily;r0Hy;dbury,pital o1rl's jr;ne;aGbc,eCfAl6mw,ni,o2p,r1;exiteeWos;ei3mbardiJston 1;glo1pizza;be;ng;ack & deckFo2ue c1;roX;ckbuster video,omingda1;le; g1g1;oodriN;cht3e ge0n & jer2rkshire hathaw1;ay;ryH;el;nana republ3s1xt5y5;f,kin robbi1;ns;ic;bXcSdidRerosmith,ig,lLmFnheuser-busEol,ppleAr7s3t&t,v2y1;er;is,on;hland2s1;n,ociated F; o1;il;by4g2m1;co;os; compu2bee1;'s;te1;rs;ch;c,d,erican3t1;!r1;ak; ex1;pre1;ss; 4catel2t1;air;!-luce1;nt;jazeera,qae1;da;as;/dc,a3er,t1;ivisi1;on;demy of scienc0;es;ba,c",Demonym:"true¦0:16;1:13;a0Wb0Nc0Cd0Ae09f07g04h02iYjVkTlPmLnIomHpDqatari,rBs7t5u4v3wel0Rz2;am0Fimbabwe0;enezuel0ietnam0H;g9krai1;aiwThai,rinida0Iu2;ni0Qrkmen;a4cot0Ke3ingapoOlovak,oma0Tpa05udRw2y0X;edi0Kiss;negal0Br08;mo0uU;o6us0Lw2;and0;a3eru0Hhilipp0Po2;li0Ertugu06;kist3lesti1na2raguay0;ma1;ani;amiZi2orweP;caragu0geri2;an,en;a3ex0Mo2;ngo0Erocc0;cedo1la2;gasy,y08;a4eb9i2;b2thua1;e0Dy0;o,t02;azakh,eny0o2uwaiti;re0;a2orda1;ma0Bp2;anN;celandic,nd4r2sraeli,ta02vo06;a2iT;ni0qi;i0oneV;aiDin2ondur0unN;di;amDe2hanai0reek,uatemal0;or2rm0;gi0;i2ren7;lipino,n4;cuadoVgyp6ngliJsto1thiopi0urope0;a2ominXut4;niH;a9h6o4roa3ub0ze2;ch;ti0;lom2ngol5;bi0;a6i2;le0n2;ese;lifor1m2na3;bo2eroo1;di0;angladeshi,el8o6r3ul2;gaG;aziBi2;ti2;sh;li2s1;vi0;aru2gi0;si0;fAl7merBngol0r5si0us2;sie,tr2;a2i0;li0;gent2me1;ine;ba1ge2;ri0;ni0;gh0r2;ic0;an",Possessive:"true¦anyAh5its,m3noCo1sometBthe0yo1;ir1mselves;ur0;!s;i8y0;!se4;er1i0;mse2s;!s0;!e0;lf;o1t0;hing;ne",Currency:"true¦$,aud,bScQdLeurKfJgbp,hkd,iIjpy,kGlEp8r7s3usd,x2y1z0¢,£,¥,ден,лв,руб,฿,₡,₨,€,₭,﷼;lotySł;en,uanR;af,of;h0t5;e0il5;k0q0;elM;iel,oubleLp,upeeL;e2ound st0;er0;lingI;n0soH;ceGn0;ies,y;e0i8;i,mpi7;n,r0wanzaCyatC;!onaBw;ls,nr;ori7ranc9;!o8;en3i2kk,o0;b0ll2;ra5;me4n0rham4;ar3;ad,e0ny;nt1;aht,itcoin0;!s",City:"true¦0:73;1:61;2:6G;3:5U;4:5R;a68b54c4Id4Ae46f3Yg3Jh38i2Zj2Uk2Dl22m1Kn19o16p0Uq0Sr0Ls01tPuOvLwDxiBy9z5;a7h5i4Muri4O;a5e5ongsh0;ng3J;greb,nzib5G;ang2e5okoha3Uunfu;katerin3Jrev0;a5n0O;m5Hn;arsBeAi6roclBu5;h0xi,zh5P;c7n5;d5nipeg,terth4;hoek,s1K;hi5Zkl3C;l63xford;aw;a6ern2i5ladivost5Molgogr6K;en3lni6R;lenc6Dncouv2Yr3ughn;lan bat1Drumqi,trecht;aDbilisi,eCheBi9o8r7u5;l21n63r5;in,ku;ipoli,ondh62;kyo,m34ron1QulouS;an5jua3l2Zmisoa6Era3;j4Xshui; hag65ssaloni2L;gucigal28hr0l av1W;briz,i6llinn,mpe5Ang5rtu,shk2X;i2Msh0;an,chu1n0p2Iyu0;aEeDh8kopje,owe1It7u5ydney;ra5zh51;ba0Jt;aten is59ockholm,rasbou6Auttga31;an8e6i5;jiazhua1llo1m60y0;f54n5;ya1zh4L;gh3Ot4U;att4Ao1Yv49;cramen18int DlBn5o paulo,ppo3Wrajevo; 7aa,t5;a 5ia3Io domin3I;a3fe,m1O;antonCdie3Gfrancisco,j5ped3Ssalv8;o5u0;se;em,v5z2B;ad0I;lou59peters29;aAe9i7o5;me,sar5t5A;io;ga,o5yadh;! de janei3I;cife,ykjavik;b4Uip4lei2Mnc2Swalpindi;ingdao,u5;ez2i0Q;aEeDhCiBo8r7u6yong5;ya1;eb5Aya1;ag54etor53;rt5zn0; 5la4Fo;au prin0Nelizabe29sa05;ls3Srae5Ctts2B;iladelph4Ynom pe1Doenix;r26tah tik3I;ler00naji,r4Pt5;na,r36;ak47des0Lm1Rr6s5ttawa;a3Ylo;an,d07;a8ew6i5ovosibir1Oyc;ng2Hs; 5cast39;del27orlea46taip16york;g8iro4Xn5pl2Zshv36v0;ch6ji1t5;es,o1;a1o1;a6o5p4;ya;no,sa0Y;aFeCi9o6u5;mb2Cni28sc40;gadishu,nt6s5;c17ul;evideo,re31;ami,l6n18s5;kolc,sissauga;an,waukee;cca,d5lbour2Pmph41;an,ell5i3;in,ín;cau,drAkass2Tl9n8r5shh4A;aca6ib5rakesh,se2N;or;i1Ty;a4EchEdal12i47;mo;id;aCeiAi8o6u5vRy2;anLckn0Rdhia3;n5s angel28;d2g bea1O;brev2De3Kma5nz,sb2verpo2A;!ss29;c5pzig;est0C; p6g5ho2Yn0Gusan27;os;az,la35;aHharFiClaipeBo9rak0Hu7y5;iv,o5;to;ala lump4n5;mi1sh0;be,hi0Llka2Zpavog4si5wlo2;ce;da;ev,n5rkuk;gSsha5;sa;k5toum;iv;bIdu3llakuric0Tmpa3Gn6ohsiu1ra5un1Lwaguc0T;c0Sj;d5o,p4;ah1Vy;a7e6i5ohannesZ;l1Xn0;dd37rusalem;ip4k5;ar2J;bad0mph1QnBrkutYs8ta01z5̇zm7;m6tapala5;pa;ir;fah0l6tanb5;ul;am2Zi2I;che2d5;ianap2Lo21;aBe8o5yder2W; chi mi6ms,nolulu,u5;st2;nh;f6lsin5rakli2;ki;ei;ifa,lifax,m7n5rb1Dva3;gAnov5oi;er;bu2Wilt2;aFdanEenDhCiPlasgBo9raz,u5;a5jr21;dal6ng5yaquil;zh1H;aja2Lupe;ld coa18then5;bu2P;ow;ent;e0Toa;sk;lw7n5za;dhi5gt1C;nag0S;ay;aisal26es,o8r6ukuya5;ma;ankfu5esno;rt;rt5sh0; wor6ale5;za;th;d5indhov0Nl paso;in5mont2;bur5;gh;aAe8ha0Visp4o7resd0Ju5;b5esseldorf,rb0shanbe;ai,l0G;ha,nggu0rtmu11;hradRl5troit;hi;donghHe5k08li0masc1Xr es sala1HugavpiY;gu,je2;aKebu,hAo5raio03uriti1P;lo7n6penhag0Ar5;do1Nk;akLst0V;gVm5;bo;aBen8i6ongqi1ristchur5;ch;ang m7ca5ttago1;go;g6n5;ai;du,zho1;n5ttogr12;digarh,g5;ch8sha,zh06;i9lga8mayenJn6pe town,r5;acCdiff;ber18c5;un;ry;ro;aUeMhJirmingh0ToIr9u5;chareRdapeRenos air7r5s0tu0;g5sa;as;es;a9is6usse5;ls;ba6t5;ol;ne;sil0Mtisla7zzav5;il5;le;va;goZst2;op6ubaneshw5;ar;al;iBl9ng8r5;g6l5n;in;en;aluru,hazi;fa5grade,o horizonte;st;ji1rut;ghd0BkGnAot9r7s6yan n4;ur;el,r07;celo3ranquil09;na;ou;du1g6ja lu5;ka;alo6k5;ok;re;ng;ers5u;field;a04b01cc00ddis abaZgartaYhmedWizawl,lQmNnHqaZrEsBt7uck5;la5;nd;he7l5;an5;ta;ns;h5unci2;dod,gab5;at;li5;ngt2;on;a6chora5kaNtwerp;ge;h7p5;ol5;is;eim;aravati,m0s5;terd5;am; 8buquerq7e5giers,maty;ppo,xandr5;ia;ue;basrah al qadim5mawsil al jadid5;ah;ab5;ad;la;ba;ra;idj0u dha5;bi;an;lbo6rh5;us;rg",Country:"true¦0:39;1:2M;a2Xb2Ec22d1Ye1Sf1Mg1Ch1Ai14j12k0Zl0Um0Gn05om3DpZqat1KrXsKtCu6v4wal3yemTz2;a25imbabwe;es,lis and futu2Y;a2enezue32ietnam;nuatu,tican city;.5gTkraiZnited 3ruXs2zbeE;a,sr;arab emirat0Kkingdom,states2;! of am2Y;k.,s.2; 28a.;a7haBimor-les0Bo6rinidad4u2;nis0rk2valu;ey,me2Ys and caic1U; and 2-2;toba1K;go,kel0Znga;iw2Wji2nz2S;ki2U;aCcotl1eBi8lov7o5pa2Cri lanka,u4w2yr0;az2ed9itzerl1;il1;d2Rriname;lomon1Wmal0uth 2;afr2JkLsud2P;ak0en0;erra leoEn2;gapo1Xt maart2;en;negKrb0ychellY;int 2moa,n marino,udi arab0;hele25luc0mart20;epublic of ir0Dom2Duss0w2;an26;a3eHhilippinTitcairn1Lo2uerto riM;l1rtugE;ki2Cl3nama,pua new0Ura2;gu6;au,esti2;ne;aAe8i6or2;folk1Hth3w2;ay; k2ern mariana1C;or0N;caragua,ger2ue;!ia;p2ther19w zeal1;al;mib0u2;ru;a6exi5icro0Ao2yanm05;ldova,n2roc4zamb9;a3gol0t2;enegro,serrat;co;c9dagasc00l6r4urit3yot2;te;an0i15;shall0Wtin2;ique;a3div2i,ta;es;wi,ys0;ao,ed01;a5e4i2uxembourg;b2echtenste11thu1F;er0ya;ban0Hsotho;os,tv0;azakh1Ee3iriba03o2uwait,yrgyz1E;rWsovo;eling0Jnya;a2erF;ma15p1B;c6nd5r3s2taly,vory coast;le of m19rael;a2el1;n,q;ia,oI;el1;aiSon2ungary;dur0Mg kong;aAermany,ha0Pibralt9re7u2;a5ern4inea2ya0O;!-biss2;au;sey;deloupe,m,tema0P;e2na0M;ce,nl1;ar;bTmb0;a6i5r2;ance,ench 2;guia0Dpoly2;nes0;ji,nl1;lklandTroeT;ast tim6cu5gypt,l salv5ngl1quatorial3ritr4st2thiop0;on0; guin2;ea;ad2;or;enmark,jibou4ominica3r con2;go;!n B;ti;aAentral african 9h7o4roat0u3yprQzech2; 8ia;ba,racao;c3lo2morPngo-brazzaville,okFsta r03te d'ivoiK;mb0;osD;i2ristmasF;le,na;republic;m2naTpe verde,yman9;bod0ero2;on;aFeChut00o8r4u2;lgar0r2;kina faso,ma,undi;azil,itish 2unei;virgin2; is2;lands;liv0nai4snia and herzegoviGtswaGuvet2; isl1;and;re;l2n7rmuF;ar2gium,ize;us;h3ngladesh,rbad2;os;am3ra2;in;as;fghaFlCmAn5r3ustr2zerbaijH;al0ia;genti2men0uba;na;dorra,g4t2;arct6igua and barbu2;da;o2uil2;la;er2;ica;b2ger0;an0;ia;ni2;st2;an",Region:"true¦0:2M;1:2S;2:2J;a2Pb2Cc1Yd1Tes1Sf1Qg1Kh1Gi1Bj17k12l0Zm0On07o05pZqWrTsKtFuCv9w5y3zacatec2T;akut0o0Du3;cat2k07;a4est 3isconsin,yomi1L;bengal,vi6;rwick2Ashington3;! dc;er4i3;rgin0;acruz,mont;dmurt0t3;ah,tar3; 2Ka0W;a5e4laxca1Qripu1Wu3;scaDva;langa1nnessee,x2E;bas0Um3smNtar24;aulip2Cil nadu;a8i6o4taf10u3ylh1E;ffYrr03s19;me1Bno1Puth 3;cVdU;ber0c3kkim,naloa;hu2ily;n4skatchew2xo3;ny; luis potosi,ta catari1;a3hode9;j3ngp06;asth2shahi;ingh24u3;e3intana roo;bec,en5reta0Q;ara7e5rince edward3unjab; i3;sl0A;i,nnsylv3rnambu0A;an0;!na;axa0Xdisha,h3klaho1Zntar3reg6ss0Ax0F;io;aIeDo5u3;evo le3nav0V;on;r3tt16va scot0;f8mandy,th3; 3ampton15;c5d4yo3;rk13;ako1M;aroli1;olk;bras1Lva0Bw3; 4foundland3;! and labrador;brunswick,hamp0Wjers3mexiRyork state;ey;galOyarit;a9eghala0Mi5o3;nta1r3;dov0elos;ch5dlanCn4ss3zor11;issippi,ouri;as geraOneso18;ig2oac2;dhy12harasht0Gine,ni4r3ssachusetts;anhao,i el,ylF;p3toba;ur;anca0Ie3incoln0IouisH;e3iR;ds;a5e4h3omi;aka06ul1;ntucky,ra01;bardino,lmyk0ns0Qr3;achay,el0nata0X;alis5har3iangxi;kh3;and;co;daho,llino6n3owa;d4gush3;et0;ia1;is;a5ert4i3un2;dalFm0D;fordZ;mpYrya1waii;ansu,eorg0lou7oa,u3;an4erre3izhou,jarat;ro;ajuato,gdo3;ng;cesterS;lori3uji2;da;sex;ageTe6o4uran3;go;rs3;et;lawaLrbyK;aEeaDh8o3rimea ,umbr0;ahui6l5nnectic4rsi3ventry;ca;ut;i02orado;la;e4hattisgarh,i3uvash0;apQhuahua;chn4rke3;ss0;ya;ra;lFm3;bridge6peche;a8ihar,r7u3;ck3ryat0;ingham3;shi3;re;emen,itish columb0;h0ja cal7lk6s3v6;hkorto3que;st2;an;ar0;iforn0;ia;dygea,guascalientes,lAndhr8r4ss3;am;izo1kans4un3;achal 6;as;na;a 3;pradesh;a5ber4t3;ai;ta;ba4s3;ka;ma",Place:"true¦a0Eb0Bc04d03e02f00gVhUiRjfk,kOlMmJneGoFpBque,rd,s9t6u5v4w1y0;akutOyz;ake isFis1y0;!o;!c;a,ostok,t;laanbaatar,p02safa,t;ahiti,e1he 0;bronx,hamptons;nn,x;a0fo,oho,t,under7yd;khalNsk;a2e1h0itcairn;l,x;k,nnN;!cif04;kla,nt,rd;b1w eng0;land;!r;a1co,i0t,uc;dNnn;gadZlibu,nhattZ;a0gw,hr;s,x;an1osrae,rasnoyar0ul;sk;!s;a1cn,da,nd0st;ianRochina;!x;arlem,kg,nd,oHwy;a3re0;at 0enwich;brita0lakH;in;!y village;co,l0ra;!a;urope,vergladC;ak,en,fw,ist,own4xb;al5dg,gk,h2l1o0rA;lo,nn;!t;a1ina0uuk;town;morro,tham;!if;cn,e1kk,l0rooklyn;vd;l air,verly hills;frica,lta,m7n3r2sia,tl1ve,zor0;es;!ant2;ct1iz;adyr,tarct0;ic0; oce0;an;ericas,s",MaleName:"true¦0:E5;1:D6;2:DO;3:AY;4:D2;5:CG;6:CW;7:C8;8:B6;9:DL;A:DK;B:A6;C:C2;aCObBLcAJd9He8Nf85g7Ih6Ui6Ej5Ek52l4Dm35n2To2Np2Fqu2Dr1Ls11t0Eu0Dv07wTxSyIzD;aDor0;cDh9Tkaria,n5W;hEkD;!aCM;ar5WeCL;aLoFuD;sDu2KvBY;if,uf;nFsEusD;ouf,sD;ef;aDg;s,tD;an,h0;hli,nBMssX;avi3ho4;aMeKiFoDyaC2;jcie8Clfgang,odrow,utD;!er;lDnst1;bFey,frD1lD;aBDiD;am,e,s;e9Fur;i,nde8sD;!l7t1;de,lErr9yD;l1ne;lDt3;aAAy;aGiDladimir,ojte7Z;cEha0kt69nceDrgAJva0;!nt;e3Vt67;lentDnA5;in4Y;ghBVlyss5Cnax,sm0;aXeShOiMoHrFuEyD;!l3ro6s1;nAr5C;avAWeDist0oy,um0;ntAOv5Zy;bGdFmDny;!as,mDoharu;aCTie,y;!d;iBy;mDt5;!my,othy;adFeoEia8GomD;!as;!do8P;!de5;dGrD;en9LrD;an9KeDy;ll,n9J;!dy;dgh,ha,iDnn3req,tsu4T;cB5ka;aTcotRePhLiJoHpenc3tDur1Vylve9Kzym1;anFeDua8D;f0phBTvDwa8C;e62ie;!islaw,l7;lom1nBFuD;leyma6ta;dDlBm1yabonga;!dhart7Bn7;aFeD;lDrm0;d1t1;h7Une,qu10un,wn,y6;aDbasti0k2Al4Rrg4Oth,ymoAU;m5n;!tD;!ie,y;lEmDnti2Eq5Bul;!ke5MmCu4;ik,vato7X;aYeUheAAiQoHuEyD;an,ou;b7NdEf5pe7SssD;!elBZ;ol3Fy;an,bKcJdIel,geHh0landBQmGnFry,sEyD;!ce;coe,s;!aAHnC;an,eo;l47r;e5Og3n7olfo,ri7A;co,ky;bCeB7;cDl7;ar6Pc6OhEkDo;!ey,ie,y;a99ie;gEid,ub9x,yDza;an1InY;gA8iD;naA4s;ch70fa4lHmGndFpha4sEul,wi2HyD;an,mo82;h7Vm5;alBDol2Uy;iATon;f,ph;ent2inD;cy,t1;aIeGhilFier72ol,rD;aka16eD;m,st1;!ip,lip;dALrcy,tD;ar,e3Gr1X;b4Kdra7Ft4ZulD;!o17;ctav3Fi3liv3mAFndrej,rHsEtDumAw9;is,to;aEcAkAm0vD;al5Z;ma;i,l53vL;aLeJiFoDu3A;aDel,j5l0ma0r3K;h,m;cEg4i49kD;!au,h7Uola;holBkDolB;!olB;al,d,il,ls1vD;il8Y;hom,thD;anDy;!a4i4;aZeWiMoHuEyD;l2Jr1;hamEr6XstaD;fa,p5C;ed,mH;di0We,hamFis2FntEsDussa;es,he;e,y;ad,ed,mD;ad,ed;cIgu4hai,kGlFnEtchD;!e8;a8Aik;house,o0Bt1;ae5YeA4olD;aj;ah,hDk7;aEeD;al,l;el,l;hElv2rD;le,ri8v2;di,met;ay0ck,hTjd,ks2DlRmadWnQrKs1tFuricExD;!imilian9Nwe8;e,io;eGhEiBtDus,yB;!eo,hew,ia;eDis;us,w;j,o;cHio,kGlFqu7Dsha8tDv2;iDy;!m,n;in,on;!el,oPus;!el9IoOus;iGu4;achDcolm,ik;ai,y;amEdi,eDmoud;sh;adDm5T;ou;aXeQiOlo3EoKuEyD;le,nd1;cGiFkDth3uk;aDe;!s;gi,s,z;as,iaD;no;g0nn7SrenFuDv8Jwe8;!iD;e,s;!zo;am,oD;n4r;a8Cevi,la5JnIoGst3thaFvD;eDi;nte;bo;!nD;!a6Sel;!ny;mFnErDur5Hwr5H;ry,s;ce,d1;ar,o5A;aLeGhaled,iDrist5Iu4Vy6X;er0p,rD;by,k,ollD;os;en0iGnDrmit,v44;!dEnDt5Z;e1Ay;a8ri59;r,th;cp3j5m66na73rEspAthem,uD;ri;im,l;a02eUiSoGuD;an,lDst2;en,iD;an,en,o,us;aNeLhnKkubBnIrGsD;eEhDi8Bue;!ua;!ph;dDge;an,i,on;!aDny;h,s,th5I;!ath5Hie,nC;!l,sDy;ph;o,qu2;an,mD;!mC;d,ffIrFsD;sDus;!e;a6BemEmai6oDry;me,ni0Y;i7Ty;!e60rD;ey,y;cKd9kImHrFsEvi3yD;!d9s1;on,p3;ed,od,rDv56;e5Nod;al,es4Xis1;a,e,oDub;b,v;k,ob,quD;es;aWbQchiPgNkeMlija,nuLonut,rJsFtDv0;ai,suD;ki;aEha0i7DmaDsac;el,il;ac,iaD;h,s;a,vinDw2;!g;k,nngu5S;!r;nacDor;io;ka;ai,rahD;im;aPeJoIuDydA;be2KgGmber4WsD;eyEsD;a2e2;in,n;h,o;m3ra3Gsse2wa4B;aHctGitGnrErD;be2Dm0;iDy;!q11;or;th;bMlLmza,nKo,rFsEyD;a4Jd9;an,s0;lGo50rFuDv7;hi4Gki,tD;a,o;is1y;an,ey;k,s;!im;ib;aVeRiPlenOoLrHuD;ilEsD;!tavo;herme,lerD;mo;aFegDov3;!g,orD;io,y;dy,h5Wnt;nzaErD;an,d1;lo;!n;lbe5Ano,oD;rg3Hvan5A;ne,oFrD;aDry;ld,rd5H;ffr7rge;brEl9rDv2;la28r3Sth,y;e3EielD;!i5;aTePiNlLorr0NrD;anFedDitz;!dCeDri2B;ri2A;cFkD;!ie,lD;in,yn;esLisD;!co,z36;etch3oD;yd;d4lDnn,onn;ip;deriFliEng,rnD;an06;pe,x;co;bi0di,hd;ar04dZfrYit0lSmKnHo2rFsteb0th0uge6vDym9zra;an,eD;ns,re36;gi,i0DnDrol,v2w2;est4Pie;oEriqDzo;ue;ch;aJerIiEmD;aIe2Z;lErD;!h0;!iD;o,s;s1y;nu4;be0Cd1iGliFmEt1viDwood;n,s;er,o;ot1Ys;!as,j4NsD;ha;a2en;!dCgAmGoEuEwD;a2Din;arD;do;o0Wu0W;l,nD;est;a01eRiOoHrGuFwEylD;an,l0;ay6ight;a6dl7nc0st2;ag0ew;minGnEri0ugDvydBy2D;!lB;!a2MnDov0;e8ie,y;go,iDykB;cDk;!k;armuEeDll1on,rk;go;id;anKj0lbeJmetri5nHon,rGsFvEwDxt3;ay6ey;en,in;hawn,mo0B;ek,ri0I;is,nDv3;is,y;rt;!dD;re;an,lNmLnKrGvD;e,iD;! lucDd;as,ca;en,iFne8rDyl;eDin,yl;l3Bn;n,o,us;!e,i4ny;iDon;an,en,on;e,lB;as;a09e07hYiar0lNoIrGuEyrD;il,us;rtD;!is;aDistob0U;ig;dy,lGnErD;ey,neli5y;or,rD;ad;by,e,in,l2t1;aIeFiDyK;fDnt;fo0Ft1;meEt5velaD;nd;nt;rFuEyD;!t1;de;enD;ce;aIeGrisEuD;ck;!tD;i0oph3;st3;er;d,rDs;b4leD;s,y;cDdric,sA;il;lGmer1rD;ey,lEro8y;ll;!os,t1;eb,v2;a07eZiVlaUoRrEuDyr1;ddy,rtK;aLeGiFuEyD;an,ce,on;ce,no;an,ce;nEtD;!t;dEtD;!on;an,on;dEndD;en,on;!foDl7y;rd;bErDyd;is;!by;i6ke;bFlEshD;al;al,lC;ek;nHrDshoi;at,nEtD;!r1C;aDie;rd14;!edict,iEjam2nC;ie,y;to;kaMlazs,nHrD;n7rDt;eDy;tt;ey;dDeE;ar,iD;le;ar17b0Vd0Rf0Pgust2hm0Mi0Jja0Il04m00nSputsiRrIsaHuFveEyDziz;a0kh0;ry;gust5st2;us;hi;aKchJiIjun,maHnFon,tDy0;hDu09;ur;av,oD;ld;an,nd0H;!el,ki;ie;ta;aq;as,dIgel0CtD;hoGoD;i6nD;!i09y;ne;ny;er,reDy;!as,i,s,w;iFmaDos;nu4r;el;ne,r,t;an,bePd9eJfHi,lGonFphXt1vD;aNin;on;so,zo;an,en;onTrD;edU;c,jaGksandFssaGxD;!andD;er,ru;ar,er;ndD;ro;rtN;ni;d9mA;ar;en;ad,eD;d,t;in;onD;so;aEi,olfDri0vik;!o;mDn;!a;dHeGraEuD;!bakr,lfazl;hDm;am;!l;allIelFoulaye,ulD;!lDrF;ah,o;! rD;ahm0;an;ah;av,on",LastName:"true¦0:9F;1:9V;2:9X;3:9H;4:9N;5:8J;6:9K;7:A0;8:9E;9:88;A:77;B:6E;C:6J;a9Ub8Lc7Kd6Xe6Rf6Dg5Vh58i54j4Pk45l3Nm2Rn2Eo26p1Nquispe,r17s0Ft05vVwOxNyGzD;aytsADhD;aDou,u;ng,o;aGeun7ZiDoshiA9un;!lD;diDmaz;rim,z;maDng;da,guc97mo6UsDzaA;aAhiA7;iao,u;aHeGiEoDright,u;jc8Sng;lDmm0nkl0sniewsA;liA1s2;b0iss,lt0;a5Rgn0lDng,tanabe;k0sh;aHeGiEoDukB;lk5roby5;dBllalDnogr2Zr0Zss0val37;ba,obos;lasEsel7N;lGn dFrg8EsEzD;qu7;ily9Oqu7silj9O;en b35ijk,yk;enzue95verde;aLeix1JhHi4j6ka3IoGrFsui,uD;om4ZrD;c4n0un1;an,embl8TynisA;dor95lst31m3rr9th;at5Mi7LoD;mErD;are6Ylaci64;ps2s0Y;hirBkah8Dnaka;a00chWeThPiNmKoItFuEvDzabo;en8Aobod34;ar7bot3lliv4zuA;aEein0oD;i67j3Lyan8V;l6rm0;kol5lovy5re6Psa,to,uD;ng,sa;iDy5Z;rn5tD;!h;l5YmDngh,rbu;mo6Do6J;aFeDimizu;hu,vchD;en7Cuk;la,r17;gu8mDoh,pulve8Trra4R;jDyD;on5;evi6Filtz,miDneid0roed0ulz,warz;dEtD;!z;!t;ar42h6ito,lFnDr3saAto,v3;ch7d0AtDz;a4Pe,os;as,ihBm3Zo0Q;aOeNiKoGuEyD;a66oo,u;bio,iz,sD;so,u;bEc7Bdrigue57g03j73mDosevelt,ssi,ta7Nux,w3Z;a4Be0O;ertsDins2;!on;bei0LcEes,vDzzo;as,e8;ci,hards2;ag4es,it0ut0y9;dFmEnDsmu7Zv5F;tan1;ir7os;ic,u;aSeLhJiGoErDut6;asad,if5Zochazk1W;lishc24pDrti62u55we66;e2Tov48;cEe09nD;as,to;as60hl0;aDillips;k,m,n5K;de3AetIna,rGtD;ersErovDtersC;!a,ic;en,on;eDic,ry,ss2;i8ra,tz,z;ers;h71k,rk0tEvD;ic,l3T;el,t2O;bJconnor,g2ClGnei5PrEzD;demir,turk;ella3MtDwe5N;ega,iz;iDof6GsC;vDyn1F;ei8;aPri1;aLeJguy1iFoDune44ym4;rodahl,vDwak;ak3Uik5otn56;eEkolDlsCx2;ic,ov6X;ls1miD;!n1;ils2mD;co42ec;gy,kaEray4varD;ro;jiDmu8shiD;ma;aXcVeQiPoIuD;lGnFrDssoli5T;atDpUr68;i,ov3;oz,te4B;d0l0;h4lIo0HrEsDza0Z;er,s;aFeEiDoz5r3Ete4B;!n6F;au,i8no,t4M;!l9;i2Rl0;crac5Ohhail5kke3Qll0;hmeGij0j2ElFndErci0ssiDyer19;!er;e3Bo2Z;n0Io;dBti;cartDlaughl6;hy;dMe6Dgnu5Ei0jer34kLmJnci59rFtEyD;er,r;ei,ic,su1N;iEkBqu9roqu6tinD;ez,s;a54c,nD;!o;a52mD;ad5;e5Oin1;rig4Ns1;aSeMiIoGuEyD;!nch;k3nDo;d,gu;mbarDpe2Rvr3;di;!nDu,yana1R;coln,dD;bDholm;erg;bed5TfeGhtFitn0kaEn6rDw2G;oy;!j;in1on1;bvDvD;re;iDmmy,rsCu,voie;ne,t11;aTennedy,h4iSlQnez46oJrGuEvar4woD;k,n;cerDmar58znets5;a,o2G;aDem0i2Zyeziu;sni3PvD;ch3U;bay4Frh0Jsk0TvaFwalDzl5;czDsA;yk;cFlD;!cDen3Q;huk;!ev3ic,s;e6uiveD;rt;eff0l3mu8nnun1;hn,lloe,minsArEstra31to,ur,yDzl5;a,s0;j0GlsC;aMenLha2Pim0QoEuD;ng,r3;e2JhFnErge2Ju2NvD;anB;es,ss2;anEnsD;en,on,t2;nesDsC;en,s1;ki26s1;cGkob3RnsDrv06;en,sD;enDon;!s;ks2obs1;brahimBglesi3Ake4Ll0CnoZoneFshikEto,vanoD;u,v4A;awa;scu;aPeIitchcock,jaltal6oFrist46uD;!aDb0gh9ynh;m4ng;a23dz3fEjga2Sk,rDx3B;ak0Yvat;er,fm3B;iGmingw3NnErD;nand7re8;dDriks1;ers2;kkiEnD;on1;la,n1;dz3g1lvoLmJnsCqIrr0SsFuEyD;as36es;g1ng;anEhiD;mo0Q;i,ov08;ue;alaD;in1;rs1;aMeorgLheorghe,iJjonIoGrEuDw2;o,staf2Utierr7zm4;ayDg3iffitUub0;li1G;lub3Rme0JnD;calv9zale0I;aj,i;l,mDordaL;en7;iev3B;gnJlGmaFnd2No,rDs2Nuthi0;cDza;ia;ge;eaElD;agh0i,o;no;e,on;ab0erMiIjeldsted,lor9oGrFuD;cDent9ji3F;hs;an1Wiedm4;ntaDrt6st0urni0;na;lipEsD;ch0;ovD;!ic;hatBnandeVrD;arDei8;a,i;ov3;dHinste6riksCsDva0D;cob2ZpDtra2X;inoDosiM;za;en,s2;er,is2wards;aUeMiKjurhuJoHrisco0YuEvorakD;!oQ;arte,boEmitru,rDt2U;and,ic;is;g4he0Hmingu7n2Ord19tD;to;us;aDmitr29ssanayake;s,z; GbnaFlEmirDrvis1Lvi,w4;!ov3;gado,ic;th;bo0groot,jo03lEsilDvri9;va;a cruz,e2uD;ca;hl,mcevsAnErw6t2EviD;d5es,s;ieDku1S;ls1;ki;a05e00hNiobMlarkLoFrD;ivDuz;elli;h1lGntFop0rDs26x;byn,reD;a,ia;i,rer0O;em4liD;ns;!e;anu;aLeIiu,oGriDuJwe;stD;eDiaD;ns1;i,ng,uFwDy;!dhury;!n,onEuD;ng;!g;kEnDtterjee,v7;!d,g;ma,raboD;rty;bGl09ng3rD;eghetEnD;a,y;ti;an,ota0M;cer9lder2mpbeIrFstDvadi08;iDro;llo;doEt0uDvalho;so;so,zo;ll;es;a09eXhUiSlNoGrFyD;rne,tyD;qi;ank5iem,ooks,yant;gdan5nFruya,su,uchEyHziD;c,n5;ard;darDik;enD;ko;ov;aEondD;al;nEzD;ev3;co;ancRshwD;as;a01oDuiy4;umDwmD;ik;ckNethov1gu,ktLnJrD;gGisFnD;ascoDds1;ni;ha;er,mD;ann;gtDit7nett;ss2;asD;hi;er,ham;b3ch,ez,hMiley,kk0nHrDu0;bEnDua;es,i0;ieDosa;ri;dDik;a8yopadhyD;ay;ra;er;k,ng;ic;cosZdYguilXkhtXlSnJrGsl4yD;aEd6;in;la;aEsl4;an;ujo,ya;dFgelD;ovD;!a;ersGov,reD;aDjL;ss1;en;en,on,s2;on;eksejGiyGmeiFvD;ar7es;ez;da;ev;ar;ams;ta",WeekDay:"true¦fri2mon2s1t0wednesd3;hurs1ues1;aturd1und1;!d0;ay0;!s",Month:"true¦aBdec9feb7j2mar,nov9oct1sep0;!t8;!o8;an3u0;l1n0;!e;!y;!u1;!ru0;ary;!em0;ber;pr1ug0;!ust;!il",Date:"true¦ago,t2week0yesterd4; e0e0;nd;mr2o0;d0morrow;ay;!w",FirstName:"true¦aKblair,cGdevFgabrieEhinaDjBk8l7m3nelly,quinn,re2sh0;ay,e0iloh;a,lby;g6ne;a1el0ina,org5;!okuh9;naia,r0;ion,lo;ashawn,uca;asCe1ir0rE;an;lsAnyat2rry;am0ess6ie,ude;ie,m5;ta;le;an,on;as2h0;arl0eyenne;ie;ey,sidy;lex2ndr1ubr0;ey;a,ea;is",Person:"true¦ashton kutchTbScNdLeJgastOhHinez,jFkEleDmCnettKoBp9r4s3t2v0;a0irgin maH;lentino rossi,n go3;aylor,heresa may,iger woods,yra banks;addam hussain,carlett johanssKlobodan milosevic,uC;ay romano,e3o1ush limbau0;gh;d stewart,nald0;inho,o;ese witherspoFilly;a0ipJ;lmIris hiltD;prah winfrFra;essiaen,itt romnEubarek;bron james,e;anye west,iefer sutherland,obe bryant;aime,effers8k rowli0;ng;alle ber0itlBulk hogan;ry;ff0meril lagasse,zekiel;ie;a0enzel washingt2ick wolf;lt1nte;ar1lint0;on;dinal wols1son0;! palm2;ey;arack obama,rock;er",Verb:"true¦awak9born,cannot,fr8g7h5k3le2m1s0wors9;e8h3;ake sure,sg;ngth6ss6;eep tabs,n0;own;as0e2;!t2;iv1onna;ight0;en",PhrasalVerb:"true¦0:7L;1:79;2:7X;3:7N;4:72;5:80;6:7P;7:78;8:6V;9:7J;A:6W;B:5Z;C:7S;D:7Q;a81b6Lc5Rd5Me5Lf4Kg41h3Kiron0j3Gk3Bl2Vm2Jn2Ho2Fp1Wquiet7Ar1Js0CtSuQvacuum 1wHyammer9zE;eroBip FonE;e0k0;by,up;aLeHhGiForErit5G;d 1k33;mp0n2Vpe0r8s8;eel 7Qip 85;aFiEn2J;gh 09rd0;n 7Nr E;d2in,o5J;it 61k8lk6rm 6Csh 7Nt6Qv51;rge9sE;e AherB;aTeRhPiLoJrGuEype 69;ckBrn E;d2in,o3Sup;aFiEot0y 2I;ckle6Rp 7T;ck6Qde Y;ne6Pp Es4O;d2o73up;ck GdFe Egh6Bme0p o0Gre0;aw3ba4d2in,up;e 61y 1;by,oD;ink Erow 6D;ba4ov7up;aEe 5Zll53;m 1r X;ck9ke Flk E;ov7u54;aEba4d2in,o3Cup;ba4ft7p59w3;a0Jc0Ie0Ch08i05l01m00nZoYpTquare StKuIwE;earGiE;ngFtch E;aw3ba4o77; by;ck Eit 1m 1ss0;in,up;aJe0WiIoGrEuc3G;aigh1WiE;ke 6Gn3A;p Erm1Z;by,in,oD;n3Br 1tc3T;c3Amp0nd Er6Zve6y 1;ba4d2up;d2oDup;ar37eHiGlFrEur9;ing9uc8;a3Fit 5B;l13n 1;e5Sll0;be2Wrt0;ap 4Sow 6C;ash 5Foke0;eep FiEow A;c3Wp 1;in,oE;ff,v7;gn 4XngFt Ez8;d2o5up; al54le0;aGoEu4T;ot Eut0w 6D;aw3ba4f3GoD;c2PdeBk58ve6;e Ill1And HtE; Etl4H;d2in,o5upE;!on;aw3ba4d2in,o27up;o5Mto;al51out0rap51;il6v8;aPeMiLoHuE;b 4Ule0n Estl8;aEba4d2in5Jo3Ut39u3S;c26w3;ll Got FuE;g2Tnd6;a27f30o5;arCin,o5;ng 53p6;aEel6inBnt0;c5Dd E;o31u0I;c24t0;aSeRiPlNoLrIsyc2HuE;ll Gt E;aEba4d2in,o1Ot3Gup;p3Lw3;ap3Kd2in,o5t3Eup;attle9ess FiHoE;p 1;ah1Oon;iEp 5Hr3Yur4Jwer 5H;nt0;ay4DuE;gBmp A;ck Eg0le9n Ap4A;o2Yup;el 4KncilB;c42ir 3Un0ss GtFy E;ba4oD; d2c24;aw3ba4o18;pEw3X;e3Wt 4U;arrow46erd0oE;d6te45;aMeJiIoGuE;ddl8lE;l 3I;c1Dp 1uth6ve E;al3Nd2in,o5up;ss0x 1;asur8lFss E;a1Gup;t A;ke Fn ArEs1Px0;k Ary6;do,o48up;aRePiKoEuck0;aIc3Hg HoEse0;k Ese3F;aft7ba4d2forw2Jin46ov7uE;nd7p;in,o0M;d A;e HghtGnFsEv1V;ten 4M;e 1k 1; 1e37;arCd2;av1Jt 37velE; o3U;c8p 1sh Etch9ugh6y20;in3Uo5;eFick6nock E;d2o3Q;eEyB;l 2Pp E;aw3ba4d2fTin,o07to,up;aGoFuE;ic8mpB;ke31t35;c3Azz 1;aQeLiIoFuE;nker32rry 1s0W;lEneBrse2X;d Ee 1;ba4d2fast,o01up;de Ft E;ba4on,up;aw3o5;aElp0;d Gl 2Ar Et 1;fEof;rom;in,oTu1H;c02m 1nFve Ez25;it,to;d Eg 2FkerG;d2in,o5;aTeMive Kloss 22oGrFunE; f0N;in3How 2B; Eof 21;aFb1Dit,oErCt0Pu18;ff,n,v7;bo5ft7hKw3;aw3ba4d2in,oEup,w3;ff,n,ut;aJek0t E;aFb17d2oErCup;ff,n,ut,v7;cFhEl1XrCt,w3;ead;ross;r 1;d aFnE;g 1;bo5;a08e01iSlOoKrGuE;cEel 1;k 1;eFighten Eown9y 1;aw3oD;eEshe1N; 1z8;lGol E;aEwi1G;bo5rC;d Alow 1;aFeEip0;sh0;g Ake0mErE;e 2R;gLlJnHrFsEzzle0;h 2P;e Em 1;aw3ba4up;d0isE;h 1;e El 19;aw3fJ;ht ba4ure0;eJnFsE;s 1;cGd E;fEoD;or;e 1X;dVl 1;cIll Erm0t0W;ap04bGd2in,oFtE;hrough;ff,ut,v7;a4ehi20;e 0L;at0dge0nd 0Ky8;oHrE;aFess Aop E;aw3bUin,o1E;g9w9; 0Dubl8;aXhUlean AoHrEut 10;ack9eep Eoss 1I;by,d2oEup;n,ut;me HoFuntE; o1Q;k 1l E;d2oD;aKbJforHin,oGtFuE;nd7;ogeth7;ut,v7;th,wE;ard;a4y;pErCw3;art;eEipB;ck 11er E;on,up;lKncel0rHsGtch FveB; in;o19up;h 0Wt6;ry FvE;e Y;aw3o15;l Em05;aEba4d2o13up;rCw3;a0Ke0Bl04oVrJuE;bblGcklWil02lk AndlWrn 08st FtEy 13zz6;t 0N;in,o5up;e E;ov7;anOeaMiFush E;oDup;ghIng E;aFba4d2forEin,o5up;th;bo5lErCw3;ong;teE;n 1;k E;d2in,o5up;ch0;arLgKil An8oHssGttlFunce Ex 07;aw3ba4;e A; arC;k 03t 1;e 1;d2up; d2;d 1;aJeed0oEurt0;cGw E;aw3ba4d2o5up;ck;k E;in,oL;ck0nk0st6; oKaHef 1nd E;d2ov7up;er;up;r0t E;d2in,oEup;ff,ut;ff,nE;to;ck Kil0nGrgFsE;h H;ain9e G;g Fk9; on;in,o5; o5;aw3d2o5up;ay;cNdJsk Guction6; oD;ff;arCo5;ouE;nd;d E;d2oEup;ff,n;own;t E;o5up;ut",Modal:"true¦c5lets,m4ought3sh1w0;ill,o5;a0o4;ll,nt;! to,a;ay,ight,ust;an,o0;uld",Adjective:"true¦0:7P;1:84;2:83;3:8A;4:7W;5:5S;6:58;7:4O;8:4N;9:81;A:6I;a6Wb6Gc63d5Je54f4Hg49h3Wi39j37k36l2Vm2Ln2Bo1Wp1Dquack,r12s0Ft07uMvJwByear5;arp0eFholeEiDoB;man5oBu6P;d6Rzy;despr7Ls5S;!sa7;eClBste2A;co1Nl o4W;!k5;aCiBola4M;b89ce versa,ol5H;ca3gabo6Gnilla;ltUnHpCrb5Msu4tterB;!mo7G; Eb1SpDsBti1M;ca7etBide dKtairs;!ti2;er,i3U;f36to da1;aLbeco75convin29deIeHfair,ivers4knGprecedVrEsCwB;iel3Nritt6A;i1XuB;pervis0spec3Y;eBu5;cognHgul6Tl6T;own;ndi2v64xpect0;cid0rB;!grou5ZsB;iz0tood;b7pp0Dssu6UuthorB;iz0;i26ra;aGeEhDi6AoCrB;i1oubl0us3M;geth6p,rp6Vuc67;ough4Wril33;en60l32mpBrr2X;o6Ati2;boo,lBn;ent0;aWcVeThSiQmug,nobbi3LoOpNqueami3LtFuBymb6H;bDi gener5DpBrpri6D;erBre0N;! dup6b,i2C;du0seq52;anda77eGiFrBunni2y3F;aightCiB;ki2p0; fBfB;or5K;ll,r5S;aBreotyp0;dfa6Cmi2;a55ec2Gir1Hlend6Cot on; call0le,mb6phist1XrBu0Vvi48;d6Ary;gnifica3nB;ce51g7;am2Re6ocki2ut;cBda1em5lfi32ni1Wpa6Jre8;o1Er42;at5Gient28reec5G;cr0me;aJeEiCoB;bu60tt51uQy4;ghtBv4;!-2BfA;ar,bel,condi1du6Dfres5AlEpublic42sCtard0vB;ea26;is4CoB;lu1na3;aQe1Cuc4A;b5TciBllyi2;al,st;aOeLicayu8lac5Ropuli5QrCuB;bl5Jmp0n51;eGiDoB;!b07fu5RmiBp6;ne3si2;mCor,sBva1;ti8;a53e;ci5MmB;a0EiB;er,um;ac20rBti1;fe9ma2XpleBv38;xi2;rBst;allelDtB;-tiBi4;me;!ed;bLffJkIld fashion0nHpGrg1Eth6utFvB;al,erB;!all,niCt,wB;eiBrouB;ght;do0Ter,g2Qsi4B;en,posi1; boa5Og2Oli8;!ay; gua5MbBli8;eat;eDsB;cBer0Eole1;e8u3O;d2Xse;aJeIiHoBua4X;nFrCtB;ab7;thB;!eB;rn;chala3descri58stop;ght5;arby,cessa44ighbor5xt;k0usia1A;aIeGiDoBultip7;bi7derBl0Vnth5ot,st;a1n;nBx0;dblo0RiaBor;tu37;ande3Qdi4NnaBre;ci2;cBgenta,in,j01keshift,le,mmoth,ny,sculi8;ab33ho;aKeFiCoBu15;uti14vi2;mCteraB;l,te;it0;ftEgBth4;al,eCitiB;ma1;nda3K;!-0C;ngu3Zst,tt6;ap1Xind5no0A;agg0uB;niMstifi0veni7;de4gno4Klleg4mQnEpso 20rB;a1rB;eleBita0J;va3; KaJbr0corIdGfluenQiQnFsEtCviB;go0Fti2;a9en3SoxB;ic3B;a8i2Vul0D;a1er,oce3;iCoB;or;re9;deq3Qppr33;fBsitu,vitro;ro3;mFpB;arDerfe9oBrop6;li1rtB;a3ed;ti4;eBi0S;d2Vn3C;aIeFiDoBumdr3I;ne36ok0rrBs08ur5;if2Z;ghfalut1QspB;an2X;aClB;liYpfA;li2;lEnDrB;d04roB;wi2;dy;f,low0;ainfAener2Oiga24lHoGraDuB;ilBng ho;ty;cCtB;efAis;efA;ne,od;ea2Iob4;aTeNinMlKoFrB;a1VeDoz1MustB;raB;ti2;e2Gq10tfA;oDrB; keeps,eBm6tuna1;g03ign;liB;sh;aBue3;g31tte1P;al,i1;dFmCrB;ti7;a7ini8;ne;le; up;bl0i3l27r Cux,voB;ri1uri1;oBreac1E;ff;aLfficie3lKmHnFre9there4veExB;a9cess,pe1QtraCuB;be2Nl0E;!va1E;n,ryday; BcouraEti0O;rou1sui1;erCiB;ne3;gi2;abo23dMe17i1;g6sB;t,ygB;oi2;er;aReJiDoBrea14ue;mina3ne,ubB;le,tfA;dact1Bfficu1OsCvB;er1K;creDeas0gruntl0hone1FordCtB;a3ressM;er5;et; HadpGfFgene1PliDrang0spe1PtCvoB;ut;ail0ermin0;be1Mca1ghB;tfA;ia3;an;facto;i5magBngeroUs0G;ed,i2;ly;ertaMhief,ivil,oDrB;aBowd0u0G;mp0vZz0;loImGnCrrBve0P;e9u1I;cre1fu0LgrDsCtB;empo0Dra0E;ta3;ue3;mer08pleB;te,x;ni4ss4;in;aNeIizarHlFoCrB;and new,isk,okN;gCna fiUttom,urgeoB;is;us;ank,indB;!i2;re;autifAhiDloCnBst,yoD;eUt;v0w;nd;ul;ckCnkru0WrrB;en;!wards; priori,b0Mc0Jd09fra08g04h03lYmWntiquVppSrMsIttracti06utheHvEwB;aCkB;wa0T;ke,re;ant garCerB;age;de;ntU;leep,piDsuDtonB;isB;hi2;ri2;ab,bitEroDtiB;fiB;ci4;ga3;raB;ry;are3etiNrB;oprB;ia1;at0;aJuB;si2;arEcohCeBiIl,oof;rt;olB;ic;mi2;ead;ainDgressiConiB;zi2;ve;st;id; IeGuFvB;aCerB;se;nc0;ed;lt;pt,qB;ua1;hoc,infinitB;um;cuCtu4u1;al;ra1;erLlKoIruHsCuB;nda3;e3oCtra9;ct;lu1rbi2;ng;te;pt;aBve;rd;aze,e;ra3;nt",Comparable:"true¦0:41;1:4I;2:45;3:4B;4:3X;5:2Y;a4Ob44c3Od3De35f2Rg2Fh24i1Vj1Uk1Rl1Jm1Dn17o15p0Vqu0Tr0KsTtMuIvFw7y6za13;ell27ou3;aBe9hi1Yi7r6;o3y;ck0Ode,l6n1ry,se;d,y;a6i4Mt;k,ry;n1Tr6sK;m,y;a7e6ulgar;nge4rda2xi3;g9in,st;g0n6pco3Mse4;like0t6;i1r6;ue;aAen9hi8i7ough,r6;anqu2Oen1ue;dy,g3Sme0ny,r09;ck,n,rs2P;d40se;ll,me,rt,s6wd45;te4;aVcarUeThRiQkin0FlMmKoHpGqua1FtAu7w6;eet,ift;b7dd13per0Gr6;e,re2H;sta2Ft5;aAe9iff,r7u6;pXr1;a6ict,o3;ig3Fn0U;a1ep,rn;le,rk;e22i3Fright0;ci28ft,l7o6re,ur;n,thi3;emn,id;a6el0ooth;ll,rt;e8i6ow,y;ck,g35m6;!y;ek,nd3D;ck,l0mp5;a6iTort,rill,y;dy,ll0Xrp;cu0Rve0Rxy;ce,ed,y;d,fe,int0l1Vv14;aBe9i8o6ude;mantic,o1Isy,u6;gh,nd;ch,pe,tzy;a6d,mo0H;dy,l;gg7ndom,p6re,w;id;ed;ai2i6;ck,et;aEhoDi1QlCoBr8u6;ny,r6;e,p5;egna2ic7o6;fouYud;ey,k0;li04or,te1B;ain,easa2;ny;in4le;dd,f6i0ld,ranQ;fi10;aAe8i7o6;b5isy,rm15sy;ce,mb5;a6w;r,t;ive,rr01;aAe8ild,o7u6;nda19te;ist,o1;a6ek,llX;n,s0ty;d,tuQ;aBeAi9o6ucky;f0Un7o1Du6ve0w17y0T;d,sy;e0g;g1Tke0tt5ve0;an,wd;me,r6te;ge;e7i6;nd;en;ol0ui1P;cy,ll,n6;sBt6;e6ima8;llege2r6;es7media6;te;ti3;ecu6ta2;re;aEeBiAo8u6;ge,m6ng1R;b5id;ll6me0t;ow;gh,l0;a6f04sita2;dy,v6;en0y;nd1Hppy,r6te4;d,sh;aGenFhDiClBoofy,r6;a9e8is0o6ue1E;o6ss;vy;at,en,y;nd,y;ad,ib,ooI;a2d1;a6o6;st0;t5uiY;u1y;aIeeb5iDlat,oAr8u6;ll,n6r14;!ny;aHe6iend0;e,sh;a7r6ul;get4mG;my;erce8n6rm;an6e;ciC;! ;le;ir,ke,n0Fr,st,t,ulA;aAerie,mp9sse7v6xtre0Q;il;nti6;al;ty;r7s6;tern,y;ly,th0;aFeCi9r7u6;ll,mb;u6y;nk;r7vi6;ne;e,ty;a6ep,nD;d6f,r;!ly;mp,pp03rk;aHhDlAo8r7u6;dd0r0te;isp,uel;ar6ld,mmon,ol,st0ward0zy;se;e6ou1;a6vW;n,r;ar8e6il0;ap,e6;sy;mi3;gey,lm8r6;e4i3;ful;!i3;aNiLlIoEr8u6;r0sy;ly;aAi7o6;ad,wn;ef,g7llia2;nt;ht;sh,ve;ld,r7un6;cy;ed,i3;ng;a7o6ue;nd,o1;ck,nd;g,tt6;er;d,ld,w1;dy;bsu9ng8we6;so6;me;ry;rd",TextOrdinal:"true¦bGeDf9hundredHmGnin7qu6s4t0zeroH;enGh1rFwe0;lfFn9;ir0ousandE;d,t4;e0ixt9;cond,ptAvent8xtA;adr9int9;et0th;e6ie8;i2o0;r0urt3;tie5;ft1rst;ight0lev1;e0h,ie2;en1;illion0;th",Cardinal:"true¦bHeEf8hundred,mHnineAone,qu6s4t0zero;en,h2rGw0;e0o;lve,n8;irt9ousandEree;e0ix5;pt1ven4xt1;adr0int0;illion;i3o0;r1ur0;!t2;ty;ft0ve;e2y;ight0lev1;!e0y;en;illion0;!s",Expression:"true¦a02b01dXeVfuck,gShLlImHnGoDpBshAtsk,u7voi04w3y0;a1eLu0;ck,p;!a,hoo,y;h1ow,t0;af,f;e0oa;e,w;gh,h0;! 0h,m;huh,oh;eesh,hh,it;ff,hew,l0sst;ease,z;h1o0w,y;h,o,ps;!h;ah,ope;eh,mm;m1ol0;!s;ao,fao;a4e2i,mm,oly1urr0;ah;! mo6;e,ll0y;!o;ha0i;!ha;ah,ee,o0rr;l0odbye;ly;e0h,t cetera,ww;k,p;'oh,a0uh;m0ng;mit,n0;!it;ah,oo,ye; 1h0rgh;!em;la",Adverb:"true¦a08by 06d02eYfShQinPjustOkinda,mMnJoEpCquite,r9s5t2up1very,well,ye0;p,s; to,wards5;h1iny bit,o0wiO;o,t6ward;en,us;eldom,o0uch;!me1rt0; of;hYtimes,w09;a1e0;alT;ndomSthN;ar excellDer0oint blank; Nhaps;f3n0;ce0ly;! 0;ag02moW; courIten;ewKo0; longEt 0;onIwithstanding;aybe,eanwhiAore0;!ovB;! aboU;deed,steV;en0;ce;or2u0;lArther0;!moJ; 0ev3;examp0good,suH;le;n1v0;er; mas0ough;se;e0irect1; 1finite0;ly;ju8trop;far,n0;ow; DbroCd nauseam,gBl6ny3part,s2t 0w4;be6l0mo6wor6;arge,ea5; soon,ide;mo1w0;ay;re;l 1mo0one,ready,so,ways;st;b1t0;hat;ut;ain;ad;lot,posteriori",Determiner:"true¦aBboth,d9e6few,l4mu8neiDown,plenty,s3th2various,wh0;at0ich0;evC;at,e4is,ose;everal,ome;a,e0;!ast,s;a1i6l0very;!se;ch;e0u;!s;!n0;!o0y;th0;er"};const Dt="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",$t=Dt.split("").reduce((function(e,t,r){return e[t]=r,e}),{});var Pt=function(e){if(void 0!==$t[e])return $t[e];let t=0,r=1,a=36,n=1;for(;r<e.length;t+=a,r++,a*=36);for(let r=e.length-1;r>=0;r--,n*=36){let a=e.charCodeAt(r)-48;a>10&&(a-=7),t+=a*n}return t};const Et=function(e,t,r){const a=Pt(t);return a<e.symCount?e.syms[a]:r+a+1-e.symCount};var Ht=function(e){const t={nodes:e.split(";"),syms:[],symCount:0};return e.match(":")&&function(e){const t=new RegExp("([0-9A-Z]+):([0-9A-Z]+)");for(let r=0;r<e.nodes.length;r++){const a=t.exec(e.nodes[r]);if(!a){e.symCount=r;break}e.syms[Pt(a[1])]=Pt(a[2])}e.nodes=e.nodes.slice(e.symCount,e.nodes.length)}(t),function(e){const t=[],r=(a,n)=>{let i=e.nodes[a];"!"===i[0]&&(t.push(n),i=i.slice(1));const o=i.split(/([A-Z0-9,]+)/g);for(let i=0;i<o.length;i+=2){const s=o[i],l=o[i+1];if(!s)continue;const u=n+s;if(","===l||void 0===l){t.push(u);continue}const c=Et(e,l,a);r(c,u)}};return r(0,""),t}(t)},jt=function(e){const t=e.split("|").reduce((e,t)=>{const r=t.split("¦");return e[r[0]]=r[1],e},{}),r={};return Object.keys(t).forEach((function(e){const a=Ht(t[e]);"true"===e&&(e=!0);for(let t=0;t<a.length;t++){const n=a[t];!0===r.hasOwnProperty(n)?!1===Array.isArray(r[n])?r[n]=[r[n],e]:r[n].push(e):r[n]=e}})),r},Nt={"20th century fox":"Organization","7 eleven":"Organization","motel 6":"Organization",g8:"Organization",vh1:"Organization",q1:"Date",q2:"Date",q3:"Date",q4:"Date",her:["Possessive","Pronoun"],his:["Possessive","Pronoun"],their:["Possessive","Pronoun"],themselves:["Possessive","Pronoun"],your:["Possessive","Pronoun"],our:["Possessive","Pronoun"],my:["Possessive","Pronoun"],its:["Possessive","Pronoun"]};const xt={Unit:(e,t)=>{e[t]=["Abbreviation","Unit"]},Cardinal:(e,t)=>{e[t]=["TextValue","Cardinal"]},TextOrdinal:(e,t)=>{e[t]=["Ordinal","TextValue"],e[t+"s"]=["TextValue","Fraction"]},Singular:(e,t,r)=>{e[t]="Singular";let a=r.transforms.toPlural(t,r);e[a]=e[a]||"Plural"},Infinitive:(e,t,r)=>{e[t]="Infinitive";let a=r.transforms.conjugate(t,r),n=Object.keys(a);for(let t=0;t<n.length;t++){let r=a[n[t]];e[r]=e[r]||n[t]}},Comparable:(e,t,r)=>{e[t]="Comparable";let a=r.transforms.adjectives(t),n=Object.keys(a);for(let t=0;t<n.length;t++){let r=a[n[t]];e[r]=e[r]||n[t]}},PhrasalVerb:(e,t,r)=>{e[t]=["PhrasalVerb","Infinitive"];let a=t.split(" "),n=r.transforms.conjugate(a[0],r),i=Object.keys(n);for(let t=0;t<i.length;t++){let o=n[i[t]]+" "+a[1];e[o]=e[o]||["PhrasalVerb",i[t]],r.hasCompound[n[i[t]]]=!0}},Demonym:(e,t,r)=>{e[t]="Demonym";let a=r.transforms.toPlural(t,r);e[a]=e[a]||["Demonym","Plural"]}},Ft=function(e,t,r){Object.keys(e).forEach(a=>{let n=e[a];"Abbreviation"!==n&&"Unit"!==n||(r.cache.abbreviations[a]=!0);let i=a.split(" ");i.length>1&&(r.hasCompound[i[0]]=!0),void 0===xt[n]?void 0!==t[a]?("string"==typeof t[a]&&(t[a]=[t[a]]),"string"==typeof n?t[a].push(n):t[a]=t[a].concat(n)):t[a]=n:xt[n](t,a,r)})};var Ct=function(e){let t=Object.assign({},Nt);return Object.keys(At).forEach(r=>{let a=jt(At[r]);Object.keys(a).forEach(e=>{a[e]=r}),Ft(a,t,e)}),t},Bt=Ft;var Gt=function(e){let t=e.irregulars.nouns,r=Object.keys(t);for(let a=0;a<r.length;a++){const n=r[a];e.words[n]="Singular",e.words[t[n]]="Plural"}let a=e.irregulars.verbs,n=Object.keys(a);for(let t=0;t<n.length;t++){const r=n[t];e.words[r]=e.words[r]||"Infinitive";let i=e.transforms.conjugate(r,e);i=Object.assign(i,a[r]),Object.keys(i).forEach(t=>{e.words[i[t]]=e.words[i[t]]||t,"Participle"===e.words[i[t]]&&(e.words[i[t]]=t)})}};const zt={g:"Gerund",prt:"Participle",perf:"PerfectTense",pst:"PastTense",fut:"FuturePerfect",pres:"PresentTense",pluperf:"Pluperfect",a:"Actor"};let It={act:{a:"_or"},ache:{pst:"ached",g:"aching"},age:{g:"ageing",pst:"aged",pres:"ages"},aim:{a:"_er",g:"_ing",pst:"_ed"},arise:{prt:"_n",pst:"arose"},babysit:{a:"_ter",pst:"babysat"},ban:{a:"",g:"_ning",pst:"_ned"},be:{a:"",g:"am",prt:"been",pst:"was",pres:"is"},beat:{a:"_er",g:"_ing",prt:"_en"},become:{prt:"_"},begin:{g:"_ning",prt:"begun",pst:"began"},being:{g:"are",pst:"were",pres:"are"},bend:{prt:"bent"},bet:{a:"_ter",prt:"_"},bind:{pst:"bound"},bite:{g:"biting",prt:"bitten",pst:"bit"},bleed:{pst:"bled",prt:"bled"},blow:{prt:"_n",pst:"blew"},boil:{a:"_er"},brake:{prt:"broken"},break:{pst:"broke"},breed:{pst:"bred"},bring:{pst:"brought",prt:"brought"},broadcast:{pst:"_"},budget:{pst:"_ed"},build:{pst:"built",prt:"built"},burn:{prt:"_ed"},burst:{prt:"_"},buy:{pst:"bought",prt:"bought"},can:{a:"",fut:"_",g:"",pst:"could",perf:"could",pluperf:"could",pres:"_"},catch:{pst:"caught"},choose:{g:"choosing",prt:"chosen",pst:"chose"},cling:{prt:"clung"},come:{prt:"_",pst:"came",g:"coming"},compete:{a:"competitor",g:"competing",pst:"_d"},cost:{pst:"_"},creep:{prt:"crept"},cut:{prt:"_"},deal:{pst:"_t",prt:"_t"},develop:{a:"_er",g:"_ing",pst:"_ed"},die:{g:"dying",pst:"_d"},dig:{g:"_ging",pst:"dug",prt:"dug"},dive:{prt:"_d"},do:{pst:"did",pres:"_es"},draw:{prt:"_n",pst:"drew"},dream:{prt:"_t"},drink:{prt:"drunk",pst:"drank"},drive:{g:"driving",prt:"_n",pst:"drove"},drop:{g:"_ping",pst:"_ped"},eat:{a:"_er",g:"_ing",prt:"_en",pst:"ate"},edit:{pst:"_ed",g:"_ing"},egg:{pst:"_ed"},fall:{prt:"_en",pst:"fell"},feed:{prt:"fed",pst:"fed"},feel:{a:"_er",pst:"felt"},fight:{pst:"fought",prt:"fought"},find:{pst:"found"},flee:{g:"_ing",prt:"fled"},fling:{prt:"flung"},fly:{prt:"flown",pst:"flew"},forbid:{pst:"forbade"},forget:{g:"_ing",prt:"forgotten",pst:"forgot"},forgive:{g:"forgiving",prt:"_n",pst:"forgave"},free:{a:"",g:"_ing"},freeze:{g:"freezing",prt:"frozen",pst:"froze"},get:{pst:"got",prt:"gotten"},give:{g:"giving",prt:"_n",pst:"gave"},go:{prt:"_ne",pst:"went",pres:"goes"},grow:{prt:"_n"},guide:{pst:"_d"},hang:{pst:"hung",prt:"hung"},have:{g:"having",pst:"had",prt:"had",pres:"has"},hear:{pst:"_d",prt:"_d"},hide:{prt:"hidden",pst:"hid"},hit:{prt:"_"},hold:{pst:"held",prt:"held"},hurt:{pst:"_",prt:"_"},ice:{g:"icing",pst:"_d"},imply:{pst:"implied",pres:"implies"},is:{a:"",g:"being",pst:"was",pres:"_"},keep:{prt:"kept"},kneel:{prt:"knelt"},know:{prt:"_n"},lay:{pst:"laid",prt:"laid"},lead:{pst:"led",prt:"led"},leap:{prt:"_t"},leave:{pst:"left",prt:"left"},lend:{prt:"lent"},lie:{g:"lying",pst:"lay"},light:{pst:"lit",prt:"lit"},log:{g:"_ging",pst:"_ged"},loose:{prt:"lost"},lose:{g:"losing",pst:"lost"},make:{pst:"made",prt:"made"},mean:{pst:"_t",prt:"_t"},meet:{a:"_er",g:"_ing",pst:"met",prt:"met"},miss:{pres:"_"},name:{g:"naming"},patrol:{g:"_ling",pst:"_led"},pay:{pst:"paid",prt:"paid"},prove:{prt:"_n"},puke:{g:"puking"},put:{prt:"_"},quit:{prt:"_"},read:{pst:"_",prt:"_"},ride:{prt:"ridden"},reside:{pst:"_d"},ring:{pst:"rang",prt:"rung"},rise:{fut:"will have _n",g:"rising",prt:"_n",pst:"rose",pluperf:"had _n"},rub:{g:"_bing",pst:"_bed"},run:{g:"_ning",prt:"_",pst:"ran"},say:{pst:"said",prt:"said",pres:"_s"},seat:{pst:"sat",prt:"sat"},see:{g:"_ing",prt:"_n",pst:"saw"},seek:{prt:"sought"},sell:{pst:"sold",prt:"sold"},send:{prt:"sent"},set:{prt:"_"},sew:{prt:"_n"},shake:{prt:"_n"},shave:{prt:"_d"},shed:{g:"_ding",pst:"_",pres:"_s"},shine:{pst:"shone",prt:"shone"},shoot:{pst:"shot",prt:"shot"},show:{pst:"_ed"},shut:{prt:"_"},sing:{prt:"sung",pst:"sang"},sink:{pst:"sank",pluperf:"had sunk"},sit:{pst:"sat"},ski:{pst:"_ied"},slay:{prt:"slain"},sleep:{prt:"slept"},slide:{pst:"slid",prt:"slid"},smash:{pres:"_es"},sneak:{prt:"snuck"},speak:{fut:"will have spoken",prt:"spoken",pst:"spoke",perf:"have spoken",pluperf:"had spoken"},speed:{prt:"sped"},spend:{prt:"spent"},spill:{prt:"_ed",pst:"spilt"},spin:{g:"_ning",pst:"spun",prt:"spun"},spit:{prt:"spat"},split:{prt:"_"},spread:{pst:"_"},spring:{prt:"sprung"},stand:{pst:"stood"},steal:{a:"_er",pst:"stole"},stick:{pst:"stuck"},sting:{pst:"stung"},stink:{pst:"stunk",prt:"stunk"},stream:{a:"_er"},strew:{prt:"_n"},strike:{g:"striking",pst:"struck"},suit:{a:"_er",g:"_ing",pst:"_ed"},sware:{prt:"sworn"},swear:{pst:"swore"},sweep:{prt:"swept"},swim:{g:"_ming",pst:"swam"},swing:{pst:"swung"},take:{fut:"will have _n",pst:"took",perf:"have _n",pluperf:"had _n"},teach:{pst:"taught",pres:"_es"},tear:{pst:"tore"},tell:{pst:"told"},think:{pst:"thought"},thrive:{prt:"_d"},tie:{g:"tying",pst:"_d"},undergo:{prt:"_ne"},understand:{pst:"understood"},upset:{prt:"_"},wait:{a:"_er",g:"_ing",pst:"_ed"},wake:{pst:"woke"},wear:{pst:"wore"},weave:{prt:"woven"},wed:{pst:"wed"},weep:{prt:"wept"},win:{g:"_ning",pst:"won"},wind:{prt:"wound"},withdraw:{pst:"withdrew"},wring:{prt:"wrung"},write:{g:"writing",prt:"written",pst:"wrote"}},Ot=Object.keys(It);for(let e=0;e<Ot.length;e++){const t=Ot[e];let r={};Object.keys(It[t]).forEach(e=>{let a=It[t][e];a=a.replace("_",t),r[zt[e]]=a}),It[t]=r}var Tt=It;var Vt={b:[{reg:/([^aeiou][aeiou])b$/i,repl:{pr:"$1bs",pa:"$1bbed",gr:"$1bbing"}}],d:[{reg:/(end)$/i,repl:{pr:"$1s",pa:"ent",gr:"$1ing",ar:"$1er"}},{reg:/(eed)$/i,repl:{pr:"$1s",pa:"$1ed",gr:"$1ing",ar:"$1er"}},{reg:/(ed)$/i,repl:{pr:"$1s",pa:"$1ded",ar:"$1der",gr:"$1ding"}},{reg:/([^aeiou][ou])d$/i,repl:{pr:"$1ds",pa:"$1dded",gr:"$1dding"}}],e:[{reg:/(eave)$/i,repl:{pr:"$1s",pa:"$1d",gr:"eaving",ar:"$1r"}},{reg:/(ide)$/i,repl:{pr:"$1s",pa:"ode",gr:"iding",ar:"ider"}},{reg:/(t|sh?)(ake)$/i,repl:{pr:"$1$2s",pa:"$1ook",gr:"$1aking",ar:"$1$2r"}},{reg:/w(ake)$/i,repl:{pr:"w$1s",pa:"woke",gr:"waking",ar:"w$1r"}},{reg:/m(ake)$/i,repl:{pr:"m$1s",pa:"made",gr:"making",ar:"m$1r"}},{reg:/(a[tg]|i[zn]|ur|nc|gl|is)e$/i,repl:{pr:"$1es",pa:"$1ed",gr:"$1ing"}},{reg:/([bd]l)e$/i,repl:{pr:"$1es",pa:"$1ed",gr:"$1ing"}},{reg:/(om)e$/i,repl:{pr:"$1es",pa:"ame",gr:"$1ing"}}],g:[{reg:/([^aeiou][aou])g$/i,repl:{pr:"$1gs",pa:"$1gged",gr:"$1gging"}}],h:[{reg:/(..)([cs]h)$/i,repl:{pr:"$1$2es",pa:"$1$2ed",gr:"$1$2ing"}}],k:[{reg:/(ink)$/i,repl:{pr:"$1s",pa:"unk",gr:"$1ing",ar:"$1er"}}],m:[{reg:/([^aeiou][aeiou])m$/i,repl:{pr:"$1ms",pa:"$1mmed",gr:"$1mming"}}],n:[{reg:/(en)$/i,repl:{pr:"$1s",pa:"$1ed",gr:"$1ing"}}],p:[{reg:/(e)(ep)$/i,repl:{pr:"$1$2s",pa:"$1pt",gr:"$1$2ing",ar:"$1$2er"}},{reg:/([^aeiou][aeiou])p$/i,repl:{pr:"$1ps",pa:"$1pped",gr:"$1pping"}},{reg:/([aeiu])p$/i,repl:{pr:"$1ps",pa:"$1p",gr:"$1pping"}}],r:[{reg:/([td]er)$/i,repl:{pr:"$1s",pa:"$1ed",gr:"$1ing"}},{reg:/(er)$/i,repl:{pr:"$1s",pa:"$1ed",gr:"$1ing"}}],s:[{reg:/(ish|tch|ess)$/i,repl:{pr:"$1es",pa:"$1ed",gr:"$1ing"}}],t:[{reg:/(ion|end|e[nc]t)$/i,repl:{pr:"$1s",pa:"$1ed",gr:"$1ing"}},{reg:/(.eat)$/i,repl:{pr:"$1s",pa:"$1ed",gr:"$1ing"}},{reg:/([aeiu])t$/i,repl:{pr:"$1ts",pa:"$1t",gr:"$1tting"}},{reg:/([^aeiou][aeiou])t$/i,repl:{pr:"$1ts",pa:"$1tted",gr:"$1tting"}}],w:[{reg:/(.llow)$/i,repl:{pr:"$1s",pa:"$1ed"}},{reg:/(..)(ow)$/i,repl:{pr:"$1$2s",pa:"$1ew",gr:"$1$2ing",prt:"$1$2n"}}],y:[{reg:/(i|f|rr)y$/i,repl:{pr:"$1ies",pa:"$1ied",gr:"$1ying"}}],z:[{reg:/([aeiou]zz)$/i,repl:{pr:"$1es",pa:"$1ed",gr:"$1ing"}}]};const Mt={pr:"PresentTense",pa:"PastTense",gr:"Gerund",prt:"Participle",ar:"Actor"},Jt=function(e,t){let r={},a=Object.keys(t.repl);for(let n=0;n<a.length;n+=1){let i=a[n];r[Mt[i]]=e.replace(t.reg,t.repl[i])}return r};var Lt=function(e=""){let t=e[e.length-1];if(!0===Vt.hasOwnProperty(t))for(let r=0;r<Vt[t].length;r+=1){if(!0===Vt[t][r].reg.test(e))return Jt(e,Vt[t][r])}return{}};const St=/[bcdfghjklmnpqrstvwxz]y$/;var _t={Gerund:e=>"e"===e.charAt(e.length-1)?e.replace(/e$/,"ing"):e+"ing",PresentTense:e=>"s"===e.charAt(e.length-1)?e+"es":!0===St.test(e)?e.slice(0,-1)+"ies":e+"s",PastTense:e=>"e"===e.charAt(e.length-1)?e+"d":"ed"===e.substr(-2)?e:!0===St.test(e)?e.slice(0,-1)+"ied":e+"ed"};var Kt=function(e="",t){let r={};return t&&t.irregulars&&!0===t.irregulars.verbs.hasOwnProperty(e)&&(r=Object.assign({},t.irregulars.verbs[e])),r=Object.assign({},Lt(e),r),void 0===r.Gerund&&(r.Gerund=_t.Gerund(e)),void 0===r.PastTense&&(r.PastTense=_t.PastTense(e)),void 0===r.PresentTense&&(r.PresentTense=_t.PresentTense(e)),r};const qt=[/ght$/,/nge$/,/ough$/,/ain$/,/uel$/,/[au]ll$/,/ow$/,/oud$/,/...p$/],Wt=[/ary$/],Rt={nice:"nicest",late:"latest",hard:"hardest",inner:"innermost",outer:"outermost",far:"furthest",worse:"worst",bad:"worst",good:"best",big:"biggest",large:"largest"},Ut=[{reg:/y$/i,repl:"iest"},{reg:/([aeiou])t$/i,repl:"$1ttest"},{reg:/([aeou])de$/i,repl:"$1dest"},{reg:/nge$/i,repl:"ngest"},{reg:/([aeiou])te$/i,repl:"$1test"}];const Qt=[/ght$/,/nge$/,/ough$/,/ain$/,/uel$/,/[au]ll$/,/ow$/,/old$/,/oud$/,/e[ae]p$/],Zt=[/ary$/,/ous$/],Xt={grey:"greyer",gray:"grayer",green:"greener",yellow:"yellower",red:"redder",good:"better",well:"better",bad:"worse",sad:"sadder",big:"bigger"},Yt=[{reg:/y$/i,repl:"ier"},{reg:/([aeiou])t$/i,repl:"$1tter"},{reg:/([aeou])de$/i,repl:"$1der"},{reg:/nge$/i,repl:"nger"}];const er={toSuperlative:function(e){if(Rt.hasOwnProperty(e))return Rt[e];for(let t=0;t<Ut.length;t++)if(Ut[t].reg.test(e))return e.replace(Ut[t].reg,Ut[t].repl);for(let t=0;t<Wt.length;t++)if(!0===Wt[t].test(e))return null;for(let t=0;t<qt.length;t++)if(!0===qt[t].test(e))return"e"===e.charAt(e.length-1)?e+"st":e+"est";return e+"est"},toComparative:function(e){if(Xt.hasOwnProperty(e))return Xt[e];for(let t=0;t<Yt.length;t++)if(!0===Yt[t].reg.test(e))return e.replace(Yt[t].reg,Yt[t].repl);for(let t=0;t<Zt.length;t++)if(!0===Zt[t].test(e))return null;for(let t=0;t<Qt.length;t++)if(!0===Qt[t].test(e))return e+"er";return!0===/e$/.test(e)?e+"r":e+"er"}};var tr=function(e){let t={},r=er.toSuperlative(e);r&&(t.Superlative=r);let a=er.toComparative(e);return a&&(t.Comparative=a),t};var rr={a:[[/(antenn|formul|nebul|vertebr|vit)a$/i,"$1ae"],[/([ti])a$/i,"$1a"]],e:[[/(kn|l|w)ife$/i,"$1ives"],[/(hive)$/i,"$1s"],[/([m|l])ouse$/i,"$1ice"],[/([m|l])ice$/i,"$1ice"]],f:[[/^(dwar|handkerchie|hoo|scar|whar)f$/i,"$1ves"],[/^((?:ca|e|ha|(?:our|them|your)?se|she|wo)l|lea|loa|shea|thie)f$/i,"$1ves"]],i:[[/(octop|vir)i$/i,"$1i"]],m:[[/([ti])um$/i,"$1a"]],n:[[/^(oxen)$/i,"$1"]],o:[[/(al|ad|at|er|et|ed|ad)o$/i,"$1oes"]],s:[[/(ax|test)is$/i,"$1es"],[/(alias|status)$/i,"$1es"],[/sis$/i,"ses"],[/(bu)s$/i,"$1ses"],[/(sis)$/i,"ses"],[/^(?!talis|.*hu)(.*)man$/i,"$1men"],[/(octop|vir|radi|nucle|fung|cact|stimul)us$/i,"$1i"]],x:[[/(matr|vert|ind|cort)(ix|ex)$/i,"$1ices"],[/^(ox)$/i,"$1en"]],y:[[/([^aeiouy]|qu)y$/i,"$1ies"]],z:[[/(quiz)$/i,"$1zes"]]};const ar=/(x|ch|sh|s|z)$/;var nr=function(e="",t){let r=t.irregulars.nouns;if(r.hasOwnProperty(e))return r[e];let a=function(e){let t=e[e.length-1];if(!0===rr.hasOwnProperty(t))for(let r=0;r<rr[t].length;r+=1){let a=rr[t][r][0];if(!0===a.test(e))return e.replace(a,rr[t][r][1])}return null}(e);return null!==a?a:ar.test(e)?e+"es":e+"s"},ir=[[/([^v])ies$/i,"$1y"],[/ises$/i,"isis"],[/(kn|[^o]l|w)ives$/i,"$1ife"],[/^((?:ca|e|ha|(?:our|them|your)?se|she|wo)l|lea|loa|shea|thie)ves$/i,"$1f"],[/^(dwar|handkerchie|hoo|scar|whar)ves$/i,"$1f"],[/(antenn|formul|nebul|vertebr|vit)ae$/i,"$1a"],[/(octop|vir|radi|nucle|fung|cact|stimul)(i)$/i,"$1us"],[/(buffal|tomat|tornad)(oes)$/i,"$1o"],[/(eas)es$/i,"$1e"],[/(..[aeiou]s)es$/i,"$1"],[/(vert|ind|cort)(ices)$/i,"$1ex"],[/(matr|append)(ices)$/i,"$1ix"],[/(x|ch|ss|sh|z|o)es$/i,"$1"],[/men$/i,"man"],[/(n)ews$/i,"$1ews"],[/([ti])a$/i,"$1um"],[/([^aeiouy]|qu)ies$/i,"$1y"],[/(s)eries$/i,"$1eries"],[/(m)ovies$/i,"$1ovie"],[/([m|l])ice$/i,"$1ouse"],[/(cris|ax|test)es$/i,"$1is"],[/(alias|status)es$/i,"$1"],[/(ss)$/i,"$1"],[/(ics)$/i,"$1"],[/s$/i,""]];var or=function(e,t){let r=t.irregulars.nouns,a=(n=r,Object.keys(n).reduce((e,t)=>(e[n[t]]=t,e),{}));var n;if(a.hasOwnProperty(e))return a[e];for(let t=0;t<ir.length;t++)if(!0===ir[t][0].test(e))return e=e.replace(ir[t][0],ir[t][1]);return e};var sr={Participle:[{reg:/own$/i,to:"ow"},{reg:/(.)un([g|k])$/i,to:"$1in$2"}],Actor:[{reg:/(er)er$/i,to:"$1"}],PresentTense:[{reg:/(..)(ies)$/i,to:"$1y"},{reg:/(tch|sh)es$/i,to:"$1"},{reg:/(ss|zz)es$/i,to:"$1"},{reg:/([tzlshicgrvdnkmu])es$/i,to:"$1e"},{reg:/(n[dtk]|c[kt]|[eo]n|i[nl]|er|a[ytrl])s$/i,to:"$1"},{reg:/(ow)s$/i,to:"$1"},{reg:/(op)s$/i,to:"$1"},{reg:/([eirs])ts$/i,to:"$1t"},{reg:/(ll)s$/i,to:"$1"},{reg:/(el)s$/i,to:"$1"},{reg:/(ip)es$/i,to:"$1e"},{reg:/ss$/i,to:"ss"},{reg:/s$/i,to:""}],Gerund:[{reg:/(..)(p|d|t|g){2}ing$/i,to:"$1$2"},{reg:/(ll|ss|zz)ing$/i,to:"$1"},{reg:/([^aeiou])ying$/i,to:"$1y"},{reg:/([^ae]i.)ing$/i,to:"$1e"},{reg:/(ea[dklnrtv])ing$/i,to:"$1"},{reg:/(ch|sh)ing$/i,to:"$1"},{reg:/(z)ing$/i,to:"$1e"},{reg:/(a[gdkvtc])ing$/i,to:"$1e"},{reg:/(u[rtcbn])ing$/i,to:"$1e"},{reg:/([^o]o[bdknprv])ing$/i,to:"$1e"},{reg:/([tbckg]l)ing$/i,to:"$1e"},{reg:/(c|s)ing$/i,to:"$1e"},{reg:/(..)ing$/i,to:"$1"}],PastTense:[{reg:/(ued)$/i,to:"ue"},{reg:/ea(rn|l|m)ed$/i,to:"ea$1"},{reg:/a([^aeiouy])ed$/i,to:"a$1e"},{reg:/([aeiou]zz)ed$/i,to:"$1"},{reg:/(e|i)lled$/i,to:"$1ll"},{reg:/(.)(sh|ch)ed$/i,to:"$1$2"},{reg:/(tl|gl)ed$/i,to:"$1e"},{reg:/(um?pt?)ed$/i,to:"$1"},{reg:/(ss)ed$/i,to:"$1"},{reg:/pped$/i,to:"p"},{reg:/tted$/i,to:"t"},{reg:/(..)gged$/i,to:"$1g"},{reg:/(..)lked$/i,to:"$1lk"},{reg:/([^aeiouy][aeiou])ked$/i,to:"$1ke"},{reg:/(.[aeiou])led$/i,to:"$1l"},{reg:/(..)(h|ion|n[dt]|ai.|[cs]t|pp|all|ss|tt|int|ail|ld|en|oo.|er|k|pp|w|ou.|rt|ght|rm)ed$/i,to:"$1$2"},{reg:/(.ut)ed$/i,to:"$1e"},{reg:/(.pt)ed$/i,to:"$1"},{reg:/(us)ed$/i,to:"$1e"},{reg:/(dd)ed$/i,to:"$1"},{reg:/(..[^aeiouy])ed$/i,to:"$1e"},{reg:/(..)ied$/i,to:"$1y"},{reg:/(.o)ed$/i,to:"$1o"},{reg:/(..i)ed$/i,to:"$1"},{reg:/(.a[^aeiou])ed$/i,to:"$1"},{reg:/([aeiou][^aeiou])ed$/i,to:"$1e"},{reg:/([rl])ew$/i,to:"$1ow"},{reg:/([pl])t$/i,to:"$1t"}]};let lr={Gerund:["ing"],Actor:["erer"],Infinitive:["ate","ize","tion","rify","then","ress","ify","age","nce","ect","ise","ine","ish","ace","ash","ure","tch","end","ack","and","ute","ade","ock","ite","ase","ose","use","ive","int","nge","lay","est","ain","ant","ent","eed","er","le","own","unk","ung","en"],PastTense:["ed","lt","nt","pt","ew","ld"],PresentTense:["rks","cks","nks","ngs","mps","tes","zes","ers","les","acks","ends","ands","ocks","lays","eads","lls","els","ils","ows","nds","ays","ams","ars","ops","ffs","als","urs","lds","ews","ips","es","ts","ns"]};lr=Object.keys(lr).reduce((e,t)=>(lr[t].forEach(r=>e[r]=t),e),{});var ur=lr;const cr={nouns:{addendum:"addenda",alga:"algae",alumna:"alumnae",alumnus:"alumni",analysis:"analyses",antenna:"antennae",appendix:"appendices",avocado:"avocados",axis:"axes",bacillus:"bacilli",barracks:"barracks",beau:"beaux",bus:"buses",cactus:"cacti",chateau:"chateaux",child:"children",circus:"circuses",clothes:"clothes",corpus:"corpora",criterion:"criteria",curriculum:"curricula",database:"databases",deer:"deer",diagnosis:"diagnoses",echo:"echoes",embargo:"embargoes",epoch:"epochs",foot:"feet",formula:"formulae",fungus:"fungi",genus:"genera",goose:"geese",halo:"halos",hippopotamus:"hippopotami",index:"indices",larva:"larvae",leaf:"leaves",libretto:"libretti",loaf:"loaves",man:"men",matrix:"matrices",memorandum:"memoranda",modulus:"moduli",mosquito:"mosquitoes",mouse:"mice",nebula:"nebulae",nucleus:"nuclei",octopus:"octopi",opus:"opera",ovum:"ova",ox:"oxen",parenthesis:"parentheses",person:"people",phenomenon:"phenomena",prognosis:"prognoses",quiz:"quizzes",radius:"radii",referendum:"referenda",rodeo:"rodeos",sex:"sexes",shoe:"shoes",sombrero:"sombreros",stimulus:"stimuli",stomach:"stomachs",syllabus:"syllabi",synopsis:"synopses",tableau:"tableaux",thesis:"theses",thief:"thieves",tooth:"teeth",tornado:"tornados",tuxedo:"tuxedos",vertebra:"vertebrae"},verbs:Tt},hr={conjugate:Kt,adjectives:tr,toPlural:nr,toSingular:or,toInfinitive:function(e,t,r){if(!e)return"";if(!0===t.words.hasOwnProperty(e)){let r=t.irregulars.verbs,a=Object.keys(r);for(let t=0;t<a.length;t++){let n=Object.keys(r[a[t]]);for(let i=0;i<n.length;i++)if(e===r[a[t]][n[i]])return a[t]}}if((r=r||function(e){let t=e.substr(e.length-3);if(!0===ur.hasOwnProperty(t))return ur[t];let r=e.substr(e.length-2);return!0===ur.hasOwnProperty(r)?ur[r]:"s"===e.substr(e.length-1)?"PresentTense":null}(e))&&sr[r])for(let t=0;t<sr[r].length;t++){const a=sr[r][t];if(!0===a.reg.test(e))return e.replace(a.reg,a.to)}return e}};let dr=!1;class gr{constructor(){Object.defineProperty(this,"words",{enumerable:!1,value:{},writable:!0}),Object.defineProperty(this,"hasCompound",{enumerable:!1,value:{},writable:!0}),Object.defineProperty(this,"irregulars",{enumerable:!1,value:cr,writable:!0}),Object.defineProperty(this,"tags",{enumerable:!1,value:Object.assign({},kt),writable:!0}),Object.defineProperty(this,"transforms",{enumerable:!1,value:hr,writable:!0}),Object.defineProperty(this,"taggers",{enumerable:!1,value:[],writable:!0}),Object.defineProperty(this,"cache",{enumerable:!1,value:{abbreviations:{}}}),this.words=Ct(this),Gt(this)}verbose(e){return dr=e,this}isVerbose(){return dr}addWords(e){let t={};Object.keys(e).forEach(r=>{let a=e[r];r=r.toLowerCase().trim(),t[r]=a}),Bt(t,this.words,this)}addConjugations(e){return Object.assign(this.irregulars.verbs,e),this}addPlurals(e){return Object.assign(this.irregulars.nouns,e),this}addTags(e){return e=Object.assign({},e),this.tags=Object.assign(this.tags,e),this.tags=yt(this.tags),this}postProcess(e){return this.taggers.push(e),this}stats(){return{words:Object.keys(this.words).length,plurals:Object.keys(this.irregulars.nouns).length,conjugations:Object.keys(this.irregulars.verbs).length,compounds:Object.keys(this.hasCompound).length,postProcessors:this.taggers.length}}}const pr=function(e){return JSON.parse(JSON.stringify(e))};gr.prototype.clone=function(){let e=new gr;return e.words=Object.assign({},this.words),e.hasCompound=Object.assign({},this.hasCompound),e.irregulars=pr(this.irregulars),e.tags=pr(this.tags),e.transforms=this.transforms,e.taggers=this.taggers,e};var mr=gr,fr=k((function(e,t){t.all=function(){return this.parents()[0]||this},t.parent=function(){return this.from?this.from:this},t.parents=function(e){let t=[];const r=function(e){e.from&&(t.push(e.from),r(e.from))};return r(this),t=t.reverse(),"number"==typeof e?t[e]:t},t.clone=function(e){let t=this.list.map(t=>t.clone(e));return this.buildFrom(t)},t.wordCount=function(){return this.list.reduce((e,t)=>e+=t.wordCount(),0)},t.wordcount=t.wordCount})),br=k((function(e,t){t.first=function(e){return void 0===e?this.get(0):this.slice(0,e)},t.last=function(e){if(void 0===e)return this.get(this.list.length-1);let t=this.list.length;return this.slice(t-e,t)},t.slice=function(e,t){let r=this.list.slice(e,t);return this.buildFrom(r)},t.eq=function(e){let t=this.list[e];return void 0===t?this.buildFrom([]):this.buildFrom([t])},t.get=t.eq,t.firstTerms=function(){return this.match("^.")},t.firstTerm=t.firstTerms,t.lastTerms=function(){return this.match(".$")},t.lastTerm=t.lastTerms,t.termList=function(e){let t=[];for(let r=0;r<this.list.length;r++){let a=this.list[r].terms();for(let r=0;r<a.length;r++)if(t.push(a[r]),void 0!==e&&void 0!==t[e])return t[e]}return t};t.groups=function(e){return void 0===e?function(e){let t={};const r={};for(let t=0;t<e.list.length;t++){const a=e.list[t],n=Object.keys(a.groups).map(e=>a.groups[e]);for(let e=0;e<n.length;e++){const{group:t,start:i,length:o}=n[e];r[t]||(r[t]=[]),r[t].push(a.buildFrom(i,o))}}const a=Object.keys(r);for(let n=0;n<a.length;n++){const i=a[n];t[i]=e.buildFrom(r[i])}return t}(this):("number"==typeof e&&(e=String(e)),function(e,t){const r=[];for(let a=0;a<e.list.length;a++){const n=e.list[a];let i=Object.keys(n.groups);i=i.filter(e=>n.groups[e].group===t),i.forEach(e=>{r.push(n.buildFrom(n.groups[e].start,n.groups[e].length))})}return e.buildFrom(r)}(this,e)||this.buildFrom([]))},t.group=t.groups,t.sentences=function(e){let t=[];return this.list.forEach(e=>{t.push(e.fullSentence())}),"number"==typeof e?this.buildFrom([t[e]]):this.buildFrom(t)},t.sentence=t.sentences}));var vr=function(e,t){if(e._cache&&!0===e._cache.set){let{words:r,tags:a}=function(e){let t=[],r=[];return e.forEach(e=>{!0!==e.optional&&!0!==e.negative&&(void 0!==e.tag&&t.push(e.tag),void 0!==e.word&&r.push(e.word))}),{tags:t,words:r}}(t);for(let t=0;t<r.length;t++)if(void 0===e._cache.words[r[t]])return!1;for(let t=0;t<a.length;t++)if(void 0===e._cache.tags[a[t]])return!1}return!0},yr=k((function(e,t){t.match=function(e,t={}){"string"!=typeof t&&"number"!=typeof t&&null!==t||(t={group:t});let r=Ce(e,t);if(0===r.length)return this.buildFrom([]);if(!1===vr(this,r))return this.buildFrom([]);let a=this.list.reduce((e,t)=>e.concat(t.match(r)),[]);return void 0!==t.group&&null!==t.group&&""!==t.group?this.buildFrom(a).groups(t.group):this.buildFrom(a)},t.not=function(e,t={}){let r=Ce(e,t);if(0===r.length||!1===vr(this,r))return this;let a=this.list.reduce((e,t)=>e.concat(t.not(r)),[]);return this.buildFrom(a)},t.matchOne=function(e,t={}){let r=Ce(e,t);if(!1===vr(this,r))return this.buildFrom([]);for(let e=0;e<this.list.length;e++){let t=this.list[e].match(r,!0);return this.buildFrom(t)}return this.buildFrom([])},t.if=function(e,t={}){let r=Ce(e,t);if(!1===vr(this,r))return this.buildFrom([]);let a=this.list.filter(e=>!0===e.has(r));return this.buildFrom(a)},t.ifNo=function(e,t={}){let r=Ce(e,t),a=this.list.filter(e=>!1===e.has(r));return this.buildFrom(a)},t.has=function(e,t={}){let r=Ce(e,t);return!1!==vr(this,r)&&this.list.some(e=>!0===e.has(r))},t.lookAhead=function(e,t={}){e||(e=".*");let r=Ce(e,t),a=[];return this.list.forEach(e=>{a=a.concat(e.lookAhead(r))}),a=a.filter(e=>e),this.buildFrom(a)},t.lookAfter=t.lookAhead,t.lookBehind=function(e,t={}){e||(e=".*");let r=Ce(e,t),a=[];return this.list.forEach(e=>{a=a.concat(e.lookBehind(r))}),a=a.filter(e=>e),this.buildFrom(a)},t.lookBefore=t.lookBehind,t.before=function(e,t={}){let r=Ce(e,t),a=this.if(r).list.map(e=>{let t=e.terms().map(e=>e.id),a=e.match(r)[0],n=t.indexOf(a.start);return 0===n||-1===n?null:e.buildFrom(e.start,n)});return a=a.filter(e=>null!==e),this.buildFrom(a)},t.after=function(e,t={}){let r=Ce(e,t),a=this.if(r).list.map(e=>{let t=e.terms(),a=t.map(e=>e.id),n=e.match(r)[0],i=a.indexOf(n.start);if(-1===i||!t[i+n.length])return null;let o=t[i+n.length].id,s=e.length-i-n.length;return e.buildFrom(o,s)});return a=a.filter(e=>null!==e),this.buildFrom(a)},t.hasAfter=function(e,t={}){return this.filter(r=>r.lookAfter(e,t).found)},t.hasBefore=function(e,t={}){return this.filter(r=>r.lookBefore(e,t).found)}}));var wr=function(e,t,r,a){let n=[];"string"==typeof e&&(n=e.split(" ")),t.list.forEach(i=>{let o=i.terms();!0===r&&(o=o.filter(r=>r.canBe(e,t.world))),o.forEach((r,i)=>{n.length>1?n[i]&&"."!==n[i]&&r.tag(n[i],a,t.world):r.tag(e,a,t.world)})})},kr={tag:function(e,t){return e?(wr(e,this,!1,t),this):this},tagSafe:function(e,t){return e?(wr(e,this,!0,t),this):this},unTag:function(e,t){return this.list.forEach(r=>{r.terms().forEach(r=>r.unTag(e,t,this.world))}),this},canBe:function(e){if(!e)return this;let t=this.world,r=this.list.reduce((r,a)=>r.concat(a.canBe(e,t)),[]);return this.buildFrom(r)}},Ar={map:function(e){if(!e)return this;let t=this.list.map((t,r)=>{let a=this.buildFrom([t]);a.from=null;let n=e(a,r);return n&&n.list&&n.list[0]?n.list[0]:n});return t=t.filter(e=>e),0===t.length?this.buildFrom(t):"object"!=typeof t[0]||"Phrase"!==t[0].isA?t:this.buildFrom(t)},forEach:function(e,t){return e?(this.list.forEach((r,a)=>{let n=this.buildFrom([r]);!0===t&&(n.from=null),e(n,a)}),this):this},filter:function(e){if(!e)return this;let t=this.list.filter((t,r)=>{let a=this.buildFrom([t]);return a.from=null,e(a,r)});return this.buildFrom(t)},find:function(e){if(!e)return this;let t=this.list.find((t,r)=>{let a=this.buildFrom([t]);return a.from=null,e(a,r)});return t?this.buildFrom([t]):void 0},some:function(e){return e?this.list.some((t,r)=>{let a=this.buildFrom([t]);return a.from=null,e(a,r)}):this},random:function(e){if(!this.found)return this;let t=Math.floor(Math.random()*this.list.length);if(void 0===e){let e=[this.list[t]];return this.buildFrom(e)}return t+e>this.length&&(t=this.length-e,t=t<0?0:t),this.slice(t,t+e)}};var Dr=function(e,t,r){let a=function(e,t=[]){let r={};return e.forEach((e,a)=>{let n=!0;void 0!==t[a]&&(n=t[a]);let i=function(e){return e.split(/[ -]/g)}(e=(e=(e||"").toLowerCase()).replace(/[,;.!?]+$/,"")).map(e=>e.trim());r[i[0]]=r[i[0]]||{},1===i.length?r[i[0]].value=n:(r[i[0]].more=r[i[0]].more||[],r[i[0]].more.push({rest:i.slice(1),value:n}))}),r}(e,t),n=[];for(let e=0;e<r.list.length;e++){const t=r.list[e];let i=t.terms().map(e=>e.reduced);for(let e=0;e<i.length;e++)void 0!==a[i[e]]&&(void 0!==a[i[e]].more&&a[i[e]].more.forEach(r=>{if(void 0===i[e+r.rest.length])return;!0===r.rest.every((t,r)=>t===i[e+r+1])&&n.push({id:t.terms()[e].id,value:r.value,length:r.rest.length+1})}),void 0!==a[i[e]].value&&n.push({id:t.terms()[e].id,value:a[i[e]].value,length:1}))}return n},$r=k((function(e,t){t.lookup=function(e){let t=[],r=(a=e)&&"[object Object]"===Object.prototype.toString.call(a);var a;!0===r&&(e=Object.keys(e).map(r=>(t.push(e[r]),r))),"string"==typeof e&&(e=[e]),!0!==this._cache.set&&this.cache();let n=Dr(e,t,this),i=this.list[0];if(!0===r){let e={};return n.forEach(t=>{e[t.value]=e[t.value]||[],e[t.value].push(i.buildFrom(t.id,t.length))}),Object.keys(e).forEach(t=>{e[t]=this.buildFrom(e[t])}),e}return n=n.map(e=>i.buildFrom(e.id,e.length)),this.buildFrom(n)},t.lookUp=t.lookup})),Pr={cache:function(e){e=e||{};let t={},r={};return this._cache.words=t,this._cache.tags=r,this._cache.set=!0,this.list.forEach((a,n)=>{a.cache=a.cache||{},a.terms().forEach(a=>{t[a.reduced]&&!t.hasOwnProperty(a.reduced)||(t[a.reduced]=t[a.reduced]||[],t[a.reduced].push(n),Object.keys(a.tags).forEach(e=>{r[e]=r[e]||[],r[e].push(n)}),e.root&&(a.setRoot(this.world),t[a.root]=[n]))})}),this},uncache:function(){return this._cache={},this.list.forEach(e=>{e.cache={}}),this.parents().forEach(e=>{e._cache={},e.list.forEach(e=>{e.cache={}})}),this}};var Er={replaceWith:function(e,t={}){return e?(!0===t&&(t={keepTags:!0}),!1===t&&(t={keepTags:!1}),t=t||{},this.uncache(),this.list.forEach(r=>{let a,n=e;if("function"==typeof e&&(n=e(r)),n&&"object"==typeof n&&"Doc"===n.isA)a=n.list,this.pool().merge(n.pool());else{if("string"!=typeof n)return;{!1!==t.keepCase&&r.terms(0).isTitleCase()&&(n=(i=n).charAt(0).toUpperCase()+i.substr(1)),a=ot(n,this.world,this.pool());let e=this.buildFrom(a);e.tagger(),a=e.list}}var i;if(!0===t.keepTags){let e=r.json({terms:{tags:!0}}).terms;a[0].terms().forEach((t,r)=>{e[r]&&t.tagSafe(e[r].tags,"keptTag",this.world)})}r.replace(a[0],this)}),this):this.delete()},replace:function(e,t,r){return void 0===t?this.replaceWith(e,r):(this.match(e).replaceWith(t,r),this)}},Hr=k((function(e,t){const r=function(e){return e&&"[object Object]"===Object.prototype.toString.call(e)},a=function(e,t){let r=ot(e,t.world)[0],a=t.buildFrom([r]);return a.tagger(),t.list=a.list,t};t.append=function(e=""){return e?this.found?(this.uncache(),this.list.forEach(t=>{let a;r(e)&&"Doc"===e.isA?a=e.list[0].clone():"string"==typeof e&&(a=ot(e,this.world,this.pool())[0]),this.buildFrom([a]).tagger(),t.append(a,this)}),this):a(e,this):this},t.insertAfter=t.append,t.insertAt=t.append,t.prepend=function(e){return e?this.found?(this.uncache(),this.list.forEach(t=>{let a;r(e)&&"Doc"===e.isA?a=e.list[0].clone():"string"==typeof e&&(a=ot(e,this.world,this.pool())[0]),this.buildFrom([a]).tagger(),t.prepend(a,this)}),this):a(e,this):this},t.insertBefore=t.prepend,t.concat=function(){this.uncache();let e=this.list.slice(0);for(let t=0;t<arguments.length;t++){let r=arguments[t];if("string"==typeof r){let t=ot(r,this.world);e=e.concat(t)}else"Doc"===r.isA?e=e.concat(r.list):"Phrase"===r.isA&&e.push(r)}return this.buildFrom(e)},t.delete=function(e){this.uncache();let t=this;return e&&(t=this.match(e)),t.list.forEach(e=>e.delete(this)),this},t.remove=t.delete}));const jr={clean:!0,reduced:!0,root:!0};var Nr={text:function(e){e=e||{};let t=!1;0===this.parents().length&&(t=!0),("root"===e||"object"==typeof e&&e.root)&&this.list.forEach(e=>{e.terms().forEach(e=>{null===e.root&&e.setRoot(this.world)})});let r=this.list.reduce((r,a,n)=>{const i=!t&&0===n,o=!t&&n===this.list.length-1;return r+a.text(e,i,o)},"");return!0!==jr[e]&&!0!==e.reduced&&!0!==e.clean&&!0!==e.root||(r=r.trim()),r}};var xr=function(e,t,r){let a=function(e){let t=0,r=0,a={};return e.termList().forEach(e=>{a[e.id]={index:r,start:t+e.pre.length,length:e.text.length},t+=e.pre.length+e.text.length+e.post.length,r+=1}),a}(e.all());(r.terms.index||r.index)&&t.forEach(e=>{e.terms.forEach(e=>{e.index=a[e.id].index}),e.index=e.terms[0].index}),(r.terms.offset||r.offset)&&t.forEach(e=>{e.terms.forEach(e=>{e.offset=a[e.id]||{}}),e.offset={index:e.terms[0].offset.index,start:e.terms[0].offset.start-e.text.indexOf(e.terms[0].text),length:e.text.length}})},Fr=k((function(e,t){const r={text:!0,terms:!0,trim:!0};t.json=function(e={}){if("number"==typeof e&&this.list[e])return this.list[e].json(r);!0===(e=function(e){return(e=Object.assign({},r,e)).unique&&(e.reduced=!0),e.offset&&(e.text=!0,e.terms&&!0!==e.terms||(e.terms={}),e.terms.offset=!0),(e.index||e.terms.index)&&(e.terms=!0===e.terms?{}:e.terms,e.terms.id=!0),e}(e)).root&&this.list.forEach(e=>{e.terms().forEach(e=>{null===e.root&&e.setRoot(this.world)})});let t=this.list.map(t=>t.json(e,this.world));if((e.terms.offset||e.offset||e.terms.index||e.index)&&xr(this,t,e),e.frequency||e.freq||e.count){let e={};this.list.forEach(t=>{let r=t.text("reduced");e[r]=e[r]||0,e[r]+=1}),this.list.forEach((r,a)=>{t[a].count=e[r.text("reduced")]})}if(e.unique){let e={};t=t.filter(t=>!0!==e[t.reduced]&&(e[t.reduced]=!0,!0))}return t},t.data=t.json})),Cr=k((function(e){const t="[0m",r=function(e,t){for(e=e.toString();e.length<t;)e+=" ";return e};const a={green:"#7f9c6c",red:"#914045",blue:"#6699cc",magenta:"#6D5685",cyan:"#2D85A8",yellow:"#e6d7b3",black:"#303b50"},n={green:function(e){return"[32m"+e+t},red:function(e){return"[31m"+e+t},blue:function(e){return"[34m"+e+t},magenta:function(e){return"[35m"+e+t},cyan:function(e){return"[36m"+e+t},yellow:function(e){return"[33m"+e+t},black:function(e){return"[30m"+e+t}};e.exports=function(e){return"undefined"!=typeof window&&window.document?(function(e){let t=e.world.tags;e.list.forEach(e=>{console.log('\n%c"'+e.text()+'"',"color: #e6d7b3;"),e.terms().forEach(e=>{let n=Object.keys(e.tags),i=e.text||"-";e.implicit&&(i="["+e.implicit+"]");let o="'"+i+"'";o=r(o,8);let s=n.find(e=>t[e]&&t[e].color),l="steelblue";t[s]&&(l=t[s].color,l=a[l]),console.log(`   ${o}  -  %c${n.join(", ")}`,`color: ${l||"steelblue"};`)})})}(e),e):(console.log(n.blue("=====")),e.list.forEach(t=>{console.log(n.blue("  -----")),t.terms().forEach(t=>{let a=Object.keys(t.tags),i=t.text||"-";t.implicit&&(i="["+t.implicit+"]"),i=n.yellow(i);let o="'"+i+"'";o=r(o,18);let s=n.blue("  ｜ ")+o+"  - "+function(e,t){return(e=e.map(e=>{if(!t.tags.hasOwnProperty(e))return e;const r=t.tags[e].color||"blue";return n[r](e)})).join(", ")}(a,e.world);console.log(s)})}),console.log(""),e)}}));var Br=function(e){let t=e.json({text:!1,terms:!1,reduced:!0}),r={};t.forEach(e=>{r[e.reduced]||(e.count=0,r[e.reduced]=e),r[e.reduced].count+=1});let a=Object.keys(r).map(e=>r[e]);return a.sort((e,t)=>e.count>t.count?-1:e.count<t.count?1:0),a},Gr={debug:function(){return Cr(this),this},out:function(e){if("text"===e)return this.text();if("normal"===e)return this.text("normal");if("json"===e)return this.json();if("offset"===e||"offsets"===e)return this.json({offset:!0});if("array"===e)return this.json({terms:!1}).map(e=>e.text).filter(e=>e);if("freq"===e||"frequency"===e)return Br(this);if("terms"===e){let e=[];return this.json({text:!1,terms:{text:!0}}).forEach(t=>{let r=t.terms.map(e=>e.text);r=r.filter(e=>e),e=e.concat(r)}),e}return"tags"===e?this.list.map(e=>e.terms().reduce((e,t)=>(e[t.clean||t.implicit]=Object.keys(t.tags),e),{})):"debug"===e?(Cr(this),this):this.text()}};const zr={alpha:(e,t)=>{let r=e.text("clean"),a=t.text("clean");return r<a?-1:r>a?1:0},length:(e,t)=>{let r=e.text().trim().length,a=t.text().trim().length;return r<a?1:r>a?-1:0},wordCount:(e,t)=>{let r=e.wordCount(),a=t.wordCount();return r<a?1:r>a?-1:0}};zr.alphabetical=zr.alpha,zr.wordcount=zr.wordCount;const Ir={index:!0,sequence:!0,seq:!0,sequential:!0,chron:!0,chronological:!0};var Or={sort:function(e){return"freq"===(e=e||"alpha")||"frequency"===e||"topk"===e?function(e){let t={};const r={case:!0,punctuation:!1,whitespace:!0,unicode:!0};return e.list.forEach(e=>{let a=e.text(r);t[a]=t[a]||0,t[a]+=1}),e.list.sort((e,a)=>{let n=t[e.text(r)],i=t[a.text(r)];return n<i?1:n>i?-1:0}),e}(this):Ir.hasOwnProperty(e)?function(e){let t={};return e.json({terms:{offset:!0}}).forEach(e=>{t[e.terms[0].id]=e.terms[0].offset.start}),e.list=e.list.sort((e,r)=>t[e.start]>t[r.start]?1:t[e.start]<t[r.start]?-1:0),e}(this):"function"==typeof(e=zr[e]||e)?(this.list=this.list.sort(e),this):this},reverse:function(){let e=[].concat(this.list);return e=e.reverse(),this.buildFrom(e)},unique:function(){let e=[].concat(this.list),t={};return e=e.filter(e=>{let r=e.text("reduced").trim()||e.text("implicit").trim();return!0!==t.hasOwnProperty(r)&&(t[r]=!0,!0)}),this.buildFrom(e)}};const Tr=/[\[\]{}⟨⟩:,،、‒–—―…‹›«»‐\-;\/⁄·*\•^†‡°¡¿※№÷×ºª%‰=‱¶§~|‖¦©℗®℠™¤₳฿]/g,Vr=/['‘’“”"′″‴]+/g;var Mr={whitespace:function(e){let t=e.list.map(e=>e.terms());t.forEach((e,r)=>{e.forEach((a,n)=>{!0!==a.hasDash()?(a.pre=a.pre.replace(/\s/g,""),a.post=a.post.replace(/\s/g,""),(e.length-1!==n||t[r+1])&&(a.implicit&&!0===Boolean(a.text)||!0!==a.hasHyphen()&&(a.post+=" "))):a.post=" - "})})},punctuation:function(e){e.forEach(e=>{!0===e.hasHyphen()&&(e.post=" "),e.pre=e.pre.replace(Tr,""),e.post=e.post.replace(Tr,""),e.post=e.post.replace(/\.\.\./,""),!0===/!/.test(e.post)&&(e.post=e.post.replace(/!/g,""),e.post="!"+e.post),!0===/\?/.test(e.post)&&(e.post=e.post.replace(/[\?!]*/,""),e.post="?"+e.post)})},unicode:function(e){e.forEach(e=>{!0!==e.isImplicit()&&(e.text=n(e.text))})},quotations:function(e){e.forEach(e=>{e.post=e.post.replace(Vr,""),e.pre=e.pre.replace(Vr,"")})},adverbs:function(e){e.match("#Adverb").not("(not|nary|seldom|never|barely|almost|basically|so)").remove()},abbreviations:function(e){e.list.forEach(e=>{let t=e.terms();t.forEach((e,r)=>{!0===e.tags.Abbreviation&&t[r+1]&&(e.post=e.post.replace(/^\./,""))})})}};const Jr={whitespace:!0,unicode:!0,punctuation:!0,emoji:!0,acronyms:!0,abbreviations:!0,case:!1,contractions:!1,parentheses:!1,quotations:!1,adverbs:!1,possessives:!1,verbs:!1,nouns:!1,honorifics:!1},Lr={light:{},medium:{case:!0,contractions:!0,parentheses:!0,quotations:!0,adverbs:!0}};Lr.heavy=Object.assign({},Lr.medium,{possessives:!0,verbs:!0,nouns:!0,honorifics:!0});var Sr={normalize:function(e){"string"==typeof(e=e||{})&&(e=Lr[e]||{}),e=Object.assign({},Jr,e),this.uncache();let t=this.termList();return e.case&&this.toLowerCase(),e.whitespace&&Mr.whitespace(this),e.unicode&&Mr.unicode(t),e.punctuation&&Mr.punctuation(t),e.emoji&&this.remove("(#Emoji|#Emoticon)"),e.acronyms&&this.acronyms().strip(),e.abbreviations&&Mr.abbreviations(this),(e.contraction||e.contractions)&&this.contractions().expand(),e.parentheses&&this.parentheses().unwrap(),(e.quotations||e.quotes)&&Mr.quotations(t),e.adverbs&&Mr.adverbs(this),(e.possessive||e.possessives)&&this.possessives().strip(),e.verbs&&this.verbs().toInfinitive(),(e.nouns||e.plurals)&&this.nouns().toSingular(),e.honorifics&&this.remove("#Honorific"),this}},_r=k((function(e,t){t.splitOn=function(e){if(!e){return this.parent().splitOn(this)}let t=Ce(e),r=[];return this.list.forEach(e=>{let a=e.match(t);if(0===a.length)return void r.push(e);let n=e;a.forEach(e=>{let t=n.splitOn(e);t.before&&r.push(t.before),t.match&&r.push(t.match),n=t.after}),n&&r.push(n)}),this.buildFrom(r)},t.splitAfter=function(e){if(!e){return this.parent().splitAfter(this)}let t=Ce(e),r=[];return this.list.forEach(e=>{let a=e.match(t);if(0===a.length)return void r.push(e);let n=e;a.forEach(e=>{let t=n.splitOn(e);t.before&&t.match?(t.before.length+=t.match.length,r.push(t.before)):t.match&&r.push(t.match),n=t.after}),n&&r.push(n)}),this.buildFrom(r)},t.split=t.splitAfter,t.splitBefore=function(e){if(!e){return this.parent().splitBefore(this)}let t=Ce(e),r=[];return this.list.forEach(e=>{let a=e.match(t);if(0===a.length)return void r.push(e);let n=e;a.forEach(e=>{let t=n.splitOn(e);t.before&&r.push(t.before),t.match&&t.after&&(t.match.length+=t.after.length),n=t.match}),n&&r.push(n)}),this.buildFrom(r)},t.segment=function(e,t){e=e||{},t=t||{text:!0};let r=this,a=Object.keys(e);return a.forEach(e=>{r=r.splitOn(e)}),r.list.forEach(t=>{for(let r=0;r<a.length;r+=1)if(t.has(a[r]))return void(t.segment=e[a[r]])}),r.list.map(e=>{let r=e.json(t);return r.segment=e.segment||null,r})}}));const Kr=function(e,t){let r=e.world;return e.list.forEach(e=>{e.terms().forEach(e=>e[t](r))}),e};var qr={toLowerCase:function(){return Kr(this,"toLowerCase")},toUpperCase:function(){return Kr(this,"toUpperCase")},toTitleCase:function(){return Kr(this,"toTitleCase")},toCamelCase:function(){return this.list.forEach(e=>{let t=e.terms();t.forEach((e,r)=>{0!==r&&e.toTitleCase(),r!==t.length-1&&(e.post="")})}),this}},Wr=k((function(e,t){t.pre=function(e,t){return void 0===e?this.list[0].terms(0).pre:(this.list.forEach(r=>{let a=r.terms(0);!0===t?a.pre+=e:a.pre=e}),this)},t.post=function(e,t){return void 0===e?this.list.map(e=>{let t=e.terms();return t[t.length-1].post}):(this.list.forEach(r=>{let a=r.terms(),n=a[a.length-1];!0===t?n.post+=e:n.post=e}),this)},t.trim=function(){return this.list=this.list.map(e=>e.trim()),this},t.hyphenate=function(){return this.list.forEach(e=>{let t=e.terms();t.forEach((e,r)=>{0!==r&&(e.pre=""),t[r+1]&&(e.post="-")})}),this},t.dehyphenate=function(){const e=/(-|–|—)/;return this.list.forEach(t=>{t.terms().forEach(t=>{e.test(t.post)&&(t.post=" ")})}),this},t.deHyphenate=t.dehyphenate,t.toQuotations=function(e,t){return e=e||'"',t=t||'"',this.list.forEach(r=>{let a=r.terms();a[0].pre=e+a[0].pre;let n=a[a.length-1];n.post=t+n.post}),this},t.toQuotation=t.toQuotations,t.toParentheses=function(e,t){return e=e||"(",t=t||")",this.list.forEach(r=>{let a=r.terms();a[0].pre=e+a[0].pre;let n=a[a.length-1];n.post=t+n.post}),this}})),Rr={join:function(e){this.uncache();let t=this.list[0],r=t.length,a={};for(let r=1;r<this.list.length;r++){const n=this.list[r];a[n.start]=!0;let i=t.lastTerm();e&&(i.post+=e),i.next=n.start,n.terms(0).prev=i.id,t.length+=n.length,t.cache={}}let n=t.length-r;return this.parents().forEach(e=>{e.list.forEach(e=>{let r=e.terms();for(let a=0;a<r.length;a++)if(r[a].id===t.start){e.length+=n;break}e.cache={}}),e.list=e.list.filter(e=>!0!==a[e.start])}),this.buildFrom([t])}};const Ur=/[,\)"';:\-–—\.…]/,Qr=function(e,t){if(!e.found)return;let r=e.termList();for(let e=0;e<r.length-1;e++){const t=r[e];if(Ur.test(t.post))return}r.forEach(e=>{e.implicit=e.clean}),r[0].text+=t,r.slice(1).forEach(e=>{e.text=""});for(let e=0;e<r.length-1;e++){const t=r[e];t.post=t.post.replace(/ /,"")}};var Zr={contract:function(){let e=this.not("@hasContraction"),t=e.match("(we|they|you) are");return Qr(t,"'re"),t=e.match("(he|she|they|it|we|you) will"),Qr(t,"'ll"),t=e.match("(he|she|they|it|we) is"),Qr(t,"'s"),t=e.match("#Person is"),Qr(t,"'s"),t=e.match("#Person would"),Qr(t,"'d"),t=e.match("(is|was|had|would|should|could|do|does|have|has|can) not"),Qr(t,"n't"),t=e.match("(i|we|they) have"),Qr(t,"'ve"),t=e.match("(would|should|could) have"),Qr(t,"'ve"),t=e.match("i am"),Qr(t,"'m"),t=e.match("going to"),this}},Xr=Object.assign({},fr,br,yr,kr,Ar,$r,Pr,Er,Hr,Nr,Fr,Gr,Or,Sr,_r,qr,Wr,Rr,Zr);let Yr={};[["terms","."],["hyphenated","@hasHyphen ."],["adjectives","#Adjective"],["hashTags","#HashTag"],["emails","#Email"],["emoji","#Emoji"],["emoticons","#Emoticon"],["atMentions","#AtMention"],["urls","#Url"],["adverbs","#Adverb"],["pronouns","#Pronoun"],["conjunctions","#Conjunction"],["prepositions","#Preposition"]].forEach(e=>{Yr[e[0]]=function(t){let r=this.match(e[1]);return"number"==typeof t&&(r=r.get(t)),r}}),Yr.emojis=Yr.emoji,Yr.atmentions=Yr.atMentions,Yr.words=Yr.terms,Yr.phoneNumbers=function(e){let t=this.splitAfter("@hasComma");return t=t.match("#PhoneNumber+"),"number"==typeof e&&(t=t.get(e)),t},Yr.money=function(e){let t=this.match("#Money #Currency?");return"number"==typeof e&&(t=t.get(e)),t},Yr.places=function(e){let t=this.match("(#City && @hasComma) (#Region|#Country)"),r=this.not(t).splitAfter("@hasComma");return r=r.concat(t),r.sort("index"),r=r.match("#Place+"),"number"==typeof e&&(r=r.get(e)),r},Yr.organizations=function(e){let t=this.clauses();return t=t.match("#Organization+"),"number"==typeof e&&(t=t.get(e)),t},Yr.entities=function(e){let t=this.clauses(),r=t.people();r=r.concat(t.places()),r=r.concat(t.organizations());return r=r.not(["someone","man","woman","mother","brother","sister","father"]),r.sort("sequence"),"number"==typeof e&&(r=r.get(e)),r},Yr.things=Yr.entities,Yr.topics=Yr.entities;var ea=Yr;const ta=/^(under|over)-?/,ra=function(e,t,r){let a=r.words,n=e[t].reduced+" "+e[t+1].reduced;return void 0!==a[n]&&!0===a.hasOwnProperty(n)?(e[t].tag(a[n],"lexicon-two",r),e[t+1].tag(a[n],"lexicon-two",r),1):t+2<e.length&&(n+=" "+e[t+2].reduced,void 0!==a[n]&&!0===a.hasOwnProperty(n))?(e[t].tag(a[n],"lexicon-three",r),e[t+1].tag(a[n],"lexicon-three",r),e[t+2].tag(a[n],"lexicon-three",r),2):t+3<e.length&&(n+=" "+e[t+3].reduced,void 0!==a[n]&&!0===a.hasOwnProperty(n))?(e[t].tag(a[n],"lexicon-four",r),e[t+1].tag(a[n],"lexicon-four",r),e[t+2].tag(a[n],"lexicon-four",r),e[t+3].tag(a[n],"lexicon-four",r),3):0};var aa=function(e,t){let r=t.words,a=t.hasCompound;for(let n=0;n<e.length;n+=1){let i=e[n].clean;if(!0===a[i]&&n+1<e.length){let r=ra(e,n,t);if(r>0){n+=r;continue}}if(void 0===r[i]||!0!==r.hasOwnProperty(i))if(i===e[n].reduced||!0!==r.hasOwnProperty(e[n].reduced)){if(!0===ta.test(i)){let a=i.replace(ta,"");!0===r.hasOwnProperty(a)&&e[n].tag(r[a],"noprefix-lexicon",t)}}else e[n].tag(r[e[n].reduced],"lexicon",t);else e[n].tag(r[i],"lexicon",t)}return e};const na=/[\'‘’‛‵′`´]$/,ia=/^(m|k|cm|km|m)\/(s|h|hr)$/;var oa=[[/^[\w\.]+@[\w\.]+\.[a-z]{2,3}$/,"Email"],[/^#[a-z0-9_\u00C0-\u00FF]{2,}$/,"HashTag"],[/^@1?[0-9](am|pm)$/i,"Time"],[/^@1?[0-9]:[0-9]{2}(am|pm)?$/i,"Time"],[/^@\w{2,}$/,"AtMention"],[/^(https?:\/\/|www\.)+\w+\.[a-z]{2,3}/,"Url"],[/^[a-z0-9./].+\.(com|net|gov|org|ly|edu|info|biz|dev|ru|jp|de|in|uk|br|io|ai)/,"Url"],[/^'[0-9]{2}$/,"Year"],[/^[012]?[0-9](:[0-5][0-9])(:[0-5][0-9])$/,"Time"],[/^[012]?[0-9](:[0-5][0-9])?(:[0-5][0-9])? ?(am|pm)$/i,"Time"],[/^[012]?[0-9](:[0-5][0-9])(:[0-5][0-9])? ?(am|pm)?$/i,"Time"],[/^[PMCE]ST$/,"Time"],[/^utc ?[+-]?[0-9]+?$/,"Time"],[/^[a-z0-9]*? o\'?clock$/,"Time"],[/^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}/i,"Date"],[/^[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,4}$/,"Date"],[/^[0-9]{1,4}\/[0-9]{1,2}\/[0-9]{1,4}$/,"Date"],[/^[0-9]{1,4}-[a-z]{2,9}-[0-9]{1,4}$/i,"Date"],[/^gmt[+-][0-9][0-9]?$/i,"Timezone"],[/^utc[+-][0-9][0-9]?$/i,"Timezone"],[/^ma?c\'.*/,"LastName"],[/^o\'[drlkn].*/,"LastName"],[/^ma?cd[aeiou]/,"LastName"],[/^(lol)+[sz]$/,"Expression"],[/^woo+a*?h?$/,"Expression"],[/^(un|de|re)\\-[a-z\u00C0-\u00FF]{2}/,"Verb"],[/^[0-9]{1,4}\.[0-9]{1,2}\.[0-9]{1,4}$/,"Date"],[/^[0-9]{3}-[0-9]{4}$/,"PhoneNumber"],[/^(\+?[0-9][ -])?[0-9]{3}[ -]?[0-9]{3}-[0-9]{4}$/,"PhoneNumber"],[/^[-+]?[\$\xA2-\xA5\u058F\u060B\u09F2\u09F3\u09FB\u0AF1\u0BF9\u0E3F\u17DB\u20A0-\u20BD\uA838\uFDFC\uFE69\uFF04\uFFE0\uFFE1\uFFE5\uFFE6][-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?(k|m|b|bn)?\+?$/,["Money","Value"]],[/^[-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?[\$\xA2-\xA5\u058F\u060B\u09F2\u09F3\u09FB\u0AF1\u0BF9\u0E3F\u17DB\u20A0-\u20BD\uA838\uFDFC\uFE69\uFF04\uFFE0\uFFE1\uFFE5\uFFE6]\+?$/,["Money","Value"]],[/^[-+]?[\$£]?[0-9]([0-9,.])+?(usd|eur|jpy|gbp|cad|aud|chf|cny|hkd|nzd|kr|rub)$/i,["Money","Value"]],[/^[-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?\+?$/,["Cardinal","NumericValue"]],[/^[-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?(st|nd|rd|r?th)$/,["Ordinal","NumericValue"]],[/^\.[0-9]+\+?$/,["Cardinal","NumericValue"]],[/^[-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?%\+?$/,["Percent","Cardinal","NumericValue"]],[/^\.[0-9]+%$/,["Percent","Cardinal","NumericValue"]],[/^[0-9]{1,4}\/[0-9]{1,4}(st|nd|rd|th)?s?$/,["Fraction","NumericValue"]],[/^[0-9.]{1,3}[a-z]{0,2}[-–—][0-9]{1,3}[a-z]{0,2}$/,["Value","NumberRange"]],[/^[0-9][0-9]?(:[0-9][0-9])?(am|pm)? ?[-–—] ?[0-9][0-9]?(:[0-9][0-9])?(am|pm)?$/,["Time","NumberRange"]],[/^[0-9.]+([a-z]{1,4})$/,"Value"]];const sa=/^[IVXLCDM]{2,}$/,la=/^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/;const ua="Adjective",ca="Infinitive",ha="PresentTense",da="Singular",ga="PastTense",pa="Expression";var ma={a:[[/.[aeiou]na$/,"Noun"],[/.[oau][wvl]ska$/,"LastName"],[/.[^aeiou]ica$/,da],[/^([hyj]a)+$/,pa]],c:[[/.[^aeiou]ic$/,ua]],d:[[/[aeiou](pp|ll|ss|ff|gg|tt|rr|bb|nn|mm)ed$/,ga],[/.[aeo]{2}[bdgmnprvz]ed$/,ga],[/.[aeiou][sg]hed$/,ga],[/.[aeiou]red$/,ga],[/.[aeiou]r?ried$/,ga],[/.[bcdgtr]led$/,ga],[/.[aoui]f?led$/,ga],[/.[iao]sed$/,ga],[/[aeiou]n?[cs]ed$/,ga],[/[aeiou][rl]?[mnf]ed$/,ga],[/[aeiou][ns]?c?ked$/,ga],[/[aeiou][nl]?ged$/,ga],[/.[tdbwxz]ed$/,ga],[/[^aeiou][aeiou][tvx]ed$/,ga],[/.[cdlmnprstv]ied$/,ga],[/[^aeiou]ard$/,da],[/[aeiou][^aeiou]id$/,ua],[/.[vrl]id$/,ua]],e:[[/.[lnr]ize$/,ca],[/.[^aeiou]ise$/,ca],[/.[aeiou]te$/,ca],[/.[^aeiou][ai]ble$/,ua],[/.[^aeiou]eable$/,ua],[/.[ts]ive$/,ua],[/[a-z]-like$/,ua]],h:[[/.[^aeiouf]ish$/,ua],[/.v[iy]ch$/,"LastName"],[/^ug?h+$/,pa],[/^uh[ -]?oh$/,pa],[/[a-z]-ish$/,ua]],i:[[/.[oau][wvl]ski$/,"LastName"]],k:[[/^(k){2}$/,pa]],l:[[/.[gl]ial$/,ua],[/.[^aeiou]ful$/,ua],[/.[nrtumcd]al$/,ua],[/.[^aeiou][ei]al$/,ua]],m:[[/.[^aeiou]ium$/,da],[/[^aeiou]ism$/,da],[/^h*u*m+$/,pa],[/^\d+ ?[ap]m$/,"Date"]],n:[[/.[lsrnpb]ian$/,ua],[/[^aeiou]ician$/,"Actor"],[/[aeiou][ktrp]in$/,"Gerund"]],o:[[/^no+$/,pa],[/^(yo)+$/,pa],[/^woo+[pt]?$/,pa]],r:[[/.[bdfklmst]ler$/,"Noun"],[/[aeiou][pns]er$/,da],[/[^i]fer$/,ca],[/.[^aeiou][ao]pher$/,"Actor"],[/.[lk]er$/,"Noun"],[/.ier$/,"Comparative"]],t:[[/.[di]est$/,"Superlative"],[/.[icldtgrv]ent$/,ua],[/[aeiou].*ist$/,ua],[/^[a-z]et$/,"Verb"]],s:[[/.[^aeiou]ises$/,ha],[/.[rln]ates$/,ha],[/.[^z]ens$/,"Verb"],[/.[lstrn]us$/,da],[/.[aeiou]sks$/,ha],[/.[aeiou]kes$/,ha],[/[aeiou][^aeiou]is$/,da],[/[a-z]\'s$/,"Noun"],[/^yes+$/,pa]],v:[[/.[^aeiou][ai][kln]ov$/,"LastName"]],y:[[/.[cts]hy$/,ua],[/.[st]ty$/,ua],[/.[gk]y$/,ua],[/.[tnl]ary$/,ua],[/.[oe]ry$/,da],[/[rdntkbhs]ly$/,"Adverb"],[/...lly$/,"Adverb"],[/[bszmp]{2}y$/,ua],[/.(gg|bb|zz)ly$/,ua],[/.[ai]my$/,ua],[/[ea]{2}zy$/,ua],[/.[^aeiou]ity$/,da]]};const fa="Adjective",ba="Infinitive",va="PresentTense",ya="Singular",wa="PastTense",ka="Adverb",Aa="Plural",Da="Verb",$a="LastName";var Pa=[null,null,{ea:ya,ia:"Noun",ic:fa,ly:ka,"'n":Da,"'t":Da},{oed:wa,ued:wa,xed:wa," so":ka,"'ll":"Modal","'re":"Copula",azy:fa,eer:"Noun",end:Da,ped:wa,ffy:fa,ify:ba,ing:"Gerund",ize:ba,lar:fa,mum:fa,nes:va,nny:fa,oid:fa,ous:fa,que:fa,rol:ya,sis:ya,zes:va},{amed:wa,aped:wa,ched:wa,lked:wa,nded:wa,cted:wa,dged:wa,akis:$a,cede:ba,chuk:$a,czyk:$a,ects:va,ends:Da,enko:$a,ette:ya,fies:va,fore:ka,gate:ba,gone:fa,ices:Aa,ints:Aa,ines:Aa,ions:Aa,less:ka,llen:fa,made:fa,nsen:$a,oses:va,ould:"Modal",some:fa,sson:$a,tage:ba,teen:"Value",tion:ya,tive:fa,tors:"Noun",vice:ya},{tized:wa,urned:wa,eased:wa,ances:Aa,bound:fa,ettes:Aa,fully:ka,ishes:va,ities:Aa,marek:$a,nssen:$a,ology:"Noun",ports:Aa,rough:fa,tches:va,tieth:"Ordinal",tures:Aa,wards:ka,where:ka},{auskas:$a,keeper:"Actor",logist:"Actor",teenth:"Value"},{opoulos:$a,borough:"Place",sdottir:$a}];var Ea={":(":!0,":)":!0,":P":!0,":p":!0,":O":!0,":3":!0,":|":!0,":/":!0,":\\":!0,":$":!0,":*":!0,":@":!0,":-(":!0,":-)":!0,":-P":!0,":-p":!0,":-O":!0,":-3":!0,":-|":!0,":-/":!0,":-\\":!0,":-$":!0,":-*":!0,":-@":!0,":^(":!0,":^)":!0,":^P":!0,":^p":!0,":^O":!0,":^3":!0,":^|":!0,":^/":!0,":^\\":!0,":^$":!0,":^*":!0,":^@":!0,"):":!0,"(:":!0,"$:":!0,"*:":!0,")-:":!0,"(-:":!0,"$-:":!0,"*-:":!0,")^:":!0,"(^:":!0,"$^:":!0,"*^:":!0,"<3":!0,"</3":!0,"<\\3":!0};const Ha=/^(\u00a9|\u00ae|[\u2319-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/;const ja={lexicon:aa,punctuation:function(e,t,r){let a=e[t];if(na.test(a.text)&&!na.test(a.pre)&&!na.test(a.post)&&a.clean.length>2){let e=a.clean[a.clean.length-2];if("s"===e)return void a.tag(["Possessive","Noun"],"end-tick",r);"n"===e&&a.tag(["Gerund"],"chillin",r)}ia.test(a.text)&&a.tag("Unit","per-sec",r)},regex:function(e,t){let r=e.text;for(let a=0;a<oa.length;a+=1)if(!0===oa[a][0].test(r)){e.tagSafe(oa[a][1],"prefix #"+a,t);break}e.text.length>=2&&sa.test(r)&&la.test(r)&&e.tag("RomanNumeral","xvii",t)},suffix:function(e,t){!function(e,t){const r=e.clean.length;let a=7;r<=a&&(a=r-1);for(let n=a;n>1;n-=1){let a=e.clean.substr(r-n,r);if(!0===Pa[a.length].hasOwnProperty(a)){let r=Pa[a.length][a];e.tagSafe(r,"suffix -"+a,t);break}}}(e,t),function(e,t){let r=e.clean,a=r[r.length-1];if(!0===ma.hasOwnProperty(a)){let n=ma[a];for(let i=0;i<n.length;i+=1)if(!0===n[i][0].test(r)){e.tagSafe(n[i][1],`endReg ${a} #${i}`,t);break}}}(e,t)},emoji:(e,t)=>{let r=e.pre+e.text+e.post;var a;r=r.trim(),r=r.replace(/[.!?,]$/,""),!0===(e=>!(":"!==e.charAt(0)||null===e.match(/:.?$/)||e.match(" ")||e.length>35))(r)&&(e.tag("Emoji","comma-emoji",t),e.text=r,e.pre=e.pre.replace(":",""),e.post=e.post.replace(":","")),e.text.match(Ha)&&(e.tag("Emoji","unicode-emoji",t),e.text=r),!0===(a=(a=r).replace(/^[:;]/,":"),Ea.hasOwnProperty(a))&&(e.tag("Emoticon","emoticon-emoji",t),e.text=r)}};var Na=function(e,t){let r=e.world;ja.lexicon(t,r);for(let e=0;e<t.length;e+=1){let a=t[e];ja.punctuation(t,e,r),ja.regex(a,r),ja.suffix(a,r),ja.emoji(a,r)}return e};var xa={beforeThisWord:{there:"Verb",me:"Verb",man:"Adjective",only:"Verb",him:"Verb",were:"Noun",took:"Noun",himself:"Verb",went:"Noun",who:"Noun",jr:"Person"},afterThisWord:{i:"Verb",first:"Noun",it:"Verb",there:"Verb",not:"Verb",because:"Noun",if:"Noun",but:"Noun",who:"Verb",this:"Noun",his:"Noun",when:"Noun",you:"Verb",very:"Adjective",old:"Noun",never:"Verb",before:"Noun"},beforeThisPos:{Copula:"Noun",PastTense:"Noun",Conjunction:"Noun",Modal:"Noun",Pluperfect:"Noun",PerfectTense:"Verb"},afterThisPos:{Adjective:"Noun",Possessive:"Noun",Determiner:"Noun",Adverb:"Verb",Pronoun:"Verb",Value:"Noun",Ordinal:"Noun",Modal:"Verb",Superlative:"Noun",Demonym:"Noun",Honorific:"Person"}};const Fa=Object.keys(xa.afterThisPos),Ca=Object.keys(xa.beforeThisPos);var Ba=function(e,t){for(let r=0;r<e.length;r+=1){let a=e[r];if(!0===a.isKnown())continue;let n=e[r-1];if(n){if(!0===xa.afterThisWord.hasOwnProperty(n.clean)){let e=xa.afterThisWord[n.clean];a.tag(e,"after-"+n.clean,t);continue}let e=Fa.find(e=>n.tags[e]);if(void 0!==e){let r=xa.afterThisPos[e];a.tag(r,"after-"+e,t);continue}}let i=e[r+1];if(i){if(!0===xa.beforeThisWord.hasOwnProperty(i.clean)){let e=xa.beforeThisWord[i.clean];a.tag(e,"before-"+i.clean,t);continue}let e=Ca.find(e=>i.tags[e]);if(void 0!==e){let r=xa.beforeThisPos[e];a.tag(r,"before-"+e,t);continue}}}};const Ga=/^[A-Z][a-z'\u00C0-\u00FF]/,za=/[0-9]/;var Ia=function(e){let t=e.world;e.list.forEach(e=>{let r=e.terms();for(let e=1;e<r.length;e++){const a=r[e];!0===Ga.test(a.text)&&!1===za.test(a.text)&&void 0===a.tags.Date&&a.tag("ProperNoun","titlecase-noun",t)}})};const Oa=/^(re|un)-?[a-z\u00C0-\u00FF]/,Ta=/^(re|un)-?/;var Va=function(e,t){let r=t.words;e.forEach(e=>{if(!0!==e.isKnown()&&!0===Oa.test(e.clean)){let a=e.clean.replace(Ta,"");a&&a.length>3&&void 0!==r[a]&&!0===r.hasOwnProperty(a)&&e.tag(r[a],"stem-"+a,t)}})};var Ma={isSingular:[/(ax|test)is$/i,/(octop|vir|radi|nucle|fung|cact|stimul)us$/i,/(octop|vir)i$/i,/(rl)f$/i,/(alias|status)$/i,/(bu)s$/i,/(al|ad|at|er|et|ed|ad)o$/i,/(ti)um$/i,/(ti)a$/i,/sis$/i,/(?:(^f)fe|(lr)f)$/i,/hive$/i,/s[aeiou]+ns$/i,/(^aeiouy|qu)y$/i,/(x|ch|ss|sh|z)$/i,/(matr|vert|ind|cort)(ix|ex)$/i,/(m|l)ouse$/i,/(m|l)ice$/i,/(antenn|formul|nebul|vertebr|vit)a$/i,/.sis$/i,/^(?!talis|.*hu)(.*)man$/i],isPlural:[/(^v)ies$/i,/ises$/i,/ives$/i,/(antenn|formul|nebul|vertebr|vit)ae$/i,/(octop|vir|radi|nucle|fung|cact|stimul)i$/i,/(buffal|tomat|tornad)oes$/i,/(analy|ba|diagno|parenthe|progno|synop|the)ses$/i,/(vert|ind|cort)ices$/i,/(matr|append)ices$/i,/(x|ch|ss|sh|s|z|o)es$/i,/is$/i,/men$/i,/news$/i,/.tia$/i,/(^f)ves$/i,/(lr)ves$/i,/(^aeiouy|qu)ies$/i,/(m|l)ice$/i,/(cris|ax|test)es$/i,/(alias|status)es$/i,/ics$/i]};const Ja=["Uncountable","Pronoun","Place","Value","Person","Month","WeekDay","Holiday"],La=[/ss$/,/sis$/,/[^aeiou][uo]s$/,/'s$/],Sa=[/i$/,/ae$/];var _a=function(e,t){if(e.tags.Noun&&!e.tags.Acronym){let r=e.clean;if(e.tags.Singular||e.tags.Plural)return;if(r.length<=3)return void e.tag("Singular","short-singular",t);if(Ja.find(t=>e.tags[t]))return;if(Ma.isPlural.find(e=>e.test(r)))return void e.tag("Plural","plural-rules",t);if(Ma.isSingular.find(e=>e.test(r)))return void e.tag("Singular","singular-rules",t);if(!0===/s$/.test(r)){if(La.find(e=>e.test(r)))return;return void e.tag("Plural","plural-fallback",t)}if(Sa.find(e=>e.test(r)))return;e.tag("Singular","singular-fallback",t)}};var Ka=["academy","administration","agence","agences","agencies","agency","airlines","airways","army","assoc","associates","association","assurance","authority","autorite","aviation","bank","banque","board","boys","brands","brewery","brotherhood","brothers","building society","bureau","cafe","caisse","capital","care","cathedral","center","central bank","centre","chemicals","choir","chronicle","church","circus","clinic","clinique","club","co","coalition","coffee","collective","college","commission","committee","communications","community","company","comprehensive","computers","confederation","conference","conseil","consulting","containers","corporation","corps","corp","council","crew","daily news","data","departement","department","department store","departments","design","development","directorate","division","drilling","education","eglise","electric","electricity","energy","ensemble","enterprise","enterprises","entertainment","estate","etat","evening news","faculty","federation","financial","fm","foundation","fund","gas","gazette","girls","government","group","guild","health authority","herald","holdings","hospital","hotel","hotels","inc","industries","institut","institute","institute of technology","institutes","insurance","international","interstate","investment","investments","investors","journal","laboratory","labs","liberation army","limited","local authority","local health authority","machines","magazine","management","marine","marketing","markets","media","memorial","mercantile exchange","ministere","ministry","military","mobile","motor","motors","musee","museum","news","news service","observatory","office","oil","optical","orchestra","organization","partners","partnership","people's party","petrol","petroleum","pharmacare","pharmaceutical","pharmaceuticals","pizza","plc","police","polytechnic","post","power","press","productions","quartet","radio","regional authority","regional health authority","reserve","resources","restaurant","restaurants","savings","school","securities","service","services","social club","societe","society","sons","standard","state police","state university","stock exchange","subcommittee","syndicat","systems","telecommunications","telegraph","television","times","tribunal","tv","union","university","utilities","workers"].reduce((function(e,t){return e[t]="Noun",e}),{});const qa=function(e){return!!e.tags.Noun&&(!(e.tags.Pronoun||e.tags.Comma||e.tags.Possessive)&&!!(e.tags.Organization||e.tags.Acronym||e.tags.Place||e.titleCase()))};const Wa=/^[A-Z]('s|,)?$/,Ra=/([A-Z]\.){2}[A-Z]?/i,Ua={I:!0,A:!0};const Qa={neighbours:Ba,case:Ia,stem:Va,plural:_a,organizations:function(e,t){for(let r=0;r<e.length;r+=1){let a=e[r];if(void 0!==Ka[a.clean]&&!0===Ka.hasOwnProperty(a.clean)){let n=e[r-1];if(void 0!==n&&!0===qa(n)){n.tagSafe("Organization","org-word-1",t),a.tagSafe("Organization","org-word-2",t);continue}let i=e[r+1];if(void 0!==i&&"of"===i.clean&&e[r+2]&&qa(e[r+2])){a.tagSafe("Organization","org-of-word-1",t),i.tagSafe("Organization","org-of-word-2",t),e[r+2].tagSafe("Organization","org-of-word-3",t);continue}}}},acronyms:function(e,t){e.forEach(e=>{!0!==e.tags.RomanNumeral&&(!0===Ra.test(e.text)&&e.tag("Acronym","period-acronym",t),e.isUpperCase()&&function(e,t){let r=e.reduced;return!!e.tags.Acronym||!t.words[r]&&!(r.length>5)&&e.isAcronym()}(e,t)?(e.tag("Acronym","acronym-step",t),e.tag("Noun","acronym-infer",t)):!Ua.hasOwnProperty(e.text)&&Wa.test(e.text)&&(e.tag("Acronym","one-letter-acronym",t),e.tag("Noun","one-letter-infer",t)),e.tags.Organization&&e.text.length<=3&&e.tag("Acronym","acronym-org",t),e.tags.Organization&&e.isUpperCase()&&e.text.length<=6&&e.tag("Acronym","acronym-org-case",t))})}};var Za=function(e,t){let r=e.world;return Qa.neighbours(t,r),Qa.case(e),Qa.stem(t,r),t.forEach(t=>{!1===t.isKnown()&&t.tag("Noun","noun-fallback",e.world)}),Qa.organizations(t,r),Qa.acronyms(t,r),t.forEach(t=>{Qa.plural(t,e.world)}),e};const Xa=/n't$/,Ya={"won't":["will","not"],wont:["will","not"],"can't":["can","not"],cant:["can","not"],cannot:["can","not"],"shan't":["should","not"],dont:["do","not"],dun:["do","not"]};var en=function(e,t){if(!0===Ya.hasOwnProperty(e.clean))return Ya[e.clean];if("ain't"===e.clean||"aint"===e.clean)return function(e,t){let r=t.terms(),a=r.indexOf(e),n=r.slice(0,a).find(e=>e.tags.Noun);return n&&n.tags.Plural?["are","not"]:["is","not"]}(e,t);if(!0===Xa.test(e.clean)){return[e.clean.replace(Xa,""),"not"]}return null};const tn=/([a-z\u00C0-\u00FF]+)[\u0027\u0060\u00B4\u2018\u2019\u201A\u201B\u2032\u2035\u2039\u203A]([a-z]{1,2})$/i,rn={ll:"will",ve:"have",re:"are",m:"am","n't":"not"};var an=function(e){let t=e.text.match(tn);return null===t?null:rn.hasOwnProperty(t[2])?[t[1],rn[t[2]]]:null};const nn={wanna:["want","to"],gonna:["going","to"],im:["i","am"],alot:["a","lot"],ive:["i","have"],imma:["I","will"],"where'd":["where","did"],whered:["where","did"],"when'd":["when","did"],whend:["when","did"],howd:["how","did"],whatd:["what","did"],dunno:["do","not","know"],brb:["be","right","back"],gtg:["got","to","go"],irl:["in","real","life"],tbh:["to","be","honest"],imo:["in","my","opinion"],til:["today","i","learned"],rn:["right","now"],twas:["it","was"],"@":["at"]};var on=function(e){return nn.hasOwnProperty(e.clean)?nn[e.clean]:null};const sn=/([a-z\u00C0-\u00FF]+)[\u0027\u0060\u00B4\u2018\u2019\u201A\u201B\u2032\u2035\u2039\u203A]s$/i,ln={that:!0,there:!0},un={here:!0,there:!0,everywhere:!0};var cn=function(e,t,r){let a=e.text.match(sn);if(null!==a){if(!0===((e,t)=>{if(e.tags.Possessive)return!0;if(e.tags.Pronoun||e.tags.QuestionWord)return!1;if(ln.hasOwnProperty(e.reduced))return!1;let r=t.get(e.next);if(!r)return!0;if(r.tags.Verb)return!!r.tags.Infinitive||!!r.tags.PresentTense;if(r.tags.Noun)return!0!==un.hasOwnProperty(r.reduced);let a=t.get(r.next);return!(!a||!a.tags.Noun||a.tags.Pronoun)||(r.tags.Adjective||r.tags.Adverb||r.tags.Verb,!1)})(e,t.pool))return e.tag("#Possessive","isPossessive",r),null;if(null!==a)return((e,t)=>{let r=t.terms(),a=r.indexOf(e);return r.slice(a+1,a+3).find(e=>e.tags.PastTense)})(e,t)?[a[1],"has"]:[a[1],"is"]}return null};const hn=/[a-z\u00C0-\u00FF]'d$/,dn={how:!0,what:!0};var gn=function(e,t){if(hn.test(e.clean)){let r=e.clean.replace(/'d$/,""),a=t.terms(),n=a.indexOf(e),i=a.slice(n+1,n+4);for(let e=0;e<i.length;e++){let t=i[e];if(t.tags.Verb)return t.tags.PastTense?[r,"had"]:!0===dn[r]?[r,"did"]:[r,"would"]}return[r,"would"]}return null};const pn=/^([0-9.]{1,3}[a-z]{0,2}) ?[-–—] ?([0-9]{1,3}[a-z]{0,2})$/i,mn=/^([0-9][0-9]?(:[0-9][0-9])?(am|pm)?) ?[-–—] ?([0-9][0-9]?(:[0-9][0-9])?(am|pm)?)$/i;var fn=function(e){if(!0===e.tags.PhoneNumber)return null;let t=e.text.match(pn);return null!==t?[t[1],"to",t[2]]:(t=e.text.match(mn),null!==t?[t[1],"to",t[4]]:null)};const bn=/^(l|c|d|j|m|n|qu|s|t)[\u0027\u0060\u00B4\u2018\u2019\u201A\u201B\u2032\u2035\u2039\u203A]([a-z\u00C0-\u00FF]+)$/i,vn={l:"le",c:"ce",d:"de",j:"je",m:"me",n:"ne",qu:"que",s:"se",t:"tu"};var yn=function(e){let t=e.text.match(bn);if(null===t||!1===vn.hasOwnProperty(t[1]))return null;let r=[vn[t[1]],t[2]];return r[0]&&r[1]?r:null};const wn=/^[0-9]+$/,kn=/^[0-9]+(st|nd|rd|th)$/,An=/^[0-9:]+(am|pm)?$/,Dn=function(e,t){let r=ot(e.join(" "),t.world,t.pool())[0],a=r.terms();aa(a,t.world);let n=a[0];return kn.test(n.text)?(a[0].tag("Ordinal","ord-range",t.world),a[2].tag("Ordinal","ord-range",t.world)):wn.test(n.text)?(a[0].tag("Cardinal","num-range",t.world),a[2].tag("Cardinal","num-range",t.world)):An.test(n.text)&&(a[0].tag("Time","time-range",t.world),a[1].tag("Date","time-range",t.world),a[2].tag("Time","time-range",t.world)),a.forEach(e=>{e.implicit=e.text,e.text="",e.clean="",e.pre="",e.post="",0===Object.keys(e.tags).length&&(e.tags.Noun=!0)}),r};var $n=function(e){let t=e.world;return e.list.forEach(r=>{let a=r.terms();for(let n=0;n<a.length;n+=1){let i=a[n],o=en(i,r);if(o=o||an(i),o=o||on(i),o=o||cn(i,r,t),o=o||gn(i,r),o=o||fn(i),o=o||yn(i),null!==o){let t=Dn(o,e);!0===r.has("#NumberRange")&&e.buildFrom([t]).tag("NumberRange"),t.terms(0).text=i.text,r.buildFrom(i.id,1,e.pool()).replace(t,e,!0)}}}),e};const Pn=function(e,t){let r=e._cache.tags[t]||[];return r=r.map(t=>e.list[t]),e.buildFrom(r)};var En=function(e){let t=Pn(e,"Infinitive");return t.found&&(t=t.ifNo("@hasQuestionMark"),t=t.ifNo("(i|we|they)"),t.not("will be").match("[#Infinitive] (#Determiner|#Possessive) #Noun").notIf("(our|their)").match("#Infinitive").tag("Imperative","shut-the"),t.match("^[#Infinitive] #Adverb?$",0).tag("Imperative","go-fast"),t.match("[(do && #Infinitive)] not? #Verb",0).tag("Imperative","do-not"),t.match("[#Infinitive] (it|some) (#Comparative|#Preposition|please|now|again)",0).tag("Imperative","do-it")),t=function(e,t){let r=e._cache.words[t]||[];return r=r.map(t=>e.list[t]),e.buildFrom(r)}(e,"like"),t.match("#Adverb like").notIf("(really|generally|typically|usually|sometimes|often|just) [like]").tag("Adverb","adverb-like"),t=Pn(e,"Adjective"),t.match("#Determiner #Adjective$").notIf("(#Comparative|#Superlative)").terms(1).tag("Noun","the-adj-1"),t=Pn(e,"FirstName"),t.match("#FirstName (#Noun|@titleCase)").ifNo("^#Possessive").ifNo("(#Pronoun|#Plural)").ifNo("@hasComma .").lastTerm().tag("#LastName","firstname-noun"),t=Pn(e,"Value"),t=t.match("#Value #PresentTense").ifNo("#Copula"),t.found&&(!0===t.has("(one|1)")?t.terms(1).tag("Singular","one-presentTense"):t.terms(1).tag("Plural","value-presentTense")),e.match("^(well|so|okay)").tag("Expression","well-"),e.match("#Value [of a second]",0).unTag("Value","of-a-second"),e.match("#Value [seconds]",0).unTag("Value","30-seconds").tag(["Unit","Plural"]),t=Pn(e,"Gerund"),t.match("(be|been) (#Adverb|not)+? #Gerund").not("#Verb$").tag("Auxiliary","be-walking"),e.match("(try|use|attempt|build|make) #Verb").ifNo("(@hasComma|#Negative|#PhrasalVerb|#Copula|will|be)").lastTerm().tag("#Noun","do-verb"),t=Pn(e,"Possessive"),t=t.match("#Possessive [#Infinitive]",0),t.lookBehind("(let|made|make|force|ask)").found||t.tag("Noun","her-match"),e};var Hn=function(e){let t={};for(let r=0;r<e.length;r++)t[e[r]]=!0;return Object.keys(t)};var jn=[{match:"too much",tag:"Adverb Adjective",reason:"bit-4"},{match:"u r",tag:"Pronoun Copula",reason:"u r"},{match:"#Copula (pretty|dead|full|well|sure) (#Adjective|#Noun)",tag:"#Copula #Adverb #Adjective",reason:"sometimes-adverb"},{match:"(#Pronoun|#Person) (had|#Adverb)? [better] #PresentTense",group:0,tag:"Modal",reason:"i-better"},{match:"[#Gerund] #Adverb? not? #Copula",group:0,tag:"Activity",reason:"gerund-copula"},{match:"[#Gerund] #Modal",group:0,tag:"Activity",reason:"gerund-modal"},{match:"holy (shit|fuck|hell)",tag:"Expression",reason:"swears-expression"},{match:"#Noun #Actor",tag:"Actor",reason:"thing-doer"},{match:"#Conjunction [u]",group:0,tag:"Pronoun",reason:"u-pronoun-2"},{match:"[u] #Verb",group:0,tag:"Pronoun",reason:"u-pronoun-1"},{match:"#Noun [(who|whom)]",group:0,tag:"Determiner",reason:"captain-who"},{match:"a bit much",tag:"Determiner Adverb Adjective",reason:"bit-3"},{match:"#Verb #Adverb? #Noun [(that|which)]",group:0,tag:"Preposition",reason:"that-prep"},{match:"@hasComma [which] (#Pronoun|#Verb)",group:0,tag:"Preposition",reason:"which-copula"},{match:"#Copula just [like]",group:0,tag:"Preposition",reason:"like-preposition"},{match:"#Noun [like] #Noun",group:0,tag:"Preposition",reason:"noun-like"},{match:"[had] #Noun+ #PastTense",group:0,tag:"Condition",reason:"had-he"},{match:"[were] #Noun+ to #Infinitive",group:0,tag:"Condition",reason:"were-he"},{match:"^how",tag:"QuestionWord",reason:"how-question"},{match:"[how] (#Determiner|#Copula|#Modal|#PastTense)",group:0,tag:"QuestionWord",reason:"how-is"},{match:"^which",tag:"QuestionWord",reason:"which-question"},{match:"[so] #Noun",group:0,tag:"Conjunction",reason:"so-conj"},{match:"[(who|what|where|why|how|when)] #Noun #Copula #Adverb? (#Verb|#Adjective)",group:0,tag:"Conjunction",reason:"how-he-is-x"}],Nn={adverbAdjective:["dark","bright","flat","light","soft","pale","dead","dim","faux","little","wee","sheer","most","near","good","extra","all"],personDate:["april","june","may","jan","august","eve"],personMonth:["january","april","may","june","jan","sep"],personAdjective:["misty","rusty","dusty","rich","randy","young"],personVerb:["pat","wade","ollie","will","rob","buck","bob","mark","jack"],personPlace:["darwin","hamilton","paris","alexandria","houston","kobe","santiago","salvador","sydney","victoria"],personNoun:["art","baker","berg","bill","brown","charity","chin","christian","cliff","daisy","dawn","dick","dolly","faith","franco","gene","green","hall","hill","holly","hope","jean","jewel","joy","kelvin","king","kitty","lane","lily","melody","mercedes","miles","olive","penny","ray","reed","robin","rod","rose","sky","summer","trinity","van","viola","violet","wang","white"]};const xn=`(${Nn.personDate.join("|")})`;var Fn=[{match:"#Holiday (day|eve)",tag:"Holiday",reason:"holiday-day"},{match:"[sun] the #Ordinal",tag:"WeekDay",reason:"sun-the-5th"},{match:"[sun] #Date",group:0,tag:"WeekDay",reason:"sun-feb"},{match:"#Date (on|this|next|last|during)? [sun]",group:0,tag:"WeekDay",reason:"1pm-sun"},{match:"(in|by|before|during|on|until|after|of|within|all) [sat]",group:0,tag:"WeekDay",reason:"sat"},{match:"(in|by|before|during|on|until|after|of|within|all) [wed]",group:0,tag:"WeekDay",reason:"wed"},{match:"(in|by|before|during|on|until|after|of|within|all) [march]",group:0,tag:"Month",reason:"march"},{match:"[sat] #Date",group:0,tag:"WeekDay",reason:"sat-feb"},{match:"#Preposition [(march|may)]",group:0,tag:"Month",reason:"in-month"},{match:"this [(march|may)]",group:0,tag:"Month",reason:"this-month"},{match:"next [(march|may)]",group:0,tag:"Month",reason:"this-month"},{match:"last [(march|may)]",group:0,tag:"Month",reason:"this-month"},{match:"[(march|may)] the? #Value",group:0,tag:"Month",reason:"march-5th"},{match:"#Value of? [(march|may)]",group:0,tag:"Month",reason:"5th-of-march"},{match:"[(march|may)] .? #Date",group:0,tag:"Month",reason:"march-and-feb"},{match:"#Date .? [(march|may)]",group:0,tag:"Month",reason:"feb-and-march"},{match:"#Adverb [(march|may)]",group:0,tag:"Verb",reason:"quickly-march"},{match:"[(march|may)] #Adverb",group:0,tag:"Verb",reason:"march-quickly"},{match:"#Value of #Month",tag:"Date",reason:"value-of-month"},{match:"#Cardinal #Month",tag:"Date",reason:"cardinal-month"},{match:"#Month #Value to #Value",tag:"Date",reason:"value-to-value"},{match:"#Month the #Value",tag:"Date",reason:"month-the-value"},{match:"(#WeekDay|#Month) #Value",tag:"Date",reason:"date-value"},{match:"#Value (#WeekDay|#Month)",tag:"Date",reason:"value-date"},{match:"(#TextValue && #Date) #TextValue",tag:"Date",reason:"textvalue-date"},{match:`in [${xn}]`,group:0,tag:"Date",reason:"in-june"},{match:`during [${xn}]`,group:0,tag:"Date",reason:"in-june"},{match:`on [${xn}]`,group:0,tag:"Date",reason:"in-june"},{match:`by [${xn}]`,group:0,tag:"Date",reason:"by-june"},{match:`after [${xn}]`,group:0,tag:"Date",reason:"after-june"},{match:`#Date [${xn}]`,group:0,tag:"Date",reason:"in-june"},{match:xn+" #Value",tag:"Date",reason:"june-5th"},{match:xn+" #Date",tag:"Date",reason:"june-5th"},{match:xn+" #ProperNoun",tag:"Person",reason:"june-smith",safe:!0},{match:xn+" #Acronym? (#ProperNoun && !#Month)",tag:"Person",reason:"june-smith-jr"},{match:"#Cardinal [second]",tag:"Unit",reason:"one-second"},{match:"#Month #NumberRange",tag:"Date",reason:"aug 20-21"},{match:"(#Place|#Demonmym|#Time) (standard|daylight|central|mountain)? time",tag:"Timezone",reason:"std-time"},{match:"(eastern|mountain|pacific|central|atlantic) (standard|daylight|summer)? time",tag:"Timezone",reason:"eastern-time"},{match:"#Time [(eastern|mountain|pacific|central|est|pst|gmt)]",group:0,tag:"Timezone",reason:"5pm-central"},{match:"(central|western|eastern) european time",tag:"Timezone",reason:"cet"}];const Cn=`(${Nn.personAdjective.join("|")})`;var Bn=[{match:"[all] #Determiner? #Noun",group:0,tag:"Adjective",reason:"all-noun"},{match:`#Adverb [${Cn}]`,group:0,tag:"Adjective",reason:"really-rich"},{match:Cn+" #Person",tag:"Person",reason:"randy-smith"},{match:Cn+" #Acronym? #ProperNoun",tag:"Person",reason:"rusty-smith"},{match:"#Copula [(just|alone)]$",group:0,tag:"Adjective",reason:"not-adverb"},{match:"#Singular is #Adverb? [#PastTense$]",group:0,tag:"Adjective",reason:"is-filled"},{match:"[#PastTense] #Singular is",group:0,tag:"Adjective",reason:"smoked-poutine"},{match:"[#PastTense] #Plural are",group:0,tag:"Adjective",reason:"baked-onions"},{match:"well [#PastTense]",group:0,tag:"Adjective",reason:"well-made"},{match:"#Copula [fucked up?]",tag:"Adjective",reason:"swears-adjective"},{match:"#Singular (seems|appears) #Adverb? [#PastTense$]",group:0,tag:"Adjective",reason:"seems-filled"},{match:"(a|an) [#Gerund]",group:0,tag:"Adjective",reason:"a|an"},{match:"as [#Gerund] as",group:0,tag:"Adjective",reason:"as-gerund-as"},{match:"more [#Gerund] than",group:0,tag:"Adjective",reason:"more-gerund-than"},{match:"(so|very|extremely) [#Gerund]",group:0,tag:"Adjective",reason:"so-gerund"},{match:"(it|he|she|everything|something) #Adverb? was #Adverb? [#Gerund]",group:0,tag:"Adjective",reason:"it-was-gerund"},{match:"(found|found) it #Adverb? [#Gerund]",group:0,tag:"Adjective",reason:"found-it-gerund"},{match:"a (little|bit|wee) bit? [#Gerund]",group:0,tag:"Adjective",reason:"a-bit-gerund"},{match:"#Copula #Adjective? [(out|in|through)]$",group:0,tag:"Adjective",reason:"still-out"},{match:"^[#Adjective] (the|your) #Noun",group:0,tag:"Infinitive",reason:"shut-the"}],Gn=[{match:"there (are|were) #Adjective? [#PresentTense]",group:0,tag:"Plural",reason:"there-are"},{match:"#Determiner [sun]",group:0,tag:"Singular",reason:"the-sun"},{match:"#Verb (a|an) [#Value]",group:0,tag:"Singular",reason:"did-a-value"},{match:"the [(can|will|may)]",group:0,tag:"Singular",reason:"the can"},{match:"#FirstName #Acronym? (#Possessive && #LastName)",tag:"Possessive",reason:"name-poss"},{match:"#Organization+ #Possessive",tag:"Possessive",reason:"org-possessive"},{match:"#Place+ #Possessive",tag:"Possessive",reason:"place-possessive"},{match:"(#Verb && !#Modal) (all|every|each|most|some|no) [#PresentTense]",group:0,tag:"Noun",reason:"all-presentTense"},{match:"#Determiner [#Adjective] #Copula",group:0,tag:"Noun",reason:"the-adj-is"},{match:"#Adjective [#Adjective] #Copula",group:0,tag:"Noun",reason:"adj-adj-is"},{match:"(had|have|#PastTense) #Adjective [#PresentTense]",group:0,tag:"Noun",reason:"adj-presentTense"},{match:"^#Adjective [#PresentTense]",group:0,tag:"Noun",reason:"start adj-presentTense"},{match:"#Value #Adjective [#PresentTense]",group:0,tag:"Noun",reason:"one-big-reason"},{match:"#PastTense #Adjective+ [#PresentTense]",group:0,tag:"Noun",reason:"won-wide-support"},{match:"(many|few|several|couple) [#PresentTense]",group:0,tag:"Noun",reason:"many-poses"},{match:"#Adverb #Adjective [#PresentTense]",group:0,tag:"Noun",reason:"very-big-dream"},{match:"#Adjective [#Infinitive] #Noun",group:0,tag:"Noun",reason:"good-wait-staff"},{match:"#Adjective #Adjective [#PresentTense]",group:0,tag:"Noun",reason:"adorable-little-store"},{match:"#Preposition #Adjective [#PresentTense]",group:0,tag:"Noun",reason:"of-basic-training"},{match:"#Adjective [#Gerund]",group:0,tag:"Noun",reason:"early-warning"},{match:"#Gerund #Adverb? #Comparative [#PresentTense]",group:0,tag:"Noun",reason:"higher-costs"},{match:"#Infinitive (this|that|the) [#Infinitive]",group:0,tag:"Noun",reason:"do-this-dance"},{match:"(his|her|its) [#Adjective]",group:0,tag:"Noun",reason:"his-fine"},{match:"some [#Verb] #Plural",group:0,tag:"Noun",reason:"determiner6"},{match:"more #Noun",tag:"Noun",reason:"more-noun"},{match:"(#Noun && @hasComma) #Noun (and|or) [#PresentTense]",group:0,tag:"Noun",reason:"noun-list"},{match:"(right|rights) of .",tag:"Noun",reason:"right-of"},{match:"a [bit]",group:0,tag:"Noun",reason:"bit-2"},{match:"#Possessive #Ordinal [#PastTense]",group:0,tag:"Noun",reason:"first-thought"},{match:"#Gerund #Determiner [#Infinitive]",group:0,tag:"Noun",reason:"running-a-show"},{match:"#Determiner #Adverb [#Infinitive]",group:0,tag:"Noun",reason:"the-reason"},{match:"(the|this|those|these) #Adjective [#Verb]",group:0,tag:"Noun",reason:"the-adj-verb"},{match:"(the|this|those|these) #Adverb #Adjective [#Verb]",group:0,tag:"Noun",reason:"determiner4"},{match:"#Determiner [#Adjective] (#Copula|#PastTense|#Auxiliary)",group:0,tag:"Noun",reason:"the-adj-2"},{match:"(the|this|a|an) [#Infinitive] #Adverb? #Verb",group:0,tag:"Noun",reason:"determiner5"},{match:"#Determiner [#Infinitive] #Noun",group:0,tag:"Noun",reason:"determiner7"},{match:"#Determiner #Adjective #Adjective? [#Infinitive]",group:0,tag:"Noun",reason:"a-nice-inf"},{match:"the [#Verb] #Preposition .",group:0,tag:"Noun",reason:"determiner1"},{match:"#Determiner [#Verb] of",group:0,tag:"Noun",reason:"the-verb-of"},{match:"#Adjective #Noun+ [#Infinitive] #Copula",group:0,tag:"Noun",reason:"career-move"},{match:"#Determiner #Noun of [#Verb]",group:0,tag:"Noun",reason:"noun-of-noun"},{match:"#Determiner [(western|eastern|northern|southern|central)] #Noun",group:0,tag:"Noun",reason:"western-line"},{match:"#Possessive [#Gerund]",group:0,tag:"Noun",reason:"her-polling"},{match:"(his|her|its) [#PresentTense]",group:0,tag:"Noun",reason:"its-polling"},{match:"(#Determiner|#Value) [(linear|binary|mobile|lexical|technical|computer|scientific|formal)] #Noun",group:0,tag:"Noun",reason:"technical-noun"},{match:"(the|those|these|a|an) [#Participle] #Noun",group:0,tag:"Adjective",reason:"blown-motor"},{match:"(the|those|these|a|an) #Adjective? [#Infinitive]",group:0,tag:"Noun",reason:"det-inf"},{match:"(the|those|these|a|an) #Adjective? [#PresentTense]",group:0,tag:"Noun",reason:"det-pres"},{match:"(the|those|these|a|an) #Adjective? [#PastTense]",group:0,tag:"Noun",reason:"det-past"},{match:"(this|that) [#Gerund]",group:0,tag:"Noun",reason:"this-gerund"},{match:"at some [#Infinitive]",group:0,tag:"Noun",reason:"at-some-inf"},{match:"(#Noun && @hasHyphen) #Verb",tag:"Noun",reason:"hyphen-verb"},{match:"is no [#Verb]",group:0,tag:"Noun",reason:"is-no-verb"},{match:"[#Verb] than",group:0,tag:"Noun",reason:"correction"},{match:"(go|goes|went) to [#Infinitive]",group:0,tag:"Noun",reason:"goes-to-verb"},{match:"(a|an) #Noun [#Infinitive] (#Preposition|#Noun)",group:0,tag:"Noun",reason:"a-noun-inf"},{match:"(a|an) #Noun [#Infinitive]$",group:0,tag:"Noun",reason:"a-noun-inf2"},{match:"do [so]",group:0,tag:"Noun",reason:"so-noun"},{match:"#Copula [#Infinitive] #Noun",group:0,tag:"Noun",reason:"is-pres-noun"},{match:"#Determiner #Adverb? [close]",group:0,tag:"Adjective",reason:"a-close"},{match:"#Determiner [(shit|damn|hell)]",group:0,tag:"Noun",reason:"swears-noun"},{match:"(the|these) [#Singular] (were|are)",group:0,tag:"Plural",reason:"singular-were"},{match:"#Gerund #Adjective? for [#Infinitive]",group:0,tag:"Noun",reason:"running-for"},{match:"#Gerund #Adjective to [#Infinitive]",group:0,tag:"Noun",reason:"running-to"},{match:"(many|any|some|several) [#PresentTense] for",group:0,tag:"Noun",reason:"any-verbs-for"},{match:"(have|had) [#Adjective] #Preposition .",group:0,tag:"Noun",reason:"have-fun"},{match:"co #Noun",tag:"Actor",reason:"co-noun"},{match:"to #PresentTense #Noun [#PresentTense] #Preposition",group:0,tag:"Noun",reason:"gas-exchange"},{match:"a #Noun+ or #Adverb+? [#Verb]",group:0,tag:"Noun",reason:"noun-or-noun"}];var zn=[{match:"[still] #Adjective",group:0,tag:"Adverb",reason:"still-advb"},{match:"[still] #Verb",group:0,tag:"Adverb",reason:"still-verb"},{match:"[so] #Adjective",group:0,tag:"Adverb",reason:"so-adv"},{match:"[way] #Comparative",group:0,tag:"Adverb",reason:"way-adj"},{match:"[way] #Adverb #Adjective",group:0,tag:"Adverb",reason:"way-too-adj"},{match:"[all] #Verb",group:0,tag:"Adverb",reason:"all-verb"},{match:"(#Verb && !#Modal) [like]",group:0,tag:"Adverb",reason:"verb-like"},{match:"(barely|hardly) even",tag:"Adverb",reason:"barely-even"},{match:"[even] #Verb",group:0,tag:"Adverb",reason:"even-walk"},{match:"even left",tag:"#Adverb #Verb",reason:"even-left"},{match:"(#PresentTense && !#Copula) [(hard|quick|long|bright|slow|fast|backwards|forwards)]",group:0,tag:"Adverb",reason:"lazy-ly"},{match:"[much] #Adjective",group:0,tag:"Adverb",reason:"bit-1"},{match:"#Copula [#Adverb]$",group:0,tag:"Adjective",reason:"is-well"},{match:"a [(little|bit|wee) bit?] #Adjective",group:0,tag:"Adverb",reason:"a-bit-cold"},{match:`[${`(${Nn.adverbAdjective.join("|")})`}] #Adjective`,group:0,tag:"Adverb",reason:"dark-green"},{match:"#Adverb [#Adverb]$",group:0,tag:"Adjective",reason:"kinda-sparkly"},{match:"#Adverb [#Adverb] (and|or|then)",group:0,tag:"Adjective",reason:"kinda-sparkly-and"}],In=[{match:"1 #Value #PhoneNumber",tag:"PhoneNumber",reason:"1-800-Value"},{match:"#NumericValue #PhoneNumber",tag:"PhoneNumber",reason:"(800) PhoneNumber"},{match:"#Demonym #Currency",tag:"Currency",reason:"demonym-currency"},{match:"[second] #Noun",group:0,tag:"Ordinal",reason:"second-noun"},{match:"#Value+ [#Currency]",group:0,tag:"Unit",reason:"5-yan"},{match:"#Value [(foot|feet)]",group:0,tag:"Unit",reason:"foot-unit"},{match:"(minus|negative) #Value",tag:"Value",reason:"minus-value"},{match:"#Value [#Abbreviation]",group:0,tag:"Unit",reason:"value-abbr"},{match:"#Value [k]",group:0,tag:"Unit",reason:"value-k"},{match:"#Unit an hour",tag:"Unit",reason:"unit-an-hour"},{match:"#Value (point|decimal) #Value",tag:"Value",reason:"value-point-value"},{match:"(#Value|a) [(buck|bucks|grand)]",group:0,tag:"Currency",reason:"value-bucks"},{match:"#Determiner [(half|quarter)] #Ordinal",group:0,tag:"Value",reason:"half-ordinal"},{match:"a #Value",tag:"Value",reason:"a-value"},{match:"[#Value+] #Currency",group:0,tag:"Money",reason:"15 usd"},{match:"(hundred|thousand|million|billion|trillion|quadrillion)+ and #Value",tag:"Value",reason:"magnitude-and-value"},{match:"!once [(a|an)] (#Duration|hundred|thousand|million|billion|trillion)",group:0,tag:"Value",reason:"a-is-one"}];const On=`(${Nn.personVerb.join("|")})`;var Tn=[{match:"[#Adjective] #Possessive #Noun",group:0,tag:"Verb",reason:"gerund-his-noun"},{match:"[#Adjective] (us|you)",group:0,tag:"Gerund",reason:"loving-you"},{match:"(slowly|quickly) [#Adjective]",group:0,tag:"Gerund",reason:"slowly-adj"},{match:"(#Modal|i|they|we|do) not? [like]",group:0,tag:"PresentTense",reason:"modal-like"},{match:"do (simply|just|really|not)+ [(#Adjective|like)]",group:0,tag:"Verb",reason:"do-simply-like"},{match:"does (#Adverb|not)? [#Adjective]",group:0,tag:"PresentTense",reason:"does-mean"},{match:"i (#Adverb|do)? not? [mean]",group:0,tag:"PresentTense",reason:"i-mean"},{match:"#Noun #Adverb? [left]",group:0,tag:"PastTense",reason:"left-verb"},{match:"(this|that) [#Plural]",group:0,tag:"PresentTense",reason:"this-verbs"},{match:"[#Copula (#Adverb|not)+?] (#Gerund|#PastTense)",group:0,tag:"Auxiliary",reason:"copula-walking"},{match:"[(has|had) (#Adverb|not)+?] #PastTense",group:0,tag:"Auxiliary",reason:"had-walked"},{match:"#Adverb+? [(#Modal|did)+ (#Adverb|not)+?] #Verb",group:0,tag:"Auxiliary",reason:"modal-verb"},{match:"[#Modal (#Adverb|not)+? have (#Adverb|not)+? had (#Adverb|not)+?] #Verb",group:0,tag:"Auxiliary",reason:"would-have"},{match:"[(has|had) (#Adverb|not)+?] #PastTense",group:0,tag:"Auxiliary",reason:"had-walked"},{match:"[(do|does|will|have|had)] (not|#Adverb)+? #Verb",group:0,tag:"Auxiliary",reason:"have-had"},{match:"[about to] #Adverb? #Verb",group:0,tag:["Auxiliary","Verb"],reason:"about-to"},{match:"#Modal (#Adverb|not)+? be (#Adverb|not)+? #Verb",group:0,tag:"Auxiliary",reason:"would-be"},{match:"(were|was) being [#PresentTense]",group:0,tag:"PastTense",reason:"was-being"},{match:"[#Modal (#Adverb|not)+? have (#Adverb|not)+? had (#Adverb|not)+?] #Verb",group:0,tag:"Auxiliary",reason:"would-have"},{match:"(#Modal|had|has) (#Adverb|not)+? been (#Adverb|not)+? #Verb",group:0,tag:"Auxiliary",reason:"had-been"},{match:"[(be|being|been)] #Participle",group:0,tag:"Auxiliary",reason:"being-foo"},{match:"(#Verb && @hasHyphen) up",tag:"PhrasalVerb",reason:"foo-up"},{match:"(#Verb && @hasHyphen) off",tag:"PhrasalVerb",reason:"foo-off"},{match:"(#Verb && @hasHyphen) over",tag:"PhrasalVerb",reason:"foo-over"},{match:"(#Verb && @hasHyphen) out",tag:"PhrasalVerb",reason:"foo-out"},{match:"#PhrasalVerb [#PhrasalVerb]",group:0,tag:"Particle",reason:"phrasal-particle"},{match:"(lived|went|crept|go) [on] for",group:0,tag:"PhrasalVerb",reason:"went-on"},{match:"#Verb (him|her|it|us|himself|herself|itself|everything|something) [(up|down)]",group:0,tag:"Adverb",reason:"phrasal-pronoun-advb"},{match:"[will #Adverb? not? #Adverb? be] #Gerund",group:0,tag:"Copula",reason:"will-be-copula"},{match:"will #Adverb? not? #Adverb? [be] #Adjective",group:0,tag:"Copula",reason:"be-copula"},{match:"[march] (up|down|back|to|toward)",group:0,tag:"Infinitive",reason:"march-to"},{match:"#Modal [march]",group:0,tag:"Infinitive",reason:"must-march"},{match:"(let|make|made) (him|her|it|#Person|#Place|#Organization)+ [#Singular] (a|an|the|it)",group:0,tag:"Infinitive",reason:"let-him-glue"},{match:"will [#Adjective]",group:0,tag:"Verb",reason:"will-adj"},{match:"#Pronoun [#Adjective] #Determiner #Adjective? #Noun",group:0,tag:"Verb",reason:"he-adj-the"},{match:"#Copula [#Adjective to] #Verb",group:0,tag:"Verb",reason:"adj-to"},{match:"[open] #Determiner",group:0,tag:"Infinitive",reason:"open-the"},{match:"[#PresentTense] (are|were|was) #Adjective",group:0,tag:"Plural",reason:"compromises-are-possible"},{match:`#Modal [${On}]`,group:0,tag:"Verb",reason:"would-mark"},{match:`#Adverb [${On}]`,group:0,tag:"Verb",reason:"really-mark"},{match:"(to|#Modal) [mark]",group:0,tag:"PresentTense",reason:"to-mark"},{match:"^[#Infinitive] (is|was)",group:0,tag:"Noun",reason:"checkmate-is"},{match:On+" #Person",tag:"Person",reason:"rob-smith"},{match:On+" #Acronym #ProperNoun",tag:"Person",reason:"rob-a-smith"},{match:"[shit] (#Determiner|#Possessive|them)",group:0,tag:"Verb",reason:"swear1-verb"},{match:"[damn] (#Determiner|#Possessive|them)",group:0,tag:"Verb",reason:"swear2-verb"},{match:"[fuck] (#Determiner|#Possessive|them)",group:0,tag:"Verb",reason:"swear3-verb"}];var Vn=[{match:"(west|north|south|east|western|northern|southern|eastern)+ #Place",tag:"Region",reason:"west-norfolk"},{match:"#City [(al|ak|az|ar|ca|ct|dc|fl|ga|id|il|nv|nh|nj|ny|oh|pa|sc|tn|tx|ut|vt|pr)]",group:0,tag:"Region",reason:"us-state"},{match:"portland [or]",group:0,tag:"Region",reason:"portland-or"},{match:"#ProperNoun+ (district|region|province|county|prefecture|municipality|territory|burough|reservation)",tag:"Region",reason:"foo-district"},{match:"(district|region|province|municipality|territory|burough|state) of #ProperNoun",tag:"Region",reason:"district-of-Foo"},{match:"in [#ProperNoun] #Place",group:0,tag:"Place",reason:"propernoun-place"},{match:"#Value #Noun (st|street|rd|road|crescent|cr|way|tr|terrace|avenue|ave)",tag:"Address",reason:"address-st"}];const Mn=`(${Nn.personNoun.join("|")})`,Jn=`(${Nn.personMonth.join("|")})`;var Ln=[{match:"[(1st|2nd|first|second)] #Honorific",group:0,tag:"Honorific",reason:"ordinal-honorific"},{match:"[(private|general|major|corporal|lord|lady|secretary|premier)] #Honorific? #Person",group:0,tag:"Honorific",reason:"ambg-honorifics"},{match:"#Copula [(#Noun|#PresentTense)] #LastName",group:0,tag:"FirstName",reason:"copula-noun-lastname"},{match:"(lady|queen|sister) #ProperNoun",tag:"FemaleName",reason:"lady-titlecase",safe:!0},{match:"(king|pope|father) #ProperNoun",tag:"MaleName",reason:"pope-titlecase",safe:!0},{match:"[(will|may|april|june|said|rob|wade|ray|rusty|drew|miles|jack|chuck|randy|jan|pat|cliff|bill)] #LastName",group:0,tag:"FirstName",reason:"maybe-lastname"},{match:"#FirstName [#Determiner #Noun] #LastName",group:0,tag:"NickName",reason:"first-noun-last"},{match:"#Possessive [#FirstName]",group:0,tag:"Person",reason:"possessive-name"},{match:"#ProperNoun (b|c|d|e|f|g|h|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z) #ProperNoun",tag:"Person",reason:"titlecase-acronym-titlecase",safe:!0},{match:"#Acronym #LastName",tag:"Person",reason:"acronym-latname",safe:!0},{match:"#Person (jr|sr|md)",tag:"Person",reason:"person-honorific"},{match:"#Person #Person the? #RomanNumeral",tag:"Person",reason:"roman-numeral"},{match:"#FirstName [/^[^aiurck]$/]",group:0,tag:["Acronym","Person"],reason:"john-e"},{match:"#Honorific #Person",tag:"Person",reason:"honorific-person"},{match:"#Honorific #Acronym",tag:"Person",reason:"Honorific-TitleCase"},{match:"#Noun van der? #Noun",tag:"Person",reason:"van der noun",safe:!0},{match:"(king|queen|prince|saint|lady) of #Noun",tag:"Person",reason:"king-of-noun",safe:!0},{match:"(prince|lady) #Place",tag:"Person",reason:"lady-place"},{match:"(king|queen|prince|saint) #ProperNoun",tag:"Person",reason:"saint-foo"},{match:"[#ProperNoun] #Person",group:0,tag:"Person",reason:"proper-person",safe:!0},{match:"al (#Person|#ProperNoun)",tag:"Person",reason:"al-borlen",safe:!0},{match:"#FirstName de #Noun",tag:"Person",reason:"bill-de-noun"},{match:"#FirstName (bin|al) #Noun",tag:"Person",reason:"bill-al-noun"},{match:"#FirstName #Acronym #ProperNoun",tag:"Person",reason:"bill-acronym-title"},{match:"#FirstName #FirstName #ProperNoun",tag:"Person",reason:"bill-firstname-title"},{match:"#Honorific #FirstName? #ProperNoun",tag:"Person",reason:"dr-john-Title"},{match:"#FirstName the #Adjective",tag:"Person",reason:"name-the-great"},{match:"#FirstName (green|white|brown|hall|young|king|hill|cook|gray|price)",tag:"Person",reason:"bill-green"},{match:Mn+" #Person",tag:"Person",reason:"ray-smith",safe:!0},{match:Mn+" #Acronym? #ProperNoun",tag:"Person",reason:"ray-a-smith",safe:!0},{match:`#Infinitive #Determiner? #Adjective? #Noun? (to|for) [${Jn}]`,group:0,tag:"Person",reason:"ambig-person"},{match:`#Infinitive [${Jn}]`,group:0,tag:"Person",reason:"infinitive-person"},{match:`[${Jn}] #Modal`,group:0,tag:"Person",reason:"ambig-modal"},{match:"[may] be",group:0,tag:"Verb",reason:"may-be"},{match:`#Modal [${Jn}]`,group:0,tag:"Person",reason:"modal-ambig"},{match:`#Copula [${Jn}]`,group:0,tag:"Person",reason:"is-may"},{match:`[${Jn}] #Copula`,group:0,tag:"Person",reason:"may-is"},{match:`that [${Jn}]`,group:0,tag:"Person",reason:"that-month"},{match:`with [${Jn}]`,group:0,tag:"Person",reason:"with-month"},{match:`for [${Jn}]`,group:0,tag:"Person",reason:"for-month"},{match:`this [${Jn}]`,group:0,tag:"Month",reason:"this-may"},{match:`next [${Jn}]`,group:0,tag:"Month",reason:"next-may"},{match:`last [${Jn}]`,group:0,tag:"Month",reason:"last-may"},{match:`#Date [${Jn}]`,group:0,tag:"Month",reason:"date-may"},{match:`[${Jn}] the? #Value`,group:0,tag:"Month",reason:"may-5th"},{match:`#Value of [${Jn}]`,group:0,tag:"Month",reason:"5th-of-may"},{match:"#ProperNoun (van|al|bin) #ProperNoun",tag:"Person",reason:"title-van-title",safe:!0},{match:"#ProperNoun (de|du) la? #ProperNoun",tag:"Person",reason:"title-de-title",safe:!0},{match:"#Singular #Acronym #LastName",tag:"#Person",reason:"title-acro-noun",safe:!0},{match:"#FirstName (#Noun && #ProperNoun) #ProperNoun?",tag:"Person",reason:"firstname-titlecase"},{match:"#FirstName #Acronym #Noun",tag:"Person",reason:"n-acro-noun",safe:!0},{match:"#FirstName [(de|di|du|van|von) #Person]",group:0,tag:"LastName",reason:"de-firstname"},{match:`[${`(${Nn.personPlace.join("|")})`}] (#ProperNoun && !#Place)`,group:0,tag:"FirstName",reason:"place-firstname"}];let Sn=[];Sn=Sn.concat(jn),Sn=Sn.concat(Fn),Sn=Sn.concat(Bn),Sn=Sn.concat(Gn),Sn=Sn.concat(zn),Sn=Sn.concat(In),Sn=Sn.concat(Tn),Sn=Sn.concat(Vn),Sn=Sn.concat([{match:"#Noun (&|n) #Noun",tag:"Organization",reason:"Noun-&-Noun"},{match:"#Organization of the? #ProperNoun",tag:"Organization",reason:"org-of-place",safe:!0},{match:"#Organization #Country",tag:"Organization",reason:"org-country"},{match:"#ProperNoun #Organization",tag:"Organization",reason:"titlecase-org"},{match:"#ProperNoun (ltd|co|inc|dept|assn|bros)",tag:"Organization",reason:"org-abbrv"},{match:"the [#Acronym]",group:0,tag:"Organization",reason:"the-acronym",safe:!0},{match:"(world|global|international|national|#Demonym) #Organization",tag:"Organization",reason:"global-org"},{match:"#Noun+ (public|private) school",tag:"School",reason:"noun-public-school"}]),Sn=Sn.concat(Ln);let _n=[];Sn.forEach(e=>{e.reg=Ce(e.match);let t=function(e){let t=[];if(1===e.reg.filter(e=>void 0!==e.fastOr).length){let r=e.reg.findIndex(e=>void 0!==e.fastOr);Object.keys(e.reg[r].fastOr).forEach(a=>{let n=Object.assign({},e);n.reg=n.reg.slice(0),n.reg[r]=Object.assign({},n.reg[r]),n.reg[r].word=a,delete n.reg[r].operator,delete n.reg[r].fastOr,t.push(n)})}return t}(e);t.length>0?_n=_n.concat(t):_n.push(e)}),_n.forEach(e=>(e.required=function(e){let t=[],r=[];return e.forEach(e=>{!0!==e.optional&&!0!==e.negative&&(void 0!==e.tag&&t.push(e.tag),void 0!==e.word&&r.push(e.word))}),{tags:Hn(t),words:Hn(r)}}(e.reg),e));var Kn=_n;var qn=function(e){Kn.forEach(t=>{let r=[];t.required.words.forEach(t=>{r.push(e._cache.words[t]||[])}),t.required.tags.forEach(t=>{r.push(e._cache.tags[t]||[])});let a=function(e){if(0===e.length)return[];let t={};e.forEach(e=>{e=Hn(e);for(let r=0;r<e.length;r++)t[e[r]]=t[e[r]]||0,t[e[r]]+=1});let r=Object.keys(t);return r=r.filter(r=>t[r]===e.length),r=r.map(e=>Number(e)),r}(r);if(0===a.length)return;let n=a.map(t=>e.list[t]),i=e.buildFrom(n).match(t.reg,t.group);i.found&&(!0===t.safe?i.tagSafe(t.tag,t.reason):i.tag(t.tag,t.reason))})};var Wn=function(e){return qn(e),En(e),e};var Rn=function(e){let t=e.termList();return e=Na(e,t),e=Za(e,t),(e=$n(e)).cache(),(e=Wn(e)).uncache(),e.world.taggers.forEach(t=>{t(e)}),e};var Un=function(e){class t extends e{stripPeriods(){return this.termList().forEach(e=>{!0===e.tags.Abbreviation&&e.next&&(e.post=e.post.replace(/^\./,""));let t=e.text.replace(/\./,"");e.set(t)}),this}addPeriods(){return this.termList().forEach(e=>{e.post=e.post.replace(/^\./,""),e.post="."+e.post}),this}}return t.prototype.unwrap=t.prototype.stripPeriods,e.prototype.abbreviations=function(e){let r=this.match("#Abbreviation");return"number"==typeof e&&(r=r.get(e)),new t(r.list,this,this.world)},e};const Qn=/\./;var Zn=function(e){class t extends e{stripPeriods(){return this.termList().forEach(e=>{let t=e.text.replace(/\./g,"");e.set(t)}),this}addPeriods(){return this.termList().forEach(e=>{let t=e.text.replace(/\./g,"");t=t.split("").join("."),!1===Qn.test(e.post)&&(t+="."),e.set(t)}),this}}return t.prototype.unwrap=t.prototype.stripPeriods,t.prototype.strip=t.prototype.stripPeriods,e.prototype.acronyms=function(e){let r=this.match("#Acronym");return"number"==typeof e&&(r=r.get(e)),new t(r.list,this,this.world)},e};var Xn=function(e){return e.prototype.clauses=function(t){let r=this.if("@hasComma").notIf("@hasComma @hasComma").notIf("@hasComma . .? (and|or) .").notIf("(#City && @hasComma) #Country").notIf("(#WeekDay && @hasComma) #Date").notIf("(#Date && @hasComma) #Year").notIf("@hasComma (too|also)$").match("@hasComma"),a=this.splitAfter(r),n=a.quotations();a=a.splitOn(n);let i=a.parentheses();a=a.splitOn(i);let o=a.if("#Copula #Adjective #Conjunction (#Pronoun|#Determiner) #Verb").match("#Conjunction");a=a.splitBefore(o);let s=a.if("if .{2,9} then .").match("then");a=a.splitBefore(s),a=a.splitBefore("as well as ."),a=a.splitBefore("such as ."),a=a.splitBefore("in addition to ."),a=a.splitAfter("@hasSemicolon"),a=a.splitAfter("@hasDash");let l=a.filter(e=>e.wordCount()>5&&e.match("#Verb+").length>=2);if(l.found){let e=l.splitAfter("#Noun .* #Verb .* #Noun+");a=a.splitOn(e.eq(0))}return"number"==typeof t&&(a=a.get(t)),new e(a.list,this,this.world)},e};var Yn=function(e){class t extends e{constructor(e,t,r){super(e,t,r),this.contracted=null}expand(){return this.list.forEach(e=>{let t=e.terms(),r=t[0].isTitleCase();t.forEach((e,r)=>{e.set(e.implicit||e.text),e.implicit=void 0,r<t.length-1&&""===e.post&&(e.post+=" ")}),r&&t[0].toTitleCase()}),this}}return e.prototype.contractions=function(e){let r=this.match("@hasContraction+");return"number"==typeof e&&(r=r.get(e)),new t(r.list,this,this.world)},e.prototype.expanded=e.prototype.isExpanded,e.prototype.contracted=e.prototype.isContracted,e};var ei=function(e){const t=function(e){let t=e.splitAfter("@hasComma").splitOn("(and|or) not?").not("(and|or) not?"),r=e.match("[.] (and|or)",0);return{things:t,conjunction:e.match("(and|or) not?"),beforeLast:r,hasOxford:r.has("@hasComma")}};class r extends e{conjunctions(){return this.match("(and|or)")}parts(){return this.splitAfter("@hasComma").splitOn("(and|or) not?")}items(){return t(this).things}add(e){return this.forEach(r=>{let a=t(r).beforeLast;a.append(e),a.termList(0).addPunctuation(",")}),this}remove(e){return this.items().if(e).remove()}hasOxfordComma(){return this.filter(e=>t(e).hasOxford)}addOxfordComma(){let e=this.items(),t=e.eq(e.length-2);return t.found&&!1===t.has("@hasComma")&&t.post(", "),this}removeOxfordComma(){let e=this.items(),t=e.eq(e.length-2);return t.found&&!0===t.has("@hasComma")&&t.post(" "),this}}return r.prototype.things=r.prototype.items,e.prototype.lists=function(e){let t=this.if("@hasComma+ .? (and|or) not? ."),a=t.match("(#Noun|#Adjective|#Determiner|#Article)+ #Conjunction not? (#Article|#Determiner)? #Adjective? #Noun+").if("#Noun"),n=t.match("(#Adjective|#Adverb)+ #Conjunction not? #Adverb? #Adjective+"),i=t.match("(#Verb|#Adverb)+ #Conjunction not? #Adverb? #Verb+"),o=a.concat(n);return o=o.concat(i),o=o.if("@hasComma"),"number"==typeof e&&(o=t.get(e)),new r(o.list,this,this.world)},e};var ti=function(e){return!0===e.has("#Plural")||!0!==e.has("(#Pronoun|#Place|#Value|#Person|#Uncountable|#Month|#WeekDay|#Holiday|#Possessive)")};const ri={hour:"an",heir:"an",heirloom:"an",honest:"an",honour:"an",honor:"an",uber:"an"},ai={a:!0,e:!0,f:!0,h:!0,i:!0,l:!0,m:!0,n:!0,o:!0,r:!0,s:!0,x:!0},ni=[/^onc?e/i,/^u[bcfhjkqrstn][aeiou]/i,/^eul/i];var ii=function(e){if(e.has("#Person")||e.has("#Place"))return"";if(e.has("#Plural"))return"the";let t=e.text("normal").trim();if(ri.hasOwnProperty(t))return ri[t];let r=t.substr(0,1);if(e.has("^@isAcronym")&&ai.hasOwnProperty(r))return"an";for(let e=0;e<ni.length;e++)if(ni[e].test(t))return"a";return/^[aeiou]/i.test(t)?"an":"a"};var oi={isSingular:[/(ax|test)is$/i,/(octop|vir|radi|nucle|fung|cact|stimul)us$/i,/(octop|vir)i$/i,/(rl)f$/i,/(alias|status)$/i,/(bu)s$/i,/(al|ad|at|er|et|ed|ad)o$/i,/(ti)um$/i,/(ti)a$/i,/sis$/i,/(?:(^f)fe|(lr)f)$/i,/hive$/i,/(^aeiouy|qu)y$/i,/(x|ch|ss|sh|z)$/i,/(matr|vert|ind|cort)(ix|ex)$/i,/(m|l)ouse$/i,/(m|l)ice$/i,/(antenn|formul|nebul|vertebr|vit)a$/i,/.sis$/i,/^(?!talis|.*hu)(.*)man$/i],isPlural:[/(antenn|formul|nebul|vertebr|vit)ae$/i,/(octop|vir|radi|nucle|fung|cact|stimul)i$/i,/men$/i,/.tia$/i,/(m|l)ice$/i]};const si=/s$/;var li=function(e){return!oi.isSingular.find(t=>t.test(e))&&(!0===si.test(e)||(!!oi.isPlural.find(t=>t.test(e))||null))};const ui={he:"his",she:"hers",they:"theirs",we:"ours",i:"mine",you:"yours",her:"hers",their:"theirs",our:"ours",my:"mine",your:"yours"};var ci=function(e){let t=e.text("text").trim();return ui.hasOwnProperty(t)?(e.replaceWith(ui[t],!0),void e.tag("Possessive","toPossessive")):/s$/.test(t)?(t+="'",e.replaceWith(t,!0),void e.tag("Possessive","toPossessive")):(t+="'s",e.replaceWith(t,!0),void e.tag("Possessive","toPossessive"))};var hi=function(e){let t={main:e};if(e.has("#Noun (of|by|for) .")){let r=e.splitAfter("[#Noun+]",0);t.main=r.eq(0),t.post=r.eq(1)}return t};var di={json:function(e){let t=null;"number"==typeof e&&(t=e,e=null),e=e||{text:!0,normal:!0,trim:!0,terms:!0};let r=[];return this.forEach(t=>{let a=t.json(e)[0];a.article=ii(t),r.push(a)}),null!==t?r[t]:r},adjectives:function(){let e=this.lookAhead("^(that|who|which)? (was|is|will)? be? #Adverb? #Adjective+");return e=e.concat(this.lookBehind("#Adjective+ #Adverb?$")),e=e.match("#Adjective"),e.sort("index")},isPlural:function(){return this.if("#Plural")},hasPlural:function(){return this.filter(e=>ti(e))},toPlural:function(e){let t=this.world.transforms.toPlural;return this.forEach(r=>{if(r.has("#Plural")||!1===ti(r))return;let a=hi(r).main,n=a.text("reduced");if((a.has("#Singular")||!0!==li(n))&&(n=t(n,this.world),a.replace(n).tag("#Plural"),e)){let e=a.lookBefore("(an|a) #Adjective?$").not("#Adjective");!0===e.found&&e.remove()}}),this},toSingular:function(e){let t=this.world.transforms.toSingular;return this.forEach(r=>{if(r.has("^#Singular+$")||!1===ti(r))return;let a=hi(r).main,n=a.text("reduced");if((a.has("#Plural")||!0===li(n))&&(n=t(n,this.world),a.replace(n).tag("#Singular"),e)){let e=r,t=r.lookBefore("#Adjective");t.found&&(e=t);let a=ii(e);e.insertBefore(a)}}),this},toPossessive:function(){return this.forEach(e=>{ci(e)}),this}};var gi=function(e){class t extends e{}return Object.assign(t.prototype,di),e.prototype.nouns=function(e,r={}){let a=this.match("(#City && @hasComma) (#Region|#Country)"),n=this.not(a).splitAfter("@hasComma");n=n.concat(a);let i=n.quotations();return i.found&&(n=n.splitOn(i.eq(0))),n=n.match("#Noun+ (of|by)? the? #Noun+?"),!0!==r.keep_anaphora&&(n=n.not("#Pronoun"),n=n.not("(there|these)"),n=n.not("(#Month|#WeekDay)"),n=n.not("(my|our|your|their|her|his)")),n=n.not("(of|for|by|the)$"),"number"==typeof e&&(n=n.get(e)),new t(n.list,this,this.world)},e};const pi=/\(/,mi=/\)/;var fi=function(e){class t extends e{unwrap(){return this.list.forEach(e=>{let t=e.terms(0);t.pre=t.pre.replace(pi,"");let r=e.lastTerm();r.post=r.post.replace(mi,"")}),this}}return e.prototype.parentheses=function(e){let r=[];return this.list.forEach(e=>{let t=e.terms();for(let a=0;a<t.length;a+=1){const n=t[a];if(pi.test(n.pre))for(let i=a;i<t.length;i+=1)if(mi.test(t[i].post)){let t=i-a+1;r.push(e.buildFrom(n.id,t)),a=i;break}}}),"number"==typeof e?(r=r[e]?[r[e]]:[],new t(r,this,this.world)):new t(r,this,this.world)},e};var bi=function(e){class t extends e{constructor(e,t,r){super(e,t,r),this.contracted=null}strip(){return this.list.forEach(e=>{e.terms().forEach(e=>{let t=e.text.replace(/'s$/,"");e.set(t||e.text)})}),this}}return e.prototype.possessives=function(e){let r=this.match("#Noun+? #Possessive");return"number"==typeof e&&(r=r.get(e)),new t(r.list,this,this.world)},e};const vi={'"':'"',"＂":"＂","'":"'","“":"”","‘":"’","‟":"”","‛":"’","„":"”","⹂":"”","‚":"’","«":"»","‹":"›","‵":"′","‶":"″","‷":"‴","〝":"〞","`":"´","〟":"〞"},yi=RegExp("("+Object.keys(vi).join("|")+")");var wi=function(e){class t extends e{unwrap(){return this}}return e.prototype.quotations=function(e){let r=[];return this.list.forEach(e=>{let t=e.terms();for(let a=0;a<t.length;a+=1){const n=t[a];if(yi.test(n.pre)){let i=(n.pre.match(yi)||[])[0],o=vi[i];for(let i=a;i<t.length;i+=1)if(-1!==t[i].post.indexOf(o)){let t=i-a+1;r.push(e.buildFrom(n.id,t)),a=i;break}}}}),"number"==typeof e?(r=r[e]?[r[e]]:[],new t(r,this,this.world)):new t(r,this,this.world)},e.prototype.quotes=e.prototype.quotations,e};var ki=function(e,t){let r=e.verb,a=r.text("reduced");if(r.has("#Infinitive"))return a;let n=null;return r.has("#PastTense")?n="PastTense":r.has("#Gerund")?n="Gerund":r.has("#PresentTense")?n="PresentTense":r.has("#Participle")?n="Participle":r.has("#Actor")&&(n="Actor"),t.transforms.toInfinitive(a,t,n)};var Ai=function(e){let t=e.verb;if(t.has("(are|were|does)")||e.auxiliary.has("(are|were|does)"))return!0;let r=function(e){return e.lookBehind("#Noun+").last()}(t);return!r.has("(he|she|many|both)")&&(!!r.has("(we|they|you|i)")||!r.has("#Person")&&(!!r.has("#Plural")||!r.has("#Singular")&&(!t.has("(is|am|do|was)")&&(!(e.auxiliary.has("(is|am|do|was)")&&!e.negative.found)&&null))))};var Di=function(e,t){let r=e.verb;if(!e.negative.found){if(e.auxiliary.found)return e.auxiliary.eq(0).append("not"),void(e.auxiliary.has("#Modal have not")&&e.auxiliary.replace("have not","not have"));if(r.has("(#Copula|will|has|had|do)"))r.append("not");else{if(r.has("#PastTense")){let a=ki(e,t);return r.replaceWith(a,!0),void r.prepend("did not")}if(r.has("#PresentTense")){let a=ki(e,t);return r.replaceWith(a,!0),void(Ai(e)?r.prepend("do not"):r.prepend("does not"))}if(r.has("#Gerund")){let a=ki(e,t);return r.replaceWith(a,!0),void r.prepend("not")}Ai(e)?r.prepend("does not"):r.prepend("do not")}}};var $i=function(e){let t=e.lookBehind(),r=t.nouns(null,{keep_anaphora:!0}).last();return r.found||(r=t.match("(that|this|each)").last(),r=r.tag("#Noun").nouns()),r};var Pi=function(e){let t={adverb:e.match("#Adverb+"),negative:e.match("#Negative"),auxiliary:e.match("#Auxiliary+").not("(#Negative|#Adverb)"),particle:e.match("#Particle"),verb:e.match("#Verb+").not("(#Adverb|#Negative|#Auxiliary|#Particle)"),original:e,subject:$i(e)};if(t.verb.has("(#PresentTense|#PastTense|#Infinitive) #Gerund$")&&(t.verb=t.verb.not("#Gerund$")),!t.verb.found)return Object.keys(t).forEach(e=>{t[e]=t[e].not(".")}),t.verb=e,t;if(t.adverb&&t.adverb.found){let r=t.adverb.text("reduced")+"$";e.has(r)&&(t.adverbAfter=!0)}return t};var Ei=e=>{let t=!1,r=Ai(e),a=e.negative.found;e.verb.lookBehind("i (#Adverb|#Verb)?$").found&&(t=!0);let n={PastTense:"was",PresentTense:"is",FutureTense:"will be",Infinitive:"is",Gerund:"being",Actor:"",PerfectTense:"been",Pluperfect:"been"};return r&&(n.PastTense="were",n.PresentTense="are",n.Infinitive="are"),!0===t&&(n.PastTense="was",n.PresentTense="am",n.Infinitive="am"),a&&(n.PastTense+=" not",n.PresentTense+=" not",n.FutureTense="will not be",n.Infinitive+=" not",n.PerfectTense="not "+n.PerfectTense,n.Pluperfect="not "+n.Pluperfect,n.Gerund="not "+n.Gerund),n};var Hi=function(e){let t=e.verb.text();return{PastTense:t+" have",PresentTense:t,FutureTense:t,Infinitive:t}};var ji=function(e,t){let r=e.verb;if(r.has("#Copula")||"be"===r.out("normal")&&e.auxiliary.has("will"))return Ei(e);if(e.auxiliary.has("are")&&r.has("#Gerund")){let r=e.original.clone(),a=r.clone().replace("are","were"),n=r.clone().replace("are","will be"),i=ki(e,t);return{PastTense:a.text(),PresentTense:r.text(),FutureTense:n.text(),Infinitive:i}}if(r.has("#Modal"))return Hi(e);let a=ki(e,t);if(!a)return{};let n=t.transforms.conjugate(a,t);n.Infinitive=a;let i=Ai(e);!0===i&&(n.PresentTense=n.Infinitive);let o=e.verb.termList(0).hasHyphen();if(e.particle.found){let t=e.particle.text(),r=!0===o?"-":" ";Object.keys(n).forEach(e=>n[e]+=r+t)}const s=e.negative.found;return n.FutureTense=n.FutureTense||"will "+n.Infinitive,s&&(n.PastTense="did not "+n.Infinitive,n.FutureTense="will not "+n.Infinitive,i?(n.PresentTense="do not "+n.Infinitive,n.Infinitive="do not "+n.Infinitive):(n.PresentTense="does not "+n.Infinitive,n.Infinitive="does not "+n.Infinitive),n.Gerund="not "+n.Gerund),n};var Ni={useParticiple:function(e){return!!e.auxiliary.has("(could|should|would|may|can|must)")||(!!e.auxiliary.has("am .+? being")||!!e.auxiliary.has("had .+? been"))},toParticiple:function(e,t){if(e.auxiliary.has("(have|had)")&&e.verb.has("#Participle"))return;let r=ji(e,t),a=r.Participle||r.PastTense;a&&e.verb.replaceWith(a,!1),e.auxiliary.has("am .+? being")&&(e.auxiliary.remove("am"),e.auxiliary.replace("being","have been")),e.auxiliary.has("have")||e.auxiliary.append("have"),e.verb.tag("Participle","toParticiple"),e.auxiliary.replace("can","could"),e.auxiliary.replace("be have","have been"),e.auxiliary.replace("not have","have not"),e.auxiliary.tag("Auxiliary")}};const{toParticiple:xi,useParticiple:Fi}=Ni,Ci=function(e){return e.auxiliary.remove("(will|are|am|being)"),e.auxiliary.remove("(did|does)"),e.auxiliary.remove("(had|has|have)"),e.particle.remove(),e.negative.remove(),e};var Bi={json:function(e){let t=null;"number"==typeof e&&(t=e,e=null),e=e||{text:!0,normal:!0,trim:!0,terms:!0};let r=[];return this.forEach(t=>{let a=t.json(e)[0],n=Pi(t);a.parts={},Object.keys(n).forEach(e=>{n[e]&&"Doc"===n[e].isA?a.parts[e]=n[e].text("normal"):a.parts[e]=n[e]}),a.isNegative=t.has("#Negative"),a.conjugations=ji(n,this.world),r.push(a)}),null!==t?r[t]:r},adverbs:function(){let e=[];this.forEach(t=>{let r=Pi(t).adverb;r.found&&(e=e.concat(r.list))});let t=this.lookBehind("#Adverb+$");return t.found&&(e=t.list.concat(e)),t=this.lookAhead("^#Adverb+"),t.found&&(e=e.concat(t.list)),this.buildFrom(e)},isPlural:function(){let e=[];return this.forEach(t=>{let r=Pi(t);!0===Ai(r,this.world)&&e.push(t.list[0])}),this.buildFrom(e)},isSingular:function(){let e=[];return this.forEach(t=>{let r=Pi(t);!1===Ai(r,this.world)&&e.push(t.list[0])}),this.buildFrom(e)},conjugate:function(){let e=[];return this.forEach(t=>{let r=Pi(t),a=ji(r,this.world);e.push(a)}),e},toPastTense:function(){return this.forEach(e=>{let t=Pi(e);if(Fi(t))return void xi(t,this.world);if(e.has("#Imperative"))return;if(e.has("be")&&e.lookBehind("to$").found)return;if(t.verb.has("#Gerund")&&t.auxiliary.has("(is|will|was)"))return void e.replace("is","was");let r=ji(t,this.world).PastTense;r&&(t=Ci(t),t.verb.replaceWith(r,!1),t.auxiliary.remove("(do|did|will)"))}),this},toPresentTense:function(){return this.forEach(e=>{if(e.has("#Imperative"))return;let t=Pi(e),r=ji(t,this.world),a=r.PresentTense;if(e.lookBehind("(i|we) (#Adverb|#Verb)?$").found&&(a=r.Infinitive),a){if(t.auxiliary.has("(have|had) been"))return t.auxiliary.replace("(have|had) been","am being"),void(r.Particle&&(a=r.Particle||r.PastTense));t.verb.replaceWith(a,!1),t.verb.tag("PresentTense"),t=Ci(t),t.auxiliary.remove("#Modal"),t.auxiliary.remove("(do|did|will)")}}),this},toFutureTense:function(){return this.forEach(e=>{let t=Pi(e);if(Fi(t))return;if(e.has("#Imperative"))return;let r=ji(t,this.world).FutureTense;r&&(t=Ci(t),t.auxiliary.remove("#Modal"),t.verb.replaceWith(r,!1),t.verb.tag("FutureTense"),t.auxiliary.remove("(do|did|will)"))}),this},toInfinitive:function(){return this.forEach(e=>{let t=Pi(e),r=ji(t,this.world).Infinitive;r&&(e.replaceWith(r,!1),e.tag("Infinitive"))}),this},toGerund:function(){return this.forEach(e=>{let t=Pi(e),r=ji(t,this.world).Gerund;r&&(e.replaceWith(r,!1),e.tag("Gerund"))}),this},toParticiple:function(){return this.forEach(e=>{let t=Pi(e),r=!t.auxiliary.found;xi(t,this.world),r&&(t.verb.prepend(t.auxiliary.text()),t.auxiliary.remove())}),this},isNegative:function(){return this.if("#Negative")},isPositive:function(){return this.ifNo("#Negative")},isImperative:function(){return this.if("#Imperative")},toNegative:function(){return this.list.forEach(e=>{let t=this.buildFrom([e]),r=Pi(t);Di(r,t.world)}),this},toPositive:function(){let e=this.match("do not #Verb");return e.found&&e.remove("do not"),this.remove("#Negative")},subject:function(){let e=[];return this.forEach(t=>{let r=$i(t);r.list[0]&&e.push(r.list[0])}),this.buildFrom(e)}};const Gi=[Un,Zn,Xn,Yn,ei,gi,fi,bi,wi,function(e){class t extends e{}return Object.assign(t.prototype,Bi),t.prototype.negate=t.prototype.toNegative,e.prototype.verbs=function(e){let r=this.match("(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+");r=r.not("^#Adverb+"),r=r.not("#Adverb+$");let a=r.match("(#Adverb && @hasComma) #Adverb"),n=r.not(a).splitAfter("@hasComma");return n=n.concat(a),n.sort("index"),n=n.if("#Verb"),n.has("(is|was)$")&&(n=n.splitBefore("(is|was)$")),n.has("#PresentTense #Adverb #PresentTense")&&(n=n.splitBefore("#Adverb #PresentTense")),"number"==typeof e&&(n=n.get(e)),new t(n.list,this,this.world)},e},function(e){class t extends e{}return e.prototype.people=function(e){let r=this.splitAfter("@hasComma");return r=r.match("#Person+"),"number"==typeof e&&(r=r.get(e)),new t(r.list,this,this.world)},e}];var zi=function(e){return Object.keys(ea).forEach(t=>e.prototype[t]=ea[t]),Gi.forEach(t=>t(e)),e};const Ii={misc:Xr,selections:ea};class Oi{constructor(e,t,r){this.list=e,Object.defineProperty(this,"from",{enumerable:!1,value:t,writable:!0}),void 0===r&&void 0!==t&&(r=t.world),Object.defineProperty(this,"world",{enumerable:!1,value:r,writable:!0}),Object.defineProperty(this,"_cache",{enumerable:!1,writable:!0,value:{}}),Object.defineProperty(this,"found",{get:()=>this.list.length>0}),Object.defineProperty(this,"length",{get:()=>this.list.length}),Object.defineProperty(this,"isA",{get:()=>"Doc"})}tagger(){return Rn(this)}pool(){return this.list.length>0?this.list[0].pool:this.all().list[0].pool}}Oi.prototype.buildFrom=function(e){return e=e.map(e=>e.clone(!0)),new Oi(e,this,this.world)},Oi.prototype.fromText=function(e){let t=ot(e,this.world,this.pool());return this.buildFrom(t)},Object.assign(Oi.prototype,Ii.misc),Object.assign(Oi.prototype,Ii.selections),zi(Oi);const Ti={untag:"unTag",and:"match",notIf:"ifNo",only:"if",onlyIf:"if"};Object.keys(Ti).forEach(e=>Oi.prototype[e]=Oi.prototype[Ti[e]]);var Vi=Oi;var Mi=function(e){let t=e.termList();return aa(t,e.world),e.world.taggers.forEach(t=>{t(e)}),e};var Ji=function e(t){let r=t;const a=function(e="",t){t&&r.addWords(t);let a=ot(e,r),n=new Vi(a,null,r);return n.tagger(),n};return a.tokenize=function(e="",t){let a=r;t&&(a=a.clone(),a.words={},a.addWords(t));let n=ot(e,a),i=new Vi(n,null,a);return(t||i.world.taggers.length>0)&&Mi(i),i},a.extend=function(e){return e(Vi,r,this,Ve,Z,Je),this},a.fromJSON=function(e){let t=st(e,r);return new Vi(t,null,r)},a.clone=function(){return e(r.clone())},a.verbose=function(e=!0){return r.verbose(e),this},a.world=function(){return r},a.parseMatch=function(e,t){return Ce(e,t)},a.version="13.11.2",a.import=a.load,a.plugin=a.extend,a}(new mr);export default Ji;
+/* compromise 13.11.2 MIT */
+//this is a not-well-thought-out way to reduce our dependence on `object===object` stuff
+const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'.split('');
+
+//generates a unique id for this term
+function makeId(str) {
+  str = str || '_';
+  let text = str + '-';
+  for (let i = 0; i < 7; i++) {
+    text += chars[Math.floor(Math.random() * chars.length)];
+  }
+  return text
+}
+
+var _id = makeId;
+
+//a hugely-ignorant, and widely subjective transliteration of latin, cryllic, greek unicode characters to english ascii.
+//approximate visual (not semantic or phonetic) relationship between unicode and ascii characters
+//http://en.wikipedia.org/wiki/List_of_Unicode_characters
+//https://docs.google.com/spreadsheet/ccc?key=0Ah46z755j7cVdFRDM1A2YVpwa1ZYWlpJM2pQZ003M0E
+let compact = {
+  '!': '¡',
+  '?': '¿Ɂ',
+  '"': '“”"❝❞',
+  "'": '‘‛❛❜',
+  '-': '—–',
+  a: 'ªÀÁÂÃÄÅàáâãäåĀāĂăĄąǍǎǞǟǠǡǺǻȀȁȂȃȦȧȺΆΑΔΛάαλАадѦѧӐӑӒӓƛɅæ',
+  b: 'ßþƀƁƂƃƄƅɃΒβϐϦБВЪЬвъьѢѣҌҍ',
+  c: '¢©ÇçĆćĈĉĊċČčƆƇƈȻȼͻͼͽϲϹϽϾСсєҀҁҪҫ',
+  d: 'ÐĎďĐđƉƊȡƋƌǷ',
+  e: 'ÈÉÊËèéêëĒēĔĕĖėĘęĚěƎƏƐǝȄȅȆȇȨȩɆɇΈΕΞΣέεξϱϵ϶ЀЁЕЭеѐёҼҽҾҿӖӗӘәӚӛӬӭ',
+  f: 'ƑƒϜϝӺӻҒғſ',
+  g: 'ĜĝĞğĠġĢģƓǤǥǦǧǴǵ',
+  h: 'ĤĥĦħƕǶȞȟΉΗЂЊЋНнђћҢңҤҥҺһӉӊ',
+  I: 'ÌÍÎÏ',
+  i: 'ìíîïĨĩĪīĬĭĮįİıƖƗȈȉȊȋΊΐΪίιϊІЇії',
+  j: 'ĴĵǰȷɈɉϳЈј',
+  k: 'ĶķĸƘƙǨǩΚκЌЖКжкќҚқҜҝҞҟҠҡ',
+  l: 'ĹĺĻļĽľĿŀŁłƚƪǀǏǐȴȽΙӀӏ',
+  m: 'ΜϺϻМмӍӎ',
+  n: 'ÑñŃńŅņŇňŉŊŋƝƞǸǹȠȵΝΠήηϞЍИЙЛПийлпѝҊҋӅӆӢӣӤӥπ',
+  o: 'ÒÓÔÕÖØðòóôõöøŌōŎŏŐőƟƠơǑǒǪǫǬǭǾǿȌȍȎȏȪȫȬȭȮȯȰȱΌΘΟθοσόϕϘϙϬϭϴОФоѲѳӦӧӨөӪӫ',
+  p: 'ƤƿΡρϷϸϼРрҎҏÞ',
+  q: 'Ɋɋ',
+  r: 'ŔŕŖŗŘřƦȐȑȒȓɌɍЃГЯгяѓҐґ',
+  s: 'ŚśŜŝŞşŠšƧƨȘșȿЅѕ',
+  t: 'ŢţŤťŦŧƫƬƭƮȚțȶȾΓΤτϮТт',
+  u: 'µÙÚÛÜùúûüŨũŪūŬŭŮůŰűŲųƯưƱƲǓǔǕǖǗǘǙǚǛǜȔȕȖȗɄΰμυϋύ',
+  v: 'νѴѵѶѷ',
+  w: 'ŴŵƜωώϖϢϣШЩшщѡѿ',
+  x: '×ΧχϗϰХхҲҳӼӽӾӿ',
+  y: 'ÝýÿŶŷŸƳƴȲȳɎɏΎΥΫγψϒϓϔЎУучўѰѱҮүҰұӮӯӰӱӲӳ',
+  z: 'ŹźŻżŽžƩƵƶȤȥɀΖζ',
+};
+//decompress data into two hashes
+let unicode = {};
+Object.keys(compact).forEach(function (k) {
+  compact[k].split('').forEach(function (s) {
+    unicode[s] = k;
+  });
+});
+
+const killUnicode = str => {
+  let chars = str.split('');
+  chars.forEach((s, i) => {
+    if (unicode[s]) {
+      chars[i] = unicode[s];
+    }
+  });
+  return chars.join('')
+};
+var unicode_1 = killUnicode;
+
+const periodAcronym = /([A-Z]\.)+[A-Z]?,?$/;
+const oneLetterAcronym$1 = /^[A-Z]\.,?$/;
+const noPeriodAcronym = /[A-Z]{2,}('s|,)?$/;
+const lowerCaseAcronym = /([a-z]\.)+[a-z]\.?$/;
+
+const isAcronym$2 = function (str) {
+  //like N.D.A
+  if (periodAcronym.test(str) === true) {
+    return true
+  }
+  //like c.e.o
+  if (lowerCaseAcronym.test(str) === true) {
+    return true
+  }
+  //like 'F.'
+  if (oneLetterAcronym$1.test(str) === true) {
+    return true
+  }
+  //like NDA
+  if (noPeriodAcronym.test(str) === true) {
+    return true
+  }
+  return false
+};
+var isAcronym_1$1 = isAcronym$2;
+
+const hasSlash$1 = /[a-z\u00C0-\u00FF] ?\/ ?[a-z\u00C0-\u00FF]/;
+
+/** some basic operations on a string to reduce noise */
+const clean = function (str) {
+  str = str || '';
+  str = str.toLowerCase();
+  str = str.trim();
+  let original = str;
+  //(very) rough ASCII transliteration -  bjŏrk -> bjork
+  str = unicode_1(str);
+  //rough handling of slashes - 'see/saw'
+  if (hasSlash$1.test(str) === true) {
+    str = str.replace(/\/.*/, '');
+  }
+  //#tags, @mentions
+  str = str.replace(/^[#@]/, '');
+  //punctuation
+  str = str.replace(/[,;.!?]+$/, '');
+  // coerce single curly quotes
+  str = str.replace(/[\u0027\u0060\u00B4\u2018\u2019\u201A\u201B\u2032\u2035\u2039\u203A]+/g, "'");
+  // coerce double curly quotes
+  str = str.replace(
+    /[\u0022\u00AB\u00BB\u201C\u201D\u201E\u201F\u2033\u2034\u2036\u2037\u2E42\u301D\u301E\u301F\uFF02]+/g,
+    '"'
+  );
+  //coerce Unicode ellipses
+  str = str.replace(/\u2026/g, '...');
+  //en-dash
+  str = str.replace(/\u2013/g, '-');
+  //lookin'->looking (make it easier for conjugation)
+  str = str.replace(/([aeiou][ktrp])in$/, '$1ing');
+  //turn re-enactment to reenactment
+  if (/^(re|un)-?[^aeiou]./.test(str) === true) {
+    str = str.replace('-', '');
+  }
+  //compact acronyms
+  if (isAcronym_1$1(str)) {
+    str = str.replace(/\./g, '');
+  }
+  //strip leading & trailing grammatical punctuation
+  if (/^[:;]/.test(str) === false) {
+    str = str.replace(/\.{3,}$/g, '');
+    str = str.replace(/[",\.!:;\?\)]+$/g, '');
+    str = str.replace(/^['"\(]+/g, '');
+  }
+  // remove zero-width characters
+  str = str.replace(/[\u200B-\u200D\uFEFF]/g, '');
+
+  //do this again..
+  str = str.trim();
+  //oh shucks,
+  if (str === '') {
+    str = original;
+  }
+
+  //nice-numbers
+  str = str.replace(/([0-9]),([0-9])/g, '$1$2');
+  return str
+};
+
+var clean_1 = clean;
+
+/** reduced is one step further than clean */
+const reduced = function (str) {
+  // remove apostrophes
+  str = str.replace(/['’]s$/, '');
+  str = str.replace(/s['’]$/, 's');
+  return str
+};
+var reduce = reduced;
+
+// basically, tokenize for terms.
+
+//all punctuation marks, from https://en.wikipedia.org/wiki/Punctuation
+//we have slightly different rules for start/end - like #hashtags.
+const startings = /^[ \n\t\.\[\](){}⟨⟩:,،、‒–—―…!‹›«»‐\-?‘’;\/⁄·&*•^†‡°¡¿※№÷×ºª%‰+−=‱¶′″‴§~\|‖¦©℗®℠™¤₳฿\u0022\uFF02\u0027\u201C\u201F\u201B\u201E\u2E42\u201A\u2035\u2036\u2037\u301D\u0060\u301F]+/;
+const endings = /[ \n\t\.'\[\](){}⟨⟩:,،、‒–—―…!‹›«»‐\-?‘’;\/⁄·&*@•^†‡°¡¿※#№÷×ºª‰+−=‱¶′″‴§~\|‖¦©℗®℠™¤₳฿\u0022\uFF02\u201D\u00B4\u301E]+$/;
+
+//money = ₵¢₡₢$₫₯֏₠€ƒ₣₲₴₭₺₾ℳ₥₦₧₱₰£៛₽₹₨₪৳₸₮₩¥
+const hasSlash = /\//;
+const hasApostrophe = /['’]/;
+const hasAcronym = /^[a-z]\.([a-z]\.)+/i;
+const minusNumber = /^[-+\.][0-9]/;
+const shortYear = /^'[0-9]{2}/;
+
+/** turn given text into a parsed-up object
+ * seperate the 'meat' of the word from the whitespace+punctuation
+ */
+const parseTerm = str => {
+  let original = str;
+  let pre = '';
+  let post = '';
+  str = str.replace(startings, found => {
+    pre = found;
+    // support '-40'
+    if ((pre === '-' || pre === '+' || pre === '.') && minusNumber.test(str)) {
+      pre = '';
+      return found
+    }
+    // support years like '97
+    if (pre === `'` && shortYear.test(str)) {
+      pre = '';
+      return found
+    }
+    return ''
+  });
+  str = str.replace(endings, found => {
+    post = found;
+    // keep s-apostrophe - "flanders'" or "chillin'"
+    if (hasApostrophe.test(found) && /[sn]['’]$/.test(original) && hasApostrophe.test(pre) === false) {
+      post = post.replace(hasApostrophe, '');
+      return `'`
+    }
+    //keep end-period in acronym
+    if (hasAcronym.test(str) === true) {
+      post = post.replace(/\./, '');
+      return '.'
+    }
+    return ''
+  });
+  //we went too far..
+  if (str === '') {
+    // do a very mild parse, and hope for the best.
+    original = original.replace(/ *$/, after => {
+      post = after || '';
+      return ''
+    });
+    str = original;
+    pre = '';
+    post = post;
+  }
+  // create the various forms of our text,
+  let clean = clean_1(str);
+  const parsed = {
+    text: str,
+    clean: clean,
+    reduced: reduce(clean),
+    pre: pre,
+    post: post,
+  };
+  // support aliases for slashes
+  if (hasSlash.test(str)) {
+    str.split(hasSlash).forEach(word => {
+      parsed.alias = parsed.alias || {};
+      parsed.alias[word.trim()] = true;
+    });
+  }
+  return parsed
+};
+var parse$2 = parseTerm;
+
+function createCommonjsModule(fn) {
+  var module = { exports: {} };
+	return fn(module, module.exports), module.exports;
+}
+
+var _01Case = createCommonjsModule(function (module, exports) {
+const titleCase = /^[A-Z][a-z'\u00C0-\u00FF]/;
+const upperCase = /^[A-Z]+s?$/;
+
+/** convert all text to uppercase */
+exports.toUpperCase = function () {
+  this.text = this.text.toUpperCase();
+  return this
+};
+
+/** convert all text to lowercase */
+exports.toLowerCase = function () {
+  this.text = this.text.toLowerCase();
+  return this
+};
+
+/** only set the first letter to uppercase
+ * leave any existing uppercase alone
+ */
+exports.toTitleCase = function () {
+  this.text = this.text.replace(/^ *[a-z\u00C0-\u00FF]/, x => x.toUpperCase()); //support unicode?
+  return this
+};
+
+/** if all letters are uppercase */
+exports.isUpperCase = function () {
+  return upperCase.test(this.text)
+};
+/** if the first letter is uppercase, and the rest are lowercase */
+exports.isTitleCase = function () {
+  return titleCase.test(this.text)
+};
+exports.titleCase = exports.isTitleCase;
+});
+
+var _02Punctuation$1 = createCommonjsModule(function (module, exports) {
+// these methods are called with '@hasComma' in the match syntax
+// various unicode quotation-mark formats
+const startQuote = /(\u0022|\uFF02|\u0027|\u201C|\u2018|\u201F|\u201B|\u201E|\u2E42|\u201A|\u00AB|\u2039|\u2035|\u2036|\u2037|\u301D|\u0060|\u301F)/;
+const endQuote = /(\u0022|\uFF02|\u0027|\u201D|\u2019|\u201D|\u2019|\u201D|\u201D|\u2019|\u00BB|\u203A|\u2032|\u2033|\u2034|\u301E|\u00B4|\u301E)/;
+
+/** search the term's 'post' punctuation  */
+exports.hasPost = function (punct) {
+  return this.post.indexOf(punct) !== -1
+};
+/** search the term's 'pre' punctuation  */
+exports.hasPre = function (punct) {
+  return this.pre.indexOf(punct) !== -1
+};
+
+/** does it have a quotation symbol?  */
+exports.hasQuote = function () {
+  return startQuote.test(this.pre) || endQuote.test(this.post)
+};
+exports.hasQuotation = exports.hasQuote;
+
+/** does it have a comma?  */
+exports.hasComma = function () {
+  return this.hasPost(',')
+};
+
+/** does it end in a period? */
+exports.hasPeriod = function () {
+  return this.hasPost('.') === true && this.hasPost('...') === false
+};
+
+/** does it end in an exclamation */
+exports.hasExclamation = function () {
+  return this.hasPost('!')
+};
+
+/** does it end with a question mark? */
+exports.hasQuestionMark = function () {
+  return this.hasPost('?') || this.hasPost('¿')
+};
+
+/** is there a ... at the end? */
+exports.hasEllipses = function () {
+  return this.hasPost('..') || this.hasPost('…') || this.hasPre('..') || this.hasPre('…')
+};
+
+/** is there a semicolon after this word? */
+exports.hasSemicolon = function () {
+  return this.hasPost(';')
+};
+
+/** is there a slash '/' in this word? */
+exports.hasSlash = function () {
+  return /\//.test(this.text)
+};
+
+/** a hyphen connects two words like-this */
+exports.hasHyphen = function () {
+  const hyphen = /^(-|–|—)$/;
+  return hyphen.test(this.post) || hyphen.test(this.pre)
+};
+/** a dash separates words - like that */
+exports.hasDash = function () {
+  const hyphen = / (-|–|—) /;
+  return hyphen.test(this.post) || hyphen.test(this.pre)
+};
+
+/** is it multiple words combinded */
+exports.hasContraction = function () {
+  return Boolean(this.implicit)
+};
+
+/** try to sensibly put this punctuation mark into the term */
+exports.addPunctuation = function (punct) {
+  // dont add doubles
+  if (punct === ',' || punct === ';') {
+    this.post = this.post.replace(punct, '');
+  }
+  this.post = punct + this.post;
+  return this
+};
+});
+
+// fuzzy-match (damerau-levenshtein)
+// Based on  tad-lispy /node-damerau-levenshtein
+// https://github.com/tad-lispy/node-damerau-levenshtein/blob/master/index.js
+
+// count steps (insertions, deletions, substitutions, or transpositions)
+const editDistance = function (strA, strB) {
+  let aLength = strA.length,
+    bLength = strB.length;
+
+  // fail-fast
+  if (aLength === 0) {
+    return bLength
+  }
+  if (bLength === 0) {
+    return aLength
+  }
+  // If the limit is not defined it will be calculate from this and that args.
+  let limit = (bLength > aLength ? bLength : aLength) + 1;
+  if (Math.abs(aLength - bLength) > (limit || 100)) {
+    return limit || 100
+  }
+
+  // init the array
+  let matrix = [];
+  for (let i = 0; i < limit; i++) {
+    matrix[i] = [i];
+    matrix[i].length = limit;
+  }
+  for (let i = 0; i < limit; i++) {
+    matrix[0][i] = i;
+  }
+
+  // Calculate matrix.
+  let j, a_index, b_index, cost, min, t;
+  for (let i = 1; i <= aLength; ++i) {
+    a_index = strA[i - 1];
+    for (j = 1; j <= bLength; ++j) {
+      // Check the jagged distance total so far
+      if (i === j && matrix[i][j] > 4) {
+        return aLength
+      }
+      b_index = strB[j - 1];
+      cost = a_index === b_index ? 0 : 1; // Step 5
+      // Calculate the minimum (much faster than Math.min(...)).
+      min = matrix[i - 1][j] + 1; // Deletion.
+      if ((t = matrix[i][j - 1] + 1) < min) min = t; // Insertion.
+      if ((t = matrix[i - 1][j - 1] + cost) < min) min = t; // Substitution.
+
+      // Update matrix.
+      let shouldUpdate =
+        i > 1 && j > 1 && a_index === strB[j - 2] && strA[i - 2] === b_index && (t = matrix[i - 2][j - 2] + cost) < min;
+      if (shouldUpdate) {
+        matrix[i][j] = t;
+      } else {
+        matrix[i][j] = min;
+      }
+    }
+  }
+  // return number of steps
+  return matrix[aLength][bLength]
+};
+
+// score similarity by from 0-1 (steps/length)
+const fuzzyMatch = function (strA, strB, minLength = 3) {
+  if (strA === strB) {
+    return 1
+  }
+  //don't even bother on tiny strings
+  if (strA.length < minLength || strB.length < minLength) {
+    return 0
+  }
+  const steps = editDistance(strA, strB);
+  let length = Math.max(strA.length, strB.length);
+  let relative = length === 0 ? 0 : steps / length;
+  let similarity = 1 - relative;
+  return similarity
+};
+
+var _fuzzy = fuzzyMatch;
+
+//declare it up here
+let wrapMatch = function () {};
+
+/** ignore optional/greedy logic, straight-up term match*/
+const doesMatch = function (t, reg, index, length) {
+  // support id matches
+  if (reg.id === t.id) {
+    return true
+  }
+  // support '.'
+  if (reg.anything === true) {
+    return true
+  }
+  // support '^' (in parentheses)
+  if (reg.start === true && index !== 0) {
+    return false
+  }
+  // support '$' (in parentheses)
+  if (reg.end === true && index !== length - 1) {
+    return false
+  }
+  //support a text match
+  if (reg.word !== undefined) {
+    //match contractions
+    if (t.implicit !== null && t.implicit === reg.word) {
+      return true
+    }
+    // term aliases for slashes and things
+    if (t.alias !== undefined && t.alias.hasOwnProperty(reg.word)) {
+      return true
+    }
+    // support ~ match
+    if (reg.soft === true && reg.word === t.root) {
+      return true
+    }
+    // support fuzzy match param
+    if (reg.fuzzy !== undefined) {
+      let score = _fuzzy(reg.word, t.reduced);
+      if (score > reg.fuzzy) {
+        return true
+      }
+      // support fuzzy + soft match
+      if (reg.soft === true) {
+        score = _fuzzy(reg.word, t.root);
+        if (score > reg.fuzzy) {
+          return true
+        }
+      }
+    }
+    //match either .clean or .text
+    return reg.word === t.clean || reg.word === t.text || reg.word === t.reduced
+  }
+  //support #Tag
+  if (reg.tag !== undefined) {
+    return t.tags[reg.tag] === true
+  }
+  //support @method
+  if (reg.method !== undefined) {
+    if (typeof t[reg.method] === 'function' && t[reg.method]() === true) {
+      return true
+    }
+    return false
+  }
+  //support /reg/
+  if (reg.regex !== undefined) {
+    return reg.regex.test(t.clean)
+  }
+  // support optimized (one|two)
+  if (reg.fastOr !== undefined) {
+    if (t.implicit && reg.fastOr.hasOwnProperty(t.implicit) === true) {
+      return true
+    }
+    return reg.fastOr.hasOwnProperty(t.reduced) || reg.fastOr.hasOwnProperty(t.text)
+  }
+  //support slower (one|two)
+  if (reg.choices !== undefined) {
+    // try to support && operator
+    if (reg.operator === 'and') {
+      // must match them all
+      return reg.choices.every(r => wrapMatch(t, r, index, length))
+    }
+    // or must match one
+    return reg.choices.some(r => wrapMatch(t, r, index, length))
+  }
+  return false
+};
+
+// wrap result for !negative match logic
+wrapMatch = function (t, reg, index, length) {
+  let result = doesMatch(t, reg, index, length);
+  if (reg.negative === true) {
+    return !result
+  }
+  return result
+};
+
+var _doesMatch = wrapMatch;
+
+// these tags aren't juicy-enough
+const boring = {};
+
+/** check a match object against this term */
+var doesMatch_1 = function (reg, index, length) {
+  return _doesMatch(this, reg, index, length)
+};
+
+/** does this term look like an acronym? */
+var isAcronym_1 = function () {
+  return isAcronym_1$1(this.text)
+};
+
+/** is this term implied by a contraction? */
+var isImplicit = function () {
+  return this.text === '' && Boolean(this.implicit)
+};
+
+/** does the term have at least one good tag? */
+var isKnown = function () {
+  return Object.keys(this.tags).some(t => boring[t] !== true)
+};
+
+/** cache the root property of the term */
+var setRoot = function (world) {
+  let transform = world.transforms;
+  let str = this.implicit || this.clean;
+  if (this.tags.Plural) {
+    str = transform.toSingular(str, world);
+  }
+  if (this.tags.Verb && !this.tags.Negative && !this.tags.Infinitive) {
+    let tense = null;
+    if (this.tags.PastTense) {
+      tense = 'PastTense';
+    } else if (this.tags.Gerund) {
+      tense = 'Gerund';
+    } else if (this.tags.PresentTense) {
+      tense = 'PresentTense';
+    } else if (this.tags.Participle) {
+      tense = 'Participle';
+    } else if (this.tags.Actor) {
+      tense = 'Actor';
+    }
+    str = transform.toInfinitive(str, world, tense);
+  }
+  this.root = str;
+};
+
+var _03Misc = {
+	doesMatch: doesMatch_1,
+	isAcronym: isAcronym_1,
+	isImplicit: isImplicit,
+	isKnown: isKnown,
+	setRoot: setRoot
+};
+
+const hasSpace$1 = /[\s-]/;
+const isUpperCase = /^[A-Z-]+$/;
+
+// const titleCase = str => {
+//   return str.charAt(0).toUpperCase() + str.substr(1)
+// }
+
+/** return various text formats of this term */
+var textOut = function (options, showPre, showPost) {
+  options = options || {};
+  let word = this.text;
+  let before = this.pre;
+  let after = this.post;
+
+  // -word-
+  if (options.reduced === true) {
+    word = this.reduced || '';
+  }
+  if (options.root === true) {
+    word = this.root || '';
+  }
+  if (options.implicit === true && this.implicit) {
+    word = this.implicit || '';
+  }
+  if (options.normal === true) {
+    word = this.clean || this.text || '';
+  }
+  if (options.root === true) {
+    word = this.root || this.reduced || '';
+  }
+  if (options.unicode === true) {
+    word = unicode_1(word);
+  }
+  // cleanup case
+  if (options.titlecase === true) {
+    if (this.tags.ProperNoun && !this.titleCase()) ; else if (this.tags.Acronym) {
+      word = word.toUpperCase(); //uppercase acronyms
+    } else if (isUpperCase.test(word) && !this.tags.Acronym) {
+      // lowercase everything else
+      word = word.toLowerCase();
+    }
+  }
+  if (options.lowercase === true) {
+    word = word.toLowerCase();
+  }
+  // remove the '.'s from 'F.B.I.' (safely)
+  if (options.acronyms === true && this.tags.Acronym) {
+    word = word.replace(/\./g, '');
+  }
+
+  // -before/after-
+  if (options.whitespace === true || options.root === true) {
+    before = '';
+    after = ' ';
+    if ((hasSpace$1.test(this.post) === false || options.last) && !this.implicit) {
+      after = '';
+    }
+  }
+  if (options.punctuation === true && !options.root) {
+    //normalized end punctuation
+    if (this.hasPost('.') === true) {
+      after = '.' + after;
+    } else if (this.hasPost('?') === true) {
+      after = '?' + after;
+    } else if (this.hasPost('!') === true) {
+      after = '!' + after;
+    } else if (this.hasPost(',') === true) {
+      after = ',' + after;
+    } else if (this.hasEllipses() === true) {
+      after = '...' + after;
+    }
+  }
+  if (showPre !== true) {
+    before = '';
+  }
+  if (showPost !== true) {
+    // let keep = after.match(/\)/) || ''
+    after = ''; //keep //after.replace(/[ .?!,]+/, '')
+  }
+  // remove the '.' from 'Mrs.' (safely)
+  if (options.abbreviations === true && this.tags.Abbreviation) {
+    after = after.replace(/^\./, '');
+  }
+  return before + word + after
+};
+
+var _04Text = {
+	textOut: textOut
+};
+
+const boringTags = {
+  Auxiliary: 1,
+  Possessive: 1,
+};
+
+/** a subjective ranking of tags kinda tfidf-based */
+const rankTags = function (term, world) {
+  let tags = Object.keys(term.tags);
+  const tagSet = world.tags;
+  tags = tags.sort((a, b) => {
+    //bury the tags we dont want
+    if (boringTags[b] || !tagSet[b]) {
+      return -1
+    }
+    // unknown tags are interesting
+    if (!tagSet[b]) {
+      return 1
+    }
+    if (!tagSet[a]) {
+      return 0
+    }
+    // then sort by #of parent tags (most-specific tags first)
+    if (tagSet[a].lineage.length > tagSet[b].lineage.length) {
+      return 1
+    }
+    if (tagSet[a].isA.length > tagSet[b].isA.length) {
+      return -1
+    }
+    return 0
+  });
+  return tags
+};
+var _bestTag = rankTags;
+
+const jsonDefault = {
+  text: true,
+  tags: true,
+  implicit: true,
+  whitespace: true,
+
+  clean: false,
+  id: false,
+  index: false,
+  offset: false,
+  bestTag: false,
+};
+
+/** return various metadata for this term */
+var json$1 = function (options, world) {
+  options = options || {};
+  options = Object.assign({}, jsonDefault, options);
+  let result = {};
+
+  // default on
+  if (options.text) {
+    result.text = this.text;
+  }
+  if (options.normal) {
+    result.normal = this.clean;
+  }
+
+  if (options.tags) {
+    result.tags = Object.keys(this.tags);
+  }
+
+  // default off
+  if (options.clean) {
+    result.clean = this.clean;
+  }
+  if (options.id || options.offset) {
+    result.id = this.id;
+  }
+  if (options.implicit && this.implicit !== null) {
+    result.implicit = this.implicit;
+  }
+  if (options.whitespace) {
+    result.pre = this.pre;
+    result.post = this.post;
+  }
+  if (options.bestTag) {
+    result.bestTag = _bestTag(this, world)[0];
+  }
+
+  return result
+};
+
+var _05Json$1 = {
+	json: json$1
+};
+
+var methods$8 = Object.assign(
+  {},
+  _01Case,
+  _02Punctuation$1,
+  _03Misc,
+  _04Text,
+  _05Json$1
+);
+
+function isClientSide() {
+  return typeof window !== 'undefined' && window.document
+}
+
+/** add spaces at the end */
+const padEnd = function (str, width) {
+  str = str.toString();
+  while (str.length < width) {
+    str += ' ';
+  }
+  return str
+};
+
+/** output for verbose-mode */
+var logTag = function (t, tag, reason) {
+  if (isClientSide()) {
+    console.log('%c' + padEnd(t.clean, 3) + '  + ' + tag + ' ', 'color: #6accb2;');
+    return
+  }
+  //server-side
+  let log = '\x1b[33m' + padEnd(t.clean, 15) + '\x1b[0m + \x1b[32m' + tag + '\x1b[0m ';
+  if (reason) {
+    log = padEnd(log, 35) + ' ' + reason + '';
+  }
+  console.log(log);
+};
+
+/** output for verbose mode  */
+var logUntag = function (t, tag, reason) {
+  if (isClientSide()) {
+    console.log('%c' + padEnd(t.clean, 3) + '  - ' + tag + ' ', 'color: #AB5850;');
+    return
+  }
+  //server-side
+  let log = '\x1b[33m' + padEnd(t.clean, 3) + ' \x1b[31m - #' + tag + '\x1b[0m ';
+  if (reason) {
+    log = padEnd(log, 35) + ' ' + reason;
+  }
+  console.log(log);
+};
+
+var isArray$3 = function (arr) {
+  return Object.prototype.toString.call(arr) === '[object Array]'
+};
+
+var titleCase$4 = str => {
+  return str.charAt(0).toUpperCase() + str.substr(1)
+};
+
+var fns$1 = {
+	logTag: logTag,
+	logUntag: logUntag,
+	isArray: isArray$3,
+	titleCase: titleCase$4
+};
+
+/** add a tag, and its descendents, to a term */
+const addTag = function (t, tag, reason, world) {
+  let tagset = world.tags;
+  //support '.' or '-' notation for skipping the tag
+  if (tag === '' || tag === '.' || tag === '-') {
+    return
+  }
+  if (tag[0] === '#') {
+    tag = tag.replace(/^#/, '');
+  }
+  tag = fns$1.titleCase(tag);
+  //if we already got this one
+  if (t.tags[tag] === true) {
+    return
+  }
+  // log it?
+  const isVerbose = world.isVerbose();
+  if (isVerbose === true) {
+    fns$1.logTag(t, tag, reason);
+  }
+  //add tag
+  t.tags[tag] = true; //whee!
+
+  //check tagset for any additional things to do...
+  if (tagset.hasOwnProperty(tag) === true) {
+    //add parent Tags
+    tagset[tag].isA.forEach(down => {
+      t.tags[down] = true;
+      if (isVerbose === true) {
+        fns$1.logTag(t, '→ ' + down);
+      }
+    });
+    //remove any contrary tags
+    t.unTag(tagset[tag].notA, '←', world);
+  }
+};
+
+/** support an array of tags */
+const addTags = function (term, tags, reason, world) {
+  if (typeof tags !== 'string') {
+    for (let i = 0; i < tags.length; i++) {
+      addTag(term, tags[i], reason, world);
+    }
+    // tags.forEach(tag => addTag(term, tag, reason, world))
+  } else {
+    addTag(term, tags, reason, world);
+  }
+};
+var add = addTags;
+
+const lowerCase = /^[a-z]/;
+
+const titleCase$3 = str => {
+  return str.charAt(0).toUpperCase() + str.substr(1)
+};
+
+/** remove this tag, and its descentents from the term */
+const unTag$1 = function (t, tag, reason, world) {
+  const isVerbose = world.isVerbose();
+  //support '*' for removing all tags
+  if (tag === '*') {
+    t.tags = {};
+    return t
+  }
+  tag = tag.replace(/^#/, '');
+  if (lowerCase.test(tag) === true) {
+    tag = titleCase$3(tag);
+  }
+  // remove the tag
+  if (t.tags[tag] === true) {
+    delete t.tags[tag];
+    //log in verbose-mode
+    if (isVerbose === true) {
+      fns$1.logUntag(t, tag, reason);
+    }
+  }
+  //delete downstream tags too
+  const tagset = world.tags;
+  if (tagset[tag]) {
+    let lineage = tagset[tag].lineage;
+    for (let i = 0; i < lineage.length; i++) {
+      if (t.tags[lineage[i]] === true) {
+        delete t.tags[lineage[i]];
+        if (isVerbose === true) {
+          fns$1.logUntag(t, ' - ' + lineage[i]);
+        }
+      }
+    }
+  }
+  return t
+};
+
+//handle an array of tags
+const untagAll = function (term, tags, reason, world) {
+  if (typeof tags !== 'string' && tags) {
+    for (let i = 0; i < tags.length; i++) {
+      unTag$1(term, tags[i], reason, world);
+    }
+    return
+  }
+  unTag$1(term, tags, reason, world);
+};
+var unTag_1$1 = untagAll;
+
+//recursively-check compatibility of this tag and term
+const canBe$2 = function (term, tag, world) {
+  const tagset = world.tags;
+  // cleanup tag
+  if (tag[0] === '#') {
+    tag = tag.replace(/^#/, '');
+  }
+  //fail-fast
+  if (tagset[tag] === undefined) {
+    return true
+  }
+  //loop through tag's contradictory tags
+  let enemies = tagset[tag].notA || [];
+  for (let i = 0; i < enemies.length; i++) {
+    if (term.tags[enemies[i]] === true) {
+      return false
+    }
+  }
+  if (tagset[tag].isA !== undefined) {
+    return canBe$2(term, tagset[tag].isA, world) //recursive
+  }
+  return true
+};
+
+var canBe_1$1 = canBe$2;
+
+/** add a tag or tags, and their descendents to this term
+ * @param  {string | string[]} tags - a tag or tags
+ * @param {string?} [reason] a clue for debugging
+ */
+var tag_1 = function (tags, reason, world) {
+  add(this, tags, reason, world);
+  return this
+};
+
+/** only tag this term if it's consistent with it's current tags */
+var tagSafe$1 = function (tags, reason, world) {
+  if (canBe_1$1(this, tags, world)) {
+    add(this, tags, reason, world);
+  }
+  return this
+};
+
+/** remove a tag or tags, and their descendents from this term
+ * @param {string | string[]} tags  - a tag or tags
+ * @param {string?} [reason] a clue for debugging
+ */
+var unTag_1 = function (tags, reason, world) {
+  unTag_1$1(this, tags, reason, world);
+  return this
+};
+
+/** is this tag consistent with the word's current tags?
+ * @param {string | string[]} tags - a tag or tags
+ * @returns {boolean}
+ */
+var canBe_1 = function (tags, world) {
+  return canBe_1$1(this, tags, world)
+};
+
+var tag$1 = {
+	tag: tag_1,
+	tagSafe: tagSafe$1,
+	unTag: unTag_1,
+	canBe: canBe_1
+};
+
+class Term {
+  constructor(text = '') {
+    text = String(text);
+    let obj = parse$2(text);
+    // the various forms of our text
+    this.text = obj.text || '';
+    this.clean = obj.clean;
+    this.reduced = obj.reduced;
+    this.root = null;
+    this.implicit = null;
+
+    this.pre = obj.pre || '';
+    this.post = obj.post || '';
+    this.tags = {};
+    this.prev = null;
+    this.next = null;
+    this.id = _id(obj.clean);
+    this.isA = 'Term'; // easier than .constructor...
+    // support alternative matches
+    if (obj.alias) {
+      this.alias = obj.alias;
+    }
+  }
+  /** set the text of the Term to something else*/
+  set(str) {
+    let obj = parse$2(str);
+    this.text = obj.text;
+    this.clean = obj.clean;
+    this.reduced = obj.reduced;
+    this.root = null;
+    this.implicit = null;
+    return this
+  }
+}
+
+/** create a deep-copy of this term */
+Term.prototype.clone = function () {
+  let term = new Term(this.text);
+  term.pre = this.pre;
+  term.post = this.post;
+  term.clean = this.clean;
+  term.reduced = this.reduced;
+  term.root = this.root;
+  term.implicit = this.implicit;
+  term.tags = Object.assign({}, this.tags);
+  //use the old id, so it can be matched with .match(doc)
+  // term.id = this.id
+  return term
+};
+
+Object.assign(Term.prototype, methods$8);
+Object.assign(Term.prototype, tag$1);
+
+var Term_1 = Term;
+
+/** return a flat array of Term objects */
+var terms = function (n) {
+  if (this.length === 0) {
+    return []
+  }
+  // use cache, if it exists
+  if (this.cache.terms) {
+    if (n !== undefined) {
+      return this.cache.terms[n]
+    }
+    return this.cache.terms
+  }
+  let terms = [this.pool.get(this.start)];
+  for (let i = 0; i < this.length - 1; i += 1) {
+    let id = terms[terms.length - 1].next;
+    if (id === null) {
+      // throw new Error('linked-list broken')
+      console.error("Compromise error: Linked list broken in phrase '" + this.start + "'");
+      break
+    }
+    let term = this.pool.get(id);
+    terms.push(term);
+    //return this one?
+    if (n !== undefined && n === i) {
+      return terms[n]
+    }
+  }
+  if (n === undefined) {
+    this.cache.terms = terms;
+  }
+  if (n !== undefined) {
+    return terms[n]
+  }
+  return terms
+};
+
+/** return a shallow or deep copy of this phrase  */
+var clone$1 = function (isShallow) {
+  if (isShallow) {
+    let p = this.buildFrom(this.start, this.length);
+    p.cache = this.cache;
+    return p
+  }
+  //how do we clone part of the pool?
+  let terms = this.terms();
+  let newTerms = terms.map(t => t.clone());
+  // console.log(newTerms)
+  //connect these new ids up
+  newTerms.forEach((t, i) => {
+    //add it to the pool..
+    this.pool.add(t);
+    if (newTerms[i + 1]) {
+      t.next = newTerms[i + 1].id;
+    }
+    if (newTerms[i - 1]) {
+      t.prev = newTerms[i - 1].id;
+    }
+  });
+  return this.buildFrom(newTerms[0].id, newTerms.length)
+};
+
+/** return last term object */
+var lastTerm = function () {
+  let terms = this.terms();
+  return terms[terms.length - 1]
+};
+
+/** quick lookup for a term id */
+var hasId = function (wantId) {
+  if (this.length === 0 || !wantId) {
+    return false
+  }
+  if (this.start === wantId) {
+    return true
+  }
+  // use cache, if available
+  if (this.cache.terms) {
+    let terms = this.cache.terms;
+    for (let i = 0; i < terms.length; i++) {
+      if (terms[i].id === wantId) {
+        return true
+      }
+    }
+    return false
+  }
+  // otherwise, go through each term
+  let lastId = this.start;
+  for (let i = 0; i < this.length - 1; i += 1) {
+    let term = this.pool.get(lastId);
+    if (term === undefined) {
+      console.error(`Compromise error: Linked list broken. Missing term '${lastId}' in phrase '${this.start}'\n`);
+      // throw new Error('linked List error')
+      return false
+    }
+    if (term.next === wantId) {
+      return true
+    }
+    lastId = term.next;
+  }
+  return false
+};
+
+/** how many seperate, non-empty words is it? */
+var wordCount = function () {
+  return this.terms().filter(t => t.text !== '').length
+};
+
+/** get the full-sentence this phrase belongs to */
+var fullSentence = function () {
+  let t = this.terms(0);
+  //find first term in sentence
+  while (t.prev) {
+    t = this.pool.get(t.prev);
+  }
+  let start = t.id;
+  let len = 1;
+  //go to end of sentence
+  while (t.next) {
+    t = this.pool.get(t.next);
+    len += 1;
+  }
+  return this.buildFrom(start, len)
+};
+
+var _01Utils$1 = {
+	terms: terms,
+	clone: clone$1,
+	lastTerm: lastTerm,
+	hasId: hasId,
+	wordCount: wordCount,
+	fullSentence: fullSentence
+};
+
+const trimEnd = function (str) {
+  return str.replace(/ +$/, '')
+};
+
+/** produce output in the given format */
+var text$1 = function (options = {}, isFirst, isLast) {
+  if (typeof options === 'string') {
+    if (options === 'normal') {
+      options = {
+        whitespace: true,
+        unicode: true,
+        lowercase: true,
+        punctuation: true,
+        acronyms: true,
+        abbreviations: true,
+        implicit: true,
+        normal: true,
+      };
+    } else if (options === 'clean') {
+      options = {
+        titlecase: false,
+        lowercase: true,
+        punctuation: true,
+        whitespace: true,
+        unicode: true,
+        implicit: true,
+        normal: true,
+      };
+    } else if (options === 'reduced') {
+      options = {
+        punctuation: false, //Hmm: is this reversed?
+        titlecase: false,
+        lowercase: true,
+        whitespace: true,
+        unicode: true,
+        implicit: true,
+        reduced: true,
+      };
+    } else if (options === 'implicit') {
+      options = {
+        punctuation: true,
+        implicit: true,
+        whitespace: true,
+        trim: true,
+      };
+    } else if (options === 'root') {
+      options = {
+        titlecase: false,
+        lowercase: true,
+        punctuation: true,
+        whitespace: true,
+        unicode: true,
+        implicit: true,
+        root: true,
+      };
+    } else {
+      options = {};
+    }
+  }
+  let terms = this.terms();
+  //this this phrase a complete sentence?
+  let isFull = false;
+  if (terms[0] && terms[0].prev === null && terms[terms.length - 1].next === null) {
+    isFull = true;
+  }
+  let text = terms.reduce((str, t, i) => {
+    // don't output intro space for a contraction-match  i'm good => "[am] good"
+    if (i === 0 && t.text === '' && t.implicit !== null && !options.implicit) {
+      return str
+    }
+    options.last = isLast && i === terms.length - 1;
+    let showPre = true;
+    let showPost = true;
+    if (isFull === false) {
+      // dont show beginning whitespace
+      if (i === 0 && isFirst) {
+        showPre = false;
+      }
+      // dont show end-whitespace
+      if (i === terms.length - 1 && isLast) {
+        showPost = false;
+      }
+    }
+    let txt = t.textOut(options, showPre, showPost);
+    // console.log(terms)
+    // if (options.titlecase && i === 0) {
+    // txt = titleCase(txt)
+    // }
+    return str + txt
+  }, '');
+  //full-phrases show punctuation, but not whitespace
+  if (isFull === true && isLast) {
+    text = trimEnd(text);
+  }
+  if (options.trim === true) {
+    text = text.trim();
+  }
+  return text
+};
+
+var _02Text = {
+	text: text$1
+};
+
+/** remove start and end whitespace */
+var trim = function () {
+  let terms = this.terms();
+  if (terms.length > 0) {
+    //trim starting
+    terms[0].pre = terms[0].pre.replace(/^\s+/, '');
+    //trim ending
+    let lastTerm = terms[terms.length - 1];
+    lastTerm.post = lastTerm.post.replace(/\s+$/, '');
+  }
+  return this
+};
+
+var _03Change = {
+	trim: trim
+};
+
+const endOfSentence = /[.?!]\s*$/;
+
+// replacing a 'word.' with a 'word!'
+const combinePost = function (before, after) {
+  //only transfer the whitespace
+  if (endOfSentence.test(after)) {
+    let whitespace = before.match(/\s*$/);
+    return after + whitespace
+  }
+  return before
+};
+
+//add whitespace to the start of the second bit
+const addWhitespace$1 = function (beforeTerms, newTerms) {
+  // add any existing pre-whitespace to beginning
+  newTerms[0].pre = beforeTerms[0].pre;
+  let lastTerm = beforeTerms[beforeTerms.length - 1];
+
+  //add any existing punctuation to end of our new terms
+  let newTerm = newTerms[newTerms.length - 1];
+  newTerm.post = combinePost(lastTerm.post, newTerm.post);
+  // remove existing punctuation
+  lastTerm.post = '';
+
+  //before ←[space]  - after
+  if (lastTerm.post === '') {
+    lastTerm.post += ' ';
+  }
+};
+
+//insert this segment into the linked-list
+const stitchIn$1 = function (beforeTerms, newTerms, pool) {
+  let lastBefore = beforeTerms[beforeTerms.length - 1];
+  let lastNew = newTerms[newTerms.length - 1];
+  let afterId = lastBefore.next;
+  //connect ours in (main → newPhrase)
+  lastBefore.next = newTerms[0].id;
+  //stich the end in  (newPhrase → after)
+  lastNew.next = afterId;
+  //do it backwards, too
+  if (afterId) {
+    // newPhrase ← after
+    let afterTerm = pool.get(afterId);
+    afterTerm.prev = lastNew.id;
+  }
+  // before ← newPhrase
+  let beforeId = beforeTerms[0].id;
+  if (beforeId) {
+    let newTerm = newTerms[0];
+    newTerm.prev = beforeId;
+  }
+};
+
+// avoid stretching a phrase twice.
+const unique$5 = function (list) {
+  return list.filter((o, i) => {
+    return list.indexOf(o) === i
+  })
+};
+
+//append one phrase onto another.
+const appendPhrase = function (before, newPhrase, doc) {
+  let beforeTerms = before.terms();
+  let newTerms = newPhrase.terms();
+  //spruce-up the whitespace issues
+  addWhitespace$1(beforeTerms, newTerms);
+  //insert this segment into the linked-list
+  stitchIn$1(beforeTerms, newTerms, before.pool);
+
+  // stretch!
+  // make each effected phrase longer
+  let toStretch = [before];
+  let hasId = before.start;
+  let docs = [doc];
+
+  docs = docs.concat(doc.parents()); // find them all!
+
+  docs.forEach(parent => {
+    // only the phrases that should change
+    let shouldChange = parent.list.filter(p => {
+      return p.hasId(hasId)
+    });
+    toStretch = toStretch.concat(shouldChange);
+  });
+  // don't double-count a phrase
+  toStretch = unique$5(toStretch);
+  toStretch.forEach(p => {
+    p.length += newPhrase.length;
+  });
+  before.cache = {};
+  return before
+};
+var append = appendPhrase;
+
+const hasSpace = / /;
+
+//a new space needs to be added, either on the new phrase, or the old one
+// '[new] [◻old]'   -or-   '[old] [◻new] [old]'
+const addWhitespace = function (newTerms) {
+  //add a space before our new text?
+  // add a space after our text
+  let lastTerm = newTerms[newTerms.length - 1];
+  if (hasSpace.test(lastTerm.post) === false) {
+    lastTerm.post += ' ';
+  }
+  return
+};
+
+//insert this segment into the linked-list
+const stitchIn = function (main, newPhrase, newTerms) {
+  // [newPhrase] → [main]
+  let lastTerm = newTerms[newTerms.length - 1];
+  lastTerm.next = main.start;
+  // [before] → [main]
+  let pool = main.pool;
+  let start = pool.get(main.start);
+  if (start.prev) {
+    let before = pool.get(start.prev);
+    before.next = newPhrase.start;
+  }
+  //do it backwards, too
+  // before ← newPhrase
+  newTerms[0].prev = main.terms(0).prev;
+  // newPhrase ← main
+  main.terms(0).prev = lastTerm.id;
+};
+
+const unique$4 = function (list) {
+  return list.filter((o, i) => {
+    return list.indexOf(o) === i
+  })
+};
+
+//append one phrase onto another
+const joinPhrase = function (original, newPhrase, doc) {
+  const starterId = original.start;
+  let newTerms = newPhrase.terms();
+  //spruce-up the whitespace issues
+  addWhitespace(newTerms);
+  //insert this segment into the linked-list
+  stitchIn(original, newPhrase, newTerms);
+  //increase the length of our phrases
+  let toStretch = [original];
+  let docs = [doc];
+  docs = docs.concat(doc.parents());
+  docs.forEach(d => {
+    // only the phrases that should change
+    let shouldChange = d.list.filter(p => {
+      return p.hasId(starterId) || p.hasId(newPhrase.start)
+    });
+    toStretch = toStretch.concat(shouldChange);
+  });
+  // don't double-count
+  toStretch = unique$4(toStretch);
+  // stretch these phrases
+  toStretch.forEach(p => {
+    p.length += newPhrase.length;
+    // change the start too, if necessary
+    if (p.start === starterId) {
+      p.start = newPhrase.start;
+    }
+    p.cache = {};
+  });
+  return original
+};
+var prepend = joinPhrase;
+
+//recursively decrease the length of all the parent phrases
+const shrinkAll = function (doc, id, deleteLength, after) {
+  let arr = doc.parents();
+  arr.push(doc);
+
+  arr.forEach(d => {
+    //find our phrase to shrink
+    let phrase = d.list.find(p => p.hasId(id));
+    if (!phrase) {
+      return
+    }
+    phrase.length -= deleteLength;
+    // does it start with this soon-removed word?
+    if (phrase.start === id) {
+      phrase.start = after.id;
+    }
+    phrase.cache = {};
+  });
+  // cleanup empty phrase objects
+  doc.list = doc.list.filter(p => {
+    if (!p.start || !p.length) {
+      return false
+    }
+    return true
+  });
+};
+
+/** wrap the linked-list around these terms
+ * so they don't appear any more
+ */
+const deletePhrase = function (phrase, doc) {
+  let pool = doc.pool();
+  let terms = phrase.terms();
+
+  //grab both sides of the chain,
+  let prev = pool.get(terms[0].prev) || {};
+  let after = pool.get(terms[terms.length - 1].next) || {};
+
+  if (terms[0].implicit && prev.implicit) {
+    prev.set(prev.implicit);
+    prev.post += ' ';
+  }
+
+  // //first, change phrase lengths
+  shrinkAll(doc, phrase.start, phrase.length, after);
+
+  // connect [prev]->[after]
+  if (prev) {
+    prev.next = after.id;
+  }
+  // connect [prev]<-[after]
+  if (after) {
+    after.prev = prev.id;
+  }
+
+  // lastly, actually delete the terms from the pool?
+  // for (let i = 0; i < terms.length; i++) {
+  //   pool.remove(terms[i].id)
+  // }
+};
+var _delete$1 = deletePhrase;
+
+// const tokenize = require('../../01-tokenizer')
+
+/** put this text at the end */
+var append_1 = function (newPhrase, doc) {
+  append(this, newPhrase, doc);
+  return this
+};
+
+/** add this text to the beginning */
+var prepend_1 = function (newPhrase, doc) {
+  prepend(this, newPhrase, doc);
+  return this
+};
+
+var _delete = function (doc) {
+  _delete$1(this, doc);
+  return this
+};
+
+// stich-in newPhrase, stretch 'doc' + parents
+var replace$1 = function (newPhrase, doc) {
+  //add it do the end
+  let firstLength = this.length;
+  append(this, newPhrase, doc);
+
+  //delete original terms
+  let tmp = this.buildFrom(this.start, this.length);
+  tmp.length = firstLength;
+  _delete$1(tmp, doc);
+};
+
+/**
+ * Turn this phrase object into 3 phrase objects
+ */
+var splitOn = function (p) {
+  let terms = this.terms();
+  let result = {
+    before: null,
+    match: null,
+    after: null,
+  };
+  let index = terms.findIndex(t => t.id === p.start);
+  if (index === -1) {
+    return result
+  }
+  //make all three sections into phrase-objects
+  let start = terms.slice(0, index);
+  if (start.length > 0) {
+    result.before = this.buildFrom(start[0].id, start.length);
+  }
+  let match = terms.slice(index, index + p.length);
+  if (match.length > 0) {
+    result.match = this.buildFrom(match[0].id, match.length);
+  }
+  let end = terms.slice(index + p.length, terms.length);
+  if (end.length > 0) {
+    result.after = this.buildFrom(end[0].id, end.length, this.pool);
+  }
+  return result
+};
+
+var _04Insert = {
+	append: append_1,
+	prepend: prepend_1,
+	delete: _delete,
+	replace: replace$1,
+	splitOn: splitOn
+};
+
+/** return json metadata for this phrase */
+var json = function (options = {}, world) {
+  let res = {};
+  // text data
+  if (options.text) {
+    res.text = this.text();
+  }
+  if (options.normal) {
+    res.normal = this.text('normal');
+  }
+  if (options.clean) {
+    res.clean = this.text('clean');
+  }
+  if (options.reduced) {
+    res.reduced = this.text('reduced');
+  }
+  if (options.implicit) {
+    res.implicit = this.text('implicit');
+  }
+  if (options.root) {
+    res.root = this.text('root');
+  }
+  if (options.trim) {
+    if (res.text) {
+      res.text = res.text.trim();
+    }
+    if (res.normal) {
+      res.normal = res.normal.trim();
+    }
+    if (res.reduced) {
+      res.reduced = res.reduced.trim();
+    }
+  }
+  // terms data
+  if (options.terms) {
+    if (options.terms === true) {
+      options.terms = {};
+    }
+    res.terms = this.terms().map(t => t.json(options.terms, world));
+  }
+  return res
+};
+
+var _05Json = {
+	json: json
+};
+
+/** match any terms after this phrase */
+var lookAhead = function (regs) {
+  // if empty match string, return everything after
+  if (!regs) {
+    regs = '.*';
+  }
+  let pool = this.pool;
+  // get a list of all terms preceding our start
+  let terms = [];
+  const getAfter = function (id) {
+    let term = pool.get(id);
+    if (!term) {
+      return
+    }
+    terms.push(term);
+    if (term.prev) {
+      getAfter(term.next); //recursion
+    }
+  };
+  let all = this.terms();
+  let lastTerm = all[all.length - 1];
+  getAfter(lastTerm.next);
+  if (terms.length === 0) {
+    return []
+  }
+  // got the terms, make a phrase from them
+  let p = this.buildFrom(terms[0].id, terms.length);
+  return p.match(regs)
+};
+
+/** match any terms before this phrase */
+var lookBehind = function (regs) {
+  // if empty match string, return everything before
+  if (!regs) {
+    regs = '.*';
+  }
+  let pool = this.pool;
+  // get a list of all terms preceding our start
+  let terms = [];
+  const getBefore = function (id) {
+    let term = pool.get(id);
+    if (!term) {
+      return
+    }
+    terms.push(term);
+    if (term.prev) {
+      getBefore(term.prev); //recursion
+    }
+  };
+  let term = pool.get(this.start);
+  getBefore(term.prev);
+  if (terms.length === 0) {
+    return []
+  }
+  // got the terms, make a phrase from them
+  let p = this.buildFrom(terms[terms.length - 1].id, terms.length);
+  return p.match(regs)
+};
+
+var _06Lookahead = {
+	lookAhead: lookAhead,
+	lookBehind: lookBehind
+};
+
+var methods$7 = Object.assign(
+  {},
+  _01Utils$1,
+  _02Text,
+  _03Change,
+  _04Insert,
+  _05Json,
+  _06Lookahead
+);
+
+// try to avoid doing the match
+const failFast$1 = function (p, regs) {
+  if (regs.length === 0) {
+    return true
+  }
+  for (let i = 0; i < regs.length; i += 1) {
+    let reg = regs[i];
+    //logical quick-ones
+    if (reg.optional !== true && reg.negative !== true) {
+      //start/end impossibilites
+      if (reg.start === true && i > 0) {
+        return true
+      }
+    }
+    //this is not possible
+    if (reg.anything === true && reg.negative === true) {
+      return true
+    }
+  }
+  return false
+};
+var _02FailFast = failFast$1;
+
+var _matchLogic = createCommonjsModule(function (module, exports) {
+//found a match? it's greedy? keep going!
+exports.getGreedy = function (state, endReg) {
+  // for greedy checking, we no longer care about the reg.start
+  // value, and leaving it can cause failures for anchored greedy
+  // matches.  ditto for end-greedy matches: we need an earlier non-
+  // ending match to succceed until we get to the actual end.
+  let reg = Object.assign({}, state.regs[state.r], { start: false, end: false });
+  let start = state.t;
+  for (; state.t < state.terms.length; state.t += 1) {
+    //stop for next-reg match
+    if (endReg && state.terms[state.t].doesMatch(endReg, state.start_i + state.t, state.phrase_length)) {
+      return state.t
+    }
+    let count = state.t - start + 1;
+    // is it max-length now?
+    if (reg.max !== undefined && count === reg.max) {
+      return state.t
+    }
+    //stop here
+    if (state.terms[state.t].doesMatch(reg, state.start_i + state.t, state.phrase_length) === false) {
+      // is it too short?
+      if (reg.min !== undefined && count < reg.min) {
+        return null
+      }
+      return state.t
+    }
+  }
+  return state.t
+};
+
+//'unspecific greedy' is a weird situation.
+exports.greedyTo = function (state, nextReg) {
+  let t = state.t;
+  //if there's no next one, just go off the end!
+  if (!nextReg) {
+    return state.terms.length
+  }
+  //otherwise, we're looking for the next one
+  for (; t < state.terms.length; t += 1) {
+    if (state.terms[t].doesMatch(nextReg, state.start_i + t, state.phrase_length) === true) {
+      return t
+    }
+  }
+  //guess it doesn't exist, then.
+  return null
+};
+
+//we have a special case where an end-anchored greedy match may need to
+//start matching before the actual end; we do this by (temporarily!)
+//removing the "end" property from the matching token... since this is
+//very situation-specific, we *only* do this when we really need to.
+exports.isEndGreedy = function (reg, state) {
+  if (reg.end === true && reg.greedy === true) {
+    if (state.start_i + state.t < state.phrase_length - 1) {
+      let tmpReg = Object.assign({}, reg, { end: false });
+      if (state.terms[state.t].doesMatch(tmpReg, state.start_i + state.t, state.phrase_length) === true) {
+        return true
+      }
+    }
+  }
+  return false
+};
+
+// match complex OR cases like (a|b|foo bar)
+exports.doOrBlock = function (state, skipN = 0) {
+  let block = state.regs[state.r];
+  let wasFound = false;
+  // do each multiword sequence
+  for (let c = 0; c < block.choices.length; c += 1) {
+    // try to match this list of tokens
+    let regs = block.choices[c];
+    wasFound = regs.every((cr, w_index) => {
+      let extra = 0;
+      let t = state.t + w_index + skipN + extra;
+      if (state.terms[t] === undefined) {
+        return false
+      }
+      let foundBlock = state.terms[t].doesMatch(cr, t + state.start_i, state.phrase_length);
+      // this can be greedy - '(foo+ bar)'
+      if (foundBlock === true && cr.greedy === true) {
+        for (let i = 1; i < state.terms.length; i += 1) {
+          let term = state.terms[t + i];
+          if (term) {
+            let keepGoing = term.doesMatch(cr, state.start_i + i, state.phrase_length);
+            if (keepGoing === true) {
+              extra += 1;
+            } else {
+              break
+            }
+          }
+        }
+      }
+      skipN += extra;
+      return foundBlock
+    });
+    if (wasFound) {
+      skipN += regs.length;
+      break
+    }
+  }
+  // we found a match -  is it greedy though?
+  if (wasFound && block.greedy === true) {
+    return exports.doOrBlock(state, skipN) // try it again!
+  }
+  return skipN
+};
+
+// match AND cases like (#Noun && foo)
+exports.doAndBlock = function (state) {
+  let longest = 0;
+  // all blocks must match, and we return the greediest match
+  let reg = state.regs[state.r];
+  let allDidMatch = reg.choices.every(block => {
+    //  for multi-word blocks, all must match
+    let allWords = block.every((cr, w_index) => {
+      let tryTerm = state.t + w_index;
+      if (state.terms[tryTerm] === undefined) {
+        return false
+      }
+      return state.terms[tryTerm].doesMatch(cr, tryTerm, state.phrase_length)
+    });
+    if (allWords === true && block.length > longest) {
+      longest = block.length;
+    }
+    return allWords
+  });
+  if (allDidMatch === true) {
+    return longest
+  }
+  return false
+};
+
+// get or create named group
+exports.getGroup = function (state, term_index, name) {
+  if (state.groups[state.groupId]) {
+    return state.groups[state.groupId]
+  }
+  const termId = state.terms[term_index].id;
+  state.groups[state.groupId] = {
+    group: String(name),
+    start: termId,
+    length: 0,
+  };
+  return state.groups[state.groupId]
+};
+});
+
+// i formally apologize for how complicated this is.
+
+/** tries to match a sequence of terms, starting from here */
+const tryHere = function (terms, regs, start_i, phrase_length) {
+  // all the variables that matter
+  let state = {
+    t: 0, //the term index we're on
+    terms: terms, //the working slice of term objects
+    r: 0, // the reg index we're on
+    regs: regs, //our match conditions
+    groups: {}, //all named-group matches
+    start_i: start_i, // term index we're starting from
+    phrase_length: phrase_length, // # of terms in the sentence
+    hasGroup: false,
+    groupId: null,
+    previousGroup: null,
+  };
+
+  // we must satisfy each rule in 'regs'
+  for (; state.r < regs.length; state.r += 1) {
+    let reg = regs[state.r];
+
+    // Check if this reg has a named capture group
+    state.hasGroup = typeof reg.named === 'string' || typeof reg.named === 'number';
+
+    // Reuse previous capture group if same
+    if (state.hasGroup === true) {
+      const prev = regs[state.r - 1];
+      if (prev && prev.named === reg.named && state.previousGroup) {
+        state.groupId = state.previousGroup;
+      } else {
+        state.groupId = _id(reg.named);
+        state.previousGroup = state.groupId;
+      }
+    }
+    //have we run-out of terms?
+    if (!state.terms[state.t]) {
+      //are all remaining regs optional or negative?
+      const haveNeeds = regs.slice(state.r).some(remain => !remain.optional);
+      if (haveNeeds === false) {
+        break //done!
+      }
+      return null // die
+    }
+    //support 'unspecific greedy' .* properly
+    if (reg.anything === true && reg.greedy === true) {
+      let skipto = _matchLogic.greedyTo(state, regs[state.r + 1]);
+      //maybe we couldn't find it
+      if (skipto === null || skipto === 0) {
+        return null
+      }
+      // ensure it's long enough
+      if (reg.min !== undefined && skipto - state.t < reg.min) {
+        return null
+      }
+      // reduce it back, if it's too long
+      if (reg.max !== undefined && skipto - state.t > reg.max) {
+        state.t = state.t + reg.max;
+        continue
+      }
+      // is it really this easy?....
+      if (state.hasGroup === true) {
+        const g = _matchLogic.getGroup(state, state.t, reg.named);
+        g.length = skipto - state.t;
+      }
+      state.t = skipto;
+      continue
+    }
+
+    // support multi-word OR (a|b|foo bar)
+    if (reg.choices !== undefined && reg.operator === 'or') {
+      let skipNum = _matchLogic.doOrBlock(state);
+      if (skipNum) {
+        // handle 'not' logic
+        if (reg.negative === true) {
+          return null // die
+        }
+        if (state.hasGroup === true) {
+          const g = _matchLogic.getGroup(state, state.t, reg.named);
+          g.length += skipNum;
+        }
+        state.t += skipNum;
+        continue
+      } else if (!reg.optional) {
+        return null //die
+      }
+    }
+
+    // support AND (#Noun && foo) blocks
+    if (reg.choices !== undefined && reg.operator === 'and') {
+      let skipNum = _matchLogic.doAndBlock(state);
+      if (skipNum) {
+        // handle 'not' logic
+        if (reg.negative === true) {
+          return null // die
+        }
+        if (state.hasGroup === true) {
+          const g = _matchLogic.getGroup(state, state.t, reg.named);
+          g.length += skipNum;
+        }
+        state.t += skipNum;
+        continue
+      } else if (!reg.optional) {
+        return null //die
+      }
+    }
+
+    // ok, finally test the term/reg
+    let term = state.terms[state.t];
+    let doesMatch = term.doesMatch(reg, state.start_i + state.t, state.phrase_length);
+    if (reg.anything === true || doesMatch === true || _matchLogic.isEndGreedy(reg, state)) {
+      let startAt = state.t;
+      // if it's a negative optional match... :0
+      if (reg.optional && regs[state.r + 1] && reg.negative) {
+        continue
+      }
+      // okay, it was a match, but if it's optional too,
+      // we should check the next reg too, to skip it?
+      if (reg.optional && regs[state.r + 1]) {
+        // does the next reg match it too?
+        let nextRegMatched = term.doesMatch(regs[state.r + 1], state.start_i + state.t, state.phrase_length);
+        if (reg.negative || nextRegMatched) {
+          // but does the next reg match the next term??
+          // only skip if it doesn't
+          let nextTerm = state.terms[state.t + 1];
+          if (!nextTerm || !nextTerm.doesMatch(regs[state.r + 1], state.start_i + state.t, state.phrase_length)) {
+            state.r += 1;
+          }
+        }
+      }
+      //advance to the next term!
+      state.t += 1;
+      //check any ending '$' flags
+      if (reg.end === true) {
+        //if this isn't the last term, refuse the match
+        if (state.t !== state.terms.length && reg.greedy !== true) {
+          return null //die
+        }
+      }
+
+      //try keep it going!
+      if (reg.greedy === true) {
+        state.t = _matchLogic.getGreedy(state, regs[state.r + 1]);
+        if (state.t === null) {
+          return null //greedy was too short
+        }
+        if (reg.min && reg.min > state.t) {
+          return null //greedy was too short
+        }
+        // if this was also an end-anchor match, check to see we really
+        // reached the end
+        if (reg.end === true && state.start_i + state.t !== phrase_length) {
+          return null //greedy didn't reach the end
+        }
+      }
+
+      if (state.hasGroup === true) {
+        // Get or create capture group
+        const g = _matchLogic.getGroup(state, startAt, reg.named);
+        // Update group - add greedy or increment length
+        if (state.t > 1 && reg.greedy) {
+          g.length += state.t - startAt;
+        } else {
+          g.length++;
+        }
+      }
+      continue
+    }
+    // ok, it doesn't match.
+
+    // did it *actually match* a negative?
+    if (reg.negative) {
+      let tmpReg = Object.assign({}, reg);
+      tmpReg.negative = false; // try removing it
+      let foundNeg = state.terms[state.t].doesMatch(tmpReg, state.start_i + state.t, state.phrase_length);
+      if (foundNeg === true) {
+        return null //bye!
+      }
+    }
+
+    //bah, who cares, keep going
+    if (reg.optional === true) {
+      continue
+    }
+    // should we skip-over an implicit word?
+    if (state.terms[state.t].isImplicit() && regs[state.r - 1] && state.terms[state.t + 1]) {
+      // if the last match was implicit too, we're missing a word.
+      if (state.terms[state.t - 1] && state.terms[state.t - 1].implicit === regs[state.r - 1].word) {
+        return null
+      }
+      // does the next one match?
+      if (state.terms[state.t + 1].doesMatch(reg, state.start_i + state.t, state.phrase_length)) {
+        state.t += 2;
+        continue
+      }
+    }
+    return null //die
+  }
+
+  //return our result
+  return { match: state.terms.slice(0, state.t), groups: state.groups }
+};
+var _03TryMatch = tryHere;
+
+// final checks on the validity of our results
+const postProcess$1 = function (terms, regs, matches) {
+  if (!matches || matches.length === 0) {
+    return matches
+  }
+  // ensure end reg has the end term
+  let atEnd = regs.some(r => r.end);
+  if (atEnd) {
+    let lastTerm = terms[terms.length - 1];
+    matches = matches.filter(({ match: arr }) => arr.indexOf(lastTerm) !== -1);
+  }
+  return matches
+};
+var _04PostProcess = postProcess$1;
+
+// supported suffix-flags:
+
+// suffixes:     ? ] + * $ {2,6} ~
+//     [\?\]\+\*\$~]*
+
+// prefixes: ! [ ^
+//     [\!\[\^]*
+
+// match  'foo /yes/' and not 'foo/no/bar'
+const bySlashes = /(?:^|\s)([\!\[\^]*(?:<[^<]*>)?\/.*?[^\\\/]\/[\?\]\+\*\$~]*)(?:\s|$)/;
+// match '(yes) but not foo(no)bar'
+const byParentheses = /([\!\[\^]*(?:<[^<]*>)?\([^\)]+[^\\\)]\)[\?\]\+\*\$~]*)(?:\s|$)/;
+// okay
+const byWord = / /g;
+
+const isBlock = str => {
+  return /^[\!\[\^]*(<[^<]*>)?\(/.test(str) && /\)[\?\]\+\*\$~]*$/.test(str)
+};
+const isReg = str => {
+  return /^[\!\[\^]*(<[^<]*>)?\//.test(str) && /\/[\?\]\+\*\$~]*$/.test(str)
+};
+
+const cleanUp = function (arr) {
+  arr = arr.map(str => str.trim());
+  arr = arr.filter(str => str);
+  return arr
+};
+
+const parseBlocks = function (txt) {
+  // parse by /regex/ first
+  let arr = txt.split(bySlashes);
+  let res = [];
+  // parse by (blocks), next
+  arr.forEach(str => {
+    if (isReg(str)) {
+      res.push(str);
+      return
+    }
+    res = res.concat(str.split(byParentheses));
+  });
+  res = cleanUp(res);
+  // split by spaces, now
+  let final = [];
+  res.forEach(str => {
+    if (isBlock(str)) {
+      final.push(str);
+    } else if (isReg(str)) {
+      final.push(str);
+    } else {
+      final = final.concat(str.split(byWord));
+    }
+  });
+  final = cleanUp(final);
+  return final
+};
+var _01ParseBlocks = parseBlocks;
+
+/* break-down a match expression into this:
+{
+  word:'',
+  tag:'',
+  regex:'',
+
+  start:false,
+  end:false,
+  negative:false,
+  anything:false,
+  greedy:false,
+  optional:false,
+
+  named:'',
+  choices:[],
+}
+*/
+const hasMinMax = /\{([0-9]+,?[0-9]*)\}/;
+const andSign = /&&/;
+const captureName = new RegExp(/^<\s*?(\S+)\s*?>/);
+
+const titleCase$2 = str => {
+  return str.charAt(0).toUpperCase() + str.substr(1)
+};
+
+const end = function (str) {
+  return str[str.length - 1]
+};
+const start = function (str) {
+  return str[0]
+};
+const stripStart = function (str) {
+  return str.substr(1)
+};
+const stripEnd = function (str) {
+  return str.substr(0, str.length - 1)
+};
+const stripBoth = function (str) {
+  str = stripStart(str);
+  str = stripEnd(str);
+  return str
+};
+
+//
+const parseToken = function (w) {
+  let obj = {};
+  //collect any flags (do it twice)
+  for (let i = 0; i < 2; i += 1) {
+    //end-flag
+    if (end(w) === '$') {
+      obj.end = true;
+      w = stripEnd(w);
+    }
+    //front-flag
+    if (start(w) === '^') {
+      obj.start = true;
+      w = stripStart(w);
+    }
+    //capture group (this one can span multiple-terms)
+    if (start(w) === '[' || end(w) === ']') {
+      obj.named = true;
+
+      if (start(w) === '[') {
+        obj.groupType = end(w) === ']' ? 'single' : 'start';
+      } else {
+        obj.groupType = 'end';
+      }
+
+      w = w.replace(/^\[/, '');
+      w = w.replace(/\]$/, '');
+
+      // Use capture group name
+      if (start(w) === '<') {
+        const res = captureName.exec(w);
+        if (res.length >= 2) {
+          obj.named = res[1];
+          w = w.replace(res[0], '');
+        }
+      }
+    }
+    //back-flags
+    if (end(w) === '+') {
+      obj.greedy = true;
+      w = stripEnd(w);
+    }
+    if (w !== '*' && end(w) === '*' && w !== '\\*') {
+      obj.greedy = true;
+      w = stripEnd(w);
+    }
+    if (end(w) === '?') {
+      obj.optional = true;
+      w = stripEnd(w);
+    }
+
+    if (start(w) === '!') {
+      obj.negative = true;
+      // obj.optional = true
+      w = stripStart(w);
+    }
+    //wrapped-flags
+    if (start(w) === '(' && end(w) === ')') {
+      // support (one && two)
+      if (andSign.test(w)) {
+        obj.choices = w.split(andSign);
+        obj.operator = 'and';
+      } else {
+        obj.choices = w.split('|');
+        obj.operator = 'or';
+      }
+      //remove '(' and ')'
+      obj.choices[0] = stripStart(obj.choices[0]);
+      let last = obj.choices.length - 1;
+      obj.choices[last] = stripEnd(obj.choices[last]);
+      // clean up the results
+      obj.choices = obj.choices.map(s => s.trim());
+      obj.choices = obj.choices.filter(s => s);
+      //recursion alert!
+      obj.choices = obj.choices.map(str => {
+        return str.split(/ /g).map(parseToken)
+      });
+      w = '';
+    }
+
+    //regex
+    if (start(w) === '/' && end(w) === '/') {
+      w = stripBoth(w);
+      obj.regex = new RegExp(w); //potential vuln - security/detect-non-literal-regexp
+      return obj
+    }
+    //soft-match
+    if (start(w) === '~' && end(w) === '~') {
+      w = stripBoth(w);
+      obj.soft = true;
+      obj.word = w;
+      return obj
+    }
+  }
+  // support #Tag{1,9}
+  if (hasMinMax.test(w) === true) {
+    w = w.replace(hasMinMax, (a, b) => {
+      let arr = b.split(/,/g);
+      if (arr.length === 1) {
+        // '{3}'	Exactly three times
+        obj.min = Number(arr[0]);
+        obj.max = Number(arr[0]);
+      } else {
+        // '{2,4}' Two to four times
+        // '{3,}' Three or more times
+        obj.min = Number(arr[0]);
+        obj.max = Number(arr[1] || 999);
+      }
+      // use same method as '+'
+      obj.greedy = true;
+      // 0 as min means the same as '?'
+      obj.optional = true;
+      return ''
+    });
+  }
+
+  //do the actual token content
+  if (start(w) === '#') {
+    obj.tag = stripStart(w);
+    obj.tag = titleCase$2(obj.tag);
+    return obj
+  }
+  //dynamic function on a term object
+  if (start(w) === '@') {
+    obj.method = stripStart(w);
+    return obj
+  }
+  if (w === '.') {
+    obj.anything = true;
+    return obj
+  }
+  //support alone-astrix
+  if (w === '*') {
+    obj.anything = true;
+    obj.greedy = true;
+    obj.optional = true;
+    return obj
+  }
+  if (w) {
+    //somehow handle encoded-chars?
+    w = w.replace('\\*', '*');
+    w = w.replace('\\.', '.');
+    obj.word = w.toLowerCase();
+  }
+  return obj
+};
+var _02ParseToken = parseToken;
+
+// name any [unnamed] capture-groups with a number
+const nameGroups = function (tokens) {
+  let convert = false;
+  let index = -1;
+  let current;
+  //'fill in' capture groups between start-end
+  for (let i = 0; i < tokens.length; i++) {
+    const token = tokens[i];
+    // Give name to un-named single tokens
+    if (token.groupType === 'single' && token.named === true) {
+      index += 1;
+      token.named = index;
+      continue
+    }
+    // Start converting tokens
+    if (token.groupType === 'start') {
+      convert = true;
+      if (typeof token.named === 'string' || typeof token.named === 'number') {
+        current = token.named;
+      } else {
+        index += 1;
+        current = index;
+      }
+    }
+    // Ensure this token has the right name
+    if (convert) {
+      token.named = current;
+    }
+    // Stop converting tokens
+    if (token.groupType === 'end') {
+      convert = false;
+    }
+  }
+  return tokens
+};
+
+// optimize an 'or' lookup, when the (a|b|c) list is simple or multi-word
+const doFastOrMode = function (tokens) {
+  return tokens.map(token => {
+    if (token.choices !== undefined) {
+      // are they all straight-up words? then optimize them.
+      let shouldPack = token.choices.every(block => {
+        if (block.length !== 1) {
+          return false
+        }
+        let reg = block[0];
+        if (reg.word !== undefined && reg.negative !== true && reg.optional !== true && reg.method !== true) {
+          return true //reg is simple-enough
+        }
+        return false
+      });
+      if (shouldPack === true) {
+        let oneOf = {};
+        token.choices.forEach(block => {
+          oneOf[block[0].word] = true;
+        });
+        token.fastOr = oneOf;
+        delete token.choices;
+      }
+    }
+    return token
+  })
+};
+
+// allow multiword OR (foo|one two)
+// const doMultiWord = function (tokens) {
+//   return tokens.map(token => {
+//     if (token.choices !== undefined) {
+//       let isMulti = token.choices.find(o => hasASpace.test(o.word)) || false
+//       if (isMulti !== false) {
+//         token.multiword = true
+//         // turn all choices into arrays
+//         token.choices = token.choices.map(choice => {
+//           if (choice.word) {
+//             choice.sequence = choice.word.split(hasASpace)
+//             delete choice.word
+//           }
+//           return choice
+//         })
+//       }
+//     }
+//     return token
+//   })
+// }
+
+// const doBlockMode = function (tokens) {
+//   return tokens.map(token => {
+//     // we've already setup fastOr mode
+//     if (token.choices !== undefined) {
+//       // console.log(token)
+//     }
+//     return token
+//   })
+// }
+
+const postProcess = function (tokens, opts = {}) {
+  // ensure all capture groups are filled between start and end
+  // give all capture groups names
+  let count = tokens.filter(t => t.groupType).length;
+  if (count > 0) {
+    tokens = nameGroups(tokens);
+  }
+  // convert 'choices' format to 'fastOr' format
+  if (!opts.fuzzy) {
+    tokens = doFastOrMode(tokens);
+  }
+  // support multiword OR (foo bar|baz)
+  // tokens = doMultiWord(tokens)
+  // support (one two three)
+  // tokens = doBlockMode(tokens)
+  return tokens
+};
+var _03PostProcess = postProcess;
+
+const isArray$2 = function (arr) {
+  return Object.prototype.toString.call(arr) === '[object Array]'
+};
+
+//turn an array into a 'choices' list
+const byArray = function (arr) {
+  let blocks = arr.map(s => {
+    return [
+      {
+        word: s,
+      },
+    ]
+  });
+  return [
+    {
+      choices: blocks,
+      operator: 'or',
+    },
+  ]
+};
+
+// turn a Doc object into a reg of ids to lookup
+const fromDoc = function (doc) {
+  if (!doc || !doc.list || !doc.list[0]) {
+    return []
+  }
+  let regs = [];
+  doc.list.forEach(p => {
+    let ids = [];
+    p.terms().forEach(t => {
+      ids.push(t.id);
+    });
+    regs.push(ids);
+  });
+  return [{ idBlocks: regs }]
+};
+
+// add fuzziness etc to each reg
+const addOptions = function (tokens, opts) {
+  // add default fuzzy-search limit
+  if (opts.fuzzy === true) {
+    opts.fuzzy = 0.85;
+  }
+  if (typeof opts.fuzzy === 'number') {
+    tokens = tokens.map(reg => {
+      // add a fuzzy-match on 'word' tokens
+      if (opts.fuzzy > 0 && reg.word) {
+        reg.fuzzy = opts.fuzzy;
+      }
+      //add it to or|and choices too
+      if (reg.choices) {
+        reg.choices.forEach(block => {
+          block.forEach(r => {
+            r.fuzzy = opts.fuzzy;
+          });
+        });
+      }
+      return reg
+    });
+  }
+  return tokens
+};
+
+/** parse a match-syntax string into json */
+const syntax = function (input, opts = {}) {
+  // fail-fast
+  if (input === null || input === undefined || input === '') {
+    return []
+  }
+  //try to support a ton of different formats:
+  if (typeof input === 'object') {
+    if (isArray$2(input)) {
+      if (input.length === 0 || !input[0]) {
+        return []
+      }
+
+      //is it a pre-parsed reg-list?
+      if (typeof input[0] === 'object') {
+        return input
+      }
+      //support a flat array of normalized words
+      if (typeof input[0] === 'string') {
+        return byArray(input)
+      }
+    }
+    //support passing-in a compromise object as a match
+    if (input && input.isA === 'Doc') {
+      return fromDoc(input)
+    }
+    return []
+  }
+  if (typeof input === 'number') {
+    input = String(input); //go for it?
+  }
+  let tokens = _01ParseBlocks(input);
+  //turn them into objects
+  tokens = tokens.map(str => _02ParseToken(str));
+  //clean up anything weird
+  tokens = _03PostProcess(tokens, opts);
+  // add fuzzy limits, etc
+  tokens = addOptions(tokens, opts);
+  // console.log(tokens)
+  return tokens
+};
+
+var matchSyntax = syntax;
+
+// match an explicit sequence of term ids
+// take a phrase and find any of the idBlocks in it
+const idLookup = function (terms, regs) {
+  let matches = [];
+  let blocklist = regs[0].idBlocks;
+  for (let t = 0; t < terms.length; t += 1) {
+    blocklist.forEach(block => {
+      if (block.length === 0) {
+        return
+      }
+      let foundAll = block.every((id, i) => {
+        return terms[t + i].id === id
+      });
+      if (foundAll) {
+        matches.push({ match: terms.slice(t, t + block.length) });
+        //  skip top-loop forward
+        t += block.length - 1;
+      }
+    });
+  }
+  return matches
+};
+var idLookup_1 = idLookup;
+
+/**  returns a simple array of arrays */
+const matchAll = function (p, regs, matchOne = false) {
+  //if we forgot to parse it..
+  if (typeof regs === 'string') {
+    regs = matchSyntax(regs);
+  }
+  //try to dismiss it, at-once
+  if (_02FailFast(p, regs) === true) {
+    return []
+  }
+
+  //any match needs to be this long, at least
+  const minLength = regs.filter(r => r.optional !== true && r.negative !== true).length;
+  let terms = p.terms();
+  let matches = [];
+
+  // these id-lookups can be super-fast
+  if (regs[0].idBlocks) {
+    let res = idLookup_1(terms, regs);
+    if (res && res.length > 0) {
+      return _04PostProcess(terms, regs, res)
+    }
+  }
+
+  //optimisation for '^' start logic
+  if (regs[0].start === true) {
+    let res = _03TryMatch(terms, regs, 0, terms.length);
+    if (res && res.match && res.match.length > 0) {
+      res.match = res.match.filter(m => m);
+      matches.push(res);
+    }
+
+    return _04PostProcess(terms, regs, matches)
+  }
+  //try starting, from every term
+  for (let i = 0; i < terms.length; i += 1) {
+    // slice may be too short
+    if (i + minLength > terms.length) {
+      break
+    }
+
+    //try it!
+    let res = _03TryMatch(terms.slice(i), regs, i, terms.length);
+    if (res && res.match && res.match.length > 0) {
+      //zoom forward!
+      i += res.match.length - 1;
+      //[capture-groups] return some null responses
+      res.match = res.match.filter(m => m);
+      matches.push(res);
+
+      //ok, maybe that's enough?
+      if (matchOne === true) {
+        return _04PostProcess(terms, regs, matches)
+      }
+    }
+  }
+  return _04PostProcess(terms, regs, matches)
+};
+var _01MatchAll = matchAll;
+
+/** return anything that doesn't match.
+ * returns a simple array of arrays
+ */
+const notMatch = function (p, regs) {
+  let found = {};
+  let arr = _01MatchAll(p, regs);
+  arr.forEach(({ match: ts }) => {
+    ts.forEach(t => {
+      found[t.id] = true;
+    });
+  });
+  //return anything not found
+  let terms = p.terms();
+  let result = [];
+  let current = [];
+  terms.forEach(t => {
+    if (found[t.id] === true) {
+      if (current.length > 0) {
+        result.push(current);
+        current = [];
+      }
+      return
+    }
+    current.push(t);
+  });
+  if (current.length > 0) {
+    result.push(current);
+  }
+  return result
+};
+var not$1 = notMatch;
+
+/** return an array of matching phrases */
+var match_1 = function (regs, justOne = false) {
+  let matches = _01MatchAll(this, regs, justOne);
+  //make them phrase objects
+  matches = matches.map(({ match, groups }) => {
+    let p = this.buildFrom(match[0].id, match.length, groups);
+    p.cache.terms = match;
+    return p
+  });
+  return matches
+};
+
+/** return boolean if one match is found */
+var has = function (regs) {
+  let matches = _01MatchAll(this, regs, true);
+  return matches.length > 0
+};
+
+/** remove all matches from the result */
+var not = function (regs) {
+  let matches = not$1(this, regs);
+  //make them phrase objects
+  matches = matches.map(list => {
+    return this.buildFrom(list[0].id, list.length)
+  });
+  return matches
+};
+
+/** return a list of phrases that can have this tag */
+var canBe$1 = function (tag, world) {
+  let results = [];
+  let terms = this.terms();
+  let previous = false;
+  for (let i = 0; i < terms.length; i += 1) {
+    let can = terms[i].canBe(tag, world);
+    if (can === true) {
+      if (previous === true) {
+        //add it to the end
+        results[results.length - 1].push(terms[i]);
+      } else {
+        results.push([terms[i]]); //make a new one
+      }
+      previous = can;
+    }
+  }
+  //turn them into Phrase objects
+  results = results
+    .filter(a => a.length > 0)
+    .map(arr => {
+      return this.buildFrom(arr[0].id, arr.length)
+    });
+  return results
+};
+
+var match = {
+	match: match_1,
+	has: has,
+	not: not,
+	canBe: canBe$1
+};
+
+// const tokenize = require('../01-tokenizer')
+
+class Phrase {
+  constructor(id, length, pool) {
+    this.start = id;
+    this.length = length;
+    this.isA = 'Phrase'; // easier than .constructor...
+    Object.defineProperty(this, 'pool', {
+      enumerable: false,
+      writable: true,
+      value: pool,
+    });
+    Object.defineProperty(this, 'cache', {
+      enumerable: false,
+      writable: true,
+      value: {},
+    });
+    Object.defineProperty(this, 'groups', {
+      enumerable: false,
+      writable: true,
+      value: {},
+    });
+  }
+}
+
+/** create a new Phrase object from an id and length */
+Phrase.prototype.buildFrom = function (id, length, groups) {
+  let p = new Phrase(id, length, this.pool);
+  //copy-over or replace capture-groups too
+  if (groups && Object.keys(groups).length > 0) {
+    p.groups = groups;
+  } else {
+    p.groups = this.groups;
+  }
+  return p
+};
+
+//apply methods
+Object.assign(Phrase.prototype, match);
+Object.assign(Phrase.prototype, methods$7);
+
+//apply aliases
+const aliases$1 = {
+  term: 'terms',
+};
+Object.keys(aliases$1).forEach(k => (Phrase.prototype[k] = Phrase.prototype[aliases$1[k]]));
+
+var Phrase_1 = Phrase;
+
+/** a key-value store of all terms in our Document */
+class Pool {
+  constructor(words = {}) {
+    //quiet this property in console.logs
+    Object.defineProperty(this, 'words', {
+      enumerable: false,
+      value: words,
+    });
+  }
+  /** throw a new term object in */
+  add(term) {
+    this.words[term.id] = term;
+    return this
+  }
+  /** find a term by it's id */
+  get(id) {
+    return this.words[id]
+  }
+  /** find a term by it's id */
+  remove(id) {
+    delete this.words[id];
+  }
+  merge(pool) {
+    Object.assign(this.words, pool.words);
+    return this
+  }
+  /** helper method */
+  stats() {
+    return {
+      words: Object.keys(this.words).length,
+    }
+  }
+}
+
+/** make a deep-copy of all terms */
+Pool.prototype.clone = function () {
+  let keys = Object.keys(this.words);
+  let words = keys.reduce((h, k) => {
+    let t = this.words[k].clone();
+    h[t.id] = t;
+    return h
+  }, {});
+  return new Pool(words)
+};
+
+var Pool_1 = Pool;
+
+//add forward/backward 'linked-list' prev/next ids
+const linkTerms = terms => {
+  terms.forEach((term, i) => {
+    if (i > 0) {
+      term.prev = terms[i - 1].id;
+    }
+    if (terms[i + 1]) {
+      term.next = terms[i + 1].id;
+    }
+  });
+};
+var _linkTerms = linkTerms;
+
+//(Rule-based sentence boundary segmentation) - chop given text into its proper sentences.
+// Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
+// @spencermountain 2017 MIT
+
+//proper nouns with exclamation marks
+// const blacklist = {
+//   yahoo: true,
+//   joomla: true,
+//   jeopardy: true,
+// }
+
+//regs-
+const initSplit = /(\S.+?[.!?\u203D\u2E18\u203C\u2047-\u2049])(?=\s+|$)/g;
+const hasSomething = /\S/;
+
+const isAcronym$1 = /[ .][A-Z]\.? *$/i;
+const hasEllipse = /(?:\u2026|\.{2,}) *$/;
+const newLine = /((?:\r?\n|\r)+)/; // Match different new-line formats
+const hasLetter = /[a-z0-9\u00C0-\u00FF\u00a9\u00ae\u2000-\u3300\ud000-\udfff]/i;
+
+const startWhitespace = /^\s+/;
+
+// Start with a regex:
+const naiive_split = function (text) {
+  let all = [];
+  //first, split by newline
+  let lines = text.split(newLine);
+  for (let i = 0; i < lines.length; i++) {
+    //split by period, question-mark, and exclamation-mark
+    let arr = lines[i].split(initSplit);
+    for (let o = 0; o < arr.length; o++) {
+      all.push(arr[o]);
+    }
+  }
+  return all
+};
+
+/** does this look like a sentence? */
+const isSentence = function (str, abbrevs) {
+  // check for 'F.B.I.'
+  if (isAcronym$1.test(str) === true) {
+    return false
+  }
+  //check for '...'
+  if (hasEllipse.test(str) === true) {
+    return false
+  }
+  // must have a letter
+  if (hasLetter.test(str) === false) {
+    return false
+  }
+
+  let txt = str.replace(/[.!?\u203D\u2E18\u203C\u2047-\u2049] *$/, '');
+  let words = txt.split(' ');
+  let lastWord = words[words.length - 1].toLowerCase();
+  // check for 'Mr.'
+  if (abbrevs.hasOwnProperty(lastWord)) {
+    return false
+  }
+  // //check for jeopardy!
+  // if (blacklist.hasOwnProperty(lastWord)) {
+  //   return false
+  // }
+  return true
+};
+
+const splitSentences = function (text, world) {
+  let abbrevs = world.cache.abbreviations;
+
+  text = text || '';
+  text = String(text);
+  let sentences = [];
+  // First do a greedy-split..
+  let chunks = [];
+  // Ensure it 'smells like' a sentence
+  if (!text || typeof text !== 'string' || hasSomething.test(text) === false) {
+    return sentences
+  }
+  // cleanup unicode-spaces
+  text = text.replace('\xa0', ' ');
+  // Start somewhere:
+  let splits = naiive_split(text);
+  // Filter-out the crap ones
+  for (let i = 0; i < splits.length; i++) {
+    let s = splits[i];
+    if (s === undefined || s === '') {
+      continue
+    }
+    //this is meaningful whitespace
+    if (hasSomething.test(s) === false) {
+      //add it to the last one
+      if (chunks[chunks.length - 1]) {
+        chunks[chunks.length - 1] += s;
+        continue
+      } else if (splits[i + 1]) {
+        //add it to the next one
+        splits[i + 1] = s + splits[i + 1];
+        continue
+      }
+    }
+    //else, only whitespace, no terms, no sentence
+    chunks.push(s);
+  }
+
+  //detection of non-sentence chunks:
+  //loop through these chunks, and join the non-sentence chunks back together..
+  for (let i = 0; i < chunks.length; i++) {
+    let c = chunks[i];
+    //should this chunk be combined with the next one?
+    if (chunks[i + 1] && isSentence(c, abbrevs) === false) {
+      chunks[i + 1] = c + (chunks[i + 1] || '');
+    } else if (c && c.length > 0) {
+      //&& hasLetter.test(c)
+      //this chunk is a proper sentence..
+      sentences.push(c);
+      chunks[i] = '';
+    }
+  }
+  //if we never got a sentence, return the given text
+  if (sentences.length === 0) {
+    return [text]
+  }
+
+  //move whitespace to the ends of sentences, when possible
+  //['hello',' world'] -> ['hello ','world']
+  for (let i = 1; i < sentences.length; i += 1) {
+    let ws = sentences[i].match(startWhitespace);
+    if (ws !== null) {
+      sentences[i - 1] += ws[0];
+      sentences[i] = sentences[i].replace(startWhitespace, '');
+    }
+  }
+  return sentences
+};
+
+var _01Sentences = splitSentences;
+
+const wordlike = /\S/;
+const isBoundary = /^[!?.]+$/;
+const naiiveSplit = /(\S+)/;
+const isSlash = /[a-z] ?\/ ?[a-z]*$/;
+
+let notWord = ['.', '?', '!', ':', ';', '-', '–', '—', '--', '...', '(', ')', '[', ']', '"', "'", '`'];
+notWord = notWord.reduce((h, c) => {
+  h[c] = true;
+  return h
+}, {});
+
+const hasHyphen = function (str) {
+  //dont split 're-do'
+  if (/^(re|un|micro|macro|trans|bi|mono|over)-?[^aeiou]./.test(str) === true) {
+    return false
+  }
+  //dont split 'bat-like'
+  if (/^([a-z\u00C0-\u00FF/]+)(-|–|—)(like|ish|less|able)/i.test(str) === true) {
+    return false
+  }
+  //letter-number 'aug-20'
+  let reg = /^([a-z\u00C0-\u00FF`"'/]+)(-|–|—)([a-z0-9\u00C0-\u00FF].*)/i;
+  if (reg.test(str) === true) {
+    return true
+  }
+  //number-letter '20-aug'
+  let reg2 = /^([0-9]{1,4})(-|–|—)([a-z\u00C0-\u00FF`"'/-]+$)/i;
+  if (reg2.test(str) === true) {
+    return true
+  }
+  return false
+};
+
+// combine '2 - 5' like '2-5' is
+const combineRanges = function (arr) {
+  const startRange = /^[0-9]{1,4}(:[0-9][0-9])?([a-z]{1,2})? ?(-|–|—) ?$/;
+  const endRange = /^[0-9]{1,4}([a-z]{1,2})? ?$/;
+  for (let i = 0; i < arr.length - 1; i += 1) {
+    if (arr[i + 1] && startRange.test(arr[i]) && endRange.test(arr[i + 1])) {
+      arr[i] = arr[i] + arr[i + 1];
+      arr[i + 1] = null;
+    }
+  }
+  return arr
+};
+
+// 'he / she' should be one word
+const combineSlashes = function (arr) {
+  for (let i = 1; i < arr.length - 1; i++) {
+    if (isSlash.test(arr[i])) {
+      arr[i - 1] += arr[i] + arr[i + 1];
+      arr[i] = null;
+      arr[i + 1] = null;
+    }
+  }
+  return arr
+};
+
+const splitHyphens = function (word) {
+  let arr = [];
+  //support multiple-hyphenated-terms
+  const hyphens = word.split(/[-–—]/);
+  let whichDash = '-';
+  let found = word.match(/[-–—]/);
+  if (found && found[0]) {
+    whichDash = found;
+  }
+  for (let o = 0; o < hyphens.length; o++) {
+    if (o === hyphens.length - 1) {
+      arr.push(hyphens[o]);
+    } else {
+      arr.push(hyphens[o] + whichDash);
+    }
+  }
+  return arr
+};
+
+const isArray$1 = function (arr) {
+  return Object.prototype.toString.call(arr) === '[object Array]'
+};
+
+//turn a string into an array of strings (naiive for now, lumped later)
+const splitWords = function (str) {
+  let result = [];
+  let arr = [];
+  //start with a naiive split
+  str = str || '';
+  if (typeof str === 'number') {
+    str = String(str);
+  }
+  if (isArray$1(str)) {
+    return str
+  }
+
+  const words = str.split(naiiveSplit);
+  for (let i = 0; i < words.length; i++) {
+    //split 'one-two'
+    if (hasHyphen(words[i]) === true) {
+      arr = arr.concat(splitHyphens(words[i]));
+      continue
+    }
+    arr.push(words[i]);
+  }
+  //greedy merge whitespace+arr to the right
+  let carry = '';
+  for (let i = 0; i < arr.length; i++) {
+    let word = arr[i];
+    //if it's more than a whitespace
+    if (wordlike.test(word) === true && notWord.hasOwnProperty(word) === false && isBoundary.test(word) === false) {
+      //put whitespace on end of previous term, if possible
+      if (result.length > 0) {
+        result[result.length - 1] += carry;
+        result.push(word);
+      } else {
+        //otherwise, but whitespace before
+        result.push(carry + word);
+      }
+      carry = '';
+    } else {
+      carry += word;
+    }
+  }
+  //handle last one
+  if (carry) {
+    if (result.length === 0) {
+      result[0] = '';
+    }
+    result[result.length - 1] += carry; //put it on the end
+  }
+  // combine 'one / two'
+  result = combineSlashes(result);
+  result = combineRanges(result);
+  // remove empty results
+  result = result.filter(s => s);
+  return result
+};
+var _02Words = splitWords;
+
+const isArray = function (arr) {
+  return Object.prototype.toString.call(arr) === '[object Array]'
+};
+
+/** turn a string into an array of Phrase objects */
+const fromText = function (text = '', world, pool) {
+  let sentences = null;
+  //a bit of validation, first
+  if (typeof text !== 'string') {
+    if (typeof text === 'number') {
+      text = String(text);
+    } else if (isArray(text)) {
+      sentences = text;
+    }
+  }
+  //tokenize into words
+  sentences = sentences || _01Sentences(text, world);
+  sentences = sentences.map(str => _02Words(str));
+
+  //turn them into proper objects
+  pool = pool || new Pool_1();
+
+  let phrases = sentences.map(terms => {
+    terms = terms.map(str => {
+      let term = new Term_1(str);
+      pool.add(term);
+      return term
+    });
+    //add next/previous ids
+    _linkTerms(terms);
+
+    //return phrase objects
+    let p = new Phrase_1(terms[0].id, terms.length, pool);
+    p.cache.terms = terms;
+    return p
+  });
+  //return them ready for a Document object
+  return phrases
+};
+
+var _01Tokenizer = fromText;
+
+const fromJSON = function (json, world) {
+  let pool = new Pool_1();
+  let phrases = json.map((p, k) => {
+    let terms = p.terms.map((o, i) => {
+      let term = new Term_1(o.text);
+      term.pre = o.pre !== undefined ? o.pre : '';
+      if (o.post === undefined) {
+        o.post = ' ';
+        //no given space for very last term
+        if (i >= p.terms.length - 1) {
+          o.post = '. ';
+          if (k >= p.terms.length - 1) {
+            o.post = '.';
+          }
+        }
+      }
+      term.post = o.post !== undefined ? o.post : ' ';
+
+      if (o.tags) {
+        o.tags.forEach(tag => term.tag(tag, '', world));
+      }
+      pool.add(term);
+      return term
+    });
+    //add prev/next links
+    _linkTerms(terms);
+    // return a proper Phrase object
+    return new Phrase_1(terms[0].id, terms.length, pool)
+  });
+  return phrases
+};
+var fromJSON_1 = fromJSON;
+
+var _version = '13.11.2';
+
+const entity = ['Person', 'Place', 'Organization'];
+
+var nouns$1 = {
+  Noun: {
+    notA: ['Verb', 'Adjective', 'Adverb'],
+  },
+  // - singular
+  Singular: {
+    isA: 'Noun',
+    notA: 'Plural',
+  },
+  //a specific thing that's capitalized
+  ProperNoun: {
+    isA: 'Noun',
+  },
+
+  // -- people
+  Person: {
+    isA: ['ProperNoun', 'Singular'],
+    notA: ['Place', 'Organization', 'Date'],
+  },
+  FirstName: {
+    isA: 'Person',
+  },
+  MaleName: {
+    isA: 'FirstName',
+    notA: ['FemaleName', 'LastName'],
+  },
+  FemaleName: {
+    isA: 'FirstName',
+    notA: ['MaleName', 'LastName'],
+  },
+  LastName: {
+    isA: 'Person',
+    notA: ['FirstName'],
+  },
+  NickName: {
+    isA: 'Person',
+    notA: ['FirstName', 'LastName'],
+  },
+  Honorific: {
+    isA: 'Noun',
+    notA: ['FirstName', 'LastName', 'Value'],
+  },
+
+  // -- places
+  Place: {
+    isA: 'Singular',
+    notA: ['Person', 'Organization'],
+  },
+  Country: {
+    isA: ['Place', 'ProperNoun'],
+    notA: ['City'],
+  },
+  City: {
+    isA: ['Place', 'ProperNoun'],
+    notA: ['Country'],
+  },
+  Region: {
+    isA: ['Place', 'ProperNoun'],
+  },
+  Address: {
+    isA: 'Place',
+  },
+
+  //---Orgs---
+  Organization: {
+    isA: ['Singular', 'ProperNoun'],
+    notA: ['Person', 'Place'],
+  },
+  SportsTeam: {
+    isA: 'Organization',
+  },
+  School: {
+    isA: 'Organization',
+  },
+  Company: {
+    isA: 'Organization',
+  },
+
+  // - plural
+  Plural: {
+    isA: 'Noun',
+    notA: ['Singular'],
+  },
+  //(not plural or singular)
+  Uncountable: {
+    isA: 'Noun',
+  },
+  Pronoun: {
+    isA: 'Noun',
+    notA: entity,
+  },
+  //a word for someone doing something -'plumber'
+  Actor: {
+    isA: 'Noun',
+    notA: entity,
+  },
+  //a gerund-as-noun - 'swimming'
+  Activity: {
+    isA: 'Noun',
+    notA: ['Person', 'Place'],
+  },
+  //'kilograms'
+  Unit: {
+    isA: 'Noun',
+    notA: entity,
+  },
+  //'Canadians'
+  Demonym: {
+    isA: ['Noun', 'ProperNoun'],
+    notA: entity,
+  },
+  //`john's`
+  Possessive: {
+    isA: 'Noun',
+    // notA: 'Pronoun',
+  },
+};
+
+var verbs$1 = {
+  Verb: {
+    notA: ['Noun', 'Adjective', 'Adverb', 'Value', 'Expression'],
+  },
+  // walks
+  PresentTense: {
+    isA: 'Verb',
+    notA: ['PastTense', 'FutureTense'],
+  },
+  // neutral form - 'walk'
+  Infinitive: {
+    isA: 'PresentTense',
+    notA: ['PastTense', 'Gerund'],
+  },
+  //close the door!
+  Imperative: {
+    isA: 'Infinitive',
+    // notA: ['PresentTense', 'PastTense', 'FutureTense', 'Gerund'],
+  },
+  // walking
+  Gerund: {
+    isA: 'PresentTense',
+    notA: ['PastTense', 'Copula', 'FutureTense'],
+  },
+  // walked
+  PastTense: {
+    isA: 'Verb',
+    notA: ['FutureTense'],
+  },
+  // will walk
+  FutureTense: {
+    isA: 'Verb',
+  },
+
+  // is
+  Copula: {
+    isA: 'Verb',
+  },
+  // would have
+  Modal: {
+    isA: 'Verb',
+    notA: ['Infinitive'],
+  },
+  // had walked
+  PerfectTense: {
+    isA: 'Verb',
+    notA: 'Gerund',
+  },
+  Pluperfect: {
+    isA: 'Verb',
+  },
+  // shown
+  Participle: {
+    isA: 'PastTense',
+  },
+  // show up
+  PhrasalVerb: {
+    isA: 'Verb',
+  },
+  //'up' part
+  Particle: {
+    isA: 'PhrasalVerb',
+  },
+
+  //this can be an adverb
+  Auxiliary: {
+    notA: ['Noun', 'Adjective', 'Value'],
+  },
+};
+
+var values = {
+  Value: {
+    notA: ['Verb', 'Adjective', 'Adverb'],
+  },
+  Ordinal: {
+    isA: 'Value',
+    notA: ['Cardinal'],
+  },
+  Cardinal: {
+    isA: 'Value',
+    notA: ['Ordinal'],
+  },
+  Fraction: {
+    isA: 'Value',
+    notA: ['Noun'],
+  },
+  RomanNumeral: {
+    isA: 'Cardinal', //can be a person, too
+    notA: ['Ordinal', 'TextValue'],
+  },
+  TextValue: {
+    isA: 'Value',
+    notA: ['NumericValue'],
+  },
+  NumericValue: {
+    isA: 'Value',
+    notA: ['TextValue'],
+  },
+  Money: {
+    isA: 'Cardinal',
+  },
+  Percent: {
+    isA: 'Value',
+  },
+};
+
+const anything = ['Noun', 'Verb', 'Adjective', 'Adverb', 'Value', 'QuestionWord'];
+
+var misc$1 = {
+  //--Adjectives--
+  Adjective: {
+    notA: ['Noun', 'Verb', 'Adverb', 'Value'],
+  },
+  // adjectives that can conjugate
+  Comparable: {
+    isA: ['Adjective'],
+  },
+  // better
+  Comparative: {
+    isA: ['Adjective'],
+  },
+  // best
+  Superlative: {
+    isA: ['Adjective'],
+    notA: ['Comparative'],
+  },
+
+  NumberRange: {
+    // isA: ['Contraction'],
+  },
+  Adverb: {
+    notA: ['Noun', 'Verb', 'Adjective', 'Value'],
+  },
+
+  // Dates:
+  //not a noun, but usually is
+  Date: {
+    notA: ['Verb', 'Adverb', 'Preposition', 'Adjective'],
+  },
+  Month: {
+    isA: ['Date', 'Singular'],
+    notA: ['Year', 'WeekDay', 'Time'],
+  },
+  WeekDay: {
+    isA: ['Date', 'Noun'],
+  },
+  // 'PST'
+  Timezone: {
+    isA: ['Date', 'Noun'],
+    notA: ['Adjective', 'ProperNoun'],
+  },
+  // '9:20pm'
+  Time: {
+    isA: ['Date'],
+    notA: ['AtMention'],
+  },
+
+  //glue
+  Determiner: {
+    notA: anything,
+  },
+  Conjunction: {
+    notA: anything,
+  },
+  Preposition: {
+    notA: anything,
+  },
+
+  // what, who, why
+  QuestionWord: {
+    notA: ['Determiner'],
+  },
+
+  // peso, euro
+  Currency: {
+    isA: ['Noun'],
+  },
+  // ughh
+  Expression: {
+    notA: ['Noun', 'Adjective', 'Verb', 'Adverb'],
+  },
+  // dr.
+  Abbreviation: {},
+
+  // internet tags
+  Url: {
+    notA: ['HashTag', 'PhoneNumber', 'Verb', 'Adjective', 'Value', 'AtMention', 'Email'],
+  },
+  PhoneNumber: {
+    notA: ['HashTag', 'Verb', 'Adjective', 'Value', 'AtMention', 'Email'],
+  },
+  HashTag: {},
+  AtMention: {
+    isA: ['Noun'],
+    notA: ['HashTag', 'Verb', 'Adjective', 'Value', 'Email'],
+  },
+  Emoji: {
+    notA: ['HashTag', 'Verb', 'Adjective', 'Value', 'AtMention'],
+  },
+  Emoticon: {
+    notA: ['HashTag', 'Verb', 'Adjective', 'Value', 'AtMention'],
+  },
+  Email: {
+    notA: ['HashTag', 'Verb', 'Adjective', 'Value', 'AtMention'],
+  },
+
+  //non-exclusive
+  Acronym: {
+    notA: ['Plural', 'RomanNumeral'],
+  },
+  Negative: {
+    notA: ['Noun', 'Adjective', 'Value'],
+  },
+  // if, unless, were
+  Condition: {
+    notA: ['Verb', 'Adjective', 'Noun', 'Value'],
+  },
+};
+
+// i just made these up
+const colorMap = {
+  Noun: 'blue',
+
+  Verb: 'green',
+  Negative: 'green',
+
+  Date: 'red',
+  Value: 'red',
+
+  Adjective: 'magenta',
+
+  Preposition: 'cyan',
+  Conjunction: 'cyan',
+  Determiner: 'cyan',
+  Adverb: 'cyan',
+};
+
+/** add a debug color to some tags */
+const addColors = function (tags) {
+  Object.keys(tags).forEach(k => {
+    // assigned from plugin, for example
+    if (tags[k].color) {
+      tags[k].color = tags[k].color;
+      return
+    }
+    // defined above
+    if (colorMap[k]) {
+      tags[k].color = colorMap[k];
+      return
+    }
+    tags[k].isA.some(t => {
+      if (colorMap[t]) {
+        tags[k].color = colorMap[t];
+        return true
+      }
+      return false
+    });
+  });
+  return tags
+};
+
+var _color = addColors;
+
+const unique$3 = function (arr) {
+  return arr.filter((v, i, a) => a.indexOf(v) === i)
+};
+
+//add 'downward' tags (that immediately depend on this one)
+const inferIsA = function (tags) {
+  Object.keys(tags).forEach(k => {
+    let tag = tags[k];
+    let len = tag.isA.length;
+    for (let i = 0; i < len; i++) {
+      let down = tag.isA[i];
+      if (tags[down]) {
+        tag.isA = tag.isA.concat(tags[down].isA);
+      }
+    }
+    // clean it up
+    tag.isA = unique$3(tag.isA);
+  });
+  return tags
+};
+var _isA = inferIsA;
+
+const unique$2 = function (arr) {
+  return arr.filter((v, i, a) => a.indexOf(v) === i)
+};
+
+// crawl the tag-graph and infer any conflicts
+// faster than doing this at tag-time
+const inferNotA = function (tags) {
+  let keys = Object.keys(tags);
+  keys.forEach(k => {
+    let tag = tags[k];
+    tag.notA = tag.notA || [];
+    tag.isA.forEach(down => {
+      if (tags[down] && tags[down].notA) {
+        // borrow its conflicts
+        let notA = typeof tags[down].notA === 'string' ? [tags[down].isA] : tags[down].notA || [];
+        tag.notA = tag.notA.concat(notA);
+      }
+    });
+    // any tag that lists us as a conflict, we conflict it back.
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i];
+      if (tags[key].notA.indexOf(k) !== -1) {
+        tag.notA.push(key);
+      }
+    }
+    // clean it up
+    tag.notA = unique$2(tag.notA);
+  });
+  return tags
+};
+var _notA = inferNotA;
+
+// a lineage is all 'incoming' tags that have this as 'isA'
+const inferLineage = function (tags) {
+  let keys = Object.keys(tags);
+  keys.forEach(k => {
+    let tag = tags[k];
+    tag.lineage = [];
+    // find all tags with it in their 'isA' set
+    for (let i = 0; i < keys.length; i++) {
+      if (tags[keys[i]].isA.indexOf(k) !== -1) {
+        tag.lineage.push(keys[i]);
+      }
+    }
+  });
+  return tags
+};
+var _lineage = inferLineage;
+
+const validate = function (tags) {
+  // cleanup format
+  Object.keys(tags).forEach(k => {
+    let tag = tags[k];
+    // ensure isA is an array
+    tag.isA = tag.isA || [];
+    if (typeof tag.isA === 'string') {
+      tag.isA = [tag.isA];
+    }
+    // ensure notA is an array
+    tag.notA = tag.notA || [];
+    if (typeof tag.notA === 'string') {
+      tag.notA = [tag.notA];
+    }
+  });
+  return tags
+};
+
+// build-out the tag-graph structure
+const inferTags = function (tags) {
+  // validate data
+  tags = validate(tags);
+  // build its 'down tags'
+  tags = _isA(tags);
+  // infer the conflicts
+  tags = _notA(tags);
+  // debug tag color
+  tags = _color(tags);
+  // find incoming links
+  tags = _lineage(tags);
+  return tags
+};
+var inference = inferTags;
+
+//extend tagset with new tags
+const addIn = function (obj, tags) {
+  Object.keys(obj).forEach(k => {
+    tags[k] = obj[k];
+  });
+};
+
+const build = () => {
+  let tags = {};
+  addIn(nouns$1, tags);
+  addIn(verbs$1, tags);
+  addIn(values, tags);
+  addIn(misc$1, tags);
+  // do the graph-stuff
+  tags = inference(tags);
+  return tags
+};
+var tags = build();
+
+var _data={
+  "Comparative": "true¦better",
+  "Superlative": "true¦earlier",
+  "PresentTense": "true¦is,sounds",
+  "Value": "true¦a few",
+  "Noun": "true¦a5b4c2f1here,ie,lit,m0no doubt,pd,tce;a,d;t,y;a,ca,o0;l,rp;a,l;d,l,rc",
+  "Copula": "true¦a1is,w0;as,ere;m,re",
+  "PastTense": "true¦be3came,d2had,lied,meant,sa2taken,w0;as,e0;nt,re;id;en,gan",
+  "Condition": "true¦if,lest,unless",
+  "Preposition": "true¦'o,-,aLbIcHdGexcept,fFiDmidQnotwithstandiRoBpSqua,sAt6u3vi2w0;/o,hereNith0;!in,oR;a,s-a-vis;n1p0;!on;like,til;h0ill,owards;an,r0;ough0u;!oJ;ans,ince,o that;',f0n2ut;!f;f,n0;!to;or,rom;espite,own,u3;hez,irca;ar1e0oAy;sides,tween;ri6;',bo7cross,ft6lo5m3propos,round,s1t0;!op;! long 0;as;id0ong0;!st;ng;er;ut",
+  "Gerund": "true¦accord0be0develop0go0result0stain0;ing",
+  "Negative": "true¦n0;ever,o0;!n,t",
+  "QuestionWord": "true¦how3wh0;at,e1ich,o0y;!m,se;n,re; come,'s",
+  "Plural": "true¦records",
+  "Conjunction": "true¦&,aFbBcuz,how9in caEno8o7p5supposing,t2v1wh0yet;eth9ile;ers4s;h0o;eref9o0;!uC;l0rovided that;us;r,therwi6; matt1r;!ev0;er;e0ut;cau1f0;ore;se;lthou1nd,s 0;far as,if;gh",
+  "Abbreviation": "true¦a0Jb0Gc0Ad08e05f02g01h00iYjWkanVlTmNnKoJpFque,rDs8t6u5v2w0;is0r,y0B;!c;a,b,e1i0ol,s,t;tro,vo;r,t;niv,safa,t;ce,e0;l,mp,nn,x;ask,e2fc,gt,i1q,r,s,t,u0;pt,rg;r,tu;c,nJp0;!t;b,d,e0;pGs,v;a,d,ennNhd,l,p,r1s0vt;!eud;ef,o0;b,f,n;ct,kla,nt;e0ov;b0e;!r;a4d,essrs,i1lle,me,r7s0t;!tr;n1s0;c,ter;!n;!j,r,sc;at,it,lb,ng,t0;!d;!s;an,d,r,u0;l,n;a,da,e,n0;c,f;on,wy;a,en,ov;e1ig,l0m,r,t,y;!a;b,m;a,g,ng,s1tc,x0;!p;p,q,t;ak,e0ist,r;c,f,pt,t;a3ca,l,m2o0pl,res,yn;!l0m1nn,rp;!o;dr;!l0pt;!if;a,c,l1r0;ig,os;!dg,vd;d4l3p2r1ss0tty,ug,ve;n,t;c,iz;prox,r,t;!ta;!j,m,v",
+  "Pronoun": "true¦'em,elle,h4i3me,ourselves,she5th1us,we,you0;!rself;e0ou;m,y;!l,t;e0im;!'s",
+  "Singular": "true¦0:15;1:18;2:12;a15b0Sc0Jd0Ce09f04gZhViUjel0kitty,lSmOnNoMpHquestionGrEs9t6u4w3;ay,om02;nc0Zs 3;doll0Kst0M; rex,a4h3ic,ragedy,v show;ere,i1;l0x return;i6ky,omeoMt3uper bowl,yst14;ep4ri1u3;de0Xff;faSmoS;st2ze;al0i1o3;om,se;! mark;a6i2la5r4u3;dPrpoH;eroga00ie0Gobl0U;te,y2;rt,te0N;bjWceJthers,verview;othi1umb2;a5ee08o3;del,m3nopo0rni1th2;!my;n,yf0;i3unch;ne;ci1nsect;ead start,o3uman right;l0me4u3;se;! run;adf0entlem6irl02laci2od,rand4u3;l0y; slam,fa3mo3;th2;an;a6ella,ly,ol0r4un3;di1;ee market,iWo3;nti2sP;mi0th2;conomy,gg,ner7ven4x3;ampTecu9;i1t;ad8e5inn2o3ragonf0ude;cumentGg3i0l0or;gy;ath,t3;ec3;tive;!dy;a9eili1h7i5o3redit card;ttage,u3;ri2sin;ty,vil w3;ar;andeli2ocol3;ate;n3rF;ary;aCel0lesJo8r5u3;n3tterf0;ti1;eakfa4o3;!th2;st;dy,tt5y3;!fri3;end;le;nki1r3;ri2;er;d5l0noma0u3;nt;ly; homin5verti3;si1;ng;em",
+  "FemaleName": "true¦0:J3;1:J7;2:IG;3:IF;4:IX;5:IK;6:JO;7:H0;8:JK;9:JG;A:HN;B:HY;C:IT;D:JD;E:IP;F:HC;G:I0;aGRbFLcDPdCYeBOfB4gADh9Ti9Gj8Gk7Gl60m49n3No3Jp37qu36r2Ds16t0Eu0Cv02wVxiTyOzH;aLeIineb,oHsof2;e3Uf2la,ra;h3iKlIna,ynH;ab,ep;da,ma;da,h3iHra;nab;aKeJi0Fol5BuIvH;etAonDO;i0na;le0sen2;el,gm3Jn,rGJs8W;aoHme0nyi;m62yAE;aMendDYhiDFiH;dele9lJnH;if48niHo0;e,f47;a,helmi0lHma;a,ow;ka0nB;aNeKiHusa5;cIktoriBMlAole7viH;anC3enJ0;kF9tor2;da,lA9nus,rHs0;a,nHoniH4;a,iFQ;leHnesH4;nIHrH;i1y;g9rHxH5;su5te;aYeUhRiNoLrIuHy3;i,la;acIZiHu0L;c2na,sH;hBPta;nHr0H;iBNya;aJffaEOnHs6;a,gtiH;ng;!nFQra;aIeHomasi0;a,l9Po8Ares1;l2ndolwethu;g9Go88rIssH;!a,ie;eHi,ri8;sa,za;bPlNmLnJrIs6tHwa0;ia0um;a63yn;iHya;a,ka,s6;arB6e3iHmEDra;!ka;a,iH;a,t6;at6it6;a0Fcarlet3We0BhXiTkye,neza0oRtNuIyH;bIBlvi1;e,ha,mayIEni7sIzH;an3MetAie,y;anHi8;!a,e,nH;aEe;aJeH;fHl5GphH;an4;cHZr5;b2fiA8m0OnHphi1;d3ia,ja,ya;er3lJmon1nIobh8PtH;a,i;dy;lEPv2;aMeIirHo0risF7y5;a,lDK;ba,e0i5lJrH;iHrDOyl;!d8Hfa;ia,lDX;hd,iMki3nJrIu0w0yH;la,ma,na;i,le9on,ron;aIda,ia,nHon;a,on;!ya;k6mH;!aa;lJrItaye81vH;da,inj;e0ife;en1i0ma;anA5bNd3Nh1RiBkMlLmJndIrHs6vannaE;aEi0;ra,y;aHi3;nt6ra;lDKma,ome;ee0in8Ru3;in1ri0;a05e00hYiVoIuH;by,thDH;bScRghQl2KnPsJwIxH;anAXie,y;an,e0;aIeHie,lD; merBLann8ll1marDBt7;!lHnn1;iHyn;e,nH;a,d9K;da,i,na;ayy8D;hel62io;bDKer7yn;a,cIkHmas,n9Fta,ya;ki,o;helGki;ea,iannGDoH;da,n1K;an0bJem9Agi0iInHta,y0;a88ee;han83na;a,eH;cEAkaE;bi0chIe,i0mo0nHquEKvCy0;di,ia;aEIelHiB;!e,le;een4ia0;aNeMhKipaluk,oJrHute66;iHudenCQ;scil3LyamvaB;lly,rt2;ilome0oebe,ylH;is,lis;arl,ggy,nelope,r5t3;ige,m0TnKo5rvaDGtIulH;a,etAin1;ricHsy,tBY;a,e,ia;do3i06;ctav2dIfCZis6lHphCZumC3yunbileg;a,ga,iv2;eHvAC;l2tA;aWeUiMoIurHy5;!ay,ul;a,eJor,rIuH;f,r;aEeCma;ll1mi;aNcLhariBOkKlaJna,sHta,vi;anHha;ur;!y;a,iDTki;hoGk9VolH;a,eDJ;!mh;hir,lHna,risFsreC;!a,lBT;asuLdKh2i6CnJomi8rgEPtHzanin zah3;aHhal4;li1s6;cy,etA;a,e9iEV;nngu30;a09ckenz4e01iMoJrignayani,uriDDyH;a,rH;a,lNna,tG;bi0i3llBInH;a,iH;ca,ka,qD3;a,cTkaSlNmi,nLrItzi,yH;ar;aIiam,lH;anEO;!l,nB;dy,eHh,n4;nhGrva;aKdJiCPlH;iHy;cent,e;red;!gros;!e5;ae5hH;ae5el3Z;ag5EgNi,lKrH;edi79iIjem,on,yH;em,l;em,sF;an4iHliF;nHsCE;a,da;!an,han;b0DcASd0Be,g09ha,i08ja,l06n04rLsoum60tKuIv82x9IyHz4;a,bell,ra,soB9;de,rH;a,eC;h8Fild1t4;a,cYgUiKjor4l7Sn4s6tJwa,yH;!aHbe6Wja9lAE;m,nBH;a,ha,in1;!aJbCBeIja,lDna,sHt64;!a,ol,sa;!l1H;! Jh,mInH;!a,e,n1;!awit,i;aliAHcJeduarBfernIjHlui5Y;o6Ful2;anB;ecil2la3;arJeIie,oHr44ueriA;!t;!ry;et42i37;el4Ui76y;dHon,ue5;akran7y;ak,en,iHk,lo3O;a,ka,nB;a,re,s4te;daHg4;!l3A;alDd4elHge,isDBon0;ei9in1yn;el,le;a0Ne0CiYoQuLyH;d2la,nH;!a,dIeBGnHsCL;!a,eBF;a,sCJ;aCWcJel0PiFlIna,pHz;e,i7;a,u,wa;iHy;a0Se,ja,l2JnB;is,l1SrJttIuHvel4;el5is1;e,ie;aKeIi8na,rH;a86i8;lHn1t7;ei;!in1;aSbb9CdRepa,lMnJsIv2zH;!a,be5LetAz4;a,etA;!a,dH;a,sHy;ay,ey,i,y;a,iJja,lHy;iHy;aA0e;!aH;!n5F;ia,ya;!nH;!a,ne;aPda,e0iNjYla,nMoKsJtHx4y5;iHt4;c2t2;e2LlCG;la,nHra;a,ie,o3;a,or1;a,gh,laH;!ni;!h,nH;a,d3e,n5P;cOdon97iNkes6mi9Ana,rMtJurIvHxmi,y5;ern1in2;a,e54ie,yn;as6iIoH;nya,ya;fa,s6;a,isF;a,la;ey,ie,y;a04eZhXiOlAKoNrJyH;lHra;a,ee,ie;istHy6D;a,en,iIyH;!na;!e,n59;nul,ri,urtnB0;aOerNlAZmJrHzzy;a,stH;en,in;!berlImernH;aq;eHi,y;e,y;a,stC;!na,ra;aHei3ongordzol;dij1w5;el7QiKjsi,lJnIrH;a,i,ri;d3na,za;ey,i,lBDs4y;ra,s6;bi7cAJdiat7IeB2iRlQmPnyakuma19rNss6KtKvi7yH;!e,lH;a,eH;e,i8L;a6DeIhHi4NlDri0y;ar6Ber6Bie,leCrB2y;!lyn8Gri0;a,en,iHl5Soli0yn;!ma,n3VsF;a5il1;ei8Ei,l4;a,tl6L;a07eYiVoNuH;anLdKliHst63;a8HeHsF;!n9tH;!a,te;e5Ji3Jy;a,i7;!anNcelDd6RelGhan7RlLni,sIva0yH;a,ce;eHie;fHlDph5U;a,in1;eHie;en,n1;!a,e,n41;lHng;!i1ClH;!i1B;anMle0nJrIsH;i8Csi8C;i,ri;!a,elGif2CnH;a,etAiHy;!e,f2A;a,e8EiInH;a,e8DiH;e,n1;cMd1mi,nIque4Xsmin3Ovie3y9zH;min8;a8eIiH;ce,e,n1s;!lHsFt0F;e,le;inIk4lDquelH;in1yn;da,ta;lRmPnOo0rNsIvaHzaro;!a0lu,na;aJiIlaHob84;!n9N;do3;!belHdo3;!a,e,l39;a77en1i0ma;a,di3es,gr6Yji;a9elBogH;en1;a,e9iHo0se;a0na;aSeOiJoHusFyacin2B;da,ll4rten23snH;a,i9Q;lImaH;ri;aIdHlaI;a,egard;ry;ath1CiJlInriet7rmi9sH;sa,t1B;en2Sga,mi;di;bi2Dil8IlNnMrJsItHwa,yl8Iz7H;i5St4;n5Yti;iHmo51ri52;etH;!te;aEnaE;a,ey,l4;a03eXiSlQoOrKunJwH;enHyne1Q;!dolD;ay,el;acIetHiselB;a,chC;e,ieH;!la;ld1AogooH;sh;adys,enHor2yn2H;a,da,na;aKgi,lIna,ov89selHta;a,e,le;da,liH;an;!n0;mLnJorgIrH;ald3Pi,m3Ctru8B;etAi4W;a,eHna;s26vieve;ma;bIil,le,mHrnet,yG;al5Ni5;i5FrielH;a,l1;aVeSiRloOoz2rH;anJeIiH;da,eB;da,ja;!cH;esIiHoi0O;n1s61;!ca;!rH;a,encH;e,ia;en,o0;lIn0rnH;!anB;ec2ic2;jr,n7rKtHy8;emIiHma,ouma7;ha,ma,n;eh;ah,iBrah,za0;cr4Nd0Ne0Mi0Lk7l04mWn4YrTsNtMuLvH;aJelIiH;!e,ta;in0Gyn;!ngel2S;geni1la,ni45;h5Sta;mLperanKtH;eIhHrel5;er;l30r8;za;a,eralB;iHma,nest2Jyn;cHka,n;a,ka;a,eMiJmH;aHie,y;!li9;lHn1;ee,iHy;a,e,ja;lHrald;da,y;aWeUiNlMma,no3oKsJvH;a,iH;na,ra;a,ie;iHuiH;se;a,en,ie,y;a0c2da,f,nMsJzaH;!betHve7;e,h;aHe,ka;!beH;th;!a,or;anor,nH;!a;!in1na;leCs6;vi;eIiHna,wi0;e,th;l,n;aYeMh2iLjeneKoHul30;lor5Tminiq4In3FrHtt4;a,eCis,la,othHthy;ea,y;ba;an0AnaEon9x4ya;anQbPde,eOiMja,lJmetr2nHsir5K;a,iH;ce,se;a,iIla,orHphi9;es,is;a,l6D;dHrdH;re;!d5Cna;!b2HoraEra;a,d3nH;!a,e;hl2i0l0HmNnLphn1rIvi1XyH;le,na;a,by,cIia,lH;a,en1;ey,ie;a,etAiH;!ca,el1Cka,z;arHia;is;a0Se0Oh05i03lVoKrIynH;di,th2;istHy05;al,i0;lPnMrIurH;tn1E;aJd2NiHn2Nri9;!nH;a,e,n1;!l1X;cepci59n4sH;tanHuelo;ce,za;eHleC;en,tA;aJeoIotH;il51;!pat3;ir8rJudH;etAiH;a,ne;a,e,iH;ce,sZ;a3er3ndH;i,y;aReNloe,rH;isJyH;stH;al;sy,tH;a1Ren,iHy;!an1e,n1;deJlseIrH;!i8yl;a,y;li9;nMrH;isKlImH;ai9;a,eHotA;n1tA;!sa;d3elGtH;al,elG;cIlH;esAi44;el2ilH;e,ia,y;itlZlYmilXndWrOsMtHy5;aKeJhHri0;erHleCrDy;in1;ri0;li0ri0;a33sH;a32ie;a,iNlLmeJolIrH;ie,ol;!e,in1yn;lHn;!a,la;a,eHie,o7y;ne,y;na,sF;a0Hi0H;a,e,l1;is7l4;in,yn;a0Ie02iZlXoUrH;andSeQiJoIyH;an0nn;nwDok8;an3DdgLg0XtH;n2XtH;!aInH;ey,i,y;ny;etH;!t8;an0e,nH;da,na;i8y;bbi8glarIlo05nH;i7n4;ka;ancHossom,ythe;a,he;an17lja0nHsm3I;i7tH;ou;aUcky,linTni7rPssOtJulaEvH;!erlH;ey,y;hJsy,tH;e,iHy8;e,na;!anH;ie,y;!ie;nHt6yl;adIiH;ce;etAi9;ay,da;!triH;ce,z;rbJyaH;rmH;aa;a3ie,o3ra;a2Sb2Md23g1Zi1Qj5l16m0Xn09oi,r04sUtTuPvOwa,yIzH;ra,u0;aKes6gJlIseH;!l;in;un;!nH;a,na;a,i2Ir2J;drJgus1RrIsteH;ja;el2;a,ey,i,y;aahua,he0;hIi2Gja,mi7s2DtrH;id;aMlIraqHt21;at;eIi8yH;!n;e,iHy;gh;!nH;ti;iJleIo6pi7;ta;en,n1tA;aHelG;!n1J;a00dje5eYgUiSjQnJohito,toHya;inetAnH;el5ia;!aKeIiHmJ;e,ka;!mHtA;ar4;!belIliFmU;sa;!le;a,eliH;ca;ka,sHta;a,sa;elHie;a,iH;a,ca,n1qH;ue;!tA;te;! JbImHstasiNya;ar2;el;cla3jul2pau5;aLberKeliJiHy;e,l2naH;!ta;a,ja;!ly;hGiIl2nB;da;a,ra;le;aWba,ePiMlKma,thJyH;a,c2sH;a,on,sa;ea;iHys0N;e,s0M;a,cIn1sHza;a,e,ha,on,sa;e,ia,ja;c2is6jaKksaKna,sJxH;aHia;!nd3;ia,saH;nd3;ra;ia;i0nIyH;ah,na;a,is,naEoud;la;c6da,leCmNnLsH;haElH;inHyY;g,n;!h;a,o,slH;ey;ee;en;at6g4nIusH;ti0;es;ie;aWdiTelMrH;eJiH;anMenH;a,e,ne;an0;na;!aLeKiIyH;nn;a,n1;a,e;!ne;!iH;de;e,lDsH;on;yn;!lH;i9yn;ne;aKbIiHrL;!gaK;ey,i8y;!e;gaH;il;dKliyJradhIs6;ha;ya;ah;a,ya",
+  "Actor": "true¦aJbGcFdCengineIfAgardenIh9instructPjournalLlawyIm8nurse,opeOp5r3s1t0;echnCherapK;ailNcientJecretary,oldiGu0;pervKrgeon;e0oofE;ceptionGsearC;hotographClumbColi1r0sychologF;actitionBogrammB;cem6t5;echanic,inist9us4;airdress8ousekeep8;arm7ire0;fight6m2;eputy,iet0;ici0;an;arpent2lerk;ricklay1ut0;ch0;er;ccoun6d2ge7r0ssis6ttenda7;chitect,t0;ist;minist1v0;is1;rat0;or;ta0;nt",
+  "Honorific": "true¦a01bYcQdPeOfiJgIhon,jr,king,lHmCoffic00p7queen,r3s0taoiseach,vice6;e1fc,gt,ir,r,u0;ltRpt,rg;cond liInBrgeaJ;abbi,e0;ar1p9s,v0;!erend; admirX;astOhd,r0vt;esideDi1of0;!essM;me mini4nce0;!ss;a3essrs,i2lle,me,r1s0;!tr;!s;stK;gistrate,j,r6yF;i3lb,t;en,ov;eld mar3rst l0;ady,i0;eutena0;nt;shG;sq,xcellency;et,oct6r,utchess;apt6hance4mdr,o0pl;lonel,m2ngress0unci3;m0wom0;an;dr,mand5;ll0;or;!ain;ldg,rig0;!adi0;er;d0sst,tty,yatullah;j,m0v;!ir0;al",
+  "SportsTeam": "true¦0:1A;1:1H;2:1G;a1Eb16c0Td0Kfc dallas,g0Ihouston 0Hindiana0Gjacksonville jagua0k0El0Bm01newToQpJqueens parkIreal salt lake,sAt5utah jazz,vancouver whitecaps,w3yW;ashington 3est ham0Rh10;natio1Oredski2wizar0W;ampa bay 6e5o3;ronto 3ttenham hotspur;blue ja0Mrapto0;nnessee tita2xasC;buccanee0ra0K;a7eattle 5heffield0Kporting kansas0Wt3;. louis 3oke0V;c1Frams;marine0s3;eah15ounG;cramento Rn 3;antonio spu0diego 3francisco gJjose earthquak1;char08paA; ran07;a8h5ittsburgh 4ortland t3;imbe0rail blaze0;pirat1steele0;il3oenix su2;adelphia 3li1;eagl1philNunE;dr1;akland 3klahoma city thunder,rlando magic;athle0Mrai3;de0; 3castle01;england 7orleans 6york 3;city fc,g4je0FknXme0Fred bul0Yy3;anke1;ian0D;pelica2sain0C;patrio0Brevolut3;ion;anchester Be9i3ontreal impact;ami 7lwaukee b6nnesota 3;t4u0Fvi3;kings;imberwolv1wi2;rewe0uc0K;dolphi2heat,marli2;mphis grizz3ts;li1;cXu08;a4eicesterVos angeles 3;clippe0dodDla9; galaxy,ke0;ansas city 3nE;chiefs,roya0E; pace0polis colU;astr06dynamo,rockeTtexa2;olden state warrio0reen bay pac3;ke0;.c.Aallas 7e3i05od5;nver 5troit 3;lio2pisto2ti3;ge0;broncZnuggeM;cowbo4maver3;ic00;ys; uQ;arCelKh8incinnati 6leveland 5ol3;orado r3umbus crew sc;api5ocki1;brow2cavalie0india2;bengaWre3;ds;arlotte horAicago 3;b4cubs,fire,wh3;iteB;ea0ulR;diff3olina panthe0; c3;ity;altimore 9lackburn rove0oston 5rooklyn 3uffalo bilN;ne3;ts;cel4red3; sox;tics;rs;oriol1rave2;rizona Ast8tlanta 3;brav1falco2h4u3;nited;aw9;ns;es;on villa,r3;os;c5di3;amondbac3;ks;ardi3;na3;ls",
+  "Uncountable": "true¦0:1I;1:1X;2:16;a1Rb1Jc1Ad17e10f0Ug0Nh0Ii0Ej0Dknowled1Ql08mYnews,oXpTrOsDt8vi7w3;a5ea0Bi4oo3;d,l;ldlife,ne;rmth,t0;neg17ol0Ctae;e6h5oothpaste,r3una;affTou3;ble,sers,t;ermod1Mund0;a,nnis;aBcene0Aeri2hAil9kittl2now,o8p6t4u3;g10nshi0Q;ati1Le3;am,el;ace1Ee3;ci2ed;ap,cc0;k,v0;eep,ingl2;d0Dfe18l3nd,tish;m11t;a6e4ic3;e,ke0M;c3laxa0Isearch;ogni0Hrea0H;bi2in;aPe5hys1last9o3ress04;l3rk,w0;it1yA;a12trZ;bstetr1il,xygen;aAe8ilk,o5u3;mps,s3;ic;n3o0I;ey,o3;gamy;a3chan1;sl2t;chine3il,themat1; learn0Bry;aught0e5i4ogi0Su3;ck,g0I;ce,ghtn08ngui0QteratN;a3isM;th0;ewelAusti0L;ce,mp3nformaUtself;a3ortan0J;ti3;en0H;a6isto5o3;ck3mework,n3spitali0B;ey;ry;ir,libut,ppiD;ene6o4r3um,ymna0D;aCound;l3ssip;d,f; 3t1;editQpo3;ol;i7lour,o4urnit3;ure;od,rgive3uri0wl;ne3;ss;c9sh;conom1duca8lectr7n5quip6th1very3;body,o3thH;ne;joy3tertain3;ment;iciPon1;tiI;ar4iabet2raugh4;es;ts;aAelcius,h6iv1l5o3urrency;al,ld w3nfusiDttD;ar;ass1oth5;aos,e3;e4w3;ing;se;r7sh;a7eef,i4lood,owls,read,utt0;er;lliar4s3;on;ds;g3ss;ga3;ge;c8dvi7ero5ir4mnes3rt,thlet1;ty;craft;b1d3naut1;ynam1;ce;id,ou3;st1;ics",
+  "Infinitive": "true¦0:6S;1:76;2:5C;3:74;4:73;5:67;6:6F;7:6Y;8:6Q;9:72;A:70;B:6X;C:5X;D:77;E:6L;F:5B;a6Kb66c57d4De3Xf3Jg3Dh37i2Uj2Sk2Ql2Hm26n23o1Yp1Jr0Rs06tYuTvOwHyG;awn,e31ield;aJe1Zhist6iIoGre6D;nd0rG;k,ry;pe,sh,th0;lk,nHrGsh,tEve;n,raD;d0t;aJiHoG;te,w;eGsB;!w;l6Jry;nHpGr4se;gra4Pli41;dGi9lo5Zpub3Q;erGo;mi5Cw1I;aMeLhKig5SoJrHuGwi7;ne,rn;aGe0Mi5Uu7y;de,in,nsf0p,v5J;r2ZuE;ank,reatC;nd,st;lk,rg1Qs9;aZcWeVhTi4Dkip,lSmRnee3Lo52pQtJuGwitE;bmBck,ff0gge7ppHrGspe5;ge,pri1rou4Zvi3;ly,o36;aLeKoJrHuG;dy,mb6;aFeGi3;ngthCss,tE;p,re;m,p;in,ke,r0Qy;la58oil,rink6;e1Zi6o3J;am,ip;a2iv0oG;ck,rtCut;arEem,le5n1r3tt6;aHo2rG;atEew;le,re;il,ve;a05eIisk,oHuG;in,le,sh;am,ll;a01cZdu8fYgXje5lUmTnt,pQquPsKtJvGwa5V;eGiew,o36;al,l,rG;se,t;aFi2u44;eJi7oItG;!o2rG;i5uc20;l3rt;mb6nt,r3;e7i2;air,eHlGo43r0K;a8y;at;aFemb0i3Zo3;aHeGi3y;a1nt;te,x;a5Dr0J;act1Yer,le5u1;a13ei3k5PoGyc6;gni2Cnci6rd;ch,li2Bs5N;i1nG;ge,k;aTerSiRlOoMrIuG;b21ll,mp,rGsh;cha1s4Q;ai1eIiDoG;cGdu8greAhibBmi1te7vi2W;eAlaim;di5pa2ss,veD;iDp,rtr46sGur;e,t;aHead,uG;g,n4;n,y;ck,le;fo34mBsi7;ck,iDrt4Mss,u1;bJccur,ff0pera9utweIverGwe;co47lap,ta22u1wG;helm;igh;ser3taF;eHotG;e,i8;ed,gle5;aMeLiIoHuG;ltip3Grd0;nit13ve;nHrr12sreprG;eseD;d,g6us;asu2lt,n0Nr4;intaFna4rHtG;ch,t0;ch,kGry;et;aMeLiJoGu1C;aHck,oGve;k,sC;d,n;ft,g35ke,mBnk,st2YveG;!n;a2Fc0Et;b0Nck,uG;gh,nE;iGno34;ck,ll,ss;am,oFuG;d4mp;gno2mQnGss3H;cOdica9flu0MhNsKtIvG;eGol3;nt,st;erGrodu8;a5fe2;i7tG;aGru5;ll;abBibB;lu1Fr1D;agi24pG;lemeDo22ro3;aKeIi2oHuG;nt,rry;n02pe,st;aGlp;d,t;nd6ppCrm,te;aKloAove1PrIuG;arGeAi15;ant39d;aGip,ow,umb6;b,sp;in,th0ze;aReaQiOlMoJrHuncG;ti3J;acGeshC;tu2;cus,lHrG;ce,eca7m,s30;d,l24;a1ZoG;at,od,w;gu2lGni1Xt,x;e,l;r,tu2;il,stCvG;or;a15cho,le5mSnPstNvalua9xG;a0AcLerKi7pGte19;a18eHi2laFoGreA;rt,se;ct,riG;en8;ci1t;el,han4;abGima9;li1J;ab6couXdHfor8ga4han8j03riEsu2t0vG;isi2Vy;!u2;body,er4pG;hasiGow0;ze;a07eUiLoKrHuG;mp;aHeAiG;ft;g,in;d4ubt;ff0p,re5sHvG;iZor8;aKcHliGmiApl1Btingui14;ke;oGuA;uGv0;ra4;gr1YppG;ear,ro3;cOeNfLliv0ma0Fny,pKsHterG;mi0G;cribe,er3iHtrG;oy;gn,re;a0Be0Ai5osB;eGi0By;at,ct;m,pC;iIlHrG;ea1;a2i06;de;ma4n8rGte;e,kC;a0Ae09h06i9l04oJrG;aHeGoAu0Hy;a9dB;ck,ve;llZmSnHok,py,uGv0;gh,nt;cePdu5fMsKtIvG;eGin8;rt,y;aFin0VrG;a7ibu9ol;iGtitu9;d0st;iHoGroD;rm;gu2rm;rn;biLfoKmaJpG;a2laF;in;re;nd;rt;ne;ap1e5;aGip,o1;im,w;aHeG;at,ck,w;llen4n4r4se;a1nt0;ll,ncIrGt0u1;eGry;!en;el;aSePloOoMrIuG;lGry;ly;igHuG;sh;htC;en;a7mb,o7rrGth0un8;ow;ck;ar,lHnefBtrG;ay;ie3ong;ng,se;band0Jc0Bd06ffo05gr04id,l01mu1nYppTrQsKttGvoid,waB;acIeHra5;ct;m0Fnd;h,k;k,sG;eIiHocia9uG;me;gn,st;mb6rt;le;chHgGri3;ue;!i3;eaJlIroG;aEve;ch;aud,y;l,r;noun8sw0tG;icipa9;ce;lHt0;er;e4ow;ee;rd;aRdIju7mBoR;it;st;!reA;ss;cJhie3knowled4tiva9;te;ge;ve;eIouDu1;se;nt;pt;on",
+  "Unit": "true¦0:19;a14b12c0Od0Ne0Lf0Gg0Ch09in0Hjoule0k02l00mNnMoLpIqHsqCt7volts,w6y4z3°2µ1;g,s;c,f,n;b,e2;a0Nb,d0Dears old,o1;tt0H;att0b;able4b3d,e2on1sp;!ne0;a2r0D;!l,sp;spo04; ft,uare 1;c0Id0Hf3i0Fkilo0Jm1ya0E;e0Mil1;e0li0H;eet0o0D;t,uart0;ascals,e2i1ou0Pt;c0Mnt0;rcent,t02;hms,uYz;an0JewtT;/s,b,e9g,i3l,m2p1²,³;h,s;!²;!/h,cro5l1;e1li08;! pFs1²;! 1;anEpD;g06s0B;gQter1;! 2s1;! 1;per second;b,i00m,u1x;men0x0;b,elvin0g,ilo2m1nR;!/h,ph,²;byZgXmeter1;! p2s1;! p1;er1; hour;e1g,r0z;ct1rtz0;aXogQ;al2b,igAra1;in0m0;!l1;on0;a4emtPl2t1;²,³; oz,uid ou1;nce0;hrenheit0rad0;b,x1;abyH;eciCg,l,mA;arat0eAg,m9oulomb0u1;bic 1p0;c5d4fo3i2meAya1;rd0;nch0;ot0;eci2;enti1;me4;!²,³;lsius0nti1;g2li1me1;ter0;ram0;bl,y1;te0;c4tt1;os1;eco1;nd0;re0;!s",
+  "Organization": "true¦0:46;a3Ab2Qc2Ad21e1Xf1Tg1Lh1Gi1Dj19k17l13m0Sn0Go0Dp07qu06rZsStFuBv8w3y1;amaha,m0Xou1w0X;gov,tu2S;a3e1orld trade organizati41;lls fargo,st1;fie22inghou16;l1rner br3D;-m11gree31l street journ25m11;an halNeriz3Wisa,o1;dafo2Gl1;kswagLvo;bs,kip,n2ps,s1;a tod2Rps;es35i1;lev2Xted natio2Uv; mobi2Kaco bePd bMeAgi frida9h3im horto2Tmz,o1witt2W;shiba,y1;ota,s r Y;e 1in lizzy;b3carpen33daily ma2Xguess w2holli0rolling st1Ms1w2;mashing pumpki2Ouprem0;ho;ea1lack eyed pe3Fyrds;ch bo1tl0;ys;l2s1;co,la m12;efoni07us;a6e4ieme2Gnp,o2pice gir5ta1ubaru;rbucks,to2N;ny,undgard1;en;a2Rx pisto1;ls;few25insbu26msu1X;.e.m.,adiohead,b6e3oyal 1yan2X;b1dutch she4;ank;/max,aders dige1Ed 1vl32;bu1c1Uhot chili peppe2Klobst28;ll;c,s;ant2Vizno2F;an5bs,e3fiz24hilip morrBi2r1;emier27octer & gamb1Rudenti14;nk floyd,zza hut;psi28tro1uge08;br2Qchina,n2Q; 2ason1Xda2G;ld navy,pec,range juli2xf1;am;us;a9b8e5fl,h4i3o1sa,wa;kia,tre dame,vart1;is;ke,ntendo,ss0K;l,s;c,st1Etflix,w1; 1sweek;kids on the block,york08;a,c;nd1Us2t1;ional aca2Fo,we0Q;a,cYd0O;aAcdonald9e5i3lb,o1tv,yspace;b1Nnsanto,ody blu0t1;ley crue,or0O;crosoft,t1;as,subisO;dica3rcedes2talli1;ca;!-benz;id,re;'s,s;c's milk,tt13z1Y;'ore09a3e1g,ittle caesa1Ktd;novo,x1;is,mark; pres5-z-boy,bour party;atv,fc,kk,m1od1K;art;iffy lu0Lo3pmorgan1sa;! cha1;se;hnson & johns1Sy d1R;bm,hop,n1tv;c,g,te1;l,rpol; & m,asbro,ewlett-packaTi3o1sbc,yundai;me dep1n1J;ot;tac1zbollah;hi;eneral 6hq,l5mb,o2reen d0Iu1;cci,ns n ros0;ldman sachs,o1;dye1g0B;ar;axo smith kliZencore;electr0Im1;oto0V;a3bi,da,edex,i1leetwood mac,oGrito-l0A;at,nancial1restoV; tim0;cebook,nnie mae;b06sa,u3xxon1; m1m1;ob0H;!rosceptics;aiml0Ae5isney,o3u1;nkin donuts,po0Wran dur1;an;j,w j1;on0;a,f leppa3ll,p2r spiegZstiny's chi1;ld;eche mode,t;rd;aEbc,hBi9nn,o3r1;aigsli5eedence clearwater reviv1ossra05;al;!ca c5l4m1o0Ast05;ca2p1;aq;st;dplMgate;ola;a,sco1tigroup;! systems;ev2i1;ck fil-a,na daily;r0Hy;dbury,pital o1rl's jr;ne;aGbc,eCfAl6mw,ni,o2p,r1;exiteeWos;ei3mbardiJston 1;glo1pizza;be;ng;ack & deckFo2ue c1;roX;ckbuster video,omingda1;le; g1g1;oodriN;cht3e ge0n & jer2rkshire hathaw1;ay;ryH;el;nana republ3s1xt5y5;f,kin robbi1;ns;ic;bXcSdidRerosmith,ig,lLmFnheuser-busEol,ppleAr7s3t&t,v2y1;er;is,on;hland2s1;n,ociated F; o1;il;by4g2m1;co;os; compu2bee1;'s;te1;rs;ch;c,d,erican3t1;!r1;ak; ex1;pre1;ss; 4catel2t1;air;!-luce1;nt;jazeera,qae1;da;as;/dc,a3er,t1;ivisi1;on;demy of scienc0;es;ba,c",
+  "Demonym": "true¦0:16;1:13;a0Wb0Nc0Cd0Ae09f07g04h02iYjVkTlPmLnIomHpDqatari,rBs7t5u4v3wel0Rz2;am0Fimbabwe0;enezuel0ietnam0H;g9krai1;aiwThai,rinida0Iu2;ni0Qrkmen;a4cot0Ke3ingapoOlovak,oma0Tpa05udRw2y0X;edi0Kiss;negal0Br08;mo0uU;o6us0Lw2;and0;a3eru0Hhilipp0Po2;li0Ertugu06;kist3lesti1na2raguay0;ma1;ani;amiZi2orweP;caragu0geri2;an,en;a3ex0Mo2;ngo0Erocc0;cedo1la2;gasy,y08;a4eb9i2;b2thua1;e0Dy0;o,t02;azakh,eny0o2uwaiti;re0;a2orda1;ma0Bp2;anN;celandic,nd4r2sraeli,ta02vo06;a2iT;ni0qi;i0oneV;aiDin2ondur0unN;di;amDe2hanai0reek,uatemal0;or2rm0;gi0;i2ren7;lipino,n4;cuadoVgyp6ngliJsto1thiopi0urope0;a2ominXut4;niH;a9h6o4roa3ub0ze2;ch;ti0;lom2ngol5;bi0;a6i2;le0n2;ese;lifor1m2na3;bo2eroo1;di0;angladeshi,el8o6r3ul2;gaG;aziBi2;ti2;sh;li2s1;vi0;aru2gi0;si0;fAl7merBngol0r5si0us2;sie,tr2;a2i0;li0;gent2me1;ine;ba1ge2;ri0;ni0;gh0r2;ic0;an",
+  "Possessive": "true¦anyAh5its,m3noCo1sometBthe0yo1;ir1mselves;ur0;!s;i8y0;!se4;er1i0;mse2s;!s0;!e0;lf;o1t0;hing;ne",
+  "Currency": "true¦$,aud,bScQdLeurKfJgbp,hkd,iIjpy,kGlEp8r7s3usd,x2y1z0¢,£,¥,ден,лв,руб,฿,₡,₨,€,₭,﷼;lotySł;en,uanR;af,of;h0t5;e0il5;k0q0;elM;iel,oubleLp,upeeL;e2ound st0;er0;lingI;n0soH;ceGn0;ies,y;e0i8;i,mpi7;n,r0wanzaCyatC;!onaBw;ls,nr;ori7ranc9;!o8;en3i2kk,o0;b0ll2;ra5;me4n0rham4;ar3;ad,e0ny;nt1;aht,itcoin0;!s",
+  "City": "true¦0:73;1:61;2:6G;3:5U;4:5R;a68b54c4Id4Ae46f3Yg3Jh38i2Zj2Uk2Dl22m1Kn19o16p0Uq0Sr0Ls01tPuOvLwDxiBy9z5;a7h5i4Muri4O;a5e5ongsh0;ng3J;greb,nzib5G;ang2e5okoha3Uunfu;katerin3Jrev0;a5n0O;m5Hn;arsBeAi6roclBu5;h0xi,zh5P;c7n5;d5nipeg,terth4;hoek,s1K;hi5Zkl3C;l63xford;aw;a6ern2i5ladivost5Molgogr6K;en3lni6R;lenc6Dncouv2Yr3ughn;lan bat1Drumqi,trecht;aDbilisi,eCheBi9o8r7u5;l21n63r5;in,ku;ipoli,ondh62;kyo,m34ron1QulouS;an5jua3l2Zmisoa6Era3;j4Xshui; hag65ssaloni2L;gucigal28hr0l av1W;briz,i6llinn,mpe5Ang5rtu,shk2X;i2Msh0;an,chu1n0p2Iyu0;aEeDh8kopje,owe1It7u5ydney;ra5zh51;ba0Jt;aten is59ockholm,rasbou6Auttga31;an8e6i5;jiazhua1llo1m60y0;f54n5;ya1zh4L;gh3Ot4U;att4Ao1Yv49;cramen18int DlBn5o paulo,ppo3Wrajevo; 7aa,t5;a 5ia3Io domin3I;a3fe,m1O;antonCdie3Gfrancisco,j5ped3Ssalv8;o5u0;se;em,v5z2B;ad0I;lou59peters29;aAe9i7o5;me,sar5t5A;io;ga,o5yadh;! de janei3I;cife,ykjavik;b4Uip4lei2Mnc2Swalpindi;ingdao,u5;ez2i0Q;aEeDhCiBo8r7u6yong5;ya1;eb5Aya1;ag54etor53;rt5zn0; 5la4Fo;au prin0Nelizabe29sa05;ls3Srae5Ctts2B;iladelph4Ynom pe1Doenix;r26tah tik3I;ler00naji,r4Pt5;na,r36;ak47des0Lm1Rr6s5ttawa;a3Ylo;an,d07;a8ew6i5ovosibir1Oyc;ng2Hs; 5cast39;del27orlea46taip16york;g8iro4Xn5pl2Zshv36v0;ch6ji1t5;es,o1;a1o1;a6o5p4;ya;no,sa0Y;aFeCi9o6u5;mb2Cni28sc40;gadishu,nt6s5;c17ul;evideo,re31;ami,l6n18s5;kolc,sissauga;an,waukee;cca,d5lbour2Pmph41;an,ell5i3;in,ín;cau,drAkass2Tl9n8r5shh4A;aca6ib5rakesh,se2N;or;i1Ty;a4EchEdal12i47;mo;id;aCeiAi8o6u5vRy2;anLckn0Rdhia3;n5s angel28;d2g bea1O;brev2De3Kma5nz,sb2verpo2A;!ss29;c5pzig;est0C; p6g5ho2Yn0Gusan27;os;az,la35;aHharFiClaipeBo9rak0Hu7y5;iv,o5;to;ala lump4n5;mi1sh0;be,hi0Llka2Zpavog4si5wlo2;ce;da;ev,n5rkuk;gSsha5;sa;k5toum;iv;bIdu3llakuric0Tmpa3Gn6ohsiu1ra5un1Lwaguc0T;c0Sj;d5o,p4;ah1Vy;a7e6i5ohannesZ;l1Xn0;dd37rusalem;ip4k5;ar2J;bad0mph1QnBrkutYs8ta01z5̇zm7;m6tapala5;pa;ir;fah0l6tanb5;ul;am2Zi2I;che2d5;ianap2Lo21;aBe8o5yder2W; chi mi6ms,nolulu,u5;st2;nh;f6lsin5rakli2;ki;ei;ifa,lifax,m7n5rb1Dva3;gAnov5oi;er;bu2Wilt2;aFdanEenDhCiPlasgBo9raz,u5;a5jr21;dal6ng5yaquil;zh1H;aja2Lupe;ld coa18then5;bu2P;ow;ent;e0Toa;sk;lw7n5za;dhi5gt1C;nag0S;ay;aisal26es,o8r6ukuya5;ma;ankfu5esno;rt;rt5sh0; wor6ale5;za;th;d5indhov0Nl paso;in5mont2;bur5;gh;aAe8ha0Visp4o7resd0Ju5;b5esseldorf,rb0shanbe;ai,l0G;ha,nggu0rtmu11;hradRl5troit;hi;donghHe5k08li0masc1Xr es sala1HugavpiY;gu,je2;aKebu,hAo5raio03uriti1P;lo7n6penhag0Ar5;do1Nk;akLst0V;gVm5;bo;aBen8i6ongqi1ristchur5;ch;ang m7ca5ttago1;go;g6n5;ai;du,zho1;n5ttogr12;digarh,g5;ch8sha,zh06;i9lga8mayenJn6pe town,r5;acCdiff;ber18c5;un;ry;ro;aUeMhJirmingh0ToIr9u5;chareRdapeRenos air7r5s0tu0;g5sa;as;es;a9is6usse5;ls;ba6t5;ol;ne;sil0Mtisla7zzav5;il5;le;va;goZst2;op6ubaneshw5;ar;al;iBl9ng8r5;g6l5n;in;en;aluru,hazi;fa5grade,o horizonte;st;ji1rut;ghd0BkGnAot9r7s6yan n4;ur;el,r07;celo3ranquil09;na;ou;du1g6ja lu5;ka;alo6k5;ok;re;ng;ers5u;field;a04b01cc00ddis abaZgartaYhmedWizawl,lQmNnHqaZrEsBt7uck5;la5;nd;he7l5;an5;ta;ns;h5unci2;dod,gab5;at;li5;ngt2;on;a6chora5kaNtwerp;ge;h7p5;ol5;is;eim;aravati,m0s5;terd5;am; 8buquerq7e5giers,maty;ppo,xandr5;ia;ue;basrah al qadim5mawsil al jadid5;ah;ab5;ad;la;ba;ra;idj0u dha5;bi;an;lbo6rh5;us;rg",
+  "Country": "true¦0:39;1:2M;a2Xb2Ec22d1Ye1Sf1Mg1Ch1Ai14j12k0Zl0Um0Gn05om3DpZqat1KrXsKtCu6v4wal3yemTz2;a25imbabwe;es,lis and futu2Y;a2enezue32ietnam;nuatu,tican city;.5gTkraiZnited 3ruXs2zbeE;a,sr;arab emirat0Kkingdom,states2;! of am2Y;k.,s.2; 28a.;a7haBimor-les0Bo6rinidad4u2;nis0rk2valu;ey,me2Ys and caic1U; and 2-2;toba1K;go,kel0Znga;iw2Wji2nz2S;ki2U;aCcotl1eBi8lov7o5pa2Cri lanka,u4w2yr0;az2ed9itzerl1;il1;d2Rriname;lomon1Wmal0uth 2;afr2JkLsud2P;ak0en0;erra leoEn2;gapo1Xt maart2;en;negKrb0ychellY;int 2moa,n marino,udi arab0;hele25luc0mart20;epublic of ir0Dom2Duss0w2;an26;a3eHhilippinTitcairn1Lo2uerto riM;l1rtugE;ki2Cl3nama,pua new0Ura2;gu6;au,esti2;ne;aAe8i6or2;folk1Hth3w2;ay; k2ern mariana1C;or0N;caragua,ger2ue;!ia;p2ther19w zeal1;al;mib0u2;ru;a6exi5icro0Ao2yanm05;ldova,n2roc4zamb9;a3gol0t2;enegro,serrat;co;c9dagasc00l6r4urit3yot2;te;an0i15;shall0Wtin2;ique;a3div2i,ta;es;wi,ys0;ao,ed01;a5e4i2uxembourg;b2echtenste11thu1F;er0ya;ban0Hsotho;os,tv0;azakh1Ee3iriba03o2uwait,yrgyz1E;rWsovo;eling0Jnya;a2erF;ma15p1B;c6nd5r3s2taly,vory coast;le of m19rael;a2el1;n,q;ia,oI;el1;aiSon2ungary;dur0Mg kong;aAermany,ha0Pibralt9re7u2;a5ern4inea2ya0O;!-biss2;au;sey;deloupe,m,tema0P;e2na0M;ce,nl1;ar;bTmb0;a6i5r2;ance,ench 2;guia0Dpoly2;nes0;ji,nl1;lklandTroeT;ast tim6cu5gypt,l salv5ngl1quatorial3ritr4st2thiop0;on0; guin2;ea;ad2;or;enmark,jibou4ominica3r con2;go;!n B;ti;aAentral african 9h7o4roat0u3yprQzech2; 8ia;ba,racao;c3lo2morPngo-brazzaville,okFsta r03te d'ivoiK;mb0;osD;i2ristmasF;le,na;republic;m2naTpe verde,yman9;bod0ero2;on;aFeChut00o8r4u2;lgar0r2;kina faso,ma,undi;azil,itish 2unei;virgin2; is2;lands;liv0nai4snia and herzegoviGtswaGuvet2; isl1;and;re;l2n7rmuF;ar2gium,ize;us;h3ngladesh,rbad2;os;am3ra2;in;as;fghaFlCmAn5r3ustr2zerbaijH;al0ia;genti2men0uba;na;dorra,g4t2;arct6igua and barbu2;da;o2uil2;la;er2;ica;b2ger0;an0;ia;ni2;st2;an",
+  "Region": "true¦0:2M;1:2S;2:2J;a2Pb2Cc1Yd1Tes1Sf1Qg1Kh1Gi1Bj17k12l0Zm0On07o05pZqWrTsKtFuCv9w5y3zacatec2T;akut0o0Du3;cat2k07;a4est 3isconsin,yomi1L;bengal,vi6;rwick2Ashington3;! dc;er4i3;rgin0;acruz,mont;dmurt0t3;ah,tar3; 2Ka0W;a5e4laxca1Qripu1Wu3;scaDva;langa1nnessee,x2E;bas0Um3smNtar24;aulip2Cil nadu;a8i6o4taf10u3ylh1E;ffYrr03s19;me1Bno1Puth 3;cVdU;ber0c3kkim,naloa;hu2ily;n4skatchew2xo3;ny; luis potosi,ta catari1;a3hode9;j3ngp06;asth2shahi;ingh24u3;e3intana roo;bec,en5reta0Q;ara7e5rince edward3unjab; i3;sl0A;i,nnsylv3rnambu0A;an0;!na;axa0Xdisha,h3klaho1Zntar3reg6ss0Ax0F;io;aIeDo5u3;evo le3nav0V;on;r3tt16va scot0;f8mandy,th3; 3ampton15;c5d4yo3;rk13;ako1M;aroli1;olk;bras1Lva0Bw3; 4foundland3;! and labrador;brunswick,hamp0Wjers3mexiRyork state;ey;galOyarit;a9eghala0Mi5o3;nta1r3;dov0elos;ch5dlanCn4ss3zor11;issippi,ouri;as geraOneso18;ig2oac2;dhy12harasht0Gine,ni4r3ssachusetts;anhao,i el,ylF;p3toba;ur;anca0Ie3incoln0IouisH;e3iR;ds;a5e4h3omi;aka06ul1;ntucky,ra01;bardino,lmyk0ns0Qr3;achay,el0nata0X;alis5har3iangxi;kh3;and;co;daho,llino6n3owa;d4gush3;et0;ia1;is;a5ert4i3un2;dalFm0D;fordZ;mpYrya1waii;ansu,eorg0lou7oa,u3;an4erre3izhou,jarat;ro;ajuato,gdo3;ng;cesterS;lori3uji2;da;sex;ageTe6o4uran3;go;rs3;et;lawaLrbyK;aEeaDh8o3rimea ,umbr0;ahui6l5nnectic4rsi3ventry;ca;ut;i02orado;la;e4hattisgarh,i3uvash0;apQhuahua;chn4rke3;ss0;ya;ra;lFm3;bridge6peche;a8ihar,r7u3;ck3ryat0;ingham3;shi3;re;emen,itish columb0;h0ja cal7lk6s3v6;hkorto3que;st2;an;ar0;iforn0;ia;dygea,guascalientes,lAndhr8r4ss3;am;izo1kans4un3;achal 6;as;na;a 3;pradesh;a5ber4t3;ai;ta;ba4s3;ka;ma",
+  "Place": "true¦a0Eb0Bc04d03e02f00gVhUiRjfk,kOlMmJneGoFpBque,rd,s9t6u5v4w1y0;akutOyz;ake isFis1y0;!o;!c;a,ostok,t;laanbaatar,p02safa,t;ahiti,e1he 0;bronx,hamptons;nn,x;a0fo,oho,t,under7yd;khalNsk;a2e1h0itcairn;l,x;k,nnN;!cif04;kla,nt,rd;b1w eng0;land;!r;a1co,i0t,uc;dNnn;gadZlibu,nhattZ;a0gw,hr;s,x;an1osrae,rasnoyar0ul;sk;!s;a1cn,da,nd0st;ianRochina;!x;arlem,kg,nd,oHwy;a3re0;at 0enwich;brita0lakH;in;!y village;co,l0ra;!a;urope,vergladC;ak,en,fw,ist,own4xb;al5dg,gk,h2l1o0rA;lo,nn;!t;a1ina0uuk;town;morro,tham;!if;cn,e1kk,l0rooklyn;vd;l air,verly hills;frica,lta,m7n3r2sia,tl1ve,zor0;es;!ant2;ct1iz;adyr,tarct0;ic0; oce0;an;ericas,s",
+  "MaleName": "true¦0:E5;1:D6;2:DO;3:AY;4:D2;5:CG;6:CW;7:C8;8:B6;9:DL;A:DK;B:A6;C:C2;aCObBLcAJd9He8Nf85g7Ih6Ui6Ej5Ek52l4Dm35n2To2Np2Fqu2Dr1Ls11t0Eu0Dv07wTxSyIzD;aDor0;cDh9Tkaria,n5W;hEkD;!aCM;ar5WeCL;aLoFuD;sDu2KvBY;if,uf;nFsEusD;ouf,sD;ef;aDg;s,tD;an,h0;hli,nBMssX;avi3ho4;aMeKiFoDyaC2;jcie8Clfgang,odrow,utD;!er;lDnst1;bFey,frD1lD;aBDiD;am,e,s;e9Fur;i,nde8sD;!l7t1;de,lErr9yD;l1ne;lDt3;aAAy;aGiDladimir,ojte7Z;cEha0kt69nceDrgAJva0;!nt;e3Vt67;lentDnA5;in4Y;ghBVlyss5Cnax,sm0;aXeShOiMoHrFuEyD;!l3ro6s1;nAr5C;avAWeDist0oy,um0;ntAOv5Zy;bGdFmDny;!as,mDoharu;aCTie,y;!d;iBy;mDt5;!my,othy;adFeoEia8GomD;!as;!do8P;!de5;dGrD;en9LrD;an9KeDy;ll,n9J;!dy;dgh,ha,iDnn3req,tsu4T;cB5ka;aTcotRePhLiJoHpenc3tDur1Vylve9Kzym1;anFeDua8D;f0phBTvDwa8C;e62ie;!islaw,l7;lom1nBFuD;leyma6ta;dDlBm1yabonga;!dhart7Bn7;aFeD;lDrm0;d1t1;h7Une,qu10un,wn,y6;aDbasti0k2Al4Rrg4Oth,ymoAU;m5n;!tD;!ie,y;lEmDnti2Eq5Bul;!ke5MmCu4;ik,vato7X;aYeUheAAiQoHuEyD;an,ou;b7NdEf5pe7SssD;!elBZ;ol3Fy;an,bKcJdIel,geHh0landBQmGnFry,sEyD;!ce;coe,s;!aAHnC;an,eo;l47r;e5Og3n7olfo,ri7A;co,ky;bCeB7;cDl7;ar6Pc6OhEkDo;!ey,ie,y;a99ie;gEid,ub9x,yDza;an1InY;gA8iD;naA4s;ch70fa4lHmGndFpha4sEul,wi2HyD;an,mo82;h7Vm5;alBDol2Uy;iATon;f,ph;ent2inD;cy,t1;aIeGhilFier72ol,rD;aka16eD;m,st1;!ip,lip;dALrcy,tD;ar,e3Gr1X;b4Kdra7Ft4ZulD;!o17;ctav3Fi3liv3mAFndrej,rHsEtDumAw9;is,to;aEcAkAm0vD;al5Z;ma;i,l53vL;aLeJiFoDu3A;aDel,j5l0ma0r3K;h,m;cEg4i49kD;!au,h7Uola;holBkDolB;!olB;al,d,il,ls1vD;il8Y;hom,thD;anDy;!a4i4;aZeWiMoHuEyD;l2Jr1;hamEr6XstaD;fa,p5C;ed,mH;di0We,hamFis2FntEsDussa;es,he;e,y;ad,ed,mD;ad,ed;cIgu4hai,kGlFnEtchD;!e8;a8Aik;house,o0Bt1;ae5YeA4olD;aj;ah,hDk7;aEeD;al,l;el,l;hElv2rD;le,ri8v2;di,met;ay0ck,hTjd,ks2DlRmadWnQrKs1tFuricExD;!imilian9Nwe8;e,io;eGhEiBtDus,yB;!eo,hew,ia;eDis;us,w;j,o;cHio,kGlFqu7Dsha8tDv2;iDy;!m,n;in,on;!el,oPus;!el9IoOus;iGu4;achDcolm,ik;ai,y;amEdi,eDmoud;sh;adDm5T;ou;aXeQiOlo3EoKuEyD;le,nd1;cGiFkDth3uk;aDe;!s;gi,s,z;as,iaD;no;g0nn7SrenFuDv8Jwe8;!iD;e,s;!zo;am,oD;n4r;a8Cevi,la5JnIoGst3thaFvD;eDi;nte;bo;!nD;!a6Sel;!ny;mFnErDur5Hwr5H;ry,s;ce,d1;ar,o5A;aLeGhaled,iDrist5Iu4Vy6X;er0p,rD;by,k,ollD;os;en0iGnDrmit,v44;!dEnDt5Z;e1Ay;a8ri59;r,th;cp3j5m66na73rEspAthem,uD;ri;im,l;a02eUiSoGuD;an,lDst2;en,iD;an,en,o,us;aNeLhnKkubBnIrGsD;eEhDi8Bue;!ua;!ph;dDge;an,i,on;!aDny;h,s,th5I;!ath5Hie,nC;!l,sDy;ph;o,qu2;an,mD;!mC;d,ffIrFsD;sDus;!e;a6BemEmai6oDry;me,ni0Y;i7Ty;!e60rD;ey,y;cKd9kImHrFsEvi3yD;!d9s1;on,p3;ed,od,rDv56;e5Nod;al,es4Xis1;a,e,oDub;b,v;k,ob,quD;es;aWbQchiPgNkeMlija,nuLonut,rJsFtDv0;ai,suD;ki;aEha0i7DmaDsac;el,il;ac,iaD;h,s;a,vinDw2;!g;k,nngu5S;!r;nacDor;io;ka;ai,rahD;im;aPeJoIuDydA;be2KgGmber4WsD;eyEsD;a2e2;in,n;h,o;m3ra3Gsse2wa4B;aHctGitGnrErD;be2Dm0;iDy;!q11;or;th;bMlLmza,nKo,rFsEyD;a4Jd9;an,s0;lGo50rFuDv7;hi4Gki,tD;a,o;is1y;an,ey;k,s;!im;ib;aVeRiPlenOoLrHuD;ilEsD;!tavo;herme,lerD;mo;aFegDov3;!g,orD;io,y;dy,h5Wnt;nzaErD;an,d1;lo;!n;lbe5Ano,oD;rg3Hvan5A;ne,oFrD;aDry;ld,rd5H;ffr7rge;brEl9rDv2;la28r3Sth,y;e3EielD;!i5;aTePiNlLorr0NrD;anFedDitz;!dCeDri2B;ri2A;cFkD;!ie,lD;in,yn;esLisD;!co,z36;etch3oD;yd;d4lDnn,onn;ip;deriFliEng,rnD;an06;pe,x;co;bi0di,hd;ar04dZfrYit0lSmKnHo2rFsteb0th0uge6vDym9zra;an,eD;ns,re36;gi,i0DnDrol,v2w2;est4Pie;oEriqDzo;ue;ch;aJerIiEmD;aIe2Z;lErD;!h0;!iD;o,s;s1y;nu4;be0Cd1iGliFmEt1viDwood;n,s;er,o;ot1Ys;!as,j4NsD;ha;a2en;!dCgAmGoEuEwD;a2Din;arD;do;o0Wu0W;l,nD;est;a01eRiOoHrGuFwEylD;an,l0;ay6ight;a6dl7nc0st2;ag0ew;minGnEri0ugDvydBy2D;!lB;!a2MnDov0;e8ie,y;go,iDykB;cDk;!k;armuEeDll1on,rk;go;id;anKj0lbeJmetri5nHon,rGsFvEwDxt3;ay6ey;en,in;hawn,mo0B;ek,ri0I;is,nDv3;is,y;rt;!dD;re;an,lNmLnKrGvD;e,iD;! lucDd;as,ca;en,iFne8rDyl;eDin,yl;l3Bn;n,o,us;!e,i4ny;iDon;an,en,on;e,lB;as;a09e07hYiar0lNoIrGuEyrD;il,us;rtD;!is;aDistob0U;ig;dy,lGnErD;ey,neli5y;or,rD;ad;by,e,in,l2t1;aIeFiDyK;fDnt;fo0Ft1;meEt5velaD;nd;nt;rFuEyD;!t1;de;enD;ce;aIeGrisEuD;ck;!tD;i0oph3;st3;er;d,rDs;b4leD;s,y;cDdric,sA;il;lGmer1rD;ey,lEro8y;ll;!os,t1;eb,v2;a07eZiVlaUoRrEuDyr1;ddy,rtK;aLeGiFuEyD;an,ce,on;ce,no;an,ce;nEtD;!t;dEtD;!on;an,on;dEndD;en,on;!foDl7y;rd;bErDyd;is;!by;i6ke;bFlEshD;al;al,lC;ek;nHrDshoi;at,nEtD;!r1C;aDie;rd14;!edict,iEjam2nC;ie,y;to;kaMlazs,nHrD;n7rDt;eDy;tt;ey;dDeE;ar,iD;le;ar17b0Vd0Rf0Pgust2hm0Mi0Jja0Il04m00nSputsiRrIsaHuFveEyDziz;a0kh0;ry;gust5st2;us;hi;aKchJiIjun,maHnFon,tDy0;hDu09;ur;av,oD;ld;an,nd0H;!el,ki;ie;ta;aq;as,dIgel0CtD;hoGoD;i6nD;!i09y;ne;ny;er,reDy;!as,i,s,w;iFmaDos;nu4r;el;ne,r,t;an,bePd9eJfHi,lGonFphXt1vD;aNin;on;so,zo;an,en;onTrD;edU;c,jaGksandFssaGxD;!andD;er,ru;ar,er;ndD;ro;rtN;ni;d9mA;ar;en;ad,eD;d,t;in;onD;so;aEi,olfDri0vik;!o;mDn;!a;dHeGraEuD;!bakr,lfazl;hDm;am;!l;allIelFoulaye,ulD;!lDrF;ah,o;! rD;ahm0;an;ah;av,on",
+  "LastName": "true¦0:9F;1:9V;2:9X;3:9H;4:9N;5:8J;6:9K;7:A0;8:9E;9:88;A:77;B:6E;C:6J;a9Ub8Lc7Kd6Xe6Rf6Dg5Vh58i54j4Pk45l3Nm2Rn2Eo26p1Nquispe,r17s0Ft05vVwOxNyGzD;aytsADhD;aDou,u;ng,o;aGeun7ZiDoshiA9un;!lD;diDmaz;rim,z;maDng;da,guc97mo6UsDzaA;aAhiA7;iao,u;aHeGiEoDright,u;jc8Sng;lDmm0nkl0sniewsA;liA1s2;b0iss,lt0;a5Rgn0lDng,tanabe;k0sh;aHeGiEoDukB;lk5roby5;dBllalDnogr2Zr0Zss0val37;ba,obos;lasEsel7N;lGn dFrg8EsEzD;qu7;ily9Oqu7silj9O;en b35ijk,yk;enzue95verde;aLeix1JhHi4j6ka3IoGrFsui,uD;om4ZrD;c4n0un1;an,embl8TynisA;dor95lst31m3rr9th;at5Mi7LoD;mErD;are6Ylaci64;ps2s0Y;hirBkah8Dnaka;a00chWeThPiNmKoItFuEvDzabo;en8Aobod34;ar7bot3lliv4zuA;aEein0oD;i67j3Lyan8V;l6rm0;kol5lovy5re6Psa,to,uD;ng,sa;iDy5Z;rn5tD;!h;l5YmDngh,rbu;mo6Do6J;aFeDimizu;hu,vchD;en7Cuk;la,r17;gu8mDoh,pulve8Trra4R;jDyD;on5;evi6Filtz,miDneid0roed0ulz,warz;dEtD;!z;!t;ar42h6ito,lFnDr3saAto,v3;ch7d0AtDz;a4Pe,os;as,ihBm3Zo0Q;aOeNiKoGuEyD;a66oo,u;bio,iz,sD;so,u;bEc7Bdrigue57g03j73mDosevelt,ssi,ta7Nux,w3Z;a4Be0O;ertsDins2;!on;bei0LcEes,vDzzo;as,e8;ci,hards2;ag4es,it0ut0y9;dFmEnDsmu7Zv5F;tan1;ir7os;ic,u;aSeLhJiGoErDut6;asad,if5Zochazk1W;lishc24pDrti62u55we66;e2Tov48;cEe09nD;as,to;as60hl0;aDillips;k,m,n5K;de3AetIna,rGtD;ersErovDtersC;!a,ic;en,on;eDic,ry,ss2;i8ra,tz,z;ers;h71k,rk0tEvD;ic,l3T;el,t2O;bJconnor,g2ClGnei5PrEzD;demir,turk;ella3MtDwe5N;ega,iz;iDof6GsC;vDyn1F;ei8;aPri1;aLeJguy1iFoDune44ym4;rodahl,vDwak;ak3Uik5otn56;eEkolDlsCx2;ic,ov6X;ls1miD;!n1;ils2mD;co42ec;gy,kaEray4varD;ro;jiDmu8shiD;ma;aXcVeQiPoIuD;lGnFrDssoli5T;atDpUr68;i,ov3;oz,te4B;d0l0;h4lIo0HrEsDza0Z;er,s;aFeEiDoz5r3Ete4B;!n6F;au,i8no,t4M;!l9;i2Rl0;crac5Ohhail5kke3Qll0;hmeGij0j2ElFndErci0ssiDyer19;!er;e3Bo2Z;n0Io;dBti;cartDlaughl6;hy;dMe6Dgnu5Ei0jer34kLmJnci59rFtEyD;er,r;ei,ic,su1N;iEkBqu9roqu6tinD;ez,s;a54c,nD;!o;a52mD;ad5;e5Oin1;rig4Ns1;aSeMiIoGuEyD;!nch;k3nDo;d,gu;mbarDpe2Rvr3;di;!nDu,yana1R;coln,dD;bDholm;erg;bed5TfeGhtFitn0kaEn6rDw2G;oy;!j;in1on1;bvDvD;re;iDmmy,rsCu,voie;ne,t11;aTennedy,h4iSlQnez46oJrGuEvar4woD;k,n;cerDmar58znets5;a,o2G;aDem0i2Zyeziu;sni3PvD;ch3U;bay4Frh0Jsk0TvaFwalDzl5;czDsA;yk;cFlD;!cDen3Q;huk;!ev3ic,s;e6uiveD;rt;eff0l3mu8nnun1;hn,lloe,minsArEstra31to,ur,yDzl5;a,s0;j0GlsC;aMenLha2Pim0QoEuD;ng,r3;e2JhFnErge2Ju2NvD;anB;es,ss2;anEnsD;en,on,t2;nesDsC;en,s1;ki26s1;cGkob3RnsDrv06;en,sD;enDon;!s;ks2obs1;brahimBglesi3Ake4Ll0CnoZoneFshikEto,vanoD;u,v4A;awa;scu;aPeIitchcock,jaltal6oFrist46uD;!aDb0gh9ynh;m4ng;a23dz3fEjga2Sk,rDx3B;ak0Yvat;er,fm3B;iGmingw3NnErD;nand7re8;dDriks1;ers2;kkiEnD;on1;la,n1;dz3g1lvoLmJnsCqIrr0SsFuEyD;as36es;g1ng;anEhiD;mo0Q;i,ov08;ue;alaD;in1;rs1;aMeorgLheorghe,iJjonIoGrEuDw2;o,staf2Utierr7zm4;ayDg3iffitUub0;li1G;lub3Rme0JnD;calv9zale0I;aj,i;l,mDordaL;en7;iev3B;gnJlGmaFnd2No,rDs2Nuthi0;cDza;ia;ge;eaElD;agh0i,o;no;e,on;ab0erMiIjeldsted,lor9oGrFuD;cDent9ji3F;hs;an1Wiedm4;ntaDrt6st0urni0;na;lipEsD;ch0;ovD;!ic;hatBnandeVrD;arDei8;a,i;ov3;dHinste6riksCsDva0D;cob2ZpDtra2X;inoDosiM;za;en,s2;er,is2wards;aUeMiKjurhuJoHrisco0YuEvorakD;!oQ;arte,boEmitru,rDt2U;and,ic;is;g4he0Hmingu7n2Ord19tD;to;us;aDmitr29ssanayake;s,z; GbnaFlEmirDrvis1Lvi,w4;!ov3;gado,ic;th;bo0groot,jo03lEsilDvri9;va;a cruz,e2uD;ca;hl,mcevsAnErw6t2EviD;d5es,s;ieDku1S;ls1;ki;a05e00hNiobMlarkLoFrD;ivDuz;elli;h1lGntFop0rDs26x;byn,reD;a,ia;i,rer0O;em4liD;ns;!e;anu;aLeIiu,oGriDuJwe;stD;eDiaD;ns1;i,ng,uFwDy;!dhury;!n,onEuD;ng;!g;kEnDtterjee,v7;!d,g;ma,raboD;rty;bGl09ng3rD;eghetEnD;a,y;ti;an,ota0M;cer9lder2mpbeIrFstDvadi08;iDro;llo;doEt0uDvalho;so;so,zo;ll;es;a09eXhUiSlNoGrFyD;rne,tyD;qi;ank5iem,ooks,yant;gdan5nFruya,su,uchEyHziD;c,n5;ard;darDik;enD;ko;ov;aEondD;al;nEzD;ev3;co;ancRshwD;as;a01oDuiy4;umDwmD;ik;ckNethov1gu,ktLnJrD;gGisFnD;ascoDds1;ni;ha;er,mD;ann;gtDit7nett;ss2;asD;hi;er,ham;b3ch,ez,hMiley,kk0nHrDu0;bEnDua;es,i0;ieDosa;ri;dDik;a8yopadhyD;ay;ra;er;k,ng;ic;cosZdYguilXkhtXlSnJrGsl4yD;aEd6;in;la;aEsl4;an;ujo,ya;dFgelD;ovD;!a;ersGov,reD;aDjL;ss1;en;en,on,s2;on;eksejGiyGmeiFvD;ar7es;ez;da;ev;ar;ams;ta",
+  "WeekDay": "true¦fri2mon2s1t0wednesd3;hurs1ues1;aturd1und1;!d0;ay0;!s",
+  "Month": "true¦aBdec9feb7j2mar,nov9oct1sep0;!t8;!o8;an3u0;l1n0;!e;!y;!u1;!ru0;ary;!em0;ber;pr1ug0;!ust;!il",
+  "Date": "true¦ago,t2week0yesterd4; e0e0;nd;mr2o0;d0morrow;ay;!w",
+  "FirstName": "true¦aKblair,cGdevFgabrieEhinaDjBk8l7m3nelly,quinn,re2sh0;ay,e0iloh;a,lby;g6ne;a1el0ina,org5;!okuh9;naia,r0;ion,lo;ashawn,uca;asCe1ir0rE;an;lsAnyat2rry;am0ess6ie,ude;ie,m5;ta;le;an,on;as2h0;arl0eyenne;ie;ey,sidy;lex2ndr1ubr0;ey;a,ea;is",
+  "Person": "true¦ashton kutchTbScNdLeJgastOhHinez,jFkEleDmCnettKoBp9r4s3t2v0;a0irgin maH;lentino rossi,n go3;aylor,heresa may,iger woods,yra banks;addam hussain,carlett johanssKlobodan milosevic,uC;ay romano,e3o1ush limbau0;gh;d stewart,nald0;inho,o;ese witherspoFilly;a0ipJ;lmIris hiltD;prah winfrFra;essiaen,itt romnEubarek;bron james,e;anye west,iefer sutherland,obe bryant;aime,effers8k rowli0;ng;alle ber0itlBulk hogan;ry;ff0meril lagasse,zekiel;ie;a0enzel washingt2ick wolf;lt1nte;ar1lint0;on;dinal wols1son0;! palm2;ey;arack obama,rock;er",
+  "Verb": "true¦awak9born,cannot,fr8g7h5k3le2m1s0wors9;e8h3;ake sure,sg;ngth6ss6;eep tabs,n0;own;as0e2;!t2;iv1onna;ight0;en",
+  "PhrasalVerb": "true¦0:7L;1:79;2:7X;3:7N;4:72;5:80;6:7P;7:78;8:6V;9:7J;A:6W;B:5Z;C:7S;D:7Q;a81b6Lc5Rd5Me5Lf4Kg41h3Kiron0j3Gk3Bl2Vm2Jn2Ho2Fp1Wquiet7Ar1Js0CtSuQvacuum 1wHyammer9zE;eroBip FonE;e0k0;by,up;aLeHhGiForErit5G;d 1k33;mp0n2Vpe0r8s8;eel 7Qip 85;aFiEn2J;gh 09rd0;n 7Nr E;d2in,o5J;it 61k8lk6rm 6Csh 7Nt6Qv51;rge9sE;e AherB;aTeRhPiLoJrGuEype 69;ckBrn E;d2in,o3Sup;aFiEot0y 2I;ckle6Rp 7T;ck6Qde Y;ne6Pp Es4O;d2o73up;ck GdFe Egh6Bme0p o0Gre0;aw3ba4d2in,up;e 61y 1;by,oD;ink Erow 6D;ba4ov7up;aEe 5Zll53;m 1r X;ck9ke Flk E;ov7u54;aEba4d2in,o3Cup;ba4ft7p59w3;a0Jc0Ie0Ch08i05l01m00nZoYpTquare StKuIwE;earGiE;ngFtch E;aw3ba4o77; by;ck Eit 1m 1ss0;in,up;aJe0WiIoGrEuc3G;aigh1WiE;ke 6Gn3A;p Erm1Z;by,in,oD;n3Br 1tc3T;c3Amp0nd Er6Zve6y 1;ba4d2up;d2oDup;ar37eHiGlFrEur9;ing9uc8;a3Fit 5B;l13n 1;e5Sll0;be2Wrt0;ap 4Sow 6C;ash 5Foke0;eep FiEow A;c3Wp 1;in,oE;ff,v7;gn 4XngFt Ez8;d2o5up; al54le0;aGoEu4T;ot Eut0w 6D;aw3ba4f3GoD;c2PdeBk58ve6;e Ill1And HtE; Etl4H;d2in,o5upE;!on;aw3ba4d2in,o27up;o5Mto;al51out0rap51;il6v8;aPeMiLoHuE;b 4Ule0n Estl8;aEba4d2in5Jo3Ut39u3S;c26w3;ll Got FuE;g2Tnd6;a27f30o5;arCin,o5;ng 53p6;aEel6inBnt0;c5Dd E;o31u0I;c24t0;aSeRiPlNoLrIsyc2HuE;ll Gt E;aEba4d2in,o1Ot3Gup;p3Lw3;ap3Kd2in,o5t3Eup;attle9ess FiHoE;p 1;ah1Oon;iEp 5Hr3Yur4Jwer 5H;nt0;ay4DuE;gBmp A;ck Eg0le9n Ap4A;o2Yup;el 4KncilB;c42ir 3Un0ss GtFy E;ba4oD; d2c24;aw3ba4o18;pEw3X;e3Wt 4U;arrow46erd0oE;d6te45;aMeJiIoGuE;ddl8lE;l 3I;c1Dp 1uth6ve E;al3Nd2in,o5up;ss0x 1;asur8lFss E;a1Gup;t A;ke Fn ArEs1Px0;k Ary6;do,o48up;aRePiKoEuck0;aIc3Hg HoEse0;k Ese3F;aft7ba4d2forw2Jin46ov7uE;nd7p;in,o0M;d A;e HghtGnFsEv1V;ten 4M;e 1k 1; 1e37;arCd2;av1Jt 37velE; o3U;c8p 1sh Etch9ugh6y20;in3Uo5;eFick6nock E;d2o3Q;eEyB;l 2Pp E;aw3ba4d2fTin,o07to,up;aGoFuE;ic8mpB;ke31t35;c3Azz 1;aQeLiIoFuE;nker32rry 1s0W;lEneBrse2X;d Ee 1;ba4d2fast,o01up;de Ft E;ba4on,up;aw3o5;aElp0;d Gl 2Ar Et 1;fEof;rom;in,oTu1H;c02m 1nFve Ez25;it,to;d Eg 2FkerG;d2in,o5;aTeMive Kloss 22oGrFunE; f0N;in3How 2B; Eof 21;aFb1Dit,oErCt0Pu18;ff,n,v7;bo5ft7hKw3;aw3ba4d2in,oEup,w3;ff,n,ut;aJek0t E;aFb17d2oErCup;ff,n,ut,v7;cFhEl1XrCt,w3;ead;ross;r 1;d aFnE;g 1;bo5;a08e01iSlOoKrGuE;cEel 1;k 1;eFighten Eown9y 1;aw3oD;eEshe1N; 1z8;lGol E;aEwi1G;bo5rC;d Alow 1;aFeEip0;sh0;g Ake0mErE;e 2R;gLlJnHrFsEzzle0;h 2P;e Em 1;aw3ba4up;d0isE;h 1;e El 19;aw3fJ;ht ba4ure0;eJnFsE;s 1;cGd E;fEoD;or;e 1X;dVl 1;cIll Erm0t0W;ap04bGd2in,oFtE;hrough;ff,ut,v7;a4ehi20;e 0L;at0dge0nd 0Ky8;oHrE;aFess Aop E;aw3bUin,o1E;g9w9; 0Dubl8;aXhUlean AoHrEut 10;ack9eep Eoss 1I;by,d2oEup;n,ut;me HoFuntE; o1Q;k 1l E;d2oD;aKbJforHin,oGtFuE;nd7;ogeth7;ut,v7;th,wE;ard;a4y;pErCw3;art;eEipB;ck 11er E;on,up;lKncel0rHsGtch FveB; in;o19up;h 0Wt6;ry FvE;e Y;aw3o15;l Em05;aEba4d2o13up;rCw3;a0Ke0Bl04oVrJuE;bblGcklWil02lk AndlWrn 08st FtEy 13zz6;t 0N;in,o5up;e E;ov7;anOeaMiFush E;oDup;ghIng E;aFba4d2forEin,o5up;th;bo5lErCw3;ong;teE;n 1;k E;d2in,o5up;ch0;arLgKil An8oHssGttlFunce Ex 07;aw3ba4;e A; arC;k 03t 1;e 1;d2up; d2;d 1;aJeed0oEurt0;cGw E;aw3ba4d2o5up;ck;k E;in,oL;ck0nk0st6; oKaHef 1nd E;d2ov7up;er;up;r0t E;d2in,oEup;ff,ut;ff,nE;to;ck Kil0nGrgFsE;h H;ain9e G;g Fk9; on;in,o5; o5;aw3d2o5up;ay;cNdJsk Guction6; oD;ff;arCo5;ouE;nd;d E;d2oEup;ff,n;own;t E;o5up;ut",
+  "Modal": "true¦c5lets,m4ought3sh1w0;ill,o5;a0o4;ll,nt;! to,a;ay,ight,ust;an,o0;uld",
+  "Adjective": "true¦0:7P;1:84;2:83;3:8A;4:7W;5:5S;6:58;7:4O;8:4N;9:81;A:6I;a6Wb6Gc63d5Je54f4Hg49h3Wi39j37k36l2Vm2Ln2Bo1Wp1Dquack,r12s0Ft07uMvJwByear5;arp0eFholeEiDoB;man5oBu6P;d6Rzy;despr7Ls5S;!sa7;eClBste2A;co1Nl o4W;!k5;aCiBola4M;b89ce versa,ol5H;ca3gabo6Gnilla;ltUnHpCrb5Msu4tterB;!mo7G; Eb1SpDsBti1M;ca7etBide dKtairs;!ti2;er,i3U;f36to da1;aLbeco75convin29deIeHfair,ivers4knGprecedVrEsCwB;iel3Nritt6A;i1XuB;pervis0spec3Y;eBu5;cognHgul6Tl6T;own;ndi2v64xpect0;cid0rB;!grou5ZsB;iz0tood;b7pp0Dssu6UuthorB;iz0;i26ra;aGeEhDi6AoCrB;i1oubl0us3M;geth6p,rp6Vuc67;ough4Wril33;en60l32mpBrr2X;o6Ati2;boo,lBn;ent0;aWcVeThSiQmug,nobbi3LoOpNqueami3LtFuBymb6H;bDi gener5DpBrpri6D;erBre0N;! dup6b,i2C;du0seq52;anda77eGiFrBunni2y3F;aightCiB;ki2p0; fBfB;or5K;ll,r5S;aBreotyp0;dfa6Cmi2;a55ec2Gir1Hlend6Cot on; call0le,mb6phist1XrBu0Vvi48;d6Ary;gnifica3nB;ce51g7;am2Re6ocki2ut;cBda1em5lfi32ni1Wpa6Jre8;o1Er42;at5Gient28reec5G;cr0me;aJeEiCoB;bu60tt51uQy4;ghtBv4;!-2BfA;ar,bel,condi1du6Dfres5AlEpublic42sCtard0vB;ea26;is4CoB;lu1na3;aQe1Cuc4A;b5TciBllyi2;al,st;aOeLicayu8lac5Ropuli5QrCuB;bl5Jmp0n51;eGiDoB;!b07fu5RmiBp6;ne3si2;mCor,sBva1;ti8;a53e;ci5MmB;a0EiB;er,um;ac20rBti1;fe9ma2XpleBv38;xi2;rBst;allelDtB;-tiBi4;me;!ed;bLffJkIld fashion0nHpGrg1Eth6utFvB;al,erB;!all,niCt,wB;eiBrouB;ght;do0Ter,g2Qsi4B;en,posi1; boa5Og2Oli8;!ay; gua5MbBli8;eat;eDsB;cBer0Eole1;e8u3O;d2Xse;aJeIiHoBua4X;nFrCtB;ab7;thB;!eB;rn;chala3descri58stop;ght5;arby,cessa44ighbor5xt;k0usia1A;aIeGiDoBultip7;bi7derBl0Vnth5ot,st;a1n;nBx0;dblo0RiaBor;tu37;ande3Qdi4NnaBre;ci2;cBgenta,in,j01keshift,le,mmoth,ny,sculi8;ab33ho;aKeFiCoBu15;uti14vi2;mCteraB;l,te;it0;ftEgBth4;al,eCitiB;ma1;nda3K;!-0C;ngu3Zst,tt6;ap1Xind5no0A;agg0uB;niMstifi0veni7;de4gno4Klleg4mQnEpso 20rB;a1rB;eleBita0J;va3; KaJbr0corIdGfluenQiQnFsEtCviB;go0Fti2;a9en3SoxB;ic3B;a8i2Vul0D;a1er,oce3;iCoB;or;re9;deq3Qppr33;fBsitu,vitro;ro3;mFpB;arDerfe9oBrop6;li1rtB;a3ed;ti4;eBi0S;d2Vn3C;aIeFiDoBumdr3I;ne36ok0rrBs08ur5;if2Z;ghfalut1QspB;an2X;aClB;liYpfA;li2;lEnDrB;d04roB;wi2;dy;f,low0;ainfAener2Oiga24lHoGraDuB;ilBng ho;ty;cCtB;efAis;efA;ne,od;ea2Iob4;aTeNinMlKoFrB;a1VeDoz1MustB;raB;ti2;e2Gq10tfA;oDrB; keeps,eBm6tuna1;g03ign;liB;sh;aBue3;g31tte1P;al,i1;dFmCrB;ti7;a7ini8;ne;le; up;bl0i3l27r Cux,voB;ri1uri1;oBreac1E;ff;aLfficie3lKmHnFre9there4veExB;a9cess,pe1QtraCuB;be2Nl0E;!va1E;n,ryday; BcouraEti0O;rou1sui1;erCiB;ne3;gi2;abo23dMe17i1;g6sB;t,ygB;oi2;er;aReJiDoBrea14ue;mina3ne,ubB;le,tfA;dact1Bfficu1OsCvB;er1K;creDeas0gruntl0hone1FordCtB;a3ressM;er5;et; HadpGfFgene1PliDrang0spe1PtCvoB;ut;ail0ermin0;be1Mca1ghB;tfA;ia3;an;facto;i5magBngeroUs0G;ed,i2;ly;ertaMhief,ivil,oDrB;aBowd0u0G;mp0vZz0;loImGnCrrBve0P;e9u1I;cre1fu0LgrDsCtB;empo0Dra0E;ta3;ue3;mer08pleB;te,x;ni4ss4;in;aNeIizarHlFoCrB;and new,isk,okN;gCna fiUttom,urgeoB;is;us;ank,indB;!i2;re;autifAhiDloCnBst,yoD;eUt;v0w;nd;ul;ckCnkru0WrrB;en;!wards; priori,b0Mc0Jd09fra08g04h03lYmWntiquVppSrMsIttracti06utheHvEwB;aCkB;wa0T;ke,re;ant garCerB;age;de;ntU;leep,piDsuDtonB;isB;hi2;ri2;ab,bitEroDtiB;fiB;ci4;ga3;raB;ry;are3etiNrB;oprB;ia1;at0;aJuB;si2;arEcohCeBiIl,oof;rt;olB;ic;mi2;ead;ainDgressiConiB;zi2;ve;st;id; IeGuFvB;aCerB;se;nc0;ed;lt;pt,qB;ua1;hoc,infinitB;um;cuCtu4u1;al;ra1;erLlKoIruHsCuB;nda3;e3oCtra9;ct;lu1rbi2;ng;te;pt;aBve;rd;aze,e;ra3;nt",
+  "Comparable": "true¦0:41;1:4I;2:45;3:4B;4:3X;5:2Y;a4Ob44c3Od3De35f2Rg2Fh24i1Vj1Uk1Rl1Jm1Dn17o15p0Vqu0Tr0KsTtMuIvFw7y6za13;ell27ou3;aBe9hi1Yi7r6;o3y;ck0Ode,l6n1ry,se;d,y;a6i4Mt;k,ry;n1Tr6sK;m,y;a7e6ulgar;nge4rda2xi3;g9in,st;g0n6pco3Mse4;like0t6;i1r6;ue;aAen9hi8i7ough,r6;anqu2Oen1ue;dy,g3Sme0ny,r09;ck,n,rs2P;d40se;ll,me,rt,s6wd45;te4;aVcarUeThRiQkin0FlMmKoHpGqua1FtAu7w6;eet,ift;b7dd13per0Gr6;e,re2H;sta2Ft5;aAe9iff,r7u6;pXr1;a6ict,o3;ig3Fn0U;a1ep,rn;le,rk;e22i3Fright0;ci28ft,l7o6re,ur;n,thi3;emn,id;a6el0ooth;ll,rt;e8i6ow,y;ck,g35m6;!y;ek,nd3D;ck,l0mp5;a6iTort,rill,y;dy,ll0Xrp;cu0Rve0Rxy;ce,ed,y;d,fe,int0l1Vv14;aBe9i8o6ude;mantic,o1Isy,u6;gh,nd;ch,pe,tzy;a6d,mo0H;dy,l;gg7ndom,p6re,w;id;ed;ai2i6;ck,et;aEhoDi1QlCoBr8u6;ny,r6;e,p5;egna2ic7o6;fouYud;ey,k0;li04or,te1B;ain,easa2;ny;in4le;dd,f6i0ld,ranQ;fi10;aAe8i7o6;b5isy,rm15sy;ce,mb5;a6w;r,t;ive,rr01;aAe8ild,o7u6;nda19te;ist,o1;a6ek,llX;n,s0ty;d,tuQ;aBeAi9o6ucky;f0Un7o1Du6ve0w17y0T;d,sy;e0g;g1Tke0tt5ve0;an,wd;me,r6te;ge;e7i6;nd;en;ol0ui1P;cy,ll,n6;sBt6;e6ima8;llege2r6;es7media6;te;ti3;ecu6ta2;re;aEeBiAo8u6;ge,m6ng1R;b5id;ll6me0t;ow;gh,l0;a6f04sita2;dy,v6;en0y;nd1Hppy,r6te4;d,sh;aGenFhDiClBoofy,r6;a9e8is0o6ue1E;o6ss;vy;at,en,y;nd,y;ad,ib,ooI;a2d1;a6o6;st0;t5uiY;u1y;aIeeb5iDlat,oAr8u6;ll,n6r14;!ny;aHe6iend0;e,sh;a7r6ul;get4mG;my;erce8n6rm;an6e;ciC;! ;le;ir,ke,n0Fr,st,t,ulA;aAerie,mp9sse7v6xtre0Q;il;nti6;al;ty;r7s6;tern,y;ly,th0;aFeCi9r7u6;ll,mb;u6y;nk;r7vi6;ne;e,ty;a6ep,nD;d6f,r;!ly;mp,pp03rk;aHhDlAo8r7u6;dd0r0te;isp,uel;ar6ld,mmon,ol,st0ward0zy;se;e6ou1;a6vW;n,r;ar8e6il0;ap,e6;sy;mi3;gey,lm8r6;e4i3;ful;!i3;aNiLlIoEr8u6;r0sy;ly;aAi7o6;ad,wn;ef,g7llia2;nt;ht;sh,ve;ld,r7un6;cy;ed,i3;ng;a7o6ue;nd,o1;ck,nd;g,tt6;er;d,ld,w1;dy;bsu9ng8we6;so6;me;ry;rd",
+  "TextOrdinal": "true¦bGeDf9hundredHmGnin7qu6s4t0zeroH;enGh1rFwe0;lfFn9;ir0ousandE;d,t4;e0ixt9;cond,ptAvent8xtA;adr9int9;et0th;e6ie8;i2o0;r0urt3;tie5;ft1rst;ight0lev1;e0h,ie2;en1;illion0;th",
+  "Cardinal": "true¦bHeEf8hundred,mHnineAone,qu6s4t0zero;en,h2rGw0;e0o;lve,n8;irt9ousandEree;e0ix5;pt1ven4xt1;adr0int0;illion;i3o0;r1ur0;!t2;ty;ft0ve;e2y;ight0lev1;!e0y;en;illion0;!s",
+  "Expression": "true¦a02b01dXeVfuck,gShLlImHnGoDpBshAtsk,u7voi04w3y0;a1eLu0;ck,p;!a,hoo,y;h1ow,t0;af,f;e0oa;e,w;gh,h0;! 0h,m;huh,oh;eesh,hh,it;ff,hew,l0sst;ease,z;h1o0w,y;h,o,ps;!h;ah,ope;eh,mm;m1ol0;!s;ao,fao;a4e2i,mm,oly1urr0;ah;! mo6;e,ll0y;!o;ha0i;!ha;ah,ee,o0rr;l0odbye;ly;e0h,t cetera,ww;k,p;'oh,a0uh;m0ng;mit,n0;!it;ah,oo,ye; 1h0rgh;!em;la",
+  "Adverb": "true¦a08by 06d02eYfShQinPjustOkinda,mMnJoEpCquite,r9s5t2up1very,well,ye0;p,s; to,wards5;h1iny bit,o0wiO;o,t6ward;en,us;eldom,o0uch;!me1rt0; of;hYtimes,w09;a1e0;alT;ndomSthN;ar excellDer0oint blank; Nhaps;f3n0;ce0ly;! 0;ag02moW; courIten;ewKo0; longEt 0;onIwithstanding;aybe,eanwhiAore0;!ovB;! aboU;deed,steV;en0;ce;or2u0;lArther0;!moJ; 0ev3;examp0good,suH;le;n1v0;er; mas0ough;se;e0irect1; 1finite0;ly;ju8trop;far,n0;ow; DbroCd nauseam,gBl6ny3part,s2t 0w4;be6l0mo6wor6;arge,ea5; soon,ide;mo1w0;ay;re;l 1mo0one,ready,so,ways;st;b1t0;hat;ut;ain;ad;lot,posteriori",
+  "Determiner": "true¦aBboth,d9e6few,l4mu8neiDown,plenty,s3th2various,wh0;at0ich0;evC;at,e4is,ose;everal,ome;a,e0;!ast,s;a1i6l0very;!se;ch;e0u;!s;!n0;!o0y;th0;er"
+};
+
+const seq="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",cache$1=seq.split("").reduce(function(n,o,e){return n[o]=e,n},{}),toAlphaCode=function(n){if(void 0!==seq[n])return seq[n];let o=1,e=36,t="";for(;n>=e;n-=e,o++,e*=36);for(;o--;){const o=n%36;t=String.fromCharCode((o<10?48:55)+o)+t,n=(n-o)/36;}return t},fromAlphaCode=function(n){if(void 0!==cache$1[n])return cache$1[n];let o=0,e=1,t=36,r=1;for(;e<n.length;o+=t,e++,t*=36);for(let e=n.length-1;e>=0;e--,r*=36){let t=n.charCodeAt(e)-48;t>10&&(t-=7),o+=t*r;}return o};var encoding={toAlphaCode:toAlphaCode,fromAlphaCode:fromAlphaCode},symbols=function(n){const o=new RegExp("([0-9A-Z]+):([0-9A-Z]+)");for(let e=0;e<n.nodes.length;e++){const t=o.exec(n.nodes[e]);if(!t){n.symCount=e;break}n.syms[encoding.fromAlphaCode(t[1])]=encoding.fromAlphaCode(t[2]);}n.nodes=n.nodes.slice(n.symCount,n.nodes.length);};const indexFromRef=function(n,o,e){const t=encoding.fromAlphaCode(o);return t<n.symCount?n.syms[t]:e+t+1-n.symCount},toArray=function(n){const o=[],e=(t,r)=>{let s=n.nodes[t];"!"===s[0]&&(o.push(r),s=s.slice(1));const c=s.split(/([A-Z0-9,]+)/g);for(let s=0;s<c.length;s+=2){const u=c[s],i=c[s+1];if(!u)continue;const l=r+u;if(","===i||void 0===i){o.push(l);continue}const f=indexFromRef(n,i,t);e(f,l);}};return e(0,""),o},unpack=function(n){const o={nodes:n.split(";"),syms:[],symCount:0};return n.match(":")&&symbols(o),toArray(o)};var unpack_1$1=unpack,unpack_1$1$1=function(n){const o=n.split("|").reduce((n,o)=>{const e=o.split("¦");return n[e[0]]=e[1],n},{}),e={};return Object.keys(o).forEach(function(n){const t=unpack_1$1(o[n]);"true"===n&&(n=!0);for(let o=0;o<t.length;o++){const r=t[o];!0===e.hasOwnProperty(r)?!1===Array.isArray(e[r])?e[r]=[e[r],n]:e[r].push(n):e[r]=n;}}),e};var efrtUnpack_min=unpack_1$1$1;
+
+//words that can't be compressed, for whatever reason
+var misc = {
+  // numbers
+  '20th century fox': 'Organization',
+  // '3m': 'Organization',
+  '7 eleven': 'Organization',
+  'motel 6': 'Organization',
+  g8: 'Organization',
+  vh1: 'Organization',
+  q1: 'Date',
+  q2: 'Date',
+  q3: 'Date',
+  q4: 'Date',
+  her: ['Possessive', 'Pronoun'],
+  his: ['Possessive', 'Pronoun'],
+  their: ['Possessive', 'Pronoun'],
+  themselves: ['Possessive', 'Pronoun'],
+  your: ['Possessive', 'Pronoun'],
+  our: ['Possessive', 'Pronoun'],
+  my: ['Possessive', 'Pronoun'],
+  its: ['Possessive', 'Pronoun'],
+};
+
+const fancy = {
+  Unit: (lex, w) => {
+    lex[w] = ['Abbreviation', 'Unit'];
+  },
+  Cardinal: (lex, w) => {
+    lex[w] = ['TextValue', 'Cardinal'];
+  },
+  TextOrdinal: (lex, w) => {
+    lex[w] = ['Ordinal', 'TextValue'];
+    lex[w + 's'] = ['TextValue', 'Fraction']; // add 'millionths'
+  },
+  // add plural/singular forms
+  Singular: (lex, w, world) => {
+    lex[w] = 'Singular';
+    let plural = world.transforms.toPlural(w, world);
+    lex[plural] = lex[plural] || 'Plural';
+  },
+  // conjugate these verbs
+  Infinitive: (lex, w, world) => {
+    lex[w] = 'Infinitive';
+    let conj = world.transforms.conjugate(w, world);
+    let tags = Object.keys(conj);
+    for (let i = 0; i < tags.length; i++) {
+      let str = conj[tags[i]];
+      lex[str] = lex[str] || tags[i]; // only if it's safe
+    }
+  },
+  // conjugate other Adjectival forms
+  Comparable: (lex, w, world) => {
+    lex[w] = 'Comparable';
+    let conj = world.transforms.adjectives(w);
+    let tags = Object.keys(conj);
+    for (let i = 0; i < tags.length; i++) {
+      let word = conj[tags[i]];
+      lex[word] = lex[word] || tags[i]; // only if it's safe
+    }
+  },
+  //conjugate phrasal-verbs
+  PhrasalVerb: (lex, w, world) => {
+    // whole thing
+    lex[w] = ['PhrasalVerb', 'Infinitive'];
+    //add original form
+    let words = w.split(' ');
+    // lex[words[0]] = lex[words[0]] || 'Infinitive'
+    // //conjugate first word
+    let conj = world.transforms.conjugate(words[0], world);
+    let tags = Object.keys(conj);
+    for (let i = 0; i < tags.length; i++) {
+      let str = conj[tags[i]] + ' ' + words[1];
+      lex[str] = lex[str] || ['PhrasalVerb', tags[i]];
+      world.hasCompound[conj[tags[i]]] = true;
+    }
+  },
+  // inflect our demonyms - 'germans'
+  Demonym: (lex, w, world) => {
+    lex[w] = 'Demonym';
+    let plural = world.transforms.toPlural(w, world);
+    lex[plural] = lex[plural] || ['Demonym', 'Plural']; // only if it's safe
+  },
+};
+
+// let a user explode their lexicon, too
+const addWords = function (wordsObj, lex, world) {
+  Object.keys(wordsObj).forEach(word => {
+    let tag = wordsObj[word];
+    // abbreviation-words are used in our tokenizer
+    if (tag === 'Abbreviation' || tag === 'Unit') {
+      world.cache.abbreviations[word] = true;
+    }
+    // cache multi-words
+    let multi = word.split(' ');
+    if (multi.length > 1) {
+      world.hasCompound[multi[0]] = true;
+    }
+
+    // do some ad-hoc work before adding it
+    if (fancy[tag] !== undefined) {
+      fancy[tag](lex, word, world);
+      return
+    }
+    //set it in our lexicon, basic
+    if (lex[word] === undefined) {
+      lex[word] = tag;
+      return
+    }
+    // if we already have that word
+    if (typeof lex[word] === 'string') {
+      lex[word] = [lex[word]];
+    }
+    if (typeof tag === 'string') {
+      lex[word].push(tag);
+    } else {
+      lex[word] = lex[word].concat(tag);
+    }
+  });
+};
+
+// we do some ad-hoc stuff here, building-up our word-list
+const buildOut = function (world) {
+  //our bag of words
+  let lexicon = Object.assign({}, misc);
+  // start adding words to the lex
+  Object.keys(_data).forEach(tag => {
+    let wordsObj = efrtUnpack_min(_data[tag]);
+    // this part sucks
+    Object.keys(wordsObj).forEach(w => {
+      wordsObj[w] = tag;
+    });
+    addWords(wordsObj, lexicon, world);
+  });
+  // console.log(Object.keys(lexicon).length)
+  return lexicon
+};
+
+var unpack_1 = {
+  buildOut: buildOut,
+  addWords: addWords,
+};
+
+// add words from plurals and conjugations data
+const addIrregulars = function (world) {
+  //add irregular plural nouns
+  let nouns = world.irregulars.nouns;
+  let words = Object.keys(nouns);
+  for (let i = 0; i < words.length; i++) {
+    const w = words[i];
+    world.words[w] = 'Singular';
+    world.words[nouns[w]] = 'Plural';
+  }
+
+  // add irregular verb conjugations
+  let verbs = world.irregulars.verbs;
+  let keys = Object.keys(verbs);
+  for (let i = 0; i < keys.length; i++) {
+    const inf = keys[i];
+    //add only if it it's safe...
+    world.words[inf] = world.words[inf] || 'Infinitive';
+    let forms = world.transforms.conjugate(inf, world);
+    forms = Object.assign(forms, verbs[inf]);
+    //add the others
+    Object.keys(forms).forEach(tag => {
+      world.words[forms[tag]] = world.words[forms[tag]] || tag;
+      // lexicon should prefer other tags, over participle
+      if (world.words[forms[tag]] === 'Participle') {
+        world.words[forms[tag]] = tag;
+      }
+    });
+  }
+};
+var addIrregulars_1 = addIrregulars;
+
+//nouns with irregular plural/singular forms
+//used in noun.inflect, and also in the lexicon.
+
+var plurals = {
+  addendum: 'addenda',
+  alga: 'algae',
+  alumna: 'alumnae',
+  alumnus: 'alumni',
+  analysis: 'analyses',
+  antenna: 'antennae',
+  appendix: 'appendices',
+  avocado: 'avocados',
+  axis: 'axes',
+  bacillus: 'bacilli',
+  barracks: 'barracks',
+  beau: 'beaux',
+  bus: 'buses',
+  cactus: 'cacti',
+  chateau: 'chateaux',
+  child: 'children',
+  circus: 'circuses',
+  clothes: 'clothes',
+  corpus: 'corpora',
+  criterion: 'criteria',
+  curriculum: 'curricula',
+  database: 'databases',
+  deer: 'deer',
+  diagnosis: 'diagnoses',
+  echo: 'echoes',
+  embargo: 'embargoes',
+  epoch: 'epochs',
+  foot: 'feet',
+  formula: 'formulae',
+  fungus: 'fungi',
+  genus: 'genera',
+  goose: 'geese',
+  halo: 'halos',
+  hippopotamus: 'hippopotami',
+  index: 'indices',
+  larva: 'larvae',
+  leaf: 'leaves',
+  libretto: 'libretti',
+  loaf: 'loaves',
+  man: 'men',
+  matrix: 'matrices',
+  memorandum: 'memoranda',
+  modulus: 'moduli',
+  mosquito: 'mosquitoes',
+  mouse: 'mice',
+  // move: 'moves',
+  nebula: 'nebulae',
+  nucleus: 'nuclei',
+  octopus: 'octopi',
+  opus: 'opera',
+  ovum: 'ova',
+  ox: 'oxen',
+  parenthesis: 'parentheses',
+  person: 'people',
+  phenomenon: 'phenomena',
+  prognosis: 'prognoses',
+  quiz: 'quizzes',
+  radius: 'radii',
+  referendum: 'referenda',
+  rodeo: 'rodeos',
+  sex: 'sexes',
+  shoe: 'shoes',
+  sombrero: 'sombreros',
+  stimulus: 'stimuli',
+  stomach: 'stomachs',
+  syllabus: 'syllabi',
+  synopsis: 'synopses',
+  tableau: 'tableaux',
+  thesis: 'theses',
+  thief: 'thieves',
+  tooth: 'teeth',
+  tornado: 'tornados',
+  tuxedo: 'tuxedos',
+  vertebra: 'vertebrae',
+  // virus: 'viri',
+  // zero: 'zeros',
+};
+
+// a list of irregular verb conjugations
+// used in verbs().conjugate()
+// but also added to our lexicon
+
+//use shorter key-names
+const mapping$1 = {
+  g: 'Gerund',
+  prt: 'Participle',
+  perf: 'PerfectTense',
+  pst: 'PastTense',
+  fut: 'FuturePerfect',
+  pres: 'PresentTense',
+  pluperf: 'Pluperfect',
+  a: 'Actor',
+};
+
+// '_' in conjugations is the infinitive form
+// (order matters, to the lexicon)
+let conjugations = {
+  act: {
+    a: '_or',
+  },
+  ache: {
+    pst: 'ached',
+    g: 'aching',
+  },
+  age: {
+    g: 'ageing',
+    pst: 'aged',
+    pres: 'ages',
+  },
+  aim: {
+    a: '_er',
+    g: '_ing',
+    pst: '_ed',
+  },
+  arise: {
+    prt: '_n',
+    pst: 'arose',
+  },
+  babysit: {
+    a: '_ter',
+    pst: 'babysat',
+  },
+  ban: {
+    a: '',
+    g: '_ning',
+    pst: '_ned',
+  },
+  be: {
+    a: '',
+    g: 'am',
+    prt: 'been',
+    pst: 'was',
+    pres: 'is',
+  },
+  beat: {
+    a: '_er',
+    g: '_ing',
+    prt: '_en',
+  },
+  become: {
+    prt: '_',
+  },
+  begin: {
+    g: '_ning',
+    prt: 'begun',
+    pst: 'began',
+  },
+  being: {
+    g: 'are',
+    pst: 'were',
+    pres: 'are',
+  },
+  bend: {
+    prt: 'bent',
+  },
+  bet: {
+    a: '_ter',
+    prt: '_',
+  },
+  bind: {
+    pst: 'bound',
+  },
+  bite: {
+    g: 'biting',
+    prt: 'bitten',
+    pst: 'bit',
+  },
+  bleed: {
+    pst: 'bled',
+    prt: 'bled',
+  },
+  blow: {
+    prt: '_n',
+    pst: 'blew',
+  },
+  boil: {
+    a: '_er',
+  },
+  brake: {
+    prt: 'broken',
+  },
+  break: {
+    pst: 'broke',
+  },
+  breed: {
+    pst: 'bred',
+  },
+  bring: {
+    pst: 'brought',
+    prt: 'brought',
+  },
+  broadcast: {
+    pst: '_',
+  },
+  budget: {
+    pst: '_ed',
+  },
+  build: {
+    pst: 'built',
+    prt: 'built',
+  },
+  burn: {
+    prt: '_ed',
+  },
+  burst: {
+    prt: '_',
+  },
+  buy: {
+    pst: 'bought',
+    prt: 'bought',
+  },
+  can: {
+    a: '',
+    fut: '_',
+    g: '',
+    pst: 'could',
+    perf: 'could',
+    pluperf: 'could',
+    pres: '_',
+  },
+  catch: {
+    pst: 'caught',
+  },
+  choose: {
+    g: 'choosing',
+    prt: 'chosen',
+    pst: 'chose',
+  },
+  cling: {
+    prt: 'clung',
+  },
+  come: {
+    prt: '_',
+    pst: 'came',
+    g: 'coming',
+  },
+  compete: {
+    a: 'competitor',
+    g: 'competing',
+    pst: '_d',
+  },
+  cost: {
+    pst: '_',
+  },
+  creep: {
+    prt: 'crept',
+  },
+  cut: {
+    prt: '_',
+  },
+  deal: {
+    pst: '_t',
+    prt: '_t',
+  },
+  develop: {
+    a: '_er',
+    g: '_ing',
+    pst: '_ed',
+  },
+  die: {
+    g: 'dying',
+    pst: '_d',
+  },
+  dig: {
+    g: '_ging',
+    pst: 'dug',
+    prt: 'dug',
+  },
+  dive: {
+    prt: '_d',
+  },
+  do: {
+    pst: 'did',
+    pres: '_es',
+  },
+  draw: {
+    prt: '_n',
+    pst: 'drew',
+  },
+  dream: {
+    prt: '_t',
+  },
+  drink: {
+    prt: 'drunk',
+    pst: 'drank',
+  },
+  drive: {
+    g: 'driving',
+    prt: '_n',
+    pst: 'drove',
+  },
+  drop: {
+    g: '_ping',
+    pst: '_ped',
+  },
+  eat: {
+    a: '_er',
+    g: '_ing',
+    prt: '_en',
+    pst: 'ate',
+  },
+  edit: {
+    pst: '_ed',
+    g: '_ing',
+  },
+  egg: {
+    pst: '_ed',
+  },
+  fall: {
+    prt: '_en',
+    pst: 'fell',
+  },
+  feed: {
+    prt: 'fed',
+    pst: 'fed',
+  },
+  feel: {
+    a: '_er',
+    pst: 'felt',
+  },
+  fight: {
+    pst: 'fought',
+    prt: 'fought',
+  },
+  find: {
+    pst: 'found',
+  },
+  flee: {
+    g: '_ing',
+    prt: 'fled',
+  },
+  fling: {
+    prt: 'flung',
+  },
+  fly: {
+    prt: 'flown',
+    pst: 'flew',
+  },
+  forbid: {
+    pst: 'forbade',
+  },
+  forget: {
+    g: '_ing',
+    prt: 'forgotten',
+    pst: 'forgot',
+  },
+  forgive: {
+    g: 'forgiving',
+    prt: '_n',
+    pst: 'forgave',
+  },
+  free: {
+    a: '',
+    g: '_ing',
+  },
+  freeze: {
+    g: 'freezing',
+    prt: 'frozen',
+    pst: 'froze',
+  },
+  get: {
+    pst: 'got',
+    prt: 'gotten',
+  },
+  give: {
+    g: 'giving',
+    prt: '_n',
+    pst: 'gave',
+  },
+  go: {
+    prt: '_ne',
+    pst: 'went',
+    pres: 'goes',
+  },
+  grow: {
+    prt: '_n',
+  },
+  guide: {
+    pst: '_d',
+  },
+  hang: {
+    pst: 'hung',
+    prt: 'hung',
+  },
+  have: {
+    g: 'having',
+    pst: 'had',
+    prt: 'had',
+    pres: 'has',
+  },
+  hear: {
+    pst: '_d',
+    prt: '_d',
+  },
+  hide: {
+    prt: 'hidden',
+    pst: 'hid',
+  },
+  hit: {
+    prt: '_',
+  },
+  hold: {
+    pst: 'held',
+    prt: 'held',
+  },
+  hurt: {
+    pst: '_',
+    prt: '_',
+  },
+  ice: {
+    g: 'icing',
+    pst: '_d',
+  },
+  imply: {
+    pst: 'implied',
+    pres: 'implies',
+  },
+  is: {
+    a: '',
+    g: 'being',
+    pst: 'was',
+    pres: '_',
+  },
+  keep: {
+    prt: 'kept',
+  },
+  kneel: {
+    prt: 'knelt',
+  },
+  know: {
+    prt: '_n',
+  },
+  lay: {
+    pst: 'laid',
+    prt: 'laid',
+  },
+  lead: {
+    pst: 'led',
+    prt: 'led',
+  },
+  leap: {
+    prt: '_t',
+  },
+  leave: {
+    pst: 'left',
+    prt: 'left',
+  },
+  lend: {
+    prt: 'lent',
+  },
+  lie: {
+    g: 'lying',
+    pst: 'lay',
+  },
+  light: {
+    pst: 'lit',
+    prt: 'lit',
+  },
+  log: {
+    g: '_ging',
+    pst: '_ged',
+  },
+  loose: {
+    prt: 'lost',
+  },
+  lose: {
+    g: 'losing',
+    pst: 'lost',
+  },
+  make: {
+    pst: 'made',
+    prt: 'made',
+  },
+  mean: {
+    pst: '_t',
+    prt: '_t',
+  },
+  meet: {
+    a: '_er',
+    g: '_ing',
+    pst: 'met',
+    prt: 'met',
+  },
+  miss: {
+    pres: '_',
+  },
+  name: {
+    g: 'naming',
+  },
+  patrol: {
+    g: '_ling',
+    pst: '_led',
+  },
+  pay: {
+    pst: 'paid',
+    prt: 'paid',
+  },
+  prove: {
+    prt: '_n',
+  },
+  puke: {
+    g: 'puking',
+  },
+  put: {
+    prt: '_',
+  },
+  quit: {
+    prt: '_',
+  },
+  read: {
+    pst: '_',
+    prt: '_',
+  },
+  ride: {
+    prt: 'ridden',
+  },
+  reside: {
+    pst: '_d',
+  },
+  ring: {
+    pst: 'rang',
+    prt: 'rung',
+  },
+  rise: {
+    fut: 'will have _n',
+    g: 'rising',
+    prt: '_n',
+    pst: 'rose',
+    pluperf: 'had _n',
+  },
+  rub: {
+    g: '_bing',
+    pst: '_bed',
+  },
+  run: {
+    g: '_ning',
+    prt: '_',
+    pst: 'ran',
+  },
+  say: {
+    pst: 'said',
+    prt: 'said',
+    pres: '_s',
+  },
+  seat: {
+    pst: 'sat',
+    prt: 'sat',
+  },
+  see: {
+    g: '_ing',
+    prt: '_n',
+    pst: 'saw',
+  },
+  seek: {
+    prt: 'sought',
+  },
+  sell: {
+    pst: 'sold',
+    prt: 'sold',
+  },
+  send: {
+    prt: 'sent',
+  },
+  set: {
+    prt: '_',
+  },
+  sew: {
+    prt: '_n',
+  },
+  shake: {
+    prt: '_n',
+  },
+  shave: {
+    prt: '_d',
+  },
+  shed: {
+    g: '_ding',
+    pst: '_',
+    pres: '_s',
+  },
+  shine: {
+    pst: 'shone',
+    prt: 'shone',
+  },
+  shoot: {
+    pst: 'shot',
+    prt: 'shot',
+  },
+  show: {
+    pst: '_ed',
+  },
+  shut: {
+    prt: '_',
+  },
+  sing: {
+    prt: 'sung',
+    pst: 'sang',
+  },
+  sink: {
+    pst: 'sank',
+    pluperf: 'had sunk',
+  },
+  sit: {
+    pst: 'sat',
+  },
+  ski: {
+    pst: '_ied',
+  },
+  slay: {
+    prt: 'slain',
+  },
+  sleep: {
+    prt: 'slept',
+  },
+  slide: {
+    pst: 'slid',
+    prt: 'slid',
+  },
+  smash: {
+    pres: '_es',
+  },
+  sneak: {
+    prt: 'snuck',
+  },
+  speak: {
+    fut: 'will have spoken',
+    prt: 'spoken',
+    pst: 'spoke',
+    perf: 'have spoken',
+    pluperf: 'had spoken',
+  },
+  speed: {
+    prt: 'sped',
+  },
+  spend: {
+    prt: 'spent',
+  },
+  spill: {
+    prt: '_ed',
+    pst: 'spilt',
+  },
+  spin: {
+    g: '_ning',
+    pst: 'spun',
+    prt: 'spun',
+  },
+  spit: {
+    prt: 'spat',
+  },
+  split: {
+    prt: '_',
+  },
+  spread: {
+    pst: '_',
+  },
+  spring: {
+    prt: 'sprung',
+  },
+  stand: {
+    pst: 'stood',
+  },
+  steal: {
+    a: '_er',
+    pst: 'stole',
+  },
+  stick: {
+    pst: 'stuck',
+  },
+  sting: {
+    pst: 'stung',
+  },
+  stink: {
+    pst: 'stunk',
+    prt: 'stunk',
+  },
+  stream: {
+    a: '_er',
+  },
+  strew: {
+    prt: '_n',
+  },
+  strike: {
+    g: 'striking',
+    pst: 'struck',
+  },
+  suit: {
+    a: '_er',
+    g: '_ing',
+    pst: '_ed',
+  },
+  sware: {
+    prt: 'sworn',
+  },
+  swear: {
+    pst: 'swore',
+  },
+  sweep: {
+    prt: 'swept',
+  },
+  swim: {
+    g: '_ming',
+    pst: 'swam',
+  },
+  swing: {
+    pst: 'swung',
+  },
+  take: {
+    fut: 'will have _n',
+    pst: 'took',
+    perf: 'have _n',
+    pluperf: 'had _n',
+  },
+  teach: {
+    pst: 'taught',
+    pres: '_es',
+  },
+  tear: {
+    pst: 'tore',
+  },
+  tell: {
+    pst: 'told',
+  },
+  think: {
+    pst: 'thought',
+  },
+  thrive: {
+    prt: '_d',
+  },
+  tie: {
+    g: 'tying',
+    pst: '_d',
+  },
+  undergo: {
+    prt: '_ne',
+  },
+  understand: {
+    pst: 'understood',
+  },
+  upset: {
+    prt: '_',
+  },
+  wait: {
+    a: '_er',
+    g: '_ing',
+    pst: '_ed',
+  },
+  wake: {
+    pst: 'woke',
+  },
+  wear: {
+    pst: 'wore',
+  },
+  weave: {
+    prt: 'woven',
+  },
+  wed: {
+    pst: 'wed',
+  },
+  weep: {
+    prt: 'wept',
+  },
+  win: {
+    g: '_ning',
+    pst: 'won',
+  },
+  wind: {
+    prt: 'wound',
+  },
+  withdraw: {
+    pst: 'withdrew',
+  },
+  wring: {
+    prt: 'wrung',
+  },
+  write: {
+    g: 'writing',
+    prt: 'written',
+    pst: 'wrote',
+  },
+};
+
+//uncompress our ad-hoc compression scheme
+let keys = Object.keys(conjugations);
+for (let i = 0; i < keys.length; i++) {
+  const inf = keys[i];
+  let final = {};
+  Object.keys(conjugations[inf]).forEach(key => {
+    let str = conjugations[inf][key];
+    //swap-in infinitives for '_'
+    str = str.replace('_', inf);
+
+    let full = mapping$1[key];
+    final[full] = str;
+  });
+  //over-write original
+  conjugations[inf] = final;
+}
+
+var conjugations_1 = conjugations;
+
+const endsWith$1 = {
+  b: [
+    {
+      reg: /([^aeiou][aeiou])b$/i,
+      repl: {
+        pr: '$1bs',
+        pa: '$1bbed',
+        gr: '$1bbing',
+      },
+    },
+  ],
+  d: [
+    {
+      reg: /(end)$/i,
+      repl: {
+        pr: '$1s',
+        pa: 'ent',
+        gr: '$1ing',
+        ar: '$1er',
+      },
+    },
+    {
+      reg: /(eed)$/i,
+      repl: {
+        pr: '$1s',
+        pa: '$1ed',
+        gr: '$1ing',
+        ar: '$1er',
+      },
+    },
+    {
+      reg: /(ed)$/i,
+      repl: {
+        pr: '$1s',
+        pa: '$1ded',
+        ar: '$1der',
+        gr: '$1ding',
+      },
+    },
+    {
+      reg: /([^aeiou][ou])d$/i,
+      repl: {
+        pr: '$1ds',
+        pa: '$1dded',
+        gr: '$1dding',
+      },
+    },
+  ],
+  e: [
+    {
+      reg: /(eave)$/i,
+      repl: {
+        pr: '$1s',
+        pa: '$1d',
+        gr: 'eaving',
+        ar: '$1r',
+      },
+    },
+    {
+      reg: /(ide)$/i,
+      repl: {
+        pr: '$1s',
+        pa: 'ode',
+        gr: 'iding',
+        ar: 'ider',
+      },
+    },
+    {
+      //shake
+      reg: /(t|sh?)(ake)$/i,
+      repl: {
+        pr: '$1$2s',
+        pa: '$1ook',
+        gr: '$1aking',
+        ar: '$1$2r',
+      },
+    },
+    {
+      //awake
+      reg: /w(ake)$/i,
+      repl: {
+        pr: 'w$1s',
+        pa: 'woke',
+        gr: 'waking',
+        ar: 'w$1r',
+      },
+    },
+    {
+      //make
+      reg: /m(ake)$/i,
+      repl: {
+        pr: 'm$1s',
+        pa: 'made',
+        gr: 'making',
+        ar: 'm$1r',
+      },
+    },
+    {
+      reg: /(a[tg]|i[zn]|ur|nc|gl|is)e$/i,
+      repl: {
+        pr: '$1es',
+        pa: '$1ed',
+        gr: '$1ing',
+        // prt: '$1en',
+      },
+    },
+    {
+      reg: /([bd]l)e$/i,
+      repl: {
+        pr: '$1es',
+        pa: '$1ed',
+        gr: '$1ing',
+      },
+    },
+    {
+      reg: /(om)e$/i,
+      repl: {
+        pr: '$1es',
+        pa: 'ame',
+        gr: '$1ing',
+      },
+    },
+  ],
+
+  g: [
+    {
+      reg: /([^aeiou][aou])g$/i,
+      repl: {
+        pr: '$1gs',
+        pa: '$1gged',
+        gr: '$1gging',
+      },
+    },
+  ],
+  h: [
+    {
+      reg: /(..)([cs]h)$/i,
+      repl: {
+        pr: '$1$2es',
+        pa: '$1$2ed',
+        gr: '$1$2ing',
+      },
+    },
+  ],
+  k: [
+    {
+      reg: /(ink)$/i,
+      repl: {
+        pr: '$1s',
+        pa: 'unk',
+        gr: '$1ing',
+        ar: '$1er',
+      },
+    },
+  ],
+  m: [
+    {
+      reg: /([^aeiou][aeiou])m$/i,
+      repl: {
+        pr: '$1ms',
+        pa: '$1mmed',
+        gr: '$1mming',
+      },
+    },
+  ],
+
+  n: [
+    {
+      reg: /(en)$/i,
+      repl: {
+        pr: '$1s',
+        pa: '$1ed',
+        gr: '$1ing',
+      },
+    },
+  ],
+  p: [
+    {
+      reg: /(e)(ep)$/i,
+      repl: {
+        pr: '$1$2s',
+        pa: '$1pt',
+        gr: '$1$2ing',
+        ar: '$1$2er',
+      },
+    },
+    {
+      reg: /([^aeiou][aeiou])p$/i,
+      repl: {
+        pr: '$1ps',
+        pa: '$1pped',
+        gr: '$1pping',
+      },
+    },
+    {
+      reg: /([aeiu])p$/i,
+      repl: {
+        pr: '$1ps',
+        pa: '$1p',
+        gr: '$1pping',
+      },
+    },
+  ],
+
+  r: [
+    {
+      reg: /([td]er)$/i,
+      repl: {
+        pr: '$1s',
+        pa: '$1ed',
+        gr: '$1ing',
+      },
+    },
+    {
+      reg: /(er)$/i,
+      repl: {
+        pr: '$1s',
+        pa: '$1ed',
+        gr: '$1ing',
+      },
+    },
+  ],
+  s: [
+    {
+      reg: /(ish|tch|ess)$/i,
+      repl: {
+        pr: '$1es',
+        pa: '$1ed',
+        gr: '$1ing',
+      },
+    },
+  ],
+
+  t: [
+    {
+      reg: /(ion|end|e[nc]t)$/i,
+      repl: {
+        pr: '$1s',
+        pa: '$1ed',
+        gr: '$1ing',
+      },
+    },
+    {
+      reg: /(.eat)$/i,
+      repl: {
+        pr: '$1s',
+        pa: '$1ed',
+        gr: '$1ing',
+      },
+    },
+    {
+      reg: /([aeiu])t$/i,
+      repl: {
+        pr: '$1ts',
+        pa: '$1t',
+        gr: '$1tting',
+      },
+    },
+    {
+      reg: /([^aeiou][aeiou])t$/i,
+      repl: {
+        pr: '$1ts',
+        pa: '$1tted',
+        gr: '$1tting',
+      },
+    },
+  ],
+
+  w: [
+    {
+      reg: /(.llow)$/i, //follow, allow
+      repl: {
+        pr: '$1s',
+        pa: '$1ed',
+      },
+    },
+    {
+      reg: /(..)(ow)$/i, //grow
+      repl: {
+        pr: '$1$2s',
+        pa: '$1ew',
+        gr: '$1$2ing',
+        prt: '$1$2n',
+      },
+    },
+  ],
+  y: [
+    {
+      reg: /(i|f|rr)y$/i,
+      repl: {
+        pr: '$1ies',
+        pa: '$1ied',
+        gr: '$1ying',
+      },
+    },
+  ],
+
+  z: [
+    {
+      reg: /([aeiou]zz)$/i,
+      repl: {
+        pr: '$1es',
+        pa: '$1ed',
+        gr: '$1ing',
+      },
+    },
+  ],
+};
+
+var suffixes$1 = endsWith$1;
+
+const posMap = {
+  pr: 'PresentTense',
+  pa: 'PastTense',
+  gr: 'Gerund',
+  prt: 'Participle',
+  ar: 'Actor',
+};
+
+const doTransform = function (str, obj) {
+  let found = {};
+  let keys = Object.keys(obj.repl);
+  for (let i = 0; i < keys.length; i += 1) {
+    let pos = keys[i];
+    found[posMap[pos]] = str.replace(obj.reg, obj.repl[pos]);
+  }
+  return found
+};
+
+//look at the end of the word for clues
+const checkSuffix = function (str = '') {
+  let c = str[str.length - 1];
+  if (suffixes$1.hasOwnProperty(c) === true) {
+    for (let r = 0; r < suffixes$1[c].length; r += 1) {
+      const reg = suffixes$1[c][r].reg;
+      if (reg.test(str) === true) {
+        return doTransform(str, suffixes$1[c][r])
+      }
+    }
+  }
+  return {}
+};
+var _01Suffixes = checkSuffix;
+
+//non-specifc, 'hail-mary' transforms from infinitive, into other forms
+const hasY = /[bcdfghjklmnpqrstvwxz]y$/;
+
+const generic = {
+  Gerund: inf => {
+    if (inf.charAt(inf.length - 1) === 'e') {
+      return inf.replace(/e$/, 'ing')
+    }
+    return inf + 'ing'
+  },
+
+  PresentTense: inf => {
+    if (inf.charAt(inf.length - 1) === 's') {
+      return inf + 'es'
+    }
+    if (hasY.test(inf) === true) {
+      return inf.slice(0, -1) + 'ies'
+    }
+    return inf + 's'
+  },
+
+  PastTense: inf => {
+    if (inf.charAt(inf.length - 1) === 'e') {
+      return inf + 'd'
+    }
+    if (inf.substr(-2) === 'ed') {
+      return inf
+    }
+    if (hasY.test(inf) === true) {
+      return inf.slice(0, -1) + 'ied'
+    }
+    return inf + 'ed'
+  },
+};
+
+var _02Generic = generic;
+
+//we run this on every verb in the lexicon, so please keep it fast
+//we assume the input word is a proper infinitive
+const conjugate$2 = function (inf = '', world) {
+  let found = {};
+  // 1. look at irregulars
+  //the lexicon doesn't pass this in
+  if (world && world.irregulars) {
+    if (world.irregulars.verbs.hasOwnProperty(inf) === true) {
+      found = Object.assign({}, world.irregulars.verbs[inf]);
+    }
+  }
+  //2. rule-based regex
+  found = Object.assign({}, _01Suffixes(inf), found);
+
+  //3. generic transformations
+  //'buzzing'
+  if (found.Gerund === undefined) {
+    found.Gerund = _02Generic.Gerund(inf);
+  }
+  //'buzzed'
+  if (found.PastTense === undefined) {
+    found.PastTense = _02Generic.PastTense(inf);
+  }
+  //'buzzes'
+  if (found.PresentTense === undefined) {
+    found.PresentTense = _02Generic.PresentTense(inf);
+  }
+  return found
+};
+var conjugate_1$1 = conjugate$2;
+
+//turn 'quick' into 'quickest'
+const do_rules$1 = [/ght$/, /nge$/, /ough$/, /ain$/, /uel$/, /[au]ll$/, /ow$/, /oud$/, /...p$/];
+const dont_rules$1 = [/ary$/];
+
+const irregulars$5 = {
+  nice: 'nicest',
+  late: 'latest',
+  hard: 'hardest',
+  inner: 'innermost',
+  outer: 'outermost',
+  far: 'furthest',
+  worse: 'worst',
+  bad: 'worst',
+  good: 'best',
+  big: 'biggest',
+  large: 'largest',
+};
+
+const transforms$2 = [
+  {
+    reg: /y$/i,
+    repl: 'iest',
+  },
+  {
+    reg: /([aeiou])t$/i,
+    repl: '$1ttest',
+  },
+  {
+    reg: /([aeou])de$/i,
+    repl: '$1dest',
+  },
+  {
+    reg: /nge$/i,
+    repl: 'ngest',
+  },
+  {
+    reg: /([aeiou])te$/i,
+    repl: '$1test',
+  },
+];
+
+const to_superlative = function (str) {
+  //irregulars
+  if (irregulars$5.hasOwnProperty(str)) {
+    return irregulars$5[str]
+  }
+  //known transforms
+  for (let i = 0; i < transforms$2.length; i++) {
+    if (transforms$2[i].reg.test(str)) {
+      return str.replace(transforms$2[i].reg, transforms$2[i].repl)
+    }
+  }
+  //dont-rules
+  for (let i = 0; i < dont_rules$1.length; i++) {
+    if (dont_rules$1[i].test(str) === true) {
+      return null
+    }
+  }
+  //do-rules
+  for (let i = 0; i < do_rules$1.length; i++) {
+    if (do_rules$1[i].test(str) === true) {
+      if (str.charAt(str.length - 1) === 'e') {
+        return str + 'st'
+      }
+      return str + 'est'
+    }
+  }
+  return str + 'est'
+};
+
+var toSuperlative = to_superlative;
+
+//turn 'quick' into 'quickly'
+const do_rules = [/ght$/, /nge$/, /ough$/, /ain$/, /uel$/, /[au]ll$/, /ow$/, /old$/, /oud$/, /e[ae]p$/];
+const dont_rules = [/ary$/, /ous$/];
+
+const irregulars$4 = {
+  grey: 'greyer',
+  gray: 'grayer',
+  green: 'greener',
+  yellow: 'yellower',
+  red: 'redder',
+  good: 'better',
+  well: 'better',
+  bad: 'worse',
+  sad: 'sadder',
+  big: 'bigger',
+};
+
+const transforms$1 = [
+  {
+    reg: /y$/i,
+    repl: 'ier',
+  },
+  {
+    reg: /([aeiou])t$/i,
+    repl: '$1tter',
+  },
+  {
+    reg: /([aeou])de$/i,
+    repl: '$1der',
+  },
+  {
+    reg: /nge$/i,
+    repl: 'nger',
+  },
+];
+
+const to_comparative = function (str) {
+  //known-irregulars
+  if (irregulars$4.hasOwnProperty(str)) {
+    return irregulars$4[str]
+  }
+  //known-transforms
+  for (let i = 0; i < transforms$1.length; i++) {
+    if (transforms$1[i].reg.test(str) === true) {
+      return str.replace(transforms$1[i].reg, transforms$1[i].repl)
+    }
+  }
+  //dont-patterns
+  for (let i = 0; i < dont_rules.length; i++) {
+    if (dont_rules[i].test(str) === true) {
+      return null
+    }
+  }
+  //do-patterns
+  for (let i = 0; i < do_rules.length; i++) {
+    if (do_rules[i].test(str) === true) {
+      return str + 'er'
+    }
+  }
+  //easy-one
+  if (/e$/.test(str) === true) {
+    return str + 'r'
+  }
+  return str + 'er'
+};
+
+var toComparative = to_comparative;
+
+const fns = {
+  toSuperlative: toSuperlative,
+  toComparative: toComparative,
+};
+
+/** conjugate an adjective into other forms */
+const conjugate$1 = function (w) {
+  let res = {};
+  // 'greatest'
+  let sup = fns.toSuperlative(w);
+  if (sup) {
+    res.Superlative = sup;
+  }
+  // 'greater'
+  let comp = fns.toComparative(w);
+  if (comp) {
+    res.Comparative = comp;
+  }
+  return res
+};
+var adjectives$2 = conjugate$1;
+
+/** patterns for turning 'bus' to 'buses'*/
+const suffixes = {
+  a: [
+    [/(antenn|formul|nebul|vertebr|vit)a$/i, '$1ae'],
+    [/([ti])a$/i, '$1a'],
+  ],
+
+  e: [
+    [/(kn|l|w)ife$/i, '$1ives'],
+    [/(hive)$/i, '$1s'],
+    [/([m|l])ouse$/i, '$1ice'],
+    [/([m|l])ice$/i, '$1ice'],
+  ],
+
+  f: [
+    [/^(dwar|handkerchie|hoo|scar|whar)f$/i, '$1ves'],
+    [/^((?:ca|e|ha|(?:our|them|your)?se|she|wo)l|lea|loa|shea|thie)f$/i, '$1ves'],
+  ],
+
+  i: [[/(octop|vir)i$/i, '$1i']],
+
+  m: [[/([ti])um$/i, '$1a']],
+
+  n: [[/^(oxen)$/i, '$1']],
+
+  o: [[/(al|ad|at|er|et|ed|ad)o$/i, '$1oes']],
+
+  s: [
+    [/(ax|test)is$/i, '$1es'],
+    [/(alias|status)$/i, '$1es'],
+    [/sis$/i, 'ses'],
+    [/(bu)s$/i, '$1ses'],
+    [/(sis)$/i, 'ses'],
+    [/^(?!talis|.*hu)(.*)man$/i, '$1men'],
+    [/(octop|vir|radi|nucle|fung|cact|stimul)us$/i, '$1i'],
+  ],
+
+  x: [
+    [/(matr|vert|ind|cort)(ix|ex)$/i, '$1ices'],
+    [/^(ox)$/i, '$1en'],
+  ],
+
+  y: [[/([^aeiouy]|qu)y$/i, '$1ies']],
+
+  z: [[/(quiz)$/i, '$1zes']],
+};
+
+var _rules$2 = suffixes;
+
+const addE = /(x|ch|sh|s|z)$/;
+
+const trySuffix = function (str) {
+  let c = str[str.length - 1];
+  if (_rules$2.hasOwnProperty(c) === true) {
+    for (let i = 0; i < _rules$2[c].length; i += 1) {
+      let reg = _rules$2[c][i][0];
+      if (reg.test(str) === true) {
+        return str.replace(reg, _rules$2[c][i][1])
+      }
+    }
+  }
+  return null
+};
+
+/** Turn a singular noun into a plural
+ * assume the given string is singular
+ */
+const pluralize = function (str = '', world) {
+  let irregulars = world.irregulars.nouns;
+
+  // check irregulars list
+  if (irregulars.hasOwnProperty(str)) {
+    return irregulars[str]
+  }
+
+  //we have some rules to try-out
+  let plural = trySuffix(str);
+  if (plural !== null) {
+    return plural
+  }
+  //like 'church'
+  if (addE.test(str)) {
+    return str + 'es'
+  }
+  // ¯\_(ツ)_/¯
+  return str + 's'
+};
+var toPlural = pluralize;
+
+//patterns for turning 'dwarves' to 'dwarf'
+var _rules$1 = [
+  [/([^v])ies$/i, '$1y'],
+  [/ises$/i, 'isis'],
+  [/(kn|[^o]l|w)ives$/i, '$1ife'],
+  [/^((?:ca|e|ha|(?:our|them|your)?se|she|wo)l|lea|loa|shea|thie)ves$/i, '$1f'],
+  [/^(dwar|handkerchie|hoo|scar|whar)ves$/i, '$1f'],
+  [/(antenn|formul|nebul|vertebr|vit)ae$/i, '$1a'],
+  [/(octop|vir|radi|nucle|fung|cact|stimul)(i)$/i, '$1us'],
+  [/(buffal|tomat|tornad)(oes)$/i, '$1o'],
+  // [/(analy|diagno|parenthe|progno|synop|the)ses$/i, '$1sis'],
+  [/(eas)es$/i, '$1e'], //diseases
+  [/(..[aeiou]s)es$/i, '$1'], //geniouses
+  [/(vert|ind|cort)(ices)$/i, '$1ex'],
+  [/(matr|append)(ices)$/i, '$1ix'],
+  [/(x|ch|ss|sh|z|o)es$/i, '$1'],
+  [/men$/i, 'man'],
+  [/(n)ews$/i, '$1ews'],
+  [/([ti])a$/i, '$1um'],
+  [/([^aeiouy]|qu)ies$/i, '$1y'],
+  [/(s)eries$/i, '$1eries'],
+  [/(m)ovies$/i, '$1ovie'],
+  [/([m|l])ice$/i, '$1ouse'],
+  [/(cris|ax|test)es$/i, '$1is'],
+  [/(alias|status)es$/i, '$1'],
+  [/(ss)$/i, '$1'],
+  [/(ics)$/i, '$1'],
+  [/s$/i, ''],
+];
+
+const invertObj = function (obj) {
+  return Object.keys(obj).reduce((h, k) => {
+    h[obj[k]] = k;
+    return h
+  }, {})
+};
+
+const toSingular = function (str, world) {
+  let irregulars = world.irregulars.nouns;
+  let invert = invertObj(irregulars); //(not very efficient)
+
+  // check irregulars list
+  if (invert.hasOwnProperty(str)) {
+    return invert[str]
+  }
+
+  // go through our regexes
+  for (let i = 0; i < _rules$1.length; i++) {
+    if (_rules$1[i][0].test(str) === true) {
+      str = str.replace(_rules$1[i][0], _rules$1[i][1]);
+      return str
+    }
+  }
+  return str
+};
+var toSingular_1 = toSingular;
+
+//rules for turning a verb into infinitive form
+let rules = {
+  Participle: [
+    {
+      reg: /own$/i,
+      to: 'ow',
+    },
+    {
+      reg: /(.)un([g|k])$/i,
+      to: '$1in$2',
+    },
+  ],
+
+  Actor: [
+    {
+      reg: /(er)er$/i,
+      to: '$1',
+    },
+  ],
+
+  PresentTense: [
+    {
+      reg: /(..)(ies)$/i,
+      to: '$1y',
+    },
+    {
+      reg: /(tch|sh)es$/i,
+      to: '$1',
+    },
+    {
+      reg: /(ss|zz)es$/i,
+      to: '$1',
+    },
+    {
+      reg: /([tzlshicgrvdnkmu])es$/i,
+      to: '$1e',
+    },
+    {
+      reg: /(n[dtk]|c[kt]|[eo]n|i[nl]|er|a[ytrl])s$/i,
+      to: '$1',
+    },
+    {
+      reg: /(ow)s$/i,
+      to: '$1',
+    },
+    {
+      reg: /(op)s$/i,
+      to: '$1',
+    },
+    {
+      reg: /([eirs])ts$/i,
+      to: '$1t',
+    },
+    {
+      reg: /(ll)s$/i,
+      to: '$1',
+    },
+    {
+      reg: /(el)s$/i,
+      to: '$1',
+    },
+    {
+      reg: /(ip)es$/i,
+      to: '$1e',
+    },
+    {
+      reg: /ss$/i,
+      to: 'ss',
+    },
+    {
+      reg: /s$/i,
+      to: '',
+    },
+  ],
+
+  Gerund: [
+    {
+      //popping -> pop
+      reg: /(..)(p|d|t|g){2}ing$/i,
+      to: '$1$2',
+    },
+    {
+      //fuzzing -> fuzz
+      reg: /(ll|ss|zz)ing$/i,
+      to: '$1',
+    },
+    {
+      reg: /([^aeiou])ying$/i,
+      to: '$1y',
+    },
+    {
+      reg: /([^ae]i.)ing$/i,
+      to: '$1e',
+    },
+    {
+      //eating, reading
+      reg: /(ea[dklnrtv])ing$/i,
+      to: '$1',
+    },
+    {
+      //washing -> wash
+      reg: /(ch|sh)ing$/i,
+      to: '$1',
+    },
+    //soft-e forms:
+    {
+      //z : hazing (not buzzing)
+      reg: /(z)ing$/i,
+      to: '$1e',
+    },
+    {
+      //a : baking, undulating
+      reg: /(a[gdkvtc])ing$/i,
+      to: '$1e',
+    },
+    {
+      //u : conjuring, tubing
+      reg: /(u[rtcbn])ing$/i,
+      to: '$1e',
+    },
+    {
+      //o : forboding, poking, hoping, boring (not hooping)
+      reg: /([^o]o[bdknprv])ing$/i,
+      to: '$1e',
+    },
+    {
+      //ling : tingling, wrinkling, circling, scrambling, bustling
+      reg: /([tbckg]l)ing$/i, //dp
+      to: '$1e',
+    },
+    {
+      //cing : bouncing, denouncing
+      reg: /(c|s)ing$/i, //dp
+      to: '$1e',
+    },
+
+    // {
+    //   //soft-e :
+    //   reg: /([ua]s|[dr]g|z|o[rlsp]|cre)ing$/i,
+    //   to: '$1e',
+    // },
+    {
+      //fallback
+      reg: /(..)ing$/i,
+      to: '$1',
+    },
+  ],
+
+  PastTense: [
+    {
+      reg: /(ued)$/i,
+      to: 'ue',
+    },
+    {
+      reg: /ea(rn|l|m)ed$/i, //ea - earned, healed, sreamed
+      to: 'ea$1',
+    },
+    {
+      reg: /a([^aeiouy])ed$/i,
+      to: 'a$1e',
+    },
+    {
+      reg: /([aeiou]zz)ed$/i,
+      to: '$1',
+    },
+    {
+      reg: /(e|i)lled$/i,
+      to: '$1ll',
+    },
+    {
+      reg: /(.)(sh|ch)ed$/i,
+      to: '$1$2',
+    },
+    {
+      reg: /(tl|gl)ed$/i,
+      to: '$1e',
+    },
+    {
+      reg: /(um?pt?)ed$/i,
+      to: '$1',
+    },
+    {
+      reg: /(ss)ed$/i,
+      to: '$1',
+    },
+    {
+      reg: /pped$/i,
+      to: 'p',
+    },
+    {
+      reg: /tted$/i,
+      to: 't',
+    },
+    {
+      reg: /(..)gged$/i,
+      to: '$1g',
+    },
+    {
+      reg: /(..)lked$/i,
+      to: '$1lk',
+    },
+    {
+      reg: /([^aeiouy][aeiou])ked$/i,
+      to: '$1ke',
+    },
+    {
+      reg: /(.[aeiou])led$/i,
+      to: '$1l',
+    },
+    {
+      reg: /(..)(h|ion|n[dt]|ai.|[cs]t|pp|all|ss|tt|int|ail|ld|en|oo.|er|k|pp|w|ou.|rt|ght|rm)ed$/i,
+      to: '$1$2',
+    },
+    {
+      reg: /(.ut)ed$/i,
+      to: '$1e',
+    },
+    {
+      reg: /(.pt)ed$/i,
+      to: '$1',
+    },
+    {
+      reg: /(us)ed$/i,
+      to: '$1e',
+    },
+    {
+      reg: /(dd)ed$/i,
+      to: '$1',
+    },
+    {
+      reg: /(..[^aeiouy])ed$/i,
+      to: '$1e',
+    },
+    {
+      reg: /(..)ied$/i,
+      to: '$1y',
+    },
+    {
+      reg: /(.o)ed$/i,
+      to: '$1o',
+    },
+    {
+      reg: /(..i)ed$/i,
+      to: '$1',
+    },
+    {
+      reg: /(.a[^aeiou])ed$/i,
+      to: '$1',
+    },
+    {
+      //owed, aced
+      reg: /([aeiou][^aeiou])ed$/i,
+      to: '$1e',
+    },
+    {
+      reg: /([rl])ew$/i,
+      to: '$1ow',
+    },
+    {
+      reg: /([pl])t$/i,
+      to: '$1t',
+    },
+  ],
+};
+var _transform = rules;
+
+let guessVerb = {
+  Gerund: ['ing'],
+  Actor: ['erer'],
+  Infinitive: [
+    'ate',
+    'ize',
+    'tion',
+    'rify',
+    'then',
+    'ress',
+    'ify',
+    'age',
+    'nce',
+    'ect',
+    'ise',
+    'ine',
+    'ish',
+    'ace',
+    'ash',
+    'ure',
+    'tch',
+    'end',
+    'ack',
+    'and',
+    'ute',
+    'ade',
+    'ock',
+    'ite',
+    'ase',
+    'ose',
+    'use',
+    'ive',
+    'int',
+    'nge',
+    'lay',
+    'est',
+    'ain',
+    'ant',
+    'ent',
+    'eed',
+    'er',
+    'le',
+    'own',
+    'unk',
+    'ung',
+    'en',
+  ],
+  PastTense: ['ed', 'lt', 'nt', 'pt', 'ew', 'ld'],
+  PresentTense: [
+    'rks',
+    'cks',
+    'nks',
+    'ngs',
+    'mps',
+    'tes',
+    'zes',
+    'ers',
+    'les',
+    'acks',
+    'ends',
+    'ands',
+    'ocks',
+    'lays',
+    'eads',
+    'lls',
+    'els',
+    'ils',
+    'ows',
+    'nds',
+    'ays',
+    'ams',
+    'ars',
+    'ops',
+    'ffs',
+    'als',
+    'urs',
+    'lds',
+    'ews',
+    'ips',
+    'es',
+    'ts',
+    'ns',
+  ],
+};
+//flip it into a lookup object
+guessVerb = Object.keys(guessVerb).reduce((h, k) => {
+  guessVerb[k].forEach(a => (h[a] = k));
+  return h
+}, {});
+var _guess = guessVerb;
+
+/** it helps to know what we're conjugating from */
+const guessTense = function (str) {
+  let three = str.substr(str.length - 3);
+  if (_guess.hasOwnProperty(three) === true) {
+    return _guess[three]
+  }
+  let two = str.substr(str.length - 2);
+  if (_guess.hasOwnProperty(two) === true) {
+    return _guess[two]
+  }
+  let one = str.substr(str.length - 1);
+  if (one === 's') {
+    return 'PresentTense'
+  }
+  return null
+};
+
+const toInfinitive$1 = function (str, world, tense) {
+  if (!str) {
+    return ''
+  }
+  //1. look at known irregulars
+  if (world.words.hasOwnProperty(str) === true) {
+    let irregs = world.irregulars.verbs;
+    let keys = Object.keys(irregs);
+    for (let i = 0; i < keys.length; i++) {
+      let forms = Object.keys(irregs[keys[i]]);
+      for (let o = 0; o < forms.length; o++) {
+        if (str === irregs[keys[i]][forms[o]]) {
+          return keys[i]
+        }
+      }
+    }
+  }
+
+  // give'r!
+  tense = tense || guessTense(str);
+  if (tense && _transform[tense]) {
+    for (let i = 0; i < _transform[tense].length; i++) {
+      const rule = _transform[tense][i];
+      if (rule.reg.test(str) === true) {
+        // console.log(rule.reg)
+        return str.replace(rule.reg, rule.to)
+      }
+    }
+  }
+  return str
+};
+var toInfinitive_1$1 = toInfinitive$1;
+
+//these let users change inflection / verb conjugation
+const irregulars$3 = {
+  nouns: plurals,
+  verbs: conjugations_1,
+};
+
+//these behaviours are configurable & shared across some plugins
+const transforms = {
+  conjugate: conjugate_1$1,
+  adjectives: adjectives$2,
+  toPlural: toPlural,
+  toSingular: toSingular_1,
+  toInfinitive: toInfinitive_1$1,
+};
+
+let isVerbose = false;
+
+/** all configurable linguistic data */
+class World {
+  constructor() {
+    // quiet these properties from a console.log
+    Object.defineProperty(this, 'words', {
+      enumerable: false,
+      value: {},
+      writable: true,
+    });
+    Object.defineProperty(this, 'hasCompound', {
+      enumerable: false,
+      value: {},
+      writable: true,
+    });
+    Object.defineProperty(this, 'irregulars', {
+      enumerable: false,
+      value: irregulars$3,
+      writable: true,
+    });
+    Object.defineProperty(this, 'tags', {
+      enumerable: false,
+      value: Object.assign({}, tags),
+      writable: true,
+    });
+    Object.defineProperty(this, 'transforms', {
+      enumerable: false,
+      value: transforms,
+      writable: true,
+    });
+    Object.defineProperty(this, 'taggers', {
+      enumerable: false,
+      value: [],
+      writable: true,
+    });
+    // cache our abbreviations for our sentence-parser
+    Object.defineProperty(this, 'cache', {
+      enumerable: false,
+      value: {
+        abbreviations: {},
+      },
+    });
+
+    // add our compressed data to lexicon
+    this.words = unpack_1.buildOut(this);
+
+    // add our irregulars to lexicon
+    addIrregulars_1(this);
+  }
+
+  /** more logs for debugging */
+  verbose(bool) {
+    isVerbose = bool;
+    return this
+  }
+  isVerbose() {
+    return isVerbose
+  }
+
+  /** put new words into our lexicon, properly */
+  addWords(wordObj) {
+    // clean them up a bit
+    let cleaned = {};
+    Object.keys(wordObj).forEach(w => {
+      let tag = wordObj[w];
+      w = w.toLowerCase().trim();
+      cleaned[w] = tag;
+    });
+    unpack_1.addWords(cleaned, this.words, this);
+  }
+
+  /** add new custom conjugations */
+  addConjugations(obj) {
+    Object.assign(this.irregulars.verbs, obj);
+    return this
+  }
+  /** add new custom plural/singular pairs */
+  addPlurals(obj) {
+    Object.assign(this.irregulars.nouns, obj);
+    return this
+  }
+
+  /** extend the compromise tagset */
+  addTags(tags) {
+    tags = Object.assign({}, tags);
+    this.tags = Object.assign(this.tags, tags);
+    // calculate graph implications for the new tags
+    this.tags = inference(this.tags);
+    return this
+  }
+  /** call methods after tagger runs */
+  postProcess(fn) {
+    this.taggers.push(fn);
+    return this
+  }
+
+  /** helper method for logging + debugging */
+  stats() {
+    return {
+      words: Object.keys(this.words).length,
+      plurals: Object.keys(this.irregulars.nouns).length,
+      conjugations: Object.keys(this.irregulars.verbs).length,
+      compounds: Object.keys(this.hasCompound).length,
+      postProcessors: this.taggers.length,
+    }
+  }
+}
+
+//  ¯\_(:/)_/¯
+const clone = function (obj) {
+  return JSON.parse(JSON.stringify(obj))
+};
+
+/** produce a deep-copy of all lingustic data */
+World.prototype.clone = function () {
+  let w2 = new World();
+  // these are simple to copy:
+  w2.words = Object.assign({}, this.words);
+  w2.hasCompound = Object.assign({}, this.hasCompound);
+  //these ones are nested:
+  w2.irregulars = clone(this.irregulars);
+  w2.tags = clone(this.tags);
+  // these are functions
+  w2.transforms = this.transforms;
+  w2.taggers = this.taggers;
+  return w2
+};
+var World_1 = World;
+
+/** return the root, first document */
+
+var _01Utils = createCommonjsModule(function (module, exports) {
+exports.all = function () {
+  return this.parents()[0] || this
+};
+
+/** return the previous result */
+exports.parent = function () {
+  if (this.from) {
+    return this.from
+  }
+  return this
+};
+
+/**  return a list of all previous results */
+exports.parents = function (n) {
+  let arr = [];
+  const addParent = function (doc) {
+    if (doc.from) {
+      arr.push(doc.from);
+      addParent(doc.from);
+    }
+  };
+  addParent(this);
+  arr = arr.reverse();
+  if (typeof n === 'number') {
+    return arr[n]
+  }
+  return arr
+};
+
+/** deep-copy the document, so that no references remain */
+exports.clone = function (doShallow) {
+  let list = this.list.map(ts => ts.clone(doShallow));
+  let tmp = this.buildFrom(list);
+  return tmp
+};
+
+/** how many seperate terms does the document have? */
+exports.wordCount = function () {
+  return this.list.reduce((count, p) => {
+    count += p.wordCount();
+    return count
+  }, 0)
+};
+exports.wordcount = exports.wordCount;
+
+/** turn on logging for decision-debugging */
+// exports.verbose = function(bool) {
+//   if (bool === undefined) {
+//     bool = true
+//   }
+//   this.world.verbose = bool
+// }
+});
+
+/** use only the first result(s) */
+
+var _02Accessors = createCommonjsModule(function (module, exports) {
+exports.first = function (n) {
+  if (n === undefined) {
+    return this.get(0)
+  }
+  return this.slice(0, n)
+};
+
+/** use only the last result(s) */
+exports.last = function (n) {
+  if (n === undefined) {
+    return this.get(this.list.length - 1)
+  }
+  let end = this.list.length;
+  return this.slice(end - n, end)
+};
+
+/** grab a given subset of the results*/
+exports.slice = function (start, end) {
+  let list = this.list.slice(start, end);
+  return this.buildFrom(list)
+};
+
+/* grab nth result */
+exports.eq = function (n) {
+  let p = this.list[n];
+  if (p === undefined) {
+    return this.buildFrom([])
+  }
+  return this.buildFrom([p])
+};
+exports.get = exports.eq;
+
+/** grab term[0] for every match */
+exports.firstTerms = function () {
+  return this.match('^.')
+};
+exports.firstTerm = exports.firstTerms;
+
+/** grab the last term for every match  */
+exports.lastTerms = function () {
+  return this.match('.$')
+};
+exports.lastTerm = exports.lastTerms;
+
+/** return a flat array of term objects */
+exports.termList = function (num) {
+  let arr = [];
+  //'reduce' but faster
+  for (let i = 0; i < this.list.length; i++) {
+    let terms = this.list[i].terms();
+    for (let o = 0; o < terms.length; o++) {
+      arr.push(terms[o]);
+      //support .termList(4)
+      if (num !== undefined && arr[num] !== undefined) {
+        return arr[num]
+      }
+    }
+  }
+  return arr
+};
+
+/* grab named capture group terms as object */
+const getGroups = function (doc) {
+  let res = {};
+  const allGroups = {};
+  for (let i = 0; i < doc.list.length; i++) {
+    const phrase = doc.list[i];
+    const groups = Object.keys(phrase.groups).map(k => phrase.groups[k]);
+    for (let j = 0; j < groups.length; j++) {
+      const { group, start, length } = groups[j];
+
+      if (!allGroups[group]) {
+        allGroups[group] = [];
+      }
+      allGroups[group].push(phrase.buildFrom(start, length));
+    }
+  }
+  const keys = Object.keys(allGroups);
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i];
+    res[key] = doc.buildFrom(allGroups[key]);
+  }
+  return res
+};
+
+/** lookup a named-group, by its name */
+const getOneName = function (doc, name) {
+  const arr = [];
+  for (let i = 0; i < doc.list.length; i++) {
+    const phrase = doc.list[i];
+    let keys = Object.keys(phrase.groups);
+    keys = keys.filter(id => phrase.groups[id].group === name);
+    keys.forEach(id => {
+      arr.push(phrase.buildFrom(phrase.groups[id].start, phrase.groups[id].length));
+    });
+  }
+  return doc.buildFrom(arr)
+};
+
+/** grab named capture group results */
+exports.groups = function (target) {
+  if (target === undefined) {
+    return getGroups(this)
+  }
+  if (typeof target === 'number') {
+    target = String(target);
+  }
+  return getOneName(this, target) || this.buildFrom([])
+};
+exports.group = exports.groups;
+
+/** get the full-sentence each phrase belongs to */
+exports.sentences = function (n) {
+  let arr = [];
+  this.list.forEach(p => {
+    arr.push(p.fullSentence());
+  });
+  if (typeof n === 'number') {
+    return this.buildFrom([arr[n]])
+  }
+  return this.buildFrom(arr)
+};
+exports.sentence = exports.sentences;
+});
+
+// cache the easier conditions up-front
+const cacheRequired$1 = function (reg) {
+  let needTags = [];
+  let needWords = [];
+  reg.forEach(obj => {
+    if (obj.optional === true || obj.negative === true) {
+      return
+    }
+    if (obj.tag !== undefined) {
+      needTags.push(obj.tag);
+    }
+    if (obj.word !== undefined) {
+      needWords.push(obj.word);
+    }
+  });
+  return { tags: needTags, words: needWords }
+};
+
+// try to pre-fail as many matches as possible, without doing them
+const failFast = function (doc, regs) {
+  if (doc._cache && doc._cache.set === true) {
+    let { words, tags } = cacheRequired$1(regs);
+    //check required words
+    for (let i = 0; i < words.length; i++) {
+      if (doc._cache.words[words[i]] === undefined) {
+        return false
+      }
+    }
+    //check required tags
+    for (let i = 0; i < tags.length; i++) {
+      if (doc._cache.tags[tags[i]] === undefined) {
+        return false
+      }
+    }
+  }
+  return true
+};
+var _failFast = failFast;
+
+var _03Match = createCommonjsModule(function (module, exports) {
+/** return a new Doc, with this one as a parent */
+exports.match = function (reg, opts = {}) {
+  // support '0' shorthand for named-groups
+  if (typeof opts === 'string' || typeof opts === 'number' || opts === null) {
+    opts = {
+      group: opts,
+    };
+  }
+  //parse-up the input expression
+  let regs = matchSyntax(reg, opts);
+  if (regs.length === 0) {
+    return this.buildFrom([])
+  }
+  //check our cache, if it exists
+  if (_failFast(this, regs) === false) {
+    return this.buildFrom([])
+  }
+  //try expression on each phrase
+  let matches = this.list.reduce((arr, p) => {
+    return arr.concat(p.match(regs))
+  }, []);
+
+  // support returning named groups
+  if (opts.group !== undefined && opts.group !== null && opts.group !== '') {
+    return this.buildFrom(matches).groups(opts.group)
+  }
+  return this.buildFrom(matches)
+};
+
+/** return all results except for this */
+exports.not = function (reg, opts = {}) {
+  //parse-up the input expression
+  let regs = matchSyntax(reg, opts);
+  //if it's empty, return them all!
+  if (regs.length === 0 || _failFast(this, regs) === false) {
+    return this
+  }
+  //try expression on each phrase
+  let matches = this.list.reduce((arr, p) => {
+    return arr.concat(p.not(regs))
+  }, []);
+  return this.buildFrom(matches)
+};
+
+/** return only the first match */
+exports.matchOne = function (reg, opts = {}) {
+  let regs = matchSyntax(reg, opts);
+  //check our cache, if it exists
+  if (_failFast(this, regs) === false) {
+    return this.buildFrom([])
+  }
+  for (let i = 0; i < this.list.length; i++) {
+    let match = this.list[i].match(regs, true);
+    return this.buildFrom(match)
+  }
+  return this.buildFrom([])
+};
+
+/** return each current phrase, only if it contains this match */
+exports.if = function (reg, opts = {}) {
+  let regs = matchSyntax(reg, opts);
+  //consult our cache, if it exists
+  if (_failFast(this, regs) === false) {
+    return this.buildFrom([])
+  }
+  let found = this.list.filter(p => p.has(regs) === true);
+  return this.buildFrom(found)
+};
+
+/** Filter-out any current phrases that have this match*/
+exports.ifNo = function (reg, opts = {}) {
+  let regs = matchSyntax(reg, opts);
+  let found = this.list.filter(p => p.has(regs) === false);
+  return this.buildFrom(found)
+};
+
+/**Return a boolean if this match exists */
+exports.has = function (reg, opts = {}) {
+  let regs = matchSyntax(reg, opts);
+  //consult our cache, if it exists
+  if (_failFast(this, regs) === false) {
+    return false
+  }
+  return this.list.some(p => p.has(regs) === true)
+};
+
+/** match any terms after our matches, within the sentence */
+exports.lookAhead = function (reg, opts = {}) {
+  // find everything afterwards, by default
+  if (!reg) {
+    reg = '.*';
+  }
+  let regs = matchSyntax(reg, opts);
+  let matches = [];
+  this.list.forEach(p => {
+    matches = matches.concat(p.lookAhead(regs));
+  });
+  matches = matches.filter(p => p);
+  return this.buildFrom(matches)
+};
+exports.lookAfter = exports.lookAhead;
+
+/** match any terms before our matches, within the sentence */
+exports.lookBehind = function (reg, opts = {}) {
+  // find everything afterwards, by default
+  if (!reg) {
+    reg = '.*';
+  }
+  let regs = matchSyntax(reg, opts);
+  let matches = [];
+  this.list.forEach(p => {
+    matches = matches.concat(p.lookBehind(regs));
+  });
+  matches = matches.filter(p => p);
+  return this.buildFrom(matches)
+};
+exports.lookBefore = exports.lookBehind;
+
+/** return all terms before a match, in each phrase */
+exports.before = function (reg, opts = {}) {
+  let regs = matchSyntax(reg, opts);
+  //only the phrases we care about
+  let phrases = this.if(regs).list;
+  let befores = phrases.map(p => {
+    let ids = p.terms().map(t => t.id);
+    //run the search again
+    let m = p.match(regs)[0];
+    let index = ids.indexOf(m.start);
+    //nothing is before a first-term match
+    if (index === 0 || index === -1) {
+      return null
+    }
+    return p.buildFrom(p.start, index)
+  });
+  befores = befores.filter(p => p !== null);
+  return this.buildFrom(befores)
+};
+
+/** return all terms after a match, in each phrase */
+exports.after = function (reg, opts = {}) {
+  let regs = matchSyntax(reg, opts);
+  //only the phrases we care about
+  let phrases = this.if(regs).list;
+  let befores = phrases.map(p => {
+    let terms = p.terms();
+    let ids = terms.map(t => t.id);
+    //run the search again
+    let m = p.match(regs)[0];
+    let index = ids.indexOf(m.start);
+    //skip if nothing is after it
+    if (index === -1 || !terms[index + m.length]) {
+      return null
+    }
+    //create the new phrase, after our match.
+    let id = terms[index + m.length].id;
+    let len = p.length - index - m.length;
+    return p.buildFrom(id, len)
+  });
+  befores = befores.filter(p => p !== null);
+  return this.buildFrom(befores)
+};
+
+/** return only results with this match afterwards */
+exports.hasAfter = function (reg, opts = {}) {
+  return this.filter(doc => {
+    return doc.lookAfter(reg, opts).found
+  })
+};
+/** return only results with this match before it */
+exports.hasBefore = function (reg, opts = {}) {
+  return this.filter(doc => {
+    return doc.lookBefore(reg, opts).found
+  })
+};
+});
+
+/** apply a tag, or tags to all terms */
+const tagTerms = function (tag, doc, safe, reason) {
+  let tagList = [];
+  if (typeof tag === 'string') {
+    tagList = tag.split(' ');
+  }
+
+  // doc.parents()[0].reasons.push(reason)
+
+  //do indepenent tags for each term:
+  doc.list.forEach(p => {
+    let terms = p.terms();
+    // tagSafe - apply only to fitting terms
+    if (safe === true) {
+      terms = terms.filter(t => t.canBe(tag, doc.world));
+    }
+    terms.forEach((t, i) => {
+      //fancy version:
+      if (tagList.length > 1) {
+        if (tagList[i] && tagList[i] !== '.') {
+          t.tag(tagList[i], reason, doc.world);
+        }
+      } else {
+        //non-fancy version (same tag for all terms)
+        t.tag(tag, reason, doc.world);
+      }
+    });
+  });
+  return
+};
+var _setTag = tagTerms;
+
+/** Give all terms the given tag */
+var tag = function (tags, why) {
+  if (!tags) {
+    return this
+  }
+  _setTag(tags, this, false, why);
+  return this
+};
+
+/** Only apply tag to terms if it is consistent with current tags */
+var tagSafe = function (tags, why) {
+  if (!tags) {
+    return this
+  }
+  _setTag(tags, this, true, why);
+  return this
+};
+
+/** Remove this term from the given terms */
+var unTag = function (tags, why) {
+  this.list.forEach(p => {
+    p.terms().forEach(t => t.unTag(tags, why, this.world));
+  });
+  return this
+};
+
+/** return only the terms that can be this tag*/
+var canBe = function (tag) {
+  if (!tag) {
+    return this
+  }
+  let world = this.world;
+  let matches = this.list.reduce((arr, p) => {
+    return arr.concat(p.canBe(tag, world))
+  }, []);
+  return this.buildFrom(matches)
+};
+
+var _04Tag = {
+	tag: tag,
+	tagSafe: tagSafe,
+	unTag: unTag,
+	canBe: canBe
+};
+
+/* run each phrase through a function, and create a new document */
+var map = function (fn) {
+  if (!fn) {
+    return this
+  }
+  let list = this.list.map((p, i) => {
+    let doc = this.buildFrom([p]);
+    doc.from = null; //it's not a child/parent
+    let res = fn(doc, i);
+    // if its a doc, return one result
+    if (res && res.list && res.list[0]) {
+      return res.list[0]
+    }
+    return res
+  });
+  //remove nulls
+  list = list.filter(x => x);
+  // return an empty response
+  if (list.length === 0) {
+    return this.buildFrom(list)
+  }
+  // if it is not a list of Phrase objects, then don't try to make a Doc object
+  if (typeof list[0] !== 'object' || list[0].isA !== 'Phrase') {
+    return list
+  }
+  return this.buildFrom(list)
+};
+
+/** run a function on each phrase */
+var forEach = function (fn, detachParent) {
+  if (!fn) {
+    return this
+  }
+  this.list.forEach((p, i) => {
+    let sub = this.buildFrom([p]);
+    // if we're doing fancy insertions, we may want to skip updating the parent each time.
+    if (detachParent === true) {
+      sub.from = null; //
+    }
+    fn(sub, i);
+  });
+  return this
+};
+
+/** return only the phrases that return true */
+var filter = function (fn) {
+  if (!fn) {
+    return this
+  }
+  let list = this.list.filter((p, i) => {
+    let doc = this.buildFrom([p]);
+    doc.from = null; //it's not a child/parent
+    return fn(doc, i)
+  });
+  return this.buildFrom(list)
+};
+
+/** return a document with only the first phrase that matches */
+var find = function (fn) {
+  if (!fn) {
+    return this
+  }
+  let phrase = this.list.find((p, i) => {
+    let doc = this.buildFrom([p]);
+    doc.from = null; //it's not a child/parent
+    return fn(doc, i)
+  });
+  if (phrase) {
+    return this.buildFrom([phrase])
+  }
+  return undefined
+};
+
+/** return true or false if there is one matching phrase */
+var some = function (fn) {
+  if (!fn) {
+    return this
+  }
+  return this.list.some((p, i) => {
+    let doc = this.buildFrom([p]);
+    doc.from = null; //it's not a child/parent
+    return fn(doc, i)
+  })
+};
+
+/** sample a subset of the results */
+var random = function (n) {
+  if (!this.found) {
+    return this
+  }
+  let r = Math.floor(Math.random() * this.list.length);
+  if (n === undefined) {
+    let list = [this.list[r]];
+    return this.buildFrom(list)
+  }
+  //prevent it from going over the end
+  if (r + n > this.length) {
+    r = this.length - n;
+    r = r < 0 ? 0 : r;
+  }
+  return this.slice(r, r + n)
+};
+
+/** combine each phrase into a new data-structure */
+// exports.reduce = function(fn, h) {
+//   let list = this.list.reduce((_h, ts) => {
+//     let doc = this.buildFrom([ts])
+//     doc.from = null //it's not a child/parent
+//     return fn(_h, doc)
+//   }, h)
+//   return this.buildFrom(list)
+// }
+
+var _05Loops = {
+	map: map,
+	forEach: forEach,
+	filter: filter,
+	find: find,
+	some: some,
+	random: random
+};
+
+// const tokenize = require('../../01-tokenizer/02-words')
+const tokenize = function (str) {
+  return str.split(/[ -]/g)
+};
+// take a list of strings
+// look them up in the document
+const buildTree = function (termList, values = []) {
+  let root = {};
+  // parse our input
+  termList.forEach((str, i) => {
+    let val = true;
+    if (values[i] !== undefined) {
+      val = values[i];
+    }
+    // some rough normalization
+    str = (str || '').toLowerCase();
+    str = str.replace(/[,;.!?]+$/, '');
+    let arr = tokenize(str).map(s => s.trim());
+    root[arr[0]] = root[arr[0]] || {};
+    if (arr.length === 1) {
+      root[arr[0]].value = val;
+    } else {
+      root[arr[0]].more = root[arr[0]].more || [];
+      root[arr[0]].more.push({
+        rest: arr.slice(1),
+        value: val,
+      });
+    }
+  });
+  // sort by longest-first?
+  // console.log(JSON.stringify(root, null, 2))
+  return root
+};
+
+const fastLookup = function (termList, values, doc) {
+  let root = buildTree(termList, values);
+  let found = [];
+  // each phrase
+  for (let i = 0; i < doc.list.length; i++) {
+    const p = doc.list[i];
+    let terms = p.terms();
+
+    let words = terms.map(t => t.reduced);
+    // each word
+    for (let w = 0; w < words.length; w++) {
+      if (root[words[w]] !== undefined) {
+        // is it a multi-word match?
+        if (root[words[w]].more !== undefined) {
+          root[words[w]].more.forEach(more => {
+            // is it too-long?
+            if (words[w + more.rest.length] === undefined) {
+              return
+            }
+            // compare each subsequent term
+            let everyTerm = more.rest.every((word, r) => {
+              return word === words[w + r + 1]
+            });
+            if (everyTerm === true) {
+              found.push({ id: p.terms()[w].id, value: more.value, length: more.rest.length + 1 });
+            }
+          });
+        }
+        // is it a single-word match?
+        if (root[words[w]].value !== undefined) {
+          found.push({ id: p.terms()[w].id, value: root[words[w]].value, length: 1 });
+        }
+      }
+    }
+  }
+  return found
+};
+var _lookup = fastLookup;
+
+var _06Lookup = createCommonjsModule(function (module, exports) {
+// compare one term and one match
+// const doesMatch = function(term, str) {
+//   if (str === '') {
+//     return false
+//   }
+//   return term.reduced === str || term.implicit === str || term.root === str || term.text.toLowerCase() === str
+// }
+
+const isObject = function (obj) {
+  return obj && Object.prototype.toString.call(obj) === '[object Object]'
+};
+
+/** lookup an array of words or phrases */
+exports.lookup = function (arr) {
+  let values = [];
+  //is it a {key:val} object?
+  let isObj = isObject(arr);
+  if (isObj === true) {
+    arr = Object.keys(arr).map(k => {
+      values.push(arr[k]);
+      return k
+    });
+  }
+  // support .lookup('foo')
+  if (typeof arr === 'string') {
+    arr = [arr];
+  }
+
+  //make sure we go fast.
+  if (this._cache.set !== true) {
+    this.cache();
+  }
+
+  let found = _lookup(arr, values, this);
+  let p = this.list[0];
+  // make object response
+  if (isObj === true) {
+    let byVal = {};
+    found.forEach(o => {
+      byVal[o.value] = byVal[o.value] || [];
+      byVal[o.value].push(p.buildFrom(o.id, o.length));
+    });
+    Object.keys(byVal).forEach(k => {
+      byVal[k] = this.buildFrom(byVal[k]);
+    });
+    return byVal
+  }
+  // otherwise, make array response:
+  found = found.map(o => p.buildFrom(o.id, o.length));
+  return this.buildFrom(found)
+};
+exports.lookUp = exports.lookup;
+});
+
+/** freeze the current state of the document, for speed-purposes*/
+var cache = function (options) {
+  options = options || {};
+  let words = {};
+  let tags = {};
+  this._cache.words = words;
+  this._cache.tags = tags;
+  this._cache.set = true;
+  this.list.forEach((p, i) => {
+    p.cache = p.cache || {};
+    //p.terms get cached automatically
+    let terms = p.terms();
+    // cache all the terms
+    terms.forEach(t => {
+      if (words[t.reduced] && !words.hasOwnProperty(t.reduced)) {
+        return //skip prototype words
+      }
+      words[t.reduced] = words[t.reduced] || [];
+      words[t.reduced].push(i);
+      Object.keys(t.tags).forEach(tag => {
+        tags[tag] = tags[tag] || [];
+        tags[tag].push(i);
+      });
+      // cache root-form on Term, too
+      if (options.root) {
+        t.setRoot(this.world);
+        words[t.root] = [i];
+      }
+    });
+  });
+  return this
+};
+/** un-freezes the current state of the document, so it may be transformed */
+var uncache = function () {
+  this._cache = {};
+  this.list.forEach(p => {
+    p.cache = {};
+  });
+  // do parents too?
+  this.parents().forEach(doc => {
+    doc._cache = {};
+    doc.list.forEach(p => {
+      p.cache = {};
+    });
+  });
+  return this
+};
+
+var _07Cache = {
+	cache: cache,
+	uncache: uncache
+};
+
+const titleCase$1 = str => {
+  return str.charAt(0).toUpperCase() + str.substr(1)
+};
+
+/** substitute-in new content */
+var replaceWith = function (replace, options = {}) {
+  if (!replace) {
+    return this.delete()
+  }
+  //support old-style params
+  if (options === true) {
+    options = { keepTags: true };
+  }
+  if (options === false) {
+    options = { keepTags: false };
+  }
+  options = options || {};
+
+  // clear the cache
+  this.uncache();
+  // return this
+  this.list.forEach(p => {
+    let input = replace;
+    // accept a function for replace
+    if (typeof replace === 'function') {
+      input = replace(p);
+    }
+    let newPhrases;
+    // accept a Doc object to replace
+    if (input && typeof input === 'object' && input.isA === 'Doc') {
+      newPhrases = input.list;
+      this.pool().merge(input.pool());
+    } else if (typeof input === 'string') {
+      //input is a string
+      if (options.keepCase !== false && p.terms(0).isTitleCase()) {
+        input = titleCase$1(input);
+      }
+      newPhrases = _01Tokenizer(input, this.world, this.pool());
+      //tag the new phrases
+      let tmpDoc = this.buildFrom(newPhrases);
+      tmpDoc.tagger();
+      newPhrases = tmpDoc.list;
+    } else {
+      return //don't even bother
+    }
+
+    // try to keep its old tags, if appropriate
+    if (options.keepTags === true) {
+      let oldTags = p.json({ terms: { tags: true } }).terms;
+      newPhrases[0].terms().forEach((t, i) => {
+        if (oldTags[i]) {
+          t.tagSafe(oldTags[i].tags, 'keptTag', this.world);
+        }
+      });
+    }
+    p.replace(newPhrases[0], this); //Oneday: support multi-sentence replacements
+  });
+  return this
+};
+
+/** search and replace match with new content */
+var replace = function (match, replace, options) {
+  // if there's no 2nd param, use replaceWith
+  if (replace === undefined) {
+    return this.replaceWith(match, options)
+  }
+  this.match(match).replaceWith(replace, options);
+  return this
+};
+
+var _01Replace = {
+	replaceWith: replaceWith,
+	replace: replace
+};
+
+var _02Insert = createCommonjsModule(function (module, exports) {
+const isObject = function (obj) {
+  return obj && Object.prototype.toString.call(obj) === '[object Object]'
+};
+
+// if it's empty, just create the phrase
+const makeNew = function (str, doc) {
+  let phrase = _01Tokenizer(str, doc.world)[0]; //assume it's one sentence, for now
+  let tmpDoc = doc.buildFrom([phrase]);
+  tmpDoc.tagger();
+  doc.list = tmpDoc.list;
+  return doc
+};
+
+/** add these new terms to the end*/
+exports.append = function (str = '') {
+  if (!str) {
+    return this
+  }
+  // if it's empty, just create the phrase
+  if (!this.found) {
+    return makeNew(str, this)
+  }
+  // clear the cache
+  this.uncache();
+  //add it to end of every phrase
+  this.list.forEach(p => {
+    //build it
+    let phrase;
+    if (isObject(str) && str.isA === 'Doc') {
+      phrase = str.list[0].clone(); //use the first phrase
+    } else if (typeof str === 'string') {
+      phrase = _01Tokenizer(str, this.world, this.pool())[0]; //assume it's one sentence, for now
+    }
+    //tag it
+    let tmpDoc = this.buildFrom([phrase]);
+    tmpDoc.tagger();
+    // push it onto the end
+    p.append(phrase, this);
+  });
+  return this
+};
+exports.insertAfter = exports.append;
+exports.insertAt = exports.append;
+
+/** add these new terms to the front*/
+exports.prepend = function (str) {
+  if (!str) {
+    return this
+  }
+  // if it's empty, just create the phrase
+  if (!this.found) {
+    return makeNew(str, this)
+  }
+  // clear the cache
+  this.uncache();
+  //add it to start of every phrase
+  this.list.forEach(p => {
+    //build it
+    let phrase;
+    if (isObject(str) && str.isA === 'Doc') {
+      phrase = str.list[0].clone(); //use the first phrase
+    } else if (typeof str === 'string') {
+      phrase = _01Tokenizer(str, this.world, this.pool())[0]; //assume it's one sentence, for now
+    }
+    //tag it
+    let tmpDoc = this.buildFrom([phrase]);
+    tmpDoc.tagger();
+    // add it to the start
+    p.prepend(phrase, this);
+  });
+  return this
+};
+exports.insertBefore = exports.prepend;
+
+/** add these new things to the end*/
+exports.concat = function () {
+  // clear the cache
+  this.uncache();
+  let list = this.list.slice(0);
+  //repeat for any number of params
+  for (let i = 0; i < arguments.length; i++) {
+    let arg = arguments[i];
+    //support a fresh string
+    if (typeof arg === 'string') {
+      let arr = _01Tokenizer(arg, this.world);
+      //TODO: phrase.tagger()?
+      list = list.concat(arr);
+    } else if (arg.isA === 'Doc') {
+      list = list.concat(arg.list);
+    } else if (arg.isA === 'Phrase') {
+      list.push(arg);
+    }
+  }
+  return this.buildFrom(list)
+};
+
+/** fully remove these terms from the document */
+exports.delete = function (match) {
+  // clear the cache
+  this.uncache();
+  let toRemove = this;
+  if (match) {
+    toRemove = this.match(match);
+  }
+  toRemove.list.forEach(phrase => phrase.delete(this));
+  return this
+};
+// aliases
+exports.remove = exports.delete;
+});
+
+const shouldTrim = {
+  clean: true,
+  reduced: true,
+  root: true,
+};
+
+/** return the document as text */
+var text = function (options) {
+  options = options || {};
+  //are we showing every phrase?
+  let showFull = false;
+  if (this.parents().length === 0) {
+    showFull = true;
+  }
+  // cache roots, if necessary
+  if (options === 'root' || (typeof options === 'object' && options.root)) {
+    this.list.forEach(p => {
+      p.terms().forEach(t => {
+        if (t.root === null) {
+          t.setRoot(this.world);
+        }
+      });
+    });
+  }
+
+  let txt = this.list.reduce((str, p, i) => {
+    const trimPre = !showFull && i === 0;
+    const trimPost = !showFull && i === this.list.length - 1;
+    return str + p.text(options, trimPre, trimPost)
+  }, '');
+
+  // clumsy final trim of leading/trailing whitespace
+  if (shouldTrim[options] === true || options.reduced === true || options.clean === true || options.root === true) {
+    txt = txt.trim();
+  }
+  return txt
+};
+
+var _01Text = {
+	text: text
+};
+
+// get all character startings in doc
+const termOffsets = function (doc) {
+  let elapsed = 0;
+  let index = 0;
+  let offsets = {};
+  doc.termList().forEach(term => {
+    offsets[term.id] = {
+      index: index,
+      start: elapsed + term.pre.length,
+      length: term.text.length,
+    };
+    elapsed += term.pre.length + term.text.length + term.post.length;
+    index += 1;
+  });
+  return offsets
+};
+
+const calcOffset = function (doc, result, options) {
+  // calculate offsets for each term
+  let offsets = termOffsets(doc.all());
+  // add index values
+  if (options.terms.index || options.index) {
+    result.forEach(o => {
+      o.terms.forEach(t => {
+        t.index = offsets[t.id].index;
+      });
+      o.index = o.terms[0].index;
+    });
+  }
+  // add offset values
+  if (options.terms.offset || options.offset) {
+    result.forEach(o => {
+      o.terms.forEach(t => {
+        t.offset = offsets[t.id] || {};
+      });
+      // let len = o.terms.reduce((n, t, i) => {
+      //   n += t.offset.length || 0
+      //   //add whitespace, too
+      //   console.log(t.post)
+      //   return n
+      // }, 0)
+
+      // The offset information for the entire doc starts at (or just before)
+      // the first term, and is as long as the whole text.  The code originally
+      // copied the entire offset value from terms[0], but since we're now
+      // overriding 2 of the three fields, it's cleaner to just create an all-
+      // new object and not pretend it's "just" the same as terms[0].
+      o.offset = {
+        index: o.terms[0].offset.index,
+        start: o.terms[0].offset.start - o.text.indexOf(o.terms[0].text),
+        length: o.text.length,
+      };
+    });
+  }
+};
+var _offset = calcOffset;
+
+var _02Json = createCommonjsModule(function (module, exports) {
+const jsonDefaults = { text: true, terms: true, trim: true };
+
+//some options have dependents
+const setOptions = function (options) {
+  options = Object.assign({}, jsonDefaults, options);
+
+  if (options.unique) {
+    options.reduced = true;
+  }
+  //offset calculation requires these options to be on
+  if (options.offset) {
+    options.text = true;
+    if (!options.terms || options.terms === true) {
+      options.terms = {};
+    }
+    options.terms.offset = true;
+  }
+  if (options.index || options.terms.index) {
+    options.terms = options.terms === true ? {} : options.terms;
+    options.terms.id = true;
+  }
+  return options
+};
+
+/** pull out desired metadata from the document */
+exports.json = function (options = {}) {
+  //support json(3) format
+  if (typeof options === 'number' && this.list[options]) {
+    return this.list[options].json(jsonDefaults)
+  }
+
+  options = setOptions(options);
+
+  // cache root strings beforehand, if necessary
+  if (options.root === true) {
+    this.list.forEach(p => {
+      p.terms().forEach(t => {
+        if (t.root === null) {
+          t.setRoot(this.world);
+        }
+      });
+    });
+  }
+
+  let result = this.list.map(p => {
+    return p.json(options, this.world)
+  });
+  // add offset and index data for each term
+  if (options.terms.offset || options.offset || options.terms.index || options.index) {
+    _offset(this, result, options);
+  }
+  // add frequency #s
+  if (options.frequency || options.freq || options.count) {
+    let obj = {};
+    this.list.forEach(p => {
+      let str = p.text('reduced');
+      obj[str] = obj[str] || 0;
+      obj[str] += 1;
+    });
+    this.list.forEach((p, i) => {
+      result[i].count = obj[p.text('reduced')];
+    });
+  }
+  // remove duplicates
+  if (options.unique) {
+    let already = {};
+    result = result.filter(o => {
+      if (already[o.reduced] === true) {
+        return false
+      }
+      already[o.reduced] = true;
+      return true
+    });
+  }
+  return result
+};
+
+//aliases
+exports.data = exports.json;
+});
+
+var _debug = createCommonjsModule(function (module) {
+// https://stackoverflow.com/questions/9781218/how-to-change-node-jss-console-font-color
+const reset = '\x1b[0m';
+
+const padEnd = function (str, width) {
+  str = str.toString();
+  while (str.length < width) {
+    str += ' ';
+  }
+  return str
+};
+
+function isClientSide() {
+  return typeof window !== 'undefined' && window.document
+}
+
+// some nice colors for client-side debug
+const css = {
+  green: '#7f9c6c',
+  red: '#914045',
+  blue: '#6699cc',
+  magenta: '#6D5685',
+  cyan: '#2D85A8',
+  yellow: '#e6d7b3',
+  black: '#303b50',
+};
+
+const logClientSide = function (doc) {
+  let tagset = doc.world.tags;
+  doc.list.forEach(p => {
+    console.log('\n%c"' + p.text() + '"', 'color: #e6d7b3;');
+    let terms = p.terms();
+    terms.forEach(t => {
+      let tags = Object.keys(t.tags);
+      let text = t.text || '-';
+      if (t.implicit) {
+        text = '[' + t.implicit + ']';
+      }
+      let word = "'" + text + "'";
+      word = padEnd(word, 8);
+      let found = tags.find(tag => tagset[tag] && tagset[tag].color);
+      let color = 'steelblue';
+      if (tagset[found]) {
+        color = tagset[found].color;
+        color = css[color];
+      }
+      console.log(`   ${word}  -  %c${tags.join(', ')}`, `color: ${color || 'steelblue'};`);
+    });
+  });
+};
+
+//cheaper than requiring chalk
+const cli = {
+  green: function (str) {
+    return '\x1b[32m' + str + reset
+  },
+  red: function (str) {
+    return '\x1b[31m' + str + reset
+  },
+  blue: function (str) {
+    return '\x1b[34m' + str + reset
+  },
+  magenta: function (str) {
+    return '\x1b[35m' + str + reset
+  },
+  cyan: function (str) {
+    return '\x1b[36m' + str + reset
+  },
+  yellow: function (str) {
+    return '\x1b[33m' + str + reset
+  },
+  black: function (str) {
+    return '\x1b[30m' + str + reset
+  },
+};
+
+const tagString = function (tags, world) {
+  tags = tags.map(tag => {
+    if (!world.tags.hasOwnProperty(tag)) {
+      return tag
+    }
+    const c = world.tags[tag].color || 'blue';
+    return cli[c](tag)
+  });
+  return tags.join(', ')
+};
+
+//output some helpful stuff to the console
+const debug = function (doc) {
+  if (isClientSide()) {
+    logClientSide(doc);
+    return doc
+  }
+  console.log(cli.blue('====='));
+  doc.list.forEach(p => {
+    console.log(cli.blue('  -----'));
+    let terms = p.terms();
+    terms.forEach(t => {
+      let tags = Object.keys(t.tags);
+      let text = t.text || '-';
+      if (t.implicit) {
+        text = '[' + t.implicit + ']';
+      }
+      {
+        text = cli.yellow(text);
+      }
+      let word = "'" + text + "'";
+      word = padEnd(word, 18);
+      let str = cli.blue('  ｜ ') + word + '  - ' + tagString(tags, doc.world);
+      console.log(str);
+    });
+  });
+  console.log('');
+  return doc
+};
+module.exports = debug;
+});
+
+const topk = function (doc) {
+  let list = doc.json({ text: false, terms: false, reduced: true });
+  // combine them
+  let obj = {};
+  list.forEach(o => {
+    if (!obj[o.reduced]) {
+      o.count = 0;
+      obj[o.reduced] = o;
+    }
+    obj[o.reduced].count += 1;
+  });
+  let arr = Object.keys(obj).map(k => obj[k]);
+  // sort them
+  arr.sort((a, b) => {
+    if (a.count > b.count) {
+      return -1
+    } else if (a.count < b.count) {
+      return 1
+    }
+    return 0
+  });
+  return arr
+};
+var _topk = topk;
+
+/** pretty-print the current document and its tags */
+var debug_1 = function () {
+  _debug(this);
+  return this
+};
+
+/** some named output formats */
+var out = function (method) {
+  if (method === 'text') {
+    return this.text()
+  }
+  if (method === 'normal') {
+    return this.text('normal')
+  }
+  if (method === 'json') {
+    return this.json()
+  }
+  if (method === 'offset' || method === 'offsets') {
+    return this.json({ offset: true })
+  }
+  if (method === 'array') {
+    return this.json({ terms: false })
+      .map(obj => obj.text)
+      .filter(str => str)
+  }
+  if (method === 'freq' || method === 'frequency') {
+    return _topk(this)
+  }
+  if (method === 'terms') {
+    let list = [];
+    this.json({ text: false, terms: { text: true } }).forEach(obj => {
+      let terms = obj.terms.map(t => t.text);
+      terms = terms.filter(t => t);
+      list = list.concat(terms);
+    });
+    return list
+  }
+  if (method === 'tags') {
+    return this.list.map(p => {
+      return p.terms().reduce((h, t) => {
+        h[t.clean || t.implicit] = Object.keys(t.tags);
+        return h
+      }, {})
+    })
+  }
+  if (method === 'debug') {
+    _debug(this);
+    return this
+  }
+  return this.text()
+};
+
+var _03Out = {
+	debug: debug_1,
+	out: out
+};
+
+const methods$6 = {
+  /** alphabetical order */
+  alpha: (a, b) => {
+    let left = a.text('clean');
+    let right = b.text('clean');
+    if (left < right) {
+      return -1
+    }
+    if (left > right) {
+      return 1
+    }
+    return 0
+  },
+
+  /** count the # of characters of each match */
+  length: (a, b) => {
+    let left = a.text().trim().length;
+    let right = b.text().trim().length;
+    if (left < right) {
+      return 1
+    }
+    if (left > right) {
+      return -1
+    }
+    return 0
+  },
+
+  /** count the # of terms in each match */
+  wordCount: (a, b) => {
+    let left = a.wordCount();
+    let right = b.wordCount();
+    if (left < right) {
+      return 1
+    }
+    if (left > right) {
+      return -1
+    }
+    return 0
+  },
+};
+
+/** sort by # of duplicates in the document*/
+const byFreq = function (doc) {
+  let counts = {};
+  const options = {
+    case: true,
+    punctuation: false,
+    whitespace: true,
+    unicode: true,
+  };
+  doc.list.forEach(p => {
+    let str = p.text(options);
+    counts[str] = counts[str] || 0;
+    counts[str] += 1;
+  });
+  // sort by freq
+  doc.list.sort((a, b) => {
+    let left = counts[a.text(options)];
+    let right = counts[b.text(options)];
+    if (left < right) {
+      return 1
+    }
+    if (left > right) {
+      return -1
+    }
+    return 0
+  });
+  return doc
+};
+
+// order results 'chronologically', or document-order
+const sortSequential = function (doc) {
+  let order = {};
+  doc.json({ terms: { offset: true } }).forEach(o => {
+    order[o.terms[0].id] = o.terms[0].offset.start;
+  });
+  doc.list = doc.list.sort((a, b) => {
+    if (order[a.start] > order[b.start]) {
+      return 1
+    } else if (order[a.start] < order[b.start]) {
+      return -1
+    }
+    return 0
+  });
+  return doc
+};
+
+//aliases
+methods$6.alphabetical = methods$6.alpha;
+methods$6.wordcount = methods$6.wordCount;
+
+// aliases for sequential ordering
+const seqNames = {
+  index: true,
+  sequence: true,
+  seq: true,
+  sequential: true,
+  chron: true,
+  chronological: true,
+};
+
+/** re-arrange the order of the matches (in place) */
+var sort = function (input) {
+  input = input || 'alpha';
+  //do this one up-front
+  if (input === 'freq' || input === 'frequency' || input === 'topk') {
+    return byFreq(this)
+  }
+  if (seqNames.hasOwnProperty(input)) {
+    return sortSequential(this)
+  }
+
+  input = methods$6[input] || input;
+  // apply sort method on each phrase
+  if (typeof input === 'function') {
+    this.list = this.list.sort(input);
+    return this
+  }
+  return this
+};
+
+/** reverse the order of the matches, but not the words */
+var reverse = function () {
+  let list = [].concat(this.list);
+  list = list.reverse();
+  return this.buildFrom(list)
+};
+
+/** remove any duplicate matches */
+var unique$1 = function () {
+  let list = [].concat(this.list);
+  let obj = {};
+  list = list.filter(p => {
+    let str = p.text('reduced').trim() || p.text('implicit').trim();
+    if (obj.hasOwnProperty(str) === true) {
+      return false
+    }
+    obj[str] = true;
+    return true
+  });
+  return this.buildFrom(list)
+};
+
+var _01Sort = {
+	sort: sort,
+	reverse: reverse,
+	unique: unique$1
+};
+
+const isPunct = /[\[\]{}⟨⟩:,،、‒–—―…‹›«»‐\-;\/⁄·*\•^†‡°¡¿※№÷×ºª%‰=‱¶§~|‖¦©℗®℠™¤₳฿]/g;
+const quotes = /['‘’“”"′″‴]+/g;
+
+const methods$5 = {
+  // cleanup newlines and extra spaces
+  whitespace: function (doc) {
+    let termArr = doc.list.map(ts => ts.terms());
+    termArr.forEach((terms, o) => {
+      terms.forEach((t, i) => {
+        // keep dashes between words
+        if (t.hasDash() === true) {
+          t.post = ' - ';
+          return
+        }
+        // remove existing spaces
+        t.pre = t.pre.replace(/\s/g, '');
+        t.post = t.post.replace(/\s/g, '');
+        //last word? ensure there's a next sentence.
+        if (terms.length - 1 === i && !termArr[o + 1]) {
+          return
+        }
+        // no extra spaces for contractions
+        if (t.implicit && Boolean(t.text) === true) {
+          return
+        }
+        // no extra spaces for hyphenated words
+        if (t.hasHyphen() === true) {
+          return
+        }
+
+        t.post += ' ';
+      });
+    });
+  },
+
+  punctuation: function (termList) {
+    termList.forEach(t => {
+      // space between hyphenated words
+      if (t.hasHyphen() === true) {
+        t.post = ' ';
+      }
+      t.pre = t.pre.replace(isPunct, '');
+      t.post = t.post.replace(isPunct, '');
+      // elipses
+      t.post = t.post.replace(/\.\.\./, '');
+      // only allow one exclamation
+      if (/!/.test(t.post) === true) {
+        t.post = t.post.replace(/!/g, '');
+        t.post = '!' + t.post;
+      }
+      // only allow one question mark
+      if (/\?/.test(t.post) === true) {
+        t.post = t.post.replace(/[\?!]*/, '');
+        t.post = '?' + t.post;
+      }
+    });
+  },
+
+  unicode: function (termList) {
+    termList.forEach(t => {
+      if (t.isImplicit() === true) {
+        return
+      }
+      t.text = unicode_1(t.text);
+    });
+  },
+
+  quotations: function (termList) {
+    termList.forEach(t => {
+      t.post = t.post.replace(quotes, '');
+      t.pre = t.pre.replace(quotes, '');
+    });
+  },
+
+  adverbs: function (doc) {
+    doc.match('#Adverb').not('(not|nary|seldom|never|barely|almost|basically|so)').remove();
+  },
+
+  // remove the '.' from 'Mrs.' (safely)
+  abbreviations: function (doc) {
+    doc.list.forEach(ts => {
+      let terms = ts.terms();
+      terms.forEach((t, i) => {
+        if (t.tags.Abbreviation === true && terms[i + 1]) {
+          t.post = t.post.replace(/^\./, '');
+        }
+      });
+    });
+  },
+};
+var _methods = methods$5;
+
+const defaults = {
+  // light
+  whitespace: true,
+  unicode: true,
+  punctuation: true,
+  emoji: true,
+  acronyms: true,
+  abbreviations: true,
+
+  // medium
+  case: false,
+  contractions: false,
+  parentheses: false,
+  quotations: false,
+  adverbs: false,
+
+  // heavy (loose legibility)
+  possessives: false,
+  verbs: false,
+  nouns: false,
+  honorifics: false,
+
+  // pronouns: true,
+};
+const mapping = {
+  light: {},
+  medium: { case: true, contractions: true, parentheses: true, quotations: true, adverbs: true },
+};
+mapping.heavy = Object.assign({}, mapping.medium, { possessives: true, verbs: true, nouns: true, honorifics: true });
+
+/** common ways to clean-up the document, and reduce noise */
+var normalize = function (options) {
+  options = options || {};
+  // support named forms
+  if (typeof options === 'string') {
+    options = mapping[options] || {};
+  }
+  // set defaults
+  options = Object.assign({}, defaults, options);
+  // clear the cache
+  this.uncache();
+
+  let termList = this.termList();
+
+  // lowercase things
+  if (options.case) {
+    this.toLowerCase();
+  }
+
+  //whitespace
+  if (options.whitespace) {
+    _methods.whitespace(this);
+  }
+
+  // unicode: é -> e
+  if (options.unicode) {
+    _methods.unicode(termList);
+  }
+
+  //punctuation - keep sentence punctation, quotes, parenths
+  if (options.punctuation) {
+    _methods.punctuation(termList);
+  }
+
+  // remove ':)'
+  if (options.emoji) {
+    this.remove('(#Emoji|#Emoticon)');
+  }
+
+  // 'f.b.i.' -> 'FBI'
+  if (options.acronyms) {
+    this.acronyms().strip();
+    // .toUpperCase()
+  }
+  // remove period from abbreviations
+  if (options.abbreviations) {
+    _methods.abbreviations(this);
+  }
+
+  // --Medium methods--
+
+  // `isn't` -> 'is not'
+  if (options.contraction || options.contractions) {
+    this.contractions().expand();
+  }
+
+  // '(word)' -> 'word'
+  if (options.parentheses) {
+    this.parentheses().unwrap();
+  }
+  // remove "" punctuation
+  if (options.quotations || options.quotes) {
+    _methods.quotations(termList);
+  }
+
+  // remove any un-necessary adverbs
+  if (options.adverbs) {
+    _methods.adverbs(this);
+  }
+
+  // --Heavy methods--
+
+  // `cory hart's -> cory hart'
+  if (options.possessive || options.possessives) {
+    this.possessives().strip();
+  }
+  // 'he walked' -> 'he walk'
+  if (options.verbs) {
+    this.verbs().toInfinitive();
+  }
+  // 'three dogs' -> 'three dog'
+  if (options.nouns || options.plurals) {
+    this.nouns().toSingular();
+  }
+  // remove 'Mr.' from 'Mr John Smith'
+  if (options.honorifics) {
+    this.remove('#Honorific');
+  }
+
+  return this
+};
+
+var _02Normalize = {
+	normalize: normalize
+};
+
+var _03Split = createCommonjsModule(function (module, exports) {
+/** return a Document with three parts for every match
+ * seperate everything before the word, as a new phrase
+ */
+exports.splitOn = function (reg) {
+  // if there's no match, split parent, instead
+  if (!reg) {
+    let parent = this.parent();
+    return parent.splitOn(this)
+  }
+  //start looking for a match..
+  let regs = matchSyntax(reg);
+  let matches = [];
+  this.list.forEach(p => {
+    let foundEm = p.match(regs);
+    //no match here, add full sentence
+    if (foundEm.length === 0) {
+      matches.push(p);
+      return
+    }
+    // we found something here.
+    let carry = p;
+    foundEm.forEach(found => {
+      let parts = carry.splitOn(found);
+      // add em in
+      if (parts.before) {
+        matches.push(parts.before);
+      }
+      if (parts.match) {
+        matches.push(parts.match);
+      }
+      // start matching now on the end
+      carry = parts.after;
+    });
+    // add that last part
+    if (carry) {
+      matches.push(carry);
+    }
+  });
+  return this.buildFrom(matches)
+};
+
+/** return a Document with two parts for every match
+ * seperate everything after the word, as a new phrase
+ */
+exports.splitAfter = function (reg) {
+  // if there's no match, split parent, instead
+  if (!reg) {
+    let parent = this.parent();
+    return parent.splitAfter(this)
+  }
+  // start looking for our matches
+  let regs = matchSyntax(reg);
+  let matches = [];
+  this.list.forEach(p => {
+    let foundEm = p.match(regs);
+    //no match here, add full sentence
+    if (foundEm.length === 0) {
+      matches.push(p);
+      return
+    }
+    // we found something here.
+    let carry = p;
+    foundEm.forEach(found => {
+      let parts = carry.splitOn(found);
+      // add em in
+      if (parts.before && parts.match) {
+        // merge these two together
+        parts.before.length += parts.match.length;
+        matches.push(parts.before);
+      } else if (parts.match) {
+        matches.push(parts.match);
+      }
+      // start matching now on the end
+      carry = parts.after;
+    });
+    // add that last part
+    if (carry) {
+      matches.push(carry);
+    }
+  });
+  return this.buildFrom(matches)
+};
+exports.split = exports.splitAfter; //i guess?
+
+/** return a Document with two parts for every match */
+exports.splitBefore = function (reg) {
+  // if there's no match, split parent, instead
+  if (!reg) {
+    let parent = this.parent();
+    return parent.splitBefore(this)
+  }
+  //start looking for a match..
+  let regs = matchSyntax(reg);
+  let matches = [];
+  this.list.forEach(p => {
+    let foundEm = p.match(regs);
+    //no match here, add full sentence
+    if (foundEm.length === 0) {
+      matches.push(p);
+      return
+    }
+    // we found something here.
+    let carry = p;
+    foundEm.forEach(found => {
+      let parts = carry.splitOn(found);
+      // add before part in
+      if (parts.before) {
+        matches.push(parts.before);
+      }
+      // merge match+after
+      if (parts.match && parts.after) {
+        parts.match.length += parts.after.length;
+      }
+      // start matching now on the end
+      carry = parts.match;
+    });
+    // add that last part
+    if (carry) {
+      matches.push(carry);
+    }
+  });
+  return this.buildFrom(matches)
+};
+
+/** split a document into labeled sections */
+exports.segment = function (regs, options) {
+  regs = regs || {};
+  options = options || { text: true };
+  let doc = this;
+  let keys = Object.keys(regs);
+  // split em
+  keys.forEach(k => {
+    doc = doc.splitOn(k);
+  });
+  //add labels for each section
+  doc.list.forEach(p => {
+    for (let i = 0; i < keys.length; i += 1) {
+      if (p.has(keys[i])) {
+        p.segment = regs[keys[i]];
+        return
+      }
+    }
+  });
+  return doc.list.map(p => {
+    let res = p.json(options);
+    res.segment = p.segment || null;
+    return res
+  })
+};
+});
+
+const eachTerm = function (doc, fn) {
+  let world = doc.world;
+  doc.list.forEach(p => {
+    p.terms().forEach(t => t[fn](world));
+  });
+  return doc
+};
+
+/** turn every letter of every term to lower-cse */
+var toLowerCase = function () {
+  return eachTerm(this, 'toLowerCase')
+};
+
+/** turn every letter of every term to upper case */
+var toUpperCase = function () {
+  return eachTerm(this, 'toUpperCase')
+};
+
+/** upper-case the first letter of each term */
+var toTitleCase = function () {
+  return eachTerm(this, 'toTitleCase')
+};
+/** remove whitespace and title-case each term */
+var toCamelCase = function () {
+  this.list.forEach(p => {
+    //remove whitespace
+    let terms = p.terms();
+    terms.forEach((t, i) => {
+      if (i !== 0) {
+        t.toTitleCase();
+      }
+      if (i !== terms.length - 1) {
+        t.post = '';
+      }
+    });
+  });
+  // this.tag('#CamelCase', 'toCamelCase')
+  return this
+};
+
+var _04Case = {
+	toLowerCase: toLowerCase,
+	toUpperCase: toUpperCase,
+	toTitleCase: toTitleCase,
+	toCamelCase: toCamelCase
+};
+
+/** add this punctuation or whitespace before each match: */
+
+var _05Whitespace = createCommonjsModule(function (module, exports) {
+exports.pre = function (str, concat) {
+  if (str === undefined) {
+    return this.list[0].terms(0).pre
+  }
+  this.list.forEach(p => {
+    let term = p.terms(0);
+    if (concat === true) {
+      term.pre += str;
+    } else {
+      term.pre = str;
+    }
+  });
+  return this
+};
+
+/** add this punctuation or whitespace after each match: */
+exports.post = function (str, concat) {
+  // return array of post strings
+  if (str === undefined) {
+    return this.list.map(p => {
+      let terms = p.terms();
+      let term = terms[terms.length - 1];
+      return term.post
+    })
+  }
+  // set post string on all ends
+  this.list.forEach(p => {
+    let terms = p.terms();
+    let term = terms[terms.length - 1];
+    if (concat === true) {
+      term.post += str;
+    } else {
+      term.post = str;
+    }
+  });
+  return this
+};
+
+/** remove start and end whitespace */
+exports.trim = function () {
+  this.list = this.list.map(p => p.trim());
+  return this
+};
+
+/** connect words with hyphen, and remove whitespace */
+exports.hyphenate = function () {
+  this.list.forEach(p => {
+    let terms = p.terms();
+    //remove whitespace
+    terms.forEach((t, i) => {
+      if (i !== 0) {
+        t.pre = '';
+      }
+      if (terms[i + 1]) {
+        t.post = '-';
+      }
+    });
+  });
+  return this
+};
+
+/** remove hyphens between words, and set whitespace */
+exports.dehyphenate = function () {
+  const hasHyphen = /(-|–|—)/;
+  this.list.forEach(p => {
+    let terms = p.terms();
+    //remove whitespace
+    terms.forEach(t => {
+      if (hasHyphen.test(t.post)) {
+        t.post = ' ';
+      }
+    });
+  });
+  return this
+};
+exports.deHyphenate = exports.dehyphenate;
+
+/** add quotations around these matches */
+exports.toQuotations = function (start, end) {
+  start = start || `"`;
+  end = end || `"`;
+  this.list.forEach(p => {
+    let terms = p.terms();
+    terms[0].pre = start + terms[0].pre;
+    let last = terms[terms.length - 1];
+    last.post = end + last.post;
+  });
+  return this
+};
+exports.toQuotation = exports.toQuotations;
+
+/** add brackets around these matches */
+exports.toParentheses = function (start, end) {
+  start = start || `(`;
+  end = end || `)`;
+  this.list.forEach(p => {
+    let terms = p.terms();
+    terms[0].pre = start + terms[0].pre;
+    let last = terms[terms.length - 1];
+    last.post = end + last.post;
+  });
+  return this
+};
+});
+
+/** make all phrases into one phrase */
+var join = function (str) {
+  // clear the cache
+  this.uncache();
+  // make one large phrase - 'main'
+  let main = this.list[0];
+  let before = main.length;
+  let removed = {};
+  for (let i = 1; i < this.list.length; i++) {
+    const p = this.list[i];
+    removed[p.start] = true;
+    let term = main.lastTerm();
+    // add whitespace between them
+    if (str) {
+      term.post += str;
+    }
+    //  main -> p
+    term.next = p.start;
+    // main <- p
+    p.terms(0).prev = term.id;
+    main.length += p.length;
+    main.cache = {};
+  }
+
+  // parents are bigger than than their children.
+  // when we increase a child, we increase their parent too.
+  let increase = main.length - before;
+  this.parents().forEach(doc => {
+    // increase length on each effected phrase
+    doc.list.forEach(p => {
+      let terms = p.terms();
+      for (let i = 0; i < terms.length; i++) {
+        if (terms[i].id === main.start) {
+          p.length += increase;
+          break
+        }
+      }
+      p.cache = {};
+    });
+    // remove redundant phrases now
+    doc.list = doc.list.filter(p => removed[p.start] !== true);
+  });
+  // return one major phrase
+  return this.buildFrom([main])
+};
+
+var _06Join = {
+	join: join
+};
+
+const postPunct = /[,\)"';:\-–—\.…]/;
+// const irregulars = {
+//   'will not': `won't`,
+//   'i am': `i'm`,
+// }
+
+const setContraction = function (m, suffix) {
+  if (!m.found) {
+    return
+  }
+  let terms = m.termList();
+  //avoid any problematic punctuation
+  for (let i = 0; i < terms.length - 1; i++) {
+    const t = terms[i];
+    if (postPunct.test(t.post)) {
+      return
+    }
+  }
+
+  // set them as implict
+  terms.forEach(t => {
+    t.implicit = t.clean;
+  });
+  // perform the contraction
+  terms[0].text += suffix;
+  // clean-up the others
+  terms.slice(1).forEach(t => {
+    t.text = '';
+  });
+  for (let i = 0; i < terms.length - 1; i++) {
+    const t = terms[i];
+    t.post = t.post.replace(/ /, '');
+  }
+};
+
+/** turn 'i am' into i'm */
+var contract = function () {
+  let doc = this.not('@hasContraction');
+  // we are -> we're
+  let m = doc.match('(we|they|you) are');
+  setContraction(m, `'re`);
+  // they will -> they'll
+  m = doc.match('(he|she|they|it|we|you) will');
+  setContraction(m, `'ll`);
+  // she is -> she's
+  m = doc.match('(he|she|they|it|we) is');
+  setContraction(m, `'s`);
+  // spencer is -> spencer's
+  m = doc.match('#Person is');
+  setContraction(m, `'s`);
+  // spencer would -> spencer'd
+  m = doc.match('#Person would');
+  setContraction(m, `'d`);
+  // would not -> wouldn't
+  m = doc.match('(is|was|had|would|should|could|do|does|have|has|can) not');
+  setContraction(m, `n't`);
+  // i have -> i've
+  m = doc.match('(i|we|they) have');
+  setContraction(m, `'ve`);
+  // would have -> would've
+  m = doc.match('(would|should|could) have');
+  setContraction(m, `'ve`);
+  // i am -> i'm
+  m = doc.match('i am');
+  setContraction(m, `'m`);
+  // going to -> gonna
+  m = doc.match('going to');
+  return this
+};
+
+var _07Contract = {
+	contract: contract
+};
+
+var methods$4 = Object.assign(
+  {},
+  _01Utils,
+  _02Accessors,
+  _03Match,
+  _04Tag,
+  _05Loops,
+  _06Lookup,
+  _07Cache,
+
+  _01Replace,
+  _02Insert,
+
+  _01Text,
+  _02Json,
+  _03Out,
+
+  _01Sort,
+  _02Normalize,
+  _03Split,
+  _04Case,
+  _05Whitespace,
+  _06Join,
+  _07Contract
+);
+
+let methods$3 = {};
+
+// allow helper methods like .adjectives() and .adverbs()
+const arr = [
+  ['terms', '.'],
+  ['hyphenated', '@hasHyphen .'],
+  ['adjectives', '#Adjective'],
+  ['hashTags', '#HashTag'],
+  ['emails', '#Email'],
+  ['emoji', '#Emoji'],
+  ['emoticons', '#Emoticon'],
+  ['atMentions', '#AtMention'],
+  ['urls', '#Url'],
+  ['adverbs', '#Adverb'],
+  ['pronouns', '#Pronoun'],
+  ['conjunctions', '#Conjunction'],
+  ['prepositions', '#Preposition'],
+];
+arr.forEach(a => {
+  methods$3[a[0]] = function (n) {
+    let m = this.match(a[1]);
+    if (typeof n === 'number') {
+      m = m.get(n);
+    }
+    return m
+  };
+});
+// aliases
+methods$3.emojis = methods$3.emoji;
+methods$3.atmentions = methods$3.atMentions;
+methods$3.words = methods$3.terms;
+
+/** return anything tagged as a phone number */
+methods$3.phoneNumbers = function (n) {
+  let m = this.splitAfter('@hasComma');
+  m = m.match('#PhoneNumber+');
+  if (typeof n === 'number') {
+    m = m.get(n);
+  }
+  return m
+};
+
+/** Deprecated: please use compromise-numbers plugin */
+methods$3.money = function (n) {
+  let m = this.match('#Money #Currency?');
+  if (typeof n === 'number') {
+    m = m.get(n);
+  }
+  return m
+};
+
+/** return all cities, countries, addresses, and regions */
+methods$3.places = function (n) {
+  // don't split 'paris, france'
+  let keep = this.match('(#City && @hasComma) (#Region|#Country)');
+  // but split the other commas
+  let m = this.not(keep).splitAfter('@hasComma');
+  // combine them back together
+  m = m.concat(keep);
+  m.sort('index');
+  m = m.match('#Place+');
+  if (typeof n === 'number') {
+    m = m.get(n);
+  }
+  return m
+};
+
+/** return all schools, businesses and institutions */
+methods$3.organizations = function (n) {
+  let m = this.clauses();
+  m = m.match('#Organization+');
+  if (typeof n === 'number') {
+    m = m.get(n);
+  }
+  return m
+};
+
+//combine them with .topics() method
+methods$3.entities = function (n) {
+  let r = this.clauses();
+  // Find people, places, and organizations
+  let yup = r.people();
+  yup = yup.concat(r.places());
+  yup = yup.concat(r.organizations());
+  let ignore = ['someone', 'man', 'woman', 'mother', 'brother', 'sister', 'father'];
+  yup = yup.not(ignore);
+  //return them to normal ordering
+  yup.sort('sequence');
+  // yup.unique() //? not sure
+  if (typeof n === 'number') {
+    yup = yup.get(n);
+  }
+  return yup
+};
+//aliases
+methods$3.things = methods$3.entities;
+methods$3.topics = methods$3.entities;
+
+var _simple = methods$3;
+
+const underOver = /^(under|over)-?/;
+
+/** match a word-sequence, like 'super bowl' in the lexicon */
+const tryMultiple = function (terms, t, world) {
+  let lex = world.words;
+  //try a two-word version
+  let txt = terms[t].reduced + ' ' + terms[t + 1].reduced;
+  if (lex[txt] !== undefined && lex.hasOwnProperty(txt) === true) {
+    terms[t].tag(lex[txt], 'lexicon-two', world);
+    terms[t + 1].tag(lex[txt], 'lexicon-two', world);
+    return 1
+  }
+  //try a three-word version?
+  if (t + 2 < terms.length) {
+    txt += ' ' + terms[t + 2].reduced;
+    if (lex[txt] !== undefined && lex.hasOwnProperty(txt) === true) {
+      terms[t].tag(lex[txt], 'lexicon-three', world);
+      terms[t + 1].tag(lex[txt], 'lexicon-three', world);
+      terms[t + 2].tag(lex[txt], 'lexicon-three', world);
+      return 2
+    }
+  }
+  //try a four-word version?
+  if (t + 3 < terms.length) {
+    txt += ' ' + terms[t + 3].reduced;
+    if (lex[txt] !== undefined && lex.hasOwnProperty(txt) === true) {
+      terms[t].tag(lex[txt], 'lexicon-four', world);
+      terms[t + 1].tag(lex[txt], 'lexicon-four', world);
+      terms[t + 2].tag(lex[txt], 'lexicon-four', world);
+      terms[t + 3].tag(lex[txt], 'lexicon-four', world);
+      return 3
+    }
+  }
+  return 0
+};
+
+/** look at each word in our list of known-words */
+const checkLexicon = function (terms, world) {
+  let lex = world.words;
+  let hasCompound = world.hasCompound; // use reduced?
+  //go through each term, and check the lexicon
+  for (let t = 0; t < terms.length; t += 1) {
+    let str = terms[t].clean;
+    //is it the start of a compound word, like 'super bowl'?
+    if (hasCompound[str] === true && t + 1 < terms.length) {
+      let foundWords = tryMultiple(terms, t, world);
+      if (foundWords > 0) {
+        t += foundWords; //skip any already-found words
+        continue
+      }
+    }
+    //try one-word lexicon
+    if (lex[str] !== undefined && lex.hasOwnProperty(str) === true) {
+      terms[t].tag(lex[str], 'lexicon', world);
+      continue
+    }
+    // look at reduced version of term, too
+    if (str !== terms[t].reduced && lex.hasOwnProperty(terms[t].reduced) === true) {
+      terms[t].tag(lex[terms[t].reduced], 'lexicon', world);
+      continue
+    }
+    // prefix strip: try to match 'take' for 'undertake'
+    if (underOver.test(str) === true) {
+      let noPrefix = str.replace(underOver, '');
+      if (lex.hasOwnProperty(noPrefix) === true) {
+        terms[t].tag(lex[noPrefix], 'noprefix-lexicon', world);
+      }
+    }
+  }
+  return terms
+};
+var _01Lexicon = checkLexicon;
+
+const apostrophes = /[\'‘’‛‵′`´]$/;
+const perSec = /^(m|k|cm|km|m)\/(s|h|hr)$/; // '5 k/m'
+
+//
+const checkPunctuation = function (terms, i, world) {
+  let term = terms[i];
+
+  //check hyphenation
+  // if (term.post.indexOf('-') !== -1 && terms[i + 1] && terms[i + 1].pre === '') {
+  //   term.tag('Hyphenated', 'has-hyphen', world)
+  // }
+  // support 'head-over'
+  // if (term.hasHyphen() === true) {
+  //   console.log(term.tags)
+  // }
+  // console.log(term.hasHyphen(), term.text)
+
+  //an end-tick (trailing apostrophe) - flanders', or Carlos'
+  if (apostrophes.test(term.text)) {
+    if (!apostrophes.test(term.pre) && !apostrophes.test(term.post) && term.clean.length > 2) {
+      let endChar = term.clean[term.clean.length - 2];
+      //flanders'
+      if (endChar === 's') {
+        term.tag(['Possessive', 'Noun'], 'end-tick', world);
+        return
+      }
+      //chillin'
+      if (endChar === 'n') {
+        term.tag(['Gerund'], 'chillin', world);
+      }
+    }
+  }
+  // '5 km/s'
+  if (perSec.test(term.text)) {
+    term.tag('Unit', 'per-sec', world);
+  }
+
+  // 'NASA' is, but not 'i REALLY love it.'
+  // if (term.tags.Noun === true && isAcronym(term, world)) {
+  //   term.tag('Acronym', 'acronym-step', world)
+  //   term.tag('Noun', 'acronym-infer', world)
+  // } else if (!oneLetterWord.hasOwnProperty(term.text) && oneLetterAcronym.test(term.text)) {
+  //   term.tag('Acronym', 'one-letter-acronym', world)
+  //   term.tag('Noun', 'one-letter-infer', world)
+  // }
+};
+var _02Punctuation = checkPunctuation;
+
+//these are regexes applied to t.text, instead of t.clean
+// order matters.
+var startsWith = [
+  //web tags
+  [/^[\w\.]+@[\w\.]+\.[a-z]{2,3}$/, 'Email'], //not fancy
+  [/^#[a-z0-9_\u00C0-\u00FF]{2,}$/, 'HashTag'],
+  [/^@1?[0-9](am|pm)$/i, 'Time'], // @6pm
+  [/^@1?[0-9]:[0-9]{2}(am|pm)?$/i, 'Time'], // @6:30
+  [/^@\w{2,}$/, 'AtMention'], //@spencermountain
+  [/^(https?:\/\/|www\.)+\w+\.[a-z]{2,3}/, 'Url'], //with http/www
+  [/^[a-z0-9./].+\.(com|net|gov|org|ly|edu|info|biz|dev|ru|jp|de|in|uk|br|io|ai)/, 'Url'], //http://mostpopularwebsites.net/top-level-domain or Check for domains like .io/.ai/.dev
+
+  //dates/times
+  [/^'[0-9]{2}$/, 'Year'], //like '97
+  [/^[012]?[0-9](:[0-5][0-9])(:[0-5][0-9])$/, 'Time'], //4:32:32
+  [/^[012]?[0-9](:[0-5][0-9])?(:[0-5][0-9])? ?(am|pm)$/i, 'Time'], //4pm
+  [/^[012]?[0-9](:[0-5][0-9])(:[0-5][0-9])? ?(am|pm)?$/i, 'Time'], //4:00pm
+  [/^[PMCE]ST$/, 'Time'], //PST, time zone abbrevs
+  [/^utc ?[+-]?[0-9]+?$/, 'Time'], //UTC 8+
+  [/^[a-z0-9]*? o\'?clock$/, 'Time'], //3 oclock
+  [/^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}/i, 'Date'], // 2020-03-02T00:00:00.000Z
+  [/^[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,4}$/, 'Date'], // 03-02-89
+  [/^[0-9]{1,4}\/[0-9]{1,2}\/[0-9]{1,4}$/, 'Date'], // 03/02/89
+  [/^[0-9]{1,4}-[a-z]{2,9}-[0-9]{1,4}$/i, 'Date'], // 03-March-89
+
+  [/^gmt[+-][0-9][0-9]?$/i, 'Timezone'], // gmt-3
+  [/^utc[+-][0-9][0-9]?$/i, 'Timezone'], // utc-3
+
+  //names
+  [/^ma?c\'.*/, 'LastName'], //mc'adams
+  [/^o\'[drlkn].*/, 'LastName'], //o'douggan
+  [/^ma?cd[aeiou]/, 'LastName'], //macdonell - Last patterns https://en.wikipedia.org/wiki/List_of_family_name_affixes
+
+  //slang things
+  [/^(lol)+[sz]$/, 'Expression'], //lol
+  [/^woo+a*?h?$/, 'Expression'], //whoaa, wooo
+  [/^(un|de|re)\\-[a-z\u00C0-\u00FF]{2}/, 'Verb'],
+  // [/^(over|under)[a-z]{2,}/, 'Adjective'],
+  [/^[0-9]{1,4}\.[0-9]{1,2}\.[0-9]{1,4}$/, 'Date'], // 03-02-89
+
+  //phone numbers
+  [/^[0-9]{3}-[0-9]{4}$/, 'PhoneNumber'], //589-3809
+  [/^(\+?[0-9][ -])?[0-9]{3}[ -]?[0-9]{3}-[0-9]{4}$/, 'PhoneNumber'], //632-589-3809
+
+  //money
+  // currency regex
+  // /[\$\xA2-\xA5\u058F\u060B\u09F2\u09F3\u09FB\u0AF1\u0BF9\u0E3F\u17DB\u20A0-\u20BD\uA838\uFDFC\uFE69\uFF04\uFFE0\uFFE1\uFFE5\uFFE6]
+
+  //like $5.30
+  [
+    /^[-+]?[\$\xA2-\xA5\u058F\u060B\u09F2\u09F3\u09FB\u0AF1\u0BF9\u0E3F\u17DB\u20A0-\u20BD\uA838\uFDFC\uFE69\uFF04\uFFE0\uFFE1\uFFE5\uFFE6][-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?(k|m|b|bn)?\+?$/,
+    ['Money', 'Value'],
+  ],
+  //like 5.30$
+  [
+    /^[-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?[\$\xA2-\xA5\u058F\u060B\u09F2\u09F3\u09FB\u0AF1\u0BF9\u0E3F\u17DB\u20A0-\u20BD\uA838\uFDFC\uFE69\uFF04\uFFE0\uFFE1\uFFE5\uFFE6]\+?$/,
+    ['Money', 'Value'],
+  ],
+  //like $400usd
+  [/^[-+]?[\$£]?[0-9]([0-9,.])+?(usd|eur|jpy|gbp|cad|aud|chf|cny|hkd|nzd|kr|rub)$/i, ['Money', 'Value']],
+
+  //numbers
+  // 50 | -50 | 3.23  | 5,999.0  | 10+
+  [/^[-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?\+?$/, ['Cardinal', 'NumericValue']],
+  [/^[-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?(st|nd|rd|r?th)$/, ['Ordinal', 'NumericValue']],
+  // .73th
+  [/^\.[0-9]+\+?$/, ['Cardinal', 'NumericValue']],
+
+  //percent
+  [/^[-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?%\+?$/, ['Percent', 'Cardinal', 'NumericValue']], //7%  ..
+  [/^\.[0-9]+%$/, ['Percent', 'Cardinal', 'NumericValue']], //.7%  ..
+  //fraction
+  [/^[0-9]{1,4}\/[0-9]{1,4}(st|nd|rd|th)?s?$/, ['Fraction', 'NumericValue']], //3/2ths
+  //range
+  [/^[0-9.]{1,3}[a-z]{0,2}[-–—][0-9]{1,3}[a-z]{0,2}$/, ['Value', 'NumberRange']], //7th-8th
+  //time-range
+  [/^[0-9][0-9]?(:[0-9][0-9])?(am|pm)? ?[-–—] ?[0-9][0-9]?(:[0-9][0-9])?(am|pm)?$/, ['Time', 'NumberRange']], //7pm-8:30
+  //with unit
+  [/^[0-9.]+([a-z]{1,4})$/, 'Value'], //like 5tbsp
+  //ordinal
+  // [/^[0-9][0-9,.]*(st|nd|rd|r?th)$/, ['NumericValue', 'Ordinal']], //like 5th
+  // [/^[0-9]+(st|nd|rd|th)$/, 'Ordinal'], //like 5th
+];
+
+const romanNumeral = /^[IVXLCDM]{2,}$/;
+const romanNumValid = /^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/; //  https://stackoverflow.com/a/267405/168877
+
+//try each of the ^regexes in our list
+const checkRegex$1 = function (term, world) {
+  let str = term.text;
+  // do them all!
+  for (let r = 0; r < startsWith.length; r += 1) {
+    if (startsWith[r][0].test(str) === true) {
+      term.tagSafe(startsWith[r][1], 'prefix #' + r, world);
+      break
+    }
+  }
+  // do some more!
+  //roman numberals - XVII
+  if (term.text.length >= 2 && romanNumeral.test(str) && romanNumValid.test(str)) {
+    term.tag('RomanNumeral', 'xvii', world);
+  }
+};
+var _03Prefixes = checkRegex$1;
+
+//regex suffix patterns and their most common parts of speech,
+//built using wordnet, by spencer kelly.
+//this mapping shrinks-down the uglified build
+const Adj$1 = 'Adjective';
+const Inf$1 = 'Infinitive';
+const Pres$1 = 'PresentTense';
+const Sing$1 = 'Singular';
+const Past$1 = 'PastTense';
+const Adverb = 'Adverb';
+const Exp = 'Expression';
+const Actor$1 = 'Actor';
+const Verb = 'Verb';
+const Noun$1 = 'Noun';
+const Last$1 = 'LastName';
+//the order here matters.
+
+//regexes indexed by mandated last-character
+var endsWith = {
+  a: [
+    [/.[aeiou]na$/, Noun$1],
+    [/.[oau][wvl]ska$/, Last$1], //polish (female)
+    [/.[^aeiou]ica$/, Sing$1],
+    [/^([hyj]a)+$/, Exp], //hahah
+  ],
+  c: [[/.[^aeiou]ic$/, Adj$1]],
+  d: [
+    //==-ed==
+    //double-consonant
+    [/[aeiou](pp|ll|ss|ff|gg|tt|rr|bb|nn|mm)ed$/, Past$1], //popped, planned
+    //double-vowel
+    [/.[aeo]{2}[bdgmnprvz]ed$/, Past$1], //beeped, mooned, veered
+    //-hed
+    [/.[aeiou][sg]hed$/, Past$1], //stashed, sighed
+    //-rd
+    [/.[aeiou]red$/, Past$1], //stored
+    [/.[aeiou]r?ried$/, Past$1], //buried
+    //-led
+    [/.[bcdgtr]led$/, Past$1], //startled, rumbled
+    [/.[aoui]f?led$/, Past$1], //impaled, stifled
+    //-sed
+    [/.[iao]sed$/, Past$1], //franchised
+    [/[aeiou]n?[cs]ed$/, Past$1], //laced, lanced
+    //-med
+    [/[aeiou][rl]?[mnf]ed$/, Past$1], //warmed, attained, engulfed
+    //-ked
+    [/[aeiou][ns]?c?ked$/, Past$1], //hooked, masked
+    //-ged
+    [/[aeiou][nl]?ged$/, Past$1], //engaged
+    //-ted
+    [/.[tdbwxz]ed$/, Past$1], //bribed, boxed
+    [/[^aeiou][aeiou][tvx]ed$/, Past$1], //boxed
+    //-ied
+    [/.[cdlmnprstv]ied$/, Past$1], //rallied
+
+    [/[^aeiou]ard$/, Sing$1], //card
+    [/[aeiou][^aeiou]id$/, Adj$1],
+    [/.[vrl]id$/, Adj$1],
+  ],
+  e: [
+    [/.[lnr]ize$/, Inf$1],
+    [/.[^aeiou]ise$/, Inf$1],
+    [/.[aeiou]te$/, Inf$1],
+    [/.[^aeiou][ai]ble$/, Adj$1],
+    [/.[^aeiou]eable$/, Adj$1],
+    [/.[ts]ive$/, Adj$1],
+    [/[a-z]-like$/, Adj$1],
+  ],
+  h: [
+    [/.[^aeiouf]ish$/, Adj$1],
+    [/.v[iy]ch$/, Last$1], //east-europe
+    [/^ug?h+$/, Exp], //uhh
+    [/^uh[ -]?oh$/, Exp], //uhoh
+    [/[a-z]-ish$/, Adj$1], //cartoon-ish
+  ],
+  i: [
+    [/.[oau][wvl]ski$/, Last$1], //polish (male)
+  ],
+  k: [
+    [/^(k){2}$/, Exp], //kkkk
+  ],
+  l: [
+    [/.[gl]ial$/, Adj$1],
+    [/.[^aeiou]ful$/, Adj$1],
+    [/.[nrtumcd]al$/, Adj$1],
+    [/.[^aeiou][ei]al$/, Adj$1],
+  ],
+  m: [
+    [/.[^aeiou]ium$/, Sing$1],
+    [/[^aeiou]ism$/, Sing$1],
+    [/^h*u*m+$/, Exp], //mmmmmmm / ummmm / huuuuuummmmmm
+    [/^\d+ ?[ap]m$/, 'Date'],
+  ],
+  n: [
+    [/.[lsrnpb]ian$/, Adj$1],
+    [/[^aeiou]ician$/, Actor$1],
+    [/[aeiou][ktrp]in$/, 'Gerund'], // 'cookin', 'hootin'
+  ],
+  o: [
+    [/^no+$/, Exp], //noooo
+    [/^(yo)+$/, Exp], //yoyo
+    [/^woo+[pt]?$/, Exp], //woo
+  ],
+  r: [
+    [/.[bdfklmst]ler$/, 'Noun'],
+    [/[aeiou][pns]er$/, Sing$1],
+    [/[^i]fer$/, Inf$1],
+    [/.[^aeiou][ao]pher$/, Actor$1],
+    [/.[lk]er$/, 'Noun'],
+    [/.ier$/, 'Comparative'],
+  ],
+  t: [
+    [/.[di]est$/, 'Superlative'],
+    [/.[icldtgrv]ent$/, Adj$1],
+    [/[aeiou].*ist$/, Adj$1],
+    [/^[a-z]et$/, Verb],
+  ],
+  s: [
+    [/.[^aeiou]ises$/, Pres$1],
+    [/.[rln]ates$/, Pres$1],
+    [/.[^z]ens$/, Verb],
+    [/.[lstrn]us$/, Sing$1],
+    [/.[aeiou]sks$/, Pres$1], //masks
+    [/.[aeiou]kes$/, Pres$1], //bakes
+    [/[aeiou][^aeiou]is$/, Sing$1],
+    [/[a-z]\'s$/, Noun$1],
+    [/^yes+$/, Exp], //yessss
+  ],
+  v: [
+    [/.[^aeiou][ai][kln]ov$/, Last$1], //east-europe
+  ],
+  y: [
+    [/.[cts]hy$/, Adj$1],
+    [/.[st]ty$/, Adj$1],
+    [/.[gk]y$/, Adj$1],
+    [/.[tnl]ary$/, Adj$1],
+    [/.[oe]ry$/, Sing$1],
+    [/[rdntkbhs]ly$/, Adverb],
+    [/...lly$/, Adverb],
+    [/[bszmp]{2}y$/, Adj$1],
+    [/.(gg|bb|zz)ly$/, Adj$1],
+    [/.[ai]my$/, Adj$1],
+    [/[ea]{2}zy$/, Adj$1],
+    [/.[^aeiou]ity$/, Sing$1],
+  ],
+};
+
+//just a foolish lookup of known suffixes
+const Adj = 'Adjective';
+const Inf = 'Infinitive';
+const Pres = 'PresentTense';
+const Sing = 'Singular';
+const Past = 'PastTense';
+const Avb = 'Adverb';
+const Plrl = 'Plural';
+const Actor = 'Actor';
+const Vb = 'Verb';
+const Noun = 'Noun';
+const Last = 'LastName';
+const Modal = 'Modal';
+const Place = 'Place';
+
+// find any issues - https://observablehq.com/@spencermountain/suffix-word-lookup
+var suffixMap = [
+  null, //0
+  null, //1
+  {
+    //2-letter
+    ea: Sing,
+    ia: Noun,
+    ic: Adj,
+    ly: Avb,
+    "'n": Vb,
+    "'t": Vb,
+  },
+  {
+    //3-letter
+    oed: Past,
+    ued: Past,
+    xed: Past,
+    ' so': Avb,
+    "'ll": Modal,
+    "'re": 'Copula',
+    azy: Adj,
+    eer: Noun,
+    end: Vb,
+    ped: Past,
+    ffy: Adj,
+    ify: Inf,
+    ing: 'Gerund', //likely to be converted to Adj after lexicon pass
+    ize: Inf,
+    lar: Adj,
+    mum: Adj,
+    nes: Pres,
+    nny: Adj,
+    oid: Adj,
+    ous: Adj,
+    que: Adj,
+    rol: Sing,
+    sis: Sing,
+    zes: Pres,
+  },
+  {
+    //4-letter
+    amed: Past,
+    aped: Past,
+    ched: Past,
+    lked: Past,
+    nded: Past,
+    cted: Past,
+    dged: Past,
+
+    akis: Last, //greek
+    cede: Inf,
+    chuk: Last, //east-europe
+    czyk: Last, //polish (male)
+    ects: Pres,
+    ends: Vb,
+    enko: Last, //east-europe
+    ette: Sing,
+    fies: Pres,
+    fore: Avb,
+    gate: Inf,
+    gone: Adj,
+    ices: Plrl,
+    ints: Plrl,
+    ines: Plrl,
+    ions: Plrl,
+    less: Avb,
+    llen: Adj,
+    made: Adj,
+    nsen: Last, //norway
+    oses: Pres,
+    ould: Modal,
+    some: Adj,
+    sson: Last, //swedish male
+    tage: Inf,
+    teen: 'Value',
+    tion: Sing,
+    tive: Adj,
+    tors: Noun,
+    vice: Sing,
+  },
+  {
+    //5-letter
+    tized: Past,
+    urned: Past,
+    eased: Past,
+
+    ances: Plrl,
+    bound: Adj,
+    ettes: Plrl,
+    fully: Avb,
+    ishes: Pres,
+    ities: Plrl,
+    marek: Last, //polish (male)
+    nssen: Last, //norway
+    ology: Noun,
+    ports: Plrl,
+    rough: Adj,
+    tches: Pres,
+    tieth: 'Ordinal',
+    tures: Plrl,
+    wards: Avb,
+    where: Avb,
+  },
+  {
+    //6-letter
+    auskas: Last, //lithuania
+    keeper: Actor,
+    logist: Actor,
+    teenth: 'Value',
+  },
+  {
+    //7-letter
+    opoulos: Last, //greek
+    borough: Place, //Hillsborough
+    sdottir: Last, //swedish female
+  },
+];
+
+const endRegexs = function (term, world) {
+  let str = term.clean;
+  let char = str[str.length - 1];
+  if (endsWith.hasOwnProperty(char) === true) {
+    let regs = endsWith[char];
+    for (let r = 0; r < regs.length; r += 1) {
+      if (regs[r][0].test(str) === true) {
+        term.tagSafe(regs[r][1], `endReg ${char} #${r}`, world);
+        break
+      }
+    }
+  }
+};
+
+//sweep-through all suffixes
+const knownSuffixes = function (term, world) {
+  const len = term.clean.length;
+  let max = 7;
+  if (len <= max) {
+    max = len - 1;
+  }
+  for (let i = max; i > 1; i -= 1) {
+    let str = term.clean.substr(len - i, len);
+    if (suffixMap[str.length].hasOwnProperty(str) === true) {
+      let tag = suffixMap[str.length][str];
+      term.tagSafe(tag, 'suffix -' + str, world);
+      break
+    }
+  }
+};
+
+//all-the-way-down!
+const checkRegex = function (term, world) {
+  knownSuffixes(term, world);
+  endRegexs(term, world);
+};
+var _04Suffixes = checkRegex;
+
+//just some of the most common emoticons
+//faster than
+//http://stackoverflow.com/questions/28077049/regex-matching-emoticons
+var emoticons = {
+  ':(': true,
+  ':)': true,
+  ':P': true,
+  ':p': true,
+  ':O': true,
+  ':3': true,
+  ':|': true,
+  ':/': true,
+  ':\\': true,
+  ':$': true,
+  ':*': true,
+  ':@': true,
+  ':-(': true,
+  ':-)': true,
+  ':-P': true,
+  ':-p': true,
+  ':-O': true,
+  ':-3': true,
+  ':-|': true,
+  ':-/': true,
+  ':-\\': true,
+  ':-$': true,
+  ':-*': true,
+  ':-@': true,
+  ':^(': true,
+  ':^)': true,
+  ':^P': true,
+  ':^p': true,
+  ':^O': true,
+  ':^3': true,
+  ':^|': true,
+  ':^/': true,
+  ':^\\': true,
+  ':^$': true,
+  ':^*': true,
+  ':^@': true,
+  '):': true,
+  '(:': true,
+  '$:': true,
+  '*:': true,
+  ')-:': true,
+  '(-:': true,
+  '$-:': true,
+  '*-:': true,
+  ')^:': true,
+  '(^:': true,
+  '$^:': true,
+  '*^:': true,
+  '<3': true,
+  '</3': true,
+  '<\\3': true,
+};
+
+//from https://www.regextester.com/106421
+const emojiReg = /^(\u00a9|\u00ae|[\u2319-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/;
+
+//for us, there's three types -
+// * ;) - emoticons
+// * 🌵 - unicode emoji
+// * :smiling_face: - asci-represented emoji
+
+//test for forms like ':woman_tone2:‍:ear_of_rice:'
+//https://github.com/Kikobeats/emojis-keywords/blob/master/index.js
+const isCommaEmoji = raw => {
+  if (raw.charAt(0) === ':') {
+    //end comma can be last or second-last ':haircut_tone3:‍♀️'
+    if (raw.match(/:.?$/) === null) {
+      return false
+    }
+    //ensure no spaces
+    if (raw.match(' ')) {
+      return false
+    }
+    //reasonably sized
+    if (raw.length > 35) {
+      return false
+    }
+    return true
+  }
+  return false
+};
+
+//check against emoticon whitelist
+const isEmoticon = str => {
+  str = str.replace(/^[:;]/, ':'); //normalize the 'eyes'
+  return emoticons.hasOwnProperty(str)
+};
+
+const tagEmoji = (term, world) => {
+  let raw = term.pre + term.text + term.post;
+  raw = raw.trim();
+  //dont double-up on ending periods
+  raw = raw.replace(/[.!?,]$/, '');
+  //test for :keyword: emojis
+  if (isCommaEmoji(raw) === true) {
+    term.tag('Emoji', 'comma-emoji', world);
+    term.text = raw;
+    term.pre = term.pre.replace(':', '');
+    term.post = term.post.replace(':', '');
+  }
+  //test for unicode emojis
+  if (term.text.match(emojiReg)) {
+    term.tag('Emoji', 'unicode-emoji', world);
+    term.text = raw;
+  }
+  //test for emoticon ':)' emojis
+  if (isEmoticon(raw) === true) {
+    term.tag('Emoticon', 'emoticon-emoji', world);
+    term.text = raw;
+  }
+};
+
+var _05Emoji = tagEmoji;
+
+const steps = {
+  lexicon: _01Lexicon,
+  punctuation: _02Punctuation,
+  regex: _03Prefixes,
+  suffix: _04Suffixes,
+  emoji: _05Emoji,
+};
+
+//'lookups' look at a term by itself
+const lookups = function (doc, terms) {
+  let world = doc.world;
+  //our list of known-words
+  steps.lexicon(terms, world);
+
+  //try these other methods
+  for (let i = 0; i < terms.length; i += 1) {
+    let term = terms[i];
+    //or maybe some helpful punctuation
+    steps.punctuation(terms, i, world);
+    //mostly prefix checks
+    steps.regex(term, world);
+    //maybe we can guess
+    steps.suffix(term, world);
+    //emoji and emoticons
+    steps.emoji(term, world);
+  }
+  return doc
+};
+var _01Init = lookups;
+
+//markov-like stats about co-occurance, for hints about unknown terms
+//basically, a little-bit better than the noun-fallback
+//just top n-grams from nlp tags, generated from nlp-corpus
+
+//after this word, here's what happens usually
+let afterThisWord = {
+  i: 'Verb', //44% //i walk..
+  first: 'Noun', //50% //first principles..
+  it: 'Verb', //33%
+  there: 'Verb', //35%
+  not: 'Verb', //33%
+  because: 'Noun', //31%
+  if: 'Noun', //32%
+  but: 'Noun', //26%
+  who: 'Verb', //40%
+  this: 'Noun', //37%
+  his: 'Noun', //48%
+  when: 'Noun', //33%
+  you: 'Verb', //35%
+  very: 'Adjective', // 39%
+  old: 'Noun', //51%
+  never: 'Verb', //42%
+  before: 'Noun', //28%
+};
+
+//in advance of this word, this is what happens usually
+let beforeThisWord = {
+  there: 'Verb', //23% // be there
+  me: 'Verb', //31% //see me
+  man: 'Adjective', // 80% //quiet man
+  only: 'Verb', //27% //sees only
+  him: 'Verb', //32% //show him
+  were: 'Noun', //48% //we were
+  took: 'Noun', //38% //he took
+  himself: 'Verb', //31% //see himself
+  went: 'Noun', //43% //he went
+  who: 'Noun', //47% //person who
+  jr: 'Person',
+};
+
+//following this POS, this is likely
+let afterThisPOS = {
+  Adjective: 'Noun', //36% //blue dress
+  Possessive: 'Noun', //41% //his song
+  Determiner: 'Noun', //47%
+  Adverb: 'Verb', //20%
+  Pronoun: 'Verb', //40%
+  Value: 'Noun', //47%
+  Ordinal: 'Noun', //53%
+  Modal: 'Verb', //35%
+  Superlative: 'Noun', //43%
+  Demonym: 'Noun', //38%
+  Honorific: 'Person', //
+};
+
+//in advance of this POS, this is likely
+let beforeThisPOS = {
+  Copula: 'Noun', //44% //spencer is
+  PastTense: 'Noun', //33% //spencer walked
+  Conjunction: 'Noun', //36%
+  Modal: 'Noun', //38%
+  Pluperfect: 'Noun', //40%
+  PerfectTense: 'Verb', //32%
+};
+var markov = {
+  beforeThisWord: beforeThisWord,
+  afterThisWord: afterThisWord,
+
+  beforeThisPos: beforeThisPOS,
+  afterThisPos: afterThisPOS,
+};
+
+const afterKeys = Object.keys(markov.afterThisPos);
+const beforeKeys = Object.keys(markov.beforeThisPos);
+
+const checkNeighbours = function (terms, world) {
+  for (let i = 0; i < terms.length; i += 1) {
+    let term = terms[i];
+    //do we still need a tag?
+    if (term.isKnown() === true) {
+      continue
+    }
+    //ok, this term needs a tag.
+    //look at previous word for clues..
+    let lastTerm = terms[i - 1];
+    if (lastTerm) {
+      // 'foobar term'
+      if (markov.afterThisWord.hasOwnProperty(lastTerm.clean) === true) {
+        let tag = markov.afterThisWord[lastTerm.clean];
+        term.tag(tag, 'after-' + lastTerm.clean, world);
+        continue
+      }
+      // 'Tag term'
+      // (look at previous POS tags for clues..)
+      let foundTag = afterKeys.find(tag => lastTerm.tags[tag]);
+      if (foundTag !== undefined) {
+        let tag = markov.afterThisPos[foundTag];
+        term.tag(tag, 'after-' + foundTag, world);
+        continue
+      }
+    }
+
+    //look at next word for clues..
+    let nextTerm = terms[i + 1];
+    if (nextTerm) {
+      // 'term foobar'
+      if (markov.beforeThisWord.hasOwnProperty(nextTerm.clean) === true) {
+        let tag = markov.beforeThisWord[nextTerm.clean];
+        term.tag(tag, 'before-' + nextTerm.clean, world);
+        continue
+      }
+      // 'term Tag'
+      // (look at next POS tags for clues..)
+      let foundTag = beforeKeys.find(tag => nextTerm.tags[tag]);
+      if (foundTag !== undefined) {
+        let tag = markov.beforeThisPos[foundTag];
+        term.tag(tag, 'before-' + foundTag, world);
+        continue
+      }
+    }
+  }
+};
+var _01Neighbours = checkNeighbours;
+
+const titleCase = /^[A-Z][a-z'\u00C0-\u00FF]/;
+const hasNumber = /[0-9]/;
+
+/** look for any grammar signals based on capital/lowercase */
+const checkCase = function (doc) {
+  let world = doc.world;
+  doc.list.forEach(p => {
+    let terms = p.terms();
+    for (let i = 1; i < terms.length; i++) {
+      const term = terms[i];
+      if (titleCase.test(term.text) === true && hasNumber.test(term.text) === false && term.tags.Date === undefined) {
+        term.tag('ProperNoun', 'titlecase-noun', world);
+      }
+    }
+  });
+};
+var _02Case = checkCase;
+
+const hasPrefix = /^(re|un)-?[a-z\u00C0-\u00FF]/;
+const prefix = /^(re|un)-?/;
+
+/** check 'rewatch' in lexicon as 'watch' */
+const checkPrefix = function (terms, world) {
+  let lex = world.words;
+  terms.forEach(term => {
+    // skip if we have a good tag already
+    if (term.isKnown() === true) {
+      return
+    }
+    //does it start with 'un|re'
+    if (hasPrefix.test(term.clean) === true) {
+      // look for the root word in the lexicon:
+      let stem = term.clean.replace(prefix, '');
+      if (stem && stem.length > 3 && lex[stem] !== undefined && lex.hasOwnProperty(stem) === true) {
+        term.tag(lex[stem], 'stem-' + stem, world);
+      }
+    }
+  });
+};
+var _03Stem = checkPrefix;
+
+//similar to plural/singularize rules, but not the same
+const isPlural$3 = [
+  /(^v)ies$/i,
+  /ises$/i,
+  /ives$/i,
+  /(antenn|formul|nebul|vertebr|vit)ae$/i,
+  /(octop|vir|radi|nucle|fung|cact|stimul)i$/i,
+  /(buffal|tomat|tornad)oes$/i,
+  /(analy|ba|diagno|parenthe|progno|synop|the)ses$/i,
+  /(vert|ind|cort)ices$/i,
+  /(matr|append)ices$/i,
+  /(x|ch|ss|sh|s|z|o)es$/i,
+  /is$/i,
+  /men$/i,
+  /news$/i,
+  /.tia$/i,
+  /(^f)ves$/i,
+  /(lr)ves$/i,
+  /(^aeiouy|qu)ies$/i,
+  /(m|l)ice$/i,
+  /(cris|ax|test)es$/i,
+  /(alias|status)es$/i,
+  /ics$/i,
+];
+
+//similar to plural/singularize rules, but not the same
+const isSingular$1 = [
+  /(ax|test)is$/i,
+  /(octop|vir|radi|nucle|fung|cact|stimul)us$/i,
+  /(octop|vir)i$/i,
+  /(rl)f$/i,
+  /(alias|status)$/i,
+  /(bu)s$/i,
+  /(al|ad|at|er|et|ed|ad)o$/i,
+  /(ti)um$/i,
+  /(ti)a$/i,
+  /sis$/i,
+  /(?:(^f)fe|(lr)f)$/i,
+  /hive$/i,
+  /s[aeiou]+ns$/i, // sans, siens
+  /(^aeiouy|qu)y$/i,
+  /(x|ch|ss|sh|z)$/i,
+  /(matr|vert|ind|cort)(ix|ex)$/i,
+  /(m|l)ouse$/i,
+  /(m|l)ice$/i,
+  /(antenn|formul|nebul|vertebr|vit)a$/i,
+  /.sis$/i,
+  /^(?!talis|.*hu)(.*)man$/i,
+];
+var isPlural_1$2 = {
+  isSingular: isSingular$1,
+  isPlural: isPlural$3,
+};
+
+//these tags don't have plurals
+const noPlurals = ['Uncountable', 'Pronoun', 'Place', 'Value', 'Person', 'Month', 'WeekDay', 'Holiday'];
+
+const notPlural = [/ss$/, /sis$/, /[^aeiou][uo]s$/, /'s$/];
+const notSingular = [/i$/, /ae$/];
+
+/** turn nouns into singular/plural */
+const checkPlural = function (t, world) {
+  if (t.tags.Noun && !t.tags.Acronym) {
+    let str = t.clean;
+    //skip existing tags, fast
+    if (t.tags.Singular || t.tags.Plural) {
+      return
+    }
+    //too short
+    if (str.length <= 3) {
+      t.tag('Singular', 'short-singular', world);
+      return
+    }
+    //is it impossible to be plural?
+    if (noPlurals.find(tag => t.tags[tag])) {
+      return
+    }
+    // isPlural suffix rules
+    if (isPlural_1$2.isPlural.find(reg => reg.test(str))) {
+      t.tag('Plural', 'plural-rules', world);
+      return
+    }
+    // isSingular suffix rules
+    if (isPlural_1$2.isSingular.find(reg => reg.test(str))) {
+      t.tag('Singular', 'singular-rules', world);
+      return
+    }
+
+    // finally, fallback 'looks plural' rules..
+    if (/s$/.test(str) === true) {
+      //avoid anything too sketchy to be plural
+      if (notPlural.find(reg => reg.test(str))) {
+        return
+      }
+      t.tag('Plural', 'plural-fallback', world);
+      return
+    }
+    //avoid anything too sketchy to be singular
+    if (notSingular.find(reg => reg.test(str))) {
+      return
+    }
+    t.tag('Singular', 'singular-fallback', world);
+  }
+};
+var _04Plurals = checkPlural;
+
+//nouns that also signal the title of an unknown organization
+//todo remove/normalize plural forms
+const orgWords = [
+  'academy',
+  'administration',
+  'agence',
+  'agences',
+  'agencies',
+  'agency',
+  'airlines',
+  'airways',
+  'army',
+  'assoc',
+  'associates',
+  'association',
+  'assurance',
+  'authority',
+  'autorite',
+  'aviation',
+  'bank',
+  'banque',
+  'board',
+  'boys',
+  'brands',
+  'brewery',
+  'brotherhood',
+  'brothers',
+  'building society',
+  'bureau',
+  'cafe',
+  'caisse',
+  'capital',
+  'care',
+  'cathedral',
+  'center',
+  'central bank',
+  'centre',
+  'chemicals',
+  'choir',
+  'chronicle',
+  'church',
+  'circus',
+  'clinic',
+  'clinique',
+  'club',
+  'co',
+  'coalition',
+  'coffee',
+  'collective',
+  'college',
+  'commission',
+  'committee',
+  'communications',
+  'community',
+  'company',
+  'comprehensive',
+  'computers',
+  'confederation',
+  'conference',
+  'conseil',
+  'consulting',
+  'containers',
+  'corporation',
+  'corps',
+  'corp',
+  'council',
+  'crew',
+  'daily news',
+  'data',
+  'departement',
+  'department',
+  'department store',
+  'departments',
+  'design',
+  'development',
+  'directorate',
+  'division',
+  'drilling',
+  'education',
+  'eglise',
+  'electric',
+  'electricity',
+  'energy',
+  'ensemble',
+  'enterprise',
+  'enterprises',
+  'entertainment',
+  'estate',
+  'etat',
+  'evening news',
+  'faculty',
+  'federation',
+  'financial',
+  'fm',
+  'foundation',
+  'fund',
+  'gas',
+  'gazette',
+  'girls',
+  'government',
+  'group',
+  'guild',
+  'health authority',
+  'herald',
+  'holdings',
+  'hospital',
+  'hotel',
+  'hotels',
+  'inc',
+  'industries',
+  'institut',
+  'institute',
+  'institute of technology',
+  'institutes',
+  'insurance',
+  'international',
+  'interstate',
+  'investment',
+  'investments',
+  'investors',
+  'journal',
+  'laboratory',
+  'labs',
+  // 'law',
+  'liberation army',
+  'limited',
+  'local authority',
+  'local health authority',
+  'machines',
+  'magazine',
+  'management',
+  'marine',
+  'marketing',
+  'markets',
+  'media',
+  'memorial',
+  'mercantile exchange',
+  'ministere',
+  'ministry',
+  'military',
+  'mobile',
+  'motor',
+  'motors',
+  'musee',
+  'museum',
+  // 'network',
+  'news',
+  'news service',
+  'observatory',
+  'office',
+  'oil',
+  'optical',
+  'orchestra',
+  'organization',
+  'partners',
+  'partnership',
+  // 'party',
+  "people's party",
+  'petrol',
+  'petroleum',
+  'pharmacare',
+  'pharmaceutical',
+  'pharmaceuticals',
+  'pizza',
+  'plc',
+  'police',
+  'polytechnic',
+  'post',
+  'power',
+  'press',
+  'productions',
+  'quartet',
+  'radio',
+  'regional authority',
+  'regional health authority',
+  'reserve',
+  'resources',
+  'restaurant',
+  'restaurants',
+  'savings',
+  'school',
+  'securities',
+  'service',
+  'services',
+  'social club',
+  'societe',
+  'society',
+  'sons',
+  'standard',
+  'state police',
+  'state university',
+  'stock exchange',
+  'subcommittee',
+  'syndicat',
+  'systems',
+  'telecommunications',
+  'telegraph',
+  'television',
+  'times',
+  'tribunal',
+  'tv',
+  'union',
+  'university',
+  'utilities',
+  'workers',
+];
+
+var organizations = orgWords.reduce(function (h, str) {
+  h[str] = 'Noun';
+  return h
+}, {});
+
+//could this word be an organization
+const maybeOrg = function (t) {
+  //must be a noun
+  if (!t.tags.Noun) {
+    return false
+  }
+  //can't be these things
+  if (t.tags.Pronoun || t.tags.Comma || t.tags.Possessive) {
+    return false
+  }
+  //must be one of these
+  if (t.tags.Organization || t.tags.Acronym || t.tags.Place || t.titleCase()) {
+    return true
+  }
+  return false
+};
+
+const tagOrgs = function (terms, world) {
+  for (let i = 0; i < terms.length; i += 1) {
+    let t = terms[i];
+    if (organizations[t.clean] !== undefined && organizations.hasOwnProperty(t.clean) === true) {
+      // look-backward - eg. 'Toronto University'
+      let lastTerm = terms[i - 1];
+      if (lastTerm !== undefined && maybeOrg(lastTerm) === true) {
+        lastTerm.tagSafe('Organization', 'org-word-1', world);
+        t.tagSafe('Organization', 'org-word-2', world);
+        continue
+      }
+      //look-forward - eg. University of Toronto
+      let nextTerm = terms[i + 1];
+      if (nextTerm !== undefined && nextTerm.clean === 'of') {
+        if (terms[i + 2] && maybeOrg(terms[i + 2])) {
+          t.tagSafe('Organization', 'org-of-word-1', world);
+          nextTerm.tagSafe('Organization', 'org-of-word-2', world);
+          terms[i + 2].tagSafe('Organization', 'org-of-word-3', world);
+          continue
+        }
+      }
+    }
+  }
+};
+var _05Organizations = tagOrgs;
+
+const oneLetterAcronym = /^[A-Z]('s|,)?$/;
+const periodSeperated = /([A-Z]\.){2}[A-Z]?/i;
+
+const oneLetterWord = {
+  I: true,
+  A: true,
+};
+
+const isAcronym = function (term, world) {
+  let str = term.reduced;
+  // a known acronym like fbi
+  if (term.tags.Acronym) {
+    return true
+  }
+  // if (term.tags.Adverb || term.tags.Verb || term.tags.Value || term.tags.Plural) {
+  //   return false
+  // }
+  // known-words, like 'PIZZA' is not an acronym.
+  if (world.words[str]) {
+    return false
+  }
+  // long capitalized words are not usually either
+  if (str.length > 5) {
+    return false
+  }
+  return term.isAcronym()
+};
+
+// F.B.I., NBC, - but not 'NO COLLUSION'
+const checkAcronym = function (terms, world) {
+  terms.forEach(term => {
+    //these are not acronyms
+    if (term.tags.RomanNumeral === true) {
+      return
+    }
+    //period-ones F.D.B.
+    if (periodSeperated.test(term.text) === true) {
+      term.tag('Acronym', 'period-acronym', world);
+    }
+    //non-period ones are harder
+    if (term.isUpperCase() && isAcronym(term, world)) {
+      term.tag('Acronym', 'acronym-step', world);
+      term.tag('Noun', 'acronym-infer', world);
+    } else if (!oneLetterWord.hasOwnProperty(term.text) && oneLetterAcronym.test(term.text)) {
+      term.tag('Acronym', 'one-letter-acronym', world);
+      term.tag('Noun', 'one-letter-infer', world);
+    }
+    //if it's a organization,
+    if (term.tags.Organization && term.text.length <= 3) {
+      term.tag('Acronym', 'acronym-org', world);
+    }
+    if (term.tags.Organization && term.isUpperCase() && term.text.length <= 6) {
+      term.tag('Acronym', 'acronym-org-case', world);
+    }
+  });
+};
+var _06Acronyms = checkAcronym;
+
+const step = {
+  neighbours: _01Neighbours,
+  case: _02Case,
+  stem: _03Stem,
+  plural: _04Plurals,
+  organizations: _05Organizations,
+  acronyms: _06Acronyms,
+};
+//
+const fallbacks = function (doc, terms) {
+  let world = doc.world;
+
+  // if it's empty, consult it's neighbours, first
+  step.neighbours(terms, world);
+
+  // is there a case-sensitive clue?
+  step.case(doc);
+
+  // check 'rewatch' as 'watch'
+  step.stem(terms, world);
+
+  // ... fallback to a noun!
+  terms.forEach(t => {
+    if (t.isKnown() === false) {
+      t.tag('Noun', 'noun-fallback', doc.world);
+    }
+  });
+
+  // turn 'Foo University' into an Org
+  step.organizations(terms, world);
+
+  //turn 'FBD' into an acronym
+  step.acronyms(terms, world);
+
+  //are the nouns singular or plural?
+  terms.forEach(t => {
+    step.plural(t, doc.world);
+  });
+
+  return doc
+};
+var _02Fallbacks = fallbacks;
+
+const hasNegative = /n't$/;
+
+const irregulars$2 = {
+  "won't": ['will', 'not'],
+  wont: ['will', 'not'],
+  "can't": ['can', 'not'],
+  cant: ['can', 'not'],
+  cannot: ['can', 'not'],
+  "shan't": ['should', 'not'],
+  dont: ['do', 'not'],
+  dun: ['do', 'not'],
+  // "ain't" is ambiguous for is/was
+};
+
+// either 'is not' or 'are not'
+const doAint = function (term, phrase) {
+  let terms = phrase.terms();
+  let index = terms.indexOf(term);
+  let before = terms.slice(0, index);
+  //look for the preceding noun
+  let noun = before.find(t => {
+    return t.tags.Noun
+  });
+  if (noun && noun.tags.Plural) {
+    return ['are', 'not']
+  }
+  return ['is', 'not']
+};
+
+const checkNegative = function (term, phrase) {
+  //check named-ones
+  if (irregulars$2.hasOwnProperty(term.clean) === true) {
+    return irregulars$2[term.clean]
+  }
+  //this word needs it's own logic:
+  if (term.clean === `ain't` || term.clean === 'aint') {
+    return doAint(term, phrase)
+  }
+  //try it normally
+  if (hasNegative.test(term.clean) === true) {
+    let main = term.clean.replace(hasNegative, '');
+    return [main, 'not']
+  }
+  return null
+};
+var _01Negative = checkNegative;
+
+const contraction$1 = /([a-z\u00C0-\u00FF]+)[\u0027\u0060\u00B4\u2018\u2019\u201A\u201B\u2032\u2035\u2039\u203A]([a-z]{1,2})$/i;
+
+//these ones don't seem to be ambiguous
+const easy = {
+  ll: 'will',
+  ve: 'have',
+  re: 'are',
+  m: 'am',
+  "n't": 'not',
+};
+//
+const checkApostrophe = function (term) {
+  let parts = term.text.match(contraction$1);
+  if (parts === null) {
+    return null
+  }
+  if (easy.hasOwnProperty(parts[2])) {
+    return [parts[1], easy[parts[2]]]
+  }
+  return null
+};
+var _02Simple = checkApostrophe;
+
+const irregulars$1 = {
+  wanna: ['want', 'to'],
+  gonna: ['going', 'to'],
+  im: ['i', 'am'],
+  alot: ['a', 'lot'],
+  ive: ['i', 'have'],
+  imma: ['I', 'will'],
+
+  "where'd": ['where', 'did'],
+  whered: ['where', 'did'],
+  "when'd": ['when', 'did'],
+  whend: ['when', 'did'],
+  // "how'd": ['how', 'did'], //'how would?'
+  // "what'd": ['what', 'did'], //'what would?'
+  howd: ['how', 'did'],
+  whatd: ['what', 'did'],
+  // "let's": ['let', 'us'], //too weird
+
+  //multiple word contractions
+  dunno: ['do', 'not', 'know'],
+  brb: ['be', 'right', 'back'],
+  gtg: ['got', 'to', 'go'],
+  irl: ['in', 'real', 'life'],
+  tbh: ['to', 'be', 'honest'],
+  imo: ['in', 'my', 'opinion'],
+  til: ['today', 'i', 'learned'],
+  rn: ['right', 'now'],
+  twas: ['it', 'was'],
+  '@': ['at'],
+};
+
+//
+const checkIrregulars = function (term) {
+  //check white-list
+  if (irregulars$1.hasOwnProperty(term.clean)) {
+    return irregulars$1[term.clean]
+  }
+  return null
+};
+var _03Irregulars = checkIrregulars;
+
+const hasApostropheS = /([a-z\u00C0-\u00FF]+)[\u0027\u0060\u00B4\u2018\u2019\u201A\u201B\u2032\u2035\u2039\u203A]s$/i;
+
+const banList = {
+  that: true,
+  there: true,
+};
+const hereThere = {
+  here: true,
+  there: true,
+  everywhere: true,
+};
+const isPossessive = (term, pool) => {
+  // if we already know it
+  if (term.tags.Possessive) {
+    return true
+  }
+  //a pronoun can't be possessive - "he's house"
+  if (term.tags.Pronoun || term.tags.QuestionWord) {
+    return false
+  }
+  if (banList.hasOwnProperty(term.reduced)) {
+    return false
+  }
+  //if end of sentence, it is possessive - "was spencer's"
+  let nextTerm = pool.get(term.next);
+  if (!nextTerm) {
+    return true
+  }
+  //a gerund suggests 'is walking'
+  if (nextTerm.tags.Verb) {
+    //fix 'jamie's bite'
+    if (nextTerm.tags.Infinitive) {
+      return true
+    }
+    //fix 'spencer's runs'
+    if (nextTerm.tags.PresentTense) {
+      return true
+    }
+    return false
+  }
+
+  //spencer's house
+  if (nextTerm.tags.Noun) {
+    // 'spencer's here'
+    if (hereThere.hasOwnProperty(nextTerm.reduced) === true) {
+      return false
+    }
+    return true
+  }
+  //rocket's red glare
+  let twoTerm = pool.get(nextTerm.next);
+  if (twoTerm && twoTerm.tags.Noun && !twoTerm.tags.Pronoun) {
+    return true
+  }
+  //othwerwise, an adjective suggests 'is good'
+  if (nextTerm.tags.Adjective || nextTerm.tags.Adverb || nextTerm.tags.Verb) {
+    return false
+  }
+  return false
+};
+
+const isHas = (term, phrase) => {
+  let terms = phrase.terms();
+  let index = terms.indexOf(term);
+  let after = terms.slice(index + 1, index + 3);
+  //look for a past-tense verb
+  return after.find(t => {
+    return t.tags.PastTense
+  })
+};
+
+const checkPossessive = function (term, phrase, world) {
+  //the rest of 's
+  let found = term.text.match(hasApostropheS);
+  if (found !== null) {
+    //spencer's thing vs spencer-is
+    if (isPossessive(term, phrase.pool) === true) {
+      term.tag('#Possessive', 'isPossessive', world);
+      return null
+    }
+    //'spencer is'
+    if (found !== null) {
+      if (isHas(term, phrase)) {
+        return [found[1], 'has']
+      }
+      return [found[1], 'is']
+    }
+  }
+  return null
+};
+var _04Possessive = checkPossessive;
+
+const hasPerfect = /[a-z\u00C0-\u00FF]'d$/;
+
+const useDid = {
+  how: true,
+  what: true,
+};
+
+/** split `i'd` into 'i had',  or 'i would'  */
+const checkPerfect = function (term, phrase) {
+  if (hasPerfect.test(term.clean)) {
+    let root = term.clean.replace(/'d$/, '');
+    //look at the next few words
+    let terms = phrase.terms();
+    let index = terms.indexOf(term);
+    let after = terms.slice(index + 1, index + 4);
+    //is it before a past-tense verb? - 'i'd walked'
+    for (let i = 0; i < after.length; i++) {
+      let t = after[i];
+      if (t.tags.Verb) {
+        if (t.tags.PastTense) {
+          return [root, 'had']
+        }
+        //what'd you see
+        if (useDid[root] === true) {
+          return [root, 'did']
+        }
+        return [root, 'would']
+      }
+    }
+    //otherwise, 'i'd walk'
+    return [root, 'would']
+  }
+  return null
+};
+var _05PerfectTense = checkPerfect;
+
+const isRange = /^([0-9.]{1,3}[a-z]{0,2}) ?[-–—] ?([0-9]{1,3}[a-z]{0,2})$/i;
+const timeRange = /^([0-9][0-9]?(:[0-9][0-9])?(am|pm)?) ?[-–—] ?([0-9][0-9]?(:[0-9][0-9])?(am|pm)?)$/i;
+
+//split '2-4' into '2 to 4'
+const checkRange = function (term) {
+  if (term.tags.PhoneNumber === true) {
+    return null
+  }
+  let parts = term.text.match(isRange);
+  if (parts !== null) {
+    return [parts[1], 'to', parts[2]]
+  } else {
+    parts = term.text.match(timeRange);
+    if (parts !== null) {
+      return [parts[1], 'to', parts[4]]
+    }
+  }
+  return null
+};
+var _06Ranges = checkRange;
+
+const contraction = /^(l|c|d|j|m|n|qu|s|t)[\u0027\u0060\u00B4\u2018\u2019\u201A\u201B\u2032\u2035\u2039\u203A]([a-z\u00C0-\u00FF]+)$/i;
+// basic support for ungendered french contractions
+// not perfect, but better than nothing, to support matching on french text.
+
+const french = {
+  l: 'le', // l'amour
+  c: 'ce', // c'est
+  d: 'de', // d'amerique
+  j: 'je', // j'aime
+  m: 'me', // m'appelle
+  n: 'ne', // n'est
+  qu: 'que', // qu'il
+  s: 'se', // s'appelle
+  t: 'tu', // t'aime
+};
+
+const checkFrench = function (term) {
+  let parts = term.text.match(contraction);
+  if (parts === null || french.hasOwnProperty(parts[1]) === false) {
+    return null
+  }
+  let arr = [french[parts[1]], parts[2]];
+  if (arr[0] && arr[1]) {
+    return arr
+  }
+  return null
+};
+var _07French = checkFrench;
+
+const isNumber = /^[0-9]+$/;
+const isOrdinal = /^[0-9]+(st|nd|rd|th)$/;
+const isTime = /^[0-9:]+(am|pm)?$/;
+
+const createPhrase = function (found, doc) {
+  //create phrase from ['would', 'not']
+  let phrase = _01Tokenizer(found.join(' '), doc.world, doc.pool())[0];
+  //tag it
+  let terms = phrase.terms();
+  _01Lexicon(terms, doc.world);
+
+  let term = terms[0];
+  // tag number-ranges
+  if (isOrdinal.test(term.text)) {
+    terms[0].tag('Ordinal', 'ord-range', doc.world);
+    terms[2].tag('Ordinal', 'ord-range', doc.world);
+  } else if (isNumber.test(term.text)) {
+    terms[0].tag('Cardinal', 'num-range', doc.world);
+    terms[2].tag('Cardinal', 'num-range', doc.world);
+  } else if (isTime.test(term.text)) {
+    terms[0].tag('Time', 'time-range', doc.world);
+    terms[1].tag('Date', 'time-range', doc.world);
+    terms[2].tag('Time', 'time-range', doc.world);
+  }
+  //make these terms implicit
+  terms.forEach(t => {
+    t.implicit = t.text;
+    t.text = '';
+    t.clean = '';
+    // remove whitespace for implicit terms
+    t.pre = '';
+    t.post = '';
+    if (Object.keys(t.tags).length === 0) {
+      t.tags.Noun = true; // if no tag, give it a noun
+    }
+  });
+  return phrase
+};
+
+const contractions = function (doc) {
+  let world = doc.world;
+  doc.list.forEach(p => {
+    let terms = p.terms();
+    for (let i = 0; i < terms.length; i += 1) {
+      let term = terms[i];
+      let found = _01Negative(term, p);
+      found = found || _02Simple(term);
+      found = found || _03Irregulars(term);
+      found = found || _04Possessive(term, p, world);
+      found = found || _05PerfectTense(term, p);
+      found = found || _06Ranges(term);
+      found = found || _07French(term);
+      //add them in
+      if (found !== null) {
+        let newPhrase = createPhrase(found, doc);
+        // keep tag NumberRange, if we had it
+        if (p.has('#NumberRange') === true) {
+          doc.buildFrom([newPhrase]).tag('NumberRange');
+        }
+        //set text as contraction
+        let firstTerm = newPhrase.terms(0);
+        firstTerm.text = term.text;
+        //grab sub-phrase to remove
+        let match = p.buildFrom(term.id, 1, doc.pool());
+        match.replace(newPhrase, doc, true);
+      }
+    }
+  });
+  return doc
+};
+var _03Contractions = contractions;
+
+const hasWord = function (doc, word) {
+  let arr = doc._cache.words[word] || [];
+  arr = arr.map(i => doc.list[i]);
+  return doc.buildFrom(arr)
+};
+const hasTag = function (doc, tag) {
+  let arr = doc._cache.tags[tag] || [];
+  arr = arr.map(i => doc.list[i]);
+  return doc.buildFrom(arr)
+};
+
+//mostly pos-corections here
+const miscCorrection = function (doc) {
+  // imperative-form
+  let m = hasTag(doc, 'Infinitive');
+  if (m.found) {
+    // you eat?
+    m = m.ifNo('@hasQuestionMark');
+    // i speak
+    m = m.ifNo('(i|we|they)');
+    // shut the door!
+    m.not('will be')
+      .match('[#Infinitive] (#Determiner|#Possessive) #Noun')
+      .notIf('(our|their)')
+      .match('#Infinitive')
+      .tag('Imperative', 'shut-the');
+    // go-fast
+    m.match('^[#Infinitive] #Adverb?$', 0).tag('Imperative', 'go-fast');
+    // do not go
+    m.match('[(do && #Infinitive)] not? #Verb', 0).tag('Imperative', 'do-not');
+    // do it
+    m.match('[#Infinitive] (it|some) (#Comparative|#Preposition|please|now|again)', 0).tag('Imperative', 'do-it');
+  }
+
+  //exactly like
+  m = hasWord(doc, 'like');
+  m.match('#Adverb like')
+    .notIf('(really|generally|typically|usually|sometimes|often|just) [like]')
+    .tag('Adverb', 'adverb-like');
+
+  //the orange.
+  m = hasTag(doc, 'Adjective');
+  m.match('#Determiner #Adjective$').notIf('(#Comparative|#Superlative)').terms(1).tag('Noun', 'the-adj-1');
+
+  // Firstname x (dangerous)
+  m = hasTag(doc, 'FirstName');
+  m.match('#FirstName (#Noun|@titleCase)')
+    .ifNo('^#Possessive')
+    .ifNo('(#Pronoun|#Plural)')
+    .ifNo('@hasComma .')
+    .lastTerm()
+    .tag('#LastName', 'firstname-noun');
+
+  //three trains / one train
+  m = hasTag(doc, 'Value');
+  m = m.match('#Value #PresentTense').ifNo('#Copula');
+  if (m.found) {
+    if (m.has('(one|1)') === true) {
+      m.terms(1).tag('Singular', 'one-presentTense');
+    } else {
+      m.terms(1).tag('Plural', 'value-presentTense');
+    }
+  }
+
+  // well i've been...
+  doc.match('^(well|so|okay)').tag('Expression', 'well-');
+  // 10th of a second
+  doc.match('#Value [of a second]', 0).unTag('Value', 'of-a-second');
+  // 30 seconds
+  doc.match('#Value [seconds]', 0).unTag('Value', '30-seconds').tag(['Unit', 'Plural']);
+
+  //been walking
+  m = hasTag(doc, 'Gerund');
+  m.match(`(be|been) (#Adverb|not)+? #Gerund`).not('#Verb$').tag('Auxiliary', 'be-walking');
+
+  // directive verb - 'use reverse'
+  doc
+    .match('(try|use|attempt|build|make) #Verb')
+    .ifNo('(@hasComma|#Negative|#PhrasalVerb|#Copula|will|be)')
+    .lastTerm()
+    .tag('#Noun', 'do-verb');
+
+  //possessives
+  //'her match' vs 'let her match'
+  m = hasTag(doc, 'Possessive');
+  m = m.match('#Possessive [#Infinitive]', 0);
+  if (!m.lookBehind('(let|made|make|force|ask)').found) {
+    m.tag('Noun', 'her-match');
+  }
+
+  return doc
+};
+
+var fixMisc = miscCorrection;
+
+const unique = function (arr) {
+  let obj = {};
+  for (let i = 0; i < arr.length; i++) {
+    obj[arr[i]] = true;
+  }
+  return Object.keys(obj)
+};
+var _unique = unique;
+
+// order matters
+const list$5 = [
+  // ==== Mutliple tags ====
+  { match: 'too much', tag: 'Adverb Adjective', reason: 'bit-4' },
+  // u r cool
+  { match: 'u r', tag: 'Pronoun Copula', reason: 'u r' },
+  //sometimes adverbs - 'pretty good','well above'
+  {
+    match: '#Copula (pretty|dead|full|well|sure) (#Adjective|#Noun)',
+    tag: '#Copula #Adverb #Adjective',
+    reason: 'sometimes-adverb',
+  },
+
+  //i better ..
+  { match: '(#Pronoun|#Person) (had|#Adverb)? [better] #PresentTense', group: 0, tag: 'Modal', reason: 'i-better' },
+  //walking is cool
+  { match: '[#Gerund] #Adverb? not? #Copula', group: 0, tag: 'Activity', reason: 'gerund-copula' },
+  //walking should be fun
+  { match: '[#Gerund] #Modal', group: 0, tag: 'Activity', reason: 'gerund-modal' },
+
+  //swear-words as non-expression POS
+  { match: 'holy (shit|fuck|hell)', tag: 'Expression', reason: 'swears-expression' },
+  //Aircraft designer
+  { match: '#Noun #Actor', tag: 'Actor', reason: 'thing-doer' },
+  { match: '#Conjunction [u]', group: 0, tag: 'Pronoun', reason: 'u-pronoun-2' },
+  //'u' as pronoun
+  { match: '[u] #Verb', group: 0, tag: 'Pronoun', reason: 'u-pronoun-1' },
+
+  // ==== Determiners ====
+  { match: '#Noun [(who|whom)]', group: 0, tag: 'Determiner', reason: 'captain-who' },
+  //that car goes
+  // { match: 'that #Noun [#PresentTense]', group: 0, tag: 'Determiner', reason: 'that-determiner' },
+  { match: 'a bit much', tag: 'Determiner Adverb Adjective', reason: 'bit-3' },
+
+  // ==== Propositions ====
+  //all students
+  { match: '#Verb #Adverb? #Noun [(that|which)]', group: 0, tag: 'Preposition', reason: 'that-prep' },
+  //work, which has been done.
+  { match: '@hasComma [which] (#Pronoun|#Verb)', group: 0, tag: 'Preposition', reason: 'which-copula' },
+  { match: '#Copula just [like]', group: 0, tag: 'Preposition', reason: 'like-preposition' },
+  //folks like her
+  { match: '#Noun [like] #Noun', group: 0, tag: 'Preposition', reason: 'noun-like' },
+  //fix for busted-up phrasalVerbs
+  // { match: '#Noun [#Particle]', group: 0, tag: 'Preposition', reason: 'repair-noPhrasal' },
+
+  // ==== Conditions ====
+  // had he survived,
+  { match: '[had] #Noun+ #PastTense', group: 0, tag: 'Condition', reason: 'had-he' },
+  // were he to survive
+  { match: '[were] #Noun+ to #Infinitive', group: 0, tag: 'Condition', reason: 'were-he' },
+
+  // ==== Questions ====
+  //the word 'how'
+  { match: '^how', tag: 'QuestionWord', reason: 'how-question' },
+  { match: '[how] (#Determiner|#Copula|#Modal|#PastTense)', group: 0, tag: 'QuestionWord', reason: 'how-is' },
+  // //the word 'which'
+  { match: '^which', tag: 'QuestionWord', reason: 'which-question' },
+  // { match: '[which] . (#Noun)+ #Pronoun', group: 0, tag: 'QuestionWord', reason: 'which-question2' },
+  // { match: 'which', tag: 'QuestionWord', reason: 'which-question3' },
+
+  // ==== Conjunctions ====
+  { match: '[so] #Noun', group: 0, tag: 'Conjunction', reason: 'so-conj' },
+  //how he is driving
+  {
+    match: '[(who|what|where|why|how|when)] #Noun #Copula #Adverb? (#Verb|#Adjective)',
+    group: 0,
+    tag: 'Conjunction',
+    reason: 'how-he-is-x',
+  },
+  // {
+  //   match: '[(who|what|where|why|how|when)] #Noun #Adverb? #Infinitive not? #Gerund',
+  //   group: 0,
+  //   tag: 'Conjunction',
+  //   reason: 'when-i-go-fishing',
+  // },
+];
+
+var _01Misc = list$5;
+
+var _ambig = {
+  // adverbs than can be adjectives
+  adverbAdjective: [
+    'dark',
+    'bright',
+    'flat',
+    'light',
+    'soft',
+    'pale',
+    'dead',
+    'dim',
+    'faux',
+    'little',
+    'wee',
+    'sheer',
+    'most',
+    'near',
+    'good',
+    'extra',
+    'all',
+  ],
+  // names that are dates
+  personDate: ['april', 'june', 'may', 'jan', 'august', 'eve'],
+  // names that may be months
+  personMonth: ['january', 'april', 'may', 'june', 'jan', 'sep'],
+  // names that are adjectives
+  personAdjective: ['misty', 'rusty', 'dusty', 'rich', 'randy', 'young'],
+
+  // names that are verbs
+  personVerb: ['pat', 'wade', 'ollie', 'will', 'rob', 'buck', 'bob', 'mark', 'jack'],
+
+  // names that are verbs
+  personPlace: [
+    'darwin',
+    'hamilton',
+    'paris',
+    'alexandria',
+    'houston',
+    'kobe',
+    'santiago',
+    'salvador',
+    'sydney',
+    'victoria',
+  ],
+
+  // names that are nouns
+  personNoun: [
+    'art',
+    'baker',
+    'berg',
+    'bill',
+    'brown',
+    'charity',
+    'chin',
+    'christian',
+    'cliff',
+    'daisy',
+    'dawn',
+    'dick',
+    'dolly',
+    'faith',
+    'franco',
+    'gene',
+    'green',
+    'hall',
+    'hill',
+    'holly',
+    'hope',
+    'jean',
+    'jewel',
+    'joy',
+    'kelvin',
+    'king',
+    'kitty',
+    'lane',
+    'lily',
+    'melody',
+    'mercedes',
+    'miles',
+    'olive',
+    'penny',
+    'ray',
+    'reed',
+    'robin',
+    'rod',
+    'rose',
+    'sky',
+    'summer',
+    'trinity',
+    'van',
+    'viola',
+    'violet',
+    'wang',
+    'white',
+  ],
+};
+
+//Dates: 'june' or 'may'
+
+const dates = `(${_ambig.personDate.join('|')})`;
+
+let list$4 = [
+  // ==== Holiday ====
+  { match: '#Holiday (day|eve)', tag: 'Holiday', reason: 'holiday-day' }, // the captain who
+
+  // ==== WeekDay ====
+  // sun the 5th
+  { match: '[sun] the #Ordinal', tag: 'WeekDay', reason: 'sun-the-5th' },
+  //sun feb 2
+  { match: '[sun] #Date', group: 0, tag: 'WeekDay', reason: 'sun-feb' },
+  //1pm next sun
+  { match: '#Date (on|this|next|last|during)? [sun]', group: 0, tag: 'WeekDay', reason: '1pm-sun' },
+  //this sat
+  { match: `(in|by|before|during|on|until|after|of|within|all) [sat]`, group: 0, tag: 'WeekDay', reason: 'sat' },
+  { match: `(in|by|before|during|on|until|after|of|within|all) [wed]`, group: 0, tag: 'WeekDay', reason: 'wed' },
+  { match: `(in|by|before|during|on|until|after|of|within|all) [march]`, group: 0, tag: 'Month', reason: 'march' },
+  //sat november
+  { match: '[sat] #Date', group: 0, tag: 'WeekDay', reason: 'sat-feb' },
+
+  // ==== Month ====
+  //all march
+  { match: `#Preposition [(march|may)]`, group: 0, tag: 'Month', reason: 'in-month' },
+  //this march
+  { match: `this [(march|may)]`, group: 0, tag: 'Month', reason: 'this-month' },
+  { match: `next [(march|may)]`, group: 0, tag: 'Month', reason: 'this-month' },
+  { match: `last [(march|may)]`, group: 0, tag: 'Month', reason: 'this-month' },
+  // march 5th
+  { match: `[(march|may)] the? #Value`, group: 0, tag: 'Month', reason: 'march-5th' },
+  // 5th of march
+  { match: `#Value of? [(march|may)]`, group: 0, tag: 'Month', reason: '5th-of-march' },
+  // march and feb
+  { match: `[(march|may)] .? #Date`, group: 0, tag: 'Month', reason: 'march-and-feb' },
+  // feb to march
+  { match: `#Date .? [(march|may)]`, group: 0, tag: 'Month', reason: 'feb-and-march' },
+  //quickly march
+  { match: `#Adverb [(march|may)]`, group: 0, tag: 'Verb', reason: 'quickly-march' },
+  //march quickly
+  { match: `[(march|may)] #Adverb`, group: 0, tag: 'Verb', reason: 'march-quickly' },
+
+  //5th of March
+  { match: '#Value of #Month', tag: 'Date', reason: 'value-of-month' },
+  //5 March
+  { match: '#Cardinal #Month', tag: 'Date', reason: 'cardinal-month' },
+  //march 5 to 7
+  { match: '#Month #Value to #Value', tag: 'Date', reason: 'value-to-value' },
+  //march the 12th
+  { match: '#Month the #Value', tag: 'Date', reason: 'month-the-value' },
+  //june 7
+  { match: '(#WeekDay|#Month) #Value', tag: 'Date', reason: 'date-value' },
+  //7 june
+  { match: '#Value (#WeekDay|#Month)', tag: 'Date', reason: 'value-date' },
+  //may twenty five
+  { match: '(#TextValue && #Date) #TextValue', tag: 'Date', reason: 'textvalue-date' },
+
+  // in june
+  { match: `in [${dates}]`, group: 0, tag: 'Date', reason: 'in-june' },
+  { match: `during [${dates}]`, group: 0, tag: 'Date', reason: 'in-june' },
+  { match: `on [${dates}]`, group: 0, tag: 'Date', reason: 'in-june' },
+  { match: `by [${dates}]`, group: 0, tag: 'Date', reason: 'by-june' },
+  { match: `after [${dates}]`, group: 0, tag: 'Date', reason: 'after-june' },
+  { match: `#Date [${dates}]`, group: 0, tag: 'Date', reason: 'in-june' },
+  // june 1992
+  { match: `${dates} #Value`, tag: 'Date', reason: 'june-5th' },
+  { match: `${dates} #Date`, tag: 'Date', reason: 'june-5th' },
+  // June Smith
+  { match: `${dates} #ProperNoun`, tag: 'Person', reason: 'june-smith', safe: true },
+  // june m. Cooper
+  { match: `${dates} #Acronym? (#ProperNoun && !#Month)`, tag: 'Person', reason: 'june-smith-jr' },
+  // 'second'
+  { match: `#Cardinal [second]`, tag: 'Unit', reason: 'one-second' },
+  // second quarter
+  // { match: `#Ordinal quarter`, tag: 'Date', reason: 'second-quarter' },
+  // 'aug 20-21'
+  { match: `#Month #NumberRange`, tag: 'Date', reason: 'aug 20-21' },
+
+  // timezones
+  // china standard time
+  { match: `(#Place|#Demonmym|#Time) (standard|daylight|central|mountain)? time`, tag: 'Timezone', reason: 'std-time' },
+  // eastern time
+  {
+    match: `(eastern|mountain|pacific|central|atlantic) (standard|daylight|summer)? time`,
+    tag: 'Timezone',
+    reason: 'eastern-time',
+  },
+  // 5pm central
+  { match: `#Time [(eastern|mountain|pacific|central|est|pst|gmt)]`, group: 0, tag: 'Timezone', reason: '5pm-central' },
+  // central european time
+  { match: `(central|western|eastern) european time`, tag: 'Timezone', reason: 'cet' },
+];
+
+var _02Dates = list$4;
+
+const adjectives$1 = `(${_ambig.personAdjective.join('|')})`;
+
+let list$3 = [
+  // all fell apart
+  { match: '[all] #Determiner? #Noun', group: 0, tag: 'Adjective', reason: 'all-noun' },
+  // very rusty
+  { match: `#Adverb [${adjectives$1}]`, group: 0, tag: 'Adjective', reason: 'really-rich' },
+  // rusty smith
+  { match: `${adjectives$1} #Person`, tag: 'Person', reason: 'randy-smith' },
+  // rusty a. smith
+  { match: `${adjectives$1} #Acronym? #ProperNoun`, tag: 'Person', reason: 'rusty-smith' },
+  //sometimes not-adverbs
+  { match: '#Copula [(just|alone)]$', group: 0, tag: 'Adjective', reason: 'not-adverb' },
+  //jack is guarded
+  { match: '#Singular is #Adverb? [#PastTense$]', group: 0, tag: 'Adjective', reason: 'is-filled' },
+  // smoked poutine is
+  { match: '[#PastTense] #Singular is', group: 0, tag: 'Adjective', reason: 'smoked-poutine' },
+  // baked onions are
+  { match: '[#PastTense] #Plural are', group: 0, tag: 'Adjective', reason: 'baked-onions' },
+  // well made
+  { match: 'well [#PastTense]', group: 0, tag: 'Adjective', reason: 'well-made' },
+
+  // is f*ed up
+  { match: '#Copula [fucked up?]', tag: 'Adjective', reason: 'swears-adjective' },
+  //jack seems guarded
+  { match: '#Singular (seems|appears) #Adverb? [#PastTense$]', group: 0, tag: 'Adjective', reason: 'seems-filled' },
+
+  // Gerund-Adjectives - 'amusing, annoying'
+  //a staggering cost
+  { match: '(a|an) [#Gerund]', group: 0, tag: 'Adjective', reason: 'a|an' },
+  //as amusing as
+  { match: 'as [#Gerund] as', group: 0, tag: 'Adjective', reason: 'as-gerund-as' },
+  // more amusing than
+  { match: 'more [#Gerund] than', group: 0, tag: 'Adjective', reason: 'more-gerund-than' },
+  // very amusing
+  { match: '(so|very|extremely) [#Gerund]', group: 0, tag: 'Adjective', reason: 'so-gerund' },
+  // it was amusing
+  {
+    match: '(it|he|she|everything|something) #Adverb? was #Adverb? [#Gerund]',
+    group: 0,
+    tag: 'Adjective',
+    reason: 'it-was-gerund',
+  },
+  // found it amusing
+  { match: '(found|found) it #Adverb? [#Gerund]', group: 0, tag: 'Adjective', reason: 'found-it-gerund' },
+  // a bit amusing
+  { match: 'a (little|bit|wee) bit? [#Gerund]', group: 0, tag: 'Adjective', reason: 'a-bit-gerund' },
+  // jury is out - preposition ➔ adjective
+  { match: '#Copula #Adjective? [(out|in|through)]$', group: 0, tag: 'Adjective', reason: 'still-out' },
+  // shut the door
+  { match: '^[#Adjective] (the|your) #Noun', group: 0, tag: 'Infinitive', reason: 'shut-the' },
+];
+
+var _03Adjective = list$3;
+
+var _04Noun = [
+  // ==== Plural ====
+  //there are reasons
+  { match: 'there (are|were) #Adjective? [#PresentTense]', group: 0, tag: 'Plural', reason: 'there-are' },
+
+  // ==== Singular ====
+  //the sun
+  { match: '#Determiner [sun]', group: 0, tag: 'Singular', reason: 'the-sun' },
+  //did a 900, paid a 20
+  { match: '#Verb (a|an) [#Value]', group: 0, tag: 'Singular', reason: 'did-a-value' },
+  //'the can'
+  { match: 'the [(can|will|may)]', group: 0, tag: 'Singular', reason: 'the can' },
+  // ==== Possessive ====
+  //spencer kelly's
+  { match: '#FirstName #Acronym? (#Possessive && #LastName)', tag: 'Possessive', reason: 'name-poss' },
+  //Super Corp's fundraiser
+  { match: '#Organization+ #Possessive', tag: 'Possessive', reason: 'org-possessive' },
+  //Los Angeles's fundraiser
+  { match: '#Place+ #Possessive', tag: 'Possessive', reason: 'place-possessive' },
+  // assign all tasks
+  {
+    match: '(#Verb && !#Modal) (all|every|each|most|some|no) [#PresentTense]',
+    group: 0,
+    tag: 'Noun',
+    reason: 'all-presentTense',
+  },
+
+  //the above is clear
+  { match: '#Determiner [#Adjective] #Copula', group: 0, tag: 'Noun', reason: 'the-adj-is' },
+  //real evil is
+  { match: '#Adjective [#Adjective] #Copula', group: 0, tag: 'Noun', reason: 'adj-adj-is' },
+
+  // PresentTense/Noun ambiguities
+  // big dreams, critical thinking
+  // have big dreams
+  { match: '(had|have|#PastTense) #Adjective [#PresentTense]', group: 0, tag: 'Noun', reason: 'adj-presentTense' },
+  // excellent answer spencer
+  { match: '^#Adjective [#PresentTense]', group: 0, tag: 'Noun', reason: 'start adj-presentTense' },
+  // one big reason
+  { match: '#Value #Adjective [#PresentTense]', group: 0, tag: 'Noun', reason: 'one-big-reason' },
+  // won widespread support
+  { match: '#PastTense #Adjective+ [#PresentTense]', group: 0, tag: 'Noun', reason: 'won-wide-support' },
+  // many poses
+  { match: '(many|few|several|couple) [#PresentTense]', group: 0, tag: 'Noun', reason: 'many-poses' },
+  // very big dreams
+  { match: '#Adverb #Adjective [#PresentTense]', group: 0, tag: 'Noun', reason: 'very-big-dream' },
+  // good wait staff
+  { match: '#Adjective [#Infinitive] #Noun', group: 0, tag: 'Noun', reason: 'good-wait-staff' },
+  // adorable little store
+  { match: '#Adjective #Adjective [#PresentTense]', group: 0, tag: 'Noun', reason: 'adorable-little-store' },
+  // of basic training
+  { match: '#Preposition #Adjective [#PresentTense]', group: 0, tag: 'Noun', reason: 'of-basic-training' },
+  // early warning
+  { match: '#Adjective [#Gerund]', group: 0, tag: 'Noun', reason: 'early-warning' },
+  // justifiying higher costs
+  { match: '#Gerund #Adverb? #Comparative [#PresentTense]', group: 0, tag: 'Noun', reason: 'higher-costs' },
+  // do the dance
+  { match: '#Infinitive (this|that|the) [#Infinitive]', group: 0, tag: 'Noun', reason: 'do-this-dance' },
+
+  //his fine
+  { match: '(his|her|its) [#Adjective]', group: 0, tag: 'Noun', reason: 'his-fine' },
+  //some pressing issues
+  { match: 'some [#Verb] #Plural', group: 0, tag: 'Noun', reason: 'determiner6' },
+  //'more' is not always an adverb
+  { match: 'more #Noun', tag: 'Noun', reason: 'more-noun' },
+  { match: '(#Noun && @hasComma) #Noun (and|or) [#PresentTense]', group: 0, tag: 'Noun', reason: 'noun-list' }, //3 feet
+  { match: '(right|rights) of .', tag: 'Noun', reason: 'right-of' }, // a bit
+  { match: 'a [bit]', group: 0, tag: 'Noun', reason: 'bit-2' },
+  // my first thought
+  { match: '#Possessive #Ordinal [#PastTense]', group: 0, tag: 'Noun', reason: 'first-thought' },
+
+  //running-a-show
+  { match: '#Gerund #Determiner [#Infinitive]', group: 0, tag: 'Noun', reason: 'running-a-show' },
+  //the-only-reason
+  { match: '#Determiner #Adverb [#Infinitive]', group: 0, tag: 'Noun', reason: 'the-reason' },
+  //the nice swim
+  { match: '(the|this|those|these) #Adjective [#Verb]', group: 0, tag: 'Noun', reason: 'the-adj-verb' },
+  // the truly nice swim
+  { match: '(the|this|those|these) #Adverb #Adjective [#Verb]', group: 0, tag: 'Noun', reason: 'determiner4' },
+  //the orange is
+  { match: '#Determiner [#Adjective] (#Copula|#PastTense|#Auxiliary)', group: 0, tag: 'Noun', reason: 'the-adj-2' },
+  // a stream runs
+  { match: '(the|this|a|an) [#Infinitive] #Adverb? #Verb', group: 0, tag: 'Noun', reason: 'determiner5' },
+  //the test string
+  { match: '#Determiner [#Infinitive] #Noun', group: 0, tag: 'Noun', reason: 'determiner7' },
+  //a nice deal
+  { match: '#Determiner #Adjective #Adjective? [#Infinitive]', group: 0, tag: 'Noun', reason: 'a-nice-inf' },
+  //the wait to vote
+  { match: 'the [#Verb] #Preposition .', group: 0, tag: 'Noun', reason: 'determiner1' },
+  //a sense of
+  { match: '#Determiner [#Verb] of', group: 0, tag: 'Noun', reason: 'the-verb-of' },
+  //next career move
+  { match: '#Adjective #Noun+ [#Infinitive] #Copula', group: 0, tag: 'Noun', reason: 'career-move' },
+  //the threat of force
+  { match: '#Determiner #Noun of [#Verb]', group: 0, tag: 'Noun', reason: 'noun-of-noun' },
+  //the western line
+  {
+    match: '#Determiner [(western|eastern|northern|southern|central)] #Noun',
+    group: 0,
+    tag: 'Noun',
+    reason: 'western-line',
+  },
+
+  //her polling
+  { match: '#Possessive [#Gerund]', group: 0, tag: 'Noun', reason: 'her-polling' },
+  //her fines
+  { match: '(his|her|its) [#PresentTense]', group: 0, tag: 'Noun', reason: 'its-polling' },
+
+  //linear algebra
+  {
+    match: '(#Determiner|#Value) [(linear|binary|mobile|lexical|technical|computer|scientific|formal)] #Noun',
+    group: 0,
+    tag: 'Noun',
+    reason: 'technical-noun',
+  },
+  // a blown motor
+  { match: '(the|those|these|a|an) [#Participle] #Noun', group: 0, tag: 'Adjective', reason: 'blown-motor' },
+  // walk the walk
+  { match: '(the|those|these|a|an) #Adjective? [#Infinitive]', group: 0, tag: 'Noun', reason: 'det-inf' },
+  { match: '(the|those|these|a|an) #Adjective? [#PresentTense]', group: 0, tag: 'Noun', reason: 'det-pres' },
+  { match: '(the|those|these|a|an) #Adjective? [#PastTense]', group: 0, tag: 'Noun', reason: 'det-past' },
+
+  // this swimming
+  { match: '(this|that) [#Gerund]', group: 0, tag: 'Noun', reason: 'this-gerund' },
+  // at some point
+  { match: 'at some [#Infinitive]', group: 0, tag: 'Noun', reason: 'at-some-inf' },
+
+  //air-flow
+  { match: '(#Noun && @hasHyphen) #Verb', tag: 'Noun', reason: 'hyphen-verb' },
+  //is no walk
+  { match: 'is no [#Verb]', group: 0, tag: 'Noun', reason: 'is-no-verb' },
+  //different views than
+  { match: '[#Verb] than', group: 0, tag: 'Noun', reason: 'correction' },
+  // goes to sleep
+  { match: '(go|goes|went) to [#Infinitive]', group: 0, tag: 'Noun', reason: 'goes-to-verb' },
+  //a close watch on
+  { match: '(a|an) #Noun [#Infinitive] (#Preposition|#Noun)', group: 0, tag: 'Noun', reason: 'a-noun-inf' },
+  //a tv show
+  { match: '(a|an) #Noun [#Infinitive]$', group: 0, tag: 'Noun', reason: 'a-noun-inf2' },
+  //do so
+  { match: 'do [so]', group: 0, tag: 'Noun', reason: 'so-noun' },
+  //is mark hughes
+  { match: '#Copula [#Infinitive] #Noun', group: 0, tag: 'Noun', reason: 'is-pres-noun' },
+  //a close
+  { match: '#Determiner #Adverb? [close]', group: 0, tag: 'Adjective', reason: 'a-close' },
+  // what the hell
+  { match: '#Determiner [(shit|damn|hell)]', group: 0, tag: 'Noun', reason: 'swears-noun' },
+  // the staff were
+  { match: '(the|these) [#Singular] (were|are)', group: 0, tag: 'Plural', reason: 'singular-were' },
+  // running for congress
+  { match: '#Gerund #Adjective? for [#Infinitive]', group: 0, tag: 'Noun', reason: 'running-for' },
+  // running to work
+  { match: '#Gerund #Adjective to [#Infinitive]', group: 0, tag: 'Noun', reason: 'running-to' },
+  // any questions for
+  { match: '(many|any|some|several) [#PresentTense] for', group: 0, tag: 'Noun', reason: 'any-verbs-for' },
+  // have fun
+  { match: `(have|had) [#Adjective] #Preposition .`, group: 0, tag: 'Noun', reason: 'have-fun' },
+  // co-founder
+  { match: `co #Noun`, tag: 'Actor', reason: 'co-noun' },
+  // to facilitate gas exchange with
+  { match: `to #PresentTense #Noun [#PresentTense] #Preposition`, group: 0, tag: 'Noun', reason: 'gas-exchange' },
+  // a comdominium, or simply condo
+  { match: `a #Noun+ or #Adverb+? [#Verb]`, group: 0, tag: 'Noun', reason: 'noun-or-noun' },
+
+  // in various sensory functions
+  // {
+  //   match: `#Preposition #Determiner #Singular [#PresentTense]`,
+  //   group: 0,
+  //   tag: 'Noun',
+  //   reason: 'various-word-functions',
+  // },
+];
+
+const adjectives = `(${_ambig.adverbAdjective.join('|')})`;
+
+var _05Adverb = [
+  //still good
+  { match: '[still] #Adjective', group: 0, tag: 'Adverb', reason: 'still-advb' },
+  //still make
+  { match: '[still] #Verb', group: 0, tag: 'Adverb', reason: 'still-verb' },
+  // so hot
+  { match: '[so] #Adjective', group: 0, tag: 'Adverb', reason: 'so-adv' },
+  // way hotter
+  { match: '[way] #Comparative', group: 0, tag: 'Adverb', reason: 'way-adj' },
+  // way too hot
+  { match: '[way] #Adverb #Adjective', group: 0, tag: 'Adverb', reason: 'way-too-adj' },
+  // all singing
+  { match: '[all] #Verb', group: 0, tag: 'Adverb', reason: 'all-verb' },
+  // sing like an angel
+  { match: '(#Verb && !#Modal) [like]', group: 0, tag: 'Adverb', reason: 'verb-like' },
+  //barely even walk
+  { match: '(barely|hardly) even', tag: 'Adverb', reason: 'barely-even' },
+  //even held
+  { match: '[even] #Verb', group: 0, tag: 'Adverb', reason: 'even-walk' },
+  // even left
+  { match: 'even left', tag: '#Adverb #Verb', reason: 'even-left' },
+  //cheering hard - dropped -ly's
+  {
+    match: '(#PresentTense && !#Copula) [(hard|quick|long|bright|slow|fast|backwards|forwards)]',
+    group: 0,
+    tag: 'Adverb',
+    reason: 'lazy-ly',
+  },
+  // much appreciated
+  { match: '[much] #Adjective', group: 0, tag: 'Adverb', reason: 'bit-1' },
+  // is well
+  { match: '#Copula [#Adverb]$', group: 0, tag: 'Adjective', reason: 'is-well' },
+  // a bit cold
+  { match: 'a [(little|bit|wee) bit?] #Adjective', group: 0, tag: 'Adverb', reason: 'a-bit-cold' },
+  // dark green
+  { match: `[${adjectives}] #Adjective`, group: 0, tag: 'Adverb', reason: 'dark-green' },
+  // kinda sparkly
+  { match: `#Adverb [#Adverb]$`, group: 0, tag: 'Adjective', reason: 'kinda-sparkly' },
+  { match: `#Adverb [#Adverb] (and|or|then)`, group: 0, tag: 'Adjective', reason: 'kinda-sparkly-and' },
+];
+
+var _06Value = [
+  // ==== PhoneNumber ====
+  //1 800 ...
+  { match: '1 #Value #PhoneNumber', tag: 'PhoneNumber', reason: '1-800-Value' },
+  //(454) 232-9873
+  { match: '#NumericValue #PhoneNumber', tag: 'PhoneNumber', reason: '(800) PhoneNumber' },
+
+  // ==== Currency ====
+  // chinese yuan
+  { match: '#Demonym #Currency', tag: 'Currency', reason: 'demonym-currency' },
+  // ==== Ordinal ====
+  { match: '[second] #Noun', group: 0, tag: 'Ordinal', reason: 'second-noun' },
+  // ==== Unit ====
+  //5 yan
+  { match: '#Value+ [#Currency]', group: 0, tag: 'Unit', reason: '5-yan' },
+  { match: '#Value [(foot|feet)]', group: 0, tag: 'Unit', reason: 'foot-unit' },
+
+  //minus 7
+  { match: '(minus|negative) #Value', tag: 'Value', reason: 'minus-value' },
+  //5 kg.
+  { match: '#Value [#Abbreviation]', group: 0, tag: 'Unit', reason: 'value-abbr' },
+  { match: '#Value [k]', group: 0, tag: 'Unit', reason: 'value-k' },
+  { match: '#Unit an hour', tag: 'Unit', reason: 'unit-an-hour' },
+  //seven point five
+  { match: '#Value (point|decimal) #Value', tag: 'Value', reason: 'value-point-value' },
+  // ten bucks
+  { match: '(#Value|a) [(buck|bucks|grand)]', group: 0, tag: 'Currency', reason: 'value-bucks' },
+  //quarter million
+  { match: '#Determiner [(half|quarter)] #Ordinal', group: 0, tag: 'Value', reason: 'half-ordinal' },
+  { match: 'a #Value', tag: 'Value', reason: 'a-value' },
+
+  // ==== Money ====
+  { match: '[#Value+] #Currency', group: 0, tag: 'Money', reason: '15 usd' },
+  // thousand and two
+  {
+    match: `(hundred|thousand|million|billion|trillion|quadrillion)+ and #Value`,
+    tag: 'Value',
+    reason: 'magnitude-and-value',
+  },
+  //'a/an' can mean 1 - "a hour"
+  {
+    match: '!once [(a|an)] (#Duration|hundred|thousand|million|billion|trillion)',
+    group: 0,
+    tag: 'Value',
+    reason: 'a-is-one',
+  },
+];
+
+const verbs = `(${_ambig.personVerb.join('|')})`;
+
+let list$2 = [
+  // adj -> gerund
+  // amusing his aunt
+  { match: '[#Adjective] #Possessive #Noun', group: 0, tag: 'Verb', reason: 'gerund-his-noun' },
+  // loving you
+  { match: '[#Adjective] (us|you)', group: 0, tag: 'Gerund', reason: 'loving-you' },
+  // slowly stunning
+  { match: '(slowly|quickly) [#Adjective]', group: 0, tag: 'Gerund', reason: 'slowly-adj' },
+  // like
+  { match: '(#Modal|i|they|we|do) not? [like]', group: 0, tag: 'PresentTense', reason: 'modal-like' },
+  // do not simply like
+  {
+    match: 'do (simply|just|really|not)+ [(#Adjective|like)]',
+    group: 0,
+    tag: 'Verb',
+    reason: 'do-simply-like',
+  },
+  // does mean
+  { match: 'does (#Adverb|not)? [#Adjective]', group: 0, tag: 'PresentTense', reason: 'does-mean' },
+  // i mean
+  { match: 'i (#Adverb|do)? not? [mean]', group: 0, tag: 'PresentTense', reason: 'i-mean' },
+  // { match: '!are (i|you|we) (#Adverb|do)? [#Adjective]', group: 0, tag: 'PresentTense', reason: 'i-mean' },
+  // ==== Tense ====
+  //he left
+  { match: '#Noun #Adverb? [left]', group: 0, tag: 'PastTense', reason: 'left-verb' },
+  //this rocks
+  { match: '(this|that) [#Plural]', group: 0, tag: 'PresentTense', reason: 'this-verbs' },
+
+  // ==== Auxiliary ====
+  //was walking
+  { match: `[#Copula (#Adverb|not)+?] (#Gerund|#PastTense)`, group: 0, tag: 'Auxiliary', reason: 'copula-walking' },
+  //support a splattering of auxillaries before a verb
+  { match: `[(has|had) (#Adverb|not)+?] #PastTense`, group: 0, tag: 'Auxiliary', reason: 'had-walked' },
+  //would walk
+  { match: `#Adverb+? [(#Modal|did)+ (#Adverb|not)+?] #Verb`, group: 0, tag: 'Auxiliary', reason: 'modal-verb' },
+  //would have had
+  {
+    match: `[#Modal (#Adverb|not)+? have (#Adverb|not)+? had (#Adverb|not)+?] #Verb`,
+    group: 0,
+    tag: 'Auxiliary',
+    reason: 'would-have',
+  },
+  //would be walking
+  // { match: `#Modal (#Adverb|not)+? be (#Adverb|not)+? #Verb`, group: 0, tag: 'Auxiliary', reason: 'would-be' },
+  //had been walking
+  // {
+  //   match: `(#Modal|had|has) (#Adverb|not)+? been (#Adverb|not)+? #Verb`,
+  //   group: 0,
+  //   tag: 'Auxiliary',
+  //   reason: 'had-been',
+  // },
+  //support a splattering of auxillaries before a verb
+  { match: `[(has|had) (#Adverb|not)+?] #PastTense`, group: 0, tag: 'Auxiliary', reason: 'had-walked' },
+  // will walk
+  { match: '[(do|does|will|have|had)] (not|#Adverb)+? #Verb', group: 0, tag: 'Auxiliary', reason: 'have-had' },
+  // about to go
+  { match: '[about to] #Adverb? #Verb', group: 0, tag: ['Auxiliary', 'Verb'], reason: 'about-to' },
+  //would be walking
+  { match: `#Modal (#Adverb|not)+? be (#Adverb|not)+? #Verb`, group: 0, tag: 'Auxiliary', reason: 'would-be' },
+  //were being run
+  { match: `(were|was) being [#PresentTense]`, group: 0, tag: 'PastTense', reason: 'was-being' },
+  //have run
+  // { match: `have #PresentTense`, group: 0, tag: 'PastTense', reason: 'have-vb' },
+  //would have had
+  {
+    match: `[#Modal (#Adverb|not)+? have (#Adverb|not)+? had (#Adverb|not)+?] #Verb`,
+    group: 0,
+    tag: 'Auxiliary',
+    reason: 'would-have',
+  },
+  //had been walking
+  {
+    match: `(#Modal|had|has) (#Adverb|not)+? been (#Adverb|not)+? #Verb`,
+    group: 0,
+    tag: 'Auxiliary',
+    reason: 'had-been',
+  },
+
+  // was being driven
+  { match: '[(be|being|been)] #Participle', group: 0, tag: 'Auxiliary', reason: 'being-foo' },
+
+  // ==== Phrasal ====
+  //'foo-up'
+  { match: '(#Verb && @hasHyphen) up', tag: 'PhrasalVerb', reason: 'foo-up' },
+  { match: '(#Verb && @hasHyphen) off', tag: 'PhrasalVerb', reason: 'foo-off' },
+  { match: '(#Verb && @hasHyphen) over', tag: 'PhrasalVerb', reason: 'foo-over' },
+  { match: '(#Verb && @hasHyphen) out', tag: 'PhrasalVerb', reason: 'foo-out' },
+  //fall over
+  { match: '#PhrasalVerb [#PhrasalVerb]', group: 0, tag: 'Particle', reason: 'phrasal-particle' },
+  // went on for
+  { match: '(lived|went|crept|go) [on] for', group: 0, tag: 'PhrasalVerb', reason: 'went-on' },
+  //back it up
+  {
+    match: '#Verb (him|her|it|us|himself|herself|itself|everything|something) [(up|down)]',
+    group: 0,
+    tag: 'Adverb',
+    reason: 'phrasal-pronoun-advb',
+  },
+
+  // ==== Copula ====
+  //will be running (not copula)
+  { match: '[will #Adverb? not? #Adverb? be] #Gerund', group: 0, tag: 'Copula', reason: 'will-be-copula' },
+  //for more complex forms, just tag 'be'
+  { match: 'will #Adverb? not? #Adverb? [be] #Adjective', group: 0, tag: 'Copula', reason: 'be-copula' },
+
+  // ==== Infinitive ====
+  //march to
+  { match: '[march] (up|down|back|to|toward)', group: 0, tag: 'Infinitive', reason: 'march-to' },
+  //must march
+  { match: '#Modal [march]', group: 0, tag: 'Infinitive', reason: 'must-march' },
+  //let him glue
+  {
+    match: '(let|make|made) (him|her|it|#Person|#Place|#Organization)+ [#Singular] (a|an|the|it)',
+    group: 0,
+    tag: 'Infinitive',
+    reason: 'let-him-glue',
+  },
+
+  //he quickly foo
+  // { match: '#Noun #Adverb [#Noun]', group: 0, tag: 'Verb', reason: 'quickly-foo' },
+  //will secure our
+  { match: 'will [#Adjective]', group: 0, tag: 'Verb', reason: 'will-adj' },
+  //he disguised the thing
+  { match: '#Pronoun [#Adjective] #Determiner #Adjective? #Noun', group: 0, tag: 'Verb', reason: 'he-adj-the' },
+
+  //is eager to go
+  { match: '#Copula [#Adjective to] #Verb', group: 0, tag: 'Verb', reason: 'adj-to' },
+  // open the door
+  { match: '[open] #Determiner', group: 0, tag: 'Infinitive', reason: 'open-the' },
+  // compromises are possible
+  { match: '[#PresentTense] (are|were|was) #Adjective', group: 0, tag: 'Plural', reason: 'compromises-are-possible' },
+
+  // would wade
+  { match: `#Modal [${verbs}]`, group: 0, tag: 'Verb', reason: 'would-mark' },
+  { match: `#Adverb [${verbs}]`, group: 0, tag: 'Verb', reason: 'really-mark' },
+  //to mark
+  { match: '(to|#Modal) [mark]', group: 0, tag: 'PresentTense', reason: 'to-mark' },
+  // checkmate is
+  { match: '^[#Infinitive] (is|was)', group: 0, tag: 'Noun', reason: 'checkmate-is' },
+  // wade smith
+  { match: `${verbs} #Person`, tag: 'Person', reason: 'rob-smith' },
+  // wade m. Cooper
+  { match: `${verbs} #Acronym #ProperNoun`, tag: 'Person', reason: 'rob-a-smith' },
+
+  // damn them
+  { match: '[shit] (#Determiner|#Possessive|them)', group: 0, tag: 'Verb', reason: 'swear1-verb' },
+  { match: '[damn] (#Determiner|#Possessive|them)', group: 0, tag: 'Verb', reason: 'swear2-verb' },
+  { match: '[fuck] (#Determiner|#Possessive|them)', group: 0, tag: 'Verb', reason: 'swear3-verb' },
+];
+
+var _07Verbs = list$2;
+
+let list$1 = [
+  // ==== Region ====
+  //West Norforlk
+  {
+    match: '(west|north|south|east|western|northern|southern|eastern)+ #Place',
+
+    tag: 'Region',
+    reason: 'west-norfolk',
+  },
+  //some us-state acronyms (exlude: al, in, la, mo, hi, me, md, ok..)
+  {
+    match: '#City [(al|ak|az|ar|ca|ct|dc|fl|ga|id|il|nv|nh|nj|ny|oh|pa|sc|tn|tx|ut|vt|pr)]',
+    group: 0,
+    tag: 'Region',
+    reason: 'us-state',
+  },
+  // portland oregon
+  {
+    match: 'portland [or]',
+    group: 0,
+    tag: 'Region',
+    reason: 'portland-or',
+  },
+  //Foo District
+  {
+    match: '#ProperNoun+ (district|region|province|county|prefecture|municipality|territory|burough|reservation)',
+    tag: 'Region',
+    reason: 'foo-district',
+  },
+  //District of Foo
+  {
+    match: '(district|region|province|municipality|territory|burough|state) of #ProperNoun',
+    tag: 'Region',
+    reason: 'district-of-Foo',
+  },
+  // in Foo California
+  {
+    match: 'in [#ProperNoun] #Place',
+    group: 0,
+    tag: 'Place',
+    reason: 'propernoun-place',
+  },
+
+  // ==== Address ====
+  {
+    match: '#Value #Noun (st|street|rd|road|crescent|cr|way|tr|terrace|avenue|ave)',
+    tag: 'Address',
+    reason: 'address-st',
+  },
+
+  // in houston
+  // { match: `in [${places}]`, group: 0, tag: 'Place', reason: 'in-paris' },
+  // { match: `near [${places}]`, group: 0, tag: 'Place', reason: 'near-paris' },
+  // { match: `at [${places}]`, group: 0, tag: 'Place', reason: 'at-paris' },
+  // { match: `from [${places}]`, group: 0, tag: 'Place', reason: 'from-paris' },
+  // { match: `to [${places}]`, group: 0, tag: 'Place', reason: 'to-paris' },
+  // { match: `#Place [${places}]`, group: 0, tag: 'Place', reason: 'tokyo-paris' },
+  // // houston texas
+  // { match: `[${places}] #Place`, group: 0, tag: 'Place', reason: 'paris-france' },
+];
+var _08Place = list$1;
+
+var _09Org = [
+  //John & Joe's
+  { match: '#Noun (&|n) #Noun', tag: 'Organization', reason: 'Noun-&-Noun' },
+  // teachers union of Ontario
+  { match: '#Organization of the? #ProperNoun', tag: 'Organization', reason: 'org-of-place', safe: true },
+  //walmart USA
+  { match: '#Organization #Country', tag: 'Organization', reason: 'org-country' },
+  //organization
+  { match: '#ProperNoun #Organization', tag: 'Organization', reason: 'titlecase-org' },
+  //FitBit Inc
+  { match: '#ProperNoun (ltd|co|inc|dept|assn|bros)', tag: 'Organization', reason: 'org-abbrv' },
+  // the OCED
+  { match: 'the [#Acronym]', group: 0, tag: 'Organization', reason: 'the-acronym', safe: true },
+  // global trade union
+  {
+    match: '(world|global|international|national|#Demonym) #Organization',
+
+    tag: 'Organization',
+    reason: 'global-org',
+  },
+  // schools
+  { match: '#Noun+ (public|private) school', tag: 'School', reason: 'noun-public-school' },
+];
+
+const nouns = `(${_ambig.personNoun.join('|')})`;
+const months = `(${_ambig.personMonth.join('|')})`;
+const places = `(${_ambig.personPlace.join('|')})`;
+
+let list = [
+  // ==== Honorific ====
+  { match: '[(1st|2nd|first|second)] #Honorific', group: 0, tag: 'Honorific', reason: 'ordinal-honorific' },
+  {
+    match: '[(private|general|major|corporal|lord|lady|secretary|premier)] #Honorific? #Person',
+    group: 0,
+    tag: 'Honorific',
+    reason: 'ambg-honorifics',
+  },
+
+  // ==== FirstNames ====
+  //is foo Smith
+  { match: '#Copula [(#Noun|#PresentTense)] #LastName', group: 0, tag: 'FirstName', reason: 'copula-noun-lastname' },
+  //pope francis
+  { match: '(lady|queen|sister) #ProperNoun', tag: 'FemaleName', reason: 'lady-titlecase', safe: true },
+  { match: '(king|pope|father) #ProperNoun', tag: 'MaleName', reason: 'pope-titlecase', safe: true },
+  //ambiguous-but-common firstnames
+  {
+    match: '[(will|may|april|june|said|rob|wade|ray|rusty|drew|miles|jack|chuck|randy|jan|pat|cliff|bill)] #LastName',
+    group: 0,
+    tag: 'FirstName',
+    reason: 'maybe-lastname',
+  },
+
+  // ==== Nickname ====
+  // Dwayne 'the rock' Johnson
+  { match: '#FirstName [#Determiner #Noun] #LastName', group: 0, tag: 'NickName', reason: 'first-noun-last' },
+
+  //my buddy
+  { match: '#Possessive [#FirstName]', group: 0, tag: 'Person', reason: 'possessive-name' },
+  {
+    match: '#ProperNoun (b|c|d|e|f|g|h|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z) #ProperNoun',
+    tag: 'Person',
+    reason: 'titlecase-acronym-titlecase',
+    safe: true,
+  }, //ludwig van beethovan
+  { match: '#Acronym #LastName', tag: 'Person', reason: 'acronym-latname', safe: true }, //jk rowling
+  { match: '#Person (jr|sr|md)', tag: 'Person', reason: 'person-honorific' }, //peter II
+  { match: '#Person #Person the? #RomanNumeral', tag: 'Person', reason: 'roman-numeral' }, //'Professor Fink', 'General McCarthy'
+  { match: '#FirstName [/^[^aiurck]$/]', group: 0, tag: ['Acronym', 'Person'], reason: 'john-e' }, //Doctor john smith jr
+  //general pearson
+  { match: '#Honorific #Person', tag: 'Person', reason: 'honorific-person' },
+  //remove single 'mr'
+  { match: '#Honorific #Acronym', tag: 'Person', reason: 'Honorific-TitleCase' },
+  //j.k Rowling
+  { match: '#Noun van der? #Noun', tag: 'Person', reason: 'van der noun', safe: true },
+  //king of spain
+  { match: '(king|queen|prince|saint|lady) of #Noun', tag: 'Person', reason: 'king-of-noun', safe: true },
+  //lady Florence
+  { match: '(prince|lady) #Place', tag: 'Person', reason: 'lady-place' },
+  //saint Foo
+  { match: '(king|queen|prince|saint) #ProperNoun', tag: 'Person', reason: 'saint-foo' },
+  //Foo U Ford
+  { match: '[#ProperNoun] #Person', group: 0, tag: 'Person', reason: 'proper-person', safe: true },
+  // al sharpton
+  { match: 'al (#Person|#ProperNoun)', tag: 'Person', reason: 'al-borlen', safe: true },
+  //ferdinand de almar
+  { match: '#FirstName de #Noun', tag: 'Person', reason: 'bill-de-noun' },
+  //Osama bin Laden
+  { match: '#FirstName (bin|al) #Noun', tag: 'Person', reason: 'bill-al-noun' },
+  //John L. Foo
+  { match: '#FirstName #Acronym #ProperNoun', tag: 'Person', reason: 'bill-acronym-title' },
+  //Andrew Lloyd Webber
+  { match: '#FirstName #FirstName #ProperNoun', tag: 'Person', reason: 'bill-firstname-title' },
+  //Mr Foo
+  { match: '#Honorific #FirstName? #ProperNoun', tag: 'Person', reason: 'dr-john-Title' },
+  //peter the great
+  { match: '#FirstName the #Adjective', tag: 'Person', reason: 'name-the-great' },
+
+  //very common-but-ambiguous lastnames
+  {
+    match: '#FirstName (green|white|brown|hall|young|king|hill|cook|gray|price)',
+
+    tag: 'Person',
+    reason: 'bill-green',
+  },
+  // faith smith
+  { match: `${nouns} #Person`, tag: 'Person', reason: 'ray-smith', safe: true },
+  // faith m. Smith
+  { match: `${nouns} #Acronym? #ProperNoun`, tag: 'Person', reason: 'ray-a-smith', safe: true },
+  //give to april
+  {
+    match: `#Infinitive #Determiner? #Adjective? #Noun? (to|for) [${months}]`,
+    group: 0,
+    tag: 'Person',
+    reason: 'ambig-person',
+  },
+  // remind june
+  { match: `#Infinitive [${months}]`, group: 0, tag: 'Person', reason: 'infinitive-person' },
+  // may waits for
+  // { match: `[${months}] #PresentTense for`, group: 0, tag: 'Person', reason: 'ambig-active-for' },
+  // may waits to
+  // { match: `[${months}] #PresentTense to`, group: 0, tag: 'Person', reason: 'ambig-active-to' },
+  // april will
+  { match: `[${months}] #Modal`, group: 0, tag: 'Person', reason: 'ambig-modal' },
+  // may be
+  { match: `[may] be`, group: 0, tag: 'Verb', reason: 'may-be' },
+  // would april
+  { match: `#Modal [${months}]`, group: 0, tag: 'Person', reason: 'modal-ambig' },
+  // it is may
+  { match: `#Copula [${months}]`, group: 0, tag: 'Person', reason: 'is-may' },
+  // may is
+  { match: `[${months}] #Copula`, group: 0, tag: 'Person', reason: 'may-is' },
+  // with april
+  { match: `that [${months}]`, group: 0, tag: 'Person', reason: 'that-month' },
+  // with april
+  { match: `with [${months}]`, group: 0, tag: 'Person', reason: 'with-month' },
+  // for april
+  { match: `for [${months}]`, group: 0, tag: 'Person', reason: 'for-month' },
+  // this april
+  { match: `this [${months}]`, group: 0, tag: 'Month', reason: 'this-may' }, //maybe not 'this'
+  // next april
+  { match: `next [${months}]`, group: 0, tag: 'Month', reason: 'next-may' },
+  // last april
+  { match: `last [${months}]`, group: 0, tag: 'Month', reason: 'last-may' },
+  // wednesday april
+  { match: `#Date [${months}]`, group: 0, tag: 'Month', reason: 'date-may' },
+  // may 5th
+  { match: `[${months}] the? #Value`, group: 0, tag: 'Month', reason: 'may-5th' },
+  // 5th of may
+  { match: `#Value of [${months}]`, group: 0, tag: 'Month', reason: '5th-of-may' },
+  // dick van dyke
+  { match: '#ProperNoun (van|al|bin) #ProperNoun', tag: 'Person', reason: 'title-van-title', safe: true },
+  //jose de Sucre
+  { match: '#ProperNoun (de|du) la? #ProperNoun', tag: 'Person', reason: 'title-de-title', safe: true },
+  //Jani K. Smith
+  { match: '#Singular #Acronym #LastName', tag: '#Person', reason: 'title-acro-noun', safe: true },
+  //John Foo
+  { match: '#FirstName (#Noun && #ProperNoun) #ProperNoun?', tag: 'Person', reason: 'firstname-titlecase' },
+  //Joe K. Sombrero
+  { match: '#FirstName #Acronym #Noun', tag: 'Person', reason: 'n-acro-noun', safe: true },
+  //Anthony de Marco
+  { match: '#FirstName [(de|di|du|van|von) #Person]', group: 0, tag: 'LastName', reason: 'de-firstname' },
+  // Paris Berelc
+  { match: `[${places}] (#ProperNoun && !#Place)`, group: 0, tag: 'FirstName', reason: 'place-firstname' },
+];
+var _10People = list;
+
+let matches = [];
+matches = matches.concat(_01Misc);
+matches = matches.concat(_02Dates);
+matches = matches.concat(_03Adjective);
+matches = matches.concat(_04Noun);
+matches = matches.concat(_05Adverb);
+matches = matches.concat(_06Value);
+matches = matches.concat(_07Verbs);
+matches = matches.concat(_08Place);
+matches = matches.concat(_09Org);
+matches = matches.concat(_10People);
+
+// cache the easier conditions up-front
+const cacheRequired = function (reg) {
+  let needTags = [];
+  let needWords = [];
+  reg.forEach(obj => {
+    if (obj.optional === true || obj.negative === true) {
+      return
+    }
+    if (obj.tag !== undefined) {
+      needTags.push(obj.tag);
+    }
+    if (obj.word !== undefined) {
+      needWords.push(obj.word);
+    }
+  });
+  return { tags: _unique(needTags), words: _unique(needWords) }
+};
+
+// for speed, enumerate (a|b|c) to three matches
+const allLists = function (m) {
+  let more = [];
+  let lists = m.reg.filter(r => r.fastOr !== undefined);
+  if (lists.length === 1) {
+    let i = m.reg.findIndex(r => r.fastOr !== undefined);
+    Object.keys(m.reg[i].fastOr).forEach(w => {
+      let newM = Object.assign({}, m);
+      newM.reg = newM.reg.slice(0);
+      newM.reg[i] = Object.assign({}, newM.reg[i]);
+      newM.reg[i].word = w;
+      delete newM.reg[i].operator;
+      delete newM.reg[i].fastOr;
+      // newM.reason += '-' + w
+      more.push(newM);
+    });
+  }
+  return more
+};
+
+// parse them
+let all = [];
+matches.forEach(m => {
+  m.reg = matchSyntax(m.match);
+  let enumerated = allLists(m);
+  if (enumerated.length > 0) {
+    all = all.concat(enumerated);
+  } else {
+    all.push(m);
+    // console.log(m)
+  }
+});
+
+all.forEach(m => {
+  m.required = cacheRequired(m.reg);
+  return m
+});
+
+// console.log(all.length)
+// console.log(all[all.length - 1])
+var matches_1 = all;
+
+// return intersection of array-of-arrays
+const hasEvery = function (chances) {
+  if (chances.length === 0) {
+    return []
+  }
+  let obj = {};
+  chances.forEach(arr => {
+    arr = _unique(arr);
+    for (let i = 0; i < arr.length; i++) {
+      obj[arr[i]] = obj[arr[i]] || 0;
+      obj[arr[i]] += 1;
+    }
+  });
+  let res = Object.keys(obj);
+  res = res.filter(k => obj[k] === chances.length);
+  res = res.map(num => Number(num));
+  return res
+};
+
+const runner = function (doc) {
+  //find phrases to try for each match
+  matches_1.forEach(m => {
+    let allChances = [];
+    m.required.words.forEach(w => {
+      allChances.push(doc._cache.words[w] || []);
+    });
+    m.required.tags.forEach(tag => {
+      allChances.push(doc._cache.tags[tag] || []);
+    });
+
+    let worthIt = hasEvery(allChances);
+    if (worthIt.length === 0) {
+      return
+    }
+
+    let phrases = worthIt.map(index => doc.list[index]);
+    let tryDoc = doc.buildFrom(phrases);
+    // phrases getting tagged
+    let match = tryDoc.match(m.reg, m.group);
+    if (match.found) {
+      if (m.safe === true) {
+        match.tagSafe(m.tag, m.reason);
+      } else {
+        match.tag(m.tag, m.reason);
+      }
+    }
+  });
+};
+var runner_1 = runner;
+
+// runner: 250ms
+// misc: 40ms
+
+//sequence of match-tag statements to correct mis-tags
+const corrections = function (doc) {
+  runner_1(doc);
+  fixMisc(doc);
+  return doc
+};
+var _04Correction = corrections;
+
+/** POS-tag all terms in this document */
+const tagger = function (doc) {
+  let terms = doc.termList();
+  // check against any known-words
+  doc = _01Init(doc, terms);
+  // everything has gotta be something. ¯\_(:/)_/¯
+  doc = _02Fallbacks(doc, terms);
+  // support "didn't" & "spencer's"
+  doc = _03Contractions(doc);
+  //set our cache, to speed things up
+  doc.cache();
+  // wiggle-around the results, so they make more sense
+  doc = _04Correction(doc);
+  // remove our cache, as it's invalidated now
+  doc.uncache();
+  // run any user-given tagger functions
+  doc.world.taggers.forEach(fn => {
+    fn(doc);
+  });
+  return doc
+};
+var _02Tagger = tagger;
+
+const addMethod$a = function (Doc) {
+  /**  */
+  class Abbreviations extends Doc {
+    stripPeriods() {
+      this.termList().forEach(t => {
+        if (t.tags.Abbreviation === true && t.next) {
+          t.post = t.post.replace(/^\./, '');
+        }
+        let str = t.text.replace(/\./, '');
+        t.set(str);
+      });
+      return this
+    }
+    addPeriods() {
+      this.termList().forEach(t => {
+        t.post = t.post.replace(/^\./, '');
+        t.post = '.' + t.post;
+      });
+      return this
+    }
+  }
+  Abbreviations.prototype.unwrap = Abbreviations.prototype.stripPeriods;
+
+  Doc.prototype.abbreviations = function (n) {
+    let match = this.match('#Abbreviation');
+    if (typeof n === 'number') {
+      match = match.get(n);
+    }
+    return new Abbreviations(match.list, this, this.world)
+  };
+  return Doc
+};
+var Abbreviations = addMethod$a;
+
+const hasPeriod = /\./;
+
+const addMethod$9 = function (Doc) {
+  /**  */
+  class Acronyms extends Doc {
+    stripPeriods() {
+      this.termList().forEach(t => {
+        let str = t.text.replace(/\./g, '');
+        t.set(str);
+      });
+      return this
+    }
+    addPeriods() {
+      this.termList().forEach(t => {
+        let str = t.text.replace(/\./g, '');
+        str = str.split('').join('.');
+        // don't add a end-period if there's a sentence-end one
+        if (hasPeriod.test(t.post) === false) {
+          str += '.';
+        }
+        t.set(str);
+      });
+      return this
+    }
+  }
+  Acronyms.prototype.unwrap = Acronyms.prototype.stripPeriods;
+  Acronyms.prototype.strip = Acronyms.prototype.stripPeriods;
+
+  Doc.prototype.acronyms = function (n) {
+    let match = this.match('#Acronym');
+    if (typeof n === 'number') {
+      match = match.get(n);
+    }
+    return new Acronyms(match.list, this, this.world)
+  };
+  return Doc
+};
+var Acronyms = addMethod$9;
+
+const addMethod$8 = function (Doc) {
+  /** split into approximate sub-sentence phrases */
+  Doc.prototype.clauses = function (n) {
+    // an awkward way to disambiguate a comma use
+    let commas = this.if('@hasComma')
+      .notIf('@hasComma @hasComma') //fun, cool...
+      .notIf('@hasComma . .? (and|or) .') //cool, and fun
+      .notIf('(#City && @hasComma) #Country') //'toronto, canada'
+      .notIf('(#WeekDay && @hasComma) #Date') //'tuesday, march 2nd'
+      .notIf('(#Date && @hasComma) #Year') //'july 6, 1992'
+      .notIf('@hasComma (too|also)$') //at end of sentence
+      .match('@hasComma');
+    let found = this.splitAfter(commas);
+
+    let quotes = found.quotations();
+    found = found.splitOn(quotes);
+
+    let parentheses = found.parentheses();
+    found = found.splitOn(parentheses);
+
+    // it is cool and it is ..
+    let conjunctions = found.if('#Copula #Adjective #Conjunction (#Pronoun|#Determiner) #Verb').match('#Conjunction');
+    found = found.splitBefore(conjunctions);
+
+    // if it is this then that
+    let condition = found.if('if .{2,9} then .').match('then');
+    found = found.splitBefore(condition);
+
+    // misc clause partitions
+    found = found.splitBefore('as well as .');
+    found = found.splitBefore('such as .');
+    found = found.splitBefore('in addition to .');
+
+    // semicolons, dashes
+    found = found.splitAfter('@hasSemicolon');
+    found = found.splitAfter('@hasDash');
+
+    // passive voice verb - '.. which was robbed is empty'
+    // let passive = found.match('#Noun (which|that) (was|is) #Adverb? #PastTense #Adverb?')
+    // if (passive.found) {
+    //   found = found.splitAfter(passive)
+    // }
+    // //which the boy robbed
+    // passive = found.match('#Noun (which|that) the? #Noun+ #Adverb? #PastTense #Adverb?')
+    // if (passive.found) {
+    //   found = found.splitAfter(passive)
+    // }
+
+    // does there appear to have relative/subordinate clause still?
+    let tooLong = found.filter(d => d.wordCount() > 5 && d.match('#Verb+').length >= 2);
+    if (tooLong.found) {
+      let m = tooLong.splitAfter('#Noun .* #Verb .* #Noun+');
+      found = found.splitOn(m.eq(0));
+    }
+
+    if (typeof n === 'number') {
+      found = found.get(n);
+    }
+    return new Doc(found.list, this, this.world)
+  };
+  return Doc
+};
+var Clauses = addMethod$8;
+
+const addMethod$7 = function (Doc) {
+  /**  */
+  class Contractions extends Doc {
+    constructor(list, from, world) {
+      super(list, from, world);
+      this.contracted = null;
+    }
+    /** turn didn't into 'did not' */
+    expand() {
+      this.list.forEach(p => {
+        let terms = p.terms();
+        //change the case?
+        let isTitlecase = terms[0].isTitleCase();
+
+        terms.forEach((t, i) => {
+          //use the implicit text
+          t.set(t.implicit || t.text);
+          t.implicit = undefined;
+
+          //add whitespace
+          if (i < terms.length - 1 && t.post === '') {
+            t.post += ' ';
+          }
+        });
+        //set titlecase
+        if (isTitlecase) {
+          terms[0].toTitleCase();
+        }
+      });
+      return this
+    }
+  }
+
+  //find contractable, expanded-contractions
+  // const findExpanded = r => {
+  //   let remain = r.not('#Contraction')
+  //   let m = remain.match('(#Noun|#QuestionWord) (#Copula|did|do|have|had|could|would|will)')
+  //   m.concat(remain.match('(they|we|you|i) have'))
+  //   m.concat(remain.match('i am'))
+  //   m.concat(remain.match('(#Copula|#Modal|do|does|have|has|can|will) not'))
+  //   return m
+  // }
+
+  Doc.prototype.contractions = function (n) {
+    //find currently-contracted
+    let found = this.match('@hasContraction+'); //(may want to split these up)
+    //todo: split consecutive contractions
+    if (typeof n === 'number') {
+      found = found.get(n);
+    }
+    return new Contractions(found.list, this, this.world)
+  };
+
+  //aliases
+  Doc.prototype.expanded = Doc.prototype.isExpanded;
+  Doc.prototype.contracted = Doc.prototype.isContracted;
+  return Doc
+};
+var Contractions = addMethod$7;
+
+const addMethod$6 = function (Doc) {
+  //pull it apart..
+  const parse = function (doc) {
+    let things = doc.splitAfter('@hasComma').splitOn('(and|or) not?').not('(and|or) not?');
+    let beforeLast = doc.match('[.] (and|or)', 0);
+    return {
+      things: things,
+      conjunction: doc.match('(and|or) not?'),
+      beforeLast: beforeLast,
+      hasOxford: beforeLast.has('@hasComma'),
+    }
+  };
+
+  /** cool, fun, and nice */
+  class Lists extends Doc {
+    /** coordinating conjunction */
+    conjunctions() {
+      return this.match('(and|or)')
+    }
+    /** split-up by list object */
+    parts() {
+      return this.splitAfter('@hasComma').splitOn('(and|or) not?')
+    }
+    /** remove the conjunction */
+    items() {
+      return parse(this).things
+    }
+    /** add a new unit to the list */
+    add(str) {
+      this.forEach(p => {
+        let beforeLast = parse(p).beforeLast;
+        beforeLast.append(str);
+        //add a comma to it
+        beforeLast.termList(0).addPunctuation(',');
+      });
+      return this
+    }
+    /** remove any matching unit from the list */
+    remove(match) {
+      return this.items().if(match).remove()
+    }
+    /** return only lists that use a serial comma */
+    hasOxfordComma() {
+      return this.filter(doc => parse(doc).hasOxford)
+    }
+    addOxfordComma() {
+      let items = this.items();
+      let needsComma = items.eq(items.length - 2);
+      if (needsComma.found && needsComma.has('@hasComma') === false) {
+        needsComma.post(', ');
+      }
+      return this
+    }
+    removeOxfordComma() {
+      let items = this.items();
+      let needsComma = items.eq(items.length - 2);
+      if (needsComma.found && needsComma.has('@hasComma') === true) {
+        needsComma.post(' ');
+      }
+      return this
+    }
+  }
+  // aliases
+  Lists.prototype.things = Lists.prototype.items;
+
+  Doc.prototype.lists = function (n) {
+    let m = this.if('@hasComma+ .? (and|or) not? .');
+
+    // person-list
+    let nounList = m
+      .match('(#Noun|#Adjective|#Determiner|#Article)+ #Conjunction not? (#Article|#Determiner)? #Adjective? #Noun+')
+      .if('#Noun');
+    let adjList = m.match('(#Adjective|#Adverb)+ #Conjunction not? #Adverb? #Adjective+');
+    let verbList = m.match('(#Verb|#Adverb)+ #Conjunction not? #Adverb? #Verb+');
+    let result = nounList.concat(adjList);
+    result = result.concat(verbList);
+    result = result.if('@hasComma');
+
+    if (typeof n === 'number') {
+      result = m.get(n);
+    }
+    return new Lists(result.list, this, this.world)
+  };
+  return Doc
+};
+var Lists = addMethod$6;
+
+const noPlural = '(#Pronoun|#Place|#Value|#Person|#Uncountable|#Month|#WeekDay|#Holiday|#Possessive)';
+
+//certain words can't be plural, like 'peace'
+const hasPlural = function (doc) {
+  if (doc.has('#Plural') === true) {
+    return true
+  }
+  // these can't be plural
+  if (doc.has(noPlural) === true) {
+    return false
+  }
+  return true
+};
+
+var hasPlural_1 = hasPlural;
+
+//chooses an indefinite aricle 'a/an' for a word
+const irregulars = {
+  hour: 'an',
+  heir: 'an',
+  heirloom: 'an',
+  honest: 'an',
+  honour: 'an',
+  honor: 'an',
+  uber: 'an', //german u
+};
+//pronounced letters of acronyms that get a 'an'
+const an_acronyms = {
+  a: true,
+  e: true,
+  f: true,
+  h: true,
+  i: true,
+  l: true,
+  m: true,
+  n: true,
+  o: true,
+  r: true,
+  s: true,
+  x: true,
+};
+//'a' regexes
+const a_regexs = [
+  /^onc?e/i, //'wu' sound of 'o'
+  /^u[bcfhjkqrstn][aeiou]/i, // 'yu' sound for hard 'u'
+  /^eul/i,
+];
+
+const makeArticle = function (doc) {
+  //no 'the john smith', but 'a london hotel'
+  if (doc.has('#Person') || doc.has('#Place')) {
+    return ''
+  }
+  //no a/an if it's plural
+  if (doc.has('#Plural')) {
+    return 'the'
+  }
+  let str = doc.text('normal').trim();
+  //explicit irregular forms
+  if (irregulars.hasOwnProperty(str)) {
+    return irregulars[str]
+  }
+  //spelled-out acronyms
+  let firstLetter = str.substr(0, 1);
+  if (doc.has('^@isAcronym') && an_acronyms.hasOwnProperty(firstLetter)) {
+    return 'an'
+  }
+  //'a' regexes
+  for (let i = 0; i < a_regexs.length; i++) {
+    if (a_regexs[i].test(str)) {
+      return 'a'
+    }
+  }
+  //basic vowel-startings
+  if (/^[aeiou]/i.test(str)) {
+    return 'an'
+  }
+  return 'a'
+};
+
+var getArticle = makeArticle;
+
+//similar to plural/singularize rules, but not the same
+const isPlural$2 = [
+  /(antenn|formul|nebul|vertebr|vit)ae$/i,
+  /(octop|vir|radi|nucle|fung|cact|stimul)i$/i,
+  /men$/i,
+  /.tia$/i,
+  /(m|l)ice$/i,
+];
+
+//similar to plural/singularize rules, but not the same
+const isSingular = [
+  /(ax|test)is$/i,
+  /(octop|vir|radi|nucle|fung|cact|stimul)us$/i,
+  /(octop|vir)i$/i,
+  /(rl)f$/i,
+  /(alias|status)$/i,
+  /(bu)s$/i,
+  /(al|ad|at|er|et|ed|ad)o$/i,
+  /(ti)um$/i,
+  /(ti)a$/i,
+  /sis$/i,
+  /(?:(^f)fe|(lr)f)$/i,
+  /hive$/i,
+  /(^aeiouy|qu)y$/i,
+  /(x|ch|ss|sh|z)$/i,
+  /(matr|vert|ind|cort)(ix|ex)$/i,
+  /(m|l)ouse$/i,
+  /(m|l)ice$/i,
+  /(antenn|formul|nebul|vertebr|vit)a$/i,
+  /.sis$/i,
+  /^(?!talis|.*hu)(.*)man$/i,
+];
+var _rules = {
+  isSingular: isSingular,
+  isPlural: isPlural$2,
+};
+
+const endS = /s$/;
+// double-check this term, if it is not plural, or singular.
+// (this is a partial copy of ./tagger/fallbacks/plural)
+// fallback plural if it ends in an 's'.
+const isPlural$1 = function (str) {
+  // isSingular suffix rules
+  if (_rules.isSingular.find(reg => reg.test(str))) {
+    return false
+  }
+  // does it end in an s?
+  if (endS.test(str) === true) {
+    return true
+  }
+  // is it a plural like 'fungi'?
+  if (_rules.isPlural.find(reg => reg.test(str))) {
+    return true
+  }
+  return null
+};
+var isPlural_1$1 = isPlural$1;
+
+const exceptions = {
+  he: 'his',
+  she: 'hers',
+  they: 'theirs',
+  we: 'ours',
+  i: 'mine',
+  you: 'yours',
+
+  her: 'hers',
+  their: 'theirs',
+  our: 'ours',
+  my: 'mine',
+  your: 'yours',
+};
+
+// turn "David" to "David's"
+const toPossessive = function (doc) {
+  let str = doc.text('text').trim();
+  // exceptions
+  if (exceptions.hasOwnProperty(str)) {
+    doc.replaceWith(exceptions[str], true);
+    doc.tag('Possessive', 'toPossessive');
+    return
+  }
+  // flanders'
+  if (/s$/.test(str)) {
+    str += "'";
+    doc.replaceWith(str, true);
+    doc.tag('Possessive', 'toPossessive');
+    return
+  }
+  //normal form:
+  str += "'s";
+  doc.replaceWith(str, true);
+  doc.tag('Possessive', 'toPossessive');
+  return
+};
+var toPossessive_1 = toPossessive;
+
+// .nouns() supports some noun-phrase-ish groupings
+// pull these apart, if necessary
+const parse$1 = function (doc) {
+  let res = {
+    main: doc,
+  };
+  //support 'mayor of chicago' as one noun-phrase
+  if (doc.has('#Noun (of|by|for) .')) {
+    let m = doc.splitAfter('[#Noun+]', 0);
+    res.main = m.eq(0);
+    res.post = m.eq(1);
+  }
+  return res
+};
+var parse_1 = parse$1;
+
+const methods$2 = {
+  /** overload the original json with noun information */
+  json: function (options) {
+    let n = null;
+    if (typeof options === 'number') {
+      n = options;
+      options = null;
+    }
+    options = options || { text: true, normal: true, trim: true, terms: true };
+    let res = [];
+    this.forEach(doc => {
+      let json = doc.json(options)[0];
+      json.article = getArticle(doc);
+      res.push(json);
+    });
+    if (n !== null) {
+      return res[n]
+    }
+    return res
+  },
+  /** get all adjectives describing this noun*/
+  adjectives: function () {
+    let list = this.lookAhead('^(that|who|which)? (was|is|will)? be? #Adverb? #Adjective+');
+    list = list.concat(this.lookBehind('#Adjective+ #Adverb?$'));
+    list = list.match('#Adjective');
+    return list.sort('index')
+  },
+
+  isPlural: function () {
+    return this.if('#Plural') //assume tagger has run?
+  },
+  hasPlural: function () {
+    return this.filter(d => hasPlural_1(d))
+  },
+  toPlural: function (agree) {
+    let toPlural = this.world.transforms.toPlural;
+    this.forEach(doc => {
+      if (doc.has('#Plural') || hasPlural_1(doc) === false) {
+        return
+      }
+      // double-check it isn't an un-tagged plural
+      let main = parse_1(doc).main;
+      let str = main.text('reduced');
+      if (!main.has('#Singular') && isPlural_1$1(str) === true) {
+        return
+      }
+      str = toPlural(str, this.world);
+      main.replace(str).tag('#Plural');
+      // 'an apple' -> 'apples'
+      if (agree) {
+        let an = main.lookBefore('(an|a) #Adjective?$').not('#Adjective');
+        if (an.found === true) {
+          an.remove();
+        }
+      }
+    });
+    return this
+  },
+  toSingular: function (agree) {
+    let toSingular = this.world.transforms.toSingular;
+    this.forEach(doc => {
+      if (doc.has('^#Singular+$') || hasPlural_1(doc) === false) {
+        return
+      }
+      // double-check it isn't an un-tagged plural
+      let main = parse_1(doc).main;
+      let str = main.text('reduced');
+      if (!main.has('#Plural') && isPlural_1$1(str) !== true) {
+        return
+      }
+      str = toSingular(str, this.world);
+      main.replace(str).tag('#Singular');
+      // add an article
+      if (agree) {
+        // 'apples' -> 'an apple'
+        let start = doc;
+        let adj = doc.lookBefore('#Adjective');
+        if (adj.found) {
+          start = adj;
+        }
+        let article = getArticle(start);
+        start.insertBefore(article);
+      }
+    });
+    return this
+  },
+  toPossessive: function () {
+    this.forEach(d => {
+      toPossessive_1(d);
+    });
+    return this
+  },
+};
+var methods_1 = methods$2;
+
+const addMethod$5 = function (Doc) {
+  /**  */
+  class Nouns extends Doc {}
+  // add-in our methods
+  Object.assign(Nouns.prototype, methods_1);
+
+  Doc.prototype.nouns = function (n, opts = {}) {
+    // don't split 'paris, france'
+    let keep = this.match('(#City && @hasComma) (#Region|#Country)');
+    // but split the other commas
+    let m = this.not(keep).splitAfter('@hasComma');
+    // combine them back together
+    m = m.concat(keep);
+
+    // don't combine over scare-quotes
+    let quotes = m.quotations();
+    if (quotes.found) {
+      m = m.splitOn(quotes.eq(0));
+    }
+
+    m = m.match('#Noun+ (of|by)? the? #Noun+?');
+    //nouns that we don't want in these results, for weird reasons
+    if (opts.keep_anaphora !== true) {
+      m = m.not('#Pronoun');
+      m = m.not('(there|these)');
+      m = m.not('(#Month|#WeekDay)'); //allow Durations, Holidays
+      // //allow possessives like "spencer's", but not generic ones like,
+      m = m.not('(my|our|your|their|her|his)');
+    }
+    m = m.not('(of|for|by|the)$');
+
+    if (typeof n === 'number') {
+      m = m.get(n);
+    }
+    return new Nouns(m.list, this, this.world)
+  };
+  return Doc
+};
+var Nouns = addMethod$5;
+
+const open = /\(/;
+const close = /\)/;
+
+const addMethod$4 = function (Doc) {
+  /** anything between (these things) */
+  class Parentheses extends Doc {
+    /** remove the parentheses characters */
+    unwrap() {
+      this.list.forEach(p => {
+        let first = p.terms(0);
+        first.pre = first.pre.replace(open, '');
+        let last = p.lastTerm();
+        last.post = last.post.replace(close, '');
+      });
+      return this
+    }
+  }
+
+  Doc.prototype.parentheses = function (n) {
+    let list = [];
+    this.list.forEach(p => {
+      let terms = p.terms();
+      //look for opening brackets
+      for (let i = 0; i < terms.length; i += 1) {
+        const t = terms[i];
+        if (open.test(t.pre)) {
+          //look for the closing bracket..
+          for (let o = i; o < terms.length; o += 1) {
+            if (close.test(terms[o].post)) {
+              let len = o - i + 1;
+              list.push(p.buildFrom(t.id, len));
+              i = o;
+              break
+            }
+          }
+        }
+      }
+    });
+    //support nth result
+    if (typeof n === 'number') {
+      if (list[n]) {
+        list = [list[n]];
+      } else {
+        list = [];
+      }
+      return new Parentheses(list, this, this.world)
+    }
+    return new Parentheses(list, this, this.world)
+  };
+
+  return Doc
+};
+var Parentheses = addMethod$4;
+
+const addMethod$3 = function (Doc) {
+  /**  */
+  class Possessives extends Doc {
+    constructor(list, from, world) {
+      super(list, from, world);
+      this.contracted = null;
+    }
+    /** turn didn't into 'did not' */
+    strip() {
+      this.list.forEach(p => {
+        let terms = p.terms();
+        terms.forEach(t => {
+          let str = t.text.replace(/'s$/, '');
+          t.set(str || t.text);
+        });
+      });
+      return this
+    }
+  }
+
+  //find contractable, expanded-contractions
+  // const findExpanded = r => {
+  //   let remain = r.not('#Contraction')
+  //   let m = remain.match('(#Noun|#QuestionWord) (#Copula|did|do|have|had|could|would|will)')
+  //   m.concat(remain.match('(they|we|you|i) have'))
+  //   m.concat(remain.match('i am'))
+  //   m.concat(remain.match('(#Copula|#Modal|do|does|have|has|can|will) not'))
+  //   return m
+  // }
+
+  Doc.prototype.possessives = function (n) {
+    //find currently-contracted
+    let found = this.match('#Noun+? #Possessive');
+    //todo: split consecutive contractions
+    if (typeof n === 'number') {
+      found = found.get(n);
+    }
+    return new Possessives(found.list, this, this.world)
+  };
+  return Doc
+};
+var Possessives = addMethod$3;
+
+const pairs = {
+  '\u0022': '\u0022', // 'StraightDoubleQuotes'
+  '\uFF02': '\uFF02', // 'StraightDoubleQuotesWide'
+  '\u0027': '\u0027', // 'StraightSingleQuotes'
+  '\u201C': '\u201D', // 'CommaDoubleQuotes'
+  '\u2018': '\u2019', // 'CommaSingleQuotes'
+  '\u201F': '\u201D', // 'CurlyDoubleQuotesReversed'
+  '\u201B': '\u2019', // 'CurlySingleQuotesReversed'
+  '\u201E': '\u201D', // 'LowCurlyDoubleQuotes'
+  '\u2E42': '\u201D', // 'LowCurlyDoubleQuotesReversed'
+  '\u201A': '\u2019', // 'LowCurlySingleQuotes'
+  '\u00AB': '\u00BB', // 'AngleDoubleQuotes'
+  '\u2039': '\u203A', // 'AngleSingleQuotes'
+  // Prime 'non quotation'
+  '\u2035': '\u2032', // 'PrimeSingleQuotes'
+  '\u2036': '\u2033', // 'PrimeDoubleQuotes'
+  '\u2037': '\u2034', // 'PrimeTripleQuotes'
+  // Prime 'quotation' variation
+  '\u301D': '\u301E', // 'PrimeDoubleQuotes'
+  '\u0060': '\u00B4', // 'PrimeSingleQuotes'
+  '\u301F': '\u301E', // 'LowPrimeDoubleQuotesReversed'
+};
+
+const hasOpen = RegExp('(' + Object.keys(pairs).join('|') + ')');
+
+const addMethod$2 = function (Doc) {
+  /** "these things" */
+  class Quotations extends Doc {
+    /** remove the quote characters */
+    unwrap() {
+      return this
+    }
+  }
+
+  Doc.prototype.quotations = function (n) {
+    let list = [];
+    this.list.forEach(p => {
+      let terms = p.terms();
+      //look for opening quotes
+      for (let i = 0; i < terms.length; i += 1) {
+        const t = terms[i];
+        if (hasOpen.test(t.pre)) {
+          let char = (t.pre.match(hasOpen) || [])[0];
+          let want = pairs[char];
+          // if (!want) {
+          //   console.warn('missing quote char ' + char)
+          // }
+          //look for the closing bracket..
+          for (let o = i; o < terms.length; o += 1) {
+            if (terms[o].post.indexOf(want) !== -1) {
+              let len = o - i + 1;
+              list.push(p.buildFrom(t.id, len));
+              i = o;
+              break
+            }
+          }
+        }
+      }
+    });
+    //support nth result
+    if (typeof n === 'number') {
+      if (list[n]) {
+        list = [list[n]];
+      } else {
+        list = [];
+      }
+      return new Quotations(list, this, this.world)
+    }
+    return new Quotations(list, this, this.world)
+  };
+  // alias
+  Doc.prototype.quotes = Doc.prototype.quotations;
+
+  return Doc
+};
+var Quotations = addMethod$2;
+
+// walked => walk  - turn a verb into it's root form
+const toInfinitive = function (parsed, world) {
+  let verb = parsed.verb;
+
+  //1. if it's already infinitive
+  let str = verb.text('reduced');
+  if (verb.has('#Infinitive')) {
+    return str
+  }
+
+  // 2. world transform does the heavy-lifting
+  let tense = null;
+  if (verb.has('#PastTense')) {
+    tense = 'PastTense';
+  } else if (verb.has('#Gerund')) {
+    tense = 'Gerund';
+  } else if (verb.has('#PresentTense')) {
+    tense = 'PresentTense';
+  } else if (verb.has('#Participle')) {
+    tense = 'Participle';
+  } else if (verb.has('#Actor')) {
+    tense = 'Actor';
+  }
+  return world.transforms.toInfinitive(str, world, tense)
+};
+var toInfinitive_1 = toInfinitive;
+
+// spencer walks -> singular
+// we walk -> plural
+
+// the most-recent noun-phrase, before this verb.
+const findNoun = function (vb) {
+  let noun = vb.lookBehind('#Noun+').last();
+  return noun
+};
+
+//sometimes you can tell if a verb is plural/singular, just by the verb
+// i am / we were
+// othertimes you need its subject 'we walk' vs 'i walk'
+const isPlural = function (parsed) {
+  let vb = parsed.verb;
+  if (vb.has('(are|were|does)') || parsed.auxiliary.has('(are|were|does)')) {
+    return true
+  }
+
+  //consider its prior noun
+  let noun = findNoun(vb);
+  if (noun.has('(he|she|many|both)')) {
+    return false
+  }
+  if (noun.has('(we|they|you|i)')) {
+    return true
+  }
+  if (noun.has('#Person')) {
+    return false
+  }
+  if (noun.has('#Plural')) {
+    return true
+  }
+  if (noun.has('#Singular')) {
+    return false
+  }
+  if (vb.has('(is|am|do|was)')) {
+    return false
+  }
+  if (parsed.auxiliary.has('(is|am|do|was)') && !parsed.negative.found) {
+    return false
+  }
+  return null
+};
+var isPlural_1 = isPlural;
+
+// #Modal : would walk    -> 'would not walk'
+// #Copula : is           -> 'is not'
+// #PastTense : walked    -> did not walk
+// #PresentTense : walks  -> does not walk
+// #Gerund : walking:     -> not walking
+// #Infinitive : walk     -> do not walk
+
+const toNegative = function (parsed, world) {
+  let vb = parsed.verb;
+  // if it's already negative...
+  if (parsed.negative.found) {
+    return
+  }
+
+  // would walk -> would not walk
+  if (parsed.auxiliary.found) {
+    parsed.auxiliary.eq(0).append('not');
+    // 'would not have' ➔ 'would not have'
+    if (parsed.auxiliary.has('#Modal have not')) {
+      parsed.auxiliary.replace('have not', 'not have');
+    }
+    return
+  }
+  // is walking -> is not walking
+  if (vb.has('(#Copula|will|has|had|do)')) {
+    vb.append('not');
+    return
+  }
+  // walked -> did not walk
+  if (vb.has('#PastTense')) {
+    let inf = toInfinitive_1(parsed, world);
+    vb.replaceWith(inf, true);
+    vb.prepend('did not');
+    return
+  }
+  // walks -> does not walk
+  if (vb.has('#PresentTense')) {
+    let inf = toInfinitive_1(parsed, world);
+    vb.replaceWith(inf, true);
+    if (isPlural_1(parsed)) {
+      vb.prepend('do not');
+    } else {
+      vb.prepend('does not');
+    }
+    return
+  }
+  //walking -> not walking
+  if (vb.has('#Gerund')) {
+    let inf = toInfinitive_1(parsed, world);
+    vb.replaceWith(inf, true);
+    vb.prepend('not');
+    return
+  }
+
+  //fallback 1:  walk -> does not walk
+  if (isPlural_1(parsed)) {
+    vb.prepend('does not');
+    return
+  }
+  //fallback 2:  walk -> do not walk
+  vb.prepend('do not');
+  return
+};
+var toNegative_1 = toNegative;
+
+// who/what is doing this verb?
+// get the prior verb most-likely doing this action
+// (it can not-exist - 'close the door')
+const getSubject = function (vb) {
+  let behind = vb.lookBehind();
+  let lastNoun = behind.nouns(null, { keep_anaphora: true }).last();
+
+  // support 'that' and 'this'
+  if (!lastNoun.found) {
+    lastNoun = behind.match('(that|this|each)').last();
+    lastNoun = lastNoun.tag('#Noun').nouns();
+  }
+  return lastNoun
+};
+var getSubject_1 = getSubject;
+
+// turn 'would not really walk up' into parts
+const parseVerb = function (vb) {
+  let parsed = {
+    adverb: vb.match('#Adverb+'), // 'really'
+    negative: vb.match('#Negative'), // 'not'
+    auxiliary: vb.match('#Auxiliary+').not('(#Negative|#Adverb)'), // 'will' of 'will go'
+    particle: vb.match('#Particle'), // 'up' of 'pull up'
+    verb: vb.match('#Verb+').not('(#Adverb|#Negative|#Auxiliary|#Particle)'),
+    original: vb,
+    subject: getSubject_1(vb),
+  };
+  // parsed.subject.debug()
+
+  // for conjugation purposes,
+  // 'should start looking' -> 'should start'
+  if (parsed.verb.has('(#PresentTense|#PastTense|#Infinitive) #Gerund$')) {
+    parsed.verb = parsed.verb.not('#Gerund$');
+  }
+  // fallback, if no verb found
+  if (!parsed.verb.found) {
+    // blank-everything
+    Object.keys(parsed).forEach(k => {
+      parsed[k] = parsed[k].not('.');
+    });
+    // it's all the verb
+    parsed.verb = vb;
+    return parsed
+  }
+  //
+  if (parsed.adverb && parsed.adverb.found) {
+    let match = parsed.adverb.text('reduced') + '$';
+    if (vb.has(match)) {
+      parsed.adverbAfter = true;
+    }
+  }
+  return parsed
+};
+var parse = parseVerb;
+
+/** too many special cases for is/was/will be*/
+const toBe = parsed => {
+  let isI = false;
+  let plural = isPlural_1(parsed);
+  let isNegative = parsed.negative.found;
+  //account for 'i is' -> 'i am' irregular
+  // if (vb.parent && vb.parent.has('i #Adverb? #Copula')) {
+  //   isI = true;
+  // }
+  // 'i look', not 'i looks'
+  if (parsed.verb.lookBehind('i (#Adverb|#Verb)?$').found) {
+    isI = true;
+  }
+
+  let obj = {
+    PastTense: 'was',
+    PresentTense: 'is',
+    FutureTense: 'will be',
+    Infinitive: 'is',
+    Gerund: 'being',
+    Actor: '',
+    PerfectTense: 'been',
+    Pluperfect: 'been',
+  };
+
+  if (plural) {
+    obj.PastTense = 'were';
+    obj.PresentTense = 'are';
+    obj.Infinitive = 'are';
+  }
+  //"i is" -> "i am"
+  if (isI === true) {
+    obj.PastTense = 'was';
+    obj.PresentTense = 'am';
+    obj.Infinitive = 'am';
+  }
+  if (isNegative) {
+    obj.PastTense += ' not';
+    obj.PresentTense += ' not';
+    obj.FutureTense = 'will not be';
+    obj.Infinitive += ' not';
+    obj.PerfectTense = 'not ' + obj.PerfectTense;
+    obj.Pluperfect = 'not ' + obj.Pluperfect;
+    obj.Gerund = 'not ' + obj.Gerund;
+  }
+  return obj
+};
+var toBe_1 = toBe;
+
+// 'may/could/should' -> 'may/could/should have'
+const doModal = function (parsed) {
+  let str = parsed.verb.text();
+  let res = {
+    PastTense: str + ' have',
+    PresentTense: str,
+    FutureTense: str,
+    Infinitive: str,
+    // Gerund: ,
+    // Actor: '',
+    // PerfectTense: '',
+    // Pluperfect: '',
+  };
+  return res
+};
+var doModal_1 = doModal;
+
+const conjugate = function (parsed, world) {
+  let verb = parsed.verb;
+
+  //special handling of 'is', 'will be', etc.
+  if (verb.has('#Copula') || (verb.out('normal') === 'be' && parsed.auxiliary.has('will'))) {
+    return toBe_1(parsed)
+  }
+
+  // special handling of 'are walking'
+  if (parsed.auxiliary.has('are') && verb.has('#Gerund')) {
+    let og = parsed.original.clone();
+    let past = og.clone().replace('are', 'were');
+    let fut = og.clone().replace('are', 'will be');
+    let infinitive = toInfinitive_1(parsed, world);
+    let res = {
+      PastTense: past.text(),
+      PresentTense: og.text(),
+      FutureTense: fut.text(),
+      Infinitive: infinitive,
+    };
+    return res
+  }
+
+  // special handling of 'he could.'
+  if (verb.has('#Modal')) {
+    return doModal_1(parsed)
+  }
+
+  // get the root form
+  let infinitive = toInfinitive_1(parsed, world);
+  if (!infinitive) {
+    return {}
+  }
+  let forms = world.transforms.conjugate(infinitive, world);
+  forms.Infinitive = infinitive;
+  // Singular: the dog chases
+  // Plural: the dogs chase
+  let bePlural = isPlural_1(parsed);
+  if (bePlural === true) {
+    forms.PresentTense = forms.Infinitive; // the dogs chase
+  }
+
+  // add particle to phrasal verbs ('fall over')
+  let hasHyphen = parsed.verb.termList(0).hasHyphen();
+  if (parsed.particle.found) {
+    let particle = parsed.particle.text();
+    let space = hasHyphen === true ? '-' : ' ';
+    Object.keys(forms).forEach(k => (forms[k] += space + particle));
+  }
+
+  //apply negative
+  const isNegative = parsed.negative.found;
+  forms.FutureTense = forms.FutureTense || 'will ' + forms.Infinitive;
+  if (isNegative) {
+    forms.PastTense = 'did not ' + forms.Infinitive;
+    forms.FutureTense = 'will not ' + forms.Infinitive;
+    if (bePlural) {
+      forms.PresentTense = 'do not ' + forms.Infinitive;
+      forms.Infinitive = 'do not ' + forms.Infinitive;
+    } else {
+      forms.PresentTense = 'does not ' + forms.Infinitive;
+      forms.Infinitive = 'does not ' + forms.Infinitive;
+    }
+    forms.Gerund = 'not ' + forms.Gerund;
+  }
+  return forms
+};
+var conjugate_1 = conjugate;
+
+// 'i could drive' -> 'i could have driven'
+// if something is 'modal-ish' we are forced to use past-participle
+// ('i could drove' is wrong)
+const useParticiple$1 = function (parsed) {
+  if (parsed.auxiliary.has('(could|should|would|may|can|must)')) {
+    return true
+  }
+  if (parsed.auxiliary.has('am .+? being')) {
+    return true
+  }
+  if (parsed.auxiliary.has('had .+? been')) {
+    return true
+  }
+  return false
+};
+
+// conjugate 'drive' ➔ 'have driven'
+const toParticiple$1 = function (parsed, world) {
+  //is it already a participle?
+  if (parsed.auxiliary.has('(have|had)') && parsed.verb.has('#Participle')) {
+    return
+  }
+  // try to swap the main verb to its participle form
+  let obj = conjugate_1(parsed, world);
+  let str = obj.Participle || obj.PastTense;
+  if (str) {
+    parsed.verb.replaceWith(str, false);
+  }
+  // 'am being driven' ➔ 'have been driven'
+  if (parsed.auxiliary.has('am .+? being')) {
+    parsed.auxiliary.remove('am');
+    parsed.auxiliary.replace('being', 'have been');
+  }
+
+  // add a 'have'
+  if (!parsed.auxiliary.has('have')) {
+    parsed.auxiliary.append('have');
+  }
+  // tag it as a participle
+  parsed.verb.tag('Participle', 'toParticiple');
+  // turn 'i can swim' to -> 'i could swim'
+  parsed.auxiliary.replace('can', 'could');
+  //'must be' ➔ 'must have been'
+  parsed.auxiliary.replace('be have', 'have been');
+  //'not have' ➔ 'have not'
+  parsed.auxiliary.replace('not have', 'have not');
+  // ensure all new words are tagged right
+  parsed.auxiliary.tag('Auxiliary');
+};
+
+var participle = {
+  useParticiple: useParticiple$1,
+  toParticiple: toParticiple$1,
+};
+
+const { toParticiple, useParticiple } = participle;
+
+// remove any tense-information in auxiliary verbs
+const makeNeutral = function (parsed) {
+  //remove tense-info from auxiliaries
+  parsed.auxiliary.remove('(will|are|am|being)');
+  parsed.auxiliary.remove('(did|does)');
+  parsed.auxiliary.remove('(had|has|have)');
+  //our conjugation includes the 'not' and the phrasal-verb particle
+  parsed.particle.remove();
+  parsed.negative.remove();
+  return parsed
+};
+
+var methods$1 = {
+  /** overload the original json with verb information */
+  json: function (options) {
+    let n = null;
+    if (typeof options === 'number') {
+      n = options;
+      options = null;
+    }
+    options = options || { text: true, normal: true, trim: true, terms: true };
+    let res = [];
+    this.forEach(p => {
+      let json = p.json(options)[0];
+      let parsed = parse(p);
+      json.parts = {};
+      Object.keys(parsed).forEach(k => {
+        if (parsed[k] && parsed[k].isA === 'Doc') {
+          json.parts[k] = parsed[k].text('normal');
+        } else {
+          json.parts[k] = parsed[k];
+        }
+      });
+      json.isNegative = p.has('#Negative');
+      json.conjugations = conjugate_1(parsed, this.world);
+      res.push(json);
+    });
+    if (n !== null) {
+      return res[n]
+    }
+    return res
+  },
+
+  /** grab the adverbs describing these verbs */
+  adverbs: function () {
+    let list = [];
+    // look at internal adverbs
+    this.forEach(vb => {
+      let advb = parse(vb).adverb;
+      if (advb.found) {
+        list = list.concat(advb.list);
+      }
+    });
+    // look for leading adverbs
+    let m = this.lookBehind('#Adverb+$');
+    if (m.found) {
+      list = m.list.concat(list);
+    }
+    // look for trailing adverbs
+    m = this.lookAhead('^#Adverb+');
+    if (m.found) {
+      list = list.concat(m.list);
+    }
+    return this.buildFrom(list)
+  },
+
+  /// Verb Inflection
+  /**return verbs like 'we walk' and not 'spencer walks' */
+  isPlural: function () {
+    let list = [];
+    this.forEach(vb => {
+      let parsed = parse(vb);
+      if (isPlural_1(parsed, this.world) === true) {
+        list.push(vb.list[0]);
+      }
+    });
+    return this.buildFrom(list)
+  },
+  /** return verbs like 'spencer walks' and not 'we walk' */
+  isSingular: function () {
+    let list = [];
+    this.forEach(vb => {
+      let parsed = parse(vb);
+      if (isPlural_1(parsed, this.world) === false) {
+        list.push(vb.list[0]);
+      }
+    });
+    return this.buildFrom(list)
+  },
+
+  /// Conjugation
+  /** return all forms of this verb  */
+  conjugate: function () {
+    let result = [];
+    this.forEach(vb => {
+      let parsed = parse(vb);
+      let forms = conjugate_1(parsed, this.world);
+      result.push(forms);
+    });
+    return result
+  },
+  /** walk ➔ walked*/
+  toPastTense: function () {
+    this.forEach(vb => {
+      let parsed = parse(vb);
+      // should we support 'would swim' ➔ 'would have swam'
+      if (useParticiple(parsed)) {
+        toParticiple(parsed, this.world);
+        return
+      }
+      // don't conjugate 'go away'.
+      if (vb.has('#Imperative')) {
+        return
+      }
+      // don't conjugate 'to be'
+      if (vb.has('be') && vb.lookBehind('to$').found) {
+        return
+      }
+      // handle 'is raining' -> 'was raining'
+      if (parsed.verb.has('#Gerund') && parsed.auxiliary.has('(is|will|was)')) {
+        vb.replace('is', 'was');
+        return
+      }
+      let str = conjugate_1(parsed, this.world).PastTense;
+      if (str) {
+        parsed = makeNeutral(parsed);
+        parsed.verb.replaceWith(str, false);
+        parsed.auxiliary.remove('(do|did|will)'); //??
+      }
+    });
+    return this
+  },
+  /** walk ➔ walks */
+  toPresentTense: function () {
+    this.forEach(vb => {
+      // don't conjugate 'go away'.
+      if (vb.has('#Imperative')) {
+        return
+      }
+      let parsed = parse(vb);
+      let obj = conjugate_1(parsed, this.world);
+      let str = obj.PresentTense;
+      // 'i look', not 'i looks'
+      if (vb.lookBehind('(i|we) (#Adverb|#Verb)?$').found) {
+        str = obj.Infinitive;
+      }
+      if (str) {
+        //awkward support for present-participle form
+        // -- should we support 'have been swimming' ➔ 'am swimming'
+        if (parsed.auxiliary.has('(have|had) been')) {
+          parsed.auxiliary.replace('(have|had) been', 'am being');
+          if (obj.Particle) {
+            str = obj.Particle || obj.PastTense;
+          }
+          return
+        }
+        parsed.verb.replaceWith(str, false);
+        parsed.verb.tag('PresentTense');
+        parsed = makeNeutral(parsed);
+        // avoid 'he would walks'
+        parsed.auxiliary.remove('#Modal');
+        parsed.auxiliary.remove('(do|did|will)'); //??
+      }
+    });
+    return this
+  },
+  /** walk ➔ will walk*/
+  toFutureTense: function () {
+    this.forEach(vb => {
+      let parsed = parse(vb);
+      // 'i should drive' is already future-enough
+      if (useParticiple(parsed)) {
+        return
+      }
+      // don't conjugate 'go away'.
+      if (vb.has('#Imperative')) {
+        return
+      }
+      let str = conjugate_1(parsed, this.world).FutureTense;
+      if (str) {
+        parsed = makeNeutral(parsed);
+        // avoid 'he would will go'
+        parsed.auxiliary.remove('#Modal');
+        parsed.verb.replaceWith(str, false);
+        parsed.verb.tag('FutureTense');
+        parsed.auxiliary.remove('(do|did|will)'); //??
+        // parsed.auxiliary.remove('(do|did|will)') //??
+      }
+    });
+    return this
+  },
+  /** walks ➔ walk */
+  toInfinitive: function () {
+    this.forEach(vb => {
+      let parsed = parse(vb);
+      let str = conjugate_1(parsed, this.world).Infinitive;
+      if (str) {
+        vb.replaceWith(str, false);
+        vb.tag('Infinitive');
+      }
+    });
+    return this
+  },
+  /** walk ➔ walking */
+  toGerund: function () {
+    this.forEach(vb => {
+      let parsed = parse(vb);
+      let str = conjugate_1(parsed, this.world).Gerund;
+      if (str) {
+        vb.replaceWith(str, false);
+        vb.tag('Gerund');
+      }
+    });
+    return this
+  },
+  /** drive ➔ driven - naked past-participle if it exists, otherwise past-tense */
+  toParticiple: function () {
+    this.forEach(vb => {
+      let parsed = parse(vb);
+      let noAux = !parsed.auxiliary.found;
+      toParticiple(parsed, this.world);
+      // dirty trick to  ensure our new auxiliary is found
+      if (noAux) {
+        parsed.verb.prepend(parsed.auxiliary.text());
+        parsed.auxiliary.remove();
+      }
+    });
+    return this
+  },
+
+  /// Negation
+  /** return only verbs with 'not'*/
+  isNegative: function () {
+    return this.if('#Negative')
+  },
+  /**  return only verbs without 'not'*/
+  isPositive: function () {
+    return this.ifNo('#Negative')
+  },
+  /**  return only commands - verbs in imperative mood */
+  isImperative: function () {
+    return this.if('#Imperative')
+  },
+  /** add a 'not' to these verbs */
+  toNegative: function () {
+    this.list.forEach(p => {
+      let doc = this.buildFrom([p]);
+      let parsed = parse(doc);
+      toNegative_1(parsed, doc.world);
+    });
+    return this
+  },
+  /** remove 'not' from these verbs */
+  toPositive: function () {
+    let m = this.match('do not #Verb');
+    if (m.found) {
+      m.remove('do not');
+    }
+    return this.remove('#Negative')
+  },
+  /** who, or what is doing this action? */
+  subject: function () {
+    let list = [];
+    this.forEach(p => {
+      let found = getSubject_1(p);
+      if (found.list[0]) {
+        list.push(found.list[0]);
+      }
+    });
+    return this.buildFrom(list)
+  },
+};
+
+const addMethod$1 = function (Doc) {
+  /**  */
+  class Verbs extends Doc {}
+  // add-in our methods
+  Object.assign(Verbs.prototype, methods$1);
+
+  // aliases
+  Verbs.prototype.negate = Verbs.prototype.toNegative;
+
+  Doc.prototype.verbs = function (n) {
+    let match = this.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+');
+    // try to ignore leading and trailing adverbs
+    match = match.not('^#Adverb+');
+    match = match.not('#Adverb+$');
+    // handle commas:
+    // don't split 'really, really'
+    let keep = match.match('(#Adverb && @hasComma) #Adverb');
+    // // but split the other commas
+    let m = match.not(keep).splitAfter('@hasComma');
+    // i was shocked looking at...
+    // let gerund = m.match('#PastTense #Gerund')
+    // if (!gerund.has('(been|am|#Auxiliary) #Gerund')) {
+    //   m = m.splitBefore(gerund.match('#Gerund'))
+    // }
+    // combine them back together
+    m = m.concat(keep);
+    m.sort('index');
+    //handle slashes?
+
+    //ensure there's actually a verb
+    m = m.if('#Verb');
+
+    // the reason he will is ...
+    if (m.has('(is|was)$')) {
+      m = m.splitBefore('(is|was)$');
+    }
+
+    //ensure it's not two verbs
+    if (m.has('#PresentTense #Adverb #PresentTense')) {
+      m = m.splitBefore('#Adverb #PresentTense');
+    }
+    //grab (n)th result
+    if (typeof n === 'number') {
+      m = m.get(n);
+    }
+    let vb = new Verbs(m.list, this, this.world);
+    return vb
+  };
+  return Doc
+};
+var Verbs = addMethod$1;
+
+const addMethod = function (Doc) {
+  /**  */
+  class People extends Doc {
+    // honorifics(){}
+    // firstNames(){}
+    // lastNames(){}
+    // pronouns(){}
+    // toPronoun(){}
+    // fromPronoun(){}
+  }
+
+  Doc.prototype.people = function (n) {
+    let match = this.splitAfter('@hasComma');
+    match = match.match('#Person+');
+
+    //grab (n)th result
+    if (typeof n === 'number') {
+      match = match.get(n);
+    }
+    return new People(match.list, this, this.world)
+  };
+  return Doc
+};
+var People = addMethod;
+
+const subclass = [
+  Abbreviations,
+  Acronyms,
+  Clauses,
+  Contractions,
+  Lists,
+  Nouns,
+  Parentheses,
+  Possessives,
+  Quotations,
+  Verbs,
+  People,
+];
+
+const extend = function (Doc) {
+  // add basic methods
+  Object.keys(_simple).forEach(k => (Doc.prototype[k] = _simple[k]));
+  // add subclassed methods
+  subclass.forEach(addFn => addFn(Doc));
+  return Doc
+};
+var Subset = extend;
+
+const methods = {
+  misc: methods$4,
+  selections: _simple,
+};
+
+
+
+
+/** a parsed text object */
+class Doc {
+  constructor(list, from, world) {
+    this.list = list;
+    // this.reasons = []
+    //quiet these properties in console.logs
+    Object.defineProperty(this, 'from', {
+      enumerable: false,
+      value: from,
+      writable: true,
+    });
+    //borrow some missing data from parent
+    if (world === undefined && from !== undefined) {
+      world = from.world;
+    }
+    //'world' getter
+    Object.defineProperty(this, 'world', {
+      enumerable: false,
+      value: world,
+      writable: true,
+    });
+    //fast-scans for our data
+    Object.defineProperty(this, '_cache', {
+      enumerable: false,
+      writable: true,
+      value: {},
+    });
+    //'found' getter
+    Object.defineProperty(this, 'found', {
+      get: () => this.list.length > 0,
+    });
+    //'length' getter
+    Object.defineProperty(this, 'length', {
+      get: () => this.list.length,
+    });
+    // this is way easier than .constructor.name...
+    Object.defineProperty(this, 'isA', {
+      get: () => 'Doc',
+    });
+  }
+
+  /** run part-of-speech tagger on all results*/
+  tagger() {
+    return _02Tagger(this)
+  }
+
+  /** pool is stored on phrase objects */
+  pool() {
+    if (this.list.length > 0) {
+      return this.list[0].pool
+    }
+    return this.all().list[0].pool
+  }
+}
+
+/** create a new Document object */
+Doc.prototype.buildFrom = function (list) {
+  list = list.map(p => p.clone(true));
+  // new this.constructor()
+  let doc = new Doc(list, this, this.world);
+  return doc
+};
+
+/** create a new Document from plaintext. */
+Doc.prototype.fromText = function (str) {
+  let list = _01Tokenizer(str, this.world, this.pool());
+  return this.buildFrom(list)
+};
+
+Object.assign(Doc.prototype, methods.misc);
+Object.assign(Doc.prototype, methods.selections);
+
+//add sub-classes
+Subset(Doc);
+
+//aliases
+const aliases = {
+  untag: 'unTag',
+  and: 'match',
+  notIf: 'ifNo',
+  only: 'if',
+  onlyIf: 'if',
+};
+Object.keys(aliases).forEach(k => (Doc.prototype[k] = Doc.prototype[aliases[k]]));
+var Doc_1 = Doc;
+
+//for the tokenize-only build, we want to keep
+const smallTagger = function (doc) {
+  let terms = doc.termList();
+  _01Lexicon(terms, doc.world);
+  // run any user-given tagger functions
+  doc.world.taggers.forEach(fn => {
+    fn(doc);
+  });
+  return doc
+};
+var tiny = smallTagger;
+
+function instance(worldInstance) {
+  //blast-out our word-lists, just once
+  let world = worldInstance;
+
+  /** parse and tag text into a compromise object  */
+  const nlp = function (text = '', lexicon) {
+    if (lexicon) {
+      world.addWords(lexicon);
+    }
+    let list = _01Tokenizer(text, world);
+    let doc = new Doc_1(list, null, world);
+    doc.tagger();
+    return doc
+  };
+
+  /** parse text into a compromise object, without running POS-tagging */
+  nlp.tokenize = function (text = '', lexicon) {
+    let w = world;
+    if (lexicon) {
+      w = w.clone();
+      w.words = {};
+      w.addWords(lexicon);
+    }
+    let list = _01Tokenizer(text, w);
+    let doc = new Doc_1(list, null, w);
+    if (lexicon || doc.world.taggers.length > 0) {
+      tiny(doc);
+    }
+    return doc
+  };
+
+  /** mix in a compromise-plugin */
+  nlp.extend = function (fn) {
+    fn(Doc_1, world, this, Phrase_1, Term_1, Pool_1);
+    return this
+  };
+
+  /** create a compromise Doc object from .json() results */
+  nlp.fromJSON = function (json) {
+    let list = fromJSON_1(json, world);
+    return new Doc_1(list, null, world)
+  };
+
+  /** make a deep-copy of the library state */
+  nlp.clone = function () {
+    return instance(world.clone())
+  };
+
+  /** log our decision-making for debugging */
+  nlp.verbose = function (bool = true) {
+    world.verbose(bool);
+    return this
+  };
+  /** grab currently-used World object */
+  nlp.world = function () {
+    return world
+  };
+  /** pre-parse any match statements */
+  nlp.parseMatch = function (str, opts) {
+    return matchSyntax(str, opts)
+  };
+
+  /** current version of the library */
+  nlp.version = _version;
+  // aliases
+  nlp.import = nlp.load;
+  nlp.plugin = nlp.extend;
+
+  return nlp
+}
+
+var src = instance(new World_1());
+
+export default src;

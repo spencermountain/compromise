@@ -1,5 +1,5 @@
 let { methods, model } = require('../world')
-const getPointer = require('./_pointer')
+const { getDoc } = require('./_pointer')
 const addMethods = require('./methods')
 const addAliases = require('./aliases')
 
@@ -27,6 +27,7 @@ class View {
       writable: true,
     })
     this.pointer = pointer
+    this.verbose = false
   }
   /*
 
@@ -37,7 +38,7 @@ class View {
   get docs() {
     let docs = this.document
     if (this.pointer) {
-      docs = getPointer(this.pointer, this.document)
+      docs = getDoc(this.pointer, this.document)
     }
     Object.defineProperty(this, 'docs', {
       value: docs,
@@ -51,7 +52,7 @@ class View {
   // create a new View, from this one
   update(pointer) {
     let m = new View(this.document, pointer)
-    m._cache = this._cache // pass this by pointer
+    m._cache = this._cache // share this full thing
     return m
   }
 }

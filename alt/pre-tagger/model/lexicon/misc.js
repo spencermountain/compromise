@@ -19,6 +19,13 @@ let misc = {
   our: ['Possessive', 'Pronoun'],
   my: ['Possessive', 'Pronoun'],
   its: ['Possessive', 'Pronoun'],
+  // ampersands
+  'at&t': 'Organization',
+  'black & decker': 'Organization',
+  'h & m': 'Organization',
+  'johnson & johnson': 'Organization',
+  'procter & gamble': 'Organization',
+  "ben & jerry's": 'Organization',
 }
 
 module.exports = misc

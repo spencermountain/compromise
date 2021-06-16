@@ -35,7 +35,7 @@
   "scripts": {
     "build": "node ./scripts/build && rollup -c --silent && npm run test:smoke --silent",
     "pack": "node ./scripts/build/pack.js",
-    "test": "node ./scripts/test/index.js ",
+    "test": "node /Users/spencer/mountain/compromise/alt-test/match.test.js | tap-dancer",
     "testb": "npm run test:smoke && TESTENV=prod  node ./scripts/test/index.js",
     "test:smoke": "node \"./scripts/test/smoke-test/\" | tap-dancer",
     "test:spec": "tape \"./tests/**/*.test.js\" | tap-spec",

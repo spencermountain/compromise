@@ -41,16 +41,16 @@ const data = [
   [require('./adjectives/adjectives'), 'Adjective'],
   [require('./adjectives/comparables'), 'Comparable'],
   //numbers
-  [require('./numbers/ordinals'), 'TextOrdinal'],
+  [require('./numbers/ordinals'), 'Ordinal'],
   [require('./numbers/cardinals'), 'Cardinal'],
   //abbreviations
   [require('./abbreviations/misc'), 'Abbreviation'],
   [require('./abbreviations/units'), 'Unit'],
-  [require('./abbreviations/nouns'), ['Abbreviation', 'Noun']],
-  [require('./abbreviations/honorifics'), ['Abbreviation', 'Honorific']],
-  [require('./abbreviations/months'), ['Abbreviation', 'Month']],
-  [require('./abbreviations/organizations'), ['Abbreviation', 'Organization']],
-  [require('./abbreviations/places'), ['Abbreviation', 'Place']],
+  [require('./abbreviations/nouns'), 'Abbreviation|Noun'],
+  [require('./abbreviations/honorifics'), 'Abbreviation|Honorific'],
+  [require('./abbreviations/months'), 'Abbreviation|Month'],
+  [require('./abbreviations/organizations'), 'Abbreviation|Organization'],
+  [require('./abbreviations/places'), 'Abbreviation|Place'],
   //misc
   [require('./misc/adverbs'), 'Adverb'],
   [require('./misc/expressions'), 'Expression'],

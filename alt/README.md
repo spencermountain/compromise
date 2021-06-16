@@ -14,6 +14,8 @@
 
 ### Changes
 
-- rename Tag properties
+- rename internal Tag properties
   -- Tag.upstream -> Tag.children
   -- Tag.isA -> Tag.parents
+
+- move nlp.verbose()

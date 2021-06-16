@@ -3,6 +3,7 @@ const View = require('./View')
 const tokenize = require('./tokenize')
 const contractions = require('./contractions')
 const preTagger = require('./pre-tagger')
+const postTagger = require('./post-tagger')
 const parseMatch = require('./View/match/match-syntax')
 let { methods, model, parsers } = require('./world')
 
@@ -48,5 +49,6 @@ nlp.model = function () {
 nlp.plugin(tokenize)
 nlp.plugin(preTagger)
 nlp.plugin(contractions)
+nlp.plugin(postTagger)
 
 module.exports = nlp

@@ -1,4 +1,4 @@
-const bySlash = /[\/:]/g
+const bySlash = /[\/>]/g
 
 const getDoc = function (pointer, document) {
   let doc = []
@@ -31,4 +31,6 @@ const getDoc = function (pointer, document) {
     })
   return doc
 }
-module.exports = getDoc
+
+const makePointer = function (arr) {}
+module.exports = { getDoc }

@@ -18,6 +18,7 @@
     "spaced-comment": 0,
     "no-cond-assign": 2,
     "no-var": 1,
+    "no-console": 1,
     "prefer-const": 0,
     "no-extra-parens": 0,
     "no-dupe-keys": 2,

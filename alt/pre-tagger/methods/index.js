@@ -10,14 +10,14 @@ module.exports = {
   fillTags: require('./tagger/08-fillTags'),
 
   // lexicon creation methods
-  nounToPlural: require('./lexicon/nouns/toPlural'),
-  nounToSingular: require('./lexicon/nouns/toSingular'),
+  nounToPlural: require('./transform/nouns/toPlural'),
+  nounToSingular: require('./transform/nouns/toSingular'),
 
-  verbToInfinitive: require('./lexicon/verbs/toInfinitive'),
-  verbConjugate: require('./lexicon/verbs/conjugate'),
+  verbToInfinitive: require('./transform/verbs/toInfinitive'),
+  verbConjugate: require('./transform/verbs/conjugate'),
 
-  adjToSuperlative: require('./lexicon/adjectives/toSuperlative'),
-  adjToComparative: require('./lexicon/adjectives/toComparative'),
+  adjToSuperlative: require('./transform/adjectives/toSuperlative'),
+  adjToComparative: require('./transform/adjectives/toComparative'),
 
   // expand: require('./lexicon/'),
 }

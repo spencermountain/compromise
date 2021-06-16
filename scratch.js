@@ -9,7 +9,9 @@ const nlp = require('./alt')
 // const fmt = iso => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 // nlp.verbose(true)
 
-// let doc = nlp(`he walked to a mall`)
-nlp(`3pm`).debug()
-// doc.match('#Noun').debug()
-// doc.debug()
+let doc = nlp(`he and John walked to a mall`)
+
+// let m = doc.match('^he').tag('Verb')
+doc.tagSafe('#LastName')
+// m.unTag('Verb')
+doc.debug()

@@ -40,7 +40,7 @@ const testIsAcronym = function (str, suffix) {
   if (suffix.indexOf('.') === -1) {
     return false
   }
-  return isAcronym.test(str);
+  return isAcronym.test(str)
 }
 
 const testHasEllipse = function (str, suffix) {
@@ -48,7 +48,7 @@ const testHasEllipse = function (str, suffix) {
   if (suffix.indexOf('.') === -1) {
     return false
   }
-  return hasEllipse.test(str);
+  return hasEllipse.test(str)
 }
 
 const testHasLetter = function (str, suffix, prefixHasLetter) {
@@ -64,11 +64,11 @@ const isSentence = function (str, suffix, abbrevs, prefixContext) {
   }
   // check for 'F.B.I.'
   if (testIsAcronym(str, suffix)) {
-    return false;
+    return false
   }
   //check for '...'
   if (testHasEllipse(str, suffix)) {
-    return false;
+    return false
   }
 
   let txt = str.replace(/[.!?\u203D\u2E18\u203C\u2047-\u2049] *$/, '')

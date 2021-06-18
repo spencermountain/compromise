@@ -113,8 +113,8 @@ const splitSentences = function (text, world) {
       //&& hasLetter.test(c)
       //this chunk is a proper sentence..
       sentences.push(c)
-      chunks[i] = ''
     }
+    chunks[i] = ''
   }
   //if we never got a sentence, return the given text
   if (sentences.length === 0) {

@@ -36,6 +36,20 @@ test('tokenize() accepts lexicon param', function (t) {
   t.end()
 })
 
+test('tokenize() does not crash on long string with many sentences', function (t) {
+  let text = 'The quick brown fox jumped over the lazy dog.\n'
+  text += 'Hi!\n'.repeat(100000)
+  let doc = nlp.tokenize(text)
+  t.end()
+})
+
+test('tokenize() does not crash on long string with few sentences', function (t) {
+  let text = 'The quick brown fox jumped over the lazy dog.\n'
+  text += '--\n'.repeat(100000)
+  let doc = nlp.tokenize(text)
+  t.end()
+})
+
 test('parseMatch() results are symmetric', function (t) {
   const doc = nlp(`Why doesnt ross, the largest friend, simply eat the other 5?`)
   let matches = [

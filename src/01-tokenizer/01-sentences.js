@@ -35,18 +35,39 @@ const naiive_split = function (text) {
   return all
 }
 
+const testIsAcronym = function (str, suffix) {
+  // early exit
+  if (suffix.indexOf('.') === -1) {
+    return false
+  }
+  return isAcronym.test(str)
+}
+
+const testHasEllipse = function (str, suffix) {
+  // early exit
+  if (suffix.indexOf('.') === -1) {
+    return false
+  }
+  return hasEllipse.test(str)
+}
+
+const testHasLetter = function (str, suffix, prefixHasLetter) {
+  return prefixHasLetter || hasLetter.test(suffix)
+}
+
 /** does this look like a sentence? */
-const isSentence = function (str, abbrevs) {
+const isSentence = function (str, suffix, abbrevs, prefixContext) {
+  // must have a letter
+  prefixContext.hasLetter = testHasLetter(str, suffix, prefixContext.hasLetter)
+  if (!prefixContext.hasLetter) {
+    return false
+  }
   // check for 'F.B.I.'
-  if (isAcronym.test(str) === true) {
+  if (testIsAcronym(str, suffix)) {
     return false
   }
   //check for '...'
-  if (hasEllipse.test(str) === true) {
-    return false
-  }
-  // must have a letter
-  if (hasLetter.test(str) === false) {
+  if (testHasEllipse(str, suffix)) {
     return false
   }
 
@@ -104,17 +125,22 @@ const splitSentences = function (text, world) {
 
   //detection of non-sentence chunks:
   //loop through these chunks, and join the non-sentence chunks back together..
+  let suffix = chunks[0] || ''
+  const prefixContext = { hasLetter: false }
   for (let i = 0; i < chunks.length; i++) {
     let c = chunks[i]
     //should this chunk be combined with the next one?
-    if (chunks[i + 1] && isSentence(c, abbrevs) === false) {
-      chunks[i + 1] = c + (chunks[i + 1] || '')
+    if (chunks[i + 1] && isSentence(c, suffix, abbrevs, prefixContext) === false) {
+      suffix = chunks[i + 1] || ''
+      chunks[i + 1] = c + suffix
     } else if (c && c.length > 0) {
       //&& hasLetter.test(c)
       //this chunk is a proper sentence..
       sentences.push(c)
-      chunks[i] = ''
+      suffix = chunks[i + 1] || ''
+      prefixContext.hasLetter = false
     }
+    chunks[i] = ''
   }
   //if we never got a sentence, return the given text
   if (sentences.length === 0) {

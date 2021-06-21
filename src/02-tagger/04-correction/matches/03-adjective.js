@@ -52,6 +52,15 @@ let list = [
   { match: '^[#Adjective] (the|your) #Noun', group: 0, tag: 'Infinitive', reason: 'shut-the' },
   // the said card
   { match: 'the [said] #Noun', group: 0, tag: 'Adjective', reason: 'the-said-card' },
+  // a myth that uncovered wounds heal
+  {
+    match: '#Noun (that|which|whose) [#PastTense && !#Copula] #Noun',
+    group: 0,
+    tag: 'Adjective',
+    reason: 'that-past-noun',
+  },
+  // the very fed character
+  // { match: `#Determiner #Adverb [#PastTense] #Noun`, group: 0, tag: 'Adjective', reason: 'very-x-noun' },
 ]
 
 module.exports = list

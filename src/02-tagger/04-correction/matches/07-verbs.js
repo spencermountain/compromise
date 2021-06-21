@@ -127,7 +127,7 @@ let list = [
   { match: '#Pronoun [#Adjective] #Determiner #Adjective? #Noun', group: 0, tag: 'Verb', reason: 'he-adj-the' },
 
   //is eager to go
-  { match: '#Copula [#Adjective to] #Verb', group: 0, tag: 'Verb', reason: 'adj-to' },
+  { match: '#Copula [#Adjective] to #Verb', group: 0, tag: 'Verb', reason: 'adj-to' },
   // open the door
   { match: '[open] #Determiner', group: 0, tag: 'Infinitive', reason: 'open-the' },
   // compromises are possible

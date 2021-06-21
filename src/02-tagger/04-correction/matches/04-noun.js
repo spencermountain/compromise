@@ -173,6 +173,15 @@ module.exports = [
   // selling like hot cakes
   { match: `#Gerund like #Adjective? [#PresentTense]`, group: 0, tag: 'Plural', reason: 'like-hot-cakes' },
 
+  // some valid reason
+  { match: `some #Adjective [#PresentTense]`, group: 0, tag: 'Noun', reason: 'some-reason' },
+  // for some reason
+  { match: `for some [#PresentTense]`, group: 0, tag: 'Noun', reason: 'for-some-reason' },
+  // same kind of shouts
+  { match: `(same|some|the|that|a) kind of [#PresentTense]`, group: 0, tag: 'Noun', reason: 'some-kind-of' },
+  // a type of shout
+  { match: `(same|some|the|that|a) type of [#PresentTense]`, group: 0, tag: 'Noun', reason: 'some-type-of' },
+
   // in various sensory functions
   // {
   //   match: `#Preposition #Determiner #Singular [#PresentTense]`,

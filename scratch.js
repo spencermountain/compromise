@@ -12,6 +12,6 @@ const nlp = require('./alt')
 let doc = nlp(`he and John walked to a mall`)
 
 // let m = doc.match('^he').tag('Verb')
-doc.tagSafe('#LastName')
+// doc.canBe('#LastName').debug()
 // m.unTag('Verb')
 doc.debug()

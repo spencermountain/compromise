@@ -57,10 +57,9 @@ const methods = {
   },
 
   /** return only the terms that can be this tag  */
-  canBe: function (tag) {
-    let pointers = []
-
-    return this
-  },
+  // canBe: function (tag) {
+  //   let pointers = []
+  //   return this
+  // },
 }
 module.exports = methods

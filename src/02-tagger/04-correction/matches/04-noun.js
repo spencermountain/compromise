@@ -161,6 +161,17 @@ module.exports = [
   { match: `to #PresentTense #Noun [#PresentTense] #Preposition`, group: 0, tag: 'Noun', reason: 'gas-exchange' },
   // a comdominium, or simply condo
   { match: `a #Noun+ or #Adverb+? [#Verb]`, group: 0, tag: 'Noun', reason: 'noun-or-noun' },
+  // operating system
+  { match: `[#Gerund] system`, group: 0, tag: 'Noun', reason: 'operating-system' },
+  // waited until release
+  {
+    match: `#PastTense (until|as|through|without) [#PresentTense]`,
+    group: 0,
+    tag: 'Noun',
+    reason: 'waited-until-release',
+  },
+  // selling like hot cakes
+  { match: `#Gerund like #Adjective? [#PresentTense]`, group: 0, tag: 'Plural', reason: 'like-hot-cakes' },
 
   // in various sensory functions
   // {

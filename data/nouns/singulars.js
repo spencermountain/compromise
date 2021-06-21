@@ -72,7 +72,6 @@ module.exports = [
   'us dollar',
   'us state',
   'way',
-  'operating system',
 
   //double-consonant rule
   'bottle',

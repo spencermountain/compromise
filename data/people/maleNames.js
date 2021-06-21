@@ -862,7 +862,7 @@ module.exports = [
   'robert',
   'roberto',
   'rocco',
-  'rocky',
+  // 'rocky',
   'roderick',
   'rodger',
   'rodney',

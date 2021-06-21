@@ -47,11 +47,11 @@ let arr = [
   // `the same type of shouts`,
   // `the same kind of shouts`,
   // `they are essential to expand`,
+  // `had a rocky release`,
+  // `doing better for fights`,
   `might get better aim`,
-  `doing better in fights`,
   `called the taylor rule`,
   `won’t take extra damage`,
-  `had a rocky release`,
   `i think tipping blows`,
 ]
 // `naive and chubby cheeked`,

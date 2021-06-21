@@ -40,4 +40,6 @@ module.exports = [
   // kinda sparkly
   { match: `#Adverb [#Adverb]$`, group: 0, tag: 'Adjective', reason: 'kinda-sparkly' },
   { match: `#Adverb [#Adverb] (and|or|then)`, group: 0, tag: 'Adjective', reason: 'kinda-sparkly-and' },
+  // super strong
+  { match: `[super] #Adjective #Noun`, group: 0, tag: 'Adverb', reason: 'super-strong' },
 ]

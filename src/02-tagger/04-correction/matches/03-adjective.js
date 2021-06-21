@@ -50,6 +50,8 @@ let list = [
   { match: '#Copula #Adjective? [(out|in|through)]$', group: 0, tag: 'Adjective', reason: 'still-out' },
   // shut the door
   { match: '^[#Adjective] (the|your) #Noun', group: 0, tag: 'Infinitive', reason: 'shut-the' },
+  // the said card
+  { match: 'the [said] #Noun', group: 0, tag: 'Adjective', reason: 'the-said-card' },
 ]
 
 module.exports = list

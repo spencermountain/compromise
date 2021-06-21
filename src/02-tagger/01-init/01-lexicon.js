@@ -1,4 +1,4 @@
-const underOver = /^(under|over)-?/
+const underOver = /^(under|over)-?.{3}/
 
 /** match a word-sequence, like 'super bowl' in the lexicon */
 const tryMultiple = function (terms, t, world) {
@@ -61,7 +61,7 @@ const checkLexicon = function (terms, world) {
     }
     // prefix strip: try to match 'take' for 'undertake'
     if (underOver.test(str) === true) {
-      let noPrefix = str.replace(underOver, '')
+      let noPrefix = str.replace(/^(under|over)-?/, '')
       if (lex.hasOwnProperty(noPrefix) === true) {
         terms[t].tag(lex[noPrefix], 'noprefix-lexicon', world)
       }

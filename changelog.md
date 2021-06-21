@@ -12,6 +12,12 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 
 -->
 
+#### 13.11.3 [June 2021]
+
+- **[fix]** - regex backtracing issue \#847 (thanks @srubin)
+- misc tagging fixes
+  update deps
+
 #### 13.11.2 [May 2021]
 
 - **[fix]** - verbphrase conjugation fixes

@@ -176,4 +176,5 @@ module.exports = [
   'wool',
   'monogamy',
   'polygamy',
+  'national security',
 ]

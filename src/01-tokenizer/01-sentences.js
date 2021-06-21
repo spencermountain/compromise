@@ -51,14 +51,14 @@ const testHasEllipse = function (str, suffix) {
   return hasEllipse.test(str)
 }
 
-const testHasLetter = function (str, suffix, prefixHasLetter) {
+const testHasLetter = function (suffix, prefixHasLetter) {
   return prefixHasLetter || hasLetter.test(suffix)
 }
 
 /** does this look like a sentence? */
 const isSentence = function (str, suffix, abbrevs, prefixContext) {
   // must have a letter
-  prefixContext.hasLetter = testHasLetter(str, suffix, prefixContext.hasLetter)
+  prefixContext.hasLetter = testHasLetter(suffix, prefixContext.hasLetter)
   if (!prefixContext.hasLetter) {
     return false
   }

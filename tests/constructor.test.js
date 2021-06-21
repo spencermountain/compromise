@@ -39,14 +39,16 @@ test('tokenize() accepts lexicon param', function (t) {
 test('tokenize() does not crash on long string with many sentences', function (t) {
   let text = 'The quick brown fox jumped over the lazy dog.\n'
   text += 'Hi!\n'.repeat(100000)
-  let doc = nlp.tokenize(text)
+  //eslint-disable-next-line
+  let _doc = nlp.tokenize(text)
   t.end()
 })
 
 test('tokenize() does not crash on long string with few sentences', function (t) {
   let text = 'The quick brown fox jumped over the lazy dog.\n'
   text += '--\n'.repeat(100000)
-  let doc = nlp.tokenize(text)
+  //eslint-disable-next-line
+  let _doc = nlp.tokenize(text)
   t.end()
 })
 

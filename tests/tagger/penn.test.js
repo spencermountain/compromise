@@ -56,7 +56,8 @@ test('pennTreebank-test:', function (t) {
     }
     if (terms.length !== sentence.tags.length) {
       perfect = false
-      msg = 'tokenize#' + index
+      msg = 'tokenize: '
+      msg += sentence.text.substr(0, 90)
     }
     // t.equal(doc.length, 1, 'one sentence #' + index)
     // t.equal(terms.length, sentence.tags.length, 'tokenize#' + index)

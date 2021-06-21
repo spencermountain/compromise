@@ -49,13 +49,13 @@ let arr = [
   // `they are essential to expand`,
   // `had a rocky release`,
   // `doing better for fights`,
-  `might get better aim`,
-  `called the taylor rule`,
-  `won’t take extra damage`,
+  // `might get better aim`,
   `i think tipping blows`,
 ]
+// `won’t take extra damage`,
+// `called the taylor rule`,
 // `naive and chubby cheeked`,
 // `he’s devastated`,
 
 let doc = nlp(arr[0]).debug()
-// nlp(`curbing terrorist activity `).debug()
+// nlp(`I have to say the value `).debug()

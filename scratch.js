@@ -12,11 +12,10 @@ const nlp = require('./src/index')
 // let doc = nlp('i do not really yell').debug()
 // let doc = nlp('i did not really yell').debug()
 
-let doc = nlp(`http:subdomain.cool.com/`).debug()
-// doc.verbs().toPresentTense()
-doc.verbs().toPastTense()
-console.log(doc.text())
-
-// let doc = nlp('I will never do that')
-// doc.verbs().toInfinitive()
-// console.log(doc.text())
+let text = '....... the rest was history!'
+console.log('start')
+// text += '--\n'.repeat(100000)
+let doc = nlp.tokenize(text)
+doc.debug()
+// console.log(doc.json()[0])
+console.log('done')

@@ -32,8 +32,9 @@ const nOutOfN = function (m) {
     return null
   }
   let { num, den } = found.groups()
-  // num = num.numbers().get(0)
-  // den = den.numbers().get(0)
+  if (!num || !den) {
+    return null
+  }
   num = parseNumber(num)
   den = parseNumber(den)
   if (typeof num === 'number' && typeof den === 'number') {

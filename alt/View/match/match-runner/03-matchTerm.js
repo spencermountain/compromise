@@ -69,10 +69,10 @@ const doesMatch = function (t, reg, index, length) {
   }
   // support optimized (one|two)
   if (reg.fastOr !== undefined) {
-    if (t.implicit && reg.fastOr.hasOwnProperty(t.implicit) === true) {
+    if (t.implicit && reg.fastOr.has(t.implicit) === true) {
       return true
     }
-    return reg.fastOr.hasOwnProperty(t.reduced) || reg.fastOr.hasOwnProperty(t.text)
+    return reg.fastOr.has(t.reduced) || reg.fastOr.has(t.text)
   }
   //support slower (one|two)
   if (reg.choices !== undefined) {

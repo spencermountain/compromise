@@ -49,4 +49,3 @@ const syntax = function (input, opts = {}) {
 }
 
 module.exports = syntax
-// console.log(syntax('[#Copula (#Adverb|not)+?] (#Gerund|#PastTense)'))

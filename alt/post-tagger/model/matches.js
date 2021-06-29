@@ -10,7 +10,7 @@ const seq = {
 }
 
 // order matters
-const matches = [
+let matches = [
   { match: 'too much', tag: 'Adverb Adjective', reason: 'bit-4' },
   // u r cool
   { match: 'u r', tag: 'Pronoun Copula', reason: 'u r' },
@@ -826,5 +826,4 @@ const matches = [
   // Paris Berelc
   { match: `[${seq.personPlace}] (#ProperNoun && !#Place)`, group: 0, tag: 'FirstName', reason: 'place-firstname' },
 ]
-
 module.exports = matches

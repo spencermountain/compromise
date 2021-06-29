@@ -1,8 +1,7 @@
 const cacheMatches = require('./cacheMatches')
+const runner = require('./runner')
 
 module.exports = {
   cacheMatches: cacheMatches,
-  runner: function (cache, model) {
-    // console.log(cache)
-  },
+  runner: runner,
 }

@@ -36,7 +36,7 @@ const allLists = function (m) {
   let lists = m.reg.filter(r => r.fastOr !== undefined)
   if (lists.length === 1) {
     let i = m.reg.findIndex(r => r.fastOr !== undefined)
-    Object.keys(m.reg[i].fastOr).forEach(w => {
+    Array.from(m.reg[i].fastOr).forEach(w => {
       let newM = Object.assign({}, m)
       newM.reg = newM.reg.slice(0)
       newM.reg[i] = Object.assign({}, newM.reg[i])

@@ -38,11 +38,10 @@ const doFastOrMode = function (tokens) {
         return false
       })
       if (shouldPack === true) {
-        let oneOf = {}
+        token.fastOr = new Set()
         token.choices.forEach(block => {
-          oneOf[block[0].word] = true
+          token.fastOr.add(block[0].word)
         })
-        token.fastOr = oneOf
         delete token.choices
       }
     }

@@ -1,5 +1,3 @@
-const cacheView = require('./cache')
-
 const methods = {
   /** */
   termList: function () {
@@ -13,7 +11,7 @@ const methods = {
   },
   /** */
   cache: function () {
-    this._cache = cacheView(this)
+    this._cache = this.methods.cacheDoc(this.document)
     return this
   },
   /** */

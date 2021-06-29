@@ -1,5 +1,5 @@
-const createCache = function (view) {
-  let cache = view.docs.map(terms => {
+const createCache = function (document) {
+  let cache = document.map(terms => {
     let stuff = new Set()
     terms.forEach(term => {
       // add words

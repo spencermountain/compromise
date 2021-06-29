@@ -4,7 +4,7 @@ const tokenize = require('./tokenize')
 const contractions = require('./contractions')
 const preTagger = require('./pre-tagger')
 const postTagger = require('./post-tagger')
-const parseMatch = require('./View/match/match-syntax')
+// const parseMatch = require('./methods/parseMatch')
 let world = require('./world')
 
 const nlp = function (document, lex) {
@@ -26,7 +26,7 @@ nlp.tokenize = function (str) {
 }
 /** pre-parse any match statements */
 nlp.parseMatch = function (str) {
-  return parseMatch(str)
+  return world.methods.parseMatch(str)
 }
 
 /** extend compromise functionality */

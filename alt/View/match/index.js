@@ -1,13 +1,5 @@
 // const runMatch = require('./match-runner')
 const runMatch = require('./match-runner')
-const parseMatch = require('./match-syntax')
-
-const _parseMatch = function (regs) {
-  if (typeof regs === 'string') {
-    return parseMatch(regs)
-  }
-  return regs
-}
 
 const _getPointers = function (res, group) {
   let ptrs = []
@@ -38,7 +30,9 @@ const _getPointers = function (res, group) {
 
 /** return the first match */
 exports.matchOne = function (regs, group) {
-  regs = _parseMatch(regs)
+  if (typeof regs === 'string') {
+    regs = this.methods.parseMatch(regs)
+  }
   let res = runMatch(this, regs, true)
   let { ptrs, byGroup } = _getPointers(res, group)
   let view = this.update(ptrs)
@@ -48,7 +42,9 @@ exports.matchOne = function (regs, group) {
 
 /** return an array of matching phrases */
 exports.match = function (regs, group) {
-  regs = _parseMatch(regs)
+  if (typeof regs === 'string') {
+    regs = this.methods.parseMatch(regs)
+  }
   let res = runMatch(this, regs)
   let { ptrs, byGroup } = _getPointers(res, group)
   let view = this.update(ptrs)
@@ -58,7 +54,9 @@ exports.match = function (regs, group) {
 
 /** return boolean if one match is found */
 exports.has = function (regs, group) {
-  regs = _parseMatch(regs)
+  if (typeof regs === 'string') {
+    regs = this.methods.parseMatch(regs)
+  }
   let res = runMatch(this, regs)
   let { ptrs } = _getPointers(res, group)
   return ptrs.length > 0

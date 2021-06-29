@@ -1,24 +1,6 @@
 module.exports = {
   // adverbs than can be adjectives
-  adverbAdjective: [
-    'dark',
-    'bright',
-    'flat',
-    'light',
-    'soft',
-    'pale',
-    'dead',
-    'dim',
-    'faux',
-    'little',
-    'wee',
-    'sheer',
-    'most',
-    'near',
-    'good',
-    'extra',
-    'all',
-  ],
+  adverbAdjective: ['dark', 'bright', 'flat', 'light', 'soft', 'pale', 'dead', 'dim', 'faux', 'little', 'wee', 'sheer', 'most', 'near', 'good', 'extra', 'all'],
   // names that are dates
   personDate: ['april', 'june', 'may', 'jan', 'august', 'eve'],
   // names that may be months
@@ -30,18 +12,7 @@ module.exports = {
   personVerb: ['pat', 'wade', 'ollie', 'will', 'rob', 'buck', 'bob', 'mark', 'jack'],
 
   // names that are verbs
-  personPlace: [
-    'darwin',
-    'hamilton',
-    'paris',
-    'alexandria',
-    'houston',
-    'kobe',
-    'santiago',
-    'salvador',
-    'sydney',
-    'victoria',
-  ],
+  personPlace: ['darwin', 'hamilton', 'paris', 'alexandria', 'houston', 'kobe', 'santiago', 'salvador', 'sydney', 'victoria'],
 
   // names that are nouns
   personNoun: [
@@ -94,3 +65,8 @@ module.exports = {
     'white',
   ],
 }
+
+Object.keys(module.exports).forEach(k => {
+  module.exports[k] = module.exports[k].join('|')
+})
+console.log(module.exports)

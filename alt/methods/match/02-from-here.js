@@ -194,12 +194,12 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
   }
 
   //return our results, as pointers
-  let pntr = `${start_i}>${state.t + start_i}`
+  let pntr = [null, start_i, state.t + start_i] //`${start_i}:${state.t + start_i}`
   let groups = {}
   Object.keys(state.groups).forEach(k => {
     let o = state.groups[k]
     let start = start_i + o.start
-    groups[k] = `${start}>${start + o.length}`
+    groups[k] = [null, start, start + o.length] //`${start}:${start + o.length}`
   })
   return { pointer: pntr, groups: groups }
 }

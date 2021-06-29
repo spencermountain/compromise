@@ -1,6 +1,13 @@
 const bySlash = /[\/:]/g
 
+const isArray = function (arr) {
+  return Object.prototype.toString.call(arr) === '[object Array]'
+}
+
 const parsePointer = function (pointer) {
+  if (isArray(pointer)) {
+    return pointer
+  }
   let [, /*skip*/ n, start, end] = pointer.split(bySlash)
   n = n === undefined ? null : parseInt(n, 10)
   start = start === undefined ? null : parseInt(start, 10)
@@ -9,17 +16,26 @@ const parsePointer = function (pointer) {
     // eslint-disable-next-line
     console.warn(`invalid pointer: '${pointer}'`)
   }
-  return { n, start, end }
+  return [n, start, end]
 }
 
-// const createPointer = function (arr) {}
+const createPointer = function (arr) {
+  let str = `/${arr[0]}`
+  if (arr[1] || arr[1] === 0) {
+    str += '/' + arr[1]
+    if (arr[2] || arr[2] === 0) {
+      str += ':' + arr[2]
+    }
+  }
+  return str
+}
 
 const getDoc = function (pointer, document) {
   let doc = []
   pointer
     .filter(str => str)
     .forEach(ptr => {
-      let { n, start, end } = parsePointer(ptr)
+      let [n, start, end] = parsePointer(ptr)
       if (!start) {
         start = 0
       }
@@ -35,6 +51,6 @@ const getDoc = function (pointer, document) {
   return doc
 }
 
-module.exports = { getDoc, parsePointer }
+module.exports = { getDoc, parsePointer, createPointer }
 
 // console.log(parsePointer('/0/0:1'))

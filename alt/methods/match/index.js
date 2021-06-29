@@ -1,11 +1,12 @@
-const fromHere = require('./02-from-here')
 const failFast = require('./01-failFast')
+const fromHere = require('./02-from-here')
+const getGroup = require('./04-getGroup')
 
 // ok, here we go.
-const runMatch = function (view, regs, justOne = false) {
+const runMatch = function (docs, m, cache) {
+  cache = cache || []
+  let { regs, group, justOne } = m
   let results = []
-  let docs = view.docs
-  let cache = view._cache || []
   const minLength = regs.filter(r => r.optional !== true && r.negative !== true).length
 
   for (let n = 0; n < docs.length; n += 1) {
@@ -25,9 +26,11 @@ const runMatch = function (view, regs, justOne = false) {
       // did we find a result?
       if (res) {
         // make proper pointers
-        res.pointer = `/${n}/` + res.pointer
+        res.pointer[0] = n
+        // res.pointer = [n, res.pointer] //`/${n}/` + res.pointer
         Object.keys(res.groups).forEach(k => {
-          res.groups[k] = `/${n}/` + res.groups[k]
+          res.groups[k][0] = n
+          // res.groups[k] = [n, res.groups[k]] //`/${n}/` + res.groups[k]
         })
         results.push(res)
         // should we stop here?
@@ -35,11 +38,14 @@ const runMatch = function (view, regs, justOne = false) {
           return results
         }
         // skip ahead, over these results
-        let { end } = view.methods.parsePointer(res.pointer)
+        let end = res.pointer[2]
+        // let { end } = methods.parsePointer(res.pointer)
         i = Math.abs(end - 1)
       }
     }
   }
+  // grab the requested group
+  results = getGroup(results, group)
   return results
 }
 module.exports = runMatch

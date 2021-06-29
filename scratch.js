@@ -3,7 +3,7 @@ const nlp = require('./alt')
 
 // nlp.verbose(true)
 let doc = nlp(`dick van dyke. Theromos hell.`)
-doc.match('dick van .').debug()
+doc.match('dick van [<name>.]').debug()
 // doc.cache()
 // doc.debug()
 // doc.match('#Noun [(who|whom|#Foo)]').debug()

@@ -1,6 +1,6 @@
-const util = require('./util')
 const out = require('./out')
-const match = require('./match')
+const util = require('./methods/utils')
+const match = require('./methods/match')
 const tag = require('./tag')
 
 const methods = Object.assign({}, util, out, match, tag)

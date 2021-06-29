@@ -1,3 +1,5 @@
+const doesMatch = require('./03-matchTerm')
+
 //found a match? it's greedy? keep going!
 exports.getGreedy = function (state, endReg) {
   // for greedy checking, we no longer care about the reg.start
@@ -8,7 +10,7 @@ exports.getGreedy = function (state, endReg) {
   let start = state.t
   for (; state.t < state.terms.length; state.t += 1) {
     //stop for next-reg match
-    if (endReg && state.terms[state.t].doesMatch(endReg, state.start_i + state.t, state.phrase_length)) {
+    if (endReg && doesMatch(state.terms[state.t], endReg, state.start_i + state.t, state.phrase_length)) {
       return state.t
     }
     let count = state.t - start + 1
@@ -17,7 +19,7 @@ exports.getGreedy = function (state, endReg) {
       return state.t
     }
     //stop here
-    if (state.terms[state.t].doesMatch(reg, state.start_i + state.t, state.phrase_length) === false) {
+    if (doesMatch(state.terms[state.t], reg, state.start_i + state.t, state.phrase_length) === false) {
       // is it too short?
       if (reg.min !== undefined && count < reg.min) {
         return null
@@ -37,7 +39,7 @@ exports.greedyTo = function (state, nextReg) {
   }
   //otherwise, we're looking for the next one
   for (; t < state.terms.length; t += 1) {
-    if (state.terms[t].doesMatch(nextReg, state.start_i + t, state.phrase_length) === true) {
+    if (doesMatch(state.terms[t], nextReg, state.start_i + t, state.phrase_length) === true) {
       return t
     }
   }
@@ -53,7 +55,7 @@ exports.isEndGreedy = function (reg, state) {
   if (reg.end === true && reg.greedy === true) {
     if (state.start_i + state.t < state.phrase_length - 1) {
       let tmpReg = Object.assign({}, reg, { end: false })
-      if (state.terms[state.t].doesMatch(tmpReg, state.start_i + state.t, state.phrase_length) === true) {
+      if (doesMatch(state.terms[state.t], tmpReg, state.start_i + state.t, state.phrase_length) === true) {
         return true
       }
     }
@@ -75,13 +77,13 @@ exports.doOrBlock = function (state, skipN = 0) {
       if (state.terms[t] === undefined) {
         return false
       }
-      let foundBlock = state.terms[t].doesMatch(cr, t + state.start_i, state.phrase_length)
+      let foundBlock = doesMatch(state.terms[t], cr, t + state.start_i, state.phrase_length)
       // this can be greedy - '(foo+ bar)'
       if (foundBlock === true && cr.greedy === true) {
         for (let i = 1; i < state.terms.length; i += 1) {
           let term = state.terms[t + i]
           if (term) {
-            let keepGoing = term.doesMatch(cr, state.start_i + i, state.phrase_length)
+            let keepGoing = doesMatch(term, cr, state.start_i + i, state.phrase_length)
             if (keepGoing === true) {
               extra += 1
             } else {
@@ -117,7 +119,7 @@ exports.doAndBlock = function (state) {
       if (state.terms[tryTerm] === undefined) {
         return false
       }
-      return state.terms[tryTerm].doesMatch(cr, tryTerm, state.phrase_length)
+      return doesMatch(state.terms[tryTerm], cr, tryTerm, state.phrase_length)
     })
     if (allWords === true && block.length > longest) {
       longest = block.length

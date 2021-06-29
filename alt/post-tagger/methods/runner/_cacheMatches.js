@@ -28,15 +28,17 @@ const addReg = function (reg, match, cache) {
 
 const cacheMatches = function (matches, methods) {
   const parseMatch = methods.parseMatch
+  const cacheMatch = methods.cacheMatch
   // parse match strings
   let pos = {}
   matches.forEach(obj => {
     obj.regs = parseMatch(obj.match)
-    obj.regs.forEach(reg => {
-      addReg(reg, obj, pos)
-    })
+    obj.needs = Array.from(cacheMatch(obj.regs))
+    // obj.regs.forEach(reg => {
+    //   addReg(reg, obj, pos)
+    // })
   })
   // console.log(pos)
-  return pos
+  return matches
 }
 module.exports = cacheMatches

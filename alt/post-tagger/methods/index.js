@@ -1,5 +1,7 @@
-const runner = require('./runner')
+const compile = require('./compile')
+const matcher = require('./matcher')
 
 module.exports = {
-  runner: runner,
+  compile: compile,
+  matcher: matcher,
 }

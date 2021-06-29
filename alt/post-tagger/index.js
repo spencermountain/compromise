@@ -3,7 +3,9 @@ const _methods = require('./methods')
 
 const postTagger = function (document, world) {
   const { methods, model } = world
-  methods.postTagger.runner(document, model.matches, methods)
+  const m = methods.postTagger
+  let byGroup = m.compile(model.matches, methods)
+  m.matcher(document, byGroup, methods)
   return document
 }
 

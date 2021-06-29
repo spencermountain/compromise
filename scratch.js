@@ -2,9 +2,10 @@
 const nlp = require('./alt')
 
 // nlp.verbose(true)
-let doc = nlp(`dick van dyke.`)
-doc.cache()
-doc.debug()
+let doc = nlp(`dick van dyke. Theromos hell.`)
+doc.match('dick van .').debug()
+// doc.cache()
+// doc.debug()
 // doc.match('#Noun [(who|whom|#Foo)]').debug()
 // doc.match('#Noun (who|whom|#Foo)').debug()
 // let m = doc.match('^he').tag('Verb')

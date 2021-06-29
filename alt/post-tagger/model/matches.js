@@ -827,6 +827,6 @@ let matches = [
   { match: `[${seq.personPlace}] (#ProperNoun && !#Place)`, group: 0, tag: 'FirstName', reason: 'place-firstname' },
 ]
 // matches = [{ match: '!one (!two|!#Three)' }, { match: '!(#Noun|cool yeah)' }]
-matches = [{ match: 'before (cool|yeah dude|#Foo) after' }]
+matches = [{ match: 'before (cool|yeah dude|#Foo) after' }, { match: 'cool van' }, { match: '#Noun yeah' }, { match: 'dick .' }]
 // matches = [{ match: 'spider cow zebra' }, { match: 'zebra one #Noun' }, { match: 'so #Noun' }, { match: 'dick . dyke' }]
 module.exports = matches

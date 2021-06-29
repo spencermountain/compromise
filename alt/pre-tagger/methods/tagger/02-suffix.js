@@ -1,5 +1,5 @@
 //sweep-through all suffixes
-const suffixLoop = function (str, suffixes = []) {
+const suffixLoop = function (str = '', suffixes = []) {
   const len = str.length
   let max = 7
   if (len <= max) {

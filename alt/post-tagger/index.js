@@ -1,14 +1,16 @@
 const _model = require('./model')
 const _methods = require('./methods')
 
-const postTagger = function (document, methods, model) {
-  methods.postTagger(document, model)
+const postTagger = function (document, world) {
+  const { methods, model } = world
+  methods.postTagger.runner(document, model)
   return document
 }
 
-const plugin = function (methods, model, parsers, View) {
-  methods = Object.assign(methods, _methods)
-  model = Object.assign(model, _model)
+const plugin = function (world) {
+  const { methods, model, parsers } = world
+  methods.postTagger = _methods
+  Object.assign(model, _model)
   parsers.push(postTagger)
 }
 module.exports = plugin

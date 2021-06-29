@@ -1,3 +1,3 @@
 module.exports = {
-  postTagger: function (document, model) {},
+  runner: function (document, model) {},
 }

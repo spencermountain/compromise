@@ -1,7 +1,9 @@
 const _model = require('./model')
 const _methods = require('./methods')
 
-const preTagger = function (document, methods, model) {
+const preTagger = function (document, world) {
+  const { methods, model } = world
+  const m = methods.preTagger
   // start with all terms
   let terms = []
   for (let i = 0; i < document.length; i += 1) {
@@ -12,28 +14,29 @@ const preTagger = function (document, methods, model) {
     }
   }
   // lookup known words
-  methods.checkLexicon(terms, model)
+  m.checkLexicon(terms, model)
   // look at word ending
-  methods.checkSuffix(terms, model)
+  m.checkSuffix(terms, model)
   // try look-like rules
-  methods.checkRegex(terms, model)
+  m.checkRegex(terms, model)
   //  fallback methods
-  methods.checkCase(document)
+  m.checkCase(document)
   // more-involved regexes
-  methods.checkAcronym(terms, model)
+  m.checkAcronym(terms, model)
   // check for stem in lexicon
-  methods.checkPrefix(terms, model)
+  m.checkPrefix(terms, model)
   //  ¯\_(ツ)_/¯
-  methods.nounFallback(document, model)
+  m.nounFallback(document, model)
   // deduce parent tags
-  methods.fillTags(terms, model)
+  m.fillTags(terms, model)
 
   return document
 }
 
-const plugin = function (methods, model, parsers) {
-  methods = Object.assign(methods, _methods)
-  model = Object.assign(model, _model)
+const plugin = function (world) {
+  let { methods, model, parsers } = world
+  methods.preTagger = _methods
+  Object.assign(model, _model)
   parsers.push(preTagger)
 }
 module.exports = plugin

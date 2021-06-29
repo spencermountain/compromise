@@ -5,15 +5,15 @@ const contractions = require('./contractions')
 const preTagger = require('./pre-tagger')
 const postTagger = require('./post-tagger')
 const parseMatch = require('./View/match/match-syntax')
-let { methods, model, parsers } = require('./world')
+let world = require('./world')
 
 const nlp = function (document, lex) {
   if (lex) {
-    Object.assign(model.lexicon, lex)
+    Object.assign(world.model.lexicon, lex)
   }
   // vroom!)
-  parsers.forEach(fn => {
-    document = fn(document, methods, model)
+  world.parsers.forEach(fn => {
+    document = fn(document, world)
   })
   return new View(document)
 }
@@ -31,18 +31,18 @@ nlp.parseMatch = function (str) {
 
 /** extend compromise functionality */
 nlp.plugin = function (fn) {
-  fn(methods, model, parsers, View)
+  fn(world, View)
   return this
 }
 nlp.extend = nlp.plugin
 
 /** reach-into compromise internal */
 nlp.methods = function () {
-  return methods
+  return world.methods
 }
 /** peek-into compromise data */
 nlp.model = function () {
-  return model
+  return world.model
 }
 
 // apply our only default plugin

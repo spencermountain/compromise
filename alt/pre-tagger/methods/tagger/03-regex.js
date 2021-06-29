@@ -6,7 +6,7 @@ const startsWith = function (str, regs) {
 }
 
 // suffix-regexes, indexed by last-character
-const endsWith = function (str, byEnd) {
+const endsWith = function (str = '', byEnd) {
   let char = str[str.length - 1]
   if (byEnd.hasOwnProperty(char) === true) {
     let regs = endsWith[char] || []

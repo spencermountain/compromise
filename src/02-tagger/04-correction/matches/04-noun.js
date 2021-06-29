@@ -161,6 +161,32 @@ module.exports = [
   { match: `to #PresentTense #Noun [#PresentTense] #Preposition`, group: 0, tag: 'Noun', reason: 'gas-exchange' },
   // a comdominium, or simply condo
   { match: `a #Noun+ or #Adverb+? [#Verb]`, group: 0, tag: 'Noun', reason: 'noun-or-noun' },
+  // operating system
+  { match: `[#Gerund] system`, group: 0, tag: 'Noun', reason: 'operating-system' },
+  // waited until release
+  {
+    match: `#PastTense (until|as|through|without) [#PresentTense]`,
+    group: 0,
+    tag: 'Noun',
+    reason: 'waited-until-release',
+  },
+  // selling like hot cakes
+  { match: `#Gerund like #Adjective? [#PresentTense]`, group: 0, tag: 'Plural', reason: 'like-hot-cakes' },
+
+  // some valid reason
+  { match: `some #Adjective [#PresentTense]`, group: 0, tag: 'Noun', reason: 'some-reason' },
+  // for some reason
+  { match: `for some [#PresentTense]`, group: 0, tag: 'Noun', reason: 'for-some-reason' },
+  // same kind of shouts
+  { match: `(same|some|the|that|a) kind of [#PresentTense]`, group: 0, tag: 'Noun', reason: 'some-kind-of' },
+  // a type of shout
+  { match: `(same|some|the|that|a) type of [#PresentTense]`, group: 0, tag: 'Noun', reason: 'some-type-of' },
+  // doing better for fights
+  { match: `#Gerund #Adjective #Preposition [#PresentTense]`, group: 0, tag: 'Noun', reason: 'doing-better-for-x' },
+  // get better aim
+  { match: `(get|got|have|had) #Comparative [#PresentTense]`, group: 0, tag: 'Noun', reason: 'got-better-aim' },
+  // i think tipping sucks
+  { match: `#Pronoun #Infinitive [#Gerund] #PresentTense`, group: 0, tag: 'Noun', reason: 'tipping-sucks' },
 
   // in various sensory functions
   // {

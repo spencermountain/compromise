@@ -100,7 +100,7 @@ export default [
         babelrc: false,
         presets: ['@babel/preset-env'],
       }),
-      sizeCheck({ expect: 351, warn: 10 }),
+      sizeCheck({ expect: 391, warn: 10 }),
     ],
   },
   {
@@ -115,7 +115,7 @@ export default [
         presets: ['@babel/preset-env'],
       }),
       terser(),
-      sizeCheck({ expect: 183, warn: 10 }),
+      sizeCheck({ expect: 190, warn: 10 }),
     ],
   },
   {

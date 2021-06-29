@@ -1,7 +1,6 @@
 // const nlp = require('./src/index')
 const nlp = require('./alt')
 // nlp.verbose(true)
-
 let doc = nlp(`he and John walked to a mall`)
 
 // let m = doc.match('^he').tag('Verb')

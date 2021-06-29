@@ -521,6 +521,7 @@ module.exports = [
   'talk',
   'tighten',
   'target',
+  'take part',
   'taste',
   'tend',
   'test',

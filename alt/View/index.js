@@ -1,5 +1,4 @@
 let { methods, model } = require('../world')
-const { getDoc } = require('./_pointer')
 const addMethods = require('./methods')
 const addAliases = require('./aliases')
 
@@ -38,7 +37,7 @@ class View {
   get docs() {
     let docs = this.document
     if (this.pointer) {
-      docs = getDoc(this.pointer, this.document)
+      docs = methods.getDoc(this.pointer, this.document)
     }
     Object.defineProperty(this, 'docs', {
       value: docs,

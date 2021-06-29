@@ -32,6 +32,7 @@ const isArray = function (arr) {
 //really easy ones
 const contractions = (document = [], model, methods) => {
   let list = model.contractions || []
+  const m = methods.contractions
   document.forEach((terms, n) => {
     // loop through terms backwards
     for (let i = terms.length - 1; i >= 0; i -= 1) {
@@ -59,15 +60,15 @@ const contractions = (document = [], model, methods) => {
         }
         // spencer's
         if (after === 's') {
-          words = methods.apostropheS(terms, i)
+          words = m.apostropheS(terms, i)
         }
         // ain't
         if (after === 't') {
-          words = methods.apostropheT(terms, i)
+          words = m.apostropheT(terms, i)
         }
         // how'd
         if (after === 'd') {
-          words = methods.apostropheD(terms, i)
+          words = m.apostropheD(terms, i)
         }
         // l'amour
         if (before === 'l') {

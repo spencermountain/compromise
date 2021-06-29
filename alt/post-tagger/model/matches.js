@@ -826,4 +826,5 @@ let matches = [
   // Paris Berelc
   { match: `[${seq.personPlace}] (#ProperNoun && !#Place)`, group: 0, tag: 'FirstName', reason: 'place-firstname' },
 ]
+// matches = [{ match: '!one (!two|!#Three)' }, { match: '!(#Noun|cool yeah)' }]
 module.exports = matches

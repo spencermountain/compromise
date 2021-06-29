@@ -1,8 +1,8 @@
-const addReg = function (reg, match, pos, neg, isNeg) {
-  if (reg.optional === true) {
+const addReg = function (reg, match, cache) {
+  // negatives can't be cached
+  if (reg.optional === true || reg.negative === true) {
     return
   }
-  let cache = reg.negative || isNeg ? neg : pos
   if (reg.tag) {
     let key = '#' + reg.tag
     cache[key] = cache[key] || []
@@ -21,7 +21,7 @@ const addReg = function (reg, match, pos, neg, isNeg) {
   // add 'slow-or' recursively
   if (reg.choices) {
     reg.choices.forEach(multi => {
-      multi.forEach(m => addReg(m, match, pos, neg, reg.negative)) //recursion
+      multi.forEach(m => addReg(m, match, cache)) //recursion
     })
   }
 }
@@ -30,15 +30,13 @@ const cacheMatches = function (matches, methods) {
   const parseMatch = methods.parseMatch
   // parse match strings
   let pos = {}
-  let neg = {}
   matches.forEach(obj => {
     obj.regs = parseMatch(obj.match)
     obj.regs.forEach(reg => {
-      addReg(reg, obj, pos, neg)
+      addReg(reg, obj, pos)
     })
   })
-  console.log(pos)
-  console.log(neg)
-  return { pos, neg }
+  // console.log(pos)
+  return pos
 }
 module.exports = cacheMatches

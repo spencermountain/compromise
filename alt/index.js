@@ -49,6 +49,6 @@ nlp.model = function () {
 nlp.plugin(tokenize)
 nlp.plugin(preTagger)
 nlp.plugin(contractions)
-nlp.plugin(postTagger)
+// nlp.plugin(postTagger)
 
 module.exports = nlp

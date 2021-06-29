@@ -35,8 +35,7 @@ const runMatch = function (view, regs, justOne = false) {
           return results
         }
         // skip ahead, over these results
-        let split = res.pointer.split(/[/>]/)
-        let end = Number(split[3]) || terms.length
+        let { end } = view.methods.parsePointer(res.pointer)
         i = Math.abs(end - 1)
       }
     }

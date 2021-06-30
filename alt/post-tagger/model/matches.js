@@ -729,16 +729,13 @@ let matches = [
   // ==== Nickname ====
   // Dwayne 'the rock' Johnson
   { match: '#FirstName [#Determiner #Noun] #LastName', group: 0, tag: 'NickName', reason: 'first-noun-last' },
-
-  //my buddy
-  { match: '#Possessive [#FirstName]', group: 0, tag: 'Person', reason: 'possessive-name' },
   {
     match: '#ProperNoun (b|c|d|e|f|g|h|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z) #ProperNoun',
     tag: 'Person',
     reason: 'titlecase-acronym-titlecase',
     safe: true,
   }, //ludwig van beethovan
-  { match: '#Acronym #LastName', tag: 'Person', reason: 'acronym-latname', safe: true }, //jk rowling
+  { match: '#Acronym #LastName', tag: 'Person', reason: 'acronym-lastname', safe: true }, //jk rowling
   { match: '#Person (jr|sr|md)', tag: 'Person', reason: 'person-honorific' }, //peter II
   { match: '#Person #Person the? #RomanNumeral', tag: 'Person', reason: 'roman-numeral' }, //'Professor Fink', 'General McCarthy'
   { match: '#FirstName [/^[^aiurck]$/]', group: 0, tag: ['Acronym', 'Person'], reason: 'john-e' }, //Doctor john smith jr
@@ -806,7 +803,7 @@ let matches = [
   // may is
   { match: `[${seq.personMonth}] #Copula`, group: 0, tag: 'Person', reason: 'may-is' },
   // with april
-  { match: `(that|with|for|this|next|last|#Date) [${seq.personMonth}]`, group: 0, tag: 'Person', reason: 'that-month' },
+  { match: `(that|with|for) [${seq.personMonth}]`, group: 0, tag: 'Person', reason: 'that-month' },
   // may 5th
   { match: `[${seq.personMonth}] the? #Value`, group: 0, tag: 'Month', reason: 'may-5th' },
   // 5th of may
@@ -816,7 +813,7 @@ let matches = [
   //jose de Sucre
   { match: '#ProperNoun (de|du) la? #ProperNoun', tag: 'Person', reason: 'title-de-title', safe: true },
   //Jani K. Smith
-  { match: '#Singular #Acronym #LastName', tag: '#Person', reason: 'title-acro-noun', safe: true },
+  { match: '#Singular #Acronym #LastName', tag: 'Person', reason: 'title-acro-noun', safe: true },
   //John Foo
   { match: '#FirstName (#Noun && #ProperNoun) #ProperNoun?', tag: 'Person', reason: 'firstname-titlecase' },
   //Joe K. Sombrero
@@ -827,6 +824,7 @@ let matches = [
   { match: `[${seq.personPlace}] (#ProperNoun && !#Place)`, group: 0, tag: 'FirstName', reason: 'place-firstname' },
 ]
 // matches = [{ match: '!one (!two|!#Three)' }, { match: '!(#Noun|cool yeah)' }]
-matches = [{ match: 'before (cool|yeah dude|#Foo) after' }, { match: '. van .', tag: 'City' }, { match: '#Noun yeah' }]
+// matches = [{ match: 'before (cool|yeah dude|#Foo) after' }, { match: '. van .', tag: 'City' }, { match: '#Noun yeah' }]
 // matches = [{ match: 'spider cow zebra' }, { match: 'zebra one #Noun' }, { match: 'so #Noun' }, { match: 'dick . dyke' }]
+// matches = [{ match: `(this|next) [(march|may)]`, group: 0, tag: 'Month', reason: 'this-month' }]
 module.exports = matches

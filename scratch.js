@@ -2,7 +2,7 @@
 const nlp = require('./alt')
 
 // nlp.verbose(true)
-let doc = nlp(`sean van dyke oh foo Theromos van hell. `)
+let doc = nlp(`funniest`)
 // doc.match('#Noun van [<name>.]').debug()
 // doc.cache()
 doc.debug()

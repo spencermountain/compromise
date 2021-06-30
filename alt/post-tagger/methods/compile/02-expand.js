@@ -1,7 +1,11 @@
 const growFastOr = function (obj, index) {
   let or = obj.regs[index]
   return Array.from(or.fastOr).map(str => {
-    return { word: str }
+    let cpy = Object.assign({}, or)
+    delete cpy.fastOr
+    delete cpy.operator
+    cpy.word = str
+    return cpy
   })
 }
 

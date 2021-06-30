@@ -1,6 +1,6 @@
 //just a few named-organizations
 //no acronyms needed. no product/brand pollution.
-module.exports = [
+export default [
   'abc',
   'academy of sciences',
   'acer',

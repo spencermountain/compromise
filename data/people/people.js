@@ -1,4 +1,4 @@
-module.exports = [
+export default [
   //famous people with names that are hard to recognize independendtly
   //male
   'hitler',

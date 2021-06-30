@@ -1,5 +1,5 @@
 // units that are also abbreviations are in ../abbrev/units.js
-module.exports = [
+export default [
   '°c',
   'celsius',
   'celsiuss',

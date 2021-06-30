@@ -1,6 +1,6 @@
 //professions 'lawyer' that aren't covered by verb.to_actor()
 
-module.exports = [
+export default [
   'accountant',
   'administrator',
   'advisor',

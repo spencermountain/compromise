@@ -1,6 +1,6 @@
 //common nouns that have no plural form. These are suprisingly rare
 //used in noun.inflect(), and added as nouns in lexicon
-module.exports = [
+export default [
   'acid',
   'acoustics',
   'advice',

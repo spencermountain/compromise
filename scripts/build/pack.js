@@ -1,12 +1,11 @@
-const fs = require('fs')
-const path = require('path')
-const efrt = require('efrt')
-// const nlpPlugin = require('compromise-plugin')
+import fs from 'fs'
+import path from 'path'
+import { pack } from 'efrt'
+import lexicon from '../../data/index.js'
+// const nlpPlugin from 'compromise-plugin'
 
 console.log('\n 🕑  - packing lexicon..')
 const outFile = path.join(__dirname, '../../src/World/_data.js')
-
-const lexicon = require('../../data')
 
 //turn them into a series of flat-arrays
 let words = Object.keys(lexicon)
@@ -24,7 +23,7 @@ words.forEach(word => {
 
 //pack each array into a tiny string
 Object.keys(packed).forEach(tag => {
-  packed[tag] = efrt.pack(packed[tag])
+  packed[tag] = pack(packed[tag])
 })
 
 //write it to a file in ./src

@@ -1,6 +1,6 @@
 //names with a distinctive signal that they identify as a female, internationally
 
-module.exports = [
+export default [
   'aada',
   'aadya',
   'aaliyah',

@@ -1,5 +1,5 @@
 //some major 'second-level' administrative divisions
-module.exports = [
+export default [
   'alabama',
   'alaska',
   'arizona',

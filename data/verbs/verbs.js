@@ -1,5 +1,5 @@
 //verbs we shouldn't conjugate
-module.exports = [
+export default [
   'has',
   'keep tabs',
   'known',

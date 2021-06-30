@@ -1,5 +1,5 @@
 //adjectives that don't conjugate to superlative/adverb/verb forms
-module.exports = [
+export default [
   // '-ive' adjectives
   'alive',
   'aggressive',

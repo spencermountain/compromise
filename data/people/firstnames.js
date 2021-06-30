@@ -1,6 +1,6 @@
 //ambiguously-gendered firstnames
 //names commonly used in either gender
-module.exports = [
+export default [
   'alexis',
   'andra',
   'aubrey',

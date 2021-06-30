@@ -1,5 +1,5 @@
 //adjectival forms of place names, as adjectives.
-module.exports = [
+export default [
   'afghan',
   'african',
   'albanian',

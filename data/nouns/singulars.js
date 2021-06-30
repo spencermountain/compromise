@@ -1,9 +1,8 @@
 //most nouns do not nead to be listed
 //for whatever reasons, these look like not-nouns
 // //so we make sure that they become nouns
-// const toPlural = require('../../text/subset/nouns/methods/pluralize');
 
-module.exports = [
+export default [
   'ad hominem',
   'banking',
   'body',

@@ -1,5 +1,5 @@
 //adjectives that convert to superlative/comparative form
-module.exports = [
+export default [
   'absurd',
   'angry',
   'awesome',

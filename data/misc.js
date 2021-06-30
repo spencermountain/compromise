@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   better: 'Comparative',
   earlier: 'Superlative',
   sounds: 'PresentTense',

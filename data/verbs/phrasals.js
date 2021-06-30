@@ -5,7 +5,7 @@
 
 //by @spencermountain, 2015 mit
 //many credits to http://www.allmyphrasalverbs.com/
-module.exports = [
+export default [
   'act out',
   'act up',
   'add down',

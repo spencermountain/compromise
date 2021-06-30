@@ -1,5 +1,5 @@
 // units that are abbreviations too
-module.exports = [
+export default [
   'dl',
   'ml',
   'gal',

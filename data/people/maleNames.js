@@ -1,5 +1,5 @@
 //names with a distinctive signal that they identify as a male, internationally
-module.exports = [
+export default [
   'aarav',
   'aaron',
   'abdallah',
@@ -187,7 +187,6 @@ module.exports = [
   'clayton',
   'clement',
   'cletus',
-  'cleveland',
   'clifford',
   'clifton',
   'clint',
@@ -244,7 +243,6 @@ module.exports = [
   'denis',
   'dennis',
   'denny',
-  'denver',
   'deon',
   'derek',
   'derrick',

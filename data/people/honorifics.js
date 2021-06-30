@@ -1,5 +1,5 @@
 //extend to person-names if infront of a name - 'Professor Frink'
-module.exports = [
+export default [
   'admiral',
   'ayatullah',
   'brigadier',

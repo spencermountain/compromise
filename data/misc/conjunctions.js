@@ -1,4 +1,4 @@
-module.exports = [
+export default [
   'although',
   'and',
   'as far as',

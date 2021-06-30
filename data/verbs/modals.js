@@ -1,4 +1,4 @@
-module.exports = [
+export default [
   'can',
   'could',
   'lets', //arguable

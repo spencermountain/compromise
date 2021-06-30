@@ -1,4 +1,4 @@
-module.exports = [
+export default [
   //some of the busiest airports in the world from
   //https://www.world-airport-codes.com/world-top-30-airports.html
   'ams',
@@ -78,14 +78,12 @@ module.exports = [
   'vostok',
   'wake island',
   'anadyr',
-  'samara',
   'ulaanbaatar',
   'krasnoyarsk',
   'indochina',
   'yakutsk',
   'chamorro',
   'chuuk',
-  'samara',
   'kosrae',
   'sakhalin',
 ]

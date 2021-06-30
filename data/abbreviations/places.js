@@ -1,4 +1,4 @@
-module.exports = [
+export default [
   'rd',
   'st',
   'dist',

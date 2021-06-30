@@ -1,4 +1,4 @@
-module.exports = [
+export default [
   'anyone',
   'anything',
   'her', //this one is check ambiguous

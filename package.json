@@ -35,8 +35,8 @@
   "scripts": {
     "build": "rollup -c --silent",
     "pack": "node ./scripts/build/pack.js",
-    "test": "tape-es ./alt-test/**.test.js | tap-dancer",
-    "testb": "npm run test:smoke && TESTENV=prod  node ./scripts/test/index.js",
+    "test": "tape-es ./tests/**.test.js | tap-dancer",
+    "testb": "TESTENV=prod tape-es ./tests/**.test.js | tap-dancer",
     "test:smoke": "node \"./scripts/test/smoke-test/\" | tap-dancer",
     "test:spec": "tape \"./tests/**/*.test.js\" | tap-spec",
     "test:types": "ts-node ./scripts/test/types.ts | tap-dancer",

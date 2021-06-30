@@ -1,8 +1,9 @@
 // const nlp = require('./src/index')
-import nlp from './alt/index.js'
+import nlp from './src/index.js'
 
 // nlp.verbose(true)
-let doc = nlp(`funniest`)
+let doc = nlp(`John is pretty`)
+console.log(doc.json())
 // doc.match('#Noun van [<name>.]').debug()
 // doc.cache()
 doc.debug()

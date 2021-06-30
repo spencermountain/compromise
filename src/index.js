@@ -1,83 +1,51 @@
-const tokenize = require('./01-tokenizer')
-const fromJSON = require('./01-tokenizer/fromJSON')
-const version = require('./_version')
-const World = require('./World/World')
-const Doc = require('./Doc/Doc')
-const Phrase = require('./Phrase/Phrase')
-const Term = require('./Term/Term')
-const Pool = require('./01-tokenizer/Pool')
-const tinyTagger = require('./02-tagger/tiny')
-const parseMatch = require('./World/match-syntax')
+import View from './View/index.js'
+import tokenizer from './tokenize/index.js'
+import preTagger from './pre-tagger/index.js'
+import contractions from './contractions/index.js'
+import postTagger from './post-tagger/index.js'
+import world from './world.js'
+import version from './_version.js'
 
-function instance(worldInstance) {
-  //blast-out our word-lists, just once
-  let world = worldInstance
-
-  /** parse and tag text into a compromise object  */
-  const nlp = function (text = '', lexicon) {
-    if (lexicon) {
-      world.addWords(lexicon)
-    }
-    let list = tokenize(text, world)
-    let doc = new Doc(list, null, world)
-    doc.tagger()
-    return doc
+const nlp = function (document, lex) {
+  if (lex) {
+    Object.assign(world.model.lexicon, lex)
   }
-
-  /** parse text into a compromise object, without running POS-tagging */
-  nlp.tokenize = function (text = '', lexicon) {
-    let w = world
-    if (lexicon) {
-      w = w.clone()
-      w.words = {}
-      w.addWords(lexicon)
-    }
-    let list = tokenize(text, w)
-    let doc = new Doc(list, null, w)
-    if (lexicon || doc.world.taggers.length > 0) {
-      tinyTagger(doc)
-    }
-    return doc
-  }
-
-  /** mix in a compromise-plugin */
-  nlp.extend = function (fn) {
-    fn(Doc, world, this, Phrase, Term, Pool)
-    return this
-  }
-
-  /** create a compromise Doc object from .json() results */
-  nlp.fromJSON = function (json) {
-    let list = fromJSON(json, world)
-    return new Doc(list, null, world)
-  }
-
-  /** make a deep-copy of the library state */
-  nlp.clone = function () {
-    return instance(world.clone())
-  }
-
-  /** log our decision-making for debugging */
-  nlp.verbose = function (bool = true) {
-    world.verbose(bool)
-    return this
-  }
-  /** grab currently-used World object */
-  nlp.world = function () {
-    return world
-  }
-  /** pre-parse any match statements */
-  nlp.parseMatch = function (str, opts) {
-    return parseMatch(str, opts)
-  }
-
-  /** current version of the library */
-  nlp.version = version
-  // aliases
-  nlp.import = nlp.load
-  nlp.plugin = nlp.extend
-
-  return nlp
+  // vroom!)
+  world.parsers.forEach(fn => {
+    document = fn(document, world)
+  })
+  return new View(document)
 }
 
-module.exports = instance(new World())
+/** parse text, without any further analysis */
+const tokenize = function (str) {
+  let document = tokenizer(str)
+  document = contractions(document)
+  return new View(document)
+}
+/** pre-parse any match statements */
+const parseMatch = function (str) {
+  return world.methods.parseMatch(str)
+}
+/** extend compromise functionality */
+const plugin = function (fn) {
+  fn(world, View)
+  return this
+}
+/** reach-into compromise internal */
+const methods = function () {
+  return world.methods
+}
+/** peek-into compromise data */
+const model = function () {
+  return world.model
+}
+
+// apply our only default plugin
+plugin(tokenizer)
+plugin(preTagger)
+plugin(contractions)
+plugin(postTagger)
+export default nlp
+
+export { tokenize, parseMatch, plugin, methods, model, version, plugin as extend }

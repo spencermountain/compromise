@@ -26,7 +26,7 @@ console.log('\n 📦  - running rollup..\n')
 
 export default [
   {
-    input: 'alt/index.js',
+    input: 'src/index.js',
     output: [{ file: 'builds/compromise.min.js', format: 'umd', name: 'nlp' }],
     plugins: [
       babel({

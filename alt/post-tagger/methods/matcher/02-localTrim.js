@@ -7,4 +7,4 @@ const localTrim = function (maybeList, docCache) {
   })
   return maybeList
 }
-module.exports = localTrim
+export default localTrim

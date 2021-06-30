@@ -1,6 +1,5 @@
 const titleCase = /^[A-Z][a-z'\u00C0-\u00FF]/
 const hasNumber = /[0-9]/
-
 // if it's a unknown titlecase word, it's a propernoun
 const checkCase = function (document) {
   document.forEach(terms => {
@@ -15,4 +14,4 @@ const checkCase = function (document) {
     }
   })
 }
-module.exports = checkCase
+export default checkCase

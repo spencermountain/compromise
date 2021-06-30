@@ -1,5 +1,11 @@
+import methods from './methods/index.js'
 let model = {}
 let parsers = []
-let methods = require('./methods')
-
-module.exports = { methods, model, parsers }
+export { methods }
+export { model }
+export { parsers }
+export default {
+  methods,
+  model,
+  parsers,
+}

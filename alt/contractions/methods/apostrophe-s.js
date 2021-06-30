@@ -1,5 +1,4 @@
 const hasContraction = /'/
-
 const banList = {
   that: true,
   there: true,
@@ -9,7 +8,6 @@ const hereThere = {
   there: true,
   everywhere: true,
 }
-
 const isPossessive = (terms, i) => {
   let term = terms[i]
   // if we already know it
@@ -23,7 +21,6 @@ const isPossessive = (terms, i) => {
   if (banList.hasOwnProperty(term.reduced)) {
     return false
   }
-
   //if end of sentence, it is possessive - "was spencer's"
   let nextTerm = terms[i + 1]
   if (!nextTerm) {
@@ -49,7 +46,6 @@ const isPossessive = (terms, i) => {
     }
     return true
   }
-
   //rocket's red glare
   let twoTerm = terms[i + 2]
   if (twoTerm && twoTerm.tags.has('Noun') && !twoTerm.tags.has('Pronoun')) {
@@ -61,13 +57,11 @@ const isPossessive = (terms, i) => {
   }
   return false
 }
-
 const isHas = (terms, i) => {
   //look for a past-tense verb
   let after = terms.slice(i + 1, i + 3)
   return after.some(t => t.tags.has('PastTense'))
 }
-
 // 's -> [possessive, 'has', or 'is']
 const apostropheS = function (terms, i) {
   // !possessive, is/has
@@ -81,4 +75,4 @@ const apostropheS = function (terms, i) {
   }
   return [before, 'is']
 }
-module.exports = apostropheS
+export default apostropheS

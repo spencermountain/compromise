@@ -1,12 +1,8 @@
-const out = require('./out')
-const util = require('./methods/utils')
-const match = require('./methods/match')
-const tag = require('./tag')
-
+import out from './out/index.js'
+import util from './methods/utils.js'
+import * as match from './methods/match.js'
+import tag from './tag/index.js'
 const methods = Object.assign({}, util, out, match, tag)
-
-module.exports = function (View) {
+export default (function (View) {
   Object.assign(View.prototype, methods)
-}
-
-// Object.keys(methods).forEach(k => console.log(`.${k}()`))
+})

@@ -1,9 +1,7 @@
-const m = require('./methods')
-
+import m from './methods.js'
 const aliases = {
   get: m.eq,
 }
-
-module.exports = function (View) {
+export default (function (View) {
   Object.assign(View.prototype, aliases)
-}
+})

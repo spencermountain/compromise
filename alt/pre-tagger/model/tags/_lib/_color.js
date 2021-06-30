@@ -1,21 +1,16 @@
 // i just made these up
 const colorMap = {
   Noun: 'blue',
-
   Verb: 'green',
   Negative: 'green',
-
   Date: 'red',
   Value: 'red',
-
   Adjective: 'magenta',
-
   Preposition: 'cyan',
   Conjunction: 'cyan',
   Determiner: 'cyan',
   Adverb: 'cyan',
 }
-
 /** add a debug color to some tags */
 const addColors = function (tags) {
   Object.keys(tags).forEach(k => {
@@ -39,5 +34,4 @@ const addColors = function (tags) {
   })
   return tags
 }
-
-module.exports = addColors
+export default addColors

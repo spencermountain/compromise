@@ -1,12 +1,10 @@
 // fuzzy-match (damerau-levenshtein)
 // Based on  tad-lispy /node-damerau-levenshtein
 // https://github.com/tad-lispy/node-damerau-levenshtein/blob/master/index.js
-
 // count steps (insertions, deletions, substitutions, or transpositions)
 const editDistance = function (strA, strB) {
   let aLength = strA.length,
     bLength = strB.length
-
   // fail-fast
   if (aLength === 0) {
     return bLength
@@ -19,7 +17,6 @@ const editDistance = function (strA, strB) {
   if (Math.abs(aLength - bLength) > (limit || 100)) {
     return limit || 100
   }
-
   // init the array
   let matrix = []
   for (let i = 0; i < limit; i++) {
@@ -29,7 +26,6 @@ const editDistance = function (strA, strB) {
   for (let i = 0; i < limit; i++) {
     matrix[0][i] = i
   }
-
   // Calculate matrix.
   let j, a_index, b_index, cost, min, t
   for (let i = 1; i <= aLength; ++i) {
@@ -45,10 +41,8 @@ const editDistance = function (strA, strB) {
       min = matrix[i - 1][j] + 1 // Deletion.
       if ((t = matrix[i][j - 1] + 1) < min) min = t // Insertion.
       if ((t = matrix[i - 1][j - 1] + cost) < min) min = t // Substitution.
-
       // Update matrix.
-      let shouldUpdate =
-        i > 1 && j > 1 && a_index === strB[j - 2] && strA[i - 2] === b_index && (t = matrix[i - 2][j - 2] + cost) < min
+      let shouldUpdate = i > 1 && j > 1 && a_index === strB[j - 2] && strA[i - 2] === b_index && (t = matrix[i - 2][j - 2] + cost) < min
       if (shouldUpdate) {
         matrix[i][j] = t
       } else {
@@ -59,7 +53,6 @@ const editDistance = function (strA, strB) {
   // return number of steps
   return matrix[aLength][bLength]
 }
-
 // score similarity by from 0-1 (steps/length)
 const fuzzyMatch = function (strA, strB, minLength = 3) {
   if (strA === strB) {
@@ -75,11 +68,4 @@ const fuzzyMatch = function (strA, strB, minLength = 3) {
   let similarity = 1 - relative
   return similarity
 }
-
-module.exports = fuzzyMatch
-
-// console.log(fuzzyMatch('test', 'test')) //exact match
-// console.log(fuzzyMatch('test', 'stest')) //one edit distance
-// console.log(fuzzyMatch('testing', 'astesting')) //longer string
-// console.log(fuzzyMatch('test', 'etst')) //transposition
-// console.log(fuzzyMatch('ab', 'aa')) //very small
+export default fuzzyMatch

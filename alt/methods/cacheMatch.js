@@ -15,4 +15,4 @@ const cacheMatch = function (regs) {
   })
   return need
 }
-module.exports = cacheMatch
+export default cacheMatch

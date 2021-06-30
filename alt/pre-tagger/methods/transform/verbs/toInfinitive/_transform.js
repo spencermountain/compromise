@@ -10,14 +10,12 @@ let rules = {
       to: '$1in$2',
     },
   ],
-
   Actor: [
     {
       reg: /(er)er$/i,
       to: '$1',
     },
   ],
-
   PresentTense: [
     {
       reg: /(..)(ies)$/i,
@@ -72,7 +70,6 @@ let rules = {
       to: '',
     },
   ],
-
   Gerund: [
     {
       //popping -> pop
@@ -125,15 +122,14 @@ let rules = {
     },
     {
       //ling : tingling, wrinkling, circling, scrambling, bustling
-      reg: /([tbckg]l)ing$/i, //dp
+      reg: /([tbckg]l)ing$/i,
       to: '$1e',
     },
     {
       //cing : bouncing, denouncing
-      reg: /(c|s)ing$/i, //dp
+      reg: /(c|s)ing$/i,
       to: '$1e',
     },
-
     // {
     //   //soft-e :
     //   reg: /([ua]s|[dr]g|z|o[rlsp]|cre)ing$/i,
@@ -145,14 +141,13 @@ let rules = {
       to: '$1',
     },
   ],
-
   PastTense: [
     {
       reg: /(ued)$/i,
       to: 'ue',
     },
     {
-      reg: /ea(rn|l|m)ed$/i, //ea - earned, healed, sreamed
+      reg: /ea(rn|l|m)ed$/i,
       to: 'ea$1',
     },
     {
@@ -262,4 +257,4 @@ let rules = {
     },
   ],
 }
-module.exports = rules
+export default rules

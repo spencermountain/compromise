@@ -1,16 +1,12 @@
+import basicSplit from './01-basic.js'
+import isSentence from './02-test.js'
 //(Rule-based sentence boundary segmentation) - chop given text into its proper sentences.
 // Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
-
 //regs-
 const hasSomething = /\S/
 const startWhitespace = /^\s+/
-
-const basicSplit = require('./01-basic')
-const isSentence = require('./02-test')
-
 const splitSentences = function (text, model) {
   let abbrevs = model.abbreviations || {}
-
   text = text || ''
   text = String(text)
   let sentences = []
@@ -45,7 +41,6 @@ const splitSentences = function (text, model) {
     //else, only whitespace, no terms, no sentence
     chunks.push(s)
   }
-
   //detection of non-sentence chunks:
   //loop through these chunks, and join the non-sentence chunks back together..
   for (let i = 0; i < chunks.length; i++) {
@@ -64,7 +59,6 @@ const splitSentences = function (text, model) {
   if (sentences.length === 0) {
     return [text]
   }
-
   //move whitespace to the ends of sentences, when possible
   //['hello',' world'] -> ['hello ','world']
   for (let i = 1; i < sentences.length; i += 1) {
@@ -76,6 +70,4 @@ const splitSentences = function (text, model) {
   }
   return sentences
 }
-
-module.exports = splitSentences
-// console.log(sentence_parser('john f. kennedy'));
+export default splitSentences

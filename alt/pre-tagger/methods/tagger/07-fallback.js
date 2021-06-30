@@ -15,7 +15,6 @@ const lookLeft = function (terms, i, leftTags, leftWords) {
     }
   }
 }
-
 // look for hints on subsequent word
 const lookRight = function (terms, i, rightTags, rightWords) {
   // look at the next word
@@ -33,7 +32,6 @@ const lookRight = function (terms, i, rightTags, rightWords) {
     }
   }
 }
-
 // look at neighbours for hints on unknown words
 const nounFallback = function (document, model) {
   const { leftTags, leftWords, rightWords, rightTags } = model.neighbours
@@ -51,5 +49,4 @@ const nounFallback = function (document, model) {
     })
   })
 }
-
-module.exports = nounFallback
+export default nounFallback

@@ -8,4 +8,4 @@ const groupBy = function (matches) {
   })
   return byGroup
 }
-module.exports = groupBy
+export default groupBy

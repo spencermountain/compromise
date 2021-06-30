@@ -19,4 +19,4 @@ const unTag = function (terms, tag, tagSet) {
     term.tags.delete(tag)
   }
 }
-module.exports = unTag
+export default unTag

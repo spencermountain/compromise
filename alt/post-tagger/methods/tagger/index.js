@@ -6,4 +6,4 @@ const tagger = function (list, document, world) {
     return setTag(terms, todo.tag, tagSet, todo.safe)
   })
 }
-module.exports = tagger
+export default tagger

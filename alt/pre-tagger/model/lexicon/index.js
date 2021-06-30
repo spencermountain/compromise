@@ -1,8 +1,6 @@
-const lexData = require('./_data')
-const unpack = require('efrt-unpack')
-// const expand = require('./expand')
-let misc = require('./misc')
-
+import lexData from './_data.js'
+import unpack from 'efrt-unpack'
+import misc from './misc.js'
 // let a user explode their lexicon, too
 const addWords = function (wordsObj, lex) {
   Object.keys(wordsObj).forEach(word => {
@@ -16,7 +14,6 @@ const addWords = function (wordsObj, lex) {
     // if (multi.length > 1) {
     //   world.hasCompound[multi[0]] = true
     // }
-
     // do some ad-hoc work before adding it
     // if (expand[tag] !== undefined) {
     // expand[tag](lex, word)
@@ -38,7 +35,6 @@ const addWords = function (wordsObj, lex) {
     }
   })
 }
-
 // we do some ad-hoc stuff here, building-up our word-list
 // const buildOut = function () {
 //our bag of words
@@ -52,4 +48,4 @@ Object.keys(lexData).forEach(tag => {
   })
   addWords(wordsObj, lexicon)
 })
-module.exports = lexicon
+export default lexicon

@@ -1,5 +1,4 @@
-/** return the first match */
-exports.matchOne = function (regs, group) {
+export const matchOne = function (regs, group) {
   let { methods, docs } = this
   if (typeof regs === 'string') {
     regs = methods.parseMatch(regs)
@@ -10,9 +9,7 @@ exports.matchOne = function (regs, group) {
   view._groups = byGroup
   return view
 }
-
-/** return an array of matching phrases */
-exports.match = function (regs, group) {
+export const match = function (regs, group) {
   let { methods, docs } = this
   if (typeof regs === 'string') {
     regs = methods.parseMatch(regs)
@@ -23,9 +20,7 @@ exports.match = function (regs, group) {
   view._groups = byGroup
   return view
 }
-
-/** return boolean if one match is found */
-exports.has = function (regs, group) {
+export const has = function (regs, group) {
   let { methods, docs } = this
   if (typeof regs === 'string') {
     regs = methods.parseMatch(regs)

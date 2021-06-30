@@ -1,5 +1,4 @@
 const prefixes = /^(anti|re|un|non|extra|inter|intra|over)([a-z-]{3})/
-
 // give 'overwork' the same tag as 'work'
 const checkPrefix = function (terms, model) {
   terms.forEach(term => {
@@ -11,4 +10,4 @@ const checkPrefix = function (terms, model) {
     }
   })
 }
-module.exports = checkPrefix
+export default checkPrefix

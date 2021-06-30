@@ -1,6 +1,5 @@
-const _model = require('./model')
-const _methods = require('./methods')
-
+import _model from './model/index.js'
+import _methods from './methods/index.js'
 const preTagger = function (document, world) {
   const { methods, model } = world
   const m = methods.preTagger
@@ -29,14 +28,12 @@ const preTagger = function (document, world) {
   m.nounFallback(document, model)
   // deduce parent tags
   m.fillTags(terms, model)
-
   return document
 }
-
 const plugin = function (world) {
   let { methods, model, parsers } = world
   methods.preTagger = _methods
   Object.assign(model, _model)
   parsers.push(preTagger)
 }
-module.exports = plugin
+export default plugin

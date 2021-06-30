@@ -1,28 +1,24 @@
-const logic = require('./_match-logic')
-const matchTerm = require('./03-matchTerm')
+import * as logic from './_match-logic.js'
+import matchTerm from './03-matchTerm.js'
 // i formally apologize for how complicated this is.
-
 /** tries to match a sequence of terms, starting from here */
 const tryHere = function (terms, regs, start_i, phrase_length) {
   // all the variables that matter
   let state = {
-    t: 0, //the term index we're on
-    terms: terms, //the working slice of term objects
-    r: 0, // the reg index we're on
-    regs: regs, //our match conditions
-    groups: {}, //all named-group matches
-    start_i: start_i, // term index we're starting from
-    phrase_length: phrase_length, // # of terms in the sentence
+    t: 0,
+    terms: terms,
+    r: 0,
+    regs: regs,
+    groups: {},
+    start_i: start_i,
+    phrase_length: phrase_length,
     inGroup: null,
   }
-
   // we must satisfy each rule in 'regs'
   for (; state.r < regs.length; state.r += 1) {
     let reg = regs[state.r]
-
     // Check if this reg has a named capture group
     state.hasGroup = Boolean(reg.group)
-
     // Reuse previous capture group if same
     if (state.hasGroup === true) {
       state.inGroup = reg.group
@@ -62,7 +58,6 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
       state.t = skipto
       continue
     }
-
     // support multi-word OR (a|b|foo bar)
     if (reg.choices !== undefined && reg.operator === 'or') {
       let skipNum = logic.doOrBlock(state)
@@ -81,7 +76,6 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
         return null //die
       }
     }
-
     // support AND (#Noun && foo) blocks
     if (reg.choices !== undefined && reg.operator === 'and') {
       let skipNum = logic.doAndBlock(state)
@@ -100,7 +94,6 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
         return null //die
       }
     }
-
     // ok, finally test the term/reg
     let term = state.terms[state.t]
     let hasMatch = matchTerm(term, reg, state.start_i + state.t, state.phrase_length)
@@ -133,7 +126,6 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
           return null //die
         }
       }
-
       //try keep it going!
       if (reg.greedy === true) {
         state.t = logic.getGreedy(state, regs[state.r + 1])
@@ -149,7 +141,6 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
           return null //greedy didn't reach the end
         }
       }
-
       if (state.hasGroup === true) {
         // Get or create capture group
         const g = logic.getGroup(state, startAt)
@@ -163,7 +154,6 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
       continue
     }
     // ok, it doesn't match.
-
     // did it *actually match* a negative?
     if (reg.negative) {
       let tmpReg = Object.assign({}, reg)
@@ -173,7 +163,6 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
         return null //bye!
       }
     }
-
     //bah, who cares, keep going
     if (reg.optional === true) {
       continue
@@ -192,7 +181,6 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
     }
     return null //die
   }
-
   //return our results, as pointers
   let pntr = [null, start_i, state.t + start_i] //`${start_i}:${state.t + start_i}`
   let groups = {}
@@ -203,4 +191,4 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
   })
   return { pointer: pntr, groups: groups }
 }
-module.exports = tryHere
+export default tryHere

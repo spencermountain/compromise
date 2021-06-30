@@ -121,7 +121,6 @@ const endsWith = {
       },
     },
   ],
-
   g: [
     {
       reg: /([^aeiou][aou])g$/i,
@@ -163,7 +162,6 @@ const endsWith = {
       },
     },
   ],
-
   n: [
     {
       reg: /(en)$/i,
@@ -201,7 +199,6 @@ const endsWith = {
       },
     },
   ],
-
   r: [
     {
       reg: /([td]er)$/i,
@@ -230,7 +227,6 @@ const endsWith = {
       },
     },
   ],
-
   t: [
     {
       reg: /(ion|end|e[nc]t)$/i,
@@ -265,17 +261,16 @@ const endsWith = {
       },
     },
   ],
-
   w: [
     {
-      reg: /(.llow)$/i, //follow, allow
+      reg: /(.llow)$/i,
       repl: {
         pr: '$1s',
         pa: '$1ed',
       },
     },
     {
-      reg: /(..)(ow)$/i, //grow
+      reg: /(..)(ow)$/i,
       repl: {
         pr: '$1$2s',
         pa: '$1ew',
@@ -294,7 +289,6 @@ const endsWith = {
       },
     },
   ],
-
   z: [
     {
       reg: /([aeiou]zz)$/i,
@@ -306,5 +300,4 @@ const endsWith = {
     },
   ],
 }
-
-module.exports = endsWith
+export default endsWith

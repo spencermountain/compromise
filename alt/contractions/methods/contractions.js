@@ -1,15 +1,12 @@
+import insertContraction from './_splice.js'
+import french from './french.js'
 const byApostrophe = /'/
-const insertContraction = require('./_splice')
-const french = require('./french')
-
 // { after: 's', out: apostropheS }, //spencer's
 // { after: 'd', out: apostropheD }, //i'd
 // { after: 't', out: apostropheT }, //isn't
-
 // // french contractions
 // { before: 'l', out: preL }, // l'amour
 // { before: 'd', out: preD }, // d'amerique
-
 const reTag = function (terms, model, methods) {
   // lookup known words
   if (methods.checkLexicon) {
@@ -24,11 +21,9 @@ const reTag = function (terms, model, methods) {
     methods.checkRegex(terms, model)
   }
 }
-
 const isArray = function (arr) {
   return Object.prototype.toString.call(arr) === '[object Array]'
 }
-
 //really easy ones
 const contractions = (document = [], model, methods) => {
   let list = model.contractions || []
@@ -43,7 +38,6 @@ const contractions = (document = [], model, methods) => {
         before = split[0]
         after = split[1]
       }
-
       list.some(o => {
         let words = null
         // look for word-word match (cannot-> [can, not])
@@ -88,4 +82,4 @@ const contractions = (document = [], model, methods) => {
     }
   })
 }
-module.exports = contractions
+export default contractions

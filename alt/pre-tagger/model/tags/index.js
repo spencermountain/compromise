@@ -1,11 +1,9 @@
-const nouns = require('./nouns')
-const verbs = require('./verbs')
-const values = require('./values')
-const misc = require('./misc')
-const inferTags = require('./_lib')
-
+import nouns from './nouns.js'
+import verbs from './verbs.js'
+import values from './values.js'
+import misc from './misc.js'
+import inferTags from './_lib/index.js'
 let tags = Object.assign({}, nouns, verbs, values, misc)
 // do the graph-stuff
 tags = inferTags(tags)
-
-module.exports = tags
+export default tags

@@ -10,4 +10,4 @@ const matchUp = function (docCache, byGroup) {
     return maybes
   })
 }
-module.exports = matchUp
+export default matchUp

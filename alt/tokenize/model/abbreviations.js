@@ -1,5 +1,4 @@
-// words often followed by a period, that are not an end to a sentence
-module.exports = [
+export default [
   'approx',
   'apt',
   'bc',
@@ -10,46 +9,46 @@ module.exports = [
   'etc',
   'ex',
   'exp',
-  'prob', //probably
-  'pron', // Pronunciation
-  'gal', //gallon
+  'prob',
+  'pron',
+  'gal',
   'min',
   'pseud',
-  'fig', //figure
+  'fig',
   'jd',
-  'lat', //latitude
-  'lng', //longitude
-  'vol', //volume
-  'fm', //not am
-  'def', //definition
+  'lat',
+  'lng',
+  'vol',
+  'fm',
+  'def',
   'misc',
-  'plz', //please
-  'ea', //each
+  'plz',
+  'ea',
   'ps',
-  'sec', //second
+  'sec',
   'pt',
-  'pref', //preface
-  'pl', //plural
-  'pp', //pages
-  'qt', //quarter
-  'fr', //french
+  'pref',
+  'pl',
+  'pp',
+  'qt',
+  'fr',
   'sq',
-  'nee', //given name at birth
-  'ss', //ship, or sections
+  'nee',
+  'ss',
   'tel',
   'temp',
   'vet',
   // 'psa', //psalms
   // 'sing',//singular
-  'ver', //version
-  'fem', //feminine
-  'masc', //masculine
-  'eng', //engineering/english
-  'adj', //adjective
-  'vb', //verb
-  'rb', //adverb
-  'inf', //infinitive
-  'situ', // in situ..
+  'ver',
+  'fem',
+  'masc',
+  'eng',
+  'adj',
+  'vb',
+  'rb',
+  'inf',
+  'situ',
   'vivo',
   'vitro',
   'wr', //world record

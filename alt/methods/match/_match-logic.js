@@ -1,7 +1,5 @@
-const doesMatch = require('./03-matchTerm')
-
-//found a match? it's greedy? keep going!
-exports.getGreedy = function (state, endReg) {
+import doesMatch from './03-matchTerm.js'
+export const getGreedy = function (state, endReg) {
   // for greedy checking, we no longer care about the reg.start
   // value, and leaving it can cause failures for anchored greedy
   // matches.  ditto for end-greedy matches: we need an earlier non-
@@ -29,9 +27,7 @@ exports.getGreedy = function (state, endReg) {
   }
   return state.t
 }
-
-//'unspecific greedy' is a weird situation.
-exports.greedyTo = function (state, nextReg) {
+export const greedyTo = function (state, nextReg) {
   let t = state.t
   //if there's no next one, just go off the end!
   if (!nextReg) {
@@ -46,12 +42,7 @@ exports.greedyTo = function (state, nextReg) {
   //guess it doesn't exist, then.
   return null
 }
-
-//we have a special case where an end-anchored greedy match may need to
-//start matching before the actual end; we do this by (temporarily!)
-//removing the "end" property from the matching token... since this is
-//very situation-specific, we *only* do this when we really need to.
-exports.isEndGreedy = function (reg, state) {
+export const isEndGreedy = function (reg, state) {
   if (reg.end === true && reg.greedy === true) {
     if (state.start_i + state.t < state.phrase_length - 1) {
       let tmpReg = Object.assign({}, reg, { end: false })
@@ -62,9 +53,7 @@ exports.isEndGreedy = function (reg, state) {
   }
   return false
 }
-
-// match complex OR cases like (a|b|foo bar)
-exports.doOrBlock = function (state, skipN = 0) {
+export const doOrBlock = function (state, skipN = 0) {
   let block = state.regs[state.r]
   let wasFound = false
   // do each multiword sequence
@@ -106,9 +95,7 @@ exports.doOrBlock = function (state, skipN = 0) {
   }
   return skipN
 }
-
-// match AND cases like (#Noun && foo)
-exports.doAndBlock = function (state) {
+export const doAndBlock = function (state) {
   let longest = 0
   // all blocks must match, and we return the greediest match
   let reg = state.regs[state.r]
@@ -131,9 +118,7 @@ exports.doAndBlock = function (state) {
   }
   return false
 }
-
-// get or create named group
-exports.getGroup = function (state, term_index) {
+export const getGroup = function (state, term_index) {
   if (state.groups[state.inGroup]) {
     return state.groups[state.inGroup]
   }

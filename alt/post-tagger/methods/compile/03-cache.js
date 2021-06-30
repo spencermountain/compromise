@@ -5,4 +5,4 @@ const cache = function (matches, methods) {
   })
   return matches
 }
-module.exports = cache
+export default cache

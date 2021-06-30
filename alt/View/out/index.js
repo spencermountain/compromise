@@ -1,6 +1,5 @@
-const debug = require('./debug')
-const out = require('./out')
-
+import debug from './debug.js'
+import out from './out.js'
 const methods = {
   /** return data */
   json: function () {
@@ -23,4 +22,4 @@ const methods = {
   /** */
   out: out,
 }
-module.exports = methods
+export default methods

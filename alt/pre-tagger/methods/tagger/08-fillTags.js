@@ -14,4 +14,4 @@ const fillTags = function (terms, model) {
     }
   })
 }
-module.exports = fillTags
+export default fillTags

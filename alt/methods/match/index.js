@@ -1,14 +1,12 @@
-const failFast = require('./01-failFast')
-const fromHere = require('./02-from-here')
-const getGroup = require('./04-getGroup')
-
+import failFast from './01-failFast.js'
+import fromHere from './02-from-here.js'
+import getGroup from './04-getGroup.js'
 // ok, here we go.
 const runMatch = function (docs, m, cache) {
   cache = cache || []
   let { regs, group, justOne } = m
   let results = []
   const minLength = regs.filter(r => r.optional !== true && r.negative !== true).length
-
   for (let n = 0; n < docs.length; n += 1) {
     let terms = docs[n]
     // can we skip this sentence?
@@ -48,4 +46,4 @@ const runMatch = function (docs, m, cache) {
   results = getGroup(results, group)
   return results
 }
-module.exports = runMatch
+export default runMatch

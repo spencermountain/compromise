@@ -1,9 +1,7 @@
 /* eslint no-console: 0 */
-
 const isArray = function (arr) {
   return Object.prototype.toString.call(arr) === '[object Array]'
 }
-
 const fns = {
   /** add a given tag, to all these terms */
   tag: function (input, reason = '', isSafe) {
@@ -27,12 +25,10 @@ const fns = {
     }
     return this
   },
-
   /** add a given tag, only if it is consistent */
   tagSafe: function (input, reason = '') {
     return this.tag(input, reason, true)
   },
-
   /** remove a given tag from all these terms */
   unTag: function (input, reason) {
     if (!this.found || !input) {
@@ -55,11 +51,10 @@ const fns = {
     }
     return this
   },
-
   /** return only the terms that can be this tag  */
   // canBe: function (tag) {
   //   let pointers = []
   //   return this
   // },
 }
-module.exports = fns
+export default fns

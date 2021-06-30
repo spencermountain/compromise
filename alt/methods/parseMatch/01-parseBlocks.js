@@ -4,24 +4,20 @@ const bySlashes = /(?:^|\s)([\!\[\^]*(?:<[^<]*>)?\/.*?[^\\\/]\/[\?\]\+\*\$~]*)(?
 const byParentheses = /([\!\[\^]*(?:<[^<]*>)?\([^\)]+[^\\\)]\)[\?\]\+\*\$~]*)(?:\s|$)/
 // okay
 const byWord = / /g
-
 // supported suffix-flags:
 // suffixes:  ? ] + * $ {2,6} ~
 // prefixes:  ! [ ^
-
 const isBlock = str => {
   return /^[\!\[\^]*(<[^<]*>)?\(/.test(str) && /\)[\?\]\+\*\$~]*$/.test(str)
 }
 const isReg = str => {
   return /^[\!\[\^]*(<[^<]*>)?\//.test(str) && /\/[\?\]\+\*\$~]*$/.test(str)
 }
-
 const cleanUp = function (arr) {
   arr = arr.map(str => str.trim())
   arr = arr.filter(str => str)
   return arr
 }
-
 const parseBlocks = function (txt) {
   // parse by /regex/ first
   let arr = txt.split(bySlashes)
@@ -49,8 +45,4 @@ const parseBlocks = function (txt) {
   final = cleanUp(final)
   return final
 }
-module.exports = parseBlocks
-
-// console.log('(one two) (upto) [<snooze_to>#Date+]'.split(byParentheses))
-// console.log(parseBlocks('(one|two) (in side) [<snooze>foo]'))
-// console.log(parseBlocks('(one|two) (in side) fl(atul)'))
+export default parseBlocks

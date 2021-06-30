@@ -1,8 +1,6 @@
-const fuzzy = require('./_fuzzy')
-
+import fuzzy from './_fuzzy.js'
 //declare it up here
 let wrapMatch = function () {}
-
 /** ignore optional/greedy logic, straight-up term match*/
 const doesMatch = function (t, reg, index, length) {
   // support id matches
@@ -86,7 +84,6 @@ const doesMatch = function (t, reg, index, length) {
   }
   return false
 }
-
 // wrap result for !negative match logic
 wrapMatch = function (t, reg, index, length) {
   let result = doesMatch(t, reg, index, length)
@@ -95,5 +92,4 @@ wrapMatch = function (t, reg, index, length) {
   }
   return result
 }
-
-module.exports = wrapMatch
+export default wrapMatch

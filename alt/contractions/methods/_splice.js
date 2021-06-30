@@ -5,7 +5,7 @@ const insertContraction = function (document, point, words = []) {
     return {
       text: '',
       pre: '',
-      post: '', //assumed
+      post: '',
       normal: '',
       implicit: word,
       tags: new Set(),
@@ -22,5 +22,4 @@ const insertContraction = function (document, point, words = []) {
   // do the splice
   document[n].splice(w, 1, ...words)
 }
-
-module.exports = insertContraction
+export default insertContraction

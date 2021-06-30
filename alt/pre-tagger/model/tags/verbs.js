@@ -1,68 +1,68 @@
-module.exports = {
-  Verb: {
-    not: ['Noun', 'Adjective', 'Adverb', 'Value', 'Expression'],
-  },
-  // walks
-  PresentTense: {
-    parents: 'Verb',
-    not: ['PastTense', 'FutureTense'],
-  },
-  // neutral form - 'walk'
-  Infinitive: {
-    parents: 'PresentTense',
-    not: ['PastTense', 'Gerund'],
-  },
-  //close the door!
-  Imperative: {
-    parents: 'Infinitive',
-  },
-  // walking
-  Gerund: {
-    parents: 'PresentTense',
-    not: ['PastTense', 'Copula', 'FutureTense'],
-  },
-  // walked
-  PastTense: {
-    parents: 'Verb',
-    not: ['FutureTense'],
-  },
-  // will walk
-  FutureTense: {
-    parents: 'Verb',
-  },
-
-  // is
-  Copula: {
-    parents: 'Verb',
-  },
-  // would have
-  Modal: {
-    parents: 'Verb',
-    not: ['Infinitive'],
-  },
-  // had walked
-  PerfectTense: {
-    parents: 'Verb',
-    not: 'Gerund',
-  },
-  Pluperfect: {
-    parents: 'Verb',
-  },
-  // shown
-  Participle: {
-    parents: 'PastTense',
-  },
-  // show up
-  PhrasalVerb: {
-    parents: 'Verb',
-  },
-  //'up' part
-  Particle: {
-    parents: 'PhrasalVerb',
-  },
-
-  //this can be an adverb
-  Auxiliary: {
-    not: ['Noun', 'Adjective', 'Value'],
-  },
+export const Verb = {
+  not: ['Noun', 'Adjective', 'Adverb', 'Value', 'Expression'],
+}
+export const PresentTense = {
+  parents: 'Verb',
+  not: ['PastTense', 'FutureTense'],
+}
+export const Infinitive = {
+  parents: 'PresentTense',
+  not: ['PastTense', 'Gerund'],
+}
+export const Imperative = {
+  parents: 'Infinitive',
+}
+export const Gerund = {
+  parents: 'PresentTense',
+  not: ['PastTense', 'Copula', 'FutureTense'],
+}
+export const PastTense = {
+  parents: 'Verb',
+  not: ['FutureTense'],
+}
+export const FutureTense = {
+  parents: 'Verb',
+}
+export const Copula = {
+  parents: 'Verb',
+}
+export const Modal = {
+  parents: 'Verb',
+  not: ['Infinitive'],
+}
+export const PerfectTense = {
+  parents: 'Verb',
+  not: 'Gerund',
+}
+export const Pluperfect = {
+  parents: 'Verb',
+}
+export const Participle = {
+  parents: 'PastTense',
+}
+export const PhrasalVerb = {
+  parents: 'Verb',
+}
+export const Particle = {
+  parents: 'PhrasalVerb',
+}
+export const Auxiliary = {
+  not: ['Noun', 'Adjective', 'Value'],
+}
+export default {
+  Verb,
+  PresentTense,
+  Infinitive,
+  Imperative,
+  Gerund,
+  PastTense,
+  FutureTense,
+  Copula,
+  Modal,
+  PerfectTense,
+  Pluperfect,
+  Participle,
+  PhrasalVerb,
+  Particle,
+  Auxiliary,
 }

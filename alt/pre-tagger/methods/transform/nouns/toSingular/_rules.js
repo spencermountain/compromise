@@ -1,5 +1,4 @@
-//patterns for turning 'dwarves' to 'dwarf'
-module.exports = [
+export default [
   [/([^v])ies$/i, '$1y'],
   [/ises$/i, 'isis'],
   [/(kn|[^o]l|w)ives$/i, '$1ife'],
@@ -9,8 +8,8 @@ module.exports = [
   [/(octop|vir|radi|nucle|fung|cact|stimul)(i)$/i, '$1us'],
   [/(buffal|tomat|tornad)(oes)$/i, '$1o'],
   // [/(analy|diagno|parenthe|progno|synop|the)ses$/i, '$1sis'],
-  [/(eas)es$/i, '$1e'], //diseases
-  [/(..[aeiou]s)es$/i, '$1'], //geniouses
+  [/(eas)es$/i, '$1e'],
+  [/(..[aeiou]s)es$/i, '$1'],
   [/(vert|ind|cort)(ices)$/i, '$1ex'],
   [/(matr|append)(ices)$/i, '$1ix'],
   [/(x|ch|ss|sh|z|o)es$/i, '$1'],

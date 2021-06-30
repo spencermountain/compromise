@@ -1,6 +1,5 @@
 // https://stackoverflow.com/questions/9781218/how-to-change-node-jss-console-font-color
 const reset = '\x1b[0m'
-
 const padEnd = function (str, width) {
   str = str.toString()
   while (str.length < width) {
@@ -8,11 +7,9 @@ const padEnd = function (str, width) {
   }
   return str
 }
-
 function isClientSide() {
   return typeof window !== 'undefined' && window.document
 }
-
 // some nice colors for client-side debug
 const css = {
   green: '#7f9c6c',
@@ -23,7 +20,6 @@ const css = {
   yellow: '#e6d7b3',
   black: '#303b50',
 }
-
 const logClientSide = function (view) {
   let tagset = view.world.tags
   view.forEach(terms => {
@@ -47,7 +43,6 @@ const logClientSide = function (view) {
     })
   })
 }
-
 //cheaper than requiring chalk
 const cli = {
   green: function (str) {
@@ -72,7 +67,6 @@ const cli = {
     return '\x1b[30m' + str + reset
   },
 }
-
 const tagString = function (tags, model) {
   tags = tags.map(tag => {
     if (!model.tags.hasOwnProperty(tag)) {
@@ -83,7 +77,6 @@ const tagString = function (tags, model) {
   })
   return tags.join(', ')
 }
-
 //output some helpful stuff to the console
 const debug = function () {
   let view = this
@@ -113,4 +106,4 @@ const debug = function () {
   console.log('')
   return view
 }
-module.exports = debug
+export default debug

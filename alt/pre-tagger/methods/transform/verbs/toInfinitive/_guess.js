@@ -87,4 +87,4 @@ guessVerb = Object.keys(guessVerb).reduce((h, k) => {
   guessVerb[k].forEach(a => (h[a] = k))
   return h
 }, {})
-module.exports = guessVerb
+export default guessVerb

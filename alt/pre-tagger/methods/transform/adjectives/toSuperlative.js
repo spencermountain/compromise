@@ -1,7 +1,6 @@
 //turn 'quick' into 'quickest'
 const do_rules = [/ght$/, /nge$/, /ough$/, /ain$/, /uel$/, /[au]ll$/, /ow$/, /oud$/, /...p$/]
 const dont_rules = [/ary$/]
-
 const irregulars = {
   nice: 'nicest',
   late: 'latest',
@@ -15,7 +14,6 @@ const irregulars = {
   big: 'biggest',
   large: 'largest',
 }
-
 const transforms = [
   {
     reg: /y$/i,
@@ -38,7 +36,6 @@ const transforms = [
     repl: '$1test',
   },
 ]
-
 const to_superlative = function (str) {
   //irregulars
   if (irregulars.hasOwnProperty(str)) {
@@ -67,5 +64,4 @@ const to_superlative = function (str) {
   }
   return str + 'est'
 }
-
-module.exports = to_superlative
+export default to_superlative

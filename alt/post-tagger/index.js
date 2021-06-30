@@ -1,5 +1,5 @@
-const _model = require('./model')
-const _methods = require('./methods')
+import _model from './model/index.js'
+import _methods from './methods/index.js'
 
 const postTagger = function (document, world) {
   const { methods, model } = world
@@ -11,11 +11,10 @@ const postTagger = function (document, world) {
   // console.dir(res, { depth: 5 })
   return document
 }
-
 const plugin = function (world) {
   const { methods, model, parsers } = world
   methods.postTagger = _methods
   Object.assign(model, _model)
   parsers.push(postTagger)
 }
-module.exports = plugin
+export default plugin

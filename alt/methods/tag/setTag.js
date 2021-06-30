@@ -34,4 +34,4 @@ const setTag = function (terms, tag, tagSet, isSafe) {
   }
   return set
 }
-module.exports = setTag
+export default setTag

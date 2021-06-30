@@ -1,6 +1,5 @@
-const tokenize = require('./tokenize')
+import tokenize from './tokenize.js'
 const hasSlash = /\//
-
 /** reduced is one step further than clean */
 // const reduce = function (str) {
 //   // remove apostrophes
@@ -8,14 +7,12 @@ const hasSlash = /\//
 //   str = str.replace(/s['’]$/, 's')
 //   return str
 // }
-
 /** turn given text into a parsed-up object
  * seperate the 'meat' of the word from the whitespace+punctuation
  */
 const parseTerm = txt => {
   // cleanup any punctuation as whitespace
   let { str, pre, post } = tokenize(txt)
-
   const parsed = {
     text: str,
     pre: pre,
@@ -30,4 +27,4 @@ const parseTerm = txt => {
   }
   return parsed
 }
-module.exports = parseTerm
+export default parseTerm

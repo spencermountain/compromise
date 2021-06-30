@@ -43,7 +43,6 @@ Object.keys(compact).forEach(function (k) {
     unicode[s] = k
   })
 })
-
 const killUnicode = str => {
   let chars = str.split('')
   chars.forEach((s, i) => {
@@ -53,5 +52,4 @@ const killUnicode = str => {
   })
   return chars.join('')
 }
-module.exports = killUnicode
-// console.log(killUnicode('bjŏȒk—Ɏó'));
+export default killUnicode

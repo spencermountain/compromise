@@ -1,7 +1,6 @@
 // a list of irregular verb conjugations
 // used in verbs().conjugate()
 // but also added to our lexicon
-
 //use shorter key-names
 const mapping = {
   g: 'Gerund',
@@ -13,7 +12,6 @@ const mapping = {
   pluperf: 'Pluperfect',
   a: 'Actor',
 }
-
 // '_' in conjugations is the infinitive form
 // (order matters, to the lexicon)
 let conjugations = {
@@ -700,7 +698,6 @@ let conjugations = {
     pst: 'wrote',
   },
 }
-
 //uncompress our ad-hoc compression scheme
 let keys = Object.keys(conjugations)
 for (let i = 0; i < keys.length; i++) {
@@ -710,12 +707,10 @@ for (let i = 0; i < keys.length; i++) {
     let str = conjugations[inf][key]
     //swap-in infinitives for '_'
     str = str.replace('_', inf)
-
     let full = mapping[key]
     final[full] = str
   })
   //over-write original
   conjugations[inf] = final
 }
-
-module.exports = conjugations
+export default conjugations

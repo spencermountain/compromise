@@ -3,12 +3,10 @@ const isUpperCase = /^[A-Z-]+$/
 const periodAcronym = /([A-Z]\.)+[A-Z]?,?$/
 const noPeriodAcronym = /[A-Z]{2,}('s|,)?$/
 const lowerCaseAcronym = /([a-z]\.)+[a-z]\.?$/
-
 const oneLetterWord = {
   I: true,
   A: true,
 }
-
 // just uppercase acronyms, no periods - 'UNOCHA'
 const isNoPeriodAcronym = function (term, model) {
   let str = term.text
@@ -43,7 +41,6 @@ const isNoPeriodAcronym = function (term, model) {
   return false
   // return term.isAcronym()
 }
-
 const isAcronym = function (terms, model) {
   terms.forEach(term => {
     //these are not acronyms
@@ -72,4 +69,4 @@ const isAcronym = function (terms, model) {
     }
   })
 }
-module.exports = isAcronym
+export default isAcronym

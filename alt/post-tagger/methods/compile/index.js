@@ -1,8 +1,7 @@
-const parse = require('./01-parse')
-const expand = require('./02-expand')
-const cache = require('./03-cache')
-const group = require('./04-group')
-
+import parse from './01-parse.js'
+import expand from './02-expand.js'
+import cache from './03-cache.js'
+import group from './04-group.js'
 const compile = function (matches, methods) {
   matches = parse(matches, methods)
   // console.log(matches.length)
@@ -14,5 +13,4 @@ const compile = function (matches, methods) {
   let byGroup = group(matches, methods)
   return byGroup
 }
-
-module.exports = compile
+export default compile

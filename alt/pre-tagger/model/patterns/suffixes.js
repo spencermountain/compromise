@@ -12,11 +12,9 @@ const Noun = 'Noun'
 const Last = 'LastName'
 const Modal = 'Modal'
 const Place = 'Place'
-
-// find any issues - https://observablehq.com/@spencermountain/suffix-word-lookup
-module.exports = [
-  null, //0
-  null, //1
+export default [
+  null,
+  null,
   {
     //2-letter
     ea: Sing,
@@ -40,7 +38,7 @@ module.exports = [
     ped: Past,
     ffy: Adj,
     ify: Inf,
-    ing: 'Gerund', //likely to be converted to Adj after lexicon pass
+    ing: 'Gerund',
     ize: Inf,
     lar: Adj,
     mum: Adj,
@@ -62,14 +60,13 @@ module.exports = [
     nded: Past,
     cted: Past,
     dged: Past,
-
-    akis: Last, //greek
+    akis: Last,
     cede: Inf,
-    chuk: Last, //east-europe
-    czyk: Last, //polish (male)
+    chuk: Last,
+    czyk: Last,
     ects: Pres,
     ends: Vb,
-    enko: Last, //east-europe
+    enko: Last,
     ette: Sing,
     fies: Pres,
     fore: Avb,
@@ -82,11 +79,11 @@ module.exports = [
     less: Avb,
     llen: Adj,
     made: Adj,
-    nsen: Last, //norway
+    nsen: Last,
     oses: Pres,
     ould: Modal,
     some: Adj,
-    sson: Last, //swedish male
+    sson: Last,
     tage: Inf,
     teen: 'Value',
     tion: Sing,
@@ -99,15 +96,14 @@ module.exports = [
     tized: Past,
     urned: Past,
     eased: Past,
-
     ances: Plrl,
     bound: Adj,
     ettes: Plrl,
     fully: Avb,
     ishes: Pres,
     ities: Plrl,
-    marek: Last, //polish (male)
-    nssen: Last, //norway
+    marek: Last,
+    nssen: Last,
     ology: Noun,
     ports: Plrl,
     rough: Adj,
@@ -119,15 +115,15 @@ module.exports = [
   },
   {
     //6-letter
-    auskas: Last, //lithuania
+    auskas: Last,
     keeper: Actor,
     logist: Actor,
     teenth: 'Value',
   },
   {
     //7-letter
-    opoulos: Last, //greek
-    borough: Place, //Hillsborough
+    opoulos: Last,
+    borough: Place,
     sdottir: Last, //swedish female
   },
 ]

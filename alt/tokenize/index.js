@@ -1,6 +1,6 @@
-const _methods = require('./methods')
-const _model = { abbreviations: require('./model/abbreviations') }
-
+import _methods from './methods/index.js'
+import abbreviations from './model/abbreviations.js'
+const _model = { abbreviations: abbreviations }
 // turn a string input into a 'document' json format
 const tokenize = function (document, world) {
   const { methods, model } = world
@@ -23,11 +23,10 @@ const tokenize = function (document, world) {
   }
   return document
 }
-
 const plugin = function (world) {
   let { methods, model, parsers } = world
   methods.tokenize = _methods
   Object.assign(model, _model)
   parsers.push(tokenize)
 }
-module.exports = plugin
+export default plugin

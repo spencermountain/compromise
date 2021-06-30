@@ -1,7 +1,6 @@
 const isAcronym = /[ .][A-Z]\.? *$/i
 const hasEllipse = /(?:\u2026|\.{2,}) *$/
 const hasLetter = /[a-z0-9\u00C0-\u00FF\u00a9\u00ae\u2000-\u3300\ud000-\udfff]/i
-
 /** does this look like a sentence? */
 const isSentence = function (str, abbrevs) {
   // check for 'F.B.I.'
@@ -16,7 +15,6 @@ const isSentence = function (str, abbrevs) {
   if (hasLetter.test(str) === false) {
     return false
   }
-
   let txt = str.replace(/[.!?\u203D\u2E18\u203C\u2047-\u2049] *$/, '')
   let words = txt.split(' ')
   let lastWord = words[words.length - 1].toLowerCase()
@@ -30,4 +28,4 @@ const isSentence = function (str, abbrevs) {
   // }
   return true
 }
-module.exports = isSentence
+export default isSentence

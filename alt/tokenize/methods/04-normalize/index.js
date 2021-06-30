@@ -1,7 +1,6 @@
-const cleanup = require('./cleanup')
-const doUnicode = require('./unicode')
-const doAcronyms = require('./acronyms')
-
+import cleanup from './cleanup.js'
+import doUnicode from './unicode.js'
+import doAcronyms from './acronyms.js'
 const normalize = function (str) {
   str = cleanup(str)
   //(very) rough ASCII transliteration -  bjŏrk -> bjork
@@ -9,4 +8,4 @@ const normalize = function (str) {
   str = doAcronyms(str)
   return str
 }
-module.exports = normalize
+export default normalize

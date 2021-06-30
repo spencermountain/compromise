@@ -1,7 +1,6 @@
 const unique = function (arr) {
   return arr.filter((v, i, a) => a.indexOf(v) === i)
 }
-
 // crawl the tag-graph and infer any conflicts
 // faster than doing this at tag-time
 const inferNotTags = function (tags) {
@@ -28,4 +27,4 @@ const inferNotTags = function (tags) {
   })
   return tags
 }
-module.exports = inferNotTags
+export default inferNotTags

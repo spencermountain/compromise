@@ -1,7 +1,6 @@
 //turn 'quick' into 'quickly'
 const do_rules = [/ght$/, /nge$/, /ough$/, /ain$/, /uel$/, /[au]ll$/, /ow$/, /old$/, /oud$/, /e[ae]p$/]
 const dont_rules = [/ary$/, /ous$/]
-
 const irregulars = {
   grey: 'greyer',
   gray: 'grayer',
@@ -14,7 +13,6 @@ const irregulars = {
   sad: 'sadder',
   big: 'bigger',
 }
-
 const transforms = [
   {
     reg: /y$/i,
@@ -33,7 +31,6 @@ const transforms = [
     repl: 'nger',
   },
 ]
-
 const to_comparative = function (str) {
   //known-irregulars
   if (irregulars.hasOwnProperty(str)) {
@@ -63,5 +60,4 @@ const to_comparative = function (str) {
   }
   return str + 'er'
 }
-
-module.exports = to_comparative
+export default to_comparative

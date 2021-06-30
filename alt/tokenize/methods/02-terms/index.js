@@ -1,20 +1,17 @@
+import { hasHyphen, splitHyphens } from './01-hyphens.js'
+import combineRanges from './03-ranges.js'
+import combineSlashes from './02-slashes.js'
 const wordlike = /\S/
 const isBoundary = /^[!?.]+$/
 const naiiveSplit = /(\S+)/
-const { hasHyphen, splitHyphens } = require('./01-hyphens')
-const combineRanges = require('./03-ranges')
-const combineSlashes = require('./02-slashes')
-
 let notWord = ['.', '?', '!', ':', ';', '-', '–', '—', '--', '...', '(', ')', '[', ']', '"', "'", '`']
 notWord = notWord.reduce((h, c) => {
   h[c] = true
   return h
 }, {})
-
 const isArray = function (arr) {
   return Object.prototype.toString.call(arr) === '[object Array]'
 }
-
 //turn a string into an array of strings (naiive for now, lumped later)
 const splitWords = function (str) {
   let result = []
@@ -27,7 +24,6 @@ const splitWords = function (str) {
   if (isArray(str)) {
     return str
   }
-
   const words = str.split(naiiveSplit)
   for (let i = 0; i < words.length; i++) {
     //split 'one-two'
@@ -70,4 +66,4 @@ const splitWords = function (str) {
   result = result.filter(s => s)
   return result
 }
-module.exports = splitWords
+export default splitWords

@@ -1,6 +1,5 @@
 const initSplit = /(\S.+?[.!?\u203D\u2E18\u203C\u2047-\u2049])(?=\s+|$)/g
 const newLine = /((?:\r?\n|\r)+)/ // Match different new-line formats
-
 // Start with a regex:
 const basicSplit = function (text) {
   let all = []
@@ -15,4 +14,4 @@ const basicSplit = function (text) {
   }
   return all
 }
-module.exports = basicSplit
+export default basicSplit

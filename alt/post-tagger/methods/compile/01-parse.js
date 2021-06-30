@@ -5,4 +5,4 @@ const parse = function (matches, methods) {
   })
   return matches
 }
-module.exports = parse
+export default parse

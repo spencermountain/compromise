@@ -8,7 +8,6 @@ const seq = {
   personNoun:
     '(art|baker|berg|bill|brown|charity|chin|christian|cliff|daisy|dawn|dick|dolly|faith|franco|gene|green|hall|hill|holly|hope|jean|jewel|joy|kelvin|king|kitty|lane|lily|melody|mercedes|miles|olive|penny|ray|reed|robin|rod|rose|sky|summer|trinity|van|viola|violet|wang|white)',
 }
-
 // order matters
 let matches = [
   { match: 'too much', tag: 'Adverb Adjective', reason: 'bit-4' },
@@ -20,14 +19,12 @@ let matches = [
     tag: '#Copula #Adverb #Adjective',
     reason: 'sometimes-adverb',
   },
-
   //i better ..
   { match: '(#Pronoun|#Person) (had|#Adverb)? [better] #PresentTense', group: 0, tag: 'Modal', reason: 'i-better' },
   //walking is cool
   { match: '[#Gerund] #Adverb? not? #Copula', group: 0, tag: 'Activity', reason: 'gerund-copula' },
   //walking should be fun
   { match: '[#Gerund] #Modal', group: 0, tag: 'Activity', reason: 'gerund-modal' },
-
   //swear-words as non-expression POS
   { match: 'holy (shit|fuck|hell)', tag: 'Expression', reason: 'swears-expression' },
   //Aircraft designer
@@ -35,10 +32,8 @@ let matches = [
   { match: '#Conjunction [u]', group: 0, tag: 'Pronoun', reason: 'u-pronoun-2' },
   //'u' as pronoun
   { match: '[u] #Verb', group: 0, tag: 'Pronoun', reason: 'u-pronoun-1' },
-
   { match: '#Noun [(who|whom)]', group: 0, tag: 'Determiner', reason: 'captain-who' },
   { match: 'a bit much', tag: 'Determiner Adverb Adjective', reason: 'bit-3' },
-
   // ==== Propositions ====
   //all students
   { match: '#Verb #Adverb? #Noun [(that|which)]', group: 0, tag: 'Preposition', reason: 'that-prep' },
@@ -51,7 +46,6 @@ let matches = [
   { match: '[had] #Noun+ #PastTense', group: 0, tag: 'Condition', reason: 'had-he' },
   // were he to survive
   { match: '[were] #Noun+ to #Infinitive', group: 0, tag: 'Condition', reason: 'were-he' },
-
   //the word 'how'
   { match: '^how', tag: 'QuestionWord', reason: 'how-question' },
   { match: '[how] (#Determiner|#Copula|#Modal|#PastTense)', group: 0, tag: 'QuestionWord', reason: 'how-is' },
@@ -66,8 +60,7 @@ let matches = [
     reason: 'how-he-is-x',
   },
   // ==== Holiday ====
-  { match: '#Holiday (day|eve)', tag: 'Holiday', reason: 'holiday-day' }, // the captain who
-
+  { match: '#Holiday (day|eve)', tag: 'Holiday', reason: 'holiday-day' },
   // ==== WeekDay ====
   // sun the 5th
   { match: '[sun] the #Ordinal', tag: 'WeekDay', reason: 'sun-the-5th' },
@@ -95,7 +88,6 @@ let matches = [
   { match: `${seq.personDates} #ProperNoun`, tag: 'Person', reason: 'june-smith', safe: true },
   // june m. Cooper
   { match: `${seq.personDates} #Acronym? (#ProperNoun && !#Month)`, tag: 'Person', reason: 'june-smith-jr' },
-
   // ==== Month ====
   //all march
   { match: `#Preposition [(march|may)]`, group: 0, tag: 'Month', reason: 'in-month' },
@@ -115,7 +107,6 @@ let matches = [
   { match: `#Adverb [(march|may)]`, group: 0, tag: 'Verb', reason: 'quickly-march' },
   //march quickly
   { match: `[(march|may)] #Adverb`, group: 0, tag: 'Verb', reason: 'march-quickly' },
-
   //5th of March
   { match: '#Value of #Month', tag: 'Date', reason: 'value-of-month' },
   //5 March
@@ -132,7 +123,6 @@ let matches = [
   { match: '(#TextValue && #Date) #TextValue', tag: 'Date', reason: 'textvalue-date' },
   // 'aug 20-21'
   { match: `#Month #NumberRange`, tag: 'Date', reason: 'aug 20-21' },
-
   // timezones
   // china standard time
   { match: `(#Place|#Demonmym|#Time) (standard|daylight|central|mountain)? time`, tag: 'Timezone', reason: 'std-time' },
@@ -166,12 +156,10 @@ let matches = [
   { match: '[#PastTense] #Plural are', group: 0, tag: 'Adjective', reason: 'baked-onions' },
   // well made
   { match: 'well [#PastTense]', group: 0, tag: 'Adjective', reason: 'well-made' },
-
   // is f*ed up
   { match: '#Copula [fucked up?]', tag: 'Adjective', reason: 'swears-adjective' },
   //jack seems guarded
   { match: '#Singular (seems|appears) #Adverb? [#PastTense$]', group: 0, tag: 'Adjective', reason: 'seems-filled' },
-
   // Gerund-Adjectives - 'amusing, annoying'
   //a staggering cost
   { match: '(a|an) [#Gerund]', group: 0, tag: 'Adjective', reason: 'a|an' },
@@ -207,7 +195,6 @@ let matches = [
   },
   //there are reasons
   { match: 'there (are|were) #Adjective? [#PresentTense]', group: 0, tag: 'Plural', reason: 'there-are' },
-
   // ==== Singular ====
   //the sun
   { match: '#Determiner [sun]', group: 0, tag: 'Singular', reason: 'the-sun' },
@@ -229,12 +216,10 @@ let matches = [
     tag: 'Noun',
     reason: 'all-presentTense',
   },
-
   //the above is clear
   { match: '#Determiner [#Adjective] #Copula', group: 0, tag: 'Noun', reason: 'the-adj-is' },
   //real evil is
   { match: '#Adjective [#Adjective] #Copula', group: 0, tag: 'Noun', reason: 'adj-adj-is' },
-
   // PresentTense/Noun ambiguities
   // big dreams, critical thinking
   // have big dreams
@@ -261,19 +246,17 @@ let matches = [
   { match: '#Gerund #Adverb? #Comparative [#PresentTense]', group: 0, tag: 'Noun', reason: 'higher-costs' },
   // do the dance
   { match: '#Infinitive (this|that|the) [#Infinitive]', group: 0, tag: 'Noun', reason: 'do-this-dance' },
-
   //his fine
   { match: '(his|her|its) [#Adjective]', group: 0, tag: 'Noun', reason: 'his-fine' },
   //some pressing issues
   { match: 'some [#Verb] #Plural', group: 0, tag: 'Noun', reason: 'determiner6' },
   //'more' is not always an adverb
   { match: 'more #Noun', tag: 'Noun', reason: 'more-noun' },
-  { match: '(#Noun && @hasComma) #Noun (and|or) [#PresentTense]', group: 0, tag: 'Noun', reason: 'noun-list' }, //3 feet
-  { match: '(right|rights) of .', tag: 'Noun', reason: 'right-of' }, // a bit
+  { match: '(#Noun && @hasComma) #Noun (and|or) [#PresentTense]', group: 0, tag: 'Noun', reason: 'noun-list' },
+  { match: '(right|rights) of .', tag: 'Noun', reason: 'right-of' },
   { match: 'a [bit]', group: 0, tag: 'Noun', reason: 'bit-2' },
   // my first thought
   { match: '#Possessive #Ordinal [#PastTense]', group: 0, tag: 'Noun', reason: 'first-thought' },
-
   //running-a-show
   { match: '#Gerund #Determiner [#Infinitive]', group: 0, tag: 'Noun', reason: 'running-a-show' },
   //the-only-reason
@@ -305,12 +288,10 @@ let matches = [
     tag: 'Noun',
     reason: 'western-line',
   },
-
   //her polling
   { match: '#Possessive [#Gerund]', group: 0, tag: 'Noun', reason: 'her-polling' },
   //her fines
   { match: '(his|her|its) [#PresentTense]', group: 0, tag: 'Noun', reason: 'its-polling' },
-
   //linear algebra
   {
     match: '(#Determiner|#Value) [(linear|binary|mobile|lexical|technical|computer|scientific|formal)] #Noun',
@@ -324,12 +305,10 @@ let matches = [
   { match: '(the|those|these|a|an) #Adjective? [#Infinitive]', group: 0, tag: 'Noun', reason: 'det-inf' },
   { match: '(the|those|these|a|an) #Adjective? [#PresentTense]', group: 0, tag: 'Noun', reason: 'det-pres' },
   { match: '(the|those|these|a|an) #Adjective? [#PastTense]', group: 0, tag: 'Noun', reason: 'det-past' },
-
   // this swimming
   { match: '(this|that) [#Gerund]', group: 0, tag: 'Noun', reason: 'this-gerund' },
   // at some point
   { match: 'at some [#Infinitive]', group: 0, tag: 'Noun', reason: 'at-some-inf' },
-
   //air-flow
   { match: '(#Noun && @hasHyphen) #Verb', tag: 'Noun', reason: 'hyphen-verb' },
   //is no walk
@@ -377,7 +356,6 @@ let matches = [
   },
   // selling like hot cakes
   { match: `#Gerund like #Adjective? [#PresentTense]`, group: 0, tag: 'Plural', reason: 'like-hot-cakes' },
-
   // some valid reason
   { match: `some #Adjective [#PresentTense]`, group: 0, tag: 'Noun', reason: 'some-reason' },
   // for some reason
@@ -437,7 +415,6 @@ let matches = [
   { match: '1 #Value #PhoneNumber', tag: 'PhoneNumber', reason: '1-800-Value' },
   //(454) 232-9873
   { match: '#NumericValue #PhoneNumber', tag: 'PhoneNumber', reason: '(800) PhoneNumber' },
-
   // ==== Currency ====
   // chinese yuan
   { match: '#Demonym #Currency', tag: 'Currency', reason: 'demonym-currency' },
@@ -447,7 +424,6 @@ let matches = [
   //5 yan
   { match: '#Value+ [#Currency]', group: 0, tag: 'Unit', reason: '5-yan' },
   { match: '#Value [(foot|feet)]', group: 0, tag: 'Unit', reason: 'foot-unit' },
-
   //minus 7
   { match: '(minus|negative) #Value', tag: 'Value', reason: 'minus-value' },
   //5 kg.
@@ -461,7 +437,6 @@ let matches = [
   //quarter million
   { match: '#Determiner [(half|quarter)] #Ordinal', group: 0, tag: 'Value', reason: 'half-ordinal' },
   { match: 'a #Value', tag: 'Value', reason: 'a-value' },
-
   // ==== Money ====
   { match: '[#Value+] #Currency', group: 0, tag: 'Money', reason: '15 usd' },
   // thousand and two
@@ -503,7 +478,6 @@ let matches = [
   { match: '#Noun #Adverb? [left]', group: 0, tag: 'PastTense', reason: 'left-verb' },
   //this rocks
   { match: '(this|that) [#Plural]', group: 0, tag: 'PresentTense', reason: 'this-verbs' },
-
   // ==== Auxiliary ====
   //was walking
   { match: `[#Copula (#Adverb|not)+?] (#Gerund|#PastTense)`, group: 0, tag: 'Auxiliary', reason: 'copula-walking' },
@@ -553,10 +527,8 @@ let matches = [
     tag: 'Auxiliary',
     reason: 'had-been',
   },
-
   // was being driven
   { match: '[(be|being|been)] #Participle', group: 0, tag: 'Auxiliary', reason: 'being-foo' },
-
   // ==== Phrasal ====
   //'foo-up'
   { match: '(#Verb && @hasHyphen) up', tag: 'PhrasalVerb', reason: 'foo-up' },
@@ -574,13 +546,11 @@ let matches = [
     tag: 'Adverb',
     reason: 'phrasal-pronoun-advb',
   },
-
   // ==== Copula ====
   //will be running (not copula)
   { match: '[will #Adverb? not? #Adverb? be] #Gerund', group: 0, tag: 'Copula', reason: 'will-be-copula' },
   //for more complex forms, just tag 'be'
   { match: 'will #Adverb? not? #Adverb? [be] #Adjective', group: 0, tag: 'Copula', reason: 'be-copula' },
-
   // ==== Infinitive ====
   //march to
   { match: '[march] (up|down|back|to|toward)', group: 0, tag: 'Infinitive', reason: 'march-to' },
@@ -593,21 +563,18 @@ let matches = [
     tag: 'Infinitive',
     reason: 'let-him-glue',
   },
-
   //he quickly foo
   // { match: '#Noun #Adverb [#Noun]', group: 0, tag: 'Verb', reason: 'quickly-foo' },
   //will secure our
   { match: 'will [#Adjective]', group: 0, tag: 'Verb', reason: 'will-adj' },
   //he disguised the thing
   { match: '#Pronoun [#Adjective] #Determiner #Adjective? #Noun', group: 0, tag: 'Verb', reason: 'he-adj-the' },
-
   //is eager to go
   { match: '#Copula [#Adjective] to #Verb', group: 0, tag: 'Verb', reason: 'adj-to' },
   // open the door
   { match: '[open] #Determiner', group: 0, tag: 'Infinitive', reason: 'open-the' },
   // compromises are possible
   { match: '[#PresentTense] (are|were|was) #Adjective', group: 0, tag: 'Plural', reason: 'compromises-are-possible' },
-
   // would wade
   { match: `#Modal [${seq.personVerb}]`, group: 0, tag: 'Verb', reason: 'would-mark' },
   { match: `#Adverb [${seq.personVerb}]`, group: 0, tag: 'Verb', reason: 'really-mark' },
@@ -619,7 +586,6 @@ let matches = [
   { match: `${seq.personVerb} #Person`, tag: 'Person', reason: 'rob-smith' },
   // wade m. Cooper
   { match: `${seq.personVerb} #Acronym #ProperNoun`, tag: 'Person', reason: 'rob-a-smith' },
-
   // damn them
   { match: '[shit] (#Determiner|#Possessive|them)', group: 0, tag: 'Verb', reason: 'swear1-verb' },
   { match: '[damn] (#Determiner|#Possessive|them)', group: 0, tag: 'Verb', reason: 'swear2-verb' },
@@ -631,12 +597,11 @@ let matches = [
   // whose name was
   { match: 'whose [#PresentTense] #Copula', group: 0, tag: 'Noun', reason: 'whos-name-was' },
   // give up on reason
-  { match: `#PhrasalVerb #PhrasalVerb #Preposition [#PresentTense]`, group: 0, tag: 'Noun', reason: 'given-up-on-x' }, // wants to be #Particle
+  { match: `#PhrasalVerb #PhrasalVerb #Preposition [#PresentTense]`, group: 0, tag: 'Noun', reason: 'given-up-on-x' },
   // ==== Region ====
   //West Norforlk
   {
     match: '(west|north|south|east|western|northern|southern|eastern)+ #Place',
-
     tag: 'Region',
     reason: 'west-norfolk',
   },
@@ -673,14 +638,12 @@ let matches = [
     tag: 'Place',
     reason: 'propernoun-place',
   },
-
   // ==== Address ====
   {
     match: '#Value #Noun (st|street|rd|road|crescent|cr|way|tr|terrace|avenue|ave)',
     tag: 'Address',
     reason: 'address-st',
   },
-
   //John & Joe's
   { match: '#Noun (&|n) #Noun', tag: 'Organization', reason: 'Noun-&-Noun' },
   // teachers union of Ontario
@@ -696,13 +659,11 @@ let matches = [
   // global trade union
   {
     match: '(world|global|international|national|#Demonym) #Organization',
-
     tag: 'Organization',
     reason: 'global-org',
   },
   // schools
   { match: '#Noun+ (public|private) school', tag: 'School', reason: 'noun-public-school' },
-
   // ==== Honorific ====
   { match: '[(1st|2nd|first|second)] #Honorific', group: 0, tag: 'Honorific', reason: 'ordinal-honorific' },
   {
@@ -711,7 +672,6 @@ let matches = [
     tag: 'Honorific',
     reason: 'ambg-honorifics',
   },
-
   // ==== FirstNames ====
   //is foo Smith
   { match: '#Copula [(#Noun|#PresentTense)] #LastName', group: 0, tag: 'FirstName', reason: 'copula-noun-lastname' },
@@ -725,7 +685,6 @@ let matches = [
     tag: 'FirstName',
     reason: 'maybe-lastname',
   },
-
   // ==== Nickname ====
   // Dwayne 'the rock' Johnson
   { match: '#FirstName [#Determiner #Noun] #LastName', group: 0, tag: 'NickName', reason: 'first-noun-last' },
@@ -734,11 +693,11 @@ let matches = [
     tag: 'Person',
     reason: 'titlecase-acronym-titlecase',
     safe: true,
-  }, //ludwig van beethovan
-  { match: '#Acronym #LastName', tag: 'Person', reason: 'acronym-lastname', safe: true }, //jk rowling
-  { match: '#Person (jr|sr|md)', tag: 'Person', reason: 'person-honorific' }, //peter II
-  { match: '#Person #Person the? #RomanNumeral', tag: 'Person', reason: 'roman-numeral' }, //'Professor Fink', 'General McCarthy'
-  { match: '#FirstName [/^[^aiurck]$/]', group: 0, tag: ['Acronym', 'Person'], reason: 'john-e' }, //Doctor john smith jr
+  },
+  { match: '#Acronym #LastName', tag: 'Person', reason: 'acronym-lastname', safe: true },
+  { match: '#Person (jr|sr|md)', tag: 'Person', reason: 'person-honorific' },
+  { match: '#Person #Person the? #RomanNumeral', tag: 'Person', reason: 'roman-numeral' },
+  { match: '#FirstName [/^[^aiurck]$/]', group: 0, tag: ['Acronym', 'Person'], reason: 'john-e' },
   //general pearson
   { match: '#Honorific #Person', tag: 'Person', reason: 'honorific-person' },
   //remove single 'mr'
@@ -767,11 +726,9 @@ let matches = [
   { match: '#Honorific #FirstName? #ProperNoun', tag: 'Person', reason: 'dr-john-Title' },
   //peter the great
   { match: '#FirstName the #Adjective', tag: 'Person', reason: 'name-the-great' },
-
   //very common-but-ambiguous lastnames
   {
     match: '#FirstName (green|white|brown|hall|young|king|hill|cook|gray|price)',
-
     tag: 'Person',
     reason: 'bill-green',
   },
@@ -823,8 +780,4 @@ let matches = [
   // Paris Berelc
   { match: `[${seq.personPlace}] (#ProperNoun && !#Place)`, group: 0, tag: 'FirstName', reason: 'place-firstname' },
 ]
-// matches = [{ match: '!one (!two|!#Three)' }, { match: '!(#Noun|cool yeah)' }]
-// matches = [{ match: 'before (cool|yeah dude|#Foo) after' }, { match: '. van .', tag: 'City' }, { match: '#Noun yeah' }]
-// matches = [{ match: 'spider cow zebra' }, { match: 'zebra one #Noun' }, { match: 'so #Noun' }, { match: 'dick . dyke' }]
-// matches = [{ match: `(this|next) [(march|may)]`, group: 0, tag: 'Month', reason: 'this-month' }]
-module.exports = matches
+export default matches

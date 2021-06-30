@@ -1,3 +1,5 @@
-module.exports = {
-  matches: require('./matches'),
+import matches from './matches.js'
+
+export default {
+  matches,
 }

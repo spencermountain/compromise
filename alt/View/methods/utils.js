@@ -61,4 +61,4 @@ const methods = {
     return
   },
 }
-module.exports = methods
+export default methods

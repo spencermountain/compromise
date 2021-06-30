@@ -24,4 +24,4 @@ const checkLexicon = function (terms, model) {
     }
   })
 }
-module.exports = checkLexicon
+export default checkLexicon

@@ -4,7 +4,6 @@ const startsWith = function (str, regs) {
     return r[0].test(str) === true
   })
 }
-
 // suffix-regexes, indexed by last-character
 const endsWith = function (str = '', byEnd) {
   let char = str[str.length - 1]
@@ -18,11 +17,9 @@ const endsWith = function (str = '', byEnd) {
   }
   return undefined
 }
-
 const isArray = function (arr) {
   return Object.prototype.toString.call(arr) === '[object Array]'
 }
-
 const checkRegex = function (terms, model) {
   terms.forEach(t => {
     if (t.tags.size === 0) {
@@ -38,4 +35,4 @@ const checkRegex = function (terms, model) {
     }
   })
 }
-module.exports = checkRegex
+export default checkRegex

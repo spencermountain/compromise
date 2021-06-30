@@ -24,4 +24,4 @@ const getGroup = function (res, group) {
   }
   return { ptrs, byGroup }
 }
-module.exports = getGroup
+export default getGroup

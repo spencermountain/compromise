@@ -19,7 +19,6 @@ const hasHyphen = function (str) {
   }
   return false
 }
-
 const splitHyphens = function (word) {
   let arr = []
   //support multiple-hyphenated-terms
@@ -38,8 +37,9 @@ const splitHyphens = function (word) {
   }
   return arr
 }
-
-module.exports = {
+export { splitHyphens }
+export { hasHyphen }
+export default {
   splitHyphens,
   hasHyphen,
 }

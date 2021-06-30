@@ -1,6 +1,5 @@
 //non-specifc, 'hail-mary' transforms from infinitive, into other forms
 const hasY = /[bcdfghjklmnpqrstvwxz]y$/
-
 const generic = {
   Gerund: inf => {
     if (inf.charAt(inf.length - 1) === 'e') {
@@ -8,7 +7,6 @@ const generic = {
     }
     return inf + 'ing'
   },
-
   PresentTense: inf => {
     if (inf.charAt(inf.length - 1) === 's') {
       return inf + 'es'
@@ -18,7 +16,6 @@ const generic = {
     }
     return inf + 's'
   },
-
   PastTense: inf => {
     if (inf.charAt(inf.length - 1) === 'e') {
       return inf + 'd'
@@ -32,5 +29,4 @@ const generic = {
     return inf + 'ed'
   },
 }
-
-module.exports = generic
+export default generic

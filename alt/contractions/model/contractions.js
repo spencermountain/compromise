@@ -1,4 +1,4 @@
-module.exports = [
+export default [
   // simple mappings
   { word: '@', out: ['at'] },
   { word: 'alot', out: ['a', 'lot'] },
@@ -34,21 +34,18 @@ module.exports = [
   { word: 'twas', out: ['it', 'was'] },
   { word: "ne'er", out: ['never'] },
   { word: "o'er ", out: ['over'] },
-
   // contraction-part mappings
-  { after: 'll', out: 'will' }, //i'll
-  { after: 've', out: 'have' }, //i've
-  { after: 're', out: 'are' }, //we're
-  { after: 'm', out: 'am' }, //i'm
-
+  { after: 'll', out: 'will' },
+  { after: 've', out: 'have' },
+  { after: 're', out: 'are' },
+  { after: 'm', out: 'am' },
   // french contractions
-  { before: 'c', out: 'ce' }, // c'est
-  { before: 'm', out: 'me' }, // m'appelle
-  { before: 'n', out: 'ne' }, // n'est
-  { before: 'qu', out: 'que' }, // qu'il
-  { before: 's', out: 'se' }, // s'appelle
+  { before: 'c', out: 'ce' },
+  { before: 'm', out: 'me' },
+  { before: 'n', out: 'ne' },
+  { before: 'qu', out: 'que' },
+  { before: 's', out: 'se' },
   { before: 't', out: 'tu' }, // t'aime
-
   // more-complex ones
   // { after: 's', out: apostropheS }, //spencer's
   // { after: 'd', out: apostropheD }, //i'd

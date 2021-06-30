@@ -1,7 +1,6 @@
-let { methods, model } = require('../world')
-const addMethods = require('./methods')
-const addAliases = require('./aliases')
-
+import { methods, model } from '../world.js'
+import addMethods from './methods.js'
+import addAliases from './aliases.js'
 class View {
   constructor(document, pointer, groups = {}) {
     this.document = document
@@ -29,10 +28,10 @@ class View {
     this.verbose = false
   }
   /*
-
-    getters:
-    -------
-  */
+  
+      getters:
+      -------
+    */
   // lazy-getter pattern (fires once)
   get docs() {
     let docs = this.document
@@ -57,5 +56,4 @@ class View {
 }
 addMethods(View)
 addAliases(View)
-
-module.exports = View
+export default View

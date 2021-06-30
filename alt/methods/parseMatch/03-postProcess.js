@@ -21,7 +21,6 @@ const nameGroups = function (regs) {
   }
   return regs
 }
-
 // optimize an 'or' lookup, when the (a|b|c) list is simple or multi-word
 const doFastOrMode = function (tokens) {
   return tokens.map(token => {
@@ -48,7 +47,6 @@ const doFastOrMode = function (tokens) {
     return token
   })
 }
-
 const postProcess = function (regs, opts = {}) {
   // ensure all capture groups names are filled between start and end
   regs = nameGroups(regs)
@@ -58,4 +56,4 @@ const postProcess = function (regs, opts = {}) {
   }
   return regs
 }
-module.exports = postProcess
+export default postProcess

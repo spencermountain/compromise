@@ -14,7 +14,6 @@ const suffixLoop = function (str = '', suffixes = []) {
   }
   return null
 }
-
 // decide tag from the ending of the word
 const tagBySuffix = function (terms, model) {
   terms.forEach(t => {
@@ -33,4 +32,4 @@ const tagBySuffix = function (terms, model) {
     }
   })
 }
-module.exports = tagBySuffix
+export default tagBySuffix

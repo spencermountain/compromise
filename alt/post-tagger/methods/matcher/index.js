@@ -1,6 +1,5 @@
-const matchUp = require('./01-matchUp')
-const localTrim = require('./02-localTrim')
-
+import matchUp from './01-matchUp.js'
+import localTrim from './02-localTrim.js'
 const matcher = function (document, byGroup, methods) {
   const { cacheDoc, match } = methods
   let results = []
@@ -22,4 +21,4 @@ const matcher = function (document, byGroup, methods) {
   // console.dir(results, { depth: 5 })
   return results
 }
-module.exports = matcher
+export default matcher

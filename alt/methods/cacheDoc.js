@@ -19,4 +19,4 @@ const createCache = function (document) {
   })
   return cache
 }
-module.exports = createCache
+export default createCache

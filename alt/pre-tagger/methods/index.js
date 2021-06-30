@@ -1,23 +1,30 @@
-module.exports = {
-  // tagger methods
-  checkLexicon: require('./tagger/01-lexicon'),
-  checkSuffix: require('./tagger/02-suffix'),
-  checkRegex: require('./tagger/03-regex'),
-  checkCase: require('./tagger/04-case'),
-  checkAcronym: require('./tagger/05-acronym'),
-  checkPrefix: require('./tagger/06-prefix'),
-  nounFallback: require('./tagger/07-fallback'),
-  fillTags: require('./tagger/08-fillTags'),
-
-  // lexicon creation methods
-  nounToPlural: require('./transform/nouns/toPlural'),
-  nounToSingular: require('./transform/nouns/toSingular'),
-
-  verbToInfinitive: require('./transform/verbs/toInfinitive'),
-  verbConjugate: require('./transform/verbs/conjugate'),
-
-  adjToSuperlative: require('./transform/adjectives/toSuperlative'),
-  adjToComparative: require('./transform/adjectives/toComparative'),
-
-  // expand: require('./lexicon/'),
+import checkLexicon from './tagger/01-lexicon.js'
+import checkSuffix from './tagger/02-suffix.js'
+import checkRegex from './tagger/03-regex.js'
+import checkCase from './tagger/04-case.js'
+import checkAcronym from './tagger/05-acronym.js'
+import checkPrefix from './tagger/06-prefix.js'
+import nounFallback from './tagger/07-fallback.js'
+import fillTags from './tagger/08-fillTags.js'
+import nounToPlural from './transform/nouns/toPlural/index.js'
+import nounToSingular from './transform/nouns/toSingular/index.js'
+import verbToInfinitive from './transform/verbs/toInfinitive/index.js'
+import verbConjugate from './transform/verbs/conjugate/index.js'
+import adjToSuperlative from './transform/adjectives/toSuperlative.js'
+import adjToComparative from './transform/adjectives/toComparative.js'
+export default {
+  checkLexicon,
+  checkSuffix,
+  checkRegex,
+  checkCase,
+  checkAcronym,
+  checkPrefix,
+  nounFallback,
+  fillTags,
+  nounToPlural,
+  nounToSingular,
+  verbToInfinitive,
+  verbConjugate,
+  adjToSuperlative,
+  adjToComparative,
 }

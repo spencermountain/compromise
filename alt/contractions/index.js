@@ -1,5 +1,5 @@
-const _methods = require('./methods/')
-const _model = { contractions: require('./model/contractions') }
+import _methods from './methods/index.js'
+import _model from './model/index.js'
 
 const simpleContractions = function (document, world) {
   const { methods, model } = world
@@ -13,4 +13,5 @@ const plugin = function (world) {
   Object.assign(model, _model)
   parsers.push(simpleContractions)
 }
-module.exports = plugin
+
+export default plugin

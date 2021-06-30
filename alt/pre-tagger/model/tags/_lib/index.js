@@ -1,8 +1,7 @@
-const inferColor = require('./_color')
-const inferParents = require('./_parents')
-const inferNotTags = require('./_not')
-const lineage = require('./_children')
-
+import inferColor from './_color.js'
+import inferParents from './_parents.js'
+import inferNotTags from './_not.js'
+import lineage from './_children.js'
 const validate = function (tags) {
   // cleanup format
   Object.keys(tags).forEach(k => {
@@ -20,7 +19,6 @@ const validate = function (tags) {
   })
   return tags
 }
-
 // build-out the tag-graph structure
 const inferTags = function (tags) {
   // validate data
@@ -35,4 +33,4 @@ const inferTags = function (tags) {
   tags = lineage(tags)
   return tags
 }
-module.exports = inferTags
+export default inferTags

@@ -27,5 +27,4 @@ let misc = {
   'procter & gamble': 'Organization',
   "ben & jerry's": 'Organization',
 }
-
-module.exports = misc
+export default misc

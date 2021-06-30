@@ -1,6 +1,11 @@
-module.exports = {
-  splitContractions: require('./contractions'),
-  apostropheD: require('./apostrophe-d'),
-  apostropheS: require('./apostrophe-s'),
-  apostropheT: require('./apostrophe-t'),
+import splitContractions from './contractions.js'
+import apostropheD from './apostrophe-d.js'
+import apostropheS from './apostrophe-s.js'
+import apostropheT from './apostrophe-t.js'
+
+export default {
+  splitContractions,
+  apostropheD,
+  apostropheS,
+  apostropheT,
 }

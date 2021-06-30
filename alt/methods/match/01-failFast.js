@@ -6,7 +6,6 @@ const anyIntersection = function (setA, setB) {
   }
   return false
 }
-
 // check words/tags against our cache
 const failFast = function (regs, cache) {
   for (let i = 0; i < regs.length; i += 1) {
@@ -29,4 +28,4 @@ const failFast = function (regs, cache) {
   }
   return false
 }
-module.exports = failFast
+export default failFast

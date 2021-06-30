@@ -13,4 +13,4 @@ const inferChildren = function (tags) {
   })
   return tags
 }
-module.exports = inferChildren
+export default inferChildren

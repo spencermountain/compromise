@@ -2,7 +2,6 @@ const periodAcronym = /([A-Z]\.)+[A-Z]?,?$/
 const oneLetterAcronym = /^[A-Z]\.,?$/
 const noPeriodAcronym = /[A-Z]{2,}('s|,)?$/
 const lowerCaseAcronym = /([a-z]\.)+[a-z]\.?$/
-
 const isAcronym = function (str) {
   //like N.D.A
   if (periodAcronym.test(str) === true) {
@@ -22,12 +21,10 @@ const isAcronym = function (str) {
   }
   return false
 }
-module.exports = isAcronym
-
 const doAcronym = function (str) {
   if (isAcronym(str)) {
     str = str.replace(/\./g, '')
   }
   return str
 }
-module.exports = doAcronym
+export default isAcronym

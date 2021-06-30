@@ -1,6 +1,5 @@
-const rules = require('./_transform')
-const guess = require('./_guess')
-
+import rules from './_transform.js'
+import guess from './_guess.js'
 /** it helps to know what we're conjugating from */
 const guessTense = function (str) {
   let three = str.substr(str.length - 3)
@@ -17,7 +16,6 @@ const guessTense = function (str) {
   }
   return null
 }
-
 const toInfinitive = function (str, model, tense) {
   if (!str) {
     return ''
@@ -35,7 +33,6 @@ const toInfinitive = function (str, model, tense) {
     }
   }
   // }
-
   // give'r!
   tense = tense || guessTense(str)
   if (tense && rules[tense]) {
@@ -48,4 +45,4 @@ const toInfinitive = function (str, model, tense) {
   }
   return str
 }
-module.exports = toInfinitive
+export default toInfinitive

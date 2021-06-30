@@ -1,7 +1,6 @@
-const parseBlocks = require('./01-parseBlocks')
-const parseToken = require('./02-parseToken')
-const postProcess = require('./03-postProcess')
-
+import parseBlocks from './01-parseBlocks.js'
+import parseToken from './02-parseToken.js'
+import postProcess from './03-postProcess.js'
 // add fuzziness etc to each reg
 const addOptions = function (tokens, opts) {
   // add default fuzzy-search limit
@@ -27,7 +26,6 @@ const addOptions = function (tokens, opts) {
   }
   return tokens
 }
-
 /** parse a match-syntax string into json */
 const syntax = function (input, opts = {}) {
   // fail-fast
@@ -47,5 +45,4 @@ const syntax = function (input, opts = {}) {
   // console.log(tokens)
   return tokens
 }
-
-module.exports = syntax
+export default syntax

@@ -1,6 +1,5 @@
-const rules = require('./_rules')
+import rules from './_rules.js'
 const addE = /(x|ch|sh|s|z)$/
-
 const trySuffix = function (str) {
   let c = str[str.length - 1]
   if (rules.hasOwnProperty(c) === true) {
@@ -18,12 +17,10 @@ const trySuffix = function (str) {
  */
 const pluralize = function (str = '', model) {
   let irregulars = model.irregular.plurals
-
   // check irregulars list
   if (irregulars.hasOwnProperty(str)) {
     return irregulars[str]
   }
-
   //we have some rules to try-out
   let plural = trySuffix(str)
   if (plural !== null) {
@@ -36,4 +33,4 @@ const pluralize = function (str = '', model) {
   // ¯\_(ツ)_/¯
   return str + 's'
 }
-module.exports = pluralize
+export default pluralize

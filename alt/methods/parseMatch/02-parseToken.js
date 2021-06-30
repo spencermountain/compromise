@@ -1,7 +1,6 @@
 const hasMinMax = /\{([0-9]+,?[0-9]*)\}/
 const andSign = /&&/
 const captureName = new RegExp(/^<\s*?(\S+)\s*?>/)
-
 /* break-down a match expression into this:
 {
   word:'',
@@ -19,11 +18,9 @@ const captureName = new RegExp(/^<\s*?(\S+)\s*?>/)
   choices:[],
 }
 */
-
 const titleCase = str => {
   return str.charAt(0).toUpperCase() + str.substr(1)
 }
-
 const end = function (str) {
   return str[str.length - 1]
 }
@@ -41,7 +38,6 @@ const stripBoth = function (str) {
   str = stripEnd(str)
   return str
 }
-
 //
 const parseToken = function (w) {
   let obj = {}
@@ -60,17 +56,14 @@ const parseToken = function (w) {
     //capture group (this one can span multiple-terms)
     if (start(w) === '[' || end(w) === ']') {
       obj.group = null
-
       if (start(w) === '[') {
         obj.groupStart = true
       }
       if (end(w) === ']') {
         obj.groupEnd = true
       }
-
       w = w.replace(/^\[/, '')
       w = w.replace(/\]$/, '')
-
       // Use capture group name
       if (start(w) === '<') {
         const res = captureName.exec(w)
@@ -93,7 +86,6 @@ const parseToken = function (w) {
       obj.optional = true
       w = stripEnd(w)
     }
-
     if (start(w) === '!') {
       obj.negative = true
       // obj.optional = true
@@ -122,7 +114,6 @@ const parseToken = function (w) {
       })
       w = ''
     }
-
     //regex
     if (start(w) === '/' && end(w) === '/') {
       w = stripBoth(w)
@@ -158,7 +149,6 @@ const parseToken = function (w) {
       return ''
     })
   }
-
   //do the actual token content
   if (start(w) === '#') {
     obj.tag = stripStart(w)
@@ -189,4 +179,4 @@ const parseToken = function (w) {
   }
   return obj
 }
-module.exports = parseToken
+export default parseToken

@@ -52,5 +52,4 @@ Object.keys(lexData).forEach(tag => {
   })
   addWords(wordsObj, lexicon)
 })
-// console.log(Object.keys(lexicon).length)
 module.exports = lexicon

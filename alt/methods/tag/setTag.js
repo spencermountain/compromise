@@ -1,11 +1,12 @@
 // add a tag to all these terms
 const setTag = function (terms, tag, tagSet, isSafe) {
   tag = tag.trim().replace(/^#/, '')
+  let set = false
   terms: for (let i = 0; i < terms.length; i += 1) {
     let term = terms[i]
     // does it already have this tag?
     if (term.tags.has(tag) === true) {
-      return
+      continue
     }
     // for known tags, do logical dependencies first
     let known = tagSet[tag]
@@ -29,6 +30,8 @@ const setTag = function (terms, tag, tagSet, isSafe) {
     }
     // finally, add our tag
     term.tags.add(tag)
+    set = true
   }
+  return set
 }
 module.exports = setTag

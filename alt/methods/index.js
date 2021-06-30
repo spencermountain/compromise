@@ -1,4 +1,6 @@
 const pointer = require('./pointer')
+const setTag = require('./tag/setTag')
+const unTag = require('./tag/unTag')
 
 module.exports = {
   match: require('./match'),
@@ -8,4 +10,6 @@ module.exports = {
   getDoc: pointer.getDoc,
   parsePointer: pointer.parsePointer,
   createPointer: pointer.createPointer,
+  setTag: setTag,
+  unTag: unTag,
 }

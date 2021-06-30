@@ -2,10 +2,10 @@
 const nlp = require('./alt')
 
 // nlp.verbose(true)
-let doc = nlp(`dick van dyke. Theromos hell.`)
-doc.match('dick van [<name>.]').debug()
+let doc = nlp(`sean van dyke oh foo Theromos van hell. `)
+// doc.match('#Noun van [<name>.]').debug()
 // doc.cache()
-// doc.debug()
+doc.debug()
 // doc.match('#Noun [(who|whom|#Foo)]').debug()
 // doc.match('#Noun (who|whom|#Foo)').debug()
 // let m = doc.match('^he').tag('Verb')

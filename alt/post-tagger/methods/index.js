@@ -1,7 +1,9 @@
 const compile = require('./compile')
-const matcher = require('./matcher')
+const bulkMatch = require('./matcher')
+const bulkTagger = require('./tagger')
 
 module.exports = {
   compile: compile,
-  matcher: matcher,
+  bulkMatch: bulkMatch,
+  bulkTagger: bulkTagger,
 }

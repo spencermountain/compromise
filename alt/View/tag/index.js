@@ -1,12 +1,10 @@
 /* eslint no-console: 0 */
-const setTag = require('./setTag')
-const unTag = require('./unTag')
 
 const isArray = function (arr) {
   return Object.prototype.toString.call(arr) === '[object Array]'
 }
 
-const methods = {
+const fns = {
   /** add a given tag, to all these terms */
   tag: function (input, reason = '', isSafe) {
     if (!this.found || !input) {
@@ -16,15 +14,16 @@ const methods = {
     if (terms.length === 0) {
       return this
     }
+    const { methods, verbose, model } = this
     // logger
-    if (this.verbose === true) {
+    if (verbose === true) {
       console.log(' +  ', input, reason || '')
     }
-    let tagSet = this.model.tags
+    let tagSet = model.tags
     if (isArray(input)) {
-      input.forEach(tag => setTag(terms, tag, tagSet, isSafe))
+      input.forEach(tag => methods.setTag(terms, tag, tagSet, isSafe))
     } else {
-      setTag(terms, input, tagSet, isSafe)
+      methods.setTag(terms, input, tagSet, isSafe)
     }
     return this
   },
@@ -43,15 +42,16 @@ const methods = {
     if (terms.length === 0) {
       return this
     }
+    const { methods, verbose, model } = this
     // logger
-    if (this.verbose === true) {
+    if (verbose === true) {
       console.log(' -  ', input, reason || '')
     }
-    let tagSet = this.model.tags
+    let tagSet = model.tags
     if (isArray(input)) {
-      input.forEach(tag => unTag(terms, tag, tagSet))
+      input.forEach(tag => methods.unTag(terms, tag, tagSet))
     } else {
-      unTag(terms, input, tagSet)
+      methods.unTag(terms, input, tagSet)
     }
     return this
   },
@@ -62,4 +62,4 @@ const methods = {
   //   return this
   // },
 }
-module.exports = methods
+module.exports = fns

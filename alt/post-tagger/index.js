@@ -3,9 +3,12 @@ const _methods = require('./methods')
 
 const postTagger = function (document, world) {
   const { methods, model } = world
-  const m = methods.postTagger
-  let byGroup = m.compile(model.matches, methods)
-  m.matcher(document, byGroup, methods)
+  const { compile, bulkMatch, bulkTagger } = methods.postTagger
+  let byGroup = compile(model.matches, methods)
+  let found = bulkMatch(document, byGroup, methods)
+  console.dir(found, { depth: 5 })
+  let res = bulkTagger(found, document, world)
+  console.dir(res, { depth: 5 })
   return document
 }
 

@@ -1,5 +1,5 @@
 // const nlp = require('./src/index')
-const nlp = require('./alt')
+import nlp from './alt/index.js'
 
 // nlp.verbose(true)
 let doc = nlp(`funniest`)

@@ -1,5 +1,5 @@
-const test = require('tape')
-const nlp = require('./_lib')
+import test from 'tape'
+import nlp from './_lib.js'
 
 const testMatches = function (arr) {
   test('main-match-tag:', function (t) {
@@ -11,4 +11,4 @@ const testMatches = function (arr) {
   })
 }
 
-module.exports = { testMatches }
+export { testMatches }

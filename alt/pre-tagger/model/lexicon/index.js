@@ -1,5 +1,5 @@
 import lexData from './_data.js'
-import unpack from 'efrt-unpack'
+import { unpack } from 'efrt'
 import misc from './misc.js'
 // let a user explode their lexicon, too
 const addWords = function (wordsObj, lex) {

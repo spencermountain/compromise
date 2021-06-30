@@ -39,7 +39,7 @@
     //respond to it finishing
     worker.addEventListener(
       'message',
-      function(r) {
+      function (r) {
         console.log(r)
         let rows = r.data.map(o => {
           return `<tr><td>${o.reduced}</td><td>${o.count}</td></tr>`
@@ -49,7 +49,7 @@
       false
     )
 
-    window.onload = function() {
+    window.onload = function () {
       //send it some text
       let str = document.getElementById('text').value
       worker.postMessage(str)

@@ -1,4 +1,4 @@
-const { testMatches } = require('./runners')
+import { testMatches } from './runners.js'
 
 let arr = [
   ['toronto', '#City'],
@@ -275,10 +275,7 @@ let arr = [
   ['healing-over', '#Gerund #Particle'],
 
   //abbreviations
-  [
-    'col. Patrick said march and feb. etc.',
-    ['Abbreviation #Person #PastTense #Month #Conjunction #Abbreviation #Abbreviation'],
-  ],
+  ['col. Patrick said march and feb. etc.', ['Abbreviation #Person #PastTense #Month #Conjunction #Abbreviation #Abbreviation']],
   [`i met April O'neil`, '#Pronoun #PastTense #Person #Person'],
 
   // adjectives

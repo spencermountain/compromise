@@ -15,12 +15,12 @@
 
   <body>
     <div class="m2">
-      <div class="f2 red ">nlp-compromise stress-test</div>
+      <div class="f2 red">nlp-compromise stress-test</div>
       <div>parse a bunch of large texts in the browser</div>
       <button id="start" class="m2">start</button>
       <div id="duration" class="darkgrey f3"></div>
     </div>
-    <table id="stage" class=" m4 center w10"></table>
+    <table id="stage" class="m4 center w10"></table>
     <script src="../builds/compromise.js"></script>
     <!-- <script src="https://unpkg.com/compromise@11.14.2/builds/compromise.min.js"></script> -->
     <script defer>
@@ -33,7 +33,7 @@
           window.texts = texts
           console.log('loaded')
         })
-      document.querySelector('#start').onclick = function() {
+      document.querySelector('#start').onclick = function () {
         console.log(nlp.version)
         let el = document.querySelector('#stage')
         document.querySelector('#start').innerHTML = 'running..'

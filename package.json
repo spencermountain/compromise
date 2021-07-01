@@ -5,17 +5,18 @@
   "version": "13.11.3",
   "main": "./builds/compromise.js",
   "unpkg": "./builds/compromise.min.js",
-  "module": "./builds/compromise.mjs",
+  "module": "./src/index.js",
   "type": "module",
   "types": "types/index.d.ts",
   "sideEffects": false,
   "exports": {
     ".": {
       "require": "./builds/compromise.js",
-      "import": "./builds/compromise.mjs",
+      "import": "./src/index.js",
       "default": "./builds/compromise.js"
     },
     "./tokenize": {
+      "import": "./src/tokenize.js",
       "default": "./builds/compromise-tokenize.js"
     }
   },

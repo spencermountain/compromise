@@ -1,10 +1,11 @@
 // const nlp = require('./src/index')
 import nlp, { model } from './src/index.js'
+// import nlp from './src/tokenize.js'
 
 // nlp.verbose(true)
 let doc = nlp(`they will`)
-doc.match('(they && foo) will').debug()
-// doc.debug()
+// doc.match('(they && foo)').debug()
+doc.debug()
 // console.log(doc.json())
 // console.log(model.tags.Modal)
 

@@ -7,6 +7,7 @@ import world from './world.js'
 import version from './_version.js'
 
 const nlp = function (document, lex) {
+  // add user-given words to lexicon
   if (lex) {
     Object.assign(world.model.lexicon, lex)
   }
@@ -18,9 +19,15 @@ const nlp = function (document, lex) {
 }
 
 /** parse text, without any further analysis */
-const tokenize = function (str) {
-  let document = tokenizer(str)
-  document = contractions(document)
+nlp.tokenize = function (document, lex) {
+  // add user-given words to lexicon
+  if (lex) {
+    Object.assign(world.model.lexicon, lex)
+  }
+  // run only the first 2 parsers
+  world.parsers.slice(0, 2).forEach(fn => {
+    document = fn(document, world)
+  })
   return new View(document)
 }
 
@@ -53,4 +60,4 @@ plugin(contractions)
 plugin(postTagger)
 export default nlp
 
-export { tokenize, parseMatch, plugin, methods, model, version, plugin as extend }
+export { parseMatch, plugin, methods, model, version, plugin as extend }

@@ -21,10 +21,15 @@ const nameGroups = function (regs) {
   }
   return regs
 }
+
 // optimize an 'or' lookup, when the (a|b|c) list is simple or multi-word
 const doFastOrMode = function (tokens) {
   return tokens.map(token => {
     if (token.choices !== undefined) {
+      // make sure it's an OR
+      if (token.operator !== 'or') {
+        return token
+      }
       // are they all straight-up words? then optimize them.
       let shouldPack = token.choices.every(block => {
         if (block.length !== 1) {
@@ -47,6 +52,7 @@ const doFastOrMode = function (tokens) {
     return token
   })
 }
+
 const postProcess = function (regs, opts = {}) {
   // ensure all capture groups names are filled between start and end
   regs = nameGroups(regs)

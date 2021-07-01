@@ -1,4 +1,5 @@
 import doesMatch from './03-matchTerm.js'
+
 export const getGreedy = function (state, endReg) {
   // for greedy checking, we no longer care about the reg.start
   // value, and leaving it can cause failures for anchored greedy
@@ -27,6 +28,7 @@ export const getGreedy = function (state, endReg) {
   }
   return state.t
 }
+
 export const greedyTo = function (state, nextReg) {
   let t = state.t
   //if there's no next one, just go off the end!
@@ -42,6 +44,7 @@ export const greedyTo = function (state, nextReg) {
   //guess it doesn't exist, then.
   return null
 }
+
 export const isEndGreedy = function (reg, state) {
   if (reg.end === true && reg.greedy === true) {
     if (state.start_i + state.t < state.phrase_length - 1) {
@@ -53,6 +56,7 @@ export const isEndGreedy = function (reg, state) {
   }
   return false
 }
+
 export const doOrBlock = function (state, skipN = 0) {
   let block = state.regs[state.r]
   let wasFound = false
@@ -95,6 +99,7 @@ export const doOrBlock = function (state, skipN = 0) {
   }
   return skipN
 }
+
 export const doAndBlock = function (state) {
   let longest = 0
   // all blocks must match, and we return the greediest match
@@ -118,6 +123,7 @@ export const doAndBlock = function (state) {
   }
   return false
 }
+
 export const getGroup = function (state, term_index) {
   if (state.groups[state.inGroup]) {
     return state.groups[state.inGroup]

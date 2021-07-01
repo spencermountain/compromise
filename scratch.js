@@ -2,8 +2,8 @@
 import nlp from './src/index.js'
 
 // nlp.verbose(true)
-let doc = nlp(`John is pretty`)
-console.log(doc.json())
+let doc = nlp(`i zero in to`)
+// console.log(doc.json())
 // doc.match('#Noun van [<name>.]').debug()
 // doc.cache()
 doc.debug()

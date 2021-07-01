@@ -5,20 +5,6 @@ import misc from './misc.js'
 const addWords = function (wordsObj, lex) {
   Object.keys(wordsObj).forEach(word => {
     let tag = wordsObj[word]
-    // abbreviation-words are used in our tokenizer
-    // if (tag === 'Abbreviation' || tag === 'Unit') {
-    //   world.cache.abbreviations[word] = true
-    // }
-    // // cache multi-words
-    // let multi = word.split(' ')
-    // if (multi.length > 1) {
-    //   world.hasCompound[multi[0]] = true
-    // }
-    // do some ad-hoc work before adding it
-    // if (expand[tag] !== undefined) {
-    // expand[tag](lex, word)
-    //   return
-    // }
     //set it in our lexicon, basic
     if (lex[word] === undefined) {
       lex[word] = tag

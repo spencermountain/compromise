@@ -15,4 +15,5 @@ export default {
   regex,
   endsWith,
   neighbours,
+  _multiCache: new Set(),
 }

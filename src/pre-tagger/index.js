@@ -35,5 +35,6 @@ const plugin = function (world) {
   methods.preTagger = _methods
   Object.assign(model, _model)
   parsers.push(preTagger)
+  methods.preTagger.expandLexicon(model, methods)
 }
 export default plugin

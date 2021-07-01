@@ -23,23 +23,31 @@ const tokenize = function (str) {
   document = contractions(document)
   return new View(document)
 }
+
 /** pre-parse any match statements */
 const parseMatch = function (str) {
   return world.methods.parseMatch(str)
 }
+nlp.parseMatch = parseMatch
+
 /** extend compromise functionality */
 const plugin = function (fn) {
   fn(world, View)
   return this
 }
+nlp.plugin = plugin
+
 /** reach-into compromise internal */
 const methods = function () {
   return world.methods
 }
+nlp.methods = methods
+
 /** peek-into compromise data */
 const model = function () {
   return world.model
 }
+nlp.model = model
 
 // apply our only default plugin
 plugin(tokenizer)

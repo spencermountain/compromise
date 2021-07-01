@@ -1,16 +1,22 @@
 // const nlp = require('./src/index')
-import nlp from './src/index.js'
+import nlp, { model } from './src/index.js'
 
 // nlp.verbose(true)
-let doc = nlp(`i zero in to`)
+let doc = nlp(`germans`)
 // console.log(doc.json())
 // doc.match('#Noun van [<name>.]').debug()
 // doc.cache()
 doc.debug()
-// doc.match('#Noun [(who|whom|#Foo)]').debug()
-// doc.match('#Noun (who|whom|#Foo)').debug()
-// let m = doc.match('^he').tag('Verb')
-// doc.canBe('#LastName').debug()
-// m.unTag('Verb')
-// doc.debug()
-// doc.update(['/0/0:1']).debug()
+
+console.log(model)
+
+/*
+['zero in','#Verb #Particle']
+['glacier','#Singular']
+['glaciers','#Plural']
+['withers','#PresentTense']
+['wither','#Infinitive']
+['german','#Demonym']
+['germans','#Demonym']
+['germans','#Plural']
+*/

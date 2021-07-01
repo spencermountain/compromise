@@ -9,8 +9,10 @@ import fillTags from './tagger/08-fillTags.js'
 
 import nounToPlural from './transform/nouns/toPlural/index.js'
 import nounToSingular from './transform/nouns/toSingular/index.js'
+
 import verbToInfinitive from './transform/verbs/toInfinitive/index.js'
 import verbConjugate from './transform/verbs/conjugate/index.js'
+
 import adjToSuperlative from './transform/adjectives/toSuperlative.js'
 import adjToComparative from './transform/adjectives/toComparative.js'
 import expandLexicon from './expand/index.js'

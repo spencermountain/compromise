@@ -16,7 +16,7 @@ const trySuffix = function (str) {
  * assume the given string is singular
  */
 const pluralize = function (str = '', model) {
-  let irregulars = model.irregular.plurals
+  let irregulars = model.irregularPlurals || {}
   // check irregulars list
   if (irregulars.hasOwnProperty(str)) {
     return irregulars[str]

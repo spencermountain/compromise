@@ -1,6 +1,6 @@
 //most nouns do not nead to be listed
-//for whatever reasons, these look like not-nouns
-// //so we make sure that they become nouns
+// for whatever reasons, these look like not-nouns
+// they are all inflected to add their plural form
 
 export default [
   'ad hominem',
@@ -125,7 +125,7 @@ export default [
   'prerogative',
   'objective',
 
-  //family-words are notpeople
+  //family-words are not people
   'aunt',
   'boy',
   'bro',

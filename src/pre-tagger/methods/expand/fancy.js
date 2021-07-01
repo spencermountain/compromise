@@ -35,6 +35,9 @@ export default {
   // 'walk up' should conjugate, too
   PhrasalVerb: (word, lex, methods, model) => {
     let [inf, rest] = word.split(' ')
+    // add root verb
+    lex[inf] = lex[inf] || 'Infinitive'
+    // conjugate it
     let all = methods.preTagger.verbConjugate(inf, model)
     Object.entries(all).forEach(a => {
       // not 'walker up', or 'had taken up'

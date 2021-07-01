@@ -2,13 +2,13 @@
 import nlp, { model } from './src/index.js'
 
 // nlp.verbose(true)
-let doc = nlp(`germans`)
+let doc = nlp(`no doubt approx. 5mins`)
 // console.log(doc.json())
 // doc.match('#Noun van [<name>.]').debug()
 // doc.cache()
 doc.debug()
 
-console.log(model)
+console.log(model.lexicon.cres)
 // write off
 // went down
 
@@ -25,4 +25,5 @@ console.log(model)
 ['writes off','#PhrasalVerb #Particle']
 ['wrote off','#PastTense #Particle']
 ['tided over','#PastTense #Particle']
+['cres','#Abbreviation']
 */

@@ -19,7 +19,6 @@ export default [
   'lat', //latitude
   'lng', //longitude
   'vol', //volume
-  // 'psa', //psalms
   'fm', //not am
   'def', //definition
   'misc',
@@ -39,18 +38,15 @@ export default [
   'tel',
   'temp',
   'vet',
-  // 'sing',//singular
   'ver', //version
   'fem', //feminine
   'masc', //masculine
   'eng', //engineering/english
-
   'adj', //adjective
   'vb', //verb
   'rb', //adverb
   'inf', //infinitive
-  // in situ..
-  'situ',
+  'situ', // in situ
   'vivo',
   'vitro',
   'wr', //world record

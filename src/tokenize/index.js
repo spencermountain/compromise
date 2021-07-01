@@ -1,6 +1,5 @@
 import _methods from './methods/index.js'
-import abbreviations from './model/abbreviations.js'
-const _model = { abbreviations: abbreviations }
+import _model from './model/index.js'
 // turn a string input into a 'document' json format
 const tokenize = function (document, world) {
   const { methods, model } = world

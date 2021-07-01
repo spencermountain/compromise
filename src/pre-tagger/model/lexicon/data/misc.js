@@ -3,18 +3,9 @@ export default {
   earlier: 'Superlative',
   sounds: 'PresentTense',
 
-  'a few': 'Value',
-
-  here: 'Noun',
-  'no doubt': 'Noun',
-
-  was: ['Copula', 'PastTense'],
-  is: ['Copula', 'PresentTense'],
-  were: ['Copula', 'PastTense'],
   am: 'Copula',
   are: 'Copula',
 
-  if: ['Condition', 'Preposition'],
   unless: 'Condition',
   lest: 'Condition',
 
@@ -39,7 +30,7 @@ export default {
   no: 'Negative',
   non: 'Negative',
   never: 'Negative',
-  not: ['Negative'], //, 'Verb'
+  not: 'Negative',
 
   where: 'QuestionWord',
   why: 'QuestionWord',
@@ -54,14 +45,5 @@ export default {
 
   //misc
   records: 'Plural',
-  '&': 'Conjunction',
-  vs: ['Conjunction', 'Abbreviation'],
-
-  //pronouns
-  i: ['Pronoun', 'Singular'],
-  he: ['Pronoun', 'Singular'],
-  she: ['Pronoun', 'Singular'],
-  it: ['Pronoun', 'Singular'],
-  they: ['Pronoun', 'Plural'],
-  we: ['Pronoun', 'Plural'],
+  'a few': 'Value',
 }

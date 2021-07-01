@@ -37,17 +37,14 @@ const plugin = function (fn) {
 }
 nlp.plugin = plugin
 
-/** reach-into compromise internal */
-const methods = function () {
+/** reach-into compromise internals */
+const { methods, model } = world
+nlp.methods = function () {
   return world.methods
 }
-nlp.methods = methods
-
-/** peek-into compromise data */
-const model = function () {
+nlp.model = function () {
   return world.model
 }
-nlp.model = model
 
 // apply our only default plugin
 plugin(tokenizer)

@@ -5,6 +5,7 @@ export default {
     let plural = methods.preTagger.nounToPlural(word, model)
     lex[plural] = lex[plural] || 'Plural'
   },
+
   // superlative/comparative forms for adjectives
   Comparable: (word, lex, methods, model) => {
     // fast -> fastest
@@ -16,11 +17,13 @@ export default {
     // overwrite
     lex[word] = 'Adjective'
   },
+
   // 'german' -> 'germains'
   Demonym: (word, lex, methods, model) => {
     let plural = methods.preTagger.nounToPlural(word, model)
     lex[plural] = lex[plural] || ['Demonym', 'Plural']
   },
+
   // conjugate all forms of these verbs
   Infinitive: (word, lex, methods, model) => {
     let all = methods.preTagger.verbConjugate(word, model)
@@ -28,6 +31,7 @@ export default {
       lex[a[1]] = lex[a[1]] || a[0]
     })
   },
+
   // 'walk up' should conjugate, too
   PhrasalVerb: (word, lex, methods, model) => {
     let [inf, rest] = word.split(' ')
@@ -45,10 +49,12 @@ export default {
       lex[str] = lex[str] || [a[0], 'PhrasalVerb']
     })
   },
+
   // expand number-words
   Cardinal: (word, lex) => {
     lex[word] = ['TextValue', 'Cardinal']
   },
+
   // 'millionth'
   Ordinal: (word, lex) => {
     lex[word] = ['TextValue', 'Ordinal']

@@ -1,5 +1,6 @@
 import _model from './model/index.js'
 import _methods from './methods/index.js'
+
 const preTagger = function (document, world) {
   const { methods, model } = world
   const m = methods.preTagger
@@ -30,10 +31,13 @@ const preTagger = function (document, world) {
   m.fillTags(terms, model)
   return document
 }
+
 const plugin = function (world) {
   let { methods, model, parsers } = world
   methods.preTagger = _methods
+  const lex = model.lexicon || {} // merge any existing lexicon
   Object.assign(model, _model)
+  Object.assign(model.lexicon, lex) //
   parsers.push(preTagger)
   methods.preTagger.expandLexicon(model, methods)
 }

@@ -45,14 +45,6 @@ import determiners from './misc/determiners.js'
 import expressions from './misc/expressions.js'
 import prepositions from './misc/prepositions.js'
 
-// import honorifics from './abbreviations/honorifics'
-// import misc from './abbreviations/misc'
-// import months from './abbreviations/months'
-// import nouns from './abbreviations/nouns'
-// import organizations from './abbreviations/organizations'
-// import places from './abbreviations/places'
-// import units from './abbreviations/units'
-
 //add-in the generic, flat word-lists
 const data = [
   // nouns
@@ -99,14 +91,6 @@ const data = [
   [determiners, 'Determiner'],
   [expressions, 'Expression'],
   [prepositions, 'Preposition'],
-
-  // [misc, 'Abbreviation'],
-  // [units, 'Unit'],
-  // [nouns, 'Abbreviation|Noun'],
-  // [honorifics, 'Abbreviation|Honorific'],
-  // [months, 'Abbreviation|Month'],
-  // [organizations, 'Abbreviation|Organization'],
-  // [places, 'Abbreviation|Place'],
 ]
 for (let i = 0; i < data.length; i++) {
   const list = data[i][0]

@@ -31,7 +31,8 @@ const transforms = [
     repl: 'nger',
   },
 ]
-const to_comparative = function (str) {
+
+const toComparative = function (str) {
   //known-irregulars
   if (irregulars.hasOwnProperty(str)) {
     return irregulars[str]
@@ -60,4 +61,4 @@ const to_comparative = function (str) {
   }
   return str + 'er'
 }
-export default to_comparative
+export default toComparative

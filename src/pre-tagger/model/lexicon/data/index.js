@@ -1,6 +1,7 @@
 //directory of files to pack with `node scripts/pack.js`
 //they are stored in compressed form
 import lex from './misc.js'
+
 import demonyms from './nouns/demonyms.js'
 import organizations from './nouns/organizations.js'
 import possessives from './nouns/possessives.js'
@@ -54,37 +55,51 @@ import prepositions from './misc/prepositions.js'
 
 //add-in the generic, flat word-lists
 const data = [
-  [singulars, 'Singular'],
+  // nouns
+  [demonyms, 'Demonym'],
+  [organizations, 'Organization'],
+  [possessives, 'Possessive'],
   [professions, 'Actor'],
+  [pronouns, 'Pronoun'],
+  [singulars, 'Singular'],
   [sportsTeams, 'SportsTeam'],
   [uncountables, 'Uncountable'],
-  [pronouns, 'Pronoun'],
-  [organizations, 'Organization'],
-  [demonyms, 'Demonym'],
-  [possessives, 'Possessive'], //+pronoun?
-  [currencies, 'Currency'],
+
+  // numbers
+  [ordinals, 'Ordinal'],
+  [cardinals, 'Cardinal'],
   [units, 'Unit'],
-  [countries, 'Country'],
-  [regions, 'Region'],
-  [places, 'Place'],
+
   [cities, 'City'],
+  [countries, 'Country'],
+  [places, 'Place'],
+  [regions, 'Region'],
+
   [weekdays, 'WeekDay'],
   [months, 'Month'],
   [dates, 'Date'],
+
+  [femaleNames, 'FemaleName'],
   [firstnames, 'FirstName'],
+  [honorifics, 'Honorific'],
   [lastnames, 'LastName'],
   [maleNames, 'MaleName'],
-  [femaleNames, 'FemaleName'],
-  [honorifics, 'Honorific'],
   [people, 'Person'],
-  [infinitives, 'Infinitive'],
-  [verbs, 'Verb'],
-  [phrasals, 'PhrasalVerb'],
-  [modals, 'Modal'],
-  [adjectives, 'Adjective'],
+
   [comparables, 'Comparable'],
-  [ordinals, 'Ordinal'],
-  [cardinals, 'Cardinal'],
+  [infinitives, 'Infinitive'],
+  [modals, 'Modal'],
+  [phrasals, 'PhrasalVerb'],
+  [verbs, 'Verb'],
+
+  [adjectives, 'Adjective'],
+  [adverbs, 'Adverb'],
+  [conjunctions, 'Conjunction'],
+  [currencies, 'Currency'],
+  [determiners, 'Determiner'],
+  [expressions, 'Expression'],
+  [prepositions, 'Preposition'],
+
   // [misc, 'Abbreviation'],
   // [units, 'Unit'],
   // [nouns, 'Abbreviation|Noun'],
@@ -92,11 +107,6 @@ const data = [
   // [months, 'Abbreviation|Month'],
   // [organizations, 'Abbreviation|Organization'],
   // [places, 'Abbreviation|Place'],
-  [adverbs, 'Adverb'],
-  [expressions, 'Expression'],
-  [prepositions, 'Preposition'],
-  [determiners, 'Determiner'],
-  [conjunctions, 'Conjunction'],
 ]
 for (let i = 0; i < data.length; i++) {
   const list = data[i][0]

@@ -1,20 +1,40 @@
 const fancyThings = {
   // add plural forms of singular nouns
-  Singular: (word, methods, lex, model) => {
+  Singular: (word, lex, methods, model) => {
     let plural = methods.preTagger.nounToPlural(word, model)
     lex[plural] = lex[plural] || 'Plural'
   },
+  // superlative/comparative forms for adjectives
+  Comparable: (word, lex, methods, model) => {
+    // fast -> fastest
+    let superlative = methods.preTagger.adjToSuperlative(word, model)
+    lex[superlative] = lex[superlative] || 'Superlative'
+    // fast -> faster
+    let comparative = methods.preTagger.adjToComparative(word, model)
+    lex[comparative] = lex[comparative] || 'Comparative'
+    // overwrite
+    lex[word] = 'Adjective'
+  },
   // 'german' -> 'germains'
-  Demonym: (word, methods, lex, model) => {
+  Demonym: (word, lex, methods, model) => {
     let plural = methods.preTagger.nounToPlural(word, model)
     lex[plural] = lex[plural] || ['Demonym', 'Plural']
   },
   // conjugate all forms of these verbs
-  Infinitive: (word, methods, lex, model) => {
+  Infinitive: (word, lex, methods, model) => {
     let all = methods.preTagger.verbConjugate(word, model)
     Object.entries(all).forEach(a => {
       lex[a[1]] = lex[a[1]] || a[0]
     })
+  },
+  // expand number-words
+  Cardinal: (word, lex) => {
+    lex[word] = ['TextValue', 'Cardinal']
+  },
+  // 'millionth'
+  Ordinal: (word, lex) => {
+    lex[word] = ['TextValue', 'Ordinal']
+    lex[word + 's'] = ['TextValue', 'Fraction']
   },
 }
 
@@ -34,7 +54,7 @@ const grow = function (model, methods) {
     }
     let tag = lex[word]
     if (fancyThings.hasOwnProperty(tag) === true) {
-      fancyThings[tag](word, methods, lex, model)
+      fancyThings[tag](word, lex, methods, model)
     }
   })
   console.log('after:', Object.keys(lex).length)

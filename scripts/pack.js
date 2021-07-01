@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
 import fs from 'fs'
 import { pack } from 'efrt'
-import lexicon from '../../data/index.js'
+import lexicon from '../src/pre-tagger/model/lexicon/data/index.js'
 console.log('\n 🕑  - packing lexicon..')
-// const dir = new URL('./', import.meta.url).pathname
+// const outFile = './src/pre-tagger/model/lexicon/_data.js'
 const outFile = './src/pre-tagger/model/lexicon/_data.js'
 
 //turn them into a series of flat-arrays

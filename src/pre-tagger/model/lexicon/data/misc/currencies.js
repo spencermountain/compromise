@@ -31,7 +31,7 @@ export default [
   'dollar',
   'dollars',
   'eur',
-  'euro',
+  'euro', //ambig
   'euros',
   'forint',
   'forints',
@@ -52,7 +52,7 @@ export default [
   'kwanzas',
   'kyat',
   'kyats',
-  'lei',
+  'lei', //ambig
   'lempira',
   'lempiras',
   'lira',
@@ -65,7 +65,7 @@ export default [
   'pesos',
   'pound sterling',
   'pound sterlings',
-  'pound',
+  'pound', //ambig
   'pounds',
   'riel',
   'rouble',

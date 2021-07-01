@@ -1,6 +1,7 @@
 import failFast from './01-failFast.js'
 import fromHere from './02-from-here.js'
 import getGroup from './04-getGroup.js'
+
 // ok, here we go.
 const runMatch = function (docs, m, cache) {
   cache = cache || []
@@ -25,10 +26,8 @@ const runMatch = function (docs, m, cache) {
       if (res) {
         // make proper pointers
         res.pointer[0] = n
-        // res.pointer = [n, res.pointer] //`/${n}/` + res.pointer
         Object.keys(res.groups).forEach(k => {
           res.groups[k][0] = n
-          // res.groups[k] = [n, res.groups[k]] //`/${n}/` + res.groups[k]
         })
         results.push(res)
         // should we stop here?
@@ -37,7 +36,6 @@ const runMatch = function (docs, m, cache) {
         }
         // skip ahead, over these results
         let end = res.pointer[2]
-        // let { end } = methods.parsePointer(res.pointer)
         i = Math.abs(end - 1)
       }
     }
@@ -46,4 +44,5 @@ const runMatch = function (docs, m, cache) {
   results = getGroup(results, group)
   return results
 }
+
 export default runMatch

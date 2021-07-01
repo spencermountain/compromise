@@ -8,6 +8,7 @@ const growFastOr = function (obj, index) {
     return cpy
   })
 }
+
 const growSlowOr = function (obj, index) {
   let or = obj.regs[index]
   return or.choices.map(regs => {
@@ -17,6 +18,7 @@ const growSlowOr = function (obj, index) {
     return { choices: regs, operator: or.operator }
   })
 }
+
 const expand = function (matches) {
   let all = []
   matches.forEach(obj => {
@@ -48,4 +50,5 @@ const expand = function (matches) {
   })
   return all
 }
+
 export default expand

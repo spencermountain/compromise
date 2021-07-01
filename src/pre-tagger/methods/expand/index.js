@@ -4,7 +4,7 @@ import fancyThings from './fancy.js'
 // this method runs as the pre-tagger plugin gets loaded
 const grow = function (model, methods) {
   let lex = model.lexicon
-  console.log('start:', Object.keys(lex).length)
+  // console.log('start:', Object.keys(lex).length)
   let _multi = model._multiCache
 
   // go through each word in the lex:
@@ -37,6 +37,6 @@ const grow = function (model, methods) {
       lex[a[1]] = lex[a[1]] || 'Plural'
     })
   }
-  console.log('after:', Object.keys(lex).length)
+  // console.log('after:', Object.keys(lex).length)
 }
 export default grow

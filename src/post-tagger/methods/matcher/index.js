@@ -1,5 +1,6 @@
 import matchUp from './01-matchUp.js'
 import localTrim from './02-localTrim.js'
+
 const matcher = function (document, byGroup, methods) {
   const { cacheDoc, match } = methods
   let results = []
@@ -13,6 +14,7 @@ const matcher = function (document, byGroup, methods) {
       let res = match([document[n]], m)
       if (res.ptrs.length > 0) {
         res.ptrs.forEach(ptr => {
+          ptr[0] = n // fix the sentence pointer
           results.push({ pointer: ptr, tag: m.tag, reason: m.reason })
         })
       }

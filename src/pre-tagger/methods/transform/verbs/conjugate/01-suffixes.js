@@ -1,4 +1,5 @@
 import suffixes from './suffixes.js'
+
 const posMap = {
   pr: 'PresentTense',
   pa: 'PastTense',
@@ -6,6 +7,7 @@ const posMap = {
   prt: 'Participle',
   ar: 'Actor',
 }
+
 const doTransform = function (str, obj) {
   let found = {}
   let keys = Object.keys(obj.repl)
@@ -15,6 +17,7 @@ const doTransform = function (str, obj) {
   }
   return found
 }
+
 //look at the end of the word for clues
 const checkSuffix = function (str = '') {
   let c = str[str.length - 1]
@@ -28,4 +31,5 @@ const checkSuffix = function (str = '') {
   }
   return {}
 }
+
 export default checkSuffix

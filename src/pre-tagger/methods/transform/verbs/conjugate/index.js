@@ -1,5 +1,6 @@
 import checkSuffix from './01-suffixes.js'
 import genericFill from './02-generic.js'
+
 //we run this on every verb in the lexicon, so please keep it fast
 //we assume the input word is a proper infinitive
 const conjugate = function (inf = '', model) {
@@ -28,4 +29,5 @@ const conjugate = function (inf = '', model) {
   }
   return found
 }
+
 export default conjugate

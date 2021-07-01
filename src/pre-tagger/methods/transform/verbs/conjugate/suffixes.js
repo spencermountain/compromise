@@ -1,4 +1,4 @@
-const endsWith = {
+export default {
   b: [
     {
       reg: /([^aeiou][aeiou])b$/i,
@@ -216,6 +216,12 @@ const endsWith = {
         gr: '$1ing',
       },
     },
+    {
+      reg: /(t|w)(ear)$/i, //wear, tear
+      repl: {
+        pa: '$1ore',
+      },
+    },
   ],
   s: [
     {
@@ -300,4 +306,3 @@ const endsWith = {
     },
   ],
 }
-export default endsWith

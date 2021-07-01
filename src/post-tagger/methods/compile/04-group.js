@@ -8,4 +8,5 @@ const groupBy = function (matches) {
   })
   return byGroup
 }
+
 export default groupBy

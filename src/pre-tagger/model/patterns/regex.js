@@ -7,6 +7,7 @@ export default [
   [/^@\w{2,}$/, 'AtMention'],
   [/^(https?:\/\/|www\.)+\w+\.[a-z]{2,3}/, 'Url'],
   [/^[a-z0-9./].+\.(com|net|gov|org|ly|edu|info|biz|dev|ru|jp|de|in|uk|br|io|ai)/, 'Url'],
+
   //dates/times
   [/^'[0-9]{2}$/, 'Year'],
   [/^[012]?[0-9](:[0-5][0-9])(:[0-5][0-9])$/, 'Time'],
@@ -21,22 +22,23 @@ export default [
   [/^[0-9]{1,4}-[a-z]{2,9}-[0-9]{1,4}$/i, 'Date'],
   [/^gmt[+-][0-9][0-9]?$/i, 'Timezone'],
   [/^utc[+-][0-9][0-9]?$/i, 'Timezone'],
+
   //names
   [/^ma?c\'.*/, 'LastName'],
   [/^o\'[drlkn].*/, 'LastName'],
   [/^ma?cd[aeiou]/, 'LastName'],
+
   //slang things
   [/^(lol)+[sz]$/, 'Expression'],
   [/^woo+a*?h?$/, 'Expression'],
   [/^(un|de|re)\\-[a-z\u00C0-\u00FF]{2}/, 'Verb'],
-  // [/^(over|under)[a-z]{2,}/, 'Adjective'],
   [/^[0-9]{1,4}\.[0-9]{1,2}\.[0-9]{1,4}$/, 'Date'],
+
   //phone numbers
   [/^[0-9]{3}-[0-9]{4}$/, 'PhoneNumber'],
   [/^(\+?[0-9][ -])?[0-9]{3}[ -]?[0-9]{3}-[0-9]{4}$/, 'PhoneNumber'],
+
   //money
-  // currency regex
-  // /[\$\xA2-\xA5\u058F\u060B\u09F2\u09F3\u09FB\u0AF1\u0BF9\u0E3F\u17DB\u20A0-\u20BD\uA838\uFDFC\uFE69\uFF04\uFFE0\uFFE1\uFFE5\uFFE6]
   //like $5.30
   [
     /^[-+]?[\$\xA2-\xA5\u058F\u060B\u09F2\u09F3\u09FB\u0AF1\u0BF9\u0E3F\u17DB\u20A0-\u20BD\uA838\uFDFC\uFE69\uFF04\uFFE0\uFFE1\uFFE5\uFFE6][-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?(k|m|b|bn)?\+?$/,
@@ -49,6 +51,7 @@ export default [
   ],
   //like $400usd
   [/^[-+]?[\$£]?[0-9]([0-9,.])+?(usd|eur|jpy|gbp|cad|aud|chf|cny|hkd|nzd|kr|rub)$/i, ['Money', 'Value']],
+
   //numbers
   // 50 | -50 | 3.23  | 5,999.0  | 10+
   [/^[-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?\+?$/, ['Cardinal', 'NumericValue']],
@@ -66,9 +69,7 @@ export default [
   [/^[0-9][0-9]?(:[0-9][0-9])?(am|pm)? ?[-–—] ?[0-9][0-9]?(:[0-9][0-9])?(am|pm)?$/, ['Time', 'NumberRange']],
   //with unit
   [/^[0-9.]+([a-z]{1,4})$/, 'Value'],
-  //ordinal
-  // [/^[0-9][0-9,.]*(st|nd|rd|r?th)$/, ['NumericValue', 'Ordinal']], //like 5th
-  // [/^[0-9]+(st|nd|rd|th)$/, 'Ordinal'], //like 5th
+
   // period-ones acronyms - f.b.i.
   [/^([A-Z]\.){2}[A-Z]?/i, 'Acronym'], //ascii-only
 ]

@@ -2,28 +2,18 @@
 import nlp, { model } from './src/index.js'
 
 // nlp.verbose(true)
-let doc = nlp(`no doubt approx. 5mins`)
+let doc = nlp(`wash fun. write off`)
 // console.log(doc.json())
 // doc.match('#Noun van [<name>.]').debug()
 // doc.cache()
+
 doc.debug()
 
-console.log(model.lexicon.cres)
-// write off
-// went down
+// swear
 
 /*
-['zero in','#Verb #Particle']
-['glacier','#Singular']
-['glaciers','#Plural']
-['withers','#PresentTense']
-['wither','#Infinitive']
-['german','#Demonym']
-['germans','#Demonym']
-['germans','#Plural']
-['write off','#Infinitive #PhrasalVerb']
-['writes off','#PhrasalVerb #Particle']
-['wrote off','#PastTense #Particle']
-['tided over','#PastTense #Particle']
-['cres','#Abbreviation']
+['', ''],
+['', ''],
+['', ''],
+['', ''],
 */

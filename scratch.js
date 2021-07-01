@@ -2,9 +2,11 @@
 import nlp, { model } from './src/index.js'
 
 // nlp.verbose(true)
-let doc = nlp(`writes off`)
-// doc.match('#Noun van [<name>.]').debug()
-doc.debug()
+let doc = nlp(`they will`)
+doc.match('(they && foo) will').debug()
+// doc.debug()
+// console.log(doc.json())
+// console.log(model.tags.Modal)
 
 /*
 ['swore', '#PastTense'],

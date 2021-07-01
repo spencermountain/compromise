@@ -1,6 +1,7 @@
 const unique = function (arr) {
   return arr.filter((v, i, a) => a.indexOf(v) === i)
 }
+
 //add 'downward' tags (that immediately depend on this one)
 const inferParents = function (tags) {
   Object.keys(tags).forEach(k => {

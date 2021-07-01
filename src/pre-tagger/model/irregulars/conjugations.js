@@ -704,6 +704,7 @@ let conjugations = {
     pst: 'wrote',
   },
 }
+
 //uncompress our ad-hoc compression scheme
 let keys = Object.keys(conjugations)
 for (let i = 0; i < keys.length; i++) {

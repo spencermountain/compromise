@@ -12,6 +12,7 @@ const Noun = 'Noun'
 const Last = 'LastName'
 const Modal = 'Modal'
 const Place = 'Place'
+
 export default [
   null,
   null,

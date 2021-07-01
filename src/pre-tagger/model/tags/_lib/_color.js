@@ -11,6 +11,7 @@ const colorMap = {
   Determiner: 'cyan',
   Adverb: 'cyan',
 }
+
 /** add a debug color to some tags */
 const addColors = function (tags) {
   Object.keys(tags).forEach(k => {
@@ -34,4 +35,5 @@ const addColors = function (tags) {
   })
   return tags
 }
+
 export default addColors

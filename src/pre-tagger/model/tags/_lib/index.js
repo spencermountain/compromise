@@ -2,6 +2,7 @@ import inferColor from './_color.js'
 import inferParents from './_parents.js'
 import inferNotTags from './_not.js'
 import lineage from './_children.js'
+
 const validate = function (tags) {
   // cleanup format
   Object.keys(tags).forEach(k => {
@@ -19,6 +20,7 @@ const validate = function (tags) {
   })
   return tags
 }
+
 // build-out the tag-graph structure
 const inferTags = function (tags) {
   // validate data

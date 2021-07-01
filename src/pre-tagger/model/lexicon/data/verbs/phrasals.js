@@ -1,10 +1,9 @@
-//phrasal verbs are two words that really mean one verb.
-//'beef up' is one verb, and not some direction of beefing.
-
-//this seems like an inefficient way to store it, but the trie compresses by prefix
-
-//by @spencermountain, 2015 mit
-//many credits to http://www.allmyphrasalverbs.com/
+// phrasal verbs are two words that really mean one verb.
+// 'beef up' is one verb, and not some direction of beefing.
+// this seems like an inefficient way to store it, but the trie compresses by prefix
+// the first-words are also conjugated as infinitives, so mind that
+// by @spencermountain, 2015 mit
+// many credits to http://www.allmyphrasalverbs.com/
 export default [
   'act out',
   'act up',
@@ -207,6 +206,8 @@ export default [
   'figure out',
   'file away',
   'file for',
+  'file out',
+  'file in',
   'fill down',
   'fill in',
   'fill out',
@@ -791,7 +792,6 @@ export default [
   'wipe out',
   'wire up',
   'wise up',
-  'word up',
   'work off',
   'work out',
   'write off',

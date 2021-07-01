@@ -1,6 +1,6 @@
 import tags from './tags/index.js'
 import irregularPlurals from './irregulars/plurals.js'
-import irregularConjugations from './irregulars/conjugations.js'
+import irregularVerbs from './irregulars/conjugations.js'
 import lexicon from './lexicon/index.js'
 import suffixPatterns from './patterns/suffixes.js'
 import regex from './patterns/regex.js'
@@ -9,7 +9,7 @@ import neighbours from './patterns/neighbours.js'
 export default {
   tags,
   irregularPlurals,
-  irregularConjugations,
+  irregularVerbs,
   lexicon,
   suffixPatterns,
   regex,

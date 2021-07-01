@@ -7,8 +7,8 @@ const conjugate = function (inf = '', model) {
   // 1. look at irregulars
   //the lexicon doesn't pass this in
   if (model.irregularVerbs) {
-    if (model.irregularVerbs.verbs.hasOwnProperty(inf) === true) {
-      found = Object.assign({}, model.irregularVerbs.verbs[inf])
+    if (model.irregularVerbs.hasOwnProperty(inf) === true) {
+      found = Object.assign({}, model.irregularVerbs[inf])
     }
   }
   //2. rule-based regex

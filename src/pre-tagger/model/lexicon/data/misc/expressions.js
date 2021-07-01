@@ -79,4 +79,5 @@ export default [
   'yuck',
   'yup',
   "d'oh",
+  'word up',
 ]

@@ -1,17 +1,17 @@
-//verbs we shouldn't conjugate
+//verbs we shouldn't conjugate, for whatever reason
 export default [
   'has',
   'keep tabs',
-  'known',
   'born',
   'cannot',
-  'awaken',
   'gonna',
   'msg',
+  'make sure',
+  // -- participle forms--
+  'awaken',
   'seen',
   'shown',
-  'make sure',
-  //
+  'known',
   'frighten',
   'given',
   'hasten',

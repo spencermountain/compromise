@@ -9,6 +9,8 @@ let doc = nlp(`germans`)
 doc.debug()
 
 console.log(model)
+// write off
+// went down
 
 /*
 ['zero in','#Verb #Particle']
@@ -19,4 +21,8 @@ console.log(model)
 ['german','#Demonym']
 ['germans','#Demonym']
 ['germans','#Plural']
+['write off','#Infinitive #PhrasalVerb']
+['writes off','#PhrasalVerb #Particle']
+['wrote off','#PastTense #Particle']
+['tided over','#PastTense #Particle']
 */

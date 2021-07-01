@@ -442,7 +442,6 @@ let conjugations = {
     prt: 'rung',
   },
   rise: {
-    fut: 'will have _n',
     g: 'rising',
     prt: '_n',
     pst: 'rose',
@@ -509,6 +508,9 @@ let conjugations = {
   show: {
     pst: '_ed',
   },
+  slow: {
+    pst: '_ed',
+  },
   shut: {
     prt: '_',
   },
@@ -543,7 +545,6 @@ let conjugations = {
     prt: 'snuck',
   },
   speak: {
-    fut: 'will have spoken',
     prt: 'spoken',
     pst: 'spoke',
     perf: 'have spoken',
@@ -599,6 +600,9 @@ let conjugations = {
   strew: {
     prt: '_n',
   },
+  string: {
+    pst: 'strung',
+  },
   strike: {
     g: 'striking',
     pst: 'struck',
@@ -625,7 +629,6 @@ let conjugations = {
     pst: 'swung',
   },
   take: {
-    fut: 'will have _n',
     pst: 'took',
     perf: 'have _n',
     pluperf: 'had _n',
@@ -648,6 +651,9 @@ let conjugations = {
   },
   tie: {
     g: 'tying',
+    pst: '_d',
+  },
+  tide: {
     pst: '_d',
   },
   undergo: {

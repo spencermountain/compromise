@@ -19,6 +19,24 @@ const grow = function (model, methods) {
       fancyThings[tag](word, lex, methods, model)
     }
   })
+
+  // recycle anything interesting in the model:
+  if (model.irregularVerbs) {
+    Object.entries(model.irregularVerbs).forEach(a => {
+      let [inf, conj] = a
+      lex[inf] = lex[inf] || 'Infinitive'
+      Object.keys(conj).forEach(tag => {
+        let word = conj[tag]
+        lex[word] = lex[word] || tag
+      })
+    })
+  }
+  if (model.irregularPlurals) {
+    Object.entries(model.irregularPlurals).forEach(a => {
+      lex[a[0]] = lex[a[0]] || 'Singular'
+      lex[a[1]] = lex[a[1]] || 'Plural'
+    })
+  }
   console.log('after:', Object.keys(lex).length)
 }
 export default grow

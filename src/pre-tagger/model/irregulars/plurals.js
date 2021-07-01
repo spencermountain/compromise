@@ -1,148 +1,78 @@
-export const addendum = 'addenda'
-export const alga = 'algae'
-export const alumna = 'alumnae'
-export const alumnus = 'alumni'
-export const analysis = 'analyses'
-export const antenna = 'antennae'
-export const appendix = 'appendices'
-export const avocado = 'avocados'
-export const axis = 'axes'
-export const bacillus = 'bacilli'
-export const barracks = 'barracks'
-export const beau = 'beaux'
-export const bus = 'buses'
-export const cactus = 'cacti'
-export const chateau = 'chateaux'
-export const child = 'children'
-export const circus = 'circuses'
-export const clothes = 'clothes'
-export const corpus = 'corpora'
-export const criterion = 'criteria'
-export const curriculum = 'curricula'
-export const database = 'databases'
-export const deer = 'deer'
-export const diagnosis = 'diagnoses'
-export const echo = 'echoes'
-export const embargo = 'embargoes'
-export const epoch = 'epochs'
-export const foot = 'feet'
-export const formula = 'formulae'
-export const fungus = 'fungi'
-export const genus = 'genera'
-export const goose = 'geese'
-export const halo = 'halos'
-export const hippopotamus = 'hippopotami'
-export const index = 'indices'
-export const larva = 'larvae'
-export const leaf = 'leaves'
-export const libretto = 'libretti'
-export const loaf = 'loaves'
-export const man = 'men'
-export const matrix = 'matrices'
-export const memorandum = 'memoranda'
-export const modulus = 'moduli'
-export const mosquito = 'mosquitoes'
-export const mouse = 'mice'
-export const nebula = 'nebulae'
-export const nucleus = 'nuclei'
-export const octopus = 'octopi'
-export const opus = 'opera'
-export const ovum = 'ova'
-export const ox = 'oxen'
-export const parenthesis = 'parentheses'
-export const person = 'people'
-export const phenomenon = 'phenomena'
-export const prognosis = 'prognoses'
-export const quiz = 'quizzes'
-export const radius = 'radii'
-export const referendum = 'referenda'
-export const rodeo = 'rodeos'
-export const sex = 'sexes'
-export const shoe = 'shoes'
-export const sombrero = 'sombreros'
-export const stimulus = 'stimuli'
-export const stomach = 'stomachs'
-export const syllabus = 'syllabi'
-export const synopsis = 'synopses'
-export const tableau = 'tableaux'
-export const thesis = 'theses'
-export const thief = 'thieves'
-export const tooth = 'teeth'
-export const tornado = 'tornados'
-export const tuxedo = 'tuxedos'
-export const vertebra = 'vertebrae'
+//nouns with irregular plural/singular forms
+//used in nouns.toPlural(), and also in the lexicon.
+
 export default {
-  addendum,
-  alga,
-  alumna,
-  alumnus,
-  analysis,
-  antenna,
-  appendix,
-  avocado,
-  axis,
-  bacillus,
-  barracks,
-  beau,
-  bus,
-  cactus,
-  chateau,
-  child,
-  circus,
-  clothes,
-  corpus,
-  criterion,
-  curriculum,
-  database,
-  deer,
-  diagnosis,
-  echo,
-  embargo,
-  epoch,
-  foot,
-  formula,
-  fungus,
-  genus,
-  goose,
-  halo,
-  hippopotamus,
-  index,
-  larva,
-  leaf,
-  libretto,
-  loaf,
-  man,
-  matrix,
-  memorandum,
-  modulus,
-  mosquito,
-  mouse,
-  nebula,
-  nucleus,
-  octopus,
-  opus,
-  ovum,
-  ox,
-  parenthesis,
-  person,
-  phenomenon,
-  prognosis,
-  quiz,
-  radius,
-  referendum,
-  rodeo,
-  sex,
-  shoe,
-  sombrero,
-  stimulus,
-  stomach,
-  syllabus,
-  synopsis,
-  tableau,
-  thesis,
-  thief,
-  tooth,
-  tornado,
-  tuxedo,
-  vertebra,
+  addendum: 'addenda',
+  alga: 'algae',
+  alumna: 'alumnae',
+  alumnus: 'alumni',
+  analysis: 'analyses',
+  antenna: 'antennae',
+  appendix: 'appendices',
+  avocado: 'avocados',
+  axis: 'axes',
+  bacillus: 'bacilli',
+  barracks: 'barracks',
+  beau: 'beaux',
+  bus: 'buses',
+  cactus: 'cacti',
+  chateau: 'chateaux',
+  child: 'children',
+  circus: 'circuses',
+  clothes: 'clothes',
+  corpus: 'corpora',
+  criterion: 'criteria',
+  curriculum: 'curricula',
+  database: 'databases',
+  deer: 'deer',
+  diagnosis: 'diagnoses',
+  echo: 'echoes',
+  embargo: 'embargoes',
+  epoch: 'epochs',
+  foot: 'feet',
+  formula: 'formulae',
+  fungus: 'fungi',
+  genus: 'genera',
+  goose: 'geese',
+  halo: 'halos',
+  hippopotamus: 'hippopotami',
+  index: 'indices',
+  larva: 'larvae',
+  leaf: 'leaves',
+  libretto: 'libretti',
+  loaf: 'loaves',
+  man: 'men',
+  matrix: 'matrices',
+  memorandum: 'memoranda',
+  modulus: 'moduli',
+  mosquito: 'mosquitoes',
+  mouse: 'mice',
+  nebula: 'nebulae',
+  nucleus: 'nuclei',
+  octopus: 'octopi',
+  opus: 'opera',
+  ovum: 'ova',
+  ox: 'oxen',
+  parenthesis: 'parentheses',
+  person: 'people',
+  phenomenon: 'phenomena',
+  prognosis: 'prognoses',
+  quiz: 'quizzes',
+  radius: 'radii',
+  referendum: 'referenda',
+  rodeo: 'rodeos',
+  sex: 'sexes',
+  shoe: 'shoes',
+  sombrero: 'sombreros',
+  stimulus: 'stimuli',
+  stomach: 'stomachs',
+  syllabus: 'syllabi',
+  synopsis: 'synopses',
+  tableau: 'tableaux',
+  thesis: 'theses',
+  thief: 'thieves',
+  tooth: 'teeth',
+  tornado: 'tornados',
+  tuxedo: 'tuxedos',
+  vertebra: 'vertebrae',
 }

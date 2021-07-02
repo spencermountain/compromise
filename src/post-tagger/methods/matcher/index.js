@@ -10,6 +10,7 @@ const matcher = function (document, byGroup, methods) {
   maybeList = localTrim(maybeList, docCache)
   // now actually run the matches
   maybeList.forEach((allPossible, n) => {
+    // console.log(allPossible.map(o => o.reason))
     allPossible.forEach(m => {
       let res = match([document[n]], m)
       if (res.ptrs.length > 0) {

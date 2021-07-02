@@ -23,25 +23,27 @@ const expand = function (matches) {
   let all = []
   matches.forEach(obj => {
     // expand simple '(one|two)' matches
-    let foundOr = obj.regs.findIndex(reg => reg.operator === 'or' && reg.fastOr)
+    let foundOr = obj.regs.findIndex(reg => reg.operator === 'or' && reg.fastOr && !reg.optional && !reg.negative)
     if (foundOr !== -1) {
       let more = growFastOr(obj, foundOr)
       more.forEach(mo => {
         let newObj = Object.assign({}, obj) //clone
         newObj.regs = obj.regs.slice(0) //clone
         newObj.regs[foundOr] = mo
+        newObj._generated = true
         all.push(newObj)
       })
       return
     }
     // expand '(#Foo && two)' matches
-    foundOr = obj.regs.findIndex(reg => reg.operator === 'or' && reg.choices)
+    foundOr = obj.regs.findIndex(reg => reg.operator === 'or' && reg.choices && !reg.optional && !reg.negative)
     if (foundOr !== -1) {
       let more = growSlowOr(obj, foundOr)
       more.forEach(mo => {
         let newObj = Object.assign({}, obj) //clone
         newObj.regs = obj.regs.slice(0) //clone
         newObj.regs[foundOr] = mo
+        newObj._generated = true
         all.push(newObj)
       })
       return

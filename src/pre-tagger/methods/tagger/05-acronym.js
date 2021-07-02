@@ -43,31 +43,31 @@ const isNoPeriodAcronym = function (term, model) {
   return false
 }
 
-const isAcronym = function (terms, model) {
-  terms.forEach(term => {
-    //these are not acronyms
-    if (term.tags.has('RomanNumeral') || term.tags.has('Acronym')) {
-      return
-    }
-    //non-period ones are harder
-    if (isNoPeriodAcronym(term, model)) {
-      setTag(term, ['Acronym', 'Noun'], 'no-period-acronym')
-      return
-    }
-    // one-letter acronyms
-    if (!oneLetterWord.hasOwnProperty(term.text) && oneLetterAcronym.test(term.text)) {
-      setTag(term, ['Acronym', 'Noun'], 'one-letter-acronym')
-      return
-    }
-    //if it's a very-short organization?
-    if (term.tags.has('Organization') && term.text.length <= 3) {
-      setTag(term, 'Acronym', 'org-acronym')
-      return
-    }
-    // upper-case org, like UNESCO
-    if (term.tags.has('Organization') && isUpperCase.test(term.text) && term.text.length <= 6) {
-      setTag(term, 'Acronym', 'titlecase-acronym')
-    }
-  })
+const isAcronym = function (term, model) {
+  //these are not acronyms
+  if (term.tags.has('RomanNumeral') || term.tags.has('Acronym')) {
+    return null
+  }
+  //non-period ones are harder
+  if (isNoPeriodAcronym(term, model)) {
+    setTag(term, ['Acronym', 'Noun'], 'no-period-acronym')
+    return true
+  }
+  // one-letter acronyms
+  if (!oneLetterWord.hasOwnProperty(term.text) && oneLetterAcronym.test(term.text)) {
+    setTag(term, ['Acronym', 'Noun'], 'one-letter-acronym')
+    return true
+  }
+  //if it's a very-short organization?
+  if (term.tags.has('Organization') && term.text.length <= 3) {
+    setTag(term, 'Acronym', 'org-acronym')
+    return true
+  }
+  // upper-case org, like UNESCO
+  if (term.tags.has('Organization') && isUpperCase.test(term.text) && term.text.length <= 6) {
+    setTag(term, 'Acronym', 'titlecase-acronym')
+    return true
+  }
+  return null
 }
 export default isAcronym

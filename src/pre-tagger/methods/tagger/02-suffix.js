@@ -16,22 +16,24 @@ const suffixLoop = function (str = '', suffixes = []) {
   }
   return null
 }
+
 // decide tag from the ending of the word
-const tagBySuffix = function (terms, model) {
-  terms.forEach(t => {
-    if (t.tags.size === 0) {
-      let tag = suffixLoop(t.normal, model.suffixPatterns)
+const tagBySuffix = function (term, model) {
+  if (term.tags.size === 0) {
+    let tag = suffixLoop(term.normal, model.suffixPatterns)
+    if (tag !== null) {
+      setTag(term, tag, 'suffix')
+      return true
+    }
+    // try implicit form of word, too
+    if (term.implicit) {
+      tag = suffixLoop(term.implicit, model.suffixPatterns)
       if (tag !== null) {
-        setTag(t, tag, 'suffix')
-      }
-      // try implicit form of word, too
-      if (t.implicit) {
-        tag = suffixLoop(t.implicit, model.suffixPatterns)
-        if (tag !== null) {
-          setTag(t, tag, 'implicit-suffix')
-        }
+        setTag(term, tag, 'implicit-suffix')
+        return true
       }
     }
-  })
+  }
+  return null
 }
 export default tagBySuffix

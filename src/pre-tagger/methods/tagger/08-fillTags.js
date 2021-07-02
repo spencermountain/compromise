@@ -8,10 +8,7 @@ const fillTags = function (terms, model) {
     for (let i = 0; i < tags.length; i += 1) {
       if (model.tags[tags[i]]) {
         let toAdd = model.tags[tags[i]].parents
-        setTag(term, toAdd, 'infer')
-      } else {
-        // console.log('missing ' + tags[i])
-        // console.log(term)
+        setTag(term, toAdd, `-infer from ${tags[i]}`)
       }
     }
   })

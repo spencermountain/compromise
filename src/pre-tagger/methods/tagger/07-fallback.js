@@ -36,20 +36,18 @@ const lookRight = function (terms, i, rightTags, rightWords) {
   }
 }
 // look at neighbours for hints on unknown words
-const nounFallback = function (document, model) {
+const nounFallback = function (terms, model) {
   const { leftTags, leftWords, rightWords, rightTags } = model.neighbours
-  document.forEach(terms => {
-    terms.forEach((term, i) => {
+  terms.forEach((term, i) => {
+    if (term.tags.size === 0) {
+      // any hints, from neighbouring words?
+      lookLeft(terms, i, leftTags, leftWords)
+      lookRight(terms, i, rightTags, rightWords)
+      //  ¯\_(ツ)_/¯
       if (term.tags.size === 0) {
-        // any hints, from neighbouring words?
-        lookLeft(terms, i, leftTags, leftWords)
-        lookRight(terms, i, rightTags, rightWords)
-        //  ¯\_(ツ)_/¯
-        if (term.tags.size === 0) {
-          setTag(term, 'Noun', 'noun-fallback')
-        }
+        setTag(term, 'Noun', 'noun-fallback')
       }
-    })
+    }
   })
 }
 export default nounFallback

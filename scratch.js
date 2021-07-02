@@ -7,11 +7,11 @@ process.env.DEBUG_TAGS = true
 nlp.verbose(true)
 
 // nlp.verbose(true)
-let doc = nlp(`kate e Watson is home`)
+let doc = nlp(`3pm EST yessss`)
 // doc.match('(they && foo)').debug()
 doc.debug()
 // console.log(doc.json())
-// console.log(model.tags.Modal)
+console.log(model.lexicon.est)
 
 /*
 ['swore', '#PastTense'],

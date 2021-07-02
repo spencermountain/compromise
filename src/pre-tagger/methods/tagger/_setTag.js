@@ -3,8 +3,8 @@ const log = (term, tag, reason = '') => {
   const yellow = str => '\x1b[33m\x1b[3m' + str + '\x1b[0m'
   const i = str => '\x1b[3m' + str + '\x1b[0m'
   let word = term.text || '[' + term.implicit + ']'
-  tag = typeof tag !== 'string' ? tag.join(' #') : tag
-  console.log(` ${yellow(word).padEnd(22)} \x1b[32m→\x1b[0m #${tag.padEnd(20)}  ${i(reason)}`) // eslint-disable-line
+  tag = typeof tag !== 'string' ? tag.slice(0, 3).join(', #') : tag
+  console.log(` ${yellow(word).padEnd(24)} \x1b[32m→\x1b[0m #${tag.padEnd(25)}  ${i(reason)}`) // eslint-disable-line
 }
 
 // a faster version than the user-facing one in ./methods

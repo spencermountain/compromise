@@ -17,6 +17,7 @@ const parseTerm = txt => {
     text: str,
     pre: pre,
     post: post,
+    tags: new Set(),
   }
   // support aliases for slashes
   if (hasSlash.test(str)) {

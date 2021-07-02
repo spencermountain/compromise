@@ -19,6 +19,7 @@ const preTagger = function (document, world) {
   m.checkSuffix(terms, model)
   // try look-like rules
   m.checkRegex(terms, model)
+
   //  fallback methods
   m.checkCase(document)
   // more-involved regexes

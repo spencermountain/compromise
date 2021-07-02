@@ -13,7 +13,7 @@ const fetch = function (url) {
         })
       })
       .on('error', err => {
-        console.log('Error: ' + err.message)
+        console.error('Error: ' + err.message) // eslint-disable-line
         reject()
       })
   })

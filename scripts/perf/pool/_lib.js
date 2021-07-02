@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 if (typeof process !== undefined && typeof module !== undefined) {
   let nlp
   if (process.env.TESTENV === 'prod') {

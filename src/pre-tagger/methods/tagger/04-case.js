@@ -1,5 +1,8 @@
+import setTag from './_setTag.js'
+
 const titleCase = /^[A-Z][a-z'\u00C0-\u00FF]/
 const hasNumber = /[0-9]/
+
 // if it's a unknown titlecase word, it's a propernoun
 const checkCase = function (document) {
   document.forEach(terms => {
@@ -8,7 +11,7 @@ const checkCase = function (document) {
       if (terms[i].tags.size === 0) {
         let str = terms[i].text //need case info
         if (titleCase.test(str) === true && hasNumber.test(str) === false && terms[i].tags.has('Date') === false) {
-          terms[i].tags.add('ProperNoun')
+          setTag(terms[i], 'ProperNoun', 'titlecase')
         }
       }
     }

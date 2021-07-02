@@ -1,6 +1,7 @@
 import { methods, model } from '../world.js'
 import addMethods from './methods.js'
 import addAliases from './aliases.js'
+
 class View {
   constructor(document, pointer, groups = {}) {
     this.document = document

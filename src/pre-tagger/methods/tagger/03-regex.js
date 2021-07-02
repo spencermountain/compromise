@@ -1,3 +1,5 @@
+import setTag from './_setTag.js'
+
 // normal regexes
 const startsWith = function (str, regs) {
   return regs.find(r => {
@@ -18,21 +20,13 @@ const endsWith = function (str = '', byEnd) {
   return undefined
 }
 
-const isArray = function (arr) {
-  return Object.prototype.toString.call(arr) === '[object Array]'
-}
-
 const checkRegex = function (terms, model) {
   terms.forEach(t => {
     if (t.tags.size === 0) {
       let str = t.normal || t.implicit
       let arr = startsWith(t.text, model.regex) || endsWith(str, model.endsWith)
       if (arr !== undefined) {
-        if (isArray(arr[1])) {
-          arr[1].forEach(tag => t.tags.add(tag))
-        } else {
-          t.tags.add(arr[1])
-        }
+        setTag(t, arr[1], 'regex')
       }
     }
   })

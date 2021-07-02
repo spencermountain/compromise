@@ -1,6 +1,6 @@
 export default [
   //web tags
-  [/^[\w\.]+@[\w\.]+\.[a-z]{2,3}$/, 'Email'],
+  [/^[\w.]+@[\w.]+\.[a-z]{2,3}$/, 'Email'],
   [/^#[a-z0-9_\u00C0-\u00FF]{2,}$/, 'HashTag'],
   [/^@1?[0-9](am|pm)$/i, 'Time'],
   [/^@1?[0-9]:[0-9]{2}(am|pm)?$/i, 'Time'],
@@ -15,7 +15,7 @@ export default [
   [/^[012]?[0-9](:[0-5][0-9])(:[0-5][0-9])? ?(am|pm)?$/i, 'Time'],
   [/^[PMCE]ST$/, 'Time'],
   [/^utc ?[+-]?[0-9]+?$/, 'Time'],
-  [/^[a-z0-9]*? o\'?clock$/, 'Time'],
+  [/^[a-z0-9]*? o'?clock$/, 'Time'],
   [/^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}/i, 'Date'],
   [/^[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,4}$/, 'Date'],
   [/^[0-9]{1,4}\/[0-9]{1,2}\/[0-9]{1,4}$/, 'Date'],
@@ -24,8 +24,8 @@ export default [
   [/^utc[+-][0-9][0-9]?$/i, 'Timezone'],
 
   //names
-  [/^ma?c\'.*/, 'LastName'],
-  [/^o\'[drlkn].*/, 'LastName'],
+  [/^ma?c'.*/, 'LastName'],
+  [/^o'[drlkn].*/, 'LastName'],
   [/^ma?cd[aeiou]/, 'LastName'],
 
   //slang things
@@ -41,16 +41,16 @@ export default [
   //money
   //like $5.30
   [
-    /^[-+]?[\$\xA2-\xA5\u058F\u060B\u09F2\u09F3\u09FB\u0AF1\u0BF9\u0E3F\u17DB\u20A0-\u20BD\uA838\uFDFC\uFE69\uFF04\uFFE0\uFFE1\uFFE5\uFFE6][-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?(k|m|b|bn)?\+?$/,
+    /^[-+]?[$\xA2-\xA5\u058F\u060B\u09F2\u09F3\u09FB\u0AF1\u0BF9\u0E3F\u17DB\u20A0-\u20BD\uA838\uFDFC\uFE69\uFF04\uFFE0\uFFE1\uFFE5\uFFE6][-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?(k|m|b|bn)?\+?$/,
     ['Money', 'Value'],
   ],
   //like 5.30$
   [
-    /^[-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?[\$\xA2-\xA5\u058F\u060B\u09F2\u09F3\u09FB\u0AF1\u0BF9\u0E3F\u17DB\u20A0-\u20BD\uA838\uFDFC\uFE69\uFF04\uFFE0\uFFE1\uFFE5\uFFE6]\+?$/,
+    /^[-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?[$\xA2-\xA5\u058F\u060B\u09F2\u09F3\u09FB\u0AF1\u0BF9\u0E3F\u17DB\u20A0-\u20BD\uA838\uFDFC\uFE69\uFF04\uFFE0\uFFE1\uFFE5\uFFE6]\+?$/,
     ['Money', 'Value'],
   ],
   //like $400usd
-  [/^[-+]?[\$£]?[0-9]([0-9,.])+?(usd|eur|jpy|gbp|cad|aud|chf|cny|hkd|nzd|kr|rub)$/i, ['Money', 'Value']],
+  [/^[-+]?[$£]?[0-9]([0-9,.])+?(usd|eur|jpy|gbp|cad|aud|chf|cny|hkd|nzd|kr|rub)$/i, ['Money', 'Value']],
 
   //numbers
   // 50 | -50 | 3.23  | 5,999.0  | 10+

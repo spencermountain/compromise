@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const txt = require('./_sotu-text')
 const path = '../../../src'
 

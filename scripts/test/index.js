@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const sh = require('shelljs')
 
 // if given, run just one test:

@@ -18,6 +18,13 @@ const nlp = function (document, lex) {
   return new View(document)
 }
 
+/** log the decision-making to console */
+nlp.verbose = function (set) {
+  let env = typeof process === undefined ? self.env : process.env //use window, in browser
+  env.DEBUG_TAGS = set === undefined ? true : Set // assume true
+  return this
+}
+
 /** parse text, without any further analysis */
 nlp.tokenize = function (document, lex) {
   // add user-given words to lexicon

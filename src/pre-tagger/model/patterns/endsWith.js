@@ -119,7 +119,7 @@ export default {
     [/.[aeiou]sks$/, Pres],
     [/.[aeiou]kes$/, Pres],
     [/[aeiou][^aeiou]is$/, Sing],
-    [/[a-z]\'s$/, Noun],
+    [/[a-z]'s$/, Noun],
     [/^yes+$/, Exp], //yessss
   ],
   v: [

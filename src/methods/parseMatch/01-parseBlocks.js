@@ -1,17 +1,17 @@
 // match  'foo /yes/' and not 'foo/no/bar'
-const bySlashes = /(?:^|\s)([\!\[\^]*(?:<[^<]*>)?\/.*?[^\\\/]\/[\?\]\+\*\$~]*)(?:\s|$)/
+const bySlashes = /(?:^|\s)([![^]*(?:<[^<]*>)?\/.*?[^\\/]\/[?\]+*$~]*)(?:\s|$)/
 // match '(yes) but not foo(no)bar'
-const byParentheses = /([\!\[\^]*(?:<[^<]*>)?\([^\)]+[^\\\)]\)[\?\]\+\*\$~]*)(?:\s|$)/
+const byParentheses = /([![^]*(?:<[^<]*>)?\([^)]+[^\\)]\)[?\]+*$~]*)(?:\s|$)/
 // okay
 const byWord = / /g
 // supported suffix-flags:
 // suffixes:  ? ] + * $ {2,6} ~
 // prefixes:  ! [ ^
 const isBlock = str => {
-  return /^[\!\[\^]*(<[^<]*>)?\(/.test(str) && /\)[\?\]\+\*\$~]*$/.test(str)
+  return /^[![^]*(<[^<]*>)?\(/.test(str) && /\)[?]\+\*\$~]*$/.test(str)
 }
 const isReg = str => {
-  return /^[\!\[\^]*(<[^<]*>)?\//.test(str) && /\/[\?\]\+\*\$~]*$/.test(str)
+  return /^[![^]*(<[^<]*>)?\//.test(str) && /\/[?]\+\*\$~]*$/.test(str)
 }
 const cleanUp = function (arr) {
   arr = arr.map(str => str.trim())

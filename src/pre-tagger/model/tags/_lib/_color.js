@@ -17,7 +17,6 @@ const addColors = function (tags) {
   Object.keys(tags).forEach(k => {
     // assigned from plugin, for example
     if (tags[k].color) {
-      tags[k].color = tags[k].color
       return
     }
     // defined above

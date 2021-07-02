@@ -1,3 +1,5 @@
+import setTag from './_setTag.js'
+
 //sweep-through all suffixes
 const suffixLoop = function (str = '', suffixes = []) {
   const len = str.length
@@ -20,13 +22,13 @@ const tagBySuffix = function (terms, model) {
     if (t.tags.size === 0) {
       let tag = suffixLoop(t.normal, model.suffixPatterns)
       if (tag !== null) {
-        t.tags.add(tag)
+        setTag(t, tag, 'suffix')
       }
       // try implicit form of word, too
       if (t.implicit) {
         tag = suffixLoop(t.implicit, model.suffixPatterns)
         if (tag !== null) {
-          t.tags.add(tag)
+          setTag(t, tag, 'implicit-suffix')
         }
       }
     }

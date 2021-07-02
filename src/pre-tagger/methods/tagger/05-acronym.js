@@ -1,3 +1,5 @@
+import setTag from './_setTag.js'
+
 const oneLetterAcronym = /^[A-Z]('s|,)?$/
 const isUpperCase = /^[A-Z-]+$/
 const periodAcronym = /([A-Z]\.)+[A-Z]?,?$/
@@ -39,8 +41,8 @@ const isNoPeriodAcronym = function (term, model) {
     return true
   }
   return false
-  // return term.isAcronym()
 }
+
 const isAcronym = function (terms, model) {
   terms.forEach(term => {
     //these are not acronyms
@@ -49,23 +51,22 @@ const isAcronym = function (terms, model) {
     }
     //non-period ones are harder
     if (isNoPeriodAcronym(term, model)) {
-      term.tags.add('Acronym')
-      term.tags.add('Noun')
+      setTag(term, ['Acronym', 'Noun'], 'no-period-acronym')
       return
     }
     // one-letter acronyms
     if (!oneLetterWord.hasOwnProperty(term.text) && oneLetterAcronym.test(term.text)) {
-      term.tags.add('Acronym')
-      term.tags.add('Noun')
+      setTag(term, ['Acronym', 'Noun'], 'one-letter-acronym')
       return
     }
     //if it's a very-short organization?
     if (term.tags.has('Organization') && term.text.length <= 3) {
-      term.tags.add('Acronym')
+      setTag(term, 'Acronym', 'org-acronym')
       return
     }
+    // upper-case org, like UNESCO
     if (term.tags.has('Organization') && isUpperCase.test(term.text) && term.text.length <= 6) {
-      term.tags.add('Acronym')
+      setTag(term, 'Acronym', 'titlecase-acronym')
     }
   })
 }

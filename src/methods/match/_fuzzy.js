@@ -42,7 +42,8 @@ const editDistance = function (strA, strB) {
       if ((t = matrix[i][j - 1] + 1) < min) min = t // Insertion.
       if ((t = matrix[i - 1][j - 1] + cost) < min) min = t // Substitution.
       // Update matrix.
-      let shouldUpdate = i > 1 && j > 1 && a_index === strB[j - 2] && strA[i - 2] === b_index && (t = matrix[i - 2][j - 2] + cost) < min
+      let shouldUpdate =
+        i > 1 && j > 1 && a_index === strB[j - 2] && strA[i - 2] === b_index && (t = matrix[i - 2][j - 2] + cost) < min
       if (shouldUpdate) {
         matrix[i][j] = t
       } else {

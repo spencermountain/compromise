@@ -1,15 +1,11 @@
+/* eslint-disable no-console */
 // https://stackoverflow.com/questions/9781218/how-to-change-node-jss-console-font-color
 const reset = '\x1b[0m'
-const padEnd = function (str, width) {
-  str = str.toString()
-  while (str.length < width) {
-    str += ' '
-  }
-  return str
-}
+
 function isClientSide() {
   return typeof window !== 'undefined' && window.document
 }
+
 // some nice colors for client-side debug
 const css = {
   green: '#7f9c6c',
@@ -32,7 +28,7 @@ const logClientSide = function (view) {
         text = '[' + t.implicit + ']'
       }
       let word = "'" + text + "'"
-      word = padEnd(word, 8)
+      word = word.padEnd(8)
       let found = tags.find(tag => tagset[tag] && tagset[tag].color)
       let color = 'steelblue'
       if (tagset[found]) {
@@ -98,7 +94,7 @@ const debug = function () {
         text = cli.yellow(text)
       }
       let word = "'" + text + "'"
-      word = padEnd(word, 18)
+      word = word.padEnd(18)
       let str = cli.blue('  ｜ ') + word + '  - ' + tagString(tags, model)
       console.log(str)
     })

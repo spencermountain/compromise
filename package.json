@@ -96,7 +96,9 @@
   "eslintIgnore": [
     "builds/*.js",
     "*.ts",
-    "plugins/**/types/*.ts"
+    "plugins/**",
+    "_old/**",
+    "_tests/**"
   ],
   "license": "MIT"
 }

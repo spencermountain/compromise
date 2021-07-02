@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const test = require('tape')
 console.log('\n 🎗️  - running smoke-test..\n')
 

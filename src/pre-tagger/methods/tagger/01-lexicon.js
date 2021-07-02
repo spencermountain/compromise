@@ -1,11 +1,4 @@
-const setTag = function (term, tag) {
-  term.tags = term.tags || new Set()
-  if (typeof tag === 'string') {
-    term.tags.add(tag)
-  } else {
-    tag.forEach(tg => term.tags.add(tg))
-  }
-}
+import setTag from './_setTag.js'
 
 // scan-ahead to match multiple-word terms - 'jack rabbit'
 const checkMulti = function (terms, i, lexicon) {
@@ -15,7 +8,7 @@ const checkMulti = function (terms, i, lexicon) {
     str += ' ' + terms[i + skip].normal
     if (lexicon.hasOwnProperty(str) === true) {
       let tag = lexicon[str]
-      terms.slice(i, i + skip + 1).forEach(term => setTag(term, tag))
+      terms.slice(i, i + skip + 1).forEach(term => setTag(term, tag, 'multi-lexicon'))
       return skip
     }
   }
@@ -41,14 +34,14 @@ const checkLexicon = function (terms, model) {
     if (t.implicit !== undefined) {
       if (lexicon[t.implicit] !== undefined && lexicon.hasOwnProperty(t.implicit)) {
         let tag = lexicon[t.implicit]
-        setTag(t, tag)
+        setTag(t, tag, 'implicit-lexicon')
         continue
       }
     }
     // normal lexicon lookup
     if (lexicon[t.normal] !== undefined && lexicon.hasOwnProperty(t.normal)) {
       let tag = lexicon[t.normal]
-      setTag(t, tag)
+      setTag(t, tag, 'lexicon')
       continue
     }
   }

@@ -1,7 +1,9 @@
-const bySlash = /[\/:]/g
+const bySlash = /[/:]/g
+
 const isArray = function (arr) {
   return Object.prototype.toString.call(arr) === '[object Array]'
 }
+
 const parsePointer = function (pointer) {
   if (isArray(pointer)) {
     return pointer
@@ -16,6 +18,7 @@ const parsePointer = function (pointer) {
   }
   return [n, start, end]
 }
+
 const createPointer = function (arr) {
   let str = `/${arr[0]}`
   if (arr[1] || arr[1] === 0) {
@@ -26,6 +29,7 @@ const createPointer = function (arr) {
   }
   return str
 }
+
 const getDoc = function (pointer, document) {
   let doc = []
   pointer
@@ -46,11 +50,5 @@ const getDoc = function (pointer, document) {
     })
   return doc
 }
-export { getDoc }
-export { parsePointer }
-export { createPointer }
-export default {
-  getDoc,
-  parsePointer,
-  createPointer,
-}
+
+export { getDoc, createPointer, parsePointer }

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const Pool = require('./pool/pool')
 const fetch = require('./_fetch')
 

@@ -1,12 +1,14 @@
 //all punctuation marks, from https://en.wikipedia.org/wiki/Punctuation
 //we have slightly different rules for start/end - like #hashtags.
 const startings =
-  /^[ \n\t\.\[\](){}⟨⟩:,،、‒–—―…!‹›«»‐\-?‘’;\/⁄·&*•^†‡°¡¿※№÷×ºª%‰+−=‱¶′″‴§~\|‖¦©℗®℠™¤₳฿\u0022\uFF02\u0027\u201C\u201F\u201B\u201E\u2E42\u201A\u2035\u2036\u2037\u301D\u0060\u301F]+/
-const endings = /[ \n\t\.'\[\](){}⟨⟩:,،、‒–—―…!‹›«»‐\-?‘’;\/⁄·&*@•^†‡°¡¿※#№÷×ºª‰+−=‱¶′″‴§~\|‖¦©℗®℠™¤₳฿\u0022\uFF02\u201D\u00B4\u301E]+$/
+  /^[ \n\t.[\](){}⟨⟩:,،、‒–—―…!‹›«»‐\-?‘’;/⁄·&*•^†‡°¡¿※№÷×ºª%‰+−=‱¶′″‴§~|‖¦©℗®℠™¤₳฿\u0022\uFF02\u0027\u201C\u201F\u201B\u201E\u2E42\u201A\u2035\u2036\u2037\u301D\u0060\u301F]+/
+const endings =
+  /[ \n\t.'[\](){}⟨⟩:,،、‒–—―…!‹›«»‐\-?‘’;/⁄·&*@•^†‡°¡¿※#№÷×ºª‰+−=‱¶′″‴§~|‖¦©℗®℠™¤₳฿\u0022\uFF02\u201D\u00B4\u301E]+$/
 const hasApostrophe = /['’]/
 const hasAcronym = /^[a-z]\.([a-z]\.)+/i
-const minusNumber = /^[-+\.][0-9]/
+const minusNumber = /^[-+.][0-9]/
 const shortYear = /^'[0-9]{2}/
+
 const normalizePunctuation = function (str) {
   let original = str
   let pre = ''
@@ -49,7 +51,6 @@ const normalizePunctuation = function (str) {
     })
     str = original
     pre = ''
-    post = post
   }
   return { str, pre, post }
 }

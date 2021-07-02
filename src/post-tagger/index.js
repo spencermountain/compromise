@@ -7,7 +7,7 @@ const postTagger = function (document, world) {
   let byGroup = compile(model.matches, methods)
   let found = bulkMatch(document, byGroup, methods)
   // console.dir(found, { depth: 5 })
-  let res = bulkTagger(found, document, world)
+  bulkTagger(found, document, world)
   // console.dir(res, { depth: 5 })
   return document
 }

@@ -1,7 +1,6 @@
 import { terser } from 'rollup-plugin-terser'
 import babel from 'rollup-plugin-babel'
 import sizeCheck from 'rollup-plugin-filesize-check'
-console.log('\n 📦  - running rollup..\n')
 
 // const banner = '/* compromise ' + version + ' MIT */'
 // const noop = __dirname + '/scripts/build/no-ops/_function'

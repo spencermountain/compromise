@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const exec = require('shelljs').exec
 const codecov = '15039ad1-b495-48cd-b4a0-bcf124c9b318' //i don't really care if you steal this.
 

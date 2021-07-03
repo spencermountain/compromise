@@ -9,7 +9,7 @@ nlp.verbose(true)
 // nlp.verbose(true)
 let doc = nlp(`Morocco Standard Time`)
 // doc.match('(they && foo)').debug()
-// doc.debug()
+doc.debug()
 
 // console.log(doc.json())
 // console.log(model.lexicon['morocco standard time'])

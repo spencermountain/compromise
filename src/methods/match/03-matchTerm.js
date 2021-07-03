@@ -35,7 +35,7 @@ const doesMatch = function (t, reg, index, length) {
     }
     // support fuzzy match param
     if (reg.fuzzy !== undefined) {
-      let score = fuzzy(reg.word, t.reduced)
+      let score = fuzzy(reg.word, t.normal)
       if (score > reg.fuzzy) {
         return true
       }
@@ -48,7 +48,7 @@ const doesMatch = function (t, reg, index, length) {
       }
     }
     //match either .clean or .text
-    return reg.word === t.clean || reg.word === t.text || reg.word === t.reduced
+    return reg.word === t.clean || reg.word === t.text || reg.word === t.normal
   }
   //support #Tag
   if (reg.tag !== undefined) {
@@ -70,7 +70,7 @@ const doesMatch = function (t, reg, index, length) {
     if (t.implicit && reg.fastOr.has(t.implicit) === true) {
       return true
     }
-    return reg.fastOr.has(t.reduced) || reg.fastOr.has(t.text)
+    return reg.fastOr.has(t.normal) || reg.fastOr.has(t.text)
   }
   //support slower (one|two)
   if (reg.choices !== undefined) {

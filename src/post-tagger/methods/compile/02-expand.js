@@ -30,12 +30,12 @@ const expand = function (matches) {
         let newObj = Object.assign({}, obj) //clone
         newObj.regs = obj.regs.slice(0) //clone
         newObj.regs[foundOr] = mo
-        newObj._generated = true
+        newObj._expanded = true
         all.push(newObj)
       })
       return
     }
-    // expand '(#Foo && two)' matches
+    // expand '(#Foo|two three)' matches
     foundOr = obj.regs.findIndex(reg => reg.operator === 'or' && reg.choices && !reg.optional && !reg.negative)
     if (foundOr !== -1) {
       let more = growSlowOr(obj, foundOr)
@@ -43,7 +43,7 @@ const expand = function (matches) {
         let newObj = Object.assign({}, obj) //clone
         newObj.regs = obj.regs.slice(0) //clone
         newObj.regs[foundOr] = mo
-        newObj._generated = true
+        newObj._expanded = true
         all.push(newObj)
       })
       return

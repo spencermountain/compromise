@@ -1,8 +1,8 @@
 import View from './View/index.js'
-import tokenizer from './tokenize/index.js'
-import preTagger from './pre-tagger/index.js'
-import contractions from './contractions/index.js'
-import postTagger from './post-tagger/index.js'
+import tokenizer from './01-tokenize/index.js'
+import preTagger from './02-pre-tagger/index.js'
+import contractions from './03-contractions/index.js'
+import postTagger from './04-post-tagger/index.js'
 import world from './world.js'
 import version from './_version.js'
 

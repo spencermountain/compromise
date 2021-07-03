@@ -7,12 +7,13 @@ process.env.DEBUG_TAGS = true
 nlp.verbose(true)
 
 // nlp.verbose(true)
-let doc = nlp(`Morocco Standard Time`)
+let doc = nlp(`i met April O'neil`)
 // doc.match('(they && foo)').debug()
 doc.debug()
 
 // console.log(doc.json())
-// console.log(model.lexicon['morocco standard time'])
+// console.log(model.lexicon['healing over'])
+// console.log(model._multiCache.has('healing'))
 
 /*
 ['swore', '#PastTense'],

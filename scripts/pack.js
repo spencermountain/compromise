@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
 import fs from 'fs'
 import { pack } from 'efrt'
-import lexicon from '../src/pre-tagger/model/lexicon/data/index.js'
+import lexicon from '../src/02-pre-tagger/model/lexicon/data/index.js'
 console.log('\n 🕑  - packing lexicon..')
 // const outFile = './src/pre-tagger/model/lexicon/_data.js'
-const outFile = './src/pre-tagger/model/lexicon/_data.js'
+const outFile = './src/02-pre-tagger/model/lexicon/_data.js'
 
 //turn them into a series of flat-arrays
 let words = Object.keys(lexicon)

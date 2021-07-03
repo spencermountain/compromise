@@ -95,7 +95,7 @@ export const doOrBlock = function (state, skipN = 0) {
   }
   // we found a match -  is it greedy though?
   if (wasFound && block.greedy === true) {
-    return exports.doOrBlock(state, skipN) // try it again!
+    return doOrBlock(state, skipN) // try it again!
   }
   return skipN
 }

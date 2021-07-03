@@ -1,12 +1,10 @@
 import insertContraction from './_splice.js'
 import french from './french.js'
+import numberRange from './number-range.js'
+
 const byApostrophe = /'/
-// { after: 's', out: apostropheS }, //spencer's
-// { after: 'd', out: apostropheD }, //i'd
-// { after: 't', out: apostropheT }, //isn't
-// // french contractions
-// { before: 'l', out: preL }, // l'amour
-// { before: 'd', out: preD }, // d'amerique
+const numDash = /^[0-9].*?[-–—].*?[0-9]/i
+
 const reTag = function (terms, model, methods) {
   let m = methods.preTagger || {}
   // lookup known words
@@ -77,10 +75,20 @@ const contractions = (document = [], model, methods) => {
         if (before === 'd') {
           words = french.preD(terms, i)
         }
+        // actually insert the new terms
         if (words) {
           insertContraction(document, [n, i], words, model)
           reTag(terms, model, methods)
           return true
+        }
+        // '44-2'
+        if (numDash.test(terms[i].normal)) {
+          words = numberRange(terms, i)
+          if (words) {
+            insertContraction(document, [n, i], words, model)
+            terms.forEach(t => t.tags.add('NumberRange'))
+            return true
+          }
         }
         return false
       })

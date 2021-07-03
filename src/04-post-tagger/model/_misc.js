@@ -1,7 +1,7 @@
 // order matters
 let matches = [
   // u r cool
-  { match: 'u r', tag: 'Pronoun Copula', reason: 'u r' },
+  { match: 'u r', tag: '#Pronoun #Copula', reason: 'u r' },
   { match: '#Noun [(who|whom)]', group: 0, tag: 'Determiner', reason: 'captain-who' },
   // ==== Propositions ====
   //all students

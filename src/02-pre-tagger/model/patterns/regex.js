@@ -76,7 +76,7 @@ export default [
   [/^(m|k|cm|km|m)\/(s|h|hr)$/, 'Unit', '5 k/m'],
 
   // period-ones acronyms - f.b.i.
-  [/^([A-Z]\.){2}[A-Z]?/i, 'Acronym', 'F.B.I'], //ascii-only
+  [/^([A-Z]\.){2}[A-Z]?/i, ['Acronym', 'Noun'], 'F.B.I'], //ascii-only
 
   // ending-apostrophes
   [/n['‘’‛‵′`´]$/, 'Gerund', "chillin'"],

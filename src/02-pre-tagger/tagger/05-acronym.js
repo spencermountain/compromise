@@ -5,6 +5,7 @@ const isUpperCase = /^[A-Z-]+$/
 const periodAcronym = /([A-Z]\.)+[A-Z]?,?$/
 const noPeriodAcronym = /[A-Z]{2,}('s|,)?$/
 const lowerCaseAcronym = /([a-z]\.)+[a-z]\.?$/
+
 const oneLetterWord = {
   I: true,
   A: true,

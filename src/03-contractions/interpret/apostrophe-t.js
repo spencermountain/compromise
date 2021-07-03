@@ -1,11 +1,17 @@
 const lastNoun = function (terms, i) {
   for (let n = i - 1; n >= 0; n -= 1) {
-    if (terms[n].tags.has('Noun') || terms[n].tags.has('Pronoun') || terms[n].tags.has('Plural') || terms[n].tags.has('Singular')) {
+    if (
+      terms[n].tags.has('Noun') ||
+      terms[n].tags.has('Pronoun') ||
+      terms[n].tags.has('Plural') ||
+      terms[n].tags.has('Singular')
+    ) {
       return terms[n]
     }
   }
   return null
 }
+
 //ain't -> are/is not
 const apostropheT = function (terms, i) {
   if (terms[i].normal === "ain't" || terms[i].normal === 'aint') {
@@ -26,4 +32,5 @@ const apostropheT = function (terms, i) {
   let before = terms[i].normal.replace(/n't/, '')
   return [before, 'not']
 }
+
 export default apostropheT

@@ -1,4 +1,5 @@
 const hasContraction = /'/
+
 // l'amour
 const preL = (terms, i) => {
   // le/la
@@ -9,6 +10,7 @@ const preL = (terms, i) => {
   }
   return ['le', after]
 }
+
 // d'amerique
 const preD = (terms, i) => {
   let after = terms[i].normal.split(hasContraction)[1]
@@ -20,8 +22,7 @@ const preD = (terms, i) => {
   }
   return ['de', after]
 }
-export { preL }
-export { preD }
+
 export default {
   preL,
   preD,

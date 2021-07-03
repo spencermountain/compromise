@@ -7,9 +7,11 @@ process.env.DEBUG_TAGS = true
 nlp.verbose(true)
 
 // nlp.verbose(true)
-let doc = nlp(`N.V.,`)
-// doc.match('(they && foo)').debug()
+let doc = nlp(`col. Patrick said march and feb. etc.`)
 doc.debug()
+doc.match('#Abbreviation #Person #PastTense #Month #Conjunction #Abbreviation #Abbreviation').debug()
+
+//
 
 // console.log(doc.json())
 // console.log(model.lexicon['healing over'])

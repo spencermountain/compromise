@@ -295,7 +295,7 @@ let arr = [
   //abbreviations
   [
     'col. Patrick said march and feb. etc.',
-    ['Abbreviation #Person #PastTense #Month #Conjunction #Abbreviation #Abbreviation'],
+    ['#Abbreviation #Person #PastTense #Month #Conjunction #Abbreviation #Abbreviation'],
   ],
   [`i met April O'neil`, '#Pronoun #PastTense #Person #Person'],
 
@@ -305,7 +305,7 @@ let arr = [
   ['canadians are nice', '#ProperNoun #Verb #Adjective'],
   ['thom is smart', '#ProperNoun #Verb #Adjective'],
 
-  // [`ANA, ENA, CCP etc.`, '#Acronym #Acronym #Acronym #Abbreviation'],
+  [`ANA, ENA, CCP etc.`, '#Acronym #Acronym #Acronym #Abbreviation'],
   [`as disgusting as`, '#Preposition #Adjective #Preposition'],
   [`more disgusting than`, '#Adverb #Adjective #Preposition'],
   [`was so nausiating`, '#Copula #Adverb #Adjective'],

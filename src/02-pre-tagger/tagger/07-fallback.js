@@ -13,7 +13,7 @@ const lookLeft = function (terms, i, leftTags, leftWords) {
     // look at prev word <-
     seen = leftWords.find(a => left.normal === a[0])
     if (seen) {
-      setTag(terms[i], seen[1], 'prev-word')
+      setTag(terms[i], seen[1], `prev-word - '${left.normal}'`)
     }
   }
 }
@@ -46,11 +46,6 @@ const nounFallback = function (terms, model) {
       //  ¯\_(ツ)_/¯
       if (term.tags.size === 0) {
         setTag(term, 'Noun', 'noun-fallback')
-        if (term.normal.endsWith('s')) {
-          setTag(term, 'Plural', 'plural-guess')
-        } else {
-          setTag(term, 'Plural', 'singular-guess')
-        }
       }
     }
   })

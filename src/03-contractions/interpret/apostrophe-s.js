@@ -8,6 +8,7 @@ const hereThere = {
   there: true,
   everywhere: true,
 }
+
 const isPossessive = (terms, i) => {
   let term = terms[i]
   // if we already know it
@@ -57,11 +58,13 @@ const isPossessive = (terms, i) => {
   }
   return false
 }
+
 const isHas = (terms, i) => {
   //look for a past-tense verb
   let after = terms.slice(i + 1, i + 3)
   return after.some(t => t.tags.has('PastTense'))
 }
+
 // 's -> [possessive, 'has', or 'is']
 const apostropheS = function (terms, i) {
   // !possessive, is/has

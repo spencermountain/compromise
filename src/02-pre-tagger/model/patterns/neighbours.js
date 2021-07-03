@@ -33,7 +33,7 @@ export default {
     ['never', 'Verb'],
     ['before', 'Noun'],
     ['a', 'Singular'],
-    ['the', 'Singular'],
+    ['the', 'Noun'],
   ],
 
   // looking at the next word's tags:

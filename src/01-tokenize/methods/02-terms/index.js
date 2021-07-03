@@ -4,14 +4,17 @@ import combineSlashes from './02-slashes.js'
 const wordlike = /\S/
 const isBoundary = /^[!?.]+$/
 const naiiveSplit = /(\S+)/
+
 let notWord = ['.', '?', '!', ':', ';', '-', '–', '—', '--', '...', '(', ')', '[', ']', '"', "'", '`']
 notWord = notWord.reduce((h, c) => {
   h[c] = true
   return h
 }, {})
+
 const isArray = function (arr) {
   return Object.prototype.toString.call(arr) === '[object Array]'
 }
+
 //turn a string into an array of strings (naiive for now, lumped later)
 const splitWords = function (str) {
   let result = []

@@ -41,7 +41,7 @@ export default [
   //is no walk
   { match: 'is no [#Verb]', group: 0, tag: 'Noun', reason: 'is-no-verb' },
   //different views than
-  { match: '[#Verb] than', group: 0, tag: 'Noun', reason: 'correction' },
+  // { match: '[#Verb] than', group: 0, tag: 'Noun', reason: 'verb-than' },
   //do so
   { match: 'do [so]', group: 0, tag: 'Noun', reason: 'so-noun' },
   // what the hell

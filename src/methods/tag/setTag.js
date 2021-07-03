@@ -1,37 +1,59 @@
+const isMulti = / /
+
+const tagTerm = function (term, tag, tagSet, isSafe) {
+  // does it already have this tag?
+  if (term.tags.has(tag) === true) {
+    return null
+  }
+  // for known tags, do logical dependencies first
+  let known = tagSet[tag]
+  if (known) {
+    // first, we remove any conflicting tags
+    if (known.not && known.not.length > 0) {
+      for (let o = 0; o < known.not.length; o += 1) {
+        // if we're in tagSafe, skip this term.
+        if (isSafe === true && term.tags.has(known.not[o])) {
+          return null
+        }
+        term.tags.delete(known.not[o])
+      }
+    }
+    // add parent tags
+    if (known.parents && known.parents.length > 0) {
+      for (let o = 0; o < known.parents.length; o += 1) {
+        term.tags.add(known.parents[o])
+      }
+    }
+  }
+  // finally, add our tag
+  term.tags.add(tag)
+  return true
+}
+
+// support '#Noun . #Adjective' syntax
+const multiTag = function (terms, tagString, tagSet, isSafe) {
+  let tags = tagString.split(isMulti)
+  terms.forEach((term, i) => {
+    let tag = tags[i]
+    if (tag && tag !== '.') {
+      tag = tag.replace(/^#/, '')
+      tagTerm(term, tag, tagSet, isSafe)
+    }
+  })
+}
+
 // add a tag to all these terms
 const setTag = function (terms, tag, tagSet, isSafe) {
-  tag = tag.trim().replace(/^#/, '')
-  let set = false
-  terms: for (let i = 0; i < terms.length; i += 1) {
-    let term = terms[i]
-    // does it already have this tag?
-    if (term.tags.has(tag) === true) {
-      continue
-    }
-    // for known tags, do logical dependencies first
-    let known = tagSet[tag]
-    if (known) {
-      // first, we remove any conflicting tags
-      if (known.not && known.not.length > 0) {
-        for (let o = 0; o < known.not.length; o += 1) {
-          // if we're in tagSafe, skip this term.
-          if (isSafe === true && term.tags.has(known.not[o])) {
-            continue terms
-          }
-          term.tags.delete(known.not[o])
-        }
-      }
-      // add parent tags
-      if (known.parents && known.parents.length > 0) {
-        for (let o = 0; o < known.parents.length; o += 1) {
-          term.tags.add(known.parents[o])
-        }
-      }
-    }
-    // finally, add our tag
-    term.tags.add(tag)
-    set = true
+  tag = tag.trim()
+  // support '#Noun . #Adjective' syntax
+  if (isMulti.test(tag)) {
+    multiTag(terms, tag, tagSet, isSafe)
+    return
   }
-  return set
+  tag = tag.replace(/^#/, '')
+  // let set = false
+  for (let i = 0; i < terms.length; i += 1) {
+    tagTerm(terms[i], tag, tagSet, isSafe)
+  }
 }
 export default setTag

@@ -9,13 +9,12 @@ const checkCase = function (term, i) {
   if (i === 0) {
     return null
   }
-  if (term.tags.size === 0) {
-    let str = term.text //need case info
-    if (titleCase.test(str) === true && hasNumber.test(str) === false && term.tags.has('Date') === false) {
-      setTag(term, 'ProperNoun', 'titlecase')
-      return true
-    }
+  let str = term.text //need case info
+  if (titleCase.test(str) === true && hasNumber.test(str) === false && term.tags.has('Date') === false) {
+    setTag(term, 'ProperNoun', 'titlecase')
+    return true
   }
+
   return null
 }
 export default checkCase

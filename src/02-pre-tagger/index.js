@@ -16,7 +16,7 @@ const preTagger = function (document, world) {
       // look at word ending
       found = found || m.checkSuffix(term, model)
       //  fallback methods
-      found = found || m.checkCase(term, i)
+      m.checkCase(term, i)
       // check for stem in lexicon
       found = found || m.checkPrefix(term, model)
       // try look-like rules

@@ -65,7 +65,7 @@ const doesMatch = function (term, reg, index, length) {
   }
   //support /reg/
   if (reg.regex !== undefined) {
-    return reg.regex.test(term.clean)
+    return reg.regex.test(term.normal)
   }
   // support optimized (one|two)
   if (reg.fastOr !== undefined) {

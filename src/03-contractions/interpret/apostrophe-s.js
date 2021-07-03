@@ -19,7 +19,7 @@ const isPossessive = (terms, i) => {
   if (term.tags.has('Pronoun') || term.tags.has('QuestionWord')) {
     return false
   }
-  if (banList.hasOwnProperty(term.reduced)) {
+  if (banList.hasOwnProperty(term.normal)) {
     return false
   }
   //if end of sentence, it is possessive - "was spencer's"
@@ -42,7 +42,7 @@ const isPossessive = (terms, i) => {
   //spencer's house
   if (nextTerm.tags.has('Noun')) {
     // 'spencer's here'
-    if (hereThere.hasOwnProperty(nextTerm.reduced) === true) {
+    if (hereThere.hasOwnProperty(nextTerm.normal) === true) {
       return false
     }
     return true

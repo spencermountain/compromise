@@ -48,6 +48,10 @@ class View {
   get found() {
     return this.docs.length > 0
   }
+  // how many matches we have
+  get length() {
+    return this.docs.length
+  }
   // create a new View, from this one
   update(pointer) {
     let m = new View(this.document, pointer)

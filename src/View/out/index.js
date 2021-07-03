@@ -1,5 +1,6 @@
 import debug from './debug.js'
 import out from './out.js'
+import textOut from './text.js'
 
 const toText = function (terms) {
   return terms.reduce((txt, t) => {
@@ -22,12 +23,7 @@ const methods = {
     })
   },
   /** */
-  text: function () {
-    return this.docs.reduce((txt, terms) => {
-      terms.forEach(t => (txt += t.pre + t.text + t.post))
-      return txt
-    }, '')
-  },
+  text: textOut,
   /** */
   debug: debug,
   /** */

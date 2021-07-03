@@ -13,6 +13,7 @@ const topk = function (view) {
   arr.sort((a, b) => (a.count > b.count ? -1 : 1))
   return arr
 }
+
 /** some named output formats */
 const out = function (method) {
   if (method === 'text') {

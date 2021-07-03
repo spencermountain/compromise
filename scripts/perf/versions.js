@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-const fetch = require('./_fetch')
+import fetch from './_fetch'
 
 let versions = [
   // '13.0.0',// feb 2020

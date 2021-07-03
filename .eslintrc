@@ -9,7 +9,7 @@
   "parserOptions": {
     "ecmaVersion": 2020,
     "sourceType": "module"
-  },
+  }, 
   "rules": {
     "comma-dangle": [1, "only-multiline"],
     "quotes": [0, "single", "avoid-escape"],

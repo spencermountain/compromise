@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
-const Pool = require('./pool/pool')
-const fetch = require('./_fetch')
+import Pool from './pool/pool.js'
+import fetch from './_fetch.js'
 
 // const BASELINE = 92 //node 12, 2017 macbook
 const BASELINE = 67 //node 12, 2020 mac mini

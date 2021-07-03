@@ -61,4 +61,7 @@ export default [
   { match: `#PhrasalVerb #PhrasalVerb #Preposition [#PresentTense]`, group: 0, tag: 'Noun', reason: 'given-up-on-x' },
   //there are reasons
   { match: 'there (are|were) #Adjective? [#PresentTense]', group: 0, tag: 'Plural', reason: 'there-are' },
+
+  // 30 trains
+  { match: '(#Value && !1 && !one) [#PresentTense]', group: 0, ifNo: ['#Copula'], tag: 'Plural', reason: '2-trains' },
 ]

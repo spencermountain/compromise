@@ -1,6 +1,6 @@
-const { parentPort } = require('worker_threads')
+import { parentPort } from 'worker_threads'
 // const nlp = require('../../src')
-let nlp = require('./_lib')
+import nlp from './_lib.js'
 
 let matches = [
   'out of range',

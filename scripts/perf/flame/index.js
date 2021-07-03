@@ -1,10 +1,9 @@
 /* eslint-disable no-console */
-const txt = require('./_sotu-text')
-const path = '../../../src'
+import txt from './_sotu-text.js'
 
 console.log('\n-- testing:  --')
 console.time('load')
-const nlp = require(path)
+import nlp from '../../../src/index.js'
 console.timeEnd('load')
 
 console.time('parse')

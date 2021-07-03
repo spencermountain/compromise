@@ -86,7 +86,6 @@ export default [
     some: Adj,
     sson: Last,
     tage: Inf,
-    teen: 'Value',
     tion: Sing,
     tive: Adj,
     tors: Noun,

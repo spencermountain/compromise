@@ -60,6 +60,8 @@ nlp.model = function () {
   return world.model
 }
 
+nlp.version = version
+
 // apply our only default plugin
 plugin(tokenizer)
 plugin(preTagger)

@@ -2,16 +2,14 @@
 // const nlp = require('./src/index')
 import nlp, { model } from './src/index.js'
 // import nlp from './src/tokenize.js'
-process.env.DEBUG_TAGS = true
 
 nlp.verbose(true)
-
-// nlp.verbose(true)
-let doc = nlp(`col. Patrick said march and feb. etc.`)
+// let doc = nlp(`Howard Stern`)
+// let doc = nlp(`Cameron Diaz`)
+let doc = nlp(`the orange`)
 doc.debug()
-doc.match('#Abbreviation #Person #PastTense #Month #Conjunction #Abbreviation #Abbreviation').debug()
 
-//
+// console.log(nlp.parseMatch('(Value && one)'))
 
 // console.log(doc.json())
 // console.log(model.lexicon['healing over'])

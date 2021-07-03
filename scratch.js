@@ -7,12 +7,13 @@ process.env.DEBUG_TAGS = true
 nlp.verbose(true)
 
 // nlp.verbose(true)
-let doc = nlp(`i met April O'neil`)
+let doc = nlp(`N.V.,`)
 // doc.match('(they && foo)').debug()
 doc.debug()
 
 // console.log(doc.json())
 // console.log(model.lexicon['healing over'])
+// console.log(model.tags.Person)
 // console.log(model._multiCache.has('healing'))
 
 /*

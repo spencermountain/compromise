@@ -27,12 +27,12 @@ const inferTags = function (tags) {
   tags = validate(tags)
   // build its 'down tags'
   tags = inferParents(tags)
-  // infer the conflicts
-  tags = inferNotTags(tags)
   // debug tag color
   tags = inferColor(tags)
   // find incoming links
   tags = lineage(tags)
+  // infer the conflicts
+  tags = inferNotTags(tags)
   return tags
 }
 export default inferTags

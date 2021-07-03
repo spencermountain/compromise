@@ -1,29 +1,45 @@
-const unique = function (arr) {
-  return arr.filter((v, i, a) => a.indexOf(v) === i)
+// assume conflicts from parents
+const getAllConflicts = (tag, tags) => {
+  let nos = typeof tags[tag].not === 'string' ? [tags[tag].not] : tags[tag].not || []
+  if (tags[tag].parents && tags[tag].parents.length > 0) {
+    tags[tag].parents.forEach(parent => {
+      let more = getAllConflicts(parent, tags)
+      nos = nos.concat(more) //recursion
+    })
+  }
+  return nos
 }
+
 // crawl the tag-graph and infer any conflicts
 // faster than doing this at tag-time
 const inferNotTags = function (tags) {
   let keys = Object.keys(tags)
   keys.forEach(k => {
     let tag = tags[k]
-    tag.not = tag.not || []
-    tag.parents.forEach(down => {
-      if (tags[down] && tags[down].not) {
-        // borrow its conflicts
-        let not = typeof tags[down].not === 'string' ? [tags[down].parents] : tags[down].not || []
-        tag.not = tag.not.concat(not)
+    let nots = new Set(tag.not)
+    // climb up the tag-tree, infer from parents
+    tag.parents.forEach(parentTag => {
+      if (tags[parentTag] && tags[parentTag].not) {
+        // assume conflicts from parents
+        getAllConflicts(parentTag, tags).forEach(nope => nots.add(nope))
       }
     })
     // any tag that lists us as a conflict, we conflict it back.
     for (let i = 0; i < keys.length; i++) {
       const key = keys[i]
       if (tags[key].not.indexOf(k) !== -1) {
-        tag.not.push(key)
+        nots.add(key)
       }
     }
+    // add the children, of all conflicts
+    // (if it's not a #Date, it's also not a #Month)
+    Array.from(nots).forEach(no => {
+      if (tags[no] && tags[no].children) {
+        tags[no].children.forEach(kid => nots.add(kid))
+      }
+    })
     // clean it up
-    tag.not = unique(tag.not)
+    tag.not = Array.from(nots)
   })
   return tags
 }

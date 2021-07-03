@@ -6,7 +6,7 @@ import nlp, { model } from './src/index.js'
 nlp.verbose(true)
 // let doc = nlp(`Howard Stern`)
 // let doc = nlp(`Cameron Diaz`)
-let doc = nlp(`the orange`)
+let doc = nlp(`let her win`)
 doc.debug()
 
 // console.log(nlp.parseMatch('(Value && one)'))

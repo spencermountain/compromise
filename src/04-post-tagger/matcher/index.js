@@ -15,7 +15,11 @@ const matcher = function (document, byGroup, methods) {
       if (res.ptrs.length > 0) {
         res.ptrs.forEach(ptr => {
           ptr[0] = n // fix the sentence pointer
-          results.push({ pointer: ptr, tag: m.tag, reason: m.reason })
+          let todo = { pointer: ptr, tag: m.tag, reason: m.reason }
+          if (m.unTag !== undefined) {
+            todo.unTag = m.unTag
+          }
+          results.push(todo)
         })
       }
     })

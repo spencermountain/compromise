@@ -29,7 +29,7 @@ export default [
 
   { match: '(#Noun && @hasComma) #Noun (and|or) [#PresentTense]', group: 0, tag: 'Noun', reason: 'noun-list' },
   //her fines
-  { match: '(his|her|its) [#PresentTense]', group: 0, tag: 'Noun', reason: 'its-polling' },
+  { match: '#Possessive [#PresentTense]', group: 0, tag: 'Noun', reason: 'its-polling' },
   // any questions for
   { match: '(many|any|some|several) [#PresentTense] for', group: 0, tag: 'Noun', reason: 'any-verbs-for' },
   // to facilitate gas exchange with

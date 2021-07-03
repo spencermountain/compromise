@@ -4,12 +4,13 @@ export default [
   { match: `#Cardinal [second]`, tag: 'Unit', reason: 'one-second' },
   //'a/an' can mean 1 - "a hour"
   {
-    match: '!once [(a|an)] (#Duration|hundred|thousand|million|billion|trillion)',
+    match: '!once? [(a|an)] (#Duration|hundred|thousand|million|billion|trillion)',
     group: 0,
     tag: 'Value',
     reason: 'a-is-one',
   },
-  { match: 'a #Value', tag: 'Value', reason: 'a-value' },
+  // a tenth
+  { match: '[a] #Ordinal', tag: 'Value', reason: 'a-ordinal' },
 
   // ==== PhoneNumber ====
   //1 800 ...

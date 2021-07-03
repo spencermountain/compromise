@@ -47,8 +47,8 @@ const miscCorrection = function (doc) {
     .tag('Adverb', 'adverb-like')
 
   //the orange.
-  m = hasTag(doc, 'Adjective')
-  m.match('#Determiner #Adjective$').notIf('(#Comparative|#Superlative)').terms(1).tag('Noun', 'the-adj-1')
+  // m = hasTag(doc, 'Adjective')
+  // m.match('#Determiner #Adjective$').notIf('(#Comparative|#Superlative)').terms(1).tag('Noun', 'the-adj-1')
 
   // Firstname x (dangerous)
   m = hasTag(doc, 'FirstName')
@@ -60,33 +60,33 @@ const miscCorrection = function (doc) {
     .tag('#LastName', 'firstname-noun')
 
   //three trains / one train
-  m = hasTag(doc, 'Value')
-  m = m.match('#Value #PresentTense').ifNo('#Copula')
-  if (m.found) {
-    if (m.has('(one|1)') === true) {
-      m.terms(1).tag('Singular', 'one-presentTense')
-    } else {
-      m.terms(1).tag('Plural', 'value-presentTense')
-    }
-  }
+  // m = hasTag(doc, 'Value')
+  // m = m.match('#Value #PresentTense').ifNo('#Copula')
+  // if (m.found) {
+  //   if (m.has('(one|1)') === true) {
+  //     m.terms(1).tag('Singular', 'one-presentTense')
+  //   } else {
+  //     m.terms(1).tag('Plural', 'value-presentTense')
+  //   }
+  // }
 
   // well i've been...
-  doc.match('^(well|so|okay)').tag('Expression', 'well-')
+  // doc.match('^(well|so|okay)').tag('Expression', 'well-')
   // 10th of a second
-  doc.match('#Value [of a second]', 0).unTag('Value', 'of-a-second')
+  // doc.match('#Value [of a second]', 0).unTag('Value', 'of-a-second')
   // 30 seconds
-  doc.match('#Value [seconds]', 0).unTag('Value', '30-seconds').tag(['Unit', 'Plural'])
+  // doc.match('#Value [seconds]', 0).unTag('Value', '30-seconds').tag(['Unit', 'Plural'])
 
   //been walking
-  m = hasTag(doc, 'Gerund')
-  m.match(`(be|been) (#Adverb|not)+? #Gerund`).not('#Verb$').tag('Auxiliary', 'be-walking')
+  // m = hasTag(doc, 'Gerund')
+  // m.match(`(be|been) (#Adverb|not)+? #Gerund`).not('#Verb$').tag('Auxiliary', 'be-walking')
 
   // directive verb - 'use reverse'
-  doc
-    .match('(try|use|attempt|build|make) #Verb')
-    .ifNo('(@hasComma|#Negative|#PhrasalVerb|#Copula|will|be)')
-    .lastTerm()
-    .tag('#Noun', 'do-verb')
+  // doc
+  //   .match('(try|use|attempt|build|make) #Verb')
+  //   .ifNo('(@hasComma|#Negative|#PhrasalVerb|#Copula|will|be)')
+  //   .lastTerm()
+  //   .tag('#Noun', 'do-verb')
 
   //possessives
   //'her match' vs 'let her match'

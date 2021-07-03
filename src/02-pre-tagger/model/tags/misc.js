@@ -36,6 +36,10 @@ export default {
     parents: ['Date'],
     not: ['AtMention'],
   },
+  // 'months'
+  Duration: {
+    parents: ['Date', 'Noun'],
+  },
   Determiner: {
     not: anything,
   },

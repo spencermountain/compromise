@@ -131,4 +131,7 @@ export default [
   { match: '[shit] (#Determiner|#Possessive|them)', group: 0, tag: 'Verb', reason: 'swear1-verb' },
   { match: '[damn] (#Determiner|#Possessive|them)', group: 0, tag: 'Verb', reason: 'swear2-verb' },
   { match: '[fuck] (#Determiner|#Possessive|them)', group: 0, tag: 'Verb', reason: 'swear3-verb' },
+
+  // been walking
+  { match: '[(be|been) (#Adverb|not)+?] #Gerund', group: 0, tag: 'Auxiliary', reason: 'been-walking' },
 ]

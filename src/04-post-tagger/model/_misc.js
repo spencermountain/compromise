@@ -38,5 +38,7 @@ let matches = [
 
   //swear-words as non-expression POS
   { match: 'holy (shit|fuck|hell)', tag: 'Expression', reason: 'swears-expression' },
+  // well..
+  { match: '^(well|so|okay)', tag: 'Expression', reason: 'well-' },
 ]
 export default matches

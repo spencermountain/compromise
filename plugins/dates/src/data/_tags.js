@@ -12,10 +12,6 @@ module.exports = {
     isA: ['Date'],
     notA: 'RomanNumeral',
   },
-  // 'months'
-  Duration: {
-    isA: ['Date', 'Noun'],
-  },
   // 'easter'
   Holiday: {
     isA: ['Date', 'Noun'],

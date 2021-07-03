@@ -76,4 +76,8 @@ export default [
   { match: '#Organization+ #Possessive', tag: 'Possessive', reason: 'org-possessive' },
   //Los Angeles's fundraiser
   { match: '#Place+ #Possessive', tag: 'Possessive', reason: 'place-possessive' },
+  // 10th of a second
+  { match: '#Value of a [second]', group: 0, unTag: 'Value', tag: 'Singular', reason: '10th-of-a-second' },
+  // 10 seconds
+  { match: '#Value [seconds]', group: 0, unTag: 'Value', tag: 'Plural', reason: '10-seconds' },
 ]

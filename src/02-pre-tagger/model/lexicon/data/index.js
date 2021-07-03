@@ -25,6 +25,7 @@ import regions from './places/regions.js'
 import dates from './dates/dates.js'
 import months from './dates/months.js'
 import weekdays from './dates/weekdays.js'
+import durations from './dates/durations.js'
 
 import infinitives from './verbs/infinitives.js'
 import modals from './verbs/modals.js'
@@ -70,6 +71,7 @@ const data = [
   [weekdays, 'WeekDay'],
   [months, 'Month'],
   [dates, 'Date'],
+  [durations, 'Duration'],
 
   [femaleNames, 'FemaleName'],
   [firstnames, 'FirstName'],

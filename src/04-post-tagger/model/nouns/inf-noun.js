@@ -31,4 +31,12 @@ export default [
   { match: '#Gerund #Adjective to [#Infinitive]', group: 0, tag: 'Noun', reason: 'running-to' },
   // 1 train
   { match: '(one|1) [#Infinitive]', group: 0, tag: 'Singular', reason: '1-trains' },
+
+  // use reverse
+  {
+    match: '(try|use|attempt|build|make) [(#Verb && !#Copula && !#PhrasalVerb)]',
+    group: 0,
+    tag: 'Noun',
+    reason: 'do-verb',
+  },
 ]

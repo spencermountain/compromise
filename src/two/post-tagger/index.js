@@ -11,6 +11,7 @@ const postTagger = function (document, world) {
   // console.dir(res, { depth: 5 })
   return document
 }
+
 const plugin = function (world) {
   const { methods, model, parsers } = world
   methods.postTagger = _methods

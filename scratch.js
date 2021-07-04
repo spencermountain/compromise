@@ -1,6 +1,6 @@
 /* eslint-disable no-console, no-unused-vars */
 // const nlp = require('./src/index')
-import nlp, { model } from './src/index.js'
+import nlp from './src/one/index.js'
 // import nlp from './src/tokenize.js'
 
 // nlp.verbose(true)
@@ -8,6 +8,7 @@ import nlp, { model } from './src/index.js'
 // let doc = nlp.tokenize('five one one nine')
 // doc.match('one{2,6}').debug()
 
+// let r = nlp('city/town').debug()
 let r = nlp('spencer is here. hoo ha. spencer two')
 r.match('.').debug()
 

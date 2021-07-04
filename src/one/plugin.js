@@ -22,6 +22,7 @@ const tokenize = function (document, world) {
   }
   return document
 }
+
 const plugin = function (world) {
   let { methods, model, parsers } = world
   methods.tokenize = _methods

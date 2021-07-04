@@ -42,8 +42,16 @@ const multiTag = function (terms, tagString, tagSet, isSafe) {
   })
 }
 
+const isArray = function (arr) {
+  return Object.prototype.toString.call(arr) === '[object Array]'
+}
+
 // add a tag to all these terms
 const setTag = function (terms, tag, tagSet, isSafe) {
+  if (isArray(tag) === true) {
+    tag.forEach(tg => setTag(terms, tg, tagSet, isSafe))
+    return
+  }
   tag = tag.trim()
   // support '#Noun . #Adjective' syntax
   if (isMulti.test(tag)) {

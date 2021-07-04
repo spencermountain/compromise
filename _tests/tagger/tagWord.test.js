@@ -1,6 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
+// done
 //test a word from each file in ./data/**
 test('pos from-lexicon', function (t) {
   const arr = [

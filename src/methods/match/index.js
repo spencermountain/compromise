@@ -3,12 +3,15 @@ import fromHere from './02-from-here.js'
 import getGroup from './04-getGroup.js'
 
 // ok, here we go.
-const runMatch = function (docs, m, cache) {
+const runMatch = function (docs, todo, cache) {
   cache = cache || []
-  let { regs, group, justOne } = m
+  let { regs, group, justOne } = todo
   let results = []
+  if (regs.length === 0) {
+    return []
+  }
   const minLength = regs.filter(r => r.optional !== true && r.negative !== true).length
-  for (let n = 0; n < docs.length; n += 1) {
+  docs: for (let n = 0; n < docs.length; n += 1) {
     let terms = docs[n]
     // can we skip this sentence?
     if (cache[n] && failFast(regs, cache[n])) {
@@ -32,7 +35,7 @@ const runMatch = function (docs, m, cache) {
         results.push(res)
         // should we stop here?
         if (justOne === true) {
-          return results
+          break docs
         }
         // skip ahead, over these results
         let end = res.pointer[2]

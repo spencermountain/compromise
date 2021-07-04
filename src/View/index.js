@@ -26,7 +26,7 @@ class View {
       writable: true,
     })
     this.pointer = pointer
-    this.verbose = false
+    this.isView = true
   }
   /*
   

@@ -10,6 +10,10 @@ const methods = {
     return arr
   },
   /** */
+  terms: function () {
+    return this.match('.') //make this faster
+  },
+  /** */
   cache: function () {
     this._cache = this.methods.cacheDoc(this.document)
     return this
@@ -58,7 +62,8 @@ const methods = {
     let document = JSON.parse(JSON.stringify(this.document))
     let view = this.update(this.pointer)
     view.document = document
-    return
+    return this
   },
 }
+methods.clone = methods.fork
 export default methods

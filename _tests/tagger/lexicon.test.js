@@ -1,6 +1,7 @@
 const test = require('tape')
 const nlp = require('../_lib')
 
+// some-done
 test('default lexicon:', function (t) {
   let arr = [
     ['great', 'Adjective'],

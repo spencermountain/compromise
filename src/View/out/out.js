@@ -29,7 +29,13 @@ const out = function (method) {
     return this.json({ offset: true })
   }
   if (method === 'array') {
-    return this.docs.map(terms => terms.map(t => t.text))
+    return this.docs.map(terms => {
+      return terms
+        .reduce((str, t) => {
+          return str + t.pre + t.text + t.post
+        }, '')
+        .trim()
+    })
   }
   if (method === 'freq' || method === 'frequency') {
     return topk(this)

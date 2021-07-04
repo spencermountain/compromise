@@ -3,14 +3,15 @@
 import nlp, { model } from './src/index.js'
 // import nlp from './src/tokenize.js'
 
-nlp.verbose(true)
-// let doc = nlp(`Howard Stern`)
-// let doc = nlp(`Cameron Diaz`)
-let doc = nlp(`Cameron, too`)
-doc.match('@hasComma').debug()
-// doc.debug()
+// nlp.verbose(true)
 
-// console.log(nlp.parseMatch('@hasComma'))
+// let doc = nlp.tokenize('five one one nine')
+// doc.match('one{2,6}').debug()
+
+let r = nlp('spencer is here. hoo ha. spencer two')
+r.match('.').debug()
+
+// console.log(nlp.parseMatch('john #FirstName{3,6}'))
 
 // console.log(doc.json())
 // console.log(model.lexicon['healing over'])

@@ -1,6 +1,6 @@
 const test = require('tape')
 const nlp = require('../_lib')
-
+// done
 test('pos-basic-tag:', function (t) {
   let arr = [
     ['John is pretty', ['Person', 'Copula', 'Adjective']],

@@ -3,6 +3,9 @@ import matchTerm from './03-matchTerm.js'
 // i formally apologize for how complicated this is.
 /** tries to match a sequence of terms, starting from here */
 const tryHere = function (terms, regs, start_i, phrase_length) {
+  if (terms.length === 0 || regs.length === 0 || !terms[start_i]) {
+    return null
+  }
   // all the variables that matter
   let state = {
     t: 0,

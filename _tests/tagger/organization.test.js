@@ -1,6 +1,6 @@
 const test = require('tape')
 const nlp = require('../_lib')
-
+// done
 test('organization test', function (t) {
   const arr = [
     'google',

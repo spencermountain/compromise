@@ -1,4 +1,4 @@
-const isSlash = /[a-z] ?\/ ?[a-z]*$/
+const isSlash = /[a-z] ?\/ ?[a-z]+$/
 // 'he / she' should be one word
 const combineSlashes = function (arr) {
   for (let i = 1; i < arr.length - 1; i++) {

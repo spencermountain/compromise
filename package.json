@@ -84,6 +84,7 @@
     "amble": "1.3.0",
     "codecov": "3.8.2",
     "nyc": "15.1.0",
+    "pretty-error": "^3.0.4",
     "rollup": "2.52.4",
     "rollup-plugin-babel": "4.4.0",
     "rollup-plugin-filesize-check": "0.0.1",

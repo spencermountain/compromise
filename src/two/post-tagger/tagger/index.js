@@ -11,7 +11,6 @@ const tagger = function (list, document, world) {
   if (env.DEBUG_TAGS) {
     console.log(`\n  \x1b[32m→ ${list.length} corrections:\x1b[0m`) //eslint-disable-line
   }
-
   return list.map(todo => {
     if (env.DEBUG_TAGS) {
       logger(todo, document)

@@ -15,6 +15,7 @@ const tokenize = function (document, world) {
         let t = splitWhitespace(str)
         // add normalized term format
         t.normal = termNormalize(t.text)
+        // console.log(t)
         return t
       })
       return terms

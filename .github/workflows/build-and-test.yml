@@ -6,9 +6,6 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
-    env:
-      CI: true
-
     strategy:
       matrix:
         node-version: [10.x, 15.x]

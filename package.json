@@ -49,7 +49,7 @@
     "perf:build": "TESTENV=prod node ./scripts/perf/index.js",
     "perf:versions": "node ./scripts/perf/versions.js",
     "flame": "clinic flame -- node ./scripts/perf/flame",
-    "lint": "eslint ./src/ && eslint ./plugins/**/src/",
+    "lint": "eslint ./src/**/* && eslint ./plugins/**/src/*",
     "watch": "amble ./scratch.js",
     "build:all": "node ./scripts/build/build-all.js && npm run build --silent",
     "plugins": "node ./scripts/plugin-check.js --silent",

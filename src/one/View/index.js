@@ -1,4 +1,4 @@
-import { methods, model } from '../world.js'
+import { methods, model } from '../../world.js'
 import addMethods from './methods.js'
 import addAliases from './aliases.js'
 
@@ -25,8 +25,13 @@ class View {
       value: null,
       writable: true,
     })
+    // helper isView boolean
+    Object.defineProperty(this, 'isView', {
+      enumerable: false,
+      value: true,
+      writable: true,
+    })
     this.pointer = pointer
-    this.isView = true
   }
   /*
   

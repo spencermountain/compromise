@@ -1,4 +1,4 @@
-import methods from './methods/index.js'
+import methods from './one/methods/index.js'
 let model = {}
 let parsers = []
 

@@ -38,6 +38,7 @@
     "pack": "node ./scripts/pack.js",
     "test": "tape-es \"./tests/**/*.test.js\" | tap-dancer",
     "testb": "npm run test:smoke && npm run env TESTENV=prod && node ./scripts/test/index.js",
+    "test:match": "tape-es \"./tests/match.test.js\" | tap-dancer",
     "test:smoke": "node \"./scripts/test/smoke-test/\" | tap-dancer",
     "test:spec": "tape \"./tests/**/*.test.js\" | tap-spec",
     "test:types": "ts-node ./scripts/test/types.ts | tap-dancer",

@@ -4,7 +4,7 @@ const textOut = function () {
   if (this.pointer) {
     perfect = false
   }
-  this.docs.forEach((terms, i) => {
+  this.docs.forEach(terms => {
     let txt = ''
     terms.forEach(t => {
       txt += t.pre + t.text + t.post

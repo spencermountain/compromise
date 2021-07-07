@@ -1,6 +1,7 @@
 import { hasHyphen, splitHyphens } from './01-hyphens.js'
 import combineRanges from './03-ranges.js'
 import combineSlashes from './02-slashes.js'
+
 const wordlike = /\S/
 const isBoundary = /^[!?.]+$/
 const naiiveSplit = /(\S+)/

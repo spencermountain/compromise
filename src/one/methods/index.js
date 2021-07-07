@@ -1,10 +1,21 @@
-import splitSentences from './01-sentences/index.js'
-import splitTerms from './02-terms/index.js'
-import splitWhitespace from './03-whitespace/index.js'
-import termNormalize from './04-normalize/index.js'
+import { getDoc, parsePointer, createPointer } from './pointer.js'
+import setTag from './tag/setTag.js'
+import unTag from './tag/unTag.js'
+import match from './match/index.js'
+import parseMatch from './parseMatch/index.js'
+import cacheDoc from './cache/cacheDoc.js'
+import cacheMatch from './cache/cacheMatch.js'
+import tokenize from './tokenize/index.js'
+
 export default {
-  splitSentences,
-  splitTerms,
-  splitWhitespace,
-  termNormalize,
+  match,
+  parseMatch,
+  setTag: setTag,
+  unTag: unTag,
+  tokenize,
+  cacheDoc,
+  cacheMatch,
+  getDoc,
+  parsePointer,
+  createPointer,
 }

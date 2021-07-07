@@ -1,14 +1,10 @@
-const hasSlash = /[a-z\u00C0-\u00FF] ?\/ ?[a-z\u00C0-\u00FF]/
 /** some basic operations on a string to reduce noise */
 const clean = function (str) {
   str = str || ''
   str = str.toLowerCase()
   str = str.trim()
   let original = str
-  //rough handling of slashes - 'see/saw'
-  if (hasSlash.test(str) === true) {
-    str = str.replace(/\/.*/, '')
-  }
+
   //#tags, @mentions
   str = str.replace(/^[#@]/, '')
   //punctuation

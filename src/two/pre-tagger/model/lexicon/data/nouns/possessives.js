@@ -1,0 +1,22 @@
+export default [
+  'anyone',
+  'anything',
+  'her', //this one is check ambiguous
+  'hers',
+  'herself',
+  'himself',
+  'his',
+  'its',
+  'mine',
+  'my',
+  'myself',
+  'none',
+  'our',
+  'ours',
+  'something',
+  'their',
+  'theirs',
+  'themselves',
+  'your',
+  'yours',
+]

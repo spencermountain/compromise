@@ -1,0 +1,24 @@
+import rules from './_rules.js'
+const invertObj = function (obj) {
+  return Object.keys(obj).reduce((h, k) => {
+    h[obj[k]] = k
+    return h
+  }, {})
+}
+const toSingular = function (str, model) {
+  let irregulars = model.irregularNouns
+  let invert = invertObj(irregulars) //(not very efficient)
+  // check irregulars list
+  if (invert.hasOwnProperty(str)) {
+    return invert[str]
+  }
+  // go through our regexes
+  for (let i = 0; i < rules.length; i++) {
+    if (rules[i][0].test(str) === true) {
+      str = str.replace(rules[i][0], rules[i][1])
+      return str
+    }
+  }
+  return str
+}
+export default toSingular

@@ -1,5 +1,5 @@
-const test = require('tape')
-const nlp = require('../_lib')
+import test from 'tape'
+import nlp from '../lib/_lib.js'
 
 test('multiword OR', function (t) {
   let m = nlp('i saw the canadian senate floor').match('the (united states|canadian) senate')

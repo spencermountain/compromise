@@ -1,5 +1,5 @@
-const test = require('tape')
-const nlp = require('../_lib')
+import test from 'tape'
+import nlp from '../lib/_lib.js'
 
 test('regex-match:', function (t) {
   let doc = nlp('it is waaaay cool')

@@ -2,20 +2,21 @@
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "modest natural language processing",
-  "version": "13.11.3",
+  "version": "rc14rc",
   "main": "./builds/compromise.js",
   "unpkg": "./builds/compromise.min.js",
-  "module": "./builds/compromise.mjs",
-  "type": "commonjs",
+  "module": "./src/index.js",
+  "type": "module",
   "types": "types/index.d.ts",
   "sideEffects": false,
   "exports": {
     ".": {
       "require": "./builds/compromise.js",
-      "import": "./builds/compromise.mjs",
+      "import": "./src/index.js",
       "default": "./builds/compromise.js"
     },
     "./tokenize": {
+      "import": "./src/tokenize.js",
       "default": "./builds/compromise-tokenize.js"
     }
   },
@@ -33,9 +34,9 @@
     "node": ">=8.0.0"
   },
   "scripts": {
-    "build": "node ./scripts/build && rollup -c --silent && npm run test:smoke --silent",
-    "pack": "node ./scripts/build/pack.js",
-    "test": "node ./scripts/test/index.js ",
+    "build": "rollup -c --silent",
+    "pack": "node ./scripts/pack.js",
+    "test": "tape-es \"./tests/**/*.test.js\" | tap-dancer",
     "testb": "npm run test:smoke && npm run env TESTENV=prod && node ./scripts/test/index.js",
     "test:smoke": "node \"./scripts/test/smoke-test/\" | tap-dancer",
     "test:spec": "tape \"./tests/**/*.test.js\" | tap-spec",
@@ -74,31 +75,31 @@
     "arrowParens": "avoid"
   },
   "dependencies": {
-    "efrt-unpack": "2.2.0"
+    "efrt": "2.3.0"
   },
   "devDependencies": {
     "@babel/core": "7.14.6",
-    "@babel/preset-env": "7.14.5",
+    "@babel/preset-env": "7.14.7",
     "@rollup/plugin-alias": "3.1.2",
-    "@rollup/plugin-commonjs": "19.0.0",
-    "@rollup/plugin-json": "4.1.0",
-    "@rollup/plugin-node-resolve": "13.0.0",
     "amble": "1.3.0",
     "codecov": "3.8.2",
-    "efrt": "2.2.2",
-    "nyc": "^15.1.0",
-    "rollup": "2.52.2",
+    "nyc": "15.1.0",
+    "pretty-error": "^3.0.4",
+    "rollup": "2.52.4",
     "rollup-plugin-babel": "4.4.0",
     "rollup-plugin-filesize-check": "0.0.1",
     "rollup-plugin-terser": "7.0.2",
     "shelljs": "0.8.4",
     "tap-dancer": "0.3.2",
-    "tape": "5.2.2"
+    "tape": "5.2.2",
+    "tape-es": "1.2.15"
   },
   "eslintIgnore": [
     "builds/*.js",
     "*.ts",
-    "plugins/**/types/*.ts"
+    "plugins/**",
+    "_old/**",
+    "_tests/**"
   ],
   "license": "MIT"
 }

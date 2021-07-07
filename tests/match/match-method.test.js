@@ -1,6 +1,7 @@
-const test = require('tape')
-const nlp = require('../_lib')
+import test from 'tape'
+import nlp from '../lib/_lib.js'
 
+// some done
 test('match-methods:', function (t) {
   let arr = [
     ['@hasComma bravery', 'truth, bravery'],

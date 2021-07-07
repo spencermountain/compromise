@@ -1,5 +1,5 @@
-const test = require('tape')
-const nlp = require('../_lib')
+import test from 'tape'
+import nlp from '../lib/_lib.js'
 
 test('or-match-basic', function (t) {
   let doc = nlp('toronto and montreal. Sydney and Paris')

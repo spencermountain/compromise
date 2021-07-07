@@ -1,5 +1,5 @@
-const test = require('tape')
-const nlp = require('../_lib')
+import test from 'tape'
+import nlp from '../lib/_lib.js'
 
 test('two named matches', function (t) {
   let m = nlp('the big dog played').match('the [<size>#Adjective] [<animal>#Noun] played')

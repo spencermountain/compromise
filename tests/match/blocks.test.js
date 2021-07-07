@@ -1,5 +1,5 @@
-const test = require('tape')
-const nlp = require('../_lib')
+import test from 'tape'
+import nlp from '../lib/_lib.js'
 
 test('optional OR block', function (t) {
   let m = nlp('start two end').match('start (one|two) end')

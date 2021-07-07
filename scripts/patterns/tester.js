@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // try to hit every match in ./tagger/corrections
 const corpus = require('nlp-corpus') //install with `npm i nlp-corpus --no-save`
 const nlp = require('../../src')

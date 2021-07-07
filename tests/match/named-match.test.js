@@ -1,5 +1,5 @@
-const test = require('tape')
-const nlp = require('../_lib')
+import test from 'tape'
+import nlp from '../lib/_lib.js'
 
 test('named-match-overlap', function (t) {
   let doc = nlp('june the 5th, july the 7th, and sept the 12th.')

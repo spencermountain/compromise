@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // ensure all our plugins are up-to-spec
 const fs = require('fs')
 const path = require('path')

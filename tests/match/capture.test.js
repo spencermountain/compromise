@@ -1,5 +1,5 @@
-const test = require('tape')
-const nlp = require('../_lib')
+import test from 'tape'
+import nlp from '../lib/_lib.js'
 
 test('match-capture-group', function (t) {
   let m = nlp('John eats glue').match('[john]', 0)
@@ -21,7 +21,7 @@ test('match-capture-group', function (t) {
   t.equal(m.out('normal'), 'eats', 'capture after wildcard')
 
   m = nlp('saw the Toronto International Documentary Film Festival yesterday').match('saw the? [#Noun+] yesterday', 0)
-  t.equal(m.trim().out('text'), 'Toronto International Documentary Film Festival', 'greedy capture')
+  t.equal(m.out('text'), 'Toronto International Documentary Film Festival', 'greedy capture')
 
   t.end()
 })

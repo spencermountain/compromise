@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // Run arbitrary (but typically npm) commands for each plugin
 // Example: "node ./plugins.js npm install"
 const sh = require('shelljs')

@@ -1,12 +1,13 @@
-if (typeof process !== undefined && typeof module !== undefined) {
-  let nlp
-  if (process.env.TESTENV === 'prod') {
-    console.warn('== production build test 🚀 ==')
-    nlp = require('../../../builds/compromise.min.js')
-  } else {
-    nlp = require('../../../src')
-    // nlp.extend(require('../plugins/numbers/src'))
-  }
+/* eslint-disable no-console */
+import src from '../../../src/index.js'
 
-  module.exports = nlp
+let nlp
+if (process.env.TESTENV === 'prod') {
+  console.warn('== production build test 🚀 ==')
+  // nlp = require('../../../builds/compromise.min.js')
+} else {
+  nlp = src
+  // nlp.extend(require('../plugins/numbers/src'))
 }
+
+export default nlp

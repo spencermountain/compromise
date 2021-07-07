@@ -1,5 +1,5 @@
-const test = require('tape')
-const nlp = require('../_lib')
+import test from 'tape'
+import nlp from '../lib/_lib.js'
 
 test('soft-match', function (t) {
   let doc = nlp(`a priest walked into the bars`)

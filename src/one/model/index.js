@@ -5,6 +5,7 @@ import nouns from './abbreviations/nouns.js'
 import organizations from './abbreviations/organizations.js'
 import places from './abbreviations/places.js'
 import units from './abbreviations/units.js'
+import aliases from './aliases.js'
 
 let list = [
   [misc],
@@ -33,6 +34,7 @@ list.forEach(a => {
 })
 
 export default {
+  aliases,
   abbreviations,
   lexicon,
 }

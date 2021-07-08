@@ -2,8 +2,13 @@ const hasSlash = /\//
 // const hasSlash = /[a-z\u00C0-\u00FF] ?\/ ?[a-z\u00C0-\u00FF]/
 const hasApostrophe = /['’]s$/
 
-const addAliases = function (term) {
+const addAliases = function (term, model) {
   let str = term.normal
+  // lookup known aliases like '&'
+  if (model.aliases.hasOwnProperty(str)) {
+    term.alias = term.alias || []
+    term.alias.push(model.aliases[str])
+  }
   // support slashes as aliases
   if (hasSlash.test(str)) {
     str.split(hasSlash).forEach(word => {

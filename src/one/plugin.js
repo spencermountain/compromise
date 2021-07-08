@@ -17,7 +17,7 @@ const tokenize = function (document, world) {
         // add normalized term format
         t.normal = termNormalize(t.text)
         // support slashes, apostrophes, etc
-        t = termAlias(t)
+        t = termAlias(t, model)
         return t
       })
       return terms

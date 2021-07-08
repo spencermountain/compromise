@@ -1,4 +1,5 @@
 import setTag from './_setTag.js'
+const underOver = /^(under|over)-?.{3}/
 
 // scan-ahead to match multiple-word terms - 'jack rabbit'
 const checkMulti = function (terms, i, lexicon) {
@@ -49,6 +50,15 @@ const checkLexicon = function (terms, model) {
       let found = t.alias.find(str => lexicon.hasOwnProperty(str))
       if (found) {
         let tag = lexicon[found]
+        setTag(t, tag, 'lexicon')
+        continue
+      }
+    }
+    // try removing a word-stem
+    if (underOver.test(t.normal) === true) {
+      let stem = t.normal.replace(/^(under|over)-?/, '')
+      if (lexicon.hasOwnProperty(stem)) {
+        let tag = lexicon[stem]
         setTag(t, tag, 'lexicon')
         continue
       }

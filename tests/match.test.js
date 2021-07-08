@@ -297,7 +297,7 @@ let arr = [
   //abbreviations
   [
     'col. Patrick said march and feb. etc.',
-    ['#Abbreviation #Person #PastTense #Month #Conjunction #Abbreviation #Abbreviation'],
+    '#Abbreviation #Person #PastTense #Month #Conjunction #Abbreviation #Abbreviation',
   ],
   [`i met April O'neil`, '#Pronoun #PastTense #Person #Person'],
 
@@ -642,6 +642,13 @@ let arr = [
   ["he isn't going", 'he @hasContraction'],
   ['FIFA', '@isAcronym'],
   ['spencer', '@isKnown'],
+
+  // july 8th
+  ['swore', '#PastTense'],
+  ['tore', '#PastTense'],
+  ['gore', '#Noun'],
+  [`spencer's city/town & cabin`, 'spencer city and .'],
+  ['city/town', 'town'],
 ]
 
 testMatches(arr)

@@ -5,16 +5,11 @@ import nlp from './src/index.js'
 
 nlp.verbose(true)
 
-let r = nlp(`it was a redefining moment`).debug()
-// console.log(nlp('toronto'))
-// let r = nlp('toronto').debug()
-// console.log(r.document)
+let doc = nlp(`spencer's city/town & cabin`) //.debug()
+// console.dir(doc, { depth: 5 })
+doc.match('spencer city and').debug()
 /*
-['swore', '#PastTense'],
-['tore', '#PastTense'],
-['gore', '#Noun'],
-['spencer's city/town & cabin', 'spencer city and .'],
-['city/town', 'town'],
+
 ['', '#'],
 ['', '#'],
 ['', '#'],

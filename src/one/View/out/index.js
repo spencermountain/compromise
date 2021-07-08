@@ -1,6 +1,6 @@
 import debug from './debug.js'
 import out from './out.js'
-import textOut from './text.js'
+import { textFromDoc, textFromTerms } from './text.js'
 
 const toText = function (terms) {
   return terms.reduce((txt, t) => {
@@ -14,7 +14,7 @@ const methods = {
   json: function () {
     return this.docs.map(terms => {
       return {
-        text: toText(terms),
+        text: textFromTerms(terms, false),
         terms: terms.map(t => {
           t.tags = Array.from(t.tags)
           return t
@@ -23,7 +23,10 @@ const methods = {
     })
   },
   /** */
-  text: textOut,
+  text: function () {
+    let perfect = this.pointer ? false : true
+    return textFromDoc(this.docs, perfect)
+  },
   /** */
   debug: debug,
   /** */

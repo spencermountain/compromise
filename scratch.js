@@ -3,10 +3,13 @@
 import nlp from './src/index.js'
 // import nlp from './src/one/index.js'
 
-nlp.verbose(true)
+// nlp.verbose(true)
 
-let doc = nlp('hello John, Lisa, Fred').debug()
-doc.match('#FirstName{3,6}').debug()
+// let doc = nlp('the big dog played')
+// doc.match('the [<target>#Adjective] [<type>#Noun] [<target>played]', 'target').debug()
+
+let doc = nlp("matt does but matthew doesn't")
+let m = doc.match('^(/matt/|frank) .').debug()
 
 /*
 

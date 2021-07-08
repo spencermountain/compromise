@@ -69,5 +69,6 @@ const methods = {
     return this
   },
 }
+methods.group = methods.groups
 methods.clone = methods.fork
 export default methods

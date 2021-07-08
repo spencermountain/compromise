@@ -63,7 +63,12 @@ export default [
   //Jani K. Smith
   { match: '#Singular #Acronym #LastName', tag: 'Person', reason: 'title-acro-noun', safe: true },
   //John Foo
-  { match: '#FirstName #Acronym? [#ProperNoun]', group: 0, tag: 'LastName', reason: 'firstname-titlecase' },
+  {
+    match: '#FirstName #Acronym? [(#ProperNoun && !#FirstName)]',
+    group: 0,
+    tag: 'LastName',
+    reason: 'firstname-titlecase',
+  },
   //Joe K. Sombrero
   { match: '#FirstName #Acronym #Noun', tag: 'Person', reason: 'n-acro-noun', safe: true },
   //Anthony de Marco

@@ -85,7 +85,7 @@ test('sentence-match:', function (t) {
 
 test('tag-match-tag :', function (t) {
   const m = nlp('apple is cool')
-  m.match(['apple', 'susan']).tag('Person')
+  m.match('apple').tag('Person')
   const p = m.match('#Person')
   t.equal(p.out('normal'), 'apple', 'apple-tagged')
   t.equal(m.length, 1, 'one-result')

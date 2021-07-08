@@ -1,10 +1,10 @@
 import doesMatch from './03-matchTerm.js'
 
+// for greedy checking, we no longer care about the reg.start
+// value, and leaving it can cause failures for anchored greedy
+// matches.  ditto for end-greedy matches: we need an earlier non-
+// ending match to succceed until we get to the actual end.
 export const getGreedy = function (state, endReg) {
-  // for greedy checking, we no longer care about the reg.start
-  // value, and leaving it can cause failures for anchored greedy
-  // matches.  ditto for end-greedy matches: we need an earlier non-
-  // ending match to succceed until we get to the actual end.
   let reg = Object.assign({}, state.regs[state.r], { start: false, end: false })
   let start = state.t
   for (; state.t < state.terms.length; state.t += 1) {

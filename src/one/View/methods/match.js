@@ -1,3 +1,5 @@
+import invert from './_invert.js'
+
 const matchOne = function (regs, group) {
   let { methods, docs } = this
   if (typeof regs === 'string') {
@@ -62,4 +64,24 @@ const ifNo = function (regs, group) {
   return this.update(notFound)
 }
 
-export { matchOne, match, has, ifFn as if, ifNo }
+const not = function (regs) {
+  let { methods, docs } = this
+  if (typeof regs === 'string') {
+    regs = methods.parseMatch(regs)
+  }
+  let todo = { regs }
+  let { ptrs } = methods.match(docs, todo, this._cache)
+  let found = {}
+  ptrs.forEach(a => {
+    found[a[0]] = found[a[0]] || []
+    found[a[0]].push(a)
+  })
+  let all = []
+  for (let i = 0; i < docs.length; i += 1) {
+    all.push([i, 0, docs[i].length])
+  }
+  let notPtrs = invert(all, ptrs)
+  return this.update(notPtrs)
+}
+
+export { matchOne, match, has, ifFn as if, ifNo, not }

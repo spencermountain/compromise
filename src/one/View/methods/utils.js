@@ -25,7 +25,7 @@ const methods = {
   },
   /** */
   groups: function (group) {
-    if (group) {
+    if (group || group === 0) {
       return this.update(this._groups[group] || [])
     }
     // return an object of Views
@@ -55,6 +55,10 @@ const methods = {
   },
   /** */
   parent: function () {
+    return this.update()
+  },
+  /** */
+  all: function () {
     return this.update()
   },
   /** */

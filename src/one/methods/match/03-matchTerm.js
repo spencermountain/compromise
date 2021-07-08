@@ -49,8 +49,11 @@ const doesMatch = function (term, reg, index, length) {
         }
       }
     }
-    //match either .clean or .text
-    return reg.word === term.clean || reg.word === term.text || reg.word === term.normal
+    if (term.alias && term.alias.some(str => str === reg.word)) {
+      return true
+    }
+    //match either .normal or .text
+    return reg.word === term.text || reg.word === term.normal
   }
   //support #Tag
   if (reg.tag !== undefined) {

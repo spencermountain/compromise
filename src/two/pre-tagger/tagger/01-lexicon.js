@@ -44,6 +44,15 @@ const checkLexicon = function (terms, model) {
       setTag(t, tag, 'lexicon')
       continue
     }
+    // lookup aliases in the lexicon
+    if (t.alias) {
+      let found = t.alias.find(str => lexicon.hasOwnProperty(str))
+      if (found) {
+        let tag = lexicon[found]
+        setTag(t, tag, 'lexicon')
+        continue
+      }
+    }
   }
 }
 export default checkLexicon

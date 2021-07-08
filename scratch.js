@@ -5,10 +5,10 @@ import nlp from './src/index.js'
 
 nlp.verbose(true)
 
-let r = nlp(`city/town`).debug()
+let r = nlp(`spencer/town`).match('town').debug()
 // console.log(nlp('toronto'))
 // let r = nlp('toronto').debug()
-console.log(r.document)
+// console.log(r.document)
 /*
 ['swore', '#PastTense'],
 ['tore', '#PastTense'],

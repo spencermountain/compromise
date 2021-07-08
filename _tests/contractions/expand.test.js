@@ -1,5 +1,5 @@
-const test = require('tape')
-const nlp = require('../_lib')
+import test from 'tape'
+import nlp from '../../tests/lib/_lib.js'
 
 test('basic is contractions', function (t) {
   let r = nlp(`he is cool.`)

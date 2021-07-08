@@ -1,6 +1,6 @@
-const test = require('tape')
-const nlp = require('../_lib')
-const penn = require('../_pennSample')
+import test from 'tape'
+import nlp from '../lib/_lib.js'
+import penn from '../lib/_pennSample.js'
 
 const softMapping = {
   CC: 'Conjunction',

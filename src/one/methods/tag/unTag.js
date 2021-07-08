@@ -6,7 +6,7 @@ const unTag = function (terms, tag, tagSet) {
     // support clearing all tags, with '*'
     if (tag === '*') {
       term.tags.clear()
-      return
+      continue
     }
     // for known tags, do logical dependencies first
     let known = tagSet[tag]

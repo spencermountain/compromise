@@ -1,56 +1,5 @@
-const test = require('tape')
-const nlp = require('../_lib')
-
-// some-done
-test('default lexicon:', function (t) {
-  let arr = [
-    ['great', 'Adjective'],
-    ['walked', 'PastTense'],
-    ['singing', 'Gerund'],
-    ['funniest', 'Superlative'],
-    ['sillier', 'Comparative'],
-    ['the', 'Determiner'],
-    ['iraqi', 'Demonym'],
-    ['december', 'Date'],
-    ['fifth', 'Value'],
-    ['suddenly', 'Adverb'],
-    ['shanghai', 'City'],
-    ['google', 'Organization'],
-  ]
-  arr.forEach(function (a) {
-    const doc = nlp(a[0])
-    t.equal(doc.has('#' + a[1]), true, a[0])
-  })
-  t.end()
-})
-
-test('root-in-lexicon:', function (t) {
-  let arr = [
-    ['wash', 'Infinitive'],
-    ['rewash', 'Infinitive'],
-    ['re-wash', 'Infinitive'],
-    ['re-washed', 'PastTense'],
-    ['rewashed', 'PastTense'],
-    ['rewashes', 'PresentTense'],
-    ['rewashing', 'Gerund'],
-
-    ['repurchase', 'Infinitive'],
-    ['re-purchase', 'Infinitive'],
-    ['unpurchase', 'Infinitive'],
-    ['purchased', 'PastTense'],
-    ['unpurchasing', 'Gerund'],
-    ['unpurchases', 'PresentTense'],
-    ['resolve', 'Infinitive'],
-    ['restructure', 'Infinitive'],
-    ['reconcile', 'Infinitive'],
-    ['repeat', 'Infinitive'],
-  ]
-  arr.forEach(function (a) {
-    const doc = nlp(a[0])
-    t.equal(doc.has('#' + a[1]), true, a[0])
-  })
-  t.end()
-})
+import test from 'tape'
+import nlp from '../lib/_lib.js'
 
 test('adjusted lexicon:', function (t) {
   //place new words

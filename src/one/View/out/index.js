@@ -4,8 +4,8 @@ import { textFromDoc, textFromTerms } from './text.js'
 
 const methods = {
   /** return data */
-  json: function () {
-    return this.docs.map(terms => {
+  json: function (n) {
+    let arr = this.docs.map(terms => {
       return {
         text: textFromTerms(terms, false),
         terms: terms.map(t => {
@@ -14,6 +14,10 @@ const methods = {
         }),
       }
     })
+    if (typeof n === 'number') {
+      return arr[n]
+    }
+    return arr
   },
   /** */
   text: function () {

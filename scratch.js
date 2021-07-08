@@ -5,15 +5,16 @@ import nlp from './src/index.js'
 
 // nlp.verbose(true)
 
-// let doc = nlp('the big dog played')
-// doc.match('the [<target>#Adjective] [<type>#Noun] [<target>played]', 'target').debug()
+// Todo:
+// * multword add lexicon
+// .eq(0).terms(0) issue
+// .toLowerCase()
+const r = nlp('we live in Toronto Canada and it is cold')
+r.match('#Place+').unTag('*').debug()
 
-let doc = nlp('the dog played')
-// doc.match([{ word: 'dog', group: 0 }], 0).debug()
-doc.match('[dog]', 0).debug()
-console.log(nlp.parseMatch('[dog]'))
+r.match('#Place').debug()
+
 /*
-
 ['', '#'],
 ['', '#'],
 ['', '#'],

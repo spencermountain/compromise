@@ -227,7 +227,9 @@ let arr = [
   ['UNESCO', '#Acronym'],
   ['NAFTA', '#Acronym'],
 
-  ['city/town', '#Noun #Noun'],
+  ['city/town', '#Noun'],
+  ['city/town', 'city'],
+  ['city/town', 'town'],
   ['boyfriend to Jane', '#Noun #Conjunction #Person'],
   // ['boyfriend of Jane', '#Noun #Conjunction #Person'],
   ['his fines', '#Possessive #Noun'],

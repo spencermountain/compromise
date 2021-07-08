@@ -3,9 +3,9 @@
 import nlp from './src/index.js'
 // import nlp from './src/one/index.js'
 
-// nlp.verbose(true)
+nlp.verbose(true)
 
-let r = nlp(`spencer's city/town`).debug()
+let r = nlp(`city/town`).debug()
 // console.log(nlp('toronto'))
 // let r = nlp('toronto').debug()
 console.log(r.document)
@@ -13,6 +13,8 @@ console.log(r.document)
 ['swore', '#PastTense'],
 ['tore', '#PastTense'],
 ['gore', '#Noun'],
+['spencer's city/town & cabin', 'spencer city and .'],
+['city/town', 'town'],
 ['', '#'],
 ['', '#'],
 ['', '#'],

@@ -392,7 +392,7 @@ let arr = [
   ['Messiaen', '#Person'],
   ['Mozart', '#LastName'],
   ['Nixon', '#LastName'],
-  ['Pope John Paul II', '#MaleName #LastName'],
+  ['Pope John Paul II', '#Person+'],
   ['Richard Nixon', '#MaleName #LastName'],
   ['Ronald Reagan', '#MaleName #LastName'],
   ['Saddam Hussain', '#Person+'],

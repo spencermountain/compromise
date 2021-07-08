@@ -39,8 +39,7 @@ export default [
   { match: '(prince|lady) #Place', tag: 'Person', reason: 'lady-place' },
   //saint Foo
   { match: '(king|queen|prince|saint) #ProperNoun', tag: 'Person', reason: 'saint-foo' },
-  //Foo U Ford
-  { match: '[#ProperNoun] #Person', group: 0, tag: 'Person', reason: 'proper-person', safe: true },
+
   // al sharpton
   { match: 'al (#Person|#ProperNoun)', tag: 'Person', reason: 'al-borlen', safe: true },
   //ferdinand de almar
@@ -62,6 +61,8 @@ export default [
   { match: '#ProperNoun (de|du) la? #ProperNoun', tag: 'Person', reason: 'title-de-title', safe: true },
   //Jani K. Smith
   { match: '#Singular #Acronym #LastName', tag: 'Person', reason: 'title-acro-noun', safe: true },
+  //Foo Ford
+  { match: '[#ProperNoun] #Person', group: 0, tag: 'Person', reason: 'proper-person', safe: true },
   //John Foo
   {
     match: '#FirstName #Acronym? [(#ProperNoun && !#FirstName)]',
@@ -69,6 +70,7 @@ export default [
     tag: 'LastName',
     reason: 'firstname-titlecase',
   },
+  { match: '(#FirstName && !@hasComma) [#FirstName]', group: 0, tag: 'LastName', reason: 'firstname-firstname' },
   //Joe K. Sombrero
   { match: '#FirstName #Acronym #Noun', tag: 'Person', reason: 'n-acro-noun', safe: true },
   //Anthony de Marco

@@ -21,6 +21,7 @@ const reTag = function (terms, model, methods) {
       m.checkRegex(term, model)
     }
   })
+  m.fillTags(terms, model)
 }
 
 const isArray = function (arr) {

@@ -3,16 +3,15 @@
 import nlp from './src/index.js'
 // import nlp from './src/one/index.js'
 
-// nlp.verbose(true)
+nlp.verbose(true)
 
 // Todo:
 // * multword add lexicon
 // .eq(0).terms(0) issue
 // .toLowerCase()
-const r = nlp('we live in Toronto Canada and it is cold')
-r.match('#Place+').unTag('*').debug()
 
-r.match('#Place').debug()
+// const r = nlp('David is amazing..').debug()
+const r = nlp("Recently I'm having trouble").debug()
 
 /*
 ['', '#'],

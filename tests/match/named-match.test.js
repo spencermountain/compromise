@@ -87,69 +87,39 @@ test('named-match-group', function (t) {
   t.end()
 })
 
-// test('named-match-to-json:', function (t) {
-//   let arr = [
-//     [
-//       'the dog played',
-//       'the [<target>#Noun] played',
-//       'dog',
-//       [{ text: 'dog', terms: [{ text: 'dog', normal: 'dog', pre: '', post: ' ', tags: ['Noun', 'Singular'] }] }],
-//     ],
-//     [
-//       'the dog played',
-//       'the [<target>dog] played',
-//       'dog',
-//       [{ text: 'dog', terms: [{ text: 'dog', normal: 'dog', pre: '', post: ' ', tags: ['Noun', 'Singular'] }] }],
-//     ],
-//     [
-//       'the big dog played',
-//       'the [<target>big dog] played',
-//       'big dog',
-//       [
-//         {
-//           text: 'big dog',
-//           terms: [
-//             { text: 'big', pre: '', post: ' ', tags: ['Comparable', 'Adjective'] },
-//             { text: 'dog', pre: '', post: ' ', tags: ['Noun', 'Singular'] },
-//           ],
-//         },
-//       ],
-//     ],
-//     [
-//       'the big dog played',
-//       'the [<target>big] dog [<target>played]',
-//       'big played',
-//       [
-//         { text: 'big', terms: [{ text: 'big', tags: ['Comparable', 'Adjective'], pre: '', post: ' ' }] },
-//         { text: 'played', terms: [{ text: 'played', tags: ['PastTense', 'Verb'], pre: '', post: '' }] },
-//       ],
-//     ],
-//   ]
+test('named-match-to-json:', function (t) {
+  let arr = [
+    ['the dog played', 'the [<target>#Noun] played', 'dog', ['dog']],
+    ['the dog played', 'the [<target>dog] played', 'dog', ['dog']],
+    ['the big dog played', 'the [<target>big dog] played', 'big dog', ['big dog']],
+    // ['the big dog played', 'the [<target>big] dog [<target>played]', 'big played', ['big', 'played']],
+  ]
 
-//   arr.forEach(function (a) {
-//     const doc = nlp(a[0]).match(a[1])
+  arr.forEach(function (a) {
+    const doc = nlp(a[0]).match(a[1])
 
-//     const res = doc.groups()
-//     t.ok(res['target'], "Should contain 'target' group")
+    const res = doc.groups()
+    t.ok(res['target'], "Should contain 'target' group")
 
-//     const json = res.target.json()
-//     const text = res.target.text()
+    const json = res.target.out('array')
+    const text = res.target.text()
 
-//     t.equal(text, a[2])
-//     t.deepEqual(json, a[3], a[0])
-//   })
+    t.equal(text, a[2])
+    t.deepEqual(json, a[3], a[0])
+  })
 
-//   t.end()
-// })
+  t.end()
+})
 
 test('named-match-overlap', function (t) {
   const arr = [
     {
       input: 'the big dog played',
-      match: 'the [<target>#Adjective] [<type>#Noun] [<target>played]',
+      match: 'the [<target>#Adjective] [<type>#Noun] [<vb>played]',
       run: res => {
-        t.equal(res['type'].text(), 'dog')
-        t.equal(res['target'].text(), 'big played')
+        t.equal(res['type'].text(), 'dog', 'got type')
+        t.equal(res['target'].text(), 'big', 'got target')
+        t.equal(res['vb'].text(), 'played', 'got verb')
       },
     },
   ]
@@ -161,9 +131,9 @@ test('named-match-overlap', function (t) {
 
 test('named-object-match-quick:', function (t) {
   let arr = [
-    ['the dog played', [{ word: 'the' }, { tag: 'Noun', named: 'target' }, { word: 'played' }], 'dog'],
-    ['the dog played', [{ word: 'dog', named: 'target' }], 'dog'],
-    ['the dog played', [{ tag: 'Verb', named: 'target' }], 'played'],
+    ['the dog played', [{ word: 'the' }, { tag: 'Noun', group: 'target' }, { word: 'played' }], 'dog'],
+    ['the dog played', [{ word: 'dog', group: 'target' }], 'dog'],
+    ['the dog played', [{ tag: 'Verb', group: 'target' }], 'played'],
   ]
 
   arr.forEach(function (a) {
@@ -178,9 +148,9 @@ test('named-object-match-quick:', function (t) {
 
 test('named-object-match:', function (t) {
   let arr = [
-    ['the dog played', [{ word: 'the' }, { tag: 'Noun', named: 'target' }, { word: 'played' }], 'dog'],
-    ['the dog played', [{ word: 'dog', named: 'target' }], 'dog'],
-    ['the dog played', [{ tag: 'Verb', named: 'target' }], 'played'],
+    ['the dog played', [{ word: 'the' }, { tag: 'Noun', group: 'target' }, { word: 'played' }], 'dog'],
+    ['the dog played', [{ word: 'dog', group: 'target' }], 'dog'],
+    ['the dog played', [{ tag: 'Verb', group: 'target' }], 'played'],
   ]
 
   arr.forEach(function (a) {
@@ -195,39 +165,17 @@ test('named-object-match:', function (t) {
 
 test('named-object-match-target:', function (t) {
   let arr = [
-    ['the dog played', [{ word: 'the' }, { tag: 'Noun', named: 'target' }, { word: 'played' }], 'dog'],
-    ['the dog played', [{ word: 'dog', named: 'target' }], 'dog'],
-    ['the dog played', [{ tag: 'Verb', named: 'target' }], 'played'],
+    ['the dog played', [{ word: 'the' }, { tag: 'Noun', group: 'target' }, { word: 'played' }], 'dog'],
+    ['the dog played', [{ word: 'dog', group: 'target' }], 'dog'],
+    ['the dog played', [{ tag: 'Verb', group: 'target' }], 'played'],
 
-    ['the dog played', [{ word: 'the' }, { tag: 'Noun', named: 'not-target' }, { word: 'played' }], ''],
-    ['the dog played', [{ word: 'dog', named: 'not-target' }], ''],
-    ['the dog played', [{ tag: 'Verb', named: 'not-target' }], ''],
+    ['the dog played', [{ word: 'the' }, { tag: 'Noun', group: 'not-target' }, { word: 'played' }], ''],
+    ['the dog played', [{ word: 'dog', group: 'not-target' }], ''],
+    ['the dog played', [{ tag: 'Verb', group: 'not-target' }], ''],
   ]
 
   arr.forEach(function (a) {
     const doc = nlp(a[0]).match(a[1]).groups('target')
-
-    const msg = a[0] + ' matches ' + JSON.stringify(a[1]) + ' ' + a[2]
-    t.equal(doc.text(), a[2], msg)
-  })
-
-  t.end()
-})
-
-test('named-object-match-number:', function (t) {
-  let arr = [
-    ['the dog played', [{ word: 'the' }, { tag: 'Noun', named: '0' }, { word: 'played' }], 'dog'],
-    ['the dog played', [{ word: 'the' }, { tag: 'Noun', named: 0 }, { word: 'played' }], 'dog'],
-    ['the dog played', [{ word: 'dog', named: 0 }], 'dog'],
-    ['the dog played', [{ tag: 'Verb', named: 0 }], 'played'],
-
-    ['the dog played', [{ word: 'the' }, { tag: 'Noun', named: 1 }, { word: 'played' }], ''],
-    ['the dog played', [{ word: 'dog', named: 1 }], ''],
-    ['the dog played', [{ tag: 'Verb', named: 1 }], ''],
-  ]
-
-  arr.forEach(function (a) {
-    const doc = nlp(a[0]).match(a[1]).groups(0)
 
     const msg = a[0] + ' matches ' + JSON.stringify(a[1]) + ' ' + a[2]
     t.equal(doc.text(), a[2], msg)

@@ -73,6 +73,13 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
           const g = logic.getGroup(state, state.t)
           g.length += skipNum
         }
+        // ensure we're at the end
+        if (reg.end === true) {
+          let end = state.phrase_length - 1
+          if (state.t + state.start_i !== end) {
+            return null
+          }
+        }
         state.t += skipNum
         continue
       } else if (!reg.optional) {
@@ -90,6 +97,13 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
         if (state.hasGroup === true) {
           const g = logic.getGroup(state, state.t)
           g.length += skipNum
+        }
+        // ensure we're at the end
+        if (reg.end === true) {
+          let end = state.phrase_length - 1
+          if (state.t + state.start_i !== end) {
+            return null
+          }
         }
         state.t += skipNum
         continue

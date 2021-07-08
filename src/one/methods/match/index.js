@@ -11,6 +11,15 @@ const addSentence = function (res, n) {
   return res
 }
 
+const handleStart = function (terms, regs, n, group) {
+  let res = fromHere(terms, regs, 0, terms.length)
+  if (res) {
+    res = addSentence(res, n)
+    return getGroup([res], group)
+  }
+  return { ptrs: [], byGroup: {} }
+}
+
 // ok, here we go.
 const runMatch = function (docs, todo, cache) {
   cache = cache || []
@@ -29,13 +38,8 @@ const runMatch = function (docs, todo, cache) {
     }
     // ^start regs only run once-
     if (regs[0].start === true) {
-      let res = fromHere(terms, regs, 0, terms.length)
-      if (res) {
-        res = addSentence(res, n)
-        return getGroup([res], group)
-      }
+      return handleStart(terms, regs, n, group)
     }
-
     //ok, try starting the match now from every term
     for (let i = 0; i < terms.length; i += 1) {
       let slice = terms.slice(i)

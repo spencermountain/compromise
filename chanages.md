@@ -23,3 +23,4 @@ match(['foo', 'far'])
 
 - move fuzzy matching to a plugin
 - drop array support in match methods
+- drop support for using Doc as match input

@@ -8,8 +8,9 @@ import nlp from './src/index.js'
 // let doc = nlp('the big dog played')
 // doc.match('the [<target>#Adjective] [<type>#Noun] [<target>played]', 'target').debug()
 
-let doc = nlp("matt does but matthew doesn't")
-let m = doc.match('^(/matt/|frank) .').debug()
+let doc = nlp('doug is good')
+let m = doc.match('.').match('.').debug()
+// console.log(m.match('.'))
 
 /*
 

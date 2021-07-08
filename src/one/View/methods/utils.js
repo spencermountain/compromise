@@ -68,6 +68,16 @@ const methods = {
     view.document = document
     return this
   },
+  /** */
+  trim: function () {
+    let docs = this.docs
+    let start = docs[0][0]
+    start.pre = ''
+    let last = docs[docs.length - 1]
+    let end = last[last.length - 1]
+    end.post = ''
+    return this
+  },
 }
 methods.group = methods.groups
 methods.clone = methods.fork

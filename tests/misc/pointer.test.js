@@ -11,13 +11,13 @@ test('', function (t) {
     // no doc
     [[], ``],
     // first sentence
-    [['/0'], `one two three. `],
-    [['/0/0'], `one two three. `],
-    [['/0/0:1'], `one `],
-    [['/0/0:2'], `one two `],
-    [['/0/0:3'], `one two three. `],
-    [['/0/0:13'], `one two three. `], //term-overflow
-    [['/0/0:-'], `one two three. `],
+    [['/0'], `one two three.`],
+    [['/0/0'], `one two three.`],
+    [['/0/0:1'], `one`],
+    [['/0/0:2'], `one two`],
+    [['/0/0:3'], `one two three.`],
+    [['/0/0:13'], `one two three.`], //term-overflow
+    [['/0/0:-'], `one two three.`],
     // nth sentence
     [['/1'], `four five six.`],
     [['/120'], ``],

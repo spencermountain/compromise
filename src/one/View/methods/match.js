@@ -1,5 +1,20 @@
 import invert from './_invert.js'
 
+const relPointer = function (ptrs, parent) {
+  if (!parent) {
+    return ptrs
+  }
+  ptrs.forEach(ptr => {
+    let n = ptr[0]
+    if (parent[n]) {
+      ptr[0] = parent[n][0]
+      ptr[1] += parent[n][1]
+      ptr[2] += parent[n][1]
+    }
+  })
+  return ptrs
+}
+
 const matchOne = function (regs, group) {
   let { methods, docs } = this
   if (typeof regs === 'string') {
@@ -19,6 +34,7 @@ const match = function (regs, group) {
   }
   let todo = { regs, group }
   let { ptrs, byGroup } = methods.match(docs, todo, this._cache)
+  ptrs = relPointer(ptrs, this.pointer)
   let view = this.update(ptrs)
   view._groups = byGroup
   return view

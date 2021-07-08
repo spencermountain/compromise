@@ -2,14 +2,24 @@ import failFast from './01-failFast.js'
 import fromHere from './02-from-here.js'
 import getGroup from './04-getGroup.js'
 
+// make proper pointers
+const addSentence = function (res, n) {
+  res.pointer[0] = n
+  Object.keys(res.groups).forEach(k => {
+    res.groups[k][0] = n
+  })
+  return res
+}
+
 // ok, here we go.
 const runMatch = function (docs, todo, cache) {
   cache = cache || []
   let { regs, group, justOne } = todo
   let results = []
   if (regs.length === 0) {
-    return []
+    return { ptrs: [], byGroup: {} }
   }
+
   const minLength = regs.filter(r => r.optional !== true && r.negative !== true).length
   docs: for (let n = 0; n < docs.length; n += 1) {
     let terms = docs[n]
@@ -17,7 +27,16 @@ const runMatch = function (docs, todo, cache) {
     if (cache[n] && failFast(regs, cache[n])) {
       continue
     }
-    //try starting the match, from every term
+    // ^start regs only run once-
+    if (regs[0].start === true) {
+      let res = fromHere(terms, regs, 0, terms.length)
+      if (res) {
+        res = addSentence(res, n)
+        return getGroup([res], group)
+      }
+    }
+
+    //ok, try starting the match now from every term
     for (let i = 0; i < terms.length; i += 1) {
       let slice = terms.slice(i)
       // ensure it's long-enough
@@ -27,11 +46,7 @@ const runMatch = function (docs, todo, cache) {
       let res = fromHere(slice, regs, i, terms.length)
       // did we find a result?
       if (res) {
-        // make proper pointers
-        res.pointer[0] = n
-        Object.keys(res.groups).forEach(k => {
-          res.groups[k][0] = n
-        })
+        res = addSentence(res, n)
         results.push(res)
         // should we stop here?
         if (justOne === true) {

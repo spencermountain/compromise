@@ -156,6 +156,7 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
       }
       continue
     }
+
     // ok, it doesn't match.
     // did it *actually match* a negative?
     if (reg.negative) {
@@ -184,8 +185,12 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
     }
     return null //die
   }
+
   //return our results, as pointers
   let pntr = [null, start_i, state.t + start_i] //`${start_i}:${state.t + start_i}`
+  if (pntr[1] === pntr[2]) {
+    return null
+  }
   let groups = {}
   Object.keys(state.groups).forEach(k => {
     let o = state.groups[k]

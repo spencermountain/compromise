@@ -39,7 +39,9 @@ const runMatch = function (docs, todo, cache) {
         }
         // skip ahead, over these results
         let end = res.pointer[2]
-        i = Math.abs(end - 1)
+        if (Math.abs(end - 1) > i) {
+          i = Math.abs(end - 1)
+        }
       }
     }
   }

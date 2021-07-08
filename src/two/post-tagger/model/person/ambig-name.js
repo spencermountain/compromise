@@ -78,8 +78,6 @@ export default [
   { match: `${personAdj} #Acronym? #ProperNoun`, tag: 'Person', reason: 'rusty-smith' },
   // very rusty
   { match: `#Adverb [${personAdj}]`, group: 0, tag: 'Adjective', reason: 'really-rich' },
-  // dark green
-  { match: `[${personAdj}] #Adjective`, group: 0, tag: 'Adverb', reason: 'dark-green' },
 
   // ===person-verb===
   // would wade

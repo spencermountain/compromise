@@ -75,5 +75,8 @@ methods.hasContraction = function (term) {
 methods.isAcronym = function (term) {
   return term.tags.has('Acronym')
 }
+methods.isKnown = function (term) {
+  return term.tags.size > 0
+}
 
 export default methods

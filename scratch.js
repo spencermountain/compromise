@@ -5,7 +5,7 @@ import nlp from './src/index.js'
 
 nlp.verbose(true)
 
-let r = nlp(`FIFA`).match('@isAcronym').debug()
+let r = nlp(`dark green`).debug()
 // console.log(nlp('toronto'))
 // let r = nlp('toronto').debug()
 // console.log(r.document)

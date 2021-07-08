@@ -2,13 +2,6 @@ import debug from './debug.js'
 import out from './out.js'
 import { textFromDoc, textFromTerms } from './text.js'
 
-const toText = function (terms) {
-  return terms.reduce((txt, t) => {
-    txt += t.pre + t.text + t.post
-    return txt
-  }, '')
-}
-
 const methods = {
   /** return data */
   json: function () {
@@ -24,8 +17,16 @@ const methods = {
   },
   /** */
   text: function () {
-    let perfect = this.pointer ? false : true
-    return textFromDoc(this.docs, perfect)
+    let keepSpace = true
+    let keepPunct = true
+    if (this.pointer) {
+      keepSpace = false
+      let ptr = this.pointer[0]
+      if (ptr && ptr[1]) {
+        keepPunct = false
+      }
+    }
+    return textFromDoc(this.docs, keepSpace, keepPunct)
   },
   /** */
   debug: debug,

@@ -38,9 +38,12 @@ const methods = {
   },
   /** */
   eq: function (n) {
-    let ptr = this.pointer[n]
-    if (ptr) {
-      return this.update([ptr])
+    let ptr = this.pointer
+    if (!ptr) {
+      ptr = this.docs.map((_doc, i) => [i])
+    }
+    if (ptr[n]) {
+      return this.update([ptr[n]])
     }
     return this.update([])
   },

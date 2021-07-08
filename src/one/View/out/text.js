@@ -1,24 +1,31 @@
-const trimEnd = /[,:;).?! ]+$/
-const trimStart = /^[('" ]+/
+const trimEnd = /[,:;).?!]+$/
+const trimStart = /^[('"]+/
 
-const textFromTerms = function (terms, perfect) {
+const textFromTerms = function (terms, keepSpace, keepPunct) {
   let txt = ''
   terms.forEach(t => {
     txt += t.pre + t.text + t.post
   })
-  if (perfect === false) {
+  if (keepPunct === false) {
     txt = txt.replace(trimStart, '')
     txt = txt.replace(trimEnd, '')
+  }
+  if (keepSpace === false) {
+    txt = txt.trim()
   }
   return txt
 }
 
-const textFromDoc = function (docs, perfect) {
+const textFromDoc = function (docs, keepSpace, keepPunct) {
   let text = ''
-  docs.forEach(terms => {
-    text += textFromTerms(terms, true) //internally perfect
-  })
-  if (perfect === false) {
+  for (let i = 0; i < docs.length; i += 1) {
+    // middle
+    text += textFromTerms(docs[i], true, true)
+  }
+  if (!keepSpace) {
+    text = text.trim()
+  }
+  if (keepPunct === false) {
     text = text.replace(trimStart, '')
     text = text.replace(trimEnd, '')
   }

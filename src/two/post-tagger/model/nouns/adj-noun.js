@@ -11,7 +11,8 @@ export default [
   { match: `(have|had) [#Adjective] #Preposition .`, group: 0, tag: 'Noun', reason: 'have-fun' },
   // the orange
   {
-    match: '#Determiner [(#Adjective && !#Comparative && !#Superlative)$',
+    match: '#Determiner [(#Adjective)]$',
+    notif: ['Comparative', 'Superlative'],
     group: 0,
     tag: 'Noun',
     reason: 'the-orange',

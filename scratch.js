@@ -5,7 +5,7 @@ import nlp from './src/index.js'
 
 nlp.verbose(true)
 
-let r = nlp(`dark green`).debug()
+let r = nlp(`it was a redefining moment`).debug()
 // console.log(nlp('toronto'))
 // let r = nlp('toronto').debug()
 // console.log(r.document)

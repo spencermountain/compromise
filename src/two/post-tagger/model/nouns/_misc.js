@@ -52,7 +52,12 @@ export default [
   { match: `a #Noun+ or #Adverb+? [#Verb]`, group: 0, tag: 'Noun', reason: 'noun-or-noun' },
   // walk the walk
   { match: '(the|those|these|a|an) #Adjective? [#Infinitive]', group: 0, tag: 'Noun', reason: 'det-inf' },
-  { match: '(the|those|these|a|an) #Adjective? [#PresentTense]', group: 0, tag: 'Noun', reason: 'det-pres' },
+  {
+    match: '(the|those|these|a|an) #Adjective? [(#PresentTense && !#Gerund)]',
+    group: 0,
+    tag: 'Noun',
+    reason: 'det-pres',
+  },
   { match: '(the|those|these|a|an) #Adjective? [#PastTense]', group: 0, tag: 'Noun', reason: 'det-past' },
 
   // ==== Actor ====

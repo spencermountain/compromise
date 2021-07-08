@@ -3,7 +3,7 @@ import nlp from '../lib/_lib.js'
 
 test('encoding-match:', function (t) {
   const r = nlp('it is * nice')
-  const str = r.match('is \\*').trim().out()
+  const str = r.match('is \\*').out().trim()
   t.equal(str, 'is *', 'encode asterix')
 
   // r = nlp('it is + nice');
@@ -23,41 +23,41 @@ test('reserved-word-in-src:', function (t) {
   t.end()
 })
 
-test('reserved-word-in-match:', function (t) {
-  const r = nlp('fo foo fulala repeat')
-  t.equal(r.has(`constructor`), false, 'single')
-  t.equal(r.has(`#constructor`), false, 'tag')
-  t.equal(r.has(`(upcoming|constructor)`), false, 'anyOf')
-  t.equal(r.has(`constructor+`), false, 'manyOf')
-  t.equal(r.has(`constructor{2,4}`), false, 'someOf')
-  t.end()
-})
+// test('reserved-word-in-match:', function (t) {
+//   const r = nlp('fo foo fulala repeat')
+//   t.equal(r.has(`constructor`), false, 'single')
+//   t.equal(r.has(`#constructor`), false, 'tag')
+//   t.equal(r.has(`(upcoming|constructor)`), false, 'anyOf')
+//   t.equal(r.has(`constructor+`), false, 'manyOf')
+//   t.equal(r.has(`constructor{2,4}`), false, 'someOf')
+//   t.end()
+// })
 
-test('test-infinite-loop', function (t) {
-  const weirdDoc = nlp('^ ? * . + $')
-  weirdDoc.match('is?')
-  weirdDoc.match('.?')
-  weirdDoc.match('*')
-  weirdDoc.match('.+')
-  weirdDoc.match('+')
-  weirdDoc.match('?')
-  weirdDoc.match('.')
-  weirdDoc.match('? * . +')
-  weirdDoc.not('?')
-  weirdDoc.not('*')
-  weirdDoc.not('^')
-  weirdDoc.not('$')
-  weirdDoc.not('+')
-  weirdDoc.not('? * . +')
-  t.ok(true, 'didnt regress')
+// test('test-infinite-loop', function (t) {
+//   const weirdDoc = nlp('^ ? * . + $')
+//   weirdDoc.match('is?')
+//   weirdDoc.match('.?')
+//   weirdDoc.match('*')
+//   weirdDoc.match('.+')
+//   weirdDoc.match('+')
+//   weirdDoc.match('?')
+//   weirdDoc.match('.')
+//   weirdDoc.match('? * . +')
+//   weirdDoc.not('?')
+//   weirdDoc.not('*')
+//   weirdDoc.not('^')
+//   weirdDoc.not('$')
+//   weirdDoc.not('+')
+//   weirdDoc.not('? * . +')
+//   t.ok(true, 'didnt regress')
 
-  let str = 'And you are?. Marshal'
-  let have = nlp(str).all().out()
-  t.equal(have, str, 'regression #1')
+//   let str = 'And you are?. Marshal'
+//   let have = nlp(str).all().out()
+//   t.equal(have, str, 'regression #1')
 
-  str = `- where is she.Oh.  you guys don't know?`
-  have = nlp(str).all().out()
-  t.equal(have, str, 'regression #2')
+//   str = `- where is she.Oh.  you guys don't know?`
+//   have = nlp(str).all().out()
+//   t.equal(have, str, 'regression #2')
 
-  t.end()
-})
+//   t.end()
+// })

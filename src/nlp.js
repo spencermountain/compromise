@@ -37,6 +37,17 @@ nlp.model = () => world.model
 
 nlp.version = version
 
+/** don't run the POS-tagger */
+nlp.tokenize = function (document, lex) {
+  // add user-given words to lexicon
+  if (lex) {
+    Object.assign(world.model.lexicon, lex)
+  }
+  // only run the first parser
+  document = world.parsers[0](document, world)
+  return new View(document)
+}
+
 // apply our only default plugins
 export default nlp
 const { parseMatch, plugin } = nlp

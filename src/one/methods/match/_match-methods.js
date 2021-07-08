@@ -71,4 +71,9 @@ methods.hasContraction = function (term) {
   return Boolean(term.implicit)
 }
 
+/** is it an acronym */
+methods.isAcronym = function (term) {
+  return term.tags.has('Acronym')
+}
+
 export default methods

@@ -156,6 +156,7 @@ export default [
   'sunshine',
   'tea',
   'tennis',
+  'time',
   'thermodynamics',
   'thunder',
   'toothpaste',

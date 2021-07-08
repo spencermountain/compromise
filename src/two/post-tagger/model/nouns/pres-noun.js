@@ -63,5 +63,11 @@ export default [
   { match: 'there (are|were) #Adjective? [#PresentTense]', group: 0, tag: 'Plural', reason: 'there-are' },
 
   // 30 trains
-  { match: '(#Value && !1 && !one) [#PresentTense]', group: 0, ifNo: ['#Copula'], tag: 'Plural', reason: '2-trains' },
+  {
+    match: '(#Value && !1 && !one) [(#PresentTense && !#Copula)]',
+    group: 0,
+    ifNo: ['#Copula'],
+    tag: 'Plural',
+    reason: '2-trains',
+  },
 ]

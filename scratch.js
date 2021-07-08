@@ -11,8 +11,10 @@ nlp.verbose(true)
 // .toLowerCase()
 
 // const r = nlp('David is amazing..').debug()
-const r = nlp("Recently I'm having trouble").debug()
+// const r = nlp('I could spend a year in Spain').debug()
+const r = nlp('Anything after 12 is a bonus').debug()
 
+// console.log(nlp.model().lexicon.time)
 /*
 ['', '#'],
 ['', '#'],

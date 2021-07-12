@@ -25,3 +25,7 @@ match(['foo', 'far'])
 - drop array support in match methods
 - drop support for using Doc as match input
 - drop support for re-used capture-group names in one match
+
+- _[breaking]_ -
+
+---

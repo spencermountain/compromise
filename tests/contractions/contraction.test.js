@@ -1,0 +1,118 @@
+import test from 'tape'
+import nlp from '../lib/_lib.js'
+
+test('tricky contractions', function (t) {
+  let doc = nlp(`I’m `)
+  doc.contractions().expand()
+  t.equal(doc.text(), 'I am ', "i'm")
+
+  doc = nlp(` i can’t `)
+  doc.contractions().expand()
+  t.equal(doc.text(), ' i can not ', "i can't")
+
+  doc = nlp(`spencer’s clean`)
+  doc.contractions().expand()
+  t.equal(doc.text(), 'spencer is clean', "spencer's")
+
+  doc = nlp(`wouldn’t be good`)
+  doc.contractions().expand()
+  t.equal(doc.text(), 'would not be good', 'wouldnt')
+
+  doc = nlp(`what’d you see`)
+  doc.contractions().expand()
+  t.equal(doc.text(), 'what did you see', 'whatd')
+
+  doc = nlp(`spencer’d go see`)
+  doc.contractions().expand()
+  t.equal(doc.text(), 'spencer would go see', 'spencerd')
+
+  t.end()
+})
+
+// test('contractions v possessive', function (t) {
+//   let str = nlp("spencer's not cool").normalize({ contractions: true }).text()
+//   t.equal(str, 'spencer is not cool', 'adj contraction')
+
+//   str = nlp("spencer's walk").normalize({ contractions: true }).text()
+//   t.equal(str, "spencer's walk", 'noun not contraction')
+
+//   str = nlp("spencer's runs").normalize({ contractions: true }).text()
+//   t.equal(str, "spencer's runs", 'present-tense not contraction')
+//   t.end()
+// })
+
+test('match contractions/possessives', function (t) {
+  let doc = nlp(`i think it's spencer's`)
+  t.equal(doc.has('it'), true, 'has it')
+  t.equal(doc.has('spencer'), true, 'has spencer')
+  t.equal(doc.has(`spencer's`), true, "has spencer's")
+  t.equal(doc.has(`i'm`), false, 'not false-positive')
+  t.equal(doc.has(`it'll`), false, 'not false-positive-2')
+  t.end()
+})
+
+test('contraction whitespace', function (t) {
+  let doc = nlp(`i didn't know.`)
+  t.equal(doc.text(), `i didn't know.`, 'init-whitespace')
+
+  doc.contractions().expand()
+  t.equal(doc.text(), `i did not know.`, 'expanded-whitespace')
+
+  doc = nlp(`i didn't.`)
+  t.equal(doc.text(), `i didn't.`, 'init-period')
+
+  doc.contractions().expand()
+  t.equal(doc.text(), `i did not.`, 'expanded-period')
+
+  t.end()
+})
+
+test('number-range', function (t) {
+  let doc = nlp(`between 5-7.`)
+  t.equal(doc.has('5 to 7'), true, 'range-preposition-match')
+  t.equal(doc.has('#NumberRange'), true, 'has NumberRange tag')
+  t.equal(doc.has('#Value'), true, 'has Value tag')
+
+  let arr = nlp('1-2').contractions().expand().match('#Value').out('array')
+  t.equal(arr.length, 2, 'found numbers')
+
+  doc = nlp('20th-21st')
+  t.equal(doc.has('#NumberRange'), true, 'ordinal has NumberRange tag')
+  t.equal(doc.has('#Ordinal'), true, 'has Ordinal tag')
+  arr = doc.contractions().expand().terms().out('array')
+  t.deepEqual(arr, ['20th', 'to', '21st'])
+
+  doc = nlp('4-5pm')
+  t.equal(doc.has('#NumberRange'), true, 'time has NumberRange tag')
+  t.equal(doc.has('#Ordinal'), false, 'time is not an Ordinal tag')
+  arr = doc.contractions().expand().terms().out('array')
+  t.deepEqual(arr, ['4', 'to', '5pm'])
+
+  doc = nlp('3:45-11pm')
+  t.equal(doc.has('#NumberRange'), true, 'time has NumberRange tag')
+  t.equal(doc.has('#Time'), true, 'time tag')
+  arr = doc.contractions().expand().terms().out('array')
+  t.deepEqual(arr, ['3:45', 'to', '11pm'])
+  t.end()
+})
+
+test('number-range with spaces', function (t) {
+  let doc = nlp('12 - 14')
+  t.equal(doc.has('#Value to #NumberRange'), true, 'has NumberRange tags')
+  t.equal(doc.text(), '12 - 14', 'text is normal')
+  t.equal(doc.contractions().expand().text(), '12 to 14', 'contraction expands')
+
+  doc = nlp('4 - 5pm')
+  t.equal(doc.has('#Value to #NumberRange'), true, 'has NumberRange tags #2')
+  t.equal(doc.text(), '4 - 5pm', 'text is proper #2')
+  t.equal(doc.contractions().expand().text(), '4 to 5pm', 'contraction expands #2')
+
+  t.end()
+})
+
+test('french-contraction', function (t) {
+  let doc = nlp(`oh j'aime ca`)
+  t.equal(doc.has('aime'), true, 'has verb')
+  t.equal(doc.has('je'), true, 'has je')
+  t.end()
+})

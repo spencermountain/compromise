@@ -1,20 +1,24 @@
 /* eslint-disable no-console, no-unused-vars */
 // import './tests/lib/_error.js'
 import nlp from './src/index.js'
-// import nlp from './src/one/index.js'
 
-nlp.verbose(true)
+// nlp.verbose(true)
 
-// Todo:
-// * multword add lexicon
-// .eq(0).terms(0) issue
-// .toLowerCase()
+let doc = nlp('i am good')
+console.log(doc.document)
+// console.log('contract')
+// doc.contract()
+// console.log(doc.out('array'))
 
-// const r = nlp('David is amazing..').debug()
-// const r = nlp('I could spend a year in Spain').debug()
-const r = nlp('Anything after 12 is a bonus').debug()
+// console.log('expand')
+// doc.contractions().expand()
+// console.log(doc.out('array'))
 
-// console.log(nlp.model().lexicon.time)
+// console.log('contract')
+// console.log(doc.document)
+// doc.contract()
+// console.log(doc.out('array'))
+
 /*
 ['', '#'],
 ['', '#'],

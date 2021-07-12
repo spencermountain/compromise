@@ -12,6 +12,10 @@ const lastNoun = function (terms, i) {
   return null
 }
 
+const irregular = {
+  "can't": ['can', 'not'],
+}
+
 //ain't -> are/is not
 const apostropheT = function (terms, i) {
   if (terms[i].normal === "ain't" || terms[i].normal === 'aint') {
@@ -28,6 +32,9 @@ const apostropheT = function (terms, i) {
       }
     }
     return ['is', 'not']
+  }
+  if (irregular.hasOwnProperty(terms[i].normal)) {
+    return irregular[terms[i].normal]
   }
   let before = terms[i].normal.replace(/n't/, '')
   return [before, 'not']

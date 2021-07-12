@@ -98,8 +98,8 @@ test('reserved words:', function (t) {
   t.ok(r.contractions().data(), 'runs contractions subset')
   // t.ok(r.parentheses().data(), 'runs parentheses subset')
   // t.ok(r.lists().data(), 'runs lists subset')
-  // t.ok(r.terms().data(), 'runs terms subset')
-  // t.ok(r.pronouns().data(), 'runs pronouns subset')
+  t.ok(r.terms().data(), 'runs terms subset')
+  t.ok(r.pronouns().data(), 'runs pronouns subset')
   t.end()
 })
 
@@ -110,6 +110,6 @@ test('co-erce reserved words', function (t) {
   r.tag('Adjective')
   t.ok(r.match('#Noun').data(), 'runs untag')
   t.equal(r.terms().slice(0, 2).length, 2, 'runs slice')
-  t.ok(r.append('constructor').text(), 'runs append')
+  // t.ok(r.append('constructor').text(), 'runs append')
   t.end()
 })

@@ -5,9 +5,11 @@ import places from './places/index.js'
 import verbs from './verbs/index.js'
 import contractions from './contractions/index.js'
 import selections from './_selections.js'
+import abbreviations from './abbreviations.js'
 
 const plugin = function (world, View) {
   selections(world, View)
+  abbreviations(world, View)
   contractions(world, View)
   dates(world, View)
   numbers(world, View)

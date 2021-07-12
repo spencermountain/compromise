@@ -122,6 +122,13 @@ const methods = {
     })
     return this
   },
+  /** how many seperate terms does the document have? */
+  wordCount: function () {
+    return this.list.reduce((count, p) => {
+      count += p.wordCount()
+      return count
+    }, 0)
+  },
 }
 methods.group = methods.groups
 methods.clone = methods.fork

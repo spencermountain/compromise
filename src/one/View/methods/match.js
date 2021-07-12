@@ -100,4 +100,4 @@ const not = function (regs) {
   return this.update(notPtrs)
 }
 
-export { matchOne, match, has, ifFn as if, ifNo, not }
+export default { matchOne, match, has, if: ifFn, ifNo, not }

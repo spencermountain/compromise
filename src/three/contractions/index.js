@@ -18,6 +18,7 @@ const plugin = function (world, View) {
         let isTitleCase = titleCase.test(terms[0].text)
         terms.forEach((t, i) => {
           t.text = t.implicit
+          delete t.implicit
           //add whitespace
           if (i < terms.length - 1 && t.post === '') {
             t.post += ' '

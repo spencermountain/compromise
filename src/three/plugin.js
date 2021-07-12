@@ -4,8 +4,10 @@ import people from './people/index.js'
 import places from './places/index.js'
 import verbs from './verbs/index.js'
 import contractions from './contractions/index.js'
+import selections from './_selections.js'
 
 const plugin = function (world, View) {
+  selections(world, View)
   contractions(world, View)
   dates(world, View)
   numbers(world, View)

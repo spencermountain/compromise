@@ -16,6 +16,7 @@ const methods = {
       return {
         text: textFromTerms(terms, false),
         terms: terms.map(t => {
+          t = Object.assign({}, t)
           t.tags = Array.from(t.tags)
           return t
         }),

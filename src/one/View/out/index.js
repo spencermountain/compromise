@@ -59,4 +59,7 @@ const methods = {
   /** */
   out: out,
 }
+// aliases
+methods.data = methods.json
+
 export default methods

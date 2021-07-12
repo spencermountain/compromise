@@ -27,7 +27,9 @@ const grow = function (model, methods) {
       lex[inf] = lex[inf] || 'Infinitive'
       Object.keys(conj).forEach(tag => {
         let word = conj[tag]
-        lex[word] = lex[word] || tag
+        if (word !== '') {
+          lex[word] = lex[word] || tag
+        }
       })
     })
   }
@@ -37,6 +39,10 @@ const grow = function (model, methods) {
       lex[a[1]] = lex[a[1]] || 'Plural'
     })
   }
+  // cleanup
+  delete lex['']
+  delete lex[null]
+  delete lex[' ']
   // console.log('after:', Object.keys(lex).length)
 }
 export default grow

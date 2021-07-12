@@ -21,8 +21,8 @@ const endsWith = function (str = '', byEnd) {
 }
 
 const checkRegex = function (term, model) {
-  let str = term.normal || term.implicit
-  let arr = startsWith(term.text, model.regex) || endsWith(str, model.endsWith)
+  let str = term.text || term.implicit
+  let arr = startsWith(str, model.regex) || endsWith(str, model.endsWith)
   if (arr !== undefined) {
     setTag(term, arr[1], `regex- '${arr[2] || arr[0]}'`)
     return true

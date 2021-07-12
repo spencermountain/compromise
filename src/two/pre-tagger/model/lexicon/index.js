@@ -36,4 +36,8 @@ Object.keys(lexData).forEach(tag => {
   })
   addWords(wordsObj, lexicon)
 })
+// cleanup
+delete lexicon['']
+delete lexicon[null]
+delete lexicon[' ']
 export default lexicon

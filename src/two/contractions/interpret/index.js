@@ -87,7 +87,7 @@ const contractions = (document = [], model, methods) => {
           words = numberRange(terms, i)
           if (words) {
             insertContraction(document, [n, i], words, model)
-            terms.forEach(t => t.tags.add('NumberRange'))
+            reTag(terms, model, methods)
             return true
           }
         }

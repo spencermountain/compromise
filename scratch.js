@@ -5,12 +5,11 @@ console.log(nlp.model().lexicon[''])
 
 // nlp.verbose(true)
 
-let str = 'a f a a b c c'
-let r = nlp(str).terms().sort('freq').debug()
-// r.match('#Noun').data()
-// r.terms().slice(0, 2).length
-// r.append('constructor').text()
-
+let str = '(hey cool) and cool'
+let doc = nlp(str).toParentheses().dehyphenate()
+// doc.terms().post('! ')
+// console.log(doc.pre('"', true))
+console.log(doc.text())
 /*
 ['', '#'],
 ['', '#'],

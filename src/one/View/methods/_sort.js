@@ -53,7 +53,6 @@ const byFreq = function (arr) {
     counts[o.normal] = counts[o.normal] || 0
     counts[o.normal] += 1
   })
-  console.log(counts)
   // sort by freq
   arr.sort((a, b) => {
     let left = counts[a.normal]

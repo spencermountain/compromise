@@ -25,6 +25,8 @@ match(['foo', 'far'])
 - drop array support in match methods
 - drop support for using Doc as match input
 - drop support for re-used capture-group names in one match
+- drop '.get()' alias - use '.eq()'
+- drop support for empty '.split()' methods - which used to split the parent
 
 - _[breaking]_ -
 

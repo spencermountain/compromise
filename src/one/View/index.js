@@ -57,6 +57,16 @@ class View {
   get length() {
     return this.docs.length
   }
+  // return a more-hackable pointer
+  get fullPointer() {
+    let { docs, pointer } = this
+    let ptrs = pointer || docs.map((_d, n) => [n])
+    return ptrs.map((a, n) => {
+      a[1] = a[1] || 0
+      a[2] = a[2] || docs[n].length
+      return a
+    })
+  }
   // create a new View, from this one
   update(pointer) {
     let m = new View(this.document, pointer)

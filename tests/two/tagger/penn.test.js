@@ -1,6 +1,7 @@
 import test from 'tape'
 import nlp from '../_lib.js'
 import penn from '../_pennSample.js'
+const here = '[two/penn] '
 
 const softMapping = {
   CC: 'Conjunction',
@@ -71,7 +72,7 @@ test('pennTreebank-test:', function (t) {
         break
       }
     }
-    t.ok(perfect, msg)
+    t.ok(perfect, here + msg)
   })
   t.end()
 })

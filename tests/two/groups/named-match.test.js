@@ -1,31 +1,32 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[two/named-match] '
 
 test('named-match-overlap', function (t) {
   let doc = nlp('june the 5th, july the 7th, and sept the 12th.')
 
   let m = doc.match('[<month>#Month]')
 
-  t.equal(m.length, 3, 'Should have 3 results')
+  t.equal(m.length, 3, here + 'Should have 3 results')
 
-  t.equal(m.groups('month').length, 3, 'Should have 3 capture group results')
+  t.equal(m.groups('month').length, 3, here + 'Should have 3 capture group results')
 
   t.end()
 })
 
 test('named-match-or:', function (t) {
   let arr = [
-    ['the dog played again', 'the [<target>(#Noun|#Verb)] played [<0>(#Adverb)]', 'dog'],
-    ['the dog played again', 'the [<target>(#Noun|#Verb)] played [<another>(#Adverb)]', 'dog'],
-    ['the dog played', 'the [<target>(#Noun|#Verb)] played', 'dog'],
-    ['the dog played', 'the [<target>(#Noun)] played', 'dog'],
+    ['the dog played again', 'the [<target>(#Noun|#Verb)] played [<0>(#Adverb)]', here + 'dog'],
+    ['the dog played again', 'the [<target>(#Noun|#Verb)] played [<another>(#Adverb)]', here + 'dog'],
+    ['the dog played', 'the [<target>(#Noun|#Verb)] played', here + 'dog'],
+    ['the dog played', 'the [<target>(#Noun)] played', here + 'dog'],
   ]
 
   arr.forEach(function (a) {
     const doc = nlp(a[0]).match(a[1]).groups('target')
 
     const msg = a[0] + ' matches ' + JSON.stringify(a[1]) + ' ' + a[2]
-    t.equal(doc.text(), a[2], msg)
+    t.equal(doc.text(), a[2], here + msg)
   })
 
   t.end()
@@ -48,7 +49,7 @@ test('named-match-auto:', function (t) {
     const res = doc.groups(0)
 
     const msg = a[0] + ' matches ' + JSON.stringify(a[1]) + ' ' + a[2]
-    t.equal(res.text(), a[2], msg)
+    t.equal(res.text(), a[2], here + msg)
   })
 
   t.end()
@@ -67,7 +68,7 @@ test('named-match-auto-multi:', function (t) {
     const res = doc.groups(0)
 
     const msg = a[0] + ' matches ' + JSON.stringify(a[1]) + ' ' + a[2]
-    t.equal(res.text(), a[2], msg)
+    t.equal(res.text(), a[2], here + msg)
   })
 
   t.end()
@@ -76,13 +77,13 @@ test('named-match-auto-multi:', function (t) {
 test('named-match-group', function (t) {
   const res = nlp('the dog played').match('the [<type>#Noun] played').groups()
 
-  t.equal(res['type'].text(), 'dog')
+  t.equal(res['type'].text(), here + 'dog')
 
   const doc2 = nlp('the big big big dog played').match('the [<size>#Adjective+] [<type>#Noun] played')
   const res2 = doc2.groups()
 
-  t.equal(res2['type'].text(), 'dog')
-  t.equal(res2['size'].text(), 'big big big')
+  t.equal(res2['type'].text(), here + 'dog')
+  t.equal(res2['size'].text(), here + 'big big big')
 
   t.end()
 })
@@ -104,8 +105,8 @@ test('named-match-to-json:', function (t) {
     const json = res.target.out('array')
     const text = res.target.text()
 
-    t.equal(text, a[2])
-    t.deepEqual(json, a[3], a[0])
+    t.equal(text, a[2], here + a[0])
+    t.deepEqual(json, a[3], here + a[0])
   })
 
   t.end()
@@ -117,9 +118,9 @@ test('named-match-overlap', function (t) {
       input: 'the big dog played',
       match: 'the [<target>#Adjective] [<type>#Noun] [<vb>played]',
       run: res => {
-        t.equal(res['type'].text(), 'dog', 'got type')
-        t.equal(res['target'].text(), 'big', 'got target')
-        t.equal(res['vb'].text(), 'played', 'got verb')
+        t.equal(res['type'].text(), 'dog', here + 'got type')
+        t.equal(res['target'].text(), 'big', here + 'got target')
+        t.equal(res['vb'].text(), 'played', here + 'got verb')
       },
     },
   ]
@@ -140,7 +141,7 @@ test('named-object-match-quick:', function (t) {
     const doc = nlp(a[0]).match(a[1], 'target')
 
     const msg = a[0] + ' matches ' + JSON.stringify(a[1]) + ' ' + a[2]
-    t.equal(doc.text(), a[2], msg)
+    t.equal(doc.text(), a[2], here + msg)
   })
 
   t.end()
@@ -157,7 +158,7 @@ test('named-object-match:', function (t) {
     const doc = nlp(a[0]).match(a[1]).groups('target')
 
     const msg = a[0] + ' matches ' + JSON.stringify(a[1]) + ' ' + a[2]
-    t.equal(doc.text(), a[2], msg)
+    t.equal(doc.text(), a[2], here + msg)
   })
 
   t.end()
@@ -178,7 +179,7 @@ test('named-object-match-target:', function (t) {
     const doc = nlp(a[0]).match(a[1]).groups('target')
 
     const msg = a[0] + ' matches ' + JSON.stringify(a[1]) + ' ' + a[2]
-    t.equal(doc.text(), a[2], msg)
+    t.equal(doc.text(), a[2], here + msg)
   })
 
   t.end()
@@ -197,7 +198,7 @@ test('named-match:', function (t) {
     const doc = nlp(a[0]).match(a[1]).groups('target')
 
     const msg = a[0] + ' matches ' + JSON.stringify(a[1]) + ' ' + a[2]
-    t.equal(doc.text(), a[2], msg)
+    t.equal(doc.text(), a[2], here + msg)
   })
 
   t.end()
@@ -218,7 +219,7 @@ test('named-match-target:', function (t) {
     const doc = nlp(a[0]).match(a[1]).groups('target')
 
     const msg = a[0] + ' matches ' + JSON.stringify(a[1]) + ' ' + a[2]
-    t.equal(doc.text(), a[2], msg)
+    t.equal(doc.text(), a[2], here + msg)
   })
 
   t.end()
@@ -239,7 +240,7 @@ test('named-match-number:', function (t) {
     const doc = nlp(a[0]).match(a[1]).groups(0)
 
     const msg = a[0] + ' matches ' + JSON.stringify(a[1]) + ' ' + a[2]
-    t.equal(doc.text(), a[2], msg)
+    t.equal(doc.text(), a[2], here + msg)
   })
 
   t.end()

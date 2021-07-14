@@ -1,6 +1,8 @@
-import { noMatches } from '../_runners.js'
+import test from 'tape'
+import nlp from '../_lib.js'
+const here = '[two/no-match] '
 
-let arr = [
+const arr = [
   [`coolcom`, '#Url'],
   [`egg./com`, '#Url'],
   [`foo,org`, '#Url'],
@@ -19,4 +21,11 @@ let arr = [
   [`l#l`, '#HashTag'],
 ]
 
-noMatches(arr)
+test('no-match:', function (t) {
+  arr.forEach(function (a) {
+    let doc = nlp(a[0])
+    let msg = `'${(a[0] + "' ").padEnd(20, '.')}  - '${a[1]}'`
+    t.equal(doc.has(a[1]), false, here + msg)
+  })
+  t.end()
+})

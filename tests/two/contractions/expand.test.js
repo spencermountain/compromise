@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[two/expand] '
 
 test('basic is contractions', function (t) {
   let r = nlp(`he is cool.`)

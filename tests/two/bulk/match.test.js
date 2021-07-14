@@ -1,4 +1,6 @@
-import { testMatches } from '../_runners.js'
+import test from 'tape'
+import nlp from '../_lib.js'
+const here = '[one/match] '
 
 let arr = [
   ['toronto', '#City'],
@@ -650,5 +652,11 @@ let arr = [
   [`spencer's city/town & cabin`, 'spencer city and .'],
   ['city/town', 'town'],
 ]
-
-testMatches(arr)
+test('match:', function (t) {
+  arr.forEach(function (a) {
+    let doc = nlp(a[0])
+    let msg = `'${(a[0] + "' ").padEnd(20, '.')}  - '${a[1]}'`
+    t.equal(doc.has(a[1]), true, here + msg)
+  })
+  t.end()
+})

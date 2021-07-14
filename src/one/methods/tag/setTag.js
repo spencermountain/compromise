@@ -47,7 +47,7 @@ const isArray = function (arr) {
 }
 
 // add a tag to all these terms
-const setTag = function (terms, tag, tagSet, isSafe) {
+const setTag = function (terms, tag, tagSet = {}, isSafe) {
   if (isArray(tag) === true) {
     tag.forEach(tg => setTag(terms, tg, tagSet, isSafe))
     return

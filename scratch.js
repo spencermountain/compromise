@@ -1,6 +1,6 @@
 /* eslint-disable no-console, no-unused-vars */
 // import './tests/lib/_error.js'
-import nlp from './src/index.js'
+import nlp from './src/one/index.js'
 console.log(nlp.model().lexicon[''])
 
 // nlp.verbose(true)
@@ -9,7 +9,7 @@ console.log(nlp.model().lexicon[''])
 // let doc = nlp(str)
 // doc.splitAfter('spencer').debug()
 
-let doc = nlp('toronto and montreal. Sydney and Paris')
+let doc = nlp('toronto and montreal. Sydney and Paris').tag('Noun').debug()
 let m = doc.match('#Place')
 console.log(m.text())
 // doc.terms().post('! ')

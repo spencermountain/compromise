@@ -64,13 +64,15 @@ const cli = {
   },
 }
 const tagString = function (tags, model) {
-  tags = tags.map(tag => {
-    if (!model.tags.hasOwnProperty(tag)) {
-      return tag
-    }
-    const c = model.tags[tag].color || 'blue'
-    return cli[c](tag)
-  })
+  if (model.tags) {
+    tags = tags.map(tag => {
+      if (!model.tags.hasOwnProperty(tag)) {
+        return tag
+      }
+      const c = model.tags[tag].color || 'blue'
+      return cli[c](tag)
+    })
+  }
   return tags.join(', ')
 }
 //output some helpful stuff to the console

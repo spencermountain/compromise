@@ -10,7 +10,7 @@ import tokenize from './tokenize/index.js'
 export default {
   match,
   parseMatch,
-  setTag: setTag,
+  setTag,
   unTag: unTag,
   tokenize,
   cacheDoc,

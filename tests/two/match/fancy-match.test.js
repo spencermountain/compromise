@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[two/fancy-match] '
 
 test('matchOne', function (t) {
   let doc = nlp('one two three four five. one three four')

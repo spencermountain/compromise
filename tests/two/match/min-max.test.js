@@ -1,24 +1,25 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[two/min-max] '
 
 test('match min-max', function (t) {
   let doc = nlp('hello1 one hello2').match('#Value{7,9}')
-  t.equal(doc.out(), '', 'match was too short')
+  t.equal(doc.out(), '', here + 'match was too short')
 
   doc = nlp('hello1 one two three four five hello2').match('#Value{3}')
-  t.equal(doc.out(), 'one two three', 'exactly three')
+  t.equal(doc.out(), 'one two three', here + 'exactly three')
 
   doc = nlp('hello1 one two three four five hello2').match('#Value{3,3}')
-  t.equal(doc.out(), 'one two three', 'still exactly three')
+  t.equal(doc.out(), 'one two three', here + 'still exactly three')
 
   doc = nlp('hello1 one two three four five hello2').match('#Value{3,}')
-  t.equal(doc.out(), 'one two three four five', 'minimum three')
+  t.equal(doc.out(), 'one two three four five', here + 'minimum three')
 
   doc = nlp('hello1 one two three four five hello2').match('hello1 .{3}')
-  t.equal(doc.out(), 'hello1 one two three', 'unspecific greedy exact length')
+  t.equal(doc.out(), 'hello1 one two three', here + 'unspecific greedy exact length')
 
   doc = nlp('hello1 one two').match('hello1 .{3}')
-  t.equal(doc.out(), '', 'unspecific greedy not long enough')
+  t.equal(doc.out(), '', here + 'unspecific greedy not long enough')
 
   t.end()
 })
@@ -40,15 +41,15 @@ test('min-max with 0', function (t) {
   arr.forEach(a => {
     let doc = nlp(a[0])
     let m = doc.match('a .{0,3} car')
-    t.equal(m.text(), a[1], a[0])
+    t.equal(m.text(), a[1], here + a[0])
   })
 
   let doc = nlp('got a car')
   let m = doc.match('a .{0,3}? car')
-  t.equal(m.text(), 'a car', 'with-question-mark')
+  t.equal(m.text(), 'a car', here + 'with-question-mark')
 
   m = doc.match('a .{0,3} car')
-  t.equal(m.text(), 'a car', 'without-question-mark')
+  t.equal(m.text(), 'a car', here + 'without-question-mark')
 
   t.end()
 })

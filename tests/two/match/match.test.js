@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[two/match] '
 
 test('term-match :', function (t) {
   let arr = [
@@ -14,7 +15,7 @@ test('term-match :', function (t) {
   arr.forEach(function (a) {
     const m = nlp(a[0]).match(a[1])
     const msg = a[0] + ' matches ' + a[1] + ' ' + a[2]
-    t.equal(m.found, a[2], msg)
+    t.equal(m.found, a[2], here + msg)
   })
   t.end()
 })
@@ -74,10 +75,10 @@ test('sentence-match:', function (t) {
   arr.forEach(function (a) {
     const m = nlp(a[0]).match(a[1])
     if (!m.found) {
-      t.equal(a[2], '', 'no-match: ' + a[0] + ' - -' + a[1])
+      t.equal(a[2], '', here + 'no-match: ' + a[0] + ' - -' + a[1])
     } else {
       const msg = "'" + a[0] + "'  - " + a[1] + " - - have : '" + m.out('normal') + "'"
-      t.equal(m.out('normal'), a[2], msg)
+      t.equal(m.out('normal'), a[2], here + msg)
     }
   })
   t.end()
@@ -87,7 +88,7 @@ test('tag-match-tag :', function (t) {
   const m = nlp('apple is cool')
   m.match('apple').tag('Person')
   const p = m.match('#Person')
-  t.equal(p.out('normal'), 'apple', 'apple-tagged')
-  t.equal(m.length, 1, 'one-result')
+  t.equal(p.out('normal'), 'apple', here + 'apple-tagged')
+  t.equal(m.length, 1, here + 'one-result')
   t.end()
 })

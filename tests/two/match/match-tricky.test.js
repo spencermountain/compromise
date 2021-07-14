@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[two/match-tricky] '
 
 test('fancy match', function (t) {
   let arr = [
@@ -103,7 +104,7 @@ test('fancy match', function (t) {
   arr.forEach(function (a) {
     const r = nlp(a[0]).match(a[1]).terms() || []
     const msg = "'" + a[0] + "' - - - '" + a[1] + "' - - got:" + r.length + '  want:' + a[2]
-    t.equal(r.length, a[2], msg)
+    t.equal(r.length, a[2], here + msg)
   })
   t.end()
 })
@@ -111,43 +112,43 @@ test('fancy match', function (t) {
 test('consecutive greedy cases', function (t) {
   let doc = nlp('one two')
   let m = doc.match('#Value #Value')
-  t.equal(m.length, 1, 'consecutive-found one')
-  t.equal(m.eq(0).text(), 'one two', 'consecutive-found both')
+  t.equal(m.length, 1, here + 'consecutive-found one')
+  t.equal(m.eq(0).text(), 'one two', here + 'consecutive-found both')
 
   m = doc.match('#Value+ #Value')
-  t.equal(m.length, 1, 'plus-found one')
-  t.equal(m.eq(0).text(), 'one two', 'plus-found both')
+  t.equal(m.length, 1, here + 'plus-found one')
+  t.equal(m.eq(0).text(), 'one two', here + 'plus-found both')
 
   m = doc.match('#Value* #Value')
-  t.equal(m.length, 1, 'astrix-found one')
-  t.equal(m.eq(0).text(), 'one two', 'astrix-found both')
+  t.equal(m.length, 1, here + 'astrix-found one')
+  t.equal(m.eq(0).text(), 'one two', here + 'astrix-found both')
 
   m = doc.match('#Value? #Value')
-  t.equal(m.length, 1, 'optional-found one')
-  t.equal(m.eq(0).text(), 'one two', 'optional-found both')
+  t.equal(m.length, 1, here + 'optional-found one')
+  t.equal(m.eq(0).text(), 'one two', here + 'optional-found both')
 
   m = nlp.tokenize('one one').match('one? one')
-  t.equal(m.length, 1, 'optional-double')
+  t.equal(m.length, 1, here + 'optional-double')
   m = nlp.tokenize('one one two').match('one? one two')
-  t.equal(m.text(), 'one one two', 'found all three terms')
+  t.equal(m.text(), 'one one two', here + 'found all three terms')
 
   t.end()
 })
 
 test('tricky-case', function (t) {
-  t.equal(nlp('Number II').has('Number II'), true, 'uppercase-match')
-  t.equal(nlp('Number I').has('Number I'), true, 'uppercase-match')
+  t.equal(nlp('Number II').has('Number II'), true, here + 'uppercase-match')
+  t.equal(nlp('Number I').has('Number I'), true, here + 'uppercase-match')
   t.end()
 })
 
 test('post-process', function (t) {
   let doc = nlp(`jack is guarded end`)
   let m = doc.match('is guarded foo?$')
-  t.equal(m.found, false, 'no end')
+  t.equal(m.found, false, here + 'no end')
 
   doc = nlp(`start jack is guarded end`)
   m = doc.match('^start? jack')
-  t.equal(m.text(), 'start jack', 'optional-start')
+  t.equal(m.text(), 'start jack', here + 'optional-start')
   t.end()
 })
 
@@ -188,13 +189,13 @@ test('post-process', function (t) {
 test('anchor-with-greedy', function (t) {
   const doc = nlp.tokenize('a a b b')
   let m = doc.match('^a a b b$')
-  t.equal(m.found, true, 'simple anchors not found')
+  t.equal(m.found, true, here + 'simple anchors not found')
 
   m = doc.match('^a+ b b$')
-  t.equal(m.found, true, 'start-anchor greedy not found')
+  t.equal(m.found, true, here + 'start-anchor greedy not found')
 
   m = doc.match('^a a b+$')
-  t.equal(m.found, true, 'end-anchor greedy not found')
+  t.equal(m.found, true, here + 'end-anchor greedy not found')
 
   t.end()
 })

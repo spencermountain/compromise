@@ -77,13 +77,13 @@ test('named-match-auto-multi:', function (t) {
 test('named-match-group', function (t) {
   const res = nlp('the dog played').match('the [<type>#Noun] played').groups()
 
-  t.equal(res['type'].text(), here + 'dog')
+  t.equal(res['type'].text(), 'dog', here + 'res1')
 
   const doc2 = nlp('the big big big dog played').match('the [<size>#Adjective+] [<type>#Noun] played')
   const res2 = doc2.groups()
 
-  t.equal(res2['type'].text(), here + 'dog')
-  t.equal(res2['size'].text(), here + 'big big big')
+  t.equal(res2['type'].text(), 'dog', here + 'res2 dog')
+  t.equal(res2['size'].text(), 'big big big', here + 'big big big')
 
   t.end()
 })

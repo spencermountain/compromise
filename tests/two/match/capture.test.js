@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[two/capture] '
 
 test('match-capture-group', function (t) {
   let m = nlp('John eats glue').match('[john]', 0)

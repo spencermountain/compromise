@@ -1,4 +1,4 @@
-import doesMatch from './03-matchTerm.js'
+import doesMatch from './04-matchTerm.js'
 
 // for greedy checking, we no longer care about the reg.start
 // value, and leaving it can cause failures for anchored greedy

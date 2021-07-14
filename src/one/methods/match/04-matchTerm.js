@@ -1,14 +1,10 @@
 import fuzzy from './_fuzzy.js'
-import methods from './_match-methods.js'
+import methods from '../termMethods.js'
 
 //declare it up here
 let wrapMatch = function () {}
 /** ignore optional/greedy logic, straight-up term match*/
 const doesMatch = function (term, reg, index, length) {
-  // support id matches
-  // if (reg.id === t.id) {
-  //   return true
-  // }
   // support '.'
   if (reg.anything === true) {
     return true

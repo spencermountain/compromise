@@ -1,5 +1,5 @@
-import * as logic from './_match-logic.js'
-import matchTerm from './03-matchTerm.js'
+import { greedyTo, doOrBlock, getGroup, doAndBlock, isEndGreedy, getGreedy } from './03-match-logic.js'
+import matchTerm from './04-matchTerm.js'
 // i formally apologize for how complicated this is.
 /** tries to match a sequence of terms, starting from here */
 const tryHere = function (terms, regs, start_i, phrase_length) {
@@ -39,7 +39,7 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
     }
     //support 'unspecific greedy' .* properly
     if (reg.anything === true && reg.greedy === true) {
-      let skipto = logic.greedyTo(state, regs[state.r + 1])
+      let skipto = greedyTo(state, regs[state.r + 1])
       //maybe we couldn't find it
       if (skipto === null || skipto === 0) {
         return null
@@ -55,7 +55,7 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
       }
       // set the group result
       if (state.hasGroup === true) {
-        const g = logic.getGroup(state, state.t)
+        const g = getGroup(state, state.t)
         g.length = skipto - state.t
       }
       state.t = skipto
@@ -63,14 +63,14 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
     }
     // support multi-word OR (a|b|foo bar)
     if (reg.choices !== undefined && reg.operator === 'or') {
-      let skipNum = logic.doOrBlock(state)
+      let skipNum = doOrBlock(state)
       if (skipNum) {
         // handle 'not' logic
         if (reg.negative === true) {
           return null // die
         }
         if (state.hasGroup === true) {
-          const g = logic.getGroup(state, state.t)
+          const g = getGroup(state, state.t)
           g.length += skipNum
         }
         // ensure we're at the end
@@ -88,14 +88,14 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
     }
     // support AND (#Noun && foo) blocks
     if (reg.choices !== undefined && reg.operator === 'and') {
-      let skipNum = logic.doAndBlock(state)
+      let skipNum = doAndBlock(state)
       if (skipNum) {
         // handle 'not' logic
         if (reg.negative === true) {
           return null // die
         }
         if (state.hasGroup === true) {
-          const g = logic.getGroup(state, state.t)
+          const g = getGroup(state, state.t)
           g.length += skipNum
         }
         // ensure we're at the end
@@ -114,7 +114,7 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
     // ok, finally test the term/reg
     let term = state.terms[state.t]
     let hasMatch = matchTerm(term, reg, state.start_i + state.t, state.phrase_length)
-    if (reg.anything === true || hasMatch === true || logic.isEndGreedy(reg, state)) {
+    if (reg.anything === true || hasMatch === true || isEndGreedy(reg, state)) {
       let startAt = state.t
       // if it's a negative optional match... :0
       if (reg.optional && regs[state.r + 1] && reg.negative) {
@@ -145,7 +145,7 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
       }
       //try keep it going!
       if (reg.greedy === true) {
-        state.t = logic.getGreedy(state, regs[state.r + 1])
+        state.t = getGreedy(state, regs[state.r + 1])
         if (state.t === null) {
           return null //greedy was too short
         }
@@ -160,7 +160,7 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
       }
       if (state.hasGroup === true) {
         // Get or create capture group
-        const g = logic.getGroup(state, startAt)
+        const g = getGroup(state, startAt)
         // Update group - add greedy or increment length
         if (state.t > 1 && reg.greedy) {
           g.length += state.t - startAt

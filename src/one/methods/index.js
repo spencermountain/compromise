@@ -6,16 +6,18 @@ import parseMatch from './parseMatch/index.js'
 import cacheDoc from './cache/cacheDoc.js'
 import cacheMatch from './cache/cacheMatch.js'
 import tokenize from './tokenize/index.js'
+import termMethods from './termMethods.js'
 
 export default {
   match,
   parseMatch,
   setTag,
-  unTag: unTag,
+  unTag,
   tokenize,
   cacheDoc,
   cacheMatch,
   getDoc,
   parsePointer,
   createPointer,
+  termMethods,
 }

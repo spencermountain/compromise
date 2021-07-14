@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[one/named-silent] '
 
 test('capture groups silent by default', function (t) {
   let m = nlp('one two three four five six seven').match('one [two] [three four five] six [seven]')

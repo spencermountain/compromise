@@ -52,7 +52,7 @@ const out = function (method) {
   if (method === 'tags') {
     return this.docs.map(terms => {
       return terms.reduce((h, t) => {
-        h[t.normal || t.implicit] = Object.keys(t.tags)
+        h[t.implicit || t.normal] = Array.from(t.tags)
         return h
       }, {})
     })

@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[one/encoding] '
 
 test('encoding-match:', function (t) {
   const r = nlp('it is * nice')
@@ -15,21 +16,21 @@ test('encoding-match:', function (t) {
 
 test('reserved-word-in-src:', function (t) {
   const r = nlp('buy eggs constructor yeah prototype')
-  t.equal(r.has(`backburner`), false, 'single')
-  t.equal(r.has(`#Foo`), false, 'tag')
-  t.equal(r.has(`(upcoming|backburner)`), false, 'anyOf')
-  t.equal(r.has(`lala+`), false, 'manyOf')
-  t.equal(r.has(`nword{2,4}`), false, 'someOf')
+  t.equal(r.has(`backburner`), false, here + 'single')
+  t.equal(r.has(`#Foo`), false, here + 'tag')
+  t.equal(r.has(`(upcoming|backburner)`), false, here + 'anyOf')
+  t.equal(r.has(`lala+`), false, here + 'manyOf')
+  t.equal(r.has(`nword{2,4}`), false, here + 'someOf')
   t.end()
 })
 
 test('reserved-word-in-match:', function (t) {
   const r = nlp('fo foo fulala repeat')
-  t.equal(r.has(`constructor`), false, 'single')
-  t.equal(r.has(`#constructor`), false, 'tag')
-  t.equal(r.has(`(upcoming|constructor)`), false, 'anyOf')
-  t.equal(r.has(`constructor+`), false, 'manyOf')
-  t.equal(r.has(`constructor{2,4}`), false, 'someOf')
+  t.equal(r.has(`constructor`), false, here + 'single')
+  t.equal(r.has(`#constructor`), false, here + 'tag')
+  t.equal(r.has(`(upcoming|constructor)`), false, here + 'anyOf')
+  t.equal(r.has(`constructor+`), false, here + 'manyOf')
+  t.equal(r.has(`constructor{2,4}`), false, here + 'someOf')
   t.end()
 })
 
@@ -49,15 +50,15 @@ test('test-infinite-loop', function (t) {
   weirdDoc.not('$')
   weirdDoc.not('+')
   weirdDoc.not('? * . +')
-  t.ok(true, 'didnt regress')
+  t.ok(true, here + 'didnt regress')
 
   let str = 'And you are?. Marshal'
   let have = nlp(str).all().out()
-  t.equal(have, str, 'regression #1')
+  t.equal(have, str, here + 'regression #1')
 
   str = `- where is she.Oh.  you guys don't know?`
   have = nlp(str).all().out()
-  t.equal(have, str, 'regression #2')
+  t.equal(have, str, here + 'regression #2')
 
   t.end()
 })

@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[one/pointer] '
 
 test('', function (t) {
   let txt = `one two three. four five six.`
@@ -24,9 +25,9 @@ test('', function (t) {
   ]
   arr.forEach(a => {
     let doc = nlp(txt).update(a[0])
-    t.equal(doc.text(), a[1], JSON.stringify(a[0]))
+    t.equal(doc.text(), a[1], here + JSON.stringify(a[0]))
 
-    t.equal(doc.found, Boolean(doc.text()), '[found] ' + a[0])
+    t.equal(doc.found, Boolean(doc.text()), here + a[0])
   })
   t.end()
 })

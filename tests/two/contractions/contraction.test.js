@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../lib/_lib.js'
+import nlp from '../../lib/_lib.js'
 
 test('tricky contractions', function (t) {
   let doc = nlp(`I’m `)

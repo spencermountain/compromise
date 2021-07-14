@@ -1,4 +1,4 @@
-import { noMatches } from './lib/runners.js'
+import { noMatches } from '../lib/runners.js'
 
 let arr = [
   [`coolcom`, '#Url'],

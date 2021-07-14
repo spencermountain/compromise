@@ -95,11 +95,11 @@ test('reserved words:', function (t) {
   const r = nlp(str)
   t.equal(r.out('text'), str, 'reserved-words-are-printed')
   t.equal(r.terms().length, reserved.length, 'reserved-length')
-  t.ok(r.contractions().data(), 'runs contractions subset')
+  // t.ok(r.contractions().data(), 'runs contractions subset')
   // t.ok(r.parentheses().data(), 'runs parentheses subset')
   // t.ok(r.lists().data(), 'runs lists subset')
   t.ok(r.terms().data(), 'runs terms subset')
-  t.ok(r.pronouns().data(), 'runs pronouns subset')
+  // t.ok(r.pronouns().data(), 'runs pronouns subset')
   t.end()
 })
 

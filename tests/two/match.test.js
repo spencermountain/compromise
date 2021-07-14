@@ -1,4 +1,4 @@
-import { testMatches } from './lib/runners.js'
+import { testMatches } from '../lib/runners.js'
 
 let arr = [
   ['toronto', '#City'],

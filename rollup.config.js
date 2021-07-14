@@ -1,6 +1,5 @@
 import { terser } from 'rollup-plugin-terser'
 import sizeCheck from 'rollup-plugin-filesize-check'
-// const banner = '/* compromise ' + version + ' MIT */'
 
 export default [
   // === Main ==

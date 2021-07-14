@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../lib/_lib.js'
+import nlp from '../_lib.js'
 
 test('tag inference:', function (t) {
   let m = nlp('aasdf2').unTag('Noun').unTag('NounPhrase')

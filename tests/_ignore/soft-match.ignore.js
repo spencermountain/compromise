@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../lib/_lib.js'
+import nlp from '../_lib.js'
 
 test('soft-match', function (t) {
   let doc = nlp(`a priest walked into the bars`)

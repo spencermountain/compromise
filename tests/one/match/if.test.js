@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../lib/_lib.js'
+import nlp from '../_lib.js'
 
 test('if-basic:', function (t) {
   let r = nlp('spencer is here')

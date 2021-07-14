@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../lib/_lib.js'
+import nlp from '../_lib.js'
 
 test('fuzzy matches', function (t) {
   let doc = nlp('i went on a talk')

@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../lib/_lib.js'
+import nlp from '../_lib.js'
 
 test('inline tagging linear:', function (t) {
   let r = nlp('one two three four')

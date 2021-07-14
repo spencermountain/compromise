@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../lib/_lib.js'
+import nlp from '../_lib.js'
 
 test('before-basic', function (t) {
   let doc = nlp('one two three four five. one three four')

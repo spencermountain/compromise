@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../lib/_lib.js'
+import nlp from '../_lib.js'
 
 test('doc-as-input', function (t) {
   let doc = nlp('if so, he is the best, that i see. he is the greatest')

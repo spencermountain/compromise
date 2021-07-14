@@ -1,6 +1,6 @@
 import test from 'tape'
-import nlp from '../lib/_lib.js'
-import penn from '../lib/_pennSample.js'
+import nlp from '../_lib.js'
+import penn from '../_pennSample.js'
 
 const softMapping = {
   CC: 'Conjunction',

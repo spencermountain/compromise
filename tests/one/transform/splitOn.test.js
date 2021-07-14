@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../lib/_lib.js'
+import nlp from '../_lib.js'
 
 test('one split, one sentence', function (t) {
   let doc = nlp('before before match, after after.')

@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../lib/_lib.js'
+import nlp from '../_lib.js'
 
 test('remove-basic :', function (t) {
   let m = nlp('the brown cat played').match('brown').delete().all()

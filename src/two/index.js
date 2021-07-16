@@ -1,4 +1,4 @@
-import nlp from '../index.js'
+import nlp from '../nlp.js'
 import one from '../one/plugin.js'
 import two from './plugin.js'
 

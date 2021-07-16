@@ -1,7 +1,7 @@
 const trimEnd = /[,:;).?!]+$/
 const trimStart = /^[('"]+/
 
-const textFromTerms = function (terms, opts) {
+const textFromTerms = function (terms, opts, keepSpace = true) {
   let txt = ''
   terms.forEach(t => {
     let pre = t.pre || ''
@@ -16,7 +16,7 @@ const textFromTerms = function (terms, opts) {
     txt = txt.replace(trimStart, '')
     txt = txt.replace(trimEnd, '')
   }
-  if (opts.keepSpace === false) {
+  if (keepSpace === false) {
     txt = txt.trim()
   }
   if (opts.lowerCase === true) {
@@ -30,7 +30,7 @@ const textFromDoc = function (docs, opts) {
   let text = ''
   for (let i = 0; i < docs.length; i += 1) {
     // middle
-    text += textFromTerms(docs[i], opts)
+    text += textFromTerms(docs[i], opts, true)
   }
   if (!opts.keepSpace) {
     text = text.trim()

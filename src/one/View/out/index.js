@@ -3,10 +3,39 @@ import out from './out.js'
 import { textFromDoc, textFromTerms } from './text.js'
 
 const lowerCase = new Set(['normal', 'clean', 'reduced', 'root'])
-const noPunct = new Set(['reduced'])
+const somePunct = new Set(['reduced'])
 const whitespace = new Set(['normal', 'clean', 'reduced', 'root'])
 const isObject = val => {
   return Object.prototype.toString.call(val) === '[object Object]'
+}
+
+const fmts = {
+  text: {
+    form: 'text',
+  },
+  human: {
+    whitespace: 'normalize',
+    punctuation: 'normalize',
+    form: 'normal',
+  },
+  machine: {
+    whitespace: 'normalize',
+    punctuation: 'normalize',
+    case: 'none',
+    form: 'normal',
+  },
+  root: {
+    form: 'root',
+  },
+  // normal: {
+  //   form: 'normal',
+  // },
+  // clean: {
+  //   form: 'normal',
+  // },
+  // reduced: {
+  //   form: 'normal',
+  // },
 }
 
 const methods = {
@@ -33,12 +62,13 @@ const methods = {
       keepSpace: true,
       keepPunct: true,
     }
-    if (fmt && typeof fmt === 'string') {
+    if (fmt && typeof fmt === 'string' && fmts.hasOwnProperty(fmt)) {
+      opts = Object.assign({}, fmts[fmt])
       if (lowerCase.has(fmt)) {
         opts.lowerCase = true
       }
-      if (noPunct.has(fmt)) {
-        // opts.fixPunctuation = true
+      if (fmt === 'normal') {
+        opts.somePunct = true
       }
       if (whitespace.has(fmt)) {
         opts.cleanWhitespace = true

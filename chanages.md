@@ -27,7 +27,7 @@ match(['foo', 'far'])
 - drop support for re-used capture-group names in one match
 - drop '.get()' alias - use '.eq()'
 - drop support for empty '.split()' methods - which used to split the parent
-
+- change .text('fmt') formats
 - _[breaking]_ -
 
 ---

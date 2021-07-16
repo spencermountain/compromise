@@ -36,6 +36,10 @@ const doFastOrMode = function (tokens) {
           return false
         }
         let reg = block[0]
+        // ^ and $ get lost in fastOr
+        if (reg.start || reg.end) {
+          return false
+        }
         if (reg.word !== undefined && reg.negative !== true && reg.optional !== true && reg.method !== true) {
           return true //reg is simple-enough
         }

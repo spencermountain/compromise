@@ -5,10 +5,10 @@ const here = '[one/syntax] '
 test('negative parentheses', function (t) {
   let doc = nlp.tokenize('if he does. does he?')
   let m = doc.if('!^(if|cool)')
-  t.equals(m.out('normal'), 'does he?', here + 'negative-start')
+  t.equals(m.text(), 'does he?', here + 'negative-start')
 
   m = doc.if('^!(if|cool)')
-  t.equals(m.out('normal'), 'does he?', here + 'start-negative')
+  t.equals(m.text(), 'does he?', here + 'start-negative')
 
   doc = nlp.tokenize('spencer other')
   t.equals(doc.match('(cool|spencer)').text(), 'spencer', here + 'optional-true')
@@ -24,18 +24,18 @@ test('negative parentheses', function (t) {
 test('start-end parentheses', function (t) {
   let doc = nlp("matt does but matthew doesn't")
   let m = doc.match('^(/matt/|frank) .')
-  t.equals(m.out('normal'), 'matt does', here + 'choice-start')
+  t.equals(m.text('normal'), 'matt does', here + 'choice-start')
 
-  m = doc.match('(^#Person|#Person$)')
-  t.equals(m.out('normal'), 'matt', here + 'matt-start')
-
-  doc = nlp("now matt doesn't but yes for matthew")
-  m = doc.match('(^#Person|#Person$)')
-  t.equals(m.out('normal'), 'matthew', here + 'matthew-end')
+  m = doc.match('(^matt|matt$)')
+  t.equals(m.text('normal'), 'matt', here + 'matt-start')
 
   doc = nlp("now matt doesn't but yes for matthew")
-  m = doc.match('(woo|#Person)$')
-  t.equals(m.out('normal'), 'matthew', here + 'matthew-end-outside')
+  m = doc.match('(^matt|matthew$)')
+  t.equals(m.text('normal'), 'matthew', here + 'matthew-end')
+
+  doc = nlp("now matt doesn't but yes for matthew")
+  m = doc.match('(woo|matthew)$')
+  t.equals(m.text('normal'), 'matthew', here + 'matthew-end-outside')
   t.end()
 })
 

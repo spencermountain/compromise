@@ -22,7 +22,7 @@ let list = [
   { match: 'well [#PastTense]', group: 0, tag: 'Adjective', reason: 'well-made' },
 
   // is f*ed up
-  { match: '#Copula [fucked up?]', tag: 'Adjective', reason: 'swears-adjective' },
+  { match: '#Copula [fucked up?]', group: 0, tag: 'Adjective', reason: 'swears-adjective' },
   //jack seems guarded
   { match: '#Singular (seems|appears) #Adverb? [#PastTense$]', group: 0, tag: 'Adjective', reason: 'seems-filled' },
 

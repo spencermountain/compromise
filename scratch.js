@@ -5,14 +5,10 @@ import nlp from './src/two/index.js'
 
 // nlp.verbose(true)
 
-let doc = nlp('spencer is really cool').not('#Adverb')
-console.log(doc.text())
-// let doc = nlp('toronto and montreal. Sydney and Paris')
-// let m = doc.match('#Place')
-// console.log(m.text())
-// doc.terms().post('! ')
-// console.log(doc.pre('"', true))
-// console.log(doc.text())
+let doc = nlp("now matt doesn't but yes for matthew")
+let m = doc.match('(^matt)').debug()
+console.log(nlp.parseMatch('(^matt)'))
+// console.log(nlp.parseMatch('^matt'))
 /*
 ['', '#'],
 ['', '#'],

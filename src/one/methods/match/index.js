@@ -15,9 +15,9 @@ const handleStart = function (terms, regs, n, group) {
   let res = fromHere(terms, regs, 0, terms.length)
   if (res) {
     res = addSentence(res, n)
-    return getGroup([res], group)
+    return res //getGroup([res], group)
   }
-  return { ptrs: [], byGroup: {} }
+  return null
 }
 
 // ok, here we go.
@@ -36,9 +36,13 @@ const runMatch = function (docs, todo, cache) {
     if (cache[n] && failFast(regs, cache[n])) {
       continue
     }
-    // ^start regs only run once-
+    // ^start regs only run once, per phrase
     if (regs[0].start === true) {
-      return handleStart(terms, regs, n, group)
+      let foundStart = handleStart(terms, regs, n, group)
+      if (foundStart) {
+        results.push(foundStart)
+      }
+      continue
     }
     //ok, try starting the match now from every term
     for (let i = 0; i < terms.length; i += 1) {

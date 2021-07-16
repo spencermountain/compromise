@@ -41,7 +41,7 @@ export default {
     parents: ['Date', 'Noun'],
   },
   Determiner: {
-    not: anything,
+    not: ['Noun', 'Verb', 'Adjective', 'Adverb', 'QuestionWord'], //allow 'a' to be a Determiner/Value
   },
   Conjunction: {
     not: anything,

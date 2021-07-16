@@ -7,7 +7,7 @@ const startsWith = function (str, regs) {
   })
 }
 // suffix-regexes, indexed by last-character
-const endsWith = function (str = '', byEnd) {
+const doEndsWith = function (str = '', byEnd) {
   let char = str[str.length - 1]
   if (byEnd.hasOwnProperty(char) === true) {
     let regs = byEnd[char] || []
@@ -21,8 +21,10 @@ const endsWith = function (str = '', byEnd) {
 }
 
 const checkRegex = function (term, model) {
-  let str = term.text || term.implicit
-  let arr = startsWith(str, model.regex) || endsWith(str, model.endsWith)
+  let { regexText, regexNormal, endsWith } = model
+  let text = term.text || term.implicit
+  let normal = term.normal || term.implicit
+  let arr = startsWith(text, regexText) || startsWith(normal, regexNormal) || doEndsWith(normal, endsWith)
   if (arr !== undefined) {
     setTag(term, arr[1], `regex- '${arr[2] || arr[0]}'`)
     return true

@@ -48,6 +48,7 @@
     "test:one": "tape-es \"./tests/one/**/*.test.js\" | tap-dancer",
     "test:two": "tape-es \"./tests/two/**/*.test.js\" | tap-dancer",
     "test:three": "tape-es \"./tests/three/**/*.test.js\" | tap-dancer",
+    "debug": "node ./scratch/debug.js",
     "coverage": "nyc -r lcov -n 'src/**/*' -n 'plugins/**/*' npm run test",
     "codecov": "npm run coverage && codecov -t 15039ad1-b495-48cd-b4a0-bcf124c9b318",
     "perf": "node ./scripts/perf/index.js",

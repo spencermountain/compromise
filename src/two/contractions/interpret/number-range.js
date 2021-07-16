@@ -3,7 +3,7 @@ const timeRange = /^([0-9][0-9]?(:[0-9][0-9])?(am|pm)?) ?[-–—] ?([0-9][0-9]?
 
 const numberRange = function (terms, i) {
   let term = terms[i]
-  if (term.tags.PhoneNumber === true) {
+  if (term.tags.has('PhoneNumber') === true) {
     return null
   }
   let parts = term.text.match(isRange)

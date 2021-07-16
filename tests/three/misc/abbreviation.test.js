@@ -16,8 +16,8 @@ test('abbreviations', function (t) {
 test('abbreviations', function (t) {
   let doc = nlp("i live on Main St. and it's fine.")
   doc.abbreviations().stripPeriods()
-  t.equal(doc.text(), here + "i live on Main St and it's fine.")
+  t.equal(doc.text(), "i live on Main St and it's fine.", here + 'strip')
   doc.abbreviations().addPeriods()
-  t.equal(doc.text(), here + "i live on Main St. and it's fine.")
+  t.equal(doc.text(), "i live on Main St. and it's fine.", here + 'add')
   t.end()
 })

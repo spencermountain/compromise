@@ -9,7 +9,8 @@ const plugin = function (world, View) {
     }
     stripPeriods() {
       this.termList().forEach(t => {
-        if (t.tags.Abbreviation === true && t.next) {
+        if (t.tags.has('Abbreviation') === true) {
+          // don't remove a final period here
           t.post = t.post.replace(/^\./, '')
         }
         let str = t.text.replace(/\./, '')

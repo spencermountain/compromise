@@ -24,11 +24,11 @@ test('camel case:', function (t) {
 })
 
 test('tricky case:', function (t) {
-  let str = 'i am spencer kelly here with Amy Adams.'
+  let str = 'i am spencer kelly here with Amy Watson.'
   let r = nlp(str)
-  r.match('#Person').toUpperCase()
+  r.match('(spencer|amy) .').toUpperCase()
   str = r.out('text')
-  t.equal(str, 'i am SPENCER KELLY here with AMY ADAMS.', here + 'tricky-uppercase')
+  t.equal(str, 'i am SPENCER KELLY here with AMY WATSON.', here + 'tricky-uppercase')
 
   str = 'the Spencer Kelly Festival of Silly Walks'
   r = nlp(str)

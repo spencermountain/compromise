@@ -1,16 +1,30 @@
-const trimEnd = /[,:;).?!]+$/
+const trimEnd = /[,:;).?!-]+/
 const trimStart = /^[('"]+/
+
+const punctToKill = /[,:;)('"]/
+const isHyphen = /^[-–—]$/
 
 const textFromTerms = function (terms, opts, keepSpace = true) {
   let txt = ''
   terms.forEach(t => {
     let pre = t.pre || ''
     let post = t.post || ''
-    if (opts.cleanWhitespace === true) {
-      pre = ''
-      post = ' '
+
+    if (opts.punctuation === 'some') {
+      pre = pre.replace(trimStart, '')
+      // replace a hyphen with a space
+      if (isHyphen.test(post)) {
+        post = ' '
+      }
+      post = post.replace(punctToKill, '')
     }
-    txt += pre + t.text + post
+    if (opts.whitespcae === 'some') {
+      pre = pre.replace(/\s/, '') //remove pre-whitespace
+      post = post.replace(/\s+/, ' ') //replace post-whitespace with a space
+    }
+    // grab the correct word format
+    let word = t[opts.use || 'text'] || ''
+    txt += pre + word + post
   })
   if (opts.keepPunct === false) {
     txt = txt.replace(trimStart, '')

@@ -5,8 +5,10 @@ import nlp from './src/two/index.js'
 
 // nlp.verbose(true)
 
-let doc = nlp('super-cool work')
-console.log(doc.text('normal'))
+let str = 'he is the king of rock. she is the queen of cool.'
+let m = nlp(str)
+m.match('(king|queen) of (#Noun|#Adjective)').hyphenate()
+console.log(m.text())
 /*
 ['', '#'],
 ['', '#'],

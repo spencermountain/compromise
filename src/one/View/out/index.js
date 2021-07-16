@@ -2,30 +2,30 @@ import debug from './debug.js'
 import out from './out.js'
 import { textFromDoc, textFromTerms } from './text.js'
 
-const lowerCase = new Set(['normal', 'clean', 'reduced', 'root'])
-const somePunct = new Set(['reduced'])
-const whitespace = new Set(['normal', 'clean', 'reduced', 'root'])
 const isObject = val => {
   return Object.prototype.toString.call(val) === '[object Object]'
 }
 
 const fmts = {
   text: {
-    form: 'text',
+    use: 'text',
   },
-  human: {
-    whitespace: 'normalize',
-    punctuation: 'normalize',
-    form: 'normal',
+  normal: {
+    whitespace: 'some',
+    punctuation: 'some',
+    case: 'some',
+    unicode: 'some',
+    use: 'normal',
   },
   machine: {
-    whitespace: 'normalize',
-    punctuation: 'normalize',
+    whitespace: 'some',
+    punctuation: 'some',
     case: 'none',
-    form: 'normal',
+    unicode: 'some',
+    use: 'normal',
   },
   root: {
-    form: 'root',
+    use: 'root',
   },
   // normal: {
   //   form: 'normal',
@@ -64,15 +64,6 @@ const methods = {
     }
     if (fmt && typeof fmt === 'string' && fmts.hasOwnProperty(fmt)) {
       opts = Object.assign({}, fmts[fmt])
-      if (lowerCase.has(fmt)) {
-        opts.lowerCase = true
-      }
-      if (fmt === 'normal') {
-        opts.somePunct = true
-      }
-      if (whitespace.has(fmt)) {
-        opts.cleanWhitespace = true
-      }
     } else if (fmt && isObject(fmt)) {
       opts = Object.assign({}, fmt, opts)
     }

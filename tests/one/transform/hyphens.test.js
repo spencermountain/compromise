@@ -41,13 +41,13 @@ test('hyphenate', function (t) {
 
   str = 'i payed seven-hundred for the sandwich'
   m = nlp(str)
-  m.match('#Value').dehyphenate()
+  m.match('(seven|hundred)').dehyphenate()
   t.equal(m.out('text'), 'i payed seven hundred for the sandwich', here + 'dehyphenate-values')
 
   str = 'he is the king of rock. she is the queen of cool.'
   m = nlp(str)
-  m.match('(king|queen) of (#Noun|#Adjective)').hyphenate()
-  t.equal(m.out('text'), 'he is the king-of-rock. she is the queen-of-cool.', here + 'hyphenate-match')
+  m.match('(king|queen) of (cool|rock)').hyphenate()
+  t.equal(m.text(), 'he is the king-of-rock. she is the queen-of-cool.', here + 'hyphenate-match')
 
   t.end()
 })

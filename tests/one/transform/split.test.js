@@ -6,7 +6,7 @@ test('splitAfter', function (t) {
   let arr = [
     ['doug and nancy', 'and', ['doug and', 'nancy']],
     ['doug and also nancy', 'and also', ['doug and also', 'nancy']],
-    ['doug and definetly nancy', 'and #Adverb', ['doug and definetly', 'nancy']],
+    ['doug and definetly nancy', 'and definetly', ['doug and definetly', 'nancy']],
     ['maybe doug but possibly nancy', 'but', ['maybe doug but', 'possibly nancy']],
 
     ['a x b x c', 'x', ['a x', 'b x', 'c']],
@@ -32,7 +32,7 @@ test('splitOn', function (t) {
   let arr = [
     ['doug and nancy', 'and', ['doug', 'and', 'nancy']],
     ['doug and also nancy', 'and also', ['doug', 'and also', 'nancy']],
-    ['doug and definetly nancy', 'and #Adverb', ['doug', 'and definetly', 'nancy']],
+    ['doug and definetly nancy', 'and definetly', ['doug', 'and definetly', 'nancy']],
     ['maybe doug but possibly nancy', 'but', ['maybe doug', 'but', 'possibly nancy']],
     ['doug is really nice', 'is', ['doug', 'is', 'really nice']],
 
@@ -54,7 +54,7 @@ test('splitBefore', function (t) {
   let arr = [
     ['doug and nancy', 'and', ['doug', 'and nancy']],
     ['doug and also nancy', 'and also', ['doug', 'and also nancy']],
-    ['doug and definetly nancy', 'and #Adverb', ['doug', 'and definetly nancy']],
+    ['doug and definetly nancy', 'and definetly', ['doug', 'and definetly nancy']],
     ['maybe doug but possibly nancy', 'but', ['maybe doug', 'but possibly nancy']],
     ['doug is really nice', 'is', ['doug', 'is really nice']],
 
@@ -86,7 +86,7 @@ test('multi splitBefore, multi sentence', function (t) {
 })
 
 test('multi splitAfter, multi sentence', function (t) {
-  let doc = nlp('before before match1, match2 after after. then a match3 over here. none found')
+  let doc = nlp('before before match1 match2 after after. then a match3 over here. none found')
   let m = doc.splitAfter('/^match/')
   t.equal(m.length, 6, 'found 6')
   t.equal(m.eq(0).out('normal'), 'before before match1', here + 'found match1')

@@ -24,10 +24,10 @@ match(['foo', 'far'])
 - move fuzzy matching to a plugin
 - drop array support in match methods
 - drop support for using Doc as match input
-- drop support for re-used capture-group names in one match
 - drop '.get()' alias - use '.eq()'
-- drop support for empty '.split()' methods - which used to split the parent
-- change .text('fmt') formats
-- _[breaking]_ -
+- **[change]** merge re-used capture-group names in one match
+- **[change]** drop support for undocumented empty '.split()' methods - which used to split the parent
+- **[change]** change .text('fmt') formats
+- **[change]** @hasContraction is no-longer secretly-greedy. use `@hasContraction{2}`
 
 ---

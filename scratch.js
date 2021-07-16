@@ -5,10 +5,8 @@ import nlp from './src/two/index.js'
 
 // nlp.verbose(true)
 
-let doc = nlp("now matt doesn't but yes for matthew")
-let m = doc.match('(^matt)').debug()
-console.log(nlp.parseMatch('(^matt)'))
-// console.log(nlp.parseMatch('^matt'))
+let doc = nlp('super-cool work')
+console.log(doc.text('normal'))
 /*
 ['', '#'],
 ['', '#'],

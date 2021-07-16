@@ -66,7 +66,7 @@ test('split skip sentence', function (t) {
   t.equal(m.length, 6, here + 'found 6')
   t.equal(m.eq(0).out('normal'), 'before', here + 'found before')
   t.equal(m.eq(1).out('normal'), 'match', here + 'found match')
-  t.equal(m.eq(2).out('normal'), 'nothing found here', here + 'no-match sentence')
+  t.equal(m.eq(2).out('normal'), 'nothing found here.', here + 'no-match sentence')
   t.equal(m.eq(3).out('normal'), 'two', here + 'found before2')
   t.equal(m.eq(4).out('normal'), 'match', here + 'found match2')
   t.equal(m.eq(5).out('normal'), 'after', here + 'found after')

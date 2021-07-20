@@ -580,8 +580,11 @@
   }; // run each of the taggers
 
 
-  const tagDate = function (doc) {
-    doc = normalize$1(doc); // run taggers
+  const tagDate = pluginOptions => function (doc) {
+    if (pluginOptions.normalizeBeforeTagging) {
+      doc = normalize$1(doc);
+    } // run taggers
+
 
     methods$3.forEach(fn => fn(doc));
     return doc;
@@ -7638,7 +7641,6 @@
 
     if (doc.has('once (a|an) #Duration') === false) {
       doc.match('[(a|an)] #Duration', 0).replaceWith('1');
-      _01Tagger(doc);
     } // 'in a few years'
     // m = doc.match('in [a few] #Duration')
     // if (m.found) {
@@ -9041,6 +9043,9 @@
 
   var times = addTimes;
 
+  let pluginOptions = {
+    normalizeBeforeTagging: true
+  };
   const opts = {
     punt: {
       weeks: 2
@@ -9053,7 +9058,7 @@
 
     world.addWords(words); // run our tagger
 
-    world.postProcess(_01Tagger); // add .durations() class + methods
+    world.postProcess(_01Tagger(pluginOptions)); // add .durations() class + methods
 
     durations(Doc); // add .times() class + methods
 
@@ -9105,6 +9110,17 @@
       d.context = context;
       return d;
     };
+  }; // Add a "don't use numbers().normalize()" option for compromise-dates.  Since
+  // the main export is the direct "addMethods" function, the best/only choice for
+  // a "curry in some options" hook is to attach it as a property on the exported
+  // function.
+
+
+  addMethods.config = (options = {}) => {
+    pluginOptions = { ...pluginOptions,
+      ...options
+    };
+    return addMethods;
   };
 
   var src = addMethods;

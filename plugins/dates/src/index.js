@@ -7,6 +7,11 @@ const addDurations = require('./durations')
 const addTimes = require('./times')
 const spacetime = require('spacetime')
 
+
+let pluginOptions = {
+  normalizeBeforeTagging: true,
+};
+
 const opts = {
   punt: { weeks: 2 },
 }
@@ -17,7 +22,7 @@ const addMethods = function (Doc, world) {
   // add info for the date plugin
   world.addWords(words)
   // run our tagger
-  world.postProcess(tagger)
+  world.postProcess(tagger(pluginOptions))
 
   // add .durations() class + methods
   addDurations(Doc, world)
@@ -60,6 +65,15 @@ const addMethods = function (Doc, world) {
     d.context = context
     return d
   }
+}
+
+// Add a "don't use numbers().normalize()" option for compromise-dates.  Since
+// the main export is the direct "addMethods" function, the best/only choice for
+// a "curry in some options" hook is to attach it as a property on the exported
+// function.
+addMethods.config = (options = {}) => {
+  pluginOptions = { ...pluginOptions, ...options };
+  return addMethods;
 }
 
 module.exports = addMethods

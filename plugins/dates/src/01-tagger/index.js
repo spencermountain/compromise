@@ -24,10 +24,14 @@ const normalize = function (doc) {
 }
 
 // run each of the taggers
-const tagDate = function (doc) {
-  doc = normalize(doc)
-  // run taggers
-  methods.forEach((fn) => fn(doc))
-  return doc
-}
+const tagDate = (pluginOptions) =>
+  function (doc) {
+    if (pluginOptions.normalizeBeforeTagging) {
+      doc = normalize(doc)
+    }
+    // run taggers
+    methods.forEach((fn) => fn(doc))
+    return doc
+  }
+
 module.exports = tagDate

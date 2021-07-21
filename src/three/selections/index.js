@@ -1,3 +1,5 @@
+import Abbreviations from './Abbreviations.js'
+
 // allow helper methods like .adjectives() and .adverbs()
 const selections = [
   ['hyphenated', '@hasHyphen .'],
@@ -68,6 +70,14 @@ const entities = function (n) {
   return yup
 }
 
+const abbreviations = function (n) {
+  let m = this.match('#Abbreviation')
+  if (typeof n === 'number') {
+    m = m.get(n)
+  }
+  return new Abbreviations(this.document, m.pointer)
+}
+
 // aliases
 let aliases = [
   ['emojis', 'emoji'],
@@ -91,6 +101,7 @@ const addSelections = function (world, View) {
   View.prototype.places = places
   View.prototype.organizations = organizations
   View.prototype.entities = entities
+  View.prototype.abbreviations = abbreviations
   aliases.forEach(a => {
     View.prototype[a[0]] = View.prototype[a[1]]
   })

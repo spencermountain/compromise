@@ -1,3 +1,4 @@
+// generated in ./lib/lexicon/ 
 export default {
   "Comparative": "true¦better",
   "Superlative": "true¦earlier",

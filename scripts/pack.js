@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import fs from 'fs'
 import { pack } from 'efrt'
-import lexicon from '../src/two/pre-tagger/model/lexicon/data/index.js'
+import lexicon from '../lib/lexicon/index.js'
 console.log('\n 🕑  - packing lexicon..')
 // const outFile = './src/pre-tagger/model/lexicon/_data.js'
 const outFile = './src/two/pre-tagger/model/lexicon/_data.js'
@@ -26,7 +26,8 @@ Object.keys(packed).forEach(tag => {
 })
 
 //write it to a file in ./src
-fs.writeFileSync(outFile, 'export default ' + JSON.stringify(packed, null, 2), 'utf8')
+let banner = `// generated in ./lib/lexicon/ \n`
+fs.writeFileSync(outFile, banner + 'export default ' + JSON.stringify(packed, null, 2), 'utf8')
 
 //get filesize
 const stats = fs.statSync(outFile)

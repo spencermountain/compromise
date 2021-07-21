@@ -1,6 +1,4 @@
-import { methods, model } from '../../world.js'
-import addMethods from './methods.js'
-import addAliases from './aliases.js'
+import { methods, model } from '../lib/world.js'
 
 class View {
   constructor(document, pointer, groups = {}) {
@@ -33,12 +31,8 @@ class View {
     })
     this.pointer = pointer
   }
-  /*
-  
-      getters:
-      -------
-    */
-  // lazy-getter pattern (fires once)
+  /* getters:  */
+  // lazy-getter (fires once)
   get docs() {
     let docs = this.document
     if (this.pointer) {
@@ -74,6 +68,4 @@ class View {
     return m
   }
 }
-addMethods(View)
-addAliases(View)
 export default View

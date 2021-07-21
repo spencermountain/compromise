@@ -1,6 +1,6 @@
-import View from './one/View/index.js'
-import world from './world.js'
-import version from './_version.js'
+import View from './View.js'
+import world from '../lib/world.js'
+import version from '../lib/_version.js'
 
 const nlp = function (document, lex) {
   // add user-given words to lexicon

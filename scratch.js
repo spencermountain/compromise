@@ -1,13 +1,14 @@
 /* eslint-disable no-console, no-unused-vars */
 // import './tests/lib/_error.js'
 import nlp from './src/three/index.js'
-// console.log(nlp.model().lexicon[''])
+// nlp.verbose(true)
 
-nlp.verbose(true)
+// let doc = nlp('he is really cool')
+let doc = nlp('he is a really big guy')
+let c = doc.chunks()
+console.log(c)
+c.debug()
 
-let doc = nlp('#cool')
-// doc.abbreviations().stripPeriods().debug()
-doc.debug()
 /*
 ['', '#'],
 ['', '#'],

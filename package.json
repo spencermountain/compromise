@@ -7,7 +7,7 @@
   "unpkg": "./builds/compromise.cjs",
   "module": "./builds/compromise.mjs",
   "type": "module",
-  "types": "types/index.d.ts",
+  "types": "builds/types.d.ts",
   "sideEffects": false,
   "exports": {
     ".": {
@@ -63,8 +63,7 @@
     "demo": "python -m SimpleHTTPServer 8888"
   },
   "files": [
-    "builds/",
-    "types/index.d.ts"
+    "builds/"
   ],
   "keywords": [
     "nlp"

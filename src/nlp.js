@@ -7,6 +7,9 @@ const nlp = function (input, lex) {
   if (lex) {
     // add user-given words to lexicon
     Object.assign(model.lexicon, lex)
+    if (methods.tag.expandLexicon) {
+      methods.tag.expandLexicon(model, methods)
+    }
   }
   let document = methods.tokenize.all(input, world)
   let doc = new View(document)

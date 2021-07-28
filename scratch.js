@@ -1,9 +1,10 @@
 /* eslint-disable no-console, no-unused-vars */
 // import './tests/_ignore/_error.js'
-import nlp from './src/three/lib.js'
+import nlp from './src/two/lib.js'
 // nlp.verbose(true)
 
-let doc = nlp("l'amour")
+let doc = nlp(`Tony, is`)
+doc.contract()
 // let doc = nlp("he's nice")
 // doc.contractions().expand()
 // doc.compute('contractions').debug()

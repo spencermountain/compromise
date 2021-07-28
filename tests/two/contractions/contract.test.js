@@ -43,20 +43,20 @@ test('contract basic', function (t) {
 
 test('avoid contraction messes', function (t) {
   let doc = nlp('Tony, is').contract()
-  t.equal(doc.text('reduced'), 'tony is', here + 'avoid-contraction 1')
+  t.equal(doc.has('is'), true, here + 'avoid-contraction 1')
 
   doc = nlp('(Tony) is').contract()
-  t.equal(doc.text('reduced'), 'tony is', here + 'avoid-contraction 2')
+  t.equal(doc.has('is'), true, here + 'avoid-contraction 2')
 
   doc = nlp(`'Tony' is`).contract()
-  t.equal(doc.text('reduced'), 'tony is', here + 'avoid-contraction 3')
+  t.equal(doc.has('is'), true, here + 'avoid-contraction 3')
 
   doc = nlp('Tony-is').contract()
-  t.equal(doc.text('reduced'), 'tony is', here + 'avoid-contraction 4')
+  t.equal(doc.has('is'), true, here + 'avoid-contraction 4')
   let str = `Tony
 is`
   doc = nlp(str).contract()
-  t.equal(doc.text('reduced'), 'tony is', here + 'avoid-contraction 5')
+  t.equal(doc.has('is'), true, here + 'avoid-contraction 5')
 
   t.end()
 })

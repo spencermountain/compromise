@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import build from '../../builds/two/compromise-two.mjs'
-import src from '../../src/two/index.js'
+import src from '../../src/two/lib.js'
 let nlp = src
 if (process.env.TESTENV === 'prod') {
   console.warn('== production build test 🚀 ==')

@@ -1,9 +1,9 @@
 /* eslint-disable no-console, no-unused-vars */
 // import './tests/_ignore/_error.js'
-import nlp from './src/two/lib.js'
-// nlp.verbose(true)
+import nlp from './src/three/lib.js'
+nlp.verbose(true)
 
-let doc = nlp("yeah he's cool.")
+let doc = nlp('nuclei')
 // doc.contractions().expand()
 // doc.compute('contractions').debug()
 doc.debug()

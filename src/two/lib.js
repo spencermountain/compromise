@@ -4,7 +4,7 @@ import two from './plugin.js'
 
 import preTagger from './pre-tagger/plugin.js'
 import contractions from './contractions/plugin.js'
-import postTagger from './post-tagger/index.js'
+import postTagger from './post-tagger/plugin.js'
 
 nlp.plugin(one)
 nlp.plugin(two)

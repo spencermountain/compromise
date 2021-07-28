@@ -38,13 +38,13 @@ nlp.model = () => world.model
 nlp.version = version
 
 /** don't run the POS-tagger */
-nlp.tokenize = function (document, lex) {
+nlp.tokenize = function (input, lex) {
   // add user-given words to lexicon
   if (lex) {
     Object.assign(world.model.lexicon, lex)
   }
   // only run the first parser
-  document = world.parsers[0](document, world)
+  let document = methods.tokenize.all(input, world)
   return new View(document)
 }
 

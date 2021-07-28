@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import build from '../../builds/three/compromise-three.mjs'
-import src from '../../src/three/index.js'
+import src from '../../src/three/lib.js'
 let nlp = src
 if (process.env.TESTENV === 'prod') {
   console.warn('== production build test 🚀 ==')

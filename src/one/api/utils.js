@@ -123,10 +123,7 @@ const utils = {
     }
     // allow a list of methods
     if (isArray(input)) {
-      input.forEach(name => {
-        console.log(name, fns[name])
-        fns.hasOwnProperty(name) && fns[name](docs, model, methods)
-      })
+      input.forEach(name => fns.hasOwnProperty(name) && fns[name](docs, model, methods))
     }
     // allow a custom compute function
     if (typeof input === 'function') {

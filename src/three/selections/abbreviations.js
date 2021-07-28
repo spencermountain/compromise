@@ -6,7 +6,6 @@ class Abbreviations extends View {
     this.viewType = 'Abbreviations'
   }
   stripPeriods() {
-    let { termNormalize } = this.methods.tokenize
     this.termList().forEach(t => {
       if (t.tags.has('Abbreviation') === true) {
         // don't remove a final period here
@@ -14,8 +13,9 @@ class Abbreviations extends View {
       }
       let str = t.text.replace(/\./, '')
       t.text = str
-      t.normal = termNormalize(str)
     })
+    // recompute normalized form?
+    this.compute('normal')
     return this
   }
   addPeriods() {

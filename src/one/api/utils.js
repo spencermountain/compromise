@@ -1,13 +1,7 @@
 const methods = {
   /** */
   termList: function () {
-    let arr = []
-    for (let i = 0; i < this.docs.length; i += 1) {
-      for (let t = 0; t < this.docs[i].length; t += 1) {
-        arr.push(this.docs[i][t])
-      }
-    }
-    return arr
+    return this.methods.utils.termList(this.docs)
   },
   /** */
   terms: function () {

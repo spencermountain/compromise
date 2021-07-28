@@ -3,7 +3,7 @@ const hasSlash = /\//
 const hasApostrophe = /['’]s$/
 
 const addAliases = function (term, model) {
-  let str = term.normal
+  let str = term.normal || term.text
   // lookup known aliases like '&'
   if (model.aliases.hasOwnProperty(str)) {
     term.alias = term.alias || []

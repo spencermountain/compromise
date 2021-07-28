@@ -6,24 +6,20 @@ import addMethods from './api/index.js'
 // turn a string input into a 'document' json format
 const tokenize = function (document, world) {
   const { methods, model } = world
-  const { splitSentences, splitTerms, splitWhitespace, termNormalize, termAlias } = methods.tokenize
+  const { splitSentences, splitTerms, splitWhitespace } = methods.tokenize
   if (typeof document === 'string') {
     // split into sentences
     let sentences = splitSentences(document, model)
     // split into word objects
     document = sentences.map(txt => {
       let terms = splitTerms(txt)
-      terms = terms.map(str => {
-        // split into [pre-text-post]
-        let t = splitWhitespace(str)
-        // add normalized term format
-        t.normal = termNormalize(t.text)
-        // support slashes, apostrophes, etc
-        t = termAlias(t, model)
-        return t
-      })
-      return terms
+      // split into [pre-text-post]
+      return terms.map(splitWhitespace)
     })
+    // add normalized term format
+    methods.compute.normal(document)
+    // support slashes, apostrophes, etc
+    methods.compute.alias(document, model)
   }
   return document
 }

@@ -119,15 +119,18 @@ const utils = {
     let fns = methods.compute || {}
     // do one method
     if (typeof input === 'string' && fns.hasOwnProperty(input)) {
-      fns[input](docs, model)
+      fns[input](docs, model, methods)
     }
     // allow a list of methods
     if (isArray(input)) {
-      input.forEach(name => fns.hasOwnProperty(name) && fns[name](docs, model))
+      input.forEach(name => {
+        console.log(name, fns[name])
+        fns.hasOwnProperty(name) && fns[name](docs, model, methods)
+      })
     }
     // allow a custom compute function
     if (typeof input === 'function') {
-      input(this.docs, model)
+      input(this.docs, model, methods)
     }
     return this
   },

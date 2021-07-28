@@ -18,17 +18,17 @@ import adjToComparative from './transform/adjectives/toComparative.js'
 import expandLexicon from './expand/index.js'
 
 export default {
-  preTagger: {
-    checkLexicon,
-    checkSuffix,
-    checkRegex,
-    checkCase,
-    checkAcronym,
-    checkPrefix,
-    nounFallback,
-    fillTags,
-    expandLexicon,
-  },
+  // preTagger: {
+  checkLexicon,
+  checkSuffix,
+  checkRegex,
+  checkCase,
+  checkAcronym,
+  checkPrefix,
+  nounFallback,
+  fillTags,
+  expandLexicon,
+  // },
   transform: {
     nounToPlural,
     nounToSingular,

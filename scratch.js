@@ -1,17 +1,16 @@
 /* eslint-disable no-console, no-unused-vars */
 // import './tests/_ignore/_error.js'
-import nlp from './src/one/index.js'
+import nlp from './src/two/lib.js'
 // nlp.verbose(true)
 
 let doc = nlp("yeah he's cool.")
 // doc.contractions().expand()
-// doc.debug()
 // doc.compute('contractions').debug()
-console.log(doc.json(0))
+doc.debug()
+// console.log(doc.json(0))
 // console.dir(doc.json(), { depth: 5 })
 // console.dir(nlp.methods(), { depth: 5 })
-// let model = nlp.model()
-// console.dir(model, { depth: 1 })
+// console.dir(nlp.model(), { depth: 1 })
 // let c = doc.chunks()
 // console.log(c)
 // c.debug()

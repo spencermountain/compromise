@@ -9,10 +9,10 @@ const byApostrophe = /'/
 const numDash = /^[0-9].*?[-–—].*?[0-9]/i
 
 const reTag = function (terms, model, methods) {
-  let m = methods.preTagger || {}
+  let m = methods.tag || {}
   // lookup known words
   if (m.checkLexicon) {
-    methods.preTagger.checkLexicon(terms, model)
+    m.checkLexicon(terms, model)
   }
   terms.forEach(term => {
     // look at word ending
@@ -34,7 +34,6 @@ const isArray = function (arr) {
 //really easy ones
 const contractions = (document = [], model, methods) => {
   let list = model.contractions || []
-  const m = methods.contractions
   document.forEach((terms, n) => {
     // loop through terms backwards
     for (let i = terms.length - 1; i >= 0; i -= 1) {

@@ -17,10 +17,7 @@
 ```
 {
   contractions: {
-    splitContractions: <function>,
-    apostropheD: <function>,
-    apostropheS: <function>,
-    apostropheT: <function>
+    expand: <function>,
   }
 }
 ```

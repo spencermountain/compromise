@@ -5,8 +5,8 @@ import nlp from './src/one/index.js'
 
 let doc = nlp("yeah he's cool.")
 // doc.contractions().expand()
-doc.debug()
-// doc.compute('machine').debug()
+// doc.debug()
+// doc.compute('contractions').debug()
 console.log(doc.json(0))
 // console.dir(doc.json(), { depth: 5 })
 // console.dir(nlp.methods(), { depth: 5 })

@@ -1,4 +1,7 @@
 import insertContraction from './_splice.js'
+import apostropheD from './apostrophe-d.js'
+import apostropheS from './apostrophe-s.js'
+import apostropheT from './apostrophe-t.js'
 import french from './french.js'
 import numberRange from './number-range.js'
 
@@ -58,15 +61,15 @@ const contractions = (document = [], model, methods) => {
         }
         // spencer's
         if (after === 's') {
-          words = m.apostropheS(terms, i)
+          words = apostropheS(terms, i)
         }
         // ain't
         if (after === 't') {
-          words = m.apostropheT(terms, i)
+          words = apostropheT(terms, i)
         }
         // how'd
         if (after === 'd') {
-          words = m.apostropheD(terms, i)
+          words = apostropheD(terms, i)
         }
         // l'amour
         if (before === 'l') {

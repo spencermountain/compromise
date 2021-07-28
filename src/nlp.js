@@ -2,16 +2,16 @@ import View from './View.js'
 import world from '../lib/world.js'
 import version from '../lib/_version.js'
 
-const nlp = function (document, lex) {
-  // add user-given words to lexicon
+const nlp = function (input, lex) {
+  const { model, methods, parsers } = world
   if (lex) {
-    Object.assign(world.model.lexicon, lex)
+    // add user-given words to lexicon
+    Object.assign(model.lexicon, lex)
   }
-  // vroom!)
-  world.parsers.forEach(fn => {
-    document = fn(document, world)
-  })
-  return new View(document)
+  let document = methods.tokenize.all(input, world)
+  let doc = new View(document)
+  doc.compute(parsers)
+  return doc
 }
 
 /** log the decision-making to console */

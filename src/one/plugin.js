@@ -28,7 +28,9 @@ const plugin = function (world) {
   let { methods, model, parsers } = world
   Object.assign({}, methods, _methods)
   Object.assign(model, _model)
-  parsers.push(tokenize)
+  methods.tokenize.all = tokenize
+  parsers.push('normal')
+  parsers.push('alias')
   // extend View class
   addMethods(View)
 }

@@ -1,4 +1,6 @@
-const methods = {
+const isArray = input => Object.prototype.toString.call(input) === '[object Array]'
+
+const utils = {
   /** */
   termList: function () {
     return this.methods.utils.termList(this.docs)
@@ -113,13 +115,23 @@ const methods = {
   },
   /** add metadata to term objects */
   compute: function (input) {
-    let fns = this.methods.compute || {}
+    const { docs, methods, model } = this
+    let fns = methods.compute || {}
+    // do one method
     if (typeof input === 'string' && fns.hasOwnProperty(input)) {
-      fns[input](this.docs)
+      fns[input](docs, model)
+    }
+    // allow a list of methods
+    if (isArray(input)) {
+      input.forEach(name => fns.hasOwnProperty(name) && fns[name](docs, model))
+    }
+    // allow a custom compute function
+    if (typeof input === 'function') {
+      input(this.docs, model)
     }
     return this
   },
 }
-methods.group = methods.groups
-methods.clone = methods.fork
-export default methods
+utils.group = utils.groups
+utils.clone = utils.fork
+export default utils

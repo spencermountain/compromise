@@ -1,5 +1,4 @@
 import fancyThings from './fancy.js'
-
 // derive clever things from our lexicon key-value pairs
 // this method runs as the pre-tagger plugin gets loaded
 const grow = function (model, methods) {
@@ -33,12 +32,12 @@ const grow = function (model, methods) {
       })
     })
   }
-  if (model.irregularPlurals) {
-    Object.entries(model.irregularPlurals).forEach(a => {
-      lex[a[0]] = lex[a[0]] || 'Singular'
-      lex[a[1]] = lex[a[1]] || 'Plural'
-    })
-  }
+  // if (model.irregularPlurals) {
+  Object.entries(model.irregularPlurals).forEach(a => {
+    lex[a[0]] = lex[a[0]] || 'Singular'
+    lex[a[1]] = lex[a[1]] || 'Plural'
+  })
+  // }
   // cleanup
   delete lex['']
   delete lex[null]

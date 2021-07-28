@@ -11,6 +11,7 @@ const plugin = world => {
   delete preTagger.model.lexicon
   Object.assign(model, preTagger.model)
   methods.compute.preTagger = preTagger.methods.tag.preTagger
+  methods.tag.expandLexicon(model, methods) //expand our lexicon
 
   // --- contractions plugin ---
   contractions.api(View)

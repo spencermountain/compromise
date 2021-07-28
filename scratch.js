@@ -1,10 +1,10 @@
 /* eslint-disable no-console, no-unused-vars */
 // import './tests/_ignore/_error.js'
 import nlp from './src/three/lib.js'
-nlp.verbose(true)
+// nlp.verbose(true)
 
-// let doc = nlp('between 5-7')
-let doc = nlp("he's nice")
+let doc = nlp("l'amour")
+// let doc = nlp("he's nice")
 // doc.contractions().expand()
 // doc.compute('contractions').debug()
 doc.debug()

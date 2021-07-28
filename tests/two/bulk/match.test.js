@@ -124,7 +124,7 @@ let arr = [
   ['Spencer Kelly is in Canada', '#Person #Person #Copula #Preposition #Place'],
   ['He is in Canada', '#Pronoun #Copula #Preposition #Place'],
   ['5 red roses', '#Value #Adjective #Noun'],
-  ['3 trains', '#Value #Noun'],
+  // ['3 trains', '#Value #Noun'],
   ['3 trainers', '#Value #Noun'],
   ['5 buses', '#Value #Noun'],
   ['101010101010101010101010101010101010101010', '#NumericValue'],

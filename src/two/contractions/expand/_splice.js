@@ -1,14 +1,14 @@
 // put n new words where 1 word was
-const insertContraction = function (document, point, words = []) {
+const insertContraction = function (document, point, words = [], hint = []) {
   let [n, w] = point
-  words = words.map(word => {
+  words = words.map((word, i) => {
     return {
       text: '',
       pre: '',
       post: '',
       normal: '',
       implicit: word,
-      tags: new Set(),
+      tags: new Set([hint[i]]), //apply any tag hints
     }
   })
   if (words[0]) {

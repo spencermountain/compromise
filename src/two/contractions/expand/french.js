@@ -23,7 +23,14 @@ const preD = (terms, i) => {
   return ['de', after]
 }
 
+// j'aime
+const preJ = (terms, i) => {
+  let after = terms[i].normal.split(hasContraction)[1]
+  return ['je', after]
+}
+
 export default {
+  preJ,
   preL,
   preD,
 }

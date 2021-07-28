@@ -32,6 +32,7 @@ const contractions = (document = [], model, methods) => {
       }
       list.some(o => {
         let words = null
+        let hint = []
         // look for word-word match (cannot-> [can, not])
         if (o.word === terms[i].normal) {
           words = isArray(o.out) ? o.out : o.out(terms, i)
@@ -56,17 +57,24 @@ const contractions = (document = [], model, methods) => {
         if (after === 'd') {
           words = apostropheD(terms, i)
         }
+        // j'aime
+        if (before === 'j') {
+          words = french.preJ(terms, i)
+          hint = ['Pronoun', 'Verb']
+        }
         // l'amour
         if (before === 'l') {
           words = french.preL(terms, i)
+          hint = ['Determiner', 'Noun']
         }
         // d'amerique
         if (before === 'd') {
           words = french.preD(terms, i)
+          hint = ['Preposition', 'Noun']
         }
         // actually insert the new terms
         if (words) {
-          insertContraction(document, [n, i], words, model)
+          insertContraction(document, [n, i], words, hint)
           reTag(terms, model, methods)
           return true
         }
@@ -74,7 +82,9 @@ const contractions = (document = [], model, methods) => {
         if (numDash.test(terms[i].normal)) {
           words = numberRange(terms, i)
           if (words) {
-            insertContraction(document, [n, i], words, model)
+            hint = ['Value', 'Conjunction', 'Value']
+            insertContraction(document, [n, i], words, hint)
+            methods.utils.setTag(terms, 'NumberRange', model.tagSet)
             reTag(terms, model, methods)
             return true
           }

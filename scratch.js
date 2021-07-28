@@ -3,7 +3,8 @@
 import nlp from './src/three/lib.js'
 nlp.verbose(true)
 
-let doc = nlp('nuclei')
+// let doc = nlp('between 5-7')
+let doc = nlp("he's nice")
 // doc.contractions().expand()
 // doc.compute('contractions').debug()
 doc.debug()

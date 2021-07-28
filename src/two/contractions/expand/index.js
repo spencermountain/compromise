@@ -9,22 +9,8 @@ const byApostrophe = /'/
 const numDash = /^[0-9].*?[-–—].*?[0-9]/i
 
 const reTag = function (terms, model, methods) {
-  let m = methods.tag || {}
-  // lookup known words
-  if (m.checkLexicon) {
-    m.checkLexicon(terms, model)
-  }
-  terms.forEach(term => {
-    // look at word ending
-    if (m.checkSuffix) {
-      m.checkSuffix(term, model)
-    }
-    // try look-like rules
-    if (m.checkRegex) {
-      m.checkRegex(term, model)
-    }
-  })
-  m.fillTags(terms, model)
+  const preTagger = methods.tag.preTagger
+  preTagger([terms], model)
 }
 
 const isArray = function (arr) {

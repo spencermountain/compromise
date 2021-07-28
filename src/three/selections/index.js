@@ -87,7 +87,8 @@ let aliases = [
   ['topics', 'entities'],
 ]
 
-const addSelections = function (world, View) {
+const addSelections = function (View) {
+  // add a list of new helper methods
   selections.forEach(a => {
     View.prototype[a[0]] = function (n) {
       let m = this.match(a[1])
@@ -102,6 +103,7 @@ const addSelections = function (world, View) {
   View.prototype.organizations = organizations
   View.prototype.entities = entities
   View.prototype.abbreviations = abbreviations
+  // add aliases
   aliases.forEach(a => {
     View.prototype[a[0]] = View.prototype[a[1]]
   })

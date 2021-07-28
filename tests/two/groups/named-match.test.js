@@ -16,10 +16,10 @@ test('named-match-overlap', function (t) {
 
 test('named-match-or:', function (t) {
   let arr = [
-    ['the dog played again', 'the [<target>(#Noun|#Verb)] played [<0>(#Adverb)]', here + 'dog'],
-    ['the dog played again', 'the [<target>(#Noun|#Verb)] played [<another>(#Adverb)]', here + 'dog'],
-    ['the dog played', 'the [<target>(#Noun|#Verb)] played', here + 'dog'],
-    ['the dog played', 'the [<target>(#Noun)] played', here + 'dog'],
+    ['the dog played again', 'the [<target>(#Noun|#Verb)] played [<0>(#Adverb)]', 'dog'],
+    ['the dog played again', 'the [<target>(#Noun|#Verb)] played [<another>(#Adverb)]', 'dog'],
+    ['the dog played', 'the [<target>(#Noun|#Verb)] played', 'dog'],
+    ['the dog played', 'the [<target>(#Noun)] played', 'dog'],
   ]
 
   arr.forEach(function (a) {

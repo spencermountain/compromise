@@ -1,5 +1,5 @@
 const cache = function (matches, methods) {
-  const cacheMatch = methods.cacheMatch
+  const cacheMatch = methods.utils.cacheMatch
   matches.forEach(obj => {
     obj.needs = Array.from(cacheMatch(obj.regs))
     // if (obj.if) {

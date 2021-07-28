@@ -2,7 +2,7 @@ import logger from './_logger.js'
 
 const tagger = function (list, document, world) {
   const tagSet = world.model.tags
-  const { getDoc, setTag, unTag } = world.methods
+  const { getDoc, setTag, unTag } = world.methods.utils
   if (list.length === 0) {
     return list
   }

@@ -1,10 +1,8 @@
 export default [
   //web tags
   [/^[\w.]+@[\w.]+\.[a-z]{2,3}$/, 'Email'],
-  [/^#[a-z0-9_\u00C0-\u00FF]{2,}$/, 'HashTag'],
   [/^@1?[0-9](am|pm)$/i, 'Time', '3pm'],
   [/^@1?[0-9]:[0-9]{2}(am|pm)?$/i, 'Time', '3:30pm'],
-  [/^@\w{2,}$/, 'AtMention'],
   [/^(https?:\/\/|www\.)+\w+\.[a-z]{2,3}/, 'Url', 'http..'],
   [/^[a-z0-9./].+\.(com|net|gov|org|ly|edu|info|biz|dev|ru|jp|de|in|uk|br|io|ai)/, 'Url', '.com'],
 
@@ -74,9 +72,6 @@ export default [
   [/^[0-9.]+([a-z]{1,4})$/, 'Value', '9km'],
   // m/h
   [/^(m|k|cm|km|m)\/(s|h|hr)$/, 'Unit', '5 k/m'],
-
-  // period-ones acronyms - f.b.i.
-  [/^([A-Z]\.){2}[A-Z]?/i, ['Acronym', 'Noun'], 'F.B.I'], //ascii-only
 
   // ending-apostrophes
   [/n['‘’‛‵′`´]$/, 'Gerund', "chillin'"],

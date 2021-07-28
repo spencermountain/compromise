@@ -2,10 +2,10 @@ import matchUp from './01-matchUp.js'
 import localTrim from './02-localTrim.js'
 
 const matcher = function (document, byGroup, methods) {
-  const { cacheDoc, match } = methods
+  const { utils, match } = methods
   let results = []
   // find suitable matches to attempt, on each sentence
-  let docCache = cacheDoc(document)
+  let docCache = utils.cacheDoc(document)
   let maybeList = matchUp(docCache, byGroup)
   maybeList = localTrim(maybeList, docCache)
   // now actually run the matches

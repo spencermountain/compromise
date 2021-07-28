@@ -22,7 +22,7 @@ nlp.verbose = function (set) {
 }
 
 /** pre-parse any match statements */
-nlp.parseMatch = world.methods.parseMatch
+nlp.parseMatch = world.methods.utils.parseMatch
 
 /** extend compromise functionality */
 nlp.plugin = function (fn) {

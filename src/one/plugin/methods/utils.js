@@ -15,7 +15,7 @@ const methods = {
   },
   /** */
   cache: function () {
-    this._cache = this.methods.cacheDoc(this.document)
+    this._cache = this.methods.utils.cacheDoc(this.document)
     return this
   },
   /** */
@@ -119,6 +119,14 @@ const methods = {
       count += p.wordCount()
       return count
     }, 0)
+  },
+  /** add metadata to term objects */
+  compute: function (input) {
+    let fns = this.methods.compute || {}
+    if (typeof input === 'string' && fns.hasOwnProperty[input]) {
+      this.docs.forEach(fns[input])
+    }
+    return this
   },
 }
 methods.group = methods.groups

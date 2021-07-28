@@ -19,9 +19,9 @@ const fns = {
     }
     let tagSet = model.tags
     if (isArray(input)) {
-      input.forEach(tag => methods.setTag(terms, tag, tagSet, isSafe))
+      input.forEach(tag => methods.utils.setTag(terms, tag, tagSet, isSafe))
     } else {
-      methods.setTag(terms, input, tagSet, isSafe)
+      methods.utils.setTag(terms, input, tagSet, isSafe)
     }
     return this
   },
@@ -45,9 +45,9 @@ const fns = {
     }
     let tagSet = model.tags
     if (isArray(input)) {
-      input.forEach(tag => methods.unTag(terms, tag, tagSet))
+      input.forEach(tag => methods.utils.unTag(terms, tag, tagSet))
     } else {
-      methods.unTag(terms, input, tagSet)
+      methods.utils.unTag(terms, input, tagSet)
     }
     return this
   },

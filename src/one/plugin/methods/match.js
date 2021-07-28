@@ -18,7 +18,7 @@ const relPointer = function (ptrs, parent) {
 const matchOne = function (regs, group) {
   let { methods, docs } = this
   if (typeof regs === 'string') {
-    regs = methods.parseMatch(regs)
+    regs = methods.utils.parseMatch(regs)
   }
   let todo = { regs, group, justOne: true }
   let { ptrs, byGroup } = methods.match(docs, todo, this._cache, true)
@@ -30,7 +30,7 @@ const matchOne = function (regs, group) {
 const match = function (regs, group) {
   let { methods, docs } = this
   if (typeof regs === 'string') {
-    regs = methods.parseMatch(regs)
+    regs = methods.utils.parseMatch(regs)
   }
   let todo = { regs, group }
   let { ptrs, byGroup } = methods.match(docs, todo, this._cache)
@@ -43,7 +43,7 @@ const match = function (regs, group) {
 const has = function (regs, group) {
   let { methods, docs } = this
   if (typeof regs === 'string') {
-    regs = methods.parseMatch(regs)
+    regs = methods.utils.parseMatch(regs)
   }
   let todo = { regs, group }
   let { ptrs } = methods.match(docs, todo, this._cache)
@@ -54,7 +54,7 @@ const has = function (regs, group) {
 const ifFn = function (regs, group) {
   let { methods, docs } = this
   if (typeof regs === 'string') {
-    regs = methods.parseMatch(regs)
+    regs = methods.utils.parseMatch(regs)
   }
   let todo = { regs, group }
   let { ptrs } = methods.match(docs, todo, this._cache)
@@ -66,7 +66,7 @@ const ifFn = function (regs, group) {
 const ifNo = function (regs, group) {
   let { methods, docs } = this
   if (typeof regs === 'string') {
-    regs = methods.parseMatch(regs)
+    regs = methods.utils.parseMatch(regs)
   }
   let todo = { regs, group }
   let { ptrs } = methods.match(docs, todo, this._cache)
@@ -83,7 +83,7 @@ const ifNo = function (regs, group) {
 const not = function (regs) {
   let { methods, docs } = this
   if (typeof regs === 'string') {
-    regs = methods.parseMatch(regs)
+    regs = methods.utils.parseMatch(regs)
   }
   let todo = { regs }
   let { ptrs } = methods.match(docs, todo, this._cache)

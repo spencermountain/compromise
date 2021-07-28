@@ -9,15 +9,17 @@ import tokenize from './tokenize/index.js'
 import termMethods from './termMethods.js'
 
 export default {
+  utils: {
+    // parsePointer,
+    // createPointer,
+    getDoc,
+    setTag,
+    unTag,
+    cacheDoc,
+    cacheMatch,
+    parseMatch,
+  },
   match,
-  parseMatch,
-  setTag,
-  unTag,
   tokenize,
-  cacheDoc,
-  cacheMatch,
-  getDoc,
-  parsePointer,
-  createPointer,
   termMethods,
 }

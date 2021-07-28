@@ -5,8 +5,8 @@ import sort from './methods/sort.js'
 import whitespace from './methods/whitespace.js'
 import split from './methods/split.js'
 import tag from './tag/index.js'
-
-const methods = Object.assign({}, util, out, match, tag, sort, whitespace, split)
+const compute = {}
+const methods = Object.assign({}, util, out, match, tag, sort, whitespace, split, compute)
 export default (function (View) {
   Object.assign(View.prototype, methods)
 })

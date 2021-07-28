@@ -77,7 +77,8 @@
     "arrowParens": "avoid"
   },
   "dependencies": {
-    "efrt": "2.3.2"
+    "efrt": "2.3.2",
+    "suffix-thumb": "^1.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-alias": "3.1.2",

@@ -34,7 +34,8 @@ const preTagger = function (document, world) {
 
 const plugin = function (world) {
   let { methods, model, parsers } = world
-  methods.preTagger = _methods
+  // methods.preTagger = _methods
+  Object.assign(methods, _methods)
   const lex = model.lexicon || {} // merge any existing lexicon
   Object.assign(model, _model)
   Object.assign(model.lexicon, lex) //

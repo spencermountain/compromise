@@ -62,10 +62,7 @@ const methods = {
     pntrs = pntrs.slice(min, max)
     return this.update(pntrs)
   },
-  /** */
-  parent: function () {
-    return this.update()
-  },
+
   /** */
   all: function () {
     return this.update()

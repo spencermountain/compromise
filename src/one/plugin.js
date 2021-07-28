@@ -1,7 +1,7 @@
 import _methods from './methods/index.js'
 import _model from './model/index.js'
 import View from '../View.js'
-import addMethods from './fns/index.js'
+import addMethods from './api/index.js'
 
 // turn a string input into a 'document' json format
 const tokenize = function (document, world) {

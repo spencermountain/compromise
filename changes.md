@@ -21,6 +21,8 @@ main things:
 match(['foo', 'far'])
 ```
 
+-**[breaking]** - drop `.parent()` and `.parents()` (use `.all()`)
+
 - move fuzzy matching to a plugin
 - drop array support in match methods
 - drop support for using Doc as match input

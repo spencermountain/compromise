@@ -81,6 +81,5 @@ methods.isKnown = function (term) {
 methods.isTitleCase = function (term) {
   return /^[A-Z][a-z'\u00C0-\u00FF]/.test(term.text)
 }
-methods.titleCase = methods.isTitleCase
 
 export default methods

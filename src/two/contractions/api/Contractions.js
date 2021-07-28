@@ -1,4 +1,4 @@
-import View from '../../View.js'
+import View from '../../../View.js'
 
 const titleCase = /^[A-Z][a-z'’\u00C0-\u00FF]/
 

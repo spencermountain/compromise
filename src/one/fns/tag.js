@@ -25,10 +25,12 @@ const fns = {
     }
     return this
   },
+
   /** add a given tag, only if it is consistent */
   tagSafe: function (input, reason = '') {
     return this.tag(input, reason, true)
   },
+
   /** remove a given tag from all these terms */
   unTag: function (input, reason) {
     if (!this.found || !input) {

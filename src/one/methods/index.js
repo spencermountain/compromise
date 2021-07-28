@@ -7,7 +7,7 @@ import cacheDoc from './cache/cacheDoc.js'
 import cacheMatch from './cache/cacheMatch.js'
 import tokenize from './tokenize/index.js'
 import termMethods from './termMethods.js'
-
+import compute from './compute.js'
 export default {
   utils: {
     // parsePointer,
@@ -18,8 +18,9 @@ export default {
     cacheDoc,
     cacheMatch,
     parseMatch,
+    match,
   },
-  match,
   tokenize,
   termMethods,
+  compute,
 }

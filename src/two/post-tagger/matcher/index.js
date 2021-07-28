@@ -2,7 +2,7 @@ import matchUp from './01-matchUp.js'
 import localTrim from './02-localTrim.js'
 
 const matcher = function (document, byGroup, methods) {
-  const { utils, match } = methods
+  const utils = methods.utils
   let results = []
   // find suitable matches to attempt, on each sentence
   let docCache = utils.cacheDoc(document)
@@ -11,7 +11,7 @@ const matcher = function (document, byGroup, methods) {
   // now actually run the matches
   maybeList.forEach((allPossible, n) => {
     allPossible.forEach(m => {
-      let res = match([document[n]], m)
+      let res = utils.match([document[n]], m)
       if (res.ptrs.length > 0) {
         res.ptrs.forEach(ptr => {
           ptr[0] = n // fix the sentence pointer

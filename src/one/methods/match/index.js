@@ -11,7 +11,7 @@ const addSentence = function (res, n) {
   return res
 }
 
-const handleStart = function (terms, regs, n, group) {
+const handleStart = function (terms, regs, n) {
   let res = fromHere(terms, regs, 0, terms.length)
   if (res) {
     res = addSentence(res, n)

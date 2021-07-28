@@ -1,6 +1,6 @@
-import debug from './debug.js'
-import out from './out.js'
-import { textFromDoc, textFromTerms } from './text.js'
+import debug from './lib/debug.js'
+import out from './lib/out.js'
+import { textFromDoc, textFromTerms } from './lib/text.js'
 
 const isObject = val => {
   return Object.prototype.toString.call(val) === '[object Object]'

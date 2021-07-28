@@ -1,8 +1,7 @@
-import _methods from './shared/index.js'
+import _methods from './methods/index.js'
 import _model from './model/index.js'
 import View from '../View.js'
-import addMethods from './plugin/methods.js'
-import addAliases from './plugin/aliases.js'
+import addMethods from './fns/index.js'
 
 // turn a string input into a 'document' json format
 const tokenize = function (document, world) {
@@ -36,6 +35,5 @@ const plugin = function (world) {
   parsers.push(tokenize)
   // extend View class
   addMethods(View)
-  addAliases(View)
 }
 export default plugin

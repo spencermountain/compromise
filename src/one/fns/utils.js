@@ -123,8 +123,8 @@ const methods = {
   /** add metadata to term objects */
   compute: function (input) {
     let fns = this.methods.compute || {}
-    if (typeof input === 'string' && fns.hasOwnProperty[input]) {
-      this.docs.forEach(fns[input])
+    if (typeof input === 'string' && fns.hasOwnProperty(input)) {
+      fns[input](this.docs)
     }
     return this
   },

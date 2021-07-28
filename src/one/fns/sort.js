@@ -1,4 +1,4 @@
-import methods from './_sort.js'
+import methods from './lib/_sort.js'
 // aliases
 const seqNames = new Set(['index', 'sequence', 'seq', 'sequential', 'chron', 'chronological'])
 const freqNames = new Set(['freq', 'frequency', 'topk', 'repeats'])

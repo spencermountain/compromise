@@ -32,7 +32,7 @@ test('tricky case:', function (t) {
 
   str = 'the Spencer Kelly Festival of Silly Walks'
   r = nlp(str)
-  r.match('@titleCase+').toCamelCase()
+  r.match('@isTitleCase+').toCamelCase()
   t.equal(r.out('text'), 'the SpencerKellyFestival of SillyWalks', here + 'tricky-camelcase')
 
   t.end()

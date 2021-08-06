@@ -52,7 +52,7 @@ const miscCorrection = function (doc) {
 
   // Firstname x (dangerous)
   m = hasTag(doc, 'FirstName')
-  m.match('#FirstName (#Noun|@titleCase)')
+  m.match('#FirstName (#Noun|@isTitleCase)')
     .ifNo('^#Possessive')
     .ifNo('(#Pronoun|#Plural)')
     .ifNo('@hasComma .')

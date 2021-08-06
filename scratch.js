@@ -3,24 +3,28 @@
 import nlp from './src/two/lib.js'
 // nlp.verbose(true)
 
-let doc = nlp(`Tony, is`)
-doc.contract()
-// let doc = nlp("he's nice")
-// doc.contractions().expand()
-// doc.compute('contractions').debug()
-doc.debug()
-// console.log(doc.json(0))
-// console.dir(doc.json(), { depth: 5 })
-// console.dir(nlp.methods(), { depth: 5 })
-// console.dir(nlp.model(), { depth: 1 })
-// let c = doc.chunks()
-// console.log(c)
-// c.debug()
-// found.eq(0).text('normal')
+let doc = nlp('the Spencer Kelly Festival of Silly Walks')
+doc.match('@isTitleCase+').debug()
 /*
 ['', '#'],
 ['', '#'],
 ['', '#'],
 */
 
-// doc.compute('root')
+/*
+
+> One
+.compute(normal)
+
+> Two
+Insert/replace
+
+> Three
+.compute([root,  numbers, dates])
+methods.compute.root(terms)
+
+* Use suffix-thumb runner for transformations
+* Figure-out phrase tagging 
+
+
+*/

@@ -1,19 +1,3 @@
-// sort words by frequency
-const topk = function (view) {
-  let obj = {}
-  view.docs.forEach(o => {
-    if (!obj[o.normal]) {
-      o.count = 0
-      obj[o.normal] = o
-    }
-    obj[o.normal].count += 1
-  })
-  let arr = Object.keys(obj).map(k => obj[k])
-  // sort them
-  arr.sort((a, b) => (a.count > b.count ? -1 : 1))
-  return arr
-}
-
 /** some named output formats */
 const out = function (method) {
   if (method === 'text') {
@@ -26,7 +10,8 @@ const out = function (method) {
     return this.json()
   }
   if (method === 'offset' || method === 'offsets') {
-    return this.json({ offset: true })
+    this.compute('offset')
+    return this.json()
   }
   if (method === 'array') {
     return this.docs.map(terms => {
@@ -38,7 +23,8 @@ const out = function (method) {
     })
   }
   if (method === 'freq' || method === 'frequency') {
-    return topk(this)
+    this.compute('freq')
+    return this.json()
   }
   if (method === 'terms') {
     let list = []

@@ -21,7 +21,9 @@ main things:
 match(['foo', 'far'])
 ```
 
--**[breaking]** - drop `.parent()` and `.parents()` (use `.all()`)
+- **[breaking]** - drop `.parent()` and `.parents()` - (use `.all()` instead)
+- **[breaking]** - drop `.out('freq')` output format - (use`.compute('freq').json()` instead)
+- **[breaking]** - drop `@titleCase` alias (use @isTitleCase)
 
 - move fuzzy matching to a plugin
 - drop array support in match methods

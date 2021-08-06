@@ -22,7 +22,7 @@ test('and-match-more', function (t) {
   t.equal(m.length, 4, here + 'found all four')
 
   m = doc.match('(#Place && /e/)')
-  t.equal(m.out(), 'montreal. Sydney', here + 'found e words')
+  t.equal(m.out(), 'montreal Sydney', here + 'found e words')
 
   m = doc.match('(#Place && !#Verb)')
   t.equal(m.length, 4, here + 'and not')

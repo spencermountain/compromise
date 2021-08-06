@@ -24,7 +24,11 @@ const checkRegex = function (term, model) {
   let { regexText, regexNormal, endsWith } = model
   let text = term.text || term.implicit
   let normal = term.normal || term.implicit
-  let arr = startsWith(text, regexText) || startsWith(normal, regexNormal) || doEndsWith(normal, endsWith)
+  let arr = startsWith(text, regexText) || startsWith(normal, regexNormal)
+  // only run endsWith if we're desperate
+  if (!arr && term.tags.size === 0) {
+    arr = doEndsWith(normal, endsWith)
+  }
   if (arr !== undefined) {
     setTag(term, arr[1], `regex- '${arr[2] || arr[0]}'`)
     return true

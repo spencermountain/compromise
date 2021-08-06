@@ -1,10 +1,12 @@
 /* eslint-disable no-console, no-unused-vars */
 // import './tests/_ignore/_error.js'
 import nlp from './src/two/lib.js'
-// nlp.verbose(true)
+nlp.verbose(true)
 
-let doc = nlp('the Spencer Kelly Festival of Silly Walks')
-doc.match('@isTitleCase+').debug()
+let doc = nlp('Jardas al Abid', { 'Jardas al Abid': 'Place' })
+// let doc = nlp('the  snake island', { 'snake island': 'Town' })
+
+doc.debug()
 /*
 ['', '#'],
 ['', '#'],

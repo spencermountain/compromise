@@ -20,6 +20,7 @@ const postTagger = function (document, model, methods) {
 const plugin = {
   methods: {
     postTagger,
+    canBe: fns.canBe,
     // bulkTagger: fns._methods,
   },
   model: _model,

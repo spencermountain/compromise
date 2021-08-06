@@ -1,7 +1,7 @@
 import _model from './model/index.js'
 import fns from './methods.js'
 
-const preTagger = function (document, model, methods) {
+const preTagger = function (document, model) {
   // start with all terms
   for (let n = 0; n < document.length; n += 1) {
     let terms = document[n]
@@ -36,6 +36,7 @@ const plugin = {
       preTagger,
       fillTags: fns.fillTags,
       expandLexicon: fns.expandLexicon,
+      addToLexicon: fns.addToLexicon,
     },
     transform: fns.transform,
   },

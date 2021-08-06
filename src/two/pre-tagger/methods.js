@@ -17,6 +17,20 @@ import adjToSuperlative from './transform/adjectives/toSuperlative.js'
 import adjToComparative from './transform/adjectives/toComparative.js'
 import expandLexicon from './expand/index.js'
 
+const addToLexicon = function (lex, world) {
+  const { methods, model } = world
+  let fixed = {}
+  // normalize lexicon a little bit
+  Object.keys(lex).forEach(k => {
+    let norm = k.toLowerCase().trim()
+    fixed[norm] = lex[k]
+  })
+  Object.assign(world.model.lexicon, fixed)
+  if (methods.tag.expandLexicon) {
+    methods.tag.expandLexicon(model, methods)
+  }
+}
+
 export default {
   // preTagger: {
   checkLexicon,
@@ -28,6 +42,7 @@ export default {
   nounFallback,
   fillTags,
   expandLexicon,
+  addToLexicon,
   // },
   transform: {
     nounToPlural,

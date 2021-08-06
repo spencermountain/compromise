@@ -3,12 +3,11 @@ import world from '../lib/world.js'
 import version from '../lib/_version.js'
 
 const nlp = function (input, lex) {
-  const { model, methods, parsers } = world
+  const { methods, parsers } = world
   if (lex) {
     // add user-given words to lexicon
-    Object.assign(model.lexicon, lex)
-    if (methods.tag.expandLexicon) {
-      methods.tag.expandLexicon(model, methods)
+    if (methods.tag.addToLexicon) {
+      methods.tag.addToLexicon(lex, world)
     }
   }
   let document = methods.tokenize.all(input, world)

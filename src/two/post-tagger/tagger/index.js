@@ -16,6 +16,12 @@ const tagger = function (list, document, model, methods) {
       logger(todo, document)
     }
     let terms = getDoc([todo.pointer], document)[0]
+    // handle 'safe' tag
+    if (todo.safe === true) {
+      if (methods.tag.canBe(terms, todo.tag, model) === false) {
+        return
+      }
+    }
     if (todo.tag !== undefined) {
       setTag(terms, todo.tag, tagSet, todo.safe)
     }

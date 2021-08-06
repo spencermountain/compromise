@@ -6,6 +6,14 @@ main things:
 - cache a sequence of matches
 - better logging
 
+* user-given lexicon is less-strong and less co-ercive
+
+```js
+nlp('Spencer Kelly', { kelly: 'Verb' }).has('#Verb') //false
+```
+
+this means adding your own words is less-dangerous.
+
 ---
 
 ### One

@@ -43,7 +43,7 @@ nlp.version = version
 nlp.tokenize = function (input, lex) {
   // add user-given words to lexicon
   if (lex) {
-    Object.assign(world.model.lexicon, lex)
+    Object.assign(world.model.two.lexicon, lex)
   }
   // only run the first parser
   let document = methods.one.tokenize(input, world)

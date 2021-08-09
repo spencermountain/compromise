@@ -5,7 +5,10 @@ import nlp from './src/one/lib.js'
 
 // let doc = nlp("Jardas al Abid's", { 'Jardas al Abid': 'Foo' })
 let doc = nlp('one two three')
-console.log(doc.methods)
+// console.log(doc.model)
+// console.dir(doc.model, { depth: 1 })
+console.log(Object.keys(doc.model))
+// console.log(doc.model)
 // let m = doc.match('two')
 // m.insertAfter('two yeah cool')
 // m.debug()

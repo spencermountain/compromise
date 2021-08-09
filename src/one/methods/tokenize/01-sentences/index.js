@@ -6,7 +6,7 @@ import isSentence from './02-test.js'
 const hasSomething = /\S/
 const startWhitespace = /^\s+/
 const splitSentences = function (text, model) {
-  let abbrevs = model.abbreviations || new Set()
+  let abbrevs = model.one.abbreviations || new Set()
   text = text || ''
   text = String(text)
   let sentences = []

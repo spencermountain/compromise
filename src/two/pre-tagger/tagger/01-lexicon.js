@@ -19,7 +19,7 @@ const checkMulti = function (terms, i, lexicon) {
 // tag any words in our lexicon
 const checkLexicon = function (terms, model) {
   const multi = model._multiCache
-  const lexicon = model.lexicon
+  const lexicon = model.two.lexicon
   // basic lexicon lookup
   for (let i = 0; i < terms.length; i += 1) {
     let t = terms[i]

@@ -34,7 +34,11 @@ list.forEach(a => {
 })
 
 export default {
-  aliases,
-  abbreviations,
-  lexicon,
+  one: {
+    aliases,
+    abbreviations,
+  },
+  two: {
+    lexicon,
+  },
 }

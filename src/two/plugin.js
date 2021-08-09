@@ -7,7 +7,7 @@ const plugin = world => {
   const { methods, model } = world
   // --- pre-tagger plugin ---
   Object.assign(methods, preTagger.methods)
-  Object.assign(model.lexicon, preTagger.model.lexicon) // don't overwrite the existing lexion
+  Object.assign(model.two.lexicon, preTagger.model.lexicon) // don't overwrite the existing lexion
   delete preTagger.model.lexicon
   Object.assign(model, preTagger.model)
   methods.compute.preTagger = preTagger.methods.tag.preTagger

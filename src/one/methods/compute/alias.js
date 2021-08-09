@@ -4,10 +4,11 @@ const hasApostrophe = /['’]s$/
 
 const addAliases = function (term, model) {
   let str = term.normal || term.text
+  const aliases = model.one.aliases
   // lookup known aliases like '&'
-  if (model.aliases.hasOwnProperty(str)) {
+  if (aliases.hasOwnProperty(str)) {
     term.alias = term.alias || []
-    term.alias.push(model.aliases[str])
+    term.alias.push(aliases[str])
   }
   // support slashes as aliases
   if (hasSlash.test(str)) {

@@ -1,6 +1,6 @@
 // is this tag consistent with the tags they already have?
 const canBe = function (terms, tag, model) {
-  let tagSet = model.tags
+  let tagSet = model.two.tags
   if (!tagSet.hasOwnProperty(tag)) {
     return true
   }

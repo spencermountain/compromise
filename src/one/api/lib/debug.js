@@ -64,12 +64,12 @@ const cli = {
   },
 }
 const tagString = function (tags, model) {
-  if (model.tags) {
+  if (model.two.tags) {
     tags = tags.map(tag => {
-      if (!model.tags.hasOwnProperty(tag)) {
+      if (!model.two.tags.hasOwnProperty(tag)) {
         return tag
       }
-      const c = model.tags[tag].color || 'blue'
+      const c = model.two.tags[tag].color || 'blue'
       return cli[c](tag)
     })
   }

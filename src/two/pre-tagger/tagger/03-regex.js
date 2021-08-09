@@ -21,8 +21,9 @@ const doEndsWith = function (str = '', byEnd) {
 }
 
 const checkRegex = function (term, model) {
-  let { regexText, regexNormal, endsWith } = model
+  let { regexText, regexNormal, endsWith } = model.two
   let normal = term.machine || term.normal
+
   let arr = startsWith(term.text, regexText) || startsWith(normal, regexNormal)
   // only run endsWith if we're desperate
   if (!arr && term.tags.size === 0) {

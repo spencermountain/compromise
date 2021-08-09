@@ -72,8 +72,4 @@ export default [
   [/^[0-9.]+([a-z]{1,4})$/, 'Value', '9km'],
   // m/h
   [/^(m|k|cm|km|m)\/(s|h|hr)$/, 'Unit', '5 k/m'],
-
-  // ending-apostrophes
-  [/n['‘’‛‵′`´]$/, 'Gerund', "chillin'"],
-  [/s['‘’‛‵′`´]$/, 'Possessive', "flanders'"],
 ]

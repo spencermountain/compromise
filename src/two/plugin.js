@@ -11,7 +11,7 @@ const plugin = world => {
   // --- pre-tagger plugin ---
   Object.assign(methods.two, preTagger.methods) // - methods
   Object.assign(methods.compute, preTagger.compute) // - compute
-  Object.assign(model, preTagger.model) // - model
+  Object.assign(model.two, preTagger.model) // - model
   Object.assign(model.two.lexicon, preTagger.lexicon) // - lexicon
 
   // --- contractions plugin ---
@@ -22,7 +22,7 @@ const plugin = world => {
   // --- post-tagger plugin ---
   Object.assign(methods.two, postTagger.methods) // - methods
   Object.assign(methods.compute, postTagger.compute) // - compute
-  Object.assign(model, postTagger.model) // - model
+  Object.assign(model.two, postTagger.model) // - model
 
   // set them computations to run on-load
   world.parsers.push('preTagger')

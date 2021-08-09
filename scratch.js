@@ -3,18 +3,10 @@
 import nlp from './src/two/lib.js'
 // nlp.verbose(true)
 
-let doc = nlp(`spencer's cool`).debug()
-console.log(doc.json(0))
-// console.log(doc.parsers)
-// console.log(doc.methods)
-// console.dir(doc.model, { depth: 1 })
-// console.log(Object.keys(doc.model))
-// console.log(doc.model)
-// let m = doc.match('two')
-// m.insertAfter('two yeah cool')
-// m.debug()
-// console.log(doc.json(0))
-// doc.debug()
+let doc = nlp(`hit Jardas al Abid's`, { 'Jardas al Abid': 'Cool' }).debug()
+
+// console.log(doc.model._multiCache)
+console.log(Object.keys(doc.model))
 
 /*
 ['', '#'],

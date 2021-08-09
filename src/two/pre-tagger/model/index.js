@@ -3,11 +3,12 @@ import irregularPlurals from './irregulars/plurals.js'
 import irregularVerbs from './irregulars/conjugations.js'
 import lexicon from './lexicon/index.js'
 import suffixPatterns from './patterns/suffixes.js'
-import regexNormal from './patterns/regex-normal.js'
-import regexText from './patterns/regex-text.js'
-import regexFallback from './patterns/regex-fallback.js'
 import endsWith from './patterns/endsWith.js'
 import neighbours from './patterns/neighbours.js'
+
+import regexNormal from './regex/regex-normal.js'
+import regexText from './regex/regex-text.js'
+import regexFallback from './regex/regex-fallback.js'
 
 export default {
   lexicon,
@@ -16,11 +17,13 @@ export default {
     irregularPlurals,
     irregularVerbs,
     suffixPatterns,
+    endsWith,
+    neighbours,
+
     regexNormal,
     regexText,
     regexFallback,
-    endsWith,
-    neighbours,
+
     _multiCache: new Set(),
   },
 }

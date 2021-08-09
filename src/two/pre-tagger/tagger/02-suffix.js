@@ -20,14 +20,14 @@ const suffixLoop = function (str = '', suffixes = []) {
 // decide tag from the ending of the word
 const tagBySuffix = function (term, model) {
   if (term.tags.size === 0) {
-    let tag = suffixLoop(term.normal, model.suffixPatterns)
+    let tag = suffixLoop(term.normal, model.two.suffixPatterns)
     if (tag !== null) {
       setTag(term, tag, 'suffix')
       return true
     }
     // try implicit form of word, too
     if (term.implicit) {
-      tag = suffixLoop(term.implicit, model.suffixPatterns)
+      tag = suffixLoop(term.implicit, model.two.suffixPatterns)
       if (tag !== null) {
         setTag(term, tag, 'implicit-suffix')
         return true

@@ -84,7 +84,7 @@ const contractions = (document = [], model, methods) => {
           if (words) {
             hint = ['Value', 'Conjunction', 'Value']
             splice(document, [n, i], words, hint)
-            methods.one.setTag(terms, 'NumberRange', model.tagSet)
+            methods.one.setTag(terms, 'NumberRange', model.two.tags)
             reTag(terms, model, methods)
             return true
           }

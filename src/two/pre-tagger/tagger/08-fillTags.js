@@ -31,8 +31,8 @@ const fillTags = function (terms, model) {
     //there is probably just one tag, but we'll allow more
     let tags = Array.from(term.tags)
     for (let i = 0; i < tags.length; i += 1) {
-      if (model.tags[tags[i]]) {
-        let toAdd = model.tags[tags[i]].parents
+      if (model.two.tags[tags[i]]) {
+        let toAdd = model.two.tags[tags[i]].parents
         setTag(term, toAdd, `-infer from ${tags[i]}`)
       }
     }

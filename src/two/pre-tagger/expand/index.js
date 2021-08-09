@@ -4,7 +4,7 @@ import fancyThings from './fancy.js'
 const grow = function (model, methods) {
   let lex = model.two.lexicon
   // console.log('start:', Object.keys(lex).length)
-  let _multi = model._multiCache
+  let _multi = model.two._multiCache
 
   // go through each word in the lex:
   Object.keys(lex).forEach(word => {
@@ -20,8 +20,8 @@ const grow = function (model, methods) {
   })
 
   // recycle anything interesting in the model:
-  if (model.irregularVerbs) {
-    Object.entries(model.irregularVerbs).forEach(a => {
+  if (model.two.irregularVerbs) {
+    Object.entries(model.two.irregularVerbs).forEach(a => {
       let [inf, conj] = a
       lex[inf] = lex[inf] || 'Infinitive'
       Object.keys(conj).forEach(tag => {
@@ -33,7 +33,7 @@ const grow = function (model, methods) {
     })
   }
   // if (model.irregularPlurals) {
-  Object.entries(model.irregularPlurals).forEach(a => {
+  Object.entries(model.two.irregularPlurals).forEach(a => {
     lex[a[0]] = lex[a[0]] || 'Singular'
     lex[a[1]] = lex[a[1]] || 'Plural'
   })

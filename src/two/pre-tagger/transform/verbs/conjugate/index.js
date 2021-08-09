@@ -5,12 +5,11 @@ import genericFill from './02-generic.js'
 //we assume the input word is a proper infinitive
 const conjugate = function (inf = '', model) {
   let found = {}
+  const irregs = model.two.irregularVerbs
   // 1. look at irregulars
   //the lexicon doesn't pass this in
-  if (model.irregularVerbs) {
-    if (model.irregularVerbs.hasOwnProperty(inf) === true) {
-      found = Object.assign({}, model.irregularVerbs[inf])
-    }
+  if (irregs && irregs.hasOwnProperty(inf) === true) {
+    found = Object.assign({}, irregs[inf])
   }
   //2. rule-based regex
   found = Object.assign({}, checkSuffix(inf), found)

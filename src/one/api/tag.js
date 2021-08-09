@@ -17,7 +17,7 @@ const fns = {
     if (verbose === true) {
       console.log(' +  ', input, reason || '')
     }
-    let tagSet = model.tags
+    let tagSet = model.two.tags
     if (isArray(input)) {
       input.forEach(tag => methods.one.setTag(terms, tag, tagSet, isSafe))
     } else {
@@ -45,7 +45,7 @@ const fns = {
     if (verbose === true) {
       console.log(' -  ', input, reason || '')
     }
-    let tagSet = model.tags
+    let tagSet = model.two.tags
     if (isArray(input)) {
       input.forEach(tag => methods.one.unTag(terms, tag, tagSet))
     } else {

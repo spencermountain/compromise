@@ -37,7 +37,7 @@ const lookRight = function (terms, i, rightTags, rightWords) {
 }
 // look at neighbours for hints on unknown words
 const nounFallback = function (terms, model) {
-  const { leftTags, leftWords, rightWords, rightTags } = model.neighbours
+  const { leftTags, leftWords, rightWords, rightTags } = model.two.neighbours
   terms.forEach((term, i) => {
     if (term.tags.size === 0) {
       // any hints, from neighbouring words?

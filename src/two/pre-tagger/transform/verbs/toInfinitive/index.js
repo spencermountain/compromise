@@ -22,7 +22,7 @@ const toInfinitive = function (str, model, tense) {
   }
   //1. look at known irregulars
   // if (world.words.hasOwnProperty(str) === true) {
-  let irregs = model.irregularVerbs
+  let irregs = model.two.irregularVerbs
   let keys = Object.keys(irregs)
   for (let i = 0; i < keys.length; i++) {
     let forms = Object.keys(irregs[keys[i]])

@@ -68,6 +68,13 @@ const runMatch = function (docs, todo, cache) {
       }
     }
   }
+  // ensure any end-results ($) match until the last term
+  if (regs[regs.length - 1].end === true) {
+    results = results.filter(res => {
+      let n = res.pointer[0]
+      return docs[n].length === res.pointer[2]
+    })
+  }
   // grab the requested group
   results = getGroup(results, group)
   return results

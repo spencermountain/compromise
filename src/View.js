@@ -36,7 +36,7 @@ class View {
   get docs() {
     let docs = this.document
     if (this.pointer) {
-      docs = methods.utils.getDoc(this.pointer, this.document)
+      docs = methods.one.getDoc(this.pointer, this.document)
     }
     Object.defineProperty(this, 'docs', {
       value: docs,

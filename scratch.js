@@ -1,12 +1,17 @@
 /* eslint-disable no-console, no-unused-vars */
 // import './tests/_ignore/_error.js'
-import nlp from './src/two/lib.js'
-nlp.verbose(true)
+import nlp from './src/one/lib.js'
+// nlp.verbose(true)
 
-let doc = nlp('Jardas al Abid', { 'Jardas al Abid': 'Place' })
-// let doc = nlp('the  snake island', { 'snake island': 'Town' })
+// let doc = nlp("Jardas al Abid's", { 'Jardas al Abid': 'Foo' })
+let doc = nlp('one two three')
+console.log(doc.methods)
+// let m = doc.match('two')
+// m.insertAfter('two yeah cool')
+// m.debug()
+// console.log(doc.json(0))
+// doc.debug()
 
-doc.debug()
 /*
 ['', '#'],
 ['', '#'],

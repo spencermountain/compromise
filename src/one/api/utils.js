@@ -3,7 +3,7 @@ const isArray = input => Object.prototype.toString.call(input) === '[object Arra
 const utils = {
   /** */
   termList: function () {
-    return this.methods.utils.termList(this.docs)
+    return this.methods.one.termList(this.docs)
   },
   /** */
   terms: function () {
@@ -11,7 +11,7 @@ const utils = {
   },
   /** */
   cache: function () {
-    this._cache = this.methods.utils.cacheDoc(this.document)
+    this._cache = this.methods.one.cacheDoc(this.document)
     return this
   },
   /** */

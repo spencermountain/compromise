@@ -1,5 +1,5 @@
 const parse = function (matches, methods) {
-  const parseMatch = methods.utils.parseMatch
+  const parseMatch = methods.one.parseMatch
   matches.forEach(obj => {
     obj.regs = parseMatch(obj.match)
   })

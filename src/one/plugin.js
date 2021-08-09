@@ -6,7 +6,7 @@ import addMethods from './api/index.js'
 // turn a string input into a 'document' json format
 const tokenize = function (document, world) {
   const { methods, model } = world
-  const { splitSentences, splitTerms, splitWhitespace } = methods.tokenize
+  const { splitSentences, splitTerms, splitWhitespace } = methods.one
   if (typeof document === 'string') {
     // split into sentences
     let sentences = splitSentences(document, model)
@@ -28,7 +28,7 @@ const plugin = function (world) {
   let { methods, model, parsers } = world
   Object.assign({}, methods, _methods)
   Object.assign(model, _model)
-  methods.tokenize.all = tokenize
+  methods.one.tokenize = tokenize
   parsers.push('normal')
   parsers.push('alias')
   // extend View class

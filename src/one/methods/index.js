@@ -5,9 +5,12 @@ import match from './match/index.js'
 import parseMatch from './parseMatch/index.js'
 import cacheDoc from './cache/cacheDoc.js'
 import cacheMatch from './cache/cacheMatch.js'
-import tokenize from './tokenize/index.js'
 import termMethods from './termMethods.js'
 import compute from './compute/index.js'
+
+import splitSentences from './tokenize/01-sentences/index.js'
+import splitTerms from './tokenize/02-terms/index.js'
+import splitWhitespace from './tokenize/03-whitespace/index.js'
 
 // flat list of terms from nested document
 const termList = function (docs) {
@@ -21,7 +24,7 @@ const termList = function (docs) {
 }
 
 export default {
-  utils: {
+  one: {
     // parsePointer,
     // createPointer,
     termList,
@@ -32,8 +35,10 @@ export default {
     cacheMatch,
     parseMatch,
     match,
+    splitSentences,
+    splitTerms,
+    splitWhitespace,
   },
-  tokenize,
   termMethods,
   compute,
 }

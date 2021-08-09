@@ -5,8 +5,9 @@ import sort from './sort.js'
 import whitespace from './whitespace.js'
 import split from './split.js'
 import tag from './tag.js'
+import insert from './insert.js'
 
-const methods = Object.assign({}, util, out, match, tag, sort, whitespace, split)
+const methods = Object.assign({}, util, out, match, tag, sort, whitespace, split, insert)
 
 // aliases
 methods.get = methods.eq

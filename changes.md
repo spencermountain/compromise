@@ -6,10 +6,10 @@ main things:
 - cache a sequence of matches
 - better logging
 
-* user-given lexicon is less-strong and less co-ercive
+* user-given lexicon is less co-ercive
 
 ```js
-nlp('Spencer Kelly', { kelly: 'Verb' }).has('#Verb') //false
+nlp('Dan Brown', { brown: 'Color' }).has('#Color') //false
 ```
 
 this means adding your own words is less-dangerous.

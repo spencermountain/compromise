@@ -84,7 +84,7 @@ const contractions = (document = [], model, methods) => {
           if (words) {
             hint = ['Value', 'Conjunction', 'Value']
             insertContraction(document, [n, i], words, hint)
-            methods.utils.setTag(terms, 'NumberRange', model.tagSet)
+            methods.one.setTag(terms, 'NumberRange', model.tagSet)
             reTag(terms, model, methods)
             return true
           }

@@ -10,7 +10,7 @@ const nlp = function (input, lex) {
       methods.tag.addToLexicon(lex, world)
     }
   }
-  let document = methods.tokenize.all(input, world)
+  let document = methods.one.tokenize(input, world)
   let doc = new View(document)
   doc.compute(parsers)
   return doc
@@ -24,7 +24,7 @@ nlp.verbose = function (set) {
 }
 
 /** pre-parse any match statements */
-nlp.parseMatch = world.methods.utils.parseMatch
+nlp.parseMatch = world.methods.one.parseMatch
 
 /** extend compromise functionality */
 nlp.plugin = function (fn) {
@@ -46,7 +46,7 @@ nlp.tokenize = function (input, lex) {
     Object.assign(world.model.lexicon, lex)
   }
   // only run the first parser
-  let document = methods.tokenize.all(input, world)
+  let document = methods.one.tokenize(input, world)
   return new View(document)
 }
 

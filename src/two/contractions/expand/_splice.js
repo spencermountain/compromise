@@ -2,13 +2,17 @@
 const insertContraction = function (document, point, words = [], hint = []) {
   let [n, w] = point
   words = words.map((word, i) => {
+    let tags = new Set()
+    if (hint[i]) {
+      tags.add(hint[i]) // apply tag hints from contraction
+    }
     return {
       text: '',
       pre: '',
       post: '',
       normal: '',
       implicit: word,
-      tags: new Set([hint[i]]), //apply any tag hints
+      tags: tags,
     }
   })
   if (words[0]) {

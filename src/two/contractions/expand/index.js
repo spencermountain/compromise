@@ -1,4 +1,4 @@
-import insertContraction from './_splice.js'
+import splice from './_splice.js'
 import apostropheD from './apostrophe-d.js'
 import apostropheS from './apostrophe-s.js'
 import apostropheT from './apostrophe-t.js'
@@ -19,7 +19,7 @@ const isArray = function (arr) {
 
 //really easy ones
 const contractions = (document = [], model, methods) => {
-  let list = model.contractions || []
+  let list = model.two.contractions || []
   document.forEach((terms, n) => {
     // loop through terms backwards
     for (let i = terms.length - 1; i >= 0; i -= 1) {
@@ -74,7 +74,7 @@ const contractions = (document = [], model, methods) => {
         }
         // actually insert the new terms
         if (words) {
-          insertContraction(document, [n, i], words, hint)
+          splice(document, [n, i], words, hint)
           reTag(terms, model, methods)
           return true
         }
@@ -83,7 +83,7 @@ const contractions = (document = [], model, methods) => {
           words = numberRange(terms, i)
           if (words) {
             hint = ['Value', 'Conjunction', 'Value']
-            insertContraction(document, [n, i], words, hint)
+            splice(document, [n, i], words, hint)
             methods.one.setTag(terms, 'NumberRange', model.tagSet)
             reTag(terms, model, methods)
             return true

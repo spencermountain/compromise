@@ -5,6 +5,8 @@ import View from '../View.js'
 
 const plugin = world => {
   const { methods, model } = world
+  model.two = model.two || {}
+  methods.two = methods.two || {}
   // --- pre-tagger plugin ---
   Object.assign(methods, preTagger.methods)
   Object.assign(model.two.lexicon, preTagger.model.lexicon) // don't overwrite the existing lexion
@@ -15,9 +17,8 @@ const plugin = world => {
 
   // --- contractions plugin ---
   contractions.api(View)
-  Object.assign(model, contractions.model)
-  Object.assign(methods, contractions.methods)
-  methods.compute.contractions = contractions.methods.contractions.expand
+  Object.assign(model.two, contractions.model)
+  Object.assign(methods.compute, contractions.compute)
 
   // --- post-tagger plugin ---
   Object.assign(methods.tag, postTagger.methods)

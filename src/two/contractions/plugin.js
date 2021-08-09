@@ -4,7 +4,7 @@ import contractions from './model/contractions.js'
 
 const plugin = {
   model: { contractions },
-  methods: { contractions: { expand: expand } },
+  compute: { contractions: expand },
   api: api,
 }
 export default plugin

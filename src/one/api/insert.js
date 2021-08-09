@@ -23,7 +23,6 @@ const insertAfter = function (str) {
     // extend the pointer
     ptr[2] += words.length
   })
-  console.log(this.pointer)
   // console.log(ptrs)
   // docs.forEach(terms => {})
   // console.log(docs)

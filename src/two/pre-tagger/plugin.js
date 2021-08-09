@@ -31,16 +31,13 @@ const preTagger = function (document, model) {
 }
 
 const plugin = {
+  compute: { preTagger },
   methods: {
-    tag: {
-      preTagger,
-      fillTags: fns.fillTags,
-      expandLexicon: fns.expandLexicon,
-      addToLexicon: fns.addToLexicon,
-    },
+    fillTags: fns.fillTags,
+    expandLexicon: fns.expandLexicon,
+    addToLexicon: fns.addToLexicon,
     transform: fns.transform,
   },
   model: _model,
-  api: {},
 }
 export default plugin

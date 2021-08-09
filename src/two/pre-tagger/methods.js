@@ -26,8 +26,8 @@ const addToLexicon = function (lex, world) {
     fixed[norm] = lex[k]
   })
   Object.assign(world.model.two.lexicon, fixed)
-  if (methods.tag.expandLexicon) {
-    methods.tag.expandLexicon(model, methods)
+  if (methods.two.expandLexicon) {
+    methods.two.expandLexicon(model, methods)
   }
 }
 

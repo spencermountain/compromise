@@ -10,20 +10,14 @@ const postTagger = function (document, model, methods) {
   return document
 }
 
-// const plugin = function (world) {
-//   const { methods, model, parsers } = world
-//   methods.postTagger = _methods
-//   Object.assign(model, _model)
-//   parsers.push(postTagger)
-// }
-// console.dir(fns, { depth: 1 })
 const plugin = {
-  methods: {
+  compute: {
     postTagger,
+  },
+  methods: {
     canBe: fns.canBe,
     // bulkTagger: fns._methods,
   },
   model: _model,
-  api: {},
 }
 export default plugin

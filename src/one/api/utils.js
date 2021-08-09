@@ -122,12 +122,16 @@ const utils = {
       fns[input](docs, model, methods)
     }
     // allow a list of methods
-    if (isArray(input)) {
+    else if (isArray(input)) {
       input.forEach(name => fns.hasOwnProperty(name) && fns[name](docs, model, methods))
     }
     // allow a custom compute function
-    if (typeof input === 'function') {
+    else if (typeof input === 'function') {
       input(this.docs, model, methods)
+    } else {
+      console.warn('no compute:', input)
+      console.log(input)
+      // throw Error('compute')
     }
     return this
   },

@@ -6,8 +6,8 @@ const nlp = function (input, lex) {
   const { methods, parsers } = world
   if (lex) {
     // add user-given words to lexicon
-    if (methods.tag.addToLexicon) {
-      methods.tag.addToLexicon(lex, world)
+    if (methods.two.addToLexicon) {
+      methods.two.addToLexicon(lex, world)
     }
   }
   let document = methods.one.tokenize(input, world)

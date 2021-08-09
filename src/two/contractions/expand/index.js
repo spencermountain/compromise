@@ -9,7 +9,7 @@ const byApostrophe = /'/
 const numDash = /^[0-9].*?[-–—].*?[0-9]/i
 
 const reTag = function (terms, model, methods) {
-  const preTagger = methods.tag.preTagger
+  const preTagger = methods.compute.preTagger
   preTagger([terms], model)
 }
 

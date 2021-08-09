@@ -1,6 +1,6 @@
 const hasSlash = /\//
 // const hasSlash = /[a-z\u00C0-\u00FF] ?\/ ?[a-z\u00C0-\u00FF]/
-const hasApostrophe = /['’]s$/
+// const hasApostrophe = /['’]s$/
 
 const addAliases = function (term, model) {
   let str = term.normal || term.text
@@ -21,11 +21,11 @@ const addAliases = function (term, model) {
     })
   }
   // aliases for apostrophe-s
-  if (hasApostrophe.test(str)) {
-    let main = str.replace(hasApostrophe, '').trim()
-    term.alias = term.alias || []
-    term.alias.push(main)
-  }
+  // if (hasApostrophe.test(str)) {
+  //   let main = str.replace(hasApostrophe, '').trim()
+  //   term.alias = term.alias || []
+  //   term.alias.push(main)
+  // }
   return term
 }
 export default addAliases

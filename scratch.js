@@ -3,9 +3,9 @@
 import nlp from './src/two/lib.js'
 // nlp.verbose(true)
 
-let doc = nlp(`he's cool.`)
-doc.compute('preTagger')
-doc.debug()
+let doc = nlp(`spencer's cool`).debug()
+console.log(doc.json(0))
+// console.log(doc.parsers)
 // console.log(doc.methods)
 // console.dir(doc.model, { depth: 1 })
 // console.log(Object.keys(doc.model))

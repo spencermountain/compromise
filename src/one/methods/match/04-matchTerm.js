@@ -19,8 +19,8 @@ const doesMatch = function (term, reg, index, length) {
   }
   //support a text match
   if (reg.word !== undefined) {
-    //match contractions
-    if (term.implicit !== null && term.implicit === reg.word) {
+    //match contractions, machine-form
+    if (term.machine !== null && term.machine === reg.word) {
       return true
     }
     // term aliases for slashes and things

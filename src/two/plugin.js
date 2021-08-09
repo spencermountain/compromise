@@ -9,23 +9,22 @@ const plugin = world => {
   methods.two = methods.two || {}
 
   // --- pre-tagger plugin ---
-  Object.assign(methods.two, preTagger.methods)
-  Object.assign(methods.compute, preTagger.compute)
-  Object.assign(model.two.lexicon, preTagger.model.lexicon) // don't overwrite the existing lexion
-  delete preTagger.model.lexicon
-  Object.assign(model, preTagger.model)
+  Object.assign(methods.two, preTagger.methods) // - methods
+  Object.assign(methods.compute, preTagger.compute) // - compute
+  Object.assign(model, preTagger.model) // - model
+  Object.assign(model.two.lexicon, preTagger.lexicon) // - lexicon
 
   // --- contractions plugin ---
-  contractions.api(View)
-  Object.assign(model.two, contractions.model)
-  Object.assign(methods.compute, contractions.compute)
+  contractions.api(View) // - api
+  Object.assign(model.two, contractions.model) // - model
+  Object.assign(methods.compute, contractions.compute) // - compute
 
   // --- post-tagger plugin ---
-  Object.assign(methods.two, postTagger.methods)
-  Object.assign(methods.compute, postTagger.compute)
-  Object.assign(model, postTagger.model)
+  Object.assign(methods.two, postTagger.methods) // - methods
+  Object.assign(methods.compute, postTagger.compute) // - compute
+  Object.assign(model, postTagger.model) // - model
 
-  // // set them computations to run on-load
+  // set them computations to run on-load
   world.parsers.push('preTagger')
   world.parsers.push('contractions')
   world.parsers.push('postTagger')

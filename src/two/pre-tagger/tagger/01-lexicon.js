@@ -23,8 +23,9 @@ const checkLexicon = function (terms, model) {
   // basic lexicon lookup
   for (let i = 0; i < terms.length; i += 1) {
     let t = terms[i]
+    let word = t.machine || t.normal
     // multi-word lookup
-    if (terms[i + 1] !== undefined && multi.has(t.normal) === true) {
+    if (terms[i + 1] !== undefined && multi.has(word) === true) {
       let skip = checkMulti(terms, i, lexicon)
       i += skip
       if (skip > 0) {
@@ -32,16 +33,16 @@ const checkLexicon = function (terms, model) {
       }
     }
     // look at implied words in contractions
-    if (t.implicit !== undefined) {
-      if (lexicon[t.implicit] !== undefined && lexicon.hasOwnProperty(t.implicit)) {
-        let tag = lexicon[t.implicit]
-        setTag(t, tag, 'implicit-lexicon')
-        continue
-      }
-    }
+    // if (t.implicit !== undefined) {
+    //   if (lexicon[t.implicit] !== undefined && lexicon.hasOwnProperty(t.implicit)) {
+    //     let tag = lexicon[t.implicit]
+    //     setTag(t, tag, 'implicit-lexicon')
+    //     continue
+    //   }
+    // }
     // normal lexicon lookup
-    if (lexicon[t.normal] !== undefined && lexicon.hasOwnProperty(t.normal)) {
-      let tag = lexicon[t.normal]
+    if (lexicon[word] !== undefined && lexicon.hasOwnProperty(word)) {
+      let tag = lexicon[word]
       setTag(t, tag, 'lexicon')
       continue
     }
@@ -55,8 +56,8 @@ const checkLexicon = function (terms, model) {
       }
     }
     // try removing a word-stem
-    if (underOver.test(t.normal) === true) {
-      let stem = t.normal.replace(/^(under|over)-?/, '')
+    if (underOver.test(word) === true) {
+      let stem = word.replace(/^(under|over)-?/, '')
       if (lexicon.hasOwnProperty(stem)) {
         let tag = lexicon[stem]
         setTag(t, tag, 'lexicon')

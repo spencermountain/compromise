@@ -10,15 +10,17 @@ import endsWith from './patterns/endsWith.js'
 import neighbours from './patterns/neighbours.js'
 
 export default {
-  tags,
-  irregularPlurals,
-  irregularVerbs,
   lexicon,
-  suffixPatterns,
-  regexNormal,
-  regexText,
-  regexFallback,
-  endsWith,
-  neighbours,
-  _multiCache: new Set(),
+  two: {
+    tags,
+    irregularPlurals,
+    irregularVerbs,
+    suffixPatterns,
+    regexNormal,
+    regexText,
+    regexFallback,
+    endsWith,
+    neighbours,
+    _multiCache: new Set(),
+  },
 }

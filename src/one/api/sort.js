@@ -12,7 +12,7 @@ const sort = function (input) {
     return {
       index: n,
       words: terms.length,
-      normal: terms.map(t => t.normal || t.implicit || '').join(' '),
+      normal: terms.map(t => t.machine || t.normal || '').join(' '),
       pointer: ptrs[n],
     }
   })
@@ -47,7 +47,7 @@ const unique = function () {
   let already = new Set()
   let toRemove = new Set()
   this.docs.forEach((terms, n) => {
-    let txt = terms.map(t => t.normal || t.implicit).join(' ')
+    let txt = terms.map(t => t.machine || t.normal).join(' ')
     if (already.has(txt)) {
       toRemove.add(n)
     }

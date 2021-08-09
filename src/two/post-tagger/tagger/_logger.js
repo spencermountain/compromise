@@ -9,7 +9,7 @@ const logger = function (todo, document) {
     if (i > end + 2) {
       break
     }
-    let str = terms[i].normal || terms[i].implicit
+    let str = terms[i].machine || terms[i].normal
     msg += i > start && i < end ? `\x1b[32m${str}\x1b[0m ` : `${yellow(str)} ` // matched terms are green
   }
   msg += '  \x1b[32m→\x1b[0m #' + tag.padEnd(12) + '  '

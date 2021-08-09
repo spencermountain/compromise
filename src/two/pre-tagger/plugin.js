@@ -38,6 +38,7 @@ const plugin = {
     addToLexicon: fns.addToLexicon,
     transform: fns.transform,
   },
-  model: _model,
+  lexicon: _model.lexicon,
+  model: _model.two,
 }
 export default plugin

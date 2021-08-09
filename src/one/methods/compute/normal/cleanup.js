@@ -4,9 +4,6 @@ const clean = function (str) {
   str = str.toLowerCase()
   str = str.trim()
   let original = str
-
-  //#tags, @mentions
-  str = str.replace(/^[#@]/, '')
   //punctuation
   str = str.replace(/[,;.!?]+$/, '')
   // coerce single curly quotes
@@ -20,12 +17,6 @@ const clean = function (str) {
   str = str.replace(/\u2026/g, '...')
   //en-dash
   str = str.replace(/\u2013/g, '-')
-  //lookin'->looking (make it easier for conjugation)
-  str = str.replace(/([aeiou][ktrp])in$/, '$1ing')
-  //turn re-enactment to reenactment
-  if (/^(re|un)-?[^aeiou]./.test(str) === true) {
-    str = str.replace('-', '')
-  }
   //strip leading & trailing grammatical punctuation
   if (/^[:;]/.test(str) === false) {
     str = str.replace(/\.{3,}$/g, '')
@@ -40,7 +31,7 @@ const clean = function (str) {
   if (str === '') {
     str = original
   }
-  //nice-numbers
+  //no-commas in numbers
   str = str.replace(/([0-9]),([0-9])/g, '$1$2')
   return str
 }

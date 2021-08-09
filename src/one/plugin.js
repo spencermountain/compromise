@@ -31,6 +31,7 @@ const plugin = function (world) {
   methods.one.tokenize = tokenize
   parsers.push('normal')
   parsers.push('alias')
+  parsers.push('machine')
   // extend View class
   addMethods(View)
 }

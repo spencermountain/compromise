@@ -12,6 +12,7 @@ const insertContraction = function (document, point, words = [], hint = []) {
       post: '',
       normal: '',
       implicit: word,
+      machine: word,
       tags: tags,
     }
   })

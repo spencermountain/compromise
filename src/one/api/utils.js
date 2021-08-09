@@ -128,11 +128,8 @@ const utils = {
     // allow a custom compute function
     else if (typeof input === 'function') {
       input(this.docs, model, methods)
-    } else {
-      console.warn('no compute:', input)
-      console.log(input)
-      // throw Error('compute')
     }
+    // console.warn('no compute:', input)
     return this
   },
 }

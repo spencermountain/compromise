@@ -45,9 +45,9 @@ nlp.tokenize = function (input, lex) {
   if (lex) {
     Object.assign(world.model.two.lexicon, lex)
   }
-  // only run the first parser
+  // run the tokenizer
   let document = methods.one.tokenize(input, world)
-  return new View(document)
+  return new View(document).compute('contractions')
 }
 
 // apply our only default plugins

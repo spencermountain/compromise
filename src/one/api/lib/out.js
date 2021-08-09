@@ -1,11 +1,17 @@
 /** some named output formats */
 const out = function (method) {
+  // text out formats
   if (method === 'text') {
     return this.text()
   }
   if (method === 'normal') {
     return this.text('normal')
   }
+  if (method === 'machine' || method === 'reduced') {
+    return this.text('machine')
+  }
+
+  // json data formats
   if (method === 'json') {
     return this.json()
   }
@@ -14,18 +20,22 @@ const out = function (method) {
     return this.json()
   }
   if (method === 'array') {
-    return this.docs.map(terms => {
+    let arr = this.docs.map(terms => {
       return terms
         .reduce((str, t) => {
           return str + t.pre + t.text + t.post
         }, '')
         .trim()
     })
+    return arr.filter(str => str)
   }
-  if (method === 'freq' || method === 'frequency') {
-    this.compute('freq')
-    return this.json()
+  // return terms sorted by frequency
+  if (method === 'freq' || method === 'frequency' || method === 'topk') {
+    let terms = this.compute('freq').terms().unique().termList()
+    return terms.sort((a, b) => (a.freq > b.freq ? -1 : 0))
   }
+
+  // some handy ad-hoc outputs
   if (method === 'terms') {
     let list = []
     this.docs.forEach(s => {

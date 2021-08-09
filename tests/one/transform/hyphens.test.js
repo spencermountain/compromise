@@ -23,9 +23,9 @@ test('hyphen-tokenize', function (t) {
   t.equal(r.terms().length, 2, here + 'minus hyphen')
 
   r = nlp('re-enactment')
-  t.equal(r.out('normal'), 'reenactment', here + 're-hyphen')
+  t.equal(r.out('machine'), 'reenactment', here + 're-hyphen')
   r = nlp('un-do')
-  t.equal(r.out('normal'), 'undo', here + 'un-hyphen')
+  t.equal(r.out('machine'), 'undo', here + 'un-hyphen')
 
   t.end()
 })

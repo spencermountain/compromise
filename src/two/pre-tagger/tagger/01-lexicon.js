@@ -4,9 +4,11 @@ const underOver = /^(under|over)-?.{3}/
 // scan-ahead to match multiple-word terms - 'jack rabbit'
 const checkMulti = function (terms, i, lexicon) {
   let max = i + 4 > terms.length ? terms.length - i : 4
-  let str = terms[i].normal
+  let str = terms[i].machine || terms[i].normal
   for (let skip = 1; skip < max; skip += 1) {
-    str += ' ' + terms[i + skip].normal
+    let t = terms[i + skip]
+    let word = t.machine || t.normal
+    str += ' ' + word
     if (lexicon.hasOwnProperty(str) === true) {
       let tag = lexicon[str]
       terms.slice(i, i + skip + 1).forEach(term => setTag(term, tag, 'multi-lexicon'))

@@ -31,18 +31,18 @@ test('matchOne', function (t) {
 
 test('greedy-capture', function (t) {
   let m = nlp('so ralf and really eats the glue').match('* [eats] the', 0)
-  t.equal(m.out('normal'), 'eats', 'one-captures')
+  t.equal(m.out('normal'), 'eats', here + 'one-captures')
 
   m = nlp('so ralf really, really eats the glue').match('[#Adverb+] eats the', 0)
-  t.equal(m.out('normal'), 'really, really', 'greedy-capture')
+  t.equal(m.out('normal'), 'really, really', here + 'greedy-capture')
 
   m = nlp('so ralf and really eats the glue').match('* [eats the]', 0)
-  t.equal(m.out('normal'), 'eats the', 'two-captures')
+  t.equal(m.out('normal'), 'eats the', here + 'two-captures')
 
   m = nlp('so ralf really eats the glue').match('really [eats the] *', 0)
-  t.equal(m.out('normal'), 'eats the', 'astrix after')
+  t.equal(m.out('normal'), 'eats the', here + 'astrix after')
 
   m = nlp('so ralf really eats the glue').match('really * [eats the]', 0)
-  t.equal(m.out('normal'), 'eats the', 'astrix is not necessary')
+  t.equal(m.out('normal'), 'eats the', here + 'astrix is not necessary')
   t.end()
 })

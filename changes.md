@@ -51,7 +51,7 @@ match(['foo', 'far'])
 ```
 
 - **[breaking]** - drop `.parent()` and `.parents()` chain - (use `.all()` instead)
-- **[breaking]** - drop `.out('freq')` output format - (use`.compute('freq').json()` instead)
+- **[breaking]** - refactor `.out('freq')` output format - (uses `.compute('freq').terms().unique().json()` instead)
 - **[breaking]** - drop array support in match methods - (use `.match().match()` instead)
 - **[breaking]** - drop support for using Doc object as match input
 - **[breaking]** - drop `@titleCase` alias (use @isTitleCase)

@@ -22,7 +22,7 @@ const fmts = {
     punctuation: 'some',
     case: 'none',
     unicode: 'some',
-    use: 'normal',
+    use: 'machine',
   },
   root: {
     use: 'root',

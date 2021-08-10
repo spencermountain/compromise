@@ -1,11 +1,16 @@
 /* eslint-disable no-console, no-unused-vars */
 // import './tests/_ignore/_error.js'
 import nlp from './src/two/lib.js'
-// nlp.verbose(true)
+// nlp.verbose('match')
 
-// nlp.tokenize(`hello there. i'm fond of saying I'm`).debug()
-let doc = nlp.tokenize(`saying I'm`).match('saying foo? am').debug()
+// let doc = nlp.tokenize(`I'm`).match('foo? am').debug()
+// let doc = nlp.tokenize(`i'm`).match("i'm").debug()
+// let doc = nlp.tokenize(`i'm`).match('i am').debug()
 
+let doc = nlp('one two three. four two five.')
+let m = doc.match('two').prepend('foo')
+doc.debug()
+// doc.debug()
 /*
 ['', '#'],
 ['', '#'],

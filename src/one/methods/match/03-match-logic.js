@@ -1,5 +1,12 @@
 import doesMatch from './04-matchTerm.js'
 
+const env = typeof process === undefined ? self.env : process.env
+const log = msg => {
+  if (env.DEBUG_MATCH) {
+    console.log(`\n  \x1b[32m ${msg} \x1b[0m`) // eslint-disable-line
+  }
+}
+
 // for greedy checking, we no longer care about the reg.start
 // value, and leaving it can cause failures for anchored greedy
 // matches.  ditto for end-greedy matches: we need an earlier non-
@@ -38,6 +45,7 @@ export const greedyTo = function (state, nextReg) {
   //otherwise, we're looking for the next one
   for (; t < state.terms.length; t += 1) {
     if (doesMatch(state.terms[t], nextReg, state.start_i + t, state.phrase_length) === true) {
+      log(`greedyTo ${state.terms[t].normal}`)
       return t
     }
   }
@@ -50,6 +58,7 @@ export const isEndGreedy = function (reg, state) {
     if (state.start_i + state.t < state.phrase_length - 1) {
       let tmpReg = Object.assign({}, reg, { end: false })
       if (doesMatch(state.terms[state.t], tmpReg, state.start_i + state.t, state.phrase_length) === true) {
+        log(`endGreedy ${state.terms[state.t].normal}`)
         return true
       }
     }
@@ -119,6 +128,7 @@ export const doAndBlock = function (state) {
     return allWords
   })
   if (allDidMatch === true) {
+    log(`doAndBlock ${state.terms[state.t].normal}`)
     return longest
   }
   return false

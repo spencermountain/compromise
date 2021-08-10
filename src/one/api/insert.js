@@ -5,30 +5,50 @@ const spliceArr = (parent, index, child) => {
   return parent
 }
 
+// this should probably be methods/one
 const clone = function (terms) {
-  return terms.slice().map(obj => Object.assign({}, obj))
+  return terms.slice().map(term => {
+    term = Object.assign({}, term)
+    term.tags = new Set(term.tags)
+    return term
+  })
 }
 
-const insertAfter = function (str) {
-  const { methods, model, document } = this
+const insert = function (str, view, prepend) {
+  const { methods, model, document } = view
   let json = methods.one.tokenize(str, { methods, model })
   let words = json[0] //assume one sentence
   // insert words at end of each doc
-  let ptrs = this.fullPointer
+  let ptrs = view.fullPointer
   ptrs.forEach(ptr => {
     // add-in the words
     let all = document[ptr[0]]
     words = clone(words)
-    spliceArr(all, ptr[1], words)
+    if (prepend) {
+      // console.log('=-=-=-= here -=-=-=-')
+      spliceArr(all, ptr[1] - 1, words)
+    } else {
+      spliceArr(all, ptr[1], words)
+    }
     // extend the pointer
     ptr[2] += words.length
   })
-  // console.log(ptrs)
-  // docs.forEach(terms => {})
-  // console.log(docs)
-  // console.log(json)
+  // convert them to whole sentences
+  ptrs = ptrs.map(a => [a[0]])
+  return view.update(ptrs)
+}
+
+const insertAfter = function (str) {
+  return insert(str, this, false)
+}
+const insertBefore = function (str) {
+  return insert(str, this, true)
 }
 
 export default {
   insertAfter,
+  insertBefore,
+  append: insertAfter,
+  prepend: insertBefore,
+  insert: insertAfter,
 }

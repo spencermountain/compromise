@@ -19,7 +19,8 @@ const nlp = function (input, lex) {
 /** log the decision-making to console */
 nlp.verbose = function (set) {
   let env = typeof process === undefined ? self.env : process.env //use window, in browser
-  env.DEBUG_TAGS = set === undefined ? true : Set // assume true
+  env.DEBUG_TAGS = set === 'tagger' || set === true ? true : ''
+  env.DEBUG_MATCH = set === 'match' || set === true ? true : ''
   return this
 }
 

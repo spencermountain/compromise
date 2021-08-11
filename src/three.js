@@ -1,10 +1,6 @@
-import nlp from './nlp.js'
-import one from './one/plugin.js'
-import two from './two/plugin.js'
-import three from './three/plugin.js'
+import nlp from './two.js'
+import selections from './05-chunker/plugin.js'
 
-nlp.plugin(one)
-nlp.plugin(two)
-nlp.plugin(three)
+nlp.plugin(selections)
 
 export default nlp

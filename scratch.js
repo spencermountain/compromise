@@ -3,7 +3,7 @@
 import nlp from './src/three.js'
 nlp.verbose('tagger')
 
-let doc = nlp('two dreams')
+let doc = nlp('each promising image')
 doc.debug()
 // console.log(nlp.world().model.two.lexicon['write off'])
 

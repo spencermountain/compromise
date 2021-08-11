@@ -34,7 +34,8 @@ export default [
 
   // use reverse
   {
-    match: '(try|use|attempt|build|make) [(#Verb && !#Copula && !#PhrasalVerb)]',
+    match: '(try|use|attempt|build|make) [#Verb]',
+    ifNo: ['#Copula', '#PhrasalVerb'],
     group: 0,
     tag: 'Noun',
     reason: 'do-verb',

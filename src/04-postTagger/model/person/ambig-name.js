@@ -29,7 +29,7 @@ export default [
   // faith m. Smith
   { match: `${personNoun} #Acronym? #ProperNoun`, tag: 'Person', reason: 'ray-a-smith', safe: true },
   // Paris Berelc
-  { match: `[${personPlace}] (#ProperNoun && !#Place)`, group: 0, tag: 'FirstName', reason: 'place-firstname' },
+  { match: `[${personPlace}] #ProperNoun`, group: 0, ifNo: '#Place', tag: 'FirstName', reason: 'place-firstname' },
 
   // ===person-date===
   // in june
@@ -45,7 +45,7 @@ export default [
   // June Smith
   { match: `${personDate} #ProperNoun`, tag: 'Person', reason: 'june-smith', safe: true },
   // june m. Cooper
-  { match: `${personDate} #Acronym? (#ProperNoun && !#Month)`, tag: 'Person', reason: 'june-smith-jr' },
+  { match: `${personDate} #Acronym? #ProperNoun`, tag: 'Person', ifNo: '#Month', reason: 'june-smith-jr' },
   // ---person-month---
   //give to april
   {

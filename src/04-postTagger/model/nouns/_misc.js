@@ -53,7 +53,8 @@ export default [
   // walk the walk
   { match: '(the|those|these|a|an) #Adjective? [#Infinitive]', group: 0, tag: 'Noun', reason: 'det-inf' },
   {
-    match: '(the|those|these|a|an) #Adjective? [(#PresentTense && !#Gerund)]',
+    match: '(the|those|these|a|an) #Adjective? [#PresentTense]',
+    ifNo: '#Gerund',
     group: 0,
     tag: 'Noun',
     reason: 'det-pres',

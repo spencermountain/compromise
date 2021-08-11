@@ -1,7 +1,8 @@
 export default [
   // assign all tasks
   {
-    match: '(#Verb && !#Modal) (all|every|each|most|some|no) [#PresentTense]',
+    match: '#Verb (all|every|each|most|some|no) [#PresentTense]',
+    ifNo: '#Modal',
     group: 0,
     tag: 'Noun',
     reason: 'all-presentTense',
@@ -64,9 +65,9 @@ export default [
 
   // 30 trains
   {
-    match: '(#Value && !1 && !one) [(#PresentTense && !#Copula)]',
+    match: '#Value [#PresentTense]',
     group: 0,
-    ifNo: ['#Copula'],
+    ifNo: ['#Copula', 'one', '1'],
     tag: 'Plural',
     reason: '2-trains',
   },

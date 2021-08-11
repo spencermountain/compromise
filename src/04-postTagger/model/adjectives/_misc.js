@@ -24,7 +24,8 @@ export default [
   { match: 'the [said] #Noun', group: 0, tag: 'Adjective', reason: 'the-said-card' },
   // a myth that uncovered wounds heal
   {
-    match: '#Noun (that|which|whose) [#PastTense && !#Copula] #Noun',
+    match: '#Noun (that|which|whose) [#PastTense] #Noun',
+    ifNo: '#Copula',
     group: 0,
     tag: 'Adjective',
     reason: 'that-past-noun',

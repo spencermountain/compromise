@@ -65,7 +65,7 @@ export default [
   { match: '[#ProperNoun] #Person', group: 0, tag: 'Person', reason: 'proper-person', safe: true },
   //John Foo
   {
-    match: '#FirstName #Acronym? [(#ProperNoun && !#FirstName)]',
+    match: '#FirstName #Acronym? [(#ProperNoun && !#FirstName)]', //can't use ifNo
     group: 0,
     tag: 'LastName',
     reason: 'firstname-titlecase',

@@ -1,18 +1,20 @@
-import View from './View.js'
-import world from '../lib/world.js'
+import View from './api/View.js'
+import world from './api/world.js'
 import version from '../lib/_version.js'
+import extend from './api/extend.js'
 
 const nlp = function (input, lex) {
-  const { methods, parsers } = world
+  //assume ./one is installed
+  const { methods, hooks } = world
   if (lex) {
     // add user-given words to lexicon
-    if (methods.two.addToLexicon) {
-      methods.two.addToLexicon(lex, world)
-    }
+    // if (methods.two.addToLexicon) {
+    //   methods.two.addToLexicon(lex, world)
+    // }
   }
   let document = methods.one.tokenize(input, world)
   let doc = new View(document)
-  doc.compute(parsers)
+  doc.compute(hooks)
   return doc
 }
 
@@ -28,10 +30,11 @@ nlp.verbose = function (set) {
 nlp.parseMatch = world.methods.one.parseMatch
 
 /** extend compromise functionality */
-nlp.plugin = function (fn) {
-  fn(world, View)
+nlp.plugin = function (plugin) {
+  extend(plugin, world, this)
   return this
 }
+nlp.extend = nlp.plugin
 
 /** reach-into compromise internals */
 const { methods, model } = world

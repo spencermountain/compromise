@@ -15,18 +15,6 @@ const relPointer = function (ptrs, parent) {
   return ptrs
 }
 
-const matchOne = function (regs, group) {
-  const one = this.methods.one
-  if (typeof regs === 'string') {
-    regs = one.parseMatch(regs)
-  }
-  let todo = { regs, group, justOne: true }
-  let { ptrs, byGroup } = one.match(this.docs, todo, this._cache, true)
-  let view = this.update(ptrs)
-  view._groups = byGroup
-  return view
-}
-
 const match = function (regs, group) {
   const one = this.methods.one
   if (typeof regs === 'string') {
@@ -35,6 +23,18 @@ const match = function (regs, group) {
   let todo = { regs, group }
   let { ptrs, byGroup } = one.match(this.docs, todo, this._cache)
   ptrs = relPointer(ptrs, this.pointer)
+  let view = this.update(ptrs)
+  view._groups = byGroup
+  return view
+}
+
+const matchOne = function (regs, group) {
+  const one = this.methods.one
+  if (typeof regs === 'string') {
+    regs = one.parseMatch(regs)
+  }
+  let todo = { regs, group, justOne: true }
+  let { ptrs, byGroup } = one.match(this.docs, todo, this._cache, true)
   let view = this.update(ptrs)
   view._groups = byGroup
   return view

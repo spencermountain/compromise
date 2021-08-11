@@ -1,5 +1,3 @@
-const isArray = input => Object.prototype.toString.call(input) === '[object Array]'
-
 const utils = {
   /** */
   termList: function () {
@@ -112,24 +110,6 @@ const utils = {
       count += p.wordCount()
       return count
     }, 0)
-  },
-  /** add metadata to term objects */
-  compute: function (input) {
-    const { docs, methods, model, compute } = this
-    // do one method
-    if (typeof input === 'string' && compute.hasOwnProperty(input)) {
-      compute[input](docs, model, methods)
-    }
-    // allow a list of methods
-    else if (isArray(input)) {
-      input.forEach(name => compute.hasOwnProperty(name) && compute[name](docs, model, methods))
-    }
-    // allow a custom compute function
-    else if (typeof input === 'function') {
-      input(this.docs, model, methods)
-    }
-    // console.warn('no compute:', input)
-    return this
   },
 }
 utils.group = utils.groups

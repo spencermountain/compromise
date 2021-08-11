@@ -7,9 +7,12 @@ import nlp from './src/one.js'
 // let doc = nlp.tokenize(`i'm`).match("i'm").debug()
 // let doc = nlp.tokenize(`i'm`).match('i am').debug()
 
-let doc = nlp('one two three. four two five.')
-// let m = doc.match('two').prepend('foo')
-doc.debug()
+// let doc = nlp('one two three. four two five.')
+// let m = doc.match('two') //.prepend('foo')
+// m.debug()
+let doc = nlp('re-enactment')
+console.log(doc.out('machine'))
+// console.log(nlp.parseMatch('foobar'))
 // doc.debug()
 /*
 ['', '#'],

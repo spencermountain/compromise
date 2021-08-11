@@ -1,3 +1,4 @@
+import compute from './compute.js'
 import out from './out.js'
 import util from './utils.js'
 import match from './match.js'
@@ -7,7 +8,7 @@ import split from './split.js'
 import tag from './tag.js'
 import insert from './insert.js'
 
-const methods = Object.assign({}, util, out, match, tag, sort, whitespace, split, insert)
+const methods = Object.assign({}, util, out, match, tag, sort, whitespace, split, insert, compute)
 
 // aliases
 methods.get = methods.eq

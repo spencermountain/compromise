@@ -8,9 +8,9 @@ const nlp = function (input, lex) {
   const { methods, hooks } = world
   if (lex) {
     // add user-given words to lexicon
-    // if (methods.two.addToLexicon) {
-    //   methods.two.addToLexicon(lex, world)
-    // }
+    if (methods.two.addToLexicon) {
+      methods.two.addToLexicon(lex, world)
+    }
   }
   let document = methods.one.tokenize(input, world)
   let doc = new View(document)
@@ -27,7 +27,9 @@ nlp.verbose = function (set) {
 }
 
 /** pre-parse any match statements */
-nlp.parseMatch = world.methods.one.parseMatch
+nlp.parseMatch = function (str) {
+  return world.methods.one.parseMatch(str)
+}
 
 /** extend compromise functionality */
 nlp.plugin = function (plugin) {
@@ -37,24 +39,28 @@ nlp.plugin = function (plugin) {
 nlp.extend = nlp.plugin
 
 /** reach-into compromise internals */
-const { methods, model } = world
-nlp.methods = () => world.methods
-nlp.model = () => world.model
+nlp.world = () => world
 
 nlp.version = version
 
 /** don't run the POS-tagger */
 nlp.tokenize = function (input, lex) {
+  const { methods, model, compute } = world
   // add user-given words to lexicon
   if (lex) {
-    Object.assign(world.model.two.lexicon, lex)
+    Object.assign(model.two.lexicon, lex) //no fancy business
   }
   // run the tokenizer
   let document = methods.one.tokenize(input, world)
-  return new View(document).compute('contractions')
+  let doc = new View(document)
+  // give contractions a shot, at least
+  if (compute.contractions) {
+    doc.compute('contractions') //run it if we've got it
+  }
+  return doc
 }
 
 // apply our only default plugins
 export default nlp
 const { parseMatch, plugin } = nlp
-export { parseMatch, plugin, methods, model, version, plugin as extend }
+export { parseMatch, plugin, version, plugin as extend }

@@ -23,7 +23,7 @@ const expand = function (words, world) {
       fancyThings[tag](word, lex, methods, model)
     }
     // finally, add it in
-    lex[word] = tag
+    lex[word] = lex[word] || tag
   })
 
   // cleanup

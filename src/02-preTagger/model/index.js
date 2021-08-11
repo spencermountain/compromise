@@ -29,10 +29,9 @@ Object.entries(irregularPlurals).forEach(a => {
 
 export default {
   two: {
-    lexicon,
-    tags,
     irregularPlurals,
     irregularVerbs,
+    tags,
     suffixPatterns,
     endsWith,
     neighbours,
@@ -40,6 +39,8 @@ export default {
     regexNormal,
     regexText,
     regexFallback,
+
+    lexicon,
 
     _multiCache: {},
   },

@@ -44,5 +44,7 @@ let matches = [].concat(
   places
 )
 export default {
-  matches,
+  two: {
+    matches,
+  },
 }

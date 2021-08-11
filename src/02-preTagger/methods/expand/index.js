@@ -20,7 +20,7 @@ const expand = function (words, world) {
     }
     // do any clever-business, by it's tag
     if (fancyThings.hasOwnProperty(tag) === true) {
-      fancyThings[tag](word, words, methods, model)
+      fancyThings[tag](word, lex, methods, model)
     }
     // finally, add it in
     lex[word] = tag

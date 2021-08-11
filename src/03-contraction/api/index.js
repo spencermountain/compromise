@@ -1,4 +1,5 @@
 const titleCase = /^[A-Z][a-z'’\u00C0-\u00FF]/
+import contract from './contract.js'
 
 const toTitleCase = function (str) {
   str = str.replace(/^ *[a-z\u00C0-\u00FF]/, x => x.toUpperCase()) //TODO: support unicode
@@ -37,9 +38,7 @@ const api = function (View) {
     let m = this.match('@hasContraction{2,}')
     return new Contractions(this.document, m.pointer)
   }
-  View.prototype.contract = function () {
-    return this.compute('contract')
-  }
+  View.prototype.contract = contract
 }
 
 export default api

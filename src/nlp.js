@@ -4,14 +4,11 @@ import version from '../lib/_version.js'
 import extend from './api/extend.js'
 
 const nlp = function (input, lex) {
-  //assume ./one is installed
   const { methods, hooks } = world
   if (lex) {
-    // add user-given words to lexicon
-    if (methods.two.addToLexicon) {
-      methods.two.addToLexicon(lex, world)
-    }
+    nlp.addWords(lex)
   }
+  //assume ./01-tokenize is installed
   let document = methods.one.tokenize(input, world)
   let doc = new View(document)
   doc.compute(hooks)
@@ -33,7 +30,7 @@ nlp.parseMatch = function (str) {
 
 /** extend compromise functionality */
 nlp.plugin = function (plugin) {
-  extend(plugin, world, this)
+  extend(plugin, world, View, this)
   return this
 }
 nlp.extend = nlp.plugin
@@ -43,12 +40,28 @@ nlp.world = () => world
 
 nlp.version = version
 
+nlp.addWords = function (words) {
+  const { methods, model } = world
+  if (!words) {
+    return
+  }
+  // add some words to our lexicon
+  if (!methods.two.expandLexicon) {
+    Object.assign(model.two.lexicon, words) //no fancy-business
+  } else {
+    // expand it, if appropriate
+    let { lex, _multi } = methods.two.expandLexicon(words, world)
+    Object.assign(model.two.lexicon, lex)
+    Object.assign(model.two._multiCache, _multi)
+  }
+}
+
 /** don't run the POS-tagger */
 nlp.tokenize = function (input, lex) {
-  const { methods, model, compute } = world
+  const { methods, compute } = world
   // add user-given words to lexicon
   if (lex) {
-    Object.assign(model.two.lexicon, lex) //no fancy business
+    nlp.addWords(lex)
   }
   // run the tokenizer
   let document = methods.one.tokenize(input, world)

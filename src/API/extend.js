@@ -22,7 +22,7 @@ function mergeDeep(model, plugin) {
 // console.dir(merged, { depth: 5 })
 
 const extend = function (plugin, world, View) {
-  const { methods, model, compute, hooks, api } = world
+  const { methods, model, compute, hooks } = world
   mergeDeep(compute, plugin.compute)
   mergeDeep(methods, plugin.methods)
   // expand the lexicon beforhand, if appropriate
@@ -40,8 +40,8 @@ const extend = function (plugin, world, View) {
   if (hooks) {
     world.hooks = hooks.concat(plugin.hooks || [])
   }
-  if (api) {
-    api(View)
+  if (plugin.api) {
+    plugin.api(View)
   }
   // console.log(world)
 }

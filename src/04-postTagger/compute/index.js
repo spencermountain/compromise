@@ -1,10 +1,9 @@
-import methods from '../methods/index.js'
-const postTagger = function (document, model, methods) {
-  let byGroup = fns.compile(model.two.matches, methods)
-  let found = fns.bulkMatch(document, byGroup, methods)
-  // console.dir(found, { depth: 5 })
-  fns.bulkTagger(found, document, model, methods)
-  // console.dir(res, { depth: 5 })
+// runs all match/tag patterns in model.two.matches
+const postTagger = function (document, world) {
+  const { model, methods } = world
+  let byGroup = methods.two.compile(model.two.matches, methods)
+  let found = methods.two.bulkMatch(document, byGroup, methods)
+  methods.two.bulkTagger(found, document, model, methods)
   return document
 }
 

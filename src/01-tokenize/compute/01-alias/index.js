@@ -2,9 +2,9 @@ const hasSlash = /\//
 // const hasSlash = /[a-z\u00C0-\u00FF] ?\/ ?[a-z\u00C0-\u00FF]/
 // const hasApostrophe = /['’]s$/
 
-const addAliases = function (term, model) {
+const addAliases = function (term, world) {
   let str = term.normal || term.text
-  const aliases = model.one.aliases
+  const aliases = world.model.one.aliases
   // lookup known aliases like '&'
   if (aliases.hasOwnProperty(str)) {
     term.alias = term.alias || []

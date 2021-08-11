@@ -50,7 +50,7 @@ export default {
       if (lex[a[1]] === undefined) {
         lex[a[1]] = a[0]
       }
-      _multi.add(a[1])
+      _multi[a[1]] = true
       let str = a[1] + ' ' + rest
       lex[str] = lex[str] || [a[0], 'PhrasalVerb']
     })

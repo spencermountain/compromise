@@ -1,17 +1,16 @@
 /* eslint-disable no-console, no-unused-vars */
 // import './tests/_ignore/_error.js'
-import nlp from './src/one.js'
+import nlp from './src/two.js'
 // nlp.verbose('match')
 
 // let doc = nlp.tokenize(`I'm`).match('foo? am').debug()
 // let doc = nlp.tokenize(`i'm`).match("i'm").debug()
 // let doc = nlp.tokenize(`i'm`).match('i am').debug()
 
-// let doc = nlp('one two three. four two five.')
+let doc = nlp('toronto blue jays')
 // let m = doc.match('two') //.prepend('foo')
-// m.debug()
-let doc = nlp('re-enactment')
-console.log(doc.out('machine'))
+doc.debug()
+// console.log(doc.text())
 // console.log(nlp.parseMatch('foobar'))
 // doc.debug()
 /*

@@ -1,4 +1,4 @@
-import methods from '../methods.js'
+import methods from '../methods/index.js'
 const postTagger = function (document, model, methods) {
   let byGroup = fns.compile(model.two.matches, methods)
   let found = fns.bulkMatch(document, byGroup, methods)

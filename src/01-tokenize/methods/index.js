@@ -18,7 +18,7 @@ const tokenize = function (input, world) {
     // add normalized term format
     compute.normal(input)
     // support slashes, apostrophes, etc
-    compute.alias(input, model)
+    compute.alias(input, world)
   }
   return input
 }

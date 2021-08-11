@@ -41,6 +41,6 @@ export default {
     regexText,
     regexFallback,
 
-    _multiCache: new Set(),
+    _multiCache: {},
   },
 }

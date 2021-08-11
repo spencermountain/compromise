@@ -27,7 +27,7 @@ const checkLexicon = function (terms, model) {
     let t = terms[i]
     let word = t.machine || t.normal
     // multi-word lookup
-    if (terms[i + 1] !== undefined && multi.has(word) === true) {
+    if (terms[i + 1] !== undefined && multi[word] === true) {
       let skip = checkMulti(terms, i, lexicon)
       i += skip
       if (skip > 0) {

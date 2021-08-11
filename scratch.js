@@ -7,7 +7,7 @@ import nlp from './src/two.js'
 // let doc = nlp.tokenize(`i'm`).match("i'm").debug()
 // let doc = nlp.tokenize(`i'm`).match('i am').debug()
 
-let doc = nlp('toronto blue jays')
+let doc = nlp("toronto blue jays aren't good")
 // let m = doc.match('two') //.prepend('foo')
 doc.debug()
 // console.log(doc.text())

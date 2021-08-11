@@ -8,9 +8,9 @@ import numberRange from './number-range.js'
 const byApostrophe = /'/
 const numDash = /^[0-9].*?[-–—].*?[0-9]/i
 
-const reTag = function (terms, model, methods) {
-  const preTagger = methods.compute.preTagger
-  preTagger([terms], model)
+const reTag = function (terms, world) {
+  const preTagger = world.compute.preTagger
+  preTagger([terms], world)
 }
 
 const isArray = function (arr) {
@@ -18,7 +18,8 @@ const isArray = function (arr) {
 }
 
 //really easy ones
-const contractions = (document = [], model, methods) => {
+const contractions = (document = [], world) => {
+  const { model, methods } = world
   let list = model.two.contractions || []
   document.forEach((terms, n) => {
     // loop through terms backwards
@@ -75,7 +76,7 @@ const contractions = (document = [], model, methods) => {
         // actually insert the new terms
         if (words) {
           splice(document, [n, i], words, hint)
-          reTag(terms, model, methods)
+          reTag(terms, world)
           return true
         }
         // '44-2'
@@ -85,7 +86,7 @@ const contractions = (document = [], model, methods) => {
             hint = ['Value', 'Conjunction', 'Value']
             splice(document, [n, i], words, hint)
             methods.one.setTag(terms, 'NumberRange', model.two.tags)
-            reTag(terms, model, methods)
+            reTag(terms, world)
             return true
           }
         }

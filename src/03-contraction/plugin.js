@@ -6,5 +6,6 @@ const plugin = {
   model: model,
   compute: compute,
   api: api,
+  hooks: ['contractions'],
 }
 export default plugin

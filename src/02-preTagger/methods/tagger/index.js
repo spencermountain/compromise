@@ -5,7 +5,7 @@ import checkCase from './04-case.js'
 import checkAcronym from './05-acronym.js'
 import checkPrefix from './06-prefix.js'
 import nounFallback from './07-fallback.js'
-import fillTags from './08-fillTags.js'
+import fillTags from './09-fillTags.js'
 
 export default {
   checkLexicon,

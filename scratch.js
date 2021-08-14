@@ -9,13 +9,15 @@ nlp.verbose('chunker')
 
 // let str = `retail stores have it worse`
 // let str = `chandler's medicine under the sink`
-let str = `the most diverse country is the best`
+let str = `Canada Legislative Center`
 // let str = `mountain ranges `
 // let str = `left is always right`
 // let str = `the place is small with indoor & outdoor seating and quite cute & quaint`
 
 let doc = nlp(str)
-doc.debug({ terms: false })
+doc.debug({ tags: false })
+
+doc.match('{Verb}').debug()
 
 // console.log(nlp.parseMatch('foo {Noun}'))
 

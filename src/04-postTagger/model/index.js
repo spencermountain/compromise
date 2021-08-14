@@ -21,7 +21,7 @@ import verbs from './verbs/_misc.js'
 
 import misc from './_misc.js'
 
-import orgs from './organizations.js'
+import orgs from './organizations/_misc.js'
 import places from './places.js'
 
 let matches = [].concat(

@@ -1,6 +1,6 @@
 import test from 'tape'
-import nlp from '../_lib.js'
-const here = '[one/match] '
+import nlp from './_lib.js'
+const here = '[two/match] '
 
 let arr = [
   ['toronto', '#City'],
@@ -25,8 +25,8 @@ let arr = [
   ['economy', '#Noun'],
   ['engineer', '#Noun'],
   ['clothing', '#Noun'],
-  ['duran duran', '#Organization'],
-  ['american express', '#Organization'],
+  ['duran duran', '#Organization+'],
+  ['american express', '#Organization+'],
   ['brotherhood', '#Noun'],
   ['oakland athletics', '#SportsTeam'],
   ['jamie', '#Person'],
@@ -343,7 +343,7 @@ let arr = [
   [`a tv show`, '#Determiner #Noun #Noun'],
   [`send me a currency report.`, '#Infinitive #Pronoun #Determiner #Noun #Noun'],
   // [`a close watch on`, '#Determiner #Adjective #Noun #Preposition'],
-  [` a surgery date of`, '#Determiner #Noun #Noun #Preposition'],
+  [`a surgery date of`, '#Determiner #Noun #Noun #Preposition'],
   [`A girl hit a boy.`, '#Determiner #Noun #Infinitive #Determiner #Noun'],
   [`a auto repair shop.`, '#Determiner #Noun #Noun #Noun'],
   // timezones
@@ -389,7 +389,7 @@ let arr = [
   ['martha stewart', '#FemaleName #LastName'],
   ['George Bush', '#MaleName #LastName'],
   ['Hillary Clinton', '#FemaleName #LastName'],
-  ['Hillary Rodham Clinton', '#FemaleName #LastName'],
+  ['Hillary Rodham Clinton', '#FemaleName #Person #LastName'],
   ['Margaret Thatcher', '#FemaleName #LastName'],
   ['Messiaen', '#Person'],
   ['Mozart', '#LastName'],
@@ -482,15 +482,15 @@ let arr = [
   // ['1,000,000p', '#Cardinal'],
 
   ['google', '#Organization'],
-  ['google inc', '#Organization'],
-  ['Capital One', '#Organization'],
+  ['google inc', '#Organization+'],
+  ['Capital One', '#Organization+'],
   ['HSBC', '#Organization'],
   ['NASA', '#Organization'],
-  ['al qaeda', '#Organization'],
+  ['al qaeda', '#Organization+'],
   ['FBI', '#Organization'],
   ['monsanto', '#Organization'],
-  ['Johnson & Johnson', '#Organization'],
-  ['Johnson & Johnson LLC', '#Organization'],
+  ['Johnson & Johnson', '#Organization+'],
+  ['Johnson & Johnson LLC', '#Organization+'],
 
   //-ced
   ['lanced', '#PastTense'],
@@ -600,36 +600,36 @@ let arr = [
   [`#22ll`, '#HashTag'],
   [`#_22ll`, '#HashTag'],
 
-  ['five hundred feet', '#Value'],
-  ['50 square feet', '#Value'],
-  ['90 hertz', '#Value'],
-  ['two books', '#Value'],
-  ['two hundred', '#Value'],
-  ['4 hundred and ten', '#Value'],
-  ['4 and a half million', '#Value'],
-  ['499 thousand', '#Value'],
+  ['five hundred feet', '#Value+ #Unit'],
+  ['50 square feet', '#Value+ #Unit+'],
+  ['90 hertz', '#Value #Unit'],
+  ['two books', '#Value #Noun'],
+  ['two hundred', '#Value #Value'],
+  ['4 hundred and ten', '#Value+'],
+  ['4 and a half million', '#Value+'],
+  ['499 thousand', '#Value+'],
   ['499', '#Value'],
   ['4,899', '#Value'],
-  ['John Smith', '#Person'],
-  ['dr. John Smith', '#Person'],
-  ['John Smith jr.', '#Person'],
-  ['John Jacob Smith', '#Person'],
-  ['Jani K. Smith', '#Person'],
+  ['John Smith', '#Person+'],
+  ['dr. John Smith', '#Honorific #Person+'],
+  ['John Smith jr.', '#Person+'],
+  ['John Jacob Smith', '#FirstName #Person+'],
+  ['Jani K. Smith', '#FirstName #Abbreviation #LastName'],
   ['asdfefs', '#Noun'],
   ['octopus', '#Noun'],
   ['tree', '#Noun'],
   ['i', '#Noun'],
   ['FBI', '#Organization'],
   ['F.B.I.', '#Organization'],
-  ['Fun ltd.', '#Organization'],
-  ['Fun co', '#Organization'],
-  ['Smith & Rogers', '#Organization'],
+  ['Fun ltd.', '#Organization+'],
+  ['Fun co', '#Organization+'],
+  ['Smith & Rogers', '#Organization+'],
   ['Google', '#Organization'],
   ['tuesday', '#Date'],
   ['february', '#Date'],
-  ['february fifth', '#Date'],
-  ['tuesday march 5th', '#Date'],
-  ['tuesday march 5th, 2015', '#Date'],
+  ['february fifth', '#Date+'],
+  ['tuesday march 5th', '#Date+'],
+  ['tuesday march 5th, 2015', '#Date+'],
 
   ['truth, bravery', '@hasComma bravery'],
   ['spencer did.', 'spencer @hasPeriod'],
@@ -640,8 +640,8 @@ let arr = [
   ['tornado/hurricane', 'hurricane'],
   ['tornado/hurricane', 'tornado'],
   ['tornado/hurricane', '@hasSlash'],
-  ['rock you like a tornado/hurricane', 'a @hasSlash'],
-  ["he isn't going", 'he @hasContraction'],
+  ['like a tornado/hurricane', 'like a @hasSlash'],
+  ["he isn't going", 'he @hasContraction #Gerund'],
   ['FIFA', '@isAcronym'],
   ['spencer', '@isKnown'],
 
@@ -656,7 +656,8 @@ test('match:', function (t) {
   arr.forEach(function (a) {
     let doc = nlp(a[0])
     let msg = `'${(a[0] + "' ").padEnd(20, '.')}  - '${a[1]}'`
-    t.equal(doc.has(a[1]), true, here + msg)
+    let m = doc.match(a[1])
+    t.equal(m.text(), doc.text(), here + msg)
   })
   t.end()
 })

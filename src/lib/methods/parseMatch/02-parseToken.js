@@ -131,6 +131,7 @@ const parseToken = function (w) {
     if (start(w) === '{' && end(w) === '}') {
       w = stripBoth(w)
       obj.chunk = w
+      obj.greedy = true
       return obj
     }
   }

@@ -19,10 +19,8 @@ const css = {
 const logClientSide = function (view) {
   let tagset = view.world.tags
   view.forEach(terms => {
-    // console.log('\n%c"' + p.text() + '"', 'color: #e6d7b3;')
-    // let terms = p.terms()
     terms.forEach(t => {
-      let tags = t.tags
+      let tags = Array.from(t.tags)
       let text = t.text || '-'
       if (t.implicit) {
         text = '[' + t.implicit + ']'
@@ -78,6 +76,7 @@ const tagString = function (tags, model) {
 
 const showChunks = function (view) {
   let { docs } = view
+  console.log('')
   docs.forEach(terms => {
     let out = []
     terms.forEach(term => {
@@ -97,38 +96,42 @@ const showChunks = function (view) {
   })
 }
 
+const showTags = function (view) {
+  let { docs, model } = view
+  console.log(cli.blue('====='))
+  docs.forEach(terms => {
+    console.log(cli.blue('  -----'))
+    terms.forEach(t => {
+      let tags = [...(t.tags || [])]
+      let text = t.text || '-'
+      if (t.implicit) {
+        text = '[' + t.implicit + ']'
+      }
+      if (typeof module !== undefined) {
+        text = cli.yellow(text)
+      }
+      let word = "'" + text + "'"
+      word = word.padEnd(18)
+      let str = cli.blue('  ｜ ') + word + '  - ' + tagString(tags, model)
+      console.log(str)
+    })
+  })
+}
 //output some helpful stuff to the console
 const debug = function (opts = {}) {
   let view = this
-  let { docs, model } = view
   if (isClientSide()) {
     logClientSide(view)
     return view
   }
   if (opts.tags !== false) {
-    console.log(cli.blue('====='))
-    docs.forEach(terms => {
-      console.log(cli.blue('  -----'))
-      terms.forEach(t => {
-        let tags = [...(t.tags || [])]
-        let text = t.text || '-'
-        if (t.implicit) {
-          text = '[' + t.implicit + ']'
-        }
-        if (typeof module !== undefined) {
-          text = cli.yellow(text)
-        }
-        let word = "'" + text + "'"
-        word = word.padEnd(18)
-        let str = cli.blue('  ｜ ') + word + '  - ' + tagString(tags, model)
-        console.log(str)
-      })
-    })
+    showTags(view)
     console.log('\n')
   }
   // output chunk-view, too
   if (opts.chunks !== false) {
     showChunks(view)
+    console.log('\n')
   }
   return view
 }

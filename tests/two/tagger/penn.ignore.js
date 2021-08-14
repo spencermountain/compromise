@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-import penn from '../_pennSample.js'
+import penn from './_pennSample.js'
 const here = '[two/penn] '
 
 const softMapping = {
@@ -68,7 +68,7 @@ test('pennTreebank-test:', function (t) {
       let found = terms[i].tags.some(tag => tag === want)
       if (!found) {
         perfect = false
-        msg += `'${terms[i].text}' has #${want}`
+        msg += `'${terms[i].text}' missing #${want}`
         break
       }
     }

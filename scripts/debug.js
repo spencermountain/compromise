@@ -1,4 +1,4 @@
-import nlp from '../src/index.js'
+import nlp from '../src/three.js'
 const txt = process.argv.slice(2).join(' ')
 console.log(`\n\n======== '${txt}' ======\n`)
 nlp.verbose(true)

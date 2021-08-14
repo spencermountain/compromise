@@ -1,6 +1,6 @@
 import nlp from './two.js'
-import selections from './05-chunker/plugin.js'
+import chunker from './05-chunker/plugin.js'
 
-nlp.plugin(selections)
+nlp.plugin(chunker)
 
 export default nlp

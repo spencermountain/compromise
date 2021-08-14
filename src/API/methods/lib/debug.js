@@ -98,34 +98,36 @@ const showChunks = function (view) {
 }
 
 //output some helpful stuff to the console
-const debug = function () {
+const debug = function (opts = {}) {
   let view = this
   let { docs, model } = view
   if (isClientSide()) {
     logClientSide(view)
     return view
   }
-  console.log(cli.blue('====='))
-  docs.forEach(terms => {
-    console.log(cli.blue('  -----'))
-    terms.forEach(t => {
-      let tags = [...(t.tags || [])]
-      let text = t.text || '-'
-      if (t.implicit) {
-        text = '[' + t.implicit + ']'
-      }
-      if (typeof module !== undefined) {
-        text = cli.yellow(text)
-      }
-      let word = "'" + text + "'"
-      word = word.padEnd(18)
-      let str = cli.blue('  ｜ ') + word + '  - ' + tagString(tags, model)
-      console.log(str)
+  if (opts.tags !== false) {
+    console.log(cli.blue('====='))
+    docs.forEach(terms => {
+      console.log(cli.blue('  -----'))
+      terms.forEach(t => {
+        let tags = [...(t.tags || [])]
+        let text = t.text || '-'
+        if (t.implicit) {
+          text = '[' + t.implicit + ']'
+        }
+        if (typeof module !== undefined) {
+          text = cli.yellow(text)
+        }
+        let word = "'" + text + "'"
+        word = word.padEnd(18)
+        let str = cli.blue('  ｜ ') + word + '  - ' + tagString(tags, model)
+        console.log(str)
+      })
     })
-  })
-  console.log('\n')
+    console.log('\n')
+  }
   // output chunk-view, too
-  if (this.viewType === 'Sentence') {
+  if (opts.chunks !== false) {
     showChunks(view)
   }
   return view

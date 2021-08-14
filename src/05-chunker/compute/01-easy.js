@@ -1,3 +1,7 @@
+// const byWord = {
+//   that: 'Conjunction',
+// }
+
 // simply chunk Nouns as <Noun>
 const easyMode = function (document) {
   for (let n = 0; n < document.length; n += 1) {
@@ -5,9 +9,25 @@ const easyMode = function (document) {
       let term = document[n][t]
       if (term.tags.has('Verb')) {
         term.chunk = 'Verb'
-      } else if (term.tags.has('Noun')) {
-        term.chunk = 'Noun'
+        continue
       }
+      if (term.tags.has('Noun')) {
+        term.chunk = 'Noun'
+        continue
+      }
+      // 100 cats
+      if (term.tags.has('Value')) {
+        term.chunk = 'Noun'
+        continue
+      }
+      //
+      if (term.tags.has('QuestionWord')) {
+        term.chunk = 'Conjunction'
+        continue
+      }
+      // if (byWord.hasOwnProperty(term.normal)) {
+      //   term.chunk = byWord[term.normal]
+      // }
     }
   }
 }

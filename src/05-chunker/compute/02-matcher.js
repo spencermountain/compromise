@@ -7,11 +7,13 @@ const rules = [
 
   // === Adjective ===
   // was really nice
-  { match: '#Copula [#Adverb+? {Adjective}]', group: 0, chunk: 'Adjective' },
+  { match: '#Copula [#Adverb+? #Adjective]', group: 0, chunk: 'Adjective' },
   // was nice
   { match: '#Copula [#Adjective]', group: 0, chunk: 'Adjective' },
+  // nice and cool
+  { match: '#Adjective and #Adjective', chunk: 'Adjective' },
   // really nice
-  { match: '#Adverb+ {Adjective}', chunk: 'Adjective' },
+  { match: '#Adverb+ #Adjective', chunk: 'Adjective' },
 
   // === Verb ===
   // quickly run

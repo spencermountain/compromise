@@ -3,8 +3,16 @@
 import nlp from './src/three.js'
 nlp.verbose('chunker')
 
-// let str = `it has been estimated that the number of people aged 100 or over will rise steeply to reach over 626000 by 2080`
-let str = `the place is small with indoor & outdoor seating and quite cute & quaint`
+// ''
+// ''
+// ''
+
+// let str = `retail stores have it worse`
+// let str = `chandler's medicine under the sink`
+let str = `the most diverse country is the best`
+// let str = `mountain ranges `
+// let str = `left is always right`
+// let str = `the place is small with indoor & outdoor seating and quite cute & quaint`
 
 let doc = nlp(str)
 doc.debug({ terms: false })

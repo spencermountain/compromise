@@ -75,6 +75,28 @@ const tagString = function (tags, model) {
   }
   return tags.join(', ')
 }
+
+const showChunks = function (view) {
+  let { docs } = view
+  docs.forEach(terms => {
+    let out = []
+    terms.forEach(term => {
+      if (term.chunk === 'Noun') {
+        out.push(cli.blue(term.implicit || term.normal))
+      } else if (term.chunk === 'Verb') {
+        out.push(cli.green(term.implicit || term.normal))
+      } else if (term.chunk === 'Adjective') {
+        out.push(cli.yellow(term.implicit || term.normal))
+      } else if (term.chunk === 'Conjunction') {
+        out.push(cli.red(term.implicit || term.normal))
+      } else {
+        out.push(term.implicit || term.normal)
+      }
+    })
+    console.log(out.join(' '), '\n')
+  })
+}
+
 //output some helpful stuff to the console
 const debug = function () {
   let view = this
@@ -101,7 +123,11 @@ const debug = function () {
       console.log(str)
     })
   })
-  console.log('')
+  console.log('\n')
+  // output chunk-view, too
+  if (this.viewType === 'Sentence') {
+    showChunks(view)
+  }
   return view
 }
 export default debug

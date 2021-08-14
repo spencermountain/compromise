@@ -1,11 +1,12 @@
 /* eslint-disable no-console, no-unused-vars */
 // import './tests/_ignore/_error.js'
 import nlp from './src/three.js'
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
-let doc = nlp('each promising image')
-doc.debug()
-// console.log(nlp.world().model.two.lexicon['write off'])
+let doc = nlp('after all the partying was over, he kissed his bride on the lips')
+doc.sentences().debug()
+
+// console.log(nlp.parseMatch('foo {Noun}'))
 
 /*
 ['', '#'],

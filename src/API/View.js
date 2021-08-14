@@ -1,6 +1,5 @@
 import world from './world.js'
 import api from './methods/index.js'
-import lib from '../lib/methods/index.js'
 
 class View {
   constructor(document, pointer, groups = {}) {

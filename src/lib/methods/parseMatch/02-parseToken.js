@@ -127,6 +127,12 @@ const parseToken = function (w) {
       obj.word = w
       return obj
     }
+    //chunks
+    if (start(w) === '{' && end(w) === '}') {
+      w = stripBoth(w)
+      obj.chunk = w
+      return obj
+    }
   }
   // support #Tag{1,9}
   if (hasMinMax.test(w) === true) {

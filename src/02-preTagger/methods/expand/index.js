@@ -25,7 +25,6 @@ const expand = function (words, world) {
     // finally, add it in
     lex[word] = lex[word] || tag
   })
-
   // cleanup
   delete lex['']
   delete lex[null]

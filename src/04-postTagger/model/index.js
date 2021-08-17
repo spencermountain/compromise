@@ -12,6 +12,8 @@ import gerundNouns from './nouns/gerund-noun.js'
 import infNouns from './nouns/inf-noun.js'
 import presNouns from './nouns/pres-noun.js'
 
+import money from './numbers/money.js'
+import fractions from './numbers/fractions.js'
 import numbers from './numbers/_misc.js'
 
 import person from './person/_misc.js'
@@ -35,6 +37,8 @@ let matches = [].concat(
   gerundNouns,
   infNouns,
   presNouns,
+  money,
+  fractions,
   numbers,
   person,
   personName,

@@ -11,6 +11,7 @@ export default [
   { word: "can't", out: ['can', 'not'] },
   { word: "shan't", out: ['should', 'not'] },
   { word: "won't", out: ['will', 'not'] },
+  { word: "that's", out: ['that', 'is'] },
   { word: 'dunno', out: ['do', 'not', 'know'] },
   { word: 'gonna', out: ['going', 'to'] },
   { word: 'gtg', out: ['got', 'to', 'go'] },

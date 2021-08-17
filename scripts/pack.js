@@ -4,7 +4,7 @@ import { pack } from 'efrt'
 import lexicon from '../lib/lexicon/index.js'
 console.log('\n 🕑  - packing lexicon..')
 // const outFile = './src/pre-tagger/model/lexicon/_data.js'
-const outFile = './src/two/pre-tagger/model/lexicon/_data.js'
+const outFile = './src/02-preTagger/model/lexicon/_data.js'
 
 //turn them into a series of flat-arrays
 let words = Object.keys(lexicon)

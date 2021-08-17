@@ -381,10 +381,6 @@ export default [
     tags: 'NNP, NNP',
   },
   {
-    text: 'Bush',
-    tags: 'NNP',
-  },
-  {
     text: 'Hiller asked Bush to name the leaders of Chechnya, Taiwan, India and Pakistan.',
     tags: 'NNP, VBD, NNP, TO, VB, DT, NNS, IN, NNP, NNP, NNP, CC, NNP',
   },
@@ -477,10 +473,6 @@ export default [
     tags: 'CC, MD, NNP, VB, VBN, RP',
   },
   {
-    text: 'gandalf',
-    tags: 'NNP',
-  },
-  {
     text: 'You really got me thinking, I enjoy reading this blog.',
     tags: 'PRP, RB, VBD, PRP, VBG, PRP, VBP, VBG, DT, NN',
   },
@@ -495,10 +487,6 @@ export default [
   {
     text: 'I agree totally!',
     tags: 'PRP, VBP, RB',
-  },
-  {
-    text: 'Paul',
-    tags: 'NNP',
   },
   {
     text: 'Ramtanu Maitra',
@@ -873,36 +861,8 @@ export default [
     tags: 'PRP, RB, VBD, PRP, IN, NNS',
   },
   {
-    text: 'India',
-    tags: 'NNP',
-  },
-  {
     text: 'Philippines',
     tags: 'NNPS',
-  },
-  {
-    text: 'Bolivia',
-    tags: 'NNP',
-  },
-  {
-    text: 'Jamaica',
-    tags: 'NNP',
-  },
-  {
-    text: 'Guatemala',
-    tags: 'NNP',
-  },
-  {
-    text: 'Venezuela',
-    tags: 'NNP',
-  },
-  {
-    text: 'Columbia',
-    tags: 'NNP',
-  },
-  {
-    text: 'Panama',
-    tags: 'NNP',
   },
   {
     text: 'Brazil we have current data already',
@@ -911,14 +871,6 @@ export default [
   {
     text: 'China we have current data already',
     tags: 'NNP, PRP, VBP, JJ, NN, RB',
-  },
-  {
-    text: 'Cindy',
-    tags: 'NNP',
-  },
-  {
-    text: 'Maureen',
-    tags: 'NNP',
   },
   {
     text: 'Vince Kaminski',
@@ -933,28 +885,8 @@ export default [
     tags: 'JJ, NNS',
   },
   {
-    text: 'Philip',
-    tags: 'NNP',
-  },
-  {
-    text: 'Paula',
-    tags: 'NNP',
-  },
-  {
     text: 'Will you drive on that day?',
     tags: 'MD, PRP, VB, IN, DT, NN',
-  },
-  {
-    text: 'Vince',
-    tags: 'NNP',
-  },
-  {
-    text: 'Paula',
-    tags: 'NNP',
-  },
-  {
-    text: 'Vince',
-    tags: 'NNP',
   },
   {
     text: 'Anne, Mike will call you regarding Sarah.',
@@ -963,18 +895,6 @@ export default [
   {
     text: 'Please advise.',
     tags: 'UH, VB',
-  },
-  {
-    text: 'Anne',
-    tags: 'NNP',
-  },
-  {
-    text: 'Vince',
-    tags: 'NNP',
-  },
-  {
-    text: 'Vince -',
-    tags: 'NNP',
   },
   {
     text: 'Good news.',
@@ -989,36 +909,12 @@ export default [
     tags: 'PRP, VBP, JJ, IN, DT',
   },
   {
-    text: 'Clayton',
-    tags: 'NNP',
-  },
-  {
     text: 'Congratulations.',
     tags: 'NNS',
   },
   {
-    text: 'Vince',
-    tags: 'NNP',
-  },
-  {
-    text: 'John',
-    tags: 'NNP',
-  },
-  {
-    text: 'John -',
-    tags: 'NNP',
-  },
-  {
     text: 'Appreciate the idea.',
     tags: 'VBP, DT, NN',
-  },
-  {
-    text: 'John.',
-    tags: 'NNP',
-  },
-  {
-    text: 'John -',
-    tags: 'NNP',
   },
   {
     text: 'oh god is there an agenda.',
@@ -1037,16 +933,8 @@ export default [
     tags: 'PRP, RB, VBP',
   },
   {
-    text: 'John',
-    tags: 'NNP',
-  },
-  {
     text: 'i completely agree.',
     tags: 'PRP, RB, VBP',
-  },
-  {
-    text: 'John',
-    tags: 'NNP',
   },
   {
     text: 'This is pretty easy math for me.',
@@ -1081,10 +969,6 @@ export default [
     tags: 'PRP, MD, VB, NN, NNS, CC, JJ, NN, NNS, IN, NN, NN',
   },
   {
-    text: 'Essie',
-    tags: 'NNP',
-  },
-  {
     text: 'Sonya City',
     tags: 'NNP, NNP',
   },
@@ -1095,18 +979,6 @@ export default [
   {
     text: 'Please let me know Monday morning.',
     tags: 'UH, VB, PRP, VB, NNP, NN',
-  },
-  {
-    text: 'Vicsandra',
-    tags: 'NNP',
-  },
-  {
-    text: 'Essie',
-    tags: 'NNP',
-  },
-  {
-    text: 'Patty',
-    tags: 'NNP',
   },
   {
     text: '18T-EI Indonesia Operations LLC',
@@ -1161,18 +1033,6 @@ export default [
     tags: 'UH, VB, PRP, VB, NNP, NN',
   },
   {
-    text: 'Vicsandra',
-    tags: 'NNP',
-  },
-  {
-    text: 'Essie',
-    tags: 'NNP',
-  },
-  {
-    text: 'Patty',
-    tags: 'NNP',
-  },
-  {
     text: 'Hello.',
     tags: 'UH',
   },
@@ -1193,68 +1053,12 @@ export default [
     tags: 'PRP, VBP, RB, VBN, DT, NNP, IN, DT, JJ, NN',
   },
   {
-    text: 'Lautrec',
-    tags: 'NNP',
-  },
-  {
-    text: 'Moore',
-    tags: 'NNP',
-  },
-  {
-    text: 'Arp',
-    tags: 'NNP',
-  },
-  {
-    text: 'Rouault',
-    tags: 'NNP',
-  },
-  {
-    text: 'Rothko',
-    tags: 'NNP',
-  },
-  {
-    text: 'Kline',
-    tags: 'NNP',
-  },
-  {
-    text: 'Motherwell',
-    tags: 'NNP',
-  },
-  {
     text: 'Is there 1 available?',
     tags: 'VBZ, EX, CD, JJ',
   },
   {
-    text: 'mike',
-    tags: 'NNP',
-  },
-  {
-    text: 'Sooners rule.',
-    tags: 'NNP, VBP',
-  },
-  {
-    text: 'Mike',
-    tags: 'NNP',
-  },
-  {
-    text: 'Ken',
-    tags: 'NNP',
-  },
-  {
-    text: 'Mike',
-    tags: 'NNP',
-  },
-  {
     text: 'Mark, I thought you would enjoy the comment about you.',
     tags: 'NNP, PRP, VBD, PRP, MD, VB, DT, NN, IN, PRP',
-  },
-  {
-    text: 'Mike',
-    tags: 'NNP',
-  },
-  {
-    text: 'Ken',
-    tags: 'NNP',
   },
   {
     text: 'We stayed at the Menger and had a great time.',
@@ -1265,20 +1069,8 @@ export default [
     tags: 'PRP, VBP, VBG, IN, DT, JJ, NN, NNS, RB',
   },
   {
-    text: 'Kay',
-    tags: 'NNP',
-  },
-  {
     text: 'I see we expect to have separate contracts for each project.',
     tags: 'PRP, VBP, PRP, VBP, TO, VB, JJ, NNS, IN, DT, NN',
-  },
-  {
-    text: 'Kay',
-    tags: 'NNP',
-  },
-  {
-    text: 'Kay',
-    tags: 'NNP',
   },
   {
     text: 'I would actually send them the draft Development Agreement a couple days after the LOI.',
@@ -1288,121 +1080,43 @@ export default [
     text: 'Remarkably clear explanation.',
     tags: 'RB, JJ, NN',
   },
-  {
-    text: 'Chris',
-    tags: 'NNP',
-  },
+
   {
     text: 'That is some good stuff.',
     tags: 'DT, VBZ, DT, JJ, NN',
-  },
-  {
-    text: 'Chris',
-    tags: 'NNP',
-  },
-  {
-    text: 'Done!',
-    tags: 'JJ',
-  },
-  {
-    text: 'Chris',
-    tags: 'NNP',
-  },
-  {
-    text: 'cd',
-    tags: 'NNP',
-  },
-  {
-    text: 'Chris',
-    tags: 'NNP',
-  },
-  {
-    text: 'Chris',
-    tags: 'NNP',
-  },
-  {
-    text: 'Chris',
-    tags: 'NNP',
-  },
-  {
-    text: 'Chris',
-    tags: 'NNP',
   },
   {
     text: 'Just a reminder to send me a currency report.',
     tags: 'RB, DT, NN, TO, VB, PRP, DT, NN, NN',
   },
   {
-    text: 'Chris',
-    tags: 'NNP',
-  },
-  {
     text: 'He will be in Calgary in a couple of weeks and will interview you then.',
     tags: 'PRP, MD, VB, IN, NNP, IN, DT, NN, IN, NNS, CC, MD, VB, PRP, RB',
   },
-  {
-    text: 'Chris',
-    tags: 'NNP',
-  },
-  {
-    text: 'Chris',
-    tags: 'NNP',
-  },
+
   {
     text: 'Give him a call tommorow.',
     tags: 'VB, PRP, DT, NN, NN',
   },
-  {
-    text: 'Chris',
-    tags: 'NNP',
-  },
-  {
-    text: 'Paul',
-    tags: 'NNP',
-  },
+
   {
     text: 'The deed is done.',
     tags: 'DT, NN, VBZ, JJ',
   },
-  {
-    text: 'Chris',
-    tags: 'NNP',
-  },
-  {
-    text: 'Chris',
-    tags: 'NNP',
-  },
-  {
-    text: 'Chris',
-    tags: 'NNP',
-  },
-  {
-    text: 'Chris',
-    tags: 'NNP',
-  },
+
   {
     text: 'Sushi tonight?',
     tags: 'NN, NN',
   },
-  {
-    text: 'Chris',
-    tags: 'NNP',
-  },
+
   {
     text: 'I will be able to attend.',
     tags: 'PRP, MD, VB, JJ, TO, VB',
   },
-  {
-    text: 'Chris',
-    tags: 'NNP',
-  },
+
   {
     text: 'Mike Jordan',
     tags: 'NNP, NNP',
-  },
-  {
-    text: 'Mike',
-    tags: 'NNP',
   },
   {
     text: 'Late Jan sounds great.',
@@ -1429,18 +1143,6 @@ export default [
     tags: 'VBP, PRP, VBG, IN, NN',
   },
   {
-    text: 'Cindy',
-    tags: 'NNP',
-  },
-  {
-    text: '-- Sally',
-    tags: 'NNP',
-  },
-  {
-    text: 'Delainey',
-    tags: 'NNP',
-  },
-  {
     text: 'Jeff Dasovich',
     tags: 'NNP, NNP',
   },
@@ -1449,20 +1151,12 @@ export default [
     tags: 'VBN, IN, NNP, NNP',
   },
   {
-    text: 'Jeff',
-    tags: 'NNP',
-  },
-  {
     text: 'Jeff Dasovich',
     tags: 'NNP, NNP',
   },
   {
     text: 'Sent by: Jeff Dasovich',
     tags: 'VBN, IN, NNP, NNP',
-  },
-  {
-    text: '- er',
-    tags: 'NNP',
   },
   {
     text: 'Steven J Kean',
@@ -1481,10 +1175,6 @@ export default [
     tags: 'IN, PRP, MD, VB, IN, DT, NN, NN, PRP, VBP, RB, JJ',
   },
   {
-    text: 'Courtney',
-    tags: 'NNP',
-  },
-  {
     text: 'calendar',
     tags: 'NN',
   },
@@ -1497,18 +1187,10 @@ export default [
     tags: 'NN, NN, IN, NNP, NNP, RB, CD',
   },
   {
-    text: 'Darla',
-    tags: 'NNP',
-  },
-  {
     text: 'Thank you.',
     tags: 'VBP, PRP',
   },
   {
-    text: 'Darla',
-    tags: 'NNP',
-  },
-  {
     text: 'Sorry about the flooding.',
     tags: 'JJ, IN, DT, NN',
   },
@@ -1517,20 +1199,12 @@ export default [
     tags: 'VB, DT, JJ, NN',
   },
   {
-    text: 'Nancy',
-    tags: 'NNP',
-  },
-  {
     text: 'Sorry about the flooding.',
     tags: 'JJ, IN, DT, NN',
   },
   {
     text: 'Have a great day.',
     tags: 'VB, DT, JJ, NN',
-  },
-  {
-    text: 'Nancy',
-    tags: 'NNP',
   },
   {
     text: 'Nancy, can you please reconfirm with Mark the price for the gas at Bondad?',
@@ -1543,10 +1217,6 @@ export default [
   {
     text: 'Have a great day.',
     tags: 'VB, DT, JJ, NN',
-  },
-  {
-    text: 'Nancy',
-    tags: 'NNP',
   },
   {
     text: 'See attached spreadsheet.',
@@ -1593,10 +1263,6 @@ export default [
     tags: 'JJ',
   },
   {
-    text: 'No.',
-    tags: 'UH',
-  },
-  {
     text: 'Vince Kaminski',
     tags: 'NNP, NNP',
   },
@@ -1611,18 +1277,6 @@ export default [
   {
     text: 'Confirmed.',
     tags: 'VBN',
-  },
-  {
-    text: 'Vince',
-    tags: 'NNP',
-  },
-  {
-    text: 'Dale',
-    tags: 'NNP',
-  },
-  {
-    text: 'Vince',
-    tags: 'NNP',
   },
   {
     text: 'That would be particularly convenient for me.',
@@ -1645,10 +1299,6 @@ export default [
     tags: 'NNP, VBZ, IN, PRP',
   },
   {
-    text: 'Vince',
-    tags: 'NNP',
-  },
-  {
     text: 'A correction.',
     tags: 'DT, NN',
   },
@@ -1657,36 +1307,8 @@ export default [
     tags: 'MD, PRP, VB, IN, DT, NN',
   },
   {
-    text: 'Vince',
-    tags: 'NNP',
-  },
-  {
-    text: 'Vince',
-    tags: 'NNP',
-  },
-  {
-    text: 'Ed',
-    tags: 'NNP',
-  },
-  {
-    text: 'Vince',
-    tags: 'NNP',
-  },
-  {
-    text: 'Ed',
-    tags: 'NNP',
-  },
-  {
-    text: 'Vince',
-    tags: 'NNP',
-  },
-  {
     text: 'Talk about a shotgun marriage!',
     tags: 'VB, IN, DT, NN, NN',
-  },
-  {
-    text: 'Ed',
-    tags: 'NNP',
   },
   {
     text: 'I shall be available on both days.',
@@ -1695,22 +1317,6 @@ export default [
   {
     text: 'It will be nice to see you again.',
     tags: 'PRP, MD, VB, JJ, TO, VB, PRP, RB',
-  },
-  {
-    text: 'Vince',
-    tags: 'NNP',
-  },
-  {
-    text: 'Joe',
-    tags: 'NNP',
-  },
-  {
-    text: 'Joe -',
-    tags: 'NNP',
-  },
-  {
-    text: 'Caroline',
-    tags: 'NNP',
   },
   {
     text: 'Sara Shackleton',
@@ -1733,10 +1339,6 @@ export default [
     tags: 'UH, VB',
   },
   {
-    text: 'Jorge',
-    tags: 'NNP',
-  },
-  {
     text: 'Sara Shackleton',
     tags: 'NNP, NNP',
   },
@@ -1751,10 +1353,6 @@ export default [
   {
     text: 'Sara Shackleton',
     tags: 'NNP, NNP',
-  },
-  {
-    text: 'Sara',
-    tags: 'NNP',
   },
   {
     text: 'looks fine',
@@ -1765,24 +1363,8 @@ export default [
     tags: 'NNP, NNP',
   },
   {
-    text: 'Carlos',
-    tags: 'NNP',
-  },
-  {
-    text: 'Kay',
-    tags: 'NNP',
-  },
-  {
-    text: 'Scott',
-    tags: 'NNP',
-  },
-  {
     text: 'Term sheet for draft contract, as requested.',
     tags: 'NN, NN, IN, NN, NN, IN, VBN',
-  },
-  {
-    text: 'Kay',
-    tags: 'NNP',
   },
   {
     text: 'They showed some kids on TV, and they were quite taken with it.',
@@ -1797,20 +1379,12 @@ export default [
     tags: 'NNP, NNP',
   },
   {
-    text: 'Kay',
-    tags: 'NNP',
-  },
-  {
     text: 'Is that ok with you?',
     tags: 'VBZ, DT, JJ, IN, PRP',
   },
   {
     text: 'the passcode: 6871082#',
     tags: 'DT, NN, CD',
-  },
-  {
-    text: 'the place: EB 3143C',
-    tags: 'DT, NN, NNP, NN',
   },
   {
     text: 'the subject: Turbine 1 and Turbine 2 Purchase Agreement',
@@ -1821,40 +1395,12 @@ export default [
     tags: 'NNP, NNP',
   },
   {
-    text: 'Kathleen',
-    tags: 'NNP',
-  },
-  {
     text: 'Kay Mann',
     tags: 'NNP, NNP',
   },
   {
     text: 'Kay Mann',
     tags: 'NNP, NNP',
-  },
-  {
-    text: 'Kay',
-    tags: 'NNP',
-  },
-  {
-    text: 'Kay',
-    tags: 'NNP',
-  },
-  {
-    text: 'Kathleen',
-    tags: 'NNP',
-  },
-  {
-    text: 'Paula.',
-    tags: 'NNP',
-  },
-  {
-    text: 'Paula.',
-    tags: 'NNP',
-  },
-  {
-    text: 'Kay --',
-    tags: 'NNP',
   },
   {
     text: '- redvepco.doc',
@@ -1869,10 +1415,6 @@ export default [
     tags: 'DT, NN, CD',
   },
   {
-    text: 'the place: EB 3143C',
-    tags: 'DT, NN, NNP, NN',
-  },
-  {
     text: 'the subject: Turbine 1 and Turbine 2 Purchase Agreement',
     tags: 'DT, NN, NN, CD, CC, NN, CD, NN, NN',
   },
@@ -1883,14 +1425,6 @@ export default [
   {
     text: 'Kay Mann',
     tags: 'NNP, NNP',
-  },
-  {
-    text: 'Kay',
-    tags: 'NNP',
-  },
-  {
-    text: 'JWVS',
-    tags: 'NNP',
   },
   {
     text: 'These are always difficult times.',
@@ -1909,20 +1443,12 @@ export default [
     tags: 'UH',
   },
   {
-    text: 'Rosalee',
-    tags: 'NNP',
-  },
-  {
     text: 'Jeff Garten',
     tags: 'NNP, NNP',
   },
   {
     text: 'Good morning, Kitty -',
     tags: 'JJ, NN, NNP',
-  },
-  {
-    text: 'Rosalee',
-    tags: 'NNP',
   },
   {
     text: 'Rosalee Fleming',
@@ -1957,16 +1483,8 @@ export default [
     tags: 'JJ',
   },
   {
-    text: 'Rosalee',
-    tags: 'NNP',
-  },
-  {
     text: 'Please check Tenn contract 36647 on the Demand speadsheet.',
     tags: 'UH, VB, NNP, NN, CD, IN, DT, NN, NN',
-  },
-  {
-    text: 'Brenda',
-    tags: 'NNP',
   },
   {
     text: 'It is very clean and is Sandalwood, Driftwood or something of that nature in color.',
@@ -1989,20 +1507,12 @@ export default [
     tags: 'NN',
   },
   {
-    text: 'Dow',
-    tags: 'NNP',
-  },
-  {
     text: 'W. Don Germany, Jr. 2301 N Brazosport Blvd B 3611, Investment Recovery Freeport, Texas 77541 Pager 1 800 451 0491 (0448) Office 979 238 2102 Home 979 548 7034',
     tags: 'NNP, NNP, NNP, NNP, CD, NNP, NNP, NNP, NNP, CD, NN, NN, NNP, NNP, CD, NN, CD, CD, CD, CD, CD, NN, CD, CD, CD, NN, CD, CD, CD',
   },
   {
     text: 'I need 2 things from you.',
     tags: 'PRP, VBP, CD, NNS, IN, PRP',
-  },
-  {
-    text: 'Darla',
-    tags: 'NNP',
   },
   {
     text: 'Hey Ernie.',
@@ -2037,120 +1547,40 @@ export default [
     tags: 'NNP, NNP',
   },
   {
-    text: 'Kay -',
-    tags: 'NNP',
-  },
-  {
-    text: 'Gregg',
-    tags: 'NNP',
-  },
-  {
-    text: 'Kay',
-    tags: 'NNP',
-  },
-  {
-    text: 'Gregg',
-    tags: 'NNP',
-  },
-  {
     text: 'Kay Mann',
     tags: 'NNP, NNP',
-  },
-  {
-    text: 'Kay',
-    tags: 'NNP',
   },
   {
     text: 'Hello -',
     tags: 'UH',
   },
   {
-    text: 'Gregg',
-    tags: 'NNP',
-  },
-  {
     text: 'Gregg Penman',
     tags: 'NNP, NNP',
   },
   {
-    text: 'Kay -',
-    tags: 'NNP',
-  },
-  {
-    text: 'Gregg',
-    tags: 'NNP',
-  },
-  {
-    text: 'Mary',
-    tags: 'NNP',
-  },
-  {
-    text: 'Kay',
-    tags: 'NNP',
-  },
-  {
-    text: 'Gregg',
-    tags: 'NNP',
-  },
-  {
     text: 'Kay Mann',
     tags: 'NNP, NNP',
   },
   {
-    text: 'Kay',
-    tags: 'NNP',
-  },
-  {
-    text: 'Gregg',
-    tags: 'NNP',
-  },
-  {
     text: 'Kay Mann',
     tags: 'NNP, NNP',
-  },
-  {
-    text: 'Kay',
-    tags: 'NNP',
   },
   {
     text: 'Hello -',
     tags: 'UH',
   },
   {
-    text: 'Gregg',
-    tags: 'NNP',
-  },
-  {
     text: 'Gregg Penman',
     tags: 'NNP, NNP',
-  },
-  {
-    text: 'Kay -',
-    tags: 'NNP',
-  },
-  {
-    text: 'Gregg',
-    tags: 'NNP',
-  },
-  {
-    text: 'Mary',
-    tags: 'NNP',
   },
   {
     text: 'Does that work?',
     tags: 'VBZ, DT, VB',
   },
   {
-    text: 'Kay',
-    tags: 'NNP',
-  },
-  {
     text: 'Are you coming for Xmas?',
     tags: 'VBP, PRP, VBG, IN, NNP',
-  },
-  {
-    text: 'Kyle',
-    tags: 'NNP',
   },
   {
     text: '====================================================',
@@ -2177,10 +1607,6 @@ export default [
     tags: 'NNP, NNP',
   },
   {
-    text: 'bd',
-    tags: 'NNP',
-  },
-  {
     text: 'Richard Sage',
     tags: 'NNP, NNP',
   },
@@ -2189,33 +1615,14 @@ export default [
     tags: 'NNP, NNP',
   },
   {
-    text: 'Tana -',
-    tags: 'NNP',
-  },
-  {
-    text: 'Denis',
-    tags: 'NNP',
-  },
-  {
-    text: 'Russell',
-    tags: 'NNP',
-  },
-  {
     text: 'Things in Houston are good and definitely warm.',
     tags: 'NNS, IN, NNP, VBP, JJ, CC, RB, JJ',
-  },
-  {
-    text: 'Susan',
-    tags: 'NNP',
   },
   {
     text: 'Are you really?',
     tags: 'VBP, PRP, RB',
   },
-  {
-    text: 'Chris',
-    tags: 'NNP',
-  },
+
   {
     text: '__________________________________________________',
     tags: 'NFP',
@@ -2223,10 +1630,6 @@ export default [
   {
     text: "She's a very fun girl.",
     tags: 'PRP, VBZ, DT, RB, JJ, NN',
-  },
-  {
-    text: 'Shorty',
-    tags: 'NNP',
   },
   {
     text: 'Ted Noble',
@@ -2249,16 +1652,8 @@ export default [
     tags: 'NNP, NNP',
   },
   {
-    text: 'Sharon',
-    tags: 'NNP',
-  },
-  {
     text: 'Do you know the address to send cards ??',
     tags: 'VBP, PRP, VB, DT, NN, TO, VB, NNS',
-  },
-  {
-    text: 'Sharon',
-    tags: 'NNP',
   },
   {
     text: 'Bobby is one of those with major injuries .?',
@@ -2269,20 +1664,12 @@ export default [
     tags: 'PRP, VBZ, RB, IN, DT, NN, NN, IN, NNP, NNP, NNP',
   },
   {
-    text: 'Dave',
-    tags: 'NNP',
-  },
-  {
     text: 'Does it make sense for us to set up a meeting with you participating from Buenos Aires?',
     tags: 'VBZ, PRP, VB, NN, IN, PRP, TO, VB, RP, DT, NN, IN, PRP, VBG, IN, NNP, NNP',
   },
   {
     text: 'Thank you',
     tags: 'VBP, PRP',
-  },
-  {
-    text: 'Dave',
-    tags: 'NNP',
   },
   {
     text: 'Leonardo Pacheco',
@@ -2293,10 +1680,6 @@ export default [
     tags: 'NNP, NNP, NNP',
   },
   {
-    text: 'Mark',
-    tags: 'NNP',
-  },
-  {
     text: '9 work days',
     tags: 'CD, NN, NNS',
   },
@@ -2305,20 +1688,8 @@ export default [
     tags: 'VBN, VBZ, DT, NN, IN, NNP, NNPS',
   },
   {
-    text: 'Max',
-    tags: 'NNP',
-  },
-  {
     text: 'I left you a voice mail on Friday.',
     tags: 'PRP, VBD, PRP, DT, NN, NN, IN, NNP',
-  },
-  {
-    text: 'Marie',
-    tags: 'NNP',
-  },
-  {
-    text: 'Pat',
-    tags: 'NNP',
   },
   {
     text: 'Please find attached the Enron Master Agreement.',
@@ -2333,20 +1704,12 @@ export default [
     tags: 'NNP, NN',
   },
   {
-    text: 'Marie',
-    tags: 'NNP',
-  },
-  {
     text: 'CONGRATULATIONS !!!!!!!',
     tags: 'NNS',
   },
   {
     text: 'Again, congratulations.',
     tags: 'RB, NNS',
-  },
-  {
-    text: 'Marie',
-    tags: 'NNP',
   },
   {
     text: 'Benjamin James-at 12.45 pm-3 lbs 4 ozs',
@@ -2365,16 +1728,8 @@ export default [
     tags: 'NNP, VBZ, JJ, RB, RB, JJ',
   },
   {
-    text: 'Mark',
-    tags: 'NNP',
-  },
-  {
     text: 'OOPS!',
     tags: 'UH',
-  },
-  {
-    text: 'Marie',
-    tags: 'NNP',
   },
   {
     text: 'I have attempted to revise them to make them clearer.',
@@ -2385,18 +1740,6 @@ export default [
     tags: 'NNP, NN',
   },
   {
-    text: 'Marie',
-    tags: 'NNP',
-  },
-  {
-    text: 'Marie',
-    tags: 'NNP',
-  },
-  {
-    text: 'Marie -',
-    tags: 'NNP',
-  },
-  {
     text: 'Patty Snyder',
     tags: 'NNP, NNP',
   },
@@ -2405,44 +1748,16 @@ export default [
     tags: 'UH, NNP',
   },
   {
-    text: 'Tracy',
-    tags: 'NNP',
-  },
-  {
     text: 'Marie x33907',
     tags: 'NNP, NN',
   },
   {
-    text: 'Karim.',
-    tags: 'NNP',
-  },
-  {
-    text: 'John',
-    tags: 'NNP',
-  },
-  {
     text: 'The post id I am looking at for Calgary is 11608.',
     tags: 'DT, NN, NN, PRP, VBP, VBG, IN, IN, NNP, VBZ, CD',
   },
   {
-    text: 'John',
-    tags: 'NNP',
-  },
-  {
-    text: 'Karim.',
-    tags: 'NNP',
-  },
-  {
-    text: 'John',
-    tags: 'NNP',
-  },
-  {
     text: 'The post id I am looking at for Calgary is 11608.',
     tags: 'DT, NN, NN, PRP, VBP, VBG, IN, IN, NNP, VBZ, CD',
-  },
-  {
-    text: 'John',
-    tags: 'NNP',
   },
   {
     text: "I've booked Videoconference Room # 1.",
@@ -2453,24 +1768,8 @@ export default [
     tags: 'MD, VB, JJ',
   },
   {
-    text: 'Nella',
-    tags: 'NNP',
-  },
-  {
-    text: 'Rob',
-    tags: 'NNP',
-  },
-  {
-    text: 'Bob',
-    tags: 'NNP',
-  },
-  {
     text: 'NO',
     tags: 'UH',
-  },
-  {
-    text: 'Mike',
-    tags: 'NNP',
   },
   {
     text: 'IEP will be hosting a dinner for California Governor Gray Davis on Thursday, December 7, 2000 at the historic Julia Morgan House in Sacramento.',
@@ -2485,24 +1784,12 @@ export default [
     tags: 'NNS',
   },
   {
-    text: 'Jeff',
-    tags: 'NNP',
-  },
-  {
     text: "I'll be in Portland but can call you.",
     tags: 'PRP, MD, VB, IN, NNP, CC, MD, VB, PRP',
   },
   {
-    text: 'Jeff',
-    tags: 'NNP',
-  },
-  {
     text: 'We await approval on the final tariff language and can then file at the CPUC.',
     tags: 'PRP, VBP, NN, IN, DT, JJ, NN, NN, CC, MD, RB, VB, IN, DT, NNP',
-  },
-  {
-    text: 'Lara',
-    tags: 'NNP',
   },
   {
     text: 'Angie Buis',
@@ -2557,14 +1844,6 @@ export default [
     tags: 'NN',
   },
   {
-    text: 'Jeff',
-    tags: 'NNP',
-  },
-  {
-    text: 'Jeff',
-    tags: 'NNP',
-  },
-  {
     text: 'David Forster',
     tags: 'NNP, NNP',
   },
@@ -2575,10 +1854,6 @@ export default [
   {
     text: 'Jonathan Day',
     tags: 'NNP, NNP',
-  },
-  {
-    text: 'Justin',
-    tags: 'NNP',
   },
   {
     text: 'Paul Goddard',
@@ -2597,10 +1872,6 @@ export default [
     tags: 'NNP, NNP',
   },
   {
-    text: 'Dave',
-    tags: 'NNP',
-  },
-  {
     text: '____________________________________________________________',
     tags: 'NFP',
   },
@@ -2617,16 +1888,8 @@ export default [
     tags: 'VBN, IN, NNP, NNP',
   },
   {
-    text: 'Peter',
-    tags: 'NNP',
-  },
-  {
     text: 'Molly Harris',
     tags: 'NNP, NNP',
-  },
-  {
-    text: 'Molly',
-    tags: 'NNP',
   },
   {
     text: 'Perhaps you can give them a personal invitation ...',
@@ -2649,10 +1912,6 @@ export default [
     tags: 'UH, NNP',
   },
   {
-    text: 'Dave',
-    tags: 'NNP',
-  },
-  {
     text: '- ETA_revision0307.doc',
     tags: 'NN',
   },
@@ -2661,16 +1920,8 @@ export default [
     tags: 'NNP, NNP',
   },
   {
-    text: 'Molly',
-    tags: 'NNP',
-  },
-  {
     text: 'Molly Harris',
     tags: 'NNP, NNP',
-  },
-  {
-    text: 'Molly',
-    tags: 'NNP',
   },
   {
     text: 'Yeah!',
@@ -2685,24 +1936,12 @@ export default [
     tags: 'NNP, NNP',
   },
   {
-    text: 'Molly',
-    tags: 'NNP',
-  },
-  {
     text: 'Mike Jordan',
     tags: 'NNP, NNP',
   },
   {
-    text: 'Mike',
-    tags: 'NNP',
-  },
-  {
     text: 'Mike Jordan',
     tags: 'NNP, NNP',
-  },
-  {
-    text: 'Mike',
-    tags: 'NNP',
   },
   {
     text: 'Mike Jordan',
@@ -2711,10 +1950,6 @@ export default [
   {
     text: 'I intend to provide weekly updates on the status of the above actions during April',
     tags: 'PRP, VBP, TO, VB, JJ, NNS, IN, DT, NN, IN, DT, JJ, NNS, IN, NNP',
-  },
-  {
-    text: 'Mike',
-    tags: 'NNP',
   },
   {
     text: 'Ben Rogers',
@@ -2733,72 +1968,28 @@ export default [
     tags: 'NNP, NNP',
   },
   {
-    text: 'Ben',
-    tags: 'NNP',
-  },
-  {
-    text: 'Ben',
-    tags: 'NNP',
-  },
-  {
-    text: 'Christopher',
-    tags: 'NNP',
-  },
-  {
     text: 'Randy, this is the issue I left you the voice mail on.',
     tags: 'NNP, DT, VBZ, DT, NN, PRP, VBD, PRP, DT, NN, NN, IN',
-  },
-  {
-    text: 'DF',
-    tags: 'NNP',
   },
   {
     text: 'James Centilli',
     tags: 'NNP, NNP',
   },
   {
-    text: 'DF',
-    tags: 'NNP',
-  },
-  {
     text: 'Susan Scott',
     tags: 'NNP, NNP',
-  },
-  {
-    text: 'df',
-    tags: 'NNP',
-  },
-  {
-    text: 'MK',
-    tags: 'NNP',
-  },
-  {
-    text: 'DF',
-    tags: 'NNP',
   },
   {
     text: 'Thank you!',
     tags: 'VBP, PRP',
   },
   {
-    text: 'DF',
-    tags: 'NNP',
-  },
-  {
     text: 'DENISE LAGESSE',
     tags: 'NNP, NNP',
   },
   {
-    text: 'df',
-    tags: 'NNP',
-  },
-  {
     text: 'Drew Fossum',
     tags: 'NNP, NNP',
-  },
-  {
-    text: 'DF',
-    tags: 'NNP',
   },
   {
     text: 'DENISE LAGESSE',
@@ -2831,26 +2022,10 @@ export default [
   {
     text: 'Please approve the purchase of two.',
     tags: 'UH, VB, DT, NN, IN, CD',
-  },
-  {
-    text: 'DF',
-    tags: 'NNP',
-  },
-  {
-    text: 'Evan --',
-    tags: 'NNP',
-  },
-  {
-    text: 'Jim',
-    tags: 'NNP',
   },
   {
     text: 'Am I scheduled to attend?',
     tags: 'VBP, PRP, VBN, TO, VB',
-  },
-  {
-    text: 'Jim',
-    tags: 'NNP',
   },
   {
     text: 'Board members are also invited to join in the substantive session of the DISCO Forum on Thursday, September 13.',
@@ -2871,18 +2046,6 @@ export default [
   {
     text: 'Many thanks.',
     tags: 'JJ, NNS',
-  },
-  {
-    text: 'Lora',
-    tags: 'NNP',
-  },
-  {
-    text: 'Jim',
-    tags: 'NNP',
-  },
-  {
-    text: 'Jim',
-    tags: 'NNP',
   },
   {
     text: 'Doug has been providing us with the necessary specific market information.',
@@ -2913,24 +2076,12 @@ export default [
     tags: 'MD, PRP, VB, DT, NN, WDT, VBZ, IN, PRP, TO, VB',
   },
   {
-    text: 'Jim',
-    tags: 'NNP',
-  },
-  {
     text: 'You may want to discuss with Becky.',
     tags: 'PRP, MD, VB, TO, VB, IN, NNP',
   },
   {
-    text: 'Jim',
-    tags: 'NNP',
-  },
-  {
     text: 'Many details remain to be worked out, but we will keep you advised.',
     tags: 'JJ, NNS, VBP, TO, VB, VBN, RP, CC, PRP, MD, VB, PRP, VBN',
-  },
-  {
-    text: 'Jim',
-    tags: 'NNP',
   },
   {
     text: 'Peter is looking currently for a job.',
@@ -2953,10 +2104,6 @@ export default [
     tags: 'PRP, VBZ, JJ, IN, PRP',
   },
   {
-    text: 'NK',
-    tags: 'NNP',
-  },
-  {
     text: 'Nasim Khan',
     tags: 'NNP, NNP',
   },
@@ -2967,10 +2114,6 @@ export default [
   {
     text: 'This is ok by me.',
     tags: 'DT, VBZ, JJ, IN, PRP',
-  },
-  {
-    text: 'SD',
-    tags: 'NNP',
   },
   {
     text: 'Good news.',
@@ -2989,10 +2132,6 @@ export default [
     tags: 'NNP, MD, VB, IN, NN',
   },
   {
-    text: 'Cindy',
-    tags: 'NNP',
-  },
-  {
     text: 'By video conference from _______',
     tags: 'IN, NN, NN, IN, NFP',
   },
@@ -3003,10 +2142,6 @@ export default [
   {
     text: 'Thank you for the invitation.',
     tags: 'VBP, PRP, IN, DT, NN',
-  },
-  {
-    text: 'Stephanie',
-    tags: 'NNP',
   },
   {
     text: 'Samuel Schott',
@@ -3027,10 +2162,6 @@ export default [
   {
     text: 'Please see attached.',
     tags: 'UH, VB, VBN',
-  },
-  {
-    text: 'Harry -',
-    tags: 'NNP',
   },
   {
     text: 'are you the right lawyer to look at this?',
@@ -3057,32 +2188,12 @@ export default [
     tags: 'NNP, NNP, NNP',
   },
   {
-    text: 'Bill',
-    tags: 'NNP',
-  },
-  {
-    text: 'Bill -',
-    tags: 'NNP',
-  },
-  {
-    text: 'Mark',
-    tags: 'NNP',
-  },
-  {
     text: 'Tana Jones',
     tags: 'NNP, NNP',
   },
   {
     text: 'Samuel Schott',
     tags: 'NNP, NNP',
-  },
-  {
-    text: 'Samuel',
-    tags: 'NNP',
-  },
-  {
-    text: 'Stephanie',
-    tags: 'NNP',
   },
   {
     text: 'Samuel Schott',
@@ -3105,28 +2216,12 @@ export default [
     tags: 'UH, VB, VBN',
   },
   {
-    text: 'Doc -',
-    tags: 'NNP',
-  },
-  {
     text: "I'll be in town through Sunday morning.",
     tags: 'PRP, MD, VB, IN, NN, IN, NNP, NN',
   },
   {
-    text: 'Mark',
-    tags: 'NNP',
-  },
-  {
-    text: 'MHC',
-    tags: 'NNP',
-  },
-  {
     text: 'I am in mediation.',
     tags: 'PRP, VBP, IN, NN',
-  },
-  {
-    text: 'Kriste',
-    tags: 'NNP',
   },
   {
     text: 'I got this.',
@@ -3141,44 +2236,12 @@ export default [
     tags: 'NN, CD',
   },
   {
-    text: 'MHC',
-    tags: 'NNP',
-  },
-  {
-    text: 'Brad',
-    tags: 'NNP',
-  },
-  {
     text: 'Tobias Munk',
     tags: 'NNP, NNP',
   },
   {
-    text: 'Teresa',
-    tags: 'NNP',
-  },
-  {
-    text: 'Michelle',
-    tags: 'NNP',
-  },
-  {
-    text: 'Michelle',
-    tags: 'NNP',
-  },
-  {
     text: 'Do you also have a SSD we can use?',
     tags: 'VBP, PRP, RB, VB, DT, NN, PRP, MD, VB',
-  },
-  {
-    text: 'Jane',
-    tags: 'NNP',
-  },
-  {
-    text: 'Brandee',
-    tags: 'NNP',
-  },
-  {
-    text: 'MHC',
-    tags: 'NNP',
   },
   {
     text: 'Sunjay Arya',
@@ -3245,32 +2308,8 @@ export default [
     tags: 'NNP, PRP, VBD, IN, NNP, NN, IN, DT',
   },
   {
-    text: 'Michelle',
-    tags: 'NNP',
-  },
-  {
     text: 'Thank you',
     tags: 'VBP, PRP',
-  },
-  {
-    text: 'Paula',
-    tags: 'NNP',
-  },
-  {
-    text: 'MHC',
-    tags: 'NNP',
-  },
-  {
-    text: 'Sandra',
-    tags: 'NNP',
-  },
-  {
-    text: 'Cindy',
-    tags: 'NNP',
-  },
-  {
-    text: 'MHC',
-    tags: 'NNP',
   },
   {
     text: 'Try this.',
@@ -3281,32 +2320,16 @@ export default [
     tags: 'NNP, NNP',
   },
   {
-    text: 'Michelle',
-    tags: 'NNP',
-  },
-  {
     text: 'Two in one day.',
     tags: 'CD, IN, CD, NN',
-  },
-  {
-    text: 'Rick',
-    tags: 'NNP',
   },
   {
     text: 'Could',
     tags: 'MD',
   },
   {
-    text: 'Sara',
-    tags: 'NNP',
-  },
-  {
     text: 'please try to verify.',
     tags: 'UH, VB, TO, VB',
-  },
-  {
-    text: 'Sara',
-    tags: 'NNP',
   },
   {
     text: 'Sara Shackleton',
@@ -3315,10 +2338,6 @@ export default [
   {
     text: 'Please advise.',
     tags: 'UH, VB',
-  },
-  {
-    text: 'Sara',
-    tags: 'NNP',
   },
   {
     text: '___________________________________________',
@@ -3337,60 +2356,24 @@ export default [
     tags: 'PRP, VBP, VBG, TO, VB, IN, DT, JJ, NN, NNP, NN',
   },
   {
-    text: 'Sara',
-    tags: 'NNP',
-  },
-  {
-    text: 'Sara',
-    tags: 'NNP',
-  },
-  {
     text: 'The draft you received has been approved by Dan.',
     tags: 'DT, NN, PRP, VBD, VBZ, VBN, VBN, IN, NNP',
-  },
-  {
-    text: 'Sara',
-    tags: 'NNP',
   },
   {
     text: 'Looks good.',
     tags: 'VBZ, JJ',
   },
   {
-    text: 'Dan',
-    tags: 'NNP',
-  },
-  {
-    text: 'Sara',
-    tags: 'NNP',
-  },
-  {
-    text: 'Sara',
-    tags: 'NNP',
-  },
-  {
     text: 'Please advise.',
     tags: 'UH, VB',
-  },
-  {
-    text: 'Sara',
-    tags: 'NNP',
   },
   {
     text: 'I will initiate the call.',
     tags: 'PRP, MD, VB, DT, NN',
   },
   {
-    text: 'Sara',
-    tags: 'NNP',
-  },
-  {
     text: 'I am checking on London.',
     tags: 'PRP, VBP, VBG, IN, NNP',
-  },
-  {
-    text: 'Sara',
-    tags: 'NNP',
   },
   {
     text: 'Janice Moore',
@@ -3403,14 +2386,6 @@ export default [
   {
     text: "I'll call you shortly.",
     tags: 'PRP, MD, VB, PRP, RB',
-  },
-  {
-    text: 'Memphis?',
-    tags: 'NNP',
-  },
-  {
-    text: 'Eleuthra?',
-    tags: 'NNP',
   },
   {
     text: 'St. Petersburg?',
@@ -3433,24 +2408,8 @@ export default [
     tags: 'IN, DT, JJ, NN, NN',
   },
   {
-    text: 'SARA',
-    tags: 'NNP',
-  },
-  {
-    text: 'Sara -',
-    tags: 'NNP',
-  },
-  {
     text: 'Do you miss me?',
     tags: 'VBP, PRP, VB, PRP',
-  },
-  {
-    text: 'SAM',
-    tags: 'NNP',
-  },
-  {
-    text: 'Sara',
-    tags: 'NNP',
   },
   {
     text: 'Robert Quick',
@@ -3465,16 +2424,8 @@ export default [
     tags: 'NNP, NNP',
   },
   {
-    text: 'Sara',
-    tags: 'NNP',
-  },
-  {
     text: 'I will be in Sao Paulo on Monday, September 20, 1999.',
     tags: 'PRP, MD, VB, IN, NNP, NNP, IN, NNP, NNP, CD, CD',
-  },
-  {
-    text: 'Sara',
-    tags: 'NNP',
   },
   {
     text: 'Thank you.',
@@ -3517,16 +2468,8 @@ export default [
     tags: 'PRP, MD, VB, DT, NN',
   },
   {
-    text: 'Jeff',
-    tags: 'NNP',
-  },
-  {
     text: 'Harry Kingerski',
     tags: 'NNP, NNP',
-  },
-  {
-    text: 'Jeff -',
-    tags: 'NNP',
   },
   {
     text: "You're right, Sue.",
@@ -3545,14 +2488,6 @@ export default [
     tags: 'NNP, NNP, NN, NN',
   },
   {
-    text: 'Jeff',
-    tags: 'NNP',
-  },
-  {
-    text: 'Scott',
-    tags: 'NNP',
-  },
-  {
     text: 'have you gotten a price?',
     tags: 'VBP, PRP, VBN, DT, NN',
   },
@@ -3563,10 +2498,6 @@ export default [
   {
     text: 'please print',
     tags: 'UH, VB',
-  },
-  {
-    text: 'Jeff',
-    tags: 'NNP',
   },
   {
     text: 'David Hoog',
@@ -3581,20 +2512,12 @@ export default [
     tags: 'PRP, VBD, DT, JJ, NNS, IN, DT, NN',
   },
   {
-    text: 'Rina',
-    tags: 'NNP',
-  },
-  {
     text: '- ENRONR~1.DOC',
     tags: 'NN',
   },
   {
     text: 'I stayed for the remainder of the lecture.',
     tags: 'PRP, VBD, IN, DT, NN, IN, DT, NN',
-  },
-  {
-    text: 'Jeff',
-    tags: 'NNP',
   },
   {
     text: 'Jana Giovannini',
@@ -3613,10 +2536,6 @@ export default [
     tags: 'NNP, NNP',
   },
   {
-    text: 'Jana',
-    tags: 'NNP',
-  },
-  {
     text: 'Great job, guys.',
     tags: 'JJ, NN, NNS',
   },
@@ -3629,24 +2548,12 @@ export default [
     tags: 'JJ, NN, NNS',
   },
   {
-    text: 'Eric',
-    tags: 'NNP',
-  },
-  {
     text: 'Finally completed tonight',
     tags: 'RB, VBN, NN',
   },
   {
-    text: 'Wayne',
-    tags: 'NNP',
-  },
-  {
     text: 'I would add setoff language.',
     tags: 'PRP, MD, VB, NN, NN',
-  },
-  {
-    text: 'Marianne',
-    tags: 'NNP',
   },
   {
     text: 'Carol St Clair',
@@ -3667,10 +2574,6 @@ export default [
   {
     text: 'Just let me know and I can send you a new attachment.',
     tags: 'RB, VB, PRP, VB, CC, PRP, MD, VB, PRP, DT, JJ, NN',
-  },
-  {
-    text: 'Carol -',
-    tags: 'NNP',
   },
   {
     text: 'Phyllis Lemell',
@@ -3709,16 +2612,8 @@ export default [
     tags: 'UH, VB, PRP',
   },
   {
-    text: 'Carol -',
-    tags: 'NNP',
-  },
-  {
     text: 'Were there any?',
     tags: 'VBD, EX, DT',
-  },
-  {
-    text: 'Carol',
-    tags: 'NNP',
   },
   {
     text: 'It is a fairly standard, fully reimbursable interconnect with Questar.',
@@ -3731,10 +2626,6 @@ export default [
   {
     text: 'We hope to execute this Agreement this week.',
     tags: 'PRP, VBP, TO, VB, DT, NN, DT, NN',
-  },
-  {
-    text: 'Kim',
-    tags: 'NNP',
   },
   {
     text: 'It is a fairly standard, fully reimbursable interconnect with Questar.',
@@ -3757,10 +2648,6 @@ export default [
     tags: 'NNP, JJ, IN, DT, JJ, NN, CC, PRP, VBP, PRP, MD, VB, RB',
   },
   {
-    text: 'Kim.',
-    tags: 'NNP',
-  },
-  {
     text: 'I was aware.',
     tags: 'PRP, VBD, JJ',
   },
@@ -3773,14 +2660,6 @@ export default [
     tags: 'NNP, JJ, IN, DT, JJ, NN, CC, PRP, VBP, PRP, MD, VB, RB',
   },
   {
-    text: 'Kim.',
-    tags: 'NNP',
-  },
-  {
-    text: 'K.',
-    tags: 'NNP',
-  },
-  {
     text: 'Are you comfortable with the difference?',
     tags: 'VBP, PRP, JJ, IN, DT, NN',
   },
@@ -3789,32 +2668,8 @@ export default [
     tags: 'DT, NNS',
   },
   {
-    text: 'Kim.',
-    tags: 'NNP',
-  },
-  {
-    text: 'richard',
-    tags: 'NNP',
-  },
-  {
-    text: 'Kim.',
-    tags: 'NNP',
-  },
-  {
     text: 'See you Sunday.',
     tags: 'VBP, PRP, NNP',
-  },
-  {
-    text: 'Tom',
-    tags: 'NNP',
-  },
-  {
-    text: 'Kim.',
-    tags: 'NNP',
-  },
-  {
-    text: 'Kim',
-    tags: 'NNP',
   },
   {
     text: 'These are the vendors of instrumentation required for the interconnect.',
@@ -3825,24 +2680,12 @@ export default [
     tags: 'PRP, VBP, VBN, IN, NNP, IN, DT, NN, IN, DT, NN, CC, NN, VBZ, VBN, CD, NNS, RB',
   },
   {
-    text: 'Kim.',
-    tags: 'NNP',
-  },
-  {
     text: 'Great.',
     tags: 'JJ',
   },
   {
-    text: 'Jeff',
-    tags: 'NNP',
-  },
-  {
     text: "I'll get you the announcement.",
     tags: 'PRP, MD, VB, PRP, DT, NN',
-  },
-  {
-    text: 'Jeff',
-    tags: 'NNP',
   },
   {
     text: 'September 26, 2001',
@@ -3855,10 +2698,6 @@ export default [
   {
     text: 'The Orange County Register',
     tags: 'DT, NNP, NNP, NNP',
-  },
-  {
-    text: 'SACRAMENTO',
-    tags: 'NNP',
   },
   {
     text: 'With the price caps gone, the generators filed paperwork with federal regulators justifying higher costs.',
@@ -3881,16 +2720,8 @@ export default [
     tags: 'VBZ, JJ',
   },
   {
-    text: 'Jeff',
-    tags: 'NNP',
-  },
-  {
     text: 'Are you playing golf?',
     tags: 'VBP, PRP, VBG, NN',
-  },
-  {
-    text: 'Jim',
-    tags: 'NNP',
   },
   {
     text: 'Have they expressed any interest in negotiating?',
@@ -3921,10 +2752,6 @@ export default [
     tags: 'NN, NNP, NNP',
   },
   {
-    text: 'Susan',
-    tags: 'NNP',
-  },
-  {
     text: 'Looks good',
     tags: 'VBZ, JJ',
   },
@@ -3933,24 +2760,8 @@ export default [
     tags: 'NNP, NNP, NNP',
   },
   {
-    text: 'Steve',
-    tags: 'NNP',
-  },
-  {
     text: "I've read the materials you sent and agree we need to address these allegations appropriately.",
     tags: 'PRP, VBP, VBN, DT, NNS, PRP, VBD, CC, VBP, PRP, VBP, TO, VB, DT, NNS, RB',
-  },
-  {
-    text: 'mb',
-    tags: 'NNP',
-  },
-  {
-    text: 'Justin',
-    tags: 'NNP',
-  },
-  {
-    text: 'Justin',
-    tags: 'NNP',
   },
   {
     text: '____________________________________________________________',
@@ -3963,14 +2774,6 @@ export default [
   {
     text: '____________________________________________________________',
     tags: 'NFP',
-  },
-  {
-    text: 'Richard -',
-    tags: 'NNP',
-  },
-  {
-    text: 'Rob',
-    tags: 'NNP',
   },
   {
     text: '- C.DTF',
@@ -4005,10 +2808,6 @@ export default [
     tags: 'UH',
   },
   {
-    text: '-- Liz',
-    tags: 'NNP',
-  },
-  {
     text: 'Thank you.',
     tags: 'VBP, PRP',
   },
@@ -4019,10 +2818,6 @@ export default [
   {
     text: '-> Gerry',
     tags: 'NFP, NNP',
-  },
-  {
-    text: 'Mark',
-    tags: 'NNP',
   },
   {
     text: 'the industry of Marriage and Kids, you heard me.',
@@ -4047,10 +2842,6 @@ export default [
   {
     text: 'NASA has some PR hurdles to overcome in the future.',
     tags: 'NNP, VBZ, DT, NN, NNS, TO, VB, IN, DT, NN',
-  },
-  {
-    text: 'Selah.',
-    tags: 'NNP',
   },
   {
     text: 'I see the merit in flowing with duality.',
@@ -4121,10 +2912,6 @@ export default [
     tags: 'PRP, VBP, PRP, TO, VB, DT, NN, IN, PRP, VBZ, JJ, JJ, NNS',
   },
   {
-    text: 'Dharma',
-    tags: 'NNP',
-  },
-  {
     text: 'Kaoshikii is especially good for women.',
     tags: 'NN, VBZ, RB, JJ, IN, NNS',
   },
@@ -4173,10 +2960,6 @@ export default [
     tags: 'DT, NN',
   },
   {
-    text: 'Pittsburgh -',
-    tags: 'NNP',
-  },
-  {
     text: 'Dr. Fortier was one of 15 people to receive the Carnegie Medal on Monday.',
     tags: 'NNP, NNP, VBD, CD, IN, CD, NNS, TO, VB, DT, NNP, NNP, IN, NNP',
   },
@@ -4193,68 +2976,32 @@ export default [
     tags: 'PRP, VBD, DT, JJ, NN, IN, NN, NNP, NNP',
   },
   {
-    text: 'CISCO',
-    tags: 'NNP',
-  },
-  {
     text: 'It is short for San Francisco.',
     tags: 'PRP, VBZ, JJ, IN, NNP, NNP',
-  },
-  {
-    text: 'Compaq',
-    tags: 'NNP',
   },
   {
     text: 'This name was formed by using COMp, for computer, and PAQ to denote a small integral object.',
     tags: 'DT, NN, VBD, VBN, IN, VBG, NN, IN, NN, CC, NN, TO, VB, DT, JJ, JJ, NN',
   },
   {
-    text: 'Corel',
-    tags: 'NNP',
-  },
-  {
     text: 'It stands for COwpland REsearch Laboratory.',
     tags: 'PRP, VBZ, IN, NNP, NNP, NNP',
-  },
-  {
-    text: 'Google',
-    tags: 'NNP',
   },
   {
     text: 'The name started as a joke boasting about the amount of information the search-engine would be able to search.',
     tags: 'DT, NN, VBD, IN, DT, NN, VBG, IN, DT, NN, IN, NN, DT, NN, NN, MD, VB, JJ, TO, VB',
   },
   {
-    text: 'Hotmail',
-    tags: 'NNP',
-  },
-  {
     text: 'Hewlett Packard',
     tags: 'NNP, NNP',
-  },
-  {
-    text: 'Intel',
-    tags: 'NNP',
   },
   {
     text: 'Kapor used to be a teacher of Transcendental Meditation of Maharishi Mahesh Yogi.',
     tags: 'NNP, VBD, TO, VB, DT, NN, IN, NNP, NNP, IN, NNP, NNP, NNP',
   },
   {
-    text: 'Microsoft',
-    tags: 'NNP',
-  },
-  {
-    text: 'Motorola',
-    tags: 'NNP',
-  },
-  {
     text: 'The popular radio company at the time was called Victrola.',
     tags: 'DT, JJ, NN, NN, IN, DT, NN, VBD, VBN, NNP',
-  },
-  {
-    text: 'ORACLE',
-    tags: 'NNP',
   },
   {
     text: 'The project was designed to help use the newly written SQL code by IBM.',
@@ -4265,24 +3012,12 @@ export default [
     tags: 'PRP, VBD, DT, NN, NNP, CC, VBD, DT, NNP, NN',
   },
   {
-    text: 'Sony',
-    tags: 'NNP',
-  },
-  {
-    text: 'SUN',
-    tags: 'NNP',
-  },
-  {
     text: 'Founded by 4 Stanford University buddies, SUN is the acronym for Stanford University Network.',
     tags: 'VBN, IN, CD, NNP, NNP, NNS, NNP, VBZ, DT, NN, IN, NNP, NNP, NNP',
   },
   {
     text: 'I am on Yahoo!',
     tags: 'PRP, VBP, IN, NNP',
-  },
-  {
-    text: 'Humanpixel',
-    tags: 'NNP',
   },
   {
     text: 'Good Day Mate!',
@@ -4311,10 +3046,6 @@ export default [
   {
     text: 'Come and say hello... you will be warmly welcomed!',
     tags: 'VB, CC, VB, UH, PRP, MD, VB, RB, VBN',
-  },
-  {
-    text: 'Kingel',
-    tags: 'NNP',
   },
   {
     text: 'We are the children of poverty, financial and spiritual.',
@@ -4389,10 +3120,6 @@ export default [
     tags: 'PRP, VBP, PRP, VBP, VBN, DT, NN, JJ',
   },
   {
-    text: 'Googlenut',
-    tags: 'NNP',
-  },
-  {
     text: 'nasa funding',
     tags: 'NNP, NN',
   },
@@ -4421,10 +3148,6 @@ export default [
     tags: 'UH, VB, DT, NN, TO, VB, DT',
   },
   {
-    text: 'Fred',
-    tags: 'NNP',
-  },
-  {
     text: 'I will attach the letter explaining the benefit we are sponsoring.',
     tags: 'PRP, MD, VB, DT, NN, VBG, DT, NN, PRP, VBP, VBG',
   },
@@ -4435,10 +3158,6 @@ export default [
   {
     text: 'I hope you have a huge network.',
     tags: 'PRP, VBP, PRP, VBP, DT, JJ, NN',
-  },
-  {
-    text: 'Fred',
-    tags: 'NNP',
   },
   {
     text: 'ADMISSION: DONATIONS AT THE DOOR',
@@ -4527,10 +3246,6 @@ export default [
   {
     text: 'Copyright 2005 Houston Chronicle',
     tags: 'NN, CD, NNP, NNP',
-  },
-  {
-    text: 'Reuters',
-    tags: 'NNP',
   },
   {
     text: 'I am serious about doing something.',
@@ -4687,14 +3402,6 @@ export default [
   {
     text: "These are some of the things I've been wondering ...",
     tags: 'DT, VBP, DT, IN, DT, NNS, PRP, VBP, VBN, VBG',
-  },
-  {
-    text: 'Linna',
-    tags: 'NNP',
-  },
-  {
-    text: 'Juggernaut',
-    tags: 'NNP',
   },
   {
     text: 'Recently, Bush addressed the nation.',
@@ -5052,10 +3759,7 @@ export default [
     text: 'Cure is to get the sensor cleaned',
     tags: 'NN, VBZ, TO, VB, DT, NN, VBN',
   },
-  {
-    text: 'Chris',
-    tags: 'NNP',
-  },
+
   {
     text: 'Downtown Chicago, Loop, North',
     tags: 'NN, NNP, NNP, NNP',
@@ -5211,10 +3915,6 @@ export default [
   {
     text: 'Hi',
     tags: 'UH',
-  },
-  {
-    text: 'Rachel',
-    tags: 'NNP',
   },
   {
     text: 'I dislike this urban society and want to leave this whole enviroment.',
@@ -5457,10 +4157,6 @@ export default [
     tags: 'NN, JJ, IN, NNP',
   },
   {
-    text: 'louise',
-    tags: 'NNP',
-  },
-  {
     text: 'But I would go for the base number of 15 hh.',
     tags: 'CC, PRP, MD, VB, IN, DT, NN, NN, IN, CD, NNS',
   },
@@ -5493,10 +4189,6 @@ export default [
     tags: 'DT, VBZ, DT, NN, IN, DT, NNS',
   },
   {
-    text: 'No.',
-    tags: 'UH',
-  },
-  {
     text: 'BTA only exists in the mind of SCAMMERS.',
     tags: 'NNP, RB, VBZ, IN, DT, NN, IN, NNS',
   },
@@ -5507,10 +4199,6 @@ export default [
   {
     text: 'Then the environment.',
     tags: 'RB, DT, NN',
-  },
-  {
-    text: 'Ian',
-    tags: 'NNP',
   },
   {
     text: 'Then add the other mate.',
@@ -5535,10 +4223,6 @@ export default [
   {
     text: 'Jim B',
     tags: 'NNP, NNP',
-  },
-  {
-    text: 'Toronto.',
-    tags: 'NNP',
   },
   {
     text: 'Please help !?',
@@ -5609,10 +4293,6 @@ export default [
     tags: 'JJ, NN',
   },
   {
-    text: 'No.',
-    tags: 'UH',
-  },
-  {
     text: 'The whole Western Addition and a large portion of the Haight was black.',
     tags: 'DT, JJ, NNP, NNP, CC, DT, JJ, NN, IN, DT, NNP, VBD, JJ',
   },
@@ -5627,10 +4307,6 @@ export default [
   {
     text: 'rabbits are delicate and can get diseases so watch out for that.',
     tags: 'NNS, VBP, JJ, CC, MD, VB, NNS, RB, VB, RP, IN, DT',
-  },
-  {
-    text: 'No.',
-    tags: 'UH',
   },
   {
     text: 'Switzerland is one, and the Netherlands are passing the same law.',
@@ -5671,10 +4347,6 @@ export default [
   {
     text: 'Jim B',
     tags: 'NNP, NNP',
-  },
-  {
-    text: 'Toronto.',
-    tags: 'NNP',
   },
   {
     text: "Recently I'm having trouble training him.",
@@ -5791,10 +4463,6 @@ export default [
   {
     text: 'Southern charm of Nashville, Birmingham, New Orleans or Charlotte.',
     tags: 'JJ, NN, IN, NNP, NNP, NNP, NNP, CC, NNP',
-  },
-  {
-    text: 'Europe?',
-    tags: 'NNP',
   },
   {
     text: 'Do you speak a foreign language?',
@@ -6229,10 +4897,6 @@ export default [
     tags: 'JJ, NN',
   },
   {
-    text: 'Mark',
-    tags: 'NNP',
-  },
-  {
     text: 'Excellent Tattoo Shop',
     tags: 'JJ, NN, NN',
   },
@@ -6261,10 +4925,6 @@ export default [
     tags: 'JJ, NN, NNS',
   },
   {
-    text: 'David',
-    tags: 'NNP',
-  },
-  {
     text: 'This office is awesome!',
     tags: 'DT, NN, VBZ, JJ',
   },
@@ -6275,10 +4935,6 @@ export default [
   {
     text: 'Food was cold',
     tags: 'NN, VBD, JJ',
-  },
-  {
-    text: 'KB',
-    tags: 'NNP',
   },
   {
     text: 'We love Little Farmer',
@@ -6553,10 +5209,6 @@ export default [
     tags: 'NN, VBD, JJ',
   },
   {
-    text: 'Sandy',
-    tags: 'NNP',
-  },
-  {
     text: 'Excellent Physiotherapists!',
     tags: 'JJ, NNS',
   },
@@ -6739,10 +5391,6 @@ export default [
   {
     text: 'Rude service',
     tags: 'JJ, NN',
-  },
-  {
-    text: 'Manson?',
-    tags: 'NNP',
   },
   {
     text: 'Fantastic food served without pretense, very reasonably priced wine selections.',
@@ -7283,10 +5931,6 @@ export default [
   {
     text: 'Perfect Practice',
     tags: 'JJ, NN',
-  },
-  {
-    text: 'Peter',
-    tags: 'NNP',
   },
   {
     text: 'Wonderful service for large group',

@@ -98,6 +98,6 @@ export default {
   },
   Possessive: {
     parents: 'Noun',
-    // not: 'Pronoun',
+    not: ['Adjective', 'Verb'],
   },
 }

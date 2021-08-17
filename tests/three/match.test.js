@@ -8,10 +8,10 @@ let arr = [
   // two still works
   ['mexico', '#Country'],
   // three-basic
-  ['i walked to the store', '{Noun} {Verb} {Noun}'],
+  ['i walked to the store', '{Noun} {Verb} {Conjunction} {Noun}'],
   // adj must have copula
-  ['Australia is the most diverse country', '{Noun} is {Adjective}'],
-  ['the most diverse country is the best', '{Noun} is {Noun}'],
+  // ['Australia is the most diverse country', '{Noun} is {Adjective}'],
+  // ['the most diverse country is the best', '{Noun} is {Noun}'],
 ]
 test('match:', function (t) {
   arr.forEach(function (a) {

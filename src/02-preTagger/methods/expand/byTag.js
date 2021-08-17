@@ -48,7 +48,7 @@ export default {
       }
       // add the root verb, alone
       if (lex[a[1]] === undefined) {
-        lex[a[1]] = a[0]
+        lex[a[1]] = lex[a[1]] || a[0]
       }
       _multi[a[1]] = true
       let str = a[1] + ' ' + rest

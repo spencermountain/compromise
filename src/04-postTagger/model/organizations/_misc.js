@@ -15,9 +15,9 @@ const multi = [
 
 export default [
   // Foo University
-  { match: `#Noun ${orgMap}`, tag: 'Organization', reason: 'foo-university' },
+  { match: `#Noun ${orgMap}`, tag: 'Organization', safe: true, reason: 'foo-university' },
   // University of Toronto
-  { match: `${orgMap} of #Place`, tag: 'Organization', reason: 'university-of-foo' },
+  { match: `${orgMap} of #Place`, tag: 'Organization', safe: true, reason: 'university-of-foo' },
 
   // foo regional health authority
   { match: `${orgMap} (health|local|regional)+ authority`, tag: 'Organization', reason: 'regional-health' },

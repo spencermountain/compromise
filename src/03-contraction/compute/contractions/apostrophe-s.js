@@ -70,7 +70,7 @@ const apostropheS = function (terms, i) {
   // !possessive, is/has
   let before = terms[i].normal.split(hasContraction)[0]
   if (isPossessive(terms, i) === true) {
-    terms[i].tags.add('Possessive')
+    // terms[i].tags = new Set(['Possessive', 'Noun']) //oof brutal.
     return null //not a contraction.
   }
   // spencer's got -> 'has'

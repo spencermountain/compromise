@@ -11,10 +11,10 @@ const arr = [
   ['i walked to the store', '{Verb} {Noun} {Verb}'],
   ['i walked to the store', '{Noun} {Adjective}'],
   // adjective moves around
-  ['Australia is the most diverse country', '{Adjective} is {Noun}'],
-  ['Australia is the most diverse country', '{Noun} is {Noun}'],
-  ['Australia is the most diverse country', '{Noun} is {Verb}'],
-  ['Australia is the most diverse country', '{Noun} {Adjective}'], //missing verb-phrase
+  // ['Australia is the most diverse country', '{Adjective} is {Noun}'],
+  // ['Australia is the most diverse country', '{Noun} is {Noun}'],
+  // ['Australia is the most diverse country', '{Noun} is {Verb}'],
+  // ['Australia is the most diverse country', '{Noun} {Adjective}'], //missing verb-phrase
 ]
 
 test('no-match:', function (t) {

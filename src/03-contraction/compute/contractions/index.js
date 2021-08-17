@@ -39,37 +39,37 @@ const contractions = (document = [], world) => {
           words = isArray(o.out) ? o.out : o.out(terms, i)
         }
         // look for after-match ('re -> [_, are])
-        if (after !== null && after === o.after) {
+        else if (after !== null && after === o.after) {
           words = typeof o.out === 'string' ? [before, o.out] : o.out(terms, i)
         }
         // look for before-match (l' -> [le, _])
-        if (before !== null && before === o.before) {
+        else if (before !== null && before === o.before) {
           words = typeof o.out === 'string' ? [o.out, after] : o.out(terms, i)
         }
         // spencer's
-        if (after === 's') {
-          words = apostropheS(terms, i)
+        else if (after === 's') {
+          words = apostropheS(terms, i, world)
         }
         // ain't
-        if (after === 't') {
+        else if (after === 't') {
           words = apostropheT(terms, i)
         }
         // how'd
-        if (after === 'd') {
+        else if (after === 'd') {
           words = apostropheD(terms, i)
         }
         // j'aime
-        if (before === 'j') {
+        else if (before === 'j') {
           words = french.preJ(terms, i)
           hint = ['Pronoun', 'Verb']
         }
         // l'amour
-        if (before === 'l') {
+        else if (before === 'l') {
           words = french.preL(terms, i)
           hint = ['Determiner', 'Noun']
         }
         // d'amerique
-        if (before === 'd') {
+        else if (before === 'd') {
           words = french.preD(terms, i)
           hint = ['Preposition', 'Noun']
         }

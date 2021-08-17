@@ -19,13 +19,13 @@ export default [
   //all march
   { match: `#Preposition [(march|may)]`, group: 0, tag: 'Month', reason: 'in-month' },
   //this march
-  { match: `this [(march|may)]`, group: 0, tag: 'Month', reason: 'this-month' },
-  { match: `next [(march|may)]`, group: 0, tag: 'Month', reason: 'this-month' },
-  { match: `last [(march|may)]`, group: 0, tag: 'Month', reason: 'this-month' },
+  { match: `this [(march|may)]`, tag: '#Date #Month', reason: 'this-month' },
+  { match: `next [(march|may)]`, tag: '#Date #Month', reason: 'this-month' },
+  { match: `last [(march|may)]`, tag: '#Date #Month', reason: 'this-month' },
   // march 5th
-  { match: `[(march|may)] the? #Value`, group: 0, tag: 'Month', reason: 'march-5th' },
+  { match: `(march|may) the? #Value`, tag: '#Month #Date #Date', reason: 'march-5th' },
   // 5th of march
-  { match: `#Value of? [(march|may)]`, group: 0, tag: 'Month', reason: '5th-of-march' },
+  { match: `#Value of? (march|may)`, tag: '#Date #Date #Month', reason: '5th-of-march' },
   // march and feb
   { match: `[(march|may)] .? #Date`, group: 0, tag: 'Month', reason: 'march-and-feb' },
   // feb to march
@@ -50,6 +50,10 @@ export default [
   { match: '(#TextValue && #Date) #TextValue', tag: 'Date', reason: 'textvalue-date' },
   // 'aug 20-21'
   { match: `#Month #NumberRange`, tag: 'Date', reason: 'aug 20-21' },
+  // wed march 5th
+  { match: `#WeekDay #Month #Ordinal`, tag: 'Date', reason: 'week mm-dd' },
+  // aug 5th 2021
+  { match: `#Month #Ordinal #Cardinal`, tag: 'Date', reason: 'mm-dd-yyy' },
 
   // === timezones ===
   // china standard time

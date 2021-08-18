@@ -1,7 +1,7 @@
 import logger from './_logger.js'
 
-const tagger = function (list, document, model, methods) {
-  const tagSet = model.two.tags
+const tagger = function (list, document, world) {
+  const { model, methods } = world
   const { getDoc, setTag, unTag } = methods.one
   if (list.length === 0) {
     return list
@@ -23,10 +23,10 @@ const tagger = function (list, document, model, methods) {
       }
     }
     if (todo.tag !== undefined) {
-      setTag(terms, todo.tag, tagSet, todo.safe)
+      setTag(terms, todo.tag, world, todo.safe)
     }
     if (todo.unTag !== undefined) {
-      unTag(terms, todo.unTag, tagSet, todo.safe)
+      unTag(terms, todo.unTag, world, todo.safe)
     }
   })
 }

@@ -333,7 +333,7 @@ let arr = [
   [`quite awfully stunning`, '#Adverb #Adverb #Adjective'],
   [`quite awfully swimming`, '#Adverb #Adverb #Verb'],
   ['is doing well', '#Copula #Gerund #Adverb'],
-  ['well, no.', '#Expression #Negative'],
+  ['well, no.', '#Expression #Expression'],
   ['he is well', '#Pronoun #Copula #Adjective'],
   ['is well made', '#Copula #Adverb #Adjective'],
   ['at some point', '#Preposition #Determiner #Noun'],
@@ -652,6 +652,11 @@ let arr = [
   ['gore', '#Noun'],
   [`spencer's city/town & cabin`, 'spencer city and .'],
   ['city/town', 'town'],
+  // aug 18
+  ["There's holes everywhere", 'there are #Plural .'],
+  ["There's an issue", 'there is #Determiner #Singular'],
+  ['Let’s not forget', 'let us not #Verb'],
+  // ['',''],
 ]
 test('match:', function (t) {
   arr.forEach(function (a) {

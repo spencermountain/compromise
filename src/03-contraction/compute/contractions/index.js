@@ -4,6 +4,7 @@ import apostropheS from './apostrophe-s.js'
 import apostropheT from './apostrophe-t.js'
 import french from './french.js'
 import numberRange from './number-range.js'
+import isPossessive from './isPossessive.js'
 
 const byApostrophe = /'/
 const numDash = /^[0-9].*?[-–—].*?[0-9]/i
@@ -46,9 +47,14 @@ const contractions = (document = [], world) => {
         else if (before !== null && before === o.before) {
           words = typeof o.out === 'string' ? [o.out, after] : o.out(terms, i)
         }
-        // spencer's
+        // bob's
         else if (after === 's') {
-          words = apostropheS(terms, i, world)
+          // [bob's house] vs [bob's cool]
+          if (isPossessive(terms, i)) {
+            methods.one.setTag([terms[i]], 'Possessive', world)
+          } else {
+            words = apostropheS(terms, i)
+          }
         }
         // ain't
         else if (after === 't') {
@@ -85,7 +91,7 @@ const contractions = (document = [], world) => {
           if (words) {
             hint = ['Value', 'Conjunction', 'Value']
             splice(document, [n, i], words, hint)
-            methods.one.setTag(terms, 'NumberRange', model.two.tags)
+            methods.one.setTag(terms, 'NumberRange', world)
             reTag(terms, world)
             return true
           }

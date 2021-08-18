@@ -31,34 +31,23 @@ str = 'we helped him out'
 // str = 'we hunted around'
 // str = 'he moved away'
 
-// str = `You do realise it is`
-// str = `He had this habit of telling you`
-// str = `20 guns means`
-// str = `that should smoke`
-// str = `The amusing world of cartoons`
-// str = `Then she was gone...`
-str = `I've simply lost track`
-str = `a rip-off`
-str = `mark's question mark`
-
-let more = [
-  // no!
-  { match: '^no', tag: 'Expression', reason: 'no' },
-  // {match:'',tag:'', reason:''},
-]
-let matches = nlp.world().model.two.matches
-more.forEach(obj => matches.push(obj))
-
+// str = `mark's question mark`
+// str = `it is a rip-off`
+str = "are you saying I'm bad"
+str = "There's holes everywhere"
+// str = "There's an issue"
+// str = 'Let’s not forget '
+// str = 'saying it is'
 // let str = `retail stores have it worse`
 // let str = `chandler's medicine under the sink`
 // let str = `mountain ranges `
 // let str = `left is always right`
 // let str = `the place is small with indoor & outdoor seating and quite cute & quaint`
 
-let doc = nlp(str)
-doc.debug({ chunks: false })
-
-// doc.match('#{Verb}').debug()
+let doc = nlp("There's an issue")
+// doc.match('there is #Determiner #Singular').debug()
+// doc.match('#Gerund #Adverb? not? #Copula')
+doc.debug()
 
 // console.log(nlp.parseMatch('foo {Noun}'))
 

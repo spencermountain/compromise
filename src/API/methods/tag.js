@@ -12,16 +12,15 @@ const fns = {
     if (terms.length === 0) {
       return this
     }
-    const { methods, verbose, model } = this
+    const { methods, verbose, world } = this
     // logger
     if (verbose === true) {
       console.log(' +  ', input, reason || '')
     }
-    let tagSet = model.two.tags
     if (isArray(input)) {
-      input.forEach(tag => methods.one.setTag(terms, tag, tagSet, isSafe))
+      input.forEach(tag => methods.one.setTag(terms, tag, world, isSafe))
     } else {
-      methods.one.setTag(terms, input, tagSet, isSafe)
+      methods.one.setTag(terms, input, world, isSafe)
     }
     return this
   },

@@ -3,7 +3,7 @@ import nlp from 'compromise'
 declare namespace nlp {
   export class Dates {
     get(): nlp.Date[]
-    get(n: number): nlp.Date
+    get(n: number): nlp.Date | undefined
     /** overloaded output with date metadata */
     json(n?: number): any
     /** convert the dates to specific formats */

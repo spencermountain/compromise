@@ -10,12 +10,36 @@ nlp.verbose('tagger')
 let str = `john lkjsdf's house`
 str = `There's holes everywhere`
 str = `no, it's only a body`
+str = `Sorry about the flooding`
+str = `Does it make sense for us`
+
+str = 'we made it'
+str = 'he made me'
+
+// causative verbs
+str = 'we made love'
+str = 'we let him go'
+str = 'we made it up'
+str = 'we helped him out'
+
+// str = 'we helped to walk'
+// str = 'we get to walk'
+// str = 'we have to walk'
+// str = 'we made him walk'
+
+// str = 'we sat there'
+// str = 'we hunted around'
+// str = 'he moved away'
+
 // str = `You do realise it is`
 // str = `He had this habit of telling you`
 // str = `20 guns means`
 // str = `that should smoke`
 // str = `The amusing world of cartoons`
 // str = `Then she was gone...`
+str = `I've simply lost track`
+str = `a rip-off`
+str = `mark's question mark`
 
 let more = [
   // no!

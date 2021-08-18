@@ -2,7 +2,7 @@ export default [
   // operating system
   { match: `[#Gerund] system`, group: 0, tag: 'Noun', reason: 'operating-system' },
   // this swimming
-  { match: '(this|that) [#Gerund]', group: 0, tag: 'Noun', reason: 'this-gerund' },
+  { match: '(this|that|the) [#Gerund]', group: 0, tag: 'Noun', reason: 'this-gerund' },
   // i think tipping sucks
   { match: `#Pronoun #Infinitive [#Gerund] #PresentTense`, group: 0, tag: 'Noun', reason: 'tipping-sucks' },
   // early warning

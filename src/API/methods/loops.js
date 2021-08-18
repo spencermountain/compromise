@@ -9,10 +9,20 @@ const forEach = function (cb) {
 
 const map = function (cb) {
   let ptrs = this.fullPointer
-  return ptrs.map((ptr, i) => {
+  let res = ptrs.map((ptr, i) => {
     let view = this.update([ptr])
     return cb(view, i)
   })
+  // return an array?
+  if ((res[0] && typeof res[0] !== 'object') || !res[0].isView) {
+    return res
+  }
+  // return a View object
+  let all = []
+  res.forEach(ptr => {
+    all = all.concat(ptr.fullPointer)
+  })
+  return this.update(all)
 }
 
 const filter = function (cb) {

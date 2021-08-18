@@ -24,7 +24,7 @@ this means adding your own words is less-dangerous.
 
 ---
 
-### Indexes
+### Unmaintained indexes
 
 ```js
 let m = nlp('the dog is nice')
@@ -32,6 +32,12 @@ let sub = m.match('is')
 sub.insertAfter('really')
 // t.equal(sub.out('normal')
 ```
+
+### Loop changes
+
+- .find() does not return undefined on an empty result anymore
+
+- .sort() does not change the document in-place anymore
 
 ### Text formats
 

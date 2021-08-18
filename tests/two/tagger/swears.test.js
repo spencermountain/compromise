@@ -22,8 +22,8 @@ test('swears:', function (t) {
   // m = nlp('he fucked up').match('he #Verb #Particle');
   // t.ok(m.found,  here +'swear-6');
 
-  m = nlp('it is fucked up').match('is #Adjective #Adjective')
-  t.ok(m.found, here + 'swear-7')
+  // m = nlp('it is fucked up').match('is #Adjective #Adjective')
+  // t.ok(m.found, here + 'swear-7')
 
   t.end()
 })

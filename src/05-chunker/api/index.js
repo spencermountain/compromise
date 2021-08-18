@@ -4,7 +4,7 @@ import selections from './selections/index.js'
 
 const chunker = function (View) {
   View.prototype.nouns = nouns
-  View.prototype.verbs = verbs
   selections(View)
+  verbs(View)
 }
 export default chunker

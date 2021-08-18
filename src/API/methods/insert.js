@@ -15,8 +15,8 @@ const clone = function (terms) {
 }
 
 const insert = function (str, view, prepend) {
-  const { methods, model, document } = view
-  let json = methods.one.tokenize(str, { methods, model })
+  const { methods, document, world } = view
+  let json = methods.one.tokenize(str, world)
   let words = json[0] //assume one sentence
   // insert words at end of each doc
   let ptrs = view.fullPointer
@@ -35,7 +35,10 @@ const insert = function (str, view, prepend) {
   })
   // convert them to whole sentences
   ptrs = ptrs.map(a => [a[0]])
-  return view.update(ptrs)
+  let doc = view.update(ptrs)
+  // try to tag them, too
+  doc.compute(['preTagger', 'contractions', 'postTagger'])
+  return doc
 }
 
 const insertAfter = function (str) {

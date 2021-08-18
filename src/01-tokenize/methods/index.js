@@ -15,6 +15,10 @@ const tokenize = function (input, world) {
       // split into [pre-text-post]
       return terms.map(splitWhitespace)
     })
+    if (!compute) {
+      console.log(compute)
+      throw new Error()
+    }
     // add normalized term format
     compute.normal(input)
     // support slashes, apostrophes, etc

@@ -148,10 +148,6 @@ export default [
     tags: 'VB, DT, NN, NN',
   },
   {
-    text: 'They are keeping a close watch on the yield on the S&P 500.',
-    tags: 'PRP, VBP, VBG, DT, JJ, NN, IN, DT, NN, IN, DT, NNP, CD',
-  },
-  {
     text: 'In fact, the market has always tanked.',
     tags: 'IN, NN, DT, NN, VBZ, RB, VBN',
   },
@@ -340,10 +336,7 @@ export default [
     text: "They also killed Shaikh Hamid 'Akkab, a clan elder of a branch of the Dulaim tribe in Tikrit.",
     tags: 'PRP, RB, VBD, NNP, NNP, NNP, DT, NN, NN, IN, DT, NN, IN, DT, NNP, NN, IN, NNP',
   },
-  {
-    text: 'Two other Dulaim leaders have been killed in the past week and a half.',
-    tags: 'CD, JJ, NNP, NNS, VBP, VBN, VBN, IN, DT, JJ, NN, CC, DT, NN',
-  },
+
   {
     text: 'One of them was from the Jubur tribe and was deputy commander of the Hawijah garrison.',
     tags: 'CD, IN, PRP, VBD, IN, DT, NNP, NN, CC, VBD, NN, NN, IN, DT, NNP, NN',
@@ -997,10 +990,6 @@ export default [
     tags: 'NNP, NNP, NNP, NNP',
   },
   {
-    text: 'I think this entity should stay with 83N.',
-    tags: 'PRP, VBP, DT, NN, MD, VB, IN, NN',
-  },
-  {
     text: 'It should be 4 - easy.',
     tags: 'PRP, MD, VB, CD, JJ',
   },
@@ -1239,10 +1228,6 @@ export default [
     tags: 'NNP, NN, VBZ, JJ, IN, CD, NN',
   },
   {
-    text: '____________________________________________________',
-    tags: 'NFP',
-  },
-  {
     text: 'A heartwarming story of the advances of women in achieving equality throughout the world.',
     tags: 'DT, JJ, NN, IN, DT, NNS, IN, NNS, IN, VBG, NN, IN, DT, NN',
   },
@@ -1467,14 +1452,6 @@ export default [
     tags: 'VBP, PRP',
   },
   {
-    text: '===================================================',
-    tags: 'NFP',
-  },
-  {
-    text: '====================================================',
-    tags: 'NFP',
-  },
-  {
     text: 'Hi Mr. Katsof -',
     tags: 'UH, NNP, NNP',
   },
@@ -1583,26 +1560,6 @@ export default [
     tags: 'VBP, PRP, VBG, IN, NNP',
   },
   {
-    text: '====================================================',
-    tags: 'NFP',
-  },
-  {
-    text: '====================================================',
-    tags: 'NFP',
-  },
-  {
-    text: '====================================================',
-    tags: 'NFP',
-  },
-  {
-    text: '====================================================',
-    tags: 'NFP',
-  },
-  {
-    text: '>----------------------------------------------------------------------------| | | >----------------------------------------------------------------------------|',
-    tags: 'NFP, NFP, NFP, NFP',
-  },
-  {
     text: 'Adnan Patel',
     tags: 'NNP, NNP',
   },
@@ -1623,10 +1580,6 @@ export default [
     tags: 'VBP, PRP, RB',
   },
 
-  {
-    text: '__________________________________________________',
-    tags: 'NFP',
-  },
   {
     text: "She's a very fun girl.",
     tags: 'PRP, VBZ, DT, RB, JJ, NN',
@@ -1663,10 +1616,7 @@ export default [
     text: 'He is currently in the emergency room at Ben Taub Hospital .?',
     tags: 'PRP, VBZ, RB, IN, DT, NN, NN, IN, NNP, NNP, NNP',
   },
-  {
-    text: 'Does it make sense for us to set up a meeting with you participating from Buenos Aires?',
-    tags: 'VBZ, PRP, VB, NN, IN, PRP, TO, VB, RP, DT, NN, IN, PRP, VBG, IN, NNP, NNP',
-  },
+
   {
     text: 'Thank you',
     tags: 'VBP, PRP',
@@ -1872,16 +1822,8 @@ export default [
     tags: 'NNP, NNP',
   },
   {
-    text: '____________________________________________________________',
-    tags: 'NFP',
-  },
-  {
     text: 'This message is confidential.',
     tags: 'DT, NN, VBZ, JJ',
-  },
-  {
-    text: '____________________________________________________________',
-    tags: 'NFP',
   },
   {
     text: 'Sent by: Nella Cappelletto',
@@ -2047,10 +1989,7 @@ export default [
     text: 'Many thanks.',
     tags: 'JJ, NNS',
   },
-  {
-    text: 'Doug has been providing us with the necessary specific market information.',
-    tags: 'NNP, VBZ, VBN, VBG, PRP, IN, DT, JJ, JJ, NN, NN',
-  },
+
   {
     text: 'Grand-standing is ignored.',
     tags: 'JJ, NN, VBZ, VBN',
@@ -2132,7 +2071,7 @@ export default [
     tags: 'NNP, MD, VB, IN, NN',
   },
   {
-    text: 'By video conference from _______',
+    text: 'By video conference from Jupiter',
     tags: 'IN, NN, NN, IN, NFP',
   },
   {
@@ -2338,10 +2277,6 @@ export default [
   {
     text: 'Please advise.',
     tags: 'UH, VB',
-  },
-  {
-    text: '___________________________________________',
-    tags: 'NFP',
   },
   {
     text: 'Thank you.',
@@ -2764,16 +2699,8 @@ export default [
     tags: 'PRP, VBP, VBN, DT, NNS, PRP, VBD, CC, VBP, PRP, VBP, TO, VB, DT, NNS, RB',
   },
   {
-    text: '____________________________________________________________',
-    tags: 'NFP',
-  },
-  {
     text: 'This message is confidential.',
     tags: 'DT, NN, VBZ, JJ',
-  },
-  {
-    text: '____________________________________________________________',
-    tags: 'NFP',
   },
   {
     text: '- C.DTF',
@@ -2895,10 +2822,7 @@ export default [
     text: 'Agel has created a new compensation structure that is truly revolutionary.',
     tags: 'NNP, VBZ, VBN, DT, JJ, NN, NN, WDT, VBZ, RB, JJ',
   },
-  {
-    text: 'This call will smoke!',
-    tags: 'DT, NN, MD, VB',
-  },
+
   {
     text: 'The Passcode to participate is: 5107',
     tags: 'DT, NN, TO, VB, VBZ, CD',
@@ -3328,10 +3252,6 @@ export default [
     tags: 'DT, JJ, NN, VBZ, VBN, DT, JJ, JJ, NN, IN, NNP',
   },
   {
-    text: 'The plants provide shade and root strength for bank stability.',
-    tags: 'DT, NNS, VBP, NN, CC, NN, NN, IN, NN, NN',
-  },
-  {
     text: 'Yellowstone has a vast elk herd, one of the largest in the world.',
     tags: 'NNP, VBZ, DT, JJ, NN, NN, CD, IN, DT, JJS, IN, DT, NN',
   },
@@ -3358,14 +3278,6 @@ export default [
   {
     text: 'The Pew researchers tried to transcend the economic argument.',
     tags: 'DT, NNP, NNS, VBD, TO, VB, DT, JJ, NN',
-  },
-  {
-    text: '---->===}*{===<----',
-    tags: 'NFP',
-  },
-  {
-    text: '---->===}*{===<----',
-    tags: 'NFP',
   },
   {
     text: 'You have seen the pictures.',
@@ -4592,10 +4504,7 @@ export default [
     text: 'Lol.',
     tags: 'UH',
   },
-  {
-    text: "Are you saying I'm bad in bed?",
-    tags: 'VBP, PRP, VBG, PRP, VBP, JJ, IN, NN',
-  },
+
   {
     text: 'Joking.',
     tags: 'VBG',
@@ -5643,10 +5552,6 @@ export default [
   {
     text: 'Stay away from this dealership !!!',
     tags: 'VB, RB, IN, DT, NN',
-  },
-  {
-    text: 'This place is a Rip-Off',
-    tags: 'DT, NN, VBZ, DT, NN, NN',
   },
   {
     text: 'I am a mental health counselor and I work with variety of mental health problems.',

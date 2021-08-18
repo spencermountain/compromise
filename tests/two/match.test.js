@@ -654,7 +654,7 @@ let arr = [
   ['city/town', 'town'],
   // aug 18
   ["There's holes everywhere", 'there are #Plural .'],
-  ["There's an issue", 'there is #Determiner #Singular'],
+  ["There's an issue", 'there is #Determiner #Noun'],
   ['Let’s not forget', 'let us not #Verb'],
   // ['',''],
 ]

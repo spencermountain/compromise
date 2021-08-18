@@ -5,6 +5,10 @@ const tagTerm = function (term, tag, tagSet, isSafe) {
   if (term.tags.has(tag) === true) {
     return null
   }
+  // allow this shorthand in multiple-tag strings
+  if (tag === '.') {
+    return null
+  }
   // for known tags, do logical dependencies first
   let known = tagSet[tag]
   if (known) {
@@ -35,7 +39,7 @@ const multiTag = function (terms, tagString, tagSet, isSafe) {
   let tags = tagString.split(isMulti)
   terms.forEach((term, i) => {
     let tag = tags[i]
-    if (tag && tag !== '.') {
+    if (tag) {
       tag = tag.replace(/^#/, '')
       tagTerm(term, tag, tagSet, isSafe)
     }
@@ -49,9 +53,6 @@ const isArray = function (arr) {
 // add a tag to all these terms
 const setTag = function (terms, tag, world = {}, isSafe) {
   const tagSet = world.model.two.tags || {}
-  if (!tagSet) {
-    throw new Error(tag)
-  }
   if (isArray(tag) === true) {
     tag.forEach(tg => setTag(terms, tg, world, isSafe))
     return

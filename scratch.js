@@ -7,11 +7,12 @@ import nlp from './src/three.js'
 // ''
 // ''
 
-let str
+let str = nlp(2).out()
+
 // str = 'retail [stores]'
-str = 'i will be walking '
-let doc = nlp(str)
-let m = doc.match(null).insertAfter('really')
+// let doc = nlp('one two three. three four five.').forEach(p => {
+//   p.toUpperCase()
+// })
 // doc.debug()
 
 // console.log(nlp.parseMatch(null))

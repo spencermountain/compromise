@@ -6,6 +6,10 @@ import whitespace from './03-whitespace/index.js'
 const tokenize = function (input, world) {
   const { methods, model, compute } = world
   const { splitSentences, splitTerms, splitWhitespace } = methods.one
+  input = input || ''
+  if (typeof input === 'number') {
+    input = String(input)
+  }
   if (typeof input === 'string') {
     // split into sentences
     let sentences = splitSentences(input, model)

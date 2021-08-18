@@ -1,5 +1,6 @@
-const test = require('tape')
-const nlp = require('./_lib')
+import test from 'tape'
+import nlp from '../tests/one/_lib.js'
+const here = '[one/punct] '
 
 test('normalize elipses', function (t) {
   const str = `[hello] spencęr…`

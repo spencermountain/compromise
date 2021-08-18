@@ -24,6 +24,15 @@ this means adding your own words is less-dangerous.
 
 ---
 
+### Indexes
+
+```js
+let m = nlp('the dog is nice')
+let sub = m.match('is')
+sub.insertAfter('really')
+// t.equal(sub.out('normal')
+```
+
 ### Text formats
 
 - **normal**

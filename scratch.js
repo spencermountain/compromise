@@ -7,8 +7,17 @@ import nlp from './src/three.js'
 // ''
 // ''
 
-let m = nlp('the dog sat').insertBefore('and')
-console.log(m.text())
+let doc = nlp('one two. two three. four five six seven')
+doc.forEach(m => {
+  m.toUpperCase()
+})
+doc.random(5).debug()
+// let sub = m.match('is')
+// sub.insertAfter('really')
+// console.log(m.text() + '|')
+// let m = nlp('the dog sat down quickly')
+// m.verbs().debug()
+// m.debug()
 
 // str = 'retail [stores]'
 // let doc = nlp('one two three. three four five.').forEach(p => {

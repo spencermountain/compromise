@@ -1,3 +1,4 @@
+import find from './find.js'
 const findVerbs = function (View) {
   class Verbs extends View {
     constructor(document, pointer, groups) {
@@ -7,7 +8,7 @@ const findVerbs = function (View) {
   }
 
   View.prototype.verbs = function (n) {
-    let m = this.match('#Verb+')
+    let m = find(this)
     if (typeof n === 'number') {
       m = m.get(n)
     }

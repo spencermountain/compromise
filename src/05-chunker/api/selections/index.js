@@ -1,5 +1,4 @@
 import { phoneNumbers, places, organizations, entities } from './find.js'
-import addAbbreviations from './abbreviations.js'
 
 // setup easy helper methods
 const selections = [
@@ -27,7 +26,6 @@ let aliases = [
 ]
 
 const addMethods = function (View) {
-  addAbbreviations(View)
   // add a list of new helper methods
   selections.forEach(a => {
     View.prototype[a[0]] = function (n) {

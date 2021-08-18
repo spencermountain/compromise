@@ -1,5 +1,11 @@
 const getSplits = function (str, view) {
-  let matches = view.match(str).pointer
+  let matches = []
+  // were we given a
+  if (typeof str === 'object' && str.isView === true) {
+    matches = str.pointer || []
+  } else {
+    matches = view.match(str).pointer
+  }
   let splitsByN = {}
   matches.forEach(a => {
     splitsByN[a[0]] = splitsByN[a[0]] || []

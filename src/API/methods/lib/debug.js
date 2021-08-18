@@ -119,6 +119,11 @@ const showTags = function (view) {
 }
 //output some helpful stuff to the console
 const debug = function (opts = {}) {
+  if (typeof opts === 'string') {
+    let tmp = {}
+    tmp[opts] = true
+    opts = tmp
+  }
   let view = this
   if (isClientSide()) {
     logClientSide(view)

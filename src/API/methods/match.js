@@ -42,22 +42,28 @@ const matchOne = function (regs = '', group) {
 
 const has = function (regs = '', group) {
   const one = this.methods.one
+  let ptrs
   if (typeof regs === 'string') {
     regs = one.parseMatch(regs)
+    let todo = { regs, group }
+    ptrs = one.match(this.docs, todo, this._cache).ptrs
+  } else if (typeof regs === 'object' && regs.isView === true) {
+    ptrs = regs.fullPointer // support a view object as input
   }
-  let todo = { regs, group }
-  let { ptrs } = one.match(this.docs, todo, this._cache)
   return ptrs.length > 0
 }
 
 // 'if'
 const ifFn = function (regs, group) {
   const one = this.methods.one
+  let ptrs
   if (typeof regs === 'string') {
     regs = one.parseMatch(regs)
+    let todo = { regs, group }
+    ptrs = one.match(this.docs, todo, this._cache).ptrs
+  } else if (typeof regs === 'object' && regs.isView === true) {
+    ptrs = regs.fullPointer // support a view object as input
   }
-  let todo = { regs, group }
-  let { ptrs } = one.match(this.docs, todo, this._cache)
   // convert them to whole sentences
   ptrs = ptrs.map(a => [a[0]])
   return this.update(ptrs)
@@ -66,11 +72,14 @@ const ifFn = function (regs, group) {
 const ifNo = function (regs, group) {
   const { docs, methods, _cache } = this
   const one = methods.one
+  let ptrs
   if (typeof regs === 'string') {
     regs = one.parseMatch(regs)
+    let todo = { regs, group }
+    ptrs = one.match(docs, todo, _cache).ptrs
+  } else if (typeof regs === 'object' && regs.isView === true) {
+    ptrs = regs.fullPointer // support a view object as input
   }
-  let todo = { regs, group }
-  let { ptrs } = one.match(docs, todo, _cache)
   let found = new Set(ptrs.map(a => a[0]))
   let notFound = [] //invert our pointer
   for (let i = 0; i < docs.length; i += 1) {
@@ -84,11 +93,13 @@ const ifNo = function (regs, group) {
 const not = function (regs) {
   const { docs, methods, _cache } = this
   const one = methods.one
+  let ptrs = []
   if (typeof regs === 'string') {
     regs = one.parseMatch(regs)
+    ptrs = one.match(docs, { regs }, _cache).ptrs
+  } else if (typeof regs === 'object' && regs.isView === true) {
+    ptrs = regs.fullPointer // support a view object as input
   }
-  let todo = { regs }
-  let { ptrs } = one.match(docs, todo, _cache)
   let found = {}
   ptrs.forEach(a => {
     found[a[0]] = found[a[0]] || []

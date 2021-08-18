@@ -7,18 +7,9 @@ import nlp from './src/three.js'
 // ''
 // ''
 
-let doc = nlp('one two three. three four five.').map(m => {
-  return m.match('. [.]', 0)
-})
-// console.log(doc.text())
-doc.debug()
-console.log(doc.found)
-
-// let doc = nlp('one two. two three. four five six seven')
-// doc.map(m => {
-//   m.toUpperCase()
-// })
-// doc.random(5).debug()
+let m = nlp("i said, 'did you have to do that' and then left, like nothing happened (which it didn't).")
+  .clauses()
+  .debug()
 // let sub = m.match('is')
 // sub.insertAfter('really')
 // console.log(m.text() + '|')

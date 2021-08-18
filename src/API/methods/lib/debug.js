@@ -134,7 +134,7 @@ const debug = function (opts = {}) {
     console.log('\n')
   }
   // output chunk-view, too
-  if (opts.chunks !== false) {
+  if (opts.chunks === true) {
     showChunks(view)
     console.log('\n')
   }

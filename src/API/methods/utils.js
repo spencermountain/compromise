@@ -106,8 +106,8 @@ const utils = {
   },
   /** how many seperate terms does the document have? */
   wordCount: function () {
-    return this.list.reduce((count, p) => {
-      count += p.wordCount()
+    return this.docs.reduce((count, terms) => {
+      count += terms.filter(t => t.text !== '').length
       return count
     }, 0)
   },

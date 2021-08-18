@@ -25,18 +25,15 @@ const fmts = {
     use: 'machine',
   },
   root: {
-    use: 'root',
+    whitespace: 'some',
+    punctuation: 'some',
+    case: 'some',
+    unicode: 'some',
+    use: 'normal',
   },
-  // normal: {
-  //   form: 'normal',
-  // },
-  // clean: {
-  //   form: 'normal',
-  // },
-  // reduced: {
-  //   form: 'normal',
-  // },
 }
+fmts.clean = fmts.normal
+fmts.reduced = fmts.root
 
 const methods = {
   /** return data */

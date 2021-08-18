@@ -7,7 +7,8 @@ import nlp from './src/three.js'
 // ''
 // ''
 
-let str = nlp(2).out()
+let m = nlp('the dog sat').insertBefore('and')
+console.log(m.text())
 
 // str = 'retail [stores]'
 // let doc = nlp('one two three. three four five.').forEach(p => {

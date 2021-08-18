@@ -1,5 +1,6 @@
-const test = require('tape')
-const nlp = require('./_lib')
+import test from 'tape'
+import nlp from '../_lib.js'
+const here = '[two/wordcount] '
 
 test('==WordCount==', function (t) {
   let arr = [
@@ -16,18 +17,18 @@ test('==WordCount==', function (t) {
   ]
   arr.forEach(function (a) {
     const doc = nlp(a[0])
-    t.equal(doc.wordCount(), a[1], a[0])
+    t.equal(doc.wordCount(), a[1], here + a[0])
   })
   t.end()
 })
 
 test('match-wordcount', function (t) {
   let doc = nlp("he is cool. she is nice. it isn't here.")
-  t.equal(doc.eq(1).wordCount(), 3, 'middle-sentence')
-  t.equal(doc.match('(he|she)').wordCount(), 2, 'he/she match')
-  t.equal(doc.match('is').wordCount(), 3, 'is-contraction match')
+  t.equal(doc.eq(1).wordCount(), 3, here + 'middle-sentence')
+  t.equal(doc.match('(he|she)').wordCount(), 2, here + 'he/she match')
+  t.equal(doc.match('is').wordCount(), 3, here + 'is-contraction match')
   //i guess!?
-  t.equal(doc.match('not').wordCount(), 0, 'not-contraction match')
-  t.equal(doc.match('not').length, 1, 'length-vs-wordCount')
+  t.equal(doc.match('not').wordCount(), 0, here + 'not-contraction match')
+  t.equal(doc.match('not').length, 1, here + 'length-vs-wordCount')
   t.end()
 })

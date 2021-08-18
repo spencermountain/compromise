@@ -1,8 +1,9 @@
 const isAcronym = /[ .][A-Z]\.? *$/i
 const hasEllipse = /(?:\u2026|\.{2,}) *$/
 const hasLetter = /[a-z0-9\u00C0-\u00FF\u00a9\u00ae\u2000-\u3300\ud000-\udfff]/i
+
 /** does this look like a sentence? */
-const isSentence = function (str, abbrevs, hasLetter) {
+const isSentence = function (str, abbrevs) {
   // must have a letter
   if (hasLetter.test(str) === false) {
     return false

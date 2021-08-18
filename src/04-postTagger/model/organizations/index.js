@@ -1,6 +1,7 @@
 import orgWords from './_orgWords.js'
 let orgMap = `(${orgWords.join('|')})`
 
+/*
 const multi = [
   'building society',
   'central bank',
@@ -12,6 +13,7 @@ const multi = [
   'state police',
   'state university',
 ]
+*/
 
 export default [
   // Foo University

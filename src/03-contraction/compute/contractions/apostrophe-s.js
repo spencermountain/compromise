@@ -6,13 +6,6 @@ const isHas = (terms, i) => {
   return after.some(t => t.tags.has('PastTense'))
 }
 
-const mapping = {
-  // let's
-  let: 'us',
-  // there's
-  // let:'us',
-}
-
 // 's -> [possessive, 'has', or 'is']
 const apostropheS = function (terms, i) {
   // !possessive, is/has

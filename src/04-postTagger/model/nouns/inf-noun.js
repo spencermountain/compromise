@@ -40,4 +40,7 @@ export default [
     tag: 'Noun',
     reason: 'do-verb',
   },
+
+  // checkmate is
+  { match: '^[#Infinitive] (is|was)', group: 0, tag: 'Noun', reason: 'checkmate-is' },
 ]

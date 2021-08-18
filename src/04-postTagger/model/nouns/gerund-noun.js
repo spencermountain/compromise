@@ -9,4 +9,8 @@ export default [
   { match: '#Adjective [#Gerund]', group: 0, tag: 'Noun', reason: 'early-warning' },
   // /her polling
   { match: '#Possessive [#Gerund]', group: 0, tag: 'Noun', reason: 'her-polling' },
+  //walking is cool
+  { match: '[#Gerund] #Adverb? not? #Copula', group: 0, tag: 'Activity', reason: 'gerund-copula' },
+  //walking should be fun
+  { match: '[#Gerund] #Modal', group: 0, tag: 'Activity', reason: 'gerund-modal' },
 ]

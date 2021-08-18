@@ -20,6 +20,10 @@ import person from './person/_misc.js'
 import personName from './person/ambig-name.js'
 
 import verbs from './verbs/_misc.js'
+import adjVerb from './verbs/adj-verb.js'
+import auxiliary from './verbs/auxiliary.js'
+import nounVerb from './verbs/noun-verb.js'
+import phrasal from './verbs/phrasal.js'
 
 import misc from './_misc.js'
 
@@ -43,6 +47,10 @@ let matches = [].concat(
   person,
   personName,
   verbs,
+  adjVerb,
+  auxiliary,
+  nounVerb,
+  phrasal,
   misc,
   orgs,
   places

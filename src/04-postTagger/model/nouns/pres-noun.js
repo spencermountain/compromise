@@ -71,4 +71,6 @@ export default [
     tag: 'Plural',
     reason: '2-trains',
   },
+  // compromises are possible
+  { match: '[#PresentTense] (are|were|was) #Adjective', group: 0, tag: 'Plural', reason: 'compromises-are-possible' },
 ]

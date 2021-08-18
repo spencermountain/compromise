@@ -19,4 +19,6 @@ export default [
   { match: '(found|found) it #Adverb? [#Gerund]', group: 0, tag: 'Adjective', reason: 'found-it-gerund' },
   // a bit amusing
   { match: 'a (little|bit|wee) bit? [#Gerund]', group: 0, tag: 'Adjective', reason: 'a-bit-gerund' },
+  // the amusing world
+  { match: '#Determiner [#Gerund] #Noun', group: 0, tag: 'Adjective', reason: 'amusing-world' },
 ]

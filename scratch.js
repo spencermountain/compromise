@@ -7,15 +7,23 @@ nlp.verbose('tagger')
 // ''
 // ''
 
-let str = `no, it's only a body`
-str = `You do realise it is`
-str = `The amusing world of cartoons`
-str = `He had this Habit of telling you`
+let str = `john lkjsdf's house`
 str = `There's holes everywhere`
-str = `john lkjsdf's house`
-str = `20 guns means`
-str = `that should work`
+str = `no, it's only a body`
+// str = `You do realise it is`
+// str = `He had this habit of telling you`
+// str = `20 guns means`
+// str = `that should smoke`
+// str = `The amusing world of cartoons`
 // str = `Then she was gone...`
+
+let more = [
+  // no!
+  { match: '^no', tag: 'Expression', reason: 'no' },
+  // {match:'',tag:'', reason:''},
+]
+let matches = nlp.world().model.two.matches
+more.forEach(obj => matches.push(obj))
 
 // let str = `retail stores have it worse`
 // let str = `chandler's medicine under the sink`

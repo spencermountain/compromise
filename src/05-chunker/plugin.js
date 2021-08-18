@@ -4,5 +4,5 @@ import chunks from './compute/index.js'
 export default {
   compute: { chunks },
   api: api,
-  hooks: ['chunks'],
+  // hooks: ['chunks'],
 }

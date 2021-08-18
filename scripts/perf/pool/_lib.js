@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import src from '../../../src/two.js'
+import src from '../../../src/three.js'
 
 let nlp
 if (process.env.TESTENV === 'prod') {

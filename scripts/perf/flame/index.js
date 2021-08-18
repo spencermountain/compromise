@@ -3,7 +3,7 @@ import txt from './_sotu-text.js'
 
 console.log('\n-- testing:  --')
 console.time('load')
-import nlp from '../../../src/index.js'
+import nlp from '../../../src/two.js'
 console.timeEnd('load')
 
 console.time('parse')

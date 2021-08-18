@@ -3,6 +3,7 @@ const postTagger = function (document, world) {
   const { model, methods } = world
   let byGroup = methods.two.compile(model.two.matches, methods)
   let found = methods.two.bulkMatch(document, byGroup, methods)
+  // console.log(found.length, 'found')
   methods.two.bulkTagger(found, document, world)
   // 2nd time?
   // let subset = new Set(found.map(todo => todo.pointer[0]))

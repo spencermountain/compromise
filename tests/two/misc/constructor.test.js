@@ -8,7 +8,7 @@ test('extra exports:', function (t) {
   t.doesNotThrow(function () {
     nlp.verbose(true)
     nlp.verbose(false)
-  }, 'can set verbosity')
+  }, here + 'can set verbosity')
 
   t.end()
 })
@@ -16,11 +16,11 @@ test('extra exports:', function (t) {
 test('tokenize() runs without pos-tagging', function (t) {
   const str = 'Miss Hoover, I glued my head to my shoulder.'
   const r = nlp.tokenize(str)
-  t.equal(r.out('text'), str, 'tokenize output is same')
+  t.equal(r.out('text'), str, here + 'tokenize output is same')
 
   t.equal(r.length, 1, 'sentence-parser-working')
   const found = r.match('#Noun').found
-  t.equal(found, false, 'no sneaky-tagging')
+  t.equal(found, false, here + 'no sneaky-tagging')
 
   t.end()
 })
@@ -30,25 +30,25 @@ test('tokenize() accepts lexicon param', function (t) {
     'spencer kelly': 'Person',
     working: 'NotFun',
   })
-  t.equal(doc.match('#Person+').text(), 'spencer kelly', 'used tag')
-  t.equal(doc.match('#NotFun').text(), 'working', 'used 2nd tag')
-  t.equal(doc.has('#Verb'), false, 'not a full tag')
+  t.equal(doc.match('#Person+').text(), 'spencer kelly', here + 'used tag')
+  t.equal(doc.match('#NotFun').text(), 'working', here + 'used 2nd tag')
+  t.equal(doc.has('#Verb'), false, here + 'not a full tag')
   t.end()
 })
 
 test('tokenize() does not crash on long string with many sentences', function (t) {
-  // let text = 'The quick brown fox jumped over the lazy dog.\n'
-  // text += 'Hi!\n'.repeat(100000)
-  // //eslint-disable-next-line
-  // let _doc = nlp.tokenize(text)
+  let text = 'The quick brown fox jumped over the lazy dog.\n'
+  text += 'Hi!\n'.repeat(100000)
+  let _doc = nlp.tokenize(text) // eslint-disable-line
+  t.ok(true, here + 'repeated hi')
   t.end()
 })
 
 test('tokenize() does not crash on long string with few sentences', function (t) {
-  // let text = 'The quick brown fox jumped over the lazy dog.\n'
-  // text += '--\n'.repeat(100000)
-  // //eslint-disable-next-line
-  // let _doc = nlp.tokenize(text)
+  let text = 'The quick brown fox jumped over the lazy dog.\n'
+  text += '--\n'.repeat(100000)
+  let _doc = nlp.tokenize(text) // eslint-disable-line
+  t.ok(true, here + 'repeated dashes')
   t.end()
 })
 
@@ -59,7 +59,6 @@ test('parseMatch() results are symmetric', function (t) {
     '^why',
     '#Value$',
     null,
-    ['simply', 'eat'],
     'why',
     '.',
     '. simply?',
@@ -67,12 +66,12 @@ test('parseMatch() results are symmetric', function (t) {
     'tornado alley #Hoover',
   ]
   matches.forEach(str => {
-    let match = nlp.parseMatch(str)
-    let a = doc.match(match).json()
+    let regs = nlp.parseMatch(str)
+    let a = doc.match(regs).json()
     let b = doc.match(str).json()
     a = JSON.stringify(a)
     b = JSON.stringify(b)
-    t.equal(a, b, str)
+    t.equal(a, b, here + str)
   })
   t.end()
 })

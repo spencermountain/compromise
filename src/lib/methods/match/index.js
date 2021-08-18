@@ -25,7 +25,7 @@ const runMatch = function (docs, todo, cache) {
   cache = cache || []
   let { regs, group, justOne } = todo
   let results = []
-  if (regs.length === 0) {
+  if (!regs || regs.length === 0) {
     return { ptrs: [], byGroup: {} }
   }
 

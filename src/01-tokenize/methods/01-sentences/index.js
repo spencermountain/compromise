@@ -5,6 +5,7 @@ import isSentence from './02-isSentence.js'
 //regs-
 const hasSomething = /\S/
 const startWhitespace = /^\s+/
+const hasLetter = /[a-z0-9\u00C0-\u00FF\u00a9\u00ae\u2000-\u3300\ud000-\udfff]/i
 
 const splitSentences = function (text, model) {
   let abbrevs = model.one.abbreviations || new Set()
@@ -28,7 +29,7 @@ const splitSentences = function (text, model) {
       continue
     }
     //this is meaningful whitespace
-    if (hasSomething.test(s) === false) {
+    if (hasSomething.test(s) === false || hasLetter.test(s) === false) {
       //add it to the last one
       if (chunks[chunks.length - 1]) {
         chunks[chunks.length - 1] += s
@@ -47,10 +48,9 @@ const splitSentences = function (text, model) {
   for (let i = 0; i < chunks.length; i++) {
     let c = chunks[i]
     //should this chunk be combined with the next one?
-    if (chunks[i + 1] && isSentence(c, abbrevs) === false) {
+    if (chunks[i + 1] && isSentence(c, abbrevs, hasLetter) === false) {
       chunks[i + 1] = c + (chunks[i + 1] || '')
     } else if (c && c.length > 0) {
-      //&& hasLetter.test(c)
       //this chunk is a proper sentence..
       sentences.push(c)
       chunks[i] = ''

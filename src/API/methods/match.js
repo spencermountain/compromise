@@ -28,7 +28,7 @@ const match = function (regs, group) {
   return view
 }
 
-const matchOne = function (regs, group) {
+const matchOne = function (regs = '', group) {
   const one = this.methods.one
   if (typeof regs === 'string') {
     regs = one.parseMatch(regs)
@@ -40,7 +40,7 @@ const matchOne = function (regs, group) {
   return view
 }
 
-const has = function (regs, group) {
+const has = function (regs = '', group) {
   const one = this.methods.one
   if (typeof regs === 'string') {
     regs = one.parseMatch(regs)

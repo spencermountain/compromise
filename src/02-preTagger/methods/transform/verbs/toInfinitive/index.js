@@ -16,6 +16,7 @@ const guessTense = function (str) {
   }
   return null
 }
+
 const toInfinitive = function (str, model, tense) {
   if (!str) {
     return ''

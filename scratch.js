@@ -14,7 +14,7 @@ import nlp from './src/three.js'
 // console.log(m.out('array'))
 // let m = doc.match('you').concat('oh yeah')
 // doc.compute('chunks')
-let doc = nlp('in Toronto i do not see anything').debug()
+let doc = nlp('For being organized, keep a notepad').debug()
 console.log(doc.verbs().json())
 // doc.compute('offset')
 // doc.match('yeah').debug('highlight')

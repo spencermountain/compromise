@@ -14,7 +14,7 @@ const map = function (cb) {
     return cb(view, i)
   })
   // return an array?
-  if ((res[0] && typeof res[0] !== 'object') || !res[0].isView) {
+  if (!res[0] || typeof res[0] !== 'object' || !res[0].isView) {
     return res
   }
   // return a View object

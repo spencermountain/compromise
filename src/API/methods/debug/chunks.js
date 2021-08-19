@@ -13,7 +13,7 @@ const showChunks = function (view) {
         out.push(cli.green(term.implicit || term.normal))
       } else if (term.chunk === 'Adjective') {
         out.push(cli.yellow(term.implicit || term.normal))
-      } else if (term.chunk === 'Conjunction') {
+      } else if (term.chunk === 'Pivot') {
         out.push(cli.red(term.implicit || term.normal))
       } else {
         out.push(term.implicit || term.normal)

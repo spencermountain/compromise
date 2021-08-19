@@ -12,13 +12,13 @@ const defaults = {
   terms: true,
 }
 
-const toJson = function (docs, opts) {
+const toJson = function (view, opts) {
   opts = opts || {}
   if (typeof opts === 'string') {
     opts = {}
   }
   opts = Object.assign({}, defaults, opts)
-  return docs.map(terms => {
+  return view.docs.map(terms => {
     let res = {}
     if (opts.text) {
       res.text = textFromTerms(terms, {}, false)
@@ -30,6 +30,9 @@ const toJson = function (docs, opts) {
       res.terms = termJSON(terms, opts)
     }
     if (opts.offset) {
+      if (!terms[0].offset) {
+        // view.compute('offset')
+      }
       let len = res.text.length
       res.offset = {
         index: terms[0].offset.index,

@@ -33,7 +33,7 @@ export default [
   },
   {
     text: 'They cite a lack of imbalances that provide early warning signals of a downturn.',
-    tags: 'PRP, VBP, DT, NN, IN, NNS, WDT, VBP, JJ, NN, NNS, IN, DT, NN',
+    tags: 'PRP, VBP, DT, NN, IN, NNS, CC, VBP, JJ, NN, NNS, IN, DT, NN',
   },
   {
     text: 'Characters drink Salty Dogs, whistle Johnny B. Goode and watch Bugs Bunny reruns.',
@@ -208,10 +208,6 @@ export default [
     tags: 'NNP, VBZ, VBN, DT, JJ, NN, IN, DT, NN, RB, RB, VBD, NNP, NNP',
   },
   {
-    text: 'This species of congressional action is predicated on an interpretation of the appropriations clause that is erroneous and unconstitutional.',
-    tags: 'DT, NN, IN, JJ, NN, VBZ, VBN, IN, DT, NN, IN, DT, NNS, NN, WDT, VBZ, JJ, CC, JJ',
-  },
-  {
     text: 'President Reagan learned that lesson.',
     tags: 'NNP, NNP, VBD, DT, NN',
   },
@@ -348,10 +344,6 @@ export default [
   {
     text: 'IAEA Report Lessons learned',
     tags: 'NNP, NN, NNPS, VBN',
-  },
-  {
-    text: 'Remember the old shoe sizing machines that was a form of radiation xray?',
-    tags: 'VB, DT, JJ, NN, VBG, NNS, WDT, VBD, DT, NN, IN, NN, NN',
   },
   {
     text: 'That too was stopped.',
@@ -2011,8 +2003,8 @@ export default [
     tags: 'NNP, VBZ, IN, NNP, IN, NNP, CC, VBZ, JJ, IN, NN',
   },
   {
-    text: 'Can we find another time that works for us to meet?',
-    tags: 'MD, PRP, VB, DT, NN, WDT, VBZ, IN, PRP, TO, VB',
+    text: 'Can we find another time',
+    tags: 'MD, PRP, VB, DT, NN',
   },
   {
     text: 'You may want to discuss with Becky.',
@@ -2819,8 +2811,8 @@ export default [
     tags: 'JJ, NN',
   },
   {
-    text: 'Agel has created a new compensation structure that is truly revolutionary.',
-    tags: 'NNP, VBZ, VBN, DT, JJ, NN, NN, WDT, VBZ, RB, JJ',
+    text: 'Agel has created a new compensation structure.',
+    tags: 'NNP, VBZ, VBN, DT, JJ, NN, NN',
   },
 
   {
@@ -3189,7 +3181,7 @@ export default [
   },
   {
     text: 'These animals have the misfortune to produce a substance that is useful in the manufacture of perfume.',
-    tags: 'DT, NNS, VBP, DT, NN, TO, VB, DT, NN, WDT, VBZ, JJ, IN, DT, NN, IN, NN',
+    tags: 'DT, NNS, VBP, DT, NN, TO, VB, DT, NN, CC, VBZ, JJ, IN, DT, NN, IN, NN',
   },
   {
     text: 'Travis Job',
@@ -3285,7 +3277,7 @@ export default [
   },
   {
     text: 'It is the welfare society that was New Orleans."',
-    tags: 'PRP, VBZ, DT, NN, NN, WDT, VBD, NNP, NNP',
+    tags: 'PRP, VBZ, DT, NN, NN, CC, VBD, NNP, NNP',
   },
   {
     text: '-- Paul, Atlanta, USA',
@@ -3778,7 +3770,7 @@ export default [
   },
   {
     text: 'For horses that are strong pullers.',
-    tags: 'IN, NNS, WDT, VBP, JJ, NNS',
+    tags: 'IN, NNS, CC, VBP, JJ, NNS',
   },
   {
     text: 'It just gives you a little leverage and curb pressure.',
@@ -4433,8 +4425,8 @@ export default [
     tags: 'NN, NN, CD',
   },
   {
-    text: 'You take a boat across the river, then spend a day biking, eating at a local restaurant, buying souvenirs and doing other things that are geared towards tourists.',
-    tags: 'PRP, VBP, DT, NN, IN, DT, NN, RB, VB, DT, NN, VBG, VBG, IN, DT, JJ, NN, VBG, NNS, CC, VBG, JJ, NNS, WDT, VBP, VBN, IN, NNS',
+    text: 'You take a boat across the river, then spend a day biking, eating at a local restaurant, buying souvenirs and doing other things geared towards tourists.',
+    tags: 'PRP, VBP, DT, NN, IN, DT, NN, RB, VB, DT, NN, VBG, VBG, IN, DT, JJ, NN, VBG, NNS, CC, VBG, JJ, NNS, VBN, IN, NNS',
   },
   {
     text: "It's called Kiwi Heaven and it's across the river from Cho Ben Tre.",
@@ -4571,7 +4563,7 @@ export default [
   },
   {
     text: 'There is a very good book on the subject that was written by General Vo Nguyen Giap.',
-    tags: 'EX, VBZ, DT, RB, JJ, NN, IN, DT, NN, WDT, VBD, VBN, IN, NNP, NNP, NNP, NNP',
+    tags: 'EX, VBZ, DT, RB, JJ, NN, IN, DT, NN, CC, VBD, VBN, IN, NNP, NNP, NNP, NNP',
   },
   {
     text: 'Any advice would be greatly appreciated.',

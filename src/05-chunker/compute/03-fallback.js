@@ -15,20 +15,20 @@ const fallback = function (document) {
       if (term.chunk === undefined) {
         // conjunctions stand alone
         if (term.tags.has('Conjunction')) {
-          setChunk(term, 'Conjunction')
+          setChunk(term, 'Pivot')
         } else if (term.tags.has('Preposition')) {
-          setChunk(term, 'Conjunction')
+          setChunk(term, 'Pivot')
         } else if (term.tags.has('Adverb')) {
           setChunk(term, 'Verb')
         }
         // just take the chunk on the right?
-        else if (document[n][t + 1] && document[n][t + 1].chunk) {
-          setChunk(term, document[n][t + 1].chunk)
-        }
-        // or take the chunk on the left
-        else if (document[n][t - 1] && document[n][t - 1].chunk) {
-          setChunk(term, document[n][t - 1].chunk)
-        } else {
+        // else if (document[n][t + 1] && document[n][t + 1].chunk) {
+        //   setChunk(term, document[n][t + 1].chunk)
+        // }
+        // // or take the chunk on the left
+        // else if (document[n][t - 1] && document[n][t - 1].chunk) {
+        //   setChunk(term, document[n][t - 1].chunk)
+        else {
           //  ¯\_(ツ)_/¯
           term.chunk = 'Noun'
         }

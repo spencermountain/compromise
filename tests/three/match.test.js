@@ -12,6 +12,12 @@ let arr = [
   // adj must have copula
   // ['Australia is the most diverse country', '{Noun} is {Adjective}'],
   // ['the most diverse country is the best', '{Noun} is {Noun}'],
+
+  // [`Look at that old woman`,''],
+  // [`She lived in New York at that time.`,''],
+  // [`Where is that friend of yours?`,''],
+  // [ `He said that he was hungry.`,''],
+  // [ `I bought the materials that are required`,''],
 ]
 test('match:', function (t) {
   arr.forEach(function (a) {

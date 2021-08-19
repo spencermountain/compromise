@@ -39,7 +39,7 @@ fmts.reduced = fmts.root
 const methods = {
   /** return data */
   json: function (n) {
-    let res = json(this.docs, n)
+    let res = json(this, n)
     if (typeof n === 'number') {
       return res[n]
     }

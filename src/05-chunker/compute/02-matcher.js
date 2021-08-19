@@ -1,9 +1,9 @@
 const rules = [
   // === Conjunction ===
   // that the houses
-  { match: '[that] #Determiner #Noun', group: 0, chunk: 'Conjunction' },
+  { match: '[that] #Determiner #Noun', group: 0, chunk: 'Pivot' },
   // estimated that
-  { match: '#PastTense [that]', group: 0, chunk: 'Conjunction' },
+  { match: '#PastTense [that]', group: 0, chunk: 'Pivot' },
 
   // === Adjective ===
   // was really nice

@@ -35,6 +35,14 @@ let matches = [
     tag: 'Conjunction',
     reason: 'how-he-is-x',
   },
+  // says that he..
+  { match: '#Verb [that] #Pronoun', group: 0, tag: 'Conjunction', reason: 'said-that-he' },
+  // things that are required
+  { match: '#Noun [that] #Copula', group: 0, tag: 'Conjunction', reason: 'that-are' },
+  // things that seem cool
+  { match: '#Noun [that] #Verb #Adjective', group: 0, tag: 'Conjunction', reason: 'that-seem' },
+  // wasn't that wide..
+  { match: '#Noun #Copula not? [that] #Adjective', group: 0, tag: 'Adverb', reason: 'that-adj' },
 
   //swear-words as non-expression POS
   { match: 'holy (shit|fuck|hell)', tag: 'Expression', reason: 'swears-expression' },

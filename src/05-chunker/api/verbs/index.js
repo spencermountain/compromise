@@ -1,14 +1,23 @@
-import find from './find.js'
+import splitComma from '../_byComma.js'
+import parseVerb from './parseVerb.js'
+
 const findVerbs = function (View) {
   class Verbs extends View {
     constructor(document, pointer, groups) {
       super(document, pointer, groups)
       this.viewType = 'Verbs'
     }
+    json() {
+      return this.map(vb => {
+        return parseVerb(vb)
+      })
+    }
   }
 
   View.prototype.verbs = function (n) {
-    let m = find(this)
+    this.compute('chunks')
+    let m = this.match('{Verb}')
+    // m = splitComma(m)
     if (typeof n === 'number') {
       m = m.get(n)
     }

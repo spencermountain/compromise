@@ -82,6 +82,25 @@ test('no match split', function (t) {
   t.end()
 })
 
+test('tricky-splitafter', function (t) {
+  let str = `one two three`
+  let m = nlp(str).match('.')
+
+  m = m.splitAfter('foo')
+  t.equal(m.text(), str, here + 'no-split')
+
+  m = m.splitAfter('one')
+  t.equal(m.text(), str, here + 'top-split')
+
+  m = m.splitAfter('two')
+  t.equal(m.text(), str, here + 'mid-split')
+
+  m = m.splitAfter('three')
+  t.equal(m.text(), str, here + 'post-split')
+
+  t.end()
+})
+
 // test('split-parent', function (t) {
 //   let doc = nlp('if so, he is the best, that i see. he is the greatest in the world')
 //   t.equal(doc.length, 2, 'init parent is 2 sentence')

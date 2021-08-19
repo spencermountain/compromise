@@ -1,3 +1,5 @@
+import splitComma from '../_byComma.js'
+
 const findNouns = function (View) {
   class Nouns extends View {
     constructor(document, pointer, groups) {
@@ -6,8 +8,10 @@ const findNouns = function (View) {
     }
   }
 
-  Nouns.prototype.nouns = function (n) {
-    let m = this.match('#Verb+')
+  View.prototype.nouns = function (n) {
+    this.compute('chunks')
+    let m = this.match('{Noun}')
+    // m = splitComma(m)
     if (typeof n === 'number') {
       m = m.get(n)
     }

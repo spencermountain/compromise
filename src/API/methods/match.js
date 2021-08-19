@@ -100,6 +100,10 @@ const not = function (regs) {
   } else if (typeof regs === 'object' && regs.isView === true) {
     ptrs = regs.fullPointer // support a view object as input
   }
+  // nothing found, end here
+  if (ptrs.length === 0) {
+    return this
+  }
   let found = {}
   ptrs.forEach(a => {
     found[a[0]] = found[a[0]] || []

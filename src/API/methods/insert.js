@@ -57,9 +57,20 @@ const insertBefore = function (str) {
   return insert(str, this, false)
 }
 
+// add string as new sentence
+const concat = function (str) {
+  const { methods, document, world } = this
+  let json = methods.one.tokenize(str, world)
+  let ptrs = this.fullPointer
+  let lastN = ptrs[ptrs.length - 1][0]
+  spliceArr(document, lastN + 1, json)
+  return this
+}
+
 export default {
   insertAfter,
   insertBefore,
+  concat,
   append: insertAfter,
   prepend: insertBefore,
   insert: insertAfter,

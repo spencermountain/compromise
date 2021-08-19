@@ -1,17 +1,24 @@
 /* eslint-disable no-console, no-unused-vars */
 // import './tests/_ignore/_error.js'
 import nlp from './src/three.js'
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 // ''
 // ''
 // ''
+// bug:
+// let m = nlp(`one two three`).match('.')
+// m = m.splitAfter('two')
+// m.debug()
 
-let doc = nlp(`Is that ok with you`)
+// console.log(m.out('array'))
+// let m = doc.match('you').concat('oh yeah')
+// doc.compute('chunks')
+let doc = nlp('in Toronto i do not see anything').debug()
+console.log(doc.verbs().json())
 // doc.compute('offset')
 // doc.match('yeah').debug('highlight')
-doc.compute('chunks')
-doc.debug('chunks')
+// doc.verbs().debug()
 // console.log(m.json({ offset: true }))
 
 // let str = `He said that he was hungry.`

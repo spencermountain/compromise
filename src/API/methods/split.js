@@ -66,13 +66,19 @@ const _splitAfter = function (ptr, matches) {
   for (let i = 0; i < matches.length; i += 1) {
     let match = matches[i]
     // add anything before and including our match
-    toAdd.push([ptr[0], nowAt, match[2]])
+    if (match[2] > nowAt) {
+      toAdd.push([ptr[0], nowAt, match[2]])
+    }
     nowAt = match[2]
   }
   // add anything after our last match
   let lastMatch = matches[matches.length - 1]
   if (lastMatch[2] < ptr[2]) {
-    toAdd.push([ptr[0], lastMatch[2], ptr[2]])
+    let start = lastMatch[2]
+    if (start < ptr[1]) {
+      start = ptr[1]
+    }
+    toAdd.push([ptr[0], start, ptr[2]])
   }
   return toAdd
 }

@@ -1,5 +1,6 @@
-import debug from './lib/debug.js'
+import debug from './debug/index.js'
 import out from './lib/out.js'
+import json from './lib/json.js'
 import { textFromDoc, textFromTerms } from './lib/text.js'
 
 const isObject = val => {
@@ -38,20 +39,11 @@ fmts.reduced = fmts.root
 const methods = {
   /** return data */
   json: function (n) {
-    let arr = this.docs.map(terms => {
-      return {
-        text: textFromTerms(terms, false),
-        terms: terms.map(t => {
-          t = Object.assign({}, t)
-          t.tags = Array.from(t.tags)
-          return t
-        }),
-      }
-    })
+    let res = json(this.docs, n)
     if (typeof n === 'number') {
-      return arr[n]
+      return res[n]
     }
-    return arr
+    return res
   },
   /** */
   text: function (fmt) {

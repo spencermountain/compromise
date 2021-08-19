@@ -7,9 +7,13 @@ import nlp from './src/three.js'
 // ''
 // ''
 
-let m = nlp("i said, 'did you have to do that' and then left, like nothing happened (which it didn't).")
-  .clauses()
-  .debug()
+let doc = nlp(`So strong, in fact`)
+doc.compute('offset')
+let m = doc.match('#Noun+')
+
+m.debug('highlight')
+// console.log(m.json({ offset: true }))
+
 // let sub = m.match('is')
 // sub.insertAfter('really')
 // console.log(m.text() + '|')

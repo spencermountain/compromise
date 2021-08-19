@@ -7,11 +7,9 @@ import nlp from './src/three.js'
 // ''
 // ''
 
-let doc = nlp(`So strong, in fact`)
+let doc = nlp(`one yeah three four yeah five yeah yeah`)
 doc.compute('offset')
-let m = doc.match('#Noun+')
-
-m.debug('highlight')
+doc.match('yeah').debug('highlight')
 // console.log(m.json({ offset: true }))
 
 // let sub = m.match('is')
@@ -22,7 +20,7 @@ m.debug('highlight')
 // m.debug()
 
 // str = 'retail [stores]'
-// let doc = nlp('one two three. three four five.').forEach(p => {
+// let doc = nlp('one yeah three. three four five.').forEach(p => {
 //   p.toUpperCase()
 // })
 // doc.debug()
@@ -40,7 +38,7 @@ m.debug('highlight')
 > One
 .compute(normal)
 
-> Two
+> yeah
 Insert/replace
 
 > Three

@@ -1,10 +1,9 @@
+import grad from 'grad-school'
+
 import nouns from './nouns.js'
 import verbs from './verbs.js'
 import values from './values.js'
 import misc from './misc.js'
-// import inferTags from './_lib/index.js'
-import grad from 'grad-school'
-
 let allTags = Object.assign({}, nouns, verbs, values, misc)
 
 // i just made these up
@@ -21,28 +20,27 @@ const colors = {
   Adverb: 'cyan',
 }
 
-let nodeList = Object.keys(allTags).map(k => {
+// setup graph-lib format
+const nodes = Object.keys(allTags).map(k => {
   let o = allTags[k]
   return { id: k, parent: o.is, props: { not: o.not || [], also: o.also || [], color: colors[k] } }
 })
-const g = grad(nodeList)
-// g.debug()
-g.cache()
-g.fillDown()
+const graph = grad(nodes).cache().fillDown()
 
-const tagSet = g.out('array').reduce((h, node) => {
+// convert it to our final format
+const tagSet = {}
+graph.out('array').forEach(node => {
   let { color, not, also } = node.props
   let parents = node._cache.parents
   if (also) {
     parents = parents.concat(also)
   }
-  h[node.id] = {
+  tagSet[node.id] = {
     color,
     not,
     parents,
     children: node._cache.children,
   }
-  return h
-}, {})
+})
 
 export default tagSet

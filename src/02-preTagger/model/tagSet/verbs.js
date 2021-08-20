@@ -8,14 +8,14 @@ export default {
   },
   Infinitive: {
     is: 'PresentTense',
-    not: ['PastTense', 'Gerund'],
+    not: ['Gerund'],
   },
   Imperative: {
     is: 'Infinitive',
   },
   Gerund: {
     is: 'PresentTense',
-    not: ['PastTense', 'Copula', 'FutureTense'],
+    not: ['Copula'],
   },
   PastTense: {
     is: 'Verb',
@@ -46,7 +46,7 @@ export default {
   },
   Particle: {
     is: 'PhrasalVerb',
-    not: ['PastTense', 'PresentTense', 'FutureTense', 'Copula', 'FutureTense', 'Gerund'],
+    not: ['PastTense', 'PresentTense', 'FutureTense', 'Copula', 'Gerund'],
   },
   Auxiliary: {
     not: ['Noun', 'Adjective', 'Value'],

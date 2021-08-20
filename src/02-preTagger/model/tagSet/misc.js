@@ -33,7 +33,7 @@ export default {
   Timezone: {
     is: 'Noun',
     also: ['Date'],
-    not: ['Adjective', 'ProperNoun'],
+    not: ['ProperNoun'],
   },
   Time: {
     is: 'Date',
@@ -72,7 +72,7 @@ export default {
   HashTag: {},
   AtMention: {
     is: 'Noun',
-    not: ['HashTag', 'Verb', 'Adjective', 'Value', 'Email'],
+    not: ['HashTag', 'Email'],
   },
   Emoji: {
     not: ['HashTag', 'Verb', 'Adjective', 'Value', 'AtMention'],

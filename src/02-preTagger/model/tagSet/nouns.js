@@ -104,6 +104,5 @@ export default {
   },
   Possessive: {
     is: 'Noun',
-    not: ['Adjective', 'Verb'],
   },
 }

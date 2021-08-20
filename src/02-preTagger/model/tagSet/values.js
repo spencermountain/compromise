@@ -16,7 +16,7 @@ export default {
   },
   RomanNumeral: {
     is: 'Cardinal',
-    not: ['Ordinal', 'TextValue'],
+    not: ['TextValue'],
   },
   TextValue: {
     is: 'Value',

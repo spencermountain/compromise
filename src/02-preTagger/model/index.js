@@ -1,4 +1,4 @@
-import tagSet from './tags/index.js'
+import tagSet from './tagSet/index.js'
 import irregularPlurals from './irregulars/plurals.js'
 import irregularVerbs from './irregulars/conjugations.js'
 import lexicon from './lexicon/index.js'

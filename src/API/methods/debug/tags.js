@@ -2,12 +2,12 @@
 import cli from './_color.js'
 
 const tagString = function (tags, model) {
-  if (model.two.tags) {
+  if (model.two.tagSet) {
     tags = tags.map(tag => {
-      if (!model.two.tags.hasOwnProperty(tag)) {
+      if (!model.two.tagSet.hasOwnProperty(tag)) {
         return tag
       }
-      const c = model.two.tags[tag].color || 'blue'
+      const c = model.two.tagSet[tag].color || 'blue'
       return cli[c](tag)
     })
   }

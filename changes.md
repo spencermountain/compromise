@@ -33,6 +33,8 @@ sub.insertAfter('really')
 // t.equal(sub.out('normal')
 ```
 
+### Clone/Fork
+
 ### Loop changes
 
 - .find() does not return undefined on an empty result anymore

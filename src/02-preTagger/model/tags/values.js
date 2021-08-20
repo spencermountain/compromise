@@ -3,33 +3,33 @@ export default {
     not: ['Verb', 'Adjective', 'Adverb'],
   },
   Ordinal: {
-    parents: 'Value',
+    is: 'Value',
     not: ['Cardinal'],
   },
   Cardinal: {
-    parents: 'Value',
+    is: 'Value',
     not: ['Ordinal'],
   },
   Fraction: {
-    parents: 'Value',
+    is: 'Value',
     not: ['Noun'],
   },
   RomanNumeral: {
-    parents: 'Cardinal',
+    is: 'Cardinal',
     not: ['Ordinal', 'TextValue'],
   },
   TextValue: {
-    parents: 'Value',
+    is: 'Value',
     not: ['NumericValue'],
   },
   NumericValue: {
-    parents: 'Value',
+    is: 'Value',
     not: ['TextValue'],
   },
   Money: {
-    parents: 'Cardinal',
+    is: 'Cardinal',
   },
   Percent: {
-    parents: 'Value',
+    is: 'Value',
   },
 }

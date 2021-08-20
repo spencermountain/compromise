@@ -5,99 +5,105 @@ export default {
     not: ['Verb', 'Adjective', 'Adverb'],
   },
   Singular: {
-    parents: 'Noun',
+    is: 'Noun',
     not: 'Plural',
   },
   ProperNoun: {
-    parents: 'Noun',
+    is: 'Noun',
   },
   Person: {
-    parents: ['ProperNoun', 'Singular'],
+    is: 'Singular',
+    also: ['ProperNoun'],
     not: ['Place', 'Organization', 'Date'],
   },
   FirstName: {
-    parents: 'Person',
+    is: 'Person',
   },
   MaleName: {
-    parents: 'FirstName',
+    is: 'FirstName',
     not: ['FemaleName', 'LastName'],
   },
   FemaleName: {
-    parents: 'FirstName',
+    is: 'FirstName',
     not: ['MaleName', 'LastName'],
   },
   LastName: {
-    parents: 'Person',
+    is: 'Person',
     not: ['FirstName'],
   },
   NickName: {
-    parents: 'Person',
+    is: 'Person',
     not: ['FirstName', 'LastName'],
   },
   Honorific: {
-    parents: 'Noun',
+    is: 'Noun',
     not: ['FirstName', 'LastName', 'Value'],
   },
   Place: {
-    parents: 'Singular',
+    is: 'Singular',
     not: ['Person', 'Organization'],
   },
   Country: {
-    parents: ['Place', 'ProperNoun'],
+    is: 'Place',
+    also: ['ProperNoun'],
     not: ['City'],
   },
   City: {
-    parents: ['Place', 'ProperNoun'],
+    is: 'Place',
+    also: ['ProperNoun'],
     not: ['Country'],
   },
   Region: {
-    parents: ['Place', 'ProperNoun'],
+    is: 'Place',
+    also: ['ProperNoun'],
   },
   Address: {
-    parents: 'Place',
+    is: 'Place',
   },
   Organization: {
-    parents: ['Singular', 'ProperNoun'],
+    is: 'Singular',
+    also: ['ProperNoun'],
     not: ['Person', 'Place'],
   },
   SportsTeam: {
-    parents: 'Organization',
+    is: 'Organization',
   },
   School: {
-    parents: 'Organization',
+    is: 'Organization',
   },
   Company: {
-    parents: 'Organization',
+    is: 'Organization',
   },
   Plural: {
-    parents: 'Noun',
+    is: 'Noun',
     not: ['Singular'],
   },
   Uncountable: {
-    parents: 'Noun',
+    is: 'Noun',
   },
   Pronoun: {
-    parents: 'Noun',
+    is: 'Noun',
     not: entity,
   },
   Actor: {
-    parents: 'Noun',
+    is: 'Noun',
     not: entity,
   },
   Activity: {
-    parents: 'Noun',
+    is: 'Noun',
     not: ['Person', 'Place'],
   },
   Unit: {
-    parents: 'Noun',
+    is: 'Noun',
     not: entity,
   },
   Demonym: {
-    parents: ['Noun', 'ProperNoun'],
+    is: 'Noun',
+    also: ['ProperNoun'],
     not: entity,
   },
   Possessive: {
-    parents: 'Noun',
+    is: 'Noun',
     not: ['Adjective', 'Verb'],
   },
 }

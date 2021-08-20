@@ -5,13 +5,13 @@ export default {
     not: ['Noun', 'Verb', 'Adverb', 'Value'],
   },
   Comparable: {
-    parents: ['Adjective'],
+    is: 'Adjective',
   },
   Comparative: {
-    parents: ['Adjective'],
+    is: 'Adjective',
   },
   Superlative: {
-    parents: ['Adjective'],
+    is: 'Adjective',
     not: ['Comparative'],
   },
   NumberRange: {},
@@ -22,23 +22,27 @@ export default {
     not: ['Verb', 'Adverb', 'Preposition', 'Adjective'],
   },
   Month: {
-    parents: ['Date', 'Singular'],
+    is: 'Singular',
+    also: ['Date'],
     not: ['Year', 'WeekDay', 'Time'],
   },
   WeekDay: {
-    parents: ['Date', 'Noun'],
+    is: 'Noun',
+    also: ['Date'],
   },
   Timezone: {
-    parents: ['Date', 'Noun'],
+    is: 'Noun',
+    also: ['Date'],
     not: ['Adjective', 'ProperNoun'],
   },
   Time: {
-    parents: ['Date'],
+    is: 'Date',
     not: ['AtMention'],
   },
   // 'months'
   Duration: {
-    parents: ['Date', 'Noun'],
+    is: 'Noun',
+    also: ['Date'],
   },
   Determiner: {
     not: ['Noun', 'Verb', 'Adjective', 'Adverb', 'QuestionWord', 'Conjunction'], //allow 'a' to be a Determiner/Value
@@ -53,7 +57,7 @@ export default {
     not: ['Determiner'],
   },
   Currency: {
-    parents: ['Noun'],
+    is: 'Noun',
   },
   Expression: {
     not: ['Noun', 'Adjective', 'Verb', 'Adverb'],
@@ -67,7 +71,7 @@ export default {
   },
   HashTag: {},
   AtMention: {
-    parents: ['Noun'],
+    is: 'Noun',
     not: ['HashTag', 'Verb', 'Adjective', 'Value', 'Email'],
   },
   Emoji: {

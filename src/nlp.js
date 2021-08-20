@@ -74,6 +74,11 @@ nlp.tokenize = function (input, lex) {
   return doc
 }
 
+// some helper methods
+nlp.model = () => world.model
+nlp.methods = () => world.methods
+nlp.hooks = () => world.hooks
+
 // apply our only default plugins
 export default nlp
 const { parseMatch, plugin } = nlp

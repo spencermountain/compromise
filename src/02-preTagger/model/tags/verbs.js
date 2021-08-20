@@ -3,49 +3,49 @@ export default {
     not: ['Noun', 'Adjective', 'Adverb', 'Value', 'Expression'],
   },
   PresentTense: {
-    parents: 'Verb',
+    is: 'Verb',
     not: ['PastTense', 'FutureTense'],
   },
   Infinitive: {
-    parents: 'PresentTense',
+    is: 'PresentTense',
     not: ['PastTense', 'Gerund'],
   },
   Imperative: {
-    parents: 'Infinitive',
+    is: 'Infinitive',
   },
   Gerund: {
-    parents: 'PresentTense',
+    is: 'PresentTense',
     not: ['PastTense', 'Copula', 'FutureTense'],
   },
   PastTense: {
-    parents: 'Verb',
+    is: 'Verb',
     not: ['FutureTense'],
   },
   FutureTense: {
-    parents: 'Verb',
+    is: 'Verb',
   },
   Copula: {
-    parents: 'Verb',
+    is: 'Verb',
   },
   Modal: {
-    parents: 'Verb',
+    is: 'Verb',
     not: ['Infinitive'],
   },
   PerfectTense: {
-    parents: 'Verb',
+    is: 'Verb',
     not: 'Gerund',
   },
   Pluperfect: {
-    parents: 'Verb',
+    is: 'Verb',
   },
   Participle: {
-    parents: 'PastTense',
+    is: 'PastTense',
   },
   PhrasalVerb: {
-    parents: 'Verb',
+    is: 'Verb',
   },
   Particle: {
-    parents: 'PhrasalVerb',
+    is: 'PhrasalVerb',
     not: ['PastTense', 'PresentTense', 'FutureTense', 'Copula', 'FutureTense', 'Gerund'],
   },
   Auxiliary: {

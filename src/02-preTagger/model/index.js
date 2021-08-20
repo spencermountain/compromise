@@ -1,4 +1,4 @@
-import tags from './tags/index.js'
+import tagSet from './tags/index.js'
 import irregularPlurals from './irregulars/plurals.js'
 import irregularVerbs from './irregulars/conjugations.js'
 import lexicon from './lexicon/index.js'
@@ -31,7 +31,7 @@ export default {
   two: {
     irregularPlurals,
     irregularVerbs,
-    tags,
+    tagSet,
     suffixPatterns,
     endsWith,
     neighbours,

@@ -44,7 +44,7 @@ const fns = {
     if (verbose === true) {
       console.log(' -  ', input, reason || '')
     }
-    let tagSet = model.two.tags
+    let tagSet = model.two.tagSet
     if (isArray(input)) {
       input.forEach(tag => methods.one.unTag(terms, tag, tagSet))
     } else {

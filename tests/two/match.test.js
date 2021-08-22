@@ -656,6 +656,22 @@ let arr = [
   ["There's holes everywhere", 'there are #Plural .'],
   ["There's an issue", 'there is #Determiner #Noun'],
   ['Let’s not forget', 'let us not #Verb'],
+  ['the thing about love', '#Determiner #Noun about #Noun'],
+  [`I don't get much [sleep]`, 'i do not #Infinitive much #Noun'],
+
+  // aug 22
+  ['the cardio dance party', '#Determiner #Noun #Noun #Noun'],
+  ['the mexican train hijacker', '#Determiner #Noun #Noun #Noun'],
+  // ['the dining experience', '#Determiner #Noun #Noun #Noun'],
+  ['the student loan default rate', '#Determiner #Noun #Noun #Noun #Noun'],
+  ['the examples include Jonathan Swift', '#Determiner #Noun #Verb #Noun #Noun'],
+  ['the feet kick him', '#Determiner #Noun #Verb #Noun'],
+  ['the fast train', 'the #Adjective #Noun'],
+  ['the faster train', 'the #Adjective #Noun'],
+  ['the fastest train', 'the #Adjective #Noun'],
+  // ['',''],
+  // ['',''],
+  // ['',''],
   // ['',''],
 ]
 test('match:', function (t) {

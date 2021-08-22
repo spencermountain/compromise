@@ -3,11 +3,11 @@ import repl from 'repl'
 import corpus from 'nlp-corpus'
 import nlp from '../src/three.js'
 
-const n = 200
+const n = 5000
 console.log(` -- pre-processing ${n} sentences-`)
 let docs = corpus.some(n)
 docs = docs.map(str => nlp(str).compute('offset'))
-console.log(` -- done --`)
+console.log(` -- ok, ready --`)
 
 const doMatch = function (match) {
   docs.forEach(doc => {

@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-unused-vars */
 // import './tests/_ignore/_error.js'
 import nlp from './src/three.js'
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 // ''
 // ''
@@ -12,7 +12,7 @@ import nlp from './src/three.js'
 // m.debug()
 
 // console.log(nlp.model().two.tagSet)
-let doc = nlp('the thing about [love]')
+let doc = nlp(`whom the angels name Lenore.`)
 // let a = doc.clone()
 // a.tag('Person')
 doc.debug()

@@ -14,6 +14,7 @@ export default [
   { word: "that's", out: ['that', 'is'] },
   { word: 'dunno', out: ['do', 'not', 'know'] },
   { word: 'gonna', out: ['going', 'to'] },
+  { word: 'gotta', out: ['have', 'got', 'to'] }, //hmm
   { word: 'gtg', out: ['got', 'to', 'go'] },
   { word: 'im', out: ['i', 'am'] },
   { word: 'imma', out: ['I', 'will'] },
@@ -22,7 +23,6 @@ export default [
   { word: 'ive', out: ['i', 'have'] },
   { word: 'rn', out: ['right', 'now'] },
   { word: 'tbh', out: ['to', 'be', 'honest'] },
-  // { word: 'til', out: ['today', 'i', 'learned'] },
   { word: 'wanna', out: ['want', 'to'] },
   { word: 'howd', out: ['how', 'did'] },
   { word: 'whatd', out: ['what', 'did'] },

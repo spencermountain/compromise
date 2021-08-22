@@ -1,47 +1,45 @@
-import adj from './adjectives/ambig.js'
-import advAdj from './adverbs/adverb-adj.js'
-import gerundAdj from './adjective-verb/gerund-adj.js'
+import adj from './ambig/adjective/adjective.js'
+import advAdj from './ambig/adjective/adj-adverb.js'
+import gerundAdj from './ambig/adjective/adj-gerund.js'
+import nounAdj from './ambig/adjective/adj-noun.js'
+import adjVerb from './ambig/adjective/adj-verb.js'
 
-import adv from './adverbs/ambig.js'
+import adv from './ambig/adverb.js'
 
-import dates from './dates/date-phrase.js'
-import ambigDates from './dates/ambig.js'
+import dates from './phrase/date-phrase.js'
+import ambigDates from './ambig/date.js'
 
-import noun from './nouns/index.js'
-import adjNouns from './adjective-noun/adj-noun.js'
-import gerundNouns from './verb-noun/gerund-noun.js'
-import infNouns from './verb-noun/inf-noun.js'
-import presNouns from './verb-noun/pres-noun.js'
+import noun from './ambig/nouns.js'
+import gerundNouns from './ambig/verb-noun/gerund-noun.js'
+import presNouns from './ambig/verb-noun/verb-noun.js'
 
-import money from './numbers/money.js'
-import fractions from './numbers/fractions.js'
-import numbers from './numbers/numbers.js'
+import money from './ambig/numbers/money.js'
+import fractions from './ambig/numbers/fractions.js'
+import numbers from './ambig/numbers/numbers.js'
 
-import person from './person/person-phrase.js'
-import personName from './person/ambig-name.js'
+import person from './phrase/person-phrase.js'
+import personName from './ambig/name.js'
 
-import verbs from './verbs/index.js'
-import adjVerb from './adjective-verb/adj-verb.js'
-import auxiliary from './verbs/auxiliary.js'
-import nounVerb from './verb-noun/noun-verb.js'
-import phrasal from './verbs/phrasal.js'
+import verbs from './phrase/verb-phrase/index.js'
+import auxiliary from './phrase/verb-phrase/auxiliary.js'
+import phrasal from './phrase/verb-phrase/phrasal.js'
 
 import misc from './_misc.js'
 
-import orgs from './organization/index.js'
-import places from './places.js'
+import orgs from './phrase/orgs/index.js'
+import places from './phrase/places.js'
+import conjunctions from './ambig/conjunctions.js'
 
 let matches = [].concat(
   adj,
   advAdj,
   gerundAdj,
+  nounAdj,
   adv,
   ambigDates,
   dates,
   noun,
-  adjNouns,
   gerundNouns,
-  infNouns,
   presNouns,
   money,
   fractions,
@@ -51,11 +49,11 @@ let matches = [].concat(
   verbs,
   adjVerb,
   auxiliary,
-  nounVerb,
   phrasal,
   misc,
   orgs,
-  places
+  places,
+  conjunctions
 )
 export default {
   two: {

@@ -11,9 +11,9 @@ import nlp from './src/three.js'
 // m = m.splitAfter('two')
 // m.debug()
 
-let doc = nlp('one two. three four')
-doc.append('oooo')
-console.log(doc.text())
+// let doc = nlp('one two. three four')
+// doc.append('oooo')
+// console.log(doc.text())
 
 // #864
 // let doc = nlp('"Good bye," he said.')

@@ -36,6 +36,9 @@ const nOutOfN = function (m) {
   // den = den.numbers().get(0)
   num = parseNumber(num)
   den = parseNumber(den)
+  if (!num || !den) {
+    return null
+  }
   if (typeof num === 'number' && typeof den === 'number') {
     return {
       numerator: num,

@@ -18,32 +18,7 @@ export default {
   Adverb: {
     not: ['Noun', 'Verb', 'Adjective', 'Value'],
   },
-  Date: {
-    not: ['Verb', 'Adverb', 'Preposition', 'Adjective'],
-  },
-  Month: {
-    is: 'Singular',
-    also: ['Date'],
-    not: ['Year', 'WeekDay', 'Time'],
-  },
-  WeekDay: {
-    is: 'Noun',
-    also: ['Date'],
-  },
-  Timezone: {
-    is: 'Noun',
-    also: ['Date'],
-    not: ['ProperNoun'],
-  },
-  Time: {
-    is: 'Date',
-    not: ['AtMention'],
-  },
-  // 'months'
-  Duration: {
-    is: 'Noun',
-    also: ['Date'],
-  },
+
   Determiner: {
     not: ['Noun', 'Verb', 'Adjective', 'Adverb', 'QuestionWord', 'Conjunction'], //allow 'a' to be a Determiner/Value
   },

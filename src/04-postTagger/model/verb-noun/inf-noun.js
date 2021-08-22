@@ -31,6 +31,8 @@ export default [
   { match: '#Gerund #Adjective to [#Infinitive]', group: 0, tag: 'Noun', reason: 'running-to' },
   // 1 train
   { match: '(one|1) [#Infinitive]', group: 0, tag: 'Singular', reason: '1-trains' },
+  // about love
+  { match: 'about [#Infinitive]', group: 0, tag: 'Singular', reason: 'about-love' },
 
   // use reverse
   {

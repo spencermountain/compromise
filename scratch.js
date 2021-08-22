@@ -12,7 +12,7 @@ import nlp from './src/three.js'
 // m.debug()
 
 // console.log(nlp.model().two.tagSet)
-let doc = nlp('one two three. spencer brown')
+let doc = nlp('the thing about [love]')
 // let a = doc.clone()
 // a.tag('Person')
 doc.debug()

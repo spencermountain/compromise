@@ -1,3 +1,10 @@
+### v1.4.0 [June 2021]
+
+- **[fix]** - runtime error in number parser
+- **[change]** - add export maps
+- **[change]** - remove sourcemap for js build
+- update deps
+
 ### v1.3.0 [Feb 2021]
 
 - **[change]** - use babel default build target (drop ie11 polyfill)

@@ -16,6 +16,7 @@ test('doc-sibling-as-input', function (t) {
   let childA = doc.if('greatest')
   let childB = doc.match('he is')
   let found = childA.match(childB)
+  // union/intersection/difference
   t.equal(found.length, 1, 'found self in sibling')
   //try false-positive example
   childA = doc.if('foobar')

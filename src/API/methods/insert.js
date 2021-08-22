@@ -18,6 +18,20 @@ const addSpace = function (terms) {
   terms[terms.length - 1].post += ' '
 }
 
+// sentence-ending punctuation should move in append
+const movePunct = (source, needle) => {
+  const juicy = /[.?!]/g // punctuation we wanna transfer
+  let wasLast = source[source.length - 1]
+  let post = wasLast.post
+  if (juicy.test(post)) {
+    let punct = post.match(juicy).join('') //not perfect
+    let last = needle[needle.length - 1]
+    last.post = punct + last.post
+    // remove it, from source
+    wasLast.post = wasLast.post.replace(juicy, '')
+  }
+}
+
 const insert = function (str, view, append) {
   const { methods, document, world } = view
   let json = methods.one.tokenize(str, world)
@@ -30,10 +44,11 @@ const insert = function (str, view, append) {
     needle = clone(needle)
     if (append) {
       addSpace(source)
-      // are we inserting into the middle?
+      // both need a space, when inserting to middle
       if (document[ptr[0]].length > ptr[2]) {
         addSpace(needle) //give needle a space too
       }
+      movePunct(source, needle)
       spliceArr(source, ptr[2], needle)
     } else {
       addSpace(needle)

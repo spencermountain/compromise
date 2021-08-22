@@ -23,15 +23,15 @@ class View {
     this.pointer = pointer
   }
   /* getters:  */
-  // lazy-getter (fires once)
   get docs() {
     let docs = this.document
     if (this.pointer) {
       docs = world.methods.one.getDoc(this.pointer, this.document)
     }
-    Object.defineProperty(this, 'docs', {
-      value: docs,
-    })
+    // lazy-getter (fires once)
+    // Object.defineProperty(this, 'docs', {
+    //   value: docs,
+    // })
     return docs
   }
   get methods() {
@@ -81,15 +81,6 @@ class View {
       let ptr = m.pointer[0]
       document[ptr[0]] = terms
     })
-    // let docs = this.fullPointers().docs
-    // console.log(docs)
-    // document = document.map(terms => {
-    //   return terms.map(term => {
-    //     term = Object.assign({}, term)
-    //     term.tags = new Set(term.tags)
-    //     return term
-    //   })
-    // })
     let m = new View(document, this.pointer)
     // m._cache = this._cache //clone this too?
     return m

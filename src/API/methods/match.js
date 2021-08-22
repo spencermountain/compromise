@@ -15,8 +15,17 @@ const relPointer = function (ptrs, parent) {
   return ptrs
 }
 
+// did they pass-in a compromise object?
+const isView = regs => regs && typeof regs === 'object' && regs.isView === true
+
 const match = function (regs, group) {
   const one = this.methods.one
+  // support param as view object
+  if (isView(regs)) {
+    let ptrs = regs.fullPointer // support a view object as input
+    return this.update(ptrs)
+  }
+  // support param as string
   if (typeof regs === 'string') {
     regs = one.parseMatch(regs)
   }
@@ -30,6 +39,11 @@ const match = function (regs, group) {
 
 const matchOne = function (regs = '', group) {
   const one = this.methods.one
+  // support at view as a param
+  if (isView(regs)) {
+    let ptrs = regs.fullPointer // support a view object as input
+    return this.update(ptrs)
+  }
   if (typeof regs === 'string') {
     regs = one.parseMatch(regs)
   }
@@ -47,7 +61,7 @@ const has = function (regs = '', group) {
     regs = one.parseMatch(regs)
     let todo = { regs, group, justOne: true }
     ptrs = one.match(this.docs, todo, this._cache).ptrs
-  } else if (typeof regs === 'object' && regs.isView === true) {
+  } else if (isView(regs)) {
     ptrs = regs.fullPointer // support a view object as input
   }
   return ptrs.length > 0
@@ -67,7 +81,7 @@ const ifFn = function (regs, group) {
     })
     return this.update(ptrs)
   }
-  if (typeof regs === 'object' && regs.isView === true) {
+  if (isView(regs)) {
     let ptrs = regs.fullPointer // support a view object as input
     return this.update(ptrs)
   }
@@ -82,7 +96,7 @@ const ifNo = function (regs, group) {
     regs = one.parseMatch(regs)
     let todo = { regs, group }
     ptrs = one.match(docs, todo, _cache).ptrs
-  } else if (typeof regs === 'object' && regs.isView === true) {
+  } else if (isView(regs)) {
     ptrs = regs.fullPointer // support a view object as input
   }
   let found = new Set(ptrs.map(a => a[0]))
@@ -102,7 +116,7 @@ const not = function (regs) {
   if (typeof regs === 'string') {
     regs = one.parseMatch(regs)
     ptrs = one.match(docs, { regs }, _cache).ptrs
-  } else if (typeof regs === 'object' && regs.isView === true) {
+  } else if (isView(regs)) {
     ptrs = regs.fullPointer // support a view object as input
   }
   // nothing found, end here

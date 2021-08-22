@@ -11,16 +11,9 @@ import nlp from './src/three.js'
 // m = m.splitAfter('two')
 // m.debug()
 
-let doc = nlp(`one two three seven. four five six`)
-// let a = doc.eq(0) //.clone()
-// doc.tag('Person')
-doc.if('four').debug()
-
-// let doc = nlp(`one two three. four five six`)
-// let a = doc.eq(0).clone()
-// a.all().tag('Person')
-// // a.debug()
-// doc.debug()
+let doc = nlp('if so, he is the best, that i see. he is the greatest')
+let m = doc.match('he is the .')
+let found = doc.matchOne(m).debug()
 
 // console.log(nlp.parseMatch(null))
 

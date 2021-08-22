@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/clone] '
+const here = '[two/clone] '
 
 test('clone root', function (t) {
   const arr = [
@@ -18,8 +18,8 @@ test('clone root', function (t) {
     let adv = doc.clone().match('#Verb').append('really')
     t.notEqual(str, adv.out(), here + 'adv not equal - ' + str)
 
-    // let rm = m.clone().match('#Verb').delete('#Verb')
-    // t.notEqual(str, rm.out(), 'rm not equal - ' + str)
+    let rm = doc.clone().match('#Verb').delete('#Verb')
+    t.notEqual(str, rm.out(), 'rm not equal - ' + str)
 
     let tag = doc.clone().tag('#Verb')
     t.notEqual(doc.match('#Verb').text(), tag.match('#Verb').text(), here + 'rm not equal - ' + str)
@@ -44,7 +44,7 @@ test('partial clone leak', function (t) {
   // clone first sentence
   let a = doc.eq(0).clone()
   // tag the whole thing
-  a.all().tag('Person')
+  a = a.all().tag('Person')
   t.equal(a.if('#Person').length, 2, here + 'A has 2 sentences')
   t.equal(doc.if('#Person').length, 1, here + 'doc has 1 sentence')
 

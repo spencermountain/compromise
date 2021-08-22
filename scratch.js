@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-unused-vars */
 // import './tests/_ignore/_error.js'
 import nlp from './src/three.js'
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 // ''
 // ''
@@ -11,11 +11,16 @@ nlp.verbose('tagger')
 // m = m.splitAfter('two')
 // m.debug()
 
-// console.log(nlp.model().two.tagSet)
-let doc = nlp(`whom the angels name Lenore.`)
-// let a = doc.clone()
-// a.tag('Person')
-doc.debug()
+let doc = nlp(`one two three seven. four five six`)
+// let a = doc.eq(0) //.clone()
+// doc.tag('Person')
+doc.if('four').debug()
+
+// let doc = nlp(`one two three. four five six`)
+// let a = doc.eq(0).clone()
+// a.all().tag('Person')
+// // a.debug()
+// doc.debug()
 
 // console.log(nlp.parseMatch(null))
 

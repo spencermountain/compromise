@@ -2,7 +2,7 @@ const entity = ['Person', 'Place', 'Organization']
 
 export default {
   Noun: {
-    not: ['Verb', 'Adjective', 'Adverb'],
+    not: ['Verb', 'Adjective', 'Adverb', 'Value'],
   },
   Singular: {
     is: 'Noun',

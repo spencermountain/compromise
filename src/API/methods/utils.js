@@ -61,13 +61,6 @@ const utils = {
   all: function () {
     return this.update()
   },
-  /** */
-  fork: function () {
-    let document = JSON.parse(JSON.stringify(this.document))
-    let view = this.update(this.pointer)
-    view.document = document
-    return this
-  },
 
   /** */
   toLowerCase: function () {
@@ -113,5 +106,4 @@ const utils = {
   },
 }
 utils.group = utils.groups
-utils.clone = utils.fork
 export default utils

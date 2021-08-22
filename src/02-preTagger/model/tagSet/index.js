@@ -9,3 +9,4 @@ let allTags = Object.assign({}, nouns, verbs, values, dates, misc)
 
 const tagSet = compute(allTags)
 export default tagSet
+// console.log(tagSet.Person)

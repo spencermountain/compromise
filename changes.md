@@ -35,6 +35,10 @@ sub.insertAfter('really')
 
 ### Clone/Fork
 
+`.clone()` will copy the document data, and `.fork()` will copy the linguistic context.
+
+a subset of a document can be cloned.
+
 ### Loop changes
 
 - .find() does not return undefined on an empty result anymore

@@ -45,7 +45,7 @@ const has = function (regs = '', group) {
   let ptrs
   if (typeof regs === 'string') {
     regs = one.parseMatch(regs)
-    let todo = { regs, group }
+    let todo = { regs, group, justOne: true }
     ptrs = one.match(this.docs, todo, this._cache).ptrs
   } else if (typeof regs === 'object' && regs.isView === true) {
     ptrs = regs.fullPointer // support a view object as input
@@ -56,17 +56,22 @@ const has = function (regs = '', group) {
 // 'if'
 const ifFn = function (regs, group) {
   const one = this.methods.one
-  let ptrs
   if (typeof regs === 'string') {
     regs = one.parseMatch(regs)
-    let todo = { regs, group }
-    ptrs = one.match(this.docs, todo, this._cache).ptrs
-  } else if (typeof regs === 'object' && regs.isView === true) {
-    ptrs = regs.fullPointer // support a view object as input
+    let todo = { regs, group, justOne: true }
+    let ptrs = this.fullPointer
+    ptrs = ptrs.filter(ptr => {
+      let m = this.update([ptr])
+      let res = one.match(m.docs, todo, this._cache).ptrs
+      return res.length > 0
+    })
+    return this.update(ptrs)
   }
-  // convert them to whole sentences
-  ptrs = ptrs.map(a => [a[0]])
-  return this.update(ptrs)
+  if (typeof regs === 'object' && regs.isView === true) {
+    let ptrs = regs.fullPointer // support a view object as input
+    return this.update(ptrs)
+  }
+  return this.update([])
 }
 
 const ifNo = function (regs, group) {

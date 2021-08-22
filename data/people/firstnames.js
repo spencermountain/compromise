@@ -42,4 +42,5 @@ module.exports = [
   'luca',
   'manaia',
   'melokuhle',
+  'sumit'
 ]

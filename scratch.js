@@ -11,6 +11,8 @@ import nlp from './src/three.js'
 // m = m.splitAfter('two')
 // m.debug()
 
+// nlp('Mary designed the key.').verbs(0).toInfinitive().debug()
+
 // let doc = nlp('one two. three four')
 // doc.append('oooo')
 // console.log(doc.text())

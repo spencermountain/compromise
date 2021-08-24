@@ -47,3 +47,6 @@ const toInfinitive = function (str, model, tense) {
   return str
 }
 export default toInfinitive
+
+// import model from '../../../../model/index.js'
+// console.log(toInfinitive('designed', model))

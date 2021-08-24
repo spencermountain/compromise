@@ -223,10 +223,6 @@ let rules = {
       to: '$1',
     },
     {
-      reg: /(..[^aeiouy])ed$/i,
-      to: '$1e',
-    },
-    {
       reg: /(..)ied$/i,
       to: '$1y',
     },
@@ -245,6 +241,15 @@ let rules = {
     {
       //owed, aced
       reg: /([aeiou][^aeiou])ed$/i,
+      to: '$1e',
+    },
+    // designed
+    {
+      reg: /([aeiou]gn)ed$/i,
+      to: '$1',
+    },
+    {
+      reg: /(..[^aeiouy])ed$/i,
       to: '$1e',
     },
     {

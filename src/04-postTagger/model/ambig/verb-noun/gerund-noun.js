@@ -13,4 +13,6 @@ export default [
   { match: '[#Gerund] #Adverb? not? #Copula', group: 0, tag: 'Activity', reason: 'gerund-copula' },
   //walking should be fun
   { match: '[#Gerund] #Modal', group: 0, tag: 'Activity', reason: 'gerund-modal' },
+  // finish listening
+  // { match: '#Infinitive [#Gerund]', group: 0, tag: 'Activity', reason: 'finish-listening' },
 ]

@@ -6,7 +6,7 @@ const getMain = function (m) {
     // main = main.not('(#Adverb|#Negative|#Auxiliary|#Particle)')
     main = main.match('!#Negative')
     main = main.match('!#Auxiliary')
-    main = main.match('!#Particle')
+    // main = main.match('!#Particle')
   }
   // just get the last one
   if (main.wordCount() > 1) {
@@ -16,11 +16,6 @@ const getMain = function (m) {
     return m
   }
   return main
-}
-
-const getAux = function (m, main) {
-  let aux = m.not(main)
-  return aux
 }
 
 const classify = function (verb) {
@@ -45,8 +40,7 @@ const parseVerb = function (view) {
   vb.remove(adverbs)
   const form = classify(vb)
   const main = getMain(vb)
-  // const aux = getAux(vb, main)
-  const aux = vb.not(main)
+  const aux = vb.not(main).not(phrasal)
 
   let verb = {
     adverbs: adverbs,
@@ -56,10 +50,17 @@ const parseVerb = function (view) {
     copula: main.match('#Copula'),
     form: form.name,
     tense: form.tense,
+    passive: Boolean(form.passive),
+    progressive: Boolean(form.progressive),
+    complete: Boolean(form.complete),
     phrasal: phrasal,
   }
   let fromTense = main.has('#PastTense') ? 'PastTense' : 'PresentTense'
-  verb.infinitive = verbToInfinitive(main.text('machine'), model, fromTense)
+  if (!verb.tense) {
+    verb.tense = fromTense
+  }
+  let str = main.text('normal') //use 'machine'?
+  verb.infinitive = verbToInfinitive(str, model, fromTense)
   return verb
 }
 export default parseVerb

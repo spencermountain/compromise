@@ -19,9 +19,12 @@ import nlp from './src/three.js'
 // console.log(three.pointer)
 // console.log(m.match('three').pointer)
 
-let doc = nlp('I usually finish listening').debug()
+// we are hiring
+// we begin hiring
+
+let doc = nlp('got ran over').debug()
 // let doc = nlp("i'm")
-console.log(doc.verbs().json())
+console.log(doc.verbs().json()[0])
 
 // bug:
 // let doc = nlp(`zero one two three am here six seven`)

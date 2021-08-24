@@ -12,11 +12,17 @@ const toJSON = function (vb) {
     main: parsed.main.text('normal'),
     negative: parsed.negative.found,
     auxiliary: getWords(parsed.auxiliary),
-    copula: parsed.copula.found,
-    form: parsed.form,
-    tense: parsed.tense,
-    isPhrasal: parsed.phrasal.found,
-    infinitive: parsed.infinitive,
+    form: {
+      name: parsed.form,
+      tense: parsed.tense,
+      isPhrasal: parsed.phrasal.found,
+      infinitive: parsed.infinitive,
+      copula: parsed.copula.found,
+      progressive: parsed.progressive,
+      passive: parsed.passive,
+      complete: parsed.complete,
+      auxiliary: parsed.auxiliary.found,
+    },
   }
 }
 
@@ -26,12 +32,10 @@ const findVerbs = function (View) {
       super(document, pointer, groups)
       this.viewType = 'Verbs'
     }
-    json(opts = {}) {
+    json(opts) {
       return this.map(vb => {
-        let json = vb.json()
-        if (opts && opts.verb !== false) {
-          json.verb = toJSON(vb)
-        }
+        let json = vb.json()[0]
+        json.verb = toJSON(vb)
         return json
       })
     }

@@ -16,7 +16,12 @@ export default [
   //support a splattering of auxillaries before a verb
   { match: `[(has|had) (#Adverb|not)+?] #PastTense`, group: 0, tag: 'Auxiliary', reason: 'had-walked' },
   // will walk
-  { match: '[(do|does|did|will|have|had|has)] (not|#Adverb)+? #Verb', group: 0, tag: 'Auxiliary', reason: 'have-had' },
+  {
+    match: '[(do|does|did|will|have|had|has|got)] (not|#Adverb)+? #Verb',
+    group: 0,
+    tag: 'Auxiliary',
+    reason: 'have-had',
+  },
   // about to go
   { match: '[about to] #Adverb? #Verb', group: 0, tag: ['Auxiliary', 'Verb'], reason: 'about-to' },
   //would be walking

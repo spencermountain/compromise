@@ -7,15 +7,20 @@ const spliceArr = (parent, index, child) => {
 
 // this should probably be methods/one
 const clone = function (terms) {
-  return terms.slice().map(term => {
+  return terms.slice(0).map(term => {
     term = Object.assign({}, term)
     term.tags = new Set(term.tags)
     return term
   })
 }
 
-const addSpace = function (terms) {
-  terms[terms.length - 1].post += ' '
+// add a space at end, if required
+const endSpace = function (terms) {
+  const hasSpace = / $/
+  let lastTerm = terms[terms.length - 1]
+  if (hasSpace.test(lastTerm.post) === false) {
+    lastTerm.post += ' '
+  }
 }
 
 // sentence-ending punctuation should move in append
@@ -26,7 +31,7 @@ const movePunct = (source, needle) => {
   if (juicy.test(post)) {
     let punct = post.match(juicy).join('') //not perfect
     let last = needle[needle.length - 1]
-    last.post = punct + last.post
+    last.post = punct + last.post + ' '
     // remove it, from source
     wasLast.post = wasLast.post.replace(juicy, '')
   }
@@ -34,25 +39,31 @@ const movePunct = (source, needle) => {
 
 const insert = function (str, view, append) {
   const { methods, document, world } = view
-  let json = methods.one.tokenize(str, world)
-  let needle = json[0] //assume one sentence
   // insert words at end of each doc
   let ptrs = view.fullPointer
   ptrs.forEach(ptr => {
+    let [n, start, end] = ptr
     // add-in the words
-    let source = document[ptr[0]]
-    needle = clone(needle)
+    let home = document[n]
+    let needle = methods.one.tokenize(str, world)[0] //assume one sentence
     if (append) {
-      addSpace(source)
-      // both need a space, when inserting to middle
-      if (document[ptr[0]].length > ptr[2]) {
-        addSpace(needle) //give needle a space too
+      // introduce spaces appropriately
+      if (end === 0) {
+        // at start - need space in insert
+        endSpace(needle)
+      } else if (end === document[n].length) {
+        // at end - need space in home
+        endSpace(home)
+      } else {
+        // in middle - need space in home and insert
+        endSpace(needle)
+        endSpace([home[ptr[1]]])
       }
-      movePunct(source, needle)
-      spliceArr(source, ptr[2], needle)
+      movePunct(home, needle)
+      spliceArr(home, end, needle)
     } else {
-      addSpace(needle)
-      spliceArr(source, ptr[1], needle)
+      endSpace(needle)
+      spliceArr(home, start, needle)
     }
     // extend the pointer
     ptr[2] += needle.length

@@ -10,14 +10,18 @@ import nlp from './src/three.js'
 // let m = nlp(`one two three`).match('.')
 // m = m.splitAfter('two')
 // m.debug()
+let doc = nlp(`oh yeah he has really walked for sure`)
+// let json = doc.verbs().json({ terms: false })[0]
+// console.log(json)
 
-// nlp('Mary designed the key.').verbs(0).toInfinitive().debug()
+let vb = doc.match('has really walked')
+let main = vb.match('walked')
+vb.debug()
+const aux = vb.not('walked')
+aux.debug()
 
-// let doc = nlp('one two. three four')
-// doc.append('oooo')
-// console.log(doc.text())
-
-// #864
+// console.log(doc.all().text() + '|')
+// // #864
 // let doc = nlp('"Good bye," he said.')
 // doc.sentences().forEach(match => {
 //   match.append('and left')

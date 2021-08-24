@@ -1,8 +1,4 @@
-import matches from './classify.js'
-
-const getWords = function (m) {
-  return m.json({ normal: true }).map(s => s.normal)
-}
+import forms from './classify.js'
 
 const getMain = function (m) {
   let main = m.match('#Verb+')
@@ -24,39 +20,47 @@ const getMain = function (m) {
 
 const getAux = function (m, main) {
   let aux = m.not(main)
-  aux = aux.match('!#Negative')
-  aux = aux.match('!#Adverb')
   return aux
 }
 
+const classify = function (verb) {
+  for (let i = 0; i < forms.length; i += 1) {
+    let todo = forms[i]
+    if (verb.has(todo.match) === true) {
+      return todo
+    }
+  }
+  return {}
+}
+
 const parseVerb = function (view) {
-  let res = view.json()[0]
   const { methods, model } = view
   const { verbToInfinitive } = methods.two.transform
-
-  const main = getMain(view)
-  const aux = getAux(view, main)
+  let vb = view.clone()
+  const not = vb.match('not') //only this word, for now
+  const adverbs = view.match('#Adverb')
+  const phrasal = view.match('#PhrasalVerb')
+  vb.remove(not)
+  vb.remove(adverbs)
+  const form = classify(vb)
+  const main = getMain(vb)
+  // const aux = getAux(vb, main)
+  const aux = vb.not(main)
+  aux.debug()
 
   let verb = {
-    adverbs: getWords(view.match('#Adverb')),
-    main: main.text('normal'),
-    negative: view.has('not'),
-    auxiliary: getWords(aux),
-    copula: main.has('#Copula'),
-    form: null,
+    adverbs: adverbs,
+    main: main,
+    negative: not,
+    auxiliary: aux,
+    copula: main.match('#Copula'),
+    form: form.name,
+    tense: form.tense,
+    phrasal: phrasal,
   }
   let fromTense = main.has('#PastTense') ? 'PastTense' : 'PresentTense'
   verb.infinitive = verbToInfinitive(verb.main, model, fromTense)
 
-  let props = {}
-  matches.find(todo => {
-    if (view.has(todo.match)) {
-      verb.form = todo.name
-      return true
-    }
-    return false
-  })
-  res.verb = verb
-  return res
+  return verb
 }
 export default parseVerb

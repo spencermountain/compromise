@@ -56,3 +56,12 @@ test('remove-dangling :', function (t) {
   t.equal(doc.text(), 'four five six', 'full-sentence')
   t.end()
 })
+
+test('clone-remove :', function (t) {
+  let doc = nlp(`one two three. four two five`)
+  let m = doc.eq(1).clone()
+  m.remove('two')
+  t.equal(m.match('four five').found, true, here + 'match-over del')
+  t.equal(doc.match('four five').found, false, here + 'og no match-over del')
+  t.end()
+})

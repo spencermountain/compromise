@@ -1,15 +1,37 @@
 import splitComma from '../_byComma.js'
 import parseVerb from './parseVerb.js'
 
+const getWords = function (m) {
+  return m.json({ normal: true }).map(s => s.normal)
+}
+
+const toJSON = function (vb) {
+  let parsed = parseVerb(vb)
+  return {
+    adverbs: getWords(parsed.adverbs),
+    main: parsed.main.text('normal'),
+    negative: parsed.negative.found,
+    auxiliary: getWords(parsed.auxiliary),
+    copula: parsed.copula.found,
+    form: parsed.form,
+    tense: parsed.tense,
+    isPhrasal: parsed.phrasal.found,
+  }
+}
+
 const findVerbs = function (View) {
   class Verbs extends View {
     constructor(document, pointer, groups) {
       super(document, pointer, groups)
       this.viewType = 'Verbs'
     }
-    json() {
+    json(opts = {}) {
       return this.map(vb => {
-        return parseVerb(vb)
+        let json = {} //vb.json(opts)
+        if (opts && opts.verb !== true) {
+          json.verb = toJSON(vb)
+        }
+        return json
       })
     }
   }

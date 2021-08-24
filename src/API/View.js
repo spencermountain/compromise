@@ -71,16 +71,16 @@ class View {
     return m
   }
   clone() {
+    // clone the whole document
     let document = this.document.slice(0)
-    this.forEach(m => {
-      let terms = this.docs[0].map(term => {
+    document = document.map(terms => {
+      return terms.map(term => {
         term = Object.assign({}, term)
         term.tags = new Set(term.tags)
         return term
       })
-      let ptr = m.pointer[0]
-      document[ptr[0]] = terms
     })
+    // clone only sub-document ?
     let m = new View(document, this.pointer)
     // m._cache = this._cache //clone this too?
     return m

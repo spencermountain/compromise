@@ -10,8 +10,13 @@ const getMain = function (m) {
     // main = main.match('!#Particle')
   }
   // just get the last one
+  if (main.length > 1) {
+    main = main.last()
+  }
   if (main.wordCount() > 1) {
-    main = main.match('.$')
+    // main = main.match('#Copula [#Verb+]', 0)
+    // main.debug()
+    // main = main.match('.$')
   }
   if (!main.found) {
     return m

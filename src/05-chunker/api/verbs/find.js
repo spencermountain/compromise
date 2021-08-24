@@ -1,7 +1,10 @@
+import splitComma from '../_byComma.js'
+
 const findVerbs = function (doc) {
   let m = doc.match('{Verb}')
 
   m = m.splitAfter('@hasComma')
+
   // let match = doc.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+')
   // try to ignore leading and trailing adverbs
   // match = match.not('^#Adverb+')
@@ -16,7 +19,7 @@ const findVerbs = function (doc) {
   //handle slashes?
 
   //ensure there's actually a verb
-  // m = m.if('#Verb')
+  m = m.if('#Verb')
 
   // the reason he will is ...
   // if (m.has('(is|was)$')) {

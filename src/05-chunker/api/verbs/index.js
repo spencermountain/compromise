@@ -1,4 +1,3 @@
-import splitComma from '../_byComma.js'
 import parseVerb from './parseVerb.js'
 import find from './find.js'
 
@@ -10,7 +9,7 @@ const toJSON = function (vb) {
   let parsed = parseVerb(vb)
   return {
     adverbs: getWords(parsed.adverbs),
-    main: parsed.main.text('normal'),
+    main: parsed.main.text('machine'),
     negative: parsed.negative.found,
     auxiliary: getWords(parsed.auxiliary),
     infinitive: parsed.infinitive,

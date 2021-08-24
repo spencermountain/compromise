@@ -1,4 +1,4 @@
-const trimEnd = /[,:;).?!-]+/
+const trimEnd = /[,:;).?!—-]+/
 const trimStart = /^[('"]+/
 
 const punctToKill = /[,:;)('"]/
@@ -22,21 +22,20 @@ const textFromTerms = function (terms, opts, keepSpace = true) {
       pre = pre.replace(/\s/, '') //remove pre-whitespace
       post = post.replace(/\s+/, ' ') //replace post-whitespace with a space
     }
+    if (opts.keepPunct === false) {
+      pre = pre.replace(trimStart, '')
+      post = post.replace(trimEnd, '')
+    }
     // grab the correct word format
-    let word = t[opts.use || 'text'] || ''
+    let word = t[opts.use || 'text'] || t.normal || t.text || ''
     txt += pre + word + post
   })
-  if (opts.keepPunct === false) {
-    txt = txt.replace(trimStart, '')
-    txt = txt.replace(trimEnd, '')
-  }
   if (keepSpace === false) {
     txt = txt.trim()
   }
   if (opts.lowerCase === true) {
     txt = txt.toLowerCase()
   }
-
   return txt
 }
 

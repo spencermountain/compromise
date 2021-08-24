@@ -1,3 +1,4 @@
+import subtract from './subtract.js'
 // const bySlash = /[/:]/g
 /*
 const isArray = function (arr) {
@@ -55,4 +56,4 @@ const getDoc = function (pointer, document) {
   return doc
 }
 
-export { getDoc /*createPointer, parsePointer*/ }
+export { getDoc, subtract /*createPointer, parsePointer*/ }

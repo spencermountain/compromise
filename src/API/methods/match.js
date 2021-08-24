@@ -1,4 +1,4 @@
-import invert from './lib/_invert.js'
+import invert from '../../lib/pointer/_invert.js'
 
 const relPointer = function (ptrs, parent) {
   if (!parent) {
@@ -112,10 +112,12 @@ const ifNo = function (regs, group) {
 const not = function (regs) {
   const { docs, methods, _cache } = this
   const one = methods.one
+  const refs = this.pointer
   let ptrs = []
   if (typeof regs === 'string') {
     regs = one.parseMatch(regs)
     ptrs = one.match(docs, { regs }, _cache).ptrs
+    ptrs = relPointer(ptrs, refs)
   } else if (isView(regs)) {
     ptrs = regs.fullPointer // support a view object as input
   }

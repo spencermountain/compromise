@@ -35,7 +35,7 @@ const api = function (View) {
   }
   // add fn to View
   View.prototype.contractions = function () {
-    let m = this.match('@hasContraction{2,}')
+    let m = this.match('@hasContraction+')
     return new Contractions(this.document, m.pointer)
   }
   View.prototype.contract = contract

@@ -37,6 +37,7 @@ const parseVerb = function (view) {
   const { methods, model } = view
   const { verbToInfinitive } = methods.two.transform
   let vb = view.clone()
+  vb.contractions().expand()
   const not = vb.match('not') //only this word, for now
   const adverbs = view.match('#Adverb')
   const phrasal = view.match('#PhrasalVerb')
@@ -46,7 +47,6 @@ const parseVerb = function (view) {
   const main = getMain(vb)
   // const aux = getAux(vb, main)
   const aux = vb.not(main)
-  aux.debug()
 
   let verb = {
     adverbs: adverbs,
@@ -59,8 +59,7 @@ const parseVerb = function (view) {
     phrasal: phrasal,
   }
   let fromTense = main.has('#PastTense') ? 'PastTense' : 'PresentTense'
-  verb.infinitive = verbToInfinitive(verb.main, model, fromTense)
-
+  verb.infinitive = verbToInfinitive(main.text('machine'), model, fromTense)
   return verb
 }
 export default parseVerb

@@ -16,6 +16,7 @@ const toJSON = function (vb) {
     form: parsed.form,
     tense: parsed.tense,
     isPhrasal: parsed.phrasal.found,
+    infinitive: parsed.infinitive,
   }
 }
 
@@ -27,8 +28,8 @@ const findVerbs = function (View) {
     }
     json(opts = {}) {
       return this.map(vb => {
-        let json = {} //vb.json(opts)
-        if (opts && opts.verb !== true) {
+        let json = vb.json()
+        if (opts && opts.verb !== false) {
           json.verb = toJSON(vb)
         }
         return json

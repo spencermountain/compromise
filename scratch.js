@@ -10,15 +10,25 @@ import nlp from './src/three.js'
 // let m = nlp(`one two three`).match('.')
 // m = m.splitAfter('two')
 // m.debug()
-let doc = nlp(`oh yeah he has really walked for sure`)
-// let json = doc.verbs().json({ terms: false })[0]
-// console.log(json)
 
-let vb = doc.match('has really walked')
-let main = vb.match('walked')
-vb.debug()
-const aux = vb.not('walked')
-aux.debug()
+// let doc = nlp(`one two three. four five six`)
+
+// let m = doc.match('two three')
+// let three = doc.match(m)
+// console.log(m.pointer)
+// console.log(three.pointer)
+// console.log(m.match('three').pointer)
+
+let doc = nlp('I usually finish listening').debug()
+// let doc = nlp("i'm")
+console.log(doc.verbs().json())
+
+// bug:
+// let doc = nlp(`zero one two three am here six seven`)
+// let m = doc.match('am here')
+// let end = m.not('am').debug()
+// console.log(m.pointer)
+// console.log(end.pointer)
 
 // console.log(doc.all().text() + '|')
 // // #864

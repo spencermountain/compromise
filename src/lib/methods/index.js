@@ -1,4 +1,4 @@
-import { getDoc } from './pointer/index.js'
+import { getDoc } from '../pointer/index.js'
 import setTag from './tag/setTag.js'
 import unTag from './tag/unTag.js'
 import match from './match/index.js'

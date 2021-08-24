@@ -6,6 +6,7 @@ const getMain = function (m) {
     // main = main.not('(#Adverb|#Negative|#Auxiliary|#Particle)')
     main = main.match('!#Negative')
     main = main.match('!#Auxiliary')
+    main = main.match('!#Modal')
     // main = main.match('!#Particle')
   }
   // just get the last one

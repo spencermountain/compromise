@@ -22,9 +22,10 @@ import nlp from './src/three.js'
 // we are hiring
 // we begin hiring
 
-let doc = nlp('got ran over').debug()
+let doc = nlp(`If THAT doesn't happen, try your best `)
 // let doc = nlp("i'm")
-console.log(doc.verbs().json()[0])
+doc.verbs().debug()
+// console.log(doc.verbs().json()[0])
 
 // bug:
 // let doc = nlp(`zero one two three am here six seven`)

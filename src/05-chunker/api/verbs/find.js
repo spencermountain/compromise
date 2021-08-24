@@ -1,7 +1,7 @@
 const findVerbs = function (doc) {
-  let m = doc.match('{Verb}').debug()
-  // console.log('===')
-  // m = m.splitAfter('@hasComma')
+  let m = doc.match('{Verb}')
+
+  m = m.splitAfter('@hasComma')
   // let match = doc.match('(#Adverb|#Auxiliary|#Verb|#Negative|#Particle)+')
   // try to ignore leading and trailing adverbs
   // match = match.not('^#Adverb+')
@@ -9,8 +9,6 @@ const findVerbs = function (doc) {
   // handle commas:
   // don't split 'really, really'
   // let keep = match.match('(#Adverb && @hasComma) #Adverb')
-  // // but split the other commas
-  // let m = match.not(keep).splitAfter('@hasComma')
 
   // combine them back together
   // m = m.concat(keep)

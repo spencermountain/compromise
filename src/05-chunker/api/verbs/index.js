@@ -1,5 +1,6 @@
 import splitComma from '../_byComma.js'
 import parseVerb from './parseVerb.js'
+import find from './find.js'
 
 const getWords = function (m) {
   return m.json({ normal: true }).map(s => s.normal)
@@ -12,11 +13,11 @@ const toJSON = function (vb) {
     main: parsed.main.text('normal'),
     negative: parsed.negative.found,
     auxiliary: getWords(parsed.auxiliary),
+    infinitive: parsed.infinitive,
     form: {
       name: parsed.form,
       tense: parsed.tense,
       isPhrasal: parsed.phrasal.found,
-      infinitive: parsed.infinitive,
       copula: parsed.copula.found,
       progressive: parsed.progressive,
       passive: parsed.passive,
@@ -43,12 +44,12 @@ const findVerbs = function (View) {
 
   View.prototype.verbs = function (n) {
     this.compute('chunks')
-    let m = this.match('{Verb}')
+    let vb = find(this)
     // m = splitComma(m)
     if (typeof n === 'number') {
-      m = m.get(n)
+      vb = vb.get(n)
     }
-    return new Verbs(this.document, m.pointer)
+    return new Verbs(this.document, vb.pointer)
   }
 }
 export default findVerbs

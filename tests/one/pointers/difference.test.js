@@ -34,3 +34,11 @@ test('pointer-difference-match :', function (t) {
 
   t.end()
 })
+
+test('difference-multi :', function (t) {
+  let doc = nlp('i think spencer can walk')
+  let m = doc.match('(i|spencer)') //#Noun
+  let res = doc.difference(m)
+  t.deepEqual(res.out('array'), ['think', 'can walk'], here + 'difference multi')
+  t.end()
+})

@@ -1,4 +1,4 @@
-import { indexN } from '../../../lib/pointers/_lib.js'
+import { indexN } from './_lib.js'
 
 // split a pointer, by match pointer
 const pivotBy = function (full, m) {

@@ -1,13 +1,14 @@
 import test from 'tape'
-import nlp from '../tests/lib/_lib.js'
+import nlp from '../_lib.js'
+const here = '[one/sort] '
 
 test('sortAlpha:', function (t) {
   const str = 'John xoo, John fredman, John davis, John fredman,'
   let r = nlp(str)
   r = r.split('@hasComma')
-  r.sort('alpha')
+  r = r.sort('alpha')
   const want = ['John davis,', 'John fredman,', 'John fredman,', 'John xoo,']
-  t.deepEqual(r.out('array'), want, 'sort-alpha')
+  t.deepEqual(r.out('array'), want, here + 'sort-alpha')
   t.end()
 })
 
@@ -15,10 +16,10 @@ test('sortSequential:', function (t) {
   const str = 'John xoo, John fredman, John davis'
   let r = nlp(str)
   r = r.split('@hasComma')
-  r.sort('alphabetical')
-  r.sort('seq')
+  r = r.sort('alphabetical')
+  r = r.sort('seq')
   const want = ['John xoo,', 'John fredman,', 'John davis']
-  t.deepEqual(r.out('array'), want, 'sort-chron')
+  t.deepEqual(r.out('array'), want, here + 'sort-chron')
   t.end()
 })
 
@@ -26,10 +27,10 @@ test('reverse:', function (t) {
   const str = 'John xoo, John fredman, John davis'
   let r = nlp(str)
   r = r.split('@hasComma')
-  r.sort('alphabetical')
+  r = r.sort('alphabetical')
   r = r.reverse()
   const want = ['John xoo,', 'John fredman,', 'John davis']
-  t.deepEqual(r.out('array'), want, 'alpha-reverse')
+  t.deepEqual(r.out('array'), want, here + 'alpha-reverse')
   t.end()
 })
 
@@ -39,7 +40,7 @@ test('freq:', function (t) {
   r = r.terms()
   r = r.sort('freq')
   const want = ['John', 'John', 'John', 'xoo,', 'fredman,', 'davis']
-  t.deepEqual(r.out('array'), want, 'freq-reverse')
+  t.deepEqual(r.out('array'), want, here + 'freq-reverse')
   t.end()
 })
 
@@ -47,10 +48,10 @@ test('length:', function (t) {
   const str = 'Amy, John Fredman, Dr. Bill, Alexis Smithsonian'
   let r = nlp(str)
   r = r.split('@hasComma')
-  r.sort('length')
+  r = r.sort('length')
   r = r.reverse()
   const want = ['Amy,', 'Dr. Bill,', 'John Fredman,', 'Alexis Smithsonian']
-  t.deepEqual(r.out('array'), want, 'sort length')
+  t.deepEqual(r.out('array'), want, here + 'sort length')
   t.end()
 })
 
@@ -58,10 +59,10 @@ test('wordCount:', function (t) {
   const str = 'John Fredman, Amy, Dr. Bill G. Gates'
   let r = nlp(str)
   r = r.split('@hasComma')
-  r.sort('wordCount')
+  r = r.sort('wordCount')
   r.reverse()
   const want = ['Dr. Bill G. Gates', 'John Fredman,', 'Amy,']
-  t.deepEqual(r.out('array'), want, 'sort-wordcount')
+  t.deepEqual(r.out('array'), want, here + 'sort-wordcount')
   t.end()
 })
 
@@ -71,7 +72,7 @@ test('unique:', function (t) {
   r = r.split('@hasComma')
   r = r.unique()
   const want = ['John xoo,', 'John fredman,', 'John davis']
-  t.deepEqual(r.out('array'), want, 'sort-unique')
+  t.deepEqual(r.out('array'), want, here + 'sort-unique')
   t.end()
 })
 
@@ -90,7 +91,7 @@ test('custom-sort:', function (t) {
     return 0
   })
   let arr = terms.map(d => d.text('normal'))
-  t.deepEqual(arr, ['meeny, ', 'eeny, ', 'miny, ', 'moe'], 'custom sort output')
+  t.deepEqual(arr, ['meeny, ', 'eeny, ', 'miny, ', 'moe'], here + 'custom sort output')
   t.end()
 })
 
@@ -99,7 +100,7 @@ test('frequency:', function (t) {
   let r = nlp(str)
   r = r.split('@hasComma')
   const a = r.out('frequency')
-  t.equal(a[0].reduced, 'john xoo', 'topk is sorted')
-  t.equal(a[0].count, 2, 'topk finds two')
+  t.equal(a[0].reduced, 'john xoo', here + 'topk is sorted')
+  t.equal(a[0].count, 2, here + 'topk finds two')
   t.end()
 })

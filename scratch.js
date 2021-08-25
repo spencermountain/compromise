@@ -18,12 +18,11 @@ import nlp from './src/three.js'
 // console.log(m.pointer)
 // console.log(three.pointer)
 // console.log(m.match('three').pointer)
-
-// let canBeVerb = nlp('i think spencer kelly can walk').canBe('Verb').debug()
-
-let doc = nlp('i think spencer can walk')
-let m = doc.match('#Noun')
-doc.difference(m).debug()
+const str = 'John xoo, John fredman, John davis, John fredman,'
+let r = nlp(str)
+r = r.splitAfter('@hasComma')
+r = r.sort('alpha')
+r.debug()
 
 // we are hiring
 // we begin hiring

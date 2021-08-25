@@ -52,6 +52,7 @@ const fns = {
     }
     return this
   },
+
   /** return only the terms that can be this tag  */
   canBe: function (tag) {
     let tagSet = this.model.two.tagSet
@@ -69,7 +70,7 @@ const fns = {
         }
       })
     })
-    let noDoc = this.update(nope).debug()
+    let noDoc = this.update(nope)
     return this.difference(noDoc)
   },
 }

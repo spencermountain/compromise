@@ -1,5 +1,6 @@
-const test = require('tape')
-const nlp = require('./_lib')
+import test from 'tape'
+import nlp from '../tests/two/_lib.js'
+const here = '[two/setTag] '
 
 test('custom-tags-persist', function (t) {
   let r = nlp('i am two years older now')

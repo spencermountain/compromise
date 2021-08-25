@@ -1,9 +1,10 @@
-const test = require('tape')
-const nlp = require('./_lib')
+import test from 'tape'
+import nlp from '../_lib.js'
+const here = '[one/remove] '
 
 test('remove-everything-basic', function (t) {
   let doc = nlp(`2pm`)
-  doc.remove('#Time')
+  doc.remove('.')
   t.equal(doc.text(), '', 'empty-text')
   t.equal(doc.length, 0, '0-length')
   t.equal(doc.found, false, 'not-found')

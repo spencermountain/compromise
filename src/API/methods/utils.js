@@ -4,8 +4,9 @@ const utils = {
     return this.methods.one.termList(this.docs)
   },
   /** */
-  terms: function () {
-    return this.match('.') //make this faster
+  terms: function (n) {
+    let m = this.match('.') //make this faster
+    return typeof n === 'number' ? m.eq(n) : m
   },
   /** */
   cache: function () {

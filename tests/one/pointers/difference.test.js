@@ -25,3 +25,12 @@ test('pointer-difference-basic :', function (t) {
 
   t.end()
 })
+
+test('pointer-difference-match :', function (t) {
+  let doc = nlp('one match two three. four five match six')
+
+  let res = doc.match('match .').union('. two')
+  t.deepEqual(res.out('array'), ['match six'], here + 'diff-full')
+
+  t.end()
+})

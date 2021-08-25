@@ -18,13 +18,10 @@ import nlp from './src/three.js'
 // console.log(m.pointer)
 // console.log(three.pointer)
 // console.log(m.match('three').pointer)
-let doc = nlp('ooh. one two three four five six seven eight nine ten')
-let full = [1, 0, 8]
-let neg = [1, 0, 2]
-let parent = doc.update([full])
-let m = doc.update([neg])
-let res = parent.difference(m)
-console.log(res.text())
+
+let doc = nlp('one match two three. four five match six seven')
+// doc.match('match .').union('. six').debug()
+doc.eq(0).complement().debug()
 
 // we are hiring
 // we begin hiring

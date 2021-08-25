@@ -1,6 +1,6 @@
-import union from './union.js'
-import intersection from './intersection.js'
-import difference from './difference.js'
+import getUnion from './union.js'
+import getIntersection from './intersection.js'
+import getDifference from './difference.js'
 
 /** return a subset of the document, from a pointer */
 const getDoc = function (pointer, document) {
@@ -25,5 +25,4 @@ const getDoc = function (pointer, document) {
   return doc
 }
 
-export { getDoc, union, intersection, difference }
-export default { getDoc, union, intersection, difference }
+export { getDoc, getUnion, getIntersection, getDifference }

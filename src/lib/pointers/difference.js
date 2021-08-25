@@ -1,3 +1,5 @@
+import { indexN } from './_lib.js'
+
 // split a pointer, by negative pointer
 const splitBy = function (full, neg) {
   let [n, start] = full
@@ -17,22 +19,19 @@ const splitBy = function (full, neg) {
 }
 
 const subtract = function (refs, not) {
-  let byN = {}
-  not.forEach(ref => {
-    byN[ref[0]] = byN[ref[0]] || []
-    byN[ref[0]].push(ref)
-  })
+  let byN = indexN(not)
   let res = []
   refs.forEach(ptr => {
     let [n] = ptr
     if (!byN[n]) {
       // nothing to subtract, it's fine
       res.push(ptr)
+      return
     }
     // oh boy, here we go
     byN[n].forEach(neg => {
       let found = splitBy(ptr, neg)
-      res = res.concat(found)
+      found.forEach(p => res.push(p))
     })
   })
   return res

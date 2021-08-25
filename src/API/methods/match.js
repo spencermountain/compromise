@@ -1,4 +1,4 @@
-import invert from '../../lib/pointers/_invert.js'
+// import invert from '../../lib/pointers/_invert.js'
 
 const relPointer = function (ptrs, parent) {
   if (!parent) {
@@ -109,33 +109,33 @@ const ifNo = function (regs, group) {
   return this.update(notFound)
 }
 
-const not = function (regs) {
-  const { docs, methods, _cache } = this
-  const one = methods.one
-  const refs = this.pointer
-  let ptrs = []
-  if (typeof regs === 'string') {
-    regs = one.parseMatch(regs)
-    ptrs = one.match(docs, { regs }, _cache).ptrs
-    ptrs = relPointer(ptrs, refs)
-  } else if (isView(regs)) {
-    ptrs = regs.fullPointer // support a view object as input
-  }
-  // nothing found, end here
-  if (ptrs.length === 0) {
-    return this
-  }
-  let found = {}
-  ptrs.forEach(a => {
-    found[a[0]] = found[a[0]] || []
-    found[a[0]].push(a)
-  })
-  let all = []
-  for (let i = 0; i < docs.length; i += 1) {
-    all.push([i, 0, docs[i].length])
-  }
-  let notPtrs = invert(all, ptrs)
-  return this.update(notPtrs)
-}
+// const not = function (regs) {
+//   const { docs, methods, _cache } = this
+//   const one = methods.one
+//   const refs = this.pointer
+//   let ptrs = []
+//   if (typeof regs === 'string') {
+//     regs = one.parseMatch(regs)
+//     ptrs = one.match(docs, { regs }, _cache).ptrs
+//     ptrs = relPointer(ptrs, refs)
+//   } else if (isView(regs)) {
+//     ptrs = regs.fullPointer // support a view object as input
+//   }
+//   // nothing found, end here
+//   if (ptrs.length === 0) {
+//     return this
+//   }
+//   let found = {}
+//   ptrs.forEach(a => {
+//     found[a[0]] = found[a[0]] || []
+//     found[a[0]].push(a)
+//   })
+//   let all = []
+//   for (let i = 0; i < docs.length; i += 1) {
+//     all.push([i, 0, docs[i].length])
+//   }
+//   let notPtrs = invert(all, ptrs)
+//   return this.update(notPtrs)
+// }
 
-export default { matchOne, match, has, if: ifFn, ifNo, not }
+export default { matchOne, match, has, if: ifFn, ifNo }

@@ -51,3 +51,27 @@ test('pointer-union-match :', function (t) {
 
   t.end()
 })
+
+test('settle :', function (t) {
+  let doc = nlp('one two three four')
+  let a = doc.match('two three')
+  let b = doc.match('three four')
+  let res = a.concat(b)
+  t.equal(res.length, 2, here + 'has both')
+  res = res.settle()
+  t.equal(res.length, 1, here + 'settle has one')
+  t.equal(res.text(), 'two three four', here + 'settle')
+  t.end()
+})
+
+test('settle-fancy :', function (t) {
+  let doc = nlp('one match two three. match five. six match. ')
+  let a = doc.match('match .')
+  let b = doc.match('five')
+  // let c = doc.match('six')
+  let res = a.concat(b) //.concat(c)
+  res = res.settle()
+  // t.equal(res.length, 1, here + 'settle has one')
+  t.equal(res.text(), 'match two match five', here + 'settle')
+  t.end()
+})

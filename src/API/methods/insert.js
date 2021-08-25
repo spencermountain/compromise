@@ -5,15 +5,6 @@ const spliceArr = (parent, index, child) => {
   return parent
 }
 
-// this should probably be methods/one
-const clone = function (terms) {
-  return terms.slice(0).map(term => {
-    term = Object.assign({}, term)
-    term.tags = new Set(term.tags)
-    return term
-  })
-}
-
 // add a space at end, if required
 const endSpace = function (terms) {
   const hasSpace = / $/
@@ -84,12 +75,22 @@ const insertBefore = function (str) {
 }
 
 // add string as new sentence
-const concat = function (str) {
+const concat = function (input) {
   const { methods, document, world } = this
-  let json = methods.one.tokenize(str, world)
-  let ptrs = this.fullPointer
-  let lastN = ptrs[ptrs.length - 1][0]
-  spliceArr(document, lastN + 1, json)
+  // parse and splice-in new terms
+  if (typeof input === 'string') {
+    let json = methods.one.tokenize(input, world)
+    let ptrs = this.fullPointer
+    let lastN = ptrs[ptrs.length - 1][0]
+    spliceArr(document, lastN + 1, json)
+    return this
+  }
+  // is it other pointers from the same document?
+  if (this.document === input.document) {
+    let ptrs = this.fullPointer
+    ptrs = ptrs.concat(input.fullPointer)
+    return this.update(ptrs)
+  }
   return this
 }
 

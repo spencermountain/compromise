@@ -12,6 +12,7 @@ methods.union = function (m) {
   let ptrs = getUnion(this.fullPointer, m.fullPointer)
   return this.update(ptrs)
 }
+methods.and = methods.union
 
 // only parts they both have
 methods.intersection = function (m) {
@@ -34,4 +35,14 @@ methods.complement = function () {
   let ptrs = getDifference(doc.fullPointer, this.fullPointer)
   return this.update(ptrs)
 }
+
+// remove overlaps
+methods.settle = function () {
+  let ptrs = this.fullPointer
+  ptrs.forEach(ptr => {
+    ptrs = getUnion(ptrs, [ptr])
+  })
+  return this.update(ptrs)
+}
+
 export default methods

@@ -43,3 +43,18 @@ test('insert-subset-include :', function (t) {
 
   t.end()
 })
+
+test('concat pointers :', function (t) {
+  let doc = nlp('one two three four')
+  let a = doc.match('two three')
+  let b = doc.match('three four')
+  let res = a.concat(b)
+  t.deepEqual(res.out('array'), ['two three', 'three four'], here + 'concat-pointer')
+
+  doc = nlp('one two three. four five six')
+  a = doc.match('two three')
+  b = doc.match('four .')
+  res = a.concat(b)
+  t.deepEqual(res.out('array'), ['two three.', 'four five'], here + 'concat-pointer-mixed')
+  t.end()
+})

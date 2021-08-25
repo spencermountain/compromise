@@ -83,5 +83,9 @@ match(['foo', 'far'])
 - **[change]** drop support for undocumented empty '.split()' methods - which used to split the parent
 - **[change]** change .text('fmt') formats
 - **[change]** @hasContraction is no-longer secretly-greedy. use `@hasContraction{2}`
+- **[change]** .and() now does a set 'union' operation of results (no overlaps)
+
+- **[new]** .union(), .intersection(), .difference() and .complement() methods
+- **[new]** .settle() - remove overlaps in matches
 
 ---

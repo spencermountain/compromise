@@ -9,8 +9,9 @@ import tag from './tag.js'
 import insert from './insert.js'
 import loops from './loops.js'
 import clone from './change.js'
+import sets from './sets.js'
 
-const methods = Object.assign({}, util, out, match, tag, sort, whitespace, split, insert, loops, compute, clone)
+const methods = Object.assign({}, util, out, match, tag, sort, whitespace, split, insert, loops, compute, clone, sets)
 
 // aliases
 methods.get = methods.eq

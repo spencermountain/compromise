@@ -6,13 +6,11 @@ const splitBy = function (full, neg) {
   let results = []
   // is there space before the neg?
   if (start < negStart) {
-    // console.log('before')
     let end = negStart < full[2] ? negStart : full[2] // find closest end-point
     results.push([n, start, end]) //before segment
   }
   // is there space after the neg?
   if (full[2] > negEnd) {
-    // console.log('after')
     results.push([n, negEnd, full[2]]) //after segment
   }
   return results
@@ -40,19 +38,3 @@ const subtract = function (refs, not) {
   return res
 }
 export default subtract
-
-// not-at-start
-let full = [1, 0, 8]
-let neg = [1, 0, 2]
-
-// not-in-middle
-full = [1, 0, 8]
-neg = [1, 2, 4]
-
-// // not-at-end
-// full = [1, 0, 8]
-// neg = [1, 6, 8]
-
-// console.log(remove(full, neg))
-
-// console.log(subtract([[1, 0, 8]], [[1, 7, 8]]))

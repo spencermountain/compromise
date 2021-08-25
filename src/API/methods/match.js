@@ -1,4 +1,4 @@
-import invert from '../../lib/pointer/_invert.js'
+import invert from '../../lib/pointers/_invert.js'
 
 const relPointer = function (ptrs, parent) {
   if (!parent) {

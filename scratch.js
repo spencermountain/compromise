@@ -18,13 +18,20 @@ import nlp from './src/three.js'
 // console.log(m.pointer)
 // console.log(three.pointer)
 // console.log(m.match('three').pointer)
+let doc = nlp('ooh. one two three four five six seven eight nine ten')
+let full = [1, 0, 8]
+let neg = [1, 0, 2]
+let parent = doc.update([full])
+let m = doc.update([neg])
+let res = parent.difference(m)
+console.log(res.text())
 
 // we are hiring
 // we begin hiring
 
-let doc = nlp(`standards for teaching and learning – the first`).debug()
+// let doc = nlp(`standards for teaching and learning – the first`).debug()
 // let doc = nlp(`gotta get`).debug()
-console.log(doc.verbs().json()[0])
+// console.log(doc.verbs().json()[0])
 
 // bug:
 // let doc = nlp(`zero one two three am here six seven`)

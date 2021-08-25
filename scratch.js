@@ -19,18 +19,10 @@ import nlp from './src/three.js'
 // console.log(three.pointer)
 // console.log(m.match('three').pointer)
 
-/*
-[_,a,a,a,-,-]
-[-,-,b,b,b,-]
-[-,x,x,x,x,-]
-*/
-
 let str = `one two three`
 let m = nlp(str).match('.')
 m = m.splitAfter('two')
 m.debug()
-// 'two three four'
-
 // we are hiring
 // we begin hiring
 

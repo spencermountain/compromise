@@ -1,19 +1,19 @@
 import { indexN } from './_lib.js'
 
 // split a pointer, by negative pointer
-const splitBy = function (full, neg) {
+const splitOn = function (full, m) {
   let [n, start] = full
-  let negStart = neg[1]
-  let negEnd = neg[2]
+  let mStart = m[1]
+  let mEnd = m[2]
   let results = []
-  // is there space before the neg?
-  if (start < negStart) {
-    let end = negStart < full[2] ? negStart : full[2] // find closest end-point
+  // is there space before the match?
+  if (start < mStart) {
+    let end = mStart < full[2] ? mStart : full[2] // find closest end-point
     results.push([n, start, end]) //before segment
   }
-  // is there space after the neg?
-  if (full[2] > negEnd) {
-    results.push([n, negEnd, full[2]]) //after segment
+  // is there space after the match?
+  if (full[2] > mEnd) {
+    results.push([n, mEnd, full[2]]) //after segment
   }
   return results
 }
@@ -30,7 +30,7 @@ const subtract = function (refs, not) {
     }
     // oh boy, here we go
     byN[n].forEach(neg => {
-      let found = splitBy(ptr, neg)
+      let found = splitOn(ptr, neg)
       found.forEach(p => res.push(p))
     })
   })

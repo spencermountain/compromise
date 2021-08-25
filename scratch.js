@@ -19,10 +19,8 @@ import nlp from './src/three.js'
 // console.log(three.pointer)
 // console.log(m.match('three').pointer)
 
-let str = `one two three`
-let m = nlp(str).match('.')
-m = m.splitAfter('two')
-m.debug()
+let m = nlp(`a x b x`).splitBefore('x') //.debug()
+console.log(m.out('array'))
 // we are hiring
 // we begin hiring
 

@@ -19,11 +19,12 @@ import nlp from './src/three.js'
 // console.log(three.pointer)
 // console.log(m.match('three').pointer)
 
-let str = 'john smith was really working'
-let m = nlp(str)
-m.match('was').tag('Foo')
-m.compute('tagRank')
-console.log(m.json()[0].terms)
+// let canBeVerb = nlp('i think spencer kelly can walk').canBe('Verb').debug()
+
+let doc = nlp('i think spencer can walk')
+let m = doc.match('#Noun')
+doc.difference(m).debug()
+
 // we are hiring
 // we begin hiring
 

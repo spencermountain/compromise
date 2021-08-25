@@ -53,9 +53,24 @@ const fns = {
     return this
   },
   /** return only the terms that can be this tag  */
-  // canBe: function (tag) {
-  //   let pointers = []
-  //   return this
-  // },
+  canBe: function (tag) {
+    let tagSet = this.model.two.tagSet
+    // everything can be an unknown tag
+    if (!tagSet.hasOwnProperty(tag)) {
+      return this
+    }
+    let not = tagSet[tag].not || []
+    let nope = []
+    this.document.forEach((terms, n) => {
+      terms.forEach((term, i) => {
+        let found = not.find(no => term.tags.has(no))
+        if (found) {
+          nope.push([n, i, i + 1])
+        }
+      })
+    })
+    let noDoc = this.update(nope).debug()
+    return this.difference(noDoc)
+  },
 }
 export default fns

@@ -1,5 +1,6 @@
 import { doesOverlap, getExtent, indexN, uniquePtrs } from './_lib.js'
 
+// a union is a + b, minus duplicates
 const getUnion = function (a, b) {
   let both = a.concat(b)
   let byN = indexN(both)

@@ -19,9 +19,9 @@ import nlp from './src/three.js'
 // console.log(three.pointer)
 // console.log(m.match('three').pointer)
 
-let doc = nlp('one match two three. four five match six seven')
-// doc.match('match .').union('. six').debug()
-doc.eq(0).complement().debug()
+let doc = nlp('one match two three. four five match six')
+let res = doc.match('match two').union('match six')
+res.debug()
 
 // we are hiring
 // we begin hiring

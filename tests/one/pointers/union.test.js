@@ -37,14 +37,17 @@ test('pointer-union-basic :', function (t) {
 test('pointer-union-match :', function (t) {
   let doc = nlp('one match two three. four five match six')
 
-  let res = doc.match('match .').union('. two')
+  let m = doc.match('. two')
+  let res = doc.match('match .').union(m)
   t.deepEqual(res.out('array'), ['match two', 'match six'], here + 'union-dupe')
 
-  res = doc.match('match two').union('. six')
+  m = doc.match('. six')
+  res = doc.match('match two').union(m)
   t.deepEqual(res.out('array'), ['match two', 'match six'], here + 'union-match-disjoint')
 
-  res = doc.match('match .').union('two three')
-  t.deepEqual(res.out('array'), ['match two three', 'match six'], here + 'union-match-overlap')
+  m = doc.match('two three')
+  res = doc.match('match .').union(m)
+  t.deepEqual(res.out('array'), ['match two three.', 'match six'], here + 'union-match-overlap')
 
   t.end()
 })

@@ -1,4 +1,5 @@
 // import methods from '../methods/index.js'
+import tagRank from './tagRank.js'
 
 const preTagger = function (document, world) {
   const { model, methods } = world
@@ -31,4 +32,4 @@ const preTagger = function (document, world) {
   }
   return document
 }
-export default { preTagger }
+export default { preTagger, tagRank }

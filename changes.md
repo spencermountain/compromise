@@ -84,6 +84,7 @@ match(['foo', 'far'])
 - **[change]** change .text('fmt') formats
 - **[change]** @hasContraction is no-longer secretly-greedy. use `@hasContraction{2}`
 - **[change]** .and() now does a set 'union' operation of results (no overlaps)
+- **[change]** bestTag is now `.compute('tagRank')`
 
 - **[new]** .union(), .intersection(), .difference() and .complement() methods
 - **[new]** .settle() - remove overlaps in matches

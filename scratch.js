@@ -19,8 +19,11 @@ import nlp from './src/three.js'
 // console.log(three.pointer)
 // console.log(m.match('three').pointer)
 
-let m = nlp(`a x b x`).splitBefore('x') //.debug()
-console.log(m.out('array'))
+let str = 'john smith was really working'
+let m = nlp(str)
+m.match('was').tag('Foo')
+m.compute('tagRank')
+console.log(m.json()[0].terms)
 // we are hiring
 // we begin hiring
 

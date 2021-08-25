@@ -1,8 +1,9 @@
-const test = require('tape')
-const nlp = require('../_lib')
+import test from 'tape'
+import nlp from '../_lib.js'
+const here = '[one/insert] '
 
 test('offset-whitespace', function (t) {
-  let doc = nlp(`one two two more `)
+  let doc = nlp(`one two two more `).compute('offset')
 
   let m = doc.match('two')
   let obj = m.json({ offset: true, terms: false })[0]
@@ -14,7 +15,7 @@ test('offset-whitespace', function (t) {
   t.equal(obj.offset.start, 4, '2 two-start')
   t.equal(obj.offset.length, 7, '2 two-length')
 
-  doc = nlp(`  one two    two more `)
+  doc = nlp(`  one two    two more `).compute('offset')
   m = doc.match('two two')
   obj = m.json({ offset: true, terms: false })[0]
   t.equal(obj.offset.length, 10, '3 two-length')
@@ -23,13 +24,13 @@ test('offset-whitespace', function (t) {
 })
 
 test('offset-punctuation', function (t) {
-  let doc = nlp(`one (two two) more `)
+  let doc = nlp(`one (two two) more `).compute('offset')
   let m = doc.match('two two')
   let obj = m.json({ offset: true, terms: false })[0]
   t.equal(obj.offset.start, 4, '4 two-start')
   t.equal(obj.offset.length, 9, '4 two-length')
 
-  doc = nlp(`0123, 678`)
+  doc = nlp(`0123, 678`).compute('offset')
   m = doc.match('678')
   obj = m.json({ offset: true, terms: false })[0]
   t.equal(obj.offset.start, 6, '5 two-start')
@@ -39,7 +40,7 @@ test('offset-punctuation', function (t) {
 })
 
 test('offset-terms', function (t) {
-  let doc = nlp(`hello world`)
+  let doc = nlp(`hello world`).compute('offset')
   let obj = doc.json({ offset: true, terms: true })[0]
 
   t.equal(obj.offset.start, 0, '6 doc-start')
@@ -55,7 +56,7 @@ test('offset-terms', function (t) {
 })
 
 test('offset-terms-whitespace', function (t) {
-  let doc = nlp(` hello world`)
+  let doc = nlp(` hello world`).compute('offset')
   let obj = doc.json({ offset: true, terms: true })[0]
 
   t.equal(obj.offset.start, 1, '7 doc-start')
@@ -71,7 +72,7 @@ test('offset-terms-whitespace', function (t) {
 })
 
 test('offset-terms-punctuation', function (t) {
-  let doc = nlp(`"hello world`)
+  let doc = nlp(`"hello world`).compute('offset')
   let obj = doc.json({ offset: true, terms: true })[0]
 
   t.equal(obj.offset.start, 0, '8 doc-start')

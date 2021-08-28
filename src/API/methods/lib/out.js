@@ -17,7 +17,7 @@ const out = function (method) {
   }
   if (method === 'offset' || method === 'offsets') {
     this.compute('offset')
-    return this.json()
+    return this.json({ offset: true })
   }
   if (method === 'array') {
     let arr = this.docs.map(terms => {

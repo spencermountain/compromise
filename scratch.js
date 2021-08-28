@@ -1,6 +1,6 @@
 /* eslint-disable no-console, no-unused-vars */
 // import './tests/_ignore/_error.js'
-import nlp from './src/one.js'
+import nlp from './src/two.js'
 // nlp.verbose('tagger')
 
 // ''
@@ -10,9 +10,10 @@ import nlp from './src/one.js'
 // let m = nlp(`one two three`).match('.')
 // m = m.splitAfter('two')
 // m.debug()
-let doc = nlp(`one two three`)
-doc.append('four five')
-console.log(doc.text() + '|')
+let r = nlp(`he is cool.`)
+r.contract()
+console.log(r.document)
+console.log(r.text() + '|')
 // let doc = nlp('Toronto is very cool', { toronto: 'City' }).compute('preTagger').debug()
 // we are hiring
 // we begin hiring

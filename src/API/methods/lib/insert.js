@@ -80,8 +80,6 @@ const cleanAppend = function (home, ptr, needle, document) {
   let total = document[n].length
   if (end < total) {
     // are we in the middle?
-    // add trailing space on predecessor
-    // endSpace(home)
     // add trailing space on self
     endSpace(needle)
   } else if (total === end) {
@@ -91,18 +89,6 @@ const cleanAppend = function (home, ptr, needle, document) {
     // very end, move period
     movePunct(home, end, needle)
   }
-  // do we need a space on new terms too?
-  // if (document[n].length > end) {
-  //   endSpace(needle)
-  // }
-  // if (document[n].length === end) {
-  //   // very end, move period
-  //   movePunct(home, end, needle)
-  // } else {
-  //   console.log(end, document[n].length)
-  //   // add trailing space on predecessor
-  //   endSpace(home)
-  // }
   spliceArr(home, ptr[2], needle)
 }
 

@@ -21,6 +21,10 @@ const isNoPeriodAcronym = function (term, model) {
   if (str.length > 5) {
     return false
   }
+  // 'I' is not a acronym
+  if (oneLetterWord.hasOwnProperty(str)) {
+    return false
+  }
   // known-words, like 'PIZZA' is not an acronym.
   if (model.two.lexicon.hasOwnProperty(str)) {
     return false

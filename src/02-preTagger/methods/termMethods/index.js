@@ -79,7 +79,7 @@ methods.isKnown = function (term) {
   return term.tags.size > 0
 }
 methods.isTitleCase = function (term) {
-  return /^[A-Z][a-z'\u00C0-\u00FF]/.test(term.text)
+  return /^[A-Z][a-z'\u00C0-\u00FF]/.test(term.text) //|| /^[A-Z]$/.test(term.text)
 }
 
 export default methods

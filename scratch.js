@@ -1,6 +1,6 @@
 /* eslint-disable no-console, no-unused-vars */
 // import './tests/_ignore/_error.js'
-import nlp from './src/three.js'
+import nlp from './src/one.js'
 // nlp.verbose('tagger')
 
 // ''
@@ -12,18 +12,12 @@ import nlp from './src/three.js'
 // m.debug()
 
 // let doc = nlp(`one two three. four five six`)
-
-// let m = doc.match('two three')
-// let three = doc.match(m)
-// console.log(m.pointer)
-// console.log(three.pointer)
-// console.log(m.match('three').pointer)
-const str = 'John xoo, John fredman, John davis, John fredman,'
-let r = nlp(str)
-r = r.splitAfter('@hasComma')
-r = r.sort('alpha')
-r.debug()
-
+let doc = nlp('the dog is nice')
+let sub = doc.match('is')
+sub.insertAfter('really')
+console.log(doc.text())
+console.log(doc.text())
+// let doc = nlp('Toronto is very cool', { toronto: 'City' }).compute('preTagger').debug()
 // we are hiring
 // we begin hiring
 

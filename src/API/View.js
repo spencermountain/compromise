@@ -59,6 +59,7 @@ class View {
     let { docs, pointer } = this
     let ptrs = pointer || docs.map((_d, n) => [n])
     return ptrs.map((a, n) => {
+      a = a.slice(0) //clone it
       a[1] = a[1] || 0
       a[2] = a[2] || (docs[n] || []).length
       return a

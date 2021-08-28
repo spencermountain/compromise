@@ -10,8 +10,24 @@ import insert from './insert.js'
 import loops from './loops.js'
 import clone from './change.js'
 import sets from './sets.js'
+import replace from './replace.js'
 
-const methods = Object.assign({}, util, out, match, tag, sort, whitespace, split, insert, loops, compute, clone, sets)
+const methods = Object.assign(
+  {},
+  util,
+  out,
+  match,
+  tag,
+  sort,
+  whitespace,
+  split,
+  insert,
+  loops,
+  compute,
+  clone,
+  sets,
+  replace
+)
 
 // aliases
 methods.get = methods.eq

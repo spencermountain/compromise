@@ -58,3 +58,22 @@ test('concat pointers :', function (t) {
   t.deepEqual(res.out('array'), ['two three.', 'four five'], here + 'concat-pointer-mixed')
   t.end()
 })
+
+test('titlecase change in insertBefore :', function (t) {
+  let doc = nlp('walking is very cool')
+  doc.match('^.').insertBefore('jogging')
+  t.equal(doc.text(), 'jogging walking is very cool', here + 'non-titlecase')
+
+  doc = nlp('Walking is very cool')
+  doc.match('^.').insertBefore('jogging')
+  t.equal(doc.text(), 'Jogging walking is very cool', here + 'titlecase')
+
+  // doc = nlp('Toronto is very cool', { toronto: 'City' })
+  // doc.match('^.').insertBefore('jogging')
+  // t.equal(doc.text(), 'Jogging Toronto is very cool', here + 'two-titlecases')
+
+  doc = nlp('I am very cool')
+  doc.match('^.').insertBefore('jogging')
+  t.equal(doc.text(), 'Jogging I am very cool', here + 'pronoun-titlecase')
+  t.end()
+})

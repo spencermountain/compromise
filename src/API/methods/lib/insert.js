@@ -76,14 +76,33 @@ const cleanPrepend = function (home, ptr, needle, document) {
 }
 
 const cleanAppend = function (home, ptr, needle, document) {
-  let n = ptr[0]
-  let end = ptr[2]
-  // add trailing space on predecessor
-  endSpace(home)
-  // do we need a space on new terms too?
-  if (document[n].length > end) {
+  let [n, , end] = ptr
+  let total = document[n].length
+  if (end < total) {
+    // are we in the middle?
+    // add trailing space on predecessor
+    // endSpace(home)
+    // add trailing space on self
     endSpace(needle)
+  } else if (total === end) {
+    // are we at the end?
+    // add a space to predecessor
+    endSpace(home)
+    // very end, move period
+    movePunct(home, end, needle)
   }
+  // do we need a space on new terms too?
+  // if (document[n].length > end) {
+  //   endSpace(needle)
+  // }
+  // if (document[n].length === end) {
+  //   // very end, move period
+  //   movePunct(home, end, needle)
+  // } else {
+  //   console.log(end, document[n].length)
+  //   // add trailing space on predecessor
+  //   endSpace(home)
+  // }
   spliceArr(home, ptr[2], needle)
 }
 

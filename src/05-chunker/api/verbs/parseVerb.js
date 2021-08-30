@@ -42,8 +42,9 @@ const parseVerb = function (view) {
   const not = vb.match('not') //only this word, for now
   const adverbs = view.match('#Adverb')
   const phrasal = view.match('#PhrasalVerb')
-  vb.remove(not)
-  vb.remove(adverbs)
+  vb = vb.remove(not)
+  vb = vb.remove(adverbs)
+  // vb.debug()
   const form = classify(vb)
   const main = getMain(vb)
   const aux = vb.not(main).not(phrasal)

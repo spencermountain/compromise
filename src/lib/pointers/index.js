@@ -1,6 +1,7 @@
 import getUnion from './union.js'
 import getIntersection from './intersection.js'
 import getDifference from './difference.js'
+import { indexN, doesOverlap } from './_lib.js'
 
 /** return a subset of the document, from a pointer */
 const getDoc = function (pointer, document) {
@@ -25,4 +26,4 @@ const getDoc = function (pointer, document) {
   return doc
 }
 
-export { getDoc, getUnion, getIntersection, getDifference }
+export { getDoc, getUnion, getIntersection, getDifference, indexN, doesOverlap }

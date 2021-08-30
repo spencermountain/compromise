@@ -16,7 +16,7 @@ const toJSON = function (vb) {
     form: {
       name: parsed.form,
       tense: parsed.tense,
-      isPhrasal: parsed.phrasal.found,
+      phrasal: parsed.phrasal.found,
       copula: parsed.copula.found,
       progressive: parsed.progressive,
       passive: parsed.passive,
@@ -32,7 +32,7 @@ const findVerbs = function (View) {
       super(document, pointer, groups)
       this.viewType = 'Verbs'
     }
-    json(opts) {
+    json() {
       return this.map(vb => {
         let json = vb.json()[0]
         json.verb = toJSON(vb)

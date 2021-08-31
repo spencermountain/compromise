@@ -97,9 +97,18 @@ test('verb form names', function (t) {
       'the dog would have been walked',
       'we would have been seen',
     ],
-    // 'auxiliary-future': [],
-    // 'auxiliary-past': [],
-    // 'auxiliary-present': [],
+    'auxiliary-future': [
+      // 'he is going to walk', //
+      // 'we are going to walk',
+    ],
+    'auxiliary-past': [
+      'he did walk', //
+      'we used to walk',
+    ],
+    'auxiliary-present': [
+      'we do walk', //
+      'he does walk',
+    ],
 
     // missing
     //  'has been elected',

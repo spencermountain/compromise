@@ -13,7 +13,7 @@ nlp.verbose('tagger')
 // let doc = nlp('we will sing along').debug()
 // let doc = nlp('had been left').debug()
 // let doc = nlp('I will be travelling').debug()
-let doc = nlp('he will walk').debug()
+let doc = nlp('he used to walk').debug()
 let vb = doc.verbs()
 console.log(vb.json()[0].verb)
 

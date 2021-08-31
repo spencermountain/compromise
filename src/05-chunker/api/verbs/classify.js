@@ -1,12 +1,12 @@
-export default [
+const forms = [
   // he walks',
-  { name: 'present-simple', match: '^#PresentTense$', tense: 'PresentTense' },
+  { name: 'simple-present', match: '^#PresentTense$', tense: 'PresentTense' },
   // he walked',
-  { name: 'past-simple', match: '^#PastTense$', tense: 'PastTense' },
+  { name: 'simple-past', match: '^#PastTense$', tense: 'PastTense' },
   // he will walk
-  { name: 'future-simple', match: '^will #Infinitive$', tense: 'FutureTense' },
+  { name: 'simple-future', match: '^will #Infinitive$', tense: 'FutureTense' },
 
-  // === simple progressive tenses===
+  // === progressive tenses===
   // he is walking
   { name: 'present-progressive', match: '^(is|are|am) #Gerund$', tense: 'PresentTense', progressive: true },
   // he was walking
@@ -26,7 +26,7 @@ export default [
   // he has been
   {
     name: 'present-perfect-progressive',
-    match: '^has been #Gerund$',
+    match: '^(has|have) been #Gerund$',
     tense: 'PastTense',
     progressive: true,
   },
@@ -41,30 +41,49 @@ export default [
   },
 
   // ==== Passive ===
-  // got walked
-  { name: 'passive-past', match: 'got #PastTense', tense: 'PastTense', passive: true },
-  // were walked
-  { name: 'passive-plural', match: '^were #PastTense', tense: 'PastTense', passive: true },
-  // had been walked
-  { name: 'passive-progressive', match: '^had been #PastTense', tense: 'PastTense', passive: true },
+  // got walked, was walked, were walked
+  { name: 'passive-past', match: '(got|were|was) (#PastTense|#Participle)', tense: 'PastTense', passive: true },
+  // is walked, are stolen
+  { name: 'passive-present', match: '^(is|are) (#PastTense|#Participle)', tense: 'PresentTense', passive: true },
+  // had been walked, have been eaten
+  { name: 'passive-past', match: '^(had|have) been (#PastTense|#Participle)', tense: 'PastTense', passive: true },
+  // has been cleaned
+  { name: 'passive-present', match: '^has been (#PastTense|#Participle)', tense: 'PresentTense', passive: true },
+
+  // will have been walked
+  {
+    name: 'passive-future',
+    match: 'will have been (#PastTense|#Participle)',
+    passive: true,
+    conditional: true,
+    tense: 'FutureTense',
+  },
+
+  // === Conditional tenses===
+  { name: 'present-conditional', match: 'would be #PastTense', conditional: true, tense: 'PresentTense' },
+  { name: 'past-conditional', match: 'would have been #PastTense', conditional: true, tense: 'PastTense' },
+
+  // { name: '', match: '', conditional: true },
 
   // ==== Auxiliary ===
   // going to drink
-  { name: 'aux-go', match: '(is|are|am|was) going to (#Infinitive|#PresentTense)', tense: 'FutureTense' },
+  // { name: 'aux-go', match: '(is|are|am|was) going to (#Infinitive|#PresentTense)', tense: 'FutureTense' },
   // he did walk
-  { name: 'aux-do', match: '^did #Infinitive$', tense: 'PastTense', plural: false },
-  { name: 'aux-does', match: '^does #Infinitive$', tense: 'PresentTense', plural: true, complete: false },
+  // { name: 'aux-do', match: '^did #Infinitive$', tense: 'PastTense', plural: false },
+  // { name: 'aux-does', match: '^does #Infinitive$', tense: 'PresentTense', plural: true, complete: false },
   // used to walk
-  { name: 'aux-used-to', match: '^used to #Infinitive$', tense: 'PastTense', complete: true },
+  // { name: 'aux-used-to', match: '^used to #Infinitive$', tense: 'PastTense', complete: true },
   // === modals ===
   // he can walk
-  { name: 'modal-infinitive', match: '^(can|must|should|shall) #Infinitive$' },
+  // { name: 'modal-infinitive', match: '^(can|must|should|shall) #Infinitive$' },
   // he could have walked
-  { name: 'modal-past', match: '^(could|must|should|shall) have #PastTense$', tense: 'PastTense' },
-  //
+  // { name: 'modal-past', match: '^(could|must|should|shall) have #PastTense$', tense: 'PastTense' },
   // { name: 'want-infinitive', match: '^(want|wants|wanted) to #Infinitive$' },
 ]
+// do longest ones first
+forms.reverse()
 
+export default forms
 // missing:
 //  - 'has been elected'
 //  - 'would have been elected'

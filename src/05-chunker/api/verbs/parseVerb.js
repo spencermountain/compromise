@@ -44,7 +44,6 @@ const parseVerb = function (view) {
   const phrasal = view.match('#PhrasalVerb')
   vb = vb.remove(not)
   vb = vb.remove(adverbs)
-  // vb.debug()
   const form = classify(vb)
   const main = getMain(vb)
   const aux = vb.not(main).not(phrasal)
@@ -55,12 +54,8 @@ const parseVerb = function (view) {
     negative: not,
     auxiliary: aux,
     copula: main.match('#Copula'),
-    form: form.name,
-    tense: form.tense,
-    passive: Boolean(form.passive),
-    progressive: Boolean(form.progressive),
-    complete: Boolean(form.complete),
     phrasal: phrasal,
+    form: Object.assign({}, form),
   }
   let fromTense = main.has('#PastTense') ? 'PastTense' : 'PresentTense'
   if (!verb.tense) {

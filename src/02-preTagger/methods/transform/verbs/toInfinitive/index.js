@@ -1,5 +1,6 @@
 import rules from './_transform.js'
 import guess from './_guess.js'
+
 /** it helps to know what we're conjugating from */
 const guessTense = function (str) {
   let three = str.substr(str.length - 3)

@@ -85,7 +85,7 @@ const ifFn = function (regs, group) {
     let ptrs = regs.fullPointer // support a view object as input
     return this.update(ptrs)
   }
-  return this.update([])
+  return this.none()
 }
 
 const ifNo = function (regs, group) {

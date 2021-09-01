@@ -1,7 +1,11 @@
 // split adverbs as before/after the root
 const getAdverbs = function (vb, root) {
+  let res = {
+    pre: vb.none(),
+    post: vb.none(),
+  }
   if (!vb.has('#Adverb')) {
-    return {}
+    return res
   }
   // pivot on the main verb
   let parts = vb.splitOn(root)
@@ -13,8 +17,10 @@ const getAdverbs = function (vb, root) {
   }
   // it must be the second one
   if (parts.eq(0).is(root)) {
-    return { post: parts.eq(1).adverbs() }
+    res.pos = parts.eq(1).adverbs()
+    return res
   }
-  return { pre: parts.eq(0).adverbs() }
+  res.pre = parts.eq(0).adverbs()
+  return res
 }
 export default getAdverbs

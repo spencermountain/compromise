@@ -3,24 +3,27 @@ import api from './methods/index.js'
 
 class View {
   constructor(document, pointer, groups = {}) {
-    this.document = document
+    Object.defineProperty(this, 'document', {
+      value: document,
+      writable: true,
+    })
     Object.defineProperty(this, 'world', {
-      enumerable: false,
       value: world,
       writable: true,
     })
     Object.defineProperty(this, '_groups', {
-      enumerable: false,
       value: groups,
       writable: true,
     })
     Object.defineProperty(this, '_cache', {
-      enumerable: false,
       value: null,
       writable: true,
     })
-
-    this.pointer = pointer
+    Object.defineProperty(this, 'pointer', {
+      value: pointer,
+      writable: true,
+    })
+    // this.size = pointer ? pointer.length : 0
   }
   /* getters:  */
   get docs() {

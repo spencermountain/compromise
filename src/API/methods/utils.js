@@ -40,7 +40,7 @@ const utils = {
     if (ptr[n]) {
       return this.update([ptr[n]])
     }
-    return this.update([])
+    return this.none()
   },
   /** */
   first: function () {
@@ -58,12 +58,16 @@ const utils = {
     return this.update(pntrs)
   },
 
-  /** */
+  /** return a view of the entire document */
   all: function () {
     return this.update()
   },
+  /** return a view of no parts of the document */
+  none: function () {
+    return this.update([])
+  },
 
-  /** */
+  /** are these two views looking at the same words? */
   is: function (b) {
     if (!b || !b.isView) {
       return false
@@ -79,41 +83,6 @@ const utils = {
     })
   },
 
-  /** */
-  toLowerCase: function () {
-    this.termList().forEach(t => {
-      t.text = t.text.toLowerCase()
-    })
-    return this
-  },
-  /** */
-  toUpperCase: function () {
-    this.termList().forEach(t => {
-      t.text = t.text.toUpperCase()
-    })
-    return this
-  },
-  /** */
-  toTitleCase: function () {
-    this.termList().forEach(t => {
-      t.text = t.text.replace(/^ *[a-z\u00C0-\u00FF]/, x => x.toUpperCase()) //support unicode?
-    })
-    return this
-  },
-  /** */
-  toCamelCase: function () {
-    this.docs.forEach(terms => {
-      terms.forEach((t, i) => {
-        if (i !== 0) {
-          t.text = t.text.replace(/^ *[a-z\u00C0-\u00FF]/, x => x.toUpperCase()) //support unicode?
-        }
-        if (i !== terms.length - 1) {
-          t.post = ''
-        }
-      })
-    })
-    return this
-  },
   /** how many seperate terms does the document have? */
   wordCount: function () {
     return this.docs.reduce((count, terms) => {

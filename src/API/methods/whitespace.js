@@ -61,7 +61,7 @@ const methods = {
 
   /** remove hyphens between words, and set whitespace */
   dehyphenate: function () {
-    const hasHyphen = /(-|–|—)/
+    const hasHyphen = /[-–—]/
     this.docs.forEach(terms => {
       //remove whitespace
       terms.forEach(t => {

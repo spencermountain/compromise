@@ -4,16 +4,16 @@ const hasHyphen = function (str) {
     return false
   }
   //dont split 'bat-like'
-  if (/^([a-z\u00C0-\u00FF/]+)(-|–|—)(like|ish|less|able)/i.test(str) === true) {
+  if (/^([a-z\u00C0-\u00FF/]+)[-–—](like|ish|less|able)/i.test(str) === true) {
     return false
   }
   //letter-number 'aug-20'
-  let reg = /^([a-z\u00C0-\u00FF`"'/]+)(-|–|—)([a-z0-9\u00C0-\u00FF].*)/i
+  let reg = /^([a-z\u00C0-\u00FF`"'/]+)[-–—]([a-z0-9\u00C0-\u00FF].*)/i
   if (reg.test(str) === true) {
     return true
   }
   //number-letter '20-aug'
-  let reg2 = /^([0-9]{1,4})(-|–|—)([a-z\u00C0-\u00FF`"'/-]+$)/i
+  let reg2 = /^([0-9]{1,4})[-–—]([a-z\u00C0-\u00FF`"'/-]+$)/i
   if (reg2.test(str) === true) {
     return true
   }

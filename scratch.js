@@ -22,7 +22,7 @@ nlp.verbose('tagger')
 // doc.match('walks').replaceWith(b)
 // doc.debug()
 
-console.log(nlp.parseMatch('a{1,2}'))
+console.log('one-two–three—four'.split(/[-–—]/))
 // console.log(nlp.parseMatch('foo{1}'))
 
 // console.log('foo{1}'.match(/\{([0-9]+)(, *[0-9]*)?\}/))

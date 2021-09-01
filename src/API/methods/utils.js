@@ -64,6 +64,22 @@ const utils = {
   },
 
   /** */
+  is: function (b) {
+    if (!b || !b.isView) {
+      return false
+    }
+    let aPtr = this.fullPointer
+    let bPtr = b.fullPointer
+    if (!aPtr.length === bPtr.length) {
+      return false
+    }
+    // ensure pointers are the same
+    return aPtr.every((ptr, i) => {
+      return ptr[0] === bPtr[i][0] && ptr[1] === bPtr[i][1] && ptr[2] === bPtr[i][2]
+    })
+  },
+
+  /** */
   toLowerCase: function () {
     this.termList().forEach(t => {
       t.text = t.text.toLowerCase()

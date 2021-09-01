@@ -122,7 +122,7 @@ test('verb form names', function (t) {
     forms[form].forEach(str => {
       let doc = nlp(str)
       let json = doc.verbs().json()[0]
-      t.equal(json.verb.form.name, form, here + `''${str}`)
+      t.equal(json.verb.grammar.form, form, here + `''${str}`)
     })
   })
   t.end()

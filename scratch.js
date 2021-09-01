@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-unused-vars */
 // import './tests/_ignore/_error.js'
 import nlp from './src/three.js'
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 // offset bug
 // let doc = nlp(`"hello world`).compute('offset')
@@ -13,19 +13,16 @@ nlp.verbose('tagger')
 // let doc = nlp('we will sing along').debug()
 // let doc = nlp('had been left').debug()
 // let doc = nlp('I will be travelling').debug()
-// let doc = nlp('he used to walk').debug()
-// let vb = doc.verbs()
-// console.log(vb.json()[0].verb)
+// let doc = nlp('he had locked up quickly')
+let doc = nlp('is really really walking')
+
+let vb = doc.verbs().debug()
+console.log(vb.json()[0].verb)
 
 // let b = nlp('sneaks').tag('Cool')
 // let doc = nlp(`john walks quickly`)
 // doc.match('walks').replaceWith(b)
 // doc.debug()
-
-console.log('one-two–three—four'.split(/[-–—]/))
-// console.log(nlp.parseMatch('foo{1}'))
-
-// console.log('foo{1}'.match(/\{([0-9]+)(, *[0-9]*)?\}/))
 
 /*
 1. efrt-unpack

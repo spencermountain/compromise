@@ -1,28 +1,5 @@
-import parseVerb from './parseVerb.js'
 import find from './find.js'
-
-const toArray = function (m) {
-  return m.json({ normal: true, terms: false, text: false }).map(s => s.normal)
-}
-
-const toJSON = function (vb) {
-  let parsed = parseVerb(vb)
-  let form = parsed.form
-  delete form.match
-  form = Object.assign(form, {
-    phrasal: parsed.phrasal.found,
-    copula: parsed.copula.found,
-    // auxiliary: parsed.auxiliary.found,
-  })
-  return {
-    adverbs: toArray(parsed.adverbs),
-    main: parsed.main.text('machine'),
-    negative: parsed.negative.found,
-    auxiliary: parsed.auxiliary.text('machine'),
-    infinitive: parsed.infinitive,
-    form: form,
-  }
-}
+import toJSON from './toJSON.js'
 
 const findVerbs = function (View) {
   class Verbs extends View {

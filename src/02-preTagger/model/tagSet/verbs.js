@@ -49,6 +49,7 @@ export default {
     not: ['PastTense', 'PresentTense', 'FutureTense', 'Copula', 'Gerund'],
   },
   Auxiliary: {
-    not: ['Noun', 'Adjective', 'Value', 'Expression', 'Conjunction'],
+    is: 'Verb',
+    not: ['PastTense', 'PresentTense', 'FutureTense', 'Gerund', 'Conjunction'],
   },
 }

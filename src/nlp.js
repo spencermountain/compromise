@@ -1,7 +1,7 @@
-import View from './api/View.js'
-import world from './api/world.js'
+import View from './API/View.js'
+import world from './API/world.js'
 import version from '../lib/_version.js'
-import extend from './api/extend.js'
+import extend from './API/extend.js'
 
 const nlp = function (input, lex) {
   const { methods, hooks } = world

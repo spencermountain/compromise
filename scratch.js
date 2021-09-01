@@ -13,9 +13,19 @@ nlp.verbose('tagger')
 // let doc = nlp('we will sing along').debug()
 // let doc = nlp('had been left').debug()
 // let doc = nlp('I will be travelling').debug()
-let doc = nlp('he used to walk').debug()
-let vb = doc.verbs()
-console.log(vb.json()[0].verb)
+// let doc = nlp('he used to walk').debug()
+// let vb = doc.verbs()
+// console.log(vb.json()[0].verb)
+
+// let b = nlp('sneaks').tag('Cool')
+// let doc = nlp(`john walks quickly`)
+// doc.match('walks').replaceWith(b)
+// doc.debug()
+
+console.log(nlp.parseMatch('a{1,2}'))
+// console.log(nlp.parseMatch('foo{1}'))
+
+// console.log('foo{1}'.match(/\{([0-9]+)(, *[0-9]*)?\}/))
 
 /*
 1. efrt-unpack

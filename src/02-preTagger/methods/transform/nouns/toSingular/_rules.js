@@ -12,7 +12,7 @@ export default [
   [/(..[aeiou]s)es$/i, '$1'],
   [/(vert|ind|cort)(ices)$/i, '$1ex'],
   [/(matr|append)(ices)$/i, '$1ix'],
-  [/(x|ch|ss|sh|z|o)es$/i, '$1'],
+  [/([xzo]|ch|ss|sh)es$/i, '$1'],
   [/men$/i, 'man'],
   [/(n)ews$/i, '$1ews'],
   [/([ti])a$/i, '$1um'],

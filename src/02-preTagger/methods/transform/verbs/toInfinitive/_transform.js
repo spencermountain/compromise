@@ -73,7 +73,7 @@ let rules = {
   Gerund: [
     {
       //popping -> pop
-      reg: /(..)(p|d|t|g){2}ing$/i,
+      reg: /(..)[pdtg]{2}ing$/i,
       to: '$1$2',
     },
     {
@@ -203,7 +203,7 @@ let rules = {
       to: '$1l',
     },
     {
-      reg: /(..)(h|ion|n[dt]|ai.|[cs]t|pp|all|ss|tt|int|ld|en|oo.|er|k|w|ou.|rt|ght|rm)ed$/i,
+      reg: /(..)([hkw]|ion|n[dt]|ai.|[cs]t|pp|all|ss|tt|int|ld|en|oo.|er|ou.|rt|ght|rm)ed$/i,
       to: '$1$2',
     },
     {

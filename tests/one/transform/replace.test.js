@@ -124,11 +124,11 @@ const here = '[one/replace] '
 test('replace-case-param', function (t) {
   let doc = nlp('Spencer is very cool.')
   doc.match('spencer').replaceWith('jogging')
-  t.equal(doc.text(), 'Jogging is very cool.', 'case kept - default')
+  t.equal(doc.text(), 'Jogging is very cool.', here + 'case kept - default')
 
   doc = nlp('spencer is very cool.')
   doc.match('spencer').replaceWith('jogging') // Jogging?
-  t.equal(doc.text(), 'jogging is very cool.', 'lowsercase kept - default')
+  t.equal(doc.text(), 'jogging is very cool.', here + 'lowsercase kept - default')
 
   // doc = nlp('Spencer is very cool.')
   // doc.match('spencer').replaceWith('jogging', { keepCase: false })

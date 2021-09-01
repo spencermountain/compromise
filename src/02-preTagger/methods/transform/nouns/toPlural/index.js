@@ -1,5 +1,6 @@
 import rules from './_rules.js'
-const addE = /(x|ch|sh|s|z)$/
+const addE = /([xsz]|ch|sh)$/
+
 const trySuffix = function (str) {
   let c = str[str.length - 1]
   if (rules.hasOwnProperty(c) === true) {

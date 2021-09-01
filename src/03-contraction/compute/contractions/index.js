@@ -7,7 +7,7 @@ import numberRange from './number-range.js'
 import isPossessive from './isPossessive.js'
 
 const byApostrophe = /'/
-const numDash = /^[0-9].*?[-–—].*?[0-9]/i
+const numDash = /^[0-9][^-–—]*[-–—].*?[0-9]/
 
 const reTag = function (terms, world) {
   const preTagger = world.compute.preTagger

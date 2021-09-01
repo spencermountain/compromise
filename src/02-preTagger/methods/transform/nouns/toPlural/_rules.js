@@ -17,7 +17,7 @@ const suffixes = {
   i: [[/(octop|vir)i$/i, '$1i']],
   m: [[/([ti])um$/i, '$1a']],
   n: [[/^(oxen)$/i, '$1']],
-  o: [[/(al|ad|at|er|et|ed|ad)o$/i, '$1oes']],
+  o: [[/(al|ad|at|er|et|ed)o$/i, '$1oes']],
   s: [
     [/(ax|test)is$/i, '$1es'],
     [/(alias|status)$/i, '$1es'],

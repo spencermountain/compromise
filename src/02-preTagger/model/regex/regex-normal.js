@@ -11,7 +11,7 @@ export default [
   [/^[012]?[0-9](:[0-5][0-9])(:[0-5][0-9])$/, 'Time', '3:12:31'],
   [/^[012]?[0-9](:[0-5][0-9])?(:[0-5][0-9])? ?(am|pm)$/i, 'Time', '1:12pm'],
   [/^[012]?[0-9](:[0-5][0-9])(:[0-5][0-9])? ?(am|pm)?$/i, 'Time', '1:12:31pm'], //can remove?
-  [/^[a-z0-9]*? o'?clock$/, 'Time', '2 oclock'],
+  [/^[a-z0-9]* o'?clock$/, 'Time', '2 oclock'],
 
   [/^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}/i, 'Date', 'iso-date'],
   [/^[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,4}$/, 'Date', 'iso-dash'],
@@ -21,7 +21,7 @@ export default [
 
   [/^utc ?[+-]?[0-9]+?$/, 'TimeZone', 'utc-9'],
   [/^[PMCE]ST$/, 'TimeZone', 'EST'],
-  [/^(gmt|utc)[+-][0-9][0-9]?$/i, 'Timezone', 'gmt-3'],
+  [/^(gmt|utc)[+-][0-9]{1,2}$/i, 'Timezone', 'gmt-3'],
 
   //names
   [/^ma?c'.*/, 'LastName', "mc'neil"],
@@ -30,7 +30,7 @@ export default [
 
   //slang things
   [/^(lol)+[sz]$/, 'Expression', 'lol'],
-  [/^woo+a*?h?$/, 'Expression', 'wooah'],
+  [/^wo{2,}a*?h?$/, 'Expression', 'wooah'],
   [/^(un|de|re)\\-[a-z\u00C0-\u00FF]{2}/, 'Verb', 'un-vite'],
 
   //phone numbers
@@ -51,7 +51,7 @@ export default [
     '5.30£',
   ],
   //like
-  [/^[-+]?[$£]?[0-9]([0-9,.])+?(usd|eur|jpy|gbp|cad|aud|chf|cny|hkd|nzd|kr|rub)$/i, ['Money', 'Value'], '$400usd'],
+  [/^[-+]?[$£]?[0-9]([0-9,.])+(usd|eur|jpy|gbp|cad|aud|chf|cny|hkd|nzd|kr|rub)$/i, ['Money', 'Value'], '$400usd'],
 
   //numbers
   // 50 | -50 | 3.23  | 5,999.0  | 10+
@@ -67,9 +67,9 @@ export default [
   //range
   [/^[0-9.]{1,3}[a-z]{0,2}[-–—][0-9]{1,3}[a-z]{0,2}$/, ['Value', 'NumberRange'], '3-4'],
   //time-range
-  [/^[0-9][0-9]?(:[0-9][0-9])?(am|pm)? ?[-–—] ?[0-9][0-9]?(:[0-9][0-9])?(am|pm)$/, ['Time', 'NumberRange'], '3-4pm'],
+  [/^[0-9]{1,2}(:[0-9][0-9])?(am|pm)? ?[-–—] ?[0-9]{1,2}(:[0-9][0-9])?(am|pm)$/, ['Time', 'NumberRange'], '3-4pm'],
   //with unit
   [/^[0-9.]+([a-z]{1,4})$/, 'Value', '9km'],
   // m/h
-  [/^(m|k|cm|km|m)\/(s|h|hr)$/, 'Unit', '5 k/m'],
+  [/^(m|k|cm|km)\/(s|h|hr)$/, 'Unit', '5 k/m'],
 ]

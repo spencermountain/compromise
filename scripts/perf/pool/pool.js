@@ -1,10 +1,9 @@
-/* global import */
 import { Worker } from 'worker_threads'
 import os from 'os'
 const cpus = os.cpus().length
 
 //eslint-disable-next-line
-let dir = new URL('./', import.meta.url).pathname
+let dir = new URL('./', import.meta.url).pathname // eslint-disable-line
 
 class Pool {
   constructor() {

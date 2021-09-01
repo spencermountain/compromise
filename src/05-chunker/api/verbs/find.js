@@ -1,4 +1,4 @@
-import splitComma from '../_byComma.js'
+// import splitComma from '../_byComma.js'
 
 const findVerbs = function (doc) {
   let m = doc.match('{Verb}')

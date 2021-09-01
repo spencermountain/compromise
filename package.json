@@ -89,6 +89,8 @@
     "nlp-corpus": "^4.2.0",
     "nyc": "15.1.0",
     "pretty-error": "^3.0.4",
+    "eslint": "7.32.0",
+    "eslint-plugin-regexp": "1.1.0",
     "rollup": "2.56.2",
     "rollup-plugin-filesize-check": "0.0.1",
     "rollup-plugin-terser": "7.0.2",

@@ -93,7 +93,7 @@ export default {
   o: [
     [/^no+$/, Exp, 'noooo'],
     [/^(yo)+$/, Exp, 'yoo'],
-    [/^woo+[pt]?$/, Exp, 'woop'], //woo
+    [/^wo{2,}[pt]?$/, Exp, 'woop'], //woo
   ],
   r: [
     [/.[bdfklmst]ler$/, 'Noun'],

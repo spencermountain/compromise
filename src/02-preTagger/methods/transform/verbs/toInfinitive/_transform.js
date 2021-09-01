@@ -203,7 +203,7 @@ let rules = {
       to: '$1l',
     },
     {
-      reg: /(..)(h|ion|n[dt]|ai.|[cs]t|pp|all|ss|tt|int|ail|ld|en|oo.|er|k|pp|w|ou.|rt|ght|rm)ed$/i,
+      reg: /(..)(h|ion|n[dt]|ai.|[cs]t|pp|all|ss|tt|int|ld|en|oo.|er|k|w|ou.|rt|ght|rm)ed$/i,
       to: '$1$2',
     },
     {

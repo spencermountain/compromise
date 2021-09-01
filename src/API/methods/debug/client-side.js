@@ -25,7 +25,7 @@ const logClientSide = function (view) {
         color = tagset[found].color
         color = css[color]
       }
-      console.log(`   ${word}  -  %c${tags.join(', ')}`, `color: ${color || 'steelblue'};`)
+      console.log(`   ${word}  -  %c${tags.join(', ')}`, `color: ${color || 'steelblue'};`) // eslint-disable-line
     })
   })
 }

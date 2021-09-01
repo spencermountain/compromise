@@ -1,6 +1,6 @@
 {
   "root": true,
-  "extends": ["eslint:recommended"],
+  "extends": ["eslint:recommended", "plugin:regexp/recommended"],
   "env": {
     "es6": true,
     "browser": true,
@@ -31,6 +31,12 @@
     "no-unmodified-loop-condition":1,
     "no-use-before-define":1,
     "prefer-const": 0,
-    "radix":1
+    "radix":1,
+
+
+    "regexp/prefer-d": 0,
+    "regexp/prefer-w": 0,
+    "regexp/prefer-range": 0,
+    "regexp/no-unused-capturing-group": 0
   }
 }

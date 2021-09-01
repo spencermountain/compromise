@@ -1,6 +1,6 @@
 const hasMinMax = /\{([0-9]+,?[0-9]*)\}/
 const andSign = /&&/
-const captureName = new RegExp(/^<\s*?(\S+)\s*?>/)
+const captureName = new RegExp(/^<\s*(\S+)\s*>/)
 /* break-down a match expression into this:
 {
   word:'',

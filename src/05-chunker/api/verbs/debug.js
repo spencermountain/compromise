@@ -31,14 +31,15 @@ const debug = function (vb) {
   let rb2 = yellow(parse.adverbs.post.text())
   // line 1
   console.log(`\n`)
-  console.log(`${ml} ${rb1.padStart(25)} ${rb2.padStart(40)}`)
+  let line = `${ml} ${rb1.padStart(25)} ${rb2.padStart(40)}`
+  console.log(line)
   // line 2
-  let line = aux.padStart(20) + ` ${not}  ` + root
-  console.log(`${ml} ${line.padStart(35)}`)
+  line = `${ml} ${aux.padStart(20)} ${not}  ` + root
+  console.log(line.padStart(35))
   // line 3
   if (parse.phrasal.particle.found) {
-    line = `[${parse.phrasal.verb.text()}] [${parse.phrasal.particle.text()}]`
-    console.log(`${ml} ${red(line).padStart(50)}`)
+    line = `${ml} [${parse.phrasal.verb.text()}] [${parse.phrasal.particle.text()}]`
+    console.log(red(line).padStart(50))
   }
   console.log(`\n`)
   // call the original debug

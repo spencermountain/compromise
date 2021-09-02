@@ -58,6 +58,45 @@ test('verb-parts:', function (t) {
       root: 'work out',
       particle: 'out',
     },
+    {
+      str: `it had clearly been acknowledged safely`,
+      aux: 'had been',
+      preAdverb: 'clearly',
+      postAdverb: 'safely',
+      root: 'acknowledged',
+    },
+    {
+      str: `she is really fancy`,
+      root: 'is',
+    },
+    {
+      str: `it was not educational really`,
+      root: 'was',
+      negative: 'not',
+    },
+    {
+      str: `don't hit the gym!`,
+      aux: 'do',
+      root: 'hit',
+      negative: 'not',
+    },
+    {
+      str: `he would fall on the couch`,
+      aux: 'would',
+      root: 'fall',
+    },
+    {
+      str: `i'll tell you what`,
+      aux: 'will',
+      root: 'tell',
+    },
+    {
+      str: `someone must eventually not win the last game`,
+      aux: 'must',
+      preAdverb: 'eventually',
+      negative: 'not',
+      root: 'win',
+    },
   ]
   arr.forEach(obj => {
     let { str, preAdverb, aux, root, postAdverb, particle } = obj

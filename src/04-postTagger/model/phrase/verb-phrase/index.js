@@ -39,8 +39,10 @@ export default [
   { match: '[open] #Determiner', group: 0, tag: 'Infinitive', reason: 'open-the' },
   //were being run
   { match: `(were|was) being [#PresentTense]`, group: 0, tag: 'PastTense', reason: 'was-being' },
+  //had been broken
+  { match: `(had|has) [been #Adjective]`, group: 0, tag: 'Auxiliary Verb', reason: 'had-been-broken' },
   //were being run
-  { match: `(had|has) [been #Adjective]`, group: 0, tag: 'Auxiliary Verb', reason: 'had-been-adj' },
+  { match: `(had|has) #Adverb? [been] #Adverb? #PastTense`, group: 0, tag: 'Auxiliary', reason: 'had-been-adj' },
 
   // damn them
   { match: '[shit] (#Determiner|#Possessive|them)', group: 0, tag: 'Verb', reason: 'swear1-verb' },

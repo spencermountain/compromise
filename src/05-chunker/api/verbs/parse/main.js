@@ -2,13 +2,10 @@
 const getMain = function (vb) {
   let main = vb.match('#Verb+')
   if (main.wordCount() > 1) {
-    // main = main.not('(#Adverb|#Negative|#Auxiliary|#Particle)')
-    main = main.not('#Negative')
-    main = main.not('#Auxiliary')
-    main = main.not('#Modal')
+    main = main.not('(#Negative|#Auxiliary|#Modal)')
     // main = main.match('!#Particle')
   }
-  // just get the last one
+  // fallback to just the last word, sometimes
   if (main.length > 1 && !main.has('#Phrasal #Particle')) {
     main = main.last()
   }

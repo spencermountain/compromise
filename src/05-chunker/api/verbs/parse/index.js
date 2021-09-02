@@ -7,12 +7,12 @@ const getAuxiliary = function (vb, root) {
     return vb.none()
   }
   let aux = parts.eq(0).clone()
-  aux.remove('(#Adverb|not)')
+  aux.remove('(#Adverb|#Negative)')
   return aux
 }
 
 const getNegative = function (vb) {
-  return vb.match('not')
+  return vb.match('#Negative')
 }
 
 // pull-apart phrasal-verb into verb-particle
@@ -35,7 +35,7 @@ const parseVerb = function (view) {
     root: root,
     adverbs: getAdverbs(vb, root),
     auxiliary: getAuxiliary(vb, root),
-    negataive: getNegative(vb),
+    negative: getNegative(vb),
     phrasal: getPhrasal(root),
   }
   return res

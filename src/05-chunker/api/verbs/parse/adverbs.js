@@ -17,7 +17,7 @@ const getAdverbs = function (vb, root) {
   }
   // it must be the second one
   if (parts.eq(0).is(root)) {
-    res.pos = parts.eq(1).adverbs()
+    res.post = parts.eq(1).adverbs()
     return res
   }
   res.pre = parts.eq(0).adverbs()

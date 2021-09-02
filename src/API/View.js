@@ -19,10 +19,11 @@ class View {
       value: null,
       writable: true,
     })
-    Object.defineProperty(this, 'pointer', {
-      value: pointer,
-      writable: true,
-    })
+    // Object.defineProperty(this, 'pointer', {
+    //   value: pointer,
+    //   writable: true,
+    // })
+    this.ptrs = pointer
     // this.size = pointer ? pointer.length : 0
   }
   /* getters:  */
@@ -36,6 +37,9 @@ class View {
     //   value: docs,
     // })
     return docs
+  }
+  get pointer() {
+    return this.ptrs
   }
   get methods() {
     return this.world.methods

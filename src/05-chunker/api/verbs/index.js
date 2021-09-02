@@ -1,6 +1,7 @@
 import find from './find.js'
 import toJSON from './toJSON.js'
 import parseVerb from './parse/index.js'
+import debug from './debug.js'
 
 const findVerbs = function (View) {
   class Verbs extends View {
@@ -13,7 +14,11 @@ const findVerbs = function (View) {
       if (typeof n === 'number') {
         doc = doc.eq(n)
       }
-      return parseVerb(doc)
+      return doc.map(parseVerb)
+    }
+    debug() {
+      debug(this)
+      return this
     }
     json(n) {
       let doc = this

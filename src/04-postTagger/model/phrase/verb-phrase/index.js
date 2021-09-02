@@ -23,7 +23,7 @@ export default [
 
   // ==== Copula ====
   //will be running (not copula)
-  { match: '[will #Adverb? not? #Adverb? be] #Gerund', group: 0, tag: 'Copula', reason: 'will-be-copula' },
+  { match: 'will #Adverb? not? #Adverb? [be] #Gerund', group: 0, tag: 'Copula', reason: 'will-be-copula' },
   //for more complex forms, just tag 'be'
   { match: 'will #Adverb? not? #Adverb? [be] #Adjective', group: 0, tag: 'Copula', reason: 'be-copula' },
   // ==== Infinitive ====

@@ -65,7 +65,7 @@ const methods = {
         }
       })
     })
-    this.pointer = ptrs
+    this.ptrs = ptrs
     return this.update(ptrs)
   },
 }

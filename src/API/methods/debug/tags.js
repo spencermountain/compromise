@@ -16,9 +16,9 @@ const tagString = function (tags, model) {
 
 const showTags = function (view) {
   let { docs, model } = view
-  console.log(cli.blue('====='))
+  // console.log(cli.blue('====='))
   docs.forEach(terms => {
-    console.log(cli.blue('  -----'))
+    console.log(cli.blue('\n  ┌─────────'))
     terms.forEach(t => {
       let tags = [...(t.tags || [])]
       let text = t.text || '-'
@@ -30,7 +30,7 @@ const showTags = function (view) {
       }
       let word = "'" + text + "'"
       word = word.padEnd(18)
-      let str = cli.blue('  ｜ ') + word + '  - ' + tagString(tags, model)
+      let str = cli.blue('  │ ') + cli.i(word) + '  - ' + tagString(tags, model)
       console.log(str)
     })
   })

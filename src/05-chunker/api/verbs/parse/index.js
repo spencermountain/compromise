@@ -25,12 +25,9 @@ const getPhrasal = function (root) {
 }
 
 const parseVerb = function (view) {
-  const { methods, model } = view
   let vb = view.clone()
   vb.contractions().expand()
-
   const root = getMain(vb)
-
   let res = {
     root: root,
     adverbs: getAdverbs(vb, root),

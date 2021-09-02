@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-unused-vars */
 // import './tests/_ignore/_error.js'
 import nlp from './src/three.js'
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 // offset bug
 // let doc = nlp(`"hello world`).compute('offset')
@@ -14,13 +14,13 @@ nlp.verbose('tagger')
 // let doc = nlp('had been left').debug()
 // let doc = nlp('I will be travelling').debug()
 
-// let doc = nlp('john will not really be walking') //.debug()
-let doc = nlp('we stood back so carefully') //.debug()
-doc.compute('chunks').debug('chunks')
+let doc = nlp('john had barely ever helped') //.debug()
+// let doc = nlp('we will not work out') //.debug()
+// doc.compute('chunks').debug('chunks')
 
 let vb = doc.verbs().debug()
 
-console.log(vb.parse()[0].adverbs.post.text())
+// console.log(vb.parse()[0].adverbs.post.text())
 
 // console.log(vb.json()[0].verb)
 

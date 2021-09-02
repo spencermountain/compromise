@@ -25,26 +25,75 @@ test('verb-parts:', function (t) {
       root: 'stood back',
       particle: 'back',
     },
+    {
+      str: `quietly hit the road`,
+      preAdverb: 'quietly',
+      root: 'hit',
+    },
+    {
+      str: `allow yourself a treat`,
+      root: 'allow',
+    },
+    {
+      str: `do allow yourself a treat`,
+      aux: 'do',
+      root: 'allow',
+    },
+    {
+      str: `do not beg for a treat`,
+      aux: 'do',
+      negative: 'not',
+      root: 'beg',
+    },
+    {
+      str: `don't hurt anybody`,
+      aux: 'do',
+      negative: 'not',
+      root: 'hurt',
+    },
+    {
+      str: `he will not work out`,
+      aux: 'will',
+      negative: 'not',
+      root: 'work out',
+      particle: 'out',
+    },
   ]
   arr.forEach(obj => {
-    const { str, preAdverb, aux, root, postAdverb, particle } = obj
+    let { str, preAdverb, aux, root, postAdverb, particle } = obj
     let vb = nlp(str).verbs()
+    str = "'" + str.split(/ /).slice(0, 5).join(' ') + "'"
     t.equal(vb.length, 1, here + `1 verb - '${str}'`)
     let parse = vb.parse()[0]
+    // test pre-adverb
     if (preAdverb) {
-      t.equal(preAdverb, parse.adverbs.pre.text(), here + `[preAdverb] ${str}`)
+      t.equal(preAdverb, parse.adverbs.pre.text(), here + `${str} [preAdverb]`)
+    } else {
+      t.equal(parse.adverbs.pre.found, false, here + `${str} [preAdverb]`)
     }
+    // test auxiliary
     if (aux) {
-      t.equal(aux, parse.auxiliary.text(), here + `[aux] ${str}`)
+      t.equal(aux, parse.auxiliary.text(), here + `${str} [aux]`)
+    } else {
+      t.equal(parse.auxiliary.found, false, here + `${str} [aux]`)
     }
+    // test root verb
     if (root) {
-      t.equal(root, parse.root.text(), here + `[root] ${str}`)
+      t.equal(root, parse.root.text(), here + `${str} [root]`)
+    } else {
+      t.equal(parse.root.found, false, here + `${str} [root]`)
     }
+    // test post-adverb
     if (postAdverb) {
-      t.equal(postAdverb, parse.adverbs.post.text(), here + `[postAdverb] ${str}`)
+      t.equal(postAdverb, parse.adverbs.post.text(), here + `${str} [postAdverb]`)
+    } else {
+      t.equal(parse.adverbs.post.found, false, here + `${str} [postAdverb]`)
     }
+    // test phrasal particle
     if (particle) {
-      t.equal(particle, parse.phrasal.particle.text(), here + `[particle] ${str}`)
+      t.equal(particle, parse.phrasal.particle.text(), here + `${str} [particle]`)
+    } else {
+      t.equal(parse.phrasal.particle.found, false, here + `${str} [particle]`)
     }
   })
   t.end()

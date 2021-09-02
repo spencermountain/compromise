@@ -11,5 +11,6 @@ const cli = {
   yellow: str => '\x1b[33m' + str + reset,
   black: str => '\x1b[30m' + str + reset,
   dim: str => '\x1b[2m' + str + reset,
+  i: str => '\x1b[3m' + str + reset,
 }
 export default cli

@@ -44,7 +44,7 @@ export default [
   // was being driven
   { match: '[(be|being|been)] #Participle', group: 0, tag: 'Auxiliary', reason: 'being-foo' },
   // been walking
-  { match: '[(be|been) (#Adverb|not)+?] #Gerund', group: 0, tag: 'Auxiliary', reason: 'been-walking' },
+  { match: '[(be|been)] (#Adverb|not)+? #Gerund', group: 0, tag: 'Auxiliary', reason: 'been-walking' },
   // used to walk
   { match: '[used to] #PresentTense', group: 0, tag: 'Auxiliary', reason: 'used-to-walk' },
 ]

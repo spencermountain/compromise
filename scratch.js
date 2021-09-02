@@ -14,11 +14,12 @@ import nlp from './src/three.js'
 // let doc = nlp('had been left').debug()
 // let doc = nlp('I will be travelling').debug()
 
-let doc = nlp('john had barely ever helped') //.debug()
+let doc = nlp('a plate had been broken') //.debug()
 // let doc = nlp('we will not work out') //.debug()
-// doc.compute('chunks').debug('chunks')
+doc.compute('chunks').debug('chunks')
 
 let vb = doc.verbs().debug()
+console.log(vb.json()[0].verb)
 
 // console.log(vb.parse()[0].adverbs.post.text())
 

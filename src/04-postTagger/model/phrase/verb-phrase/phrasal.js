@@ -16,7 +16,4 @@ export default [
     tag: 'Adverb',
     reason: 'phrasal-pronoun-advb',
   },
-
-  //were being run
-  { match: `(were|was) being [#PresentTense]`, group: 0, tag: 'PastTense', reason: 'was-being' },
 ]

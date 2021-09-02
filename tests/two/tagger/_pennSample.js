@@ -2911,10 +2911,7 @@ export default [
     text: 'Hewlett Packard',
     tags: 'NNP, NNP',
   },
-  {
-    text: 'Kapor used to be a teacher of Transcendental Meditation of Maharishi Mahesh Yogi.',
-    tags: 'NNP, VBD, TO, VB, DT, NN, IN, NNP, NNP, IN, NNP, NNP, NNP',
-  },
+
   {
     text: 'The popular radio company at the time was called Victrola.',
     tags: 'DT, JJ, NN, NN, IN, DT, NN, VBD, VBN, NNP',
@@ -5241,10 +5238,7 @@ export default [
     text: 'Perfect Location plus',
     tags: 'JJ, NN, CC',
   },
-  {
-    text: 'I used to live at Meadowrun and that was a nightmare.',
-    tags: 'PRP, VBD, TO, VB, IN, NNP, CC, DT, VBD, DT, NN',
-  },
+
   {
     text: 'Another great business bites the dust!',
     tags: 'DT, JJ, NN, VBZ, DT, NN',
@@ -5789,10 +5783,7 @@ export default [
     text: 'One of the worst places',
     tags: 'CD, IN, DT, JJS, NNS',
   },
-  {
-    text: 'I used to LOVE this place.',
-    tags: 'PRP, VBD, TO, VB, DT, NN',
-  },
+
   {
     text: 'Wife and I attempted to adopt a dog and was nothing but frustrating.',
     tags: 'NN, CC, PRP, VBD, TO, VB, DT, NN, CC, VBD, NN, CC, JJ',

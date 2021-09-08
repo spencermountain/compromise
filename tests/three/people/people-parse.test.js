@@ -4,17 +4,19 @@ const here = '[three/people-parse] '
 
 test('people-parse:', function (t) {
   let arr = [
-    [`john turner`, 'john', 'turner', ''],
-    [`dr James Smith`, 'james', 'smith', 'dr'],
-    [`Corey`, 'corey', '', ''],
-    [`sgt Williams`, '', 'williams', 'sgt'],
-
-    [`Mr Springer`, '', 'springer', 'mr'],
-    [`Mr. Goobly`, '', 'goobly', 'mr.'],
-    [`dr dirk sinkel`, 'dirk', 'sinkel', 'dr'],
-    [`john D Springer sr`, 'john', 'springer', 'sr'],
-    [`captain john D Springer`, 'john', 'springer', 'captain'],
-    // [``,'',''],
+    ['john turner', 'john', 'turner', ''],
+    ['dr James Smith', 'james', 'smith', 'dr'],
+    ['Corey', 'corey', '', ''],
+    ['sgt Williams', '', 'williams', 'sgt'],
+    ['Mr Springer', '', 'springer', 'mr'],
+    ['Mr. Goobly', '', 'goobly', 'mr.'],
+    ['dr dirk sinkel', 'dirk', 'sinkel', 'dr'],
+    ['Dirk M Sinkel', 'dirk', 'sinkel', ''],
+    ['john D Springer sr', 'john', 'springer', 'sr'],
+    ['captain john D Springer', 'john', 'springer', 'captain'],
+    ['his majesty kerry adams', 'kerry', 'adams', 'his majesty'],
+    ['queen elizabeth', 'elizabeth', '', 'queen'],
+    // [','',''],
   ]
   arr.forEach(a => {
     let [str, first, last, hon] = a

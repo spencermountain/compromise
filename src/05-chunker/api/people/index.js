@@ -1,5 +1,7 @@
 import find from './find.js'
 import parse from './parse.js'
+import gender from './gender.js'
+
 const addMethod = function (View) {
   /**
    *
@@ -28,6 +30,7 @@ const addMethod = function (View) {
           firstName: parsed.firstName.text('normal'),
           lastName: parsed.lastName.text('normal'),
           honorific: parsed.honorific.text('normal'),
+          presumed_gender: gender(parsed),
         }
         return json
       })

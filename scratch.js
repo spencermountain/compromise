@@ -14,7 +14,7 @@ import nlp from './src/three.js'
 
 */
 
-let doc = nlp('Mr dirk sinkel').debug()
+let doc = nlp('queen elizabeth').debug()
 // doc.compute('chunks').debug('chunks')
 // doc.people().debug()
 console.log(doc.people().json())

@@ -11,8 +11,8 @@ export default [
   //is foo Smith
   { match: '#Copula [(#Noun|#PresentTense)] #LastName', group: 0, tag: 'FirstName', reason: 'copula-noun-lastname' },
   //pope francis
-  { match: '(lady|queen|sister) #ProperNoun', tag: 'FemaleName', reason: 'lady-titlecase', safe: true },
-  { match: '(king|pope|father) #ProperNoun', tag: 'MaleName', reason: 'pope-titlecase', safe: true },
+  { match: '(lady|queen|sister) #ProperNoun', tag: 'Honorific Person', reason: 'lady-titlecase', safe: true },
+  { match: '(king|pope|father) #ProperNoun', tag: 'Honorific Person', reason: 'pope-titlecase', safe: true },
 
   // ==== Nickname ====
   // Dwayne 'the rock' Johnson
@@ -89,4 +89,11 @@ export default [
   { match: '#ProperNoun [#Honorific]', group: 0, tag: 'Person', reason: 'last-sr' },
   // dr john foobar
   { match: '#Honorific #FirstName [#Singular]', group: 0, tag: 'LastName', reason: 'dr-john-foo', safe: true },
+  //his-excellency
+  {
+    match: '[(his|her) (majesty|honour|worship|excellency|honorable)] #Person',
+    group: 0,
+    tag: ['Honorific', 'Person'],
+    reason: 'his-excellency',
+  },
 ]

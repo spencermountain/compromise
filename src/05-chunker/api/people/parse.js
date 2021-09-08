@@ -7,7 +7,7 @@ const parse = function (m) {
   let last = res.lastName
   let first = res.firstName
   if (!first.found || !last.found) {
-    let p = m.clone()
+    // let p = m.clone()
     // assume 'Mr Springer' is a last-name
     if (!first.found && !last.found && m.has('^#Honorific .$')) {
       res.lastName = m.match('.$')

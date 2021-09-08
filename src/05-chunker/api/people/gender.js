@@ -4,7 +4,7 @@
   it should not be used for any other purposes, other than resolving pronouns
 */
 const m = 'male'
-const f = 'male'
+const f = 'female'
 
 // known gendered honorifics
 const honorifics = {
@@ -39,15 +39,17 @@ const honorifics = {
 
 const predictGender = function (parsed) {
   let { firstName, honorific } = parsed
-  // use first-name as signal
-  if (firstName.match('#FemaleName')) {
+  // use first-name as signal-signal
+  if (firstName.has('#FemaleName')) {
     return f
   }
-  if (firstName.match('#MaleName')) {
+  if (firstName.has('#MaleName')) {
     return m
   }
+  // use honorics as gender-signal
   if (honorific.found) {
     let hon = honorific.text('normal')
+    hon = hon.replace(/\./g, '') //clean it up a bit
     if (honorifics.hasOwnProperty(hon)) {
       return honorifics[hon]
     }

@@ -17,6 +17,7 @@
     "max-params":[1, 5],
     "consistent-return":1,
     "no-bitwise":1,
+    "no-empty":1,
     "no-console":1,
     "no-duplicate-imports":1,
     "no-eval":2,

@@ -85,4 +85,8 @@ export default [
   { match: '#FirstName #Acronym #Noun', tag: 'Person', reason: 'n-acro-noun', safe: true },
   //Anthony de Marco
   { match: '#FirstName [(de|di|du|van|von)] #Person', group: 0, tag: 'LastName', reason: 'de-firstname' },
+  //Joe springer sr
+  { match: '#ProperNoun [#Honorific]', group: 0, tag: 'Person', reason: 'last-sr' },
+  // dr john foobar
+  { match: '#Honorific #FirstName [#Singular]', group: 0, tag: 'LastName', reason: 'dr-john-foo', safe: true },
 ]

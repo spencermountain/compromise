@@ -14,12 +14,10 @@ import nlp from './src/three.js'
 
 */
 
-let doc = nlp('in june').debug()
-doc = nlp('during june').debug()
-doc = nlp('in jan').debug()
-doc = nlp('during jan').debug()
+let doc = nlp('Mr dirk sinkel').debug()
 // doc.compute('chunks').debug('chunks')
 // doc.people().debug()
+console.log(doc.people().json())
 
 /*
 

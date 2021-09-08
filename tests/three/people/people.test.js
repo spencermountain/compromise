@@ -1,44 +1,44 @@
 import test from 'tape'
-import nlp from './_lib.js'
+import nlp from '../_lib.js'
 const here = '[three/people] '
 
 test('people:', function (t) {
   let doc = nlp('Mary is in the boat. Nancy is in the boat. Fred is in the boat. Jack is too.')
   let arr = doc.people().toLowerCase().out('array')
-  t.deepEqual(arr, ['mary', 'nancy', 'fred', 'jack'], 'people-easy')
+  t.deepEqual(arr, ['mary', 'nancy', 'fred', 'jack'], here + 'people-easy')
 
   doc = nlp('jean jacket. jean Slkje')
   arr = doc.people().toLowerCase().out('array')
-  t.deepEqual(arr, ['jean slkje'], 'people-context')
+  t.deepEqual(arr, ['jean slkje'], here + 'people-context')
 
   doc = nlp('The Bill was passed by James MacCarthur')
   arr = doc.people().toLowerCase().out('array')
-  t.deepEqual(arr, ['james maccarthur'], 'the-bill')
+  t.deepEqual(arr, ['james maccarthur'], here + 'the-bill')
 
   doc = nlp('Rod MacDonald bought a Rod')
   arr = doc.people().toLowerCase().out('array')
-  t.deepEqual(arr, ['rod macdonald'], 'the-rod-1')
+  t.deepEqual(arr, ['rod macdonald'], here + 'the-rod-1')
 
   doc = nlp('Rod L. MacDonald bought a lightening rod')
   arr = doc.people().toLowerCase().out('text')
-  t.deepEqual(arr, 'rod l. macdonald', 'the-rod-2')
+  t.deepEqual(arr, 'rod l. macdonald', here + 'the-rod-2')
 
   doc = nlp('Francine du Plessix')
   arr = doc.people().text()
-  t.deepEqual(arr, 'Francine du Plessix', 'name-du-person')
+  t.deepEqual(arr, 'Francine du Plessix', here + 'name-du-person')
 
   doc = nlp("Matt 'the doctor' Smith lasted three seasons.")
   arr = doc.people().toLowerCase().out()
-  t.deepEqual(arr, "matt 'the doctor' smith", 'nickname-1')
+  t.deepEqual(arr, "matt 'the doctor' smith", here + 'nickname-1')
 
   doc = nlp("Randal Kieth Orton and Dwayne 'the rock' Johnson had a really funny fight.")
-  t.equal(doc.people(0).out('normal'), 'randal kieth orton', 'nickname-2a')
-  t.equal(doc.people(1).out('normal'), 'dwayne the rock johnson', 'nickname-2b')
+  t.equal(doc.people(0).out('normal'), 'randal kieth orton', here + 'nickname-2a')
+  t.equal(doc.people(1).out('normal'), 'dwayne the rock johnson', here + 'nickname-2b')
 
   doc = nlp('i work with Tina Fey and Jake Gyllenhal.')
   let m = doc.people()
-  t.equal(m.eq(0).text(), 'Tina Fey')
-  t.equal(m.eq(1).text(), 'Jake Gyllenhal')
+  t.equal(m.eq(0).text(), 'Tina Fey', here + 'tina')
+  t.equal(m.eq(1).text(), 'Jake Gyllenhal', here + 'jake')
 
   t.end()
 })
@@ -86,7 +86,7 @@ test('people false-positives:', function (t) {
   arr.forEach(str => {
     let doc = nlp(str)
     let people = doc.people().out('array')
-    t.deepEqual(people, [], str)
+    t.deepEqual(people, [], here + str)
   })
 
   t.end()

@@ -11,8 +11,12 @@ export default [
   //is foo Smith
   { match: '#Copula [(#Noun|#PresentTense)] #LastName', group: 0, tag: 'FirstName', reason: 'copula-noun-lastname' },
   //pope francis
-  { match: '(lady|queen|sister) #ProperNoun', tag: 'Honorific Person', reason: 'lady-titlecase', safe: true },
-  { match: '(king|pope|father) #ProperNoun', tag: 'Honorific Person', reason: 'pope-titlecase', safe: true },
+  {
+    match: '(lady|queen|sister|king|pope|father) #ProperNoun',
+    tag: 'Honorific Person',
+    reason: 'lady-titlecase',
+    safe: true,
+  },
 
   // ==== Nickname ====
   // Dwayne 'the rock' Johnson

@@ -28,6 +28,7 @@ let misc = {
   were: ['Copula', 'PastTense'],
   her: ['Possessive', 'Pronoun'],
   his: ['Possessive', 'Pronoun'],
+  hers: ['Possessive', 'Pronoun'],
   their: ['Possessive', 'Pronoun'],
   themselves: ['Possessive', 'Pronoun'],
   your: ['Possessive', 'Pronoun'],

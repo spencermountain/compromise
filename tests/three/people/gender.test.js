@@ -3,17 +3,23 @@ import nlp from '../_lib.js'
 const here = '[three/people-parse] '
 
 test('people-parse:', function (t) {
+  const m = 'male'
+  const f = 'female'
   let arr = [
     // by firstname
-    ['john turner', 'male'],
-    ['dr James Smith', 'male'],
-    ['dr Debrah Smith', 'female'],
+    ['john turner', m],
+    ['dr James Smith', m],
+    ['dr Debrah Smith', f],
     // by honorific
-    ['Mr Springer', 'male'],
-    ['his excellency kerry adams', 'male'],
+    ['Mr Springer', m],
+    ['his excellency kerry adams', m],
     // ambig
     ['kerry adams', null],
     ['dr adams', null],
+    // from pronoun
+    ['kris fogel', null],
+    ['kris fogel said he liked it', m],
+    ['kris fogel said her shoes fit', f],
   ]
   arr.forEach(a => {
     let [str, want] = a

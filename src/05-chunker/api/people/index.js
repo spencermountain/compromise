@@ -30,7 +30,7 @@ const addMethod = function (View) {
           firstName: parsed.firstName.text('normal'),
           lastName: parsed.lastName.text('normal'),
           honorific: parsed.honorific.text('normal'),
-          presumed_gender: gender(parsed),
+          presumed_gender: gender(parsed, p),
         }
         return json
       })

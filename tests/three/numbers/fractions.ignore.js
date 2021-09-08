@@ -17,9 +17,9 @@ test('numerator-denominator parsing', function (t) {
     ['3/8s', 3, 8],
   ]
   arr.forEach(a => {
-    let res = nlp(a[0]).fractions().json()[0] || {}
-    t.equal(res.numerator, a[1], 'numerator - ' + a[0])
-    t.equal(res.denominator, a[2], 'denominator - ' + a[0])
+    let res = nlp(a[0]).fractions().json()[0] || { fraction: {} }
+    t.equal(res.fraction.numerator, a[1], here + 'numerator - ' + a[0])
+    t.equal(res.fraction.denominator, a[2], here + 'denominator - ' + a[0])
   })
   t.end()
 })
@@ -32,8 +32,8 @@ test('fraction-normalize:', function (t) {
   ]
   arr.forEach(a => {
     let doc = nlp(a[0])
-    doc.fractions().normalize()
-    t.equal(doc.text(), a[1], a[1])
+    doc.fractions().toFraction()
+    t.equal(doc.text(), a[1], here + a[1])
   })
   t.end()
 })
@@ -51,7 +51,7 @@ test('parse fractions:', function (t) {
     let doc = nlp(a[0])
     let m = doc.fractions()
     let found = m.get(0) || {}
-    t.equal(found.decimal, a[2], 'Decimal: ' + a[0])
+    t.equal(found.decimal, a[2], here + 'parse- ' + a[0])
   })
   t.end()
 })
@@ -76,8 +76,8 @@ test('numbers with fractions:', function (t) {
   arr.forEach(a => {
     let doc = nlp(a[0])
     let m = doc.numbers()
-    let found = m.get(0) || null
-    t.equal(found, a[2], 'Decimal: ' + a[0])
+    let found = m.get()[0] || null
+    t.equal(found, a[2], here + a[0])
     // t.equal(doc.fractions().toDecimal().text(), a[1], 'toDecimal(): ' + a[1])
   })
   t.end()
@@ -93,9 +93,9 @@ test('fully-ambiguous fractions', function (t) {
   ]
   arr.forEach(a => {
     let doc = nlp(a[0])
-    let found = doc.fractions().get(0) || {}
-    t.equal(found.numerator, a[1], 'numerator: ' + a[0])
-    t.equal(found.denominator, a[2], 'denominator: ' + a[0])
+    let found = doc.fractions().get()[0] || {}
+    t.equal(found.numerator, a[1], here + 'numerator: ' + a[0])
+    t.equal(found.denominator, a[2], here + 'denominator: ' + a[0])
   })
   t.end()
 })
@@ -111,15 +111,15 @@ test('seconds-edge-case', function (t) {
 
   arr.forEach(a => {
     let doc = nlp(a[0])
-    doc.fractions().normalize()
-    t.equal(doc.text(), a[1], a[1])
+    doc.fractions().toFraction()
+    t.equal(doc.text(), a[1], here + a[1])
   })
   t.end()
 })
 
 test('do-math:', function (t) {
   let arr = nlp('1/2').fractions().get()
-  t.equal(arr[0].decimal, 0.5)
+  t.equal(arr[0].decimal, 0.5, here + 'do-math')
 
   // arr = nlp('1 1/2').fractions().json()
   // t.equal(arr[0].decimal, 1.5)

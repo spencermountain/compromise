@@ -15,13 +15,13 @@ import nlp from './src/three.js'
 */
 
 // let doc = nlp('i gave him two fourths of a slice')
-let doc = nlp('i gave him three eighths of a slice')
+let doc = nlp('seven out of ten apples')
 // let m = doc.match('fourths')
 // m.replaceWith('fooo')
 // m.debug()
 // doc.compute('chunks').debug('chunks')
-doc.fractions().toCardinal()
-console.log(doc.text())
+console.log(doc.fractions().json())
+// console.log(doc.text())
 
 /*
 

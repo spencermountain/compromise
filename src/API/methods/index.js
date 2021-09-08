@@ -36,5 +36,6 @@ const methods = Object.assign(
 // aliases
 methods.get = methods.eq
 methods.lookBehind = methods.before
+methods.lookAhead = methods.after
 
 export default methods

@@ -9,7 +9,7 @@ export default [
   //   .unTag('#Money', 'three-decimal money')
 
   // cleanup currency false-positives
-  { match: '#Currency #Verb', ifNo: '#Value', unTag: 'Currency', reason: 'no-currency' },
+  // { match: '#Currency #Verb', ifNo: '#Value', unTag: 'Currency', reason: 'no-currency' },
   // 6 dollars and 5 cents
   { match: '#Value #Currency [and] #Value (cents|ore|centavos|sens)', group: 0, tag: 'money', reason: 'and-5-cents' },
   // maybe currencies

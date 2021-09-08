@@ -33,15 +33,9 @@ export default [
 
   // ===person-date===
   // in june
-  { match: `in [${personDate}]`, group: 0, tag: 'Date', reason: 'in-june' },
-  { match: `during [${personDate}]`, group: 0, tag: 'Date', reason: 'in-june' },
-  { match: `on [${personDate}]`, group: 0, tag: 'Date', reason: 'in-june' },
-  { match: `by [${personDate}]`, group: 0, tag: 'Date', reason: 'by-june' },
-  { match: `after [${personDate}]`, group: 0, tag: 'Date', reason: 'after-june' },
-  { match: `#Date [${personDate}]`, group: 0, tag: 'Date', reason: 'in-june' },
+  { match: `(in|during|on|by|after|#Date) [${personDate}]`, group: 0, tag: 'Date', reason: 'in-june' },
   // june 1992
-  { match: `${personDate} #Value`, tag: 'Date', reason: 'june-5th' },
-  { match: `${personDate} #Date`, tag: 'Date', reason: 'june-5th' },
+  { match: `${personDate} (#Value|#Date)`, tag: 'Date', reason: 'june-5th' },
   // June Smith
   { match: `${personDate} #ProperNoun`, tag: 'Person', reason: 'june-smith', safe: true },
   // june m. Cooper

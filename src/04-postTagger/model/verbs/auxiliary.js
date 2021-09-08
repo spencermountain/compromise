@@ -1,9 +1,8 @@
+// these are some of our heaviest-used matches
 export default [
   // ==== Auxiliary ====
   //was walking
   { match: `[#Copula] (#Adverb|not)+? (#Gerund|#PastTense)`, group: 0, tag: 'Auxiliary', reason: 'copula-walking' },
-  //support a splattering of auxillaries before a verb
-  { match: `[(has|had)] (#Adverb|not)+? #PastTense`, group: 0, tag: 'Auxiliary', reason: 'had-walked' },
   //would walk
   { match: `#Adverb+? [(#Modal|did)+] (#Adverb|not)+? #Verb`, group: 0, tag: 'Auxiliary', reason: 'modal-verb' },
   //would have had
@@ -26,14 +25,6 @@ export default [
   { match: '[about to] #Adverb? #Verb', group: 0, tag: ['Auxiliary', 'Verb'], reason: 'about-to' },
   //would be walking
   { match: `#Modal (#Adverb|not)+? [be] (#Adverb|not)+? #Verb`, group: 0, tag: 'Auxiliary', reason: 'would-be' },
-
-  //would have had
-  {
-    match: `#Modal (#Adverb|not)+? [have] (#Adverb|not)+? [had] (#Adverb|not)+?] #Verb`,
-    group: 0,
-    tag: 'Auxiliary',
-    reason: 'would-have',
-  },
   //had been walking
   {
     match: `[(#Modal|had|has)] (#Adverb|not)+? [been] (#Adverb|not)+? #Verb`,

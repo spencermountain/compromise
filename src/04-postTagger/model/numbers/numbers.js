@@ -9,9 +9,6 @@ export default [
     tag: 'Value',
     reason: 'a-is-one',
   },
-  // a tenth
-  { match: '[a] #Ordinal', tag: 'Value', reason: 'a-ordinal' },
-
   // ==== PhoneNumber ====
   //1 800 ...
   { match: '1 #Value #PhoneNumber', tag: 'PhoneNumber', reason: '1-800-Value' },

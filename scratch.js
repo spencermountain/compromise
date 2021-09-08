@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/three.js'
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 /*
 
@@ -14,9 +14,12 @@ nlp.verbose('tagger')
 
 */
 
-let doc = nlp('five million').debug()
+let doc = nlp('in june').debug()
+doc = nlp('during june').debug()
+doc = nlp('in jan').debug()
+doc = nlp('during jan').debug()
 // doc.compute('chunks').debug('chunks')
-doc.people().debug()
+// doc.people().debug()
 
 /*
 

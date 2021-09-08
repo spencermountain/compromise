@@ -14,7 +14,7 @@ nlp.verbose('tagger')
 
 */
 
-let doc = nlp('john stewart').debug()
+let doc = nlp('five million').debug()
 // doc.compute('chunks').debug('chunks')
 doc.people().debug()
 

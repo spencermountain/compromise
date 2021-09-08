@@ -56,6 +56,12 @@ export default {
     })
   },
 
+  // expand 'million'
+  Multiple: (word, lex) => {
+    lex[word] = ['Multiple', 'Cardinal']
+    // add millionth
+    lex[word + 'th'] = ['Multiple', 'Ordinal']
+  },
   // expand number-words
   Cardinal: (word, lex) => {
     lex[word] = ['TextValue', 'Cardinal']

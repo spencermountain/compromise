@@ -1,11 +1,4 @@
 export default [
-  // hundred
-  {
-    match: '(hundred|thousand|million|billion|trillion|quadrillion|quintillion|sextillion|septillion)',
-    tag: 'Multiple',
-    reason: '',
-  },
-
   // half a penny
   { match: '[(half|quarter)] of? (a|an)', group: 0, tag: 'Fraction', reason: 'millionth' },
   // nearly half

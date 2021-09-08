@@ -14,6 +14,9 @@ export default {
     is: 'Value',
     not: ['Noun'],
   },
+  Multiple: {
+    is: 'Value',
+  },
   RomanNumeral: {
     is: 'Cardinal',
     not: ['TextValue'],

@@ -47,7 +47,7 @@ export default [
   { match: '#Determiner [(half|quarter)] #Ordinal', group: 0, tag: 'Value', reason: 'half-ordinal' },
   // thousand and two
   {
-    match: `(hundred|thousand|million|billion|trillion|quadrillion)+ and #Value`,
+    match: `#Multiple+ and #Value`,
     tag: 'Value',
     reason: 'magnitude-and-value',
   },

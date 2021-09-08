@@ -1,6 +1,6 @@
-// import splitComma from '../_byComma.js'
 import isSubordinate from './isSubordinate.js'
 import isPlural from './isPlural.js'
+import { getNth } from '../_lib.js'
 
 const toJSON = function (m) {
   return {
@@ -29,10 +29,7 @@ const findNouns = function (View) {
   View.prototype.nouns = function (n) {
     this.compute('chunks')
     let m = this.match('{Noun}')
-    // m = splitComma(m)
-    if (typeof n === 'number') {
-      m = m.get(n)
-    }
+    m = getNth(m, n)
     return new Nouns(this.document, m.pointer)
   }
 }

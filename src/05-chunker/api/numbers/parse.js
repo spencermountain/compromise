@@ -1,4 +1,4 @@
-import parseText from './toNumber/index.js'
+import parseText from './convert/toNumber/index.js'
 import parseFraction from '../fractions/parse.js'
 
 const parseNumeric = function (str, p, isFraction) {

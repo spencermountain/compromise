@@ -2,6 +2,7 @@ import find from './find.js'
 import toJSON from './toJSON.js'
 import parseVerb from './parse/index.js'
 import debug from './debug.js'
+import { getNth } from '../_lib.js'
 
 const findVerbs = function (View) {
   class Verbs extends View {
@@ -10,22 +11,14 @@ const findVerbs = function (View) {
       this.viewType = 'Verbs'
     }
     parse(n) {
-      let doc = this
-      if (typeof n === 'number') {
-        doc = doc.eq(n)
-      }
-      return doc.map(parseVerb)
+      return getNth(this, n).map(parseVerb)
     }
     debug() {
       debug(this)
       return this
     }
     json(n) {
-      let doc = this
-      if (typeof n === 'number') {
-        doc = doc.eq(n)
-      }
-      return doc.map(vb => {
+      return getNth(this, n).map(vb => {
         let json = vb.json()[0]
         json.verb = toJSON(vb)
         return json
@@ -36,10 +29,7 @@ const findVerbs = function (View) {
   View.prototype.verbs = function (n) {
     this.compute('chunks')
     let vb = find(this)
-    // m = splitComma(m)
-    if (typeof n === 'number') {
-      vb = vb.get(n)
-    }
+    vb = getNth(vb, n)
     return new Verbs(this.document, vb.pointer)
   }
 }

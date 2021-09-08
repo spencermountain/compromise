@@ -14,6 +14,7 @@ const selections = [
   ['pronouns', '#Pronoun'],
   ['conjunctions', '#Conjunction'],
   ['prepositions', '#Preposition'],
+  ['abbreviations', '#Abbreviation'],
 ]
 
 // aliases

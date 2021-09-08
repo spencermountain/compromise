@@ -1,8 +1,8 @@
 import find from './find.js'
+import { getNth } from '../_lib.js'
 
 const addMethod = function (View) {
   /**
-   *
    */
   class Places extends View {
     constructor(document, pointer, groups) {
@@ -14,9 +14,7 @@ const addMethod = function (View) {
   View.prototype.places = function (n) {
     this.compute('chunks')
     let m = find(this)
-    if (typeof n === 'number') {
-      m = m.get(n)
-    }
+    m = getNth(m, n)
     return new Places(this.document, m.pointer)
   }
 }

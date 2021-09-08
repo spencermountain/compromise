@@ -1,5 +1,5 @@
 const endS = /s$/
-import parseText from '../numbers/toNumber/index.js'
+import parseText from '../numbers/convert/toNumber/index.js'
 
 // just using .toNumber() again may risk an infinite-loop
 const parseNumber = function (m) {
@@ -51,12 +51,11 @@ const nOutOfN = function (m) {
 
 // parse 'five thirds'
 const nOrinalth = function (m) {
-  let found = m.match('[<num>(#Cardinal|a)+] [<dem>#Fraction+]')
+  let found = m.match('[<num>(#Cardinal|a)+] [<den>#Fraction+]')
   if (found.found !== true) {
     return null
   }
-  let { num, dem } = found.groups()
-  dem.debug()
+  let { num, den } = found.groups()
   // -- parse numerator---
   // quick-support for 'a third'
   if (num.has('a')) {
@@ -69,22 +68,22 @@ const nOrinalth = function (m) {
   }
   // -- parse denominator --
   // turn 'thirds' into third
-  let str = dem.text('reduced')
+  let str = den.text('reduced')
   if (endS.test(str)) {
     str = str.replace(endS, '')
-    dem.replaceWith(str)
+    den = den.replaceWith(str)
   }
   // support 'one half' as '1/2'
   if (mapping.hasOwnProperty(str)) {
-    dem = mapping[str]
+    den = mapping[str]
   } else {
     // dem = dem.numbers().get(0)
-    dem = parseNumber(dem)
+    den = parseNumber(den)
   }
-  if (typeof num === 'number' && typeof dem === 'number') {
+  if (typeof num === 'number' && typeof den === 'number') {
     return {
       numerator: num,
-      denominator: dem,
+      denominator: den,
     }
   }
   return null
@@ -127,7 +126,7 @@ const round = n => {
 }
 
 const parseFraction = function (m) {
-  // m = m.clone()
+  m = m.clone()
   let res = named(m) || slashForm(m) || nOutOfN(m) || nOrinalth(m) || oneNth(m) || null
   if (res !== null) {
     // do the math

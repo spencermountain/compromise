@@ -1,34 +1,24 @@
 import find from './find.js'
 import parse from './parse.js'
+import { getNth } from '../_lib.js'
 
 const addMethod = function (View) {
-  /**
-   *
-   */
+  /**   */
   class Numbers extends View {
     constructor(document, pointer, groups) {
       super(document, pointer, groups)
       this.viewType = 'Numbers'
     }
     parse(n) {
-      let doc = this
-      if (typeof n === 'number') {
-        doc = doc.eq(n)
-      }
-      return doc.map(parse)
+      return getNth(this, n).map(parse)
     }
     get(n) {
-      let doc = this
-      if (typeof n === 'number') {
-        doc = doc.eq(n)
-      }
-      return doc.map(parse).map(o => o.num)
+      return getNth(this, n)
+        .map(parse)
+        .map(o => o.num)
     }
     json(n) {
-      let doc = this
-      if (typeof n === 'number') {
-        doc = doc.eq(n)
-      }
+      let doc = getNth(this, n)
       return doc.map(p => {
         let json = p.json()[0]
         let parsed = parse(p)
@@ -66,9 +56,7 @@ const addMethod = function (View) {
 
   View.prototype.numbers = function (n) {
     let m = find(this)
-    if (typeof n === 'number') {
-      m = m.get(n)
-    }
+    m = getNth(m, n)
     return new Numbers(this.document, m.pointer)
   }
   // alias

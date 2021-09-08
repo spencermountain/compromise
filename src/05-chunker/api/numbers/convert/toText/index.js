@@ -1,4 +1,4 @@
-import toString from '../_toString'
+import toString from '../../_toString.js'
 import { sequence, ones_mapping, tens_mapping } from './data.js'
 /**
  * turns an integer/float into.ber, like 'fifty-five'

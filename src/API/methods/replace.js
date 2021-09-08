@@ -1,14 +1,14 @@
 const fns = {}
 
 fns.replaceWith = function (input) {
-  let ptr = this.fullPointer
+  let ptrs = this.fullPointer
   // slide this in
   this.insertAfter(input)
   // delete the original terms
-  let original = this.update(ptr)
+  let original = this.update(ptrs)
   this.delete(original)
   // what should we return?
-  return this.update(ptr)
+  return this.update(ptrs)
 }
 
 fns.replace = function (match, input) {

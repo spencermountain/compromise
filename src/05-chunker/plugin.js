@@ -1,4 +1,4 @@
-import api from './api/index.js'
+import api from './api/api.js'
 import chunks from './compute/index.js'
 
 export default {

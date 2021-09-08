@@ -1,4 +1,4 @@
-import toString from './toString.js'
+import toString from './toString.js.js'
 
 /**
  * turn a number like 5 into an ordinal like 5th

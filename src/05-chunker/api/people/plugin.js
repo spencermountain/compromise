@@ -1,6 +1,7 @@
 import find from './find.js'
 import parse from './parse.js'
 import gender from './gender.js'
+import { getNth } from '../_lib.js'
 
 const addMethod = function (View) {
   /**
@@ -12,17 +13,10 @@ const addMethod = function (View) {
       this.viewType = 'People'
     }
     parse(n) {
-      let doc = this
-      if (typeof n === 'number') {
-        doc = doc.eq(n)
-      }
-      return doc.map(parse)
+      return getNth(this, n).map(parse)
     }
     json(n) {
-      let doc = this
-      if (typeof n === 'number') {
-        doc = doc.eq(n)
-      }
+      let doc = getNth(this, n)
       return doc.map(p => {
         let json = p.json()[0]
         let parsed = parse(p)
@@ -40,9 +34,7 @@ const addMethod = function (View) {
   View.prototype.people = function (n) {
     this.compute('chunks')
     let m = find(this)
-    if (typeof n === 'number') {
-      m = m.get(n)
-    }
+    m = getNth(m, n)
     return new People(this.document, m.pointer)
   }
 }

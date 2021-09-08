@@ -52,3 +52,14 @@ test('one named - three results', function (t) {
   t.equal(m.groups('month').length, 3, here + '3 months, one sentence')
   t.end()
 })
+
+test('absolute pointers', function (t) {
+  let doc = nlp('i gave him two fourths of a slice')
+  let m = doc.match('#Value+')
+  m = m.match('#Value+')
+  m = m.match('[<num>two] [<dem>fourths]')
+  let { num, dem } = m.groups()
+  t.equal(num.text(), 'two', here + 'num')
+  t.equal(dem.text(), 'fourths', here + 'den')
+  t.end()
+})

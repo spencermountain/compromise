@@ -1,4 +1,4 @@
-import { phoneNumbers, places, organizations, entities } from './find.js'
+import { phoneNumbers, organizations, entities } from './find.js'
 
 // setup easy helper methods
 const selections = [
@@ -34,7 +34,6 @@ const addMethods = function (View) {
     }
   })
   View.prototype.phoneNumbers = phoneNumbers
-  View.prototype.places = places
   View.prototype.organizations = organizations
   View.prototype.entities = entities
   // add aliases

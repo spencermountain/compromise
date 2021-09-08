@@ -8,22 +8,6 @@ const phoneNumbers = function (n) {
   return m
 }
 
-/** return all cities, countries, addresses, and regions */
-const places = function (n) {
-  // don't split 'paris, france'
-  let keep = this.match('(#City && @hasComma) (#Region|#Country)')
-  // but split the other commas
-  let m = this.not(keep).splitAfter('@hasComma')
-  // combine them back together
-  m = m.concat(keep)
-  m.sort('index')
-  m = m.match('#Place+')
-  if (typeof n === 'number') {
-    m = m.get(n)
-  }
-  return m
-}
-
 /** return all schools, businesses and institutions */
 const organizations = function (n) {
   let m = this.clauses()
@@ -52,4 +36,4 @@ const entities = function (n) {
   return yup
 }
 
-export { phoneNumbers, places, organizations, entities }
+export { phoneNumbers, organizations, entities }

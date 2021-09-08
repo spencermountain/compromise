@@ -97,3 +97,13 @@ test('multi splitAfter, multi sentence', function (t) {
   t.equal(m.eq(5).out('normal'), 'none found', here + 'unfound')
   t.end()
 })
+
+test('split group', function (t) {
+  let doc = nlp('one two match three four')
+  let m = doc.splitBefore('two match three')
+  t.deepEqual(m.out('array'), ['one', 'two match three four'], here + 'match without group')
+
+  m = doc.splitBefore('two [match] three', 0)
+  t.deepEqual(m.out('array'), ['one two', 'match three four'], here + 'match on group')
+  t.end()
+})

@@ -4,14 +4,14 @@ const combine = function (left, right) {
   return [left[0], left[1], right[2]]
 }
 
-const getDoc = (m, view) => {
-  return typeof m === 'string' ? view.match(m) : m
+const getDoc = (m, view, group) => {
+  return typeof m === 'string' ? view.match(m, group) : m
 }
 
 const methods = {}
 // [before], [match], [after]
-methods.splitOn = function (m) {
-  let splits = getDoc(m, this).fullPointer
+methods.splitOn = function (m, group) {
+  let splits = getDoc(m, this, group).fullPointer
   let all = splitAll(this.fullPointer, splits)
   let res = []
   all.forEach(o => {
@@ -25,8 +25,8 @@ methods.splitOn = function (m) {
 }
 
 // [before], [match after]
-methods.splitBefore = function (m) {
-  let splits = getDoc(m, this).fullPointer
+methods.splitBefore = function (m, group) {
+  let splits = getDoc(m, this, group).fullPointer
   let all = splitAll(this.fullPointer, splits)
   let res = []
   all.forEach(o => {
@@ -44,8 +44,8 @@ methods.splitBefore = function (m) {
 }
 
 // [before match], [after]
-methods.splitAfter = function (m) {
-  let splits = getDoc(m, this).fullPointer
+methods.splitAfter = function (m, group) {
+  let splits = getDoc(m, this, group).fullPointer
   let all = splitAll(this.fullPointer, splits)
   let res = []
   all.forEach(o => {

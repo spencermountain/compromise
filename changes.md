@@ -87,6 +87,7 @@ match(['foo', 'far'])
 - **[change]** bestTag is now `.compute('tagRank')`
 - **[change]** .sort() is no longer in-place (its now immutable)
 - **[change]** drop undocumented options param to `.replaceWith()` method
+- **[change]** add match-group as 2nd param to split methods
 
 - **[new]** .union(), .intersection(), .difference() and .complement() methods
 - **[new]** .settle() - remove overlaps in matches

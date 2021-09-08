@@ -11,6 +11,7 @@ import sort from './sort.js'
 import split from './split.js'
 import tag from './tag.js'
 import util from './utils.js'
+import lookaround from './lookaround.js'
 import whitespace from './whitespace.js'
 
 const methods = Object.assign(
@@ -28,6 +29,7 @@ const methods = Object.assign(
   sort,
   split,
   tag,
+  lookaround,
   whitespace
 )
 

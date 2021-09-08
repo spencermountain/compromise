@@ -45,8 +45,7 @@ const fns = {
     }
     // is it other pointers from the same document?
     if (this.document === input.document) {
-      let ptrs = this.fullPointer
-      ptrs = ptrs.concat(input.fullPointer)
+      let ptrs = this.fullPointer.concat(input.fullPointer)
       return this.update(ptrs)
     }
     return this

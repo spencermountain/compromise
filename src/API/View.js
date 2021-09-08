@@ -63,12 +63,12 @@ class View {
   }
   // return a more-hackable pointer
   get fullPointer() {
-    let { docs, pointer } = this
+    let { docs, pointer, document } = this
     let ptrs = pointer || docs.map((_d, n) => [n])
     return ptrs.map((a, n) => {
       a = a.slice(0) //clone it
       a[1] = a[1] || 0
-      a[2] = a[2] || (docs[n] || []).length
+      a[2] = a[2] || (document[n] || []).length
       return a
     })
   }

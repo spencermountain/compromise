@@ -49,4 +49,10 @@ export default [
     output: [{ file: 'builds/three/compromise-three.mjs', format: 'esm' }],
     plugins: [terser(), sizeCheck({ expect: 160, warn: 15 })],
   },
+  // date-plugin
+  {
+    input: 'src/plugins/three/dates/plugin.js',
+    output: [{ file: 'builds/three/compromise-dates.mjs', format: 'esm' }],
+    plugins: [terser(), sizeCheck({ expect: 160, warn: 15 })],
+  },
 ]

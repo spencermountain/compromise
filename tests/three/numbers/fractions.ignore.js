@@ -1,5 +1,6 @@
-const test = require('tape')
-const nlp = require('./_lib')
+import test from 'tape'
+import nlp from '../_lib.js'
+const here = '[three/fractions] '
 
 test('numerator-denominator parsing', function (t) {
   let arr = [
@@ -15,7 +16,7 @@ test('numerator-denominator parsing', function (t) {
     ['3/8ths', 3, 8],
     ['3/8s', 3, 8],
   ]
-  arr.forEach((a) => {
+  arr.forEach(a => {
     let res = nlp(a[0]).fractions().json()[0] || {}
     t.equal(res.numerator, a[1], 'numerator - ' + a[0])
     t.equal(res.denominator, a[2], 'denominator - ' + a[0])
@@ -29,7 +30,7 @@ test('fraction-normalize:', function (t) {
     ['apparently, 3 out of four cats do think so', 'apparently, 3/4 cats do think so'],
     ['two thirds of a cake', '2/3 of a cake'],
   ]
-  arr.forEach((a) => {
+  arr.forEach(a => {
     let doc = nlp(a[0])
     doc.fractions().normalize()
     t.equal(doc.text(), a[1], a[1])
@@ -46,7 +47,7 @@ test('parse fractions:', function (t) {
     // ['one thirty second of an inch', '0.031 of an inch', 0.031],
     // ['six thirty seconds of an inch', '0.187 of an inch', 0.187],
   ]
-  arr.forEach((a) => {
+  arr.forEach(a => {
     let doc = nlp(a[0])
     let m = doc.fractions()
     let found = m.get(0) || {}
@@ -72,7 +73,7 @@ test('numbers with fractions:', function (t) {
     // ['two hundred and twelve and five hundred and one thousandths', '212.501', 212.501],
   ]
 
-  arr.forEach((a) => {
+  arr.forEach(a => {
     let doc = nlp(a[0])
     let m = doc.numbers()
     let found = m.get(0) || null
@@ -90,7 +91,7 @@ test('fully-ambiguous fractions', function (t) {
     ['thirty five fifths of an inch', 35, 5],
     ['three hundred tenths of an inch', 300, 10],
   ]
-  arr.forEach((a) => {
+  arr.forEach(a => {
     let doc = nlp(a[0])
     let found = doc.fractions().get(0) || {}
     t.equal(found.numerator, a[1], 'numerator: ' + a[0])
@@ -108,7 +109,7 @@ test('seconds-edge-case', function (t) {
     // ['three thirty secondths of an inch', '3/32 of an inch'],
   ]
 
-  arr.forEach((a) => {
+  arr.forEach(a => {
     let doc = nlp(a[0])
     doc.fractions().normalize()
     t.equal(doc.text(), a[1], a[1])

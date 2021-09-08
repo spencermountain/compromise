@@ -14,10 +14,14 @@ import nlp from './src/three.js'
 
 */
 
-let doc = nlp('kris fogel said her shoes fit').debug()
+let doc = nlp('i gave him two fourths of a slice')
+let m = doc.match('#Value+')
+m = m.match('[<num>(#Cardinal|a)+] [<dem>#Fraction+]')
+
+m.groups().num.debug()
+m.groups().dem.debug()
 // doc.compute('chunks').debug('chunks')
-// doc.people().debug()
-console.log(doc.people().json())
+// console.log(doc.fractions().json())
 
 /*
 

@@ -30,6 +30,10 @@
     "./three": {
       "import": "./builds/three/compromise-three.mjs",
       "default": "./builds/three/compromise-three.cjs"
+    },
+    "./three/dates": {
+      "import": "./builds/three/compromise-dates.mjs",
+      "default": "./builds/three/compromise-dates.cjs"
     }
   },
   "repository": {

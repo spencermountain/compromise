@@ -2,6 +2,7 @@ import verbs from './verbs/index.js'
 import sentences from './sentences/index.js'
 import nouns from './nouns/index.js'
 import selections from './selections/index.js'
+import numbers from './numbers/index.js'
 import abbreviations from './abbreviations.js'
 import people from './people/index.js'
 import places from './places/index.js'
@@ -14,6 +15,7 @@ const chunker = function (View) {
   sentences(View)
   people(View)
   places(View)
+  numbers(View)
   abbreviations(View)
   clauses(View)
 }

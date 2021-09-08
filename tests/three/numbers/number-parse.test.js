@@ -1,5 +1,6 @@
-const test = require('tape')
-const nlp = require('./_lib')
+import test from 'tape'
+import nlp from '../_lib.js'
+const here = '[three/number-parse] '
 
 test('parse numbers', function (t) {
   let arr = [
@@ -39,8 +40,8 @@ test('parse numbers', function (t) {
     // ['seventy hundred', null],
   ]
   arr.forEach(function (a) {
-    const num = nlp(a[0]).values().get(0)
-    t.equal(num, a[1], '[Parse]: ' + a[0])
+    const num = nlp(a[0]).values().get()[0]
+    t.equal(num, a[1], here + a[0])
   })
   t.end()
 })

@@ -1,8 +1,8 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/people-parse] '
+const here = '[three/gender] '
 
-test('people-parse:', function (t) {
+test('people-gender:', function (t) {
   const m = 'male'
   const f = 'female'
   let arr = [
@@ -20,6 +20,7 @@ test('people-parse:', function (t) {
     ['kris fogel', null],
     ['kris fogel said he liked it', m],
     ['kris fogel said her shoes fit', f],
+    ['kris and amy washed her car', null], //ambig
   ]
   arr.forEach(a => {
     let [str, want] = a

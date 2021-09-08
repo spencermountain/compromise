@@ -95,3 +95,23 @@ match(['foo', 'far'])
 - **[new]** .none() - helper-method for returning an empty view of the document
 
 ---
+
+### plugins
+
+adjectives
+export
+hash
+html
+ngrams
+numbers
+paragraphs
+pronounce
+redact
+scan
+sentences
+strict
+syllables
+typeahead
+keypress
+
+### search

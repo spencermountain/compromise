@@ -1,5 +1,6 @@
-const test = require('tape')
-const nlp = require('./_lib')
+import test from 'tape'
+import nlp from './_lib.js'
+const here = '[three/people] '
 
 test('people:', function (t) {
   let doc = nlp('Mary is in the boat. Nancy is in the boat. Fred is in the boat. Jack is too.')
@@ -74,13 +75,13 @@ test('people false-positives:', function (t) {
     `which  I  think  may  be  arising`,
     // `Mr Sean Malay, Spinal Surgeon`,
     `onto the Spinal CATS Service`,
-    // `Vitamin D.`,
-    // `may`,
-    // `ACE`,
+    `Vitamin D.`,
+    `may`,
+    `ACE`,
     // `gene`,
     // `Jennifer  antibiotics`,
-    // `rheumatoid factor, ANA, ENA, CCP antibody, ESR, CRP, etc.`,
-    // `in our X-ray Uro-radiology`,
+    `rheumatoid factor, ANA, ENA, CCP antibody, ESR, CRP, etc.`,
+    `in our X-ray Uro-radiology`,
   ]
   arr.forEach(str => {
     let doc = nlp(str)

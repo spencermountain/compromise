@@ -16,7 +16,7 @@ export default [
 
   // ==== Nickname ====
   // Dwayne 'the rock' Johnson
-  { match: '#FirstName [#Determiner #Noun] #LastName', group: 0, tag: 'NickName', reason: 'first-noun-last' },
+  { match: '#FirstName [#Determiner #Noun] #LastName', group: 0, tag: 'Person', reason: 'first-noun-last' },
   {
     match: '#ProperNoun (b|c|d|e|f|g|h|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z) #ProperNoun',
     tag: 'Person',
@@ -63,18 +63,26 @@ export default [
   { match: '#Singular #Acronym #LastName', tag: '#FirstName #Person .', reason: 'title-acro-noun', safe: true },
   //Foo Ford
   { match: '[#ProperNoun] #Person', group: 0, tag: 'Person', reason: 'proper-person', safe: true },
+  // john keith jones
+  {
+    match: '#Person [#ProperNoun #ProperNoun]',
+    group: 0,
+    tag: 'Person',
+    reason: 'three-name-person',
+    safe: true,
+  },
   //John Foo
   {
-    match: '#FirstName #Acronym? [(#ProperNoun && !#FirstName)]', //can't use ifNo
+    match: '#FirstName #Acronym? [#ProperNoun]', //can't use ifNo
     group: 0,
     tag: 'LastName',
     reason: 'firstname-titlecase',
+    safe: true,
   },
+  // john stewart
   { match: '(#FirstName && !@hasComma) [#FirstName]', group: 0, tag: 'LastName', reason: 'firstname-firstname' },
   //Joe K. Sombrero
   { match: '#FirstName #Acronym #Noun', tag: 'Person', reason: 'n-acro-noun', safe: true },
   //Anthony de Marco
-  { match: '#FirstName [(de|di|du|van|von) #Person]', group: 0, tag: 'LastName', reason: 'de-firstname' },
-
-  // { match: '#Person #Person', group: 0, tag: 'LastName', reason: 'de-firstname' },
+  { match: '#FirstName [(de|di|du|van|von)] #Person', group: 0, tag: 'LastName', reason: 'de-firstname' },
 ]

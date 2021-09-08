@@ -10,7 +10,7 @@ test('known-regions:', function (t) {
   ]
   arr.forEach(function (a) {
     const str = nlp(a[0]).match('#Region').text('normal')
-    t.equal(str, a[1], a[0])
+    t.equal(str, a[1], here + a[0])
   })
   t.end()
 })
@@ -27,13 +27,13 @@ test('unknown-places:', function (t) {
   ]
   arr.forEach(function (a) {
     const str = nlp(a[0]).places(0).text('normal')
-    t.equal(str, a[1], a[0])
+    t.equal(str, a[1], here + a[0])
   })
   t.end()
 })
 
 test('mixed continents-places:', function (t) {
   const doc = nlp('in north africa, eastern asia, guatemala, europe, north america, and japan')
-  t.equal(doc.places().length, 6, '6-places')
+  t.equal(doc.places().length, 6, here + '6-places')
   t.end()
 })

@@ -12,13 +12,21 @@ const tagger = function (list, document, world) {
     console.log(`\n  \x1b[32m→ ${list.length} corrections:\x1b[0m`) //eslint-disable-line
   }
   return list.map(todo => {
+    if (!todo.tag) {
+      return
+    }
     if (env.DEBUG_TAGS) {
       logger(todo, document)
     }
     let terms = getDoc([todo.pointer], document)[0]
     // handle 'safe' tag
     if (todo.safe === true) {
+      // check for conflicting tags
       if (methods.two.canBe(terms, todo.tag, model) === false) {
+        return
+      }
+      // dont tag half of a hyphenated word
+      if (terms[terms.length - 1].post === '-') {
         return
       }
     }

@@ -1,16 +1,20 @@
 const find = function (doc) {
   let m = doc.match('#Place+')
 
-  let commas = m.match('@hasComma')
-  // don't split 'paris, france'
-  commas = commas.filter(c => {
-    return c.after('#Country').found
+  // split all commas except for 'paris, france'
+  let splits = m.match('@hasComma')
+  splits = splits.filter(c => {
+    // split 'europe, china'
+    if (c.has('(asia|africa|europe|america)$')) {
+      return true
+    }
+    // don't split 'paris, france'
+    if (c.has('(#City|#Region)$') && c.after('^#Country').found) {
+      return false
+    }
+    return true
   })
-  m = m.splitAfter(commas)
-  // toronto, chicago
-  // m = m.splitBefore('(#City && @hasComma) [#City]', 0)
-  // germany, sweden
-  // m = m.splitBefore('(#Country && @hasComma) [#Country]', 0)
+  m = m.splitAfter(splits)
   return m
 }
 export default find

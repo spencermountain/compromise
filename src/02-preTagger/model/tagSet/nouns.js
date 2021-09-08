@@ -31,10 +31,6 @@ export default {
     is: 'Person',
     not: ['FirstName'],
   },
-  NickName: {
-    is: 'Person',
-    not: ['FirstName', 'LastName'],
-  },
   Honorific: {
     is: 'Noun',
     not: ['FirstName', 'LastName', 'Value'],

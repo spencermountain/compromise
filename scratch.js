@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/three.js'
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 /*
 
@@ -14,14 +14,9 @@ import nlp from './src/three.js'
 
 */
 
-// let doc = nlp('Toronto, Chicago, USA')
-let doc = nlp('one two three match four five')
-let m = doc.match('match')
-let res = m.concat(m.after())
-res.debug()
-
+let doc = nlp('john stewart').debug()
 // doc.compute('chunks').debug('chunks')
-// doc.places().debug()
+doc.people().debug()
 
 /*
 

@@ -26,7 +26,7 @@ const isNoPeriodAcronym = function (term, model) {
     return false
   }
   // known-words, like 'PIZZA' is not an acronym.
-  if (model.two.lexicon.hasOwnProperty(str)) {
+  if (model.two.lexicon.hasOwnProperty(term.normal)) {
     return false
   }
   //like N.D.A
@@ -55,6 +55,7 @@ const isAcronym = function (term, model) {
   }
   //non-period ones are harder
   if (isNoPeriodAcronym(term, model)) {
+    term.tags.clear() //not ideal
     setTag(term, ['Acronym', 'Noun'], 'no-period-acronym')
     return true
   }

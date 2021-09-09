@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/three.js'
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 /*
 
@@ -14,13 +14,10 @@ import nlp from './src/three.js'
 
 */
 
-// let doc = nlp('i gave him two fourths of a slice')
-let doc = nlp('seven out of ten apples')
-// let m = doc.match('fourths')
-// m.replaceWith('fooo')
-// m.debug()
+let doc = nlp('lady Gaga').debug()
+// let doc = nlp('ten and one twentieth').debug()
 // doc.compute('chunks').debug('chunks')
-console.log(doc.fractions().json())
+console.log(doc.people().json()[0])
 // console.log(doc.text())
 
 /*

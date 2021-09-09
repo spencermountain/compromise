@@ -2,11 +2,11 @@
 const findModifiers = str => {
   const mults = [
     {
-      reg: /^(minus|negative)[\s\-]/i,
+      reg: /^(minus|negative)[\s-]/i,
       mult: -1,
     },
     {
-      reg: /^(a\s)?half[\s\-](of\s)?/i,
+      reg: /^(a\s)?half[\s-](of\s)?/i,
       mult: 0.5,
     },
     //  {

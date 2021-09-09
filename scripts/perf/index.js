@@ -26,10 +26,15 @@ const fetchAll = function (urls) {
   return Promise.all(urls.map(u => fetch(u))).then(res => res.map(texts => texts.join('\n')))
 }
 
-const diff = function (time) {
-  let delta = time - BASELINE
-  let percent = (delta / time) * 100
-  percent = Math.round(percent * 10) / 10
+const growth = (baseline, current) => {
+  let percent = (current / baseline) * 100
+  percent = 100 - Math.round(percent)
+  percent = percent * -1
+  if (percent > 5) {
+    percent = '\x1b[31m' + percent + '% slower\x1b[0m'
+  } else if (percent < -5) {
+    percent = '\x1b[32m' + Math.abs(percent) + '% faster\x1b[0m'
+  }
   return percent
 }
 
@@ -46,6 +51,9 @@ const diff = function (time) {
   let sum = nums.reduce((h, n) => h + n, 0)
   sum = Math.round(sum * 10) / 10
   console.log('\n\n', sum, ' total')
-  console.log('  +/- ', diff(sum), '% ')
+  // console.log('  +/- ', diff(sum), '% ')
+  console.log('  +/- ', growth(BASELINE, sum))
   p.close()
 })()
+
+// console.log(growth(100, 110))

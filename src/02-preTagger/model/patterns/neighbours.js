@@ -34,6 +34,7 @@ export default {
     ['before', 'Noun'],
     ['a', 'Singular'],
     ['the', 'Noun'],
+    ['been', 'Verb'],
   ],
 
   // looking at the next word's tags:

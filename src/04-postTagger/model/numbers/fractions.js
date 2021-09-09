@@ -24,7 +24,7 @@ export default [
   { match: '(a|one) #Cardinal?+ #Ordinal', tag: 'Fraction', reason: 'a-ordinal' },
 
   // //  '3 out of 5'
-  // { match: '#Cardinal+ out? of every? #Cardinal', tag: 'Fraction', reason: 'out-of' },
+  { match: '#Cardinal+ out? of every? #Cardinal', tag: 'Fraction', reason: 'out-of' },
 ]
 
 // {match:'', tag:'',reason:''},

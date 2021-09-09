@@ -50,7 +50,7 @@ test('parse fractions:', function (t) {
   arr.forEach(a => {
     let doc = nlp(a[0])
     let m = doc.fractions()
-    let found = m.get(0) || {}
+    let found = m.get()[0] || {}
     t.equal(found.decimal, a[2], here + 'parse- ' + a[0])
   })
   t.end()

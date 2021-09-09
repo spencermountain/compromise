@@ -309,7 +309,7 @@ let arr = [
   ['canadians are nice', '#ProperNoun #Verb #Adjective'],
   ['thom is smart', '#ProperNoun #Verb #Adjective'],
 
-  [`ANA, ENA, CCP etc.`, '#Acronym #Acronym #Acronym #Abbreviation'],
+  [`ANAB, ENA, CCP etc.`, '#Acronym #Acronym #Acronym #Abbreviation'],
   [`as disgusting as`, '#Preposition #Adjective #Preposition'],
   [`more disgusting than`, '#Adverb #Adjective #Preposition'],
   [`was so nausiating`, '#Copula #Adverb #Adjective'],

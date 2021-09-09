@@ -39,6 +39,7 @@ const addMethod = function (View) {
     isCardina() {
       return this.if('#Cardinal')
     }
+
     /** convert to numeric form like '8' or '8th' */
     toNumber() {
       this.forEach(val => {

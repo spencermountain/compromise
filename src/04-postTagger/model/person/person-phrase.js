@@ -29,8 +29,6 @@ export default [
   },
   { match: '#Acronym #LastName', tag: 'Person', reason: 'acronym-lastname', safe: true },
   { match: '#Person (jr|sr|md)', tag: 'Person', reason: 'person-honorific' },
-  //general pearson
-  { match: '#Honorific #Person', tag: 'Person', reason: 'honorific-person' },
   //remove single 'mr'
   { match: '#Honorific #Acronym', tag: 'Person', reason: 'Honorific-TitleCase' },
   { match: '#Person #Person the? #RomanNumeral', tag: 'Person', reason: 'roman-numeral' },
@@ -62,7 +60,7 @@ export default [
   // dick van dyke
   { match: '#ProperNoun (van|al|bin) #ProperNoun', tag: 'Person', reason: 'title-van-title', safe: true },
   //jose de Sucre
-  { match: '#ProperNoun (de|du) la? #ProperNoun', tag: 'Person', reason: 'title-de-title', safe: true },
+  { match: '#ProperNoun (de|du) la? #ProperNoun', tag: 'Person', reason: 'title-de-title' },
   //Jani K. Smith
   { match: '#Singular #Acronym #LastName', tag: '#FirstName #Person .', reason: 'title-acro-noun', safe: true },
   //Foo Ford
@@ -100,4 +98,6 @@ export default [
     tag: ['Honorific', 'Person'],
     reason: 'his-excellency',
   },
+  //general pearson
+  { match: '#Honorific #Person', tag: 'Person', reason: 'honorific-person' },
 ]

@@ -6,12 +6,11 @@ const toInfinitive = function (parsed, methods, model) {
   if (root.has('#Gerund')) {
     fromTense = 'Gerund'
   }
-  let vb = root
+  // let vb = root
   // if(
   // pull-apart phrasal
   let particle = root.match('#Particle$')
   let str = root.not(particle).text('normal')
-
   let inf = verbToInfinitive(str, model, fromTense)
   if (particle.found) {
     inf += ' ' + particle.text('normal')

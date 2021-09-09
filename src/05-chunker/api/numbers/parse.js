@@ -48,10 +48,13 @@ const parseNumber = function (m) {
   }
   // -- parse text-formats --
   // Fractions: remove 'and a half' etc. from the end
-  let frPart = m.match('#Fraction #Fraction+$')
+  let frPart = m.match('#Fraction{2,}$')
   frPart = frPart.found === false ? m.match('^#Fraction$') : frPart
   let fraction = null
   if (frPart.found) {
+    if (frPart.has('#Value and #Value #Fraction')) {
+      frPart = frPart.match('and #Value #Fraction')
+    }
     fraction = parseFraction(frPart)
     // remove it from our string
     m = m.not(frPart)

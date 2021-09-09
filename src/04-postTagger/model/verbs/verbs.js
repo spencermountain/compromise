@@ -40,7 +40,9 @@ export default [
   //were being run
   { match: `(were|was) being [#PresentTense]`, group: 0, tag: 'PastTense', reason: 'was-being' },
   //had been broken
-  { match: `(had|has) [been #Adjective]`, group: 0, tag: 'Auxiliary Verb', reason: 'had-been-broken' },
+  { match: `(had|has|have) [been /en$/]`, group: 0, tag: 'Auxiliary Participle', reason: 'had-been-broken' },
+  //had been smoked
+  { match: `(had|has|have) [been /ed$/]`, group: 0, tag: 'Auxiliary PastTense', reason: 'had-been-smoked' },
   //were being run
   { match: `(had|has) #Adverb? [been] #Adverb? #PastTense`, group: 0, tag: 'Auxiliary', reason: 'had-been-adj' },
 

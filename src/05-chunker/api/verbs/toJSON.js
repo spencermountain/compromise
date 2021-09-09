@@ -19,13 +19,13 @@ const toText = function (m) {
 
 const toJSON = function (vb) {
   let parsed = parseVerb(vb)
-  const inf = toInfinitive(parsed, vb.methods, vb.model)
+  const infinitive = toInfinitive(parsed, vb.methods, vb.model)
   return {
     root: parsed.root.text(),
     preAdverbs: toArray(parsed.adverbs.pre),
     postAdverbs: toArray(parsed.adverbs.post),
     auxiliary: toText(parsed.auxiliary),
-    infinitive: toText(inf),
+    infinitive: infinitive,
     grammar: getGrammar(vb, parsed),
   }
 }

@@ -6,12 +6,12 @@ export default [
   {
     input: 'src/three.js',
     output: [{ file: 'builds/compromise.cjs', format: 'umd', name: 'nlp' }],
-    plugins: [terser(), sizeCheck({ expect: 160, warn: 15 })],
+    plugins: [terser(), sizeCheck({ expect: 180, warn: 15 })],
   },
   {
     input: 'src/three.js',
     output: [{ file: 'builds/compromise.mjs', format: 'esm' }],
-    plugins: [terser(), sizeCheck({ expect: 160, warn: 15 })],
+    plugins: [terser(), sizeCheck({ expect: 180, warn: 15 })],
   },
 
   // === One ==
@@ -42,17 +42,17 @@ export default [
   {
     input: 'src/three.js',
     output: [{ file: 'builds/three/compromise-three.cjs', format: 'umd', name: 'nlp' }],
-    plugins: [terser(), sizeCheck({ expect: 160, warn: 15 })],
+    plugins: [terser(), sizeCheck({ expect: 180, warn: 15 })],
   },
   {
     input: 'src/three.js',
     output: [{ file: 'builds/three/compromise-three.mjs', format: 'esm' }],
-    plugins: [terser(), sizeCheck({ expect: 160, warn: 15 })],
+    plugins: [terser(), sizeCheck({ expect: 180, warn: 15 })],
   },
   // date-plugin
   {
-    input: 'src/plugins/three/dates/plugin.js',
+    input: 'plugins/dates/plugin.js',
     output: [{ file: 'builds/three/compromise-dates.mjs', format: 'esm' }],
-    plugins: [terser(), sizeCheck({ expect: 160, warn: 15 })],
+    plugins: [terser(), sizeCheck({ expect: 10, warn: 15 })],
   },
 ]

@@ -1,7 +1,6 @@
 export default [
   // all fell apart
-  { match: '[all] #Determiner? #Noun', group: 0, tag: 'Adjective', reason: 'all-noun' },
-
+  { match: '[(all|both)] #Determiner #Noun', group: 0, tag: 'Noun', reason: 'all-noun' },
   //sometimes not-adverbs
   { match: '#Copula [(just|alone)]$', group: 0, tag: 'Adjective', reason: 'not-adverb' },
   //jack is guarded
@@ -19,7 +18,7 @@ export default [
   // jury is out - preposition ➔ adjective
   { match: '#Copula #Adjective? [(out|in|through)]$', group: 0, tag: 'Adjective', reason: 'still-out' },
   // shut the door
-  { match: '^[#Adjective] (the|your) #Noun', group: 0, tag: 'Infinitive', reason: 'shut-the' },
+  { match: '^[#Adjective] (the|your) #Noun', group: 0, ifNo: ['all'], tag: 'Infinitive', reason: 'shut-the' },
   // the said card
   { match: 'the [said] #Noun', group: 0, tag: 'Adjective', reason: 'the-said-card' },
   // a myth that uncovered wounds heal

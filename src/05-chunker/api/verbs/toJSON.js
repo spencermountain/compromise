@@ -1,5 +1,5 @@
 import parseVerb from './parse/index.js'
-import { toInfinitive } from './conjugate/index.js'
+import { toInfinitive } from './conjugate/toInfinitive/index.js'
 import getGrammar from './grammar/index.js'
 
 const toArray = function (m) {

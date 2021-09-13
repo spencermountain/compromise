@@ -26,6 +26,8 @@ const rules = [
   { match: '{Verb} #Negative', chunk: 'Verb' },
   // not seen
   { match: '#Negative {Verb}', chunk: 'Verb' },
+  // want to be sedated
+  // { match: 'want to {Verb}', chunk: 'Verb' },
 
   // === Noun ===
   // the brown fox

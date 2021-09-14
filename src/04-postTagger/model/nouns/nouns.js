@@ -1,3 +1,5 @@
+const infNouns =
+  '(feel|sense|process|rush|side|bomb|bully|challenge|cover|crush|dump|exchange|flow|function|issue|lecture|limit|march|process)'
 export default [
   //'more' is not always an adverb
   { match: 'more #Noun', tag: 'Noun', reason: 'more-noun' },
@@ -88,4 +90,11 @@ export default [
   { match: '#Value [seconds]', group: 0, unTag: 'Value', tag: 'Plural', reason: '10-seconds' },
   //the repairer said
   { match: '#Determiner [#Noun] said', group: 0, tag: 'Actor', reason: 'the-actor-said' },
+  //the euro sense
+  {
+    match: `#Determiner #Noun [${infNouns}] !(#Preposition|to|#Adverb)?`,
+    group: 0,
+    tag: 'Noun',
+    reason: 'the-noun-sense',
+  },
 ]

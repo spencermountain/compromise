@@ -14,5 +14,9 @@ let matches = [
   { match: 'holy (shit|fuck|hell)', tag: 'Expression', reason: 'swears-expression' },
   // well..
   { match: '^(well|so|okay)', tag: 'Expression', reason: 'well-' },
+  // some sort of
+  { match: 'some sort of', tag: 'Adjective Noun Conjunction', reason: 'some-sort-of' },
+  // of some sort
+  { match: 'of some sort', tag: 'Conjunction Adjective Noun', reason: 'of-some-sort' },
 ]
 export default matches

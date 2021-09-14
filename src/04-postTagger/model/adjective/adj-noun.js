@@ -9,6 +9,8 @@ export default [
   { match: '#Determiner [#Adjective] (#Copula|#PastTense|#Auxiliary)', group: 0, tag: 'Noun', reason: 'the-adj-2' },
   // have fun
   { match: `(have|had) [#Adjective] #Preposition .`, group: 0, tag: 'Noun', reason: 'have-fun' },
+  // brewing giant
+  { match: `#Gerund giant`, tag: 'Noun', reason: 'brewing-giant' },
   // the orange
   {
     match: '#Determiner [(#Adjective)]$',

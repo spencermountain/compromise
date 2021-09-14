@@ -35,6 +35,8 @@ export default [
   { match: `[may] be`, group: 0, tag: 'Verb', reason: 'may-be' },
 
   // === misc==
+  // side with
+  // { match: '[(side|fool|monkey)] with', group: 0, tag: 'Infinitive', reason: 'fool-with' },
   // open the door
   { match: '[open] #Determiner', group: 0, tag: 'Infinitive', reason: 'open-the' },
   //were being run
@@ -45,6 +47,13 @@ export default [
   { match: `(had|has|have) [been /ed$/]`, group: 0, tag: 'Auxiliary PastTense', reason: 'had-been-smoked' },
   //were being run
   { match: `(had|has) #Adverb? [been] #Adverb? #PastTense`, group: 0, tag: 'Auxiliary', reason: 'had-been-adj' },
+  //were under cooked
+  {
+    match: `(is|was|were) [(under|over) #PastTense]`,
+    group: 0,
+    tag: 'Adverb Adjective',
+    reason: 'was-under-cooked',
+  },
 
   // damn them
   { match: '[shit] (#Determiner|#Possessive|them)', group: 0, tag: 'Verb', reason: 'swear1-verb' },

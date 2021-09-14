@@ -16,11 +16,11 @@ nlp.verbose('tagger')
 
 // let doc = nlp('the people in toronto drove quickly').debug()
 // let doc = nlp(`he professes love`).debug()
-let doc = nlp(`they cast doubt`).debug()
+let doc = nlp(`kiss of death`).debug()
 // doc.nouns().debug()
 // doc.compute('chunks').debug('chunks')
 // doc.verbs().subjects().debug()
-doc.verbs().debug()
+// doc.verbs().debug()
 // console.log(doc.verbs().conjugate())
 // doc.verbs().forEach(vb => {
 //   vb = vb.verbs()

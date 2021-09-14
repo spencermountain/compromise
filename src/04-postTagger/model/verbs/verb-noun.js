@@ -121,6 +121,13 @@ export default [
   { match: `(same|some|the|that|a) kind of [#PresentTense]`, group: 0, tag: 'Noun', reason: 'some-kind-of' },
   // a type of shout
   { match: `(same|some|the|that|a) type of [#PresentTense]`, group: 0, tag: 'Noun', reason: 'some-type-of' },
+  // side of fries
+  {
+    match: `[(side|share|helping|slice|lump|list|swarm|rest|rush|smell|supply|surge|tune|value|view|test|appeal|base|cause|center|copy|date|defeat|display|force|form|kiss)] of`,
+    group: 0,
+    tag: 'Noun',
+    reason: 'side-of-fries',
+  },
   // doing better for fights
   { match: `#Gerund #Adjective #Preposition [#PresentTense]`, group: 0, tag: 'Noun', reason: 'doing-better-for-x' },
   // get better aim

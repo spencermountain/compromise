@@ -18,5 +18,8 @@ let matches = [
   { match: 'some sort of', tag: 'Adjective Noun Conjunction', reason: 'some-sort-of' },
   // of some sort
   { match: 'of some sort', tag: 'Conjunction Adjective Noun', reason: 'of-some-sort' },
+
+  // such skill
+  { match: '[such] (a|an|is)? #Noun', group: 0, tag: 'Determiner', reason: 'such-skill' },
 ]
 export default matches

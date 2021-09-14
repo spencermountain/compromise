@@ -2,6 +2,64 @@ import test from 'tape'
 import nlp from '../_lib.js'
 const here = '[three/verb-find] '
 
+test('verb-splitter:', function (t) {
+  let arr = [
+    {
+      str: `poodles like being pampered`,
+      verbs: ['like', 'being pampered'],
+    },
+    {
+      str: `i can help fix the tire`,
+      verbs: ['can help', 'fix'],
+    },
+    {
+      str: `i will help out the team`,
+      verbs: ['will help out'],
+    },
+    {
+      str: `we breifly studied up on the theory`,
+      verbs: ['breifly studied up'],
+    },
+    {
+      str: `we studied breifly up in the lobby`,
+      verbs: ['studied breifly'],
+    },
+    {
+      str: `it waxed and waned`,
+      verbs: ['waxed', 'waned'],
+    },
+    {
+      str: `he ran, swam, and biked`,
+      verbs: ['ran,', 'swam,', 'biked'],
+    },
+    {
+      str: `he ran to get it`,
+      verbs: ['ran', 'get'],
+    },
+    {
+      str: `he should have earned or valued it by now`,
+      verbs: ['should have earned', 'valued'],
+    },
+    {
+      str: `he should not have shown such skill`,
+      verbs: ['should not have shown'],
+    },
+    {
+      str: `walk faster`,
+      verbs: ['walk'],
+    },
+    // {
+    //   str: `poodles like to be pampered`,
+    //   verbs: ['like', 'be pampered'],
+    // },
+  ]
+  arr.forEach(o => {
+    let verbs = nlp(o.str).verbs().out('array')
+    t.deepEqual(verbs, o.verbs, here + o.str)
+  })
+  t.end()
+})
+
 //dont take it too-far
 test('verb-greedy:', function (t) {
   let arr = nlp('he would be, had he survived').verbs().json()

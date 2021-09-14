@@ -12,7 +12,7 @@ export default [
   //a nice deal
   { match: '#Determiner #Adjective #Adjective? [#Infinitive]', group: 0, tag: 'Noun', reason: 'a-nice-inf' },
   // the mexican train
-  { match: '#Determiner #Demonym [#Verb]', group: 0, tag: 'Noun', reason: 'mexican-train' },
+  { match: '#Determiner #Demonym [#PresentTense]', group: 0, tag: 'Noun', reason: 'mexican-train' },
   //next career move
   { match: '#Adjective #Noun+ [#Infinitive] #Copula', group: 0, tag: 'Noun', reason: 'career-move' },
   // at some point

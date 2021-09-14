@@ -723,6 +723,9 @@ let arr = [
   ['the nurse march', '#Determiner #Noun #Noun'],
   ['date of birth', '#Noun of #Noun'],
   ['kiss of death', '#Noun of #Noun'],
+  ['he used to live', '#Noun #Auxiliary #Auxiliary #Infinitive'],
+  ['poodles like being pampered', '#Plural #Infinitive #Gerund #PastTense'],
+  ['poodles like to be pampered', '#Plural #Infinitive to #Copula #PastTense'],
 ] //match-two
 test('match:', function (t) {
   arr.forEach(function (a) {

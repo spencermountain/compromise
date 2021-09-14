@@ -1,3 +1,5 @@
+const verbNoun =
+  '(side|share|control|state|lump|list|swarm|rest|rush|smell|supply|surge|tune|value|view|test|appeal|base|cause|center|copy|date|defeat|display|force|form|kiss)'
 export default [
   // do the dance
   { match: '#Infinitive (this|that|the) [#Infinitive]', group: 0, tag: 'Noun', reason: 'do-this-dance' },
@@ -122,12 +124,11 @@ export default [
   // a type of shout
   { match: `(same|some|the|that|a) type of [#PresentTense]`, group: 0, tag: 'Noun', reason: 'some-type-of' },
   // side of fries
-  {
-    match: `[(side|share|helping|slice|lump|list|swarm|rest|rush|smell|supply|surge|tune|value|view|test|appeal|base|cause|center|copy|date|defeat|display|force|form|kiss)] of`,
-    group: 0,
-    tag: 'Noun',
-    reason: 'side-of-fries',
-  },
+  { match: `[${verbNoun}] of`, group: 0, tag: 'Noun', reason: 'side-of-fries' },
+  // the side
+  { match: `#Determiner [${verbNoun}]`, group: 0, tag: 'Noun', reason: 'the-side' },
+  // take control
+  { match: `#Infinitive [${verbNoun}]`, group: 0, tag: 'Noun', reason: 'take-control' },
   // doing better for fights
   { match: `#Gerund #Adjective #Preposition [#PresentTense]`, group: 0, tag: 'Noun', reason: 'doing-better-for-x' },
   // get better aim

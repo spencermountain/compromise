@@ -685,14 +685,15 @@ let arr = [
   ['the World Trade Center', 'the #Noun #Noun #Noun'],
   ['minimizing side reactions', '#Gerund #Noun #Noun'],
   ['would not give rise', '#Modal not #PhrasalVerb #Particle'],
-  ['it sounds like her ', 'it #Verb #Adverb her'],
-  ['side of fries ', '#Noun of #Plural'],
+  // ['it sounds like her ', 'it #Verb #Adverb her'],
+  // ['side of fries ', '#Noun of #Plural'],
   ['side with traitors ', '#Verb with #Plural'],
   ['bright side of life', '#Adjective #Noun of #Noun'],
   ['the way of love', 'the #Noun of #Noun'],
   ['daily side hustle', '#Adjective #Noun #Noun'],
   ['mask the pain', '#Verb the #Noun'],
-  ['help unmask the great slice', '#Verb #Verb the #Adjective #Noun'],
+  ['tony the tiger', '#Noun the #Noun'],
+  // ['help unmask the great slice', '#Verb #Verb the #Adjective #Noun'],
   ['help Dubai heal', '#Verb #Noun #Verb'],
   ['the euro sense', 'the #Noun #Noun'],
   ['the lights come on', 'the #Plural #Verb #Particle'],
@@ -725,7 +726,7 @@ let arr = [
   ['kiss of death', '#Noun of #Noun'],
   ['he used to live', '#Noun #Auxiliary #Auxiliary #Infinitive'],
   ['poodles like being pampered', '#Plural #Infinitive #Gerund #PastTense'],
-  ['poodles like to be pampered', '#Plural #Infinitive to #Copula #PastTense'],
+  ['poodles like to be pampered', '#Plural #Infinitive to #Verb #PastTense'],
 ] //match-two
 test('match:', function (t) {
   arr.forEach(function (a) {

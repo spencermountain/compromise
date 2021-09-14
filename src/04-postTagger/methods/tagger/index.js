@@ -32,6 +32,12 @@ const tagger = function (list, document, world) {
     }
     if (todo.tag !== undefined) {
       setTag(terms, todo.tag, world, todo.safe)
+      // quick and dirty plural tagger
+      if (terms.length === 1 && todo.tag === 'Noun') {
+        if (terms[0].text && terms[0].text.match(/..s$/) !== null) {
+          setTag(terms, 'Plural', world, todo.safe)
+        }
+      }
     }
     if (todo.unTag !== undefined) {
       unTag(terms, todo.unTag, world, todo.safe)

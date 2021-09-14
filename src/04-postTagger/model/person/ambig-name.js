@@ -1,7 +1,7 @@
 const personDate = '(april|june|may|jan|august|eve)'
 const personMonth = '(january|april|may|june|jan|sep)'
 const personAdj = '(misty|rusty|dusty|rich|randy|young)'
-const personVerb = '(pat|wade|ollie|will|rob|buck|bob|mark|jack)'
+const personVerb = '(drew|pat|wade|ollie|will|rob|buck|bob|mark|jack)'
 const personPlace = '(darwin|hamilton|paris|alexandria|houston|kobe|santiago|salvador|sydney|victoria)'
 const firstName = '(will|may|april|june|said|rob|wade|ray|rusty|drew|miles|jack|chuck|randy|jan|pat|cliff|bill)'
 const lastName = '(green|white|brown|hall|young|king|hill|cook|gray|price)'
@@ -77,6 +77,8 @@ export default [
   // would wade
   { match: `#Modal [${personVerb}]`, group: 0, tag: 'Verb', reason: 'would-mark' },
   { match: `#Adverb [${personVerb}]`, group: 0, tag: 'Verb', reason: 'really-mark' },
+  // drew closer
+  { match: `[${personVerb}] (#Adverb|#Comparative)`, group: 0, tag: 'Verb', reason: 'drew-closer' },
   // wade smith
   { match: `${personVerb} #Person`, tag: 'Person', reason: 'rob-smith' },
   // wade m. Cooper

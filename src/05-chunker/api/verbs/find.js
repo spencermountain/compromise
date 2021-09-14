@@ -2,6 +2,12 @@ const findVerbs = function (doc) {
   let m = doc.match('{Verb}')
 
   m = m.splitAfter('@hasComma')
+
+  // the reason he will is ...
+  // all i do is talk
+  m = m.splitAfter('[(do|did|am|was|is|will)] (is|was)', 0)
+  // m = m.splitAfter('[(do|did|am|was|is|will)] #PresentTense', 0)
+
   //ensure there's actually a verb
   m = m.if('#Verb')
 

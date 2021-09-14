@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/three.js'
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 /*
 
@@ -14,9 +14,13 @@ import nlp from './src/three.js'
 
 */
 
-let doc = nlp("the wind wizard's son said").debug()
+// let doc = nlp('the people in toronto drove quickly').debug()
+// let doc = nlp(`he professes love`).debug()
+let doc = nlp(`they cast doubt`).debug()
+// doc.nouns().debug()
 // doc.compute('chunks').debug('chunks')
-doc.verbs().subjects().debug()
+// doc.verbs().subjects().debug()
+doc.verbs().debug()
 // console.log(doc.verbs().conjugate())
 // doc.verbs().forEach(vb => {
 //   vb = vb.verbs()

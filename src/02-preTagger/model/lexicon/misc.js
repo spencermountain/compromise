@@ -39,5 +39,7 @@ let misc = {
   // misc
   vs: ['Conjunction', 'Abbreviation'],
   if: ['Condition', 'Preposition'],
+  closer: 'Comparative',
+  closest: 'Superlative',
 }
 export default misc

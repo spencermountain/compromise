@@ -1,13 +1,7 @@
-const lastNoun = function (vb, parsed) {
+const lastNoun = function (vb) {
   let before = vb.before()
-  let nounPhrase = before.match('{Noun}').last()
+  let noun = before.nouns().last()
 
-  // cut-back the noun-phrase
-  nounPhrase = nounPhrase.not('(#Adverb|#Preposition|#Adjective)')
-  // 'his' cannot be a subject
-  nounPhrase = nounPhrase.not('#Possessive')
-  // the cloud's lining
-  let noun = nounPhrase.last()
   let pronoun = noun.match('(he|she|we|you|they)')
   if (pronoun.found) {
     return pronoun

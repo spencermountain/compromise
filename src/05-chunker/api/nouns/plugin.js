@@ -1,6 +1,7 @@
 import isSubordinate from './isSubordinate.js'
 import isPlural from './isPlural.js'
 import { getNth } from '../_lib.js'
+import find from './find.js'
 
 const toJSON = function (m) {
   return {
@@ -28,7 +29,7 @@ const findNouns = function (View) {
 
   View.prototype.nouns = function (n) {
     this.compute('chunks')
-    let m = this.match('{Noun}')
+    let m = find(this)
     m = getNth(m, n)
     return new Nouns(this.document, m.pointer)
   }

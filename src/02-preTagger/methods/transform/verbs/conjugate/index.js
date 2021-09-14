@@ -30,3 +30,6 @@ const conjugate = function (inf = '', model) {
 }
 
 export default conjugate
+
+// import m from '../../../../model/index.js'
+// console.log(conjugate('profess', m))

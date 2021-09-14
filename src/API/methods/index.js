@@ -37,5 +37,6 @@ const methods = Object.assign(
 methods.get = methods.eq
 methods.lookBehind = methods.before
 methods.lookAhead = methods.after
+methods.notIf = methods.ifNo
 
 export default methods

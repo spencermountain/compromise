@@ -9,39 +9,29 @@ import neighbours from './patterns/neighbours.js'
 import regexNormal from './regex/regex-normal.js'
 import regexText from './regex/regex-text.js'
 import regexFallback from './regex/regex-fallback.js'
+import switchLexicon from './switchLexicon/index.js'
 
-// scounge irregulars for any interesting lexicon-data:
-Object.entries(irregularVerbs).forEach(a => {
-  let [inf, conj] = a
-  lexicon[inf] = lexicon[inf] || 'Infinitive'
-  Object.keys(conj).forEach(tag => {
-    let word = conj[tag]
-    if (word !== '') {
-      lexicon[word] = lexicon[word] || tag
-    }
-  })
-})
+import expandLexicon from './_expand/index.js'
 
-Object.entries(irregularPlurals).forEach(a => {
-  lexicon[a[0]] = lexicon[a[0]] || 'Singular'
-  lexicon[a[1]] = lexicon[a[1]] || 'Plural'
-})
+const model = {
+  irregularPlurals,
+  irregularVerbs,
+  tagSet,
+
+  suffixPatterns,
+  endsWith,
+  neighbours,
+
+  regexNormal,
+  regexText,
+  regexFallback,
+
+  lexicon,
+  switchLexicon,
+
+  _multiCache: {},
+}
 
 export default {
-  two: {
-    irregularPlurals,
-    irregularVerbs,
-    tagSet,
-    suffixPatterns,
-    endsWith,
-    neighbours,
-
-    regexNormal,
-    regexText,
-    regexFallback,
-
-    lexicon,
-
-    _multiCache: {},
-  },
+  two: expandLexicon(model),
 }

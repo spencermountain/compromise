@@ -22,7 +22,6 @@ const expand = function (words, world) {
     if (fancyThings.hasOwnProperty(tag) === true) {
       fancyThings[tag](word, lex, methods, model)
     }
-    // finally, add it in
     lex[word] = lex[word] || tag
   })
   // cleanup

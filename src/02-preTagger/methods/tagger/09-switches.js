@@ -1,12 +1,20 @@
 import setTag from './_setTag.js'
 
-const lookAt = function (term, byTag, byWord) {
+const lookAtWord = function (term, byWord) {
   if (!term) {
     return null
   }
   // look at word
   if (byWord.hasOwnProperty(term.normal)) {
+    // console.log(term.normal, '->', byWord[term.normal])
     return byWord[term.normal]
+  }
+  return null
+}
+
+const lookAtTag = function (term, byTag) {
+  if (!term) {
+    return null
   }
   // look at tags
   let tags = Array.from(term.tags)
@@ -27,14 +35,21 @@ const swtichLexicon = function (terms, model) {
     const { words, before, after, beforeWords, afterWords, fallback } = switchers[k]
     terms.forEach((term, i) => {
       if (words.hasOwnProperty(term.normal)) {
-        // look -> right first
-        let tag = lookAt(terms[i + 1], after, afterWords)
-        // look <- left second
-        tag = tag || lookAt(terms[i - 1], before, beforeWords)
+        // look -> right word first
+        let tag = lookAtWord(terms[i + 1], afterWords)
+        // look <- left word, second
+        tag = tag || lookAtWord(terms[i - 1], beforeWords)
+        // look -> right tag next
+        tag = tag || lookAtTag(terms[i + 1], after)
+        // look <- left tag next
+        tag = tag || lookAtTag(terms[i - 1], before)
         // i guess we should still tag it
+        // if (!tag) {
+        //   console.log('===fallback')
+        // }
         tag = tag || fallback
         if (tag) {
-          // term.tags.clear()
+          term.tags.clear()
           setTag(term, tag, `[switch] ${k}`)
           if (model.two.tagSet[tag]) {
             let parents = model.two.tagSet[tag].parents

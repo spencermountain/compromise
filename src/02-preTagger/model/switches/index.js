@@ -20,6 +20,7 @@ const switches = {
       Negative: vb, //not date
       Determiner: nn, //the date
       Possessive: nn, //his date
+      Noun: nn, //nasa funding
     },
     beforeWords: {
       i: vb, //i date
@@ -28,14 +29,15 @@ const switches = {
       they: vb, //they date
       to: vb, //to date
       one: nn, //one hope
+      please: vb, //please check
     },
     after: {
       Determiner: vb, //flash the
       Adverb: vb, //date quickly
       Possessive: vb, //date his
-      Noun: vb, //date spencer
+      // Noun: vb, //date spencer
       Preposition: vb, //date around, dump onto, grumble about
-      Conjunction: nn, // dip to, dip through
+      Conjunction: vb, // dip to, dip through
       Value: nn, //date nine  -?
       Modal: nn, //date would
       Copula: nn, //fear is
@@ -46,7 +48,7 @@ const switches = {
       you: vb, //date you
       of: nn, //date of birth (preposition)
     },
-    fallback: vb,
+    fallback: nn,
   },
 
   // adjective - gerund - 'shocking'
@@ -57,7 +59,6 @@ const switches = {
       Adverb: g, //quickly shocking
       Preposition: g, //by insulting
       Conjunction: g, //to insulting
-      Noun: g, //revealing clue
     },
     after: {
       Adverb: g, //shocking quickly
@@ -68,13 +69,15 @@ const switches = {
       Copula: g, //shocking is
       Preposition: g, //dashing by
       Conjunction: g, //insulting to
-      Noun: jj, //shocking ignorance, blinding me, rallying cry
+      Noun: jj, //shocking ignorance, rallying cry, revealing clue
     },
     beforeWords: {
       // really shocking
       really: jj,
       quite: jj,
       very: jj,
+      totally: jj,
+      extremely: jj,
       so: jj,
       also: jj,
       too: jj, //too insulting

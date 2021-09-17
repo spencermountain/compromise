@@ -25,12 +25,12 @@ const preTagger = function (document, world) {
       // more-involved regexes
       tagger.checkAcronym(term, model)
     }
-    // verb-noun disambiguation
-    tagger.switchLexicon(terms, model)
     //  ¯\_(ツ)_/¯ - found nothing
     tagger.nounFallback(terms, model)
     // deduce parent tags
     tagger.fillTags(terms, model)
+    // verb-noun disambiguation
+    tagger.switchLexicon(terms, model)
   }
   return document
 }

@@ -16,7 +16,7 @@ export default [
   //is eager to go
   { match: '#Copula [#Adjective] to #Verb', group: 0, tag: 'Verb', reason: 'adj-to' },
   //want to be sedated
-  { match: '(want|try|need) to be [#PastTense]', group: 0, tag: 'Adjective', reason: 'want-to-be' },
+  // { match: '(want|try|need) to be [#PastTense]', group: 0, tag: 'Adjective', reason: 'want-to-be' },
   //should be sedated
   // { match: '#Modal be [#PastTense]', group: 0, tag: 'Adjective', reason: 'should-be-x' },
   // rude and insulting

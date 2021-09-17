@@ -15,10 +15,24 @@ const colors = {
 }
 
 const compute = function (allTags) {
+  // initial validation
+  Object.keys(allTags).forEach(k => {
+    allTags[k].not = allTags[k].not || []
+    allTags[k].also = allTags[k].also || []
+  })
+  // not links are bi-directional
+  // add any incoming not tags
+  Object.keys(allTags).forEach(k => {
+    let nots = allTags[k].not || []
+    nots.forEach(no => {
+      allTags[no].not.push(k)
+    })
+  })
+
   // setup graph-lib format
   const flatList = Object.keys(allTags).map(k => {
     let o = allTags[k]
-    const props = { not: o.not || [], also: o.also || [], color: colors[k] }
+    const props = { not: new Set(o.not), also: o.also, color: colors[k] }
     return { id: k, parent: o.is, props }
   })
   const graph = grad(flatList).cache().fillDown()

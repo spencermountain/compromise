@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/two.js'
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 /*
 
@@ -16,7 +16,7 @@ nlp.verbose('tagger')
 
 // let doc = nlp('the people in toronto drove quickly').debug()
 // let doc = nlp(`he professes love`).debug()
-let doc = nlp(`would base of control`).debug()
+let doc = nlp(`walk in on`).debug()
 // doc.nouns().debug()
 // doc.compute('chunks').debug('chunks')
 // doc.verbs().subjects().debug()

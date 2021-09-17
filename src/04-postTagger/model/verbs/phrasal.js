@@ -5,6 +5,8 @@ export default [
   { match: '(#Verb && @hasHyphen) off', tag: 'PhrasalVerb', reason: 'foo-off' },
   { match: '(#Verb && @hasHyphen) over', tag: 'PhrasalVerb', reason: 'foo-over' },
   { match: '(#Verb && @hasHyphen) out', tag: 'PhrasalVerb', reason: 'foo-out' },
+  // walk in on
+  { match: '[#Verb in] on', tag: 'PhrasalVerb Particle', reason: 'walk-in-on' },
   //fall over
   { match: '#PhrasalVerb [#PhrasalVerb]', group: 0, tag: 'Particle', reason: 'phrasal-particle' },
   // went on for

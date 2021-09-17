@@ -17,16 +17,16 @@ const swtichLexicon = function (terms, model) {
   const { nounVerb } = model.two.switchers
   terms.forEach((term, i) => {
     // noun-verb
-    if (nounVerb.words.hasOwnProperty(term.normal)) {
-      let left = terms[i - 1]
-      let right = terms[i + 1]
-      let tag = lookAt(left, nounVerb.left) || lookAt(right, nounVerb.right)
-      if (tag) {
-        term.tags.clear()
-        setTag(term, tag, 'look-left [nounVerb]')
-        return
-      }
-    }
+    // if (nounVerb.words.hasOwnProperty(term.normal)) {
+    //   let left = terms[i - 1]
+    //   let right = terms[i + 1]
+    //   let tag = lookAt(left, nounVerb.left) || lookAt(right, nounVerb.right)
+    //   if (tag) {
+    //     term.tags.clear()
+    //     setTag(term, tag, 'look-left [nounVerb]')
+    //     return
+    //   }
+    // }
   })
 }
 export default swtichLexicon

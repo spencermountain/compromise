@@ -6,7 +6,7 @@ export default {
   },
   Singular: {
     is: 'Noun',
-    not: 'Plural',
+    not: ['Plural'],
   },
   ProperNoun: {
     is: 'Noun',

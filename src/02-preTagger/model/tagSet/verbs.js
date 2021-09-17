@@ -33,7 +33,7 @@ export default {
   },
   PerfectTense: {
     is: 'Verb',
-    not: 'Gerund',
+    not: ['Gerund'],
   },
   Pluperfect: {
     is: 'Verb',

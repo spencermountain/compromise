@@ -9,7 +9,7 @@ import neighbours from './patterns/neighbours.js'
 import regexNormal from './regex/regex-normal.js'
 import regexText from './regex/regex-text.js'
 import regexFallback from './regex/regex-fallback.js'
-import switchLexicon from './switchLexicon/index.js'
+import switchers from './switches/index.js'
 
 import expandLexicon from './_expand/index.js'
 
@@ -27,7 +27,7 @@ const model = {
   regexFallback,
 
   lexicon,
-  switchLexicon,
+  switchers,
 
   _multiCache: {},
 }

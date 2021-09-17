@@ -2,7 +2,7 @@
 import fs from 'fs'
 import { pack } from 'efrt'
 import lexicon from '../lib/lexicon/index.js'
-import switchLexicon from '../lib/switch-lexicon/index.js'
+import switches from '../lib/switches/index.js'
 
 // compress our list of known-words
 const packLex = function () {
@@ -39,14 +39,14 @@ const packLex = function () {
 
 // ambiguous words to supplement lexicon in varied ways
 const packSwitchers = function () {
-  Object.keys(switchLexicon).forEach(k => {
-    switchLexicon[k] = pack(switchLexicon[k])
+  Object.keys(switches).forEach(k => {
+    switches[k].words = pack(switches[k].words)
   })
 
   //write it to a file in ./src
-  let banner = `// generated in ./lib/switch-lexicon/ \n`
-  const outFile = './src/02-preTagger/model/switchLexicon/_words.js'
-  fs.writeFileSync(outFile, banner + 'export default ' + JSON.stringify(switchLexicon, null, 2), 'utf8')
+  let banner = `// generated in ./lib/switches/ \n`
+  const outFile = './src/02-preTagger/model/switches/_data.js'
+  fs.writeFileSync(outFile, banner + 'export default ' + JSON.stringify(switches, null, 2), 'utf8')
 
   //get filesize
   const stats = fs.statSync(outFile)

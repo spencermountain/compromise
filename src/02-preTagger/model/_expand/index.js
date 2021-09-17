@@ -12,9 +12,9 @@ const expandLexicon = function (words, model) {
 }
 
 // harvest ambiguous words for any conjugations
-const expandSwitchers = function (switches, model) {
+const expandSwitchers = function (switchers, model) {
   // get conjugations from maybe-verbs
-  const infs = Array.from(switches.NounVerb).reduce((h, str) => {
+  const infs = Object.keys(switchers.nounVerb.words).reduce((h, str) => {
     h[str] = 'Infinitive'
     return h
   }, {})
@@ -24,7 +24,7 @@ const expandSwitchers = function (switches, model) {
 
 const expand = function (model) {
   model = expandIrregulars(model)
-  model = expandSwitchers(model.switchLexicon, model)
+  model = expandSwitchers(model.switchers, model)
   model = expandLexicon(model.lexicon, model)
   return model
 }

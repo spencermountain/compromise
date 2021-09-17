@@ -26,6 +26,7 @@ const extend = function (plugin, world, View) {
   mergeDeep(compute, plugin.compute)
   mergeDeep(methods, plugin.methods)
   mergeDeep(model, plugin.model)
+
   if (hooks) {
     world.hooks = hooks.concat(plugin.hooks || [])
   }

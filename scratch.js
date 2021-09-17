@@ -16,7 +16,7 @@ nlp.verbose('tagger')
 
 // let doc = nlp('the people in toronto drove quickly').debug()
 // let doc = nlp(`he professes love`).debug()
-let doc = nlp(`date of`).debug()
+let doc = nlp(`revealing a clue`).debug()
 // doc.nouns().debug()
 // doc.compute('chunks').debug('chunks')
 // doc.verbs().subjects().debug()

@@ -7,7 +7,7 @@ const vb = 'Infinitive'
 const nn = 'Singular'
 
 const jj = 'Adjective'
-// const g = 'Gerund'
+const g = 'Gerund'
 // const pst = 'PastTense'
 
 const switches = {
@@ -51,10 +51,36 @@ const switches = {
 
   // adjective - gerund - 'shocking'
   adjGerund: {
-    before: {},
-    after: {},
-    beforeWords: {},
-    afterWords: {},
+    before: {
+      Copula: jj, //is shocking
+      Verb: g, // loves shocking
+      Adverb: g, //quickly shocking
+      Preposition: g, //by insulting
+      Conjunction: g, //to insulting
+      Noun: g, //revealing clue
+    },
+    after: {
+      Adverb: g, //shocking quickly
+      Noun: jj, //shocking ignorance, blinding me, rallying cry
+      Determiner: g, //shocking the
+      Copula: g, //shocking is
+      Preposition: g, //dashing by
+      Conjunction: g, //insulting to
+    },
+    beforeWords: {
+      // really shocking
+      really: jj,
+      quite: jj,
+      very: jj,
+      so: jj,
+      also: jj,
+      too: jj, //too insulting
+      it: jj, //find it insulting
+    },
+    afterWords: {
+      too: jj, //insulting too
+      also: jj, //insulting too
+    },
     fallback: jj,
   },
 

@@ -736,6 +736,7 @@ let arr = [
   [`looked back on`, '#PastTense #Particle #Preposition'],
   [`is back on`, '#Copula #Adjective #Preposition'],
   // before/after switches
+  // noun-verb
   [`date the boy`, '#PresentTense #Determiner #Noun'],
   [`date of birth`, '#Noun #Preposition #Noun'],
   [`any flood`, '#Determiner #Noun'],
@@ -753,7 +754,22 @@ let arr = [
   [`one flood`, '. #Noun'],
   [`flash could`, '#Noun .'],
   [`flash is`, '#Noun .'],
-  [``, ''],
+  // adj-gerund
+  [`shocking quickly`, '#Gerund .'],
+  [`shocking me`, '#Gerund .'],
+  [`shocking his`, '#Gerund .'],
+  [`imagines shocking`, '. #Gerund'],
+  [`quickly shocking`, '. #Gerund'],
+  [`quietly shocking`, '. #Gerund'],
+  [`shocking him`, '#Gerund .'],
+  [`trusting the`, '#Gerund .'],
+  [`revealing a clue`, '#Gerund . .'],
+  [`revealing clue`, '#Adjective .'],
+  [`shocking spencer's`, '#Gerund .'],
+  [`shocking ignorance`, '#Adjective .'],
+  [`is shocking`, '. #Adjective'],
+  [`really shocking`, '. #Adjective'],
+  [`too insulting`, '. #Adjective'],
   // [``, ''],
 ] //match-two
 test('match:', function (t) {

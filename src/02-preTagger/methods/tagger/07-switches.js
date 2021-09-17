@@ -10,6 +10,10 @@ const lookAt = function (term, byTag, byWord) {
   }
   // look at tags
   let tags = Array.from(term.tags)
+  // if it's empty, assume it's a Noun
+  if (tags.length === 0 && byTag.Noun) {
+    return byTag.Noun
+  }
   for (let i = 0; i < tags.length; i += 1) {
     if (byTag[tags[i]]) {
       return byTag[tags[i]]

@@ -28,6 +28,7 @@ const model = {
 
   lexicon,
   switchers,
+  uncountable: {},
 
   _multiCache: {},
 }

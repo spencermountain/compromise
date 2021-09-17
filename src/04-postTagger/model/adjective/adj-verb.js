@@ -19,4 +19,6 @@ export default [
   { match: '(want|try|need) to be [#PastTense]', group: 0, tag: 'Adjective', reason: 'want-to-be' },
   //should be sedated
   // { match: '#Modal be [#PastTense]', group: 0, tag: 'Adjective', reason: 'should-be-x' },
+  // rude and insulting
+  { match: '#Adjective and [#Gerund]', group: 0, tag: 'Adjective', reason: 'rude-and-x' },
 ]

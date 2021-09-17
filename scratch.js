@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/two.js'
+import nlp from './src/three.js'
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 /*
 
@@ -16,7 +16,8 @@ nlp.verbose('tagger')
 
 // let doc = nlp('the people in toronto drove quickly').debug()
 // let doc = nlp(`he professes love`).debug()
-let doc = nlp(`revealing a clue`).debug()
+// let doc = nlp(` and living in Toronto`).debug()
+let doc = nlp(`Drizzy professes love for ESPN reporter at Raptors Drake Night`).verbs().subjects().debug()
 // doc.nouns().debug()
 // doc.compute('chunks').debug('chunks')
 // doc.verbs().subjects().debug()

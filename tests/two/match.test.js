@@ -770,6 +770,14 @@ let arr = [
   [`is shocking`, '. #Adjective'],
   [`really shocking`, '. #Adjective'],
   [`too insulting`, '. #Adjective'],
+  // adj-past
+  [`very detailed`, '. #Adjective'],
+  [`our detailed`, '. #Adjective'],
+  [`the detailed`, '. #Adjective'],
+  [`quickly detailed`, '. #PastTense'],
+  [`detailed plan`, '#Adjective .'],
+  [`intoxicated little`, '#Adjective .'],
+  [`he detailed`, '. #PastTense'],
   // [``, ''],
 ] //match-two
 test('match:', function (t) {

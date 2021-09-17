@@ -8,7 +8,7 @@ const nn = 'Singular'
 
 const jj = 'Adjective'
 const g = 'Gerund'
-// const pst = 'PastTense'
+const pst = 'PastTense'
 
 const switches = {
   // Singular - Infinitive -
@@ -61,11 +61,14 @@ const switches = {
     },
     after: {
       Adverb: g, //shocking quickly
-      Noun: jj, //shocking ignorance, blinding me, rallying cry
+      Possessive: g, //shocking spencer's
+      ProperNoun: g, //shocking spencer
+      Pronoun: g, //shocking him
       Determiner: g, //shocking the
       Copula: g, //shocking is
       Preposition: g, //dashing by
       Conjunction: g, //insulting to
+      Noun: jj, //shocking ignorance, blinding me, rallying cry
     },
     beforeWords: {
       // really shocking
@@ -86,10 +89,31 @@ const switches = {
 
   // adjective - pastTense - 'damaged'
   adjPast: {
-    before: {},
-    after: {},
-    beforeWords: {},
-    afterWords: {},
+    before: {
+      Determiner: jj, //the detailed
+      Copula: jj, //is detailed
+      Possessive: jj, //spencer's detailed
+      Adverb: pst, //quickly detailed
+      Pronoun: pst, //he detailed
+    },
+    after: {
+      Noun: jj, //detailed plan
+      Possessive: pst, //hooked him
+      Pronoun: pst, //hooked me
+      Determiner: pst, //hooked the
+      Adjective: jj, //intoxicated little
+    },
+    beforeWords: {
+      really: jj, //really damaged
+      quite: jj,
+      very: jj,
+      so: jj,
+      also: jj,
+      too: jj, //too insulting
+    },
+    afterWords: {
+      by: pst, //damaged by
+    },
     fallback: jj,
   },
 }

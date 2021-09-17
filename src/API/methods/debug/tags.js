@@ -16,7 +16,9 @@ const tagString = function (tags, model) {
 
 const showTags = function (view) {
   let { docs, model } = view
-  // console.log(cli.blue('====='))
+  if (docs.length === 0) {
+    console.log(cli.blue('\n     ──────'))
+  }
   docs.forEach(terms => {
     console.log(cli.blue('\n  ┌─────────'))
     terms.forEach(t => {

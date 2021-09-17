@@ -13,8 +13,11 @@ const map = function (cb) {
     let view = this.update([ptr])
     return cb(view, i)
   })
-  // return an array?
-  if (!res[0] || typeof res[0] !== 'object' || !res[0].isView) {
+  if (res.length === 0) {
+    return this.update([])
+  }
+  // return an array of values?
+  if (res[0] && typeof res[0] === 'object' && !res[0].isView) {
     return res
   }
   // return a View object

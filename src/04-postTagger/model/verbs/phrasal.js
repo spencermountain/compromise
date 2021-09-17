@@ -6,7 +6,12 @@ export default [
   { match: '(#Verb && @hasHyphen) over', tag: 'PhrasalVerb', reason: 'foo-over' },
   { match: '(#Verb && @hasHyphen) out', tag: 'PhrasalVerb', reason: 'foo-out' },
   // walk in on
-  { match: '[#Verb in] on', tag: 'PhrasalVerb Particle', reason: 'walk-in-on' },
+  {
+    match: '[#Verb (in|out|up|down|off|back)] (on|in)',
+    ifNo: ['#Copula'],
+    tag: 'PhrasalVerb Particle',
+    reason: 'walk-in-on',
+  },
   //fall over
   { match: '#PhrasalVerb [#PhrasalVerb]', group: 0, tag: 'Particle', reason: 'phrasal-particle' },
   // went on for

@@ -727,6 +727,14 @@ let arr = [
   ['he used to live', '#Noun #Auxiliary #Auxiliary #Infinitive'],
   ['poodles like being pampered', '#Plural #Infinitive #Gerund #PastTense'],
   ['poodles like to be pampered', '#Plural #Infinitive to #Verb #PastTense'],
+
+  [`walk in on`, '#PhrasalVerb #Particle #Preposition'],
+  [`standing out in`, '#PhrasalVerb #Particle #Preposition'],
+  [`stood up in`, '#PastTense #Particle #Preposition'],
+  [`stood out on`, '#PastTense #Particle #Preposition'],
+  [`walked out in`, '#PastTense #Particle #Preposition'],
+  [`looked back on`, '#PastTense #Particle #Preposition'],
+  [`is back on`, '#Copula #Adjective #Preposition'],
 ] //match-two
 test('match:', function (t) {
   arr.forEach(function (a) {

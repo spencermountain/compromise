@@ -19,6 +19,9 @@ const arr = [
 
   [`# l`, '#HashTag'],
   [`l#l`, '#HashTag'],
+  [`walk in on`, '#Verb #Preposition #Preposition'],
+  [`standing out in`, '#Verb #Preposition #Preposition'],
+  // [``, ''],
 ]
 
 test('no-match:', function (t) {

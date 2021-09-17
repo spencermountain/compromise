@@ -16,7 +16,7 @@ import nlp from './src/two.js'
 
 // let doc = nlp('the people in toronto drove quickly').debug()
 // let doc = nlp(`he professes love`).debug()
-let doc = nlp(`walk in on`).debug()
+let doc = nlp(`date of birth`).debug()
 // doc.nouns().debug()
 // doc.compute('chunks').debug('chunks')
 // doc.verbs().subjects().debug()

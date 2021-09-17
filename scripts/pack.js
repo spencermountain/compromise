@@ -40,7 +40,7 @@ const packLex = function () {
 // ambiguous words to supplement lexicon in varied ways
 const packSwitchers = function () {
   Object.keys(switches).forEach(k => {
-    switches[k].words = pack(switches[k].words)
+    switches[k] = pack(switches[k])
   })
 
   //write it to a file in ./src

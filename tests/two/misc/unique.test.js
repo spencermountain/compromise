@@ -22,7 +22,7 @@ test('sentence-unique', function (t) {
 test('unique-normalize', function (t) {
   let doc = nlp(`SPENCER's house (spencer)`)
   doc = doc.terms().unique()
-  t.equal(doc.text(), "SPENCER's house", here + 'normalize-posessive')
+  t.equal(doc.text(), "SPENCER's house", here + 'normalize-possessive')
 
   doc = nlp(`is not isn't`)
   doc = doc.terms().unique()

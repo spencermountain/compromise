@@ -735,6 +735,26 @@ let arr = [
   [`walked out in`, '#PastTense #Particle #Preposition'],
   [`looked back on`, '#PastTense #Particle #Preposition'],
   [`is back on`, '#Copula #Adjective #Preposition'],
+  // before/after switches
+  [`date the boy`, '#PresentTense #Determiner #Noun'],
+  [`date of birth`, '#Noun #Preposition #Noun'],
+  [`any flood`, '#Determiner #Noun'],
+  [`will flood`, '. #PresentTense'],
+  [`suddenly flood`, '. #PresentTense'],
+  [`not flood`, '. #PresentTense'],
+  [`we date`, '. #PresentTense'],
+  [`you flood`, '. #PresentTense'],
+  [`date spencer`, '#Verb .'],
+  [`flash the`, '#Verb .'],
+  [`flash his`, '#Verb .'],
+  [`flash around`, '#Verb .'],
+  [`flood you`, '#Verb .'],
+  [`my flood`, '. #Noun'],
+  [`one flood`, '. #Noun'],
+  [`flash could`, '#Noun .'],
+  [`flash is`, '#Noun .'],
+  [``, ''],
+  // [``, ''],
 ] //match-two
 test('match:', function (t) {
   arr.forEach(function (a) {

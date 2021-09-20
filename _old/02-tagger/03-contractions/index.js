@@ -20,13 +20,13 @@ const createPhrase = function (found, doc) {
 
   let term = terms[0]
   // tag number-ranges
-  if (isOrdinal.test(term.text)) {
+  if (isOrdinal.test(term.text) && terms[2]) {
     terms[0].tag('Ordinal', 'ord-range', doc.world)
     terms[2].tag('Ordinal', 'ord-range', doc.world)
-  } else if (isNumber.test(term.text)) {
+  } else if (isNumber.test(term.text) && terms[2]) {
     terms[0].tag('Cardinal', 'num-range', doc.world)
     terms[2].tag('Cardinal', 'num-range', doc.world)
-  } else if (isTime.test(term.text)) {
+  } else if (isTime.test(term.text) && terms[1] && terms[2]) {
     terms[0].tag('Time', 'time-range', doc.world)
     terms[1].tag('Date', 'time-range', doc.world)
     terms[2].tag('Time', 'time-range', doc.world)

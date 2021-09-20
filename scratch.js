@@ -24,7 +24,9 @@ let text = 'US battles to save storm victims'
 text = 'the letters concern'
 text = 'our drinks'
 text = 'diet traps'
-text = 'tape measure'
+text = 'tape measures'
+text = '#cool'
+text = 'walking is fun'
 // text = 'extremely heated tube'
 let doc = nlp(text).debug()
 // doc.nouns().debug()

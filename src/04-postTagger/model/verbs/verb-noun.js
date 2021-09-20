@@ -150,5 +150,11 @@ export default [
   // compromises are possible
   { match: '[#PresentTense] (are|were|was) #Adjective', group: 0, tag: 'Plural', reason: 'compromises-are-possible' },
   // ignoring commute
-  { match: '#Gerund [#PresentTense]', group: 0, tag: 'Noun', ifNo: ['going'], reason: 'ignoring-commute' },
+  {
+    match: '#Gerund [#PresentTense]',
+    group: 0,
+    tag: 'Noun',
+    ifNo: ['going', 'being', '#Copula'],
+    reason: 'ignoring-commute',
+  },
 ]

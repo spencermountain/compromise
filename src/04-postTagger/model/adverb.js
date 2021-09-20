@@ -45,6 +45,8 @@ export default [
   { match: '(a|an) #Adverb [#Participle] #Noun', group: 0, tag: 'Adjective', reason: 'completely-beaten' },
   //a close
   { match: '#Determiner #Adverb? [close]', group: 0, tag: 'Adjective', reason: 'a-close' },
+  //walking close
+  { match: '#Gerund #Adverb? [close]', group: 0, tag: 'Adverb', reason: 'being-close' },
   // a blown motor
   { match: '(the|those|these|a|an) [#Participle] #Noun', group: 0, tag: 'Adjective', reason: 'blown-motor' },
 ]

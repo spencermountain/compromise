@@ -1,5 +1,7 @@
 import data from './_data.js'
 import { unpack } from 'efrt'
+import person from './person.js'
+import adj from './adjective.js'
 // unpack our lexicon of ambiguous-words
 // (found in ./lib/switches/)
 
@@ -28,8 +30,10 @@ const switches = {
       you: vb, //you date
       they: vb, //they date
       to: vb, //to date
-      one: nn, //one hope
       please: vb, //please check
+      will: vb, //will check
+      was: nn, //was time
+      is: nn, //
     },
     after: {
       Determiner: vb, //flash the
@@ -71,20 +75,9 @@ const switches = {
       Conjunction: g, //insulting to
       Noun: jj, //shocking ignorance, rallying cry, revealing clue
     },
-    beforeWords: {
+    beforeWords: Object.assign(adj.beforeWords, {
       been: g,
-      // really shocking
-      really: jj,
-      quite: jj,
-      very: jj,
-      totally: jj,
-      extremely: jj,
-      so: jj,
-      also: jj,
-      too: jj, //too insulting
-      it: jj, //find it insulting
-      but: jj, //nothing but frustrating
-    },
+    }),
     afterWords: {
       too: jj, //insulting too
       also: jj, //insulting too
@@ -95,13 +88,10 @@ const switches = {
 
   // adjective - pastTense - 'damaged'
   adjPast: {
-    before: {
-      Determiner: jj, //the detailed
-      Copula: jj, //is detailed
-      Possessive: jj, //spencer's detailed
+    before: Object.assign(adj.before, {
       Adverb: pst, //quickly detailed
       Pronoun: pst, //he detailed
-    },
+    }),
     after: {
       Noun: jj, //detailed plan
       Possessive: pst, //hooked him
@@ -109,32 +99,9 @@ const switches = {
       Determiner: pst, //hooked the
       Adjective: jj, //intoxicated little
     },
-    beforeWords: {
-      seem: jj, //seem prepared
-      seemed: jj,
-      seems: jj,
-      feel: jj, //feel prepared
-      feels: jj,
-      felt: jj,
-      appear: jj,
-      appears: jj,
-      appeared: jj,
-      really: jj, //really damaged
-      quite: jj,
-      well: jj,
-      very: jj,
-      deeply: jj,
-      profoundly: jj,
-      extremely: jj,
-      so: jj,
-      badly: jj,
-      mostly: jj,
-      also: jj,
-      over: jj, //over cooked
-      under: jj,
-      too: jj, //too insulting
+    beforeWords: Object.assign(adj.beforeWords, {
       quickly: pst, //
-    },
+    }),
     afterWords: {
       by: pst, //damaged by
       back: pst, //charged back
@@ -144,6 +111,14 @@ const switches = {
       down: pst, //hammered down
     },
     fallback: jj,
+  },
+
+  personNoun: {
+    before: Object.assign(person.before),
+    after: Object.assign(person.after),
+    beforeWords: Object.assign(person.beforeWords),
+    afterWords: Object.assign(person.afterWords),
+    fallback: nn,
   },
 }
 // add compressed word-data

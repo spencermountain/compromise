@@ -150,11 +150,11 @@ export default [
     reason: 'ignoring-commute',
   },
   // seek progress
-  {
-    match: '#Infinitive [#Infinitive]',
-    group: 0,
-    tag: 'Noun',
-    ifNo: ['go', 'have', 'help', 'do', '#PhrasalVerb'],
-    reason: 'seek-progress',
-  },
+  // {
+  //   match: '#Infinitive [#Infinitive]',
+  //   group: 0,
+  //   tag: 'Noun',
+  //   ifNo: ['go', 'have', 'help', 'do', '#PhrasalVerb'],
+  //   reason: 'seek-progress',
+  // },
 ]

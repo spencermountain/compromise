@@ -14,13 +14,16 @@ let text = 'dept of state'
 text = `must-see show`
 text = `smelled like smoke`
 text = `would look like`
-text = `provide record levels`
 text = `seek progress`
 text = `zero in`
-const doc = nlp(text).debug()
-
-// let text = 'litigation costs'
-// let text = 'US battles to save storm victims'
+text = `it was time`
+text = `I've read`
+text = `provide record levels`
+text = `cut costs`
+text = `charity said`
+text = `victoria learned`
+// text = 'litigation costs'
+// text = 'US battles to save storm victims'
 // text = 'the letters concern'
 // text = 'our drinks'
 // text = 'diet traps'
@@ -30,6 +33,8 @@ const doc = nlp(text).debug()
 // text = 'he is cool/nice'
 // text = `It's a father`
 // text = 'extremely heated tube'
+const doc = nlp(text).debug()
+
 // let doc = nlp(text).debug()
 // console.log(doc.document)
 // doc.nouns().debug()

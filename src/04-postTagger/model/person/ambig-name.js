@@ -2,34 +2,23 @@ const personDate = '(april|june|may|jan|august|eve)'
 const personMonth = '(january|april|may|june|jan|sep)'
 const personAdj = '(misty|rusty|dusty|rich|randy|young)'
 const personVerb = '(drew|pat|wade|ollie|will|rob|buck|bob|mark|jack)'
-const personPlace = '(darwin|hamilton|paris|alexandria|houston|kobe|santiago|salvador|sydney|victoria)'
 const firstName = '(will|may|april|june|said|rob|wade|ray|rusty|drew|miles|jack|chuck|randy|jan|pat|cliff|bill)'
 const lastName = '(green|white|brown|hall|young|king|hill|cook|gray|price)'
-const personNoun =
-  '(art|baker|berg|bill|brown|charity|chin|christian|cliff|daisy|dawn|dick|dolly|faith|franco|gene|green|hall|hill|holly|hope|jean|jewel|joy|kelvin|king|kitty|lane|lily|melody|mercedes|miles|olive|penny|ray|reed|robin|rod|rose|sky|summer|trinity|van|viola|violet|wang|white)'
 
 export default [
   //ambiguous-but-common firstnames
-  {
-    match: `[${firstName}] #LastName`,
-    group: 0,
-    tag: 'FirstName',
-    reason: 'maybe-lastname',
-  },
-  //very common-but-ambiguous lastnames
-  {
-    match: `#FirstName ${lastName}`,
-    tag: 'Person',
-    reason: 'bill-green',
-  },
-
-  // ===person-noun===
-  // faith smith
-  { match: `${personNoun} #Person`, tag: 'Person', reason: 'ray-smith', safe: true },
-  // faith m. Smith
-  { match: `${personNoun} #Acronym? #ProperNoun`, tag: 'Person', reason: 'ray-a-smith', safe: true },
-  // Paris Berelc
-  { match: `[${personPlace}] #ProperNoun`, group: 0, ifNo: '#Place', tag: 'FirstName', reason: 'place-firstname' },
+  // {
+  //   match: `[${firstName}] #LastName`,
+  //   group: 0,
+  //   tag: 'FirstName',
+  //   reason: 'maybe-lastname',
+  // },
+  // //very common-but-ambiguous lastnames
+  // {
+  //   match: `#FirstName ${lastName}`,
+  //   tag: 'Person',
+  //   reason: 'bill-green',
+  // },
 
   // ===person-date===
   // in june

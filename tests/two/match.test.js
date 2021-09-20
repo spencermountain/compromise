@@ -837,7 +837,10 @@ let arr = [
   // [`might get better aim`, '#Auxiliary #Verb #Comparative #Noun'],
   // [`i think tipping blows`, 'i #PresentTense #Gerund #Adjective'],
 
-  // [``, ``],
+  [`charity chapman`, `#Person #Person`],
+  [`charity feels`, `#Person #Verb`],
+  [`darwin said`, `#Person #Verb`],
+  [`victoria learned`, `#Person #Verb`],
   // [``, ``],
   // [``, ``],
 ] //match-two

@@ -39,7 +39,6 @@ let arr = [
   // `will have waited until release`,
   // `selling like hot cakes`,
   // `have given up on reason`,
-
   // `you have some valid points`,
   // `for some reason`,
   // `dirty tricks`,
@@ -50,12 +49,11 @@ let arr = [
   // `had a rocky release`,
   // `doing better for fights`,
   // `might get better aim`,
-  `i think tipping blows`,
+  // `i think tipping blows`,
 ]
 // `won’t take extra damage`,
 // `called the taylor rule`,
 // `naive and chubby cheeked`,
 // `he’s devastated`,
-
-let doc = nlp(arr[0]).debug()
-// nlp(`I have to say the value `).debug()
+let text = '10.-200 ug/L'
+let doc = nlp(text) //<-- exception thrown here

@@ -1,4 +1,4 @@
-/* compromise 13.11.3 MIT */
+/* compromise 13.11.4 MIT */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -3702,7 +3702,7 @@
 
   var fromJSON_1 = fromJSON$1;
 
-  var _version = '13.11.3';
+  var _version = '13.11.4';
 
   const entity = ['Person', 'Place', 'Organization'];
   var nouns$2 = {
@@ -4254,7 +4254,7 @@
     "WeekDay": "true¦fri2mon2s1t0wednesd3;hurs1ues1;aturd1und1;!d0;ay0;!s",
     "Month": "true¦aBdec9feb7j2mar,nov9oct1sep0;!t8;!o8;an3u0;l1n0;!e;!y;!u1;!ru0;ary;!em0;ber;pr1ug0;!ust;!il",
     "Date": "true¦ago,t2week0yesterd4; e0e0;nd;mr2o0;d0morrow;ay;!w",
-    "FirstName": "true¦aKblair,cGdevFgabrieEhinaDjBk8l7m3nelly,quinn,re2sh0;ay,e0iloh;a,lby;g6ne;a1el0ina,org5;!okuh9;naia,r0;ion,lo;ashawn,uca;asCe1ir0rE;an;lsAnyat2rry;am0ess6ie,ude;ie,m5;ta;le;an,on;as2h0;arl0eyenne;ie;ey,sidy;lex2ndr1ubr0;ey;a,ea;is",
+    "FirstName": "true¦aLblair,cHdevGgabrieFhinaEjCk9l8m4nelly,quinn,re3s0;h0umit;ay,e0iloh;a,lby;g6ne;a1el0ina,org5;!okuh9;naia,r0;ion,lo;ashawn,uca;asCe1ir0rE;an;lsAnyat2rry;am0ess6ie,ude;ie,m5;ta;le;an,on;as2h0;arl0eyenne;ie;ey,sidy;lex2ndr1ubr0;ey;a,ea;is",
     "Person": "true¦ashton kutchTbScNdLeJgastOhHinez,jFkEleDmCnettKoBp9r4s3t2v0;a0irgin maH;lentino rossi,n go3;aylor,heresa may,iger woods,yra banks;addam hussain,carlett johanssKlobodan milosevic,uC;ay romano,e3o1ush limbau0;gh;d stewart,nald0;inho,o;ese witherspoFilly;a0ipJ;lmIris hiltD;prah winfrFra;essiaen,itt romnEubarek;bron james,e;anye west,iefer sutherland,obe bryant;aime,effers8k rowli0;ng;alle ber0itlBulk hogan;ry;ff0meril lagasse,zekiel;ie;a0enzel washingt2ick wolf;lt1nte;ar1lint0;on;dinal wols1son0;! palm2;ey;arack obama,rock;er",
     "Verb": "true¦awak9born,cannot,fr8g7h5k3le2m1s0wors9;e8h3;ake sure,sg;ngth6ss6;eep tabs,n0;own;as0e2;!t2;iv1onna;ight0;en",
     "PhrasalVerb": "true¦0:7L;1:79;2:7X;3:7N;4:72;5:80;6:7P;7:78;8:6V;9:7J;A:6W;B:5Z;C:7S;D:7Q;a81b6Lc5Rd5Me5Lf4Kg41h3Kiron0j3Gk3Bl2Vm2Jn2Ho2Fp1Wquiet7Ar1Js0CtSuQvacuum 1wHyammer9zE;eroBip FonE;e0k0;by,up;aLeHhGiForErit5G;d 1k33;mp0n2Vpe0r8s8;eel 7Qip 85;aFiEn2J;gh 09rd0;n 7Nr E;d2in,o5J;it 61k8lk6rm 6Csh 7Nt6Qv51;rge9sE;e AherB;aTeRhPiLoJrGuEype 69;ckBrn E;d2in,o3Sup;aFiEot0y 2I;ckle6Rp 7T;ck6Qde Y;ne6Pp Es4O;d2o73up;ck GdFe Egh6Bme0p o0Gre0;aw3ba4d2in,up;e 61y 1;by,oD;ink Erow 6D;ba4ov7up;aEe 5Zll53;m 1r X;ck9ke Flk E;ov7u54;aEba4d2in,o3Cup;ba4ft7p59w3;a0Jc0Ie0Ch08i05l01m00nZoYpTquare StKuIwE;earGiE;ngFtch E;aw3ba4o77; by;ck Eit 1m 1ss0;in,up;aJe0WiIoGrEuc3G;aigh1WiE;ke 6Gn3A;p Erm1Z;by,in,oD;n3Br 1tc3T;c3Amp0nd Er6Zve6y 1;ba4d2up;d2oDup;ar37eHiGlFrEur9;ing9uc8;a3Fit 5B;l13n 1;e5Sll0;be2Wrt0;ap 4Sow 6C;ash 5Foke0;eep FiEow A;c3Wp 1;in,oE;ff,v7;gn 4XngFt Ez8;d2o5up; al54le0;aGoEu4T;ot Eut0w 6D;aw3ba4f3GoD;c2PdeBk58ve6;e Ill1And HtE; Etl4H;d2in,o5upE;!on;aw3ba4d2in,o27up;o5Mto;al51out0rap51;il6v8;aPeMiLoHuE;b 4Ule0n Estl8;aEba4d2in5Jo3Ut39u3S;c26w3;ll Got FuE;g2Tnd6;a27f30o5;arCin,o5;ng 53p6;aEel6inBnt0;c5Dd E;o31u0I;c24t0;aSeRiPlNoLrIsyc2HuE;ll Gt E;aEba4d2in,o1Ot3Gup;p3Lw3;ap3Kd2in,o5t3Eup;attle9ess FiHoE;p 1;ah1Oon;iEp 5Hr3Yur4Jwer 5H;nt0;ay4DuE;gBmp A;ck Eg0le9n Ap4A;o2Yup;el 4KncilB;c42ir 3Un0ss GtFy E;ba4oD; d2c24;aw3ba4o18;pEw3X;e3Wt 4U;arrow46erd0oE;d6te45;aMeJiIoGuE;ddl8lE;l 3I;c1Dp 1uth6ve E;al3Nd2in,o5up;ss0x 1;asur8lFss E;a1Gup;t A;ke Fn ArEs1Px0;k Ary6;do,o48up;aRePiKoEuck0;aIc3Hg HoEse0;k Ese3F;aft7ba4d2forw2Jin46ov7uE;nd7p;in,o0M;d A;e HghtGnFsEv1V;ten 4M;e 1k 1; 1e37;arCd2;av1Jt 37velE; o3U;c8p 1sh Etch9ugh6y20;in3Uo5;eFick6nock E;d2o3Q;eEyB;l 2Pp E;aw3ba4d2fTin,o07to,up;aGoFuE;ic8mpB;ke31t35;c3Azz 1;aQeLiIoFuE;nker32rry 1s0W;lEneBrse2X;d Ee 1;ba4d2fast,o01up;de Ft E;ba4on,up;aw3o5;aElp0;d Gl 2Ar Et 1;fEof;rom;in,oTu1H;c02m 1nFve Ez25;it,to;d Eg 2FkerG;d2in,o5;aTeMive Kloss 22oGrFunE; f0N;in3How 2B; Eof 21;aFb1Dit,oErCt0Pu18;ff,n,v7;bo5ft7hKw3;aw3ba4d2in,oEup,w3;ff,n,ut;aJek0t E;aFb17d2oErCup;ff,n,ut,v7;cFhEl1XrCt,w3;ead;ross;r 1;d aFnE;g 1;bo5;a08e01iSlOoKrGuE;cEel 1;k 1;eFighten Eown9y 1;aw3oD;eEshe1N; 1z8;lGol E;aEwi1G;bo5rC;d Alow 1;aFeEip0;sh0;g Ake0mErE;e 2R;gLlJnHrFsEzzle0;h 2P;e Em 1;aw3ba4up;d0isE;h 1;e El 19;aw3fJ;ht ba4ure0;eJnFsE;s 1;cGd E;fEoD;or;e 1X;dVl 1;cIll Erm0t0W;ap04bGd2in,oFtE;hrough;ff,ut,v7;a4ehi20;e 0L;at0dge0nd 0Ky8;oHrE;aFess Aop E;aw3bUin,o1E;g9w9; 0Dubl8;aXhUlean AoHrEut 10;ack9eep Eoss 1I;by,d2oEup;n,ut;me HoFuntE; o1Q;k 1l E;d2oD;aKbJforHin,oGtFuE;nd7;ogeth7;ut,v7;th,wE;ard;a4y;pErCw3;art;eEipB;ck 11er E;on,up;lKncel0rHsGtch FveB; in;o19up;h 0Wt6;ry FvE;e Y;aw3o15;l Em05;aEba4d2o13up;rCw3;a0Ke0Bl04oVrJuE;bblGcklWil02lk AndlWrn 08st FtEy 13zz6;t 0N;in,o5up;e E;ov7;anOeaMiFush E;oDup;ghIng E;aFba4d2forEin,o5up;th;bo5lErCw3;ong;teE;n 1;k E;d2in,o5up;ch0;arLgKil An8oHssGttlFunce Ex 07;aw3ba4;e A; arC;k 03t 1;e 1;d2up; d2;d 1;aJeed0oEurt0;cGw E;aw3ba4d2o5up;ck;k E;in,oL;ck0nk0st6; oKaHef 1nd E;d2ov7up;er;up;r0t E;d2in,oEup;ff,ut;ff,nE;to;ck Kil0nGrgFsE;h H;ain9e G;g Fk9; on;in,o5; o5;aw3d2o5up;ay;cNdJsk Guction6; oD;ff;arCo5;ouE;nd;d E;d2oEup;ff,n;own;t E;o5up;ut",
@@ -10410,13 +10410,13 @@
     checkLexicon(terms, doc.world);
     let term = terms[0]; // tag number-ranges
 
-    if (isOrdinal.test(term.text)) {
+    if (isOrdinal.test(term.text) && terms[2]) {
       terms[0].tag('Ordinal', 'ord-range', doc.world);
       terms[2].tag('Ordinal', 'ord-range', doc.world);
-    } else if (isNumber.test(term.text)) {
+    } else if (isNumber.test(term.text) && terms[2]) {
       terms[0].tag('Cardinal', 'num-range', doc.world);
       terms[2].tag('Cardinal', 'num-range', doc.world);
-    } else if (isTime.test(term.text)) {
+    } else if (isTime.test(term.text) && terms[1] && terms[2]) {
       terms[0].tag('Time', 'time-range', doc.world);
       terms[1].tag('Date', 'time-range', doc.world);
       terms[2].tag('Time', 'time-range', doc.world);

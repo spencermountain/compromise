@@ -43,6 +43,14 @@ test('normalize-test:', function (t) {
   t.end()
 })
 
+test('runtime error:', function (t) {
+  let txt = ` for three out of every four and the first four . `
+  let doc = nlp(txt)
+  doc.numbers().toNumber()
+  t.ok(true, 'doesnt throw')
+  t.end()
+})
+
 test('misc:', function (t) {
   let str = '2 million five hundred thousand and fifty nine is bigger than 2882'
   let m = nlp(str)

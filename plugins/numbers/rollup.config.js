@@ -27,7 +27,7 @@ export default [
       {
         file: `builds/${name}.js`,
         format: 'umd',
-        sourcemap: true,
+        sourcemap: false,
         name: 'compromiseNumbers',
         banner: banner,
       },

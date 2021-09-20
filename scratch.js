@@ -26,9 +26,11 @@ text = 'our drinks'
 text = 'diet traps'
 text = 'tape measures'
 text = '#cool'
-text = 'walking is fun'
+text = 'cool.com/fun'
+text = 'he is cool/nice'
 // text = 'extremely heated tube'
 let doc = nlp(text).debug()
+console.log(doc.document)
 // doc.nouns().debug()
 // doc.compute('chunks').debug('chunks')
 // doc.verbs().subjects().debug()

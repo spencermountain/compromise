@@ -1,4 +1,6 @@
 const hasSlash = /\//
+const hasDomain = /[a-z]\.[a-z]/i
+const isMath = /[0-9]/
 // const hasSlash = /[a-z\u00C0-\u00FF] ?\/ ?[a-z\u00C0-\u00FF]/
 // const hasApostrophe = /['’]s$/
 
@@ -11,14 +13,18 @@ const addAliases = function (term, world) {
     term.alias.push(aliases[str])
   }
   // support slashes as aliases
-  if (hasSlash.test(str)) {
-    str.split(hasSlash).forEach(word => {
-      word = word.trim()
-      if (word !== '') {
-        term.alias = term.alias || []
-        term.alias.push(word)
-      }
-    })
+  if (hasSlash.test(str) && !hasDomain.test(str) && !isMath.test(str)) {
+    let arr = str.split(hasSlash)
+    // don't split urls and things
+    if (arr.length <= 2) {
+      arr.forEach(word => {
+        word = word.trim()
+        if (word !== '') {
+          term.alias = term.alias || []
+          term.alias.push(word)
+        }
+      })
+    }
   }
   // aliases for apostrophe-s
   // if (hasApostrophe.test(str)) {

@@ -494,9 +494,9 @@ let arr = [
   ['Johnson & Johnson LLC', '#Organization+'],
 
   //-ced
-  ['lanced', '#PastTense'],
-  ['balanced', '#PastTense'],
-  ['seduced', '#PastTense'],
+  ['they lanced', '. #PastTense'],
+  ['he balanced', '. #PastTense'],
+  ['we seduced', '. #PastTense'],
 
   //-shed
   ['impoverished', '#PastTense'],

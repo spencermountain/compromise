@@ -13,11 +13,6 @@ const parse = function (m) {
       res.lastName = m.match('.$')
       return res
     }
-
-    // let rest = p.remove(res.honorific)
-    // if (!res.firstName.found && res.lastName.found) {
-    // }
-    // console.log(res)
   }
   return res
 }

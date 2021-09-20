@@ -36,17 +36,17 @@ export default [
   { word: "ne'er", out: ['never'] },
   { word: "o'er ", out: ['over'] },
   // contraction-part mappings
-  { after: 'll', out: 'will' },
-  { after: 've', out: 'have' },
-  { after: 're', out: 'are' },
-  { after: 'm', out: 'am' },
+  { after: 'll', out: ['will'] },
+  { after: 've', out: ['have'] },
+  { after: 're', out: ['are'] },
+  { after: 'm', out: ['am'] },
   // french contractions
-  { before: 'c', out: 'ce' },
-  { before: 'm', out: 'me' },
-  { before: 'n', out: 'ne' },
-  { before: 'qu', out: 'que' },
-  { before: 's', out: 'se' },
-  { before: 't', out: 'tu' }, // t'aime
+  { before: 'c', out: ['ce'] },
+  { before: 'm', out: ['me'] },
+  { before: 'n', out: ['ne'] },
+  { before: 'qu', out: ['que'] },
+  { before: 's', out: ['se'] },
+  { before: 't', out: ['tu'] }, // t'aime
   // more-complex ones
   // { after: 's', out: apostropheS }, //spencer's
   // { after: 'd', out: apostropheD }, //i'd

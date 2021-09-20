@@ -49,7 +49,7 @@
     "pack": "node ./scripts/pack.js",
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer",
     "testb": "npm run test:smoke && npm run env TESTENV=prod && node ./scripts/test/index.js",
-    "test:one": "tape \"./tests/one/**/*.test.js\" | tap-dancer",
+    "test:one": "tape \"./tests/one/match/*.test.js\" | tap-dancer",
     "test:two": "tape \"./tests/two/**/*.test.js\" | tap-dancer",
     "test:three": "tape \"./tests/three/**/*.test.js\" | tap-dancer",
     "debug": "node ./scripts/debug.js",

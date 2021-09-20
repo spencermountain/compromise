@@ -14,9 +14,9 @@ const reTag = function (terms, world) {
   preTagger([terms], world)
 }
 
-const isArray = function (arr) {
-  return Object.prototype.toString.call(arr) === '[object Array]'
-}
+// const isArray = function (arr) {
+//   return Object.prototype.toString.call(arr) === '[object Array]'
+// }
 
 //really easy ones
 const contractions = (document = [], world) => {
@@ -37,15 +37,15 @@ const contractions = (document = [], world) => {
         let hint = []
         // look for word-word match (cannot-> [can, not])
         if (o.word === terms[i].normal) {
-          words = isArray(o.out) ? o.out : o.out(terms, i)
+          words = o.out //isArray(o.out) ? o.out : o.out(terms, i)
         }
         // look for after-match ('re -> [_, are])
         else if (after !== null && after === o.after) {
-          words = typeof o.out === 'string' ? [before, o.out] : o.out(terms, i)
+          words = [before, o.out] //typeof o.out === 'string' ? [before, o.out] : o.out(terms, i)
         }
         // look for before-match (l' -> [le, _])
         else if (before !== null && before === o.before) {
-          words = typeof o.out === 'string' ? [o.out, after] : o.out(terms, i)
+          words = [o.out, after] //typeof o.out === 'string' ? [o.out, after] : o.out(terms, i)
         }
         // bob's
         else if (after === 's') {

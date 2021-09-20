@@ -33,7 +33,7 @@ const swtichLexicon = function (terms, i, model) {
   let term = terms[i]
   const { switchers } = model.two
   Object.keys(switchers).forEach(k => {
-    const { words, before, after, beforeWords, afterWords, fallback } = switchers[k]
+    const { words, before, after, beforeWords, afterWords } = switchers[k]
     // do we already have a good tag?
     if (term.tags.has('ProperNoun') || term.tags.has('Acronym')) {
       return
@@ -47,11 +47,6 @@ const swtichLexicon = function (terms, i, model) {
       tag = tag || lookAtTag(terms[i + 1], after)
       // look <- left tag next
       tag = tag || lookAtTag(terms[i - 1], before)
-      // i guess we should still tag it
-      // if (!tag) {
-      //   console.log('===fallback')
-      // }
-      tag = tag || fallback
       if (tag) {
         term.tags.clear()
         fastTag(term, tag, `3-[switch] ${k}`)

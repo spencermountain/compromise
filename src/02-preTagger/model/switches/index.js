@@ -110,15 +110,36 @@ const switches = {
       Adjective: jj, //intoxicated little
     },
     beforeWords: {
+      seem: jj, //seem prepared
+      seemed: jj,
+      seems: jj,
+      feel: jj, //feel prepared
+      feels: jj,
+      felt: jj,
+      appear: jj,
+      appears: jj,
+      appeared: jj,
       really: jj, //really damaged
       quite: jj,
+      well: jj,
       very: jj,
+      deeply: jj,
+      profoundly: jj,
+      extremely: jj,
       so: jj,
+      badly: jj,
+      mostly: jj,
       also: jj,
       too: jj, //too insulting
+      quickly: pst, //
     },
     afterWords: {
       by: pst, //damaged by
+      back: pst, //charged back
+      out: pst, //charged out
+      in: pst, //crowded in
+      up: pst, //heated up
+      down: pst, //hammered down
     },
     fallback: jj,
   },

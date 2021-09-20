@@ -56,12 +56,13 @@ const isAcronym = function (terms, i, model) {
   }
   //non-period ones are harder
   if (isNoPeriodAcronym(term, model)) {
-    term.tags.clear() //not ideal
+    term.tags.clear()
     fastTag(term, ['Acronym', 'Noun'], '3-no-period-acronym')
     return true
   }
   // one-letter acronyms
   if (!oneLetterWord.hasOwnProperty(term.text) && oneLetterAcronym.test(term.text)) {
+    term.tags.clear()
     fastTag(term, ['Acronym', 'Noun'], '3-one-letter-acronym')
     return true
   }

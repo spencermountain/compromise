@@ -6,9 +6,9 @@ import path from 'path'
 const tag = 'JJ'
 const reg = /ed$/
 
-const ids = ['0004']
-// let ids = []
-for (let i = 221; i <= 220; i += 1) {
+// const ids = ['0004']
+let ids = []
+for (let i = 1; i <= 10; i += 1) {
   let str = String(i).padStart(4, '0')
   ids.push(str)
 }

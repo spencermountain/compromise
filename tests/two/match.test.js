@@ -775,10 +775,18 @@ let arr = [
   [`very detailed`, '. #Adjective'],
   [`our detailed`, '. #Adjective'],
   [`the detailed`, '. #Adjective'],
+  [`well equipped`, '. #Adjective'],
   [`quickly detailed`, '. #PastTense'],
+  [`deeply closed`, `. #Adjective`],
   [`detailed plan`, '#Adjective .'],
+  [`failed class`, '#Adjective .'],
   [`intoxicated little`, '#Adjective .'],
+  [`closed it`, `#PastTense .`],
+  [`cramped his style`, `#PastTense #Pronoun #Noun`],
   [`he detailed`, '. #PastTense'],
+  [`seemed closed`, `. #PastTense`],
+  [`quickly closed`, `. #PastTense`],
+  [`badly damaged`, `. #Adjective`],
   // [``, ''],
 
   [`wish that`, '#PresentTense .'],
@@ -800,7 +808,7 @@ let arr = [
   // [`become overly weakened`, '#Verb #Adverb #PastTense'],
   [`a completely beaten man`, 'a #Adverb #Verb #Noun'],
   [`the said card`, 'the #Adjective #Noun'],
-  [`one super strong character`, '#Determiner #Adverb #Adjective #Noun'],
+  [`one super strong character`, '. #Adverb #Adjective #Noun'],
   [`we charged back`, 'we #PastTense #Adverb'],
   [`for suspected terrorists`, 'for #Adjective #Plural'],
   [`for discounted beauty items`, 'for #Adjective #Noun #Plural'],
@@ -820,13 +828,18 @@ let arr = [
   [`doing better for fights`, '#Gerund #Adjective for #Plural'],
   [`might get better aim`, '#Auxiliary #Verb #Comparative #Noun'],
   [`i think tipping blows`, 'i #PresentTense #Gerund #Adjective'],
+
+  // [``, ``],
+  // [``, ``],
+  // [``, ``],
 ] //match-two
 test('match:', function (t) {
   arr.forEach(function (a) {
-    let doc = nlp(a[0]).compute('tagRank')
+    let [str, match] = a
+    let doc = nlp(str).compute('tagRank')
     let tags = doc.json()[0].terms.map(term => term.tagRank[0])
-    let msg = `'${(a[0] + "' ").padEnd(20, ' ')}  - '${tags.join(', ')}'`
-    let m = doc.match(a[1])
+    let msg = `'${(str + "' ").padEnd(20, ' ')}  - '${tags.join(', ')}'`
+    let m = doc.match(match)
     t.equal(m.text(), doc.text(), here + msg)
   })
   t.end()

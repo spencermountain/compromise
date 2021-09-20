@@ -48,14 +48,13 @@ const firstPass = function (terms, model) {
 //
 // these methods don't care about word-neighbours
 const secondPass = function (terms, model) {
-  // look for a starting tag
   for (let i = 0; i < terms.length; i += 1) {
     //  is it titlecased?
     let found = second.checkCase(terms, i, model)
 
-    if (found === null && terms[i].tags.size === 0) {
+    if (terms[i].tags.size === 0) {
       // look at word ending
-      found = second.checkSuffix(terms, i, model)
+      found = found || second.checkSuffix(terms, i, model)
       // check for stem in lexicon
       found = found || second.checkPrefix(terms, i, model)
       // try look-like rules
@@ -66,15 +65,16 @@ const secondPass = function (terms, model) {
 
 const thirdPass = function (terms, model) {
   for (let i = 0; i < terms.length; i += 1) {
-    let found = null
     // let these tags get layered
-    found = found || third.checkAcronym(terms, i, model)
+    let found = third.checkAcronym(terms, i, model)
     // deduce parent tags
     fillTags(terms, i, model)
     // look left+right for hints
-    found = found || third.neighbours(terms, model)
+    found = found || third.neighbours(terms, i, model)
     //  ¯\_(ツ)_/¯ - found nothing
     found = found || third.nounFallback(terms, i, model)
+  }
+  for (let i = 0; i < terms.length; i += 1) {
     // run this again, if necessary
     // fillTags(terms, i, model)
     // verb-noun disambiguation, etc

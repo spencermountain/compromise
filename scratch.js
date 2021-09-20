@@ -21,8 +21,9 @@ nlp.verbose('tagger')
 
 // let text = 'litigation costs'
 let text = 'US battles to save storm victims'
-text = 'Mr. Goobly'
-// text = 'been blinding'
+text = 'integrated tube'
+text = 'suspected terrorists'
+// text = 'extremely heated tube'
 let doc = nlp(text).debug()
 // doc.nouns().debug()
 // doc.compute('chunks').debug('chunks')

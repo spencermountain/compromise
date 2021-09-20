@@ -3,7 +3,7 @@ const spacetime = require('spacetime')
 const nlp = require('./_lib')
 
 test('day-start edge-cases', function (t) {
-  let doc = nlp('in june')
+  let doc = nlp('in june 2021')
   let date = doc.dates({ dayStart: '8:00am', dayEnd: '6:00pm', timezone: 'Asia/Shanghai' }).get(0)
   t.equal(date.start, '2021-06-01T08:00:00.000+08:00', 'start')
   t.equal(date.end, '2021-06-30T18:00:00.000+08:00', 'end')

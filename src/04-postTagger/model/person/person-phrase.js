@@ -13,7 +13,7 @@ export default [
   //pope francis
   {
     match: '(lady|queen|sister|king|pope|father) #ProperNoun',
-    tag: 'Honorific Person',
+    tag: 'Person',
     reason: 'lady-titlecase',
     safe: true,
   },

@@ -1,55 +1,23 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/three.js'
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 // import './tests/one/match/named-silent.test.js'
 // import './tests/one/match/encoding.test.js'
-// import './tests/one/match/if.test.js'
+// import './tests/one/match/itap /Users/spencer/mountain/compromise/tests/two/match.test.jsf.test.js'
 // import './tests/one/match/regex.test.js'
 // import './tests/one/match/doc-match.test.js'
 // import './tests/one/match/negative.test.js'
 
-let doc = nlp('in 3/8ths of a second').debug()
-doc.fractions().toFraction().debug()
-// let m = doc.match('one !two three')
-
-// doc = nlp.tokenize('one two three')
-// m = doc.match('one !foo three')
-
-// doc = nlp.tokenize('one two three')
-// m = doc.match('one !foo? two three')
-// t.equal(m.text(), 'one two three', here + 'skip-not')
-
-// doc = nlp.tokenize(`one after`)
-// m = doc.match(`one !foo? moo? after`)
-
-// m = doc.match(`one !foo? after`)
-
-// doc = nlp(`I have not booked`)
-
-// // -make sure we do not find 'not'
-// m = doc.match(`have !not? booked`)
-
-// // make sure we do not find 'not'
-// // but with tricky next-term greedy
-// m = doc.match(`have !not? * booked`)
-
-/*
-
-1. verb parse
-2. verb conjugate
-3. noun parse
-  3a. person parse0
-  3a. place parse
-
-
-*/
-
-// let doc = nlp('the people in toronto drove quickly').debug()
-// let doc = nlp(`he professes love`).debug()
-// let doc = nlp(` and living in Toronto`).debug()
-// let doc = nlp(` Amazing Experience! `).debug()
+let text = 'dept of state'
+text = `must-see show`
+text = `smelled like smoke`
+text = `would look like`
+text = `provide record levels`
+text = `seek progress`
+text = `zero in`
+const doc = nlp(text).debug()
 
 // let text = 'litigation costs'
 // let text = 'US battles to save storm victims'

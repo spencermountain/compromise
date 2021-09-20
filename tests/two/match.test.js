@@ -210,7 +210,7 @@ let arr = [
   ['there were many walks', '#Noun #Copula #Adjective #Plural'],
   ['there were the walks', '#Noun #Copula #Determiner #Noun'],
 
-  ['it was fixed', '#Noun #Copula #PastTense'],
+  // ['it was fixed', '#Noun #Copula #PastTense'],
   ['it will be boxed', '#Noun #Verb #Verb #PastTense'],
   //ambiguous adverbs
   ['it was pretty', '#Noun #Copula #Adjective'],
@@ -395,7 +395,7 @@ let arr = [
   ['Messiaen', '#Person'],
   ['Mozart', '#LastName'],
   ['Nixon', '#LastName'],
-  ['Pope John Paul II', '#Person+'],
+  ['Pope John Paul II', '#Honorific #Person+'],
   ['Richard Nixon', '#MaleName #LastName'],
   ['Ronald Reagan', '#MaleName #LastName'],
   ['Saddam Hussain', '#Person+'],

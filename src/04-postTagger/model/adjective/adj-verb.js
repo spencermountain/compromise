@@ -20,7 +20,7 @@ export default [
   //should be sedated
   // { match: '#Modal be [#PastTense]', group: 0, tag: 'Adjective', reason: 'should-be-x' },
   // rude and insulting
-  { match: '#Adjective and [#Gerund]', group: 0, tag: 'Adjective', reason: 'rude-and-x' },
+  { match: '#Adjective and [#Gerund] !#Preposition?', group: 0, tag: 'Adjective', reason: 'rude-and-x' },
   // were over cooked
   { match: '#Copula #Adverb? (over|under) [#PastTense]', group: 0, tag: 'Adjective', reason: 'over-cooked' },
   //felt loved

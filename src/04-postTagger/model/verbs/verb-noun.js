@@ -1,5 +1,3 @@
-const verbNoun =
-  '(side|share|control|state|lump|list|swarm|rest|rush|smell|supply|surge|tune|value|view|test|appeal|base|cause|center|copy|date|defeat|display|force|form|kiss)'
 export default [
   // do the dance
   { match: '#Infinitive (this|that|the) [#Infinitive]', group: 0, tag: 'Noun', reason: 'do-this-dance' },
@@ -122,12 +120,6 @@ export default [
   { match: `(same|some|the|that|a) kind of [#PresentTense]`, group: 0, tag: 'Noun', reason: 'some-kind-of' },
   // a type of shout
   { match: `(same|some|the|that|a) type of [#PresentTense]`, group: 0, tag: 'Noun', reason: 'some-type-of' },
-  // side of fries
-  // { match: `[${verbNoun}] of`, group: 0, tag: 'Noun', reason: 'side-of-fries' },
-  // the side
-  // { match: `#Determiner [${verbNoun}]`, group: 0, tag: 'Noun', reason: 'the-side' },
-  // take control
-  // { match: `#Infinitive [${verbNoun}]`, group: 0, tag: 'Noun', reason: 'take-control' },
   // doing better for fights
   { match: `#Gerund #Adjective #Preposition [#PresentTense]`, group: 0, tag: 'Noun', reason: 'doing-better-for-x' },
   // get better aim
@@ -151,10 +143,18 @@ export default [
   { match: '[#PresentTense] (are|were|was) #Adjective', group: 0, tag: 'Plural', reason: 'compromises-are-possible' },
   // ignoring commute
   {
-    match: '#Gerund [#PresentTense]',
+    match: '#Copula #Gerund [#PresentTense]',
     group: 0,
     tag: 'Noun',
-    ifNo: ['going', 'being', '#Copula'],
+    ifNo: ['going'],
     reason: 'ignoring-commute',
+  },
+  // seek progress
+  {
+    match: '#Infinitive [#Infinitive]',
+    group: 0,
+    tag: 'Noun',
+    ifNo: ['go', 'have', 'help', 'do', '#PhrasalVerb'],
+    reason: 'seek-progress',
   },
 ]

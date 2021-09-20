@@ -19,10 +19,10 @@ const tokenize = function (input, world) {
       // split into [pre-text-post]
       return terms.map(splitWhitespace)
     })
-    // add normalized term format
+    // add normalized term format, always
     compute.normal(input)
     // support slashes, apostrophes, etc
-    compute.alias(input, world)
+    // compute.alias(input, world)
   }
   return input
 }

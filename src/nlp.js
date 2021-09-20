@@ -69,7 +69,7 @@ nlp.tokenize = function (input, lex) {
   let doc = new View(document)
   // give contractions a shot, at least
   if (compute.contractions) {
-    doc.compute('contractions') //run it if we've got it
+    doc.compute(['alias', 'normal', 'machine', 'contractions']) //run it if we've got it
   }
   return doc
 }

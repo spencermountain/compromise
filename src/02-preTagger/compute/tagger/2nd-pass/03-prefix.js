@@ -1,4 +1,5 @@
-import setTag from './_setTag.js'
+import fastTag from '../_fastTag.js'
+
 const prefixes = /^(anti|re|un|non|extra|inter|intra|over)([a-z-]{3})/
 
 // only allow prefixes on adjectives, verbs
@@ -11,14 +12,15 @@ const allowed = {
 }
 
 // give 'overwork' the same tag as 'work'
-const checkPrefix = function (term, model) {
+const checkPrefix = function (terms, i, model) {
+  let term = terms[i]
   if (prefixes.test(term.normal) === true) {
     let root = term.normal.replace(prefixes, '$2')
     root = root.replace(/^-/, '')
     if (model.two.lexicon.hasOwnProperty(root) === true) {
       let tag = model.two.lexicon[root]
       if (allowed[tag] === true) {
-        setTag(term, tag, 'prefix')
+        fastTag(term, tag, '2-prefix')
         return true
       }
     }

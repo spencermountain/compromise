@@ -17,7 +17,13 @@ nlp.verbose('tagger')
 // let doc = nlp('the people in toronto drove quickly').debug()
 // let doc = nlp(`he professes love`).debug()
 // let doc = nlp(` and living in Toronto`).debug()
-let doc = nlp(` Amazing Experience! `).debug()
+// let doc = nlp(` Amazing Experience! `).debug()
+
+// let text = 'litigation costs'
+let text = 'US battles to save storm victims'
+text = 'Mr. Goobly'
+// text = 'been blinding'
+let doc = nlp(text).debug()
 // doc.nouns().debug()
 // doc.compute('chunks').debug('chunks')
 // doc.verbs().subjects().debug()

@@ -53,6 +53,9 @@ const isArray = function (arr) {
 // add a tag to all these terms
 const setTag = function (terms, tag, world = {}, isSafe) {
   const tagSet = world.model.two.tagSet || {}
+  if (!tag) {
+    return
+  }
   if (isArray(tag) === true) {
     tag.forEach(tg => setTag(terms, tg, world, isSafe))
     return

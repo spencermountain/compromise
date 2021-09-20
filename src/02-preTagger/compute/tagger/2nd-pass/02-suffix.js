@@ -1,4 +1,4 @@
-import setTag from './_setTag.js'
+import fastTag from '../_fastTag.js'
 
 //sweep-through all suffixes
 const suffixLoop = function (str = '', suffixes = []) {
@@ -18,18 +18,19 @@ const suffixLoop = function (str = '', suffixes = []) {
 }
 
 // decide tag from the ending of the word
-const tagBySuffix = function (term, model) {
+const tagBySuffix = function (terms, i, model) {
+  let term = terms[i]
   if (term.tags.size === 0) {
     let tag = suffixLoop(term.normal, model.two.suffixPatterns)
     if (tag !== null) {
-      setTag(term, tag, 'suffix')
+      fastTag(term, tag, '2-suffix')
       return true
     }
     // try implicit form of word, too
     if (term.implicit) {
       tag = suffixLoop(term.implicit, model.two.suffixPatterns)
       if (tag !== null) {
-        setTag(term, tag, 'implicit-suffix')
+        fastTag(term, tag, '2-implicit-suffix')
         return true
       }
     }

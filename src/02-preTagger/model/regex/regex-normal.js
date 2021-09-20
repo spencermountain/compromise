@@ -72,4 +72,6 @@ export default [
   [/^[0-9.]+([a-z]{1,4})$/, 'Value', '9km'],
   // m/h
   [/^(m|k|cm|km)\/(s|h|hr)$/, 'Unit', '5 k/m'],
+  // μg/g
+  [/^(ug|ng|mg)\/(l|m3|ft3)$/, 'Unit', 'ug/L'],
 ]

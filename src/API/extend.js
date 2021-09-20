@@ -33,6 +33,5 @@ const extend = function (plugin, world, View) {
   if (plugin.api) {
     plugin.api(View)
   }
-  // console.log(world)
 }
 export default extend

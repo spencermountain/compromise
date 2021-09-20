@@ -1,4 +1,4 @@
-import setTag from './_setTag.js'
+import fastTag from '../_fastTag.js'
 
 // normal regexes
 const startsWith = function (str, regs) {
@@ -20,8 +20,9 @@ const doEndsWith = function (str = '', byEnd) {
   return undefined
 }
 
-const checkRegex = function (term, model) {
+const checkRegex = function (terms, i, model) {
   let { regexText, regexNormal, endsWith } = model.two
+  let term = terms[i]
   let normal = term.machine || term.normal
 
   let arr = startsWith(term.text, regexText) || startsWith(normal, regexNormal)
@@ -30,7 +31,7 @@ const checkRegex = function (term, model) {
     arr = doEndsWith(normal, endsWith)
   }
   if (arr !== undefined) {
-    setTag(term, arr[1], `regex- '${arr[2] || arr[0]}'`)
+    fastTag(term, arr[1], `2-regex- '${arr[2] || arr[0]}'`)
     return true
   }
   return null

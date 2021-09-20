@@ -20,10 +20,10 @@ test('people-parse:', function (t) {
   ]
   arr.forEach(a => {
     let [str, first, last, hon] = a
-    let res = nlp(str).people().parse()[0]
-    t.equal(res.firstName.text('normal'), first, here + 'first - ' + str)
-    t.equal(res.lastName.text('normal'), last, here + 'last - ' + str)
-    t.equal(res.honorific.text('normal'), hon, here + 'honorific - ' + str)
+    let res = nlp(str).people().parse()[0] || {}
+    t.equal(res.firstName && res.firstName.text('normal'), first, here + 'first - ' + str)
+    t.equal(res.lastName && res.lastName.text('normal'), last, here + 'last - ' + str)
+    t.equal(res.honorific && res.honorific.text('normal'), hon, here + 'honorific - ' + str)
   })
   t.end()
 })

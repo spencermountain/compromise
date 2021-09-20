@@ -72,6 +72,7 @@ const switches = {
       Noun: jj, //shocking ignorance, rallying cry, revealing clue
     },
     beforeWords: {
+      been: g,
       // really shocking
       really: jj,
       quite: jj,

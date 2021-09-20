@@ -1,4 +1,5 @@
 import fastTag from '../_fastTag.js'
+import fillTag from './_fillTags.js'
 
 const lookAtWord = function (term, words) {
   if (!term) {
@@ -39,6 +40,7 @@ const neighbours = function (terms, i, model) {
     tag = tag || lookAtTag(terms[i + 1], rightTags)
     if (tag) {
       fastTag(term, tag, '3-[neighbour]')
+      fillTag(terms, i, model)
       return true
     }
   }

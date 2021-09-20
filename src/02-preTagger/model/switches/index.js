@@ -130,6 +130,8 @@ const switches = {
       badly: jj,
       mostly: jj,
       also: jj,
+      over: jj, //over cooked
+      under: jj,
       too: jj, //too insulting
       quickly: pst, //
     },

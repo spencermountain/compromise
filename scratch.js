@@ -21,8 +21,10 @@ nlp.verbose('tagger')
 
 // let text = 'litigation costs'
 let text = 'US battles to save storm victims'
-text = 'integrated tube'
-text = 'suspected terrorists'
+text = 'the letters concern'
+text = 'our drinks'
+text = 'diet traps'
+text = 'tape measure'
 // text = 'extremely heated tube'
 let doc = nlp(text).debug()
 // doc.nouns().debug()

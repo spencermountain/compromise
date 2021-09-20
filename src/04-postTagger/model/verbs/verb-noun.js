@@ -100,8 +100,7 @@ export default [
   { match: '#Gerund #Adverb? #Comparative [#PresentTense]', group: 0, tag: 'Noun', reason: 'higher-costs' },
 
   { match: '(#Noun && @hasComma) #Noun (and|or) [#PresentTense]', group: 0, tag: 'Noun', reason: 'noun-list' },
-  //her fines
-  { match: '#Possessive [#PresentTense]', group: 0, tag: 'Noun', reason: 'its-polling' },
+
   // any questions for
   { match: '(many|any|some|several) [#PresentTense] for', group: 0, tag: 'Noun', reason: 'any-verbs-for' },
   // to facilitate gas exchange with
@@ -150,4 +149,6 @@ export default [
   },
   // compromises are possible
   { match: '[#PresentTense] (are|were|was) #Adjective', group: 0, tag: 'Plural', reason: 'compromises-are-possible' },
+  // ignoring commute
+  { match: '#Gerund [#PresentTense]', group: 0, tag: 'Noun', ifNo: ['going'], reason: 'ignoring-commute' },
 ]

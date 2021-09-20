@@ -75,8 +75,6 @@ const thirdPass = function (terms, model) {
     found = found || third.nounFallback(terms, i, model)
   }
   for (let i = 0; i < terms.length; i += 1) {
-    // run this again, if necessary
-    // fillTags(terms, i, model)
     // verb-noun disambiguation, etc
     third.switchChange(terms, i, model)
   }

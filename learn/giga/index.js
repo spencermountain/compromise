@@ -1,10 +1,9 @@
 /* eslint-disable no-console */
 import parseXml from './getByTag.js'
 import fs from 'fs'
-import path from 'path'
 
 const tag = 'JJ'
-const reg = /ed$/
+const reg = /ing$/
 
 // const ids = ['0004']
 let ids = []

@@ -754,6 +754,7 @@ let arr = [
   [`one flood`, '. #Noun'],
   [`flash could`, '#Noun .'],
   [`flash is`, '#Noun .'],
+
   // adj-gerund
   [`shocking quickly`, '#Gerund .'],
   [`shocking me`, '#Gerund .'],
@@ -779,6 +780,9 @@ let arr = [
   [`intoxicated little`, '#Adjective .'],
   [`he detailed`, '. #PastTense'],
   // [``, ''],
+
+  [`wish that`, '#PresentTense .'],
+  [`that wish`, '. #Singular'],
 ] //match-two
 test('match:', function (t) {
   arr.forEach(function (a) {

@@ -48,7 +48,7 @@ const switches = {
       you: vb, //date you
       of: nn, //date of birth (preposition)
     },
-    fallback: nn,
+    fallback: vb,
   },
 
   // adjective - gerund - 'shocking'
@@ -82,10 +82,12 @@ const switches = {
       also: jj,
       too: jj, //too insulting
       it: jj, //find it insulting
+      but: jj, //nothing but frustrating
     },
     afterWords: {
       too: jj, //insulting too
       also: jj, //insulting too
+      you: g, //telling you
     },
     fallback: jj,
   },

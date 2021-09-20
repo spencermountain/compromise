@@ -34,6 +34,10 @@ const swtichLexicon = function (terms, model) {
   Object.keys(switchers).forEach(k => {
     const { words, before, after, beforeWords, afterWords, fallback } = switchers[k]
     terms.forEach((term, i) => {
+      // do we already have a good tag?
+      if (term.tags.has('ProperNoun') || term.tags.has('Acronym')) {
+        return
+      }
       if (words.hasOwnProperty(term.normal)) {
         // look -> right word first
         let tag = lookAtWord(terms[i + 1], afterWords)

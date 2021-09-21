@@ -1,6 +1,6 @@
 // const personDate = '(april|june|may|jan|august|eve)'
 // const personMonth = '(january|april|may|june|jan|sep)'
-const personAdj = '(misty|rusty|dusty|rich|randy|sandy|young|earnest|frank)'
+const personAdj = '(misty|rusty|dusty|rich|randy|sandy|young|earnest|frank|brown)'
 const personVerb = '(drew|pat|wade|ollie|will|rob|buck|bob|mark|jack)'
 
 export default [
@@ -57,5 +57,7 @@ export default [
   // wade m. Cooper
   { match: `${personVerb} #Acronym #ProperNoun`, tag: 'Person', reason: 'rob-a-smith' },
   //to mark
-  { match: '(to|#Modal) [mark]', group: 0, tag: 'PresentTense', reason: 'to-mark' },
+  // { match: '(to|#Modal) [mark]', group: 0, tag: 'PresentTense', reason: 'to-mark' },
+  // will go
+  { match: '[will] #Verb', group: 0, tag: 'Modal', reason: 'will-verb' },
 ]

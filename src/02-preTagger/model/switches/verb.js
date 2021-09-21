@@ -1,4 +1,5 @@
-const vb = 'Verb'
+const vb = 'Infinitive'
+
 export default {
   before: {
     Modal: vb, //would date

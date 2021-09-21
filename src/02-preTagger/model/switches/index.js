@@ -7,9 +7,8 @@ import verb from './verb.js'
 // unpack our lexicon of ambiguous-words
 // (found in ./lib/switches/)
 
-const vb = 'Infinitive'
 const nn = 'Singular'
-
+const vb = 'Infinitive'
 const jj = 'Adjective'
 const g = 'Gerund'
 const pst = 'PastTense'
@@ -18,23 +17,23 @@ const switches = {
   // Singular - Infinitive -
   // date, call, claim, flash
   nounVerb: {
-    before: {
+    before: Object.assign({}, verb.before, {
       Determiner: nn, //the date
       Possessive: nn, //his date
       Noun: nn, //nasa funding
-    },
-    beforeWords: {
+    }),
+    beforeWords: Object.assign({}, verb.beforeWords, {
       was: nn, //was time
       is: nn, //
-    },
-    after: {
+    }),
+    after: Object.assign({}, verb.after, {
       Value: nn, //date nine  -?
       Modal: nn, //date would
       Copula: nn, //fear is
-    },
-    afterWords: {
+    }),
+    afterWords: Object.assign({}, verb.afterWords, {
       of: nn, //date of birth (preposition)
-    },
+    }),
     fallback: vb,
   },
 
@@ -58,7 +57,7 @@ const switches = {
       Conjunction: g, //insulting to
       Noun: jj, //shocking ignorance, rallying cry, revealing clue
     },
-    beforeWords: Object.assign(adj.beforeWords, {
+    beforeWords: Object.assign({}, adj.beforeWords, {
       been: g,
     }),
     afterWords: {
@@ -71,7 +70,7 @@ const switches = {
 
   // adjective - pastTense - 'damaged'
   adjPast: {
-    before: Object.assign(adj.before, {
+    before: Object.assign({}, adj.before, {
       Adverb: pst, //quickly detailed
       Pronoun: pst, //he detailed
     }),
@@ -82,7 +81,7 @@ const switches = {
       Determiner: pst, //hooked the
       Adjective: jj, //intoxicated little
     },
-    beforeWords: Object.assign(adj.beforeWords, {
+    beforeWords: Object.assign({}, adj.beforeWords, {
       quickly: pst, //
     }),
     afterWords: {
@@ -97,26 +96,26 @@ const switches = {
   },
 
   personNoun: {
-    before: Object.assign(person.before),
-    after: Object.assign(person.after),
-    beforeWords: Object.assign(person.beforeWords),
-    afterWords: Object.assign(person.afterWords),
+    before: Object.assign({}, person.before),
+    after: Object.assign({}, person.after),
+    beforeWords: Object.assign({}, person.beforeWords),
+    afterWords: Object.assign({}, person.afterWords),
     fallback: nn,
   },
 
   personDate: {
-    before: Object.assign(person.before, date.before),
-    after: Object.assign(person.after, date.after),
-    beforeWords: Object.assign(person.beforeWords, date.beforeWords),
-    afterWords: Object.assign(person.afterWords, date.afterWords),
+    before: Object.assign({}, person.before, date.before),
+    after: Object.assign({}, person.after, date.after),
+    beforeWords: Object.assign({}, person.beforeWords, date.beforeWords),
+    afterWords: Object.assign({}, person.afterWords, date.afterWords),
     fallback: nn,
   },
 
   personVerb: {
-    before: Object.assign(person.before, verb.before),
-    after: Object.assign(person.after, verb.after),
-    beforeWords: Object.assign(person.beforeWords, verb.beforeWords),
-    afterWords: Object.assign(person.afterWords, verb.afterWords),
+    before: Object.assign({}, person.before, verb.before),
+    after: Object.assign({}, person.after, verb.after),
+    beforeWords: Object.assign({}, person.beforeWords, verb.beforeWords),
+    afterWords: Object.assign({}, person.afterWords, verb.afterWords),
     fallback: vb,
   },
 }

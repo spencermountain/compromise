@@ -2,6 +2,8 @@ import data from './_data.js'
 import { unpack } from 'efrt'
 import person from './person.js'
 import adj from './adjective.js'
+import date from './date.js'
+import verb from './verb.js'
 // unpack our lexicon of ambiguous-words
 // (found in ./lib/switches/)
 
@@ -17,39 +19,20 @@ const switches = {
   // date, call, claim, flash
   nounVerb: {
     before: {
-      Modal: vb, //would date
-      Adverb: vb, //quickly date
-      Negative: vb, //not date
       Determiner: nn, //the date
       Possessive: nn, //his date
       Noun: nn, //nasa funding
     },
     beforeWords: {
-      i: vb, //i date
-      we: vb, //we date
-      you: vb, //you date
-      they: vb, //they date
-      to: vb, //to date
-      please: vb, //please check
-      will: vb, //will check
       was: nn, //was time
       is: nn, //
     },
     after: {
-      Determiner: vb, //flash the
-      Adverb: vb, //date quickly
-      Possessive: vb, //date his
-      // Noun: vb, //date spencer
-      Preposition: vb, //date around, dump onto, grumble about
-      Conjunction: vb, // dip to, dip through
       Value: nn, //date nine  -?
       Modal: nn, //date would
       Copula: nn, //fear is
     },
     afterWords: {
-      the: vb, //echo the
-      me: vb, //date me
-      you: vb, //date you
       of: nn, //date of birth (preposition)
     },
     fallback: vb,
@@ -119,6 +102,22 @@ const switches = {
     beforeWords: Object.assign(person.beforeWords),
     afterWords: Object.assign(person.afterWords),
     fallback: nn,
+  },
+
+  personDate: {
+    before: Object.assign(person.before, date.before),
+    after: Object.assign(person.after, date.after),
+    beforeWords: Object.assign(person.beforeWords, date.beforeWords),
+    afterWords: Object.assign(person.afterWords, date.afterWords),
+    fallback: nn,
+  },
+
+  personVerb: {
+    before: Object.assign(person.before, verb.before),
+    after: Object.assign(person.after, verb.after),
+    beforeWords: Object.assign(person.beforeWords, verb.beforeWords),
+    afterWords: Object.assign(person.afterWords, verb.afterWords),
+    fallback: vb,
   },
 }
 // add compressed word-data

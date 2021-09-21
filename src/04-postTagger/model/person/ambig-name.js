@@ -1,58 +1,42 @@
-const personDate = '(april|june|may|jan|august|eve)'
-const personMonth = '(january|april|may|june|jan|sep)'
-const personAdj = '(misty|rusty|dusty|rich|randy|young)'
+// const personDate = '(april|june|may|jan|august|eve)'
+// const personMonth = '(january|april|may|june|jan|sep)'
+const personAdj = '(misty|rusty|dusty|rich|randy|sandy|young|earnest|frank)'
 const personVerb = '(drew|pat|wade|ollie|will|rob|buck|bob|mark|jack)'
-const firstName = '(will|may|april|june|said|rob|wade|ray|rusty|drew|miles|jack|chuck|randy|jan|pat|cliff|bill)'
-const lastName = '(green|white|brown|hall|young|king|hill|cook|gray|price)'
 
 export default [
-  //ambiguous-but-common firstnames
-  // {
-  //   match: `[${firstName}] #LastName`,
-  //   group: 0,
-  //   tag: 'FirstName',
-  //   reason: 'maybe-lastname',
-  // },
-  // //very common-but-ambiguous lastnames
-  // {
-  //   match: `#FirstName ${lastName}`,
-  //   tag: 'Person',
-  //   reason: 'bill-green',
-  // },
-
   // ===person-date===
   // in june
-  { match: `(in|during|on|by|after|#Date) [${personDate}]`, group: 0, tag: 'Date', reason: 'in-june' },
-  // june 1992
-  { match: `${personDate} (#Value|#Date)`, tag: 'Date', reason: 'june-5th' },
-  // June Smith
-  { match: `${personDate} #ProperNoun`, tag: 'Person', reason: 'june-smith', safe: true },
-  // june m. Cooper
-  { match: `${personDate} #Acronym? #ProperNoun`, tag: 'Person', ifNo: '#Month', reason: 'june-smith-jr' },
-  // ---person-month---
-  //give to april
-  {
-    match: `#Infinitive #Determiner? #Adjective? #Noun? (to|for) [${personMonth}]`,
-    group: 0,
-    tag: 'Person',
-    reason: 'ambig-person',
-  },
-  // remind june
-  { match: `#Infinitive [${personMonth}]`, group: 0, tag: 'Person', reason: 'infinitive-person' },
-  // april will
-  { match: `[${personMonth}] #Modal`, group: 0, tag: 'Person', reason: 'ambig-modal' },
-  // would april
-  { match: `#Modal [${personMonth}]`, group: 0, tag: 'Person', reason: 'modal-ambig' },
-  // it is may
-  { match: `#Copula [${personMonth}]`, group: 0, tag: 'Person', reason: 'is-may' },
-  // may is
-  { match: `[${personMonth}] #Copula`, group: 0, tag: 'Person', reason: 'may-is' },
-  // with april
-  { match: `(that|with|for) [${personMonth}]`, group: 0, tag: 'Person', reason: 'that-month' },
-  // may 5th
-  { match: `[${personMonth}] the? #Value`, group: 0, tag: 'Month', reason: 'may-5th' },
-  // 5th of may
-  { match: `#Value of [${personMonth}]`, group: 0, tag: 'Month', reason: '5th-of-may' },
+  // { match: `(in|during|on|by|after|#Date) [${personDate}]`, group: 0, tag: 'Date', reason: 'in-june' },
+  // // june 1992
+  // { match: `${personDate} (#Value|#Date)`, tag: 'Date', reason: 'june-5th' },
+  // // June Smith
+  // { match: `${personDate} #ProperNoun`, tag: 'Person', reason: 'june-smith', safe: true },
+  // // june m. Cooper
+  // { match: `${personDate} #Acronym? #ProperNoun`, tag: 'Person', ifNo: '#Month', reason: 'june-smith-jr' },
+  // // ---person-month---
+  // //give to april
+  // {
+  //   match: `#Infinitive #Determiner? #Adjective? #Noun? (to|for) [${personMonth}]`,
+  //   group: 0,
+  //   tag: 'Person',
+  //   reason: 'ambig-person',
+  // },
+  // // remind june
+  // { match: `#Infinitive [${personMonth}]`, group: 0, tag: 'Person', reason: 'infinitive-person' },
+  // // april will
+  // { match: `[${personMonth}] #Modal`, group: 0, tag: 'Person', reason: 'ambig-modal' },
+  // // would april
+  // { match: `#Modal [${personMonth}]`, group: 0, tag: 'Person', reason: 'modal-ambig' },
+  // // it is may
+  // { match: `#Copula [${personMonth}]`, group: 0, tag: 'Person', reason: 'is-may' },
+  // // may is
+  // { match: `[${personMonth}] #Copula`, group: 0, tag: 'Person', reason: 'may-is' },
+  // // with april
+  // { match: `(that|with|for) [${personMonth}]`, group: 0, tag: 'Person', reason: 'that-month' },
+  // // may 5th
+  // { match: `[${personMonth}] the? #Value`, group: 0, tag: 'Month', reason: 'may-5th' },
+  // // 5th of may
+  // { match: `#Value of [${personMonth}]`, group: 0, tag: 'Month', reason: '5th-of-may' },
 
   // ===person-adjective===
   // rusty smith

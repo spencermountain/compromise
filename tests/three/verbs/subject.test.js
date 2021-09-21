@@ -37,10 +37,15 @@ test('get fluent-verb subject', function (t) {
     ['the new couple were dancing', 'the new couple', 'were dancing'],
     ['the new couple was dancing', 'the new couple', 'was dancing'],
     ['the people of toronto drove quickly', 'the people of toronto', 'drove quickly'],
+    ['The magician, at her arrival, saved the Sultan', 'The magician', 'saved'],
+    ['The auto mechanics that work for Auto Towing are very friendly', 'The auto mechanics', 'are'],
+    ['I went up to Mr. T and said', 'I', 'said'],
+    ['Purchase of power from IPPs will ruin GEB', 'Purchase of power', 'will ruin'],
+    ['Govt to blame for plastic mess; say manufacturers', 'manufacturers', 'say'],
   ]
   arr.forEach(a => {
     let [str, subject, verb] = a
-    let vb = nlp(str).verbs(0)
+    let vb = nlp(str).verbs(0) //.if(verb)
     let res = vb.subjects()
     t.equal(vb.text(), verb, here + `[vb] '${a[0]}'`)
     t.equal(res.text(), subject, here + `[subj] '${a[0]}'`)

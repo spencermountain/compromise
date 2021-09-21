@@ -11,24 +11,8 @@ nlp.verbose('tagger')
 // import './tests/one/match/negative.test.js'
 
 let text = 'dept of state'
-text = `must-see show`
-text = `smelled like smoke`
-text = `would look like`
-text = `seek progress`
-text = `zero in`
-text = `it was time`
-text = `I've read`
-text = `provide record levels`
-text = `cut costs`
-text = `charity said`
-text = `victoria learned`
-text = `april learned`
-text = `bob in the water`
-text = `I will attach`
-text = `Leo in 2005`
-text = `June 14 Reception`
-text = `They will mature`
 text = `john k. johnson`
+text = `That's hearty, said the Giant;`
 // text = 'litigation costs'
 // text = 'US battles to save storm victims'
 // text = 'the letters concern'
@@ -36,10 +20,6 @@ text = `john k. johnson`
 // text = 'diet traps'
 // text = 'tape measures'
 // text = '#cool'
-// text = 'cool.com/fun'
-// text = 'he is cool/nice'
-// text = `It's a father`
-// text = 'extremely heated tube'
 const doc = nlp(text).debug()
 
 // let doc = nlp(text).debug()

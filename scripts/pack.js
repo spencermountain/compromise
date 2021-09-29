@@ -5,10 +5,16 @@ import lexicon from '../lib/lexicon/index.js'
 import switches from '../lib/switches/index.js'
 import senses from '../lib/senses/index.js'
 
+const steps = [
+  {
+    // doit:
+  },
+]
+
 // compress our list of known-words
 const packLex = function () {
   console.log('\n 🕑  - packing lexicon..')
-  const outFile = './src/02-preTagger/model/lexicon/_data.js'
+  const outFile = './src/two/preTagger/model/lexicon/_data.js'
   let words = Object.keys(lexicon)
   let packed = {}
   //turn them into a series of flat-arrays
@@ -46,7 +52,7 @@ const packSwitchers = function () {
 
   //write it to a file in ./src
   let banner = `// generated in ./lib/switches/ \n`
-  const outFile = './src/02-preTagger/model/switches/_data.js'
+  const outFile = './src/two/preTagger/model/switches/_data.js'
   fs.writeFileSync(outFile, banner + 'export default ' + JSON.stringify(switches, null, 2), 'utf8')
 
   //get filesize
@@ -63,7 +69,7 @@ const packSenses = function () {
   })
   //write it to a file in ./src
   let banner = `// generated in ./lib/switches/ \n`
-  const outFile = './src/06-sense/model/_data.js'
+  const outFile = './src/four/sense/model/_data.js'
   fs.writeFileSync(outFile, banner + 'export default ' + JSON.stringify(senses, null, 2), 'utf8')
 
   //get filesize

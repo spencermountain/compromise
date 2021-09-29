@@ -1,4 +1,4 @@
-import { getUnion, getIntersection, getDifference } from '../../lib/pointers/index.js'
+import { getUnion, getIntersection, getDifference } from '../lib/pointers/index.js'
 
 const getDoc = (m, view) => {
   return typeof m === 'string' ? view.match(m) : m

@@ -1,7 +1,7 @@
 import nlp from './one.js'
-import preTag from './02-preTagger/plugin.js'
-import contractions from './03-contraction/plugin.js'
-import postTag from './04-postTagger/plugin.js'
+import preTag from './two/preTagger/plugin.js'
+import contractions from './two/contraction/plugin.js'
+import postTag from './two/postTagger/plugin.js'
 
 nlp.plugin(preTag)
 nlp.plugin(contractions)

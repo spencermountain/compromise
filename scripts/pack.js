@@ -7,77 +7,63 @@ import senses from '../lib/senses/index.js'
 
 const steps = [
   {
-    // doit:
+    label: 'lexicon',
+    path: './src/two/preTagger/model/lexicon/_data.js',
+    compress: function () {
+      let packed = {}
+      //turn them into a series of flat-arrays
+      Object.keys(lexicon).forEach(word => {
+        let tags = lexicon[word]
+        if (typeof tags === 'string') {
+          tags = [tags]
+        }
+        tags.forEach(tag => {
+          packed[tag] = packed[tag] || []
+          packed[tag].push(word)
+        })
+      })
+      //pack each array into a tiny string
+      Object.keys(packed).forEach(tag => {
+        packed[tag] = pack(packed[tag])
+      })
+      return packed
+    },
+  },
+  {
+    label: 'switches',
+    path: './src/two/preTagger/model/switches/_data.js',
+    compress: function () {
+      Object.keys(switches).forEach(k => {
+        switches[k] = pack(switches[k])
+      })
+      return switches
+    },
+  },
+  {
+    label: 'senses',
+    path: './src/four/sense/model/_data.js',
+    compress: function () {
+      Object.keys(senses).forEach(ambig => {
+        senses[ambig].forEach(sense => {
+          sense.words = pack(sense.words)
+        })
+      })
+      return senses
+    },
   },
 ]
 
-// compress our list of known-words
-const packLex = function () {
-  console.log('\n 🕑  - packing lexicon..')
-  const outFile = './src/two/preTagger/model/lexicon/_data.js'
-  let words = Object.keys(lexicon)
-  let packed = {}
-  //turn them into a series of flat-arrays
-  words.forEach(word => {
-    let tags = lexicon[word]
-    if (typeof tags === 'string') {
-      tags = [tags]
-    }
-    tags.forEach(tag => {
-      packed[tag] = packed[tag] || []
-      packed[tag].push(word)
-    })
-  })
-
-  //pack each array into a tiny string
-  Object.keys(packed).forEach(tag => {
-    packed[tag] = pack(packed[tag])
-  })
+// run through all our steps
+steps.forEach(obj => {
+  console.log(`\n 🕑  - packing ${obj.label}..`)
+  const packed = obj.compress()
 
   //write it to a file in ./src
-  let banner = `// generated in ./lib/lexicon/ \n`
-  fs.writeFileSync(outFile, banner + 'export default ' + JSON.stringify(packed, null, 2), 'utf8')
+  const banner = `// generated in ./lib/${obj.label}\n`
+  fs.writeFileSync(obj.path, banner + 'export default ' + JSON.stringify(packed, null, 2), 'utf8')
 
   //get filesize
-  const stats = fs.statSync(outFile)
+  const stats = fs.statSync(obj.path)
   let size = (stats['size'] / 1000.0).toFixed(1)
-  console.log('       - lexicon is  ' + size + 'k\n')
-}
-
-// ambiguous words to supplement lexicon in varied ways
-const packSwitchers = function () {
-  Object.keys(switches).forEach(k => {
-    switches[k] = pack(switches[k])
-  })
-
-  //write it to a file in ./src
-  let banner = `// generated in ./lib/switches/ \n`
-  const outFile = './src/two/preTagger/model/switches/_data.js'
-  fs.writeFileSync(outFile, banner + 'export default ' + JSON.stringify(switches, null, 2), 'utf8')
-
-  //get filesize
-  const stats = fs.statSync(outFile)
-  let size = (stats['size'] / 1000.0).toFixed(1)
-  console.log('       - switch-lexicon is  ' + size + 'k\n')
-}
-
-const packSenses = function () {
-  Object.keys(senses).forEach(ambig => {
-    senses[ambig].forEach(sense => {
-      sense.words = pack(sense.words)
-    })
-  })
-  //write it to a file in ./src
-  let banner = `// generated in ./lib/switches/ \n`
-  const outFile = './src/four/sense/model/_data.js'
-  fs.writeFileSync(outFile, banner + 'export default ' + JSON.stringify(senses, null, 2), 'utf8')
-
-  //get filesize
-  const stats = fs.statSync(outFile)
-  let size = (stats['size'] / 1000.0).toFixed(1)
-  console.log('       - senses are  ' + size + 'k\n')
-}
-
-packLex()
-packSwitchers()
-packSenses()
+  console.log(`       - ${obj.label} is  ` + size + 'k\n')
+})

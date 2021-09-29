@@ -1,4 +1,4 @@
-// generated in ./lib/switches/ 
+// generated in ./lib/senses
 export default {
   "plug": [
     {

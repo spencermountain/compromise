@@ -1,6 +1,3 @@
-import debug from './debug/index.js'
-import out from './lib/out.js'
-import json from './lib/json.js'
 import { textFromDoc } from './lib/text.js'
 
 const isObject = val => {
@@ -36,15 +33,7 @@ const fmts = {
 fmts.clean = fmts.normal
 fmts.reduced = fmts.root
 
-const methods = {
-  /** return data */
-  json: function (n) {
-    let res = json(this, n)
-    if (typeof n === 'number') {
-      return res[n]
-    }
-    return res
-  },
+export default {
   /** */
   text: function (fmt) {
     let opts = {
@@ -65,12 +54,4 @@ const methods = {
     }
     return textFromDoc(this.docs, opts)
   },
-  /** */
-  debug: debug,
-  /** */
-  out: out,
 }
-// aliases
-methods.data = methods.json
-
-export default methods

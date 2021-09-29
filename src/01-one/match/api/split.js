@@ -1,4 +1,4 @@
-import splitAll from '../lib/pointers/split.js'
+import splitAll from '../../../API/pointers/split.js'
 
 const combine = function (left, right) {
   return [left[0], left[1], right[2]]

@@ -1,4 +1,4 @@
-import { indexN } from '../../../API/lib/pointers/index.js'
+import { indexN } from '../../../API/pointers/index.js'
 
 const before = function (regs, group) {
   let pre = []

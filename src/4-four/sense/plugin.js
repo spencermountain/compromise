@@ -1,10 +1,10 @@
 import model from './model/index.js'
 import api from './api/api.js'
-import getSense from './compute/index.js'
+import sense from './compute/index.js'
 
 export default {
-  compute: { sense: getSense },
+  compute: { sense },
   api,
   model,
-  hooks: ['sense'],
+  // hooks: ['sense'],
 }

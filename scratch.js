@@ -1,5 +1,6 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/four.js'
+// import nlp from './src/four.js'
+import nlp from './builds/compromise.cjs'
 
 // nlp.verbose('tagger')
 
@@ -11,6 +12,7 @@ const doc = nlp(text).match('#Ordinal').tag('Foo').debug()
 // // console.log(nlp.parseMatch('<verb>'))
 // console.log(nlp.parseMatch('{cold} .'))
 // doc.match('{cold} .').debug()
+console.log(doc)
 
 /*
 

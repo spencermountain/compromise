@@ -1,10 +1,14 @@
 import nlp from './nlp.js'
-import lib from './API/lib/plugin.js'
 import match from './01-one/match/plugin.js'
+import tag from './01-one/tag/plugin.js'
+import pointers from './01-one/pointers/plugin.js'
+import cache from './01-one/cache/plugin.js'
 import tokenize from './01-one/tokenize/plugin.js'
 
-nlp.extend(lib)
+nlp.extend(pointers)
 nlp.extend(match)
+nlp.extend(tag)
+nlp.extend(cache)
 nlp.extend(tokenize)
 
 export default nlp

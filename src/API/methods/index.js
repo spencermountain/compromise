@@ -6,12 +6,12 @@ import loops from './loops.js'
 // import match from '../../01-one/match/api/match.js'
 import out from './out.js'
 import replace from './replace.js'
-import sets from './sets.js'
+// import sets from '../../01-one/pointers/api/sets.js'
 import sort from './sort.js'
 import split from './split.js'
-import tag from './tag.js'
+// import tag from '../../01-one/tag/api/tag.js'
 import util from './utils.js'
-import lookaround from './lookaround.js'
+// import lookaround from '../../01-one/match/api/lookaround.js'
 import whitespace from './whitespace.js'
 
 const methods = Object.assign(
@@ -25,18 +25,16 @@ const methods = Object.assign(
   // match,
   out,
   replace,
-  sets,
+  // sets,
   sort,
   split,
-  tag,
-  lookaround,
+  // tag,
+  // lookaround,
   whitespace
 )
 
 // aliases
 methods.get = methods.eq
-methods.lookBehind = methods.before
-methods.lookAhead = methods.after
 methods.notIf = methods.ifNo
 
 export default methods

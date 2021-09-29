@@ -7,7 +7,7 @@ let text = 'first pitches'
 // text = 'diet traps'
 // text = 'tape measures'
 // text = '#cool'
-const doc = nlp(text).match('#Ordinal').debug()
+const doc = nlp(text).match('#Ordinal').tag('Foo').debug()
 // // console.log(nlp.parseMatch('<verb>'))
 // console.log(nlp.parseMatch('{cold} .'))
 // doc.match('{cold} .').debug()

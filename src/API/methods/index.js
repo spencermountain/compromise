@@ -3,7 +3,7 @@ import clone from './change.js'
 import compute from './compute.js'
 import insert from './insert.js'
 import loops from './loops.js'
-import match from './match.js'
+// import match from '../../01-one/match/api/match.js'
 import out from './out.js'
 import replace from './replace.js'
 import sets from './sets.js'
@@ -22,7 +22,7 @@ const methods = Object.assign(
   compute,
   insert,
   loops,
-  match,
+  // match,
   out,
   replace,
   sets,

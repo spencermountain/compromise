@@ -1,5 +1,5 @@
 import nlp from './two.js'
-import chunker from './three/chunker/plugin.js'
+import chunker from './03-three/chunker/plugin.js'
 
 nlp.plugin(chunker)
 

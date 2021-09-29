@@ -3,17 +3,14 @@ import nlp from './src/four.js'
 
 // nlp.verbose('tagger')
 
-let text = 'cold beer'
+let text = 'first pitches'
 // text = 'diet traps'
 // text = 'tape measures'
 // text = '#cool'
-const doc = nlp(text)
-doc.compute('machine')
-doc.compute('chunks')
-console.log(doc.json()[0].terms)
+const doc = nlp(text).match('#Ordinal').debug()
 // // console.log(nlp.parseMatch('<verb>'))
 // console.log(nlp.parseMatch('{cold} .'))
-doc.match('{cold} .').debug()
+// doc.match('{cold} .').debug()
 
 /*
 

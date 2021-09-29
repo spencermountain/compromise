@@ -1,4 +1,4 @@
-import { getDifference, indexN } from '../lib/pointers/index.js'
+import { getDifference, indexN } from '../../../API/lib/pointers/index.js'
 
 // transfer sentence-ending punctuation
 const repairPunct = function (terms, len) {
@@ -13,9 +13,9 @@ const repairPunct = function (terms, len) {
 
 const methods = {
   /** */
-  fork: function () {
-    return this
-  },
+  // fork: function () {
+  //   return this
+  // },
   /** */
   remove: function (reg) {
     let m = this

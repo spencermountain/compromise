@@ -1,4 +1,4 @@
-import { cleanAppend, cleanPrepend, spliceArr } from './lib/insert.js'
+import { cleanAppend, cleanPrepend, spliceArr } from '../../../API/methods/lib/insert.js'
 
 const insert = function (str, view, prepend) {
   const { methods, document, world } = view

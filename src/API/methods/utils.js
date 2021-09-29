@@ -8,16 +8,7 @@ const utils = {
     let m = this.match('.') //make this faster
     return typeof n === 'number' ? m.eq(n) : m
   },
-  /** */
-  cache: function () {
-    this._cache = this.methods.one.cacheDoc(this.document)
-    return this
-  },
-  /** */
-  uncache: function () {
-    this._cache = null
-    return this
-  },
+
   /** */
   groups: function (group) {
     if (group || group === 0) {

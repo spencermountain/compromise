@@ -1,7 +1,7 @@
 import { getDoc } from '../pointers/index.js'
 import setTag from './tag/setTag.js'
 import unTag from './tag/unTag.js'
-import match from './match/index.js'
+// import match from '../../../01-one/match/methods/match/index.js'
 // import parseMatch from '../../../01-one/match/methods/parseMatch/index.js'
 import cacheDoc from './cache/cacheDoc.js'
 import cacheMatch from './cache/cacheMatch.js'
@@ -29,6 +29,6 @@ export default {
     cacheDoc,
     cacheMatch,
     // parseMatch,
-    match,
+    // match,
   },
 }

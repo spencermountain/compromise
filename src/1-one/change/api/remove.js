@@ -1,5 +1,3 @@
-// import { getDifference, indexN } from '../../pointers/methods/lib/index.js'
-
 // transfer sentence-ending punctuation
 const repairPunct = function (terms, len) {
   let last = terms.length - 1

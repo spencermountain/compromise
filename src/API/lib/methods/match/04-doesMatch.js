@@ -1,5 +1,5 @@
 import fuzzy from './_fuzzy.js'
-import methods from '../termMethods.js' //this should load off of 'methods.one.termMethods'
+import methods from '../../../../1-one/match/methods/termMethods.js' //fix me!!
 
 //declare it up here
 let wrapMatch = function () {}

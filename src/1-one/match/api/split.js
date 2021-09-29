@@ -1,4 +1,4 @@
-import splitAll from '../../pointers/methods/lib/split.js'
+// import splitAll from '../../pointers/methods/lib/split.js'
 
 const combine = function (left, right) {
   return [left[0], left[1], right[2]]
@@ -11,6 +11,7 @@ const getDoc = (m, view, group) => {
 const methods = {}
 // [before], [match], [after]
 methods.splitOn = function (m, group) {
+  const { splitAll } = this.methods.one
   let splits = getDoc(m, this, group).fullPointer
   let all = splitAll(this.fullPointer, splits)
   let res = []
@@ -26,6 +27,7 @@ methods.splitOn = function (m, group) {
 
 // [before], [match after]
 methods.splitBefore = function (m, group) {
+  const { splitAll } = this.methods.one
   let splits = getDoc(m, this, group).fullPointer
   let all = splitAll(this.fullPointer, splits)
   let res = []
@@ -45,6 +47,7 @@ methods.splitBefore = function (m, group) {
 
 // [before match], [after]
 methods.splitAfter = function (m, group) {
+  const { splitAll } = this.methods.one
   let splits = getDoc(m, this, group).fullPointer
   let all = splitAll(this.fullPointer, splits)
   let res = []

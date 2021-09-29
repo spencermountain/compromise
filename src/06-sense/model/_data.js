@@ -63,7 +63,7 @@ export default {
     {
       "tag": "Noun",
       "fallback": null,
-      "words": "throw¦base0fast0mound,pitcher;ball|field¦football,keep1s0;occ0trik0;er"
+      "words": "throw¦base0fast0mound,pitcher,strike;ball|field¦football,keep1s0;occ0trik0;er"
     }
   ],
   "stock": [
@@ -168,7 +168,7 @@ export default {
     {
       "tag": "Adjective",
       "fallback": "temperature",
-      "words": "temperature¦air,freez2thermo0win1;me0stat;ter;e,ing|attitude¦a0mean,shoulder,uncaring;loof,ttitude"
+      "words": "temperature¦air,freez2thermo0win1;me0stat;ter;e,ing|attitude¦a0demeanor,mean,shoulder,uncaring;loof,ttitude"
     }
   ]
 }

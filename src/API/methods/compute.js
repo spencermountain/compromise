@@ -7,15 +7,15 @@ const fns = {
     const compute = world.compute
     // do one method
     if (typeof input === 'string' && compute.hasOwnProperty(input)) {
-      compute[input](docs, world)
+      compute[input](docs, world, this)
     }
     // allow a list of methods
     else if (isArray(input)) {
-      input.forEach(name => world.compute.hasOwnProperty(name) && compute[name](docs, world))
+      input.forEach(name => world.compute.hasOwnProperty(name) && compute[name](docs, world, this))
     }
     // allow a custom compute function
     else if (typeof input === 'function') {
-      input(this.docs, world)
+      input(this.docs, world, this)
     } else {
       console.warn('no compute:', input) // eslint-disable-line
     }

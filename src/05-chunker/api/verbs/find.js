@@ -1,5 +1,5 @@
 const findVerbs = function (doc) {
-  let m = doc.match('{Verb}')
+  let m = doc.match('<Verb>')
 
   m = m.splitAfter('@hasComma')
 

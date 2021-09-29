@@ -105,8 +105,12 @@ test('verb-parts:', function (t) {
     str = "'" + str.split(/ /).slice(0, 5).join(' ') + "'"
     t.equal(vb.length, 1, here + `1 verb - '${str}'`)
     let parse = vb.parse()[0]
+    if (!parse) {
+      t.ok(false, here + ' [no-verb] ' + str)
+      return
+    }
     // test pre-adverb
-    if (preAdverb) {
+    if (preAdverb && parse.adverbs.pre.text) {
       t.equal(preAdverb, parse.adverbs.pre.text(), here + `${str} [preAdverb]`)
     } else {
       t.equal(parse.adverbs.pre.found, false, here + `${str} [preAdverb]`)

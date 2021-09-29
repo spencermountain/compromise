@@ -31,17 +31,17 @@ const rules = [
 
   // === Noun ===
   // the brown fox
-  { match: '#Determiner #Adjective+ {Noun}', chunk: 'Noun' },
+  { match: '#Determiner #Adjective+ <Noun>', chunk: 'Noun' },
   // the fox
-  { match: '#Determiner {Noun}', chunk: 'Noun' },
+  { match: '#Determiner <Noun>', chunk: 'Noun' },
   // brown fox
-  { match: '#Adjective+ {Noun}', chunk: 'Noun' },
+  { match: '#Adjective+ <Noun>', chunk: 'Noun' },
   // son of a gun
-  { match: '{Noun} of #Determiner {Noun}', chunk: 'Noun' },
+  { match: '<Noun> of #Determiner <Noun>', chunk: 'Noun' },
   // the history of science
   { match: '#Determiner #Noun of #Noun', chunk: 'Noun' },
   // indoor and outdoor seating
-  { match: '{Noun} and {Noun}', chunk: 'Noun' },
+  { match: '<Noun> and <Noun>', chunk: 'Noun' },
 ]
 
 const setChunks = function (todo, document, methods) {

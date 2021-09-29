@@ -3,21 +3,21 @@ import nlp from './_lib.js'
 const here = '[three/miss] '
 
 const arr = [
-  ['Canada', '{Verb}'],
-  ['Canada Legislative Center', '{Verb}'],
-  ['Canada Legislative Center', '{Conjunction}'],
-  ['Canada Legislative Center', '{foobar}'],
+  ['Canada', '<Verb>'],
+  ['Canada Legislative Center', '<Verb>'],
+  ['Canada Legislative Center', '<Conjunction>'],
+  ['Canada Legislative Center', '<foobar>'],
   // three missing basic
-  ['i walked to the store', '{Verb} {Noun} {Verb}'],
-  ['i walked to the store', '{Noun} {Adjective}'],
+  ['i walked to the store', '<Verb> <Noun> <Verb>'],
+  ['i walked to the store', '<Noun> <Adjective>'],
   // adverb, no verb
-  // ['about 20 minutes relatively quietly', '{Verb}'],
-  // ['quite suddenly', '{Verb}'],
+  // ['about 20 minutes relatively quietly', '<Verb>'],
+  // ['quite suddenly', '<Verb>'],
   // adjective moves around
-  // ['Australia is the most diverse country', '{Adjective} is {Noun}'],
-  // ['Australia is the most diverse country', '{Noun} is {Noun}'],
-  // ['Australia is the most diverse country', '{Noun} is {Verb}'],
-  // ['Australia is the most diverse country', '{Noun} {Adjective}'], //missing verb-phrase
+  // ['Australia is the most diverse country', '{Adjective} is <Noun>'],
+  // ['Australia is the most diverse country', '<Noun> is <Noun>'],
+  // ['Australia is the most diverse country', '<Noun> is <Verb>'],
+  // ['Australia is the most diverse country', '<Noun> {Adjective}'], //missing verb-phrase
 ]
 
 test('no-match:', function (t) {

@@ -127,10 +127,21 @@ const parseToken = function (w) {
       obj.word = w
       return obj
     }
-    //chunks
+    //machine/sense overloaded
     if (start(w) === '{' && end(w) === '}') {
       w = stripBoth(w)
-      obj.chunk = w
+      if (/\//.test(w)) {
+        obj.sense = w
+        obj.greedy = true
+      } else {
+        obj.machine = w
+      }
+      return obj
+    }
+    //chunks
+    if (start(w) === '<' && end(w) === '>') {
+      w = stripBoth(w)
+      obj.chunk = titleCase(w)
       obj.greedy = true
       return obj
     }

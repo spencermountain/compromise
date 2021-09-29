@@ -8,12 +8,12 @@ const chooseSense = function (terms, i, sense) {
   for (let n = 1; n < range; n += 1) {
     // look left by n
     if (terms[i - n] && words[terms[i - n].normal]) {
-      console.log(` <- '${words[terms[i - n].normal]}'`)
+      // console.log(` <- '${words[terms[i - n].normal]}'`)
       return words[terms[i - n].normal]
     }
     // look right by n
     if (terms[i + n] && words[terms[i + n].normal]) {
-      console.log(` -> '${words[terms[i + n].normal]}'`)
+      // console.log(` -> '${words[terms[i + n].normal]}'`)
       return words[terms[i + n].normal]
     }
   }
@@ -26,7 +26,7 @@ const getSense = function (document, world, doc) {
   for (let i = 0; i < terms.length; i += 1) {
     const term = terms[i]
     const str = term.normal
-    if (senses[str]) {
+    if (senses.hasOwnProperty(str) === true) {
       // get appropriate sense for the term's tag
       const sense = senses[str].find(obj => term.tags.has(obj.tag))
       const name = chooseSense(terms, i, sense)

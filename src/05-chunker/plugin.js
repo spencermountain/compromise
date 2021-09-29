@@ -1,8 +1,8 @@
 import api from './api/api.js'
-import chunks from './compute/index.js'
+import compute from './compute/index.js'
 
 export default {
-  compute: { chunks },
+  compute: compute,
   api: api,
   // hooks: ['chunks'],
 }

@@ -66,9 +66,17 @@ const doesMatch = function (term, reg, index, length) {
   if (reg.regex !== undefined) {
     return reg.regex.test(term.normal)
   }
-  //support {chunk}
+  //support <chunk>
   if (reg.chunk !== undefined) {
     return term.chunk === reg.chunk
+  }
+  //support {machine}
+  if (reg.machine !== undefined) {
+    return term.machine === reg.machine
+  }
+  //support {word/sense}
+  if (reg.sense !== undefined) {
+    return term.sense === reg.sense
   }
   // support optimized (one|two)
   if (reg.fastOr !== undefined) {

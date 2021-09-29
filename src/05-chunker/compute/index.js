@@ -16,4 +16,4 @@ const findChunks = function (document, world) {
   fallback(document, world)
   fixUp(document, world)
 }
-export default findChunks
+export default { chunks: findChunks }

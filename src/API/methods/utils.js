@@ -79,6 +79,10 @@ const utils = {
     }
     // ensure pointers are the same
     return aPtr.every((ptr, i) => {
+      if (!bPtr[i]) {
+        return false
+      }
+      // ensure [n, start, end] are all the same
       return ptr[0] === bPtr[i][0] && ptr[1] === bPtr[i][1] && ptr[2] === bPtr[i][2]
     })
   },

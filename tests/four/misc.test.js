@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from './_lib.js'
 const here = '[four/misc]'
 
 test('match-set', function (t) {

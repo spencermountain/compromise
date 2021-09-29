@@ -3,6 +3,7 @@ import fs from 'fs'
 import { pack } from 'efrt'
 import lexicon from '../lib/lexicon/index.js'
 import switches from '../lib/switches/index.js'
+import senses from '../lib/senses/index.js'
 
 // compress our list of known-words
 const packLex = function () {
@@ -54,5 +55,23 @@ const packSwitchers = function () {
   console.log('       - switch-lexicon is  ' + size + 'k\n')
 }
 
+const packSenses = function () {
+  Object.keys(senses).forEach(ambig => {
+    senses[ambig].forEach(sense => {
+      sense.words = pack(sense.words)
+    })
+  })
+  //write it to a file in ./src
+  let banner = `// generated in ./lib/switches/ \n`
+  const outFile = './src/06-sense/model/_data.js'
+  fs.writeFileSync(outFile, banner + 'export default ' + JSON.stringify(senses, null, 2), 'utf8')
+
+  //get filesize
+  const stats = fs.statSync(outFile)
+  let size = (stats['size'] / 1000.0).toFixed(1)
+  console.log('       - senses are  ' + size + 'k\n')
+}
+
 packLex()
 packSwitchers()
+packSenses()

@@ -24,6 +24,9 @@ const showTags = function (view) {
     terms.forEach(t => {
       let tags = [...(t.tags || [])]
       let text = t.text || '-'
+      if (t.sense) {
+        text = '{' + t.sense + '}'
+      }
       if (t.implicit) {
         text = '[' + t.implicit + ']'
       }

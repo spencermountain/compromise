@@ -1,8 +1,8 @@
 import model from './model/index.js'
-import sense from './compute/index.js'
+import getSense from './compute/index.js'
 
 export default {
-  compute: { sense },
+  compute: { sense: getSense },
   model: model,
   hooks: ['sense'],
 }

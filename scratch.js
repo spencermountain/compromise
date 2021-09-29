@@ -3,11 +3,12 @@ import nlp from './src/four.js'
 
 // nlp.verbose('tagger')
 
-let text = 'cold winter'
+let text = 'cold demeanor'
 // text = 'diet traps'
 // text = 'tape measures'
 // text = '#cool'
-const doc = nlp(text).debug()
+const doc = nlp(text)
+doc.match('{cold} .').debug()
 
 /*
 

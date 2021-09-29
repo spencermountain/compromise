@@ -55,4 +55,15 @@ export default [
     output: [{ file: 'builds/three/compromise-dates.mjs', format: 'esm' }],
     plugins: [terser(), sizeCheck({ expect: 10, warn: 15 })],
   },
+  // === Four ==
+  {
+    input: 'src/four.js',
+    output: [{ file: 'builds/four/compromise-four.cjs', format: 'umd', name: 'nlp' }],
+    plugins: [terser(), sizeCheck({ expect: 200, warn: 25 })],
+  },
+  {
+    input: 'src/four.js',
+    output: [{ file: 'builds/four/compromise-four.mjs', format: 'esm' }],
+    plugins: [terser(), sizeCheck({ expect: 200, warn: 25 })],
+  },
 ]

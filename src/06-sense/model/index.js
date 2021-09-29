@@ -1,27 +1,14 @@
-import verbs from './verb.js'
-import adjectives from './adjective.js'
-import nouns from './noun.js'
+import data from './_data.js'
+import { unpack } from 'efrt'
 
-// const setup = function (senses) {
-// Object.keys(senses).forEach(k => {
-//   const res = {
-//     words: {},
-//     fallback: null,
-//   }
-//   senses[k].forEach( o => {
-
-//   })
-//   senses[k] = res
-// })
-// return senses
-// }
+Object.keys(data).forEach(ambig => {
+  data[ambig].forEach(sense => {
+    sense.words = unpack(sense.words)
+  })
+})
 
 export default {
   four: {
-    senses: {
-      Noun: nouns,
-      Verb: verbs,
-      Adjective: adjectives,
-    },
+    senses: data,
   },
 }

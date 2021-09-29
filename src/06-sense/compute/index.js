@@ -1,23 +1,39 @@
 const range = 20 // look 20 words in either direction
 
 const chooseSense = function (terms, i, sense) {
-  const term = terms[i]
-
-  console.log(term, sense)
+  if (!sense) {
+    return null
+  }
+  const words = sense.words
+  for (let n = 1; n < range; n += 1) {
+    // look left by n
+    if (terms[i - n] && words[terms[i - n].normal]) {
+      console.log(` <- '${words[terms[i - n].normal]}'`)
+      return words[terms[i - n].normal]
+    }
+    // look right by n
+    if (terms[i + n] && words[terms[i + n].normal]) {
+      console.log(` -> '${words[terms[i + n].normal]}'`)
+      return words[terms[i + n].normal]
+    }
+  }
+  return sense.fallback || null
 }
 
-const sense = function (document, world, doc) {
+const getSense = function (document, world, doc) {
   const { senses } = world.model.four
-  const byTag = Object.keys(senses)
   const terms = doc.termList()
   for (let i = 0; i < terms.length; i += 1) {
     const term = terms[i]
-    for (let k = 0; k < byTag.length; k += 1) {
-      const tag = byTag[k]
-      if (term.tags.has(tag) === true && senses[tag].hasOwnProperty(term.normal) === true) {
-        chooseSense(terms, i, senses[tag][term.normal])
+    const str = term.normal
+    if (senses[str]) {
+      // get appropriate sense for the term's tag
+      const sense = senses[str].find(obj => term.tags.has(obj.tag))
+      const name = chooseSense(terms, i, sense)
+      if (name !== null) {
+        term.sense = `${term.normal}/${name}`
       }
     }
   }
 }
-export default sense
+export default getSense

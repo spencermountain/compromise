@@ -1,5 +1,5 @@
 import fuzzy from './_fuzzy.js'
-import methods from '../../../../02-two/preTagger/methods/termMethods/index.js' //fix me!!
+import methods from '../../../../2-two/preTagger/methods/termMethods/index.js' //fix me!!
 
 //declare it up here
 let wrapMatch = function () {}

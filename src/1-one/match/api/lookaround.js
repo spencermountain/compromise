@@ -1,6 +1,7 @@
-import { indexN } from '../../../API/pointers/index.js'
+// import { indexN } from '../../pointers/methods/lib/index.js'
 
 const before = function (regs, group) {
+  const { indexN } = this.methods.one
   let pre = []
   let byN = indexN(this.fullPointer)
   Object.keys(byN).forEach(k => {
@@ -18,6 +19,7 @@ const before = function (regs, group) {
 }
 
 const after = function (regs, group) {
+  const { indexN } = this.methods.one
   let post = []
   let byN = indexN(this.fullPointer)
   let document = this.document

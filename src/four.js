@@ -1,5 +1,5 @@
 import nlp from './three.js'
-import sense from './04-four/sense/plugin.js'
+import sense from './4-four/sense/plugin.js'
 
 nlp.plugin(sense)
 

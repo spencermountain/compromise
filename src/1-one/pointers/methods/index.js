@@ -1,3 +1,8 @@
+import getUnion from './lib/union.js'
+import getIntersection from './lib/intersection.js'
+import getDifference from './lib/difference.js'
+import { indexN, doesOverlap } from './lib/_lib.js'
+
 // flat list of terms from nested document
 const termList = function (docs) {
   let arr = []
@@ -36,5 +41,10 @@ export default {
   one: {
     termList,
     getDoc,
+    getUnion,
+    getIntersection,
+    getDifference,
+    indexN,
+    doesOverlap,
   },
 }

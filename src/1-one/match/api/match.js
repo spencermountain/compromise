@@ -1,30 +1,4 @@
-const relPointer = function (ptrs, parent) {
-  if (!parent) {
-    return ptrs
-  }
-  ptrs.forEach(ptr => {
-    let n = ptr[0]
-    if (parent[n]) {
-      ptr[0] = parent[n][0]
-      ptr[1] += parent[n][1]
-      ptr[2] += parent[n][1]
-    }
-  })
-  return ptrs
-}
-
-// make match-result relative to whole document
-const fixPointers = function (res, parent) {
-  let { ptrs, byGroup } = res
-  ptrs = relPointer(ptrs, parent)
-  Object.keys(byGroup).forEach(k => {
-    byGroup[k] = relPointer(byGroup[k], parent)
-  })
-  return { ptrs, byGroup }
-}
-
-// did they pass-in a compromise object?
-const isView = regs => regs && typeof regs === 'object' && regs.isView === true
+import { fixPointers, isView } from './_lib.js'
 
 const match = function (regs, group) {
   const one = this.methods.one
@@ -39,7 +13,7 @@ const match = function (regs, group) {
   }
   let todo = { regs, group }
   let res = one.match(this.docs, todo, this._cache)
-  let { ptrs, byGroup } = fixPointers(res, this.pointer)
+  let { ptrs, byGroup } = fixPointers(res, this.fullPointer)
   let view = this.update(ptrs)
   view._groups = byGroup
   return view
@@ -57,7 +31,7 @@ const matchOne = function (regs = '', group) {
   }
   let todo = { regs, group, justOne: true }
   let res = one.match(this.docs, todo, this._cache)
-  let { ptrs, byGroup } = fixPointers(res, this.pointer)
+  let { ptrs, byGroup } = fixPointers(res, this.fullPointer)
   let view = this.update(ptrs)
   view._groups = byGroup
   return view

@@ -4,21 +4,11 @@ import nlp from './src/four.js'
 
 // nlp.verbose('tagger')
 
-let doc = nlp.tokenize(`four two five`)
-console.log(doc.eq(0).match('two'))
-// let m = doc.eq(0)
-// m.remove('two')
-// m.debug()
-
-// m.all().debug()
-// m.match('four five').debug()
-
-// let text = 'he is really walking. he is nice'
-// const doc = nlp(text)
-// let res = doc.match('#Adverb').remove()
+let text = 'he is really walking.'
+const doc = nlp(text)
 // doc.verbs().toPastTense()
 // doc.verbs().toPresentTense()
-// m.debug()
+// doc.debug()
 
 /*
 

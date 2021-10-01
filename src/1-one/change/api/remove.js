@@ -31,7 +31,9 @@ const pluckOut = function (document, nots) {
       if (i === document.length && document[i - 1]) {
         let terms = document[i - 1]
         let lastTerm = terms[terms.length - 1]
-        lastTerm.post = lastTerm.post.trimEnd()
+        if (lastTerm) {
+          lastTerm.post = lastTerm.post.trimEnd()
+        }
       }
     }
   }
@@ -43,18 +45,13 @@ const methods = {
   remove: function (reg) {
     const { indexN } = this.methods.one
     // two modes:
-    //  - a. remove a new match, from self
-    //  - b. remove self, from full parent
-    // assume remove self -
+    //  - a. remove self, from full parent
     let self = this.all()
     let not = this
-    // remove match
+    //  - b. remove a new match, from self
     if (reg) {
       self = this
       not = this.match(reg)
-      // this.debug()
-      // console.log(reg)
-      console.log(not)
     }
     let ptrs = self.fullPointer
     let nots = not.fullPointer.reverse()

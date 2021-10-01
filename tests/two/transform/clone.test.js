@@ -60,7 +60,8 @@ test('clone does not leak', function (t) {
   }
   // is it still unchanged?
   t.deepEqual(doc.json(), nlp(txt).json(), here + 'no-leak-json')
-  t.deepEqual(doc.text(), txt, here + 'no-leak-text')
+  t.equal(doc.text(), txt, here + 'no-leak-text')
+  t.equal(doc.has('#Yeah'), false, here + 'no-leak-tags')
   t.end()
 })
 

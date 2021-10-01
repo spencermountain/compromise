@@ -52,6 +52,9 @@ const methods = {
     if (reg) {
       self = this
       not = this.match(reg)
+      // this.debug()
+      // console.log(reg)
+      console.log(not)
     }
     let ptrs = self.fullPointer
     let nots = not.fullPointer.reverse()

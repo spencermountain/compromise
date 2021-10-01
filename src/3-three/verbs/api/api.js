@@ -51,29 +51,31 @@ const findVerbs = function (View) {
       return getNth(this, n).map(vb => {
         let parsed = parseVerb(vb)
         let info = getGrammar(vb, parsed)
-        console.log(info)
-        return toPresent(vb, parsed)
+        return toPresent(vb, parsed, info.form)
       })
     }
     toPastTense(n) {
       return getNth(this, n).map(vb => {
         let parsed = parseVerb(vb)
-        return toPast(vb, parsed)
+        let info = getGrammar(vb, parsed)
+        return toPast(vb, parsed, info.form)
       })
     }
     toFutureTense(n) {
       return getNth(this, n).map(vb => {
         let parsed = parseVerb(vb)
-        return toFuture(vb, parsed)
+        let info = getGrammar(vb, parsed)
+        return toFuture(vb, parsed, info.form)
       })
     }
     conjugate(n) {
       return getNth(this, n).map(vb => {
         let parsed = parseVerb(vb)
+        let info = getGrammar(vb, parsed)
         return {
-          pastTense: toPast(vb, parsed),
-          presentTense: toPresent(vb, parsed),
-          futureTense: toFuture(vb, parsed),
+          pastTense: toPast(vb, parsed, info.form),
+          presentTense: toPresent(vb, parsed, info.form),
+          futureTense: toFuture(vb, parsed, info.form),
         }
       })
     }

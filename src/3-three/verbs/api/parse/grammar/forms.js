@@ -132,7 +132,10 @@ const verbForms = {
     // he could have walked
     ['^(could|must|should|shall) have #PastTense$', [past]],
   ],
-  //  'want-infinitive':[ '^(want|wants|wanted) to #Infinitive$' ],
+  'want-infinitive': [
+    ['^(want|wants|wanted) to #Infinitive$', [present]],
+    ['^(wanted) to #Infinitive$', [past]],
+  ],
 }
 
 let list = []

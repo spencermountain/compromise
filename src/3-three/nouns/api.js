@@ -1,7 +1,9 @@
 import isSubordinate from './isSubordinate.js'
 import isPlural from './isPlural.js'
-import { getNth } from '../_lib.js'
 import find from './find.js'
+
+// return the nth elem of a doc
+export const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
 
 const toJSON = function (m) {
   return {
@@ -10,7 +12,7 @@ const toJSON = function (m) {
   }
 }
 
-const findNouns = function (View) {
+const nounAPI = function (View) {
   class Nouns extends View {
     constructor(document, pointer, groups) {
       super(document, pointer, groups)
@@ -34,4 +36,4 @@ const findNouns = function (View) {
     return new Nouns(this.document, m.pointer)
   }
 }
-export default findNouns
+export default nounAPI

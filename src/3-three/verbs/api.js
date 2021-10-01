@@ -2,11 +2,13 @@ import find from './find.js'
 import toJSON from './toJSON.js'
 import parseVerb from './parse/index.js'
 import debug from './debug.js'
-import { getNth } from '../_lib.js'
 import toPast from './conjugate/toPast/index.js'
 import toPresent from './conjugate/toPresent/index.js'
 import toFuture from './conjugate/toFuture/index.js'
 import getSubject from './subject/index.js'
+
+// return the nth elem of a doc
+export const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
 
 const findVerbs = function (View) {
   class Verbs extends View {

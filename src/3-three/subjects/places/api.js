@@ -1,5 +1,7 @@
 import find from './find.js'
-import { getNth } from '../_lib.js'
+
+// return the nth elem of a doc
+export const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
 
 const addMethod = function (View) {
   /**

@@ -1,8 +1,10 @@
 import find from './find.js'
 import parse from './parse.js'
-import { getNth } from '../_lib.js'
 import toCardinal from './convert/toCardinal.js'
 import toOrdinal from './convert/toOrdinal.js'
+
+// return the nth elem of a doc
+export const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
 
 const plugin = function (View) {
   /**

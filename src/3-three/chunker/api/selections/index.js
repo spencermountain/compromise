@@ -1,4 +1,13 @@
-import { phoneNumbers, organizations, entities } from './find.js'
+// return the nth elem of a doc
+export const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
+
+/** return anything tagged as a phone number */
+const phoneNumbers = function (n) {
+  let m = this.splitAfter('@hasComma')
+  m = m.match('#PhoneNumber+')
+  m = getNth(m, n)
+  return m
+}
 
 // setup easy helper methods
 const selections = [
@@ -35,8 +44,6 @@ const addMethods = function (View) {
     }
   })
   View.prototype.phoneNumbers = phoneNumbers
-  View.prototype.organizations = organizations
-  View.prototype.entities = entities
   // add aliases
   aliases.forEach(a => {
     View.prototype[a[0]] = View.prototype[a[1]]

@@ -2,21 +2,23 @@ import forms from './forms.js'
 
 const cleanUp = function (vb, res) {
   vb = vb.clone()
-  // remove negatives
-  if (vb.has('not')) {
-    vb = vb.remove('not')
-  }
   // remove adverbs
+  if (res.adverbs.post && res.adverbs.post.found) {
+    vb.remove(res.adverbs.post)
+  }
   if (res.adverbs.pre && res.adverbs.pre.found) {
     vb.remove(res.adverbs.pre)
   }
-  if (res.adverbs.post && res.adverbs.post.found) {
-    vb.remove(res.adverbs.post)
+  // remove negatives
+  if (vb.has('not')) {
+    vb = vb.remove('not')
   }
   // cut-off phrasal-verb
   if (res.root.has('#PhrasalVerb #Particle')) {
     vb.remove('#Particle$')
   }
+  // did we miss any of these?
+  // vb = vb.remove('#Adverb')
   return vb
 }
 

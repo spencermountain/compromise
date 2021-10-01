@@ -8,6 +8,9 @@ test('verb form names', function (t) {
     'simple-present': [
       'we walk home.',
       'she walks home', //Simple present tense
+      'they really walk home.',
+      'they walk quickly home.',
+      'they really walk quickly home.',
     ],
     'simple-past': [
       'Peter lived in China in 1961.',

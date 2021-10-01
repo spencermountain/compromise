@@ -4,11 +4,18 @@ import nlp from './src/four.js'
 
 // nlp.verbose('tagger')
 
-let text = 'he is really walking.'
-const doc = nlp(text)
-// doc.verbs().toPastTense()
-// doc.verbs().toPresentTense()
+// let doc = nlp('before during after')
+// let before = doc.match('before')
+// let after = doc.match('after')
+// doc.remove(before)
+// doc.remove(after)
 // doc.debug()
+
+let text = 'he must walk'
+let doc = nlp(text)
+doc.verbs().toPastTense()
+// doc.verbs().toPresentTense()
+doc.debug()
 
 /*
 

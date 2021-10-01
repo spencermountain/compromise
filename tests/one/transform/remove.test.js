@@ -93,7 +93,17 @@ test('remove-is-not-split :', function (t) {
   t.end()
 })
 
-test('clone-remove :', function (t) {
+test('clone-safe:', function (t) {
+  const txt = 'foo one two. one foo two. one two foo. foo.'
+  const doc = nlp(txt)
+  const res = doc.clone().remove('foo')
+  const want = 'one two. one two. one two.'
+  t.equal(doc.text(), txt, here + 'og untouched')
+  t.equal(res.text(), want, here + 'match returns mutated')
+  t.end()
+})
+
+test('clone-partial :', function (t) {
   let doc = nlp(`one two three. four two five`)
   let m = doc.eq(1).clone()
   m.remove('two')

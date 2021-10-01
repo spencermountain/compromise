@@ -27,7 +27,7 @@ test('clone root', function (t) {
   t.end()
 })
 
-test('partial clone basic', function (t) {
+test('clone tag-basic', function (t) {
   let doc = nlp(`one two three. four five six`).tag('Value')
 
   // clone/tag first sentence
@@ -38,7 +38,33 @@ test('partial clone basic', function (t) {
   t.end()
 })
 
-// test('partial clone leak', function (t) {
+test('clone does not leak', function (t) {
+  const txt = 'one foo two three. four. foo five six. foo.'
+  let doc = nlp(txt)
+  let m = doc.clone()
+  // do all sorts of terrible things to the document
+  for (let i = 0; i < 5; i += 1) {
+    m = m.splitOn('two')
+    m = m.remove('foo')
+    m.match('three').remove()
+    m = m.match('five').insertAfter('after')
+    m.prepend('oh yeah')
+    m.unTag('Value')
+    m = m.map(p => p.toUpperCase())
+    m.eq(1).remove()
+    m = m.not('foo')
+    m = m.if('.')
+    m = m.eq(0).tag('Yeah')
+    m.compute(['normal', 'tagger', 'foo'])
+    m = m.all()
+  }
+  // is it still unchanged?
+  t.deepEqual(doc.json(), nlp(txt).json(), here + 'no-leak-json')
+  t.deepEqual(doc.text(), txt, here + 'no-leak-text')
+  t.end()
+})
+
+// test('partial clone ', function (t) {
 //   let doc = nlp(`one two three. four five six`).tag('Value')
 
 //   // clone first sentence

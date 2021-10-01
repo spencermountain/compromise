@@ -18,6 +18,9 @@ const endSpace = function (terms) {
 const movePunct = (source, end, needle) => {
   const juicy = /[.?!]/g // punctuation we wanna transfer
   let wasLast = source[end - 1]
+  if (!wasLast) {
+    return
+  }
   let post = wasLast.post
   if (juicy.test(post)) {
     let punct = post.match(juicy).join('') //not perfect

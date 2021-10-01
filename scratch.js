@@ -4,10 +4,11 @@ import nlp from './src/four.js'
 
 // nlp.verbose('tagger')
 
-let doc = nlp(`one two three. four two five`)
-let m = doc.eq(1).clone()
-m.remove('two').debug()
-
+let doc = nlp(`four two five`)
+let m = doc.eq(0) //.debug()
+// console.log(m.pointer)
+m.remove('two')
+m.debug()
 // m.all().debug()
 // m.match('four five').debug()
 

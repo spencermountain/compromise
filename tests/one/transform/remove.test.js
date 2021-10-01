@@ -18,7 +18,7 @@ test('remove-basic :', function (t) {
   t.end()
 })
 
-test('remove-match :', function (t) {
+test('remove-greedy :', function (t) {
   let m = nlp('the brown cat played').remove('brown')
   t.equal(m.out('text'), 'the cat played', 'brown-cat')
 
@@ -54,6 +54,42 @@ test('remove-dangling :', function (t) {
   doc.eq(0).remove()
   t.equal(doc.length, 1, 'one-sentence')
   t.equal(doc.text(), 'four five six', 'full-sentence')
+  // remove the final remaining one
+  doc.eq(0).remove()
+  t.equal(doc.length, 0, 'no-sentence')
+  t.equal(doc.text(), '', 'no-text')
+  t.end()
+})
+
+test('remove-self :', function (t) {
+  const doc = nlp('foo one two. one foo two. one two foo. foo.')
+  const res = doc.match('foo').remove()
+  const want = 'one two. one two. one two.'
+  t.equal(doc.text(), want, here + 'this mutate self')
+  t.equal(res.text(), want, here + 'this return mutated')
+  t.equal(res.length, 3, here + 'match sentence length')
+  t.equal(doc.length, 3, here + 'match original length')
+  t.end()
+})
+
+test('remove-match:', function (t) {
+  const doc = nlp('foo one two. one foo two. one two foo. foo.')
+  const res = doc.remove('foo')
+  const want = 'one two. one two. one two.'
+  t.equal(doc.text(), want, here + 'match mutates self')
+  t.equal(res.text(), want, here + 'match returns mutated')
+  t.equal(res.length, 3, here + 'match sentence length')
+  t.equal(doc.length, 3, here + 'match original length')
+  t.end()
+})
+
+test('remove-is-not-split :', function (t) {
+  const doc = nlp('he is really walking. he surely walked quickly, silently.')
+  doc.remove('#Adverb')
+  t.equal(doc.length, 2, here + 'no-split length')
+  t.equal(doc.has('is walking'), true, here + 'match over split')
+  t.equal(doc.has('he walked'), true, here + 'match over split2')
+  t.equal(doc.text(), 'he is walking. he walked.', here + 'remove text')
   t.end()
 })
 

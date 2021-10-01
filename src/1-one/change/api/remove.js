@@ -9,63 +9,73 @@ const repairPunct = function (terms, len) {
   }
 }
 
+// remove terms from document json
+const pluckOut = function (document, nots) {
+  nots.forEach(ptr => {
+    let [n, start, end] = ptr
+    let len = end - start
+    // removed.push([n, start, start + len])
+    if (end === document[n].length && end > 1) {
+      repairPunct(document[n], len)
+    }
+    document[n].splice(start, len) // replaces len terms at index start
+  })
+  // foreach + splice = 'mutable .filter()'
+  for (let i = document.length - 1; i >= 0; i -= 1) {
+    if (document[i].length === 0) {
+      document.splice(i, 1)
+    }
+  }
+  return document
+}
+
 const methods = {
   /** */
-  // fork: function () {
-  //   return this
-  // },
-  /** */
   remove: function (reg) {
-    const { getDifference, indexN } = this.methods.one
-    let m = this
-    let og = this.fullPointer
+    const { indexN } = this.methods.one
+    // two modes:
+    //  - a. remove a new match, from self
+    //  - b. remove self, from full parent
+    // assume remove self -
+    let self = this.all()
+    let not = this
+    // remove match
     if (reg) {
-      m = this.match(reg)
+      self = this
+      not = this.match(reg)
     }
-    let document = m.document
-    // remove terms from the document
-    let removed = []
-    let nots = m.fullPointer.reverse()
-    nots.forEach(ptr => {
-      let [n, start, end] = ptr
-      let len = end - start
-      removed.push([n, start, start + len])
-      if (end === document[n].length && end > 1) {
-        repairPunct(document[n], len)
+    let ptrs = self.fullPointer
+    let nots = not.fullPointer.reverse()
+    // remove them from the actual document
+    let document = pluckOut(not.document, nots)
+    // repair our pointers
+    let gone = indexN(nots)
+    ptrs = ptrs.map(ptr => {
+      let [n] = ptr
+      if (!gone[n]) {
+        return ptr
       }
-      document[n].splice(start, len) // replaces len terms at index start
-    })
-    let ptrs = getDifference(og, removed.reverse())
-    // remove any now-empty sentences
-    this.document = document.filter((arr, i) => {
-      if (arr.length > 0) {
-        return true
-      }
-      // step any further-n pointers back
-      for (let k = 0; k < ptrs.length; k += 1) {
-        if (ptrs[k][0] > i) {
-          ptrs[k][0] -= 1
-        }
-      }
-      return false
-    })
-
-    // now that the document has been spliced, we need to repair downstream pointers
-    let byN = indexN(ptrs)
-    nots.forEach(not => {
-      let [n] = not
-      let maybes = byN[n] || []
-      maybes.forEach(ptr => {
-        // is it after a not?
-        if (ptr[1] > not[1]) {
-          let len = not[2] - not[1]
-          ptr[1] -= len
+      gone[n].forEach(no => {
+        let len = no[2] - no[1]
+        // does it effect our pointer?
+        if (ptr[1] <= no[1] && ptr[2] >= no[2]) {
           ptr[2] -= len
         }
       })
+      return ptr
     })
-    this.ptrs = ptrs
-    return this.update(ptrs)
+    // remove any now-empty pointers
+    ptrs = ptrs.filter(ptr => {
+      const len = ptr[2] - ptr[1]
+      if (len <= 0) {
+        return false
+      }
+      return true
+    })
+    // mutate original
+    self.ptrs = ptrs
+    self.document = document
+    return self.update(ptrs) //return new document
   },
 }
 // aliases

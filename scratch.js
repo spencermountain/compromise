@@ -4,10 +4,12 @@ import nlp from './src/four.js'
 
 // nlp.verbose('tagger')
 
-const doc = nlp('foo one two. one foo two. one two foo. foo.')
-const res = doc.match('foo').remove()
-// console.log(doc.document)
-doc.debug()
+let doc = nlp(`one two three. four two five`)
+let m = doc.eq(1).clone()
+m.remove('two').debug()
+
+// m.all().debug()
+// m.match('four five').debug()
 
 // let text = 'he is really walking. he is nice'
 // const doc = nlp(text)

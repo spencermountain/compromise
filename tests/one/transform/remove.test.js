@@ -85,7 +85,7 @@ test('remove-match:', function (t) {
 
 test('remove-is-not-split :', function (t) {
   const doc = nlp('he is really walking. he surely walked quickly, silently.')
-  doc.remove('#Adverb')
+  doc.remove('(really|surely|quickly|silently)')
   t.equal(doc.length, 2, here + 'no-split length')
   t.equal(doc.has('is walking'), true, here + 'match over split')
   t.equal(doc.has('he walked'), true, here + 'match over split2')

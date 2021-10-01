@@ -5,7 +5,9 @@ const repairPunct = function (terms, len) {
   let to = terms[last - len]
   if (to && from) {
     to.post += from.post //this isn't perfect.
-    to.post = to.post.replace(/ +([.?!])/, '$1')
+    to.post = to.post.replace(/ +([.?!,;:])/, '$1')
+    // don't allow any silly punctuation outcomes like ',!'
+    to.post = to.post.replace(/[,;:]+([.?!])/, '$1')
   }
 }
 
@@ -20,10 +22,17 @@ const pluckOut = function (document, nots) {
     }
     document[n].splice(start, len) // replaces len terms at index start
   })
-  // foreach + splice = 'mutable .filter()'
+  // remove any now-empty sentences
+  // (foreach + splice = 'mutable filter')
   for (let i = document.length - 1; i >= 0; i -= 1) {
     if (document[i].length === 0) {
       document.splice(i, 1)
+      // remove any trailing whitespace before our removed sentence
+      if (i === document.length && document[i - 1]) {
+        let terms = document[i - 1]
+        let lastTerm = terms[terms.length - 1]
+        lastTerm.post = lastTerm.post.trimEnd()
+      }
     }
   }
   return document

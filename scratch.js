@@ -11,7 +11,8 @@ import nlp from './src/four.js'
 // doc.remove(after)
 // doc.debug()
 
-let text = 'he must walk'
+// let text = `i will start looking`
+let text = `he will be walking`
 let doc = nlp(text)
 doc.verbs().toPastTense()
 // doc.verbs().toPresentTense()

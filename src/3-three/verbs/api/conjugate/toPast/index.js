@@ -39,11 +39,18 @@ const forms = {
   'simple-future': both,
 
   // he is walking
-  'present-progressive': both,
+  'present-progressive': vb => {
+    vb.replace('is', 'was')
+    return vb
+  },
   // he was walking
-  'past-progressive': both,
+  'past-progressive': noop,
   // he will be walking
-  'future-progressive': both,
+  'future-progressive': (vb, parsed) => {
+    vb.match(parsed.root).insertBefore('was')
+    vb.remove('(will|be)')
+    return vb
+  },
 
   // has walked -> had walked (?)
   'present-perfect': hasHad,

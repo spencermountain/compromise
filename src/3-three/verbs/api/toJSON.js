@@ -1,6 +1,6 @@
 import parseVerb from './parse/index.js'
 import { toInfinitive } from './conjugate/toInfinitive/index.js'
-import getGrammar from './grammar/index.js'
+import getGrammar from './parse/grammar/index.js'
 
 const toArray = function (m) {
   if (!m || !m.isView) {

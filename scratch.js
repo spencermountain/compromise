@@ -4,9 +4,9 @@ import nlp from './src/four.js'
 
 // nlp.verbose('tagger')
 
-let text = 'i walked to the store'
+let text = 'i will walk to the store'
 const doc = nlp(text)
-// doc.verbs().toPresentTense()
+doc.verbs().toPresentTense()
 doc.debug()
 
 /*

@@ -1,5 +1,6 @@
-const test = require('tape')
-const nlp = require('../_lib')
+import test from 'tape'
+import nlp from '../_lib.js'
+const here = '[three/verb-conjugate] '
 
 const arr = [
   {
@@ -276,7 +277,7 @@ const arr = [
 test('conjugation:', function (t) {
   const test_conjugation = function (inf, o, form, original) {
     const msg = 'from ' + original + ' to ' + form + ':  [' + o[original] + '] -> [' + inf[form] + ']'
-    t.equal(inf[form], o[form], msg)
+    t.equal(inf[form], o[form], here + msg)
   }
 
   arr.forEach(function (o) {

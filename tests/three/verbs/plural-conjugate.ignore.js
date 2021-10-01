@@ -1,5 +1,6 @@
-const test = require('tape')
-const nlp = require('../_lib')
+import test from 'tape'
+import nlp from '../_lib.js'
+const here = '[three/verb-plural] '
 
 test('plural-verbs toPresent:', function (t) {
   let arr = [
@@ -77,7 +78,7 @@ test('plural-verbs toPresent:', function (t) {
   arr.forEach(a => {
     let doc = nlp(a[0])
     doc.verbs().toPresentTense()
-    t.equal(doc.text(), a[1], '[toPres] ' + a[0])
+    t.equal(doc.text(), a[1], here + '[toPres] ' + a[0])
   })
   t.end()
 })
@@ -115,7 +116,7 @@ test('plural-verbs toPast:', function (t) {
   arr.forEach(a => {
     let doc = nlp(a[0])
     doc.verbs().toPastTense()
-    t.equal(doc.text(), a[1], '[toPast] ' + a[0])
+    t.equal(doc.text(), a[1], here + '[toPast] ' + a[0])
   })
   t.end()
 })
@@ -153,7 +154,7 @@ test('plural-verbs toFuture:', function (t) {
   arr.forEach(a => {
     let doc = nlp(a[0])
     doc.verbs().toFutureTense()
-    t.equal(doc.text(), a[1], '[toFut] ' + a[0])
+    t.equal(doc.text(), a[1], here + '[toFut] ' + a[0])
   })
   t.end()
 })

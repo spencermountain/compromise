@@ -1,4 +1,4 @@
 const toFuture = function (vb, parsed) {
-  // console.log(parsed)
+  return vb
 }
 export default toFuture

@@ -88,6 +88,7 @@ match(['foo', 'far'])
 - **[change]** .sort() is no longer in-place (its now immutable)
 - **[change]** drop undocumented options param to `.replaceWith()` method
 - **[change]** add match-group as 2nd param to split methods
+- **[change]** remove #FutureTense tag - which is not really a thing in english
 
 - **[new]** .union(), .intersection(), .difference() and .complement() methods
 - **[new]** .settle() - remove overlaps in matches

@@ -4,7 +4,7 @@ export default {
   },
   PresentTense: {
     is: 'Verb',
-    not: ['PastTense', 'FutureTense'],
+    not: ['PastTense'],
   },
   Infinitive: {
     is: 'PresentTense',
@@ -19,10 +19,7 @@ export default {
   },
   PastTense: {
     is: 'Verb',
-    not: ['FutureTense'],
-  },
-  FutureTense: {
-    is: 'Verb',
+    not: ['PresentTense', 'Gerund'],
   },
   Copula: {
     is: 'Verb',
@@ -46,10 +43,10 @@ export default {
   },
   Particle: {
     is: 'PhrasalVerb',
-    not: ['PastTense', 'PresentTense', 'FutureTense', 'Copula', 'Gerund'],
+    not: ['PastTense', 'PresentTense', 'Copula', 'Gerund'],
   },
   Auxiliary: {
     is: 'Verb',
-    not: ['PastTense', 'PresentTense', 'FutureTense', 'Gerund', 'Conjunction'],
+    not: ['PastTense', 'PresentTense', 'Gerund', 'Conjunction'],
   },
 }

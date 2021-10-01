@@ -10,7 +10,7 @@ export default [
   // i mean
   { match: 'i (#Adverb|do)? not? [mean]', group: 0, tag: 'PresentTense', reason: 'i-mean' },
   //will secure our
-  { match: 'will #Adjective', tag: 'Auxiliary FutureTense', reason: 'will-adj' },
+  { match: 'will #Adjective', tag: 'Auxiliary Infinitive', reason: 'will-adj' },
   //he disguised the thing
   { match: '#Pronoun [#Adjective] #Determiner #Adjective? #Noun', group: 0, tag: 'Verb', reason: 'he-adj-the' },
   //is eager to go

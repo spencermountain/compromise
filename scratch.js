@@ -12,11 +12,12 @@ import nlp from './src/four.js'
 // doc.debug()
 
 // let text = `i will start looking`
-let text = `he will be walking`
+let text = `is being walked`
 let doc = nlp(text)
-doc.verbs().toPastTense()
+doc.verbs().debug().toPastTense()
 // doc.verbs().toPresentTense()
 doc.debug()
+// console.log(doc.text() + '|')
 
 /*
 

@@ -22,6 +22,8 @@ const rules = [
   { match: '{Verb} #Adverb+', chunk: 'Verb' },
   // sitting near
   { match: '#Gerund #Adjective', chunk: 'Verb' },
+  // going to walk
+  { match: '#Gerund to #Verb', chunk: 'Verb' },
   // had not
   { match: '{Verb} #Negative', chunk: 'Verb' },
   // not seen

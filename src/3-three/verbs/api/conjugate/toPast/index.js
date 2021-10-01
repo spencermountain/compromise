@@ -85,10 +85,10 @@ const forms = {
     vb.replace('(is|are)', 'was')
     return vb
   },
-  // will be walked -> was walked
+  // will be walked -> had been walked
   'passive-future': (vb, parsed) => {
     if (parsed.auxiliary.has('will be')) {
-      vb.match(parsed.root).insertBefore('was')
+      vb.match(parsed.root).insertBefore('had been')
       vb.remove('(will|be)')
     }
     // will have been walked -> had been walked
@@ -136,6 +136,7 @@ const forms = {
 }
 
 const toPast = function (vb, parsed, form) {
+  // console.log(form)
   if (forms.hasOwnProperty(form)) {
     return forms[form](vb, parsed)
   }

@@ -9,7 +9,7 @@ const findVerbs = function (doc) {
   // m = m.splitAfter('[(do|did|am|was|is|will)] #PresentTense', 0)
 
   // like being pampered
-  m = m.splitBefore('#Verb [being] #Verb', 0)
+  m = m.splitBefore('(#Verb && !#Copula) [being] #Verb', 0)
   // like to be pampered
   m = m.splitBefore('#Verb [to be] #Verb', 0)
 

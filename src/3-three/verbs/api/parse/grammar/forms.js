@@ -78,7 +78,7 @@ const verbForms = {
     // got walked, was walked, were walked
     ['(got|were|was) (#PastTense|#Participle)', [past, passive]],
     // was being walked
-    ['^(is|was|were) being (#PastTense|#Participle)', [past, passive]],
+    ['^(was|were) being (#PastTense|#Participle)', [past, passive]],
     // had been walked, have been eaten
     ['^(had|have) been (#PastTense|#Participle)', [past, passive]],
   ],

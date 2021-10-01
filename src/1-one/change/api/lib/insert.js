@@ -67,7 +67,7 @@ const cleanPrepend = function (home, ptr, needle, document) {
     endSpace(needle)
   } else if (end === document[n].length) {
     // at end - need space in home
-    endSpace(home)
+    endSpace(needle)
   } else {
     // in middle - need space in home and insert
     endSpace(needle)

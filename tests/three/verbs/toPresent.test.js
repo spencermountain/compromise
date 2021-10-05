@@ -24,6 +24,7 @@ test('toPresent:', function (t) {
     // ['he will walk', 'he walks'],
     // ['he is walking', 'he is walking'],
     // ['he was walking', 'he is walking'],
+    // ['i am walking', 'i am walking'],
     // ['he will be walking', 'he is walking'],
     //
     // ['he has walked', 'he had walked'],

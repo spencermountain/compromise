@@ -4,19 +4,10 @@ import nlp from './src/four.js'
 
 // nlp.verbose('tagger')
 
-// let doc = nlp('before during after')
-// let before = doc.match('before')
-// let after = doc.match('after')
-// doc.remove(before)
-// doc.remove(after)
-// doc.debug()
-
-// let text = `i will start looking`
-let text = `i will walk`
+let text = `he was walking`
 let doc = nlp(text)
-doc.verbs().toPresentTense()
+doc.verbs().toInfinitive()
 doc.debug()
-// console.log(doc.text() + '|')
 
 /*
 

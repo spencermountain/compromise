@@ -2,6 +2,7 @@ import find from '../find.js'
 import toJSON from './toJSON.js'
 import parseVerb from './parse/index.js'
 import debug from './debug.js'
+import toInfinitive from './conjugate/toInfinitive/index.js'
 import toPast from './conjugate/toPast/index.js'
 import toPresent from './conjugate/toPresent/index.js'
 import toFuture from './conjugate/toFuture/index.js'
@@ -45,6 +46,13 @@ const findVerbs = function (View) {
     isPlural(n) {
       return getNth(this, n).filter(vb => {
         return getSubject(vb).plural === true
+      })
+    }
+    toInfinitive(n) {
+      return getNth(this, n).map(vb => {
+        let parsed = parseVerb(vb)
+        let info = getGrammar(vb, parsed)
+        return toInfinitive(vb, parsed, info.form)
       })
     }
     toPresentTense(n) {

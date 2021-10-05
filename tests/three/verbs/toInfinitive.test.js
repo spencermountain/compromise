@@ -53,6 +53,12 @@ test('toInfinitive:', function (t) {
     ['used to walk', 'walk'],
     ['do walk', 'walk'],
     ['does walk', 'walk'],
+    // adverbs
+    ['i was really not being walked', 'i really not walk'],
+    ['i was not really being walked', 'i not really walk'],
+    ['i was being really not walked', 'i really not walk'],
+    ['i was being not really walked', 'i not really walk'],
+    ['he was not going to walk', 'he not walk'],
   ]
   arr.forEach(a => {
     let doc = nlp(a[0])

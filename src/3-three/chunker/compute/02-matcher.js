@@ -28,6 +28,10 @@ const rules = [
   { match: '{Verb} #Negative', chunk: 'Verb' },
   // not seen
   { match: '#Negative {Verb}', chunk: 'Verb' },
+  // not really
+  { match: '#Negative #Adverb ', chunk: 'Verb' },
+  // really not
+  { match: '#Adverb #Negative', chunk: 'Verb' },
   // want to be sedated
   // { match: 'want to {Verb}', chunk: 'Verb' },
 

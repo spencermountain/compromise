@@ -1,7 +1,8 @@
 // get all character startings in doc
-const termOffsets = function (docs) {
+const offset = function (_docs, _a, b) {
   let elapsed = 0
   let index = 0
+  let docs = b.document //start from the actual-top
   for (let i = 0; i < docs.length; i += 1) {
     for (let t = 0; t < docs[i].length; t += 1) {
       let term = docs[i][t]
@@ -16,4 +17,16 @@ const termOffsets = function (docs) {
   }
 }
 
-export default termOffsets
+// cheat- add the document's pointer to the terms
+const index = function (docs, _a, b) {
+  let ptrs = b.fullPointer
+  for (let i = 0; i < docs.length; i += 1) {
+    const [n, start] = ptrs[i]
+    for (let t = 0; t < docs[i].length; t += 1) {
+      let term = docs[i][t]
+      term.index = [n, start + t]
+    }
+  }
+}
+
+export { offset, index }

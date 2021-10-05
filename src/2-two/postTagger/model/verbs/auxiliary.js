@@ -33,9 +33,24 @@ export default [
     reason: 'had-been',
   },
   // was being driven
-  { match: '[(be|being|been)] #Participle', group: 0, tag: 'Auxiliary', reason: 'being-foo' },
+  { match: '[(be|being|been)] #Participle', group: 0, tag: 'Auxiliary', reason: 'being-driven' },
+
+  // was being walked
+  {
+    match: '#Copula (#Adverb|not)+? [(be|being|been)] #Adverb+? #PastTense',
+    group: 0,
+    tag: 'Auxiliary',
+    reason: 'being-walked',
+  },
   // been walking
   { match: '[(be|been)] (#Adverb|not)+? #Gerund', group: 0, tag: 'Auxiliary', reason: 'been-walking' },
   // used to walk
   { match: '[used to] #PresentTense', group: 0, tag: 'Auxiliary', reason: 'used-to-walk' },
+  // was going to walk
+  {
+    match: '#Copula (#Adverb|not)+? [going to] #Adverb+? #PresentTense',
+    group: 0,
+    tag: 'Auxiliary',
+    reason: 'going-to-walk',
+  },
 ]

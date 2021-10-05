@@ -111,3 +111,12 @@ test('clone-partial :', function (t) {
   t.equal(doc.match('four five').found, false, here + 'og no match-over del')
   t.end()
 })
+
+test('remove doc by index :', function (t) {
+  let doc = nlp(`one extra two match three`)
+  let m = doc.match('match')
+  doc.remove('extra')
+  doc.remove(m)
+  t.equal(doc.text(), 'one two three', here + 'pointer index')
+  t.end()
+})

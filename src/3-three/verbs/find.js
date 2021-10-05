@@ -21,7 +21,6 @@ const findVerbs = function (doc) {
 
   // the reason he will is ...
   // ensure it's not two verbs
-
   return m
 }
 export default findVerbs

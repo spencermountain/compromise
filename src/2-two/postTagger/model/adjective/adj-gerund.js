@@ -9,12 +9,12 @@ export default [
   // very amusing
   { match: '(so|very|extremely) [#Gerund]', group: 0, tag: 'Adjective', reason: 'so-gerund' },
   // it was amusing
-  {
-    match: '(it|he|she|everything|something) #Adverb? was #Adverb? [#Gerund]',
-    group: 0,
-    tag: 'Adjective',
-    reason: 'it-was-gerund',
-  },
+  // {
+  //   match: '(it|he|she|everything|something) #Adverb? was #Adverb? [#Gerund]',
+  //   group: 0,
+  //   tag: 'Adjective',
+  //   reason: 'it-was-gerund',
+  // },
   // found it amusing
   { match: '(found|found) it #Adverb? [#Gerund]', group: 0, tag: 'Adjective', reason: 'found-it-gerund' },
   // a bit amusing

@@ -26,18 +26,21 @@ const simple = (vb, parsed) => {
   return vb
 }
 
-const isWasWere = function (vb, parsed) {
+const isAreAm = function (vb, parsed) {
   // 'people were' -> 'people are'
   if (vb.has('were')) {
-    return vb.replace('were', 'are')
+    return 'are'
   }
   // 'i was' -> i am
-  let subj = getSubject(vb, parsed)
-  if (subj.subject.has('i')) {
-    return vb.replace('was', 'am')
+  let { subject, plural } = getSubject(vb, parsed)
+  if (subject.has('i')) {
+    return 'am'
+  }
+  if (subject.has('we') || plural) {
+    return 'are'
   }
   // 'he was' -> he is
-  return vb.replace('was', 'is')
+  return 'is'
 }
 
 const forms = {
@@ -55,7 +58,10 @@ const forms = {
   // is walking ->
   'present-progressive': noop,
   // was walking -> is walking
-  'past-progressive': isWasWere,
+  'past-progressive': (vb, parsed) => {
+    let str = isAreAm(vb, parsed)
+    return vb.replace('(were|was)', str)
+  },
   // will be walking -> is walking
   'future-progressive': vb => {
     vb.match('will').insertBefore('is')
@@ -64,23 +70,32 @@ const forms = {
     return vb
   },
 
-  // has walked -> had walked (?)
+  // has walked ->  (?)
   'present-perfect': noop,
-  // had walked
-  'past-perfect': noop,
-  // will have walked -> had walked
-  'future-perfect': noop,
+  // had walked -> has walked
+  'past-perfect': vb => vb.replace('had', 'has'),
+  // will have walked -> has walked
+  'future-perfect': vb => {
+    vb.match('will').insertBefore('has')
+    return vb.remove('have').remove('will')
+  },
 
-  // has been walking -> had been
+  // has been walking
   'present-perfect-progressive': noop,
   // had been walking
-  'past-perfect-progressive': noop,
-  // will have been -> had
-  'future-perfect-progressive': noop,
+  'past-perfect-progressive': vb => vb.replace('had', 'has'),
+  // will have been -> has been
+  'future-perfect-progressive': vb => {
+    vb.match('will').insertBefore('has')
+    return vb.remove('have').remove('will')
+  },
 
-  // got walked
-  'passive-past': noop,
-  // is being walked  -> 'was being walked'
+  // got walked -> is walked
+  'passive-past': (vb, parsed) => {
+    let str = isAreAm(vb, parsed)
+    return vb.replace('got', str)
+  },
+  // is being walked  ->
   'passive-present': noop,
   // will be walked -> had been walked
   'passive-future': noop,

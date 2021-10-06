@@ -9,8 +9,8 @@ import nlp from './src/four.js'
 // doc.remove('extra')
 // m.debug()
 
-let doc = nlp(`he does walk`)
-doc.verbs().toPresentTense()
+let doc = nlp(`was walking`)
+doc.verbs().toFutureTense()
 doc.debug()
 
 /*

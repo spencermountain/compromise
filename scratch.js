@@ -9,7 +9,7 @@ import nlp from './src/four.js'
 // doc.remove('extra')
 // m.debug()
 
-let doc = nlp(`is going to drink`)
+let doc = nlp(`he does walk`)
 doc.verbs().toPresentTense()
 doc.debug()
 

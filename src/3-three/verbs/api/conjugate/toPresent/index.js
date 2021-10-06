@@ -40,6 +40,16 @@ const toGerund = (vb, parsed) => {
   return vb
 }
 
+const toInfinitive = (vb, parsed) => {
+  const { verbToInfinitive } = vb.methods.two.transform
+  let str = parsed.root.text('normal')
+  str = verbToInfinitive(str, vb.model)
+  if (str) {
+    vb = vb.replace(parsed.root, str)
+  }
+  return vb
+}
+
 const isAreAm = function (vb, parsed) {
   // 'people were' -> 'people are'
   if (vb.has('were')) {
@@ -65,8 +75,7 @@ const forms = {
   // he will walk -> he walked
   'simple-future': (vb, parsed) => {
     simple(vb, parsed)
-    vb.remove('will')
-    return vb
+    return vb.remove('will')
   },
 
   // is walking ->
@@ -80,8 +89,7 @@ const forms = {
   'future-progressive': vb => {
     vb.match('will').insertBefore('is')
     vb.remove('be')
-    vb.remove('will')
-    return vb
+    return vb.remove('will')
   },
 
   // has walked ->  (?)
@@ -127,7 +135,10 @@ const forms = {
   // would be walked ->
   'present-conditional': noop,
   // would have been walked ->
-  'past-conditional': noop,
+  'past-conditional': vb => {
+    vb.replace('been', 'be')
+    return vb.remove('have')
+  },
 
   // is going to drink -> is drinking
   'auxiliary-future': (vb, parsed) => {
@@ -135,15 +146,23 @@ const forms = {
     vb.remove('(going|to)')
     return vb
   },
-  // used to walk
-  'auxiliary-past': noop,
-  // we do walk -> we did walk
+  // used to walk -> is walking
+  // did walk -> is walking
+  'auxiliary-past': (vb, parsed) => {
+    toGerund(vb, parsed)
+    vb.replace(parsed.auxiliary, 'is')
+    return vb
+  },
+  // we do walk ->
   'auxiliary-present': noop,
 
   // must walk -> 'must have walked'
   'modal-infinitive': noop,
   // must have walked
-  'modal-past': noop,
+  'modal-past': (vb, parsed) => {
+    toInfinitive(vb, parsed)
+    return vb.remove('have')
+  },
   // wanted to walk
   // 'want-infinitive': vb => {
   //   vb.replace('(want|wants)', 'wanted')
@@ -152,7 +171,7 @@ const forms = {
 }
 
 const toPresent = function (vb, parsed, form) {
-  console.log(form)
+  // console.log(form)
   if (forms.hasOwnProperty(form)) {
     return forms[form](vb, parsed)
   }

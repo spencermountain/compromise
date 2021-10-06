@@ -67,14 +67,18 @@ test('toPresent:', function (t) {
     ['had been walked', 'is being walked'],
     // ['will have been walked', 'has been walked'],
     ['will be walked', 'is being walked'],
+    ['he used to walk', 'he is walking'],
+    ['he did walk', 'he is walking'],
+    ['he must walk', 'he must walk'],
+    ['he must have walked', 'he must walk'],
 
-    // ['would be walked', 'would have been walked'],
-    // ['would have been walked', 'would have been walked'],
-    // ['is going to walk', 'was going to walk'],
-    // ['did walk', 'did walk'],
-    // ['used to walk', 'used to walk'],
+    ['would be walked', 'would be walked'],
+    ['would have been walked', 'would be walked'],
+    ['is going to walk', 'is walking'],
+    ['did walk', 'is walking'],
+    ['used to walk', 'is walking'],
     // ['do walk', 'did walk'],
-    // ['does walk', 'did walk'],
+    ['does walk', 'does walk'],
   ]
   arr.forEach(a => {
     let doc = nlp(a[0])

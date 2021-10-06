@@ -91,6 +91,7 @@ match(['foo', 'far'])
 - **[change]** remove #FutureTense tag - which is not really a thing in english
 
 - **[new]** .union(), .intersection(), .difference() and .complement() methods
+- **[new]** .freeze(), unfreeze() - prevent a match from drifting, once parent is mutated
 - **[new]** .settle() - remove overlaps in matches
 - **[new]** .is() - helper-method for comparing two views
 - **[new]** .none() - helper-method for returning an empty view of the document

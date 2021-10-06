@@ -4,14 +4,11 @@ import nlp from './src/four.js'
 
 // nlp.verbose('tagger')
 
-let text = `yeah. one extra two match here three`
-let doc = nlp(text)
-let m = doc.match('match here').freeze()
-console.log(m)
-// doc.remove('extra')
-// doc.remove(m)
-// doc.debug()
-
+let doc = nlp(`yeah. one extra two match here three`)
+let m = doc.match('match here')
+m.freeze()
+doc.remove('extra')
+m.debug()
 // doc.verbs().toInfinitive()
 // doc.debug()
 

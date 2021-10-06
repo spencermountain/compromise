@@ -1,5 +1,6 @@
 import world from './world.js'
 import api from './methods/index.js'
+import { repair, isSame } from './methods/_repair.js'
 
 class View {
   constructor(document, pointer, groups = {}) {
@@ -30,6 +31,11 @@ class View {
   get docs() {
     let docs = this.document
     if (this.pointer) {
+      docs = world.methods.one.getDoc(this.pointer, this.document)
+    }
+    // is the pointer stale?
+    if (this.frozen && isSame(docs, this.frozen) === false) {
+      repair(this)
       docs = world.methods.one.getDoc(this.pointer, this.document)
     }
     // lazy-getter (fires once)
@@ -63,7 +69,12 @@ class View {
   }
   // return a more-hackable pointer
   get fullPointer() {
-    let { docs, pointer, document } = this
+    let { docs, pointer, document, frozen } = this
+    if (frozen && isSame(docs, this.frozen) === false) {
+      repair(this)
+      docs = this.docs
+    }
+    // compute a proper pointer, from docs
     let ptrs = pointer || docs.map((_d, n) => [n])
     return ptrs.map((a, n) => {
       a = a.slice(0) //clone it

@@ -26,6 +26,20 @@ const simple = (vb, parsed) => {
   return vb
 }
 
+const toGerund = (vb, parsed) => {
+  const { verbConjugate, verbToInfinitive } = vb.methods.two.transform
+  let str = parsed.root.text('normal')
+  str = verbToInfinitive(str, vb.model)
+  // 'i walk' vs 'he walks'
+  if (isPlural(vb, parsed) === false) {
+    str = verbConjugate(str, vb.model).Gerund
+  }
+  if (str) {
+    vb = vb.replace(parsed.root, str)
+  }
+  return vb
+}
+
 const isAreAm = function (vb, parsed) {
   // 'people were' -> 'people are'
   if (vb.has('were')) {
@@ -91,22 +105,36 @@ const forms = {
   },
 
   // got walked -> is walked
+  // was walked -> is walked
+  // had been walked -> is walked
   'passive-past': (vb, parsed) => {
     let str = isAreAm(vb, parsed)
-    return vb.replace('got', str)
+    if (vb.has('(had|have|has)') && vb.has('been')) {
+      vb.replace('(had|have|has)', str)
+      vb.replace('been', 'being')
+      return vb
+    }
+    return vb.replace('(got|was|were)', str)
   },
   // is being walked  ->
   'passive-present': noop,
-  // will be walked -> had been walked
-  'passive-future': noop,
+  // will be walked -> is being walked
+  'passive-future': vb => {
+    vb.replace('will', 'is')
+    return vb.replace('be', 'being')
+  },
 
-  // would be walked -> 'would have been walked'
+  // would be walked ->
   'present-conditional': noop,
-  // would have been walked
+  // would have been walked ->
   'past-conditional': noop,
 
-  // is going to drink -> was going to drink
-  'auxiliary-future': noop,
+  // is going to drink -> is drinking
+  'auxiliary-future': (vb, parsed) => {
+    toGerund(vb, parsed)
+    vb.remove('(going|to)')
+    return vb
+  },
   // used to walk
   'auxiliary-past': noop,
   // we do walk -> we did walk

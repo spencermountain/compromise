@@ -26,6 +26,20 @@ const simple = (vb, parsed) => {
   return vb
 }
 
+const isWasWere = function (vb, parsed) {
+  // 'people were' -> 'people are'
+  if (vb.has('were')) {
+    return vb.replace('were', 'are')
+  }
+  // 'i was' -> i am
+  let subj = getSubject(vb, parsed)
+  if (subj.subject.has('i')) {
+    return vb.replace('was', 'am')
+  }
+  // 'he was' -> he is
+  return vb.replace('was', 'is')
+}
+
 const forms = {
   // he walks -> he walked
   'simple-present': noop,
@@ -38,12 +52,17 @@ const forms = {
     return vb
   },
 
-  // he is walking
+  // is walking ->
   'present-progressive': noop,
-  // he was walking
-  'past-progressive': noop,
-  // he will be walking
-  'future-progressive': noop,
+  // was walking -> is walking
+  'past-progressive': isWasWere,
+  // will be walking -> is walking
+  'future-progressive': vb => {
+    vb.match('will').insertBefore('is')
+    vb.remove('be')
+    vb.remove('will')
+    return vb
+  },
 
   // has walked -> had walked (?)
   'present-perfect': noop,
@@ -90,7 +109,7 @@ const forms = {
 }
 
 const toPresent = function (vb, parsed, form) {
-  // console.log(form)
+  console.log(form)
   if (forms.hasOwnProperty(form)) {
     return forms[form](vb, parsed)
   }

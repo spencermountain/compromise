@@ -1,4 +1,4 @@
-import getMain from './main.js'
+import getMain from './root.js'
 import getAdverbs from './adverbs.js'
 
 const getAuxiliary = function (vb, root) {

@@ -10,16 +10,18 @@ import nlp from './src/four.js'
 // m.debug()
 
 let str = 'The "auto mechanics" that work for Auto Towing are very friendly'
-str = `he can not walk`
+str = `Now I ~can understand*`
 // str = 'we were walking' //Past continuous tense
 let doc = nlp(str)
+console.log(doc.match('can').text('machine'))
 // doc.compute('chunks').debug('chunks')
 // doc.questions().debug()
 // console.log(doc.verbs().json())
 
-console.log(doc.verbs().json())
-doc.debug()
+// console.log(doc.verbs().json())
+// doc.debug()
 
+// console.log(doc.json())
 /*
 
 

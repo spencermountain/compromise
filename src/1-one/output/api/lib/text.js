@@ -1,5 +1,5 @@
-const trimEnd = /[,:;).?!—-]+/
-const trimStart = /^[('"]+/
+const trimEnd = /[,:;)\]*.?~!—-]+/
+const trimStart = /^[(['"*~]+/
 
 const punctToKill = /[,:;)('"]/
 const isHyphen = /^[-–—]$/

@@ -1,5 +1,4 @@
 import parseVerb from './parse/index.js'
-import toInfinitive from './conjugate/toInfinitive/index.js'
 import getGrammar from './parse/grammar/index.js'
 
 const toArray = function (m) {
@@ -17,17 +16,22 @@ const toText = function (m) {
   return m.text('normal')
 }
 
+const toInfinitive = function (root) {
+  const { verbToInfinitive } = root.methods.two.transform
+  let str = root.text('normal')
+  return verbToInfinitive(str, root.model)
+}
+
 const toJSON = function (vb) {
   vb = vb.clone()
   let parsed = parseVerb(vb)
   const info = getGrammar(vb, parsed)
-  const infinitive = toInfinitive(vb, parsed, info.form)
   return {
     root: parsed.root.text(),
     preAdverbs: toArray(parsed.adverbs.pre),
     postAdverbs: toArray(parsed.adverbs.post),
     auxiliary: toText(parsed.auxiliary),
-    infinitive: infinitive.text('normal'),
+    infinitive: toInfinitive(parsed.root),
     grammar: info,
   }
 }

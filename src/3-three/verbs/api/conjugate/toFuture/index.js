@@ -1,5 +1,3 @@
-import getSubject from '../../parse/subject/index.js'
-
 const noop = vb => vb
 
 const simple = (vb, parsed) => {

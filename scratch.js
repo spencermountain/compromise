@@ -9,7 +9,7 @@ import nlp from './src/four.js'
 // doc.remove('extra')
 // console.log(doc.text())
 let doc = nlp('i am waling')
-doc.verbs().toPastTense()
+doc.sentences().toPastTense()
 doc.debug()
 /*
 

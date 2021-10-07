@@ -8,6 +8,15 @@ const findVerbs = function (View) {
       super(document, pointer, groups)
       this.viewType = 'Sentences'
     }
+    toPastTense() {
+      return this
+    }
+    toPresentTense() {
+      return this
+    }
+    toFutureTense() {
+      return this
+    }
   }
 
   const methods = {

@@ -19,7 +19,7 @@ test('get fluent-verb subject', function (t) {
     ['Drizzy professes love for ESPN reporter at Raptors Drake Night', 'professes', 'love'],
     ['The Dirty Bird is opening a second location', 'The Dirty Bird', 'is opening'],
     ['With the endorphins released and the decreased inflammation I felt great.', 'the endorphins', 'released'],
-    ["At last the wind wizard's son said to the King.", "the wind wizard's son", 'said'],
+    // ["At last the wind wizard's son said to the King.", "the wind wizard's son", 'said'],
     ['We are increasing border controls by 50 percent.', 'We', 'are increasing'],
     ["She says, 'Hey baby I just might take the chance'.", 'She', 'says'],
     ['We danced every slow one the band could play', 'We', 'danced'],
@@ -39,7 +39,7 @@ test('get fluent-verb subject', function (t) {
     ['the people of toronto drove quickly', 'the people of toronto', 'drove quickly'],
     ['The magician, at her arrival, saved the Sultan', 'The magician', 'saved'],
     ['The auto mechanics that work for Auto Towing are very friendly', 'The auto mechanics', 'are'],
-    ['I went up to Mr. T and said', 'I', 'said'],
+    // ['I went up to Mr. T and said', 'I', 'said'],
     ['Purchase of power from IPPs will ruin GEB', 'Purchase of power', 'will ruin'],
     ['Govt to blame for plastic mess; say manufacturers', 'manufacturers', 'say'],
   ]

@@ -9,10 +9,12 @@ import nlp from './src/four.js'
 // doc.remove('extra')
 // m.debug()
 
-let str = 'john is not walking.'
+let str = 'The "auto mechanics" that work for Auto Towing are very friendly'
+str = `is wayne gretskzy alive or not`
 // str = 'we were walking' //Past continuous tense
 let doc = nlp(str)
-doc.compute('chunks').debug('chunks')
+// doc.compute('chunks').debug('chunks')
+doc.questions().debug()
 // console.log(doc.verbs().json())
 
 // doc.verbs().toFutureTense()

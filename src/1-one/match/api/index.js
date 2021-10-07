@@ -6,7 +6,11 @@ const methods = Object.assign({}, match, lookaround, split)
 
 // aliases
 methods.lookBehind = methods.before
+methods.lookBefore = methods.before
+
 methods.lookAhead = methods.after
+methods.lookAfter = methods.after
+
 methods.notIf = methods.ifNo
 
 const matchAPI = function (View) {

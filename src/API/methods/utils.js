@@ -53,6 +53,11 @@ const utils = {
   all: function () {
     return this.update()
   },
+  /**  */
+  fullSentences: function () {
+    let ptrs = this.fullPointer.map(a => [a[0]]) //lazy!
+    return this.update(ptrs)
+  },
   /** return a view of no parts of the document */
   none: function () {
     return this.update([])
@@ -87,4 +92,5 @@ const utils = {
   },
 }
 utils.group = utils.groups
+utils.fullSentence = utils.fullSentences
 export default utils

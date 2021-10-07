@@ -18,6 +18,10 @@ const toJson = function (view, opts) {
     opts = {}
   }
   opts = Object.assign({}, defaults, opts)
+  // run any necessary upfront steps
+  if (opts.offset) {
+    view.compute('offset')
+  }
   return view.docs.map(terms => {
     let res = {}
     if (opts.text) {

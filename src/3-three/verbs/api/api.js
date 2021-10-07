@@ -26,11 +26,13 @@ const findVerbs = function (View) {
       return this
     }
     json(n) {
-      return getNth(this, n).map(vb => {
-        let json = vb.json()[0]
+      let m = getNth(this, n).reverse()
+      let arr = m.map(vb => {
+        let json = vb.json()[0] || {}
         json.verb = toJSON(vb)
         return json
       })
+      return arr.reverse()
     }
     subjects(n) {
       return getNth(this, n).map(vb => {

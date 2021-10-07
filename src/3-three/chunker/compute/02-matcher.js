@@ -25,9 +25,9 @@ const rules = [
   // going to walk
   { match: '#Gerund to #Verb', chunk: 'Verb' },
   // had not
-  { match: '{Verb} #Negative', chunk: 'Verb' },
+  { match: '#Verb #Negative', chunk: 'Verb' },
   // not seen
-  { match: '#Negative {Verb}', chunk: 'Verb' },
+  { match: '#Negative #Verb', chunk: 'Verb' },
   // not really
   { match: '#Negative #Adverb ', chunk: 'Verb' },
   // really not

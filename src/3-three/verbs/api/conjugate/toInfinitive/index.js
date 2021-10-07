@@ -12,7 +12,6 @@ const toPresent = function (vb, parsed) {
   if (parsed.auxiliary.found) {
     vb.remove(aux)
   }
-  vb.debug()
   return vb
 }
 export default toPresent

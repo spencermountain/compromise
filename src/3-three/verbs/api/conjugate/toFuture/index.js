@@ -85,7 +85,6 @@ const forms = {
 }
 
 const toFuture = function (vb, parsed, form) {
-  console.log(form)
   if (forms.hasOwnProperty(form)) {
     return forms[form](vb, parsed)
   }

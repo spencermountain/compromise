@@ -35,7 +35,6 @@ class View {
     }
     // is the pointer stale?
     if (this.frozen && isSame(docs, this.frozen) === false) {
-      console.log('=== repair docs ==')
       repair(this)
       docs = world.methods.one.getDoc(this.pointer, this.document)
     }
@@ -72,7 +71,6 @@ class View {
   get fullPointer() {
     let { docs, pointer, document, frozen } = this
     if (frozen && isSame(docs, this.frozen) === false) {
-      console.log('=== repair pointer ==')
       repair(this)
       docs = this.docs
     }

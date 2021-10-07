@@ -9,9 +9,14 @@ import nlp from './src/four.js'
 // doc.remove('extra')
 // m.debug()
 
-let doc = nlp(`was walking`)
-doc.verbs().toFutureTense()
-doc.debug()
+let str = 'john is not walking.'
+// str = 'we were walking' //Past continuous tense
+let doc = nlp(str)
+doc.compute('chunks').debug('chunks')
+// console.log(doc.verbs().json())
+
+// doc.verbs().toFutureTense()
+// doc.debug()
 
 /*
 

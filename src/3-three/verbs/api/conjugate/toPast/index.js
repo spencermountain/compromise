@@ -2,7 +2,6 @@ const noop = vb => vb
 
 const noAux = (vb, parsed) => {
   if (parsed.auxiliary.found) {
-    // parsed.auxiliary.debug()
     vb = vb.remove(parsed.auxiliary)
   }
   return vb

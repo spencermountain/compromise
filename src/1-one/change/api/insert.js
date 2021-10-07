@@ -8,7 +8,12 @@ const insert = function (str, view, prepend) {
     let [n] = ptr
     // add-in the words
     let home = document[n]
-    let needle = methods.one.tokenize(str, world)[0] //assume one sentence
+    let needle = []
+    if (typeof str === 'string') {
+      needle = methods.one.tokenize(str, world)[0] //assume one sentence
+    } else if (typeof str === 'object' && str.docs) {
+      needle = str.docs[0] //assume one sentence
+    }
     if (prepend) {
       cleanPrepend(home, ptr, needle, document)
     } else {
@@ -26,11 +31,11 @@ const insert = function (str, view, prepend) {
 }
 
 const fns = {
-  insertAfter: function (str) {
-    return insert(str, this, false)
+  insertAfter: function (input) {
+    return insert(input, this, false)
   },
-  insertBefore: function (str) {
-    return insert(str, this, true)
+  insertBefore: function (input) {
+    return insert(input, this, true)
   },
   // add string as new sentence
   concat: function (input) {

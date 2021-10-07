@@ -77,3 +77,11 @@ test('titlecase change in insertBefore :', function (t) {
   t.equal(doc.text(), 'Jogging I am very cool', here + 'pronoun-titlecase')
   t.end()
 })
+
+test('insert document :', function (t) {
+  let doc = nlp(`one two three`)
+  let b = nlp('four')
+  doc.append(b)
+  t.equal(doc.text(), 'one two three four', here + 'doc appent')
+  t.end()
+})

@@ -27,8 +27,8 @@ const toJson = function (view, opts) {
     if (opts.text) {
       res.text = textFromTerms(terms, {}, false)
     }
-    if (opts.normal) {
-      res.normal = textFromTerms(terms, { use: 'normal' }, false)
+    if (opts.normal || opts.machine || opts.reduced) {
+      res.normal = textFromTerms(terms, { use: 'normal', punctuation: 'some' }, false)
     }
     if (opts.terms) {
       res.terms = termJSON(terms, opts)

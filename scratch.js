@@ -13,7 +13,7 @@ let str = 'The "auto mechanics" that work for Auto Towing are very friendly'
 str = `Now I ~can understand*`
 // str = 'we were walking' //Past continuous tense
 let doc = nlp(str)
-console.log(doc.match('can').text('machine'))
+console.log(doc.match('can').json({ machine: true }))
 // doc.compute('chunks').debug('chunks')
 // doc.questions().debug()
 // console.log(doc.verbs().json())

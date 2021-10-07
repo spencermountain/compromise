@@ -34,5 +34,7 @@ const find = function (view) {
   })
 }
 
-const quotations = function (n) {}
+const quotations = function (n) {
+  return find(this)
+}
 export default quotations

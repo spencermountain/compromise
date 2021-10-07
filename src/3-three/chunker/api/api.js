@@ -4,7 +4,7 @@ import quotations from './quotations.js'
 
 const chunker = function (View) {
   selections(View)
-  clauses(View)
-  quotations(View)
+  View.prototype.clauses = clauses
+  View.prototype.quotations = quotations
 }
 export default chunker

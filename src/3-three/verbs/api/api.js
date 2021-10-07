@@ -25,10 +25,10 @@ const findVerbs = function (View) {
       debug(this)
       return this
     }
-    json(n) {
+    json(opts, n) {
       let m = getNth(this, n).reverse()
       let arr = m.map(vb => {
-        let json = vb.json()[0] || {}
+        let json = vb.json(opts)[0] || {}
         json.verb = toJSON(vb)
         return json
       })

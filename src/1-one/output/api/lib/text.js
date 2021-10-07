@@ -27,7 +27,7 @@ const textFromTerms = function (terms, opts, keepSpace = true) {
       post = post.replace(trimEnd, '')
     }
     // grab the correct word format
-    let word = t[opts.use || 'normal'] || t.text || ''
+    let word = t[opts.use || 'text'] || t.normal || ''
     txt += pre + word + post
   })
   if (keepSpace === false) {

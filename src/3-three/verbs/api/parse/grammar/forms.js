@@ -84,9 +84,9 @@ const verbForms = {
   ],
   'passive-present': [
     // is walked, are stolen
-    ['^(is|are) (#PastTense|#Participle)', [present, passive]],
+    ['^(is|are|am) (#PastTense|#Participle)', [present, passive]],
     // is being walked
-    ['^(is|are) being (#PastTense|#Participle)', [present, passive]],
+    ['^(is|are|am) being (#PastTense|#Participle)', [present, passive]],
     // has been cleaned
     ['^has been (#PastTense|#Participle)', [present, passive]],
   ],

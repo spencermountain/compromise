@@ -83,6 +83,19 @@ test('remove-match:', function (t) {
   t.end()
 })
 
+test('remove-until-empty:', function (t) {
+  let doc = nlp(`extra. match.`)
+  let m = doc.match('match')
+  doc.remove('extra')
+  doc.remove(m)
+  t.equal(doc.text(), '', here + 'remove empty')
+
+  doc = nlp(`extra. one two.`)
+  doc.remove('extra')
+  t.equal(doc.text(), 'one two.', here + 'remove empty again')
+  t.end()
+})
+
 test('remove-is-not-split :', function (t) {
   const doc = nlp('he is really walking. he surely walked quickly, silently.')
   doc.remove('(really|surely|quickly|silently)')
@@ -114,7 +127,7 @@ test('clone-partial :', function (t) {
 
 test('remove doc by index :', function (t) {
   let doc = nlp(`one extra two match three`)
-  let m = doc.match('match')
+  let m = doc.match('match').freeze()
   doc.remove('extra')
   doc.remove(m)
   t.equal(doc.text(), 'one two three', here + 'pointer index')

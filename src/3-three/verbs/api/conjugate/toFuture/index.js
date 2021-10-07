@@ -44,39 +44,66 @@ const forms = {
   'future-progressive': noop,
 
   // has walked ->
-  'present-perfect': noop,
+  'present-perfect': vb => vb.replace('has', 'will have'),
   // had walked ->
-  'past-perfect': noop,
+  'past-perfect': vb => vb.replace('had', 'will have'),
   // will have walked ->
   'future-perfect': noop,
 
   // has been walking
-  'present-perfect-progressive': noop,
+  'present-perfect-progressive': vb => vb.replace('has', 'will have'),
   // had been walking
-  'past-perfect-progressive': noop,
+  'past-perfect-progressive': vb => vb.replace('had', 'will have'),
   // will have been ->
   'future-perfect-progressive': noop,
 
   // got walked ->
   // was walked ->
+  // was being walked ->
   // had been walked ->
-  'passive-past': noop,
+  'passive-past': vb => {
+    if (vb.has('got')) {
+      return vb.replace('got', 'will get')
+    }
+    if (vb.has('(was|were)')) {
+      vb.replace('(was|were)', 'will be')
+      return vb.remove('being')
+    }
+    if (vb.has('(have|has|had) been')) {
+      return vb.replace('(have|has|had) been', 'will be')
+    }
+    return vb
+  },
   // is being walked  ->
-  'passive-present': noop,
+  'passive-present': vb => {
+    vb.replace('being', 'will be')
+    vb.remove('(is|are|am)')
+    return vb
+  },
   // will be walked ->
   'passive-future': noop,
   // would be walked ->
-  'present-conditional': noop,
+  'present-conditional': vb => vb.replace('would', 'will'),
   // would have been walked ->
-  'past-conditional': noop,
+  'past-conditional': vb => vb.replace('would', 'will'),
 
   // is going to drink ->
   'auxiliary-future': noop,
   // used to walk -> is walking
   // did walk -> is walking
-  'auxiliary-past': noop,
+  'auxiliary-past': vb => {
+    if (vb.has('used') && vb.has('to')) {
+      vb.replace('used', 'will')
+      return vb.remove('to')
+    }
+    vb.replace('did', 'will')
+    return vb
+  },
   // we do walk ->
-  'auxiliary-present': noop,
+  // he does walk ->
+  'auxiliary-present': vb => {
+    return vb.replace('(do|does)', 'will')
+  },
 
   // must walk ->
   'modal-infinitive': noop,
@@ -85,6 +112,7 @@ const forms = {
 }
 
 const toFuture = function (vb, parsed, form) {
+  // console.log(form)
   if (forms.hasOwnProperty(form)) {
     return forms[form](vb, parsed)
   }

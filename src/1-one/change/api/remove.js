@@ -16,7 +16,9 @@ const pluckOut = function (document, nots) {
   nots.forEach(ptr => {
     let [n, start, end] = ptr
     let len = end - start
-    // removed.push([n, start, start + len])
+    if (!document[n]) {
+      return // weird!
+    }
     if (end === document[n].length && end > 1) {
       repairPunct(document[n], len)
     }
@@ -55,8 +57,8 @@ const methods = {
     }
     let ptrs = self.fullPointer
     let nots = not.fullPointer.reverse()
-    // remove them from the actual document
-    let document = pluckOut(not.document, nots)
+    // remove them from the actual document)
+    let document = pluckOut(this.document, nots)
     // repair our pointers
     let gone = indexN(nots)
     ptrs = ptrs.map(ptr => {
@@ -81,6 +83,7 @@ const methods = {
       }
       return true
     })
+    //TODO: fix downstream n pointers
     // mutate original
     self.ptrs = ptrs
     self.document = document

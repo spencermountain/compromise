@@ -18,6 +18,7 @@ const toText = function (m) {
 }
 
 const toJSON = function (vb) {
+  vb = vb.clone()
   let parsed = parseVerb(vb)
   const info = getGrammar(vb, parsed)
   const infinitive = toInfinitive(vb, parsed, info.form)
@@ -26,7 +27,7 @@ const toJSON = function (vb) {
     preAdverbs: toArray(parsed.adverbs.pre),
     postAdverbs: toArray(parsed.adverbs.post),
     auxiliary: toText(parsed.auxiliary),
-    infinitive: infinitive,
+    infinitive: infinitive.text('normal'),
     grammar: info,
   }
 }

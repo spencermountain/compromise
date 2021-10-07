@@ -8,8 +8,8 @@ import nlp from './src/four.js'
 // let doc = nlp(`extra. one two.`)
 // doc.remove('extra')
 // console.log(doc.text())
-let doc = nlp('he does walk')
-doc.verbs().toFutureTense()
+let doc = nlp('i am waling')
+doc.verbs().toPastTense()
 doc.debug()
 /*
 

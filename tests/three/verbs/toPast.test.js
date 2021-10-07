@@ -11,6 +11,8 @@ test('toPast:', function (t) {
 
     ['he is walking', 'he was walking'],
     ['he was walking', 'he was walking'],
+    ['we are walking', 'we were walking'],
+    ['we were walking', 'we were walking'],
     ['i am walking', 'i was walking'],
     ['he will be walking', 'he was walking'],
 

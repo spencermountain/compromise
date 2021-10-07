@@ -39,7 +39,8 @@ const forms = {
 
   // he is walking
   'present-progressive': vb => {
-    vb.replace('is', 'was')
+    vb.replace('are', 'were')
+    vb.replace('(is|are|am)', 'was')
     return vb
   },
   // he was walking

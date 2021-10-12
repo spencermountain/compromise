@@ -24,7 +24,11 @@ const textFromTerms = function (terms, opts, keepSpace = true) {
     }
     if (opts.keepPunct === false) {
       pre = pre.replace(trimStart, '')
-      post = post.replace(trimEnd, '')
+      if (post === '-') {
+        post = ' '
+      } else {
+        post = post.replace(trimEnd, '')
+      }
     }
     // grab the correct word format
     let word = t[opts.use || 'text'] || t.normal || ''

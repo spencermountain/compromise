@@ -21,6 +21,9 @@ const findVerbs = function (doc) {
   // what i can sell will be
   m = m.splitBefore('(#PresentTense|#PastTense) [will be]$', 0)
 
+  // professes love
+  m = m.splitBefore('(#PresentTense|#PastTense) [#Infinitive]', 0)
+
   //ensure there's actually a verb
   m = m.if('#Verb')
 

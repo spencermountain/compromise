@@ -48,6 +48,10 @@ test('verb-splitter:', function (t) {
       str: `walk faster`,
       verbs: ['walk'],
     },
+    {
+      str: `he professes love`,
+      verbs: ['professes'],
+    },
     // {
     //   str: `poodles like to be pampered`,
     //   verbs: ['like', 'be pampered'],

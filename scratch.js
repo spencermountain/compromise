@@ -9,15 +9,15 @@ nlp.verbose('tagger')
 // doc.remove('extra')
 // console.log(doc.text())
 
-// let txt = `conditions of employment started`
+let txt = `The TTC's Bloor-Danforth Line`
 // let txt = `one first step `
-let txt = `Characters drink Salty Dogs `
 
 let doc = nlp(txt).debug()
+console.log(doc.match('. . . .').json())
 // console.log(doc.text('normal'))
 // console.log(doc.text())
 
-// console.log(doc.verbs().json()[0])
+console.log(doc.verbs().json())
 //
 /*
 

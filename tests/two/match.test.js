@@ -859,6 +859,18 @@ let arr = [
   [`June 14 Reception`, '#Date #Date #Noun'],
   [`They will mature`, '#Pronoun will #Infinitive'],
   [`john k. johnson`, '#Person #Person #Person'],
+
+  [`putting his hand`, '#Verb #Possessive #Noun'],
+  [`defeating his longstanding rivals`, '#Verb #Possessive #Adjective #Plural'],
+  [`understand my answer`, '#Verb #Possessive #Noun'],
+  [`child’s play`, '#Possessive #Noun'],
+  [`describes his brush with death`, '#Verb #Possessive #Noun with #Noun'],
+  [`decide their fate`, '#Verb #Possessive #Noun'],
+  [`take your time`, '#Verb #Possessive #Noun'],
+  [`strengthen our trade relations`, '#Verb #Possessive #Noun #Plural'],
+  [`i need your help`, 'i #Verb #Possessive #Noun'],
+  [`have our unyielding support`, '#Verb #Possessive #Adjective #Noun'],
+  [`my dear`, '#Possessive #Noun'],
   // [``, ``],
   // [``, ``],
 ] //match-two

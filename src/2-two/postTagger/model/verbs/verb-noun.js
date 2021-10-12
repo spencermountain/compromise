@@ -141,6 +141,8 @@ export default [
   },
   // compromises are possible
   { match: '[#PresentTense] (are|were|was) #Adjective', group: 0, tag: 'Plural', reason: 'compromises-are-possible' },
+  //pursue its dreams
+  { match: '#PresentTense #Possessive [#PresentTense]', group: 0, tag: 'Plural', reason: 'pursue-its-dreams' },
   // ignoring commute
   {
     match: '#Copula #Gerund [#PresentTense]',

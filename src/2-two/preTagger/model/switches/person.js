@@ -4,10 +4,12 @@ export default {
   before: {
     Honorific: p,
     Person: p,
+    Preposition: p, //with sue
   },
   after: {
     Person: p,
     ProperNoun: p,
+    Modal: p, //bob could
   },
   beforeWords: {},
   afterWords: {

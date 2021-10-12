@@ -9,6 +9,6 @@ export default [
   [/^([A-Z]\.){2}[A-Z]?/i, ['Acronym', 'Noun'], 'F.B.I'], //ascii-only
 
   // ending-apostrophes
-  [/n['‘’‛‵′`´]$/, 'Gerund', "chillin'"],
-  [/s['‘’‛‵′`´]$/, 'Possessive', "flanders'"],
+  [/.{3}lin['‘’‛‵′`´]$/, 'Gerund', "chillin'"],
+  [/.{4}s['‘’‛‵′`´]$/, 'Possessive', "flanders'"],
 ]

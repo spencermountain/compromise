@@ -92,5 +92,11 @@ test('verb-greedy:', function (t) {
   str = nlp('we must really not').verbs().out('normal')
   t.equal(str, 'must really not', here + 'verb-adverb-not')
 
+  str = nlp('the skill you can sell is your knowledge').verbs().eq(0).out('normal')
+  t.equal(str, 'can sell', here + 'can sell is')
+
+  str = nlp('what you can sell will be').verbs().eq(0).out('normal')
+  t.equal(str, 'can sell', here + 'can sell will be')
+
   t.end()
 })

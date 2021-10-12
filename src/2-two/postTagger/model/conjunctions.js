@@ -16,6 +16,8 @@ export default [
     tag: 'Conjunction',
     reason: 'how-he-is-x',
   },
+  // when he
+  { match: '#Copula [(who|what|where|why|how|when)] #Noun', group: 0, tag: 'Conjunction', reason: 'when-he' },
   // says that he..
   { match: '#Verb [that] #Pronoun', group: 0, tag: 'Conjunction', reason: 'said-that-he' },
   // things that are required

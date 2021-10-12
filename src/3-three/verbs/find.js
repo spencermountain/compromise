@@ -16,6 +16,11 @@ const findVerbs = function (doc) {
   // implicit conjugation - 'help fix'
   m = m.splitAfter('[help] #PresentTense', 0)
 
+  // what i can sell is..
+  m = m.splitBefore('(#PresentTense|#PastTense) [#Copula]$', 0)
+  // what i can sell will be
+  m = m.splitBefore('(#PresentTense|#PastTense) [will be]$', 0)
+
   //ensure there's actually a verb
   m = m.if('#Verb')
 

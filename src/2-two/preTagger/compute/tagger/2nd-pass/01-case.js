@@ -13,9 +13,9 @@ const checkCase = function (terms, i) {
   let str = term.text //need case info
   // titlecase and not first word of sentence
   if (i !== 0 && titleCase.test(str) === true && hasNumber.test(str) === false) {
-    term.tags.delete('Verb')
-    term.tags.delete('Adjective')
-    term.tags.delete('Adverb')
+    if (!term.tags.has('Noun')) {
+      term.tags.clear()
+    }
     fastTag(term, 'ProperNoun', '2-titlecase')
     return true
   }

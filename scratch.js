@@ -9,14 +9,11 @@ nlp.verbose('tagger')
 // doc.remove('extra')
 // console.log(doc.text())
 
-let txt = `Kensington Market art project [takes] catcallers to task`
 // let txt = `conditions of employment started`
-// let txt = `it's when Bob [can dance] with Sue again'`
-// let txt = `And one of the first steps we [can take] together`
-// let txt = `it's when Bob [can dance] with Sue again`
-// let txt = `the skill you [can sell] is your knowledge`
+// let txt = `one first step `
+let txt = `the skill you [can sell] will be your knowledge`
 
-let doc = nlp(txt).debug()
+let doc = nlp(txt).verbs().debug()
 // console.log(doc.text('normal'))
 // console.log(doc.text())
 

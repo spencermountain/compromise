@@ -135,7 +135,7 @@ export default [
   {
     match: '#Value [#PresentTense]',
     group: 0,
-    ifNo: ['#Copula', 'one', '1'],
+    ifNo: ['one', '1'],
     tag: 'Plural',
     reason: '2-trains',
   },
@@ -147,7 +147,7 @@ export default [
   { match: '#Possessive #Adjective [#Verb]', group: 0, tag: 'Noun', reason: 'our-full-support' },
   // ignoring commute
   {
-    match: '#Copula #Gerund [#PresentTense]',
+    match: '#Copula #Gerund [#PresentTense] !by?',
     group: 0,
     tag: 'Noun',
     ifNo: ['going'],

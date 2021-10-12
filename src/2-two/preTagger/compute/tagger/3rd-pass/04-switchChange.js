@@ -56,6 +56,7 @@ const swtichLexicon = function (terms, i, model) {
       // look <- left tag next
       tag = tag || lookAtTag(terms[i - 1], before)
       if (tag) {
+        // console.log(term, tag)
         term.tags.clear()
         fastTag(term, tag, `3-[switch] ${keys[o]}`)
         if (model.two.tagSet[tag]) {

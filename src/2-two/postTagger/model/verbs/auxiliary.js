@@ -34,6 +34,8 @@ export default [
   },
   // was being driven
   { match: '[(be|being|been)] #Participle', group: 0, tag: 'Auxiliary', reason: 'being-driven' },
+  // may want
+  { match: '[may] #Adverb? #Infinitive', group: 0, tag: 'Auxiliary', reason: 'may-want' },
 
   // was being walked
   {

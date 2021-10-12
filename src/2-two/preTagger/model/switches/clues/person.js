@@ -14,7 +14,13 @@ export default {
   ownTags: {
     ProperNoun: p, //capital letter
   },
-  beforeWords: {},
+  beforeWords: {
+    hi: p,
+    hey: p,
+    yo: p,
+    dear: p,
+    hello: p,
+  },
   afterWords: {
     // person-usually verbs
     said: p,

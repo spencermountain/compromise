@@ -5,6 +5,7 @@ export default {
     Modal: vb, //would date
     Adverb: vb, //quickly date
     Negative: vb, //not date
+    Plural: vb, //characters drink
   },
   after: {
     Determiner: vb, //flash the

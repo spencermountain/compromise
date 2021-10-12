@@ -40,11 +40,11 @@ const switches = {
   },
   personNoun: {
     parts: [noun, person],
-    fallback: 'Singular',
+    fallback: 'Singular', //hmmm
   },
   personDate: {
     parts: [person, date],
-    fallback: 'Singular',
+    fallback: null, //hmmm
   },
   personVerb: {
     parts: [person, verb],

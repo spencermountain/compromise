@@ -11,7 +11,7 @@ nlp.verbose('tagger')
 
 // let txt = `conditions of employment started`
 // let txt = `one first step `
-let txt = `He's probably still scared and unsure`
+let txt = `Characters drink Salty Dogs `
 
 let doc = nlp(txt).debug()
 // console.log(doc.text('normal'))

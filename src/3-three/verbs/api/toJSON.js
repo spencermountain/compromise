@@ -31,6 +31,7 @@ const toJSON = function (vb) {
     preAdverbs: toArray(parsed.adverbs.pre),
     postAdverbs: toArray(parsed.adverbs.post),
     auxiliary: toText(parsed.auxiliary),
+    negative: parsed.negative.found,
     infinitive: toInfinitive(parsed.root),
     grammar: info,
   }

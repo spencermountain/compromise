@@ -30,13 +30,13 @@ class View {
   /* getters:  */
   get docs() {
     let docs = this.document
-    if (this.pointer) {
-      docs = world.methods.one.getDoc(this.pointer, this.document)
+    if (this.ptrs) {
+      docs = world.methods.one.getDoc(this.ptrs, this.document)
     }
     // is the pointer stale?
     if (this.frozen && isSame(docs, this.frozen) === false) {
       repair(this)
-      docs = world.methods.one.getDoc(this.pointer, this.document)
+      docs = world.methods.one.getDoc(this.ptrs, this.document)
     }
     // lazy-getter (fires once)
     // Object.defineProperty(this, 'docs', {
@@ -69,14 +69,14 @@ class View {
   }
   // return a more-hackable pointer
   get fullPointer() {
-    let { docs, pointer, document, frozen } = this
+    let { docs, ptrs, document, frozen } = this
     if (frozen && isSame(docs, this.frozen) === false) {
       repair(this)
       docs = this.docs
     }
     // compute a proper pointer, from docs
-    let ptrs = pointer || docs.map((_d, n) => [n])
-    return ptrs.map((a, n) => {
+    let pointers = ptrs || docs.map((_d, n) => [n])
+    return pointers.map((a, n) => {
       a = a.slice(0) //clone it
       a[1] = a[1] || 0
       a[2] = a[2] || (document[n] || []).length

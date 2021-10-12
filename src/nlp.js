@@ -1,7 +1,11 @@
 import View from './API/View.js'
-import world from './API/world.js'
+import tmp from './API/world.js'
 import version from '../lib/_version.js'
 import extend from './API/extend.js'
+import clone from './API/clone.js'
+
+let world = Object.assign({}, tmp)
+// let world = { methods, model, compute, hooks }
 
 const nlp = function (input, lex) {
   const { methods, hooks } = world
@@ -72,6 +76,15 @@ nlp.tokenize = function (input, lex) {
     doc.compute(['alias', 'normal', 'machine', 'contractions']) //run it if we've got it
   }
   return doc
+}
+
+/** deep-clone the library's model*/
+nlp.fork = function (str) {
+  world = Object.assign({}, world)
+  world.methods = Object.assign({}, world.methods)
+  world.model = clone(world.model)
+  world.model.forked = str
+  return nlp
 }
 
 // some helper methods

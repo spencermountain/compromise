@@ -14,6 +14,7 @@ const lastNoun = function (terms, i) {
 
 const irregular = {
   "can't": ['can', 'not'],
+  "won't": ['will', 'not'],
 }
 
 //ain't -> are/is not

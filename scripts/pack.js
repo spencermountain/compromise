@@ -8,7 +8,7 @@ import senses from '../lib/senses/index.js'
 const steps = [
   {
     label: 'lexicon',
-    path: './src/two/preTagger/model/lexicon/_data.js',
+    path: './src/2-two/preTagger/model/lexicon/_data.js',
     compress: function () {
       let packed = {}
       //turn them into a series of flat-arrays
@@ -31,7 +31,7 @@ const steps = [
   },
   {
     label: 'switches',
-    path: './src/two/preTagger/model/switches/_data.js',
+    path: './src/2-two/preTagger/model/switches/_data.js',
     compress: function () {
       Object.keys(switches).forEach(k => {
         switches[k] = pack(switches[k])
@@ -41,7 +41,7 @@ const steps = [
   },
   {
     label: 'senses',
-    path: './src/four/sense/model/_data.js',
+    path: './src/4-four/sense/model/_data.js',
     compress: function () {
       Object.keys(senses).forEach(ambig => {
         senses[ambig].forEach(sense => {

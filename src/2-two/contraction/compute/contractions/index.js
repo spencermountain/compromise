@@ -41,7 +41,7 @@ const contractions = (document = [], world) => {
         }
         // look for after-match ('re -> [_, are])
         else if (after !== null && after === o.after) {
-          words = [before, o.out] //typeof o.out === 'string' ? [before, o.out] : o.out(terms, i)
+          words = [before].concat(o.out)
         }
         // look for before-match (l' -> [le, _])
         else if (before !== null && before === o.before) {

@@ -39,6 +39,7 @@ export default {
     too: jj, //too insulting
     it: jj, //find it insulting
     but: jj, //nothing but frustrating
+    still: jj, //still scared
   },
   afterWords: {
     too: jj, //insulting too

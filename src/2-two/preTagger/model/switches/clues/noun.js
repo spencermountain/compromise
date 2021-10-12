@@ -5,6 +5,8 @@ export default {
     Determiner: nn, //the date
     Possessive: nn, //his date
     Noun: nn, //nasa funding
+    PresentTense: nn, //save storm victims
+    PastTense: nn, //saved storm victims
   },
   after: {
     Value: nn, //date nine  -?

@@ -11,9 +11,9 @@ nlp.verbose('tagger')
 
 // let txt = `conditions of employment started`
 // let txt = `one first step `
-let txt = `we are putting the pressure`
+let txt = `The United States`
 
-let doc = nlp(txt).verbs().debug()
+let doc = nlp(txt).debug()
 // console.log(doc.text('normal'))
 // console.log(doc.text())
 

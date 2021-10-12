@@ -35,7 +35,8 @@ const swtichLexicon = function (terms, i, model) {
   Object.keys(switchers).forEach(k => {
     const { words, before, after, beforeWords, afterWords } = switchers[k]
     // do we already have a good tag?
-    if (term.tags.has('Person') || term.tags.has('Acronym')) {
+    const fine = ['Person', 'Place', 'Organization', 'Acronym']
+    if (fine.some(tag => term.tags.has(tag))) {
       return
     }
     if (words.hasOwnProperty(term.normal)) {

@@ -27,10 +27,10 @@ const switches = {
   // adjective - gerund - 'shocking'
   adjGerund: {
     parts: [adj, gerund],
-    // before: merge(gerund.before, {
-    //   Copula: 'Adjective', //is shocking
-    // }),
     fallback: 'Adjective',
+    // before: {
+    //   Copula: 'Adjective', //is shocking
+    // },
   },
 
   // adjective - pastTense - 'damaged'

@@ -29,16 +29,21 @@ const lookAtTag = function (term, byTag) {
   return null
 }
 
+const goodAlready = function (term) {
+  const fine = ['Person', 'Place', 'Organization', 'Acronym']
+  return fine.some(tag => term.tags.has(tag))
+}
+
 const swtichLexicon = function (terms, i, model) {
   let term = terms[i]
+  // do we already have a good tag?
+  if (goodAlready(term)) {
+    return
+  }
   const { switchers } = model.two
-  Object.keys(switchers).forEach(k => {
-    const { words, before, after, beforeWords, afterWords, ownTags } = switchers[k]
-    // do we already have a good tag?
-    const fine = ['Person', 'Place', 'Organization', 'Acronym']
-    if (fine.some(tag => term.tags.has(tag))) {
-      return
-    }
+  const keys = Object.keys(switchers)
+  for (let o = 0; o < keys.length; o += 1) {
+    const { words, before, after, beforeWords, afterWords, ownTags } = switchers[keys[o]]
     if (words.hasOwnProperty(term.normal)) {
       // look at term's own tags for obvious hints, first
       let tag = lookAtTag(terms[i], ownTags || {})
@@ -52,14 +57,14 @@ const swtichLexicon = function (terms, i, model) {
       tag = tag || lookAtTag(terms[i - 1], before)
       if (tag) {
         term.tags.clear()
-        fastTag(term, tag, `3-[switch] ${k}`)
+        fastTag(term, tag, `3-[switch] ${keys[o]}`)
         if (model.two.tagSet[tag]) {
           let parents = model.two.tagSet[tag].parents
           fastTag(term, parents, `3-switch-infer from ${tag}`)
         }
-        return
+        return //one hint is good-enough
       }
     }
-  })
+  }
 }
 export default swtichLexicon

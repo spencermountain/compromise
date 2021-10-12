@@ -10,7 +10,7 @@ export default {
   after: {
     Adverb: g, //shocking quickly
     Possessive: g, //shocking spencer's
-    ProperNoun: g, //shocking spencer
+    Person: g, //shocking spencer
     Pronoun: g, //shocking him
     Determiner: g, //shocking the
     Copula: g, //shocking is

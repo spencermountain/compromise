@@ -73,7 +73,7 @@ let rules = {
   Gerund: [
     {
       //popping -> pop
-      reg: /(..)[pdtg]{2}ing$/i,
+      reg: /(..)([pdtg]){2}ing$/i,
       to: '$1$2',
     },
     {

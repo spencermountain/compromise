@@ -98,6 +98,11 @@ test('verb-parts:', function (t) {
       negative: 'not',
       root: 'win',
     },
+    {
+      str: `we are putting the pressure`,
+      aux: 'are',
+      root: 'putting',
+    },
   ]
   arr.forEach(obj => {
     let { str, preAdverb, aux, root, postAdverb, particle } = obj

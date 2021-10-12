@@ -59,6 +59,7 @@ test('toInfinitive:', function (t) {
     ['i was being really not walked', 'i really not walk'],
     ['i was being not really walked', 'i not really walk'],
     ['he was not going to walk', 'he not walk'],
+    ['we are putting', 'we put'],
   ]
   arr.forEach(a => {
     let doc = nlp(a[0])

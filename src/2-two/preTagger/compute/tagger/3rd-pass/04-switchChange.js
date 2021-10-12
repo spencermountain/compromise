@@ -33,15 +33,17 @@ const swtichLexicon = function (terms, i, model) {
   let term = terms[i]
   const { switchers } = model.two
   Object.keys(switchers).forEach(k => {
-    const { words, before, after, beforeWords, afterWords } = switchers[k]
+    const { words, before, after, beforeWords, afterWords, ownTags } = switchers[k]
     // do we already have a good tag?
     const fine = ['Person', 'Place', 'Organization', 'Acronym']
     if (fine.some(tag => term.tags.has(tag))) {
       return
     }
     if (words.hasOwnProperty(term.normal)) {
-      // look -> right word first
-      let tag = lookAtWord(terms[i + 1], afterWords)
+      // look at term's own tags for obvious hints, first
+      let tag = lookAtTag(terms[i], ownTags || {})
+      // look -> right word
+      tag = tag || lookAtWord(terms[i + 1], afterWords)
       // look <- left word, second
       tag = tag || lookAtWord(terms[i - 1], beforeWords)
       // look -> right tag next

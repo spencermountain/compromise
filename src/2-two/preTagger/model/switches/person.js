@@ -11,6 +11,9 @@ export default {
     ProperNoun: p,
     Modal: p, //bob could
   },
+  ownTags: {
+    ProperNoun: p, //capital letter
+  },
   beforeWords: {},
   afterWords: {
     // person-usually verbs

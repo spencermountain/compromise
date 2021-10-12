@@ -1,131 +1,68 @@
 import data from './_data.js'
 import { unpack } from 'efrt'
-import person from './person.js'
-import adj from './adjective.js'
-import date from './date.js'
-import verb from './verb.js'
+import person from './clues/person.js'
+import adj from './clues/adjective.js'
+import date from './clues/date.js'
+import verb from './clues/verb.js'
+import noun from './clues/noun.js'
+import gerund from './clues/gerund.js'
+import past from './clues/past.js'
 // unpack our lexicon of ambiguous-words
 // (found in ./lib/switches/)
 
-const nn = 'Singular'
-const vb = 'Infinitive'
-const jj = 'Adjective'
-const g = 'Gerund'
-const pst = 'PastTense'
+const merge = (a, b) => {
+  a = a || {}
+  b = b || {}
+  return Object.assign({}, a, b)
+}
 
 const switches = {
   // Singular - Infinitive -
   // date, call, claim, flash
   nounVerb: {
-    before: Object.assign({}, verb.before, {
-      Determiner: nn, //the date
-      Possessive: nn, //his date
-      Noun: nn, //nasa funding
-    }),
-    after: Object.assign({}, verb.after, {
-      Value: nn, //date nine  -?
-      Modal: nn, //date would
-      Copula: nn, //fear is
-    }),
-    ownTags: Object.assign({}, { ProperNoun: nn }),
-    beforeWords: Object.assign({}, verb.beforeWords, {
-      was: nn, //was time
-      is: nn, //
-    }),
-    afterWords: Object.assign({}, verb.afterWords, {
-      of: nn, //date of birth (preposition)
-    }),
-    fallback: vb,
+    parts: [verb, noun],
+    fallback: 'Infinitive',
   },
 
   // adjective - gerund - 'shocking'
   adjGerund: {
-    before: {
-      Copula: jj, //is shocking
-      Verb: g, // loves shocking
-      Adverb: g, //quickly shocking
-      Preposition: g, //by insulting
-      Conjunction: g, //to insulting
-    },
-    after: {
-      Adverb: g, //shocking quickly
-      Possessive: g, //shocking spencer's
-      ProperNoun: g, //shocking spencer
-      Pronoun: g, //shocking him
-      Determiner: g, //shocking the
-      Copula: g, //shocking is
-      Preposition: g, //dashing by
-      Conjunction: g, //insulting to
-      Noun: jj, //shocking ignorance, rallying cry, revealing clue
-    },
-    beforeWords: Object.assign({}, adj.beforeWords, {
-      been: g,
-    }),
-    afterWords: {
-      too: jj, //insulting too
-      also: jj, //insulting too
-      you: g, //telling you
-    },
-    fallback: jj,
+    parts: [adj, gerund],
+    // before: merge(gerund.before, {
+    //   Copula: 'Adjective', //is shocking
+    // }),
+    fallback: 'Adjective',
   },
 
   // adjective - pastTense - 'damaged'
   adjPast: {
-    before: Object.assign({}, adj.before, {
-      Adverb: pst, //quickly detailed
-      Pronoun: pst, //he detailed
-    }),
-    after: {
-      Noun: jj, //detailed plan
-      Possessive: pst, //hooked him
-      Pronoun: pst, //hooked me
-      Determiner: pst, //hooked the
-      Adjective: jj, //intoxicated little
-    },
-    beforeWords: Object.assign({}, adj.beforeWords, {
-      quickly: pst, //
-    }),
-    afterWords: {
-      by: pst, //damaged by
-      back: pst, //charged back
-      out: pst, //charged out
-      in: pst, //crowded in
-      up: pst, //heated up
-      down: pst, //hammered down
-    },
-    fallback: jj,
+    parts: [adj, past],
+    fallback: 'Adjective',
   },
-
   personNoun: {
-    before: Object.assign({}, person.before),
-    after: Object.assign({}, person.after),
-    ownTags: Object.assign({}, person.ownTags),
-    beforeWords: Object.assign({}, person.beforeWords),
-    afterWords: Object.assign({}, person.afterWords),
-    fallback: nn,
+    parts: [noun, person],
+    fallback: 'Singular',
   },
-
   personDate: {
-    before: Object.assign({}, person.before, date.before),
-    after: Object.assign({}, person.after, date.after),
-    ownTags: Object.assign({}, person.ownTags),
-    beforeWords: Object.assign({}, person.beforeWords, date.beforeWords),
-    afterWords: Object.assign({}, person.afterWords, date.afterWords),
-    fallback: nn,
+    parts: [person, date],
+    fallback: 'Singular',
   },
-
   personVerb: {
-    before: Object.assign({}, person.before, verb.before),
-    after: Object.assign({}, person.after, verb.after),
-    ownTags: Object.assign({}, person.ownTags),
-    beforeWords: Object.assign({}, person.beforeWords, verb.beforeWords),
-    afterWords: Object.assign({}, person.afterWords, verb.afterWords),
-    fallback: vb,
+    parts: [person, verb],
+    fallback: 'Singular',
   },
 }
 // add compressed word-data
 Object.keys(switches).forEach(k => {
-  switches[k].words = unpack(data[k])
+  let [a, b] = switches[k].parts
+  switches[k] = {
+    before: merge(a.before, b.before),
+    after: merge(a.after, b.after),
+    ownTags: merge(a.ownTags, b.ownTags),
+    beforeWords: merge(a.beforeWords, b.beforeWords),
+    afterWords: merge(a.afterWords, b.afterWords),
+    words: unpack(data[k]),
+    fallback: switches[k].fallback,
+  }
 })
 
 export default switches

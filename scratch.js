@@ -2,7 +2,7 @@
 import nlp from './src/three.js'
 // import nlp from './builds/compromise.cjs'
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 // bug!
 // let doc = nlp(`extra. one two.`)
@@ -11,7 +11,7 @@ nlp.verbose('tagger')
 
 // let txt = `conditions of employment started`
 // let txt = `one first step `
-let txt = `Thank you Comfort Zone`
+let txt = `Sue and Jeff`
 
 let doc = nlp(txt).debug()
 // console.log(doc.text('normal'))

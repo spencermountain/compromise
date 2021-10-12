@@ -7,7 +7,10 @@ export default {
     Possessive: jj, //spencer's detailed
   },
 
-  after: {},
+  after: {
+    Noun: jj, //detailed plan
+    Adjective: jj, //intoxicated little
+  },
 
   beforeWords: {
     seem: jj, //seem prepared
@@ -37,5 +40,8 @@ export default {
     it: jj, //find it insulting
     but: jj, //nothing but frustrating
   },
-  afterWords: {},
+  afterWords: {
+    too: jj, //insulting too
+    also: jj, //insulting too
+  },
 }

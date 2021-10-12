@@ -33,5 +33,6 @@ export default {
     sang: p,
     learn: p,
     learned: p,
+    and: p, //sue and jeff
   },
 }

@@ -30,6 +30,7 @@ const api = function (View) {
           terms[0].text = toTitleCase(terms[0].text)
         }
       })
+      this.compute('normal') //re-set normalized text
       return this
     }
   }

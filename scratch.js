@@ -8,11 +8,12 @@ import nlp from './src/three.js'
 // let doc = nlp(`extra. one two.`)
 // doc.remove('extra')
 // console.log(doc.text())
-let doc = nlp(`he did not see`).debug()
-// doc.contractions().expand()
+let doc = nlp(`he won't see`).debug()
+doc.contractions().expand()
+console.log(doc.text('normal'))
 // console.log(doc.text())
 
-console.log(doc.verbs().json()[0])
+// console.log(doc.verbs().json()[0])
 //
 /*
 

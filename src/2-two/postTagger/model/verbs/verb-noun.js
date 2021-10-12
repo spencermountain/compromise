@@ -143,6 +143,8 @@ export default [
   { match: '[#PresentTense] (are|were|was) #Adjective', group: 0, tag: 'Plural', reason: 'compromises-are-possible' },
   //pursue its dreams
   { match: '#PresentTense #Possessive [#PresentTense]', group: 0, tag: 'Plural', reason: 'pursue-its-dreams' },
+  // our unyielding support
+  { match: '#Possessive #Adjective [#Verb]', group: 0, tag: 'Noun', reason: 'our-full-support' },
   // ignoring commute
   {
     match: '#Copula #Gerund [#PresentTense]',

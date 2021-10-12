@@ -871,6 +871,18 @@ let arr = [
   [`i need your help`, 'i #Verb #Possessive #Noun'],
   [`have our unyielding support`, '#Verb #Possessive #Adjective #Noun'],
   [`my dear`, '#Possessive #Noun'],
+
+  [`My old position`, '#Possessive #Adjective #Noun'],
+  [`john's whole world`, '#Possessive #Adjective #Noun'],
+  [`your online profiles`, '#Possessive #Adjective #Noun'],
+  [`their past mistakes`, '#Possessive #Adjective #Noun'],
+  [`Toronto's epic Instagram feed`, '#Possessive #Adjective #Noun #Noun'],
+  [`in your foul shoes`, 'in #Possessive #Adjective #Noun'],
+  [`MY DEAR WIFE`, '#Possessive #Adjective #Noun'],
+  [`our beloved sons`, '#Possessive #Adjective #Noun'],
+  // [`your majesty shall`, '#Possessive #Adjective #Verb'],
+  [`my youthful mind`, '#Possessive #Adjective #Noun'],
+  [`our full support`, '#Possessive #Adjective #Noun'],
   // [``, ``],
   // [``, ``],
 ] //match-two

@@ -46,6 +46,8 @@ const rules = [
   { match: '<Noun> of #Determiner <Noun>', chunk: 'Noun' },
   // the history of science
   { match: '#Determiner #Noun of #Noun', chunk: 'Noun' },
+  // slices of ham
+  { match: '#Plural of #Singular', chunk: 'Noun' },
   // indoor and outdoor seating
   { match: '<Noun> and <Noun>', chunk: 'Noun' },
 ]

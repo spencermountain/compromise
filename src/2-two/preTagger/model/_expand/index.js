@@ -27,18 +27,25 @@ const expandSwitchers = function (switchers, model) {
   // get conjugations from maybe-verbs
   const infs = Object.keys(switchers.nounVerb.words).reduce((h, str) => {
     h[str] = 'Infinitive'
-    // switchers.nounVerb.words[str + 's'] = true
     return h
   }, {})
-  model = expandLexicon(infs, model)
+  // model = expandLexicon(infs, model)
+  // set the rest as defaults
+  let words = {}
+  Object.keys(switchers).forEach(k => {
+    Object.keys(switchers[k].words).forEach(str => {
+      words[str] = switchers[k].fallback
+    })
+  })
+  model = expandLexicon(words, model)
   return model
 }
 
 const expand = function (model) {
   model = expandIrregulars(model)
-  model = expandSwitchers(model.switchers, model)
   model = expandLexicon(model.lexicon, model)
   model = addUncountables(model.lexicon, model)
+  model = expandSwitchers(model.switchers, model)
   return model
 }
 export default expand

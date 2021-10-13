@@ -31,7 +31,7 @@ const lookAtTag = function (term, byTag) {
 }
 
 const goodAlready = function (term) {
-  const fine = ['Person', 'Place', 'Organization', 'Acronym']
+  const fine = ['ProperNoun', 'Acronym']
   return fine.some(tag => term.tags.has(tag))
 }
 

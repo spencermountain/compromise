@@ -32,25 +32,25 @@ export default {
     "after": "Person¦p0;erson,ropernoun|Singular¦copula,modal,value",
     "ownTags": "Singular¦propernoun",
     "beforeWords": "Person¦dear,h0yo;e0i;llo,y|Singular¦is,was",
-    "afterWords": "Person¦and,fe7learn6play5s2t0;el7h0old;inks,ought;a1ing,pend0;s,t;id,ng,ys;ed,s;!ed;e0lt;ls|Singular¦of",
+    "afterWords": "Person¦fe7learn6play5s2t0;el7h0old;inks,ought;a1ing,pend0;s,t;id,ng,ys;ed,s;!ed;e0lt;ls|Singular¦of",
     "words": "true¦a0Mb0Ec0Ad02e00fZgWhRjNkJlImColive,p8r5s3trini0Dv0wang;an,i0;cto0Mol0;a,et;a0ky,on6umm0HydnA;lvador,ntia00;ay,e1o0uF;b01d,se;ed,x;a2e0ol;aRn0;ny;ris,tX;a4e2i0;ck0l2;ey;lo00rced0;es;x,ya;aFeo,iK;e2i0obe;ng,r0tS;by;lvLnt;a2e1o0;lVrdan,y;an,w4;de,smi7y;a1iPo0;lApe,us2;ll,mil1z0;el;ton;ail,e1r0;ant,een;ne;aith,ern,lo,ranco;a0dFlmo,mir,ula,ve;rl;a4e3i1ol0;ly;ck,e0xF;go;an,ja;i1rw0wn;in;sy;atalina,h0liff,rystal;ari1in,risti0;!an;ty;a4e3i2r0;an0ook;dy;ll;nedict,rg;k1rb0;ie;er;l0rt;exand0fredo,ma;ria",
     "fallback": "Singular"
   },
   "personDate": {
     "before": "Person¦honorific,p0;ers0repositi0;on|Date¦date,value",
-    "after": "Person¦modal,p0;erson,ropernoun|Date¦date,value",
-    "ownTags": "Person¦propernoun",
+    "after": "Person¦copula,modal,p0;erson,ropernoun|Date¦date,value",
+    "ownTags": "",
     "beforeWords": "Person¦dear,h0yo;e0i;llo,y|Date¦after,by,during,in,last,next,of,sometime,t0until;his,il",
-    "afterWords": "Person¦and,fe7learn6play5s2t0;el7h0old;inks,ought;a1ing,pend0;s,t;id,ng,ys;ed,s;!ed;e0lt;ls|Date¦in,sometime,the,until",
+    "afterWords": "Person¦fe7learn6play5s2t0;el7h0old;inks,ought;a1ing,pend0;s,t;id,ng,ys;ed,s;!ed;e0lt;ls|Date¦in,sometime,the,until",
     "words": "true¦a2j0may,sep;an0une;!uary;p0ugust,v0;ril",
     "fallback": "Month"
   },
   "personVerb": {
     "before": "Person¦honorific,p0;ers0repositi0;on|Infinitive¦adverb,mod0negative,plur0;al",
-    "after": "Person¦modal,p0;erson,ropernoun|Infinitive¦adverb,conjunc1determiner,p0;ossessive,reposi0;tion",
-    "ownTags": "Person¦propernoun",
+    "after": "Person¦copula,modal,p0;erson,ropernoun|Infinitive¦adverb,conjunc1determiner,p0;ossessive,reposi0;tion",
+    "ownTags": "",
     "beforeWords": "Person¦dear,h0yo;e0i;llo,y|Infinitive¦i,please,t1w0you;e,ill;hey,o",
-    "afterWords": "Person¦and,fe7learn6play5s2t0;el7h0old;inks,ought;a1ing,pend0;s,t;id,ng,ys;ed,s;!ed;e0lt;ls|Infinitive¦me,the,you",
+    "afterWords": "Person¦fe7learn6play5s2t0;el7h0old;inks,ought;a1ing,pend0;s,t;id,ng,ys;ed,s;!ed;e0lt;ls|Infinitive¦me,the,you",
     "words": "true¦b2chu3drew,ja3ma1ollie,pat,rob,sue,w0;ade,ill;ck,rk;ob,u0;ck",
     "fallback": "Person"
   }

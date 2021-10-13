@@ -1,6 +1,5 @@
 import multiWord from './1st-pass/01-multiWord.js'
 import checkLexicon from './1st-pass/02-lexicon.js'
-import switchLexicon from './1st-pass/03-switchLexion.js'
 
 import checkSuffix from './2nd-pass/02-suffix.js'
 import checkRegex from './2nd-pass/04-regex.js'
@@ -16,7 +15,6 @@ import switchChange from './3rd-pass/04-switchChange.js'
 const first = {
   multiWord,
   checkLexicon,
-  switchLexicon,
 }
 const second = {
   checkSuffix,
@@ -39,8 +37,6 @@ const firstPass = function (terms, model) {
       found = found || first.multiWord(terms, i, model)
       // lookup known words
       found = found || first.checkLexicon(terms, i, model)
-      // set temporary tags for these
-      found = found || first.switchLexicon(terms, i, model)
     }
   }
 }

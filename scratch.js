@@ -9,15 +9,9 @@ nlp.verbose('tagger')
 // doc.remove('extra')
 // console.log(doc.text())
 
-let txt = `The TTC's Bloor-Danforth Line`
-// let txt = `one first step `
-
+let txt = `Monday 09 January 2006`
 let doc = nlp(txt).debug()
-console.log(doc.match('. . . .').json())
-// console.log(doc.text('normal'))
-// console.log(doc.text())
 
-console.log(doc.verbs().json())
 //
 /*
 

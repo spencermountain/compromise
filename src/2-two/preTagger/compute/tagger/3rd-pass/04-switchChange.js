@@ -1,4 +1,5 @@
 import fastTag from '../_fastTag.js'
+// import fillTags from '../3rd-pass/_fillTags.js'
 
 const lookAtWord = function (term, byWord) {
   if (!term) {
@@ -55,7 +56,7 @@ const swtichLexicon = function (terms, i, model) {
       tag = tag || lookAtTag(terms[i + 1], after)
       // look <- left tag next
       tag = tag || lookAtTag(terms[i - 1], before)
-      if (tag) {
+      if (tag && !term.tags.has(tag)) {
         // console.log(term, tag)
         term.tags.clear()
         fastTag(term, tag, `3-[switch] ${keys[o]}`)
@@ -63,6 +64,8 @@ const swtichLexicon = function (terms, i, model) {
           let parents = model.two.tagSet[tag].parents
           fastTag(term, parents, `3-switch-infer from ${tag}`)
         }
+        // deduce parent tags?
+        // fillTags(terms, i, model)
         return //one hint is good-enough
       }
     }

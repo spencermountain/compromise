@@ -4,6 +4,8 @@ import fillTags from '../3rd-pass/_fillTags.js'
 const titleCase = /^[A-Z][a-z'\u00C0-\u00FF]/
 const hasNumber = /[0-9]/
 
+const notProper = ['Date', 'Month', 'WeekDay', 'Unit']
+
 // https://stackoverflow.com/a/267405/168877
 const romanNumeral = /^[IVXLCDM]{2,}$/
 const romanNumValid = /^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/
@@ -14,6 +16,9 @@ const checkCase = function (terms, i, model) {
   let str = term.text //need case info
   // titlecase and not first word of sentence
   if (i !== 0 && titleCase.test(str) === true && hasNumber.test(str) === false) {
+    if (notProper.find(tag => term.tags.has(tag))) {
+      return null
+    }
     fillTags(terms, i, model)
     if (!term.tags.has('Noun')) {
       term.tags.clear()

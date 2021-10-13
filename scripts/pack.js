@@ -34,7 +34,11 @@ const steps = [
     path: './src/2-two/preTagger/model/switches/_data.js',
     compress: function () {
       Object.keys(switches).forEach(k => {
-        switches[k] = pack(switches[k])
+        Object.keys(switches[k]).forEach(key => {
+          if (typeof switches[k][key] !== 'string') {
+            switches[k][key] = pack(switches[k][key])
+          }
+        })
       })
       return switches
     },

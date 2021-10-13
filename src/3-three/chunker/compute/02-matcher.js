@@ -24,6 +24,8 @@ const rules = [
   { match: '#Gerund #Adjective', chunk: 'Verb' },
   // going to walk
   { match: '#Gerund to #Verb', chunk: 'Verb' },
+  // is no
+  { match: '#Copula no', chunk: 'Verb' },
   // had not
   { match: '#Verb #Negative', chunk: 'Verb' },
   // not seen
@@ -42,12 +44,15 @@ const rules = [
   { match: '#Determiner <Noun>', chunk: 'Noun' },
   // brown fox
   { match: '#Adjective+ <Noun>', chunk: 'Noun' },
+  // --- of ---
   // son of a gun
   { match: '<Noun> of #Determiner <Noun>', chunk: 'Noun' },
   // the history of science
   { match: '#Determiner #Noun of #Noun', chunk: 'Noun' },
   // slices of ham
   { match: '#Plural of #Singular', chunk: 'Noun' },
+  // --- in ---
+  { match: '<Noun> in <Noun>', chunk: 'Noun' },
   // indoor and outdoor seating
   { match: '<Noun> and <Noun>', chunk: 'Noun' },
 ]

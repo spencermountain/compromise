@@ -1,6 +1,6 @@
 import isSubordinate from './isSubordinate.js'
 import isPlural from './isPlural.js'
-import find from './find.js'
+import find from '../find.js'
 
 // return the nth elem of a doc
 export const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)

@@ -21,5 +21,7 @@ let matches = [
 
   // such skill
   { match: '[such] (a|an|is)? #Noun', group: 0, tag: 'Determiner', reason: 'such-skill' },
+  // sorry
+  { match: '(say|says|said) [sorry]', group: 0, tag: 'Expression', reason: 'say-sorry' },
 ]
 export default matches

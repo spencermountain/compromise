@@ -15,7 +15,6 @@ const here = '[three/noun-phrase]'
 
 test('noun-phrases', function (t) {
   let arr = [
-    ['he was a person of interest in the case', ['he', 'a person of interest', 'the case']],
     ['he was the mayor of chicago', ['he', 'the mayor of chicago']],
     ['he was the captain of the football team', ['he', 'the captain of the football team']],
     ['he was the Knight of the Round Table', ['he', 'the Knight of the Round Table']],
@@ -49,13 +48,39 @@ test('noun-phrases', function (t) {
       ['a slew of gadgets', 'the delicate table near the door'],
     ],
 
-    /*
-    are we going to the premium one at two 
-    you will read a page and want to shoot yourself
-    check some benchmarks for c and java 
-    As a result of this decision, the Nation reinstated the class
-    heavy rains wash away stagnant pools 
-    */
+    [`spencer's friend is upset`, [`spencer's friend`]],
+
+    // #Noun - #Pronoun
+    [`he says sorry there is no gravy`, ['he', 'there', 'gravy']],
+    [`The next time I met him`, ['The next time', 'I', 'him']],
+    [`Next morning they went`, ['Next morning', 'they']],
+    [`Huh, I would’ve thought it was the other way around.`, ['I', 'it', 'the other way around.']],
+    [`I remember this semi-truck coming towards me`, ['I', 'this semi-truck', 'me']],
+    [`As he recalled the misfortune he wept bitterly`, ['he', 'the misfortune', 'he']],
+    [`The data we are receiving`, ['The data', 'we']],
+    [`The next two folks I have seen`, ['The next two folks', 'I']],
+    [`Every second word he swore`, ['Every second word', 'he']],
+    [`your forgiveness I implore`, ['your forgiveness', 'I']],
+    [`we commended him for his bravery`, ['we', 'him', 'his bravery']],
+    ['because you are a client i can not ask', ['you', 'a client', 'i']],
+    ['with the black suit i wore', ['the black suit', 'i']],
+    ['give them the best meal', ['them', 'the best meal']],
+    ['teach him five lessons', ['him', 'five lessons']],
+    // #Noun in #Noun
+    [`I told my wife I wanted breakfast in bed`, ['I', 'my wife', 'I', 'breakfast in bed']],
+    ['everybody in the tavern', ['everybody in the tavern']],
+    // ['he was a person of interest in the case', ['he', 'a person of interest', 'the case']],
+
+    ['the service techs are friendly', ['the service techs']],
+    [`piece of that Butterfinger I ate in january '07`, ['piece of that Butterfinger', 'I', "january '07"]],
+    ['the noise the slide makes', ['the noise', 'the slide']],
+    ['Had to lick his shoe', ['his shoe']],
+    // ['precisely to relieve the burden', ['the burden']],
+    // [`are we going to the premium one at two `, ['we','the premium one','two']],
+    [`you will read a page and want to shoot yourself`, ['you', 'a page', 'yourself']],
+    // [`check some benchmarks for c and java `, ['some benchmarks','c and java']],
+    // [`As a result of this decision, the Nation reinstated the class`, []],
+    [`heavy rains wash away stagnant pools `, ['heavy rains', 'stagnant pools']],
   ]
   arr.forEach(function (a) {
     const nouns = nlp(a[0]).nouns().out('array')

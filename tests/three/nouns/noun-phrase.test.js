@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/noun-phrase]'
+const here = '[three/noun-phrase] '
 
 //(from https://brenocon.com/JustesonKatz1995.pdf)
 // AN: linear function; lexical ambiguity; mobile phase
@@ -81,6 +81,12 @@ test('noun-phrases', function (t) {
     // [`check some benchmarks for c and java `, ['some benchmarks','c and java']],
     // [`As a result of this decision, the Nation reinstated the class`, []],
     [`heavy rains wash away stagnant pools `, ['heavy rains', 'stagnant pools']],
+    // [`'My first play through of it'`,[]]
+    [`They walked on through the night`, ['They', 'the night']],
+    [`you have only the practice of friendship`, ['you', 'the practice of friendship']],
+    [`we commended him for his bravery`, ['we', 'him', 'his bravery']],
+    [`should give parents the power`, 'parents', 'the power'],
+    [`Sweet is the scent`, ['the scent']],
   ]
   arr.forEach(function (a) {
     const nouns = nlp(a[0]).nouns().out('array')

@@ -1,4 +1,5 @@
 import fastTag from '../_fastTag.js'
+const hasApostrophe = /['‘’‛‵′`´]/
 
 // normal regexes
 const startsWith = function (str, regs) {
@@ -24,8 +25,12 @@ const checkRegex = function (terms, i, model) {
   let { regexText, regexNormal, endsWith } = model.two
   let term = terms[i]
   let normal = term.machine || term.normal
-
-  let arr = startsWith(term.text, regexText) || startsWith(normal, regexNormal)
+  let text = term.text
+  // keep dangling apostrophe?
+  if (hasApostrophe.test(term.post) && !hasApostrophe.test(term.pre)) {
+    text += term.post.trim()
+  }
+  let arr = startsWith(text, regexText) || startsWith(normal, regexNormal)
   // only run endsWith if we're desperate
   if (!arr && term.tags.size === 0) {
     arr = doEndsWith(normal, endsWith)

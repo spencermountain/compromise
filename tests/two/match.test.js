@@ -883,7 +883,10 @@ let arr = [
   // [`your majesty shall`, '#Possessive #Adjective #Verb'],
   [`my youthful mind`, '#Possessive #Adjective #Noun'],
   [`our full support`, '#Possessive #Adjective #Noun'],
-  // [``, ``],
+
+  [`the feminine`, `the #Noun`],
+  [`the feminine form`, `the #Adjective #Noun`],
+  [`I'm fuckin' around with two geese`, `#Pronoun #Copula #Gerund #Particle #Preposition #Value #Plural`],
   // [``, ``],
 ] //match-two
 test('match:', function (t) {

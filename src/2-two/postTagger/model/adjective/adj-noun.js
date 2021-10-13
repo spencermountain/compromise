@@ -13,7 +13,7 @@ export default [
   { match: `#Gerund giant`, tag: 'Noun', reason: 'brewing-giant' },
   // the orange
   {
-    match: '#Determiner [(#Adjective)]$',
+    match: '#Determiner [#Adjective]$',
     notif: ['Comparative', 'Superlative'],
     group: 0,
     tag: 'Noun',

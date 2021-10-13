@@ -23,5 +23,16 @@ let matches = [
   { match: '[such] (a|an|is)? #Noun', group: 0, tag: 'Determiner', reason: 'such-skill' },
   // sorry
   { match: '(say|says|said) [sorry]', group: 0, tag: 'Expression', reason: 'say-sorry' },
+
+  // double-prepositions
+  // rush out of
+  {
+    match: '#Verb [(out|for|through|about|around|in|down|up|on|off)] #Preposition',
+    group: 0,
+    tag: 'Particle',
+    reason: 'rush-out',
+  },
+  // at about
+  { match: '#Preposition [about]', group: 0, tag: 'Adjective', reason: 'at-about' },
 ]
 export default matches

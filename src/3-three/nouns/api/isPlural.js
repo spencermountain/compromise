@@ -1,6 +1,7 @@
 const notPlural = '(#Pronoun|#Place|#Value|#Person|#Uncountable|#Month|#WeekDay|#Holiday|#Possessive)'
 
 const isPlural = function (m, root) {
+  // const { looksPlural } = m.world.methods.two
   // these can't be plural
   if (root.has(notPlural) === true) {
     return false
@@ -12,6 +13,12 @@ const isPlural = function (m, root) {
   if (m.has('#Plural')) {
     return true
   }
-  return false
+  if (m.has('#Singular')) {
+    return false
+  }
+  // word-reg fallback
+  let str = root.text('normal')
+  // ends with a brutal s fallback
+  return str.length > 3 && str.endsWith('s')
 }
 export default isPlural

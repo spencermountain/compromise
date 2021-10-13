@@ -2,7 +2,7 @@
 import nlp from './src/three.js'
 // import nlp from './builds/compromise.cjs'
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 // bug!
 // let doc = nlp(`extra. one two.`)
@@ -15,9 +15,9 @@ import nlp from './src/three.js'
 // let txt = 'memories still remind me'
 // let txt = 'the quite dirty man and his little dog'
 // let txt = 'precisely to relieve the burden'
-let doc = nlp(`a surly captain `)
+let doc = nlp(`firemen`).tag('Noun')
 // console.log(doc.nouns().toPlural().toSingular())
-doc.nouns().toPlural()
+doc.nouns().toSingular()
 // console.log(doc.nouns().json())
 // let doc = nlp(txt)
 doc.compute('chunks').debug('chunks')

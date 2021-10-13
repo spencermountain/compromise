@@ -1,4 +1,5 @@
 import fastTag from '../_fastTag.js'
+import looksPlural from './looksPlural.js'
 // tags that are neither plural or singular
 const uncountable = [
   'Acronym',
@@ -11,14 +12,14 @@ const uncountable = [
   'Honorific',
 ]
 // try to guess if each noun is a plural/singular
-const pluralSingular = function (term) {
+const setPluralSingular = function (term) {
   if (!term.tags.has('Noun') || term.tags.has('Plural') || term.tags.has('Singular')) {
     return
   }
   if (uncountable.find(tag => term.tags.has(tag))) {
     return
   }
-  if (term.normal.endsWith('s')) {
+  if (looksPlural(term.normal)) {
     fastTag(term, 'Plural', '3-plural-guess')
   } else {
     fastTag(term, 'Singular', '3-singular-guess')
@@ -37,6 +38,6 @@ const fillTags = function (terms, i, model) {
     }
   }
   // turn 'Noun' into Plural/Singular
-  pluralSingular(term)
+  setPluralSingular(term)
 }
 export default fillTags

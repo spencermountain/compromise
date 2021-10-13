@@ -15,6 +15,7 @@ export default {
   barracks: 'barracks',
   beau: 'beaux',
   bus: 'buses',
+  gas: 'gases',
   cactus: 'cacti',
   chateau: 'chateaux',
   child: 'children',

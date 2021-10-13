@@ -5,9 +5,10 @@ const invertObj = function (obj) {
     return h
   }, {})
 }
+
 const toSingular = function (str, model) {
-  let irregulars = model.irregularNouns
-  let invert = invertObj(irregulars) //(not very efficient)
+  const { irregularPlurals } = model.two
+  let invert = invertObj(irregularPlurals) //(not very efficient)
   // check irregulars list
   if (invert.hasOwnProperty(str)) {
     return invert[str]

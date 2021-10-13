@@ -1,6 +1,8 @@
 import find from '../find.js'
 import parseNoun from './parse.js'
 import toJSON from './toJSON.js'
+import toPlural from './toPlural.js'
+import toSingular from './toSingular.js'
 
 // return the nth elem of a doc
 const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
@@ -44,16 +46,18 @@ const api = function (View) {
 
     toPlural(n) {
       return getNth(this, n).map(m => {
+        return toPlural(m, parseNoun(m))
+      })
+      // return new Nouns(all.document, all.pointer)
+    }
+
+    toSingular(n) {
+      return getNth(this, n).map(m => {
         let res = parseNoun(m)
-        // already plural
-        if (res.isPlural) {
-          return m
-        }
-        return m
+        return toSingular(m, res)
       })
     }
   }
-
   View.prototype.nouns = function (n) {
     this.compute('chunks')
     let m = find(this)

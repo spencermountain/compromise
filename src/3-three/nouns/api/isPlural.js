@@ -1,8 +1,8 @@
 const notPlural = '(#Pronoun|#Place|#Value|#Person|#Uncountable|#Month|#WeekDay|#Holiday|#Possessive)'
 
-const isPlural = function (m) {
+const isPlural = function (m, root) {
   // these can't be plural
-  if (m.has(notPlural) === true) {
+  if (root.has(notPlural) === true) {
     return false
   }
   // two singular nouns are plural noun phrase

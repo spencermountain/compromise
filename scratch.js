@@ -13,13 +13,15 @@ nlp.verbose('tagger')
 // let txt = 'I am done soaking it'
 // let txt = 'I wanted breakfast in bed'
 // let txt = 'memories still remind me'
-let txt = 'everybody in the tavern'
+// let txt = 'the quite dirty man and his little dog'
 // let txt = 'precisely to relieve the burden'
-
-let doc = nlp(txt).debug()
-
+let doc = nlp(`the surly captain of the basketball team`)
+// doc.nouns().toPlural()
+console.log(doc.nouns().json())
+// let doc = nlp(txt)
 doc.compute('chunks').debug('chunks')
-doc.nouns().debug()
+// doc.nouns().debug()
+// console.log(doc.nouns().adjectives().out('array'))
 
 //
 /*

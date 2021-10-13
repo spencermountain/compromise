@@ -12,7 +12,7 @@ import getGrammar from './parse/grammar/index.js'
 // return the nth elem of a doc
 export const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
 
-const findVerbs = function (View) {
+const api = function (View) {
   class Verbs extends View {
     constructor(document, pointer, groups) {
       super(document, pointer, groups)
@@ -98,4 +98,4 @@ const findVerbs = function (View) {
     return new Verbs(this.document, vb.pointer)
   }
 }
-export default findVerbs
+export default api

@@ -87,6 +87,13 @@ test('noun-phrases', function (t) {
     [`we commended him for his bravery`, ['we', 'him', 'his bravery']],
     [`should give parents the power`, 'parents', 'the power'],
     [`Sweet is the scent`, ['the scent']],
+    [`the surly captain of the basketball team`, ['the surly captain of the basketball team']],
+    [`the captain of the winning basketball team`, ['the captain of the winning basketball team']],
+    [`the nine captains of the new orleans basketball team`, ['the nine captains of the new orleans basketball team']],
+    [
+      `the unlikely captain of the largest international basketball team`,
+      ['the unlikely captain of the largest international basketball team'],
+    ],
   ]
   arr.forEach(function (a) {
     const nouns = nlp(a[0]).nouns().out('array')

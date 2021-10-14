@@ -19,7 +19,7 @@ export default {
     "fallback": "Adjective"
   },
   "adjPast": {
-    "before": "Adjective¦copula,determiner,possessive|PastTense¦adverb,pronoun",
+    "before": "Adjective¦copula,determiner,possessive|PastTense¦adverb,n0pron0;oun",
     "after": "Adjective¦adjective,noun|PastTense¦determiner,p0;ossessive,ronoun",
     "ownTags": "",
     "beforeWords": "Adjective¦a9b7deep8extreme8fe5it,most8ov4profound8quite,re3s1to0und4very,we2;o,t2;eem8o,ti0;ll;al4;er;el0lt;!s;ad0ut;ly;lso,ppear0;!ed,s|PastTense¦quickly",

@@ -2,7 +2,7 @@
 import nlp from './src/three.js'
 // import nlp from './builds/compromise.cjs'
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 // bug!
 // let doc = nlp(`extra. one two.`)
@@ -11,11 +11,9 @@ import nlp from './src/three.js'
 
 // Purchase of power from IPPs will ruin GEB
 // States that make basic private health insurance [should receive] federal funds
-// let doc = nlp(`the big tornado, i guess, was fast`)
+let doc = nlp(`the eyes closed`).debug()
+// doc.verbs().debug().toInfinitive()
 // doc.debug()
-
-let r = nlp("we're not gonna take it, no we're not gonna take it")
-r.contractions().expand()
 //
 /*
 

@@ -72,6 +72,7 @@ test('verb form names', function (t) {
       'The house is cleaned every day.', // simple present
       'The house has been cleaned since you left.', // Present perfect
       'My car has been stolen!',
+      'The house is being cleaned at the moment.', // Present continuous
     ],
     'passive-past': [
       'a window had been left open.',
@@ -81,7 +82,6 @@ test('verb form names', function (t) {
       'All the cookies have been eaten.',
       'The movie ET was directed by Spielberg.',
       'The house was cleaned yesterday.', // Simple past
-      'The house is being cleaned at the moment.', // Present continuous
       'The house was being cleaned last week.', // Past continuous
       'The house had been cleaned before they arrived.', // Past perfect
     ],

@@ -11,11 +11,11 @@ import nlp from './src/three.js'
 
 // Purchase of power from IPPs will ruin GEB
 // States that make basic private health insurance [should receive] federal funds
-let doc = nlp(`Images of death have lost shock value`)
-doc.ptrs = [[0], [0]]
-doc = doc.unique()
-doc.debug()
-// console.log(doc.quotations().text('normal'))
+// let doc = nlp(`the big tornado, i guess, was fast`)
+// doc.debug()
+
+let r = nlp("we're not gonna take it, no we're not gonna take it")
+r.contractions().expand()
 //
 /*
 

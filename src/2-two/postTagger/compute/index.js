@@ -1,10 +1,10 @@
 const splitByClause = function (document) {
-  const hasComma = /,/
+  const splitHere = /[,:;]/
   let arr = []
   document.forEach(terms => {
     let start = 0
     terms.forEach((term, i) => {
-      if (hasComma.test(term.post)) {
+      if (splitHere.test(term.post)) {
         arr.push(terms.slice(start, i + 1))
         start = i + 1
       }

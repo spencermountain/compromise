@@ -11,9 +11,7 @@ nlp.verbose('tagger')
 
 // Purchase of power from IPPs will ruin GEB
 // States that make basic private health insurance [should receive] federal funds
-let doc = nlp(`the eyes closed`).debug()
-// doc.verbs().debug().toInfinitive()
-// doc.debug()
+let doc = nlp(`he professes love`).debug()
 //
 /*
 

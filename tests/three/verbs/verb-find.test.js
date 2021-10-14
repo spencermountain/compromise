@@ -52,6 +52,18 @@ test('verb-splitter:', function (t) {
       str: `he professes love`,
       verbs: ['professes'],
     },
+    {
+      str: `we go eat`,
+      verbs: ['go eat'],
+    },
+    {
+      str: `we will go eat`,
+      verbs: ['will go eat'],
+    },
+    {
+      str: `we will walk eat`,
+      verbs: ['will walk', 'eat'],
+    },
     // {
     //   str: `poodles like to be pampered`,
     //   verbs: ['like', 'be pampered'],

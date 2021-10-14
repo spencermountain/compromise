@@ -22,7 +22,10 @@ const findVerbs = function (doc) {
   m = m.splitBefore('(#PresentTense|#PastTense) [will be]$', 0)
 
   // professes love
-  m = m.splitBefore('(#PresentTense|#PastTense) [#Infinitive]', 0)
+  let toVerbs = m.match('(#PresentTense|#PastTense) #Infinitive')
+  if (toVerbs.found && !toVerbs.has('^go')) {
+    m = m.splitBefore('(#PresentTense|#PastTense) [#Infinitive]', 0)
+  }
 
   //ensure there's actually a verb
   m = m.if('#Verb')

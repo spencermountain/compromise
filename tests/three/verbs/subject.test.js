@@ -2,7 +2,7 @@ import test from 'tape'
 import nlp from '../_lib.js'
 const here = '[three/verb-subjects]'
 
-test('get fluent-verb subject', function (t) {
+test('get verb subject', function (t) {
   let arr = [
     ['i am walking', 'i', 'am walking'],
     ['we are walking', 'we', 'are walking'],
@@ -16,7 +16,7 @@ test('get fluent-verb subject', function (t) {
     ['Former Congressman Tim Penny has raised the possibility', 'Former Congressman Tim Penny', 'has raised'],
     ["The TTC's Bloor-Danforth Line will turn 50 years old", 'Bloor-Danforth Line', 'will turn'],
     ["so we vigorously searched through my friend's selection", 'we', 'vigorously searched'],
-    ['Drizzy professes love for ESPN reporter at Raptors Drake Night', 'professes', 'love'],
+    ['the Man professes love for ESPN reporter at Raptors Night', 'the Man', 'professes'],
     ['The Dirty Bird is opening a second location', 'The Dirty Bird', 'is opening'],
     ['With the endorphins released and the decreased inflammation I felt great.', 'the endorphins', 'released'],
     // ["At last the wind wizard's son said to the King.", "the wind wizard's son", 'said'],
@@ -28,7 +28,7 @@ test('get fluent-verb subject', function (t) {
     ['the robber Captain carried a dagger under his garment.', 'the robber Captain', 'carried'],
     ['The newspaper supported the Whigs, (later Liberals).', 'The newspaper', 'supported'],
     ['Baby you can drive my car', 'you', 'can drive'],
-    ['Aiyah, we go eat first den decide later lah.', 'we', 'go eat'],
+    ['Aiyah, we go eat first then decide later lah.', 'we', 'go eat'],
     ['Experts warn against consuming adulterated oil', 'Experts', 'warn'],
     ['He slapped my face and he shook me like a rag doll', 'He', 'slapped'],
     ["she mistook the old woman's caution, and lingered for hours.", 'she', 'mistook'],
@@ -45,7 +45,10 @@ test('get fluent-verb subject', function (t) {
   ]
   arr.forEach(a => {
     let [str, subject, verb] = a
-    let vb = nlp(str).verbs(0) //.if(verb)
+    let vb = nlp(str).verbs()
+    if (vb.length > 1) {
+      vb = vb.if(verb).verbs()
+    }
     let res = vb.subjects()
     t.equal(vb.text(), verb, here + `[vb] '${a[0]}'`)
     t.equal(res.text(), subject, here + `[subj] '${a[0]}'`)

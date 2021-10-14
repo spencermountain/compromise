@@ -22,6 +22,7 @@ test('quotation test', function (t) {
     [`i heard "the news" today`, 'the news'],
     [`i heard 'news' today`, 'news'],
     [`yo. i heard "the very sad news" today`, 'the very sad news'],
+    [`i heard "the news today`, ''],
   ]
   arr.forEach(function (a) {
     const r = nlp(a[0])

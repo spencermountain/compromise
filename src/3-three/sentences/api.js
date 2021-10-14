@@ -22,7 +22,7 @@ const findVerbs = function (View) {
   const methods = {
     sentences: function (n) {
       this.compute('chunks')
-      let m = this.all()
+      let m = this.map(s => s.fullSentence())
       m = getNth(m, n)
       return new Sentences(this.document, m.pointer)
     },

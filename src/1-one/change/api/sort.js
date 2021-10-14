@@ -42,19 +42,17 @@ const reverse = function () {
 
 /** remove any duplicate matches */
 const unique = function () {
-  let { docs, pointer } = this
-  let ptrs = pointer || docs.map((_d, n) => [n])
   let already = new Set()
-  let toRemove = new Set()
-  this.docs.forEach((terms, n) => {
-    let txt = terms.map(t => t.machine || t.normal).join(' ')
+  let res = this.filter(m => {
+    let txt = m.text('normal')
     if (already.has(txt)) {
-      toRemove.add(n)
+      return false
     }
     already.add(txt)
+    return true
   })
-  ptrs = ptrs.filter((_a, n) => toRemove.has(n) === false)
-  return this.update(ptrs)
+  // this.ptrs = res.ptrs //mutate original?
+  return res
 }
 
 export default { unique, reverse, sort }

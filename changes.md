@@ -89,6 +89,7 @@ match(['foo', 'far'])
 - **[change]** drop undocumented options param to `.replaceWith()` method
 - **[change]** add match-group as 2nd param to split methods
 - **[change]** remove #FutureTense tag - which is not really a thing in english
+- **[change]** .unique() no-longer mutates parent
 
 - **[new]** .union(), .intersection(), .difference() and .complement() methods
 - **[new]** .freeze(), unfreeze() - prevent a match from drifting, once parent is mutated

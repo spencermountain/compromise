@@ -76,10 +76,10 @@ class View {
     }
     // compute a proper pointer, from docs
     let pointers = ptrs || docs.map((_d, n) => [n])
-    return pointers.map((a, n) => {
+    return pointers.map(a => {
       a = a.slice(0) //clone it
       a[1] = a[1] || 0
-      a[2] = a[2] || (document[n] || []).length
+      a[2] = a[2] || (document[a[0]] || []).length
       return a
     })
   }

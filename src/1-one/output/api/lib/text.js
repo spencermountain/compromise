@@ -1,5 +1,6 @@
-const trimEnd = /[,:;)\]*.?~!—-]+/
-const trimStart = /^[(['"*~]+/
+const trimEnd = /[,:;)\]*.?~!\u0022\uFF02\u0027\u201D\u2019\u00BB\u203A\u2032\u2033\u2034\u301E\u00B4—-]+/
+const trimStart =
+  /^[(['"*~\uFF02\u201C\u2018\u201F\u201B\u201E\u2E42\u201A\u00AB\u2039\u2035\u2036\u2037\u301D\u0060\u301F]+/
 
 const punctToKill = /[,:;)('"]/
 const isHyphen = /^[-–—]$/
@@ -22,7 +23,7 @@ const textFromTerms = function (terms, opts, keepSpace = true) {
       pre = pre.replace(/\s/, '') //remove pre-whitespace
       post = post.replace(/\s+/, ' ') //replace post-whitespace with a space
     }
-    if (opts.keepPunct === false) {
+    if (!opts.keepPunct) {
       pre = pre.replace(trimStart, '')
       if (post === '-') {
         post = ' '

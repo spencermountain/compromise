@@ -23,18 +23,38 @@ const pairs = {
 
 const hasOpen = RegExp('(' + Object.keys(pairs).join('|') + ')')
 
-const find = function (view) {
-  view.compute('index')
-  view.docs.forEach(terms => {
-    let isOpen = false
-    terms.forEach(term => {
-      if (!isOpen && term.pre && hasOpen.test(term.pre)) {
-      }
-    })
-  })
+const findEnd = function (terms, i) {
+  const have = terms[i].pre.match(hasOpen)[0] || ''
+  if (!have || !pairs[have]) {
+    return null
+  }
+  const want = pairs[have]
+  for (; i < terms.length; i += 1) {
+    if (terms[i].post && terms[i].post.match(want)) {
+      return i
+    }
+  }
+  return null
 }
 
-const quotations = function (n) {
-  return find(this)
+const find = function () {
+  this.compute('index')
+  let ptrs = []
+  this.docs.forEach(terms => {
+    let isOpen = false
+    for (let i = 0; i < terms.length; i += 1) {
+      let term = terms[i]
+      if (!isOpen && term.pre && hasOpen.test(term.pre)) {
+        let end = findEnd(terms, i)
+        if (end !== null) {
+          let [n, start] = terms[i].index
+          ptrs.push([n, start, end + 1])
+          i = end
+        }
+      }
+    }
+  })
+  return this.update(ptrs)
 }
-export default quotations
+
+export default find

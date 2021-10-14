@@ -7,7 +7,7 @@ test('isPlural:', function (t) {
     ['octopus', false],
     ['tree', false],
     ['trees', true],
-    // ['i', false],
+    ['i', false],
     ['mayor of chicago', false],
     ['mayors of chicago', true],
     ['octopus', false],
@@ -21,8 +21,8 @@ test('isPlural:', function (t) {
     ['circus', false],
     ['circuses', true],
     ['circuses', true],
-    // ['simpsons\'', false],
-    // ['she\'s', false],
+    ["simpsons'", false],
+    ["she's", false],
   ]
   arr.forEach(function (a) {
     const r = nlp(a[0]).nouns()

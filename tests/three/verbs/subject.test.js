@@ -42,6 +42,10 @@ test('get verb subject', function (t) {
     // ['I went up to Mr. T and said', 'I', 'said'],
     ['Purchase of power from IPPs will ruin GEB', 'Purchase of power', 'will ruin'],
     ['Govt to blame for plastic mess; say manufacturers', 'manufacturers', 'say'],
+    [`Even the IP and ICDC have abandoned the neighbourhood`, `the IP and ICDC`, `have abandoned`],
+    [`They have sent over their top reporter Ahmed Mansour`, `They`, `have sent over`],
+    [`He did once make an unforgivable error`, `He`, `did once make`],
+    [``, ``, ``],
   ]
   arr.forEach(a => {
     let [str, subject, verb] = a

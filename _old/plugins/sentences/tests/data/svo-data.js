@@ -18732,7 +18732,7 @@ module.exports = [
     obj: 'it',
   },
   {
-    txt: "And, you 're going to develop a hopeless romantic streak.",
+    txt: "And, you're going to develop a hopeless romantic streak.",
     subj: 'you',
     verb: "'re going",
     obj: 'streak',

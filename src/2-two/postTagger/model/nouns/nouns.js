@@ -20,6 +20,8 @@ export default [
   { match: '#Determiner [#Verb] of', group: 0, tag: 'Noun', reason: 'the-verb-of' },
   //the threat of force
   { match: '#Determiner #Noun of [#Verb]', group: 0, tag: 'Noun', ifNo: '#Gerund', reason: 'noun-of-noun' },
+  //Grandma's cooking, my tiptoing
+  { match: '#Possessive [#Gerund]', group: 0, tag: 'Noun', reason: 'grandmas-cooking' },
 
   //'u' as pronoun
   { match: '#Conjunction [u]', group: 0, tag: 'Pronoun', reason: 'u-pronoun-2' },

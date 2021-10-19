@@ -45,7 +45,22 @@ test('get verb subject', function (t) {
     [`Even the IP and ICDC have abandoned the neighbourhood`, `the IP and ICDC`, `have abandoned`],
     [`They have sent over their top reporter Ahmed Mansour`, `They`, `have sent over`],
     [`He did once make an unforgivable error`, `He`, `did once make`],
-    [``, ``, ``],
+    [`Al-Iraqiyah tv said that ICDC were controlling Ramadi.`, `Al-Iraqiyah tv`, `said`],
+    // [`how it may affect the future`, `it`, `may affect`],
+    [`Many people still believe that to be true`, `Many people`, `still believe`],
+    [`As a parent, I can imagine how painful it must be`, `I`, `can imagine`],
+    [`Read some of the following links`, ``, `Read`],
+    [`You wonder if he was manipulating the market`, `he`, `was manipulating`],
+    [`Your reply is good and deserves something`, `Your reply`, `is`],
+    [`Your reply is good and deserves something`, `Your reply`, `deserves`],
+    // [`dozens of school buses were submerged`, `dozens of school buses`, `were submerged`],
+    // [`All Aries natives may have to tighten their belts and curb their desire`, `All Aries natives`, `may have to`],
+    // [`All Aries natives may have to tighten their belts and curb their desire`, `All Aries natives`, `curb`],
+    [`As a result, your finances improve`, `your finances`, `improve`],
+    [`These leaps and bounds forward include love and creativity`, `These leaps and bounds forward`, `include`],
+    // [`Your working life might not go so smoothly this year`, `Your working life`, `might not go so smoothly`],
+    [`Flex your muscles, friend Libra, and prepare for an easy ride`, `friend Libra`, `prepare`],
+    [`Your life might take on a new direction`, 'Your life', 'might take on'],
   ]
   arr.forEach(a => {
     let [str, subject, verb] = a

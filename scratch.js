@@ -11,9 +11,11 @@ import nlp from './src/three.js'
 
 // States that make basic private health insurance [should receive] federal funds
 // let doc = nlp(`Purchase of power from IPPs will ruin GEB`)
+let doc = nlp(`I just love the smell of Grandma's cooking.`)
 // let doc = nlp(`On Wednesday guerrillas had kidnapped a cosmetic surgeon and his wife while they were on their way home.`)
-let doc = nlp(`You wonder if he was manipulating the market with his bombing targets.`)
-doc.chunks().debug('chunks')
+// let doc = nlp(`You wonder if he was manipulating the market with his bombing targets.`)
+doc.debug('chunks')
+doc.chunks().debug()
 
 //
 /*

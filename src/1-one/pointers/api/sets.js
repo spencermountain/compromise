@@ -11,7 +11,7 @@ methods.union = function (m) {
   const { getUnion } = this.methods.one
   m = getDoc(m, this)
   let ptrs = getUnion(this.fullPointer, m.fullPointer)
-  return this.update(ptrs)
+  return this.toView(ptrs)
 }
 methods.and = methods.union
 
@@ -20,7 +20,7 @@ methods.intersection = function (m) {
   const { getIntersection } = this.methods.one
   m = getDoc(m, this)
   let ptrs = getIntersection(this.fullPointer, m.fullPointer)
-  return this.update(ptrs)
+  return this.toView(ptrs)
 }
 
 // only parts of a that b does not have
@@ -28,7 +28,7 @@ methods.difference = function (m) {
   const { getDifference } = this.methods.one
   m = getDoc(m, this)
   let ptrs = getDifference(this.fullPointer, m.fullPointer)
-  return this.update(ptrs)
+  return this.toView(ptrs)
 }
 methods.not = methods.difference
 
@@ -37,7 +37,7 @@ methods.complement = function () {
   const { getDifference } = this.methods.one
   let doc = this.all()
   let ptrs = getDifference(doc.fullPointer, this.fullPointer)
-  return this.update(ptrs)
+  return this.toView(ptrs)
 }
 
 // remove overlaps

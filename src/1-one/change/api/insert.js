@@ -24,7 +24,7 @@ const insert = function (str, view, prepend) {
   })
   // convert them to whole sentences
   ptrs = ptrs.map(a => [a[0]])
-  let doc = view.update(ptrs)
+  let doc = view.toView(ptrs)
   // try to tag them, too
   doc.compute(['preTagger', 'contractions', 'postTagger', 'index'])
   return doc
@@ -51,7 +51,7 @@ const fns = {
     // is it other pointers from the same document?
     if (this.document === input.document) {
       let ptrs = this.fullPointer.concat(input.fullPointer)
-      return this.update(ptrs).compute('index')
+      return this.toView(ptrs).compute('index')
     }
     return this
   },

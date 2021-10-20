@@ -26,7 +26,7 @@ const map = function (cb) {
   res.forEach(ptr => {
     all = all.concat(ptr.fullPointer)
   })
-  return this.update(all)
+  return this.toView(all)
 }
 
 const filter = function (cb) {

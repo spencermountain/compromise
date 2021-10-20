@@ -87,7 +87,7 @@ const methods = {
     // mutate original
     self.ptrs = ptrs
     self.document = document
-    return self.update(ptrs).compute('index') //return new document
+    return self.toView(ptrs).compute('index') //return new document
   },
 }
 // aliases

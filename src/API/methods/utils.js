@@ -5,7 +5,7 @@ const utils = {
   },
   /** */
   terms: function (n) {
-    let m = this.match('.') //make this faster
+    let m = this.match('.').toView() //make this faster
     return typeof n === 'number' ? m.eq(n) : m
   },
 
@@ -51,12 +51,12 @@ const utils = {
 
   /** return a view of the entire document */
   all: function () {
-    return this.update()
+    return this.update().toView()
   },
   /**  */
   fullSentences: function () {
     let ptrs = this.fullPointer.map(a => [a[0]]) //lazy!
-    return this.update(ptrs)
+    return this.update(ptrs).toView()
   },
   /** return a view of no parts of the document */
   none: function () {

@@ -23,9 +23,15 @@ let doc = nlp(`all the days since december were gross`)
 // let doc = nlp(text)
 // doc.debug('chunks')
 // doc.chunks().debug()
-doc.verbs().subjects().debug()
+// doc.verbs().subjects().debug()
 // console.log(doc.nouns().json())
-//
+
+
+let r = nlp(`John Smith and Jack were walking`)
+let m = doc.verbs().match('.')
+console.log(m)
+
+
 /*
 
 

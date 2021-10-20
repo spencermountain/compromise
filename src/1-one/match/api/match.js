@@ -5,7 +5,7 @@ const match = function (regs, group) {
   // support param as view object
   if (isView(regs)) {
     let ptrs = regs.fullPointer // support a view object as input
-    return this.update(ptrs)
+    return this.toView(ptrs)
   }
   // support param as string
   if (typeof regs === 'string') {
@@ -14,7 +14,7 @@ const match = function (regs, group) {
   let todo = { regs, group }
   let res = one.match(this.docs, todo, this._cache)
   let { ptrs, byGroup } = fixPointers(res, this.fullPointer)
-  let view = this.update(ptrs)
+  let view = this.toView(ptrs)
   view._groups = byGroup
   return view
 }
@@ -24,7 +24,7 @@ const matchOne = function (regs = '', group) {
   // support at view as a param
   if (isView(regs)) {
     let ptrs = regs.fullPointer // support a view object as input
-    return this.update(ptrs)
+    return this.toView(ptrs)
   }
   if (typeof regs === 'string') {
     regs = one.parseMatch(regs)
@@ -32,7 +32,7 @@ const matchOne = function (regs = '', group) {
   let todo = { regs, group, justOne: true }
   let res = one.match(this.docs, todo, this._cache)
   let { ptrs, byGroup } = fixPointers(res, this.fullPointer)
-  let view = this.update(ptrs)
+  let view = this.toView(ptrs)
   view._groups = byGroup
   return view
 }

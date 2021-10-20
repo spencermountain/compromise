@@ -11,7 +11,7 @@ const before = function (regs, group) {
       pre.push([first[0], 0, first[1]])
     }
   })
-  let preWords = this.update(pre)
+  let preWords = this.toView(pre)
   if (!regs) {
     return preWords
   }
@@ -31,7 +31,7 @@ const after = function (regs, group) {
       post.push([n, end, document[n].length])
     }
   })
-  let postWords = this.update(post)
+  let postWords = this.toView(post)
   if (!regs) {
     return postWords
   }

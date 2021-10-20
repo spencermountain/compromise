@@ -4,28 +4,20 @@ import { repair, isSame } from './methods/_repair.js'
 
 class View {
   constructor(document, pointer, groups = {}) {
-    Object.defineProperty(this, 'document', {
-      value: document,
-      writable: true,
+    // invisible props
+    [
+      ['document', document],
+      ['world', world],
+      ['_groups', groups],
+      ['_cache', null],
+      ['viewType', 'View']
+    ].forEach(a => {
+      Object.defineProperty(this, a[0], {
+        value: a[1],
+        writable: true,
+      })
     })
-    Object.defineProperty(this, 'world', {
-      value: world,
-      writable: true,
-    })
-    Object.defineProperty(this, '_groups', {
-      value: groups,
-      writable: true,
-    })
-    Object.defineProperty(this, '_cache', {
-      value: null,
-      writable: true,
-    })
-    // Object.defineProperty(this, 'pointer', {
-    //   value: pointer,
-    //   writable: true,
-    // })
     this.ptrs = pointer
-    // this.size = pointer ? pointer.length : 0
   }
   /* getters:  */
   get docs() {
@@ -38,10 +30,6 @@ class View {
       repair(this)
       docs = world.methods.one.getDoc(this.ptrs, this.document)
     }
-    // lazy-getter (fires once)
-    // Object.defineProperty(this, 'docs', {
-    //   value: docs,
-    // })
     return docs
   }
   get pointer() {
@@ -91,6 +79,9 @@ class View {
   }
   // create a new View, from this one
   toView(pointer) {
+    if (pointer === undefined) {
+      pointer = this.pointer
+    }
     let m = new View(this.document, pointer)
     m._cache = this._cache // share this full thing
     return m
@@ -106,7 +97,9 @@ class View {
       })
     })
     // clone only sub-document ?
-    let m = new View(document, this.pointer)
+    let m = this.update(this.pointer)
+    m.document = document
+    // let m = new View(document, this.pointer)
     // m._cache = this._cache //clone this too?
     return m
   }

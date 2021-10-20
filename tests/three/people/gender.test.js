@@ -24,8 +24,8 @@ test('people-gender:', function (t) {
   ]
   arr.forEach(a => {
     let [str, want] = a
-    let res = nlp(str).people().json()[0]
-    t.equal(res.person.presumed_gender, want, here + 'gender - ' + str)
+    let res = nlp(str).people().json()[0] || {}
+    t.equal((res.person || {}).presumed_gender, want, here + 'gender - ' + str)
   })
   t.end()
 })

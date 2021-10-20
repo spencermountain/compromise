@@ -6,7 +6,9 @@ const matcher = function (document, byGroup, methods) {
   const one = methods.one
   // find suitable matches to attempt, on each sentence
   let docCache = one.cacheDoc(document)
+  // collect possible matches for this document
   let maybeList = matchUp(docCache, byGroup)
+  // ensure all defined needs are met for each match
   maybeList = localTrim(maybeList, docCache)
   // now actually run the matches
   let results = runMatch(maybeList, document, one)

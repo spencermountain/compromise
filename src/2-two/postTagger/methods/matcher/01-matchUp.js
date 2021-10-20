@@ -1,13 +1,14 @@
 // for each cached-sentence, find a list of possible matches
-const matchUp = function (docCache, byGroup) {
-  return docCache.map(needs => {
-    let maybes = new Set()
+const matchUp = function (docNeeds, matchGroups) {
+  return docNeeds.map(needs => {
+    let maybes = []
     needs.forEach(need => {
-      if (byGroup.hasOwnProperty(need)) {
-        byGroup[need].forEach(o => maybes.add(o))
+      if (matchGroups.hasOwnProperty(need)) {
+        maybes = maybes.concat(matchGroups[need])
       }
     })
-    return maybes
+    return new Set(maybes)
   })
 }
+
 export default matchUp

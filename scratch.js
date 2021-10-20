@@ -11,7 +11,7 @@ import text from '/Users/spencer/mountain/compromise/scripts/perf/flame/_sotu-te
 // console.log(doc.text())
 
 // let doc = nlp(`all the days since december were gross`)
-let doc = nlp(`one two three four value in God's sight five six seven`).debug()
+let doc = nlp(`dr. food`).debug()
 // let doc = nlp(text)
 // doc.compute('chunks')
 // doc.debug('chunks')

@@ -10,4 +10,4 @@ Object.keys(switches).forEach(k => {
     }
   })
 })
-console.log(all)
+console.log(all) // eslint-disable-line

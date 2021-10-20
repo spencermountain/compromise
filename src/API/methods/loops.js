@@ -16,8 +16,9 @@ const map = function (cb) {
   if (res.length === 0) {
     return this.update([])
   }
-  // return an array of values?
-  if (res[0] && typeof res[0] === 'object' && !res[0].isView) {
+  // return an array of values, or View objects?
+  // user can return either from their callback
+  if (res[0] !== undefined && typeof res[0] === 'object' && (res[0] === null || !res[0].isView)) {
     return res
   }
   // return a View object

@@ -17,9 +17,9 @@ test('numerator-denominator parsing', function (t) {
     ['3/8s', 3, 8],
   ]
   arr.forEach(a => {
-    let res = nlp(a[0]).fractions().json()[0] || { fraction: {} }
-    t.equal(res.fraction.numerator, a[1], here + 'numerator - ' + a[0])
-    t.equal(res.fraction.denominator, a[2], here + 'denominator - ' + a[0])
+    let res = nlp(a[0]).fractions().json()[0] || {}
+    t.equal((res.fraction || {}).numerator, a[1], here + 'numerator - ' + a[0])
+    t.equal((res.fraction || {}).denominator, a[2], here + 'denominator - ' + a[0])
   })
   t.end()
 })

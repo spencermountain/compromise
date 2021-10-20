@@ -33,6 +33,7 @@
     "no-use-before-define":1,
     "prefer-const": 0,
     "radix":1,
+    "no-unused-vars":1,
 
 
     "regexp/prefer-d": 0,

@@ -17,16 +17,16 @@ const multi = [
 
 export default [
   // Foo University
-  { match: `#Noun ${orgMap}`, tag: 'Organization', safe: true, reason: 'foo-university' },
-  // University of Toronto
-  { match: `${orgMap} of #Place`, tag: 'Organization', safe: true, reason: 'university-of-foo' },
+  // { match: `#Noun ${orgMap}`, tag: 'Organization', safe: true, reason: 'foo-university' },
+  // // University of Toronto
+  // { match: `${orgMap} of #Place`, tag: 'Organization', safe: true, reason: 'university-of-foo' },
 
-  // foo regional health authority
-  { match: `${orgMap} (health|local|regional)+ authority`, tag: 'Organization', reason: 'regional-health' },
-  // foo stock exchange
-  { match: `${orgMap} (stock|mergantile)+ exchange`, tag: 'Organization', reason: 'stock-exchange' },
-  // foo news service
-  { match: `${orgMap} (daily|evening|local)+ news service?`, tag: 'Organization', reason: 'foo-news' },
+  // // foo regional health authority
+  // { match: `${orgMap} (health|local|regional)+ authority`, tag: 'Organization', reason: 'regional-health' },
+  // // foo stock exchange
+  // { match: `${orgMap} (stock|mergantile)+ exchange`, tag: 'Organization', reason: 'stock-exchange' },
+  // // foo news service
+  // { match: `${orgMap} (daily|evening|local)+ news service?`, tag: 'Organization', reason: 'foo-news' },
 
   //John & Joe's
   { match: '#Noun (&|n) #Noun', tag: 'Organization', reason: 'Noun-&-Noun' },

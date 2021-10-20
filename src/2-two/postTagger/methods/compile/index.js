@@ -14,6 +14,20 @@ const compile = function (matches, methods) {
   matches = cache(matches, methods)
   // organize them according to need...
   let byGroup = group(matches, methods)
+
+  // every sentence has a noun
+  delete byGroup['#Noun']
+
+  // let words = Object.keys(byGroup)
+  // words = words.sort((a, b) => {
+  //   if (byGroup[a].length > byGroup[b].length) {
+  //     return -1
+  //   }
+  //   return 0
+  // })
+  // words.slice(0, 10).forEach(k => {
+  //   console.log(k, byGroup[k].length)
+  // })
   return byGroup
 }
 

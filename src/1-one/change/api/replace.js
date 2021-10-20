@@ -8,7 +8,7 @@ fns.replaceWith = function (input) {
   let original = this.update(ptrs)
   this.delete(original)
   // what should we return?
-  return this.update(ptrs)
+  return this.update(ptrs).compute('index')
 }
 
 fns.replace = function (match, input) {

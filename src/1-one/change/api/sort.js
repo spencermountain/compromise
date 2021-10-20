@@ -32,7 +32,7 @@ const sort = function (input) {
   return this
 }
 
-/** reverse the order of the matches, but not the words */
+/** reverse the order of the matches, but not the words or index */
 const reverse = function () {
   let ptrs = this.pointer || this.docs.map((_d, n) => [n])
   ptrs = [].concat(ptrs)
@@ -52,7 +52,7 @@ const unique = function () {
     return true
   })
   // this.ptrs = res.ptrs //mutate original?
-  return res
+  return res//.compute('index')
 }
 
 export default { unique, reverse, sort }

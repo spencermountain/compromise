@@ -2,7 +2,8 @@ import alias from './01-alias/index.js'
 import normal from './02-normal/index.js'
 import machine from './03-machine/index.js'
 import freq from './freq.js'
-import { offset, index } from './offset.js'
+import offset from './offset.js'
+import index from './reindex.js'
 import wordCount from './wordCount.js'
 
 // cheat-method for a quick loop
@@ -13,6 +14,7 @@ const termLoop = function (docs, fn, world) {
     }
   }
 }
+
 const methods = {
   alias: (docs, world) => termLoop(docs, alias, world),
   normal: (docs, world) => termLoop(docs, normal, world),

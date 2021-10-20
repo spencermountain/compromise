@@ -26,7 +26,7 @@ const insert = function (str, view, prepend) {
   ptrs = ptrs.map(a => [a[0]])
   let doc = view.update(ptrs)
   // try to tag them, too
-  doc.compute(['preTagger', 'contractions', 'postTagger'])
+  doc.compute(['preTagger', 'contractions', 'postTagger', 'index'])
   return doc
 }
 
@@ -46,12 +46,12 @@ const fns = {
       let ptrs = this.fullPointer
       let lastN = ptrs[ptrs.length - 1][0]
       spliceArr(document, lastN + 1, json)
-      return this
+      return this.compute('index')
     }
     // is it other pointers from the same document?
     if (this.document === input.document) {
       let ptrs = this.fullPointer.concat(input.fullPointer)
-      return this.update(ptrs)
+      return this.update(ptrs).compute('index')
     }
     return this
   },

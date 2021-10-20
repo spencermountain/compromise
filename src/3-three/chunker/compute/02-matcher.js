@@ -48,9 +48,9 @@ const rules = [
   // son of a gun
   { match: '<Noun> of #Determiner <Noun>', chunk: 'Noun' },
   // the history of science
-  { match: '#Determiner #Noun of #Noun', chunk: 'Noun' },
+  // { match: '#Determiner #Noun of #Noun', chunk: 'Noun' },
   // slices of ham
-  { match: '#Plural of #Singular', chunk: 'Noun' },
+  { match: '#Noun of #Noun', chunk: 'Noun' },
   // --- in ---
   { match: '<Noun> in <Noun>', chunk: 'Noun' },
   // indoor and outdoor seating

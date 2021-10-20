@@ -3,6 +3,7 @@ import getDifference from './lib/difference.js'
 import getIntersection from './lib/intersection.js'
 import getUnion from './lib/union.js'
 import splitAll from './lib/split.js'
+import pointerFromTerms from './pointerFromTerms.js'
 
 // flat list of terms from nested document
 const termList = function (docs) {
@@ -48,5 +49,6 @@ export default {
     indexN,
     doesOverlap,
     splitAll,
+    pointerFromTerms,
   },
 }

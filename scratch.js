@@ -1,6 +1,7 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/three.js'
 // import nlp from './builds/compromise.cjs'
+import text from '/Users/spencer/mountain/compromise/scripts/perf/flame/_sotu-text.js'
 
 // nlp.verbose('tagger')
 
@@ -9,14 +10,14 @@ import nlp from './src/three.js'
 // doc.remove('extra')
 // console.log(doc.text())
 
-// States that make basic private health insurance [should receive] federal funds
-// let doc = nlp(`Purchase of power from IPPs will ruin GEB`)
-let doc = nlp(`I just love the smell of Grandma's cooking.`)
-// let doc = nlp(`On Wednesday guerrillas had kidnapped a cosmetic surgeon and his wife while they were on their way home.`)
-// let doc = nlp(`You wonder if he was manipulating the market with his bombing targets.`)
-doc.debug('chunks')
-doc.chunks().debug()
-
+// let doc = nlp(`all the days since december were gross`)
+let doc = nlp(`one two three four value in God's sight five six seven`).debug()
+// let doc = nlp(text)
+// doc.compute('chunks')
+// doc.debug('chunks')
+// doc.chunks().debug()
+// doc.verbs().subjects().debug()
+// console.log(doc.nouns().json())
 //
 /*
 

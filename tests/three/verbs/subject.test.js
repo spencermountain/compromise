@@ -61,6 +61,9 @@ test('get verb subject', function (t) {
     // [`Your working life might not go so smoothly this year`, `Your working life`, `might not go so smoothly`],
     [`Flex your muscles, friend Libra, and prepare for an easy ride`, `friend Libra`, `prepare`],
     [`Your life might take on a new direction`, 'Your life', 'might take on'],
+
+    // subordinate phrases
+    [`all the days since december were awful`, 'all the days', 'were'],
   ]
   arr.forEach(a => {
     let [str, subject, verb] = a

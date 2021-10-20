@@ -1,11 +1,19 @@
+//
 const lastNoun = function (vb) {
   let before = vb.before()
-  let noun = before.nouns().last()
+  let nouns = before.nouns()
 
+  let noun = nouns.last()
+  // these are dead-ringers
   let pronoun = noun.match('(he|she|we|you|they)')
   if (pronoun.found) {
     return pronoun
   }
+  // should we skip a subbordinate clause or two?
+  // nouns.reverse().forEach(noun => {
+  //   console.log(noun.json())
+  // })
+
   return noun
 }
 

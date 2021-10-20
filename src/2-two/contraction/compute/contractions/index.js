@@ -9,9 +9,12 @@ import isPossessive from './isPossessive.js'
 const byApostrophe = /'/
 const numDash = /^[0-9][^-–—]*[-–—].*?[0-9]/
 
-const reTag = function (terms, world) {
+const reTag = function (terms, i, world) {
   const preTagger = world.compute.preTagger
-  preTagger([terms], world)
+  // just re-tag neighbourhood
+  let start = i < 2 ? 0 : i - 2
+  let slice = terms.slice(start, i + 3)
+  preTagger([slice], world)
 }
 
 // const isArray = function (arr) {
@@ -82,7 +85,7 @@ const contractions = (document = [], world) => {
         // actually insert the new terms
         if (words) {
           splice(document, [n, i], words, hint)
-          reTag(terms, world)
+          reTag(terms, i, world)
           return true
         }
         // '44-2'
@@ -92,7 +95,7 @@ const contractions = (document = [], world) => {
             hint = ['Value', 'Conjunction', 'Value']
             splice(document, [n, i], words, hint)
             methods.one.setTag(terms, 'NumberRange', world)
-            reTag(terms, world)
+            reTag(terms, i, world)
             return true
           }
         }

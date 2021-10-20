@@ -2,21 +2,38 @@
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "modest natural language processing",
-  "version": "13.11.4",
-  "main": "./builds/compromise.js",
-  "unpkg": "./builds/compromise.min.js",
+  "version": "rc14rc",
+  "main": "./builds/compromise.cjs",
+  "unpkg": "./builds/compromise.cjs",
   "module": "./builds/compromise.mjs",
-  "type": "commonjs",
-  "types": "types/index.d.ts",
+  "type": "module",
+  "types": "builds/types.d.ts",
   "sideEffects": false,
   "exports": {
     ".": {
-      "require": "./builds/compromise.js",
+      "require": "./builds/compromise.cjs",
       "import": "./builds/compromise.mjs",
-      "default": "./builds/compromise.js"
+      "default": "./builds/compromise.cjs"
     },
     "./tokenize": {
-      "default": "./builds/compromise-tokenize.js"
+      "import": "./builds/one/compromise-one.mjs",
+      "default": "./builds/one/compromise-one.cjs"
+    },
+    "./one": {
+      "import": "./builds/one/compromise-one.mjs",
+      "default": "./builds/one/compromise-one.cjs"
+    },
+    "./two": {
+      "import": "./builds/two/compromise-two.mjs",
+      "default": "./builds/two/compromise-two.cjs"
+    },
+    "./three": {
+      "import": "./builds/three/compromise-three.mjs",
+      "default": "./builds/three/compromise-three.cjs"
+    },
+    "./three/dates": {
+      "import": "./builds/three/compromise-dates.mjs",
+      "default": "./builds/three/compromise-dates.cjs"
     }
   },
   "repository": {
@@ -24,32 +41,28 @@
     "url": "git://github.com/spencermountain/compromise.git"
   },
   "homepage": "https://github.com/spencermountain/compromise",
-  "browserslist": [
-    "defaults",
-    "not IE 11",
-    "maintained node versions"
-  ],
   "engines": {
     "node": ">=8.0.0"
   },
   "scripts": {
-    "build": "node ./scripts/build && rollup -c --silent && npm run test:smoke --silent",
-    "pack": "node ./scripts/build/pack.js",
-    "test": "node ./scripts/test/index.js ",
-    "testb": "npm run test:smoke && TESTENV=prod  node ./scripts/test/index.js",
-    "test:smoke": "node \"./scripts/test/smoke-test/\" | tap-dancer",
-    "test:spec": "tape \"./tests/**/*.test.js\" | tap-spec",
-    "test:types": "ts-node ./scripts/test/types.ts | tap-dancer",
-    "test:stress": "node ./scripts/test/stress.js",
-    "test:coverage": "nyc -r text-summary -n 'src/**/*' -n 'plugins/**/*' npm run test",
-    "coverage:html": "nyc --reporter=html tape \"./tests/**/*.test.js\" | tap-dancer --color always",
+    "build": "rollup -c --silent",
+    "pack": "node ./scripts/pack.js",
+    "test": "tape \"./tests/**/*.test.js\" | tap-dancer",
+    "testb": "npm run test:smoke && TESTENV=prod npm run test",
+    "test:one": "tape \"./tests/one/match/*.test.js\" | tap-dancer",
+    "test:two": "tape \"./tests/two/**/*.test.js\" | tap-dancer",
+    "test:three": "tape \"./tests/three/**/*.test.js\" | tap-dancer",
+    "test:four": "tape \"./tests/four/**/*.test.js\" | tap-dancer",
+    "test:match": "tape \"./tests/*/match.test.js\" | tap-dancer",
+    "test:penn": "tape \"./tests/two/tagger/penn.test.js\" | tap-dancer",
+    "test:smoke": "tape \"./scripts/test/smoke.test.js\" | tap-dancer",
+    "debug": "node ./scripts/debug.js",
+    "match": "node ./scripts/match.js",
     "coverage": "nyc -r lcov -n 'src/**/*' -n 'plugins/**/*' npm run test",
     "codecov": "npm run coverage && codecov -t 15039ad1-b495-48cd-b4a0-bcf124c9b318",
     "perf": "node ./scripts/perf/index.js",
-    "perf:build": "TESTENV=prod node ./scripts/perf/index.js",
-    "perf:versions": "node ./scripts/perf/versions.js",
     "flame": "clinic flame -- node ./scripts/perf/flame",
-    "lint": "eslint ./src/ && eslint ./plugins/**/src/",
+    "lint": "eslint ./src/**/* && eslint ./plugins/**/src/*",
     "watch": "amble ./scratch.js",
     "build:all": "node ./scripts/build/build-all.js && npm run build --silent",
     "plugins": "node ./scripts/plugin-check.js --silent",
@@ -59,8 +72,7 @@
     "demo": "python -m SimpleHTTPServer 8888"
   },
   "files": [
-    "builds/",
-    "types/index.d.ts"
+    "builds/"
   ],
   "keywords": [
     "nlp"
@@ -74,31 +86,33 @@
     "arrowParens": "avoid"
   },
   "dependencies": {
-    "efrt-unpack": "2.2.0"
+    "efrt": "2.3.2",
+    "grad-school": "0.0.4",
+    "suffix-thumb": "2.0.0"
   },
   "devDependencies": {
-    "@babel/core": "7.14.6",
-    "@babel/preset-env": "7.14.5",
-    "@rollup/plugin-alias": "3.1.2",
-    "@rollup/plugin-commonjs": "19.0.0",
-    "@rollup/plugin-json": "4.1.0",
-    "@rollup/plugin-node-resolve": "13.0.0",
+    "@rollup/plugin-alias": "3.1.8",
     "amble": "1.3.0",
-    "codecov": "3.8.2",
-    "efrt": "2.2.2",
-    "nyc": "^15.1.0",
-    "rollup": "2.52.2",
-    "rollup-plugin-babel": "4.4.0",
+    "codecov": "3.8.3",
+    "eslint": "8.0.1",
+    "eslint-plugin-regexp": "1.4.1",
+    "nlp-corpus": "^4.2.0",
+    "nyc": "15.1.0",
+    "pretty-error": "^3.0.4",
+    "rollup": "2.58.0",
     "rollup-plugin-filesize-check": "0.0.1",
     "rollup-plugin-terser": "7.0.2",
     "shelljs": "0.8.4",
-    "tap-dancer": "0.3.2",
-    "tape": "5.2.2"
+    "tap-dancer": "0.3.4",
+    "tape": "5.3.1",
+    "tape-es": "^1.2.15"
   },
   "eslintIgnore": [
     "builds/*.js",
     "*.ts",
-    "plugins/**/types/*.ts"
+    "plugins/**",
+    "_old/**",
+    "_tests/**"
   ],
   "license": "MIT"
 }

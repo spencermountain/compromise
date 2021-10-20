@@ -1,9 +1,9 @@
-const txt = require('./_sotu-text')
-const path = '../../../src'
+/* eslint-disable no-console */
+import txt from './_sotu-text.js'
 
 console.log('\n-- testing:  --')
 console.time('load')
-const nlp = require(path)
+import nlp from '../../../src/three.js'
 console.timeEnd('load')
 
 console.time('parse')

@@ -4,25 +4,23 @@ on: [pull_request]
 
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest
-
-    env:
-      CI: true
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
-        node-version: [10.x, 15.x]
+        node-version: [10.x, 12.x, 14.x, 15.x, 16.x]
+        os: [macos-latest, ubuntu-latest, windows-latest]
 
     steps:
       - uses: actions/checkout@v2
 
       - name: use node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
 
       - name: cache dependencies
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-npm-${{ matrix.node-version }}-${{ hashFiles('package-lock.json') }}

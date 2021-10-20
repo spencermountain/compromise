@@ -346,7 +346,7 @@ nlp.extend((Doc, world) => {
 ##### Documentation:
 
 | Concepts                                                                              |                                               API                                               |                                                                                Plugins |
-| ------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------: | -------------------------------------------------------------------------------------: | 
+| ------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------: | -------------------------------------------------------------------------------------: | --- |
 | [Accuracy](https://observablehq.com/@spencermountain/compromise-accuracy)             |           [Accessors](https://observablehq.com/@spencermountain/compromise-accessors)           |          [Adjectives](https://observablehq.com/@spencermountain/compromise-adjectives) |
 | [Caching](https://observablehq.com/@spencermountain/compromise-cache)                 | [Constructor-methods](https://observablehq.com/@spencermountain/compromise-constructor-methods) |                    [Dates](https://observablehq.com/@spencermountain/compromise-dates) |
 | [Case](https://observablehq.com/@spencermountain/compromise-case)                     |        [Contractions](https://observablehq.com/@spencermountain/compromise-contractions)        |                  [Export](https://observablehq.com/@spencermountain/compromise-export) |
@@ -358,8 +358,8 @@ nlp.extend((Doc, world) => {
 | [Performance](https://observablehq.com/@spencermountain/compromise-performance)       |                    [Nouns](https://observablehq.com/@spencermountain/nouns)                     |          [Paragraphs](https://observablehq.com/@spencermountain/compromise-paragraphs) |
 | [Plugins](https://observablehq.com/@spencermountain/compromise-plugins)               |              [Output](https://observablehq.com/@spencermountain/compromise-output)              |                      [Scan](https://observablehq.com/@spencermountain/compromise-scan) |
 | [Projects](https://observablehq.com/@spencermountain/compromise-projects)             |          [Selections](https://observablehq.com/@spencermountain/compromise-selections)          |            [Sentences](https://observablehq.com/@spencermountain/compromise-sentences) |
-| [Tagger](https://observablehq.com/@spencermountain/compromise-tagger)                 |             [Sorting](https://observablehq.com/@spencermountain/compromise-sorting)             |            [Syllables](https://observablehq.com/@spencermountain/compromise-syllables) | 
-| [Tags](https://observablehq.com/@spencermountain/compromise-tags)                     |               [Split](https://observablehq.com/@spencermountain/compromise-split)               |            [Pronounce](https://observablehq.com/@spencermountain/compromise-pronounce) |                                                                                       |
+| [Tagger](https://observablehq.com/@spencermountain/compromise-tagger)                 |             [Sorting](https://observablehq.com/@spencermountain/compromise-sorting)             |            [Syllables](https://observablehq.com/@spencermountain/compromise-syllables) |
+| [Tags](https://observablehq.com/@spencermountain/compromise-tags)                     |               [Split](https://observablehq.com/@spencermountain/compromise-split)               |            [Pronounce](https://observablehq.com/@spencermountain/compromise-pronounce) |     |
 | [Tokenization](https://observablehq.com/@spencermountain/compromise-tokenization)     |                [Text](https://observablehq.com/@spencermountain/compromise-text)                |                  [Strict](https://observablehq.com/@spencermountain/compromise-strict) |
 | [Named-Entities](https://observablehq.com/@spencermountain/compromise-topics)         |               [Utils](https://observablehq.com/@spencermountain/compromise-utils)               |            [Penn-tags](https://observablehq.com/@spencermountain/compromise-penn-tags) |
 | [Whitespace](https://observablehq.com/@spencermountain/compromise-whitespace)         |                    [Verbs](https://observablehq.com/@spencermountain/verbs)                     | [Typeahead](https://observablehq.com/@spencermountain/compromise/compromise-typeahead) |
@@ -545,7 +545,7 @@ _(all match methods use the [match-syntax](https://docs.compromise.cool/compromi
 
 - **[.contractions()](https://observablehq.com/@spencermountain/compromise-contractions)** - things like "didn't"
 - **[.contractions().expand()](https://observablehq.com/@spencermountain/compromise-contractions)** - things like "didn't"
-- **[.contract()](https://observablehq.com/@spencermountain/compromise-contractions)** - `"she would"` -> `"she'd"`
+<!-- - **[.contract()](https://observablehq.com/@spencermountain/compromise-contractions)** - `"she would"` -> `"she'd"` -->
 - **[.parentheses()](https://observablehq.com/@spencermountain/compromise-selections)** - return anything inside (parentheses)
 - **[.possessives()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `"Spencer's"`
 - **[.quotations()](https://observablehq.com/@spencermountain/compromise-selections)** - return any terms inside quotation marks

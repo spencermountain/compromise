@@ -6,6 +6,6 @@ const plugin = {
   compute: compute,
   methods: methods,
   model: model,
-  // hooks: ['postTagger'],
+  hooks: ['postTagger'],
 }
 export default plugin

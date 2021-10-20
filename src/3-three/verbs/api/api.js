@@ -6,7 +6,7 @@ import toInfinitive from './conjugate/toInfinitive/index.js'
 import toPast from './conjugate/toPast/index.js'
 import toPresent from './conjugate/toPresent/index.js'
 import toFuture from './conjugate/toFuture/index.js'
-import getSubject from './parse/subject/index.js'
+import getSubject from './parse/getSubject.js'
 import getGrammar from './parse/grammar/index.js'
 
 // return the nth elem of a doc

@@ -1,23 +1,31 @@
+const shouldSkip = function (last) {
+  let obj = last.parse()[0] || {}
+  return obj.isSubordinate
+}
 //
 const lastNoun = function (vb) {
   let before = vb.before()
   let nouns = before.nouns()
 
-  let noun = nouns.last()
+  let last = nouns.last()
   // these are dead-ringers
-  let pronoun = noun.match('(he|she|we|you|they)')
+  let pronoun = last.match('(he|she|we|you|they)')
   if (pronoun.found) {
     return pronoun
   }
-  // 
-  // nouns.debug()
-  // console.log(noun)
   // should we skip a subbordinate clause or two?
-  // nouns.reverse().forEach(noun => {
-  //   console.log(noun.json())
-  // })
-
-  return noun
+  last = nouns.last()
+  if (shouldSkip(last)) {
+    // console.log(vb.text())
+    nouns.remove(last)
+    last = nouns.last()
+  }
+  // i suppose we can skip two?
+  if (shouldSkip(last)) {
+    nouns.remove(last)
+    last = nouns.last()
+  }
+  return last
 }
 
 const isPlural = function (subj, vb) {

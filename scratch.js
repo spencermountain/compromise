@@ -14,17 +14,20 @@ import nlp from './src/three.js'
 // console.log(doc.text())
 
 // let doc = nlp(`Pursuing a successful career, along with the usual social and financial advantages, will be easier this year `)
-let doc = nlp(`all the days since december were really gross`)
-console.log(doc.verbs().json())
+let doc = nlp(`all the days since december were really awful`)
+// console.log(doc.verbs().json())
 // console.log(doc.verbs().adverbs())
 // let doc = nlp(`one two three`)
 // doc.replace('two', 'foo bar')
 // doc.debug()
 
 // let doc = nlp(text)
-// doc.debug('chunks')
+doc.debug('chunks')
 // doc.chunks().debug()
-// doc.verbs().subjects().debug()
+console.log('verb:')
+doc.verbs().debug()
+console.log('subj:')
+doc.verbs().subjects().debug()
 // console.log(doc.nouns().json())
 
 

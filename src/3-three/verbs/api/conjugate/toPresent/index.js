@@ -1,4 +1,4 @@
-import getSubject from '../../parse/subject/index.js'
+import getSubject from '../../parse/getSubject.js'
 
 const noop = vb => vb
 

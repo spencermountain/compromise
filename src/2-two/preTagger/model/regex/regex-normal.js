@@ -19,7 +19,7 @@ export default [
   [/^[0-9]{1,4}\.[0-9]{1,2}\.[0-9]{1,4}$/, 'Date', 'iso-dot'],
   [/^[0-9]{1,4}-[a-z]{2,9}-[0-9]{1,4}$/i, 'Date', '12-dec-2019'],
 
-  [/^utc ?[+-]?[0-9]+?$/, 'TimeZone', 'utc-9'],
+  [/^utc ?[+-]?[0-9]+$/, 'TimeZone', 'utc-9'],
   [/^[PMCE]ST$/, 'TimeZone', 'EST'],
   [/^(gmt|utc)[+-][0-9]{1,2}$/i, 'Timezone', 'gmt-3'],
 
@@ -30,7 +30,7 @@ export default [
 
   //slang things
   [/^(lol)+[sz]$/, 'Expression', 'lol'],
-  [/^wo{2,}a*?h?$/, 'Expression', 'wooah'],
+  [/^wo{2,}a*h?$/, 'Expression', 'wooah'],
   [/^(un|de|re)\\-[a-z\u00C0-\u00FF]{2}/, 'Verb', 'un-vite'],
 
   //phone numbers

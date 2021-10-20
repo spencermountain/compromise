@@ -6,5 +6,5 @@ export default {
   compute: { sense },
   api,
   model,
-  hooks: ['sense'],
+  // hooks: ['sense'],
 }

@@ -18,21 +18,12 @@ const compile = function (matches, methods) {
 
   // Every sentence has a Noun/Verb,
   // assume any match will be found on another need
+  // this is true now,
   // but we should stay careful about this.
   delete byGroup['#Noun']
   delete byGroup['#Verb']
   // console.log(matches.filter(o => o.needs.length === 1)) //check!
 
-  // let words = Object.keys(byGroup)
-  // words = words.sort((a, b) => {
-  //   if (byGroup[a].length > byGroup[b].length) {
-  //     return -1
-  //   }
-  //   return 0
-  // })
-  // words.slice(0, 10).forEach(k => {
-  //   console.log(k, byGroup[k].length)
-  // })
   return byGroup
 }
 

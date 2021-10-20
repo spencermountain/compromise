@@ -20,7 +20,7 @@ const addMethod = function (View) {
     json(n) {
       let doc = getNth(this, n)
       return doc.map(p => {
-        let json = p.json()[0]
+        let json = p.toView().json()[0]
         let parsed = parse(p)
         json.person = {
           firstName: parsed.firstName.text('normal'),
@@ -30,6 +30,12 @@ const addMethod = function (View) {
         }
         return json
       })
+    }
+    // overloaded - keep People class
+    update(pointer) {
+      let m = new People(this.document, pointer)
+      m._cache = this._cache // share this full thing
+      return m
     }
   }
 

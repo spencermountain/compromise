@@ -1,8 +1,9 @@
 import questions from './questions.js'
+
 // return the nth elem of a doc
 export const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
 
-const findVerbs = function (View) {
+const api = function (View) {
   class Sentences extends View {
     constructor(document, pointer, groups) {
       super(document, pointer, groups)
@@ -16,6 +17,12 @@ const findVerbs = function (View) {
     }
     toFutureTense() {
       return this
+    }
+    // overloaded - keep Sentences class
+    update(pointer) {
+      let m = new Sentences(this.document, pointer)
+      m._cache = this._cache // share this full thing
+      return m
     }
   }
 
@@ -33,4 +40,4 @@ const findVerbs = function (View) {
 
   Object.assign(View.prototype, methods)
 }
-export default findVerbs
+export default api

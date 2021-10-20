@@ -26,7 +26,7 @@ const plugin = function (View) {
     }
     json(n) {
       return getNth(this, n).map(p => {
-        let json = p.json()[0]
+        let json = p.toView().json()[0]
         let decimal = parse(p)
         let full = decimal * 100
         json.fraction = {

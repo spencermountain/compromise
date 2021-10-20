@@ -22,7 +22,7 @@ const addMethod = function (View) {
     json(n) {
       let doc = getNth(this, n)
       return doc.map(p => {
-        let json = p.json()[0]
+        let json = p.toView().json()[0]
         let parsed = parse(p)
         json.number = {
           prefix: parsed.prefix,
@@ -54,6 +54,12 @@ const addMethod = function (View) {
         val.tag('NumericValue')
       })
       return this
+    }
+    // overloaded - keep Numbers class
+    update(pointer) {
+      let m = new Numbers(this.document, pointer)
+      m._cache = this._cache // share this full thing
+      return m
     }
   }
 

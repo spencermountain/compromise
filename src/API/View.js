@@ -89,6 +89,12 @@ class View {
     m._cache = this._cache // share this full thing
     return m
   }
+  // create a new View, from this one
+  toView(pointer) {
+    let m = new View(this.document, pointer)
+    m._cache = this._cache // share this full thing
+    return m
+  }
   clone() {
     // clone the whole document
     let document = this.document.slice(0)

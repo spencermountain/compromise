@@ -9,6 +9,9 @@ const lastNoun = function (vb) {
   if (pronoun.found) {
     return pronoun
   }
+  // 
+  // nouns.debug()
+  // console.log(noun)
   // should we skip a subbordinate clause or two?
   // nouns.reverse().forEach(noun => {
   //   console.log(noun.json())

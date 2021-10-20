@@ -21,14 +21,10 @@ const api = function (View) {
     parse(n) {
       return getNth(this, n).map(parseVerb)
     }
-    debug() {
-      debug(this)
-      return this
-    }
     json(opts, n) {
       let m = getNth(this, n).reverse()
       let arr = m.map(vb => {
-        let json = vb.json(opts)[0] || {}
+        let json = vb.toView().json(opts)[0] || {}
         json.verb = toJSON(vb)
         return json
       })
@@ -88,6 +84,12 @@ const api = function (View) {
           futureTense: toFuture(vb, parsed, info.form),
         }
       })
+    }
+    // overloaded - keep Verb class
+    update(pointer) {
+      let m = new Verbs(this.document, pointer)
+      m._cache = this._cache // share this full thing
+      return m
     }
   }
 

@@ -20,7 +20,7 @@ const api = function (View) {
 
     json(opts = {}) {
       return this.map(m => {
-        let json = m.json(opts)[0] || {}
+        let json = m.toView().json(opts)[0] || {}
         if (opts && opts.noun !== true) {
           json.noun = toJSON(m)
         }
@@ -56,6 +56,12 @@ const api = function (View) {
         let res = parseNoun(m)
         return toSingular(m, res)
       })
+    }
+    // create a new View, from this one
+    update(pointer) {
+      let m = new Nouns(this.document, pointer)
+      m._cache = this._cache // share this full thing
+      return m
     }
   }
   View.prototype.nouns = function (n) {

@@ -96,6 +96,7 @@ match(['foo', 'far'])
 - **[new]** .settle() - remove overlaps in matches
 - **[new]** .is() - helper-method for comparing two views
 - **[new]** .none() - helper-method for returning an empty view of the document
+- **[new]** .toView() method - drop back to a normal Class instance
 
 ---
 

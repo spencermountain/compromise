@@ -2,7 +2,7 @@
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "modest natural language processing",
-  "version": "rc14rc",
+  "version": "13.11.4-next",
   "main": "./builds/compromise.cjs",
   "unpkg": "./builds/compromise.cjs",
   "module": "./builds/compromise.mjs",

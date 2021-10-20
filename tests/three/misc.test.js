@@ -39,18 +39,16 @@ test('test overloading', function (t) {
   t.ok(m.json(), 'overload-people')
   t.equal(m.eq(0).viewType, 'People', 'still-is-people')
 
-  // m = doc.places()
-  // t.ok(m.json(), 'overload-places')
-  // t.equal(m.eq(0).viewType, 'Places', 'still-is-places')
+  m = doc.places()
+  t.ok(m.json(), 'overload-places')
+  t.equal(m.eq(0).viewType, 'View', 'places has no class')
 
   t.end()
 })
 
-
 test('drop back to View', function (t) {
   let doc = nlp(`John Smith and Jack were walking`)
   let vb = doc.verbs()
-
   // ====== drop class ----
   let m = vb.match('.')
   t.equal(m.viewType, 'View', _ + 'match-to-view')
@@ -73,8 +71,17 @@ test('drop back to View', function (t) {
   m = vb.intersection(doc.match('.'))
   t.equal(m.viewType, 'View', _ + 'intersection-to-view')
 
+  m = vb.adverbs()
+  t.equal(m.viewType, 'View', _ + 'adverbs-to-view')
+
+  t.end()
+})
+
+test('retain class', function (t) {
+  let doc = nlp(`John Smith and Jack were walking`)
+  let vb = doc.verbs()
   // ====== keep class ---
-  m = vb.update([])
+  let m = vb.update([])
   t.equal(m.viewType, 'Verbs', _ + 'update-keeps-class')
 
   m = vb.find(v => v.toUpperCase())

@@ -19,7 +19,7 @@ const match = function (regs, group) {
   return view
 }
 
-const matchOne = function (regs = '', group) {
+const matchOne = function (regs, group) {
   const one = this.methods.one
   // support at view as a param
   if (isView(regs)) {
@@ -37,7 +37,7 @@ const matchOne = function (regs = '', group) {
   return view
 }
 
-const has = function (regs = '', group) {
+const has = function (regs, group) {
   const one = this.methods.one
   let ptrs
   if (typeof regs === 'string') {

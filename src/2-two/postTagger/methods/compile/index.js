@@ -12,11 +12,16 @@ const compile = function (matches, methods) {
   matches = expand(matches) // run this twice
   // retrieve the needs of each match statement
   matches = cache(matches, methods)
+
   // organize them according to need...
   let byGroup = group(matches, methods)
 
-  // every sentence has a noun
+  // Every sentence has a Noun/Verb,
+  // assume any match will be found on another need
+  // but we should stay careful about this.
   delete byGroup['#Noun']
+  delete byGroup['#Verb']
+  // console.log(matches.filter(o => o.needs.length === 1)) //check!
 
   // let words = Object.keys(byGroup)
   // words = words.sort((a, b) => {

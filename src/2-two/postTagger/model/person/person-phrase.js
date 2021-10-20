@@ -82,7 +82,7 @@ export default [
     safe: true,
   },
   // john stewart
-  { match: '(#FirstName && !@hasComma) [#FirstName]', group: 0, tag: 'LastName', reason: 'firstname-firstname' },
+  { match: '#FirstName [#FirstName]', group: 0, tag: 'LastName', reason: 'firstname-firstname' },
   //Joe K. Sombrero
   { match: '#FirstName #Acronym #Noun', tag: 'Person', reason: 'n-acro-noun', safe: true },
   //Anthony de Marco

@@ -41,7 +41,7 @@ export default [
     reason: 'technical-noun',
   },
   //air-flow
-  { match: '(#Noun && @hasHyphen) #Verb', tag: 'Noun', reason: 'hyphen-verb' },
+  { match: '(#Noun && @hasHyphen) #PresentTense', tag: 'Noun', reason: 'hyphen-verb' },
   //is no walk
   { match: 'is no [#Verb]', group: 0, tag: 'Noun', reason: 'is-no-verb' },
   //different views than

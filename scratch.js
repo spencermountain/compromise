@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/three.js'
+import nlp from './src/two.js'
 // import nlp from './builds/compromise.cjs'
 import text from '/Users/spencer/mountain/compromise/scripts/perf/flame/_sotu-text.js'
 
@@ -23,7 +23,7 @@ let doc = nlp(`dr. food`).debug()
 
 
 
-
+(#Noun && @hasHyphen) #Verb
 
 
 

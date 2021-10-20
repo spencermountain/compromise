@@ -25,7 +25,8 @@ test('noun-parts:', function (t) {
     let { str, adjectives, root, determiner, number } = obj
     let n = nlp(str).nouns()
     str = "'" + str.split(/ /).slice(0, 5).join(' ') + "'"
-    let parse = n.parse()[0]
+    let o = nlp('')
+    let parse = n.parse()[0] || { number: o, adjectives: o, determiner: o, root: o }
 
     t.equal(parse.number.text(), number, here + `${str} [number]`)
     // adjectives

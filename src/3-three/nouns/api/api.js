@@ -59,7 +59,6 @@ const api = function (View) {
     }
   }
   View.prototype.nouns = function (n) {
-    this.compute('chunks')
     let m = find(this)
     m = getNth(m, n)
     return new Nouns(this.document, m.pointer)

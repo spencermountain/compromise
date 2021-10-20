@@ -13,7 +13,6 @@ import text from '/Users/spencer/mountain/compromise/scripts/perf/flame/_sotu-te
 // let doc = nlp(`all the days since december were gross`)
 let doc = nlp(`dr. food`).debug()
 // let doc = nlp(text)
-// doc.compute('chunks')
 // doc.debug('chunks')
 // doc.chunks().debug()
 // doc.verbs().subjects().debug()

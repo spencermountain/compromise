@@ -14,7 +14,6 @@ const addMethod = function (View) {
   }
 
   View.prototype.places = function (n) {
-    this.compute('chunks')
     let m = find(this)
     m = getNth(m, n)
     return new Places(this.document, m.pointer)

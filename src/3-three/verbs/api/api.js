@@ -92,7 +92,6 @@ const api = function (View) {
   }
 
   View.prototype.verbs = function (n) {
-    this.compute('chunks')
     let vb = find(this)
     vb = getNth(vb, n)
     return new Verbs(this.document, vb.pointer)

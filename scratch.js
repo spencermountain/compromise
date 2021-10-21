@@ -13,10 +13,9 @@ import nlp from './src/three.js'
 // doc.remove('extra')
 // console.log(doc.text())
 
-
 let r = nlp('spencer is here. john was here.')
-console.log(r.json())
-// r.if('is')
+let m = r.if('is')
+console.log(m.out())
 
 
 /*

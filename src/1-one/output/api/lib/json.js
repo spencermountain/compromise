@@ -25,7 +25,7 @@ const toJson = function (view, opts) {
   return view.docs.map(terms => {
     let res = {}
     if (opts.text) {
-      res.text = textFromTerms(terms, {}, false)
+      res.text = textFromTerms(terms, { keepPunct: true }, false)
     }
     if (opts.normal || opts.machine || opts.reduced) {
       res.normal = textFromTerms(terms, { use: 'normal', punctuation: 'some' }, false)
@@ -34,9 +34,6 @@ const toJson = function (view, opts) {
       res.terms = termJSON(terms, opts)
     }
     if (opts.offset) {
-      if (!terms[0].offset) {
-        // view.compute('offset')
-      }
       let len = res.text.length
       res.offset = {
         index: terms[0].offset.index,

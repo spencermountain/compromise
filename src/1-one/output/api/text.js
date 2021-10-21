@@ -50,6 +50,8 @@ export default {
       let ptr = this.pointer[0]
       if (ptr && ptr[1]) {
         opts.keepPunct = false
+      } else {
+        opts.keepPunct = true
       }
     }
     return textFromDoc(this.docs, opts)

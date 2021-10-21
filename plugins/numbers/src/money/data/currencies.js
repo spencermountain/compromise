@@ -1,6 +1,13 @@
 //from wikipedia's {{infobox currency}}, Dec 2020
 module.exports = [
   {
+    dem: 'brazil',
+    name: 'real',
+    iso: 'brl',
+    sub: 'centavo',
+    sym: ['R$'],
+  },
+  {
     dem: 'american',
     name: 'dollar',
     iso: 'usd',

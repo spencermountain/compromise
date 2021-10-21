@@ -13,7 +13,7 @@ import nlp from './src/three.js'
 // doc.remove('extra')
 // console.log(doc.text())
 
-let doc = nlp(`I've read`).debug()
+let doc = nlp(`poor fellow, who [should marry] Molly`).debug()
 // let doc = nlp(`the critics have discovered`).debug()
 // let doc = nlp(`legislatures have asked us`).debug()
 

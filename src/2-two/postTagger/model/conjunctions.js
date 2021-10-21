@@ -6,7 +6,6 @@ export default [
   { match: '[how] (#Determiner|#Copula|#Modal|#PastTense)', group: 0, tag: 'QuestionWord', reason: 'how-is' },
   // the word 'which'
   { match: '^which', tag: 'QuestionWord', reason: 'which-question' },
-
   // ==== Conjunctions ====
   { match: '[so] #Noun', group: 0, tag: 'Conjunction', reason: 'so-conj' },
   //how he is driving

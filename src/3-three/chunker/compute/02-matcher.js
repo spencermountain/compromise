@@ -34,8 +34,8 @@ const rules = [
   { match: '#Negative #Adverb ', chunk: 'Verb' },
   // really not
   { match: '#Adverb #Negative', chunk: 'Verb' },
-  // want to be sedated
-  // { match: 'want to {Verb}', chunk: 'Verb' },
+  // want to see
+  { match: '(want|wants|wanted) to #Infinitive', chunk: 'Verb' },
 
   // === Noun ===
   // the brown fox

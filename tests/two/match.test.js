@@ -851,6 +851,7 @@ let arr = [
   [`zero in`, '#PhrasalVerb #PhrasalVerb'],
   [`it was time`, '#Noun #Copula #Noun'],
   [`I've said`, '#Pronoun have #PastTense'],
+  [`I've read`, '#Pronoun have #PastTense'],
   [`provide record levels`, '#Infinitive . #Plural'],
   [`cut costs`, '#Verb #Plural'],
   [`I will attach`, '#Pronoun #Verb #Verb'],
@@ -886,6 +887,8 @@ let arr = [
   [`the feminine`, `the #Noun`],
   [`the feminine form`, `the #Adjective #Noun`],
   [`I'm fuckin' around with two geese`, `#Pronoun #Copula #Gerund #Particle #Preposition #Value #Plural`],
+  [`he changes`, `#Noun #PresentTense`],
+  [`his changes`, `#Noun #Plural`],
   // [``, ``],
 ] //match-two
 test('match:', function (t) {

@@ -1,7 +1,7 @@
 // generated in ./lib/switches
 export default {
   "nounVerb": {
-    "before": "Infinitive¦adverb,mod0negative,plur0;al|Singular¦determiner,infinit2noun,p0;as0ossess1resen0;ttense;ive",
+    "before": "Infinitive¦adverb,mod1negative,p0;lur0ronoun;al|Singular¦determiner,infinit2noun,p0;as0ossess1resen0;ttense;ive",
     "after": "Infinitive¦adverb,conjunc1determiner,p0;ossessive,reposi0;tion|Singular¦copula,modal,value",
     "ownTags": "Singular¦propernoun",
     "beforeWords": "Infinitive¦i,please,t1w0you;e,ill;hey,o|Singular¦is,of,was",
@@ -46,7 +46,7 @@ export default {
     "fallback": "Month"
   },
   "personVerb": {
-    "before": "Person¦honorific,p0;ers0repositi0;on|Infinitive¦adverb,mod0negative,plur0;al",
+    "before": "Person¦honorific,p0;ers0repositi0;on|Infinitive¦adverb,mod1negative,p0;lur0ronoun;al",
     "after": "Person¦copula,modal,p0;erson,ropernoun|Infinitive¦adverb,conjunc1determiner,p0;ossessive,reposi0;tion",
     "ownTags": "",
     "beforeWords": "Person¦dear,h0yo;e0i;llo,y|Infinitive¦i,please,t1w0you;e,ill;hey,o",

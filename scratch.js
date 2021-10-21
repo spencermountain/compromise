@@ -13,9 +13,9 @@ import nlp from './src/three.js'
 // doc.remove('extra')
 // console.log(doc.text())
 
-let r = nlp('spencer is here. john was here.')
-let m = r.if('is')
-console.log(m.out())
+let doc = nlp(`I've read`).debug()
+// let doc = nlp(`the critics have discovered`).debug()
+// let doc = nlp(`legislatures have asked us`).debug()
 
 
 /*

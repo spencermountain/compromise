@@ -49,6 +49,8 @@ export default [
   { match: `(had|has) #Adverb? [been] #Adverb? #PastTense`, group: 0, tag: 'Auxiliary', reason: 'had-been-adj' },
   //had to walk
   { match: `(had|has) to [#Noun] (#Determiner|#Possessive)`, group: 0, tag: 'Infinitive', reason: 'had-to-noun' },
+  // have read
+  { match: `have [#PresentTense]`, group: 0, tag: 'PastTense', notIf: ['come', 'gotten'], reason: 'have-read' },
   //were under cooked
   {
     match: `(is|was|were) [(under|over) #PastTense]`,

@@ -19,6 +19,6 @@ const isPlural = function (m, root) {
   // word-reg fallback
   let str = root.text('normal')
   // ends with a brutal s fallback
-  return str.length > 3 && str.endsWith('s')
+  return str.length > 3 && str.endsWith('s') && !str.endsWith('ss')
 }
 export default isPlural

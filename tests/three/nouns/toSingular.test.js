@@ -84,7 +84,7 @@ test('toSingular:', function (t) {
     // ['Isley Brothers members', 'Isley Brothers member'],
   ]
   arr.forEach(function (a) {
-    const r = nlp(a[0]).tag('Noun').nouns()
+    const r = nlp(a[0]).tag('Noun').compute('chunks').nouns()
     const str = r.toSingular().text()
     t.equal(str, a[1], here + a[0])
   })

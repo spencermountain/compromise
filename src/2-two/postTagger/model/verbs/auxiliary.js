@@ -44,6 +44,8 @@ export default [
     tag: 'Auxiliary',
     reason: 'being-walked',
   },
+  // will be walked
+  { match: 'will [be] #PastTense', group: 0, tag: 'Auxiliary', reason: 'will-be-x' },
   // been walking
   { match: '[(be|been)] (#Adverb|not)+? #Gerund', group: 0, tag: 'Auxiliary', reason: 'been-walking' },
   // used to walk

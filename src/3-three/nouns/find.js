@@ -1,6 +1,5 @@
 const findNouns = function (doc) {
   let m = doc.match('<Noun>')
-
   let commas = m.match('@hasComma')
   // allow toronto, ontario
   commas = commas.not('#Place')

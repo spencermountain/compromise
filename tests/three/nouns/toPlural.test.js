@@ -82,7 +82,7 @@ test('toPlural:', function (t) {
     ['zoos', 'zoos'],
   ]
   arr.forEach(function (a) {
-    const r = nlp(a[0]).tag('Noun').nouns()
+    const r = nlp(a[0]).tag('Noun').compute('chunks').nouns()
     const str = r.toPlural().out('normal')
     t.equal(str, a[1], here + a[0])
   })

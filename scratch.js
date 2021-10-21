@@ -13,10 +13,10 @@ import nlp from './src/three.js'
 // doc.remove('extra')
 // console.log(doc.text())
 
-// let doc = nlp(`Pursuing a successful career, along with the usual social and financial advantages, will be easier this year `)
-let doc = nlp(`he will be walked`).debug()
-// doc.nouns().debug()
-// console.log(doc.verbs().toInfinitive().text())
+
+let r = nlp('spencer is here. john was here.')
+console.log(r.json())
+// r.if('is')
 
 
 /*

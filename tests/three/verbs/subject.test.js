@@ -64,16 +64,13 @@ test('get verb subject', function (t) {
 
     // subordinate phrases
     [`all the days since december were awful`, 'the days', 'were'],
+    [`Pursuing a successful career, along with the usual social and financial advantages, will be easier this year`, 'a successful career', 'will']
   ]
   arr.forEach(a => {
     let [str, subject, verb] = a
-    let vb = nlp(str).verbs()
-    if (vb.length > 1) {
-      vb = vb.if(verb).verbs()
-    }
-    let res = vb.subjects()
+    let vb = nlp(str).verbs().if(verb).first()
     t.equal(vb.text(), verb, here + `[vb] '${a[0]}'`)
-    t.equal(res.text(), subject, here + `[subj] '${a[0]}'`)
+    t.equal(vb.subjects().text(), subject, here + `[subj] '${a[0]}'`)
   })
   t.end()
 })

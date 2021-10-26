@@ -25,7 +25,7 @@ export default [
   { match: '#Copula #Adverb? (over|under) [#PastTense]', group: 0, tag: 'Adjective', reason: 'over-cooked' },
   //felt loved
   {
-    match: '(seem|seems|seemed|appear|appeared|appears|feel|feels|felt) #Adverb? [#PastTense]',
+    match: '(seem|seems|seemed|appear|appeared|appears|feel|feels|felt|sound|sounds|sounded) (#Adverb|#Adjective)? [#PastTense]',
     group: 0,
     tag: 'Adjective',
     reason: 'felt-loved',

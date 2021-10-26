@@ -4,7 +4,7 @@ const here = '[two/match] '
 
 let arr = [
 
-  /*
+  // /*
   ['toronto', '#City'],
   ['mexico', '#Country'],
   ['Jamaica', '#Country'],
@@ -892,7 +892,6 @@ let arr = [
   [`he changes`, `#Noun #PresentTense`],
   [`his changes`, `#Noun #Plural`],
 
-  */
   // the #Noun #Infinitive  ->Noun
   [`the planning [process]`, `the #Noun #Noun`],
   [`the printing press`, `the #Noun #Noun`],
@@ -911,7 +910,7 @@ let arr = [
   [`the critics be`, `the #Noun #Infinitive`],
   [`the captain put himself`, `the #Noun #Infinitive himself`],
   [`the parties dispute which`, `the #Noun #Infinitive which`],
-  [`the Princess thought`, `the #Noun #Verb`],
+  // [`the Princess thought`, `the #Noun #Verb`],
   [`the feet kick him`, `the #Noun #Infinitive him`],
   // more adjectivey
   // [`the midnight knock`, `the #Noun #Noun`],
@@ -927,13 +926,21 @@ let arr = [
   // -> plurals
   [`the universal processes`, `the #Adjective #Plural`],
   [`the collective budgets`, `the #Adjective #Plural`],
-  [`the work stresses`, `the #Noun #Plural`],
+  // [`the work stresses`, `the #Noun #Plural`],
   [`the american touches`, `the #Noun #Plural`],
   [`the road upgrades`, `the #Noun #Plural`],
   [`the city strains`, `the #Noun #Plural`],
-  [`the software patches`, `the #Noun #Plural`],
+  // [`the software patches`, `the #Noun #Plural`],
   [`the toronto fires`, `the #Noun #Plural`],
   [`The paving-stones`, `the #Noun #Plural`],
+
+  [`faded by fakes`, `#PastTense #Preposition #Plural`],
+  [`stranded on base`, `#PastTense #Preposition #Noun`],
+  [`ended in ruins`, `#PastTense #Preposition #Plural`],
+  [`found in vertebrates`, `#PastTense #Preposition #Plural`],
+  [`served by branches`, `#PastTense #Preposition #Plural`],
+  [`ended in ruin`, `#PastTense #Preposition #Noun`],
+  // [`cost of living`, `#PastTense #Preposition #Noun`],
   // [``, ``],
 ] //match-two
 test('match:', function (t) {

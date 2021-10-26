@@ -461,10 +461,7 @@ let conjugations = {
     prt: 'said',
     pres: '_s',
   },
-  seat: {
-    pst: 'sat',
-    prt: 'sat',
-  },
+
   see: {
     g: '_ing',
     prt: '_n',
@@ -524,6 +521,10 @@ let conjugations = {
   },
   sit: {
     pst: 'sat',
+  },
+  seat: {
+    pst: 'sat',
+    prt: 'sat',
   },
   ski: {
     pst: '_ied',

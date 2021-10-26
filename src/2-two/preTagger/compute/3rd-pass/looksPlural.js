@@ -29,6 +29,8 @@ const singularEnds = [
   /(antenn|formul|nebul|vertebr|vit)a$/i,
   /.sis$/i,
   /^(?!talis|.*hu)(.*)man$/i,
+  /'s$/i,
+  /ss$/i,
 ]
 
 const looksPlural = function (str) {

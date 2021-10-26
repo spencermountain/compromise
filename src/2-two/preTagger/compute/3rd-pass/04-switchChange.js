@@ -56,7 +56,7 @@ const swtichLexicon = function (terms, i, model) {
         console.log('===> ' + term.text)
       }
       // look at term's own tags for obvious hints, first
-      let tag = null// lookAtTag(terms[i], ownTags || {})
+      let tag = lookAtTag(terms[i], ownTags || {})
       // look -> right word
       tag = tag || lookAtWord(terms[i + 1], afterWords)
       // look <- left word, second

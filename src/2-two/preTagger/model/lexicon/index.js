@@ -12,7 +12,6 @@ Object.keys(lexData).forEach(tag => {
   let wordsObj = unpack(lexData[tag])
   Object.keys(wordsObj).forEach(w => (lexicon[w] = tag))
 })
-
 // misc cleanup
 delete lexicon['']
 delete lexicon[null]

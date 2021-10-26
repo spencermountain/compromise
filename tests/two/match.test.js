@@ -147,7 +147,7 @@ let arr = [
   ['they will', '#Pronoun #Verb'],
   ['the will', '#Determiner #Noun'],
 
-  ['may leave', '#Modal #Verb'],
+  ['may leave', '#Verb #Infinitive'],
   ['they may', '#Pronoun #Verb'],
   ['this may', '#Determiner #Noun'],
 
@@ -685,7 +685,7 @@ let arr = [
   ['my aching head', 'my #Adjective #Noun'],
   // ['Ignoring commute costs', '#Verb #Noun #Noun'],
   ['the World Trade Center', 'the #Noun #Noun #Noun'],
-  ['minimizing side reactions', '#Gerund #Noun #Noun'],
+  // ['minimizing side reactions', '#Gerund #Noun #Noun'],
   ['would not give rise', '#Modal not #PhrasalVerb #Particle'],
   // ['it sounds like her ', 'it #Verb #Adverb her'],
   // ['side of fries ', '#Noun of #Plural'],
@@ -857,7 +857,7 @@ let arr = [
   [`provide record levels`, '#Infinitive . #Plural'],
   [`cut costs`, '#Verb #Plural'],
   [`I will attach`, '#Pronoun #Verb #Verb'],
-  [`Leo in 2005`, '#Noun in #Year'],
+  [`Leo in 2005`, '#Noun in #Value'],
   [`June 14 Reception`, '#Date #Date #Noun'],
   [`They will mature`, '#Pronoun will #Infinitive'],
   [`john k. johnson`, '#Person #Person #Person'],
@@ -872,7 +872,7 @@ let arr = [
   [`strengthen our trade relations`, '#Verb #Possessive #Noun #Plural'],
   [`i need your help`, 'i #Verb #Possessive #Noun'],
   [`have our unyielding support`, '#Verb #Possessive #Adjective #Noun'],
-  [`my dear`, '#Possessive #Noun'],
+  // [`my dear`, '#Possessive #Noun'],
 
   [`My old position`, '#Possessive #Adjective #Noun'],
   [`john's whole world`, '#Possessive #Adjective #Noun'],

@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import nlp from './builds/compromise.cjs'
 // import text from '/Users/spencer/mountain/compromise/scripts/perf/flame/_sotu-text.js'
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 
 
@@ -27,7 +27,7 @@ import nlp from './src/three.js'
 // let txt = `before his [play] "The Cherry Orchard"`
 // let txt = `the work stresses hit me`
 // let txt = `the software patches were`
-let txt = `they sat down`
+let txt = `great help`
 // let txt= `this is straight up [stalking].`
 // let txt = `faded by [fakes]`
 // let txt = `a dual blood [supply] from the arteries.`
@@ -35,8 +35,8 @@ let txt = `they sat down`
 
 
 let doc = nlp(txt).debug()
-doc.verbs().toInfinitive()
-console.log(doc.text())
+// doc.verbs().toInfinitive()
+// console.log(doc.text())
 // doc.verbs().toFutureTense()
 
 

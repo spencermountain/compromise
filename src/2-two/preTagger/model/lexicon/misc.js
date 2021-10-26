@@ -41,5 +41,6 @@ let misc = {
   if: ['Condition', 'Preposition'],
   closer: 'Comparative',
   closest: 'Superlative',
+  will: 'Verb',
 }
 export default misc

@@ -21,16 +21,7 @@ nlp.verbose('tagger')
 // console.log(s.text())
 
 
-// let txt = `your incision [site].`
-// let txt= `Gun [talk]`
-
-// let txt = `before his [play] "The Cherry Orchard"`
-// let txt = `the work stresses hit me`
-// let txt = `the software patches were`
-let txt = `great help`
-// let txt= `this is straight up [stalking].`
-// let txt = `faded by [fakes]`
-// let txt = `a dual blood [supply] from the arteries.`
+let txt = `adults are much easier`
 
 
 

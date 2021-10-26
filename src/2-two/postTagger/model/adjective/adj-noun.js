@@ -14,7 +14,7 @@ export default [
   // the orange
   {
     match: '#Determiner [#Adjective]$',
-    notif: ['Comparative', 'Superlative'],
+    ifNo: ['Comparative', 'Superlative', 'much'],
     group: 0,
     tag: 'Noun',
     reason: 'the-orange',

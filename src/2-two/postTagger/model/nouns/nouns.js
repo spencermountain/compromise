@@ -23,7 +23,7 @@ export default [
   //Grandma's cooking, my tiptoing
   { match: '#Possessive [#Gerund]', group: 0, tag: 'Noun', reason: 'grandmas-cooking' },
   // ended in ruins
-  { match: '#PastTense #Preposition [#PresentTense]', group: 0, tag: 'Noun', reason: 'ended-in-ruins' },
+  { match: '#PastTense #Preposition [#PresentTense]', group: 0, ifNo: ['#Gerund'], tag: 'Noun', reason: 'ended-in-ruins' },
 
   //'u' as pronoun
   { match: '#Conjunction [u]', group: 0, tag: 'Pronoun', reason: 'u-pronoun-2' },

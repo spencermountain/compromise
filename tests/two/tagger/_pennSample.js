@@ -1666,10 +1666,6 @@ export default [
     tags: 'NNP, NNP, CD, NN, CD, NNS, CD, NNS',
   },
   {
-    text: 'Emma is fine, too-very well !!',
-    tags: 'NNP, VBZ, JJ, RB, RB, JJ',
-  },
-  {
     text: 'OOPS!',
     tags: 'UH',
   },
@@ -3165,10 +3161,6 @@ export default [
     tags: 'PRP, VBP, JJ, IN, VBG, NN',
   },
   {
-    text: 'Any suggestions would be appreciated.',
-    tags: 'DT, NNS, MD, VB, VBN',
-  },
-  {
     text: 'I will.',
     tags: 'PRP, MD',
   },
@@ -3729,10 +3721,7 @@ export default [
     text: '- 20 piece Chicken McNuggets',
     tags: 'CD, NN, NNP, NNPS',
   },
-  {
-    text: '- Large fries',
-    tags: 'JJ, NNS',
-  },
+
   {
     text: '- 10 piece Chicken McNuggets',
     tags: 'CD, NN, NNP, NNPS',
@@ -4673,10 +4662,6 @@ export default [
   {
     text: 'You also may need to treat the incubation water.',
     tags: 'PRP, RB, MD, VB, TO, VB, DT, NN, NN',
-  },
-  {
-    text: 'In time the eggs can suffocate in the shipping container.',
-    tags: 'IN, NN, DT, NNS, MD, VB, IN, DT, NN, NN',
   },
   {
     text: 'Should I get a balcony?',

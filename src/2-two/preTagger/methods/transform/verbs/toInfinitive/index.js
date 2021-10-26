@@ -18,12 +18,8 @@ const guessTense = function (str) {
   return null
 }
 
-const toInfinitive = function (str, model, tense) {
-  if (!str) {
-    return ''
-  }
-  //1. look at known irregulars
-  // if (world.words.hasOwnProperty(str) === true) {
+// lookup known irregular verb forms
+const fromIrreg = function (str, model) {
   let irregs = model.two.irregularVerbs
   let keys = Object.keys(irregs)
   for (let i = 0; i < keys.length; i++) {
@@ -34,8 +30,10 @@ const toInfinitive = function (str, model, tense) {
       }
     }
   }
-  // }
-  // give'r!
+}
+
+// transform verb from regular expressions
+const fromReg = function (str, tense) {
   tense = tense || guessTense(str)
   if (tense && rules[tense]) {
     for (let i = 0; i < rules[tense].length; i++) {
@@ -45,7 +43,23 @@ const toInfinitive = function (str, model, tense) {
       }
     }
   }
-  return str
+}
+
+const toInfinitive = function (str, model, tense) {
+  if (!str) {
+    return ''
+  }
+  // pull-apart phrasal verb 'fall over'
+  let [verb, particle] = str.split(/ /)
+  // 1. look at known irregulars
+  let inf = fromIrreg(verb, model)
+  // 2. give'r!
+  inf = inf || fromReg(verb, tense) || verb
+  // stitch phrasal back on
+  if (particle) {
+    inf += ' ' + particle
+  }
+  return inf
 }
 export default toInfinitive
 

@@ -46,6 +46,7 @@ const swtichLexicon = function (terms, i, model) {
   for (let o = 0; o < keys.length; o += 1) {
     const { words, before, after, beforeWords, afterWords, ownTags } = switchers[keys[o]]
     if (words.hasOwnProperty(term.normal)) {
+      // console.log('===> ' + term.text)
       // look at term's own tags for obvious hints, first
       let tag = lookAtTag(terms[i], ownTags || {})
       // look -> right word

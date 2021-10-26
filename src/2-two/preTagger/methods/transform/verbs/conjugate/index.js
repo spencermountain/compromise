@@ -3,9 +3,16 @@ import genericFill from './02-generic.js'
 
 //we run this on every verb in the lexicon, so please keep it fast
 //we assume the input word is a proper infinitive
-const conjugate = function (inf = '', model) {
+const conjugate = function (inf, model) {
   let found = {}
   const irregs = model.two.irregularVerbs
+  let particle = ''
+  // pull-apart phrasal verb 'fall over'
+  if (/ /.test(inf)) {
+    let split = inf.split(/ /)
+    inf = split[0]
+    particle = split[1]
+  }
   // 1. look at irregulars
   //the lexicon doesn't pass this in
   if (irregs && irregs.hasOwnProperty(inf) === true) {
@@ -25,6 +32,12 @@ const conjugate = function (inf = '', model) {
   //'buzzes'
   if (found.PresentTense === undefined) {
     found.PresentTense = genericFill.PresentTense(inf)
+  }
+  // put phrasal-verbs back together again
+  if (particle) {
+    Object.keys(found).forEach(k => {
+      found[k] += ' ' + particle
+    })
   }
   return found
 }

@@ -10,13 +10,13 @@ export default [
   // have fun
   { match: `(have|had) [#Adjective] #Preposition .`, group: 0, tag: 'Noun', reason: 'have-fun' },
   // brewing giant
-  { match: `#Gerund giant`, tag: 'Noun', reason: 'brewing-giant' },
+  { match: `#Gerund (giant|capital|center|zone|application)`, tag: 'Noun', reason: 'brewing-giant' },
   // the orange
-  {
-    match: '#Determiner [#Adjective]$',
-    ifNo: ['Comparative', 'Superlative', 'much'],
-    group: 0,
-    tag: 'Noun',
-    reason: 'the-orange',
-  },
+  // {
+  //   match: '#Determiner [#Adjective]$',
+  //   ifNo: ['Comparative', 'Superlative', 'much'],
+  //   group: 0,
+  //   tag: 'Noun',
+  //   reason: 'the-orange',
+  // },
 ]

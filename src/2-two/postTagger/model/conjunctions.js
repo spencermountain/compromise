@@ -33,5 +33,5 @@ export default [
   { match: '@hasComma [which] (#Pronoun|#Verb)', group: 0, tag: 'Preposition', reason: 'which-copula' },
   { match: '#Copula just [like]', group: 0, tag: 'Preposition', reason: 'like-preposition' },
   //folks like her
-  { match: '#Noun [like] #Noun', group: 0, tag: 'Preposition', reason: 'noun-like' },
+  { match: '#Plural [like] #Noun', group: 0, tag: 'Preposition', reason: 'noun-like' },
 ]

@@ -1,10 +1,27 @@
+const splitOn = function (term) {
+  if (!term) {
+    return false
+  }
+  // veggies, like figs
+  if (term.normal === 'like') {
+    return false
+  }
+  // toronto, canada  - tuesday, march
+  if (term.tags.has('Place') || term.tags.has('Date')) {
+    return false
+  }
+  return true
+}
+
+// kind-of a dirty sentence chunker
 const splitByClause = function (document) {
   const splitHere = /[,:;]/
   let arr = []
   document.forEach(terms => {
     let start = 0
     terms.forEach((term, i) => {
-      if (splitHere.test(term.post)) {
+      // does it have a comma/semicolon ?
+      if (splitHere.test(term.post) && splitOn(terms[i + 1])) {
         arr.push(terms.slice(start, i + 1))
         start = i + 1
       }

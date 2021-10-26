@@ -5798,10 +5798,6 @@ export default [
     tags: 'JJ, NN, NN, VBZ, JJ',
   },
   {
-    text: 'I walked away.',
-    tags: 'PRP, VBD, RB',
-  },
-  {
     text: 'Perfect Practice',
     tags: 'JJ, NN',
   },

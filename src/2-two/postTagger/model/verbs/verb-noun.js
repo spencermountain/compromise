@@ -147,6 +147,8 @@ export default [
   { match: '#Possessive #Adjective [#Verb]', group: 0, tag: 'Noun', reason: 'our-full-support' },
   // they do serve fish
   { match: '(do|did|will) [#Singular] #Noun', group: 0, tag: 'PresentTense', reason: 'do-serve-fish' },
+  // tastes good
+  { match: '[(tastes|smells)] #Adverb? #Adjective', group: 0, tag: 'PresentTense', reason: 'tastes-good' },
   // ignoring commute
   {
     match: '#Copula #Gerund [#PresentTense] !by?',

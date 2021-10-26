@@ -21,7 +21,10 @@ nlp.verbose('tagger')
 // console.log(s.text())
 
 
-let txt = `adults are much easier`
+// let txt = `squadrons were based out of Tan Son`
+let txt = `toronto, canada`
+// let txt = `The ship offers variety`
+// let txt = `Great name for a great store`
 
 
 

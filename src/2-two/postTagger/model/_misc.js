@@ -29,6 +29,7 @@ let matches = [
   {
     match: '#Verb [(out|for|through|about|around|in|down|up|on|off)] #Preposition',
     group: 0,
+    ifNo: ['#Copula'],//were out
     tag: 'Particle',
     reason: 'rush-out',
   },

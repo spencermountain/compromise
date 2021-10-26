@@ -90,6 +90,9 @@ export default [
   { match: '#Value of a [second]', group: 0, unTag: 'Value', tag: 'Singular', reason: '10th-of-a-second' },
   // 10 seconds
   { match: '#Value [seconds]', group: 0, unTag: 'Value', tag: 'Plural', reason: '10-seconds' },
+  // in time
+  { match: 'in [#Infinitive]', group: 0, tag: 'Singular', reason: 'in-age' },
+
   //the repairer said
   { match: '#Determiner [#Noun] said', group: 0, tag: 'Actor', reason: 'the-actor-said' },
   //the euro sense

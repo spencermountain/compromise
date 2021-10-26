@@ -1,13 +1,17 @@
 import fastTag from '../_fastTag.js'
 // import fillTags from '../3rd-pass/_fillTags.js'
 
+const DEBUG = false
+
 const lookAtWord = function (term, byWord) {
   if (!term) {
     return null
   }
   // look at word
   if (byWord.hasOwnProperty(term.normal)) {
-    // console.log(term.normal, '->', byWord[term.normal])
+    if (DEBUG) {
+      console.log(term.normal, '->', byWord[term.normal])
+    }
     return byWord[term.normal]
   }
   return null
@@ -23,7 +27,9 @@ const lookAtTag = function (term, byTag) {
   tags = tags.sort((a, b) => (a.length > b.length ? -1 : 1))
   for (let i = 0; i < tags.length; i += 1) {
     if (byTag[tags[i]]) {
-      // console.log(tags[i], '->', byTag[tags[i]])
+      if (DEBUG) {
+        console.log(tags[i], '->', byTag[tags[i]])
+      }
       return byTag[tags[i]]
     }
   }
@@ -46,9 +52,11 @@ const swtichLexicon = function (terms, i, model) {
   for (let o = 0; o < keys.length; o += 1) {
     const { words, before, after, beforeWords, afterWords, ownTags } = switchers[keys[o]]
     if (words.hasOwnProperty(term.normal)) {
-      // console.log('===> ' + term.text)
+      if (DEBUG) {
+        console.log('===> ' + term.text)
+      }
       // look at term's own tags for obvious hints, first
-      let tag = lookAtTag(terms[i], ownTags || {})
+      let tag = null// lookAtTag(terms[i], ownTags || {})
       // look -> right word
       tag = tag || lookAtWord(terms[i + 1], afterWords)
       // look <- left word, second

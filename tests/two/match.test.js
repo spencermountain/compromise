@@ -3,6 +3,8 @@ import nlp from './_lib.js'
 const here = '[two/match] '
 
 let arr = [
+
+  /*
   ['toronto', '#City'],
   ['mexico', '#Country'],
   ['Jamaica', '#Country'],
@@ -889,6 +891,49 @@ let arr = [
   [`I'm fuckin' around with two geese`, `#Pronoun #Copula #Gerund #Particle #Preposition #Value #Plural`],
   [`he changes`, `#Noun #PresentTense`],
   [`his changes`, `#Noun #Plural`],
+
+  */
+  // the #Noun #Infinitive  ->Noun
+  [`the planning [process]`, `the #Noun #Noun`],
+  [`the printing press`, `the #Noun #Noun`],
+  [`the tip line`, `the #Noun #Noun`],
+  [`the defence budget`, `the #Noun #Noun`],
+  [`the cross cook`, `the #Noun #Noun`],
+  [`the security guard`, `the #Noun #Noun`],
+  [`the intersection sign`, `the #Noun #Noun`],
+  // the #Noun #Infinitive  ->Verb
+  [`did the banana say`, `. the #Noun #Infinitive`],
+  [`did the skeleten show`, `. the #Noun #Infinitive`],
+  [`does the king want`, `. the #Noun #Infinitive`],
+  [`does the writer say`, `. the #Noun #Infinitive`],
+  [`let the messiah go`, `. the #Noun #Infinitive`],
+  [`the critics keep writing`, `the #Noun #Verb #Verb`],
+  [`the critics be`, `the #Noun #Infinitive`],
+  [`the captain put himself`, `the #Noun #Infinitive himself`],
+  [`the parties dispute which`, `the #Noun #Infinitive which`],
+  [`the Princess thought`, `the #Noun #Verb`],
+  [`the feet kick him`, `the #Noun #Infinitive him`],
+  // more adjectivey
+  // [`the midnight knock`, `the #Noun #Noun`],
+  [`the universal process`, `the #Adjective #Singular`],
+  [`the collective budget`, `the #Adjective #Singular`],
+  [`the work stress`, `the #Noun #Singular`],
+  [`the american touch`, `the #Noun #Singular`],
+  [`the road upgrade`, `the #Noun #Singular`],
+  [`the city strain`, `the #Noun #Singular`],
+  [`the software patch`, `the #Noun #Singular`],
+  [`the toronto fire`, `the #Noun #Singular`],
+  // [`The paving-stone`, `the #Noun #Singular`],
+  // -> plurals
+  [`the universal processes`, `the #Adjective #Plural`],
+  [`the collective budgets`, `the #Adjective #Plural`],
+  [`the work stresses`, `the #Noun #Plural`],
+  [`the american touches`, `the #Noun #Plural`],
+  [`the road upgrades`, `the #Noun #Plural`],
+  [`the city strains`, `the #Noun #Plural`],
+  [`the software patches`, `the #Noun #Plural`],
+  [`the toronto fires`, `the #Noun #Plural`],
+  [`The paving-stones`, `the #Noun #Plural`],
   // [``, ``],
 ] //match-two
 test('match:', function (t) {

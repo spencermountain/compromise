@@ -1,12 +1,12 @@
 // generated in ./lib/switches
 export default {
   "nounVerb": {
-    "before": "Infinitive¦adverb,mod1negative,p0;lur0ronoun;al|Singular¦determiner,infinit2noun,p0;as0ossess1resen0;ttense;ive",
+    "before": "Infinitive¦adverb,mod1negative,p0;lur0ronoun;al|Singular¦adject2determiner,infinit2noun,p0;as0ossess1resen0;ttense;ive",
     "after": "Infinitive¦adverb,conjunc1determiner,p0;ossessive,reposi0;tion|Singular¦copula,modal,value",
     "ownTags": "Singular¦propernoun",
-    "beforeWords": "Infinitive¦i,please,t1w0you;e,ill;hey,o|Singular¦is,of,was",
+    "beforeWords": "Infinitive¦i,please,t1w0you;e,ill;hey,o|Singular¦is,of,w0;as,ith",
     "afterWords": "Infinitive¦me,the,you|Singular¦of",
-    "words": "true¦0:2Z;1:3F;a37b31c2Jd25e21f1Ng1Hh1Bi17j16ki15l0Ym0Rn0No0Mp0DrYsHt9upgra1Jv6w2yawn;a3hist33i2orry,re39;nd,re,sh;rra19t2ve;ch,er;al13i3o2;te,w;ew,s2F;a7e35i6o5r2une,wi35;a3eat,i2u34;bu32ck;in,nsf36p;r1Eu1;me,p;l2rg0Js2Y;k,ly;cGeFhEiDli22mCneeze,pBt4u2;ppOr2spe28;ge,pri0;a7e6or5r3u2;dy,ff,mb2K;a1Ne2;ss,t1;e,m;m,p;ck,in,ke,mp,re,te;la1Vrink2E;eJi2Do1L;de,gn;iv2Oo2H;ar1n0r2L;a14o14r2;at1ew;aEe3isk,oot,u2;in,le,sh;as29c9el,f8g7je1Ql0Bp6que2Es4tu1Rv2waA;e2iew;al,r0;er2Do2t;l2Crt;ly,o1P;a4rS;act08u0;a3o2;rd;ll;i0n2t;ge,k;a9e8in,l6o5r3u2;mp,rcha0sh;ai0o2;ce25du13mi0te1Y;s11w21;an,u2;g,n1G;el,rm13;iSrt,ss,t1u0;ff1Wil;e4o2;d,t2;e,i0U;ed,gle10;a5e4i3o2urd1R;dCnitNp;lk,nd,rrM;asu06ss;n,r2sk,t1;ch,k2;et;a7e5i4o2u09;a2ck,g,ve;d,n;ft,m0Mne,st;cPv2;el;bBck,un1;ll,ss;am,ud0T;c1Dn3ss2;ue;cr2fluW;ea0;a5iPo3u2;nt;n2pe,st,u0;or;nd2rm,te;!le;aSo6r5u2;ar3e13i2;de;antee,d;asp,ip,umb0K;of,ssip;aEeBiAl7o5r3u2;el,nd0W;ac2ost0V;tuA;cus,r2;ce,eca0Mm;a3o2y;at,od,w;g,sh;re,sh,t,x;a2ed;r,tu2;re;ce,rm;cho,nvy,x2ye;chanXerci0p2;eri2oR;enF;aCe9i6o5r3u2;mp;a2eam,ink;in;dQubt;p,s2vor9;li2play;ke;fe3posAsi2;gn,re;at,ct;maJn3r2te;e,t;ce;aHentZhDlaCo5r2;ed3u2y;sh;it;llap0m5n2py,ugh,vV;ce3du2trol;ct;rn;fo3m2;and,uL;rt;im,w;a3e2ip;at,ck;llen2n2r2se;ge;ll,u0ve;se;a6lessJo3ran1u2;bb3ck3ntI;aBmb,ne,o3ss,tt2x;le;k,st,t;nk,se;dCid,ltBnswBpproa1rch8ss5tt3ucti2;on;a2empt;ck;i3ocia2;te;st;!i2;ve;ch;er;dre3vertis2;ing;ss",
+    "words": "true¦0:2Z;1:3G;2:3D;a39b32c2Kd26e22f1Og1Ih1Ci18j17ki16l0Zm0Tn0Po0Op0ErZsItAupgra1Kv7w3yawn;a4hist35i3orry,re3B;nd,re,sh;rra1At3ve;ch,er;al14i4o3;te,w;ew,s2G;a8e2i7o6r3une,wi2;a4eat,i3u2;bu34ck;in,nsf38p;r1Fu1;me,p;l3rg2Qs30;k,ly;cHeGhFiEli23mDneeze,pCt5u3;ppPr3spe29;ge,pri0;a8e7or6r4u3;dy,ff,mb2M;a1Oe3;ss,t1;e,m;m,p;ck,in,ke,mp,re,te;la1Wrink2G;eKi2Fo1M;de,gn;iv2Qo2J;ar1n0r2N;a15o15r3;at1ew;aFe4isk,oot,u3;in,le,sh;as2BcAel,f9g8je1Rl0Cp7que2s5tu1Sv3waB;e3iew;al,r0;er2Fo3t;l2Ert;ly,o1Q;a5r1Z;act09u0;a4o3;rd;ll;i0n3t;ge,k;aBeAin,l7o6r4u3;mp,rcha0sh;ai0e28o3;ce27du14mi0te2;s12w23;a4u3;g,n1H;n,y;el,rm13;iSrt,ss,t1u0;ff1Xil;e5o3;d,t3;e,i0U;ed,gle10;a6e5i4o3urd1S;dCnitNp;lk,nd,rrM;asu06ss;n,r3sk,t1;ch,k18;a8e6i5o3u0A;a3ck,g,ve;d,n;ft,m0Nne,st;cQv3;el;bCck,un1;ll,ss;am,ud0U;c1Fn4ss3;ue;cr3fluX;ea0;a6iQo4u3;nt;n3pe,st,u0;or;nd3rm,te;!le;aTo7r6u3;ar4e15i3;de;antee,d;asp,ip,umb0M;of,ssip;aFeCiBl8o6r4u3;el,nd0Y;ac3ost0X;tuB;cus,r3;ce,eca2m;a4o3y;at,od,w;g,sh;re,sh,t,x;a3ed;r,tu3;re;ce,rm;cho,nvy,x3ye;chanYerci0p3;eri3oS;enG;aDeAi7o6r4u3;mp;a3eam,ink;in;dRubt;p,s3vorA;li3play;ke;fe4posBsi3;gn,re;at,ct;maKn4r3te;e,t;ce;aIent01hElaDo6r3;ed4u3y;sh;it;llap0m6n3ok,py,ugh,vX;ce4du3trol;ct;rn;fo4m3;and,uN;rt;im,w;a4e3ip;at,ck;llen3n3r3se;ge;ke,ll,u0ve;se;a8lessLo5ran1u3;bb5ck5dg3ntK;et;a2mb,ne,o4ss,tt3x;le;k,st,t;nk,se;dDid,ltCnswCpproa1rch9ss6tt4ucti3;on;a3empt;ck;i2ocia3;te;st;!i3;ve;ch;er;dre4vertis3;ing;ss",
     "fallback": "Infinitive"
   },
   "adjGerund": {
@@ -28,10 +28,10 @@ export default {
     "fallback": "Adjective"
   },
   "personNoun": {
-    "before": "Person¦honorific,p0;ers0repositi0;on|Singular¦determiner,infinit2noun,p0;as0ossess1resen0;ttense;ive",
+    "before": "Person¦honorific,p0;ers0repositi0;on|Singular¦adject2determiner,infinit2noun,p0;as0ossess1resen0;ttense;ive",
     "after": "Person¦p0;erson,ropernoun|Singular¦copula,modal,value",
     "ownTags": "Singular¦propernoun",
-    "beforeWords": "Person¦dear,h0yo;e0i;llo,y|Singular¦is,of,was",
+    "beforeWords": "Person¦dear,h0yo;e0i;llo,y|Singular¦is,of,w0;as,ith",
     "afterWords": "Person¦fe7learn6play5s2t0;el7h0old;inks,ought;a1ing,pend0;s,t;id,ng,ys;ed,s;!ed;e0lt;ls|Singular¦of",
     "words": "true¦a0Mb0Ec0Ad02e00fZgWhRjNkJlImColive,p8r5s3trini0Dv0wang;an,i0;cto0Mol0;a,et;a0ky,on6umm0HydnA;lvador,ntia00;ay,e1o0uF;b01d,se;ed,x;a2e0ol;aRn0;ny;ris,tX;a4e2i0;ck0l2;ey;lo00rced0;es;x,ya;aFeo,iK;e2i0obe;ng,r0tS;by;lvLnt;a2e1o0;lVrdan,y;an,w4;de,smi7y;a1iPo0;lApe,us2;ll,mil1z0;el;ton;ail,e1r0;ant,een;ne;aith,ern,lo,ranco;a0dFlmo,mir,ula,ve;rl;a4e3i1ol0;ly;ck,e0xF;go;an,ja;i1rw0wn;in;sy;atalina,h0liff,rystal;ari1in,risti0;!an;ty;a4e3i2r0;an0ook;dy;ll;nedict,rg;k1rb0;ie;er;l0rt;exand0fredo,ma;ria",
     "fallback": "Singular"

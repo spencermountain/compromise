@@ -21,18 +21,17 @@ nlp.verbose('tagger')
 // console.log(s.text())
 
 
-let txt = `we drink whole [bottles]`
-//let txt= `your incision [site].`
-//let txt= `Gun [talk]`
-//let txt= `during the planning [process] `
-//let txt= `Mehtab was older in [age]`
-//let txt= `this is straight up [stalking].`
-//let txt= `With the rhymes and the [ties] and the dolla signs`
-//let txt= `before his [play] "The Cherry Orchard"`
-//let txt= `anarchist theory and poststructuralist [thought]`
-//let txt= `Surat saree brands faded by [fakes]`
-//let txt= `the cottage was made of bread and roofed with [cakes]`
-//let txt= `The liver receives a dual blood [supply] from the arteries.`
+// let txt = `your incision [site].`
+// let txt= `Gun [talk]`
+
+// let txt = `before his [play] "The Cherry Orchard"`
+// let txt = `the work stresses hit me`
+let txt = `the software patches were`
+// let txt= `this is straight up [stalking].`
+// let txt = `faded by [fakes]`
+// let txt = `a dual blood [supply] from the arteries.`
+
+
 
 let doc = nlp(txt).debug()
 // doc.verbs().toInfinitive()

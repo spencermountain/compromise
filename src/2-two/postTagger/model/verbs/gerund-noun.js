@@ -1,6 +1,9 @@
 export default [
   // operating system
   { match: `[#Gerund] system`, group: 0, tag: 'Noun', reason: 'operating-system' },
+  { match: '(this|that|the) [#Gerund #Infinitive]', group: 0, tag: 'Singular', reason: 'the-planning-process' },
+  // the planning processes
+  { match: '(that|the) [#Gerund #PresentTense]', group: 0, tag: 'Plural', reason: 'the-paving-stones' },
   // this swimming
   { match: '(this|that|the) [#Gerund]', group: 0, tag: 'Noun', reason: 'this-gerund' },
   // i think tipping sucks

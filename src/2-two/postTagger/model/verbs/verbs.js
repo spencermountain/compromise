@@ -33,6 +33,10 @@ export default [
   { match: '#Modal [march]', group: 0, tag: 'Infinitive', reason: 'must-march' },
   // may be
   { match: `[may] be`, group: 0, tag: 'Verb', reason: 'may-be' },
+  // subject to
+  { match: `[(subject|subjects|subjected)] to`, group: 0, tag: 'Verb', reason: 'subject to' },
+  // subject to
+  { match: `[home] to`, group: 0, tag: 'PresentTense', reason: 'home to' },
 
   // === misc==
   // side with

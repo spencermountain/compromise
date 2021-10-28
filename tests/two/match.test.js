@@ -960,6 +960,7 @@ let arr = [
   // [`he stopped thinking`, `. #PresentTense #Gerund`],
   [`starts thinking`, `#PresentTense #Gerund`],
 
+  // Gerund Noun/verb
   [`babysitting sucks`, `#Noun #Verb`],
   [`casting was really awful`, `#Noun #Copula #Adverb #Adjective`],
   [`baking was fun`, `#Noun #Copula #Adjective`],
@@ -981,9 +982,16 @@ let arr = [
   [`walking should be fun`, `#Noun #Modal be #Adjective`],
   [`i think tipping sucks`, `#Pronoun #Infinitive #Noun #PresentTense`],
 
-
+  // 
+  [`health insurance reform is tricky`, `#Noun #Noun #Noun is #Adjective`],
+  [`Toronto will be home to large party`, `#Noun #Verb be #Verb to #Adjective #Noun`],
+  [`appeal court`, `#Noun #Noun`],
+  [`their accelerating returns`, `#Noun #Adjective #Noun`],
+  [`accelerating his returns`, `#Gerund his #Plural`],
+  [`the exploding returns`, `. #Adjective #Plural`],
+  [`their exploding returns`, `. #Adjective #Plural`],
   // [``, ``],
-] //match-two
+]
 test('match:', function (t) {
   arr.forEach(function (a) {
     let [str, match] = a

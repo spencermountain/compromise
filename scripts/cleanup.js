@@ -3,7 +3,7 @@ import lexicon from '../lib/lexicon/index.js'
 
 let all = {}
 Object.keys(switches).forEach(k => {
-  switches[k].forEach(word => {
+  switches[k].words.forEach(word => {
     if (lexicon.hasOwnProperty(word)) {
       all[lexicon[word]] = all[lexicon[word]] || []
       all[lexicon[word]].push(word)

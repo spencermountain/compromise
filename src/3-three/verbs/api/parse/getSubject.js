@@ -1,4 +1,8 @@
 const shouldSkip = function (last) {
+  // is it our only choice?
+  if (last.length <= 1) {
+    return false
+  }
   let obj = last.parse()[0] || {}
   return obj.isSubordinate
 }
@@ -16,7 +20,6 @@ const lastNoun = function (vb) {
   // should we skip a subbordinate clause or two?
   last = nouns.last()
   if (shouldSkip(last)) {
-    // console.log(vb.text())
     nouns.remove(last)
     last = nouns.last()
   }

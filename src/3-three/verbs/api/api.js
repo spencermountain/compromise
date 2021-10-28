@@ -11,6 +11,10 @@ import getGrammar from './parse/grammar/index.js'
 
 // return the nth elem of a doc
 export const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
+const isObject = val => Object.prototype.toString.call(val) === '[object Object]'
+
+
+
 
 const api = function (View) {
   class Verbs extends View {
@@ -28,6 +32,10 @@ const api = function (View) {
         json.verb = toJSON(vb)
         return json
       })
+      // never return a View object
+      if (isObject(arr) && arr.isView === true) {
+        arr = []
+      }
       return arr.reverse()
     }
     subjects(n) {

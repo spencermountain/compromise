@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import nlp from './builds/compromise.cjs'
 // import text from '/Users/spencer/mountain/compromise/scripts/perf/flame/_sotu-text.js'
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 
 
@@ -30,7 +30,8 @@ nlp.verbose('tagger')
 // let txt = `it's a stuffed animal... you know`
 // let txt = `move quickly to complete`
 // let txt = `it was moving`
-let txt = `Cashtech eyes A-Pac`
+// let txt = `Cashtech eyes A-Pac`
+let txt = `me and my friend Janice walked`
 // let txt = `the unfinished business of our country`
 // let txt = `to balance the budget.`
 // let txt=`Then she went to Grettel, shook her till she awoke, and cried: Get up, you lazy - bones, fetch water and cook something for your brother.`
@@ -38,8 +39,11 @@ let txt = `Cashtech eyes A-Pac`
 // let txt=`At this discourse of the crier the Prince of the Indies, considering that the principal motive of his travel was to carry the Sultan, his father, home some singular rarity, thought that he could not meet with any which could give him more satisfaction.`
 
 
-
-let doc = nlp(txt).debug()
+txt = ` the wind wizard's son laughed at the King.`
+let doc = nlp(txt)//.debug()
+doc.verbs().subjects().debug()
+// console.log(doc.verbs().json())
+// console.log(doc.verbs().json()[0])
 // doc.verbs().toInfinitive()
 // console.log(doc.text())
 // doc.verbs().toFutureTense()

@@ -3,7 +3,7 @@ import chunker from './3-three/chunker/plugin.js'
 import nouns from './3-three/nouns/plugin.js'
 import numbers from './3-three/numbers/plugin.js'
 import sentences from './3-three/sentences/plugin.js'
-import subjects from './3-three/subjects/plugin.js'
+import subjects from './3-three/topics/plugin.js'
 import verbs from './3-three/verbs/plugin.js'
 
 nlp.plugin(chunker) //

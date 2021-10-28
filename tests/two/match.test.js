@@ -990,6 +990,7 @@ let arr = [
   [`accelerating his returns`, `#Gerund his #Plural`],
   [`the exploding returns`, `. #Adjective #Plural`],
   [`their exploding returns`, `. #Adjective #Plural`],
+  [`their plunging neckline`, `. #Adjective #Singular`],
   // [``, ``],
 ]
 test('match:', function (t) {

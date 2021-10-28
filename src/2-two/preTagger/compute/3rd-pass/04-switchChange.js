@@ -1,7 +1,8 @@
 import fastTag from '../_fastTag.js'
 // import fillTags from '../3rd-pass/_fillTags.js'
 
-const DEBUG = false
+const env = typeof process === undefined ? self.env : process.env || {} // eslint-disable-line
+
 
 const lookAtWord = function (term, byWord) {
   if (!term) {
@@ -9,8 +10,8 @@ const lookAtWord = function (term, byWord) {
   }
   // look at word
   if (byWord.hasOwnProperty(term.normal)) {
-    if (DEBUG) {
-      console.log(term.normal, '->', byWord[term.normal])
+    if (env.DEBUG_TAGS) {
+      console.log(`  \x1b[32m→ ${byWord[term.normal]} (from ${term.normal}) \x1b[0m\n`)
     }
     return byWord[term.normal]
   }
@@ -27,8 +28,8 @@ const lookAtTag = function (term, byTag) {
   tags = tags.sort((a, b) => (a.length > b.length ? -1 : 1))
   for (let i = 0; i < tags.length; i += 1) {
     if (byTag[tags[i]]) {
-      if (DEBUG) {
-        console.log(tags[i], '->', byTag[tags[i]])
+      if (env.DEBUG_TAGS) {
+        console.log(`  \x1b[32m→ ${byTag[tags[i]]}  (from #${tags[i]}) \x1b[0m\n`)
       }
       return byTag[tags[i]]
     }
@@ -52,8 +53,8 @@ const swtichLexicon = function (terms, i, model) {
   for (let o = 0; o < keys.length; o += 1) {
     const { words, before, after, beforeWords, afterWords, ownTags } = switchers[keys[o]]
     if (words.hasOwnProperty(term.normal)) {
-      if (DEBUG) {
-        console.log('===> ' + term.text)
+      if (env.DEBUG_TAGS) {
+        console.log(` -=-=- [switch] -=- '${term.text}'`)
       }
       // look at term's own tags for obvious hints, first
       let tag = lookAtTag(terms[i], ownTags || {})
@@ -61,10 +62,10 @@ const swtichLexicon = function (terms, i, model) {
       tag = tag || lookAtWord(terms[i + 1], afterWords)
       // look <- left word, second
       tag = tag || lookAtWord(terms[i - 1], beforeWords)
-      // look -> right tag next
-      tag = tag || lookAtTag(terms[i + 1], after)
       // look <- left tag next
       tag = tag || lookAtTag(terms[i - 1], before)
+      // look -> right tag next
+      tag = tag || lookAtTag(terms[i + 1], after)
       if (tag && !term.tags.has(tag)) {
         // console.log(term, tag)
         term.tags.clear()

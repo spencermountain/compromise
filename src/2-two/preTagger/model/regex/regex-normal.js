@@ -31,6 +31,7 @@ export default [
   //slang things
   [/^(lol)+[sz]$/, 'Expression', 'lol'],
   [/^wo{2,}a*h?$/, 'Expression', 'wooah'],
+  [/^(hee?)+h?$/, 'Expression', 'hehe'],
   [/^(un|de|re)\\-[a-z\u00C0-\u00FF]{2}/, 'Verb', 'un-vite'],
 
   //phone numbers

@@ -941,6 +941,9 @@ let arr = [
   [`served by branches`, `#PastTense #Preposition #Plural`],
   [`ended in ruin`, `#PastTense #Preposition #Noun`],
   // [`cost of living`, `#PastTense #Preposition #Noun`],
+
+  // oct 28, 2021
+  [`adding a sleeping aid.`, `#Gerund #Determiner #Noun #Singular`],
   // [``, ``],
 ] //match-two
 test('match:', function (t) {

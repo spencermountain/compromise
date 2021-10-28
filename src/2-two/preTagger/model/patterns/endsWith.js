@@ -18,7 +18,7 @@ export default {
     [/.[aeiou]na$/, Noun, 'tuna'],
     [/.[oau][wvl]ska$/, Last],
     [/.[^aeiou]ica$/, Sing, 'harmonica'],
-    [/^([hyj]a)+$/, Exp, 'haha'], //hahah
+    [/^([hyj]a+)+$/, Exp, 'haha'], //hahah
   ],
   c: [[/.[^aeiou]ic$/, Adj]],
   d: [

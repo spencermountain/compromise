@@ -279,10 +279,7 @@ export default [
     text: 'A faster version, the SuperDot, was launched in 1984.',
     tags: 'DT, JJR, NN, DT, NNP, VBD, VBN, IN, CD',
   },
-  {
-    text: 'Valley Federal is currently being examined by regulators.',
-    tags: 'NNP, NNP, VBZ, RB, VBG, VBN, IN, NNS',
-  },
+
   {
     text: 'Columbia has only about 10 million common shares in public hands.',
     tags: 'NNP, VBZ, RB, IN, CD, CD, JJ, NNS, IN, JJ, NNS',
@@ -5856,10 +5853,6 @@ export default [
   {
     text: 'I left with a case of BRAWLER !!!!!',
     tags: 'PRP, VBD, IN, DT, NN, IN, NNP',
-  },
-  {
-    text: 'Oil Change Disaster',
-    tags: 'NN, NN, NN',
   },
   {
     text: 'Liars, negative stars!',

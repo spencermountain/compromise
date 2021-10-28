@@ -7,7 +7,8 @@ const toTitleCase = function (str) {
 }
 const titleCase = function (obj) {
   return Object.keys(obj).reduce((h, key) => {
-    h[toTitleCase(key)] = obj[key]
+    let name = toTitleCase(key).replace(/tense$/, 'Tense')
+    h[name] = obj[key]
     return h
   }, {})
 }
@@ -21,15 +22,15 @@ Object.keys(switches).forEach(k => {
       switches[k][key] = unpack(switches[k][key])
     }
   })
-  switches[k].before = titleCase(switches[k].before)
-  switches[k].after = titleCase(switches[k].after)
+  switches[k].beforeTags = titleCase(switches[k].beforeTags)
+  switches[k].afterTags = titleCase(switches[k].afterTags)
   switches[k].ownTags = titleCase(switches[k].ownTags)
 })
 
 // make a copy of nounVerb called 'presentPlural'
 const presentPlural = Object.assign({}, switches.nounVerb)
 presentPlural.fallback = 'PresentTense'
-let keys = ['before', 'after', 'beforeWords', 'afterWords', 'ownTags']
+let keys = ['beforeTags', 'afterTags', 'beforeWords', 'afterWords', 'ownTags']
 keys.forEach(k => {
   presentPlural[k] = Object.assign({}, switches.nounVerb[k])
   Object.keys(presentPlural[k]).forEach(key => {

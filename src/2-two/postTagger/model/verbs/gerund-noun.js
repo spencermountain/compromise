@@ -1,8 +1,8 @@
 export default [
   // watching the working
-  { match: `#Gerund #Determiner [#Gerund]`, group: 0, tag: 'Noun', reason: 'sleeping-aid' },
+  // { match: `#Gerund #Determiner [#Gerund]`, group: 0, tag: 'Noun', reason: 'sleeping-aid' },
   // operating system
-  { match: `[#Gerund] (system|aid|method|utility|tool|reform|therapy|philosophy|room)`, group: 0, tag: 'Noun', reason: 'operating-system' },
+  // { match: `[#Gerund] (system|aid|method|utility|tool|reform|therapy|philosophy|room)`, group: 0, tag: 'Noun', reason: 'operating-system' },
   // the planning processes
   { match: '(this|that|the|a|an) [#Gerund #Infinitive]', group: 0, tag: 'Singular', reason: 'the-planning-process' },
   // the paving stones

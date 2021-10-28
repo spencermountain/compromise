@@ -11,7 +11,7 @@ const lookAtWord = function (term, byWord) {
   // look at word
   if (byWord.hasOwnProperty(term.normal)) {
     if (env.DEBUG_TAGS) {
-      console.log(`  \x1b[32m→ ${byWord[term.normal]} (from ${term.normal}) \x1b[0m\n`)
+      console.log(`  \x1b[32m→ #${byWord[term.normal]} (from ${term.normal}) \x1b[0m\n`)
     }
     return byWord[term.normal]
   }
@@ -29,7 +29,7 @@ const lookAtTag = function (term, byTag) {
   for (let i = 0; i < tags.length; i += 1) {
     if (byTag[tags[i]]) {
       if (env.DEBUG_TAGS) {
-        console.log(`  \x1b[32m→ ${byTag[tags[i]]}  (from #${tags[i]}) \x1b[0m\n`)
+        console.log(`  \x1b[32m→ #${byTag[tags[i]]}  (from #${tags[i]}) \x1b[0m\n`)
       }
       return byTag[tags[i]]
     }
@@ -51,10 +51,10 @@ const swtichLexicon = function (terms, i, model) {
   const { switchers } = model.two
   const keys = Object.keys(switchers)
   for (let o = 0; o < keys.length; o += 1) {
-    const { words, before, after, beforeWords, afterWords, ownTags } = switchers[keys[o]]
+    const { words, beforeTags, afterTags, beforeWords, afterWords, ownTags } = switchers[keys[o]]
     if (words.hasOwnProperty(term.normal)) {
       if (env.DEBUG_TAGS) {
-        console.log(` -=-=- [switch] -=- '${term.text}'`)
+        console.log(`\n -=-=- '${term.text}' [switch] - (${keys[o]})`)
       }
       // look at term's own tags for obvious hints, first
       let tag = lookAtTag(terms[i], ownTags || {})
@@ -63,9 +63,11 @@ const swtichLexicon = function (terms, i, model) {
       // look <- left word, second
       tag = tag || lookAtWord(terms[i - 1], beforeWords)
       // look <- left tag next
-      tag = tag || lookAtTag(terms[i - 1], before)
+      tag = tag || lookAtTag(terms[i - 1], beforeTags)
       // look -> right tag next
-      tag = tag || lookAtTag(terms[i + 1], after)
+      tag = tag || lookAtTag(terms[i + 1], afterTags)
+      // console.log(terms[i - 1])
+      // console.log(terms[i + 1])
       if (tag && !term.tags.has(tag)) {
         // console.log(term, tag)
         term.tags.clear()

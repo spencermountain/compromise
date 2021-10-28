@@ -42,5 +42,6 @@ let misc = {
   closer: 'Comparative',
   closest: 'Superlative',
   much: 'Adverb',
+  may: 'Modal',
 }
 export default misc

@@ -21,7 +21,7 @@ export default [
   //the threat of force
   { match: '#Determiner #Noun of [#Verb]', group: 0, tag: 'Noun', ifNo: '#Gerund', reason: 'noun-of-noun' },
   //Grandma's cooking, my tiptoing
-  { match: '#Possessive [#Gerund]', group: 0, tag: 'Noun', reason: 'grandmas-cooking' },
+  // { match: '#Possessive [#Gerund]', group: 0, tag: 'Noun', reason: 'grandmas-cooking' },
   // ended in ruins
   { match: '#PastTense #Preposition [#PresentTense]', group: 0, ifNo: ['#Gerund'], tag: 'Noun', reason: 'ended-in-ruins' },
 

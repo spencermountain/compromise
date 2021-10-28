@@ -944,6 +944,44 @@ let arr = [
 
   // oct 28, 2021
   [`adding a sleeping aid.`, `#Gerund #Determiner #Noun #Singular`],
+  [`babysitting her`, `#Gerund .`],
+  [`baking a cooking`, `#Gerund #Determiner #Noun`],
+  [`casting a shadow`, `#Gerund #Determiner #Noun`],
+  [`riding that bike`, `#Gerund #Determiner #Noun`],
+  [`timing the race`, `#Gerund the #Noun`],
+  [`barely manufacturing`, `#Adverb #Gerund`],
+  [`started thinking`, `#PastTense #Gerund`],
+  [`finish listening`, `#Infinitive #Gerund`],
+  [`laughing and crying`, `#Gerund and #Gerund`],
+  [`without laughing`, `. #Gerund`],
+  [`uplifting thinking`, `#Adjective #Noun`],
+
+  [`he loves thinking`, `. #PresentTense #Gerund`],
+  // [`he stopped thinking`, `. #PresentTense #Gerund`],
+  [`starts thinking`, `#PresentTense #Gerund`],
+
+  [`babysitting sucks`, `#Noun #Verb`],
+  [`casting was really awful`, `#Noun #Copula #Adverb #Adjective`],
+  [`baking was fun`, `#Noun #Copula #Adjective`],
+  [`manufacturing returned`, `#Noun #PastTense`],
+  [`laughing may help`, `#Noun #Modal #Infinitive`],
+  [`laughing is pretty handy`, `#Noun #Copula #Adverb #Adjective`],
+  [`my riding`, `#Possessive #Noun`],
+  [`minus laughing`, `. #Noun`],
+  [`thinking aid`, `#Noun #Noun`],
+  [`talking therapy`, `#Noun #Noun`],
+  [`talking therapies`, `#Noun #Plural`],
+  [`toronto riding`, `#Noun #Noun`],
+  [`the timing`, `the #Noun`],
+  [`watching the working class`, `#Gerund the #Noun #Noun`],
+  [`talking the talk`, `#Gerund the #Noun`],
+  [`early warning`, `#Adjective #Noun`],
+  // [`planning processes`, `#Noun #Plural`],
+  [`planning committees`, `#Noun #Plural`],
+  [`walking should be fun`, `#Noun #Modal be #Adjective`],
+  [`i think tipping sucks`, `#Pronoun #Infinitive #Noun #PresentTense`],
+
+
   // [``, ``],
 ] //match-two
 test('match:', function (t) {

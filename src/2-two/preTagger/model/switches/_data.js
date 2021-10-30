@@ -5,7 +5,7 @@ export default {
     "afterTags": "Infinitive¦adverb,conjunc1determiner,p0;ossessive,reposi0;tion|Singular¦copula,modal,noun,p0value;as0resen0;ttense",
     "ownTags": "Singular¦propernoun",
     "beforeWords": "Infinitive¦i,please,t1w0you;e,ill;hey,o|Singular¦a7cut6for,is,m3o2pl4save1w0;as,ith;!d,s;f,n;a1in0;us;de,ke0;!s;ll,ny",
-    "afterWords": "Infinitive¦h1it,me,the0you;!m;er,im|Singular¦a2method,of,philosophy,r1system,t0util3;herapy,ool;eform,oom;id,uthor0;ity",
+    "afterWords": "Infinitive¦a2h1it,me,the0you;!m;er,im;!n|Singular¦a2method,of,philosophy,r1system,t0util3;herapy,ool;eform,oom;id,uthor0;ity",
     "words": "true¦0:37;1:3R;2:3P;3:3L;4:3C;a3Jb3Cc2Sd2De28f1Vg1Oh1Ii1Ej1Dki1Cl16m10n0Wo0Vp0Lr05sNtFupgra1QvCw6y5;awn,ield;a8hist4i7o5re3K;nd1r5;k,ry;nd,re,sh;rra1Dt5ve;ch,er;al17i6o5;te,w;ew,s2L;aAe3hought,i9o8r5u2Twi3;a6eat,i5u3;bu3Bck;in,nsf1p;r1Iu2;me,p;l5rg2Xs37;k,ly;cKeJhIiHli28mGneeze,pFt8u5;pp6r5spe2F;ge,pri0;ly,o2H;aAe9or8r6u5;dy,ff,mb4;a1Se5;ss,t2;e,m;m,p;ck,in,ke,mp,re,te;la20rink4;eMi4o1Q;de,gn;a19iv1o2P;ar2n0r2T;a17o17r5;at2ew;aHe6isk,oot,u5;in,le,sh;as2HcCel,fBgAje1Wl0Ep9que3s7tu1Xv5waD;e5iew;al,r0;er2Lo5t;l2Krt;air,e2Mly,o1V;a7r25;act0Borm,u0;a6o5;rd;ll;i0n6t5;!e;ge,k;aDeCin,l9o8r6u5;mp,rcha0sh;ai0e2Do5;ce2Cdu17mi0te3;s15w1;a6u5;g,n1M;n,y;el,rm16;iTrt,ss,t2u0;ff1il;ame,e7o5;d,t5;e,i0X;ed,gle14;a8e7i6o5urd1;dZnitOp;lk,nd,rrN;asu07rchandi0ss;n,r5sk,t2;ch,k1D;a9e8i7o5u0C;a5ck,g,ve;d,n;ft,m0Qne,st;cRvQ;bEck,un2;ll,ss;am,ud10;n6ss5;ue;cr5fluZ;ea0;a8elp,iSo6u5;nt;n5pe,st,u0;or;nd5rm,te;!le;aAo9r8u5;ar6e1Bi5;de;antee,d;asp,ip,umb4;of,ssip;in,ze;aGeDiCl9o7rac6u5;el;tuD;cus,r5;ce,eca3m;a6o5y;at,od,w;g,sh;re,sh,t,x;a5ed;r,tu5;re;ce,rm;cho,nvy,x5ye;c7erci0p5;eri5oX;enK;el,han01;aGeDiAo9r6u5;mp;a6eam,i5;ft,nk;in;dVubt;p,s5vorC;li5play;ke;fe6posDsi5;gn,re;at,ct;maOn6r5te;e,t;ce;aMent1hIlaHo8r5;ed6u5y;sh;it;llap0m9n5ok,py,ugh,v1;ce7du6tr5;a3ol;ct;rn;bi7fo6m5;and,uQ;rt;ne;im,w;a6e5ip;at,ck;llen5n5r5se;ge;ke,ll,re,u0ve;se;aAo7ran2u5;bb4ck4dg5;et;a3mb,ne,o6ss,tt4x;le;k,st,t;nk,se;ddreHid,lt1nsw1ppDrchBss8tt6ucti5;on;a5empt;ck;i3ocia5;te;st;!i5;ve;e6roa2;ch;al;er;ss",
     "fallback": "Infinitive"
   },
@@ -50,7 +50,7 @@ export default {
     "afterTags": "Person¦p0verb;erson,ropernoun|Infinitive¦adverb,conjunc1determiner,p0;ossessive,reposi0;tion",
     "ownTags": "",
     "beforeWords": "Person¦dear,h0yo;e0i;llo,y|Infinitive¦i,please,t1w0you;e,ill;hey,o",
-    "afterWords": "Person¦fe7learn6play5s2t0;el7h0old;inks,ought;a1eems,ing,pend0;s,t;id,ng,ys;ed,s;!ed;e0lt;ls|Infinitive¦h1it,me,the0you;!m;er,im",
+    "afterWords": "Person¦fe7learn6play5s2t0;el7h0old;inks,ought;a1eems,ing,pend0;s,t;id,ng,ys;ed,s;!ed;e0lt;ls|Infinitive¦a2h1it,me,the0you;!m;er,im;!n",
     "words": "true¦b1chu2drew,ja2ma0ollie,pat,rob,sue,wade;ck,rk;ob,u0;ck",
     "fallback": "PresentTense"
   },

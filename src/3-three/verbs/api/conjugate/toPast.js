@@ -1,41 +1,58 @@
-const noop = vb => vb
+const fns = {
 
-const noAux = (vb, parsed) => {
-  if (parsed.auxiliary.found) {
-    vb = vb.remove(parsed.auxiliary)
-  }
-  return vb
+  noop: vb => vb,
+
+  noAux: (vb, parsed) => {
+    if (parsed.auxiliary.found) {
+      vb = vb.remove(parsed.auxiliary)
+    }
+    return vb
+  },
+
+  // walk->walked
+  simple: (vb, parsed) => {
+    const { verbConjugate, verbToInfinitive } = vb.methods.two.transform
+    let str = parsed.root.text('normal')
+    str = verbToInfinitive(str, vb.model)
+    let all = verbConjugate(str, vb.model)
+    // 'driven' || 'drove'
+    str = all.Participle || all.PastTense
+    if (str) {
+      vb = vb.replace(parsed.root, str).tag('Verb')
+      vb.not('#Particle').tag('PastTense')
+    }
+    return vb
+  },
+
+  both: function (vb, parsed) {
+    vb = fns.simple(vb, parsed)
+    return fns.noAux(vb, parsed)
+  },
+
+  hasHad: vb => {
+    vb.replace('has', 'had')
+    return vb
+  },
+
+  // some verbs have this weird past-tense form
+  // drive -> driven, (!drove)
+  hasParticiple: (vb, parsed) => {
+    const { verbConjugate, verbToInfinitive } = vb.methods.two.transform
+    let str = parsed.root.text('normal')
+    str = verbToInfinitive(str, vb.model)
+    return verbConjugate(str, vb.model).Participle
+  },
+
 }
 
-// walk->walked
-const simple = (vb, parsed) => {
-  const { verbConjugate, verbToInfinitive } = vb.methods.two.transform
-  let str = parsed.root.text('normal')
-  str = verbToInfinitive(str, vb.model)
-  str = verbConjugate(str, vb.model).PastTense
-  if (str) {
-    vb = vb.replace(parsed.root, str)
-  }
-  return vb
-}
-
-const both = function (vb, parsed) {
-  vb = simple(vb, parsed)
-  return noAux(vb, parsed)
-}
-
-const hasHad = vb => {
-  vb.replace('has', 'had')
-  return vb
-}
 
 const forms = {
   // he walks -> he walked
-  'simple-present': simple,
+  'simple-present': fns.simple,
   // he walked
-  'simple-past': noop,
+  'simple-past': fns.noop,
   // he will walk -> he walked
-  'simple-future': both,
+  'simple-future': fns.both,
 
   // he is walking
   'present-progressive': vb => {
@@ -44,7 +61,7 @@ const forms = {
     return vb
   },
   // he was walking
-  'past-progressive': noop,
+  'past-progressive': fns.noop,
   // he will be walking
   'future-progressive': (vb, parsed) => {
     vb.match(parsed.root).insertBefore('was')
@@ -53,9 +70,9 @@ const forms = {
   },
 
   // has walked -> had walked (?)
-  'present-perfect': hasHad,
+  'present-perfect': fns.hasHad,
   // had walked
-  'past-perfect': noop,
+  'past-perfect': fns.noop,
   // will have walked -> had walked
   'future-perfect': (vb, parsed) => {
     vb.match(parsed.root).insertBefore('had')
@@ -64,9 +81,9 @@ const forms = {
   },
 
   // has been walking -> had been
-  'present-perfect-progressive': hasHad,
+  'present-perfect-progressive': fns.hasHad,
   // had been walking
-  'past-perfect-progressive': noop,
+  'past-perfect-progressive': fns.noop,
   // will have been -> had
   'future-perfect-progressive': vb => {
     vb.remove('will')
@@ -105,7 +122,7 @@ const forms = {
     return vb
   },
   // would have been walked
-  'past-conditional': noop,
+  'past-conditional': fns.noop,
 
   // is going to drink -> was going to drink
   'auxiliary-future': vb => {
@@ -113,7 +130,7 @@ const forms = {
     return vb
   },
   // used to walk
-  'auxiliary-past': noop,
+  'auxiliary-past': fns.noop,
   // we do walk -> we did walk
   'auxiliary-present': vb => {
     vb.replace('(do|does)', 'did')
@@ -122,24 +139,35 @@ const forms = {
 
   // must walk -> 'must have walked'
   'modal-infinitive': (vb, parsed) => {
-    simple(vb, parsed)
-    vb.match('(can|must|should|shall)').insertAfter('have')
+    // this modal has a clear tense
+    if (vb.has('can')) {
+      // can drive -> could drive
+      vb.replace('can', 'could')
+    } else {
+      // otherwise, 
+      //  walk -> have walked
+      //  drive -> have driven
+      fns.simple(vb, parsed)
+      vb.match('#Modal').insertAfter('have').tag('Auxiliary')
+    }
     return vb
   },
   // must have walked
-  'modal-past': noop,
+  'modal-past': fns.noop,
   // wanted to walk
-  // 'want-infinitive': vb => {
-  //   vb.replace('(want|wants)', 'wanted')
-  //   return vb
-  // },
+  'want-infinitive': vb => {
+    vb.replace('(want|wants)', 'wanted')
+    vb.remove('will')
+    return vb
+  },
 }
 
 const toPast = function (vb, parsed, form) {
   // console.log(form)
   if (forms.hasOwnProperty(form)) {
-    return forms[form](vb, parsed)
+    return forms[form](vb, parsed).tag('Verb')
   }
+  // do nothing i guess?
   return vb
 }
 export default toPast

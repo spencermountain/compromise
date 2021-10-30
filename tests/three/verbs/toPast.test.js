@@ -45,6 +45,19 @@ test('toPast:', function (t) {
     ['used to walk', 'used to walk'],
     ['do walk', 'did walk'],
     ['does walk', 'did walk'],
+    ['he wants to walk', 'he wanted to walk'],
+    ['he will want to walk', 'he wanted to walk'],
+
+    // participle
+    ['he can walk', 'he could walk'],
+    ['he could walk', 'he could have walked'], //not sure
+    ['he would walk', 'he would have walked'],//not sure
+    ['he should walk', 'he should have walked'],
+
+    ['he can drive', 'he could drive'],
+    ['he could drive', 'he could have driven'],
+    ['he would drive', 'he would have driven'],
+    ['he should drive', 'he should have driven'],
   ]
   arr.forEach(a => {
     let doc = nlp(a[0])

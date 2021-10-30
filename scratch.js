@@ -6,11 +6,6 @@ import nlp from './src/three.js'
 // nlp.verbose('tagger')
 
 
-let doc = nlp('spencer@gmail.com.').debug()
-// doc.match('#Email').replaceWith('foo')
-doc.insertAfter('foo')
-console.log(doc.text() + '|')
-
 // bug!
 // let doc = nlp(`extra. one two.`)
 // doc.remove('extra')
@@ -41,13 +36,21 @@ console.log(doc.text() + '|')
 // let txt=`At this discourse of the crier the Prince of the Indies, considering that the principal motive of his travel was to carry the Sultan, his father, home some singular rarity, thought that he could not meet with any which could give him more satisfaction.`
 
 
-// txt = ` The city of Los Angeles covers a total area`
-// let doc = nlp(txt).debug()
+// let txt = `temptation is a desire to engage`
+let txt = `he can walk`
+// let txt = `he will want to walk`
+let doc = nlp(txt)
+doc.verbs().toPastTense().debug()
+doc.verbs().toPastTense()
+// doc.sentences().toPastTense().debug()
+// doc.sentences().toFutureTense()
+// doc.debug()
+
 // doc.verbs().subjects().debug()
 // console.log(doc.verbs().json())
 // console.log(doc.verbs().json()[0])
 // doc.verbs().toInfinitive()
-// console.log(doc.text())
+console.log(doc.text())
 // doc.verbs().toFutureTense()
 
 

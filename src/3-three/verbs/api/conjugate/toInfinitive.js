@@ -13,6 +13,6 @@ const toPresent = function (vb, parsed) {
       vb.remove(m.text('normal')) //super awkward
     })
   }
-  return vb
+  return vb.tag('Verb')
 }
 export default toPresent

@@ -11,11 +11,11 @@ test('sentence-change-tense:', function (t) {
     ['i usually use the stairs', 'i usually used the stairs', 'i usually will use the stairs'],
     ['he finishes first', 'he finished first', 'he will finish first'],
     ['our house looks great', 'our house looked great', 'our house will look great'],
-    // [
-    //   'temptation is a desire to engage',
-    //   'temptation was a desire to engage',
-    //   'temptation will be a desire to engage',
-    // ],
+    [
+      'temptation is a desire to engage',
+      'temptation was a desire to engage',
+      'temptation will be a desire to engage',
+    ],
     // [
     //   'Capital punishment, also known as the death penalty, is the state-sanctioned killing of a person as punishment for a crime.',
     //   'Capital punishment, also known as the death penalty, was the state-sanctioned killing of a person as punishment for a crime.',

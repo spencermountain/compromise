@@ -26,7 +26,6 @@ const findVerbs = function (doc) {
   if (toVerbs.found && !toVerbs.has('^go')) {
     m = m.splitBefore('(#PresentTense|#PastTense) [#Infinitive]', 0)
   }
-
   //ensure there's actually a verb
   m = m.if('#Verb')
 

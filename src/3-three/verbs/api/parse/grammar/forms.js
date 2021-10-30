@@ -124,18 +124,19 @@ const verbForms = {
   ],
 
   // === modals ===
-  'modal-infinitive': [
-    // he can walk
-    ['^(can|must|should|shall) #Infinitive$', []],
-  ],
   'modal-past': [
     // he could have walked
     ['^(could|must|should|shall) have #PastTense$', [past]],
   ],
-  // 'want-infinitive': [
-  //   ['^(want|wants|wanted) to #Infinitive$', [present]],
-  //   ['^(wanted) to #Infinitive$', [past]],
-  // ],
+  'want-infinitive': [
+    ['^(want|wants|wanted) to #Infinitive$', [present]],
+    ['^wanted to #Infinitive$', [past]],
+    ['^will want to #Infinitive$', [future]],
+  ],
+  'modal-infinitive': [
+    // he can walk
+    ['^#Modal #Infinitive$', []],
+  ],
 }
 
 let list = []

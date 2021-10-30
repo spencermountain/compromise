@@ -164,10 +164,11 @@ const forms = {
     return vb.remove('have')
   },
   // wanted to walk
-  // 'want-infinitive': vb => {
-  //   vb.replace('(want|wants)', 'wanted')
-  //   return vb
-  // },
+  'want-infinitive': vb => {
+    vb.replace('(want|wanted)', 'wants')
+    vb.remove('will')
+    return vb
+  },
 }
 
 const toPresent = function (vb, parsed, form) {

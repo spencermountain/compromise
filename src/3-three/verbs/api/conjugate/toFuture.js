@@ -107,9 +107,18 @@ const forms = {
   'modal-infinitive': noop,
   // must have walked
   'modal-past': noop,
+  // wanted to walk
+  'want-infinitive': vb => {
+    vb.replace('(want|wants|wanted)', 'will want')
+    return vb
+  },
 }
 
 const toFuture = function (vb, parsed, form) {
+  // is it already future-tense?
+  if (vb.has('will') || vb.has('going to')) {
+    return vb
+  }
   // console.log(form)
   if (forms.hasOwnProperty(form)) {
     return forms[form](vb, parsed).tag('Verb')

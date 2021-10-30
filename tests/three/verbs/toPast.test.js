@@ -4,7 +4,12 @@ const here = '[three/verb-toPast] '
 
 test('toPast:', function (t) {
   let arr = [
-    // known forms:
+    // copula-based
+    ['he is nice', 'he was nice'],
+    ['he is really it', 'he was really it'],
+    ['he was nice', 'he was nice'],
+    ['he was walking', 'he was walking'],
+
     ['he walks', 'he walked'],
     ['he walked', 'he walked'],
     ['he will walk', 'he walked'],

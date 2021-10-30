@@ -17,6 +17,8 @@ const fns = {
     let all = verbConjugate(str, vb.model)
     // 'driven' || 'drove'
     str = all.Participle || all.PastTense
+    // but skip the 'is' participle..
+    str = str === 'been' ? 'was' : str
     if (str) {
       vb = vb.replace(parsed.root, str).tag('Verb')
       vb.not('#Particle').tag('PastTense')

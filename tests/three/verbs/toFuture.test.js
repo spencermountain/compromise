@@ -71,6 +71,16 @@ test('toFuture:', function (t) {
     ['he did walk', 'he will walk'],
     // ['he must walk', 'he must walk'],
     // ['he must have walked', 'he must walk'],
+
+    // modal/conditions are weird
+    // ['he can walk', 'he can walk'],
+    // ['he could walk', 'he can walk'],
+    // ['he should walk', 'he should walk'],
+
+    // want-infinitive
+    ['he wants to walk', 'he will want to walk'],
+    ['he wanted to walk', 'he will want to walk'],
+    ['he will want to walk', 'he will want to walk'],
   ]
   arr.forEach(a => {
     let doc = nlp(a[0])

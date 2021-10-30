@@ -71,6 +71,7 @@ test('toPresent:', function (t) {
     ['he did walk', 'he is walking'],
     ['he must walk', 'he must walk'],
     ['he must have walked', 'he must walk'],
+    ['he could have walked', 'he could walk'],
 
     ['would be walked', 'would be walked'],
     ['would have been walked', 'would be walked'],
@@ -79,6 +80,11 @@ test('toPresent:', function (t) {
     ['used to walk', 'is walking'],
     // ['do walk', 'did walk'],
     ['does walk', 'does walk'],
+
+    // want-infinitive
+    ['he wants to walk', 'he wants to walk'],
+    ['he wanted to walk', 'he wants to walk'],
+    ['he will want to walk', 'he wants to walk'],
   ]
   arr.forEach(a => {
     let doc = nlp(a[0])

@@ -7,5 +7,4 @@ const methods = Object.assign({}, util, compute, loops, freeze)
 
 // aliases
 methods.get = methods.eq
-
 export default methods

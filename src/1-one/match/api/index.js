@@ -12,7 +12,6 @@ methods.lookAhead = methods.after
 methods.lookAfter = methods.after
 
 methods.notIf = methods.ifNo
-
 const matchAPI = function (View) {
   Object.assign(View.prototype, methods)
 }

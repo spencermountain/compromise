@@ -29,5 +29,31 @@ test('ifNo:', function (t) {
   m = r.ifNo('is')
   t.equal(m.out('normal'), 'john was here.', here + 'if-no-partial')
 
+
+  let doc = nlp(`a desire to engage and build`)
+  m = doc.match('build')
+  m = m.notIf('lkajsdf')
+  t.equal(m.out('text'), 'build', here + 'ifNo-miss')
+
+  m = m.notIf('build')
+  t.equal(m.out('text'), '', here + 'ifNo-hit')
+
+  doc = nlp('spencer is here. one two')
+  m = doc.ifNo('.')
+  t.equal(m.out('text'), '', here + 'ifNo-dot')
+
+  doc = nlp('here one mid two end').terms()
+  m = doc.ifNo('(one|two)')
+  t.equal(m.out('text'), 'here mid end', here + 'ifNo-two')
+
+  t.end()
+})
+
+test('ifNo view:', function (t) {
+  let doc = nlp('here one mid two end').terms()
+  let m = doc.match('(one|two)')
+  let res = doc.ifNo(m)
+  t.equal(res.out('text'), 'here mid end', here + 'ifNo-view')
+
   t.end()
 })

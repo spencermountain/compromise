@@ -35,16 +35,12 @@ import nlp from './src/three.js'
 // let txt=`For the ultimate in geek chic, get the TI - 89 Titanium graphing calculator from this company, TXN`
 // let txt=`At this discourse of the crier the Prince of the Indies, considering that the principal motive of his travel was to carry the Sultan, his father, home some singular rarity, thought that he could not meet with any which could give him more satisfaction.`
 
-
-let txt = `temptation is a desire to engage and build`
-let doc = nlp(txt)
-let m = doc.match('build')
-m.notIf('lkajsdf').debug()
-// doc.sentences().toPastTense().debug()
-// doc.debug()
-
-console.log(doc.text())
-
+let doc = nlp('one two three match four five')
+let m = doc.match('match')
+let four = m.after()
+let res = m.concat(four)
+// res.debug()
+// console.log(res.out('text'))
 
 
 

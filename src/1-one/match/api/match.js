@@ -72,24 +72,23 @@ const ifFn = function (regs, group) {
 }
 
 const ifNo = function (regs, group) {
-  const { docs, methods, _cache } = this
+  const { methods } = this
   const one = methods.one
-  let ptrs
+
+  // support a view object as input
+  if (isView(regs)) {
+    return this.difference(regs)
+  }
+  // otherwise parse the match string
   if (typeof regs === 'string') {
     regs = one.parseMatch(regs)
-    let todo = { regs, group }
-    ptrs = one.match(docs, todo, _cache).ptrs
-  } else if (isView(regs)) {
-    ptrs = regs.fullPointer // support a view object as input
   }
-  let found = new Set(ptrs.map(a => a[0]))
-  let notFound = [] //invert our pointer
-  for (let i = 0; i < docs.length; i += 1) {
-    if (found.has(i) === false) {
-      notFound.push([i])
-    }
-  }
-  return this.update(notFound)
+  return this.filter(m => {
+    let todo = { regs, group, justOne: true }
+    let ptrs = one.match(m.docs, todo, m._cache).ptrs
+    return ptrs.length === 0
+  })
+
 }
 
 export default { matchOne, match, has, if: ifFn, ifNo }

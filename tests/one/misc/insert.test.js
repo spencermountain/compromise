@@ -85,3 +85,18 @@ test('insert document :', function (t) {
   t.equal(doc.text(), 'one two three four', here + 'doc appent')
   t.end()
 })
+
+test('punctuation edge-cases :', function (t) {
+  let doc = nlp('before.').insertAfter('after')
+  t.equal(doc.text(), 'before after.', here + 'period')
+
+  doc = nlp('before...').insertAfter('after')
+  t.equal(doc.text(), 'before after...', here + 'elipses')
+
+  doc = nlp('before.?').insertAfter('after')
+  t.equal(doc.text(), 'before after.?', here + 'period question-mark')
+
+  doc = nlp('before?').insertAfter('after')
+  t.equal(doc.text(), 'before after?', here + ' question-mark')
+  t.end()
+})

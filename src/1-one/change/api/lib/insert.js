@@ -25,7 +25,7 @@ const movePunct = (source, end, needle) => {
   if (juicy.test(post)) {
     let punct = post.match(juicy).join('') //not perfect
     let last = needle[needle.length - 1]
-    last.post = punct + last.post + ' '
+    last.post = punct + last.post //+ ' '
     // remove it, from source
     wasLast.post = wasLast.post.replace(juicy, '')
   }

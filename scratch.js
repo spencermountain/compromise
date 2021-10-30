@@ -6,7 +6,10 @@ import nlp from './src/three.js'
 // nlp.verbose('tagger')
 
 
-
+let doc = nlp('spencer@gmail.com.').debug()
+// doc.match('#Email').replaceWith('foo')
+doc.insertAfter('foo')
+console.log(doc.text() + '|')
 
 // bug!
 // let doc = nlp(`extra. one two.`)
@@ -31,7 +34,6 @@ import nlp from './src/three.js'
 // let txt = `move quickly to complete`
 // let txt = `it was moving`
 // let txt = `Cashtech eyes A-Pac`
-let txt = `me and my friend Janice walked`
 // let txt = `the unfinished business of our country`
 // let txt = `to balance the budget.`
 // let txt=`Then she went to Grettel, shook her till she awoke, and cried: Get up, you lazy - bones, fetch water and cook something for your brother.`
@@ -39,9 +41,9 @@ let txt = `me and my friend Janice walked`
 // let txt=`At this discourse of the crier the Prince of the Indies, considering that the principal motive of his travel was to carry the Sultan, his father, home some singular rarity, thought that he could not meet with any which could give him more satisfaction.`
 
 
-txt = ` the wind wizard's son laughed at the King.`
-let doc = nlp(txt)//.debug()
-doc.verbs().subjects().debug()
+// txt = ` The city of Los Angeles covers a total area`
+// let doc = nlp(txt).debug()
+// doc.verbs().subjects().debug()
 // console.log(doc.verbs().json())
 // console.log(doc.verbs().json()[0])
 // doc.verbs().toInfinitive()

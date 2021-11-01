@@ -19,28 +19,29 @@ import nlp from './src/three.js'
 // console.log(s.text())
 
 
-// let txt = `and Drew Fossum`
+let txt = ''
 
-// let txt = `the job interview.`
-// let txt = `use colour printing`
-// let txt = `my dear, and I am glad you can make`
-// let txt = `you will be rewarded for all you have suffered`
-// let txt = `it's a stuffed animal... you know`
-// let txt = `move quickly to complete`
-// let txt = `it was moving`
-// let txt = `Cashtech eyes A-Pac`
-// let txt = `the unfinished business of our country`
-// let txt = `to balance the budget.`
-// let txt=`Then she went to Grettel, shook her till she awoke, and cried: Get up, you lazy - bones, fetch water and cook something for your brother.`
-// let txt=`For the ultimate in geek chic, get the TI - 89 Titanium graphing calculator from this company, TXN`
-// let txt=`At this discourse of the crier the Prince of the Indies, considering that the principal motive of his travel was to carry the Sultan, his father, home some singular rarity, thought that he could not meet with any which could give him more satisfaction.`
+// txt = `and Drew Fossum`
+// txt = `the job interview.`
+// txt = `use colour printing`
+// txt = `my dear, and I am glad you can make`
+// txt = `you will be rewarded for all you have suffered`
+// txt = `it's a stuffed animal... you know`
+// txt = `move quickly to complete`
+// txt = `it was moving`
+// txt = `Cashtech eyes A-Pac`
+// txt = `the unfinished business of our country`
+// txt = `to balance the budget.`
+// txt=`Then she went to Grettel, shook her till she awoke, and cried: Get up, you lazy - bones, fetch water and cook something for your brother.`
+// txt=`For the ultimate in geek chic, get the TI - 89 Titanium graphing calculator from this company, TXN`
+// txt=`At this discourse of the crier the Prince of the Indies, considering that the principal motive of his travel was to carry the Sultan, his father, home some singular rarity, thought that he could not meet with any which could give him more satisfaction.`
+txt = `sing`
+txt = `appeared`
+let doc = nlp(txt).debug()
 
-let doc = nlp('one two three match four five')
-let m = doc.match('match')
-let four = m.after()
-let res = m.concat(four)
-// res.debug()
-// console.log(res.out('text'))
+doc.sentences().toFutureTense()
+doc.debug()
+// console.log(doc.out('text'))
 
 
 

@@ -115,13 +115,15 @@ const forms = {
 }
 
 const toFuture = function (vb, parsed, form) {
+  // console.log(form)
   // is it already future-tense?
   if (vb.has('will') || vb.has('going to')) {
     return vb
   }
-  // console.log(form)
   if (forms.hasOwnProperty(form)) {
-    return forms[form](vb, parsed).tag('Verb')
+    vb = forms[form](vb, parsed)
+    vb.tag('Verb').compute('chunks')
+    return vb
   }
   return vb
 }

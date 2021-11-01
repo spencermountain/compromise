@@ -37,26 +37,33 @@ let txt = ''
 // txt=`At this discourse of the crier the Prince of the Indies, considering that the principal motive of his travel was to carry the Sultan, his father, home some singular rarity, thought that he could not meet with any which could give him more satisfaction.`
 // txt = `sing`
 txt = `appeared`
-// txt = `sparred`
-// txt = `strayed`
-// txt = `snarled`
-// txt = `clawed`
-// txt = `colored`
-// txt = `rooted`
-// txt = `weighted`
-// txt = `enjoyed`
-// txt = `sprayed`
-// txt = `defied`
-// txt = `echoed`
-// txt = `vetoed`
-// txt = `fluffed`
-// txt = `engulfed`
-// txt = `whirled`
-// txt = `saddled`
-// txt = `vexed`
-// txt = `rained`
-// txt = `filmed`
-// txt = `welcomed`
+txt = `sparred`
+txt = `colored`
+
+txt = `strayed`
+txt = `sprayed`
+txt = `enjoyed`
+
+txt = `snarled`
+txt = `whirled`
+txt = `saddled`
+
+txt = `clawed`
+
+txt = `rooted`
+txt = `boated`
+txt = `weighted`
+
+txt = `defied`
+txt = `echoed`
+txt = `vetoed`
+txt = `fluffed`
+txt = `oiled`
+txt = `engulfed`
+txt = `vexed`
+txt = `rained`
+txt = `filmed`
+txt = `welcomed`
 
 let doc = nlp(txt).debug()
 

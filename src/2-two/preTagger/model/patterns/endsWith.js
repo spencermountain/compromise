@@ -40,14 +40,7 @@ export default {
 
     // ===== -ed ======
     //-led
-    //-qled
-    //-wled
-    //-eled
-    //-rled
-    //-tled
-    //-yled
     [/..led$/, Past, 'hurled'],
-    // [/.[aoui]f?led$/, Past, 'boiled'],
     //-sed
     [/.[iao]sed$/, Past, ''],
     [/[aeiou]n?[cs]ed$/, Past, ''],

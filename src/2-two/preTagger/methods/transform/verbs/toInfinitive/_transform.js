@@ -143,53 +143,68 @@ let rules = {
   ],
   PastTense: [
     {
-      reg: /(ued)$/i,
-      to: 'ue',
+      reg: /([rl])ew$/i,
+      to: '$1ow',
     },
+    {
+      reg: /([pl])t$/i,
+      to: '$1t',
+    },
+
+    // ====  -ed  ====
+
+    // misc-ed
     {
       reg: /ea(rn|l|m)ed$/i,
       to: 'ea$1',
     },
     {
-      reg: /a([^aeiouy])ed$/i,
-      to: 'a$1e',
+      reg: /(um?pt?)ed$/i,
+      to: '$1',
     },
+    // misc no e endings
     {
-      reg: /([aeiou]zz)ed$/i,
+      reg: /(..)([hkw]|ion|n[dt]|ai.|[cs]t|pp|all|ss|tt|int|ld|en|oo.|er|ou.|rt|ght|rm|lm|rl|x)ed$/i,
+      to: '$1$2',
+    },
+    // -ded
+    {
+      reg: /(dd)ed$/i,
+      to: '$1',
+    },
+    // -fed
+    {
+      reg: /fed$/i,
+      to: 'f',
+    },
+    // -med
+    {
+      reg: /([aeiou]me)d$/i, //welcomed
       to: '$1',
     },
     {
+      reg: /med$/i, //doomed
+      to: 'm',
+    },
+    // -led
+    {
       reg: /(e|i)lled$/i,
       to: '$1ll',
-    },
-    {
-      reg: /(.)(sh|ch)ed$/i,
-      to: '$1$2',
     },
     {
       reg: /(tl|gl)ed$/i,
       to: '$1e',
     },
     {
-      reg: /(um?pt?)ed$/i,
-      to: '$1',
+      reg: /(.[aeiou])led$/i,
+      to: '$1l',
     },
-    {
-      reg: /(ss)ed$/i,
-      to: '$1',
-    },
-    {
-      reg: /pped$/i,
-      to: 'p',
-    },
-    {
-      reg: /tted$/i,
-      to: 't',
-    },
+    // -ged
     {
       reg: /(..)gged$/i,
       to: '$1g',
     },
+    // -ked
     {
       reg: /(..)lked$/i,
       to: '$1lk',
@@ -198,13 +213,51 @@ let rules = {
       reg: /([^aeiouy][aeiou])ked$/i,
       to: '$1ke',
     },
+    // -ned
     {
-      reg: /(.[aeiou])led$/i,
-      to: '$1l',
+      reg: /([aeiou]gn)ed$/i, // designed
+      to: '$1',
     },
     {
-      reg: /(..)([hkw]|ion|n[dt]|ai.|[cs]t|pp|all|ss|tt|int|ld|en|oo.|er|ou.|rt|ght|rm)ed$/i,
+      reg: /([aeiou]n)ed$/i, // rained
+      to: '$1',
+    },
+    // -hed
+    {
+      reg: /(.)(sh|ch)ed$/i,
       to: '$1$2',
+    },
+    // -ped
+    {
+      reg: /pped$/i,
+      to: 'p',
+    },
+    // -red
+    {
+      reg: /(.rr)ed$/i,
+      to: '$1',
+    },
+    {
+      reg: /(.[aeiou]r)ed$/i,
+      to: '$1',
+    },
+    // -sed
+    {
+      reg: /(ss)ed$/i,
+      to: '$1',
+    },
+    {
+      reg: /(us)ed$/i,
+      to: '$1e',
+    },
+    // -ted
+    {
+      reg: /tted$/i,
+      to: 't',
+    },
+    {
+      reg: /(.[aeiou]{2})ted$/i, //rooted/boated
+      to: '$1t',
     },
     {
       reg: /(.ut)ed$/i,
@@ -214,12 +267,24 @@ let rules = {
       reg: /(.pt)ed$/i,
       to: '$1',
     },
+    // -zed
     {
-      reg: /(us)ed$/i,
-      to: '$1e',
+      reg: /([aeiou]zz)ed$/i,
+      to: '$1',
+    },
+    // -yed
+    {
+      reg: /([aeiou]y)ed$/i,
+      to: '$1',
+    },
+
+    // vowel-ed
+    {
+      reg: /ued$/i,
+      to: 'ue',
     },
     {
-      reg: /(dd)ed$/i,
+      reg: /(.o)ed$/i,//echoed, vetoed
       to: '$1',
     },
     {
@@ -227,12 +292,14 @@ let rules = {
       to: '$1y',
     },
     {
-      reg: /(.o)ed$/i,
-      to: '$1o',
-    },
-    {
       reg: /(..i)ed$/i,
       to: '$1',
+    },
+
+    // fallbacks
+    {
+      reg: /a([^aeiouy])ed$/i,
+      to: 'a$1e',
     },
     {
       reg: /(.a[^aeiou])ed$/i,
@@ -243,23 +310,12 @@ let rules = {
       reg: /([aeiou][^aeiou])ed$/i,
       to: '$1e',
     },
-    // designed
-    {
-      reg: /([aeiou]gn)ed$/i,
-      to: '$1',
-    },
     {
       reg: /(..[^aeiouy])ed$/i,
       to: '$1e',
     },
-    {
-      reg: /([rl])ew$/i,
-      to: '$1ow',
-    },
-    {
-      reg: /([pl])t$/i,
-      to: '$1t',
-    },
+
+
   ],
 }
 export default rules

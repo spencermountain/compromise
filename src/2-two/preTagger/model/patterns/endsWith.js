@@ -32,6 +32,13 @@ export default {
     //-rd
     [/.[aeiou]red$/, Past, 'hired'],
     [/.[aeiou]r?ried$/, Past, 'hurried'],
+    // ard
+    [/[^aeiou]ard$/, Sing, 'steward'],
+    // id
+    [/[aeiou][^aeiou]id$/, Adj, ''],
+    [/.[vrl]id$/, Adj, 'livid'],
+
+    // ===== -ed ======
     //-led
     [/.[bcdgtr]led$/, Past, 'hurled'],
     [/.[aoui]f?led$/, Past, 'boiled'],
@@ -42,16 +49,15 @@ export default {
     [/[aeiou][rl]?[mnf]ed$/, Past, ''],
     //-ked
     [/[aeiou][ns]?c?ked$/, Past, 'bunked'],
+    //-gned
+    [/[aeiou]gned$/, Past],
     //-ged
     [/[aeiou][nl]?ged$/, Past],
     //-ted
-    [/.[tdbwxz]ed$/, Past],
+    [/.[tdbwxyz]ed$/, Past],
     [/[^aeiou][aeiou][tvx]ed$/, Past],
     //-ied
-    [/.[cdlmnprstv]ied$/, Past, 'emptied'],
-    [/[^aeiou]ard$/, Sing, 'steward'],
-    [/[aeiou][^aeiou]id$/, Adj, ''],
-    [/.[vrl]id$/, Adj, 'livid'],
+    [/.[cdflmnprstv]ied$/, Past, 'emptied'],
   ],
   e: [
     [/.[lnr]ize$/, Inf, 'antagonize'],

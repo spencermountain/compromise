@@ -82,42 +82,56 @@ test('toFuture:', function (t) {
     ['he wanted to walk', 'he will want to walk'],
     ['he will want to walk', 'he will want to walk'],
 
+    // more past-tense forms
+    [`used to claw`, `will claw`],
+    [`had clawed`, `will claw`],
+    [`have clawed`, `will claw`],
+    [`clawed`, `will claw`],
+    [`did claw`, `will claw`],
+
     // conjugation -ed issues
     [`sing`, `will sing`],
     [`sung`, `will sing`],
-    [`appeared`, `will appear`],
-    [`sparred`, `will sparr`],
-    [`strayed`, `will stray`],
-    [`snarled`, `will snarl`],
     [`clawed`, `will claw`],
-    [`faced`, `will face`],
     [`trumped`, `will trump`],
     [`out-lived`, `will out-live`],
     [`out-live`, `will out-live`],
-    [`trumpeted`, `will trumpet`],
     [`slugged`, `will slug`],
     [`slashed`, `will splash`],
+    [`he uploaded`, `he will upload`],
+    [`he echoed`, `he will echo`],
+    [`she absorbed`, `she will absorb`],
+
+    [`faced`, `will face`],
     [`trounced`, `will trounce`],
+
+    [`appeared`, `will appear`],
+    [`sparred`, `will sparr`],
     [`speared`, `will spear`],
     [`colored`, `will color`],
     [`cured`, `will cure`],
     [`roared`, `will roar`],
     [`withered`, `will wither`],
+
+    [`trumpeted`, `will trumpet`],
     [`he bloated`, `he will bloat`],
     [`he drifted`, `he will drift`],
     [`he doubted`, `he will doubt`],
     [`he rooted`, `he will root`],
+
     [`he annoyed`, `he will annoy`],
     [`he enjoyed`, `he will enjoy`],
     [`he prayed`, `he will pray`],
     [`he preyed`, `he will prey`],
     [`he sprayed`, `he will sprayed`],
+    [`strayed`, `will stray`],
+
     [`he lied`, `he will lie`],
     [`he qualified`, `he will qualify`],
-    [`he echoed`, `he will echo`],
-    [`he uploaded`, `he will upload`],
+
     [`he fluffed`, `he will fluff`],
     [`he engulfed`, `he will engulf`],
+
     [`he ruled`, `he will rule`],
     [`he sailed`, `he will sail`],
     [`he piled`, `he will pile`],
@@ -127,14 +141,17 @@ test('toFuture:', function (t) {
     [`he scheduled`, `he will schedule`],
     [`he pulled`, `he will pull`],
     [`she whirled`, `she will whirl`],
+    [`snarled`, `will snarl`],
+
     [`she vexed`, `she will vex`],
     [`she relaxed`, `she will relax`],
-    [`she absorbed`, `she will absorb`],
+
     [`she aligned`, `she will align`],
     [`she ruined`, `she will ruin`],
     [`she turned`, `she will turn`],
     [`it rained`, `it will rain`],
     [`she worsened`, `she will worsen`],
+
     [`she filmed`, `she will film`],
     [`we nicknamed`, `we will nickname`],
     [`we doomed`, `we will doom`],

@@ -22,6 +22,7 @@ const simple = (vb, parsed) => {
   }
   if (str) {
     vb = vb.replace(parsed.root, str)
+    vb.not('#Particle').tag('PresentTense')
   }
   return vb
 }
@@ -36,6 +37,7 @@ const toGerund = (vb, parsed) => {
   }
   if (str) {
     vb = vb.replace(parsed.root, str)
+    vb.not('#Particle').tag('Gerund')
   }
   return vb
 }

@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import nlp from './builds/compromise.cjs'
 // import text from '/Users/spencer/mountain/compromise/scripts/perf/flame/_sotu-text.js'
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 
 // bug!
@@ -35,32 +35,32 @@ let txt = ''
 // txt=`Then she went to Grettel, shook her till she awoke, and cried: Get up, you lazy - bones, fetch water and cook something for your brother.`
 // txt=`For the ultimate in geek chic, get the TI - 89 Titanium graphing calculator from this company, TXN`
 // txt=`At this discourse of the crier the Prince of the Indies, considering that the principal motive of his travel was to carry the Sultan, his father, home some singular rarity, thought that he could not meet with any which could give him more satisfaction.`
-txt = `sing`
+// txt = `sing`
 txt = `appeared`
-txt = `sparred`
-txt = `strayed`
-txt = `snarled`
-txt = `clawed`
-txt = `colored`
-txt = `rooted`
-txt = `weighted`
-txt = `enjoyed`
-txt = `sprayed`
-txt = `defied`
-txt = `echoed`
-txt = `vetoed`
-txt = `fluffed`
-txt = `engulfed`
-txt = `styled`
-txt = `whirled`
-txt = `saddled`
-txt = `vexed`
-txt = `rained`
-txt = `filmed`
-txt = `welcomed`
+// txt = `sparred`
+// txt = `strayed`
+// txt = `snarled`
+// txt = `clawed`
+// txt = `colored`
+// txt = `rooted`
+// txt = `weighted`
+// txt = `enjoyed`
+// txt = `sprayed`
+// txt = `defied`
+// txt = `echoed`
+// txt = `vetoed`
+// txt = `fluffed`
+// txt = `engulfed`
+// txt = `whirled`
+// txt = `saddled`
+// txt = `vexed`
+// txt = `rained`
+// txt = `filmed`
+// txt = `welcomed`
+
 let doc = nlp(txt).debug()
 
-doc.sentences().toFutureTense()
+doc.verbs().toFutureTense()
 doc.debug()
 // console.log(doc.out('text'))
 

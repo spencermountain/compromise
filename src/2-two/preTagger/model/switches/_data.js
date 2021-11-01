@@ -51,7 +51,7 @@ export default {
     "ownTags": "",
     "beforeWords": "Person¦dear,h0yo;e0i;llo,y|Infinitive¦i,please,t1w0you;e,ill;hey,o",
     "afterWords": "Person¦fe7learn6play5s2t0;el7h0old;inks,ought;a1eems,ing,pend0;s,t;id,ng,ys;ed,s;!ed;e0lt;ls|Infinitive¦a2h1it,me,the0you;!m;er,im;!n",
-    "words": "true¦b1chu2drew,ja2ma0ollie,pat,rob,sue,wade;ck,rk;ob,u0;ck",
+    "words": "true¦b2chu3drew,ja3ma1ollie,pat,rob,su0wade;e,ng;ck,rk;ob,u0;ck",
     "fallback": "PresentTense"
   },
   "gerundNoun": {

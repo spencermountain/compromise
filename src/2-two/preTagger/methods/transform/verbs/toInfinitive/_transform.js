@@ -127,7 +127,7 @@ let rules = {
     },
     {
       //cing : bouncing, denouncing
-      reg: /(c|s)ing$/i,
+      reg: /(.[c|s])ing$/i,
       to: '$1e',
     },
     // {
@@ -164,12 +164,16 @@ let rules = {
     },
     // misc no e endings
     {
-      reg: /(..)([hkw]|ion|n[dt]|ai.|[cs]t|pp|all|ss|tt|int|ld|en|oo.|er|ou.|rt|ght|rm|lm|rl|x)ed$/i,
+      reg: /(..)([hkw]|ion|n[dt]|ai.|[cs]t|pp|all|ss|tt|int|ld|en|oo.|er|ou.|rt|ght|rm|lm|rl|x|bt|rb)ed$/i,
       to: '$1$2',
     },
     // -ded
     {
       reg: /(dd)ed$/i,
+      to: '$1',
+    },
+    {
+      reg: /(.[aeiou]{2}d)ed$/i,//downloaded
       to: '$1',
     },
     // -fed
@@ -178,6 +182,14 @@ let rules = {
       to: 'f',
     },
     // -med
+    {
+      reg: /mmed$/i, //jammed
+      to: 'm',
+    },
+    {
+      reg: /([aeiou]{2}m)ed$/i, //doomed
+      to: '$1',
+    },
     {
       reg: /([aeiou]me)d$/i, //welcomed
       to: '$1',
@@ -188,7 +200,7 @@ let rules = {
     },
     // -led
     {
-      reg: /(e|i)lled$/i,
+      reg: /([aeiou])lled$/i,
       to: '$1ll',
     },
     {
@@ -196,7 +208,15 @@ let rules = {
       to: '$1e',
     },
     {
-      reg: /(.[aeiou])led$/i,
+      reg: /([aeiou]{2})led$/i,//sailed
+      to: '$1l',
+    },
+    {
+      reg: /(.[iou])led$/i, //ruled, piled
+      to: '$1le',
+    },
+    {
+      reg: /(.[ae])led$/i, //wheeled, totaled
       to: '$1l',
     },
     // -ged
@@ -215,7 +235,7 @@ let rules = {
     },
     // -ned
     {
-      reg: /([aeiou]gn)ed$/i, // designed
+      reg: /([aeiou][gr]n)ed$/i, // designed, turned
       to: '$1',
     },
     {
@@ -238,8 +258,12 @@ let rules = {
       to: '$1',
     },
     {
-      reg: /(.[aeiou]r)ed$/i,
+      reg: /(.[aeiou]{2}r)ed$/i,//appeared
       to: '$1',
+    },
+    {
+      reg: /(.[aeiou]r)ed$/i,//admired
+      to: '$1e',
     },
     // -sed
     {
@@ -256,15 +280,19 @@ let rules = {
       to: 't',
     },
     {
-      reg: /(.[aeiou]{2})ted$/i, //rooted/boated
+      reg: /(.[aeiou]{2})ted$/i, //rooted/boated/greeted/suited
       to: '$1t',
     },
     {
-      reg: /(.ut)ed$/i,
+      reg: /([pfmdb][ie]t)ed$/i,//trumpeted/limited
+      to: '$1',
+    },
+    {
+      reg: /(.[aeiou]t)ed$/i, //created, voted, attributed
       to: '$1e',
     },
     {
-      reg: /(.pt)ed$/i,
+      reg: /(.[p|f]t)ed$/i,//drifted
       to: '$1',
     },
     // -zed
@@ -282,6 +310,10 @@ let rules = {
     {
       reg: /ued$/i,
       to: 'ue',
+    },
+    {
+      reg: /(^.ie)d$/i,//lied
+      to: '$1',
     },
     {
       reg: /(.o)ed$/i,//echoed, vetoed

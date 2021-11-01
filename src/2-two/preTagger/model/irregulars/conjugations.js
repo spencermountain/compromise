@@ -162,6 +162,10 @@ let conjugations = {
   cost: {
     pst: '_',
   },
+  color: {
+    pst: '_ed',
+    g: '_ing',
+  },
   creep: {
     prt: 'crept',
   },

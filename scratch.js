@@ -35,35 +35,10 @@ let txt = ''
 // txt=`Then she went to Grettel, shook her till she awoke, and cried: Get up, you lazy - bones, fetch water and cook something for your brother.`
 // txt=`For the ultimate in geek chic, get the TI - 89 Titanium graphing calculator from this company, TXN`
 // txt=`At this discourse of the crier the Prince of the Indies, considering that the principal motive of his travel was to carry the Sultan, his father, home some singular rarity, thought that he could not meet with any which could give him more satisfaction.`
-// txt = `sing`
-txt = `appeared`
-txt = `sparred`
-txt = `colored`
 
-txt = `strayed`
-txt = `sprayed`
-txt = `enjoyed`
+// txt = `out-lived`
+txt = `he limited`
 
-txt = `snarled`
-txt = `whirled`
-txt = `saddled`
-
-txt = `clawed`
-
-txt = `rooted`
-txt = `boated`
-txt = `weighted`
-
-txt = `defied`
-txt = `echoed`
-txt = `vetoed`
-txt = `fluffed`
-txt = `oiled`
-txt = `engulfed`
-txt = `vexed`
-txt = `rained`
-txt = `filmed`
-txt = `welcomed`
 
 let doc = nlp(txt).debug()
 

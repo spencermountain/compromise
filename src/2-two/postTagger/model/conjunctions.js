@@ -1,11 +1,4 @@
 export default [
-  // ==== Questions ====
-  //the word 'how'
-  { match: '^how', tag: 'QuestionWord', reason: 'how-question' },
-  // how is
-  { match: '[how] (#Determiner|#Copula|#Modal|#PastTense)', group: 0, tag: 'QuestionWord', reason: 'how-is' },
-  // the word 'which'
-  { match: '^which', tag: 'QuestionWord', reason: 'which-question' },
   // ==== Conjunctions ====
   { match: '[so] #Noun', group: 0, tag: 'Conjunction', reason: 'so-conj' },
   //how he is driving
@@ -34,4 +27,23 @@ export default [
   { match: '#Copula just [like]', group: 0, tag: 'Preposition', reason: 'like-preposition' },
   //folks like her
   { match: '#Noun [like] #Noun', group: 0, tag: 'Preposition', reason: 'noun-like' },
+
+
+
+
+  // ==== Questions ====
+  // where
+  // why
+  // when
+  // who
+  // whom
+  // whose
+  // what
+  // which
+  //the word 'how many'
+  // { match: '^(how|which)', tag: 'QuestionWord', reason: 'how-question' },
+  // how-he, when the
+  { match: '[#QuestionWord] (#Pronoun|#Determiner)', group: 0, tag: 'Preposition', reason: 'how-he' },
+  // how is
+  { match: '[how] (#Determiner|#Copula|#Modal|#PastTense)', group: 0, tag: 'QuestionWord', reason: 'how-is' },
 ]

@@ -12,13 +12,14 @@ for (let i = 1; i <= 10; i += 1) {
 let all = {}
 
 ids.forEach(id => {
-  console.log(id)
   let json = fs.readFileSync(`/Users/spencer/mountain/compromise/learn/getInfinitive/result/${id}.json`).toString()
   json = JSON.parse(json)
   Object.assign(all, json)
 })
 
 let pairs = Object.entries(all)
+// console.log(pairs.filter(a => /ged$/.test(a[0])))
 
 let model = find(pairs)
-console.dir(model, { depth: 5 })
+// console.dir(model, { depth: 15 })
+console.log(JSON.stringify(model, null, 2))

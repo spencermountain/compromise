@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import nlp from './builds/compromise.cjs'
 // import text from '/Users/spencer/mountain/compromise/scripts/perf/flame/_sotu-text.js'
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 
 // bug!
@@ -19,7 +19,7 @@ nlp.verbose('tagger')
 // console.log(s.text())
 
 
-let txt = 'the weather which we can reach'
+let txt = 'you smoked!'
 
 // txt = `and Drew Fossum`
 // txt = `the job interview.`
@@ -37,13 +37,14 @@ let txt = 'the weather which we can reach'
 // txt=`At this discourse of the crier the Prince of the Indies, considering that the principal motive of his travel was to carry the Sultan, his father, home some singular rarity, thought that he could not meet with any which could give him more satisfaction.`
 
 
-let doc = nlp(txt).debug()
+// let doc = nlp(txt).debug()
 
 // txt = `out-lived`
 // txt = `he limited`
-// let doc = nlp(txt).debug()
-// doc.verbs().toFutureTense()
-// doc.debug()
+txt = `he smoked`
+let doc = nlp(txt).debug()
+doc.verbs().toFutureTense()
+doc.debug()
 
 
 

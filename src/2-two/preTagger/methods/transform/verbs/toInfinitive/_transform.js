@@ -164,7 +164,7 @@ let rules = {
     },
     // misc no e endings
     {
-      reg: /(..)([hkw]|ion|n[dt]|ai.|[cs]t|pp|all|ss|tt|int|ld|en|oo.|er|ou.|rt|ght|rm|lm|rl|x|bt|rb)ed$/i,
+      reg: /(..)([hw]|ion|n[dt]|ai.|[cs]t|pp|all|ss|tt|int|ld|en|oo.|er|ou.|rt|ght|rm|lm|rl|x|bt|rb)ed$/i,
       to: '$1$2',
     },
     // -ded

@@ -14,7 +14,7 @@ export default {
     "afterTags": "Adjective¦adjective,noun|Gerund¦adverb,co2determiner,p0;ers3ossessive,r0;eposi1onoun;njunc0pula;ti0;on",
     "ownTags": "",
     "beforeWords": "Adjective¦a9b7deep8extreme8fe5it,most8ov4profound8quite,re3s1to0und4very,we2;o,t2;eem8o,ti0;ll;al4;er;el0lt;!s;ad0ut;ly;lso,ppear0;!ed,s|Gerund¦a6be5continue,h3keep,love4st0;art1op0;!ped,s;!ed,s;ate0elp3;!d,s;!en,gan;m,void0;!s",
-    "afterWords": "Adjective¦also,too|Gerund¦h1it,me,on,the0you;ir,m,re;er,im",
+    "afterWords": "Adjective¦also,too|Gerund¦about,h1it,me,on,the0you;ir,m,re;er,im",
     "words": "true¦0:1X;1:1V;2:1M;3:1K;4:1J;5:1F;a1Lb1Hc13d0Re0Lf0Fg0Ah09i05jud1Fl01mZoXpUrOsEt9u6veWy8;ny7p6;lif1set1;iel5;aSe9hr7i3ouc4r6wis1;eVoub2us1yi0;ea0Bi6;l2vi0;l2mp1;atisf0Screec4hocVkyrocke1lo0OoDpCriVt8ur7we6;e0Nl2;gi0pri1Iroun5;a7ea1Ii6riSun0W;mula1r3;gge3r6;t2vi0;ark2ee5;a6ot4;ki0ri0;aAe7ive1o6us4;a3l2;fres4ig0NlaBv6war5;ea2itali6;si0zi0;gi0ll0Dmb2vi0;a0Cerple7r6u0Y;es13o0L;xi0;pGut6verwhel12;goi0st0J;eande3is0Zo04u6;mb2;a7i6o02;fesa01mi1;c6g0H;ki0;m8n6rrita1;sul1te0Pvi6;go0Xti0;po0Q;arro9ea2orrifXumilia1;l9r6;a1ipRo7uel6;i0li0;wi0;a3ea0L;aAetc4it1l9o8r6ulfil2;ee0Migh6ust0O;teW;rebo5un5;atte3oC;di0scina1;m9n7x6;ac1ci1is1;ab2c6du3gaXsui0;han1ouraW;barras09erVpo6;we3;aGeAi6;s6zzE;appoin1t6;r6u0C;ac1es03;c9fiHm8pres02ser7velo6;pi0;vi0;an5eaE;a6liD;yi0;maIri0s4un1;aIhFloVo6ripp2ut1;mAn6rrespon5;cer8f7spi3tr6;as1ol2;lic1uR;ni0;for1m8p6;el2ro6;miN;an5;a6ea1il2;llen6rL;gi0;lJptiva1;ecoIlin5o7ruiHu6;d5st2;oGri0unci0;di0;bsoLcIgFlarEmCppea2rAs6;pi3su3to6;nis4;hi0;ri0;res1;li0;aAu6;si0;mi0;i0on6;i6zi0;zi0;cele6hi0;ra1;ti0;rbi0;ng",
     "fallback": "Adjective"
   },
@@ -59,7 +59,7 @@ export default {
     "afterTags": "Gerund¦adverb,conjunc2determiner,p0;ers2ossessive,r0;eposi0onoun;ti0;on|Singular¦copula,modal,noun,p0value;as0resen0;ttense",
     "ownTags": "Singular¦propernoun",
     "beforeWords": "Gerund¦a6be5continue,h3keep,love4st0;art1op0;!ped,s;!ed,s;ate0elp3;!d,s;!en,gan;m,void0;!s|Singular¦a7cut6for,is,m3o2pl4save1w0;as,ith;!d,s;f,n;a1in0;us;de,ke0;!s;ll,ny",
-    "afterWords": "Gerund¦h1it,me,on,the0you;ir,m,re;er,im|Singular¦a2method,of,philosophy,r1system,t0util3;herapy,ool;eform,oom;id,uthor0;ity",
+    "afterWords": "Gerund¦about,h1it,me,on,the0you;ir,m,re;er,im|Singular¦a2method,of,philosophy,r1system,t0util3;herapy,ool;eform,oom;id,uthor0;ity",
     "words": "true¦0:1G;1:1F;2:10;a1Db0Xc0Jd0Fen2f0Eg0Ch09i08jog19k06l04m01n00oXpTquestio0OrOsBt7u02voluntee0Ww3yGzo0O;a5ed2i0Vor4r3;ap0Xest0J;ki0r0X;i1r0Ks13tc13;al16e5hin16i4ra3y0U;c15di0i0IvA;mi0p0S;a18s1;ai0CcDeChBin10kat9lee0Qmo12now8p7t6u4w3;ea0Mim14;fOr3;fi0vi01;retc0Uud0N;el07;b4i0;eb3i0;oar2;ip0Hou1;a1rUt1;hoo01o0Cre3;a0Te03;a6e5i2o4u3;li0n01;ofi0wi0;cor2hear0Rnde07structr0Q;p09ti0;a5la4oisoXr3ublis0G;a08eten2in1;nVyi0;in1rt06;f4peZrgani3vula1;si0zi0;feZ;egotia1ur0I;a4essa0Aisu3onitoX;nderst01;nufactuVrke1;a3earMod07yi0;n2ug04;i3n08;c06lG;ci0magiInterac1roI;andEi4o3un1;l2wD;ki0ri0;atheMrie3ui2;vi0;ar02i9lir1ormat1ros1un2;a5eba1irec1o4r3umM;awi0es02;ub1wnloa2;nci0ti0;aEelebDhBl9o5r3;aw3osY;li0;a5di0loCmplai4n3oRpi0;duc1sul1;ni0;cKti0;apBea8imGo3ubG;ni0tI;a3ee6;n1t1;ra1;m6s1te3;ri0;aFeDitBlAo8r6u3;il2ll4r3;pi0;yi0;an2;di0;a1m3oA;bi0;esDoa1;c3i0;hi0;lon3t1;gi0;bys4c3ki0;ki0;it1;c1dverti5rg4ssu3;mi0;ui0;si0;ti0;ng",
     "fallback": "Gerund"
   }

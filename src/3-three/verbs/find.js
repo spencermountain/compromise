@@ -28,7 +28,6 @@ const findVerbs = function (doc) {
   }
   //ensure there's actually a verb
   m = m.if('#Verb')
-
   // the reason he will is ...
   // ensure it's not two verbs
   return m

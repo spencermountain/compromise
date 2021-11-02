@@ -19,7 +19,7 @@ import nlp from './src/three.js'
 // console.log(s.text())
 
 
-let txt = 'you smoked!'
+let txt = `I don't see`
 
 // txt = `and Drew Fossum`
 // txt = `the job interview.`
@@ -37,14 +37,22 @@ let txt = 'you smoked!'
 // txt=`At this discourse of the crier the Prince of the Indies, considering that the principal motive of his travel was to carry the Sultan, his father, home some singular rarity, thought that he could not meet with any which could give him more satisfaction.`
 
 
-// let doc = nlp(txt).debug()
 
+txt = `bought office supplies`
+txt = `i was thinking`
+let doc = nlp(txt).debug()
+
+// bug 1
 // txt = `out-lived`
 // txt = `he limited`
-txt = `he smoked`
-let doc = nlp(txt).debug()
-doc.verbs().toFutureTense()
-doc.debug()
+// txt = `he smoked`
+// let doc = nlp(txt).debug()
+// doc.verbs().toFutureTense()
+// doc.debug()
+
+// bug 2
+// let m = doc.match('#Verb+')
+// console.log(m.text())
 
 
 

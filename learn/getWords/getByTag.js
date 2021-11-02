@@ -1,20 +1,4 @@
-/* eslint-disable no-console */
-import fs from 'fs'
-import XmlStream from 'xml-stream'
-
-const streamXml = function (file, cb, end) {
-  const stream = fs.createReadStream(file)
-  const xml = new XmlStream(stream)
-  xml.collect('w')
-  xml.on('endElement: s', function (item) {
-    cb(item, xml)
-  })
-  xml.on('error', function (e) {
-    console.log('error')
-    console.log(e)
-  })
-  xml.on('end', end)
-}
+import streamXml from '../giga.js'
 
 // kick them off
 const parseXml = function (id, tag) {

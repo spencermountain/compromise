@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import parseXml from './getByTag.js'
+import parseXml from '../getWords/getByTag.js'
 import fs from 'fs'
 
 const tag = 'JJ'
@@ -29,20 +29,20 @@ const topk = function (arr) {
   return res.map(a => a[0])
 }
 
-;(async () => {
-  await forEachSync(ids, async id => {
-    console.log(`\ndoing ${id}:\n`)
-    let list = await parseXml(id, tag)
-    console.log('done')
-    list = list.map(a => {
-      let str = a[0] || ''
-      return str.toLowerCase().trim()
+  ; (async () => {
+    await forEachSync(ids, async id => {
+      console.log(`\ndoing ${id}:\n`)
+      let list = await parseXml(id, tag)
+      console.log('done')
+      list = list.map(a => {
+        let str = a[0] || ''
+        return str.toLowerCase().trim()
+      })
+      list = list.filter(str => reg.test(str))
+      let res = topk(list)
+      console.log(res)
+      fs.writeFileSync(`./learn/giga/result/${id}.json`, JSON.stringify(res, null, 2))
     })
-    list = list.filter(str => reg.test(str))
-    let res = topk(list)
-    console.log(res)
-    fs.writeFileSync(`./learn/giga/result/${id}.json`, JSON.stringify(res, null, 2))
-  })
-  // ids.forEach();
-  console.log('all-done.')
-})()
+    // ids.forEach();
+    console.log('all-done.')
+  })()

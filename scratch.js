@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import nlp from './builds/compromise.cjs'
 // import text from '/Users/spencer/mountain/compromise/scripts/perf/flame/_sotu-text.js'
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 
 // bug!
@@ -38,8 +38,34 @@ let txt = `I don't see`
 
 
 
-txt = `bought office supplies`
-txt = `i was thinking`
+// txt = `bought office supplies`
+// txt = `i was thinking`
+
+// txt = `by number of seats.`
+// txt = `he taught debate`
+// txt = `he teaches breadmaking`
+// txt = `spaghetti and steamed rice`
+
+txt = `singers on stage`
+// txt = `in times of change, a symbol`
+// txt = `The similar TORRO scale ranges from  `
+// txt = `powerful known tornadoes.`
+// txt = `people don't need beauty sleep`
+// txt = `the pillow floor seats`
+// txt = `the mrt bus stop.`
+// txt = `The difference is astounding.`
+// txt = `buck naked`
+// txt = `without any recharge.`
+// txt = `The old Fairy's turn`
+// txt = `more with spite than age`
+// txt = `should have her hand pierced`
+// txt = `my birthday wishes`
+// txt = `another fool to roast`
+// txt = `even the humblest`
+// txt = `that is all you are getting`
+// txt = `running around stores.`
+// txt = `children with just diapers on`
+
 let doc = nlp(txt).debug()
 
 // bug 1

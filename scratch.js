@@ -46,8 +46,8 @@ let txt = `I don't see`
 // txt = `he teaches breadmaking`
 // txt = `spaghetti and steamed rice`
 
-txt = `singers on stage`
-// txt = `in times of change, a symbol`
+// txt = `singers on stage`
+txt = `in times of change, a symbol`
 // txt = `The similar TORRO scale ranges from  `
 // txt = `powerful known tornadoes.`
 // txt = `people don't need beauty sleep`

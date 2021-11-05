@@ -35,6 +35,8 @@ export default [
   { match: '(one|1) [#Infinitive]', group: 0, tag: 'Singular', reason: '1-trains' },
   // about love
   { match: 'about [#Infinitive]', group: 0, tag: 'Singular', reason: 'about-love' },
+  // on stage
+  { match: 'on [#Infinitive]', group: 0, tag: 'Noun', reason: 'on-stage' },
   // number of seats
   { match: 'number of [#PresentTense]', group: 0, tag: 'Noun', reason: 'number-of-x' },
   // teaches/taught

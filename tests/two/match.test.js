@@ -992,6 +992,34 @@ let arr = [
   [`their exploding returns`, `. #Adjective #Plural`],
   [`their plunging neckline`, `. #Adjective #Singular`],
   // [``, ``],
+
+  // nov 5
+  [`by number of seats.`, 'by #Noun of #Plural'],
+  [`he taught debate`, 'he #Verb #Noun'],
+  [`he teaches breadmaking`, 'he #Verb #Noun'],
+  [`spaghetti and steamed rice`, '#Noun and #Adjective #Noun'],
+  [`singers on stage`, '#Noun on #Noun'],
+  [`in times of change, a symbol`, 'in times of #Noun a #Noun'],
+  [`The similar TORRO scale ranges from`, 'the #Adjective #Noun #Noun #PresentTense from'],
+  [`powerful known tornadoes.`, '#Adjective #Adjective #Plural'],
+  [`beauty sleep`, '#Noun #Noun'],
+  [`the pillow floor seats`, 'the #Noun #Noun #Noun'],
+  [`the mrt bus stop.`, 'the #Noun #Noun #Noun'],
+  [`The difference is astounding.`, 'the #Noun is #Adjective'],
+  [`buck naked`, '#Adjective #Adjective'],
+  [`without any recharge.`, 'without any #Noun'],
+  [`(mis-fired).`, '#Verb'],
+  [`president-elect`, '#Noun'],
+  [`super-cool`, '#Adverb #Adjective'],
+  [`flower-like.`, '#Adjective'],
+  [`The old Fairy's turn`, 'the #Adjective #Possessive #Noun'],
+  [`more with spite than age`, 'more with #Noun than #Noun'],
+  [`should have her hand pierced`, 'should have her #Noun #Noun'],
+  [`another fool to roast`, 'another #Noun to #Verb'],
+  [`even the humblest`, '#Adverb the #Superlative'],
+  [`that is all you are getting`, 'that #Copula #Noun you are #Gerund'],
+  // [`was running around stores.`, 'was #Gerund around #Plural'],
+
 ]
 test('match:', function (t) {
   arr.forEach(function (a) {

@@ -1,10 +1,10 @@
 export default [
   // amusing his aunt
-  { match: '[#Adjective] #Possessive #Noun', group: 0, tag: 'Verb', reason: 'gerund-his-noun' },
+  // { match: '[#Adjective] #Possessive #Noun', group: 0, tag: 'Verb', reason: 'gerund-his-noun' },
   // loving you
-  { match: '[#Adjective] (us|you)', group: 0, tag: 'Gerund', reason: 'loving-you' },
+  // { match: '[#Adjective] (us|you)', group: 0, tag: 'Gerund', reason: 'loving-you' },
   // slowly stunning
-  { match: '(slowly|quickly) [#Adjective]', group: 0, tag: 'Gerund', reason: 'slowly-adj' },
+  { match: '(slowly|quickly) [#Adjective]', group: 0, tag: 'Verb', reason: 'slowly-adj' },
   // does mean
   { match: 'does (#Adverb|not)? [#Adjective]', group: 0, tag: 'PresentTense', reason: 'does-mean' },
   // i mean

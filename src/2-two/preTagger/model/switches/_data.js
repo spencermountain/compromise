@@ -4,9 +4,9 @@ export default {
     "beforeTags": "Infinitive¦adverb,mod1negative,p0;lur0ronoun;al|Singular¦adject2determiner,gerund,infinit2noun,p0;as0ossess1resen0;ttense;ive",
     "afterTags": "Infinitive¦adverb,conjunc1determiner,p0;ossessive,reposi0;tion|Singular¦copula,modal,noun,p0value;as0resen0;ttense",
     "ownTags": "Singular¦propernoun",
-    "beforeWords": "Infinitive¦i,please,t1w0you;e,ill;hey,o|Singular¦a7cut6for,is,m3o2pl4save1w0;as,ith;!d,s;f,n;a1in0;us;de,ke0;!s;ll,ny",
-    "afterWords": "Infinitive¦a2h1it,me,the0you;!m;er,im;!n|Singular¦a2method,of,philosophy,r1system,t0util3;herapy,ool;eform,oom;id,uthor0;ity",
-    "words": "true¦0:3B;1:3V;2:3T;3:3P;4:3G;a3Nb3Gc2Wd2He2Cf1Zg1Sh1Mi1Ij1Hki1Gl1Am14n10o0Zp0Pr09sNtFupgra1UvCw6y5;awn,ield;a8hist4i7o5re3O;nd1r5;k,ry;nd,re,sh;rra1Ht5ve;ch,er;al1Bi6o5;te,w;ew,s2P;aAe3hought,i9o8r5u2Xwi3;a6eat,i5u3;bu3Fck;in,nsf1p;r1Mu2;me,p;l5rg31s3B;k,ly;cNeLhKiJlImHneeze,pGt8u5;pp6r5spe2J;ge,pri0;ly,o2L;aBeAo8r6u5;dy,ff,mb4;a1We5;ss,t2;p,r5;e,m;m,p;ck,in,ke,mp,re,te;la23rink4;ePi4o1T;eep,i1Y;de,gn;a1Biv1o2R;a5n0r2V;r2t;a6o18r5;at2ew;le,re;aHe6isk,oot,u5;in,le,sh;as2HcCel,fBgAje1Wl0Ep9que3s7tu1Xv5waD;e5iew;al,r0;er2Lo5t;l2Krt;air,e2Mly,o1V;a7r25;act0Borm,u0;a6o5;rd;ll;i0n6t5;!e;ge,k;aDeCin,l9o8r6u5;mp,rcha0sh;ai0e2Do5;ce2Cdu17mi0te3;s15w1;a6u5;g,n1M;n,y;el,rm16;iTrt,ss,t2u0;ff1il;ame,e7o5;d,t5;e,i0X;ed,gle14;a8e7i6o5urd1;dZnitOp;lk,nd,rrN;asu07rchandi0ss;n,r5sk,t2;ch,k1D;a9e8i7o5u0C;a5ck,g,ve;d,n;ft,m0Qne,st;cRvQ;bEck,un2;ll,ss;am,ud10;n6ss5;ue;cr5fluZ;ea0;a8elp,iSo6u5;nt;n5pe,st,u0;or;nd5rm,te;!le;aAo9r8u5;ar6e1Bi5;de;antee,d;asp,ip,umb4;of,ssip;in,ze;aGeDiCl9o7rac6u5;el;tuD;cus,r5;ce,eca3m;a6o5y;at,od,w;g,sh;re,sh,t,x;a5ed;r,tu5;re;ce,rm;cho,nvy,x5ye;c7erci0p5;eri5oX;enK;el,han01;aGeDiAo9r6u5;mp;a6eam,i5;ft,nk;in;dVubt;p,s5vorC;li5play;ke;fe6posDsi5;gn,re;at,ct;maOn6r5te;e,t;ce;aMent1hIlaHo8r5;ed6u5y;sh;it;llap0m9n5ok,py,ugh,v1;ce7du6tr5;a3ol;ct;rn;bi7fo6m5;and,uQ;rt;ne;im,w;a6e5ip;at,ck;llen5n5r5se;ge;ke,ll,re,u0ve;se;aAo7ran2u5;bb4ck4dg5;et;a3mb,ne,o6ss,tt4x;le;k,st,t;nk,se;ddreHid,lt1nsw1ppDrchBss8tt6ucti5;on;a5empt;ck;i3ocia5;te;st;!i5;ve;e6roa2;ch;al;er;ss",
+    "beforeWords": "Infinitive¦i,please,t1w0you;e,ill;hey,o|Singular¦a7cut6for,is,m3o2pl4save1than,w0;as,ith;!d,s;f,n;a1in0;us;de,ke0;!s;ll,ny",
+    "afterWords": "Infinitive¦a2from,h1it,me,the0you;!m;er,im;!n|Singular¦a2method,of,philosophy,r1system,t0util3;herapy,ool;eform,oom;id,uthor0;ity",
+    "words": "true¦0:3C;1:3W;2:3U;3:3Q;a3Nb3Gc2Xd2Ie2Df20g1Th1Ni1Jj1Iki1Hl1Bm15n11o10p0Qr09sNtEupgra1VvBw5y4;awn,ield;a7hist3Ii6o4re3O;nd1r4;k,ry;nd,re,sh;rra1It4ve;ch,er;al1Ci5o4;te,w;ew,s2Q;aAe3hought,i9o8r5u4wi3;ne,rn;a5eat,i4u3;bu3Eck;in,nsf1p;r1Mu2;me,p;l4rg30s3A;k,ly;cMeKhJiIlHmGneeze,pFt7u4;pp5r4spe2J;ge,pri0;ly,o2L;aAe9o7r5u4;dy,ff,mb2V;a1We4;ss,t2;p,r4;e,m;m,p;ck,in,ke,mp,re,te;i2Wla23rink2O;ePi2No1T;eep,i1Y;de,gn;a1Biv1o2Q;a4n0r2U;r2t;a5o18r4;at2ew;le,re;aHe6isk,o5u4;in,le,sh;a3ot;as2FcBel,fAg9je1Vl0Dp8que3s6tu1Wv4waC;e4iew;al,r0;er2Jo4t;l2Irt;air,e2Kly,o1U;a6r23;act0Aorm,u0;a5o4;rd;ll;i0n5t4;!e;ge,k;aCeBin,l8o7r5u4;mp,rcha0sh;ai0e2Bo4;ce2Adu16mi0te3;s14w1;a5u4;g,n1K;n,y;el,rm15;iSrt,ss,t2u0;ff1il;ame,e6o4;d,t4;e,i0W;ed,gle13;a7e6i5o4urd1;dYnitNp;lk,nd,rrM;asu06rchandi0ss;n,r4sk,t2;ch,k1B;a8e7i6o4u0B;a4ck,g,ve;d,n;ft,m0Pne,st;cQvP;bDck,un2;ll,ss;am,ud0Y;n5ss4;ue;cr4fluY;ea0;a7elp,iRo5u4;nt;n4pe,st,u0;or;nd4rm,te;!le;a9o8r7u4;ar5e19i4;de;antee,d;asp,ip,umb0Q;of,ssip;in,ze;aFeCiBl8o6rac5u4;el;tuC;cus,ol,r4;ce,eca3m;a5o4y;at,od,w;g,sh;re,sh,t,x;a4ed;r,tu4;re;ce,rm;cho,nvy,x4ye;c6erci0p4;eri4oW;enJ;el,hanZ;aFeCi9o8r5u4;mp;a5eam,i4;ft,nk;in;dTubt;p,s4vorB;li4play;ke;fe5posCsi4;gn,re;at,ct;maMn5r4te;e,t;ce;aKent1hGlaFo7r4;ed5u4y;sh;it;llap0m8n4ok,py,ugh,v1;ce6du5tr4;a3ol;ct;rn;bine,fo5m4;and,uO;rt;im,w;a5e4ip;at,ck;llen4n4r4se;ge;ke,ll,re,u0ve;se;a9o6ran2u4;bb6ck6dg4;et;a3mb,ne,o5ss,tt4x;le;k,st,t;nk,se;ddreGge,id,lt1nsw1ppCrchAss7tt5ucti4;on;a4empt;ck;i3ocia4;te;st;!i4;ve;e5roa2;ch;al;er;ss",
     "fallback": "Infinitive"
   },
   "adjGerund": {
@@ -31,7 +31,7 @@ export default {
     "beforeTags": "Person¦honorific,p0;ers0repositi0;on|Singular¦adject2determiner,gerund,infinit2noun,p0;as0ossess1resen0;ttense;ive",
     "afterTags": "Person¦p0verb;erson,ropernoun|Singular¦copula,modal,noun,p0value;as0resen0;ttense",
     "ownTags": "Singular¦propernoun",
-    "beforeWords": "Person¦dear,h0yo;e0i;llo,y|Singular¦a7cut6for,is,m3o2pl4save1w0;as,ith;!d,s;f,n;a1in0;us;de,ke0;!s;ll,ny",
+    "beforeWords": "Person¦dear,h0yo;e0i;llo,y|Singular¦a7cut6for,is,m3o2pl4save1than,w0;as,ith;!d,s;f,n;a1in0;us;de,ke0;!s;ll,ny",
     "afterWords": "Person¦fe7learn6play5s2t0;el7h0old;inks,ought;a1eems,ing,pend0;s,t;id,ng,ys;ed,s;!ed;e0lt;ls|Singular¦a2method,of,philosophy,r1system,t0util3;herapy,ool;eform,oom;id,uthor0;ity",
     "words": "true¦a0Lb0Dc09d01eZfYgWhRjNkJlImColive,p8r5s3trini0Cv0wang;an,i0;cto0Lol0;a,et;a0ky,on6umm0GydnA;lvador,ntiaZ;ay,e1o0uF;b00d,se;ed,x;a2e0ol;aQn0;ny;ris,tW;a4e2i0;ck0l2;ey;loZrced0;es;x,ya;aEeo,iJ;e2i0obe;ng,r0tR;by;lvKnt;a2e1o0;lUrdan,y;an,w4;de,smi6y;a1iOo0;l9pe,us2;ll,mil1z0;el;ton;ail,e0rant;ne;aith,ern,lo,ranco;a0dFlmo,mir,ula,ve;rl;a4e3i1ol0;ly;ck,e0xF;go;an,ja;i1rw0wn;in;sy;atalina,h0liff,rystal;ari1in,risti0;!an;ty;a4e3i2r0;an0ook;dy;ll;nedict,rg;k1rb0;ie;er;l0rt;exand0fredo,ma;ria",
     "fallback": "Singular"
@@ -50,7 +50,7 @@ export default {
     "afterTags": "Person¦p0verb;erson,ropernoun|Infinitive¦adverb,conjunc1determiner,p0;ossessive,reposi0;tion",
     "ownTags": "",
     "beforeWords": "Person¦dear,h0yo;e0i;llo,y|Infinitive¦i,please,t1w0you;e,ill;hey,o",
-    "afterWords": "Person¦fe7learn6play5s2t0;el7h0old;inks,ought;a1eems,ing,pend0;s,t;id,ng,ys;ed,s;!ed;e0lt;ls|Infinitive¦a2h1it,me,the0you;!m;er,im;!n",
+    "afterWords": "Person¦fe7learn6play5s2t0;el7h0old;inks,ought;a1eems,ing,pend0;s,t;id,ng,ys;ed,s;!ed;e0lt;ls|Infinitive¦a2from,h1it,me,the0you;!m;er,im;!n",
     "words": "true¦b2chu3drew,ja3ma1ollie,pat,rob,su0wade;e,ng;ck,rk;ob,u0;ck",
     "fallback": "PresentTense"
   },
@@ -58,7 +58,7 @@ export default {
     "beforeTags": "Gerund¦adv1conjunc0preposi0v1;tion;erb|Singular¦adject2determiner,gerund,infinit2noun,p0;as0ossess1resen0;ttense;ive",
     "afterTags": "Gerund¦adverb,conjunc2determiner,p0;ers2ossessive,r0;eposi0onoun;ti0;on|Singular¦copula,modal,noun,p0value;as0resen0;ttense",
     "ownTags": "Singular¦propernoun",
-    "beforeWords": "Gerund¦a6be5continue,h3keep,love4st0;art1op0;!ped,s;!ed,s;ate0elp3;!d,s;!en,gan;m,void0;!s|Singular¦a7cut6for,is,m3o2pl4save1w0;as,ith;!d,s;f,n;a1in0;us;de,ke0;!s;ll,ny",
+    "beforeWords": "Gerund¦a6be5continue,h3keep,love4st0;art1op0;!ped,s;!ed,s;ate0elp3;!d,s;!en,gan;m,void0;!s|Singular¦a7cut6for,is,m3o2pl4save1than,w0;as,ith;!d,s;f,n;a1in0;us;de,ke0;!s;ll,ny",
     "afterWords": "Gerund¦about,h1it,me,on,the0you;ir,m,re;er,im|Singular¦a2method,of,philosophy,r1system,t0util3;herapy,ool;eform,oom;id,uthor0;ity",
     "words": "true¦0:1G;1:1F;2:10;a1Db0Xc0Jd0Fen2f0Eg0Ch09i08jog19k06l04m01n00oXpTquestio0OrOsBt7u02voluntee0Ww3yGzo0O;a5ed2i0Vor4r3;ap0Xest0J;ki0r0X;i1r0Ks13tc13;al16e5hin16i4ra3y0U;c15di0i0IvA;mi0p0S;a18s1;ai0CcDeChBin10kat9lee0Qmo12now8p7t6u4w3;ea0Mim14;fOr3;fi0vi01;retc0Uud0N;el07;b4i0;eb3i0;oar2;ip0Hou1;a1rUt1;hoo01o0Cre3;a0Te03;a6e5i2o4u3;li0n01;ofi0wi0;cor2hear0Rnde07structr0Q;p09ti0;a5la4oisoXr3ublis0G;a08eten2in1;nVyi0;in1rt06;f4peZrgani3vula1;si0zi0;feZ;egotia1ur0I;a4essa0Aisu3onitoX;nderst01;nufactuVrke1;a3earMod07yi0;n2ug04;i3n08;c06lG;ci0magiInterac1roI;andEi4o3un1;l2wD;ki0ri0;atheMrie3ui2;vi0;ar02i9lir1ormat1ros1un2;a5eba1irec1o4r3umM;awi0es02;ub1wnloa2;nci0ti0;aEelebDhBl9o5r3;aw3osY;li0;a5di0loCmplai4n3oRpi0;duc1sul1;ni0;cKti0;apBea8imGo3ubG;ni0tI;a3ee6;n1t1;ra1;m6s1te3;ri0;aFeDitBlAo8r6u3;il2ll4r3;pi0;yi0;an2;di0;a1m3oA;bi0;esDoa1;c3i0;hi0;lon3t1;gi0;bys4c3ki0;ki0;it1;c1dverti5rg4ssu3;mi0;ui0;si0;ti0;ng",
     "fallback": "Gerund"

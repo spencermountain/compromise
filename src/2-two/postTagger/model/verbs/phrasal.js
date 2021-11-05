@@ -17,7 +17,7 @@ export default [
   // went on for
   { match: '(lived|went|crept|go) [on] for', group: 0, tag: 'PhrasalVerb', reason: 'went-on' },
   // mis-fired
-  // { match: '[(mis)] #Verb', group: 0, tag: 'Verb', reason: 'mis-fired' },
+  // { match: '[(mis)] #Verb', group: 0, tag: 'Verb', reason: 'mis-firedsa' },
   //back it up
   {
     match: '#Verb (him|her|it|us|himself|herself|itself|everything|something) [(up|down)]',

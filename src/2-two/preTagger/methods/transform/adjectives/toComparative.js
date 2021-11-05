@@ -62,3 +62,5 @@ const toComparative = function (str) {
   return str + 'er'
 }
 export default toComparative
+
+// console.log(toComparative('humble'))

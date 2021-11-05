@@ -14,6 +14,7 @@ const irregulars = {
   big: 'biggest',
   large: 'largest',
 }
+
 const transforms = [
   {
     reg: /y$/i,
@@ -32,10 +33,15 @@ const transforms = [
     repl: 'ngest',
   },
   {
+    reg: /le$/i, //huble, simple
+    repl: 'lest',
+  },
+  {
     reg: /([aeiou])te$/i,
     repl: '$1test',
   },
 ]
+
 const toSuperlative = function (str) {
   //irregulars
   if (irregulars.hasOwnProperty(str)) {
@@ -66,4 +72,4 @@ const toSuperlative = function (str) {
 }
 export default toSuperlative
 
-// console.log(toSuperlative('wide'))
+// console.log(toSuperlative('humble'))

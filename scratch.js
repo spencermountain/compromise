@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import nlp from './builds/compromise.cjs'
 // import text from '/Users/spencer/mountain/compromise/scripts/perf/flame/_sotu-text.js'
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 
 // bug!
@@ -38,14 +38,11 @@ let txt = `I don't see`
 
 
 
-txt = `bought office supplies`
+// txt = `bought office supplies`
 // txt = `i was thinking`
-
-
-txt = `The similar TORRO scale ranges from`
 // txt = `my birthday wishes`
 
-let doc = nlp(txt).debug()
+// let doc = nlp(txt).debug()
 
 // bug 1
 // txt = `out-lived`
@@ -56,8 +53,9 @@ let doc = nlp(txt).debug()
 // doc.debug()
 
 // bug 2
-// let m = doc.match('#Verb+')
-// console.log(m.text())
+let doc = nlp(`i don't see`)
+let m = doc.match('do not')
+console.log(m.text())
 
 
 

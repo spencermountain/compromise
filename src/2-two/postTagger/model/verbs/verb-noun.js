@@ -37,6 +37,10 @@ export default [
   { match: 'about [#Infinitive]', group: 0, tag: 'Singular', reason: 'about-love' },
   // on stage
   { match: 'on [#Infinitive]', group: 0, tag: 'Noun', reason: 'on-stage' },
+  // any charge
+  { match: 'any [#Infinitive]', group: 0, tag: 'Noun', reason: 'any-charge' },
+  // no doubt
+  { match: 'no [#Infinitive]', group: 0, tag: 'Noun', reason: 'no-doubt' },
   // number of seats
   { match: 'number of [#PresentTense]', group: 0, tag: 'Noun', reason: 'number-of-x' },
   // teaches/taught

@@ -15,7 +15,7 @@ const tokenize = function (input, world) {
     let sentences = splitSentences(input, model)
     // split into word objects
     input = sentences.map(txt => {
-      let terms = splitTerms(txt)
+      let terms = splitTerms(txt, model)
       // split into [pre-text-post]
       return terms.map(splitWhitespace)
     })

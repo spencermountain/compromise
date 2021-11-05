@@ -1,10 +1,17 @@
-const hasHyphen = function (str) {
-  //dont split 're-do'
-  if (/^(re|un|micro|macro|trans|bi|mono|over)-?[^aeiou]./.test(str) === true) {
+const hasHyphen = function (str, model) {
+  let parts = str.split(/[-–—]/)
+  if (parts.length <= 1) {
     return false
   }
-  //dont split 'bat-like'
-  if (/^([a-z\u00C0-\u00FF/]+)[-–—](like|ish|less|able)/i.test(str) === true) {
+  const { prefixes, suffixes } = model.one
+
+  //dont split 're-do'
+  if (prefixes.hasOwnProperty(parts[0])) {
+    return false
+  }
+  //dont split 'flower-like'
+  parts[1] = parts[1].trim().replace(/[.?!]$/, '')
+  if (suffixes.hasOwnProperty(parts[1])) {
     return false
   }
   //letter-number 'aug-20'

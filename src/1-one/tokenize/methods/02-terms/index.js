@@ -17,7 +17,7 @@ const isArray = function (arr) {
 }
 
 //turn a string into an array of strings (naiive for now, lumped later)
-const splitWords = function (str) {
+const splitWords = function (str, model) {
   let result = []
   let arr = []
   //start with a naiive split
@@ -31,7 +31,7 @@ const splitWords = function (str) {
   const words = str.split(naiiveSplit)
   for (let i = 0; i < words.length; i++) {
     //split 'one-two'
-    if (hasHyphen(words[i]) === true) {
+    if (hasHyphen(words[i], model) === true) {
       arr = arr.concat(splitHyphens(words[i]))
       continue
     }

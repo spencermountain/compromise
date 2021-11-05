@@ -53,9 +53,9 @@ let txt = `I don't see`
 // doc.debug()
 
 // bug 2
-let doc = nlp(`i don't see`)
-let m = doc.match('do not')
-console.log(m.text())
+let doc = nlp(`I remember this semi-truck`)
+let m = doc.match('this .')
+console.log(m.text('normal'))
 
 
 

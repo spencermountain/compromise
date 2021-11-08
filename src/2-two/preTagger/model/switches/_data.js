@@ -24,7 +24,7 @@ export default {
     "ownTags": "",
     "beforeWords": "Adjective¦a9b7deep8extreme8fe5it,most8ov4profound8quite,re3s1to0und4very,we2;o,t2;eem8o,ti0;ll;al4;er;el0lt;!s;ad0ut;ly;lso,ppear0;!ed,s|PastTense¦been,ha0;d,s,ve",
     "afterWords": "Adjective¦also,too|PastTense¦b0down,in,out,up;ack,y",
-    "words": "true¦0:0V;a0Rb0Oc0CdZeXfUgift0hTiOjNknown,liLmJoHpDreBs4t3u2w1;arp0eath0J;nKpd0Qs0;arn02roubl0;a6ca5et00im4peci06t2u1;bsid09spe7;e1rip0;am0reotyp0;pl0Ful0K;r0tt0B;tur0Iut0;cov09f0Agul0Hstri1;ct0;arallel0le0DolSr1u04;e2o1;cUloTnou0F;ferr0oc2par0;c1rganX;cupi0;easFix0o1;d03tV;cens0m1;it0;agg0ust00;mp4n1;br0t1;e1oxic02;gr01rest0;li0oB;ammReZook0;aVix0r1;a1i0;ct2gment0;ducVns1quipp0stabl8xperieX;ur0;aCe7i1;gnNmin5s1;ciplKgrun3t1;o1r7;rt0;tl0;ish0;centr4pr3ra2t1velop0;aIermE;ng0;ess0;al4;mag0t0;elebrGharg0lAo6r4u1;lt2stom1;iz0;ivD;a1owd0;mp0;d0mb3n1ok0;sid1troll0;er0;in0;ass1os0;ifi0;ala6i2o1urn0;il0;as0;cknowledg0d2nim1ppreci1ssum0;at0;opt0va1;nc0;ed",
+    "words": "true¦0:14;1:11;a11b0Yc0Jd07e05f02gift0hZiUjTknown,liSmQoOpKquaJrFs6t5u3ve01w2;arp0eath0Qorri0;ni2pd1s0;fi0t0;arn09roubl0;a8ca7et07im6peci5t3u2;bsid0FspeB;e2rip0;am0reotyp0;al0Cfi0;p9ul1;r0tt0G;t2ut0;is0Kur1;a4e2;cov0Cf0Dgul1stri2;ct0;lli0ti0G;li0F;arallel0le0HolUr2u05;e3o2;cWloVnou0J;ferr0oc3par0;c2rganY;cupi0;easHix0o2;di07tW;cens0mit0;agg0us04;mp5n2;br0t2;e2oxic1;gr1nYrest0;li0oE;ammTe1o2;ok0r2;riX;aYix0r2;a2i0;ct3gment0;duc1ns2quipp0stabl9xperie00;ur0;aCe8i2;gniQmin6s2;ciplKgrun4t2;o2r8;rt0;tl0;ish0;central8pr4ra3t2velop0;aLermE;ng0;ess0;mag0t0;eDharg0lBo7r5u2;lt3stom2;iz0;iv1;a2owd0;mp0;d0mb4n2ok0;sid2troll0;er0;in0;as2os0;si4;lebr1r2;ti2;fi0;ala7i3o2urn0;il0;as0;cknowledg0d3nim1ppreci1ssum0;at0;opt0va2;nc0;ed",
     "fallback": "Adjective"
   },
   "personNoun": {

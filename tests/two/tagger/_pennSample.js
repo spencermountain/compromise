@@ -3808,10 +3808,6 @@ export default [
     tags: 'PRP, VBP, IN, NNP',
   },
   {
-    text: 'I want to go travelling.',
-    tags: 'PRP, VBP, TO, VB, VBG',
-  },
-  {
     text: 'Hotels for travelling will be expensive.',
     tags: 'NNS, IN, NN, MD, VB, JJ',
   },

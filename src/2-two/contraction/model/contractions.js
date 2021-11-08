@@ -33,6 +33,7 @@ export default [
   { word: "'tis", out: ['it', 'is'] },
   { word: "'twas", out: ['it', 'was'] },
   { word: 'twas', out: ['it', 'was'] },
+  { word: 'y\'know', out: ['you', 'know'] },
   { word: "ne'er", out: ['never'] },
   { word: "o'er ", out: ['over'] },
   // contraction-part mappings

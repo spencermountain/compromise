@@ -151,6 +151,8 @@ export default [
   },
   // compromises are possible
   { match: '[#PresentTense] (are|were|was) #Adjective', group: 0, tag: 'Plural', reason: 'compromises-are-possible' },
+  // hope i helped
+  { match: '^[(hope|guess|thought|think)] #Pronoun #Verb', group: 0, tag: 'Infinitive', reason: 'suppose-i' },
   //pursue its dreams
   { match: '#PresentTense #Possessive [#PresentTense]', group: 0, tag: 'Plural', reason: 'pursue-its-dreams' },
   // our unyielding support

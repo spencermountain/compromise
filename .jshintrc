@@ -2,5 +2,8 @@
   "esversion": 8,
   "node": true,
   "asi": true,
-  "undef": true
+  "undef": true,
+  "globals": {
+    "self": true
+  }
 }

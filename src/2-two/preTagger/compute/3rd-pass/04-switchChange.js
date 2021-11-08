@@ -66,19 +66,18 @@ const swtichLexicon = function (terms, i, model) {
       tag = tag || lookAtTag(terms[i - 1], beforeTags)
       // look -> right tag next
       tag = tag || lookAtTag(terms[i + 1], afterTags)
-      // console.log(terms[i - 1])
-      // console.log(terms[i + 1])
-      if (tag && !term.tags.has(tag)) {
-        // console.log(term, tag)
-        term.tags.clear()
-        fastTag(term, tag, `3-[switch] ${keys[o]}`)
-        if (model.two.tagSet[tag]) {
-          let parents = model.two.tagSet[tag].parents
-          fastTag(term, parents, `3-switch-infer from ${tag}`)
+      // did we find anything?
+      if (tag) {
+        // is it a tag we don't have yet?
+        if (!term.tags.has(tag)) {
+          term.tags.clear()
+          fastTag(term, tag, `3-[switch] ${keys[o]}`)
+          if (model.two.tagSet[tag]) {
+            let parents = model.two.tagSet[tag].parents
+            fastTag(term, parents, `3-switch-infer from ${tag}`)
+          }
         }
-        // deduce parent tags?
-        // fillTags(terms, i, model)
-        return //one hint is good-enough
+        break //one hint is good-enough
       }
     }
   }

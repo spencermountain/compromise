@@ -35,5 +35,7 @@ let matches = [
   },
   // at about
   { match: '#Preposition [about]', group: 0, tag: 'Adjective', reason: 'at-about' },
+  // dude we should
+  { match: '^[(dude|man|girl)] #Pronoun', group: 0, tag: 'Expression', reason: 'dude-i' },
 ]
 export default matches

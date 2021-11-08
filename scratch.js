@@ -54,15 +54,12 @@ let txt
 // txt= 'Are you playing golf?'
 // txt= 'Has Liz finished with gathering the documents?'
 // txt= 'Increases longevity.'
-// txt= 'Dr. Fortier was one of 15 people to receive the Carnegie Medal on Monday.'
+txt = 'Dr. Fortier was one of 15 people to receive the Carnegie Medal on Monday.'
 // txt= 'The Superdome stadium is without power, and toilets are overflowing.'
 // txt= 'You are requesting a legitimate service and you are paying for it !!'
 // txt= 'Visit message boards and post this article as a new message by highlighting the text of this letter and selecting paste from the edit menu.'
 // txt= "680 - Number of suspected al-Qa'ida members that the United States admits are detained at Guantánamo Bay, Cuba."
-txt = 'I am VERY satisfied.'
-// txt= 'I want to go travelling.'
-// txt= 'YOU have to spend the time training.'
-// txt= 'Hope I helped!'
+// txt = 'YOU have to spend the time training.'
 // txt= 'Need Advice !?'
 // txt= 'The federal sites of Washington, DC.'
 // txt= 'Boiled WHITE rice and boiled chicken breast.'
@@ -81,7 +78,7 @@ txt = 'I am VERY satisfied.'
 // txt= 'May, 2009.'
 // txt= 'I put the coffee thing in hot water and settled for a cup of weak coffee.'
 
-// txt = 'intravenous'
+txt = 'yo we should'
 let doc = nlp(txt).debug()
 
 // bug 1

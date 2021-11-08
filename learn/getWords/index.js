@@ -13,7 +13,7 @@ for (let i = 1; i <= 10; i += 1) {
 }
 
 
-; (async () => {
+; (async () => {// eslint-disable-line
   await forEachSync(ids, async id => {
     console.log(`\ndoing ${id}:\n`)
     let list = await parseXml(id, tag)

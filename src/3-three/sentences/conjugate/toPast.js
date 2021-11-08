@@ -1,4 +1,4 @@
-const toPast = function (s, parsed) {
+const toPast = function (s) {
   let verbs = s.verbs()
 
   // already past

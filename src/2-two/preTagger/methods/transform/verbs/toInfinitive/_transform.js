@@ -6,6 +6,10 @@ let rules = {
       to: 'ow',
     },
     {
+      reg: /aken$/i,//overtaken
+      to: 'ake',
+    },
+    {
       reg: /(.)un([g|k])$/i,
       to: '$1in$2',
     },
@@ -143,8 +147,20 @@ let rules = {
   ],
   PastTense: [
     {
-      reg: /([rl])ew$/i,
+      reg: /([rl])ew$/i,//threw
       to: '$1ow',
+    },
+    {
+      reg: /(ow)n$/i,//flown
+      to: '$1',
+    },
+    {
+      reg: /orn$/i,//worn
+      to: 'ear',
+    },
+    {
+      reg: /eld$/i,//withheld
+      to: 'old',
     },
     {
       reg: /([pl])t$/i,
@@ -164,16 +180,25 @@ let rules = {
     },
     // misc no e endings
     {
-      reg: /(..)([hw]|ion|n[dt]|ai.|[cs]t|pp|all|ss|tt|int|ld|en|oo.|er|ou.|rt|ght|rm|lm|rl|x|bt|rb)ed$/i,
+      reg: /(..)(h|w|ion|n[dt]|ai.|all|int|ld|en|oo.|er|ou.|ght|rm|lm|rl|x|bt|rb)ed$/i,
       to: '$1$2',
+    },
+    // doubled consonants
+    {
+      reg: /(..)(p|s|b|d){2}ed$/i,// eslint-disable-line
+      to: '$1$2', //robbed -> rob
     },
     // -ded
     {
-      reg: /(dd)ed$/i,
-      to: '$1',
+      reg: /uaded$/i,//pursuaded
+      to: 'uade',
     },
     {
       reg: /(.[aeiou]{2}d)ed$/i,//downloaded
+      to: '$1',
+    },
+    {
+      reg: /(.[rnd]d)ed$/i,//forwarded, ended
       to: '$1',
     },
     // -fed
@@ -200,7 +225,11 @@ let rules = {
     },
     // -led
     {
-      reg: /([aeiou])lled$/i,
+      reg: /([vpnd])elled$/i, //one-l
+      to: '$1el',
+    },
+    {
+      reg: /([aeiou])lled$/i, //two-l's
       to: '$1ll',
     },
     {
@@ -234,6 +263,10 @@ let rules = {
       to: '$1ke',
     },
     // -ned
+    {
+      reg: /([lfw]in)ed$/i, // lined, entwined
+      to: '$1e',
+    },
     {
       reg: /([aeiou][gr]n)ed$/i, // designed, turned
       to: '$1',
@@ -276,7 +309,11 @@ let rules = {
     },
     // -ted
     {
-      reg: /tted$/i,
+      reg: /iated$/i,//satiated
+      to: 'iate',
+    },
+    {
+      reg: /tted$/i,//admitted
       to: 't',
     },
     {
@@ -288,11 +325,15 @@ let rules = {
       to: '$1',
     },
     {
+      reg: /asted$/i,//wasted, tasted
+      to: 'aste',
+    },
+    {
       reg: /(.[aeiou]t)ed$/i, //created, voted, attributed
       to: '$1e',
     },
     {
-      reg: /(.[p|f]t)ed$/i,//drifted
+      reg: /(.[pfrsc]t)ed$/i,//drifted
       to: '$1',
     },
     // -zed

@@ -68,12 +68,17 @@ let txt
 
 // let doc = nlp(txt).debug()
 
-
-let regs = [{ word: 'may' }, { pre: '(' }]
-nlp('may, (2019) foo').match(regs).debug()
+let arr = [
 
 
-// console.log(nlp.parseMatch('cool @hasComma'))
+  ["yelled", "model"],
+  ["spelled", "model"],
+]
+let doc = nlp(arr[arr.length - 1][0]).debug()
+doc.verbs().toInfinitive()
+// doc.verbs().toPresentTense()
+console.log(doc.text())
+
 // bug 1
 // txt = `he out-lived`
 // txt = `he out lived`

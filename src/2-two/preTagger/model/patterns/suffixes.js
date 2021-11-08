@@ -51,6 +51,7 @@ export default [
     rol: Sing,
     sis: Sing,
     zes: Pres,
+    eld: Past,
   },
   {
     //4-letter
@@ -62,6 +63,7 @@ export default [
     mned: Adj,
     cted: Past,
     dged: Past,
+    ield: Sing,
     akis: Last,
     cede: Inf,
     chuk: Last,

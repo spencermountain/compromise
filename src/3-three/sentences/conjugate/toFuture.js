@@ -1,4 +1,4 @@
-const toFuture = function (s, parsed) {
+const toFuture = function (s) {
   let verbs = s.verbs()
 
   // translate the first verb, no-stress

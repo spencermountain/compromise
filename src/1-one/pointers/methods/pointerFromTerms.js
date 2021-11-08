@@ -1,2 +1,4 @@
-const pointerFromTerms = function (docs, document) {}
+const pointerFromTerms = function (docs, document) {
+  //TODO: 
+}
 export default pointerFromTerms

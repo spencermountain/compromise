@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import XmlStream from 'xml-stream'
 import fs from 'fs'
 

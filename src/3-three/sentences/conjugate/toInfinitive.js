@@ -1,4 +1,4 @@
-const toInfinitive = function (s, parsed) {
+const toInfinitive = function (s) {
   s.verbs().toInfinitive()
   s.compute('chunks')
   return s

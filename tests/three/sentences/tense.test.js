@@ -96,15 +96,15 @@ test('sentence-change-tense:', function (t) {
 
     doc.sentences().toPastTense()
     let str = doc.out('text')
-    t.equal(str, a[1], '[pres->pastTense] ' + str)
+    t.equal(str, a[1], here + '[pres->pastTense] ' + str)
 
     doc.sentences().toFutureTense()
     str = doc.out('text')
-    t.equal(str, a[2], '[past->future] ' + str)
+    t.equal(str, a[2], here + '[past->future] ' + str)
 
     doc.sentences().toPresentTense()
     str = doc.out('text')
-    t.equal(str, a[0], '[future->present] ' + str)
+    t.equal(str, a[0], here + '[future->present] ' + str)
   })
   t.end()
 })

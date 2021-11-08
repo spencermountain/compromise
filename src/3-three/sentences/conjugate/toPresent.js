@@ -1,4 +1,4 @@
-const toPresent = function (s, parsed) {
+const toPresent = function (s) {
   s.verbs().toPresentTense()
   s.compute('chunks')
   return s

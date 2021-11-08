@@ -276,6 +276,7 @@ let conjugations = {
   free: {
     a: '',
     g: '_ing',
+    pst: '_d',
   },
   freeze: {
     g: 'freezing',
@@ -588,6 +589,7 @@ let conjugations = {
   steal: {
     a: '_er',
     pst: 'stole',
+    prt: 'stolen',
   },
   stick: {
     pst: 'stuck',
@@ -616,12 +618,6 @@ let conjugations = {
     a: '_er',
     g: '_ing',
     pst: '_ed',
-  },
-  sware: {
-    prt: 'sworn',
-  },
-  swear: {
-    pst: 'swore',
   },
   sweep: {
     prt: 'swept',
@@ -678,9 +674,6 @@ let conjugations = {
   wake: {
     pst: 'woke',
   },
-  wear: {
-    pst: 'wore',
-  },
   weave: {
     prt: 'woven',
   },
@@ -707,6 +700,44 @@ let conjugations = {
     g: 'writing',
     prt: 'written',
     pst: 'wrote',
+  },
+
+  // -ee verbs
+  agree: {
+    pst: '_d',
+  },
+  disagree: {
+    pst: '_d',
+  },
+  guarantee: {
+    pst: '_d',
+  },
+  pee: {
+    pst: '_d',
+  },
+  programme: {
+    pst: '_d',
+  },
+
+  // -orn verbs
+  swear: {
+    pst: 'swore',
+    prt: 'sworn',
+  },
+  wear: {
+    pst: 'wore',
+    prt: 'worn',
+  },
+  shrink: {
+    pst: 'shrunk',
+    prt: 'shrunken',
+  },
+  dye: {
+    pst: '_d',
+  },
+  mimic: {
+    pst: '_ked',
+    g: '_king',
   },
 }
 

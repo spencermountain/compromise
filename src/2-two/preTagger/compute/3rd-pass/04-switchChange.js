@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import fastTag from '../_fastTag.js'
 // import fillTags from '../3rd-pass/_fillTags.js'
 

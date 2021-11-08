@@ -63,11 +63,11 @@ const doesMatch = function (term, reg, index, length) {
     return false
   }
   //support whitespace/punctuation
-  if (reg.post !== undefined) {
-    return term.post && term.post.includes(reg.post)
-  }
   if (reg.pre !== undefined) {
     return term.pre && term.pre.includes(reg.pre)
+  }
+  if (reg.post !== undefined) {
+    return term.post && term.post.includes(reg.post)
   }
   //support /reg/
   if (reg.regex !== undefined) {

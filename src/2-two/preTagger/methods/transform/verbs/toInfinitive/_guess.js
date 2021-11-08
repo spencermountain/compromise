@@ -40,7 +40,6 @@ let guessVerb = {
     'eed',
     'er',
     'le',
-    'own',
     'unk',
     'ung',
     'en',
@@ -81,6 +80,7 @@ let guessVerb = {
     'ts',
     'ns',
   ],
+  Participle: ['ken', 'wn']
 }
 //flip it into a lookup object
 guessVerb = Object.keys(guessVerb).reduce((h, k) => {

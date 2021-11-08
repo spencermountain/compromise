@@ -35,6 +35,7 @@ const fromIrreg = function (str, model) {
 // transform verb from regular expressions
 const fromReg = function (str, tense) {
   tense = tense || guessTense(str)
+  // console.log(tense)
   if (tense && rules[tense]) {
     for (let i = 0; i < rules[tense].length; i++) {
       const rule = rules[tense][i]
@@ -44,6 +45,7 @@ const fromReg = function (str, tense) {
       }
     }
   }
+  return null
 }
 
 
@@ -62,6 +64,7 @@ const toInfinitive = function (str, model, tense) {
     particle = ''
   }
   // 1. look at known irregulars
+  // console.log(verb)
   let inf = fromIrreg(verb, model)
   // 2. give'r!
   inf = inf || fromReg(verb, tense) || verb
@@ -77,5 +80,3 @@ const toInfinitive = function (str, model, tense) {
 }
 export default toInfinitive
 
-// import model from '../../../../model/index.js'
-// console.log(toInfinitive('designed', model))

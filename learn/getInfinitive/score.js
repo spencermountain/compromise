@@ -1,6 +1,6 @@
-import nlp from '../../src/two.js'
-import { forEachSync } from '../giga.js'
-import fs from 'fs'
+// import nlp from '../../src/two.js'
+// import { forEachSync } from '../giga.js'
+// import fs from 'fs'
 import fromPast from './models/fromPast.js'
 import { convert } from '/Users/spencer/mountain/suffix-thumb/src/index.js'
 

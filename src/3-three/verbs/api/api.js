@@ -1,7 +1,6 @@
 import find from '../find.js'
 import toJSON from './toJSON.js'
 import parseVerb from './parse/index.js'
-import debug from './debug.js'
 import toInfinitive from './conjugate/toInfinitive.js'
 import toPast from './conjugate/toPast.js'
 import toPresent from './conjugate/toPresent.js'

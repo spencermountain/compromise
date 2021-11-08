@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import nlp from './builds/compromise.cjs'
 // import text from '/Users/spencer/mountain/compromise/scripts/perf/flame/_sotu-text.js'
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 
 // bug!
@@ -44,11 +44,7 @@ let txt
 // txt= 'Thursday works for me.'
 // txt= 'She is going to be a kinesiologist, sports injury therapist.'
 // txt= 'Does that work?'
-txt = 'Bob Bowen'
-// txt= 'Drew Fossum'
-// txt = 'Drew Fossum'
-// txt= 'bob k'
-// txt= "You're right, Sue."
+txt = "right, Sue."
 // txt= 'Day One Interviews Day Two Interviews'
 // txt= 'Sue and Jeff --'
 // txt= 'Has Liz finished with gathering the documents?'
@@ -74,8 +70,10 @@ txt = 'Bob Bowen'
 // txt= 'I had a conversation with the woman running this place in April 2010.'
 // txt= 'Great Cookies, Cakes, and Customer Service'
 // txt= 'May, 2009.'
+txt = 'you guys don\'t know'
 
-let doc = nlp(txt).debug()
+let doc = nlp(`John Smith and Jack were walking`)
+doc.insertAfter('drugs')
 
 // bug 1
 // txt = `out-lived`
@@ -84,7 +82,6 @@ let doc = nlp(txt).debug()
 // let doc = nlp(txt).debug()
 // doc.verbs().toFutureTense()
 // doc.debug()
-
 
 
 

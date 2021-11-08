@@ -9,12 +9,20 @@ import isPossessive from './isPossessive.js'
 const byApostrophe = /'/
 const numDash = /^[0-9][^-–—]*[-–—].*?[0-9]/
 
-const reTag = function (terms, i, world) {
+const reTag = function (terms, i, world, view) {
   const preTagger = world.compute.preTagger
   // just re-tag neighbourhood
   let start = i < 2 ? 0 : i - 2
-  let slice = terms.slice(start, i + 3)
-  preTagger([slice], world)
+  let slice = terms//terms.slice(start, i + 3)
+  slice = [slice]
+
+  let tmp = view.clone()
+  tmp.document = slice
+  tmp.compute('index', 'tagger')
+  // tmp.compute(world.hooks)
+  // console.log(world.hooks)
+
+  preTagger(slice, world)
 }
 
 // const isArray = function (arr) {
@@ -22,7 +30,7 @@ const reTag = function (terms, i, world) {
 // }
 
 //really easy ones
-const contractions = (document = [], world) => {
+const contractions = (document = [], world, view) => {
   const { model, methods } = world
   let list = model.two.contractions || []
   document.forEach((terms, n) => {
@@ -85,7 +93,7 @@ const contractions = (document = [], world) => {
         // actually insert the new terms
         if (words) {
           splice(document, [n, i], words, hint)
-          reTag(terms, i, world)
+          reTag(terms, i, world, view)
           return true
         }
         // '44-2'
@@ -95,7 +103,7 @@ const contractions = (document = [], world) => {
             hint = ['Value', 'Conjunction', 'Value']
             splice(document, [n, i], words, hint)
             methods.one.setTag(terms, 'NumberRange', world)
-            reTag(terms, i, world)
+            reTag(terms, i, world, view)
             return true
           }
         }

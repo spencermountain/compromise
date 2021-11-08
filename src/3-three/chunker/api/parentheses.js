@@ -11,7 +11,6 @@ const findEnd = function (terms, i) {
 }
 
 const find = function () {
-  this.compute('index')
   let ptrs = []
   this.docs.forEach(terms => {
     let isOpen = false

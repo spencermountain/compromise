@@ -39,7 +39,7 @@ export default {
   "personDate": {
     "beforeTags": "Person¦honorific,p0;ers0repositi0;on|Date¦date,value",
     "afterTags": "Person¦p0verb;erson,ropernoun|Date¦date,value",
-    "ownTags": "",
+    "ownTags": "Person¦propernoun",
     "beforeWords": "Person¦dear,h0yo;e0i;llo,y|Date¦after,by,during,in,last,next,of,sometime,t0until;his,il",
     "afterWords": "Person¦fe7learn6play5s2t0;el7h0old;inks,ought;a1eems,ing,pend0;s,t;id,ng,ys;ed,s;!ed;e0lt;ls|Date¦in,sometime,the,until",
     "words": "true¦a2j0sep;an0une;!uary;p0ugust,v0;ril",
@@ -48,7 +48,7 @@ export default {
   "personVerb": {
     "beforeTags": "Person¦honorific,p0;ers0repositi0;on|Infinitive¦adverb,mod1negative,p0;lur0ronoun;al",
     "afterTags": "Person¦p0verb;erson,ropernoun|Infinitive¦adverb,conjunc1determiner,p0;ossessive,reposi0;tion",
-    "ownTags": "",
+    "ownTags": "Person¦propernoun",
     "beforeWords": "Person¦dear,h0yo;e0i;llo,y|Infinitive¦c4do3ha2i,must,please,sho5t1w0you;e,ill,o4;hey,o;d,ve;!es;an,o0;uld",
     "afterWords": "Person¦fe7learn6play5s2t0;el7h0old;inks,ought;a1eems,ing,pend0;s,t;id,ng,ys;ed,s;!ed;e0lt;ls|Infinitive¦a2from,h1it,me,the0you;!m;er,im;!n",
     "words": "true¦b2chu3drew,ja3ma1ollie,pat,rob,su0wade;e,ng;ck,rk;ob,u0;ck",

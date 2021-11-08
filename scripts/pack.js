@@ -40,6 +40,7 @@ const steps = [
           }
         })
       })
+
       return switches
     },
   },
@@ -68,6 +69,6 @@ steps.forEach(obj => {
 
   //get filesize
   const stats = fs.statSync(obj.path)
-  let size = (stats['size'] / 1000.0).toFixed(1)
+  let size = (stats.size / 1000.0).toFixed(1)
   console.log(`       - ${obj.label} is  ` + size + 'k\n')
 })

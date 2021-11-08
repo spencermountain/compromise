@@ -14,6 +14,25 @@ const titleCase = function (obj) {
   }, {})
 }
 
+// make a copy of nounVerb called 'presentPlural'
+const copySwitch = function (from) {
+  const presentPlural = Object.assign({}, from)
+  presentPlural.fallback = 'PresentTense'
+  let keys = ['beforeTags', 'afterTags', 'beforeWords', 'afterWords', 'ownTags']
+  keys.forEach(k => {
+    presentPlural[k] = Object.assign({}, from[k])
+    Object.keys(presentPlural[k]).forEach(key => {
+      presentPlural[k][key] = presentPlural[k][key] === 'Infinitive' ? 'PresentTense' : 'Plural'
+    })
+  })
+  let words = {}
+  Object.keys(presentPlural.words).forEach(str => {
+    words[str + 's'] = true
+  })
+  presentPlural.words = words
+  return presentPlural
+}
+
 // unpack our lexicon of ambiguous-words
 // (found in ./lib/switches/)
 // add compressed word-data
@@ -28,22 +47,7 @@ Object.keys(switches).forEach(k => {
   switches[k].ownTags = titleCase(switches[k].ownTags)
 })
 
-// make a copy of nounVerb called 'presentPlural'
-const presentPlural = Object.assign({}, switches.nounVerb)
-presentPlural.fallback = 'PresentTense'
-let keys = ['beforeTags', 'afterTags', 'beforeWords', 'afterWords', 'ownTags']
-keys.forEach(k => {
-  presentPlural[k] = Object.assign({}, switches.nounVerb[k])
-  Object.keys(presentPlural[k]).forEach(key => {
-    presentPlural[k][key] = presentPlural[k][key] === 'Infinitive' ? 'PresentTense' : 'Plural'
-  })
-})
-let words = {}
-Object.keys(presentPlural.words).forEach(str => {
-  words[str + 's'] = true
-})
-presentPlural.words = words
-switches.presentPlural = presentPlural
+switches.presentPlural = copySwitch(switches.nounVerb)
 
 // random ad-hoc changes  - 
 // 'was time' vs 'was working'

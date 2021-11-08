@@ -59,7 +59,6 @@ const isQuestion = function (doc) {
 
 const findQuestions = function (view) {
   const hasQ = /\?/
-  view.compute('index')
   const { document } = view
   return view.filter(m => {
     let terms = m.docs[0]

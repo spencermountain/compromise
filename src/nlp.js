@@ -15,6 +15,7 @@ const nlp = function (input, lex) {
   //assume ./01-tokenize is installed
   let document = methods.one.tokenize(input, world)
   let doc = new View(document)
+  doc.world = world
   doc.compute(hooks)
   return doc
 }

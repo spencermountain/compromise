@@ -6,7 +6,6 @@ import getChunks from './chunks.js'
 
 const chunker = function (View) {
   View.prototype.chunks = function () {
-    this.compute('index')
     return getChunks(this)
   }
 

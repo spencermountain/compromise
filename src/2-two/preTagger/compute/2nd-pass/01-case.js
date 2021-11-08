@@ -13,9 +13,16 @@ const romanNumValid = /^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/
 // if it's a unknown titlecase word, it's a propernoun
 const checkCase = function (terms, i, model) {
   let term = terms[i]
+  // console.log(`=-=-=-= ${term.text} -=-=-=-`)
+  if (!term.index) {
+    console.log('error')
+    process.exit()
+    // term.index = []
+  }
+  let index = term.index[1]
   let str = term.text //need case info
   // titlecase and not first word of sentence
-  if (i !== 0 && titleCase.test(str) === true && hasNumber.test(str) === false) {
+  if (index !== 0 && titleCase.test(str) === true && hasNumber.test(str) === false) {
     if (notProper.find(tag => term.tags.has(tag))) {
       return null
     }

@@ -2,7 +2,7 @@ import fuzzy from './_fuzzy.js'
 import methods from '../termMethods.js' //this should load off of 'methods.one.termMethods'
 
 //declare it up here
-let wrapMatch = function () {}
+let wrapMatch = function () { }
 /** ignore optional/greedy logic, straight-up term match*/
 const doesMatch = function (term, reg, index, length) {
   // support '.'
@@ -61,6 +61,13 @@ const doesMatch = function (term, reg, index, length) {
       return true
     }
     return false
+  }
+  //support whitespace/punctuation
+  if (reg.post !== undefined) {
+    return term.post && term.post.includes(reg.post)
+  }
+  if (reg.pre !== undefined) {
+    return term.pre && term.pre.includes(reg.pre)
   }
   //support /reg/
   if (reg.regex !== undefined) {

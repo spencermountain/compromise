@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import nlp from './builds/compromise.cjs'
 // import text from '/Users/spencer/mountain/compromise/scripts/perf/flame/_sotu-text.js'
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 
 // bug!
@@ -61,11 +61,19 @@ let txt
 // txt = 'Provided me with warm blanket and has soft music playing.'
 // txt = 'the woman running this place'
 
-txt = 'May, 2009.'
+// txt = 'May, (2009) foo'
 // txt = 'She is amazing.'
 
-let doc = nlp(txt).debug()
 
+
+// let doc = nlp(txt).debug()
+
+
+let regs = [{ word: 'may' }, { pre: '(' }]
+nlp('may, (2019) foo').match(regs).debug()
+
+
+// console.log(nlp.parseMatch('cool @hasComma'))
 // bug 1
 // txt = `he out-lived`
 // txt = `he out lived`

@@ -52,5 +52,11 @@ switches.presentPlural = copySwitch(switches.nounVerb)
 // random ad-hoc changes  - 
 // 'was time' vs 'was working'
 switches.gerundNoun.beforeWords.was = 'Gerund'
+// 'waiting for'
+switches.gerundNoun.afterWords.for = 'Gerund'
+// she loves
+switches.presentPlural.beforeTags.Pronoun = 'PresentTense'
+
+delete switches.nounVerb.afterTags.Noun
 
 export default switches

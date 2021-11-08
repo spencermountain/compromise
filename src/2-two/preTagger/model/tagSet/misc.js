@@ -26,7 +26,7 @@ export default {
     not: anything,
   },
   Preposition: {
-    not: anything,
+    not: ['Noun', 'Verb', 'Adjective', 'Adverb', 'QuestionWord'],
   },
   QuestionWord: {
     not: ['Determiner'],

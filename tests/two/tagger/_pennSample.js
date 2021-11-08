@@ -891,10 +891,6 @@ export default [
     tags: 'PRP, VBP, JJ, IN, DT',
   },
   {
-    text: 'Congratulations.',
-    tags: 'NNS',
-  },
-  {
     text: 'Appreciate the idea.',
     tags: 'VBP, DT, NN',
   },
@@ -1461,10 +1457,6 @@ export default [
     tags: 'RB, JJ',
   },
   {
-    text: 'She is going to be a kinesiologist, sports injury therapist.',
-    tags: 'PRP, VBZ, VBG, TO, VB, DT, NN, NNS, NN, NN',
-  },
-  {
     text: 'I think she just wants to be able to touch football players legs.',
     tags: 'PRP, VBP, PRP, RB, VBZ, TO, VB, JJ, TO, VB, NN, NNS, NNS',
   },
@@ -1643,14 +1635,6 @@ export default [
     tags: 'NNP, NN',
   },
   {
-    text: 'CONGRATULATIONS !!!!!!!',
-    tags: 'NNS',
-  },
-  {
-    text: 'Again, congratulations.',
-    tags: 'RB, NNS',
-  },
-  {
     text: 'Benjamin James-at 12.45 pm-3 lbs 4 ozs',
     tags: 'NNP, NNP, IN, CD, NN, CD, NNS, CD, NNS',
   },
@@ -1713,10 +1697,6 @@ export default [
   {
     text: 'We have already received firm commitments from 3 companies.',
     tags: 'PRP, VBP, RB, VBN, JJ, NNS, IN, CD, NNS',
-  },
-  {
-    text: 'Congratulations.',
-    tags: 'NNS',
   },
   {
     text: "I'll be in Portland but can call you.",
@@ -2042,10 +2022,6 @@ export default [
   {
     text: 'Good news.',
     tags: 'JJ, NN',
-  },
-  {
-    text: 'Congratulations and good luck.',
-    tags: 'NNS, CC, JJ, NN',
   },
   {
     text: 'Hello, Bill!',
@@ -3200,10 +3176,6 @@ export default [
   {
     text: "You're done.",
     tags: 'PRP, VBP, JJ',
-  },
-  {
-    text: 'Congratulations !!!!!!',
-    tags: 'NNS',
   },
   {
     text: "THAT's IT !!",
@@ -5466,10 +5438,6 @@ export default [
     tags: 'NNP, NNP, IN, DT, NNP',
   },
   {
-    text: 'Congratulations Prestige Hino!',
-    tags: 'NNS, NNP, NNP',
-  },
-  {
     text: 'Bronze award service excellence, metro.',
     tags: 'NN, NN, NN, NN, NNP',
   },
@@ -5761,10 +5729,6 @@ export default [
   {
     text: 'They refused.',
     tags: 'PRP, VBD',
-  },
-  {
-    text: 'Huge ammount of time wasted time and elevated blood pressure.',
-    tags: 'JJ, NN, IN, NN, VBN, NN, CC, VBN, NN, NN',
   },
   {
     text: 'College is a Joke and the Salon is a JOKE!',

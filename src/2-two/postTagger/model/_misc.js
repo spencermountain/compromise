@@ -37,5 +37,7 @@ let matches = [
   { match: '#Preposition [about]', group: 0, tag: 'Adjective', reason: 'at-about' },
   // dude we should
   { match: '^[(dude|man|girl)] #Pronoun', group: 0, tag: 'Expression', reason: 'dude-i' },
+  // are welcome
+  { match: '#Copula [#Expression]', group: 0, tag: 'Noun', reason: 'are-welcome' },
 ]
 export default matches

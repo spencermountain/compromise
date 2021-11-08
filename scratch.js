@@ -44,17 +44,15 @@ let txt
 // txt= 'Thursday works for me.'
 // txt= 'She is going to be a kinesiologist, sports injury therapist.'
 // txt= 'Does that work?'
-// txt= 'Bob Bowen'
+txt = 'Bob Bowen'
 // txt= 'Drew Fossum'
-// txt= 'Drew Fossum'
+// txt = 'Drew Fossum'
 // txt= 'bob k'
 // txt= "You're right, Sue."
 // txt= 'Day One Interviews Day Two Interviews'
 // txt= 'Sue and Jeff --'
-// txt= 'Are you playing golf?'
 // txt= 'Has Liz finished with gathering the documents?'
 // txt= 'Increases longevity.'
-txt = 'Dr. Fortier was one of 15 people to receive the Carnegie Medal on Monday.'
 // txt= 'The Superdome stadium is without power, and toilets are overflowing.'
 // txt= 'You are requesting a legitimate service and you are paying for it !!'
 // txt= 'Visit message boards and post this article as a new message by highlighting the text of this letter and selecting paste from the edit menu.'
@@ -76,9 +74,7 @@ txt = 'Dr. Fortier was one of 15 people to receive the Carnegie Medal on Monday.
 // txt= 'I had a conversation with the woman running this place in April 2010.'
 // txt= 'Great Cookies, Cakes, and Customer Service'
 // txt= 'May, 2009.'
-// txt= 'I put the coffee thing in hot water and settled for a cup of weak coffee.'
 
-txt = 'yo we should'
 let doc = nlp(txt).debug()
 
 // bug 1

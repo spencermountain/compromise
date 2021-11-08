@@ -161,6 +161,8 @@ export default [
   { match: '(do|did|will) [#Singular] #Noun', group: 0, tag: 'PresentTense', reason: 'do-serve-fish' },
   // tastes good
   { match: '[(tastes|smells)] #Adverb? #Adjective', group: 0, tag: 'PresentTense', reason: 'tastes-good' },
+  // are you plauing golf
+  { match: '^are #Pronoun [#Noun]', group: 0, ifNo: ['here', 'there'], tag: 'Verb', reason: 'are-you-x' },
   // ignoring commute
   {
     match: '#Copula #Gerund [#PresentTense] !by?',

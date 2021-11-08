@@ -8,6 +8,7 @@ const toTitleCase = function (str) {
 const titleCase = function (obj) {
   return Object.keys(obj).reduce((h, key) => {
     let name = toTitleCase(key).replace(/tense$/, 'Tense')
+    name = toTitleCase(key).replace(/noun$/, 'Noun')
     h[name] = obj[key]
     return h
   }, {})
@@ -43,5 +44,9 @@ Object.keys(presentPlural.words).forEach(str => {
 })
 presentPlural.words = words
 switches.presentPlural = presentPlural
+
+// random ad-hoc changes  - 
+// 'was time' vs 'was working'
+switches.gerundNoun.beforeWords.was = 'Gerund'
 
 export default switches

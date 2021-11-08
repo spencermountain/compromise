@@ -76,8 +76,8 @@ const swtichLexicon = function (terms, i, model) {
             let parents = model.two.tagSet[tag].parents
             fastTag(term, parents, `3-switch-infer from ${tag}`)
           }
+          break //one hint is good-enough
         }
-        break //one hint is good-enough
       }
     }
   }

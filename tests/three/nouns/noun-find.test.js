@@ -94,6 +94,8 @@ test('noun-phrases', function (t) {
       `the unlikely captain of the largest international basketball team`,
       ['the unlikely captain of the largest international basketball team'],
     ],
+    [`are you here spencer?`, ['you', 'here', 'spencer?']],
+    [`put it there`, ['it', 'there']],
   ]
   arr.forEach(function (a) {
     const nouns = nlp(a[0]).nouns().out('array')

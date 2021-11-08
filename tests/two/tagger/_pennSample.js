@@ -2869,10 +2869,6 @@ export default [
     tags: 'DT, NN',
   },
   {
-    text: 'Dr. Fortier was one of 15 people to receive the Carnegie Medal on Monday.',
-    tags: 'NNP, NNP, VBD, CD, IN, CD, NNS, TO, VB, DT, NNP, NNP, IN, NNP',
-  },
-  {
     text: 'Important information of big companies',
     tags: 'JJ, NN, IN, JJ, NNS',
   },

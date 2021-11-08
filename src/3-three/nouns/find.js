@@ -17,6 +17,10 @@ const findNouns = function (doc) {
   m = m.splitOn('[#Pronoun] (#Determiner|#Value)', 0)
   // the noise the slide makes
   m = m.splitBefore('#Noun [(the|a|an)] #Adjective? #Noun', 0)
+  // here spencer slept
+  m = m.splitOn('[(here|there)] #Noun', 0)
+  // put it there
+  m = m.splitOn('[#Noun] (here|there)', 0)
 
   //ensure there's actually a noun
   m = m.if('#Noun')

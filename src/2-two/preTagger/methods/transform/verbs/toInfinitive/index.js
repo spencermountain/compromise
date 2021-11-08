@@ -46,12 +46,21 @@ const fromReg = function (str, tense) {
   }
 }
 
+
 const toInfinitive = function (str, model, tense) {
   if (!str) {
     return ''
   }
+  let prefixes = model.one.prefixes
+  let prefix = ''
   // pull-apart phrasal verb 'fall over'
   let [verb, particle] = str.split(/ /)
+  // support 'over cleaned'
+  if (particle && prefixes[verb] === true) {
+    prefix = verb
+    verb = particle
+    particle = ''
+  }
   // 1. look at known irregulars
   let inf = fromIrreg(verb, model)
   // 2. give'r!
@@ -59,6 +68,10 @@ const toInfinitive = function (str, model, tense) {
   // stitch phrasal back on
   if (particle) {
     inf += ' ' + particle
+  }
+  // stitch prefix back on
+  if (prefix) {
+    inf = prefix + ' ' + inf
   }
   return inf
 }

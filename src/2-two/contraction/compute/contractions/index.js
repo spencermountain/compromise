@@ -13,12 +13,12 @@ const reTag = function (terms, i, world, view) {
   const preTagger = world.compute.preTagger
   // just re-tag neighbourhood
   let start = i < 2 ? 0 : i - 2
-  let slice = terms//terms.slice(start, i + 3)
+  let slice = terms.slice(start, i + 3)
   slice = [slice]
 
   let tmp = view.clone()
   tmp.document = slice
-  tmp.compute('index', 'tagger')
+  tmp.compute('index', 'tagger') //this should probably be smarter
   // tmp.compute(world.hooks)
   // console.log(world.hooks)
 

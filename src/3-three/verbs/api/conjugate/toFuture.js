@@ -5,9 +5,10 @@ const simple = (vb, parsed) => {
   let str = parsed.root.text('normal')
   str = verbToInfinitive(str, vb.model)
   if (str) {
-    vb = vb.replace(parsed.root, str).tag('Verb')
+    vb = vb.replace(parsed.root, str)
+    vb.not('#Particle').tag('PresentTense')
   }
-  vb.prepend('will')
+  vb.prepend('will').match('will').tag('Auxiliary')
   vb.remove(parsed.auxiliary)
   return vb
 }
@@ -19,9 +20,10 @@ const progressive = (vb, parsed) => {
   str = verbToInfinitive(str, vb.model)
   if (str) {
     str = verbConjugate(str, vb.model).Gerund
-    vb = vb.replace(parsed.root, str).tag('Verb')
+    vb = vb.replace(parsed.root, str)
+    vb.not('#Particle').tag('PresentTense')
   }
-  vb.prepend('will be')
+  vb.prepend('will be').match('will be').tag('Auxiliary')
   vb.remove(parsed.auxiliary)
   return vb
 }

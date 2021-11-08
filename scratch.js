@@ -44,9 +44,8 @@ let txt
 // txt= 'Thursday works for me.'
 // txt= 'She is going to be a kinesiologist, sports injury therapist.'
 // txt= 'Does that work?'
-txt = "right, Sue."
 // txt= 'Day One Interviews Day Two Interviews'
-// txt= 'Sue and Jeff --'
+// txt = 'Sue and Jeff --'
 // txt= 'Has Liz finished with gathering the documents?'
 // txt= 'Increases longevity.'
 // txt= 'The Superdome stadium is without power, and toilets are overflowing.'
@@ -70,18 +69,19 @@ txt = "right, Sue."
 // txt= 'I had a conversation with the woman running this place in April 2010.'
 // txt= 'Great Cookies, Cakes, and Customer Service'
 // txt= 'May, 2009.'
-txt = 'you guys don\'t know'
 
-let doc = nlp(`John Smith and Jack were walking`)
-doc.insertAfter('drugs')
+// let doc = nlp(txt).debug()
 
 // bug 1
-// txt = `out-lived`
-// txt = `he limited`
-// txt = `he smoked`
-// let doc = nlp(txt).debug()
-// doc.verbs().toFutureTense()
-// doc.debug()
+// txt = `he out-lived`
+txt = `he out lived`
+txt = `pseudo clean`
+txt = `he was anti cleaning`
+// txt = `he was anti cleaning`
+let doc = nlp(txt)
+console.log(doc.verbs().json()[0])
+doc.verbs().toFutureTense()
+doc.debug()
 
 
 

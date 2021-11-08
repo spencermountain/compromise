@@ -13,6 +13,10 @@ const cleanUp = function (vb, res) {
   if (vb.has('not')) {
     vb = vb.remove('not')
   }
+  // remove prefixes like 'anti'
+  if (vb.has('#Prefix')) {
+    vb = vb.remove('#Prefix')
+  }
   // cut-off phrasal-verb
   if (res.root.has('#PhrasalVerb #Particle')) {
     vb.remove('#Particle$')

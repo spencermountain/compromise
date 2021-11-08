@@ -1,4 +1,4 @@
-import getMain from './root.js'
+import getRoot from './root.js'
 import getAdverbs from './adverbs.js'
 
 const getAuxiliary = function (vb, root) {
@@ -7,7 +7,7 @@ const getAuxiliary = function (vb, root) {
     return vb.none()
   }
   let aux = parts.eq(0).clone()
-  aux.remove('(#Adverb|#Negative)')
+  aux.remove('(#Adverb|#Negative|#Prefix)')
   return aux
 }
 
@@ -27,9 +27,10 @@ const getPhrasal = function (root) {
 const parseVerb = function (view) {
   let vb = view.clone()
   vb.contractions().expand()
-  const root = getMain(vb)
+  const root = getRoot(vb)
   let res = {
     root: root,
+    prefix: vb.match('#Prefix'),
     adverbs: getAdverbs(vb, root),
     auxiliary: getAuxiliary(vb, root),
     negative: getNegative(vb),

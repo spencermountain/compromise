@@ -1,16 +1,17 @@
 import multiWord from './1st-pass/01-multiWord.js'
 import checkLexicon from './1st-pass/02-lexicon.js'
 
-import checkSuffix from './2nd-pass/02-suffix.js'
-import checkRegex from './2nd-pass/04-regex.js'
 import checkCase from './2nd-pass/01-case.js'
+import checkSuffix from './2nd-pass/02-suffix.js'
 import checkPrefix from './2nd-pass/03-prefix.js'
+import checkRegex from './2nd-pass/04-regex.js'
 
 import fillTags from './3rd-pass/_fillTags.js'
-import nounFallback from './3rd-pass/03-fallback.js'
 import checkAcronym from './3rd-pass/01-acronym.js'
 import neighbours from './3rd-pass/02-neighbours.js'
+import nounFallback from './3rd-pass/03-fallback.js'
 import switchChange from './3rd-pass/04-switchChange.js'
+import checkHyphen from './3rd-pass/05-prefixes.js'
 
 const first = {
   multiWord,
@@ -21,6 +22,7 @@ const second = {
   checkRegex,
   checkCase,
   checkPrefix,
+  checkHyphen
 }
 const third = {
   checkAcronym,
@@ -71,6 +73,8 @@ const thirdPass = function (terms, model) {
     found = found || third.nounFallback(terms, i, model)
   }
   for (let i = 0; i < terms.length; i += 1) {
+    // support 'out-lived'
+    second.checkHyphen(terms, i, model)
     // verb-noun disambiguation, etc
     third.switchChange(terms, i, model)
   }

@@ -34,6 +34,7 @@ export default [
   'tri',
   // 'ultra', //'ulta-cool'
   'un',
+  'out',
   'under',
   'whole',
 ].reduce((h, str) => {

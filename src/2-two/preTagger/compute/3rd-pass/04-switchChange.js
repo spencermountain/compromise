@@ -1,7 +1,7 @@
 import fastTag from '../_fastTag.js'
 // import fillTags from '../3rd-pass/_fillTags.js'
 
-const env = typeof process === undefined ? self.env : process.env || {} // eslint-disable-line
+const env = typeof process === 'undefined' ? self.env : process.env || {} // eslint-disable-line
 
 
 const lookAtWord = function (term, byWord) {

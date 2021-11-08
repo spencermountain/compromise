@@ -29,6 +29,9 @@ const singularEnds = [
   /(antenn|formul|nebul|vertebr|vit)a$/i,
   /.sis$/i,
   /^(?!talis|.*hu)(.*)man$/i,
+  /[mwlixv]as$/i,//christmas
+  /[rtoslxcn]is$/i,//mantis, thesis, probocis, tennis
+  /[erftiopaslxcbn]us$/i,//doofus, census, virus, lotus, genius, campus, surplus
   /'s$/i,
   /ss$/i,
 ]

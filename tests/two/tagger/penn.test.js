@@ -43,6 +43,7 @@ const softMapping = {
 }
 
 test('pennTreebank-test:', function (t) {
+  let all = []
   penn.forEach((sentence, index) => {
     sentence.tags = sentence.tags.split(', ')
 
@@ -72,7 +73,11 @@ test('pennTreebank-test:', function (t) {
         break
       }
     }
+    if (!perfect) {
+      all.push(sentence.text)
+    }
     t.ok(perfect, here + msg)
   })
   t.end()
+  // console.log(all)
 })

@@ -3651,10 +3651,6 @@ export default [
   },
 
   {
-    text: 'Downtown Chicago, Loop, North',
-    tags: 'NN, NNP, NNP, NNP',
-  },
-  {
     text: 'Is there any cure for mouse poison?',
     tags: 'VBZ, EX, DT, NN, IN, NN, NN',
   },

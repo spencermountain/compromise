@@ -1036,6 +1036,6 @@ test('match:', function (t) {
     }
     t.equal(m.text(), doc.text(), here + msg)
   })
-  console.log(JSON.stringify(res, null, 2))
+  // console.log(JSON.stringify(res, null, 2))
   t.end()
 })

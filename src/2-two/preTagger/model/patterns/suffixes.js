@@ -42,6 +42,7 @@ export default [
     ify: Inf,
     ing: 'Gerund',
     ize: Inf,
+    ibe: Inf,
     lar: Adj,
     mum: Adj,
     nes: Pres,

@@ -56,7 +56,25 @@ switches.gerundNoun.beforeWords.was = 'Gerund'
 switches.gerundNoun.afterWords.for = 'Gerund'
 // she loves
 switches.presentPlural.beforeTags.Pronoun = 'PresentTense'
+// definetly warm
+switches.adjPresent.beforeTags.Adverb = 'Adjective'
+switches.adjPresent.beforeTags.Negative = 'Adjective'
+switches.adjPresent.beforeTags.Plural = 'Adjective'
+// Object.assign(switches.adjPresent.afterTags, { Determiner: 'Adjective', Adverb: 'Adjective', Conjunction: 'Adjective', Possessive: 'Adjective', })
+// switches.adjPresent.afterTags.Determiner = 'Adjective'
+// switches.adjPresent.afterTags.Adverb = 'Adjective'
+// switches.adjPresent.afterTags.Conjunction = 'Adjective'
+// switches.adjPresent.afterTags.Possessive = 'Adjective'
+switches.adjPresent.afterTags = {}
+switches.adjPresent.beforeWords.have = 'Adjective'
+switches.adjPresent.beforeWords.had = 'Adjective'
+switches.adjPresent.beforeWords.do = 'Adjective'
+switches.adjPresent.beforeWords.does = 'Adjective'
+switches.adjPresent.afterWords.from = 'Adjective'
 
+switches.adjGerund.beforeWords.is = 'Adjective'
+switches.adjGerund.beforeWords.was = 'Adjective'
+switches.adjGerund.beforeWords.be = 'Adjective'
 delete switches.nounVerb.afterTags.Noun
 
 export default switches

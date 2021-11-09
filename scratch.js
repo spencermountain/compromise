@@ -21,7 +21,6 @@ nlp.verbose('tagger')
 
 let txt
 
-
 // txt = " It was full of violence and gangs and kids cutting class, says Linda Ward, the school's principal."
 // txt = 'They operate ships and banks.'
 // txt = ' Bob handled quite brilliantly.'
@@ -100,9 +99,8 @@ txt = `i hear the children crying`
 // txt = "super-cool"
 // txt = "and help minimize the loss of life"
 
-
-// let doc = nlp(txt)
-// doc.debug()
+let doc = nlp(txt)
+doc.debug()
 // console.log(doc.verbs().json()[1])
 // let arr = [
 

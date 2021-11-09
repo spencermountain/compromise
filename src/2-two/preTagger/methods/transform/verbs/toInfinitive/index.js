@@ -34,8 +34,8 @@ const fromIrreg = function (str, model) {
 
 // transform verb from regular expressions
 const fromReg = function (str, tense) {
-  tense = tense || guessTense(str)
   // console.log(tense)
+  tense = tense || guessTense(str)
   if (tense && rules[tense]) {
     for (let i = 0; i < rules[tense].length; i++) {
       const rule = rules[tense][i]

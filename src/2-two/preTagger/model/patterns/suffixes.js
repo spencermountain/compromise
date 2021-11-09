@@ -12,6 +12,7 @@ const Noun = 'Noun'
 const Last = 'LastName'
 const Modal = 'Modal'
 const Place = 'Place'
+const Prt = 'Participle'
 
 export default [
   null,
@@ -52,6 +53,9 @@ export default [
     sis: Sing,
     zes: Pres,
     eld: Past,
+    ken: Prt,//awoken
+    ven: Prt,//woven
+    ten: Prt,//brighten
   },
   {
     //4-letter

@@ -6,8 +6,12 @@ let rules = {
       to: 'ow',
     },
     {
-      reg: /aken$/i,//overtaken
-      to: 'ake',
+      reg: /(tt)en$/i,//overtaken
+      to: 't',
+    },
+    {
+      reg: /(..[^aeiou])en$/i,//overtaken
+      to: '$1e',
     },
     {
       reg: /(.)un([g|k])$/i,
@@ -248,7 +252,7 @@ let rules = {
       to: '$1el',
     },
     {
-      reg: /([aeiou])lled$/i, //two-l's
+      reg: /([aeiou])lled$/i, //skilled, smelled, called
       to: '$1ll',
     },
     {
@@ -260,11 +264,11 @@ let rules = {
       to: '$1l',
     },
     {
-      reg: /(.[iou])led$/i, //ruled, piled
+      reg: /(.[ioua])led$/i, //ruled, piled
       to: '$1le',
     },
     {
-      reg: /(.[ae])led$/i, //wheeled, totaled
+      reg: /(.e)led$/i, //wheeled, totaled
       to: '$1l',
     },
     // -ged

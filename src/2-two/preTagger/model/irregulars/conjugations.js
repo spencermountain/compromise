@@ -385,9 +385,9 @@ let conjugations = {
     g: '_ging',
     pst: '_ged',
   },
-  loose: {
-    prt: 'lost',
-  },
+  // loose: {
+  //   prt: 'lost',
+  // },
   lose: {
     g: 'losing',
     pst: 'lost',
@@ -744,6 +744,33 @@ let conjugations = {
   },
   expedite: {
     pst: '_d',
+  },
+  // -led exceptions
+  control: {
+    pst: '_led',
+  },
+  rival: {
+    pst: '_led',
+  },
+  cancel: {
+    pst: '_led',
+  },
+  annul: {
+    pst: '_led',
+  },
+  extol: {
+    pst: '_led',
+  },
+  distil: {
+    pst: '_led',
+  },
+  label: {
+    pst: '_led',
+  },
+
+  sow: {
+    pst: '_ed',
+    prt: '_n',
   },
 }
 

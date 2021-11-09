@@ -104,12 +104,12 @@ txt = `i hear the children crying`
 // let doc = nlp(txt)
 // doc.debug()
 // console.log(doc.verbs().json()[1])
-let arr = [
-  ["convened", "convene"],
-]
-let doc = nlp(arr[arr.length - 1][0]).debug()
-doc.verbs().toInfinitive()
-console.log(doc.text())
+// let arr = [
+
+// ]
+// let doc = nlp(arr[arr.length - 1][0]).debug()
+// doc.verbs().toInfinitive()
+// console.log(doc.text())
 
 // bug 1
 // txt = `he out-lived`

@@ -105,7 +105,10 @@ txt = "He then got up, opened his arms wide"
 // doc.debug()
 // console.log(doc.verbs().json()[1])
 let arr = [
-  ['opened']
+
+  ["resold", "resell"],
+
+  ["blitzed", "blitz"],
 ]
 let doc = nlp(arr[arr.length - 1][0]).debug()
 doc.verbs().toInfinitive()

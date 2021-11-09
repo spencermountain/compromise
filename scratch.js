@@ -105,8 +105,7 @@ txt = `i hear the children crying`
 // doc.debug()
 // console.log(doc.verbs().json()[1])
 let arr = [
-  ["factored", "factor"],
-  ["stored", "store"],
+  ["convened", "convene"],
 ]
 let doc = nlp(arr[arr.length - 1][0]).debug()
 doc.verbs().toInfinitive()

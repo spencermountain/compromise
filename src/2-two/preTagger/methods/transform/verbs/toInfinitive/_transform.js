@@ -180,7 +180,7 @@ let rules = {
     },
     // misc no e endings
     {
-      reg: /(..)(h|w|ion|n[dt]|ai.|all|int|ld|en|oo.|er|ou.|ght|rm|lm|rl|x|bt|rb)ed$/i,
+      reg: /(..)(h|w|ion|n[dt]|ai.|all|int|ld|oo.|er|ou.|ght|rm|lm|rl|x|bt|rb)ed$/i,
       to: '$1$2',
     },
 
@@ -228,6 +228,19 @@ let rules = {
     {
       reg: /med$/i, //doomed
       to: 'm',
+    },
+    // -ned
+    {
+      reg: /nned$/i, //banned
+      to: 'n',
+    },
+    {
+      reg: /wned$/i, //owned
+      to: 'wn',
+    },
+    {
+      reg: /([aeiou])ned$/i, //shined
+      to: '$1ne',
     },
     // -led
     {
@@ -291,6 +304,18 @@ let rules = {
       reg: /pped$/i,
       to: 'p',
     },
+    {
+      reg: /([aeiouy][aeiouy])ped$/i,//reaped
+      to: '$1p',
+    },
+    {
+      reg: /([^aeiouy][aeiouy])ped$/i,//wiped
+      to: '$1pe',
+    },
+    {
+      reg: /([^aeiouy])ped$/i,//cramped
+      to: '$1p',
+    },
     // -red
     {
       reg: /rred$/i,
@@ -319,8 +344,8 @@ let rules = {
     },
     // -ted
     {
-      reg: /iated$/i,//satiated
-      to: 'iate',
+      reg: /([iu])ated$/i,//satiated
+      to: '$1ate',
     },
     {
       reg: /tted$/i,//admitted

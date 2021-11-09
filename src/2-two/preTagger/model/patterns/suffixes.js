@@ -93,6 +93,7 @@ export default [
     tive: Adj,
     tors: Noun,
     vice: Sing,
+    wned: Past,
   },
   {
     //5-letter

@@ -1,9 +1,9 @@
 export default [
   // #coolguy
-  [/^#[a-z0-9_\u00C0-\u00FF]{2,}$/, 'HashTag'],
+  [/^#[a-z0-9_\u00C0-\u00FF]{2,}$/i, 'HashTag'],
 
   // @spencermountain
-  [/^@\w{2,}$/, 'AtMention'],
+  [/^@\w{2,}$/i, 'AtMention'],
 
   // period-ones acronyms - f.b.i.
   [/^([A-Z]\.){2}[A-Z]?/i, ['Acronym', 'Noun'], 'F.B.I'], //ascii-only

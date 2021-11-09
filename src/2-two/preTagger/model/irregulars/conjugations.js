@@ -739,6 +739,9 @@ let conjugations = {
     pst: '_ked',
     g: '_king',
   },
+  prefer: {
+    pst: '_red',
+  },
 }
 
 //uncompress our ad-hoc compression scheme

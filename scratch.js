@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import nlp from './builds/compromise.cjs'
 // import text from '/Users/spencer/mountain/compromise/scripts/perf/flame/_sotu-text.js'
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 
 // bug!
@@ -74,8 +74,7 @@ let txt
 
 // txt = "clothing"
 txt = "#cool fun.com @cooman"
-txt = "Steve talked to Johnson LLC"
-txt = "GIC airlines"
+txt = `i hear the children crying`
 // txt = "it was redefining"
 // txt = "distressing us"
 // txt = "it was disgusting"
@@ -99,20 +98,22 @@ txt = "GIC airlines"
 // txt = "appeal court"
 // txt = "The difference is astounding."
 // txt = "super-cool"
+// txt = "and help minimize the loss of life"
 
 
-let doc = nlp(txt)
-doc.debug()
+// let doc = nlp(txt)
+// doc.debug()
+// console.log(doc.verbs().json()[1])
+let arr = [
+  ["inferred", "infer"],
 
-// let arr = [
+  ["reworded", "reword"],
 
-
-//   ["yelled", "model"],
-//   ["spelled", "model"],
-// ]
-// let doc = nlp(arr[arr.length - 1][0]).debug()
-// doc.verbs().toInfinitive()
-// console.log(doc.text())
+  ["preferred", "prefer"],
+]
+let doc = nlp(arr[arr.length - 1][0]).debug()
+doc.verbs().toInfinitive()
+console.log(doc.text())
 
 // bug 1
 // txt = `he out-lived`

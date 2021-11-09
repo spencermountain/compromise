@@ -183,12 +183,18 @@ let rules = {
       reg: /(..)(h|w|ion|n[dt]|ai.|all|int|ld|en|oo.|er|ou.|ght|rm|lm|rl|x|bt|rb)ed$/i,
       to: '$1$2',
     },
-    // doubled consonants
+
+    // -bed
     {
-      reg: /(..)(p|s|b|d){2}ed$/i,// eslint-disable-line
-      to: '$1$2', //robbed -> rob
+      reg: /(..)bbed$/i,//robbed
+      to: '$1b',
     },
+
     // -ded
+    {
+      reg: /(..)dded$/i,//embedded
+      to: '$1d',
+    },
     {
       reg: /uaded$/i,//pursuaded
       to: 'uade',
@@ -287,8 +293,8 @@ let rules = {
     },
     // -red
     {
-      reg: /(.rr)ed$/i,
-      to: '$1',
+      reg: /rred$/i,
+      to: 'r',
     },
     {
       reg: /(.[aeiou]{2}r)ed$/i,//appeared

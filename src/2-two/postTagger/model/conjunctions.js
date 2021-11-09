@@ -44,6 +44,8 @@ export default [
   // { match: '^(how|which)', tag: 'QuestionWord', reason: 'how-question' },
   // how-he, when the
   { match: '[#QuestionWord] (#Pronoun|#Determiner)', group: 0, tag: 'Preposition', reason: 'how-he' },
+  // when stolen
+  { match: '[#QuestionWord] #Participle', group: 0, tag: 'Preposition', reason: 'when-stolen' },
   // how is
   { match: '[how] (#Determiner|#Copula|#Modal|#PastTense)', group: 0, tag: 'QuestionWord', reason: 'how-is' },
 ]

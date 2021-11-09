@@ -35,8 +35,8 @@ export default [
   // 'ultra', //'ulta-cool'
   'un',
   'out',
-  'under',
-  'whole',
+  // 'under',
+  // 'whole',
 ].reduce((h, str) => {
   h[str] = true
   return h

@@ -772,6 +772,9 @@ let conjugations = {
     pst: '_ed',
     prt: '_n',
   },
+  convene: {
+    pst: '_d',
+  },
 }
 
 //uncompress our ad-hoc compression scheme

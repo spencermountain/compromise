@@ -243,7 +243,7 @@ let rules = {
       to: 'wn',
     },
     {
-      reg: /([aeiou])ned$/i, //shined
+      reg: /([aiou])ned$/i, //shined
       to: '$1ne',
     },
     // -led

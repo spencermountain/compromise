@@ -151,7 +151,6 @@ test('toInfinitive:', function (t) {
     ["defaulted", "default"],
     ["wilted", "wilt"],
     ["tilted", "tilt"],
-    ["melted", "melt"],
     ["salted", "salt"],
     ["malted", "malt"],
 
@@ -417,6 +416,8 @@ test('toInfinitive:', function (t) {
     ["swabbed", "swab"],
     ["stabbed", "stab"],
     ["nabbed", "nab"],
+
+    ['opened', 'open']
   ]
   arr.forEach(a => {
     let doc = nlp(a[0])

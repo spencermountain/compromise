@@ -74,6 +74,7 @@ let txt
 // txt = "clothing"
 txt = "#cool fun.com @cooman"
 txt = `i hear the children crying`
+txt = `Okay, you broke my fridge`
 // txt = "it was redefining"
 // txt = "distressing us"
 // txt = "it was disgusting"
@@ -98,16 +99,17 @@ txt = `i hear the children crying`
 // txt = "The difference is astounding."
 // txt = "super-cool"
 // txt = "and help minimize the loss of life"
+txt = "He then got up, opened his arms wide"
 
-let doc = nlp(txt)
-doc.debug()
+// let doc = nlp(txt)
+// doc.debug()
 // console.log(doc.verbs().json()[1])
-// let arr = [
-
-// ]
-// let doc = nlp(arr[arr.length - 1][0]).debug()
-// doc.verbs().toInfinitive()
-// console.log(doc.text())
+let arr = [
+  ['opened']
+]
+let doc = nlp(arr[arr.length - 1][0]).debug()
+doc.verbs().toInfinitive()
+console.log(doc.text())
 
 // bug 1
 // txt = `he out-lived`

@@ -297,7 +297,11 @@ let rules = {
       to: 'r',
     },
     {
-      reg: /(.[aeiou]{2}r)ed$/i,//appeared
+      reg: /(.[aeiou]{2,}r)ed$/i,//appeared
+      to: '$1',
+    },
+    {
+      reg: /(..[csrltvh]or)ed$/i,//restored
       to: '$1',
     },
     {
@@ -327,8 +331,12 @@ let rules = {
       to: '$1t',
     },
     {
-      reg: /([pfmdb][ie]t)ed$/i,//trumpeted/limited
+      reg: /([pfmdb]et)ed$/i,//trumpeted/limited
       to: '$1',
+    },
+    {
+      reg: /ited$/i,//visited
+      to: 'it',
     },
     {
       reg: /asted$/i,//wasted, tasted
@@ -339,7 +347,7 @@ let rules = {
       to: '$1e',
     },
     {
-      reg: /(.[pfrsc]t)ed$/i,//drifted
+      reg: /(.[pfrlsc]t)ed$/i,//drifted, melted
       to: '$1',
     },
     // -zed

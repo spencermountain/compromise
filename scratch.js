@@ -68,16 +68,51 @@ let txt
 
 // let doc = nlp(txt).debug()
 
-let arr = [
+// txt = "i met April O'neil"
+// txt = "Pope John Paul II"
+// txt = "Mel Brooks"
+
+// txt = "clothing"
+txt = "#cool fun.com @cooman"
+txt = "Steve talked to Johnson LLC"
+txt = "GIC airlines"
+// txt = "it was redefining"
+// txt = "distressing us"
+// txt = "it was disgusting"
+// txt = "quite awfully dashing"
+// txt = "rallied"
+// txt = "Fundo ltd."
+// txt = "we help stop tragedies"
+// txt = "seek progress"
+// txt = "the aging process"
+// txt = "the euro challenge to"
+// txt = "is shocking"
+// txt = "closed it"
+// txt = "charity chapman"
+// txt = "cut costs"
+// txt = "defeating his longstanding rivals"
+// txt = "the feminine"
+// txt = "I'm fuckin' around with two geese"
+// txt = "without laughing"
+// txt = "babysitting sucks"
+// txt = "manufacturing returned"
+// txt = "appeal court"
+// txt = "The difference is astounding."
+// txt = "super-cool"
 
 
-  ["yelled", "model"],
-  ["spelled", "model"],
-]
-let doc = nlp(arr[arr.length - 1][0]).debug()
-doc.verbs().toInfinitive()
-// doc.verbs().toPresentTense()
-console.log(doc.text())
+let doc = nlp(txt)
+doc.debug()
+
+// let arr = [
+
+
+//   ["yelled", "model"],
+//   ["spelled", "model"],
+// ]
+// let doc = nlp(arr[arr.length - 1][0]).debug()
+// doc.verbs().toInfinitive()
+// console.log(doc.text())
 
 // bug 1
 // txt = `he out-lived`

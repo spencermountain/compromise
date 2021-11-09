@@ -9,8 +9,9 @@ import checkRegex from './2nd-pass/04-regex.js'
 import fillTags from './3rd-pass/_fillTags.js'
 import checkAcronym from './3rd-pass/01-acronym.js'
 import neighbours from './3rd-pass/02-neighbours.js'
-import nounFallback from './3rd-pass/03-fallback.js'
-import switchChange from './3rd-pass/04-switchChange.js'
+import orgWords from './3rd-pass/03-orgWords.js'
+import nounFallback from './3rd-pass/04-fallback.js'
+import switchChange from './3rd-pass/06-switchChange.js'
 import checkHyphen from './3rd-pass/05-prefixes.js'
 
 const first = {
@@ -26,9 +27,10 @@ const second = {
 }
 const third = {
   checkAcronym,
+  neighbours,
+  orgWords,
   nounFallback,
   switchChange,
-  neighbours,
 }
 
 // set a preliminary tag for known words
@@ -73,6 +75,8 @@ const thirdPass = function (terms, model) {
     found = found || third.nounFallback(terms, i, model)
   }
   for (let i = 0; i < terms.length; i += 1) {
+    // Johnson LLC
+    third.orgWords(terms, i, model)
     // support 'out-lived'
     second.checkHyphen(terms, i, model)
     // verb-noun disambiguation, etc

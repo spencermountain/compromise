@@ -184,4 +184,7 @@ export default [
   'university',
   'utilities',
   'workers',
-]
+].reduce((h, str) => {
+  h[str] = true
+  return h
+}, {})

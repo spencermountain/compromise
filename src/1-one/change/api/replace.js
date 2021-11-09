@@ -12,6 +12,9 @@ fns.replaceWith = function (input) {
 }
 
 fns.replace = function (match, input) {
+  if (match && !input) {
+    return this.replaceWith(match)
+  }
   let m = this.match(match)
   if (!m.found) {
     return this

@@ -1,5 +1,5 @@
-import orgWords from './_orgWords.js'
-let orgMap = `(${orgWords.join('|')})`
+// import orgWords from './_orgWords.js'
+// let orgMap = `(${orgWords.join('|')})`
 
 /*
 const multi = [

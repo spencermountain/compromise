@@ -1019,16 +1019,23 @@ let arr = [
   [`even the humblest`, '#Adverb the #Superlative'],
   [`that is all you are getting`, 'that #Copula #Noun you are #Gerund'],
   // [`was running around stores.`, 'was #Gerund around #Plural'],
-
+  ["Steve talked to Johnson LLC", '#Person talked to #Organization #Organization'],
+  ["GIC airlines", '#Organization #Organization'],
 ]
 test('match:', function (t) {
+  let res = []
   arr.forEach(function (a) {
     let [str, match] = a
     let doc = nlp(str).compute('tagRank')
     let tags = doc.json()[0].terms.map(term => term.tagRank[0])
     let msg = `'${(str + "' ").padEnd(20, ' ')}  - '${tags.join(', ')}'`
     let m = doc.match(match)
+
+    if (m.text() !== doc.text()) {
+      res.push(a[0])
+    }
     t.equal(m.text(), doc.text(), here + msg)
   })
+  console.log(JSON.stringify(res, null, 2))
   t.end()
 })

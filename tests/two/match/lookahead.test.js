@@ -1,5 +1,7 @@
-const test = require('tape')
-const nlp = require('./_lib')
+import test from 'tape'
+import nlp from '../_lib.js'
+const here = '[two/lookahead] '
+
 
 test('look-ahead', function (t) {
   let doc = nlp(`i walked to a store today. the store was very nice`)

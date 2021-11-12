@@ -114,11 +114,11 @@ txt = "He then got up, opened his arms wide"
 // doc.verbs().toInfinitive()
 // console.log(doc.text())
 
-txt = `I reached my hat, bowed to him, and took leave.`
-txt = `I know those guys are earning their keep`
+txt = `I reached my hat, bowed to him, and earned it.`
+// txt = `I know those guys are earning their keep`
 
 let doc = nlp(txt)
-doc.verbs().if('(bowed|earning)').subjects().debug()
+doc.verbs().if('(earned)').subjects().debug()
 // doc.debug('chunks')
 // doc.nouns().debug()
 

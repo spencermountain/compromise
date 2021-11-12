@@ -16,6 +16,10 @@ const noSubClause = function (before) {
     if (m.has('^(if|unless|while|but|for|per)')) {
       return false
     }
+    // bowed to her,
+    if (i > 0 && m.has('^#Verb . #Noun+$')) {
+      return false
+    }
     // the fog, suddenly increasing in..
     if (i > 0 && m.has('^#Adverb')) {
       return false
@@ -37,12 +41,9 @@ const lastNoun = function (vb) {
   // parse-out our preceding nouns
   let nouns = before.nouns()
 
-  // i/she/he/they are very strong
-
-
-  // nouns.debug()
+  // look for any dead-ringers
   let last = nouns.last()
-  // these are dead-ringers
+  // i/she/he/they are very strong
   let pronoun = last.match('(i|he|she|we|you|they)')
   if (pronoun.found) {
     return pronoun

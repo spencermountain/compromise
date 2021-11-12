@@ -7,9 +7,13 @@ import nlp from './src/three.js'
 
 
 // bug!
-// let doc = nlp(`extra. one two.`)
-// doc.remove('extra')
-// console.log(doc.text() + '|')
+let doc = nlp(`extra. match.`)
+let m = doc.match('match').freeze()
+console.log(m.frozen)
+doc.remove('extra')
+doc.remove(m)
+doc.debug()
+
 
 // bug!
 // let doc = nlp(`john walks`)
@@ -117,8 +121,8 @@ txt = "He then got up, opened his arms wide"
 txt = `Dialects of this language include Wu`
 // txt = `I know those guys are earning their keep`
 
-let doc = nlp(txt)
-doc.verbs().if('include').subjects().debug()
+// let doc = nlp(txt)
+// doc.verbs().if('include').subjects().debug()
 // doc.debug('chunks')
 // doc.nouns().debug()
 

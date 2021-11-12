@@ -125,6 +125,15 @@ test('clone-partial :', function (t) {
   t.end()
 })
 
+
+test('remove full-sentence', function (t) {
+  let doc = nlp(`extra. one two.`)
+  doc.remove('extra')
+  t.equal(doc.length, 1, here + '1 left')
+  t.equal(doc.text(), 'one two.', here + 'kept 2nd sentence')
+  t.end()
+})
+
 test('remove doc by index :', function (t) {
   let doc = nlp(`one extra two match three`)
   let m = doc.match('match').freeze()

@@ -37,8 +37,13 @@ const pluckOut = function (document, nots) {
           lastTerm.post = lastTerm.post.trimEnd()
         }
       }
+      // repair any downstream indexes
+      // for (let k = i; k < document.length; k += 1) {
+      //   document[k].forEach(term => term.index[0] -= 1)
+      // }
     }
   }
+  // console.log(document)
   return document
 }
 
@@ -76,14 +81,17 @@ const methods = {
       return ptr
     })
     // remove any now-empty pointers
-    ptrs = ptrs.filter(ptr => {
+    ptrs = ptrs.filter((ptr, i) => {
       const len = ptr[2] - ptr[1]
       if (len <= 0) {
+        // adjust downstream pointers
+        for (let x = i + 1; x < ptrs.length; x += 1) {
+          ptrs[x][0] -= 1
+        }
         return false
       }
       return true
     })
-    //TODO: fix downstream n pointers
     // mutate original
     self.ptrs = ptrs
     self.document = document

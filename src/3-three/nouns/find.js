@@ -11,7 +11,7 @@ const findNouns = function (doc) {
   // these are individual nouns
   m = m.splitOn('(he|she|we|you|they)')
   // a client i saw
-  m = m.splitOn('#Noun [#Pronoun]', 0)
+  m = m.splitOn('(#Noun|#Adjective) [#Pronoun]', 0)
   // give him the best
   m = m.splitOn('[#Pronoun] (#Determiner|#Value)', 0)
   // the noise the slide makes

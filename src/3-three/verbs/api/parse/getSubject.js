@@ -7,6 +7,8 @@ const shouldSkip = function (last) {
   return obj.isSubordinate
 }
 
+// try to chop-out any obvious conditional phrases
+// he wore, [if it was raining], a raincoat.
 const noSubClause = function (before) {
   let parts = before.clauses()
   parts = parts.filter((m, i) => {
@@ -34,12 +36,21 @@ const lastNoun = function (vb) {
   before = noSubClause(before)
   // parse-out our preceding nouns
   let nouns = before.nouns()
+
+  // i/she/he/they are very strong
+
+
   // nouns.debug()
   let last = nouns.last()
   // these are dead-ringers
-  let pronoun = last.match('(he|she|we|you|they)')
+  let pronoun = last.match('(i|he|she|we|you|they)')
   if (pronoun.found) {
     return pronoun
+  }
+  // these are also good hints
+  let det = last.match('^#Determiner .+')
+  if (det.found) {
+    return det
   }
   // should we skip a subbordinate clause or two?
   last = nouns.last()

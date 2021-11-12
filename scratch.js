@@ -114,10 +114,12 @@ txt = "He then got up, opened his arms wide"
 // doc.verbs().toInfinitive()
 // console.log(doc.text())
 
-txt = `the flames, while increasing in virulence, forced the ship`
-txt = `The national poet of Greece, Dionysios Solomos, wrote a poem about the unexpected loss, named To the Death of Lord Byron.`
+txt = `I reached my hat, bowed to him, and took leave.`
+txt = `I know those guys are earning their keep`
+
 let doc = nlp(txt)
-doc.verbs().if('wrote').subjects().debug()
+doc.verbs().if('(bowed|earning)').subjects().debug()
+// doc.debug('chunks')
 // doc.nouns().debug()
 
 // bug 1

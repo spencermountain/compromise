@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import nlp from './builds/compromise.cjs'
 // import text from '/Users/spencer/mountain/compromise/scripts/perf/flame/_sotu-text.js'
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 
 // bug!
@@ -104,15 +104,15 @@ txt = "He then got up, opened his arms wide"
 // let doc = nlp(txt)
 // doc.debug()
 // console.log(doc.verbs().json()[1])
-let arr = [
+// let arr = [
 
-  ["resold", "resell"],
+//   ["resold", "resell"],
 
-  ["blitzed", "blitz"],
-]
-let doc = nlp(arr[arr.length - 1][0]).debug()
-doc.verbs().toInfinitive()
-console.log(doc.text())
+//   ["blitzed", "blitz"],
+// ]
+// let doc = nlp(arr[arr.length - 1][0]).debug()
+// doc.verbs().toInfinitive()
+// console.log(doc.text())
 
 // bug 1
 // txt = `he out-lived`
@@ -125,8 +125,16 @@ console.log(doc.text())
 // doc.verbs().toFutureTense()
 // doc.debug()
 
+let doc = nlp('found after found after')
+let m = doc.match('found after')
+let s = doc.match('found')
+m.splitAfter(s).debug()
 
 
+// let subj = doc.verbs().if('think').subjects()
+// console.log('=-=-=-= here -=-=-=-')
+// subj.debug()
+// doc.debug()
 /*
 
 

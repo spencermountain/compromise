@@ -41,7 +41,7 @@ const splitAll = function (full, m) {
     matches.forEach((p, i) => {
       let found = pivotBy(carry, p)
       // last one
-      if (!byN[n][i + 1]) {
+      if (!matches[i + 1]) {
         res.push(found)
       } else {
         res.push({ before: found.before, match: found.match })
@@ -51,7 +51,6 @@ const splitAll = function (full, m) {
       }
     })
   })
-  // console.log(res)
   return res
 }
 

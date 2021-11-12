@@ -6,7 +6,6 @@ const findNouns = function (doc) {
   if (commas.found) {
     m = m.splitAfter(commas)
   }
-
   // yo there
   m = m.splitOn('#Expression')
   // these are individual nouns
@@ -21,7 +20,6 @@ const findNouns = function (doc) {
   m = m.splitOn('[(here|there)] #Noun', 0)
   // put it there
   m = m.splitOn('[#Noun] (here|there)', 0)
-
   //ensure there's actually a noun
   m = m.if('#Noun')
   return m

@@ -1,5 +1,3 @@
-// import splitAll from '../../pointers/methods/lib/split.js'
-
 const combine = function (left, right) {
   return [left[0], left[1], right[2]]
 }

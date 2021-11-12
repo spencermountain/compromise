@@ -82,6 +82,19 @@ test('no match split', function (t) {
   t.end()
 })
 
+test('splitOn multi', function (t) {
+  let doc = nlp('one yeah')
+  let m = doc.match('(one|two) yeah')
+  let res = m.splitAfter(doc.match('(one|two)'))
+  t.deepEqual(res.out('array'), ['one', 'yeah'], here + 'split-single')
+
+  doc = nlp('one yeah two yeah')
+  m = doc.match('(one|two) yeah')
+  res = m.splitAfter(doc.match('(one|two)'))
+  t.deepEqual(res.out('array'), ['one', 'yeah', 'two', 'yeah'], here + 'split-multi')
+  t.end()
+})
+
 test('tricky-splitafter', function (t) {
   let str = `one two three`
   let m = nlp(str).match('.')

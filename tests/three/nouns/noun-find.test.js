@@ -51,7 +51,7 @@ test('noun-phrases', function (t) {
     [`spencer's friend is upset`, [`spencer's friend`]],
 
     // #Noun - #Pronoun
-    [`he says sorry there is no gravy`, ['he', 'there', 'gravy']],
+    [`he says sorry there is no gravy`, ['he', 'there', 'no gravy']],
     [`The next time I met him`, ['The next time', 'I', 'him']],
     [`Next morning they went`, ['Next morning', 'they']],
     [`Huh, I would’ve thought it was the other way around.`, ['I', 'it', 'the other way around.']],
@@ -88,12 +88,9 @@ test('noun-phrases', function (t) {
     [`should give parents the power`, ['parents', 'the power']],
     [`Sweet is the scent`, ['the scent']],
     [`the surly captain of the basketball team`, ['the surly captain of the basketball team']],
-    [`the captain of the winning basketball team`, ['the captain of the winning basketball team']],
     [`the nine captains of the new orleans basketball team`, ['the nine captains of the new orleans basketball team']],
-    [
-      `the unlikely captain of the largest international basketball team`,
-      ['the unlikely captain of the largest international basketball team'],
-    ],
+    // [`the captain of the winning basketball team`, ['the captain of the winning basketball team']],
+    // [`the unlikely captain of the largest international basketball team`, ['the unlikely captain of the largest international basketball team'],],
     [`are you here spencer?`, ['you', 'here', 'spencer?']],
     [`put it there`, ['it', 'there']],
   ]

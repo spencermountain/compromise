@@ -39,22 +39,18 @@ const rules = [
 
   // === Noun ===
   // the brown fox
-  { match: '#Determiner #Adjective+ <Noun>', chunk: 'Noun' },
+  { match: '#Determiner #Adjective+ #Noun', chunk: 'Noun' },
   // the fox
   { match: '#Determiner <Noun>', chunk: 'Noun' },
   // brown fox
   { match: '#Adjective+ <Noun>', chunk: 'Noun' },
   // --- of ---
   // son of a gun
-  { match: '<Noun> of #Determiner <Noun>', chunk: 'Noun' },
-  // the history of science
-  // { match: '#Determiner #Noun of #Noun', chunk: 'Noun' },
-  // slices of ham
-  { match: '#Noun of #Noun', chunk: 'Noun' },
+  { match: '<Noun> of #Determiner? #Noun', chunk: 'Noun' },
   // --- in ---
-  { match: '<Noun> in <Noun>', chunk: 'Noun' },
+  { match: '#Noun in #Determiner? #Noun', chunk: 'Noun' },
   // indoor and outdoor seating
-  { match: '<Noun> and <Noun>', chunk: 'Noun' },
+  { match: '#Noun and #Determiner? #Noun', chunk: 'Noun' },
 ]
 
 const setChunks = function (todo, document, methods) {

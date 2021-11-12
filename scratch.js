@@ -9,7 +9,7 @@ import nlp from './src/three.js'
 // bug!
 // let doc = nlp(`extra. one two.`)
 // doc.remove('extra')
-// console.log(doc.text())
+// console.log(doc.text() + '|')
 
 // bug!
 // let doc = nlp(`john walks`)
@@ -114,6 +114,12 @@ txt = "He then got up, opened his arms wide"
 // doc.verbs().toInfinitive()
 // console.log(doc.text())
 
+txt = `the flames, while increasing in virulence, forced the ship`
+txt = `The national poet of Greece, Dionysios Solomos, wrote a poem about the unexpected loss, named To the Death of Lord Byron.`
+let doc = nlp(txt)
+doc.verbs().if('wrote').subjects().debug()
+// doc.nouns().debug()
+
 // bug 1
 // txt = `he out-lived`
 // txt = `he out lived`
@@ -125,16 +131,8 @@ txt = "He then got up, opened his arms wide"
 // doc.verbs().toFutureTense()
 // doc.debug()
 
-let doc = nlp('found after found after')
-let m = doc.match('found after')
-let s = doc.match('found')
-m.splitAfter(s).debug()
 
 
-// let subj = doc.verbs().if('think').subjects()
-// console.log('=-=-=-= here -=-=-=-')
-// subj.debug()
-// doc.debug()
 /*
 
 

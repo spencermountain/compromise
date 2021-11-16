@@ -8,7 +8,10 @@ const parseXml = function (id, tag1, tag2) {
   let list = []
   const parseEN = function (item) {
     item.w = item.w || []
-    let found = item.w.filter(o => o['$'].tree === tag1 || o['$'].tree === tag2)
+    let found = item.w.filter(o => {
+      console.log(o['$'].tree)
+      return o['$'].tree === tag1 || o['$'].tree === tag2
+    })
     found = found.map(o => [o['$text'], o['$'].tree])
     list = list.concat(found)
     return true
@@ -24,7 +27,7 @@ const parseXml = function (id, tag1, tag2) {
 
 const res = {}
 const tag1 = 'JJ'
-const tag2 = 'VBD'
+const tag2 = 'VBP'
 
 const ids = ['0004']
   // let ids = []

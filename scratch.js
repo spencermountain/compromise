@@ -7,12 +7,10 @@ import nlp from './src/three.js'
 
 
 // bug!
-let doc = nlp(`extra. match.`)
-let m = doc.match('match').freeze()
-console.log(m.frozen)
-doc.remove('extra')
-doc.remove(m)
-doc.debug()
+// let doc = nlp(`extra. match.`)
+// let m = doc.match('match').freeze()
+// doc.remove('extra')
+// doc.match(m).debug()
 
 
 // bug!
@@ -118,10 +116,11 @@ txt = "He then got up, opened his arms wide"
 // doc.verbs().toInfinitive()
 // console.log(doc.text())
 
-txt = `Dialects of this language include Wu`
+txt = `i felt used`
 // txt = `I know those guys are earning their keep`
 
-// let doc = nlp(txt)
+let doc = nlp(txt)
+doc.debug()
 // doc.verbs().if('include').subjects().debug()
 // doc.debug('chunks')
 // doc.nouns().debug()

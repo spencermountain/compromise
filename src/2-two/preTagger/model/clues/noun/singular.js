@@ -17,14 +17,14 @@ export default {
     Copula: true, //fear is
     PresentTense: true, //babysitting sucks
     PastTense: true, //babysitting sucked
-    Noun: true, //talking therapy, planning process
+    // Noun: true, //talking therapy, planning process
   },
   ownTags: { ProperNoun: true },
   beforeWords: {
     with: true,//with cakes
     without: true,//
-    was: true, //was time  -- was working
-    is: true, //
+    // was: true, //was time  -- was working
+    // is: true, //
     of: true, //of power
     for: true, //for rats
     any: true, //any rats

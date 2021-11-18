@@ -1,9 +1,8 @@
 import lexData from './_data.js'
 import { unpack } from 'efrt'
 import misc from './misc.js'
-import methods from '../../methods/index.js'
 // unpack our lexicon of words
-// (found in ./lib/lexicon/)
+// (found in ./lexicon/)
 
 // more clever things are done on the data later
 //  - once the plugin is applied
@@ -19,16 +18,16 @@ Object.keys(lexData).forEach(tag => {
     Object.keys(wordsObj).forEach(w => {
       lexicon[w] = tag
     })
-  } else {
-    // add them as seperate key-val object
-    Object.keys(wordsObj).forEach(w => {
-      variables[w] = tag
-      // pluralize Infinitive|Singular
-      if (tag === 'Infinitive|Singular') {
-        variables[w + 's'] = 'PresentTense|Plural'
-      }
-    })
+    return
   }
+  // add them as seperate key-val object
+  Object.keys(wordsObj).forEach(w => {
+    variables[w] = tag
+    // pluralize Infinitive|Singular
+    if (tag === 'Infinitive|Singular') {
+      variables[w + 's'] = 'PresentTense|Plural'
+    }
+  })
 })
 // misc cleanup
 delete lexicon['']

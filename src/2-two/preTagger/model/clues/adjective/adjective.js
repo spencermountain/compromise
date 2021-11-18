@@ -1,31 +1,14 @@
 
-// adjPresent.beforeTags.Adverb = 'Adjective'
-// adjPresent.beforeTags.Negative = 'Adjective'
-// adjPresent.beforeTags.Plural = 'Adjective'
-// // adjPresent.afterTags.Determiner = 'Adjective'
-// // adjPresent.afterTags.Adverb = 'Adjective'
-// // adjPresent.afterTags.Conjunction = 'Adjective'
-// // adjPresent.afterTags.Possessive = 'Adjective'
-// adjPresent.afterTags = {}
-// adjPresent.beforeWords.have = 'Adjective'
-// adjPresent.beforeWords.had = 'Adjective'
-// adjPresent.beforeWords.do = 'Adjective'
-// adjPresent.beforeWords.does = 'Adjective'
-// adjPresent.afterWords.from = 'Adjective'
-
-// adjGerund.beforeWords.is = 'Adjective'
-// adjGerund.beforeWords.was = 'Adjective'
-// adjGerund.beforeWords.be = 'Adjective'
 
 export default {
   beforeTags: {
     Determiner: true, //the detailed
-    Copula: true, //is detailed
+    // Copula: true, //is detailed
     Possessive: true, //spencer's detailed
   },
 
   afterTags: {
-    Noun: true, //detailed plan, overwhelming evidence
+    // Noun: true, //detailed plan, overwhelming evidence
     Adjective: true, //intoxicated little
   },
 

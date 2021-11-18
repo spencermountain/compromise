@@ -32,7 +32,6 @@ export default {
     stopped: true,
     help: true,
     helps: true,
-    // prevent: true,
     avoid: true,
     avoids: true,
     love: true,//love painting
@@ -41,8 +40,9 @@ export default {
     hate: true,
     hates: true,
     hated: true,
-    was: true,//was working
-    is: true,
+    // was: true,//was working
+    // is: true,
+    // be: true,
   },
   afterWords: {
     you: true, //telling you

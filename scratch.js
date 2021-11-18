@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import nlp from './builds/compromise.cjs'
 // import text from '/Users/spencer/mountain/compromise/scripts/perf/flame/_sotu-text.js'
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 
 // bug!
@@ -106,7 +106,28 @@ txt = "gathering the flowers"
 // txt = "He then got up, opened his arms wide"
 txt = `amazing appeal`
 txt = `amazing appeals`
-txt = `david is amazing`
+
+txt = `he is winning`// default
+// txt = `he is bombing`// Gerund|Singular
+txt = `he is amazing`// Adjective|Gerund
+
+txt = `spend the time training`
+txt = `without laughing`
+txt = `revealing his`
+txt = `talking therapies`
+// txt = `quickly shocking`
+// txt = `The ship offers variety`
+
+
+// Adjective|Gerund
+// Adjective|PastTense
+// Adjective|PresentTense
+// Gerund|Singular
+// Month|Person
+// Person|Infinitive
+// Singular|Person
+// Infinitive|Singular
+
 
 
 // let doc = nlp(txt)

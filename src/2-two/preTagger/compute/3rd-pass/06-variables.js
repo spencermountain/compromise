@@ -3,6 +3,19 @@ const env = typeof process === 'undefined' ? self.env : process.env || {} // esl
 
 
 // random ad-hoc changes  - 
+const adhoc = {
+  // Adjective|Gerund needs extra help
+  'Adjective|Gerund': (terms, i) => {
+    // 'is walking' vs 'is amazing'
+    if (terms[i - 1] && terms[i - 1].tags.has('Copula')) {
+      // if it's at the end
+      if (!terms[i + 1]) {
+        return 'Adjective'
+      }
+    }
+
+  }
+}
 // 'was time' vs 'was working'
 // gerundNoun.beforeWords.was = 'Gerund'
 // 'waiting for'
@@ -20,7 +33,7 @@ const checkWord = (term, obj) => {
   }
   const found = obj[term.normal] === true
   if (found && env.DEBUG_TAGS) {
-    console.log(`\n  \x1b[32m [variable] - '${term.normal}' \x1b[0m\n`)
+    console.log(`\n  \x1b[2m\x1b[3m     ↓ - '${term.normal}' \x1b[0m`)
   }
   return found
 }
@@ -33,7 +46,7 @@ const checkTag = (term, obj = {}) => {
   let tags = Array.from(term.tags).sort((a, b) => (a.length > b.length ? -1 : 1))
   const found = tags.find(tag => obj[tag] === true)
   if (found && env.DEBUG_TAGS) {
-    console.log(`\n  \x1b[32m [variable] - #${found} ('${term.normal}') \x1b[0m\n`)
+    console.log(`\n  \x1b[2m\x1b[3m      ↓ - '${term.normal}' (#${found})  \x1b[0m`)
   }
   return Boolean(found)
 }
@@ -91,11 +104,23 @@ const setTag = function (term, tag, model) {
 const doVariables = function (terms, i, model) {
   const { variables, clues } = model.two
   const term = terms[i]
+  // should we ignore the switching stuff?
+  if (term.tags.has('ProperNoun') || term.tags.has('Acronym')) {
+    return
+  }
   if (variables.hasOwnProperty(term.normal)) {
-    let [a, b] = variables[term.normal].split(/\|/)
-    const tag = pickTag(terms, i, a, b, clues)
+    let form = variables[term.normal]
+    let [a, b] = form.split(/\|/)
+    let tag = pickTag(terms, i, a, b, clues)
+    // lean-harder on some variable forms
+    if (adhoc[form]) {
+      tag = adhoc[form](terms, i) || tag
+    }
     // did we find anything?
     if (tag) {
+      if (env.DEBUG_TAGS) {
+        console.log(`\n  \x1b[32m [variable] - '${term.normal}' - (${form}) → #${tag} \x1b[0m\n`)
+      }
       setTag(term, tag, model)
     }
   }

@@ -197,5 +197,6 @@ export default [
   'vexing',
   'working',
   'yielding',
+  'disgusting'
 ]
 

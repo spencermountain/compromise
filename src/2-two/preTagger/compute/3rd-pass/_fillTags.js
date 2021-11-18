@@ -34,7 +34,7 @@ const fillTags = function (terms, i, model) {
   for (let k = 0; k < tags.length; k += 1) {
     if (model.two.tagSet[tags[k]]) {
       let toAdd = model.two.tagSet[tags[k]].parents
-      fastTag(term, toAdd, `3 [infer] ${tags[k]}`)
+      fastTag(term, toAdd, `  -inferred by #${tags[k]}`)
     }
   }
   // turn 'Noun' into Plural/Singular

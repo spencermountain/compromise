@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
 import fs from 'fs'
 import { pack } from 'efrt'
-import lexicon from '../lib/lexicon/index.js'
-import switches from '../lib/switches/index.js'
-import senses from '../lib/senses/index.js'
+import lexicon from '../lexicon/index.js'
+// import switches from '../lib/switches/index.js'
+// import senses from '../lib/senses/index.js'
 
 const steps = [
   {
@@ -29,33 +29,33 @@ const steps = [
       return packed
     },
   },
-  {
-    label: 'switches',
-    path: './src/2-two/preTagger/model/switches/_data.js',
-    compress: function () {
-      Object.keys(switches).forEach(k => {
-        Object.keys(switches[k]).forEach(key => {
-          if (typeof switches[k][key] !== 'string') {
-            switches[k][key] = pack(switches[k][key])
-          }
-        })
-      })
+  // {
+  //   label: 'switches',
+  //   path: './src/2-two/preTagger/model/switches/_data.js',
+  //   compress: function () {
+  //     Object.keys(switches).forEach(k => {
+  //       Object.keys(switches[k]).forEach(key => {
+  //         if (typeof switches[k][key] !== 'string') {
+  //           switches[k][key] = pack(switches[k][key])
+  //         }
+  //       })
+  //     })
 
-      return switches
-    },
-  },
-  {
-    label: 'senses',
-    path: './src/4-four/sense/model/_data.js',
-    compress: function () {
-      Object.keys(senses).forEach(ambig => {
-        senses[ambig].forEach(sense => {
-          sense.words = pack(sense.words)
-        })
-      })
-      return senses
-    },
-  },
+  //     return switches
+  //   },
+  // },
+  // {
+  //   label: 'senses',
+  //   path: './src/4-four/sense/model/_data.js',
+  //   compress: function () {
+  //     Object.keys(senses).forEach(ambig => {
+  //       senses[ambig].forEach(sense => {
+  //         sense.words = pack(sense.words)
+  //       })
+  //     })
+  //     return senses
+  //   },
+  // },
 ]
 
 // run through all our steps

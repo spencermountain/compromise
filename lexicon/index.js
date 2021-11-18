@@ -47,6 +47,16 @@ import determiners from './misc/determiners.js'
 import expressions from './misc/expressions.js'
 import prepositions from './misc/prepositions.js'
 
+
+import adjPast from './switches/adj-past.js'
+import adjPresent from './switches/adj-present.js'
+import adjGerund from './switches/adj-gerund.js'
+import verbNoun from './switches/verb-noun.js'
+import gerundNoun from './switches/gerund-noun.js'
+import singularPerson from './switches/singular-person.js'
+import personDate from './switches/person-date.js'
+import personVerb from './switches/person-verb.js'
+
 //add-in the generic, flat word-lists
 const data = [
   // nouns
@@ -95,6 +105,16 @@ const data = [
   [modals, 'Modal'],
   [verbs, 'Verb'],
   [phrasals, 'PhrasalVerb'],
+
+  // switches
+  [adjGerund, 'Adjective|Gerund'],
+  [adjPast, 'Adjective|PastTense'],
+  [adjPresent, 'Adjective|PresentTense'],
+  [gerundNoun, 'Gerund|Singular'],
+  [personDate, 'Person|Date'],
+  [personVerb, 'Person|Verb'],
+  [singularPerson, 'Singular|Person'],
+  [verbNoun, 'Infinitive|Singular'],
 ]
 for (let i = 0; i < data.length; i++) {
   const list = data[i][0]

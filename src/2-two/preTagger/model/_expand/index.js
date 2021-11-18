@@ -23,20 +23,26 @@ const addUncountables = function (words, model) {
 }
 
 // harvest ambiguous words for any conjugations
-const expandSwitchers = function (switchers, model) {
+const expandVariable = function (variables, model) {
+  const pipe = /\|/
+  let words = {}
+  //add first tag as an assumption for each variable word
+  Object.keys(variables).forEach(w => {
+    let main = variables[w].split(pipe)[0]
+    words[w] = main
+  })
   // get conjugations from maybe-verbs
-  // const infs = Object.keys(switchers.nounVerb.words).reduce((h, str) => {
+  // const infs = Object.keys(switches.nounVerb.words).reduce((h, str) => {
   //   h[str] = 'Infinitive'
   //   return h
   // }, {})
   // model = expandLexicon(infs, model)
   // set the rest as defaults
-  let words = {}
-  Object.keys(switchers).forEach(k => {
-    Object.keys(switchers[k].words).forEach(str => {
-      words[str] = switchers[k].fallback
-    })
-  })
+  // Object.keys(switches).forEach(k => {
+  //   Object.keys(switches[k].words).forEach(str => {
+  //     words[str] = switches[k].fallback
+  //   })
+  // })
   model = expandLexicon(words, model)
   return model
 }
@@ -45,7 +51,7 @@ const expand = function (model) {
   model = expandIrregulars(model)
   model = expandLexicon(model.lexicon, model)
   model = addUncountables(model.lexicon, model)
-  model = expandSwitchers(model.switchers, model)
+  model = expandVariable(model.variables, model)
   return model
 }
 export default expand

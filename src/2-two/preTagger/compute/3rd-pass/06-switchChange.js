@@ -49,10 +49,10 @@ const swtichLexicon = function (terms, i, model) {
   if (goodAlready(term)) {
     return
   }
-  const { switchers } = model.two
-  const keys = Object.keys(switchers)
+  const { switches } = model.two
+  const keys = Object.keys(switches)
   for (let o = 0; o < keys.length; o += 1) {
-    const { words, beforeTags, afterTags, beforeWords, afterWords, ownTags } = switchers[keys[o]]
+    const { words, beforeTags, afterTags, beforeWords, afterWords, ownTags } = switches[keys[o]]
     if (words.hasOwnProperty(term.normal)) {
       if (env.DEBUG_TAGS) {
         console.log(`\n -=-=- '${term.text}' [switch] - (${keys[o]})`)

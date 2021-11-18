@@ -1,6 +1,6 @@
 import View from './API/View.js'
 import tmp from './API/world.js'
-import version from '../lib/_version.js'
+import version from './_version.js'
 import extend from './API/extend.js'
 import clone from './API/clone.js'
 

@@ -99,9 +99,13 @@ txt = `Okay, you broke my fridge`
 // txt = "manufacturing returned"
 // txt = "appeal court"
 // txt = "The difference is astounding."
-// txt = "super-cool"
+txt = "super-cool"
+txt = "Do dogs enjoy watching T.V.?"
+txt = "gathering the flowers"
 // txt = "and help minimize the loss of life"
-txt = "He then got up, opened his arms wide"
+// txt = "He then got up, opened his arms wide"
+txt = `amazing appeal`
+txt = `amazing appeals`
 
 // let doc = nlp(txt)
 // doc.debug()
@@ -116,7 +120,6 @@ txt = "He then got up, opened his arms wide"
 // doc.verbs().toInfinitive()
 // console.log(doc.text())
 
-txt = `i felt used`
 // txt = `I know those guys are earning their keep`
 
 let doc = nlp(txt)

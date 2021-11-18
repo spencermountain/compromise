@@ -112,7 +112,7 @@ const data = [
   [adjPresent, 'Adjective|PresentTense'],
   [gerundNoun, 'Gerund|Singular'],
   [personDate, 'Person|Date'],
-  [personVerb, 'Person|Verb'],
+  [personVerb, 'Person|Infinitive'],
   [singularPerson, 'Singular|Person'],
   [verbNoun, 'Infinitive|Singular'],
 ]

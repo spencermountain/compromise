@@ -4,9 +4,10 @@ import gerund from './verb/gerund.js'
 import singular from './noun/singular.js'
 import person from './noun/person.js'
 import pastTense from './verb/pastTense.js'
-import presentTense from './verb/presentTense.js'
+import infinitive from './verb/infinitive.js'
 
 const plural = Object.assign({}, singular)
+const presentTense = Object.assign({}, infinitive)
 
 export default {
   Adjective: adjective,
@@ -15,6 +16,7 @@ export default {
   Singular: singular,
   Person: person,
   PastTense: pastTense,
+  Infinitive: infinitive,
   PresentTense: presentTense,
   Plural: plural
 }

@@ -3,7 +3,7 @@ const env = typeof process === 'undefined' ? self.env : process.env || {} // esl
 
 const checkWord = (term, obj) => {
   if (!term || !obj) {
-    return null
+    return false
   }
   const found = obj[term.normal] === true
   if (found && env.DEBUG_TAGS) {
@@ -14,7 +14,7 @@ const checkWord = (term, obj) => {
 
 const checkTag = (term, obj = {}) => {
   if (!term || !obj) {
-    return null
+    return false
   }
   // very rough sort, so 'Noun' is after ProperNoun, etc
   let tags = Array.from(term.tags).sort((a, b) => (a.length > b.length ? -1 : 1))
@@ -28,21 +28,35 @@ const checkTag = (term, obj = {}) => {
 const pickTag = function (terms, i, a, b, clues) {
   let clueA = clues[a] || {}
   let clueB = clues[b] || {}
-  // console.log(a, clueA)
-  // console.log(b, clueB)
-  // look -> right word
-  let tag = checkWord(terms[i + 1], clueA.afterWords) ? a : null
-  tag = tag || checkWord(terms[i + 1], clueB.afterWords) ? b : null
+
+  // look -> right word, first
+  let tag = null
+  if (checkWord(terms[i + 1], clueA.afterWords)) {
+    return a
+  }
+  if (checkWord(terms[i + 1], clueB.afterWords)) {
+    return b
+  }
   // look <- left word, second
-  tag = tag || checkWord(terms[i - 1], clueA.beforeWords) ? a : null
-  tag = tag || checkWord(terms[i - 1], clueB.beforeWords) ? b : null
-  if (tag === null) {
-    // look <- left tag 
-    tag = tag || checkTag(terms[i - 1], clueA.beforeTags) ? a : null
-    tag = tag || checkTag(terms[i - 1], clueB.beforeTags) ? b : null
-    // look -> right tag next
-    tag = tag || checkTag(terms[i + 1], clueA.afterTags) ? a : null
-    tag = tag || checkTag(terms[i + 1], clueB.afterTags) ? b : null
+  if (checkWord(terms[i - 1], clueA.beforeWords)) {
+    return a
+  }
+  if (checkWord(terms[i - 1], clueB.beforeWords)) {
+    return b
+  }
+  // look <- left tag 
+  if (checkTag(terms[i - 1], clueA.beforeTags)) {
+    return a
+  }
+  if (checkTag(terms[i - 1], clueB.beforeTags)) {
+    return b
+  }
+  // look -> right tag
+  if (checkTag(terms[i + 1], clueA.afterTags)) {
+    return a
+  }
+  if (checkTag(terms[i + 1], clueB.afterTags)) {
+    return b
   }
   return tag
 }

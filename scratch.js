@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import nlp from './builds/compromise.cjs'
 // import text from '/Users/spencer/mountain/compromise/scripts/perf/flame/_sotu-text.js'
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 
 // bug!
@@ -106,6 +106,7 @@ txt = "gathering the flowers"
 // txt = "He then got up, opened his arms wide"
 txt = `amazing appeal`
 txt = `amazing appeals`
+txt = `can fool`
 
 // let doc = nlp(txt)
 // doc.debug()

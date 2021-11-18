@@ -5,6 +5,7 @@ import checkCase from './2nd-pass/01-case.js'
 import checkSuffix from './2nd-pass/02-suffix.js'
 import checkPrefix from './2nd-pass/03-prefix.js'
 import checkRegex from './2nd-pass/04-regex.js'
+import checkYear from './2nd-pass/05-year.js'
 
 import fillTags from './3rd-pass/_fillTags.js'
 import checkAcronym from './3rd-pass/01-acronym.js'
@@ -24,7 +25,8 @@ const second = {
   checkRegex,
   checkCase,
   checkPrefix,
-  checkHyphen
+  checkHyphen,
+  checkYear,
 }
 const third = {
   checkAcronym,
@@ -60,7 +62,9 @@ const secondPass = function (terms, model) {
       found = found || second.checkPrefix(terms, i, model)
       // try look-like rules
       found = found || second.checkRegex(terms, i, model)
+      // turn '1993' into a year
     }
+    second.checkYear(terms, i, model)
   }
 }
 

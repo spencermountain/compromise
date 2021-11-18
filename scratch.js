@@ -106,7 +106,11 @@ txt = "gathering the flowers"
 // txt = "He then got up, opened his arms wide"
 txt = `amazing appeal`
 txt = `amazing appeals`
-txt = `can fool`
+txt = `david is amazing`
+txt = `june 1992`
+txt = `before 1992`
+txt = `1992 in astronomy`
+txt = `1992 dalmations`
 
 // let doc = nlp(txt)
 // doc.debug()

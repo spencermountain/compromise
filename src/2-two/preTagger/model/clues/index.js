@@ -1,5 +1,5 @@
 import adjective from './adjective.js'
-import date from './date.js'
+import month from './month.js'
 import gerund from './verb/gerund.js'
 import singular from './noun/singular.js'
 import person from './noun/person.js'
@@ -11,7 +11,7 @@ const presentTense = Object.assign({}, infinitive)
 
 export default {
   Adjective: adjective,
-  Date: date,
+  Month: month,
   Gerund: gerund,
   Singular: singular,
   Person: person,

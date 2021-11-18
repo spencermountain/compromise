@@ -28,6 +28,9 @@ const checkTag = (term, obj = {}) => {
 const pickTag = function (terms, i, a, b, clues) {
   let clueA = clues[a] || {}
   let clueB = clues[b] || {}
+  if (!clueA || !clueB) {
+    console.log('\nMissing', a, b)
+  }
 
   // look -> right word, first
   let tag = null

@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import nlp from './builds/compromise.cjs'
 // import text from '/Users/spencer/mountain/compromise/scripts/perf/flame/_sotu-text.js'
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 
 // bug!
@@ -107,10 +107,7 @@ txt = "gathering the flowers"
 txt = `amazing appeal`
 txt = `amazing appeals`
 txt = `david is amazing`
-txt = `june 1992`
-txt = `before 1992`
-txt = `1992 in astronomy`
-txt = `1992 dalmations`
+
 
 // let doc = nlp(txt)
 // doc.debug()

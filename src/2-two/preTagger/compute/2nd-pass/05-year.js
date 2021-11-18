@@ -2,20 +2,7 @@ import fastTag from '../_fastTag.js'
 const min = 1400
 const max = 2100
 
-const dateWords = new Set(
-  'in',
-  'on',
-  'by',
-  'for',
-  'during',
-  'within',
-  'before',
-  'after',
-  'of',
-  'this',
-  'next',
-  'last',
-)
+const dateWords = new Set(['in', 'on', 'by', 'for', 'during', 'within', 'before', 'after', 'of', 'this', 'next', 'last'])
 
 const seemsGood = function (term) {
   if (!term) {

@@ -9,6 +9,7 @@ import infinitive from './verb/infinitive.js'
 const plural = Object.assign({}, singular)
 const presentTense = Object.assign({}, infinitive)
 
+
 export default {
   Adjective: adjective,
   Month: month,

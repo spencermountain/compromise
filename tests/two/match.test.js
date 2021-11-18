@@ -1021,6 +1021,14 @@ let arr = [
   // [`was running around stores.`, 'was #Gerund around #Plural'],
   ["Steve talked to Johnson LLC", '#Person talked to #Organization #Organization'],
   ["GIC airlines", '#Organization #Organization'],
+
+  [`amazing appeal`, '#Adjective #Singular'],
+  [`amazing appeals`, '#Adjective #Plural'],
+  [`david is amazing`, '#Noun is #Adjective'],
+  [`june 1992`, '#Month #Year'],
+  [`before 1992`, 'before #Year'],
+  [`1992 in astronomy`, '#Year in #Noun'],
+  [`1992 dalmations`, '!#Year #Plural'],
 ]
 test('match:', function (t) {
   let res = []

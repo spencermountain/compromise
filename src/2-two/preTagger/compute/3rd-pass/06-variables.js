@@ -1,6 +1,19 @@
 import fastTag from '../_fastTag.js'
 const env = typeof process === 'undefined' ? self.env : process.env || {} // eslint-disable-line
 
+
+// random ad-hoc changes  - 
+// 'was time' vs 'was working'
+// gerundNoun.beforeWords.was = 'Gerund'
+// 'waiting for'
+// gerundNoun.afterWords.for = 'Gerund'
+// she loves
+// presentPlural.beforeTags.Pronoun = 'PresentTense'
+// definetly warm
+
+// delete nounVerb.afterTags.Noun
+
+
 const checkWord = (term, obj) => {
   if (!term || !obj) {
     return false
@@ -31,7 +44,6 @@ const pickTag = function (terms, i, a, b, clues) {
   if (!clueA || !clueB) {
     console.log('\nMissing', a, b)
   }
-
   // look -> right word, first
   let tag = null
   if (checkWord(terms[i + 1], clueA.afterWords)) {

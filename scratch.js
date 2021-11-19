@@ -129,6 +129,34 @@ txt = `talking therapies`
 // Infinitive|Singular
 
 
+// Spanish fixes #3
+// -- tagging
+// txt = `charcoal chicken`
+// txt = `in every bite`
+// txt = `There was a prison break and I saw it`
+// txt = `the rising cost of health`
+// txt = `All right, first thing we gotta do, damage control.`
+// txt = `Go to the chicken farm and take the hatchet.`
+// txt = `He split 2 1980 title fights with Roberto Duran`
+// txt = `Grandma opens a present with a pair`
+// txt = `what are those, fish hooks?`
+// txt = `the sweet potato fries.`
+// txt = `on a carriage by hand`
+// txt = `New project crowdsources help for Toronto's homeless`
+// txt = `my friends house.`
+// txt = `The city is home to studios`
+// txt = `major record labels.`
+// txt = `The pie was bland and overcooked.`
+// txt = `our mission of progress.`
+// txt = `the .dat file`
+// txt = `730pm show and the 9pm show`
+// txt = `Fuller created this show`
+// txt = `deli serves up smoked meat`
+// txt = `continue as state chief`
+// txt = `Bharti initiates talks`
+// txt = `no tones`
+// txt = `& other types`
+// txt = `40 gallons of water a day`
 
 // let doc = nlp(txt)
 // doc.debug()

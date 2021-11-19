@@ -1029,6 +1029,32 @@ let arr = [
   [`before 1992`, 'before #Year'],
   [`1992 in astronomy`, '#Year in #Noun'],
   [`1992 dalmations`, '!#Year #Plural'],
+
+  // nov 19
+  [`charcoal chicken`, '#Noun #Noun'],
+  [`in every bite`, 'in #Determiner #Noun'],
+  [`There was a prison break and I saw it`, 'there #Copula a #Noun #Noun and I #Verb it'],
+  [`the rising cost of health`, 'the #Gerund #Singular of .'],
+  [`we gotta do, damage control.`, 'we got to do #Noun #Noun'],
+  [`Go to the chicken farm and take the hatchet.`, '#Verb to the #Noun #Noun and #Verb the #Noun'],
+  [`He split 2 1980 title fights with Roberto Duran`, '#Pronoun #Verb #Value #Year #Noun #Plural with #Person #Person'],
+  [`Grandma opens a present with a pair`, '#Noun #PresentTense a #Noun with a #Noun'],
+  [`what are those, fish hooks?`, 'what are . #Noun #Plural'],
+  [`the sweet potato fries.`, '#Determiner sweet #Noun #Plural'],
+  [`New project crowdsources help for Toronto's homeless`, '#Adjective #Noun #PresentTense #Noun for #Possessive #Noun'],
+  [`my friends house.`, 'my #Noun #Noun'],
+  [`major record labels.`, '#Adjective #Noun #Plural'],
+  [`The pie was bland and overcooked.`, 'the #Noun was #Adjective and #Adjective'],
+  [`our mission of progress.`, '#Possessive #Noun of #Noun'],
+  [`the .dat file`, 'the #Noun #Noun'],
+  [`the 9pm show`, '#Determiner #Time #Noun'],
+  [`Fuller created this show`, '#Noun #PastTense #Determiner #Noun'],
+  [`deli serves up smoked meat`, '#Noun #PhrasalVerb #Particle #Adjective #Noun'],
+  [`continue as state chief`, '#Verb as #Noun #Noun'],
+  [`Bharti initiates talks`, '#Noun #PresentTense #Plural'],
+  [`no tones`, 'no #Plural'],
+  [`& other types`, 'and other #Plural'],
+  [`40 gallons of water a day`, '#Value #Plural of #Noun a #Noun'],
 ]
 test('match:', function (t) {
   let res = []

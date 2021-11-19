@@ -116,6 +116,7 @@ export default [
   'yes',
   'yikes',
   'yipee',
+  'heck',
   'yippee',
   'yuck',
   'yup',

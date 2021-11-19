@@ -508,4 +508,5 @@ export default [
   'impending',
   'preexisting',
   'buck naked',
+  'old school',
 ]

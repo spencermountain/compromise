@@ -203,6 +203,7 @@ export default [
   'warped',
   'weakened',
   'weathered',
+  'smoked',
   'wet',
   'worried',
 ]

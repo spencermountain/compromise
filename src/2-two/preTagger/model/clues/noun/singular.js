@@ -3,6 +3,7 @@ export default {
   beforeTags: {
     Determiner: true, //the date
     Possessive: true, //his date
+    // ProperNoun: true,
     Noun: true, //nasa funding
     Adjective: true, //whole bottles
     // Verb:true, //save storm victims
@@ -10,6 +11,7 @@ export default {
     Gerund: true, //uplifting victims
     PastTense: true, //saved storm victims
     Infinitive: true, //profess love
+    Date: true//9pm show
   },
   afterTags: {
     Value: true, //date nine  -?

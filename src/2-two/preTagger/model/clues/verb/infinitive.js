@@ -46,6 +46,13 @@ export default {
     a: true, //covers a
     an: true, //covers an
     from: true, //ranges from
+    up: true,//serves up
+    down: true,//serves up
+    by: true,
+    in: true,
+    out: true,
+    on: true,
+    off: true,
     // for:true, //settled for
   },
 }

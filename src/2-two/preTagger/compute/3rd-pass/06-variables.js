@@ -13,8 +13,14 @@ const adhoc = {
         return 'Adjective'
       }
     }
+  },
+  // 'PresentTense|Plural': (terms, i) => {
+  // if it's at the start 'prices ...'
+  // if (i === 0) {
+  //   return 'Plural'
+  // }
+  // }
 
-  }
 }
 // 'was time' vs 'was working'
 // gerundNoun.beforeWords.was = 'Gerund'
@@ -110,6 +116,7 @@ const doVariables = function (terms, i, model) {
   }
   if (variables.hasOwnProperty(term.normal)) {
     let form = variables[term.normal]
+    // console.log(form, term.normal)
     let [a, b] = form.split(/\|/)
     let tag = pickTag(terms, i, a, b, clues)
     // lean-harder on some variable forms

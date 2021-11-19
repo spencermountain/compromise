@@ -61,11 +61,11 @@ export default [
     plugins: [terser(opts), sizeCheck({ expect: 10, warn: 15 })],
   },
   // redact-plugin
-  {
-    input: 'plugins/redact/plugin.js',
-    output: [{ file: 'builds/three/compromise-redact.mjs', format: 'esm' }],
-    plugins: [terser(opts), sizeCheck({ expect: 10, warn: 15 })],
-  },
+  // {
+  //   input: 'plugins/redact/plugin.js',
+  //   output: [{ file: 'builds/three/compromise-redact.mjs', format: 'esm' }],
+  //   plugins: [terser(opts), sizeCheck({ expect: 10, warn: 15 })],
+  // },
   // === Four ==
   {
     input: 'src/four.js',

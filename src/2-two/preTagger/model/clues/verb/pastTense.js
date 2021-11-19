@@ -3,7 +3,7 @@ export default {
   beforeTags: {
     Adverb: true, //quickly detailed
     Pronoun: true, //he detailed
-    Noun: true, //eye closed
+    // Noun: true, //eye closed
     Auxiliary: true,
   },
   afterTags: {

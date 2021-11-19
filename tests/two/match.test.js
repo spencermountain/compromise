@@ -1055,6 +1055,10 @@ let arr = [
   [`no tones`, 'no #Plural'],
   [`& other types`, 'and other #Plural'],
   [`40 gallons of water a day`, '#Value #Plural of #Noun a #Noun'],
+
+  [`a nice present`, 'a #Adjective #Noun'],//noun
+  [`present the trophy`, '#Verb the #Noun'],//verb
+  [`tony is present`, '#Person is #Adjective'],//adjective
 ]
 test('match:', function (t) {
   let res = []

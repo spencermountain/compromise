@@ -84,5 +84,6 @@ export default [
   'tiny bit',
   'very',
   'well',
+  'backward',
 
 ]

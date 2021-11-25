@@ -92,7 +92,7 @@ const doVariables = function (terms, i, model) {
   if (variables.hasOwnProperty(term.normal)) {
     let form = variables[term.normal]
     // console.log(`\n'${term.normal}'  : ${form}`)
-    // console.log(terms)
+    // console.log(clues[form])
 
     // skip propernouns, acronyms, etc
     if (/^[A-Z]/.test(term.text) && form !== 'Month|Person') {

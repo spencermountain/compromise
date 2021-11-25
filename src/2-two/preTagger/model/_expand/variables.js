@@ -30,7 +30,7 @@ const variables = {
   },
   // 'April'
   'Person|Date': (str, lex) => {
-    lex[str] = 'Person'
+    lex[str] = 'Date'
   },
   // 'rob'
   'Person|Verb': (str, lex) => {

@@ -207,6 +207,8 @@ export default [
   'wet',
   'worried',
   'shut',
+  'discounted',
+  'bottled',
 ]
 
 

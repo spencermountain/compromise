@@ -247,4 +247,5 @@ export default [
   'pray',
   'splay',
   'commence',
+  'pierce',
 ]

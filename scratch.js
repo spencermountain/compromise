@@ -26,11 +26,39 @@ let txt
 
 
 let arr = [
-
-
   // ["forecasted", "forecast"],
   ["tasted", "forecast"],
-
+  ["overseen", "oversee"],
+  ["misunderstood", "misunderstand"],
+  ["unwound", "unwind"],
+  ["blasted", "blast"],
+  ["ignited", "ignite"],
+  ["permeated", "permeate"],
+  ["recreated", "recreate"],
+  ["praised", "praise"],
+  ["explored", "explore"],
+  ["layered", "layer"],
+  ["answered", "answer"],
+  ["lowered", "lower"],
+  ["severed", "sever"],
+  ["covered", "cover"],
+  ["leaked", "leak"],
+  ["misled", "mislead"],
+  ["buttered", "butter"],
+  ["uttered", "utter"],
+  ["cleaned", "clean"],
+  ["rained", "rain"],
+  ["joined", "join"],
+  ["ruined", "ruin"],
+  ["postponed", "postpone"],
+  ["pondered", "ponder"],
+  ["triggered", "trigger"],
+  ["checkered", "checker"],
+  ["slaughtered", "slaughter"],
+  ["chartered", "charter"],
+  ["sequestered", "sequester"],
+  ["bolstered", "bolster"],
+  ["mustered", "muster"],
 ]
 let doc = nlp(arr[arr.length - 1][0]).debug()
 doc.verbs().toInfinitive()

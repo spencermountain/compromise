@@ -1,42 +1,25 @@
-import month from './month.js'
-import gerund from './verb/gerund.js'
-import singular from './noun/singular.js'
-import person from './noun/person.js'
-import pastTense from './verb/pastTense.js'
-import infinitive from './verb/infinitive.js'
-import adjective from './adjective/adjective.js'
+import adjGerund from './adj-gerund.js'
+import adjNoun from './adj-noun.js'
+import adjPast from './adj-past.js'
+import adjPresent from './adj-present.js'
+import nounGerund from './noun-gerund.js'
+import nounVerb from './noun-verb.js'
+import personDate from './person-date.js'
+import personNoun from './person-noun.js'
+import personVerb from './person-verb.js'
 
-import adjectiveExtra from './adjective/adjective-extra.js'
-import verbExtra from './verb/verb-extra.js'
-
-const plural = Object.assign({}, singular)
-const presentTense = Object.assign({}, infinitive)
-
-
-export default {
-  Month: month,
-  Gerund: gerund,
-  Singular: singular,
-  Person: person,
-  PastTense: pastTense,
-  Infinitive: infinitive,
-  PresentTense: presentTense,
-  Plural: plural,
-  Adjective: adjective,
-
-  // AdjectiveExtra: adjectiveExtra,
-  // VerbExtra: verbExtra
+const clues = {
+  'Adj|Gerund': adjGerund,
+  'Adj|Noun': adjNoun,
+  'Adj|Past': adjPast,
+  'Adj|Present': adjPresent,
+  'Noun|Verb': nounVerb,
+  'Noun|Gerund': nounGerund,
+  'Person|Noun': personNoun,
+  'Person|Date': personDate,
+  'Person|Verb': personVerb,
 }
 
+// make a few copies
 
-//  'Adjective|Gerund'
-//  'Adjective|PastTense'
-//  'Adjective|PresentTense'
-//  'Adjective|Singular'
-
-//  'Gerund|Singular'
-//  'Singular|Person'
-//  'Infinitive|Singular'
-
-//  'Month|Person'
-//  'Person|Infinitive'
+export default clues

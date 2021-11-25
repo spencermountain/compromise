@@ -1,6 +1,8 @@
 import lexData from './_data.js'
 import { unpack } from 'efrt'
 import misc from './misc.js'
+import toPlural from '../../methods/transform/nouns/toPlural/index.js'
+import irregularPlurals from '../irregulars/plurals.js'
 // unpack our lexicon of words
 // (found in ./lexicon/)
 
@@ -9,6 +11,8 @@ import misc from './misc.js'
 const hasSwitch = /\|/
 let lexicon = misc
 let variables = {}
+
+const tmpModel = { two: { irregularPlurals, uncountable: {} } }
 
 Object.keys(lexData).forEach(tag => {
   let wordsObj = unpack(lexData[tag])
@@ -24,9 +28,10 @@ Object.keys(lexData).forEach(tag => {
   Object.keys(wordsObj).forEach(w => {
     variables[w] = tag
     // pluralize Infinitive|Singular
-    if (tag === 'Infinitive|Singular') {
-      variables[w + 's'] = 'PresentTense|Plural'
-    }
+    // if (tag === 'Noun|Verb') {
+    //   let plural = toPlural(w, tmpModel)
+    //   variables[w + 's'] = 'Plural|Verb'
+    // }
   })
 })
 // misc cleanup

@@ -1,5 +1,6 @@
+// the commercial market
+// watching the commercial
 export default [
-
   'adult',
   'alert',
   'arab',

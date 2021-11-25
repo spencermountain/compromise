@@ -1,5 +1,6 @@
 import methods from '../../methods/index.js'
 import expandIrregulars from './irregulars.js'
+import variables from './variables.js'
 
 const expandLexicon = function (words, model) {
   // do clever tricks to grow the words
@@ -23,13 +24,11 @@ const addUncountables = function (words, model) {
 }
 
 // harvest ambiguous words for any conjugations
-const expandVariable = function (variables, model) {
-  const pipe = /\|/
+const expandVariable = function (switchWords, model) {
   let words = {}
   //add first tag as an assumption for each variable word
-  Object.keys(variables).forEach(w => {
-    let main = variables[w].split(pipe)[0]
-    words[w] = main
+  Object.keys(switchWords).forEach(w => {
+    variables[switchWords[w]](w, words)
   })
   // get conjugations from maybe-verbs
   // const infs = Object.keys(switches.nounVerb.words).reduce((h, str) => {

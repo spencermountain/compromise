@@ -35,9 +35,9 @@ const adhoc = {
 
 const checkWord = (term, obj) => {
   if (!term || !obj) {
-    return false
+    return null
   }
-  const found = obj[term.normal] === true
+  const found = obj[term.normal]
   if (found && env.DEBUG_TAGS) {
     console.log(`\n  \x1b[2m\x1b[3m     ↓ - '${term.normal}' \x1b[0m`)
   }
@@ -46,52 +46,32 @@ const checkWord = (term, obj) => {
 
 const checkTag = (term, obj = {}) => {
   if (!term || !obj) {
-    return false
+    return null
   }
   // very rough sort, so 'Noun' is after ProperNoun, etc
   let tags = Array.from(term.tags).sort((a, b) => (a.length > b.length ? -1 : 1))
-  const found = tags.find(tag => obj[tag] === true)
+  let found = tags.find(tag => obj.hasOwnProperty(tag))
+  found = obj[found]
   if (found && env.DEBUG_TAGS) {
     console.log(`\n  \x1b[2m\x1b[3m      ↓ - '${term.normal}' (#${found})  \x1b[0m`)
   }
-  return Boolean(found)
+  return found
 }
 
-const pickTag = function (terms, i, a, b, clues) {
-  let clueA = clues[a] || {}
-  let clueB = clues[b] || {}
-  // if (!clueA || !clueB) {
-  //   console.log('\nMissing', a, b)
-  // }
+const pickTag = function (terms, i, clues) {
+  if (!clues) {
+    return
+  }
+  // console.log(clues.beforeTags)
   // look -> right word, first
-  let tag = null
-  if (checkWord(terms[i + 1], clueA.afterWords)) {
-    return a
-  }
-  if (checkWord(terms[i + 1], clueB.afterWords)) {
-    return b
-  }
+  let tag = checkWord(terms[i + 1], clues.afterWords)
   // look <- left word, second
-  if (checkWord(terms[i - 1], clueA.beforeWords)) {
-    return a
-  }
-  if (checkWord(terms[i - 1], clueB.beforeWords)) {
-    return b
-  }
+  tag = tag || checkWord(terms[i - 1], clues.beforeWords)
   // look <- left tag 
-  if (checkTag(terms[i - 1], clueA.beforeTags)) {
-    return a
-  }
-  if (checkTag(terms[i - 1], clueB.beforeTags)) {
-    return b
-  }
+  tag = tag || checkTag(terms[i - 1], clues.beforeTags)
   // look -> right tag
-  if (checkTag(terms[i + 1], clueA.afterTags)) {
-    return a
-  }
-  if (checkTag(terms[i + 1], clueB.afterTags)) {
-    return b
-  }
+  tag = tag || checkTag(terms[i + 1], clues.afterTags)
+  // console.log(clues)
   return tag
 }
 
@@ -112,24 +92,26 @@ const doVariables = function (terms, i, model) {
   const term = terms[i]
   if (variables.hasOwnProperty(term.normal)) {
     let form = variables[term.normal]
+    // console.log(`\n'${term.normal}'  : ${form}`)
+    // console.log(terms)
 
     // skip propernouns, acronyms, etc
     if (/^[A-Z]/.test(term.text) && form !== 'Month|Person') {
       return
     }
-    // console.log(form, term.normal)
-    let [a, b] = form.split(/\|/)
-    let tag = pickTag(terms, i, a, b, clues)
+    let tag = pickTag(terms, i, clues[form])
     // lean-harder on some variable forms
-    if (adhoc[form]) {
-      tag = adhoc[form](terms, i) || tag
-    }
+    // if (adhoc[form]) {
+    //   tag = adhoc[form](terms, i) || tag
+    // }
     // did we find anything?
     if (tag) {
       if (env.DEBUG_TAGS) {
         console.log(`\n  \x1b[32m [variable] - '${term.normal}' - (${form}) → #${tag} \x1b[0m\n`)
       }
       setTag(term, tag, model)
+    } else if (env.DEBUG_TAGS) {
+      console.log('   -> x')
     }
   }
 }

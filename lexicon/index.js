@@ -48,13 +48,13 @@ import expressions from './misc/expressions.js'
 import prepositions from './misc/prepositions.js'
 
 
-import adjPast from './switches/adj-past.js'
-import adjPresent from './switches/adj-present.js'
 import adjGerund from './switches/adj-gerund.js'
 import adjNoun from './switches/adj-noun.js'
-import verbNoun from './switches/verb-noun.js'
-import gerundNoun from './switches/gerund-noun.js'
-import singularPerson from './switches/singular-person.js'
+import adjPast from './switches/adj-past.js'
+import adjPresent from './switches/adj-present.js'
+import nounVerb from './switches/noun-verb.js'
+import nounGerund from './switches/noun-gerund.js'
+import personNoun from './switches/person-noun.js'
 import personDate from './switches/person-date.js'
 import personVerb from './switches/person-verb.js'
 
@@ -108,15 +108,15 @@ const data = [
   [phrasals, 'PhrasalVerb'], //5kb
 
   // switches
-  [adjGerund, 'Adjective|Gerund'],
-  [adjPast, 'Adjective|PastTense'],
-  [adjPresent, 'Adjective|PresentTense'],
-  [adjNoun, 'Adjective|Singular'],
-  [gerundNoun, 'Gerund|Singular'],
-  [personDate, 'Month|Person'],
-  [personVerb, 'Person|Infinitive'],
-  [singularPerson, 'Singular|Person'],
-  [verbNoun, 'Infinitive|Singular'],
+  [adjGerund, 'Adj|Gerund'],
+  [adjNoun, 'Adj|Noun'],
+  [adjPast, 'Adj|Past'],
+  [adjPresent, 'Adj|Present'],
+  [nounVerb, 'Noun|Verb'],
+  [nounGerund, 'Noun|Gerund'],
+  [personNoun, 'Person|Noun'],
+  [personDate, 'Person|Date'],
+  [personVerb, 'Person|Verb'],
 ]
 for (let i = 0; i < data.length; i++) {
   const list = data[i][0]

@@ -455,6 +455,7 @@ export default [
   'type',
   'trip',
   'rerun',
+  'resume',
 
   'rally',
 ]

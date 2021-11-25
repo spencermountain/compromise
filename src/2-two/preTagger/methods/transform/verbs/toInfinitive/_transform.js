@@ -184,7 +184,7 @@ let rules = {
     },
     // misc no e endings
     {
-      reg: /(..)(h|w|ion|n[dt]|ai.|all|int|ld|oo.|er|ou.|ght|rm|lm|rl|x|bt|rb)ed$/i,
+      reg: /(..)(h|w|ion|n[dt]|ai.|all|int|ld|oo.|ght|rm|lm|rl|x|bt|rb)ed$/i,
       to: '$1$2',
     },
 
@@ -192,6 +192,10 @@ let rules = {
     {
       reg: /(..)bbed$/i,//robbed
       to: '$1b',
+    },
+    {
+      reg: /(..mb)ed$/i,//climbed
+      to: '$1',
     },
 
     // -ded
@@ -204,12 +208,26 @@ let rules = {
       to: 'uade',
     },
     {
+      reg: /aided$/i,//braided
+      to: 'aid',
+    },
+
+    {
       reg: /(.[aeiou]{2}d)ed$/i,//downloaded
       to: '$1',
     },
     {
       reg: /(.[rnd]d)ed$/i,//forwarded, ended
       to: '$1',
+    },
+    // -ked
+    {
+      reg: /cked$/i,
+      to: 'ck',
+    },
+    {
+      reg: /([sr])ked$/i,//asked, sparked
+      to: '$1k',
     },
     // -fed
     {
@@ -243,7 +261,7 @@ let rules = {
       to: 'wn',
     },
     {
-      reg: /([aiou])ned$/i, //shined
+      reg: /([aiu])ned$/i, //shined
       to: '$1ne',
     },
     // -led
@@ -278,8 +296,8 @@ let rules = {
     },
     // -ked
     {
-      reg: /(..)lked$/i,
-      to: '$1lk',
+      reg: /(..[ln]k)ed$/i,//winked, talked
+      to: '$1',
     },
     {
       reg: /([^aeiouy][aeiou])ked$/i,
@@ -326,6 +344,10 @@ let rules = {
       to: 'r',
     },
     {
+      reg: /(.uir)ed$/i,//aquired
+      to: '$1e',
+    },
+    {
       reg: /(.[aeiou]{2,}r)ed$/i,//appeared
       to: '$1',
     },
@@ -352,6 +374,10 @@ let rules = {
       to: '$1ate',
     },
     {
+      reg: /(ou)ted$/i,//shouted
+      to: '$1t',
+    },
+    {
       reg: /tted$/i,//admitted
       to: 't',
     },
@@ -360,7 +386,7 @@ let rules = {
       to: '$1t',
     },
     {
-      reg: /([pfmdb]et)ed$/i,//trumpeted/limited
+      reg: /([pfmdbk]et)ed$/i,//trumpeted/limited
       to: '$1',
     },
     {
@@ -368,8 +394,8 @@ let rules = {
       to: 'it',
     },
     {
-      reg: /asted$/i,//wasted, tasted
-      to: 'aste',
+      reg: /([^aeiou])asted$/i,//wasted, tasted
+      to: '$1aste',
     },
     {
       reg: /(.[aeiou]t)ed$/i, //created, voted, attributed
@@ -379,18 +405,26 @@ let rules = {
       reg: /(.[pfrlsc]t)ed$/i,//drifted, melted
       to: '$1',
     },
-    // -zed
-    {
-      reg: /([aeiou]zz)ed$/i,
-      to: '$1',
-    },
     // -yed
     {
       reg: /([aeiou]y)ed$/i,
       to: '$1',
     },
+    // -zed
+    {
+      reg: /([aeiou]zz)ed$/i,
+      to: '$1',
+    },
+    {
+      reg: /([aeiou]tz)ed$/i,//blitzed
+      to: '$1',
+    },
 
     // vowel-ed
+    {
+      reg: /aid$/i,//paid
+      to: 'ay',
+    },
     {
       reg: /ued$/i,
       to: 'ue',

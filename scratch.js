@@ -26,43 +26,11 @@ let txt
 
 
 let arr = [
-  ["resold", "resell"],
-  ["blitzed", "blitz"],
-  ["overpaid", "overpay"],
-  ["toasted", "toast"],
-  ["united", "unite"],
-  ["forecasted", "forecast"],
-  ["marketed", "market"],
-  ["skyrocketed", "skyrocket"],
-  ["ticketed", "ticket"],
-  ["aroused", "arouse"],
-  ["espoused", "espouse"],
-  ["warehoused", "warehouse"],
-  ["focused", "focus"],
-  ["created", "create"],
-  ["required", "require"],
-  ["acquired", "acquire"],
-  ["aired", "air"],
-  ["persevered", "persevere"],
-  ["imprisoned", "imprison"],
-  ["poisoned", "poison"],
-  ["seasoned", "season"],
-  ["combed", "comb"],
-  ["climbed", "climb"],
-  ["succumbed", "succumb"],
-  ["crowded", "crowd"],
-  ["decreed", "decree"],
-  ["longed", "long"],
-  ["hacked", "hack"],
-  ["clocked", "clock"],
-  ["blocked", "block"],
-  ["linked", "link"],
-  ["marked", "mark"],
-  ["tasked", "task"],
-  ["totalled", "total"],
-  ["intervened", "intervene"],
-  ["reckoned", "reckon"],
-  ["closed", "close"],
+
+
+  // ["forecasted", "forecast"],
+  ["tasted", "forecast"],
+
 ]
 let doc = nlp(arr[arr.length - 1][0]).debug()
 doc.verbs().toInfinitive()

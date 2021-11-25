@@ -105,6 +105,9 @@ let conjugations = {
   breed: {
     pst: 'bred',
   },
+  decree: {
+    pst: '_d',
+  },
   bring: {
     pst: 'brought',
     prt: 'brought',
@@ -168,6 +171,9 @@ let conjugations = {
   },
   creep: {
     prt: 'crept',
+  },
+  create: {
+    prt: '_d',
   },
   cut: {
     prt: '_',
@@ -773,6 +779,12 @@ let conjugations = {
     prt: '_n',
   },
   convene: {
+    pst: '_d',
+  },
+  focus: {
+    pst: '_ed',
+  },
+  persevere: {
     pst: '_d',
   },
 }

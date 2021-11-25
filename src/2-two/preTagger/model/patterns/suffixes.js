@@ -64,6 +64,8 @@ export default [
     aped: Past,
     ched: Past,
     lked: Past,
+    rked: Past,
+    reed: Past,
     nded: Past,
     mned: Adj,
     cted: Past,

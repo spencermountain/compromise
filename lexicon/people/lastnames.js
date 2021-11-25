@@ -105,6 +105,7 @@ export default [
   'chand',
   'chang',
   'chatterjee',
+  'chapman',
   'chavez',
   'che',
   'chen',

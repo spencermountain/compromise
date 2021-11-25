@@ -14,6 +14,7 @@ const seemsGood = function (term) {
   if (term.tags.has('Date') || term.tags.has('Month') || term.tags.has('WeekDay')) {
     return true
   }
+  return false
 }
 
 // recognize '1993' as a year

@@ -49,7 +49,7 @@ export default {
     up: true,//serves up
     down: true,//serves up
     by: true,
-    in: true,
+    in: true, //bob in
     out: true,
     on: true,
     off: true,

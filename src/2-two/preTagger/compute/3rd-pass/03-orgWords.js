@@ -1,8 +1,16 @@
+const isTitleCase = function (str) {
+  return /^[A-Z][a-z'\u00C0-\u00FF]/.test(str)
+}
+
 const isOrg = function (term) {
   if (!term) {
     return false
   }
   if (term.tags.has('ProperNoun') || term.tags.has('Organization') || term.tags.has('Acronym')) {
+    return true
+  }
+  // allow anything titlecased to be an org
+  if (isTitleCase(term.text)) {
     return true
   }
   return false

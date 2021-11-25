@@ -61,7 +61,7 @@ const pickTag = function (terms, i, a, b, clues) {
   let clueA = clues[a] || {}
   let clueB = clues[b] || {}
   if (!clueA || !clueB) {
-    console.log('\nMissing', a, b)
+    // console.log('\nMissing', a, b)
   }
   // look -> right word, first
   let tag = null
@@ -110,12 +110,12 @@ const setTag = function (term, tag, model) {
 const doVariables = function (terms, i, model) {
   const { variables, clues } = model.two
   const term = terms[i]
-  // should we ignore the switching stuff?
-  if (term.tags.has('ProperNoun') || term.tags.has('Acronym')) {
-    return
-  }
   if (variables.hasOwnProperty(term.normal)) {
     let form = variables[term.normal]
+    // skip propernouns, acronyms, etc
+    if (/^[A-Z]/.test(term.text) && form !== 'Month|Person') {
+      return
+    }
     // console.log(form, term.normal)
     let [a, b] = form.split(/\|/)
     let tag = pickTag(terms, i, a, b, clues)

@@ -76,10 +76,9 @@ let arr = [
   //abbreviations
   ['John & John,', '#Noun #Noun #Noun'],
   ['N.V.,', '#Noun'],
-  ['col. Patrick said march and feb. etc.', '#Abbreviation #Person #PastTense #Month #Conjunction #Abbreviation #Abbreviation',],
-  [`i met April O'neil`, '#Pronoun #PastTense #Person #Person'],
+  ['col. Patrick said march and feb. etc.', '#Abbreviation #Person #PastTense #Month #Conjunction #Abbreviation #Abbreviation'],
   [`ANAB, ENA, CCP etc.`, '#Acronym #Acronym #Acronym #Abbreviation'],
-  ['contracted AIDS', '#PastTense #Acronym'],
+  // ['contracted AIDS', '#PastTense #Acronym'],
   ['contacted nbc', '#PastTense #Acronym'],
   ['UNESCO', '#Acronym'],
   ['NAFTA', '#Acronym'],

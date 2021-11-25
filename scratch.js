@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/three.js'
 // import nlp from './builds/compromise.cjs'
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 // bug!
 // let doc = nlp(`extra. match.`)
@@ -18,11 +18,12 @@ import nlp from './src/three.js'
 
 
 let txt
-// txt = `wait I see`
-// txt = ``
+txt = `#cool @cool`
+txt = `Fundo ltd.`
+txt = `April O'neil`
 
-// let doc = nlp(txt)
-// doc.debug()
+let doc = nlp(txt)
+doc.debug()
 
 
 // let arr = [

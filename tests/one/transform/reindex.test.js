@@ -15,8 +15,8 @@ test('sanity-check index:', function (t) {
   let doc = nlp(txt)
   let json = doc.json()
   // t.equal(json[4].text, 'sentence number four.', 'got sentence')
-  t.deepEqual(json[4].terms[0].index, [4, 0], 'got term 1')
-  t.deepEqual(json[4].terms[2].index, [4, 2], 'got term 2')
+  t.deepEqual(json[4].terms[0].index, [4, 0], here + 'got term 1')
+  t.deepEqual(json[4].terms[2].index, [4, 2], here + 'got term 2')
   t.end()
 })
 
@@ -24,13 +24,13 @@ test('reindex on remove:', function (t) {
   let doc = nlp(txt)
   doc.remove('match')
   let json = doc.eq(4).json()[0]
-  t.equal(json.terms[1].normal, 'four', 'removed word')
-  t.deepEqual(json.terms[1].index, [4, 1], 'reindex after remove word')
+  t.equal(json.terms[1].normal, 'four', here + 'removed word')
+  t.deepEqual(json.terms[1].index, [4, 1], here + 'reindex after remove word')
 
   doc.eq(1).remove()
   json = doc.eq(3).json()[0]
-  t.equal(json.terms[1].normal, 'four', 'removed sentence')
-  t.deepEqual(json.terms[1].index, [3, 1], 'reindex after remove sentence')
+  t.equal(json.terms[1].normal, 'four', here + 'removed sentence')
+  t.deepEqual(json.terms[1].index, [3, 1], here + 'reindex after remove sentence')
   t.end()
 })
 
@@ -38,8 +38,8 @@ test('reindex on insert:', function (t) {
   let doc = nlp(txt)
   doc.match('match').insertAfter('insert')
   let json = doc.eq(4).json()[0]
-  t.equal(json.terms[2].normal, 'insert', 'inserted word')
-  t.deepEqual(json.terms[3].index, [4, 3], 'reindex after insert word')
+  t.equal(json.terms[2].normal, 'insert', here + 'inserted word')
+  t.deepEqual(json.terms[3].index, [4, 3], here + 'reindex after insert word')
   // test .concat too
   t.end()
 })
@@ -48,8 +48,8 @@ test('reindex on replace:', function (t) {
   let doc = nlp(txt)
   doc.replace('match', 'replace two')
   let json = doc.eq(4).json()[0]
-  t.equal(json.terms[1].normal, 'replace', 'replaced word')
-  t.deepEqual(json.terms[3].index, [4, 3], 'reindex after replaced word')
+  t.equal(json.terms[1].normal, 'replace', here + 'replaced word')
+  t.deepEqual(json.terms[3].index, [4, 3], here + 'reindex after replaced word')
   t.end()
 })
 
@@ -57,16 +57,16 @@ test('reindex on concat:', function (t) {
   let doc = nlp(txt)
   doc.eq(1).concat('this is another sentence')
   let json = doc.eq(5).json()[0]
-  t.equal(json.terms[1].normal, 'match', 'correct word')
-  t.deepEqual(json.terms[1].index, [5, 1], 'reindex after concat')
+  t.equal(json.terms[1].normal, 'match', here + 'correct word')
+  t.deepEqual(json.terms[1].index, [5, 1], here + 'reindex after concat')
   t.end()
 })
 
 // test('reindex on unique:', function (t) {
 //   let doc = nlp('one two one two three').terms()
 //   doc = doc.unique()
-//   t.equal(doc.text(), 'one two three', 'unique smoketest')
+//   t.equal(doc.text(), 'one two three', here+'unique smoketest')
 //   let json = doc.json()
-//   t.deepEqual(json[2].terms[0].index, [2, 0], 'reindex after unique')
+//   t.deepEqual(json[2].terms[0].index, [2, 0], here+'reindex after unique')
 //   t.end()
 // })

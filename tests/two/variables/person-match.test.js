@@ -12,7 +12,7 @@ let arr = [
   ['John you', '#MaleName #Pronoun'],
   ['you John you', '#Pronoun #Person #Pronoun'],
   ['boyfriend to Jane', '#Noun #Conjunction #Person'],
-  ['boyfriend of Jane', '#Noun #Conjunction #Person'],
+  ['boyfriend of Jane', '#Noun . #Person'],
 
   // famous people names
   ['john stewart', '#MaleName #LastName'],
@@ -24,7 +24,7 @@ let arr = [
   ['Messiaen', '#Person'],
   ['Mozart', '#LastName'],
   ['Nixon', '#LastName'],
-  ['Pope John Paul II', '#Honorific #Person+'],
+  ['Pope John Paul II', '#Person+'],
   ['Richard Nixon', '#MaleName #LastName'],
   ['Ronald Reagan', '#MaleName #LastName'],
   ['Saddam Hussain', '#Person+'],
@@ -80,13 +80,13 @@ let arr = [
   ['John Jacob Smith', '#FirstName #Person+'],
   ['Jani K. Smith', '#FirstName #Acronym #LastName'],
   [`charity chapman`, `#Person #Person`],
-  [`charity feels`, `#Person #Verb`],
+  [`charity said`, `#Person #Verb`],
   [`darwin said`, `#Person #Verb`],
   [`victoria learned`, `#Person #Verb`],
   [`charity said`, '#Person #Verb'],
   [`april learned`, '#Person #Verb'],
   [`john k. johnson`, '#Person #Person #Person'],
-
+  [`i met April O'neil`, '#Pronoun #PastTense #Person #Person'],
   // Verbs
   [`bob in the water`, '#Verb in the #Noun'],
 ]

@@ -60,10 +60,10 @@ const secondPass = function (terms, model) {
       found = found || second.checkSuffix(terms, i, model)
       // check for stem in lexicon
       found = found || second.checkPrefix(terms, i, model)
-      // try look-like rules
-      found = found || second.checkRegex(terms, i, model)
-      // turn '1993' into a year
     }
+    // try look-like rules
+    second.checkRegex(terms, i, model)
+    // turn '1993' into a year
     second.checkYear(terms, i, model)
   }
 }

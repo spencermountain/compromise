@@ -38,7 +38,7 @@ const checkRegex = function (terms, i, model) {
   if (!arr && term.tags.size === 0) {
     arr = doEndsWith(normal, endsWith)
   }
-  if (arr !== undefined) {
+  if (arr) {
     fastTag(term, arr[1], `2-regex- '${arr[2] || arr[0]}'`)
     return true
   }

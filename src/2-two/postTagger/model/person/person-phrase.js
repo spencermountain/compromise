@@ -75,11 +75,11 @@ export default [
   },
   //John Foo
   {
-    match: '#FirstName #Acronym? [#ProperNoun]', //can't use ifNo
+    match: '#FirstName #Acronym? [#ProperNoun]',
     group: 0,
     tag: 'LastName',
     reason: 'firstname-titlecase',
-    safe: true,
+    // safe: true,
   },
   // john stewart
   { match: '#FirstName [#FirstName]', group: 0, tag: 'LastName', reason: 'firstname-firstname' },

@@ -24,6 +24,19 @@ export default {
   Plural: plural,
   Adjective: adjective,
 
-  AdjectiveExtra: adjectiveExtra,
-  VerbExtra: verbExtra
+  // AdjectiveExtra: adjectiveExtra,
+  // VerbExtra: verbExtra
 }
+
+
+//  'Adjective|Gerund'
+//  'Adjective|PastTense'
+//  'Adjective|PresentTense'
+//  'Adjective|Singular'
+
+//  'Gerund|Singular'
+//  'Singular|Person'
+//  'Infinitive|Singular'
+
+//  'Month|Person'
+//  'Person|Infinitive'

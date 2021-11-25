@@ -206,6 +206,7 @@ export default [
   'smoked',
   'wet',
   'worried',
+  'shut',
 ]
 
 

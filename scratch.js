@@ -24,7 +24,7 @@ txt = `the Princess thought`
 txt = `the skeleten show`
 txt = `major record labels`
 txt = `a nice present`
-txt = `he initiates a talk`
+txt = `i saw a minor`
 
 let doc = nlp(txt)
 doc.debug()

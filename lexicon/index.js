@@ -51,6 +51,7 @@ import prepositions from './misc/prepositions.js'
 import adjPast from './switches/adj-past.js'
 import adjPresent from './switches/adj-present.js'
 import adjGerund from './switches/adj-gerund.js'
+import adjNoun from './switches/adj-noun.js'
 import verbNoun from './switches/verb-noun.js'
 import gerundNoun from './switches/gerund-noun.js'
 import singularPerson from './switches/singular-person.js'
@@ -110,6 +111,7 @@ const data = [
   [adjGerund, 'Adjective|Gerund'],
   [adjPast, 'Adjective|PastTense'],
   [adjPresent, 'Adjective|PresentTense'],
+  [adjNoun, 'Adjective|Singular'],
   [gerundNoun, 'Gerund|Singular'],
   [personDate, 'Month|Person'],
   [personVerb, 'Person|Infinitive'],

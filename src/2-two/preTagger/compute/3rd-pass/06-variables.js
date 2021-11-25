@@ -60,9 +60,9 @@ const checkTag = (term, obj = {}) => {
 const pickTag = function (terms, i, a, b, clues) {
   let clueA = clues[a] || {}
   let clueB = clues[b] || {}
-  if (!clueA || !clueB) {
-    // console.log('\nMissing', a, b)
-  }
+  // if (!clueA || !clueB) {
+  //   console.log('\nMissing', a, b)
+  // }
   // look -> right word, first
   let tag = null
   if (checkWord(terms[i + 1], clueA.afterWords)) {
@@ -112,6 +112,7 @@ const doVariables = function (terms, i, model) {
   const term = terms[i]
   if (variables.hasOwnProperty(term.normal)) {
     let form = variables[term.normal]
+
     // skip propernouns, acronyms, etc
     if (/^[A-Z]/.test(term.text) && form !== 'Month|Person') {
       return

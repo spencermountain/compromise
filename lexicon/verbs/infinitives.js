@@ -248,4 +248,5 @@ export default [
   'splay',
   'commence',
   'pierce',
+  'initiate',
 ]

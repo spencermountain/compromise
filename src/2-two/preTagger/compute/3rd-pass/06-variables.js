@@ -93,9 +93,8 @@ const doVariables = function (terms, i, model) {
     let form = variables[term.normal]
     // console.log(`\n'${term.normal}'  : ${form}`)
     // console.log(clues[form])
-
     // skip propernouns, acronyms, etc
-    if (/^[A-Z]/.test(term.text) && form !== 'Month|Person') {
+    if (term.tags.has('Acronym') || term.tags.has('PhrasalVerb')) {
       return
     }
     let tag = pickTag(terms, i, clues[form])

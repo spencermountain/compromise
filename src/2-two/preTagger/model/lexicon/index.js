@@ -28,10 +28,10 @@ Object.keys(lexData).forEach(tag => {
   Object.keys(wordsObj).forEach(w => {
     variables[w] = tag
     // pluralize Infinitive|Singular
-    // if (tag === 'Noun|Verb') {
-    //   let plural = toPlural(w, tmpModel)
-    //   variables[w + 's'] = 'Plural|Verb'
-    // }
+    if (tag === 'Noun|Verb') {
+      let plural = toPlural(w, tmpModel)
+      variables[plural] = 'Plural|Verb'
+    }
   })
 })
 // misc cleanup

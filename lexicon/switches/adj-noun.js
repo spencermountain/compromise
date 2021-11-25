@@ -43,5 +43,6 @@ export default [
   'vanilla',
   'welcome',
 
+  'chief',
 
 ]

@@ -177,6 +177,10 @@ export default [
   'effect',
   'connect',
   'prospect',
+  'skeleten',
+  'kitten',
+  'republic',
+  'record label',
 
 
 ]

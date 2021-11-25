@@ -30,11 +30,15 @@ const variables = {
   },
   // 'April'
   'Person|Date': (str, lex) => {
-    lex[str] = 'Date'
+    lex[str] = 'Month'
   },
   // 'rob'
   'Person|Verb': (str, lex) => {
     lex[str] = 'Verb'
+  },
+  // 'boxes'
+  'Plural|Verb': (str, lex) => {
+    lex[str] = 'Plural'
   },
 }
 export default variables

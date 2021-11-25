@@ -178,5 +178,7 @@ export default [
   'wildlife',
   'wine',
   'wood',
+  'water',
   'wool',
+  'kindergarten',
 ]

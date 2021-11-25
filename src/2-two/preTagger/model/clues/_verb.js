@@ -1,4 +1,4 @@
-const v = 'Verb'
+const v = 'Infinitive'
 
 export default {
   beforeTags: {
@@ -59,5 +59,6 @@ export default {
     on: v,
     off: v,
     // for:true, //settled for
+    all: v//shiver all night
   },
 }

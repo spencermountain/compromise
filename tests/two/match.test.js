@@ -26,7 +26,8 @@ let arr = [
   ['wrote', '#PastTense'],
   ['write', '#Verb'],
   ['survive', '#Verb'],
-  ['attempt', '#Verb'],
+  ['our attempt', 'our #Noun'],
+  ['can attempt', 'can #Verb'],
   ["mc'adams", '#LastName'],
   ['Müller', '#LastName'],
   ['muller', '#LastName'],
@@ -47,7 +48,7 @@ let arr = [
   ['sting', '#Infinitive'],
   ['stung', '#PastTense'],
   ['ocean', '#Noun'],
-  ['shiver', '#Verb'],
+  ['shiver all night', '#Verb all #Noun'],
   [`flanders'`, '#Possessive'],
   ['MMMCMXXIII', '#RomanNumeral'],
   // ['MIMMCMXXIII', '#Acronym'], //invalid roman numeral

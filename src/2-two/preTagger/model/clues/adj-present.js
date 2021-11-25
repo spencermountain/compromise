@@ -4,7 +4,8 @@ import verb from './_verb.js'
 // 'would mean' vs 'is mean'
 const misc = {
   afterTags: {
-    Noun: 'Adjective'//ruling party
+    Noun: 'Adjective',//ruling party
+    Conjunction: undefined //clean and excellent
   }
 }
 const clue = {

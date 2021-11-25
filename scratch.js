@@ -25,10 +25,11 @@ txt = `the skeleten show`
 txt = `major record labels`
 txt = `a nice present`
 txt = `i saw a minor`
-txt = `august`
 txt = `attempt`
 txt = `the ruling party`
-txt = `i met April O'neil`
+txt = `shiver`
+txt = `shiver all night`
+txt = `Bharti initiates talks`
 
 let doc = nlp(txt)
 doc.debug()

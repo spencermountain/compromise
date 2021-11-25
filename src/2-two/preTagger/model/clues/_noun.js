@@ -11,7 +11,7 @@ export default {
     Gerund: n, //uplifting victims
     PastTense: n, //saved storm victims
     Infinitive: n, //profess love
-    Date: n//9pm show
+    Date: n,//9pm show
   },
   afterTags: {
     Value: n, //date nine  -?
@@ -20,8 +20,9 @@ export default {
     PresentTense: n, //babysitting sucks
     PastTense: n, //babysitting sucked
     // Noun:n, //talking therapy, planning process
+    Demonym: n//american touch
   },
-  ownTags: { ProperNoun: n },
+  // ownTags: { ProperNoun: n },
   beforeWords: {
     with: n,//with cakes
     without: n,//

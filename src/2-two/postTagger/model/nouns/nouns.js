@@ -94,6 +94,8 @@ export default [
   { match: '#Value [seconds]', group: 0, unTag: 'Value', tag: 'Plural', reason: '10-seconds' },
   // in time
   { match: 'in [#Infinitive]', group: 0, tag: 'Singular', reason: 'in-age' },
+  // a minor in
+  { match: 'a [#Adjective] #Preposition', group: 0, tag: 'Noun', reason: 'a-minor-in' },
 
   //the repairer said
   { match: '#Determiner [#Noun] said', group: 0, tag: 'Actor', reason: 'the-actor-said' },

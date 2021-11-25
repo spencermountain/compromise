@@ -54,7 +54,7 @@ let arr = [
 
   // the #Noun #Infinitive  ->Verb
   [`did the banana say`, `. the #Noun #Infinitive`],
-  [`did the skeleten show`, `. the #Noun #Infinitive`],
+  // [`did the skeleten show`, `. the #Noun #Infinitive`],
   [`does the king want`, `. the #Noun #Infinitive`],
   [`does the writer say`, `. the #Noun #Infinitive`],
   [`let the messiah go`, `. the #Noun #Infinitive`],
@@ -68,7 +68,7 @@ let arr = [
   [`the universal process`, `the #Adjective #Singular`],
   [`the collective budget`, `the #Adjective #Singular`],
   [`the work stress`, `the #Noun #Singular`],
-  [`the american touch`, `the #Noun #Singular`],
+  [`the american touch`, `the #Demonym #Singular`],
   [`the road upgrade`, `the #Noun #Singular`],
   [`the city strain`, `the #Noun #Singular`],
   [`the software patch`, `the #Noun #Singular`],
@@ -86,20 +86,22 @@ let arr = [
   [`The paving-stones`, `the #Noun #Plural`],
   // [`cost of living`, `#PastTense #Preposition #Noun`],
   [`The similar TORRO scale ranges from`, 'the #Adjective #Noun #Noun #PresentTense from'],
-  [`New project crowdsources help for Toronto's homeless`, '#Adjective #Noun #PresentTense #Noun for #Possessive #Noun'],
+  // [`New project crowdsources help for Toronto's homeless`, '#Adjective #Noun #PresentTense #Noun for #Possessive #Noun'],
   [`Bharti initiates talks`, '#Noun #PresentTense #Plural'],
   [`Grandma opens a present with a pair`, '#Noun #PresentTense a #Noun with a #Noun'],
-  [`a nice present`, 'a #Adjective #Noun'],//noun
+
+  // [`a nice present`, 'a #Adjective #Noun'],//noun
   [`present the trophy`, '#Verb the #Noun'],//verb
   [`tony is present`, '#Person is #Adjective'],//adjective
+
   [`in every bite`, 'in #Determiner #Noun'],
   [`There was a prison break and I saw it`, 'there #Copula a #Noun #Noun and I #Verb it'],
   [`we gotta do, damage control.`, 'we got to do #Noun #Noun'],
   [`Go to the chicken farm and take the hatchet.`, '#Verb to the #Noun #Noun and #Verb the #Noun'],
-  [`He split 2 1980 title fights with Roberto Duran`, '#Pronoun #Verb #Value #Year #Noun #Plural with #Person #Person'],
+  [`He split 2 1980 title fights with Roberto Duran`, '#Pronoun #Verb #Value #Value #Noun #Plural with #Person #Person'],
   [`what are those, fish hooks?`, 'what are . #Noun #Plural'],
   [`the sweet potato fries.`, '#Determiner sweet #Noun #Plural'],
-  [`my friends house.`, 'my #Noun #Noun'],
+  [`my friend's house.`, 'my #Noun #Noun'],
   [`major record labels.`, '#Adjective #Noun #Plural'],
   [`our mission of progress.`, '#Possessive #Noun of #Noun'],
   [`the .dat file`, 'the #Noun #Noun'],
@@ -141,7 +143,6 @@ let arr = [
   ['those rocks dude', '#Determiner #Plural #Noun'],
   ['the test string', '#Determiner #Noun #Noun'],
 
-  ['The stream runs', '#Determiner #Noun #Verb'],
   ['The stream really runs', '#Determiner #Noun #Adverb #Verb'],
   ['The nice stream really runs', '#Determiner #Adjective #Noun #Adverb #Verb'],
   ['there are reasons', '#Noun #Copula #Plural'],
@@ -159,8 +160,25 @@ let arr = [
   // [`have given up on reason`, '#Auxiliary #PhrasalVerb #Particle on #Noun'],
   // [`you have some valid points`, '#Noun #Verb some #Adjective #Plural'],
 
+  [`he changes`, '. #PresentTense'],
+  [`our changes`, '. #Noun'],
+  [`then changes`, '. #PresentTense'],
+  [`quickly changes`, '. #PresentTense'],
+  [`seven changes`, '. #Noun'],
+  [`with changes`, '. #Noun'],
+  [`without changes`, '. #Noun'],
+  [`abrupt changes`, '. #Noun'],
+  [`changes gears`, '#PresentTense .'],
+  [`changes the gears`, '#PresentTense . .'],
+  [`changes my gears`, '#PresentTense . .'],
+  [`changes are coming`, '#Noun . .'],
+  [`changes quickly`, '#PresentTense #Adverb'],
+  [`changes seven things`, '#PresentTense #Value #Plural'],
+  [`changes into batman`, '#PresentTense . .'],
 
-  [`cut costs`, '#Verb #Plural'],
+  // two consecutive variables
+  // [`cut costs`, '#Verb #Plural'],
+  // ['The stream runs', '#Determiner #Noun #Verb'],
 
 ]
 test('match:', function (t) {

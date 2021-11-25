@@ -4,7 +4,7 @@ export default {
     Adverb: true, //quickly date
     Negative: true, //not date
     Plural: true, //characters drink
-    Pronoun: true//he changes
+    // ProperNoun: true,//google thought
   },
   afterTags: {
     Determiner: true, //flash the
@@ -34,6 +34,9 @@ export default {
     us: true,
     me: true,
     them: true,
+    he: true,
+    she: true,
+    it: true,
   },
   afterWords: {
     the: true, //echo the

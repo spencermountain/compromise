@@ -20,7 +20,11 @@ nlp.verbose('tagger')
 let txt
 txt = `#cool @cool`
 txt = `Fundo ltd.`
-txt = `April O'neil`
+txt = `the Princess thought`
+txt = `the skeleten show`
+txt = `major record labels`
+txt = `a nice present`
+txt = `he initiates a talk`
 
 let doc = nlp(txt)
 doc.debug()

@@ -1,5 +1,6 @@
 import fastTag from '../_fastTag.js'
 import looksPlural from './looksPlural.js'
+import getTense from '../../methods/transform/verbs/getTense/index.js'
 // tags that are neither plural or singular
 const uncountable = [
   'Acronym',
@@ -26,6 +27,17 @@ const setPluralSingular = function (term) {
   }
 }
 
+// try to guess the tense of a naked verb
+const setTense = function (term) {
+  let tags = term.tags
+  if (tags.has('Verb') && tags.size === 1) {
+    let guess = getTense(term.normal)
+    if (guess) {
+      fastTag(term, guess, '3-verb-tense-guess')
+    }
+  }
+}
+
 //add deduced parent tags to our terms
 const fillTags = function (terms, i, model) {
   let term = terms[i]
@@ -39,5 +51,7 @@ const fillTags = function (terms, i, model) {
   }
   // turn 'Noun' into Plural/Singular
   setPluralSingular(term)
+  // turn 'Verb' into Present/PastTense
+  setTense(term, model)
 }
 export default fillTags

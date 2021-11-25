@@ -4,7 +4,6 @@ const here = '[three/verb-toInfinitive] '
 
 test('toInfinitive:', function (t) {
   let arr = [
-    // known forms:
     ['he walked', 'he walk'],
     ['i walked', 'i walk'],
     ['we walked', 'we walk'],
@@ -15,10 +14,8 @@ test('toInfinitive:', function (t) {
     ['our user walked', 'our user walk'],
     ['the eye closed', 'the eye close'],
     ['the eyes closed', 'the eyes close'],
-
     ['their colloseum will open', 'their colloseum open'],
     ['their children will open', 'their children open'],
-
     ['he walks', 'he walk'],
     ['he walked', 'he walk'],
     ['he will walk', 'he walk'],
@@ -26,7 +23,6 @@ test('toInfinitive:', function (t) {
     ['he was walking', 'he walk'],
     ['i am walking', 'i walk'],
     ['he will be walking', 'he walk'],
-
     ['he has walked', 'he walk'],
     ['he had walked', 'he walk'],
     ['he will have walked', 'he walk'],
@@ -61,7 +57,6 @@ test('toInfinitive:', function (t) {
     ['he was not going to walk', 'he not walk'],
     ['we are putting', 'we put'],
 
-
     // want-infinitive
     // ['he wants to walk', 'he want to walk'],
     // ['he wanted to walk', 'he want to walk'],
@@ -69,10 +64,9 @@ test('toInfinitive:', function (t) {
 
     // ["persuaded", "persuade"],
     // ["overcrowded", "overcrowd"],
-
     ["lost", "lose"],
 
-    // from particple forms
+    // from particple
     ["overthrown", "overthrow"],
     ["thrown", "throw"],
     ["overgrown", "overgrow"],
@@ -82,7 +76,6 @@ test('toInfinitive:', function (t) {
     // ["withdrawn", "withdraw"],
     ["sworn", "swear"],
     ["worn", "wear"],
-
     ["forgotten", "forget"],
     ["bitten", "bite"],
     ["stolen", "steal"],
@@ -90,8 +83,6 @@ test('toInfinitive:', function (t) {
     // ["overtaken", "overtake"],
     // ["undertaken", "undertake"],
     // ["taken", "take"],
-
-
     // ["overseen", "oversee"],
     // ["foreseen", "foresee"],
     // ["overridden", "override"],
@@ -105,15 +96,11 @@ test('toInfinitive:', function (t) {
     // ["done", "do"],
     // ["withstood", "withstand"],
     // ["ground", "grind"],
-
     ["upheld", "uphold"],
     ["withheld", "withhold"],
     // ["resold", "resell"],
     // ["repaid", "repay"],
     ["dyed", "dye"],
-
-
-    ["glutted", "glut"],
     ["gutted", "gut"],
     ["spotted", "spot"],
     ["slotted", "slot"],
@@ -137,14 +124,10 @@ test('toInfinitive:', function (t) {
     // ["silhouetted", "silhouette"],
     ["netted", "net"],
     ["formatted", "format"],
-
-
     ["wasted", "waste"],
     ["tasted", "taste"],
     // ["quoted", "quote"],
     // ["piloted", "pilot"],
-
-
     ["consulted", "consult"],
     ["resulted", "result"],
     ["catapulted", "catapult"],
@@ -153,7 +136,6 @@ test('toInfinitive:', function (t) {
     ["tilted", "tilt"],
     ["salted", "salt"],
     ["malted", "malt"],
-
     ["exited", "exit"],
     ["deposited", "deposit"],
     ["transited", "transit"],
@@ -162,16 +144,12 @@ test('toInfinitive:', function (t) {
     ["inherited", "inherit"],
     ["solicited", "solicit"],
     ["expedited", "expedite"],
-
     // ["interpreted", "interpret"],
-    // ["filleted", "fillet"],
-    // ["pelleted", "pellet"],
     // ["marketed", "market"],
     // ["skyrocketed", "skyrocket"],
     // ["crocheted", "crochet"],
     // ["targeted", "target"],
     // ["acted", "act"],
-
     ["accentuated", "accentuate"],
     ["situated", "situate"],
     ["perpetuated", "perpetuate"],
@@ -198,16 +176,12 @@ test('toInfinitive:', function (t) {
     ["enunciated", "enunciate"],
     // ["appreciated", "appreciate"],
     // ["created", "create"],
-
-
     // ["warehoused", "warehouse"],
     // ["focused", "focus"],
     // ["focussed", "focus"],
     ["kissed", "kiss"],
     ["missed", "miss"],
     // ["biased", "bias"],
-
-
     ["spurred", "spur"],
     ["blurred", "blur"],
     ["incurred", "incur"],
@@ -223,8 +197,6 @@ test('toInfinitive:', function (t) {
     ["jarred", "jar"],
     ["scarred", "scar"],
     ["barred", "bar"],
-
-
     ["scored", "score"],
     // ["restored", "restore"],
     ["flavored", "flavor"],
@@ -237,13 +209,10 @@ test('toInfinitive:', function (t) {
     ["mirrored", "mirror"],
     ["tailored", "tailor"],
     ["anchored", "anchor"],
-
-
     // ["required", "require"],
     // ["acquired", "acquire"],
     // ["aired", "air"],
     // ["adhered", "adhere"],
-
     ["stopped", "stop"],
     ["topped", "top"],
     ["popped", "pop"],
@@ -269,18 +238,14 @@ test('toInfinitive:', function (t) {
     ["scrapped", "scrap"],
     ["snapped", "snap"],
     ["mapped", "map"],
-
     // ["underdeveloped", "underdevelop"],
     // ["well-developed", "well-develop"],
-
     ["revamped", "revamp"],
     ["stamped", "stamp"],
     ["clamped", "clamp"],
-
     ["helped", "help"],
     ["seeped", "seep"],
     ["reaped", "reap"],
-
     ["banned", "ban"],
     ["frowned", "frown"],
     ["drowned", "drown"],
@@ -293,12 +258,10 @@ test('toInfinitive:', function (t) {
     ["foreign-owned", "foreign-own"],
     ["owned", "own"],
     ["pawned", "pawn"],
-
     ["attuned", "attune"],
     ["tuned", "tune"],
     ["postponed", "postpone"],
     ["boned", "bone"],
-
     ["stunned", "stun"],
     ["twinned", "twin"],
     ["underpinned", "underpin"],
@@ -309,8 +272,7 @@ test('toInfinitive:', function (t) {
     ["planned", "plan"],
     ["scanned", "scan"],
     ["canned", "can"],
-
-    // ["condemned", "condemn"],
+    ["condemned", "condemn"],
     ["intertwined", "intertwine"],
     ["entwined", "entwine"],
     ["destined", "destine"],
@@ -320,7 +282,6 @@ test('toInfinitive:', function (t) {
     ["undermined", "undermine"],
     ["examined", "examine"],
     ["mined", "mine"],
-
     ["outlined", "outline"],
     ["underlined", "underline"],
     ["streamlined", "streamline"],
@@ -328,7 +289,6 @@ test('toInfinitive:', function (t) {
     ["inclined", "incline"],
     ["declined", "decline"],
     ["lined", "line"],
-
     ["machined", "machine"],
     ["imagined", "imagine"],
     ["confined", "confine"],
@@ -339,13 +299,7 @@ test('toInfinitive:', function (t) {
     ["convened", "convene"],
     ["planed", "plane"],
     ["caned", "cane"],
-
-
-    // ["accustomed", "accustom"],
     // ["blossomed", "blossom"],
-    // ["programmed", "programme"],
-
-
     ["annulled", "annul"],
     ["extolled", "extol"],
     ["controlled", "control"],
@@ -366,7 +320,6 @@ test('toInfinitive:', function (t) {
     ["profiled", "profile"],
     ["scaled", "scale"],
     ["baled", "bale"],
-
     ["invoked", "invoke"],
     ["revoked", "revoke"],
     ["smoked", "smoke"],
@@ -375,19 +328,12 @@ test('toInfinitive:', function (t) {
     ["mimicked", "mimic"],
     ["flaked", "flake"],
     ["baked", "bake"],
-
-    // ["stymied", "stymie"],
     // ["clothed", "clothe"],
     // ["wronged", "wrong"],
-    // ["tinged", "ting"],
-
-
     ["guaranteed", "guarantee"],
     ["agreed", "agree"],
     ["freed", "free"],
     ["fed", "feed"],
-
-
     ["reworded", "reword"],
     ["worded", "word"],
     ["afforded", "afford"],
@@ -396,28 +342,66 @@ test('toInfinitive:', function (t) {
     ["rewarded", "reward"],
     ["awarded", "award"],
     ["guarded", "guard"],
-    // ["well-regarded", "well-regard"],
     ["regarded", "regard"],
     ["discarded", "discard"],
     ["carded", "card"],
     ["bombarded", "bombard"],
     ["ended", "end"],
-    // ["aided", "aid"],
+    ["aided", "aid"],
     ["plodded", "plod"],
     ["skidded", "skid"],
     ["embedded", "embed"],
     ["dissuaded", "dissuade"],
     ["persuaded", "persuade"],
-
-    // ["combed", "comb"],
     ["dubbed", "dub"],
     ["bobbed", "bob"],
     ["ribbed", "rib"],
     ["swabbed", "swab"],
     ["stabbed", "stab"],
     ["nabbed", "nab"],
-
     ['opened', 'open']
+
+
+    /*
+    // nov 25
+  ["resold", "resell"],
+  ["blitzed", "blitz"],
+  ["overpaid", "overpay"],
+  ["toasted", "toast"],
+  ["united", "unite"],
+  ["forecasted", "forecast"],
+  ["marketed", "market"],
+  ["skyrocketed", "skyrocket"],
+  ["ticketed", "ticket"],
+  ["aroused", "arouse"],
+  ["espoused", "espouse"],
+  ["warehoused", "warehouse"],
+  ["focused", "focus"],
+  ["created", "create"],
+  ["required", "require"],
+  ["acquired", "acquire"],
+  ["aired", "air"],
+  ["persevered", "persevere"],
+  ["imprisoned", "imprison"],
+  ["poisoned", "poison"],
+  ["seasoned", "season"],
+  ["combed", "comb"],
+  ["climbed", "climb"],
+  ["succumbed", "succumb"],
+  ["crowded", "crowd"],
+  ["decreed", "decree"],
+  ["longed", "long"],
+  ["hacked", "hack"],
+  ["clocked", "clock"],
+  ["blocked", "block"],
+  ["linked", "link"],
+  ["marked", "mark"],
+  ["tasked", "task"],
+  ["totalled", "total"],
+  ["intervened", "intervene"],
+  ["reckoned", "reckon"],
+  ["closed", "close"],
+  */
   ]
   arr.forEach(a => {
     let doc = nlp(a[0])

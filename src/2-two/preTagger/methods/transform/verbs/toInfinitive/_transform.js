@@ -184,7 +184,7 @@ let rules = {
     },
     // misc no e endings
     {
-      reg: /(..)(h|w|ion|n[dt]|ai.|all|int|ld|oo.|ght|rm|lm|rl|x|bt|rb)ed$/i,
+      reg: /(..)(h|w|ion|n[dt]|all|int|ld|oo.|ght|rm|lm|rl|x|bt|rb)ed$/i,
       to: '$1$2',
     },
 
@@ -261,6 +261,10 @@ let rules = {
       to: 'wn',
     },
     {
+      reg: /([aeiou]{2})ned$/i, //rained, ruined
+      to: '$1n',
+    },
+    {
       reg: /([aiu])ned$/i, //shined
       to: '$1ne',
     },
@@ -300,6 +304,10 @@ let rules = {
       to: '$1',
     },
     {
+      reg: /([aeiou]{2})ked$/i,//cooked, leaked
+      to: '$1k',
+    },
+    {
       reg: /([^aeiouy][aeiou])ked$/i,
       to: '$1ke',
     },
@@ -313,7 +321,7 @@ let rules = {
       to: '$1',
     },
     {
-      reg: /([aeiou]n)ed$/i, // rained
+      reg: /([aeiou]n)ed$/i, // rained, poisoned
       to: '$1',
     },
     // -hed
@@ -352,7 +360,7 @@ let rules = {
       to: '$1',
     },
     {
-      reg: /(..[csrltvh]or)ed$/i,//restored
+      reg: /(..[csrtvhgkyw][oe]r)ed$/i,//restored, mustered
       to: '$1',
     },
     {
@@ -390,11 +398,11 @@ let rules = {
       to: '$1',
     },
     {
-      reg: /ited$/i,//visited
-      to: 'it',
+      reg: /([brmsf])ited$/i,//visited, vomited
+      to: '$1it',
     },
     {
-      reg: /([^aeiou])asted$/i,//wasted, tasted
+      reg: /([^cl])asted$/i,//wasted, tasted
       to: '$1aste',
     },
     {

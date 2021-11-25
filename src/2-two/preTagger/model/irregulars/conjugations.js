@@ -721,6 +721,9 @@ let conjugations = {
   pee: {
     pst: '_d',
   },
+  permeate: {
+    pst: '_d',
+  },
   programme: {
     pst: '_d',
   },

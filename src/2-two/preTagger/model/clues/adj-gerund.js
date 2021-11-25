@@ -9,4 +9,5 @@ const clue = {
   beforeWords: Object.assign({}, adj.beforeWords, gerund.beforeWords),
   afterWords: Object.assign({}, adj.afterWords, gerund.afterWords),
 }
+// console.log(clue)
 export default clue

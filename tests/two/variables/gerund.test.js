@@ -51,7 +51,7 @@ let arr = [
   [`was so nausiating`, '#Copula #Adverb #Adjective'],
   [`extremely moving`, '#Adverb #Adjective'],
   [`this reckoning`, '#Determiner #Noun'],
-  [`it was redefining`, '#Pronoun #Copula #Adjective'],
+  [`it was redefining`, '#Pronoun #Copula #Gerund'],
   [`it was a redefining moment`, '#Pronoun #Copula #Determiner #Adjective #Noun'],
   [`i found it isolating`, '#Noun #PastTense #Noun #Adjective'],
   [`it was disgusting`, '#Pronoun #Copula #Adjective'],

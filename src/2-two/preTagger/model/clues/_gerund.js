@@ -1,8 +1,11 @@
 const g = 'Gerund'
 
+// Adj|Gerund
+// Noun|Gerund
+
 export default {
   beforeTags: {
-    Verb: g, // loves shocking
+    // Verb: g, // loves shocking
     Adverb: g, //quickly shocking
     Preposition: g, //by insulting
     Conjunction: g, //to insulting

@@ -25,7 +25,7 @@ txt = `the skeleten show`
 txt = `major record labels`
 txt = `a nice present`
 txt = `i saw a minor`
-txt = `it was disgusting`
+txt = `it was redefining`
 
 let doc = nlp(txt)
 doc.debug()

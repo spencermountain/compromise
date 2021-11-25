@@ -51,10 +51,10 @@ const checkTag = (term, obj = {}) => {
   // very rough sort, so 'Noun' is after ProperNoun, etc
   let tags = Array.from(term.tags).sort((a, b) => (a.length > b.length ? -1 : 1))
   let found = tags.find(tag => obj.hasOwnProperty(tag))
-  found = obj[found]
   if (found && env.DEBUG_TAGS) {
     console.log(`\n  \x1b[2m\x1b[3m      ↓ - '${term.normal}' (#${found})  \x1b[0m`)
   }
+  found = obj[found]
   return found
 }
 
@@ -62,7 +62,6 @@ const pickTag = function (terms, i, clues) {
   if (!clues) {
     return
   }
-  // console.log(clues.beforeTags)
   // look -> right word, first
   let tag = checkWord(terms[i + 1], clues.afterWords)
   // look <- left word, second

@@ -220,7 +220,6 @@ export default [
   'look',
   'love',
   'lump',
-  'man',
   'march',
   'market',
   'mash',

@@ -3614,11 +3614,6 @@ export default [
     tags: 'CC, PRP, VBZ, JJ',
   },
   {
-    text: 'Cure is to get the sensor cleaned',
-    tags: 'NN, VBZ, TO, VB, DT, NN, VBN',
-  },
-
-  {
     text: 'Is there any cure for mouse poison?',
     tags: 'VBZ, EX, DT, NN, IN, NN, NN',
   },
@@ -4400,10 +4395,6 @@ export default [
     tags: 'PRP, MD, RB, VB, NNP, DT, NN, JJ, NN, CC, DT, NN, IN, NNS',
   },
   {
-    text: 'Boiled WHITE rice and boiled chicken breast.',
-    tags: 'VBN, JJ, NN, CC, VBN, NN, NN',
-  },
-  {
     text: 'Bland food.',
     tags: 'JJ, NN',
   },
@@ -4707,10 +4698,6 @@ export default [
   {
     text: "He's dropping we",
     tags: 'PRP, VBZ, VBG, NN',
-  },
-  {
-    text: 'I know this is going to be expensive.',
-    tags: 'PRP, VBP, DT, VBZ, VBG, TO, VB, JJ',
   },
   {
     text: "It's actually one of the alternative therapies for EPM",

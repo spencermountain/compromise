@@ -288,6 +288,13 @@ let arr = [
   ["GIC airlines", '#Organization #Organization'],
   [`charcoal chicken`, '#Noun #Noun'],
 
+  // not roman numerals
+  ['LI', '!#RomanNumeral'],
+  ['DC', '!#RomanNumeral'],
+  ['MD', '!#RomanNumeral'],
+  ['DM', '!#RomanNumeral'],
+  ['ML', '!#RomanNumeral'],
+
 ]
 test('match:', function (t) {
   let res = []

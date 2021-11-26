@@ -36,7 +36,8 @@ clues['Plural|Verb'] = {
 }
 // add some custom plural clues
 Object.assign(clues['Plural|Verb'].beforeTags, {
-  Conjunction: 'PresentTense' //and changes
+  Conjunction: 'PresentTense', //and changes
+  // Noun: undefined
 })
 Object.assign(clues['Plural|Verb'].afterTags, {
   Noun: 'PresentTense', //changes gears

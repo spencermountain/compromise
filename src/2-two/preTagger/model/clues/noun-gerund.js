@@ -5,7 +5,13 @@ import gerund from './_gerund.js'
 const misc = {
   beforeTags: { Copula: 'Gerund', PastTense: 'Gerund', PresentTense: 'Gerund', Infinitive: 'Gerund' },
   afterTags: {},
-  beforeWords: { are: 'Gerund', were: 'Gerund', be: 'Gerund', no: 'Gerund', without: 'Gerund' },
+  beforeWords: {
+    are: 'Gerund', were: 'Gerund', be: 'Gerund', no: 'Gerund', without: 'Gerund',
+    //are you playing
+    you: 'Gerund', we: 'Gerund', they: 'Gerund', he: 'Gerund', she: 'Gerund',
+    //stop us playing
+    us: 'Gerund', them: 'Gerund'
+  },
   afterWords: {},
 }
 const clue = {

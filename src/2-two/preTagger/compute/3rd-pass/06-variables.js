@@ -1,7 +1,45 @@
 import fastTag from '../_fastTag.js'
 const env = typeof process === 'undefined' ? self.env : process.env || {} // eslint-disable-line
 
-const sortTags = function () { }
+const isCapital = (terms, i) => {
+  if (terms[i].tags.has('ProperNoun')) {// 'Comfort Inn'
+    return 'Noun'
+  }
+}
+const isAloneVerb = (terms, i) => {
+  if (i === 0) {// 'Help'
+    return 'Verb'
+  }
+}
+
+const adhoc = {
+  'Adj|Gerund': (terms, i) => {
+    return isCapital(terms, i)
+    //   // return isAloneVerb(terms, i)
+  },
+  'Adj|Noun': (terms, i) => {
+    return isCapital(terms, i)
+  },
+  'Adj|Past': (terms, i) => {
+    return isCapital(terms, i)
+  },
+  'Adj|Present': (terms, i) => {
+    return isCapital(terms, i)
+    //   // return isAloneVerb(terms, i)
+  },
+  'Noun|Gerund': (terms, i) => {
+    return isCapital(terms, i)
+  },
+  'Noun|Verb': (terms, i) => {
+    return isCapital(terms, i) || isAloneVerb(terms, i)
+  },
+  'Person|Noun': (terms, i) => {
+    return isCapital(terms, i)
+  },
+  'Person|Verb': (terms, i) => {
+    return isCapital(terms, i)
+  },
+}
 
 
 const checkWord = (term, obj) => {
@@ -75,9 +113,9 @@ const doVariables = function (terms, i, model) {
     }
     let tag = pickTag(terms, i, clues[form], model)
     // lean-harder on some variable forms
-    // if (adhoc[form]) {
-    //   tag = adhoc[form](terms, i) || tag
-    // }
+    if (adhoc[form]) {
+      tag = adhoc[form](terms, i) || tag
+    }
     // did we find anything?
     if (tag) {
       if (env.DEBUG_TAGS) {

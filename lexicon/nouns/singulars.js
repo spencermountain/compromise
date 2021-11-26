@@ -181,6 +181,9 @@ export default [
   'kitten',
   'republic',
   'record label',
-
+  // -ven
+  'oven',
+  'heaven',
+  'raven',
 
 ]

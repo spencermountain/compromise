@@ -14,8 +14,11 @@ const past = {
     Possessive: 'PastTense', //hooked him
     Pronoun: 'PastTense', //hooked me
     Determiner: 'PastTense', //hooked the
+    Adverb: 'PastTense', //cooked perfectly
   },
   beforeWords: {
+    be: 'PastTense',//be hooked
+    get: 'PastTense',//get charged
     had: 'PastTense',
     has: 'PastTense',
     have: 'PastTense',

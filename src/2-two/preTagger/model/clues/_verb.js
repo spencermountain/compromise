@@ -35,7 +35,7 @@ export default {
     must: v,
     us: v,
     me: v,
-    them: v,
+    // them: v,
     he: v,
     she: v,
     it: v,

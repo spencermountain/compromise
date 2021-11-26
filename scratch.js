@@ -23,6 +23,19 @@ txt = `Fundo ltd.`
 txt = `repurchase the milk`
 txt = `imagines shocking`
 txt = `the shocking cost of health`
+txt = `the former president of the United States of America`
+txt = `1575 Leonardo beats Ruy Lopez`
+txt = `yoga and horses`
+txt = `to probe and alter`
+txt = `the city and surrounding area`
+txt = `the Senate's composition and powers`
+txt = `small twigs & stems`
+// txt = `kiss of death`
+// txt = `I only feed them dry food.`
+// txt = `my pre and post reading opinion`
+// txt = `10 markets and pop-ups`
+txt = `the winds and storms`
+// txt = `collection of odds and ends`
 
 let doc = nlp(txt)
 doc.debug()

@@ -14,5 +14,6 @@ const clue = {
   beforeWords: Object.assign({}, adj.beforeWords, verb.beforeWords),
   afterWords: Object.assign({}, adj.afterWords, verb.afterWords),
 }
+// console.log(clue.beforeWords)
 // console.log(clue)
 export default clue

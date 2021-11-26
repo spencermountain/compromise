@@ -8,7 +8,7 @@ export default [
   //is all
   { match: '#Copula #Adverb? [all]', group: 0, tag: 'Noun', reason: 'is-all' },
   //the orange is
-  { match: '#Determiner [#Adjective] (#Copula|#PastTense|#Auxiliary)', group: 0, tag: 'Noun', reason: 'the-adj-2' },
+  // { match: '#Determiner [#Adjective] (#Copula|#PastTense|#Auxiliary)', group: 0, tag: 'Noun', reason: 'the-orange-is' },
   // have fun
   { match: `(have|had) [#Adjective] #Preposition .`, group: 0, tag: 'Noun', reason: 'have-fun' },
   // brewing giant

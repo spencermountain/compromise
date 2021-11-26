@@ -39,3 +39,5 @@ const model = {
 export default {
   two: expandLexicon(model),
 }
+
+// console.log(model.lexicon.thought)

@@ -35,6 +35,12 @@ txt = `small twigs & stems`
 // txt = `my pre and post reading opinion`
 // txt = `10 markets and pop-ups`
 txt = `the winds and storms`
+txt = `flash could`
+txt = `The new century demands new partnerships for peace and security.`
+txt = `bullet artist [shows] his arsenal`
+txt = `The U of R is also recommended, too`
+txt = `flash is`
+// txt = `each negative thought`
 // txt = `collection of odds and ends`
 
 let doc = nlp(txt)

@@ -171,12 +171,6 @@ export default [
     ifNo: ['going'],
     reason: 'ignoring-commute',
   },
-  // seek progress
-  // {
-  //   match: '#Infinitive [#Infinitive]',
-  //   group: 0,
-  //   tag: 'Noun',
-  //   ifNo: ['go', 'have', 'help', 'do', '#PhrasalVerb'],
-  //   reason: 'seek-progress',
-  // },
+  // noun-pastTense variables
+  { match: '#Determiner #Adjective? [(shed|thought|rose|bid|saw|spelt)]', group: 0, tag: 'Noun', reason: 'noun-past' },
 ]

@@ -27,7 +27,7 @@ const parseXml = function (id, tag1, tag2) {
 
 const res = {}
 const tag1 = 'NN'
-const tag2 = 'VBG'
+const tag2 = 'VBD'
 
 const ids = ['0004']
   // let ids = []

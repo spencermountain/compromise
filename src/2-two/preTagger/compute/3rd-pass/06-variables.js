@@ -7,7 +7,7 @@ const isCapital = (terms, i) => {
   }
 }
 const isAloneVerb = (terms, i) => {
-  if (i === 0) {// 'Help'
+  if (i === 0 && !terms[1]) {// 'Help'
     return 'Verb'
   }
 }
@@ -15,7 +15,6 @@ const isAloneVerb = (terms, i) => {
 const adhoc = {
   'Adj|Gerund': (terms, i) => {
     return isCapital(terms, i)
-    //   // return isAloneVerb(terms, i)
   },
   'Adj|Noun': (terms, i) => {
     return isCapital(terms, i)
@@ -25,7 +24,6 @@ const adhoc = {
   },
   'Adj|Present': (terms, i) => {
     return isCapital(terms, i)
-    //   // return isAloneVerb(terms, i)
   },
   'Noun|Gerund': (terms, i) => {
     return isCapital(terms, i)
@@ -123,7 +121,7 @@ const doVariables = function (terms, i, model) {
       }
       setTag(term, tag, model)
     } else if (env.DEBUG_TAGS) {
-      console.log('   -> x')
+      console.log(`\n -> X  - '${term.normal}'  : ${form}  `)
     }
   }
 }

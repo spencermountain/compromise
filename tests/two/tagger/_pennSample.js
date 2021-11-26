@@ -2376,10 +2376,6 @@ export default [
     tags: 'NN, NNP, IN, NNP',
   },
   {
-    text: 'Day One Interviews Day Two Interviews',
-    tags: 'NN, CD, NNS, NN, CD, NNS',
-  },
-  {
     text: 'Shawna Johnson Recruiting Coordinator',
     tags: 'NNP, NNP, NN, NN',
   },
@@ -5876,10 +5872,6 @@ export default [
   {
     text: 'VCU has the # 1 art school in America, and EXCELS in healthcare and medical schooling.',
     tags: 'NNP, VBZ, DT, NN, CD, NN, NN, IN, NNP, CC, VBZ, IN, NN, CC, JJ, NN',
-  },
-  {
-    text: 'The U of R is also recommended, too!',
-    tags: 'DT, NNP, IN, NNP, VBZ, RB, VBN, RB',
   },
   {
     text: 'A slice of heaven in winter park off forsyth!',

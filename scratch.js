@@ -18,30 +18,31 @@ nlp.verbose('tagger')
 
 
 let txt
-txt = `#cool @cool`
-txt = `Fundo ltd.`
 txt = `repurchase the milk`
-txt = `imagines shocking`
-txt = `the shocking cost of health`
-txt = `the former president of the United States of America`
-txt = `1575 Leonardo beats Ruy Lopez`
-txt = `yoga and horses`
-txt = `to probe and alter`
-txt = `the city and surrounding area`
-txt = `the Senate's composition and powers`
-txt = `small twigs & stems`
-// txt = `kiss of death`
-// txt = `I only feed them dry food.`
-// txt = `my pre and post reading opinion`
-// txt = `10 markets and pop-ups`
-txt = `the winds and storms`
-txt = `flash could`
-txt = `The new century demands new partnerships for peace and security.`
-txt = `bullet artist [shows] his arsenal`
-txt = `The U of R is also recommended, too`
-txt = `flash is`
-// txt = `each negative thought`
+
+// txt = `yoga and horses`
+// txt = `to probe and alter`
+// txt = `the city and surrounding area`
+// txt = `the Senate's composition and powers`
+// txt = `small twigs & stems`
+// txt = `the winds and storms`
 // txt = `collection of odds and ends`
+
+// txt = `10 markets and pop-ups`
+txt = `gangs and kids cutting class`
+txt = `two banks merged`
+txt = `the company quite brilliantly, said Mr. Newhouse`
+txt = `craze is sweeping the country`
+txt = `You really got me thinking, I enjoy`
+txt = `SNAP is right in part`
+txt = `It is trying to play ice hockey`
+txt = `Islamic Jihad known as the Vanguards`
+txt = `and new business models for transmission `
+txt = `we expect to have separate contracts`
+txt = `Does that work for you`
+txt = `Nothing wrong with rotorua`
+txt = ` United States almost `
+
 
 let doc = nlp(txt)
 doc.debug()

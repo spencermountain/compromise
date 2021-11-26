@@ -31,6 +31,9 @@ const adhoc = {
   'Noun|Verb': (terms, i) => {
     return isCapital(terms, i) || isAloneVerb(terms, i)
   },
+  'Plural|Verb': (terms, i) => {
+    return isCapital(terms, i) || isAloneVerb(terms, i)
+  },
   'Person|Noun': (terms, i) => {
     return isCapital(terms, i)
   },

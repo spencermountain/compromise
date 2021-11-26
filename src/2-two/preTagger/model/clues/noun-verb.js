@@ -4,7 +4,9 @@ import verb from './_verb.js'
 // 'boot the ball'   -  'the red boot'
 // 'boots the ball'  -   'the red boots'
 const clue = {
-  beforeTags: Object.assign({}, verb.beforeTags, noun.beforeTags,),
+  beforeTags: Object.assign({}, verb.beforeTags, noun.beforeTags, {
+    // Noun: undefined
+  }),
   afterTags: Object.assign({}, verb.afterTags, noun.afterTags, {
     ProperNoun: 'Infinitive', Gerund: 'Infinitive', Adjective: 'Infinitive',
     Copula: 'Singular'

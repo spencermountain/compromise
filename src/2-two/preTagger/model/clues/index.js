@@ -20,27 +20,30 @@ const clues = {
   'Person|Verb': personVerb,
 }
 
-const copy = (obj) => {
-  return Object.keys(obj).reduce((h, k) => {
+const copy = (obj, more) => {
+  let res = Object.keys(obj).reduce((h, k) => {
     h[k] = obj[k] === 'Infinitive' ? 'PresentTense' : 'Plural'
     return h
   }, {})
+  return Object.assign(res, more)
 }
 
 // make a copy of this one
 clues['Plural|Verb'] = {
-  beforeWords: copy(clues['Noun|Verb'].beforeWords),
-  afterWords: copy(clues['Noun|Verb'].afterWords),
-  beforeTags: copy(clues['Noun|Verb'].beforeTags),
-  afterTags: copy(clues['Noun|Verb'].afterTags),
+  beforeWords: copy(clues['Noun|Verb'].beforeWords, {
+
+  }),
+  afterWords: copy(clues['Noun|Verb'].afterWords, {
+    his: 'PresentTense', her: 'PresentTense', its: 'PresentTense'
+  }),
+  beforeTags: copy(clues['Noun|Verb'].beforeTags, {
+    Conjunction: 'PresentTense', //and changes
+    Noun: undefined //the century demands
+  }),
+  afterTags: copy(clues['Noun|Verb'].afterTags, {
+    Noun: 'PresentTense', //changes gears
+    Value: 'PresentTense' //changes seven gears
+  }),
 }
 // add some custom plural clues
-Object.assign(clues['Plural|Verb'].beforeTags, {
-  Conjunction: 'PresentTense', //and changes
-  // Noun: undefined
-})
-Object.assign(clues['Plural|Verb'].afterTags, {
-  Noun: 'PresentTense', //changes gears
-  Value: 'PresentTense' //changes seven gears
-})
 export default clues

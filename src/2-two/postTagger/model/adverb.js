@@ -40,7 +40,7 @@ export default [
   // a bit cold
   { match: 'a [(little|bit|wee) bit?] #Adjective', group: 0, tag: 'Adverb', reason: 'a-bit-cold' },
   // super strong
-  { match: `[super] #Adjective #Noun`, group: 0, tag: 'Adverb', reason: 'super-strong' },
+  { match: `[(super|pretty)] #Adjective`, group: 0, tag: 'Adverb', reason: 'super-strong' },
   // become overly weakened
   { match: '(become|fall|grow) #Adverb? [#PastTense]', group: 0, tag: 'Adjective', reason: 'overly-weakened' },
   // a completely beaten man

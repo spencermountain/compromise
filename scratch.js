@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/three.js'
 // import nlp from './builds/compromise.cjs'
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 // bug!
 // let doc = nlp(`extra. match.`)
@@ -20,30 +20,20 @@ import nlp from './src/three.js'
 let txt
 txt = `#cool @cool`
 txt = `Fundo ltd.`
-txt = `the Princess thought`
-txt = `the skeleten show`
-txt = `major record labels`
-txt = `a nice present`
-txt = `i saw a minor`
-txt = `attempt`
-txt = `the ruling party`
-txt = `shiver`
-txt = `shiver all night`
-txt = `Bharti initiates talks`
+txt = `repurchase the milk`
+txt = `imagines shocking`
+txt = `the shocking cost of health`
 
-// let doc = nlp(txt)
-// doc.debug()
-
-
-txt = `our house looks great`
-txt = `the vision appears and starts to walk and sing`
-txt = `the vision will appear and will start to walk and sing`
 let doc = nlp(txt)
+doc.debug()
+
+
+// txt = `the vision appears and starts to walk and sing`
+// let doc = nlp(txt)
 // doc.sentences().toPast()
 // doc.sentences().toFuture()
-doc.sentences().toPresent()
-doc.debug()
-// console.log(doc.out('text'))
+// doc.sentences().toPresent()
+// doc.debug()
 
 
 // let arr = [

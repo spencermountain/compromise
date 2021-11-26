@@ -4,7 +4,7 @@ import gerund from './_gerund.js'
 // rallying the troops
 // her rallying cry
 const clue = {
-  beforeTags: Object.assign({}, adj.beforeTags, gerund.beforeTags),
+  beforeTags: Object.assign({}, adj.beforeTags, gerund.beforeTags, { Copula: 'Adjective', PresentTense: 'Gerund' }),
   afterTags: Object.assign({}, adj.afterTags, gerund.afterTags),
   beforeWords: Object.assign({}, adj.beforeWords, gerund.beforeWords),
   afterWords: Object.assign({}, adj.afterWords, gerund.afterWords),

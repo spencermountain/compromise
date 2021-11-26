@@ -258,6 +258,7 @@ export default [
   'frown on',
   'fry up',
   'fuck up',
+  'fuck around',
   'fuel down',
   'fuel up',
   'gad about',

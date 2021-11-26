@@ -34,7 +34,7 @@ let arr = [
   [`he stopped thinking`, `. #PastTense #Gerund`],
   [`starts thinking`, `#PresentTense #Gerund`],
   [`that is all you are getting`, 'that #Copula #Noun you are #Gerund'],
-  [`the rising cost of health`, 'the #Gerund #Singular of .'],
+  // [`the rising cost of health`, 'the #Gerund #Singular of .'],
   [`shocking spencer's`, '#Gerund .'],
   [`commanding the field`, '#Gerund #Determiner #Noun'],
   ['he is walking', '#Pronoun #Copula #Gerund'],

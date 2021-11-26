@@ -1,36 +1,7 @@
 import fastTag from '../_fastTag.js'
 const env = typeof process === 'undefined' ? self.env : process.env || {} // eslint-disable-line
 
-
-// random ad-hoc changes  - 
-const adhoc = {
-  // Adjective|Gerund needs extra help
-  'Adjective|Gerund': (terms, i) => {
-    // 'is walking' vs 'is amazing'
-    if (terms[i - 1] && terms[i - 1].tags.has('Copula')) {
-      // if it's at the end
-      if (!terms[i + 1]) {
-        return 'Adjective'
-      }
-    }
-  },
-  // 'PresentTense|Plural': (terms, i) => {
-  // if it's at the start 'prices ...'
-  // if (i === 0) {
-  //   return 'Plural'
-  // }
-  // }
-
-}
-// 'was time' vs 'was working'
-// gerundNoun.beforeWords.was = 'Gerund'
-// 'waiting for'
-// gerundNoun.afterWords.for = 'Gerund'
-// she loves
-// presentPlural.beforeTags.Pronoun = 'PresentTense'
-// definetly warm
-
-// delete nounVerb.afterTags.Noun
+const sortTags = function () { }
 
 
 const checkWord = (term, obj) => {
@@ -44,12 +15,16 @@ const checkWord = (term, obj) => {
   return found
 }
 
-const checkTag = (term, obj = {}) => {
+const checkTag = (term, obj = {}, tagSet) => {
   if (!term || !obj) {
     return null
   }
-  // very rough sort, so 'Noun' is after ProperNoun, etc
-  let tags = Array.from(term.tags).sort((a, b) => (a.length > b.length ? -1 : 1))
+  // rough sort, so 'Noun' is after ProperNoun, etc
+  let tags = Array.from(term.tags).sort((a, b) => {
+    let numA = tagSet[a] ? tagSet[a].parents.length : 0
+    let numB = tagSet[b] ? tagSet[b].parents.length : 0
+    return numA > numB ? -1 : 1
+  })
   let found = tags.find(tag => obj.hasOwnProperty(tag))
   if (found && env.DEBUG_TAGS) {
     console.log(`\n  \x1b[2m\x1b[3m      ↓ - '${term.normal}' (#${found})  \x1b[0m`)
@@ -58,18 +33,19 @@ const checkTag = (term, obj = {}) => {
   return found
 }
 
-const pickTag = function (terms, i, clues) {
+const pickTag = function (terms, i, clues, model) {
   if (!clues) {
     return
   }
+  const tagSet = model.two.tagSet
   // look -> right word, first
   let tag = checkWord(terms[i + 1], clues.afterWords)
   // look <- left word, second
   tag = tag || checkWord(terms[i - 1], clues.beforeWords)
   // look <- left tag 
-  tag = tag || checkTag(terms[i - 1], clues.beforeTags)
+  tag = tag || checkTag(terms[i - 1], clues.beforeTags, tagSet)
   // look -> right tag
-  tag = tag || checkTag(terms[i + 1], clues.afterTags)
+  tag = tag || checkTag(terms[i + 1], clues.afterTags, tagSet)
   // console.log(clues)
   return tag
 }
@@ -97,7 +73,7 @@ const doVariables = function (terms, i, model) {
     if (term.tags.has('Acronym') || term.tags.has('PhrasalVerb')) {
       return
     }
-    let tag = pickTag(terms, i, clues[form])
+    let tag = pickTag(terms, i, clues[form], model)
     // lean-harder on some variable forms
     // if (adhoc[form]) {
     //   tag = adhoc[form](terms, i) || tag

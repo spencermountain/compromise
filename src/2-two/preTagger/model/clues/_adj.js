@@ -22,6 +22,14 @@ export default {
     appear: jj,
     appears: jj,
     appeared: jj,
+    also: jj,
+    over: jj, //over cooked
+    under: jj,
+    too: jj, //too insulting
+    it: jj, //find it insulting
+    but: jj, //nothing but frustrating
+    still: jj, //still scared
+    // adverbs that are adjective-ish
     really: jj, //really damaged
     quite: jj,
     well: jj,
@@ -33,13 +41,8 @@ export default {
     badly: jj,
     mostly: jj,
     totally: jj,
-    also: jj,
-    over: jj, //over cooked
-    under: jj,
-    too: jj, //too insulting
-    it: jj, //find it insulting
-    but: jj, //nothing but frustrating
-    still: jj, //still scared
+    awfully: jj,
+    rather: jj,
   },
   afterWords: {
     too: jj, //insulting too

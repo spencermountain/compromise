@@ -35,12 +35,14 @@ txt = `Bharti initiates talks`
 // doc.debug()
 
 
-txt = `the stool falls over`
+txt = `our house looks great`
+txt = `the vision appears and starts to walk and sing`
+txt = `the vision will appear and will start to walk and sing`
 let doc = nlp(txt)
-doc.sentences().toPast()
+// doc.sentences().toPast()
+// doc.sentences().toFuture()
+doc.sentences().toPresent()
 doc.debug()
-doc.sentences().toFuture()
-// doc.sentences().toPresent()
 // console.log(doc.out('text'))
 
 

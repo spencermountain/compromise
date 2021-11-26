@@ -16,7 +16,7 @@ test('sentence-change-tense:', function (t) {
       'temptation was a desire to engage',
       'temptation will be a desire to engage',
     ],
-    [`the vision appears and starts to walk and sing`, `the vision appeared and started to walk and sing`, `the vision will appear and start to walk and sing`]
+    [`the vision appears and starts to walk and sing`, `the vision appeared and started to walk and sing`, `the vision will appear and start to walk and sing`],
     // [
     //   'Capital punishment, also known as the death penalty, is the state-sanctioned killing of a person as punishment for a crime.',
     //   'Capital punishment, also known as the death penalty, was the state-sanctioned killing of a person as punishment for a crime.',
@@ -47,11 +47,11 @@ test('sentence-change-tense:', function (t) {
     //   `A hinge was a mechanical bearing that connected two solid objects, typically allowing only a limited angle of rotation between them.`,
     //   `A hinge will be a mechanical bearing that connects two solid objects, typically allowing only a limited angle of rotation between them.`,
     // ],
-    // [
-    //   `Sugaring is a food preservation method similar to pickling.`,
-    //   `Sugaring was a food preservation method similar to pickling.`,
-    //   `Sugaring will be a food preservation method similar to pickling.`,
-    // ],
+    [
+      `Sugaring is a food preservation method similar to pickling.`,
+      `Sugaring was a food preservation method similar to pickling.`,
+      `Sugaring will be a food preservation method similar to pickling.`,
+    ],
     // [
     //   `Sugaring is the process of desiccating a food by first dehydrating it, then packing it with pure sugar.`,
     //   `Sugaring was the process of desiccating a food by first dehydrating it, then packing it with pure sugar.`,
@@ -73,7 +73,7 @@ test('sentence-change-tense:', function (t) {
     //   'he did what he could to stop',
     //   'he will do what he can to stop',
     // ],
-    // ['goes to sleep', 'went to sleep', 'will go to sleep'],
+    ['goes to sleep', 'went to sleep', 'will go to sleep'],
 
     //passive
     // ['cardboard is made of tree fibre', 'cardboard was made of tree fibre', 'cardboard will be made of tree fibre'],
@@ -82,11 +82,11 @@ test('sentence-change-tense:', function (t) {
     // ['we do what we can to stop', 'we did what we could to stop', 'we will do what we can to stop'],
 
     //multi-sentence
-    // [
-    //   'this is one sentence. This makes two now.',
-    //   'this was one sentence. This made two now.',
-    //   'this will be one sentence. This will make two now.',
-    // ],
+    [
+      'this is one sentence. This makes two now.',
+      'this was one sentence. This made two now.',
+      'this will be one sentence. This will make two now.',
+    ],
 
     //support negative
     // ['this isn\'t one sentence. This doesn\'t make two now.', 'this was not one sentence. This didn\'t make two now.', 'this won\'t be one sentence. This won\'t make two now.']

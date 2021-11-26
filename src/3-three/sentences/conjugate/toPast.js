@@ -29,7 +29,7 @@ const toPast = function (s) {
     }
   }
 
-  s.compute('chunks')
+  // s.compute('chunks')
   return s
 }
 export default toPast

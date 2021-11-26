@@ -25,8 +25,7 @@ const toPresent = function (vb, parsed) {
       vb.remove(m.text('normal')) //super awkward
     })
   }
-  vb.fullSentence().compute('preTagger')
-  vb.compute('chunks')
+  vb.fullSentence().compute(['preTagger', 'postTagger', 'chunks'])
   return vb
 }
 export default toPresent

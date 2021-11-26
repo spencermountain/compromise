@@ -178,8 +178,7 @@ const toPresent = function (vb, parsed, form) {
   // console.log(form)
   if (forms.hasOwnProperty(form)) {
     vb = forms[form](vb, parsed)
-    vb.fullSentence().compute('preTagger')
-    vb.compute('chunks')
+    vb.fullSentence().compute(['preTagger', 'postTagger', 'chunks'])
     return vb
   }
   return vb

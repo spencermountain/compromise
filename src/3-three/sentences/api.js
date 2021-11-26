@@ -52,6 +52,10 @@ const api = function (View) {
       return m
     }
   }
+  // aliases
+  Sentences.prototype.toPresent = Sentences.prototype.toPresentTense
+  Sentences.prototype.toPast = Sentences.prototype.toPastTense
+  Sentences.prototype.toFuture = Sentences.prototype.toFutureTense
 
   const methods = {
     sentences: function (n) {

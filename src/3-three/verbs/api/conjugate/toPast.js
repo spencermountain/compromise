@@ -16,12 +16,14 @@ const fns = {
     str = verbToInfinitive(str, vb.model)
     let all = verbConjugate(str, vb.model)
     // 'driven' || 'drove'
-    str = all.Participle || all.PastTense
+    str = all.PastTense
+    // all.Participle || all.PastTense
     // but skip the 'is' participle..
     str = str === 'been' ? 'was' : str
     if (str) {
-      vb = vb.replace(parsed.root, str).tag('Verb')
-      vb.not('#Particle').tag('PastTense')
+      vb = vb.replace(parsed.root, str)//.tag('Verb')
+      // vb.not('#Particle').tag('PastTense')
+      // vb.fullSentence().compute('preTagger')
     }
     return vb
   },
@@ -168,7 +170,8 @@ const toPast = function (vb, parsed, form) {
   // console.log(form)
   if (forms.hasOwnProperty(form)) {
     vb = forms[form](vb, parsed)
-    vb.tag('Verb').compute('chunks')
+    vb.fullSentence().compute('preTagger')
+    vb.compute('chunks')
     return vb
   }
   // do nothing i guess?

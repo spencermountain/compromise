@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/three.js'
 // import nlp from './builds/compromise.cjs'
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 // bug!
 // let doc = nlp(`extra. match.`)
@@ -31,8 +31,17 @@ txt = `shiver`
 txt = `shiver all night`
 txt = `Bharti initiates talks`
 
+// let doc = nlp(txt)
+// doc.debug()
+
+
+txt = `the stool falls over`
 let doc = nlp(txt)
+doc.sentences().toPast()
 doc.debug()
+doc.sentences().toFuture()
+// doc.sentences().toPresent()
+// console.log(doc.out('text'))
 
 
 // let arr = [

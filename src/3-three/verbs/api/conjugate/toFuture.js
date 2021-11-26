@@ -6,7 +6,7 @@ const simple = (vb, parsed) => {
   str = verbToInfinitive(str, vb.model)
   if (str) {
     vb = vb.replace(parsed.root, str)
-    vb.not('#Particle').tag('PresentTense')
+    // vb.not('#Particle').tag('Infinitive')
   }
   vb.prepend('will').match('will').tag('Auxiliary')
   vb.remove(parsed.auxiliary)
@@ -124,7 +124,8 @@ const toFuture = function (vb, parsed, form) {
   }
   if (forms.hasOwnProperty(form)) {
     vb = forms[form](vb, parsed)
-    vb.tag('Verb').compute('chunks')
+    vb.fullSentence().compute('preTagger')
+    vb.compute('chunks')
     return vb
   }
   return vb

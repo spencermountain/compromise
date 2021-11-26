@@ -87,7 +87,7 @@ export default [
     ints: Plrl,
     ines: Plrl,
     ions: Plrl,
-    less: Avb,
+    less: Adj,
     llen: Adj,
     made: Adj,
     nsen: Last,

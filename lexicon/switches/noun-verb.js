@@ -243,7 +243,6 @@ export default [
   'measure',
   'mention',
   'merchandise',
-  'merge',
   'merit',
   'mess',
   'milk',
@@ -490,5 +489,6 @@ export default [
   'yield',
   'zip',
   'zone',
+  'hope',
 ]
 

@@ -185,5 +185,7 @@ export default [
   'oven',
   'heaven',
   'raven',
+  // -ibe
+  'tribe',
 
 ]

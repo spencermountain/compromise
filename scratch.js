@@ -19,6 +19,7 @@ nlp.verbose('tagger')
 
 let txt
 txt = `repurchase the milk`
+// txt = `they too failed`
 
 // txt = `yoga and horses`
 // txt = `to probe and alter`
@@ -28,10 +29,12 @@ txt = `repurchase the milk`
 // txt = `the winds and storms`
 // txt = `collection of odds and ends`
 
+// txt = `what are you up to`
+// txt = `up to date`
+// txt = ` bump us up to first class`
+
 // txt = `10 markets and pop-ups`
-txt = `gangs and kids cutting class`
-txt = `two banks merged`
-txt = `the company quite brilliantly, said Mr. Newhouse`
+// txt = `fruit danishes as well`
 // txt = `SNAP is right in part`
 // txt = `business models for transmission `
 

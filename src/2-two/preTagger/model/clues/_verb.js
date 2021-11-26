@@ -59,6 +59,6 @@ export default {
     on: v,
     off: v,
     // for:true, //settled for
-    all: v//shiver all night
+    all: v,//shiver all night
   },
 }

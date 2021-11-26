@@ -57,6 +57,8 @@ export default [
   { match: `have [#PresentTense]`, group: 0, tag: 'PastTense', ifNo: ['come', 'gotten'], reason: 'have-read' },
   // does that work
   { match: `(does|will|#Modal) that [work]`, group: 0, tag: 'PastTense', reason: 'does-that-work' },
+  // sounds fun
+  { match: `[(sound|sounds)] #Adjective`, group: 0, tag: 'PresentTense', reason: 'sounds-fun' },
   //were under cooked
   {
     match: `(is|was|were) [(under|over) #PastTense]`,

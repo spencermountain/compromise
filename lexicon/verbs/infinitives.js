@@ -249,4 +249,5 @@ export default [
   'commence',
   'pierce',
   'initiate',
+  'merge',
 ]

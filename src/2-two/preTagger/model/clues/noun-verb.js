@@ -12,7 +12,9 @@ const clue = {
     Copula: 'Singular'
   }),
   beforeWords: Object.assign({}, verb.beforeWords, noun.beforeWords),
-  afterWords: Object.assign({}, verb.afterWords, noun.afterWords),
+  afterWords: Object.assign({}, verb.afterWords, noun.afterWords, {
+    instead: 'Infinitive',
+  }),
 }
 // console.log(clue.afterTags)
 export default clue

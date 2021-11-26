@@ -382,10 +382,10 @@ export default [
     text: 'NEW DELHI -',
     tags: 'NNP, NNP',
   },
-  {
-    text: 'But they, too, failed.',
-    tags: 'CC, PRP, RB, VBD',
-  },
+  // {
+  //   text: 'But they, too, failed.',
+  //   tags: 'CC, PRP, RB, VBD',
+  // },
   {
     text: 'Colombo, too, seems to be in an intractable position.',
     tags: 'NNP, RB, VBZ, TO, VB, IN, DT, JJ, NN',
@@ -617,10 +617,6 @@ export default [
   {
     text: 'Umm...',
     tags: 'UH',
-  },
-  {
-    text: 'Question Mark',
-    tags: 'NN, NN',
   },
   {
     text: 'Bush successfully makes Satan look good in comparison.',
@@ -5423,10 +5419,6 @@ export default [
   {
     text: 'Bronze award service excellence, metro.',
     tags: 'NN, NN, NN, NN, NNP',
-  },
-  {
-    text: 'Gold award parts excellence, metro.',
-    tags: 'NN, NN, NNS, NN, NNP',
   },
   {
     text: 'simple but perfect',

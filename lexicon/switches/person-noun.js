@@ -45,7 +45,7 @@ export default [
   'hazel',
   'hill',
   'holly',
-  'hope',
+  // 'hope',
   'jade',
   'jasmine',
   'jay',

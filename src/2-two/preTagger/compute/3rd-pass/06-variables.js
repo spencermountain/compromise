@@ -64,7 +64,7 @@ const checkTag = (term, obj = {}, tagSet) => {
     let numB = tagSet[b] ? tagSet[b].parents.length : 0
     return numA > numB ? -1 : 1
   })
-  let found = tags.find(tag => obj.hasOwnProperty(tag))
+  let found = tags.find(tag => obj[tag])
   if (found && env.DEBUG_TAGS) {
     console.log(`\n  \x1b[2m\x1b[3m      ↓ - '${term.normal}' (#${found})  \x1b[0m`)
   }

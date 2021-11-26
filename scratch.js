@@ -32,13 +32,8 @@ txt = `repurchase the milk`
 txt = `gangs and kids cutting class`
 txt = `two banks merged`
 txt = `the company quite brilliantly, said Mr. Newhouse`
-txt = `craze is sweeping the country`
-txt = `You really got me thinking, I enjoy`
-txt = `SNAP is right in part`
-txt = `It is trying to play ice hockey`
-txt = `Islamic Jihad known as the Vanguards`
-txt = `and new business models for transmission `
-txt = `we expect to have separate contracts`
+// txt = `SNAP is right in part`
+// txt = `business models for transmission `
 
 
 let doc = nlp(txt)

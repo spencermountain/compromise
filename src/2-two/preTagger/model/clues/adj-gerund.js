@@ -7,7 +7,10 @@ const clue = {
   beforeTags: Object.assign({}, adj.beforeTags, gerund.beforeTags, { Copula: 'Adjective', PresentTense: 'Gerund' }),
   afterTags: Object.assign({}, adj.afterTags, gerund.afterTags),
   beforeWords: Object.assign({}, adj.beforeWords, gerund.beforeWords),
-  afterWords: Object.assign({}, adj.afterWords, gerund.afterWords),
+  afterWords: Object.assign({}, adj.afterWords, gerund.afterWords, {
+    to: 'Gerund',
+    the: 'Gerund' //sweeping the country
+  }),
 }
 // console.log(clue)
 export default clue

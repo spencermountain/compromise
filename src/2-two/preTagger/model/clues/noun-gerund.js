@@ -17,7 +17,10 @@ const misc = {
 const clue = {
   beforeTags: Object.assign({}, gerund.beforeTags, noun.beforeTags, misc.beforeTags),
   afterTags: Object.assign({}, gerund.afterTags, noun.afterTags),
-  beforeWords: Object.assign({}, gerund.beforeWords, noun.beforeWords, misc.beforeWords),
+  beforeWords: Object.assign({}, gerund.beforeWords, noun.beforeWords, misc.beforeWords, {
+    //got me thinking
+    me: 'Gerund', us: 'Gerund', them: 'Gerund',
+  }),
   afterWords: Object.assign({}, gerund.afterWords, noun.afterWords),
 }
 // console.log(clue)

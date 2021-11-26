@@ -34,6 +34,7 @@ const past = {
     for: 'PastTense', //settled for
     the: 'PastTense', //settled the
     with: 'PastTense', //obsessed with
+    as: 'PastTense', //known as
   },
 }
 

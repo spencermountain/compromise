@@ -271,10 +271,10 @@ export default [
     text: 'A stadium craze is sweeping the country.',
     tags: 'DT, NN, NN, VBZ, VBG, DT, NN',
   },
-  {
-    text: 'Stock prices closed higher in Stockholm, Amsterdam and Frankfurt and lower in Zurich.',
-    tags: 'NN, NNS, VBD, JJR, IN, NNP, NNP, CC, NNP, CC, JJR, IN, NNP',
-  },
+  // {
+  //   text: 'Stock prices closed higher in Stockholm, Amsterdam and Frankfurt and lower in Zurich.',
+  //   tags: 'NN, NNS, VBD, JJR, IN, NNP, NNP, CC, NNP, CC, JJR, IN, NNP',
+  // },
   {
     text: 'A faster version, the SuperDot, was launched in 1984.',
     tags: 'DT, JJR, NN, DT, NNP, VBD, VBN, IN, CD',
@@ -431,10 +431,6 @@ export default [
     tags: 'NNS, UH',
   },
   {
-    text: 'The Communist party has the largest number of registered party members in the country and can be considered as the oldest popular political party in Iraq.',
-    tags: 'DT, NNP, NNP, VBZ, DT, JJS, NN, IN, VBN, NN, NNS, IN, DT, NN, CC, MD, VB, VBN, IN, DT, JJS, JJ, JJ, NN, IN, NNP',
-  },
-  {
     text: "Al-Gu'ud had favoured elections and was in good terms with the government.",
     tags: 'NNP, NNP, VBD, VBN, NNS, CC, VBD, IN, JJ, NNS, IN, DT, NN',
   },
@@ -523,10 +519,6 @@ export default [
     tags: 'PRP, RB, VBD, IN, NN, VBG, NNS',
   },
   {
-    text: 'He has clearly gone on enjoying killing people on a large scale in Iraq.',
-    tags: 'PRP, VBZ, RB, VBN, RP, VBG, VBG, NNS, IN, DT, JJ, NN, IN, NNP',
-  },
-  {
     text: 'He would wear khaki trousers and some old jacket.',
     tags: 'PRP, MD, VB, NN, NNS, CC, DT, JJ, NN',
   },
@@ -561,10 +553,6 @@ export default [
   {
     text: '...',
     tags: 'NFP',
-  },
-  {
-    text: 'SNAP is right in part.',
-    tags: 'NNP, VBZ, JJ, IN, NN',
   },
   {
     text: 'Police and prosecutors have the tools.',
@@ -3847,10 +3835,6 @@ export default [
     tags: 'PRP, MD, VB, RB, JJ, CC, JJ',
   },
   {
-    text: 'YOU have to spend the time training.',
-    tags: 'PRP, VBP, VB, VB, DT, NN, VBG',
-  },
-  {
     text: '10 gallon nano reef ideas?',
     tags: 'CD, NN, NN, NN, NNS',
   },
@@ -4890,10 +4874,6 @@ export default [
   {
     text: 'Absolutely great!',
     tags: 'RB, JJ',
-  },
-  {
-    text: 'Clean, updated room, friendly staff, safe location.',
-    tags: 'JJ, VBN, NN, JJ, NNS, JJ, NN',
   },
   {
     text: 'CHANGE THE PROCESS, PPL!',

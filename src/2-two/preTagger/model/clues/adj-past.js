@@ -15,6 +15,7 @@ const past = {
     Pronoun: 'PastTense', //hooked me
     Determiner: 'PastTense', //hooked the
     Adverb: 'PastTense', //cooked perfectly
+    Comparative: 'PastTense',//closed higher
   },
   beforeWords: {
     be: 'PastTense',//be hooked

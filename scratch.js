@@ -31,6 +31,15 @@ txt = `repurchase the milk`
 
 // txt = `what are you up to`
 // txt = `up to date`
+txt = `Visit message boards`
+txt = `everything went wrong with us`
+txt = `spend the time training`
+txt = `mechanics that work for Auto Towing`
+// txt = `read these reviews and improved!`
+// txt = `has soft music playing.`
+// txt = `it is always clean.`
+// txt = `with guns, cash and drugs`
+// txt = `Stock prices closed higher`
 // txt = ` bump us up to first class`
 
 // txt = `10 markets and pop-ups`

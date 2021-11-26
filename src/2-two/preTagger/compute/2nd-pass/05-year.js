@@ -2,7 +2,7 @@ import fastTag from '../_fastTag.js'
 const min = 1400
 const max = 2100
 
-const dateWords = new Set(['in', 'on', 'by', 'for', 'during', 'within', 'before', 'after', 'of', 'this', 'next', 'last'])
+const dateWords = new Set(['in', 'on', 'by', 'for', 'during', 'within', 'before', 'after', 'of', 'this', 'next', 'last', 'may'])
 
 const seemsGood = function (term) {
   if (!term) {
@@ -23,9 +23,15 @@ const tagYear = function (terms, i) {
   if (term.tags.has('NumericValue') && term.tags.has('Cardinal')) {
     let num = Number(term.normal)
     // number between 1400 and 2100
-    if (num && !isNaN(num) && num > min && num < max) {
-      if (seemsGood(terms[i - 1]) || seemsGood(terms[i + 1])) {
-        fastTag(term, 'Year', '2-tagYear')
+    if (num && !isNaN(num)) {
+      if (num > min && num < max) {
+        if (seemsGood(terms[i - 1]) || seemsGood(terms[i + 1])) {
+          return fastTag(term, 'Year', '2-tagYear')
+        }
+        // or is it really-close to a year?
+        if (num > 1950 && num < 2025) {
+          // console.log(terms[i])
+        }
       }
     }
   }

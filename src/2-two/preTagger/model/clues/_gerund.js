@@ -56,6 +56,7 @@ export default {
     them: g, //
     their: g, // fighting their
     it: g, //dumping it
+    this: g, //running this
     there: g, // swimming there
     on: g, // landing on
     about: g, // talking about

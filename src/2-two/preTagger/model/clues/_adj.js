@@ -35,6 +35,8 @@ export default {
     well: jj,
     very: jj,
     deeply: jj,
+    // always: jj,
+    // never: jj,
     profoundly: jj,
     extremely: jj,
     so: jj,

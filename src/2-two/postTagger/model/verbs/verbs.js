@@ -59,6 +59,8 @@ export default [
   { match: `(does|will|#Modal) that [work]`, group: 0, tag: 'PastTense', reason: 'does-that-work' },
   // sounds fun
   { match: `[(sound|sounds)] #Adjective`, group: 0, tag: 'PresentTense', reason: 'sounds-fun' },
+  // look good
+  { match: `[(look|looks)] #Adjective`, group: 0, tag: 'PresentTense', reason: 'looks-good' },
   //were under cooked
   {
     match: `(is|was|were) [(under|over) #PastTense]`,

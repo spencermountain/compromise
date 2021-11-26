@@ -39,9 +39,6 @@ txt = `It is trying to play ice hockey`
 txt = `Islamic Jihad known as the Vanguards`
 txt = `and new business models for transmission `
 txt = `we expect to have separate contracts`
-txt = `Does that work for you`
-txt = `Nothing wrong with rotorua`
-txt = ` United States almost `
 
 
 let doc = nlp(txt)

@@ -43,6 +43,9 @@ export default {
     totally: jj,
     awfully: jj,
     rather: jj,
+    nothing: jj, //nothing secret, 
+    something: jj,//something wrong
+    anything: jj,
   },
   afterWords: {
     too: jj, //insulting too

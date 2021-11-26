@@ -55,6 +55,8 @@ export default [
   { match: `(had|has) to [#Noun] (#Determiner|#Possessive)`, group: 0, tag: 'Infinitive', reason: 'had-to-noun' },
   // have read
   { match: `have [#PresentTense]`, group: 0, tag: 'PastTense', ifNo: ['come', 'gotten'], reason: 'have-read' },
+  // does that work
+  { match: `(does|will|#Modal) that [work]`, group: 0, tag: 'PastTense', reason: 'does-that-work' },
   //were under cooked
   {
     match: `(is|was|were) [(under|over) #PastTense]`,

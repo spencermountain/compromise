@@ -11,7 +11,10 @@ const misc = {
 const clue = {
   beforeTags: Object.assign({}, adj.beforeTags, verb.beforeTags),
   afterTags: Object.assign({}, adj.afterTags, verb.afterTags, misc.afterTags),
-  beforeWords: Object.assign({}, adj.beforeWords, verb.beforeWords),
+  beforeWords: Object.assign({}, adj.beforeWords, verb.beforeWords, {
+    // have seperate contracts
+    have: undefined, had: undefined
+  }),
   afterWords: Object.assign({}, adj.afterWords, verb.afterWords),
 }
 // console.log(clue.beforeWords)

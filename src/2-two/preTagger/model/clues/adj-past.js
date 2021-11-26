@@ -7,6 +7,7 @@ const past = {
   beforeTags: {
     Adverb: 'PastTense', //quickly detailed
     Pronoun: 'PastTense', //he detailed
+    ProperNoun: 'PastTense', //toronto closed
     // Noun:'PastTense', //eye closed
     Auxiliary: 'PastTense',
   },
@@ -16,6 +17,7 @@ const past = {
     Determiner: 'PastTense', //hooked the
     Adverb: 'PastTense', //cooked perfectly
     Comparative: 'PastTense',//closed higher
+    Date: 'PastTense',// alleged thursday
   },
   beforeWords: {
     be: 'PastTense',//be hooked
@@ -24,6 +26,8 @@ const past = {
     has: 'PastTense',
     have: 'PastTense',
     been: 'PastTense',
+    as: 'PastTense',//as requested
+    for: 'Adjective',//for discounted items
   },
   afterWords: {
     by: 'PastTense', //damaged by

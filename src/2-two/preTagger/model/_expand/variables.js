@@ -34,7 +34,7 @@ const variables = {
   },
   // 'rob'
   'Person|Verb': (str, lex) => {
-    lex[str] = 'Verb'
+    lex[str] = 'Person'
   },
   // 'boxes'
   'Plural|Verb': (str, lex) => {

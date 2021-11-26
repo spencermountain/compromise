@@ -6,13 +6,15 @@ import verb from './_verb.js'
 const clue = {
   beforeTags: Object.assign({}, verb.beforeTags, noun.beforeTags, {
     // Noun: undefined
+    Adjective: 'Singular',//great name
   }),
   afterTags: Object.assign({}, verb.afterTags, noun.afterTags, {
     ProperNoun: 'Infinitive', Gerund: 'Infinitive', Adjective: 'Infinitive',
-    Copula: 'Singular'
+    Copula: 'Singular',
   }),
   beforeWords: Object.assign({}, verb.beforeWords, noun.beforeWords),
   afterWords: Object.assign({}, verb.afterWords, noun.afterWords, {
+    for: 'Infinitive',//work for
     instead: 'Infinitive',
   }),
 }

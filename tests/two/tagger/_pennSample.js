@@ -4917,7 +4917,7 @@ export default [
   },
   {
     text: 'I love it for discounted beauty items and household appliances.',
-    tags: 'PRP, VBP, PRP, IN, VBN, NN, NNS, CC, NN, NNS',
+    tags: 'PRP, VBP, PRP, IN, JJ, NN, NNS, CC, NN, NNS',
   },
   {
     text: 'The service at Instep was great !!',

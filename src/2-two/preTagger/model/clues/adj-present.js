@@ -13,7 +13,9 @@ const clue = {
   afterTags: Object.assign({}, adj.afterTags, verb.afterTags, misc.afterTags),
   beforeWords: Object.assign({}, adj.beforeWords, verb.beforeWords, {
     // have seperate contracts
-    have: undefined, had: undefined
+    have: undefined, had: undefined,
+    //went wrong, got wrong
+    went: 'Adjective', goes: 'Adjective', got: 'Adjective'
   }),
   afterWords: Object.assign({}, adj.afterWords, verb.afterWords),
 }

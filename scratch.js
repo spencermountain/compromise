@@ -31,10 +31,7 @@ txt = `repurchase the milk`
 
 // txt = `what are you up to`
 // txt = `up to date`
-txt = `Visit message boards`
-txt = `everything went wrong with us`
-txt = `spend the time training`
-txt = `mechanics that work for Auto Towing`
+txt = `Great name for it`
 // txt = `read these reviews and improved!`
 // txt = `has soft music playing.`
 // txt = `it is always clean.`

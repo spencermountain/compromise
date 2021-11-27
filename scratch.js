@@ -49,20 +49,19 @@ txt = `Great name for it`
 // doc.debug()
 
 
-let doc = nlp(`one extra match two`)
-let m = doc.match('match').freeze()
-doc.remove('extra')
-doc.remove(m)
-doc.debug()
 
 
 
-// txt = `the vision appears and starts to walk and sing`
-// let doc = nlp(txt)
+txt = `i was there`
+txt = `say it again`
+txt = `waiters are furious`
+txt = `this union has disrupted`
+let doc = nlp(txt)
+// doc.verbs().debug()
 // doc.sentences().toPast()
 // doc.sentences().toFuture()
-// doc.sentences().toPresent()
-// doc.debug()
+doc.sentences().toPresent()
+doc.debug()
 
 
 // let arr = [

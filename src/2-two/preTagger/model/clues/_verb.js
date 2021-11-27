@@ -30,6 +30,7 @@ export default {
     could: v,
     should: v,
     do: v,
+    did: v,
     does: v,
     can: v,
     must: v,

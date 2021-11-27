@@ -13,7 +13,6 @@ import neighbours from './3rd-pass/02-neighbours.js'
 import orgWords from './3rd-pass/03-orgWords.js'
 import nounFallback from './3rd-pass/04-fallback.js'
 import variables from './3rd-pass/06-variables.js'
-// import switchChange from './3rd-pass/06-switchChange.js'
 import checkHyphen from './3rd-pass/05-prefixes.js'
 
 const first = {
@@ -86,7 +85,6 @@ const thirdPass = function (terms, model) {
     second.checkHyphen(terms, i, model)
     // verb-noun disambiguation, etc
     third.variables(terms, i, model)
-    // third.switchChange(terms, i, model)
   }
 }
 

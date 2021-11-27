@@ -84,8 +84,8 @@ test('toFuture:', function (t) {
 
     // more past-tense forms
     [`used to claw`, `will claw`],
-    [`had clawed`, `will claw`],
-    [`have clawed`, `will claw`],
+    [`had clawed`, `will have clawed`],
+    [`have clawed`, `will have clawed`],
     [`clawed`, `will claw`],
     [`did claw`, `will claw`],
 

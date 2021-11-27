@@ -8,8 +8,8 @@ const past = {
     Adverb: 'PastTense', //quickly detailed
     Pronoun: 'PastTense', //he detailed
     ProperNoun: 'PastTense', //toronto closed
-    // Noun:'PastTense', //eye closed
     Auxiliary: 'PastTense',
+    Noun: 'PastTense', //eye closed  -- i guess.
   },
   afterTags: {
     Possessive: 'PastTense', //hooked him

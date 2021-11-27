@@ -2,7 +2,7 @@ import fastTag from '../_fastTag.js'
 const hasApostrophe = /['‘’‛‵′`´]/
 
 // normal regexes
-const startsWith = function (str, regs) {
+const doRegs = function (str, regs) {
   for (let i = 0; i < regs.length; i += 1) {
     if (regs[i][0].test(str) === true) {
       return regs[i]
@@ -25,7 +25,7 @@ const doEndsWith = function (str = '', byEnd) {
 }
 
 const checkRegex = function (terms, i, model) {
-  let { regexText, regexNormal, endsWith } = model.two
+  let { regexText, regexNormal, regexNumbers, endsWith } = model.two
   let term = terms[i]
   let normal = term.machine || term.normal
   let text = term.text
@@ -33,7 +33,11 @@ const checkRegex = function (terms, i, model) {
   if (hasApostrophe.test(term.post) && !hasApostrophe.test(term.pre)) {
     text += term.post.trim()
   }
-  let arr = startsWith(text, regexText) || startsWith(normal, regexNormal)
+  let arr = doRegs(text, regexText) || doRegs(normal, regexNormal)
+  // hide a bunch of number regexes behind this one
+  if (!arr && /[0-9]/.test(normal)) {
+    arr = doRegs(normal, regexNumbers)
+  }
   // only run endsWith if we're desperate
   if (!arr && term.tags.size === 0) {
     arr = doEndsWith(normal, endsWith)

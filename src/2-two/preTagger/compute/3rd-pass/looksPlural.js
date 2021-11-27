@@ -1,49 +1,82 @@
 //similar to plural/singularize rules, but not the same
-const pluralEnds = [
-  /(antenn|formul|nebul|vertebr|vit)ae$/i,
-  /(octop|vir|radi|nucle|fung|cact|stimul)i$/i,
-  /men$/i,
-  /.tia$/i,
-  /(m|l)ice$/i,
-]
+const isPlural = {
+  e: [
+    'mice',
+    'louse',
+    'antennae',
+    'formulae',
+    'nebulae',
+    'vertebrae',
+    'vitae',
+  ],
+  i: [
+    'tia',
+    'octopi',
+    'viri',
+    'radii',
+    'nuclei',
+    'fungi',
+    'cacti',
+    'stimuli',
+  ],
+  n: [
+    'men',
+  ]
+}
 
-//similar to plural/singularize rules, but not the same
-const singularEnds = [
-  /(ax|test)is$/i,
-  /(octop|vir|radi|nucle|fung|cact|stimul)us$/i,
-  /(octop|vir)i$/i,
-  /(rl)f$/i,
-  /(alias|status)$/i,
-  /(bu)s$/i,
-  /(al|ad|at|er|et|ed)o$/i,
-  /(ti)um$/i,
-  /(ti)a$/i,
-  /sis$/i,
-  /(?:(^f)fe|(lr)f)$/i,
-  /hive$/i,
-  /(^aeiouy|qu)y$/i,
-  /(x|ch|ss|sh|z)$/i,
-  /(matr|vert|ind|cort)(ix|ex)$/i,
-  /(m|l)ouse$/i,
-  /(m|l)ice$/i,
-  /(antenn|formul|nebul|vertebr|vit)a$/i,
-  /.sis$/i,
-  /^(?!talis|.*hu)(.*)man$/i,
-  /[mwlixv]as$/i,//christmas
-  /[rtoslxcn]is$/i,//mantis, thesis, probocis, tennis
-  /[erftiopaslxcbn]us$/i,//doofus, census, virus, lotus, genius, campus, surplus
-  /'s$/i,
-  /ss$/i,
+const notPlural = [
+  'bus',
+  'mas',//christmas
+  'was',
+  'las',
+  'ias',//alias
+  'xas',
+  'vas',
+  'cis',//probocis
+  'lis',
+  'nis',//tennis
+  'ois',
+  'ris',
+  'sis',//thesis
+  'tis',//mantis, testis
+  'xis',
+  'aus',
+  'bus',
+  'cus',
+  'eus',//nucleus
+  'fus',//doofus
+  'gus',//fungus
+  'ius',//radius
+  'lus',//stimulus
+  'nus',
+  'ous',
+  'pus',//octopus
+  'rus',//virus
+  'sus',//census
+  'tus',//status,cactus
+  'xus',
+  '\'s',
+  'ss',
 ]
 
 const looksPlural = function (str) {
-  if (pluralEnds.find(reg => reg.test(str))) {
-    return true
-  }
-  if (singularEnds.find(reg => reg.test(str))) {
+  // not long enough to be plural
+  if (!str || str.length <= 3) {
     return false
   }
-  // ends with an s fallback
-  return str.length > 3 && str.endsWith('s')
+  let end = str[str.length - 1]
+  // look at 'firemen'
+  if (isPlural.hasOwnProperty(end)) {
+    return isPlural[end].find(suff => str.endsWith(suff))
+  }
+  if (end !== 's') {
+    return false
+  }
+  // look for 'virus'
+  if (notPlural.find(end => str.endsWith(end))) {
+    return false
+  }
+  // ends with an s, seems plural i guess.
+  return true
 }
 export default looksPlural

@@ -49,17 +49,11 @@ txt = `Great name for it`
 // doc.debug()
 
 
-
-let doc = nlp(`we're not gonna take it`)
+let doc = nlp(`one extra match two`)
+let m = doc.match('match').freeze()
+doc.remove('extra')
+doc.remove(m)
 doc.debug()
-console.log(doc.text())
-
-// let doc = nlp(`before match after.`)
-// let m = doc.match('match')//.freeze()
-// console.log(doc.document[0])
-// doc.remove('before')
-// console.log(doc.document[0])
-// m.debug()
 
 
 

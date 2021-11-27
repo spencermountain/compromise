@@ -65,7 +65,7 @@ test('freeze-split :', function (t) {
 })
 
 test('freeze-sentence-remove :', function (t) {
-  let doc = nlp(`extra. match.`)
+  let doc = nlp(`extra. match`)
   let m = doc.match('match').freeze()
   doc.remove('extra')
   t.equal(doc.match(m).text(), 'match', here + 'remove-sentence')

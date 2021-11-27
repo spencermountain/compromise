@@ -16,18 +16,12 @@ const reTag = function (terms, i, world, view) {
   let slice = terms.slice(start, i + 3)
   slice = [slice]
 
-  let tmp = view.clone()
+  let tmp = view.update(view.pointer)
   tmp.document = slice
-  tmp.compute('index', 'tagger') //this should probably be smarter
-  // tmp.compute(world.hooks)
-  // console.log(world.hooks)
-
+  tmp.compute('index')
   preTagger(slice, world)
 }
 
-// const isArray = function (arr) {
-//   return Object.prototype.toString.call(arr) === '[object Array]'
-// }
 
 //really easy ones
 const contractions = (document = [], world, view) => {

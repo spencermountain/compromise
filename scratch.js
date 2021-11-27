@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/three.js'
 // import nlp from './builds/compromise.cjs'
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 // bug!
 // let doc = nlp(`extra. match.`)
@@ -45,8 +45,18 @@ txt = `Great name for it`
 // txt = `business models for transmission `
 
 
-let doc = nlp(txt)
-doc.debug()
+// let doc = nlp(txt)
+// doc.debug()
+
+
+
+let doc = nlp(`before match after.`)
+let m = doc.match('match')//.freeze()
+console.log(doc.document[0])
+doc.remove('before')
+// console.log(doc.document[0])
+// m.debug()
+
 
 
 // txt = `the vision appears and starts to walk and sing`

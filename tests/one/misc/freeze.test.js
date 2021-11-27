@@ -63,3 +63,11 @@ test('freeze-split :', function (t) {
   t.deepEqual(res.out('array'), ['before and', 'm', 'and after'], here + 'freeze split')
   t.end()
 })
+
+test('freeze-sentence-remove :', function (t) {
+  let doc = nlp(`extra. match.`)
+  let m = doc.match('match').freeze()
+  doc.remove('extra')
+  t.equal(doc.match(m).text(), 'match', here + 'remove-sentence')
+  t.end()
+})

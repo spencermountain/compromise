@@ -1,5 +1,6 @@
 // cheat- add the document's pointer to the terms
 const index = function (_d, _w, view) {
+  // console.log('reindex')
   let document = view.document
   for (let n = 0; n < document.length; n += 1) {
     for (let i = 0; i < document[n].length; i += 1) {

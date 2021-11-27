@@ -23,8 +23,7 @@ const checkSuffix = function (str = '') {
   let c = str[str.length - 1]
   if (suffixes.hasOwnProperty(c) === true) {
     for (let r = 0; r < suffixes[c].length; r += 1) {
-      const reg = suffixes[c][r].reg
-      if (reg.test(str) === true) {
+      if (suffixes[c][r].reg.test(str) === true) {
         return doTransform(str, suffixes[c][r])
       }
     }

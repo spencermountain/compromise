@@ -21,7 +21,7 @@ const doEndsWith = function (str = '', byEnd) {
       }
     }
   }
-  return undefined
+  return null
 }
 
 const checkRegex = function (terms, i, model) {

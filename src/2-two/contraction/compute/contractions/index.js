@@ -49,7 +49,7 @@ const byStart = {
 }
 
 // pull-apart known contractions from model
-const byList = function (list, term, before, after) {
+const knownOnes = function (list, term, before, after) {
   for (let i = 0; i < list.length; i += 1) {
     let o = list[i]
     // look for word-word match (cannot-> [can, not])
@@ -68,25 +68,21 @@ const byList = function (list, term, before, after) {
   return null
 }
 
-
 //really easy ones
 const contractions = (document = [], world, view) => {
   const { model, methods } = world
   let list = model.two.contractions || []
+  // each sentence
   document.forEach((terms, n) => {
     // loop through terms backwards
     for (let i = terms.length - 1; i >= 0; i -= 1) {
       let before = null
       let after = null
       if (byApostrophe.test(terms[i].normal) === true) {
-        let split = terms[i].normal.split(byApostrophe)
-        before = split[0]
-        after = split[1]
+        [before, after] = terms[i].normal.split(byApostrophe)
       }
-
-      let hint = []
       // any known-ones, like 'dunno'?
-      let words = byList(list, terms[i], before, after)
+      let words = knownOnes(list, terms[i], before, after)
       // ['foo', 's']
       if (!words && byEnd.hasOwnProperty(after)) {
         words = byEnd[after](terms, i, world)
@@ -97,17 +93,16 @@ const contractions = (document = [], world, view) => {
       }
       // actually insert the new terms
       if (words) {
-        splice(document, [n, i], words, hint)
+        splice(document, [n, i], words)
         reTag(terms, i, world, view)
         continue
       }
-      // '44-2'
+      // '44-2' has special care
       if (numDash.test(terms[i].normal)) {
         words = numberRange(terms, i)
         if (words) {
-          hint = ['Value', 'Conjunction', 'Value']
-          splice(document, [n, i], words, hint)
-          methods.one.setTag(terms, 'NumberRange', world)
+          splice(document, [n, i], words)
+          methods.one.setTag(terms, 'NumberRange', world)//add custom tag
           reTag(terms, i, world, view)
         }
       }

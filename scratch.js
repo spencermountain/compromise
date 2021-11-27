@@ -18,7 +18,7 @@ import nlp from './src/three.js'
 
 
 let txt
-txt = `repurchase the milk`
+// txt = `repurchase the milk`
 // txt = `they too failed`
 
 // txt = `yoga and horses`

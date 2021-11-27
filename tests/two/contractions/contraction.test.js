@@ -30,17 +30,20 @@ test('tricky contractions', function (t) {
   t.end()
 })
 
-// test('contractions v possessive', function (t) {
-//   let str = nlp("spencer's not cool").normalize({ contractions: true }).text()
-//   t.equal(str, 'spencer is not cool', 'adj contraction')
+test('contractions v possessive', function (t) {
+  let doc = nlp("spencer's not cool")
+  doc.contractions().expand()
+  t.equal(doc.text(), 'spencer is not cool', 'adj contraction')
 
-//   str = nlp("spencer's walk").normalize({ contractions: true }).text()
-//   t.equal(str, "spencer's walk", 'noun not contraction')
+  doc = nlp("spencer's walk")
+  doc.contractions().expand()
+  t.equal(doc.text(), "spencer's walk", 'noun not contraction')
 
-//   str = nlp("spencer's runs").normalize({ contractions: true }).text()
-//   t.equal(str, "spencer's runs", 'present-tense not contraction')
-//   t.end()
-// })
+  doc = nlp("spencer's runs")
+  doc.contractions().expand()
+  t.equal(doc.text(), "spencer's runs", 'present-tense not contraction')
+  t.end()
+})
 
 test('match contractions/possessives', function (t) {
   let doc = nlp(`i think it's spencer's`)

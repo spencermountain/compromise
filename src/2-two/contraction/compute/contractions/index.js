@@ -23,6 +23,52 @@ const reTag = function (terms, i, world, view) {
 }
 
 
+const byEnd = {
+  // ain't
+  t: (terms, i) => apostropheT(terms, i),
+  // how'd
+  d: (terms, i) => apostropheD(terms, i),
+  // bob's
+  s: (terms, i, world) => {
+    // [bob's house] vs [bob's cool]
+    if (isPossessive(terms, i)) {
+      world.methods.one.setTag([terms[i]], 'Possessive', world)
+    } else {
+      return apostropheS(terms, i)
+    }
+  },
+}
+
+const byStart = {
+  // j'aime
+  j: (terms, i) => french.preJ(terms, i),
+  // l'amour
+  l: (terms, i) => french.preL(terms, i),
+  // d'amerique
+  d: (terms, i) => french.preD(terms, i),
+}
+
+// pull-apart known contractions from model
+const byList = function (list, term, before, after) {
+  for (let i = 0; i < list.length; i += 1) {
+    let o = list[i]
+    // look for word-word match (cannot-> [can, not])
+    if (o.word === term.normal) {
+      return o.out
+    }
+    // look for after-match ('re -> [_, are])
+    else if (after !== null && after === o.after) {
+      return [before].concat(o.out)
+    }
+    // look for before-match (l' -> [le, _])
+    else if (before !== null && before === o.before) {
+      return [o.out, after] //typeof o.out === 'string' ? [o.out, after] : o.out(terms, i)
+    }
+  }
+  return null
+}
+
+
 //really easy ones
 const contractions = (document = [], world, view) => {
   const { model, methods } = world
@@ -37,72 +83,34 @@ const contractions = (document = [], world, view) => {
         before = split[0]
         after = split[1]
       }
-      list.some(o => {
-        let words = null
-        let hint = []
-        // look for word-word match (cannot-> [can, not])
-        if (o.word === terms[i].normal) {
-          words = o.out //isArray(o.out) ? o.out : o.out(terms, i)
-        }
-        // look for after-match ('re -> [_, are])
-        else if (after !== null && after === o.after) {
-          words = [before].concat(o.out)
-        }
-        // look for before-match (l' -> [le, _])
-        else if (before !== null && before === o.before) {
-          words = [o.out, after] //typeof o.out === 'string' ? [o.out, after] : o.out(terms, i)
-        }
-        // bob's
-        else if (after === 's') {
-          // [bob's house] vs [bob's cool]
-          if (isPossessive(terms, i)) {
-            methods.one.setTag([terms[i]], 'Possessive', world)
-          } else {
-            words = apostropheS(terms, i)
-          }
-        }
-        // ain't
-        else if (after === 't') {
-          words = apostropheT(terms, i)
-        }
-        // how'd
-        else if (after === 'd') {
-          words = apostropheD(terms, i)
-        }
-        // j'aime
-        else if (before === 'j') {
-          words = french.preJ(terms, i)
-          hint = ['Pronoun', 'Verb']
-        }
-        // l'amour
-        else if (before === 'l') {
-          words = french.preL(terms, i)
-          hint = ['Determiner', 'Noun']
-        }
-        // d'amerique
-        else if (before === 'd') {
-          words = french.preD(terms, i)
-          hint = ['Preposition', 'Noun']
-        }
-        // actually insert the new terms
+
+      let hint = []
+      // any known-ones, like 'dunno'?
+      let words = byList(list, terms[i], before, after)
+      // ['foo', 's']
+      if (!words && byEnd.hasOwnProperty(after)) {
+        words = byEnd[after](terms, i, world)
+      }
+      // ['j', 'aime']
+      if (!words && byStart.hasOwnProperty(before)) {
+        words = byStart[before](terms, i)
+      }
+      // actually insert the new terms
+      if (words) {
+        splice(document, [n, i], words, hint)
+        reTag(terms, i, world, view)
+        continue
+      }
+      // '44-2'
+      if (numDash.test(terms[i].normal)) {
+        words = numberRange(terms, i)
         if (words) {
+          hint = ['Value', 'Conjunction', 'Value']
           splice(document, [n, i], words, hint)
+          methods.one.setTag(terms, 'NumberRange', world)
           reTag(terms, i, world, view)
-          return true
         }
-        // '44-2'
-        if (numDash.test(terms[i].normal)) {
-          words = numberRange(terms, i)
-          if (words) {
-            hint = ['Value', 'Conjunction', 'Value']
-            splice(document, [n, i], words, hint)
-            methods.one.setTag(terms, 'NumberRange', world)
-            reTag(terms, i, world, view)
-            return true
-          }
-        }
-        return false
-      })
+      }
     }
   })
 }

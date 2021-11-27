@@ -17,16 +17,26 @@ function mergeDeep(model, plugin) {
   }
   return model
 }
-
 // const merged = mergeDeep({ a: 1 }, { b: { c: { d: { e: 12345 } } } })
 // console.dir(merged, { depth: 5 })
 
+// vroom
+function mergeQuick(model, plugin) {
+  for (const key in plugin) {
+    model[key] = model[key] || {}
+    Object.assign(model[key], plugin[key])
+  }
+  return model
+}
+
 const extend = function (plugin, world, View) {
   const { methods, model, compute, hooks } = world
-
-  mergeDeep(methods, plugin.methods)
-  mergeDeep(model, plugin.model)
-
+  if (plugin.methods) {
+    mergeQuick(methods, plugin.methods)
+  }
+  if (plugin.model) {
+    mergeDeep(model, plugin.model)
+  }
   // shallow-merge compute
   if (plugin.compute) {
     Object.assign(compute, plugin.compute)

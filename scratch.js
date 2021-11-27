@@ -50,10 +50,14 @@ txt = `Great name for it`
 
 
 
-let doc = nlp(`before match after.`)
-let m = doc.match('match')//.freeze()
-console.log(doc.document[0])
-doc.remove('before')
+let doc = nlp(`we're not gonna take it`)
+doc.debug()
+console.log(doc.text())
+
+// let doc = nlp(`before match after.`)
+// let m = doc.match('match')//.freeze()
+// console.log(doc.document[0])
+// doc.remove('before')
 // console.log(doc.document[0])
 // m.debug()
 

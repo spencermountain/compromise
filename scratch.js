@@ -93,13 +93,14 @@ let arr = [
   `Toronto Young Rangers`,
 ]
 
-// let doc = nlp('one two three four five. no here results.')
+arr = [
+  `Toronto`,
+  `Toronto Rangers`,
+]
+
 let trie = nlp.compile(arr)
 console.log(trie)
-console.log(trie.endAs.length)
-console.log(trie.failTo.length)
-// let res = doc.lookup(trie).json()
-// console.log(res)
+nlp('toronto rangers').lookup(trie).debug()
 
 // txt = `i was there`
 // txt = `say it again`

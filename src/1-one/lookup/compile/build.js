@@ -13,7 +13,7 @@ const buildTrie = function (phrases, world) {
   // const tokenize=methods.one.
   let goNext = [{}]
   let endAs = [null]
-  let failTo = [null]
+  let failTo = [0]
 
   let xs = []
   let n = 0

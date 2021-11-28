@@ -5,7 +5,7 @@ const scanWords = function (terms, trie) {
   for (let i = 0; i < terms.length; i++) {
     let word = terms[i].normal
     // main match-logic loop:
-    while (n > 0 && !trie.goNext[n].hasOwnProperty(word)) {
+    while (n > 0 && (trie.goNext[n] === undefined || !trie.goNext[n].hasOwnProperty(word))) {
       n = trie.failTo[n] || 0 // (usually back to 0)
     }
     // did we fail?

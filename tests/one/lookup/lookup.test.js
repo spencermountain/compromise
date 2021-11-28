@@ -54,6 +54,31 @@ test('lookup-tricky', function (t) {
   t.end()
 })
 
+test('lookup-dupes', function (t) {
+  let trie = nlp.compile([`Toronto`, `Toronto Rangers`])
+  let res = nlp('toronto rangers').lookup(trie)
+  t.equal(res.length, 1, here + 'no-sub-matches')
+  t.end()
+})
+
+test('lookup-repeat', function (t) {
+  let trie = nlp.compile([
+    `Toronto`,
+    `Toronto Toronto`,
+    `Toronto Rangers`,
+  ])
+  let res = nlp('one two tornado rangers').lookup(trie)
+  t.equal(res.length, 0, here + 'repeat-miss')
+
+  res = nlp('toronto toronto').lookup(trie)
+  t.equal(res.length, 1, here + 'repeat-on')
+  res = nlp('toronto rangers').lookup(trie)
+  t.equal(res.length, 1, here + 'repeat-off')
+  res = nlp('toronto').lookup(trie)
+  t.equal(res.length, 1, here + 'repeat-single')
+  t.end()
+})
+
 
 test('lookup-fallback', function (t) {
   let trie = nlp.compile(['a b c d e f', 'a b'])

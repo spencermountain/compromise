@@ -3,7 +3,7 @@ import tmp from './API/world.js'
 import version from './_version.js'
 import extend from './API/extend.js'
 import clone from './API/clone.js'
-import compile from './1-one/lookup/compile.js'
+import compile from './1-one/lookup/compile/build.js'
 
 let world = Object.assign({}, tmp)
 

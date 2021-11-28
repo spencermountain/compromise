@@ -50,10 +50,13 @@ txt = `Great name for it`
 
 
 
-let trie = nlp.compile(['two three', 'onety foo'])
+// let trie = nlp.compile(['a', 'b', 'c', 'f', 'd', 'e', 'a one'])
+// let trie = nlp.compile(['a b a c', 'foo'])
+let trie = nlp.compile([' f five', 'five five',])
+
 console.dir(trie, { depth: 5 })
-let doc = nlp('one two three four five. no here results.')
-doc.scan(trie).debug()
+// let doc = nlp('one two three four five. no here results. ')
+// doc.lookup(trie).debug()
 
 // txt = `i was there`
 // txt = `say it again`

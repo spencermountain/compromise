@@ -1,26 +1,25 @@
 // follow our trie structure
 const scanWords = function (terms, trie) {
-  let state = 0
+  let n = 0
   let results = []
   for (let i = 0; i < terms.length; i++) {
-    let l = terms[i].normal
-    if (trie.gotoFn[state] === undefined) {
-      trie.gotoFn[state] = []
+    let word = terms[i].normal
+    // main match-logic loop:
+    while (n > 0 && !trie.goNext[n].hasOwnProperty(word)) {
+      n = trie.failTo[n] // (usually back to 0)
     }
-    while (state > 0 && !(l in trie.gotoFn[state])) {
-      state = trie.failure[state]
-    }
-    if (!(l in trie.gotoFn[state])) {
+    // did we fail?
+    if (!trie.goNext[n].hasOwnProperty(word)) {
       continue
     }
-    state = trie.gotoFn[state][l]
-    if (trie.output[state] !== undefined) {
-      let arr = trie.output[state]
+    n = trie.goNext[n][word]
+    if (trie.endOn[n]) {
+      let arr = trie.endOn[n]
       for (let o = 0; o < arr.length; o++) {
-        let obj = arr[o]
-        let term = terms[i - obj.len + 1]
+        let len = arr[o]
+        let term = terms[i - len + 1]
         let [n, start] = term.index
-        results.push([n, start, start + obj.len])
+        results.push([n, start, start + len])
       }
     }
   }

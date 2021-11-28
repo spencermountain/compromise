@@ -1,4 +1,5 @@
-import compile from './compile.js'
+import build from './compile/build.js'
+import compress from './compile/compress.js'
 import scan from './scan.js'
 
 const isObject = val => {
@@ -8,12 +9,19 @@ const isObject = val => {
 const api = function (View) {
   /** turn an array or object into a compressed trie*/
   View.prototype.compile = function (obj) {
-    return compile(obj)
+    const trie = build(obj)
+    return compress(trie)
   }
 
   /** find all matches in this document */
-  View.prototype.scan = function (input) {
-    let trie = isObject(input) ? input : compile(input)
+  View.prototype.lookup = function (input) {
+    if (!input) {
+      return this.none()
+    }
+    if (typeof input === 'string') {
+      input = [input]
+    }
+    let trie = isObject(input) ? input : build(input)
     // cache it first
     let res = scan(this, trie)
     return res

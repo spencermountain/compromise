@@ -5,6 +5,7 @@ import output from './1-one/output/plugin.js'
 import pointers from './1-one/pointers/plugin.js'
 import tag from './1-one/tag/plugin.js'
 import tokenize from './1-one/tokenize/plugin.js'
+import lookup from './1-one/lookup/plugin.js'
 
 nlp.extend(change) //0kb
 nlp.extend(output) //0kb
@@ -12,5 +13,6 @@ nlp.extend(match) //10kb
 nlp.extend(pointers) //2kb
 nlp.extend(tag) //2kb
 nlp.extend(tokenize) //7kb
+nlp.extend(lookup) //7kb
 
 export default nlp // 40kb

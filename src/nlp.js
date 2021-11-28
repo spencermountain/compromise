@@ -3,9 +3,9 @@ import tmp from './API/world.js'
 import version from './_version.js'
 import extend from './API/extend.js'
 import clone from './API/clone.js'
+import compile from './1-one/lookup/compile.js'
 
 let world = Object.assign({}, tmp)
-// let world = { methods, model, compute, hooks }
 
 const nlp = function (input, lex) {
   const { methods, hooks } = world
@@ -33,6 +33,9 @@ nlp.verbose = function (set) {
 nlp.parseMatch = function (str) {
   return world.methods.one.parseMatch(str)
 }
+
+/** pre-compile a list of matches to lookup */
+nlp.compile = compile
 
 /** extend compromise functionality */
 nlp.plugin = function (plugin) {

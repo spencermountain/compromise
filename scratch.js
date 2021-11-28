@@ -50,18 +50,21 @@ txt = `Great name for it`
 
 
 
+let trie = nlp.compile(['two three', 'onety foo'])
+console.dir(trie, { depth: 5 })
+let doc = nlp('one two three four five. no here results.')
+doc.scan(trie).debug()
 
-
-txt = `i was there`
-txt = `say it again`
-txt = `waiters are furious`
-txt = `this union has disrupted`
-let doc = nlp(txt)
+// txt = `i was there`
+// txt = `say it again`
+// txt = `waiters are furious`
+// txt = `this union has disrupted`
+// let doc = nlp(txt)
 // doc.verbs().debug()
 // doc.sentences().toPast()
 // doc.sentences().toFuture()
-doc.sentences().toPresent()
-doc.debug()
+// doc.sentences().toPresent()
+// doc.debug()
 
 
 // let arr = [

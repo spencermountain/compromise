@@ -6,15 +6,15 @@ const scanWords = function (terms, trie) {
     let word = terms[i].normal
     // main match-logic loop:
     while (n > 0 && !trie.goNext[n].hasOwnProperty(word)) {
-      n = trie.failTo[n] // (usually back to 0)
+      n = trie.failTo[n] || 0 // (usually back to 0)
     }
     // did we fail?
     if (!trie.goNext[n].hasOwnProperty(word)) {
       continue
     }
     n = trie.goNext[n][word]
-    if (trie.endOn[n]) {
-      let arr = trie.endOn[n]
+    if (trie.endAs[n]) {
+      let arr = trie.endAs[n]
       for (let o = 0; o < arr.length; o++) {
         let len = arr[o]
         let term = terms[i - len + 1]

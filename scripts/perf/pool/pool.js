@@ -10,6 +10,7 @@ class Pool {
     this.workers = []
     for (let i = 0; i < cpus; i += 1) {
       this.workers.push(new Worker(dir + '/worker.js'))
+      // this.workers.push(new Worker(dir + '/lookup-worker.js'))
     }
   }
   do(msg) {

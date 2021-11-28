@@ -1,17 +1,26 @@
 // edited by Spencer Kelly
 // credit to https://github.com/BrunoRB/ahocorasick by Bruno Roberto Búrigo.
 
+const tokenize = function (phrase, world) {
+  const { methods, model } = world
+  let terms = methods.one.splitTerms(phrase, model).map(methods.one.splitWhitespace)
+  return terms.map(term => term.text.toLowerCase())
+}
+
 // turn an array or object into a compressed aho-corasick structure
-const buildTrie = function (keywords) {
+const buildTrie = function (phrases, world) {
+
+  // const tokenize=methods.one.
   let goNext = [{}]
-  let endOn = [null]
+  let endAs = [null]
   let failTo = [null]
 
   let xs = []
   let n = 0
-  keywords.forEach(function (word, w) {
+  phrases.forEach(function (phrase) {
     let curr = 0
-    let words = word.split(/ /g).filter(w => w)
+    // let wordsB = phrase.split(/ /g).filter(w => w)
+    let words = tokenize(phrase, world)
     for (let i = 0; i < words.length; i++) {
       let word = words[i]
       if (goNext[curr] && goNext[curr].hasOwnProperty(word)) {
@@ -21,10 +30,10 @@ const buildTrie = function (keywords) {
         goNext[curr][word] = n
         goNext[n] = {}
         curr = n
-        endOn[n] = null
+        endAs[n] = null
       }
     }
-    endOn[curr] = [words.length]
+    endAs[curr] = [words.length]
   })
 
   // f(s) = 0 for all states of depth 1 (the ones from which the 0 state can transition to)
@@ -48,16 +57,16 @@ const buildTrie = function (keywords) {
       if (word in goNext[n]) {
         let fs = goNext[n][word]
         failTo[s] = fs
-        if (endOn[fs]) {
-          endOn[s] = endOn[s] || []
-          endOn[s] = endOn[s].concat(endOn[fs])
+        if (endAs[fs]) {
+          endAs[s] = endAs[s] || []
+          endAs[s] = endAs[s].concat(endAs[fs])
         }
       } else {
         failTo[s] = 0
       }
     }
   }
-  return { goNext, endOn, failTo, }
+  return { goNext, endAs, failTo, }
 }
 export default buildTrie
 

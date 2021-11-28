@@ -9,7 +9,7 @@ const isObject = val => {
 const api = function (View) {
   /** turn an array or object into a compressed trie*/
   View.prototype.compile = function (obj) {
-    const trie = build(obj)
+    const trie = build(obj, this.world)
     return compress(trie)
   }
 
@@ -21,7 +21,7 @@ const api = function (View) {
     if (typeof input === 'string') {
       input = [input]
     }
-    let trie = isObject(input) ? input : build(input)
+    let trie = isObject(input) ? input : build(input, this.world)
     // cache it first
     let res = scan(this, trie)
     return res

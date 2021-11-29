@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/one.js'
+import nlp from './src/three.js'
 // import nlp from './builds/compromise.cjs'
 // nlp.verbose('tagger')
 
@@ -100,15 +100,26 @@ let arr = [
 // ]
 
 
-let doc = nlp('one two three four five. Toronto marlies. foobar')
-doc.match('marlies').debug()
+let doc = nlp(`tosses`).tag('Noun').compute('chunks')
+
+// doc.debug()
+console.log(doc.nouns())
+doc.nouns().debug()
+// doc.match('.$').replaceWith('football')
+// doc.tag('Noun').compute('chunks').nouns()//.toPlural().debug()
+// doc.verbs().toFutureTense()//.debug()
+// console.log(doc.document)
+// let doc = nlp(`he's going`).debug()
+// console.dir(doc.json(), { depth: 5 })
+// console.log(doc._cache)
+// doc.match('marlies').debug()
 // console.log(nlp.hooks())
 // let m = doc.match('(two|four) (three|five)').debug()
 // console.log(m)
 // m.settle().debug()
 
-let trie = nlp.compile(arr)
-doc.lookup(trie).debug()
+// let trie = nlp.compile(arr)
+// doc.lookup(trie).debug()
 
 // txt = `i was there`
 // txt = `say it again`

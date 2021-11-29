@@ -9,17 +9,9 @@ import isPossessive from './isPossessive.js'
 const byApostrophe = /'/
 const numDash = /^[0-9][^-–—]*[-–—].*?[0-9]/
 
-const reTag = function (terms, i, world, view) {
-  const preTagger = world.compute.preTagger
-  // just re-tag neighbourhood
-  let start = i < 2 ? 0 : i - 2
-  let slice = terms.slice(start, i + 3)
-  slice = [slice]
-
-  let tmp = view.update(view.pointer)
-  tmp.document = slice
-  tmp.compute('index')
-  preTagger(slice, world)
+const reTag = function (view, n) {
+  let s = view.eq(n)
+  s.compute(['preTagger', 'index'])
 }
 
 
@@ -69,7 +61,8 @@ const knownOnes = function (list, term, before, after) {
 }
 
 //really easy ones
-const contractions = (document = [], world, view) => {
+const contractions = (view) => {
+  let { world, document } = view
   const { model, methods } = world
   let list = model.two.contractions || []
   // each sentence
@@ -94,7 +87,7 @@ const contractions = (document = [], world, view) => {
       // actually insert the new terms
       if (words) {
         splice(document, [n, i], words)
-        reTag(terms, i, world, view)
+        reTag(view, n)
         continue
       }
       // '44-2' has special care
@@ -103,7 +96,7 @@ const contractions = (document = [], world, view) => {
         if (words) {
           splice(document, [n, i], words)
           methods.one.setTag(terms, 'NumberRange', world)//add custom tag
-          reTag(terms, i, world, view)
+          reTag(view, n)
         }
       }
     }

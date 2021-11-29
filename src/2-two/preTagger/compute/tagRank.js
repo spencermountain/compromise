@@ -18,7 +18,8 @@ const sortByKids = function (tags, tagSet) {
   return tags
 }
 
-const tagRank = function (document, world) {
+const tagRank = function (view) {
+  const { document, world } = view
   const tagSet = world.model.two.tagSet
   document.forEach(terms => {
     terms.forEach(term => {

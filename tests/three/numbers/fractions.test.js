@@ -119,7 +119,7 @@ test('seconds-edge-case', function (t) {
 
 test('do-math:', function (t) {
   let arr = nlp('1/2').fractions().get()
-  t.equal(arr[0].decimal, 0.5, here + 'do-math')
+  t.equal((arr[0] || {}).decimal, 0.5, here + 'do-math')
 
   // arr = nlp('1 1/2').fractions().json()
   // t.equal(arr[0].decimal, 1.5)

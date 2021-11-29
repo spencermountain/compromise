@@ -7,18 +7,19 @@ import index from './reindex.js'
 import wordCount from './wordCount.js'
 
 // cheat-method for a quick loop
-const termLoop = function (docs, fn, world) {
+const termLoop = function (view, fn) {
+  let docs = view.docs
   for (let i = 0; i < docs.length; i += 1) {
     for (let t = 0; t < docs[i].length; t += 1) {
-      fn(docs[i][t], world)
+      fn(docs[i][t], view.world)
     }
   }
 }
 
 const methods = {
-  alias: (docs, world) => termLoop(docs, alias, world),
-  normal: (docs, world) => termLoop(docs, normal, world),
-  machine: (docs, world) => termLoop(docs, machine, world),
+  alias: (view) => termLoop(view, alias),
+  normal: (view) => termLoop(view, normal),
+  machine: (view) => termLoop(view, machine),
   freq,
   offset,
   index,

@@ -1,6 +1,7 @@
 import sentence from './01-sentences/index.js'
 import term from './02-terms/index.js'
 import whitespace from './03-whitespace/index.js'
+import normalize from '../compute/02-normal/index.js'
 
 // turn a string input into a 'document' json format
 const tokenize = function (input, world) {
@@ -17,10 +18,12 @@ const tokenize = function (input, world) {
     input = sentences.map(txt => {
       let terms = splitTerms(txt, model)
       // split into [pre-text-post]
-      return terms.map(splitWhitespace)
+      terms = terms.map(splitWhitespace)
+      // add normalized term format, always
+      terms.forEach(normalize)
+      return terms
     })
-    // add normalized term format, always
-    compute.normal(input)
+    // compute.normal(input)
     // support slashes, apostrophes, etc
     // compute.alias(input, world)
   }

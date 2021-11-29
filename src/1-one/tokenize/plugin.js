@@ -6,7 +6,7 @@ export default {
   compute: compute,
   methods: methods,
   model: model,
-  hooks: ['alias', 'machine', 'index'],
+  hooks: ['normal', 'alias', 'machine', 'index'],
 }
 
 // const plugin = function (world) {

@@ -88,10 +88,10 @@ const thirdPass = function (terms, model) {
   }
 }
 
-const preTagger = function (document, world) {
-  const { model } = world
+const preTagger = function (view) {
+  const { methods, model } = view
   // roughly split sentences up by clause
-  document = world.methods.two.quickSplit(document)
+  let document = methods.two.quickSplit(view.document)
   // start with all terms
   for (let n = 0; n < document.length; n += 1) {
     let terms = document[n]
@@ -102,6 +102,8 @@ const preTagger = function (document, world) {
     // guess by the neighbours
     thirdPass(terms, model)
   }
+  // leave a nice cache for the next people
+  view.compute('cache')
   return document
 }
 

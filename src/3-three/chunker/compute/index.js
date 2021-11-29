@@ -9,7 +9,8 @@ import fixUp from './04-fixUp.js'
     Preposition
 */
 
-const findChunks = function (document, world) {
+const findChunks = function (view) {
+  const { document, world } = view
   easyMode(document)
   matcher(document, world)
   matcher(document, world) //run it 2nd time

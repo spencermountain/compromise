@@ -20,7 +20,8 @@ const chooseSense = function (terms, i, sense) {
   return sense.fallback || null
 }
 
-const getSense = function (document, world, doc) {
+const getSense = function (view) {
+  const { world, doc } = view
   const { senses } = world.model.four
   const terms = doc.termList()
   for (let i = 0; i < terms.length; i += 1) {

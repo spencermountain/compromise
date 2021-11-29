@@ -1,6 +1,6 @@
-import build from './compile/build.js'
-import compress from './compile/compress.js'
-import scan from './scan.js'
+import build from './api/compile/build.js'
+import compress from './api/compile/compress.js'
+import scan from './api/scan.js'
 
 const isObject = val => {
   return Object.prototype.toString.call(val) === '[object Object]'

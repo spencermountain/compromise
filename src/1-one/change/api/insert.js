@@ -26,7 +26,7 @@ const insert = function (str, view, prepend) {
   ptrs = ptrs.map(a => [a[0]])
   let doc = view.toView(ptrs)
   // try to tag them, too
-  doc.compute(view.world.hooks)
+  doc.compute('index')
   return doc
 }
 

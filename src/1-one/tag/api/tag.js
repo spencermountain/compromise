@@ -22,6 +22,8 @@ const fns = {
     } else {
       methods.one.setTag(terms, input, world, isSafe)
     }
+    // uncache
+    this.uncache()
     return this
   },
 
@@ -50,6 +52,8 @@ const fns = {
     } else {
       methods.one.unTag(terms, input, tagSet)
     }
+    // uncache
+    this.uncache()
     return this
   },
 

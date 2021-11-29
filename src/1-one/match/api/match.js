@@ -4,8 +4,7 @@ const match = function (regs, group) {
   const one = this.methods.one
   // support param as view object
   if (isView(regs)) {
-    let ptrs = regs.fullPointer // support a view object as input
-    return this.toView(ptrs)
+    return this.intersection(regs)
   }
   // support param as string
   if (typeof regs === 'string') {
@@ -23,8 +22,7 @@ const matchOne = function (regs, group) {
   const one = this.methods.one
   // support at view as a param
   if (isView(regs)) {
-    let ptrs = regs.fullPointer // support a view object as input
-    return this.toView(ptrs)
+    return this.intersection(regs).eq(0)
   }
   if (typeof regs === 'string') {
     regs = one.parseMatch(regs)
@@ -65,8 +63,7 @@ const ifFn = function (regs, group) {
     return this.update(ptrs)
   }
   if (isView(regs)) {
-    let ptrs = regs.fullPointer // support a view object as input
-    return this.update(ptrs)
+    return this.intersection(regs)
   }
   return this.none()
 }
@@ -74,7 +71,6 @@ const ifFn = function (regs, group) {
 const ifNo = function (regs, group) {
   const { methods } = this
   const one = methods.one
-
   // support a view object as input
   if (isView(regs)) {
     return this.difference(regs)

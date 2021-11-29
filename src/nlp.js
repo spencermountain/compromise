@@ -19,6 +19,9 @@ const nlp = function (input, lex) {
   return doc
 }
 
+
+
+
 /** log the decision-making to console */
 nlp.verbose = function (set) {
   let env = typeof process === 'undefined' ? self.env : process.env //use window, in browser

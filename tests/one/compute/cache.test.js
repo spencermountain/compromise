@@ -15,9 +15,16 @@ test('invalidate cach on tag', function (t) {
   doc.tag('Noun')
   let res = doc.match('#Noun')
   t.equal(res.found, true, here + 'match skipped cache')
-
   res = doc.lookup(['farm', 'chilly'])
   t.equal(res.found, true, here + 'lookup skipped cache')
+  t.end()
+})
 
+test('applied cache is sneaky', function (t) {
+  let doc = nlp('one two three four').cache()
+  let m = doc.match('one two three')
+  m.tag('#Person')//oh neat
+  t.equal(m.match('#Person').found, true, here + 'm is updated')
+  t.equal(doc.match('#Person').found, false, here + 'parent is out-of-date')
   t.end()
 })

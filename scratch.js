@@ -99,12 +99,6 @@ let arr = [
 //   `Toronto marlies`,
 // ]
 
-// cache - issue 
-let r = nlp('one two three four')
-r.match('one two three').tag('#Person')//.debug()
-r.match('#Person').debug()
-console.log(r._cache)
-
 
 // bug: doc-match issue
 // txt = `clearly did suggest`
@@ -114,6 +108,14 @@ console.log(r._cache)
 // parsed.auxiliary.debug()
 // vb.match(parsed.auxiliary).debug()
 
+
+let doc = nlp('he is the best, that i see. he was the greatest')
+let childA = doc.if('greatest')
+let childB = doc.match('he .')
+console.log(childA.if(childB).debug())
+// let found = childA.matchOne(childB)
+// found.debug()
+// found.debug()
 
 // doc.debug()
 

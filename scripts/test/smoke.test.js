@@ -2,7 +2,8 @@
 import test from 'tape'
 import main from '../../builds/compromise.cjs'
 import min from '../../builds/compromise.mjs'
-import tokenize from '../../builds/one/compromise-one.cjs'
+import one from '../../builds/one/compromise-one.cjs'
+import two from '../../builds/two/compromise-two.cjs'
 console.log('\n 🎗️  - running smoke-test..\n') // eslint-disable-line
 
 //'sanity-test' the builds
@@ -27,9 +28,10 @@ test('min build', function (t) {
 })
 
 test('tokenize build', function (t) {
-  let doc = tokenize('John and Joe walked to the store')
+  let doc = one('John and Joe walked to the store')
   t.equal(doc.match('joe walked .').found, true, 'match-statement')
-  t.equal(doc.terms(1).text('reduced'), 'and', 'text-out')
+  t.equal(doc.match('joe walked .').found, true, 'match-statement')
+  t.equal(doc.has('#Person'), false, 'no sneaky tags')
   //ensure lexicon works
   // let tmp = tokenize('spencer kelly', { spencer: 'Cool' })
   // t.equal(tmp.match('#Cool').text(), 'spencer', 'lexicon-works')

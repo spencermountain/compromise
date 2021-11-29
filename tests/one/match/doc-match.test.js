@@ -16,9 +16,13 @@ test('doc-sibling-as-input', function (t) {
   let doc = nlp('he is the best, that i see. he is the greatest')
   let childA = doc.if('greatest')
   let childB = doc.match('he is')
-  let found = childA.match(childB)
   // union/intersection/difference
+  let found = childA.match(childB)
   t.equal(found.length, 1, here + 'found self in sibling')
+
+  found = childA.if(childB)
+  t.equal(found.length, 1, here + 'if self in sibling')
+
   //try false-positive example
   childA = doc.if('foobar')
   childB = doc.match('he is')

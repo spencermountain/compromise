@@ -73,7 +73,13 @@ class View {
   // create a new View, from this one
   update(pointer) {
     let m = new View(this.document, pointer)
-    // m._cache = this._cache // share this full thing
+    // send the cache down, too
+    if (m._cache && pointer && pointer.length > 1) {
+      let c = pointer.map(ptr => {
+        return m._cache[ptr[0]]
+      })
+      m._cache = c
+    }
     m.world = this.world
     return m
   }

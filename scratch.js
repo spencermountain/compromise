@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/one.js'
+import nlp from './src/two.js'
 // import nlp from './builds/compromise.cjs'
 // nlp.verbose('tagger')
 
@@ -109,27 +109,6 @@ let arr = [
 // vb.match(parsed.auxiliary).debug()
 
 
-let doc = nlp('he is the best, that i see. he was the greatest')
-let childA = doc.if('greatest')
-let childB = doc.match('he .')
-console.log(childA.if(childB).debug())
-// let found = childA.matchOne(childB)
-// found.debug()
-// found.debug()
-
-// doc.debug()
-
-// let arr = [
-//   ["recreated", "recreate"],
-//   ["postponed", "postpone"],
-//   ["pondered", "ponder"],
-//   ["boned", "bone"],
-// ]
-// let doc = nlp(arr[arr.length - 1][0]).debug()
-// doc.verbs().toInfinitive()
-// console.log(doc.text())
-
-
 // bug 1
 // txt = `he out-lived`
 // txt = `he out lived`
@@ -141,7 +120,9 @@ console.log(childA.if(childB).debug())
 // doc.verbs().toFutureTense()
 // doc.debug()
 
-
+let doc = nlp('toronto and montreal. Sydney and Paris.')
+console.log(nlp.parseMatch('(#Place && #Noun)')[0].choices)
+let m = doc.match('(#Place && #Noun)').debug()
 
 /*
 

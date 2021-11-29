@@ -35,7 +35,6 @@ nlp.parseMatch = function (str) {
 
 /** pre-compile a list of matches to lookup */
 nlp.compile = function (input) {
-  console.log('compile')
   return this().compile(input)
 }
 

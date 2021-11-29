@@ -26,11 +26,25 @@ const scanWords = function (terms, trie) {
   return results
 }
 
+const cacheMiss = function (words, cache) {
+  for (let i = 0; i < words.length; i += 1) {
+    if (cache.has(words[i]) === true) {
+      return false
+    }
+  }
+  return true
+}
+
 const scan = function (view, trie) {
   let results = []
   let docs = view.docs
+  let firstWords = Object.keys(trie.goNext[0])
   // do each phrase
   for (let i = 0; i < docs.length; i++) {
+    // can we skip the phrase, all together?
+    if (cacheMiss(firstWords, view._cache[i]) === true) {
+      continue
+    }
     let terms = docs[i]
     let found = scanWords(terms, trie)
     if (found.length > 0) {

@@ -93,23 +93,22 @@ let arr = [
   `Toronto Young Rangers`,
 ]
 
-arr = [
-  // `Toronto`,
-  `Toronto Rangers`,
-  `Toronto marlies`,
-]
+// arr = [
+//   // `Toronto`,
+//   `Toronto Rangers`,
+//   `Toronto marlies`,
+// ]
 
 
 let doc = nlp('one two three four five. Toronto marlies. foobar')
 doc.match('marlies').debug()
-console.log(doc._cache)
 // console.log(nlp.hooks())
 // let m = doc.match('(two|four) (three|five)').debug()
 // console.log(m)
 // m.settle().debug()
 
-// let trie = nlp.compile(arr)
-// doc.lookup(trie).debug()
+let trie = nlp.compile(arr)
+doc.lookup(trie).debug()
 
 // txt = `i was there`
 // txt = `say it again`

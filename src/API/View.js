@@ -98,8 +98,7 @@ class View {
     // clone only sub-document ?
     let m = this.update(this.pointer)
     m.document = document
-    // let m = new View(document, this.pointer)
-    // m._cache = this._cache //clone this too?
+    m._cache = this._cache //clone this too?
     return m
   }
 }

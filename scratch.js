@@ -99,11 +99,16 @@ let arr = [
 //   `Toronto marlies`,
 // ]
 
-let doc = nlp(`chilly`).update([[0]])//.match('.')
-console.log(doc.hooks)
-// let trie = nlp.compile(arr)
-// doc.lookup(trie).debug()
-
+let doc = nlp('one two three. three four five.')
+// .filter(p => {
+//   // console.log(p.docs)
+//   console.log(p.match('four'))
+//   m = p
+//   return p.has('four')
+// })
+let m = doc.eq(1)
+console.log(m.match('four').text())
+// doc.debug()
 // txt = `i was there`
 // txt = `say it again`
 // txt = `waiters are furious`

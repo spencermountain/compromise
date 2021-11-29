@@ -73,7 +73,7 @@ class View {
   // create a new View, from this one
   update(pointer) {
     let m = new View(this.document, pointer)
-    m._cache = this._cache // share this full thing
+    // m._cache = this._cache // share this full thing
     m.world = this.world
     return m
   }
@@ -83,7 +83,7 @@ class View {
       pointer = this.pointer
     }
     let m = new View(this.document, pointer)
-    m._cache = this._cache // share this full thing
+    // m._cache = this._cache // share this full thing
     return m
   }
   clone() {

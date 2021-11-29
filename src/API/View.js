@@ -74,6 +74,7 @@ class View {
   update(pointer) {
     let m = new View(this.document, pointer)
     m._cache = this._cache // share this full thing
+    m.world = this.world
     return m
   }
   // create a new View, from this one

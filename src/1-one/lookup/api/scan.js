@@ -42,7 +42,7 @@ const scan = function (view, trie) {
   // do each phrase
   for (let i = 0; i < docs.length; i++) {
     // can we skip the phrase, all together?
-    if (view._cache[i] && cacheMiss(firstWords, view._cache[i]) === true) {
+    if (view._cache && view._cache[i] && cacheMiss(firstWords, view._cache[i]) === true) {
       continue
     }
     let terms = docs[i]

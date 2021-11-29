@@ -99,25 +99,8 @@ let arr = [
 //   `Toronto marlies`,
 // ]
 
-
-let doc = nlp(`chilly`)
-doc.tag('Noun')
-doc.match('#Noun').debug()
-// console.log(doc.nouns())
-// doc.nouns().debug()
-// doc.match('.$').replaceWith('football')
-// doc.tag('Noun').compute('chunks').nouns()//.toPlural().debug()
-// doc.verbs().toFutureTense()//.debug()
-// console.log(doc.document)
-// let doc = nlp(`he's going`).debug()
-// console.dir(doc.json(), { depth: 5 })
-// console.log(doc._cache)
-// doc.match('marlies').debug()
-// console.log(nlp.hooks())
-// let m = doc.match('(two|four) (three|five)').debug()
-// console.log(m)
-// m.settle().debug()
-
+let doc = nlp(`chilly`).update([[0]])//.match('.')
+console.log(doc.hooks)
 // let trie = nlp.compile(arr)
 // doc.lookup(trie).debug()
 

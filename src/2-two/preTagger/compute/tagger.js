@@ -91,7 +91,7 @@ const thirdPass = function (terms, model) {
 const preTagger = function (view) {
   const { methods, model } = view
   // roughly split sentences up by clause
-  let document = methods.two.quickSplit(view.document)
+  let document = methods.two.quickSplit(view.docs)
   // start with all terms
   for (let n = 0; n < document.length; n += 1) {
     let terms = document[n]

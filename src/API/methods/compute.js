@@ -3,7 +3,7 @@ const isArray = input => Object.prototype.toString.call(input) === '[object Arra
 const fns = {
   /** add metadata to term objects */
   compute: function (input) {
-    const { docs, world } = this
+    const { world } = this
     const compute = world.compute
     // do one method
     if (typeof input === 'string' && compute.hasOwnProperty(input)) {

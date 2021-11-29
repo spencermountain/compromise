@@ -100,11 +100,11 @@ let arr = [
 // ]
 
 
-let doc = nlp(`tosses`).tag('Noun').compute('chunks')
-
-// doc.debug()
-console.log(doc.nouns())
-doc.nouns().debug()
+let doc = nlp(`chilly`)
+doc.tag('Noun')
+doc.match('#Noun').debug()
+// console.log(doc.nouns())
+// doc.nouns().debug()
 // doc.match('.$').replaceWith('football')
 // doc.tag('Noun').compute('chunks').nouns()//.toPlural().debug()
 // doc.verbs().toFutureTense()//.debug()

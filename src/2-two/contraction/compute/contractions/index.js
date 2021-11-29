@@ -9,11 +9,12 @@ import isPossessive from './isPossessive.js'
 const byApostrophe = /'/
 const numDash = /^[0-9][^-–—]*[-–—].*?[0-9]/
 
-const reTag = function (view, n) {
-  let s = view.eq(n)
-  s.compute(['preTagger', 'index'])
+// run tagger on our new implicit terms
+const reTag = function (terms, view) {
+  let tmp = view.update()
+  tmp.document = [terms]
+  tmp.compute(['preTagger'])
 }
-
 
 const byEnd = {
   // ain't
@@ -87,7 +88,8 @@ const contractions = (view) => {
       // actually insert the new terms
       if (words) {
         splice(document, [n, i], words)
-        reTag(view, n)
+        reTag(document[n], view)
+        // reTag(view, n)
         continue
       }
       // '44-2' has special care
@@ -96,7 +98,7 @@ const contractions = (view) => {
         if (words) {
           splice(document, [n, i], words)
           methods.one.setTag(terms, 'NumberRange', world)//add custom tag
-          reTag(view, n)
+          reTag(document[n], view)
         }
       }
     }

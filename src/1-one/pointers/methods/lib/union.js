@@ -31,3 +31,5 @@ export default getUnion
 // console.log(getUnion([[0, 1, 4]], [[0, 2, 6]]))
 // overlap
 // console.log(getUnion([[0, 1, 4]], [[0, 2, 3]]))
+// neighbours
+// console.log(getUnion([[0, 1, 3]], [[0, 3, 5]]))

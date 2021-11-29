@@ -3,16 +3,16 @@ export const doesOverlap = function (a, b) {
   if (a[0] !== b[0]) {
     return false
   }
-  let startA = a[1]
-  let startB = b[1]
+  let [, startA, endA] = a
+  let [, startB, endB] = b
   // [a,a,a,-,-,-,]
   // [-,-,b,b,b,-,]
-  if (startA <= startB && a[2] >= startB) {
+  if (startA <= startB && endA > startB) {
     return true
   }
   // [-,-,-,a,a,-,]
   // [-,-,b,b,b,-,]
-  if (startB <= startA && b[2] >= startA) {
+  if (startB <= startA && endB > startA) {
     return true
   }
   return false
@@ -58,6 +58,9 @@ export const uniquePtrs = function (arr) {
 // console.log(doesOverlap([0, 3, 4], [0, 1, 5]))
 // // disjoint
 // console.log(doesOverlap([0, 0, 3], [0, 4, 5]))
+// neighbours
+// console.log(doesOverlap([0, 1, 3], [0, 3, 5]))
+// console.log(doesOverlap([0, 3, 5], [0, 1, 3]))
 
 // console.log(
 //   getExtent([

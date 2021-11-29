@@ -22,8 +22,8 @@ const api = function (View) {
       input = [input]
     }
     let trie = isObject(input) ? input : build(input, this.world)
-    // cache it first
     let res = scan(this, trie)
+    res = res.settle()
     return res
   }
 }

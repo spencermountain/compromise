@@ -31,6 +31,11 @@ test('pointer-union-basic :', function (t) {
   res = start.union(end)
   t.equal(res.text(), 'two three four five', here + 'union-not-plus')
 
+  start = doc.update([[1, 0, 2]])
+  end = doc.update([[1, 2, 4]])
+  res = start.union(end)
+  t.equal(res.text(), 'one two three four', here + 'union-neighbour')
+
   t.end()
 })
 
@@ -73,5 +78,13 @@ test('settle-fancy :', function (t) {
   res = res.settle()
   // t.equal(res.length, 1, here + 'settle has one')
   t.equal(res.text(), 'match two match five', here + 'settle')
+  t.end()
+})
+
+test('settle-neighbour :', function (t) {
+  let doc = nlp('one two three four five')
+  let res = doc.match('(two|four) (three|five)')
+  res = res.settle()
+  t.deepEqual(res.out('array'), ['two three', 'four five'], here + 'neighbour')
   t.end()
 })

@@ -98,9 +98,14 @@ arr = [
   `Toronto Rangers`,
 ]
 
-let trie = nlp.compile(arr)
-console.log(trie)
-nlp('toronto rangers').lookup(trie).debug()
+
+let doc = nlp('one two three four five.')
+// let m = doc.match('(two|four) (three|five)').debug()
+// console.log(m)
+// m.settle().debug()
+
+let trie = nlp.compile(['two three', 'four five', 'five six'])
+doc.lookup(trie).debug()
 
 // txt = `i was there`
 // txt = `say it again`

@@ -37,3 +37,11 @@ test('split-doc-input', function (t) {
   t.equal(found.eq(1).text('reduced'), 'the greatest', here + 'found second match')
   t.end()
 })
+
+
+test('two-or-matches overlap', function (t) {
+  let doc = nlp('one two three four five')
+  let m = doc.match('(two|four) (three|five)')
+  t.deepEqual(m.out('array'), ['two three', 'four five'], here + 'or-overlap')
+  t.end()
+})

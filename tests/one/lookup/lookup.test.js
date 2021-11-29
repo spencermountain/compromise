@@ -24,7 +24,7 @@ test('lookup-basic', function (t) {
 
   trie = nlp.compile(['two three', 'two', 'seven', 'one', 'onety', 'eleventy eight'])
   res = doc.lookup(trie)
-  t.equal(res.length, 3, here + 'three results')
+  t.equal(res.length, 2, here + 'no-dupe results')
 
   trie = nlp.compile(['twoe three', 'twsasdf so', 'sefven', 'onde', 'onety', 'eleventy eight'])
   res = doc.lookup(trie)

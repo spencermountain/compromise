@@ -15,8 +15,9 @@ const postTagger = function (view) {
   // subset = Array.from(subset).map(n => document[n])
   // found = methods.two.bulkMatch(subset, byGroup, methods)
   // methods.two.bulkTagger(found, subset, world)
-  // leave a nice cache for the next person
-  view.compute('cache')
+  // leave a nice cache for the next person?
+  // view.compute('cache')
+  view.uncache()
   return document
 }
 

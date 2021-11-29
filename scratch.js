@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/three.js'
+import nlp from './src/one.js'
 // import nlp from './builds/compromise.cjs'
 // nlp.verbose('tagger')
 
@@ -100,19 +100,19 @@ let arr = [
 // ]
 
 // cache - issue 
-// let r = nlp('one two three four')
-// r.match('one two three').tag('#Person')//.debug()
-// r.match('#Person').debug()
-// console.log(r._cache)
+let r = nlp('one two three four')
+r.match('one two three').tag('#Person')//.debug()
+r.match('#Person').debug()
+console.log(r._cache)
 
 
 // bug: doc-match issue
-txt = `clearly did suggest`
-let doc = nlp(txt)
-let vb = doc.verbs()
-let parsed = vb.parse()[0]
-parsed.auxiliary.debug()
-vb.match(parsed.auxiliary).debug()
+// txt = `clearly did suggest`
+// let doc = nlp(txt)
+// let vb = doc.verbs()
+// let parsed = vb.parse()[0]
+// parsed.auxiliary.debug()
+// vb.match(parsed.auxiliary).debug()
 
 
 // doc.debug()

@@ -10,6 +10,30 @@ const isPlural = (vb, parsed) => {
   }
   return subj.plural
 }
+// is/are/am
+const copula = (vb, parsed) => {
+  let subj = getSubject(vb, parsed)
+  let m = subj.subject
+  if (m.has('i')) {
+    return 'am'
+  }
+  if (subj.plural) {
+    return 'are'
+  }
+  return 'is'
+}
+
+const doDoes = function (vb, parsed) {
+  let subj = getSubject(vb, parsed)
+  let m = subj.subject
+  if (m.has('i') || m.has('we')) {
+    return 'do'
+  }
+  if (subj.plural) {
+    return 'do'
+  }
+  return 'does'
+}
 
 // walk->walked
 const simple = (vb, parsed) => {
@@ -19,6 +43,10 @@ const simple = (vb, parsed) => {
   // 'i walk' vs 'he walks'
   if (isPlural(vb, parsed) === false) {
     str = verbConjugate(str, vb.model).PresentTense
+  }
+  // handle copula
+  if (parsed.root.has('#Copula')) {
+    str = copula(vb, parsed)
   }
   if (str) {
     vb = vb.replace(parsed.root, str)
@@ -76,8 +104,17 @@ const forms = {
   'simple-past': simple,
   // he will walk -> he walked
   'simple-future': (vb, parsed) => {
-    simple(vb, parsed)
-    return vb.remove('will')
+    const { root, auxiliary } = parsed
+    // handle 'will be'
+    if (auxiliary.has('will') && root.has('be')) {
+      let str = copula(vb, parsed)
+      vb.replace(root, str)
+      vb = vb.remove('will')
+    } else {
+      simple(vb, parsed)
+      vb = vb.remove('will')
+    }
+    return vb
   },
 
   // is walking ->
@@ -151,6 +188,12 @@ const forms = {
   // used to walk -> is walking
   // did walk -> is walking
   'auxiliary-past': (vb, parsed) => {
+    // 'did provide' -> 'does provide'
+    if (parsed.auxiliary.has('did')) {
+      let str = doDoes(vb, parsed)
+      vb.replace(parsed.auxiliary, str)
+      return vb
+    }
     toGerund(vb, parsed)
     vb.replace(parsed.auxiliary, 'is')
     return vb

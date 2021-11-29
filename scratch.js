@@ -99,27 +99,23 @@ let arr = [
 //   `Toronto marlies`,
 // ]
 
-let doc = nlp('one two three. three four five.')
-// .filter(p => {
-//   // console.log(p.docs)
-//   console.log(p.match('four'))
-//   m = p
-//   return p.has('four')
-// })
-let m = doc.eq(1)
-console.log(m.match('four').text())
-// doc.debug()
-// txt = `i was there`
-// txt = `say it again`
-// txt = `waiters are furious`
-// txt = `this union has disrupted`
-// let doc = nlp(txt)
-// doc.verbs().debug()
-// doc.sentences().toPast()
-// doc.sentences().toFuture()
-// doc.sentences().toPresent()
-// doc.debug()
+// cache - issue 
+// let r = nlp('one two three four')
+// r.match('one two three').tag('#Person')//.debug()
+// r.match('#Person').debug()
+// console.log(r._cache)
 
+
+// bug: doc-match issue
+txt = `clearly did suggest`
+let doc = nlp(txt)
+let vb = doc.verbs()
+let parsed = vb.parse()[0]
+parsed.auxiliary.debug()
+vb.match(parsed.auxiliary).debug()
+
+
+// doc.debug()
 
 // let arr = [
 //   ["recreated", "recreate"],

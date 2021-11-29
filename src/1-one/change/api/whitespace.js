@@ -22,7 +22,7 @@ const methods = {
       return last[last.length - 1].post
     }
     this.docs.forEach(terms => {
-      let term = terms[0]
+      let term = terms[terms.length - 1]
       if (concat === true) {
         term.post += str
       } else {
@@ -32,14 +32,14 @@ const methods = {
     return this
   },
 
-  /** */
+  /** remove whitespace from start/end */
   trim: function () {
     let docs = this.docs
     let start = docs[0][0]
-    start.pre = ''
+    start.pre = start.pre.trimStart()
     let last = docs[docs.length - 1]
     let end = last[last.length - 1]
-    end.post = ''
+    end.post = end.post.trimEnd()
     return this
   },
 

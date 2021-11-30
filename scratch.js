@@ -1,97 +1,22 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/two.js'
+import nlp from './src/three.js'
 // import nlp from './builds/compromise.cjs'
 // nlp.verbose('tagger')
-
-// bug!
-// let doc = nlp(`extra. match.`)
-// let m = doc.match('match').freeze()
-// doc.remove('extra')
-// doc.match(m).debug()
 
 // bug!
 // let doc = nlp(`john walks`)
 // let s = doc.sentences()
 // s.toFutureTense().fullSentences()
-// console.log(s)
 // console.log(s.text())
 
 
 let txt
-// txt = `repurchase the milk`
-// txt = `they too failed`
+txt = `please go `
 
-// txt = `yoga and horses`
-// txt = `to probe and alter`
-// txt = `the city and surrounding area`
-// txt = `the Senate's composition and powers`
-// txt = `small twigs & stems`
-// txt = `the winds and storms`
-// txt = `collection of odds and ends`
-
-// txt = `what are you up to`
-// txt = `up to date`
-txt = `Great name for it`
-// txt = `read these reviews and improved!`
-// txt = `has soft music playing.`
-// txt = `it is always clean.`
-// txt = `with guns, cash and drugs`
-// txt = `Stock prices closed higher`
-// txt = ` bump us up to first class`
-
-// txt = `10 markets and pop-ups`
-// txt = `fruit danishes as well`
-// txt = `SNAP is right in part`
-// txt = `business models for transmission `
-
-
-// let doc = nlp(txt)
-// doc.debug()
-
-
-let arr = [
-  `Toronto Aeros`,
-  `Toronto Arenas`,
-  `Toronto Aura Lee`,
-  `Toronto 228th Battalion (NHA)`,
-  `Toronto Blueshirts`,
-  `Toronto Jr. Canadiens`,
-  `Dixie Beehives (2005–11)`,
-  `East York Lyndhursts`,
-  `Toronto Granites`,
-  `Toronto Knob Hill Farms`,
-  `Toronto Lions`,
-  `Toronto Maple Leafs`,
-  `Toronto Marlboros`,
-  `Toronto Marlies`,
-  `Mimico Monarchs`,
-  `Toronto Native Sons`,
-  `Niagara-on-the-Lake Predators`,
-  `North York Rangers`,
-  `North York Rangers (1967–1984)`,
-  `Toronto Ontarios`,
-  `Toronto Professional Hockey Club`,
-  `Toronto Ravinas`,
-  `Toronto Roadrunners`,
-  `Royal York Royals`,
-  `Toronto St. Patricks`,
-  `Toronto Shamrocks`,
-  `St. Michael's Buzzers`,
-  `Toronto Tecumsehs`,
-  `Toronto Toros`,
-  `Toronto Attack`,
-  `Toronto Furies`,
-  `Toronto Jr. Aeros`,
-  `Toronto Neil McNeil Maroons`,
-  `Toronto Patriots`,
-  `Toronto Six`,
-  `Toronto St. Michael's Majors`,
-  `Toronto Varsity Blues men's ice hockey`,
-  `Torontos`,
-  `Toronto Wellingtons`,
-  `West Toronto Nationals`,
-  `Toronto Young Rangers`,
-]
+txt = `did n't I`
+// let doc = nlp(txt).verbs().debug().json()
+let doc = nlp(txt).contractions().expand().debug()
+// console.log(nlp(txt).json()[0])
 
 // arr = [
 //   // `Toronto`,
@@ -120,9 +45,11 @@ let arr = [
 // doc.verbs().toFutureTense()
 // doc.debug()
 
-let doc = nlp('toronto and montreal. Sydney and Paris.')
-console.log(nlp.parseMatch('(#Place && #Noun)')[0].choices)
-let m = doc.match('(#Place && #Noun)').debug()
+
+// AND issue:
+// let doc = nlp('toronto and montreal. Sydney and Paris.')
+// console.log(nlp.parseMatch('(#Place && #Noun)')[0].choices)
+// let m = doc.match('(#Place && #Noun)').debug()
 
 /*
 

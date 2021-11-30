@@ -25,6 +25,8 @@ let misc = {
   we: ['Pronoun', 'Plural'],
   was: ['Copula', 'PastTense'],
   is: ['Copula', 'PresentTense'],
+  are: ['Copula', 'PresentTense'],
+  am: ['Copula', 'PresentTense'],
   were: ['Copula', 'PastTense'],
   her: ['Possessive', 'Pronoun'],
   his: ['Possessive', 'Pronoun'],

@@ -86,9 +86,10 @@ const api = function (View) {
         let parsed = parseVerb(vb)
         let info = getGrammar(vb, parsed)
         return {
-          pastTense: toPast(vb, parsed, info.form),
-          presentTense: toPresent(vb, parsed, info.form),
-          futureTense: toFuture(vb, parsed, info.form),
+          Infinitive: toInfinitive(vb.clone(), parsed, info.form).text('normal'),
+          PastTense: toPast(vb.clone(), parsed, info.form).text('normal'),
+          PresentTense: toPresent(vb.clone(), parsed, info.form).text('normal'),
+          FutureTense: toFuture(vb.clone(), parsed, info.form).text('normal'),
         }
       })
     }

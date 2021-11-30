@@ -9,6 +9,11 @@ test('confidence', function (t) {
     ['google', 1],
     ['jlcekehj is', 0.6],
     ['yelpily good', 0.85],
+
+    // [ 'Striking revenue workers threaten gherao',null]
+    // [ 'Madhuri goes dhak-dhak again',null]
+    // [ `ACF's development committee meets`,null]
+    // [ 'State govt gives HR panel office space',null]
   ]
   arr.forEach(a => {
     let [str, score] = a

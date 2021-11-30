@@ -93,6 +93,7 @@ match(['foo', 'far'])
 
 - **[new]** .union(), .intersection(), .difference() and .complement() methods
 - **[new]** .freeze(), unfreeze() - prevent a match from drifting, once parent is mutated
+- **[new]** .confidence() method - approximate tagging confidence score for arbitrary selections
 - **[new]** .settle() - remove overlaps in matches
 - **[new]** .is() - helper-method for comparing two views
 - **[new]** .none() - helper-method for returning an empty view of the document

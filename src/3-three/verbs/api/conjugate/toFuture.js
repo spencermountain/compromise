@@ -1,4 +1,5 @@
-const noop = vb => vb
+import { noop } from './lib.js'
+
 
 const simple = (vb, parsed) => {
   const { verbToInfinitive } = vb.methods.two.transform

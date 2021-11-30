@@ -3,7 +3,6 @@ export default {
   "Comparative": "true¦better",
   "Superlative": "true¦earlier",
   "PresentTense": "true¦sounds",
-  "Copula": "true¦a0;m,re",
   "Condition": "true¦lest,unless",
   "PastTense": "true¦be2came,d1had,lied,mea0sa1taken,we0;nt;id;en,gan",
   "Gerund": "true¦accord0be0go0result0stain0;ing",

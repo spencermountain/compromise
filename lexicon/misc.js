@@ -3,9 +3,6 @@ export default {
   earlier: 'Superlative',
   sounds: 'PresentTense',
 
-  am: 'Copula',
-  are: 'Copula',
-
   unless: 'Condition',
   lest: 'Condition',
 

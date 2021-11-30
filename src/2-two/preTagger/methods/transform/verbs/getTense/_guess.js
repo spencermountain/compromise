@@ -44,8 +44,9 @@ let guessVerb = {
     'ung',
     'en',
   ],
-  PastTense: ['ed', 'lt', 'nt', 'pt', 'ew', 'ld'],
+  PastTense: ['ept', 'ed', 'lt', 'nt', 'ew', 'ld'],
   PresentTense: [
+    'upt',
     'rks',
     'cks',
     'nks',

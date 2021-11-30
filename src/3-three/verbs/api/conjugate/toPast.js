@@ -1,3 +1,6 @@
+import { noop, doDoes } from './lib.js'
+
+
 const fns = {
 
   noop: vb => vb,
@@ -21,16 +24,25 @@ const fns = {
     // but skip the 'is' participle..
     str = str === 'been' ? 'was' : str
     if (str) {
-      vb = vb.replace(parsed.root, str)//.tag('Verb')
-      // vb.not('#Particle').tag('PastTense')
-      // vb.fullSentence().compute('preTagger')
+      vb.replace(parsed.root, str)
     }
     return vb
   },
 
   both: function (vb, parsed) {
+    // 'he did not walk'
+    if (parsed.negative.found) {
+      let did = doDoes(vb, parsed)
+      if (did === 'do') {
+        did = 'did'
+      }
+      vb.replace('will', did)
+      return vb
+    }
+    // 'he walked'
     vb = fns.simple(vb, parsed)
-    return fns.noAux(vb, parsed)
+    vb = fns.noAux(vb, parsed)
+    return vb
   },
 
   hasHad: vb => {
@@ -54,7 +66,7 @@ const forms = {
   // he walks -> he walked
   'simple-present': fns.simple,
   // he walked
-  'simple-past': fns.noop,
+  'simple-past': noop,
   // he will walk -> he walked
   'simple-future': fns.both,
 
@@ -65,7 +77,7 @@ const forms = {
     return vb
   },
   // he was walking
-  'past-progressive': fns.noop,
+  'past-progressive': noop,
   // he will be walking
   'future-progressive': (vb, parsed) => {
     vb.match(parsed.root).insertBefore('was')
@@ -76,7 +88,7 @@ const forms = {
   // has walked -> had walked (?)
   'present-perfect': fns.hasHad,
   // had walked
-  'past-perfect': fns.noop,
+  'past-perfect': noop,
   // will have walked -> had walked
   'future-perfect': (vb, parsed) => {
     vb.match(parsed.root).insertBefore('had')
@@ -87,7 +99,7 @@ const forms = {
   // has been walking -> had been
   'present-perfect-progressive': fns.hasHad,
   // had been walking
-  'past-perfect-progressive': fns.noop,
+  'past-perfect-progressive': noop,
   // will have been -> had
   'future-perfect-progressive': vb => {
     vb.remove('will')
@@ -126,7 +138,7 @@ const forms = {
     return vb
   },
   // would have been walked
-  'past-conditional': fns.noop,
+  'past-conditional': noop,
 
   // is going to drink -> was going to drink
   'auxiliary-future': vb => {
@@ -134,7 +146,7 @@ const forms = {
     return vb
   },
   // used to walk
-  'auxiliary-past': fns.noop,
+  'auxiliary-past': noop,
   // we do walk -> we did walk
   'auxiliary-present': vb => {
     vb.replace('(do|does)', 'did')
@@ -157,7 +169,7 @@ const forms = {
     return vb
   },
   // must have walked
-  'modal-past': fns.noop,
+  'modal-past': noop,
   // wanted to walk
   'want-infinitive': vb => {
     vb.replace('(want|wants)', 'wanted')

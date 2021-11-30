@@ -1,39 +1,4 @@
-import getSubject from '../parse/getSubject.js'
-
-const noop = vb => vb
-
-const isPlural = (vb, parsed) => {
-  let subj = getSubject(vb, parsed)
-  let m = subj.subject
-  if (m.has('i') || m.has('we')) {
-    return true
-  }
-  return subj.plural
-}
-// is/are/am
-const copula = (vb, parsed) => {
-  let subj = getSubject(vb, parsed)
-  let m = subj.subject
-  if (m.has('i')) {
-    return 'am'
-  }
-  if (subj.plural) {
-    return 'are'
-  }
-  return 'is'
-}
-
-const doDoes = function (vb, parsed) {
-  let subj = getSubject(vb, parsed)
-  let m = subj.subject
-  if (m.has('i') || m.has('we')) {
-    return 'do'
-  }
-  if (subj.plural) {
-    return 'do'
-  }
-  return 'does'
-}
+import { noop, isPlural, isAreAm, doDoes } from './lib.js'
 
 // walk->walked
 const simple = (vb, parsed) => {
@@ -46,7 +11,7 @@ const simple = (vb, parsed) => {
   }
   // handle copula
   if (parsed.root.has('#Copula')) {
-    str = copula(vb, parsed)
+    str = isAreAm(vb, parsed)
   }
   if (str) {
     vb = vb.replace(parsed.root, str)
@@ -80,22 +45,7 @@ const toInfinitive = (vb, parsed) => {
   return vb
 }
 
-const isAreAm = function (vb, parsed) {
-  // 'people were' -> 'people are'
-  if (vb.has('were')) {
-    return 'are'
-  }
-  // 'i was' -> i am
-  let { subject, plural } = getSubject(vb, parsed)
-  if (subject.has('i')) {
-    return 'am'
-  }
-  if (subject.has('we') || plural) {
-    return 'are'
-  }
-  // 'he was' -> he is
-  return 'is'
-}
+
 
 const forms = {
   // he walks -> he walked
@@ -107,7 +57,7 @@ const forms = {
     const { root, auxiliary } = parsed
     // handle 'will be'
     if (auxiliary.has('will') && root.has('be')) {
-      let str = copula(vb, parsed)
+      let str = isAreAm(vb, parsed)
       vb.replace(root, str)
       vb = vb.remove('will')
     } else {

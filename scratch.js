@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/three.js'
 // import nlp from './builds/compromise.cjs'
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 // bug!
 // let doc = nlp(`john walks`)
@@ -11,22 +11,16 @@ nlp.verbose('tagger')
 
 
 let txt
-txt = `please go `
+// txt = `please go `
 
-txt = `hoom is good. oh yeah`
-// let doc = nlp(txt).verbs().debug().json()
-let doc = nlp(txt).debug()
-// console.log(doc.confidence())
-console.log(doc.json({ confidence: true }))
-// console.log(doc.document[0])
-// console.log(nlp(txt).json({ terms: { unknown: true } })[0])
-
-// arr = [
+// let arr = [
 //   // `Toronto`,
-//   `Toronto Rangers`,
+//   `delta`,
+//   `farming`,
+//   `Toronto`,
 //   `Toronto marlies`,
 // ]
-
+// console.log(nlp.compile(arr))
 
 // bug: doc-match issue
 // txt = `clearly did suggest`
@@ -43,9 +37,17 @@ console.log(doc.json({ confidence: true }))
 // txt = `pseudo clean`
 // txt = `he was anti cleaning`
 // // txt = `he was anti cleaning`
-// let doc = nlp(txt)
-// console.log(doc.verbs().json()[0])
-// doc.verbs().toFutureTense()
+txt = 'i will start'
+let doc = nlp(txt)
+console.log(doc.verbs().conjugate())
+// let vb = doc.update([[0, 1, 3]])
+
+// let will = doc.update([[0, 1, 2]])
+// let walk = doc.update([[0, 2, 3]])//.debug()
+
+// vb.replace(will, 'fooWill')
+// vb.replace(walk, 'foowalk')
+// doc.verbs().toPastTense()
 // doc.debug()
 
 

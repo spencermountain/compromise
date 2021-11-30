@@ -13,10 +13,11 @@ nlp.verbose('tagger')
 let txt
 txt = `please go `
 
-txt = `hoom is good`
+txt = `hoom is good. oh yeah`
 // let doc = nlp(txt).verbs().debug().json()
 let doc = nlp(txt).debug()
-console.log(doc.confidence())
+// console.log(doc.confidence())
+console.log(doc.json({ confidence: true }))
 // console.log(doc.document[0])
 // console.log(nlp(txt).json({ terms: { unknown: true } })[0])
 

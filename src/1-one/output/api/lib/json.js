@@ -22,7 +22,7 @@ const toJson = function (view, opts) {
   if (opts.offset) {
     view.compute('offset')
   }
-  return view.docs.map(terms => {
+  return view.docs.map((terms, i) => {
     let res = {}
     if (opts.text) {
       res.text = textFromTerms(terms, { keepPunct: true }, false)
@@ -40,6 +40,9 @@ const toJson = function (view, opts) {
         start: terms[0].offset.start,
         length: len,
       }
+    }
+    if (opts.confidence && view.confidence) {
+      res.confidence = view.eq(i).confidence()
     }
     return res
   })

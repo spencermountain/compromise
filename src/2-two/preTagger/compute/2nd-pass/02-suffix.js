@@ -24,6 +24,7 @@ const tagBySuffix = function (terms, i, model) {
     let tag = suffixLoop(term.normal, model.two.suffixPatterns)
     if (tag !== null) {
       fastTag(term, tag, '2-suffix')
+      term.confidence = 0.7
       return true
     }
     // try implicit form of word, too
@@ -31,6 +32,7 @@ const tagBySuffix = function (terms, i, model) {
       tag = suffixLoop(term.implicit, model.two.suffixPatterns)
       if (tag !== null) {
         fastTag(term, tag, '2-implicit-suffix')
+        term.confidence = 0.7
         return true
       }
     }

@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/three.js'
 // import nlp from './builds/compromise.cjs'
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 // bug!
 // let doc = nlp(`john walks`)
@@ -13,10 +13,12 @@ import nlp from './src/three.js'
 let txt
 txt = `please go `
 
-txt = `did n't I`
+txt = `hoom is good`
 // let doc = nlp(txt).verbs().debug().json()
-let doc = nlp(txt).contractions().expand().debug()
-// console.log(nlp(txt).json()[0])
+let doc = nlp(txt).debug()
+console.log(doc.confidence())
+// console.log(doc.document[0])
+// console.log(nlp(txt).json({ terms: { unknown: true } })[0])
 
 // arr = [
 //   // `Toronto`,

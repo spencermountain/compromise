@@ -41,6 +41,7 @@ const neighbours = function (terms, i, model) {
     if (tag) {
       fastTag(term, tag, '3-[neighbour]')
       fillTag(terms, i, model)
+      terms[i].confidence = 0.2
       return true
     }
   }

@@ -21,6 +21,7 @@ const checkPrefix = function (terms, i, model) {
       let tag = model.two.lexicon[root]
       if (allowed[tag] === true) {
         fastTag(term, tag, '2-prefix')
+        term.confidence = 0.6
         return true
       }
     }

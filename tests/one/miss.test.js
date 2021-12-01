@@ -4,11 +4,11 @@ const here = '[one/miss] '
 
 const arr = [
   // no tags
-  [`toronto`, '#City'],
-  [`i went to Toronto`, '#Noun'],
-  // no chunks
-  [`toronto`, '<Noun>'],
-  [`i went to Toronto`, '<Noun>'],
+  // [`toronto`, '#City'],
+  // [`i went to Toronto`, '#Noun'],
+  // // no chunks
+  // [`toronto`, '<Noun>'],
+  // [`i went to Toronto`, '<Noun>'],
   // min-length
   ['mexico', '.{2}'],
   ['mexico', '.{2,3}'],

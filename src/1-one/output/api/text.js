@@ -43,9 +43,9 @@ export default {
     if (fmt && typeof fmt === 'string' && fmts.hasOwnProperty(fmt)) {
       opts = Object.assign({}, fmts[fmt])
     } else if (fmt && isObject(fmt)) {
-      opts = Object.assign({}, fmt, opts)
+      opts = Object.assign({}, opts, fmt)
     }
-    if (this.pointer) {
+    if (this.pointer && opts.keepPunct === undefined) {
       opts.keepSpace = false
       let ptr = this.pointer[0]
       if (ptr && ptr[1]) {

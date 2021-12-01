@@ -36,19 +36,14 @@ let txt
 // txt = `pseudo clean`
 // txt = `he was anti cleaning`
 // // txt = `he was anti cleaning`
-txt = 'i was really not being walked'
-let doc = nlp(txt)//.tag('Verb')
-// let m = doc.match('walking')
-// doc.replace(m, 'food')
+txt = 'do speak!'
 
-doc.verbs().toInfinitive()
-// doc.verbs().toPresentTense()
+// '^[#Infinitive] (#Adjective|#Adverb)?$'
+
+let doc = nlp(txt)
+// console.log(doc.json()[0])
+doc.verbs().toPastTense()
 doc.debug()
-
-// vb.replace(will, 'fooWill')
-// vb.replace(walk, 'foowalk')
-// doc.verbs().toPastTense()
-// doc.debug()
 
 
 // AND issue:

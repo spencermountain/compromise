@@ -18,6 +18,10 @@ const getData = function (tags) {
 
 const verbForms = {
   // === Simple ===
+  'imperative': [
+    // walk!
+    ['#Imperative', []],
+  ],
   'infinitive': [
     // walk
     ['^#Infinitive$', []],

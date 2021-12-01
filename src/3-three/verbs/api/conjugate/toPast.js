@@ -15,7 +15,7 @@ const fns = {
   // walk->walked
   simple: (vb, parsed) => {
     const { verbConjugate, verbToInfinitive } = vb.methods.two.transform
-    let str = parsed.root.text('normal')
+    let str = parsed.root.text({ keepPunct: false })
     str = verbToInfinitive(str, vb.model)
     let all = verbConjugate(str, vb.model)
     // 'driven' || 'drove'

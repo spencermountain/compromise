@@ -23,6 +23,7 @@ import personName from './person/ambig-name.js'
 import verbs from './verbs/verbs.js'
 import auxiliary from './verbs/auxiliary.js'
 import phrasal from './verbs/phrasal.js'
+import imperative from './verbs/imperative.js'
 
 import misc from './_misc.js'
 
@@ -50,6 +51,7 @@ let matches = [].concat(
   adjVerb,
   auxiliary,
   phrasal,
+  imperative,
   misc,
   orgs,
   places,

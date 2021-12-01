@@ -30,6 +30,8 @@ const progressive = (vb, parsed) => {
 }
 
 const forms = {
+  // walk ->
+  'infinitive': simple,
   // he walks ->
   'simple-present': simple,
   // he walked

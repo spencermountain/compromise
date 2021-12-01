@@ -18,6 +18,10 @@ const getData = function (tags) {
 
 const verbForms = {
   // === Simple ===
+  'infinitive': [
+    // walk
+    ['^#Infinitive$', []],
+  ],
   'simple-present': [
     // he walks',
     ['^#PresentTense$', [present]],

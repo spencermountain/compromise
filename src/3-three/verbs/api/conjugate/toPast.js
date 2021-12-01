@@ -63,6 +63,8 @@ const fns = {
 
 
 const forms = {
+  // walk -> walked
+  'infinitive': fns.simple,
   // he walks -> he walked
   'simple-present': fns.simple,
   // he walked

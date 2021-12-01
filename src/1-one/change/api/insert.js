@@ -17,10 +17,11 @@ const insert = function (str, view, prepend) {
     }
     if (prepend) {
       cleanPrepend(home, ptr, needle, document)
-      selfPtrs[i] = ptr // push self backwards by len
     } else {
       cleanAppend(home, ptr, needle, document)
     }
+    // change self backwards by len
+    selfPtrs[i] = ptr
     // extend the pointer
     ptr[2] += needle.length
   })
@@ -28,9 +29,7 @@ const insert = function (str, view, prepend) {
   // ptrs = ptrs.map(a => [a[0]])
   let doc = view.toView(ptrs)
   // shift our self pointer, if necessary
-  if (prepend) {
-    view.ptrs = selfPtrs
-  }
+  view.ptrs = selfPtrs
   // try to tag them, too
   doc.compute('index')
   return doc

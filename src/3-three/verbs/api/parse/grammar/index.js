@@ -40,10 +40,9 @@ const getGrammar = function (vb, res) {
   }
   // did we find nothing?
   if (!grammar.form) {
-    if (vb.has('#PastTense')) {
-      grammar.form = 'simple-past'
+    if (vb.has('^#Verb$')) {
+      grammar.form = 'infinitive'
     }
-    grammar.form = 'simple-present'
   }
   // fallback to 'naiive' tense detection
   if (!grammar.tense) {

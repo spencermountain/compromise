@@ -110,12 +110,12 @@ test('prepend shift-self :', function (t) {
   t.end()
 })
 
-// test('append shift-self :', function (t) {
-//   let doc = nlp('self')
-//   let m = doc.match('.')
-//   let res = m.append('after')
-//   t.equal(res.text(), 'self after', here + 'res has both')
-//   t.equal(m.text(), 'self after', here + 'self is self+after')
-//   t.end()
-// })
+test('append shift-self :', function (t) {
+  let doc = nlp('self')
+  let m = doc.match('.')
+  let res = m.append('after')
+  t.equal(res.text(), 'self after', here + 'res has both')
+  t.equal(m.text(), 'self after', here + 'self is self+after')
+  t.end()
+})
 

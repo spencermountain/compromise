@@ -48,6 +48,8 @@ const toInfinitive = (vb, parsed) => {
 
 
 const forms = {
+  // walk
+  'infinitive': simple,
   // he walks -> he walked
   'simple-present': noop,
   // he walked

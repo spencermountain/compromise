@@ -31,7 +31,6 @@ const fromReg = function (str, tense) {
   return null
 }
 
-
 const toInfinitive = function (str, model, tense) {
   if (!str) {
     return ''

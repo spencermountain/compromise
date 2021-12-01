@@ -8,14 +8,16 @@ const findVerbs = function (doc) {
   m = m.splitAfter('[(do|did|am|was|is|will)] (is|was)', 0)
   // m = m.splitAfter('[(do|did|am|was|is|will)] #PresentTense', 0)
 
+  // cool
+
   // like being pampered
   m = m.splitBefore('(#Verb && !#Copula) [being] #Verb', 0)
   // like to be pampered
   m = m.splitBefore('#Verb [to be] #Verb', 0)
 
   // implicit conjugation - 'help fix'
-  m = m.splitAfter('[help] #PresentTense', 0)
 
+  m = m.splitAfter('[help] #PresentTense', 0)
   // what i can sell is..
   m = m.splitBefore('(#PresentTense|#PastTense) [#Copula]$', 0)
   // what i can sell will be
@@ -30,7 +32,6 @@ const findVerbs = function (doc) {
   m = m.if('#Verb')
   // the reason he will is ...
   // ensure it's not two verbs
-  // m.debug()
   return m
 }
 export default findVerbs

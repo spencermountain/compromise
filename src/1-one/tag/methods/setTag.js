@@ -1,5 +1,14 @@
 const isMulti = / /
 
+const addChunk = function (term, tag) {
+  if (tag === 'Noun') {
+    term.chunk = tag
+  }
+  if (tag === 'Verb') {
+    term.chunk = tag
+  }
+}
+
 const tagTerm = function (term, tag, tagSet, isSafe) {
   // does it already have this tag?
   if (term.tags.has(tag) === true) {
@@ -26,11 +35,14 @@ const tagTerm = function (term, tag, tagSet, isSafe) {
     if (known.parents && known.parents.length > 0) {
       for (let o = 0; o < known.parents.length; o += 1) {
         term.tags.add(known.parents[o])
+        addChunk(term, known.parents[o])
       }
     }
   }
   // finally, add our tag
   term.tags.add(tag)
+  // add a chunk too, if it's easy
+  addChunk(term, tag)
   return true
 }
 

@@ -31,15 +31,22 @@ let txt
 // vb.match(parsed.auxiliary).debug()
 
 
+// prepend-shift
+let doc = nlp('no self')
+let m = doc.match('self')
+m.prepend('before hand')
+m.debug()
+
 // bug 1
 // txt = `he out-lived`
 // txt = `he out lived`
 // txt = `pseudo clean`
 // txt = `he was anti cleaning`
 // // txt = `he was anti cleaning`
-txt = 'i will start'
-let doc = nlp(txt)
-console.log(doc.verbs().conjugate())
+// txt = 'study'
+// let doc = nlp(txt).tag('Verb')
+// doc.verbs().debug()
+// console.log(doc.verbs().conjugate())
 // let vb = doc.update([[0, 1, 3]])
 
 // let will = doc.update([[0, 1, 2]])

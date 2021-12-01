@@ -4,7 +4,8 @@ const insert = function (str, view, prepend) {
   const { methods, document, world } = view
   // insert words at end of each doc
   let ptrs = view.fullPointer
-  ptrs.forEach(ptr => {
+  let selfPtrs = view.fullPointer
+  ptrs.forEach((ptr, i) => {
     let [n] = ptr
     // add-in the words
     let home = document[n]
@@ -16,6 +17,7 @@ const insert = function (str, view, prepend) {
     }
     if (prepend) {
       cleanPrepend(home, ptr, needle, document)
+      selfPtrs[i] = ptr // push self backwards by len
     } else {
       cleanAppend(home, ptr, needle, document)
     }
@@ -23,8 +25,12 @@ const insert = function (str, view, prepend) {
     ptr[2] += needle.length
   })
   // convert them to whole sentences
-  ptrs = ptrs.map(a => [a[0]])
+  // ptrs = ptrs.map(a => [a[0]])
   let doc = view.toView(ptrs)
+  // shift our self pointer, if necessary
+  if (prepend) {
+    view.ptrs = selfPtrs
+  }
   // try to tag them, too
   doc.compute('index')
   return doc

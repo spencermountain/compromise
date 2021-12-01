@@ -100,3 +100,22 @@ test('punctuation edge-cases :', function (t) {
   t.equal(doc.text(), 'before after?', here + ' question-mark')
   t.end()
 })
+
+test('prepend shift-self :', function (t) {
+  let doc = nlp('no self no')
+  let m = doc.match('self')
+  let res = m.prepend('before')
+  t.equal(res.text(), 'before self', here + 'res has both')
+  t.equal(m.text(), 'before self', here + 'self is before+self')
+  t.end()
+})
+
+// test('append shift-self :', function (t) {
+//   let doc = nlp('self')
+//   let m = doc.match('.')
+//   let res = m.append('after')
+//   t.equal(res.text(), 'self after', here + 'res has both')
+//   t.equal(m.text(), 'self after', here + 'self is self+after')
+//   t.end()
+// })
+

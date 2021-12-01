@@ -38,6 +38,13 @@ const getGrammar = function (vb, res) {
       break //only match one
     }
   }
+  // did we find nothing?
+  if (!grammar.form) {
+    if (vb.has('#PastTense')) {
+      grammar.form = 'simple-past'
+    }
+    grammar.form = 'simple-present'
+  }
   // fallback to 'naiive' tense detection
   if (!grammar.tense) {
     grammar.tense = res.root.has('#PastTense') ? 'PastTense' : 'PresentTense'

@@ -12,9 +12,6 @@ import getGrammar from './parse/grammar/index.js'
 export const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
 const isObject = val => Object.prototype.toString.call(val) === '[object Object]'
 
-
-
-
 const api = function (View) {
   class Verbs extends View {
     constructor(document, pointer, groups) {

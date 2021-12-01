@@ -11,7 +11,7 @@ export default [
   // do it again
   { match: '^[#Infinitive] it (please|now|again|plz)', notIf, group: 0, tag: 'Imperative', reason: 'do-it-please' },
   // go!
-  { match: '^[#Infinitive]$', group: 0, tag: 'Imperative', reason: 'go' },
+  // { match: '^[#Infinitive]$', group: 0, tag: 'Imperative', reason: 'go' },
   { match: '^[#Infinitive] (#Adjective|#Adverb)$', group: 0, tag: 'Imperative', reason: 'go' },
   // turn down the noise
   { match: '^[#Infinitive] (up|down|over) #Determiner', group: 0, tag: 'Imperative', reason: 'turn-down' },

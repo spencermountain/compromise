@@ -10,7 +10,6 @@ const textFromTerms = function (terms, opts, keepSpace = true) {
   terms.forEach(t => {
     let pre = t.pre || ''
     let post = t.post || ''
-
     if (opts.punctuation === 'some') {
       pre = pre.replace(trimStart, '')
       // replace a hyphen with a space

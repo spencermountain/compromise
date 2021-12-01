@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[two/smomke] '
+const here = '[two/smoke] '
 
 //make sure it can handle garbage inputs
 test('garbage-inputs', function (t) {

@@ -36,13 +36,15 @@ let txt
 // txt = `pseudo clean`
 // txt = `he was anti cleaning`
 // // txt = `he was anti cleaning`
-txt = 'do speak!'
+txt = 'the robber Captain carried a dagger under his garment.'
 
 // '^[#Infinitive] (#Adjective|#Adverb)?$'
 
 let doc = nlp(txt)
+console.log(doc.verbs().text() + '|')
+// doc.verbs().subjects().debug()
 // console.log(doc.json()[0])
-doc.verbs().toPastTense()
+// doc.verbs().toPastTense()
 doc.debug()
 
 

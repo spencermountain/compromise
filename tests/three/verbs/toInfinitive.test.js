@@ -50,16 +50,23 @@ test('toInfinitive:', function (t) {
     ['do walk', 'walk'],
     ['does walk', 'walk'],
 
+    // negatives
+    ['i did not walk', 'i do not walk'],
+    ['we did not walk', 'we do not walk'],
+    ['he did not walk', 'he does not walk'],
+    ['i was not being walked', 'i do not walk'],
+    ['i had not walked', 'i do not walk'],
+
     // want-infinitive
     // ['he wants to walk', 'he want to walk'],
     // ['he wanted to walk', 'he want to walk'],
     // ['he will want to walk', 'he want to walk'],
     // adverbs
-    ['i was really not being walked', 'i really not walk'],
-    ['i was not really being walked', 'i not really walk'],
-    ['i was being really not walked', 'i really not walk'],
-    ['i was being not really walked', 'i not really walk'],
-    ['he was not going to walk', 'he not walk'],
+    ['i was really not being walked', 'i do really not walk'],
+    ['i was not really being walked', 'i do not really walk'],
+    ['i was being really not walked', 'i do really not walk'],
+    ['i was being not really walked', 'i do not really walk'],
+    ['he was not going to walk', 'he does not walk'],
     ['we are putting', 'we put'],
 
     // from particple
@@ -417,7 +424,6 @@ test('toInfinitive:', function (t) {
     ['excited', 'excite'],
     ['invited', 'invite'],
     ['recited', 'recite'],
-
 
   ]
   arr.forEach(a => {

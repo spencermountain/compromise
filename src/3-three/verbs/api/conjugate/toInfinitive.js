@@ -1,3 +1,5 @@
+import { doDoes } from './lib.js'
+
 const getTense = (root) => {
   let tense = null
   if (root.has('#Participle')) {
@@ -22,8 +24,17 @@ const toInfinitive = function (vb, parsed) {
   // remove any auxiliary terms
   if (auxiliary.found) {
     auxiliary.terms().reverse().forEach(m => {
-      vb.remove(m)
+      vb.remove(m.text())//gross
     })
+  }
+  // there is no real way to do this
+  // 'i not walk'?  'i walk not'?
+  if (parsed.negative.found) {
+    if (!vb.has('not')) {
+      vb.prepend('not')
+    }
+    let does = doDoes(vb, parsed)
+    vb.prepend(does)
   }
   vb.fullSentence().compute(['preTagger', 'postTagger', 'chunks'])
   return vb

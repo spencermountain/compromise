@@ -5,6 +5,7 @@ import toInfinitive from './conjugate/toInfinitive.js'
 import toPast from './conjugate/toPast.js'
 import toPresent from './conjugate/toPresent.js'
 import toFuture from './conjugate/toFuture.js'
+import toGerund from './conjugate/toGerund.js'
 import getSubject from './parse/getSubject.js'
 import getGrammar from './parse/grammar/index.js'
 
@@ -50,6 +51,9 @@ const api = function (View) {
         return getSubject(vb).plural === true
       })
     }
+    isImperative(n) {
+      return getNth(this, n).filter(vb => vb.has('#Imperative'))
+    }
     toInfinitive(n) {
       return getNth(this, n).map(vb => {
         let parsed = parseVerb(vb)
@@ -76,6 +80,13 @@ const api = function (View) {
         let parsed = parseVerb(vb)
         let info = getGrammar(vb, parsed)
         return toFuture(vb, parsed, info.form)
+      })
+    }
+    toGerund(n) {
+      return getNth(this, n).map(vb => {
+        let parsed = parseVerb(vb)
+        let info = getGrammar(vb, parsed)
+        return toGerund(vb, parsed, info.form)
       })
     }
     conjugate(n) {

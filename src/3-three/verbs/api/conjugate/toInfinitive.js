@@ -10,7 +10,7 @@ const getTense = (root) => {
 }
 
 // all verb forms are the same
-const toPresent = function (vb, parsed) {
+const toInfinitive = function (vb, parsed) {
   const { verbToInfinitive } = vb.methods.two.transform
   const { root, auxiliary } = parsed
   root.freeze()
@@ -19,13 +19,13 @@ const toPresent = function (vb, parsed) {
   if (str) {
     vb.replace(root, str)
   }
-  // remove any auxiliary
+  // remove any auxiliary terms
   if (auxiliary.found) {
-    auxiliary.terms().forEach(m => {
-      vb.remove(m.text('normal')) //super awkward
+    auxiliary.terms().reverse().forEach(m => {
+      vb.remove(m)
     })
   }
   vb.fullSentence().compute(['preTagger', 'postTagger', 'chunks'])
   return vb
 }
-export default toPresent
+export default toInfinitive

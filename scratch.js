@@ -36,9 +36,14 @@ let txt
 // txt = `pseudo clean`
 // txt = `he was anti cleaning`
 // // txt = `he was anti cleaning`
-txt = 'study'
-let doc = nlp(txt).tag('Verb')
-console.log(doc.verbs().conjugate())
+txt = 'i was really not being walked'
+let doc = nlp(txt)//.tag('Verb')
+// let m = doc.match('walking')
+// doc.replace(m, 'food')
+
+doc.verbs().toInfinitive()
+// doc.verbs().toPresentTense()
+doc.debug()
 
 // vb.replace(will, 'fooWill')
 // vb.replace(walk, 'foowalk')

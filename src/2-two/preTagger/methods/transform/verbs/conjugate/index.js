@@ -4,6 +4,15 @@ import genericFill from './02-generic.js'
 //we run this on every verb in the lexicon, so please keep it fast
 //we assume the input word is a proper infinitive
 const conjugate = function (inf, model) {
+  // ad-hoc Copula response
+  if (inf === 'be') {
+    return {
+      Infinitive: inf,
+      Gerund: 'being',
+      PastTense: 'was',
+      PresentTense: 'is',
+    }
+  }
   let found = {}
   const irregs = model.two.irregularVerbs
   let particle = ''

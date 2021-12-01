@@ -1,5 +1,6 @@
-const test = require('tape')
-const nlp = require('../_lib')
+import test from 'tape'
+import nlp from '../_lib.js'
+const here = '[three/imperative] '
 
 test('isImperative:', function (t) {
   let arr = [
@@ -34,7 +35,7 @@ test('isImperative:', function (t) {
   arr.forEach(function (a) {
     const doc = nlp(a[0])
     let m = doc.verbs().isImperative()
-    t.equal(m.found, a[1], `[isImperative] ${a[0]}`)
+    t.equal(m.found, a[1], `${here} ${a[0]}`)
   })
   t.end()
 })
@@ -53,7 +54,7 @@ test('imperative keeps tense:', function (t) {
   arr.forEach(function (str) {
     const doc = nlp(str)
     doc.verbs().toPastTense()
-    t.equal(doc.text(), str, str + ' [toPast]')
+    t.equal(doc.text(), str, here + str + ' [toPast]')
   })
   t.end()
 })

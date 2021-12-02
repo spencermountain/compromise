@@ -3,6 +3,7 @@ import tmp from './API/world.js'
 import version from './_version.js'
 import extend from './API/extend.js'
 import clone from './API/clone.js'
+import { verbose, typeAhead, compile } from './API/_lib.js'
 
 let world = Object.assign({}, tmp)
 
@@ -20,13 +21,7 @@ const nlp = function (input, lex) {
 }
 
 /** log the decision-making to console */
-nlp.verbose = function (set) {
-  let env = typeof process === 'undefined' ? self.env : process.env //use window, in browser
-  env.DEBUG_TAGS = set === 'tagger' || set === true ? true : ''
-  env.DEBUG_MATCH = set === 'match' || set === true ? true : ''
-  env.DEBUG_CHUNKS = set === 'chunker' || set === true ? true : ''
-  return this
-}
+nlp.verbose = verbose
 
 /** pre-parse any match statements */
 nlp.parseMatch = function (str) {
@@ -34,9 +29,10 @@ nlp.parseMatch = function (str) {
 }
 
 /** pre-compile a list of matches to lookup */
-nlp.compile = function (input) {
-  return this().compile(input)
-}
+nlp.compile = compile
+
+/** add words to assume by prefix in typeahead */
+nlp.typeAhead = typeAhead
 
 /** extend compromise functionality */
 nlp.plugin = function (plugin) {
@@ -48,8 +44,10 @@ nlp.extend = nlp.plugin
 /** reach-into compromise internals */
 nlp.world = () => world
 
+/** current library release version */
 nlp.version = version
 
+/** insert new words/phrases into the lexicon */
 nlp.addWords = function (words) {
   const { methods, model } = world
   if (!words) {
@@ -98,6 +96,6 @@ nlp.methods = () => world.methods
 nlp.hooks = () => world.hooks
 
 // apply our only default plugins
+const { plugin, parseMatch } = nlp
 export default nlp
-const { parseMatch, plugin } = nlp
-export { parseMatch, plugin, version, plugin as extend }
+export { plugin, version, plugin as extend }

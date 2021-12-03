@@ -1,5 +1,6 @@
-const test = require('tape')
-const nlp = require('./_lib')
+import test from 'tape'
+import nlp from '../_lib.js'
+const here = '[one/typeahead] '
 
 test('typeahead test', function (t) {
   const lexicon = {
@@ -53,12 +54,13 @@ test('min test', function (t) {
 })
 
 test('lexicon-guard test', function (t) {
+  nlp.addWords({ swim: 'Verb' })
   // 'swim' is it's own word.
   nlp.typeahead(['swimsuit'])
   t.equal(nlp('swim').has('swimsuit'), false, 'lexicon-block')
   t.equal(nlp('swimsu').has('swimsuit'), true, 'lexicon-continue')
 
-  nlp('').world.prefixes = {} //whoosh!
+  nlp.world().model.one.typeahead = {} //whoosh!
   // who cares - do it anyways
   nlp.typeahead(['swimsuit'], { safe: false })
   t.equal(nlp('swim').has('swimsuit'), true, 'safemode-off')

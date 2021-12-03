@@ -1,5 +1,5 @@
 // generate all the possible prefixes up-front
-const createIndex = function (arr, opts, world) {
+const getPrefixes = function (arr, opts, world) {
   let index = {}
   let collisions = []
   let existing = world.prefixes || {}
@@ -12,7 +12,7 @@ const createIndex = function (arr, opts, world) {
     for (let size = opts.min; size < max; size += 1) {
       let prefix = str.substr(0, size)
       // ensure prefix is not a word
-      if (opts.safe && world.words.hasOwnProperty(prefix)) {
+      if (opts.safe && world.model.two.lexicon.hasOwnProperty(prefix)) {
         continue
       }
       // does it already exist?
@@ -35,4 +35,5 @@ const createIndex = function (arr, opts, world) {
   })
   return index
 }
-module.exports = createIndex
+
+export default getPrefixes

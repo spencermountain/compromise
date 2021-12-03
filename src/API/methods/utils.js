@@ -39,7 +39,7 @@ const utils = {
   },
   /** */
   last: function () {
-    let n = this.pointer.length - 1
+    let n = this.fullPointer.length - 1
     return this.eq(n)
   },
   /** */

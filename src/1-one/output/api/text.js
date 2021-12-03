@@ -32,6 +32,7 @@ const fmts = {
 }
 fmts.clean = fmts.normal
 fmts.reduced = fmts.root
+fmts.implicit = fmts.machine
 
 export default {
   /** */

@@ -11,8 +11,9 @@ const checkLexicon = function (terms, i, model) {
   // if (t.implicit !== undefined) {
   //   if (lexicon[t.implicit] !== undefined && lexicon.hasOwnProperty(t.implicit)) {
   //     let tag = lexicon[t.implicit]
-  //     setTag(t, tag, 'implicit-lexicon')
-  //     continue
+  //     console.log(tag)
+  //     fastTag(t, tag, 'implicit-lexicon')
+  //     return true
   //   }
   // }
   // normal lexicon lookup

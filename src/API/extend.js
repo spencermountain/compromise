@@ -29,7 +29,7 @@ function mergeQuick(model, plugin) {
   return model
 }
 
-const extend = function (plugin, world, View) {
+const extend = function (plugin, world, View, nlp) {
   const { methods, model, compute, hooks } = world
   if (plugin.methods) {
     mergeQuick(methods, plugin.methods)
@@ -48,6 +48,9 @@ const extend = function (plugin, world, View) {
   // assign new class methods
   if (plugin.api) {
     plugin.api(View)
+  }
+  if (plugin.lib) {
+    Object.keys(plugin.lib).forEach(k => nlp[k] = plugin.lib[k])
   }
 }
 export default extend

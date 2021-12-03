@@ -2,17 +2,6 @@
 
 
 /** add words to assume by prefix in typeahead */
-const typeAhead = function (lex = {}) {
-  // interpret array as input
-  if (Object.prototype.toString.call(lex) === '[object Array]') {
-    lex = lex.reduce((h, k) => {
-      h[k] = true
-      return h
-    }, {})
-  }
-  this.world.one.typeahead = lex
-  return this
-}
 
 /** log the decision-making to console */
 const verbose = function (set) {
@@ -27,4 +16,4 @@ const verbose = function (set) {
 const compile = function (input) {
   return this().compile(input)
 }
-export { verbose, typeAhead, compile }
+export { verbose, compile }

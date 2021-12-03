@@ -3,7 +3,7 @@ import tmp from './API/world.js'
 import version from './_version.js'
 import extend from './API/extend.js'
 import clone from './API/clone.js'
-import { verbose, typeAhead, compile } from './API/_lib.js'
+import { verbose, compile } from './API/_lib.js'
 
 let world = Object.assign({}, tmp)
 
@@ -32,7 +32,17 @@ nlp.parseMatch = function (str) {
 nlp.compile = compile
 
 /** add words to assume by prefix in typeahead */
-nlp.typeAhead = typeAhead
+// nlp.typeAhead = function (lex = {}) {
+//   // interpret array as input
+//   if (Object.prototype.toString.call(lex) === '[object Array]') {
+//     lex = lex.reduce((h, k) => {
+//       h[k] = true
+//       return h
+//     }, {})
+//   }
+//   world.model.one.typeahead = lex
+//   return this
+// }
 
 /** extend compromise functionality */
 nlp.plugin = function (plugin) {

@@ -8,8 +8,6 @@ export default {
     abbreviations,
     prefixes,
     suffixes,
-  },
-  two: {
     lexicon, //give this one forward
   },
 }

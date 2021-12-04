@@ -35,7 +35,7 @@ export default {
   // 'walk up' should conjugate, too
   PhrasalVerb: (word, lex, methods, model) => {
     lex[word] = ['PhrasalVerb', 'Infinitive']
-    let _multi = model.two._multiCache
+    let _multi = model.one._multiCache
     let [inf, rest] = word.split(' ')
     // add root verb
     lex[inf] = lex[inf] || 'Infinitive'

@@ -6,13 +6,19 @@ const addWords = function (words) {
     return
   }
   // add some words to our lexicon
-  if (!methods.two.expandLexicon) {
-    Object.assign(model.two.lexicon, words) //no fancy-business
-  } else {
-    // expand it, if appropriate
+  if (methods.two.expandLexicon) {
+    // do fancy ./two version
     let { lex, _multi } = methods.two.expandLexicon(words, world)
-    Object.assign(model.two.lexicon, lex)
-    Object.assign(model.two._multiCache, _multi)
+    Object.assign(model.one.lexicon, lex)
+    Object.assign(model.one._multiCache, _multi)
+  } else if (methods.one.expandLexicon) {
+    // do basic ./one version
+    let { lex, _multi } = methods.one.expandLexicon(words, world)
+    Object.assign(model.one.lexicon, lex)
+    Object.assign(model.one._multiCache, _multi)
+  } else {
+    //no fancy-business
+    Object.assign(model.one.lexicon, words)
   }
 }
 

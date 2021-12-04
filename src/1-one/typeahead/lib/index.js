@@ -13,7 +13,7 @@ const prepare = function (words = [], opts = {}) {
   let model = this.model()
   opts = Object.assign({}, defaults, opts)
   if (isObject(words)) {
-    Object.assign(model.two.lexicon, words)
+    Object.assign(model.one.lexicon, words)
     words = Object.keys(words)
   }
   let prefixes = allPrefixes(words, opts, this.world())

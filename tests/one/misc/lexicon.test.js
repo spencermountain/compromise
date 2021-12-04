@@ -14,7 +14,7 @@ test('addWords side-load:', function (t) {
   doc = _nlp('it was bigg', lex)
   t.equal(doc.has('#Size'), true, here + 'single-word')
   doc = _nlp('the bigg apple', lex)
-  t.equal(doc.has('#Two'), true, here + 'found-multi-word')
+  t.equal(doc.has('#Town'), true, here + 'found-multi-word')
   t.equal(doc.has('#Size'), false, here + 'no-single-word')
 
   doc = _nlp('it was bigg')

@@ -1,6 +1,7 @@
 // harvest list of irregulars for any juicy word-data
 const expandIrregulars = function (model) {
-  const { lexicon, irregularVerbs, irregularPlurals } = model
+  const { irregularVerbs, irregularPlurals } = model.two
+  const { lexicon, } = model.one
   // scounge irregulars for any interesting lexicon-data:
   Object.entries(irregularVerbs).forEach(a => {
     let [inf, conj] = a

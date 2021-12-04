@@ -27,11 +27,11 @@ const variables = {
 
 const expandLexicon = function (words, model) {
   // do clever tricks to grow the words
-  const world = { model: { two: model }, methods }
+  const world = { model, methods }
   let { lex, _multi } = methods.two.expandLexicon(words, world)
   // store multiple-word terms in a cache
-  Object.assign(model.lexicon, lex)
-  Object.assign(model._multiCache, _multi)
+  Object.assign(model.one.lexicon, lex)
+  Object.assign(model.one._multiCache, _multi)
   return model
 }
 
@@ -39,7 +39,7 @@ const expandLexicon = function (words, model) {
 const addUncountables = function (words, model) {
   Object.keys(words).forEach(k => {
     if (words[k] === 'Uncountable') {
-      model.uncountable[k] = true
+      model.two.uncountable[k] = true
       words[k] = 'Noun'
     }
   })
@@ -60,9 +60,9 @@ const expandVariable = function (switchWords, model) {
 
 const expand = function (model) {
   model = expandIrregulars(model)
-  model = expandLexicon(model.lexicon, model)
-  model = addUncountables(model.lexicon, model)
-  model = expandVariable(model.variables, model)
+  model = expandLexicon(model.one.lexicon, model)
+  model = addUncountables(model.one.lexicon, model)
+  model = expandVariable(model.two.variables, model)
   return model
 }
 export default expand

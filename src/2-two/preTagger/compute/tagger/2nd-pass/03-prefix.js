@@ -17,8 +17,8 @@ const checkPrefix = function (terms, i, model) {
   if (prefixes.test(term.normal) === true) {
     let root = term.normal.replace(prefixes, '$2')
     root = root.replace(/^-/, '')
-    if (model.two.lexicon.hasOwnProperty(root) === true) {
-      let tag = model.two.lexicon[root]
+    if (model.one.lexicon.hasOwnProperty(root) === true) {
+      let tag = model.one.lexicon[root]
       if (allowed[tag] === true) {
         fastTag(term, tag, '2-prefix')
         term.confidence = 0.6

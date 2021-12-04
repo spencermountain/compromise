@@ -12,7 +12,7 @@ const getPrefixes = function (arr, opts, world) {
     for (let size = opts.min; size < max; size += 1) {
       let prefix = str.substr(0, size)
       // ensure prefix is not a word
-      if (opts.safe && world.model.two.lexicon.hasOwnProperty(prefix)) {
+      if (opts.safe && world.model.one.lexicon.hasOwnProperty(prefix)) {
         continue
       }
       // does it already exist?

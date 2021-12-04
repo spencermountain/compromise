@@ -26,7 +26,7 @@ const isNoPeriodAcronym = function (term, model) {
     return false
   }
   // known-words, like 'PIZZA' is not an acronym.
-  if (model.two.lexicon.hasOwnProperty(term.normal)) {
+  if (model.one.lexicon.hasOwnProperty(term.normal)) {
     return false
   }
   //like N.D.A

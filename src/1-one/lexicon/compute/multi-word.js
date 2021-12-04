@@ -19,8 +19,8 @@ const checkMulti = function (terms, i, lexicon, fastTag) {
 const multiWord = function (terms, i, world) {
   const { model, methods } = world
   const { fastTag } = methods.one
-  const multi = model.two._multiCache || {}
-  const lexicon = model.two.lexicon || {}
+  const multi = model.one._multiCache || {}
+  const lexicon = model.one.lexicon || {}
   // basic lexicon lookup
   let t = terms[i]
   let word = t.machine || t.normal

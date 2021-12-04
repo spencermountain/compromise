@@ -14,32 +14,34 @@ import orgWords from './orgWords.js'
 
 import expandLexicon from './_expand/index.js'
 
-const model = {
-  irregularPlurals,
-  irregularVerbs,
-  tagSet,
+let model = {
+  one: {
+    _multiCache: {},
+    lexicon,
+  },
+  two: {
+    irregularPlurals,
+    irregularVerbs,
+    tagSet,
 
-  suffixPatterns,
-  endsWith,
-  neighbours,
+    suffixPatterns,
+    endsWith,
+    neighbours,
 
-  regexNormal,
-  regexText,
-  regexNumbers,
+    regexNormal,
+    regexText,
+    regexNumbers,
 
-  lexicon,
-  variables,
-  clues,
+    variables,
+    clues,
 
-  uncountable: {},
+    uncountable: {},
 
-  orgWords,
+    orgWords,
+  },
 
-  _multiCache: {},
 }
+model = expandLexicon(model)
+export default model
 
-export default {
-  two: expandLexicon(model),
-}
-
-// console.log(model.lexicon.thought)
+// console.log(model.one.lexicon.see)

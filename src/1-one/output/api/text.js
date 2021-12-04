@@ -27,7 +27,7 @@ const fmts = {
     punctuation: 'some',
     case: 'some',
     unicode: 'some',
-    use: 'normal',
+    use: 'root',
   },
 }
 fmts.clean = fmts.normal

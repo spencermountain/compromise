@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/two.js'
+import nlp from './src/three.js'
 // import nlp from './builds/compromise.cjs'
 // nlp.verbose('tagger')
 
@@ -55,8 +55,16 @@ let lex = {
   big: 'Size',
   'big apple': 'Town'
 }
-let doc = nlp('the big apple').debug()
+// let doc = nlp('the big apple. walk out', lex).debug()
 
+let doc = nlp(`a priest walks into the bars`)
+// doc.cache({ root: true })
+doc.compute('root')
+// console.log(doc.match('~bar~').found)
+console.log(doc.text('root'))
+
+// console.log(doc.methods.one.expandLexicon)
+// console.log(doc.methods.two.expandLexicon)
 // AND issue:
 // let doc = nlp('toronto and montreal. Sydney and Paris.')
 // console.log(nlp.parseMatch('(#Place && #Noun)')[0].choices)

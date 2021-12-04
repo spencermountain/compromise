@@ -51,10 +51,11 @@ txt = `advances are within reach.`
 // let doc = nlp(txt)
 // doc.debug()
 
-nlp.addWords({
+let lex = {
   red: 'Color'
-})
-nlp('he will be quick').debug()
+}
+nlp.addWords(lex)
+nlp('he was red').debug()
 
 // AND issue:
 // let doc = nlp('toronto and montreal. Sydney and Paris.')

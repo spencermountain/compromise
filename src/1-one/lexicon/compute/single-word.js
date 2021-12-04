@@ -1,8 +1,9 @@
-import fastTag from './_fastTag.js'
 const underOver = /^(under|over)-?.{3}/
 
 // tag any words in our lexicon
-const checkLexicon = function (terms, i, model) {
+const checkLexicon = function (terms, i, world) {
+  const { model, methods } = world
+  const fastTag = methods.one.fastTag
   const lexicon = model.two.lexicon
   // basic lexicon lookup
   let t = terms[i]

@@ -51,15 +51,41 @@ txt = `advances are within reach.`
 // let doc = nlp(txt)
 // doc.debug()
 
-let lex = {
-  big: 'Size',
-  'big apple': 'Town'
-}
-let _nlp = nlp.fork()
-_nlp('the big apple', lex).debug()
-nlp('the big apple').debug()
+// let lex = {
+//   big: 'Size',
+//   'big apple': 'Town'
+// }
+// console.log(nlp.model().one.lexicon == _nlp.model().one.lexicon)
+// let _nlp = nlp.fork()
+// nlp('the big apple', lex).debug()
+// console.log(a.big, b.big)
+// _nlp('the big apple').debug()
+
+// insert punctuation issue
+// let doc = nlp('one two. three four')
+// doc.prepend('food')
+// console.log(doc.text())
 
 
+
+const doc = nlp('he is cool')
+doc.verbs().toNegative()
+doc.debug()
+/*
+  nlp.extend((Doc, world) => {
+    world.addTags({
+      Doctor: {
+        isA: 'Person',
+      },
+      Surgeon: {
+        isA: 'Doctor',
+      },
+    })
+  })
+  let doc = nlp('george is a person.')
+  doc.match('george').tag('Surgeon')
+
+*/
 
 
 // nlp.parseMatch('#foo and')

@@ -19,16 +19,20 @@ const nlp = function (input, lex) {
   doc.compute(hooks)
   return doc
 }
+Object.defineProperty(nlp, '_world', {
+  value: world,
+  writable: true,
+})
 
 /** don't run the POS-tagger */
 nlp.tokenize = function (input, lex) {
-  const { methods, compute } = world
+  const { methods, compute } = this._world
   // add user-given words to lexicon
   if (lex) {
     nlp.addWords(lex)
   }
   // run the tokenizer
-  let document = methods.one.tokenize(input, world)
+  let document = methods.one.tokenize(input, this._world)
   let doc = new View(document)
   // give contractions a shot, at least
   if (compute.contractions) {
@@ -39,16 +43,16 @@ nlp.tokenize = function (input, lex) {
 
 /** deep-clone the library's model*/
 nlp.fork = function (str) {
-  world = Object.assign({}, world)
-  world.methods = Object.assign({}, world.methods)
-  world.model = clone(world.model)
-  world.model.forked = str
-  return nlp
+  this._world = Object.assign({}, this._world)
+  this._world.methods = Object.assign({}, this._world.methods)
+  this._world.model = clone(this._world.model)
+  this._world.model.fork = str
+  return this
 }
 
 /** extend compromise functionality */
 nlp.plugin = function (plugin) {
-  extend(plugin, world, View, this)
+  extend(plugin, this._world, View, this)
   return this
 }
 nlp.extend = nlp.plugin
@@ -60,10 +64,18 @@ nlp.compile = compile
 /** current library release version */
 nlp.version = version
 /** reach-into compromise internals */
-nlp.world = () => world
-nlp.model = () => world.model
-nlp.methods = () => world.methods
-nlp.hooks = () => world.hooks
+nlp.world = function () {
+  return this._world
+}
+nlp.model = function () {
+  return this._world.model
+}
+nlp.methods = function () {
+  return this._world.methods
+}
+nlp.hooks = function () {
+  return this._world.hooks
+}
 
 // apply our only default plugins
 export default nlp

@@ -156,6 +156,15 @@ test('toPresent:', function (t) {
     // ['this union had disrupted', 'this union has disrupted'],
     ['john wrote everyday', 'john writes everyday'],
     // ['spencer and john wrote everyday', 'spencer and john write everyday'],
+
+    // contractions
+    [`i'm good`, 'i was good'],
+    [`they're good`, 'they were good'],
+    //TODO: missing auxillary
+    // [`we've said`, 'we said'], //or 'we have said'
+    // [`they'd said`, 'they said'], //or 'they have said'
+    // (ambiguous)
+    // [`he's good`, 'he was good'],
   ]
   arr.forEach(a => {
     let doc = nlp(a[0])

@@ -31,7 +31,7 @@ const insert = function (str, view, prepend) {
   // shift our self pointer, if necessary
   view.ptrs = selfPtrs
   // try to tag them, too
-  doc.compute('index')
+  doc.compute(['index', 'lexicon', 'preTagger'])
   return doc
 }
 

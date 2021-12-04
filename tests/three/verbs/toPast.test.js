@@ -91,6 +91,38 @@ test('toPast:', function (t) {
     // ['it will not have studied enough', 'it had not studied enough'],
     ['spencer will have learned enough', 'spencer learned enough'],
     // ['spencer will not have learned enough', 'spencer had not learned enough'],
+
+
+    //oke
+    ['awakes', 'awoke'],
+    //ade
+    ['makes', 'made'],
+    ['remakes', 'remade'],
+    //ook
+    ['shakes', 'shook'],
+    ['forsakes', 'forsook'],
+
+    ['takes', 'took'],
+    ['overtakes', 'overtook'],
+    ['undertakes', 'undertook'],
+    ['mistakes', 'mistook'],
+    ['retakes', 'retook'],
+    //aked
+    ['bakes', 'baked'],
+    ['fakes', 'faked'],
+    ['snakes', 'snaked'],
+
+    // sneaky past participles
+    // present
+    ['i am being driven', 'i have been driven'],
+    ['i should be driven', 'i should have been driven'],
+    // past->past
+    ['i had been driven', 'i had been driven'],
+    ['i should have been driven', 'i should have been driven'],
+    // gerund
+    ['when it is raining', 'when it was raining'],
+    ['i think it will be raining', 'i thought it will be raining'],
+    ['when it was raining', 'when it was raining'],
   ]
   arr.forEach(a => {
     let doc = nlp(a[0])

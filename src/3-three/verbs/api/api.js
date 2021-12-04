@@ -8,10 +8,10 @@ import toFuture from './conjugate/toFuture.js'
 import toGerund from './conjugate/toGerund.js'
 import getSubject from './parse/getSubject.js'
 import getGrammar from './parse/grammar/index.js'
+import toNegative from './conjugate/toNegative.js'
 
 // return the nth elem of a doc
 export const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
-const isObject = val => Object.prototype.toString.call(val) === '[object Object]'
 
 const api = function (View) {
   class Verbs extends View {
@@ -102,6 +102,30 @@ const api = function (View) {
       let m = new Verbs(this.document, pointer)
       m._cache = this._cache // share this full thing
       return m
+    }
+
+    /** return only verbs with 'not'*/
+    isNegative() {
+      return this.if('#Negative')
+    }
+    /**  return only verbs without 'not'*/
+    isPositive() {
+      return this.ifNo('#Negative')
+    }
+    /** remove 'not' from these verbs */
+    toPositive() {
+      let m = this.match('do not #Verb')
+      if (m.found) {
+        m.remove('do not')
+      }
+      return this.remove('#Negative')
+    }
+    toNegative(n) {
+      return getNth(this, n).map(vb => {
+        let parsed = parseVerb(vb)
+        let info = getGrammar(vb, parsed)
+        return toNegative(vb, parsed, info.form)
+      })
     }
   }
 

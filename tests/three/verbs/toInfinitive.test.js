@@ -425,6 +425,29 @@ test('toInfinitive:', function (t) {
     ['invited', 'invite'],
     ['recited', 'recite'],
 
+    // gerund -> infinitive
+    ['coming', 'come'],
+    ['moving', 'move'],
+    ['joking', 'joke'],
+    ['poking', 'poke'],
+    ['naming', 'name'],
+    ['aching', 'ache'],
+    ['tuning', 'tune'],
+    ['hazing', 'haze'],
+    //phrasal
+    ['hazing-over', 'haze-over'],
+
+    // pastTense -> infinitive
+    ['came', 'come'],
+    ['named', 'name'],
+    ['moved', 'move'],
+    ['joked', 'joke'],
+    ['poked', 'poke'],
+    ['hooping', 'hoop'],
+    ['ached', 'ache'],
+    ['tuned', 'tune'],
+    //phrasal
+    ['hazed-over', 'haze-over'],
   ]
   arr.forEach(a => {
     let doc = nlp(a[0])

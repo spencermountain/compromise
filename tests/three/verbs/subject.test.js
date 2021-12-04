@@ -64,7 +64,46 @@ test('get verb subject', function (t) {
 
     // subordinate phrases
     [`all the days since december were awful`, 'the days', 'were'],
-    [`Pursuing a successful career, along with the usual social and financial advantages, will be easier this year`, 'a successful career', 'will']
+    [`Pursuing a successful career, along with the usual social and financial advantages, will be easier this year`, 'a successful career', 'will'],
+
+
+    ['i walked', 'i', 'walked'],
+    ['john was cool', 'john', 'was'],
+    ['john really was cool', 'john', 'really was'],
+    ['john was really cool', 'john', 'was really'],
+    ['john did not really drive', 'john', 'did not really'],
+    ['john would not have really driven', 'john', 'would not have really driven'],
+    ['speak!', '', ''],
+    ['please go to the mall', '', ''],
+    ['shut the door', '', ''],
+    ['i shall go there', 'i', 'shall go'],
+    ['he walks carefully and eats a grape', 'he', 'walks carefully'],
+    ['if so, john should pay for it', 'john', 'should pay'],
+    ['you really think so?', 'you', 'really think'],
+    ['the moon is made of cheese', 'moon', 'is made'],
+    [`listen to the wind blow, watch the sun rise.`, '', ''],
+    [`run in the shadows, damn your love, damn your lies. `, '', ''],
+    [`listen to the wind blow down comes the night. `, '', ''],
+    [`running in the shadows damn your love, damn your lies. `, '', ''],
+    [`break the silence, damn the dark, damn the light.`, '', ''],
+    [`some should decrease.`, '', ''],
+    [`join the community of conscience.`, '', ''],
+    [`why is everything different?`, '', ''],
+    [`bye!`, '', ''],
+    [`oh dear god!`, '', ''],
+    [`is there something wrong?`, '', ''],
+    [`why is ross naked?`, '', ''],
+    [`yeah the big homey`, '', ''],
+    [`the type of female wit fly gucci gear`, '', ''],
+    [`compared to the heart of a man`, '', ''],
+    [`give me a red rose, she cried`, '', ''],
+    [`drinking orange juice out of a champagne glass.`, '', ''],
+    //
+    [`it moves power and decision making closer to the people.`, 'it', 'moves'],
+    [`that is completely untrue.`, 'that', 'is'],
+    [`i better hit the shower.`, 'i', 'better hit'],
+    [`morning's here!`, 'morning', ''],
+
   ]
   arr.forEach(a => {
     let [str, subject, verb] = a

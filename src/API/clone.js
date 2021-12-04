@@ -4,18 +4,19 @@ const isObject = item => item && typeof item === 'object' && !Array.isArray(item
 
 const isSet = item => item instanceof Set
 
-// not-very-deep clone
-const deepClone = function (obj) {
-  for (const key in obj) {
-    if (isObject(obj[key])) {
-      obj[key] = Object.assign({}, obj[key])
-      // obj[key] = deepClone(obj[key]) //recursive
-    } else if (isArray(obj[key])) {
-      obj[key] = obj[key].slice(0)
-    } else if (isSet(obj[key])) {
-      obj[key] = new Set(obj[key])
+// deep-i-guess clone of model object
+const deepClone = function (model) {
+  // console.log(Object.keys(obj))
+  for (const key in model) {
+    if (isObject(model[key])) {
+      model[key] = Object.assign({}, model[key])
+      model[key] = deepClone(model[key]) //recursive
+    } else if (isArray(model[key])) {
+      model[key] = model[key].slice(0)
+    } else if (isSet(model[key])) {
+      model[key] = new Set(model[key])
     }
   }
-  return obj
+  return model
 }
 export default deepClone

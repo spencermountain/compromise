@@ -1,5 +1,6 @@
-const test = require('tape')
-const nlp = require('../_lib')
+import test from 'tape'
+import nlp from '../_lib.js'
+const here = '[three/verb-toNegative] '
 
 test('negative-verb-phrase:', function (t) {
   let arr = [
@@ -40,7 +41,7 @@ test('negative-verb-phrase:', function (t) {
   arr.forEach(function (a) {
     const vb = nlp(a[0]).verbs().toNegative()
     const str = vb.out('text')
-    t.equal(str, a[1], "'" + str + "' - - want: " + a[1])
+    t.equal(str, a[1], here + "'" + str + "' - - want: " + a[1])
   })
   t.end()
 })
@@ -85,7 +86,7 @@ test('inline verb negate:', function (t) {
     let doc = nlp(a[0])
     doc.verbs().toNegative()
     let str = doc.text('normal')
-    t.equal(str, a[1], a[1] + ' --- ' + str)
+    t.equal(str, a[1], here + a[1] + ' --- ' + str)
   })
   t.end()
 })

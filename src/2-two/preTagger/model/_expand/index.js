@@ -1,6 +1,29 @@
 import methods from '../../methods/index.js'
 import expandIrregulars from './irregulars.js'
-import variables from './variables.js'
+
+// defaults for switches
+const variables = {
+  // 'amusing'
+  'Adj|Gerund': 'Adjective',
+  // 'standard'
+  'Adj|Noun': 'Adjective',
+  // 'boiled'
+  'Adj|Past': 'Adjective',
+  // 'smooth'
+  'Adj|Present': 'Adjective',
+  // 'box'
+  'Noun|Verb': 'Singular',
+  //'singing'
+  'Noun|Gerund': 'Gerund',
+  // 'hope'
+  'Person|Noun': 'Noun',
+  // 'April'
+  'Person|Date': 'Month',
+  // 'rob'
+  'Person|Verb': 'Person',
+  // 'boxes'
+  'Plural|Verb': 'Plural',
+}
 
 const expandLexicon = function (words, model) {
   // do clever tricks to grow the words
@@ -28,20 +51,9 @@ const expandVariable = function (switchWords, model) {
   let words = {}
   //add first tag as an assumption for each variable word
   Object.keys(switchWords).forEach(w => {
-    variables[switchWords[w]](w, words)
+    const name = switchWords[w]
+    words[w] = variables[name]
   })
-  // get conjugations from maybe-verbs
-  // const infs = Object.keys(switches.nounVerb.words).reduce((h, str) => {
-  //   h[str] = 'Infinitive'
-  //   return h
-  // }, {})
-  // model = expandLexicon(infs, model)
-  // set the rest as defaults
-  // Object.keys(switches).forEach(k => {
-  //   Object.keys(switches[k].words).forEach(str => {
-  //     words[str] = switches[k].fallback
-  //   })
-  // })
   model = expandLexicon(words, model)
   return model
 }

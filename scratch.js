@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/one.js'
+import nlp from './src/two.js'
 // import nlp from './builds/compromise.cjs'
 // nlp.verbose('tagger')
 
@@ -52,10 +52,10 @@ txt = `advances are within reach.`
 // doc.debug()
 
 let lex = {
-  red: 'Color'
+  big: 'Size',
+  'big apple': 'Town'
 }
-nlp.addWords(lex)
-nlp('he was red').debug()
+let doc = nlp('the big apple').debug()
 
 // AND issue:
 // let doc = nlp('toronto and montreal. Sydney and Paris.')

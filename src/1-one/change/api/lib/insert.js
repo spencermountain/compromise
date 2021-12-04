@@ -9,7 +9,7 @@ const spliceArr = (parent, index, child) => {
 const endSpace = function (terms) {
   const hasSpace = / $/
   let lastTerm = terms[terms.length - 1]
-  if (hasSpace.test(lastTerm.post) === false) {
+  if (lastTerm && hasSpace.test(lastTerm.post) === false) {
     lastTerm.post += ' '
   }
 }
@@ -81,6 +81,7 @@ const cleanPrepend = function (home, ptr, needle, document) {
 const cleanAppend = function (home, ptr, needle, document) {
   let [n, , end] = ptr
   let total = document[n].length
+
   if (end < total) {
     // are we in the middle?
     // add trailing space on self

@@ -77,13 +77,13 @@ test('named-match-auto-multi:', function (t) {
 test('named-match-group', function (t) {
   const res = nlp('the dog played').match('the [<type>#Noun] played').groups()
 
-  t.equal(res['type'].text(), 'dog', here + 'res1')
+  t.equal(res['type'] && res['type'].text(), 'dog', here + 'res1')
 
   const doc2 = nlp('the big big big dog played').match('the [<size>#Adjective+] [<type>#Noun] played')
   const res2 = doc2.groups()
 
-  t.equal(res2['type'].text(), 'dog', here + 'res2 dog')
-  t.equal(res2['size'].text(), 'big big big', here + 'big big big')
+  t.equal(res2['type'] && res2['type'].text(), 'dog', here + 'res2 dog')
+  t.equal(res2['size'] && res2['size'].text(), 'big big big', here + 'big big big')
 
   t.end()
 })
@@ -118,9 +118,9 @@ test('named-match-overlap', function (t) {
       input: 'the big dog played',
       match: 'the [<target>#Adjective] [<type>#Noun] [<vb>played]',
       run: res => {
-        t.equal(res['type'].text(), 'dog', here + 'got type')
-        t.equal(res['target'].text(), 'big', here + 'got target')
-        t.equal(res['vb'].text(), 'played', here + 'got verb')
+        t.equal(res.type && res.type.text(), 'dog', here + 'got type')
+        t.equal(res.target && res.target.text(), 'big', here + 'got target')
+        t.equal(res.vb && res.vb.text(), 'played', here + 'got verb')
       },
     },
   ]

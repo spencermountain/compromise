@@ -127,7 +127,7 @@ const toFuture = function (vb, parsed, form) {
   }
   if (forms.hasOwnProperty(form)) {
     vb = forms[form](vb, parsed)
-    vb.fullSentence().compute(['preTagger', 'postTagger', 'chunks'])
+    vb.fullSentence().compute(['lexicon', 'preTagger', 'postTagger', 'chunks'])
     return vb
   }
   return vb

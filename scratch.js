@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/three.js'
+import nlp from './src/one.js'
 // import nlp from './builds/compromise.cjs'
 // nlp.verbose('tagger')
 
@@ -51,17 +51,16 @@ txt = `advances are within reach.`
 // let doc = nlp(txt)
 // doc.debug()
 
+nlp.addWords({
+  red: 'Color'
+})
+nlp('he will be quick').debug()
 
 // AND issue:
 // let doc = nlp('toronto and montreal. Sydney and Paris.')
 // console.log(nlp.parseMatch('(#Place && #Noun)')[0].choices)
 // let m = doc.match('(#Place && #Noun)').debug()
 // a bunch of words we're expecting
-
-nlp.typeahead(['grey', 'gold', 'red'], { min: 2 })
-// layer-two, a little safer
-nlp.typeahead(['greyhound', 'goldendoodle', 'poodle'], { min: 3 })
-nlp('greyh').autoFill().debug()
 
 /*
 

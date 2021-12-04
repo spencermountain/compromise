@@ -8,6 +8,7 @@ import tokenize from './1-one/tokenize/plugin.js'
 import lookup from './1-one/lookup/plugin.js'
 import cache from './1-one/cache/plugin.js'
 import typeahead from './1-one/typeahead/plugin.js'
+import lexicon from './1-one/lexicon/plugin.js'
 
 nlp.extend(change) //0kb
 nlp.extend(output) //0kb
@@ -18,5 +19,6 @@ nlp.extend(tokenize) //7kb
 nlp.plugin(cache) //~1kb
 nlp.extend(lookup) //7kb
 nlp.extend(typeahead) //1kb
+nlp.extend(lexicon) //1kb
 
 export default nlp // 40kb

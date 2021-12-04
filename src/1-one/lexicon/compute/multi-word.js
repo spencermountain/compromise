@@ -1,4 +1,4 @@
-import fastTag from '../_fastTag.js'
+import fastTag from './_fastTag.js'
 
 // scan-ahead to match multiple-word terms - 'jack rabbit'
 const checkMulti = function (terms, i, lexicon) {
@@ -18,8 +18,8 @@ const checkMulti = function (terms, i, lexicon) {
 }
 
 const multiWord = function (terms, i, model) {
-  const multi = model.two._multiCache
-  const lexicon = model.two.lexicon
+  const multi = model.two._multiCache || {}
+  const lexicon = model.two.lexicon || {}
   // basic lexicon lookup
   let t = terms[i]
   let word = t.machine || t.normal

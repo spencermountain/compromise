@@ -19,7 +19,7 @@ const compute = function (view) {
     lastTerm.typeahead = true
     // tag it, as our assumed term
     if (view.compute.preTagger) {
-      view.last().unTag('*').compute('preTagger')
+      view.last().unTag('*').compute(['lexicon', 'preTagger'])
     }
   }
 }

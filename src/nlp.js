@@ -31,19 +31,6 @@ nlp.parseMatch = function (str) {
 /** pre-compile a list of matches to lookup */
 nlp.compile = compile
 
-/** add words to assume by prefix in typeahead */
-// nlp.typeAhead = function (lex = {}) {
-//   // interpret array as input
-//   if (Object.prototype.toString.call(lex) === '[object Array]') {
-//     lex = lex.reduce((h, k) => {
-//       h[k] = true
-//       return h
-//     }, {})
-//   }
-//   world.model.one.typeahead = lex
-//   return this
-// }
-
 /** extend compromise functionality */
 nlp.plugin = function (plugin) {
   extend(plugin, world, View, this)
@@ -57,22 +44,6 @@ nlp.world = () => world
 /** current library release version */
 nlp.version = version
 
-/** insert new words/phrases into the lexicon */
-nlp.addWords = function (words) {
-  const { methods, model } = world
-  if (!words) {
-    return
-  }
-  // add some words to our lexicon
-  if (!methods.two.expandLexicon) {
-    Object.assign(model.two.lexicon, words) //no fancy-business
-  } else {
-    // expand it, if appropriate
-    let { lex, _multi } = methods.two.expandLexicon(words, world)
-    Object.assign(model.two.lexicon, lex)
-    Object.assign(model.two._multiCache, _multi)
-  }
-}
 
 /** don't run the POS-tagger */
 nlp.tokenize = function (input, lex) {

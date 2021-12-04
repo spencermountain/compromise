@@ -1,5 +1,3 @@
-import multiWord from './1st-pass/01-multiWord.js'
-import checkLexicon from './1st-pass/02-lexicon.js'
 
 import checkCase from './2nd-pass/01-case.js'
 import checkSuffix from './2nd-pass/02-suffix.js'
@@ -15,10 +13,7 @@ import nounFallback from './3rd-pass/04-fallback.js'
 import variables from './3rd-pass/06-variables.js'
 import checkHyphen from './3rd-pass/05-prefixes.js'
 
-const first = {
-  multiWord,
-  checkLexicon,
-}
+
 const second = {
   checkSuffix,
   checkRegex,
@@ -35,17 +30,7 @@ const third = {
   variables,
 }
 
-// set a preliminary tag for known words
-const firstPass = function (terms, model) {
-  for (let i = 0; i < terms.length; i += 1) {
-    if (terms[i].tags.size === 0) {
-      let found = null
-      found = found || first.multiWord(terms, i, model)
-      // lookup known words
-      found = found || first.checkLexicon(terms, i, model)
-    }
-  }
-}
+
 
 //
 // these methods don't care about word-neighbours
@@ -90,13 +75,14 @@ const thirdPass = function (terms, model) {
 
 const preTagger = function (view) {
   const { methods, model } = view
+  // assign known-words
+  // view.compute('lexicon')
   // roughly split sentences up by clause
   let document = methods.two.quickSplit(view.docs)
   // start with all terms
   for (let n = 0; n < document.length; n += 1) {
     let terms = document[n]
-    // assign known-words
-    firstPass(terms, model)
+    // firstPass(terms, model)
     // guess by the letters
     secondPass(terms, model)
     // guess by the neighbours

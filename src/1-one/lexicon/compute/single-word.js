@@ -1,4 +1,4 @@
-import fastTag from '../_fastTag.js'
+import fastTag from './_fastTag.js'
 const underOver = /^(under|over)-?.{3}/
 
 // tag any words in our lexicon
@@ -7,15 +7,6 @@ const checkLexicon = function (terms, i, model) {
   // basic lexicon lookup
   let t = terms[i]
   let word = t.machine || t.normal
-  // look at implied words in contractions
-  // if (t.implicit !== undefined) {
-  //   if (lexicon[t.implicit] !== undefined && lexicon.hasOwnProperty(t.implicit)) {
-  //     let tag = lexicon[t.implicit]
-  //     console.log(tag)
-  //     fastTag(t, tag, 'implicit-lexicon')
-  //     return true
-  //   }
-  // }
   // normal lexicon lookup
   if (lexicon[word] !== undefined && lexicon.hasOwnProperty(word)) {
     let tag = lexicon[word]

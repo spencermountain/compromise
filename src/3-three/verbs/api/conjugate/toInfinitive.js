@@ -36,7 +36,7 @@ const toInfinitive = function (vb, parsed) {
     let does = doDoes(vb, parsed)
     vb.prepend(does)
   }
-  vb.fullSentence().compute(['preTagger', 'postTagger', 'chunks'])
+  vb.fullSentence().compute(['lexicon', 'preTagger', 'postTagger', 'chunks'])
   return vb
 }
 export default toInfinitive

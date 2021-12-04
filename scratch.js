@@ -58,10 +58,10 @@ txt = `advances are within reach.`
 // let m = doc.match('(#Place && #Noun)').debug()
 // a bunch of words we're expecting
 
-nlp.typeahead(['milan', 'milwaukee'], { min: 1 })
-// nlp.addWords({ swim: 'Verb' })
-// nlp.typeahead(['swimsuit'])
-nlp('mil').autoFill().debug()
+nlp.typeahead(['grey', 'gold', 'red'], { min: 2 })
+// layer-two, a little safer
+nlp.typeahead(['greyhound', 'goldendoodle', 'poodle'], { min: 3 })
+nlp('greyh').autoFill().debug()
 
 /*
 

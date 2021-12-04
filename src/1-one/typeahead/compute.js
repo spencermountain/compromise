@@ -1,8 +1,8 @@
 // lookup last word in the type-ahead prefixes
-const tryPrefix = function (view) {
+const compute = function (view) {
   const prefixes = view.model.one.typeahead
   const docs = view.docs
-  if (docs.length === 0) {
+  if (docs.length === 0 || Object.keys(prefixes).length === 0) {
     return
   }
   let lastPhrase = docs[docs.length - 1] || []
@@ -23,4 +23,5 @@ const tryPrefix = function (view) {
     }
   }
 }
-export default tryPrefix
+
+export default { typeahead: compute }

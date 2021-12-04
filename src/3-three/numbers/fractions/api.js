@@ -26,7 +26,7 @@ const plugin = function (View) {
         let parsed = parse(p)
         json.fraction = parsed
         return json
-      })
+      }, [])
     }
     // become 0.5
     toDecimal(n) {

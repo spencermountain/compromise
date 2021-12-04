@@ -20,31 +20,6 @@ const nlp = function (input, lex) {
   return doc
 }
 
-/** log the decision-making to console */
-nlp.verbose = verbose
-
-/** pre-parse any match statements */
-nlp.parseMatch = function (str) {
-  return world.methods.one.parseMatch(str)
-}
-
-/** pre-compile a list of matches to lookup */
-nlp.compile = compile
-
-/** extend compromise functionality */
-nlp.plugin = function (plugin) {
-  extend(plugin, world, View, this)
-  return this
-}
-nlp.extend = nlp.plugin
-
-/** reach-into compromise internals */
-nlp.world = () => world
-
-/** current library release version */
-nlp.version = version
-
-
 /** don't run the POS-tagger */
 nlp.tokenize = function (input, lex) {
   const { methods, compute } = world
@@ -71,12 +46,24 @@ nlp.fork = function (str) {
   return nlp
 }
 
-// some helper methods
+/** extend compromise functionality */
+nlp.plugin = function (plugin) {
+  extend(plugin, world, View, this)
+  return this
+}
+nlp.extend = nlp.plugin
+
+/** log the decision-making to console */
+nlp.verbose = verbose
+/** pre-compile a list of matches to lookup */
+nlp.compile = compile
+/** current library release version */
+nlp.version = version
+/** reach-into compromise internals */
+nlp.world = () => world
 nlp.model = () => world.model
 nlp.methods = () => world.methods
 nlp.hooks = () => world.hooks
 
 // apply our only default plugins
-const { plugin, parseMatch } = nlp
 export default nlp
-export { plugin, version, plugin as extend }

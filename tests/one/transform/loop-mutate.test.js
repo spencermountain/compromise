@@ -1,5 +1,6 @@
-const test = require('tape')
-const nlp = require('./_lib')
+import test from 'tape'
+import nlp from '../_lib.js'
+const here = '[one/loop-mutate] '
 
 test('foreach replace', function (t) {
   let doc = nlp('guns and roses')

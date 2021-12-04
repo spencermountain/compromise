@@ -6,6 +6,7 @@ import toSingular from './toSingular.js'
 
 // return the nth elem of a doc
 const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
+const isObject = val => Object.prototype.toString.call(val) === '[object Object]'
 
 const api = function (View) {
   class Nouns extends View {
@@ -25,7 +26,7 @@ const api = function (View) {
           json.noun = toJSON(m)
         }
         return json
-      })
+      }, [])
     }
 
     isPlural(n) {

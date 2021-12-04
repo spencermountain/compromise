@@ -8,8 +8,7 @@ const find = function (n) {
   let m = r.people()
   m = m.concat(r.places())
   m = m.concat(r.organizations())
-  let ignore = ['someone', 'man', 'woman', 'mother', 'brother', 'sister', 'father']
-  m = m.not(ignore)
+  m = m.not('(someone|man|woman|mother|brother|sister|father)')
   //return them to normal ordering
   m.sort('sequence')
   // yup.unique() //? not sure

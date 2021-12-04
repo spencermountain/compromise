@@ -7,14 +7,14 @@ const forEach = function (cb) {
   return this
 }
 
-const map = function (cb) {
+const map = function (cb, empty) {
   let ptrs = this.fullPointer
   let res = ptrs.map((ptr, i) => {
     let view = this.update([ptr])
     return cb(view, i)
   })
   if (res.length === 0) {
-    return this.update([])
+    return empty || this.update([])
   }
   // return an array of values, or View objects?
   // user can return either from their callback

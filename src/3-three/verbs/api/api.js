@@ -28,11 +28,7 @@ const api = function (View) {
         let json = vb.toView().json(opts)[0] || {}
         json.verb = toJSON(vb)
         return json
-      })
-      // never return a View object
-      if (isObject(arr) && arr.isView === true) {
-        arr = []
-      }
+      }, [])
       return arr.reverse()
     }
     subjects(n) {

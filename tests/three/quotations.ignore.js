@@ -1,9 +1,10 @@
-const test = require('tape')
-const nlp = require('./_lib')
+import test from 'tape'
+import nlp from './_lib.js'
+const here = '[three/quotations] '
 
 function testAllQuotes(a, t) {
   const str = nlp(a[0]).quotations().out('normal')
-  t.equal(str, a[1], a[0])
+  t.equal(str, a[1], here + a[0])
 }
 
 test('quotation test:', function (t) {
@@ -15,8 +16,8 @@ test('quotation test:', function (t) {
     [`“quote”`, `quote`],
     [`“quote is here”`, `quote is here`],
   ].forEach(function (a) {
-    const str = nlp(a[0]).quotations().out('normal')
-    t.equal(str, a[1], a[0])
+    const str = nlp(a[0]).quotations().text()
+    t.equal(str, a[1], here + a[0])
   })
   t.end()
 })

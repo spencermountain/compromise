@@ -24,6 +24,8 @@ const selections = [
   ['conjunctions', '#Conjunction'],
   ['prepositions', '#Preposition'],
   ['abbreviations', '#Abbreviation'],
+  ['acronyms', '#Acronym'],
+  ['possessives', '#Possessive'],
 ]
 
 // aliases

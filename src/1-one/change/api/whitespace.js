@@ -1,7 +1,7 @@
 const methods = {
   /** add this punctuation or whitespace before each match: */
   pre: function (str, concat) {
-    if (str === undefined) {
+    if (str === undefined && this.found) {
       return this.docs[0][0].pre
     }
     this.docs.forEach(terms => {
@@ -34,6 +34,9 @@ const methods = {
 
   /** remove whitespace from start/end */
   trim: function () {
+    if (!this.found) {
+      return this
+    }
     let docs = this.docs
     let start = docs[0][0]
     start.pre = start.pre.trimStart()

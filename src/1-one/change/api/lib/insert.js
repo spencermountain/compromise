@@ -16,7 +16,7 @@ const endSpace = function (terms) {
 
 // sentence-ending punctuation should move in append
 const movePunct = (source, end, needle) => {
-  const juicy = /[.?!]/g // punctuation we wanna transfer
+  const juicy = /[.?!,;:)'"]/g // punctuation we wanna transfer
   let wasLast = source[end - 1]
   if (!wasLast) {
     return
@@ -86,6 +86,7 @@ const cleanAppend = function (home, ptr, needle, document) {
     // are we in the middle?
     // add trailing space on self
     endSpace(needle)
+    movePunct(home, end, needle)
   } else if (total === end) {
     // are we at the end?
     // add a space to predecessor

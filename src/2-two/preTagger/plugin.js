@@ -6,6 +6,6 @@ const plugin = {
   compute,
   methods,
   model,
-  hooks: ['preTagger'],
+  hooks: ['preTagger'],//'root'
 }
 export default plugin

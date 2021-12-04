@@ -1,12 +1,14 @@
-const test = require('tape')
-const nlp = require('./_lib')
+import test from 'tape'
+import nlp from './_lib.js'
+const here = '[three/fuzz] '
+
 
 const subsets = [
   'abbreviations',
   'acronyms',
   'clauses',
   'contractions',
-  'lists',
+  // 'lists',
   'nouns',
   'parentheses',
   'possessives',
@@ -31,6 +33,9 @@ const subsets = [
   'places',
   'organizations',
   'entities',
+  'numbers',
+  'fractions',
+  // 'money',
 ]
 
 const isArray = function (arr) {
@@ -55,6 +60,7 @@ URGENT: ➔➔*.
 -0.0#  .`
   let doc = nlp(str)
   subsets.forEach(sub => {
+    t.ok(doc[sub], here + sub)
     let m = doc[sub]()
     let arr = m.json()
     m.tag('H*a--ar.d')
@@ -65,10 +71,10 @@ URGENT: ➔➔*.
     m = m.trim()
     t.equal(isArray(arr), true, sub + '.json()')
     t.equal(typeof m.text(), 'string', sub + '.text()')
-    t.equal(typeof m.parent().wordCount(), 'number', sub + '.wordcount()')
+    t.equal(typeof m.wordCount(), 'number', sub + '.wordcount()')
     t.equal(typeof m.replaceWith('!').text(), 'string', 'replaceWith')
     m = m.map(d => d.if('.'))
-    m = m.terms().parent()
+    m = m.terms()
     m.cache()
     t.equal(typeof m.text(), 'string', sub + 'after-map')
     t.equal(isArray(arr), true, sub + '.json() again')

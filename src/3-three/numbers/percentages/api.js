@@ -35,7 +35,7 @@ const plugin = function (View) {
           cardinal: `${full}%`,
         }
         return json
-      })
+      }, [])
     }
   }
 

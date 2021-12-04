@@ -3,9 +3,9 @@ import model from './model/index.js'
 import compute from './compute/index.js'
 
 export default {
-  compute: compute,
-  methods: methods,
-  model: model,
+  compute,
+  methods,
+  model,
   hooks: ['alias', 'machine', 'index'],
 }
 

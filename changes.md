@@ -99,6 +99,7 @@ match(['foo', 'far'])
 - **[new]** .none() - helper-method for returning an empty view of the document
 - **[new]** .toView() method - drop back to a normal Class instance
 - **[new]** add punctuation match support via pre/post params
+- **[new]** add ambiguous empty .map() state as 2nd param
 
 ---
 

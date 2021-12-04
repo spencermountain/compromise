@@ -55,14 +55,14 @@ let lex = {
   big: 'Size',
   'big apple': 'Town'
 }
-// let doc = nlp('the big apple. walk out', lex).debug()
+let _nlp = nlp.fork()
+_nlp('the big apple', lex).debug()
+nlp('the big apple').debug()
 
-let doc = nlp(`a priest walks into the bars`)
-// doc.cache({ root: true })
-doc.compute('root')
-// console.log(doc.match('~bar~').found)
-console.log(doc.text('root'))
 
+
+
+// nlp.parseMatch('#foo and')
 // console.log(doc.methods.one.expandLexicon)
 // console.log(doc.methods.two.expandLexicon)
 // AND issue:

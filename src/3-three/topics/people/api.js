@@ -29,7 +29,7 @@ const addMethod = function (View) {
           presumed_gender: gender(parsed, p),
         }
         return json
-      })
+      }, [])
     }
     // overloaded - keep People class
     update(pointer) {

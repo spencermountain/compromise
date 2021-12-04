@@ -31,7 +31,7 @@ const addMethod = function (View) {
           hasComma: parsed.hasComma,
         }
         return json
-      })
+      }, [])
     }
     /** return only ordinal numbers */
     isOrdinal() {

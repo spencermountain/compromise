@@ -90,13 +90,13 @@ const parse = function (str) {
 
     //buildOut section, collect 'has' values
     if (/^[0-9.]+$/.test(w)) {
-      has['ones'] = parseFloat(w) //not technically right
+      has.ones = parseFloat(w) //not technically right
     } else if (words.ones.hasOwnProperty(w) === true) {
-      has['ones'] = words.ones[w]
+      has.ones = words.ones[w]
     } else if (words.teens.hasOwnProperty(w) === true) {
-      has['teens'] = words.teens[w]
+      has.teens = words.teens[w]
     } else if (words.tens.hasOwnProperty(w) === true) {
-      has['tens'] = words.tens[w]
+      has.tens = words.tens[w]
     } else if (words.multiples.hasOwnProperty(w) === true) {
       let mult = words.multiples[w]
 

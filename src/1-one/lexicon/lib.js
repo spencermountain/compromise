@@ -8,7 +8,7 @@ const addWords = function (words) {
 
   // normalize tag vals
   Object.keys(words).forEach(k => {
-    if (words[k].startsWith('#')) {
+    if (typeof words[k] === 'string' && words[k].startsWith('#')) {
       words[k] = words[k].replace(/^#/, '')
     }
   })

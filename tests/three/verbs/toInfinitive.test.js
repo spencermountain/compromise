@@ -2,7 +2,7 @@ import test from 'tape'
 import nlp from '../_lib.js'
 const here = '[three/verb-toInfinitive] '
 
-test('toInfinitive:', function (t) {
+test('toInfinitive-phrase:', function (t) {
   let arr = [
     ['he walked', 'he walk'],
     ['i walked', 'i walk'],
@@ -68,7 +68,6 @@ test('toInfinitive:', function (t) {
     ['i was being not really walked', 'i do not really walk'],
     ['he was not going to walk', 'he does not walk'],
     ['we are putting', 'we put'],
-
     // from particple
     ["overthrown", "overthrow"],
     ["thrown", "throw"],
@@ -120,6 +119,7 @@ test('toInfinitive:', function (t) {
     ["salted", "salt"],
     ["malted", "malt"],
     ["exited", "exit"],
+    ["excited", "excite"],
     ["deposited", "deposit"],
     ["transited", "transit"],
     ["revisited", "revisit"],
@@ -152,7 +152,6 @@ test('toInfinitive:', function (t) {
     ["conciliated", "conciliate"],
     ["repudiated", "repudiate"],
     ["mediated", "mediate"],
-    ["associated", "associate"],
     ["enunciated", "enunciate"],
     ["created", "create"],
     ["warehoused", "warehouse"],
@@ -179,7 +178,6 @@ test('toInfinitive:', function (t) {
     ["co-sponsored", "co-sponsor"],
     ["sponsored", "sponsor"],
     ["mirrored", "mirror"],
-    ["tailored", "tailor"],
     ["anchored", "anchor"],
     ["stopped", "stop"],
     ["topped", "top"],
@@ -199,7 +197,6 @@ test('toInfinitive:', function (t) {
     ["shrinkwrapped", "shrinkwrap"],
     ["wrapped", "wrap"],
     ["strapped", "strap"],
-    ["trapped", "trap"],
     ["scrapped", "scrap"],
     ["snapped", "snap"],
     ["mapped", "map"],
@@ -254,13 +251,11 @@ test('toInfinitive:', function (t) {
     ["defined", "define"],
     ["fined", "fine"],
     ["dined", "dine"],
-    ["combined", "combine"],
     ["convened", "convene"],
     ["planed", "plane"],
     ["caned", "cane"],
     ["annulled", "annul"],
     ["extolled", "extol"],
-    ["controlled", "control"],
     ["distilled", "distil"],
     ["levelled", "level"],
     ["travelled", "travel"],
@@ -278,7 +273,6 @@ test('toInfinitive:', function (t) {
     ["baled", "bale"],
     ["invoked", "invoke"],
     ["revoked", "revoke"],
-    ["smoked", "smoke"],
     ["choked", "choke"],
     ["spiked", "spike"],
     ["mimicked", "mimic"],
@@ -291,7 +285,6 @@ test('toInfinitive:', function (t) {
     ["reworded", "reword"],
     ["worded", "word"],
     ["afforded", "afford"],
-    ["recorded", "record"],
     ["forwarded", "forward"],
     ["rewarded", "reward"],
     ["guarded", "guard"],
@@ -313,17 +306,15 @@ test('toInfinitive:', function (t) {
     ["stabbed", "stab"],
     ["nabbed", "nab"],
     ['opened', 'open'],
-    ["resold", "resell"],
+    // ["resold", "resell"],
     ["blitzed", "blitz"],
     ["overpaid", "overpay"],
-    ["toasted", "toast"],
     ["marketed", "market"],
     ["skyrocketed", "skyrocket"],
     ["ticketed", "ticket"],
     ["aroused", "arouse"],
     ["espoused", "espouse"],
     ["warehoused", "warehouse"],
-    ["focused", "focus"],
     ["created", "create"],
     ["acquired", "acquire"],
     ["aired", "air"],
@@ -385,7 +376,6 @@ test('toInfinitive:', function (t) {
     ["answered", "answer"],
     ["lowered", "lower"],
     ["severed", "sever"],
-    ["covered", "cover"],
     ["leaked", "leak"],
     // ["misled", "mislead"],
     ["buttered", "butter"],
@@ -427,11 +417,9 @@ test('toInfinitive:', function (t) {
 
     // gerund -> infinitive
     ['coming', 'come'],
-    ['moving', 'move'],
     ['joking', 'joke'],
     ['poking', 'poke'],
     ['naming', 'name'],
-    ['aching', 'ache'],
     ['tuning', 'tune'],
     ['hazing', 'haze'],
     //phrasal
@@ -456,3 +444,23 @@ test('toInfinitive:', function (t) {
   })
   t.end()
 })
+
+
+test('toInfinitive-coerced:', function (t) {
+  let arr = [
+    ['smoked', 'smoke'],
+    ['detailed', 'detail'],
+    ['tailored', 'tailor'],
+    ['controlled', 'control'],
+    ['recorded', 'record'],
+    ['trapped', 'trap'],
+    ['associated', 'associate']
+  ]
+  arr.forEach(a => {
+    let doc = nlp(a[0]).tag('PastTense')
+    doc.verbs().toInfinitive()
+    t.equal(doc.text(), a[1], here + ' ' + a[0])
+  })
+  t.end()
+})
+

@@ -438,6 +438,9 @@ let conjugations = {
   quit: {
     prt: '_',
   },
+  quote: {
+    pst: '_d',
+  },
   read: {
     pst: '_',
     prt: '_',
@@ -754,6 +757,9 @@ let conjugations = {
   expedite: {
     pst: '_d',
   },
+  exit: {
+    pst: '_ed',
+  },
   // -led exceptions
   control: {
     pst: '_led',
@@ -789,6 +795,12 @@ let conjugations = {
   },
   persevere: {
     pst: '_d',
+  },
+  tailor: {
+    pst: '_ed',
+  },
+  solicit: {
+    pst: '_ed',
   },
 }
 

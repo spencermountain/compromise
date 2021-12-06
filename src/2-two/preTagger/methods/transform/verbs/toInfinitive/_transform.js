@@ -321,6 +321,10 @@ let rules = {
       to: '$1',
     },
     {
+      reg: /([htb]on)ed$/i, // phoned, stoned
+      to: '$1e',
+    },
+    {
       reg: /([aeiou]n)ed$/i, // rained, poisoned
       to: '$1',
     },
@@ -356,7 +360,7 @@ let rules = {
       to: '$1e',
     },
     {
-      reg: /(.[aeiou]{2,}r)ed$/i,//appeared
+      reg: /([aeiou]{2,}r)ed$/i,//appeared, aired
       to: '$1',
     },
     {

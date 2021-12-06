@@ -1,3 +1,5 @@
+// punctuation we wanna transfer
+
 // splice an array into an array
 const spliceArr = (parent, index, child) => {
   let args = [index, 0].concat(child)
@@ -8,15 +10,16 @@ const spliceArr = (parent, index, child) => {
 // add a space at end, if required
 const endSpace = function (terms) {
   const hasSpace = / $/
+  const hasDash = /[-–—]/
   let lastTerm = terms[terms.length - 1]
-  if (lastTerm && hasSpace.test(lastTerm.post) === false) {
+  if (lastTerm && !hasSpace.test(lastTerm.post) && !hasDash.test(lastTerm.post)) {
     lastTerm.post += ' '
   }
 }
 
 // sentence-ending punctuation should move in append
 const movePunct = (source, end, needle) => {
-  const juicy = /[.?!,;:)'"]/g // punctuation we wanna transfer
+  const juicy = /[.?!,;:)-–—'"]/g
   let wasLast = source[end - 1]
   if (!wasLast) {
     return
@@ -85,8 +88,8 @@ const cleanAppend = function (home, ptr, needle, document) {
   if (end < total) {
     // are we in the middle?
     // add trailing space on self
-    endSpace(needle)
     movePunct(home, end, needle)
+    endSpace(needle)
   } else if (total === end) {
     // are we at the end?
     // add a space to predecessor

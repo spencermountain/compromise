@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/three.js'
-import dates from './plugins/dates/src/plugin.js'
-nlp.plugin(dates)
+// import dates from './plugins/dates/src/plugin.js'
+// nlp.plugin(dates)
 // import nlp from './builds/compromise.cjs'
 // nlp.verbose('tagger')
 
@@ -15,9 +15,11 @@ let txt = ''
 // doc.debug()
 
 
-const doc = nlp('on september 12 1998 yeah')
+const doc = nlp('Tony on september 12 1998 yeah')
+doc.compute('penn')
+console.log(doc.json()[0])
 // doc.dates().debug()
-console.dir(doc.dates().json()[0], { depth: 5 })
+// console.dir(doc.dates().json()[0], { depth: 5 })
 // let doc = nlp(txt)
 // doc.debug()
 

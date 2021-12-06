@@ -16,9 +16,11 @@ let txt = ''
 
 
 // const doc = nlp('Tony on september 12 1998 yeah')
-const doc = nlp('Tony september 12 to march equinox')
-// doc.dates().debug()
-console.dir(doc.dates().json({ terms: false }), { depth: 5 })
+const doc = nlp('fifteenth')
+doc.numbers().toCardinal()
+doc.debug()
+// console.dir(doc.times().json({ terms: false }), { depth: 5 })
+// console.dir(doc.dates().json({ terms: false }), { depth: 5 })
 // let doc = nlp(txt)
 // doc.debug()
 

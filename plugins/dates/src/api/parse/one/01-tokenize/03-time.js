@@ -58,11 +58,12 @@ const halfPast = function (m, s) {
 const parseTime = function (doc, context) {
   let time = doc.match('(at|by|for|before|this|after)? #Time+')
   if (time.found) {
-    doc.remove(time)
-    // '4pm on tuesday'
-    doc.remove('^sharp')
-    doc.remove('^on')
-    doc.remove('on the dot')
+
+    // doc.remove(time)
+    // // '4pm on tuesday'
+    // doc.remove('^sharp')
+    // doc.remove('^on')
+    // doc.remove('on the dot')
   }
   // get the main part of the time
   time = time.not('^(at|by|for|before|this|after)')
@@ -70,7 +71,6 @@ const parseTime = function (doc, context) {
   time = time.not('on the dot')
   let s = spacetime.now(context.timezone)
   let now = s.clone()
-
   // check for known-times (like 'today')
   let timeStr = time.text('reduced')
   if (hardCoded.hasOwnProperty(timeStr)) {

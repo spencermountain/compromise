@@ -1,0 +1,38 @@
+{
+  "name": "compromise-dates",
+  "description": "plugin for nlp-compromise",
+  "version": "3.0.0-next",
+  "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
+  "main": "./builds/compromise-dates.js",
+  "unpkg": "./builds/compromise-dates.min.js",
+  "module": "./builds/compromise-dates.mjs",
+  "type": "module",
+  "types": "types/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/spencermountain/compromise.git"
+  },
+  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/dates",
+  "scripts": {
+    "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
+    "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
+    "watch": "amble ./scratch.js",
+    "build": "rollup -c --silent"
+  },
+  "files": [
+    "builds/",
+    "types/index.d.ts"
+  ],
+  "eslintIgnore": [
+    "builds/*.js"
+  ],
+  "peerDependencies": {
+    "compromise": ">=12.0.0"
+  },
+  "dependencies": {
+    "spacetime": "6.16.0",
+    "spacetime-holiday": "0.1.0"
+  },
+  "devDependencies": {},
+  "license": "MIT"
+}

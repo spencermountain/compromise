@@ -1,12 +1,15 @@
 import find from './find/index.js'
-import parseDate from './parse/one/index.js'
+import parseRange from './parse/range/index.js'
 
 const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
 
 
-const toJSON = function (parsed) {
-  console.log(parsed)
-  return {}
+const toJSON = function (range) {
+  range = range[0]//oof
+  return {
+    start: range.start.format('iso'),
+    end: range.end.format('iso')
+  }
 }
 
 const api = function (View) {
@@ -17,16 +20,15 @@ const api = function (View) {
       this.viewType = 'Nouns'
     }
 
-    parse(n) {
-      console.log('=-=-=-= here -=-=-=-')
-      return getNth(this, n).map(parseDate)
+    get(n) {
+      return getNth(this, n).map(parseRange)
     }
 
     json(opts = {}) {
       return this.map(m => {
         let json = m.toView().json(opts)[0] || {}
         if (opts && opts.dates !== true) {
-          let parsed = parseDate(m)
+          let parsed = parseRange(m)
           json.dates = toJSON(parsed)
         }
         return json

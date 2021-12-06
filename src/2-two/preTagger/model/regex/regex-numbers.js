@@ -16,7 +16,7 @@ export default [
   [/^[0-9]{1,4}-[a-z]{2,9}-[0-9]{1,4}$/i, 'Date', '12-dec-2019'],
 
   // timezones
-  [/^utc ?[+-]?[0-9]+$/, 'TimeZone', 'utc-9'],
+  [/^utc ?[+-]?[0-9]+$/, 'Timezone', 'utc-9'],
   [/^(gmt|utc)[+-][0-9]{1,2}$/i, 'Timezone', 'gmt-3'],
 
   //phone numbers

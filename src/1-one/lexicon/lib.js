@@ -5,6 +5,13 @@ const addWords = function (words) {
   if (!words) {
     return
   }
+
+  // normalize tag vals
+  Object.keys(words).forEach(k => {
+    if (words[k].startsWith('#')) {
+      words[k] = words[k].replace(/^#/, '')
+    }
+  })
   // add some words to our lexicon
   if (methods.two.expandLexicon) {
     // do fancy ./two version

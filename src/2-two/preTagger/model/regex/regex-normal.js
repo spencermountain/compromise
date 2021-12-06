@@ -5,7 +5,7 @@ export default [
   [/^[a-z0-9./].+\.(com|net|gov|org|ly|edu|info|biz|dev|ru|jp|de|in|uk|br|io|ai)/, 'Url', '.com'],
 
   // timezones
-  [/^[PMCE]ST$/, 'TimeZone', 'EST'],
+  [/^[PMCE]ST$/, 'Timezone', 'EST'],
 
   //names
   [/^ma?c'.*/, 'LastName', "mc'neil"],

@@ -49,7 +49,9 @@ const validate = function (tags, already) {
   Object.keys(tags).forEach(k => {
     let nots = tags[k].not || []
     nots.forEach(no => {
-      tags[no].not.push(k)
+      if (tags[no] && tags[no].not) {
+        tags[no].not.push(k)
+      }
     })
   })
   return tags

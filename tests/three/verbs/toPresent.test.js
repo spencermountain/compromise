@@ -60,7 +60,7 @@ test('toPresent:', function (t) {
     ['had been walked', 'is being walked'],
     // ['has been walked', 'is being walked'], //?
     ['have been walked', 'is being walked'],
-    ['usually is really walked often', 'usually is really walked often'],
+    ['usually is really walked often', 'usually really walks often'],
     ['were walked', 'are walked'],
     ['was being walked', 'is being walked'],
     // // ['has been walked', 'had been walked'],
@@ -159,7 +159,15 @@ test('toPresent:', function (t) {
 
     // contractions
     [`i'm good`, 'i was good'],
-    [`they're good`, 'they were good'],
+    [`i'd go`, `i'd go`],
+    [`i've gone`, `i go`],
+    [`we've gone`, `we go`],
+    [`we've walked`, `we walk`],
+    [`he'll go`, `he goes`],
+    [`he'll walk`, `he walks`],
+    [`they've seen`, `they see`],
+    [`they were good`, 'they are good'],
+    // [`they're good`, 'they were good'],
     //TODO: missing auxillary
     // [`we've said`, 'we said'], //or 'we have said'
     // [`they'd said`, 'they said'], //or 'they have said'

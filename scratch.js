@@ -14,11 +14,15 @@ let txt = ''
 // doc.verbs().toNegative()
 // doc.debug()
 
-txt = `hazed-over`
+txt = `usually is really walked often`
+txt = `people will seldom start looking`
+txt = `he clearly did not suggest`
+txt = `they're good`
+txt = `i'm good`
 
 let doc = nlp(txt)
 // doc.replace('hazed', 'fogged')
-doc.verbs().toInfinitive()
+doc.verbs().toPresent()
 console.log(doc.text())
 
 // const doc = nlp('Tony on september 12 1998 yeah')

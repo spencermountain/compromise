@@ -128,6 +128,9 @@ const api = function (View) {
       })
     }
   }
+  Verbs.prototype.toPast = Verbs.prototype.toPastTense
+  Verbs.prototype.toPresent = Verbs.prototype.toPresentTense
+  Verbs.prototype.toFuture = Verbs.prototype.toFutureTense
 
   View.prototype.verbs = function (n) {
     let vb = find(this)

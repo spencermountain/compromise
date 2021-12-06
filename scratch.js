@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/three.js'
+import nlp from './src/two.js'
 // import nlp from './builds/compromise.cjs'
 // nlp.verbose('tagger')
 
@@ -14,14 +14,22 @@ let txt = ''
 
 nlp.addTags({
   Doctor: {
-    isA: 'Person',
+    is: 'Person',
+    not: 'Nurse'
   },
   Surgeon: {
-    isA: 'Doctor',
+    is: 'Doctor',
+  },
+  Person: {
+    is: 'Noun',
   },
 })
+nlp.addWords({
+  george: 'Surgeon'
+})
+// console.log(nlp.model().one.tagSet.Surgeon)
 let doc = nlp('george is a person.')
-doc.match('george').tag('Surgeon')
+// doc.match('george').tag('Surgeon')
 doc.debug()
 
 

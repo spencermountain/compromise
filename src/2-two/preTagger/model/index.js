@@ -1,4 +1,3 @@
-import tagSet from './tagSet/index.js'
 import irregularPlurals from './irregulars/plurals.js'
 import irregularVerbs from './irregulars/conjugations.js'
 import { lexicon, variables } from './lexicon/index.js'
@@ -18,7 +17,6 @@ let model = {
   one: {
     _multiCache: {},
     lexicon,
-    tagSet,
   },
   two: {
     irregularPlurals,

@@ -20,7 +20,7 @@ const sortByKids = function (tags, tagSet) {
 
 const tagRank = function (view) {
   const { document, world } = view
-  const tagSet = world.model.two.tagSet
+  const tagSet = world.model.one.tagSet
   document.forEach(terms => {
     terms.forEach(term => {
       let tags = Array.from(term.tags)

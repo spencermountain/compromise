@@ -64,7 +64,7 @@ const isArray = function (arr) {
 
 // add a tag to all these terms
 const setTag = function (terms, tag, world = {}, isSafe) {
-  const tagSet = world.model.two.tagSet || {}
+  const tagSet = world.model.one.tagSet || {}
   if (!tag) {
     return
   }

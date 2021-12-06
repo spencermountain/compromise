@@ -44,8 +44,8 @@ const fillTags = function (terms, i, model) {
   //there is probably just one tag, but we'll allow more
   let tags = Array.from(term.tags)
   for (let k = 0; k < tags.length; k += 1) {
-    if (model.two.tagSet[tags[k]]) {
-      let toAdd = model.two.tagSet[tags[k]].parents
+    if (model.one.tagSet[tags[k]]) {
+      let toAdd = model.one.tagSet[tags[k]].parents
       fastTag(term, toAdd, `  -inferred by #${tags[k]}`)
     }
   }

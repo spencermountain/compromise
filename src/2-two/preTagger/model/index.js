@@ -18,11 +18,11 @@ let model = {
   one: {
     _multiCache: {},
     lexicon,
+    tagSet,
   },
   two: {
     irregularPlurals,
     irregularVerbs,
-    tagSet,
 
     suffixPatterns,
     endsWith,

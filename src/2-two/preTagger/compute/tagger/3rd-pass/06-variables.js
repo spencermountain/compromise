@@ -76,7 +76,7 @@ const pickTag = function (terms, i, clues, model) {
   if (!clues) {
     return
   }
-  const tagSet = model.two.tagSet
+  const tagSet = model.one.tagSet
   // look -> right word, first
   let tag = checkWord(terms[i + 1], clues.afterWords)
   // look <- left word, second
@@ -93,8 +93,8 @@ const setTag = function (term, tag, model) {
   if (!term.tags.has(tag)) {
     term.tags.clear()
     fastTag(term, tag, `3-[variable]`)
-    if (model.two.tagSet[tag]) {
-      let parents = model.two.tagSet[tag].parents
+    if (model.one.tagSet[tag]) {
+      let parents = model.one.tagSet[tag].parents
       fastTag(term, parents, `  -inferred by #${tag}`)
     }
   }

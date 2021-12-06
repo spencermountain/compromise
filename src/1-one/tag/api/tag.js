@@ -46,7 +46,7 @@ const fns = {
     if (verbose === true) {
       console.log(' -  ', input, reason || '')
     }
-    let tagSet = model.two.tagSet
+    let tagSet = model.one.tagSet
     if (isArray(input)) {
       input.forEach(tag => methods.one.unTag(terms, tag, tagSet))
     } else {
@@ -59,7 +59,7 @@ const fns = {
 
   /** return only the terms that can be this tag  */
   canBe: function (tag) {
-    let tagSet = this.model.two.tagSet
+    let tagSet = this.model.one.tagSet
     // everything can be an unknown tag
     if (!tagSet.hasOwnProperty(tag)) {
       return this

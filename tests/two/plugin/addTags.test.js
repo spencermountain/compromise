@@ -6,7 +6,7 @@ const _nlp = nlp.fork()
 test('tagset-change-isA-basic', function (t) {
   _nlp.addTags({
     Doctor: {
-      isA: 'Person',
+      is: 'Person',
     },
   })
   _nlp.addWords({
@@ -35,8 +35,8 @@ test('tagset-change-isA-basic', function (t) {
 test('tagset-change-isA', function (t) {
   _nlp.addTags({
     Doctor: {
-      isA: 'Person',
-      notA: 'Foo',
+      is: 'Person',
+      not: 'Foo',
     },
   })
   _nlp.addWords({
@@ -55,10 +55,10 @@ test('tagset-change-isA', function (t) {
 test('tagset-remove-downward', function (t) {
   _nlp.addTags({
     Doctor: {
-      isA: 'Person',
+      is: 'Person',
     },
     Surgeon: {
-      isA: 'Doctor',
+      is: 'Doctor',
     },
   })
   let doc = _nlp('george is a person.')
@@ -79,10 +79,10 @@ test('tagset-remove-downward', function (t) {
 test('tagset-remove-half-downward', function (t) {
   _nlp.addTags({
     Doctor: {
-      isA: 'Person',
+      is: 'Person',
     },
     Surgeon: {
-      isA: 'Doctor',
+      is: 'Doctor',
     },
   })
   let doc = _nlp('george is a person.')
@@ -100,7 +100,7 @@ test('tagset-tree', function (t) {
   _nlp.addTags({
     One: {},
     Two: {},
-    Three: { isA: 'Two' },
+    Three: { is: 'Two' },
   })
   let doc = _nlp(`have fun in toronto`, { toronto: 'Three' })
   let m = doc.match('toronto')
@@ -115,7 +115,7 @@ test('tagset-tree', function (t) {
 //   _nlp.addTags({
 //     One: {},
 //     Two: {},
-//     Three: { isA: ['Two', 'One', 'FirstName'] },
+//     Three: { is: ['Two', 'One', 'FirstName'] },
 //   })
 //   let doc = _nlp(`have fun in toronto`, { toronto: 'Three' })
 //   let m = doc.match('toronto')

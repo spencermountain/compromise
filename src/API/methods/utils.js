@@ -42,6 +42,17 @@ const utils = {
     let n = this.fullPointer.length - 1
     return this.eq(n)
   },
+
+  /** grab term[0] for every match */
+  firstTerms: function () {
+    return this.match('^.')
+  },
+
+  /** grab the last term for every match  */
+  lastTerms: function () {
+    return this.match('.$')
+  },
+
   /** */
   slice: function (min, max) {
     let pntrs = this.pointer || this.docs.map((_o, n) => [n])
@@ -93,4 +104,6 @@ const utils = {
 }
 utils.group = utils.groups
 utils.fullSentence = utils.fullSentences
+utils.lastTerm = utils.lastTerms
+utils.firstTerm = utils.firstTerms
 export default utils

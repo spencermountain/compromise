@@ -8,7 +8,7 @@ nlp.plugin(speechPlugin)
 let txt = ''
 txt = 'seventh millenium'
 
-let doc = nlp(txt).compute(['soundsLike', 'syllables'])
+// let doc = nlp(txt).compute(['soundsLike', 'syllables'])
+// console.dir(doc.json()[0], { depth: 5 })
 
-
-console.dir(doc.json()[0], { depth: 5 })
+console.log(nlp(txt).syllables())

@@ -1,5 +1,5 @@
-import toText from '../../numbers/convert/toText/index.js'
-import textOrdinal from '../../numbers/convert/toOrdinal/textOrdinal.js'
+import toText from '../../numbers/format/toText/index.js'
+import textOrdinal from '../../numbers/format/toOrdinal/textOrdinal.js'
 
 const toOrdinal = function (obj) {
   // don't divide by zero!

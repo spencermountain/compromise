@@ -16,8 +16,8 @@ let txt = ''
 
 
 // const doc = nlp('Tony on september 12 1998 yeah')
-const doc = nlp('fifteenth')
-doc.numbers().toCardinal()
+const doc = nlp('fifty five')
+doc.numbers().toOrdinal()
 doc.debug()
 // console.dir(doc.times().json({ terms: false }), { depth: 5 })
 // console.dir(doc.dates().json({ terms: false }), { depth: 5 })

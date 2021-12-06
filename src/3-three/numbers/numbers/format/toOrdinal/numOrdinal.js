@@ -1,9 +1,10 @@
-import toString from './toString.js.js'
+import toString from '../../_toString.js'
 
 /**
  * turn a number like 5 into an ordinal like 5th
  */
-const numOrdinal = function (num) {
+const numOrdinal = function (obj) {
+  let num = obj.num
   if (!num && num !== 0) {
     return null
   }

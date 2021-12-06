@@ -1,5 +1,5 @@
 import find from './find.js'
-import parseNumber from '../numbers/parse.js'
+import parseNumber from '../numbers/parse/index.js'
 import { getNth } from '../../chunker/api/_lib.js'
 
 const parse = function (m) {

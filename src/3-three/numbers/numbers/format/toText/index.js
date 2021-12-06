@@ -61,7 +61,8 @@ const handle_decimal = num => {
 }
 
 /** turns an integer into a textual number */
-const toText = function (num) {
+const toText = function (obj) {
+  let num = obj.num
   // handle zero, quickly
   if (num === 0 || num === '0') {
     return 'zero' // no?

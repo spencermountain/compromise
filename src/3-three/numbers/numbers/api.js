@@ -1,5 +1,6 @@
 import find from './find.js'
-import parse from './parse.js'
+import parse from './parse/index.js'
+import format from './format/index.js'
 
 // return the nth elem of a doc
 export const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
@@ -44,14 +45,57 @@ const addMethod = function (View) {
 
     /** convert to numeric form like '8' or '8th' */
     toNumber() {
-      this.forEach(val => {
+      this.if('#TextValue').forEach(val => {
         let obj = parse(val)
         if (obj.num === null) {
           return
         }
-        let str = makeNumber(obj, false, val.has('#Ordinal'))
+        let fmt = obj.isOrdinal ? 'Ordinal' : 'Cardinal'
+        let str = format(obj, fmt)
         val.replaceWith(str, true)
         val.tag('NumericValue')
+      })
+      return this
+    }
+    /** convert to numeric form like 'eight' or 'eighth' */
+    toText() {
+      this.if('#NumericValue').forEach(val => {
+        let obj = parse(val)
+        if (obj.num === null) {
+          return
+        }
+        let fmt = obj.isOrdinal ? 'TextOrdinal' : 'TextCardinal'
+        let str = format(obj, fmt)
+        val.replaceWith(str, true)
+        val.tag('TextValue')
+      })
+      return this
+    }
+    /** convert ordinal to cardinal form, like 'eight', or '8' */
+    toCardinal() {
+      this.if('#Ordinal').forEach(val => {
+        let obj = parse(val)
+        if (obj.num === null) {
+          return
+        }
+        let fmt = obj.isText ? 'TextCardinal' : 'Cardinal'
+        let str = format(obj, fmt)
+        val.replaceWith(str, true)
+        val.tag('Cardinal')
+      })
+      return this
+    }
+    /** convert cardinal to ordinal form, like 'eighth', or '8th' */
+    toOrdinal() {
+      this.if('#Cardinal').forEach(val => {
+        let obj = parse(val)
+        if (obj.num === null) {
+          return
+        }
+        let fmt = obj.isText ? 'TextOrdinal' : 'Ordinal'
+        let str = format(obj, fmt)
+        val.replaceWith(str, true)
+        val.tag('Ordinal')
       })
       return this
     }

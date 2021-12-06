@@ -1,5 +1,5 @@
 const endS = /s$/
-import parseText from '../numbers/convert/toNumber/index.js'
+import parseText from '../numbers/parse/toNumber/index.js'
 
 // just using .toNumber() again may risk an infinite-loop
 const parseNumber = function (m) {

@@ -1,5 +1,5 @@
-import parseText from './convert/toNumber/index.js'
-import parseFraction from '../fractions/parse.js'
+import parseText from './toNumber/index.js'
+import parseFraction from '../../fractions/parse.js'
 
 const parseNumeric = function (str, p, isFraction) {
   str = str.replace(/,/g, '')
@@ -74,6 +74,10 @@ const parseNumber = function (m) {
     prefix: '',
     num: num,
     suffix: '',
+    isOrdinal: m.has('#Ordinal'),
+    isText: m.has('#TextValue'),
+    isFraction: m.has('#Fraction'),
+    isMoney: m.has('#Money'),
   }
 }
 export default parseNumber

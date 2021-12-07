@@ -18,16 +18,12 @@ txt = `he clearly did not suggest`
 txt = `they're good`
 txt = `people will seldom start looking`
 txt = `we had walked`
-txt = `i'd walked`
+txt = `we've gone`
 
-// let doc = nlp(txt)
-let doc = nlp(`i'd walked`)
-let m = doc.splitOn('had').debug()
-console.log(m.out('array'))
-// doc.replace('had', 'foo')
-// doc.verbs().toPresent()
+let doc = nlp(txt)
+doc.verbs().toPresent()
 // doc.verbs().toNegative()
-// doc.debug()
+doc.debug()
 // console.log(doc.text())
 
 // const doc = nlp('Tony on september 12 1998 yeah')

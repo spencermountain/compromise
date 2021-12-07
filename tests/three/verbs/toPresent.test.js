@@ -158,7 +158,7 @@ test('toPresent:', function (t) {
     // ['spencer and john wrote everyday', 'spencer and john write everyday'],
 
     // contractions
-    [`i'm good`, 'i was good'],
+    [`i'm good`, 'i\'m good'],
     [`i'd go`, `i'd go`],
     [`i've gone`, `i go`],
     [`we've gone`, `we go`],

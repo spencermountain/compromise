@@ -209,6 +209,7 @@ export default [
   'shut',
   'discounted',
   'bottled',
+  'gone',
 ]
 
 

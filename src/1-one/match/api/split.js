@@ -2,8 +2,17 @@ const combine = function (left, right) {
   return [left[0], left[1], right[2]]
 }
 
-const getDoc = (m, view, group) => {
-  return typeof m === 'string' ? view.match(m, group) : m
+const getDoc = (reg, view, group) => {
+  let m = reg
+  if (typeof reg === 'string') {
+    m = view.match(reg, group)
+  }
+  // are we splitting within a contraction?
+  if (m.has('@hasContraction')) {
+    let more = m.grow('@hasContraction')
+    more.contractions().expand()
+  }
+  return m
 }
 
 const methods = {}

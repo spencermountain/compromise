@@ -187,5 +187,9 @@ export default [
   'raven',
   // -ibe
   'tribe',
+  // nny
+  'nanny',
+  'bunny',
+  'fanny',
 
 ]

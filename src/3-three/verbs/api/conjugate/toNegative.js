@@ -8,12 +8,34 @@ const doesNot = function (vb, parsed) {
   return vb
 }
 
+const isWas = function (vb) {
+  // not be
+  let m = vb.match('be')
+  if (m.found) {
+    m.prepend('not')
+    return vb
+  }
+  // will not
+  m = vb.match('(is|was|am|are|will|were)')
+  if (m.found) {
+    m.append('not')
+    return vb
+  }
+  return vb
+}
+
+const hasCopula = (vb) => vb.has('(is|was|am|are|will|were|be)')
+
 //vaguely, turn 'he is cool' into 'he is not cool'
 const forms = {
 
 
   // he walks' -> 'he does not walk'
   'simple-present': (vb, parsed) => {
+    // is/was
+    if (hasCopula(vb) === true) {
+      return isWas(vb, parsed)
+    }
     // he walk
     vb = toInf(vb, parsed)
     // does not 
@@ -22,6 +44,10 @@ const forms = {
   },
   // 'he walked' -> 'he did not walk'
   'simple-past': (vb, parsed) => {
+    // is/was
+    if (hasCopula(vb) === true) {
+      return isWas(vb, parsed)
+    }
     // he walk
     vb = toInf(vb, parsed)
     // did not walk
@@ -36,6 +62,9 @@ const forms = {
   },
   // walk -> does not walk
   'infinitive': (vb, parsed) => {
+    if (hasCopula(vb) === true) {
+      return isWas(vb, parsed)
+    }
     return doesNot(vb, parsed)
   },
 
@@ -78,108 +107,15 @@ const forms = {
     return vb
   },
 
-  /*
-    // ============
-
-    'simple-future': (vb, parsed) => {
-      // he will walk
-      return vb
-    },
-  
-  
-    // === Progressive ===
-    'present-progressive': (vb, parsed) => {
-      // he is walking
-      return vb
-    },
-    'past-progressive': (vb, parsed) => {
-      // he was walking
-      return vb
-    },
-    'future-progressive': (vb, parsed) => {
-      // he will be
-      return vb
-    },
-  
-    // === Perfect ===
-    'present-perfect': (vb, parsed) => {
-      // he has walked
-      return vb
-    },
-    'past-perfect': (vb, parsed) => {
-      // he had walked
-      return vb
-    },
-    'future-perfect': (vb, parsed) => {
-      // he will have
-      return vb
-    },
-  
-    // === Progressive-perfect ===
-    'present-perfect-progressive': (vb, parsed) => {
-      // he has been walking
-      return vb
-    },
-    'past-perfect-progressive': (vb, parsed) => {
-      // he had been
-      return vb
-    },
-    'future-perfect-progressive': (vb, parsed) => {
-      // will have been
-      return vb
-    },
-  
-  
-    'passive-present': (vb, parsed) => {
-      // is walked, are stolen
-      // is being walked
-      // has been cleaned
-      return vb
-    },
-    'passive-future': (vb, parsed) => {
-      // will have been walked
-      // will be cleaned
-      return vb
-    },
-  
-    // === Conditional ===
-    'present-conditional': (vb, parsed) => {
-      // would be walked
-      return vb
-    },
-    'past-conditional': (vb, parsed) => {
-      // would have been walked
-      return vb
-    },
-  
-    // ==== Auxiliary ===
-    'auxiliary-future': (vb, parsed) => {
-      // going to drink
-      return vb
-    },
-  
-    'auxiliary-present': (vb, parsed) => {
-      // we do walk
-      return vb
-    },
-  
-    // === modals ===
-    'modal-past': (vb, parsed) => {
-      // he could have walked
-      return vb
-    },
-    'modal-infinitive': (vb, parsed) => {
-      // he can walk
-      return vb
-    },*/
 }
+
 const toNegative = function (vb, parsed, form) {
+  // console.log(form)
   if (vb.has('#Negative')) {
     return vb
   }
   if (forms.hasOwnProperty(form)) {
     vb = forms[form](vb, parsed)
-    vb.fullSentence().compute(['lexicon', 'preTagger', 'chunks'])
     return vb
   }
 
@@ -187,19 +123,18 @@ const toNegative = function (vb, parsed, form) {
   let m = vb.matchOne('be')
   if (m.found) {
     m.prepend('not')
-    return vb.sentence().compute('lexicon')
+    return vb
   }
-  // is not
-  m = vb.matchOne('(is|was|am|are|will|were)')
-  if (m.found) {
-    m.append('not')
-    return vb.sentence().compute('lexicon')
+  // is/was not
+  if (hasCopula(vb) === true) {
+    return isWas(vb, parsed)
   }
+
   // 'would not'
   m = vb.matchOne('(will|had|have|has|did|does|do|#Modal)')
   if (m.found) {
     m.append('not')
-    return vb.sentence().compute('lexicon')
+    return vb
   }
   // do nothing i guess?
   return vb

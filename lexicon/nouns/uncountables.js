@@ -181,4 +181,5 @@ export default [
   'water',
   'wool',
   'kindergarten',
+  'tyranny',
 ]

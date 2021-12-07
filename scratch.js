@@ -1,9 +1,9 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/three.js'
-import dates from './plugins/dates/src/plugin.js'
-nlp.plugin(dates)
+// import dates from './plugins/dates/src/plugin.js'
+// nlp.plugin(dates)
 // import nlp from './builds/compromise.cjs'
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 let txt = ''
 
@@ -11,7 +11,7 @@ let txt = ''
 // doc.debug()
 
 // const doc = nlp('he is cool')
-// doc.verbs().toNegative()
+// doc.verbs().toNegative()000
 // doc.debug()
 
 txt = `usually is really walked often`
@@ -20,13 +20,17 @@ txt = `he clearly did not suggest`
 txt = `they're good`
 txt = `i'm good`
 txt = `we want to walk`
-txt = `he wants to walk`
+
+txt = ``
+txt = `Bugs Bunny reruns`
+txt = `nanny`
 
 let doc = nlp(txt)
 // doc.replace('hazed', 'fogged')
 // doc.verbs().toPresent()
-doc.verbs().toNegative()
-console.log(doc.text())
+// doc.verbs().toNegative()
+doc.debug()
+// console.log(doc.text())
 
 // const doc = nlp('Tony on september 12 1998 yeah')
 // const doc = nlp('fifty five')

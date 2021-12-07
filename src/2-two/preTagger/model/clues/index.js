@@ -38,7 +38,8 @@ clues['Plural|Verb'] = {
   }),
   beforeTags: copy(clues['Noun|Verb'].beforeTags, {
     Conjunction: 'PresentTense', //and changes
-    Noun: undefined //the century demands
+    Noun: undefined, //the century demands
+    ProperNoun: 'PresentTense'//john plays
   }),
   afterTags: copy(clues['Noun|Verb'].afterTags, {
     Noun: 'PresentTense', //changes gears

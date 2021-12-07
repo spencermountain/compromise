@@ -60,7 +60,7 @@ test('toPresent:', function (t) {
     ['had been walked', 'is being walked'],
     // ['has been walked', 'is being walked'], //?
     ['have been walked', 'is being walked'],
-    ['usually is really walked often', 'usually really walks often'],
+    ['usually really walked often', 'usually really walks often'],
     ['were walked', 'are walked'],
     ['was being walked', 'is being walked'],
     // // ['has been walked', 'had been walked'],

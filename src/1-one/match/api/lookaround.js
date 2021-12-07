@@ -1,5 +1,6 @@
 // import { indexN } from '../../pointers/methods/lib/index.js'
 
+
 const before = function (regs, group) {
   const { indexN } = this.methods.one
   let pre = []
@@ -38,4 +39,34 @@ const after = function (regs, group) {
   return postWords.match(regs, group)
 }
 
-export default { before, after }
+const growLeft = function (regs, group) {
+  regs = this.world.methods.one.parseMatch(regs)
+  regs[regs.length - 1].end = true// ensure matches are beside us ←
+  let ptrs = this.fullPointer
+  this.forEach((m, n) => {
+    let more = m.before(regs, group)
+    if (more.found) {
+      ptrs[n][1] -= more.terms().length
+    }
+  })
+  return this.update(ptrs)
+}
+
+const growRight = function (regs, group) {
+  regs = this.world.methods.one.parseMatch(regs)
+  regs[0].start = true// ensure matches are beside us →
+  let ptrs = this.fullPointer
+  this.forEach((m, n) => {
+    let more = m.after(regs, group)
+    if (more.found) {
+      ptrs[n][2] += more.terms().length
+    }
+  })
+  return this.update(ptrs)
+}
+
+const grow = function (regs, group) {
+  return this.growRight(regs, group).growLeft(regs, group)
+}
+
+export default { before, after, growLeft, growRight, grow }

@@ -6,6 +6,11 @@ fns.replaceWith = function (input) {
   this.insertAfter(input)
   // delete the original terms
   let original = this.update(ptrs)
+  // are we replacing part of a contraction?
+  if (original.has('@hasContraction')) {
+    let more = this.growLeft('@hasContraction+').growRight('@hasContraction+')
+    more.contractions().expand()
+  }
   this.delete(original)
   // what should we return?
   return this.toView(ptrs).compute(['index', 'lexicon', 'preTagger'])

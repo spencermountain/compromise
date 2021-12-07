@@ -45,3 +45,31 @@ test('after-concat:', function (t) {
   t.equal(res.text(), 'match four five', here + 'concat')
   t.end()
 })
+
+test('grow-right:', function (t) {
+  let doc = nlp('one two three match four five')
+  let m = doc.match('match')
+  let more = m.growRight('(three|four|five)+')
+  t.equal(more.text(), 'match four five', here + 'grow-right')
+
+  doc = nlp('one match. one match two. one match two two.')
+  m = doc.match('match')
+  more = m.growRight('two+')
+  let arr = ['match.', 'match two.', 'match two two.']
+  t.deepEqual(more.out('array'), arr, here + 'grow-right-multi')
+  t.end()
+})
+
+test('grow-left:', function (t) {
+  let doc = nlp('one two three match four five')
+  let m = doc.match('match')
+  let more = m.growLeft('(three|four|one|five)+')
+  t.equal(more.text(), 'three match', here + 'grow-left')
+
+  doc = nlp('match. one match two. one one match one.')
+  m = doc.match('match')
+  more = m.growLeft('one+')
+  let arr = ['match.', 'one match', 'one one match']
+  t.deepEqual(more.out('array'), arr, here + 'grow-left-multi')
+  t.end()
+})

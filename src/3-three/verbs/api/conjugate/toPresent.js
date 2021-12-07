@@ -1,4 +1,4 @@
-import { noop, isPlural, isAreAm, doDoes } from './lib.js'
+import { noop, isPlural, isAreAm, doDoes, getSubject, toInf } from './lib.js'
 
 // walk->walked
 const simple = (vb, parsed) => {
@@ -85,8 +85,20 @@ const forms = {
 
   // has walked ->  (?)
   'present-perfect': noop,
+
   // had walked -> has walked
-  'past-perfect': vb => vb.replace('had', 'has'),
+  'past-perfect': (vb, parsed) => {
+    // not 'we has walked'
+    let subj = getSubject(vb, parsed)
+    let m = subj.subject
+    if (m.has('i') || m.has('we')) {
+      vb = toInf(vb, parsed)// we walk
+      vb.remove('had')
+      return vb
+    }
+    vb.replace('had', 'has')
+    return vb
+  },
   // will have walked -> has walked
   'future-perfect': vb => {
     vb.match('will').insertBefore('has')
@@ -161,8 +173,12 @@ const forms = {
     return vb.remove('have')
   },
   // wanted to walk
-  'want-infinitive': vb => {
-    vb.replace('(want|wanted)', 'wants')
+  'want-infinitive': (vb, parsed) => {
+    let str = 'wants'
+    if (isPlural(vb, parsed)) {
+      str = 'want'//we want
+    }
+    vb.replace('(want|wanted|wants)', str)
     vb.remove('will')
     return vb
   },

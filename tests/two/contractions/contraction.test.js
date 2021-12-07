@@ -120,3 +120,30 @@ test('french-contraction', function (t) {
   t.equal(doc.has('je'), true, here + 'has je')
   t.end()
 })
+
+test('replace-contraction', function (t) {
+  let doc = nlp(`i'd walked`)
+  doc.replace('had', 'foo')
+  t.equal(doc.text(), `i foo walked`, here + 'replace-contraction')
+  t.end()
+})
+
+test('remove-contraction', function (t) {
+  let doc = nlp(`i'd walked`)
+  doc.remove('had')
+  t.equal(doc.text(), `i walked`, here + 'remove-contraction')
+  t.end()
+})
+
+test('insert-contraction', function (t) {
+  let doc = nlp(`i'd walked`)
+  let m = doc.match('had')
+  m.insertBefore('really')
+  t.equal(doc.text(), `i really had walked`, here + 'insertBefore-contraction')
+
+  doc = nlp(`i'd walked`)
+  m = doc.match('i')
+  m.insertAfter('really')
+  t.equal(doc.text(), `i really had walked`, here + 'insertAfter-contraction')
+  t.end()
+})

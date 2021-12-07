@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import dates from './plugins/dates/src/plugin.js'
 // nlp.plugin(dates)
 // import nlp from './builds/compromise.cjs'
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 let txt = ''
 
@@ -14,26 +14,21 @@ let txt = ''
 // doc.verbs().toNegative()000
 // doc.debug()
 
-txt = `usually is really walked often`
-txt = `people will seldom start looking`
 txt = `he clearly did not suggest`
 txt = `they're good`
-txt = `i'm good`
-txt = `we want to walk`
+txt = `people will seldom start looking`
+txt = `we had walked`
+txt = `i'd walked`
 
-txt = ``
-
-
-
-txt = ` read these reviews and improved!`
-txt = ` another fool to roast`
-
-let doc = nlp(txt)
-// doc.replace('hazed', 'fogged')
+// let doc = nlp(txt)
+let doc = nlp(`i'd walked`)
+let m = doc.match('had')
+m.insertBefore('really')
+// doc.replace('had', 'foo')
 // doc.verbs().toPresent()
 // doc.verbs().toNegative()
 doc.debug()
-// console.log(doc.text())
+console.log(doc.text())
 
 // const doc = nlp('Tony on september 12 1998 yeah')
 // const doc = nlp('fifty five')

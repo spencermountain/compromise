@@ -61,6 +61,12 @@ const methods = {
       self = this
       not = this.match(reg)
     }
+    // is it part of a contraction?
+    if (self.has('@hasContraction')) {
+      let more = self.grow('@hasContraction')
+      more.contractions().expand()
+    }
+
     let ptrs = self.fullPointer
     let nots = not.fullPointer.reverse()
     // remove them from the actual document)

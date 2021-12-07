@@ -52,4 +52,4 @@ const toInf = function (vb, parsed) {
   return vb
 }
 
-export { noop, isPlural, isAreAm, doDoes, toInf }
+export { noop, isPlural, isAreAm, doDoes, toInf, getSubject }

@@ -45,6 +45,9 @@ export default {
     minus: n,//minus laughing
     plus: n,//
     than: n,//more than age
+    another: n,//
+    versus: n,//
+    neither: n,//
   },
   afterWords: {
     of: n, //date of birth (preposition)

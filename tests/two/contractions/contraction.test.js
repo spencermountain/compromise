@@ -147,3 +147,10 @@ test('insert-contraction', function (t) {
   t.equal(doc.text(), `i really had walked`, here + 'insertAfter-contraction')
   t.end()
 })
+
+test('split-contraction', function (t) {
+  let doc = nlp(`i'd walked`)
+  let m = doc.splitOn('had')
+  t.deepEqual(m.out('array'), ['i', 'had', 'walked'], here + 'splitOn-contraction')
+  t.end()
+})

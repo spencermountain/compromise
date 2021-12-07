@@ -22,13 +22,13 @@ txt = `i'd walked`
 
 // let doc = nlp(txt)
 let doc = nlp(`i'd walked`)
-let m = doc.match('had')
-m.insertBefore('really')
+let m = doc.splitOn('had').debug()
+console.log(m.out('array'))
 // doc.replace('had', 'foo')
 // doc.verbs().toPresent()
 // doc.verbs().toNegative()
-doc.debug()
-console.log(doc.text())
+// doc.debug()
+// console.log(doc.text())
 
 // const doc = nlp('Tony on september 12 1998 yeah')
 // const doc = nlp('fifty five')

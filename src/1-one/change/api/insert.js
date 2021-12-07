@@ -5,6 +5,12 @@ const insert = function (str, view, prepend) {
   // insert words at end of each doc
   let ptrs = view.fullPointer
   let selfPtrs = view.fullPointer
+  // are we inserting inside a contraction?
+  // expand, it first
+  if (view.has('@hasContraction')) {
+    let more = view.grow('@hasContraction')
+    more.contractions().expand()
+  }
   ptrs.forEach((ptr, i) => {
     let [n] = ptr
     // add-in the words

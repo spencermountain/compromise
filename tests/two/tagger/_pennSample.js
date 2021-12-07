@@ -643,10 +643,6 @@ export default [
     tags: 'PRP, VBP, VBG, PRP, RB',
   },
   {
-    text: 'Do you really think GWB, and neocons in general are representative of true followers of Jesus of Nazareth?',
-    tags: 'VBP, PRP, RB, VB, NNP, CC, NNS, IN, JJ, VBP, JJ, IN, JJ, NNS, IN, NNP, IN, NNP',
-  },
-  {
     text: 'Is the distinction accurate and valid?',
     tags: 'VBZ, DT, NN, JJ, CC, JJ',
   },
@@ -806,10 +802,10 @@ export default [
     text: 'Zawahiri was associated with a faction of the Egyptian Islamic Jihad known as the Vanguards of Conquest.',
     tags: 'NNP, VBD, VBN, IN, DT, NN, IN, DT, NNP, NNP, NNP, VBN, IN, DT, NNPS, IN, NNP',
   },
-  {
-    text: 'At one time, some thought he had been spotted in Iran.',
-    tags: 'IN, CD, NN, DT, VBD, PRP, VBD, VBN, VBN, IN, NNP',
-  },
+  // {
+  //   text: 'At one time, some thought he had been spotted in Iran.',
+  //   tags: 'IN, CD, NN, DT, VBD, PRP, VBD, VBN, VBN, IN, NNP',
+  // },
   {
     text: 'In the case of the anthrax used in the mailings, there was an electrostatic charge.',
     tags: 'IN, DT, NN, IN, DT, NN, VBN, IN, DT, NNS, EX, VBD, DT, JJ, NN',
@@ -926,10 +922,10 @@ export default [
     text: 'OVERVIEW',
     tags: 'NN',
   },
-  {
-    text: 'It will examine technology options and new business models for transmission expansion.',
-    tags: 'PRP, MD, VB, NN, NNS, CC, JJ, NN, NNS, IN, NN, NN',
-  },
+  // {
+  //   text: 'It will examine technology options and new business models for transmission expansion.',
+  //   tags: 'PRP, MD, VB, NN, NNS, CC, JJ, NN, NNS, IN, NN, NN',
+  // },
   {
     text: 'Sonya City',
     tags: 'NNP, NNP',
@@ -2063,10 +2059,10 @@ export default [
     text: 'Each calendar month during the term of the Transaction will be a Dispatch Period.',
     tags: 'DT, NN, NN, IN, DT, NN, IN, DT, NN, MD, VB, DT, NN, NN',
   },
-  {
-    text: 'select PROGRAMS',
-    tags: 'VB, NNS',
-  },
+  // {
+  //   text: 'select PROGRAMS',
+  //   tags: 'VB, NNS',
+  // },
   {
     text: 'Bill D Hare',
     tags: 'NNP, NNP, NNP',
@@ -5200,10 +5196,10 @@ export default [
     text: 'Consistantly poor',
     tags: 'RB, JJ',
   },
-  {
-    text: 'Drinks were awesome, prices reasonable, and staff friendly.',
-    tags: 'NNS, VBD, JJ, NNS, JJ, CC, NN, JJ',
-  },
+  // {
+  //   text: 'Drinks were awesome, prices reasonable, and staff friendly.',
+  //   tags: 'NNS, VBD, JJ, NNS, JJ, CC, NN, JJ',
+  // },
   {
     text: 'Amazing!',
     tags: 'JJ',
@@ -5717,10 +5713,10 @@ export default [
     text: 'wonderful',
     tags: 'JJ',
   },
-  {
-    text: 'I decided it was time to grow up and made an appointment.',
-    tags: 'PRP, VBD, PRP, VBD, NN, TO, VB, RP, CC, VBD, DT, NN',
-  },
+  // {
+  //   text: 'I decided it was time to grow up and made an appointment.',
+  //   tags: 'PRP, VBD, PRP, VBD, NN, TO, VB, RP, CC, VBD, DT, NN',
+  // },
   {
     text: 'One night was too much.',
     tags: 'CD, NN, VBD, RB, JJ',

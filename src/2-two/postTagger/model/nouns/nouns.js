@@ -60,7 +60,7 @@ export default [
   { match: '(the|those|these|a|an) #Adjective? [#Infinitive]', group: 0, tag: 'Noun', reason: 'det-inf' },
   {
     match: '(the|those|these|a|an) #Adjective? [#PresentTense]',
-    ifNo: '#Gerund',
+    ifNo: ['#Gerund', '#Copula'],
     group: 0,
     tag: 'Noun',
     reason: 'det-pres',

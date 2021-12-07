@@ -14,7 +14,7 @@ export default {
     Possessive: v, //date his
     // Noun:true, //date spencer
     Preposition: v, //date around, dump onto, grumble about
-    Conjunction: v, // dip to, dip through
+    // Conjunction: v, // dip to, dip through
   },
   beforeWords: {
     i: v, //i date
@@ -61,5 +61,14 @@ export default {
     off: v,
     // for:true, //settled for
     all: v,//shiver all night
+    // conjunctions
+    to: v,//dip to
+    because: v,//
+    although: v,//
+    before: v,//
+    how: v,//
+    otherwise: v,//
+    though: v,//
+    yet: v,//
   },
 }

@@ -22,8 +22,11 @@ txt = `i'm good`
 txt = `we want to walk`
 
 txt = ``
-txt = `Bugs Bunny reruns`
-txt = `nanny`
+
+
+
+txt = ` read these reviews and improved!`
+txt = ` another fool to roast`
 
 let doc = nlp(txt)
 // doc.replace('hazed', 'fogged')

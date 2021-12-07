@@ -30,6 +30,7 @@ export default [
   'present',
   'rear',
   'republican',
+  'representative',
   'secret',
   'senior',
   'sole',

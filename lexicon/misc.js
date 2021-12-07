@@ -43,4 +43,5 @@ export default {
   //misc
   records: 'Plural',
   'a few': 'Value',
+  'ones': 'Plural', //those ones
 }

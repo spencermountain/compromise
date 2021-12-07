@@ -332,7 +332,6 @@ export default [
   'reply',
   'report',
   'request',
-  'rerun',
   'reserve',
   'resolve',
   'resort',

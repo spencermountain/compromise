@@ -3,7 +3,7 @@ import repl from 'repl'
 import corpus from 'nlp-corpus'
 import nlp from '../src/three.js'
 
-const n = 5000
+const n = 7500
 console.log(` -- pre-processing ${n} sentences-`)
 let docs = corpus.some(n)
 docs = docs.map(str => nlp(str).compute('offset'))

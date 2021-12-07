@@ -12,9 +12,12 @@ const clue = {
     ProperNoun: 'Infinitive', Gerund: 'Infinitive', Adjective: 'Infinitive',
     Copula: 'Singular',
   }),
-  beforeWords: Object.assign({}, verb.beforeWords, noun.beforeWords),
+  beforeWords: Object.assign({}, verb.beforeWords, noun.beforeWords, {
+    // is time
+    is: 'Singular', was: 'Singular'
+  }),
   afterWords: Object.assign({}, verb.afterWords, noun.afterWords, {
-    for: 'Infinitive',//work for
+    // for: 'Infinitive',//work for
     instead: 'Infinitive',
   }),
 }

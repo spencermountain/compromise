@@ -11,7 +11,10 @@ const misc = {
 const clue = {
   beforeTags: Object.assign({}, adj.beforeTags, noun.beforeTags, misc.beforeTags),
   afterTags: Object.assign({}, adj.afterTags, noun.afterTags),
-  beforeWords: Object.assign({}, adj.beforeWords, noun.beforeWords),
+  beforeWords: Object.assign({}, adj.beforeWords, noun.beforeWords, {
+    // are representative
+    are: 'Adjective', is: 'Adjective', was: 'Adjective', be: 'Adjective',
+  }),
   afterWords: Object.assign({}, adj.afterWords, noun.afterWords),
 }
 export default clue

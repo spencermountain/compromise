@@ -104,6 +104,7 @@ const utils = {
 }
 utils.group = utils.groups
 utils.fullSentence = utils.fullSentences
+utils.sentence = utils.fullSentences
 utils.lastTerm = utils.lastTerms
 utils.firstTerm = utils.firstTerms
 export default utils

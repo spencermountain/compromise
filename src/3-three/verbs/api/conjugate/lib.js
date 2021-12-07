@@ -42,4 +42,14 @@ const doDoes = function (vb, parsed) {
   return 'does'
 }
 
-export { noop, isPlural, isAreAm, doDoes }
+const toInf = function (vb, parsed) {
+  const { verbToInfinitive } = vb.methods.two.transform
+  let str = parsed.root.text({ keepPunct: false })
+  str = verbToInfinitive(str, vb.model)
+  if (str) {
+    vb.replace(parsed.root, str)
+  }
+  return vb
+}
+
+export { noop, isPlural, isAreAm, doDoes, toInf }

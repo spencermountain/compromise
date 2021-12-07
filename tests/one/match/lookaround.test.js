@@ -73,3 +73,20 @@ test('grow-left:', function (t) {
   t.deepEqual(more.out('array'), arr, here + 'grow-left-multi')
   t.end()
 })
+
+test('grow', function (t) {
+  let doc = nlp('one two three match four five')
+  let m = doc.match('match')
+  let more = m.grow('(three|two)')
+  t.equal(more.text(), 'three match', here + 'grow-both')
+
+  m = doc.match('match')
+  more = m.grow('(three|one|five)+')
+  t.equal(more.text(), 'three match', here + 'grow-left-only')
+
+  t.equal(m.text(), 'match', 'grow doesnt mutate')
+
+  more = m.grow('*')
+  t.equal(more.text(), m.sentence().text(), 'grow-all')
+  t.end()
+})

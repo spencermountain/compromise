@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/three.js'
-// import dates from './plugins/dates/src/plugin.js'
-// nlp.plugin(dates)
+import plg from './plugins/speech/src/plugin.js'
+nlp.plugin(plg)
 // import nlp from './builds/compromise.cjs'
 // nlp.verbose('tagger')
 
@@ -19,11 +19,13 @@ txt = `they're good`
 txt = `people will seldom start looking`
 txt = `we had walked`
 txt = `we've gone`
+txt = `edmonton oilers`
 
-let doc = nlp(txt)
-doc.verbs().toPresent()
+let doc = nlp(txt).compute('syllables')
+console.log(doc.json({ syllables: true })[0])
+// doc.verbs().toPresent()
 // doc.verbs().toNegative()
-doc.debug()
+// doc.debug()
 // console.log(doc.text())
 
 // const doc = nlp('Tony on september 12 1998 yeah')

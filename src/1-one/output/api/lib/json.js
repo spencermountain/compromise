@@ -44,6 +44,9 @@ const toJson = function (view, opts) {
     if (opts.confidence && view.confidence) {
       res.confidence = view.eq(i).confidence()
     }
+    if (opts.syllables && view.syllables) {
+      res.syllables = view.syllables()
+    }
     return res
   })
 }

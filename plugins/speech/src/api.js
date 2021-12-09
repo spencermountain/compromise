@@ -2,10 +2,13 @@ const api = function (View) {
   /** */
   View.prototype.syllables = function () {
     this.compute('syllables')
-    return this.docs.map(terms => {
-      let arr = terms.map(term => term.syllables.join(' '))
-      return arr.join(' ')
+    let all = []
+    this.docs.forEach(terms => {
+      terms.forEach(term => {
+        all = all.concat(term.syllables)
+      })
     })
+    return all
   }
 }
 export default api

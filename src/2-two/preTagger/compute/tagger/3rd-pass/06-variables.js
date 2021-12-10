@@ -1,6 +1,6 @@
 import fastTag from '../_fastTag.js'
-const env = typeof process === 'undefined' ? self.env : process.env || {} // eslint-disable-line
-
+const env = typeof process === 'undefined' ? self.env || {} : process.env // eslint-disable-line
+console.log(env)
 const isCapital = (terms, i) => {
   if (terms[i].tags.has('ProperNoun')) {// 'Comfort Inn'
     return 'Noun'

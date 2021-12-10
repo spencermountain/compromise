@@ -16,7 +16,7 @@ const fastTag = function (term, tag, reason) {
     return
   }
   // some logging for debugging
-  let env = typeof process === 'undefined' ? self.env : process.env
+  let env = typeof process === 'undefined' ? self.env || {} : process.env
   if (env && env.DEBUG_TAGS) {
     log(term, tag, reason)
   }

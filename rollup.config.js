@@ -54,18 +54,6 @@ export default [
     output: [{ file: 'builds/three/compromise-three.mjs', format: 'esm' }],
     plugins: [terser(opts), sizeCheck({ expect: 180, warn: 15 })],
   },
-  // date-plugin
-  {
-    input: 'plugins/dates/plugin.js',
-    output: [{ file: 'builds/three/compromise-dates.mjs', format: 'esm' }],
-    plugins: [terser(opts), sizeCheck({ expect: 10, warn: 15 })],
-  },
-  // redact-plugin
-  // {
-  //   input: 'plugins/redact/plugin.js',
-  //   output: [{ file: 'builds/three/compromise-redact.mjs', format: 'esm' }],
-  //   plugins: [terser(opts), sizeCheck({ expect: 10, warn: 15 })],
-  // },
   // === Four ==
   {
     input: 'src/four.js',

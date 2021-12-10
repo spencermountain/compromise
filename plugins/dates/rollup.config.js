@@ -6,7 +6,7 @@ const opts = { keep_classnames: true, module: true }
 export default [
   {
     input: 'src/plugin.js',
-    output: [{ file: 'builds/compromise-dates.cjs', format: 'umd', name: 'compromise-dates' }],
+    output: [{ file: 'builds/compromise-dates.cjs', format: 'umd', name: 'compromiseDates' }],
     plugins: [terser(opts), sizeCheck({ expect: 45, warn: 15 })],
   },
   {

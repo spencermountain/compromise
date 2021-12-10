@@ -6,7 +6,7 @@ const opts = { keep_classnames: true, module: true }
 export default [
   {
     input: 'src/plugin.js',
-    output: [{ file: 'builds/compromise-speech.cjs', format: 'umd', name: 'compromise-speech' }],
+    output: [{ file: 'builds/compromise-speech.cjs', format: 'umd', name: 'compromiseSpeech' }],
     plugins: [terser(opts), sizeCheck({ expect: 45, warn: 15 })],
   },
   {

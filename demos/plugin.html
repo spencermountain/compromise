@@ -1,0 +1,40 @@
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <style>
+    #result {
+      font-size: 40px;
+      margin: 20%;
+    }
+
+    a {
+      color: steelblue;
+    }
+  </style>
+</head>
+<script src="../builds/three/compromise-three.cjs"></script>
+<script src="../plugins/speech/builds/compromise-speech.cjs"></script>
+<!-- <script src="https://unpkg.com/compromise-numbers"></script> -->
+<script defer>
+  // compromise is loaded as 'window.nlp'
+  // plugin is loaded as 'window.compromiseSpeech'
+  nlp.plugin(compromiseSpeech)
+
+  var doc = nlp('edmonton oilers')
+  doc.compute('syllables')
+
+  window.onload = function () {
+    let arr = doc.syllables()
+    let el = document.getElementById('result')
+    el.innerHTML = JSON.stringify(arr, null, 2)
+  }
+</script>
+
+<body>
+  <div>compromise plugin demo</div>
+  <div><a href="https://github.com/spencermountain/compromise/blob/master/demo/plugin.html">view source</a></div>
+  <pre id="result"></pre>
+</body>
+
+</html>

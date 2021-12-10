@@ -1,8 +1,8 @@
 /* eslint-disable no-console, no-unused-vars */
-// import nlp from './src/three.js'
+import nlp from './src/three.js'
 // import plg from './plugins/speech/src/plugin.js'
 // nlp.plugin(plg)
-import nlp from './builds/three/compromise-three.cjs'
+// import nlp from './builds/three/compromise-three.cjs'
 // nlp.verbose('tagger')
 
 let txt = ''
@@ -19,10 +19,12 @@ txt = `they're good`
 txt = `people will seldom start looking`
 txt = `we had walked`
 txt = `we've gone`
-txt = `edmonton oilers`
+txt = `we've walked `
 
-let doc = nlp(txt).compute('syllables')
-console.log(doc.json({ syllables: true })[0])
+let doc = nlp(txt)
+doc.verbs().parse()
+console.log(doc.text())
+// console.log(doc.json({ syllables: true })[0])
 // doc.verbs().toPresent()
 // doc.verbs().toNegative()
 // doc.debug()

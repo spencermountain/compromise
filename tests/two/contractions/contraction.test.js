@@ -149,20 +149,20 @@ test('insert-contraction', function (t) {
 })
 
 test('split-contraction', function (t) {
-  let doc = nlp(`i'd walked`)
-  let m = doc.splitOn('had')
-  t.deepEqual(m.out('array'), ['i', 'had', 'walked'], here + 'splitOn-contraction')
+  // let doc = nlp(`i'd walked`)
+  // let m = doc.splitOn('had')
+  // t.deepEqual(m.out('array'), ['i', 'had', 'walked'], here + 'splitOn-contraction')
 
-  doc = nlp(`i'd walked`)
-  m = doc.splitAfter('i')
-  t.deepEqual(m.out('array'), ['i', 'had walked'], here + 'splitAfter-contraction')
+  // doc = nlp(`i'd walked`)
+  // m = doc.splitAfter('i')
+  // t.deepEqual(m.out('array'), ['i', 'had walked'], here + 'splitAfter-contraction')
 
-  doc = nlp(`i'd walked`)
-  m = doc.splitBefore('had')
-  t.deepEqual(m.out('array'), ['i', 'had walked'], here + 'splitBefore-contraction')
+  // doc = nlp(`i'd walked`)
+  // m = doc.splitBefore('had')
+  // t.deepEqual(m.out('array'), ['i', 'had walked'], here + 'splitBefore-contraction')
 
-  doc = nlp(`i've walked`)
-  m = doc.splitAfter('walked')
+  let doc = nlp(`i've walked`)
+  let m = doc.splitAfter('walked')
   t.deepEqual(m.out('array'), [`i've walked`], here + 'split-contraction-miss-1')
 
   // doc = nlp(`i'd walked`)

@@ -41,8 +41,9 @@
     "node": ">=8.0.0"
   },
   "scripts": {
-    "build": "rollup -c --silent",
+    "build": "npm run version && rollup -c --silent",
     "pack": "node ./scripts/pack.js",
+    "version": "node ./scripts/version.js",
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer",
     "testb": "npm run test:smoke && TESTENV=prod npm run test",
     "test:one": "tape \"./tests/one/match/*.test.js\" | tap-dancer",

@@ -3,4 +3,4 @@ import fs from 'fs'
 // make a small file for our version number
 let pkg = JSON.parse(fs.readFileSync('./package.json').toString())
 
-fs.writeFileSync('./lib/_version.js', `export default '${pkg.version}'`)
+fs.writeFileSync('./src/_version.js', `export default '${pkg.version}'`)

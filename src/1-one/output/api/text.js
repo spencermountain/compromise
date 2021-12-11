@@ -1,4 +1,4 @@
-import { textFromDoc } from './lib/text.js'
+import { textFromDoc } from './_text.js'
 
 const isObject = val => {
   return Object.prototype.toString.call(val) === '[object Object]'

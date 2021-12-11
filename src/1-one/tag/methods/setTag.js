@@ -41,6 +41,8 @@ const tagTerm = function (term, tag, tagSet, isSafe) {
   }
   // finally, add our tag
   term.tags.add(tag)
+  // now it's dirty
+  term.dirty = true
   // add a chunk too, if it's easy
   addChunk(term, tag)
   return true

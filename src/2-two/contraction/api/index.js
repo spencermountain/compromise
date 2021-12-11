@@ -24,6 +24,8 @@ const api = function (View) {
           if (i < terms.length - 1 && t.post === '') {
             t.post += ' '
           }
+          // flag it as dirty
+          t.dirty = true
         })
         // make the first word title-case?
         if (isTitleCase) {

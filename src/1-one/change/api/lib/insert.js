@@ -2,6 +2,8 @@
 
 // splice an array into an array
 const spliceArr = (parent, index, child) => {
+  // tag them as dirty
+  child.forEach(term => term.dirty = true)
   let args = [index, 0].concat(child)
   Array.prototype.splice.apply(parent, args)
   return parent
@@ -84,7 +86,6 @@ const cleanPrepend = function (home, ptr, needle, document) {
 const cleanAppend = function (home, ptr, needle, document) {
   let [n, , end] = ptr
   let total = document[n].length
-
   if (end < total) {
     // are we in the middle?
     // add trailing space on self

@@ -7,23 +7,28 @@ import nlp from './src/three.js'
 
 let txt = ''
 
+
+/*
+* replace ‘$1’ stuff  [1](https://github.com/spencermountain/compromise/issues/863)
+* combine documents
+* more .json() methods
+* replace.ignore tests
+*/
+
+
+
+
 // let doc = nlp(txt)
 // doc.debug()
 
 // const doc = nlp('he is cool')
-// doc.verbs().toNegative()000
+// doc.verbs().toNegative()
 // doc.debug()
-
-txt = `he clearly did not suggest`
-txt = `they're good`
-txt = `people will seldom start looking`
-txt = `we had walked`
-txt = `we've gone`
-txt = `we've walked `
-
-let doc = nlp(txt)
-doc.verbs().parse()
-console.log(doc.text())
+let doc = nlp(`i'd walked`)
+let m = doc.match('i')
+m.insertAfter('really')
+doc.debug()
+// console.log(doc.json({ dirty: true })[0])
 // console.log(doc.json({ syllables: true })[0])
 // doc.verbs().toPresent()
 // doc.verbs().toNegative()

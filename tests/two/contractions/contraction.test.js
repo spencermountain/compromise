@@ -148,6 +148,13 @@ test('insert-contraction', function (t) {
   t.end()
 })
 
+test('insert does not trigger contractions', function (t) {
+  let doc = nlp(`we've walked`)
+  doc.insertAfter('cool')
+  t.equal(doc.text(), `we've walked cool`, here + 'insert-no-contraction')
+  t.end()
+})
+
 test('split-contraction', function (t) {
   // let doc = nlp(`i'd walked`)
   // let m = doc.splitOn('had')

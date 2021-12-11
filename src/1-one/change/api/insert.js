@@ -1,16 +1,21 @@
 import { cleanAppend, cleanPrepend, spliceArr } from './lib/insert.js'
 
+
+// are we inserting inside a contraction?
+// expand it first
+const expand = function (m) {
+  if (m.has('@hasContraction')) {
+    let more = m.grow('@hasContraction')
+    more.contractions().expand()
+  }
+}
+
+
 const insert = function (str, view, prepend) {
   const { methods, document, world } = view
   // insert words at end of each doc
   let ptrs = view.fullPointer
   let selfPtrs = view.fullPointer
-  // are we inserting inside a contraction?
-  // expand, it first
-  if (view.has('@hasContraction')) {
-    let more = view.grow('@hasContraction')
-    more.contractions().expand()
-  }
   ptrs.forEach((ptr, i) => {
     let [n] = ptr
     // add-in the words
@@ -22,8 +27,10 @@ const insert = function (str, view, prepend) {
       needle = str.docs[0] //assume one sentence
     }
     if (prepend) {
+      expand(view.update([ptr]).firstTerm())
       cleanPrepend(home, ptr, needle, document)
     } else {
+      expand(view.update([ptr]).lastTerm())
       cleanAppend(home, ptr, needle, document)
     }
     // change self backwards by len

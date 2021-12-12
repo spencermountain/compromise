@@ -21,13 +21,12 @@ let txt = ''
 // let doc = nlp(txt)
 // doc.debug()
 
-// const doc = nlp('he is cool')
-// doc.verbs().toNegative()
-// doc.debug()
-let doc = nlp(`i'd walked fast`)
-let m = doc.match('walked').tag('Cool')
-doc.compute('cache')
-console.log(m.json({ dirty: true, sentences: true, cache: true }))
+
+
+const doc = nlp('walk the plank')
+let doc2 = nlp('foo bar')
+doc.concat(doc2)
+doc.debug()
 // console.log(doc.json({ dirty: true })[0])
 // console.log(doc.json({ syllables: true })[0])
 // doc.verbs().toPresent()

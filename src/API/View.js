@@ -96,6 +96,17 @@ class View {
     // m._cache = this._cache // share this full thing
     return m
   }
+
+  fromText(input) {
+    const { methods, world } = this
+    //assume ./01-tokenize is installed
+    let document = methods.one.tokenize(input, world)
+    let doc = new View(document)
+    doc.world = world
+    // doc.compute(world.hooks)
+    doc.compute(['normal', 'lexicon', 'preTagger'])
+    return doc
+  }
   clone() {
     // clone the whole document
     let document = this.document.slice(0)

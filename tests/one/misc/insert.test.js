@@ -44,21 +44,6 @@ test('insert-subset-include :', function (t) {
   t.end()
 })
 
-test('concat pointers :', function (t) {
-  let doc = nlp('one two three four')
-  let a = doc.match('two three')
-  let b = doc.match('three four')
-  let res = a.concat(b)
-  t.deepEqual(res.out('array'), ['two three', 'three four'], here + 'concat-pointer')
-
-  doc = nlp('one two three. four five six')
-  a = doc.match('two three')
-  b = doc.match('four .')
-  res = a.concat(b)
-  t.deepEqual(res.out('array'), ['two three.', 'four five'], here + 'concat-pointer-mixed')
-  t.end()
-})
-
 test('titlecase change in insertBefore :', function (t) {
   let doc = nlp('walking is very cool')
   doc.match('^.').insertBefore('jogging')
@@ -116,6 +101,17 @@ test('append shift-self :', function (t) {
   let res = m.append('after')
   t.equal(res.text(), 'self after', here + 'res has both')
   t.equal(m.text(), 'self after', here + 'self is self+after')
+  t.end()
+})
+
+test('insert doc :', function (t) {
+  const doc = nlp('walk the plank')
+  let doc2 = nlp('foo bar')
+  doc.insertAfter(doc2.docs)
+  t.equal(doc.text(), 'walk the plank foo bar', here + 'insert doc')
+  t.equal(doc.match('plank foo').found, true, here + 'insert found')
+  doc.prepend('oh yeah')
+  t.equal(doc.match('oh yeah walk').found, true, here + 'prepend found')
   t.end()
 })
 

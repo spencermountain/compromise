@@ -49,7 +49,7 @@ const toJSON = function (view, opts) {
   return view.docs.map((terms, i) => {
     let res = {}
     Object.keys(opts).forEach(k => {
-      if (opts[k] === true && fns[k]) {
+      if (opts[k] && fns[k]) {
         res[k] = fns[k](terms, view.eq(i))
       }
     })

@@ -1,5 +1,4 @@
-import { cleanAppend, cleanPrepend, spliceArr } from './lib/insert.js'
-
+import { cleanAppend, cleanPrepend } from './lib/insert.js'
 
 // are we inserting inside a contraction?
 // expand it first
@@ -10,9 +9,27 @@ const expand = function (m) {
   }
 }
 
+const isArray = (arr) => Object.prototype.toString.call(arr) === '[object Array]'
 
-const insert = function (str, view, prepend) {
-  const { methods, document, world } = view
+const getTerms = function (input, world) {
+  const { methods } = world
+  // create our terms from a string
+  if (typeof input === 'string') {
+    return methods.one.tokenize(input, world)[0] //assume one sentence
+  }
+  //allow a view object
+  if (typeof input === 'object' && input.isView) {
+    return input.docs[0] //assume one sentence
+  }
+  //allow an array of terms, too
+  if (isArray(input)) {
+    return isArray(input[0]) ? input[0] : input
+  }
+  return []
+}
+
+const insert = function (input, view, prepend) {
+  const { document, world } = view
   // insert words at end of each doc
   let ptrs = view.fullPointer
   let selfPtrs = view.fullPointer
@@ -20,23 +37,18 @@ const insert = function (str, view, prepend) {
     let [n] = ptr
     // add-in the words
     let home = document[n]
-    let needle = []
-    if (typeof str === 'string') {
-      needle = methods.one.tokenize(str, world)[0] //assume one sentence
-    } else if (typeof str === 'object' && str.docs) {
-      needle = str.docs[0] //assume one sentence
-    }
+    let terms = getTerms(input, world)
     if (prepend) {
       expand(view.update([ptr]).firstTerm())
-      cleanPrepend(home, ptr, needle, document)
+      cleanPrepend(home, ptr, terms, document)
     } else {
       expand(view.update([ptr]).lastTerm())
-      cleanAppend(home, ptr, needle, document)
+      cleanAppend(home, ptr, terms, document)
     }
     // change self backwards by len
     selfPtrs[i] = ptr
     // extend the pointer
-    ptr[2] += needle.length
+    ptr[2] += terms.length
   })
   // convert them to whole sentences
   // ptrs = ptrs.map(a => [a[0]])
@@ -55,24 +67,7 @@ const fns = {
   insertBefore: function (input) {
     return insert(input, this, true)
   },
-  // add string as new sentence
-  concat: function (input) {
-    const { methods, document, world } = this
-    // parse and splice-in new terms
-    if (typeof input === 'string') {
-      let json = methods.one.tokenize(input, world)
-      let ptrs = this.fullPointer
-      let lastN = ptrs[ptrs.length - 1][0]
-      spliceArr(document, lastN + 1, json)
-      return this.compute('index')
-    }
-    // is it other pointers from the same document?
-    if (this.document === input.document) {
-      let ptrs = this.fullPointer.concat(input.fullPointer)
-      return this.toView(ptrs).compute('index')
-    }
-    return this
-  },
+
 }
 fns.append = fns.insertAfter
 fns.prepend = fns.insertBefore

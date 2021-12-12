@@ -40,7 +40,7 @@ test('match-replace :', function (t) {
     ['the boy and the girl', 'the cat', 'the house', 'the boy and the girl'],
   ]
   arr.forEach(function (a) {
-    const str = nlp(a[0]).replace(a[1], a[2]).out('text')
+    const str = nlp(a[0]).replace(a[1], a[2]).all().out('text')
     const msg = str + ' -- ' + a[3]
     t.equal(str, a[3], here + msg)
   })

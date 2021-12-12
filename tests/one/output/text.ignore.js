@@ -1,5 +1,6 @@
-const test = require('tape')
-const nlp = require('../_lib')
+import test from 'tape'
+import nlp from '../_lib.js'
+const here = '[one/text] '
 
 test('text-formats', function (t) {
   let doc = nlp(`Toronto's citizens LOVE toronto! they come here for food.`)
@@ -63,8 +64,8 @@ test('text-reduced', function (t) {
 
   t.equal(doc.text('reduced'), str, 'text(reduced): ')
 
-  doc.normalize('reduced')
-  t.equal(doc.text('reduced'), str, 'normalize(reduced):  ')
+  // doc.normalize('reduced')
+  // t.equal(doc.text('reduced'), str, 'normalize(reduced):  ')
 
   doc = nlp('Rälf.  ')
   t.equal(doc.text('reduced'), 'ralf', 'reduced trim whitespace ')
@@ -87,8 +88,8 @@ test('text-root', function (t) {
 
   t.equal(doc.text('root'), str, 'text(root): ')
 
-  doc.normalize('root')
-  t.equal(doc.text('root'), str, 'normalize(root):  ')
+  // doc.normalize('root')
+  // t.equal(doc.text('root'), str, 'normalize(root):  ')
 
   t.end()
 })

@@ -17,16 +17,15 @@ let txt = ''
 
 
 
-
 // let doc = nlp(txt)
 // doc.debug()
 
 
-
-const doc = nlp('walk the plank')
-let doc2 = nlp('foo bar')
-doc.concat(doc2)
+let doc = nlp('the boy and the girl')
+doc.replace('the (boy|girl)', 'the cat')
 doc.debug()
+
+// doc.debug()
 // console.log(doc.json({ dirty: true })[0])
 // console.log(doc.json({ syllables: true })[0])
 // doc.verbs().toPresent()

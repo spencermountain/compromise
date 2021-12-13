@@ -383,7 +383,6 @@ nlp.extend((Doc, world) => {
 
 ##### Some fun Applications:
 
-- **[Chat dialogue framework](http://superscriptjs.com/)** - by Rob Ellis
 - **[Automated Bechdel Test](https://github.com/guardian/bechdel-test)** - by The Guardian
 - **[Story generation framework](https://perchance.org/welcome)** - by Jose Phrocca
 - **[Tumbler blog of lists](https://leanstooneside.tumblr.com/)** - horse-ebooks-like lists - by Michael Paulukonis

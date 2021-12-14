@@ -21,9 +21,14 @@ let txt = ''
 // doc.debug()
 
 
-let doc = nlp('the #leafs and the #Jets')
-let m = doc.match('(boy|girl)')
-doc.match(m).debug()
+let doc = nlp('the #leafs and the #JetsGo')
+doc.hashTags().debug()
+
+
+// match-freeze issue
+// let doc = nlp('the boy and the girl.')
+// let m = doc.match('(boy|girl)')
+// doc.match(m).debug()
 // m.insertAfter('foo')
 // doc.debug()
 

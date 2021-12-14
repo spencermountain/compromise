@@ -46,3 +46,20 @@ test('greedy-capture', function (t) {
   t.equal(m.out('normal'), 'eats the', here + 'astrix is not necessary')
   t.end()
 })
+
+test('match-doc', function (t) {
+  let doc = nlp('the boy and the girl.')
+  let m = doc.match('(boy|girl)')
+  let arr = doc.match(m).out('array')
+  t.deepEqual(arr, ['boy', 'girl'], here + 'match-doc')
+  t.end()
+})
+
+test('match-doc-freeze', function (t) {
+  let doc = nlp('the boy and the girl.')
+  let m = doc.match('(boy|girl)').freeze()
+  doc.prepend('ooh baby')
+  let arr = doc.match(m).out('array')
+  t.deepEqual(arr, ['boy', 'girl'], here + 'match-doc')
+  t.end()
+})

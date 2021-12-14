@@ -38,6 +38,7 @@ test('match-replace :', function (t) {
     ['the dog played', 'the (dog|hamster|pet-snake)', 'the cat', 'the cat played'],
     ['the boy and the girl', 'the #Noun', 'the house', 'the house and the house'],
     ['the boy and the girl', 'the cat', 'the house', 'the boy and the girl'],
+    ['the boy and the girl', '(boy|girl)', 'cat', 'the cat and the cat'],
   ]
   arr.forEach(function (a) {
     const str = nlp(a[0]).replace(a[1], a[2]).all().out('text')

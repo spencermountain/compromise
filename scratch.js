@@ -21,9 +21,14 @@ let txt = ''
 // doc.debug()
 
 
-let doc = nlp('the boy and the girl')
-doc.replace('the (boy|girl)', 'the cat')
-doc.debug()
+let doc = nlp('the #leafs and the #Jets')
+let m = doc.match('(boy|girl)')
+doc.match(m).debug()
+// m.insertAfter('foo')
+// doc.debug()
+
+// doc.replace('(boy|girl)', 'cat')
+// doc.all().debug()
 
 // doc.debug()
 // console.log(doc.json({ dirty: true })[0])

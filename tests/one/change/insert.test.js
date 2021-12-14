@@ -104,6 +104,15 @@ test('append shift-self :', function (t) {
   t.end()
 })
 
+test('insert-multi :', function (t) {
+  let doc = nlp('the boy and the girl. girl girl')
+  let m = doc.match('(boy|girl)')
+  m.insertAfter('cat')
+  t.equal(doc.eq(0).text(), 'the boy cat and the girl cat', here + 'insert multi')
+  t.equal(doc.eq(1).text(), 'girl cat girl cat', here + 'insert consecutive')
+  t.end()
+})
+
 test('insert doc :', function (t) {
   const doc = nlp('walk the plank')
   let doc2 = nlp('foo bar')

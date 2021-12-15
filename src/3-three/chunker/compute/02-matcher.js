@@ -52,6 +52,7 @@ const rules = [
   // indoor and outdoor seating
   { match: '#Noun and #Determiner? #Noun', chunk: 'Noun' },
 ]
+let byGroup = null
 
 const setChunks = function (todo, document, methods) {
   const { getDoc } = methods.one
@@ -71,7 +72,7 @@ const setChunks = function (todo, document, methods) {
 
 const matcher = function (document, world) {
   const { methods } = world
-  let byGroup = methods.two.compile(rules, methods)
+  byGroup = byGroup || methods.two.compile(rules, methods)
   let found = methods.two.bulkMatch(document, byGroup, methods)
   found.forEach(todo => {
     setChunks(todo, document, methods)

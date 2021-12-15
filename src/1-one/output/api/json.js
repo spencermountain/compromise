@@ -29,9 +29,9 @@ const fns = {
       return term
     })
   },
-  confidence: (_terms, m) => m.confidence(),
-  syllables: (_terms, m) => m.syllables(),
-  sentence: (_terms, m) => m.fullSentence().text(),
+  confidence: (_terms, view, i) => view.eq(i).confidence(),
+  syllables: (_terms, view, i) => view.eq(i).syllables(),
+  sentence: (_terms, view, i) => view.eq(i).fullSentence().text(),
   dirty: (terms) => terms.some(t => t.dirty === true)
 }
 fns.sentences = fns.sentence
@@ -50,7 +50,7 @@ const toJSON = function (view, opts) {
     let res = {}
     Object.keys(opts).forEach(k => {
       if (opts[k] && fns[k]) {
-        res[k] = fns[k](terms, view.eq(i))
+        res[k] = fns[k](terms, view, i)
       }
     })
     return res

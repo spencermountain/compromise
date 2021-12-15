@@ -5,7 +5,7 @@ import freq from './freq.js'
 import offset from './offset.js'
 import index from './reindex.js'
 import wordCount from './wordCount.js'
-import compute from './ids.js'
+// import compute from './_ids.js'
 
 // cheat-method for a quick loop
 const termLoop = function (view, fn) {
@@ -21,7 +21,7 @@ const methods = {
   alias: (view) => termLoop(view, alias),
   normal: (view) => termLoop(view, normal),
   machine: (view) => termLoop(view, machine),
-  ids: compute,
+  // ids: compute,
   freq,
   offset,
   index,

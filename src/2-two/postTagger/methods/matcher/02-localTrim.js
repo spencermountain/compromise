@@ -1,6 +1,8 @@
 // filter-down list of maybe-matches
 const localTrim = function (maybeList, docCache) {
-  docCache.forEach((haves, n) => {
+  for (let n = 0; n < docCache.length; n += 1) {
+    let haves = docCache[n]
+
     // ensure all stated-needs of the match are met
     maybeList[n] = Array.from(maybeList[n]).filter(obj => {
       return obj.needs.every(need => haves.has(need))
@@ -12,7 +14,7 @@ const localTrim = function (maybeList, docCache) {
       }
       return true
     })
-  })
+  }
   return maybeList
 }
 export default localTrim

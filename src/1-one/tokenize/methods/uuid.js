@@ -1,16 +1,36 @@
 /*
-unique & ordered-ids, based on time & term index
+unique & ordered term ids, based on time & term index
 
-TTT - > 46 seconds since load
-NNN - > 46 thousand sentences (1 inf-jest)
-II   - > 1,200 words in a sentence
-TTTNNNII
+Base 36 (numbers+ascii)
+  3 digit 4,600
+  2 digit 1,200
+  1 digit 36
 
-to overflow, you must wait a minute, then load an infinite jest
+  TTT|NNN|II|R
+
+TTT -> 46 seconds since load
+NNN -> 46 thousand sentences (>1 inf-jest)
+II  -> 1,200 words in a sentence (nuts)
+R   -> 1-36 random number 
+
+novels: 
+  avg 80,000 words
+    15 words per sentence
+  5,000 sentences
+
+Infinite Jest:
+  36,247 sentences
+  https://en.wikipedia.org/wiki/List_of_longest_novels
+
+collisions are more-likely after
+    46 seconds have passed,
+  and 
+    after 46-thousand sentences
+
 */
 const start = new Date().getTime()
 
-const pad = (str) => {
+const pad3 = (str) => {
   str = str.length < 3 ? '0' + str : str
   return str.length < 3 ? '0' + str : str
 }
@@ -27,13 +47,13 @@ const toId = function (n, i) {
   i = i > 1294 ? 1294 : i
 
   // 3 digits for time
-  let id = pad(now.toString(36))
+  let id = pad3(now.toString(36))
   // 3 digit  for sentence index (46k)
-  id += pad(n.toString(36))
+  id += pad3(n.toString(36))
 
   // 1 digit for term index (36)
   let tx = i.toString(36)
-  tx = tx.length < 2 ? '0' + tx : tx
+  tx = tx.length < 2 ? '0' + tx : tx //pad2
   id += tx
 
   // 1 digit random number
@@ -41,34 +61,11 @@ const toId = function (n, i) {
   id += (r).toString(36)
 
   if (id.length !== 9) {
-    console.log('!9 ' + id)
+    console.error('id !9 ' + id)
   }
   return id.toUpperCase()
 }
 
-// console.log(toId(4, 8))
-
 export default toId
 
-
-// setInterval(() => {
-//   console.log(toId(4, 12))
-// }, 100)
-
-// test - match
-// let begin = new Date()
-// let all = {}
-// let dupes = 0
-// for (let n = 0; n < 50000; n += 1) {
-//   for (let i = 0; i < 20; i += 1) {
-//     let id = toId(n, i)
-//     if (all[id] === true) {
-//       // console.log(id)
-//       dupes += 1
-//     }
-//     all[id] = true
-//   }
-// }
-// let end = new Date()
-// console.log((end.getTime() - begin.getTime()) / 1000)
-// console.log(dupes, 'dupes')
+// setInterval(() => console.log(toId(4, 12)), 100)

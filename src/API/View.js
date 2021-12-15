@@ -96,7 +96,6 @@ class View {
     // m._cache = this._cache // share this full thing
     return m
   }
-
   fromText(input) {
     const { methods, world } = this
     //assume ./01-tokenize is installed

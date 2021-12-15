@@ -27,9 +27,6 @@ const tokenize = function (input, world) {
       })
       return terms
     })
-    // compute.normal(input)
-    // support slashes, apostrophes, etc
-    // compute.alias(input, world)
   }
   return input
 }

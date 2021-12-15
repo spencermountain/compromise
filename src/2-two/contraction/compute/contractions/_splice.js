@@ -5,16 +5,13 @@ const insertContraction = function (document, point, words) {
     return
   }
   words = words.map((word) => {
-    let tags = new Set()
-    return {
-      text: '',
-      pre: '',
-      post: '',
-      normal: '',
-      implicit: word,
-      machine: word,
-      tags: tags,
-    }
+    word.implicit = word.text
+    word.machine = word.text
+    word.pre = ''
+    word.post = ''
+    word.text = ''
+    word.normal = ''
+    return word
   })
   if (words[0]) {
     // move whitespace over

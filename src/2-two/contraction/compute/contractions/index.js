@@ -62,6 +62,10 @@ const knownOnes = function (list, term, before, after) {
   return null
 }
 
+const toDocs = function (words, view) {
+  return view.fromText(words.join(' ')).docs[0]
+}
+
 //really easy ones
 const contractions = (view) => {
   let { world, document } = view
@@ -88,15 +92,16 @@ const contractions = (view) => {
       }
       // actually insert the new terms
       if (words) {
+        words = toDocs(words, view)
         splice(document, [n, i], words)
         reTag(document[n], view)
-        // reTag(view, n)
         continue
       }
       // '44-2' has special care
       if (numDash.test(terms[i].normal)) {
         words = numberRange(terms, i)
         if (words) {
+          words = toDocs(words, view)
           splice(document, [n, i], words)
           methods.one.setTag(terms, 'NumberRange', world)//add custom tag
           reTag(document[n], view)

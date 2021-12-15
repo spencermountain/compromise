@@ -1,7 +1,7 @@
 import sentence from './01-sentences/index.js'
 import term from './02-terms/index.js'
 import whitespace from './03-whitespace/index.js'
-import normalize from '../compute/02-normal/index.js'
+import normalize from '../compute/normal/index.js'
 
 // turn a string input into a 'document' json format
 const tokenize = function (input, world) {

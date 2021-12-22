@@ -191,7 +191,7 @@ var doc = nlp('London is calling')
 doc.verbs().toNegative()
 // 'London is not calling'
 ```
-<img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+<img height="75px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 <!-- 
   one/two/three parts
@@ -207,14 +207,22 @@ doc.verbs().toNegative()
 
 ```js
 import nlp from 'compromise/one'
+
+let doc = nlp("Wayne's World, party time")
+let data = doc.json()
+// [{ terms:[{ text:"Wayne's", normal:"wayne"}, ...] }]
 ```
+
+##### Output
+
+- **[.text()](https://observablehq.com/@spencermountain/compromise-text)** - return the document as text
+- **[.json({})](https://observablehq.com/@spencermountain/compromise-json)** - return the document as data
+- **[.debug()](https://observablehq.com/@spencermountain/compromise-output)** - pretty-print the interpreted document
 
 ##### Utils
 
 - **[.all()](https://observablehq.com/@spencermountain/compromise-utils)** - return the whole original document ('zoom out')
 - **[.found](https://observablehq.com/@spencermountain/compromise-utils)** _[getter]_ - is this document empty?
-- **[.parent()](https://observablehq.com/@spencermountain/compromise-utils)** - return the previous result
-- **[.parents()](https://observablehq.com/@spencermountain/compromise-utils)** - return all of the previous results
 - **[.tagger()](https://observablehq.com/@spencermountain/compromise-tagger)** - (re-)run the part-of-speech tagger on this document
 - **[.wordCount()](https://observablehq.com/@spencermountain/compromise-utils)** - count the # of terms in the document
 - **[.length](https://observablehq.com/@spencermountain/compromise-utils)** _[getter]_ - count the # of characters in the document (string length)
@@ -250,6 +258,13 @@ _(all match methods use the [match-syntax](https://docs.compromise.cool/compromi
 - **[.before('')](https://observablehq.com/@spencermountain/compromise-match)** - return all terms before a match, in each phrase
 - **[.after('')](https://observablehq.com/@spencermountain/compromise-match)** - return all terms after a match, in each phrase
 - **[.lookup([])](https://observablehq.com/@spencermountain/compromise-match)** - quick find for an array of string matches
+
+##### Tag
+
+- **[.tag('')](https://observablehq.com/@spencermountain/compromise-tagger)** - Give all terms the given tag
+- **[.tagSafe('')](https://observablehq.com/@spencermountain/compromise-tagger)** - Only apply tag to terms if it is consistent with current tags
+- **[.unTag('')](https://observablehq.com/@spencermountain/compromise-tagger)** - Remove this term from the given terms
+- **[.canBe('')](https://observablehq.com/@spencermountain/compromise-tagger)** - return only the terms that can be this tag
 
 ##### Case
 
@@ -298,12 +313,6 @@ _(all match methods use the [match-syntax](https://docs.compromise.cool/compromi
 - **[.segment({})](https://observablehq.com/@spencermountain/compromise-split)** - split a document into labeled sections
 - **[.join('')](https://observablehq.com/@spencermountain/compromise-split)** - make all phrases into one phrase
 
-##### Output
-
-- **[.text('method')](https://observablehq.com/@spencermountain/compromise-text)** - return the document as text
-- **[.json({})](https://observablehq.com/@spencermountain/compromise-json)** - pull out desired metadata from the document
-- **[.out('array|offset|terms')](https://observablehq.com/@spencermountain/compromise-output)** - some named output formats (deprecated)
-- **[.debug()](https://observablehq.com/@spencermountain/compromise-output)** - pretty-print the current document and its tags
 
 
   </p>
@@ -321,14 +330,12 @@ _(all match methods use the [match-syntax](https://docs.compromise.cool/compromi
 
 ```js
 import nlp from 'compromise/two'
+
+let doc = nlp("Wayne's World, party time")
+let str = doc.match('#Possessive #Noun').text()
+// "Wayne's World"
 ```
 
-##### Tag
-
-- **[.tag('')](https://observablehq.com/@spencermountain/compromise-tagger)** - Give all terms the given tag
-- **[.tagSafe('')](https://observablehq.com/@spencermountain/compromise-tagger)** - Only apply tag to terms if it is consistent with current tags
-- **[.unTag('')](https://observablehq.com/@spencermountain/compromise-tagger)** - Remove this term from the given terms
-- **[.canBe('')](https://observablehq.com/@spencermountain/compromise-tagger)** - return only the terms that can be this tag
 
 ##### Contractions
 - **[.contractions()](https://observablehq.com/@spencermountain/compromise-contractions)** - things like "didn't"
@@ -351,6 +358,10 @@ import nlp from 'compromise/two'
 
 ```js
 import nlp from 'compromise/three'
+
+let doc = nlp("Wayne's World, party time")
+let str = doc.people().normalize().text()
+// "wayne"
 ```
 
 ##### Selections

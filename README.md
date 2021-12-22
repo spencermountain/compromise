@@ -352,7 +352,7 @@ let str = doc.match('#Possessive #Noun').text()
   <h1 align="left">
    <code>compromise/three</code>
   </h1>
-  <p align="center">Pick-apart <code>phrases</code> in sentences.</p>
+  <p align="center"><code>Phrase</code> and sentence tooling.</p>
   <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
   <p>
 

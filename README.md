@@ -37,7 +37,7 @@
 isn't it weird how we can <i>write text</i>, but not parse it?
 <br/>
 <ul>
-   <i>↬<sub>ᔐᖜ</sub>↬-</i> and how we can't get the information <i>back out</i>?⇬
+   <i>↬<sub>ᔐᖜ</sub>↬-</i> 
 </ul>
 </div>
 <img height="55px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
@@ -66,7 +66,9 @@ text is a dead-end.
   <a href="https://docs.compromise.cool/compromise-performance">quick</a>,
   and often <i><a href="https://docs.compromise.cool/compromise-accuracy">good-enough</a></i>.
   <br/>
+  <sub >
    <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/> it is not as smart as you'd think.
+  </sub>
    <br/>
    <!-- spacer -->
 <!-- <img height="45px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
@@ -80,9 +82,6 @@ text is a dead-end.
 <img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 ### .match():
-
-interpret and match text:
-
 ```js
 let doc = nlp(entireNovel)
 doc.match('the #Adjective of times').text()
@@ -103,9 +102,6 @@ if (doc.has('simon says #Verb') === false) {
 </div>
 
 ### .verbs():
-
-conjugate and negate verbs in any tense:
-
 ```js
 let doc = nlp('she sells seashells by the seashore.')
 doc.verbs().toPastTense()
@@ -121,9 +117,6 @@ doc.text()
 </div>
 
 ### .nouns():
-
-play between plural, singular and possessive forms:
-
 ```js
 let doc = nlp('the purple dinosaur')
 doc.nouns().toPlural()
@@ -139,9 +132,6 @@ doc.text()
 </div>
 
 ### .numbers():
-
-interpret plain-text numbers
-
 ```js
 nlp.extend(require('compromise-numbers'))
 
@@ -158,38 +148,7 @@ doc.text()
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221814-05ed1680-ffb8-11e9-8b6b-c7528d163871.png"/>
 </div>
 
-### .topics():
-
-names/places/orgs, tldr:
-
-```js
-let doc = nlp(buddyHolly)
-doc.people().if('mary').json()
-// [{text:'Mary Tyler Moore'}]
-
-let doc = nlp(freshPrince)
-doc.places().first().text()
-// 'West Phillidelphia'
-
-doc = nlp('the opera about richard nixon visiting china')
-doc.topics().json()
-// [
-//   { text: 'richard nixon' },
-//   { text: 'china' }
-// ]
-```
-
-<div align="right">
-  <a href="https://docs.compromise.cool/topics-named-entity-recognition">topics docs</a>
-</div>
-
-<div align="center">
-  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221632-b9094000-ffb7-11e9-99e0-b48edd6cdf8a.png"/>
-</div>
-
 ### .contractions():
-
-handle implicit terms:
 
 ```js
 let doc = nlp("we're not gonna take it, no we ain't gonna take it.")
@@ -216,10 +175,7 @@ Use it on the client-side:
 
 ```html
 <script src="https://unpkg.com/compromise"></script>
-<script src="https://unpkg.com/compromise-numbers"></script>
 <script>
-  nlp.extend(compromiseNumbers)
-
   var doc = nlp('two bottles of beer')
   doc.numbers().minus(1)
   document.body.innerHTML = doc.text()
@@ -227,7 +183,7 @@ Use it on the client-side:
 </script>
 ```
 
-as an es-module:
+or in node:
 
 ```typescript
 import nlp from 'compromise'
@@ -237,6 +193,43 @@ doc.verbs().toNegative()
 // 'London is not calling'
 ```
 
+<!-- 
+  one/two/three parts
+ -->
+<p align="center">
+  <h1 align="left">
+    <code>compromise/one</code>
+  </h1>
+  <p align="center">A <code>tokenizer</code> of words, sentences, and punctuation.</p>
+  <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+  <p>
+    <ul >
+      <li ><a href="#">doc.compute()</a> - run a given analysis</li>
+      <li ><a href="#">doc.insertAfter()</a> - append some words</li>
+    </ul>
+  </p>
+<img height="85px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+</p>
+
+<p align="center">
+  <h1 align="left">
+   <code>compromise/two</code>
+  </h1>
+  <p align="center">A <code>part-of-speech</code> tagger, and grammar-interpreter.</p>
+  <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+  <p>
+    <ul >
+      <li ><a href="#">doc.compute('tagger')</a> - </li>
+      <li ><a href="#">doc.contractions().expand()</a> - "i'm" → ["i", "am"]</li>
+    </ul>
+  </p>
+<img height="85px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+</p>
+
+
+<!-- 
+  bragging graphs
+ -->
 <!-- spacer -->
 <img height="30" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
@@ -272,38 +265,6 @@ you can read more about how it works, [here](https://observablehq.com/@spencermo
 <div align="center">
   <img src="https://user-images.githubusercontent.com/399657/68221814-05ed1680-ffb8-11e9-8b6b-c7528d163871.png"/>
 </div>
-
-
-
-<p align="center">
-  <h1 align="left">
-    <code>compromise/one</code>
-  </h1>
-  <p align="center">A <code>tokenizer</code> of words, sentences, and punctuation.</p>
-  <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-  <p>
-    <ul >
-      <li ><a href="#">doc.compute()</a> - run a given analysis</li>
-      <li ><a href="#">doc.insertAfter()</a> - append some words</li>
-    </ul>
-  </p>
-<img height="85px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-</p>
-
-<p align="center">
-  <h1 align="left">
-   <code>compromise/two</code>
-  </h1>
-  <p align="center">A <code>part-of-speech</code> tagger, and grammar-interpreter.</p>
-  <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-  <h4>
-    <ul >
-      <li ><a href="#">doc.compute('tagger')</a> - </li>
-      <li ><a href="#">doc.contractions().expand()</a> - "i'm" → ["i", "am"]</li>
-    </ul>
-  </h4>
-<img height="85px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-</p>
 
 
 

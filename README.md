@@ -197,8 +197,8 @@ doc.verbs().toNegative()
   one/two/three parts
  -->
 <p align="center">
+  <sub >full api</sub>
   <h1 align="left">
-    <sub >full api</sub>
     <code>compromise/one</code>
   </h1>
   <p align="center">A <code>tokenizer</code> of words, sentences, and punctuation.</p>

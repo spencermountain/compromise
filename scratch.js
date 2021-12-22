@@ -5,16 +5,19 @@ import nlp from './src/two.js'
 // import nlp from './builds/three/compromise-three.cjs'
 // nlp.verbose('tagger')
 
-let txt = `I’m `
+let txt = `i walked quickly`
 
 
 let doc = nlp(txt)
+let m = doc.match('quickly')
+// m.freeze()
+doc.replace('walked', 'set up')
+doc.replace('set', 'really walked')
+m.debug()
 console.log(doc.text())
-// nlp.tokenize('i am').debug()
-// doc.replace('walked', 'set up')
 // doc.insertAfter('woo')
-let arr = doc.json({ text: false })
-console.dir(arr, { depth: 5 })
+// let arr = doc.json({ text: false })
+// console.dir(arr, { depth: 5 })
 /*
 
 

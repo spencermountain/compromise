@@ -32,6 +32,7 @@
 <!-- spacer -->
 <img height="85px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
+
 <div align="left">
 isn't it weird how we can <i>write text</i>, but not parse it?
 <br/>
@@ -271,6 +272,46 @@ you can read more about how it works, [here](https://observablehq.com/@spencermo
 <div align="center">
   <img src="https://user-images.githubusercontent.com/399657/68221814-05ed1680-ffb8-11e9-8b6b-c7528d163871.png"/>
 </div>
+
+
+
+<p align="center">
+  <h1 align="left">
+    <a href="https://github.com/sharkdp/bat"><code>compromise/one</code></a>
+  </h1>
+  <p align="center">A <code>tokenizer</code> of words, sentences, and punctuation.</p>
+  <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+  <h3>
+    <ul >
+      <li ><a href="#">doc.compute()</a> - run a given analysis</li>
+      <li ><a href="#">doc.insertAfter()</a> - append some words</li>
+    </ul>
+  </h3>
+  <p align="center">
+    <img src="" width="600" />
+  </p>
+<img height="85px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+</p>
+
+<p align="center">
+  <h1 align="left">
+    <a href="https://github.com/sharkdp/bat"><code>compromise/two</code></a>
+  </h1>
+  <p align="center">A <code>part-of-speech</code> tagger, and grammar-interpreter.</p>
+  <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+  <h3>
+    <ul >
+      <li ><a href="#">doc.compute('tagger')</a> - </li>
+      <li ><a href="#">doc.contractions().expand()</a> - "i'm" → ["i", "am"]</li>
+    </ul>
+  </h3>
+  <p align="center">
+    <img src="" width="600" />
+  </p>
+<img height="85px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+</p>
+
+
 
 ### .extend():
 

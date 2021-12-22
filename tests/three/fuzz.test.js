@@ -42,6 +42,21 @@ const isArray = function (arr) {
   return Object.prototype.toString.call(arr) === '[object Array]'
 }
 
+
+const goodIds = function (doc) {
+  let all = {}
+  doc.docs.forEach(terms => {
+    terms.forEach(term => {
+      if (!term.id || all[term.id] === true) {
+        return false
+      }
+      all[term.id] = true
+    })
+  })
+  return true
+}
+
+
 test('try all json methods', function (t) {
   let str = `
   
@@ -68,6 +83,9 @@ URGENT: ➔➔*.
     m.tag('null')
     m.unTag('null')
     m = m.match('*')
+    m.replace('. [@hasPeriod]', 'blug.')
+    m.contractions().expand()
+    m.append('.3')
     m = m.trim()
     t.equal(isArray(arr), true, sub + '.json()')
     t.equal(typeof m.text(), 'string', sub + '.text()')
@@ -78,6 +96,7 @@ URGENT: ➔➔*.
     m.cache()
     t.equal(typeof m.text(), 'string', sub + 'after-map')
     t.equal(isArray(arr), true, sub + '.json() again')
+    t.equal(goodIds(m), true, here + sub + 'good-ds')
   })
 
   t.end()

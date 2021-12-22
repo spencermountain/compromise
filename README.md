@@ -198,11 +198,16 @@ doc.verbs().toNegative()
  -->
 <p align="center">
   <h1 align="left">
+    <sub >full api</sub>
     <code>compromise/one</code>
   </h1>
   <p align="center">A <code>tokenizer</code> of words, sentences, and punctuation.</p>
   <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
   <p>
+
+```js
+import nlp from 'compromise/one'
+```
 
 ##### Utils
 
@@ -314,12 +319,20 @@ _(all match methods use the [match-syntax](https://docs.compromise.cool/compromi
   <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
   <p>
 
+```js
+import nlp from 'compromise/two'
+```
+
 ##### Tag
 
 - **[.tag('')](https://observablehq.com/@spencermountain/compromise-tagger)** - Give all terms the given tag
 - **[.tagSafe('')](https://observablehq.com/@spencermountain/compromise-tagger)** - Only apply tag to terms if it is consistent with current tags
 - **[.unTag('')](https://observablehq.com/@spencermountain/compromise-tagger)** - Remove this term from the given terms
 - **[.canBe('')](https://observablehq.com/@spencermountain/compromise-tagger)** - return only the terms that can be this tag
+
+##### Contractions
+- **[.contractions()](https://observablehq.com/@spencermountain/compromise-contractions)** - things like "didn't"
+- **[.contractions().expand()](https://observablehq.com/@spencermountain/compromise-contractions)** - things like "didn't"
 
   </p>
 <img height="85px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
@@ -336,6 +349,9 @@ _(all match methods use the [match-syntax](https://docs.compromise.cool/compromi
   <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
   <p>
 
+```js
+import nlp from 'compromise/three'
+```
 
 ##### Selections
 
@@ -357,12 +373,6 @@ _(all match methods use the [match-syntax](https://docs.compromise.cool/compromi
 - **[.places()](https://observablehq.com/@spencermountain/topics-named-entity-recognition)** - like 'Paris, France'
 - **[.organizations()](https://observablehq.com/@spencermountain/topics-named-entity-recognition)** - like 'Google, Inc'
 - **[.topics()](https://observablehq.com/@spencermountain/topics-named-entity-recognition)** - `people()` + `places()` + `organizations()`
-
-##### Subsets
-
-- **[.contractions()](https://observablehq.com/@spencermountain/compromise-contractions)** - things like "didn't"
-- **[.contractions().expand()](https://observablehq.com/@spencermountain/compromise-contractions)** - things like "didn't"
-<!-- - **[.contract()](https://observablehq.com/@spencermountain/compromise-contractions)** - `"she would"` -> `"she'd"` -->
 - **[.parentheses()](https://observablehq.com/@spencermountain/compromise-selections)** - return anything inside (parentheses)
 - **[.possessives()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `"Spencer's"`
 - **[.quotations()](https://observablehq.com/@spencermountain/compromise-selections)** - return any terms inside quotation marks
@@ -370,6 +380,8 @@ _(all match methods use the [match-syntax](https://docs.compromise.cool/compromi
 - **[.lists()](https://observablehq.com/@spencermountain/compromise-lists)** - things like `'eats, shoots, and leaves'`
   - **[.lists().items()](https://observablehq.com/@spencermountain/compromise-lists)** - return the partitioned things in the list
   - **[.lists().add()](https://observablehq.com/@spencermountain/compromise-lists)** - put a new item in the list
+
+##### Nouns
 - **[.nouns()](https://observablehq.com/@spencermountain/nouns)** - return any subsequent terms tagged as a Noun
   - **[.nouns().json()](https://observablehq.com/@spencermountain/nouns)** - overloaded output with noun metadata
   - **[.nouns().adjectives()](https://observablehq.com/@spencermountain/nouns)** - get any adjectives describing this noun
@@ -379,6 +391,8 @@ _(all match methods use the [match-syntax](https://docs.compromise.cool/compromi
   - **[.nouns().isSingular()](https://observablehq.com/@spencermountain/nouns)** - return only singular nouns
   - **[.nouns().hasPlural()](https://observablehq.com/@spencermountain/nouns)** - return only nouns that _can be_ inflected as plural
   - **[.nouns().toPossessive()](https://observablehq.com/@spencermountain/nouns)** - add a `'s` to the end, in a safe manner.
+
+##### Verbs
 - **[.verbs()](https://observablehq.com/@spencermountain/verbs)** - return any subsequent terms tagged as a Verb
   - **[.verbs().json()](https://observablehq.com/@spencermountain/verbs)** - overloaded output with verb metadata
   - **[.verbs().conjugate()](https://observablehq.com/@spencermountain/verbs)** - return all forms of these verbs
@@ -453,7 +467,8 @@ _(all match methods use the [match-syntax](https://docs.compromise.cool/compromi
   - **[.sentences().toExclamation()](https://observablehq.com/@spencermountain/compromise-sentences)** - end sentence with a `!`
   - **[.sentences().toQuestion()](https://observablehq.com/@spencermountain/compromise-sentences)** - end sentence with a `?`
   - **[.sentences().toStatement()](https://observablehq.com/@spencermountain/compromise-sentences)** - end sentence with a `.`
-    <!-- - **[.sentences().toContinuous()](#)** - -->
+
+<!-- - **[.contract()](https://observablehq.com/@spencermountain/compromise-contractions)** - `"she would"` -> `"she'd"` -->
 
   </p>
 <img height="85px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>

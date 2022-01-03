@@ -1,7 +1,9 @@
 /* eslint-disable no-console */
 import fs from 'fs'
 import { pack } from 'efrt'
+import { compress } from 'suffix-thumb'
 import lexicon from '../lexicon/index.js'
+import models from '../data/models/index.js'
 // import switches from '../lib/switches/index.js'
 // import senses from '../lib/senses/index.js'
 
@@ -29,21 +31,16 @@ const steps = [
       return packed
     },
   },
-  // {
-  //   label: 'switches',
-  //   path: './src/2-two/preTagger/model/switches/_data.js',
-  //   compress: function () {
-  //     Object.keys(switches).forEach(k => {
-  //       Object.keys(switches[k]).forEach(key => {
-  //         if (typeof switches[k][key] !== 'string') {
-  //           switches[k][key] = pack(switches[k][key])
-  //         }
-  //       })
-  //     })
-
-  //     return switches
-  //   },
-  // },
+  {
+    label: 'models',
+    path: './src/2-two/preTagger/methods/transform/_data.js',
+    compress: function () {
+      Object.keys(models).forEach(k => {
+        models[k] = compress(models[k])
+      })
+      return models
+    },
+  },
   // {
   //   label: 'senses',
   //   path: './src/4-four/sense/model/_data.js',

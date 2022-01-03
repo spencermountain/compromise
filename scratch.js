@@ -3,18 +3,22 @@ import nlp from './src/three.js'
 // import plg from './plugins/speech/src/plugin.js'
 // nlp.plugin(plg)
 // import nlp from './builds/three/compromise-three.cjs'
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 
 
 
 // let txt = `i was overthrown`
 let txt = ''
-txt = `i overthrew`
-txt = `waiters are furious`
-txt = `of`
+txt = `he will not write`
+txt = `he fuzzes`
+txt = `he invests`
+txt = `he wants`
+txt = `buy`
 let doc = nlp(txt)
 // doc.verbs().toPast()
+doc.verbs().toPresentTense()
+// doc.verbs().toInfinitive()
 doc.debug()
 // console.log(doc.verbs().conjugate())
 

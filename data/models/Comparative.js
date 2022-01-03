@@ -76,10 +76,6 @@ export default {
       [
         "wer",
         "w"
-      ],
-      [
-        "yer",
-        "y"
       ]
     ]
   },
@@ -111,6 +107,7 @@ export default {
     "gamer": "game",
     "liver": "live",
     "truer": "true",
+    "layer": "lay",
     "calmer": "calm",
     "number": "numb"
   }

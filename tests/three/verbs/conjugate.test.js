@@ -28,12 +28,6 @@ const arr = [
     PastTense: 'overthrew',
   },
   {
-    Infinitive: 'patrol',
-    PresentTense: 'patrols',
-    Gerund: 'patrolling',
-    PastTense: 'patrolled',
-  },
-  {
     Infinitive: 'guide',
     PresentTense: 'guides',
     Gerund: 'guiding',
@@ -248,12 +242,6 @@ const arr = [
     PresentTense: 'invests',
     PastTense: 'invested',
     Gerund: 'investing',
-  },
-  {
-    Infinitive: 'age',
-    PresentTense: 'ages',
-    PastTense: 'aged',
-    Gerund: 'ageing',
   },
   {
     Infinitive: 'shed',

@@ -66,10 +66,6 @@ export default {
         "ent"
       ],
       [
-        "eady",
-        "eady"
-      ],
-      [
         "idly",
         "id"
       ],
@@ -176,14 +172,20 @@ export default {
     ],
     "g": [
       [
-        "ng",
-        "ng"
+        "ong",
+        "ong"
       ]
     ],
     "k": [
       [
-        "ck",
-        "ck"
+        "ack",
+        "ack"
+      ]
+    ],
+    "w": [
+      [
+        "ow",
+        "ow"
       ]
     ],
     "a": [
@@ -202,12 +204,6 @@ export default {
       [
         "e",
         "e"
-      ]
-    ],
-    "f": [
-      [
-        "f",
-        "f"
       ]
     ],
     "h": [
@@ -240,12 +236,6 @@ export default {
         "o"
       ]
     ],
-    "p": [
-      [
-        "p",
-        "p"
-      ]
-    ],
     "r": [
       [
         "r",
@@ -262,12 +252,6 @@ export default {
       [
         "t",
         "t"
-      ]
-    ],
-    "w": [
-      [
-        "w",
-        "w"
       ]
     ]
   },
@@ -323,9 +307,10 @@ export default {
     "socioeconomically": "socioeconomical",
     "anatomically": "anatomical",
     "cyclically": "cyclical",
+    "already": "already",
+    "up": "up",
+    "thereof": "thereof",
     "publicly": "public",
-    "easy": "easy",
-    "sic": "sic",
     "why": "why"
   }
 }

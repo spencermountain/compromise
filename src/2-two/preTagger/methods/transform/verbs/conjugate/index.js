@@ -44,3 +44,6 @@ const conjugate = function (inf, model) {
 
 export default conjugate
 
+// console.log(toPresent.rules.y)
+// console.log(convert('buy', toPresent))
+

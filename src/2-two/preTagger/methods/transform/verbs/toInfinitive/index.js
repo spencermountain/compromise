@@ -19,13 +19,20 @@ const toParts = function (str, model) {
   }
 }
 
+const pluralCopula = new Set(['are', 'were', 'been'])
+const singCopula = new Set(['is', 'was', 'be', 'being'])
+
 const toInfinitive = function (str, model, tense) {
   let { prefix, verb, particle } = toParts(str, model)
   let inf = ''
   if (!tense) {
     tense = getTense(str)
   }
-  if (tense === 'Participle') {
+  if (pluralCopula.has(str)) {
+    inf = 'are'
+  } else if (singCopula.has(str)) {
+    inf = 'is'
+  } else if (tense === 'Participle') {
     inf = convert(verb, fromParticiple)
   } else if (tense === 'PastTense') {
     inf = convert(verb, fromPast)
@@ -48,3 +55,5 @@ const toInfinitive = function (str, model, tense) {
   return inf
 }
 export default toInfinitive
+
+// console.log(toInfinitive('are', { one: {} }))

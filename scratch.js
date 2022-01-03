@@ -11,8 +11,7 @@ import nlp from './src/three.js'
 // let txt = `i was overthrown`
 let txt = ''
 txt = `i overthrew`
-txt = `i boned`
-txt = `i excited`
+txt = `i ruined`
 let doc = nlp(txt)
 doc.verbs().toInfinitive()
 doc.debug()

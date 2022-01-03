@@ -1,4 +1,4 @@
-import { fromPast, fromPresent, fromGerund } from '../../models/index.js'
+import { fromPast, fromPresent, fromGerund, fromParticiple } from '../../models/index.js'
 import { convert } from 'suffix-thumb'
 import getTense from '../getTense/index.js'
 
@@ -25,7 +25,9 @@ const toInfinitive = function (str, model, tense) {
   if (!tense) {
     tense = getTense(str)
   }
-  if (tense === 'PastTense') {
+  if (tense === 'Participle') {
+    inf = convert(verb, fromParticiple)
+  } else if (tense === 'PastTense') {
     inf = convert(verb, fromPast)
   } else if (tense === 'PresentTense') {
     inf = convert(verb, fromPresent)

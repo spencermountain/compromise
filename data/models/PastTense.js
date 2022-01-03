@@ -1,422 +1,119 @@
 export default {
   "rules": {
     "d": [
-      [
-        "scribed",
-        "scribe"
-      ],
-      [
-        "velled",
-        "vel"
-      ],
-      [
-        "efined",
-        "efine"
-      ],
-      [
-        "ighted",
-        "ight"
-      ],
-      [
-        "ckled",
-        "ckle"
-      ],
-      [
-        "illed",
-        "ill"
-      ],
-      [
-        "ooled",
-        "ool"
-      ],
-      [
-        "urled",
-        "url"
-      ],
-      [
-        "fined",
-        "fine"
-      ],
-      [
-        "hered",
-        "her"
-      ],
-      [
-        "vered",
-        "ver"
-      ],
-      [
-        "cused",
-        "cuse"
-      ],
-      [
-        "eated",
-        "eat"
-      ],
-      [
-        "dited",
-        "dit"
-      ],
-      [
-        "sited",
-        "sit"
-      ],
-      [
-        "asted",
-        "ast"
-      ],
-      [
-        "bbed",
-        "b"
-      ],
-      [
-        "mbed",
-        "mb"
-      ],
-      [
-        "rbed",
-        "rb"
-      ],
-      [
-        "aded",
-        "ade"
-      ],
-      [
-        "dded",
-        "d"
-      ],
-      [
-        "ided",
-        "ide"
-      ],
-      [
-        "uded",
-        "ude"
-      ],
-      [
-        "nged",
-        "nge"
-      ],
-      [
-        "shed",
-        "sh"
-      ],
-      [
-        "died",
-        "dy"
-      ],
-      [
-        "lied",
-        "ly"
-      ],
-      [
-        "pied",
-        "py"
-      ],
-      [
-        "oked",
-        "oke"
-      ],
-      [
-        "aled",
-        "al"
-      ],
-      [
-        "bled",
-        "ble"
-      ],
-      [
-        "dled",
-        "dle"
-      ],
-      [
-        "eled",
-        "el"
-      ],
-      [
-        "fled",
-        "fle"
-      ],
-      [
-        "gled",
-        "gle"
-      ],
-      [
-        "iled",
-        "il"
-      ],
-      [
-        "pled",
-        "ple"
-      ],
-      [
-        "tled",
-        "tle"
-      ],
-      [
-        "uled",
-        "ule"
-      ],
-      [
-        "imed",
-        "im"
-      ],
-      [
-        "aned",
-        "an"
-      ],
-      [
-        "ened",
-        "en"
-      ],
-      [
-        "ined",
-        "in"
-      ],
-      [
-        "oned",
-        "on"
-      ],
-      [
-        "aped",
-        "ape"
-      ],
-      [
-        "mped",
-        "mp"
-      ],
-      [
-        "oped",
-        "op"
-      ],
-      [
-        "pped",
-        "p"
-      ],
-      [
-        "ared",
-        "are"
-      ],
-      [
-        "ered",
-        "er"
-      ],
-      [
-        "ired",
-        "ire"
-      ],
-      [
-        "rred",
-        "r"
-      ],
-      [
-        "ured",
-        "ure"
-      ],
-      [
-        "used",
-        "use"
-      ],
-      [
-        "ated",
-        "ate"
-      ],
-      [
-        "cted",
-        "ct"
-      ],
-      [
-        "eted",
-        "et"
-      ],
-      [
-        "fted",
-        "ft"
-      ],
-      [
-        "ited",
-        "it"
-      ],
-      [
-        "lted",
-        "lt"
-      ],
-      [
-        "nted",
-        "nt"
-      ],
-      [
-        "oted",
-        "ote"
-      ],
-      [
-        "pted",
-        "pt"
-      ],
-      [
-        "rted",
-        "rt"
-      ],
-      [
-        "sted",
-        "st"
-      ],
-      [
-        "tted",
-        "t"
-      ],
-      [
-        "uted",
-        "ute"
-      ],
-      [
-        "owed",
-        "ow"
-      ],
-      [
-        "ound",
-        "ind"
-      ],
-      [
-        "tood",
-        "tand"
-      ],
-      [
-        "ead",
-        "ead"
-      ],
-      [
-        "ced",
-        "ce"
-      ],
-      [
-        "ded",
-        "d"
-      ],
-      [
-        "eed",
-        "ee"
-      ],
-      [
-        "fed",
-        "f"
-      ],
-      [
-        "ged",
-        "ge"
-      ],
-      [
-        "hed",
-        "h"
-      ],
-      [
-        "ied",
-        "y"
-      ],
-      [
-        "ked",
-        "k"
-      ],
-      [
-        "med",
-        "m"
-      ],
-      [
-        "ned",
-        "n"
-      ],
-      [
-        "red",
-        "r"
-      ],
-      [
-        "sed",
-        "se"
-      ],
-      [
-        "ued",
-        "ue"
-      ],
-      [
-        "ved",
-        "ve"
-      ],
-      [
-        "wed",
-        "w"
-      ],
-      [
-        "xed",
-        "x"
-      ],
-      [
-        "yed",
-        "y"
-      ],
-      [
-        "zed",
-        "ze"
-      ],
-      [
-        "aid",
-        "ay"
-      ],
-      [
-        "bid",
-        "bid"
-      ],
-      [
-        "eld",
-        "old"
-      ],
-      [
-        "old",
-        "ell"
-      ]
+      ["scribed", "scribe"],
+      ["velled", "vel"],
+      ["efined", "efine"],
+      ["ighted", "ight"],
+      ["ckled", "ckle"],
+      ["illed", "ill"],
+      ["ooled", "ool"],
+      ["urled", "url"],
+      ["fined", "fine"],
+      ["hered", "her"],
+      ["vered", "ver"],
+      ["cused", "cuse"],
+      ["eated", "eat"],
+      ["dited", "dit"],
+      ["sited", "sit"],
+      ["asted", "ast"],
+      ["bbed", "b"],
+      ["mbed", "mb"],
+      ["rbed", "rb"],
+      ["aded", "ade"],
+      ["dded", "d"],
+      ["ided", "ide"],
+      ["uded", "ude"],
+      ["nged", "nge"],
+      ["shed", "sh"],
+      ["died", "dy"],
+      ["lied", "ly"],
+      ["pied", "py"],
+      ["oked", "oke"],
+      ["aled", "al"],
+      ["bled", "ble"],
+      ["dled", "dle"],
+      ["eled", "el"],
+      ["fled", "fle"],
+      ["gled", "gle"],
+      ["iled", "il"],
+      ["pled", "ple"],
+      ["tled", "tle"],
+      ["uled", "ule"],
+      ["imed", "im"],
+      ["aned", "an"],
+      ["ened", "en"],
+      ["ined", "in"],
+      ["oned", "on"],
+      ["aped", "ape"],
+      ["mped", "mp"],
+      ["oped", "op"],
+      ["pped", "p"],
+      ["ared", "are"],
+      ["ered", "er"],
+      ["ired", "ire"],
+      ["rred", "r"],
+      ["ured", "ure"],
+      ["used", "use"],
+      ["ated", "ate"],
+      ["cted", "ct"],
+      ["eted", "et"],
+      ["fted", "ft"],
+      ["ited", "it"],
+      ["lted", "lt"],
+      ["nted", "nt"],
+      ["oted", "ote"],
+      ["pted", "pt"],
+      ["rted", "rt"],
+      ["sted", "st"],
+      ["tted", "t"],
+      ["uted", "ute"],
+      ["owed", "ow"],
+      ["ound", "ind"],
+      ["tood", "tand"],
+      ["ead", "ead"],
+      ["ced", "ce"],
+      ["ded", "d"],
+      ["eed", "ee"],
+      ["fed", "f"],
+      ["ged", "ge"],
+      ["hed", "h"],
+      ["ied", "y"],
+      ["ked", "k"],
+      ["med", "m"],
+      ["ned", "n"],
+      ["red", "r"],
+      ["sed", "se"],
+      ["ued", "ue"],
+      ["ved", "ve"],
+      ["wed", "w"],
+      ["xed", "x"],
+      ["yed", "y"],
+      ["zed", "ze"],
+      ["aid", "ay"],
+      ["bid", "bid"],
+      ["eld", "old"],
+      ["old", "ell"]
     ],
     "e": [
       [
         "rote",
         "rite"
       ],
-      [
-        "rove",
-        "rive"
-      ],
-      [
-        "ame",
-        "ome"
-      ],
-      [
-        "ore",
-        "ear"
-      ]
+      ["rove", "rive"],
+      ["ame", "ome"],
+      ["ore", "ear"]
     ],
     "t": [
       [
         "uilt",
         "uild"
       ],
-      [
-        "ent",
-        "end"
-      ],
-      [
-        "ept",
-        "eep"
-      ],
-      [
-        "et",
-        "et"
-      ],
-      [
-        "st",
-        "st"
-      ],
-      [
-        "ut",
-        "ut"
-      ]
+      ["ent", "end"],
+      ["ept", "eep"],
+      ["et", "et"],
+      ["st", "st"],
+      ["ut", "ut"]
     ],
     "g": [
       [
@@ -429,10 +126,7 @@ export default {
         "ank",
         "ink"
       ],
-      [
-        "ook",
-        "ake"
-      ]
+      ["ook", "ake"]
     ],
     "w": [
       [
@@ -774,6 +468,39 @@ export default {
     "dove": "dive",
     "knit": "knit",
     "enamelled": "enamel",
-    "spat": "spit"
+    "spat": "spit",
+    'shrunk': 'shrink',
+    'tasted': 'taste',
+    'excited': 'excite',
+    'kissed': 'kiss',
+    'seeped': 'seep',
+    'attuned': 'attune',
+    'boned': 'bone',
+    'stunned': 'stun',
+    'twinned': 'twin',
+    'skinned': 'skin',
+    'thinned': 'thin',
+    'panned': 'pan',
+    'canned': 'can',
+    'entwined': 'entwine',
+    'predetermined': 'predetermine',
+    'sidelined': 'sideline',
+    'inclined': 'incline',
+    'planed': 'plan',
+    'caned': 'cane',
+    'extolled': 'extoll',
+    'distilled': 'distill',
+    'expelled': 'expell',
+    'dispelled': 'dispell',
+    'channelled': 'channel',
+    'rivalled': 'rival',
+    'profiled': 'profile',
+    'baled': 'bale',
+    'spiked': 'spike',
+    'mimicked': 'mimick',
+    'blitzed': 'blitz',
+    'shouted': 'shout',
+    'excited': 'excit',
+    'ached': 'ache',
   }
 }

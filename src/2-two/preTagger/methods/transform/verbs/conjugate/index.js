@@ -1,5 +1,13 @@
-import checkSuffix from './01-suffixes.js'
-import genericFill from './02-generic.js'
+import { toPast, toPresent, toGerund, toParticiple } from '../../models/index.js'
+import { convert } from 'suffix-thumb'
+
+// pull-apart phrasal verb 'fall over'
+const parse = (inf) => {
+  if (/ /.test(inf)) {
+    return inf.split(/ /)
+  }
+  return [inf, '']
+}
 
 //we run this on every verb in the lexicon, so please keep it fast
 //we assume the input word is a proper infinitive
@@ -13,35 +21,18 @@ const conjugate = function (inf, model) {
       PresentTense: 'is',
     }
   }
-  let found = {}
-  const irregs = model.two.irregularVerbs
-  let particle = ''
-  // pull-apart phrasal verb 'fall over'
-  if (/ /.test(inf)) {
-    let split = inf.split(/ /)
-    inf = split[0]
-    particle = split[1]
+  let [str, particle] = parse(inf)
+  let found = {
+    PastTense: convert(str, toPast),
+    PresentTense: convert(str, toPresent),
+    Gerund: convert(str, toGerund),
   }
-  // 1. look at irregulars
-  //the lexicon doesn't pass this in
-  if (irregs && irregs.hasOwnProperty(inf) === true) {
-    found = Object.assign({}, irregs[inf])
+  // drive -> driven (not drove)
+  let pastPrt = convert(str, toParticiple)
+  if (pastPrt !== found.PastTense) {
+    found.Participle = pastPrt
   }
-  //2. rule-based regex
-  found = Object.assign({}, checkSuffix(inf), found)
-  //3. generic transformations
-  //'buzzing'
-  if (found.Gerund === undefined) {
-    found.Gerund = genericFill.Gerund(inf)
-  }
-  //'buzzed'
-  if (found.PastTense === undefined) {
-    found.PastTense = genericFill.PastTense(inf)
-  }
-  //'buzzes'
-  if (found.PresentTense === undefined) {
-    found.PresentTense = genericFill.PresentTense(inf)
-  }
+
   // put phrasal-verbs back together again
   if (particle) {
     Object.keys(found).forEach(k => {

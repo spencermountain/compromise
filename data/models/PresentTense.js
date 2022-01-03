@@ -1,130 +1,37 @@
 export default {
   "rules": {
     "s": [
-      [
-        "efines",
-        "efine"
-      ],
-      [
-        "venes",
-        "vene"
-      ],
-      [
-        "fines",
-        "fine"
-      ],
-      [
-        "cuses",
-        "cuse"
-      ],
-      [
-        "dies",
-        "dy"
-      ],
-      [
-        "lies",
-        "ly"
-      ],
-      [
-        "ties",
-        "ty"
-      ],
-      [
-        "ines",
-        "ine"
-      ],
-      [
-        "ases",
-        "ase"
-      ],
-      [
-        "uses",
-        "use"
-      ],
-      [
-        "ics",
-        "ic"
-      ],
-      [
-        "hes",
-        "h"
-      ],
-      [
-        "ies",
-        "y"
-      ],
-      [
-        "nes",
-        "ne"
-      ],
-      [
-        "ses",
-        "se"
-      ],
-      [
-        "bs",
-        "b"
-      ],
-      [
-        "ds",
-        "d"
-      ],
-      [
-        "es",
-        "e"
-      ],
-      [
-        "fs",
-        "f"
-      ],
-      [
-        "gs",
-        "g"
-      ],
-      [
-        "hs",
-        "h"
-      ],
-      [
-        "ks",
-        "k"
-      ],
-      [
-        "ls",
-        "l"
-      ],
-      [
-        "ms",
-        "m"
-      ],
-      [
-        "ns",
-        "n"
-      ],
-      [
-        "os",
-        "o"
-      ],
-      [
-        "ps",
-        "p"
-      ],
-      [
-        "rs",
-        "r"
-      ],
-      [
-        "ts",
-        "t"
-      ],
-      [
-        "ws",
-        "w"
-      ],
-      [
-        "ys",
-        "y"
-      ]
+      ["efines", "efine"],
+      ["venes", "vene"],
+      ["fines", "fine"],
+      ["cuses", "cuse"],
+      ["dies", "dy"],
+      ["lies", "ly"],
+      ["ties", "ty"],
+      ["ines", "ine"],
+      ["ases", "ase"],
+      ["uses", "use"],
+      ["ics", "ic"],
+      ["hes", "h"],
+      ["ies", "y"],
+      ["nes", "ne"],
+      ["ses", "se"],
+      ["bs", "b"],
+      ["ds", "d"],
+      ["es", "e"],
+      ["fs", "f"],
+      ["gs", "g"],
+      ["hs", "h"],
+      ["ks", "k"],
+      ["ls", "l"],
+      ["ms", "m"],
+      ["ns", "n"],
+      ["os", "o"],
+      ["ps", "p"],
+      ["rs", "r"],
+      ["ts", "t"],
+      ["ws", "w"],
+      ["ys", "y"]
     ]
   },
   "exceptions": {
@@ -183,7 +90,6 @@ export default {
     "breathes": "breathe",
     "is": "be",
     "has": "have",
-    "'s": "be",
     "describes": "describe",
     "estimates": "estimate",
     "resides": "reside",
@@ -209,25 +115,17 @@ export default {
     "escapes": "escape",
     "escalates": "escalate",
     "synthesizes": "synthesize",
-    "ai": "ai",
     "underestimates": "underestimate",
-    "visas": "visa",
     "information": "contain",
     "dimensions": "dimension",
     "presides": "preside",
     "pressures": "pressure",
     "restates": "restate",
     "hath": "have",
-    "an": "be",
-    "of": "consist",
-    "very": "be",
-    "a": "be",
     "reshapes": "reshape",
     "hypothesizes": "hypothesize",
     "overestimates": "overestimate",
     "presages": "presage",
-    "crafted": "be",
-    "unclear": "be",
     "orchestrates": "orchestrate"
   }
 }

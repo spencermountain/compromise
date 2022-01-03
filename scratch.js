@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import plg from './plugins/speech/src/plugin.js'
 // nlp.plugin(plg)
 // import nlp from './builds/three/compromise-three.cjs'
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 
 
@@ -12,9 +12,11 @@ import nlp from './src/three.js'
 let txt = ''
 txt = `i overthrew`
 txt = `waiters are furious`
+txt = `of`
 let doc = nlp(txt)
-doc.verbs().toPast()
+// doc.verbs().toPast()
 doc.debug()
+// console.log(doc.verbs().conjugate())
 
 // let txt = `i walked quickly`
 // let doc = nlp(txt)

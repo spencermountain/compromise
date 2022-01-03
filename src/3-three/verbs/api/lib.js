@@ -1,4 +1,4 @@
-import getSubject from '../parse/getSubject.js'
+import getSubject from './parse/getSubject.js'
 
 const noop = vb => vb
 
@@ -52,4 +52,21 @@ const toInf = function (vb, parsed) {
   return vb
 }
 
-export { noop, isPlural, isAreAm, doDoes, toInf, getSubject }
+
+const getTense = function (m) {
+  if (m.has('#Participle')) {
+    return 'Participle'
+  }
+  if (m.has('#PastTense')) {
+    return 'PastTense'
+  }
+  if (m.has('#Gerund')) {
+    return 'Gerund'
+  }
+  if (m.has('#PresentTense')) {
+    return 'PresentTense'
+  }
+  return undefined
+}
+
+export { noop, isPlural, isAreAm, doDoes, toInf, getSubject, getTense }

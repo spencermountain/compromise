@@ -1,5 +1,6 @@
 import parseVerb from './parse/index.js'
 import getGrammar from './parse/grammar/index.js'
+import { getTense } from './lib.js'
 
 const toArray = function (m) {
   if (!m || !m.isView) {
@@ -19,7 +20,7 @@ const toText = function (m) {
 const toInfinitive = function (root) {
   const { verbToInfinitive } = root.methods.two.transform
   let str = root.text('normal')
-  return verbToInfinitive(str, root.model)
+  return verbToInfinitive(str, root.model, getTense(root))
 }
 
 const toJSON = function (vb) {

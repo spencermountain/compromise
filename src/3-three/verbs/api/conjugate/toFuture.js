@@ -1,31 +1,33 @@
-import { noop } from './lib.js'
+import { noop, getTense } from '../lib.js'
 
 
 const simple = (vb, parsed) => {
   const { verbToInfinitive } = vb.methods.two.transform
-  let str = parsed.root.text('normal')
-  str = verbToInfinitive(str, vb.model)
+  const { root, auxiliary } = parsed
+  let str = root.text('normal')
+  str = verbToInfinitive(str, vb.model, getTense(root))
   if (str) {
-    vb = vb.replace(parsed.root, str)
+    vb = vb.replace(root, str)
     // vb.not('#Particle').tag('Infinitive')
   }
   vb.prepend('will').match('will').tag('Auxiliary')
-  vb.remove(parsed.auxiliary)
+  vb.remove(auxiliary)
   return vb
 }
 
 // 'will be walking'
 const progressive = (vb, parsed) => {
   const { verbConjugate, verbToInfinitive } = vb.methods.two.transform
-  let str = parsed.root.text('normal')
-  str = verbToInfinitive(str, vb.model)
+  const { root, auxiliary } = parsed
+  let str = root.text('normal')
+  str = verbToInfinitive(str, vb.model, getTense(root))
   if (str) {
     str = verbConjugate(str, vb.model).Gerund
-    vb = vb.replace(parsed.root, str)
+    vb = vb.replace(root, str)
     vb.not('#Particle').tag('PresentTense')
   }
   vb.prepend('will be').match('will be').tag('Auxiliary')
-  vb.remove(parsed.auxiliary)
+  vb.remove(auxiliary)
   return vb
 }
 

@@ -1,15 +1,4 @@
-import { doDoes } from './lib.js'
-
-const getTense = (root) => {
-  let tense = null
-  if (root.has('#Participle')) {
-    return 'Participle'
-  }
-  if (root.has('#PastTense')) {
-    return 'PastTense'
-  }
-  return tense
-}
+import { doDoes, getTense } from '../lib.js'
 
 // all verb forms are the same
 const toInfinitive = function (vb, parsed) {

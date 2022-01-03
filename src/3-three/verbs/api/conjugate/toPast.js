@@ -1,9 +1,7 @@
-import { noop, doDoes } from './lib.js'
+import { noop, doDoes, getTense } from '../lib.js'
 
 
 const fns = {
-
-  noop: vb => vb,
 
   noAux: (vb, parsed) => {
     if (parsed.auxiliary.found) {
@@ -15,8 +13,9 @@ const fns = {
   // walk->walked
   simple: (vb, parsed) => {
     const { verbConjugate, verbToInfinitive } = vb.methods.two.transform
-    let str = parsed.root.text({ keepPunct: false })
-    str = verbToInfinitive(str, vb.model)
+    const root = parsed.root
+    let str = root.text({ keepPunct: false })
+    str = verbToInfinitive(str, vb.model, getTense(root))
     let all = verbConjugate(str, vb.model)
     // 'driven' || 'drove'
     str = all.PastTense
@@ -24,7 +23,7 @@ const fns = {
     // but skip the 'is' participle..
     str = str === 'been' ? 'was' : str
     if (str) {
-      vb.replace(parsed.root, str)
+      vb.replace(root, str)
     }
     return vb
   },
@@ -54,8 +53,9 @@ const fns = {
   // drive -> driven, (!drove)
   hasParticiple: (vb, parsed) => {
     const { verbConjugate, verbToInfinitive } = vb.methods.two.transform
-    let str = parsed.root.text('normal')
-    str = verbToInfinitive(str, vb.model)
+    const root = parsed.root
+    let str = root.text('normal')
+    str = verbToInfinitive(str, vb.model, getTense(root))
     return verbConjugate(str, vb.model).Participle
   },
 

@@ -7,12 +7,12 @@ const toRoot = {
   // 'walked' -> 'walk'
   'PastTense': (term, world) => {
     let str = term.machine || term.normal || term.text
-    return world.methods.two.transform.verbToInfinitive(str, world.model)
+    return world.methods.two.transform.verbToInfinitive(str, world.model, 'PastTense')
   },
   // 'walks' -> 'walk'
   'PresentTense': (term, world) => {
     let str = term.machine || term.normal || term.text
-    return world.methods.two.transform.verbToInfinitive(str, world.model)
+    return world.methods.two.transform.verbToInfinitive(str, world.model, 'PresentTense')
   },
 }
 

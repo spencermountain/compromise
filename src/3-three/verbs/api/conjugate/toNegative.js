@@ -1,4 +1,4 @@
-import { doDoes, toInf } from './lib.js'
+import { doDoes, toInf } from '../lib.js'
 
 
 // do/does not walk 

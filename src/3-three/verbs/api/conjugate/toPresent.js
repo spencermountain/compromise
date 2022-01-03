@@ -1,20 +1,22 @@
-import { noop, isPlural, isAreAm, doDoes, getSubject, toInf } from './lib.js'
+import { noop, isPlural, isAreAm, doDoes, getSubject, toInf, getTense } from '../lib.js'
 
 // walk->walked
 const simple = (vb, parsed) => {
   const { verbConjugate, verbToInfinitive } = vb.methods.two.transform
-  let str = parsed.root.text('normal')
-  str = verbToInfinitive(str, vb.model)
+  const root = parsed.root
+  let str = root.text('normal')
+
+  str = verbToInfinitive(str, vb.model, getTense(root))
   // 'i walk' vs 'he walks'
   if (isPlural(vb, parsed) === false) {
     str = verbConjugate(str, vb.model).PresentTense
   }
   // handle copula
-  if (parsed.root.has('#Copula')) {
+  if (root.has('#Copula')) {
     str = isAreAm(vb, parsed)
   }
   if (str) {
-    vb = vb.replace(parsed.root, str)
+    vb = vb.replace(root, str)
     vb.not('#Particle').tag('PresentTense')
   }
   return vb
@@ -22,14 +24,15 @@ const simple = (vb, parsed) => {
 
 const toGerund = (vb, parsed) => {
   const { verbConjugate, verbToInfinitive } = vb.methods.two.transform
-  let str = parsed.root.text('normal')
-  str = verbToInfinitive(str, vb.model)
+  const root = parsed.root
+  let str = root.text('normal')
+  str = verbToInfinitive(str, vb.model, getTense(root))
   // 'i walk' vs 'he walks'
   if (isPlural(vb, parsed) === false) {
     str = verbConjugate(str, vb.model).Gerund
   }
   if (str) {
-    vb = vb.replace(parsed.root, str)
+    vb = vb.replace(root, str)
     vb.not('#Particle').tag('Gerund')
   }
   return vb
@@ -37,8 +40,9 @@ const toGerund = (vb, parsed) => {
 
 const toInfinitive = (vb, parsed) => {
   const { verbToInfinitive } = vb.methods.two.transform
+  const root = parsed.root
   let str = parsed.root.text('normal')
-  str = verbToInfinitive(str, vb.model)
+  str = verbToInfinitive(str, vb.model, getTense(root))
   if (str) {
     vb = vb.replace(parsed.root, str)
   }

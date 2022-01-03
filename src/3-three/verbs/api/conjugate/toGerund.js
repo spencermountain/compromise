@@ -1,3 +1,5 @@
+import { getTense } from '../lib.js'
+
 // all verb forms are the same
 const toGerund = function (vb, parsed) {
   const { verbToInfinitive, verbConjugate } = vb.methods.two.transform
@@ -7,7 +9,7 @@ const toGerund = function (vb, parsed) {
   }
   root.freeze()
   let str = root.text('normal')
-  str = verbToInfinitive(str, vb.model,)
+  str = verbToInfinitive(str, vb.model, getTense(root))
   let gerund = verbConjugate(str, vb.model).Gerund
   if (gerund) {
     vb.replace(root, gerund)

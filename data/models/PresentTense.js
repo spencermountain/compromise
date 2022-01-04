@@ -1,126 +1,36 @@
 export default {
   "rules": {
     "s": [
-      [
-        "efines",
-        "efine"
-      ],
-      [
-        "venes",
-        "vene"
-      ],
-      [
-        "fines",
-        "fine"
-      ],
-      [
-        "cuses",
-        "cuse"
-      ],
-      [
-        "dies",
-        "dy"
-      ],
-      [
-        "lies",
-        "ly"
-      ],
-      [
-        "ties",
-        "ty"
-      ],
-      [
-        "ines",
-        "ine"
-      ],
-      [
-        "uses",
-        "use"
-      ],
-      [
-        "ics",
-        "ic"
-      ],
-      [
-        "hes",
-        "h"
-      ],
-      [
-        "ies",
-        "y"
-      ],
-      [
-        "nes",
-        "ne"
-      ],
-      [
-        "ses",
-        "se"
-      ],
-      [
-        "bs",
-        "b"
-      ],
-      [
-        "ds",
-        "d"
-      ],
-      [
-        "es",
-        "e"
-      ],
-      [
-        "fs",
-        "f"
-      ],
-      [
-        "gs",
-        "g"
-      ],
-      [
-        "hs",
-        "h"
-      ],
-      [
-        "ks",
-        "k"
-      ],
-      [
-        "ls",
-        "l"
-      ],
-      [
-        "ms",
-        "m"
-      ],
-      [
-        "ns",
-        "n"
-      ],
-      [
-        "os",
-        "o"
-      ],
-      [
-        "ps",
-        "p"
-      ],
-      [
-        "rs",
-        "r"
-      ],
-      [
-        "ts",
-        "t"
-      ],
-      [
-        "ws",
-        "w"
-      ],
-      [
-        "ys",
-        "y"
-      ]
+      ["efines", "efine"],
+      ["venes", "vene"],
+      ["fines", "fine"],
+      ["cuses", "cuse"],
+      ["dies", "dy"],
+      ["lies", "ly"],
+      ["ties", "ty"],
+      ["ines", "ine"],
+      ["uses", "use"],
+      ["ics", "ic"],
+      ["hes", "h"],
+      ["ies", "y"],
+      ["nes", "ne"],
+      ["ses", "se"],
+      ["bs", "b"],
+      ["ds", "d"],
+      ["es", "e"],
+      ["fs", "f"],
+      ["gs", "g"],
+      ["hs", "h"],
+      ["ks", "k"],
+      ["ls", "l"],
+      ["ms", "m"],
+      ["ns", "n"],
+      ["os", "o"],
+      ["ps", "p"],
+      ["rs", "r"],
+      ["ts", "t"],
+      ["ws", "w"],
+      ["ys", "y"]
     ]
   },
   "exceptions": {
@@ -249,6 +159,7 @@ export default {
     "roughs": "rough",
     "buoys": "buoy",
     "arrays": "array",
-    "assays": "assay"
+    "assays": "assay",
+    "fuzzes": "fuzz"
   }
 }

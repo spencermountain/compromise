@@ -1,62 +1,20 @@
 export default {
   "rules": {
     "t": [
-      [
-        "earest",
-        "ear"
-      ],
-      [
-        "llest",
-        "ll"
-      ],
-      [
-        "erest",
-        "ere"
-      ],
-      [
-        "urest",
-        "ure"
-      ],
-      [
-        "dest",
-        "d"
-      ],
-      [
-        "gest",
-        "g"
-      ],
-      [
-        "hest",
-        "h"
-      ],
-      [
-        "iest",
-        "y"
-      ],
-      [
-        "kest",
-        "k"
-      ],
-      [
-        "nest",
-        "n"
-      ],
-      [
-        "pest",
-        "p"
-      ],
-      [
-        "sest",
-        "se"
-      ],
-      [
-        "test",
-        "t"
-      ],
-      [
-        "west",
-        "w"
-      ]
+      ["earest", "ear"],
+      ["llest", "ll"],
+      ["erest", "ere"],
+      ["urest", "ure"],
+      ["dest", "d"],
+      ["gest", "g"],
+      ["hest", "h"],
+      ["iest", "y"],
+      ["kest", "k"],
+      ["nest", "n"],
+      ["pest", "p"],
+      ["sest", "se"],
+      ["test", "t"],
+      ["west", "w"]
     ]
   },
   "exceptions": {

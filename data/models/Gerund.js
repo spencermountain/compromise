@@ -5,522 +5,135 @@ export default {
         "ceeding",
         "ceed"
       ],
-      [
-        "hanging",
-        "hange"
-      ],
-      [
-        "ringing",
-        "ring"
-      ],
-      [
-        "harging",
-        "harge"
-      ],
-      [
-        "eathing",
-        "eath"
-      ],
-      [
-        "celling",
-        "cel"
-      ],
-      [
-        "uelling",
-        "uel"
-      ],
-      [
-        "velling",
-        "vel"
-      ],
-      [
-        "welling",
-        "well"
-      ],
-      [
-        "rilling",
-        "rill"
-      ],
-      [
-        "ramming",
-        "ram"
-      ],
-      [
-        "efining",
-        "efine"
-      ],
-      [
-        "keeping",
-        "keepe"
-      ],
-      [
-        "evering",
-        "ever"
-      ],
-      [
-        "raising",
-        "raise"
-      ],
-      [
-        "reating",
-        "reat"
-      ],
-      [
-        "ighting",
-        "ight"
-      ],
-      [
-        "routing",
-        "rout"
-      ],
-      [
-        "ribing",
-        "ribe"
-      ],
-      [
-        "adding",
-        "ad"
-      ],
-      [
-        "eeding",
-        "eed"
-      ],
-      [
-        "anging",
-        "ange"
-      ],
-      [
-        "inging",
-        "ing"
-      ],
-      [
-        "arging",
-        "arge"
-      ],
-      [
-        "making",
-        "mak"
-      ],
-      [
-        "ulling",
-        "ull"
-      ],
-      [
-        "ooling",
-        "ool"
-      ],
-      [
-        "fining",
-        "fine"
-      ],
-      [
-        "honing",
-        "hone"
-      ],
-      [
-        "eeping",
-        "eep"
-      ],
-      [
-        "ouping",
-        "oup"
-      ],
-      [
-        "fering",
-        "fer"
-      ],
-      [
-        "hering",
-        "her"
-      ],
-      [
-        "vering",
-        "ver"
-      ],
-      [
-        "horing",
-        "hore"
-      ],
-      [
-        "toring",
-        "tor"
-      ],
-      [
-        "aising",
-        "aise"
-      ],
-      [
-        "bating",
-        "bate"
-      ],
-      [
-        "eating",
-        "eat"
-      ],
-      [
-        "oating",
-        "oat"
-      ],
-      [
-        "biting",
-        "bit"
-      ],
-      [
-        "citing",
-        "cite"
-      ],
-      [
-        "diting",
-        "dit"
-      ],
-      [
-        "riting",
-        "rite"
-      ],
-      [
-        "siting",
-        "sit"
-      ],
-      [
-        "asting",
-        "ast"
-      ],
-      [
-        "outing",
-        "out"
-      ],
-      [
-        "bbing",
-        "b"
-      ],
-      [
-        "mbing",
-        "mb"
-      ],
-      [
-        "rbing",
-        "rb"
-      ],
-      [
-        "ubing",
-        "ube"
-      ],
-      [
-        "ading",
-        "ad"
-      ],
-      [
-        "dding",
-        "d"
-      ],
-      [
-        "iding",
-        "ide"
-      ],
-      [
-        "oding",
-        "ode"
-      ],
-      [
-        "uding",
-        "ude"
-      ],
-      [
-        "nging",
-        "nge"
-      ],
-      [
-        "rging",
-        "rge"
-      ],
-      [
-        "thing",
-        "th"
-      ],
-      [
-        "oking",
-        "oke"
-      ],
-      [
-        "aling",
-        "al"
-      ],
-      [
-        "bling",
-        "ble"
-      ],
-      [
-        "cling",
-        "cle"
-      ],
-      [
-        "dling",
-        "dle"
-      ],
-      [
-        "eling",
-        "el"
-      ],
-      [
-        "fling",
-        "fle"
-      ],
-      [
-        "gling",
-        "gle"
-      ],
-      [
-        "iling",
-        "il"
-      ],
-      [
-        "kling",
-        "kle"
-      ],
-      [
-        "pling",
-        "ple"
-      ],
-      [
-        "tling",
-        "tle"
-      ],
-      [
-        "uling",
-        "ule"
-      ],
-      [
-        "wling",
-        "wl"
-      ],
-      [
-        "aming",
-        "am"
-      ],
-      [
-        "iming",
-        "im"
-      ],
-      [
-        "mming",
-        "m"
-      ],
-      [
-        "oming",
-        "om"
-      ],
-      [
-        "aning",
-        "an"
-      ],
-      [
-        "ening",
-        "en"
-      ],
-      [
-        "ining",
-        "in"
-      ],
-      [
-        "oning",
-        "on"
-      ],
-      [
-        "aping",
-        "ape"
-      ],
-      [
-        "iping",
-        "ipe"
-      ],
-      [
-        "lping",
-        "lp"
-      ],
-      [
-        "mping",
-        "mp"
-      ],
-      [
-        "oping",
-        "op"
-      ],
-      [
-        "pping",
-        "p"
-      ],
-      [
-        "yping",
-        "ype"
-      ],
-      [
-        "aring",
-        "ar"
-      ],
-      [
-        "ering",
-        "er"
-      ],
-      [
-        "iring",
-        "ire"
-      ],
-      [
-        "oring",
-        "or"
-      ],
-      [
-        "uring",
-        "ure"
-      ],
-      [
-        "asing",
-        "ase"
-      ],
-      [
-        "ising",
-        "ise"
-      ],
-      [
-        "using",
-        "use"
-      ],
-      [
-        "ating",
-        "ate"
-      ],
-      [
-        "cting",
-        "ct"
-      ],
-      [
-        "eting",
-        "et"
-      ],
-      [
-        "fting",
-        "ft"
-      ],
-      [
-        "iting",
-        "it"
-      ],
-      [
-        "lting",
-        "lt"
-      ],
-      [
-        "nting",
-        "nt"
-      ],
-      [
-        "oting",
-        "ote"
-      ],
-      [
-        "pting",
-        "pt"
-      ],
-      [
-        "rting",
-        "rt"
-      ],
-      [
-        "sting",
-        "st"
-      ],
-      [
-        "tting",
-        "t"
-      ],
-      [
-        "uting",
-        "ute"
-      ],
-      [
-        "owing",
-        "ow"
-      ],
-      [
-        "dying",
-        "dy"
-      ],
-      [
-        "lying",
-        "ly"
-      ],
-      [
-        "cing",
-        "ce"
-      ],
-      [
-        "ding",
-        "d"
-      ],
-      [
-        "eing",
-        "e"
-      ],
-      [
-        "fing",
-        "f"
-      ],
-      [
-        "ging",
-        "ge"
-      ],
-      [
-        "hing",
-        "h"
-      ],
-      [
-        "king",
-        "k"
-      ],
-      [
-        "ming",
-        "m"
-      ],
-      [
-        "ning",
-        "n"
-      ],
-      [
-        "oing",
-        "o"
-      ],
-      [
-        "ring",
-        "r"
-      ],
-      [
-        "sing",
-        "se"
-      ],
-      [
-        "uing",
-        "ue"
-      ],
-      [
-        "ving",
-        "ve"
-      ],
-      [
-        "wing",
-        "w"
-      ],
-      [
-        "xing",
-        "x"
-      ],
-      [
-        "ying",
-        "y"
-      ],
-      [
-        "zing",
-        "ze"
-      ]
+      ["hanging", "hange"],
+      ["ringing", "ring"],
+      ["harging", "harge"],
+      ["eathing", "eath"],
+      ["celling", "cel"],
+      ["uelling", "uel"],
+      ["velling", "vel"],
+      ["welling", "well"],
+      ["rilling", "rill"],
+      ["ramming", "ram"],
+      ["efining", "efine"],
+      ["keeping", "keepe"],
+      ["evering", "ever"],
+      ["raising", "raise"],
+      ["reating", "reat"],
+      ["ighting", "ight"],
+      ["routing", "rout"],
+      ["ribing", "ribe"],
+      ["adding", "ad"],
+      ["eeding", "eed"],
+      ["anging", "ange"],
+      ["inging", "ing"],
+      ["arging", "arge"],
+      ["making", "mak"],
+      ["ulling", "ull"],
+      ["ooling", "ool"],
+      ["fining", "fine"],
+      ["honing", "hone"],
+      ["eeping", "eep"],
+      ["ouping", "oup"],
+      ["fering", "fer"],
+      ["hering", "her"],
+      ["vering", "ver"],
+      ["horing", "hore"],
+      ["toring", "tor"],
+      ["aising", "aise"],
+      ["bating", "bate"],
+      ["eating", "eat"],
+      ["oating", "oat"],
+      ["biting", "bit"],
+      ["citing", "cite"],
+      ["diting", "dit"],
+      ["riting", "rite"],
+      ["siting", "sit"],
+      ["asting", "ast"],
+      ["outing", "out"],
+      ["bbing", "b"],
+      ["mbing", "mb"],
+      ["rbing", "rb"],
+      ["ubing", "ube"],
+      ["ading", "ad"],
+      ["dding", "d"],
+      ["iding", "ide"],
+      ["oding", "ode"],
+      ["uding", "ude"],
+      ["nging", "nge"],
+      ["rging", "rge"],
+      ["thing", "th"],
+      ["oking", "oke"],
+      ["aling", "al"],
+      ["bling", "ble"],
+      ["cling", "cle"],
+      ["dling", "dle"],
+      ["eling", "el"],
+      ["fling", "fle"],
+      ["gling", "gle"],
+      ["iling", "il"],
+      ["kling", "kle"],
+      ["pling", "ple"],
+      ["tling", "tle"],
+      ["uling", "ule"],
+      ["wling", "wl"],
+      ["aming", "am"],
+      ["iming", "im"],
+      ["mming", "m"],
+      ["oming", "om"],
+      ["aning", "an"],
+      ["ening", "en"],
+      ["ining", "in"],
+      ["oning", "on"],
+      ["aping", "ape"],
+      ["iping", "ipe"],
+      ["lping", "lp"],
+      ["mping", "mp"],
+      ["oping", "op"],
+      ["pping", "p"],
+      ["yping", "ype"],
+      ["aring", "ar"],
+      ["ering", "er"],
+      ["iring", "ire"],
+      ["oring", "or"],
+      ["uring", "ure"],
+      ["asing", "ase"],
+      ["ising", "ise"],
+      ["using", "use"],
+      ["ating", "ate"],
+      ["cting", "ct"],
+      ["eting", "et"],
+      ["fting", "ft"],
+      ["iting", "it"],
+      ["lting", "lt"],
+      ["nting", "nt"],
+      ["oting", "ote"],
+      ["pting", "pt"],
+      ["rting", "rt"],
+      ["sting", "st"],
+      ["tting", "t"],
+      ["uting", "ute"],
+      ["owing", "ow"],
+      ["dying", "dy"],
+      ["lying", "ly"],
+      ["cing", "ce"],
+      ["ding", "d"],
+      ["eing", "e"],
+      ["fing", "f"],
+      ["ging", "ge"],
+      ["hing", "h"],
+      ["king", "k"],
+      ["ming", "m"],
+      ["ning", "n"],
+      ["oing", "o"],
+      ["ring", "r"],
+      ["sing", "se"],
+      ["uing", "ue"],
+      ["ving", "ve"],
+      ["wing", "w"],
+      ["xing", "x"],
+      ["ying", "y"],
+      ["zing", "ze"]
     ]
   },
   "exceptions": {

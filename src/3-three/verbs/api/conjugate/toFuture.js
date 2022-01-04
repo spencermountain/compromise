@@ -8,7 +8,7 @@ const simple = (vb, parsed) => {
   str = verbToInfinitive(str, vb.model, getTense(root))
   if (str) {
     vb = vb.replace(root, str)
-    // vb.not('#Particle').tag('Infinitive')
+    vb.not('#Particle').tag('Verb')
   }
   vb.prepend('will').match('will').tag('Auxiliary')
   vb.remove(auxiliary)

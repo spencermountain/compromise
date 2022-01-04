@@ -42,11 +42,11 @@ let guessVerb = {
     'le',
     'unk',
     'ung',
+    'upt',
     'en',
   ],
   PastTense: ['ept', 'ed', 'lt', 'nt', 'ew', 'ld'],
   PresentTense: [
-    'upt',
     'rks',
     'cks',
     'nks',

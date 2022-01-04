@@ -56,4 +56,5 @@ const toInfinitive = function (str, model, tense) {
 }
 export default toInfinitive
 
-// console.log(toInfinitive('are', { one: {} }))
+// console.log(toInfinitive('snarled', { one: {} }))
+// console.log(convert('snarled', fromPast))

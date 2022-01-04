@@ -5,78 +5,24 @@ export default {
         "immer",
         "im"
       ],
-      [
-        "lder",
-        "ld"
-      ],
-      [
-        "ffer",
-        "ff"
-      ],
-      [
-        "ller",
-        "ll"
-      ],
-      [
-        "rmer",
-        "rm"
-      ],
-      [
-        "tter",
-        "t"
-      ],
-      [
-        "cer",
-        "ce"
-      ],
-      [
-        "der",
-        "d"
-      ],
-      [
-        "ger",
-        "g"
-      ],
-      [
-        "her",
-        "h"
-      ],
-      [
-        "ier",
-        "y"
-      ],
-      [
-        "ker",
-        "k"
-      ],
-      [
-        "ler",
-        "l"
-      ],
-      [
-        "ner",
-        "n"
-      ],
-      [
-        "per",
-        "p"
-      ],
-      [
-        "rer",
-        "r"
-      ],
-      [
-        "ser",
-        "se"
-      ],
-      [
-        "ter",
-        "t"
-      ],
-      [
-        "wer",
-        "w"
-      ]
+      ["lder", "ld"],
+      ["ffer", "ff"],
+      ["ller", "ll"],
+      ["rmer", "rm"],
+      ["tter", "t"],
+      ["cer", "ce"],
+      ["der", "d"],
+      ["ger", "g"],
+      ["her", "h"],
+      ["ier", "y"],
+      ["ker", "k"],
+      ["ler", "l"],
+      ["ner", "n"],
+      ["per", "p"],
+      ["rer", "r"],
+      ["ser", "se"],
+      ["ter", "t"],
+      ["wer", "w"]
     ]
   },
   "exceptions": {

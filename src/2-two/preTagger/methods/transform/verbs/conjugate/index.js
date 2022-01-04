@@ -23,16 +23,18 @@ const conjugate = function (inf, model) {
   }
   let [str, particle] = parse(inf)
   let found = {
+    Infinitive: inf,
     PastTense: convert(str, toPast),
     PresentTense: convert(str, toPresent),
     Gerund: convert(str, toGerund),
+    FutureTense: 'will ' + inf
   }
+  // add past-participle if it's interesting
   // drive -> driven (not drove)
   let pastPrt = convert(str, toParticiple)
-  if (pastPrt !== found.PastTense) {
+  if (pastPrt !== inf && pastPrt !== found.PastTense) {
     found.Participle = pastPrt
   }
-
   // put phrasal-verbs back together again
   if (particle) {
     Object.keys(found).forEach(k => {

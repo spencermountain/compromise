@@ -1,492 +1,150 @@
 export default {
   "rules": {
     "d": [
-      [
-        "scribed",
-        "scribe"
-      ],
-      [
-        "nnelled",
-        "nnel"
-      ],
-      [
-        "efined",
-        "efine"
-      ],
-      [
-        "ighted",
-        "ight"
-      ],
-      [
-        "ached",
-        "ach"
-      ],
-      [
-        "icked",
-        "ick"
-      ],
-      [
-        "ckled",
-        "ckle"
-      ],
-      [
-        "illed",
-        "ill"
-      ],
-      [
-        "ooled",
-        "ool"
-      ],
-      [
-        "urled",
-        "url"
-      ],
-      [
-        "fined",
-        "fine"
-      ],
-      [
-        "hered",
-        "her"
-      ],
-      [
-        "vered",
-        "ver"
-      ],
-      [
-        "cused",
-        "cuse"
-      ],
-      [
-        "eated",
-        "eat"
-      ],
-      [
-        "cited",
-        "cite"
-      ],
-      [
-        "dited",
-        "dit"
-      ],
-      [
-        "sited",
-        "sit"
-      ],
-      [
-        "asted",
-        "ast"
-      ],
-      [
-        "bbed",
-        "b"
-      ],
-      [
-        "mbed",
-        "mb"
-      ],
-      [
-        "rbed",
-        "rb"
-      ],
-      [
-        "aded",
-        "ade"
-      ],
-      [
-        "dded",
-        "d"
-      ],
-      [
-        "ided",
-        "ide"
-      ],
-      [
-        "uded",
-        "ude"
-      ],
-      [
-        "gged",
-        "g"
-      ],
-      [
-        "nged",
-        "nge"
-      ],
-      [
-        "ched",
-        "ch"
-      ],
-      [
-        "shed",
-        "sh"
-      ],
-      [
-        "died",
-        "dy"
-      ],
-      [
-        "lied",
-        "ly"
-      ],
-      [
-        "pied",
-        "py"
-      ],
-      [
-        "aked",
-        "ake"
-      ],
-      [
-        "cked",
-        "ck"
-      ],
-      [
-        "oked",
-        "oke"
-      ],
-      [
-        "aled",
-        "al"
-      ],
-      [
-        "bled",
-        "ble"
-      ],
-      [
-        "dled",
-        "dle"
-      ],
-      [
-        "eled",
-        "el"
-      ],
-      [
-        "fled",
-        "fle"
-      ],
-      [
-        "gled",
-        "gle"
-      ],
-      [
-        "iled",
-        "il"
-      ],
-      [
-        "pled",
-        "ple"
-      ],
-      [
-        "tled",
-        "tle"
-      ],
-      [
-        "uled",
-        "ule"
-      ],
-      [
-        "imed",
-        "im"
-      ],
-      [
-        "aned",
-        "an"
-      ],
-      [
-        "ened",
-        "en"
-      ],
-      [
-        "ined",
-        "ine"
-      ],
-      [
-        "oned",
-        "on"
-      ],
-      [
-        "aped",
-        "ape"
-      ],
-      [
-        "iped",
-        "ipe"
-      ],
-      [
-        "mped",
-        "mp"
-      ],
-      [
-        "oped",
-        "op"
-      ],
-      [
-        "pped",
-        "p"
-      ],
-      [
-        "ared",
-        "are"
-      ],
-      [
-        "ered",
-        "er"
-      ],
-      [
-        "ired",
-        "ire"
-      ],
-      [
-        "rred",
-        "r"
-      ],
-      [
-        "ured",
-        "ure"
-      ],
-      [
-        "used",
-        "use"
-      ],
-      [
-        "ated",
-        "ate"
-      ],
-      [
-        "cted",
-        "ct"
-      ],
-      [
-        "eted",
-        "et"
-      ],
-      [
-        "fted",
-        "ft"
-      ],
-      [
-        "ited",
-        "it"
-      ],
-      [
-        "lted",
-        "lt"
-      ],
-      [
-        "nted",
-        "nt"
-      ],
-      [
-        "oted",
-        "ote"
-      ],
-      [
-        "pted",
-        "pt"
-      ],
-      [
-        "rted",
-        "rt"
-      ],
-      [
-        "sted",
-        "st"
-      ],
-      [
-        "tted",
-        "t"
-      ],
-      [
-        "uted",
-        "ute"
-      ],
-      [
-        "owed",
-        "ow"
-      ],
-      [
-        "ound",
-        "ind"
-      ],
-      [
-        "tood",
-        "tand"
-      ],
-      [
-        "ead",
-        "ead"
-      ],
-      [
-        "ced",
-        "ce"
-      ],
-      [
-        "ded",
-        "d"
-      ],
-      [
-        "eed",
-        "ee"
-      ],
-      [
-        "fed",
-        "f"
-      ],
-      [
-        "ged",
-        "ge"
-      ],
-      [
-        "hed",
-        "h"
-      ],
-      [
-        "ied",
-        "y"
-      ],
-      [
-        "ked",
-        "k"
-      ],
-      [
-        "med",
-        "m"
-      ],
-      [
-        "ned",
-        "n"
-      ],
-      [
-        "red",
-        "r"
-      ],
-      [
-        "sed",
-        "se"
-      ],
-      [
-        "ued",
-        "ue"
-      ],
-      [
-        "ved",
-        "ve"
-      ],
-      [
-        "wed",
-        "w"
-      ],
-      [
-        "xed",
-        "x"
-      ],
-      [
-        "yed",
-        "y"
-      ],
-      [
-        "zed",
-        "ze"
-      ],
-      [
-        "aid",
-        "ay"
-      ],
-      [
-        "bid",
-        "bid"
-      ],
-      [
-        "eld",
-        "old"
-      ],
-      [
-        "old",
-        "ell"
-      ]
+      ["scribed", "scribe"],
+      ["nnelled", "nnel"],
+      ["efined", "efine"],
+      ["ighted", "ight"],
+      ["ached", "ach"],
+      ["icked", "ick"],
+      ["ckled", "ckle"],
+      ["illed", "ill"],
+      ["ooled", "ool"],
+      ["urled", "url"],
+      ["fined", "fine"],
+      ["hered", "her"],
+      ["vered", "ver"],
+      ["cused", "cuse"],
+      ["eated", "eat"],
+      ["cited", "cite"],
+      ["dited", "dit"],
+      ["sited", "sit"],
+      ["asted", "ast"],
+      ["bbed", "b"],
+      ["mbed", "mb"],
+      ["rbed", "rb"],
+      ["aded", "ade"],
+      ["dded", "d"],
+      ["ided", "ide"],
+      ["uded", "ude"],
+      ["gged", "g"],
+      ["nged", "nge"],
+      ["ched", "ch"],
+      ["shed", "sh"],
+      ["died", "dy"],
+      ["lied", "ly"],
+      ["pied", "py"],
+      ["aked", "ake"],
+      ["cked", "ck"],
+      ["oked", "oke"],
+      ["aled", "al"],
+      ["bled", "ble"],
+      ["dled", "dle"],
+      ["eled", "el"],
+      ["fled", "fle"],
+      ["gled", "gle"],
+      ["iled", "il"],
+      ["pled", "ple"],
+      ["tled", "tle"],
+      ["uled", "ule"],
+      ["imed", "im"],
+      ["aned", "an"],
+      ["ened", "en"],
+      ["ined", "ine"],
+      ["oned", "on"],
+      ["aped", "ape"],
+      ["iped", "ipe"],
+      ["mped", "mp"],
+      ["oped", "op"],
+      ["pped", "p"],
+      ["ared", "are"],
+      ["ered", "er"],
+      ["ired", "ire"],
+      ["rred", "r"],
+      ["ured", "ure"],
+      ["used", "use"],
+      ["ated", "ate"],
+      ["cted", "ct"],
+      ["eted", "et"],
+      ["fted", "ft"],
+      ["ited", "it"],
+      ["lted", "lt"],
+      ["nted", "nt"],
+      ["oted", "ote"],
+      ["pted", "pt"],
+      ["rted", "rt"],
+      ["sted", "st"],
+      ["tted", "t"],
+      ["uted", "ute"],
+      ["owed", "ow"],
+      ["ound", "ind"],
+      ["tood", "tand"],
+      ["ead", "ead"],
+      ["ced", "ce"],
+      ["ded", "d"],
+      ["eed", "ee"],
+      ["fed", "f"],
+      ["ged", "ge"],
+      ["hed", "h"],
+      ["ied", "y"],
+      ["ked", "k"],
+      ["med", "m"],
+      ["ned", "n"],
+      ["red", "r"],
+      ["sed", "se"],
+      ["ued", "ue"],
+      ["ved", "ve"],
+      ["wed", "w"],
+      ["xed", "x"],
+      ["yed", "y"],
+      ["zed", "ze"],
+      ["aid", "ay"],
+      ["bid", "bid"],
+      ["eld", "old"],
+      ["old", "ell"]
     ],
     "e": [
       [
         "rote",
         "rite"
       ],
-      [
-        "rove",
-        "rive"
-      ],
-      [
-        "ade",
-        "ake"
-      ],
-      [
-        "ame",
-        "ome"
-      ],
-      [
-        "ore",
-        "ear"
-      ]
+      ["rove", "rive"],
+      ["ade", "ake"],
+      ["ame", "ome"],
+      ["ore", "ear"]
     ],
     "g": [
       [
         "lung",
         "ling"
       ],
-      [
-        "ang",
-        "ing"
-      ]
+      ["ang", "ing"]
     ],
     "t": [
       [
         "uilt",
         "uild"
       ],
-      [
-        "elt",
-        "eel"
-      ],
-      [
-        "ent",
-        "end"
-      ],
-      [
-        "ept",
-        "eep"
-      ],
-      [
-        "et",
-        "et"
-      ],
-      [
-        "st",
-        "st"
-      ],
-      [
-        "ut",
-        "ut"
-      ]
+      ["elt", "eel"],
+      ["ent", "end"],
+      ["ept", "eep"],
+      ["et", "et"],
+      ["st", "st"],
+      ["ut", "ut"]
     ],
     "w": [
       [
         "hrew",
         "hrow"
       ],
-      [
-        "aw",
-        "ee"
-      ]
+      ["aw", "ee"]
     ],
     "k": [
       [
         "ank",
         "ink"
       ],
-      [
-        "ook",
-        "ake"
-      ]
+      ["ook", "ake"]
     ],
     "n": [
       [

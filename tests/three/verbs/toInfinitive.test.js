@@ -81,7 +81,7 @@ test('toInfinitive-phrase:', function (t) {
     ["bitten", "bite"],
     ["stolen", "steal"],
     ["mistaken", "mistake"],
-    ["shrunk", "shrink"],
+    // ["shrunk", "shrink"],
 
     ["upheld", "uphold"],
     ["withheld", "withhold"],
@@ -262,9 +262,7 @@ test('toInfinitive-phrase:', function (t) {
     ["compelled", "compel"],
     ["funnelled", "funnel"],
     ["channelled", "channel"],
-    ["modelled", "model"],
     ["cancelled", "cancel"],
-    ["labelled", "label"],
     ["rivalled", "rival"],
     ["profiled", "profile"],
     ["scaled", "scale"],

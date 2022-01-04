@@ -11,6 +11,11 @@ const toPresent = reverse(fromPresent)
 const toGerund = reverse(fromGerund)
 const toParticiple = reverse(fromParticiple)
 
+const toComparative = uncompress(data.Comparative)
+const toSuperlative = uncompress(data.Superlative)
+const fromComparative = reverse(toComparative)
+const fromSuperlative = reverse(toSuperlative)
+
 export default {
   fromPast,
   fromPresent,
@@ -19,5 +24,10 @@ export default {
   toPast,
   toPresent,
   toGerund,
-  toParticiple
+  toParticiple,
+  // adjectives
+  toComparative,
+  toSuperlative,
+  fromComparative,
+  fromSuperlative
 }

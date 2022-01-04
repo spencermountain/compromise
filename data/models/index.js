@@ -8,10 +8,10 @@ import Superlative from './Superlative.js'
 
 export default {
   // Adverb,
-  // Comparative,
+  Comparative,
   Gerund,
   Participle,
   PastTense,
   PresentTense,
-  // Superlative,
+  Superlative,
 }

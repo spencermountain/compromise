@@ -60,11 +60,11 @@ const expandVariable = function (switchWords, model) {
 }
 
 const expand = function (model) {
-  model = expandIrregulars(model)
   model = expandLexicon(model.one.lexicon, model)
   model = addUncountables(model.one.lexicon, model)
   model = expandVariable(model.two.variables, model)
   model = expandModels(model)
+  model = expandIrregulars(model)
   return model
 }
 export default expand

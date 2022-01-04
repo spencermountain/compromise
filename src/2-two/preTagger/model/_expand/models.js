@@ -24,10 +24,10 @@ const expandModels = function (model) {
   words = getWords(toGerund, 'Infinitive', 'Gerund')
   Object.assign(res, words)
   // superlative
-  words = getWords(toSuperlative, 'Infinitive', 'Superlative')
+  words = getWords(toSuperlative, 'Adjective', 'Superlative')
   Object.assign(res, words)
   // comparative
-  words = getWords(toComparative, 'Infinitive', 'Comparative')
+  words = getWords(toComparative, 'Adjective', 'Comparative')
   Object.assign(res, words)
 
   model.one.lexicon = Object.assign(res, lexicon)

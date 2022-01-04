@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import plg from './plugins/speech/src/plugin.js'
 // nlp.plugin(plg)
 // import nlp from './builds/three/compromise-three.cjs'
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 
 
@@ -12,7 +12,7 @@ import nlp from './src/three.js'
 let txt = ''
 txt = `he is walking`
 txt = `he disrupted`
-txt = `I can tell`
+txt = `it was just gorgeous`
 let doc = nlp(txt)
 // doc.verbs().toPastTense()
 // doc.verbs().toPresentTense()

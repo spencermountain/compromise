@@ -161,6 +161,12 @@ export default {
     "spun": "spin",
     "stolen": "steal",
     "sung": "sing",
-    "wound": "wind"
+    "wound": "wind",
+    "bet": "bet",
+    "dived": "dive",
+    "set": "set",
+    "shaved": "shave",
+    "thrived": "thrive",
+    "upset": "upset"
   }
 }

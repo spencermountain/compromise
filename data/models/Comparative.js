@@ -109,6 +109,20 @@ export default {
     "truer": "true",
     "layer": "lay",
     "calmer": "calm",
-    "number": "numb"
+    "number": "numb",
+    "greater": "great",
+    "shorter": "short",
+    "faster": "fast",
+    "tighter": "tight",
+    "stricter": "strict",
+    "brighter": "bright",
+    "presenter": "present",
+    "lighter": "light",
+    "softer": "soft",
+    "smarter": "smart",
+    "broadcaster": "broadcast",
+    "quieter": "quiet",
+    "orienter": "orient",
+    "sweeter": "sweet"
   }
 }

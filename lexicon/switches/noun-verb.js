@@ -488,6 +488,5 @@ export default [
   'yield',
   'zip',
   'zone',
-  'hope',
 ]
 

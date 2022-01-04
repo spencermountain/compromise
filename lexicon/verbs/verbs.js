@@ -8,15 +8,12 @@ export default [
   'msg',
   'make sure',
   // -- participle forms--
-  'awaken',
   'seen',
   'shown',
-  'known',
   'frighten',
   'given',
   'hasten',
   'heighten',
-  'lengthen',
   'lessen',
   'worsen',
 ]

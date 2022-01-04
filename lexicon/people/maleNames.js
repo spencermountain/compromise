@@ -211,7 +211,7 @@ export default [
   'damion',
   'damon',
   'dan',
-  'dane',
+  // 'dane',
   'daniel',
   'danny',
   'daren',

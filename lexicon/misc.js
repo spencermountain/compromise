@@ -21,7 +21,6 @@ export default {
   being: 'Gerund',
   according: 'Gerund',
   resulting: 'Gerund',
-  developing: 'Gerund',
   staining: 'Gerund',
 
   no: 'Expression',

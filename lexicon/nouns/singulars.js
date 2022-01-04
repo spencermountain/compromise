@@ -34,7 +34,6 @@ export default [
   'home run',
   'human right',
   'home',
-  'insect',
   'lunch',
   'meeting',
   'nothing',

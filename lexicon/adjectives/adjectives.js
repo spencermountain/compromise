@@ -23,7 +23,6 @@ export default [
   'unrelenting',
 
   // never-verb 'ed' adjectives:
-  'mean',
   'nuanced',
   'old fashioned',
   'fabled',
@@ -212,7 +211,6 @@ export default [
   'easygoing',
   'efficient',
   'elderly',
-  'elite',
   'eminent',
   'en route',
   'en suite',
@@ -243,7 +241,6 @@ export default [
   'frequent',
   'frozen',
   'global',
-  'gone',
   'good',
   'gratis',
   'guilty',

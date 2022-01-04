@@ -1,4 +1,4 @@
-import switches from '../lib/switches/index.js'
+import switches from '../lib/lexicon/switches/index.js'
 import lexicon from '../lib/lexicon/index.js'
 
 let all = {}

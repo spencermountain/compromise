@@ -3,33 +3,31 @@
   "name": "compromise",
   "description": "modest natural language processing",
   "version": "13.11.4-rc4",
-  "main": "./builds/compromise.js",
+  "main": "./src/index.js",
   "unpkg": "./builds/compromise.js",
-  "module": "./builds/three/compromise-three.mjs",
   "type": "module",
   "types": "builds/types.d.ts",
   "sideEffects": false,
   "exports": {
     ".": {
-      "require": "./builds/three/compromise-three.cjs",
-      "import": "./builds/three/compromise-three.mjs",
-      "default": "./builds/three/compromise-three.cjs"
+      "import": "./src/three.js",
+      "require": "./builds/three/compromise-three.cjs"
     },
     "./tokenize": {
-      "import": "./builds/one/compromise-one.mjs",
-      "default": "./builds/one/compromise-one.cjs"
+      "import": "./src/one.js",
+      "require": "./builds/one/compromise-one.cjs"
     },
     "./one": {
-      "import": "./builds/one/compromise-one.mjs",
-      "default": "./builds/one/compromise-one.cjs"
+      "import": "./src/one.js",
+      "require": "./builds/one/compromise-one.cjs"
     },
     "./two": {
-      "import": "./builds/two/compromise-two.mjs",
-      "default": "./builds/two/compromise-two.cjs"
+      "import": "./src/two.js",
+      "require": "./builds/two/compromise-two.cjs"
     },
     "./three": {
-      "import": "./builds/three/compromise-three.mjs",
-      "default": "./builds/three/compromise-three.cjs"
+      "import": "./src/three.js",
+      "require": "./builds/three/compromise-three.cjs"
     }
   },
   "repository": {
@@ -85,24 +83,23 @@
     "arrowParens": "avoid"
   },
   "dependencies": {
-    "efrt": "2.3.2",
-    "grad-school": "0.0.4"
+    "efrt": "2.5.0",
+    "grad-school": "0.0.4",
+    "suffix-thumb": "3.1.5"
   },
   "devDependencies": {
-    "@rollup/plugin-alias": "3.1.8",
-    "@rollup/plugin-node-resolve": "13.1.1",
+    "@rollup/plugin-alias": "3.1.9",
+    "@rollup/plugin-node-resolve": "13.1.2",
     "amble": "1.3.0",
     "codecov": "3.8.3",
-    "eslint": "8.5.0",
+    "eslint": "8.6.0",
     "eslint-plugin-regexp": "1.5.1",
     "minimum-model": "^0.0.1",
     "nlp-corpus": "^4.2.0",
-    "nyc": "15.1.0",
-    "rollup": "2.62.0",
+    "rollup": "2.63.0",
     "rollup-plugin-filesize-check": "0.0.1",
     "rollup-plugin-terser": "7.0.2",
     "shelljs": "0.8.4",
-    "suffix-thumb": "^3.0.0",
     "tap-dancer": "0.3.4",
     "tape": "5.4.0"
   },

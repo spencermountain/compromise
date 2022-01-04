@@ -1,6 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from '../../src/one.js'
-import fs from 'fs'
 import corpus from 'nlp-corpus'
 
 

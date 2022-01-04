@@ -66,6 +66,7 @@ test('pennTreebank-test:', function (t) {
 
     for (let i = 0; i < sentence.tags.length; i++) {
       const want = softMapping[sentence.tags[i]]
+      terms[i] = terms[i] || { tags: [] }
       let found = terms[i].tags.some(tag => tag === want)
       if (!found) {
         perfect = false

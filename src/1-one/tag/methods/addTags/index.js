@@ -1,7 +1,6 @@
 import grad from 'grad-school'
 import fmt from './02-fmt.js'
 import validate from './01-validate.js'
-// import grad from '/Users/spencer/mountain/grad-school/src/index.js'
 
 // 'fill-down' parent logic inference
 const compute = function (allTags) {

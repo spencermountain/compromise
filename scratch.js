@@ -7,12 +7,11 @@ nlp.verbose('tagger')
 
 
 
-
 // let txt = `i was overthrown`
 let txt = ''
 txt = `he is walking`
 txt = `he disrupted`
-txt = `dumbest`
+txt = `pleasant`
 let doc = nlp(txt)
 // doc.verbs().toPastTense()
 // doc.verbs().toPresentTense()
@@ -51,6 +50,6 @@ doc.debug()
 
 
 
-
+prepDFS
 
 */

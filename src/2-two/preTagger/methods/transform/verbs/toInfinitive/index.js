@@ -1,7 +1,5 @@
-// import { fromPast, fromPresent, fromGerund, fromParticiple } from '../../../../model/models/index.js'
 import { convert } from 'suffix-thumb'
 import getTense from '../getTense/index.js'
-
 
 const toParts = function (str, model) {
   let prefix = ''

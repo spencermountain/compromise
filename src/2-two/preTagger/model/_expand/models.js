@@ -10,7 +10,6 @@ const expandModels = function (model) {
   let { lexicon, } = model.one
   const { toPast, toPresent, toGerund, toParticiple } = model.two.models
   let res = {}
-  // console.log(Object.keys(lexicon).length)
   // participle-form
   let words = getWords(toParticiple, 'Infinitive', 'Participle')
   Object.assign(res, words)
@@ -24,11 +23,8 @@ const expandModels = function (model) {
   words = getWords(toGerund, 'Infinitive', 'Gerund')
   Object.assign(res, words)
 
-  // console.log(toPresent.exceptions.say)
   model.one.lexicon = Object.assign(res, lexicon)
-  // console.log(lexicon.say)
 
-  // console.log(Object.keys(lexicon).length)
   return model
 }
 export default expandModels

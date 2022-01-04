@@ -12,7 +12,7 @@ nlp.verbose('tagger')
 let txt = ''
 txt = `he is walking`
 txt = `he disrupted`
-txt = `it was just gorgeous`
+txt = `jack seems guarded`
 let doc = nlp(txt)
 // doc.verbs().toPastTense()
 // doc.verbs().toPresentTense()

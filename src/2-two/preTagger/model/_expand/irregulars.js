@@ -5,10 +5,16 @@ const expandIrregulars = function (model) {
   // scounge irregulars for any interesting lexicon-data:
   // Object.entries(irregularVerbs).forEach(a => {
   //   let [inf, conj] = a
+  //   // if (!lexicon[inf]) {
+  //   //   console.log(inf)
+  //   // }
   //   lexicon[inf] = lexicon[inf] || 'Infinitive'
   //   Object.keys(conj).forEach(tag => {
   //     let word = conj[tag]
   //     if (word !== '') {
+  //       // if (!lexicon[word]) {
+  //       //   console.log(word, tag)
+  //       // }
   //       lexicon[word] = lexicon[word] || tag
   //     }
   //   })

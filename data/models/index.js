@@ -7,11 +7,11 @@ import PresentTense from './PresentTense.js'
 import Superlative from './Superlative.js'
 
 export default {
-  Adverb,
-  Comparative,
+  // Adverb,
+  // Comparative,
   Gerund,
   Participle,
   PastTense,
   PresentTense,
-  Superlative,
+  // Superlative,
 }

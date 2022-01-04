@@ -1,5 +1,4 @@
 import irregularPlurals from './irregulars/plurals.js'
-// import irregularVerbs from './irregulars/conjugations.js'
 import { lexicon, variables } from './lexicon/index.js'
 import clues from './clues/index.js'
 import suffixPatterns from './patterns/suffixes.js'
@@ -20,7 +19,6 @@ let model = {
   },
   two: {
     irregularPlurals,
-    // irregularVerbs,
     models,
 
     suffixPatterns,

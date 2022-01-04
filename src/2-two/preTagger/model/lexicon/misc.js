@@ -47,51 +47,19 @@ let misc = {
   may: 'Modal',
 
 
-  // 'actor': 'Actor',
-  // 'aimer': 'Actor',
-  // 'babysitter': 'Actor',
-  // 'beater': 'Actor',
-  // 'boiler': 'Actor',
-  // 'competitor': 'Actor',
-  // 'developer': 'Actor',
-  // 'eater': 'Actor',
-  // 'feeler': 'Actor',
-  // 'meeter': 'Actor',
-  // 'stealer': 'Actor',
-  // 'streamer': 'Actor',
-  // 'suiter': 'Actor',
-  // 'waiter': 'Actor',
-
-  'ageing': 'Gerund',
-  'aiming': 'Gerund',
-  'puking': 'Gerund',
-  'mimicking': 'Gerund',
-  'forgeting': 'Gerund',
-
-  'aged': 'PastTense',
-  'aimed': 'PastTense',
+  // irregular conjugations with two forms
   'babysat': 'PastTense',
   'blew': 'PastTense',
-  'budgeted': 'PastTense',
-  'colored': 'PastTense',
   'drank': 'PastTense',
   'drove': 'PastTense',
   'forgave': 'PastTense',
-  'guided': 'PastTense',
-  'iced': 'PastTense',
   'skiied': 'PastTense',
   'spilt': 'PastTense',
   'stung': 'PastTense',
   'swam': 'PastTense',
   'swung': 'PastTense',
   'guaranteed': 'PastTense',
-  'programmed': 'PastTense',
   'shrunk': 'PastTense',
-  'distilled': 'PastTense',
-  'labelled': 'PastTense',
-
-  'bitten': 'Participle',
-  'driven': 'Participle',
 
 }
 export default misc

@@ -1,3 +1,4 @@
+
 const getWords = function (model, left, right) {
   return Object.entries(model.exceptions).reduce((h, a) => {
     h[a[0]] = left
@@ -8,7 +9,7 @@ const getWords = function (model, left, right) {
 
 const expandModels = function (model) {
   let { lexicon, } = model.one
-  const { toPast, toPresent, toGerund, toParticiple } = model.two.models
+  const { toPast, toPresent, toGerund, toParticiple, toSuperlative, toComparative } = model.two.models
   let res = {}
   // participle-form
   let words = getWords(toParticiple, 'Infinitive', 'Participle')
@@ -21,6 +22,12 @@ const expandModels = function (model) {
   Object.assign(res, words)
   // gerund-form
   words = getWords(toGerund, 'Infinitive', 'Gerund')
+  Object.assign(res, words)
+  // superlative
+  words = getWords(toSuperlative, 'Infinitive', 'Superlative')
+  Object.assign(res, words)
+  // comparative
+  words = getWords(toComparative, 'Infinitive', 'Comparative')
   Object.assign(res, words)
 
   model.one.lexicon = Object.assign(res, lexicon)

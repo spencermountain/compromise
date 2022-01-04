@@ -11,7 +11,7 @@ const toPresent = reverse(fromPresent)
 const toGerund = reverse(fromGerund)
 const toParticiple = reverse(fromParticiple)
 
-export {
+export default {
   fromPast,
   fromPresent,
   fromGerund,

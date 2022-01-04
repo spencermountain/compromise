@@ -33,7 +33,7 @@ const steps = [
   },
   {
     label: 'models',
-    path: './src/2-two/preTagger/methods/transform/models/_data.js',
+    path: './src/2-two/preTagger/model/models/_data.js',
     compress: function () {
       Object.keys(models).forEach(k => {
         models[k] = compress(models[k])

@@ -1,11 +1,10 @@
 import irregularPlurals from './irregulars/plurals.js'
-import irregularVerbs from './irregulars/conjugations.js'
 import { lexicon, variables } from './lexicon/index.js'
 import clues from './clues/index.js'
 import suffixPatterns from './patterns/suffixes.js'
 import endsWith from './patterns/endsWith.js'
 import neighbours from './patterns/neighbours.js'
-
+import models from './models/index.js'
 import regexNormal from './regex/regex-normal.js'
 import regexText from './regex/regex-text.js'
 import regexNumbers from './regex/regex-numbers.js'
@@ -20,7 +19,7 @@ let model = {
   },
   two: {
     irregularPlurals,
-    irregularVerbs,
+    models,
 
     suffixPatterns,
     endsWith,

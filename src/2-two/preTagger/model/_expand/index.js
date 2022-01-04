@@ -1,5 +1,6 @@
 import methods from '../../methods/index.js'
 import expandIrregulars from './irregulars.js'
+import expandModels from './models.js'
 
 // defaults for switches
 const variables = {
@@ -59,6 +60,7 @@ const expandVariable = function (switchWords, model) {
 }
 
 const expand = function (model) {
+  model = expandModels(model)
   model = expandIrregulars(model)
   model = expandLexicon(model.one.lexicon, model)
   model = addUncountables(model.one.lexicon, model)

@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import plg from './plugins/speech/src/plugin.js'
 // nlp.plugin(plg)
 // import nlp from './builds/three/compromise-three.cjs'
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 
 
@@ -12,8 +12,8 @@ nlp.verbose('tagger')
 let txt = ''
 txt = `he is walking`
 txt = `he disrupted`
-txt = `he will disrupt`
-let doc = nlp(txt).debug()
+txt = `I can tell`
+let doc = nlp(txt)
 // doc.verbs().toPastTense()
 // doc.verbs().toPresentTense()
 // doc.verbs().toInfinitive()

@@ -1,4 +1,4 @@
-import { toPast, toPresent, toGerund, toParticiple } from '../../models/index.js'
+// import { toPast, toPresent, toGerund, toParticiple } from '../../../../model/models/index.js'
 import { convert } from 'suffix-thumb'
 
 // pull-apart phrasal verb 'fall over'
@@ -12,6 +12,7 @@ const parse = (inf) => {
 //we run this on every verb in the lexicon, so please keep it fast
 //we assume the input word is a proper infinitive
 const conjugate = function (inf, model) {
+  const { toPast, toPresent, toGerund, toParticiple } = model.two.models
   // ad-hoc Copula response
   if (inf === 'be') {
     return {

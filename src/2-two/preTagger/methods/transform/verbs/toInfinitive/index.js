@@ -18,7 +18,7 @@ const toParts = function (str, model) {
 }
 
 const pluralCopula = new Set(['are', 'were', 'been'])
-const singCopula = new Set(['is', 'was', 'be', 'being'])
+const singCopula = new Set(['is', 'am', 'was', 'be', 'being'])
 
 const toInfinitive = function (str, model, tense) {
   const { fromPast, fromPresent, fromGerund, fromParticiple } = model.two.models
@@ -28,9 +28,9 @@ const toInfinitive = function (str, model, tense) {
     tense = getTense(str)
   }
   if (pluralCopula.has(str)) {
-    inf = 'are'
+    inf = 'be'
   } else if (singCopula.has(str)) {
-    inf = 'is'
+    inf = 'be'
   } else if (tense === 'Participle') {
     inf = convert(verb, fromParticiple)
   } else if (tense === 'PastTense') {

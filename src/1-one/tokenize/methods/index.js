@@ -5,7 +5,7 @@ import normalize from '../compute/normal/index.js'
 
 // turn a string input into a 'document' json format
 const tokenize = function (input, world) {
-  const { methods, model, compute } = world
+  const { methods, model } = world
   const { splitSentences, splitTerms, splitWhitespace } = methods.one
   input = input || ''
   if (typeof input === 'number') {

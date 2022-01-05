@@ -4,6 +4,7 @@ import { noop, getTense } from '../lib.js'
 const simple = (vb, parsed) => {
   const { verbToInfinitive } = vb.methods.two.transform
   const { root, auxiliary } = parsed
+  auxiliary.freeze()
   let str = root.text('normal')
   str = verbToInfinitive(str, vb.model, getTense(root))
   if (str) {
@@ -11,6 +12,7 @@ const simple = (vb, parsed) => {
     vb.not('#Particle').tag('Verb')
   }
   vb.prepend('will').match('will').tag('Auxiliary')
+  auxiliary.repair()
   vb.remove(auxiliary)
   return vb
 }
@@ -19,15 +21,17 @@ const simple = (vb, parsed) => {
 const progressive = (vb, parsed) => {
   const { verbConjugate, verbToInfinitive } = vb.methods.two.transform
   const { root, auxiliary } = parsed
+  auxiliary.freeze()
   let str = root.text('normal')
   str = verbToInfinitive(str, vb.model, getTense(root))
   if (str) {
     str = verbConjugate(str, vb.model).Gerund
-    vb = vb.replace(root, str)
+    vb.replace(root, str)
     vb.not('#Particle').tag('PresentTense')
   }
-  vb.prepend('will be').match('will be').tag('Auxiliary')
+  auxiliary.repair()
   vb.remove(auxiliary)
+  vb.prepend('will be').match('will be').tag('Auxiliary')
   return vb
 }
 

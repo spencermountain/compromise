@@ -5,8 +5,8 @@ import nlp from './src/three.js'
 // import nlp from './builds/three/compromise-three.cjs'
 // nlp.verbose('tagger')
 
-let doc = nlp('he is walking')
-doc.verbs().toFuture()
+let doc = nlp(`I’m `)
+doc.contractions().expand()
 doc.debug()
 
 

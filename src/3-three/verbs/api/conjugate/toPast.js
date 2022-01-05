@@ -1,4 +1,4 @@
-import { noop, doDoes, getTense } from '../lib.js'
+import { noop, getTense, isPlural } from '../lib.js'
 
 
 const fns = {
@@ -22,6 +22,9 @@ const fns = {
     // all.Participle || all.PastTense
     // but skip the 'is' participle..
     str = str === 'been' ? 'was' : str
+    if (str === 'was' && isPlural(vb, parsed)) {
+      str = 'were'
+    }
     if (str) {
       vb.replace(root, str)
     }
@@ -31,11 +34,7 @@ const fns = {
   both: function (vb, parsed) {
     // 'he did not walk'
     if (parsed.negative.found) {
-      let did = doDoes(vb, parsed)
-      if (did === 'do') {
-        did = 'did'
-      }
-      vb.replace('will', did)
+      vb.replace('will', 'did')
       return vb
     }
     // 'he walked'

@@ -1,9 +1,8 @@
 import compute from './compute.js'
 import loops from './loops.js'
 import util from './utils.js'
-import freeze from './freeze.js'
 
-const methods = Object.assign({}, util, compute, loops, freeze)
+const methods = Object.assign({}, util, compute, loops)
 
 // aliases
 methods.get = methods.eq

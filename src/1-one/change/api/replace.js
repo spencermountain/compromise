@@ -1,11 +1,9 @@
 const fns = {}
 
-const mergeMatch = function (insert,) { }
-
 fns.replaceWith = function (input) {
   let ptrs = this.fullPointer
   // const insert = this.fromText(input).docs
-  let original = this.update(ptrs).freeze()
+  let original = this.update(ptrs)//.freeze()
   // slide this in
   this.insertAfter(input)
   this.match(original) //todo: fix me December '21

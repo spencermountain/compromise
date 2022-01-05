@@ -1,6 +1,5 @@
 import world from './world.js'
 import api from './methods/index.js'
-import { getPtrs } from './methods/_repair.js'
 
 class View {
   constructor(document, pointer, groups = {}) {
@@ -23,9 +22,8 @@ class View {
   get docs() {
     let docs = this.document
     if (this.frozen) {
-      return this.frozen
-    }
-    if (this.ptrs) {
+      docs = world.methods.one.slowMode(this)
+    } else if (this.ptrs) {
       docs = world.methods.one.getDoc(this.ptrs, this.document)
     }
     return docs
@@ -55,18 +53,20 @@ class View {
   }
   // return a more-hackable pointer
   get fullPointer() {
-    let { docs, ptrs, document, frozen } = this
-    // compute our pointer from frozen terms
-    if (frozen) {
-      return getPtrs(this)
-      // return this.methods.one.pointerFromTerms(frozen)
-    }
+    let { docs, ptrs, document } = this
     // compute a proper pointer, from docs
     let pointers = ptrs || docs.map((_d, n) => [n])
+    // do we need to repair it, first?
+    if (this.frozen) {
+      world.methods.one.slowMode(this)
+    }
     return pointers.map(a => {
       a = a.slice(0) //clone it
       a[1] = a[1] || 0
       a[2] = a[2] || (document[a[0]] || []).length
+      if (a[3]) {
+        a[3] = a[3]//frozen pointer
+      }
       return a
     })
   }

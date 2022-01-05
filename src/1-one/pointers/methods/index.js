@@ -4,6 +4,8 @@ import getIntersection from './lib/intersection.js'
 import getUnion from './lib/union.js'
 import splitAll from './lib/split.js'
 import pointerFromTerms from './pointerFromTerms.js'
+import slowMode from './slowMode.js'
+import getDoc from './getDoc.js'
 
 // flat list of terms from nested document
 const termList = function (docs) {
@@ -16,33 +18,11 @@ const termList = function (docs) {
   return arr
 }
 
-/** return a subset of the document, from a pointer */
-const getDoc = function (pointer, document) {
-  let doc = []
-  pointer.forEach(ptr => {
-    if (!ptr) {
-      return
-    }
-    let [n, start, end] = ptr //parsePointer(ptr)
-    let terms = document[n] || []
-    if (start === undefined) {
-      start = 0
-    }
-    if (end === undefined) {
-      end = terms.length
-    }
-    terms = terms.slice(start, end)
-    if (terms.length > 0) {
-      doc.push(terms)
-    }
-  })
-  return doc
-}
-
 export default {
   one: {
     termList,
     getDoc,
+    slowMode,
     getUnion,
     getIntersection,
     getDifference,

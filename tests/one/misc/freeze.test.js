@@ -79,3 +79,28 @@ test('freeze-sentence-remove :', function (t) {
   t.equal(doc.match(m).text(), 'match', here + 'remove-sentence')
   t.end()
 })
+
+test('repair-grandchild :', function (t) {
+  let doc = nlp('before. one match yes match no. match nope')
+  let m1 = doc.match('match yes match')
+  let m2 = m1.match('match yes')
+  let m3 = m2.match('yes').freeze()
+  doc.replace('one', 'so many more words')
+  m3.repair()
+  t.equal(m3.text(), 'yes', 'grandchild repaired')
+  t.end()
+})
+
+test('freeze-misc :', function (t) {
+  let doc = nlp('before. one match yes match no. match nope')
+  let m = doc.match('match yes').freeze()
+  doc.prepend('match yes')
+  doc.replace('one', 'oh yeah')
+  m.repair()
+  doc.replace('oh yeah', 'foo')
+  doc = doc.notIf('before')
+  doc.remove('one')
+  m.repair()
+  t.equal(m.text(), 'match yes', 'still repaired')
+  t.end()
+})

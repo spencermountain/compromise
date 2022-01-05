@@ -56,6 +56,7 @@ const methods = {
     let document = this.document
     this.ptrs.forEach(ptr => {
       let [n, i, end, ids] = ptr
+      ids = ids || []
       let terms = (document[n] || []).slice(i, end)
       // we still okay?
       if (looksOk(terms, ids)) {

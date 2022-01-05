@@ -6,11 +6,15 @@ import nlp from './src/one.js'
 // nlp.verbose('tagger')
 
 let doc = nlp('the boy and the girl.')
-let m = doc.match('(boy|girl)').freeze()
-doc.prepend('ooh baby')
-m.repair()
-console.log(m)
-doc.match(m).debug()
+// let m = doc.match('(boy|girl)')
+doc.intersection('(boy|girl)').debug()
+// m.freeze()
+// doc.prepend('ooh')
+// m.repair()
+// m.unfreeze()
+// console.log(m)
+// console.log(doc.match(m))
+// doc.match(m).debug()
 /*
 
 

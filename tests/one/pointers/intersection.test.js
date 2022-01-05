@@ -44,3 +44,18 @@ test('pointer-intersection-match :', function (t) {
   t.deepEqual(res.out('array'), ['match two'], here + 'intersection-match-two')
   t.end()
 })
+
+test('intersection-match :', function (t) {
+  let doc = nlp('the boy and the girl')
+  let res = doc.intersection('(boy|girl)').out('array')
+  t.deepEqual(res, ['boy', 'girl'], 'only-intersection')
+  t.end()
+})
+
+test('intersection-doc :', function (t) {
+  let doc = nlp('the boy and the girl')
+  let m = doc.match('(boy|girl)')
+  let res = doc.intersection(m).out('array')
+  t.deepEqual(res, ['boy', 'girl'], 'only-intersection-doc')
+  t.end()
+})

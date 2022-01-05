@@ -25,14 +25,13 @@ const getIntersection = function (a, b) {
     if (hmm.length === 0) {
       return
     }
-    // grow all b matches into one match
-    hmm = getExtent(hmm)
-    let overlap = intersection(ptr, hmm)
-    if (overlap) {
-      res.push(overlap)
-    }
+    hmm.forEach(h => {
+      let overlap = intersection(ptr, h)
+      if (overlap) {
+        res.push(overlap)
+      }
+    })
   })
-
   return res
 }
 export default getIntersection

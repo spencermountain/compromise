@@ -11,7 +11,7 @@ export default [
   // my first thought
   { match: '#Possessive #Ordinal [#PastTense]', group: 0, tag: 'Noun', reason: 'first-thought' },
   //the nice swim
-  { match: '(the|this|those|these) #Adjective [#Verb]', group: 0, tag: 'Noun', reason: 'the-adj-verb' },
+  { match: '(the|this|those|these) #Adjective [#Verb]', group: 0, tag: 'Noun', ifNo: '#Copula', reason: 'the-adj-verb' },
   // the truly nice swim
   { match: '(the|this|those|these) #Adverb #Adjective [#Verb]', group: 0, tag: 'Noun', reason: 'determiner4' },
   //the wait to vote
@@ -106,4 +106,6 @@ export default [
     tag: 'Noun',
     reason: 'the-noun-sense',
   },
+  // photographs of a computer are
+  { match: '[#PresentTense] (of|by|for) (a|an|the) #Noun #Copula', group: 0, tag: 'Plural', reason: 'photographs-of' },
 ]

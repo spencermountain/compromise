@@ -3,10 +3,9 @@ import nlp from './src/three.js'
 // import plg from './plugins/speech/src/plugin.js'
 // nlp.plugin(plg)
 // import nlp from './builds/three/compromise-three.cjs'
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
-let doc = nlp(`I’m `)
-doc.contractions().expand()
+let doc = nlp(`Photographs from a computer are`)
 doc.debug()
 
 

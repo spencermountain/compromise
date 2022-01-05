@@ -59,6 +59,7 @@ test('match-doc-freeze', function (t) {
   let doc = nlp('the boy and the girl.')
   let m = doc.match('(boy|girl)').freeze()
   doc.prepend('ooh baby')
+  m.repair()
   let arr = doc.match(m).out('array')
   t.deepEqual(arr, ['boy', 'girl'], here + 'match-doc')
   t.end()

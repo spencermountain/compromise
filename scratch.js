@@ -5,13 +5,12 @@ import nlp from './src/one.js'
 // import nlp from './builds/three/compromise-three.cjs'
 // nlp.verbose('tagger')
 
-let doc = nlp(`extra. match`)
-let m = doc.match('match').freeze()
-doc.remove('extra')
-m.fullPointer
+let doc = nlp('the boy and the girl.')
+let m = doc.match('(boy|girl)').freeze()
+doc.prepend('ooh baby')
+m.repair()
 console.log(m)
-m.debug()
-
+doc.match(m).debug()
 /*
 
 

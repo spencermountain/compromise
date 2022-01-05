@@ -12,6 +12,7 @@ const toGerund = function (vb, parsed) {
   str = verbToInfinitive(str, vb.model, getTense(root))
   let gerund = verbConjugate(str, vb.model).Gerund
   if (gerund) {
+    root.repair()
     vb.replace(root, gerund)
   }
   // remove any auxiliary

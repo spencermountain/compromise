@@ -1,3 +1,10 @@
+
+const looksOk = function (terms, ids) {
+
+}
+
+
+
 const methods = {
   // allow re-use of this view, after a mutation
   freeze: function () {
@@ -23,5 +30,19 @@ const methods = {
     delete this.frozen
     return this
   },
+  // fix a potentially-broken match
+  repair: function () {
+    let ptrs = []
+    let document = this.document
+    this.ptrs.forEach(ptr => {
+      let [n, i, end, ids] = ptr
+      let terms = document[n].slice(i, end)
+      if (looksOk(terms, ids)) {
+        ptrs.push(ptr)
+        return
+      }
+    })
+    return this
+  }
 }
 export default methods

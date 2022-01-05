@@ -21,9 +21,7 @@ class View {
   /* getters:  */
   get docs() {
     let docs = this.document
-    if (this.frozen) {
-      docs = world.methods.one.slowMode(this)
-    } else if (this.ptrs) {
+    if (this.ptrs) {
       docs = world.methods.one.getDoc(this.ptrs, this.document)
     }
     return docs
@@ -57,9 +55,6 @@ class View {
     // compute a proper pointer, from docs
     let pointers = ptrs || docs.map((_d, n) => [n])
     // do we need to repair it, first?
-    if (this.frozen) {
-      world.methods.one.slowMode(this)
-    }
     return pointers.map(a => {
       a = a.slice(0) //clone it
       a[1] = a[1] || 0

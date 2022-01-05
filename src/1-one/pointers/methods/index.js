@@ -4,7 +4,6 @@ import getIntersection from './lib/intersection.js'
 import getUnion from './lib/union.js'
 import splitAll from './lib/split.js'
 import pointerFromTerms from './pointerFromTerms.js'
-import slowMode from './slowMode.js'
 import getDoc from './getDoc.js'
 
 // flat list of terms from nested document
@@ -22,7 +21,6 @@ export default {
   one: {
     termList,
     getDoc,
-    slowMode,
     getUnion,
     getIntersection,
     getDifference,

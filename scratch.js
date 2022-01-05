@@ -5,7 +5,6 @@ import nlp from './src/three.js'
 // import nlp from './builds/three/compromise-three.cjs'
 nlp.verbose('tagger')
 
-let doc = nlp(`Photographs from a computer are`)
+let doc = nlp('toronto and montreal. Sydney and Paris.')
+let m = doc.match('(#ProperNoun && .)')
 doc.debug()
-
-

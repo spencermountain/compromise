@@ -1,0 +1,25 @@
+// properNouns
+export default [
+  'mercedes',
+  'barbie',
+  'catalina',
+  'christi',
+  'diego',
+  'elmo',
+  'franco',
+  'jordan',
+  'kent',
+  'kirby',
+  'mickey',
+
+  'darwin',
+  'hamilton',
+  'paris',
+  'alexandria',
+  'houston',
+  'kobe',
+  'santiago',
+  'salvador',
+  'sydney',
+  'victoria',
+]

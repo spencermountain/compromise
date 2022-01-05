@@ -10,6 +10,7 @@ import pronouns from './nouns/pronouns.js'
 import singulars from './nouns/singulars.js'
 import sportsTeams from './nouns/sportsTeams.js'
 import uncountables from './nouns/uncountables.js'
+import properNouns from './nouns/properNouns.js'
 
 import cities from './places/cities.js'
 import countries from './places/countries.js'
@@ -69,6 +70,7 @@ const data = [
   [singulars, 'Singular'],
   [sportsTeams, 'SportsTeam'],
   [uncountables, 'Uncountable'],
+  [properNouns, 'ProperNoun'],
 
   // numbers
   [ordinals, 'Ordinal'],

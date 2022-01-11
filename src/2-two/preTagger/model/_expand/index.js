@@ -60,6 +60,7 @@ const expandVariable = function (switchWords, model) {
 }
 
 const expand = function (model) {
+
   model = expandLexicon(model.one.lexicon, model)
   model = addUncountables(model.one.lexicon, model)
   model = expandVariable(model.two.variables, model)

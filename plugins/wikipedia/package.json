@@ -3,8 +3,7 @@
   "description": "plugin for nlp-compromise",
   "version": "0.0.0",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
-  "main": "./builds/compromise-wiki.js",
-  "unpkg": "./builds/compromise-wiki.min.js",
+  "main": "./src/index.js",
   "type": "module",
   "repository": {
     "type": "git",
@@ -17,19 +16,14 @@
     "watch": "amble ./scratch.js",
     "build": "rollup -c --silent"
   },
-  "files": [
-    "builds/",
-    "types/index.d.ts"
-  ],
-  "eslintIgnore": [
-    "builds/*.js"
-  ],
   "peerDependencies": {
     "compromise": ">=12.0.0"
   },
   "dependencies": {
+    "efrt": "^2.5.0"
+  },
+  "devDependencies": {
     "colorette": "^2.0.16",
-    "efrt": "^2.5.0",
     "node-wget-promise": "^0.1.6"
   },
   "license": "MIT"

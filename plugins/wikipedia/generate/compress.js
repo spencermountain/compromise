@@ -14,5 +14,5 @@ let arr = JSON.parse(fs.readFileSync(output))
 
 console.log('compressing', arr.length.toLocaleString(), 'articles')
 const smol = pack(arr)
-// console.log(fileSize(smol))
+console.log(fileSize(smol))
 fs.writeFileSync('./en-articles.js', `export default \`` + smol + '`')

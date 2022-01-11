@@ -15,18 +15,7 @@ txt = `In Iraq and Syria, American leadership -- including our military power --
 txt = `None: The light bulb contains.`
 
 // jan 11
-txt = ` Bridge joins the upper`
-txt = `including our military power`
-txt = `light bulb contains the seeds`
-txt = `barber shop offers pints`
-txt = `will help`
-txt = ` New shop brings the best `
-txt = ` Cardiac patients lose heart`
-txt = `Nadiad civic body owes GEB Rs`
-
-txt = `I hit him hard`
-txt = `I hit her hard.`
-// txt = `The liver receives a dual blood `
+txt = `The liver receives a dual blood `
 
 let doc = nlp(txt)
 // let m = doc.match('(#ProperNoun && .)')

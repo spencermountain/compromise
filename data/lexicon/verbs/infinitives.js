@@ -374,5 +374,7 @@ export default [
   "focus",
   "persevere",
   "tailor",
-  "solicit"
+  "solicit",
+  "owe",
+  "contain"
 ]

@@ -18,7 +18,7 @@ const expandModels = function (model) {
   words = getWords(toPast, 'Infinitive', 'PastTense')
   Object.assign(res, words)
   // present-tense
-  words = getWords(toPresent, 'Infinitive', 'PresentTense')
+  words = getWords(toPresent, 'Infinitive', 'Verb')
   Object.assign(res, words)
   // gerund-form
   words = getWords(toGerund, 'Infinitive', 'Gerund')

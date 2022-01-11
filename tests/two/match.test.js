@@ -295,6 +295,9 @@ let arr = [
   ['DM', '!#RomanNumeral'],
   ['ML', '!#RomanNumeral'],
 
+  // ambiguous 'her'
+  [`I hit him hard`, '#Pronoun #Verb #Pronoun (#Adjective|#Adverb)'],
+  [`I hit her hard.`, '#Pronoun #Verb #Pronoun (#Adjective|#Adverb)']
 ]
 test('match:', function (t) {
   let res = []

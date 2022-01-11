@@ -10,9 +10,8 @@ const output = `./files/${lang}.${project}-pageviews.json`
 const userPage = /^User:./
 const userTalk = /^User talk:./
 const catPage = /^Category:./
-const disambig = / \(/
 const hasNum = /[0-9]/
-const hasPunct = /[.,\/#!$%\^&\*;:{}=\-_`~()]/
+const hasPunct = /[.,\/#!$%\^&\*;:{}=_`~()\\]/
 
 //tot to internal id
 const toName = function (title = '') {

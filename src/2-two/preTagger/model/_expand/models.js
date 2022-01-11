@@ -1,7 +1,9 @@
 
 const getWords = function (model, left, right) {
   return Object.entries(model.exceptions).reduce((h, a) => {
-    h[a[0]] = left
+    if (left) {
+      h[a[0]] = left
+    }
     h[a[1]] = right
     return h
   }, {})
@@ -21,7 +23,7 @@ const expandModels = function (model) {
   words = getWords(toPresent, 'Infinitive', 'Verb')
   Object.assign(res, words)
   // gerund-form
-  words = getWords(toGerund, 'Infinitive', 'Gerund')
+  words = getWords(toGerund, null, 'Gerund')
   Object.assign(res, words)
   // superlative
   words = getWords(toSuperlative, 'Adjective', 'Superlative')

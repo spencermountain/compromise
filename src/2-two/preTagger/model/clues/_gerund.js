@@ -27,6 +27,7 @@ export default {
     stop: g,//
     am: g,//am watching
     be: g,//be timing
+    me: g,//got me thinking
     // action-words
     began: g,
     start: g,

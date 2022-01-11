@@ -273,7 +273,6 @@ export default [
   'hire',
   'hit',
   'hold',
-  'holiday',
   'honor',
   'honour',
   'hook',
@@ -381,6 +380,7 @@ export default [
   'permit',
   'pet',
   'phase',
+  'phone',
   'photograph',
   'pick',
   'pile',
@@ -657,4 +657,6 @@ export default [
   'zip',
   'zone',
   'buffer',
+  'field',
+  'remain',
 ]

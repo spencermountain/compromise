@@ -158,6 +158,7 @@ export default [
   //
   'default rate',
   'student loan',
+  'us state',//tricky
   // 'security force',
   // 'armed force',
   'advantage',
@@ -180,6 +181,7 @@ export default [
   'kitten',
   'republic',
   'record label',
+  'light bulb',
   // -ven
   'oven',
   'heaven',

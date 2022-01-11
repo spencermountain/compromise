@@ -42,6 +42,7 @@ clues['Plural|Verb'] = {
     ProperNoun: 'PresentTense'//john plays
   }),
   afterTags: copy(clues['Noun|Verb'].afterTags, {
+    Gerund: 'Plural',//ice caps disappearing
     Noun: 'PresentTense', //changes gears
     Value: 'PresentTense' //changes seven gears
   }),

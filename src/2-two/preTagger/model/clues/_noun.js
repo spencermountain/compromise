@@ -3,6 +3,7 @@ export default {
   beforeTags: {
     Determiner: n, //the date
     Possessive: n, //his date
+    Acronym: n,//u.s. state
     // ProperNoun:n,
     Noun: n, //nasa funding
     Adjective: n, //whole bottles

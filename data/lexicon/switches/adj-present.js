@@ -31,7 +31,6 @@ export default [
   'open',
   'own',
   'pale',
-  'perfect',
   'present',
   'prime',
   'prompt',

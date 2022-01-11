@@ -140,7 +140,6 @@ export default {
     "photographs": "photograph",
     "preys": "prey",
     "keys": "key",
-    "holidays": "holiday",
     "laughs": "laugh",
     "disobeys": "disobey",
     "defrays": "defray",

@@ -89,8 +89,6 @@ export default {
     "leapt": "leap",
     "led": "lead",
     "left": "leave",
-    "lengthen": "length",
-    "lit": "light",
     "made": "make",
     "meant": "mean",
     "quit": "quit",

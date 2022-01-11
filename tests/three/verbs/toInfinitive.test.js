@@ -171,7 +171,6 @@ test('toInfinitive-phrase:', function (t) {
     ["scarred", "scar"],
     ["barred", "bar"],
     ["scored", "score"],
-    ["flavored", "flavor"],
     ["favored", "favor"],
     ["monitored", "monitor"],
     ["factored", "factor"],

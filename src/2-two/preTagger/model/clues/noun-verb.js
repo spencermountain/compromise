@@ -21,5 +21,5 @@ const clue = {
     instead: 'Infinitive',
   }),
 }
-// console.log(clue.afterTags)
+// console.log(clue.beforeTags)
 export default clue

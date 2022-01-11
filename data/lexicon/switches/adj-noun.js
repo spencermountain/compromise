@@ -45,5 +45,6 @@ export default [
   'welcome',
 
   'chief',
+  'light',
 
 ]

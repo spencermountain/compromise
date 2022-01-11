@@ -451,4 +451,6 @@ export default [
   'preexisting',
   'buck naked',
   'old school',
+  'bronze',
+  'equal',
 ]

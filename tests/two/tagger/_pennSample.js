@@ -587,10 +587,6 @@ export default [
     tags: 'DT, NNP, NNP',
   },
   {
-    text: 'Husbands marry mothers and teen daughters at the same time.',
-    tags: 'NNS, VBP, NNS, CC, NN, NNS, IN, DT, JJ, NN',
-  },
-  {
     text: 'Also look up the kingston family.',
     tags: 'RB, VB, RP, DT, NNP, NN',
   },

@@ -242,7 +242,6 @@ export default [
   'game',
   'gas',
   'gaze',
-  'gear',
   'geek',
   'gloss',
   'goof',
@@ -658,5 +657,4 @@ export default [
   'zone',
   'buffer',
   'field',
-  'remain',
 ]

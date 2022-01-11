@@ -25,6 +25,7 @@ export default {
   },
   // ownTags: { ProperNoun: n },
   beforeWords: {
+    the: n,//the brands
     with: n,//with cakes
     without: n,//
     // was:n, //was time  -- was working

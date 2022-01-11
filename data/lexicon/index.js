@@ -133,4 +133,4 @@ for (let i = 0; i < data.length; i++) {
 
 export default lex
 // console.log(Object.keys(lex).length);
-// console.log(lex['her'])
+// console.log(lex['gore'])

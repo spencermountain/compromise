@@ -6,7 +6,7 @@ export default {
     lex[plural] = lex[plural] || 'Plural'
   },
 
-  // superlative/comparative forms for adjectives
+  // superlative/ comparative forms for adjectives
   Comparable: (word, lex, methods, model) => {
     // fast -> fastest
     let superlative = methods.two.transform.adjToSuperlative(word, model)

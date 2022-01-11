@@ -628,7 +628,6 @@ export default {
     "confounded": "confound",
     "inked": "ink",
     "commanded": "command",
-    "speeded": "speed",
     "inferred": "infer",
     "pitted": "pit",
     "expounded": "expound",
@@ -647,6 +646,19 @@ export default {
     "slayed": "slay",
     "strewn": "strew",
     "remade": "remake",
-    "mistook": "mistake"
+    "mistook": "mistake",
+    "rooted": "root",
+    "sparred": "spar",
+    "bloated": "bloat",
+    "uploaded": "upload",
+    "speared": "spear",
+    "snarled": "snarl",
+    "styled": "style",
+    "roared": "roar",
+    "piled": "pile",
+    "whirled": "whirl",
+    "nicknamed": "nickname",
+    "uploaded": "upload",
+    "vied": "vie",
   }
 }

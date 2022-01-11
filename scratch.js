@@ -12,8 +12,21 @@ let txt = ''
 // txt = `auto mechanics that work for`
 // txt = `Good place to be`
 // txt = `energy and finance `
+// txt = `leaders and delegates abandoned Gandhi`
+// txt = `are some of the brands you [can find]`
+
+txt = `They both had pools`
+txt = `cramped his style`
+txt = `darwin said`
+txt = `victoria learned`
+txt = `He split 2 1980 title fights with Roberto Duran`
+txt = `continue as state chief`
+txt = `there were the walks`
+txt = `Favorite place in Tampa`
+// txt = `the voice mail on.`
+
+// txt = `gore` //'gear'
 let doc = nlp(txt)
-// let m = doc.match('(#ProperNoun && .)')
 doc.debug()
 
 

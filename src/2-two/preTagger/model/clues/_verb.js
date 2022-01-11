@@ -59,6 +59,7 @@ export default {
     out: v,
     on: v,
     off: v,
+    when: v,//starts when
     // for:true, //settled for
     all: v,//shiver all night
     // conjunctions

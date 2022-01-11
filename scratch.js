@@ -30,6 +30,9 @@ txt = `the cheapest surgeon to perform an operation.`
 // txt = ` the Christmas holidays.`
 // txt = `it completely lacked flavor.`
 // txt = `auto mechanics that work for`
+// txt = `he uploaded`
+// txt = `he bloated`
+txt = `process`
 let doc = nlp(txt)
 // let m = doc.match('(#ProperNoun && .)')
 doc.debug()

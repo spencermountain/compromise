@@ -182,5 +182,7 @@ export default [
   'wool',
   'kindergarten',
   'tyranny',
-  'internet'
+  'internet',
+  'less',
+  'haste'
 ]

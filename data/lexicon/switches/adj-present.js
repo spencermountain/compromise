@@ -57,4 +57,7 @@ export default [
   'wet',
   'wound',
   'wrong',
+  'express',
+  'elicit',
+  'fringe',
 ]

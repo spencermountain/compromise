@@ -1,27 +1,24 @@
 // import nlp from 'compromise'
-import nlp from '../../../src/one.js'
+import nlp from '../../../src/two.js'
 import { unpack } from 'efrt'
+import model from '../_model.js'
 
-import model from '../en-articles.js'
 
+
+console.log('unpacking list..')
 let list = Object.keys(unpack(model))
-// let list = [
-//   "Brian Vollmer",
-//   "Brian Wansink",
-//   "Brice Marden",
-//   "Brideless Groom",
-// "Bridge Constructor Portal",
-//   "Bridge Protocol Data Unit",
-//   "Bridget Kearney",
-//   "Bridget Malcolm",
-//   "Bridgewater State University",
-//   "Bridie",
-// ]
-// const miss = new Set('portal')
-const miss = /constructor/
-list = list.filter(str => miss.test(str) === false)
-console.log(list.length.toLocaleString())
+console.log(list.length.toLocaleString(), 'articles')
+// console.log(list.filter(str => str.match(/toronto/)))
 
+console.log('compiling lookup..')
 let trie = nlp.compile(list)
 
-export default trie
+const plugin = {
+  api: function (View) {
+    View.prototype.wikipedia = function () {
+      return this.lookup(trie)
+    }
+  }
+}
+
+export default plugin

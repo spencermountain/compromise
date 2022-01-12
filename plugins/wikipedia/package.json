@@ -14,6 +14,8 @@
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
     "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
     "watch": "amble ./scratch.js",
+    "generate": "node ./scripts/generate/index.js",
+    "stat": "node ./scripts/stat.js",
     "build": "rollup -c --silent"
   },
   "peerDependencies": {

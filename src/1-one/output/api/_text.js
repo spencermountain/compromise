@@ -34,8 +34,10 @@ const textFromTerms = function (terms, opts, keepSpace = true) {
     // grab the correct word format
     let word = t[opts.use || 'text'] || t.normal || ''
     // add an implicit space, for contractions
-    if (opts.use === 'machine' && t.implicit && (!post || !hasSpace.test(post))) {
-      post += ' '
+    if (opts.use === 'machine' && t.implicit) {
+      if (!post || !hasSpace.test(post)) {
+        post += ' '
+      }
     }
     txt += pre + word + post
   })

@@ -33,7 +33,6 @@ const toDocs = function (words, view) {
 //really easy ones
 const contractions = (view) => {
   let { world, document } = view
-  const { model } = world
   // each sentence
   document.forEach((terms, n) => {
     // loop through terms backwards

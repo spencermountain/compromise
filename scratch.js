@@ -34,9 +34,7 @@ txt = `He'd gone`
 // txt = `the voice mail on.`
 
 
-txt = "he's just a tiny baby"
-// txt = `gore` //'gear'
+txt = "mr. clinton"
 let doc = nlp(txt)
-doc.debug()
-console.log(doc.text('machine'))
+console.log(doc.text('normal'))
 

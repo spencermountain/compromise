@@ -54,6 +54,8 @@ export default {
       } else {
         opts.keepPunct = true
       }
+    } else {
+      opts.keepPunct = true
     }
     return textFromDoc(this.docs, opts)
   },

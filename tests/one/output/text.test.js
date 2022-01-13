@@ -56,40 +56,47 @@ test('text-normal', function (t) {
   t.end()
 })
 
-test('text-reduced', function (t) {
-  let doc = nlp(`My dog LOVES pizza, and grapes!!`)
-  const str = 'my dog loves pizza and grapes'
+// test('text-reduced', function (t) {
+//   let doc = nlp(`My dog LOVES pizza, and grapes!!`)
+//   const str = 'my dog loves pizza and grapes'
 
-  t.equal(doc.json({ reduced: true })[0].reduced, str, 'json(reduced)')
+//   t.equal(doc.json({ reduced: true })[0].reduced, str, 'json(reduced)')
 
-  t.equal(doc.text('reduced'), str, 'text(reduced): ')
+//   t.equal(doc.text('reduced'), str, 'text(reduced): ')
 
-  // doc.normalize('reduced')
-  // t.equal(doc.text('reduced'), str, 'normalize(reduced):  ')
+//   // doc.normalize('reduced')
+//   // t.equal(doc.text('reduced'), str, 'normalize(reduced):  ')
 
-  doc = nlp('Rälf.  ')
-  t.equal(doc.text('reduced'), 'ralf', 'reduced trim whitespace ')
-  t.end()
-})
+//   doc = nlp('Rälf.  ')
+//   t.equal(doc.text('reduced'), 'ralf', 'reduced trim whitespace ')
+//   t.end()
+// })
 
-test('text-implicit', function (t) {
-  let doc = nlp(`My dog isn't good, he's the best!`)
-  const str = 'My dog is not good, he is the best!'
-  t.equal(doc.json({ implicit: true })[0].implicit, str, 'json(implicit)')
-  t.equal(doc.text('implicit'), str, 'text(implicit): ')
-  t.end()
-})
+// test('text-implicit', function (t) {
+//   let doc = nlp(`My dog isn't good, he's the best!`)
+//   const str = 'My dog is not good, he is the best!'
+//   t.equal(doc.json({ implicit: true })[0].implicit, str, 'json(implicit)')
+//   t.equal(doc.text('implicit'), str, 'text(implicit): ')
+//   t.end()
+// })
 
-test('text-root', function (t) {
-  let doc = nlp(`My dog LOVES pizza, and grapes!!`)
-  const str = 'my dog love pizza and grape'
 
-  t.equal(doc.json({ root: true })[0].root, str, 'json(root)')
+// test('text-machine', function (t) {
+//   let doc = nlp("he's just a tiny baby")
+//   t.equal(doc.text('machine'), 'he is just a tiny baby', 'machine contraction')
+//   t.end()
+// })
 
-  t.equal(doc.text('root'), str, 'text(root): ')
+// test('text-root', function (t) {
+//   let doc = nlp(`My dog LOVES pizza, and grapes!!`)
+//   const str = 'my dog love pizza and grape'
 
-  // doc.normalize('root')
-  // t.equal(doc.text('root'), str, 'normalize(root):  ')
+//   t.equal(doc.json({ root: true })[0].root, str, 'json(root)')
 
-  t.end()
-})
+//   t.equal(doc.text('root'), str, 'text(root): ')
+
+//   // doc.normalize('root')
+//   // t.equal(doc.text('root'), str, 'normalize(root):  ')
+
+//   t.end()
+// })

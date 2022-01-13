@@ -1,19 +1,26 @@
 import { textFromTerms } from './_text.js'
-
+import fmts from './_fmts.js'
 const defaults = {
   text: true,
   terms: true,
 }
 
+let opts = { case: 'none', unicode: 'some', use: 'machine', punctuation: 'some' }
+
+const merge = function (a, b) {
+  return Object.assign({}, a, b)
+}
+
 const fns = {
   text: (terms) => {
-    let o = { keepPunct: true }
-    return textFromTerms(terms, o, false)
+    return textFromTerms(terms, { keepPunct: true }, false)
   },
-  normal: (terms) => {
-    let o = { use: 'normal', punctuation: 'some' }
-    return textFromTerms(terms, o, false)
-  },
+  normal: (terms) => textFromTerms(terms, merge(fmts.normal, { keepPunct: true }), false),
+  implicit: (terms) => textFromTerms(terms, merge(fmts.implicit, { keepPunct: true }), false),
+
+  machine: (terms) => textFromTerms(terms, opts, false),
+  root: (terms) => textFromTerms(terms, merge(opts, { use: 'root' }), false),
+
   offset: (terms) => {
     let len = fns.text(terms).length
     return {
@@ -35,6 +42,8 @@ const fns = {
   dirty: (terms) => terms.some(t => t.dirty === true)
 }
 fns.sentences = fns.sentence
+fns.clean = fns.normal
+fns.reduced = fns.root
 
 const toJSON = function (view, opts) {
   opts = opts || {}

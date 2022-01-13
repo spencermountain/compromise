@@ -29,12 +29,13 @@ txt = `Favorite place in Tampa`
 
 txt = `Gandhi's cool`
 txt = `i'd really walked`
-txt = `what'd he go`
-txt = `He'd gone`
+// txt = `what'd he DO`
+txt = `walks, goes!`
 // txt = `the voice mail on.`
 
 
-txt = "mr. clinton"
 let doc = nlp(txt)
-console.log(doc.text('normal'))
+// console.log(doc.json()[0].terms)
+console.log(doc.json({ normal: true }))
+// console.log(doc.text('normal'))
 

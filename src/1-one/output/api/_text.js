@@ -19,7 +19,7 @@ const textFromTerms = function (terms, opts, keepSpace = true) {
       }
       post = post.replace(punctToKill, '')
     }
-    if (opts.whitespcae === 'some') {
+    if (opts.whitespace === 'some') {
       pre = pre.replace(/\s/, '') //remove pre-whitespace
       post = post.replace(/\s+/, ' ') //replace post-whitespace with a space
     }
@@ -33,8 +33,11 @@ const textFromTerms = function (terms, opts, keepSpace = true) {
     }
     // grab the correct word format
     let word = t[opts.use || 'text'] || t.normal || ''
+    if (opts.use === 'implicit') {
+      word = t.implicit || t.text
+    }
     // add an implicit space, for contractions
-    if (opts.use === 'machine' && t.implicit) {
+    if ((opts.use === 'machine' || opts.use === 'implicit') && t.implicit) {
       if (!post || !hasSpace.test(post)) {
         post += ' '
       }

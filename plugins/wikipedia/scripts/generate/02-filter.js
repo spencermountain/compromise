@@ -3,6 +3,13 @@ import sh from 'shelljs'
 import fs from 'fs'
 import { blue, yellow } from 'colorette'
 import nlp from '../../../../src/two.js'
+import nos from './_no-list.js'
+import conf from '../../config.js'
+
+const { lang, project, min_pageviews } = conf
+const tsvOut = `./files/${lang}.${project}-pageviews.tsv`
+const output = `./files/${lang}.${project}-pageviews.json`
+const file = `./files/pageviews.tsv`
 
 const lex = nlp.model().one.lexicon
 
@@ -15,19 +22,15 @@ const keep = {
   Region: true,
   SportsTeam: true,
 }
+const noList = new Set(nos)
 
-import conf from '../../config.js'
-const { lang, project, min_pageviews } = conf
-const tsvOut = `./files/${lang}.${project}-pageviews.tsv`
-const output = `./files/${lang}.${project}-pageviews.json`
-const file = `./files/pageviews.tsv`
 // const userPage = /^User:./
 // const userTalk = /^User talk:./
 // const catPage = /^Category:./
 const list = /^list of ./
 const hasNum = /[0-9]/
 
-const hasPunct = /[.,\/#!$%\^&\*;:{}=_`~()\\]/
+const hasPunct = /[.,\/#!$%\^&\*;:{}=_`~()+\\]/
 
 //tot to internal id
 const toName = function (title = '') {
@@ -45,6 +48,10 @@ const ignorePage = function (title) {
     return true
   }
   if (hasNum.test(title) || hasPunct.test(title) || list.test(title)) {
+    return true
+  }
+  // ban-list
+  if (noList.has(title)) {
     return true
   }
   return false

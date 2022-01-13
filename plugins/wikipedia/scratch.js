@@ -3,6 +3,8 @@ import nlp from '../../src/one.js'
 import plugin from './src/index.js'
 nlp.extend(plugin)
 
-// let txt = 'i saw the toronto raptors play a cleveland foops'
-let txt = `so we're adding 3201 Marines to our forces in Afghanistan.`
+let txt = ''
+txt = `Moreover, it is always possible to consolidate for discovery different cases that involve construction of the same claims.`
+
+txt = 'i saw the toronto raptors play a cleveland foops'
 nlp(txt).wikipedia().debug()

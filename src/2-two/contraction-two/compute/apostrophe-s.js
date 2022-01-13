@@ -8,7 +8,7 @@ const isHas = (terms, i) => {
 
 // 's -> [possessive, 'has', or 'is']
 const apostropheS = function (terms, i) {
-  // !possessive, is/has
+  // possessive, is/has
   let before = terms[i].normal.split(hasContraction)[0]
   // spencer's got -> 'has'
   if (isHas(terms, i)) {

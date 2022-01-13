@@ -4,7 +4,7 @@ import apostropheS from './apostrophe-s.js'
 import apostropheT from './apostrophe-t.js'
 import french from './french.js'
 import numberRange from './number-range.js'
-import isPossessive from './isPossessive.js'
+import shouldSplit from './_should-split.js'
 
 const byApostrophe = /'/
 const numDash = /^[0-9][^-–—]*[-–—].*?[0-9]/
@@ -24,9 +24,7 @@ const byEnd = {
   // bob's
   s: (terms, i, world) => {
     // [bob's house] vs [bob's cool]
-    if (isPossessive(terms, i)) {
-      world.methods.one.setTag([terms[i]], 'Possessive', world)
-    } else {
+    if (shouldSplit(terms, i) === true) {
       return apostropheS(terms, i)
     }
   },

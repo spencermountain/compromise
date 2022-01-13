@@ -24,12 +24,12 @@ export default [
   { word: 'rn', out: ['right', 'now'] },
   { word: 'tbh', out: ['to', 'be', 'honest'] },
   { word: 'wanna', out: ['want', 'to'] },
+  // apostrophe d
   { word: 'howd', out: ['how', 'did'] },
   { word: 'whatd', out: ['what', 'did'] },
   { word: 'whend', out: ['when', 'did'] },
   { word: 'whered', out: ['where', 'did'] },
-  { word: "when'd", out: ['when', 'did'] },
-  { word: "where'd", out: ['where', 'did'] },
+
   { word: "'tis", out: ['it', 'is'] },
   { word: "'twas", out: ['it', 'was'] },
   { word: 'twas', out: ['it', 'was'] },

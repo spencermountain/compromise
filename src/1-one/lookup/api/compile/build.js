@@ -35,7 +35,6 @@ const buildTrie = function (phrases, world) {
     }
     endAs[curr] = [words.length]
   })
-
   // f(s) = 0 for all states of depth 1 (the ones from which the 0 state can transition to)
   for (let word in goNext[0]) {
     n = goNext[0][word]
@@ -46,7 +45,9 @@ const buildTrie = function (phrases, world) {
   while (xs.length) {
     let r = xs.shift()
     // for each symbol a such that g(r, a) = s
-    for (let word in goNext[r]) {
+    let keys = Object.keys(goNext[r])
+    for (let i = 0; i < keys.length; i += 1) {
+      let word = keys[i]
       let s = goNext[r][word]
       xs.push(s)
       // set state = f(r)
@@ -54,7 +55,7 @@ const buildTrie = function (phrases, world) {
       while (n > 0 && !goNext[n].hasOwnProperty(word)) {
         n = failTo[n]
       }
-      if (word in goNext[n]) {
+      if (goNext.hasOwnProperty(n)) {
         let fs = goNext[n][word]
         failTo[s] = fs
         if (endAs[fs]) {

@@ -22,4 +22,5 @@ export default [
   'salvador',
   'sydney',
   'victoria',
+  'venus',
 ]

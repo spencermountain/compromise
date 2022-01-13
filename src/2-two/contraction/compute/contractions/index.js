@@ -13,7 +13,7 @@ const numDash = /^[0-9][^-–—]*[-–—].*?[0-9]/
 const reTag = function (terms, view) {
   let tmp = view.update()
   tmp.document = [terms]
-  tmp.compute(['lexicon', 'preTagger'])
+  tmp.compute(['lexicon', 'preTagger', 'index'])
 }
 
 const byEnd = {

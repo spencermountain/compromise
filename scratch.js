@@ -3,7 +3,9 @@ import nlp from './src/three.js'
 // import plg from './plugins/speech/src/plugin.js'
 // nlp.plugin(plg)
 // import nlp from './builds/three/compromise-three.cjs'
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
+
+
 
 let txt = ''
 
@@ -26,7 +28,13 @@ txt = `Favorite place in Tampa`
 // txt = `the voice mail on.`
 
 // txt = `gore` //'gear'
-let doc = nlp(txt)
-doc.debug()
+// let doc = nlp(txt)
+// doc.debug()
 
-
+let arr = [
+  'marines',
+  'afghanistan'
+]
+let trie = nlp.compile(arr)
+let res = nlp(`so we're adding 3201 Marines to our forces in Afghanistan.`).lookup(trie)
+res.debug()

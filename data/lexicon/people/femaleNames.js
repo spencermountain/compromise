@@ -1688,7 +1688,6 @@ export default [
   'vanessa',
   'veda',
   'velma',
-  'venus',
   'vera',
   'verna',
   'vernice',

@@ -90,3 +90,19 @@ test('contraction-optional', function (t) {
   t.equal(m.text(), `i'm`, here + 'i glad?')
   t.end()
 })
+
+
+
+test('lookup contraction', function (t) {
+  let arr = [
+    'foobar',
+    'marines',
+    'afghanistan',
+    'foo',
+  ]
+  let trie = nlp.compile(arr)
+  let res = nlp(`so we're adding 3201 Marines to our forces in Afghanistan.`).lookup(trie)
+  t.equal(res.has('marines'), true, 'post-contraction found first one')
+  t.equal(res.has('afghanistan'), true, 'post-contraction found second one')
+  t.end()
+})

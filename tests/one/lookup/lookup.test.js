@@ -121,6 +121,40 @@ test('lookup-input', function (t) {
   t.end()
 })
 
+test('lookup-reserved', function (t) {
+  let arr = [
+    "Brian Vollmer",
+    "Brian Wansink",
+    "Brice Marden",
+    "Brideless Groom",
+    "Bridge Constructor Portal",
+    "Bridge Protocol Data Unit",
+    "Bridget Kearney",
+    "Bridget Malcolm",
+    "Bridgewater State University",
+    "Bridie",
+  ]
+  let trie = nlp.compile(arr)
+  let res = nlp('before Bridge Constructor Portal after').lookup(trie)
+  t.equal(res.found, true, 'found-reserved-word')
+  t.end()
+})
+
+
+test('lookup no-contractions', function (t) {
+  let arr = [
+    'foobar',
+    'marines',
+    'afghanistan',
+    'foo',
+  ]
+  let trie = nlp.compile(arr)
+  let res = nlp(`so we're adding 3201 Marines to our forces in Afghanistan.`).lookup(trie)
+  t.equal(res.has('marines'), true, 'no-contraction got first one')
+  t.equal(res.has('afghanistan'), true, 'no-contraction got first one')
+  t.end()
+})
+
 // test('obj-scan', function(t) {
 //   let doc = nlp('one one two three four five.  here one result.')
 //   let trie = nlp.compile({ two: 'Fun', here: 'Fun' })

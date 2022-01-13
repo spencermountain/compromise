@@ -38,6 +38,10 @@ const cacheMiss = function (words, cache) {
 const scan = function (view, trie) {
   let results = []
   let docs = view.docs
+  if (!trie.goNext || !trie.goNext[0]) {
+    console.error('Compromise invalid lookup trie')
+    return view.none()
+  }
   let firstWords = Object.keys(trie.goNext[0])
   // do each phrase
   for (let i = 0; i < docs.length; i++) {

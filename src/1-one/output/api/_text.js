@@ -4,6 +4,7 @@ const trimStart =
 
 const punctToKill = /[,:;)('"]/
 const isHyphen = /^[-–—]$/
+const hasSpace = / /
 
 const textFromTerms = function (terms, opts, keepSpace = true) {
   let txt = ''
@@ -32,6 +33,10 @@ const textFromTerms = function (terms, opts, keepSpace = true) {
     }
     // grab the correct word format
     let word = t[opts.use || 'text'] || t.normal || ''
+    // add an implicit space, for contractions
+    if (opts.use === 'machine' && t.implicit && (!post || !hasSpace.test(post))) {
+      post += ' '
+    }
     txt += pre + word + post
   })
   if (keepSpace === false) {

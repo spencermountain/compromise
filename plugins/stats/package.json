@@ -1,5 +1,5 @@
 {
-  "name": "compromise-plugin-wikipedia",
+  "name": "compromise-plugin-stats",
   "description": "plugin for nlp-compromise",
   "version": "0.0.0",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
@@ -9,12 +9,12 @@
     "type": "git",
     "url": "git://github.com/spencermountain/compromise.git"
   },
-  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins",
+  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/stats",
   "scripts": {
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
     "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
     "watch": "amble ./scratch.js",
-    "generate": "node ./scripts/generate/index.js",
+    "generate": "node ./scripts/generate.js",
     "stat": "node ./scripts/stat.js",
     "perf": "node ./scripts/perf.js",
     "build": "rollup -c --silent"
@@ -25,9 +25,6 @@
   "dependencies": {
     "efrt": "^2.5.0"
   },
-  "devDependencies": {
-    "colorette": "^2.0.16",
-    "node-wget-promise": "^0.1.6"
-  },
+  "devDependencies": {},
   "license": "MIT"
 }

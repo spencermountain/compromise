@@ -29,7 +29,7 @@ const compute = function (view) {
   intervals(view)
   timezone(view)
   fixup(view)
-  view.debug()
+  // view.debug()
   return view
 }
 

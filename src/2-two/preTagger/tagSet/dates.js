@@ -13,11 +13,11 @@ export default {
   },
   Year: {
     is: 'Date',
-    notA: ['RomanNumeral'],
+    not: ['RomanNumeral'],
   },
   FinancialQuarter: {
     is: 'Date',
-    notA: 'Fraction',
+    not: 'Fraction',
   },
   // 'easter'
   Holiday: {

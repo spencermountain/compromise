@@ -102,6 +102,9 @@ match(['foo', 'far'])
 - **[new]** add punctuation match support via pre/post params
 - **[new]** add ambiguous empty .map() state as 2nd param
 
+### date-plugin
+- **[change]** .json() date metadata has moved-around
+
 ---
 
 ### plugins

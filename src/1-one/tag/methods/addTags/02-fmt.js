@@ -11,8 +11,6 @@ const getColor = function (node) {
   return colors[found]
 }
 
-
-
 // convert tags to our final format
 const fmt = function (nodes) {
   const res = {}
@@ -25,6 +23,7 @@ const fmt = function (nodes) {
     res[node.id] = {
       is,
       not,
+      also,
       parents,
       children: node._cache.children,
       color: getColor(node)

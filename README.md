@@ -743,7 +743,7 @@ These are some helpful extensions:
 
 ##### Ngrams
 
-`npm install compromise-ngrams`
+`npm install compromise-plugin-stats`
 
 - **[.ngrams({})](https://observablehq.com/@spencermountain/compromise-ngram)** - list all repeating sub-phrases, by word-count
 - **[.unigrams()](https://observablehq.com/@spencermountain/compromise-ngram)** - n-grams with one word

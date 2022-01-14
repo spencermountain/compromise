@@ -9,19 +9,18 @@ nlp.plugin(datePlugin)
 const fmt = (iso) => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 
 const context = {
-  // today: '2021-04-17',
-  // timezone: 'Asia/Shanghai',
+  today: '1999-04-17',
+  // today: [1999, 3, 12]
+  timezone: 'Asia/Shanghai',
   // dayStart: '8:00am',
   // dayEnd: '8:00pm',
 }
 
-let txt = ''
-txt = 'june 3 2019'
-
-let doc = nlp(txt)//.debug()
-let dates = doc.dates(context)
-dates = dates.get()
-dates.forEach((date) => {
-  console.log('start: ', fmt(date.start))
-  console.log('  end: ', fmt(date.end))
-})
+// let doc = nlp('next tuesday at 3pm')
+let doc = nlp('may to august 1996')
+let found = doc.dates(context).json()[0]
+console.log(found.dates)
+// dates.forEach((date) => {
+//   console.log('start: ', fmt(date.start))
+//   console.log('  end: ', fmt(date.end))
+// })

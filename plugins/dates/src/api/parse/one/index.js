@@ -19,7 +19,10 @@ import spacetime from 'spacetime'
 const parseDate = function (doc, context) {
   doc = doc.clone()
   context = context || {}
-  context.today = context.today || spacetime.now()
+  if (!context.today) {
+    context.today = spacetime.now()
+  }
+  context.today = spacetime(context.today)
   // quick normalization
   doc.match('[^the] !#Value', 0).remove() // keep 'the 17th'
   //parse-out any sections

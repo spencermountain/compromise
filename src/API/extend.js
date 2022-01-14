@@ -29,14 +29,6 @@ function mergeQuick(model, plugin) {
   return model
 }
 
-// wire-up existing tags
-// const addTags = function (tags, world) {
-//   const add = world.methods.one.addTags
-//   const tagSet = world.model.one.tagSet
-//   // console.log(world.model.one.tagSet)
-//   world.model.one.tagSet = add(tags, tagSet)
-// }
-
 const extend = function (plugin, world, View, nlp) {
   const { methods, model, compute, hooks } = world
   if (plugin.methods) {

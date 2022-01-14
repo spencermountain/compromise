@@ -7,4 +7,4 @@ let txt = ''
 txt = `Moreover, it is always possible to consolidate for discovery different cases that involve construction of the same claims.`
 
 txt = 'i saw the toronto raptors play a cleveland foops'
-nlp(txt).wikipedia().debug()
+nlp(txt).articleNames().debug()

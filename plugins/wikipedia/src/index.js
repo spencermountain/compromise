@@ -3,7 +3,7 @@ import nlp from '../../../src/two.js'
 import { unpack } from 'efrt'
 import model from '../_model.js'
 
-const hasNum = /[0-9]/
+// const hasNum = /[0-9]/
 
 console.log('unpacking list..')
 let list = Object.keys(unpack(model))
@@ -16,7 +16,7 @@ let trie = nlp.compile(list)
 
 const plugin = {
   api: function (View) {
-    View.prototype.wikipedia = function () {
+    View.prototype.articleNames = function () {
       return this.lookup(trie)
     }
   }

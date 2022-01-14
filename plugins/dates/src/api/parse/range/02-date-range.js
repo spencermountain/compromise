@@ -126,6 +126,7 @@ export default [
       to = parseDate(to, context)
       from.d = from.d.year(year)
       to.d = to.d.year(year)
+
       if (from && to) {
         let obj = {
           start: from,

@@ -546,7 +546,6 @@ export default {
     "defending": "defend",
     "trending": "trend",
     "bonding": "bond",
-    "forwarding": "forward",
     "intending": "intend",
     "withholding": "withhold",
     "rebuilding": "rebuild",

@@ -21,6 +21,9 @@ let matches = [
 
   // such skill
   { match: '[such] (a|an|is)? #Noun', group: 0, tag: 'Determiner', reason: 'such-skill' },
+  // that is
+  // { match: '^[that] (is|was)', group: 0, tag: 'Noun', reason: 'that-is' },
+
   // sorry
   { match: '(say|says|said) [sorry]', group: 0, tag: 'Expression', reason: 'say-sorry' },
 

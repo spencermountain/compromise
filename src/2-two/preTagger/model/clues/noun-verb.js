@@ -14,12 +14,14 @@ const clue = {
   }),
   beforeWords: Object.assign({}, verb.beforeWords, noun.beforeWords, {
     // is time
-    is: 'Singular', was: 'Singular'
+    is: 'Singular', was: 'Singular',
+    //balance of power
+    of: 'Singular'
   }),
   afterWords: Object.assign({}, verb.afterWords, noun.afterWords, {
     // for: 'Infinitive',//work for
     instead: 'Infinitive',
   }),
 }
-// console.log(clue.beforeTags)
+// console.log(clue.afterWords.of)
 export default clue

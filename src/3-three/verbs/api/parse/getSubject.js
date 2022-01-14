@@ -40,7 +40,6 @@ const lastNoun = function (vb) {
   before = noSubClause(before)
   // parse-out our preceding nouns
   let nouns = before.nouns()
-
   // look for any dead-ringers
   let last = nouns.last()
   // i/she/he/they are very strong
@@ -49,10 +48,17 @@ const lastNoun = function (vb) {
     return pronoun
   }
   // these are also good hints
-  let det = last.match('^#Determiner .+')
+  let det = nouns.if('^(that|this|those)')
   if (det.found) {
     return det
   }
+  if (nouns.found === false) {
+    let det = before.match('^(that|this|those)')
+    if (det.found) {
+      return det
+    }
+  }
+
   // should we skip a subbordinate clause or two?
   last = nouns.last()
   if (shouldSkip(last)) {

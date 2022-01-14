@@ -51,7 +51,7 @@ export default {
     it: v, //hope it
     a: v, //covers a
     an: v, //covers an
-    from: v, //ranges from
+    // from: v, //ranges from
     up: v,//serves up
     down: v,//serves up
     by: v,

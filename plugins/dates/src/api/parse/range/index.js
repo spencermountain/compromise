@@ -65,7 +65,6 @@ const parseRanges = function (m, context) {
   }
   // add the repeat info to each date
   found = found.map((o) => Object.assign({}, repeats, o))
-
   // ensure start is not after end
   found.forEach((res) => {
     if (res.start && res.end && res.start.d.epoch > res.end.d.epoch) {

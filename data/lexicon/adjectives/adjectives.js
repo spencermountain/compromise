@@ -394,6 +394,7 @@ export default [
   'still',
   'straight forward',
   'straightforward',
+  'forward',
   'stylish',
   'subsequent',
   'sui generis',

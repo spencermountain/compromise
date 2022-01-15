@@ -1,5 +1,6 @@
-const test = require('tape')
-const nlp = require('./_lib')
+import test from 'tape'
+import nlp from '../_lib.js'
+const here = '[three/number] '
 
 test('get currency ', function (t) {
   let arr = [
@@ -16,7 +17,7 @@ test('get currency ', function (t) {
   arr.forEach((a) => {
     let doc = nlp(a[0])
     let json = doc.money().json(0)
-    t.equal(a[1], json.iso, a[0])
+    t.equal(a[1], json.iso, here + a[0])
   })
   t.end()
 })
@@ -24,46 +25,46 @@ test('get currency ', function (t) {
 test('money formats', function (t) {
   let doc = nlp('£30.50')
   let str = doc.money().json(0).textFmt
-  t.equal(str, 'thirty point five pounds')
+  t.equal(str, 'thirty point five pounds', here)
 
   doc = nlp('9 WON')
   str = doc.money().json(0).textFmt
-  t.equal(str, 'nine won', '9 won')
+  t.equal(str, 'nine won', '9 won', here)
   t.end()
 })
 
 test('money text', function (t) {
   let doc = nlp('i paid 5 USD for the thing, and got $2.50 back.')
   let m = doc.money()
-  t.equal(m.length, 2, 'both money forms')
-  t.equal(m.eq(0).text(), '5 USD', 'val-currency')
-  t.equal(m.eq(1).text(), '$2.50', 'sybol-val')
+  t.equal(m.length, 2, here + 'both money forms')
+  t.equal(m.eq(0).text(), '5 USD', here + 'val-currency')
+  t.equal(m.eq(1).text(), '$2.50', here + 'sybol-val')
 
   doc = nlp('i got 1 peso and £30.')
   m = doc.money()
-  t.equal(m.length, 2, 'both intl money forms')
-  t.equal(m.eq(0).text(), '1 peso', 'val-currency-2')
-  t.equal(m.eq(1).text(), '£30', 'sybol-val-2')
+  t.equal(m.length, 2, here + 'both intl money forms')
+  t.equal(m.eq(0).text(), '1 peso', here + 'val-currency-2')
+  t.equal(m.eq(1).text(), '£30', here + 'sybol-val-2')
 
   doc = nlp('it is $70.23')
   m = doc.money()
-  t.equal(m.out('normal'), '$70.23', 'match-$70.23')
+  t.equal(m.out('normal'), '$70.23', here + 'match-$70.23')
 
   doc = nlp('it is $703')
   m = doc.money()
-  t.equal(m.out('normal'), '$703', 'match-$703')
+  t.equal(m.out('normal'), '$703', here + 'match-$703')
 
   doc = nlp('it is five euros')
   m = doc.money()
-  t.equal(m.out('normal'), 'five euros', 'match-five-euros')
+  t.equal(m.out('normal'), 'five euros', here + 'match-five-euros')
 
   doc = nlp('i said five times, you should pay 12 dollars')
   m = doc.money()
-  t.equal(m.out('normal'), '12 dollars', 'match-12 dollars')
+  t.equal(m.out('normal'), '12 dollars', here + 'match-12 dollars')
 
   doc = nlp('you should pay sixty five dollars and four cents USD')
   m = doc.money()
-  t.equal(m.out('normal'), 'sixty five dollars and four cents usd', 'match-long-usd')
+  t.equal(m.out('normal'), 'sixty five dollars and four cents usd', here + 'match-long-usd')
 
   t.end()
 })
@@ -71,11 +72,11 @@ test('money text', function (t) {
 test('money-transform:', function (t) {
   let doc = nlp('i paid $5.32 for a pizza slice')
   doc.money().add(1)
-  t.equal(doc.text(), 'i paid $6.32 for a pizza slice', 'money-add-one')
+  t.equal(doc.text(), 'i paid $6.32 for a pizza slice', here + 'money-add-one')
 
   doc = nlp('i paid fifty eight dollars')
   doc.money().add(1)
-  t.equal(doc.text(), 'i paid fifty nine dollars', 'text-add-one')
+  t.equal(doc.text(), 'i paid fifty nine dollars', here + 'text-add-one')
   t.end()
 })
 
@@ -101,7 +102,7 @@ test('money-has:', function (t) {
   tests.forEach(function (a) {
     let r = nlp(a[0])
     let m = r.match('#Money')
-    t.equal(m.found, a[1], "money-has: '" + a[0] + "'")
+    t.equal(m.found, a[1], here + "money-has: '" + a[0] + "'")
   })
   t.end()
 })
@@ -137,8 +138,8 @@ test('money-parse:', function (t) {
   arr.forEach((a) => {
     let doc = nlp(a[0])
     let amount = doc.money().get()
-    t.equal(amount.length, 1, `'${a[0]}' has 1 money result`)
-    t.equal(amount[0].num, a[1], a[0])
+    t.equal(amount.length, 1, here + `'${a[0]}' has 1 money result`)
+    t.equal(amount[0].num, a[1], here + a[0])
   })
   t.end()
 })
@@ -158,7 +159,7 @@ test('money false-positive:', function (t) {
   arr.forEach((a) => {
     let doc = nlp(a[0])
     let m = doc.money()
-    t.equal(m.found, false, `not money - '${a}'`)
+    t.equal(m.found, false, here + `not money - '${a}'`)
   })
   t.end()
 })

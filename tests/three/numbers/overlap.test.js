@@ -1,5 +1,6 @@
-const test = require('tape')
-const nlp = require('./_lib')
+import test from 'tape'
+import nlp from '../_lib.js'
+const here = '[three/number-overlap] '
 
 test('number-fraction overlap', function (t) {
   let arr = [
@@ -12,8 +13,8 @@ test('number-fraction overlap', function (t) {
     let doc = nlp(a[0])
     let values = doc.numbers().get(0)
     let fractions = doc.fractions().get(0)
-    t.equal(values, a[1], '[Value]: ' + a[0])
-    t.equal(fractions, null, '[Value]: no-fraction')
+    t.equal(values, a[1], here + 'Value: ' + a[0])
+    t.equal(fractions, null, here + 'Fraction: no-fraction')
   })
 
   t.end()

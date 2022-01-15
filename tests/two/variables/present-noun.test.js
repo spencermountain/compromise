@@ -9,7 +9,6 @@ let arr = [
   ['makes', '#PresentTense'],
   ['mistakes', '#PresentTense'],
   ['overtakes', '#PresentTense'],
-  ['remakes', '#PresentTense'],
   ['retakes', '#PresentTense'],
   ['forsakes', '#PresentTense'],
   ['shakes', '#PresentTense'],

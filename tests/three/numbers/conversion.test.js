@@ -1,5 +1,6 @@
-const test = require('tape')
-const nlp = require('./_lib')
+import test from 'tape'
+import nlp from '../_lib.js'
+const here = '[three/number] '
 
 test('fraction/percent conversion', function (t) {
   let arr = [

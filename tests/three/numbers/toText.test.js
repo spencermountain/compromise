@@ -1,5 +1,6 @@
-const test = require('tape')
-const nlp = require('./_lib')
+import test from 'tape'
+import nlp from '../_lib.js'
+const here = '[three/number-toText] '
 
 test('to_text:', function (t) {
   let arr = [
@@ -31,7 +32,7 @@ test('to_text:', function (t) {
   ]
   arr.forEach(function (a) {
     const str = nlp(a[0]).values().toText().out('text')
-    t.equal(str, a[1], a[0])
+    t.equal(str, a[1], here + a[0])
   })
   t.end()
 })
@@ -46,26 +47,26 @@ test('all-to-text:', function (t) {
   ]
   arr.forEach((txt) => {
     const str = nlp(txt).values().toText().toCardinal().text()
-    t.equal(str, 'one', txt + ' -> one')
+    t.equal(str, 'one', here + txt + ' -> one')
   })
 
   arr = ['500', '500.0', '500th', 'five hundred', 'five hundredth']
   arr.forEach((txt) => {
     const str = nlp(txt).values().toText().toCardinal().text()
-    t.equal(str, 'five hundred', txt + ' -> five hundred')
+    t.equal(str, 'five hundred', here + txt + ' -> five hundred')
   })
 
   arr = ['2012', '2012.0', '2,012', '2012th', 'two thousand and twelve', 'two thousand and twelfth']
   arr.forEach((txt) => {
     const str = nlp(txt).values().toText().toCardinal().text()
-    t.equal(str, 'two thousand and twelve', txt)
+    t.equal(str, 'two thousand and twelve', here + txt)
   })
   t.end()
 })
 
 test('big number:', function (t) {
   const str = nlp('twenty-three quadrillion').values().toText().out()
-  t.equal(str, 'twenty three quadrillion', 'quadrillion')
+  t.equal(str, 'twenty three quadrillion', here + 'quadrillion')
 
   // str = nlp('nine quintillion two hundred').values().toText().out();
   // t.equal(str, 'nine quintillion two hundred', 'quantillion');

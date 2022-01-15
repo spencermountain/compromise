@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import plg from './plugins/speech/src/plugin.js'
 // nlp.plugin(plg)
 // import nlp from './builds/three/compromise-three.cjs'
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 
 // console.log(nlp.model().one.tagSet.Month)
@@ -28,13 +28,10 @@ let txt = ''
 
 txt = `Pursuing a successful career, along with the usual social and financial advantages, will be easier this year`
 txt = `all the days since december were awful`
-txt = `morning's here`
-let doc = nlp(txt).debug()
+txt = `there were the walks`
+// let doc = nlp(txt).debug()
 // doc.chunks().debug('chunks')
-doc.verbs().subjects().debug()
+// doc.verbs().subjects().debug()
 
-
-
-// let doc = nlp('john is nice').sentences()
-// doc.toFutureTense()
-// doc.debug()
+const str = nlp('75').values().toText().out('text')
+console.log(str)

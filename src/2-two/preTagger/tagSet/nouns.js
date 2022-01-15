@@ -54,7 +54,7 @@ export default {
     also: ['ProperNoun'],
   },
   Address: {
-    is: 'Place',
+    // is: 'Place',
   },
   Organization: {
     is: 'Singular',

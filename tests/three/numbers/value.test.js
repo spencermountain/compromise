@@ -1,62 +1,63 @@
-const test = require('tape')
-const nlp = require('./_lib')
+import test from 'tape'
+import nlp from '../_lib.js'
+const here = '[three/number-value] '
 
-test('value-lumper-splitter:', function(t) {
+test('value-lumper-splitter:', function (t) {
   let r = nlp('202 199')
-  t.equal(r.values().length, 2, 'two-numbers')
+  t.equal(r.values().length, 2, here + 'two-numbers')
 
   r = nlp('two hundred and fifty times six')
-  t.equal(r.values().length, 2, 'two-numbers2')
+  t.equal(r.values().length, 2, here + 'two-numbers2')
 
   r = nlp('one two')
-  t.equal(r.values().length, 2, 'two-numbers3')
+  t.equal(r.values().length, 2, here + 'two-numbers3')
 
   r = nlp('fifth ninth')
-  t.equal(r.values().length, 2, 'two-numbers4')
+  t.equal(r.values().length, 2, here + 'two-numbers4')
   t.end()
 })
 
-test('value-basic:', function(t) {
+test('value-basic:', function (t) {
   let r = nlp('third month of 2019')
   r.values().toNumber()
-  t.equal(r.out(), '3rd month of 2019', 'toNumber')
+  t.equal(r.out(), '3rd month of 2019', here + 'toNumber')
 
   r.values().toText()
-  t.equal(r.out(), 'third month of two thousand and nineteen', 'toText')
+  t.equal(r.out(), 'third month of two thousand and nineteen', here + 'toText')
 
   r = nlp('third month of two thousand and nineteen')
   r.values().toCardinal()
-  t.equal(r.out(), 'three months of two thousand and nineteen', 'toCardinal')
+  t.equal(r.out(), 'three months of two thousand and nineteen', here + 'toCardinal')
 
   r = nlp('three months of two thousand nineteen')
   r.values().toOrdinal()
-  t.equal(r.out(), 'third month of two thousand and nineteenth', 'toOrdinal')
+  t.equal(r.out(), 'third month of two thousand and nineteenth', here + 'toOrdinal')
 
   r.values()
     .toNumber()
     .all()
-  t.equal(r.out(), '3rd month of 2019th', 'toNumber2')
+  t.equal(r.out(), '3rd month of 2019th', here + 'toNumber2')
 
   t.end()
 })
 
-test('value-to_ordinal:', function(t) {
+test('value-to_ordinal:', function (t) {
   let arr = [
     [11, '11th'],
     [5, '5th'],
     [22, '22nd'],
   ]
-  arr.forEach(function(a) {
+  arr.forEach(function (a) {
     const str = nlp(a[0])
       .values()
       .toOrdinal()
       .out('normal')
-    t.equal(str, a[1], a[0])
+    t.equal(str, a[1], here + a[0])
   })
   t.end()
 })
 
-test('value-number:', function(t) {
+test('value-number:', function (t) {
   let arr = [
     ['five hundred feet', 500],
     ['fifty square feet', 50],
@@ -65,7 +66,7 @@ test('value-number:', function(t) {
     ['twelve 2-gram containers', 12],
     ['thirty-seven forever-21 stores', 37],
   ]
-  arr.forEach(function(a) {
+  arr.forEach(function (a) {
     const str = nlp(a[0])
       .values()
       .toNumber()
@@ -73,99 +74,99 @@ test('value-number:', function(t) {
       .first()
       .out('normal')
     a[1] = String(a[1])
-    t.equal(str, a[1], a[0])
+    t.equal(str, a[1], here + a[0])
   })
   t.end()
 })
 
-test('add/subtract:', function(t) {
+test('add/subtract:', function (t) {
   let r = nlp('beginning of 2019')
     .values()
     .add(2)
     .all()
-  t.equal(r.out(), 'beginning of 2021', 'add-2-cardinal')
+  t.equal(r.out(), 'beginning of 2021', here + 'add-2-cardinal')
 
   r = nlp('beginning of the 2019th')
     .values()
     .add(2)
     .all()
-  t.equal(r.out(), 'beginning of the 2021st', 'add-2-ordinal')
+  t.equal(r.out(), 'beginning of the 2021st', here + 'add-2-ordinal')
 
   r = nlp('beginning of the 2019th')
     .values()
     .add(-2)
     .all()
-  t.equal(r.out(), 'beginning of the 2017th', 'add-minus-2-ordinal')
+  t.equal(r.out(), 'beginning of the 2017th', here + 'add-minus-2-ordinal')
 
   r = nlp('beginning of 2019')
     .values()
     .subtract(2)
     .all()
-  t.equal(r.out(), 'beginning of 2017', 'subtract-2-cardinal')
+  t.equal(r.out(), 'beginning of 2017', here + 'subtract-2-cardinal')
 
   r = nlp('beginning of the 2019th')
     .values()
     .subtract(2)
     .all()
-  t.equal(r.out(), 'beginning of the 2017th', 'subtract-2-ordinal')
+  t.equal(r.out(), 'beginning of the 2017th', here + 'subtract-2-ordinal')
 
   r = nlp('seventeen years old')
     .values()
     .add(2)
     .all()
-  t.equal(r.out(), 'nineteen years old', 'text-add-2-ordinal')
+  t.equal(r.out(), 'nineteen years old', here + 'text-add-2-ordinal')
   r = nlp('seventeenth birthday')
     .values()
     .add(2)
     .all()
-  t.equal(r.out(), 'nineteenth birthday', 'text-add-2-ordinal')
+  t.equal(r.out(), 'nineteenth birthday', here + 'text-add-2-ordinal')
 
   r = nlp('seventeen years old')
     .values()
     .subtract(2)
     .all()
-  t.equal(r.out(), 'fifteen years old', 'text-subtract-2-cardinal')
+  t.equal(r.out(), 'fifteen years old', here + 'text-subtract-2-cardinal')
 
   r = nlp('seventeenth birthday')
     .values()
     .subtract(2)
     .all()
-  t.equal(r.out(), 'fifteenth birthday', 'text-subtract-2-cardinal')
+  t.equal(r.out(), 'fifteenth birthday', here + 'text-subtract-2-cardinal')
 
   r = nlp('seven apples and 1,231 peaches')
     .values()
     .add(50)
     .all()
-  t.equal(r.out(), 'fifty seven apples and 1,281 peaches', 'two-add-50s')
+  t.equal(r.out(), 'fifty seven apples and 1,281 peaches', here + 'two-add-50s')
   t.end()
 })
 
-test('increment:', function(t) {
+test('increment:', function (t) {
   let r = nlp('seven apples and 231 peaches')
   r.values().increment()
-  t.equal(r.out(), 'eight apples and 232 peaches', 'increment-cardinal')
+  t.equal(r.out(), 'eight apples and 232 peaches', here + 'increment-cardinal')
   r.values().decrement()
-  t.equal(r.out(), 'seven apples and 231 peaches', 'decrement-cardinal')
+  t.equal(r.out(), 'seven apples and 231 peaches', here + 'decrement-cardinal')
 
   r = nlp('seventh place and 12th place')
   r.values()
     .increment()
     .increment()
-  t.equal(r.out(), 'ninth place and 14th place', 'increment-ordinal')
+  t.equal(r.out(), 'ninth place and 14th place', here + 'increment-ordinal')
   r.values()
     .decrement()
     .decrement()
-  t.equal(r.out(), 'seventh place and 12th place', 'decrement-ordinal')
+  t.equal(r.out(), 'seventh place and 12th place', here + 'decrement-ordinal')
   t.end()
 })
 
-test('number splits', function(t) {
+test('number splits', function (t) {
   const arr = ['12, 34, 56', '12 34 56', '12, 34, 56', '1 2 4']
   arr.forEach(str => {
     const tokens = nlp(str)
       .values()
       .out('array')
-    t.equal(tokens.length, 3, str)
+    t.equal(tokens.length, 3, here + str)
   })
   t.end()
 })

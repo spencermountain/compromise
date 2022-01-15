@@ -71,6 +71,17 @@ a subset of a document can be cloned.
 match(['foo', 'far'])
 ```
 
+
+### Number parsing
+`compromise-plugin-numbers` is now included by default, which is great news.
+- **[breaking]** - change `numbers().json()` result format
+- **[change]** - less-magic with money parsing - `nlp('50 cents').money().get()` is no-longer `0.5`
+
+### Date parsing
+- **[change]** .json() date metadata has moved-around
+
+
+### Main
 - **[breaking]** - drop `.parent()` and `.parents()` chain - (use `.all()` instead)
 - **[breaking]** - refactor `.out('freq')` output format - (uses `.compute('freq').terms().unique().json()` instead)
 - **[breaking]** - drop array support in match methods - (use `.match().match()` instead)
@@ -78,7 +89,6 @@ match(['foo', 'far'])
 - **[breaking]** - drop `@titleCase` alias (use @isTitleCase)
 - **[breaking]** - drop '.get()' alias - use '.eq()'
 - **[breaking]** - drop `.json(0)` shorthand - use `.json()[0]`
-- **[breaking]** - change `numbers().json()` result format
 - move fuzzy matching to a plugin
 
 - **[change]** merge re-used capture-group names in one match
@@ -93,6 +103,7 @@ match(['foo', 'far'])
 - **[change]** remove #FutureTense tag - which is not really a thing in english
 - **[change]** .unique() no-longer mutates parent
 
+### new methods
 - **[new]** .union(), .intersection(), .difference() and .complement() methods
 - **[new]** .freeze(), unfreeze() - prevent a match from drifting, once parent is mutated
 - **[new]** .confidence() method - approximate tagging confidence score for arbitrary selections
@@ -104,27 +115,5 @@ match(['foo', 'far'])
 - **[new]** add punctuation match support via pre/post params
 - **[new]** add ambiguous empty .map() state as 2nd param
 
-### date-plugin
-- **[change]** .json() date metadata has moved-around
 
 ---
-
-### plugins
-
-adjectives
-export
-hash
-html
-ngrams
-numbers
-paragraphs
-pronounce
-redact
-scan
-sentences
-strict
-syllables
-typeahead
-keypress
-
-### search

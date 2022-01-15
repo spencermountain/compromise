@@ -178,7 +178,7 @@ const addMethod = function (View) {
           return
         }
         let fmt = val.has('#Ordinal') ? 'Ordinal' : 'Cardinal'
-        if (val.has('#TextNumber')) {
+        if (val.has('#TextValue')) {
           fmt = val.has('#Ordinal') ? 'TextOrdinal' : 'TextCardinal'
         }
         let str = format(obj, fmt)

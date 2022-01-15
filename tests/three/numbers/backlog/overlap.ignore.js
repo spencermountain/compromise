@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from '../../_lib.js'
 const here = '[three/number-overlap] '
 
 test('number-fraction overlap', function (t) {

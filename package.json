@@ -51,6 +51,7 @@
     "test:match": "tape \"./tests/*/match.test.js\" | tap-dancer",
     "test:penn": "tape \"./tests/two/tagger/penn.test.js\" | tap-dancer",
     "test:smoke": "tape \"./scripts/test/smoke.test.js\" | tap-dancer",
+    "test:dates": "tape \"./plugins/dates/tests/**/*.test.js\" | tap-dancer",
     "debug": "node ./scripts/debug.js",
     "match": "node ./scripts/match.js",
     "coverage": "nyc -r lcov -n 'src/**/*' -n 'plugins/**/*' npm run test",

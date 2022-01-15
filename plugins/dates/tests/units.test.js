@@ -25,7 +25,7 @@ test('units', function (t) {
   ]
   arr.forEach((a) => {
     let doc = nlp(a[0])
-    let found = doc.dates({ today: a[0] }).get(0)
+    let found = doc.dates({ today: a[0] }).get()[0]
     if (!found) {
       console.log(a[0])
     }

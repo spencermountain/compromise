@@ -52,7 +52,7 @@ const parseIntervals = function (doc, context) {
     let units = m.groups('unit')
     units.nouns().toSingular()
     let unit = units.text('reduced')
-    repeat.interval[unit] = m.groups('num').numbers().get(0)
+    repeat.interval[unit] = m.groups('num').numbers().get()[0]
     repeat.choose = parseLogic(m)
     doc = doc.remove(m)
     return { repeat: repeat }

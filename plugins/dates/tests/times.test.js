@@ -71,7 +71,7 @@ test('times of start and end', function (t) {
   ]
   arr.forEach((a) => {
     let doc = nlp(a[0])
-    let dates = doc.dates(context).get(0) || {}
+    let dates = doc.dates(context).get()[0] || {}
     let start = spacetime(dates.start)
     t.equal(start.time(), a[1], '[time] ' + a[0])
     if (a[2]) {

@@ -36,7 +36,7 @@ import datePlugin from 'compromise-dates'
 nlp.plugin(datePlugin)
 
 let doc = nlp('the second monday of february')
-doc.dates().get(0)
+doc.dates().get()[0]
 /*
   { start: '2021-02-08T00:00:00.000Z', end: '2021-02-08T23:59:59.999Z'}
 */

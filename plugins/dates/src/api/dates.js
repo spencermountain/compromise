@@ -23,8 +23,8 @@ const api = function (View) {
       this.forEach((m) => {
         parseRange(m, this.opts).forEach(res => {
           all.push({
-            start: res.start.format('iso'),
-            end: res.end.format('iso')
+            start: res.start ? res.start.format('iso') : null,
+            end: res.end ? res.end.format('iso') : null
           })
         })
       })
@@ -43,6 +43,27 @@ const api = function (View) {
         }
         return json
       }, [])
+    }
+
+    format(fmt) {
+      let found = this.freeze()
+      let res = found.map(m => {
+        m.repair()
+        let obj = parseRange(m, this.opts)[0] || {}
+        if (obj.start) {
+          let start = obj.start.d
+          let str = start.format(fmt)
+          if (obj.end) {
+            let end = obj.end.d
+            if (start.isSame(end, 'day') === false) {
+              str += ' to ' + end.format(fmt)
+            }
+          }
+          m.replaceWith(str)
+        }
+        return m
+      })
+      return new Dates(this.document, res.pointer, null, this.opts)
     }
   }
 

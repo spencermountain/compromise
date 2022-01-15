@@ -11,8 +11,8 @@ test('durations vs dates', function (t) {
   ]
   arr.forEach((str) => {
     let doc = nlp(str)
-    let dates = doc.dates().get(0)
-    let durations = doc.durations().get(0)
+    let dates = doc.dates().get()[0] || {}
+    let durations = doc.durations().get()[0] || {}
     t.ok(dates.start, `[date] ${str}`)
     t.equal(durations.minute, 30, `[duration] ${str}`)
   })
@@ -54,30 +54,30 @@ test('one-word durations', function (t) {
   ]
   arr.forEach((a) => {
     let doc = nlp(a[0]).tag('Duration')
-    let found = doc.durations().get(0)
+    let found = doc.durations().get()[0]
     t.deepEqual(found, a[1], a[0])
   })
   t.end()
 })
 
-test('durations normalize', function (t) {
-  let arr = [
-    ['blah blah two hours and 8 mins foobar', 'blah blah 2 hours and 8 minutes foobar'],
-    ['seventy-two years', '72 years'],
-    ['12 years and 2 months', '12 years and 2 months'],
-    ['12.3 years', '12.3 years'],
-    ['12 years and one month', '12 years and 1 month'],
-    ['12 yrs and 2 hrs', '12 years and 2 hours'],
-    ['2mins please', '2 minutes please'],
-    ['5yrs and 3 months', '5 years and 3 months'],
-    // ['three quarters', '3 quarters'],
-    // no duration
-    ['food wholesale prices for hours', 'food wholesale prices for hours'],
-  ]
-  arr.forEach((a) => {
-    let doc = nlp(a[0])
-    doc.durations().normalize()
-    t.equal(doc.text(), a[1], a[0])
-  })
-  t.end()
-})
+// test('durations normalize', function (t) {
+//   let arr = [
+//     ['blah blah two hours and 8 mins foobar', 'blah blah 2 hours and 8 minutes foobar'],
+//     ['seventy-two years', '72 years'],
+//     ['12 years and 2 months', '12 years and 2 months'],
+//     ['12.3 years', '12.3 years'],
+//     ['12 years and one month', '12 years and 1 month'],
+//     ['12 yrs and 2 hrs', '12 years and 2 hours'],
+//     ['2mins please', '2 minutes please'],
+//     ['5yrs and 3 months', '5 years and 3 months'],
+//     // ['three quarters', '3 quarters'],
+//     // no duration
+//     ['food wholesale prices for hours', 'food wholesale prices for hours'],
+//   ]
+//   arr.forEach((a) => {
+//     let doc = nlp(a[0])
+//     doc.durations().normalize()
+//     t.equal(doc.text(), a[1], a[0])
+//   })
+//   t.end()
+// })

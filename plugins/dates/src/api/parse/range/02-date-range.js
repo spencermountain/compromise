@@ -120,7 +120,7 @@ export default [
     desc: 'january to may 2020',
     parse: (m, context) => {
       let from = m.groups('from')
-      let year = from.groups('year').numbers().get(0)
+      let year = from.groups('year').numbers().get()[0]
       let to = m.groups('to')
       from = parseDate(from, context)
       to = parseDate(to, context)

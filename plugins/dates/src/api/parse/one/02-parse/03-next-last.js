@@ -38,7 +38,6 @@ const nextLast = function (doc, context) {
       return unit
     }
   }
-
   //'next friday, last thursday'
   m = doc.match('^#WeekDay$')
   if (m.found === true) {

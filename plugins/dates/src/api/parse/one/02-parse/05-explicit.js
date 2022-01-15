@@ -21,6 +21,7 @@ const parseExplicit = function (doc, context) {
       return unit
     }
   }
+
   // 'march 1992'
   m = doc.match('[<month>#Month] of? [<year>#Year]')
   if (m.found) {
@@ -33,6 +34,7 @@ const parseExplicit = function (doc, context) {
       return unit
     }
   }
+
   //no-years
   // 'fifth of june'
   m = doc.match('[<date>#Value] of? [<month>#Month]')

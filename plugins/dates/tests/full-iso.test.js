@@ -27,7 +27,7 @@ test('full iso start+end tests', function (t) {
   ]
   arr.forEach((a) => {
     let doc = nlp(a[0])
-    let dates = doc.dates(context).get()[0]
+    let dates = doc.dates(context).get()[0] || {}
     t.equal(dates.start, a[1], '[start] ' + a[0])
     t.equal(dates.end, a[2], '[end] ' + a[0])
   })

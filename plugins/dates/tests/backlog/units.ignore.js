@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from './_lib.js'
+import nlp from '../_lib.js'
 
 test('units', function (t) {
   let arr = [

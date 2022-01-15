@@ -36,7 +36,7 @@ test('in 4 mins', function (t) {
 
 test('durations json', function (t) {
   let doc = nlp('blah blah two hours and 8 mins foobar')
-  let json = doc.durations().json(0)
+  let json = doc.durations().json()[0]
   t.equal(json.duration.hour, 2, '2 hours')
   t.equal(json.duration.minute, 8, '8 minute')
   t.end()

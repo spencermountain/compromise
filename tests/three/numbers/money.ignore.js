@@ -16,7 +16,7 @@ test('get currency ', function (t) {
   ]
   arr.forEach((a) => {
     let doc = nlp(a[0])
-    let json = doc.money().json(0)
+    let json = doc.money().json()[0]
     t.equal(a[1], json.iso, here + a[0])
   })
   t.end()
@@ -24,11 +24,11 @@ test('get currency ', function (t) {
 
 test('money formats', function (t) {
   let doc = nlp('£30.50')
-  let str = doc.money().json(0).textFmt
+  let str = doc.money().json()[0].textFmt
   t.equal(str, 'thirty point five pounds', here)
 
   doc = nlp('9 WON')
-  str = doc.money().json(0).textFmt
+  str = doc.money().json()[0].textFmt
   t.equal(str, 'nine won', '9 won', here)
   t.end()
 })

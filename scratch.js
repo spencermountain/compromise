@@ -33,5 +33,6 @@ txt = `there were the walks`
 // doc.chunks().debug('chunks')
 // doc.verbs().subjects().debug()
 
-const str = nlp('75').values().toText().out('text')
-console.log(str)
+let doc = nlp('£30.50')
+let obj = doc.money().json()
+console.log(obj)

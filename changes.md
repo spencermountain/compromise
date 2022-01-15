@@ -77,6 +77,8 @@ match(['foo', 'far'])
 - **[breaking]** - drop support for using Doc object as match input
 - **[breaking]** - drop `@titleCase` alias (use @isTitleCase)
 - **[breaking]** - drop '.get()' alias - use '.eq()'
+- **[breaking]** - drop `.json(0)` shorthand - use `.json()[0]`
+- **[breaking]** - change `numbers().json()` result format
 - move fuzzy matching to a plugin
 
 - **[change]** merge re-used capture-group names in one match

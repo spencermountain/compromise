@@ -1,10 +1,4 @@
 
-const looksOk = function (terms, ids) {
-
-}
-
-
-
 const methods = {
   // allow re-use of this view, after a mutation
   freeze: function () {
@@ -12,8 +6,7 @@ const methods = {
     let docs = this.docs
     let pointer = this.fullPointer
     pointer = pointer.map((a, n) => {
-      let ids = docs[n].map(t => t.uuid)
-      a.push(ids)
+      a[3] = docs[n].map(t => t.uuid)
       return a
     })
     this.ptrs = pointer

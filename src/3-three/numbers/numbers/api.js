@@ -53,7 +53,7 @@ const addMethod = function (View) {
         if (obj.num === null) {
           return
         }
-        let fmt = obj.isOrdinal ? 'Ordinal' : 'Cardinal'
+        let fmt = val.has('#Ordinal') ? 'Ordinal' : 'Cardinal'
         let str = format(obj, fmt)
         val.replaceWith(str, true)
         val.tag('NumericValue')
@@ -77,49 +77,60 @@ const addMethod = function (View) {
     }
     /** convert to numeric form like 'eight' or 'eighth' */
     toText() {
-      let m = this.if('#NumericValue').freeze()
-      m.forEach(val => {
+      let m = this.freeze()
+      let res = m.map(val => {
+        if (val.has('#TextValue')) {
+          return val
+        }
         val.repair()
         let obj = parse(val)
         if (obj.num === null) {
           return
         }
-        let fmt = obj.isOrdinal ? 'TextOrdinal' : 'TextCardinal'
+        let fmt = val.has('#Ordinal') ? 'TextOrdinal' : 'TextCardinal'
         let str = format(obj, fmt)
         val.replaceWith(str, true)
         val.tag('TextValue')
+        return val
       })
-      return this
+      return new Numbers(res.document, res.pointer)
     }
     /** convert ordinal to cardinal form, like 'eight', or '8' */
     toCardinal() {
-      let m = this.if('#Ordinal').freeze()
-      m.forEach(val => {
+      let m = this.freeze()
+      let res = m.forEach(val => {
+        if (!val.has('#Ordinal')) {
+          return val
+        }
         let obj = parse(val)
         if (obj.num === null) {
           return
         }
-        let fmt = obj.isText ? 'TextCardinal' : 'Cardinal'
+        let fmt = val.has('#TextValue') ? 'TextCardinal' : 'Cardinal'
         let str = format(obj, fmt)
         val.replaceWith(str, true)
         val.tag('Cardinal')
       })
-      return this
+      return new Numbers(res.document, res.pointer)
     }
     /** convert cardinal to ordinal form, like 'eighth', or '8th' */
     toOrdinal() {
-      let m = this.if('#Cardinal').freeze()
-      m.forEach(val => {
+      let m = this.freeze()
+      let res = m.map(val => {
+        if (val.has('#Ordinal')) {
+          return val
+        }
         let obj = parse(val)
         if (obj.num === null) {
           return
         }
-        let fmt = obj.isText ? 'TextOrdinal' : 'Ordinal'
+        let fmt = val.has('#TextValue') ? 'TextOrdinal' : 'Ordinal'
         let str = format(obj, fmt)
         val.replaceWith(str, true)
         val.tag('Ordinal')
+        return val
       })
-      return this
+      return new Numbers(res.document, res.pointer)
     }
 
     /** return only numbers that are == n */
@@ -159,24 +170,25 @@ const addMethod = function (View) {
         n = parse(n).num
       }
       let m = this.freeze()
-      m.forEach((val) => {
+      let res = m.map((val) => {
         val.repair()
         let obj = parse(val)
         obj.num = n
         if (obj.num === null) {
           return
         }
-        let fmt = obj.isOrdinal ? 'Ordinal' : 'Cardinal'
-        if (obj.isText) {
-          fmt = obj.isOrdinal ? 'TextOrdinal' : 'TextCardinal'
+        let fmt = val.has('#Ordinal') ? 'Ordinal' : 'Cardinal'
+        if (val.has('#TextNumber')) {
+          fmt = val.has('#Ordinal') ? 'TextOrdinal' : 'TextCardinal'
         }
         let str = format(obj, fmt)
         val = val.not('#Currency')
         val.replaceWith(str, true)
         // handle plural/singular unit
         // agreeUnits(agree, val, obj)
+        return val
       })
-      return this
+      return new Numbers(res.document, res.pointer)
     }
     add(n, agree) {
       if (!n) {
@@ -186,24 +198,25 @@ const addMethod = function (View) {
         n = parse(n).num
       }
       let m = this.freeze()
-      m.forEach((val) => {
+      let res = m.map((val) => {
         val.repair()
         let obj = parse(val)
         if (obj.num === null) {
           return
         }
         obj.num += n
-        let fmt = obj.isOrdinal ? 'Ordinal' : 'Cardinal'
+        let fmt = val.has('#Ordinal') ? 'Ordinal' : 'Cardinal'
         if (obj.isText) {
-          fmt = obj.isOrdinal ? 'TextOrdinal' : 'TextCardinal'
+          fmt = val.has('#Ordinal') ? 'TextOrdinal' : 'TextCardinal'
         }
         let str = format(obj, fmt)
         val = val.not('#Currency')
         val.replaceWith(str, true)
         // handle plural/singular unit
         // agreeUnits(agree, val, obj)
+        return val
       })
-      return this
+      return new Numbers(res.document, res.pointer)
     }
     /** decrease each number by n*/
     subtract(n, agree) {
@@ -235,6 +248,18 @@ const addMethod = function (View) {
 
   View.prototype.numbers = function (n) {
     let m = find(this)
+    m = getNth(m, n)
+    return new Numbers(this.document, m.pointer)
+  }
+  View.prototype.percentages = function (n) {
+    let m = find(this)
+    m = m.filter(v => v.has('#Percent') || v.after('^percent'))
+    m = getNth(m, n)
+    return new Numbers(this.document, m.pointer)
+  }
+  View.prototype.money = function (n) {
+    let m = find(this)
+    m = m.filter(v => v.has('#Money') || v.after('^#Currency'))
     m = getNth(m, n)
     return new Numbers(this.document, m.pointer)
   }

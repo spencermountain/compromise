@@ -69,7 +69,7 @@ test('date-tagger', function (t) {
     ['ash wednesday', ['Holiday', 'Holiday']],
   ]
   arr.forEach(function (a) {
-    let terms = nlp(a[0]).json(0).terms
+    let terms = nlp(a[0]).json()[0].terms
     terms.forEach((term, i) => {
       let tag = a[1][i]
       let found = term.tags.some(tg => tg === tag)

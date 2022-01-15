@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/number-big] '
 
 const cardinal = function (str) {
-  return nlp(str).values().json(0).number
+  return nlp(str).values().json()[0].number.num
 }
 
 test('a very large cardinal', function (t) {
@@ -20,7 +20,7 @@ test('a very large cardinal', function (t) {
 })
 
 test('number ordinal', function (t) {
-  t.equal(nlp('two hundred trillion').values().toOrdinal().toNice().text(), here + '200,000,000,000,000th', here + '1')
+  t.equal(nlp('two hundred trillion').values().toOrdinal().toNice().text(), '200,000,000,000,000th', here + '1')
   t.equal(nlp('thirty seven quadrillion and two hundred').values().toOrdinal().toNice().text(), '37,000,000,000,000,200th', here + '2')
   t.equal(nlp('thirty seven quadrillion, two thousand').values().toOrdinal().toNice().text(), '37,000,000,000,002,000th', here + '3')
   t.equal(nlp('ninety nine quadrillion, two hundred thousand').values().toOrdinal().toNice().text(), '99,000,000,000,200,000th', here + '4')
@@ -31,10 +31,10 @@ test('number ordinal', function (t) {
 })
 
 test('text ordinal', function (t) {
-  t.equal(nlp('thirty quadrillion and two hundred').values().json()[0].textOrdinal, 'thirty quadrillion two hundredth', here + '1')
-  t.equal(nlp('nine trillion seven hundred fifty').values().json()[0].textOrdinal, 'nine trillion seven hundred and fiftieth', here + '2')
-  t.equal(nlp('a quintillion').values().json()[0].textOrdinal, 'one quintillionth', here + '3')
-  t.equal(nlp('seventy-two quintillion').values().json()[0].textOrdinal, 'seventy two quintillionth', here + '4')
+  t.equal(nlp('thirty quadrillion and two hundred').values().toText().toOrdinal().text(), 'thirty quadrillion two hundredth', here + '1')
+  t.equal(nlp('nine trillion seven hundred fifty').values().toText().toOrdinal().text(), 'nine trillion seven hundred and fiftieth', here + '2')
+  t.equal(nlp('a quintillion').values().toText().toOrdinal().text(), 'one quintillionth', here + '3')
+  t.equal(nlp('seventy-two quintillion').values().toText().toOrdinal().text(), 'seventy two quintillionth', here + '4')
   t.end()
 })
 

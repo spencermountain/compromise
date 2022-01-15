@@ -51,7 +51,7 @@ test('pennTreebank-test:', function (t) {
     let perfect = true
     let msg = `'` + sentence.text.substr(0, 35) + `..   -  `
 
-    let terms = doc.json(0).terms
+    let terms = doc.json()[0].terms
     if (doc.length !== 1) {
       perfect = false
       msg = 'one sentence #' + index

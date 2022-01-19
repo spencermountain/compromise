@@ -124,13 +124,15 @@ export default [
     desc: 'tuesday before noon',
     parse: (m, context) => {
       let unit = parseDate(m, context)
-      let end = unit.clone()
-      let start = unit.start()
       if (unit) {
-        return {
-          start: start,
-          end: end,
-          unit: 'time',
+        let end = unit.clone()
+        let start = unit.start()
+        if (unit) {
+          return {
+            start: start,
+            end: end,
+            unit: 'time',
+          }
         }
       }
       return null

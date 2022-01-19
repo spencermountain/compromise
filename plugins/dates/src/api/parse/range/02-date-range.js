@@ -61,10 +61,10 @@ export default [
     parse: (m, context) => {
       let { month, from, to, year } = m.groups()
       let year2 = year.clone()
-      let start = from.prepend(month.text()).append(year.text())
+      let start = from.prepend(month).append(year)
       start = parseDate(start, context)
       if (start) {
-        let end = to.prepend(month.text()).append(year2)
+        let end = to.prepend(month).append(year2)
         end = parseDate(end, context)
         return {
           start: start,
@@ -120,13 +120,12 @@ export default [
     desc: 'january to may 2020',
     parse: (m, context) => {
       let from = m.groups('from')
-      let year = from.groups('year').numbers().get()[0]
+      let year = m.groups('year').numbers().get()[0]
       let to = m.groups('to')
       from = parseDate(from, context)
       to = parseDate(to, context)
       from.d = from.d.year(year)
       to.d = to.d.year(year)
-
       if (from && to) {
         let obj = {
           start: from,

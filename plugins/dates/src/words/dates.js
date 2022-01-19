@@ -6,7 +6,7 @@ export default [
   'autumn',
 
   'some day',
-  'one day',
+  // 'one day',
   'all day',
   'some point',
 

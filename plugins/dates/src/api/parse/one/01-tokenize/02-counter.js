@@ -9,6 +9,7 @@ unlike a shift, like "2 weeks after x"
 const oneBased = {
   minute: true,
 }
+
 const getCounter = function (doc) {
   // 7th week of
   let m = doc.match('[<num>#Value] [<unit>#Duration+] (of|in)')
@@ -24,7 +25,6 @@ const getCounter = function (doc) {
     if (!oneBased[unit]) {
       res.num -= 1
     }
-    // doc = doc.remove(m)
     return { res, m }
   }
   // first week of
@@ -39,11 +39,10 @@ const getCounter = function (doc) {
     if (dir === 'final') {
       dir = 'last'
     }
-    let found = {
+    let res = {
       unit: unit,
       dir: dir,
     }
-    // doc = doc.remove(m)
     return { res, m }
   }
 

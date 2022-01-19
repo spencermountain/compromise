@@ -34,17 +34,17 @@ knownWord.tmrw = knownWord.tomorrow
 knownWord.anytime = knownWord.today
 knownWord.sometime = knownWord.today
 
-const today = function (doc, context, section) {
+const today = function (doc, context, parts) {
   let unit = null
   // is it empty?
   if (doc.found === false) {
     // do we have just a time?
-    if (section.time !== null) {
+    if (parts.time !== null) {
       unit = new Moment(context.today, null, context) // choose today
     }
     //do we just have a shift?
-    if (Object.keys(section.shift).length > 0) {
-      if (section.shift.hour || section.shift.minute) {
+    if (parts.shift && Object.keys(parts.shift).length > 0) {
+      if (parts.shift.hour || parts.shift.minute) {
         unit = new Moment(context.today, null, context) // choose now
       } else {
         unit = new Day(context.today, null, context) // choose today
@@ -58,7 +58,7 @@ const today = function (doc, context, section) {
     return knownWord[str](context)
   }
   // day after next
-  if (str === 'next' && Object.keys(section.shift).length > 0) {
+  if (str === 'next' && parts.shift && Object.keys(parts.shift).length > 0) {
     return knownWord.tomorrow(context)
   }
   return unit

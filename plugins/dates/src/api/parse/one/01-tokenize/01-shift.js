@@ -53,6 +53,7 @@ const parseShift = function (doc) {
   }
   m = shift.match('#Cardinal #Duration')
   shift = shift.not(m)
+
   // supoprt '1 day after tomorrow'
   m = shift.match('[<unit>#Duration] [<dir>(after|before)]')
   if (m.found) {
@@ -65,6 +66,7 @@ const parseShift = function (doc) {
       res[unit] = -1
     }
   }
+
   // in half an hour
   m = shift.match('half (a|an) [#Duration]', 0)
   if (m.found) {
@@ -72,7 +74,8 @@ const parseShift = function (doc) {
     res[unit] = 0.5
   }
   // finally, remove it from our text
-  m = m.append('#DateShift')
+  m = doc.match('#DateShift+')
+
   return { res, m }
 }
 export default parseShift

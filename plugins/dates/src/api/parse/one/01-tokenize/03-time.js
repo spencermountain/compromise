@@ -196,7 +196,7 @@ const parseTime = function (doc, context) {
     if (/(am|pm)/i.test(str) === false) {
       s = ampmChooser(s)
     }
-    return { result: s.time(), m }
+    return { result: s.time(), m: time }
   }
   // should we fallback to a dayStart default?
   if (context.dayStart) {

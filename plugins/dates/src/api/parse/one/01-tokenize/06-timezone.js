@@ -43,11 +43,8 @@ const parseOffset = function (tz) {
 const parseTimezone = function (doc) {
   let m = doc.match('#Timezone+')
   //remove prepositions
-  m = m.remove('(in|for|by|near|at)')
+  m = m.not('(in|for|by|near|at)')
   let str = m.text('reduced')
-
-  // remove it from our doc, either way
-  // doc.remove('#Timezone+')
 
   // check our list of informal tz names
   if (informal.hasOwnProperty(str)) {

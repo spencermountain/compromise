@@ -6,7 +6,6 @@ const parseWeekday = function (doc) {
     if (doc.has('(this|next|last) (next|upcoming|coming|past)? #WeekDay')) {
       return { result: null, m: doc.none() }
     }
-    // doc.remove(day)
     return { result: day.text('reduced'), m: day }
   }
   return { result: null, m: doc.none() }

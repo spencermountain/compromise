@@ -5,15 +5,15 @@ import makeSuffix from './suffix.js'
 
 const format = function (obj, fmt) {
   if (fmt === 'TextOrdinal') {
-    return textOrdinal(obj) + makeSuffix(obj)
+    return obj.prefix + textOrdinal(obj) + makeSuffix(obj)
   }
   if (fmt === 'Ordinal') {
-    return numOrdinal(obj) + obj.suffix
+    return obj.prefix + numOrdinal(obj) + obj.suffix
   }
   if (fmt === 'TextCardinal') {
-    return textCardinal(obj) + makeSuffix(obj)
+    return obj.prefix + textCardinal(obj) + makeSuffix(obj)
   }
   // assume Cardinal
-  return String(obj.num) + obj.suffix
+  return obj.prefix + String(obj.num) + obj.suffix
 }
 export default format

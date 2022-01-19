@@ -11,8 +11,8 @@ test('number-fraction overlap', function (t) {
 
   arr.forEach((a) => {
     let doc = nlp(a[0])
-    let values = doc.numbers().get(0)
-    let fractions = doc.fractions().get(0)
+    let values = doc.numbers().get()[0]
+    let fractions = doc.fractions().get()[0]
     t.equal(values, a[1], here + 'Value: ' + a[0])
     t.equal(fractions, null, here + 'Fraction: no-fraction')
   })

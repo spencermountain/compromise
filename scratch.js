@@ -29,7 +29,8 @@ let txt = ''
 txt = `Pursuing a successful career, along with the usual social and financial advantages, will be easier this year`
 txt = `all the days since december were awful`
 txt = `there were the walks`
-// let doc = nlp(txt).debug()
+txt = `one day after next`
+let doc = nlp(txt).tag('Date').debug()
 // doc.chunks().debug('chunks')
 // doc.verbs().subjects().debug()
 
@@ -40,7 +41,6 @@ txt = `there were the walks`
 // doc.money().add(1)
 // doc.debug(0)
 
-
-let doc = nlp('five hundred fifty nine is more than fifty three')
-doc.values().set(4)
-doc.debug()
+// let doc = nlp('i paid $5.32 for a pizza slice')
+// doc.money().add(1)
+// console.log(doc.text())

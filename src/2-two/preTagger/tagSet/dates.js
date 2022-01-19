@@ -1,6 +1,6 @@
 export default {
   Date: {
-    not: ['Verb', 'Adverb', 'Preposition', 'Adjective'],
+    not: ['Verb', 'Adverb', 'Adjective'],
   },
   Month: {
     is: 'Singular',

@@ -63,7 +63,7 @@ const nOrinalth = function (m) {
   } else {
     // abuse the number-parser for 'thirty three'
     // let tmp = num.clone().unTag('Fraction')
-    // num = tmp.numbers().get(0)
+    // num = tmp.numbers().get()[0]
     num = parseNumber(num)
   }
   // -- parse denominator --
@@ -77,7 +77,7 @@ const nOrinalth = function (m) {
   if (mapping.hasOwnProperty(str)) {
     den = mapping[str]
   } else {
-    // dem = dem.numbers().get(0)
+    // dem = dem.numbers().get()[0]
     den = parseNumber(den)
   }
   if (typeof num === 'number' && typeof den === 'number') {
@@ -97,7 +97,7 @@ const oneNth = function (m) {
   }
   // ensure it's '100th of a '
   if (m.lookAhead('^of .')) {
-    // let num = found.numbers().get(0)
+    // let num = found.numbers().get()[0]
     let num = parseNumber(found)
     return {
       numerator: 1,

@@ -15,8 +15,10 @@ const month = {
   beforeWords: {
     by: m,
     in: m,
+    on: m,
     during: m,
     after: m,
+    before: m,
     until: m,
     til: m,
     sometime: m,
@@ -24,10 +26,13 @@ const month = {
     this: m, //this april
     next: m,
     last: m,
+    previous: m,
+    following: m,
   },
   afterWords: {
     sometime: m,
     in: m,
+    of: m,
     until: m,
     the: m, //june the 4th
   },

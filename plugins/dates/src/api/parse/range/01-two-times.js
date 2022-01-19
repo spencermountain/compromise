@@ -23,7 +23,7 @@ export default [
       let end = parseDate(to, context)
       if (end) {
         let start = end.clone()
-        start.applyTime(from.text('reduced'))
+        start.applyTime(from.text('implicit'))
         if (start) {
           let obj = {
             start: start,
@@ -51,7 +51,7 @@ export default [
       from = parseDate(from, context)
       if (from) {
         let end = from.clone()
-        end.applyTime(to.text('reduced'))
+        end.applyTime(to.text('implicit'))
         if (end) {
           let obj = {
             start: from,

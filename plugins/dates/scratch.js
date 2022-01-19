@@ -8,10 +8,13 @@ nlp.plugin(datePlugin)
 
 const fmt = (iso) => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 
+process.env.DEBUG_DATE = true
+
 const context = {
   today: '1999-04-17',
   // today: [1999, 3, 12]
-  timezone: 'Asia/Shanghai',
+  // timezone: 'Asia/Shanghai',
+  timezone: false
   // dayStart: '8:00am',
   // dayEnd: '8:00pm',
 }
@@ -19,15 +22,16 @@ const context = {
 let txt = ''
 txt = 'next tuesday at 3pm'
 txt = 'may to august 1996'
-txt = 'haloween'
 txt = 'tommorrow before noon'
-txt = 'two days before june'
-txt = 'February 14, 2004'
 txt = 'on the day after next'
-txt = 'one day after next'
-txt = '3-4pm'
-txt = 'june 5-7 1999'
-txt = 'April 7th 2018'
+txt = 'december seventh'
+txt = 'apr 22nd 2014'
+txt = '3pm-3:30'
+txt = ' may to august 1996'
+txt = 'today at 6:00pm'
+txt = 'fourth quarter, 2002'
+txt = 'May twenty-fourth, 2010'
+txt = 'first day of 2019'
 // txt = 'on april 22nd'
 // txt = 'monday'
 
@@ -40,7 +44,7 @@ txt = 'April 7th 2018'
 // })
 
 
-let doc = nlp(txt).debug()
+let doc = nlp(txt)//.debug()
 let m = doc.dates(context)
 // m.debug()
 console.log(m.get())

@@ -53,13 +53,13 @@ const timeTagger = function (doc) {
       let m = range.match('[#NumberRange+] (on|by|at)? #WeekDay', 0)
       tagTimeRange(m, '3-4-tuesday')
       // 3-4 on march 2nd
-      range.match('[#NumberRange+] (on|by|at)? #Month #Value', 0)
+      m = range.match('[#NumberRange+] (on|by|at)? #Month #Value', 0)
       tagTimeRange(m, '3-4 mar 3')
       // 3-4pm
-      range.match('[#NumberRange] to (#NumberRange && #Time)', 0)
+      m = range.match('[#NumberRange] to (#NumberRange && #Time)', 0)
       tagTimeRange(m, '3-4pm')
       // 3pm-5
-      range.match('(#NumberRange && #Time) to [#NumberRange]', 0)
+      m = range.match('(#NumberRange && #Time) to [#NumberRange]', 0)
       tagTimeRange(m, '3pm-4')
     }
     // from 4 to 5 tomorrow
@@ -86,6 +86,9 @@ const timeTagger = function (doc) {
     // 3 to 4 on wednesday
     m = date.match('#Cardinal to #Cardinal on? (#WeekDay|#Month #Value)')
     tagTimeRange(m, '3-4 wed')
+    // 3 to 4 pm
+    // m = date.match('^#Cardinal to #Time')
+    // tagTimeRange(m, '3 to 4pm')
   }
   // around four thirty
   doc.match('(at|around|near|#Date) [#Cardinal (thirty|fifteen) (am|pm)?]', 0).tag('Time', here)

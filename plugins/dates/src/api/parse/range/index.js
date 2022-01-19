@@ -8,6 +8,13 @@ import doOneDate from './03-one-date.js'
 
 const ranges = [].concat(doTwoTimes, doCombos, doDateRange, doOneDate)
 
+const env = typeof process === 'undefined' ? self.env || {} : process.env
+const log = msg => {
+  if (env.DEBUG_DATE) {
+    console.log(`\n  \x1b[32m ${msg} \x1b[0m`) // eslint-disable-line
+  }
+}
+
 const isArray = function (arr) {
   return Object.prototype.toString.call(arr) === '[object Array]'
 }
@@ -40,7 +47,7 @@ const tryRanges = function (doc, context) {
     let fmt = ranges[i]
     let m = doc.match(fmt.match)
     if (m.found) {
-      // console.log(`  ---[${fmt.desc}]---`)
+      log(`  ---[${fmt.desc}]---`)
       let res = fmt.parse(m, context)
       if (res !== null) {
         // did it return more than one date?

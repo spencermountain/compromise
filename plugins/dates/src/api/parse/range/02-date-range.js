@@ -84,7 +84,7 @@ export default [
       if (to) {
         let fromDate = m.groups('from')
         let from = to.clone()
-        from.d = from.d.date(fromDate.text('normal'))
+        from.d = from.d.date(fromDate.text('implicit'))
         return {
           start: from,
           end: to.end(),
@@ -104,7 +104,7 @@ export default [
       if (from) {
         let toDate = m.groups('to')
         let to = from.clone()
-        to.d = to.d.date(toDate.text('normal'))
+        to.d = to.d.date(toDate.text('implicit'))
         return {
           start: from,
           end: to.end(),

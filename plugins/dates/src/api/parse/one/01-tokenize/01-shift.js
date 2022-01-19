@@ -30,26 +30,25 @@ const parseUnit = function (m) {
 
 //turn '5 weeks before' to {weeks:5}
 const parseShift = function (doc) {
-  let res = {}
+  let result = {}
   let m = doc.none()
   let shift = doc.match('#DateShift+')
   if (shift.found === false) {
-    return { res, m }
+    return { res: result, m }
   }
   // '5 weeks'
   shift.match('#Cardinal #Duration').forEach((ts) => {
-    let num = ts.match('#Cardinal').text('normal')
-    num = parseFloat(num)
+    let num = ts.match('#Cardinal').numbers().get()[0]
     if (num && typeof num === 'number') {
       let unit = parseUnit(ts)
       if (knownUnits[unit] === true) {
-        res[unit] = num
+        result[unit] = num
       }
     }
   })
   //is it 2 weeks ago?  → -2
   if (shift.has('(before|ago|hence|back)$') === true) {
-    Object.keys(res).forEach((k) => (res[k] *= -1))
+    Object.keys(result).forEach((k) => (result[k] *= -1))
   }
   m = shift.match('#Cardinal #Duration')
   shift = shift.not(m)
@@ -61,9 +60,9 @@ const parseShift = function (doc) {
     // unit = unit.replace(/s$/, '')
     let dir = m.groups('dir').text('reduced')
     if (dir === 'after') {
-      res[unit] = 1
+      result[unit] = 1
     } else if (dir === 'before') {
-      res[unit] = -1
+      result[unit] = -1
     }
   }
 
@@ -71,11 +70,10 @@ const parseShift = function (doc) {
   m = shift.match('half (a|an) [#Duration]', 0)
   if (m.found) {
     let unit = parseUnit(m)
-    res[unit] = 0.5
+    result[unit] = 0.5
   }
   // finally, remove it from our text
   m = doc.match('#DateShift+')
-
-  return { res, m }
+  return { result, m }
 }
 export default parseShift

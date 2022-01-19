@@ -37,7 +37,7 @@ const tokenize = function (doc, context) {
   let section = res.result
   doc = doc.not(res.m)
 
-  // parse 'next x]
+  // parse 'next x'
   res = doRelative(doc)
   let rel = res.result
   doc = doc.not(res.m)

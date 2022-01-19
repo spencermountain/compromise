@@ -4,11 +4,11 @@ const parseWeekday = function (doc) {
   if (day.found && !doc.has('^#WeekDay$')) {
     // handle relative-day logic elsewhere.
     if (doc.has('(this|next|last) (next|upcoming|coming|past)? #WeekDay')) {
-      return null
+      return { result: null, m: doc.none() }
     }
-    doc.remove(day)
-    return day.text('reduced')
+    // doc.remove(day)
+    return { result: day.text('reduced'), m: day }
   }
-  return null
+  return { result: null, m: doc.none() }
 }
 export default parseWeekday

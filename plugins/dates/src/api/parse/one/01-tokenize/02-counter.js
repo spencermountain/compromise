@@ -16,16 +16,16 @@ const getCounter = function (doc) {
     let obj = m.groups()
     let num = obj.num.text('reduced')
     let unit = obj.unit.text('reduced')
-    let found = {
+    let res = {
       unit: unit,
       num: Number(num) || 0,
     }
     // 0-based or 1-based units
     if (!oneBased[unit]) {
-      found.num -= 1
+      res.num -= 1
     }
-    doc = doc.remove(m)
-    return found
+    // doc = doc.remove(m)
+    return { res, m }
   }
   // first week of
   m = doc.match('[<dir>(first|initial|last|final)] [<unit>#Duration+] (of|in)')
@@ -43,10 +43,10 @@ const getCounter = function (doc) {
       unit: unit,
       dir: dir,
     }
-    doc = doc.remove(m)
-    return found
+    // doc = doc.remove(m)
+    return { res, m }
   }
 
-  return {}
+  return { res: null, m: doc.none() }
 }
 export default getCounter

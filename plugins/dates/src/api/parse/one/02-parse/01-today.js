@@ -36,7 +36,6 @@ knownWord.sometime = knownWord.today
 
 const today = function (doc, context, section) {
   let unit = null
-
   // is it empty?
   if (doc.found === false) {
     // do we have just a time?

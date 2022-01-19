@@ -1,20 +1,16 @@
 import { WeekDay, Moment, Day } from './units/index.js'
-import doShift from './01-tokenize/01-shift.js'
-import doCounter from './01-tokenize/02-counter.js'
-import doTime from './01-tokenize/03-time.js'
-import doRelative from './01-tokenize/04-relative.js'
-import doSection from './01-tokenize/05-section.js'
-import doTimezone from './01-tokenize/06-timezone.js'
-import doWeekday from './01-tokenize/07-weekday.js'
-
 import today from './02-parse/01-today.js'
 import holiday from './02-parse/02-holidays.js'
 import nextLast from './02-parse/03-next-last.js'
 import yearly from './02-parse/04-yearly.js'
 import explicit from './02-parse/05-explicit.js'
-
 import addCounter from './03-transform/addCounter.js'
 import spacetime from 'spacetime'
+import tokenize from './01-tokenize/index.js'
+
+const interpret = function (doc, context, parts) {
+
+}
 
 const parseDate = function (doc, context) {
   doc = doc.clone()
@@ -26,23 +22,18 @@ const parseDate = function (doc, context) {
   // quick normalization
   doc.match('[^the] !#Value', 0).remove() // keep 'the 17th'
   //parse-out any sections
-  let shift = doShift(doc)
-  let counter = doCounter(doc)
-  let tz = doTimezone(doc)
-  let time = doTime(doc, context)
-  let weekDay = doWeekday(doc, context)
-  let section = doSection(doc, context)
-  let rel = doRelative(doc)
+  let parts = tokenize(doc, context)
+  doc = parts.doc
 
   //set our new timezone
-  if (tz) {
-    context = Object.assign({}, context, { timezone: tz })
+  if (parts.tz) {
+    context = Object.assign({}, context, { timezone: parts.tz })
     let iso = context.today.format('iso-short')
     context.today = context.today.goto(context.timezone).set(iso)
   }
   let unit = null
   //'in two days'
-  unit = unit || today(doc, context, { shift, time, rel })
+  unit = unit || today(doc, context, parts)
   // 'this haloween'
   unit = unit || holiday(doc, context)
   // 'this month'
@@ -51,10 +42,9 @@ const parseDate = function (doc, context) {
   unit = unit || yearly(doc, context)
   // 'this june 2nd'
   unit = unit || explicit(doc, context)
-
-  if (!unit && weekDay) {
-    unit = new WeekDay(weekDay, null, context)
-    weekDay = null
+  if (!unit && parts.weekDay) {
+    unit = new WeekDay(parts.weekDay, null, context)
+    parts.weekDay = null
   }
 
   // debugging
@@ -76,7 +66,8 @@ const parseDate = function (doc, context) {
   }
 
   // 2 days after..
-  if (shift) {
+  if (parts.shift) {
+    let shift = parts.shift
     unit.applyShift(shift)
     // allow shift to change our unit size
     if (shift.hour || shift.minute) {
@@ -86,26 +77,26 @@ const parseDate = function (doc, context) {
     }
   }
   // wednesday next week
-  if (weekDay && unit.unit !== 'day') {
-    unit.applyWeekDay(weekDay)
+  if (parts.weekDay && unit.unit !== 'day') {
+    unit.applyWeekDay(parts.weekDay)
     unit = new WeekDay(unit.d, null, unit.context)
   }
   // this/next/last
-  if (rel) {
-    unit.applyRel(rel)
+  if (parts.rel) {
+    unit.applyRel(parts.rel)
   }
   // end of
-  if (section) {
-    unit.applySection(section)
+  if (parts.section) {
+    unit.applySection(parts.section)
   }
   // at 5:40pm
-  if (time) {
-    unit.applyTime(time)
+  if (parts.time) {
+    unit.applyTime(parts.time)
     // unit = new Minute(unit.d, null, unit.context)
   }
   // apply counter
-  if (counter && counter.unit) {
-    unit = addCounter(unit, counter)
+  if (parts.counter && parts.counter.unit) {
+    unit = addCounter(unit, parts.counter)
   }
   return unit
 }

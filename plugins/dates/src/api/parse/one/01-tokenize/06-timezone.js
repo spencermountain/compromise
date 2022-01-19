@@ -47,17 +47,17 @@ const parseTimezone = function (doc) {
   let str = m.text('reduced')
 
   // remove it from our doc, either way
-  doc.remove('#Timezone+')
+  // doc.remove('#Timezone+')
 
   // check our list of informal tz names
   if (informal.hasOwnProperty(str)) {
-    return informal[str]
+    return { res: informal[str], m }
   }
   let tz = parseOffset(str)
   if (tz) {
-    return tz
+    return { res: tz, m }
   }
 
-  return null
+  return { res: null, m: doc.none() }
 }
 export default parseTimezone

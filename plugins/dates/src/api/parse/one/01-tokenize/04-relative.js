@@ -2,32 +2,28 @@
 const parseRelative = function (doc) {
   // avoid parsing 'day after next'
   if (doc.has('(next|last|this)$')) {
-    return null
+    return { result: null, m: doc.none() }
   }
   // next monday
   let m = doc.match('^this? (next|upcoming|coming)')
   if (m.found) {
-    doc.remove(m)
-    return 'next'
+    return { result: 'next', m }
   }
   // 'this past monday' is not-always 'last monday'
   m = doc.match('^this? (past)')
   if (m.found) {
-    doc.remove(m)
-    return 'this-past'
+    return { result: 'this-past', m }
   }
   // last monday
   m = doc.match('^this? (last|previous)')
   if (m.found) {
-    doc.remove(m)
-    return 'last'
+    return { result: 'last', m }
   }
   // this monday
   m = doc.match('^(this|current)')
   if (m.found) {
-    doc.remove(m)
-    return 'this'
+    return { result: 'this', m }
   }
-  return null
+  return { result: null, m: doc.none() }
 }
 export default parseRelative

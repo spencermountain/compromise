@@ -74,7 +74,7 @@ const parseTime = function (doc, context) {
   // check for known-times (like 'today')
   let timeStr = time.text('reduced')
   if (hardCoded.hasOwnProperty(timeStr)) {
-    return hardCoded[timeStr]
+    return { result: hardCoded[timeStr], m: time }
   }
   // '5 oclock'
   let m = time.match('^#Cardinal oclock (am|pm)?')
@@ -89,7 +89,7 @@ const parseTime = function (doc, context) {
       } else {
         s = ampmChooser(s)
       }
-      return s.time()
+      return { result: s.time(), m }
     }
   }
 
@@ -100,7 +100,7 @@ const parseTime = function (doc, context) {
     if (s.isValid() && !s.isEqual(now)) {
       // choose ambiguous ampm
       s = ampmChooser(s)
-      return s.time()
+      return { result: s.time(), m }
     }
   }
   // 'twenty past'
@@ -114,7 +114,7 @@ const parseTime = function (doc, context) {
     }
     d = d.next('hour').startOf('hour').minute(min)
     if (d.isValid() && !d.isEqual(now)) {
-      return d.time()
+      return { result: d.time(), m }
     }
   }
   // 'ten to'
@@ -128,7 +128,7 @@ const parseTime = function (doc, context) {
     }
     d = d.next('hour').startOf('hour').minus(min, 'minutes')
     if (d.isValid() && !d.isEqual(now)) {
-      return d.time()
+      return { result: d.time(), m }
     }
   }
   // '4 in the evening'
@@ -146,7 +146,7 @@ const parseTime = function (doc, context) {
       if (desc === 'evening' || desc === 'night') {
         s = s.ampm('pm')
       }
-      return s.time()
+      return { result: s.time(), m }
     }
   }
 
@@ -169,7 +169,7 @@ const parseTime = function (doc, context) {
       if (desc === 'evening' || desc === 'tonight') {
         s = s.ampm('pm')
       }
-      return s.time()
+      return { result: s.time(), m }
     }
   }
 
@@ -184,7 +184,7 @@ const parseTime = function (doc, context) {
       if (/(am|pm)/i.test(str) === false) {
         s = ampmChooser(s)
       }
-      return s.time()
+      return { result: s.time(), m }
     }
   }
 
@@ -196,12 +196,12 @@ const parseTime = function (doc, context) {
     if (/(am|pm)/i.test(str) === false) {
       s = ampmChooser(s)
     }
-    return s.time()
+    return { result: s.time(), m }
   }
   // should we fallback to a dayStart default?
   if (context.dayStart) {
-    return context.dayStart
+    return { result: context.dayStart, m: doc.none() }
   }
-  return null
+  return { result: null, m: doc.none() }
 }
 export default parseTime

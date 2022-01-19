@@ -22,8 +22,9 @@ txt = 'may to august 1996'
 txt = 'haloween'
 txt = 'tommorrow before noon'
 txt = '1:01pm'
-txt = 'on april 22nd'
-txt = 'monday'
+txt = 'two days before june'
+// txt = 'on april 22nd'
+// txt = 'monday'
 
 // let doc = nlp(txt).debug()
 // let found = doc.dates(context).json()[0]
@@ -34,5 +35,6 @@ txt = 'monday'
 // })
 
 let doc = nlp(txt)
-let m = doc.dates(context).format('{timezone}')
-m.debug()
+let m = doc.dates(context)
+// m.debug()
+console.log(m.get())

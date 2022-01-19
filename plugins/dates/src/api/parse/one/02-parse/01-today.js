@@ -51,7 +51,6 @@ const today = function (doc, context, parts) {
       }
     }
   }
-
   // today, yesterday, tomorrow
   let str = doc.text('reduced')
   if (knownWord.hasOwnProperty(str) === true) {

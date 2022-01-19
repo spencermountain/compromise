@@ -1,5 +1,5 @@
 import find from './find/index.js'
-import parseRange from './parse/range/index.js'
+import parseDates from './parse/index.js'
 
 const toJSON = function (range) {
   range = range[0]//oof
@@ -21,7 +21,7 @@ const api = function (View) {
     get(n) {
       let all = []
       this.forEach((m) => {
-        parseRange(m, this.opts).forEach(res => {
+        parseDates(m, this.opts).forEach(res => {
           all.push({
             start: res.start ? res.start.format('iso') : null,
             end: res.end ? res.end.format('iso') : null
@@ -38,7 +38,7 @@ const api = function (View) {
       return this.map(m => {
         let json = m.toView().json(opts)[0] || {}
         if (opts && opts.dates !== true) {
-          let parsed = parseRange(m, this.opts)
+          let parsed = parseDates(m, this.opts)
           json.dates = toJSON(parsed)
         }
         return json
@@ -49,7 +49,7 @@ const api = function (View) {
       let found = this.freeze()
       let res = found.map(m => {
         m.repair()
-        let obj = parseRange(m, this.opts)[0] || {}
+        let obj = parseDates(m, this.opts)[0] || {}
         if (obj.start) {
           let start = obj.start.d
           let str = start.format(fmt)

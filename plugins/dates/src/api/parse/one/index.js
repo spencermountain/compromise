@@ -16,12 +16,6 @@ const log = parts => {
 }
 
 const parseDate = function (doc, context) {
-  context = context || {}
-  if (context.timezone === false) {
-    context.timezone = 'UTC'
-  }
-  context.today = context.today || spacetime.now(context.timezone)
-  context.today = spacetime(context.today, context.timezone)
   // quick normalization
   doc = doc.not('[^the] !#Value', 0) // keep 'the 17th'
 

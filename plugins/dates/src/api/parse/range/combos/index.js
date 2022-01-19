@@ -91,7 +91,8 @@ export default [
       let results = []
       m.match('#Value').forEach((val) => {
         val = val.clone()
-        let d = val.append(month)
+        let d = val.prepend(month.text())
+        console.log('|' + d.text())
         if (year.found) {
           d.append(year)
         }

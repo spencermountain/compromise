@@ -5,8 +5,7 @@ const doMachine = function (term) {
   str = str.replace(/['’]s$/, '')
   str = str.replace(/s['’]$/, 's')
   //lookin'->looking (make it easier for conjugation)
-  str = str.replace(/([aeiou][ktrp])in$/, '$1ing')
-
+  str = str.replace(/([aeiou][ktrp])in'$/, '$1ing')
   //turn re-enactment to reenactment
   if (/^(re|un)-?[^aeiou]./.test(str) === true) {
     str = str.replace('-', '')

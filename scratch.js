@@ -30,7 +30,12 @@ txt = `Pursuing a successful career, along with the usual social and financial a
 txt = `all the days since december were awful`
 txt = `there were the walks`
 txt = `one day after next`
-let doc = nlp(txt).tag('Date').debug()
+txt = `may twenty fourth, 2020`
+let doc = nlp(txt)
+doc.match('twenty')
+doc.numbers().toNumber()
+doc.debug()
+
 // doc.chunks().debug('chunks')
 // doc.verbs().subjects().debug()
 

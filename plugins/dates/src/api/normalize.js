@@ -1,7 +1,6 @@
 
 const normalize = function (doc) {
   doc = doc.clone()
-
   // 'four thirty' -> 4:30
   let m = doc.match('[<hour>#Cardinal] [<min>(thirty|fifteen)]').match('#Time+')
   if (m.found) {
@@ -26,6 +25,7 @@ const normalize = function (doc) {
     num.toNumber()
     num.toCardinal(false)
   }
+  doc.debug()
   // expand 'aug 20-21'
   doc.contractions().expand()
   // remove adverbs

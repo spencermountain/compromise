@@ -67,20 +67,17 @@ const findNumbers = function (doc) {
       }
     }
     //fifth five
-    if (m.has('#Ordinal #Cardinal')) {
-      m = m.splitBefore('#Cardinal+')
-    }
+    m = m.splitBefore('#Ordinal [#Cardinal]', 0)
     //five 2017 (support '5 hundred', and 'twenty 5'
     if (m.has('#TextValue #NumericValue') && !m.has('(' + tens + '|#Multiple)')) {
-      m = m.splitBefore('#NumericValue+')
+      m = m.splitBefore('#TextValue #NumericValue')
     }
   }
 
   //5-8
-  if (m.has('#NumberRange')) {
-    m = m.splitAfter('#NumberRange')
-  }
-
+  m = m.splitAfter('#NumberRange')
+  // june 5th 1999
+  m = m.splitBefore('#Year')
   return m
 }
 

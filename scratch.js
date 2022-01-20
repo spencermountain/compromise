@@ -30,9 +30,9 @@ txt = `Pursuing a successful career, along with the usual social and financial a
 txt = `all the days since december were awful`
 txt = `there were the walks`
 txt = `one day after next`
-txt = `may twenty fourth, 2020`
+txt = `may twenty fourth 2020`
 let doc = nlp(txt)
-doc.match('twenty')
+// doc.match('twenty')
 doc.numbers().toNumber()
 doc.debug()
 

@@ -17,10 +17,20 @@ const seemsGood = function (term) {
   return false
 }
 
+const seemsOkay = function (term) {
+  if (!term) {
+    return false
+  }
+  if (term.tags.has('Ordinal')) {
+    return true
+  }
+  return false
+}
+
 // recognize '1993' as a year
 const tagYear = function (terms, i) {
   const term = terms[i]
-  if (term.tags.has('NumericValue') && term.tags.has('Cardinal')) {
+  if (term.tags.has('NumericValue') && term.tags.has('Cardinal') && term.normal.length === 4) {
     let num = Number(term.normal)
     // number between 1400 and 2100
     if (num && !isNaN(num)) {
@@ -30,7 +40,9 @@ const tagYear = function (terms, i) {
         }
         // or is it really-close to a year?
         if (num > 1950 && num < 2025) {
-          // console.log(terms[i])
+          if (seemsOkay(terms[i - 1]) || seemsOkay(terms[i + 1])) {
+            return fastTag(term, 'Year', '2-tagYear-close')
+          }
         }
       }
     }

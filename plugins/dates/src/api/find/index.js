@@ -44,6 +44,10 @@ const findDate = function (doc) {
   dates = dates.notIf('^one (#WeekDay|#Month)$')
   // tokenize the dates
   dates = split(dates)
+
+  // $5 an hour
+  dates = dates.notIf('(#Money|#Percentage)')
+  dates = dates.notIf('^per #Duration')
   // dates.debug()
   return dates
 }

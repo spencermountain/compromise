@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/three.js'
-// import plg from './plugins/speech/src/plugin.js'
-// nlp.plugin(plg)
+import plg from './plugins/dates/src/plugin.js'
+nlp.plugin(plg)
 // import nlp from './builds/three/compromise-three.cjs'
 // nlp.verbose('tagger')
 
@@ -30,8 +30,10 @@ txt = `Pursuing a successful career, along with the usual social and financial a
 txt = `all the days since december were awful`
 txt = `there were the walks`
 txt = `one day after next`
-txt = `may twenty fourth 2020`
-txt = `jan 5th`
+
+txt = `Do high-intensity cardiovascular exercise four to five days per week.`
+txt = `you've been a doctor for 8 years now`
+// txt = `begin a year-long stay `
 let doc = nlp(txt)
 // doc.match('twenty')
 // doc.numbers().toNumber()

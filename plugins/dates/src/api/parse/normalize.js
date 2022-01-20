@@ -1,4 +1,9 @@
 const normalize = function (doc) {
+
+  if (!doc.numbers) {
+    console.warn(`\nCompromise warning: compromise/three must be used with compromise-dates plugin\n`)
+  }
+
   // normalize doc
   doc = doc.clone()
   doc.numbers().toNumber()

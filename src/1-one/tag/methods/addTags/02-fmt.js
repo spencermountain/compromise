@@ -33,7 +33,9 @@ const fmt = function (nodes) {
   Object.keys(res).forEach(k => {
     let nots = new Set(res[k].not)
     res[k].not.forEach(not => {
-      res[not].children.forEach(tag => nots.add(tag))
+      if (res[not]) {
+        res[not].children.forEach(tag => nots.add(tag))
+      }
     })
     res[k].not = Array.from(nots)
   })

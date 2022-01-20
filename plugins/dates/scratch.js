@@ -11,7 +11,7 @@ const fmt = (iso) => (iso ? spacetime(iso).format('{day-short} {nice} {year}') :
 process.env.DEBUG_DATE = true
 
 const context = {
-  today: '1999-04-17',
+  // today: '1999-04-17',
   // today: [1999, 3, 12]
   timezone: 'Asia/Shanghai',
   // timezone: false
@@ -30,6 +30,9 @@ txt = '3pm-5pm on june 5th'
 txt = '3pm-5pm on june 5th'
 txt = 'six in the morning'
 txt = 'last week of july'
+txt = 'a month from now'
+txt = 'March 7th-11th 1987'
+// txt = 'four thirty'
 // txt = 'on april 22nd'
 // txt = 'monday'
 

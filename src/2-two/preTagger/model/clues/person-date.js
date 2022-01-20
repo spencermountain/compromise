@@ -19,6 +19,7 @@ const month = {
     during: m,
     after: m,
     before: m,
+    between: m,
     until: m,
     til: m,
     sometime: m,

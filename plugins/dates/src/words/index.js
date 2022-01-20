@@ -7,6 +7,7 @@ import times from './times.js'
 let lex = {
   'a couple': 'Value',
   thur: 'WeekDay',
+  thurs: 'WeekDay',
 }
 const add = function (arr, tag) {
   arr.forEach(str => {

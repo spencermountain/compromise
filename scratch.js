@@ -31,12 +31,10 @@ txt = `all the days since december were awful`
 txt = `there were the walks`
 txt = `one day after next`
 txt = `may twenty fourth 2020`
-txt = `the dinosaurs`
+txt = `jan 5th`
 let doc = nlp(txt)
-doc.tag('Foo')
 // doc.match('twenty')
 // doc.numbers().toNumber()
-doc.sentences().toPast()
 doc.debug()
 
 // doc.chunks().debug('chunks')

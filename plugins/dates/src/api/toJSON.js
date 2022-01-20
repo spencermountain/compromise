@@ -21,7 +21,7 @@ const toJSON = function (range) {
       end: null,
       timezone: null,
       duration: {},
-      range: null
+      // range: null
     }
   }
   let diff = range.end ? getDuration(range) : {}
@@ -30,7 +30,7 @@ const toJSON = function (range) {
     end: range.end ? range.end.format('iso') : null,
     timezone: range.start.d.format('timezone'),
     duration: diff,
-    range: getRange(diff)
+    // range: getRange(diff)
   }
 }
 export default toJSON

@@ -14,7 +14,7 @@ const uncountable = [
 ]
 // try to guess if each noun is a plural/singular
 const setPluralSingular = function (term) {
-  if (!term.tags.has('Noun') || term.tags.has('Plural') || term.tags.has('Singular')) {
+  if (!term.tags.has('Noun') || term.tags.has('Plural') || term.tags.has('Singular') || term.tags.has('Date')) {
     return
   }
   if (uncountable.find(tag => term.tags.has(tag))) {

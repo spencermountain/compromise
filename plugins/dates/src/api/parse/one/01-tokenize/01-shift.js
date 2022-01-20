@@ -36,6 +36,7 @@ const parseShift = function (doc) {
   if (shift.found === false) {
     return { res: result, m }
   }
+
   // '5 weeks'
   shift.match('#Cardinal #Duration').forEach((ts) => {
     let num = ts.match('#Cardinal').numbers().get()[0]

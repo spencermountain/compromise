@@ -16,6 +16,7 @@ const cleanup = function (doc) {
   doc = doc.not('sharp')
   doc = doc.not('on the dot')
   doc = doc.not('^on')
+  doc = doc.not('(next|last|this)$')
   return doc
 }
 

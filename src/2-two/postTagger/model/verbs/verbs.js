@@ -28,7 +28,7 @@ export default [
   { match: 'will #Adverb? not? #Adverb? [be] #Adjective', group: 0, tag: 'Copula', reason: 'be-copula' },
   // ==== Infinitive ====
   //march to
-  { match: '[march] (up|down|back|to|toward)', group: 0, tag: 'Infinitive', reason: 'march-to' },
+  { match: '[march] (up|down|back|toward)', notIf: ['#Date'], group: 0, tag: 'Infinitive', reason: 'march-to' },
   //must march
   { match: '#Modal [march]', group: 0, tag: 'Infinitive', reason: 'must-march' },
   // may be

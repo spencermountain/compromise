@@ -20,7 +20,6 @@ const parseDate = function (doc, context) {
   //parse-out any sections
   let parts = tokenize(doc, context)
   doc = parts.doc
-
   // logger
   log(parts)
 

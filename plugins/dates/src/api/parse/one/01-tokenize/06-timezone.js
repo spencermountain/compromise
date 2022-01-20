@@ -48,13 +48,13 @@ const parseTimezone = function (doc) {
 
   // check our list of informal tz names
   if (informal.hasOwnProperty(str)) {
-    return { res: informal[str], m }
+    return { result: informal[str], m }
   }
   let tz = parseOffset(str)
   if (tz) {
-    return { res: tz, m }
+    return { result: tz, m }
   }
 
-  return { res: null, m: doc.none() }
+  return { result: null, m: doc.none() }
 }
 export default parseTimezone

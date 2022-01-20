@@ -13,8 +13,8 @@ process.env.DEBUG_DATE = true
 const context = {
   today: '1999-04-17',
   // today: [1999, 3, 12]
-  // timezone: 'Asia/Shanghai',
-  timezone: false
+  timezone: 'Asia/Shanghai',
+  // timezone: false
   // dayStart: '8:00am',
   // dayEnd: '8:00pm',
 }
@@ -29,6 +29,7 @@ txt = 'last week of june'
 txt = '3pm-5pm on june 5th'
 txt = '3pm-5pm on june 5th'
 txt = 'six in the morning'
+txt = 'last week of july'
 // txt = 'on april 22nd'
 // txt = 'monday'
 
@@ -40,6 +41,6 @@ txt = 'six in the morning'
 //   console.log('  end: ', fmt(date.end))
 // })
 
-let doc = nlp(txt)//.debug()
+let doc = nlp(txt).debug()
 let m = doc.dates(context)
 console.log(m.get())

@@ -1,1 +1,350 @@
-var e,t;e=this,t=function(){const e=e=>e.replace(/([^c])\1/g,"$1"),t=e=>e.match(/^(kn|gn|pn|ae|wr)/)?e.substr(1,e.length-1):e,a=e=>e.replace(/mb$/,"m"),l=e=>(e=(e=(e=e.replace(/([^s]|^)(c)(h)/g,"$1x$3").trim()).replace(/cia/g,"xia")).replace(/c(i|e|y)/g,"s$1")).replace(/c/g,"k"),c=e=>(e=e.replace(/d(ge|gy|gi)/g,"j$1")).replace(/d/g,"t"),i=e=>(e=e.replace(/gh(^$|[^aeiou])/g,"h$1")).replace(/g(n|ned)$/g,"$1"),n=e=>(e=(e=(e=e.replace(/gh/g,"f")).replace(/([^g]|^)(g)(i|e|y)/g,"$1j$3")).replace(/gg/g,"g")).replace(/g/g,"k"),o=e=>e.replace(/([aeiou])h([^aeiou]|$)/g,"$1$2"),h=e=>e.replace(/ck/g,"k"),r=e=>e.replace(/ph/g,"f"),g=e=>e.replace(/q/g,"k"),u=e=>e.replace(/s(h|io|ia)/g,"x$1"),p=e=>e=e.replace(/t(ia[^n]|io)/g,"x$1"),s=e=>e.replace(/tch/g,"ch"),f=e=>e.replace(/v/g,"f"),m=e=>e.replace(/^wh/,"w"),y=e=>e.replace(/w([^aeiou]|$)/g,"$1"),$=e=>(e=e.replace(/^x/,"s")).replace(/x/g,"ks"),d=e=>e.replace(/y([^aeiou]|$)/g,"$1"),b=e=>e.replace(/z/,"s"),x=e=>e,k=/^(eu)/i,E=/^[^aeiou][e]([^d]|$)/,j=/^([^aeiouy])[aeiouy]\1[aeiouy]/,w=/^[^aeiouy]([aeiouy])[^aeiouy]\1/,v=/^([tg][aeiouy]){2}/,L=/^[^aeiouy]+$/,T=/[aeiouy]$/,q=/^[^aeiouy][h]?[aeiouy]/,z=[/^[^aeiou]?ion/,/^[^aeiou]?ised/,/^[^aeiou]?iled/,/[aeiou][n][gt]$/,/\wa[gt]e$/],S=/ +/g,A=/[aeiouy]$/,B=/^[^aeiouy][h]?[aeiouy]/,C=/^e[sm]/,D=/^e/,F=/(eo|eu|ia|oa|ua|ui)$/i,G=/[aiouy]/,H=/ee$/,I=function(e){let t=[],a=e.split(""),l="",c="",i="";for(let e=0;e<a.length;e++){l=a.slice(0,e).join(""),i=a[e],c=a.slice(e+1,a.length).join("");let n=l+a[e];if(l.match(A)&&!i.match(A))return c.match(C)&&(n+="e",c=c.replace(D,"")),t.push(n),t.concat(I(c));if(n.match(F))return t.push(l),t.push(i),t.concat(I(c));if(n.match(A)&&c.match(B))return t.push(n),t.concat(I(c))}if(e.match(G)||e.match(H))t.push(e);else if(e){let a=t.length-1;a<0&&(a=0),t[a]=(t[a]||"")+e}return t};let J=function(e){let t=[];return e?((e=e.replace(/[.,?]/g,"")).split(S).map(e=>{t=t.concat(I(e))}),t=function(e){let t=(e=(e=e.map((function(e){return e.trim()}))).filter((function(e){return""!==e}))).length;if(t>1){let a=e[t-2]+e[t-1];for(let l=0;l<z.length;l++)a.match(z[l])&&(e[t-2]=e[t-2]+e[t-1],e.pop())}if(e.length>1){let t=(1===e[0].length||e[0].match(q))&&e[0].match(T),a=e[1].match(E);if(t&&a){let t=e[0]+e[1];t.match(j)||t.match(w)||t.match(v)||(e[0]=e[0]+e[1],e.splice(1,1))}}if(e.length>1){let t=e[e.length-2].match(q)&&e[e.length-2].match(T),a=e[e.length-1].match(E)&&z.every(t=>!e[e.length-1].match(t));if(t&&a){let t=e[e.length-2]+e[e.length-1];t.match(j)||t.match(w)||t.match(v)||(e[e.length-2]=e[e.length-2]+e[e.length-1],e.splice(e.length-1,1))}}if(e.length>1){let t=e[0]+e[1];t.match(k)&&(e[0]=t,e.splice(1,1))}return e.length>1&&e[e.length-1].match(L)&&(e[e.length-2]=e[e.length-2]+e[e.length-1],e.splice(e.length-1,1)),e}(t),0===t.length&&(t=[e]),t=t.filter(e=>e),t):t};return{api:function(e){e.prototype.syllables=function(){this.compute("syllables");let e=[];return this.docs.forEach(t=>{t.forEach(t=>{e=e.concat(t.syllables)})}),e}},compute:{soundsLike:function(k){k.docs.forEach(k=>{k.forEach(k=>{var E;k.soundsLike=(E=k.normal||k.text,E=e(E),E=t(E),E=a(E),E=h(E),E=l(E),E=c(E),E=i(E),E=n(E),E=o(E),E=r(E),E=g(E),E=u(E),E=$(E),E=p(E),E=s(E),E=f(E),E=m(E),E=y(E),E=d(E),E=b(E),(E=x(E)).trim())})})},syllables:function(e){e.docs.forEach(e=>{e.forEach(e=>{e.syllables=J(e.normal||e.text)})})}}}},"object"==typeof exports&&"undefined"!=typeof module?module.exports=t():"function"==typeof define&&define.amd?define(t):(e="undefined"!=typeof globalThis?globalThis:e||self).compromiseSpeech=t();
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+  typeof define === 'function' && define.amd ? define(factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.compromiseSpeech = factory());
+})(this, (function () { 'use strict';
+
+  //individual manipulations of the text
+  const transformations = {
+    dedup: (s) => {
+      return s.replace(/([^c])\1/g, '$1')
+    },
+    dropInitialLetters: (s) => {
+      if (s.match(/^(kn|gn|pn|ae|wr)/)) {
+        return s.substr(1, s.length - 1)
+      }
+      return s
+    },
+    dropBafterMAtEnd: (s) => {
+      return s.replace(/mb$/, 'm')
+    },
+    cchange: (s) => {
+      s = s.replace(/([^s]|^)(c)(h)/g, '$1x$3').trim();
+      s = s.replace(/cia/g, 'xia');
+      s = s.replace(/c(i|e|y)/g, 's$1');
+      return s.replace(/c/g, 'k')
+    },
+    dchange: (s) => {
+      s = s.replace(/d(ge|gy|gi)/g, 'j$1');
+      return s.replace(/d/g, 't')
+    },
+    dropG: (s) => {
+      s = s.replace(/gh(^$|[^aeiou])/g, 'h$1');
+      return s.replace(/g(n|ned)$/g, '$1')
+    },
+    changeG: (s) => {
+      s = s.replace(/gh/g, 'f');
+      s = s.replace(/([^g]|^)(g)(i|e|y)/g, '$1j$3');
+      s = s.replace(/gg/g, 'g');
+      return s.replace(/g/g, 'k')
+    },
+    dropH: (s) => {
+      return s.replace(/([aeiou])h([^aeiou]|$)/g, '$1$2')
+    },
+    changeCK: (s) => {
+      return s.replace(/ck/g, 'k')
+    },
+    changePH: (s) => {
+      return s.replace(/ph/g, 'f')
+    },
+    changeQ: (s) => {
+      return s.replace(/q/g, 'k')
+    },
+    changeS: (s) => {
+      return s.replace(/s(h|io|ia)/g, 'x$1')
+    },
+    changeT: (s) => {
+      s = s.replace(/t(ia[^n]|io)/g, 'x$1');
+      // return s.replace(/th/, '0')
+      return s
+    },
+    dropT: (s) => {
+      return s.replace(/tch/g, 'ch')
+    },
+    changeV: (s) => {
+      return s.replace(/v/g, 'f')
+    },
+    changeWH: (s) => {
+      return s.replace(/^wh/, 'w')
+    },
+    dropW: (s) => {
+      return s.replace(/w([^aeiou]|$)/g, '$1')
+    },
+    changeX: (s) => {
+      s = s.replace(/^x/, 's');
+      return s.replace(/x/g, 'ks')
+    },
+    dropY: (s) => {
+      return s.replace(/y([^aeiou]|$)/g, '$1')
+    },
+    changeZ: (s) => {
+      return s.replace(/z/, 's')
+    },
+    dropVowels: (s) => {
+      return s //.charAt(0) + s.substr(1, s.length).replace(/[aeiou]/g, '');
+    },
+  };
+
+  //a js version of the metaphone (#1) algorithm
+
+  const metaphone = function (s) {
+    s = transformations.dedup(s);
+    s = transformations.dropInitialLetters(s);
+    s = transformations.dropBafterMAtEnd(s);
+    s = transformations.changeCK(s);
+    s = transformations.cchange(s);
+    s = transformations.dchange(s);
+    s = transformations.dropG(s);
+    s = transformations.changeG(s);
+    s = transformations.dropH(s);
+    s = transformations.changePH(s);
+    s = transformations.changeQ(s);
+    s = transformations.changeS(s);
+    s = transformations.changeX(s);
+    s = transformations.changeT(s);
+    s = transformations.dropT(s);
+    s = transformations.changeV(s);
+    s = transformations.changeWH(s);
+    s = transformations.dropW(s);
+    s = transformations.dropY(s);
+    s = transformations.changeZ(s);
+    s = transformations.dropVowels(s);
+    return s.trim()
+  };
+
+  const soundsLike = function (view) {
+    view.docs.forEach(terms => {
+      terms.forEach(term => {
+        term.soundsLike = metaphone(term.normal || term.text);
+      });
+    });
+  };
+
+  const starts_with_single_vowel_combos = /^(eu)/i;
+  const joining_consonant_vowel = /^[^aeiou][e]([^d]|$)/;
+  const cvcv_same_consonant = /^([^aeiouy])[aeiouy]\1[aeiouy]/;
+  const cvcv_same_vowel = /^[^aeiouy]([aeiouy])[^aeiouy]\1/;
+  const cvcv_known_consonants = /^([tg][aeiouy]){2}/;
+  const only_one_or_more_c = /^[^aeiouy]+$/;
+
+  const ends_with_vowel$1 = /[aeiouy]$/;
+  const starts_with_consonant_vowel$1 = /^[^aeiouy][h]?[aeiouy]/;
+
+  const ones = [
+    /^[^aeiou]?ion/,
+    /^[^aeiou]?ised/,
+    /^[^aeiou]?iled/,
+
+    // -ing, -ent
+    /[aeiou][n][gt]$/,
+
+    // -ate, -age
+    /\wa[gt]e$/,
+  ];
+
+  //suffix fixes
+  const postprocess = function (arr) {
+    //trim whitespace
+    arr = arr.map(function (w) {
+      return w.trim()
+    });
+    arr = arr.filter(function (w) {
+      return w !== ''
+    });
+    // if (arr.length > 2) {
+    //   return arr;
+    // }
+    let l = arr.length;
+    if (l > 1) {
+      let suffix = arr[l - 2] + arr[l - 1];
+      for (let i = 0; i < ones.length; i++) {
+        if (suffix.match(ones[i])) {
+          arr[l - 2] = arr[l - 2] + arr[l - 1];
+          arr.pop();
+        }
+      }
+    }
+
+    // since the open syllable detection is overzealous,
+    // sometimes need to rejoin incorrect splits
+    if (arr.length > 1) {
+      let first_is_open =
+        (arr[0].length === 1 || arr[0].match(starts_with_consonant_vowel$1)) &&
+        arr[0].match(ends_with_vowel$1);
+      let second_is_joining = arr[1].match(joining_consonant_vowel);
+
+      if (first_is_open && second_is_joining) {
+        let possible_combination = arr[0] + arr[1];
+        let probably_separate_syllables =
+          possible_combination.match(cvcv_same_consonant) ||
+          possible_combination.match(cvcv_same_vowel) ||
+          possible_combination.match(cvcv_known_consonants);
+
+        if (!probably_separate_syllables) {
+          arr[0] = arr[0] + arr[1];
+          arr.splice(1, 1);
+        }
+      }
+    }
+
+    if (arr.length > 1) {
+      let second_to_last_is_open =
+        arr[arr.length - 2].match(starts_with_consonant_vowel$1) &&
+        arr[arr.length - 2].match(ends_with_vowel$1);
+      let last_is_joining =
+        arr[arr.length - 1].match(joining_consonant_vowel) &&
+        ones.every(re => !arr[arr.length - 1].match(re));
+
+      if (second_to_last_is_open && last_is_joining) {
+        let possible_combination = arr[arr.length - 2] + arr[arr.length - 1];
+        let probably_separate_syllables =
+          possible_combination.match(cvcv_same_consonant) ||
+          possible_combination.match(cvcv_same_vowel) ||
+          possible_combination.match(cvcv_known_consonants);
+
+        if (!probably_separate_syllables) {
+          arr[arr.length - 2] = arr[arr.length - 2] + arr[arr.length - 1];
+          arr.splice(arr.length - 1, 1);
+        }
+      }
+    }
+
+    if (arr.length > 1) {
+      let single = arr[0] + arr[1];
+      if (single.match(starts_with_single_vowel_combos)) {
+        arr[0] = single;
+        arr.splice(1, 1);
+      }
+    }
+
+    if (arr.length > 1) {
+      if (arr[arr.length - 1].match(only_one_or_more_c)) {
+        arr[arr.length - 2] = arr[arr.length - 2] + arr[arr.length - 1];
+        arr.splice(arr.length - 1, 1);
+      }
+    }
+
+    return arr
+  };
+
+  //chop a string into pronounced syllables
+
+  const all_spaces = / +/g;
+  const ends_with_vowel = /[aeiouy]$/;
+  const starts_with_consonant_vowel = /^[^aeiouy][h]?[aeiouy]/;
+  const starts_with_e_then_specials = /^e[sm]/;
+  const starts_with_e = /^e/;
+  const ends_with_noisy_vowel_combos = /(eo|eu|ia|oa|ua|ui)$/i;
+  const aiouy = /[aiouy]/;
+  const ends_with_ee = /ee$/;
+  // const whitespace_dash = /\s\-/
+
+  //method is nested because it's called recursively
+  const doWord = function (w) {
+    let all = [];
+    let chars = w.split('');
+    let before = '';
+    let after = '';
+    let current = '';
+    for (let i = 0; i < chars.length; i++) {
+      before = chars.slice(0, i).join('');
+      current = chars[i];
+      after = chars.slice(i + 1, chars.length).join('');
+      let candidate = before + chars[i];
+
+      //it's a consonant that comes after a vowel
+      if (before.match(ends_with_vowel) && !current.match(ends_with_vowel)) {
+        if (after.match(starts_with_e_then_specials)) {
+          candidate += 'e';
+          after = after.replace(starts_with_e, '');
+        }
+        all.push(candidate);
+        return all.concat(doWord(after))
+      }
+
+      //unblended vowels ('noisy' vowel combinations)
+      if (candidate.match(ends_with_noisy_vowel_combos)) {
+        //'io' is noisy, not in 'ion'
+        all.push(before);
+        all.push(current);
+        return all.concat(doWord(after)) //recursion
+      }
+
+      // if candidate is followed by a CV, assume consecutive open syllables
+      if (candidate.match(ends_with_vowel) && after.match(starts_with_consonant_vowel)) {
+        all.push(candidate);
+        return all.concat(doWord(after))
+      }
+    }
+    //if still running, end last syllable
+    if (w.match(aiouy) || w.match(ends_with_ee)) {
+      //allow silent trailing e
+      all.push(w);
+    } else if (w) {
+      let last = all.length - 1;
+      if (last < 0) {
+        last = 0;
+      }
+      all[last] = (all[last] || '') + w; //append it to the last one
+    }
+    return all
+  };
+
+  let syllables$1 = function (str) {
+    let all = [];
+    if (!str) {
+      return all
+    }
+    str = str.replace(/[.,?]/g, '');
+    str.split(all_spaces).map(s => {
+      all = all.concat(doWord(s));
+    });
+
+    // str.split(whitespace_dash).forEach(doWord)
+    all = postprocess(all);
+
+    //for words like 'tree' and 'free'
+    if (all.length === 0) {
+      all = [str];
+    }
+    //filter blanks
+    all = all.filter(s => s);
+
+    return all
+  };
+
+  const syllables = function (view) {
+    view.docs.forEach(terms => {
+      terms.forEach(term => {
+        term.syllables = syllables$1(term.normal || term.text);
+      });
+    });
+  };
+
+  var compute = {
+    soundsLike,
+    syllables
+  };
+
+  const api = function (View) {
+    /** */
+    View.prototype.syllables = function () {
+      this.compute('syllables');
+      let all = [];
+      this.docs.forEach(terms => {
+        terms.forEach(term => {
+          all = all.concat(term.syllables);
+        });
+      });
+      return all
+    };
+  };
+
+  var plugin = {
+    api,
+    compute
+  };
+
+  return plugin;
+
+}));

@@ -3,11 +3,18 @@
   "description": "plugin for nlp-compromise",
   "version": "0.0.1-next",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
-  "main": "./builds/compromise-speech.js",
+  "main": "./src/plugin.js",
   "unpkg": "./builds/compromise-speech.min.js",
   "module": "./builds/compromise-speech.mjs",
   "type": "module",
   "types": "types/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./src/plugin.js",
+      "require": "./builds/compromise-speech.cjs"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/spencermountain/compromise.git"
@@ -19,10 +26,6 @@
     "watch": "amble ./scratch.js",
     "build": "rollup -c --silent"
   },
-  "files": [
-    "builds/",
-    "types/index.d.ts"
-  ],
   "eslintIgnore": [
     "builds/*.js"
   ],

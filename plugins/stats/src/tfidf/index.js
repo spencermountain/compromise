@@ -1,10 +1,21 @@
 import compileModel from './compile/index.js'
-import model from './_model.js'
-// import { unpack } from 'efrt'
+import pcked from './_model.js'
+import { unpack } from 'efrt'
 import diff from './diff.js'
 
-// const model = unpack(packed)
-// console.log(model)
+const unzip = function (model) {
+  let all = {}
+  Object.keys(model).forEach(k => {
+    model[k] = unpack(model[k])
+    let num = Number(k)
+    Object.keys(model[k]).forEach(w => {
+      all[w] = num
+    })
+  })
+  return all
+}
+
+const model = unzip(pcked)
 
 
 const addMethods = function (View) {

@@ -1,6 +1,6 @@
 import corpus from 'nlp-corpus'
 import nlp from '../../../src/one.js'
-import plugin from '../src/index.js'
+import plugin from '../src/plugin.js'
 nlp.extend(plugin)
 
 const n = 30000

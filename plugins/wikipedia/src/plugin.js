@@ -16,7 +16,7 @@ let trie = nlp.compile(list)
 
 const plugin = {
   api: function (View) {
-    View.prototype.articleNames = function () {
+    View.prototype.wikipedia = function () {
       return this.lookup(trie)
     }
   }

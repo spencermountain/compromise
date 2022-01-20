@@ -10,7 +10,22 @@ const fileSize = (pathStr) => {
   return Math.round(kb) + 'kb'
 }
 
+const packList = function (obj) {
+  let byNum = Object.keys(obj).reduce((h, k) => {
+    let num = String(obj[k])
+    h[num] = h[num] || []
+    h[num].push(k)
+    return h
+  }, {})
+  Object.keys(byNum).forEach(k => {
+    byNum[k] = pack(byNum[k])
+  })
+  return byNum
+}
+
+
 let tmp = corpus.all()
+// let tmp = corpus.some(1000)
 console.log(tmp.length, 'sentences')
 let txt = tmp.join(`\n`)
 
@@ -18,9 +33,7 @@ let txt = tmp.join(`\n`)
 let doc = nlp(txt)//.compute('root')
 let out = doc.freq()
 
-
-// out = pack(out)
-// out = "export default `" + out + "`"
-out = "export default " + JSON.stringify(out)
+out = packList(out)
+out = "export default " + JSON.stringify(out, null, 2)
 fs.writeFileSync('./src/tfidf/_model.js', out)
 console.log(fileSize('./src/tfidf/_model.js'))

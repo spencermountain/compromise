@@ -70,7 +70,9 @@
     "demo": "python -m SimpleHTTPServer 8888"
   },
   "files": [
-    "builds/"
+    "plugins/",
+    "builds/",
+    "src/"
   ],
   "keywords": [
     "nlp"

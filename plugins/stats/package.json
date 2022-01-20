@@ -1,10 +1,17 @@
 {
-  "name": "compromise-plugin-stats",
+  "name": "compromise-stats",
   "description": "plugin for nlp-compromise",
   "version": "0.0.0",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
-  "main": "./src/index.js",
+  "main": "./src/plugin.js",
   "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./src/plugin.js",
+      "require": "./builds/compromise-stats.cjs"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/spencermountain/compromise.git"

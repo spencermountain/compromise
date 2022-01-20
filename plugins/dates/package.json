@@ -3,11 +3,18 @@
   "description": "plugin for nlp-compromise",
   "version": "3.0.0-next",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
-  "main": "./builds/compromise-dates.js",
+  "main": "./src/plugin.js",
   "unpkg": "./builds/compromise-dates.min.js",
   "module": "./builds/compromise-dates.mjs",
   "type": "module",
   "types": "types/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./src/plugin.js",
+      "require": "./builds/compromise-dates.cjs"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/spencermountain/compromise.git"
@@ -22,6 +29,7 @@
   },
   "files": [
     "builds/",
+    "src/",
     "types/index.d.ts"
   ],
   "eslintIgnore": [

@@ -1,5 +1,5 @@
 import { noop, getTense } from '../lib.js'
-
+const keep = { tags: true }
 
 const simple = (vb, parsed) => {
   const { verbToInfinitive } = vb.methods.two.transform
@@ -8,7 +8,7 @@ const simple = (vb, parsed) => {
   let str = root.text('normal')
   str = verbToInfinitive(str, vb.model, getTense(root))
   if (str) {
-    vb = vb.replace(root, str)
+    vb = vb.replace(root, str, keep)
     vb.not('#Particle').tag('Verb')
   }
   vb.prepend('will').match('will').tag('Auxiliary')
@@ -26,7 +26,7 @@ const progressive = (vb, parsed) => {
   str = verbToInfinitive(str, vb.model, getTense(root))
   if (str) {
     str = verbConjugate(str, vb.model).Gerund
-    vb.replace(root, str)
+    vb.replace(root, str, keep)
     vb.not('#Particle').tag('PresentTense')
   }
   auxiliary.repair()
@@ -60,7 +60,7 @@ const forms = {
   'future-perfect': noop,
 
   // has been walking
-  'present-perfect-progressive': vb => vb.replace('has', 'will have'),
+  'present-perfect-progressive': vb => vb.replace('has', 'will have',),
   // had been walking
   'past-perfect-progressive': vb => vb.replace('had', 'will have'),
   // will have been ->

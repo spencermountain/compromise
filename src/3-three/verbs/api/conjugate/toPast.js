@@ -1,5 +1,5 @@
 import { noop, getTense, isPlural } from '../lib.js'
-
+const keep = { tags: true }
 
 const fns = {
 
@@ -26,7 +26,7 @@ const fns = {
       str = 'were'
     }
     if (str) {
-      vb.replace(root, str)
+      vb.replace(root, str, keep)
     }
     return vb
   },
@@ -44,7 +44,7 @@ const fns = {
   },
 
   hasHad: vb => {
-    vb.replace('has', 'had')
+    vb.replace('has', 'had', keep)
     return vb
   },
 
@@ -73,8 +73,8 @@ const forms = {
 
   // he is walking
   'present-progressive': vb => {
-    vb.replace('are', 'were')
-    vb.replace('(is|are|am)', 'was')
+    vb.replace('are', 'were', keep)
+    vb.replace('(is|are|am)', 'was', keep)
     return vb
   },
   // he was walking
@@ -104,19 +104,19 @@ const forms = {
   // will have been -> had
   'future-perfect-progressive': vb => {
     vb.remove('will')
-    vb.replace('have', 'had')
+    vb.replace('have', 'had', keep)
     return vb
   },
 
   // got walked
   'passive-past': vb => {
     // 'have been walked' -> 'had been walked'
-    vb.replace('have', 'had')
+    vb.replace('have', 'had', keep)
     return vb
   },
   // is being walked  -> 'was being walked'
   'passive-present': vb => {
-    vb.replace('(is|are)', 'was')
+    vb.replace('(is|are)', 'was', keep)
     return vb
   },
   // will be walked -> had been walked
@@ -127,7 +127,7 @@ const forms = {
     }
     // will have been walked -> had been walked
     if (parsed.auxiliary.has('will have been')) {
-      vb.replace('have', 'had')
+      vb.replace('have', 'had', keep)
       vb.remove('will')
     }
     return vb
@@ -143,14 +143,14 @@ const forms = {
 
   // is going to drink -> was going to drink
   'auxiliary-future': vb => {
-    vb.replace('(is|are|am)', 'was')
+    vb.replace('(is|are|am)', 'was', keep)
     return vb
   },
   // used to walk
   'auxiliary-past': noop,
   // we do walk -> we did walk
   'auxiliary-present': vb => {
-    vb.replace('(do|does)', 'did')
+    vb.replace('(do|does)', 'did', keep)
     return vb
   },
 
@@ -159,7 +159,7 @@ const forms = {
     // this modal has a clear tense
     if (vb.has('can')) {
       // can drive -> could drive
-      vb.replace('can', 'could')
+      vb.replace('can', 'could', keep)
     } else {
       // otherwise, 
       //  walk -> have walked
@@ -173,7 +173,7 @@ const forms = {
   'modal-past': noop,
   // wanted to walk
   'want-infinitive': vb => {
-    vb.replace('(want|wants)', 'wanted')
+    vb.replace('(want|wants)', 'wanted', keep)
     vb.remove('will')
     return vb
   },

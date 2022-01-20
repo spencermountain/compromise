@@ -20,18 +20,15 @@ const context = {
 }
 
 let txt = ''
-txt = 'next tuesday at 3pm'
-txt = 'may to august 1996'
-txt = 'tommorrow before noon'
 txt = 'on the day after next'
+txt = 'next tuesday at 3pm'
 txt = 'december seventh'
-txt = 'apr 22nd 2014'
 txt = '3pm-3:30'
 txt = ' may to august 1996'
-txt = 'today at 6:00pm'
-txt = 'fourth quarter, 2002'
-txt = '1st day of 2019'
-txt = 'May twenty-fourth, 2010'
+txt = 'last week of june'
+txt = '3pm-5pm on june 5th'
+txt = '3pm-5pm on june 5th'
+txt = 'six in the morning'
 // txt = 'on april 22nd'
 // txt = 'monday'
 
@@ -43,8 +40,6 @@ txt = 'May twenty-fourth, 2010'
 //   console.log('  end: ', fmt(date.end))
 // })
 
-
 let doc = nlp(txt)//.debug()
 let m = doc.dates(context)
-// m.debug()
 console.log(m.get())

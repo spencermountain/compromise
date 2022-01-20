@@ -1,4 +1,5 @@
 import { getTense } from '../lib.js'
+const keep = { tags: true }
 
 // all verb forms are the same
 const toGerund = function (vb, parsed) {
@@ -13,7 +14,7 @@ const toGerund = function (vb, parsed) {
   let gerund = verbConjugate(str, vb.model).Gerund
   if (gerund) {
     root.repair()
-    vb.replace(root, gerund)
+    vb.replace(root, gerund, keep)
   }
   // remove any auxiliary
   if (auxiliary.found) {

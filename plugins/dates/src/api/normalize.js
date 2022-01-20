@@ -25,7 +25,6 @@ const normalize = function (doc) {
     num.toNumber()
     num.toCardinal(false)
   }
-  doc.debug()
   // expand 'aug 20-21'
   doc.contractions().expand()
   // remove adverbs

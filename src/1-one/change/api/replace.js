@@ -1,9 +1,9 @@
 const fns = {}
 
-fns.replaceWith = function (input) {
+fns.replaceWith = function (input, keep = {}) {
   let ptrs = this.fullPointer
-  // const insert = this.fromText(input).docs
-  let original = this.update(ptrs)//.freeze()
+  let original = this.update(ptrs)
+  let oldTags = (original.docs[0] || []).map(term => Array.from(term.tags))
   // slide this in
   this.insertAfter(input)
   this.match(original) //todo: fix me December '21
@@ -15,17 +15,24 @@ fns.replaceWith = function (input) {
   }
   this.delete(original)
   // what should we return?
-  return this.toView(ptrs).compute(['index', 'lexicon', 'preTagger'])
+  let m = this.toView(ptrs).compute(['index', 'lexicon', 'preTagger'])
+  // replace any old tags
+  if (keep.tags) {
+    m.terms().forEach((term, i) => {
+      term.tagSafe(oldTags[i])
+    })
+  }
+  return m
 }
 
-fns.replace = function (match, input) {
+fns.replace = function (match, input, keep) {
   if (match && !input) {
-    return this.replaceWith(match)
+    return this.replaceWith(match, keep)
   }
   let m = this.match(match)
   if (!m.found) {
     return this
   }
-  return m.replaceWith(input)
+  return m.replaceWith(input, keep)
 }
 export default fns

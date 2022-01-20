@@ -1,5 +1,5 @@
 import { doDoes, toInf } from '../lib.js'
-
+const keep = { tags: true }
 
 // do/does not walk 
 const doesNot = function (vb, parsed) {
@@ -71,7 +71,7 @@ const forms = {
   'passive-past': (vb, parsed) => {
     // got walked -> did not get walked
     if (vb.has('got')) {
-      vb.replace('got', 'get')
+      vb.replace('got', 'get', keep)
       vb.prepend('did not')
       return vb
     }
@@ -103,7 +103,7 @@ const forms = {
     // does not 
     vb = doesNot(vb, parsed)
     // want
-    vb = vb.replace('wants', 'want')
+    vb = vb.replace('wants', 'want', keep)
     return vb
   },
 

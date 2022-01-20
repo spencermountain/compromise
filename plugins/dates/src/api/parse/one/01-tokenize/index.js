@@ -6,6 +6,20 @@ import doSection from './05-section.js'
 import doTimezone from './06-timezone.js'
 import doWeekday from './07-weekday.js'
 
+
+const cleanup = function (doc) {
+  // 'the fifth week ..'
+  doc = doc.not('[^the] !#Value', 0) // keep 'the 17th'
+  // 
+  doc = doc.not('#Preposition$')
+  doc = doc.not('#Conjunction$')
+  doc = doc.not('sharp')
+  doc = doc.not('on the dot')
+  doc = doc.not('^on')
+  return doc
+}
+
+
 const tokenize = function (doc, context) {
   // parse 'two weeks after'
   let res = doShift(doc)
@@ -41,6 +55,9 @@ const tokenize = function (doc, context) {
   res = doRelative(doc)
   let rel = res.result
   doc = doc.not(res.m)
+
+  // cleanup remaining doc object
+  doc = cleanup(doc)
 
   return {
     shift,

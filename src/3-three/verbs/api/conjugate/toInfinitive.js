@@ -1,4 +1,5 @@
 import { doDoes, getTense } from '../lib.js'
+const keep = { tags: true }
 
 // all verb forms are the same
 const toInfinitive = function (vb, parsed) {
@@ -9,7 +10,7 @@ const toInfinitive = function (vb, parsed) {
   str = verbToInfinitive(str, vb.model, getTense(root))
   if (str) {
     root.repair()
-    vb.replace(root, str)
+    vb.replace(root, str, keep)
   }
   // remove any auxiliary terms
   if (auxiliary.found) {

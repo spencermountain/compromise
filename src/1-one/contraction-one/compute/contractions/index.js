@@ -101,7 +101,11 @@ const contractions = (view) => {
         if (words) {
           words = toDocs(words, view)
           splice(document, [n, i], words)
-          methods.one.setTag(terms, 'NumberRange', world)//add custom tag
+          methods.one.setTag(words, 'NumberRange', world)//add custom tag
+          // is it a time-range, like '5-9pm'
+          if (words[2] && words[2].tags.has('Time')) {
+            methods.one.setTag([words[0]], 'Time', world)
+          }
           reTag(document[n], view)
         }
       }

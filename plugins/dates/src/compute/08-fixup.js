@@ -10,7 +10,7 @@ const fixUp = function (doc) {
     }
 
     // wed nov
-    doc.match('[(wed|sat)] (#Month|#Year)', 0).tag('WeekDay', 'wed')
+    doc.match('[(wed|sat)] (#Month|#Year|on|between|during|from)', 0).tag('WeekDay', 'wed')
 
     let d = doc.match('#Date+')
     //'spa day'

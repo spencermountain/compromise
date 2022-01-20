@@ -57,14 +57,6 @@ const halfPast = function (m, s) {
 
 const parseTime = function (doc, context) {
   let time = doc.match('(at|by|for|before|this|after)? #Time+')
-  if (time.found) {
-
-    // doc.remove(time)
-    // // '4pm on tuesday'
-    // doc.remove('^sharp')
-    // doc.remove('^on')
-    // doc.remove('on the dot')
-  }
   // get the main part of the time
   time = time.not('^(at|by|for|before|this|after)')
   time = time.not('sharp')
@@ -79,7 +71,6 @@ const parseTime = function (doc, context) {
   // '5 oclock'
   let m = time.match('^#Cardinal oclock (am|pm)?')
   if (m.found) {
-    m = m.not('oclock')
     s = s.hour(m.text('reduced'))
     s = s.startOf('hour')
     if (s.isValid() && !s.isEqual(now)) {
@@ -134,7 +125,7 @@ const parseTime = function (doc, context) {
   // '4 in the evening'
   m = time.match('[<time>#Time] (in|at) the? [<desc>(morning|evening|night|nighttime)]')
   if (m.found) {
-    let str = m.groups('time').text('reduced')
+    let str = m.groups('time').text('normal')
     if (/^[0-9]{1,2}$/.test(str)) {
       s = s.hour(str) //3 in the morning
       s = s.startOf('hour')

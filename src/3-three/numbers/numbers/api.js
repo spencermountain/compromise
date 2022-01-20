@@ -55,7 +55,7 @@ const addMethod = function (View) {
         }
         let fmt = val.has('#Ordinal') ? 'Ordinal' : 'Cardinal'
         let str = format(obj, fmt)
-        val.replaceWith(str, true)
+        val.replaceWith(str, { tags: true })
         val.tag('NumericValue')
       })
       return this
@@ -71,7 +71,7 @@ const addMethod = function (View) {
         }
         let num = obj.num.toLocaleString()
         // support ordinal?
-        val.replaceWith(num)
+        val.replaceWith(num, { tags: true })
       })
       return this
     }
@@ -89,7 +89,7 @@ const addMethod = function (View) {
         }
         let fmt = val.has('#Ordinal') ? 'TextOrdinal' : 'TextCardinal'
         let str = format(obj, fmt)
-        val.replaceWith(str, true)
+        val.replaceWith(str, { tags: true })
         val.tag('TextValue')
         return val
       })
@@ -108,7 +108,7 @@ const addMethod = function (View) {
         }
         let fmt = val.has('#TextValue') ? 'TextCardinal' : 'Cardinal'
         let str = format(obj, fmt)
-        val.replaceWith(str, true)
+        val.replaceWith(str, { tags: true })
         val.tag('Cardinal')
       })
       return new Numbers(res.document, res.pointer)
@@ -126,7 +126,7 @@ const addMethod = function (View) {
         }
         let fmt = val.has('#TextValue') ? 'TextOrdinal' : 'Ordinal'
         let str = format(obj, fmt)
-        val.replaceWith(str, true)
+        val.replaceWith(str, { tags: true })
         val.tag('Ordinal')
         return val
       })
@@ -183,7 +183,7 @@ const addMethod = function (View) {
         }
         let str = format(obj, fmt)
         val = val.not('#Currency')
-        val.replaceWith(str, true)
+        val.replaceWith(str, { tags: true })
         // handle plural/singular unit
         // agreeUnits(agree, val, obj)
         return val
@@ -211,7 +211,7 @@ const addMethod = function (View) {
         }
         let str = format(obj, fmt)
         val = val.not('#Currency')
-        val.replaceWith(str, true)
+        val.replaceWith(str, { tags: true })
         // handle plural/singular unit
         // agreeUnits(agree, val, obj)
         return val

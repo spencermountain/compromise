@@ -1,4 +1,5 @@
 import { noop, isPlural, isAreAm, doDoes, getSubject, toInf, getTense } from '../lib.js'
+const keep = { tags: true }
 
 // walk->walked
 const simple = (vb, parsed) => {
@@ -16,7 +17,7 @@ const simple = (vb, parsed) => {
     str = isAreAm(vb, parsed)
   }
   if (str) {
-    vb = vb.replace(root, str)
+    vb = vb.replace(root, str, keep)
     vb.not('#Particle').tag('PresentTense')
   }
   return vb
@@ -32,7 +33,7 @@ const toGerund = (vb, parsed) => {
     str = verbConjugate(str, vb.model).Gerund
   }
   if (str) {
-    vb = vb.replace(root, str)
+    vb = vb.replace(root, str, keep)
     vb.not('#Particle').tag('Gerund')
   }
   return vb
@@ -44,7 +45,7 @@ const toInfinitive = (vb, parsed) => {
   let str = parsed.root.text('normal')
   str = verbToInfinitive(str, vb.model, getTense(root))
   if (str) {
-    vb = vb.replace(parsed.root, str)
+    vb = vb.replace(parsed.root, str, keep)
   }
   return vb
 }
@@ -78,7 +79,7 @@ const forms = {
   // was walking -> is walking
   'past-progressive': (vb, parsed) => {
     let str = isAreAm(vb, parsed)
-    return vb.replace('(were|was)', str)
+    return vb.replace('(were|was)', str, keep)
   },
   // will be walking -> is walking
   'future-progressive': vb => {
@@ -100,7 +101,7 @@ const forms = {
       vb.remove('had')
       return vb
     }
-    vb.replace('had', 'has')
+    vb.replace('had', 'has', keep)
     return vb
   },
   // will have walked -> has walked
@@ -112,7 +113,7 @@ const forms = {
   // has been walking
   'present-perfect-progressive': noop,
   // had been walking
-  'past-perfect-progressive': vb => vb.replace('had', 'has'),
+  'past-perfect-progressive': vb => vb.replace('had', 'has', keep),
   // will have been -> has been
   'future-perfect-progressive': vb => {
     vb.match('will').insertBefore('has')
@@ -125,7 +126,7 @@ const forms = {
   'passive-past': (vb, parsed) => {
     let str = isAreAm(vb, parsed)
     if (vb.has('(had|have|has)') && vb.has('been')) {
-      vb.replace('(had|have|has)', str)
+      vb.replace('(had|have|has)', str, keep)
       vb.replace('been', 'being')
       return vb
     }
@@ -182,7 +183,7 @@ const forms = {
     if (isPlural(vb, parsed)) {
       str = 'want'//we want
     }
-    vb.replace('(want|wanted|wants)', str)
+    vb.replace('(want|wanted|wants)', str, keep)
     vb.remove('will')
     return vb
   },

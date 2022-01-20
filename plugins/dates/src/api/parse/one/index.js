@@ -12,13 +12,11 @@ const log = parts => {
         console.log(k, parts[k])
       }
     })
+    parts.doc.debug()
   }
 }
 
 const parseDate = function (doc, context) {
-  // quick normalization
-  doc = doc.not('[^the] !#Value', 0) // keep 'the 17th'
-
   //parse-out any sections
   let parts = tokenize(doc, context)
   doc = parts.doc

@@ -18,7 +18,7 @@ const timeTagger = function (doc) {
   // 03/02
   doc.match('/^[0-9]{2}/[0-9]{2}/').tag('Date', here).unTag('Value')
   // 3 in the morning
-  doc.match('[#Value] (in|at) the? (morning|evening|night|nighttime)').tag('Time', here)
+  doc.match('#Value (in|at) the? (morning|evening|night|nighttime)').tag('Time', here)
   // 4-5pm
   // doc.match('/[0-9](am|pm)?-[0-9](am|pm)/').tag(['DateRange', 'Time'], '3-4pm')
   if (!doc.has('#Month')) {

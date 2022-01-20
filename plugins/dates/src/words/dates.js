@@ -5,10 +5,10 @@ export default [
   'winter',
   'autumn',
 
-  'some day',
+  // 'some day',
   // 'one day',
   'all day',
-  'some point',
+  // 'some point',
 
   'eod',
   'eom',

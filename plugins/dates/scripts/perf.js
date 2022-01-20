@@ -24,7 +24,7 @@ docs.forEach(str => {
     found[o.normal] = found[o.normal] || 0
     found[o.normal] += 1
     matches += 1
-    if (o.normal === 'etc.') {
+    if (o.normal === 'at some' || o.normal === "or" || o.normal === "but" || o.normal === "to") {
       console.log(' =-=-=-=-\n\n   ', str)
     }
   })

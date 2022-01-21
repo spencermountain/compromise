@@ -3,7 +3,6 @@ import text from './text.js'
 import json from './json.js'
 
 const methods = Object.assign({}, out, text, json)
-console.log(Object.keys(methods))
 // aliases
 methods.data = methods.json
 

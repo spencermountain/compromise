@@ -1,6 +1,9 @@
 import { parentPort } from 'worker_threads'
 // const nlp = require('../../src')
 import nlp from './_lib.js'
+import plg from '../../../plugins/dates/src/plugin.js'
+nlp.plugin(plg)
+
 
 let matches = [
   'out of range',

@@ -13,9 +13,6 @@ let docs = corpus.all().slice(0, n)
 docs = docs.map(str => nlp(str))
 console.log(` -- ok, ready --`)
 
-// const compiled = methods.two.compile(matches, methods)
-// console.log(Object.keys(compiled))
-
 // qa
 let already = {}
 matches.forEach(todo => {

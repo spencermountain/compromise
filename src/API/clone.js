@@ -6,7 +6,6 @@ const isSet = item => item instanceof Set
 
 // deep-i-guess clone of model object
 const deepClone = function (model) {
-  // console.log(Object.keys(obj))
   for (const key in model) {
     if (isObject(model[key])) {
       model[key] = Object.assign({}, model[key])

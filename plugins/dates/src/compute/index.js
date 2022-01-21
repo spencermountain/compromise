@@ -8,15 +8,10 @@ import intervals from './06-intervals.js'
 import timezone from './07-timezone.js'
 import fixup from './08-fixup.js'
 
-// normalizations to run before tagger
-const normalize = function (doc) {
-  // turn '20mins' into '20 mins'
-  doc.numbers().normalize()
-  return doc
-}
 
 // run each of the taggers
 const compute = function (view) {
+  view.cache()
   // doc = normalize(doc)
   // run taggers
   // methods.forEach((fn) => fn(view))
@@ -30,6 +25,7 @@ const compute = function (view) {
   timezone(view)
   fixup(view)
   // view.debug()
+  view.uncache()
   return view
 }
 

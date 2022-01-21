@@ -20,6 +20,7 @@ let matches = [
 
 const doit = async function (txt) {
   let doc = nlp(txt)
+  // doc.compute('root')
   matches.forEach(reg => {
     doc.match(reg).text()
   })

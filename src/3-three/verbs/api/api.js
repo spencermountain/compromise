@@ -97,12 +97,6 @@ const api = function (View) {
         }
       })
     }
-    // overloaded - keep Verb class
-    update(pointer) {
-      let m = new Verbs(this.document, pointer)
-      m._cache = this._cache // share this full thing
-      return m
-    }
 
     /** return only verbs with 'not'*/
     isNegative() {
@@ -126,6 +120,12 @@ const api = function (View) {
         let info = getGrammar(vb, parsed)
         return toNegative(vb, parsed, info.form)
       })
+    }
+    // overloaded - keep Verb class
+    update(pointer) {
+      let m = new Verbs(this.document, pointer)
+      m._cache = this._cache // share this full thing
+      return m
     }
   }
   Verbs.prototype.toPast = Verbs.prototype.toPastTense

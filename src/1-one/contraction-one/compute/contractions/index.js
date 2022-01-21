@@ -68,7 +68,7 @@ const toDocs = function (words, view) {
 const contractions = (view) => {
   let { world, document } = view
   const { model, methods } = world
-  let list = model.two.contractions || []
+  let list = model.one.contractions || []
   // each sentence
   document.forEach((terms, n) => {
     // loop through terms backwards

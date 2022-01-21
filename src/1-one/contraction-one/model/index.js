@@ -1,2 +1,2 @@
 import contractions from './contractions.js'
-export default { two: { contractions } }
+export default { one: { contractions } }

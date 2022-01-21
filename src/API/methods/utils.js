@@ -103,6 +103,7 @@ const utils = {
   },
 
 }
+console.log(Object.keys(utils))
 utils.group = utils.groups
 utils.fullSentence = utils.fullSentences
 utils.sentence = utils.fullSentences

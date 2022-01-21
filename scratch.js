@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 import plg from './plugins/dates/src/plugin.js'
 nlp.plugin(plg)
 // import nlp from './builds/three/compromise-three.cjs'
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 
 // console.log(nlp.model().one.tagSet.Month)
@@ -39,12 +39,12 @@ txt = `exercise four to five days per week.`
 // txt = ` hold it in for ten seconds or so.`
 // txt = `At some point, possibly years from the initial`
 // txt = `begin a year-long stay `
-let doc = nlp(txt)
-// doc.match('twenty')
-// doc.numbers().toNumber()
-doc.debug()
-doc.dates().debug()
 
+txt = `a priest walked into the bars`
+let doc = nlp(txt)
+doc.compute('root')
+console.log(doc.match('{walk}').text('root'))
+// console.log(doc.json()[0])
 // doc.chunks().debug('chunks')
 // doc.verbs().subjects().debug()
 

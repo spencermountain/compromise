@@ -146,7 +146,7 @@ test('chronic-tests-one', (t) => {
   }
   arr.forEach(a => {
     let found = nlp(a[0]).dates(context).json()[0] || {}
-    let have = fmt(found.dates.start)
+    let have = fmt((found.dates || {}).start)
     t.equal(have, a[1], a[0])
   })
   t.end()

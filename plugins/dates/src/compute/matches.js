@@ -2,6 +2,7 @@ const preps = '(in|by|before|during|on|until|after|of|within|all)' //6
 const thisNext = '(last|next|this|previous|current|upcoming|coming)' //2
 const sections = '(start|end|middle|starting|ending|midpoint|beginning)' //2
 const seasons = '(spring|summer|winter|fall|autumn)'
+const knownDate = '(yesterday|today|tomorrow)'
 
 // { match: '', tag: '', reason:'' },
 let matches = [
@@ -173,6 +174,69 @@ let matches = [
   // around four thirty
   { match: '(at|around|near|#Date) [#Cardinal (thirty|fifteen) (am|pm)?]', group: 0, tag: 'Time', reason: 'time-tag' },
   //anytime around 3
-  { match: '(anytime|sometime) (before|after|near) [#Cardinal]', group: 0, tag: 'Time', reason: 'antime-after-3' }
+  { match: '(anytime|sometime) (before|after|near) [#Cardinal]', group: 0, tag: 'Time', reason: 'antime-after-3' },
+
+
+  //'two days before'/ 'nine weeks frow now'
+  { match: '#Cardinal #Duration (before|after|ago|from|hence|back)', tag: 'DateShift', reason: 'date-shift' },
+  // in two weeks
+  { match: 'in #Cardinal #Duration', tag: 'DateShift', reason: 'date-shift' },
+  { match: 'in (a|an) #Duration', tag: 'DateShift', reason: 'date-shift' },
+  // an hour from now
+  { match: '[(a|an) #Duration from] #Date', group: 0, tag: 'DateShift', reason: 'date-shift' },
+  // a month ago
+  { match: '(a|an) #Duration ago', tag: 'DateShift', reason: 'date-shift' },
+  // in half an hour
+  { match: 'in half (a|an) #Duration', tag: 'DateShift', reason: 'date-shift' },
+  // in a few weeks
+  { match: 'in a (few|couple) of? #Duration', tag: 'DateShift', reason: 'date-shift' },
+  //two weeks and three days before
+  { match: '#Cardinal #Duration and? #DateShift', tag: 'DateShift', reason: 'date-shift' },
+  { match: '#DateShift and #Cardinal #Duration', tag: 'DateShift', reason: 'date-shift' },
+  // 'day after tomorrow'
+  { match: '[#Duration (after|before)] #Date', group: 0, tag: 'DateShift', reason: 'date-shift' },
+
+  // july 3rd and 4th
+  { match: '#Month #Ordinal and #Ordinal', tag: 'Date', reason: 'ord-and-ord' },
+  // every other week
+  { match: 'every other #Duration', tag: 'Date', reason: 'every-other' },
+  // every weekend
+  { match: '(every|any|each|a) (day|weekday|week day|weekend|weekend day)', tag: 'Date', reason: 'any-weekday' },
+  // any-wednesday
+  { match: '(every|any|each|a) (#WeekDay)', tag: 'Date', reason: 'any-wednesday' },
+  // any week
+  { match: '(every|any|each|a) (#Duration)', tag: 'Date', reason: 'any-week' },
+  // wed nov
+  { match: '[(wed|sat)] (#Month|#Year|on|between|during|from)', group: 0, tag: 'WeekDay', reason: 'wed' },
+  //'spa day'
+  { match: '^day$', unTag: 'Date', reason: 'spa-day' },
+  // tomorrow's meeting
+  { match: '(in|of|by|for)? (#Possessive && #Date)', unTag: 'Date', reason: 'tomorrows meeting' },
+  //yesterday 7
+  { match: `${knownDate} [#Value]$`, unTag: 'Date', reason: 'yesterday-7' },
+  //7 yesterday
+  { match: `^[#Value] ${knownDate}$`, group: 0, unTag: 'Date', reason: '7 yesterday' },
+  //friday yesterday
+  // { match: `#WeekDay+ ${knownDate}$`, unTag: 'Date').lastTerm(, tag:'Date',  reason: 'fri-yesterday'},
+  //tomorrow on 5
+  { match: `on #Cardinal$`, unTag: 'Date', reason: 'on 5' },
+  //this tomorrow
+  { match: `[this] tomorrow`, group: 0, unTag: 'Date', reason: 'this-tomorrow' },
+  //q2 2019
+  { match: `(q1|q2|q3|q4) #Year`, tag: 'Date', reason: 'q2 2016' },
+  //5 next week
+  { match: `^[#Value] (this|next|last)`, group: 0, unTag: 'Date', reason: '4 next' },
+  //this month 7
+  { match: `(last|this|next) #Duration [#Value]`, group: 0, unTag: 'Date', reason: 'this month 7' },
+  //7 this month
+  { match: `[!#Month] #Value (last|this|next) #Date`, group: 0, unTag: 'Date', reason: '7 this month' },
+  // over the years
+  { match: '(in|over) the #Duration #Date+?', unTag: 'Date', reason: 'over-the-duration' },
+  // second quarter of 2020
+  { match: '#Ordinal quarter of? #Year', unTag: 'Fraction' },
+  // a month from now
+  { match: '(from|by|before) now', unTag: 'Time' },
+
 
 ]
+export default matches

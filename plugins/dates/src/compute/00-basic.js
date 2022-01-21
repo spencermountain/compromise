@@ -33,18 +33,6 @@ const tagYearSafe = (m, reason) => {
 }
 
 const tagDates = function (doc) {
-  // doc.debug()
-  // // in the evening
-  // doc.match('in the (night|evening|morning|afternoon|day|daytime)').tag('Time', 'in-the-night')
-  // // 8 pm
-  // doc.match('(#Value|#Time) (am|pm)').tag('Time', 'value-ampm')
-  // // 22-aug
-  // // doc.match('/^[0-9]{2}-(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov)/').tag('Date', '20-jan')
-  // // 2012-06
-  // doc.match('/^[0-9]{4}-[0-9]{2}$/').tag('Date', '2012-06')
-
-  // // misc weekday words
-  // doc.match('(tue|thu)').tag('WeekDay', 'misc-weekday')
 
   doc
     .match('(march|april|may) (and|to|or|through|until)? (march|april|may)')
@@ -54,88 +42,6 @@ const tagDates = function (doc) {
   // april should almost-always be a date
   // doc.match('[april] !#LastName?', 0).tag('Month', 'april')
 
-  //months:
-  let month = doc.if('#Month')
-  if (month.found === true) {
-    // //June 5-7th
-    // month.match(`#Month #Date+`).tag('Date', 'correction-numberRange')
-    // //5th of March
-    // month.match('#Value of #Month').tag('Date', 'value-of-month')
-    // //5 March
-    // month.match('#Cardinal #Month').tag('Date', 'cardinal-month')
-    // //march 5 to 7
-    // month.match('#Month #Value (and|or|to)? #Value+').tag('Date', 'value-to-value')
-    // //march the 12th
-    // month.match('#Month the #Value').tag('Date', 'month-the-value')
-    // // march to april
-    // month.match('(march|may) to? #Date').tag('Date').match('^.').tag('Month', 'march-to')
-    // // 'march'
-    // month.match('^(march|may)$').tag('Month', 'single-march')
-    // //March or June
-    // month.match('#Month or #Month').tag('Date', 'month-or-month')
-  }
-
-  //months:
-  let val = doc.if('#Value')
-  if (val.found === true) {
-    // //june 7
-    // val.match('(#WeekDay|#Month) #Value').ifNo('#Money').tag('Date', 'date-value')
-
-    // //7 june
-    // val.match('#Value (#WeekDay|#Month)').ifNo('#Money').tag('Date', 'value-date')
-
-    // //may twenty five
-    // val.match('#TextValue #TextValue').if('#Date').tag('#Date', 'textvalue-date')
-
-    // //two thursdays back
-    // val.match('#Value (#WeekDay|#Duration) back').tag('#Date', '3-back')
-
-    //eg 'year'
-    let duration = val.if('#Duration')
-    if (duration.found === true) {
-      // //for 4 months
-      // duration.match('for #Value #Duration').tag('Date', 'for-x-duration')
-      // //two days before
-      // duration.match('#Value #Duration #Conjunction').tag('Date', 'val-duration-conjunction')
-      // //for four days
-      // duration.match(`${preps}? #Value #Duration`).tag('Date', 'value-duration')
-      // //two years old
-      // duration.match('#Value #Duration old').unTag('Date', 'val-years-old')
-    }
-  }
-
-  //seasons
-  let season = doc.if(seasons)
-  if (season.found === true) {
-    // season.match(`${preps}? ${thisNext} ${seasons}`).tag('Date', 'thisNext-season')
-    // season.match(`the? ${sections} of ${seasons}`).tag('Date', 'section-season')
-    // season.match(`${seasons} ${preps}? #Cardinal`).tag('Date', 'season-year')
-  }
-
-  //rest-dates
-  let date = doc.if('#Date')
-  if (date.found === true) {
-    // //june the 5th
-    // date.match('#Date the? #Ordinal').tag('Date', 'correction')
-    // //last month
-    // date.match(`${thisNext} #Date`).tag('Date', 'thisNext-date')
-    // //by 5 March
-    // date.match('due? (by|before|after|until) #Date').tag('Date', 'by')
-    // //next feb
-    // date.match('(last|next|this|previous|current|upcoming|coming|the) #Date').tag('Date', 'next-feb')
-    // //start of june
-    // date.match(`the? ${sections} of #Date`).tag('Date', 'section-of')
-    // //fifth week in 1998
-    // date.match('#Ordinal #Duration in #Date').tag('Date', 'duration-in')
-    // //early in june
-    // date.match('(early|late) (at|in)? the? #Date').tag('Time', 'early-evening')
-    // //tomorrow before 3
-    // date.match('#Date (by|before|after|at|@|about) #Cardinal').not('^#Date').tag('Time', 'date-before-Cardinal')
-    // //saturday am
-    // date.match('#Date [(am|pm)]', 0).unTag('Verb').unTag('Copula').tag('Time', 'date-am')
-    // //feb to june
-    // date.match('#Date (#Preposition|to) #Date').ifNo('#Duration').tag('Date', 'date-prep-date')
-  }
 
   //year/cardinal tagging
   let cardinal = doc.if('#Cardinal')
@@ -177,25 +83,10 @@ const tagDates = function (doc) {
     tagYear(m.groups('1'), 'between-year-and-year-2')
   }
 
-  let time = doc.if('#Time')
-  if (time.found === true) {
-    // //by 6pm
-    // time.match('(by|before|after|at|@|about) #Time').tag('Time', 'preposition-time')
-  }
   //'2020' bare input
   let m = doc.match('^/^20[012][0-9]$/$')
   tagYearSafe(m, '2020-ish')
 
-  // // in 20mins
-  // doc.match('(in|after) /^[0-9]+(min|sec|wk)s?/').tag('Date', 'shift-units')
-  // //tuesday night
-  // doc.match('#Date [(now|night|sometime)]', 0).tag('Time', 'date-now')
-  // // 4 days from now
-  // doc.match('(from|starting|until|by) now').tag('Date', 'for-now')
-  // // every night
-  // doc.match('(each|every) night').tag('Date', 'for-now')
-
-  // doc.debug()
   return doc
 }
 export default tagDates

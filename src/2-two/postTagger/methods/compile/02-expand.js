@@ -29,6 +29,7 @@ const expand = function (matches) {
       more.forEach(mo => {
         let newObj = Object.assign({}, obj) //clone
         newObj.regs = obj.regs.slice(0) //clone
+        // console.log(mo)
         newObj.regs[foundOr] = mo
         newObj._expanded = true
         all.push(newObj)
@@ -42,7 +43,7 @@ const expand = function (matches) {
       more.forEach(mo => {
         let newObj = Object.assign({}, obj) //clone
         newObj.regs = obj.regs.slice(0) //clone
-        newObj.regs[foundOr] = mo
+        newObj.regs[foundOr] = mo //!fixme [mo]?
         newObj._expanded = true
         all.push(newObj)
       })

@@ -66,6 +66,10 @@ export const isEndGreedy = function (reg, state) {
   return false
 }
 
+const isArray = function (arr) {
+  return Object.prototype.toString.call(arr) === '[object Array]'
+}
+
 export const doOrBlock = function (state, skipN = 0) {
   let block = state.regs[state.r]
   let wasFound = false
@@ -73,6 +77,14 @@ export const doOrBlock = function (state, skipN = 0) {
   for (let c = 0; c < block.choices.length; c += 1) {
     // try to match this list of tokens
     let regs = block.choices[c]
+    if (!isArray(regs)) {
+      // console.log('=-=-=-= bad -=-=-=-')
+      // console.dir(state.regs, { depth: 5 })
+      return false
+    }// } else {
+    //   // console.log('=-=-=-= good -=-=-=-')
+    //   // console.dir(state.regs[0], { depth: 5 })
+    // }
     wasFound = regs.every((cr, w_index) => {
       let extra = 0
       let t = state.t + w_index + skipN + extra

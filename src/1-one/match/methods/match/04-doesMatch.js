@@ -20,7 +20,7 @@ const doesMatch = function (term, reg, index, length) {
   //support a text match
   if (reg.word !== undefined) {
     //match contractions, machine-form
-    if (term.machine !== null && (term.machine === reg.word || term.root === reg.word)) {
+    if (term.machine !== null && term.machine === reg.word) {
       return true
     }
     // term aliases for slashes and things

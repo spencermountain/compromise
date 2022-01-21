@@ -14,6 +14,16 @@ const toRoot = {
     let str = term.machine || term.normal || term.text
     return world.methods.two.transform.verbToInfinitive(str, world.model, 'PresentTense')
   },
+  // 'quieter' -> 'quiet'
+  'Comparative': (term, world) => {
+    let str = term.machine || term.normal || term.text
+    return world.methods.two.transform.adjFromComparative(str, world.model)
+  },
+  // 'quietest' -> 'quiet'
+  'Superlative': (term, world) => {
+    let str = term.machine || term.normal || term.text
+    return world.methods.two.transform.adjFromSuperlative(str, world.model)
+  },
 }
 
 const getRoot = function (view) {

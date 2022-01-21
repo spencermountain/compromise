@@ -39,11 +39,12 @@ txt = `exercise four to five days per week.`
 // txt = ` hold it in for ten seconds or so.`
 // txt = `At some point, possibly years from the initial`
 // txt = `begin a year-long stay `
+// txt = `The gostak distims the doshes.`
 
-txt = `a priest walked into the bars`
-let doc = nlp(txt)
+txt = `he was quietest`
+let doc = nlp(txt).debug()
 doc.compute('root')
-console.log(doc.match('{walk}').text('root'))
+doc.match('{quiet}').debug()
 // console.log(doc.json()[0])
 // doc.chunks().debug('chunks')
 // doc.verbs().subjects().debug()

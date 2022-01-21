@@ -2,8 +2,8 @@ import nlp from '../../src/three.js'
 import spacetime from 'spacetime'
 
 import datePlugin from './src/plugin.js'
-// nlp.plugin(datePlugin)
-// nlp.verbose(true)
+nlp.plugin(datePlugin)
+// nlp.verbose('tagger')
 // nlp.verbose('date')
 
 const fmt = (iso) => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
@@ -36,6 +36,8 @@ txt = '4 years or more'
 txt = 'took 76 years to finish'
 txt = 'exercise four to five days per week.'
 txt = 'in a few years'
+txt = 'today in PST'
+txt = '4pm sharp on tuesday' //! <- expand issue
 
 // txt = 'four thirty'
 // txt = 'on april 22nd'
@@ -49,8 +51,8 @@ txt = 'in a few years'
 //   console.log('  end: ', fmt(date.end))
 // })
 
-console.log(nlp.parseMatch('#Value (year|month|week|day) and a half'))
-let doc = nlp(txt)//.debug()
+// console.log(nlp.parseMatch('#Value (year|month|week|day) and a half'))
+let doc = nlp(txt).debug()
 // doc.match('#Value (year|month|week|day) and a half').debug()
-// let m = doc.dates(context)
-// console.log(m.get())
+let m = doc.dates(context)
+console.log(m.get())

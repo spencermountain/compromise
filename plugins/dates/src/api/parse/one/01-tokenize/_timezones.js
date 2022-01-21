@@ -102,6 +102,7 @@ const informal = {
   'atlantic daylight time': america + 'Halifax',
   adt: america + 'Halifax',
   'eastern standard time': america + 'New_York',
+  'eastern': america + 'New_York',
   'eastern time': america + 'New_York',
   est: america + 'New_York',
   'eastern daylight time': america + 'New_York',

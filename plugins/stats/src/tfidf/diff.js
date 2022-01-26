@@ -1,9 +1,10 @@
 const diff = function (doc, globe) {
   doc.forEach(a => {
     let global = globe[a[0]] || 0
-    a[2] = a[1] - global
+    // console.log(a[1], global)
+    a[1] = a[1] - global
   })
-  return doc.sort((a, b) => {
+  doc = doc.sort((a, b) => {
     if (a[2] > b[2]) {
       return -1
     } else if (a[2] < b[2]) {
@@ -11,5 +12,6 @@ const diff = function (doc, globe) {
     }
     return 0
   })
+  return doc
 }
 export default diff

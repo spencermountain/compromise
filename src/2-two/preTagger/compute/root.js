@@ -1,4 +1,10 @@
 const toRoot = {
+  // 'spencer's' -> 'spencer'
+  'Possessive': (term, world) => {
+    let str = term.machine || term.normal || term.text
+    str = str.replace(/'s$/, '')
+    return str
+  },
   // 'drinks' -> 'drink'
   'Plural': (term, world) => {
     let str = term.machine || term.normal || term.text
@@ -8,6 +14,11 @@ const toRoot = {
   'PastTense': (term, world) => {
     let str = term.machine || term.normal || term.text
     return world.methods.two.transform.verbToInfinitive(str, world.model, 'PastTense')
+  },
+  // 'walking' -> 'walk'
+  'Gerund': (term, world) => {
+    let str = term.machine || term.normal || term.text
+    return world.methods.two.transform.verbToInfinitive(str, world.model, 'Gerund')
   },
   // 'walks' -> 'walk'
   'PresentTense': (term, world) => {
@@ -29,14 +40,17 @@ const toRoot = {
 const getRoot = function (view) {
   const world = view.world
   const keys = Object.keys(toRoot)
-  // console.log(world.methods.two.transform.nounToSingular)
   view.docs.forEach(terms => {
     for (let i = 0; i < terms.length; i += 1) {
       const term = terms[i]
       for (let k = 0; k < keys.length; k += 1) {
         if (term.tags.has(keys[k])) {
           const fn = toRoot[keys[k]]
-          term.root = fn(term, world)
+          let root = fn(term, world)
+          if (term.normal !== root) {
+            term.root = root
+          }
+          break
         }
       }
     }

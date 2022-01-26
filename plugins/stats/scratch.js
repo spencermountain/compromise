@@ -1,5 +1,5 @@
 // import corpus from 'nlp-corpus'
-import nlp from '../../src/one.js'
+import nlp from '../../src/three.js'
 import plugin from './src/plugin.js'
 nlp.extend(plugin)
 

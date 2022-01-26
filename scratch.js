@@ -41,10 +41,12 @@ txt = `exercise four to five days per week.`
 // txt = `begin a year-long stay `
 // txt = `The gostak distims the doshes.`
 
-txt = `he was quietest`
+txt = `i am looking`
 let doc = nlp(txt).debug()
 doc.compute('root')
-doc.match('{quiet}').debug()
+doc.compute('tfidf')
+console.log(doc.json()[0])
+doc.match('{look}').debug()
 // console.log(doc.json()[0])
 // doc.chunks().debug('chunks')
 // doc.verbs().subjects().debug()

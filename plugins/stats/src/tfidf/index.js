@@ -16,15 +16,19 @@ const unzip = function (model) {
 }
 
 const model = unzip(pcked)
-
+// console.log(model)
+// console.log(Object.keys(model).length.toLocaleString())
+// console.log(model.stun)
 
 const addMethods = function (View) {
   View.prototype.tfidf = function (mod) {
     if (!mod) {
       mod = model
     }
+    this.compute('root')
     let freq = Object.entries(compileModel(this))
-    return diff(freq, mod)
+    let res = diff(freq, mod)
+    return res
   }
 
   View.prototype.freq = function () {

@@ -30,7 +30,11 @@ console.log(tmp.length, 'sentences')
 let txt = tmp.join(`\n`)
 
 // let txt = 'toronto raptors play a toronto maple leafs'
-let doc = nlp(txt)//.compute('root')
+console.log('parsing')
+let doc = nlp(txt)
+console.log('compute root')
+doc.compute('root')
+console.log('compute freq')
 let out = doc.freq()
 
 out = packList(out)

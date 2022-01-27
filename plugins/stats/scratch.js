@@ -7,6 +7,6 @@ nlp.extend(plugin)
 // let doc = nlp(txt)
 // console.log(doc.ngram())
 
-let txt = 'i think we see that fook are nice'
+let txt = 'i think we see that fook are nice. foopsie are cool'
 let doc = nlp(txt)
 console.log(doc.tfidf())

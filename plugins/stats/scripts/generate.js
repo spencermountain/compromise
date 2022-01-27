@@ -14,13 +14,13 @@ const fileSize = (pathStr) => {
 // let txt = corpus.some(1000).join('\n')
 let txt = corpus.all().join(`\n`)
 
-let doc = nlp(txt)
-let counts = idf(doc)
+let doc = nlp(txt).compute('root')
+let counts = idf(doc, { use: 'root', min: 4 })
 
 // collect by freq
 let byFreq = zipUp(counts)
 
-
+// console.log(counts)
 let out = "export default " + JSON.stringify(byFreq, null, 2)
 fs.writeFileSync('./src/tfidf/_model.js', out)
 console.log(fileSize('./src/tfidf/_model.js'))

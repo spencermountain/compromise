@@ -7,7 +7,7 @@ const hasLetter = /[a-z]/
 const zipUp = function (counts) {
   let byFreq = {}
   counts = Object.entries(counts)
-  counts = counts.filter(a => a[1] > 2)
+  // counts = counts.filter(a => a[1] > 2)
   counts = counts.sort((a, b) => {
     if (a[1] > b[1]) {
       return 1
@@ -25,12 +25,12 @@ const zipUp = function (counts) {
     byFreq[k] = byFreq[k] || []
     byFreq[k].push(str)
   })
-  console.log(byFreq)
 
   //compress each key
   Object.keys(byFreq).forEach(k => {
     byFreq[k] = pack(byFreq[k])
   })
+  // console.log(byFreq)
   return byFreq
 }
 export default zipUp

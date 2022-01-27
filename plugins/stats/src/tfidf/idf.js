@@ -15,10 +15,15 @@ const idf = function (view, opts = {}) {
 
   counts = Object.entries(counts)
   counts = counts.reduce((h, a) => {
+    if (opts.min && a[1] < opts.min) {
+      return h
+    }
     // IDF = (Total number of documents) / (total number of documents containing the keyword)
     let num = Math.log10(total / a[1])
-    num = Math.round(num * 100) / 100 // round to 2 digits
-    h[a[0]] = num.toFixed(2)
+    //force between 0-1
+    // num = num / max
+    // num = Math.round(num * 1000) / 1000 // round to 2 digits
+    h[a[0]] = num.toFixed(3)
     return h
   }, {})
   return counts

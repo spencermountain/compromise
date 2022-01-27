@@ -4,23 +4,23 @@ import idf from './idf.js'
 import unpack from './unpack.js'
 
 const model = unpack(pcked)
-// console.log(model)
+let keys = Object.keys(model)
+const max = model[keys[keys.length - 1]] * 1.1
 // console.log(Object.keys(model).length.toLocaleString())
-// console.log(model.stun)
+// console.log(model.sway)
 
 const addMethods = function (View) {
 
-  View.prototype.tfidf = function (mod, opts = {}) {
-    // inverse document frequeny
-    mod = !mod ? model : mod
+  View.prototype.tfidf = function (opts = {}) {
     // term frequency
     let counts = tf(this, opts)
     let freqs = Object.entries(counts)
     freqs = freqs.map(a => {
       let [w, count] = a
-      // tfidf
-      console.log(w, mod[w])
-      let tfidf = count * (mod[w] || 1)
+      // tfidf = tf * idf
+      let tfidf = count * (model[w] || max)
+      // round it 2 decimals
+      tfidf = Math.round(tfidf * 100) / 100
       a[1] = tfidf
       return a
     })

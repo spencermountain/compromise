@@ -31,7 +31,6 @@ txt = `all the days since december were awful`
 txt = `there were the walks`
 txt = `one day after next`
 
-txt = `i've exercised four to five days per week.`
 // txt = `for 8 years now`
 // txt = `took 76 years to finish`
 // txt = `I've literally spent nearly 4 years or more`
@@ -47,11 +46,13 @@ txt = `i've exercised four to five days per week.`
 // doc.people().replaceWith('██████████')
 
 
+txt = `i've exercised four to five days per week.`
 let doc = nlp(txt).compute('root')
+doc.lookup(['john lennon', 'exercise', 'four to five'], { form: 'root' }).debug()
 // doc.redact({})
-doc.debug()
-console.log(doc.json({ root: true }))
-console.log(doc.text('root'))
+// doc.debug()
+// console.log(doc.json({ root: true }))
+// console.log(doc.text('root'))
 
 
 

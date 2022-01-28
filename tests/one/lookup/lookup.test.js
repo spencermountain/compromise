@@ -155,6 +155,8 @@ test('lookup no-contractions', function (t) {
   t.end()
 })
 
+
+
 // test('obj-scan', function(t) {
 //   let doc = nlp('one one two three four five.  here one result.')
 //   let trie = nlp.compile({ two: 'Fun', here: 'Fun' })

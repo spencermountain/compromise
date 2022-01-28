@@ -14,7 +14,7 @@ const api = function (View) {
   }
 
   /** find all matches in this document */
-  View.prototype.lookup = function (input) {
+  View.prototype.lookup = function (input, opts = {}) {
     if (!input) {
       return this.none()
     }
@@ -22,7 +22,7 @@ const api = function (View) {
       input = [input]
     }
     let trie = isObject(input) ? input : build(input, this.world)
-    let res = scan(this, trie)
+    let res = scan(this, trie, opts)
     res = res.settle()
     return res
   }

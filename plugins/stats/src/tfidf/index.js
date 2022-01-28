@@ -11,7 +11,10 @@ const max = model[keys[keys.length - 1]] * 1.1
 
 const addMethods = function (View) {
 
-  View.prototype.tfidf = function (opts = {}) {
+  View.prototype.tfidf = function (opts = {}, mod) {
+    if (!mod) {
+      mod = model
+    }
     // term frequency
     let counts = tf(this, opts)
     let freqs = Object.entries(counts)
@@ -35,6 +38,6 @@ const addMethods = function (View) {
     })
   }
 
-  View.prototype.idf = idf
+  View.prototype.buildIDF = idf
 }
 export default addMethods

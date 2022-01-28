@@ -32,12 +32,15 @@ const textFromTerms = function (terms, opts, keepSpace = true) {
       }
     }
     // grab the correct word format
-    let word = t[opts.use || 'text'] || t.normal || ''
-    if (opts.use === 'implicit') {
+    let word = t[opts.form || 'text'] || t.normal || ''
+    if (opts.form === 'implicit') {
       word = t.implicit || t.text
     }
+    if (opts.form === 'root' && t.implicit) {
+      word = t.root || t.implicit || t.normal
+    }
     // add an implicit space, for contractions
-    if ((opts.use === 'machine' || opts.use === 'implicit') && t.implicit) {
+    if ((opts.form === 'machine' || opts.form === 'implicit' || opts.form === 'root') && t.implicit) {
       if (!post || !hasSpace.test(post)) {
         post += ' '
       }

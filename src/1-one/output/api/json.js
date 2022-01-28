@@ -5,7 +5,7 @@ const defaults = {
   terms: true,
 }
 
-let opts = { case: 'none', unicode: 'some', use: 'machine', punctuation: 'some' }
+let opts = { case: 'none', unicode: 'some', form: 'machine', punctuation: 'some' }
 
 const merge = function (a, b) {
   return Object.assign({}, a, b)
@@ -19,7 +19,7 @@ const fns = {
   implicit: (terms) => textFromTerms(terms, merge(fmts.implicit, { keepPunct: true }), false),
 
   machine: (terms) => textFromTerms(terms, opts, false),
-  root: (terms) => textFromTerms(terms, merge(opts, { use: 'root' }), false),
+  root: (terms) => textFromTerms(terms, merge(opts, { form: 'root' }), false),
 
   offset: (terms) => {
     let len = fns.text(terms).length

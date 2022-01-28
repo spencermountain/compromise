@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/three.js'
-import plg from './plugins/dates/src/plugin.js'
-nlp.plugin(plg)
+// import plg from './plugins/dates/src/plugin.js'
+// nlp.plugin(plg)
 // import nlp from './builds/three/compromise-three.cjs'
 // nlp.verbose('tagger')
 
@@ -31,7 +31,7 @@ txt = `all the days since december were awful`
 txt = `there were the walks`
 txt = `one day after next`
 
-txt = `exercise four to five days per week.`
+txt = `i've exercised four to five days per week.`
 // txt = `for 8 years now`
 // txt = `took 76 years to finish`
 // txt = `I've literally spent nearly 4 years or more`
@@ -41,15 +41,21 @@ txt = `exercise four to five days per week.`
 // txt = `begin a year-long stay `
 // txt = `The gostak distims the doshes.`
 
-txt = `i am looking`
-let doc = nlp(txt).debug()
-doc.compute('root')
-doc.compute('tfidf')
-console.log(doc.json()[0])
-doc.match('{look}').debug()
-// console.log(doc.json()[0])
-// doc.chunks().debug('chunks')
-// doc.verbs().subjects().debug()
+// txt = `said Dr. Miller and his pal Joe`
+// txt = `Jim bought himself a book`
+// let doc = nlp(txt).debug()
+// doc.people().replaceWith('██████████')
+
+
+let doc = nlp(txt).compute('root')
+// doc.redact({})
+doc.debug()
+console.log(doc.json({ root: true }))
+console.log(doc.text('root'))
+
+
+
+
 
 // let doc = nlp('it was 0 dollars')
 // let doc = nlp('$7.003')

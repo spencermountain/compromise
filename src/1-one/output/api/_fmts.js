@@ -1,30 +1,30 @@
 const fmts = {
   text: {
-    use: 'text',
+    form: 'text',
   },
   normal: {
     whitespace: 'some',
     punctuation: 'some',
     case: 'some',
     unicode: 'some',
-    use: 'normal',
+    form: 'normal',
   },
   machine: {
     whitespace: 'some',
     punctuation: 'some',
     case: 'none',
     unicode: 'some',
-    use: 'machine',
+    form: 'machine',
   },
   root: {
     whitespace: 'some',
     punctuation: 'some',
     case: 'some',
     unicode: 'some',
-    use: 'root',
+    form: 'root',
   },
   implicit: {
-    use: 'implicit',
+    form: 'implicit',
   }
 }
 fmts.clean = fmts.normal

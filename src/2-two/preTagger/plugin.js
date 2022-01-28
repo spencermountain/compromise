@@ -8,5 +8,5 @@ export default {
   methods,
   model,
   tags,
-  hooks: ['preTagger'],//'root'
+  hooks: ['preTagger'],
 }

@@ -62,7 +62,7 @@ const methods = {
       not = this.match(reg)
     }
     // is it part of a contraction?
-    if (self.has('@hasContraction')) {
+    if (self.has('@hasContraction') && self.contractions) {
       let more = self.grow('@hasContraction')
       more.contractions().expand()
     }

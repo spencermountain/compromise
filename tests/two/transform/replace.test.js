@@ -69,12 +69,13 @@ test('structured-object-replace :', function (t) {
 
 test('replace-keep some punctuation', function (t) {
   let doc = nlp('two weeks').tag('Cool')
-  doc.replace('two', '2', true)
+  doc.replace('two', '2', { tags: true })
   t.equal(doc.match('#Cool+').text(), '2 weeks', here + 'replace-keep-tags')
 
   doc = nlp('first sentence. I am trying it out.')
   doc.match('#Gerund').tag('HashTag')
-  doc.match('trying').replaceWith('working', true)
+  doc.match('trying')
+  doc.replaceWith('working', { tags: true })
   t.equal(doc.match('#HashTag+').text(), 'working', here + 'replacewith-keep-tags')
   t.end()
 })
@@ -89,47 +90,53 @@ test('replace over implict', function (t) {
 test('replace-with-Doc', function (t) {
   let b = nlp('sneaks').tag('Cool')
   let doc = nlp(`john walks quickly`)
-  doc.match('walks').replaceWith(b)
+  doc.match('walks').replaceWith(b, { tags: true })
   t.equal(doc.text(), 'john sneaks quickly', here + 'doc-replace')
   t.equal(doc.has('#Cool'), true, here + 'doc-replace tags')
   t.end()
 })
 
 test('replace-with-function', function (t) {
-  const repl = p => {
+  const fn = p => {
     if (p.has('john')) {
       return 'johnny'
     }
     return 'nancy'
   }
-  let doc = nlp('spencer and John').replace('#Person', repl, true, true)
-  t.equal(doc.text(), 'nancy and Johnny', here + 'replace function')
+  let doc = nlp('spencer and John')
+  doc.replace('#Person', fn)
+  t.equal(doc.text(), 'nancy and johnny', here + 'replace function')
 
   doc = nlp('Thurs, Feb 2nd, 2016')
   doc.match('feb').replaceWith(m => {
     return m.text({ trim: true }) + '!'
   })
   t.equal(doc.text(), 'Thurs, Feb! 2nd, 2016', here + 'replaceWith function')
+
+  doc = nlp('Spencer is very cool.')
+  doc.match('spencer').replaceWith((m) => m.text() + 's')
+  doc.match('is').replaceWith((m) => 'are')
+  t.equal(doc.text(), 'Spencers are very cool.', here + 'replaceWith twice')
   t.end()
 })
 
-// test('replace-tags-param', function (t) {
-//   let doc = nlp('Spencer is very cool.')
-//   doc.match('spencer').replaceWith('jogging')
-//   t.equal(doc.has('(jogging && #Gerund)'), true, here+'tags not-kept - default')
+test('replace-tags-param', function (t) {
+  let doc = nlp('Spencer is very cool.')
+  doc.match('spencer').replaceWith('jogging')
+  t.equal(doc.has('(jogging && #Gerund)'), true, here + 'tags not-kept - default')
 
-//   doc = nlp('Spencer is very cool.')
-//   doc.match('spencer').replaceWith('jogging', true)
-//   t.equal(doc.has('(jogging && #Person)'), true, here+'tags kept - boolean')
-//   t.equal(doc.has('(jogging && #Gerund)'), false, here+'tags kept - boolean')
+  doc = nlp('Spencer is very cool.')
+  doc.match('spencer').replaceWith('jogging', { tags: true })
+  t.equal(doc.has('(jogging && #Person)'), true, here + 'tags kept - boolean')
+  t.equal(doc.has('(jogging && #Gerund)'), false, here + 'tags kept - boolean')
 
-//   doc = nlp('Spencer is very cool.')
-//   doc.match('spencer').replaceWith('jogging', { keepTags: true })
-//   t.equal(doc.has('(jogging && #Person)'), true, here+'tags kept - boolean')
-//   t.equal(doc.has('(jogging && #Gerund)'), false, 'here+tags kept - boolean')
+  doc = nlp('Spencer is very cool.')
+  doc.match('spencer').replaceWith('jogging', { tags: true })
+  t.equal(doc.has('(jogging && #Person)'), true, here + 'tags kept - boolean')
+  t.equal(doc.has('(jogging && #Gerund)'), false, 'here+tags kept - boolean')
 
-//   t.end()
-// })
+  t.end()
+})
 
 test('replace-case-param', function (t) {
   let doc = nlp('Spencer is very cool.')

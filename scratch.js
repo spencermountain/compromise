@@ -9,8 +9,7 @@ let txt = ''
 
 // txt = `spencer's cool and Dr. Miller and his pal Joe`
 
-let doc = nlp('Spencer is very cool.')
-doc.match('spencer').replaceWith((m) => {
-  return 'foo'
-})
+const doc = nlp('walk the plank')
+doc.replace('walk the [.]', 'eat the $0')
 doc.debug()
+console.log(doc.text())

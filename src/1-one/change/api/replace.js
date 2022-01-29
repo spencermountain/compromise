@@ -4,9 +4,22 @@ const titleCase = function (str) {
   return str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())
 }
 
+const replaceByFn = function (main, fn) {
+  main.freeze()
+  main.forEach(m => {
+    m.repair()
+    let out = fn(m)
+    m.replaceWith(out)
+  })
+  return main
+}
+
 fns.replaceWith = function (input, keep = {}) {
   let ptrs = this.fullPointer
   let main = this
+  if (typeof input === 'function') {
+    return replaceByFn(main, input)
+  }
   let original = this.update(ptrs)
   original.freeze()
   let oldTags = (original.docs[0] || []).map(term => Array.from(term.tags))

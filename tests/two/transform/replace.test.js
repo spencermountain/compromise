@@ -21,7 +21,6 @@ test('replace-basic :', function (t) {
   t.end()
 })
 
-
 test('replace-sub :', function (t) {
   const doc = nlp('walk the plank')
   doc.replace('walk the [.]', 'eat the $0')
@@ -134,15 +133,36 @@ test('replace-with-function', function (t) {
 
 test('replace-case-param', function (t) {
   let doc = nlp('Spencer is very cool.')
-  doc.match('spencer').replaceWith('jogging')
-  t.equal(doc.text(), 'Jogging is very cool.', here + here + 'case kept - default')
+  doc.match('spencer').replaceWith('jogging', { case: true })
+  t.equal(doc.text(), 'Jogging is very cool.', here + here + 'case kept ')
 
   doc = nlp('spencer is very cool.')
-  doc.match('spencer').replaceWith('jogging') // Jogging?
+  doc.match('spencer').replaceWith('jogging', { case: false }) // Jogging?
   t.equal(doc.text(), 'jogging is very cool.', here + here + 'lowsercase kept - default')
 
-  // doc = nlp('Spencer is very cool.')
-  // doc.match('spencer').replaceWith('jogging', { keepCase: false })
-  // t.equal(doc.text(), 'jogging is very cool.', 'dont-keep')
+  doc = nlp('Spencer is very cool.')
+  doc.match('spencer').replaceWith('jogging', { case: false })
+  t.equal(doc.text(), 'jogging is very cool.', 'dont-keep')
+  t.end()
+})
+
+
+test('replace-repair', function (t) {
+  let doc = nlp('the cat and the dog')
+  doc.replace('#Noun', 'house')
+  t.equal(doc.text(), 'the house and the house', here + 'repair-one-one')
+
+
+  doc = nlp('the cat and the dog')
+  doc.replace('the #Noun', 'the house')
+  t.equal(doc.text(), 'the house and the house', here + 'repair-two-two')
+
+  doc = nlp('the cat and the dog')
+  doc.replace('#Noun', 'cool house')
+  t.equal(doc.text(), 'the cool house and the cool house', here + 'repair-one-two')
+
+  doc = nlp('the cat and the dog')
+  doc.replace('the #Noun', 'house')
+  t.equal(doc.text(), 'house and house', here + 'repair-two-one')
   t.end()
 })

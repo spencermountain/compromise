@@ -2,20 +2,24 @@ const fns = {}
 
 fns.replaceWith = function (input, keep = {}) {
   let ptrs = this.fullPointer
+  let main = this
   let original = this.update(ptrs)
+  original.freeze()
   let oldTags = (original.docs[0] || []).map(term => Array.from(term.tags))
   // slide this in
-  this.insertAfter(input)
-  this.match(original) //todo: fix me December '21
+  main.insertAfter(input)
+  original.repair()
+  // original.debug()
   // delete the original terms
   // are we replacing part of a contraction?
-  if (original.has('@hasContraction')) {
-    let more = this.growLeft('@hasContraction+').growRight('@hasContraction+')
+  if (original.has('@hasContraction') && main.contractions) {
+    let more = main.growLeft('@hasContraction+').growRight('@hasContraction+')
     more.contractions().expand()
   }
-  this.delete(original)
+  //science.
+  main.delete(original)
   // what should we return?
-  let m = this.toView(ptrs).compute(['index', 'lexicon', 'preTagger'])
+  let m = main.toView(ptrs).compute(['index', 'lexicon', 'preTagger'])
   // replace any old tags
   if (keep.tags) {
     m.terms().forEach((term, i) => {

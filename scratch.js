@@ -26,10 +26,10 @@ let txt = ''
 // txt = `there were the walks`
 // txt = `Favorite place in Tampa`
 
-txt = `Pursuing a successful career, along with the usual social and financial advantages, will be easier this year`
-txt = `all the days since december were awful`
-txt = `there were the walks`
-txt = `one day after next`
+// txt = `Pursuing a successful career, along with the usual social and financial advantages, will be easier this year`
+// txt = `all the days since december were awful`
+// txt = `there were the walks`
+// txt = `one day after next`
 
 // txt = `for 8 years now`
 // txt = `took 76 years to finish`
@@ -40,15 +40,19 @@ txt = `one day after next`
 // txt = `begin a year-long stay `
 // txt = `The gostak distims the doshes.`
 
-// txt = `said Dr. Miller and his pal Joe`
-// txt = `Jim bought himself a book`
-// let doc = nlp(txt).debug()
+// txt = `spencer's cool and Dr. Miller and his pal Joe`
+
+let doc = nlp('he walked')
+let m = doc.match('walked')
+m.replace('foo')
+doc.all().debug()
+
+// doc.verbs().toInfinitive()
+// console.log(doc.text() + '|')
+// let m = nlp('the dog sat').freeze().insertBefore('and')
 // doc.people().replaceWith('██████████')
 
 
-txt = `i've exercised four to five days per week.`
-let doc = nlp(txt).compute('root')
-doc.lookup(['john lennon', 'exercise', 'four to five'], { form: 'root' }).debug()
 // doc.redact({})
 // doc.debug()
 // console.log(doc.json({ root: true }))

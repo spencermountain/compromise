@@ -54,6 +54,10 @@ const methods = {
   repair: function () {
     let ptrs = []
     let document = this.document
+    if (this.ptrs && this.ptrs[0] && !this.ptrs[0][3]) {
+      console.warn('Compromise: .repair() called before .freeze()')//eslint-disable-line
+      return this
+    }
     this.ptrs.forEach(ptr => {
       let [n, i, end, ids] = ptr
       ids = ids || []

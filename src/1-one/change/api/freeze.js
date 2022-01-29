@@ -14,7 +14,7 @@ const methods = {
     return this
   },
   // make it fast again
-  unfreeze: function () {
+  unFreeze: function () {
     let pointer = this.fullPointer
     pointer = pointer.map((a, n) => {
       return a.slice(0, 3)
@@ -23,19 +23,10 @@ const methods = {
     delete this.frozen
     return this
   },
-  // fix a potentially-broken match
-  repair: function () {
-    let ptrs = []
-    let document = this.document
-    this.ptrs.forEach(ptr => {
-      let [n, i, end, ids] = ptr
-      let terms = document[n].slice(i, end)
-      if (looksOk(terms, ids)) {
-        ptrs.push(ptr)
-        return
-      }
-    })
-    return this
-  }
+  // helper method for freeze-state
+  isFrozen: function () {
+    return Boolean(this.fullPointer[0] && this.fullPointer[0][3])
+  },
+
 }
 export default methods

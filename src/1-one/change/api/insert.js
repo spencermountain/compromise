@@ -1,5 +1,5 @@
 import { cleanAppend, cleanPrepend } from './lib/insert.js'
-
+import uuid from '../compute/uuid.js'
 // are we inserting inside a contraction?
 // expand it first
 const expand = function (m) {
@@ -10,6 +10,13 @@ const expand = function (m) {
 }
 
 const isArray = (arr) => Object.prototype.toString.call(arr) === '[object Array]'
+
+const addIds = function (terms) {
+  terms.forEach((term, i) => {
+    term.uuid = uuid(0, i)
+  })
+  return terms
+}
 
 const getTerms = function (input, world) {
   const { methods } = world
@@ -33,11 +40,15 @@ const insert = function (input, view, prepend) {
   // insert words at end of each doc
   let ptrs = view.fullPointer
   let selfPtrs = view.fullPointer
-  ptrs.forEach((ptr, i) => {
+  // view.freeze()
+  view.forEach((m, i) => {
+    // m.repair()
+    let ptr = m.fullPointer[0]
     let [n] = ptr
     // add-in the words
     let home = document[n]
     let terms = getTerms(input, world)
+    terms = addIds(terms)
     if (prepend) {
       expand(view.update([ptr]).firstTerm())
       cleanPrepend(home, ptr, terms, document)
@@ -45,10 +56,13 @@ const insert = function (input, view, prepend) {
       expand(view.update([ptr]).lastTerm())
       cleanAppend(home, ptr, terms, document)
     }
+    // 'unfreeze it'
+    // ptr = ptr.slice(0, 3)
     // change self backwards by len
     selfPtrs[i] = ptr
     // extend the pointer
     ptr[2] += terms.length
+    ptrs[i] = ptr
   })
   // convert them to whole sentences
   // ptrs = ptrs.map(a => [a[0]])

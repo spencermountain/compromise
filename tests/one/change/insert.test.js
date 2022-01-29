@@ -124,3 +124,22 @@ test('insert doc :', function (t) {
   t.end()
 })
 
+test('insert repair :', function (t) {
+  let doc = nlp(`foo middle foo`)
+  doc.match('foo+').insertAfter('bar')
+  t.equal(doc.text(), 'foo bar middle foo bar', 'insert-repair-1')
+
+  doc = nlp(`foo foo middle foo`)
+  doc.match('foo+').insertAfter('bar')
+  t.equal(doc.text(), 'foo foo bar middle foo bar', 'insert-repair-2')
+
+  doc = nlp(`foo foo middle foo foo`)
+  doc.match('foo+').insertAfter('bar')
+  t.equal(doc.text(), 'foo foo bar middle foo foo bar', 'insert-repair-3')
+
+  doc = nlp(`before foo middle foo foo after foo`)
+  doc.match('foo+').insertAfter('bar')
+  t.equal(doc.text(), 'before foo bar middle foo foof bar after foo bar', 'insert-repair-4')
+  t.end()
+})
+

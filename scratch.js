@@ -14,8 +14,6 @@ let txt = ''
 // doc.debug()
 
 
-let r = nlp(`he is cool.`)
-r.contract()
-console.log(r.text())
-console.log(r.text('normal'))
-console.log(r.text('implicit'))
+let doc = nlp(`“Fun” and stuff`).debug()
+// console.log(doc.json()[0].terms)
+console.log(doc.text('normal'))

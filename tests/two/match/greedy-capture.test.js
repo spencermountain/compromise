@@ -45,13 +45,13 @@ test('issue-654: greedy capture', function (t) {
 
 test('test greedy min/max', function (t) {
   let doc = nlp('hello John, Lisa, Fred').match('#FirstName{3,6}')
-  t.equal(doc.text(), 'John Lisa Fred', 'min met')
+  t.equal(doc.text(), 'John, Lisa, Fred', 'min met')
 
   doc = nlp('hello John, Lisa, Fred').match('#FirstName{4,6}')
   t.equal(doc.found, false, 'min not met')
 
   doc = nlp('hello John, Lisa, Fred').match('#FirstName{1,2}')
-  t.equal(doc.eq(0).text(), 'John Lisa', 'max-match')
+  t.equal(doc.eq(0).text(), 'John, Lisa', 'max-match')
   t.equal(doc.eq(1).text(), 'Fred', 'max-over-run')
   t.end()
 })

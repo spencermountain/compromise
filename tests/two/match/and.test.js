@@ -18,19 +18,19 @@ test('and-match', function (t) {
 
 test('and-match-more', function (t) {
   let doc = nlp('toronto and montreal. Sydney and Paris.')
-  let m = doc.match('(#Place && .)')
+  let m = doc.match('(#ProperNoun && .)')
   t.equal(m.length, 4, here + 'found all four')
 
-  m = doc.match('(#Place && /e/)')
-  t.equal(m.out(), 'montreal Sydney', here + 'found e words')
+  m = doc.match('(#ProperNoun && /e/)')
+  t.equal(m.out(), 'montreal. Sydney', here + 'found e words')
 
-  m = doc.match('(#Place && !#Verb)')
+  m = doc.match('(#ProperNoun && !#Verb)')
   t.equal(m.length, 4, here + 'and not')
 
-  m = doc.match('(#Place && #Verb)')
+  m = doc.match('(#ProperNoun && #Verb)')
   t.equal(m.length, 0, here + 'no and')
 
-  m = doc.match('(#Place && #Noun && * && .{1,3})')
+  m = doc.match('(#ProperNoun && #Noun && * && .{1,3})')
   t.equal(m.length, 4, here + 'four towns')
 
   t.end()
@@ -38,13 +38,13 @@ test('and-match-more', function (t) {
 
 test('and-match-multi', function (t) {
   let doc = nlp('toronto and montreal. Sydney and Paris.')
-  let m = doc.match('(#Place and && toronto .)')
+  let m = doc.match('(#ProperNoun and && toronto .)')
   t.equal(m.out(), 'toronto and', here + 'found one multi')
 
-  m = doc.match('(#Place and && toronto)')
+  m = doc.match('(#ProperNoun and && toronto)')
   t.equal(m.out(), 'toronto and', here + 'use longest match')
 
-  m = doc.match('(#Place and montreal && toronto)')
+  m = doc.match('(#ProperNoun and montreal && toronto)')
   t.equal(m.out(), 'toronto and montreal.', here + 'use longest match 2')
   t.end()
 })

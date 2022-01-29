@@ -1,6 +1,7 @@
 import splice from './_splice.js'
 import apostropheS from './apostrophe-s.js'
 import apostropheD from './apostrophe-d.js'
+import apostropheT from './apostrophe-t.js'
 import isPossessive from './isPossessive.js'
 
 const byApostrophe = /'/
@@ -15,6 +16,8 @@ const reTag = function (terms, view) {
 const byEnd = {
   // how'd
   d: (terms, i) => apostropheD(terms, i),
+  // we ain't
+  t: (terms, i) => apostropheT(terms, i),
   // bob's
   s: (terms, i, world) => {
     // [bob's house] vs [bob's cool]

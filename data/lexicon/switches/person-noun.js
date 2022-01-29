@@ -78,6 +78,5 @@ export default [
   'violet',
   'wang',
 
-
 ]
 

@@ -153,7 +153,7 @@ export default [
   'oslo',
   'ottawa',
   'palermo',
-  // 'paris',
+  'paris',
   'patras',
   'perth',
   'petah tikva',

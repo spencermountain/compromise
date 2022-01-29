@@ -14,7 +14,6 @@ export default [
 
   'darwin',
   'hamilton',
-  'paris',
   'alexandria',
   'houston',
   'kobe',

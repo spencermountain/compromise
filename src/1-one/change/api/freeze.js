@@ -25,9 +25,8 @@ const methods = {
   },
   // helper method for freeze-state
   isFrozen: function () {
-    return Boolean(this.fullPointer[0] && this.fullPointer[0][3])
-  },
-
+    return Boolean(this.ptrs && this.ptrs[0] && this.ptrs[0][3])
+  }
 }
 // aliases
 methods.unfreeze = methods.unFreeze

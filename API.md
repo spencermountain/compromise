@@ -75,6 +75,7 @@
 * .concat()
 * .freeze()
 * .unfreeze()
+* .isFrozen()
 * .repai()
 
 

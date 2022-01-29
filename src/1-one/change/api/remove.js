@@ -87,13 +87,16 @@ const methods = {
       })
       return ptr
     })
+
     // remove any now-empty pointers
     ptrs = ptrs.filter((ptr, i) => {
       const len = ptr[2] - ptr[1]
       if (len <= 0) {
         // adjust downstream pointers
         for (let x = i + 1; x < ptrs.length; x += 1) {
-          ptrs[x][0] -= 1
+          ptrs.filter(a => a[0] === x).forEach(a => {
+            a[0] -= 1
+          })
         }
         return false
       }

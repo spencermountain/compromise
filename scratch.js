@@ -9,6 +9,6 @@ let txt = ''
 
 // txt = `spencer's cool and Dr. Miller and his pal Joe`
 
-let doc = nlp('i am george and i live in Paris.')
-doc = doc.replace('i am [#Person+] and i live in [.]', '$0 is from $1')
+let doc = nlp('the cat and the dog')
+doc.replace('#Noun', 'house')
 doc.debug()

@@ -108,7 +108,7 @@ test('insert-multi :', function (t) {
   let doc = nlp('the boy and the girl. girl girl')
   let m = doc.match('(boy|girl)')
   m.insertAfter('cat')
-  t.equal(doc.eq(0).text(), 'the boy cat and the girl cat', here + 'insert multi')
+  t.equal(doc.eq(0).text(), 'the boy cat and the girl cat.', here + 'insert multi')
   t.equal(doc.eq(1).text(), 'girl cat girl cat', here + 'insert consecutive')
   t.end()
 })
@@ -139,7 +139,7 @@ test('insert repair :', function (t) {
 
   doc = nlp(`before foo middle foo foo after foo`)
   doc.match('foo+').insertAfter('bar')
-  t.equal(doc.text(), 'before foo bar middle foo foof bar after foo bar', 'insert-repair-4')
+  t.equal(doc.text(), 'before foo bar middle foo foo bar after foo bar', 'insert-repair-4')
   t.end()
 })
 

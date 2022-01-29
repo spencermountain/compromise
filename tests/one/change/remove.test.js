@@ -212,3 +212,34 @@ test('remove-quality-check', function (t) {
 
   t.end()
 })
+
+test('remove-bug-1', function (t) {
+  let m = nlp('one two three. foo.')
+  m = m.splitOn('two')
+  t.equal(m.docs.length, 4, 'four-parts')
+  t.equal(m.ptrs.length, 4, 'four-ptrs')
+  m.match('three').remove()
+  t.equal(m.docs.length, 3, 'now-three-parts')
+  t.equal(m.ptrs.length, 3, 'now-three-ptrs')
+  t.end()
+})
+
+// test('remove-self-keep-splits', function (t) {
+//   let m = nlp('one two three. four.')
+//   m = m.terms()
+//   // [one, two, three, four]
+//   m = m.match('three').remove()
+//   // [one, two, four]
+//   t.deepEqual(m.out('array'), ['one', 'two.', 'four'])
+//   t.end()
+// })
+
+test('remove-keep-splits', function (t) {
+  let m = nlp('one two three. four.')
+  m = m.terms()
+  // [one, two, three, four]
+  m = m.remove('three')
+  // [one, two, four]
+  t.deepEqual(m.out('array'), ['one', 'two.', 'four.'], 'keep-splits')
+  t.end()
+})

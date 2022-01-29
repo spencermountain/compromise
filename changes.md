@@ -80,6 +80,14 @@ match(['foo', 'far'])
 ### Date parsing
 - **[change]** .json() date metadata has moved-around
 
+### Replace wildcards
+```js
+let doc = nlp('i am george and i live in France.')
+doc.replace('i am [#Person+] and i live in [.]', '$0 is from $1')
+doc.text()
+// 'george is from France'
+```
+
 
 ### Main
 - **[breaking]** - drop `.parent()` and `.parents()` chain - (use `.all()` instead)

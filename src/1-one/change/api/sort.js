@@ -2,10 +2,26 @@ import methods from './lib/_sort.js'
 // aliases
 const seqNames = new Set(['index', 'sequence', 'seq', 'sequential', 'chron', 'chronological'])
 const freqNames = new Set(['freq', 'frequency', 'topk', 'repeats'])
+const alphaNames = new Set(['alpha', 'alphabetical'])
+
+// support function as parameter
+const customSort = function (view, fn) {
+  let ptrs = view.fullPointer
+  let all = []
+  ptrs.forEach((ptr, i) => {
+    all.push(view.update([ptr]))
+  })
+  let none = view.none()
+  //! not working yet
+  return none.concat(all.sort(fn))
+}
 
 /** re-arrange the order of the matches (in place) */
 const sort = function (input) {
   let { docs, pointer } = this
+  if (typeof input === 'function') {
+    return customSort(this, input)
+  }
   input = input || 'alpha'
   let ptrs = pointer || docs.map((_d, n) => [n])
   let arr = docs.map((terms, n) => {
@@ -16,10 +32,15 @@ const sort = function (input) {
       pointer: ptrs[n],
     }
   })
-  // // 'chronological' sorting
+  // 'chronological' sorting
   if (seqNames.has(input)) {
     input = 'sequential'
   }
+  // alphabetical sorting
+  if (alphaNames.has(input)) {
+    input = 'alpha'
+  }
+  // sort by frequency
   if (freqNames.has(input)) {
     arr = methods.byFreq(arr)
     return this.update(arr.map(o => o.pointer))

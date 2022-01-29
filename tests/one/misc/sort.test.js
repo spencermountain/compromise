@@ -18,7 +18,7 @@ test('sortSequential:', function (t) {
   r = r.split('@hasComma')
   r = r.sort('alphabetical')
   r = r.sort('seq')
-  const want = ['John xoo', 'John fredman', 'John davis']
+  const want = ['John xoo,', 'John fredman,', 'John davis']
   t.deepEqual(r.out('array'), want, here + 'sort-chron')
   t.end()
 })
@@ -29,7 +29,7 @@ test('reverse:', function (t) {
   r = r.split('@hasComma')
   r = r.sort('alphabetical')
   r = r.reverse()
-  const want = ['John xoo', 'John fredman', 'John davis']
+  const want = ['John xoo,', 'John fredman,', 'John davis']
   t.deepEqual(r.out('array'), want, here + 'alpha-reverse')
   t.end()
 })

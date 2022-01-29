@@ -35,15 +35,13 @@ const wordCount = (a, b) => {
 
 /** count the # of terms in each match */
 const sequential = (a, b) => {
-  let left = a.pointer.join('')
-  let right = b.pointer.join('')
-  if (left < right) {
+  if (a[0] < b[0]) {
     return 1
   }
-  if (left > right) {
+  if (a[0] > b[0]) {
     return -1
   }
-  return 0
+  return a[1] > b[1] ? 1 : -1
 }
 
 /** sort by # of duplicates in the document*/

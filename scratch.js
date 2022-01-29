@@ -13,7 +13,9 @@ let txt = ''
 // doc.replace('#Noun', 'house')
 // doc.debug()
 
-
-let doc = nlp(`“Fun” and stuff`).debug()
-// console.log(doc.json()[0].terms)
-console.log(doc.text('normal'))
+const str = 'John xoo, John fredman, John davis'
+let r = nlp(str)
+r = r.split('@hasComma')
+// r = r.sort('alpha')
+r = r.sort('seq')
+r.debug()

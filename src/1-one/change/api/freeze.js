@@ -29,4 +29,6 @@ const methods = {
   },
 
 }
+// aliases
+methods.unfreeze = methods.unFreeze
 export default methods

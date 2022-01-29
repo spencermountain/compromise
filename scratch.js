@@ -9,7 +9,6 @@ let txt = ''
 
 // txt = `spencer's cool and Dr. Miller and his pal Joe`
 
-const doc = nlp('walk the plank')
-doc.replace('walk the [.]', 'eat the $0')
+let doc = nlp('i am george and i live in Paris.')
+doc = doc.replace('i am [#Person+] and i live in [.]', '$0 is from $1')
 doc.debug()
-console.log(doc.text())

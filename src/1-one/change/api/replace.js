@@ -1,9 +1,11 @@
+const dollarStub = /\$[0-9a-z]+/g
 const fns = {}
 
 const titleCase = function (str) {
   return str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())
 }
 
+// doc.replace('foo', (m)=>{})
 const replaceByFn = function (main, fn) {
   main.freeze()
   main.forEach(m => {
@@ -11,7 +13,24 @@ const replaceByFn = function (main, fn) {
     let out = fn(m)
     m.replaceWith(out)
   })
+  main.unfreeze()
   return main
+}
+
+// support 'foo $0' replacements
+const subDollarSign = function (input, main) {
+  if (typeof input !== 'string') {
+    return input
+  }
+  let groups = main.groups()
+  input = input.replace(dollarStub, (a, b, c) => {
+    let num = a.replace(/\$/, '')
+    if (groups.hasOwnProperty(num)) {
+      return groups[num].text()
+    }
+    return a
+  })
+  return input
 }
 
 fns.replaceWith = function (input, keep = {}) {
@@ -20,6 +39,9 @@ fns.replaceWith = function (input, keep = {}) {
   if (typeof input === 'function') {
     return replaceByFn(main, input)
   }
+  // support 'foo $0' replacements
+  input = subDollarSign(input, main)
+
   let original = this.update(ptrs)
   original.freeze()
   let oldTags = (original.docs[0] || []).map(term => Array.from(term.tags))

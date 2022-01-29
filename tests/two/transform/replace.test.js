@@ -21,13 +21,6 @@ test('replace-basic :', function (t) {
   t.end()
 })
 
-test('replace-sub :', function (t) {
-  const doc = nlp('walk the plank')
-  doc.replace('walk the [.]', 'eat the $0')
-  t.equal(doc.text(), 'eat the plank', here + '$0')
-
-  t.end()
-})
 
 
 test('match-replace :', function (t) {

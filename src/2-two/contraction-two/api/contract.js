@@ -12,19 +12,18 @@ const setContraction = function (m, suffix) {
       return
     }
   }
-  // set them as implict
-  terms.forEach(t => {
-    t.implicit = t.normal
-  })
-  // perform the contraction
+  // set first word as full text
+  terms[0].implicit = terms[0].normal
   terms[0].text += suffix
+  terms[0].normal += suffix
   // clean-up the others
   terms.slice(1).forEach(t => {
+    t.implicit = t.normal
     t.text = ''
+    t.normal = ''
   })
   for (let i = 0; i < terms.length - 1; i++) {
-    const t = terms[i]
-    t.post = t.post.replace(/ /, '')
+    terms[i].post = terms[i].post.replace(/ /, '')
   }
 }
 

@@ -56,13 +56,14 @@ class View {
     let pointers = ptrs || docs.map((_d, n) => [n])
     // do we need to repair it, first?
     return pointers.map(a => {
-      a = a.slice(0) //clone it
-      a[1] = a[1] || 0
-      a[2] = a[2] || (document[a[0]] || []).length
-      if (a[3]) {
-        a[3] = a[3]//frozen id
+      let [n, start, end, id] = a
+      start = start || 0
+      end = end || (document[n] || []).length
+      //add frozen id, for good-measure
+      if (document[n] && document[n][start]) {
+        id = id || document[n][start].id
       }
-      return a
+      return [n, start, end, id]
     })
   }
   // create a new View, from this one

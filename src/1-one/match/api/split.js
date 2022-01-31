@@ -15,6 +15,14 @@ const getDoc = (reg, view, group) => {
   return m
 }
 
+const addIds = function (ptr, view) {
+  let [n, start] = ptr
+  if (view.document[n] && view.document[n][start]) {
+    ptr[3] = ptr[3] || view.document[n][start].id
+  }
+  return ptr
+}
+
 const methods = {}
 // [before], [match], [after]
 methods.splitOn = function (m, group) {
@@ -29,6 +37,7 @@ methods.splitOn = function (m, group) {
     res.push(o.after)
   })
   res = res.filter(p => p)
+  res = res.map(p => addIds(p, this))
   return this.update(res)
 }
 
@@ -49,6 +58,7 @@ methods.splitBefore = function (m, group) {
     }
   })
   res = res.filter(p => p)
+  res = res.map(p => addIds(p, this))
   return this.update(res)
 }
 
@@ -69,6 +79,7 @@ methods.splitAfter = function (m, group) {
     res.push(o.after)
   })
   res = res.filter(p => p)
+  res = res.map(p => addIds(p, this))
   return this.update(res)
 }
 methods.split = methods.splitAfter

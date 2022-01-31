@@ -32,11 +32,13 @@ txt = `Dr. Miller and his pal Joe`
 // let doc = nlp('buy')
 // console.log(doc.verbs().conjugate())
 
-let doc = nlp(`extra. match.`)
-let m = doc.match('match')
-doc.remove('extra')
-doc.remove(m)
-doc.debug()
+
+
+let m = nlp('one two three. foo.')
+m = m.splitOn('two')
+m.match('three').remove()
+// console.log(m.ptrs)
+m.debug()
 
 // let doc = nlp('once told me')
 // let m = doc.match('once')

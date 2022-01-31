@@ -37,9 +37,8 @@ const api = function (View) {
     }
 
     format(fmt) {
-      let found = this.freeze()
+      let found = this
       let res = found.map(m => {
-        m.repair()
         let obj = parseDates(m, this.opts)[0] || {}
         if (obj.start) {
           let start = obj.start.d

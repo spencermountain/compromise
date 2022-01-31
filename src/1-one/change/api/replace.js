@@ -7,13 +7,10 @@ const titleCase = function (str) {
 
 // doc.replace('foo', (m)=>{})
 const replaceByFn = function (main, fn) {
-  // main.freeze()
   main.forEach(m => {
-    // m.repair()
     let out = fn(m)
     m.replaceWith(out)
   })
-  // main.unfreeze()
   return main
 }
 

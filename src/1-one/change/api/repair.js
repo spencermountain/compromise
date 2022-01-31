@@ -52,31 +52,31 @@ const lookFor = function (ids, document, n) {
 const methods = {
   // fix a potentially-broken match
   repair: function () {
-    let ptrs = []
-    let document = this.document
-    if (this.ptrs && this.ptrs[0] && !this.ptrs[0][3]) {
-      console.warn('Compromise: .repair() called before .freeze()')//eslint-disable-line
-      return this
-    }
-    this.ptrs.forEach(ptr => {
-      let [n, i, end, ids] = ptr
-      ids = ids || []
-      let terms = (document[n] || []).slice(i, end)
-      // we still okay?
-      if (looksOk(terms, ids)) {
-        ptrs.push(ptr)
-      } else {
-        // look-around for a fix
-        let found = lookFor(ids, document, n)
-        if (found) {
-          ptrs.push(found)
-        }
-        //so, drop this match
-      }
-    })
-    this.ptrs = ptrs
-    this.frozen = false
-    this.freeze()
+    // let ptrs = []
+    // let document = this.document
+    // if (this.ptrs && this.ptrs[0] && !this.ptrs[0][3]) {
+    //   console.warn('Compromise: .repair() called before .freeze()')//eslint-disable-line
+    //   return this
+    // }
+    // this.ptrs.forEach(ptr => {
+    //   let [n, i, end, ids] = ptr
+    //   ids = ids || []
+    //   let terms = (document[n] || []).slice(i, end)
+    //   // we still okay?
+    //   if (looksOk(terms, ids)) {
+    //     ptrs.push(ptr)
+    //   } else {
+    //     // look-around for a fix
+    //     let found = lookFor(ids, document, n)
+    //     if (found) {
+    //       ptrs.push(found)
+    //     }
+    //     //so, drop this match
+    //   }
+    // })
+    // this.ptrs = ptrs
+    // this.frozen = false
+    // this.freeze()
     return this
   }
 }

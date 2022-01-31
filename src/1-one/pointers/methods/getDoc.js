@@ -45,11 +45,12 @@ const getDoc = function (pointer, document) {
         let len = end - start
         terms = document[wild[0]].slice(wild[1], wild[1] + len)
       }
+    } else {
+      terms = terms.slice(start, end)
     }
     if (terms.length === 0) {
       return
     }
-    terms = terms.slice(start, end)
     if (start === end) {
       return
     }

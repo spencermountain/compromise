@@ -40,9 +40,7 @@ const insert = function (input, view, prepend) {
   // insert words at end of each doc
   let ptrs = view.fullPointer
   let selfPtrs = view.fullPointer
-  // view.freeze()
   view.forEach((m, i) => {
-    // m.repair()
     let ptr = m.fullPointer[0]
     let [n] = ptr
     // add-in the words
@@ -57,14 +55,17 @@ const insert = function (input, view, prepend) {
       cleanAppend(home, ptr, terms, document)
     }
     // harden the pointer
-    ptr[3] = document[n][ptr[1]].id
+    if (!document[n][ptr[1]]) {
+      console.log(ptr)
+    } else {
+      ptr[3] = document[n][ptr[1]].id
+    }
     // change self backwards by len
     selfPtrs[i] = ptr
     // extend the pointer
     ptr[2] += terms.length
     ptrs[i] = ptr
   })
-  // view.unFreeze()
   let doc = view.toView(ptrs)
   // shift our self pointer, if necessary
   view.ptrs = selfPtrs

@@ -46,9 +46,8 @@ const addMethod = function (View) {
 
     /** convert to numeric form like '8' or '8th' */
     toNumber() {
-      let m = this.if('#TextValue').freeze()
+      let m = this.if('#TextValue')
       m.forEach(val => {
-        val.repair()
         let obj = parse(val)
         if (obj.num === null) {
           return
@@ -62,9 +61,8 @@ const addMethod = function (View) {
     }
     /** add commas, or nicer formatting for numbers */
     toLocaleString() {
-      let m = this.freeze()
+      let m = this
       m.forEach((val) => {
-        val.repair()
         let obj = parse(val)
         if (obj.num === null) {
           return
@@ -77,12 +75,11 @@ const addMethod = function (View) {
     }
     /** convert to numeric form like 'eight' or 'eighth' */
     toText() {
-      let m = this.freeze()
+      let m = this
       let res = m.map(val => {
         if (val.has('#TextValue')) {
           return val
         }
-        val.repair()
         let obj = parse(val)
         if (obj.num === null) {
           return
@@ -97,7 +94,7 @@ const addMethod = function (View) {
     }
     /** convert ordinal to cardinal form, like 'eight', or '8' */
     toCardinal() {
-      let m = this.freeze()
+      let m = this
       let res = m.forEach(val => {
         if (!val.has('#Ordinal')) {
           return val
@@ -115,7 +112,7 @@ const addMethod = function (View) {
     }
     /** convert cardinal to ordinal form, like 'eighth', or '8th' */
     toOrdinal() {
-      let m = this.freeze()
+      let m = this
       let res = m.map(val => {
         if (val.has('#Ordinal')) {
           return val
@@ -169,9 +166,8 @@ const addMethod = function (View) {
       if (typeof n === 'string') {
         n = parse(n).num
       }
-      let m = this.freeze()
+      let m = this
       let res = m.map((val) => {
-        val.repair()
         let obj = parse(val)
         obj.num = n
         if (obj.num === null) {
@@ -197,9 +193,8 @@ const addMethod = function (View) {
       if (typeof n === 'string') {
         n = parse(n).num
       }
-      let m = this.freeze()
+      let m = this
       let res = m.map((val) => {
-        val.repair()
         let obj = parse(val)
         if (obj.num === null) {
           return

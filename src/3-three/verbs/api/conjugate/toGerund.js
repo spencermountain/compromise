@@ -8,12 +8,10 @@ const toGerund = function (vb, parsed) {
   if (vb.has('#Gerund')) {
     return vb
   }
-  root.freeze()
   let str = root.text('normal')
   str = verbToInfinitive(str, vb.model, getTense(root))
   let gerund = verbConjugate(str, vb.model).Gerund
   if (gerund) {
-    root.repair()
     vb.replace(root, gerund, keep)
   }
   // remove any auxiliary

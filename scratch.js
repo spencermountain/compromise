@@ -17,12 +17,19 @@ txt = `Dr. Miller and his pal Joe`
 // console.log(m)
 // m.debug()
 
+// let doc = nlp('five hundred fifty nine is more than fifty')
+// doc.values().toNumber()
+// doc.debug()
 
-let doc = nlp('it was 500')
-doc.replace('500', '500th')
-// doc.insertAfter('ooh')
-// doc.values().toOrdinal()
-doc.debug()
+
+let doc = nlp(`yeah. one extra two match here three`)
+let m = doc.match('match here')
+doc.remove('extra')
+doc.match(m).debug()
+// doc.debug()
+
+// let doc = nlp('buy')
+// console.log(doc.verbs().conjugate())
 
 // doc = nlp('once told me')
 // m = doc.match('once')

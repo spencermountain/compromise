@@ -49,7 +49,6 @@ test('all-to-text:', function (t) {
     const str = nlp(txt).values().toText().toCardinal().text()
     t.equal(str, 'one', here + txt + ' -> one')
   })
-
   arr = ['500', '500.0', '500th', 'five hundred', 'five hundredth']
   arr.forEach((txt) => {
     const str = nlp(txt).values().toText().toCardinal().text()

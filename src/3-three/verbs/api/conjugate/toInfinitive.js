@@ -5,11 +5,9 @@ const keep = { tags: true }
 const toInfinitive = function (vb, parsed) {
   const { verbToInfinitive } = vb.methods.two.transform
   const { root, auxiliary } = parsed
-  root.freeze()
   let str = root.text('normal')
   str = verbToInfinitive(str, vb.model, getTense(root))
   if (str) {
-    root.repair()
     vb.replace(root, str, keep)
   }
   // remove any auxiliary terms

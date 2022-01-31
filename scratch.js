@@ -25,6 +25,7 @@ txt = `Dr. Miller and his pal Joe`
 let doc = nlp(`yeah. one extra two match here three`)
 let m = doc.match('match here')
 doc.remove('extra')
+m.docs
 doc.match(m).debug()
 // doc.debug()
 

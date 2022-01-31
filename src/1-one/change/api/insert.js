@@ -56,7 +56,7 @@ const insert = function (input, view, prepend) {
     }
     // harden the pointer
     if (!document[n][ptr[1]]) {
-      console.log(ptr)
+      console.log('soft-pointer', ptr)
     } else {
       ptr[3] = document[n][ptr[1]].id
     }

@@ -21,12 +21,10 @@ const blindSweep = function (id, doc, n) {
   return null
 }
 
-
-
 /** return a subset of the document, from a pointer */
-const getDoc = function (pointer, document) {
+const getDoc = function (ptrs, document) {
   let doc = []
-  pointer.forEach(ptr => {
+  ptrs.forEach((ptr, i) => {
     if (!ptr) {
       return
     }
@@ -39,11 +37,13 @@ const getDoc = function (pointer, document) {
       end = terms.length
     }
     if (id && terms[start] && terms[start].id !== id) {
-      console.log('  repairing pointer...')
+      // console.log('  repairing pointer...')
       let wild = blindSweep(id, document, n)
       if (wild !== null) {
         let len = end - start
         terms = document[wild[0]].slice(wild[1], wild[1] + len)
+        // actually change the pointer
+        ptrs[i] = [wild[0], wild[1], wild[1] + len, terms[0].id]
       }
     } else {
       terms = terms.slice(start, end)

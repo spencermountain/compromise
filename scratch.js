@@ -22,21 +22,26 @@ txt = `Dr. Miller and his pal Joe`
 // doc.debug()
 
 
-let doc = nlp(`yeah. one extra two match here three`)
-let m = doc.match('match here')
-doc.remove('extra')
-m.docs
-doc.match(m).debug()
+// let doc = nlp(`yeah. one extra two match here three`)
+// let m = doc.match('match here')
+// doc.remove('extra')
+// m.docs
+// doc.match(m).debug()
 // doc.debug()
 
 // let doc = nlp('buy')
 // console.log(doc.verbs().conjugate())
 
-// doc = nlp('once told me')
-// m = doc.match('once')
+let doc = nlp(`extra. match.`)
+let m = doc.match('match')
+doc.remove('extra')
+doc.remove(m)
+doc.debug()
+
+// let doc = nlp('once told me')
+// let m = doc.match('once')
 // doc.insertBefore('somebody')
 // m.debug()
-// console.log(m)
-// 'somebody'
+// 'once'
 
 

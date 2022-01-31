@@ -36,7 +36,7 @@ const getDoc = function (ptrs, document) {
     if (end === undefined) {
       end = terms.length
     }
-    if (id && terms[start] && terms[start].id !== id) {
+    if (id && (!terms[start] || terms[start].id !== id)) {
       // console.log('  repairing pointer...')
       let wild = blindSweep(id, document, n)
       if (wild !== null) {

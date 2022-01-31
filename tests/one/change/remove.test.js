@@ -66,8 +66,8 @@ test('remove-self :', function (t) {
   const res = doc.match('foo').remove()
   const want = 'one two. one two. one two.'
   t.equal(doc.text(), want, here + 'this mutate self')
-  t.equal(res.text(), want, here + 'this return mutated')
-  t.equal(res.length, 3, here + 'match sentence length')
+  t.equal(res.text(), '', here + 'this return mutated')
+  t.equal(res.length, 0, here + 'match sentence length')
   t.equal(doc.length, 3, here + 'match original length')
   t.end()
 })

@@ -48,6 +48,17 @@ const pluckOut = function (document, nots) {
   return document
 }
 
+
+
+const removeSelf = function (m, view) {
+
+}
+const removePart = function (m, view) {
+
+}
+
+
+
 const methods = {
   /** */
   remove: function (reg) {
@@ -56,7 +67,7 @@ const methods = {
     //  - a. remove self, from full parent
     let self = this.all()
     let not = this
-    //  - b. remove a new match, from self
+    //  - b. remove a part, from self
     if (reg) {
       self = this
       not = this.match(reg)
@@ -107,7 +118,10 @@ const methods = {
     // mutate original
     self.ptrs = ptrs
     self.document = document
-    return self.toView(ptrs).compute('index') //return new document
+    if (reg) {
+      return self.toView(ptrs).compute('index') //return new document
+    }
+    return self.none()
   },
 }
 // aliases

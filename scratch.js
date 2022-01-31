@@ -7,15 +7,28 @@ import nlp from './src/three.js'
 
 let txt = ''
 
-// txt = `spencer's cool and Dr. Miller and his pal Joe`
+txt = `Dr. Miller and his pal Joe`
+// let doc = nlp(txt)
+// console.log(doc.document[0][3].id)
+// doc.ptrs = [[0, 3, 5, doc.document[0][3].id]]
+// console.log(doc)
+// console.log(doc.docs)
+// let m = doc.match('#Person+')//.debug()
+// console.log(m)
+// m.debug()
 
-// let doc = nlp('the cat and the dog')
-// doc.replace('#Noun', 'house')
-// doc.debug()
 
-const str = 'John xoo, John fredman, John davis'
-let r = nlp(str)
-r = r.split('@hasComma')
-// r = r.sort('alpha')
-r = r.sort('seq')
-r.debug()
+let doc = nlp('it was 500')
+doc.replace('500', '500th')
+// doc.insertAfter('ooh')
+// doc.values().toOrdinal()
+doc.debug()
+
+// doc = nlp('once told me')
+// m = doc.match('once')
+// doc.insertBefore('somebody')
+// m.debug()
+// console.log(m)
+// 'somebody'
+
+

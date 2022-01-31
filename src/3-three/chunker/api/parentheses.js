@@ -20,7 +20,7 @@ const find = function () {
         let end = findEnd(terms, i)
         if (end !== null) {
           let [n, start] = terms[i].index
-          ptrs.push([n, start, end + 1])
+          ptrs.push([n, start, end + 1, terms[i].id])
           i = end
         }
       }

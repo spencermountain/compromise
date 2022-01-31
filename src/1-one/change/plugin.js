@@ -3,5 +3,5 @@ import compute from './compute/index.js'
 
 export default {
   api,
-  compute
+  compute,
 }

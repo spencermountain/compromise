@@ -102,6 +102,8 @@ const methods = {
       }
       return true
     })
+    // strip hardened-pointers
+    ptrs = ptrs.map(ptr => ptr.slice(0, 3))
     // mutate original
     self.ptrs = ptrs
     self.document = document

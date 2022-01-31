@@ -7,13 +7,13 @@ const titleCase = function (str) {
 
 // doc.replace('foo', (m)=>{})
 const replaceByFn = function (main, fn) {
-  main.freeze()
+  // main.freeze()
   main.forEach(m => {
-    m.repair()
+    // m.repair()
     let out = fn(m)
     m.replaceWith(out)
   })
-  main.unfreeze()
+  // main.unfreeze()
   return main
 }
 
@@ -43,7 +43,9 @@ fns.replaceWith = function (input, keep = {}) {
   input = subDollarSign(input, main)
 
   let original = this.update(ptrs)
-  original.freeze()
+  // soften-up pointer
+  ptrs = ptrs.map(ptr => ptr.slice(0, 3))
+  // original.freeze()
   let oldTags = (original.docs[0] || []).map(term => Array.from(term.tags))
   // slide this in
   main.insertAfter(input)

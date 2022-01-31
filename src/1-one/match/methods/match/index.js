@@ -77,6 +77,11 @@ const runMatch = function (docs, todo, cache) {
   }
   // grab the requested group
   results = getGroup(results, group)
+  // add ids to pointers
+  results.ptrs.forEach(ptr => {
+    let [n, start] = ptr
+    ptr.push(docs[n][start].id)
+  })
   return results
 }
 

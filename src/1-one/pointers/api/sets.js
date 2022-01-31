@@ -1,7 +1,16 @@
-// import { getUnion, getIntersection, getDifference } from '../methods/lib/index.js'
-
 const getDoc = (m, view) => {
   return typeof m === 'string' ? view.match(m) : m
+}
+
+// 'harden' our json pointers, again
+const addIds = function (ptrs, docs) {
+  return ptrs.map(ptr => {
+    let [n, start] = ptr
+    if (docs[n][start]) {
+      ptr.push(docs[n][start].id)
+    }
+    return ptr
+  })
 }
 
 const methods = {}
@@ -11,6 +20,7 @@ methods.union = function (m) {
   const { getUnion } = this.methods.one
   m = getDoc(m, this)
   let ptrs = getUnion(this.fullPointer, m.fullPointer)
+  ptrs = addIds(ptrs, this.document)
   return this.toView(ptrs)
 }
 methods.and = methods.union
@@ -20,6 +30,7 @@ methods.intersection = function (m) {
   const { getIntersection } = this.methods.one
   m = getDoc(m, this)
   let ptrs = getIntersection(this.fullPointer, m.fullPointer)
+  ptrs = addIds(ptrs, this.document)
   return this.toView(ptrs)
 }
 
@@ -28,6 +39,7 @@ methods.difference = function (m) {
   const { getDifference } = this.methods.one
   m = getDoc(m, this)
   let ptrs = getDifference(this.fullPointer, m.fullPointer)
+  ptrs = addIds(ptrs, this.document)
   return this.toView(ptrs)
 }
 methods.not = methods.difference
@@ -37,6 +49,7 @@ methods.complement = function () {
   const { getDifference } = this.methods.one
   let doc = this.all()
   let ptrs = getDifference(doc.fullPointer, this.fullPointer)
+  ptrs = addIds(ptrs, this.document)
   return this.toView(ptrs)
 }
 
@@ -47,6 +60,7 @@ methods.settle = function () {
   ptrs.forEach(ptr => {
     ptrs = getUnion(ptrs, [ptr])
   })
+  ptrs = addIds(ptrs, this.document)
   return this.update(ptrs)
 }
 

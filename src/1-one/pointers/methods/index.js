@@ -3,7 +3,6 @@ import getDifference from './lib/difference.js'
 import getIntersection from './lib/intersection.js'
 import getUnion from './lib/union.js'
 import splitAll from './lib/split.js'
-import pointerFromTerms from './pointerFromTerms.js'
 import getDoc from './getDoc.js'
 
 // flat list of terms from nested document
@@ -27,6 +26,5 @@ export default {
     indexN,
     doesOverlap,
     splitAll,
-    pointerFromTerms,
   },
 }

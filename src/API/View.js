@@ -60,7 +60,7 @@ class View {
       a[1] = a[1] || 0
       a[2] = a[2] || (document[a[0]] || []).length
       if (a[3]) {
-        a[3] = a[3]//frozen pointer
+        a[3] = a[3]//frozen id
       }
       return a
     })

@@ -2,15 +2,15 @@
 const methods = {
   // allow re-use of this view, after a mutation
   freeze: function () {
-    this.compute('uuid')
-    let docs = this.docs
-    let pointer = this.fullPointer
-    pointer = pointer.map((a, n) => {
-      a[3] = docs[n].map(t => t.uuid)
-      return a
-    })
-    this.ptrs = pointer
-    this.frozen = true
+    // this.compute('id')
+    // let docs = this.docs
+    // let pointer = this.fullPointer
+    // pointer = pointer.map((a, n) => {
+    //   a[3] = docs[n].map(t => t.id)
+    //   return a
+    // })
+    // this.ptrs = pointer
+    // this.frozen = true
     return this
   },
   // make it fast again

@@ -13,7 +13,7 @@ const isArray = (arr) => Object.prototype.toString.call(arr) === '[object Array]
 
 const addIds = function (terms) {
   terms.forEach((term, i) => {
-    term.uuid = uuid(0, i)
+    term.id = uuid(term)
   })
   return terms
 }
@@ -40,9 +40,9 @@ const insert = function (input, view, prepend) {
   // insert words at end of each doc
   let ptrs = view.fullPointer
   let selfPtrs = view.fullPointer
-  view.freeze()
+  // view.freeze()
   view.forEach((m, i) => {
-    m.repair()
+    // m.repair()
     let ptr = m.fullPointer[0]
     let [n] = ptr
     // add-in the words
@@ -56,13 +56,15 @@ const insert = function (input, view, prepend) {
       expand(view.update([ptr]).lastTerm())
       cleanAppend(home, ptr, terms, document)
     }
+    // harden the pointer
+    ptr[3] = document[n][ptr[1]].id
     // change self backwards by len
     selfPtrs[i] = ptr
     // extend the pointer
     ptr[2] += terms.length
     ptrs[i] = ptr
   })
-  view.unFreeze()
+  // view.unFreeze()
   let doc = view.toView(ptrs)
   // shift our self pointer, if necessary
   view.ptrs = selfPtrs

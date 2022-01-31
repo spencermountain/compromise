@@ -19,7 +19,7 @@ const scanWords = function (terms, trie, opts) {
         let len = arr[o]
         let term = terms[i - len + 1]
         let [n, start] = term.index
-        results.push([n, start, start + len])
+        results.push([n, start, start + len, term.id])
       }
     }
   }

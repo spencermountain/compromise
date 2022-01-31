@@ -35,7 +35,8 @@ const pad3 = (str) => {
   return str.length < 3 ? '0' + str : str
 }
 
-const toId = function (n, i) {
+const toId = function (term) {
+  let [n, i] = term.index || [0, 0]
   var now = new Date().getTime() - start;
   now = parseInt(now, 10)
 
@@ -63,7 +64,7 @@ const toId = function (n, i) {
   if (id.length !== 9) {
     console.error('id !9 ' + id)
   }
-  return id.toUpperCase()
+  return term.normal + '|' + id.toUpperCase()
 }
 
 export default toId

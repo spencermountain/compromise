@@ -4,7 +4,7 @@ const looksOk = function (terms, ids) {
   if (terms.length !== ids.length) {
     return false
   }
-  return terms.every((term, n) => term.uuid === ids[n])
+  return terms.every((term, n) => term.id === ids[n])
 }
 
 // sweep-around looking for our term uuid
@@ -12,14 +12,14 @@ const findStart = function (id, doc, n) {
   for (let i = 0; i < max; i += 1) {
     // look up a sentence
     if (doc[n - i]) {
-      let index = doc[n - i].findIndex(term => term.uuid === id)
+      let index = doc[n - i].findIndex(term => term.id === id)
       if (index !== -1) {
         return [n - i, index]
       }
     }
     // look down a sentence
     if (doc[n + i]) {
-      let index = doc[n + i].findIndex(term => term.uuid === id)
+      let index = doc[n + i].findIndex(term => term.id === id)
       if (index !== -1) {
         return [n + i, index]
       }
@@ -37,7 +37,7 @@ const lookFor = function (ids, document, n) {
   // look for how-long we can make it
   for (let i = 0; i < ids.length; i += 1) {
     let term = document[start[0]][start[1] + i]
-    if (term.uuid === ids[i]) {
+    if (term.id === ids[i]) {
       terms.push(term)
     } else {
       break

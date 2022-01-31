@@ -1,3 +1,27 @@
+const max = 4
+
+// sweep-around looking for our term uuid
+const blindSweep = function (id, doc, n) {
+  for (let i = 0; i < max; i += 1) {
+    // look up a sentence
+    if (doc[n - i]) {
+      let index = doc[n - i].findIndex(term => term.id === id)
+      if (index !== -1) {
+        return [n - i, index]
+      }
+    }
+    // look down a sentence
+    if (doc[n + i]) {
+      let index = doc[n + i].findIndex(term => term.id === id)
+      if (index !== -1) {
+        return [n + i, index]
+      }
+    }
+  }
+  return null
+}
+
+
 
 /** return a subset of the document, from a pointer */
 const getDoc = function (pointer, document) {
@@ -6,7 +30,7 @@ const getDoc = function (pointer, document) {
     if (!ptr) {
       return
     }
-    let [n, start, end] = ptr //parsePointer(ptr)
+    let [n, start, end, id] = ptr //parsePointer(ptr)
     let terms = document[n] || []
     if (start === undefined) {
       start = 0
@@ -14,10 +38,23 @@ const getDoc = function (pointer, document) {
     if (end === undefined) {
       end = terms.length
     }
-    terms = terms.slice(start, end)
-    if (terms.length > 0) {
-      doc.push(terms)
+    if (id && terms[start] && terms[start].id !== id) {
+      console.log('  repairing pointer...')
+      let wild = blindSweep(id, document, n)
+      if (wild !== null) {
+        let len = end - start
+        terms = document[wild[0]].slice(wild[1], wild[1] + len)
+      }
     }
+    if (terms.length === 0) {
+      return
+    }
+    terms = terms.slice(start, end)
+    if (start === end) {
+      return
+    }
+    // otherwise, looks good!
+    doc.push(terms)
   })
   return doc
 }

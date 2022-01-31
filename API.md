@@ -45,7 +45,7 @@
 
 
 ### Change
-* .compute('uuid')
+* .compute('id')
 * .toLowerCase()
 * .toUpperCase()
 * .toTitleCase()

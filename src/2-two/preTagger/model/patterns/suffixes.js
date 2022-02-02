@@ -63,6 +63,8 @@ export default [
     ect: Inf,
     ict: Inf,
     uct: Inf,
+    ide: Inf,
+    ign: Inf,
   },
   {
     //4-letter
@@ -131,6 +133,11 @@ export default [
     gist: Sing,
     note: Sing,
     ract: Inf,
+    duce: Inf,
+    pose: Inf,
+    eive: Inf,
+    lyze: Inf,
+    lyse: Inf,
   },
   {
     //5-letter
@@ -171,6 +178,7 @@ export default [
     alist: Sing,
     olist: Sing,
     icist: Sing,
+    ounce: Inf,
   },
   {
     //6-letter

@@ -36,6 +36,16 @@ const tagBySuffix = function (terms, i, model) {
         return true
       }
     }
+    // Infinitive suffix + 's' can be PresentTense
+    // if (term.normal[term.normal.length - 1] === 's') {
+    //   let str = term.normal.replace(/s$/, '')
+    //   if (suffixLoop(str, model.two.suffixPatterns) === 'Infinitive') {
+    //     console.log(str)
+    //     fastTag(term, 'PresentTense', '2-implied-present')
+    //     term.confidence = 0.5
+    //     return true
+    //   }
+    // }
   }
   return null
 }

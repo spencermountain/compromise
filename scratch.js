@@ -9,7 +9,7 @@ nlp.verbose('tagger')
 
 
 */
-let txt = "contradict"
+let txt = "broaden"
 // txt = 'documentary'
 // txt = `Dr. Miller and his pal Joe`
 let doc = nlp(txt)

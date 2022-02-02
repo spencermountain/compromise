@@ -1,6 +1,7 @@
 import fastTag from '../_fastTag.js'
 import fillTag from './_fillTags.js'
 
+
 const nounFallback = function (terms, i, model) {
   if (terms[i].tags.size === 0) {
     fastTag(terms[i], 'Noun', '3-[fallback]')

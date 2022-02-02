@@ -432,6 +432,14 @@ let arr = [
   ["rearrange", "#Verb"],
   ["prearrange", "#Verb"],
   ["decommission", "#Verb"],
+  ["depreciable", "#Adjective"],
+  ["soluble", "#Adjective"],
+  ["viable", "#Adjective"],
+  ["valuable", "#Adjective"],
+  ["disproportionate", "#Adjective"],
+  ["plentiful", "#Adjective"],
+  ["unfamiliar", "#Adjective"],
+  ["victory", "#Noun"],
 
 ]
 test('match:', function (t) {

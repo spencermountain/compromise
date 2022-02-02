@@ -757,4 +757,26 @@ export default [
   "ripen",
   "dampen",
   "sharpen",
+  "express",  // Adjective
+  "appoint",  // Noun
+  "reinforce",  // Noun
+  "relieve",  // Noun
+  "preclude",  // Noun
+  "elicit",
+  "ensue",  // Noun
+  "uncover",  // Noun
+  "predetermine",  // Noun
+  "appraise",  // Noun
+  "elapse",  // Noun
+  "shut",  // Noun
+  "pinpoint",
+  "reclaim",
+  "refuel",
+  "liquefy",
+  "coexist",
+  "graze",
+  "infuse",
+  "amaze",
+  "resurface",  // Noun
+  "defuse",  // Noun
 ]

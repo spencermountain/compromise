@@ -197,6 +197,30 @@ export default [
   'vexing',
   'working',
   'yielding',
-  'disgusting'
+  'disgusting',
+
+
+  "convincing",
+  "degrading",
+  "overriding",
+  "guiding",
+  "groundbreaking",
+  "willing",
+  "unwilling",
+  "forthcoming",
+  "overlapping",
+  "inspiring",
+  "increasing",
+  "incorporating",
+  "debilitating",
+  "devastating",
+  "dissenting",
+  "lasting",
+  "offsetting",
+  "contributing",
+  "revolving",
+  "owing",
+  "outlying",
+
 ]
 

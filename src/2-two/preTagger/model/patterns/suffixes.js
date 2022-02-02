@@ -65,6 +65,9 @@ export default [
     uct: Inf,
     ide: Inf,
     ign: Inf,
+    ect: Inf,
+    ful: Adj,
+    bal: Adj,
   },
   {
     //4-letter
@@ -138,6 +141,8 @@ export default [
     eive: Inf,
     lyze: Inf,
     lyse: Inf,
+    iant: Adj,
+    nary: Adj,
   },
   {
     //5-letter
@@ -179,6 +184,13 @@ export default [
     olist: Sing,
     icist: Sing,
     ounce: Inf,
+    iable: Adj,
+    borne: Adj,
+    gnant: Adj,
+    inant: Adj,
+    igent: Adj,
+    atory: Adj,
+    ctory: Adj,
   },
   {
     //6-letter

@@ -60,6 +60,9 @@ export default [
     ken: Prt,//awoken
     ven: Prt,//woven
     ten: Prt,//brighten
+    ect: Inf,
+    ict: Inf,
+    uct: Inf,
   },
   {
     //4-letter
@@ -127,6 +130,7 @@ export default [
     uist: Sing,
     gist: Sing,
     note: Sing,
+    ract: Inf,
   },
   {
     //5-letter

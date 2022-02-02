@@ -9,11 +9,11 @@ nlp.verbose('tagger')
 
 
 */
-let txt = "lipid"
+let txt = "contradict"
 // txt = 'documentary'
 // txt = `Dr. Miller and his pal Joe`
 let doc = nlp(txt)
-doc.redact().debug()
+doc.debug()
 // console.log(doc.document[0][3].id)
 // doc.ptrs = [[0, 3, 5, doc.document[0][3].id]]
 // console.log(doc)

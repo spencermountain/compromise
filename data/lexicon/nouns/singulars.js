@@ -374,4 +374,6 @@ export default [
   "concrete",
   "breakthrough",
   "bout",
+  "picnic",
+  "wafer",
 ]

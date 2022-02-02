@@ -207,6 +207,7 @@ export default [
   "horseradish",  // Adjective
   "expertise",  // Infinitive
   "merchandise",  // Verb
+
   "demise",  // Infinitive
   "anise",  // Infinitive
   "treatise",  // Infinitive

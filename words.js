@@ -1,205 +1,442 @@
 import nlp from './src/three.js'
+
 let obj = {
-  misc: [
-    "time",  // Verb
-    "level",  // Verb
-    "cost",  // Verb
-    "question",  // Verb
-    "type",  // Verb
-    "factor",  // Infinitive
-    "rule",  // Verb
-    "billion",  // Multiple
-    "reason",  // Verb
-    "today",  // Date
-    "man",  // Infinitive
-    "trend",  // Verb
-    "hand",  // Verb
-    "crop",  // Verb
-    "phone",  // Verb
-    "profile",  // Infinitive
-    "kind",  // Adjective
-    "side",  // Verb
-    "premium",  // Adjective
-    "discipline",  // Infinitive
-    "rat",  // Verb
-    "dividend",  // Verb
-    "athlete",  // Infinitive
-    "m",  // Expression
-    "milk",  // Verb
-    "trip",  // Verb
-    "skin",  // Infinitive
-    "thousand",  // Multiple
-    "thanks",  // PresentTense
-    "shock",  // Verb
-    "array",  // Infinitive
-    "defect",  // Verb
-    "thought",  // PastTense
-    "hundred",  // Multiple
-    "bottle",  // Verb
-    "juice",  // Verb
-    "mouth",  // Verb
-    "scholar",  // Adjective
-    "bit",  // PastTense
-    "synergy",  // Adjective
-    "allergy",  // Adjective
-    "whale",  // Infinitive
-    "grid",  // Adjective
-    "breakthrough",  // Adjective
-    "eleven",  // TextValue
-    "fun",  // Adjective
-    "lipid",  // Adjective
-    "telescope",  // Infinitive
-    "monkey",  // Infinitive
-    "indices",  // Verb
-    "stipend",  // Verb
-    "accused",  // PastTense
-    "communiqué",  // Adjective
-    "tone",  // Verb
-    "fourteen",  // TextValue
-    "traps",  // Verb
-    "shot",  // PastTense
-    "forty",  // TextValue
-    "disincentive",  // Adjective
-    "motive",  // Adjective
-    "biopsy",  // Adjective
-    "keynote",  // Infinitive
-    "stays",  // Verb
-    "caucus",  // Infinitive
-    "gamete",  // Infinitive
-    "tribute",  // Verb
-    "plenty",  // Determiner
-    "handful",  // Adjective
-    "fringe",  // Adjective
-    "seabed",  // PastTense
-    "headline",  // Infinitive
-    "autopsy",  // Adjective
-    "clergy",  // Adjective
-    "clearer",  // Comparative
-    "nous",  // Adjective
-    "stranger",  // Comparative
-    "trough",  // Adjective
-    "capsular",  // Adjective
-    "handheld",  // PastTense
-    "chromatid",  // Adjective
-    "résumé",  // Verb
-    "creosote",  // Infinitive
-    "gelatin",  // Gerund
-    "spoke",  // PastTense
-    "banknote",  // Infinitive
-    "crucible",  // Adjective
-    "gluten",  // Participle
-    "prostitute",  // Infinitive
-    "premises",  // PresentTense
-    "thinner",  // Comparative
-    "bout",  // Preposition
-    "misc",  // Abbreviation
-    "reformer",  // Adjective
-    "anecdote",  // Infinitive
-    "five",  // TextValue
-    "antifreeze",  // Infinitive
-    "lethargy",  // Adjective
-    "ninety",  // TextValue
-    "necropsy",  // Adjective
-    "valueadded",  // PastTense
-    "metallurgy",  // Adjective
-    "spat",  // PastTense
-    "antidote",  // Infinitive
-    "overcoat",  // Infinitive
-    "vanilla",  // Adjective
-    "trimmer",  // Comparative
-    "exogamy",  // Adjective
-    "seventy",  // TextValue
-    "biotin",  // Gerund
-    "eyelid",  // Adjective
-    "eighty",  // TextValue
-    "jute",  // Infinitive
-    "isoniazid",  // Adjective
-    "jetty",  // Adjective
-    "goodbye",  // Expression
-    "phospholipid",  // Adjective
-    "amends",  // Verb
-    "tungsten",  // Participle
-    "chose",  // PastTense
-    "début",  // Infinitive
-    "disrepute",  // Infinitive
-    "twenty",  // TextValue
-    "sixty",  // TextValue
-    "uncompetitive",  // Adjective
-    "eight",  // TextValue
-    "videotaped",  // PastTense
-    "somatotropin",  // Gerund
-    "antihypertensive",  // Adjective
-    "chromatin",  // Gerund
-    "narcolepsy",  // Adjective
-    "couscous",  // Adjective
-    "exemplar",  // Adjective
-    "seedbed",  // PastTense
-    "teens",  // Verb
-    "escolar",  // Adjective
-    "ferritin",  // Gerund
-    "erythropoietin",  // Gerund
-    "headphones",  // PresentTense
-    "gonadotropin",  // Gerund
-    "moped",  // PastTense
-    "exposé",  // Infinitive
-    "aramid",  // Adjective
-    "flute",  // Infinitive
-    "enroute",  // Infinitive
-    "thirty",  // TextValue
-    "breakeven",  // Participle
-    "cellar",  // Adjective
-    "fifty",  // TextValue
-    "spirochete",  // Infinitive
-    "zygote",  // Infinitive
-    "maté",  // Infinitive
-    "overbroad",  // Adjective
-    "crossbones",  // PresentTense
-    "billionth",  // Multiple
-    "coyote",  // Infinitive
-    "mummy",  // Adjective
-    "greed",  // PastTense
-    "chitin",  // Gerund
-    "hotbed",  // PastTense
-    "two",  // TextValue
-    "unlit",  // PastTense
-    "spermatid",  // Adjective
-    "passthrough",  // Adjective
-    "somatostatin",  // Gerund
-    "platen",  // Participle
-    "honors",  // Verb
-    "reconvene",  // Infinitive
-    "pâté",  // Infinitive
-    "pinniped",  // PastTense
-    "yearend",  // Verb
-    "lupin",  // Gerund
-    "burglar",  // Adjective
-    "mandible",  // Adjective
-    "trillion",  // Multiple
-    "tummy",  // Adjective
-    "lit",  // PastTense
-    "chrysanthemum",  // Adjective
-    "underlay",  // PastTense
-    "puppy",  // Adjective
-    "sweepstakes",  // PresentTense
-    "riverbed",  // PastTense
-    "came",  // PastTense
-    "psyllid",  // Adjective
-    "autoroute",  // Infinitive
-    "headnote",  // Infinitive
-    "lat",  // Abbreviation
-    "featherbed",  // PastTense
-    "avens",  // Verb
-    "pairs",  // Verb
-    "effigy",  // Adjective
-    "generalist",  // Adjective
-    "pastoralist",  // Adjective
-    "naturalist",  // Adjective
+  b: [
+    "succumb",
+    "adsorb",
+    "disturb",
+    "dub",
+
+  ],
+  d: [
+    "imbedd",
+    "breastfeed",
+    "wield",
+    "disband",
+    "abscond",
+    "abound",
+    "prod",
+    "bombard",
+    "retard",
+    "discord",
+    "defraud",
+
+  ],
+  e: [
+    "deface",
+    "resurface",
+    "displace",
+    "misplace",
+    "interlace",
+    "outpace",
+    "embrace",
+    "retrace",
+    "deice",
+    "suffice",
+    "reprice",
+    "entice",
+    "refinance",
+    "videoconference",
+    "mince",
+    "denounce",
+    "renounce",
+    "pronounce",
+    "coerce",
+    "reinforce",
+    "acquiesce",
+    "coalesce",
+    "adduce",
+    "deduce",
+    "induce",
+    "reproduce",
+    "lade",
+    "abrade",
+    "dissuade",
+    "pervade",
+    "abide",
+    "coincide",
+    "confide",
+    "collide",
+    "subside",
+    "subdivide",
+    "decode",
+    "corrode",
+    "preclude",
+    "conclude",
+    "exclude",
+    "elude",
+    "allude",
+    "collude",
+    "intrude",
+    "protrude",
+    "extrude",
+    "disengage",
+    "repackage",
+    "envisage",
+    "fledge",
+    "dredge",
+    "abridge",
+    "dislodge",
+    "adjudge",
+    "prejudge",
+    "oblige",
+    "indulge",
+    "divulge",
+    "interchange",
+    "arrange",
+    "rearrange",
+    "prearrange",
+    "scavenge",
+    "expunge",
+    "enlarge",
+    "submerge",
+    "diverge",
+    "converge",
+    "forge",
+    "clothe",
+    "soothe",
+    "belie",
+    "untie",
+    "evoke",
+    "invoke",
+    "provoke",
+    "inhale",
+    "exhale",
+    "disable",
+    "tremble",
+    "disassemble",
+    "redouble",
+    "encircle",
+    "mishandle",
+    "rekindle",
+    "dwindle",
+    "baffle",
+    "stifle",
+    "juggle",
+    "smuggle",
+    "strangle",
+    "entangle",
+    "disentangle",
+    "commingle",
+    "refile",
+    "tackle",
+    "trample",
+    "oversample",
+    "grapple",
+    "cripple",
+    "topple",
+    "decouple",
+    "uncouple",
+    "entitle",
+    "disentitle",
+    "dismantle",
+    "startle",
+    "wrestle",
+    "rattle",
+    "belittle",
+    "reschedule",
+    "overrule",
+    "inflame",
+    "deplane",
+    "calcine",
+    "refine",
+    "predetermine",
+    "opine",
+    "condone",
+    "recordkeepe",
+    "peacekeepe",
+    "beware",
+    "backfire",
+    "aspire",
+    "transpire",
+    "inspire",
+    "conspire",
+    "acquire",
+    "reacquire",
+    "enquire",
+    "inquire",
+    "occure",
+    "procure",
+    "disfigure",
+    "injure",
+    "conjure",
+    "insure",
+    "reinsure",
+    "assure",
+    "reassure",
+    "denature",
+    "nurture",
+    "encase",
+    "decease",
+    "appease",
+    "degrease",
+    "tease",
+    "erase",
+    "rephrase",
+    "liaise",
+    "appraise",
+    "poise",
+    "cleanse",
+    "condense",
+    "dispense",
+    "foreclose",
+    "enclose",
+    "disclose",
+    "diagnose",
+    "juxtapose",
+    "impose",
+    "superimpose",
+    "compose",
+    "decompose",
+    "propose",
+    "oppose",
+    "presuppose",
+    "dispose",
+    "predispose",
+    "transpose",
+    "elapse",
+    "rehearse",
+    "immerse",
+    "disperse",
+    "intersperse",
+    "endorse",
+    "reimburse",
+    "disburse",
+    "refocuse",
+    "defuse",
+    "infuse",
+    "confuse",
+    "transfuse",
+    "espouse",
+    "arouse",
+    "analyse",
+    "paralyse",
+    "catalyse",
+    "hydrolyse",
+    "predate",
+    "elucidate",
+    "invalidate",
+    "consolidate",
+    "fluoridate",
+    "liquidate",
+    "backdate",
+    "inundate",
+    "outdate",
+    "amalgamate",
+    "decimate",
+    "automate",
+    "understate",
+    "overstate",
+    "typewrite",
+    "songwrite",
+    "denote",
+    "connote",
+    "imbue",
+    "subdue",
+    "prorogue",
+    "devalue",
+    "undervalue",
+    "discontinue",
+    "accrue",
+    "construe",
+    "misconstrue",
+    "ensue",
+    "cleave",
+    "bereave",
+    "behave",
+    "pave",
+    "engrave",
+    "relieve",
+    "aggrieve",
+    "retrieve",
+    "waive",
+    "deceive",
+    "conceive",
+    "preconceive",
+    "perceive",
+    "outlive",
+    "revive",
+    "calve",
+    "halve",
+    "delve",
+    "shelve",
+    "solve",
+    "absolve",
+    "dissolve",
+    "evolve",
+    "devolve",
+    "revolve",
+    "disprove",
+    "starve",
+    "conserve",
+    "amaze",
+    "braze",
+    "graze",
+    "analyze",
+    "paralyze",
+    "catalyze",
+    "hydrolyze",
+
+
+  ],
+  f: [
+    "debrief",
+    "sniff",
+    "handcuff",
+    "engulf",
+    "spoof",
+  ],
+  g: [
+    "debug",
+    "unplug",
+  ],
+  h: [
+    "preach",
+    "poach",
+    "encroach",
+    "detach",
+    "entrench",
+    "quench",
+    "relaunch",
+    "overarch",
+    "etch",
+    "encash",
+    "unleash",
+    "quash",
+    "dishwash",
+    "refresh",
+    "refurbish",
+    "overfish",
+    "abolish",
+    "demolish",
+    "accomplish",
+    "replenish",
+    "diminish",
+    "astonish",
+    "tarnish",
+    "furnish",
+    "punish",
+    "cherish",
+    "perish",
+    "impoverish",
+    "nourish",
+    "undernourish",
+    "languish",
+    "extinguish",
+    "relinquish",
+    "bequeath",
+    "unearth",
+
+  ],
+  k: [
+    "wreak",
+    "rulemak",
+    "steelmak",
+    "filmmak",
+    "decisionmak",
+    "policymak",
+    "hijack",
+    "traffick",
+    "mimick",
+    "restock",
+    "caulk",
+    "debunk",
+    "antismok",
+    "debark",
+    "embark",
+    "disembark",
+    "earmark",
+    "hardwork",
+    "rework",
+    "lurk",
+
   ],
 
 
+  n: [
+    "demean",
+    "broaden",
+    "sadden",
+    "widen",
+    "deafen",
+    "stiffen",
+    "toughen",
+    "lengthen",
+    "ripen",
+    "dampen",
+    "reopen",
+    "sharpen",
+    "align",
+    "realign",
+    "resign",
+    "undersign",
+    "countersign",
+    "impugn",
+    "entrain",
+    "restrain",
+    "examin",
+    "enjoin",
+    "condemn",
+    "burgeon",
+    "decommission",
+    "disillusion",
+    "recondition",
+    "munition",
+    "reposition",
+    "apportion",
+    "summon",
+    "environ",
+    "imprison",
+    "forewarn",
+    "discern",
+    "intern",
+    "adorn",
+    "adjourn",
+    "mourn",
+    "overturn",
+    "shun",
+    "spawn",
+    "drown",
+
+  ],
+
+  t: [
+    "overheat",
+    "maltreat",
+    "gat",
+    "replant",
+    "supplant",
+    "orient",
+    "reorient",
+    "disorient",
+    "augment",
+    "ferment",
+    "circumvent",
+    "reinvent",
+    "acquaint",
+    "pinpoint",
+    "appoint",
+    "reappoint",
+    "disappoint",
+    "underreport",
+    "misreport",
+    "infest",
+    "ingest",
+    "congest",
+    "preexist",
+    "coexist",
+    "crosscut",
+    "shut",
+    "rout",
+
+  ],
+
+
+
+
 }
-let pos = '#Noun'
-let key = 'misc'
+let pos = '#Verb'
+let key = 'y'
 let right = 0
 let wrong = 0
 obj[key].forEach(w => {

@@ -658,4 +658,5 @@ export default [
   'field',
   'mandate',
   'conglomerate',
+  'groom',
 ]

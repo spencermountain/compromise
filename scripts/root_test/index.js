@@ -1,7 +1,7 @@
-import words from '/Users/spencer/mountain/minimum-model/root-dictionary/noun.js'
+import words from '/Users/spencer/mountain/minimum-model/root-dictionary/verb.js'
 import nlp from '../../src/three.js'
 
-const pos = '#Noun'
+const pos = '#Verb'
 words.forEach(w => {
   let doc = nlp(w)
   if (!doc.has(pos)) {

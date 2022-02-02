@@ -104,4 +104,5 @@ export default [
   "token",
   "pet",
   "nagging",
+  "squat",
 ]

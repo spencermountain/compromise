@@ -4,8 +4,9 @@ import nlp from './src/three.js'
 let obj = {
 
 
-  // these are all verbs
+  // these are all nouns
   misc: [
+
 
   ]
 

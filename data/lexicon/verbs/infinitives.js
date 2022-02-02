@@ -777,6 +777,8 @@ export default [
   "graze",
   "infuse",
   "amaze",
-  "resurface",  // Noun
-  "defuse",  // Noun
+  "resurface",
+
+  "sublimate",
+  "animate",
 ]

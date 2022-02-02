@@ -59,4 +59,10 @@ export default [
   'express',
   'elicit',
   'fringe',
+  "consummate",
+  "defuse",
+  "wrought",
+  "counterfeit",
+  "alight",
+
 ]

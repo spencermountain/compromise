@@ -210,6 +210,7 @@ export default [
   "indefinite",
   "trite",
   "petite",
+  "exquisite",
   "en suite",
   "acute",
   "absolute",

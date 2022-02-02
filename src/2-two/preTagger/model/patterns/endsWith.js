@@ -87,7 +87,7 @@ export default {
   m: [
     [/.[^aeiou]ium$/, Sing, 'magnesium'],
     [/[^aeiou]ism$/, Sing, 'schism'],
-    [/^h*u*m+$/, Exp, 'hmm'],
+    [/^[hm]m+$/, Exp, 'hmm'],
     [/^\d+ ?[ap]m$/, 'Date', '3am'],
   ],
   n: [

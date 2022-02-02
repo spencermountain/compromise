@@ -48,7 +48,6 @@ export default [
   'hey',
   'hi',
   'hip hip hooray',
-  'hmm',
   'holy cow',
   'holy moly',
   'holy smokes',

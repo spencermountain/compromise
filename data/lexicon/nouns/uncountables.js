@@ -215,5 +215,7 @@ export default [
   "glycerin",
 
   "spite",
+  "overcrowding",
+  "troubleshooting",
 
 ]

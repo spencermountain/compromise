@@ -376,4 +376,16 @@ export default [
   "bout",
   "picnic",
   "wafer",
+
+  "waterbed",
+
+  "downside",
+  "upside",
+  "highrise",
+  "surrogate",
+  "vertebrate",
+  "invertebrate",
+  "opiate",
+
+  "luddite",
 ]

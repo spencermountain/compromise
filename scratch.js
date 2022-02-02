@@ -10,6 +10,7 @@ nlp.verbose('tagger')
 
 */
 let txt = "non plentiful"
+txt = "illiterate"
 // txt = 'documentary'
 // txt = `Dr. Miller and his pal Joe`
 let doc = nlp(txt)

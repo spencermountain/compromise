@@ -1,24 +1,11 @@
 import nlp from './src/three.js'
 
-const suffixSort = function (arr) {
-  const reverse = (str = '') => str.split('').reverse().join('')
-  return arr.sort((a, b) => {
-    a = reverse(a)
-    b = reverse(b)
-    if (a > b) {
-      return 1
-    } else if (a < b) {
-      return -1
-    }
-    return 0
-  })
-}
 
 let obj = {
 
 
+  // these are all verbs
   misc: [
-
 
   ]
 

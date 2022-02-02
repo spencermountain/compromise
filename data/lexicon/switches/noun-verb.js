@@ -535,7 +535,6 @@ export default [
   'spread',
   'sprinkle',
   'spruce',
-  'square',
   'stack',
   'stain',
   'stake',

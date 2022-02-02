@@ -96,9 +96,12 @@ export default [
   "variant",
   "watershed",
   "void",
-
-
-
-
-
+  "sound",
+  "subordinate",
+  "brute",
+  "undergraduate",
+  "total",
+  "token",
+  "pet",
+  "nagging",
 ]

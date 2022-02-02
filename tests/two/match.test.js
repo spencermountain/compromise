@@ -297,7 +297,48 @@ let arr = [
 
   // ambiguous 'her'
   [`I hit him hard`, '#Pronoun #Verb #Pronoun (#Adjective|#Adverb)'],
-  [`I hit her hard.`, '#Pronoun #Verb #Pronoun (#Adjective|#Adverb)']
+  [`I hit her hard.`, '#Pronoun #Verb #Pronoun (#Adjective|#Adverb)'],
+
+
+
+  ['ingredient', '#Noun'],
+  ['convent', '#Noun'],
+  ['incident', '#Noun'],
+  ['rodent', '#Noun'],
+  ['correspondent', '#Noun'],
+  ['descendent', '#Noun'],
+  ['incident', '#Noun'],
+  ['macronutrient', '#Noun'],
+  ['urgent', '#Adjective'],
+  ['asian', '#Adjective'],
+  ['belgian', '#Adjective'],
+  ['albanian', '#Adjective'],
+  ['rotarian', '#Noun'],
+  [`m`, '#Noun'],
+  [`mineralogy`, '#Noun'],
+  [`microsome`, '#Noun'],
+  [`postage`, '#Noun'],
+  [`agent`, '#Noun'],
+  [`alkaloid`, '#Noun'],
+  [`hierarchy`, '#Noun'],
+  [`anarchy`, '#Noun'],
+  [`psychopathy`, '#Noun'],
+  [`apathy`, '#Noun'],
+  [`horseradish`, '#Noun'],
+
+  ["expertise", '#Noun'],
+  ["premise", '#Noun'],
+  ["merchandise", '#Noun'],
+  ["demise", '#Noun'],
+  ["sunrise", '#Noun'],
+  ["anise", '#Noun'],
+  ["treatise", '#Noun'],
+  ["oligopoly", '#Noun'],
+  ["disassembly", '#Noun'],
+
+  // [``, '#Noun'],
+  // ['', '#Noun'],
+
 ]
 test('match:', function (t) {
   let res = []

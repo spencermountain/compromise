@@ -454,4 +454,6 @@ export default [
   'old school',
   'bronze',
   'equal',
+
+  'urgent'
 ]

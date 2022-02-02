@@ -52,6 +52,9 @@ export default [
     que: Adj,
     rol: Sing,
     sis: Sing,
+    ogy: Sing,
+    oid: Sing,
+    ian: Sing,
     zes: Pres,
     eld: Past,
     ken: Prt,//awoken
@@ -97,10 +100,13 @@ export default [
     sson: Last,
     tage: Inf,
     tion: Sing,
+    tage: Noun,
+    ique: Sing,
     tive: Adj,
     tors: Noun,
     vice: Sing,
     wned: Past,
+    gent: Sing,
   },
   {
     //5-letter
@@ -116,6 +122,7 @@ export default [
     marek: Last,
     nssen: Last,
     ology: Noun,
+    osome: Noun,
     ports: Plrl,
     rough: Adj,
     tches: Pres,
@@ -123,10 +130,15 @@ export default [
     tures: Plrl,
     wards: Avb,
     where: Avb,
+    archy: Noun,
+    pathy: Noun,
+    opoly: Noun,
+    embly: Noun,
   },
   {
     //6-letter
     auskas: Last,
+    parent: Sing,
     keeper: Actor,
     logist: Actor,
     teenth: 'Value',

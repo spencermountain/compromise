@@ -184,5 +184,33 @@ export default [
   'tyranny',
   'internet',
   'less',
-  'haste'
+  'haste',
+
+
+  'skin',
+  'greed',
+  'sweepstakes',
+  'gluten',
+  'premises',
+  'metallurgy',
+  'amends',
+  'tungsten',
+  'debut',
+  'disrepute',
+  'couscous',
+  'vanilla',
+
+  "honesty",  // Adjective
+  "dishonesty",  // Adjective
+  "dynasty",  // Adjective
+  "hashish",  // Adjective
+  "horseradish",  // Adjective
+  "expertise",  // Infinitive
+  "merchandise",  // Verb
+  "demise",  // Infinitive
+  "anise",  // Infinitive
+  "treatise",  // Infinitive
+  "aspirin",
+  "glycerin",
+
 ]

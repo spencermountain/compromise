@@ -194,7 +194,6 @@ export default [
   'fanny',
 
   'percentage',
-  'skin',
   'cheque',
   'shortage',
   'array',
@@ -225,21 +224,12 @@ export default [
   'trough',
   'gelatin',
   'crucible',
-  'gluten',
   'prostitute',
-  'premises',
   'bout',
   'reformer',
   'anecdote',
-  'metallurgy',
   'antidote',
-  'vanilla',
   'eyelid',
-  'amends',
-  'tungsten',
-  'debut',
-  'disrepute',
-  'couscous',
   'exemplar',
   'teen',
   'headphone',
@@ -248,7 +238,6 @@ export default [
   'cellar',
   'coyote',
   'mummy',
-  'greed',
   'hotbed',
   'pate', //páté
   'burglar',
@@ -256,8 +245,25 @@ export default [
   'tummy',
   'chrysanthemum',
   'puppy',
-  'sweepstakes',
   'riverbed',
   'effigy',
 
+  "cheque",
+  "plaque",
+  "torque",
+  "mosque",
+
+  "referent",
+  "deterrent",
+
+  "extent",  // Adjective
+  "intent",  // Adjective
+  "talent",  // Adjective
+  "discontent",  // Adjective
+
+  "premise",  // Infinitive
+  "sunrise",  // Infinitive
+
+  "panoply",  // Adverb
+  "firefly",  // Adverb
 ]

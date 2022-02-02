@@ -11,7 +11,9 @@ export default [
   'kent',
   'kirby',
   'mickey',
+  'finn',
 
+  // cities
   'darwin',
   'hamilton',
   'alexandria',
@@ -22,4 +24,11 @@ export default [
   'sydney',
   'victoria',
   'venus',
+  'samara',
+  'orlando',
+  // currencies
+  'nis',
+  'riel',
+  'euro',
+
 ]

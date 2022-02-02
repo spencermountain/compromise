@@ -4,8 +4,20 @@ import nlp from './src/three.js'
 let obj = {
 
 
-  // these are all nouns
+  // these are all Adjectives
   misc: [
+
+
+    "round",
+    "wound",
+
+
+    "tender",
+
+
+    "worst",
+
+    "hinny",
 
 
   ]

@@ -455,7 +455,6 @@ export default [
   'melo',
   'mendes',
   'mendez',
-  'mendoza',
   'mercier',
   'messi',
   'messier',

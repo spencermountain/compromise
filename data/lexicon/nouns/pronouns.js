@@ -15,7 +15,7 @@ export default [
   'il',
   'elle',
   'yourself',
-  "'em",
-  "he's",
-  "she's",
+  `'em`,
+  `he's`,
+  `she's`,
 ]

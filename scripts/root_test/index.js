@@ -1,4 +1,4 @@
-import words from '/Users/spencer/mountain/minimum-model/root-dictionary/adj-verb.js'
+import words from '/Users/spencer/mountain/minimum-model/root-dictionary/verb-noun.js'
 import nlp from '../../src/three.js'
 
 
@@ -17,7 +17,7 @@ const suffixSort = function (arr) {
 }
 
 let arr = []
-const pos = '#Noun'
+const pos = '#Adjective'
 words.forEach(w => {
   let doc = nlp(w)
   if (doc.has(pos)) {

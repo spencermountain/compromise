@@ -60,7 +60,7 @@ export default [
   'with',
   'within',
   'without',
-  "'o",
-  "a'",
-  "o'",
+  `'o`,
+  `a'`,
+  `o'`,
 ]

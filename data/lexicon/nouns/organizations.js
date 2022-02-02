@@ -272,14 +272,14 @@ export default [
   'ywca',
   // 'mercedes',
 
-  "applebee's",
-  "arby's",
-  "carl's jr",
-  "l'oreal",
-  "mac's milk",
-  "mcdonald's",
-  "quizno's",
-  "sainsbury's",
+  `applebee's`,
+  `arby's`,
+  `carl's jr`,
+  `l'oreal`,
+  `mac's milk`,
+  `mcdonald's`,
+  `quizno's`,
+  `sainsbury's`,
 
   //some bands
   'abba',
@@ -320,7 +320,7 @@ export default [
   'thin lizzy',
   'u2',
   'van halen',
-  "destiny's child",
+  `destiny's child`,
 
   // other groups
   'eurosceptics',

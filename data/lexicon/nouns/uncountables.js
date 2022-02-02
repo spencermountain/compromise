@@ -21,6 +21,7 @@ export default [
   'bread',
   'bunting',
   'butter',
+  'cad',
   'cards',
   'cash',
   'celcius',
@@ -200,22 +201,22 @@ export default [
   'couscous',
   'vanilla',
 
-  "honesty",  // Adjective
-  "dishonesty",  // Adjective
-  "dynasty",  // Adjective
-  "hashish",  // Adjective
-  "horseradish",  // Adjective
-  "expertise",  // Infinitive
-  "merchandise",  // Verb
+  'honesty',  // Adjective
+  'dishonesty',  // Adjective
+  'dynasty',  // Adjective
+  'hashish',  // Adjective
+  'horseradish',  // Adjective
+  'expertise',  // Infinitive
+  'merchandise',  // Verb
 
-  "demise",  // Infinitive
-  "anise",  // Infinitive
-  "treatise",  // Infinitive
-  "aspirin",
-  "glycerin",
+  'demise',  // Infinitive
+  'anise',  // Infinitive
+  'treatise',  // Infinitive
+  'aspirin',
+  'glycerin',
 
-  "spite",
-  "overcrowding",
-  "troubleshooting",
+  'spite',
+  'overcrowding',
+  'troubleshooting',
 
 ]

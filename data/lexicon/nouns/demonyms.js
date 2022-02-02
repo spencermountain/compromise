@@ -44,7 +44,6 @@ export default [
   'ethiopian',
   'european',
   'filipino',
-  'finn',
   'french',
   'gambian',
   'georgian',

@@ -120,5 +120,5 @@ export default [
   'yippee',
   'yuck',
   'yup',
-  "d'oh",
+  `d'oh`,
 ]

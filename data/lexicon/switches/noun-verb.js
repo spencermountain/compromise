@@ -656,4 +656,6 @@ export default [
   'zone',
   'buffer',
   'field',
+  'mandate',
+  'conglomerate',
 ]

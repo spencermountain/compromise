@@ -9,7 +9,8 @@ nlp.verbose('tagger')
 
 
 */
-let txt = 'veterinarian'
+let txt = "lipid"
+// txt = 'documentary'
 // txt = `Dr. Miller and his pal Joe`
 let doc = nlp(txt)
 doc.redact().debug()

@@ -95,6 +95,7 @@ export default [
   "variable",
   "variant",
   "watershed",
+  "void",
 
 
 

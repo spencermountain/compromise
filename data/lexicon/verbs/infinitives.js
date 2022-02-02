@@ -379,4 +379,7 @@ export default [
   "write",
   "seem",
   "appear",
+  "accommodate",
+  "validate",
+  "intimidate",
 ]

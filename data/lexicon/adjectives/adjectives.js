@@ -455,5 +455,6 @@ export default [
   'bronze',
   'equal',
 
-  'urgent'
+  'urgent',
+  'devoid'
 ]

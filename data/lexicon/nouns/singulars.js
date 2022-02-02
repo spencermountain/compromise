@@ -256,14 +256,122 @@ export default [
   "referent",
   "deterrent",
 
-  "extent",  // Adjective
-  "intent",  // Adjective
-  "talent",  // Adjective
-  "discontent",  // Adjective
+  "extent",
+  "intent",
+  "talent",
+  "discontent",
 
-  "premise",  // Infinitive
-  "sunrise",  // Infinitive
+  "premise",
+  "sunrise",
 
-  "panoply",  // Adverb
-  "firefly",  // Adverb
+  "panoply",
+  "firefly",
+
+  "material",
+  "denial",
+  "burial",
+  "tutorial",
+
+  "referral",
+  "deferral",
+  "mural",
+
+  "rebuttal",
+  "acquittal",
+  "petal",
+  "recital",
+  "pedestal",
+
+  "golfer",
+  "surfer",
+  "staffer",
+
+  "salary",
+  "vocabulary",
+  "dignitary",
+  "notary",
+  "burglary",
+  "granary",
+  "military",
+
+  "financier",
+  "photocopier",
+  "dossier",
+  "cashier",
+  "copier",
+  "skier",
+  "drier",
+  "métier",
+  "occupier",
+  "cahier",
+  "grenadier",
+
+  "waist",
+
+  "vegetable",
+  "timetable",
+  "turntable",
+  "syllable",
+  "respite",
+  "appetite",
+  "plebiscite",
+  "urbanite",
+  "rite",
+
+  "tactic",
+  "critic",
+  "characteristic",
+  "statistic",
+  "topic",
+  "ethic",
+  "fabric",
+  "garlic",
+  "rhetoric",
+  "colic",
+  "tunic",
+  "medic",
+  "cleric",
+
+
+  "rate",
+  "certificate",
+  "rebate",
+  "estate",
+  "template",
+  "prostate",
+  "nitrate",
+  "acetate",
+  "substrate",
+  "consulate",
+  "carbohydrate",
+  "doctorate",
+  "frigate",
+  "electorate",
+  "laureate",
+
+  "accrual",
+  "mammal",
+  "cereal",
+  "decal",
+  "ordeal",
+  "urinal",
+
+  "incident",
+  "rodent",
+  "ascent",
+  "coefficient",
+  "quotient",
+
+  "pharmacist",
+  "panellist",
+  "hygienist",
+  "buddhist",
+  "columnist",
+  "soloist",
+  "bicyclist",
+
+  "athlete",
+  "concrete",
+  "breakthrough",
+  "bout",
 ]

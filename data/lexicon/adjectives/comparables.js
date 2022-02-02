@@ -141,7 +141,6 @@ export default [
   'lowly',
   'loyal',
   'lucky',
-  'mean',
   'measly',
   'meaty',
   'meek',

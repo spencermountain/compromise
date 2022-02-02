@@ -46,7 +46,6 @@ export default [
   'problem',
   'priest',
   'purpose',
-  'question',
   'question mark',
   'room',
   // 'rose',
@@ -195,7 +194,6 @@ export default [
   'cheque',
   'shortage',
   'array',
-  'defect',
   'mouth',
   'scholar',
   'synergy',
@@ -330,7 +328,6 @@ export default [
   'cleric',
 
 
-  'rate',
   'certificate',
   'rebate',
   'estate',

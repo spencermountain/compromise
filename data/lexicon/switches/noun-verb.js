@@ -364,7 +364,6 @@ export default [
   'model',
   'monitor',
   'mop',
-  'mouth',
   'move',
   'murder',
   'name',

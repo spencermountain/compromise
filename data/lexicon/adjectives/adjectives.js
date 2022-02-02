@@ -7,6 +7,7 @@ export default [
   "magenta",
   "superb",
   "cardiac",
+
   // -ic
   "specific",
   "terrific",
@@ -22,7 +23,6 @@ export default [
   "gigantic",
   "frantic",
   "authentic",
-
   "ad hoc",
   "ahead",
   "widespread",
@@ -75,7 +75,6 @@ export default [
   "torpid",
   "languid",
 
-
   "behind",
   "blind",
   "beyond",
@@ -101,10 +100,10 @@ export default [
   "underage",
   "average",
   "awake",
-
-  // -le
   "upscale",
   "wholesale",
+
+  // -ble
   "able",
   "probable",
   "foreseeable",
@@ -115,6 +114,8 @@ export default [
   "soluble",
   "insoluble",
   "single",
+
+  // -ile
   "fragile",
   "worthwhile",
   "juvenile",
@@ -123,21 +124,20 @@ export default [
   "versatile",
   "fertile",
   "hostile",
+
   "whole",
   "multiple",
   "ample",
-
-
   "same",
   "supreme",
   "part-time",
-
-  // -ne
   "profane",
   "humane",
   "insane",
   "obscene",
   "serene",
+
+  // -ine
   "alkaline",
   "offline",
   "crystalline",
@@ -146,12 +146,10 @@ export default [
   "feminine",
   "pristine",
   "routine",
+
   "done",
   "autoimmune",
   "picayune",
-
-
-  // -re
   "aware",
   "macabre",
   "sincere",
@@ -160,8 +158,6 @@ export default [
   "bizarre",
   "premature",
   "immature",
-
-  // -se
   "obese",
   "precise",
   "concise",
@@ -204,12 +200,9 @@ export default [
   "inadequate",
   "private",
 
-  // -ete
   "obsolete",
   "incomplete",
   "discrete",
-
-  // -ite
   "recondite",
   "impolite",
   "finite",
@@ -218,22 +211,18 @@ export default [
   "trite",
   "petite",
   "en suite",
-
   "acute",
   "absolute",
   "resolute",
   "en route",
   "due",
   "unique",
-
-  // -ve
   "concave",
   "coercive",
   "conducive",
   "alive",
   "aggressive",
   "attractive",
-
   "above",
   "ablaze",
   "bronze",
@@ -270,9 +259,7 @@ export default [
   "knowing",
   "appetizing",
 
-
   "smug",
-
   // -ish
   "snobbish",
   "selfish",
@@ -282,7 +269,6 @@ export default [
   "squeamish",
   "loutish",
   "lush",
-
 
   "mammoth",
   "north",
@@ -321,6 +307,7 @@ export default [
   "rival",
   "royal",
 
+  // -el
   "rebel",
   "parallel",
   "civil",
@@ -376,7 +363,6 @@ export default [
   "proven",
   "frozen",
 
-
   "sovereign",
   "foreign",
   "benign",
@@ -421,7 +407,6 @@ export default [
   "outer",
   "over",
 
-
   "unfair",
   "junior",
   "inferior",
@@ -451,7 +436,6 @@ export default [
   "derelict",
   "distinct",
 
-
   "discreet",
   "soviet",
   "unmet",
@@ -463,13 +447,10 @@ export default [
   "overnight",
   "uptight",
   "overwrought",
-
-  // -it
   "illicit",
   "implicit",
   "explicit",
   "nonprofit",
-
   "difficult",
 
   // -ant
@@ -548,8 +529,6 @@ export default [
   "inert",
   "overt",
   "covert",
-
-  // -st
   "east",
   "least",
   "abreast",
@@ -565,7 +544,6 @@ export default [
   "most",
   "uttermost",
   "robust",
-
   "devout",
   "kaput",
   "next",

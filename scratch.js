@@ -5,10 +5,15 @@ import nlp from './src/three.js'
 
 // nlp.verbose('tagger')
 
-let txt = ''
+/*
 
-txt = `Dr. Miller and his pal Joe`
-// let doc = nlp(txt)
+
+*/
+
+// txt = `Dr. Miller and his pal Joe`
+txt = `m`
+let doc = nlp(txt)
+doc.redact().debug()
 // console.log(doc.document[0][3].id)
 // doc.ptrs = [[0, 3, 5, doc.document[0][3].id]]
 // console.log(doc)
@@ -34,11 +39,10 @@ txt = `Dr. Miller and his pal Joe`
 
 
 
-let m = nlp('one two three. foo.')
-m = m.splitOn('two')
-m.match('three').remove()
-// console.log(m.ptrs)
-m.debug()
+// let m = nlp('one two three. foo.')
+// m = m.splitOn('two')
+// m.match('three').remove()
+// m.debug()
 
 // let doc = nlp('once told me')
 // let m = doc.match('once')

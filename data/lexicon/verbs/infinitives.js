@@ -675,4 +675,12 @@ export default [
   'wrestle',
   'wring',
   'write',
+
+  // prefixes
+  'discard',
+  'realise',
+  'refocus',
+  'reboot',
+  'reheat',
+  'reload',
 ]

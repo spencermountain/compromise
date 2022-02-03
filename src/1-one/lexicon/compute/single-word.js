@@ -1,4 +1,5 @@
-const underOver = /^(under|over)-?.{3}/
+const prefix = /^(mis|re|un|dis|under|over)-?/
+const allowPrefix = new Set(['Infinitive', 'PastTense', 'Gerund', 'PresentTense', 'Adjective', 'Participle'])
 
 // tag any words in our lexicon
 const checkLexicon = function (terms, i, world) {
@@ -23,13 +24,16 @@ const checkLexicon = function (terms, i, world) {
       return true
     }
   }
-  // try removing a word-stem
-  if (underOver.test(word) === true) {
-    let stem = word.replace(/^(under|over)-?/, '')
-    if (lexicon.hasOwnProperty(stem)) {
-      let tag = lexicon[stem]
-      fastTag(t, tag, '1-lexicon-prefix')
-      return true
+  // prefixing for verbs/adjectives
+  if (prefix.test(word) === true) {
+    let stem = word.replace(prefix, '')
+    if (lexicon.hasOwnProperty(stem) && stem.length > 3) {
+      // only allow prefixes for verbs/adjectives
+      if (allowPrefix.has(lexicon[stem])) {
+        console.log('->', word, stem, lexicon[stem])
+        fastTag(t, lexicon[stem], '1-lexicon-prefix')
+        return true
+      }
     }
   }
   return null

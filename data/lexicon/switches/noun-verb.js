@@ -685,4 +685,8 @@ export default [
   'yield',
   'zip',
   'zone',
+
+  // prefixes
+  'dispatch',
+  'remark',
 ]

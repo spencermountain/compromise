@@ -95,6 +95,7 @@ export default [
   "inside",
   "outside",
   "avant garde",
+  "home made",
   "wee",
   "teenage",
   "underage",
@@ -605,6 +606,9 @@ export default [
   "sorry",
   "uppity",
   "guilty",
-  "woozy"
+  "woozy",
+
+  // prefixes
+  "recent",
 ]
 

@@ -441,6 +441,9 @@ let arr = [
   ["unfamiliar", "#Adjective"],
   ["victory", "#Noun"],
 
+  ["food and programs", "#Noun and #Noun"],
+  ["writes and programs", "#PresentTense and #PresentTense"],
+
 ]
 test('match:', function (t) {
   let res = []

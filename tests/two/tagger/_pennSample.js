@@ -3338,10 +3338,6 @@ export default [
     tags: 'NNP, NNP, NNP, CD, CD, NNP',
   },
   {
-    text: 'Historian John Stow dies: April 6, 1605 Sat / Wed.',
-    tags: 'JJ, NNP, NNP, VBZ, NNP, CD, CD, NNP, SYM, NNP',
-  },
-  {
     text: 'Upon the same day he conquered Darius, won a great victory at sea, & died the same day.',
     tags: 'IN, DT, JJ, NN, PRP, VBD, NNP, VBD, DT, JJ, NN, IN, NN, CC, VBD, DT, JJ, NN',
   },

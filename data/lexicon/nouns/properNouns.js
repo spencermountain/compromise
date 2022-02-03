@@ -12,6 +12,7 @@ export default [
   'kirby',
   'mickey',
   'finn',
+  'missy',
 
   // cities
   'darwin',

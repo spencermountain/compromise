@@ -2,6 +2,7 @@ import irregularPlurals from './irregulars/plurals.js'
 import { lexicon, variables } from './lexicon/index.js'
 import clues from './clues/index.js'
 import suffixPatterns from './patterns/suffixes.js'
+import prefixPatterns from './patterns/prefixes.js'
 import endsWith from './patterns/endsWith.js'
 import neighbours from './patterns/neighbours.js'
 import models from './models/index.js'
@@ -22,6 +23,7 @@ let model = {
     models,
 
     suffixPatterns,
+    prefixPatterns,
     endsWith,
     neighbours,
 

@@ -31,7 +31,7 @@ const checkLexicon = function (terms, i, world) {
     if (lexicon.hasOwnProperty(stem) && stem.length > 3) {
       // only allow prefixes for verbs/adjectives
       if (allowPrefix.has(lexicon[stem])) {
-        console.log('->', word, stem, lexicon[stem])
+        // console.log('->', word, stem, lexicon[stem])
         fastTag(t, lexicon[stem], '1-lexicon-prefix')
         return true
       }

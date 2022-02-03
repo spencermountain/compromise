@@ -5,6 +5,9 @@ import nlp from './src/three.js'
 
 nlp.verbose('tagger')
 
+
+
+
 /*
 
 
@@ -16,6 +19,15 @@ txt = "another fool to roast"
 txt = "There's holes everywhere"
 txt = "macronutrient"
 txt = "undue"
+txt = "semiskilled"
+txt = "antiwork"
+txt = "antiaircraft"
+txt = "micromanaged"
+txt = "kilos"
+txt = "autolytic"
+txt = "autocorrelatio"
+txt = "introvert"
+txt = "de-orients"
 // txt = `Dr. Miller and his pal Joe`
 let doc = nlp(txt)
 doc.debug()

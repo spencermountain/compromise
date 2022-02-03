@@ -1,8 +1,8 @@
 
 import checkCase from './2nd-pass/01-case.js'
 import checkSuffix from './2nd-pass/02-suffix.js'
-import checkPrefix from './2nd-pass/03-prefix.js'
-import checkRegex from './2nd-pass/04-regex.js'
+import checkRegex from './2nd-pass/03-regex.js'
+import checkPrefix from './2nd-pass/04-prefix.js'
 import checkYear from './2nd-pass/05-year.js'
 
 import fillTags from './3rd-pass/_fillTags.js'
@@ -13,7 +13,6 @@ import nounFallback from './3rd-pass/04-fallback.js'
 import variables from './3rd-pass/06-variables.js'
 import checkHyphen from './3rd-pass/05-prefixes.js'
 
-
 const second = {
   checkSuffix,
   checkRegex,
@@ -22,6 +21,7 @@ const second = {
   checkHyphen,
   checkYear,
 }
+
 const third = {
   checkAcronym,
   neighbours,
@@ -30,23 +30,18 @@ const third = {
   variables,
 }
 
-
-
 //
 // these methods don't care about word-neighbours
 const secondPass = function (terms, model) {
   for (let i = 0; i < terms.length; i += 1) {
     //  is it titlecased?
-    let found = second.checkCase(terms, i, model)
-
-    if (terms[i].tags.size === 0) {
-      // look at word ending
-      found = found || second.checkSuffix(terms, i, model)
-      // check for stem in lexicon
-      found = found || second.checkPrefix(terms, i, model)
-    }
+    second.checkCase(terms, i, model)
+    // look at word ending
+    second.checkSuffix(terms, i, model)
     // try look-like rules
     second.checkRegex(terms, i, model)
+    // check for recognized prefix, like 'micro-'
+    second.checkPrefix(terms, i, model)
     // turn '1993' into a year
     second.checkYear(terms, i, model)
   }

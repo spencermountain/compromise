@@ -619,5 +619,6 @@ export default [
   'underwater',
   'overseas',
   'undue',
+  'monochrome',
 ]
 

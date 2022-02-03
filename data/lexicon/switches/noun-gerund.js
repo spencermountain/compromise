@@ -111,7 +111,6 @@ export default [
   'meeting',
   'messaging',
   'mining',
-  'misunderstanding',
   'monitoring',
   'negotiating',
   'networking',

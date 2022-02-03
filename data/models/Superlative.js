@@ -123,7 +123,6 @@ export default {
     "dull": "dullest",
     "eerie": "eeriest",
     "feeble": "feeblest",
-    "fierce ": "fierce est",
     "fierce": "fiercest",
     "gay": "gayest",
     "gentle": "gentlest",

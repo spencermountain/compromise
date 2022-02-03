@@ -1,5 +1,5 @@
-const prefix = /^(mis|re|un|dis|under|over)-?/
-const allowPrefix = new Set(['Infinitive', 'PastTense', 'Gerund', 'PresentTense', 'Adjective', 'Participle'])
+const prefix = /^(under|over|mis|re|un|dis)-?/
+const allowPrefix = new Set(['Verb', 'Infinitive', 'PastTense', 'Gerund', 'PresentTense', 'Adjective', 'Participle'])
 
 // tag any words in our lexicon
 const checkLexicon = function (terms, i, world) {

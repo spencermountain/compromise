@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 /*
 
@@ -12,11 +12,11 @@ import nlp from './src/three.js'
 let txt = "non plentiful"
 txt = "relaunch"
 txt = `
+overthrow
 `
-// txt = 'documentary'
 // txt = `Dr. Miller and his pal Joe`
 let doc = nlp(txt)
-// doc.debug()
+doc.debug()
 // console.log(doc.document[0][3].id)
 // doc.ptrs = [[0, 3, 5, doc.document[0][3].id]]
 // console.log(doc)

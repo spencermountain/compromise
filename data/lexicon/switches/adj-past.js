@@ -217,6 +217,8 @@ export default [
   'weathered',
   'wet',
   'worried',
+  // prefixes
+  'overlooked'
 ]
 
 

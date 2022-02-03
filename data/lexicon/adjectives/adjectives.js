@@ -619,5 +619,9 @@ export default [
   "unspoken",
   "unchecked",
   "unattended",
+  "undercover",
+  "underlying",
+  "underwater",
+  "overseas",
 ]
 

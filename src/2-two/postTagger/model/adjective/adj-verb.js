@@ -15,16 +15,14 @@ export default [
   { match: '#Pronoun [#Adjective] #Determiner #Adjective? #Noun', group: 0, tag: 'Verb', reason: 'he-adj-the' },
   //is eager to go
   { match: '#Copula [#Adjective] to #Verb', group: 0, tag: 'Verb', reason: 'adj-to' },
-  //want to be sedated
-  // { match: '(want|try|need) to be [#PastTense]', group: 0, tag: 'Adjective', reason: 'want-to-be' },
-  //should be sedated
-  // { match: '#Modal be [#PastTense]', group: 0, tag: 'Adjective', reason: 'should-be-x' },
   // rude and insulting
   { match: '#Adjective and [#Gerund] !#Preposition?', group: 0, tag: 'Adjective', reason: 'rude-and-x' },
   // were over cooked
   { match: '#Copula #Adverb? (over|under) [#PastTense]', group: 0, tag: 'Adjective', reason: 'over-cooked' },
   // was bland and overcooked
   { match: '#Copula #Adjective+ (and|or) [#PastTense]$', group: 0, tag: 'Adjective', reason: 'bland-and-overcooked' },
+  // got tired of
+  { match: 'got #Adverb? [#PastTense] of', group: 0, tag: 'Adjective', reason: 'got-tired-of' },
   //felt loved
   {
     match: '(seem|seems|seemed|appear|appeared|appears|feel|feels|felt|sound|sounds|sounded) (#Adverb|#Adjective)? [#PastTense]',

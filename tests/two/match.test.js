@@ -469,6 +469,9 @@ let arr = [
   ["trajectory", "#Noun"],
   ["victory", "#Noun"],
 
+  ["merged", "#PastTense"],
+  ["mentioned", "#PastTense"],
+  ["aired", "#PastTense"],
 ]
 test('match:', function (t) {
   let res = []

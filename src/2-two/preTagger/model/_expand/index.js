@@ -16,7 +16,7 @@ const variables = {
   // 'boiled'
   'Adj|Past': 'Adjective',
   // 'smooth'
-  'Adj|Present': 'Adjective',
+  'Adj|Present': 'Adjective',//+conjugations
   // 'box'
   'Noun|Verb': 'Singular', //+conjugations
   //'singing'
@@ -52,11 +52,14 @@ const addUncountables = function (words, model) {
   return model
 }
 
-const expandVerb = function (str, words) {
+const expandVerb = function (str, words, doPresent) {
   let obj = conjugate(str, tmpModel)
   words[obj.PastTense] = words[obj.PastTense] || 'PastTense'
-  words[obj.PresentTense] = words[obj.PresentTense] || 'PresentTense'
   words[obj.Gerund] = words[obj.Gerund] || 'Gerund'
+  if (doPresent === true) {
+    // is this plural noun, or present-tense?
+    words[obj.PresentTense] = words[obj.PresentTense] || 'PresentTense'
+  }
 }
 
 // harvest ambiguous words for any conjugations
@@ -68,7 +71,10 @@ const expandVariable = function (switchWords, model) {
     words[w] = variables[name]
     // conjugate some verbs
     if (name === 'Noun|Verb') {
-      expandVerb(w, words)
+      expandVerb(w, words, false)
+    }
+    if (name === 'Adj|Present') {
+      expandVerb(w, words, true)
     }
   })
   // add conjugations

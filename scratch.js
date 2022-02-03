@@ -96,12 +96,11 @@ txt = "Number of suspected al-Qa'ida members"
 txt = " THE premier university"
 txt = " THE favourite fruit"
 txt = " New York style pizza"
-txt = " 200,000 guns means 1000 tonnes"
 txt = "only fight and win"
-txt = "The two banks merged in 1985"
-txt = "merged"
-txt = "mentioned"
-txt = "aired"
+txt = " 200,000 guns means 1000 tonnes"
+txt = "means"
+txt = "I got tired of them"
+
 // txt = `Dr. Miller and his pal Joe`
 let doc = nlp(txt)
 // console.log(doc.verbs().conjugate())

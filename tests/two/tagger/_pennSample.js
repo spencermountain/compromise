@@ -915,14 +915,6 @@ export default [
     tags: 'VBP, PRP, VBG, TO, VB',
   },
   {
-    text: 'OVERVIEW',
-    tags: 'NN',
-  },
-  // {
-  //   text: 'It will examine technology options and new business models for transmission expansion.',
-  //   tags: 'PRP, MD, VB, NN, NNS, CC, JJ, NN, NNS, IN, NN, NN',
-  // },
-  {
     text: 'Sonya City',
     tags: 'NNP, NNP',
   },
@@ -2748,10 +2740,6 @@ export default [
     tags: 'JJ, IN, DT, IN, NN, VBG, NNS, CC, NNS',
   },
   {
-    text: 'Revolutionary Compensation',
-    tags: 'JJ, NN',
-  },
-  {
     text: 'Agel has created a new compensation structure.',
     tags: 'NNP, VBZ, VBN, DT, JJ, NN, NN',
   },
@@ -2954,10 +2942,6 @@ export default [
     tags: 'NN, NNP, VBZ, DT, NN',
   },
   {
-    text: 'Subject: NASA IS A WASTE!',
-    tags: 'NN, NNP, VBZ, DT, NN',
-  },
-  {
     text: 'U.S. Senate Committee on Appropriations',
     tags: 'NNP, NNP, NNP, IN, NNPS',
   },
@@ -3104,10 +3088,6 @@ export default [
   {
     text: 'I will.',
     tags: 'PRP, MD',
-  },
-  {
-    text: 'Subject: Civet Cats, James Rachels + a song',
-    tags: 'NN, NN, NNS, NNP, NNP, SYM, DT, NN',
   },
   {
     text: 'These animals have the misfortune to produce a substance that is useful in the manufacture of perfume.',
@@ -3424,10 +3404,6 @@ export default [
   {
     text: 'The Sunburn can reach Mach 3 at high altitude.',
     tags: 'DT, NNP, MD, VB, NNP, CD, IN, JJ, NN',
-  },
-  {
-    text: 'Virtually every credible analysis has Syria standing as the strongest military force in the Middle East after Israel.',
-    tags: 'RB, DT, JJ, NN, VBZ, NNP, VBG, IN, DT, JJS, JJ, NN, IN, DT, NNP, NNP, IN, NNP',
   },
   {
     text: 'Iran also stands accused of aiding terrorism across the globe.',
@@ -4868,10 +4844,6 @@ export default [
     tags: 'VB, DT, NN, NNS',
   },
   {
-    text: 'Home made product',
-    tags: 'NN, VBN, NN',
-  },
-  {
     text: 'I love the people, the product and the service!',
     tags: 'PRP, VBP, DT, NNS, DT, NN, CC, DT, NN',
   },
@@ -5880,10 +5852,6 @@ export default [
   {
     text: 'Thank you, Bowtie!',
     tags: 'VBP, PRP, NNP',
-  },
-  {
-    text: 'Craft Wonderland with History',
-    tags: 'NN, NN, IN, NN',
   },
   {
     text: 'Great name for a great store!',

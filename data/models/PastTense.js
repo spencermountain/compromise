@@ -154,6 +154,11 @@ export default {
     ]
   },
   "exceptions": {
+    "guessed": "guess",
+    "eyed": "eye",
+    "reeled": "reel",
+    "pruned": "prune",
+    "aired": "air",
     "coated": "coat",
     "floated": "float",
     "explored": "explore",

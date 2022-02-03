@@ -370,7 +370,7 @@ let arr = [
   [`polite`, '#Adjective'],
   [`exquisite`, '#Adjective'],
   [`opposite`, '#Adjective'],
-  [`spite`, '#Noun'],
+  [`his spite`, 'his #Noun'],
   [`parasite`, '#Noun'],
   [`favorite`, '#Adjective'],
   [`write`, '#Verb'],
@@ -404,7 +404,7 @@ let arr = [
   ['detect', '#Verb'],
   ['correct', '#Adjective'],
   ['aspect', '#Noun'],
-  ['defect', '#Noun'],
+  ['minor defect', '#Adjective #Noun'],
   ['restrict', '#Verb'],
   ['depict', '#Verb'],
   ['misinterpret', '#Verb'],
@@ -414,7 +414,7 @@ let arr = [
   ['denounces', '#Verb'],
   ['denounced', '#Verb'],
   ['refocus', '#Verb'],
-  ['reorder', '#Verb'],
+  ['reorder it', '#Verb it'],
   ['misinform', '#Verb'],
   ['reclaim', '#Verb'],
   ['restrike', '#Verb'],
@@ -428,7 +428,8 @@ let arr = [
   ['maze', '#Singular'],
   ['blaze it', '#Verb it'],
   ['districts', '#Plural'],
-
+  ['quiet addict', '#Adjective #Singular'],
+  ['addict them', '#Verb them'],
   ["rearrange", "#Verb"],
   ["prearrange", "#Verb"],
   ["decommission", "#Verb"],
@@ -448,7 +449,25 @@ let arr = [
 
   ["food and programs", "#Noun and #Noun"],
   ["writes and programs", "#PresentTense and #PresentTense"],
-  [`revisit the unsteamed towels`, '#Infinitive the #Adjective #Plural']
+  [`revisit the unsteamed towels`, '#Infinitive the #Adjective #Plural'],
+
+  ["macronutrient", "#Noun"],
+  ["undue", "#Adjective"],
+  ["semiskilled", "#Adjective"],
+  ["antiwork", "#Noun"],
+  ["antiaircraft", "#Noun"],
+  ["kilos", "#Noun"],
+  ["autolytic", "#Adjective"],
+  ["introvert", "#Noun"],
+  ["de-orients", "#Verb"],
+  ["deduct", "#Verb"],
+  ["conduct", "#Verb"],
+
+  ["contradictory", "#Adjective"],
+  ["factory", "#Noun"],
+  ["satisfactory", "#Adjective"],
+  ["trajectory", "#Noun"],
+  ["victory", "#Noun"],
 
 ]
 test('match:', function (t) {

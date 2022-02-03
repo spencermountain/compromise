@@ -1,6 +1,11 @@
 import methods from '../../methods/index.js'
 import expandIrregulars from './irregulars.js'
 import expandModels from './models.js'
+import conjugate from '../../methods/transform/verbs/conjugate/index.js'
+import models from '../models/index.js'
+let tmpModel = {
+  two: { models }
+}
 
 // defaults for switches
 const variables = {
@@ -13,7 +18,7 @@ const variables = {
   // 'smooth'
   'Adj|Present': 'Adjective',
   // 'box'
-  'Noun|Verb': 'Singular',
+  'Noun|Verb': 'Singular', //+conjugations
   //'singing'
   'Noun|Gerund': 'Gerund',
   // 'hope'
@@ -47,6 +52,13 @@ const addUncountables = function (words, model) {
   return model
 }
 
+const expandVerb = function (str, words) {
+  let obj = conjugate(str, tmpModel)
+  words[obj.PastTense] = words[obj.PastTense] || 'PastTense'
+  words[obj.PresentTense] = words[obj.PresentTense] || 'PresentTense'
+  words[obj.Gerund] = words[obj.Gerund] || 'Gerund'
+}
+
 // harvest ambiguous words for any conjugations
 const expandVariable = function (switchWords, model) {
   let words = {}
@@ -54,7 +66,12 @@ const expandVariable = function (switchWords, model) {
   Object.keys(switchWords).forEach(w => {
     const name = switchWords[w]
     words[w] = variables[name]
+    // conjugate some verbs
+    if (name === 'Noun|Verb') {
+      expandVerb(w, words)
+    }
   })
+  // add conjugations
   model = expandLexicon(words, model)
   return model
 }

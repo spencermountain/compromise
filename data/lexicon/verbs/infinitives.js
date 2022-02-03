@@ -677,4 +677,8 @@ export default [
   'reboot',
   'reheat',
   'reload',
+  'deduct',
+  'decommission',
+  'blaze',
+  'merge',
 ]

@@ -6,6 +6,7 @@ export default [
   'account',
   'ache',
   'act',
+  'addict',
   'address',
   'advance',
   'advocate',
@@ -688,4 +689,5 @@ export default [
   'dispatch',
   'remark',
   'resort',
+
 ]

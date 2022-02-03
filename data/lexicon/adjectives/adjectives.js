@@ -620,5 +620,7 @@ export default [
   'overseas',
   'undue',
   'monochrome',
+  'contradictory',
+  'satisfactory',
 ]
 

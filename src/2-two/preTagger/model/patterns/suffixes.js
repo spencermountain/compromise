@@ -62,7 +62,6 @@ export default [
     ten: Prt,//brighten
     ect: Inf,
     ict: Inf,
-    uct: Inf,
     ide: Inf,
     ign: Inf,
     ect: Inf,
@@ -96,6 +95,7 @@ export default [
     gone: Adj,
     ices: Plrl,
     ints: Plrl,
+    ruct: Inf,
     ines: Plrl,
     ions: Plrl,
     less: Adj,
@@ -190,7 +190,9 @@ export default [
     inant: Adj,
     igent: Adj,
     atory: Adj,
-    ctory: Adj,
+    // ctory: Adj,
+    rient: Sing,
+    dient: Sing,
   },
   {
     //6-letter

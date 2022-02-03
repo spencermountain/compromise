@@ -8,28 +8,103 @@ nlp.verbose('tagger')
 
 
 
+// past-tense issues
+// beat
+// bet
+// bias
+// bid
+// bike
+// boss
+// buzz
+// core
+// cost
+// cut
+// eye
+// fit
+// frame
+// game
+// gas
+// gloss
+// guess
+// hit
+// inhale
+// manoeuvre
+// mess
+// name
+// perfume
+// pined
+// pore
+// programme
+// prune
+// redo
+// rendezvous
+// scout
+// set
+// shed
+// ski
+// smile
+// spite
+// spread
+// sprinkle
+// stall
+// thrust
+// time
+// toll
+// tone
+// toss
+// vibe
+// zone
+
+// to-gerund issues
+// bang
+// blitz
+// boss
+// cross
+// fuzz
+// gas
+// gloss
+// mess
+// rendezvous
+// smell
+// yell
+
+// to-present issues
+// bias
+// blitz
+// boss
+// buzz
+// gloss
+// kiss
+// mess
+// rendezvous
+// ski
+// toss
+// witness
 /*
-
-
 */
 let txt = "non plentiful"
 txt = "quiet relaunch"
 txt = "president-elect"
 txt = "another fool to roast"
 txt = "There's holes everywhere"
-txt = "macronutrient"
-txt = "undue"
-txt = "semiskilled"
-txt = "antiwork"
-txt = "antiaircraft"
-txt = "micromanaged"
-txt = "kilos"
-txt = "autolytic"
-txt = "autocorrelatio"
-txt = "introvert"
-txt = "de-orients"
+txt = "another fool to roast"
+txt = "favourite place in tampa"
+txt = "and has soft music playing"
+txt = "Good place to be"
+txt = "provide weekly updates on the status"
+txt = "Number of suspected al-Qa'ida members"
+txt = " THE premier university"
+txt = " THE favourite fruit"
+txt = " New York style pizza"
+txt = " 200,000 guns means 1000 tonnes"
+txt = "only fight and win"
+txt = "The two banks merged in 1985"
+txt = "merged"
+txt = "mentioned"
+txt = "aired"
 // txt = `Dr. Miller and his pal Joe`
 let doc = nlp(txt)
+// console.log(doc.verbs().conjugate())
 doc.debug()
 // console.log(doc.document[0][3].id)
 // doc.ptrs = [[0, 3, 5, doc.document[0][3].id]]

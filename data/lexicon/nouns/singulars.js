@@ -275,6 +275,7 @@ export default [
   "prospect",
   "insect",
   "verdict",
+  "district",
   "free market",
   "human right",
 

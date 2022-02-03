@@ -201,17 +201,16 @@ export default [
   'couscous',
   'vanilla',
 
-  'honesty',  // Adjective
-  'dishonesty',  // Adjective
-  'dynasty',  // Adjective
-  'hashish',  // Adjective
-  'horseradish',  // Adjective
-  'expertise',  // Infinitive
-  'merchandise',  // Verb
+  'honesty',
+  'dishonesty',
+  'dynasty',
+  'hashish',
+  'horseradish',
+  'expertise',
 
-  'demise',  // Infinitive
-  'anise',  // Infinitive
-  'treatise',  // Infinitive
+  'demise',
+  'anise',
+  'treatise',
   'aspirin',
   'glycerin',
 

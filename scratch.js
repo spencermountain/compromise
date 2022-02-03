@@ -1,34 +1,24 @@
 /* eslint-disable no-console, no-unused-vars */
-// import nlp from './src/three.js'
+import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-import list from '/Users/spencer/mountain/compromise/data/lexicon/switches/person-verb.js'
-
-const prefix = /^(under|over|mis|re|un|dis)-?/
-let all = new Set(list)
-list.forEach(str => {
-  if (prefix.test(str)) {
-    let stem = str.replace(prefix, '')
-    if (all.has(stem)) {
-      console.log(str)
-    }
-  }
-})
-
-
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 /*
 
 
 */
-// let txt = "non plentiful"
-// txt = "relaunch"
-// txt = `overview crept up`
+let txt = "non plentiful"
+txt = "quiet relaunch"
+txt = "president-elect"
+txt = "another fool to roast"
+txt = "There's holes everywhere"
+txt = "macronutrient"
+txt = "undue"
 // txt = `Dr. Miller and his pal Joe`
-// let doc = nlp(txt)
-// doc.debug()
+let doc = nlp(txt)
+doc.debug()
 // console.log(doc.document[0][3].id)
 // doc.ptrs = [[0, 3, 5, doc.document[0][3].id]]
 // console.log(doc)

@@ -1,4 +1,5 @@
 const prefix = /^(under|over|mis|re|un|dis)-?/
+// anti|non|extra|inter|intra|over
 const allowPrefix = new Set(['Verb', 'Infinitive', 'PastTense', 'Gerund', 'PresentTense', 'Adjective', 'Participle'])
 
 // tag any words in our lexicon
@@ -30,7 +31,7 @@ const checkLexicon = function (terms, i, world) {
     if (lexicon.hasOwnProperty(stem) && stem.length > 3) {
       // only allow prefixes for verbs/adjectives
       if (allowPrefix.has(lexicon[stem])) {
-        // console.log('->', word, stem, lexicon[stem])
+        console.log('->', word, stem, lexicon[stem])
         fastTag(t, lexicon[stem], '1-lexicon-prefix')
         return true
       }

@@ -218,5 +218,6 @@ export default [
   'spite',
   'overcrowding',
   'troubleshooting',
+  'gore',
 
 ]

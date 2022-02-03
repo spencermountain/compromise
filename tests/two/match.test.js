@@ -19,7 +19,6 @@ let arr = [
   ['cactus', '#Singular'],
   ['cacti', '#Plural'],
   ['economy', '#Noun'],
-  ['engineer', '#Noun'],
   ['brotherhood', '#Noun'],
   ['claire', '#FemaleName'],
   ['arthur', '#MaleName'],
@@ -427,7 +426,7 @@ let arr = [
   ['products', '#Plural'],
   ['district', '#Singular'],
   ['maze', '#Singular'],
-  ['blaze', '#Verb'],
+  ['blaze it', '#Verb it'],
   ['districts', '#Plural'],
 
   ["rearrange", "#Verb"],

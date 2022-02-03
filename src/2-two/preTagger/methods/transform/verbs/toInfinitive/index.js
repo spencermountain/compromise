@@ -3,7 +3,10 @@ import getTense from '../getTense/index.js'
 
 const toParts = function (str, model) {
   let prefix = ''
-  let prefixes = model.one.prefixes
+  let prefixes = {}
+  if (model.one && model.one.prefixes) {
+    prefixes = model.one.prefixes
+  }
   // pull-apart phrasal verb 'fall over'
   let [verb, particle] = str.split(/ /)
   // support 'over cleaned'

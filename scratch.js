@@ -80,6 +80,12 @@ nlp.verbose('tagger')
 // ski
 // toss
 // witness
+
+// -toInf issues
+// framed
+// bored
+
+
 /*
 */
 let txt = "non plentiful"
@@ -100,6 +106,7 @@ txt = "only fight and win"
 txt = " 200,000 guns means 1000 tonnes"
 txt = "means"
 txt = "I got tired of them"
+txt = "intoxicates"
 
 // txt = `Dr. Miller and his pal Joe`
 let doc = nlp(txt)

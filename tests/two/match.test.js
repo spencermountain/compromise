@@ -472,6 +472,10 @@ let arr = [
   ["merged", "#PastTense"],
   ["mentioned", "#PastTense"],
   ["aired", "#PastTense"],
+  ["screeched", "#PastTense"],
+  ["screeches", "#PresentTense"],
+  ["intoxicates", "#PresentTense"],
+  ["intoxicated", "#PastTense"],
 ]
 test('match:', function (t) {
   let res = []

@@ -137,6 +137,9 @@ export default {
     ]
   },
   "exceptions": {
+    "aching": "ache",
+    "glaring": "glare",
+    "stunning": "stun",
     "combating": "combat",
     "preparing": "prepare",
     "sharing": "share",

@@ -2,6 +2,7 @@ import methods from '../../methods/index.js'
 import expandIrregulars from './irregulars.js'
 import expandModels from './models.js'
 import conjugate from '../../methods/transform/verbs/conjugate/index.js'
+import toInfinitive from '../../methods/transform/verbs/toInfinitive/index.js'
 import models from '../models/index.js'
 let tmpModel = {
   two: { models }
@@ -10,25 +11,25 @@ let tmpModel = {
 // defaults for switches
 const variables = {
   // 'amusing'
-  'Adj|Gerund': 'Adjective',
+  'Adj|Gerund': 'Adjective', //+conjugations
   // 'standard'
   'Adj|Noun': 'Adjective',
   // 'boiled'
-  'Adj|Past': 'Adjective',
+  'Adj|Past': 'Adjective', //+conjugations
   // 'smooth'
   'Adj|Present': 'Adjective',//+conjugations
   // 'box'
-  'Noun|Verb': 'Singular', //+conjugations
+  'Noun|Verb': 'Singular', //+conjugations (no-present)
   //'singing'
-  'Noun|Gerund': 'Gerund',
+  'Noun|Gerund': 'Gerund', //+conjugations
   // 'hope'
   'Person|Noun': 'Noun',
   // 'April'
   'Person|Date': 'Month',
   // 'rob'
-  'Person|Verb': 'Person',
+  'Person|Verb': 'Person',//+conjugations
   // 'boxes'
-  'Plural|Verb': 'Plural',
+  'Plural|Verb': 'Plural', //(these are already derivative)
 }
 
 const expandLexicon = function (words, model) {
@@ -73,9 +74,21 @@ const expandVariable = function (switchWords, model) {
     if (name === 'Noun|Verb') {
       expandVerb(w, words, false)
     }
-    if (name === 'Adj|Present') {
+    if (name === 'Adj|Present' || name === 'Person|Verb') {
       expandVerb(w, words, true)
     }
+    if (name === 'Adj|Gerund' || name === 'Noun|Gerund') {
+      let inf = toInfinitive(w, tmpModel, 'Gerund')
+      if (!words[inf]) {
+        words[inf] = 'Infinitive' //expand it later
+      }
+    }
+    // if (name === 'Adj|Past') {
+    //   let inf = toInfinitive(w, tmpModel, 'PastTense')
+    //   if (!words[inf]) {
+    //     words[inf] = 'Infinitive' //expand it later
+    //   }
+    // }
   })
   // add conjugations
   model = expandLexicon(words, model)

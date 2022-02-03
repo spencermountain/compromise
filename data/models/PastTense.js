@@ -154,6 +154,8 @@ export default {
     ]
   },
   "exceptions": {
+    "framed": "frame",
+    "bored": "bore",
     "guessed": "guess",
     "eyed": "eye",
     "reeled": "reel",

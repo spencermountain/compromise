@@ -163,7 +163,6 @@ export default [
   'soothing',
   'sparkling',
   'speeding',
-  'sriking',
   'staggering',
   'startling',
   'starving',

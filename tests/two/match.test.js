@@ -418,6 +418,7 @@ let arr = [
   ['reorder', '#Verb'],
   ['misinform', '#Verb'],
   ['reclaim', '#Verb'],
+  ['restrike', '#Verb'],
   ['disembark', '#Verb'],
   ['debunking', '#Gerund'],
   ['debunks', '#PresentTense'],
@@ -443,6 +444,7 @@ let arr = [
 
   ["food and programs", "#Noun and #Noun"],
   ["writes and programs", "#PresentTense and #PresentTense"],
+  [`revisit the unsteamed towels`, '#Infinitive the #Adjective #Plural']
 
 ]
 test('match:', function (t) {

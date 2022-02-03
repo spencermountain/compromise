@@ -1,80 +1,7 @@
 import fastTag from '../_fastTag.js'
 const env = typeof process === 'undefined' ? self.env || {} : process.env // eslint-disable-line
-
-const isCapital = (terms, i) => {
-  if (terms[i].tags.has('ProperNoun')) {// 'Comfort Inn'
-    return 'Noun'
-  }
-}
-const isAloneVerb = (terms, i) => {
-  if (i === 0 && !terms[1]) {// 'Help'
-    return 'Verb'
-  }
-}
-
-// "food and programs" vs "writes and programs"
-const isList = function (terms, i, vb) {
-  // "x and ___"
-  if (terms[i - 1] && terms[i - 2]) {
-    let str = terms[i - 1].normal
-    if (str === 'and' || str === 'or') {
-      // 'Noun and ___'
-      if (terms[i - 2].tags.has('Noun')) {
-        return 'Noun'
-      }
-      // 'writes and ___'
-      if (terms[i - 2].tags.has(vb)) {
-        return vb
-      }
-    }
-  }
-  // "___ and programs"
-  if (terms[i + 1] && terms[i + 2]) {
-    let str = terms[i + 1].normal
-    if (str === 'and' || str === 'or') {
-      // 'Noun and ___'
-      if (terms[i + 2].tags.has('Noun')) {
-        return 'Noun'
-      }
-      // 'writes and ___'
-      if (terms[i + 2].tags.has(vb)) {
-        return vb
-      }
-    }
-  }
-  return null
-}
-
-const adhoc = {
-  'Adj|Gerund': (terms, i) => {
-    return isCapital(terms, i)
-  },
-  'Adj|Noun': (terms, i) => {
-    return isCapital(terms, i)
-  },
-  'Adj|Past': (terms, i) => {
-    return isCapital(terms, i)
-  },
-  'Adj|Present': (terms, i) => {
-    return isCapital(terms, i)
-  },
-  'Noun|Gerund': (terms, i) => {
-    return isCapital(terms, i)
-  },
-  'Noun|Verb': (terms, i) => {
-    return isList(terms, i, 'Infinitive') || isCapital(terms, i) || isAloneVerb(terms, i)
-  },
-  'Plural|Verb': (terms, i) => {
-    return isList(terms, i, 'PresentTense') || isCapital(terms, i) || isAloneVerb(terms, i)
-  },
-  'Person|Noun': (terms, i) => {
-    return isCapital(terms, i)
-  },
-  'Person|Verb': (terms, i) => {
-    return isCapital(terms, i)
-  },
-}
-
+import adhoc from './_adhoc.js'
+const prefix = /^(under|over|mis|re|un|dis)-?/
 
 const checkWord = (term, obj) => {
   if (!term || !obj) {
@@ -137,8 +64,13 @@ const setTag = function (term, tag, model) {
 const doVariables = function (terms, i, model) {
   const { variables, clues } = model.two
   const term = terms[i]
-  if (variables.hasOwnProperty(term.normal)) {
-    let form = variables[term.normal]
+  let str = term.normal
+  // support prefixes for switching words
+  if (prefix.test(str) && !variables[str]) {
+    str = str.replace(prefix, '') // could use some guards, here
+  }
+  if (variables.hasOwnProperty(str)) {
+    let form = variables[str]
     // console.log(`\n'${term.normal}'  : ${form}`)
     // console.log(clues[form])
     // skip propernouns, acronyms, etc
@@ -153,11 +85,11 @@ const doVariables = function (terms, i, model) {
     // did we find anything?
     if (tag) {
       if (env.DEBUG_TAGS) {
-        console.log(`\n  \x1b[32m [variable] - '${term.normal}' - (${form}) → #${tag} \x1b[0m\n`)
+        console.log(`\n  \x1b[32m [variable] - '${str}' - (${form}) → #${tag} \x1b[0m\n`)
       }
       setTag(term, tag, model)
     } else if (env.DEBUG_TAGS) {
-      console.log(`\n -> X  - '${term.normal}'  : ${form}  `)
+      console.log(`\n -> X  - '${str}'  : ${form}  `)
     }
   }
 }

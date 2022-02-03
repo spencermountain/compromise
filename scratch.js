@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 /*
 
@@ -11,9 +11,7 @@ nlp.verbose('tagger')
 */
 let txt = "non plentiful"
 txt = "relaunch"
-txt = `
-overthrow
-`
+txt = `overview crept up`
 // txt = `Dr. Miller and his pal Joe`
 let doc = nlp(txt)
 doc.debug()

@@ -215,6 +215,7 @@ export default [
   'warped',
   'weakened',
   'weathered',
+  'shared',
   'wet',
   'worried',
   // prefixes

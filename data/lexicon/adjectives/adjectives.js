@@ -610,5 +610,14 @@ export default [
 
   // prefixes
   "recent",
+  "unmarried",
+  "unseen",
+  "untold",
+  "unused",
+  "unwanted",
+  "unsold",
+  "unspoken",
+  "unchecked",
+  "unattended",
 ]
 

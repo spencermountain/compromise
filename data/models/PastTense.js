@@ -369,7 +369,6 @@ export default {
     "met": "meet",
     "went": "go",
     "underwent": "undergo",
-    "pent": "pen",
     "peaked": "peak",
     "soaked": "soak",
     "leaked": "leak",

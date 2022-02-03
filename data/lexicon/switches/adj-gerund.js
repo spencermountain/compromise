@@ -222,5 +222,8 @@ export default [
   'owing',
   'outlying',
 
+  // prefixes
+  'resting',
+
 ]
 

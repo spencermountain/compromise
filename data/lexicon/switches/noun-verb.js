@@ -689,4 +689,5 @@ export default [
   // prefixes
   'dispatch',
   'remark',
+  'resort',
 ]

@@ -9,7 +9,7 @@ let tmpModel = {
 }
 
 // defaults for switches
-const variables = {
+const switchDefaults = {
   // 'amusing'
   'Adj|Gerund': 'Adjective', //+conjugations
   // 'standard'
@@ -69,7 +69,7 @@ const expandVariable = function (switchWords, model) {
   //add first tag as an assumption for each variable word
   Object.keys(switchWords).forEach(w => {
     const name = switchWords[w]
-    words[w] = variables[name]
+    words[w] = switchDefaults[name]
     // conjugate some verbs
     if (name === 'Noun|Verb') {
       expandVerb(w, words, false)
@@ -98,7 +98,7 @@ const expandVariable = function (switchWords, model) {
 const expand = function (model) {
   model = expandLexicon(model.one.lexicon, model)
   model = addUncountables(model.one.lexicon, model)
-  model = expandVariable(model.two.variables, model)
+  model = expandVariable(model.two.switches, model)
   model = expandModels(model)
   model = expandIrregulars(model)
   return model

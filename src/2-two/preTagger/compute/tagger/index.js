@@ -1,4 +1,5 @@
 
+import tagSwitch from './2nd-pass/00-tagSwitch.js'
 import checkCase from './2nd-pass/01-case.js'
 import checkSuffix from './2nd-pass/02-suffix.js'
 import checkRegex from './2nd-pass/03-regex.js'
@@ -10,10 +11,11 @@ import checkAcronym from './3rd-pass/01-acronym.js'
 import neighbours from './3rd-pass/02-neighbours.js'
 import orgWords from './3rd-pass/03-orgWords.js'
 import nounFallback from './3rd-pass/04-fallback.js'
-import variables from './3rd-pass/06-variables.js'
+import variables from './3rd-pass/06-switches.js'
 import checkHyphen from './3rd-pass/05-prefixes.js'
 
 const second = {
+  tagSwitch,
   checkSuffix,
   checkRegex,
   checkCase,
@@ -34,6 +36,8 @@ const third = {
 // these methods don't care about word-neighbours
 const secondPass = function (terms, model) {
   for (let i = 0; i < terms.length; i += 1) {
+    // mark Noun|Verb on term metadata
+    second.tagSwitch(terms, i, model)
     //  is it titlecased?
     second.checkCase(terms, i, model)
     // look at word ending

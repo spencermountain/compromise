@@ -145,6 +145,11 @@ const parseToken = function (w) {
       obj.greedy = true
       return obj
     }
+    if (start(w) === '%' && end(w) === '%') {
+      w = stripBoth(w)
+      obj.switch = w
+      return obj
+    }
   }
   // support #Tag{1,9}
   if (hasMinMax.test(w) === true) {

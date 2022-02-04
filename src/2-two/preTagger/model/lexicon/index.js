@@ -10,7 +10,7 @@ import irregularPlurals from '../irregulars/plurals.js'
 //  - once the plugin is applied
 const hasSwitch = /\|/
 let lexicon = misc
-let variables = {}
+let switches = {}
 
 const tmpModel = { two: { irregularPlurals, uncountable: {} } }
 
@@ -26,11 +26,11 @@ Object.keys(lexData).forEach(tag => {
   }
   // add them as seperate key-val object
   Object.keys(wordsObj).forEach(w => {
-    variables[w] = tag
+    switches[w] = tag
     // pluralize Infinitive|Singular
     if (tag === 'Noun|Verb') {
       let plural = toPlural(w, tmpModel)
-      variables[plural] = 'Plural|Verb'
+      switches[plural] = 'Plural|Verb'
     }
   })
 })
@@ -38,4 +38,4 @@ Object.keys(lexData).forEach(tag => {
 delete lexicon['']
 delete lexicon[null]
 delete lexicon[' ']
-export { lexicon, variables }
+export { lexicon, switches }

@@ -1,5 +1,5 @@
 import irregularPlurals from './irregulars/plurals.js'
-import { lexicon, variables } from './lexicon/index.js'
+import { lexicon, switches } from './lexicon/index.js'
 import clues from './clues/index.js'
 import suffixPatterns from './patterns/suffixes.js'
 import prefixPatterns from './patterns/prefixes.js'
@@ -31,7 +31,7 @@ let model = {
     regexText,
     regexNumbers,
 
-    variables,
+    switches,
     clues,
 
     uncountable: {},

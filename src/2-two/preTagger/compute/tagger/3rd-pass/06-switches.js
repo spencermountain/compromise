@@ -61,16 +61,16 @@ const setTag = function (term, tag, model) {
 }
 
 // words like 'bob' that can change between two tags
-const doVariables = function (terms, i, model) {
-  const { variables, clues } = model.two
+const doSwitches = function (terms, i, model) {
+  const { switches, clues } = model.two
   const term = terms[i]
   let str = term.normal
   // support prefixes for switching words
-  if (prefix.test(str) && !variables[str]) {
+  if (prefix.test(str) && !switches[str]) {
     str = str.replace(prefix, '') // could use some guards, here
   }
-  if (variables.hasOwnProperty(str)) {
-    let form = variables[str]
+  if (switches.hasOwnProperty(str)) {
+    let form = switches[str]
     // console.log(`\n'${term.normal}'  : ${form}`)
     // console.log(clues[form])
     // skip propernouns, acronyms, etc
@@ -93,4 +93,4 @@ const doVariables = function (terms, i, model) {
     }
   }
 }
-export default doVariables
+export default doSwitches

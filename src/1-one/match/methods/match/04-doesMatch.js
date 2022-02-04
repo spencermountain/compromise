@@ -77,6 +77,10 @@ const doesMatch = function (term, reg, index, length) {
   if (reg.chunk !== undefined) {
     return term.chunk === reg.chunk
   }
+  //support %Noun|Verb%
+  if (reg.switch !== undefined) {
+    return term.switch === reg.switch
+  }
   //support {machine}
   if (reg.machine !== undefined) {
     return term.normal === reg.machine || term.machine === reg.machine

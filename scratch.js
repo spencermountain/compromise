@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 
 
@@ -106,12 +106,14 @@ txt = "only fight and win"
 txt = " 200,000 guns means 1000 tonnes"
 txt = "means"
 txt = "I got tired of them"
-txt = "intoxicates"
+txt = "poison cut the pen"
 
 // txt = `Dr. Miller and his pal Joe`
 let doc = nlp(txt)
+// console.log(doc.json()[0])
 // console.log(doc.verbs().conjugate())
-doc.debug()
+console.log(nlp.parseMatch('%Noun|Verb%'))
+doc.match('%Noun|Verb%').debug()
 // console.log(doc.document[0][3].id)
 // doc.ptrs = [[0, 3, 5, doc.document[0][3].id]]
 // console.log(doc)

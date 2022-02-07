@@ -102,18 +102,24 @@ txt = "Number of suspected al-Qa'ida members"
 txt = " THE premier university"
 txt = " THE favourite fruit"
 txt = " New York style pizza"
-txt = "only fight and win"
 txt = " 200,000 guns means 1000 tonnes"
 txt = "means"
 txt = "I got tired of them"
 txt = "poison cut the pen"
+txt = "only fight and win"
 
 // txt = `Dr. Miller and his pal Joe`
 let doc = nlp(txt)
 // console.log(doc.json()[0])
 // console.log(doc.verbs().conjugate())
-console.log(nlp.parseMatch('%Noun|Verb%'))
-doc.match('%Noun|Verb%').debug()
+
+
+// console.log(nlp.parseMatch('%Noun|Verb%'))
+
+doc.debug()
+// doc.match('%Noun|Verb%').debug()
+
+
 // console.log(doc.document[0][3].id)
 // doc.ptrs = [[0, 3, 5, doc.document[0][3].id]]
 // console.log(doc)

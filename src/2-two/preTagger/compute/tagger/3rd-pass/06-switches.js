@@ -69,8 +69,8 @@ const doSwitches = function (terms, i, model) {
   if (prefix.test(str) && !switches[str]) {
     str = str.replace(prefix, '') // could use some guards, here
   }
-  if (switches.hasOwnProperty(str)) {
-    let form = switches[str]
+  if (term.switch) {
+    let form = term.switch
     // console.log(`\n'${term.normal}'  : ${form}`)
     // console.log(clues[form])
     // skip propernouns, acronyms, etc

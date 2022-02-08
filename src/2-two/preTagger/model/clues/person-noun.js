@@ -4,9 +4,9 @@ import noun from './_noun.js'
 // 'babling brook' vs 'brook sheilds'
 
 const clue = {
-  beforeTags: Object.assign({}, person.beforeTags, noun.beforeTags),
-  afterTags: Object.assign({}, person.afterTags, noun.afterTags),
-  beforeWords: Object.assign({}, person.beforeWords, noun.beforeWords, { i: 'Infinitive', we: 'Infinitive' }),
-  afterWords: Object.assign({}, person.afterWords, noun.afterWords),
+  beforeTags: Object.assign({}, noun.beforeTags, person.beforeTags),
+  afterTags: Object.assign({}, noun.afterTags, person.afterTags),
+  beforeWords: Object.assign({}, noun.beforeWords, person.beforeWords, { i: 'Infinitive', we: 'Infinitive' }),
+  afterWords: Object.assign({}, noun.afterWords, person.afterWords),
 }
 export default clue

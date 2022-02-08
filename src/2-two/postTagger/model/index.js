@@ -10,7 +10,7 @@ import dates from './dates/date-phrase.js'
 import ambigDates from './dates/date.js'
 
 import noun from './nouns/nouns.js'
-import gerundNouns from './verbs/gerund-noun.js'
+import gerundNouns from './verbs/noun-gerund.js'
 import presNouns from './verbs/verb-noun.js'
 
 import money from './numbers/money.js'
@@ -24,6 +24,7 @@ import verbs from './verbs/verbs.js'
 import auxiliary from './verbs/auxiliary.js'
 import phrasal from './verbs/phrasal.js'
 import imperative from './verbs/imperative.js'
+import adjGerund from './verbs/adj-gerund.js'
 
 import misc from './_misc.js'
 
@@ -52,6 +53,7 @@ let matches = [].concat(
   auxiliary,
   phrasal,
   imperative,
+  adjGerund,
   misc,
   orgs,
   places,

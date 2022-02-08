@@ -68,6 +68,7 @@ test('verb-parts:', function (t) {
     {
       str: `she is really fancy`,
       root: 'is',
+      postAdverb: 'really',
     },
     {
       str: `it was not educational really`,

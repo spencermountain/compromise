@@ -226,13 +226,11 @@ const addMethod = function (View) {
     }
     /** increase each number by 1 */
     increment(agree) {
-      this.add(1, agree)
-      return this
+      return this.add(1, agree)
     }
     /** decrease each number by 1 */
     decrement(agree) {
-      this.add(-1, agree)
-      return this
+      return this.add(-1, agree)
     }
     // overloaded - keep Numbers class
     update(pointer) {

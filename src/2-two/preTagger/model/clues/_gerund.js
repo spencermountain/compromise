@@ -19,6 +19,7 @@ export default {
     Copula: g, //shocking is
     Preposition: g, //dashing by, swimming in
     Conjunction: g, //insulting to
+    Comparative: g, //growing shorter
   },
   beforeWords: {
     been: g,

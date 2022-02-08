@@ -476,6 +476,9 @@ let arr = [
   ["screeches", "#PresentTense"],
   ["intoxicates", "#PresentTense"],
   ["intoxicated", "#PastTense"],
+  // 
+  ["trying not", "#Gerund not"],
+  ["not trying", "not #Adjective"],
 ]
 test('match:', function (t) {
   let res = []

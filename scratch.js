@@ -3,85 +3,7 @@ import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-// nlp.verbose('tagger')
-
-
-// past-tense issues
-// beat
-// bet
-// bias
-// bid
-// bike
-// boss
-// buzz
-// core
-// cost
-// cut
-// eye
-// fit
-// frame
-// game
-// gas
-// gloss
-// guess
-// hit
-// inhale
-// manoeuvre
-// mess
-// name
-// perfume
-// pined
-// pore
-// programme
-// prune
-// redo
-// rendezvous
-// scout
-// set
-// shed
-// ski
-// smile
-// spite
-// spread
-// sprinkle
-// stall
-// thrust
-// time
-// toll
-// tone
-// toss
-// vibe
-// zone
-
-// to-gerund issues
-// bang
-// blitz
-// boss
-// cross
-// fuzz
-// gas
-// gloss
-// mess
-// rendezvous
-// smell
-// yell
-
-// to-present issues
-// bias
-// blitz
-// boss
-// buzz
-// gloss
-// kiss
-// mess
-// rendezvous
-// ski
-// toss
-// witness
-
-// -toInf issues
-// framed
-// bored
+nlp.verbose('tagger')
 
 
 /*
@@ -104,24 +26,20 @@ txt = " 200,000 guns means 1000 tonnes"
 txt = "means"
 txt = "I got tired of them"
 txt = "poison cut the pen"
-txt = "only fight and win"
-txt = "darwin said"
-txt = "victoria BC"
-txt = "allow"
-txt = "smile"
+txt = "spaghetti and steamed rice"
+txt = "bob in the water"
 
-// let doc = nlp(txt)
+let doc = nlp(txt)
+doc.debug()
 // console.log(doc.json()[0])
 // console.log(doc.verbs().conjugate())
 
 // doc.verbs().toPastTense()
-// doc.debug()
 // console.log(doc.verbs().conjugate())
 
 
-let doc = nlp('seventh place and 12th place')
-doc.values().increment().increment()
-doc.debug()
+// let doc = nlp(txt)
+// doc.debug()
 // let doc = nlp('five hundred fifty nine is more than fifty')
 // doc.values().toNumber()
 // doc.debug()

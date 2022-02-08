@@ -13,7 +13,7 @@ const isAloneVerb = (terms, i) => {
 // "food and programs" vs "writes and programs"
 const isList = function (terms, i, vb) {
   // "x and ___"
-  if (terms[i - 1] && terms[i - 2]) {
+  if (terms[i - 1] && terms[i - 2] && !terms[i - 2].switch) {
     let str = terms[i - 1].normal
     if (str === 'and' || str === 'or') {
       // 'Noun and ___'
@@ -27,7 +27,7 @@ const isList = function (terms, i, vb) {
     }
   }
   // "___ and programs"
-  if (terms[i + 1] && terms[i + 2]) {
+  if (terms[i + 1] && terms[i + 2] && !terms[i + 2].switch) {
     let str = terms[i + 1].normal
     if (str === 'and' || str === 'or') {
       // 'Noun and ___'
@@ -68,8 +68,8 @@ const adhoc = {
   'Person|Noun': (terms, i) => {
     return isCapital(terms, i)
   },
-  'Person|Verb': (terms, i) => {
-    return isCapital(terms, i)
-  },
+  // 'Person|Verb': (terms, i) => {
+  // return isCapital(terms, i)
+  // },
 }
 export default adhoc

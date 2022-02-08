@@ -22,10 +22,6 @@ const verbForms = {
     // walk!
     ['#Imperative', []],
   ],
-  'infinitive': [
-    // walk
-    ['^#Infinitive$', []],
-  ],
   'simple-present': [
     // he walks',
     ['^#PresentTense$', [present]],
@@ -144,6 +140,11 @@ const verbForms = {
   'modal-infinitive': [
     // he can walk
     ['^#Modal #Infinitive$', []],
+  ],
+
+  'infinitive': [
+    // walk
+    ['^#Infinitive$', []],
   ],
 }
 

@@ -6,6 +6,10 @@ const createCache = function (document) {
       if (term.normal !== '') {
         stuff.add(term.normal)
       }
+      // cache switch-status - '%Noun|Verb%'
+      if (term.switch) {
+        stuff.add(`%${term.switch}%`)
+      }
       // cache implicit words, too
       if (term.implicit) {
         stuff.add(term.implicit)

@@ -38,6 +38,7 @@ txt = 'exercise four to five days per week.'
 txt = 'in a few years'
 txt = 'today in PST'
 txt = '4pm sharp on tuesday' //! <- expand issue
+txt = '130pm' //! <- expand issue
 
 // txt = 'four thirty'
 // txt = 'on april 22nd'

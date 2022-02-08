@@ -58,6 +58,7 @@ import nounGerund from './switches/noun-gerund.js'
 import personNoun from './switches/person-noun.js'
 import personDate from './switches/person-date.js'
 import personVerb from './switches/person-verb.js'
+import personPlace from './switches/person-place.js'
 
 //add-in the generic, flat word-lists
 const data = [
@@ -117,6 +118,7 @@ const data = [
   [nounVerb, 'Noun|Verb'],
   [nounGerund, 'Noun|Gerund'],
   [personNoun, 'Person|Noun'],
+  [personPlace, 'Person|Place'],
   [personDate, 'Person|Date'],
   [personVerb, 'Person|Verb'],
 ]

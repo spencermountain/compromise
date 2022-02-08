@@ -6,8 +6,6 @@ import nlp from './src/three.js'
 // nlp.verbose('tagger')
 
 
-
-
 // past-tense issues
 // beat
 // bet
@@ -107,27 +105,23 @@ txt = "means"
 txt = "I got tired of them"
 txt = "poison cut the pen"
 txt = "only fight and win"
+txt = "darwin said"
+txt = "victoria BC"
+txt = "allow"
+txt = "smile"
 
-// txt = `Dr. Miller and his pal Joe`
-let doc = nlp(txt)
+// let doc = nlp(txt)
 // console.log(doc.json()[0])
 // console.log(doc.verbs().conjugate())
 
+// doc.verbs().toPastTense()
+// doc.debug()
+// console.log(doc.verbs().conjugate())
 
-// console.log(nlp.parseMatch('%Noun|Verb%'))
 
+let doc = nlp('seventh place and 12th place')
+doc.values().increment().increment()
 doc.debug()
-// doc.match('%Noun|Verb%').debug()
-
-
-// console.log(doc.document[0][3].id)
-// doc.ptrs = [[0, 3, 5, doc.document[0][3].id]]
-// console.log(doc)
-// console.log(doc.docs)
-// let m = doc.match('#Person+')//.debug()
-// console.log(m)
-// m.debug()
-
 // let doc = nlp('five hundred fifty nine is more than fifty')
 // doc.values().toNumber()
 // doc.debug()
@@ -140,8 +134,7 @@ doc.debug()
 // doc.match(m).debug()
 // doc.debug()
 
-// let doc = nlp('buy')
-// console.log(doc.verbs().conjugate())
+// doc = nlp('buy')
 
 
 

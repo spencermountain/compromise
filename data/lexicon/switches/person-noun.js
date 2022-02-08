@@ -77,6 +77,8 @@ export default [
   'viola',
   'violet',
   'wang',
+  'venus',
+
 
 ]
 

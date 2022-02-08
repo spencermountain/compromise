@@ -43,6 +43,8 @@ export default {
     sang: p,
     learn: p,
     learned: p,
+    wants: p,
+    wanted: p
     // and:true, //sue and jeff
   },
 }

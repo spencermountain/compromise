@@ -68,7 +68,14 @@ const addMethod = function (View) {
           return
         }
         let num = obj.num.toLocaleString()
-        // support ordinal?
+        // support ordinal ending, too
+        if (val.has('#Ordinal')) {
+          let str = format(obj, 'Ordinal')
+          let end = str.match(/[a-z]+$/)
+          if (end) {
+            num += end[0] || ''
+          }
+        }
         val.replaceWith(num, { tags: true })
       })
       return this

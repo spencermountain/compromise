@@ -5,13 +5,15 @@ import makeSuffix from './suffix.js'
 
 const format = function (obj, fmt) {
   if (fmt === 'TextOrdinal') {
-    return obj.prefix + textOrdinal(obj) + makeSuffix(obj)
+    let { prefix, suffix } = makeSuffix(obj)
+    return prefix + textOrdinal(obj) + suffix
   }
   if (fmt === 'Ordinal') {
     return obj.prefix + numOrdinal(obj) + obj.suffix
   }
   if (fmt === 'TextCardinal') {
-    return obj.prefix + textCardinal(obj) + makeSuffix(obj)
+    let { prefix, suffix } = makeSuffix(obj)
+    return prefix + textCardinal(obj) + suffix
   }
   // assume Cardinal
   return obj.prefix + String(obj.num) + obj.suffix

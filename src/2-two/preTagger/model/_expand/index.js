@@ -28,6 +28,8 @@ const switchDefaults = {
   'Person|Date': 'Month',
   // 'rob'
   'Person|Verb': 'Person',//+conjugations
+  // 'victoria'
+  'Person|Place': 'Person',
   // 'boxes'
   'Plural|Verb': 'Plural', //(these are already derivative)
 }

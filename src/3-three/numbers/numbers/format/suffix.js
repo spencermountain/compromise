@@ -22,22 +22,27 @@ const suffixes = {
 }
 
 const addSuffix = function (obj) {
-  let suff = ''
+  let res = {
+    suffix: '',
+    prefix: obj.prefix,
+  }
   // $5 to 'five dollars'
   if (prefixes.hasOwnProperty(obj.prefix)) {
-    suff += ' ' + prefixes[obj.prefix]
+    res.suffix += ' ' + prefixes[obj.prefix]
+    res.prefix = ''
   }
   // 5% to 'five percent'
   if (suffixes.hasOwnProperty(obj.suffix)) {
-    suff += ' ' + suffixes[obj.suffix]
+    res.suffix += ' ' + suffixes[obj.suffix]
   }
-  if (suff && obj.num === 1) {
-    suff = suff.replace(/s$/, '')
+  if (res.suffix && obj.num === 1) {
+    res.suffix = res.suffix.replace(/s$/, '')
   }
   // misc other suffixes
-  if (!suff && obj.suffix) {
-    suff += ' ' + obj.suffix
+  if (!res.suffix && obj.suffix) {
+    res.suffix += ' ' + obj.suffix
   }
-  return suff
+  return res
 }
+
 export default addSuffix

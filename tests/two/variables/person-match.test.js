@@ -89,6 +89,7 @@ let arr = [
   [`i met April O'neil`, '#Pronoun #PastTense #Person #Person'],
   // Verbs
   [`bob in the water`, '#Verb in the #Noun'],
+  // [`may is`, '#Person is'],
 ]
 test('match:', function (t) {
   arr.forEach(function (a) {

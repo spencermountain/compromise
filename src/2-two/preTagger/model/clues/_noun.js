@@ -63,5 +63,9 @@ export default {
     philosophy: n,
     room: n,
     authority: n,
+    says: n,
+    said: n,
+    wants: n,
+    wanted: n,
   },
 }

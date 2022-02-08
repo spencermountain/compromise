@@ -7,6 +7,7 @@ import nounVerb from './noun-verb.js'
 import personDate from './person-date.js'
 import personNoun from './person-noun.js'
 import personVerb from './person-verb.js'
+import personPlace from './person-place.js'
 
 const clues = {
   'Adj|Gerund': adjGerund,
@@ -18,6 +19,7 @@ const clues = {
   'Person|Noun': personNoun,
   'Person|Date': personDate,
   'Person|Verb': personVerb,
+  'Person|Place': personPlace,
 }
 
 const copy = (obj, more) => {

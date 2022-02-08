@@ -29,14 +29,19 @@ export default [
   // { match: `#Modal [${personMonth}]`, group: 0, tag: 'Person', reason: 'modal-ambig' },
   // // it is may
   // { match: `#Copula [${personMonth}]`, group: 0, tag: 'Person', reason: 'is-may' },
-  // // may is
-  // { match: `[${personMonth}] #Copula`, group: 0, tag: 'Person', reason: 'may-is' },
+  // may is
+  // { match: `[%Person|Date%] #Copula`, group: 0, tag: 'Person', reason: 'may-is' },
+  // may the
+  // { match: `[%Person|Date%] the`, group: 0, tag: 'Date', reason: 'may-the' },
+  // of may
+  // { match: `of [%Person|Date%]`, group: 0, tag: 'Date', reason: 'of-may' },
   // // with april
   // { match: `(that|with|for) [${personMonth}]`, group: 0, tag: 'Person', reason: 'that-month' },
   // // may 5th
   // { match: `[${personMonth}] the? #Value`, group: 0, tag: 'Month', reason: 'may-5th' },
-  // // 5th of may
-  // { match: `#Value of [${personMonth}]`, group: 0, tag: 'Month', reason: '5th-of-may' },
+
+  // ===person-noun===
+  // { match: `[%Person|Noun%] (will|had|has|said|says|told|did|learned|wants|wanted)`, tag: 'Person', reason: 'person-said' },
 
   // ===person-adjective===
   // rusty smith

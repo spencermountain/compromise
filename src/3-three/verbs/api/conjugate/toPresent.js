@@ -89,14 +89,17 @@ const forms = {
   },
 
   // has walked ->  (?)
-  'present-perfect': noop,
+  'present-perfect': (vb, parsed) => {
+    // return vb.replace('(have|had)', 'has')
+    return vb
+  },
 
   // had walked -> has walked
   'past-perfect': (vb, parsed) => {
     // not 'we has walked'
     let subj = getSubject(vb, parsed)
     let m = subj.subject
-    if (m.has('i') || m.has('we')) {
+    if (isPlural(vb, parsed) || m.has('i')) {
       vb = toInf(vb, parsed)// we walk
       vb.remove('had')
       return vb

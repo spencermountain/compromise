@@ -3,10 +3,91 @@ import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
+
+
+
+// past-tense issues
+// beat
+// bet
+// bias
+// bid
+// bike
+// boss
+// buzz
+// core
+// cost
+// cut
+// eye
+// fit
+// frame
+// game
+// gas
+// gloss
+// guess
+// hit
+// inhale
+// manoeuvre
+// mess
+// name
+// perfume
+// pined
+// pore
+// programme
+// prune
+// redo
+// rendezvous
+// scout
+// set
+// shed
+// ski
+// smile
+// spite
+// spread
+// sprinkle
+// stall
+// thrust
+// time
+// toll
+// tone
+// toss
+// vibe
+// zone
+
+// to-gerund issues
+// bang
+// blitz
+// boss
+// cross
+// fuzz
+// gas
+// gloss
+// mess
+// rendezvous
+// smell
+// yell
+
+// to-present issues
+// bias
+// blitz
+// boss
+// buzz
+// gloss
+// kiss
+// mess
+// rendezvous
+// ski
+// toss
+// witness
+
+// -toInf issues
+// framed
+// bored
+
 
 
 /*
+
 */
 let txt = "non plentiful"
 txt = "quiet relaunch"
@@ -27,12 +108,19 @@ txt = "means"
 txt = "I got tired of them"
 txt = "poison cut the pen"
 txt = "spaghetti and steamed rice"
-txt = "bob in the water"
-
+txt = `we've gone`
+txt = `the yankees have gone`
+txt = `the yankees had gone`
+txt = `we wrote`
 let doc = nlp(txt)
-doc.debug()
-// console.log(doc.json()[0])
+
+// let h = doc.match('have')
+// h.growRight('.').debug()
+doc.verbs().toPresentTense()
 // console.log(doc.verbs().conjugate())
+doc.debug()
+console.log(doc.text())
+// console.log(doc.json()[0])
 
 // doc.verbs().toPastTense()
 // console.log(doc.verbs().conjugate())

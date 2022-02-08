@@ -7,9 +7,10 @@ const checkWord = (term, obj) => {
   if (!term || !obj) {
     return null
   }
-  const found = obj[term.normal]
+  let str = term.normal || term.implicit
+  const found = obj[str]
   if (found && env.DEBUG_TAGS) {
-    console.log(`\n  \x1b[2m\x1b[3m     ↓ - '${term.normal}' \x1b[0m`)
+    console.log(`\n  \x1b[2m\x1b[3m     ↓ - '${str}' \x1b[0m`)
   }
   return found
 }
@@ -64,7 +65,7 @@ const setTag = function (term, tag, model) {
 const doSwitches = function (terms, i, model) {
   const { switches, clues } = model.two
   const term = terms[i]
-  let str = term.normal
+  let str = term.normal || term.implicit
   // support prefixes for switching words
   if (prefix.test(str) && !switches[str]) {
     str = str.replace(prefix, '') // could use some guards, here

@@ -45,7 +45,7 @@ const lastNoun = function (vb) {
   // i/she/he/they are very strong
   let pronoun = last.match('(i|he|she|we|you|they)')
   if (pronoun.found) {
-    return pronoun
+    return pronoun.nouns()
   }
   // these are also good hints
   let det = nouns.if('^(that|this|those)')
@@ -74,20 +74,15 @@ const lastNoun = function (vb) {
 }
 
 const isPlural = function (subj, vb) {
-  // jack and jill
-  if (subj.has('(and|or)')) {
-    return true
-  }
-  // quarterbacks
-  if (subj.has('#Plural')) {
-    return true
-  }
-  if (subj.has('(we|they)')) {
-    return true
-  }
   // 'we are' vs 'he is'
-  if (vb.has('(are)')) {
+  if (vb.has('are')) {
     return true
+  }
+  if (subj.has('(those|they)')) {
+    return true
+  }
+  if (subj.found && subj.isPlural) {
+    return subj.isPlural().found
   }
   return false
 }

@@ -48,7 +48,7 @@ test('toPast:', function (t) {
     ['is going to walk', 'was going to walk'],
     ['did walk', 'did walk'],
     ['used to walk', 'used to walk'],
-    ['do walk', 'did walk'],
+    ['we do walk', 'we did walk'],
     ['does walk', 'did walk'],
     ['he wants to walk', 'he wanted to walk'],
     ['he will want to walk', 'he wanted to walk'],
@@ -69,6 +69,7 @@ test('toPast:', function (t) {
     ['i barely write', 'i barely wrote'],
     ['we barely write', 'we barely wrote'],
     ['we will barely write', 'we barely wrote'],
+    // compound verb
     [`i'll start looking`, 'i started looking'],
     [`i won't start looking`, 'i did not start looking'],
     // negatives
@@ -85,7 +86,7 @@ test('toPast:', function (t) {
     ['waiters are furious', 'waiters were furious'],
     ['the waiters will walk out', 'the waiters walked out'],
     ['this union will disrupt', 'this union disrupted'],
-    ['this union has disrupted', 'this union disrupted'],
+    ['this union has disrupted', 'this union had disrupted'],
     ['it will have real feelings', 'it had real feelings'],
     // ['it had no real feelings', 'it had no real feelings'],
     // ['it will not have studied enough', 'it had not studied enough'],
@@ -114,14 +115,14 @@ test('toPast:', function (t) {
 
     // sneaky past participles
     // present
-    ['i am being awaken', 'i have been awaken'],
+    // ['i am being awaken', 'i have been awaken'],
     ['i should be awaken', 'i should have been driven'],
     // past->past
     ['i had been awaken', 'i had been awaken'],
     ['i should have been awaken', 'i should have been awaken'],
     // gerund
     ['when it is raining', 'when it was raining'],
-    ['i think it will be raining', 'i thought it will be raining'],
+    // ['i think it will be raining', 'i thought it will be raining'],
     ['when it was raining', 'when it was raining'],
   ]
   arr.forEach(a => {

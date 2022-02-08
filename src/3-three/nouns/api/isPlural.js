@@ -10,6 +10,9 @@ const isPlural = function (m, root) {
   if (m.has('#Noun and #Noun')) {
     return true
   }
+  if (m.has('(we|they)')) {
+    return true
+  }
   if (m.has('#Plural')) {
     return true
   }

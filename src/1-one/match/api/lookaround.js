@@ -46,7 +46,9 @@ const growLeft = function (regs, group) {
   this.forEach((m, n) => {
     let more = m.before(regs, group)
     if (more.found) {
-      ptrs[n][1] -= more.terms().length
+      let terms = more.terms()
+      ptrs[n][1] -= terms.length
+      ptrs[n][3] = terms.docs[0][0].id
     }
   })
   return this.update(ptrs)
@@ -59,7 +61,8 @@ const growRight = function (regs, group) {
   this.forEach((m, n) => {
     let more = m.after(regs, group)
     if (more.found) {
-      ptrs[n][2] += more.terms().length
+      let terms = more.terms()
+      ptrs[n][2] += terms.length
     }
   })
   return this.update(ptrs)

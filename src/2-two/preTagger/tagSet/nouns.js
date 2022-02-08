@@ -57,8 +57,7 @@ export default {
     // is: 'Place',
   },
   Organization: {
-    is: 'Singular',
-    also: ['ProperNoun'],
+    is: 'ProperNoun',
     not: ['Person', 'Place'],
   },
   SportsTeam: {

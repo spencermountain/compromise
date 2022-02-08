@@ -48,7 +48,7 @@ fns.replaceWith = function (input, keep = {}) {
   main.insertAfter(input)
   // are we replacing part of a contraction?
   if (original.has('@hasContraction') && main.contractions) {
-    let more = main.growLeft('@hasContraction+').growRight('@hasContraction+')
+    let more = main.grow('@hasContraction+')
     more.contractions().expand()
   }
   // delete the original terms

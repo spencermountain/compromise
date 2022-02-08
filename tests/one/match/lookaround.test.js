@@ -88,5 +88,30 @@ test('grow', function (t) {
 
   more = m.grow('*')
   t.equal(more.text(), m.sentence().text(), 'grow-all')
+
+  t.end()
+})
+
+test('grow-around', function (t) {
+  let doc = nlp(`i have gone`)
+  let h = doc.match('have')
+  let right = h.growRight('.')
+  t.equal(right.text(), 'have gone', 'grow-right')
+  let left = h.growLeft('.')
+  t.equal(left.text(), 'i have', 'grow-left')
+  let both = h.grow('.')
+  t.equal(both.text(), 'i have gone', 'grow-both')
+  t.end()
+})
+
+test('grow-contraction', function (t) {
+  let doc = nlp(`i've gone`)
+  let h = doc.match('have')
+  let right = h.growRight('.')
+  t.equal(right.text(), 'gone', 'grow-right')
+  let left = h.growLeft('.')
+  t.equal(left.text(), 'i\'ve', 'grow-left')
+  let both = h.grow('.')
+  t.equal(both.text(), 'i\'ve gone', 'grow-both')
   t.end()
 })

@@ -686,4 +686,6 @@ export default [
   'inform',
   'intoxicate',
   'perform',
+  'discuss',
+  'portray',
 ]

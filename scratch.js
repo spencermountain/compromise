@@ -3,11 +3,14 @@ import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 /*
 
 */
+//  #Noun (%Noun|Verb% && #Verb)
+
+
 let txt = "non plentiful"
 txt = "quiet relaunch"
 txt = "president-elect"
@@ -31,13 +34,19 @@ txt = `we've gone`
 txt = `the yankees have gone`
 txt = `the yankees had gone`
 txt = `we wrote`
+// feb 17
 txt = `They read Mickey Spillane and talk about Groucho`
 txt = `address`
 txt = `flown`
 txt = `misinform`
 txt = `relaunch`
 txt = `inbred`
-txt = `the # 1 art school in America`
+txt = `there is gender bias in sickness`
+txt = `for draft contract`
+txt = `Why doesn't Mike Tyson play Playstation`
+// txt = `and a mysterious cracking sound,`
+// txt = `pressure on the terrorist countries `
+// txt = `a major stumbling block to industrial growth`
 let doc = nlp(txt)
 // console.log(nlp.model().one.lexicon.buy)
 // doc.verbs().toPresentTense()

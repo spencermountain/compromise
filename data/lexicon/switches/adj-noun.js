@@ -98,4 +98,5 @@ export default [
   'void',
   'watershed',
   'welcome',
+  'terrorist',
 ]

@@ -690,6 +690,7 @@ export default [
   'dispatch',
   'remark',
   'resort',
+  'detail',
 
 
 ]

@@ -622,5 +622,7 @@ export default [
   'monochrome',
   'contradictory',
   'satisfactory',
+
+  'premier',
 ]
 

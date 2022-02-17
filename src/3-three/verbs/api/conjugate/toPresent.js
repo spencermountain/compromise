@@ -61,6 +61,12 @@ const forms = {
     let { root } = parsed
     // is it *only* a infinitive? - 'we buy' etc
     if (root.has('#Infinitive')) {
+      let subj = getSubject(vb, parsed)
+      let m = subj.subject
+      if (isPlural(vb, parsed) || m.has('i')) {
+        // keep it infinitive
+        return vb
+      }
       let str = root.text('normal')
       let pres = verbConjugate(str, vb.model).PresentTense
       if (str !== pres) {

@@ -1,4 +1,4 @@
-const prefix = /^(under|over|mis|re|un|dis)-?/
+const prefix = /^(under|over|mis|re|un|dis|pre|post)-?/
 // anti|non|extra|inter|intra|over
 const allowPrefix = new Set(['Verb', 'Infinitive', 'PastTense', 'Gerund', 'PresentTense', 'Adjective', 'Participle'])
 

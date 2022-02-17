@@ -5,7 +5,6 @@ import nlp from './src/three.js'
 
 // nlp.verbose('tagger')
 
-
 /*
 
 */
@@ -34,12 +33,19 @@ txt = `the yankees had gone`
 txt = `we wrote`
 txt = `They read Mickey Spillane and talk about Groucho`
 txt = `address`
+txt = `flown`
+txt = `misinform`
+txt = `relaunch`
+txt = `inbred`
+txt = `the # 1 art school in America`
 let doc = nlp(txt)
 // console.log(nlp.model().one.lexicon.buy)
 // doc.verbs().toPresentTense()
-console.log(doc.verbs().conjugate())
+// doc.verbs().toFutureTense()
+// console.log(doc.verbs().conjugate())
 doc.debug()
-console.log(doc.text())
+// doc.redact().debug()
+// console.log(doc.text())
 // console.log(doc.json()[0])
 
 // doc.verbs().toPastTense()

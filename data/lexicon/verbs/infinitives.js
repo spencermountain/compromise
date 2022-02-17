@@ -682,4 +682,8 @@ export default [
   'decommission',
   'blaze',
   'merge',
+
+  'inform',
+  'intoxicate',
+  'perform',
 ]

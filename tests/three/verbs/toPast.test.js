@@ -101,7 +101,6 @@ test('toPast:', function (t) {
     ['remakes', 'remade'],
     //ook
     ['shakes', 'shook'],
-    ['forsakes', 'forsook'],
 
     ['takes', 'took'],
     ['overtakes', 'overtook'],
@@ -116,7 +115,7 @@ test('toPast:', function (t) {
     // sneaky past participles
     // present
     // ['i am being awaken', 'i have been awaken'],
-    ['i should be awaken', 'i should have been driven'],
+    ['i should be awaken', 'i should have been awaken'],
     // past->past
     ['i had been awaken', 'i had been awaken'],
     ['i should have been awaken', 'i should have been awaken'],

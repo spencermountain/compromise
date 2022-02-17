@@ -68,29 +68,30 @@ const expandVerb = function (str, words, doPresent) {
 // harvest ambiguous words for any conjugations
 const expandVariable = function (switchWords, model) {
   let words = {}
+  const lex = model.one.lexicon
   //add first tag as an assumption for each variable word
   Object.keys(switchWords).forEach(w => {
     const name = switchWords[w]
     words[w] = switchDefaults[name]
     // conjugate some verbs
     if (name === 'Noun|Verb') {
-      expandVerb(w, words, false)
+      expandVerb(w, lex, false)
     }
     if (name === 'Adj|Present' || name === 'Person|Verb') {
-      expandVerb(w, words, true)
+      expandVerb(w, lex, true)
     }
     if (name === 'Adj|Gerund' || name === 'Noun|Gerund') {
       let inf = toInfinitive(w, tmpModel, 'Gerund')
-      if (!words[inf]) {
+      if (!lex[inf]) {
         words[inf] = 'Infinitive' //expand it later
       }
     }
-    // if (name === 'Adj|Past') {
-    //   let inf = toInfinitive(w, tmpModel, 'PastTense')
-    //   if (!words[inf]) {
-    //     words[inf] = 'Infinitive' //expand it later
-    //   }
-    // }
+    if (name === 'Adj|Past') {
+      let inf = toInfinitive(w, tmpModel, 'PastTense')
+      if (!lex[inf]) {
+        words[inf] = 'Infinitive' //expand it later
+      }
+    }
   })
   // add conjugations
   model = expandLexicon(words, model)

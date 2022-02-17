@@ -2034,4 +2034,6 @@ export default [
   ['skidded', 'skid'],
   ['dissuaded', 'dissuade'],
   ['poked', 'poke'],
+  ['retook', 'retake'],
+  ['levelled', 'level'],
 ]

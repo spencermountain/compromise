@@ -353,7 +353,6 @@ export default [
   'match',
   'measure',
   'mention',
-  'merchandise',
   'merge',
   'merit',
   'mess',
@@ -691,5 +690,6 @@ export default [
   'dispatch',
   'remark',
   'resort',
+
 
 ]

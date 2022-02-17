@@ -372,7 +372,8 @@ export default [
   "autopsy",
   "city",
   "honesty",
-  "guy"
+  "guy",
+  'school',
 ]
 
 

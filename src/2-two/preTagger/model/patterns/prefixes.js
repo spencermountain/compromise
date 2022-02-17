@@ -14,6 +14,7 @@ export default [
     // 3-letter
     neo: Noun,
     bio: Noun,
+    // pre: Noun,
     'de-': Verb,
     're-': Verb,
     'un-': Verb,

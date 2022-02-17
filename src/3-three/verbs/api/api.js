@@ -95,7 +95,7 @@ const api = function (View) {
           PresentTense: toPresent(vb.clone(), parsed, info.form).text('normal'),
           FutureTense: toFuture(vb.clone(), parsed, info.form).text('normal'),
         }
-      })
+      }, [])
     }
 
     /** return only verbs with 'not'*/

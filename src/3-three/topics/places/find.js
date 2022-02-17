@@ -1,5 +1,5 @@
 const find = function (doc) {
-  let m = doc.match('#Place+')
+  let m = doc.match('(#Place|#Address)+')
 
   // split all commas except for 'paris, france'
   let splits = m.match('@hasComma')

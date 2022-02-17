@@ -244,7 +244,7 @@ let arr = [
   [`putting his hand`, '#Verb #Possessive #Noun'],
   [`understand my answer`, '#Verb #Possessive #Noun'],
   [`child’s play`, '#Possessive #Noun'],
-  [`describes his brush with death`, '#Verb #Possessive #Noun with #Noun'],
+  [`he describes his brush with death`, 'he #Verb #Possessive #Noun with #Noun'],
   [`decide their fate`, '#Verb #Possessive #Noun'],
   [`take your time`, '#Verb #Possessive #Noun'],
   [`strengthen our trade relations`, '#Verb #Possessive #Noun #Plural'],

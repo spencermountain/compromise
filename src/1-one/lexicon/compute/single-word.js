@@ -5,7 +5,8 @@ const allowPrefix = new Set(['Verb', 'Infinitive', 'PastTense', 'Gerund', 'Prese
 // tag any words in our lexicon
 const checkLexicon = function (terms, i, world) {
   const { model, methods } = world
-  const fastTag = methods.one.fastTag
+  // const fastTag = methods.one.fastTag
+  const setTag = methods.one.setTag
   const lexicon = model.one.lexicon
   // basic lexicon lookup
   let t = terms[i]
@@ -13,7 +14,8 @@ const checkLexicon = function (terms, i, world) {
   // normal lexicon lookup
   if (lexicon[word] !== undefined && lexicon.hasOwnProperty(word)) {
     let tag = lexicon[word]
-    fastTag(t, tag, '1-lexicon')
+    setTag([t], tag, world, '1-lexicon')
+    // fastTag(t, tag, '1-lexicon')
     return true
   }
   // lookup aliases in the lexicon
@@ -21,7 +23,8 @@ const checkLexicon = function (terms, i, world) {
     let found = t.alias.find(str => lexicon.hasOwnProperty(str))
     if (found) {
       let tag = lexicon[found]
-      fastTag(t, tag, '1-lexicon-alias')
+      setTag([t], tag, world, '1-lexicon-alias')
+      // fastTag(t, tag, '1-lexicon-alias')
       return true
     }
   }
@@ -32,7 +35,8 @@ const checkLexicon = function (terms, i, world) {
       // only allow prefixes for verbs/adjectives
       if (allowPrefix.has(lexicon[stem])) {
         // console.log('->', word, stem, lexicon[stem])
-        fastTag(t, lexicon[stem], '1-lexicon-prefix')
+        setTag([t], lexicon[stem], world, '1-lexicon-prefix')
+        // fastTag(t, lexicon[stem], '1-lexicon-prefix')
         return true
       }
     }

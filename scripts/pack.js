@@ -3,9 +3,7 @@ import fs from 'fs'
 import { pack } from 'efrt'
 import { compress, learn } from 'suffix-thumb'
 import lexicon from '../data/lexicon/index.js'
-import models from '../data/models/index.js'
-// import switches from '../lib/switches/index.js'
-// import senses from '../lib/senses/index.js'
+import models from '../data/pairs/index.js'
 
 const steps = [
   {
@@ -32,11 +30,11 @@ const steps = [
     },
   },
   {
-    label: 'models',
+    label: 'pairs',
     path: './src/2-two/preTagger/model/models/_data.js',
     compress: function () {
       Object.keys(models).forEach(k => {
-        console.log('  - ' + k)
+        console.log('     - ' + k)
         const model = learn(models[k])
         models[k] = compress(model)
       })

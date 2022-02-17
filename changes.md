@@ -71,6 +71,8 @@ a subset of a document can be cloned.
 match(['foo', 'far'])
 ```
 
+### Tagger
+<!-- - **[change]** Infinitive & Gerund are no longer PresentTense, automatically -->
 
 ### Number parsing
 `compromise-plugin-numbers` is now included by default, which is great news.

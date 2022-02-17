@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[two/gerund-match] '
+const here = '[two/gerund] '
 
 let arr = [
   // === gerunds ===

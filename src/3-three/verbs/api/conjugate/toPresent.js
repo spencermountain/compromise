@@ -56,7 +56,19 @@ const forms = {
   // walk
   'infinitive': simple,
   // he walks -> he walked
-  'simple-present': noop,
+  'simple-present': (vb, parsed) => {
+    const { verbConjugate } = vb.methods.two.transform
+    let { root } = parsed
+    // is it *only* a infinitive? - 'we buy' etc
+    if (root.has('#Infinitive')) {
+      let str = root.text('normal')
+      let pres = verbConjugate(str, vb.model).PresentTense
+      if (str !== pres) {
+        vb = vb.replace(root, pres, keep)
+      }
+    }
+    return vb
+  },
   // he walked
   'simple-past': simple,
   // he will walk -> he walked

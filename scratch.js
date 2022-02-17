@@ -6,86 +6,6 @@ import nlp from './src/three.js'
 // nlp.verbose('tagger')
 
 
-
-// past-tense issues
-// beat
-// bet
-// bias
-// bid
-// bike
-// boss
-// buzz
-// core
-// cost
-// cut
-// eye
-// fit
-// frame
-// game
-// gas
-// gloss
-// guess
-// hit
-// inhale
-// manoeuvre
-// mess
-// name
-// perfume
-// pined
-// pore
-// programme
-// prune
-// redo
-// rendezvous
-// scout
-// set
-// shed
-// ski
-// smile
-// spite
-// spread
-// sprinkle
-// stall
-// thrust
-// time
-// toll
-// tone
-// toss
-// vibe
-// zone
-
-// to-gerund issues
-// bang
-// blitz
-// boss
-// cross
-// fuzz
-// gas
-// gloss
-// mess
-// rendezvous
-// smell
-// yell
-
-// to-present issues
-// bias
-// blitz
-// boss
-// buzz
-// gloss
-// kiss
-// mess
-// rendezvous
-// ski
-// toss
-// witness
-
-// -toInf issues
-// framed
-// bored
-
-
-
 /*
 
 */
@@ -112,12 +32,12 @@ txt = `we've gone`
 txt = `the yankees have gone`
 txt = `the yankees had gone`
 txt = `we wrote`
+txt = `They read Mickey Spillane and talk about Groucho`
+txt = `address`
 let doc = nlp(txt)
-
-// let h = doc.match('have')
-// h.growRight('.').debug()
-doc.verbs().toPresentTense()
-// console.log(doc.verbs().conjugate())
+// console.log(nlp.model().one.lexicon.buy)
+// doc.verbs().toPresentTense()
+console.log(doc.verbs().conjugate())
 doc.debug()
 console.log(doc.text())
 // console.log(doc.json()[0])

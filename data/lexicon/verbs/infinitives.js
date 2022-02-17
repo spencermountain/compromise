@@ -247,6 +247,7 @@ export default [
   'emerge',
   'emphasize',
   'empower',
+  'enjoy',
   'enable',
   'enact',
   'enclose',

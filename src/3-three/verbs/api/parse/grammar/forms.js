@@ -25,6 +25,8 @@ const verbForms = {
   'simple-present': [
     // he walks',
     ['^#PresentTense$', [present]],
+    // we walk
+    ['^#Infinitive$', [present]],
   ],
   'simple-past': [
     // he walked',

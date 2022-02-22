@@ -4,9 +4,13 @@ const api = function (View) {
     this.compute('syllables')
     let all = []
     this.docs.forEach(terms => {
+      let some = []
       terms.forEach(term => {
-        all = all.concat(term.syllables)
+        some = some.concat(term.syllables)
       })
+      if (some.length > 0) {
+        all.push(some)
+      }
     })
     return all
   }

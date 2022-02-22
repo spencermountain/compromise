@@ -6,7 +6,7 @@ nlp.plugin(speechPlugin)
 // nlp.verbose('date')
 
 let txt = ''
-txt = 'seventh millenium'
+txt = 'seventh millenium. white collar'
 
 // let doc = nlp(txt).compute(['soundsLike', 'syllables'])
 // console.dir(doc.json()[0], { depth: 5 })

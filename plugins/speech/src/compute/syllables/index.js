@@ -1,6 +1,6 @@
 import getSyllables from './syllables.js'
 
-const defaultObj = { normal: true, text: true, terms: false }
+// const defaultObj = { normal: true, text: true, terms: false }
 
 const syllables = function (view) {
   view.docs.forEach(terms => {

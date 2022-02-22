@@ -63,7 +63,7 @@ const ifFn = function (regs, group) {
     return this.update(ptrs)
   }
   if (isView(regs)) {
-    return this.intersection(regs)
+    return this.filter(m => m.intersection(regs).found)
   }
   return this.none()
 }

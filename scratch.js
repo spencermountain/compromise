@@ -57,14 +57,10 @@ let txt = "non plentiful"
 // txt = `pressure on the terrorist countries `
 // txt = `a major stumbling block to industrial growth`
 let doc = nlp('one match two. Two match three match. four nope.')
-// console.log(nlp.model().one.lexicon.buy)
-// doc.verbs().toPresentTense()
-// doc.verbs().toFutureTense()
-// console.log(doc.verbs().conjugate())
-// doc.debug()
 let found = doc.match('match+')
-
-console.log(doc.html({ blue: found }))
+doc = doc.if(found)
+doc.debug()
+// console.log(doc.html({ blue: found }))
 
 
 

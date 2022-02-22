@@ -1,3 +1,5 @@
+const trailSpace = /[\s\.?!]+$/
+
 const toText = function (term) {
   let pre = term.pre || ''
   let post = term.post || ''
@@ -10,7 +12,7 @@ const html = function (obj) {
   Object.keys(obj).forEach(k => {
     let ptrs = obj[k].fullPointer
     ptrs.forEach(a => {
-      starts[a[3]] = { tag: k, len: a[2] }
+      starts[a[3]] = { tag: k, end: a[2] }
     })
   })
   // create the text output
@@ -20,13 +22,19 @@ const html = function (obj) {
       let t = terms[i]
       // do a span tag
       if (starts.hasOwnProperty(t.id)) {
-        let { tag, len } = starts[t.id]
+        let { tag, end } = starts[t.id]
         out += `<span class="${tag}">`
-        for (let k = i; k < len; k += 1) {
+        for (let k = i; k < end; k += 1) {
           out += toText(terms[k])
         }
-        out += `</span>`
-        i += len - 1
+        // move trailing whitespace after tag
+        let after = ''
+        out = out.replace(trailSpace, (a, b) => {
+          after = a
+          return ''
+        })
+        out += `</span>${after}`
+        i = end - 1
       } else {
         out += toText(t)
       }

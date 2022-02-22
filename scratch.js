@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/one.js'
+import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
@@ -12,7 +12,7 @@ let plg = {
 }
 nlp.plugin(plg)
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 /*
 
@@ -56,12 +56,24 @@ let txt = "non plentiful"
 // txt = `and a mysterious cracking sound,`
 // txt = `pressure on the terrorist countries `
 // txt = `a major stumbling block to industrial growth`
-let doc = nlp('the stylo', { stylo: 'FemaleNoun' })
+let doc = nlp('i found the stylo on the table.')
 // console.log(nlp.model().one.lexicon.buy)
 // doc.verbs().toPresentTense()
 // doc.verbs().toFutureTense()
 // console.log(doc.verbs().conjugate())
-doc.debug()
+// doc.debug()
+
+
+let nouns = doc.nouns()
+console.log(doc.html({
+  blue: nouns
+}))
+
+
+
+
+
+
 // doc.redact().debug()
 // console.log(doc.text())
 // console.log(doc.json()[0])

@@ -59,8 +59,7 @@ let txt = "non plentiful"
 let doc = nlp('one match two. Two match three match. four nope.')
 let found = doc.match('match+')
 doc = doc.if(found)
-doc.debug()
-// console.log(doc.html({ blue: found }))
+console.log(doc.html({ blue: found }))
 
 
 

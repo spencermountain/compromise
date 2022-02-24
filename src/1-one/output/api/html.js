@@ -1,4 +1,4 @@
-const trailSpace = /[\s\.?!]+$/
+const trailSpace = /\s+$/
 
 const toText = function (term) {
   let pre = term.pre || ''

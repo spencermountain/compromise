@@ -14,7 +14,7 @@ const checkLexicon = function (terms, i, world) {
   // normal lexicon lookup
   if (lexicon[word] !== undefined && lexicon.hasOwnProperty(word)) {
     let tag = lexicon[word]
-    setTag([t], tag, world, '1-lexicon')
+    setTag([t], tag, world, false, '1-lexicon')
     // fastTag(t, tag, '1-lexicon')
     return true
   }

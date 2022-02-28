@@ -99,7 +99,7 @@
     "eslint-plugin-regexp": "1.5.1",
     "minimum-model": "^0.0.1",
     "nlp-corpus": "^4.2.0",
-    "rollup": "2.66.1",
+    "rollup": "2.68.0",
     "rollup-plugin-filesize-check": "0.0.1",
     "rollup-plugin-terser": "7.0.2",
     "shelljs": "0.8.5",

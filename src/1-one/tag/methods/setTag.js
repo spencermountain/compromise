@@ -64,11 +64,28 @@ const isArray = function (arr) {
   return Object.prototype.toString.call(arr) === '[object Array]'
 }
 
+// verbose-mode tagger debuging
+const log = (term, tag, reason = '') => {
+  const yellow = str => '\x1b[33m\x1b[3m' + str + '\x1b[0m'
+  const i = str => '\x1b[3m' + str + '\x1b[0m'
+  let word = term.text || '[' + term.implicit + ']'
+  if (typeof tag !== 'string' && tag.length > 2) {
+    tag = tag.slice(0, 2).join(', #') + ' +' //truncate the list of tags
+  }
+  tag = typeof tag !== 'string' ? tag.join(', #') : tag
+  console.log(` ${yellow(word).padEnd(24)} \x1b[32m→\x1b[0m #${tag.padEnd(25)}  ${i(reason)}`) // eslint-disable-line
+}
+
 // add a tag to all these terms
-const setTag = function (terms, tag, world = {}, isSafe) {
+const setTag = function (terms, tag, world = {}, isSafe, reason) {
   const tagSet = world.model.one.tagSet || {}
   if (!tag) {
     return
+  }
+  // some logging for debugging
+  let env = typeof process === 'undefined' ? self.env || {} : process.env
+  if (env && env.DEBUG_TAGS) {
+    log(terms[0], tag, reason)
   }
   if (isArray(tag) === true) {
     tag.forEach(tg => setTag(terms, tg, world, isSafe))

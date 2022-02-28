@@ -10,7 +10,7 @@ const checkMulti = function (terms, i, lexicon, setTag, world) {
     if (lexicon.hasOwnProperty(str) === true) {
       let tag = lexicon[str]
       let ts = terms.slice(i, i + skip + 1)
-      setTag(ts, tag, world, '1-multi-lexicon')
+      setTag(ts, tag, world, false, '1-multi-lexicon')
       return true
     }
   }

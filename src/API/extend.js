@@ -58,5 +58,8 @@ const extend = function (plugin, world, View, nlp) {
   if (plugin.words) {
     nlp.addWords(plugin.words)
   }
+  if (plugin.mutate) {
+    plugin.mutate(world)
+  }
 }
 export default extend

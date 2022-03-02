@@ -21,7 +21,7 @@ const tokenize = function (input, world) {
       terms = terms.map(splitWhitespace)
       // add normalized term format, always
       terms.forEach((term, i) => {
-        normalize(term)
+        normalize(term, world)
       })
       return terms
     })

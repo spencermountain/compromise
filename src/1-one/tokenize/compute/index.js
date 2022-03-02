@@ -18,8 +18,8 @@ const termLoop = function (view, fn) {
 
 const methods = {
   alias: (view) => termLoop(view, alias),
-  normal: (view) => termLoop(view, normal),
   machine: (view) => termLoop(view, machine),
+  normal: (view) => termLoop(view, normal),
   freq,
   offset,
   index,

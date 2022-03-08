@@ -54,7 +54,7 @@
     "test:dates": "tape \"./plugins/dates/tests/**/*.test.js\" | tap-dancer",
     "debug": "node ./scripts/debug.js",
     "match": "node ./scripts/match.js",
-    "coverage": "nyc -r lcov -n 'src/**/*' -n 'plugins/**/*' npm run test",
+    "coverage": "c8 -r lcov -n 'src/**/*' -n 'plugins/**/*' npm run test",
     "codecov": "npm run coverage && codecov -t 15039ad1-b495-48cd-b4a0-bcf124c9b318",
     "perf": "node ./scripts/perf/index.js",
     "flame": "clinic flame -- node ./scripts/perf/flame",

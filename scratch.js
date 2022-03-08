@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/three.js'
+import nlp from './src/one.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
@@ -8,6 +8,9 @@ let plg = {
     FemaleNoun: {
       is: 'Noun'
     }
+  },
+  words: {
+    'captain obvious': 'Captain'
   }
 }
 nlp.plugin(plg)
@@ -62,7 +65,7 @@ let txt = "non plentiful"
 // console.log(doc.html({ blue: found }))
 
 
-nlp('i won\'t go to the hill').verbs().debug()
+nlp('it was captain obvious').debug()
 
 
 

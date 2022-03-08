@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 // Run arbitrary (but typically npm) commands for each plugin
 // Example: "node ./plugins.js npm install"
-const sh = require('shelljs')
+import sh from 'shelljs'
 
 // process.argv contains the complete command-line, with [0] as the node
 // executable, and [1] as the script (this file).  [2] is the beginning of any

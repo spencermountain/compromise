@@ -32,6 +32,16 @@ test('addWords side-load:', function (t) {
   t.end()
 })
 
+test('lexicon compute:', function (t) {
+  let words = {
+    'captain obvious': 'Captain'
+  }
+  let doc = nlp('it was captain obvious', words)
+  let m = doc.match('#Captain+')
+  t.equal(m.text(), 'captain obvious', here + 'multi-word')
+  t.end()
+})
+
 test('tricky lexicon:', function (t) {
   let lexicon = {
     'bed bath and beyond': 'Organization',

@@ -67,7 +67,7 @@ const buildTrie = function (phrases, world) {
       }
     }
   }
-  return { goNext, endAs, failTo, }
+  return { goNext, endAs, failTo }
 }
 export default buildTrie
 

@@ -22,10 +22,10 @@ const byEnd = {
   // how'd
   d: (terms, i) => apostropheD(terms, i),
   // bob's
-  s: (terms, i, world) => {
+  s: (terms, i) => {
     // [bob's house] vs [bob's cool]
     if (shouldSplit(terms, i) === true) {
-      return apostropheS(terms, i)
+      apostropheS(terms, i)
     }
   },
 }

@@ -20,7 +20,7 @@ const subDollarSign = function (input, main) {
     return input
   }
   let groups = main.groups()
-  input = input.replace(dollarStub, (a, b, c) => {
+  input = input.replace(dollarStub, (a) => {
     let num = a.replace(/\$/, '')
     if (groups.hasOwnProperty(num)) {
       return groups[num].text()

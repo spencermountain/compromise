@@ -8,7 +8,7 @@ const alphaNames = new Set(['alpha', 'alphabetical'])
 const customSort = function (view, fn) {
   let ptrs = view.fullPointer
   let all = []
-  ptrs.forEach((ptr, i) => {
+  ptrs.forEach((ptr) => {
     all.push(view.update([ptr]))
   })
   let none = view.none()

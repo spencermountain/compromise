@@ -22,9 +22,8 @@ const combineViews = function (home, input) {
   }
   // update n of new pointer, to end of our pointer
   let ptrs = input.fullPointer
-  ptrs = ptrs.map(a => {
+  ptrs.forEach(a => {
     a[0] += home.document.length
-    return a
   })
   home.document = combineDocs(home.document, input.document)
   return home.all()

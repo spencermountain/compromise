@@ -1,5 +1,5 @@
 // derive clever things from our lexicon key-value pairs
-const expand = function (words, world) {
+const expand = function (words) {
   // const { methods, model } = world
   let lex = {}
   // console.log('start:', Object.keys(lex).length)

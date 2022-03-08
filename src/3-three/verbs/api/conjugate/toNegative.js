@@ -56,7 +56,7 @@ const forms = {
   },
 
   // walk! -> 'do not walk'
-  'imperative': (vb, parsed) => {
+  'imperative': (vb) => {
     vb.prepend('do not')
     return vb
   },
@@ -68,7 +68,7 @@ const forms = {
     return doesNot(vb, parsed)
   },
 
-  'passive-past': (vb, parsed) => {
+  'passive-past': (vb) => {
     // got walked -> did not get walked
     if (vb.has('got')) {
       vb.replace('got', 'get', keep)
@@ -84,7 +84,7 @@ const forms = {
     }
     return vb
   },
-  'auxiliary-past': (vb, parsed) => {
+  'auxiliary-past': (vb) => {
     // used to walk
     if (vb.has('used')) {
       vb.prepend('did not')

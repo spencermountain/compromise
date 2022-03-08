@@ -61,9 +61,6 @@ const toId = function (term) {
   let r = parseInt(Math.random() * 36, 10)
   id += (r).toString(36)
 
-  if (id.length !== 9) {
-    console.error('id !9 ' + id)
-  }
   return term.normal + '|' + id.toUpperCase()
 }
 

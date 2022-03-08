@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/one.js'
+import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
@@ -56,13 +56,13 @@ let txt = "non plentiful"
 // txt = `and a mysterious cracking sound,`
 // txt = `pressure on the terrorist countries `
 // txt = `a major stumbling block to industrial growth`
-let doc = nlp('one match two. Two match three match. four nope.')
+// let doc = nlp('one match two. Two match three match. four nope.')
 // let found = doc.match('match+')
 // doc = doc.if(found)
 // console.log(doc.html({ blue: found }))
 
 
-
+nlp('i won\'t go to the hill').verbs().debug()
 
 
 

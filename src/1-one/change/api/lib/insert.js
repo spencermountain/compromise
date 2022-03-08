@@ -21,7 +21,7 @@ const endSpace = function (terms) {
 
 // sentence-ending punctuation should move in append
 const movePunct = (source, end, needle) => {
-  const juicy = /[.?!,;:)-–—'"]/g
+  const juicy = /[\.\?!,;:)-–—'"]/g
   let wasLast = source[end - 1]
   if (!wasLast) {
     return

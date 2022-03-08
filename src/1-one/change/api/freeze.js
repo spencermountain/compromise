@@ -16,7 +16,7 @@ const methods = {
   // make it fast again
   unFreeze: function () {
     let pointer = this.fullPointer
-    pointer = pointer.map((a, n) => {
+    pointer = pointer.map((a) => {
       return a.slice(0, 3)
     })
     this.ptrs = pointer

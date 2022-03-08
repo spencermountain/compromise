@@ -12,7 +12,7 @@ const expand = function (m) {
 const isArray = (arr) => Object.prototype.toString.call(arr) === '[object Array]'
 
 const addIds = function (terms) {
-  terms.forEach((term, i) => {
+  terms.forEach((term) => {
     term.id = uuid(term)
   })
   return terms
@@ -56,7 +56,7 @@ const insert = function (input, view, prepend) {
     }
     // harden the pointer
     if (!document[n][ptr[1]]) {
-      console.log('soft-pointer', ptr)
+      // console.log('soft-pointer', ptr)
     } else {
       ptr[3] = document[n][ptr[1]].id
     }

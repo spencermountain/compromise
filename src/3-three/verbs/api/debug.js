@@ -2,17 +2,6 @@
 import parseVerb from './parse/index.js'
 
 const reset = '\x1b[0m'
-// const c = {
-//   green: str => '\x1b[32m' + str + reset,
-//   red: str => '\x1b[31m' + str + reset,
-//   blue: str => '\x1b[34m' + str + reset,
-//   magenta: str => '\x1b[35m' + str + reset,
-//   cyan: str => '\x1b[36m' + str + reset,
-//   yellow: str => '\x1b[33m' + str + reset,
-//   black: str => '\x1b[30m' + str + reset,
-//   dim: str => '\x1b[2m' + str + reset,
-//   italic: str => '\x1b[3m' + str + reset,
-// }
 const yellow = str => `\x1b[2m\x1b[33m\x1b[3m ${str} ${reset}`
 const bgGreen = str => `\x1b[42m\x1b[30m •${str}• ${reset}`
 const dim = str => `\x1b[2m\x1b[3m ${str} ${reset}`
@@ -43,6 +32,6 @@ const debug = function (vb) {
   }
   console.log(`\n`)
   // call the original debug
-  vb.update(vb.pointer).debug()
+  // vb.update(vb.pointer).debug()
 }
 export default debug

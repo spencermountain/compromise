@@ -1,0 +1,15 @@
+{
+  "entry": [
+    "src/three.js"
+  ],
+  "extensions": [
+    ".js"
+  ],
+  "ignorePatterns": [
+    "**/node_modules/**"
+  ],
+  "ignoreUnimported": [
+    "src/i18n/locales/en.ts",
+    "src/i18n/locales/nl.ts"
+  ]
+}

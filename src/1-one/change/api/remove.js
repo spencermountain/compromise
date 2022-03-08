@@ -49,16 +49,6 @@ const pluckOut = function (document, nots) {
 }
 
 
-
-const removeSelf = function (m, view) {
-
-}
-const removePart = function (m, view) {
-
-}
-
-
-
 const methods = {
   /** */
   remove: function (reg) {

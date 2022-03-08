@@ -38,7 +38,7 @@ const api = function (View) {
         return toInfinitive(vb, parsed)
       })
     }
-    toNegative(n) {
+    toNegative() {
       // return getNth(this, n).map(vb => {
       //   let parsed = parse(vb)
       //   return toInfinitive(vb, parsed)

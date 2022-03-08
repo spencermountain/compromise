@@ -15,13 +15,13 @@ const tokenize = function (input, world) {
     // split into sentences
     let sentences = splitSentences(input, model)
     // split into word objects
-    input = sentences.map((txt, n) => {
+    input = sentences.map((txt) => {
       let terms = splitTerms(txt, model)
       // split into [pre-text-post]
       terms = terms.map(splitWhitespace)
       // add normalized term format, always
-      terms.forEach((term, i) => {
-        normalize(term, world)
+      terms.forEach((t) => {
+        normalize(t, world)
       })
       return terms
     })

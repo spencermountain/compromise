@@ -14,9 +14,9 @@ test('fraction/percent conversion', function (t) {
   arr.forEach((a) => {
     let doc = nlp(a[0])
     doc.percentages().toFraction()
-    t.equal(doc.text(), a[1], 'toFraction')
+    t.equal(doc.text(), a[1], here+'toFraction')
     doc.fractions().toPercentage()
-    t.equal(doc.text(), a[0], 'toPercentage')
+    t.equal(doc.text(), a[0], here+'toPercentage')
   })
   t.end()
 })

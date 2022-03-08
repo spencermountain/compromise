@@ -25,7 +25,7 @@ let matches = [
   //march the 12th
   { match: '#Month the #Value', tag: 'Date', reason: 'month-the-value' },
   // march to april
-  { match: '[(march|may)] to? #Date', tag: 'Date', group: 0, tag: 'Month', reason: 'march-to' },
+  { match: '[(march|may)] to? #Date',  group: 0, tag: 'Month', reason: 'march-to' },
   // 'march'
   { match: '^(march|may)$', tag: 'Month', reason: 'single-march' },
   //March or June

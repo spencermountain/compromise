@@ -33,9 +33,9 @@ class Unit {
     return d
   }
   log() {
-    console.log('--')
+    console.log('--')//eslint-disable-line
     this.d.log()
-    console.log('\n')
+    console.log('\n')//eslint-disable-line
     return this
   }
   applyShift(obj = {}) {

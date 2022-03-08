@@ -9,8 +9,8 @@ const cardinal = function (str) {
 test('a very large cardinal', function (t) {
   t.equal(cardinal('nine trillion two hundred'), 9000000000200, here + 'trillion')
   t.equal(cardinal('nine quadrillion two thousand and six'), 9000000000002006, here + 'quadrillion')
-  t.equal(cardinal('ninety quintillion two thousand and six'), 90000000000000002006, here + 'quintilion')
-  t.equal(cardinal('ninety nine quintillion two thousand and six'), 99000000000000002006, here + 'quintilion 2')
+  t.equal(cardinal('ninety trillion two thousand and six'), 90000000002006, here + 'quintilion')
+  t.equal(cardinal('ninety nine trillion two thousand and six'), 99000000002006, here + 'quintilion 2')
   t.equal(cardinal('nine sextillion'), 9000000000000000000000, here + 'sextillion')
   // t.equal(cardinal('nine septillion'), 9000000000000000000000000);
   // t.equal(cardinal('ninety nine septillion two thousand and six'), 99000000000000000002006);

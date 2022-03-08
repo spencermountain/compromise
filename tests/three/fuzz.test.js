@@ -48,7 +48,7 @@ const goodIds = function (doc) {
   doc.docs.forEach(terms => {
     terms.forEach(term => {
       if (!term.id || all[term.id] === true) {
-        return false
+        return
       }
       all[term.id] = true
     })

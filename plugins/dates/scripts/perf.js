@@ -1,3 +1,4 @@
+/* eslint-disable no-console*/
 import corpus from 'nlp-corpus'
 import nlp from '../../../src/three.js'
 import plugin from '../src/plugin.js'

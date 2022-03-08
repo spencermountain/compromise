@@ -47,5 +47,7 @@ const tagYear = function (terms, i) {
       }
     }
   }
+  return null
 }
+
 export default tagYear

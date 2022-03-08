@@ -3,11 +3,13 @@ const isCapital = (terms, i) => {
   if (terms[i].tags.has('ProperNoun')) {// 'Comfort Inn'
     return 'Noun'
   }
+  return null
 }
 const isAloneVerb = (terms, i) => {
   if (i === 0 && !terms[1]) {// 'Help'
     return 'Verb'
   }
+  return null
 }
 
 // "food and programs" vs "writes and programs"

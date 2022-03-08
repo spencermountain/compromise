@@ -1,3 +1,4 @@
+/* eslint-disable no-console, no-unused-vars */
 import { parentPort } from 'worker_threads'
 // const nlp = require('../../src')
 import nlp from './_lib.js'

@@ -6,22 +6,22 @@ const here = '[two/lookahead] '
 test('look-ahead', function (t) {
   let doc = nlp(`i walked to a store today. the store was very nice`)
   let m = doc.match('store').lookAhead('#Adjective')
-  t.deepEqual(m.out('array'), ['nice'], 'found all upcoming adjectives')
+  t.deepEqual(m.out('array'), ['nice'], here+'found all upcoming adjectives')
 
   let m2 = doc.match('store').lookAhead('.')
-  t.deepEqual(m2.out('array'), ['today.', 'was', 'very', 'nice'], 'found all upcoming words')
+  t.deepEqual(m2.out('array'), ['today.', 'was', 'very', 'nice'], here+'found all upcoming words')
 
   let m3 = doc.match('store').lookAhead('farmer')
-  t.equal(m3.found, false, 'lookahead empty')
+  t.equal(m3.found, false, here+'lookahead empty')
 
   let m4 = doc.match('nice').lookAhead('.')
-  t.equal(m4.found, false, 'lookahead on edge empty')
+  t.equal(m4.found, false, here+'lookahead on edge empty')
 
   let m5 = nlp('it is raining').match('raining').lookAhead()
-  t.equal(m5.found, false, 'lookahead at end empty')
+  t.equal(m5.found, false, here+'lookahead at end empty')
 
   let m6 = nlp('it is raining today and tomorrow').match('raining').lookAhead()
-  t.equal(m6.text(), 'today and tomorrow', 'lookahead blank finds all')
+  t.equal(m6.text(), 'today and tomorrow', here+'lookahead blank finds all')
 
   t.end()
 })

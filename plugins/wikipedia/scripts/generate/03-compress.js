@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { pack } from 'efrt'
 import fs from 'fs'
 import conf from '../../config.js'

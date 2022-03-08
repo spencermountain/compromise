@@ -49,7 +49,7 @@ const forms = {
   'future-progressive': noop,
 
   // has walked ->
-  'present-perfect': (vb, parsed) => {
+  'present-perfect': (vb) => {
     vb.match('(have|has)').replaceWith('will have')
     return vb
   },
@@ -59,7 +59,7 @@ const forms = {
   'future-perfect': noop,
 
   // has been walking
-  'present-perfect-progressive': vb => vb.replace('has', 'will have',),
+  'present-perfect-progressive': vb => vb.replace('has', 'will have'),
   // had been walking
   'past-perfect-progressive': vb => vb.replace('had', 'will have'),
   // will have been ->

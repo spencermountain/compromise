@@ -1,6 +1,6 @@
 const toRoot = {
   // 'spencer's' -> 'spencer'
-  'Possessive': (term, world) => {
+  'Possessive': (term) => {
     let str = term.machine || term.normal || term.text
     str = str.replace(/'s$/, '')
     return str

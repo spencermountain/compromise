@@ -29,7 +29,7 @@ const html = function (obj) {
         }
         // move trailing whitespace after tag
         let after = ''
-        out = out.replace(trailSpace, (a, b) => {
+        out = out.replace(trailSpace, (a) => {
           after = a
           return ''
         })

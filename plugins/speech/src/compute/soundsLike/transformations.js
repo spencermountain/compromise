@@ -15,7 +15,7 @@ const transformations = {
   cchange: (s) => {
     s = s.replace(/([^s]|^)(c)(h)/g, '$1x$3').trim()
     s = s.replace(/cia/g, 'xia')
-    s = s.replace(/c(i|e|y)/g, 's$1')
+    s = s.replace(/c([iey])/g, 's$1')
     return s.replace(/c/g, 'k')
   },
   dchange: (s) => {
@@ -23,12 +23,14 @@ const transformations = {
     return s.replace(/d/g, 't')
   },
   dropG: (s) => {
-    s = s.replace(/gh(^$|[^aeiou])/g, 'h$1')
+    // Drop 'G' if followed by 'H' and 'H' is not at the end or before a vowel. 
+    s = s.replace(/gh(^$|[^aeiou])/g, 'h$1')//eslint-disable-line
+    // Drop 'G' if followed by 'N' or 'NED' and is at the end.
     return s.replace(/g(n|ned)$/g, '$1')
   },
   changeG: (s) => {
     s = s.replace(/gh/g, 'f')
-    s = s.replace(/([^g]|^)(g)(i|e|y)/g, '$1j$3')
+    s = s.replace(/([^g]|^)(g)([iey])/g, '$1j$3')
     s = s.replace(/gg/g, 'g')
     return s.replace(/g/g, 'k')
   },

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const logClientSide = function (view) {
   console.log('%c -=-=- ', 'background-color:#6699cc;')
   view.forEach(m => {

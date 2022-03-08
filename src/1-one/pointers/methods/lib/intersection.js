@@ -1,4 +1,4 @@
-import { doesOverlap, getExtent, indexN } from './_lib.js'
+import { doesOverlap, indexN } from './_lib.js'
 
 // [a,a,a,a,-,-,]
 // [-,-,b,b,b,-,]

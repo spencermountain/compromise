@@ -6,13 +6,13 @@ const getDuration = function (range) {
   return diff
 }
 
-const getRange = function (diff) {
-  if (diff.years) {
-    return 'decade'
-  }
-  // console.log(diff)
-  return null
-}
+// const getRange = function (diff) {
+//   if (diff.years) {
+//     return 'decade'
+//   }
+//   // console.log(diff)
+//   return null
+// }
 
 const toJSON = function (range) {
   if (!range.start) {

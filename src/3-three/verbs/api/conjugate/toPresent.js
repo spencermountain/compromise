@@ -107,7 +107,7 @@ const forms = {
   },
 
   // has walked ->  (?)
-  'present-perfect': (vb, parsed) => {
+  'present-perfect': (vb) => {
     // return vb.replace('(have|had)', 'has')
     return vb
   },

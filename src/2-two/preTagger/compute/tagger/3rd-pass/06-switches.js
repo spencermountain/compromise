@@ -10,7 +10,7 @@ const checkWord = (term, obj) => {
   let str = term.normal || term.implicit
   const found = obj[str]
   if (found && env.DEBUG_TAGS) {
-    console.log(`\n  \x1b[2m\x1b[3m     ↓ - '${str}' \x1b[0m`)
+    console.log(`\n  \x1b[2m\x1b[3m     ↓ - '${str}' \x1b[0m`)//eslint-disable-line
   }
   return found
 }
@@ -27,7 +27,7 @@ const checkTag = (term, obj = {}, tagSet) => {
   })
   let found = tags.find(tag => obj[tag])
   if (found && env.DEBUG_TAGS) {
-    console.log(`\n  \x1b[2m\x1b[3m      ↓ - '${term.normal}' (#${found})  \x1b[0m`)
+    console.log(`\n  \x1b[2m\x1b[3m      ↓ - '${term.normal}' (#${found})  \x1b[0m`)//eslint-disable-line
   }
   found = obj[found]
   return found
@@ -35,7 +35,7 @@ const checkTag = (term, obj = {}, tagSet) => {
 
 const pickTag = function (terms, i, clues, model) {
   if (!clues) {
-    return
+    return null
   }
   const tagSet = model.one.tagSet
   // look -> right word, first
@@ -86,11 +86,11 @@ const doSwitches = function (terms, i, model) {
     // did we find anything?
     if (tag) {
       if (env.DEBUG_TAGS) {
-        console.log(`\n  \x1b[32m [variable] - '${str}' - (${form}) → #${tag} \x1b[0m\n`)
+        console.log(`\n  \x1b[32m [variable] - '${str}' - (${form}) → #${tag} \x1b[0m\n`)//eslint-disable-line
       }
       setTag(term, tag, model)
     } else if (env.DEBUG_TAGS) {
-      console.log(`\n -> X  - '${str}'  : ${form}  `)
+      console.log(`\n -> X  - '${str}'  : ${form}  `)//eslint-disable-line
     }
   }
 }

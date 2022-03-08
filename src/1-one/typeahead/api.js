@@ -2,7 +2,7 @@
 const autoFill = function () {
   const docs = this.docs
   if (docs.length === 0) {
-    return
+    return this
   }
   let lastPhrase = docs[docs.length - 1] || []
   let term = lastPhrase[lastPhrase.length - 1]

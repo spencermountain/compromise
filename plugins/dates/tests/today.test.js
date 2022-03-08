@@ -19,7 +19,7 @@ test('set today context', function (t) {
 
 //ensure dateRange renders as local time
 test('today is always today', (t) => {
-  ;[
+  let arr=[
     'Europe/Paris',
     'Europe/London',
     'Etc/UTC',
@@ -32,7 +32,8 @@ test('today is always today', (t) => {
     'Atlantic/Canary',
     'Africa/Lome',
     null,
-  ].forEach((tz) => {
+  ]
+  arr.forEach((tz) => {
     let context = {
       timezone: tz,
       today: [2016, 11, 3],

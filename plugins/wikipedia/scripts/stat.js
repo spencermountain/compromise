@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import sh from 'shelljs'
 import fs from 'fs'
 

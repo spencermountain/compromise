@@ -3,7 +3,7 @@ import postProcess from './postProcess.js'
 
 const all_spaces = / +/g
 const ends_with_vowel = /[aeiouy]$/
-const starts_with_consonant_vowel = /^[^aeiouy][h]?[aeiouy]/
+const starts_with_consonant_vowel = /^[^aeiouy]h?[aeiouy]/
 const starts_with_e_then_specials = /^e[sm]/
 const starts_with_e = /^e/
 const ends_with_noisy_vowel_combos = /(eo|eu|ia|oa|ua|ui)$/i

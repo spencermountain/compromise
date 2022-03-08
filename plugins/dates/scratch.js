@@ -1,3 +1,4 @@
+/* eslint-disable no-console, no-unused-vars */
 import nlp from '../../src/three.js'
 import spacetime from 'spacetime'
 

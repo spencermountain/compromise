@@ -1,3 +1,4 @@
+/* eslint-disable no-console, no-unused-vars */
 import words from '/Users/spencer/mountain/minimum-model/root-dictionary/verb-noun.js'
 import nlp from '../../src/three.js'
 

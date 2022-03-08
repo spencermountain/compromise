@@ -15,9 +15,7 @@ const normalize = function (doc) {
   }
 
   if (!doc.numbers) {
-    console.warn(
-      `Warning: compromise-numbers plugin is not loaded.\n   You should load this plugin \n     - https://bit.ly/3t8RfFG`
-    )
+    console.warn(`Warning: compromise-numbers plugin is not loaded.\n   You should load this plugin \n     - https://bit.ly/3t8RfFG`) //eslint-disable-line
   } else {
     // doc.numbers().normalize()
     // convert 'two' to 2

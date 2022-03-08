@@ -73,7 +73,7 @@ const looksPlural = function (str) {
     return false
   }
   // look for 'virus'
-  if (notPlural.find(end => str.endsWith(end))) {
+  if (notPlural.find(suff => str.endsWith(suff))) {
     return false
   }
   // ends with an s, seems plural i guess.

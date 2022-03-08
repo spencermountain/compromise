@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from './_lib.js'
-const relaxed = 14
+// const relaxed = 14
 
 let february = 1
 //number of days between start+end

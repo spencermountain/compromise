@@ -27,7 +27,7 @@ test('units', function (t) {
     let doc = nlp(a[0])
     let found = doc.dates({ today: a[0] }).get()[0]
     if (!found) {
-      console.log(a[0])
+      console.log(a[0])//eslint-disable-line
     }
     t.equal(found.unit, a[1], '[unit] ' + a[0])
   })

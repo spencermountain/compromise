@@ -18,8 +18,8 @@ const scanWords = function (terms, trie, opts) {
       for (let o = 0; o < arr.length; o++) {
         let len = arr[o]
         let term = terms[i - len + 1]
-        let [n, start] = term.index
-        results.push([n, start, start + len, term.id])
+        let [no, start] = term.index
+        results.push([no, start, start + len, term.id])
       }
     }
   }
@@ -40,7 +40,7 @@ const scan = function (view, trie, opts) {
   opts.form = opts.form || 'normal'
   let docs = view.docs
   if (!trie.goNext || !trie.goNext[0]) {
-    console.error('Compromise invalid lookup trie')
+    console.error('Compromise invalid lookup trie')//eslint-disable-line
     return view.none()
   }
   let firstWords = Object.keys(trie.goNext[0])

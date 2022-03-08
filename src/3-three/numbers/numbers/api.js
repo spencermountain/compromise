@@ -1,7 +1,6 @@
 import find from './find.js'
 import parse from './parse/index.js'
 import format from './format/index.js'
-import parseText from './parse/toNumber/index.js'
 
 // return the nth elem of a doc
 export const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
@@ -89,7 +88,7 @@ const addMethod = function (View) {
         }
         let obj = parse(val)
         if (obj.num === null) {
-          return
+          return val
         }
         let fmt = val.has('#Ordinal') ? 'TextOrdinal' : 'TextCardinal'
         let str = format(obj, fmt)
@@ -102,18 +101,19 @@ const addMethod = function (View) {
     /** convert ordinal to cardinal form, like 'eight', or '8' */
     toCardinal() {
       let m = this
-      let res = m.forEach(val => {
+      let res = m.map(val => {
         if (!val.has('#Ordinal')) {
           return val
         }
         let obj = parse(val)
         if (obj.num === null) {
-          return
+          return val
         }
         let fmt = val.has('#TextValue') ? 'TextCardinal' : 'Cardinal'
         let str = format(obj, fmt)
         val.replaceWith(str, { tags: true })
         val.tag('Cardinal')
+        return val
       })
       return new Numbers(res.document, res.pointer)
     }
@@ -126,7 +126,7 @@ const addMethod = function (View) {
         }
         let obj = parse(val)
         if (obj.num === null) {
-          return
+          return val
         }
         let fmt = val.has('#TextValue') ? 'TextOrdinal' : 'Ordinal'
         let str = format(obj, fmt)
@@ -178,7 +178,7 @@ const addMethod = function (View) {
         let obj = parse(val)
         obj.num = n
         if (obj.num === null) {
-          return
+          return val
         }
         let fmt = val.has('#Ordinal') ? 'Ordinal' : 'Cardinal'
         if (val.has('#TextValue')) {
@@ -204,7 +204,7 @@ const addMethod = function (View) {
       let res = m.map((val) => {
         let obj = parse(val)
         if (obj.num === null) {
-          return
+          return val
         }
         obj.num += n
         let fmt = val.has('#Ordinal') ? 'Ordinal' : 'Cardinal'

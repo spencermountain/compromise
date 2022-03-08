@@ -1,4 +1,4 @@
-const parse = function (s) {
+const parse = function () {
   // let chunks = s.chunks().debug()
 
   return {

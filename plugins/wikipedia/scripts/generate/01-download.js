@@ -1,19 +1,20 @@
+/* eslint-disable no-console */
 import wget from 'node-wget-promise'
 import { yellow } from 'colorette'
 import sh from 'shelljs'
 const file = `./files/pageviews.tsv`
 
-let d = new Date()
-const month = `${d.getMonth() + 1}`.padStart(2, '0')
-const year = d.getFullYear()
+let date = new Date()
+const month = `${date.getMonth() + 1}`.padStart(2, '0')
+const year = date.getFullYear()
 
 // create the filename for the last dump
 const getDate = () => {
   let d = new Date()
   d.setDate(d.getDate() - 10) // do yesterday
-  const month = `${d.getMonth() + 1}`.padStart(2, '0')
-  const date = `${d.getDate()}`.padStart(2, '0')
-  return `${d.getFullYear()}${month}${date}`
+  const m = `${d.getMonth() + 1}`.padStart(2, '0')
+  const str = `${d.getDate()}`.padStart(2, '0')
+  return `${d.getFullYear()}${m}${str}`
 }
 
 const getIt = async function () {

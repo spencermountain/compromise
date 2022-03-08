@@ -11,7 +11,7 @@ const getWords = function (model, left, right) {
 
 
 const expandModels = function (model) {
-  let { lexicon, } = model.one
+  let { lexicon } = model.one
   const { toPast, toPresent, toGerund, toSuperlative, toComparative } = model.two.models
   let res = {}
   let words = {}

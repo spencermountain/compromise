@@ -1,3 +1,5 @@
+/* global importScripts */
+
 //loads and runs compromise inside the worker-instance
 self.addEventListener(
   'message',

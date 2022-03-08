@@ -24,7 +24,7 @@ const byEnd = {
     if (isPossessive(terms, i)) {
       world.methods.one.setTag([terms[i]], 'Possessive', world)
     } else {
-      return apostropheS(terms, i)
+      apostropheS(terms, i)
     }
   },
 }

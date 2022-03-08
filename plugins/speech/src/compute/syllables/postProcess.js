@@ -1,12 +1,12 @@
 const starts_with_single_vowel_combos = /^(eu)/i
-const joining_consonant_vowel = /^[^aeiou][e]([^d]|$)/
+const joining_consonant_vowel = /^[^aeiou]e([^d]|$)/
 const cvcv_same_consonant = /^([^aeiouy])[aeiouy]\1[aeiouy]/
 const cvcv_same_vowel = /^[^aeiouy]([aeiouy])[^aeiouy]\1/
 const cvcv_known_consonants = /^([tg][aeiouy]){2}/
 const only_one_or_more_c = /^[^aeiouy]+$/
 
 const ends_with_vowel = /[aeiouy]$/
-const starts_with_consonant_vowel = /^[^aeiouy][h]?[aeiouy]/
+const starts_with_consonant_vowel = /^[^aeiouy]h?[aeiouy]/
 
 const ones = [
   /^[^aeiou]?ion/,
@@ -14,7 +14,7 @@ const ones = [
   /^[^aeiou]?iled/,
 
   // -ing, -ent
-  /[aeiou][n][gt]$/,
+  /[aeiou]n[gt]$/,
 
   // -ate, -age
   /\wa[gt]e$/,

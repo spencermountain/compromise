@@ -1,4 +1,3 @@
-const here = 'time-tagger'
 
 // 3-4 can be a time-range, sometimes
 const tagTimeRange = function (m, reason) {

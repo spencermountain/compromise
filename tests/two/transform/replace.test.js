@@ -108,7 +108,7 @@ test('replace-with-function', function (t) {
 
   doc = nlp('Spencer is very cool.')
   doc.match('spencer').replaceWith((m) => m.text() + 's')
-  doc.match('is').replaceWith((m) => 'are')
+  doc.match('is').replaceWith(() => 'are')
   t.equal(doc.text(), 'Spencers are very cool.', here + 'replaceWith twice')
   t.end()
 })

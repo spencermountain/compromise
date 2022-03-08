@@ -8,6 +8,7 @@ import nlp from './_lib.js'
 
 const fmt = (iso) => (iso ? spacetime(iso).format('iso-short') : '-')
 
+// eslint-disable-next-line
 const mk = function (y, m, d, h, sec, mil) {
   let s = spacetime.now().year(y)
   if (m) {

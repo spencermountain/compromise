@@ -1,4 +1,4 @@
-// import nlp from 'compromise'
+/* eslint-disable no-console */
 import nlp from '../../../src/two.js'
 import { unpack } from 'efrt'
 import model from '../_model.js'

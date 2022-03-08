@@ -1,7 +1,7 @@
 import { pack } from 'efrt'
 
 const hasNumber = /[0-9,;!:|¦]/
-const hasPunct = /[.,\/#!$%\^&\*;:{}=\-_`~()']/
+const hasPunct = /[.,/#!$%^&*;:{}=\-_`~()']/
 const hasLetter = /[a-z]/
 
 const zipUp = function (counts) {

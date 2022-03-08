@@ -1,8 +1,8 @@
 //ambiguous 'may' and 'march'
-const preps = '(in|by|before|during|on|until|after|of|within|all)' //6
-const thisNext = '(last|next|this|previous|current|upcoming|coming)' //2
+// const preps = '(in|by|before|during|on|until|after|of|within|all)' //6
+// const thisNext = '(last|next|this|previous|current|upcoming|coming)' //2
 const sections = '(start|end|middle|starting|ending|midpoint|beginning)' //2
-const seasons = '(spring|summer|winter|fall|autumn)'
+// const seasons = '(spring|summer|winter|fall|autumn)'
 
 //ensure a year is approximately typical for common years
 //please change in one thousand years

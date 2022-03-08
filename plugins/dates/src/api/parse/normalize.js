@@ -1,7 +1,7 @@
 const normalize = function (doc) {
 
   if (!doc.numbers) {
-    console.warn(`\nCompromise warning: compromise/three must be used with compromise-dates plugin\n`)
+    console.warn(`\nCompromise warning: compromise/three must be used with compromise-dates plugin\n`) // eslint-disable-line
   }
 
   // normalize doc

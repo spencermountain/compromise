@@ -93,11 +93,11 @@ class View {
     return m
   }
   fromText(input) {
-    const { methods, world } = this
+    const { methods } = this
     //assume ./01-tokenize is installed
-    let document = methods.one.tokenize(input, world)
+    let document = methods.one.tokenize(input, this.world)
     let doc = new View(document)
-    doc.world = world
+    doc.world = this.world
     // doc.compute(world.hooks)
     doc.compute(['normal', 'lexicon', 'preTagger'])
     return doc

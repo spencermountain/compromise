@@ -1,6 +1,6 @@
-import { readFileSync, writeFileSync } from 'fs'
-import sh from 'shelljs'
+/* eslint-disable no-console */
 import fs from 'fs'
+import sh from 'shelljs'
 import { blue, yellow } from 'colorette'
 import nlp from '../../../../src/two.js'
 import nos from './_no-list.js'
@@ -30,7 +30,7 @@ const noList = new Set(nos)
 const list = /^list of ./
 const hasNum = /[0-9]/
 
-const hasPunct = /[.,\/#!$%\^&\*;:{}=_`~()+\\]/
+const hasPunct = /[.,/#!$%^&*;:{}=_`~()+\\]/
 
 //tot to internal id
 const toName = function (title = '') {
@@ -60,7 +60,7 @@ const ignorePage = function (title) {
 const toList = function () {
   let final = []
   let nope = 0
-  let arr = readFileSync(tsvOut).toString().split(/\n/)
+  let arr = fs.readFileSync(tsvOut).toString().split(/\n/)
   for (let i = 0; i < arr.length; i += 1) {
     let a = arr[i].split(' ')
     let title = a[1]
@@ -90,7 +90,7 @@ const toList = function () {
   console.log(`   ... removed ${nope.toLocaleString()} articles`)
   console.log('final list', Object.keys(final).length.toLocaleString(), ' articles')
   final = JSON.stringify(final, null, 2)
-  writeFileSync(output, final)
+  fs.writeFileSync(output, final)
   return final
 }
 

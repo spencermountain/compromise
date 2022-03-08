@@ -1,3 +1,4 @@
+/* eslint-disable no-console, no-unused-vars */
 import nlp from '../../src/three.js'
 
 import speechPlugin from './src/plugin.js'

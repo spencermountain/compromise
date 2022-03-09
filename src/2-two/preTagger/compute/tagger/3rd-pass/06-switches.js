@@ -65,7 +65,7 @@ const setTag = function (term, tag, model) {
 const doSwitches = function (terms, i, model) {
   const { switches, clues } = model.two
   const term = terms[i]
-  let str = term.normal || term.implicit
+  let str = term.normal || term.implicit || ''
   // support prefixes for switching words
   if (prefix.test(str) && !switches[str]) {
     str = str.replace(prefix, '') // could use some guards, here

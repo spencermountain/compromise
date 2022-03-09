@@ -1,15 +1,21 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/three.js'
-// import plg from './plugins/dates/src/plugin.js'
+import plg from './plugins/speech/src/plugin.js'
 // nlp.plugin(plg)
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 /*
 
 */
 //  #Noun (%Noun|Verb% && #Verb)
 
+
+nlp.extend(plg)
+
+let doc = nlp(`Milwaukee has certainly had its share of visitors..`)
+// doc.compute('syllables')
+console.log(JSON.stringify(doc.places().json({ 'syllables': true }), null, 2))
 
 let txt = "non plentiful"
 // txt = "quiet relaunch"
@@ -47,14 +53,12 @@ let txt = "non plentiful"
 // txt = `and a mysterious cracking sound,`
 // txt = `pressure on the terrorist countries `
 // txt = `a major stumbling block to industrial growth`
-txt = `no, it's a body`
+// let doc = nlp("soft and yielding like a nerf ball")
 
-// console.log(nlp.model().one.lexicon[`it's`])
-
-let doc = nlp(txt)
-doc.debug()
-
-console.log(Object.keys(doc.model.one.tagSet).length)
+// let out = doc.out({
+//   '#Adjective': (m) => `[${m.text()}]`
+// })
+// console.log(out)
 
 
 

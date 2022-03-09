@@ -44,7 +44,7 @@ do you find it strange, how we struggle to parse text?
   <div>
 <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
   </div>
-  <sub>how easy text is to make, and how difficult it is <i>to use</i>?</sub>
+  <sub>how easy text is to make, then how difficult it is <i>to use</i>?</sub>
 </ul>
 </div>
 <img height="45px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
@@ -62,7 +62,7 @@ do you find it strange, how we struggle to parse text?
 <img height="45px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 <div align="left">
-  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>compromise <code>tries its best</code> to turn text into data.
+  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>compromise <a href="https://observablehq.com/@spencermountain/compromise-justification">tries its best</a> to turn text into data.
   <br/>
   <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>it makes limited and sensible decisions.
   <br/>
@@ -95,8 +95,8 @@ doc.text()
 <!-- spacer -->
 <img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-<div align="left">
-the idea is to be open-ended, and not fancy:
+<div align="right">
+the idea is to be not fancy at all:
 </div>
 
 ```js
@@ -113,7 +113,7 @@ if (doc.has('simon says #Verb')) {
 
 
 <div align="left">
-pull-out parts of a text:
+you can pull-out parts of a text:
 </div>
 
 ```js
@@ -128,6 +128,39 @@ doc.match('the #Adjective of times').text()
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221837-0d142480-ffb8-11e9-9d30-90669f1b897c.png"/>
 </div>
 
+compute metadata, and then grab it:
+```js
+import plg from 'compromise-speech'
+nlp.extend(plg)
+
+let doc = nlp(`Milwaukee has certainly had its share of visitors..`)
+doc.compute('syllables')
+doc.places().json()
+/*[{
+  "text": "Milwaukee",
+  "terms": [{ 
+    "normal": "milwaukee",
+    "syllables": ["mil", "waukee"],
+    "tags": ["Noun", "Singular", "Place", "ProperNoun", "City"]
+  }]
+}]*/
+```
+
+
+quickly flip between parsed and unparsed forms:
+
+```js
+let doc = nlp('soft and yielding like a nerf ball')
+doc.html({ i: '#Adjective' })
+// '<i>soft</i> and <i>yielding</i> like a nerf ball'
+```
+
+<div align="right">
+  <a href="https://docs.compromise.cool/compromise-output">output docs</a>
+</div>
+<div align="center">
+  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221837-0d142480-ffb8-11e9-9d30-90669f1b897c.png"/>
+</div>
 
 avoid idiomatic problems, and brittle interpreters:
 
@@ -135,7 +168,7 @@ avoid idiomatic problems, and brittle interpreters:
 let doc = nlp("we're not gonna take it..")
 
 doc.has('gonna') // true
-doc.has('going') // true
+doc.has('going to') // true (implicit)
 
 // transform
 doc.contractions().expand()
@@ -202,7 +235,7 @@ Use it on the client-side:
 </script>
 ```
 
-or otherwise:
+or likewise:
 
 ```typescript
 import nlp from 'compromise'
@@ -220,7 +253,7 @@ doc.verbs().toNegative()
 <!-- spacer -->
 <img height="30" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-compromise is **180kb** (minified):
+compromise is **200kb** (minified):
 
 <div align="center">
   <!-- filesize -->
@@ -248,14 +281,14 @@ The final lexicon is <a href="https://observablehq.com/@spencermountain/compromi
 you can read more about how it works, [here](https://observablehq.com/@spencermountain/compromise-internals). it's weird.
 
 <!-- spacer -->
-<img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+<img height="75px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 
 <!-- 
   one/two/three parts
  -->
 <p align="left">
-  <sub >full api:</sub>
+  <sub>okay,</sub>
   <h1>
     <code>compromise/one</code>
   </h1>
@@ -271,9 +304,10 @@ let data = doc.json()
 // [{ terms:[{ text:"Wayne's", normal:"wayne"}, ...] }]
 ```
 
-<code>/one</code> splits your text up, puts it in a handy API, 
-
-and does nothing else:
+<b>one</b> splits your text up, wraps it in a handy API, 
+<ul>
+  <sub>and does nothing else -</sub>
+</ul>
 
 
 <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
@@ -281,7 +315,7 @@ and does nothing else:
 ##### Output
 
 - **[.text()](https://observablehq.com/@spencermountain/compromise-text)** - return the document as text
-- **[.json({})](https://observablehq.com/@spencermountain/compromise-json)** - return the document as data
+- **[.json()](https://observablehq.com/@spencermountain/compromise-json)** - return the document as data
 - **[.debug()](https://observablehq.com/@spencermountain/compromise-output)** - pretty-print the interpreted document
 
 ##### Utils
@@ -310,7 +344,7 @@ and does nothing else:
 
 ##### Match
 
-_(all match methods use the [match-syntax](https://docs.compromise.cool/compromise-match-syntax).)_
+_(match methods use the [match-syntax](https://docs.compromise.cool/compromise-match-syntax).)_
 
 - **[.match('')](https://observablehq.com/@spencermountain/compromise-match)** - return a new Doc, with this one as a parent
 - **[.not('')](https://observablehq.com/@spencermountain/compromise-match)** - return all results except for this
@@ -379,9 +413,16 @@ _(all match methods use the [match-syntax](https://docs.compromise.cool/compromi
 - **[.join('')](https://observablehq.com/@spencermountain/compromise-split)** - make all phrases into one phrase
 
 
+<img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-  </p>
-<img height="85px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+<b>one</b> is fast - most sentences take a 10th of a millisecond. 
+It can do ~1mb of text a second - or ~10 wikipedia pages per second.
+<i>Infinite jest</i> is takes 3s. 
+
+You can also paralellize it with <a href="https://observablehq.com/@spencermountain/compromise-performance">a webworker</a>, or interpret a stream with <b >compromise-stream</b>.
+
+<p>
+  <img height="85px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 </p>
 
 <!-- two -->
@@ -401,9 +442,9 @@ let str = doc.match('#Possessive #Noun').text()
 // "Wayne's World"
 ```
 
-with <code>/two</code>, you have a basic interpretation of the grammar of each word.
+<b>two</b> automatically applies a very basic interpretation of the grammar of each word.
 
-<sub>this is more useful than people sometimes realise.</sub>
+<sub>this is more useful than people sometimes realize.</sub>
 
 Really light grammar helps you write cleaner queries, and get closer to the information.
 
@@ -419,7 +460,7 @@ Part-of-speech tagging is profoundly-difficult task to get 100% on. It is also a
 <img height="85px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 </p>
 
-you can see the grammar of each word by running `.debug()`.
+you can see the grammar of each word by running `doc.debug()`, and the reasoning for each tag with `nlp.verbose('tagger')`.
 
 compromise has <b>83 tags</b>, arranged in <a href="https://observablehq.com/@spencermountain/compromise-tags">a handsome graph</a>.
 
@@ -427,6 +468,7 @@ compromise has <b>83 tags</b>, arranged in <a href="https://observablehq.com/@sp
 
 if you prefer <a href="https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html"><i>Penn tags</i></a>, you can derive them with:
 ```js
+let doc = nlp('welcome thrillho')
 doc.compute('penn')
 doc.json()
 ```

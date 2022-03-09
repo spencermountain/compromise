@@ -54,6 +54,7 @@ txt = `no, it's a body`
 let doc = nlp(txt)
 doc.debug()
 
+console.log(Object.keys(doc.model.one.tagSet).length)
 
 
 

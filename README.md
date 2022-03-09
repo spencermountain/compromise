@@ -34,69 +34,92 @@
 <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 
-<!-- <div align="left">
-isn't it weird how we can't understand information in text?
+ <div align="left">
+do you find it strange, how we struggle to parse text?
 <br/>
 <ul>
    <i>↬<sub>ᔐᖜ</sub>↬-</i> 
+  <br/>
+  how <b>error-prone</b> and <b>tricky</b> the simplest things are?
+  <div>
+<img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+  </div>
+  how simple text is to make, and how difficult it is <i>to use</i>?
 </ul>
 </div>
 <img height="45px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-<div align="center">
-it's like we've agreed that
+<div align="right">
+and how it becomes
 <div>
-text is a dead-end.
+  basically a dead-end
+  <br/>
+  for our information?
 </div>
-<sub>and the knowledge in it</sub>
-<br/>
-<sub>should not really be used.</sub>
-</div> -->
+</div>
 
 <!-- spacer -->
 <img height="45px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 <div align="left">
-  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>compromise <a href="https://observablehq.com/@spencermountain/compromise-justification">tries its best</a> to parse text, into data.
-</div>
-
-<div align="left">
- <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-  it is
-  <a href="https://docs.compromise.cool/compromise-filesize">small,
-  <a href="https://docs.compromise.cool/compromise-performance">quick</a>,
-  and often <i><a href="https://docs.compromise.cool/compromise-accuracy">good-enough</a></i>.
+  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>compromise <a href="https://observablehq.com/@spencermountain/compromise-justification">tries its best</a> to turn text into data.
+  <br/>
+  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>it makes some limited and sensible decisions.
   <br/>
   <sub >
    <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/> it is not as smart as you'd think.
   </sub>
-</div>
 
-<!-- spacer -->
 <img height="45px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
+
+ <!-- 
+  it is
+  <a href="https://docs.compromise.cool/compromise-filesize">small,
+  <a href="https://docs.compromise.cool/compromise-performance">quick</a>,
+  and often <i><a href="https://docs.compromise.cool/compromise-accuracy">good-enough</a></i>.
+  <br/> -->
+</div>
+<img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
+
+```js
+import nlp from 'compromise'
+
+let doc = nlp('she sells seashells by the seashore.')
+doc.verbs().toPastTense()
+doc.text()
+// 'she sold seashells by the seashore.'
+```
+
+<!-- spacer -->
+<img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
 <div align="left">
-it does a few things that makes text more sensible to use, ask questions off of, and to play with:
+the whole idea is to be open-ended, not fancy, and allow direction:
 </div>
 
 <!-- spacer -->
-<img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+<img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
+```js
+if (doc.has('simon says #Verb')) {
+  return true
+}
+```
 
 <!-- spacer -->
-<img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+<img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-### .match():
+<div align="left">
+pull-out parts of a text:
+</div>
+
 ```js
 let doc = nlp(entireNovel)
 doc.match('the #Adjective of times').text()
 // "the blurst of times?"
 ```
-
-```js
-if (!doc.has('simon says #Verb')) {
-  return 'do nothing'
-}
-```
-
 <div align="right">
   <a href="https://docs.compromise.cool/compromise-match">match docs</a>
 </div>
@@ -104,52 +127,8 @@ if (!doc.has('simon says #Verb')) {
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221837-0d142480-ffb8-11e9-9d30-90669f1b897c.png"/>
 </div>
 
-### .verbs():
-```js
-let doc = nlp('she sells seashells by the seashore.')
-doc.verbs().toPastTense()
-doc.text()
-// 'she sold seashells by the seashore.'
-```
 
-<div align="right">
-  <a href="https://docs.compromise.cool/verbs">verb docs</a>
-</div>
-<div align="center">
-  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221824-09809d80-ffb8-11e9-9ef0-6ed3574b0ce8.png"/>
-</div>
-
-### .nouns():
-```js
-let doc = nlp('the purple dinosaur')
-doc.nouns().toPlural()
-doc.text()
-// 'the purple dinosaurs'
-```
-
-<div align="right">
-  <a href="https://docs.compromise.cool/nouns">noun docs</a>
-</div>
-<div align="center">
-  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221731-e8b84800-ffb7-11e9-8453-6395e0e903fa.png"/>
-</div>
-
-### .numbers():
-```js
-let doc = nlp('ninety five thousand and fifty two')
-doc.numbers().add(2)
-doc.text()
-// 'ninety five thousand and fifty four'
-```
-
-<div align="right">
-  <a href="https://docs.compromise.cool/compromise-values">number docs</a>
-</div>
-<div align="center">
-  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221814-05ed1680-ffb8-11e9-8b6b-c7528d163871.png"/>
-</div>
-
-### .contractions():
+avoid idiomatic problems, and brittle interpreters:
 
 ```js
 let doc = nlp("we're not gonna take it, no we ain't gonna take it.")
@@ -167,10 +146,45 @@ dox.text()
   <a href="https://docs.compromise.cool/compromise-contractions">contraction docs</a>
 </div>
 <div align="center">
-  <img src="https://user-images.githubusercontent.com/399657/68221731-e8b84800-ffb7-11e9-8453-6395e0e903fa.png"/>
+  <!-- <img src="https://user-images.githubusercontent.com/399657/68221731-e8b84800-ffb7-11e9-8453-6395e0e903fa.png"/> -->
+  <div align="center">
+  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221814-05ed1680-ffb8-11e9-8b6b-c7528d163871.png"/>
+</div>
+
   <!-- spacer -->
   <img height="30" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 </div>
+
+whip stuff around like it's data:
+```js
+let doc = nlp('ninety five thousand and fifty two')
+doc.numbers().add(2)
+doc.text()
+// 'ninety five thousand and fifty four'
+```
+
+<div align="right">
+  <a href="https://docs.compromise.cool/compromise-values">number docs</a>
+</div>
+<!-- <div align="center">
+  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221814-05ed1680-ffb8-11e9-8b6b-c7528d163871.png"/>
+</div> -->
+
+because it actually is.
+```js
+let doc = nlp('the purple dinosaur')
+doc.nouns().toPlural()
+doc.text()
+// 'the purple dinosaurs'
+```
+
+<div align="right">
+  <a href="https://docs.compromise.cool/nouns">noun docs</a>
+</div>
+<div align="center">
+  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221731-e8b84800-ffb7-11e9-8453-6395e0e903fa.png"/>
+</div>
+
 
 Use it on the client-side:
 
@@ -184,7 +198,7 @@ Use it on the client-side:
 </script>
 ```
 
-or the back:
+or node/deno/typescript:
 
 ```typescript
 import nlp from 'compromise'

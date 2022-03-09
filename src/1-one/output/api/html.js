@@ -1,4 +1,5 @@
-const trailSpace = /\s+$/
+const isClass = /^\../
+const isId = /^#./
 
 const toText = function (term) {
   let pre = term.pre || ''
@@ -6,15 +7,43 @@ const toText = function (term) {
   return pre + term.text + post
 }
 
-const html = function (obj) {
-  // index ids to highlight
+const toTag = function (k) {
+  let start = ''
+  let end = '</span>'
+  if (isClass.test(k)) {
+    start = `<span class="${k.replace(/^\./, '')}"`
+  } else if (isId.test(k)) {
+    start = `<span id="${k.replace(/^#/, '')}"`
+  } else {
+    start = `<${k}`
+    end = `</${k}>`
+  }
+  start += '>'
+  return { start, end }
+}
+
+const getIndex = function (doc, obj) {
   let starts = {}
+  let ends = {}
   Object.keys(obj).forEach(k => {
-    let ptrs = obj[k].fullPointer
-    ptrs.forEach(a => {
-      starts[a[3]] = { tag: k, end: a[2] }
+    let res = obj[k]
+    let tag = toTag(k)
+    if (typeof res === 'string') {
+      res = doc.match(res)
+    }
+    res.docs.forEach(terms => {
+      starts[terms[0].id] = tag
+      ends[terms[terms.length - 1].id] = tag
     })
   })
+  return { starts, ends }
+}
+
+
+
+const html = function (obj) {
+  // index ids to highlight
+  let { starts, ends } = getIndex(this, obj)
   // create the text output
   let out = ''
   this.docs.forEach(terms => {
@@ -22,19 +51,12 @@ const html = function (obj) {
       let t = terms[i]
       // do a span tag
       if (starts.hasOwnProperty(t.id)) {
-        let { tag, end } = starts[t.id]
-        out += `<span class="${tag}">`
-        for (let k = i; k < end; k += 1) {
-          out += toText(terms[k])
-        }
-        // move trailing whitespace after tag
-        let after = ''
-        out = out.replace(trailSpace, (a) => {
-          after = a
-          return ''
-        })
-        out += `</span>${after}`
-        i = end - 1
+        out += starts[t.id].start
+      }
+      if (ends.hasOwnProperty(t.id)) {
+        out += t.pre || '' + t.text || ''
+        out += ends[t.id].end
+        out += t.post || ''
       } else {
         out += toText(t)
       }

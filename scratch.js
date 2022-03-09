@@ -45,12 +45,13 @@ import nlp from './src/three.js'
 // txt = `and a mysterious cracking sound,`
 // txt = `pressure on the terrorist countries `
 // txt = `a major stumbling block to industrial growth`
-let doc = nlp("soft and yielding like a nerf ball")
-let out = doc.out({
-  '#Adjective': (m) => `[${m.text()}]`
-})
-console.log(out)
 
+let doc = nlp(`one match two.`)
+let html = doc.html(
+  { i: 'match' },
+  { b: 'match two' },
+)
 
+console.log(html)
 
 

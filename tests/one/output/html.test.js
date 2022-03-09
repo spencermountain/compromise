@@ -23,11 +23,23 @@ test('html-match', function (t) {
 
 test('html-nest', function (t) {
   let doc = nlp(`one match two.`)
-  let html = doc.html(
-    { i: 'match' },
-    { b: 'match two' },
-  )
-  t.equal(html, `one <b><i>match</i> two</b>.`, here + 'html nest')
+  let html = doc.html({
+    i: 'match',
+    b: 'one match two'
+  })
+  t.equal(html, `<b>one <i>match</i> two</b>.`, here + 'easy nest')
+
+  html = doc.html({
+    b: 'match two',
+    i: 'match',
+  })
+  t.equal(html, `one <b><i>match</i> two</b>.`, here + 'hard nest')
+
+  // html = doc.html({
+  //   i: 'match',
+  //   b: 'match two',
+  // })
+  // t.equal(html, `one <b><i>match</i> two</b>.`, here + 'harder nest')
 
   t.end()
 })

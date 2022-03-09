@@ -1,15 +1,20 @@
 const isClass = /^\../
 const isId = /^#./
 
-const toText = function (term) {
-  let pre = term.pre || ''
-  let post = term.post || ''
-  return pre + term.text + post
+const escapeXml = (str) => {
+  str = str.replace(/&/g, '&amp;')
+  str = str.replace(/</g, '&lt;')
+  str = str.replace(/>/g, '&gt;')
+  str = str.replace(/"/g, '&quot;')
+  str = str.replace(/'/g, '&apos;');
+  return str
 }
 
+// interpret .class, #id, tagName
 const toTag = function (k) {
   let start = ''
   let end = '</span>'
+  k = escapeXml(k)
   if (isClass.test(k)) {
     start = `<span class="${k.replace(/^\./, '')}"`
   } else if (isId.test(k)) {
@@ -32,14 +37,16 @@ const getIndex = function (doc, obj) {
       res = doc.match(res)
     }
     res.docs.forEach(terms => {
-      starts[terms[0].id] = tag
-      ends[terms[terms.length - 1].id] = tag
+      let a = terms[0].id
+      starts[a] = starts[a] || []
+      starts[a].push(tag.start)
+      let b = terms[terms.length - 1].id
+      ends[b] = ends[b] || []
+      ends[b].push(tag.end)
     })
   })
   return { starts, ends }
 }
-
-
 
 const html = function (obj) {
   // index ids to highlight
@@ -51,15 +58,13 @@ const html = function (obj) {
       let t = terms[i]
       // do a span tag
       if (starts.hasOwnProperty(t.id)) {
-        out += starts[t.id].start
+        out += starts[t.id].join('')
       }
+      out += t.pre || '' + t.text || ''
       if (ends.hasOwnProperty(t.id)) {
-        out += t.pre || '' + t.text || ''
-        out += ends[t.id].end
-        out += t.post || ''
-      } else {
-        out += toText(t)
+        out += ends[t.id].join('')
       }
+      out += t.post || ''
     }
   })
   return out

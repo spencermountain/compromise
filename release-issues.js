@@ -42,3 +42,14 @@ import nlp from './src/three.js'
 
 
 
+// let m = nlp('one two three. foo.')
+// m = m.splitOn('two')
+// m.match('three').remove()
+// m.debug()
+
+// let doc = nlp('once told me')
+// let m = doc.match('once')
+// doc.insertBefore('somebody')
+// m.debug()
+// 'once'
+

@@ -31,11 +31,11 @@
 </div>
 
 <!-- spacer -->
-<img height="85px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+<img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 
-<div align="left">
-isn't it weird how we can <i>write text</i>, but not parse it?
+<!-- <div align="left">
+isn't it weird how we can't understand information in text?
 <br/>
 <ul>
    <i>↬<sub>ᔐᖜ</sub>↬-</i> 
@@ -51,13 +51,13 @@ text is a dead-end.
 <sub>and the knowledge in it</sub>
 <br/>
 <sub>should not really be used.</sub>
-</div>
+</div> -->
 
 <!-- spacer -->
 <img height="45px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 <div align="left">
-  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>compromise <a href="https://observablehq.com/@spencermountain/compromise-justification">tries its best</a> to parse text.
+  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>compromise <a href="https://observablehq.com/@spencermountain/compromise-justification">tries its best</a> to parse text, into data.
 </div>
 
 <div align="left">
@@ -70,11 +70,13 @@ text is a dead-end.
   <sub >
    <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/> it is not as smart as you'd think.
   </sub>
-   <br/>
-   <!-- spacer -->
-<!-- <img height="45px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-   it is though - very open-ended, hackable, and open to engineering. -->
-   </div>
+</div>
+
+<!-- spacer -->
+<img height="45px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+<div align="left">
+it does a few things that makes text more sensible to use, ask questions off of, and to play with:
+</div>
 
 <!-- spacer -->
 <img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
@@ -192,6 +194,42 @@ doc.verbs().toNegative()
 // 'London is not calling'
 ```
 <img height="75px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
+
+<!-- 
+  bragging graphs
+ -->
+<!-- spacer -->
+<img height="30" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
+compromise is **180kb** (minified):
+
+<div align="center">
+  <!-- filesize -->
+  <a href="https://bundlephobia.com/result?p=compromise">
+    <img width="600" src="https://user-images.githubusercontent.com/399657/68234819-14dfc300-ffd0-11e9-8b30-cb8545707b29.png"/>
+  </a>
+</div>
+
+it's pretty fast. It can run on keypress:
+
+<div align="center">
+  <a href="https://observablehq.com/@spencermountain/compromise-performance">
+    <img width="600" src="https://user-images.githubusercontent.com/399657/68234798-0abdc480-ffd0-11e9-9ac5-8875d185a631.png"/>
+  </a>
+</div>
+
+it works mainly by <a href="https://observablehq.com/@spencermountain/verbs">conjugating all forms</a> of a basic word list.
+
+The final lexicon is <a href="https://observablehq.com/@spencermountain/compromise-lexicon">~14,000 words</a>:
+
+<div align="center">
+  <img width="600" src="https://user-images.githubusercontent.com/399657/68234805-0d201e80-ffd0-11e9-8dc6-f7a600352555.png"/>
+</div>
+
+you can read more about how it works, [here](https://observablehq.com/@spencermountain/compromise-internals). it's weird.
+
+
 
 <!-- 
   one/two/three parts
@@ -489,38 +527,6 @@ let str = doc.people().normalize().text()
 
 
 
-<!-- 
-  bragging graphs
- -->
-<!-- spacer -->
-<img height="30" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-
-compromise is **180kb** (minified):
-
-<div align="center">
-  <!-- filesize -->
-  <a href="https://bundlephobia.com/result?p=compromise">
-    <img width="600" src="https://user-images.githubusercontent.com/399657/68234819-14dfc300-ffd0-11e9-8b30-cb8545707b29.png"/>
-  </a>
-</div>
-
-it's pretty fast. It can run on keypress:
-
-<div align="center">
-  <a href="https://observablehq.com/@spencermountain/compromise-performance">
-    <img width="600" src="https://user-images.githubusercontent.com/399657/68234798-0abdc480-ffd0-11e9-9ac5-8875d185a631.png"/>
-  </a>
-</div>
-
-it works mainly by <a href="https://observablehq.com/@spencermountain/verbs">conjugating all forms</a> of a basic word list.
-
-The final lexicon is <a href="https://observablehq.com/@spencermountain/compromise-lexicon">~14,000 words</a>:
-
-<div align="center">
-  <img width="600" src="https://user-images.githubusercontent.com/399657/68234805-0d201e80-ffd0-11e9-8dc6-f7a600352555.png"/>
-</div>
-
-you can read more about how it works, [here](https://observablehq.com/@spencermountain/compromise-internals). it's weird.
 
 <!-- spacer -->
   <!-- <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/> -->
@@ -545,33 +551,27 @@ let doc = nlp(muppetText, myWords)
 or make heavier changes with a [compromise-plugin](https://observablehq.com/@spencermountain/compromise-plugins).
 
 ```js
-const nlp = require('compromise')
-
-nlp.extend((Doc, world) => {
+import nlp from 'compromise'
+nlp.extend({
   // add new tags
-  world.addTags({
+  tags: {
     Character: {
       isA: 'Person',
       notA: 'Adjective',
     },
-  })
-
+  },
   // add or change words in the lexicon
-  world.addWords({
+  words: {
     kermit: 'Character',
     gonzo: 'Character',
-  })
-
-  // add methods to run after the tagger
-  world.postProcess(doc => {
-    doc.match('light the lights').tag('#Verb . #Plural')
-  })
-
-  // add a whole new method
-  Doc.prototype.kermitVoice = function () {
-    this.sentences().prepend('well,')
-    this.match('i [(am|was)]').prepend('um,')
-    return this
+  },
+  // add new methods to compromise
+  api: (View) => {
+    View.prototype.kermitVoice = function () {
+      this.sentences().prepend('well,')
+      this.match('i [(am|was)]').prepend('um,')
+      return this
+    }
   }
 })
 ```
@@ -623,6 +623,11 @@ nlp.extend((Doc, world) => {
 | [Whitespace](https://observablehq.com/@spencermountain/compromise-whitespace) |              [Verbs](https://observablehq.com/@spencermountain/verbs)                     | [Typeahead](https://observablehq.com/@spencermountain/compromise/compromise-typeahead) |
 | [World data](https://observablehq.com/@spencermountain/compromise-world)      | [Normalization](https://observablehq.com/@spencermountain/compromise-normalization)       |                                                                             |
 | [Fuzzy-matching](https://observablehq.com/@spencermountain/compromise-fuzzy-matching) |          [Typescript](https://observablehq.com/@spencermountain/compromise-typescript)  |                                                                       |
+
+
+<div >
+  <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+</div>
 
 ##### Talks:
 
@@ -775,12 +780,6 @@ this plugin creates a wrapper around the default sentence objects.
   - **[.paragraphs().filter()](https://observablehq.com/@spencermountain/compromise-paragraphs)** -
 
 
-##### Strict-match
-
-`npm install compromise-strict`
-
-- **[.strictMatch()](https://observablehq.com/@spencermountain/compromise-strict)** - perform a compromise match using a formal parser
-
 ##### Syllables
 
 `npm install compromise-syllables`
@@ -805,13 +804,11 @@ we're committed to typescript/deno support, both in main and in the official-plu
 
 ```ts
 import nlp from 'compromise'
-import ngrams from 'compromise-ngrams'
-import numbers from 'compromise-numbers'
+import stats from 'compromise-stats'
 
-const nlpEx = nlp.extend(ngrams).extend(numbers)
+const nlpEx = nlp.extend(stats)
 
 nlpEx('This is type safe!').ngrams({ min: 1 })
-nlpEx('This is type safe!').numbers()
 ```
 
 <div align="right">
@@ -915,6 +912,7 @@ nlpEx('This is type safe!').numbers()
 
 - &nbsp; **[en-pos](https://github.com/finnlp/en-pos)** - very clever javascript pos-tagger _by [Alex Corvi](https://github.com/alexcorvi)_
 - &nbsp; **[naturalNode](https://github.com/NaturalNode/natural)** - fancier statistical nlp in javascript
+- &nbsp; **[dariusk/pos-js ](https://github.com/dariusk/pos-js)** - fastTag fork in javascript
 - &nbsp; **[compendium-js](https://github.com/Ulflander/compendium-js)** - POS and sentiment analysis in javascript
 - &nbsp; **[nodeBox linguistics](https://www.nodebox.net/code/index.php/Linguistics)** - conjugation, inflection in javascript
 - &nbsp; **[reText](https://github.com/wooorm/retext)** - very impressive [text utilities](https://github.com/wooorm/retext/blob/master/doc/plugins.md) in javascript

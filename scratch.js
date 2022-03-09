@@ -1,21 +1,9 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/one.js'
+import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-let plg = {
-  tags: {
-    FemaleNoun: {
-      is: 'Noun'
-    }
-  },
-  words: {
-    'captain obvious': 'Captain'
-  }
-}
-nlp.plugin(plg)
-
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 /*
 
@@ -59,51 +47,14 @@ let txt = "non plentiful"
 // txt = `and a mysterious cracking sound,`
 // txt = `pressure on the terrorist countries `
 // txt = `a major stumbling block to industrial growth`
-// let doc = nlp('one match two. Two match three match. four nope.')
-// let found = doc.match('match+')
-// doc = doc.if(found)
-// console.log(doc.html({ blue: found }))
+txt = `no, it's a body`
 
+// console.log(nlp.model().one.lexicon[`it's`])
 
-nlp('it was captain obvious').debug()
-
-
-
-// doc.redact().debug()
-// console.log(doc.text())
-// console.log(doc.json()[0])
-
-// doc.verbs().toPastTense()
-// console.log(doc.verbs().conjugate())
-
-
-// let doc = nlp(txt)
-// doc.debug()
-// let doc = nlp('five hundred fifty nine is more than fifty')
-// doc.values().toNumber()
-// doc.debug()
-
-
-// let doc = nlp(`yeah. one extra two match here three`)
-// let m = doc.match('match here')
-// doc.remove('extra')
-// m.docs
-// doc.match(m).debug()
-// doc.debug()
-
-// doc = nlp('buy')
+let doc = nlp(txt)
+doc.debug()
 
 
 
-// let m = nlp('one two three. foo.')
-// m = m.splitOn('two')
-// m.match('three').remove()
-// m.debug()
-
-// let doc = nlp('once told me')
-// let m = doc.match('once')
-// doc.insertBefore('somebody')
-// m.debug()
-// 'once'
 
 

@@ -95,7 +95,7 @@ doc.text()
 <!-- spacer -->
 <img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-<div align="right">
+<div align="center">
 the idea is to be not fancy at all:
 </div>
 
@@ -113,7 +113,7 @@ if (doc.has('simon says #Verb')) {
 
 
 <div align="left">
-you can pull-out parts of a text:
+pull-out parts of a text:
 </div>
 
 ```js
@@ -128,30 +128,34 @@ doc.match('the #Adjective of times').text()
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221837-0d142480-ffb8-11e9-9d30-90669f1b897c.png"/>
 </div>
 
-compute metadata, and then grab it:
+compute metadata, and grab it:
 ```js
 import plg from 'compromise-speech'
 nlp.extend(plg)
 
-let doc = nlp(`Milwaukee has certainly had its share of visitors..`)
+let doc = nlp('Milwaukee has certainly had its share of visitors..')
 doc.compute('syllables')
 doc.places().json()
-/*[{
+/*
+[{
   "text": "Milwaukee",
   "terms": [{ 
     "normal": "milwaukee",
-    "syllables": ["mil", "waukee"],
-    "tags": ["Noun", "Singular", "Place", "ProperNoun", "City"]
+    "syllables": ["mil", "waukee"]
   }]
-}]*/
+}]
+*/
 ```
 
+<div align="center">
+  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221814-05ed1680-ffb8-11e9-8b6b-c7528d163871.png"/>
+</div> 
 
 quickly flip between parsed and unparsed forms:
 
 ```js
 let doc = nlp('soft and yielding like a nerf ball')
-doc.html({ i: '#Adjective' })
+doc.out({ '#Adjective': (m)=>`<i>${m.text()}</i>` })
 // '<i>soft</i> and <i>yielding</i> like a nerf ball'
 ```
 
@@ -162,7 +166,7 @@ doc.html({ i: '#Adjective' })
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221837-0d142480-ffb8-11e9-9d30-90669f1b897c.png"/>
 </div>
 
-avoid idiomatic problems, and brittle interpreters:
+avoid idiomatic problems, and brittle parsers:
 
 ```js
 let doc = nlp("we're not gonna take it..")
@@ -192,9 +196,9 @@ dox.text()
 whip stuff around like it's data:
 ```js
 let doc = nlp('ninety five thousand and fifty two')
-doc.numbers().add(2)
+doc.numbers().add(20)
 doc.text()
-// 'ninety five thousand and fifty four'
+// 'ninety five thousand and seventy two'
 ```
 
 <div align="right">
@@ -253,7 +257,7 @@ doc.verbs().toNegative()
 <!-- spacer -->
 <img height="30" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-compromise is **200kb** (minified):
+compromise is **~200kb** (minified):
 
 <div align="center">
   <!-- filesize -->
@@ -301,7 +305,13 @@ import nlp from 'compromise/one'
 
 let doc = nlp("Wayne's World, party time")
 let data = doc.json()
-// [{ terms:[{ text:"Wayne's", normal:"wayne"}, ...] }]
+/* [{ 
+    normal:"wayne's world party time",
+    terms:[{ text: "Wayne's", normal: "wayne" }, 
+      ...
+      ] 
+  }]
+*/
 ```
 
 <b>one</b> splits your text up, wraps it in a handy API, 
@@ -416,10 +426,12 @@ _(match methods use the [match-syntax](https://docs.compromise.cool/compromise-m
 <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 <b>one</b> is fast - most sentences take a 10th of a millisecond. 
-It can do ~1mb of text a second - or ~10 wikipedia pages per second.
+
+It can do <b>~1mb</b> of text a second - or 10 wikipedia pages.
+
 <i>Infinite jest</i> is takes 3s. 
 
-You can also paralellize it with <a href="https://observablehq.com/@spencermountain/compromise-performance">a webworker</a>, or interpret a stream with <b >compromise-stream</b>.
+You can also paralellize, or stream text to it with <a href="">compromise-speed</a>.
 
 <p>
   <img height="85px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
@@ -441,12 +453,14 @@ let doc = nlp("Wayne's World, party time")
 let str = doc.match('#Possessive #Noun').text()
 // "Wayne's World"
 ```
-
-<b>two</b> automatically applies a very basic interpretation of the grammar of each word.
+<p>
+  <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+</p>
+<b>two</b> automatically calculates the very basic grammar of each word.
 
 <sub>this is more useful than people sometimes realize.</sub>
 
-Really light grammar helps you write cleaner queries, and get closer to the information.
+Really light grammar helps you write cleaner templates, and get closer to the information.
 
 Part-of-speech tagging is profoundly-difficult task to get 100% on. It is also a profoundly easy task to get 85% on.
 
@@ -490,9 +504,9 @@ let str = doc.people().normalize().text()
 // "wayne"
 ```
 
-<code>/three</code> is a set of tooling to 'zoom into' and operate on parts of a text.
+<b>three</b> is a set of tooling to <i>zoom into</i> and operate on parts of a text.
 
-`doc.numbers()` grabs all the numbers in a document, and extends it with new methods.
+`.numbers()` grabs all the numbers in a document, for example - and extends it with new methods, like `.subtract()`.
 
 ##### Nouns
 - **[.nouns()](https://observablehq.com/@spencermountain/nouns)** - return any subsequent terms tagged as a Noun
@@ -630,8 +644,9 @@ let str = doc.people().normalize().text()
 
 ### .extend():
 
-decide how words get interpreted:
+compromise comes with a considerate, common-sense baseline for english grammar. You're free to change, or lay-waste to any settings - which is the fun part actually.
 
+the easiest part is just to suggest tags for any given words:
 ```js
 let myWords = {
   kermit: 'FirstName',

@@ -1,7 +1,18 @@
 import debug from './debug/index.js'
+import wrap from './wrap.js'
+
+
+const isObject = val => {
+  return Object.prototype.toString.call(val) === '[object Object]'
+}
+
 
 /** some named output formats */
 const out = function (method) {
+  // support custom outputs
+  if (isObject(method)) {
+    return wrap(this, method)
+  }
   // text out formats
   if (method === 'text') {
     return this.text()

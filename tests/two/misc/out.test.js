@@ -28,3 +28,12 @@ test('out-array', function (t) {
   t.equal(arr[0], '1-2', here + 'got contraction text')
   t.end()
 })
+
+test('out-wrap', function (t) {
+  let doc = nlp("soft and yielding like a nerf ball")
+  let out = doc.out({
+    '#Adjective': (m) => `[${m.text()}]`
+  })
+  t.equal(out, `[soft] and [yielding] like a nerf ball`, 'two matches')
+  t.end()
+})

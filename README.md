@@ -35,27 +35,29 @@
 
 
  <div align="left">
-do you find it strange, how we struggle to parse text?
+don't you find it strange, how we struggle to parse text?
 <br/>
 <ul>
    <i>↬<sub>ᔐᖜ</sub>↬-</i> 
   <br/>
-  how <b>error-prone</b> and <b>tricky</b> the simplest things are?
+  how <b>error-prone</b> and <b>tricky</b> the simplest things become?
   <div>
 <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
   </div>
-  how simple text is to make, and how difficult it is <i>to use</i>?
+  <sub>how easy text is to make, and how difficult it is <i>to use</i>?</sub>
 </ul>
 </div>
 <img height="45px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 <div align="right">
-and how it becomes
+<sub >
+how it becomes
 <div>
   basically a dead-end
   <br/>
   for our information?
 </div>
+</sub>
 </div>
 
 <!-- spacer -->
@@ -64,7 +66,7 @@ and how it becomes
 <div align="left">
   <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>compromise <a href="https://observablehq.com/@spencermountain/compromise-justification">tries its best</a> to turn text into data.
   <br/>
-  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>it makes some limited and sensible decisions.
+  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>it makes limited and sensible decisions.
   <br/>
   <sub >
    <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/> it is not as smart as you'd think.
@@ -96,11 +98,8 @@ doc.text()
 <img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 <div align="left">
-the whole idea is to be open-ended, not fancy, and allow direction:
+the idea is to be open-ended, and not fancy:
 </div>
-
-<!-- spacer -->
-<img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 ```js
 if (doc.has('simon says #Verb')) {
@@ -110,6 +109,10 @@ if (doc.has('simon says #Verb')) {
 
 <!-- spacer -->
 <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+<div align="center">
+  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221814-05ed1680-ffb8-11e9-8b6b-c7528d163871.png"/>
+</div> 
+
 
 <div align="left">
 pull-out parts of a text:
@@ -131,15 +134,15 @@ doc.match('the #Adjective of times').text()
 avoid idiomatic problems, and brittle interpreters:
 
 ```js
-let doc = nlp("we're not gonna take it, no we ain't gonna take it.")
+let doc = nlp("we're not gonna take it..")
 
-// match an implicit term
+doc.has('gonna') // true
 doc.has('going') // true
 
 // transform
 doc.contractions().expand()
 dox.text()
-// 'we are not going to take it, no we are not going to take it.'
+// 'we are not going to take it..'
 ```
 
 <div align="right">
@@ -166,11 +169,17 @@ doc.text()
 <div align="right">
   <a href="https://docs.compromise.cool/compromise-values">number docs</a>
 </div>
-<!-- <div align="center">
-  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221814-05ed1680-ffb8-11e9-8b6b-c7528d163871.png"/>
-</div> -->
 
-because it actually is.
+<div align="center">
+  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221837-0d142480-ffb8-11e9-9d30-90669f1b897c.png"/>
+</div>
+
+<div align="center">
+  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221731-e8b84800-ffb7-11e9-8453-6395e0e903fa.png"/>
+</div>
+
+<sub>because it actually is:</sub>
+
 ```js
 let doc = nlp('the purple dinosaur')
 doc.nouns().toPlural()
@@ -180,9 +189,6 @@ doc.text()
 
 <div align="right">
   <a href="https://docs.compromise.cool/nouns">noun docs</a>
-</div>
-<div align="center">
-  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221731-e8b84800-ffb7-11e9-8453-6395e0e903fa.png"/>
 </div>
 
 
@@ -243,6 +249,8 @@ The final lexicon is <a href="https://observablehq.com/@spencermountain/compromi
 
 you can read more about how it works, [here](https://observablehq.com/@spencermountain/compromise-internals). it's weird.
 
+<!-- spacer -->
+<img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 
 <!-- 
@@ -264,6 +272,8 @@ let doc = nlp("Wayne's World, party time")
 let data = doc.json()
 // [{ terms:[{ text:"Wayne's", normal:"wayne"}, ...] }]
 ```
+
+compromise/one splits your text up, puts it in a handy API, and does nothing else:
 
 ##### Output
 

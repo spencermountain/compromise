@@ -1,14 +1,13 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from '../../src/one.js'
 
-// import plg from './src/plugin.js'
-// nlp.plugin(plg)
+import { streamFile } from './src/index.js'
+nlp.plugin(streamFile)
 
 
 
-
-const file = `./tests/files/freshPrince.txt`
-
-
-
-// console.log(nlp.stream(txt))
+nlp.streamFile(`./tests/files/freshPrince.txt`, (s) => {
+  return s.places()
+}).then(doc => {
+  doc.debug()
+})

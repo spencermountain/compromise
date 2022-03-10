@@ -50,6 +50,9 @@ export default {
     another: n,//
     versus: n,//
     neither: n,//
+    // strong adjectives
+    favorite: n,//
+    best: n,//
   },
   afterWords: {
     of: n, //date of birth (preposition)

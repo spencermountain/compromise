@@ -624,5 +624,6 @@ export default [
   'satisfactory',
 
   'premier',
+  'skilled',
 ]
 

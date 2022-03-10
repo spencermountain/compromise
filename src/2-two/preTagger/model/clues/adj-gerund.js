@@ -10,7 +10,10 @@ const clue = {
     Plural: 'Gerund'//kids cutting
   }),
   afterTags: Object.assign({}, adj.afterTags, gerund.afterTags),
-  beforeWords: Object.assign({}, adj.beforeWords, gerund.beforeWords),
+  beforeWords: Object.assign({
+    is: 'Adjective',
+    was: 'Adjective'
+  }, adj.beforeWords, gerund.beforeWords),
   afterWords: Object.assign({}, adj.afterWords, gerund.afterWords, {
     to: 'Gerund',
     not: 'Gerund',//trying not to car

@@ -5357,10 +5357,6 @@ export default [
     tags: 'NNP, NNP, IN, DT, NNP',
   },
   {
-    text: 'Bronze award service excellence, metro.',
-    tags: 'NN, NN, NN, NN, NNP',
-  },
-  {
     text: 'simple but perfect',
     tags: 'JJ, CC, JJ',
   },
@@ -5601,10 +5597,6 @@ export default [
     tags: 'TO, VB, PRP, VBD, DT, NN, CC, NN, NN, PRP, VBD, RB, JJ',
   },
   {
-    text: 'Everything was bland, completely void of any spice or flavor.',
-    tags: 'NN, VBD, JJ, RB, JJ, IN, DT, NN, CC, NN',
-  },
-  {
     text: 'I recommend La Hacienda',
     tags: 'PRP, VBP, NNP, NNP',
   },
@@ -5780,10 +5772,6 @@ export default [
   {
     text: 'I paid 2 k cash for a truck with a bad motor.',
     tags: 'PRP, VBD, CD, NN, NN, IN, DT, NN, IN, DT, JJ, NN',
-  },
-  {
-    text: 'Grimy work you guys do.',
-    tags: 'JJ, NN, PRP, NNS, VBP',
   },
   {
     text: "It's an adorable little store filled with lots of stationery goodness.",

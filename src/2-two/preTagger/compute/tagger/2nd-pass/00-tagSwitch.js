@@ -1,4 +1,4 @@
-const prefix = /^(under|over|mis|re|un|dis)-?/
+const prefix = /^(under|over|mis|re|un|dis|semi)-?/
 
 const tagSwitch = function (terms, i, model) {
   const switches = model.two.switches

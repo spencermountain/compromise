@@ -281,7 +281,7 @@ let arr = [
   [`flower-like.`, '#Adjective'],
   [`The old Fairy's turn`, 'the #Adjective #Possessive #Noun'],
   [`more with spite than age`, 'more with #Noun than #Noun'],
-  [`another fool to roast`, 'another #Noun to #Verb'],
+  // [`another fool to roast`, 'another #Noun to #Verb'],
   [`even the humblest`, '#Adverb the #Superlative'],
   ["Steve talked to Johnson LLC", '#Person talked to #Organization #Organization'],
   ["GIC airlines", '#Organization #Organization'],

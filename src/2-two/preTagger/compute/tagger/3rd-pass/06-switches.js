@@ -1,7 +1,7 @@
 import fastTag from '../_fastTag.js'
 const env = typeof process === 'undefined' ? self.env || {} : process.env // eslint-disable-line
 import adhoc from './_adhoc.js'
-const prefix = /^(under|over|mis|re|un|dis)-?/
+const prefix = /^(under|over|mis|re|un|dis|semi)-?/
 
 const checkWord = (term, obj) => {
   if (!term || !obj) {

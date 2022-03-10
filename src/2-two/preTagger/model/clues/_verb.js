@@ -55,7 +55,7 @@ export default {
     up: v,//serves up
     down: v,//serves up
     by: v,
-    in: v, //bob in
+    // in: v, //bob in
     out: v,
     on: v,
     off: v,

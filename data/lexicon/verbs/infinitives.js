@@ -698,5 +698,6 @@ export default [
   'vie',
   'reconcile',
   'profess',
+  'bathe',
   'state chief',
 ]

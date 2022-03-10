@@ -6,7 +6,7 @@ let arr = [
   // === people ==
   ['jamie', '#Person'],
   ['Spencer Kelly is in Canada', '#Person #Person #Copula #Preposition #Place'],
-  ['John swim', '#Person #Verb'],
+  ['John bathe', '#Person #Verb'],
   ['John, John', '#Person #Person'],
   ['John, you', '#FirstName #Pronoun'],
   ['John you', '#MaleName #Pronoun'],

@@ -95,7 +95,7 @@ test('toFuture:', function (t) {
     [`clawed`, `will claw`],
     [`trumped`, `will trump`],
     [`out-lived`, `will out-live`],
-    [`out-live`, `will out-live`],
+    // [`out-live`, `will out-live`],
     [`slugged`, `will slug`],
     [`splashed`, `will splash`],
     [`he uploaded`, `he will upload`],
@@ -107,7 +107,7 @@ test('toFuture:', function (t) {
     [`trounced`, `will trounce`],
 
     [`appeared`, `will appear`],
-    [`sparred`, `will sparr`],
+    [`sparred`, `will spar`],
     [`speared`, `will spear`],
     [`colored`, `will color`],
     [`cured`, `will cure`],
@@ -143,7 +143,7 @@ test('toFuture:', function (t) {
     [`he ruled`, `he will rule`],
     [`he sailed`, `he will sail`],
     [`he piled`, `he will pile`],
-    [`he piled-on`, `he will pile-on`],
+    // [`he piled-on`, `he will pile-on`],
     [`he styled`, `he will style`],
     [`he totaled`, `he will total`],
     [`he scheduled`, `he will schedule`],
@@ -171,7 +171,7 @@ test('toFuture:', function (t) {
     // ['we barely write', 'we will barely write'],
     // ['we will barely write', 'we will barely write'],
     // [`i'll start looking`, "i'll start looking"],
-    [`i won't start looking`, 'i will not start looking'],
+    [`i won't start looking`, 'i won\'t start looking'],
     // negatives
     ['we do not write', 'we will not write'],
     ['we will not write', 'we will not write'],
@@ -186,12 +186,22 @@ test('toFuture:', function (t) {
     ['waiters are furious', 'waiters will be furious'],
     ['the waiters will walk out', 'the waiters will walk out'],
     ['this union will disrupt', 'this union will disrupt'],
-    ['this union has disrupted', 'this union will disrupt'],
+    ['this union has disrupted', 'this union will have disrupted'],
     ['it will have real feelings', 'it will have real feelings'],
     // ['it had no real feelings', 'it had no real feelings'],
     // ['it will not have studied enough', 'it had not studied enough'],
     // ['spencer will have learned enough', 'spencer will have learned enough'],
     // ['spencer will not have learned enough', 'spencer had not learned enough'],
+
+    // gerund-phrase
+    [`he starts seeing`, `he will start seeing`],
+    [`he started seeing`, `he will start seeing`],
+    [`he will start seeing`, `he will start seeing`],
+    [`we start seeing`, `we will start seeing`],
+    [`we started seeing`, `we will start seeing`],
+    [`we will start seeing`, `we will start seeing`],
+    [`we have started seeing`, `we will start seeing`],
+    [`we will have started seeing`, `we will have started seeing`],
   ]
   arr.forEach(a => {
     let doc = nlp(a[0])

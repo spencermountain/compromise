@@ -94,7 +94,7 @@ export default [
   'framed',
   'fried',
   'gifted',
-  'gone',
+  // 'gone',
   'hammered',
   'heated',
   'hooked',

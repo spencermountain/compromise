@@ -117,6 +117,12 @@ const forms = {
   'modal-infinitive': noop,
   // must have walked
   'modal-past': noop,
+  // started looking
+  'gerund-phrase': (vb, parsed) => {
+    parsed.root = parsed.root.not('#Gerund$')
+    simple(vb, parsed)
+    return vb.remove('(had|have)')
+  },
   // wanted to walk
   'want-infinitive': vb => {
     vb.replace('(want|wants|wanted)', 'will want')

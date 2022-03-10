@@ -1,5 +1,6 @@
 export default [
   // -- participle forms--
+  'gone',
   'seen',
   'shown',
   'frighten',

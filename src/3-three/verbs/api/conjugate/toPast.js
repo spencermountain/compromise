@@ -177,6 +177,12 @@ const forms = {
     vb.remove('will')
     return vb
   },
+  // started looking
+  'gerund-phrase': (vb, parsed) => {
+    parsed.root = parsed.root.not('#Gerund$')
+    fns.simple(vb, parsed)
+    return vb.remove('will')
+  },
 }
 
 const toPast = function (vb, parsed, form) {

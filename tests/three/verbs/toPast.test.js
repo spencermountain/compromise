@@ -90,7 +90,7 @@ test('toPast:', function (t) {
     ['it will have real feelings', 'it had real feelings'],
     // ['it had no real feelings', 'it had no real feelings'],
     // ['it will not have studied enough', 'it had not studied enough'],
-    ['spencer will have learned enough', 'spencer learned enough'],
+    ['spencer will have learned enough', 'spencer had learned enough'],
     // ['spencer will not have learned enough', 'spencer had not learned enough'],
 
 
@@ -123,6 +123,16 @@ test('toPast:', function (t) {
     ['when it is raining', 'when it was raining'],
     // ['i think it will be raining', 'i thought it will be raining'],
     ['when it was raining', 'when it was raining'],
+
+    // gerund-phrase
+    [`he starts seeing`, `he started seeing`],
+    [`he started seeing`, `he started seeing`],
+    [`he will start seeing`, `he started seeing`],
+    [`we start seeing`, `we started seeing`],
+    [`we started seeing`, `we started seeing`],
+    [`we will start seeing`, `we started seeing`],
+    [`we have started seeing`, `we have started seeing`],
+    [`we will have started seeing`, `we have started seeing`],
   ]
   arr.forEach(a => {
     let doc = nlp(a[0])

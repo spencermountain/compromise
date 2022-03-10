@@ -18,11 +18,12 @@ let arr = [
 ]
 txt = `people started to look`
 txt = `we have started seeing`
+txt = `i won't start looking`
 
 
 let doc = nlp(txt)
 
-doc.verbs().debug().toFuture()
+doc.verbs().debug().toPast()
 doc.debug()
 console.log(doc.text())
 

@@ -18,13 +18,11 @@ let arr = [
 ]
 txt = `people started to look`
 txt = `we have started seeing`
-txt = `flown`
 
 
-let doc = nlp(txt)
+// let doc = nlp(txt)
 
-doc.verbs().debug().toPast()
+let doc = nlp('Spencer is very cool.')
+doc.match('spencer').replaceWith('jogging')
 doc.debug()
-console.log(doc.text())
-
 

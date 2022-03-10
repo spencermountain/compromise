@@ -193,21 +193,21 @@ test('remove-everything-nested', function (t) {
 test('remove-quality-check', function (t) {
   let doc = nlp('match one two. one match two. one two match.')
   doc.remove('match')
-  t.equal(doc.text(), 'one two. one two. one two.', 'remove all sides')
+  t.equal(doc.text(), 'one two. one two. one two.', here + 'remove all sides')
 
   let str = 'match. match match. match match match.'
   doc = nlp(str)
   doc.remove('foobar')
-  t.equal(doc.text(), str, 'remove nothing')
+  t.equal(doc.text(), str, here + 'remove nothing')
   doc.remove('match')
-  t.equal(doc.text(), '', 'remove everything')
+  t.equal(doc.text(), '', here + 'remove everything')
 
   doc = nlp('before match after. before match match after. before match match match after.')
   let before = doc.match('before')
   // let after = doc.clone().match('after')
   doc.remove('match+')
-  t.equal(doc.text(), 'before after. before after. before after.', 'remove multi-length')
-  t.equal(before.text(), 'before before before', 'match before multi-length')
+  t.equal(doc.text(), 'before after. before after. before after.', here + 'remove multi-length')
+  t.equal(before.text(), 'before before before', here + 'match before multi-length')
   // t.equal(after.text(), 'after after after', 'match after multi-length')
 
   t.end()
@@ -216,11 +216,11 @@ test('remove-quality-check', function (t) {
 test('remove-bug-1', function (t) {
   let m = nlp('one two three. foo.')
   m = m.splitOn('two')
-  t.equal(m.docs.length, 4, 'four-parts')
-  t.equal(m.ptrs.length, 4, 'four-ptrs')
-  m.match('three').remove()
-  t.equal(m.docs.length, 3, 'now-three-parts')
-  t.equal(m.ptrs.length, 3, 'now-three-ptrs')
+  t.equal(m.docs.length, 4, here + 'four-parts')
+  t.equal(m.ptrs.length, 4, here + 'four-ptrs')
+  m.remove('three')
+  t.equal(m.docs.length, 3, here + 'now-three-parts')
+  t.equal(m.ptrs.length, 3, here + 'now-three-ptrs')
   t.end()
 })
 
@@ -240,6 +240,6 @@ test('remove-keep-splits', function (t) {
   // [one, two, three, four]
   m = m.remove('three')
   // [one, two, four]
-  t.deepEqual(m.out('array'), ['one', 'two.', 'four.'], 'keep-splits')
+  t.deepEqual(m.out('array'), ['one', 'two.', 'four.'], here + 'keep-splits')
   t.end()
 })

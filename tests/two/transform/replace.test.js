@@ -66,9 +66,8 @@ test('replace-keep some punctuation', function (t) {
   t.equal(doc.match('#Cool+').text(), '2 weeks', here + 'replace-keep-tags')
 
   doc = nlp('first sentence. I am trying it out.')
-  doc.match('#Gerund').tag('HashTag')
-  doc.match('trying')
-  doc.replaceWith('working', { tags: true })
+  let m = doc.match('trying').tag('HashTag')
+  m.replaceWith('working', { tags: true })
   t.equal(doc.match('#HashTag+').text(), 'working', here + 'replacewith-keep-tags')
   t.end()
 })
@@ -116,7 +115,8 @@ test('replace-with-function', function (t) {
 test('replace-tags-param', function (t) {
   let doc = nlp('Spencer is very cool.')
   doc.match('spencer').replaceWith('jogging')
-  t.equal(doc.has('(jogging && #Gerund)'), true, here + 'tags not-kept - default')
+  let m = doc.match('jogging')
+  t.equal(m.has('#Person'), false, here + 'tags not-kept - default')
 
   doc = nlp('Spencer is very cool.')
   doc.match('spencer').replaceWith('jogging', { tags: true })

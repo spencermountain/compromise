@@ -65,7 +65,7 @@ test('all-to-text:', function (t) {
 
 test('big number:', function (t) {
   const str = nlp('twenty-three quadrillion').values().toText().out()
-  t.equal(str, 'twenty three quadrillion', here + 'quadrillion')
+  t.equal(str, 'twenty-three quadrillion', here + 'quadrillion')
 
   // str = nlp('nine quintillion two hundred').values().toText().out();
   // t.equal(str, 'nine quintillion two hundred', 'quantillion');

@@ -697,5 +697,6 @@ export default [
   'confirm',
   'vie',
   'reconcile',
+  'profess',
   'state chief',
 ]

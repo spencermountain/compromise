@@ -108,4 +108,8 @@ export default [
   },
   // photographs of a computer are
   { match: '[#PresentTense] (of|by|for) (a|an|the) #Noun #Copula', group: 0, tag: 'Plural', reason: 'photographs-of' },
+  // soft music playing
+  { match: '%Noun|Gerund%$', tag: 'Noun', reason: 'music-playing' },
+  // hopes and dreams
+  { match: '#Plural and %Plural|Verb%', tag: 'Plural', reason: 'hopes-and-dreams' },
 ]

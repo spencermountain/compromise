@@ -220,4 +220,7 @@ export default [
   'gore',
 
   'merchandise',
+  'pretense',
+  'preamble',
+  'presense',
 ]

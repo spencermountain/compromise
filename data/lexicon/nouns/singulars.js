@@ -375,6 +375,8 @@ export default [
   'guy',
   'school',
   'bar',
+  'prediction',
+  'pie',
 ]
 
 

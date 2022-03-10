@@ -7,13 +7,5 @@ export default [
   'gonna',
   'msg',
   'make sure',
-  // -- participle forms--
-  'seen',
-  'shown',
-  'frighten',
-  'given',
-  'hasten',
-  'heighten',
-  'lessen',
-  'worsen',
+
 ]

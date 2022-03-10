@@ -32,6 +32,7 @@ import infinitives from './verbs/infinitives.js'
 import modals from './verbs/modals.js'
 import phrasals from './verbs/phrasals.js'
 import verbs from './verbs/verbs.js'
+import participles from './verbs/participles.js'
 
 import adjectives from './adjectives/adjectives.js'
 import comparables from './adjectives/comparables.js'
@@ -109,6 +110,7 @@ const data = [
   [modals, 'Modal'],
   [verbs, 'Verb'],
   [phrasals, 'PhrasalVerb'], //5kb
+  [participles, 'Participle'],
 
   // switches
   [adjGerund, 'Adj|Gerund'],
@@ -135,4 +137,4 @@ for (let i = 0; i < data.length; i++) {
 
 export default lex
 // console.log(Object.keys(lex).length);
-// console.log(lex[`it's`])
+// console.log(lex[`pie`])

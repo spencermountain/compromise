@@ -355,7 +355,6 @@ export default [
   'unforeseen',
   'broken',
   'barren',
-  'written',
   'rotten',
   'craven',
   'even',
@@ -625,5 +624,7 @@ export default [
 
   'premier',
   'skilled',
+  'antique',
+  'dependent',
 ]
 

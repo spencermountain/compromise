@@ -688,4 +688,6 @@ export default [
   'perform',
   'discuss',
   'portray',
+  'avoid',
+  'like',
 ]

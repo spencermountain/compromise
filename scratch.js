@@ -39,22 +39,9 @@ let arr = [
   '680 - Number of suspected al-Qa\'ida members that the Un..',//admits' no #Verb -
   'Is there any cure for mouse poison?..',//poison' no #Noun -
   'I want to apply for canada skilled immigeration program..',//skilled' no #Verb -
-  'They are social and like to be handled...',//like' no #Verb -
-  'They both had pools for kids and adults...',//pools' no #Noun -
-  'Southern charm of Nashville, Birmingham, New Orleans or..',//charm' no #Noun -
-  'Amount of time could be dependent on so many things...',//dependent' no #Adjective -
-  'But there are just so many poses and programs!..',//programs' no #Noun -
-  'There is a very good book on the subject that was writt..',//written' no #Verb -
-  'You may also want to avoid Thanksgiving week and the Ch..',//avoid' no #Verb -
-  'Needs to go out of business..',//out' no #Preposition -
-  'She is amazing...',//amazing' no #Adjective -
-  'They must have read these reviews and improved!..',//improved' no #Verb -
-  'The nurses are sweet as pie and the doctor is wonderful..',//pie' no #Noun -
-  'Antique Lighting, Fixtures, Chicago..',//Antique' no #Adjective -
-  'Good place to be on a Sunday Night...',//place' no #Noun -
-  'Fantastic food served without pretense, very reasonably..',//pretense' no #Noun -
-  'Provided me with warm blanket and has soft music playin..',//playing' no #Gerund -
-  'mechanics that work',//work' no #Verb -
+  // 'They both had pools for kids',//pools' no #Noun -
+  // 'read these reviews and improved!..',//improved' no #Verb -
+  // 'Good place to be',//place' no #Noun -
 ]
 
 

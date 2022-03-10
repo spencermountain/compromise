@@ -96,6 +96,7 @@ export default [
   'channel',
   'charge',
   'chart',
+  'charm',
   'chase',
   'chauffeur',
   'cheat',

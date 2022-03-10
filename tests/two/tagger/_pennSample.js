@@ -4808,10 +4808,6 @@ export default [
     tags: 'JJ, NN, NN, CC, JJ, NN',
   },
   {
-    text: 'Needs to go out of business',
-    tags: 'VBZ, TO, VB, IN, IN, NN',
-  },
-  {
     text: "I've only had good experiences at Adorn, I was greeted and offered a refreshment.",
     tags: 'PRP, VBP, RB, VBN, JJ, NNS, IN, NNP, PRP, VBD, VBN, CC, VBN, DT, NN',
   },

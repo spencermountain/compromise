@@ -447,7 +447,7 @@ let arr = [
   ["pro-business", "#Adjective"],
   ["post-gun", "#Adjective"],
 
-  ["food and programs", "#Noun and #Noun"],
+  // ["food and programs", "#Noun and #Noun"],
   ["writes and programs", "#PresentTense and #PresentTense"],
   [`revisit the unsteamed towels`, '#Infinitive the #Adjective #Plural'],
 

@@ -161,6 +161,7 @@ export default [
     nssen: Last,
     ology: Noun,
     osome: Sing,
+    tment: Sing,
     ports: Plrl,
     rough: Adj,
     tches: Pres,

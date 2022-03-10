@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import plg from './plugins/speech/src/plugin.js'
 // nlp.plugin(plg)
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 let txt = ''
 let arr = [
@@ -18,11 +18,9 @@ let arr = [
 ]
 txt = `people started to look`
 txt = `we have started seeing`
+txt = `I remember this semi-truck coming towards me`
 
 
-// let doc = nlp(txt)
-
-let doc = nlp('Spencer is very cool.')
-doc.match('spencer').replaceWith('jogging')
+let doc = nlp(txt)
 doc.debug()
 

@@ -55,7 +55,7 @@ test('noun-phrases', function (t) {
     [`The next time I met him`, ['The next time', 'I', 'him']],
     [`Next morning they went`, ['Next morning', 'they']],
     [`Huh, I would’ve thought it was the other way around.`, ['I', 'it', 'the other way around.']],
-    [`I remember this semi-truck coming towards me`, ['I', 'this semi-truck', 'me']],
+    [`I remember this semi truck coming towards me`, ['I', 'this semi truck', 'me']],
     [`As he recalled the misfortune he wept bitterly`, ['he', 'the misfortune', 'he']],
     [`The data we are receiving`, ['The data', 'we']],
     [`The next two folks I have seen`, ['The next two folks', 'I']],

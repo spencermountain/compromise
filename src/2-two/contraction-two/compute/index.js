@@ -22,10 +22,9 @@ const byEnd = {
   s: (terms, i, world) => {
     // [bob's house] vs [bob's cool]
     if (isPossessive(terms, i)) {
-      world.methods.one.setTag([terms[i]], 'Possessive', world)
-    } else {
-      apostropheS(terms, i)
+      return world.methods.one.setTag([terms[i]], 'Possessive', world)
     }
+    return apostropheS(terms, i)
   },
 }
 

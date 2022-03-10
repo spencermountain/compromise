@@ -56,6 +56,7 @@ export default {
     ['man', 'Adjective'],
     ['only', vb],
     ['him', vb],
+    ['it', vb],//relaunch it
     ['were', nn],
     ['took', nn],
     ['himself', vb],

@@ -26,6 +26,7 @@ const past = {
     has: 'PastTense',
     have: 'PastTense',
     been: 'PastTense',
+    it: 'PastTense',//it intoxicated him
     as: 'PastTense',//as requested
     for: 'Adjective',//for discounted items
   },

@@ -691,6 +691,8 @@ export default [
   'remark',
   'resort',
   'detail',
+  'order',
+  'reorder',
 
 
 ]

@@ -53,3 +53,9 @@ import nlp from './src/three.js'
 // m.debug()
 // 'once'
 
+// fork bungs-up regex
+let doc = nlp(`one match two.`)
+doc.fork()
+doc.compute('preTagger')
+doc.debug()
+

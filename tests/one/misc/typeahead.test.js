@@ -17,12 +17,12 @@ test('typeahead test', function (t) {
   // create a document
   let doc = nlp('i went to bucking', lexicon)
   let m = doc.match('buckinghamshire')
-  t.equal(m.text(), 'bucking', 'found partial')
+  t.equal(m.text(), 'bucking', here + 'found partial')
   t.equal(m.text('implicit'), 'buckinghamshire', here + 'found full')
 
   // match by tag, too
   m = doc.match('#Town')
-  t.equal(m.text(), 'bucking', 'found partial')
+  t.equal(m.text(), 'bucking', here + 'found partial')
   t.equal(m.text('implicit'), 'buckinghamshire', here + 'found full')
 
   doc = nlp('buck')
@@ -34,7 +34,7 @@ test('typeahead test', function (t) {
 
 test('collision test', function (t) {
   nlp.typeahead(['milan', 'milwaukee'], { min: 1, safe: false })
-  t.equal(nlp('mil').has('(milan|milwaukee)'), false, 'collision')
+  t.equal(nlp('mil').has('(milan|milwaukee)'), false, here + 'collision')
   // t.equal(nlp('mila').has('milan'), true, 'no-collision-1')
   t.equal(nlp('milw').has('milwaukee'), true, here + 'no-collision-2')
   t.end()

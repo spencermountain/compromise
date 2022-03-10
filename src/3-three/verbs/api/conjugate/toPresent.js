@@ -6,7 +6,6 @@ const simple = (vb, parsed) => {
   const { verbConjugate, verbToInfinitive } = vb.methods.two.transform
   const root = parsed.root
   let str = root.text('normal')
-
   str = verbToInfinitive(str, vb.model, getTense(root))
   // 'i walk' vs 'he walks'
   if (isPlural(vb, parsed) === false) {
@@ -197,6 +196,12 @@ const forms = {
   'modal-past': (vb, parsed) => {
     toInfinitive(vb, parsed)
     return vb.remove('have')
+  },
+  // started looking
+  'gerund-phrase': (vb, parsed) => {
+    parsed.root = parsed.root.not('#Gerund$')
+    simple(vb, parsed)
+    return vb.remove('(will|have)')
   },
   // wanted to walk
   'want-infinitive': (vb, parsed) => {

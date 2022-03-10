@@ -8,7 +8,7 @@ const addIds = function (ptrs, docs) {
   return ptrs.map(ptr => {
     let [n, start] = ptr
     if (docs[n][start]) {
-      ptr.push(docs[n][start].id)
+      ptr[3] = docs[n][start].id
     }
     return ptr
   })

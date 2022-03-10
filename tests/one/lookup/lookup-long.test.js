@@ -64,6 +64,7 @@ test('lookup-long', function (t) {
   let trie = nlp.compile(arr)
   let doc = nlp(text)
   let res = doc.lookup(trie)
+  console.log(res.out('array'))
   t.equal(res.length, 11, here + 'found all')
 
   let m = res.if('maple leafs')

@@ -80,7 +80,7 @@ const runMatch = function (docs, todo, cache) {
   // add ids to pointers
   results.ptrs.forEach(ptr => {
     let [n, start] = ptr
-    ptr.push(docs[n][start].id)
+    ptr[3] = docs[n][start].id
   })
   return results
 }

@@ -22,6 +22,28 @@ const verbForms = {
     // walk!
     ['#Imperative', []],
   ],
+
+  'want-infinitive': [
+    ['^(want|wants|wanted) to #Infinitive$', [present]],
+    ['^wanted to #Infinitive$', [past]],
+    ['^will want to #Infinitive$', [future]],
+  ],
+
+  'gerund-phrase': [
+    // started looking
+    ['^#PastTense #Gerund$', [past]],
+    // starts looking
+    ['^#PresentTense #Gerund$', [present]],
+    // start looking
+    ['^#Infinitive #Gerund$', [present]],
+    // will start looking
+    ['^will #Infinitive #Gerund$', [future]],
+    // have started looking
+    ['^have #PastTense #Gerund$', [past]],
+    // will have started looking
+    ['^will have #PastTense #Gerund$', [past]],
+  ],
+
   'simple-present': [
     // he walks',
     ['^#PresentTense$', [present]],
@@ -133,11 +155,6 @@ const verbForms = {
   'modal-past': [
     // he could have walked
     ['^(could|must|should|shall) have #PastTense$', [past]],
-  ],
-  'want-infinitive': [
-    ['^(want|wants|wanted) to #Infinitive$', [present]],
-    ['^wanted to #Infinitive$', [past]],
-    ['^will want to #Infinitive$', [future]],
   ],
   'modal-infinitive': [
     // he can walk

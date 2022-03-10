@@ -23,6 +23,7 @@ const cleanUp = function (vb, res) {
   }
   // did we miss any of these?
   // vb = vb.remove('#Adverb')
+  vb = vb.not('#Adverb')
   return vb
 }
 

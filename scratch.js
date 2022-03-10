@@ -16,13 +16,13 @@ let arr = [
   // 'fish hooks',
 
 ]
-txt = `he will want to walk`
-txt = `they clearly did not suggest`
+// txt = `people started to look`
+txt = `people will start looking`
 
 
 let doc = nlp(txt)
 
-doc.verbs().toPresent()
+doc.verbs().debug().toPresent()
 doc.debug()
 
 

@@ -9,11 +9,16 @@ const clue = {
     PresentTense: 'Gerund',
     Plural: 'Gerund'//kids cutting
   }),
-  afterTags: Object.assign({}, adj.afterTags, gerund.afterTags),
-  beforeWords: Object.assign({
+
+  afterTags: Object.assign({}, adj.afterTags, gerund.afterTags, {
+    Singular: 'Adjective'//shocking ignorance
+  }),
+
+  beforeWords: Object.assign({}, adj.beforeWords, gerund.beforeWords, {
     is: 'Adjective',
     was: 'Adjective'
-  }, adj.beforeWords, gerund.beforeWords),
+  }),
+
   afterWords: Object.assign({}, adj.afterWords, gerund.afterWords, {
     to: 'Gerund',
     not: 'Gerund',//trying not to car

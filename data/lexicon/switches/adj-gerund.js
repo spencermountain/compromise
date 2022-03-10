@@ -221,6 +221,7 @@ export default [
 
   // prefixes
   'resting',
+  'redefining',
 
 ]
 

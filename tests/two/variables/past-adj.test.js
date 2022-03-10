@@ -30,9 +30,9 @@ let arr = [
   [`the detailed plan`, '. #Adjective #Noun'],
   [`well equipped`, '. #Adjective'],
   [`deeply closed`, `. #Adjective`],
-  [`detailed plan`, '#Adjective .'],
+  [`a detailed plan`, 'a #Adjective .'],
   [`seemed closed`, `. #Adjective`],
-  [`failed class`, '#Adjective .'],
+  [`my failed class`, 'my #Adjective .'],
   [`intoxicated little`, '#Adjective .'],
   [`quickly closed`, `. #PastTense`],
   [`badly damaged`, `. #Adjective`],
@@ -44,7 +44,7 @@ let arr = [
   [`spaghetti and steamed rice`, '#Noun and #Adjective #Noun'],
   [`for suspected terrorists`, 'for #Adjective #Plural'],
   [`for discounted beauty items`, 'for #Adjective #Noun #Plural'],
-  [`number of registered party members`, '#Noun of #Adjective #Noun #Plural'],
+  // [`number of registered party members`, '#Noun of #Adjective #Noun #Plural'],
   [`rely on bottled water`, '#Verb on #Adjective #Noun'],
 
   // === PastTense ===

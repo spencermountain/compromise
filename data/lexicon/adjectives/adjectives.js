@@ -578,6 +578,7 @@ export default [
   'unsightly',
   'unruly',
   'many',
+  'sparkly',
 
   // -ry
   'legendary',

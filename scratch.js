@@ -47,11 +47,7 @@ import nlp from './src/three.js'
 // txt = `a major stumbling block to industrial growth`
 
 let doc = nlp(`one match two.`)
-let html = doc.html({
-  i: 'match',
-  b: 'match two'
-})
-
-console.log(html)
-
+doc.fork()
+doc.compute('preTagger')
+doc.debug()
 

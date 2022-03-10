@@ -39,7 +39,7 @@ const addMethod = function (View) {
       return this.if('#Ordinal')
     }
     /** return only cardinal numbers*/
-    isCardina() {
+    isCardinal() {
       return this.if('#Cardinal')
     }
 

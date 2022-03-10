@@ -73,10 +73,6 @@
 * .sort()
 * .fork()
 * .concat()
-* .freeze()
-* .unfreeze()
-* .isFrozen()
-* .repai()
 
 
 ### Contraction-one

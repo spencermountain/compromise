@@ -103,8 +103,12 @@ const methods = {
       }
       return true
     })
-    // strip hardened-pointers
-    ptrs = ptrs.map(ptr => ptr.slice(0, 3))
+    // re-harden pointers
+    ptrs = ptrs.map((ptr) => {
+      let [n, start] = ptr
+      ptr[3] = document[n] && document[n][start] ? document[n][start].id : null
+      return ptr
+    })
     // mutate original
     self.ptrs = ptrs
     self.document = document

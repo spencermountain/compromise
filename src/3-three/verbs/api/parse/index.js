@@ -6,8 +6,8 @@ const getAuxiliary = function (vb, root) {
   if (parts.length <= 1) {
     return vb.none()
   }
-  let aux = parts.eq(0).clone()
-  aux.remove('(#Adverb|#Negative|#Prefix)')
+  let aux = parts.eq(0)
+  aux = aux.not('(#Adverb|#Negative|#Prefix)')
   return aux
 }
 

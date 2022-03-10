@@ -13,9 +13,8 @@ let arr = [
   'he is redefining art',
   'he is redefining his art',
   'i wish that',
-  'fish hooks?',
-  'the toronto fires',
-  'the resolve to fight',
+  // 'fish hooks',
+
 ]
 
 

@@ -21,7 +21,7 @@ const clue = {
   afterWords: Object.assign({}, verb.afterWords, noun.afterWords, {
     // for: 'Infinitive',//work for
     instead: 'Infinitive',
-    that: 'Singular',//subject that was
+    // that: 'Singular',//subject that was
     // for: 'Infinitive',//work for
     about: 'Infinitive',//talk about
     to: null,

@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import plg from './plugins/speech/src/plugin.js'
 // nlp.plugin(plg)
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 let txt = ''
 let arr = [
@@ -16,11 +16,11 @@ let arr = [
   // 'fish hooks',
 
 ]
+txt = `people will seldom start looking`
 
 
-let doc = nlp(arr[arr.length - 1])
+let doc = nlp(txt)
+doc.verbs().toPresent()
 doc.debug()
-
-
 
 

@@ -65,7 +65,7 @@ const reverse = function () {
 const unique = function () {
   let already = new Set()
   let res = this.filter(m => {
-    let txt = m.text('normal')
+    let txt = m.text('machine')
     if (already.has(txt)) {
       return false
     }

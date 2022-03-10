@@ -3,15 +3,15 @@ import nlp from '../_lib.js'
 const here = '[two/or] '
 
 test('or-match-basic', function (t) {
-  let doc = nlp('toronto and montreal. Sydney and Paris')
+  let doc = nlp('toronto and montreal. London and Paris')
   let m = doc.match('(#Place  | and )')
-  t.equal(m.out(), 'toronto and montreal. Sydney and Paris', here + 'whitespace-or')
+  t.equal(m.out(), 'toronto and montreal. London and Paris', here + 'whitespace-or')
 
   m = doc.match('(#Place  | nonono no no| and )')
-  t.equal(m.out(), 'toronto and montreal. Sydney and Paris', here + 'whitespace-or-multi1')
+  t.equal(m.out(), 'toronto and montreal. London and Paris', here + 'whitespace-or-multi1')
 
   m = doc.match('( nonono no no|| . )')
-  t.equal(m.out(), 'toronto and montreal. Sydney and Paris', here + 'whitespace-or-dot')
+  t.equal(m.out(), 'toronto and montreal. London and Paris', here + 'whitespace-or-dot')
   t.end()
 })
 

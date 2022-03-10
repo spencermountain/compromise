@@ -34,7 +34,7 @@ const verbForms = {
   ],
   'simple-future': [
     // he will walk
-    ['^will #Infinitive$', [future]],
+    ['^will #Adverb? #Infinitive', [future]],
   ],
 
   // === Progressive ===

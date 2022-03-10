@@ -5,8 +5,6 @@ const here = '[two/out] '
 test('out-tags', function (t) {
   let out = nlp(`he's cool.`).out('tags')
   t.equal(out.length, 1, 'one sentence')
-  out[0] = out[0] || { he: [], is: [], cool: [] }
-  out[0] = Object.assign(out[0], { he: [], is: [], cool: [] })
   t.equal(out[0].he.indexOf('Pronoun') !== -1, true, here + 'has he:Pronoun')
   t.equal(out[0].is.indexOf('Copula') !== -1, true, here + 'has is:Copula')
   t.equal(out[0].cool.indexOf('Adjective') !== -1, true, here + 'has cool:Adjective')

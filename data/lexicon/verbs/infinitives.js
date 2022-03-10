@@ -695,4 +695,6 @@ export default [
   'ignore',
   'remain',
   'confirm',
+  'vie',
+  'reconcile',
 ]

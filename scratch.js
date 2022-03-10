@@ -11,6 +11,7 @@ let arr = [
   // 'Visit message boards and post this article as a new mes..', //'Visit' no #Verb -
   // 'Provided me with warm blanket and has soft music playing', //'playing' no #Gerund -
   'she needs to develop ',
+  // 'from their hands',
 ]
 
 

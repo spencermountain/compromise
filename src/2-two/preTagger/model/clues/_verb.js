@@ -40,6 +40,7 @@ export default {
     he: v,
     she: v,
     it: v,
+    being: v,
   },
   afterWords: {
     the: v, //echo the

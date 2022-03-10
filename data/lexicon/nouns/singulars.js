@@ -377,6 +377,7 @@ export default [
   'bar',
   'prediction',
   'pie',
+  'rerun',
 ]
 
 

@@ -24,7 +24,9 @@ const clue = {
     that: 'Singular',//subject that was
     // for: 'Infinitive',//work for
     about: 'Infinitive',//talk about
-    to: null
+    to: null,
+    by: null,
+    in: null
   }),
 }
 // console.log(clue.afterWords.of)

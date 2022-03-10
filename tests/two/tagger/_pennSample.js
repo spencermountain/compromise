@@ -495,10 +495,6 @@ export default [
     tags: 'NNP, NNP, JJ, JJ, NNS',
   },
   {
-    text: '"President Musharraf promised to help us and cooperate with us on curbing terrorist activity by the Taliban," says Karzai.',
-    tags: 'NNP, NNP, VBD, TO, VB, PRP, CC, VB, IN, PRP, IN, VBG, JJ, NN, IN, DT, NNP, VBZ, NNP',
-  },
-  {
     text: 'That too may change.',
     tags: 'DT, RB, MD, VB',
   },
@@ -1818,10 +1814,10 @@ export default [
     text: 'Ben Rogers',
     tags: 'NNP, NNP',
   },
-  {
-    text: 'It has been a pleasure to meet with you and I hope we can continue to talk about energy and finance in the future.',
-    tags: 'PRP, VBZ, VBN, DT, NN, TO, VB, IN, PRP, CC, PRP, VBP, PRP, MD, VB, TO, VB, IN, NN, CC, NN, IN, DT, NN',
-  },
+  // {
+  //   text: 'It has been a pleasure to meet with you and I hope we can continue to talk about energy and finance in the future.',
+  //   tags: 'PRP, VBZ, VBN, DT, NN, TO, VB, IN, PRP, CC, PRP, VBP, PRP, MD, VB, TO, VB, IN, NN, CC, NN, IN, DT, NN',
+  // },
   {
     text: 'Ben Rogers',
     tags: 'NNP, NNP',
@@ -2538,10 +2534,6 @@ export default [
   {
     text: 'The Orange County Register',
     tags: 'DT, NNP, NNP, NNP',
-  },
-  {
-    text: 'With the price caps gone, the generators filed paperwork with federal regulators justifying higher costs.',
-    tags: 'IN, DT, NN, NNS, JJ, DT, NNS, VBD, NN, IN, JJ, NNS, VBG, JJR, NNS',
   },
   {
     text: 'Smutney-Jones also said he was unaware of anyone in the power-generating community being consulted.',
@@ -4934,10 +4926,6 @@ export default [
   {
     text: 'Excellent Physiotherapists!',
     tags: 'JJ, NNS',
-  },
-  {
-    text: 'They must have read these reviews and improved!',
-    tags: 'PRP, MD, VB, VBN, DT, NNS, CC, VBN',
   },
   {
     text: 'This was a flavorful, enjoyable meal for both of us.',

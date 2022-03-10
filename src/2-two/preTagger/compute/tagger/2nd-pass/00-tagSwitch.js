@@ -2,6 +2,7 @@ const prefix = /^(under|over|mis|re|un|dis|semi)-?/
 
 const tagSwitch = function (terms, i, model) {
   const switches = model.two.switches
+  const lexicon = model.one.lexicon
   let term = terms[i]
   if (switches.hasOwnProperty(term.normal)) {
     term.switch = switches[term.normal]
@@ -10,7 +11,7 @@ const tagSwitch = function (terms, i, model) {
   // support 'restrike' -> 'strike'
   if (prefix.test(term.normal)) {
     let stem = term.normal.replace(prefix, '')
-    if (stem.length > 3 && switches.hasOwnProperty(stem)) {
+    if (stem.length > 3 && switches.hasOwnProperty(stem) && !lexicon[stem]) {
       term.switch = switches[stem]
     }
   }

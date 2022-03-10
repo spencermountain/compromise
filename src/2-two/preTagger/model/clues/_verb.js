@@ -57,7 +57,7 @@ export default {
     by: v,
     // in: v, //bob in
     out: v,
-    on: v,
+    // on: v,
     off: v,
     when: v,//starts when
     // for:true, //settled for

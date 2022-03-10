@@ -690,4 +690,9 @@ export default [
   'portray',
   'avoid',
   'like',
+  'admit',
+  'arrive',
+  'ignore',
+  'remain',
+  'confirm',
 ]

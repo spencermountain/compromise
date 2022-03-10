@@ -22,6 +22,9 @@ const clue = {
     // for: 'Infinitive',//work for
     instead: 'Infinitive',
     that: 'Singular',//subject that was
+    // for: 'Infinitive',//work for
+    about: 'Infinitive',//talk about
+    to: null
   }),
 }
 // console.log(clue.afterWords.of)

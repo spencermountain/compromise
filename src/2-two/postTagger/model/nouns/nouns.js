@@ -111,5 +111,9 @@ export default [
   // soft music playing
   { match: '%Noun|Gerund%$', tag: 'Noun', reason: 'music-playing' },
   // hopes and dreams
-  { match: '#Plural and %Plural|Verb%', tag: 'Plural', reason: 'hopes-and-dreams' },
+  { match: '#Plural and [%Plural|Verb%]', tag: 'Plural', reason: 'hopes-and-dreams' },
+  // fight and win
+  { match: '#Infinitive and [%Noun|Verb%]', group: 0, tag: 'Infinitive', reason: 'fight and win' },
+  // an impressionist painting
+  { match: '#Determiner [%Adj|Noun%] #Noun', group: 0, tag: 'Adjective', reason: 'a-complex-relationship' },
 ]

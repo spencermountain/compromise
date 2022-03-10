@@ -53,6 +53,8 @@ export default {
     // strong adjectives
     favorite: n,//
     best: n,//
+    daily: n,//
+    weekly: n,//
   },
   afterWords: {
     of: n, //date of birth (preposition)

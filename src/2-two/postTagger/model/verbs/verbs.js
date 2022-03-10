@@ -76,4 +76,6 @@ export default [
 
   // jobs that fit
   { match: '#Plural that %Noun|Verb%', tag: '. #Preposition #Infinitive', reason: 'jobs-that-work' },
+  // works for me
+  { match: '[works] for me', group: 0, tag: '#PresentTense', reason: 'works-for-me' },
 ]

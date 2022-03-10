@@ -223,4 +223,5 @@ export default [
   'pretense',
   'preamble',
   'presense',
+  'dope',
 ]

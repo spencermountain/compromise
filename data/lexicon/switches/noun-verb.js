@@ -419,6 +419,7 @@ export default [
   'poll',
   'pool',
   'pop',
+  'poison',
   'pore',
   'pose',
   'post',

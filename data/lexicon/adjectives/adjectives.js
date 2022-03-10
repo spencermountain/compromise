@@ -626,5 +626,6 @@ export default [
   'skilled',
   'antique',
   'dependent',
+  'independent',
 ]
 

@@ -99,4 +99,9 @@ export default [
   'watershed',
   'welcome',
   'terrorist',
+  'feminist',
+  'impressionist',
+  'communist',
+  'socialist',
+  'modernist',
 ]

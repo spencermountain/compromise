@@ -979,10 +979,6 @@ export default [
     tags: 'UH',
   },
   {
-    text: 'I was originally inquiring about purchasing a Cross or Signac impressionist lithograph.',
-    tags: 'PRP, VBD, RB, VBG, IN, VBG, DT, NNP, CC, NNP, JJ, NN',
-  },
-  {
     text: 'I found them and purchased both from a gallery in London, William Weston.',
     tags: 'PRP, VBD, PRP, CC, VBD, DT, IN, DT, NN, IN, NNP, NNP, NNP',
   },
@@ -1301,10 +1297,6 @@ export default [
     tags: 'NNP, NNP',
   },
   {
-    text: 'Term sheet for draft contract, as requested.',
-    tags: 'NN, NN, IN, NN, NN, IN, VBN',
-  },
-  {
     text: 'They showed some kids on TV, and they were quite taken with it.',
     tags: 'PRP, VBD, DT, NNS, IN, NN, CC, PRP, VBD, RB, VBN, IN, PRP',
   },
@@ -1411,10 +1403,6 @@ export default [
   {
     text: 'Sorry.',
     tags: 'JJ',
-  },
-  {
-    text: 'Please check Tenn contract 36647 on the Demand speadsheet.',
-    tags: 'UH, VB, NNP, NN, CD, IN, DT, NN, NN',
   },
   {
     text: 'It is very clean and is Sandalwood, Driftwood or something of that nature in color.',
@@ -1585,10 +1573,6 @@ export default [
   {
     text: 'Enclosed is a worksheet for Ineos Acrylics.',
     tags: 'VBN, VBZ, DT, NN, IN, NNP, NNPS',
-  },
-  {
-    text: 'I left you a voice mail on Friday.',
-    tags: 'PRP, VBD, PRP, DT, NN, NN, IN, NNP',
   },
   {
     text: 'Please find attached the Enron Master Agreement.',
@@ -2340,10 +2324,6 @@ export default [
     tags: 'PRP, VBP, JJ, NNP',
   },
   {
-    text: 'Place: University of Pennsylvania',
-    tags: 'NN, NNP, IN, NNP',
-  },
-  {
     text: 'Shawna Johnson Recruiting Coordinator',
     tags: 'NNP, NNP, NN, NN',
   },
@@ -2968,10 +2948,6 @@ export default [
   {
     text: 'Also NASA has a large outreach program for education, some people believe this is important.',
     tags: 'RB, NNP, VBZ, DT, JJ, NN, NN, IN, NN, DT, NNS, VBP, DT, VBZ, JJ',
-  },
-  {
-    text: 'and bridges ???',
-    tags: 'CC, NNS',
   },
   {
     text: 'i find that extremely hard to believe.',
@@ -3988,7 +3964,7 @@ export default [
   },
   {
     text: 'I want to apply for canada skilled immigeration program.',
-    tags: 'PRP, VBP, TO, VB, IN, NNP, VBN, NN, NN',
+    tags: 'PRP, VBP, TO, VB, IN, NNP, JJ, NN, NN',
   },
   {
     text: 'Can i apply with 63 points?',
@@ -4215,10 +4191,6 @@ export default [
     tags: 'VBP, EX, DT, JJ, NNS, IN, PRP',
   },
   {
-    text: 'They both had pools for kids and adults.',
-    tags: 'PRP, DT, VBD, NNS, IN, NNS, CC, NNS',
-  },
-  {
     text: 'Spa We tried the spa on the Liberty and loved it.',
     tags: 'NN, PRP, VBD, DT, NN, IN, DT, NNP, CC, VBD, PRP',
   },
@@ -4309,10 +4281,6 @@ export default [
   {
     text: "It's called Kiwi Heaven and it's across the river from Cho Ben Tre.",
     tags: 'PRP, VBZ, VBN, NNP, NNP, CC, PRP, VBZ, IN, DT, NN, IN, NNP, NNP, NNP',
-  },
-  {
-    text: 'yoga and horses .....?',
-    tags: 'NN, CC, NNS',
   },
   {
     text: 'But there are just so many poses and programs!',
@@ -5279,10 +5247,6 @@ export default [
   {
     text: 'Love the soups.',
     tags: 'VBP, DT, NNS',
-  },
-  {
-    text: 'The auto mechanics that work for Auto Towing are very friendly and informative and answered any question I had.',
-    tags: 'DT, NN, NNS, WDT, VBP, IN, NNP, NNP, VBP, RB, JJ, CC, JJ, CC, VBD, DT, NN, PRP, VBD',
   },
   {
     text: 'A very satisfied new customer!',

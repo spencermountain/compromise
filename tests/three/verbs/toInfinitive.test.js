@@ -253,7 +253,7 @@ test('toInfinitive-phrase:', function (t) {
     ["caned", "cane"],
     ["annulled", "annul"],
     ["extolled", "extol"],
-    ["quickly levelled", "quickly level"],
+    ["quickly leveled", "quickly level"],
     ["travelled", "travel"],
     ["expelled", "expel"],
     ["dispelled", "dispel"],
@@ -416,7 +416,8 @@ test('toInfinitive-phrase:', function (t) {
     ['tuning', 'tune'],
     ['hazing', 'haze'],
     //phrasal
-    ['hazing-over', 'haze-over'],
+    ['hazing over', 'haze over'],
+    // ['hazing-over', 'haze-over'],
 
     // pastTense -> infinitive
     ['came', 'come'],
@@ -428,7 +429,8 @@ test('toInfinitive-phrase:', function (t) {
     ['ached', 'ache'],
     ['tuned', 'tune'],
     //phrasal
-    ['hazed-over', 'haze-over'],
+    ['hazed over', 'haze over'],
+    // ['hazed-over', 'haze-over'],
   ]
   arr.forEach(a => {
     let doc = nlp(a[0])

@@ -18,7 +18,7 @@ let arr = [
 ]
 txt = `people started to look`
 txt = `we have started seeing`
-txt = `i won't start looking`
+txt = `flown`
 
 
 let doc = nlp(txt)

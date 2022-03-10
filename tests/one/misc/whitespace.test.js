@@ -15,9 +15,9 @@ test('whitespace-out', function (t) {
   t.equal(doc.match('four').text(), 'four', here + 'one match')
 
   t.equal(doc.match('two').text(), 'two two', here + 'two single matches')
-  t.equal(doc.match('one').text(), 'one, One', here + 'two more single matches')
+  t.equal(doc.match('one').text(), 'one, One,', here + 'two more single matches')
 
-  t.equal(doc.match('one two').text(), 'one, two One, two', here + 'two multi-matches')
+  t.equal(doc.match('one two').text(), 'one, two One, two,', here + 'two multi-matches')
 
   // t.equal(doc.not('two').out(), 'one, three. One, four?', '.not() okay') // ❌
 

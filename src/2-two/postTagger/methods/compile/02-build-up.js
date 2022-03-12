@@ -19,7 +19,7 @@ const growSlowOr = function (obj, index) {
   })
 }
 
-const expand = function (matches) {
+const buildUp = function (matches) {
   let all = []
   matches.forEach(obj => {
     // expand simple '(one|two)' matches
@@ -54,4 +54,4 @@ const expand = function (matches) {
   return all
 }
 
-export default expand
+export default buildUp

@@ -35,6 +35,11 @@ const toRoot = {
     let str = term.machine || term.normal || term.text
     return world.methods.two.transform.adjFromSuperlative(str, world.model)
   },
+  // 'suddenly' -> 'sudden'
+  // 'Adverb': (term, world) => {
+  // let str = term.machine || term.normal || term.text
+  // return world.methods.two.transform.adjFromSuperlative(str, world.model)
+  // },
 }
 
 const getRoot = function (view) {

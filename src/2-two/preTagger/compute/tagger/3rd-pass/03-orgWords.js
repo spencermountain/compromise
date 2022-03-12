@@ -1,3 +1,5 @@
+import fastTag from '../_fastTag.js'
+
 const isTitleCase = function (str) {
   return /^[A-Z][a-z'\u00C0-\u00FF]/.test(str)
 }
@@ -19,12 +21,13 @@ const isOrg = function (term) {
 const tagOrgs = function (terms, i, model) {
   const orgWords = model.two.orgWords
   let term = terms[i]
-  if (orgWords[term.normal] === true && isOrg(terms[i - 1])) {
-    terms[i].tags.add('Organization')
+  let str = term.machine || term.normal
+  if (orgWords[str] === true && isOrg(terms[i - 1])) {
+    fastTag(terms[i], 'Organization', '3-[org-word]')
     // loop backwards, tag organization-like things
     for (let t = terms.length - 1; t >= 0; t -= 1) {
       if (isOrg(terms[t])) {
-        terms[t].tags.add('Organization')
+        fastTag(terms[t], 'Organization', '3-[org-word]')
       } else {
         break
       }

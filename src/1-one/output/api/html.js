@@ -37,6 +37,10 @@ const getIndex = function (doc, obj) {
       res = doc.match(res)
     }
     res.docs.forEach(terms => {
+      // don't highlight implicit terms
+      if (terms.every(t => t.implicit)) {
+        return
+      }
       let a = terms[0].id
       starts[a] = starts[a] || []
       starts[a].push(tag.start)

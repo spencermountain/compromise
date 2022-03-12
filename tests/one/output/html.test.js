@@ -43,3 +43,10 @@ test('html-nest', function (t) {
 
   t.end()
 })
+
+test('html-implicit', function (t) {
+  let doc = nlp(`he's cool`)
+  let out = doc.html({ '.foo': '#Verb' })
+  t.equal(out, `he's cool`, here + 'implict')
+  t.end()
+})

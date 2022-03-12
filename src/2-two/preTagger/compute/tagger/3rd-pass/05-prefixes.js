@@ -1,3 +1,5 @@
+import fastTag from '../_fastTag.js'
+
 // 'out lived' is a verb-phrase
 // 'over booked' is too
 // 'macro-nutrient', too
@@ -13,15 +15,13 @@ const doPrefix = function (terms, i, model) {
   if (prefixes[term.normal] === true) {
     // 'over cooked'
     if (nextTerm.tags.has('Verb')) {
-      term.tags.clear()
-      term.tags.add('Verb')
-      term.tags.add('Prefix')
+      fastTag(term, 'Verb', '3-[prefix]')
+      fastTag(term, 'Prefix', '3-[prefix]')
     }
     // 'pseudo clean'
     if (nextTerm.tags.has('Adjective')) {
-      term.tags.clear()
-      term.tags.add('Adjective')
-      term.tags.add('Prefix')
+      fastTag(term, 'Adjective', '3-[prefix]')
+      fastTag(term, 'Prefix', '3-[prefix]')
     }
   }
 

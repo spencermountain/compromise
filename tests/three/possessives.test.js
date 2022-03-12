@@ -37,6 +37,12 @@ test('strip-all', function (t) {
   doc.possessives().strip()
   doc.parentheses().strip()
   doc.quotations().strip()
-  t.equal(doc.text(), 'frank open bar.')
+  t.equal(doc.text(), 'frank open bar.', here + 'strip-1')
+
+  doc = nlp(`(frank's open "bar".)`)
+  doc.possessives().strip()
+  doc.parentheses().strip()
+  doc.quotations().strip()
+  t.equal(doc.text(), 'frank open bar.', here + 'strip-2')
   t.end()
 })

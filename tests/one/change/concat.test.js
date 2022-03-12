@@ -14,6 +14,13 @@ test('concat pointers :', function (t) {
   b = doc.match('four .')
   res = a.concat(b)
   t.deepEqual(res.out('array'), ['two three.', 'four five'], here + 'concat-pointer-mixed')
+
+  doc = nlp('before text. middle. after text.')
+  a = doc.slice(0, 2)
+  b = doc.slice(2)
+  let both = a.concat(b)
+  t.equal(both.length, 3, here + 'pointer-both')
+  t.equal(doc.length, 3, here + 'pointer-non-mutable')
   t.end()
 })
 
@@ -23,5 +30,11 @@ test('concat doc :', function (t) {
   doc.concat(doc2)
   t.equal(doc.text(), 'walk the plank foo bar', here + 'concat doc')
   t.equal(doc.match('plank foo').found, false, here + 'concat is two sentences')
+
+
+  let a = nlp('before text. middle.')
+  let b = nlp('after text.')
+  a.concat(b)
+  t.equal(a.length, 3, here + 'have 3 mutable')
   t.end()
 })

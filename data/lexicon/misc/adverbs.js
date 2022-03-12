@@ -1,3 +1,4 @@
+// most are generated from adjective list at runtime
 export default [
   'a lot',
   'a posteriori',

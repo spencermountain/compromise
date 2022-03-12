@@ -35,7 +35,13 @@ test('swap-noun', function (t) {
   doc = nlp('I am Cliff Clavin').compute('root')
   doc.swap('cliff', 'giraffe', '!#Person')
   t.equal(doc.text(), 'I am Cliff Clavin', here + 'nn-guard')
+  t.end()
+})
 
-
+test('swap-adverb', function (t) {
+  let doc = nlp('suddenly and heatedly').compute('root')
+  doc.swap('heated', 'warm')
+  doc.swap('sudden', 'immediate')
+  t.equal(doc.text(), 'immediately and warmly', here + 'swap-adverb')
   t.end()
 })

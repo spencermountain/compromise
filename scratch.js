@@ -6,8 +6,8 @@ import nlp from './src/three.js'
 // nlp.verbose('tagger')
 
 let txt = ''
-txt = 'suddenly bolt heatedly'
+txt = 'suddenly and heatedly'
 let doc = nlp(txt).compute('root')
-let json = doc.adverbs().json()[0]
-console.log(json)
-// doc.adverbs().toAdjective().debug()
+doc.swap('heated', 'warm')
+doc.swap('sudden', 'immediate')
+doc.debug()

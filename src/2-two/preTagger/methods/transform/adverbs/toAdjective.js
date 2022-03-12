@@ -1,37 +1,5 @@
-const rules = [
-  {},
-  {},
-  { 'ly': '' },
-  {
-    'ily': 'y',
-    'bly': 'ble',
-    'ply': 'ple',
-  },
-  {
-    'ally': 'al',
-    'rply': 'rp',
-  },
-  {
-    'ually': 'ual',
-    'ially': 'ial',
-    'cally': 'cal',
-    'eally': 'eal',
-    'rally': 'ral',
-    'nally': 'nal',
-    'mally': 'mal',
-    'eeply': 'eep',
-    'eaply': 'eap',
-  },
-  {
-    ically: 'ic',
-  },
-  // {
-  //   tically: 'tic',
-  //   nically: 'nic',
-  //   gically: 'gic',
-  //   fically: 'fic',
-  // },
-]
+import doRules from './lib.js'
+
 const s = 'ically'
 const ical = new Set([
   'analyt' + s, //analytical
@@ -69,47 +37,66 @@ const ical = new Set([
   'whims' + s,// whimsical
 ])
 
+const suffixes = [
+  null,
+  {},
+  { 'ly': '' },
+  {
+    'ily': 'y',
+    'bly': 'ble',
+    'ply': 'ple',
+  },
+  {
+    'ally': 'al',
+    'rply': 'rp',
+  },
+  {
+    'ually': 'ual',
+    'ially': 'ial',
+    'cally': 'cal',
+    'eally': 'eal',
+    'rally': 'ral',
+    'nally': 'nal',
+    'mally': 'mal',
+    'eeply': 'eep',
+    'eaply': 'eap',
+  },
+  {
+    ically: 'ic',
+  }
+]
+
+const noAdj = new Set([
+  'early',
+  'only',
+  'hourly',
+  'daily',
+  'weekly',
+  'monthly',
+  'yearly',
+  'mostly',
+  'duly',
+  'unduly',
+  'especially',
+  'undoubtedly',
+  'conversely',
+  'namely',
+  'exceedingly',
+  'presumably',
+  'accordingly',
+  'overly'
+])
+
 // exceptions to rules
 const exceptions = {
-  'early': null,
-  'only': null,
-  'hourly': null,
-  'daily': null,
-  'weekly': null,
-  'monthly': null,
-  'yearly': null,
-  'mostly': null,
-  'duly': null,
-  'unduly': null,
-  'especially': null,
-  'undoubtedly': null,
-  'conversely': null,
-  'namely': null,
-  'exceedingly': null,
-  'presumably': null,
-  'accordingly': null,
-  'overly': null,
-  'wholly': 'whole',
-  'fully': 'full',
-  'truly': 'true',
-  'gently': 'gentle',
-  'singly': 'single',
+  wholly: 'whole',
+  fully: 'full',
+  truly: 'true',
+  gently: 'gentle',
+  singly: 'single',
   customarily: 'customary',
 }
-//sweep-through all suffixes
-const suffixLoop = function (str = '', suffixes = []) {
-  const len = str.length
-  let max = len <= 6 ? len - 1 : 6
-  for (let i = max; i > 1; i -= 1) {
-    let suffix = str.substring(len - i, str.length)
-    if (suffixes[suffix.length].hasOwnProperty(suffix) === true) {
-      let pre = str.slice(0, len - i)
-      let post = suffixes[suffix.length][suffix]
-      return pre + post
-    }
-  }
-  return str
-}
+
 
 const toAdjective = function (str) {
   if (!str.endsWith('ly')) {
@@ -119,10 +106,13 @@ const toAdjective = function (str) {
   if (ical.has(str)) {
     return str.replace(/ically/, 'ical')
   }
+  if (noAdj.has(str)) {
+    return null
+  }
   if (exceptions.hasOwnProperty(str)) {
     return exceptions[str]
   }
-  return suffixLoop(str, rules)
+  return doRules(str, suffixes) || str
 }
 export default toAdjective
 

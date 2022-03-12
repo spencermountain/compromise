@@ -9,6 +9,15 @@ const swapNoun = function (m, lemma) {
   m.replaceWith(str)
 }
 
+const swapAdverb = function (m, lemma) {
+  const toAdverb = m.methods.two.transform.adjToAdverb
+  let str = lemma
+  let adv = toAdverb(str)
+  if (adv) {
+    m.replaceWith(adv)
+  }
+}
+
 const swap = function (from, to, tag) {
   let m = this.match(`{${from}}`)
   // guard against some homonyms
@@ -20,6 +29,9 @@ const swap = function (from, to, tag) {
   }
   if (m.has('#Noun')) {
     return swapNoun(m, to)
+  }
+  if (m.has('#Adverb')) {
+    return swapAdverb(m, to)
   }
   return this
 }

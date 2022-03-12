@@ -1,7 +1,8 @@
 /* eslint-disable no-console, no-unused-vars */
 import doDocs from './_giga.js'
 import tagMap from './_tagMap.js'
-import transform from '../../src/2-two/preTagger/methods/transform/adverbs.js'
+import transform from '../../src/2-two/preTagger/methods/transform/adverbs/toAdverb.js'
+// import transform from '../../src/2-two/preTagger/methods/transform/adverbs/toAdjective.js'
 
 
 let ids = []
@@ -21,20 +22,20 @@ const doSentence = function (s) {
     if (tag === 'Adverb') {
       rbs.push(t['$'].lem)
     }
-    if (tag === 'Adjective') {
-      jjs.push(t['$'].lem)
-    }
+    // if (tag === 'Adjective') {
+    //   jjs.push(t['$'].lem)
+    // }
   })
 }
 
 let correct = 0
 doDocs(ids, doSentence).then(() => {
-  jjs = new Set(jjs)
-  rbs.forEach(rb => {
-    rb = rb || ''
-    let j = transform(rb)
-    if (rb.endsWith('ly') && !jjs.has(j) && j) {
-      console.log(rb)
+  rbs = new Set(rbs)
+  jjs.forEach(j => {
+    j = j || ''
+    let rb = transform(j)
+    if (!rbs.has(rb) && rb) {
+      console.log(j)
     } else {
       correct += 1
     }

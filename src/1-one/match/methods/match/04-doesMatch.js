@@ -83,7 +83,7 @@ const doesMatch = function (term, reg, index, length) {
   }
   //support {machine}
   if (reg.machine !== undefined) {
-    return term.normal === reg.machine || term.machine === reg.machine
+    return term.normal === reg.machine || term.machine === reg.machine || term.root === reg.machine
   }
   //support {word/sense}
   if (reg.sense !== undefined) {

@@ -65,6 +65,8 @@ export default [
   { match: '#Singular #Acronym #LastName', tag: '#FirstName #Person .', reason: 'title-acro-noun', safe: true },
   //Foo Ford
   { match: '[#ProperNoun] #Person', group: 0, tag: 'Person', reason: 'proper-person', safe: true },
+  //Cliff Clavin
+  { match: '%Person|Noun% #ProperNoun', tag: 'Person', reason: 'switch-person', safe: true },
   // john keith jones
   {
     match: '#Person [#ProperNoun #ProperNoun]',

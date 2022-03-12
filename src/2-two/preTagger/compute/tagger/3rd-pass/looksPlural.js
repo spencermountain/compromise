@@ -23,6 +23,13 @@ const isPlural = {
     'men',
   ]
 }
+// plural words as exceptions to suffix-rules
+const exceptions = new Set([
+  'formulas',
+  'koalas',
+  'israelis',
+  'menus',
+])
 
 const notPlural = [
   'bus',
@@ -41,7 +48,6 @@ const notPlural = [
   'tis',//mantis, testis
   'xis',
   'aus',
-  'bus',
   'cus',
   'eus',//nucleus
   'fus',//doofus
@@ -63,6 +69,10 @@ const looksPlural = function (str) {
   // not long enough to be plural
   if (!str || str.length <= 3) {
     return false
+  }
+  // 'menus' etc
+  if (exceptions.has(str)) {
+    return true
   }
   let end = str[str.length - 1]
   // look at 'firemen'

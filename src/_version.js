@@ -1,1 +1,1 @@
-export default '13.11.4-rc5'
+export default '13.11.4-rc6'

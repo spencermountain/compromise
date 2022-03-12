@@ -22,9 +22,35 @@
 <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 
-##### Ngrams
+##### TFIDF
+[tf-idf](https://en.wikipedia.org/wiki/Tf%E2%80%93idf) is a type of word-analysis that can discover the most-characteristic, or unique words in a text.
+It combines uniqueness of words, and their frequency in the document.
+This plugin comes pre-built with a standard english model, so you can fingerprint an arbitrary text with `.tfidif()`
 
-`npm install compromise-ngrams`
+- **.tfidf(opts, model?)** - 
+
+alternatively, you can build your own model, from a compromise document:
+- **.buildIDF()** - 
+
+```js
+let model=nlp(shakespeareWords)
+let doc = nlp('thou art so sus.')
+doc.tfidf()
+// [ [ 'sus', 5.78 ], [ 'thou', 2.3 ], [ 'art', 1.75 ], [ 'so', 0.44 ] ]
+```
+
+if you want to combine tfidf with other analysis, you can add numbers to individual terms, like this:
+```js
+let doc = nlp('no, my son is also named Bort')
+doc.compute('tfidf')
+let json = doc.json()
+json[0].terms[6]
+// {"text":"Bort", "tags":[], "tfidf":5.78, ... }
+```
+
+TF-IDF values are scaled, but have an unbounded maximum. The result for 'foo foo foo foo' would increase every with repitition.
+
+##### Ngrams
 
 - **[.ngrams({})](https://observablehq.com/@spencermountain/compromise-ngram)** - list all repeating sub-phrases, by word-count
 - **[.unigrams()](https://observablehq.com/@spencermountain/compromise-ngram)** - n-grams with one word

@@ -97,6 +97,18 @@ let arr = [
   ['scarcely', 'scarce'],
   ['scarily', 'scary'],
   ['severely', 'severe'],
+
+  ['badly', 'bad'],
+  // ['well', 'good'],
+  ['icily', 'icy'],
+  ['idly', 'idle'],
+  // ['manly', 'male'],
+  ['publicly', 'public'],
+  ['simply', 'simple'],
+  ['singly', 'single'],
+  // ['especially', 'special'],
+  ['vaguely', 'vague'],
+  ['wholly', 'whole'],
   // ['', ''],
 ]
 

@@ -8,9 +8,9 @@ nlp.extend(plugin)
 // let doc = nlp(txt)
 // console.log(doc.ngram())
 
-let txt = 'i think we see that fook are nice. foopsie are cool'
+let txt = 'no, my son is also named Bort'
 
 let doc = nlp(txt)
-console.log(doc.tfidf())
-// doc.compute('tfidf')
-// console.log(doc.json()[0])
+// console.log(doc.tfidf())
+doc.compute('tfidf')
+console.log(JSON.stringify(doc.json()[0].terms[6]))

@@ -22,6 +22,7 @@ test('swap-verb', function (t) {
   t.end()
 })
 
+
 test('swap-noun', function (t) {
   let doc = nlp('a cute koala').compute('root')
   doc.swap('koala', 'giraffe')

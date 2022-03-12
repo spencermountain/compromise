@@ -23,7 +23,13 @@ const suffixes = [
 ]
 
 const exceptions = {
+  whole: 'wholly',
   full: 'fully',
+  good: 'well',
+  idle: 'idly',
+  public: 'publicly',
+  single: 'singly',
+  special: 'especially',
 }
 
 // a lot of adjectives *don't really* have a adverb

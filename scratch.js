@@ -8,8 +8,6 @@ import nlp from './src/three.js'
 let txt = ''
 txt = 'suddenly bolt heatedly'
 let doc = nlp(txt).compute('root')
-doc.debug()
-console.log(doc.json()[0].terms)
-// console.log(doc.text('root'))
-
-console.log(doc.model.one.lexicon.heatedly)
+let json = doc.adverbs().json()[0]
+console.log(json)
+// doc.adverbs().toAdjective().debug()

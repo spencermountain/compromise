@@ -19,13 +19,11 @@ const selections = [
   ['emoticons', '#Emoticon'],
   ['atMentions', '#AtMention'],
   ['urls', '#Url'],
-  ['adverbs', '#Adverb'],
   ['pronouns', '#Pronoun'],
   ['conjunctions', '#Conjunction'],
   ['prepositions', '#Preposition'],
   ['abbreviations', '#Abbreviation'],
   ['acronyms', '#Acronym'],
-  // ['possessives', '#Possessive'],
 ]
 
 // aliases

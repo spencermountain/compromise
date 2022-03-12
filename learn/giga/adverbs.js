@@ -1,5 +1,8 @@
+/* eslint-disable no-console, no-unused-vars */
 import doDocs from './_giga.js'
 import tagMap from './_tagMap.js'
+import transform from '../../src/2-two/preTagger/methods/transform/adverbs.js'
+
 
 let ids = []
 for (let i = 1; i <= 10; i += 1) {
@@ -24,38 +27,17 @@ const doSentence = function (s) {
   })
 }
 
-const attempt = function (str = '') {
-  str = str.replace(/ually$/, 'ual')
-  str = str.replace(/ially$/, 'ial')
-  str = str.replace(/cally$/, 'c')
-  str = str.replace(/eally$/, 'eal')
-  str = str.replace(/rally$/, 'ral')
-  str = str.replace(/nally$/, 'nal')
-  str = str.replace(/mally$/, 'mal')
-  str = str.replace(/ally$/, '')
-  str = str.replace(/ily$/, 'y')
-  str = str.replace(/bly$/, 'ble')
-  str = str.replace(/ly$/, '')
-  return str
-}
-
-
-
 let correct = 0
 doDocs(ids, doSentence).then(() => {
-  console.log('done')
   jjs = new Set(jjs)
   rbs.forEach(rb => {
-    let j = attempt(rb)
-    if (!jjs.has(j) || rb.endsWith('y')) {
+    rb = rb || ''
+    let j = transform(rb)
+    if (rb.endsWith('ly') && !jjs.has(j)) {
       console.log(rb)
     } else {
       correct += 1
     }
   })
   console.log(correct.toLocaleString(), rbs.length.toLocaleString())
-  // fs.writeFileSync('./jjs.js', 'export default ' + JSON.stringify(jjs))
-  // fs.writeFileSync('./rbs.js', 'export default ' + JSON.stringify(rbs))
-  // console.log(jjs.length)
-  // console.log(rbs.length)
 })

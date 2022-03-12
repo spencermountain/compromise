@@ -176,6 +176,9 @@ hooks: ['preTagger']
 * .compute('root')
 * .compute('penn')
 
+### Swap
+* .swap('stroll', 'walk')
+
 ---
 # Three
 ### Chunker

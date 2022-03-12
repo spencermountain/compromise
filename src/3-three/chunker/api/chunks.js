@@ -1,8 +1,8 @@
-const chunks = function (view) {
+const chunks = function () {
   let carry = []
   let roll = null
   let same = null
-  view.docs.forEach(terms => {
+  this.docs.forEach(terms => {
     terms.forEach(term => {
       // start a new chunk
       if (term.chunk !== same) {
@@ -18,6 +18,6 @@ const chunks = function (view) {
   if (roll) {
     carry.push(roll)
   }
-  return view.update(carry)
+  return this.update(carry)
 }
 export default chunks

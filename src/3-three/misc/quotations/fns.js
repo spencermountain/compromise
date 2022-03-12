@@ -22,6 +22,7 @@ const pairs = {
 }
 
 const hasOpen = RegExp('(' + Object.keys(pairs).join('|') + ')')
+const hasClosed = RegExp('(' + Object.values(pairs).join('|') + ')')
 
 const findEnd = function (terms, i) {
   const have = terms[i].pre.match(hasOpen)[0] || ''
@@ -37,9 +38,9 @@ const findEnd = function (terms, i) {
   return null
 }
 
-const find = function () {
+const find = function (doc) {
   let ptrs = []
-  this.docs.forEach(terms => {
+  doc.docs.forEach(terms => {
     let isOpen = false
     for (let i = 0; i < terms.length; i += 1) {
       let term = terms[i]
@@ -53,7 +54,14 @@ const find = function () {
       }
     }
   })
-  return this.update(ptrs)
+  return doc.update(ptrs)
 }
 
-export default find
+const strip = function (m) {
+  m.docs.forEach(terms => {
+    terms[0].pre = terms[0].pre.replace(hasOpen, '')
+    let lastTerm = terms[terms.length - 1]
+    lastTerm.post = lastTerm.post.replace(hasClosed, '')
+  })
+}
+export { find, strip }

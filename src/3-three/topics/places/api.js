@@ -4,7 +4,6 @@ import find from './find.js'
 export const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
 
 const addMethod = function (View) {
-
   View.prototype.places = function (n) {
     let m = find(this)
     m = getNth(m, n)

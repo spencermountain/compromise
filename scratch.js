@@ -1,12 +1,15 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/two.js'
+import nlp from './src/three.js'
 // import plg from './plugins/speech/src/plugin.js'
 // nlp.plugin(plg)
 
 nlp.verbose('tagger')
 
 let txt = ''
-let doc = nlp('a sudden bolt').compute('root')
-// console.log(doc.json()[0].terms)
-// doc.swap('koala', 'giraffe')
+txt = 'a sudden bolt'
+txt = `frank's (open) 'bar'.`
+txt = `Union Corp`
+let doc = nlp(txt)
+// let m = doc.match('angeles')
+// m = m.growLeft('los')
 doc.debug()

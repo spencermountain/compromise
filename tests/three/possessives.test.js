@@ -1,19 +1,19 @@
 import test from 'tape'
-import nlp from '../_lib.js'
-const here = '[two/possessive] '
+import nlp from './_lib.js'
+const here = '[three/possessives] '
 
 test('possessives tagger', function (t) {
   const arr = [`Spencer's`, `Spencer Kelly's`, `Spencer C. Kelly's`, `Union Corp's`, `Los Angeles's`]
   arr.forEach(a => {
     const doc = nlp(a)
     const m = doc.possessives()
-    t.equal(m.length, 1, 'one possessive -' + a)
-    t.equal(m.out(), a, 'possessive match -' + a)
+    t.equal(m.length, 1, here + 'one possessive -' + a)
+    t.equal(m.out(), a, here + 'possessive match -' + a)
   })
   t.end()
 })
 
-test('possessives strip', function (t) {
+test('possessives-strip', function (t) {
   const arr = [
     [`Spencer's`, 'Spencer'],
     [`Corey Hart's`, 'Corey Hart'],
@@ -26,7 +26,17 @@ test('possessives strip', function (t) {
   arr.forEach(a => {
     const doc = nlp(a[0])
     doc.possessives().strip()
-    t.equal(doc.out('text'), a[1], a[0])
+    t.equal(doc.out('text'), a[1], here + a[0])
   })
+  t.end()
+})
+
+
+test('strip-all', function (t) {
+  let doc = nlp(`frank's (open) 'bar'.`)
+  doc.possessives().strip()
+  doc.parentheses().strip()
+  doc.quotations().strip()
+  t.equal(doc.text(), 'frank open bar.')
   t.end()
 })

@@ -60,7 +60,16 @@ let arr = [
   ['random', 'randomness'],
   ['credible', 'credibility'],
   ['impossible', 'impossibility'],
-  // ['annoying', null],
+  ['annoying', null],
+
+  ['moist', 'moistness'],
+  ['quick', 'quickness'],
+  ['quiet', 'quiet'],
+  ['red', 'redness'],
+  ['ripe', 'ripeness'],
+  ['rough', 'roughness'],
+  ['sad', 'sadness'],
+  ['sharp', 'sharpness'],
 ]
 
 test('toNoun:', function (t) {

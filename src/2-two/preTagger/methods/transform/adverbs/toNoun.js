@@ -23,6 +23,7 @@ const suffixes = [
     'ring': 'ring',
     'cial': 'ciality',
     'nate': 'nation',
+    'rate': 'ration',
     'bing': 'bingness',
     'atic': 'acy',//democratic
     'sing': 'se',
@@ -50,7 +51,10 @@ const exceptions = {
   free: 'freedom',
   wise: 'wisdom',
   fortunate: 'fortune',
-  gentle: 'gentleness'
+  gentle: 'gentleness',
+  quiet: 'quiet',
+  expensive: 'expense',
+  offensive: 'offence'
 }
 
 const dontDo = new Set([

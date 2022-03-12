@@ -6,6 +6,7 @@ import verbConjugate from './verbs/conjugate/index.js'
 import getTense from './verbs/getTense/index.js'
 import advToAdjective from './adverbs/toAdjective.js'
 import adjToAdverb from './adverbs/toAdverb.js'
+import adjToNoun from './adverbs/toNoun.js'
 
 
 import { adjToSuperlative, adjToComparative, adjFromSuperlative, adjFromComparative } from './adjectives/index.js'
@@ -17,5 +18,5 @@ export default {
 
   adjToSuperlative, adjToComparative, adjFromSuperlative, adjFromComparative,
 
-  advToAdjective, adjToAdverb
+  advToAdjective, adjToAdverb, adjToNoun
 }

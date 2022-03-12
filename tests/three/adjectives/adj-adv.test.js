@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from './_lib.js'
+import nlp from '../_lib.js'
 const here = '[three/verb-toPresent] '
 
 let arr = [
@@ -62,7 +62,6 @@ let arr = [
   ['technically', 'technical'],
   ['partly', 'part'],
   ['mathematically', 'mathematical'],
-
   ['automatically', 'automatic'],
   ['critically', 'critical'],
   ['dramatically', 'dramatic'],

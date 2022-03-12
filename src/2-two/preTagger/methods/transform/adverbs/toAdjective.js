@@ -84,7 +84,12 @@ const noAdj = new Set([
   'exceedingly',
   'presumably',
   'accordingly',
-  'overly'
+  'overly',
+  'best',
+  'latter',
+  'little',
+  'long',
+  'low'
 ])
 
 // exceptions to rules
@@ -97,6 +102,7 @@ const exceptions = {
   customarily: 'customary',
   idly: 'idle',
   publically: 'public',
+  quickly: 'fast',
 
   well: 'good',// -?
 }

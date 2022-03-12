@@ -33,7 +33,7 @@ doDocs(ids, doSentence).then(() => {
   rbs.forEach(rb => {
     rb = rb || ''
     let j = transform(rb)
-    if (rb.endsWith('ly') && !jjs.has(j)) {
+    if (rb.endsWith('ly') && !jjs.has(j) && j) {
       console.log(rb)
     } else {
       correct += 1

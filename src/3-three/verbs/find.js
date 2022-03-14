@@ -28,6 +28,8 @@ const findVerbs = function (doc) {
   if (toVerbs.found && !toVerbs.has('^go')) {
     m = m.splitBefore('(#PresentTense|#PastTense) [#Infinitive]', 0)
   }
+  // 'allow yourself'
+  m = m.not('#Reflexive$')
   //ensure there's actually a verb
   m = m.if('#Verb')
   // the reason he will is ...

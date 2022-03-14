@@ -18,6 +18,7 @@ const chunks = function () {
   if (roll) {
     carry.push(roll)
   }
+
   return this.update(carry)
 }
 export default chunks

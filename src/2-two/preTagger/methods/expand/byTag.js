@@ -34,11 +34,14 @@ export default {
 
   // 'walk up' should conjugate, too
   PhrasalVerb: (word, lex, methods, model) => {
+    let already = model.one.lexicon
     lex[word] = ['PhrasalVerb', 'Infinitive']
     let _multi = model.one._multiCache
     let [inf, rest] = word.split(' ')
     // add root verb
-    lex[inf] = lex[inf] || 'Infinitive'
+    if (!already[inf]) {
+      lex[inf] = lex[inf] || 'Infinitive'
+    }
     // conjugate it
     let all = methods.two.transform.verbConjugate(inf, model)
     Object.entries(all).forEach(a => {
@@ -47,8 +50,8 @@ export default {
         return
       }
       // add the root verb, alone
-      if (lex[a[1]] === undefined) {
-        lex[a[1]] = lex[a[1]] || a[0]
+      if (!lex[a[1]] && !already[a[1]]) {
+        lex[a[1]] = a[0]
       }
       _multi[a[1]] = true
       let str = a[1] + ' ' + rest

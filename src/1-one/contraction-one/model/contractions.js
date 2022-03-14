@@ -30,6 +30,7 @@ export default [
   { word: 'whend', out: ['when', 'did'] },
   { word: 'whered', out: ['where', 'did'] },
 
+  // { after: `cause`, out: ['because'] },
   { word: "'tis", out: ['it', 'is'] },
   { word: "'twas", out: ['it', 'was'] },
   { word: 'twas', out: ['it', 'was'] },

@@ -48,7 +48,6 @@ const findDate = function (doc) {
   // $5 an hour
   dates = dates.notIf('(#Money|#Percentage)')
   dates = dates.notIf('^per #Duration')
-  // dates.debug()
   return dates
 }
 export default findDate

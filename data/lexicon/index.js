@@ -109,8 +109,8 @@ const data = [
   [infinitives, 'Infinitive'],
   [modals, 'Modal'],
   [verbs, 'Verb'],
-  [phrasals, 'PhrasalVerb'], //5kb
   [participles, 'Participle'],
+  [phrasals, 'PhrasalVerb'], //5kb
 
   // switches
   [adjGerund, 'Adj|Gerund'],
@@ -137,4 +137,4 @@ for (let i = 0; i < data.length; i++) {
 
 export default lex
 // console.log(Object.keys(lex).length);
-// console.log(lex[`gone`])
+// console.log(lex[`size`])

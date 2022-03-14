@@ -4,9 +4,9 @@ import fallback from './03-fallback.js'
 import fixUp from './04-fixUp.js'
 /* Chunks:
     Noun
-    .Verb
+    Verb
     Adjective
-    Preposition
+    Pivot
 */
 
 const findChunks = function (view) {

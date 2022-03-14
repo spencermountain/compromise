@@ -1,17 +1,15 @@
 const banList = {
   that: true,
   there: true,
-}
-const hereThere = {
+  let: true,
   here: true,
-  there: true,
   everywhere: true,
 }
 
 const isPossessive = (terms, i) => {
   let term = terms[i]
   // these can't be possessive
-  if (hereThere.hasOwnProperty(term.machine)) {
+  if (banList.hasOwnProperty(term.machine || term.normal)) {
     return false
   }
   // if we already know it
@@ -20,9 +18,6 @@ const isPossessive = (terms, i) => {
   }
   //a pronoun can't be possessive - "he's house"
   if (term.tags.has('Pronoun') || term.tags.has('QuestionWord')) {
-    return false
-  }
-  if (banList.hasOwnProperty(term.normal)) {
     return false
   }
   //if end of sentence, it is possessive - "was spencer's"
@@ -44,8 +39,9 @@ const isPossessive = (terms, i) => {
   }
   //spencer's house
   if (nextTerm.tags.has('Noun')) {
+    let nextStr = nextTerm.machine || nextTerm.normal
     // 'spencer's here'
-    if (hereThere.hasOwnProperty(nextTerm.normal) === true) {
+    if (nextStr === 'here' || nextStr === 'there' || nextStr === 'everywhere') {
       return false
     }
     return true

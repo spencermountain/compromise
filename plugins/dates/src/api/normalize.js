@@ -44,7 +44,6 @@ const normalize = function (doc) {
   // }
   // jan - feb
   doc.match('@hasDash').insertAfter('to').tag('Date')
-  // doc.debug()
   return doc
 }
 export default normalize

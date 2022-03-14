@@ -4,7 +4,7 @@ const relative = `(that|which|whichever|who|whoever|whom|whose|whomever)`
 
 //try to remove secondary clauses
 const mainClause = function (s) {
-  let m = s.clauses()
+  let m = s
   if (m.length === 1) {
     return m
   }

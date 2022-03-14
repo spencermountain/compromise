@@ -138,7 +138,7 @@ export default [
   'size',
   'egg',
   'pig',
-  'gang',
+
 
   // -ing
   'pudding',
@@ -378,6 +378,7 @@ export default [
   'prediction',
   'pie',
   'rerun',
+  'bride',
 ]
 
 

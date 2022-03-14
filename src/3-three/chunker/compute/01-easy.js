@@ -1,6 +1,3 @@
-// const byWord = {
-//   that: 'Conjunction',
-// }
 
 // simply chunk Nouns as <Noun>
 const easyMode = function (document) {
@@ -22,7 +19,7 @@ const easyMode = function (document) {
       }
       //
       if (term.tags.has('QuestionWord')) {
-        term.chunk = 'Conjunction'
+        term.chunk = 'Pivot'
         continue
       }
       // if (byWord.hasOwnProperty(term.normal)) {

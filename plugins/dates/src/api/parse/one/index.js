@@ -12,7 +12,7 @@ const log = parts => {
         console.log(k, parts[k])// eslint-disable-line
       }
     })
-    parts.doc.debug()
+    parts.doc.debug()// allow
   }
 }
 

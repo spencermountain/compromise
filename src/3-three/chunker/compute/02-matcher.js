@@ -40,6 +40,12 @@ const rules = [
   { match: '(want|wants|wanted) to #Infinitive', chunk: 'Verb' },
   // walk ourselves
   { match: '#Verb #Reflexive', chunk: 'Verb' },
+  // tell him the story
+  { match: '#Verb [#Pronoun] #Determiner', group: 0, chunk: 'Verb' },
+  // tries to walk
+  { match: '#Verb [to] #Adverb? #Infinitive', group: 0, chunk: 'Verb' },
+  // upon seeing
+  { match: '[#Preposition] #Gerund', group: 0, chunk: 'Verb' },
 
   // === Noun ===
   // the brown fox
@@ -65,8 +71,8 @@ const setChunks = function (todo, document, methods) {
   let terms = getDoc([todo.pointer], document)[0]
   const env = typeof process === 'undefined' ? self.env || {} : process.env
   terms.forEach(term => {
-    if (term.chunk) {
-      return //don't overwrite
+    if (term.chunk === todo.chunk) {
+      return
     }
     if (env.DEBUG_CHUNKS) {
       let str = (term.normal + "'").padEnd(8)

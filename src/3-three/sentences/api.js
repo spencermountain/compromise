@@ -18,11 +18,11 @@ const api = function (View) {
     json(opts = {}) {
       return this.map(m => {
         let json = m.toView().json(opts)[0] || {}
-        let { subj, verb, obj } = parse(m)
+        let { subj, verb, pred } = parse(m)
         json.sentence = {
           subject: subj.text('normal'),
           verb: verb.text('normal'),
-          predicate: obj.text('normal'),
+          predicate: pred.text('normal'),
         }
         return json
       }, [])

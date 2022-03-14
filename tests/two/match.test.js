@@ -479,6 +479,8 @@ let arr = [
   // 
   ["trying not", "#Gerund not"],
   ["not trying", "not #Adjective"],
+  ["wait and see", "#Infinitive and #Infinitive"],
+  ["bride and groom", "#Noun and #Noun"],
 ]
 test('match:', function (t) {
   let res = []

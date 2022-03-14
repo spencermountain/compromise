@@ -57,4 +57,11 @@ export default {
   records: 'Plural',
   'a few': 'Value',
   'ones': 'Plural', //those ones
+
+  // 
+  'come here': 'Imperative',
+  'go away': 'Imperative',
+  'hurry up': 'Imperative',
+  'make sure': 'Imperative',
+  // 'stand back': 'Imperative'
 }

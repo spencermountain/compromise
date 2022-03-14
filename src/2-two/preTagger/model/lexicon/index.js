@@ -27,7 +27,7 @@ Object.keys(lexData).forEach(tag => {
   // add them as seperate key-val object
   Object.keys(wordsObj).forEach(w => {
     switches[w] = tag
-    // pluralize Infinitive|Singular
+    // pluralize Noun|Verb switches
     if (tag === 'Noun|Verb') {
       let plural = toPlural(w, tmpModel)
       switches[plural] = 'Plural|Verb'

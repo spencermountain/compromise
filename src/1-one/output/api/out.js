@@ -67,7 +67,7 @@ const out = function (method) {
     })
   }
   if (method === 'debug') {
-    return this.debug()
+    return this.debug() //allow
   }
   return this.text()
 }

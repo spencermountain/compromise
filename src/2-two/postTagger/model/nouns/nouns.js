@@ -52,6 +52,8 @@ export default [
   { match: 'do [so]', group: 0, tag: 'Noun', reason: 'so-noun' },
   // what the hell
   { match: '#Determiner [(shit|damn|hell)]', group: 0, tag: 'Noun', reason: 'swears-noun' },
+  // go to shit
+  { match: 'to [(shit|hell)]', group: 0, tag: 'Noun', reason: 'to-swears' },
   // the staff were
   { match: '(the|these) [#Singular] (were|are)', group: 0, tag: 'Plural', reason: 'singular-were' },
   // a comdominium, or simply condo
@@ -109,11 +111,13 @@ export default [
   // photographs of a computer are
   { match: '[#PresentTense] (of|by|for) (a|an|the) #Noun #Copula', group: 0, tag: 'Plural', reason: 'photographs-of' },
   // soft music playing
-  { match: '%Noun|Gerund%$', tag: 'Noun', reason: 'music-playing' },
-  // hopes and dreams
-  { match: '#Plural and [%Plural|Verb%]', group: 0, tag: 'Plural', reason: 'hopes-and-dreams' },
+  // { match: '%Noun|Gerund%$', tag: 'Noun', reason: 'music-playing' },
   // fight and win
   { match: '#Infinitive and [%Noun|Verb%]', group: 0, tag: 'Infinitive', reason: 'fight and win' },
+  // hopes and dreams
+  { match: '#Noun and [%Plural|Verb%]', group: 0, tag: 'Plural', reason: 'hopes-and-dreams' },
+  // bride and groom
+  { match: '#Noun and [%Noun|Verb%]', group: 0, tag: 'Singular', reason: 'bride-and-groom' },
   // an impressionist painting
   { match: '#Determiner [%Adj|Noun%] #Noun', group: 0, tag: 'Adjective', ifNo: ['#ProperNoun'], reason: 'a-complex-relationship' },
 ]

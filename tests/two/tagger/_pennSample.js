@@ -5333,10 +5333,6 @@ export default [
     tags: 'NN, NN, VBZ, JJ, CC, JJ',
   },
   {
-    text: 'Stay away from this dealership !!!',
-    tags: 'VB, RB, IN, DT, NN',
-  },
-  {
     text: 'I am a mental health counselor and I work with variety of mental health problems.',
     tags: 'PRP, VBP, DT, JJ, NN, NN, CC, PRP, VBP, IN, NN, IN, JJ, NN, NNS',
   },
@@ -5994,10 +5990,6 @@ export default [
     tags: 'JJ, NN',
   },
   {
-    text: 'STAY AWAY!',
-    tags: 'VB, RB',
-  },
-  {
     text: 'Very unhappy ...',
     tags: 'RB, JJ',
   },
@@ -6068,10 +6060,6 @@ export default [
   {
     text: 'I WAS calling about one board !!',
     tags: 'PRP, VBD, VBG, IN, CD, NN',
-  },
-  {
-    text: 'STAY AWAY !!!',
-    tags: 'VB, RB',
   },
   {
     text: 'Then she was gone.',

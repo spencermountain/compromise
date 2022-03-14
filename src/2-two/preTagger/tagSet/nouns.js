@@ -8,6 +8,7 @@ export default {
     is: 'Noun',
     not: ['Plural'],
   },
+  // 'Canada'
   ProperNoun: {
     is: 'Noun',
   },
@@ -31,6 +32,7 @@ export default {
     is: 'Person',
     not: ['FirstName'],
   },
+  // 'dr.'
   Honorific: {
     is: 'Noun',
     not: ['FirstName', 'LastName', 'Value'],
@@ -49,6 +51,7 @@ export default {
     also: ['ProperNoun'],
     not: ['Country'],
   },
+  // 'california'
   Region: {
     is: 'Place',
     also: ['ProperNoun'],
@@ -73,31 +76,42 @@ export default {
     is: 'Noun',
     not: ['Singular'],
   },
+  // 'gravity'
   Uncountable: {
     is: 'Noun',
   },
+  // 'it'
   Pronoun: {
     is: 'Noun',
     not: entity,
   },
+  // 'swimmer'
   Actor: {
     is: 'Noun',
     not: entity,
   },
+  // walking
   Activity: {
     is: 'Noun',
     not: ['Person', 'Place'],
   },
+  // kilometres
   Unit: {
     is: 'Noun',
     not: entity,
   },
+  // canadian
   Demonym: {
     is: 'Noun',
     also: ['ProperNoun'],
     not: entity,
   },
+  // [spencer's] hat
   Possessive: {
     is: 'Noun',
+  },
+  // 'yourself'
+  Reflexive: {
+    is: 'Pronoun',
   },
 }

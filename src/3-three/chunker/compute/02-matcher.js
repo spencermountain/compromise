@@ -38,6 +38,8 @@ const rules = [
   { match: '#Adverb #Negative', chunk: 'Verb' },
   // want to see
   { match: '(want|wants|wanted) to #Infinitive', chunk: 'Verb' },
+  // walk ourselves
+  { match: '#Verb #Reflexive', chunk: 'Verb' },
 
   // === Noun ===
   // the brown fox

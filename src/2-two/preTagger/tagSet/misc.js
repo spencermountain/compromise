@@ -67,4 +67,8 @@ export default {
   Condition: {
     not: ['Verb', 'Adjective', 'Noun', 'Value'],
   },
+  // 'tell [me]'
+  Reflexive: {
+    is: 'Auxiliary',
+  },
 }

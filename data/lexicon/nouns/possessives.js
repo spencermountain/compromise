@@ -4,19 +4,17 @@ export default [
   // 'her', //this one is check ambiguous
   // 'hers',
   // 'his',
-  'herself',
-  'himself',
   'its',
   'mine',
   'my',
-  'myself',
   'none',
   'our',
   'ours',
   'something',
   'their',
   'theirs',
-  'themselves',
   'your',
   'yours',
+
+
 ]

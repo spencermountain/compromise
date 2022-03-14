@@ -53,8 +53,4 @@ export default {
     is: 'PhrasalVerb',
     not: ['PastTense', 'PresentTense', 'Copula', 'Gerund'],
   },
-  // 'tell [me]'
-  Reflexive: {
-    is: 'Auxiliary',
-  },
 }

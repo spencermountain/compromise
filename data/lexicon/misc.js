@@ -39,6 +39,20 @@ export default {
   "how's": 'QuestionWord',
   'how come': 'QuestionWord',
 
+  'myself': 'Reflexive',
+  'yourself': 'Reflexive',
+  'yourselves': 'Reflexive',
+  'theirselves': 'Reflexive',
+  'himself': 'Reflexive',
+  'herself': 'Reflexive',
+  'oneself': 'Reflexive',
+  'itself': 'Reflexive',
+  'ourselves': 'Reflexive',
+  'themselves': 'Reflexive',
+  'theirself': 'Reflexive',
+  'ourself': 'Reflexive',
+  'themself': 'Reflexive',
+
   //misc
   records: 'Plural',
   'a few': 'Value',

@@ -57,4 +57,8 @@ export default [
     tag: 'Auxiliary',
     reason: 'going-to-walk',
   },
+  // tell me
+  { match: '#Imperative [(me|him|her)]', group: 0, tag: 'Reflexive', reason: 'tell-him' },
+  // walk yourself
+  // { match: '#Imperative [#Reflexive]', group: 0, tag: 'Auxiliary', reason: 'tell-him' },
 ]

@@ -7,7 +7,7 @@ import nlp from './src/three.js'
 
 let txt = ''
 txt = `please tell me you'll address the issue`
-txt = `We are introducing ourselves to the class.`
+txt = `The boy who you saw at the store committed a robbery.`
 let doc = nlp(txt)
 doc.debug()
 console.log(doc.sentences().json())

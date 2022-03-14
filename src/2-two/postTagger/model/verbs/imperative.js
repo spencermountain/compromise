@@ -14,7 +14,7 @@ export default [
   // go!
   // { match: '^[#Infinitive]$', group: 0, tag: 'Imperative', reason: 'go' },
   // go quickly.
-  { match: '^[#Infinitive] (#Adjective|#Adverb)$', group: 0, tag: 'Imperative', reason: 'go-quickly' },
+  { match: '^[#Infinitive] (#Adjective|#Adverb)$', group: 0, tag: 'Imperative', ifNo: ['so', 'such', 'rather', 'enough'], reason: 'go-quickly' },
   // turn down the noise
   { match: '^[#Infinitive] (up|down|over) #Determiner', group: 0, tag: 'Imperative', reason: 'turn-down' },
   // eat my shorts

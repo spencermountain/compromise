@@ -18,6 +18,8 @@ const rules = [
   // === Verb ===
   // quickly run
   { match: '#Adverb+ {Verb}', chunk: 'Verb' },
+  // quickly and suddenly run
+  { match: '#Adverb+ and #Adverb #Verb', chunk: 'Verb' },
   // run quickly
   { match: '{Verb} #Adverb+', chunk: 'Verb' },
   // sitting near

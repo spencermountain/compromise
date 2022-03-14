@@ -4,6 +4,7 @@ import getChunks from './chunks.js'
 
 const api = function (View) {
   selections(View)
+
   View.prototype.chunks = getChunks
   View.prototype.clauses = clauses
 }

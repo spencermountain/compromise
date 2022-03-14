@@ -6,8 +6,8 @@ import nlp from './src/three.js'
 // nlp.verbose('tagger')
 
 let txt = ''
-txt = 'suddenly and heatedly'
-let doc = nlp(txt).compute('root')
-doc.swap('heated', 'warm')
-doc.swap('sudden', 'immediate')
+txt = `please tell me you'll address the issue`
+txt = `We are introducing ourselves to the class.`
+let doc = nlp(txt)
 doc.debug()
+console.log(doc.sentences().json())

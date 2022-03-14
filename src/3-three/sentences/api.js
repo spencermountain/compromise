@@ -1,8 +1,9 @@
-import questions from './questions.js'
-import parse from './parse.js'
+import isQuestion from './questions.js'
+import parse from './parse/index.js'
 import toPast from './conjugate/toPast.js'
 import toPresent from './conjugate/toPresent.js'
 import toFuture from './conjugate/toFuture.js'
+import toNegative from './conjugate/toNegative.js'
 import toInfinitive from './conjugate/toInfinitive.js'
 
 // return the nth elem of a doc
@@ -14,36 +15,47 @@ const api = function (View) {
       super(document, pointer, groups)
       this.viewType = 'Sentences'
     }
+    json(opts = {}) {
+      return this.map(m => {
+        let json = m.toView().json(opts)[0] || {}
+        let { subj, verb, obj } = parse(m)
+        json.sentence = {
+          subject: subj.text('normal'),
+          verb: verb.text('normal'),
+          predicate: obj.text('normal'),
+        }
+        return json
+      }, [])
+    }
     toPastTense(n) {
-      return getNth(this, n).map(vb => {
-        let parsed = parse(vb)
-        return toPast(vb, parsed)
+      return getNth(this, n).map(s => {
+        let parsed = parse(s)
+        return toPast(s, parsed)
       })
     }
     toPresentTense(n) {
-      return getNth(this, n).map(vb => {
-        let parsed = parse(vb)
-        return toPresent(vb, parsed)
+      return getNth(this, n).map(s => {
+        let parsed = parse(s)
+        return toPresent(s, parsed)
       })
     }
     toFutureTense(n) {
-      return getNth(this, n).map(vb => {
-        let parsed = parse(vb)
-        return toFuture(vb, parsed)
+      return getNth(this, n).map(s => {
+        let parsed = parse(s)
+        return toFuture(s, parsed)
       })
     }
     toInfinitive(n) {
-      return getNth(this, n).map(vb => {
-        let parsed = parse(vb)
-        return toInfinitive(vb, parsed)
+      return getNth(this, n).map(s => {
+        let parsed = parse(s)
+        return toInfinitive(s, parsed)
       })
     }
-    toNegative() {
-      // return getNth(this, n).map(vb => {
-      //   let parsed = parse(vb)
-      //   return toInfinitive(vb, parsed)
-      // })
-      return this
+    toNegative(n) {
+      return getNth(this, n).map(vb => {
+        let parsed = parse(vb)
+        return toNegative(vb, parsed)
+      })
     }
     // overloaded - keep Sentences class
     update(pointer) {
@@ -64,7 +76,7 @@ const api = function (View) {
       return new Sentences(this.document, m.pointer)
     },
     questions: function (n) {
-      let m = questions(this)
+      let m = isQuestion(this)
       return getNth(m, n)
     },
   }

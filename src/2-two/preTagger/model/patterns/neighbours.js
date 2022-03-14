@@ -46,8 +46,6 @@ export default {
     ['PastTense', nn],
     ['Conjunction', nn],
     ['Modal', nn],
-    ['Pluperfect', nn],
-    ['PerfectTense', vb], //32%
   ],
   // looking at the next word:
   rightWords: [

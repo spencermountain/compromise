@@ -43,7 +43,7 @@ export default {
     let all = methods.two.transform.verbConjugate(inf, model)
     Object.entries(all).forEach(a => {
       // not 'walker up', or 'had taken up'
-      if (a[0] === 'Actor' || a[0] === 'PerfectTense' || a[0] === 'Pluperfect' || a[1] === '') {
+      if (a[0] === 'Actor' || a[1] === '') {
         return
       }
       // add the root verb, alone

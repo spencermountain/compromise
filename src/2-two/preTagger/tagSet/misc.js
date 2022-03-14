@@ -62,7 +62,7 @@ export default {
     not: ['Plural', 'RomanNumeral'],
   },
   Negative: {
-    not: ['Noun', 'Adjective', 'Value'],
+    not: ['Noun', 'Adjective', 'Value', 'Expression'],
   },
   Condition: {
     not: ['Verb', 'Adjective', 'Noun', 'Value'],

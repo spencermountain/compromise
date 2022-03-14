@@ -62,5 +62,5 @@ export default [
   // walk yourself
   // { match: '#Imperative [#Reflexive]', group: 0, tag: 'Auxiliary', reason: 'tell-him' },
   // there is no x
-  { match: '(is|was) #Adverb? [no]', group: 0, tag: 'Auxiliary', reason: 'is-no' },
+  { match: '(is|was) #Adverb? [no]', group: 0, tag: 'Negative', reason: 'is-no' },
 ]

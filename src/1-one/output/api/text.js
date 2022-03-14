@@ -14,10 +14,6 @@ export default {
     }
     if (fmt && typeof fmt === 'string' && fmts.hasOwnProperty(fmt)) {
       opts = Object.assign({}, fmts[fmt])
-      // silently trigger a root?
-      // if (fmt === 'root' && this.document[0][0] && !this.document[0][0].root) {
-      //   this.compute('root')
-      // }
     } else if (fmt && isObject(fmt)) {
       opts = Object.assign({}, fmt, opts)//todo: fixme
     }

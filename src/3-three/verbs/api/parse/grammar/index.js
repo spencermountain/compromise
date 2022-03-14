@@ -10,8 +10,8 @@ const cleanUp = function (vb, res) {
     vb.remove(res.adverbs.pre)
   }
   // remove negatives
-  if (vb.has('not')) {
-    vb = vb.remove('not')
+  if (vb.has('#Negative')) {
+    vb = vb.remove('#Negative')
   }
   // remove prefixes like 'anti'
   if (vb.has('#Prefix')) {

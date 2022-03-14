@@ -25,8 +25,9 @@ const byEnd = {
   s: (terms, i) => {
     // [bob's house] vs [bob's cool]
     if (shouldSplit(terms, i) === true) {
-      apostropheS(terms, i)
+      return apostropheS(terms, i)
     }
+    return null
   },
 }
 

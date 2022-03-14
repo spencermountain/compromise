@@ -18,6 +18,12 @@ const textFromTerms = function (terms, opts, keepSpace = true) {
         post = ' '
       }
       post = post.replace(punctToKill, '')
+      // cleanup exclamations
+      post = post.replace(/\?!+/, '?')
+      post = post.replace(/!+/, '!')
+      post = post.replace(/\?+/, '?')
+      // kill elipses
+      post = post.replace(/\.{2,}/, '')
     }
     if (opts.whitespace === 'some') {
       pre = pre.replace(/\s/, '') //remove pre-whitespace

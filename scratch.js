@@ -1,9 +1,9 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/three.js'
+import nlp from './src/two.js'
 // import plg from './plugins/speech/src/plugin.js'
 // nlp.plugin(plg)
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 // nlp.verbose('chunker')
 
 let txt = ''
@@ -19,9 +19,19 @@ txt = `The store that the boy robbed is on the corner.`
 // txt = `'Cause the world is spinning at the speed of light`
 txt = `We had been to see her several times.`
 txt = `simply allow yourself a treat`
-txt = `there is no gravy`
-let doc = nlp(txt)
-// doc.verbs().toNegative()
-doc.verbs().toPastTense()
-doc.debug()
-// console.log(doc.sentences().json())
+txt = `he's the best`
+// let doc = nlp(txt)
+
+const lexicon = {
+  buckinghamshire: 'Town',
+  ayrshire: 'Town',
+}
+// add the words we should predict from
+nlp.typeahead(lexicon, { min: 4 })
+// create a document
+let doc = nlp('i went to bucking', lexicon)
+console.log(doc.text('implicit'))
+
+let m = doc.match('buckinghamshire')
+m.debug()
+console.log(m.text('implicit'))

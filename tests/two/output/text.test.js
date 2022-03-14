@@ -41,7 +41,7 @@ test('text-text', function (t) {
 
 test('text-normal', function (t) {
   let doc = nlp(`My dog LOVES pizza, and grapes!!`)
-  const want = 'my dog loves pizza and grapes!!'
+  const want = 'my dog loves pizza and grapes!'
   t.equal(doc.json({ normal: true })[0].normal, want, 'json(normal)')
   t.equal(doc.text('normal'), want, 'text(normal): ')
   // doc.normalize()
@@ -72,16 +72,15 @@ test('text-implicit', function (t) {
 
 test('text-machine', function (t) {
   let doc = nlp("he's just a tiny baby")
-  t.equal(doc.text('machine'), 'he is just a tiny baby', 'machine contraction')
+  t.equal(doc.text('machine'), 'he is just a tiny baby', here + 'machine contraction')
   t.end()
 })
 
 test('text-root', function (t) {
-  let doc = nlp(`My dog LOVES pizza, and grapes!!`)
+  let doc = nlp(`My dog LOVES pizza, and grapes...`)
+  doc.compute('root')
   const want = 'my dog love pizza and grape'
-  t.equal(doc.json({ root: true })[0].root, want, 'json(root)')
+  t.equal(doc.json({ root: true })[0].root, want, here + 'json(root)')
   t.equal(doc.text('root'), want, 'text(root): ')
-  // doc.normalize('root')
-  // t.equal(doc.text('root'), str, 'normalize(root):  ')
   t.end()
 })

@@ -177,6 +177,7 @@ test('toFuture:', function (t) {
     ['we will not write', 'we will not write'],
     ['angelina does not write', 'angelina will not write'],
     ['angelina will not write', 'angelina will not write'],
+    ['there is no hope', 'there will be no hoping'],
     // ['toronto barely starts', 'toronto will barely start'],
     ['say it again', 'say it again'],
     // ['council votes to deny it', 'council will vote to deny it'],

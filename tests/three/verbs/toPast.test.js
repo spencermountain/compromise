@@ -79,6 +79,7 @@ test('toPast:', function (t) {
     ['angelina will not write', 'angelina did not write'],
     ['toronto barely starts', 'toronto barely started'],
     ['say it again', 'say it again'],
+    ['there is no hope', 'there was no hope'],
     // ['council votes to deny it', 'council voted to deny it'],
     ['nobody will say for certain', 'nobody said for certain'],
     ['he will say for certain', 'he said for certain'],

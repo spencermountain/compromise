@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import plg from './plugins/speech/src/plugin.js'
 // nlp.plugin(plg)
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 // nlp.verbose('chunker')
 
 let txt = ''
@@ -19,8 +19,9 @@ txt = `The store that the boy robbed is on the corner.`
 // txt = `'Cause the world is spinning at the speed of light`
 txt = `We had been to see her several times.`
 txt = `simply allow yourself a treat`
-txt = `don't hurt anybody`
+txt = `there is no gravy`
 let doc = nlp(txt)
-doc.verbs().debug()
-// doc.debug()
+// doc.verbs().toNegative()
+doc.verbs().toPastTense()
+doc.debug()
 // console.log(doc.sentences().json())

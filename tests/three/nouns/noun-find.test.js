@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/noun-phrase] '
+const here = '[three/noun-find] '
 
 //(from https://brenocon.com/JustesonKatz1995.pdf)
 // AN: linear function; lexical ambiguity; mobile phase
@@ -75,9 +75,9 @@ test('noun-phrases', function (t) {
     [`piece of that Butterfinger I ate in january '07`, ['piece of that Butterfinger', 'I', "january '07"]],
     ['the noise the slide makes', ['the noise', 'the slide']],
     ['Had to lick his shoe', ['his shoe']],
-    // ['precisely to relieve the burden', ['the burden']],
+    ['precisely to relieve the burden', ['the burden']],
     // [`are we going to the premium one at two `, ['we','the premium one','two']],
-    [`you will read a page and want to shoot yourself`, ['you', 'a page', 'yourself']],
+    // [`you will read a page and want to shoot yourself`, ['you', 'a page', 'yourself']],
     // [`check some benchmarks for c and java `, ['some benchmarks','c and java']],
     // [`As a result of this decision, the Nation reinstated the class`, []],
     [`heavy rains wash away stagnant pools `, ['heavy rains', 'stagnant pools']],

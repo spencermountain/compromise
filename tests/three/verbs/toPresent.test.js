@@ -157,6 +157,10 @@ test('toPresent:', function (t) {
     ['john wrote everyday', 'john writes everyday'],
     // ['spencer and john wrote everyday', 'spencer and john write everyday'],
 
+    ['there was no hope', 'there is no hope'],
+    ['there will be no hope', 'there is no hope'],
+    ['there is no hope', 'there is no hope'],
+
     // present-perfect -> present hmm
     [`the yankees had gone`, `the yankees go`],
     [`the yankees have gone`, `the yankees go`],

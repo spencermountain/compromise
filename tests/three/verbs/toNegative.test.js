@@ -109,6 +109,12 @@ test('inline verb negate:', function (t) {
     [`he could have walked`, `he could not have walked`],
     [`he wants to walk`, `he does not want to walk`],
     [`he can walk`, `he can not walk`],
+
+    // already-negative
+    [`he can not walk`, `he can not walk`],
+    [`he could not have really walked`, `he could not have really walked`],
+    ['there is not hope', 'there is not hope'],
+    ['there is no hope', 'there is no hope'],
   ]
   arr.forEach(function (a) {
     let doc = nlp(a[0])

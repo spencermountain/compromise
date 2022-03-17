@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/one.js'
+import nlp from './src/three.js'
 // import plg from './plugins/speech/src/plugin.js'
 // nlp.plugin(plg)
 
@@ -22,7 +22,8 @@ txt = `he's the best and will always be the best`
 txt = `I'd phoned`
 // let doc = nlp(txt)
 // doc.debug()
-let doc = nlp('Larry, Curly, and Moe')
-let people = doc.match('.') // (any one noun)
-let arr = people.map(d => d.text('normal'))
-console.log(arr)
+
+let doc = nlp(`i'd walked`)
+let m = doc.match('had')
+m.insertBefore('really')
+console.log(doc.text())

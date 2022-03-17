@@ -44,7 +44,7 @@
     "version": "node ./scripts/version.js",
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer",
     "testb": "npm run test:smoke && TESTENV=prod npm run test",
-    "test:one": "tape \"./tests/one/match/*.test.js\" | tap-dancer",
+    "test:one": "tape \"./tests/one/**/*.test.js\" | tap-dancer",
     "test:two": "tape \"./tests/two/**/*.test.js\" | tap-dancer",
     "test:three": "tape \"./tests/three/**/*.test.js\" | tap-dancer",
     "test:four": "tape \"./tests/four/**/*.test.js\" | tap-dancer",

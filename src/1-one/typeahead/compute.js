@@ -15,6 +15,7 @@ const compute = function (view) {
   if (prefixes.hasOwnProperty(lastTerm.normal)) {
     let found = prefixes[lastTerm.normal]
     // add full-word as an implicit result
+    lastTerm.implicit = found
     lastTerm.machine = found
     lastTerm.typeahead = true
     // tag it, as our assumed term

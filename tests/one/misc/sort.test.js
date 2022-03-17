@@ -91,7 +91,7 @@ test('custom-sort:', function (t) {
     return 0
   })
   let arr = terms.map(d => d.text('normal'))
-  t.deepEqual(arr, ['meeny, ', 'eeny, ', 'miny, ', 'moe'], here + 'custom sort output')
+  t.deepEqual(arr, ['meeny', 'eeny', 'miny', 'moe'], here + 'custom sort output')
   t.end()
 })
 
@@ -101,6 +101,6 @@ test('frequency:', function (t) {
   r = r.split('@hasComma')
   const a = r.out('frequency')
   t.equal(a[0].reduced, 'john xoo', here + 'topk is sorted')
-  t.equal(a[0].count, 2, here + 'topk finds two')
+  t.equal(a[0].freq, 2, here + 'topk finds two')
   t.end()
 })

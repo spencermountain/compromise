@@ -37,7 +37,9 @@ const parse = function (doc) {
   if (twoWord.found) {
     twoWord.forEach((m) => {
       let num = m.numbers().get()[0]
-      let unit = m.terms().last().nouns().toSingular().text('reduced')
+      let unit = m.terms().last().text('reduced')
+      unit = unit.replace(/ies$/, 'y')
+      unit = unit.replace(/s$/, '')
       // turn 'mins' into 'minute'
       if (mapping.hasOwnProperty(unit)) {
         unit = mapping[unit]

@@ -50,10 +50,10 @@ test('one-word durations', function (t) {
     ['10mins', { minute: 10 }],
     ['1min', { minute: 1 }],
     ['1sec', { second: 1 }],
-    ['1 sec', { second: 1 }],
+    // ['1 sec', { second: 1 }],
   ]
   arr.forEach((a) => {
-    let doc = nlp(a[0]).tag('Duration')
+    let doc = nlp(a[0])//.tag('Duration')
     let found = doc.durations().get()[0]
     t.deepEqual(found, a[1], a[0])
   })

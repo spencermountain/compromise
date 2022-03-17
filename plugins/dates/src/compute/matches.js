@@ -11,7 +11,9 @@ let matches = [
   // 8 pm
   { match: '(#Value|#Time) (am|pm)', tag: 'Time', reason: 'value-ampm' },
   // 2012-06
-  { match: '/^[0-9]{4}-[0-9]{2}$/', tag: 'Date', reason: '2012-06' },
+  // { match: '/^[0-9]{4}-[0-9]{2}$/', tag: 'Date', reason: '2012-06' },
+  // 30mins
+  // { match: '/^[0-9]+(min|sec|hr|d)s?$/', tag: 'Duration', reason: '30min' },
   // misc weekday words
   { match: '(tue|thu)', tag: 'WeekDay', reason: 'misc-weekday' },
   //June 5-7th
@@ -25,7 +27,7 @@ let matches = [
   //march the 12th
   { match: '#Month the #Value', tag: 'Date', reason: 'month-the-value' },
   // march to april
-  { match: '[(march|may)] to? #Date',  group: 0, tag: 'Month', reason: 'march-to' },
+  { match: '[(march|may)] to? #Date', group: 0, tag: 'Month', reason: 'march-to' },
   // 'march'
   { match: '^(march|may)$', tag: 'Month', reason: 'single-march' },
   //March or June
@@ -148,10 +150,10 @@ let matches = [
 
   // 2 oclock
   { match: '#Cardinal oclock', tag: 'Time', reason: '2 oclock' },
-  // 13h30
-  { match: '/^[0-9]{2}h[0-9]{2}$/', tag: 'Time', reason: '13h30' },
-  // 03/02
-  { match: '/^[0-9]{2}/[0-9]{2}/', tag: 'Date', unTag: 'Value', reason: '03/02' },
+  // // 13h30
+  // { match: '/^[0-9]{2}h[0-9]{2}$/', tag: 'Time', reason: '13h30' },
+  // // 03/02
+  // { match: '/^[0-9]{2}/[0-9]{2}/', tag: 'Date', unTag: 'Value', reason: '03/02' },
   // 3 in the morning
   { match: '#Value (in|at) the? (morning|evening|night|nighttime)', tag: 'Time', reason: '3 in the morning' },
   // ten to seven
@@ -159,7 +161,7 @@ let matches = [
   // at 10 past
   { match: '(at|by|before) (5|10|15|20|five|ten|fifteen|twenty|quarter|half) (after|past|to)', tag: 'Time', reason: 'at-20-past' },
   // iso  (2020-03-02T00:00:00.000Z)
-  { match: '/^[0-9]{4}[:-][0-9]{2}[:-][0-9]{2}T[0-9]/', tag: 'Time', reason: 'iso-time-tag' },
+  // { match: '/^[0-9]{4}[:-][0-9]{2}[:-][0-9]{2}T[0-9]/', tag: 'Time', reason: 'iso-time-tag' },
   // tuesday at 4
   { match: '#Date [at #Cardinal]', group: 0, notIf: '#Year', tag: 'Time', reason: ' tuesday at 4' },
   // half an hour

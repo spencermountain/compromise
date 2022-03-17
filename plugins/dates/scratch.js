@@ -40,6 +40,8 @@ txt = 'in a few years'
 txt = 'today in PST'
 txt = '4pm sharp on tuesday' //! <- expand issue
 txt = '130pm' //! <- expand issue
+txt = 'by september 5th'
+
 
 // txt = 'four thirty'
 // txt = 'on april 22nd'
@@ -56,5 +58,5 @@ txt = '130pm' //! <- expand issue
 // console.log(nlp.parseMatch('#Value (year|month|week|day) and a half'))
 let doc = nlp(txt).debug()
 // doc.match('#Value (year|month|week|day) and a half').debug()
-let m = doc.dates(context)
+let m = doc.durations(context)
 console.log(m.get())

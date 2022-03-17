@@ -60,6 +60,6 @@ test('match-doc-freeze', function (t) {
   let m = doc.match('(boy|girl)')
   doc.prepend('ooh baby')
   let arr = doc.match(m).out('array')
-  t.deepEqual(arr, ['boy', 'girl'], here + 'match-doc')
+  t.deepEqual(arr, ['boy', 'girl.'], here + 'match-doc-2')
   t.end()
 })

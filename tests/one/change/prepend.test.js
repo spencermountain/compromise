@@ -20,7 +20,7 @@ test('prepend middle', function (t) {
 test('prepend multi', function (t) {
   let doc = nlp('one two. three four')
   doc.prepend('oooo')
-  t.equal(doc.text(), 'oooo. one two. oooo three four', here + 'prepend-multi')
+  t.equal(doc.text(), 'oooo one two. oooo three four', here + 'prepend-multi')
   t.end()
 })
 

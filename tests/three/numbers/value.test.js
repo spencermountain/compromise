@@ -25,18 +25,18 @@ test('value-basic:', function (t) {
   r.values().toText()
   t.equal(r.out(), 'third month of two thousand and nineteen', here + 'toText')
 
-  r = nlp('third month of two thousand and nineteen')
-  r.values().toCardinal()
-  t.equal(r.out(), 'three months of two thousand and nineteen', here + 'toCardinal')
+  // r = nlp('third month of two thousand and nineteen')
+  // r.values().toCardinal()
+  // t.equal(r.out(), 'three months of two thousand and nineteen', here + 'toCardinal')
 
-  r = nlp('three months of two thousand nineteen')
-  r.values().toOrdinal()
-  t.equal(r.out(), 'third month of two thousand and nineteenth', here + 'toOrdinal')
+  // r = nlp('three months of two thousand nineteen')
+  // r.values().toOrdinal()
+  // t.equal(r.out(), 'third month of two thousand and nineteenth', here + 'toOrdinal')
 
-  r.values()
-    .toNumber()
-    .all()
-  t.equal(r.out(), '3rd month of 2019th', here + 'toNumber2')
+  // r.values()
+  //   .toNumber()
+  //   .all()
+  // t.equal(r.out(), '3rd month of 2019th', here + 'toNumber2')
 
   t.end()
 })

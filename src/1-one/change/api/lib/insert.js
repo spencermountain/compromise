@@ -32,7 +32,7 @@ const movePunct = (source, end, needle) => {
   if (juicy.test(post)) {
     let punct = post.match(juicy).join('') //not perfect
     let last = needle[needle.length - 1]
-    last.post = punct + last.post //+ ' '
+    last.post = punct + last.post
     // remove it, from source
     wasLast.post = wasLast.post.replace(juicy, '')
   }
@@ -81,7 +81,7 @@ const cleanPrepend = function (home, ptr, needle, document) {
     endSpace([home[ptr[1]]])
   }
   moveTitleCase(home, start, needle)
-  movePunct(home, end, needle)
+  // movePunct(home, end, needle)
   spliceArr(home, start, needle)
 }
 
@@ -99,6 +99,10 @@ const cleanAppend = function (home, ptr, needle, document) {
     endSpace(home)
     // very end, move period
     movePunct(home, end, needle)
+    // is there another sentence after?
+    if (document[n + 1]) {
+      needle[needle.length - 1].post += ' '
+    }
   }
   spliceArr(home, ptr[2], needle)
   // set new endId

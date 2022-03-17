@@ -23,5 +23,8 @@ txt = `I'd phoned`
 // let doc = nlp(txt)
 // doc.debug()
 
-let doc = nlp(`thirty seconds`)
-console.log(doc.fractions().json())
+
+let doc = nlp('one two. three four')
+doc.append('oooo')
+// doc.debug()
+console.log(doc.text())

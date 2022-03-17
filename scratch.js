@@ -27,5 +27,7 @@ txt = `he's the best and will always be the best`
 // i will start looking -> i started looking
 // i will not start looking -> i did not start looking
 
-let doc = nlp('he walked').verbs().toGerund()
+let doc = nlp(`He tried to decide whether the woman was pretty`)
+doc.sentences().toPresentTense()
 doc.debug()
+// doc.debug('chunks')

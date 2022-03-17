@@ -6,6 +6,12 @@ const banList = {
   everywhere: true,
 }
 
+const beforePossessive = {
+  in: true,//in sunday's
+  by: true,//by sunday's
+  for: true,//for sunday's
+}
+
 const isPossessive = (terms, i) => {
   let term = terms[i]
   // these can't be possessive
@@ -44,6 +50,10 @@ const isPossessive = (terms, i) => {
     if (nextStr === 'here' || nextStr === 'there' || nextStr === 'everywhere') {
       return false
     }
+    return true
+  }
+  // by sunday's final
+  if (terms[i - 1] && beforePossessive[terms[i - 1].normal] === true) {
     return true
   }
   //rocket's red glare

@@ -699,5 +699,6 @@ export default [
   'reconcile',
   'profess',
   'bathe',
+  'incite',
   'state chief',
 ]

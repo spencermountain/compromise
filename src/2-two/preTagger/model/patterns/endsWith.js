@@ -93,7 +93,7 @@ export default {
   n: [
     [/.[lsrnpb]ian$/, Adj, 'republican'],
     [/[^aeiou]ician$/, Actor, 'musician'],
-    [/[aeiou][ktrp]in$/, 'Gerund', "cookin'"], // 'cookin', 'hootin'
+    [/[aeiou][ktrp]in'$/, 'Gerund', "cookin'"], // 'cookin', 'hootin'
   ],
   o: [
     [/^no+$/, Exp, 'noooo'],

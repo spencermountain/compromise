@@ -2,6 +2,12 @@ import test from 'tape'
 import nlp from './_lib.js'
 const here = '[three/possessives] '
 
+test('possessives misc', function (t) {
+  let doc = nlp(`in Sunday's final`)
+  t.equal(doc.has('#Possessive'), true, here + 'misc')
+  t.end()
+})
+
 test('possessives tagger', function (t) {
   const arr = [`Spencer's`, `Spencer Kelly's`, `Spencer C. Kelly's`, `Union Corp's`, `Los Angeles's`]
   arr.forEach(a => {

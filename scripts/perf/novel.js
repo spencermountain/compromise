@@ -1,16 +1,16 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from '../../src/one.js'
+import nlp from '../../src/three.js'
 import corpus from 'nlp-corpus'
 import fs from 'fs'
-import wtf from 'wtf_wikipedia'
+  // import wtf from 'wtf_wikipedia'
 
   ; (async () => {
 
 
-    const txt = await wtf.fetch('Julius and Ethel Rosenberg').then(d => d.text())
+    // const txt = await wtf.fetch('Julius and Ethel Rosenberg').then(d => d.text())
     // const txt = corpus.all().slice(0, 10000).join('\n')
-    // let txt = fs.readFileSync('/Users/spencer/data/infinite-jest/infinite-jest.txt').toString()
-
+    let txt = fs.readFileSync('/Users/spencer/data/infinite-jest/infinite-jest.txt').toString()
+    txt = txt.substring(39390, 80000)
     //get filesize
     const bytes = Buffer.byteLength(txt)
     const size = Math.ceil(bytes / 1024)
@@ -22,6 +22,11 @@ import wtf from 'wtf_wikipedia'
 
     let begin = new Date()
     let doc = nlp(txt)
+    doc.sentences().forEach(s => {
+      if (s.verbs().length === 2) {
+        console.log(s.text())
+      }
+    })
     let arr = doc.json()
     console.log(arr.length)
 

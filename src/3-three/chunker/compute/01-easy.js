@@ -22,9 +22,6 @@ const easyMode = function (document) {
         term.chunk = 'Pivot'
         continue
       }
-      // if (byWord.hasOwnProperty(term.normal)) {
-      //   term.chunk = byWord[term.normal]
-      // }
     }
   }
 }

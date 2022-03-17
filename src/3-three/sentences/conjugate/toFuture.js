@@ -14,7 +14,7 @@ const toFuture = function (s) {
     // verbs.debug()
     // otherwise, I guess so?
     if (verbs.found) {
-      verbs.verbs().toFutureTense()
+      verbs.verbs().toInfinitive()
     }
   }
   // s = s.fullSentence()

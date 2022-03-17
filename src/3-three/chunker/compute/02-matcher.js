@@ -60,7 +60,7 @@ const rules = [
   // --- in ---
   { match: '#Noun in #Determiner? #Noun', chunk: 'Noun' },
   // indoor and outdoor seating
-  { match: '#Noun and #Determiner? #Noun', chunk: 'Noun' },
+  { match: '#Singular and #Determiner? #Singular', chunk: 'Noun' },
   // that is why
   // { match: '[that] (is|was)', group: 0, chunk: 'Noun' },
 ]

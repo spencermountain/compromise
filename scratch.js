@@ -24,17 +24,8 @@ txt = `he's the best and will always be the best`
 // console.log(m.pointer)
 // m.debug()
 
-let doc = nlp('one two match three four')
-let m = doc.match('match .') // 'match three'
-doc.remove('three')
-console.log('==============')
-// m.docs
-console.log('|' + m.text())
-console.log('|' + m.text())
+// i will start looking -> i started looking
+// i will not start looking -> i did not start looking
 
-
-// let s = doc.sentences()
-// s.toFutureTense()
-// console.log(s.fullPointer)
-// s.debug()
-
+let doc = nlp('he walked').verbs().toGerund()
+doc.debug()

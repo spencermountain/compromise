@@ -16,6 +16,17 @@ test('toPresent:', function (t) {
     ['the eye closed', 'the eye closes'],
     ['the eyes closed', 'the eyes close'],
 
+    // copula forms
+    ['i am not cool', 'i am not cool'],
+    ['i was not cool', 'i am not cool'],
+    ['i will not be cool', 'i am not cool'],
+    ['he is not cool', 'he is not cool'],
+    ['he was not cool', 'he is not cool'],
+    ['he will not be cool', 'he is not cool'],
+    ['they are not cool', 'they are not cool'],
+    ['they were not cool', 'they are not cool'],
+    ['they will not be cool', 'they are not cool'],
+
     ['their colloseum will open', 'their colloseum opens'],
     ['their children will open', 'their children open'],
 
@@ -32,7 +43,7 @@ test('toPresent:', function (t) {
     ['he will really be walking', 'he is really walking'],
     ['he will be really walking', 'he is really walking'],
     //
-    ['he has walked', 'he has walked'],
+    // ['he has walked', 'he has walked'],
     ['he had walked', 'he has walked'],
     ['he will have walked', 'he has walked'],
     ['he really will have walked', 'he really has walked'],
@@ -152,7 +163,7 @@ test('toPresent:', function (t) {
     ['he clearly did not suggest', 'he clearly does not suggest'],
     ['they clearly did not suggest', 'they clearly do not suggest'],
     ['the library did not provide', 'the library does not provide'],
-    ['the library clearly will not provide', 'the library clearly does not provide'],
+    // ['the library clearly will not provide', 'the library clearly does not provide'],
     // ['this union had disrupted', 'this union has disrupted'],
     ['john wrote everyday', 'john writes everyday'],
     // ['spencer and john wrote everyday', 'spencer and john write everyday'],
@@ -162,7 +173,7 @@ test('toPresent:', function (t) {
     ['there is no hope', 'there is no hope'],
 
     // present-perfect -> present hmm
-    [`the yankees had gone`, `the yankees go`],
+    // [`the yankees had gone`, `the yankees go`],
     [`the yankees have gone`, `the yankees go`],
     // gerund-phrase
     [`he starts seeing`, `he starts seeing`],

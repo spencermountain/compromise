@@ -1,4 +1,4 @@
-import { noop, isPlural, isAreAm, doDoes, getSubject, toInf, getTense } from '../lib.js'
+import { noop, isPlural, isAreAm, doDoes, getSubject, toInf, getTense, noWill } from '../lib.js'
 const keep = { tags: true }
 
 // walk->walked
@@ -19,6 +19,7 @@ const simple = (vb, parsed) => {
     vb = vb.replace(root, str, keep)
     vb.not('#Particle').tag('PresentTense')
   }
+  // vb.replace('not ' + str, str + ' not')
   return vb
 }
 
@@ -84,6 +85,7 @@ const forms = {
       let str = isAreAm(vb, parsed)
       vb.replace(root, str)
       vb = vb.remove('will')
+      vb.replace('not ' + str, str + ' not')
     } else {
       simple(vb, parsed)
       vb = vb.remove('will')
@@ -108,7 +110,7 @@ const forms = {
   // has walked ->  (?)
   'present-perfect': (vb, parsed) => {
     simple(vb, parsed)
-    vb = vb.remove('(have|had)')
+    vb = vb.remove('(have|had|has)')
     return vb
   },
 

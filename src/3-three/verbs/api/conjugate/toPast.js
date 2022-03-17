@@ -1,4 +1,4 @@
-import { noop, getTense, isPlural } from '../lib.js'
+import { noop, getTense, wasWere, noWill } from '../lib.js'
 const keep = { tags: true }
 
 const fns = {
@@ -22,8 +22,8 @@ const fns = {
     // all.Participle || all.PastTense
     // but skip the 'is' participle..
     str = str === 'been' ? 'was' : str
-    if (str === 'was' && isPlural(vb, parsed)) {
-      str = 'were'
+    if (str === 'was') {
+      str = wasWere(vb, parsed)
     }
     if (str) {
       vb.replace(root, str, keep)
@@ -57,6 +57,8 @@ const fns = {
     str = verbToInfinitive(str, vb.model, getTense(root))
     return verbConjugate(str, vb.model).Participle
   },
+
+
 
 }
 
@@ -93,7 +95,10 @@ const forms = {
   // will have walked -> had walked
   'future-perfect': (vb, parsed) => {
     vb.match(parsed.root).insertBefore('had')
-    vb.remove('(will|have)')
+    if (vb.has('will')) {
+      vb = noWill(vb)
+    }
+    vb.remove('have')
     return vb
   },
 
@@ -181,7 +186,8 @@ const forms = {
   'gerund-phrase': (vb, parsed) => {
     parsed.root = parsed.root.not('#Gerund$')
     fns.simple(vb, parsed)
-    return vb.remove('will')
+    noWill(vb)
+    return vb
   },
 }
 

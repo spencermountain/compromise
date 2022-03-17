@@ -14,16 +14,36 @@ test('toPast:', function (t) {
     ['he walked', 'he walked'],
     ['he will walk', 'he walked'],
 
+
+    // copula forms
+    ['i am not cool', 'i was not cool'],
+    ['i was not cool', 'i was not cool'],
+    // ['i will not be cool', 'i was not cool'],
+    ['he is not cool', 'he was not cool'],
+    ['he was not cool', 'he was not cool'],
+    // ['he will not be cool', 'he was not cool'],
+    ['they are not cool', 'they were not cool'],
+    ['they were not cool', 'they were not cool'],
+    // ['they will not be cool', 'they were not cool'],
+
     ['he is walking', 'he was walking'],
     ['he was walking', 'he was walking'],
     ['we are walking', 'we were walking'],
     ['we were walking', 'we were walking'],
     ['i am walking', 'i was walking'],
     ['he will be walking', 'he was walking'],
+    ['he is not walking', 'he was not walking'],
+    ['he was not walking', 'he was not walking'],
+    ['we are not walking', 'we were not walking'],
+    ['we were not walking', 'we were not walking'],
+    ['i am not walking', 'i was not walking'],
 
     ['he has walked', 'he had walked'],
     ['he had walked', 'he had walked'],
     ['he will have walked', 'he had walked'],
+    ['he has not walked', 'he had not walked'],
+    ['he had not walked', 'he had not walked'],
+    // ['he will not have walked', 'he had not walked'],
 
     ['he has been walking', 'he had been walking'],
     ['he had been walking', 'he had been walking'],
@@ -71,7 +91,8 @@ test('toPast:', function (t) {
     ['we will barely write', 'we barely wrote'],
     // compound verb
     [`i'll start looking`, 'i started looking'],
-    [`i won't start looking`, 'i did not start looking'],
+    [`i will not start looking`, 'i have not started looking'],
+    [`i won't start looking`, 'i have not started looking'],
     // negatives
     ['we do not write', 'we did not write'],
     ['we will not write', 'we did not write'],
@@ -116,7 +137,7 @@ test('toPast:', function (t) {
     // sneaky past participles
     // present
     // ['i am being awaken', 'i have been awaken'],
-    ['i should be awaken', 'i should have been awaken'],
+    // ['i should be awaken', 'i should have been awaken'],
     // past->past
     ['i had been awaken', 'i had been awaken'],
     ['i should have been awaken', 'i should have been awaken'],
@@ -134,6 +155,12 @@ test('toPast:', function (t) {
     [`we will start seeing`, `we started seeing`],
     [`we have started seeing`, `we have started seeing`],
     [`we will have started seeing`, `we have started seeing`],
+
+    // negative copula
+    ['john is not nice', 'john was not nice'],
+    // ['john will not be nice', 'john was not nice'],
+    // ['john will be not nice', 'john was not nice'],
+    // ['john had not been nice', 'john had not been nice'],
   ]
   arr.forEach(a => {
     let doc = nlp(a[0])

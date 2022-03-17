@@ -16,6 +16,17 @@ test('toFuture:', function (t) {
     ['the eye closed', 'the eye will close'],
     ['the eyes closed', 'the eyes will close'],
 
+    // copula forms
+    ['i am not cool', 'i will be not cool'],
+    ['i was not cool', 'i will be not cool'],
+    ['i will not be cool', 'i will not be cool'],
+    ['he is not cool', 'he will be not cool'],
+    ['he was not cool', 'he will be not cool'],
+    ['he will not be cool', 'he will not be cool'],
+    ['they are not cool', 'they will be not cool'],
+    ['they were not cool', 'they will be not cool'],
+    ['they will not be cool', 'they will not be cool'],
+
     ['their colloseum will open', 'their colloseum will open'],
     ['their children will open', 'their children will open'],
 
@@ -177,7 +188,7 @@ test('toFuture:', function (t) {
     ['we will not write', 'we will not write'],
     ['angelina does not write', 'angelina will not write'],
     ['angelina will not write', 'angelina will not write'],
-    ['there is no hope', 'there will be no hoping'],
+    ['there is no hope', 'there will be no hope'],
     // ['toronto barely starts', 'toronto will barely start'],
     ['say it again', 'say it again'],
     // ['council votes to deny it', 'council will vote to deny it'],

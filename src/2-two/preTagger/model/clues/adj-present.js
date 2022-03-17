@@ -11,12 +11,12 @@ const misc = {
 const clue = {
   beforeTags: Object.assign({}, adj.beforeTags, verb.beforeTags, {
     // always clean
-    Adverb: undefined
+    Adverb: undefined, Negative: undefined
   }),
   afterTags: Object.assign({}, adj.afterTags, verb.afterTags, misc.afterTags),
   beforeWords: Object.assign({}, adj.beforeWords, verb.beforeWords, {
     // have seperate contracts
-    have: undefined, had: undefined,
+    have: undefined, had: undefined, not: undefined,
     //went wrong, got wrong
     went: 'Adjective', goes: 'Adjective', got: 'Adjective',
     // be sure

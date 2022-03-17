@@ -16,6 +16,19 @@ test('verb-to-gerund:', function (t) {
     ['he dedicates', 'he is dedicating'],
     // ['he did not walk', 'he was not walking'],
     ['there is no hope', 'there is no hoping'],
+
+
+    // copula forms
+    ['i am not cool', 'i am not being cool'],
+    ['i was not cool', 'i am not being cool'],
+    ['i will not be cool', 'i will not be being cool'],
+    ['he is not cool', 'he is not being cool'],
+    ['he was not cool', 'he was not being cool'],
+    ['he will not be cool', 'he will not be being cool'],
+    ['they are not cool', 'they are not being cool'],
+    ['they were not cool', 'they were not being cool'],
+    ['they will not be cool', 'they will not be being cool'],
+
   ]
   arr.forEach(function (a) {
     const doc = nlp(a[0])

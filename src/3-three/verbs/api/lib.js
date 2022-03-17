@@ -11,6 +11,14 @@ const isPlural = (vb, parsed) => {
   return subj.plural
 }
 
+const wasWere = (vb, parsed) => {
+  let { subject, plural } = getSubject(vb, parsed)
+  if (plural || subject.has('we')) {
+    return 'were'
+  }
+  return 'was'
+}
+
 // present-tense copula
 const isAreAm = function (vb, parsed) {
   // 'people were' -> 'people are'
@@ -69,4 +77,13 @@ const getTense = function (m) {
   return undefined
 }
 
-export { noop, isPlural, isAreAm, doDoes, toInf, getSubject, getTense }
+// i will start looking -> i started looking
+// i will not start looking -> i did not start looking
+const noWill = (vb) => {
+  if (vb.has('will not')) {
+    return vb.replace('will not', 'have not')
+  }
+  return vb.remove('will')
+}
+
+export { noop, isPlural, isAreAm, doDoes, toInf, getSubject, getTense, wasWere, noWill }

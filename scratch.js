@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import plg from './plugins/speech/src/plugin.js'
 // nlp.plugin(plg)
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 // nlp.verbose('chunker')
 
 let txt = ''
@@ -19,10 +19,7 @@ txt = `The store that the boy robbed is on the corner.`
 txt = `We had been to see her several times.`
 txt = `simply allow yourself a treat`
 txt = `he's the best and will always be the best`
-
-// let m = nlp('the dog sat').insertAfter('and')
-// console.log(m.pointer)
-// m.debug()
-
-// i will start looking -> i started looking
-// i will not start looking -> i did not start looking
+txt = `Visit houses`
+let doc = nlp(txt)
+doc.debug()
+console.log(doc.json()[0].terms[0])

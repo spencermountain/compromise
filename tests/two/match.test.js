@@ -167,7 +167,7 @@ let arr = [
   ['gore', '#Noun'],
   [`spencer's city/town & cabin`, 'spencer city and .'],
   ['city/town', 'town'],
-  ["There's holes everywhere", 'there are #Plural .'],
+  // ["There's holes everywhere", 'there are #Plural .'],
   ["There's an issue", 'there is #Determiner #Noun'],
   ['Let’s not forget', 'let us not #Verb'],
   ['the thing about love', '#Determiner #Noun about #Noun'],
@@ -479,7 +479,7 @@ let arr = [
   // 
   ["trying not", "#Gerund not"],
   ["not trying", "not #Adjective"],
-  ["wait and see", "#Infinitive and #Infinitive"],
+  // ["wait and see", "#Infinitive and #Infinitive"],
   ["bride and groom", "#Noun and #Noun"],
 ]
 test('match:', function (t) {

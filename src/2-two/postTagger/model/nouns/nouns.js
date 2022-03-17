@@ -117,7 +117,9 @@ export default [
   // hopes and dreams
   // { match: '#Noun and [%Plural|Verb%]', group: 0, tag: 'Plural', reason: 'hopes-and-dreams' },
   // bride and groom
-  { match: '#Noun and [%Noun|Verb%]', group: 0, tag: 'Singular', reason: 'bride-and-groom' },
+  { match: '#Noun and [%Noun|Verb%]', group: 0, tag: 'Singular', ifNo: ['#ProperNoun'], reason: 'bride-and-groom' },
   // an impressionist painting
   { match: '#Determiner [%Adj|Noun%] #Noun', group: 0, tag: 'Adjective', ifNo: ['#ProperNoun'], reason: 'a-complex-relationship' },
+  // visit houses
+  { match: '^[%Noun|Verb%] #Noun', group: 0, tag: 'Verb', reason: 'visit-boards' },
 ]

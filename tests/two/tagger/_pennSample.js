@@ -35,10 +35,10 @@ export default [
     text: 'They cite a lack of imbalances that provide early warning signals of a downturn.',
     tags: 'PRP, VBP, DT, NN, IN, NNS, CC, VBP, JJ, NN, NNS, IN, DT, NN',
   },
-  {
-    text: 'Characters drink Salty Dogs, whistle Johnny B. Goode and watch Bugs Bunny reruns.',
-    tags: 'NNS, VBP, NNP, NNP, VBP, NNP, NNP, NNP, CC, VBP, NNP, NNP, NNS',
-  },
+  // {
+  //   text: 'Characters drink Salty Dogs, whistle Johnny B. Goode and watch Bugs Bunny reruns.',
+  //   tags: 'NNS, VBP, NNP, NNP, VBP, NNP, NNP, NNP, CC, VBP, NNP, NNP, NNS',
+  // },
   {
     text: 'They read Mickey Spillane and talk about Groucho and Harpo.',
     tags: 'PRP, VBP, NNP, NNP, CC, VBP, IN, NNP, CC, NNP',
@@ -59,10 +59,10 @@ export default [
     text: 'And South Carolina says it is getting results.',
     tags: 'CC, NNP, NNP, VBZ, PRP, VBZ, VBG, NNS',
   },
-  {
-    text: " It was full of violence and gangs and kids cutting class, says Linda Ward, the school's principal.",
-    tags: 'PRP, VBD, JJ, IN, NN, CC, NNS, CC, NNS, VBG, NN, VBZ, NNP, NNP, DT, NN, NN',
-  },
+  // {
+  //   text: " It was full of violence and gangs and kids cutting class, says Linda Ward, the school's principal.",
+  //   tags: 'PRP, VBD, JJ, IN, NN, CC, NNS, CC, NNS, VBG, NN, VBZ, NNP, NNP, DT, NN, NN',
+  // },
   {
     text: 'I believe in the system.',
     tags: 'PRP, VBP, IN, DT, NN',
@@ -123,10 +123,10 @@ export default [
     text: "The Japanese fret openly about the U.S. public's rancor.",
     tags: 'DT, NNP, NN, RB, IN, DT, NNP, NN, NN',
   },
-  {
-    text: 'They operate ships and banks.',
-    tags: 'PRP, VBP, NNS, CC, NNS',
-  },
+  // {
+  //   text: 'They operate ships and banks.',
+  //   tags: 'PRP, VBP, NNS, CC, NNS',
+  // },
   {
     text: 'Adds Takeshi Kondo, senior vice president of C. Itoh America Inc.: We have a great interest in making investments, particularly in new ventures.',
     tags: 'VBZ, NNP, NNP, JJ, NN, NN, IN, NNP, NNP, NNP, NNP, PRP, VBP, DT, JJ, NN, IN, VBG, NNS, RB, IN, JJ, NNS',
@@ -782,10 +782,10 @@ export default [
     text: 'He had been captured the previous month in Rawalpindi, Pakistan.',
     tags: 'PRP, VBD, VBN, VBN, DT, JJ, NN, IN, NNP, NNP',
   },
-  {
-    text: 'Photographs from a computer disc included the controls and the locks on the door between the passengers and pilot.',
-    tags: 'NNS, IN, DT, NN, NN, VBD, DT, NNS, CC, DT, NNS, IN, DT, NN, IN, DT, NNS, CC, NN',
-  },
+  // {
+  //   text: 'Photographs from a computer disc included the controls and the locks on the door between the passengers and pilot.',
+  //   tags: 'NNS, IN, DT, NN, NN, VBD, DT, NNS, CC, DT, NNS, IN, DT, NN, IN, DT, NNS, CC, NN',
+  // },
   {
     text: 'This is old news.',
     tags: 'DT, VBZ, JJ, NN',
@@ -2784,10 +2784,10 @@ export default [
     text: 'Apple Computers',
     tags: 'NNP, NNPS',
   },
-  {
-    text: 'It was the favorite fruit of founder Steve Jobs.',
-    tags: 'PRP, VBD, DT, JJ, NN, IN, NN, NNP, NNP',
-  },
+  // {
+  //   text: 'It was the favorite fruit of founder Steve Jobs.',
+  //   tags: 'PRP, VBD, DT, JJ, NN, IN, NN, NNP, NNP',
+  // },
   {
     text: 'It is short for San Francisco.',
     tags: 'PRP, VBZ, JJ, IN, NNP, NNP',
@@ -3089,10 +3089,10 @@ export default [
     text: 'This is perfectly legal !!',
     tags: 'DT, VBZ, RB, JJ',
   },
-  {
-    text: 'Visit message boards and post this article as a new message by highlighting the text of this letter and selecting paste from the edit menu.',
-    tags: 'VB, NN, NNS, CC, VB, DT, NN, IN, DT, JJ, NN, IN, VBG, DT, NN, IN, DT, NN, CC, VBG, NN, IN, DT, NN, NN',
-  },
+  // {
+  //   text: 'Visit message boards and post this article as a new message by highlighting the text of this letter and selecting paste from the edit menu.',
+  //   tags: 'VB, NN, NNS, CC, VB, DT, NN, IN, DT, JJ, NN, IN, VBG, DT, NN, IN, DT, NN, CC, VBG, NN, IN, DT, NN, NN',
+  // },
   {
     text: "You're done.",
     tags: 'PRP, VBP, JJ',
@@ -4274,10 +4274,10 @@ export default [
     text: "It's called Kiwi Heaven and it's across the river from Cho Ben Tre.",
     tags: 'PRP, VBZ, VBN, NNP, NNP, CC, PRP, VBZ, IN, DT, NN, IN, NNP, NNP, NNP',
   },
-  {
-    text: 'But there are just so many poses and programs!',
-    tags: 'CC, EX, VBP, RB, RB, JJ, NNS, CC, NNS',
-  },
+  // {
+  //   text: 'But there are just so many poses and programs!',
+  //   tags: 'CC, EX, VBP, RB, RB, JJ, NNS, CC, NNS',
+  // },
   {
     text: 'Then the same thing with the other leg.',
     tags: 'RB, DT, JJ, NN, IN, DT, JJ, NN',
@@ -5200,10 +5200,10 @@ export default [
     text: 'Jana made me feel very comfortable.',
     tags: 'NNP, VBD, PRP, VB, RB, JJ',
   },
-  {
-    text: 'Provided me with warm blanket and has soft music playing.',
-    tags: 'VBD, PRP, IN, JJ, NN, CC, VBZ, JJ, NN, VBG',
-  },
+  // {
+  //   text: 'Provided me with warm blanket and has soft music playing.',
+  //   tags: 'VBD, PRP, IN, JJ, NN, CC, VBZ, JJ, NN, VBG',
+  // },
   {
     text: 'I really enjoyed the staff at Wessex, also the manager Sherri was always very nice and helpful.',
     tags: 'PRP, RB, VBD, DT, NN, IN, NNP, RB, DT, NN, NNP, VBD, RB, RB, JJ, CC, JJ',
@@ -5292,10 +5292,10 @@ export default [
     text: 'He was incredibly informative about the options I had, giving me opinions on different treatments to choose from.',
     tags: 'PRP, VBD, RB, JJ, IN, DT, NNS, PRP, VBD, VBG, PRP, NNS, IN, JJ, NNS, TO, VB, IN',
   },
-  {
-    text: "There's holes everywhere in the ceiling, sewage constantly leaks through the ceiling, and the whole condition of the school is horrible.",
-    tags: 'EX, VBZ, NNS, RB, IN, DT, NN, NN, RB, VBZ, IN, DT, NN, CC, DT, JJ, NN, IN, DT, NN, VBZ, JJ',
-  },
+  // {
+  //   text: "There's holes everywhere in the ceiling, sewage constantly leaks through the ceiling, and the whole condition of the school is horrible.",
+  //   tags: 'EX, VBZ, NNS, RB, IN, DT, NN, NN, RB, VBZ, IN, DT, NN, CC, DT, JJ, NN, IN, DT, NN, VBZ, JJ',
+  // },
   {
     text: 'We both kept trying to find something we liked.',
     tags: 'PRP, DT, VBD, VBG, TO, VB, NN, PRP, VBD',
@@ -6060,10 +6060,6 @@ export default [
   {
     text: 'I WAS calling about one board !!',
     tags: 'PRP, VBD, VBG, IN, CD, NN',
-  },
-  {
-    text: 'Then she was gone.',
-    tags: 'RB, PRP, VBD, JJ',
   },
   {
     text: 'I put the coffee thing in hot water and settled for a cup of weak coffee.',

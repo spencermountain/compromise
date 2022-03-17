@@ -63,6 +63,7 @@ const growRight = function (regs, group) {
     if (more.found) {
       let terms = more.terms()
       ptrs[n][2] += terms.length
+      ptrs[n][4] = null //remove end-id
     }
   })
   return this.update(ptrs)

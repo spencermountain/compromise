@@ -20,9 +20,17 @@ txt = `We had been to see her several times.`
 txt = `simply allow yourself a treat`
 txt = `he's the best and will always be the best`
 
-let m = nlp('the dog sat').insertAfter('and')
-console.log(m.pointer)
-m.debug()
+// let m = nlp('the dog sat').insertAfter('and')
+// console.log(m.pointer)
+// m.debug()
+
+let doc = nlp('one two match three four')
+let m = doc.match('match .') // 'match three'
+doc.remove('three')
+console.log('==============')
+// m.docs
+console.log('|' + m.text())
+console.log('|' + m.text())
 
 
 // let s = doc.sentences()

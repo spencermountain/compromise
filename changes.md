@@ -115,7 +115,6 @@ doc.text()
 
 ### new methods
 - **[new]** .union(), .intersection(), .difference() and .complement() methods
-- **[new]** .freeze(), unfreeze() - prevent a match from drifting, once parent is mutated
 - **[new]** .confidence() method - approximate tagging confidence score for arbitrary selections
 - **[new]** .settle() - remove overlaps in matches
 - **[new]** .is() - helper-method for comparing two views

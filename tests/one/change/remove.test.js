@@ -136,7 +136,7 @@ test('remove full-sentence', function (t) {
 
 test('remove doc by index :', function (t) {
   let doc = nlp(`one extra two match three`)
-  let m = doc.match('match').freeze()
+  let m = doc.match('match')
   doc.remove('extra')
   doc.remove(m)
   t.equal(doc.text(), 'one two three', here + 'pointer index')

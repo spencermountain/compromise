@@ -26,11 +26,16 @@ const repairEnding = function (ptr, document) {
   let terms = document[n].slice(start)
   // look for end-id
   let newEnd = terms.findIndex(t => t.id === endId)
+
   if (newEnd === -1) {
-    newEnd = terms.length
+    // if end-term wasn't found, so go all the way to the end
+    ptr[2] = document[n].length
+    ptr[4] = terms.length ? terms[terms.length - 1].id : null
+  } else {
+    ptr[2] = newEnd // repair ending
+    // ptr[4] = null
   }
-  ptr[2] = newEnd // repair ending
-  return document[n].slice(start, newEnd + 1)
+  return document[n].slice(start, ptr[2] + 1)
 }
 
 /** return a subset of the document, from a pointer */

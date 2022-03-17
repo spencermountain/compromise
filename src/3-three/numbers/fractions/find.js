@@ -5,6 +5,9 @@ const findFractions = function (doc, n) {
   m = m.filter(r => {
     return !r.lookBehind('#Value and$').found
   })
+  // thirty seconds
+  m = m.notIf('#Value seconds')
+
   if (typeof n === 'number') {
     m = m.eq(n)
   }

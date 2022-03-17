@@ -23,7 +23,5 @@ txt = `I'd phoned`
 // let doc = nlp(txt)
 // doc.debug()
 
-let doc = nlp(`i'd walked`)
-let m = doc.match('had')
-m.insertBefore('really')
-console.log(doc.text())
+let doc = nlp(`thirty seconds`)
+console.log(doc.fractions().json())

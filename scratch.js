@@ -22,7 +22,7 @@ txt = `he's the best and will always be the best`
 txt = `I'd phoned`
 // let doc = nlp(txt)
 // doc.debug()
-txt = 'left   his/her/their  backpack '
-let doc = nlp(txt)
-doc.debug()
-console.log(doc.json())
+let doc = nlp('Larry, Curly, and Moe')
+let people = doc.match('.') // (any one noun)
+let arr = people.map(d => d.text('normal'))
+console.log(arr)

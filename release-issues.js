@@ -4,16 +4,12 @@ import nlp from './src/three.js'
 // import nlp from './builds/compromise.cjs'
 // nlp.verbose('tagger')
 
-
-
 // bug!
 // let doc = nlp(`john walks`)
 // let s = doc.sentences()
 // s.toFutureTense().fullSentences()
 // console.log(s.text())
 
-
-// let txt
 
 
 // bug: doc-match issue
@@ -42,11 +38,6 @@ import nlp from './src/three.js'
 
 
 
-// let m = nlp('one two three. foo.')
-// m = m.splitOn('two')
-// m.match('three').remove()
-// m.debug()
-
 // let doc = nlp('once told me')
 // let m = doc.match('once')
 // doc.insertBefore('somebody')
@@ -54,8 +45,20 @@ import nlp from './src/three.js'
 // 'once'
 
 // fork bungs-up regex
-let doc = nlp(`one match two.`)
-doc.fork()
-doc.compute('preTagger')
-doc.debug()
+// let doc = nlp(`one match two.`)
+// doc.fork()
+// doc.compute('preTagger')
+// doc.debug()
+
+
+// split issue
+// txt = 'a x b x c'
+// let doc = nlp(txt)
+// doc.splitBefore('x').debug()
+
+
+// let m = nlp('one two three. foo.')
+// m = m.splitOn('two')
+// m.match('three').remove()
+// m.debug()
 

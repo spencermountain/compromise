@@ -51,6 +51,7 @@ methods.splitBefore = function (m, group) {
     res.push(o.passthrough)
     res.push(o.before)
     if (o.match && o.after) {
+      // console.log(combine(o.match, o.after))
       res.push(combine(o.match, o.after))
     } else {
       res.push(o.match)

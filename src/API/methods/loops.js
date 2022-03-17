@@ -18,8 +18,15 @@ const map = function (cb, empty) {
   }
   // return an array of values, or View objects?
   // user can return either from their callback
-  if (res[0] !== undefined && typeof res[0] === 'object' && (res[0] === null || !res[0].isView)) {
-    return res
+  if (res[0] !== undefined) {
+    // array of strings
+    if (typeof res[0] === 'string') {
+      return res
+    }
+    // array of objects
+    if (typeof res[0] === 'object' && (res[0] === null || !res[0].isView)) {
+      return res
+    }
   }
   // return a View object
   let all = []

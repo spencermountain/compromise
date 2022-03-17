@@ -14,10 +14,10 @@ const add = function (arr, tag) {
     lex[str] = tag
   })
 }
-add(Object.keys(timezones), '#Timezone')
-add(dates, '#Date')
-add(durations, '#Duration')
-add(holidays, '#Holiday')
-add(times, '#Time')
-
+add(Object.keys(timezones), 'Timezone')
+add(dates, 'Date')
+add(durations, 'Duration')
+add(holidays, 'Holiday')
+add(times, 'Time')
+// console.log(lex['april fools'])
 export default lex

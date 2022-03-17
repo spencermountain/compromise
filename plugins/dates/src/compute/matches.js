@@ -133,9 +133,9 @@ let matches = [
   { match: '(about|approx|approximately|around) #Date', tag: 'Date', reason: 'approximately june' },
 
   // until june
-  { match: '(by|until|on|in|at|during|over|every|each|due) the? #Date', notIf: '#PhrasalVerb', tag: 'Date', reason: 'until june' },
+  { match: '(by|until|on|in|at|during|over|every|each|due) the? #Date', ifNo: '#PhrasalVerb', tag: 'Date', reason: 'until june' },
   // until last june
-  { match: '(by|until|after|before|during|on|in|following|since) (next|this|last)? #Date', notIf: '#PhrasalVerb', tag: 'Date', reason: 'until last june' },
+  { match: '(by|until|after|before|during|on|in|following|since) (next|this|last)? #Date', ifNo: '#PhrasalVerb', tag: 'Date', reason: 'until last june' },
 
   //next september
   { match: 'this? (last|next|past|this|previous|current|upcoming|coming|the) #Date', tag: 'Date', reason: 'next september' },
@@ -163,7 +163,7 @@ let matches = [
   // iso  (2020-03-02T00:00:00.000Z)
   // { match: '/^[0-9]{4}[:-][0-9]{2}[:-][0-9]{2}T[0-9]/', tag: 'Time', reason: 'iso-time-tag' },
   // tuesday at 4
-  { match: '#Date [at #Cardinal]', group: 0, notIf: '#Year', tag: 'Time', reason: ' tuesday at 4' },
+  { match: '#Date [at #Cardinal]', group: 0, ifNo: '#Year', tag: 'Time', reason: ' tuesday at 4' },
   // half an hour
   { match: 'half an (hour|minute|second)', tag: 'Date', reason: 'half an hour' },
   // in eastern time
@@ -180,23 +180,23 @@ let matches = [
 
 
   //'two days before'/ 'nine weeks frow now'
-  { match: '(#Cardinal|a|an) #Duration (before|after|ago|from|hence|back)', tag: 'DateShift', reason: 'date-shift' },
+  { match: '(#Cardinal|a|an) #Duration (before|after|ago|from|hence|back)', tag: 'DateShift', reason: 'nine weeks frow now' },
   // in two weeks
-  { match: 'in #Cardinal #Duration', tag: 'DateShift', reason: 'date-shift' },
-  { match: 'in (a|an) #Duration', tag: 'DateShift', reason: 'date-shift' },
+  { match: 'in #Cardinal #Duration', tag: 'DateShift', reason: 'in two weeks' },
+  { match: 'in (a|an) #Duration', tag: 'DateShift', reason: 'in a week' },
   // an hour from now
-  { match: '[(a|an) #Duration from] #Date', group: 0, tag: 'DateShift', reason: 'date-shift' },
+  { match: '[(a|an) #Duration from] #Date', group: 0, tag: 'DateShift', reason: 'an hour from now' },
   // a month ago
-  { match: '(a|an) #Duration ago', tag: 'DateShift', reason: 'date-shift' },
+  { match: '(a|an) #Duration ago', tag: 'DateShift', reason: 'a month ago' },
   // in half an hour
-  { match: 'in half (a|an) #Duration', tag: 'DateShift', reason: 'date-shift' },
+  { match: 'in half (a|an) #Duration', tag: 'DateShift', reason: 'in half an hour' },
   // in a few weeks
-  { match: 'in a (few|couple) of? #Duration', tag: 'DateShift', reason: 'date-shift' },
+  { match: 'in a (few|couple) of? #Duration', tag: 'DateShift', reason: 'in a few weeks' },
   //two weeks and three days before
-  { match: '#Cardinal #Duration and? #DateShift', tag: 'DateShift', reason: 'date-shift' },
+  { match: '#Cardinal #Duration and? #DateShift', tag: 'DateShift', reason: 'three days before' },
   { match: '#DateShift and #Cardinal #Duration', tag: 'DateShift', reason: 'date-shift' },
   // 'day after tomorrow'
-  { match: '[#Duration (after|before)] #Date', group: 0, tag: 'DateShift', reason: 'date-shift' },
+  { match: '[#Duration (after|before)] #Date', group: 0, tag: 'DateShift', reason: 'day after tomorrow' },
 
   // july 3rd and 4th
   { match: '#Month #Ordinal and #Ordinal', tag: 'Date', reason: 'ord-and-ord' },

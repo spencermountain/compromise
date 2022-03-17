@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from './_lib.js'
+const here = '[date/durations]'
 
 test('durations vs dates', function (t) {
   let arr = [
@@ -44,18 +45,18 @@ test('durations json', function (t) {
 
 test('one-word durations', function (t) {
   let arr = [
-    ['20m', { minute: 20 }],
+    // ['20m', { minute: 20 }],
     ['20min', { minute: 20 }],
     ['20mins', { minute: 20 }],
     ['10mins', { minute: 10 }],
     ['1min', { minute: 1 }],
     ['1sec', { second: 1 }],
-    // ['1 sec', { second: 1 }],
+    ['1 sec', { second: 1 }],
   ]
   arr.forEach((a) => {
     let doc = nlp(a[0])//.tag('Duration')
     let found = doc.durations().get()[0]
-    t.deepEqual(found, a[1], a[0])
+    t.deepEqual(found, a[1], here + a[0])
   })
   t.end()
 })

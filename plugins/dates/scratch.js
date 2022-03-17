@@ -41,7 +41,10 @@ txt = 'today in PST'
 txt = '4pm sharp on tuesday' //! <- expand issue
 txt = '130pm' //! <- expand issue
 txt = 'by september 5th'
+txt = '1 year 9 months from now '
+// txt = 'on april fools 2020 '
 
+// console.log(nlp.model().one.lexicon['april fools'])
 
 // txt = 'four thirty'
 // txt = 'on april 22nd'

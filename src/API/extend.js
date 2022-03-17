@@ -1,6 +1,10 @@
 const isObject = function (item) {
-  // let isSet = item instanceof Set
   return item && typeof item === 'object' && !Array.isArray(item)
+}
+
+
+const isArray = function (arr) {
+  return Object.prototype.toString.call(arr) === '[object Array]'
 }
 
 // recursive merge of objects
@@ -10,6 +14,9 @@ function mergeDeep(model, plugin) {
       if (isObject(plugin[key])) {
         if (!model[key]) Object.assign(model, { [key]: {} })
         mergeDeep(model[key], plugin[key]) //recursion
+        // } else if (isArray(plugin[key])) {
+        // console.log(key)
+        // console.log(model)
       } else {
         Object.assign(model, { [key]: plugin[key] })
       }

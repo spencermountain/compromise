@@ -10,7 +10,7 @@ const find = function (n) {
   m = m.concat(r.organizations())
   m = m.not('(someone|man|woman|mother|brother|sister|father)')
   //return them to normal ordering
-  m.sort('sequence')
+  m = m.sort('seq')
   // yup.unique() //? not sure
   m = getNth(m, n)
   return m

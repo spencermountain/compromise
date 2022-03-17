@@ -24,7 +24,6 @@ txt = `I'd phoned`
 // doc.debug()
 
 
-let doc = nlp('one two. three four')
-doc.append('oooo')
-// doc.debug()
-console.log(doc.text())
+let doc = nlp('i went to Gloop University in Paris, France, with John H. Smith')
+let arr = doc.topics().out('array')
+console.log(arr)

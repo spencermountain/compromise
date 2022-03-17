@@ -19,7 +19,14 @@ txt = `The store that the boy robbed is on the corner.`
 txt = `We had been to see her several times.`
 txt = `simply allow yourself a treat`
 txt = `he's the best and will always be the best`
-let doc = nlp(txt)
-doc.sentences().toPastTense()
-doc.debug()
+
+let m = nlp('the dog sat').insertAfter('and')
+console.log(m.pointer)
+m.debug()
+
+
+// let s = doc.sentences()
+// s.toFutureTense()
+// console.log(s.fullPointer)
+// s.debug()
 

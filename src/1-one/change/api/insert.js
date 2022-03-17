@@ -55,9 +55,7 @@ const insert = function (input, view, prepend) {
       cleanAppend(home, ptr, terms, document)
     }
     // harden the pointer
-    if (!document[n][ptr[1]]) {
-      // console.log('soft-pointer', ptr)
-    } else {
+    if (document[n] && document[n][ptr[1]]) {
       ptr[3] = document[n][ptr[1]].id
     }
     // change self backwards by len

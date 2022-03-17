@@ -79,8 +79,9 @@ const runMatch = function (docs, todo, cache) {
   results = getGroup(results, group)
   // add ids to pointers
   results.ptrs.forEach(ptr => {
-    let [n, start] = ptr
-    ptr[3] = docs[n][start].id
+    let [n, start, end] = ptr
+    ptr[3] = docs[n][start].id//start-id
+    ptr[4] = docs[n][end - 1].id//end-id
   })
   return results
 }

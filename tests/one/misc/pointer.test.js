@@ -2,7 +2,7 @@ import test from 'tape'
 import nlp from '../_lib.js'
 const here = '[one/pointer] '
 
-test('', function (t) {
+test('basic pointer getters', function (t) {
   let txt = `one two three. four five six.`
   let arr = [
     // empty pointers mean full doc
@@ -29,5 +29,34 @@ test('', function (t) {
 
     t.equal(doc.found, Boolean(doc.text()), here + a[0])
   })
+  t.end()
+})
+
+
+// repair an end index using endId
+test('use pointer endId', function (t) {
+  // insert a term
+  let doc = nlp(`john is nice`)
+  let m = doc.match('.*')
+  doc.match('is').insertAfter('really')
+  t.equal(m.text(), 'john is really nice', here + 'end-id grow')
+  t.equal(m.text(), 'john is really nice', here + 'end-id grow 2nd-time')
+
+  // remove a middle-term
+  doc = nlp(`john is nice`)
+  m = doc.match('.*')
+  doc.match('is').remove()
+  t.equal(m.text(), 'john nice', here + 'end-id shrink')
+  t.equal(m.text(), 'john nice', here + 'end-id shrink 2nd time')
+
+  // remove an ending-term
+  doc = nlp(`john is nice`)
+  m = doc.match('.*')
+  doc.match('nice').remove()
+  // first time
+  t.equal(m.text(), 'john is', here + 'end-id remove first time')
+  // second time
+  t.equal(m.text(), 'john is', here + 'end-id remove second time')
+
   t.end()
 })

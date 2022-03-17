@@ -56,14 +56,17 @@ class View {
     let pointers = ptrs || docs.map((_d, n) => [n])
     // do we need to repair it, first?
     return pointers.map(a => {
-      let [n, start, end, id] = a
+      let [n, start, end, id, endId] = a
       start = start || 0
       end = end || (document[n] || []).length
       //add frozen id, for good-measure
       if (document[n] && document[n][start]) {
         id = id || document[n][start].id
+        if (document[n][end - 1]) {
+          endId = endId || document[n][end - 1].id
+        }
       }
-      return [n, start, end, id]
+      return [n, start, end, id, endId]
     })
   }
   // create a new View, from this one

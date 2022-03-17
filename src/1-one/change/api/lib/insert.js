@@ -4,8 +4,10 @@
 const spliceArr = (parent, index, child) => {
   // tag them as dirty
   child.forEach(term => term.dirty = true)
-  let args = [index, 0].concat(child)
-  Array.prototype.splice.apply(parent, args)
+  if (parent) {
+    let args = [index, 0].concat(child)
+    Array.prototype.splice.apply(parent, args)
+  }
   return parent
 }
 
@@ -85,7 +87,7 @@ const cleanPrepend = function (home, ptr, needle, document) {
 
 const cleanAppend = function (home, ptr, needle, document) {
   let [n, , end] = ptr
-  let total = document[n].length
+  let total = (document[n] || []).length
   if (end < total) {
     // are we in the middle?
     // add trailing space on self
@@ -99,6 +101,8 @@ const cleanAppend = function (home, ptr, needle, document) {
     movePunct(home, end, needle)
   }
   spliceArr(home, ptr[2], needle)
+  // set new endId
+  ptr[4] = needle[needle.length - 1].id
 }
 
 export { cleanPrepend, cleanAppend, spliceArr }

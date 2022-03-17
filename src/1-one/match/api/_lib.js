@@ -5,9 +5,9 @@ export const relPointer = function (ptrs, parent) {
   ptrs.forEach(ptr => {
     let n = ptr[0]
     if (parent[n]) {
-      ptr[0] = parent[n][0]
-      ptr[1] += parent[n][1]
-      ptr[2] += parent[n][1]
+      ptr[0] = parent[n][0] //n
+      ptr[1] += parent[n][1] //start
+      ptr[2] += parent[n][1] //end
     }
   })
   return ptrs

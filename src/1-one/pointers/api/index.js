@@ -7,7 +7,7 @@ const getDoc = (m, view) => {
 const addIds = function (ptrs, docs) {
   return ptrs.map(ptr => {
     let [n, start] = ptr
-    if (docs[n][start]) {
+    if (docs[n] && docs[n][start]) {
       ptr[3] = docs[n][start].id
     }
     return ptr

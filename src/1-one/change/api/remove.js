@@ -105,8 +105,10 @@ const methods = {
     })
     // re-harden pointers
     ptrs = ptrs.map((ptr) => {
-      let [n, start] = ptr
-      ptr[3] = document[n] && document[n][start] ? document[n][start].id : null
+      let [n, start, end] = ptr
+      let terms = document[n] || []
+      ptr[3] = terms[start] ? terms[start].id : null
+      ptr[4] = terms[end - 1] ? terms[end - 1].id : null
       return ptr
     })
     // mutate original

@@ -42,7 +42,8 @@ const api = function (View) {
     toFutureTense(n) {
       return getNth(this, n).map(s => {
         let parsed = parse(s)
-        return toFuture(s, parsed)
+        s = toFuture(s, parsed)
+        return s
       })
     }
     toInfinitive(n) {

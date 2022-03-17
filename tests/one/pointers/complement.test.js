@@ -21,7 +21,7 @@ test('complement-match :', function (t) {
   t.deepEqual(res.out('array'), ['one', 'three.', 'four five'], here + 'compliment-multi')
 
   res = doc.match('one match').complement()
-  t.deepEqual(res.text('machine'), 'two three four five match six', here + 'compliment-start')
+  t.deepEqual(res.text('machine'), 'two three. four five match six', here + 'compliment-start')
 
   res = doc.eq(0).complement()
   t.deepEqual(res.text(), 'four five match six', here + 'compliment-no-n')

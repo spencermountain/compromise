@@ -44,7 +44,6 @@ const pluckOut = function (document, nots) {
       // }
     }
   }
-  // console.log(document)
   return document
 }
 
@@ -103,19 +102,18 @@ const methods = {
       }
       return true
     })
-    // re-harden pointers
+    // remove old hard-pointers
     ptrs = ptrs.map((ptr) => {
-      let [n, start, end] = ptr
-      let terms = document[n] || []
-      ptr[3] = terms[start] ? terms[start].id : null
-      ptr[4] = terms[end - 1] ? terms[end - 1].id : null
+      ptr[3] = null
+      ptr[4] = null
       return ptr
     })
     // mutate original
     self.ptrs = ptrs
     self.document = document
+    self.compute('index')
     if (reg) {
-      return self.toView(ptrs).compute('index') //return new document
+      return self.toView(ptrs) //return new document
     }
     return self.none()
   },

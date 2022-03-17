@@ -27,7 +27,7 @@ test('reindex on remove:', function (t) {
   t.equal(json.terms[1].normal, 'four', here + 'removed word')
   t.deepEqual(json.terms[1].index, [4, 1], here + 'reindex after remove word')
 
-  doc.eq(1).remove()
+  doc.eq(1).remove() //pursuing....
   json = doc.eq(3).json()[0]
   t.equal(json.terms[1].normal, 'four', here + 'removed sentence')
   t.deepEqual(json.terms[1].index, [3, 1], here + 'reindex after remove sentence')

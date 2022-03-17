@@ -36,7 +36,7 @@ test('freeze-destroy-match :', function (t) {
   let m = doc.match('match extra here')
   // m.freeze()
   doc.remove('extra')
-  t.equal(m.text(), 'match', here + 'broken-match')
+  t.equal(m.text(), 'match here', here + 'broken-match')
   // ensure it now removes nothing
   doc.remove(m)
   t.equal(doc.has('match'), false, here + 'removed some')

@@ -23,17 +23,15 @@ const blindSweep = function (id, doc, n) {
 
 const repairEnding = function (ptr, document) {
   let [n, start, , , endId] = ptr
-  let terms = document[n].slice(start)
+  let terms = document[n]
   // look for end-id
   let newEnd = terms.findIndex(t => t.id === endId)
-
   if (newEnd === -1) {
     // if end-term wasn't found, so go all the way to the end
     ptr[2] = document[n].length
     ptr[4] = terms.length ? terms[terms.length - 1].id : null
   } else {
-    ptr[2] = newEnd // repair ending
-    // ptr[4] = null
+    ptr[2] = newEnd // repair ending pointer
   }
   return document[n].slice(start, ptr[2] + 1)
 }

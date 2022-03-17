@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/three.js'
+import nlp from './src/one.js'
 // import plg from './plugins/speech/src/plugin.js'
 // nlp.plugin(plg)
 
@@ -19,7 +19,10 @@ txt = `The store that the boy robbed is on the corner.`
 txt = `We had been to see her several times.`
 txt = `simply allow yourself a treat`
 txt = `he's the best and will always be the best`
-txt = `Visit houses`
+txt = `I'd phoned`
+// let doc = nlp(txt)
+// doc.debug()
+txt = 'left   his/her/their  backpack '
 let doc = nlp(txt)
 doc.debug()
-console.log(doc.json()[0].terms[0])
+console.log(doc.json())

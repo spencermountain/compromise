@@ -6,7 +6,7 @@ const api = function (View) {
   class Adverbs extends View {
     constructor(document, pointer, groups) {
       super(document, pointer, groups)
-      this.viewType = 'adverbs'
+      this.viewType = 'Adverbs'
     }
     json(opts = {}) {
       const toAdj = this.methods.two.transform.advToAdjective

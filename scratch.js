@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import plg from './plugins/speech/src/plugin.js'
 // nlp.plugin(plg)
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 // nlp.verbose('chunker')
 
 let txt = ''
@@ -26,8 +26,3 @@ txt = `he's the best and will always be the best`
 
 // i will start looking -> i started looking
 // i will not start looking -> i did not start looking
-
-let doc = nlp(`it stunk up`)
-doc.verbs().toNegative()
-doc.debug()
-// doc.debug('chunks')

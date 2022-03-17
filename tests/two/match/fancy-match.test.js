@@ -51,7 +51,7 @@ test('match-doc', function (t) {
   let doc = nlp('the boy and the girl.')
   let m = doc.match('(boy|girl)')
   let arr = doc.match(m).out('array')
-  t.deepEqual(arr, ['boy', 'girl'], here + 'match-doc')
+  t.deepEqual(arr, ['boy', 'girl.'], here + 'match-doc')
   t.end()
 })
 

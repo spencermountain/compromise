@@ -81,6 +81,8 @@ const verbForms = {
   'past-perfect': [
     // he had walked
     ['^had #PastTense$', [past, complete]],
+    // had been to see
+    ['^had #PastTense to #Infinitive', [past, complete]],
   ],
   'future-perfect': [
     // he will have

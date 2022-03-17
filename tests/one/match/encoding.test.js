@@ -2,17 +2,17 @@ import test from 'tape'
 import nlp from '../_lib.js'
 const here = '[one/encoding] '
 
-test('encoding-match:', function (t) {
-  const r = nlp('it is * nice')
-  const str = r.match('is \\*').out().trim()
-  t.equal(str, 'is *', 'encode asterix')
+// test('encoding-match:', function (t) {
+//   let r = nlp('it is * nice')
+//   let str = r.match('is \\*').out().trim()
+//   t.equal(str, 'is *', 'encode asterix')
 
-  // r = nlp('it is + nice');
-  // str = r.match('is \\+ nice').trim().out();
-  // t.equal(str, 'is + nice', 'encode plus');
+//   r = nlp('it is + nice');
+//   str = r.match('is \\+ nice').trim().out();
+//   t.equal(str, 'is + nice', 'encode plus');
 
-  t.end()
-})
+//   t.end()
+// })
 
 test('reserved-word-in-src:', function (t) {
   const r = nlp('buy eggs constructor yeah prototype')

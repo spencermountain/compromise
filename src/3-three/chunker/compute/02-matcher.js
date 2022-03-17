@@ -51,7 +51,7 @@ const rules = [
   // the brown fox
   { match: '#Determiner #Adjective+ #Noun', chunk: 'Noun' },
   // the fox
-  { match: '#Determiner <Noun>', chunk: 'Noun' },
+  { match: '(the|this) <Noun>', chunk: 'Noun' },
   // brown fox
   { match: '#Adjective+ <Noun>', chunk: 'Noun' },
   // --- of ---

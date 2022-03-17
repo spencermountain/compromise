@@ -19,7 +19,7 @@ test('user-lex-with-hyphenation:', function (t) {
 
 test('user-lex-with-possessive form:', function (t) {
   const sentence =
-    "A suicide attack hit Jardas al Abid's center killing one person (and the attacker) and injuring more than twenty."
+    "A suicide attack hit Jardas al Abid's area killing one person (and the attacker) and injuring more than twenty."
   const found = nlp(sentence, lexicon).match('#Place+')
   t.equal("jardas al abid's", found.eq(0).text('normal'), here + 'found-apostrophe')
   t.equal(lexicon, lexicon, here + 'lexicon-unchanged')

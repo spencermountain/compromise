@@ -171,12 +171,12 @@ const arr = [
     PastTense: 'unified',
     Infinitive: 'unify',
   },
-  {
-    PresentTense: 'addresses',
-    Gerund: 'addressing',
-    PastTense: 'addressed',
-    Infinitive: 'address',
-  },
+  // {
+  //   PresentTense: 'addresses',
+  //   Gerund: 'addressing',
+  //   PastTense: 'addressed',
+  //   Infinitive: 'address',
+  // },
   {
     Infinitive: 'bumble',
     PresentTense: 'bumbles',

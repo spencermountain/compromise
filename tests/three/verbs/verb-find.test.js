@@ -34,7 +34,7 @@ test('verb-splitter:', function (t) {
     },
     {
       str: `he ran to get it`,
-      verbs: ['ran', 'get'],
+      verbs: ['ran to get'],
     },
     {
       str: `he should have earned or valued it by now`,

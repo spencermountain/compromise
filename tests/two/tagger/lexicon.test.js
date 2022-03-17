@@ -21,8 +21,8 @@ test('adjusted lexicon:', function (t) {
   })
   //
   //set gender from lexicon
-  const doc = nlp('Kelly', lexicon)
-  t.equal(doc.has('#FemaleName'), true, here + 'kelly-female')
+  const doc = nlp('Abbi', lexicon)
+  t.equal(doc.has('#FemaleName'), true, here + 'abbi-female')
   //set as male:
   lexicon = {
     kelly: 'MaleName',

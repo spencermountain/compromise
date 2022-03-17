@@ -16,7 +16,7 @@ test('sentence-change-tense:', function (t) {
       'temptation was a desire to engage',
       'temptation will be a desire to engage',
     ],
-    [`the vision appears and starts to walk and sing`, `the vision appeared and started to walk and sing`, `the vision will appear and start to walk and sing`],
+    // [`the vision appears and starts to walk and sing`, `the vision appeared and started to walk and sing`, `the vision will appear and start to walk and sing`],
     // [
     //   'Capital punishment, also known as the death penalty, is the state-sanctioned killing of a person as punishment for a crime.',
     //   'Capital punishment, also known as the death penalty, was the state-sanctioned killing of a person as punishment for a crime.',

@@ -50,6 +50,7 @@ const forms = {
     }
     // he walk
     vb = toInf(vb, parsed)
+    // vb.debug()
     // did not walk
     vb.prepend('did not')
     return vb

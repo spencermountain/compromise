@@ -13,7 +13,7 @@ const noSubClause = function (before) {
   let parts = before.clauses()
   parts = parts.filter((m, i) => {
     // if it was raining..
-    if (m.has('^(if|unless|while|but|for|per)')) {
+    if (m.has('^(if|unless|while|but|for|per|at|by|that|which|who|from)')) {
       return false
     }
     // bowed to her,

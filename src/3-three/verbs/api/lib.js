@@ -50,17 +50,6 @@ const doDoes = function (vb, parsed) {
   return 'does'
 }
 
-const toInf = function (vb, parsed) {
-  const { verbToInfinitive } = vb.methods.two.transform
-  let str = parsed.root.text({ keepPunct: false })
-  str = verbToInfinitive(str, vb.model)
-  if (str) {
-    vb.replace(parsed.root, str)
-  }
-  return vb
-}
-
-
 const getTense = function (m) {
   if (m.has('#Participle')) {
     return 'Participle'
@@ -76,6 +65,18 @@ const getTense = function (m) {
   }
   return undefined
 }
+
+const toInf = function (vb, parsed) {
+  const { verbToInfinitive } = vb.methods.two.transform
+  let str = parsed.root.text({ keepPunct: false })
+  str = verbToInfinitive(str, vb.model, getTense(vb))
+  if (str) {
+    vb.replace(parsed.root, str)
+  }
+  return vb
+}
+
+
 
 // i will start looking -> i started looking
 // i will not start looking -> i did not start looking

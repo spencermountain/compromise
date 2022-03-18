@@ -75,7 +75,7 @@ const utils = {
   },
 
   /** are these two views looking at the same words? */
-  is: function (b) {
+  isDoc: function (b) {
     if (!b || !b.isView) {
       return false
     }

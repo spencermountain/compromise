@@ -16,7 +16,7 @@ const getAdverbs = function (vb, root) {
     }
   }
   // it must be the second one
-  if (parts.eq(0).is(root)) {
+  if (parts.eq(0).isDoc(root)) {
     res.post = parts.eq(1).adverbs()
     return res
   }

@@ -7,11 +7,6 @@ const getDoc = (reg, view, group) => {
   if (typeof reg === 'string') {
     m = view.match(reg, group)
   }
-  // are we splitting within a contraction?
-  // if (m.has('@hasContraction')) {
-  //   let more = m.grow('@hasContraction')
-  //   more.contractions().expand()
-  // }
   return m
 }
 

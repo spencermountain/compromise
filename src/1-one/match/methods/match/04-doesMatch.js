@@ -27,24 +27,17 @@ const doesMatch = function (term, reg, index, length) {
     if (term.alias !== undefined && term.alias.hasOwnProperty(reg.word)) {
       return true
     }
-    // support ~ match
-    if (reg.soft === true && reg.word === term.root) {
-      return true
-    }
-    // support fuzzy match param
-    if (reg.fuzzy !== undefined) {
-      let score = fuzzy(reg.word, term.normal)
-      if (score > reg.fuzzy) {
+    // support ~ fuzzy match
+    if (reg.fuzzy === true) {
+      if (reg.word === term.root) {
         return true
       }
-      // support fuzzy + soft match
-      if (reg.soft === true) {
-        score = fuzzy(reg.word, term.root)
-        if (score > reg.fuzzy) {
-          return true
-        }
+      let score = fuzzy(reg.word, term.normal)
+      if (score >= reg.min) {
+        return true
       }
     }
+    // match slashes and things
     if (term.alias && term.alias.some(str => str === reg.word)) {
       return true
     }

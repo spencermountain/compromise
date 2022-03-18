@@ -23,7 +23,13 @@ txt = `I'd phoned`
 // let doc = nlp(txt)
 // doc.debug()
 
+// let doc = nlp('i went to Gloop University in Paris, France, with John H. Smith')
+// let arr = doc.topics().out('array')
+// console.log(arr)
 
-let doc = nlp('i went to Gloop University in Paris, France, with John H. Smith')
-let arr = doc.topics().out('array')
-console.log(arr)
+// console.log(nlp.parseMatch(`[<word>~atlk~]`, { fuzzy: 0.5 }))
+let doc = nlp('i went on a talk')
+
+let m = doc.match('i ~ewnt~ on a [~atlk~]', null, { fuzzy: 0.74 })
+m = doc.match('i ~ewnt~ on a [<word>~atlk~]', 'word', { fuzzy: 0.74 })
+m.debug()

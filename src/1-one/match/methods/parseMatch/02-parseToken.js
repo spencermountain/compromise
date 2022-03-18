@@ -39,7 +39,7 @@ const stripBoth = function (str) {
   return str
 }
 //
-const parseToken = function (w) {
+const parseToken = function (w, opts) {
   let obj = {}
   //collect any flags (do it twice)
   for (let i = 0; i < 2; i += 1) {
@@ -91,6 +91,17 @@ const parseToken = function (w) {
       // obj.optional = true
       w = stripStart(w)
     }
+    //soft-match
+    if (start(w) === '~' && end(w) === '~' && w.length > 2) {
+      w = stripBoth(w)
+      obj.fuzzy = true
+      obj.min = opts.fuzzy || 0.85
+      if (/\(/.test(w) === false) {
+        obj.word = w
+        return obj
+      }
+    }
+
     //wrapped-flags
     if (start(w) === '(' && end(w) === ')') {
       // support (one && two)
@@ -110,7 +121,7 @@ const parseToken = function (w) {
       obj.choices = obj.choices.filter(s => s)
       //recursion alert!
       obj.choices = obj.choices.map(str => {
-        return str.split(/ /g).map(parseToken)
+        return str.split(/ /g).map(s => parseToken(s, opts))
       })
       w = ''
     }
@@ -120,13 +131,7 @@ const parseToken = function (w) {
       obj.regex = new RegExp(w) //potential vuln - security/detect-non-literal-regexp
       return obj
     }
-    //soft-match
-    if (start(w) === '~' && end(w) === '~') {
-      w = stripBoth(w)
-      obj.soft = true
-      obj.word = w
-      return obj
-    }
+
     //machine/sense overloaded
     if (start(w) === '{' && end(w) === '}') {
       w = stripBoth(w)

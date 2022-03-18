@@ -1,7 +1,7 @@
 // match  'foo /yes/' and not 'foo/no/bar'
 const bySlashes = /(?:^|\s)([![^]*(?:<[^<]*>)?\/.*?[^\\/]\/[?\]+*$~]*)(?:\s|$)/
 // match '(yes) but not foo(no)bar'
-const byParentheses = /([![^]*(?:<[^<]*>)?\([^)]+[^\\)]\)[?\]+*$~]*)(?:\s|$)/
+const byParentheses = /([!~[^]*(?:<[^<]*>)?\([^)]+[^\\)]\)[?\]+*$~]*)(?:\s|$)/
 // okay
 const byWord = / /g
 

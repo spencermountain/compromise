@@ -30,12 +30,19 @@ const doFastOrMode = function (tokens) {
       if (token.operator !== 'or') {
         return token
       }
+      if (token.fuzzy === true) {
+        return token
+      }
       // are they all straight-up words? then optimize them.
       let shouldPack = token.choices.every(block => {
         if (block.length !== 1) {
           return false
         }
         let reg = block[0]
+        // ~fuzzy~ words need more care
+        if (reg.fuzzy === true) {
+          return false
+        }
         // ^ and $ get lost in fastOr
         if (reg.start || reg.end) {
           return false
@@ -57,13 +64,29 @@ const doFastOrMode = function (tokens) {
   })
 }
 
-const postProcess = function (regs, opts = {}) {
+// support ~(a|b|c)~
+const fuzzyOr = function (regs) {
+  return regs.map(reg => {
+    if (reg.fuzzy && reg.choices) {
+      // pass fuzzy-data to each OR choice
+      reg.choices.forEach(r => {
+        if (r.length === 1 && r[0].word) {
+          r[0].fuzzy = true
+          r[0].min = reg.min
+        }
+      })
+    }
+    return reg
+  })
+}
+
+const postProcess = function (regs) {
   // ensure all capture groups names are filled between start and end
   regs = nameGroups(regs)
   // convert 'choices' format to 'fastOr' format
-  if (!opts.fuzzy) {
-    regs = doFastOrMode(regs)
-  }
+  regs = doFastOrMode(regs)
+  // support ~(foo|bar)~
+  regs = fuzzyOr(regs)
   return regs
 }
 export default postProcess

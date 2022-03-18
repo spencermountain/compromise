@@ -1,8 +1,8 @@
-/** pre-parse any match statements */
-const parseMatch = function (str) {
-  const world = this.world()
-  return world.methods.one.parseMatch(str)
-}
+
 export default {
-  parseMatch
+  /** pre-parse any match statements */
+  parseMatch: function (str, opts) {
+    const world = this.world()
+    return world.methods.one.parseMatch(str, opts)
+  }
 }

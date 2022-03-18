@@ -1,6 +1,6 @@
 import { fixPointers, isView } from './_lib.js'
 
-const match = function (regs, group) {
+const match = function (regs, group, opts) {
   const one = this.methods.one
   // support param as view object
   if (isView(regs)) {
@@ -8,7 +8,7 @@ const match = function (regs, group) {
   }
   // support param as string
   if (typeof regs === 'string') {
-    regs = one.parseMatch(regs)
+    regs = one.parseMatch(regs, opts)
   }
   let todo = { regs, group }
   let res = one.match(this.docs, todo, this._cache)
@@ -18,14 +18,14 @@ const match = function (regs, group) {
   return view
 }
 
-const matchOne = function (regs, group) {
+const matchOne = function (regs, group, opts) {
   const one = this.methods.one
   // support at view as a param
   if (isView(regs)) {
     return this.intersection(regs).eq(0)
   }
   if (typeof regs === 'string') {
-    regs = one.parseMatch(regs)
+    regs = one.parseMatch(regs, opts)
   }
   let todo = { regs, group, justOne: true }
   let res = one.match(this.docs, todo, this._cache)
@@ -35,11 +35,11 @@ const matchOne = function (regs, group) {
   return view
 }
 
-const has = function (regs, group) {
+const has = function (regs, group, opts) {
   const one = this.methods.one
   let ptrs
   if (typeof regs === 'string') {
-    regs = one.parseMatch(regs)
+    regs = one.parseMatch(regs, opts)
     let todo = { regs, group, justOne: true }
     ptrs = one.match(this.docs, todo, this._cache).ptrs
   } else if (isView(regs)) {
@@ -49,10 +49,10 @@ const has = function (regs, group) {
 }
 
 // 'if'
-const ifFn = function (regs, group) {
+const ifFn = function (regs, group, opts) {
   const one = this.methods.one
   if (typeof regs === 'string') {
-    regs = one.parseMatch(regs)
+    regs = one.parseMatch(regs, opts)
     let todo = { regs, group, justOne: true }
     let ptrs = this.fullPointer
     ptrs = ptrs.filter(ptr => {
@@ -68,7 +68,7 @@ const ifFn = function (regs, group) {
   return this.none()
 }
 
-const ifNo = function (regs, group) {
+const ifNo = function (regs, group, opts) {
   const { methods } = this
   const one = methods.one
   // support a view object as input
@@ -77,7 +77,7 @@ const ifNo = function (regs, group) {
   }
   // otherwise parse the match string
   if (typeof regs === 'string') {
-    regs = one.parseMatch(regs)
+    regs = one.parseMatch(regs, opts)
   }
   return this.filter(m => {
     let todo = { regs, group, justOne: true }

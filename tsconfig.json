@@ -10,6 +10,6 @@
     "types/types.d.ts"
   ],
   "include": [
-    "builds/index.d.ts"
+    "types/index.d.ts"
   ]
 }

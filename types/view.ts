@@ -5,11 +5,11 @@ class View {
   /** is this document empty? */
   found: boolean
   /** get a list of term objects for this view */
-  docs: Term[][]
+  docs: Document
   /** .docs [alias] */
-  termList: () => Term[][]
+  termList: () => Document
   /** get the full parsed text */
-  document: Term[][]
+  document: Document
   /** the indexes for the current view */
   pointer: Pointer[] | null
   /** explicit indexes for the current view */
@@ -34,6 +34,12 @@ class View {
   uncache: (options?: object) => View
   /** run a named operation on the document */
   compute: (method: string | string[]) => View
+  /** create a new document */
+  fromText: (text: string) => View
+  /** turn a Verb or Noun view into a normal one */
+  toView: (pointer: Pointer | null) => View
+  /** create a new view, from this document */
+  update: (pointer: Pointer | null) => View
 
   // Accessors    
   /** return the whole original document ('zoom out') */
@@ -56,14 +62,14 @@ class View {
   lastTerms: () => View
   /** grab a specific named capture group */
   groups: (name?: string) => View | Groups
-  /** */
+  /** are these two views of the same document? */
   isDoc: (view?: View) => boolean
+  /** Average measure of tag confidence */
+  confidence: () => number
 
   // Match
   /** return matching patterns in this doc */
   match: (match: string | View, options?: any, group?: string | number) => View
-  /** return all results except for this */
-  not: (match: string | View, options?: any) => View
   /** return only the first match */
   matchOne: (match: string | View, options?: any) => View
   /** return each current phrase, only if it contains this match */
@@ -81,6 +87,22 @@ class View {
   /** return the terms after each match */
   after: (match: string | View, options?: any) => View
 
+
+  /** return all results except for this */
+  not: (match: string | View, options?: any) => View
+  /** .not() [alias] */
+  difference: (match: string | View) => View
+  /** return all matches except duplicates */
+  union: (match: string | View) => View
+  /** .union() [alias] */
+  and: (match: string | View) => View
+  /** return only duplicate matches */
+  intersection: (match: string | View) => View
+  /** get everything that is not a match */
+  complement: (match: string | View) => View
+  /** remove overlaps in matches */
+  settle: (match: string | View) => View
+
   /** add any immediately-following matches to the view*/
   growRight: (match: string | View, options?: any) => View
   /** add any immediately-preceding matches to the view*/
@@ -90,6 +112,8 @@ class View {
 
   /** quick find for an array of string matches */
   lookup: (matches: string[]) => View
+  /** assume any type-ahead prefixes */
+  autoFill: () => View
 
   // Case
   /** turn every letter of every term to lower-cse */
@@ -103,15 +127,15 @@ class View {
 
   // Whitespace
   /** add this punctuation or whitespace before each match */
-  pre: (str: string, concat: boolean) => View
+  pre: (str?: string, concat?: boolean) => View
   /** add this punctuation or whitespace after each match */
-  post: (str: string, concat: boolean) => View
+  post: (str?: string, concat?: boolean) => View
   /** remove start and end whitespace */
   trim: () => View
   /** connect words with hyphen, and remove whitespace */
   hyphenate: () => View
   /** remove hyphens between words, and set whitespace */
-  dehyphenate: () => View
+  deHyphenate: () => View
 
   // Tag
   /** Give all terms the given tag */
@@ -205,10 +229,13 @@ class View {
   terms: (n?: number) => View
   /** split-up results into multi-term phrases */
   clauses: (n?: number) => View
+  /** split-up noun-phrase and verb-phrases */
+  chunks: () => View
+
   /** return all terms connected with a hyphen or dash like `'wash-out'`*/
   hyphenated: (n?: number) => View
   /** add quoation marks around each match */
-  toQuoations: (start?: string, end?: string) => View
+  toQuotations: (start?: string, end?: string) => View
   /** add brackets around each match */
   toParentheses: (start?: string, end?: string) => View
   /** return terms like `'(939) 555-0113'` */
@@ -428,6 +455,7 @@ interface Parentheses extends View {
 }
 
 interface Adjectives extends View { }
+
 interface Adverbs extends View { }
 
 interface Possessives extends View {

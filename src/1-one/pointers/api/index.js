@@ -36,14 +36,14 @@ methods.intersection = function (m) {
 }
 
 // only parts of a that b does not have
-methods.difference = function (m) {
+methods.not = function (m) {
   const { getDifference } = this.methods.one
   m = getDoc(m, this)
   let ptrs = getDifference(this.fullPointer, m.fullPointer)
   ptrs = addIds(ptrs, this.document)
   return this.toView(ptrs)
 }
-methods.not = methods.difference
+methods.difference = methods.not
 
 // get opposite of a
 methods.complement = function () {

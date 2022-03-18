@@ -1,5 +1,5 @@
 // import nlp from '../../src/three.js'
-import nlp from '../../types/types'
+import nlp from '../../'
 
 let doc = nlp('okay cool')
 // lib
@@ -23,9 +23,9 @@ doc.slice(2)
 doc.termList()
 doc.terms()
 doc.wordCount()
-doc.update()
-doc.toView()
-doc.fromText()
+doc.update([])
+doc.toView([])
+doc.fromText('foo')
 doc.clone()
 doc.fullPointer
 doc.docs
@@ -59,11 +59,11 @@ doc.pre(' ')
 doc.post(' ')
 doc.trim()
 doc.hyphenate()
-doc.dehyphenate()
+doc.deHyphenate()
 doc.toQuotations()
 doc.toParentheses()
 doc.deHyphenate()
-doc.toQuotation()
+doc.toQuotations()
 doc.unique()
 doc.reverse()
 doc.sort()

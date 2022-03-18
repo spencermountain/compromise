@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
-import nlp from '../../../src/two.js'
+import nlp from '../../../src/one.js'
 import { unpack } from 'efrt'
-import model from '../_model.js'
+import model from './_model.js'
 
 // const hasNum = /[0-9]/
 

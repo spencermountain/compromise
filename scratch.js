@@ -27,9 +27,9 @@ txt = `I'd phoned`
 // let arr = doc.topics().out('array')
 // console.log(arr)
 
-// console.log(nlp.parseMatch(`[<word>~atlk~]`, { fuzzy: 0.5 }))
-let doc = nlp('i went on a talk')
 
-let m = doc.match('i ~ewnt~ on a [~atlk~]', null, { fuzzy: 0.74 })
-m = doc.match('i ~ewnt~ on a [<word>~atlk~]', 'word', { fuzzy: 0.74 })
-m.debug()
+let doc = nlp('all right Colossus, you’re free to go, but stay away from Death Mountain.')
+let segments = {
+  '@isTitleCase+': 'titleCase'
+}
+console.log(doc.splitOn('@isTitleCase+').debug())

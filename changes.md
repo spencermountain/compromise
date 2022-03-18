@@ -99,7 +99,12 @@ doc.text()
 - **[breaking]** - drop `@titleCase` alias (use @isTitleCase)
 - **[breaking]** - drop '.get()' alias - use '.eq()'
 - **[breaking]** - drop `.json(0)` shorthand - use `.json()[0]`
+- **[breaking]** - drop .parent()
+- **[breaking]** - drop .parents()
+- **[breaking]** - drop .tagger() - use .compute('tagger')
+
 - move fuzzy matching to a plugin
+
 
 - **[change]** merge re-used capture-group names in one match
 - **[change]** drop support for undocumented empty '.split()' methods - which used to split the parent

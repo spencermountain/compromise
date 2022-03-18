@@ -6,7 +6,7 @@
   "main": "./src/index.js",
   "unpkg": "./builds/compromise.js",
   "type": "module",
-  "types": "builds/types.d.ts",
+  "types": "types/types.d.ts",
   "sideEffects": false,
   "exports": {
     ".": {

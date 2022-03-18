@@ -1,8 +1,20 @@
-import { Document, Pointer, Groups, Term, JsonOptions, Lexicon } from './misc'
-import View from './view'
+import { Lexicon } from './misc'
+import View from './View'
 export as namespace nlp
 
-declare interface nlp<D extends object, W extends object, Ph extends Object> {
+export interface Plugin {
+  methods?: object,
+  model?: object,
+  compute?: object,
+  hooks?: string[],
+  tags?: object,
+  words?: object,
+  lib?: () => object,
+  api?: (view: View) => void,
+  mutate?: (world: object) => void,
+}
+
+declare interface nlp {
   /** normal usage */
   (text?: string, lexicon?: Lexicon): View
   /** tokenize string */
@@ -22,25 +34,25 @@ declare interface nlp<D extends object, W extends object, Ph extends Object> {
   /** pre-parse a match statement, for faster lookups*/
   parseMatch(str: string, options?: object): object[]
   /** create instance using global world*/
-  fork(): nlp<D, W, Ph>
+  fork(): nlp
   /** mix in a compromise-plugin */
-  extend(plugin: object): nlp<D, W, Ph>
+  extend(plugin: Plugin): nlp
 }
 
-declare function nlp(text?: string, lexicon?: Lexicon): View
-declare function nlp(text?: string): View
+/** parse a given text */
+declare function nlp(text: string, lexicon?: Lexicon): View
 
 // Constructor
 declare module nlp {
-  export function tokenize(text?: string, lexicon?: Lexicon): View
+  export function tokenize(text: string, lexicon?: Lexicon): View
   /** mix in a compromise-plugin */
-  export function extend(plugin: object): nlp<{}, {}, {}>
+  export function extend(plugin: Plugin): nlp
   /** re-generate a Doc object from .json() results */
   export function fromJSON(json: any): View
   /**  log our decision-making for debugging */
   export function verbose(bool?: boolean): View
   /** create instance using global world */
-  export function clone(): nlp<{}, {}, {}>
+  export function clone(): nlp
   /**  current semver version of the library */
   export const version: number
 }

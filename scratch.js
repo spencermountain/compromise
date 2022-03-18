@@ -23,13 +23,14 @@ txt = `I'd phoned`
 // let doc = nlp(txt)
 // doc.debug()
 
-// let doc = nlp('i went to Gloop University in Paris, France, with John H. Smith')
+let doc = nlp('i went to Gloop University in Paris, France, with John H. Smith')
 // let arr = doc.topics().out('array')
 // console.log(arr)
 
-
-let doc = nlp('all right Colossus, you’re free to go, but stay away from Death Mountain.')
-let segments = {
-  '@isTitleCase+': 'titleCase'
-}
-console.log(doc.splitOn('@isTitleCase+').debug())
+// doc.terms().all().debug()
+console.log(doc.docs)
+// let doc = nlp('all right Colossus, you’re free to go, but stay away from Death Mountain.')
+// let segments = {
+//   '@isTitleCase+': 'titleCase'
+// }
+// console.log(doc.splitOn('@isTitleCase+').debug())

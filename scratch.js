@@ -7,30 +7,16 @@ import nlp from './src/three.js'
 // nlp.verbose('chunker')
 
 let txt = ''
-txt = `please tell me you'll address the issue`
-txt = `The boy committed a robbery, who you saw at the store `
-txt = `tell the story to him`
-txt = `tell him the story`
-txt = `I wanna be bigger, stronger, drive a faster car`
-txt = `every day the kitten tries to eat the mouse`
-txt = `After dripping mustard all over his shirt.`
-txt = `The store that the boy robbed is on the corner.`
-// txt = `'Cause the world is spinning at the speed of light`
-txt = `We had been to see her several times.`
-txt = `simply allow yourself a treat`
-txt = `he's the best and will always be the best`
-txt = `I'd phoned`
 // let doc = nlp(txt)
 // doc.debug()
 
-let doc = nlp('i went to Gloop University in Paris, France, with John H. Smith')
-// let arr = doc.topics().out('array')
-// console.log(arr)
+// weird remove issue
+// let m = nlp('one two three. foo.')
+// m = m.splitOn('two')
+// m.match('three').remove()
+// m.debug()
 
-// doc.terms().all().debug()
-console.log(doc.docs)
-// let doc = nlp('all right Colossus, you’re free to go, but stay away from Death Mountain.')
-// let segments = {
-//   '@isTitleCase+': 'titleCase'
-// }
-// console.log(doc.splitOn('@isTitleCase+').debug())
+txt = [['one', 'two', 'three'], ['four']]
+let a = nlp(txt)
+
+a.debug()

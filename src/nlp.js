@@ -1,22 +1,19 @@
 import View from './API/View.js'
-import tmp from './API/world.js'
+import tmpWrld from './API/world.js'
 import version from './_version.js'
 import extend from './API/extend.js'
 import clone from './API/clone.js'
 import { verbose, compile } from './API/_lib.js'
+import handleInputs from './API/inputs.js'
 
-let world = Object.assign({}, tmp)
+let world = Object.assign({}, tmpWrld)
 
 const nlp = function (input, lex) {
-  const { methods, hooks } = world
   if (lex) {
     nlp.addWords(lex)
   }
-  //assume ./01-tokenize is installed
-  let document = methods.one.tokenize(input, world)
-  let doc = new View(document)
-  doc.world = world
-  doc.compute(hooks)
+  let doc = handleInputs(input, View, world)
+  doc.compute(world.hooks)
   return doc
 }
 Object.defineProperty(nlp, '_world', {
@@ -26,14 +23,13 @@ Object.defineProperty(nlp, '_world', {
 
 /** don't run the POS-tagger */
 nlp.tokenize = function (input, lex) {
-  const { methods, compute } = this._world
+  const { compute } = this._world
   // add user-given words to lexicon
   if (lex) {
     nlp.addWords(lex)
   }
   // run the tokenizer
-  let document = methods.one.tokenize(input, this._world)
-  let doc = new View(document)
+  let doc = handleInputs(input, View, world)
   // give contractions a shot, at least
   if (compute.contractions) {
     doc.compute(['alias', 'normal', 'machine', 'contractions']) //run it if we've got it
@@ -57,12 +53,7 @@ nlp.plugin = function (plugin) {
 }
 nlp.extend = nlp.plugin
 
-/** log the decision-making to console */
-nlp.verbose = verbose
-/** pre-compile a list of matches to lookup */
-nlp.compile = compile
-/** current library release version */
-nlp.version = version
+
 /** reach-into compromise internals */
 nlp.world = function () {
   return this._world
@@ -77,5 +68,11 @@ nlp.hooks = function () {
   return this._world.hooks
 }
 
-// apply our only default plugins
+/** log the decision-making to console */
+nlp.verbose = verbose
+/** pre-compile a list of matches to lookup */
+nlp.compile = compile
+/** current library release version */
+nlp.version = version
+
 export default nlp

@@ -23,7 +23,7 @@ test('api:', function (t) {
     doc.firstTerms()
     doc.fullSentences()
     doc.groups()
-    doc.is()
+    // doc.is()
     doc.last()
     doc.lastTerms()
     doc.none()

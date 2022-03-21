@@ -1,0 +1,53 @@
+import test from 'tape'
+import nlp from '../_lib.js'
+const here = '[one/inputs] '
+
+test('doc-as-input :', function (t) {
+  let txt = `yeah. one two. match three.`
+  let a = nlp(txt)
+  let b = nlp(a)
+  t.equal(b.text(), txt, here + 'doc as input')
+
+  a = nlp(txt).match('match')
+  b = nlp(a)
+  t.equal(b.text(), 'match', here + 'passed pointer')
+  t.equal(b.all().text(), txt, here + 'got whole document')
+  t.end()
+})
+
+test('empty-inputs :', function (t) {
+  t.equal(nlp(null).text(), '', here + 'null input')
+  t.equal(nlp(undefined).text(), '', here + 'undefined input')
+  t.equal(nlp([]).text(), '', here + 'empty array input')
+  t.equal(nlp({}).text(), '', here + 'empty obj input')
+  t.equal(nlp('').text(), '', here + 'empty string input')
+  t.end()
+})
+
+test('json-input :', function (t) {
+  let json = nlp('').json()
+  t.equal(nlp(json).text(), '', here + 'empty json input')
+
+  json = nlp('one two three').json()
+  t.equal(nlp(json).text(), 'one two three', here + 'one sentence json input')
+
+  json = nlp('one two. three four, five').json()
+  t.equal(nlp(json).text(), 'one two. three four, five', here + 'two sentence json input')
+
+  // ensure tags passthrough
+  let doc = nlp('one two match three')
+  doc.match('match').tag('Foo')
+  json = doc.json()
+  let b = nlp(json)
+  t.equal(b.has('#Foo'), true, here + 'tag-from-json')
+
+  t.end()
+})
+
+test('pre-tokenized-input :', function (t) {
+  let input = [['one', 'two', 'three'], ['four']]
+  let doc = nlp(input)
+  t.equal(doc.eq(0).text(), 'one two three', here + 'first-sentence')
+  t.equal(doc.eq(1).text(), 'four', here + '2nd-sentence')
+  t.end()
+})

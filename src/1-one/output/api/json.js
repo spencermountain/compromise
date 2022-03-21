@@ -45,20 +45,20 @@ fns.sentences = fns.sentence
 fns.clean = fns.normal
 fns.reduced = fns.root
 
-const toJSON = function (view, opts) {
-  opts = opts || {}
-  if (typeof opts === 'string') {
-    opts = {}
+const toJSON = function (view, option) {
+  option = option || {}
+  if (typeof option === 'string') {
+    option = {}
   }
-  opts = Object.assign({}, defaults, opts)
+  option = Object.assign({}, defaults, option)
   // run any necessary upfront steps
-  if (opts.offset) {
+  if (option.offset) {
     view.compute('offset')
   }
   return view.docs.map((terms, i) => {
     let res = {}
-    Object.keys(opts).forEach(k => {
-      if (opts[k] && fns[k]) {
+    Object.keys(option).forEach(k => {
+      if (option[k] && fns[k]) {
         res[k] = fns[k](terms, view, i)
       }
     })

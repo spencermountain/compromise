@@ -182,15 +182,42 @@
 ---
 
 # Three
+
 ### Chunker
 * .compute('chunks')
 .chunks()
 .clauses()
-.quotations()
-.parentheses()
 
 ### Misc
+.acronyms()
+  .acronyms().strip()
+.parentheses()
+  .parentheses().strip()
+.possessives()
+  .possessives().strip()
+.quotations()
+  .quotations().strip()
+.adjectives()
+  .adjectives().json()
+.adverbs()
+  .adverbs().json()
+.hyphenated()
+.adjectives()
+.hashTags()
+.emails()
+.emoji()
+.emoticons()
+.atMentions()
+.urls()
+.pronouns()
+.conjunctions()
+.prepositions()
+.abbreviations()
+.honorifics()
+
+
 ### Normalize
+.normalize()
 
 ### Nouns
 * .nouns()
@@ -225,13 +252,21 @@
 * .percentages()
 * .money()
 * .fractions()
+  * .fractions().parse()
+  * .fractions().get()
   * .fractions().json()
+  * .fractions().toDecimal()
+  * .fractions().toFraction()
+  * .fractions().toOrdinal()
+  * .fractions().toCardinal()
+  * .fractions().toPercentage()
 
 ### Redact
 * .redact()
 
 ### Sentences
 * .sentences()
+  * .sentences().json()
   * .sentences().toPastTense()
   * .sentences().toPresentTense()
   * .sentences().toFutureTense()

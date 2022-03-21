@@ -17,8 +17,7 @@ const presets = {
   heavy: split(light + medium + heavy)
 }
 
-const api = function (View) {
-
+export default function (View) {
   View.prototype.normalize = function (opts = 'light') {
     if (typeof opts === 'string') {
       opts = presets[opts]
@@ -32,4 +31,3 @@ const api = function (View) {
     return this
   }
 }
-export default api

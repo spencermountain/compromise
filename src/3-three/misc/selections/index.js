@@ -30,9 +30,6 @@ const selections = [
 let aliases = [
   ['emojis', 'emoji'],
   ['atmentions', 'atMentions'],
-  ['words', 'terms'],
-  ['things', 'entities'],
-  ['topics', 'entities'],
 ]
 
 const addMethods = function (View) {

@@ -18,7 +18,5 @@ const find = function (n) {
 
 const api = function (View) {
   View.prototype.topics = find
-  // aliases
-  View.prototype.entities = find
 }
 export default api

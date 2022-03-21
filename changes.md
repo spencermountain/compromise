@@ -120,6 +120,7 @@ doc.text()
 - **[change]** remove #FutureTense tag - which is not really a thing in english
 - **[change]** .unique() no-longer mutates parent
 - **[change]** .normalize() inputs cleanup
+- **[change]** drop agreement parameters in .numbers() methods
 
 ### new methods
 - **[new]** .union(), .intersection(), .difference() and .complement() methods

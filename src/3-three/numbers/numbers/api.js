@@ -16,9 +16,7 @@ const addMethod = function (View) {
       return getNth(this, n).map(parse)
     }
     get(n) {
-      return getNth(this, n)
-        .map(parse)
-        .map(o => o.num)
+      return getNth(this, n).map(parse).map(o => o.num)
     }
     json(n) {
       let doc = getNth(this, n)
@@ -166,7 +164,7 @@ const addMethod = function (View) {
       })
     }
     /** set these number to n */
-    set(n, agree) {
+    set(n) {
       if (n === undefined) {
         return this // don't bother
       }
@@ -197,7 +195,7 @@ const addMethod = function (View) {
       })
       return new Numbers(res.document, res.pointer)
     }
-    add(n, agree) {
+    add(n) {
       if (!n) {
         return this // don't bother
       }

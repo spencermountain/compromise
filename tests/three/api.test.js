@@ -132,7 +132,7 @@ test('api:', function (t) {
 
 
     // Two
-    doc.compute('apostropheS')
+    doc.compute('contractionTwo')
     doc.contractions()
     doc.contractions().expand()
 

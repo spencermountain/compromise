@@ -130,7 +130,7 @@ doc.autoFill()
 
 
 // Two
-doc.compute('apostropheS')
+doc.compute('contraction2')
 doc.contractions()
 doc.contractions().expand()
 

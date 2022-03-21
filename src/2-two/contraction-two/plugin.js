@@ -1,4 +1,8 @@
 import api from './api/index.js'
-import apostropheS from './compute/index.js'
+import compute from './compute/index.js'
 
-export default { compute: { apostropheS }, api, hooks: ['apostropheS'] }
+export default {
+  compute,
+  api,
+  hooks: ['contractionTwo']
+}

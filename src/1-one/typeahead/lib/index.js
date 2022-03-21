@@ -30,6 +30,5 @@ const prepare = function (words = [], opts = {}) {
 }
 
 export default {
-  typeahead: prepare,
-  typeAhead: prepare,
+  typeahead: prepare
 }

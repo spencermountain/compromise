@@ -4,7 +4,7 @@ import lib from './lib.js'
 
 const model = {
   one: {
-    lexicon: {},
+    lexicon: {}, //setup blank lexicon
     _multiCache: {},
   }
 }

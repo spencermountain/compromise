@@ -4,7 +4,7 @@ import lib from './lib/index.js'
 
 const model = {
   one: {
-    typeahead: {}
+    typeahead: {} //set a blank key-val
   }
 }
 export default {

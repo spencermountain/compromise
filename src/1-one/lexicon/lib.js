@@ -5,7 +5,6 @@ const addWords = function (words) {
   if (!words) {
     return
   }
-
   // normalize tag vals
   Object.keys(words).forEach(k => {
     if (typeof words[k] === 'string' && words[k].startsWith('#')) {
@@ -29,6 +28,4 @@ const addWords = function (words) {
   }
 }
 
-export default {
-  addWords
-}
+export default { addWords }

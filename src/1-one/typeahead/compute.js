@@ -1,5 +1,5 @@
 // lookup last word in the type-ahead prefixes
-const compute = function (view) {
+const typeahead = function (view) {
   const prefixes = view.model.one.typeahead
   const docs = view.docs
   if (docs.length === 0 || Object.keys(prefixes).length === 0) {
@@ -25,4 +25,4 @@ const compute = function (view) {
   }
 }
 
-export default { typeahead: compute }
+export default { typeahead }

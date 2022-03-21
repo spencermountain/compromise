@@ -33,7 +33,7 @@ const toDocs = function (words, view) {
 }
 
 //really easy ones
-const contractions = (view) => {
+const contractionTwo = (view) => {
   let { world, document } = view
   // each sentence
   document.forEach((terms, n) => {
@@ -63,4 +63,4 @@ const contractions = (view) => {
     }
   })
 }
-export default contractions
+export default { contractionTwo }

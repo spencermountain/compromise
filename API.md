@@ -148,12 +148,13 @@
 
 ### Typeahead
 * nlp.typeahead()
-
 * .compute('typeahead')
+
 * .autoFill()
 
 ### Lexicon
 * .compute('lexicon')
+* nlp.addWords()
 
 
 ---
@@ -161,22 +162,22 @@
 # Two
 ### Pre-tagger
 * .compute('preTagger')
-* .compute('tagRank')
 * .compute('root')
 * .compute('penn')
 
 ### Contraction-two
-* .compute('apostropheS')
+* .compute('contractionTwo')
 * .contractions()
   * .contractions().expand()
+* .contract()
 
 ### Post-tagger
 * .compute('postTagger')
-*.confidence()
+* .confidence()
 
 
 ### Swap
-* .swap('stroll', 'walk')
+* .swap()
 
 ---
 

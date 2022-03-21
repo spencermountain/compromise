@@ -37,6 +37,10 @@ const inputs = function (input, View, world) {
   const { methods } = world
   let doc = new View([])
   doc.world = world
+  // support a number
+  if (typeof input === 'number') {
+    input = String(input)
+  }
   // return empty doc
   if (!input) {
     return doc

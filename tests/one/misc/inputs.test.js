@@ -21,6 +21,15 @@ test('empty-inputs :', function (t) {
   t.equal(nlp([]).text(), '', here + 'empty array input')
   t.equal(nlp({}).text(), '', here + 'empty obj input')
   t.equal(nlp('').text(), '', here + 'empty string input')
+  // nullish / problematic
+  t.equal(nlp('0').text(), '0', here + '0 string input')
+  t.equal(nlp(0).text(), '0', here + '0 num input')
+  t.equal(nlp('null').text(), 'null', here + 'null string input')
+  t.equal(nlp('undefined').text(), 'undefined', here + 'undefined string input')
+  t.equal(nlp('[]').text(), '[]', here + 'empty array string input')
+  t.equal(nlp('{}').text(), '{}', here + 'empty obj string input')
+  t.equal(nlp('constructor').text(), 'constructor', here + 'constructor string input')
+  t.equal(nlp('prototype').text(), 'prototype', here + 'prototype string input')
   t.end()
 })
 

@@ -16,7 +16,6 @@ let txt = ''
 // m.match('three').remove()
 // m.debug()
 
-txt = [['one', 'two', 'three'], ['four']]
-let a = nlp(txt)
-
-a.debug()
+var doc = nlp("Björk, the singer-songwriter,  plays at seven...")
+doc.normalize()
+console.log(doc.text())

@@ -1,11 +1,19 @@
 // import nlp from '../../src/three.js'
-import nlp from '../../'
+import nlp from '../../types/types'
 
 let doc = nlp('okay cool')
 // lib
 nlp.version
 nlp.tokenize('')
-// nlp.plugin({})
+nlp.plugin({})
+nlp.parseMatch()
+nlp.world()
+nlp.model()
+nlp.methods()
+nlp.hooks()
+nlp.verbose()
+nlp.version
+
 
 // loops
 doc.forEach((s) => s)

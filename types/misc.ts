@@ -1,4 +1,3 @@
-
 export interface Term {
   text: string,
   pre: string,
@@ -58,4 +57,16 @@ export interface JsonOptions {
 // a key-value object of words, terms
 export interface Lexicon {
   [key: string]: string
+}
+
+export interface Plugin {
+  methods?: object,
+  model?: object,
+  compute?: object,
+  hooks?: string[],
+  tags?: object,
+  words?: object,
+  lib?: () => object,
+  api?: (view: Function) => void,  //should be View
+  mutate?: (world: object) => void,
 }

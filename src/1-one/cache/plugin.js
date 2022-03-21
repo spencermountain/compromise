@@ -6,5 +6,4 @@ export default {
   api,
   compute,
   methods,
-  // hooks: ['cache']
 }

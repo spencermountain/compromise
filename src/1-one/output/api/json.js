@@ -67,7 +67,7 @@ const toJSON = function (view, option) {
 }
 
 
-export default {
+const methods = {
   /** return data */
   json: function (n) {
     let res = toJSON(this, n)
@@ -77,3 +77,5 @@ export default {
     return res
   },
 }
+methods.data = methods.json
+export default methods

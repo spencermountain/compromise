@@ -2,7 +2,7 @@ import View from './API/View.js'
 import tmpWrld from './API/world.js'
 import version from './_version.js'
 import extend from './API/extend.js'
-import { verbose, compile } from './API/_lib.js'
+import { verbose } from './API/_lib.js'
 import handleInputs from './API/inputs.js'
 
 let world = Object.assign({}, tmpWrld)
@@ -61,8 +61,6 @@ nlp.hooks = function () {
 
 /** log the decision-making to console */
 nlp.verbose = verbose
-/** pre-compile a list of matches to lookup */
-nlp.compile = compile
 /** current library release version */
 nlp.version = version
 

@@ -2,7 +2,6 @@
 * nlp.tokenize()
 * nlp.plugin()
 * nlp.parseMatch()
-* nlp.compile()
 
 * nlp.world()
 * nlp.model()
@@ -57,15 +56,21 @@
 * .toUpperCase()
 * .toTitleCase()
 * .toCamelCase()
+
+* .concat()
+
 * .insertAfter()
 * .insertBefore()
-* .append()
-* .prepend()
-* .insert()
-* .replaceWith()
-* .replace()
+
 * .remove()
-* .delete()
+
+* .replace()
+* .replaceWith()
+
+* .unique()
+* .reverse()
+* .sort()
+
 * .pre()
 * .post()
 * .trim()
@@ -75,51 +80,44 @@
 * .toParentheses()
 * .deHyphenate()
 * .toQuotation()
-* .unique()
-* .reverse()
-* .sort()
-* .concat()
 
 ### Output
-* .debug()
-* .out()
-* .text()
-  * .text('normal')
-  * .text('machine')
-  * .text('root')
-  * .text('implicit')
+* .html()
 * .json()
+* .out()
+* .debug()
+* .text()
+* .wrap()
 
 ### Match
 * nlp.parseMatch()
 
-* .matchOne()
 * .match()
+* .matchOne()
 * .has()
 * .if()
 * .ifNo()
+
 * .before()
 * .after()
 * .growLeft()
 * .growRight()
 * .grow()
+
 * .splitOn()
 * .splitBefore()
 * .splitAfter()
-* .split()
 
 ### Pointers
 * .union()
-* .and()
 * .intersection()
-* .difference()
 * .not()
 * .complement()
 * .settle()
 
 ### Tag
-* model.one.tagSet
 * nlp.addTags()
+* .compute('tagRank')
 
 * .tag()
 * .tagSafe()
@@ -131,8 +129,8 @@
 
 ### Tokenize
 * .compute('alias')
-* .compute('normal')
 * .compute('machine')
+* .compute('normal')
 * .compute('freq')
 * .compute('offset')
 * .compute('index')
@@ -144,6 +142,7 @@
 * .uncache()
 
 ### Lookup
+* nlp.compile()
 * .compile()
 * .lookup()
 
@@ -200,7 +199,7 @@
   * .nouns().adjectives()
   * .nouns().toPlural()
   * .nouns().toSingular()
-  
+
 ### Numbers
 * .numbers()
   * .numbers().parse()

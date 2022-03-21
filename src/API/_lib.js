@@ -8,8 +8,4 @@ const verbose = function (set) {
   return this
 }
 
-/** pre-compile a list of matches to lookup */
-const compile = function (input) {
-  return this().compile(input)
-}
-export { verbose, compile }
+export { verbose }

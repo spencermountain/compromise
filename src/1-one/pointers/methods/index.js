@@ -1,8 +1,5 @@
-import { indexN, doesOverlap } from './lib/_lib.js'
-import getDifference from './lib/difference.js'
-import getIntersection from './lib/intersection.js'
-import getUnion from './lib/union.js'
-import splitAll from './lib/split.js'
+import { indexN } from '../api/lib/_lib.js'
+import splitAll from '../api/lib/split.js'
 import getDoc from './getDoc.js'
 
 // flat list of terms from nested document
@@ -20,11 +17,9 @@ export default {
   one: {
     termList,
     getDoc,
-    getUnion,
-    getIntersection,
-    getDifference,
-    indexN,
-    doesOverlap,
-    splitAll,
+    pointer: {
+      indexN,
+      splitAll,
+    }
   },
 }

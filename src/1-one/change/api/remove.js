@@ -51,7 +51,7 @@ const pluckOut = function (document, nots) {
 const methods = {
   /** */
   remove: function (reg) {
-    const { indexN } = this.methods.one
+    const { indexN } = this.methods.one.pointer
     // two modes:
     //  - a. remove self, from full parent
     let self = this.all()

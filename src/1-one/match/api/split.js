@@ -21,7 +21,7 @@ const addIds = function (ptr, view) {
 const methods = {}
 // [before], [match], [after]
 methods.splitOn = function (m, group) {
-  const { splitAll } = this.methods.one
+  const { splitAll } = this.methods.one.pointer
   let splits = getDoc(m, this, group).fullPointer
   let all = splitAll(this.fullPointer, splits)
   let res = []
@@ -38,7 +38,7 @@ methods.splitOn = function (m, group) {
 
 // [before], [match after]
 methods.splitBefore = function (m, group) {
-  const { splitAll } = this.methods.one
+  const { splitAll } = this.methods.one.pointer
   let splits = getDoc(m, this, group).fullPointer
   let all = splitAll(this.fullPointer, splits)
   let res = []
@@ -60,7 +60,7 @@ methods.splitBefore = function (m, group) {
 
 // [before match], [after]
 methods.splitAfter = function (m, group) {
-  const { splitAll } = this.methods.one
+  const { splitAll } = this.methods.one.pointer
   let splits = getDoc(m, this, group).fullPointer
   let all = splitAll(this.fullPointer, splits)
   let res = []

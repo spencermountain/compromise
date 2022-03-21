@@ -6,9 +6,10 @@ import nlp from './src/three.js'
 // nlp.verbose('tagger')
 // nlp.verbose('chunker')
 
-let txt = ''
-// let doc = nlp(txt)
-// doc.debug()
+let txt = 'F.B.I.'
+let doc = nlp(txt)
+doc.acronyms().strip().debug()
+doc.debug()
 
 // weird remove issue
 // let m = nlp('one two three. foo.')
@@ -16,6 +17,6 @@ let txt = ''
 // m.match('three').remove()
 // m.debug()
 
-var doc = nlp("Björk, the singer-songwriter,  plays at seven...")
-doc.normalize()
-console.log(doc.text())
+// var doc = nlp("Björk, the singer-songwriter,  plays at seven...")
+// doc.normalize()
+// console.log(doc.text())

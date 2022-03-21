@@ -98,7 +98,7 @@ class View {
   fromText(input) {
     const { methods } = this
     //assume ./01-tokenize is installed
-    let document = methods.one.tokenize(input, this.world)
+    let document = methods.one.tokenize.fromString(input, this.world)
     let doc = new View(document)
     doc.world = this.world
     // doc.compute(world.hooks)

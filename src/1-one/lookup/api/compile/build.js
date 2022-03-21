@@ -3,7 +3,7 @@
 
 const tokenize = function (phrase, world) {
   const { methods, model } = world
-  let terms = methods.one.splitTerms(phrase, model).map(methods.one.splitWhitespace)
+  let terms = methods.one.tokenize.splitTerms(phrase, model).map(methods.one.tokenize.splitWhitespace)
   return terms.map(term => term.text.toLowerCase())
 }
 

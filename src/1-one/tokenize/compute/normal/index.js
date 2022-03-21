@@ -3,6 +3,7 @@ import doUnicode from './02-unicode.js'
 import doAcronyms from './03-acronyms.js'
 
 const normalize = function (term, world) {
+  // console.log(world.methods.one)
   let str = term.text || ''
   str = cleanup(str)
   //(very) rough ASCII transliteration -  bjŏrk -> bjork

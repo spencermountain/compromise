@@ -1,19 +1,33 @@
+const termLoop = function (view, cb) {
+  view.docs.forEach(terms => {
+    terms.forEach(cb)
+  })
+}
+
 export default {
   // keep only first-word, and 'entity' titlecasing
-  'case': (doc) => {
-
+  'case': (doc, strength) => {
+    termLoop(doc, (term, i) => {
+      if (strength === 'heavy') {
+        term.text = term.text.toLowerCase()
+      }
+    })
   },
   // visually romanize/anglicize 'Björk' into 'Bjork'.
   'unicode': (doc) => {
-
+    // termLoop(doc, (term) => term.text = term.normal)
   },
   // remove hyphens, newlines, and force one space between words
-  'whitespace': (doc) => {
+  'whitespace': (doc, strength) => {
+    termLoop(doc, (term) => {
 
+    })
   },
   // remove commas, semicolons - but keep sentence-ending punctuation
-  'punctuation': (doc) => {
+  'punctuation': (doc, strength) => {
+    termLoop(doc, (term) => {
 
+    })
   },
 
   // ====== subsets ===
@@ -24,7 +38,7 @@ export default {
   },
   //remove periods from acronyms, like 'F.B.I.'
   'acronyms': (doc) => {
-
+    doc.acronyms().strip()
   },
   //remove words inside brackets (like these)
   'parentheses': (doc) => {

@@ -35,7 +35,7 @@ export default {
     const { methods, document, world } = this
     // parse and splice-in new terms
     if (typeof input === 'string') {
-      let json = methods.one.tokenize(input, world)
+      let json = methods.one.tokenize.fromString(input, world)
       let ptrs = this.fullPointer
       let lastN = ptrs[ptrs.length - 1][0]
       spliceArr(document, lastN + 1, json)

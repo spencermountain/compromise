@@ -23,7 +23,6 @@ const selections = [
   ['conjunctions', '#Conjunction'],
   ['prepositions', '#Preposition'],
   ['abbreviations', '#Abbreviation'],
-  ['acronyms', '#Acronym'],
   ['honorifics', '#Honorific'],
 ]
 

@@ -8,7 +8,7 @@ const streamFile = function (path, fn, opts) {
   opts = Object.assign({}, defaults, opts)
   return new Promise((resolve, reject) => {
     let model = nlp.model()
-    const splitSentences = nlp.methods().one.splitSentences
+    const splitSentences = nlp.methods().one.tokenize.splitSentences
     const s = fs.createReadStream(path, opts);
 
     let txt = ''

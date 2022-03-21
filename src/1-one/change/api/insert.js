@@ -22,7 +22,7 @@ const getTerms = function (input, world) {
   const { methods } = world
   // create our terms from a string
   if (typeof input === 'string') {
-    return methods.one.tokenize(input, world)[0] //assume one sentence
+    return methods.one.tokenize.fromString(input, world)[0] //assume one sentence
   }
   //allow a view object
   if (typeof input === 'object' && input.isView) {

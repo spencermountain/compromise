@@ -47,7 +47,7 @@ const inputs = function (input, View, world) {
   }
   // parse a string
   if (typeof input === 'string') {
-    let document = methods.one.tokenize(input, world)
+    let document = methods.one.tokenize.fromString(input, world)
     return new View(document)
   }
   // handle compromise View

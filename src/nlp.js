@@ -37,14 +37,6 @@ nlp.tokenize = function (input, lex) {
   return doc
 }
 
-/** deep-clone the library's model*/
-nlp.fork = function (str) {
-  this._world = Object.assign({}, this._world)
-  this._world.methods = Object.assign({}, this._world.methods)
-  this._world.model = clone(this._world.model)
-  this._world.model.fork = str
-  return this
-}
 
 /** extend compromise functionality */
 nlp.plugin = function (plugin) {

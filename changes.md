@@ -35,9 +35,9 @@ sub.insertAfter('really')
 
 ### Clone/Fork
 
-`.clone()` will copy the document data, and `.fork()` will copy the linguistic context.
-
-a subset of a document can be cloned.
+`.clone()` will copy the document data
+<!-- , and `.fork()` will copy the linguistic context. 
+a subset of a document can be cloned.-->
 
 ### Loop changes
 
@@ -95,13 +95,15 @@ doc.text()
 - **[breaking]** - drop `.parent()` and `.parents()` chain - (use `.all()` instead)
 - **[breaking]** - refactor `.out('freq')` output format - (uses `.compute('freq').terms().unique().json()` instead)
 - **[breaking]** - drop array support in match methods - (use `.match().match()` instead)
-- **[breaking]** - drop support for using Doc object as match input
 - **[breaking]** - drop `@titleCase` alias (use @isTitleCase)
 - **[breaking]** - drop '.get()' alias - use '.eq()'
 - **[breaking]** - drop `.json(0)` shorthand - use `.json()[0]`
-- **[breaking]** - drop .parent()
-- **[breaking]** - drop .parents()
 - **[breaking]** - drop .tagger() - use .compute('tagger')
+- **[breaking]** - drop .export() -> .load()  - use .json() -> nlp(json)
+- **[breaking]** - drop nlp.clone()
+- **[breaking]** - drop .join() *deprecated*
+- **[breaking]** - drop .lists()  *deprecated*
+- **[breaking]** - drop .segment() *deprecated*
 
 - move fuzzy matching to a plugin
 

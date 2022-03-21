@@ -1,4 +1,3 @@
-import fastTag from '../_fastTag.js'
 const env = typeof process === 'undefined' ? self.env || {} : process.env // eslint-disable-line
 import adhoc from './_adhoc.js'
 const prefix = /^(under|over|mis|re|un|dis|semi)-?/
@@ -50,19 +49,10 @@ const pickTag = function (terms, i, clues, model) {
   return tag
 }
 
-const setTag = function (term, tag, model) {
-  if (!term.tags.has(tag)) {
-    term.tags.clear()
-    fastTag(term, tag, `3-[variable]`)
-    if (model.one.tagSet[tag]) {
-      let parents = model.one.tagSet[tag].parents
-      fastTag(term, parents, `  -inferred by #${tag}`)
-    }
-  }
-}
-
 // words like 'bob' that can change between two tags
-const doSwitches = function (terms, i, model) {
+const doSwitches = function (terms, i, world) {
+  const model = world.model
+  const setTag = world.methods.one.setTag
   const { switches, clues } = model.two
   const term = terms[i]
   let str = term.normal || term.implicit || ''
@@ -72,8 +62,6 @@ const doSwitches = function (terms, i, model) {
   }
   if (term.switch) {
     let form = term.switch
-    // console.log(`\n'${term.normal}'  : ${form}`)
-    // console.log(clues[form])
     // skip propernouns, acronyms, etc
     if (term.tags.has('Acronym') || term.tags.has('PhrasalVerb')) {
       return
@@ -88,7 +76,8 @@ const doSwitches = function (terms, i, model) {
       if (env.DEBUG_TAGS) {
         console.log(`\n  \x1b[32m [variable] - '${str}' - (${form}) → #${tag} \x1b[0m\n`)//eslint-disable-line
       }
-      setTag(term, tag, model)
+      // setTag(term, tag, model)
+      setTag([term], tag, world, null, `3-[variable]`)
     } else if (env.DEBUG_TAGS) {
       console.log(`\n -> X  - '${str}'  : ${form}  `)//eslint-disable-line
     }

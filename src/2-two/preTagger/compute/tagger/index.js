@@ -51,7 +51,7 @@ const secondPass = function (terms, model) {
   }
 }
 
-const thirdPass = function (terms, model) {
+const thirdPass = function (terms, model, world) {
   for (let i = 0; i < terms.length; i += 1) {
     // let these tags get layered
     let found = third.checkAcronym(terms, i, model)
@@ -68,12 +68,12 @@ const thirdPass = function (terms, model) {
     // support 'out-lived'
     second.checkHyphen(terms, i, model)
     // verb-noun disambiguation, etc
-    third.variables(terms, i, model)
+    third.variables(terms, i, world)
   }
 }
 
 const preTagger = function (view) {
-  const { methods, model } = view
+  const { methods, model, world } = view
   // assign known-words
   // view.compute('lexicon')
   // roughly split sentences up by clause
@@ -85,7 +85,7 @@ const preTagger = function (view) {
     // guess by the letters
     secondPass(terms, model)
     // guess by the neighbours
-    thirdPass(terms, model)
+    thirdPass(terms, model, world)
   }
   // leave a nice cache for the next people
   view.compute('cache')

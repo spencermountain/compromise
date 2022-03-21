@@ -8,6 +8,7 @@ const checkLexicon = function (terms, i, world) {
   // const fastTag = methods.one.fastTag
   const setTag = methods.one.setTag
   const lexicon = model.one.lexicon
+
   // basic lexicon lookup
   let t = terms[i]
   let word = t.machine || t.normal

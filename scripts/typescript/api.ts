@@ -68,7 +68,6 @@ doc.unique()
 doc.reverse()
 doc.sort()
 doc.concat('foo')
-// doc.fork()
 
 doc.compute('contractions')
 doc.compute('lexicon')

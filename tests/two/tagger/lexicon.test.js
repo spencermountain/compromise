@@ -37,3 +37,11 @@ test('adjusted lexicon:', function (t) {
   t.end()
 })
 
+test('allow orthagonal tags:', function (t) {
+  let doc = nlp('i was farming', { farming: 'Foo' })
+  let m = doc.match('farming')
+  t.equal(m.has('#Foo'), true, here + 'has new tag')
+  t.equal(m.has('#Gerund'), true, here + 'has normal tag')
+  t.end()
+})
+

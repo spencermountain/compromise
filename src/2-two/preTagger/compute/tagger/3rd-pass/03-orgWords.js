@@ -25,7 +25,7 @@ const tagOrgs = function (terms, i, model) {
   if (orgWords[str] === true && isOrg(terms[i - 1])) {
     fastTag(terms[i], 'Organization', '3-[org-word]')
     // loop backwards, tag organization-like things
-    for (let t = terms.length - 1; t >= 0; t -= 1) {
+    for (let t = i; t >= 0; t -= 1) {
       if (isOrg(terms[t])) {
         fastTag(terms[t], 'Organization', '3-[org-word]')
       } else {

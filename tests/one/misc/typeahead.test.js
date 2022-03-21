@@ -15,20 +15,20 @@ test('typeahead test', function (t) {
   // add the words we should predict from
   nlp.typeahead(lexicon, { min: 4 })
   // create a document
-  let doc = nlp('i went to bucking', lexicon)
-  let m = doc.match('buckinghamshire')
-  t.equal(m.text(), 'bucking', here + 'found partial')
-  t.equal(m.text('implicit'), 'buckinghamshire', here + 'found full')
+  let doc = nlp('i went to bambrid', lexicon)
+  let m = doc.match('bambridgeshire')
+  t.equal(m.text(), 'bambrid', here + 'found partial')
+  t.equal(m.text('implicit'), 'bambridgeshire', here + 'found full')
 
   // match by tag, too
   m = doc.match('#Town')
-  t.equal(m.text(), 'bucking', here + 'found partial')
-  t.equal(m.text('implicit'), 'buckinghamshire', here + 'found full')
+  t.equal(m.text(), 'bambrid', here + 'found partial')
+  t.equal(m.text('implicit'), 'bambridgeshire', here + 'found full')
 
-  doc = nlp('buck')
-  t.equal(doc.has('buckinghamshire'), true, here + 'found 4-letters')
-  doc = nlp('buc')
-  t.equal(doc.has('buckinghamshire'), false, here + 'not-found 3-letters')
+  doc = nlp('bamb')
+  t.equal(doc.has('bambridgeshire'), true, here + 'found 4-letters')
+  doc = nlp('bam')
+  t.equal(doc.has('bambridgeshire'), false, here + 'not-found 3-letters')
   t.end()
 })
 

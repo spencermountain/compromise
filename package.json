@@ -30,6 +30,19 @@
       "require": "./builds/three/compromise-three.cjs"
     }
   },
+  "typesVersions": {
+    "*": {
+      "one": [
+        "types/one.d.ts"
+      ],
+      "two": [
+        "build/two.d.ts"
+      ],
+      "three": [
+        "build/three.d.ts"
+      ]
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/spencermountain/compromise.git"

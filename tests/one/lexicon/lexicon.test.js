@@ -7,7 +7,7 @@ test('addWords side-load:', function (t) {
     bigg: 'Size',
     'bigg apple': 'Town'
   }
-  const _nlp = nlp.fork()
+  const _nlp = nlp//.fork()
   let doc = _nlp('it was bigg')
   t.equal(doc.has('(#Size|#Town)'), false, here + 'none-on-init')
 
@@ -46,7 +46,7 @@ test('tricky lexicon:', function (t) {
   let lexicon = {
     'bed bath and beyond': 'Organization',
   }
-  const _nlp = nlp.fork()
+  const _nlp = nlp//.fork()
   let r = _nlp('shopping at Bed Bath and Beyond, the store', lexicon)
   let str = r.match('#Organization+').out('normal')
   t.equal(str, 'bed bath and beyond', here + 'four-word')

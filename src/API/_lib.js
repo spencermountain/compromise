@@ -1,8 +1,4 @@
 
-
-
-/** add words to assume by prefix in typeahead */
-
 /** log the decision-making to console */
 const verbose = function (set) {
   let env = typeof process === 'undefined' ? self.env || {} : process.env //use window, in browser

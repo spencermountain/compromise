@@ -11,7 +11,7 @@ const find = function (n) {
   m = m.not('(someone|man|woman|mother|brother|sister|father)')
   //return them to normal ordering
   m = m.sort('seq')
-  m = m.unique()
+  // m = m.unique()
   m = getNth(m, n)
   return m
 }

@@ -3,6 +3,11 @@ import nlp from '../../'
 
 let doc = nlp('okay cool')
 // lib
+nlp.version
+nlp.tokenize('')
+// nlp.plugin({})
+
+// loops
 doc.forEach((s) => s)
 doc = doc.map(s => s)
 doc = doc.filter(s => s.found)

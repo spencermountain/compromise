@@ -7,10 +7,7 @@ import nlp from './src/three.js'
 // nlp.verbose('chunker')
 
 // weird remove issue
-// let m = nlp('one two three. foo.')
-// m = m.splitOn('two')
-// m.match('three').remove()
-// m.debug()
-
-let doc = nlp('Gloop University in Paris')
-let arr = doc.debug()
+let m = nlp('one two three. foo.')
+m = m.splitOn('two')
+m.match('three').remove()
+m.debug()

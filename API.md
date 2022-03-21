@@ -1,4 +1,19 @@
 # lib
+* nlp.tokenize()
+* nlp.plugin()
+* nlp.parseMatch()
+* nlp.compile()
+
+* nlp.world()
+* nlp.model()
+* nlp.methods()
+* nlp.hooks()
+* nlp.verbose()
+* nlp.version
+
+
+# One
+### API
 * .compute()
 * .forEach()
 * .map() 
@@ -6,26 +21,21 @@
 * .find() 
 * .some()
 * .random()
-* .all()
-* .eq()
-* .first()         
-* .firstTerms()    
-* .fullSentences() 
-* .groups()        
-* .is()            
-* .last()
-* .lastTerms()
-* .none()
-* .slice()         
+
 * .termList()      
 * .terms()
+* .groups()     
+* .eq()
+* .first()         
+* .last()
+* .firstTerms()    
+* .lastTerms()
+* .slice()         
+* .all()
+* .fullSentences() 
+* .none()
+* .isDoc()            
 * .wordCount()
-
-* .fullPointer
-* .update()
-* .toView()
-* .fromText()
-* .clone()
 
 * .docs
 * .pointer
@@ -35,14 +45,11 @@
 * .isView
 * .found
 * .length
-
-# One
-
-### Cache
-* .compute('cache')
-* .cache()
-* .uncache()
-
+* .fullPointer
+* .update()
+* .toView()
+* .fromText()
+* .clone()
 
 ### Change
 * .compute('id')
@@ -73,23 +80,15 @@
 * .sort()
 * .concat()
 
-
-### Contraction-one
-hooks: ['contractions']
-* model.one.contractions
-
-* .compute('contractions')
-
-
-### Lexicon
-hooks: ['lexicon']
-* .compute('lexicon')
-
-
-### Lookup
-* .compile()
-* .lookup()
-
+### Output
+* .debug()
+* .out()
+* .text()
+  * .text('normal')
+  * .text('machine')
+  * .text('root')
+  * .text('implicit')
+* .json()
 
 ### Match
 * nlp.parseMatch()
@@ -109,17 +108,6 @@ hooks: ['lexicon']
 * .splitAfter()
 * .split()
 
-
-### Output
-* .debug()
-* .out()
-* .text()
-  * .text('normal')
-  * .text('machine')
-  * .text('root')
-  * .text('implicit')
-* .json()
-
 ### Pointers
 * .union()
 * .and()
@@ -138,8 +126,10 @@ hooks: ['lexicon']
 * .unTag()
 * .canBe()
 
+### Contractions
+* .compute('contractions')
+
 ### Tokenize
-hooks: ['alias', 'machine', 'index']
 * .compute('alias')
 * .compute('normal')
 * .compute('machine')
@@ -148,45 +138,59 @@ hooks: ['alias', 'machine', 'index']
 * .compute('index')
 * .compute('wordCount')
 
+### Cache
+* .compute('cache')
+* .cache()
+* .uncache()
+
+### Lookup
+* .compile()
+* .lookup()
+
 ### Typeahead
-hooks: ['typeahead']
 * nlp.typeahead()
 
 * .compute('typeahead')
 * .autoFill()
 
+### Lexicon
+* .compute('lexicon')
+
+
 ---
+
 # Two
-### Contraction-two
-hooks: ['apostropheS']
-* .compute('apostropheS')
-* .contractions()
-  * .contractions().expand()
-
-### Post-tagger
-hooks: ['postTagger']
-
-*.confidence()
-
 ### Pre-tagger
-hooks: ['preTagger']
 * .compute('preTagger')
 * .compute('tagRank')
 * .compute('root')
 * .compute('penn')
 
+### Contraction-two
+* .compute('apostropheS')
+* .contractions()
+  * .contractions().expand()
+
+### Post-tagger
+* .compute('postTagger')
+*.confidence()
+
+
 ### Swap
 * .swap('stroll', 'walk')
 
 ---
+
 # Three
 ### Chunker
-hooks: ['chunks']
 * .compute('chunks')
 .chunks()
 .clauses()
 .quotations()
 .parentheses()
+
+### Misc
+### Normalize
 
 ### Nouns
 * .nouns()
@@ -196,6 +200,7 @@ hooks: ['chunks']
   * .nouns().adjectives()
   * .nouns().toPlural()
   * .nouns().toSingular()
+  
 ### Numbers
 * .numbers()
   * .numbers().parse()
@@ -221,6 +226,7 @@ hooks: ['chunks']
 * .money()
 * .fractions()
   * .fractions().json()
+
 ### Redact
 * .redact()
 

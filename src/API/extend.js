@@ -2,11 +2,6 @@ const isObject = function (item) {
   return item && typeof item === 'object' && !Array.isArray(item)
 }
 
-
-const isArray = function (arr) {
-  return Object.prototype.toString.call(arr) === '[object Array]'
-}
-
 // recursive merge of objects
 function mergeDeep(model, plugin) {
   if (isObject(plugin)) {

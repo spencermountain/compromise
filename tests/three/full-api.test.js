@@ -6,7 +6,7 @@ const here = '[three/full-api] '
 test('constructor api', function (t) {
   const fns = {
     tokenize: () => { nlp.tokenize("you're sure you haven't just made thousands of mistakes?") },
-    extend: () => { nlp.extend({ words: { bloobah: 'Yeah' } }) },
+    plugin: () => { nlp.plugin({ words: { bloobah: 'Yeah' } }) },
     verbose: () => { nlp.verbose(false); nlp('I am the very model of a modern Major-General') },
     version: () => { nlp.version },
     all: () => { nlp('this is yelling').match('#Verb').toTitleCase().all().text() },
@@ -66,9 +66,7 @@ test('constructor api', function (t) {
     split: () => { nlp('Monorail...Once again! Monorail... Monorail!').splitOn('monorail').eq(0).text() },
     splitAfter: () => { nlp('Monorail...Once again! Monorail... Monorail!').splitAfter('monorail').eq(0).text() },
     splitBefore: () => { nlp('Monorail...Once again! Monorail... Monorail!').splitBefore('monorail').eq(0).text() },
-    // segment: () => { nlp('foo').segment() },
     text: () => { nlp('you might say there’s a little Uter in all of us').match('#Adjective uter').out('array') },
-    // debug: () => { nlp('foo').debug() },
     out: () => { nlp('foo').out() },
     json: () => { nlp('The stage was set for the Alan Parsons Project! Which I believe was some sort of hovercraft.').data() },
     terms: () => { nlp('we should all be more like little Ruttiger').terms().json() },
@@ -93,6 +91,7 @@ test('constructor api', function (t) {
     acronyms: () => { nlp('foo').acronyms() },
     nouns: () => { nlp('foo').nouns() },
     verbs: () => { nlp('Moe Sizlak. That’s right. I’m a surgeon.').verbs() },
+    // debug: () => { nlp('foo').debug() },
   }
   Object.keys(fns).forEach(k => {
     t.doesNotThrow(() => {

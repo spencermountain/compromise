@@ -2,7 +2,6 @@ import View from './API/View.js'
 import tmpWrld from './API/world.js'
 import version from './_version.js'
 import extend from './API/extend.js'
-import clone from './API/clone.js'
 import { verbose, compile } from './API/_lib.js'
 import handleInputs from './API/inputs.js'
 

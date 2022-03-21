@@ -7,13 +7,13 @@ const alphaNames = new Set(['alpha', 'alphabetical'])
 // support function as parameter
 const customSort = function (view, fn) {
   let ptrs = view.fullPointer
-  let all = []
-  ptrs.forEach((ptr) => {
-    all.push(view.update([ptr]))
+  ptrs = ptrs.sort((a, b) => {
+    a = view.update([a])
+    b = view.update([b])
+    return fn(a, b)
   })
-  let none = view.none()
-  //! not working yet
-  return none.concat(all.sort(fn))
+  view.ptrs = ptrs //mutate original
+  return view
 }
 
 /** re-arrange the order of the matches (in place) */

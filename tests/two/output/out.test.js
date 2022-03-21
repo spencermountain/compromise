@@ -15,8 +15,8 @@ test('out-topk', function (t) {
   let doc = nlp(`What'd I say? Monorail. and it called? Monorail.`)
   let out = doc.out('freq')
   // t.equal(out.length, 3, here + 'three results')
-  t.equal(out[0].normal, 'monorail', here + 'top-result is most-frequent')
-  t.equal(out[0].freq, 2, here + 'got count')
+  t.equal(out[0].normal, 'monorail.', here + 'top-result is most-frequent')
+  t.equal(out[0].count, 2, here + 'got count')
   t.end()
 })
 

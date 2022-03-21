@@ -779,12 +779,11 @@ nlp.extend({
 _(these methods are on the `nlp` object)_
 
 - **[.tokenize()](https://observablehq.com/@spencermountain/compromise-tokenization)** - parse text without running POS-tagging
-- **[.extend()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - mix in a compromise-plugin
-- **[.fromJSON()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - load a compromise object from `.json()` result
+- **[.plugin()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - mix in a compromise-plugin
 - **[.verbose()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - log our decision-making for debugging
-- **[.version()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - current semver version of the library
-- **[.world()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - grab all current linguistic data
+- **[.version](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - current semver version of the library
 - **[.parseMatch()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - pre-parse any match statements for faster lookups
+- **[.world()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - grab all current linguistic data
 
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221824-09809d80-ffb8-11e9-9ef0-6ed3574b0ce8.png"/>

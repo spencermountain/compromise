@@ -6,6 +6,18 @@ const isObject = val => {
   return Object.prototype.toString.call(val) === '[object Object]'
 }
 
+// sort by frequency
+const topk = function (arr) {
+  let obj = {}
+  arr.forEach(a => {
+    obj[a] = obj[a] || 0
+    obj[a] += 1
+  })
+  let res = Object.keys(obj).map(k => {
+    return { normal: k, count: obj[k] }
+  })
+  return res.sort((a, b) => (a.count > b.count ? -1 : 0))
+}
 
 /** some named output formats */
 const out = function (method) {
@@ -44,8 +56,7 @@ const out = function (method) {
   }
   // return terms sorted by frequency
   if (method === 'freq' || method === 'frequency' || method === 'topk') {
-    let terms = this.compute('freq').terms().unique().termList()
-    return terms.sort((a, b) => (a.freq > b.freq ? -1 : 0))
+    return topk(this.json({ normal: true }).map(o => o.normal))
   }
 
   // some handy ad-hoc outputs

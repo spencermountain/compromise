@@ -5,29 +5,48 @@ const termLoop = function (view, cb) {
 }
 
 export default {
-  // keep only first-word, and 'entity' titlecasing
-  'case': (doc, strength) => {
-    termLoop(doc, (term, i) => {
-      if (strength === 'heavy') {
-        term.text = term.text.toLowerCase()
-      }
+  // remove titlecasing, uppercase
+  'case': (doc) => {
+    termLoop(doc, (term) => {
+      term.text = term.text.toLowerCase()
     })
   },
   // visually romanize/anglicize 'Björk' into 'Bjork'.
   'unicode': (doc) => {
-    // termLoop(doc, (term) => term.text = term.normal)
+    const world = doc.world
+    const killUnicode = world.methods.one.killUnicode
+    termLoop(doc, (term) => term.text = killUnicode(term.text, world))
   },
   // remove hyphens, newlines, and force one space between words
-  'whitespace': (doc, strength) => {
+  'whitespace': (doc) => {
     termLoop(doc, (term) => {
-
+      // one space between words
+      term.post = term.post.replace(/\s+/g, ' ')
+      term.post = term.post.replace(/\s([.,?!:;])/g, '$1')//no whitespace before a period, etc
+      // no whitepace before a word
+      term.pre = term.pre.replace(/\s+/g, '')
     })
   },
   // remove commas, semicolons - but keep sentence-ending punctuation
-  'punctuation': (doc, strength) => {
+  'punctuation': (doc) => {
     termLoop(doc, (term) => {
-
+      // turn dashes to spaces
+      term.post = term.post.replace(/[–—-]/g, ' ')
+      // remove comma, etc 
+      term.post = term.post.replace(/[,:;]/g, '')
+      // remove elipses
+      term.post = term.post.replace(/\.{2,}/g, '')
+      // remove repeats
+      term.post = term.post.replace(/\?{2,}/g, '?')
+      term.post = term.post.replace(/!{2,}/g, '!')
+      // replace ?!
+      term.post = term.post.replace(/\?!+/g, '?')
     })
+    // trim end
+    let docs = doc.docs
+    let terms = docs[docs.length - 1]
+    let lastTerm = terms[terms.length - 1]
+    lastTerm.post = lastTerm.post.replace(/ /g, '')
   },
 
   // ====== subsets ===

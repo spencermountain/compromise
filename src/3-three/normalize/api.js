@@ -8,8 +8,8 @@ const split = (str) => {
   }, {})
 }
 
-const light = 'case|unicode|whitespace|punctuation|acronyms|honorifics'
-const medium = '|contractions|parentheses|quotations|emoji'
+const light = 'unicode|punctuation|whitespace|acronyms'
+const medium = '|case|contractions|parentheses|quotations|emoji|honorifics'
 const heavy = '|possessives|adverbs|nouns|verbs'
 const presets = {
   light: split(light),
@@ -23,10 +23,13 @@ const api = function (View) {
     if (typeof opts === 'string') {
       opts = presets[opts]
     }
-    // 
+    // run each method
     Object.keys(opts).forEach(fn => {
-      methods[fn](this, opts[fn])
+      if (opts[fn]) {
+        methods[fn](this, opts[fn])
+      }
     })
+    return this
   }
 }
 export default api

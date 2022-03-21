@@ -117,6 +117,7 @@ doc.text()
 - **[change]** add match-group as 2nd param to split methods
 - **[change]** remove #FutureTense tag - which is not really a thing in english
 - **[change]** .unique() no-longer mutates parent
+- **[change]** .normalize() inputs cleanup
 
 ### new methods
 - **[new]** .union(), .intersection(), .difference() and .complement() methods

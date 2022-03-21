@@ -2,6 +2,7 @@ import sentence from './01-sentences/index.js'
 import term from './02-terms/index.js'
 import whitespace from './03-whitespace/index.js'
 import normalize from '../compute/normal/index.js'
+import killUnicode from './unicode.js'
 
 // turn a string input into a 'document' json format
 const fromString = function (input, world) {
@@ -26,6 +27,7 @@ const fromString = function (input, world) {
 
 export default {
   one: {
+    killUnicode,
     tokenize: {
       splitSentences: sentence,
       splitTerms: term,

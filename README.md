@@ -112,7 +112,7 @@ if (doc.has('simon says #Verb')) {
 </div> 
 
 
-<div align="center">
+<div align="left">
 select parts of the text:
 </div>
 
@@ -214,6 +214,8 @@ doc.text()
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221837-0d142480-ffb8-11e9-9d30-90669f1b897c.png"/>
 </div>
+<!-- spacer -->
+<img height="30" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 
 <sub>-because it actually is-</sub>
@@ -340,8 +342,9 @@ It can do <b>~1mb</b> of text a second - or 10 wikipedia pages.
 
 <i>Infinite jest</i> is takes 3s. 
 
-You can also paralellize, or stream text to it with <a href="https://github.com/spencermountain/compromise/tree/master/plugins/speed">compromise-speed</a>.
-
+<div align="right">
+  You can also paralellize, or stream text to it with <a href="https://github.com/spencermountain/compromise/tree/master/plugins/speed">compromise-speed</a>.
+</div>
 
 <!-- spacer -->
 <img height="60px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
@@ -370,7 +373,7 @@ let str = doc.match('#Possessive #Noun').text()
 <p>
   <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 </p>
-<b>/two</b> automatically calculates the very basic grammar of each word.
+<b>compromise/two</b> automatically calculates the very basic grammar of each word.
 
 <sub>this is more useful than people sometimes realize.</sub>
 
@@ -386,7 +389,9 @@ compromise has <b>83 tags</b>, arranged in <a href="https://observablehq.com/@sp
 
 <b>#FirstName</b> → <b>#Person</b> → <b>#ProperNoun</b> → <b>#Noun</b>
 
-you can see the grammar of each word by running `doc.debug()`, and the reasoning for each tag with `nlp.verbose('tagger')`.
+you can see the grammar of each word by running `doc.debug()`
+
+you can see the reasoning for each tag with `nlp.verbose('tagger')`.
 
 if you prefer <a href="https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html"><i>Penn tags</i></a>, you can derive them with:
 ```js
@@ -418,10 +423,32 @@ let str = doc.people().normalize().text()
 </div>
 
 
-<b>three</b> is a set of tooling to <i>zoom into</i> and operate on parts of a text.
+<b>compromise/three</b> is a set of tooling to <i>zoom into</i> and operate on parts of a text.
 
 `.numbers()` grabs all the numbers in a document, for example - and extends it with new methods, like `.subtract()`.
 
+When you have a phrase, or group of words, you can see additional metadata about it with `.json()`
+```js
+let doc = nlp("four out of five dentists")
+console.log(doc.fractions().json())
+/*[{
+    text: 'four out of five',
+    terms: [ [Object], [Object], [Object], [Object] ],
+    fraction: { numerator: 4, denominator: 5, decimal: 0.8 }
+  }
+]*/
+```
+
+```js
+let doc = nlp("$4.09CAD")
+doc.money().json()
+/*[{
+    text: '$4.09CAD',
+    terms: [ [Object] ],
+    number: { prefix: '$', num: 4.09, suffix: 'cad'}
+  }
+]*/
+```
 
 <img height="80px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 

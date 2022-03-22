@@ -12,8 +12,8 @@ import nlp from './src/three.js'
 // m.match('three').remove()
 // m.debug()
 
-let doc = nlp('the dog is nice')
-let sub = doc.match('is')
-doc.match('doc').insertBefore('brown')
-console.log(sub.text())
-// 'is'
+let doc = nlp('soft and yielding like a nerf ball')
+console.log(doc.out({
+  '#Adjective': (m) => `<i>${m.text()}</i>`
+}))
+// console.log(doc.text())

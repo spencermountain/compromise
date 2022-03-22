@@ -31,7 +31,7 @@ This works by using a fast-mode index lookup, with id-based error-correction.
 
 ### Included plugins
 `compromise-penn-tags` `compromise-plugin-scan` and `compromise-plugin-typeahead` are now included in `/one` by default, which is great news.
-`compromise-plugin-numbers` is included by default in `/three`
+`compromise-plugin-numbers` and `compromise-plugin-adjectives` is included by default in `/three`
 
 ### New languages
 We now support early-versions of [french](https://compromise.cool/one/french), [spanish](https://compromise.cool/one/spanish), and [german](https://compromise.cool/one/german)

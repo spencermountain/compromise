@@ -40,9 +40,9 @@ do you find it strange, how we struggle to parse text?
 <ul>
    <i>↬<sub>ᔐᖜ</sub>↬-</i> 
   <br/>
-  how <b>error-prone</b> and <b><i>tricky</i></b> the simplest things become?
+  how <b>error-prone</b> and <b><i>tricky</i></b> the simplest things are?
   <div>
-<img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+<img height="45px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
   </div>
   <sub>how easy text is to make, then how difficult it is <i>to use</i>?</sub>
 </ul>
@@ -113,7 +113,7 @@ if (doc.has('simon says #Verb')) {
 
 
 <div align="left">
-pull-out parts of a text:
+select parts of the text:
 </div>
 
 ```js
@@ -126,9 +126,11 @@ doc.match('the #Adjective of times').text()
 </div>
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221837-0d142480-ffb8-11e9-9d30-90669f1b897c.png"/>
+  <!-- spacer -->
+  <img height="20px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 </div>
 
-compute metadata, and grab it:
+and grab metadata:
 ```js
 import plg from 'compromise-speech'
 nlp.extend(plg)
@@ -148,14 +150,18 @@ doc.places().json()
 ```
 
 <div align="center">
-  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221814-05ed1680-ffb8-11e9-8b6b-c7528d163871.png"/>
+  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221814-05ed1680-ffb8-11e9-8b6b-c7528d163871.png"/>  
+  <!-- spacer -->
+  <img height="20px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 </div> 
 
 quickly flip between parsed and unparsed forms:
 
 ```js
 let doc = nlp('soft and yielding like a nerf ball')
-doc.out({ '#Adjective': (m)=>`<i>${m.text()}</i>` })
+doc.out({ 
+  '#Adjective': (m)=> `<i>${m.text()}</i>` 
+})
 // '<i>soft</i> and <i>yielding</i> like a nerf ball'
 ```
 
@@ -164,9 +170,11 @@ doc.out({ '#Adjective': (m)=>`<i>${m.text()}</i>` })
 </div>
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221837-0d142480-ffb8-11e9-9d30-90669f1b897c.png"/>
+  <!-- spacer -->
+  <img height="20px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>  
 </div>
 
-avoid idiomatic problems, and brittle parsers:
+avoid idiomatic problems of brittle parsers:
 
 ```js
 let doc = nlp("we're not gonna take it..")
@@ -193,7 +201,7 @@ dox.text()
   <img height="30" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 </div>
 
-whip stuff around like it's data:
+and whip stuff around like it's data:
 ```js
 let doc = nlp('ninety five thousand and fifty two')
 doc.numbers().add(20)
@@ -209,9 +217,6 @@ doc.text()
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221837-0d142480-ffb8-11e9-9d30-90669f1b897c.png"/>
 </div>
 
-<div align="center">
-  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221731-e8b84800-ffb7-11e9-8453-6395e0e903fa.png"/>
-</div>
 
 <sub>because it actually is:</sub>
 
@@ -225,7 +230,13 @@ doc.text()
 <div align="right">
   <a href="https://docs.compromise.cool/nouns">noun docs</a>
 </div>
+<div align="center">
+  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221731-e8b84800-ffb7-11e9-8453-6395e0e903fa.png"/>
+</div>
 
+
+  <!-- spacer -->
+  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 Use it on the client-side:
 
@@ -298,7 +309,7 @@ you can read more about how it works, [here](https://observablehq.com/@spencermo
   </h1>
   <p align="center">A <code>tokenizer</code> of words, sentences, and punctuation.</p>
   <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-  <p>
+<p>
 
 ```js
 import nlp from 'compromise/one'
@@ -306,7 +317,7 @@ import nlp from 'compromise/one'
 let doc = nlp("Wayne's World, party time")
 let data = doc.json()
 /* [{ 
-    normal:"wayne's world party time",
+  normal:"wayne's world party time",
     terms:[{ text: "Wayne's", normal: "wayne" }, 
       ...
       ] 
@@ -314,13 +325,99 @@ let data = doc.json()
 */
 ```
 
+<div align="right">
+  <a href="https://observablehq.com/@spencermountain/compromise-json">json docs</a>
+</div>
+
 <b>one</b> splits your text up, wraps it in a handy API, 
 <ul>
   <sub>and does nothing else -</sub>
 </ul>
 
+<img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-<img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+<b>one</b> is fast - most sentences take a 10th of a millisecond. 
+
+It can do <b>~1mb</b> of text a second - or 10 wikipedia pages.
+
+<i>Infinite jest</i> is takes 3s. 
+
+You can also paralellize, or stream text to it with <a href="">compromise-speed</a>.
+
+
+<!-- two -->
+<p align="center">
+  <h1 align="left">
+   <code>compromise/two</code>
+  </h1>
+  <p align="center">A <code>part-of-speech</code> tagger, and grammar-interpreter.</p>
+  <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+  <p>
+
+```js
+import nlp from 'compromise/two'
+
+let doc = nlp("Wayne's World, party time")
+let str = doc.match('#Possessive #Noun').text()
+// "Wayne's World"
+```
+<p>
+  <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+</p>
+<b>two</b> automatically calculates the very basic grammar of each word.
+
+<sub>this is more useful than people sometimes realize.</sub>
+
+Really light grammar helps you write cleaner templates, and get closer to the information.
+
+<!-- Part-of-speech tagging is profoundly-difficult task to get 100% on. It is also a profoundly easy task to get 85% on. -->
+
+
+<img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
+you can see the grammar of each word by running `doc.debug()`, and the reasoning for each tag with `nlp.verbose('tagger')`.
+
+compromise has <b>83 tags</b>, arranged in <a href="https://observablehq.com/@spencermountain/compromise-tags">a handsome graph</a>.
+
+<b>#FirstName</b> → <b>#Person</b> → <b>#ProperNoun</b> → <b>#Noun</b>
+
+if you prefer <a href="https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html"><i>Penn tags</i></a>, you can derive them with:
+```js
+let doc = nlp('welcome thrillho')
+doc.compute('penn')
+doc.json()
+```
+
+<img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
+<!-- three -->
+<p align="center">
+  <h1 align="left">
+   <code>compromise/three</code>
+  </h1>
+  <p align="center"><code>Phrase</code> and sentence tooling.</p>
+  <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+  <p>
+
+```js
+import nlp from 'compromise/three'
+
+let doc = nlp("Wayne's World, party time")
+let str = doc.people().normalize().text()
+// "wayne"
+```
+
+<b>three</b> is a set of tooling to <i>zoom into</i> and operate on parts of a text.
+
+`.numbers()` grabs all the numbers in a document, for example - and extends it with new methods, like `.subtract()`.
+
+
+<img height="80px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
+
+## API
+
+### compromise/one
 
 ##### Output
 
@@ -423,90 +520,27 @@ _(match methods use the [match-syntax](https://docs.compromise.cool/compromise-m
 - **[.join('')](https://observablehq.com/@spencermountain/compromise-split)** - make all phrases into one phrase
 
 
-<img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+##### Lib
 
-<b>one</b> is fast - most sentences take a 10th of a millisecond. 
+_(these methods are on the main `nlp` object)_
 
-It can do <b>~1mb</b> of text a second - or 10 wikipedia pages.
+- **[nlp.tokenize()](https://observablehq.com/@spencermountain/compromise-tokenization)** - parse text without running POS-tagging
+- **[nlp.plugin()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - mix in a compromise-plugin
+- **[nlp.verbose()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - log our decision-making for debugging
+- **[nlp.version](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - current semver version of the library
+- **[nlp.parseMatch()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - pre-parse any match statements for faster lookups
+- **[nlp.world()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - grab all current linguistic data
 
-<i>Infinite jest</i> is takes 3s. 
 
-You can also paralellize, or stream text to it with <a href="">compromise-speed</a>.
 
-<p>
-  <img height="85px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-</p>
-
-<!-- two -->
-<p align="center">
-  <h1 align="left">
-   <code>compromise/two</code>
-  </h1>
-  <p align="center">A <code>part-of-speech</code> tagger, and grammar-interpreter.</p>
-  <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-  <p>
-
-```js
-import nlp from 'compromise/two'
-
-let doc = nlp("Wayne's World, party time")
-let str = doc.match('#Possessive #Noun').text()
-// "Wayne's World"
-```
-<p>
-  <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-</p>
-<b>two</b> automatically calculates the very basic grammar of each word.
-
-<sub>this is more useful than people sometimes realize.</sub>
-
-Really light grammar helps you write cleaner templates, and get closer to the information.
-
-Part-of-speech tagging is profoundly-difficult task to get 100% on. It is also a profoundly easy task to get 85% on.
-
-<img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+### compromise/two
 
 ##### Contractions
 - **[.contractions()](https://observablehq.com/@spencermountain/compromise-contractions)** - things like "didn't"
 - **[.contractions().expand()](https://observablehq.com/@spencermountain/compromise-contractions)** - things like "didn't"
 
-<p>
-<img height="85px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-</p>
 
-you can see the grammar of each word by running `doc.debug()`, and the reasoning for each tag with `nlp.verbose('tagger')`.
-
-compromise has <b>83 tags</b>, arranged in <a href="https://observablehq.com/@spencermountain/compromise-tags">a handsome graph</a>.
-
-<b>#FirstName</b> → <b>#Person</b> → <b>#ProperNoun</b> → <b>#Noun</b>
-
-if you prefer <a href="https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html"><i>Penn tags</i></a>, you can derive them with:
-```js
-let doc = nlp('welcome thrillho')
-doc.compute('penn')
-doc.json()
-```
-
-<!-- three -->
-<p align="center">
-  <h1 align="left">
-   <code>compromise/three</code>
-  </h1>
-  <p align="center"><code>Phrase</code> and sentence tooling.</p>
-  <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-  <p>
-
-```js
-import nlp from 'compromise/three'
-
-let doc = nlp("Wayne's World, party time")
-let str = doc.people().normalize().text()
-// "wayne"
-```
-
-<b>three</b> is a set of tooling to <i>zoom into</i> and operate on parts of a text.
-
-`.numbers()` grabs all the numbers in a document, for example - and extends it with new methods, like `.subtract()`.
+### compromise/three
 
 ##### Nouns
 - **[.nouns()](https://observablehq.com/@spencermountain/nouns)** - return any subsequent terms tagged as a Noun
@@ -625,17 +659,10 @@ let str = doc.people().normalize().text()
 
 <!-- - **[.contract()](https://observablehq.com/@spencermountain/compromise-contractions)** - `"she would"` -> `"she'd"` -->
 
-  </p>
+<p>
 <img height="85px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 </p>
 
-
-
-
-
-
-<!-- spacer -->
-  <!-- <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/> -->
 <div align="center">
   <img src="https://user-images.githubusercontent.com/399657/68221814-05ed1680-ffb8-11e9-8b6b-c7528d163871.png"/>
 </div>
@@ -772,18 +799,6 @@ nlp.extend({
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221632-b9094000-ffb7-11e9-99e0-b48edd6cdf8a.png"/>
 </div>
 
-### API:
-
-##### Constructor
-
-_(these methods are on the `nlp` object)_
-
-- **[.tokenize()](https://observablehq.com/@spencermountain/compromise-tokenization)** - parse text without running POS-tagging
-- **[.plugin()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - mix in a compromise-plugin
-- **[.verbose()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - log our decision-making for debugging
-- **[.version](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - current semver version of the library
-- **[.parseMatch()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - pre-parse any match statements for faster lookups
-- **[.world()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - grab all current linguistic data
 
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221824-09809d80-ffb8-11e9-9ef0-6ed3574b0ce8.png"/>
@@ -792,19 +807,6 @@ _(these methods are on the `nlp` object)_
 ### Plugins:
 
 These are some helpful extensions:
-
-##### Adjectives
-
-`npm install compromise-adjectives`
-
-- **[.adjectives()](https://observablehq.com/@spencermountain/compromise-adjectives)** - like `quick`
-  - **[.adjectives().json()](https://observablehq.com/@spencermountain/compromise-adjectives)** - overloaded output with adjective metadata
-  - **[.adjectives().conjugate()](https://observablehq.com/@spencermountain/compromise-adjectives)** - return all conjugated forms of this adjective
-  - **[.adjectives().toSuperlative()](https://observablehq.com/@spencermountain/compromise-adjectives)** - convert `quick` to `quickest`
-  - **[.adjectives().toComparative()](https://observablehq.com/@spencermountain/compromise-adjectives)** - convert `quick` to `quicker`
-  - **[.adjectives().toAdverb()](https://observablehq.com/@spencermountain/compromise-adjectives)** - convert `quick` to `quickly`
-  - **[.adjectives().toVerb()](https://observablehq.com/@spencermountain/compromise-adjectives)** - convert `quick` to `quicken`
-  - **[.adjectives().toNoun()](https://observablehq.com/@spencermountain/compromise-adjectives)** - convert `quick` to `quickness`
 
 ##### Dates
 
@@ -824,36 +826,9 @@ These are some helpful extensions:
   - **[.times().json()](https://observablehq.com/@spencermountain/compromise-dates)** - overloaded output with time metadata
 
 
-##### Export
+##### Stats
 
-`npm install compromise-export`
-
-- **[.export()](https://observablehq.com/@spencermountain/compromise-export)** - store a parsed document for later use
-- **[nlp.load()](https://observablehq.com/@spencermountain/compromise-export)** - re-generate a Doc object from .export() results
-
-##### Html
-
-`npm install compromise-html`
-
-- **[.html({})](https://observablehq.com/@spencermountain/compromise-html)** - generate sanitized html from the document
-
-##### Hash
-
-`npm install compromise-hash`
-
-- **[.hash()](https://observablehq.com/@spencermountain/compromise-hash)** - generate an md5 hash from the document+tags
-- **[.isEqual(doc)](https://observablehq.com/@spencermountain/compromise-hash)** - compare the hash of two documents for semantic-equality
-
-##### Keypress
-
-`npm install compromise-keypress`
-
-- **[nlp.keypress('')](https://observablehq.com/@spencermountain/compromise-keypress)** - generate an md5 hash from the document+tags
-- **[nlp.clear('')](https://observablehq.com/@spencermountain/compromise-keypress)** - clean-up any cached sentences from memory
-
-##### Ngrams
-
-`npm install compromise-plugin-stats`
+`npm install compromise-stats`
 
 - **[.ngrams({})](https://observablehq.com/@spencermountain/compromise-ngram)** - list all repeating sub-phrases, by word-count
 - **[.unigrams()](https://observablehq.com/@spencermountain/compromise-ngram)** - n-grams with one word
@@ -863,39 +838,18 @@ These are some helpful extensions:
 - **[.endgrams()](https://observablehq.com/@spencermountain/compromise-ngram)** - n-grams including the last term of a phrase
 - **[.edgegrams()](https://observablehq.com/@spencermountain/compromise-ngram)** - n-grams including the first or last term of a phrase
 
-##### Paragraphs
-
-`npm install compromise-paragraphs`
-this plugin creates a wrapper around the default sentence objects.
-
-- **[.paragraphs()](https://observablehq.com/@spencermountain/compromise-paragraphs)** - return groups of sentences
-  - **[.paragraphs().json()](https://observablehq.com/@spencermountain/compromise-paragraphs)** - output metadata for each paragraph
-  - **[.paragraphs().sentences()](https://observablehq.com/@spencermountain/compromise-paragraphs)** - go back to a regular Doc object
-  - **[.paragraphs().terms()](https://observablehq.com/@spencermountain/compromise-paragraphs)** - return all individual terms
-  - **[.paragraphs().eq()](https://observablehq.com/@spencermountain/compromise-paragraphs)** - get the nth paragraph
-  - **[.paragraphs().first()](https://observablehq.com/@spencermountain/compromise-paragraphs)** - get the first n paragraphs
-  - **[.paragraphs().last()](https://observablehq.com/@spencermountain/compromise-paragraphs)** - get the last n paragraphs
-  - **[.paragraphs().match()](https://observablehq.com/@spencermountain/compromise-paragraphs)** -
-  - **[.paragraphs().not()](https://observablehq.com/@spencermountain/compromise-paragraphs)** -
-  - **[.paragraphs().if()](https://observablehq.com/@spencermountain/compromise-paragraphs)** -
-  - **[.paragraphs().ifNo()](https://observablehq.com/@spencermountain/compromise-paragraphs)** -
-  - **[.paragraphs().has()](https://observablehq.com/@spencermountain/compromise-paragraphs)** -
-  - **[.paragraphs().forEach()](https://observablehq.com/@spencermountain/compromise-paragraphs)** -
-  - **[.paragraphs().map()](https://observablehq.com/@spencermountain/compromise-paragraphs)** -
-  - **[.paragraphs().filter()](https://observablehq.com/@spencermountain/compromise-paragraphs)** -
-
-
-##### Syllables
+##### Speech
 
 `npm install compromise-syllables`
 
 - **[.syllables()](https://observablehq.com/@spencermountain/compromise-syllables)** - split each term by its typical pronounciation
 
-##### Penn-tags
+##### Wikipedia
 
-`npm install compromise-penn-tags`
+`npm install compromise-wikipedia`
 
-- **[.pennTags()](https://observablehq.com/@spencermountain/compromise-penn-tags)** - return POS tags from the Penn Tagset
+- **[.wikipedia()](https://observablehq.com/@spencermountain/compromise-wikipedia)** - compressed article reconciliation
+
 
 <!-- spacer -->
 <div >

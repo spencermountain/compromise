@@ -12,8 +12,8 @@ import nlp from './src/three.js'
 // m.match('three').remove()
 // m.debug()
 
-let doc = nlp('soft and yielding like a nerf ball')
-console.log(doc.out({
-  '#Adjective': (m) => `<i>${m.text()}</i>`
-}))
+let doc = nlp("Wayne's World, party time")
+let str = doc.people().normalize('heavy').text()
+console.log(str)
+// "wayne"
 // console.log(doc.text())

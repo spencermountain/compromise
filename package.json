@@ -74,8 +74,8 @@
     "plugins:build": "node ./scripts/plugins.js npm run build"
   },
   "files": [
-    "plugins/",
     "builds/",
+    "types/",
     "src/"
   ],
   "keywords": [

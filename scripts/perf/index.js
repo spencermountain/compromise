@@ -38,22 +38,22 @@ const growth = (baseline, current) => {
   return percent
 }
 
-;(async () => {
-  let p = new Pool()
-  let texts = await fetchAll(docs.map(file => `https://unpkg.com/nlp-corpus@3.3.0/builds/${file}`))
-  console.log(`\n\n  running ${texts.length} texts on ${p.count()} workers`)
-  let nums = []
-  for (let i = 0; i < texts.length; i += 1) {
-    console.log(`    text #${i + 1} - 🕰`)
-    let num = await p.do(texts[i])
-    nums.push(num)
-  }
-  let sum = nums.reduce((h, n) => h + n, 0)
-  sum = Math.round(sum * 10) / 10
-  console.log('\n\n', sum, ' total')
-  // console.log('  +/- ', diff(sum), '% ')
-  console.log('  +/- ', growth(BASELINE, sum))
-  p.close()
-})()
+  ; (async () => {
+    let p = new Pool()
+    let texts = await fetchAll(docs.map(file => `https://unpkg.com/nlp-corpus@3.3.0/builds/${file}`))
+    console.log(`\n\n  running ${texts.length} texts on ${p.count()} workers`)
+    let nums = []
+    for (let i = 0; i < texts.length; i += 1) {
+      console.log(`    text #${i + 1} - 🕰`)
+      let num = await p.do(texts[i])
+      nums.push(num)
+    }
+    let sum = nums.reduce((h, n) => h + n, 0)
+    sum = Math.round(sum * 10) / 10
+    console.log('\n\n', sum, ' total')
+    // console.log('  +/- ', diff(sum), '% ')
+    console.log('  +/- ', growth(BASELINE, sum))
+    p.close()
+  })()
 
 // console.log(growth(100, 110))

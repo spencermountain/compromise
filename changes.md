@@ -1,86 +1,47 @@
-main things:
+[compromise](http://compromise.cool/) is a javascript library that can does natural-language-processing tasks in the browser.
 
-- esmodules
-- one/two/three split
-- drop IE11
-- cache a sequence of matches
-- better logging
+v14 is a big release, a proud re-write. A lot of sticky problems are now gone.
 
-* user-given lexicon is less co-ercive
+main updates:
+
+### Speed
+v14 is much faster. Usually 2x faster. You should be able to parse twice as many documents, in the same time.
+
+### Size
+v14 has been split into 3 libraries, so you can choose how-much of the library you'd like to use.
+this is possible by switching to esmodules.
+```js
+import nlp from 'compromise/one' // 68kb
+import nlp from 'compromise/two' // 225kb
+import nlp from 'compromise/three' // 275kb
+```
+
+in v14, we are dropping support for IE11.
+
+### Self-repairing pointers
+we've finally found a quick way to support dynamic pointers to changing word data:
+```js
+let doc = nlp('the dog is nice')
+let sub = doc.match('is')
+doc.match('doc').insertBefore('brown')
+console.log(sub.text())
+// 'is'
+```
+This works by using a fast-mode index lookup, with id-based error-correction.
+
+### Included plugins
+`compromise-penn-tags` `compromise-plugin-scan` and `compromise-plugin-typeahead` are now included in `/one` by default, which is great news.
+`compromise-plugin-numbers` is included by default in `/three`
+
+### New languages
+We now support early-versions of [french](https://compromise.cool/one/french), [spanish](https://compromise.cool/one/spanish), and [german](https://compromise.cool/one/german)
+
+### Measured tagging suggestion
+a user-given lexicon is less co-ercive - so adding your own words is less-dangerous:
 
 ```js
 nlp('Dan Brown', { brown: 'Color' }).has('#Color') //false
 ```
-
-this means adding your own words is less-dangerous.
-
----
-
-### One
-
-### Two
-
-### Three
-
----
-
-### Unmaintained indexes
-
-```js
-let m = nlp('the dog is nice')
-let sub = m.match('is')
-sub.insertAfter('really')
-// t.equal(sub.out('normal')
-```
-
-### Clone/Fork
-
-`.clone()` will copy the document data
-<!-- , and `.fork()` will copy the linguistic context. 
-a subset of a document can be cloned.-->
-
-### Loop changes
-
-- .find() does not return undefined on an empty result anymore
-
-- .sort() does not change the document in-place anymore
-
-### Text formats
-
-- **normal**
-  human-readable, lowercased, ascii-when-possible
-
-- **machine**
-  expanded contractions, no apostrophes,
-
-```js
-{
-  text: "Spencer's",
-  normal: "spencer's",
-  machine: 'spencer'
-},
-{
-  text: 're-factor',
-  normal: 're-factor',
-  machine: 'refactor'
-}
-```
-
-```js
-//matching from an array
-match(['foo', 'far'])
-```
-
-### Tagger
-<!-- - **[change]** Infinitive & Gerund are no longer PresentTense, automatically -->
-
-### Number parsing
-`compromise-plugin-numbers` is now included by default, which is great news.
-- **[breaking]** - change `numbers().json()` result format
-- **[change]** - less-magic with money parsing - `nlp('50 cents').money().get()` is no-longer `0.5`
-
-### Date parsing
-- **[change]** .json() date metadata has moved-around
 
 ### Replace wildcards
 ```js
@@ -90,50 +51,67 @@ doc.text()
 // 'george is from France'
 ```
 
+### Root-replace
+`.swap()` is a way to replace via a root-word - where declinations are automatically handled:
+```js
+let doc = nlp('i strolled downtown').compute('root')
+doc.swap('stroll', 'walk')
+// 'i walked downtown'
+```
 
-### Main
-- **[breaking]** - drop `.parent()` and `.parents()` chain - (use `.all()` instead)
+### New plugin scheme
+We finally have a `.plugin()` scheme strong-enough to use internally. v14 is completely constructed via .plugin().
+See the [plugin documentation](https://observablehq.com/@spencermountain/compromise-plugins) for details.
+
+### New plugins
+see 
+* [compromise-speed](https://github.com/spencermountain/compromise/tree/master/plugins/speed)
+* [compromise-stats](https://github.com/spencermountain/compromise/tree/master/plugins/stats)
+* [compromise-wikipedia](https://github.com/spencermountain/compromise/tree/master/plugins/wikipedia)
+
+as well as our existing [compromise-speech](https://github.com/spencermountain/compromise/tree/master/plugins/speech) and [compromise-dates](https://github.com/spencermountain/compromise/tree/master/plugins/dates) functionality
+
+---
+
+## Misc changes
+
+- **[breaking]** - remove `.parent()` and `.parents()` chain - (use `.all()` instead)
+- **[breaking]** - remove `@titleCase` alias (use @isTitleCase)
+- **[breaking]** - remove '.get()' alias - use '.eq()'
+- **[breaking]** - remove `.json(0)` shorthand - use `.json()[0]`
+- **[breaking]** - remove `.tagger()` - use .compute('tagger')
+- **[breaking]** - remove `.export()` -> .load()  - use .json() -> nlp(json)
+- **[breaking]** - remove `nlp.clone()`
+- **[breaking]** - remove `.join()` *deprecated*
+- **[breaking]** - remove `.lists()`  *deprecated*
+- **[breaking]** - remove `.segment()` *deprecated*
+- **[breaking]** - remove `.sententences().toParticiple()` & `.verbs().toParticiple()`
+- **[breaking]** - remove `.nouns().toPossessive()` & `.nouns().hasPlural()`
+- **[breaking]** - remove array support in match methods - (use `.match().match()` instead)
 - **[breaking]** - refactor `.out('freq')` output format - (uses `.compute('freq').terms().unique().json()` instead)
-- **[breaking]** - drop array support in match methods - (use `.match().match()` instead)
-- **[breaking]** - drop `@titleCase` alias (use @isTitleCase)
-- **[breaking]** - drop '.get()' alias - use '.eq()'
-- **[breaking]** - drop `.json(0)` shorthand - use `.json()[0]`
-- **[breaking]** - drop .tagger() - use .compute('tagger')
-- **[breaking]** - drop .export() -> .load()  - use .json() -> nlp(json)
-- **[breaking]** - drop nlp.clone()
-- **[breaking]** - drop .join() *deprecated*
-- **[breaking]** - drop .lists()  *deprecated*
-- **[breaking]** - drop .segment() *deprecated*
-- **[breaking]** - drop .sententences().toParticiple() & .verbs().toParticiple()
-- **[breaking]** - drop .nouns().toPossessive() & .nouns().hasPlural()
-
-- move fuzzy matching to a plugin
-
-
+- **[breaking]** - change `.json()` result format for subsets
 - **[change]** merge re-used capture-group names in one match
 - **[change]** drop support for undocumented empty '.split()' methods - which used to split the parent
-- **[change]** change .text('fmt') formats
+- **[change]** subtle changes to `.text('fmt')` formats
 - **[change]** @hasContraction is no-longer secretly-greedy. use `@hasContraction{2}`
-- **[change]** .and() now does a set 'union' operation of results (no overlaps)
+- **[change]** `.and()` now does a set 'union' operation of results (no overlaps)
 - **[change]** bestTag is now `.compute('tagRank')`
-- **[change]** .sort() is no longer in-place (its now immutable)
+- **[change]** `.sort()` is no longer in-place (its now immutable)
 - **[change]** drop undocumented options param to `.replaceWith()` method
 - **[change]** add match-group as 2nd param to split methods
 - **[change]** remove #FutureTense tag - which is not really a thing in english
-- **[change]** .unique() no-longer mutates parent
-- **[change]** .normalize() inputs cleanup
+- **[change]** `.unique()` no-longer mutates parent
+- **[change]** `.normalize()` inputs cleanup
 - **[change]** drop agreement parameters in .numbers() methods
+- **[change]** - less-magical money parsing - `nlp('50 cents').money().get()` is no-longer `0.5`
+- **[change]** - .find() does not return undefined on an empty result anymore
 
-### new methods
-- **[new]** .union(), .intersection(), .difference() and .complement() methods
-- **[new]** .confidence() method - approximate tagging confidence score for arbitrary selections
-- **[new]** .settle() - remove overlaps in matches
-- **[new]** .is() - helper-method for comparing two views
-- **[new]** .none() - helper-method for returning an empty view of the document
-- **[new]** .toView() method - drop back to a normal Class instance
-- **[new]** .growLeft() and .growRight() methods
+- **[new]** `.union()`, .intersection(), .difference() and .complement() methods
+- **[new]** `.confidence()` method - approximate tagging confidence score for arbitrary selections
+- **[new]** `.settle()` - remove overlaps in matches
+- **[new]** `.isDoc()` - helper-method for comparing two views
+- **[new]** `.none()` - helper-method for returning an empty view of the document
+- **[new]** `.toView()` method - drop back to a normal Class instance
+- **[new]** `.grow()` `.growLeft()` and `.growRight()` methods
 - **[new]** add punctuation match support via pre/post params
 - **[new]** add ambiguous empty .map() state as 2nd param
-
-
----

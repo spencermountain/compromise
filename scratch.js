@@ -7,7 +7,7 @@ import nlp from './src/three.js'
 // nlp.verbose('chunker')
 
 let doc = nlp('i may-work')
-doc.dehyphenate().debug()
+doc.toQuotations().debug()
 console.log(doc.text())
 
 // weird remove issue

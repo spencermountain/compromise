@@ -39,6 +39,9 @@ const api = function (View) {
         return getSubject(vb, parsed).subject
       })
     }
+    adverbs(n) {
+      return getNth(this, n).map(vb => vb.match('#Adverb'))
+    }
     isSingular(n) {
       return getNth(this, n).filter(vb => {
         return getSubject(vb).plural !== true

@@ -5,10 +5,10 @@ interface Two extends View {
   contractions: (n?: number) => Contractions
   /** contract words that can combine, like "did not" */
   contract: () => View
-  /** smart-replace root forms */
-  swap: (fromLemma: string, toLemma: string, guardTag?: string) => View
   /** Average measure of tag confidence */
   confidence: () => number
+  /** smart-replace root forms */
+  swap: (fromLemma: string, toLemma: string, guardTag?: string) => View
 }
 
 

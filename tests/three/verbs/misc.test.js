@@ -58,6 +58,13 @@ test('support punctuation', function (t) {
   t.end()
 })
 
+test('adverbs method', function (t) {
+  let doc = nlp('i may really go! It is cool.')
+  let advb = doc.verbs().adverbs()
+  t.equal(advb.text(), 'really', 'found adverb')
+  t.end()
+})
+
 // test('was shocked looking at', function (t) {
 //   let doc = nlp('i was shocked looking at the race')
 //   let verbs = doc.verbs()

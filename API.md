@@ -13,7 +13,25 @@
 
 # One
 ### API
+* .found
+* .docs
+* .pointer
+* .fullPointer
+* .methods
+* .model
+* .hooks
+* .isView
+* .length
+
+* .update()
+* .toView()
+* .fromText()
+* .termList()   
+
 * .compute()
+* .clone()
+
+### Loops
 * .forEach()
 * .map() 
 * .filter() 
@@ -21,7 +39,7 @@
 * .some()
 * .random()
 
-* .termList()      
+### Accessors
 * .terms()
 * .groups()     
 * .eq()
@@ -36,57 +54,6 @@
 * .isDoc()            
 * .wordCount()
 
-* .docs
-* .pointer
-* .methods
-* .model
-* .hooks
-* .isView
-* .found
-* .length
-* .fullPointer
-* .update()
-* .toView()
-* .fromText()
-* .clone()
-
-### Change
-* .compute('id')
-* .toLowerCase()
-* .toUpperCase()
-* .toTitleCase()
-* .toCamelCase()
-
-* .concat()
-
-* .insertAfter()
-* .insertBefore()
-
-* .remove()
-
-* .replace()
-* .replaceWith()
-
-* .unique()
-* .reverse()
-* .sort()
-
-* .pre()
-* .post()
-* .trim()
-* .hyphenate()
-* .dehyphenate()
-* .toQuotations()
-* .toParentheses()
-* .toQuotation()
-
-### Output
-* .html()
-* .json()
-* .out()
-* .debug()
-* .text()
-* .wrap()
 
 ### Match
 * nlp.parseMatch()
@@ -106,6 +73,44 @@
 * .splitOn()
 * .splitBefore()
 * .splitAfter()
+
+### Change
+* .compute('id')
+* .toLowerCase()
+* .toUpperCase()
+* .toTitleCase()
+* .toCamelCase()
+
+* .concat()
+
+* .insertBefore()
+* .insertAfter()
+
+* .remove()
+
+* .replace()
+* .replaceWith()
+
+* .unique()
+* .reverse()
+* .sort()
+
+* .pre()
+* .post()
+* .trim()
+* .hyphenate()
+* .dehyphenate()
+* .toQuotations()
+* .toParentheses()
+
+### Output
+* .text()
+* .json()
+* .debug()
+* .out()
+* .html()
+* .wrap()
+
 
 ### Pointers
 * .union()
@@ -142,7 +147,6 @@
 
 ### Lookup
 * nlp.compile()
-* .compile()
 * .lookup()
 
 ### Typeahead
@@ -187,7 +191,27 @@
 .chunks()
 .clauses()
 
+### Normalize
+.normalize()
+
+### Redact
+* .redact()
+
 ### Misc
+.hyphenated()
+.hashTags()
+.emails()
+.emoji()
+.emoticons()
+.atMentions()
+.urls()
+.pronouns()
+.conjunctions()
+.prepositions()
+.honorifics()
+.abbreviations()
+.phoneNumbers()
+
 .acronyms()
   .acronyms().strip()
   .acronyms().addPeriods()
@@ -201,23 +225,6 @@
   .adjectives().json()
 .adverbs()
   .adverbs().json()
-.hyphenated()
-.adjectives()
-.hashTags()
-.emails()
-.emoji()
-.emoticons()
-.atMentions()
-.urls()
-.pronouns()
-.conjunctions()
-.prepositions()
-.abbreviations()
-.honorifics()
-
-
-### Normalize
-.normalize()
 
 ### Nouns
 * .nouns()
@@ -261,11 +268,9 @@
   * .fractions().toCardinal()
   * .fractions().toPercentage()
 
-### Redact
-* .redact()
-
 ### Sentences
 * .sentences()
+  * .sentences().parse()
   * .sentences().json()
   * .sentences().toPastTense()
   * .sentences().toPresentTense()
@@ -278,22 +283,17 @@
   * .sentences().isStatement()
 * .questions()
 
-### Topics
-* .topics()
-* .organizations()
-* .people()
-  * .people().parse()
-  * .people().json()
-* .places()
 
 ### Verbs
 * .verbs()
   * .verbs().parse()
   * .verbs().json()
   * .verbs().subjects()
+  * .verbs().adverbs()
   * .verbs().isSingular()
   * .verbs().isPlural()
   * .verbs().isImperative()
+
   * .verbs().toInfinitive()
   * .verbs().toPresentTense()
   * .verbs().toPastTense()
@@ -304,3 +304,12 @@
   * .verbs().isPositive()
   * .verbs().toPositive()
   * .verbs().toNegative()
+
+
+### Topics
+* .people()
+  * .people().parse()
+  * .people().json()
+* .places()
+* .organizations()
+* .topics()

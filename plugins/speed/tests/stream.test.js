@@ -1,11 +1,14 @@
 import test from 'tape'
 import nlp from './_lib.js'
-import { streamFile } from '../src/index.js'
-nlp.plugin(streamFile)
 import fs from 'fs'
+import path from 'path'
+import { streamFile } from '../src/plugin.js'
+nlp.plugin(streamFile)
+
+let dir = new URL('./', import.meta.url).pathname
+let file = path.join(dir, `./files/freshPrince.txt`)
 
 test('stream the whole document', function (t) {
-  let file = `./tests/files/freshPrince.txt`
   let want = fs.readFileSync(file).toString()
   nlp.streamFile(file, (s) => {
     return s.match('.')
@@ -16,7 +19,6 @@ test('stream the whole document', function (t) {
 })
 
 test('return no matches', function (t) {
-  let file = `./tests/files/freshPrince.txt`
   nlp.streamFile(file, (s) => {
     return s.match('coconut')
   }).then(doc => {

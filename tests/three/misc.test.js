@@ -72,7 +72,7 @@ test('drop back to View', function (t) {
   t.equal(m.viewType, 'View', _ + 'intersection-to-view')
 
   m = vb.adverbs()
-  t.equal(m.viewType, 'Adverbs', _ + 'adverbs-to-view')
+  t.equal(m.viewType, 'View', _ + 'adverbs-to-view')
 
   t.end()
 })

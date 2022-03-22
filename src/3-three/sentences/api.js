@@ -3,7 +3,7 @@ import parse from './parse/index.js'
 import toPast from './conjugate/toPast.js'
 import toPresent from './conjugate/toPresent.js'
 import toFuture from './conjugate/toFuture.js'
-import toNegative from './conjugate/toNegative.js'
+import { toNegative, toPositive } from './conjugate/toNegative.js'
 import toInfinitive from './conjugate/toInfinitive.js'
 
 // return the nth elem of a doc
@@ -57,6 +57,23 @@ const api = function (View) {
         let parsed = parse(vb)
         return toNegative(vb, parsed)
       })
+    }
+    toPositive(n) {
+      return getNth(this, n).map(vb => {
+        let parsed = parse(vb)
+        return toPositive(vb, parsed)
+      })
+    }
+    isQuestion(n) {
+      return this.questions(n)
+    }
+    isExclamation(n) {
+      let res = this.filter(s => s.lastTerm().has('@hasExclamation'))
+      return getNth(res, n)
+    }
+    isStatement(n) {
+      let res = this.filter(s => !s.isExclamation().found && !s.isQuestion().found)
+      return getNth(res, n)
     }
     // overloaded - keep Sentences class
     update(pointer) {

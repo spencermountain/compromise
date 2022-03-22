@@ -44,9 +44,9 @@ const isQuestion = function (doc) {
 
   // Clause starts with a question word
   // e.g., Anyway the wind blows, what doesn't really matter to me
-  if (clauses.has('^#QuestionWord')) {
-    return true
-  }
+  // if (clauses.has('^#QuestionWord')) {
+  //   return true
+  // }
 
   //is wayne gretskzy alive
   if (clauses.has('(do|does|is|was) #Noun+ #Adverb? (#Adjective|#Infinitive)$')) {

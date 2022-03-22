@@ -93,6 +93,14 @@ interface Sentences extends View {
   toGerund: () => View
   /** 'he is cool' → 'he is not cool' */
   toNegative: () => View
+  /** 'he isn't cool' -> 'he is cool' */
+  toPositive: () => View
+  /** keep only questions */
+  isQuestion: () => View
+  /** keep only sentences with an exclamation-mark*/
+  isExclamation: () => View
+  /** remove questions, and exclamations */
+  isStatement: () => View
 }
 
 // Nouns class

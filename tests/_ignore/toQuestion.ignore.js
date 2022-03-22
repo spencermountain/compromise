@@ -1,5 +1,5 @@
 const test = require('tape')
-const nlp = require('./_lib')
+const nlp = require('../../_old/plugins/sentences/tests/_lib')
 
 test('simple chanage-punct', function (t) {
   let statement = `I can't believe it's a law firm.`

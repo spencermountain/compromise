@@ -273,6 +273,10 @@
   * .sentences().toFutureTense()
   * .sentences().toInfinitive()
   * .sentences().toNegative()
+  * .sentences().toPositive()
+  * .sentences().isQuestion()
+  * .sentences().isExclamation()
+  * .sentences().isStatement()
 * .questions()
 
 ### Topics

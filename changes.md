@@ -104,6 +104,7 @@ doc.text()
 - **[breaking]** - drop .join() *deprecated*
 - **[breaking]** - drop .lists()  *deprecated*
 - **[breaking]** - drop .segment() *deprecated*
+- **[breaking]** - drop .sententences().toParticiple() & .verbs().toParticiple()
 
 - move fuzzy matching to a plugin
 

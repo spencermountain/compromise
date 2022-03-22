@@ -7,7 +7,7 @@ import nlp from './src/three.js'
 // nlp.verbose('chunker')
 
 let doc = nlp('i saw three fifths of an inch')
-// doc.fractions().toOrdinal()
+doc.sentences().toPositive()
 doc.debug()
 
 // weird remove issue

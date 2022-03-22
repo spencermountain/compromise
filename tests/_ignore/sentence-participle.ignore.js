@@ -1,5 +1,6 @@
-const test = require('tape')
-const nlp = require('./_lib')
+import test from 'tape'
+import nlp from '../three/_lib.js'
+const here = '[three/sentence-participle] '
 
 test('toPast finds participle form', function (t) {
   let doc = nlp('i drive')
@@ -44,7 +45,8 @@ test('toParticiple', function (t) {
   ]
   arr.forEach((a) => {
     let doc = nlp(a[0])
-    doc.sentences().toParticiple()
+    // doc.sentences().toParticiple()
+    doc.sentences().toPastTense()
     t.equal(doc.text(), a[1], a[0])
   })
   t.end()

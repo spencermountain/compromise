@@ -2,7 +2,6 @@ data
 demo
 plugins
 scripts
-src
 tests
 .eslintrc
 .gitignore

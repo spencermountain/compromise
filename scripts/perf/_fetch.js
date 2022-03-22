@@ -1,4 +1,4 @@
-const https = require('https')
+import https from 'https'
 
 const fetch = function (url) {
   return new Promise((resolve, reject) => {
@@ -13,10 +13,10 @@ const fetch = function (url) {
         })
       })
       .on('error', err => {
-        console.log('Error: ' + err.message)
+        console.error('Error: ' + err.message) // eslint-disable-line
         reject()
       })
   })
 }
 
-module.exports = fetch
+export default fetch

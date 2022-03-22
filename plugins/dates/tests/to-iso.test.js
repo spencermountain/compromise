@@ -1,5 +1,5 @@
-const test = require('tape')
-const nlp = require('./_lib')
+import test from 'tape'
+import nlp from './_lib.js'
 
 const context = {
   today: '2019-02-02T03:40:00.000Z',
@@ -57,7 +57,7 @@ test('date-parse :', function (t) {
   ]
   arr.forEach(function (a) {
     let json = nlp(a[0]).dates(context).json()[0] || {}
-    t.equal(json.start, a[1], a[0])
+    t.equal(json.dates.start, a[1], a[0])
   })
   t.end()
 })

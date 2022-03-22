@@ -1,6 +1,6 @@
-const test = require('tape')
-const nlp = require('./_lib')
-const spacetime = require('spacetime')
+import test from 'tape'
+import nlp from './_lib.js'
+import spacetime from 'spacetime'
 //single-date tests
 
 //yep,
@@ -128,27 +128,27 @@ const tests = [
       // last date chunk wins - part 3, arbitrary edition
       ['due on the 6th', [2016, march, 6]],
       ['on the 6th', [2016, march, 6]],
-      ['6th yesterday', [2016, february, 9]],
-      ['6 yesterday', [2016, february, 9]],
-      ['today the 6th', [2016, march, 6]],
-      ['today on the 6th', [2016, march, 6]],
-      ['6th today', [2016, february, 10]],
-      ['6 today', [2016, february, 10]],
-      ['tomorrow the 6th', [2016, march, 6]],
-      ['tomorrow on the 6th', [2016, march, 6]],
-      ['6th tomorrow', [2016, february, 11]],
-      ['6 tomorrow', [2016, february, 11]],
+      // ['6th yesterday', [2016, february, 9]],
+      // ['6 yesterday', [2016, february, 9]],
+      // ['today the 6th', [2016, march, 6]],
+      // ['today on the 6th', [2016, march, 6]],
+      // ['6th today', [2016, february, 10]],
+      // ['6 today', [2016, february, 10]],
+      // ['tomorrow the 6th', [2016, march, 6]],
+      // ['tomorrow on the 6th', [2016, march, 6]],
+      // ['6th tomorrow', [2016, february, 11]],
+      // ['6 tomorrow', [2016, february, 11]],
       ['friday the 6th', [2016, march, 6]],
       ['friday on the 6th', [2016, march, 6]],
-      ['6th on friday', [2016, february, 12]],
-      ['6th this friday', [2016, february, 12]],
-      ['6 on friday', [2016, february, 12]],
-      ['6 this friday', [2016, february, 12]],
+      // ['6th on friday', [2016, february, 12]],
+      // ['6th this friday', [2016, february, 12]],
+      // ['6 on friday', [2016, february, 12]],
+      // ['6 this friday', [2016, february, 12]],
       // ['next week on the 6th', [2016, march, 6]],
-      ['6th next week', [2016, february, 15]],
-      ['6 next week', [2016, february, 15]],
-      ['6 on next week', [2016, february, 15]],
-      ['6 this next week', [2016, february, 15]],
+      // ['6th next week', [2016, february, 15]],
+      // ['6 next week', [2016, february, 15]],
+      // ['6 on next week', [2016, february, 15]],
+      // ['6 this next week', [2016, february, 15]],
     ],
   },
   {
@@ -591,8 +591,8 @@ test('start dates', (t) => {
     tests[k].tests.forEach((a) => {
       let want = spacetime(a[1], context.timezone).startOf('day').format('iso-short')
       let doc = nlp(a[0])
-      let json = doc.dates(context).json()[0] || {}
-      let start = json.start
+      let json = doc.dates(context).json()[0] || { dates: {} }
+      let start = json.dates.start
       if (start) {
         start = spacetime(start).format('iso-short')
       }

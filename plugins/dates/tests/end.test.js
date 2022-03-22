@@ -1,6 +1,6 @@
-const test = require('tape')
-const nlp = require('./_lib')
-const spacetime = require('spacetime')
+import test from 'tape'
+import nlp from './_lib.js'
+import spacetime from 'spacetime'
 //single-date tests
 
 //yep,
@@ -79,8 +79,8 @@ test('end dates', (t) => {
     let today = tests[k].today.join('-')
     tests[k].tests.forEach((a) => {
       let want = spacetime(a[1], context.timezone).endOf('day').iso()
-      let json = nlp(a[0]).dates(context).json()[0]
-      t.equal(json.end, want, `[${today}] ${a[0]}`)
+      let json = nlp(a[0]).dates(context).json()[0] || { dates: {} }
+      t.equal(json.dates.end, want, `[${today}] ${a[0]}`)
     })
   })
   t.end()

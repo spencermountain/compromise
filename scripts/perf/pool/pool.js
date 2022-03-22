@@ -1,12 +1,16 @@
-const { Worker } = require('worker_threads')
-const os = require('os')
+import { Worker } from 'worker_threads'
+import os from 'os'
 const cpus = os.cpus().length
+
+//eslint-disable-next-line
+let dir = new URL('./', import.meta.url).pathname // eslint-disable-line
 
 class Pool {
   constructor() {
     this.workers = []
     for (let i = 0; i < cpus; i += 1) {
-      this.workers.push(new Worker(__dirname + '/worker.js'))
+      this.workers.push(new Worker(dir + '/worker.js'))
+      // this.workers.push(new Worker(dir + '/lookup-worker.js'))
     }
   }
   do(msg) {
@@ -33,7 +37,7 @@ class Pool {
     this.workers.forEach(w => w.terminate())
   }
 }
-module.exports = Pool
+export default Pool
 
 // let p = new Pool()
 // p.do("hey now, you're a rockstar").then(() => p.close())

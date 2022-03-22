@@ -1,7 +1,7 @@
-const test = require('tape')
-const nlp = require('../_lib')
+import test from 'tape'
+import nlp from '../_lib.js'
 
-test('date-chunk :', function(t) {
+test('date-chunk :', function (t) {
   let arr = [
     ['remember to buy eggs tomorrow', 'tomorrow'],
     ['i should buy eggs for the kids on sunday', 'on sunday'],
@@ -42,7 +42,7 @@ test('date-chunk :', function(t) {
     ['post a tweet about consumerism on april fools day', 'on april fools day'],
     ['all the bills are what I need to pay by tuesday', 'by tuesday'],
   ]
-  arr.forEach(function(a) {
+  arr.forEach(function (a) {
     const str = nlp(a[0])
       .match('#Date+')
       .out('reduced')

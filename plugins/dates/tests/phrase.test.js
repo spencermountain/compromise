@@ -1,5 +1,5 @@
-const test = require('tape')
-const nlp = require('./_lib')
+import test from 'tape'
+import nlp from './_lib.js'
 
 test('date-phrase tests:', function (t) {
   let arr = [

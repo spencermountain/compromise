@@ -1,5 +1,5 @@
-const test = require('tape')
-const nlp = require('./_lib')
+import test from 'tape'
+import nlp from './_lib.js'
 // const spacetime = require('spacetime')
 
 test('date-tokenizer', function (t) {

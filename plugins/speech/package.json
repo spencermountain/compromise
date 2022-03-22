@@ -1,0 +1,38 @@
+{
+  "name": "compromise-speech",
+  "description": "plugin for nlp-compromise",
+  "version": "0.0.1",
+  "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
+  "main": "./src/plugin.js",
+  "unpkg": "./builds/compromise-speech.min.js",
+  "module": "./builds/compromise-speech.mjs",
+  "type": "module",
+  "types": "types/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./src/plugin.js",
+      "require": "./builds/compromise-speech.cjs"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/spencermountain/compromise.git"
+  },
+  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/speech",
+  "scripts": {
+    "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
+    "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
+    "watch": "amble ./scratch.js",
+    "build": "rollup -c --silent"
+  },
+  "eslintIgnore": [
+    "builds/*.js"
+  ],
+  "peerDependencies": {
+    "compromise": ">=14.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "license": "MIT"
+}

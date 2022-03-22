@@ -1,0 +1,37 @@
+{
+  "name": "compromise-stats",
+  "description": "plugin for nlp-compromise",
+  "version": "0.0.1",
+  "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
+  "main": "./src/plugin.js",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./src/plugin.js",
+      "require": "./builds/compromise-stats.cjs"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/spencermountain/compromise.git"
+  },
+  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/stats",
+  "scripts": {
+    "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
+    "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
+    "watch": "amble ./scratch.js",
+    "generate": "node ./scripts/generate.js",
+    "stat": "node ./scripts/stat.js",
+    "perf": "node ./scripts/perf.js",
+    "build": "rollup -c --silent"
+  },
+  "peerDependencies": {
+    "compromise": ">=14.0.0"
+  },
+  "dependencies": {
+    "efrt": "^2.5.0"
+  },
+  "devDependencies": {},
+  "license": "MIT"
+}

@@ -1,4 +1,4 @@
-module.exports = `Mr. Speaker, Vice President Cheney, Members of Congress, distinguished guests, and fellow citizens:
+export default `Mr. Speaker, Vice President Cheney, Members of Congress, distinguished guests, and fellow citizens:
 America this evening is a Nation called to great responsibilities. And we are rising to meet them.
 As we gather tonight, hundreds of thousands of American servicemen and women are deployed across the world in the war on terror. By bringing hope to the oppressed, and delivering justice to the violent, they are making America more secure.
 Each day, law enforcement personnel and intelligence officers are tracking terrorist threats; analysts are examining airline passenger lists; the men and women of our new Homeland Security Department are patrolling our coasts and borders. And their vigilance is protecting America.

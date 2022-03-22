@@ -1,6 +1,6 @@
-const test = require('tape')
-const nlp = require('./_lib')
-const spacetime = require('spacetime')
+import test from 'tape'
+import nlp from './_lib.js'
+import spacetime from 'spacetime'
 
 const fmt = (iso) => (iso ? spacetime(iso).format('{iso-short}') : '-')
 
@@ -17,8 +17,8 @@ test('this monday', function (t) {
   arr.forEach((a) => {
     let doc = nlp('this monday')
     let found = doc.dates({ today: a[0] }).json()[0]
-    t.equal(fmt(found.start), a[1], 'monday-start')
-    t.equal(fmt(found.end), a[1], 'monday-end')
+    t.equal(fmt(found.dates.start), a[1], 'monday-start')
+    t.equal(fmt(found.dates.end), a[1], 'monday-end')
   })
   t.end()
 })

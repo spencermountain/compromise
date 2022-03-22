@@ -1,14 +1,13 @@
-if (typeof process !== undefined && typeof module !== undefined) {
-  let nlp
-  if (process.env.TESTENV === 'prod') {
-    nlp = require('../../../')
-    nlp.extend(require(`../`))
-    nlp.extend(require(`../../numbers/`))
-  } else {
-    nlp = require('../../../src')
-    nlp.extend(require(`../src`))
-    nlp.extend(require(`../../numbers/src`))
-  }
+/* eslint-disable no-console */
+import build from '../../../builds/three/compromise-three.mjs'
+import src from '../../../src/three.js'
+let nlp = src
+import dates from '../src/plugin.js'
 
-  module.exports = nlp
+// import dateBuild from '../builds/compromise-dates.js'
+if (process.env.TESTENV === 'prod') {
+  console.warn('== production build test 🚀 ==')
+  nlp = build
 }
+nlp.plugin(dates)
+export default nlp

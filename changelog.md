@@ -12,6 +12,50 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 
 -->
 
+### 14.0.0 &nbsp; :postal_horn: [March 2022]
+Major release - see [Release Notes](https://github.com/spencermountain/compromise/releases/tag/14.0.0) for full details
+
+- **[breaking]** - remove `.parent()` and `.parents()` chain - (use `.all()` instead)
+- **[breaking]** - remove `@titleCase` alias (use @isTitleCase)
+- **[breaking]** - remove '.get()' alias - use '.eq()'
+- **[breaking]** - remove `.json(0)` shorthand - use `.json()[0]`
+- **[breaking]** - remove `.tagger()` - use .compute('tagger')
+- **[breaking]** - remove `.export()` -> .load()  - use .json() -> nlp(json)
+- **[breaking]** - remove `nlp.clone()`
+- **[breaking]** - remove `.join()` *deprecated*
+- **[breaking]** - remove `.lists()`  *deprecated*
+- **[breaking]** - remove `.segment()` *deprecated*
+- **[breaking]** - remove `.sententences().toParticiple()` & `.verbs().toParticiple()`
+- **[breaking]** - remove `.nouns().toPossessive()` & `.nouns().hasPlural()`
+- **[breaking]** - remove array support in match methods - (use `.match().match()` instead)
+- **[breaking]** - refactor `.out('freq')` output format - (uses `.compute('freq').terms().unique().json()` instead)
+- **[breaking]** - change `.json()` result format for subsets
+- **[change]** merge re-used capture-group names in one match
+- **[change]** drop support for undocumented empty '.split()' methods - which used to split the parent
+- **[change]** subtle changes to `.text('fmt')` formats
+- **[change]** @hasContraction is no-longer secretly-greedy. use `@hasContraction{2}`
+- **[change]** `.and()` now does a set 'union' operation of results (no overlaps)
+- **[change]** bestTag is now `.compute('tagRank')`
+- **[change]** `.sort()` is no longer in-place (its now immutable)
+- **[change]** drop undocumented options param to `.replaceWith()` method
+- **[change]** add match-group as 2nd param to split methods
+- **[change]** remove #FutureTense tag - which is not really a thing in english
+- **[change]** `.unique()` no-longer mutates parent
+- **[change]** `.normalize()` inputs cleanup
+- **[change]** drop agreement parameters in .numbers() methods
+- **[change]** - less-magical money parsing - `nlp('50 cents').money().get()` is no-longer `0.5`
+- **[change]** - .find() does not return undefined on an empty result anymore
+- **[change]** - fuzzy matches must now be wrapped in tildes, like `~this~`
+- **[new]** `.union()`, .intersection(), .difference() and .complement() methods
+- **[new]** `.confidence()` method - approximate tagging confidence score for arbitrary selections
+- **[new]** `.settle()` - remove overlaps in matches
+- **[new]** `.isDoc()` - helper-method for comparing two views
+- **[new]** `.none()` - helper-method for returning an empty view of the document
+- **[new]** `.toView()` method - drop back to a normal Class instance
+- **[new]** `.grow()` `.growLeft()` and `.growRight()` methods
+- **[new]** add punctuation match support via pre/post params
+- **[new]** add ambiguous empty .map() state as 2nd param
+
 #### 13.11.3 [June 2021]
 
 - **[fix]** - regex backtracing issue \#847 (thanks @srubin)

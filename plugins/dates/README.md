@@ -16,7 +16,6 @@
   <div align="center">
     <code>npm install compromise-dates</code>
   </div>
-  <b>-work-in-Progress-</b>
 </div>
 
 <!-- spacer -->
@@ -32,11 +31,12 @@ This library is an earnest attempt to get date information out of text, in a cle
 
 
 ```js
-const nlp = require('compromise')
-nlp.extend(require('compromise-dates'))
+import nlp from 'compromise'
+import datePlugin from 'compromise-dates'
+nlp.plugin(datePlugin)
 
 let doc = nlp('the second monday of february')
-doc.dates().get(0)
+doc.dates().get()[0]
 /*
   { start: '2021-02-08T00:00:00.000Z', end: '2021-02-08T23:59:59.999Z'}
 */

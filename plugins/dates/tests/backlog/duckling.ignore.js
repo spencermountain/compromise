@@ -2,15 +2,16 @@
 // -- All rights reserved.
 // https://github.com/facebook/duckling/edit/master/Duckling/Time/EN/Corpus.hs
 // This source code is licensed under the BSD-style license
-const test = require('tape')
-const spacetime = require('spacetime')
-const nlp = require('../_lib')
+import test from 'tape'
+import spacetime from 'spacetime'
+import nlp from '../_lib.js'
 const isArray = function (arr) {
   return Object.prototype.toString.call(arr) === '[object Array]'
 }
 
 const fmt = (iso) => (iso ? spacetime(iso).format('iso-short') : '')
 
+ // eslint-disable-next-line
 const mk = function (y, m, d, h, sec, mil) {
   if (isArray(y) && isArray(m)) {
     return [mk(y) + mk(m)]
@@ -922,8 +923,8 @@ test('duckling-tests', (t) => {
         today: [2013, 2, 12],
       }
       let found = nlp(str).dates(context).json()[0] || {}
-      found.date = found.date || {}
-      t.ok(fmt(found.date.start), str)
+      found.dates = found.dates || {}
+      t.ok(fmt(found.dates.start), str)
       // t.equal(fmt(found.date.start), a[0], str)
     })
   })

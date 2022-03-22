@@ -1,6 +1,6 @@
-const test = require('tape')
-const spacetime = require('spacetime')
-const nlp = require('./_lib')
+import test from 'tape'
+import spacetime from 'spacetime'
+import nlp from './_lib.js'
 
 test('times of start and end', function (t) {
   let context = {
@@ -71,7 +71,7 @@ test('times of start and end', function (t) {
   ]
   arr.forEach((a) => {
     let doc = nlp(a[0])
-    let dates = doc.dates(context).get(0) || {}
+    let dates = doc.dates(context).get()[0] || {}
     let start = spacetime(dates.start)
     t.equal(start.time(), a[1], '[time] ' + a[0])
     if (a[2]) {
@@ -83,28 +83,28 @@ test('times of start and end', function (t) {
 
 test('times test', function (t) {
   let doc = nlp('it was around 4:30pm on tuesday')
-  let json = doc.times({ today: '1996-03-28', timezone: 'Canada/Eastern' }).json()[0]
+  let json = doc.times({ today: '1996-03-28', timezone: 'Canada/Eastern' }).json()
   t.equal(json.length, 1, 'found time')
-  t.equal(json.time, '4:30pm', '4:30pm')
+  t.equal(json[0].time.time, '4:30pm', '4:30pm')
 
   doc = nlp('it was around 4pm on tuesday')
   json = doc.times({ today: '1996-03-28', timezone: 'Canada/Eastern' }).json()[0]
-  t.equal(json.time, '4:00pm', '4pm')
+  t.equal(json.time.time, '4:00pm', '4pm')
 
   doc = nlp('it was around 2 oclock pm on tuesday')
   json = doc.times().json()[0]
-  t.equal(json.time, '2:00pm', '2 oclock')
+  t.equal(json.time.time, '2:00pm', '2 oclock')
 
   doc = nlp('it was around six thirty pm friday')
   json = doc.times().json()[0]
-  t.equal(json.time, '6:30pm', 'six thirty pm')
+  t.equal(json.time.time, '6:30pm', 'six thirty pm')
 
   doc = nlp('it was six in the morning!')
   json = doc.times().json()[0]
-  t.equal(json.time, '6:00am', 'six in the morning')
+  t.equal(json.time.time, '6:00am', 'six in the morning')
 
   doc = nlp('it was ten after 9')
   json = doc.times().json()[0]
-  t.equal(json.time, '9:10am', 'ten after 9')
+  t.equal(json.time.time, '9:10am', 'ten after 9')
   t.end()
 })

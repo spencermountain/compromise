@@ -1,6 +1,6 @@
-const test = require('tape')
-const nlp = require('./_lib')
-const spacetime = require('spacetime')
+import test from 'tape'
+import nlp from './_lib.js'
+import spacetime from 'spacetime'
 
 const fmt = (iso) => (iso ? spacetime(iso).format('{iso-short}') : '-')
 
@@ -17,8 +17,8 @@ test('this week', function (t) {
   arr.forEach((a) => {
     let doc = nlp('this week')
     let found = doc.dates({ today: a }).json()[0]
-    t.equal(fmt(found.start), '2020-12-07', 'this-start')
-    t.equal(fmt(found.end), '2020-12-13', 'this-end')
+    t.equal(fmt(found.dates.start), '2020-12-07', 'this-start')
+    t.equal(fmt(found.dates.end), '2020-12-13', 'this-end')
   })
   t.end()
 })
@@ -36,8 +36,8 @@ test('last week', function (t) {
   arr.forEach((a) => {
     let doc = nlp('last week')
     let found = doc.dates({ today: a }).json()[0]
-    t.equal(fmt(found.start), '2020-11-30', 'last-start')
-    t.equal(fmt(found.end), '2020-12-06', 'last-end')
+    t.equal(fmt(found.dates.start), '2020-11-30', 'last-start')
+    t.equal(fmt(found.dates.end), '2020-12-06', 'last-end')
   })
   t.end()
 })
@@ -55,8 +55,8 @@ test('next week', function (t) {
   arr.forEach((a) => {
     let doc = nlp('next week')
     let found = doc.dates({ today: a }).json()[0]
-    t.equal(fmt(found.start), '2020-12-14', 'last-start')
-    t.equal(fmt(found.end), '2020-12-20', 'last-end')
+    t.equal(fmt(found.dates.start), '2020-12-14', 'last-start')
+    t.equal(fmt(found.dates.end), '2020-12-20', 'last-end')
   })
   t.end()
 })

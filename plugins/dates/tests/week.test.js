@@ -1,6 +1,6 @@
-const test = require('tape')
-const nlp = require('./_lib')
-const spacetime = require('spacetime')
+import test from 'tape'
+import nlp from './_lib.js'
+import spacetime from 'spacetime'
 
 test('week-logic', function (t) {
   let tests = [

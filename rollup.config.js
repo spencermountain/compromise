@@ -1,81 +1,59 @@
-import commonjs from '@rollup/plugin-commonjs'
-import json from '@rollup/plugin-json'
-import resolve from '@rollup/plugin-node-resolve'
 import { terser } from 'rollup-plugin-terser'
-import babel from 'rollup-plugin-babel'
-import alias from '@rollup/plugin-alias'
 import sizeCheck from 'rollup-plugin-filesize-check'
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 
-import { version } from './package.json'
-console.log('\n 📦  - running rollup..\n')
-
-const banner = '/* compromise ' + version + ' MIT */'
-const noop = __dirname + '/scripts/build/no-ops/_function'
-const noobj = __dirname + '/scripts/build/no-ops/_object'
+const opts = {
+  keep_classnames: true,
+  module: true,
+}
 
 export default [
+  // === Main ==
   {
-    input: 'src/index.js',
-    output: [{ file: 'builds/compromise-tokenize.js', format: 'umd', sourcemap: false, name: 'nlp' }],
-    plugins: [
-      json(),
-      commonjs(),
-      babel({
-        babelrc: false,
-        presets: ['@babel/preset-env'],
-      }),
-      alias({
-        //remove a bunch of imports with no-ops
-        entries: [
-          { find: './data/conjugations', replacement: noobj },
-          { find: './data/plurals', replacement: noobj },
-          { find: './data/misc', replacement: noobj },
-          { find: '../transforms/conjugate', replacement: noop },
-          { find: '../transforms/adjectives', replacement: noop },
-          { find: '../transforms/toPlural', replacement: noop },
-          { find: '../transforms/toSingular', replacement: noop },
-          { find: '../transforms/toInfinitive', replacement: noop },
-          { find: './_data', replacement: noobj },
-          { find: '../02-tagger', replacement: __dirname + '/src/02-tagger/tiny' },
-          { find: 'efrt-unpack', replacement: noop },
-        ],
-      }),
-      terser(),
-      sizeCheck({ expect: 82, warn: 5 }),
-    ],
+    input: 'src/three.js',
+    output: [{ file: 'builds/compromise.js', format: 'umd', name: 'nlp' }],
+    plugins: [nodeResolve(), terser(opts), sizeCheck({ expect: 277, warn: 15 })],
+  },
+  // {
+  //   input: 'src/three.js',
+  //   output: [{ file: 'builds/compromise.mjs', format: 'esm' }],
+  //   plugins: [nodeResolve(),terser(opts), sizeCheck({ expect: 180, warn: 15 })],
+  // },
+
+  // === One ==
+  {
+    input: 'src/one.js',
+    output: [{ file: 'builds/one/compromise-one.cjs', format: 'umd', name: 'nlp' }],
+    plugins: [nodeResolve(), terser(opts), sizeCheck({ expect: 69, warn: 15 })],
   },
   {
-    input: 'src/index.js',
-    output: [{ banner: banner, file: 'builds/compromise.mjs', format: 'esm' }],
-    plugins: [resolve(), json(), commonjs(), terser(), sizeCheck({ expect: 192, warn: 10 })],
+    input: 'src/one.js',
+    output: [{ file: 'builds/one/compromise-one.mjs', format: 'esm' }],
+    plugins: [nodeResolve(), terser(opts), sizeCheck({ expect: 69, warn: 15 })],
+  },
+
+  // === Two ==
+  {
+    input: 'src/two.js',
+    output: [{ file: 'builds/two/compromise-two.cjs', format: 'umd', name: 'nlp' }],
+    plugins: [nodeResolve(), terser(opts), sizeCheck({ expect: 226, warn: 15 })],
   },
   {
-    input: 'src/index.js',
-    output: [{ banner: banner, file: 'builds/compromise.js', format: 'umd', sourcemap: false, name: 'nlp' }],
-    plugins: [
-      resolve(),
-      json(),
-      commonjs(),
-      babel({
-        babelrc: false,
-        presets: ['@babel/preset-env'],
-      }),
-      sizeCheck({ expect: 391, warn: 10 }),
-    ],
+    input: 'src/two.js',
+    output: [{ file: 'builds/two/compromise-two.mjs', format: 'esm' }],
+    plugins: [nodeResolve(), terser(opts), sizeCheck({ expect: 226, warn: 15 })],
+  },
+
+  // === Three ==
+  {
+    input: 'src/three.js',
+    output: [{ file: 'builds/three/compromise-three.cjs', format: 'umd', name: 'nlp' }],
+    plugins: [nodeResolve(), terser(opts), sizeCheck({ expect: 277, warn: 15 })],
   },
   {
-    input: 'src/index.js',
-    output: [{ file: 'builds/compromise.min.js', format: 'umd', name: 'nlp' }],
-    plugins: [
-      resolve(),
-      json(),
-      commonjs(),
-      babel({
-        babelrc: false,
-        presets: ['@babel/preset-env'],
-      }),
-      terser(),
-      sizeCheck({ expect: 190, warn: 10 }),
-    ],
+    input: 'src/three.js',
+    output: [{ file: 'builds/three/compromise-three.mjs', format: 'esm' }],
+    plugins: [nodeResolve(), terser(opts), sizeCheck({ expect: 277, warn: 15 })],
   },
+
 ]

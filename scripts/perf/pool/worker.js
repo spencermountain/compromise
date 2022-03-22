@@ -1,6 +1,9 @@
-const { parentPort } = require('worker_threads')
+import { parentPort } from 'worker_threads'
 // const nlp = require('../../src')
-let nlp = require('./_lib')
+import nlp from './_lib.js'
+// import plg from '../../../plugins/dates/src/plugin.js'
+// nlp.plugin(plg)
+
 
 let matches = [
   'out of range',
@@ -20,6 +23,7 @@ let matches = [
 
 const doit = async function (txt) {
   let doc = nlp(txt)
+  // doc.compute('root')
   matches.forEach(reg => {
     doc.match(reg).text()
   })

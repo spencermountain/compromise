@@ -8,9 +8,6 @@ jobs:
   release:
     runs-on: ubuntu-latest
 
-    env:
-      CI: true
-
     # Note that these steps are *identical* to build-and-test (with the caveat
     # that build-and-test uses several versions of Node, and Release only uses
     # 10.x) at least until the actual publishing happens.  Ideally, we could
@@ -19,12 +16,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2
         with:
-          node-version: 10.x
+          node-version: 15.x
 
       - name: cache dependencies
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-npm-10.x-${{ hashFiles('package-lock.json') }}
@@ -35,12 +32,11 @@ jobs:
       - name: install
         run: |
           npm ci
-          npm i --no-save ts-node typescript
-          npm run plugins:ci
+          # npm i --no-save ts-node typescript
+          # npm run plugins:ci
 
       - name: static checks
         run: |
-          npm i --no-save eslint
           npm run lint
 
       - name: build
@@ -51,9 +47,9 @@ jobs:
       - name: test
         run: |
           npm run test:smoke
-          npm run testb
+          npm run test
           # npm run perf
-          npm run test:types
+          # npm run test:types
           # npm run test:stress
 
       # And finally... publish it!  Note that we create the .npmrc file

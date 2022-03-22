@@ -1,10 +1,10 @@
-const test = require('tape')
-const spacetime = require('spacetime')
-const nlp = require('./_lib')
+import test from 'tape'
+import spacetime from 'spacetime'
+import nlp from './_lib.js'
 
 test('day-start edge-cases', function (t) {
   let doc = nlp('in june 2021')
-  let date = doc.dates({ dayStart: '8:00am', dayEnd: '6:00pm', timezone: 'Asia/Shanghai' }).get(0)
+  let date = doc.dates({ dayStart: '8:00am', dayEnd: '6:00pm', timezone: 'Asia/Shanghai' }).get()[0]
   t.equal(date.start, '2021-06-01T08:00:00.000+08:00', 'start')
   t.equal(date.end, '2021-06-30T18:00:00.000+08:00', 'end')
   t.end()
@@ -28,7 +28,7 @@ test('day start', function (t) {
   const startTime = '5:30am'
   arr.forEach((str) => {
     let doc = nlp(str)
-    let date = doc.dates({ dayStart: startTime }).get(0)
+    let date = doc.dates({ dayStart: startTime }).get()[0]
     let have = spacetime(date.start).time()
     t.equal(have, startTime, '[start] ' + str)
   })
@@ -39,7 +39,7 @@ test('day end', function (t) {
   const endTime = '8:30pm'
   arr.forEach((str) => {
     let doc = nlp(str)
-    let date = doc.dates({ dayEnd: endTime }).get(0)
+    let date = doc.dates({ dayEnd: endTime }).get()[0]
     let have = spacetime(date.end).time()
     t.equal(have, endTime, '[end] ' + str)
   })

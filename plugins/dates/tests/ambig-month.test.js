@@ -1,6 +1,6 @@
-const test = require('tape')
-const nlp = require('./_lib')
-const spacetime = require('spacetime')
+import test from 'tape'
+import nlp from './_lib.js'
+import spacetime from 'spacetime'
 
 const fmt = (iso) => (iso ? spacetime(iso).format('{iso-short}') : '-')
 
@@ -16,9 +16,9 @@ test('this month', function (t) {
   ]
   arr.forEach((a) => {
     let doc = nlp('this month')
-    let found = doc.dates({ today: a }).json()[0]
-    t.equal(fmt(found.start), '2020-12-01', 'this-start')
-    t.equal(fmt(found.end), '2020-12-31', 'this-end')
+    let found = doc.dates({ today: a }).json()[0] || {}
+    t.equal(fmt((found.dates || {}).start), '2020-12-01', 'this-start')
+    t.equal(fmt((found.dates || {}).end), '2020-12-31', 'this-end')
   })
   t.end()
 })
@@ -35,9 +35,9 @@ test('next month', function (t) {
   ]
   arr.forEach((a) => {
     let doc = nlp('next month')
-    let found = doc.dates({ today: a }).json()[0]
-    t.equal(fmt(found.start), '2021-01-01', 'next-start')
-    t.equal(fmt(found.end), '2021-01-31', 'next-end')
+    let found = doc.dates({ today: a }).json()[0] || {}
+    t.equal(fmt((found.dates || {}).start), '2021-01-01', 'next-start')
+    t.equal(fmt((found.dates || {}).end), '2021-01-31', 'next-end')
   })
   t.end()
 })
@@ -54,9 +54,9 @@ test('last month', function (t) {
   ]
   arr.forEach((a) => {
     let doc = nlp('last month')
-    let found = doc.dates({ today: a }).json()[0]
-    t.equal(fmt(found.start), '2020-11-01', 'last-start')
-    t.equal(fmt(found.end), '2020-11-30', 'last-end')
+    let found = doc.dates({ today: a }).json()[0] || {}
+    t.equal(fmt((found.dates || {}).start), '2020-11-01', 'last-start')
+    t.equal(fmt((found.dates || {}).end), '2020-11-30', 'last-end')
   })
   t.end()
 })
@@ -77,32 +77,32 @@ test('this december', function (t) {
   ]
   arr.forEach((a) => {
     let doc = nlp('this december')
-    let found = doc.dates({ today: a }).json()[0]
-    t.equal(fmt(found.start), '2020-12-01', 'this december')
-    t.equal(fmt(found.end), '2020-12-31', 'this december')
+    let found = doc.dates({ today: a }).json()[0] || {}
+    t.equal(fmt((found.dates || {}).start), '2020-12-01', 'this december')
+    t.equal(fmt((found.dates || {}).end), '2020-12-31', 'this december')
 
     doc = nlp('next december')
-    found = doc.dates({ today: a }).json()[0]
-    t.equal(fmt(found.start), '2021-12-01', 'next december')
-    t.equal(fmt(found.end), '2021-12-31', 'next december')
+    found = doc.dates({ today: a }).json()[0] || {}
+    t.equal(fmt((found.dates || {}).start), '2021-12-01', 'next december')
+    t.equal(fmt((found.dates || {}).end), '2021-12-31', 'next december')
 
     doc = nlp('last december')
-    found = doc.dates({ today: a }).json()[0]
-    t.equal(fmt(found.start), '2019-12-01', 'last december')
-    t.equal(fmt(found.end), '2019-12-31', 'last december')
+    found = doc.dates({ today: a }).json()[0] || {}
+    t.equal(fmt((found.dates || {}).start), '2019-12-01', 'last december')
+    t.equal(fmt((found.dates || {}).end), '2019-12-31', 'last december')
   })
   t.end()
 })
 
 test('this september', function (t) {
   let doc = nlp('this september')
-  let found = doc.dates({ today: [2019, 7, 4] }).json()[0]
-  t.equal(fmt(found.start), '2019-09-01', 'this sept - before')
+  let found = doc.dates({ today: [2019, 7, 4] }).json()[0] || {}
+  t.equal(fmt((found.dates || {}).start), '2019-09-01', 'this sept - before')
 
-  found = doc.dates({ today: [2019, 8, 4] }).json()[0]
-  t.equal(fmt(found.start), '2019-09-01', 'this sept - during')
+  found = doc.dates({ today: [2019, 8, 4] }).json()[0] || {}
+  t.equal(fmt((found.dates || {}).start), '2019-09-01', 'this sept - during')
 
-  found = doc.dates({ today: [2019, 9, 4] }).json()[0]
-  t.equal(fmt(found.start), '2020-09-01', 'this sept - after')
+  found = doc.dates({ today: [2019, 9, 4] }).json()[0] || {}
+  t.equal(fmt((found.dates || {}).start), '2020-09-01', 'this sept - after')
   t.end()
 })

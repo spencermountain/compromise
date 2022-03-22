@@ -1,5 +1,5 @@
 // a smoke-test for our typescipt typings
-import nlp from '../../'
+import nlp from '../../builds/types'
 import tape from 'tape'
 
 console.log('\n 🥗  - running types-test..\n')

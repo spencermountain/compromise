@@ -1,7 +1,7 @@
-const test = require('tape')
-const nlp = require('../_lib')
+import test from 'tape'
+import nlp from '../_lib.js'
 
-test('date-tag :', function(t) {
+test('date-tag :', function (t) {
   let arr = [
     'yesterday',
     'today',
@@ -290,7 +290,7 @@ test('date-tag :', function(t) {
     // '100th day to 200th',
     // 'march'
   ]
-  arr.forEach(function(first) {
+  arr.forEach(function (first) {
     const str = nlp(first)
       .match('#Date+')
       .out('text')

@@ -1,6 +1,6 @@
-const test = require('tape')
-const nlp = require('./_lib')
-const spacetime = require('spacetime')
+import test from 'tape'
+import nlp from './_lib.js'
+import spacetime from 'spacetime'
 
 const fmt = (iso) => (iso ? spacetime(iso).format('{iso-short}') : '-')
 
@@ -20,8 +20,8 @@ test('parsed today shorthand', function (t) {
     timezone: 'Canada/Pacific',
   }
   let doc = nlp('today')
-  let found = doc.dates(context).json()[0]
-  t.equal(fmt(found.start), '2020-12-12', 'today shorthand')
+  let found = doc.dates(context).json()[0] || {}
+  t.equal(fmt(found.dates.start), '2020-12-12', 'today shorthand')
   t.end()
 })
 
@@ -31,9 +31,9 @@ test('never allow end > start', (t) => {
   }
   let arr = ['eat eggs june 5th to june 7th', 'eat eggs june 5th to 7th', 'eat eggs june 7th to june 5th']
   arr.forEach((str) => {
-    let json = nlp(str).dates(context).json()[0]
-    let start = spacetime(json.start)
-    let end = spacetime(json.end)
+    let json = nlp(str).dates(context).json()[0] || {}
+    let start = spacetime(json.dates.start)
+    let end = spacetime(json.dates.end)
     t.equal(start.isBefore(end), true, str)
   })
   t.end()

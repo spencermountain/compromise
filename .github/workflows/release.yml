@@ -50,7 +50,7 @@ jobs:
           npm run test:smoke
           npm run testb
           # npm run perf
-          npm run test:types
+          # npm run test:types
           # npm run test:stress
 
       # And finally... publish it!  Note that we create the .npmrc file

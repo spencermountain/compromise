@@ -30,9 +30,7 @@ const showTags = function (view) {
       if (t.implicit) {
         text = '[' + t.implicit + ']'
       }
-      if (typeof module !== undefined) {
-        text = cli.yellow(text)
-      }
+      text = cli.yellow(text)
       let word = "'" + text + "'"
       word = word.padEnd(18)
       let str = cli.blue('  │ ') + cli.i(word) + '  - ' + tagString(tags, model)

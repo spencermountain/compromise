@@ -1,3 +1,5 @@
+import nlp from 'compromise'
+
 let sentenceCache = {}
 
 /** memoize tagger per-sentence */

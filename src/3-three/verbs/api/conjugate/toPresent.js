@@ -1,4 +1,4 @@
-import { noop, isPlural, isAreAm, doDoes, getSubject, toInf, getTense, noWill } from '../lib.js'
+import { noop, isPlural, isAreAm, doDoes, getSubject, toInf, getTense } from '../lib.js'
 const keep = { tags: true }
 
 // walk->walked

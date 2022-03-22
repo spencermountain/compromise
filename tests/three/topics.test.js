@@ -55,7 +55,7 @@ test('misc entities', function (t) {
   m = doc.organizations()
   t.equal(m.length, 0, here + 'no organizations')
 
-  m = doc.entities()
+  m = doc.topics()
   t.equal(m.length, 1, here + 'one entity')
   t.end()
 })

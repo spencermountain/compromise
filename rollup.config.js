@@ -55,15 +55,5 @@ export default [
     output: [{ file: 'builds/three/compromise-three.mjs', format: 'esm' }],
     plugins: [nodeResolve(), terser(opts), sizeCheck({ expect: 180, warn: 15 })],
   },
-  // === Four ==
-  {
-    input: 'src/four.js',
-    output: [{ file: 'builds/four/compromise-four.cjs', format: 'umd', name: 'nlp' }],
-    plugins: [nodeResolve(), terser(opts), sizeCheck({ expect: 200, warn: 25 })],
-  },
-  {
-    input: 'src/four.js',
-    output: [{ file: 'builds/four/compromise-four.mjs', format: 'esm' }],
-    plugins: [nodeResolve(), terser(opts), sizeCheck({ expect: 200, warn: 25 })],
-  },
+
 ]

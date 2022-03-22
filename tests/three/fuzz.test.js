@@ -32,7 +32,7 @@ const subsets = [
   'phoneNumbers',
   'places',
   'organizations',
-  'entities',
+  'topics',
   'numbers',
   'fractions',
   // 'money',

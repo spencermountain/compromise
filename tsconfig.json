@@ -7,7 +7,7 @@
     "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
   },
   "files": [
-    "types/types.d.ts"
+    "types/three.d.ts"
   ],
   "include": [
     "types/index.d.ts"

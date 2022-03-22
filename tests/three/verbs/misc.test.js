@@ -1,12 +1,13 @@
-const test = require('tape')
-const nlp = require('../_lib')
+import test from 'tape'
+import nlp from '../_lib.js'
+const here = '[three/verb-misc] '
 
 test('verbs.json', function (t) {
   let json = nlp('She has called twice, not the tv').verbs().json()
   t.equal(json.length, 1, 'one verb')
-  t.equal(json[0].isNegative, false, 'not negative')
-  t.equal(json[0].parts.verb, 'called', 'got main verb')
-  t.equal(json[0].parts.auxiliary, 'has', 'got aux verb')
+  t.equal(json[0].verb.negative, false, 'not negative')
+  t.equal(json[0].verb.root, 'called', 'got main verb')
+  t.equal(json[0].verb.auxiliary, 'has', 'got aux verb')
   t.end()
 })
 

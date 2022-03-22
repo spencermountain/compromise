@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../tests/one/_lib.js'
+import nlp from '../three/_lib.js'
 const here = '[one/punct] '
 
 test('normalize elipses', function (t) {

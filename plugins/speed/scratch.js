@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from '../../src/one.js'
 
-import { streamFile } from './src/index.js'
+import { streamFile } from './src/plugin.js'
 nlp.plugin(streamFile)
 
 

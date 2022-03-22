@@ -6,8 +6,8 @@ import nlp from './src/three.js'
 // nlp.verbose('tagger')
 // nlp.verbose('chunker')
 
-let doc = nlp('three fifths of an inch')
-doc.fractions().toOrdinal()
+let doc = nlp('i saw three fifths of an inch')
+// doc.fractions().toOrdinal()
 doc.debug()
 
 // weird remove issue

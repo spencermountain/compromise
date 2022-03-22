@@ -2,7 +2,7 @@ const trimEnd = /[,:;)\]*.?~!\u0022\uFF02\u201D\u2019\u00BB\u203A\u2032\u2033\u2
 const trimStart =
   /^[(['"*~\uFF02\u201C\u2018\u201F\u201B\u201E\u2E42\u201A\u00AB\u2039\u2035\u2036\u2037\u301D\u0060\u301F]+/
 
-const punctToKill = /[,:;)('"\u201D]/
+const punctToKill = /[,:;)('"\u201D\]]/
 const isHyphen = /^[-–—]$/
 const hasSpace = / /
 

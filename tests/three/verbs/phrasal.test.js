@@ -1,8 +1,9 @@
-const test = require('tape')
-const nlp = require('../_lib')
+import test from 'tape'
+import nlp from '../_lib.js'
+const here = '[three/phrasal]'
 
 test('phrasal-verbs:', function (t) {
-  ;[
+  let arr = [
     [`he is really good`, ['he', 'is', 'really', 'good']],
     [`he is upset about it`, ['he', 'is', 'upset', 'about', 'it']],
     [`he will mess about with it`, ['he', 'will', 'mess about', 'with', 'it']],
@@ -13,10 +14,11 @@ test('phrasal-verbs:', function (t) {
 
     [`frighten back`, ['frighten', 'back']],
     [`frighten away`, ['frighten away']],
-  ].forEach(function (a) {
+  ]
+  arr.forEach(function (a) {
     const terms = nlp(a[0]).out('array')
     const msg = terms.join(' ') + '  -- ' + a[1].join(' ')
-    t.equal(terms.join(' '), a[1].join(' '), msg)
+    t.equal(terms.join(' '), a[1].join(' '), here + msg)
   })
   t.end()
 })

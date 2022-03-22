@@ -47,7 +47,7 @@ interface Three extends View {
   /** return terms like `'Mrs.'`*/
   abbreviations: (n?: number) => View
   /** return terms like `'FBI'` */
-  acronyms: (n?: number) => View
+  acronyms: (n?: number) => Acronyms
 
   /** return anything inside (parentheses) */
   parentheses: (n?: number) => Parentheses
@@ -233,6 +233,13 @@ interface Possessives extends View {
 interface Quotations extends View {
   /** remove leading and trailing quotation marks */
   strip: () => View
+}
+
+interface Acronyms extends View {
+  /** 'F.B.I.' -> 'FBI' */
+  strip: () => View
+  /** 'FBI' -> 'F.B.I.' */
+  addPeriods: () => View
 }
 
 export default Three

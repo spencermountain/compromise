@@ -191,6 +191,7 @@
 ### Misc
 .acronyms()
   .acronyms().strip()
+  .acronyms().addPeriods()
 .parentheses()
   .parentheses().strip()
 .possessives()

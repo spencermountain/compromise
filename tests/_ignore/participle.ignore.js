@@ -1,5 +1,6 @@
-const test = require('tape')
-const nlp = require('../_lib')
+import test from 'tape'
+import nlp from '../three/_lib.js'
+const here = '[three/participle] '
 
 test('toParticiple', function (t) {
   let arr = [
@@ -12,7 +13,8 @@ test('toParticiple', function (t) {
   ]
   arr.forEach(a => {
     let doc = nlp(a[0])
-    doc.verbs().toParticiple()
+    // doc.verbs().toParticiple()
+    doc.verbs().toPast()
     t.equal(doc.text(), a[1], a[0])
   })
   t.end()

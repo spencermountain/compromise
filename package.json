@@ -2,7 +2,7 @@
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "modest natural language processing",
-  "version": "13.11.4-rc7",
+  "version": "13.11.4-rc8",
   "main": "./src/index.js",
   "unpkg": "./builds/compromise.js",
   "type": "module",

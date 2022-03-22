@@ -7,8 +7,8 @@ const toOrdinal = function (obj) {
     return ''
   }
   // create [two] [fifths]
-  let start = toText(obj.numerator)
-  let end = textOrdinal(obj.denominator)
+  let start = toText({ num: obj.numerator })
+  let end = textOrdinal({ num: obj.denominator })
   // 'one secondth' -> 'one half'
   if (obj.denominator === 2) {
     end = 'half'

@@ -52,6 +52,9 @@ const plugin = function (View) {
       getNth(this, n).forEach(m => {
         let obj = parse(m)
         let str = toOrdinal(obj)
+        if (m.after('^#Noun').found) {
+          str += ' of' // three fifths of dentists
+        }
         m.replaceWith(str)
       })
       return this

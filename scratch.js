@@ -6,12 +6,9 @@ import nlp from './src/three.js'
 // nlp.verbose('tagger')
 // nlp.verbose('chunker')
 
-
-// let doc = nlp("soft and yielding like a nerf ball")
-// let out = doc.out({
-//   '#Adjective': (m) => `[${m.text()}]`
-// })
-
+let doc = nlp('three fifths of an inch')
+doc.fractions().toOrdinal()
+doc.debug()
 
 // weird remove issue
 // let m = nlp('one two three. foo.', { two: 'Infinitive' })

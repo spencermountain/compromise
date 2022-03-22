@@ -131,3 +131,22 @@ test('do-math:', function (t) {
 
   t.end()
 })
+
+test('fraction ordinal/cardinal:', function (t) {
+  let doc = nlp('three fifths of an inch')
+  doc.fractions().toCardinal()
+  t.equal(doc.text(), 'three out of five of an inch', here + 'toCardinal')
+
+  doc = nlp('three out of five senators')
+  doc.fractions().toOrdinal()
+  t.equal(doc.text(), 'three fifths of senators', here + 'toOrdinal')
+
+  doc = nlp('three fifths of an inch')
+  doc.fractions().toOrdinal()
+  t.equal(doc.text(), 'three fifths of an inch', here + 'unchanged toOrdinal')
+
+  doc = nlp('three out of five senators')
+  doc.fractions().toCardinal()
+  t.equal(doc.text(), 'three out of five senators', here + 'unchanged toCardinal')
+  t.end()
+})

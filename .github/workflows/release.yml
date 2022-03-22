@@ -32,12 +32,11 @@ jobs:
       - name: install
         run: |
           npm ci
-          npm i --no-save ts-node typescript
+          # npm i --no-save ts-node typescript
           # npm run plugins:ci
 
       - name: static checks
         run: |
-          npm i --no-save eslint
           npm run lint
 
       - name: build
@@ -48,7 +47,7 @@ jobs:
       - name: test
         run: |
           npm run test:smoke
-          npm run testb
+          npm run test
           # npm run perf
           # npm run test:types
           # npm run test:stress

@@ -24,4 +24,5 @@ jobs:
             ${{ runner.os }}-node-
 
       - run: npm ci
+      - run: npm i --no-save c8
       - run: npm run codecov

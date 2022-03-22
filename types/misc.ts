@@ -1,3 +1,11 @@
+export type Document = Term[][]
+
+export type Pointer = [n?: number, start?: number, end?: number, startId?: string, endId?: string]
+
+export type outMethods = 'text' | 'normal' | 'offset' | 'terms' | 'topk' | 'json' | 'tags' | 'array' | 'debug'
+
+export type Groups = object
+
 export interface Term {
   text: string,
   pre: string,
@@ -14,13 +22,6 @@ export interface Term {
   // other things you may find...
   syllables?: string[],
 }
-
-export type Document = Term[][]
-
-export type Pointer = [n?: number, start?: number, end?: number, startId?: string, endId?: string]
-
-export type Groups = object
-
 
 // possible values to .json()
 export interface JsonProps {
@@ -54,8 +55,6 @@ export interface JsonProps {
   }
 }
 
-export type outMethods = 'text' | 'normal' | 'offset' | 'terms' | 'topk' | 'json' | 'tags' | 'array' | 'debug'
-
 // a key-value object of words, terms
 export interface Lexicon {
   [key: string]: string
@@ -69,6 +68,6 @@ export interface Plugin {
   tags?: object,
   words?: object,
   lib?: () => object,
-  api?: (view: Function) => void,  //should be View
-  mutate?: (world: object) => void,
+  api?: (fn: (view: any) => {}) => void,  //should be View
+  mutate?: (fn: (world: object) => {}) => void,
 }

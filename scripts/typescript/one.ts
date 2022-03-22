@@ -1,8 +1,9 @@
 // import nlp from '../../src/three.js'
-import nlp from '../../types/three'
+import nlp from '../../types/one'
 
 let doc = nlp('okay cool')
-// # lib
+
+// ### Lib
 nlp.tokenize('adf')
 nlp.plugin({})
 nlp.parseMatch()
@@ -13,7 +14,6 @@ nlp.methods()
 nlp.hooks()
 nlp.verbose()
 nlp.version
-
 
 // ### API
 doc.compute('')

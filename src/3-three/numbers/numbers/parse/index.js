@@ -45,7 +45,7 @@ const parseNumber = function (m) {
   // is it in '3,123' format?
   let hasComma = /[0-9],[0-9]/.test(m.text('text'))
   // parse a numeric-number like '$4.00'
-  if (m.wordCount() <= 2) {
+  if (m.terms().length === 1 && !m.has('#Multiple')) {
     let res = parseNumeric(str, m)
     if (res !== null) {
       res.hasComma = hasComma

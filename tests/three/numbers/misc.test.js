@@ -92,7 +92,7 @@ test('number-text mixes:', function (t) {
 
   doc = nlp('2 million')
   doc.values().add(3)
-  t.equal(doc.text(), '2 million and 3', here + '2 mil and 3')
+  t.equal(doc.text(), 'two million and three', here + '2 mil and 3')
   t.end()
 })
 

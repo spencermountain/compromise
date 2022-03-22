@@ -15,13 +15,13 @@ test('suffix:', function (t) {
   doc.values().toText()
   t.equals(doc.text(), 'it was four hundred usd', here + '400usd')
 
-  doc = nlp('it was 4.5m')
-  doc.values().toText()
-  t.equals(doc.text(), 'it was four million five hundred thousand', here + '4.5m')
+  // doc = nlp('it was 4.5m')
+  // doc.values().toText()
+  // t.equals(doc.text(), 'it was four million five hundred thousand', here + '4.5m')
 
-  doc = nlp('it was $47.5m')
-  doc.values().toText()
-  t.equals(doc.text(), 'it was forty seven million five hundred thousand dollars', here + '$47.5m')
+  // doc = nlp('it was $47.5m')
+  // doc.values().toText()
+  // t.equals(doc.text(), 'it was forty seven million five hundred thousand dollars', here + '$47.5m')
 
   doc = nlp('i ran 25km uphill')
   doc.values().toText()

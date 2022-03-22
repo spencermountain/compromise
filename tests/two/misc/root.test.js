@@ -7,6 +7,11 @@ test('root text', function (t) {
   let doc = nlp(txt).compute('root')
   let want = `i have exercise four to five day per week.`
   t.equal(doc.text('root'), want, here + 'found root form')
+
+  txt = `he seems quicker. She's the quickest.`
+  doc = nlp(txt).compute('root')
+  want = `he seem quick. she be the quick.` //:/
+  t.equal(doc.text('root'), want, here + 'found root comparative')
   t.end()
 })
 

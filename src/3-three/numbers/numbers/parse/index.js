@@ -1,33 +1,34 @@
 import parseText from './toNumber/index.js'
 import parseFraction from '../../fractions/parse.js'
 
-const parseNumeric = function (str, p, isFraction) {
+const parseNumeric = function (str, m) {
   str = str.replace(/,/g, '')
-  //parse a numeric-number (easy)
-  let arr = str.split(/^([^0-9]*)([0-9.,]*)([^0-9]*)$/)
-  if (arr && arr[2] && p.terms().length < 2) {
-    let num = parseFloat(arr[2] || str)
+  //parse a numeric-number
+  let arr = str.split(/([0-9.,]*)/)
+  let [prefix, num] = arr
+  let suffix = arr.slice(2).join('')
+  if (num !== '' && m.length < 2) {
+    num = Number(num || str)
     //ensure that num is an actual number
     if (typeof num !== 'number') {
       num = null
     }
     // strip an ordinal off the suffix
-    let suffix = arr[3] || ''
+    suffix = suffix || ''
     if (suffix === 'st' || suffix === 'nd' || suffix === 'rd' || suffix === 'th') {
       suffix = ''
     }
     // support M for million, k for thousand
-    if (suffix === 'm' || suffix === 'M') {
-      num *= 1000000
-      suffix = ''
-    }
-    if (suffix === 'k' || suffix === 'k') {
-      num *= 1000
-      suffix = ''
-    }
-    num = isFraction ? 1 / num : num
+    // if (suffix === 'm' || suffix === 'M') {
+    //   num *= 1000000
+    //   suffix = ''
+    // }
+    // if (suffix === 'k' || suffix === 'k') {
+    //   num *= 1000
+    //   suffix = ''
+    // }
     return {
-      prefix: arr[1] || '',
+      prefix: prefix || '',
       num: num,
       suffix: suffix,
     }
@@ -44,10 +45,12 @@ const parseNumber = function (m) {
   // is it in '3,123' format?
   let hasComma = /[0-9],[0-9]/.test(m.text('text'))
   // parse a numeric-number like '$4.00'
-  let res = parseNumeric(str, m)
-  if (res !== null) {
-    res.hasComma = hasComma
-    return res
+  if (m.wordCount() <= 2) {
+    let res = parseNumeric(str, m)
+    if (res !== null) {
+      res.hasComma = hasComma
+      return res
+    }
   }
   // -- parse text-formats --
   // Fractions: remove 'and a half' etc. from the end

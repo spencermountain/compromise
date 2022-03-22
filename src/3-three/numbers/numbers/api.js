@@ -214,11 +214,6 @@ const addMethod = function (View) {
           fmt = val.has('#Ordinal') ? 'TextOrdinal' : 'TextCardinal'
         }
         let str = format(obj, fmt)
-        val = val.not('#Currency')
-        // add commas to number
-        if (obj.hasComma && fmt === 'Cardinal') {
-          str = Number(str).toLocaleString()
-        }
         val.replaceWith(str, { tags: true })
         // handle plural/singular unit
         // agreeUnits(agree, val, obj)

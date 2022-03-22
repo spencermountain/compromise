@@ -84,3 +84,29 @@ test('misc:', function (t) {
 
   t.end()
 })
+
+test('number-text mixes:', function (t) {
+  let doc = nlp('2 million')
+  doc.values().toNumber()
+  t.equal(doc.text(), '2000000', here + '2 mil')
+
+  doc = nlp('2 million')
+  doc.values().add(3)
+  t.equal(doc.text(), '2 million and 3', here + '2 mil and 3')
+  t.end()
+})
+
+test('prefix/suffix:', function (t) {
+  let doc = nlp('$7,938').numbers().add(1)
+  t.equal(doc.text(), '$7,939', here + 'add money')
+
+  doc = nlp('7,938kg').numbers().minus(1)
+  t.equal(doc.text(), '7,937kg', here + 'minus w/ unit')
+
+  doc = nlp('938.4cm').numbers().minus(1)
+  t.equal(doc.text(), '937.4cm', here + 'minus w/ decimal')
+
+  doc = nlp('33rd').numbers().add(1)
+  t.equal(doc.text(), '34th', here + 'add ordinal')
+  t.end()
+})

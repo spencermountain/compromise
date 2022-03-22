@@ -16,6 +16,10 @@ const format = function (obj, fmt) {
     return prefix + textCardinal(obj) + suffix
   }
   // assume Cardinal
-  return obj.prefix + String(obj.num) + obj.suffix
+  let num = obj.num
+  if (obj.hasComma) {
+    num = num.toLocaleString()
+  }
+  return obj.prefix + String(num) + obj.suffix
 }
 export default format

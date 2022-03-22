@@ -462,30 +462,37 @@ doc.money().json()
 - **[.text()](https://observablehq.com/@spencermountain/compromise-text)** - return the document as text
 - **[.json()](https://observablehq.com/@spencermountain/compromise-json)** - return the document as data
 - **[.debug()](https://observablehq.com/@spencermountain/compromise-output)** - pretty-print the interpreted document
+- **[.out()](https://observablehq.com/@spencermountain/compromise-output)** - a named or custom output
+- **[.html({})](https://observablehq.com/@spencermountain/compromise-html)** - output custom html tags for matches
+- **[.wrap({})](https://observablehq.com/@spencermountain/compromise-output)** - produce custom output for document matches
 
 ##### Utils
 
-- **[.all()](https://observablehq.com/@spencermountain/compromise-utils)** - return the whole original document ('zoom out')
 - **[.found](https://observablehq.com/@spencermountain/compromise-utils)** _[getter]_ - is this document empty?
-- **[.tagger()](https://observablehq.com/@spencermountain/compromise-tagger)** - (re-)run the part-of-speech tagger on this document
-- **[.wordCount()](https://observablehq.com/@spencermountain/compromise-utils)** - count the # of terms in the document
+- **[.docs](https://observablehq.com/@spencermountain/compromise-utils)** _[getter]_ get term objects as json
 - **[.length](https://observablehq.com/@spencermountain/compromise-utils)** _[getter]_ - count the # of characters in the document (string length)
+- **[.isView](https://observablehq.com/@spencermountain/compromise-utils)** _[getter]_ - identify a compromise object
+- **[.compute()](https://observablehq.com/@spencermountain/compromise-compute)** - run a named analysis on the document
 - **[.clone()](https://observablehq.com/@spencermountain/compromise-utils)** - deep-copy the document, so that no references remain
+- **[.termList()](https://observablehq.com/@spencermountain/compromise-accessors)** - return a flat list of all Term objects in match
+
 - **[.cache({})](https://observablehq.com/@spencermountain/compromise-cache)** - freeze the current state of the document, for speed-purposes
 - **[.uncache()](https://observablehq.com/@spencermountain/compromise-cache)** - un-freezes the current state of the document, so it may be transformed
 
 ##### Accessors
 
+- **[.all()](https://observablehq.com/@spencermountain/compromise-utils)** - return the whole original document ('zoom out')
+- **[.terms()](https://observablehq.com/@spencermountain/compromise-selections)** - split-up results by each individual term
 - **[.first(n)](https://observablehq.com/@spencermountain/compromise-accessors)** - use only the first result(s)
 - **[.last(n)](https://observablehq.com/@spencermountain/compromise-accessors)** - use only the last result(s)
 - **[.slice(n,n)](https://observablehq.com/@spencermountain/compromise-accessors)** - grab a subset of the results
 - **[.eq(n)](https://observablehq.com/@spencermountain/compromise-accessors)** - use only the nth result
-- **[.terms()](https://observablehq.com/@spencermountain/compromise-selections)** - split-up results by each individual term
 - **[.firstTerms()](https://observablehq.com/@spencermountain/compromise-accessors)** - get the first word in each match
 - **[.lastTerms()](https://observablehq.com/@spencermountain/compromise-accessors)** - get the end word in each match
-- **[.sentences()](https://observablehq.com/@spencermountain/compromise-accessors)** - get the whole sentence for each match
-- **[.termList()](https://observablehq.com/@spencermountain/compromise-accessors)** - return a flat list of all Term objects in match
-- **[.groups('')](https://observablehq.com/@spencermountain/compromise-accessors)** - grab any named capture-groups from a match
+- **[.fullSentences()](https://observablehq.com/@spencermountain/compromise-accessors)** - get the whole sentence for each match
+- **[.groups()](https://observablehq.com/@spencermountain/compromise-accessors)** - grab any named capture-groups from a match
+- **[.wordCount()](https://observablehq.com/@spencermountain/compromise-utils)** - count the # of terms in the document
+- **[.confidence()](https://observablehq.com/@spencermountain/compromise-utils)** - an average score for pos tag interpretations
 
 ##### Match
 
@@ -497,11 +504,25 @@ _(match methods use the [match-syntax](https://docs.compromise.cool/compromise-m
 - **[.if('')](https://observablehq.com/@spencermountain/compromise-match)** - return each current phrase, only if it contains this match ('only')
 - **[.ifNo('')](https://observablehq.com/@spencermountain/compromise-match)** - Filter-out any current phrases that have this match ('notIf')
 - **[.has('')](https://observablehq.com/@spencermountain/compromise-match)** - Return a boolean if this match exists
-- **[.lookBehind('')](https://observablehq.com/@spencermountain/compromise-match)** - search through earlier terms, in the sentence
-- **[.lookAhead('')](https://observablehq.com/@spencermountain/compromise-match)** - search through following terms, in the sentence
 - **[.before('')](https://observablehq.com/@spencermountain/compromise-match)** - return all terms before a match, in each phrase
 - **[.after('')](https://observablehq.com/@spencermountain/compromise-match)** - return all terms after a match, in each phrase
+
+- **[.union()](https://observablehq.com/@spencermountain/compromise-pointers)** - return combined matches without duplicates
+- **[.intersection()](https://observablehq.com/@spencermountain/compromise-pointers)** - return only duplicate matches
+- **[.complement()](https://observablehq.com/@spencermountain/compromise-pointers)** - get everything not in another match
+- **[.settle()](https://observablehq.com/@spencermountain/compromise-pointers)** - remove overlaps from matches
+
+- **[.growRight('')](https://observablehq.com/@spencermountain/compromise-match)** - add any matching terms immediately after each match
+- **[.growLeft('')](https://observablehq.com/@spencermountain/compromise-match)** - add any matching terms immediately before each match
+- **[.grow('')](https://observablehq.com/@spencermountain/compromise-match)** - add any matching terms before or after each match
+
+- **[.splitOn('')](https://observablehq.com/@spencermountain/compromise-split)** - return a Document with three parts for every match ('splitOn')
+- **[.splitBefore('')](https://observablehq.com/@spencermountain/compromise-split)** - partition a phrase before each matching segment
+- **[.splitAfter('')](https://observablehq.com/@spencermountain/compromise-split)** - partition a phrase after each matching segment
+
 - **[.lookup([])](https://observablehq.com/@spencermountain/compromise-match)** - quick find for an array of string matches
+
+- **[.autofill()](https://observablehq.com/@spencermountain/compromise-typeahead)** - create type-ahead assumptions on the document
 
 ##### Tag
 
@@ -540,10 +561,11 @@ _(match methods use the [match-syntax](https://docs.compromise.cool/compromise-m
 
 - **[.replace(match, replace)](https://observablehq.com/@spencermountain/compromise-insert)** - search and replace match with new content
 - **[.replaceWith(replace)](https://observablehq.com/@spencermountain/compromise-insert)** - substitute-in new text
-- **[.delete()](https://observablehq.com/@spencermountain/compromise-insert)** - fully remove these terms from the document
-- **[.append(str)](https://observablehq.com/@spencermountain/compromise-insert)** - add these new terms to the end (insertAfter)
-- **[.prepend(str)](https://observablehq.com/@spencermountain/compromise-insert)** - add these new terms to the front (insertBefore)
+- **[.remove()](https://observablehq.com/@spencermountain/compromise-insert)** - fully remove these terms from the document
+- **[.insertBefore(str)](https://observablehq.com/@spencermountain/compromise-insert)** - add these new terms to the front of each match (prepend)
+- **[.insertAfter(str)](https://observablehq.com/@spencermountain/compromise-insert)** - add these new terms to the end of each match (append)
 - **[.concat()](https://observablehq.com/@spencermountain/compromise-insert)** - add these new things to the end
+- **[.swap(fromLemma, toLemma)](https://observablehq.com/@spencermountain/compromise-insert)** - smart replace of root-words,using proper conjugation
 
 ##### Transform
 
@@ -551,11 +573,6 @@ _(match methods use the [match-syntax](https://docs.compromise.cool/compromise-m
 - **[.reverse()](https://observablehq.com/@spencermountain/compromise-sorting)** - reverse the order of the matches, but not the words
 - **[.normalize({})](https://observablehq.com/@spencermountain/compromise-normalization)** - clean-up the text in various ways
 - **[.unique()](https://observablehq.com/@spencermountain/compromise-sorting)** - remove any duplicate matches
-- **[.split('')](https://observablehq.com/@spencermountain/compromise-split)** - return a Document with three parts for every match ('splitOn')
-- **[.splitBefore('')](https://observablehq.com/@spencermountain/compromise-split)** - partition a phrase before each matching segment
-- **[.splitAfter('')](https://observablehq.com/@spencermountain/compromise-split)** - partition a phrase after each matching segment
-- **[.segment({})](https://observablehq.com/@spencermountain/compromise-split)** - split a document into labeled sections
-- **[.join('')](https://observablehq.com/@spencermountain/compromise-split)** - make all phrases into one phrase
 
 
 ##### Lib
@@ -564,10 +581,13 @@ _(these methods are on the main `nlp` object)_
 
 - **[nlp.tokenize()](https://observablehq.com/@spencermountain/compromise-tokenization)** - parse text without running POS-tagging
 - **[nlp.plugin()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - mix in a compromise-plugin
+- **[nlp.parseMatch()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - pre-parse any match statements for faster lookups
+- **[nlp.world()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - grab or change library internals
+- **[nlp.model()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - grab all current linguistic data
+- **[nlp.methods()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - grab or change internal methods
+- **[nlp.hooks()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - see which compute methods run automatically
 - **[nlp.verbose()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - log our decision-making for debugging
 - **[nlp.version](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - current semver version of the library
-- **[nlp.parseMatch()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - pre-parse any match statements for faster lookups
-- **[nlp.world()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - grab all current linguistic data
 
 <!-- spacer -->
 <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
@@ -590,60 +610,63 @@ _(these methods are on the main `nlp` object)_
 ##### Nouns
 - **[.nouns()](https://observablehq.com/@spencermountain/nouns)** - return any subsequent terms tagged as a Noun
   - **[.nouns().json()](https://observablehq.com/@spencermountain/nouns)** - overloaded output with noun metadata
-  - **[.nouns().adjectives()](https://observablehq.com/@spencermountain/nouns)** - get any adjectives describing this noun
-  - **[.nouns().toPlural()](https://observablehq.com/@spencermountain/nouns)** - `'football captain' → 'football captains'`
-  - **[.nouns().toSingular()](https://observablehq.com/@spencermountain/nouns)** - `'turnovers' → 'turnover'`
+  - **[.nouns().parse()](https://observablehq.com/@spencermountain/nouns)** - get tokenized noun-phrase
   - **[.nouns().isPlural()](https://observablehq.com/@spencermountain/nouns)** - return only plural nouns
   - **[.nouns().isSingular()](https://observablehq.com/@spencermountain/nouns)** - return only singular nouns
-  - **[.nouns().hasPlural()](https://observablehq.com/@spencermountain/nouns)** - return only nouns that _can be_ inflected as plural
-  - **[.nouns().toPossessive()](https://observablehq.com/@spencermountain/nouns)** - add a `'s` to the end, in a safe manner.
+  - **[.nouns().toPlural()](https://observablehq.com/@spencermountain/nouns)** - `'football captain' → 'football captains'`
+  - **[.nouns().toSingular()](https://observablehq.com/@spencermountain/nouns)** - `'turnovers' → 'turnover'`
+  - **[.nouns().adjectives()](https://observablehq.com/@spencermountain/nouns)** - get any adjectives describing this noun
 
 ##### Verbs
 - **[.verbs()](https://observablehq.com/@spencermountain/verbs)** - return any subsequent terms tagged as a Verb
   - **[.verbs().json()](https://observablehq.com/@spencermountain/verbs)** - overloaded output with verb metadata
-  - **[.verbs().conjugate()](https://observablehq.com/@spencermountain/verbs)** - return all forms of these verbs
+  - **[.verbs().parse()](https://observablehq.com/@spencermountain/verbs)** - get tokenized verb-phrase
+  - **[.verbs().subjects()](https://observablehq.com/@spencermountain/verbs)** - what is doing the verb action
+  - **[.verbs().adverbs()](https://observablehq.com/@spencermountain/verbs)** - return the adverbs describing this verb.
+  - **[.verbs().isSingular()](https://observablehq.com/@spencermountain/verbs)** - return singular verbs like 'spencer walks'
+  - **[.verbs().isPlural()](https://observablehq.com/@spencermountain/verbs)** - return plural verbs like 'we walk'
+  - **[.verbs().isImperative()](https://observablehq.com/@spencermountain/verbs)** - only instruction verbs like 'eat it!'
+  
   - **[.verbs().toPastTense()](https://observablehq.com/@spencermountain/verbs)** - `'will go' → 'went'`
   - **[.verbs().toPresentTense()](https://observablehq.com/@spencermountain/verbs)** - `'walked' → 'walks'`
   - **[.verbs().toFutureTense()](https://observablehq.com/@spencermountain/verbs)** - `'walked' → 'will walk'`
   - **[.verbs().toInfinitive()](https://observablehq.com/@spencermountain/verbs)** - `'walks' → 'walk'`
   - **[.verbs().toGerund()](https://observablehq.com/@spencermountain/verbs)** - `'walks' → 'walking'`
-  - **[.verbs().toParticiple()](https://observablehq.com/@spencermountain/verbs)** - `'drive' → 'driven'` - otherwise simple-past ('walked')
+  - **[.verbs().conjugate()](https://observablehq.com/@spencermountain/verbs)** - return all forms of these verbs
+  
+  - **[.verbs().isNegative()](https://observablehq.com/@spencermountain/verbs)** - return verbs with 'not', 'never' or 'no'
+  - **[.verbs().isPositive()](https://observablehq.com/@spencermountain/verbs)** - only verbs without 'not', 'never' or 'no'
   - **[.verbs().toNegative()](https://observablehq.com/@spencermountain/verbs)** - `'went' → 'did not go'`
   - **[.verbs().toPositive()](https://observablehq.com/@spencermountain/verbs)** - `"didn't study" → 'studied'`
-  - **[.verbs().isNegative()](https://observablehq.com/@spencermountain/verbs)** - return verbs with 'not'
-  - **[.verbs().isPositive()](https://observablehq.com/@spencermountain/verbs)** - only verbs without 'not'
-  - **[.verbs().isPlural()](https://observablehq.com/@spencermountain/verbs)** - return plural verbs like 'we walk'
-  - **[.verbs().isSingular()](https://observablehq.com/@spencermountain/verbs)** - return singular verbs like 'spencer walks'
-  - **[.verbs().adverbs()](https://observablehq.com/@spencermountain/verbs)** - return the adverbs describing this verb.
-  - **[.verbs().isImperative()](https://observablehq.com/@spencermountain/verbs)** - only instruction verbs like 'eat it!'
 
 ##### Numbers
 - **[.numbers()](https://observablehq.com/@spencermountain/compromise-values)** - grab all written and numeric values
-  - **[.numbers().get()](https://observablehq.com/@spencermountain/compromise-values)** - retrieve the parsed number(s)
+  - **[.numbers().parse()](https://observablehq.com/@spencermountain/compromise-values)** - get tokenized number phrase
+  - **[.numbers().get()](https://observablehq.com/@spencermountain/compromise-values)** - get a simple javascript number
   - **[.numbers().json()](https://observablehq.com/@spencermountain/compromise-values)** - overloaded output with number metadata
-  - **[.numbers().units()](https://observablehq.com/@spencermountain/compromise-values)** - grab 'kilos' from `25 kilos'`
-  - **[.numbers().fractions()](https://observablehq.com/@spencermountain/compromise-values)** - things like `1/3rd`
-  - **[.numbers().toText()](https://observablehq.com/@spencermountain/compromise-values)** - convert number to `five` or `fifth`
-  - **[.numbers().toNumber()](https://observablehq.com/@spencermountain/compromise-values)** - convert number to `5` or `5th`
-  - **[.numbers().toOrdinal()](https://observablehq.com/@spencermountain/compromise-values)** - convert number to `fifth` or `5th`
-  - **[.numbers().toCardinal()](https://observablehq.com/@spencermountain/compromise-values)** - convert number to `five` or `5`
+  - **[.numbers().toNumber()](https://observablehq.com/@spencermountain/compromise-values)** - convert 'five' to `5`
+  - **[.numbers().toLocaleString()](https://observablehq.com/@spencermountain/compromise-values)** - add commas, or nicer formatting for numbers
+  - **[.numbers().toText()](https://observablehq.com/@spencermountain/compromise-values)** - convert '5' to `five`
+  - **[.numbers().toOrdinal()](https://observablehq.com/@spencermountain/compromise-values)** - convert 'five' to `fifth` or `5th`
+  - **[.numbers().toCardinal()](https://observablehq.com/@spencermountain/compromise-values)** - convert 'fifth' to `five` or `5`
+  - **[.numbers().isOrdinal()](https://observablehq.com/@spencermountain/compromise-values)** - return only ordinal numbers
+  - **[.numbers().isCardinal()](https://observablehq.com/@spencermountain/compromise-values)** - return only cardinal numbers
+  - **[.numbers().isEqual(n)](https://observablehq.com/@spencermountain/compromise-values)** - return numbers with this value
+  - **[.numbers().greaterThan(min)](https://observablehq.com/@spencermountain/compromise-values)** - return numbers bigger than n
+  - **[.numbers().lessThan(max)](https://observablehq.com/@spencermountain/compromise-values)** - return numbers smaller than n
+  - **[.numbers().between(min, max)](https://observablehq.com/@spencermountain/compromise-values)** - return numbers between min and max
   - **[.numbers().set(n)](https://observablehq.com/@spencermountain/compromise-values)** - set number to n
   - **[.numbers().add(n)](https://observablehq.com/@spencermountain/compromise-values)** - increase number by n
   - **[.numbers().subtract(n)](https://observablehq.com/@spencermountain/compromise-values)** - decrease number by n
   - **[.numbers().increment()](https://observablehq.com/@spencermountain/compromise-values)** - increase number by 1
   - **[.numbers().decrement()](https://observablehq.com/@spencermountain/compromise-values)** - decrease number by 1
-  - **[.numbers().isEqual(n)](https://observablehq.com/@spencermountain/compromise-values)** - return numbers with this value
-  - **[.numbers().greaterThan(min)](https://observablehq.com/@spencermountain/compromise-values)** - return numbers bigger than n
-  - **[.numbers().lessThan(max)](https://observablehq.com/@spencermountain/compromise-values)** - return numbers smaller than n
-  - **[.numbers().between(min, max)](https://observablehq.com/@spencermountain/compromise-values)** - return numbers between min and max
-  - **[.numbers().isOrdinal()](https://observablehq.com/@spencermountain/compromise-values)** - return only ordinal numbers
-  - **[.numbers().isCardinal()](https://observablehq.com/@spencermountain/compromise-values)** - return only cardinal numbers
-  - **[.numbers().toLocaleString()](https://observablehq.com/@spencermountain/compromise-values)** - add commas, or nicer formatting for numbers
+  
 - **[.money()](https://observablehq.com/@spencermountain/compromise-values)** - things like `'$2.50'`
   - **[.money().get()](https://observablehq.com/@spencermountain/compromise-values)** - retrieve the parsed amount(s) of money
   - **[.money().json()](https://observablehq.com/@spencermountain/compromise-values)** - currency + number info
   - **[.money().currency()](https://observablehq.com/@spencermountain/compromise-values)** - which currency the money is in
 - **[.fractions()](https://observablehq.com/@spencermountain/compromise-values)** - like '2/3rds' or 'one out of five'
+  - **[.fractions().parse()](https://observablehq.com/@spencermountain/compromise-values)** - get tokenized fraction
   - **[.fractions().get()](https://observablehq.com/@spencermountain/compromise-values)** - simple numerator, denomenator data
   - **[.fractions().json()](https://observablehq.com/@spencermountain/compromise-values)** - json method overloaded with fractions data
   - **[.fractions().toDecimal()](https://observablehq.com/@spencermountain/compromise-values)** - '2/3' -> '0.66'
@@ -662,21 +685,16 @@ _(these methods are on the main `nlp` object)_
   - **[.sentences().toPastTense()](https://observablehq.com/@spencermountain/compromise-sentences)** - `he walks` -> `he walked`
   - **[.sentences().toPresentTense()](https://observablehq.com/@spencermountain/compromise-sentences)** - `he walked` -> `he walks`
   - **[.sentences().toFutureTense()](https://observablehq.com/@spencermountain/compromise-sentences)** -- `he walks` -> `he will walk`
+  - **[.sentences().toInfinitive()](https://observablehq.com/@spencermountain/compromise-sentences)** -- verb root-form `he walks` -> `he walk`
   - **[.sentences().toNegative()](https://observablehq.com/@spencermountain/compromise-sentences)** - - `he walks` -> `he didn't walk`
-  - **[.sentences().toPositive()](https://observablehq.com/@spencermountain/compromise-sentences)** - `he doesn't walk` -> `he walks`
-  - **[.sentences().isPassive()](https://observablehq.com/@spencermountain/compromise-sentences)** - return only sentences with a passive-voice
   - **[.sentences().isQuestion()](https://observablehq.com/@spencermountain/compromise-sentences)** - return questions with a `?`
   - **[.sentences().isExclamation()](https://observablehq.com/@spencermountain/compromise-sentences)** - return sentences with a `!`
   - **[.sentences().isStatement()](https://observablehq.com/@spencermountain/compromise-sentences)** - return sentences without `?` or `!`
-  - **[.sentences().prepend()](https://observablehq.com/@spencermountain/compromise-sentences)** - smarter prepend that repairs whitespace + titlecasing
-  - **[.sentences().append()](https://observablehq.com/@spencermountain/compromise-sentences)** - smarter append that repairs sentence punctuation
-  - **[.sentences().toExclamation()](https://observablehq.com/@spencermountain/compromise-sentences)** - end sentence with a `!`
-  - **[.sentences().toQuestion()](https://observablehq.com/@spencermountain/compromise-sentences)** - end sentence with a `?`
-  - **[.sentences().toStatement()](https://observablehq.com/@spencermountain/compromise-sentences)** - end sentence with a `.`
 
 ##### Misc selections
 
 - **[.clauses()](https://observablehq.com/@spencermountain/compromise-selections)** - split-up sentences into multi-term phrases
+- **[.chunks()](https://observablehq.com/@spencermountain/compromise-selections)** - split-up sentences noun-phrases and verb-phrases
 - **[.hyphenated()](https://observablehq.com/@spencermountain/compromise-selections)** - all terms connected with a hyphen or dash like `'wash-out'`
 - **[.phoneNumbers()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'(939) 555-0113'`
 - **[.hashTags()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'#nlp'`
@@ -685,19 +703,37 @@ _(these methods are on the main `nlp` object)_
 - **[.emojis()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `💋`
 - **[.atMentions()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'@nlp_compromise'`
 - **[.urls()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'compromise.cool'`
-- **[.adverbs()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'quickly'`
 - **[.pronouns()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'he'`
 - **[.conjunctions()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'but'`
 - **[.prepositions()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'of'`
 - **[.abbreviations()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'Mrs.'`
+
 - **[.people()](https://observablehq.com/@spencermountain/topics-named-entity-recognition)** - names like 'John F. Kennedy'
+- **[.people().json()](https://observablehq.com/@spencermountain/topics-named-entity-recognition)** - get person-name metadata
+- **[.people().parse()](https://observablehq.com/@spencermountain/topics-named-entity-recognition)** - get person-name interpretation
 - **[.places()](https://observablehq.com/@spencermountain/topics-named-entity-recognition)** - like 'Paris, France'
 - **[.organizations()](https://observablehq.com/@spencermountain/topics-named-entity-recognition)** - like 'Google, Inc'
 - **[.topics()](https://observablehq.com/@spencermountain/topics-named-entity-recognition)** - `people()` + `places()` + `organizations()`
-- **[.parentheses()](https://observablehq.com/@spencermountain/compromise-selections)** - return anything inside (parentheses)
-- **[.possessives()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `"Spencer's"`
-- **[.quotations()](https://observablehq.com/@spencermountain/compromise-selections)** - return any terms inside quotation marks
+
+
+- **[.adjectives()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'quickly'`
+- **[.adjectives().json()](https://observablehq.com/@spencermountain/compromise-selections)** - get adjective metadata
+
+- **[.adverbs()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'quickly'`
+- **[.adverbs().json()](https://observablehq.com/@spencermountain/compromise-selections)** - get adverb metadata
+
 - **[.acronyms()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'FBI'`
+- **[.acronyms().strip()](https://observablehq.com/@spencermountain/compromise-selections)** - remove periods from acronyms
+- **[.acronyms().addPeriods()](https://observablehq.com/@spencermountain/compromise-selections)** - add periods to acronyms
+
+- **[.parentheses()](https://observablehq.com/@spencermountain/compromise-selections)** - return anything inside (parentheses)
+- **[.parentheses().strip()](https://observablehq.com/@spencermountain/compromise-selections)** - remove brackets 
+
+- **[.possessives()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `"Spencer's"`
+- **[.possessives().strip()](https://observablehq.com/@spencermountain/compromise-selections)** - "Spencer's" -> "Spencer"
+
+- **[.quotations()](https://observablehq.com/@spencermountain/compromise-selections)** - return any terms inside paired quotation marks
+- **[.quotations().strip()](https://observablehq.com/@spencermountain/compromise-selections)** - remove quotation marks
 
 <p>
 <img height="85px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>

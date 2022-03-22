@@ -173,7 +173,7 @@ class View {
 
 
   // ### Pointers
-  /** return all matches except duplicates */
+  /** return all matches without duplicates */
   union: (match: string | View) => View
   /** return only duplicate matches */
   intersection: (match: string | View) => View

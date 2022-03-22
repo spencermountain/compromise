@@ -40,6 +40,7 @@
 * .random()
 
 ### Accessors
+* .all()
 * .terms()
 * .groups()     
 * .eq()
@@ -48,7 +49,6 @@
 * .firstTerms()    
 * .lastTerms()
 * .slice()         
-* .all()
 * .fullSentences() 
 * .none()
 * .isDoc()            

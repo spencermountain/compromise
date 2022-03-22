@@ -75,10 +75,10 @@ const lastNoun = function (vb) {
 
 const isPlural = function (subj, vb) {
   // 'we are' vs 'he is'
-  if (vb.has('are')) {
+  if (vb.has('(are|were|does)')) {
     return true
   }
-  if (subj.has('(those|they)')) {
+  if (subj.has('(those|they|we)')) {
     return true
   }
   if (subj.found && subj.isPlural) {

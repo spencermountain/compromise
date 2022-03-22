@@ -6,9 +6,8 @@ import nlp from './src/three.js'
 // nlp.verbose('tagger')
 // nlp.verbose('chunker')
 
-let doc = nlp('i saw three fifths of an inch')
-doc.sentences().toPositive()
-doc.debug()
+let doc = nlp('we look at it.')
+doc.verbs().isPlural().debug()
 
 // weird remove issue
 // let m = nlp('one two three. foo.', { two: 'Infinitive' })

@@ -5,7 +5,7 @@ const here = '[three/verb-isPlural] '
 test('plural-verbs:', function (t) {
   let r = nlp('i look. Spencer looks.')
   let len = r.verbs().isPlural().length
-  t.equal(len, 1, here + 'i singular')
+  t.equal(len, 0, here + '0 singular')
 
   r = nlp('we look at it. They report on it')
   len = r.verbs().isPlural().length

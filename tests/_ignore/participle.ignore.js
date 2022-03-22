@@ -15,7 +15,7 @@ test('toParticiple', function (t) {
     let doc = nlp(a[0])
     // doc.verbs().toParticiple()
     doc.verbs().toPast()
-    t.equal(doc.text(), a[1], a[0])
+    t.equal(doc.text(), a[1], here + a[0])
   })
   t.end()
 })
@@ -33,7 +33,7 @@ test('participle -> past', function (t) {
   arr.forEach(a => {
     let doc = nlp(a[0])
     doc.verbs().toPastTense()
-    t.equal(doc.text(), a[1], a[0])
+    t.equal(doc.text(), a[1], here + a[0])
   })
   t.end()
 })
@@ -51,7 +51,7 @@ test('participle -> future', function (t) {
   arr.forEach(a => {
     let doc = nlp(a[0])
     doc.verbs().toFutureTense()
-    t.equal(doc.text(), a[1], a[0])
+    t.equal(doc.text(), a[1], here + a[0])
   })
   t.end()
 })

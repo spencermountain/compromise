@@ -1,7 +1,7 @@
 {
   "name": "compromise-stats",
   "description": "plugin for nlp-compromise",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "main": "./src/plugin.js",
   "type": "module",
@@ -27,7 +27,7 @@
     "build": "rollup -c --silent"
   },
   "peerDependencies": {
-    "compromise": ">=12.0.0"
+    "compromise": ">=14.0.0"
   },
   "dependencies": {
     "efrt": "^2.5.0"

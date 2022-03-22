@@ -30,7 +30,7 @@
     "builds/*.js"
   ],
   "peerDependencies": {
-    "compromise": ">=12.0.0"
+    "compromise": ">=14.0.0"
   },
   "dependencies": {},
   "devDependencies": {},

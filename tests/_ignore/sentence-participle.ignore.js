@@ -5,27 +5,27 @@ const here = '[three/sentence-participle] '
 test('toPast finds participle form', function (t) {
   let doc = nlp('i drive')
   doc.sentences().toPastTense()
-  t.equal(doc.text(), 'i drove', 'no modal')
+  t.equal(doc.text(), 'i drove', here + 'no modal')
 
   doc = nlp('i really drive')
   doc.sentences().toPastTense()
-  t.equal(doc.text(), 'i really drove', 'adverb no modal')
+  t.equal(doc.text(), 'i really drove', here + 'adverb no modal')
 
   doc = nlp('i should drive')
   doc.sentences().toPastTense()
-  t.equal(doc.text(), 'i should have driven', 'with should')
+  t.equal(doc.text(), 'i should have driven', here + 'with should')
 
   doc = nlp('i really may drive')
   doc.sentences().toPastTense()
-  t.equal(doc.text(), 'i really may have driven', 'with really may')
+  t.equal(doc.text(), 'i really may have driven', here + 'with really may')
 
   doc = nlp('i could actually drive')
   doc.sentences().toPastTense()
-  t.equal(doc.text(), 'i could have actually driven', 'with could actually')
+  t.equal(doc.text(), 'i could have actually driven', here + 'with could actually')
 
   doc = nlp("i seriously couldn't drive")
   doc.sentences().toPastTense()
-  t.equal(doc.text(), "i seriously couldn't have driven", 'with adverb + neg')
+  t.equal(doc.text(), "i seriously couldn't have driven", here + 'with adverb + neg')
 
   // doc = nlp("i seriously couldn't even drive")
   // doc.sentences().toPastTense()
@@ -47,7 +47,7 @@ test('toParticiple', function (t) {
     let doc = nlp(a[0])
     // doc.sentences().toParticiple()
     doc.sentences().toPastTense()
-    t.equal(doc.text(), a[1], a[0])
+    t.equal(doc.text(), a[1], here + a[0])
   })
   t.end()
 })
@@ -64,7 +64,7 @@ test('modal-present-to-past', function (t) {
   arr.forEach((a) => {
     let doc = nlp(a[0])
     doc.sentences().toPastTense()
-    t.equal(doc.text(), a[1], a[0])
+    t.equal(doc.text(), a[1], here + a[0])
   })
   t.end()
 })

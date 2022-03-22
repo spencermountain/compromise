@@ -25,7 +25,7 @@ test('unicode emojis', function (t) {
   ].forEach(function (a) {
     const have = nlp(a[0]).match('#Emoji').out('normal')
     const msg = "have: '" + have + "'  want: '" + a[1] + "'"
-    t.equal(have, a[1], msg)
+    t.equal(have, a[1], here + msg)
   })
   t.end()
 })
@@ -41,7 +41,7 @@ test('emoticon emojis', function (t) {
   ].forEach(function (a) {
     const have = nlp(a[0]).match('#Emoticon').out('normal')
     const msg = "have: '" + have + "'  want: '" + a[1] + "'"
-    t.equal(have, a[1], msg)
+    t.equal(have, a[1], here + msg)
   })
   t.end()
 })
@@ -51,16 +51,16 @@ test('result methods', function (t) {
 
   //has method
   const m = nlp(text)
-  t.equal(m.match('#Emoji').found, true, 'nlp.has positive')
-  t.equal(m.match('#SportsTeam').found, false, 'nlp.has neg')
+  t.equal(m.match('#Emoji').found, true, here + 'nlp.has positive')
+  t.equal(m.match('#SportsTeam').found, false, here + 'nlp.has neg')
 
   //filter string
   let small = m.if('(#Emoji|#Emoticon)')
-  t.equal(small.out('text'), 'this :cookie: <3 💯 so good. Yes it is <3', 'nlp.filter string')
+  t.equal(small.out('text'), 'this :cookie: <3 💯 so good. Yes it is <3', here + 'nlp.filter string')
 
   //filter method
   small = m.ifNo('(#Emoji|#Emoticon)')
-  t.equal(small.out('normal'), 'it is really nice.', 'nlp.filter method')
+  t.equal(small.out('normal'), 'it is really nice.', here + 'nlp.filter method')
 
   t.end()
 })

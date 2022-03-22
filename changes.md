@@ -16,7 +16,7 @@ import nlp from 'compromise/two' // 225kb
 import nlp from 'compromise/three' // 275kb
 ```
 
-in v14, we are dropping support for IE11.
+in v14, we are dropping support for IE11 and node <12.
 
 ### Self-repairing pointers
 we've finally found a quick way to support dynamic pointers to changing word data:
@@ -106,7 +106,6 @@ as well as our existing [compromise-speech](https://github.com/spencermountain/c
 - **[change]** - less-magical money parsing - `nlp('50 cents').money().get()` is no-longer `0.5`
 - **[change]** - .find() does not return undefined on an empty result anymore
 - **[change]** - fuzzy matches must now be wrapped in tildes, like `~this~`
-
 - **[new]** `.union()`, .intersection(), .difference() and .complement() methods
 - **[new]** `.confidence()` method - approximate tagging confidence score for arbitrary selections
 - **[new]** `.settle()` - remove overlaps in matches

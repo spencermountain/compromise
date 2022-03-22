@@ -45,7 +45,7 @@ Major release - see [Release Notes](https://github.com/spencermountain/compromis
 - **[change]** drop agreement parameters in .numbers() methods
 - **[change]** - less-magical money parsing - `nlp('50 cents').money().get()` is no-longer `0.5`
 - **[change]** - .find() does not return undefined on an empty result anymore
-
+- **[change]** - fuzzy matches must now be wrapped in tildes, like `~this~`
 - **[new]** `.union()`, .intersection(), .difference() and .complement() methods
 - **[new]** `.confidence()` method - approximate tagging confidence score for arbitrary selections
 - **[new]** `.settle()` - remove overlaps in matches

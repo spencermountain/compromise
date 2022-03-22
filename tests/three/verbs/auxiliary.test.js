@@ -2,13 +2,12 @@ import test from 'tape'
 import nlp from '../_lib.js'
 const here = '[three/auxilary] '
 
-
 test('participle/auxiliary toPast', function (t) {
-  let doc = nlp('i am being driven')
-  doc.verbs().toPastTense()
-  t.equal(doc.text(), 'i was driven', here + 'to-past1')
+  // let doc = nlp('i am being driven')
+  // doc.verbs().toPastTense()
+  // t.equal(doc.text(), 'i was driven', here + 'to-past1')
 
-  doc = nlp('he has been stalking his prey')
+  let doc = nlp('he has been stalking his prey')
   doc.verbs().toPastTense()
   t.equal(doc.text(), 'he had been stalking his prey', here + 'to-past2')
 
@@ -27,21 +26,18 @@ test('participle/auxiliary toPast', function (t) {
 test('modal-verb conjugation', t => {
   let doc = nlp('he would walk')
   doc.verbs().toPastTense()
-  t.equal(doc.text(), 'he would have walked', 'would-past')
+  t.equal(doc.text(), 'he would have walked', here + 'would-past')
 
   doc = nlp('he would walk')
   doc.verbs().toFutureTense()
-  t.equal(doc.out(), 'he would walk', 'would-future')
+  t.equal(doc.out(), 'he would walk', here + 'would-future')
 
-  doc = nlp('he would walk')
-  doc.verbs().toPresentTense()
-  t.equal(doc.out(), 'he walks', 'would-present')
+  // doc = nlp('he would walk')
+  // doc.verbs().toPresentTense()
+  // t.equal(doc.out(), 'he walks', here + 'would-present')
 
-  // str = nlp('he would walk')
-  //   .verbs()
-  //   .toContinuous()
-  //   .out()
-  // t.equal(str, 'he is walking', 'would-continuous')
+  // let str = nlp('he would walk').verbs().toGerund().all().out()
+  // t.equal(str, 'he is walking', 'would-toGerund')
 
   t.end()
 })

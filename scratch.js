@@ -6,8 +6,8 @@ import nlp from './src/three.js'
 // nlp.verbose('tagger')
 // nlp.verbose('chunker')
 
-let doc = nlp('we look at it.')
-doc.verbs().isPlural().debug()
+let doc = nlp('i may work')
+doc.verbs().toPastTense().debug()
 
 // weird remove issue
 // let m = nlp('one two three. foo.', { two: 'Infinitive' })

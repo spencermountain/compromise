@@ -4,37 +4,41 @@ const here = '[three/verb-misc] '
 
 test('verbs.json', function (t) {
   let json = nlp('She has called twice, not the tv').verbs().json()
-  t.equal(json.length, 1, 'one verb')
-  t.equal(json[0].verb.negative, false, 'not negative')
-  t.equal(json[0].verb.root, 'called', 'got main verb')
-  t.equal(json[0].verb.auxiliary, 'has', 'got aux verb')
+  t.equal(json.length, 1, here + 'one verb')
+  t.equal(json[0].verb.negative, false, here + 'not negative')
+  t.equal(json[0].verb.root, 'called', here + 'got main verb')
+  t.equal(json[0].verb.auxiliary, 'has', here + 'got aux verb')
   t.end()
 })
 
 test('verbs.adverbs', function (t) {
   let doc = nlp('spencer is really great! Spencer really really was superb.')
   doc.verbs().adverbs().delete()
-  t.equal(doc.out(), 'spencer is great! Spencer was superb.', 'no-adverbs')
+  t.equal(doc.out(), 'spencer is great! Spencer was superb.', here + 'no-adverbs')
 
   doc = nlp('spencer truly would really run quickly').verbs().adverbs()
   t.equal(doc.length, 3, 'found all three adverbs')
-  t.equal(doc.text('reduced'), 'truly really quickly', 'found adverbs in order')
+  t.equal(doc.text('reduced'), 'truly really quickly', here + 'found adverbs in order')
 
   t.end()
 })
 
 test('dont conjugate modals', function (t) {
   let doc = nlp('i may')
-  doc.verbs().toPastTense()
-  t.equal(doc.out(), 'i may have', 'may')
+  // doc.verbs().toPastTense()
+  // t.equal(doc.out(), 'i may have', here + 'may')
 
-  doc = nlp('i think he really could.')
-  doc.verbs().toPastTense()
-  t.equal(doc.out(), 'i thought he really could have.', 'really could')
+  doc = nlp('i would')
+  doc.verbs().toFutureTense()
+  t.equal(doc.out(), 'i would', here + 'would')
 
-  doc = nlp('everybody ought to.')
-  doc.verbs().toPastTense()
-  t.equal(doc.out(), 'everybody ought to have.', 'ought to')
+  // doc = nlp('i think he really could.')
+  // doc.verbs().toPastTense()
+  // t.equal(doc.out(), 'i thought he really could have.', here + 'really could')
+
+  // doc = nlp('everybody ought to.')
+  // doc.verbs().toPastTense()
+  // t.equal(doc.out(), 'everybody ought to have.', here + 'ought to')
 
   t.end()
 })
@@ -42,15 +46,15 @@ test('dont conjugate modals', function (t) {
 test('support punctuation', function (t) {
   let doc = nlp('i go!')
   doc.verbs().toPastTense()
-  t.equal(doc.text(), 'i went!', 'excl-mark')
+  t.equal(doc.text(), 'i went!', here + 'excl-mark')
 
   doc = nlp('i go?!')
   doc.verbs().toPastTense()
-  t.equal(doc.text(), 'i went?!', 'ques-excl-mark')
+  t.equal(doc.text(), 'i went?!', here + 'ques-excl-mark')
 
   doc = nlp('i go; he went.')
   doc.verbs().toPastTense()
-  t.equal(doc.text(), 'i went; he went.', 'semi-colon')
+  t.equal(doc.text(), 'i went; he went.', here + 'semi-colon')
   t.end()
 })
 

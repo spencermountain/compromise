@@ -14,6 +14,10 @@ const fns = {
   simple: (vb, parsed) => {
     const { verbConjugate, verbToInfinitive } = vb.methods.two.transform
     const root = parsed.root
+    // 'i may'
+    if (root.has('#Modal')) {
+      return vb
+    }
     let str = root.text({ keepPunct: false })
     str = verbToInfinitive(str, vb.model, getTense(root))
     let all = verbConjugate(str, vb.model)

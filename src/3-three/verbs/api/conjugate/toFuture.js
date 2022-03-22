@@ -4,6 +4,10 @@ const keep = { tags: true }
 const simple = (vb, parsed) => {
   const { verbToInfinitive } = vb.methods.two.transform
   const { root, auxiliary } = parsed
+  // 'i may'
+  if (root.has('#Modal')) {
+    return vb
+  }
   let str = root.text('normal')
   str = verbToInfinitive(str, vb.model, getTense(root))
   if (str) {

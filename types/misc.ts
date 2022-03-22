@@ -23,7 +23,7 @@ export type Groups = object
 
 
 // possible values to .json()
-export interface JsonOptions {
+export interface JsonProps {
   /**  a perfect copy of the input text */
   text?: boolean
   /** normalized whitespace, case, unicode, punctuation */
@@ -53,6 +53,8 @@ export interface JsonOptions {
     bestTag?: boolean
   }
 }
+
+export type outMethods = 'text' | 'normal' | 'offset' | 'terms' | 'topk' | 'json' | 'tags' | 'array' | 'debug'
 
 // a key-value object of words, terms
 export interface Lexicon {

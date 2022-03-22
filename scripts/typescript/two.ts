@@ -20,4 +20,4 @@ doc.confidence()
 
 
 // ### Swap
-doc.swap()
+doc.swap('', '')

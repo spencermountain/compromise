@@ -3,8 +3,8 @@ import nlp from '../../types/three'
 
 let doc = nlp('okay cool')
 // # lib
-nlp.tokenize()
-nlp.plugin()
+nlp.tokenize('adf')
+nlp.plugin({})
 nlp.parseMatch()
 
 nlp.world()
@@ -16,23 +16,23 @@ nlp.version
 
 
 // ### API
-doc.compute()
-doc.forEach()
-doc.map()
-doc.filter()
-doc.find()
-doc.some()
+doc.compute('')
+doc.forEach(s => s)
+doc.map(s => s)
+doc.filter(s => s.found)
+doc.find(s => s.found)
+doc.some(s => s.found)
 doc.random()
 
 doc.termList()
 doc.terms()
 doc.groups()
-doc.eq()
+doc.eq(3)
 doc.first()
 doc.last()
 doc.firstTerms()
 doc.lastTerms()
-doc.slice()
+doc.slice(3)
 doc.all()
 doc.fullSentences()
 doc.none()
@@ -48,9 +48,9 @@ doc.isView
 doc.found
 doc.length
 doc.fullPointer
-doc.update()
-doc.toView()
-doc.fromText()
+doc.update(null)
+doc.toView(null)
+doc.fromText('')
 doc.clone()
 
 // ### Change
@@ -60,15 +60,15 @@ doc.toUpperCase()
 doc.toTitleCase()
 doc.toCamelCase()
 
-doc.concat()
+doc.concat('')
 
-doc.insertAfter()
-doc.insertBefore()
+doc.insertAfter('')
+doc.insertBefore('')
 
-doc.remove()
+doc.remove('')
 
-doc.replace()
-doc.replaceWith()
+doc.replace('', '')
+doc.replaceWith('')
 
 doc.unique()
 doc.reverse()
@@ -81,51 +81,49 @@ doc.hyphenate()
 doc.dehyphenate()
 doc.toQuotations()
 doc.toParentheses()
-doc.deHyphenate()
-doc.toQuotation()
 
 // ### Output
-doc.html()
+doc.html({})
 doc.json()
 doc.out()
 doc.debug()
 doc.text()
-doc.wrap()
+doc.wrap({})
 
 // ### Match
 nlp.parseMatch()
 
-doc.match()
-doc.matchOne()
-doc.has()
-doc.if()
-doc.ifNo()
+doc.match('')
+doc.matchOne('')
+doc.has('')
+doc.if('')
+doc.ifNo('')
 
-doc.before()
-doc.after()
-doc.growLeft()
-doc.growRight()
-doc.grow()
+doc.before('')
+doc.after('')
+doc.growLeft('')
+doc.growRight('')
+doc.grow('')
 
 doc.splitOn()
 doc.splitBefore()
 doc.splitAfter()
 
 // ### Pointers
-doc.union()
-doc.intersection()
-doc.not()
-doc.complement()
-doc.settle()
+doc.union('')
+doc.intersection('')
+doc.not('')
+doc.complement('')
+doc.settle('')
 
 // ### Tag
-nlp.addTags()
+nlp.addTags({})
 doc.compute('tagRank')
 
-doc.tag()
-doc.tagSafe()
-doc.unTag()
-doc.canBe()
+doc.tag('')
+doc.tagSafe('')
+doc.unTag('')
+doc.canBe('')
 
 // ### Contractions
 doc.compute('contractions')
@@ -145,19 +143,17 @@ doc.cache()
 doc.uncache()
 
 // ### Lookup
-nlp.compile()
-doc.compile()
-doc.lookup()
+nlp.compile([''])
+doc.lookup({})
 
 // ### Typeahead
-nlp.typeahead()
+nlp.typeahead({})
 doc.compute('typeahead')
-
 doc.autoFill()
 
 // ### Lexicon
 doc.compute('lexicon')
-nlp.addWords()
+nlp.addWords({})
 
 
 

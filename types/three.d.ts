@@ -24,6 +24,14 @@ declare module nlp {
   export function verbose(bool?: boolean): any
   /**  current semver version of the library */
   export const version: string
+  /** connect new tags to tagset graph */
+  export function addTags(tags: object): any
+  /** add new words to internal lexicon */
+  export function addWords(words: Lexicon): any
+  /** turn a list of words into a searchable graph */
+  export function compile(words: string[]): object
+  /** add words to the autoFill dictionary */
+  export function typeahead(words: Lexicon): any
 }
 
 export default nlp

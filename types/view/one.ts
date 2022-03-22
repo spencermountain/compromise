@@ -1,4 +1,4 @@
-import { Document, Pointer, Groups, Term, JsonOptions, Lexicon } from './misc'
+import { Document, Pointer, Groups, JsonProps, outMethods } from '../misc'
 
 class View {
   // Utils
@@ -112,7 +112,7 @@ class View {
   grow: (match: string | View, options?: any) => View
 
   /** quick find for an array of string matches */
-  lookup: (matches: string[]) => View
+  lookup: (trie: object | string[]) => View
   /** assume any type-ahead prefixes */
   autoFill: () => View
 
@@ -136,7 +136,7 @@ class View {
   /** connect words with hyphen, and remove whitespace */
   hyphenate: () => View
   /** remove hyphens between words, and set whitespace */
-  deHyphenate: () => View
+  dehyphenate: () => View
 
   // Tag
   /** Give all terms the given tag */
@@ -201,23 +201,18 @@ class View {
   splitBefore: (match?: string) => View
   /** separate everything before the word, as a new phrase */
   splitAfter: (match?: string) => View
-  /** split a document into labeled sections  */
-  segment: (regs: object, options?: object) => View
-  /** make all phrases into one phrase  */
-  join: (str?: string) => View
 
   // Output
   /** return the document as text */
   text: (options?: string | object) => string
   /** pull out desired metadata from the document */
-  json: (options?: JsonOptions | string) => any
+  json: (options?: JsonProps | string) => any
   /** some named output formats */
-  out: (format?: 'text' | 'normal' | 'offset' | 'terms') => string
-  // out: (format: 'array') => string[]
-  // out: (format: 'tags' | 'terms') => Array<{ normal: string; text: string; tags: string[] }>
-  // out: (format: 'json') => Array<{ normal: string; text: string; tags: () => void }>[]
-  // out: (format: 'debug') => View
-  // out: (format: 'topk') => Array<{ normal: string; count: number; percent: number }>
+  out: (format?: outMethods) => any
+  /** produce an html string */
+  html: (toHighlight: object) => string
+  /** produce an html string */
+  wrap: (matches: object) => string
   /** pretty-print the current document and its tags */
   debug: () => View
 }

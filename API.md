@@ -78,7 +78,6 @@
 * .dehyphenate()
 * .toQuotations()
 * .toParentheses()
-* .deHyphenate()
 * .toQuotation()
 
 ### Output

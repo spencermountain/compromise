@@ -22,5 +22,9 @@ test('match @functions', function (t) {
   m = doc.match('(foo|!@hasComma)')
   t.equal(m.text(), 'i am much better and faster', here + 'negative in optional function')
 
+
+  m = nlp('set the SCE to AUX.').match('@isUpperCase')
+  t.equal(m.length, 2, here + 'two uppercase')
+
   t.end()
 })

@@ -7,10 +7,7 @@ import nlp from './src/three.js'
 // nlp.verbose('chunker')
 
 // weird remove issue
-let m = nlp('one two three. foo.', { two: 'Infinitive' })
-m = m.splitOn('two').eq(0).tag('Foo')
-m.match('three').remove()
-m.debug()
-
-
-// let doc = nlp("Now, to take the ferry cost a nickel.").debug()
+// let m = nlp('one two three. foo.', { two: 'Infinitive' })
+// m = m.splitOn('two').eq(0).tag('Foo')
+// m.match('three').remove()
+// m.debug()

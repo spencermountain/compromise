@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import plg from './plugins/speech/src/plugin.js'
 // nlp.plugin(plg)
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 // nlp.verbose('chunker')
 
 // weird remove issue
@@ -12,11 +12,5 @@ import nlp from './src/three.js'
 // m.match('three').remove()
 // m.debug()
 
-let doc = nlp('simon says shoot the puck')
-doc.none().normalize().debug()
 
-// let doc = nlp("Wayne's World, party time")
-// let str = doc.people().normalize('heavy').text()
-// console.log(str)
-// "wayne"
-// console.log(doc.text())
+let doc = nlp("Like the time I caught the ferry ").debug()

@@ -43,3 +43,10 @@ test('normalize contractions', function (t) {
   t.equal(doc.text(), ` it is   coöl, (i think) .    He is   cool;  i said .`, here + 'normalize-contractions')
   t.end()
 })
+
+test('normalize empty', function (t) {
+  let doc = nlp('').none()
+  doc.normalize()
+  t.equal(doc.text(), ``, here + 'normalize-nothing')
+  t.end()
+})

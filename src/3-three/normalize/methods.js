@@ -45,8 +45,10 @@ export default {
     // trim end
     let docs = doc.docs
     let terms = docs[docs.length - 1]
-    let lastTerm = terms[terms.length - 1]
-    lastTerm.post = lastTerm.post.replace(/ /g, '')
+    if (terms && terms.length > 0) {
+      let lastTerm = terms[terms.length - 1]
+      lastTerm.post = lastTerm.post.replace(/ /g, '')
+    }
   },
 
   // ====== subsets ===

@@ -281,7 +281,7 @@ it's pretty fast. It can run on keypress:
 
 <div align="center">
   <a href="https://observablehq.com/@spencermountain/compromise-performance">
-    <img width="600" src="https://user-images.githubusercontent.com/399657/68234798-0abdc480-ffd0-11e9-9ac5-8875d185a631.png"/>
+    <img width="600" src="https://user-images.githubusercontent.com/399657/159795115-ed62440a-be41-424c-baa4-8dd15c48377d.png"/>
   </a>
 </div>
 

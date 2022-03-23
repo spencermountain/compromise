@@ -24,6 +24,11 @@ const chunks = function () {
     if (c.has('<Noun>')) {
       return c.nouns()
     }
+    // if (c.has('<Verb>')) {
+    //   if (c.verbs().length > 1) {
+    //     console.log(c.text())
+    //   }
+    // }
     return c
   })
   return parts

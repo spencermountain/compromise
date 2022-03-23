@@ -27,6 +27,8 @@ export default [
   { match: '#Copula just [like]', group: 0, tag: 'Preposition', reason: 'like-preposition' },
   //folks like her
   { match: '#Noun [like] #Noun', group: 0, tag: 'Preposition', reason: 'noun-like' },
+  //like the time
+  { match: '[like] #Determiner', group: 0, tag: 'Preposition', reason: 'like-the' },
 
 
 

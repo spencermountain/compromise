@@ -3,14 +3,14 @@ import nlp from './src/three.js'
 // import plg from './plugins/speech/src/plugin.js'
 // nlp.plugin(plg)
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 // nlp.verbose('chunker')
 
 // weird remove issue
-// let m = nlp('one two three. foo.', { two: 'Infinitive' })
-// m = m.splitOn('two').eq(0).tag('Foo')
-// m.match('three').remove()
-// m.debug()
+let m = nlp('one two three. foo.', { two: 'Infinitive' })
+m = m.splitOn('two').eq(0).tag('Foo')
+m.match('three').remove()
+m.debug()
 
 
-let doc = nlp("Like the time I caught the ferry ").debug()
+// let doc = nlp("Now, to take the ferry cost a nickel.").debug()

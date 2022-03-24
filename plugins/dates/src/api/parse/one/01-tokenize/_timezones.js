@@ -129,7 +129,7 @@ const informal = {
   ndt: america + 'St_Johns',
   'brazil time': america + 'Sao_Paulo',
   brt: america + 'Sao_Paulo',
-  brasília: america + 'Sao_Paulo',
+  'brasília': america + 'Sao_Paulo',
   brasilia: america + 'Sao_Paulo',
   'brazilian time': america + 'Sao_Paulo',
   'argentina time': america + 'Buenos_Aires',

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <script src="https://unpkg.com/compromise"></script>
+  <!-- <script src="https://unpkg.com/compromise-dates"></script> -->
+  <script src="../builds/compromise-dates.min.js"></script>
+
+</head>
+
+<body>
+  <p>compromise-dates demo:</p>
+  <ul>
+    <kbd>lets meet in 32 days</kbd>
+    <h2 id="res">loading</h2>
+  </ul>
+
+  <script defer>
+    nlp.plugin(compromiseDates) // window.compromiseDates
+    let txt = document.querySelector('kbd').innerText
+    let doc = nlp(txt)
+    let json = doc.dates().json()
+    let iso = json[0].dates.start
+    document.querySelector('#res').innerHTML = new Date(iso).toDateString()
+  </script>
+</body>
+
+</html>

@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/one.js'
+import nlp from './src/three.js'
 // import plg from './plugins/speech/src/plugin.js'
 // nlp.plugin(plg)
 
@@ -12,26 +12,48 @@ import nlp from './src/one.js'
 // m.match('three').remove()
 // m.debug()
 
-// let doc = nlp('He will learn to really like this')
-// doc.chunks().debug('chunks')
-// doc.nouns().debug('chunks')
 
-import wtf from '/Users/spencer/mountain/wtf_wikipedia/builds/wtf_wikipedia.mjs'
+// let doc = nlp('January the 12th of 2022 at 3pm')
+// let tmp = doc.clone()
+// tmp.remove('(the|of|at)')
+// tmp.numbers().toCardinal()
+// // 'january 12 2022'
+// let tmpYear = tmp.match('#Month #Value [#Value]', 0)
+// // get the match in the original document
+// let year = doc.match(tmpYear)
+// console.log(tmpYear)
+// year.debug()
 
-wtf.fetch('Sea breeze').then(doc => {
-  let txt = doc.text()
-  let begin = new Date()
-  nlp(txt)
-  // 
-  let end = new Date()
-  console.log((end.getTime() - begin.getTime()))
 
-})
 
-// let doc = nlp("looked for Amanda Hugginkiss")
-// // cache the root form of each word
-// doc.compute('cache')
-// // use a 'soft' lookup:
-// let m = doc.match('{look}')
-// // print our result:
-// m.debug()
+// let doc = nlp('one two three')
+// let tmp = doc.clone()
+// // mutate the original
+// doc.remove('two')
+// // return a partial
+// return doc.match(tmp).text()
+
+
+// let doc = nlp(`Springfield, springfield! it's a hell of a town.`)
+// let terms = doc.terms() //split by term
+// //remove duplicate matches
+// doc = doc.unique()
+// return doc.out('array')
+
+
+// let doc = nlp(`i have two questions for Homer - 'Why lie?' and 'Lies, why?'`)
+// doc.quotations().splitOn().out('array')
+
+// let doc = nlp('the sky is dark')
+// return doc.adjectives().json()[0]
+
+nlp('the so-called group of seven').normalize({ numbers: true }).out()
+
+nlp(`i saw the game that the Toronto Maple Leafs won`).verbs().isSingular().debug()
+
+nlp("you and your whole lousy operation stink").verbs().adverbs().debug()
+
+
+let doc = nlp(`wayne's World, party-time, excellent!! 🎸`)
+doc.remove('(#Emoticon|#Emoji)')
+console.log(doc.text())

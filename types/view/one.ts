@@ -81,33 +81,33 @@ class View {
 
   // Match
   /** return matching patterns in this doc */
-  match: (match: string | View, options?: any, group?: string | number) => View
+  match: (match: string | View, group?: string | number, options?: object) => View
   /** return only the first match */
-  matchOne: (match: string | View, options?: any) => View
+  matchOne: (match: string | View, group?: string | number, options?: object) => View
   /** Return a boolean if this match exists */
-  has: (match: string | View, options?: any) => boolean
+  has: (match: string | View, group?: string | number, options?: object) => boolean
   /** return each current phrase, only if it contains this match */
-  if: (match: string | View, options?: any) => View
+  if: (match: string | View, group?: string | number, options?: object) => View
   /** Filter-out any current phrases that have this match */
-  ifNo: (match: string | View, options?: any) => View
+  ifNo: (match: string | View, group?: string | number, options?: object) => View
 
   /** return the terms before each match */
-  before: (match: string | View, options?: any) => View
+  before: (match: string | View, group?: string | number, options?: object) => View
   /** return the terms after each match */
-  after: (match: string | View, options?: any) => View
+  after: (match: string | View, group?: string | number, options?: object) => View
   /** add any immediately-preceding matches to the view*/
-  growLeft: (match: string | View, options?: any) => View
+  growLeft: (match: string | View, group?: string | number, options?: object) => View
   /** add any immediately-following matches to the view*/
-  growRight: (match: string | View, options?: any) => View
+  growRight: (match: string | View, group?: string | number, options?: object) => View
   /** expand the view with any left-or-right matches*/
-  grow: (match: string | View, options?: any) => View
+  grow: (match: string | View, group?: string | number, options?: object) => View
 
   /** .split() [alias] */
-  splitOn: (match?: string) => View
+  splitOn: (match?: string, group?: string | number) => View
   /** separate everything after the match as a new phrase */
-  splitBefore: (match?: string) => View
+  splitBefore: (match?: string, group?: string | number) => View
   /** separate everything before the word, as a new phrase */
-  splitAfter: (match?: string) => View
+  splitAfter: (match?: string, group?: string | number) => View
 
   // Case
   /** turn every letter of every term to lower-cse */
@@ -129,9 +129,9 @@ class View {
   /** fully remove these terms from the document */
   remove: (match: string | View) => View
   /** search and replace match with new content */
-  replace: (match: string | View, text?: string | Function, keepTags?: boolean | object, keepCase?: boolean) => View
+  replace: (from: string | View, to?: string | Function, keep?: object) => View
   /** substitute-in new content */
-  replaceWith: (text: string | Function, keepTags?: boolean | object, keepCase?: boolean) => View
+  replaceWith: (to: string | Function, keep?: object) => View
 
   /** remove any duplicate matches */
   unique: () => View

@@ -686,6 +686,8 @@ _(these methods are on the main `nlp` object)_
 - **[.adjectives()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'quick'`
 - **[.adjectives().json()](https://observablehq.com/@spencermountain/compromise-selections)** - get adjective metadata
 - **[.adjectives().adverbs()](https://observablehq.com/@spencermountain/compromise-selections)** - get adverbs describing this adjective
+- **[.adjectives().toComparative()](https://observablehq.com/@spencermountain/compromise-selections)** - 'quick' -> 'quicker'
+- **[.adjectives().toSuperlative()](https://observablehq.com/@spencermountain/compromise-selections)** - 'quick' -> 'quickest'
 - **[.adjectives().toAdverb()](https://observablehq.com/@spencermountain/compromise-selections)** - 'quick' -> 'quickly'
 - **[.adjectives().toNoun()](https://observablehq.com/@spencermountain/compromise-selections)** - 'quick' -> 'quickness'
 

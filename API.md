@@ -215,6 +215,8 @@
 .adjectives()
   .adjectives().json()
   .adjectives().adverbs()
+  .adjectives().toSuperlative()
+  .adjectives().toComparative()
   .adjectives().toAdverb()
   .adjectives().toNoun()
 

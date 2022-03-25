@@ -22,13 +22,16 @@ const api = function (View) {
       this.viewType = 'Adjectives'
     }
     json(opts = {}) {
-      const { adjToAdverb, adjToNoun } = this.methods.two.transform
+      const { adjToAdverb, adjToNoun, adjToSuperlative, adjToComparative } = this.methods.two.transform
       opts.normal = true
       return this.map(m => {
         let json = m.toView().json(opts)[0] || {}
+        let str = toRoot(m)
         json.adjective = {
-          adverb: adjToAdverb(json.normal),
-          noun: adjToNoun(json.normal),
+          adverb: adjToAdverb(str),
+          noun: adjToNoun(str),
+          superlative: adjToSuperlative(str, this.model),
+          comparative: adjToComparative(str, this.model),
         }
         return json
       }, [])

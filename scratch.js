@@ -35,7 +35,8 @@ nlp.verbose('tagger')
 // return doc.match(tmp).text()
 
 
-let doc = nlp('he is simply cooler')
+let doc = nlp('he is so clear')
+console.log(doc.adjectives().json())
 // doc.adjectives().toSuperlative()
 
 doc.debug()

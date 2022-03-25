@@ -516,7 +516,7 @@ _(match methods use the [match-syntax](https://docs.compromise.cool/compromise-m
 - **[.splitBefore('')](https://observablehq.com/@spencermountain/compromise-split)** - partition a phrase before each matching segment
 - **[.splitAfter('')](https://observablehq.com/@spencermountain/compromise-split)** - partition a phrase after each matching segment
 - **[.lookup([])](https://observablehq.com/@spencermountain/compromise-match)** - quick find for an array of string matches
-- **[.autofill()](https://observablehq.com/@spencermountain/compromise-typeahead)** - create type-ahead assumptions on the document
+- **[.autoFill()](https://observablehq.com/@spencermountain/compromise-typeahead)** - create type-ahead assumptions on the document
 
 ##### Tag
 

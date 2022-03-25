@@ -1,10 +1,8 @@
-// import nlp from 'compromise'
-import nlp from '../../../../src/three.js'
-
 let sentenceCache = {}
 
 /** memoize tagger per-sentence */
 const keyPress = function (text, lex, opts = {}) {
+  const nlp = this
   const splitSentences = this.methods().one.tokenize.splitSentences
   let arr = splitSentences(text, this.model())
 

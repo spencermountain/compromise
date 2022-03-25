@@ -39,7 +39,10 @@ nlp.streamFile('./path/to/file.txt', (s)=>{
 
 
 ### Keypress
-cache any already-parsed sentences, and combine them in-memory
+if you are running compromise on every keystroke, it is not necessary to re-parse all sentences, every time.
+This plugin will cache any already-parsed sentences, and combine them in-memory, with any changed ones.
+
+it will also un-cache any temporary sentences, to clear-up memory.
 ```js
 import {keyPress} from 'compromise-plugin-speed'
 nlp.extend(keyPress)
@@ -50,6 +53,7 @@ doc = nlp.keyPress('parsed once. it was the blurst of times')
 
 or in the browser:
 ```html
+<textarea>Chocolate microscopes? Double guitars?</textarea>
 <script src="https://unpkg.com/compromise"></script>
 <script src="https://unpkg.com/compromise-speed"></script>
 <script defer>

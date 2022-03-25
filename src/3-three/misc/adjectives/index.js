@@ -20,6 +20,25 @@ const api = function (View) {
         return json
       }, [])
     }
+    adverbs() {
+      return this.before('#Adverb+$').concat(this.after('^#Adverb+'))
+    }
+
+    toAdverb(n) {
+      const { adjToAdverb } = this.methods.two.transform
+      return getNth(this, n).map(adj => {
+        let adv = adjToAdverb(adj.text('normal'))
+        return adj.replaceWith(adv)
+      })
+    }
+
+    toNoun(n) {
+      const { adjToNoun } = this.methods.two.transform
+      return getNth(this, n).map(adj => {
+        let adv = adjToNoun(adj.text('normal'))
+        return adj.replaceWith(adv)
+      })
+    }
   }
 
   View.prototype.adjectives = function (n) {

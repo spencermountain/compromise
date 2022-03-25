@@ -13,8 +13,8 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 -->
 
 #### 14.0.1 [March 2021]
-- **[fix]** - compromise-date client-side export format
-
+- **[fix]** - client-side export format for plugins
+- **[new]** - more adjective transformation methods
 
 ### 🚨 14.0.0 🚨 &nbsp; [March 2022]
 Major release - see [Release Notes](https://github.com/spencermountain/compromise/releases/tag/14.0.0) for full details

@@ -12,7 +12,6 @@ const phoneNumbers = function (n) {
 // setup easy helper methods
 const selections = [
   ['hyphenated', '@hasHyphen .'],
-  ['adjectives', '#Adjective'],
   ['hashTags', '#HashTag'],
   ['emails', '#Email'],
   ['emoji', '#Emoji'],

@@ -682,6 +682,13 @@ _(these methods are on the main `nlp` object)_
   - **[.sentences().isExclamation()](https://observablehq.com/@spencermountain/compromise-sentences)** - return sentences with a `!`
   - **[.sentences().isStatement()](https://observablehq.com/@spencermountain/compromise-sentences)** - return sentences without `?` or `!`
 
+##### Adjectives
+- **[.adjectives()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'quick'`
+- **[.adjectives().json()](https://observablehq.com/@spencermountain/compromise-selections)** - get adjective metadata
+- **[.adjectives().adverbs()](https://observablehq.com/@spencermountain/compromise-selections)** - get adverbs describing this adjective
+- **[.adjectives().toAdverb()](https://observablehq.com/@spencermountain/compromise-selections)** - 'quick' -> 'quickly'
+- **[.adjectives().toNoun()](https://observablehq.com/@spencermountain/compromise-selections)** - 'quick' -> 'quickness'
+
 ##### Misc selections
 
 - **[.clauses()](https://observablehq.com/@spencermountain/compromise-selections)** - split-up sentences into multi-term phrases
@@ -704,8 +711,6 @@ _(these methods are on the main `nlp` object)_
 - **[.places()](https://observablehq.com/@spencermountain/topics-named-entity-recognition)** - like 'Paris, France'
 - **[.organizations()](https://observablehq.com/@spencermountain/topics-named-entity-recognition)** - like 'Google, Inc'
 - **[.topics()](https://observablehq.com/@spencermountain/topics-named-entity-recognition)** - `people()` + `places()` + `organizations()`
-- **[.adjectives()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'quickly'`
-- **[.adjectives().json()](https://observablehq.com/@spencermountain/compromise-selections)** - get adjective metadata
 - **[.adverbs()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'quickly'`
 - **[.adverbs().json()](https://observablehq.com/@spencermountain/compromise-selections)** - get adverb metadata
 - **[.acronyms()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'FBI'`

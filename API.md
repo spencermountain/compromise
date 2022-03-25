@@ -212,6 +212,12 @@
 .abbreviations()
 .phoneNumbers()
 
+.adjectives()
+  .adjectives().json()
+  .adjectives().adverbs()
+  .adjectives().toAdverb()
+  .adjectives().toNoun()
+
 .acronyms()
   .acronyms().strip()
   .acronyms().addPeriods()
@@ -221,8 +227,6 @@
   .possessives().strip()
 .quotations()
   .quotations().strip()
-.adjectives()
-  .adjectives().json()
 .adverbs()
   .adverbs().json()
 

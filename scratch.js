@@ -6,6 +6,8 @@ import nlp from './src/three.js'
 // nlp.verbose('tagger')
 // nlp.verbose('chunker')
 
+// nlp('it is green and he is friendly.').sentences().toFutureTense().debug()
+
 // weird remove issue
 // let m = nlp('one two three. foo.', { two: 'Infinitive' })
 // m = m.splitOn('two').eq(0).tag('Foo')
@@ -33,18 +35,10 @@ import nlp from './src/three.js'
 // return doc.match(tmp).text()
 
 
-// let doc = nlp(`Springfield, springfield! it's a hell of a town.`)
-// let terms = doc.terms() //split by term
-// //remove duplicate matches
-// doc = doc.unique()
-// return doc.out('array')
-
-
-// let doc = nlp(`i have two questions for Homer - 'Why lie?' and 'Lies, why?'`)
-// doc.quotations().splitOn().out('array')
-
-// let doc = nlp('the sky is dark')
-// return doc.adjectives().json()[0]
+let doc = nlp('the sky is dark')
+doc.adjectives().toNoun()
+doc.debug()
+// console.log(doc.adjectives().json()[0])
 
 
 // nlp(`i saw the game that the Toronto Maple Leafs won`).verbs().isSingular().debug()

@@ -95,6 +95,9 @@ export default {
   'verbs': (doc) => {
     doc.verbs().toInfinitive()
   },
-
+  // turn "fifty" into "50"
+  'numbers': (doc) => {
+    doc.numbers().toNumber()
+  },
 
 }

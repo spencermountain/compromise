@@ -22,7 +22,7 @@ const plugin = function (View) {
     }
     json(n) {
       return getNth(this, n).map(p => {
-        let json = p.toView().json()[0]
+        let json = p.toView().json(n)[0]
         let parsed = parse(p)
         json.fraction = parsed
         return json

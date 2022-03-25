@@ -20,7 +20,7 @@ const addMethod = function (View) {
     json(n) {
       let doc = getNth(this, n)
       return doc.map(p => {
-        let json = p.toView().json()[0]
+        let json = p.toView().json(n)[0]
         let parsed = parse(p)
         json.person = {
           firstName: parsed.firstName.text('normal'),

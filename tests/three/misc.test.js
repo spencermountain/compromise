@@ -1,20 +1,19 @@
 import test from 'tape'
 import nlp from './_lib.js'
-const _ = '[three/misc] '
+const here = '[three/misc] '
 
 test('full-sentence-issue', function (t) {
   let doc = nlp(`Images of death have lost shock value`)
   doc.ptrs = [[0], [0]]
-  t.equal(doc.questions().found, false, _ + 'no questions')
-  t.equal(doc.length, 2, _ + '2 matches')
-  t.equal(doc.sentences().length, 2, _ + '2 sentences')
+  t.equal(doc.questions().found, false, here + 'no questions')
+  t.equal(doc.length, 2, here + '2 matches')
+  t.equal(doc.sentences().length, 2, here + '2 sentences')
   doc.unique()
-  t.equal(doc.sentences().length, 2, _ + 'still 2')
+  t.equal(doc.sentences().length, 2, here + 'still 2')
   doc = doc.unique()
-  t.equal(doc.sentences().length, 1, _ + '1 unique sentence')
+  t.equal(doc.sentences().length, 1, here + '1 unique sentence')
   t.end()
 })
-
 
 test('test overloading', function (t) {
   let doc = nlp(`the 7 days since december were gross`)
@@ -51,28 +50,28 @@ test('drop back to View', function (t) {
   let vb = doc.verbs()
   // ====== drop class ----
   let m = vb.match('.')
-  t.equal(m.viewType, 'View', _ + 'match-to-view')
+  t.equal(m.viewType, 'View', here + 'match-to-view')
 
   m = vb.before('.$')
-  t.equal(m.viewType, 'View', _ + 'before-to-view')
+  t.equal(m.viewType, 'View', here + 'before-to-view')
 
   m = vb.map(v => v)
-  t.equal(m.viewType, 'View', _ + 'map-to-view')
+  t.equal(m.viewType, 'View', here + 'map-to-view')
 
   m = vb.insertAfter('drugs')
-  t.equal(m.viewType, 'View', _ + 'insert-to-view')
+  t.equal(m.viewType, 'View', here + 'insert-to-view')
 
   m = vb.remove('jack')
-  t.equal(m.viewType, 'View', _ + 'insert-to-view')
+  t.equal(m.viewType, 'View', here + 'insert-to-view')
 
   m = vb.replaceWith('jack', 'blue')
-  t.equal(m.viewType, 'View', _ + 'replace-to-view')
+  t.equal(m.viewType, 'View', here + 'replace-to-view')
 
   m = vb.intersection(doc.match('.'))
-  t.equal(m.viewType, 'View', _ + 'intersection-to-view')
+  t.equal(m.viewType, 'View', here + 'intersection-to-view')
 
   m = vb.adverbs()
-  t.equal(m.viewType, 'View', _ + 'adverbs-to-view')
+  t.equal(m.viewType, 'View', here + 'adverbs-to-view')
 
   t.end()
 })
@@ -82,28 +81,28 @@ test('retain class', function (t) {
   let vb = doc.verbs()
   // ====== keep class ---
   let m = vb.update([])
-  t.equal(m.viewType, 'Verbs', _ + 'update-keeps-class')
+  t.equal(m.viewType, 'Verbs', here + 'update-keeps-class')
 
   m = vb.find(v => v.toUpperCase())
-  t.equal(m.viewType, 'Verbs', _ + 'find-kees-class')
+  t.equal(m.viewType, 'Verbs', here + 'find-kees-class')
 
   m = vb.tag('Foo')
-  t.equal(m.viewType, 'Verbs', _ + 'tag-keeps-class')
+  t.equal(m.viewType, 'Verbs', here + 'tag-keeps-class')
 
   m = vb.ifNo('.')
-  t.equal(m.viewType, 'Verbs', _ + 'if-keeps-class')
+  t.equal(m.viewType, 'Verbs', here + 'if-keeps-class')
 
   m = vb.toUpperCase()
-  t.equal(m.viewType, 'Verbs', _ + 'case-keeps-class')
+  t.equal(m.viewType, 'Verbs', here + 'case-keeps-class')
 
   m = vb.clone()
-  t.equal(m.viewType, 'Verbs', _ + 'clone-keeps-class')
+  t.equal(m.viewType, 'Verbs', here + 'clone-keeps-class')
 
   m = vb.sort('alpha')
-  t.equal(m.viewType, 'Verbs', _ + 'sort-keeps-class')
+  t.equal(m.viewType, 'Verbs', here + 'sort-keeps-class')
 
   m = vb.unique()
-  t.equal(m.viewType, 'Verbs', _ + 'unique-keeps-class')
+  t.equal(m.viewType, 'Verbs', here + 'unique-keeps-class')
   t.end()
 })
 
@@ -129,6 +128,13 @@ test('replacement with a contraction', function (t) {
   doc.verbs().toPastTense()
   t.equal(doc.text(), 'The only reason he did not continue was because of how tired he felt.', 'conjugate-contraction')
 
+  t.end()
+})
+
+test('json extended options:', function (t) {
+  let doc = nlp(`Hey everybody, I'm lookin' for Amanda Hugginkiss`)
+  let json = doc.people().json({ offset: true })
+  t.ok(json[0].offset, here + 'exteded json methods')
   t.end()
 })
 

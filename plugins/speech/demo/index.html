@@ -4,23 +4,23 @@
 <head>
 
   <script src="https://unpkg.com/compromise"></script>
-  <!-- <script src="https://unpkg.com/compromise-stats"></script> -->
-  <script src="../builds/compromise-stats.min.js"></script>
+  <!-- <script src="https://unpkg.com/compromise-speech"></script> -->
+  <script src="../builds/compromise-speech.min.js"></script>
 
 </head>
 
 <body>
-  <p>compromise-stats demo:</p>
+  <p>compromise-speech demo:</p>
   <ul>
-    <kbd>Who keeps the metric system down? We do, we do! </kbd>
+    <kbd>chocolate microscopes </kbd>
     <pre id="res">loading</pre>
   </ul>
 
   <script defer>
-    nlp.plugin(compromiseStats) // window.compromiseDates
+    nlp.plugin(compromiseSpeech) // window.compromiseSpeech
     let txt = document.querySelector('kbd').innerText
     let doc = nlp(txt)
-    let json = doc.ngrams()
+    let json = doc.syllables()
     document.querySelector('#res').innerHTML = JSON.stringify(json, null, 2)
   </script>
 </body>

@@ -1,13 +1,15 @@
-/* eslint-disable no-console */
 import build from '../../../builds/one/compromise-one.mjs'
 import src from '../../../src/one.js'
-let nlp = src
-import plugin from '../src/plugin.js'
+import plgBuild from '../builds/compromise-stats.mjs'
+import plg from '../src/plugin.js'
+let nlp;
 
-// import dateBuild from '../builds/compromise-speech.js'
 if (process.env.TESTENV === 'prod') {
-  console.warn('== production build test 🚀 ==')
+  console.warn('== production build test 🚀 ==')  // eslint-disable-line
   nlp = build
+  nlp.plugin(plgBuild)
+} else {
+  nlp = src
+  nlp.plugin(plg)
 }
-nlp.plugin(plugin)
 export default nlp

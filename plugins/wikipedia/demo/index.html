@@ -5,22 +5,22 @@
 
   <script src="https://unpkg.com/compromise"></script>
   <!-- <script src="https://unpkg.com/compromise-stats"></script> -->
-  <script src="../builds/compromise-stats.min.js"></script>
+  <script src="../builds/compromise-wikipedia.min.js"></script>
 
 </head>
 
 <body>
-  <p>compromise-stats demo:</p>
+  <p>compromise-wikipedia demo:</p>
   <ul>
-    <kbd>Who keeps the metric system down? We do, we do! </kbd>
+    <kbd>you could still go to McGill, the Harvard of Canada!</kbd>
     <pre id="res">loading</pre>
   </ul>
 
   <script defer>
-    nlp.plugin(compromiseStats) // window.compromiseDates
+    nlp.plugin(compromiseWikipedia)
     let txt = document.querySelector('kbd').innerText
     let doc = nlp(txt)
-    let json = doc.ngrams()
+    let json = doc.wikipedia().out('array')
     document.querySelector('#res').innerHTML = JSON.stringify(json, null, 2)
   </script>
 </body>

@@ -12,7 +12,11 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 
 -->
 
-### 14.0.0 &nbsp; :postal_horn: [March 2022]
+#### 14.0.1 [March 2021]
+- **[fix]** - compromise-date client-side export format
+
+
+### 🚨 14.0.0 🚨 &nbsp; [March 2022]
 Major release - see [Release Notes](https://github.com/spencermountain/compromise/releases/tag/14.0.0) for full details
 
 - **[breaking]** - remove `.parent()` and `.parents()` chain - (use `.all()` instead)

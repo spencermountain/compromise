@@ -1,13 +1,15 @@
-/* eslint-disable no-console */
 import build from '../../../builds/three/compromise-three.mjs'
 import src from '../../../src/three.js'
-let nlp = src
-import dates from '../src/plugin.js'
+import plgBuild from '../builds/compromise-dates.mjs'
+import plg from '../src/plugin.js'
+let nlp;
 
-// import dateBuild from '../builds/compromise-dates.js'
 if (process.env.TESTENV === 'prod') {
-  console.warn('== production build test 🚀 ==')
+  console.warn('== production build test 🚀 ==')  // eslint-disable-line
   nlp = build
+  nlp.plugin(plgBuild)
+} else {
+  nlp = src
+  nlp.plugin(plg)
 }
-nlp.plugin(dates)
 export default nlp

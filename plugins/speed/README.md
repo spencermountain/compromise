@@ -48,6 +48,18 @@ let doc = nlp.keyPress('parsed once. it was the blurst of')
 doc = nlp.keyPress('parsed once. it was the blurst of times')
 ```
 
+or in the browser:
+```html
+<script src="https://unpkg.com/compromise"></script>
+<script src="https://unpkg.com/compromise-speed"></script>
+<script defer>
+  nlp.plugin(compromiseSpeed.keyPress)
+  document.querySelector('textarea').onkeypress = (e) => {
+    let doc = nlp.keyPress(e.target.value)
+  }
+</script>
+```
+
 <!-- ### StreamFetch 
 
  ### WorkerPool -->

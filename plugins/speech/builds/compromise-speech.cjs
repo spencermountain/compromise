@@ -21,7 +21,7 @@
     cchange: (s) => {
       s = s.replace(/([^s]|^)(c)(h)/g, '$1x$3').trim();
       s = s.replace(/cia/g, 'xia');
-      s = s.replace(/c(i|e|y)/g, 's$1');
+      s = s.replace(/c([iey])/g, 's$1');
       return s.replace(/c/g, 'k')
     },
     dchange: (s) => {
@@ -29,12 +29,14 @@
       return s.replace(/d/g, 't')
     },
     dropG: (s) => {
-      s = s.replace(/gh(^$|[^aeiou])/g, 'h$1');
+      // Drop 'G' if followed by 'H' and 'H' is not at the end or before a vowel. 
+      s = s.replace(/gh(^$|[^aeiou])/g, 'h$1');//eslint-disable-line
+      // Drop 'G' if followed by 'N' or 'NED' and is at the end.
       return s.replace(/g(n|ned)$/g, '$1')
     },
     changeG: (s) => {
       s = s.replace(/gh/g, 'f');
-      s = s.replace(/([^g]|^)(g)(i|e|y)/g, '$1j$3');
+      s = s.replace(/([^g]|^)(g)([iey])/g, '$1j$3');
       s = s.replace(/gg/g, 'g');
       return s.replace(/g/g, 'k')
     },
@@ -84,51 +86,56 @@
       return s //.charAt(0) + s.substr(1, s.length).replace(/[aeiou]/g, '');
     },
   };
+  var m = transformations;
 
   //a js version of the metaphone (#1) algorithm
 
   const metaphone = function (s) {
-    s = transformations.dedup(s);
-    s = transformations.dropInitialLetters(s);
-    s = transformations.dropBafterMAtEnd(s);
-    s = transformations.changeCK(s);
-    s = transformations.cchange(s);
-    s = transformations.dchange(s);
-    s = transformations.dropG(s);
-    s = transformations.changeG(s);
-    s = transformations.dropH(s);
-    s = transformations.changePH(s);
-    s = transformations.changeQ(s);
-    s = transformations.changeS(s);
-    s = transformations.changeX(s);
-    s = transformations.changeT(s);
-    s = transformations.dropT(s);
-    s = transformations.changeV(s);
-    s = transformations.changeWH(s);
-    s = transformations.dropW(s);
-    s = transformations.dropY(s);
-    s = transformations.changeZ(s);
-    s = transformations.dropVowels(s);
+    s = m.dedup(s);
+    s = m.dropInitialLetters(s);
+    s = m.dropBafterMAtEnd(s);
+    s = m.changeCK(s);
+    s = m.cchange(s);
+    s = m.dchange(s);
+    s = m.dropG(s);
+    s = m.changeG(s);
+    s = m.dropH(s);
+    s = m.changePH(s);
+    s = m.changeQ(s);
+    s = m.changeS(s);
+    s = m.changeX(s);
+    s = m.changeT(s);
+    s = m.dropT(s);
+    s = m.changeV(s);
+    s = m.changeWH(s);
+    s = m.dropW(s);
+    s = m.dropY(s);
+    s = m.changeZ(s);
+    s = m.dropVowels(s);
     return s.trim()
   };
+
+  var metaphone$1 = metaphone;
 
   const soundsLike = function (view) {
     view.docs.forEach(terms => {
       terms.forEach(term => {
-        term.soundsLike = metaphone(term.normal || term.text);
+        term.soundsLike = metaphone$1(term.normal || term.text);
       });
     });
   };
 
+  var soundsLike$1 = soundsLike;
+
   const starts_with_single_vowel_combos = /^(eu)/i;
-  const joining_consonant_vowel = /^[^aeiou][e]([^d]|$)/;
+  const joining_consonant_vowel = /^[^aeiou]e([^d]|$)/;
   const cvcv_same_consonant = /^([^aeiouy])[aeiouy]\1[aeiouy]/;
   const cvcv_same_vowel = /^[^aeiouy]([aeiouy])[^aeiouy]\1/;
   const cvcv_known_consonants = /^([tg][aeiouy]){2}/;
   const only_one_or_more_c = /^[^aeiouy]+$/;
 
   const ends_with_vowel$1 = /[aeiouy]$/;
-  const starts_with_consonant_vowel$1 = /^[^aeiouy][h]?[aeiouy]/;
+  const starts_with_consonant_vowel$1 = /^[^aeiouy]h?[aeiouy]/;
 
   const ones = [
     /^[^aeiou]?ion/,
@@ -136,7 +143,7 @@
     /^[^aeiou]?iled/,
 
     // -ing, -ent
-    /[aeiou][n][gt]$/,
+    /[aeiou]n[gt]$/,
 
     // -ate, -age
     /\wa[gt]e$/,
@@ -226,12 +233,13 @@
 
     return arr
   };
+  var postProcess = postprocess;
 
   //chop a string into pronounced syllables
 
   const all_spaces = / +/g;
   const ends_with_vowel = /[aeiouy]$/;
-  const starts_with_consonant_vowel = /^[^aeiouy][h]?[aeiouy]/;
+  const starts_with_consonant_vowel = /^[^aeiouy]h?[aeiouy]/;
   const starts_with_e_then_specials = /^e[sm]/;
   const starts_with_e = /^e/;
   const ends_with_noisy_vowel_combos = /(eo|eu|ia|oa|ua|ui)$/i;
@@ -290,7 +298,7 @@
     return all
   };
 
-  let syllables$1 = function (str) {
+  let syllables$2 = function (str) {
     let all = [];
     if (!str) {
       return all
@@ -301,7 +309,7 @@
     });
 
     // str.split(whitespace_dash).forEach(doWord)
-    all = postprocess(all);
+    all = postProcess(all);
 
     //for words like 'tree' and 'free'
     if (all.length === 0) {
@@ -313,17 +321,25 @@
     return all
   };
 
+  // console.log(syllables('civilised'))
+
+  var getSyllables = syllables$2;
+
+  // const defaultObj = { normal: true, text: true, terms: false }
+
   const syllables = function (view) {
     view.docs.forEach(terms => {
       terms.forEach(term => {
-        term.syllables = syllables$1(term.normal || term.text);
+        term.syllables = getSyllables(term.normal || term.text);
       });
     });
   };
 
+  var syllables$1 = syllables;
+
   var compute = {
-    soundsLike,
-    syllables
+    soundsLike: soundsLike$1,
+    syllables: syllables$1
   };
 
   const api = function (View) {
@@ -332,16 +348,36 @@
       this.compute('syllables');
       let all = [];
       this.docs.forEach(terms => {
+        let some = [];
         terms.forEach(term => {
-          all = all.concat(term.syllables);
+          some = some.concat(term.syllables);
         });
+        if (some.length > 0) {
+          all.push(some);
+        }
+      });
+      return all
+    };
+    /** */
+    View.prototype.soundsLike = function () {
+      this.compute('soundsLike');
+      let all = [];
+      this.docs.forEach(terms => {
+        let some = [];
+        terms.forEach(term => {
+          some = some.concat(term.soundsLike);
+        });
+        if (some.length > 0) {
+          all.push(some);
+        }
       });
       return all
     };
   };
+  var api$1 = api;
 
   var plugin = {
-    api,
+    api: api$1,
     compute
   };
 

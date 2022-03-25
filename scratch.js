@@ -25,7 +25,6 @@ import nlp from './src/three.js'
 // year.debug()
 
 
-
 // let doc = nlp('one two three')
 // let tmp = doc.clone()
 // // mutate the original
@@ -49,11 +48,16 @@ import nlp from './src/three.js'
 
 nlp('the so-called group of seven').normalize({ numbers: true }).out()
 
-nlp(`i saw the game that the Toronto Maple Leafs won`).verbs().isSingular().debug()
+// nlp(`i saw the game that the Toronto Maple Leafs won`).verbs().isSingular().debug()
 
-nlp("you and your whole lousy operation stink").verbs().adverbs().debug()
+// nlp("you and your whole lousy operation stink").verbs().adverbs().debug()
 
 
 let doc = nlp(`wayne's World, party-time, excellent!! 🎸`)
 doc.remove('(#Emoticon|#Emoji)')
 console.log(doc.text())
+
+
+// let doc = nlp('Hey everybody, I’m lookin’ for Amanda Hugginkiss')
+// let m = doc.people() // 'amanda hugginkiss'
+// let offsets = m.json({offset:true})

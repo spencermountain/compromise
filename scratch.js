@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import plg from './plugins/speech/src/plugin.js'
 // nlp.plugin(plg)
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 // nlp.verbose('chunker')
 
 // nlp('it is green and he is friendly.').sentences().toFutureTense().debug()
@@ -35,8 +35,9 @@ import nlp from './src/three.js'
 // return doc.match(tmp).text()
 
 
-let doc = nlp('the sky is dark')
-doc.adjectives().toNoun()
+let doc = nlp('he is simply cooler')
+// doc.adjectives().toSuperlative()
+
 doc.debug()
 // console.log(doc.adjectives().json()[0])
 

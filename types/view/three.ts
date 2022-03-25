@@ -245,6 +245,10 @@ interface Quotations extends View {
 interface Adjectives extends View {
   /** get the words describing this adjective */
   adverbs: () => View
+  /** 'quick' -> 'quicker' */
+  toComparative: (n?: number) => View
+  /** 'quick' -> 'quickest' */
+  toSuperlative: (n?: number) => View
   /** 'quick' -> 'quickly' */
   toAdverb: (n?: number) => View
   /** 'quick' -> 'quickness' */

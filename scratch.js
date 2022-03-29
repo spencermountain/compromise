@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import plg from './plugins/speech/src/plugin.js'
 // nlp.plugin(plg)
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 // nlp.verbose('chunker')
 
 // nlp('it is green and he is friendly.').sentences().toFutureTense().debug()
@@ -35,20 +35,32 @@ nlp.verbose('tagger')
 // return doc.match(tmp).text()
 
 
-let doc = nlp('he is so clear')
-console.log(doc.adjectives().json())
-// doc.adjectives().toSuperlative()
-
-doc.debug()
-// console.log(doc.adjectives().json()[0])
-
-
 // nlp(`i saw the game that the Toronto Maple Leafs won`).verbs().isSingular().debug()
 
 // nlp("you and your whole lousy operation stink").verbs().adverbs().debug()
 
 
-// let doc = nlp(`wayne's World, party-time, excellent!! 🎸`)
-// doc.remove('(#Emoticon|#Emoji)')
-// console.log(doc.text())
+// nlp(`excellent 🎸`).debug()
 
+
+let str = ''
+// str = 'the police'
+// str = 'pass'
+// str = 'guess'
+// str = 'series'
+// str = 'miss'
+// str = 'species'
+// str = 'cross'
+// str = 'dress'
+// str = 'clothes'
+// str = 'focus'
+// str = 'press'
+// str = 'address'
+// str = 'seated'
+// str = 'kiss'
+// str = 'calories'
+// str = 'cookies'
+// str = 'eldest'
+// nlp(str).compute('root').normalize('heavy').debug()
+
+// nlp('the police').nouns().toSingular()

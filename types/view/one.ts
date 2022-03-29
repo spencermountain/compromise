@@ -41,7 +41,7 @@ class View {
   /** run a function on each phrase, as an individual document */
   forEach: (fn: (m: View) => void) => View
   /** run each phrase through a function, and create a new document */
-  map: (fn: (m: View) => any) => View | any
+  map: (fn: (m: View) => any, emptyResult?: any) => View | any
   /** return only the phrases that return true */
   filter: (fn: (m: View) => boolean) => View
   /** return a document with only the first phrase that matches */

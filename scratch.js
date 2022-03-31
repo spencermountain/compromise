@@ -40,7 +40,12 @@ import nlp from './src/three.js'
 // nlp("you and your whole lousy operation stink").verbs().adverbs().debug()
 
 
-// nlp(`excellent 🎸`).debug()
+let doc = nlp(`nice job :)`)
+let m = doc.match('#Emoticon')
+m.debug()
+// console.log(m.docs)
+console.log(m.text() + '|')
+// console.log(doc.out('normal'))
 
 
 let str = ''

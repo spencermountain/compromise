@@ -1,6 +1,6 @@
 import test from 'tape'
-import nlp from '../three/_lib.js'
-const here = '[three/emoji] '
+import nlp from '../_lib.js'
+const here = '[two/emoji] '
 
 // test('keyword emojis', function (t) {
 //   [
@@ -40,8 +40,7 @@ test('emoticon emojis', function (t) {
     // ['</3</3', '</3</3'],
   ].forEach(function (a) {
     const have = nlp(a[0]).match('#Emoticon').out('normal')
-    const msg = "have: '" + have + "'  want: '" + a[1] + "'"
-    t.equal(have, a[1], here + msg)
+    t.equal(have, a[1], here + a[0])
   })
   t.end()
 })

@@ -64,6 +64,9 @@ const textFromTerms = function (terms, opts, keepSpace = true) {
 
 const textFromDoc = function (docs, opts) {
   let text = ''
+  if (!docs || !docs[0] || !docs[0][0]) {
+    return text
+  }
   for (let i = 0; i < docs.length; i += 1) {
     // middle
     text += textFromTerms(docs[i], opts, true)
@@ -72,8 +75,14 @@ const textFromDoc = function (docs, opts) {
     text = text.trim()
   }
   if (opts.keepPunct === false) {
-    text = text.replace(trimStart, '')
-    text = text.replace(trimEnd, '')
+    // don't remove ':)' etc
+    if (!docs[0][0].tags.has('Emoticon')) {
+      text = text.replace(trimStart, '')
+    }
+    let last = docs[docs.length - 1]
+    if (!last[last.length - 1].tags.has('Emoticon')) {
+      text = text.replace(trimEnd, '')
+    }
   }
   if (opts.cleanWhitespace === true) {
     text = text.trim()

@@ -37,20 +37,5 @@ import nlp from './src/three.js'
 
 // nlp(`i saw the game that the Toronto Maple Leafs won`).verbs().isSingular().debug()
 
-// nlp("you and your whole lousy operation stink").verbs().adverbs().debug()
 
 
-let str = ''
-
-str = 'clothes'
-// str = 'series'
-// str = 'species'
-// str = 'the police'
-// str = 'the slice'
-
-// str = 'seated'
-let doc = nlp(str)
-doc.debug()
-// doc.compute('root').normalize('heavy').debug()
-
-// nlp('the police').nouns().toSingular().debug()

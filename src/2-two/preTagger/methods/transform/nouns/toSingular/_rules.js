@@ -19,7 +19,6 @@ export default [
   [/([^aeiouy]|qu)ies$/i, '$1y'],
   [/(s)eries$/i, '$1eries'],
   [/(m)ovies$/i, '$1ovie'],
-  [/([m|l])ice$/i, '$1ouse'],
   [/(cris|ax|test)es$/i, '$1is'],
   [/(alias|status)es$/i, '$1'],
   [/(ss)$/i, '$1'],

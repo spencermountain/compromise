@@ -40,32 +40,22 @@ import nlp from './src/three.js'
 // nlp("you and your whole lousy operation stink").verbs().adverbs().debug()
 
 
-let doc = nlp(`nice job :)`)
-let m = doc.match('#Emoticon')
-m.debug()
-// console.log(m.docs)
-console.log(m.text() + '|')
-// console.log(doc.out('normal'))
-
-
 let str = ''
-// str = 'the police'
 // str = 'pass'
 // str = 'guess'
-// str = 'series'
 // str = 'miss'
-// str = 'species'
 // str = 'cross'
 // str = 'dress'
-// str = 'clothes'
-// str = 'focus'
 // str = 'press'
 // str = 'address'
-// str = 'seated'
 // str = 'kiss'
-// str = 'calories'
-// str = 'cookies'
-// str = 'eldest'
-// nlp(str).compute('root').normalize('heavy').debug()
 
-// nlp('the police').nouns().toSingular()
+// str = 'the police'
+// str = 'series'
+// str = 'species'
+// str = 'clothes'
+str = 'focus'
+// str = 'seated'
+nlp(str).debug().compute('root').normalize('heavy').debug()
+
+// nlp('the police').nouns().toSingular().debug()

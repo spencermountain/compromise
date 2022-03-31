@@ -13,6 +13,9 @@ class Unit {
         year: context.today.year(),
       }
     }
+    if (input && input.month === 'sept') {
+      input.month = 'sep'
+    }
     // set it to the beginning of the given unit
     let d = spacetime(input, context.timezone, { today: today })
     Object.defineProperty(this, 'd', {

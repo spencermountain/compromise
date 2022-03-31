@@ -26,7 +26,8 @@ import nlp from './src/three.js'
 // console.log(tmpYear)
 // year.debug()
 
-
+let doc = nlp('aug. 3')
+console.log(doc.text('reduced'))
 // let doc = nlp('one two three')
 // let tmp = doc.clone()
 // // mutate the original

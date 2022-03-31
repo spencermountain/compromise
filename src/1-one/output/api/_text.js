@@ -8,7 +8,7 @@ const hasSpace = / /
 
 const textFromTerms = function (terms, opts, keepSpace = true) {
   let txt = ''
-  terms.forEach(t => {
+  terms.forEach((t, i) => {
     let pre = t.pre || ''
     let post = t.post || ''
     if (opts.punctuation === 'some') {
@@ -24,6 +24,10 @@ const textFromTerms = function (terms, opts, keepSpace = true) {
       post = post.replace(/\?+/, '?')
       // kill elipses
       post = post.replace(/\.{2,}/, '')
+      // kill abbreviation periods
+      if (t.tags.has('Abbreviation') && terms[i + 1]) {
+        post = post.replace(/\./, '')
+      }
     }
     if (opts.whitespace === 'some') {
       pre = pre.replace(/\s/, '') //remove pre-whitespace

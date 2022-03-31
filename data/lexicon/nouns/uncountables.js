@@ -152,7 +152,6 @@ export default [
   'soap',
   'soccer',
   'spacecraft',
-  'species',
   'speed',
   'statistics',
   'steam',

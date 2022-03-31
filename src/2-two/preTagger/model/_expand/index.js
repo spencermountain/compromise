@@ -50,7 +50,7 @@ const addUncountables = function (words, model) {
   Object.keys(words).forEach(k => {
     if (words[k] === 'Uncountable') {
       model.two.uncountable[k] = true
-      words[k] = 'Noun'
+      words[k] = 'Uncountable'
     }
   })
   return model

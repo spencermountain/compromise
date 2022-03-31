@@ -6,7 +6,7 @@ export default {
   },
   Singular: {
     is: 'Noun',
-    not: ['Plural'],
+    not: ['Plural', 'Uncountable'],
   },
   // 'Canada'
   ProperNoun: {
@@ -74,7 +74,7 @@ export default {
   },
   Plural: {
     is: 'Noun',
-    not: ['Singular'],
+    not: ['Singular', 'Uncountable'],
   },
   // 'gravity'
   Uncountable: {

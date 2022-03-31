@@ -43,7 +43,14 @@ test('normalize - heavy', function (t) {
     ['Director of the F.B.I.', 'director of the fbi'],
     ['cross', 'cross'],
     ['the police', 'the police'],
+    ['the kiss', 'the kiss'],
+    ['he kisses', 'he kiss'],
+    ['we kiss', 'we kiss'],
     ['series', 'series'],
+    ['the clothes', 'the clothes'],
+    ['the services', 'the service'],
+    ['he services', 'he service'],
+    ['the species', 'the species'],
   ]
   arr.forEach(function (a) {
     const str = nlp(a[0]).normalize('heavy').out('text')

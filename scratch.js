@@ -50,12 +50,14 @@ let str = ''
 // str = 'address'
 // str = 'kiss'
 
-// str = 'the police'
-// str = 'series'
-// str = 'species'
+str = 'the police'
+str = 'series'
+str = 'species'
 // str = 'clothes'
-str = 'focus'
+
 // str = 'seated'
-nlp(str).debug().compute('root').normalize('heavy').debug()
+let doc = nlp(str)
+doc.debug()
+// doc.compute('root').normalize('heavy').debug()
 
 // nlp('the police').nouns().toSingular().debug()

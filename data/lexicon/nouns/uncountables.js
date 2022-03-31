@@ -187,6 +187,10 @@ export default [
   'less',
   'haste',
 
+  'series',
+  'species',
+  'clothes',
+
 
   'skin',
   'greed',

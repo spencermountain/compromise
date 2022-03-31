@@ -41,6 +41,9 @@ test('normalize - heavy', function (t) {
     ['This is a test?!', 'this be a test?'],
     ['Björk, the singer-songwriter...', 'bjork the singer songwriter'],
     ['Director of the F.B.I.', 'director of the fbi'],
+    ['cross', 'cross'],
+    ['the police', 'the police'],
+    ['series', 'series'],
   ]
   arr.forEach(function (a) {
     const str = nlp(a[0]).normalize('heavy').out('text')

@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import plg from './plugins/speech/src/plugin.js'
 // nlp.plugin(plg)
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 // nlp.verbose('chunker')
 
 // nlp('it is green and he is friendly.').sentences().toFutureTense().debug()
@@ -42,9 +42,9 @@ nlp.verbose('tagger')
 
 let str = ''
 
-str = 'series'
 str = 'clothes'
-str = 'species'
+// str = 'series'
+// str = 'species'
 // str = 'the police'
 // str = 'the slice'
 

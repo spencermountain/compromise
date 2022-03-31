@@ -2,23 +2,31 @@
 export default {
   // add plural forms of singular nouns
   Singular: (word, lex, methods, model) => {
+    let already = model.one.lexicon
     let plural = methods.two.transform.nounToPlural(word, model)
-    lex[plural] = lex[plural] || 'Plural'
+    if (!already[plural]) {
+      lex[plural] = lex[plural] || 'Plural'
+    }
   },
 
   // superlative/ comparative forms for adjectives
   Comparable: (word, lex, methods, model) => {
+    let already = model.one.lexicon
     // fast -> fastest
-    let superlative = methods.two.transform.adjToSuperlative(word, model)
-    lex[superlative] = lex[superlative] || 'Superlative'
+    let sup = methods.two.transform.adjToSuperlative(word, model)
+    if (!already[sup]) {
+      lex[sup] = lex[sup] || 'Superlative'
+    }
     // fast -> faster
-    let comparative = methods.two.transform.adjToComparative(word, model)
-    lex[comparative] = lex[comparative] || 'Comparative'
+    let comp = methods.two.transform.adjToComparative(word, model)
+    if (!already[comp]) {
+      lex[comp] = lex[comp] || 'Comparative'
+    }
     // overwrite
     lex[word] = 'Adjective'
   },
 
-  // 'german' -> 'germains'
+  // 'german' -> 'germans'
   Demonym: (word, lex, methods, model) => {
     let plural = methods.two.transform.nounToPlural(word, model)
     lex[plural] = lex[plural] || ['Demonym', 'Plural']
@@ -26,9 +34,12 @@ export default {
 
   // conjugate all forms of these verbs
   Infinitive: (word, lex, methods, model) => {
+    let already = model.one.lexicon
     let all = methods.two.transform.verbConjugate(word, model)
     Object.entries(all).forEach(a => {
-      lex[a[1]] = lex[a[1]] || a[0]
+      if (!already[a[1]] && !lex[a[1]]) {
+        lex[a[1]] = a[0]
+      }
     })
   },
 

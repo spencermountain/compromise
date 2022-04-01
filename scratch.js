@@ -34,25 +34,34 @@ import nlp from './src/three.js'
 // return doc.match(tmp).text()
 
 let txt = `I've seen worse`
-// txt = `try and pass.`
+txt = `try and pass.`
 // txt = `so I guess.`
 // txt = `Kiss you `
 // txt = ` I miss you`
-// txt = ` work to address specific illnesses`
-// txt = `Once your troops get to where they are going, attack their power plants.`
-// txt = `You don't have to !`
-txt = `Everyone he met told him`
 // txt = `to see what had happened, threw herself head foremost.`
-// txt = `a bed all embroidered with gold and silver.`
-// txt = `the Princess to be carried`
+// txt = `Focus on`
+// txt = `c'mere, gimme`
+// txt = `the remarkable was better`
+// txt = `more broken promises`
+// txt = `Address potential causes.`
+// txt = `to express the subject.`
+// txt = `C'mon!`
+// txt = `dismiss this`
+// txt = `blew Curdken's hat`
+// txt = `needed to access.`
+// txt = `its great purposes .`
 
-let doc = nlp(txt)
-doc.verbs().debug()
-doc = doc.compute('root').debug().normalize('heavy')
-doc.debug()
-console.log(doc.text('root'))
+// let doc = nlp(txt)
+// doc = doc.compute('root').debug().normalize('heavy')
+// console.log(doc.text('root'))
 
 // nlp(`i saw the game that the Toronto Maple Leafs won`).verbs().isSingular().debug()
 
+
+let doc = nlp(txt).compute('root')
+doc.terms().forEach(t => {
+  let str = t.text('root')
+  console.log(str)
+})
 
 

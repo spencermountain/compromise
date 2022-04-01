@@ -39,16 +39,16 @@ let txt = `I've seen worse`
 // txt = `Kiss you `
 // txt = ` I miss you`
 // txt = ` work to address specific illnesses`
-// txt = `the eldest son`
-// txt = `if you cross a warden`
-txt = `Once your troops get to where they are going, attack their power plants.`
-txt = `You don't have to !`
+// txt = `Once your troops get to where they are going, attack their power plants.`
+// txt = `You don't have to !`
 txt = `Everyone he met told him`
-txt = `to see what had happened, threw herself head foremost.`
-txt = `caused the Princess to be carried into `
-txt = `a bed all embroidered with gold and silver.`
+// txt = `to see what had happened, threw herself head foremost.`
+// txt = `a bed all embroidered with gold and silver.`
+// txt = `the Princess to be carried`
 
-let doc = nlp(txt).compute('root').debug().normalize('heavy')
+let doc = nlp(txt)
+doc.verbs().debug()
+doc = doc.compute('root').debug().normalize('heavy')
 doc.debug()
 console.log(doc.text('root'))
 

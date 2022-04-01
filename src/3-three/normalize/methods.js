@@ -80,7 +80,7 @@ export default {
   },
   //turn 'Vice Admiral John Smith' to 'John Smith'
   'honorifics': (doc) => {
-    doc.honorifics().remove()
+    doc.match('#Honorific #Person').honorifics().remove()
   },
   // remove needless adverbs
   'adverbs': (doc) => {

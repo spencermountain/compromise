@@ -628,5 +628,6 @@ export default [
   'antique',
   'dependent',
   'independent',
+  'seated',
 ]
 

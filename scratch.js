@@ -33,6 +33,24 @@ import nlp from './src/three.js'
 // // return a partial
 // return doc.match(tmp).text()
 
+let txt = `I've seen worse`
+// txt = `try and pass.`
+// txt = `so I guess.`
+// txt = `Kiss you `
+// txt = ` I miss you`
+// txt = ` work to address specific illnesses`
+// txt = `the eldest son`
+// txt = `if you cross a warden`
+txt = `Once your troops get to where they are going, attack their power plants.`
+txt = `You don't have to !`
+txt = `Everyone he met told him`
+txt = `to see what had happened, threw herself head foremost.`
+txt = `caused the Princess to be carried into `
+txt = `a bed all embroidered with gold and silver.`
+
+let doc = nlp(txt).compute('root').debug().normalize('heavy')
+doc.debug()
+console.log(doc.text('root'))
 
 // nlp(`i saw the game that the Toronto Maple Leafs won`).verbs().isSingular().debug()
 

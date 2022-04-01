@@ -2036,4 +2036,5 @@ export default [
   ['poked', 'poke'],
   ['retook', 'retake'],
   ['levelled', 'level'],
+  ['dared', 'dare'],
 ]

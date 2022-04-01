@@ -45,34 +45,21 @@ txt = `to express the subject.`
 txt = `its great purposes`
 txt = `great purposes`
 txt = `his excuses`
-// txt = `his fine`
-// txt = `Anyways, New Years`
-// txt = `It's only me -- Jaqueline.`
-// txt = `and Saturdays 11 a.m. - 3 p.m. when.`
+txt = `It's only me -- Jaqueline.`
+txt = `and Saturdays 11 a.m. - 3 p.m. when.`
 // txt = `He ws quiet`
-// txt = `different sizes.`
 // txt = `he swims to`
-// txt = `bowls`
-// txt = `tryna`
-// txt = `bein`
-// txt = `rea`
-// txt = `purpos`
-// txt = `caus`
-// txt = `pls`
-// txt = `tis`
-// txt = `characteristics`
-// txt = `menus`
-// txt = `tactics`
 // txt = `others`
 // txt = `yours`
 
-
 let doc = nlp(txt).debug()
-doc.nouns().toSingular()
+doc.compute('root')
+console.log(doc.docs)
+// doc.nouns().toSingular()
 // doc.verbs().toPastTense()
 // doc.verbs().toInfinitive()
 // doc = doc.compute('root').debug().normalize('heavy')
-doc.debug()
+// doc.debug()
 // console.log(doc.docs)
 // nlp(`i saw the game that the Toronto Maple Leafs won`).verbs().isSingular().debug()
 

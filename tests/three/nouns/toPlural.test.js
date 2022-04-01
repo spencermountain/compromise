@@ -79,6 +79,15 @@ test('toPlural:', function (t) {
     ['avocado', 'avocados'],
     ['studio', 'studios'],
     ['zoo', 'zoos'],
+    ['characteristic', 'characteristics'],
+    ['menu', 'menus'],
+    ['tactic', 'tactics'],
+    ['cause', 'causes'],
+    ['bowl', 'bowls'],
+    ['purpose', 'purposes'],
+    ['size', 'sizes'],
+    ['promise', 'promises'],
+    ['swim', 'swims'],
   ]
   arr.forEach(function (a) {
     let doc = nlp(a[0])

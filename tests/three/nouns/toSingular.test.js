@@ -81,12 +81,38 @@ test('toSingular:', function (t) {
     ['parentheses', 'parenthesis'],
     ['theses', 'thesis'],
     ['bases', 'base'],
+
+    ['bonuses', 'bonus'],
+    ['buses', 'bus'],
+    ['campuses', 'campus'],
+    ['causes', 'cause'],
+    ['clauses', 'clause'],
+    ['his excuses', 'his excuse'],
+    ['focuses', 'focus'],
+    ['houses', 'house'],
+    ['spouses', 'spouse'],
+    ['surpluses', 'surplus'],
+    ['uses', 'use'],
+    ['viruses', 'virus'],
     // ['Isley Brothers members', 'Isley Brothers member'],
   ]
   arr.forEach(function (a) {
-    const r = nlp(a[0]).tag('Noun').compute('chunks').nouns()
-    const str = r.toSingular().text()
-    t.equal(str, a[1], here + a[0])
+    let doc = nlp(a[0])
+    doc.tag('Noun').compute('chunks')
+    let str = doc.nouns().toSingular().text()
+    t.equal(str, a[1], here + '[toSingular] ' + a[0])
+
+
+    doc = nlp(a[1])
+    doc.tag('Noun').compute('chunks')
+    str = doc.nouns().toPlural().text()
+    t.equal(str, a[0], here + '[toPlural] ' + a[0])
+
+    doc = nlp(a[0])
+    doc.tag('Noun').compute('chunks')
+    str = doc.nouns().toPlural().text()
+    t.equal(str, a[0], here + '[stay-plural] ' + a[0])
+
   })
   t.end()
 })

@@ -16,6 +16,7 @@ const toSingular = function (str, model) {
   // go through our regexes
   for (let i = 0; i < rules.length; i++) {
     if (rules[i][0].test(str) === true) {
+      // console.log(rules[i])
       str = str.replace(rules[i][0], rules[i][1])
       return str
     }

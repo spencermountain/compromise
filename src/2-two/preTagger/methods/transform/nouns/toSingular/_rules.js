@@ -7,9 +7,12 @@ export default [
   [/(antenn|formul|nebul|vertebr|vit)ae$/i, '$1a'],
   [/(octop|vir|radi|nucle|fung|cact|stimul)(i)$/i, '$1us'],
   [/(buffal|tomat|tornad)(oes)$/i, '$1o'],
-  // [/(analy|diagno|parenthe|progno|synop|the)ses$/i, '$1sis'],
+
+  [/(aus)es$/i, '$1e'],//causes
   [/(eas)es$/i, '$1e'],//diseases
+  [/(ious)es$/i, '$1'],//geniouses
   [/(ous)es$/i, '$1e'],//houses
+
   [/(..[aeiou]s)es$/i, '$1'],
   [/(vert|ind|cort)(ices)$/i, '$1ex'],
   [/(matr|append)(ices)$/i, '$1ix'],

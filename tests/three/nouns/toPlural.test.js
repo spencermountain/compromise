@@ -68,23 +68,34 @@ test('toPlural:', function (t) {
     ['combo', 'combos'],
     ['gazebo', 'gazebos'],
     //test that plural.pluralize()==plural..
-    ['snakes', 'snakes'],
-    ['skis', 'skis'],
+    ['snake', 'snakes'],
+    ['ski', 'skis'],
     // ['mayor of chicago', 'mayors of chicago'],
-    // ["Barrymores", "Barrymores"],
-    ['witches', 'witches'],
-    ['boxes', 'boxes'],
-    ['gases', 'gases'],
-    ['spoofs', 'spoofs'],
-    ['solos', 'solos'],
-    ['avocados', 'avocados'],
-    ['studios', 'studios'],
-    ['zoos', 'zoos'],
+    ['witch', 'witches'],
+    ['box', 'boxes'],
+    ['gas', 'gases'],
+    ['spoof', 'spoofs'],
+    ['solo', 'solos'],
+    ['avocado', 'avocados'],
+    ['studio', 'studios'],
+    ['zoo', 'zoos'],
   ]
   arr.forEach(function (a) {
-    const r = nlp(a[0]).tag('Noun').compute('chunks').nouns()
-    const str = r.toPlural().out('normal')
-    t.equal(str, a[1], here + a[0])
+    let doc = nlp(a[0])
+    doc.tag('Noun').compute('chunks')
+    let str = doc.nouns().toPlural().text()
+    t.equal(str, a[1], here + '[toPlural] ' + a[0])
+
+    doc = nlp(a[1])
+    doc.tag('Noun').compute('chunks')
+    str = doc.nouns().toSingular().text()
+    t.equal(str, a[0], here + '[toSingular] ' + a[0])
+
+    doc = nlp(a[0])
+    doc.tag('Noun').compute('chunks')
+    str = doc.nouns().toSingular().text()
+    t.equal(str, a[0], here + '[stay-singular] ' + a[0])
+
   })
   t.end()
 })

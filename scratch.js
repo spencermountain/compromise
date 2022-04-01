@@ -33,23 +33,18 @@ import nlp from './src/three.js'
 // // return a partial
 // return doc.match(tmp).text()
 
-let txt = `I've seen worse`
-txt = `try and pass.`
-txt = `so I guess.`
-txt = `Kiss you `
-txt = ` I miss you`
+let txt = ``
 txt = `to see what had happened, threw herself head foremost.`
-txt = `Focus on`
-txt = `c'mere, gimme`
 txt = `the remarkable was better`
 txt = `more broken promises`
 txt = `Address potential causes.`
 txt = `to express the subject.`
-// txt = `C'mon!`
 // txt = `dismiss this`
 // txt = `blew Curdken's hat`
 // txt = `needed to access.`
 txt = `its great purposes`
+txt = `great purposes`
+txt = `his excuses`
 // txt = `his fine`
 // txt = `Anyways, New Years`
 // txt = `It's only me -- Jaqueline.`

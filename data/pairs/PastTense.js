@@ -2037,4 +2037,5 @@ export default [
   ['retook', 'retake'],
   ['levelled', 'level'],
   ['dared', 'dare'],
+  ['swam', 'swim'],
 ]

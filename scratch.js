@@ -35,33 +35,59 @@ import nlp from './src/three.js'
 
 let txt = `I've seen worse`
 txt = `try and pass.`
-// txt = `so I guess.`
-// txt = `Kiss you `
-// txt = ` I miss you`
-// txt = `to see what had happened, threw herself head foremost.`
-// txt = `Focus on`
-// txt = `c'mere, gimme`
-// txt = `the remarkable was better`
-// txt = `more broken promises`
-// txt = `Address potential causes.`
-// txt = `to express the subject.`
+txt = `so I guess.`
+txt = `Kiss you `
+txt = ` I miss you`
+txt = `to see what had happened, threw herself head foremost.`
+txt = `Focus on`
+txt = `c'mere, gimme`
+txt = `the remarkable was better`
+txt = `more broken promises`
+txt = `Address potential causes.`
+txt = `to express the subject.`
 // txt = `C'mon!`
 // txt = `dismiss this`
 // txt = `blew Curdken's hat`
 // txt = `needed to access.`
-// txt = `its great purposes .`
+txt = `its great purposes`
+// txt = `his fine`
+// txt = `Anyways, New Years`
+// txt = `It's only me -- Jaqueline.`
+// txt = `and Saturdays 11 a.m. - 3 p.m. when.`
+// txt = `He ws quiet`
+// txt = `different sizes.`
+// txt = `he swims to`
+// txt = `bowls`
+// txt = `tryna`
+// txt = `bein`
+// txt = `rea`
+// txt = `purpos`
+// txt = `caus`
+// txt = `pls`
+// txt = `tis`
+// txt = `characteristics`
+// txt = `menus`
+// txt = `tactics`
+// txt = `others`
+// txt = `yours`
 
-// let doc = nlp(txt)
+
+let doc = nlp(txt).debug()
+doc.nouns().toSingular()
+// doc.verbs().toPastTense()
+// doc.verbs().toInfinitive()
 // doc = doc.compute('root').debug().normalize('heavy')
-// console.log(doc.text('root'))
-
+doc.debug()
+// console.log(doc.docs)
 // nlp(`i saw the game that the Toronto Maple Leafs won`).verbs().isSingular().debug()
 
 
-let doc = nlp(txt).compute('root')
-doc.terms().forEach(t => {
-  let str = t.text('root')
-  console.log(str)
-})
+// let doc = nlp(txt).compute('root').debug()
+// doc.verbs().toInfinitive()
 
+// console.log(doc.text('root'))
+// doc.terms().forEach(t => {
+//   let str = t.text('root')
+//   console.log(str + '|')
+// })
 

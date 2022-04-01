@@ -33,6 +33,7 @@ export default [
   'fellow',
   'female',
   'fluid',
+  'fine',
   'gold',
   'homeless',
   'ideal',

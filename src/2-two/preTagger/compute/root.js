@@ -23,6 +23,9 @@ const toRoot = {
   // 'walks' -> 'walk'
   'PresentTense': (term, world) => {
     let str = term.machine || term.normal || term.text
+    if (term.tags.has('Infinitive')) {
+      return str
+    }
     return world.methods.two.transform.verbToInfinitive(str, world.model, 'PresentTense')
   },
   // 'quieter' -> 'quiet'

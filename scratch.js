@@ -45,20 +45,23 @@ txt = `to express the subject.`
 txt = `its great purposes`
 txt = `great purposes`
 txt = `his excuses`
-txt = `It's only me -- Jaqueline.`
-txt = `and Saturdays 11 a.m. - 3 p.m. when.`
+txt = `virus`
+// txt = `his abuses`
 // txt = `He ws quiet`
 // txt = `he swims to`
 // txt = `others`
 // txt = `yours`
 
 let doc = nlp(txt).debug()
-doc.compute('root')
-console.log(doc.docs)
-// doc.nouns().toSingular()
+// doc.replace('excuses', 'foo')
+// doc.compute('root')
+// doc = doc.normalize('heavy')
+// let root = doc.match('excuses')
+// doc.replace(root, 'foo')
+doc.nouns().toPlural()
+console.log(doc.text())
 // doc.verbs().toPastTense()
 // doc.verbs().toInfinitive()
-// doc = doc.compute('root').debug().normalize('heavy')
 // doc.debug()
 // console.log(doc.docs)
 // nlp(`i saw the game that the Toronto Maple Leafs won`).verbs().isSingular().debug()

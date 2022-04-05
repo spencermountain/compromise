@@ -82,7 +82,10 @@ export default {
   bus: 'buses',
   gas: 'gases',
   circus: 'circuses',
+  virus: 'viruses',
   database: 'databases',
+  excuse: 'excuses',
+  abuse: 'abuses',
 
   avocado: 'avocados',
   barracks: 'barracks',
@@ -94,6 +97,7 @@ export default {
   deer: 'deer',
   halo: 'halos',
   man: 'men',
+  woman: 'women',
   mosquito: 'mosquitoes',
   mouse: 'mice',
   person: 'people',

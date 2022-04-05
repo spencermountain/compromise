@@ -35,6 +35,7 @@ export default [
   'fluid',
   'fine',
   'gold',
+  'genious',
   'homeless',
   'ideal',
   'incumbent',

@@ -10,6 +10,10 @@ const toRoot = {
     let str = term.machine || term.normal || term.text
     return world.methods.two.transform.nounToSingular(str, world.model)
   },
+  // ''
+  'Copula': () => {
+    return 'is'
+  },
   // 'walked' -> 'walk'
   'PastTense': (term, world) => {
     let str = term.machine || term.normal || term.text

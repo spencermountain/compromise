@@ -11,9 +11,8 @@ const toSingular = function (m, parsed) {
   let str = parsed.root.text('normal')
   let single = nounToSingular(str, model)
   m.replace(parsed.root, single, keep).tag('Singular', 'toPlural')
-
   // should we change the determiner/article?
-
+  // m.debug()
   return m
 }
 export default toSingular

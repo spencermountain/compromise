@@ -35,7 +35,7 @@ test('toSingular:', function (t) {
     ['aircraft', 'aircraft'],
     ['bass', 'bass'],
     ['bison', 'bison'],
-    ['fish', 'fish'],
+    ['fishes', 'fish'],
     ['fowl', 'fowl'],
     ['kilos', 'kilo'],
     ['kimonos', 'kimono'],
@@ -57,13 +57,6 @@ test('toSingular:', function (t) {
     ['eyebrows', 'eyebrow'],
     // ['mayors of chicago', 'mayor of chicago'],
     //test that sungular.singularize()==singular..
-    ['mango', 'mango'],
-    ['memento', 'memento'],
-    ['motto', 'motto'],
-    ['tornado', 'tornado'],
-    ['person', 'person'],
-    ['goose', 'goose'],
-    ['mouse', 'mouse'],
     ['calves', 'calf'],
     ['olives', 'olive'],
     ['loaves', 'loaf'],
@@ -74,7 +67,7 @@ test('toSingular:', function (t) {
     ['buses', 'bus'],
     ['tosses', 'toss'],
     ['wishes', 'wish'],
-    ['geniouses', 'genious'],
+    ['the geniouses', 'the genious'],
     ['prognoses', 'prognosis'],
     ['analyses', 'analysis'],
     ['synopses', 'synopsis'],
@@ -87,13 +80,13 @@ test('toSingular:', function (t) {
     ['campuses', 'campus'],
     ['causes', 'cause'],
     ['clauses', 'clause'],
-    ['his excuses', 'his excuse'],
-    ['focuses', 'focus'],
+    ['the focuses', 'the focus'],
     ['houses', 'house'],
     ['spouses', 'spouse'],
     ['surpluses', 'surplus'],
     ['uses', 'use'],
     ['viruses', 'virus'],
+    ['his excuses', 'his excuse'],
     // ['Isley Brothers members', 'Isley Brothers member'],
   ]
   arr.forEach(function (a) {
@@ -102,16 +95,15 @@ test('toSingular:', function (t) {
     let str = doc.nouns().toSingular().text()
     t.equal(str, a[1], here + '[toSingular] ' + a[0])
 
-
     doc = nlp(a[1])
     doc.tag('Noun').compute('chunks')
     str = doc.nouns().toPlural().text()
     t.equal(str, a[0], here + '[toPlural] ' + a[0])
 
-    doc = nlp(a[0])
-    doc.tag('Noun').compute('chunks')
-    str = doc.nouns().toPlural().text()
-    t.equal(str, a[0], here + '[stay-plural] ' + a[0])
+    // doc = nlp(a[0])
+    // doc.tag('Noun').compute('chunks')
+    // str = doc.nouns().toPlural().text()
+    // t.equal(str, a[0], here + '[stay-plural] ' + a[0])
 
   })
   t.end()

@@ -52,20 +52,24 @@ txt = `virus`
 // txt = `others`
 // txt = `yours`
 
-let doc = nlp(txt).debug()
+let doc = nlp(txt)
 // doc.replace('excuses', 'foo')
 // doc.compute('root')
 // doc = doc.normalize('heavy')
 // let root = doc.match('excuses')
 // doc.replace(root, 'foo')
-doc.nouns().toPlural()
-console.log(doc.text())
+// doc.nouns().toSingular()
+// console.log(doc.text())
 // doc.verbs().toPastTense()
 // doc.verbs().toInfinitive()
 // doc.debug()
 // console.log(doc.docs)
 // nlp(`i saw the game that the Toronto Maple Leafs won`).verbs().isSingular().debug()
 
+// past-two
+doc = nlp(`he walks down the street and smells the flowers.`)
+doc.sentences().toFutureTense()
+doc.debug()
 
 // let doc = nlp(txt).compute('root').debug()
 // doc.verbs().toInfinitive()

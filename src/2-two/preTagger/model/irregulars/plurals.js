@@ -31,7 +31,7 @@ export default {
   prognosis: 'prognoses',
   synopsis: 'synopses',
   thesis: 'theses',
-
+  neurosis: 'neuroses',
   // -x
   appendix: 'appendices',
   index: 'indices',
@@ -82,6 +82,7 @@ export default {
   bus: 'buses',
   gas: 'gases',
   circus: 'circuses',
+  crisis: 'crises',
   virus: 'viruses',
   database: 'databases',
   excuse: 'excuses',

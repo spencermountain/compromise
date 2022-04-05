@@ -17,7 +17,6 @@ export default [
   'billiards',
   'bison',
   'blood',
-  'bowls',
   'bread',
   'bunting',
   'butter',

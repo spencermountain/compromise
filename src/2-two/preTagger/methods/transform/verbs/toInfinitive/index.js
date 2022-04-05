@@ -23,21 +23,21 @@ const toParts = function (str, model) {
 
 // dunno about these..
 const copulaMap = {
-  are: 'are',
-  were: 'are',
+  are: 'be',
+  were: 'be',
   been: 'be',
-  is: 'is',
-  am: 'is',
-  was: 'is',
+  is: 'be',
+  am: 'be',
+  was: 'be',
   be: 'be',
   being: 'be',
 }
 
 const toInfinitive = function (str, model, tense) {
   const { fromPast, fromPresent, fromGerund, fromParticiple } = model.two.models
-  if (str.length < 3) {
-    return str
-  }
+  // if (str.length < 3) {
+  //   return str
+  // }
   let { prefix, verb, particle } = toParts(str, model)
   let inf = ''
   if (!tense) {

@@ -1,6 +1,6 @@
 export default [
   [/([^v])ies$/i, '$1y'],
-  [/ises$/i, 'isis'],
+  [/(ise)s$/i, '$1'],//promises
   [/(kn|[^o]l|w)ives$/i, '$1ife'],
   [/^((?:ca|e|ha|(?:our|them|your)?se|she|wo)l|lea|loa|shea|thie)ves$/i, '$1f'],
   [/^(dwar|handkerchie|hoo|scar|whar)ves$/i, '$1f'],
@@ -8,15 +8,16 @@ export default [
   [/(octop|vir|radi|nucle|fung|cact|stimul)(i)$/i, '$1us'],
   [/(buffal|tomat|tornad)(oes)$/i, '$1o'],
 
-  [/(aus)es$/i, '$1e'],//causes
-  [/(eas)es$/i, '$1e'],//diseases
+  [/(ause)s$/i, '$1'],//causes
+  [/(ease)s$/i, '$1'],//diseases
   [/(ious)es$/i, '$1'],//geniouses
-  [/(ous)es$/i, '$1e'],//houses
+  [/(ouse)s$/i, '$1'],//houses
+  [/(ose)s$/i, '$1'],//roses
 
-  [/(..[aeiou]s)es$/i, '$1'],
+  [/(..[aeiu]s)es$/i, '$1'],
   [/(vert|ind|cort)(ices)$/i, '$1ex'],
   [/(matr|append)(ices)$/i, '$1ix'],
-  [/([xzo]|ch|ss|sh)es$/i, '$1'],
+  [/([xo]|ch|ss|sh)es$/i, '$1'],
   [/men$/i, 'man'],
   [/(n)ews$/i, '$1ews'],
   [/([ti])a$/i, '$1um'],
@@ -26,6 +27,6 @@ export default [
   [/(cris|ax|test)es$/i, '$1is'],
   [/(alias|status)es$/i, '$1'],
   [/(ss)$/i, '$1'],
-  [/(ics)$/i, '$1'],
+  [/(ic)s$/i, '$1'],
   [/s$/i, ''],
 ]

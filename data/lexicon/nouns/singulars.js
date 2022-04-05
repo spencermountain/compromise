@@ -194,6 +194,7 @@ export default [
   'christmas carol',
   'girl',
   'handful',
+  'bowl',
   'super bowl',
   'team',
   'ham',
@@ -379,6 +380,7 @@ export default [
   'pie',
   'rerun',
   'bride',
+  'menu',
 ]
 
 

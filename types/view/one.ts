@@ -202,7 +202,7 @@ class View {
   uncache: (options?: object) => View
 
   /** quick find for an array of string matches */
-  lookup: (trie: object | string[]) => View
+  lookup: (trie: object | string[], opts?: object) => View
   /** assume any type-ahead prefixes */
   autoFill: () => View
 

@@ -46,33 +46,29 @@ txt = `its great purposes`
 txt = `great purposes`
 txt = `his excuses`
 txt = `virus`
+txt = `he needed to access`
 // txt = `his abuses`
 // txt = `He ws quiet`
 // txt = `he swims to`
 // txt = `others`
 // txt = `yours`
 
-let doc = nlp(txt)
+// let doc = nlp(txt)
 // doc.replace('excuses', 'foo')
 // doc.compute('root')
 // doc = doc.normalize('heavy')
-// let root = doc.match('excuses')
-// doc.replace(root, 'foo')
-// doc.nouns().toSingular()
-// console.log(doc.text())
-// doc.verbs().toPastTense()
-// doc.verbs().toInfinitive()
 // doc.debug()
-// console.log(doc.docs)
+
+
 // nlp(`i saw the game that the Toronto Maple Leafs won`).verbs().isSingular().debug()
 
-// past-two
-doc = nlp(`he walks down the street and smells the flowers.`)
-doc.sentences().toFutureTense()
-doc.debug()
+// doc = nlp(`he walks down the street and smells the flowers.`)
+// doc.sentences().toFutureTense()
+// doc.debug()
 
-// let doc = nlp(txt).compute('root').debug()
-// doc.verbs().toInfinitive()
+let doc = nlp(txt).compute('root').debug()
+doc.verbs().toInfinitive()
+doc.debug()
 
 // console.log(doc.text('root'))
 // doc.terms().forEach(t => {

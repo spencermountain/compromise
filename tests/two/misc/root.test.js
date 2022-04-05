@@ -10,7 +10,7 @@ test('root misc', function (t) {
 
   txt = `he seems quicker. She's the quickest.`
   doc = nlp(txt).compute('root')
-  want = `he seem quick. she be the quick.` //:/
+  want = `he seem quick. she is the quick.` //:/
   t.equal(doc.text('root'), want, here + 'found root comparative')
   t.end()
 })

@@ -68,7 +68,11 @@ const doesMatch = function (term, reg, index, length) {
   }
   //support /reg/
   if (reg.regex !== undefined) {
-    return reg.regex.test(term.normal)
+    let str = term.normal
+    if (reg.use) {
+      str = term[reg.use]
+    }
+    return reg.regex.test(str)
   }
   //support <chunk>
   if (reg.chunk !== undefined) {

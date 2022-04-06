@@ -77,5 +77,10 @@ txt = `he needed to access`
 // })
 
 
+// let doc = nlp('i NEED it')
+// console.log(nlp.parseMatch('/NEED/', { caseSensitive: true }))
+// doc.match('/NEED/', null, { caseSensitive: true }).debug()
+
+
 let doc = nlp('i NEED it')
-doc.match('NEED', null, { caseSensitive: true }).debug()
+doc.match('/NEED/', null, { caseSensitive: true }).debug()

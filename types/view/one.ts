@@ -1,4 +1,4 @@
-import { Document, Pointer, Groups, JsonProps, outMethods } from '../misc'
+import { Document, Pointer, Groups, JsonProps, outMethods, matchOptions } from '../misc'
 
 class View {
   // Utils
@@ -81,26 +81,26 @@ class View {
 
   // Match
   /** return matching patterns in this doc */
-  match: (match: string | View, group?: string | number, options?: object) => View
+  match: (match: string | View, group?: string | number, options?: matchOptions) => View
   /** return only the first match */
-  matchOne: (match: string | View, group?: string | number, options?: object) => View
+  matchOne: (match: string | View, group?: string | number, options?: matchOptions) => View
   /** Return a boolean if this match exists */
-  has: (match: string | View, group?: string | number, options?: object) => boolean
+  has: (match: string | View, group?: string | number, options?: matchOptions) => boolean
   /** return each current phrase, only if it contains this match */
-  if: (match: string | View, group?: string | number, options?: object) => View
+  if: (match: string | View, group?: string | number, options?: matchOptions) => View
   /** Filter-out any current phrases that have this match */
-  ifNo: (match: string | View, group?: string | number, options?: object) => View
+  ifNo: (match: string | View, group?: string | number, options?: matchOptions) => View
 
   /** return the terms before each match */
-  before: (match: string | View, group?: string | number, options?: object) => View
+  before: (match: string | View, group?: string | number, options?: matchOptions) => View
   /** return the terms after each match */
-  after: (match: string | View, group?: string | number, options?: object) => View
+  after: (match: string | View, group?: string | number, options?: matchOptions) => View
   /** add any immediately-preceding matches to the view*/
-  growLeft: (match: string | View, group?: string | number, options?: object) => View
+  growLeft: (match: string | View, group?: string | number, options?: matchOptions) => View
   /** add any immediately-following matches to the view*/
-  growRight: (match: string | View, group?: string | number, options?: object) => View
+  growRight: (match: string | View, group?: string | number, options?: matchOptions) => View
   /** expand the view with any left-or-right matches*/
-  grow: (match: string | View, group?: string | number, options?: object) => View
+  grow: (match: string | View, group?: string | number, options?: matchOptions) => View
 
   /** .split() [alias] */
   splitOn: (match?: string, group?: string | number) => View

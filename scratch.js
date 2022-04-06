@@ -66,9 +66,9 @@ txt = `he needed to access`
 // doc.sentences().toFutureTense()
 // doc.debug()
 
-let doc = nlp(txt).compute('root').debug()
-doc.verbs().toInfinitive()
-doc.debug()
+// let doc = nlp(txt).compute('root').debug()
+// doc.verbs().toInfinitive()
+// doc.debug()
 
 // console.log(doc.text('root'))
 // doc.terms().forEach(t => {
@@ -76,3 +76,6 @@ doc.debug()
 //   console.log(str + '|')
 // })
 
+
+let doc = nlp('i NEED it')
+doc.match('NEED', null, { caseSensitive: true }).debug()

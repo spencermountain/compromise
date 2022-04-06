@@ -19,6 +19,10 @@ const doesMatch = function (term, reg, index, length) {
   }
   //support a text match
   if (reg.word !== undefined) {
+    // check case-sensitivity, etc
+    if (reg.use) {
+      return reg.word === term[reg.use]
+    }
     //match contractions, machine-form
     if (term.machine !== null && term.machine === reg.word) {
       return true

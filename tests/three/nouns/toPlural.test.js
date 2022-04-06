@@ -116,3 +116,21 @@ test('toPlural:', function (t) {
   })
   t.end()
 })
+
+test('toPlural - longer:', function (t) {
+  let arr = [
+    [`we commended him for his hamburger`, `we commended him for his hamburgers`],
+    [`everything i say, he liked`, `everything i say, he liked`],
+    [`the tornado in Barrie swept through downtown`, `the tornados in Barrie swept through downtown`],
+    [`no cookie until after dinner`, `no cookies until after dinners`],
+    [`my finger looked green afterwards`, `my fingers looked green afterwards`],
+    // [`my finger was green afterwards`, `my fingers were green afterwards`],
+  ]
+  arr.forEach(function (a) {
+    let doc = nlp(a[0])
+    doc.compute('chunks')
+    doc.nouns().toPlural()
+    t.equal(doc.text(), a[1], here + '[toPlural] ' + a[0])
+  })
+  t.end()
+})

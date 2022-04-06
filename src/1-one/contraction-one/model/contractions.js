@@ -35,9 +35,8 @@ export default [
   { word: 'whered', out: ['where', 'did'] },
 
   // { after: `cause`, out: ['because'] },
-  { word: "'tis", out: ['it', 'is'] },
-  { word: "'twas", out: ['it', 'was'] },
-  { word: 'twas', out: ['it', 'was'] },
+  { word: "tis", out: ['it', 'is'] },
+  { word: "twas", out: ['it', 'was'] },
   { word: `y'know`, out: ['you', 'know'] },
   { word: "ne'er", out: ['never'] },
   { word: "o'er", out: ['over'] },

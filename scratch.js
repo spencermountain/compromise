@@ -9,21 +9,32 @@ import nlp from './src/three.js'
 // nlp('it is green and he is friendly.').sentences().toFutureTense().debug()
 
 // weird remove issue
-// let m = nlp('one two three. foo.', { two: 'Infinitive' })
-// m = m.splitOn('two').eq(0).tag('Foo')
-// m.match('three').remove()
-// m.debug()
+// let doc = nlp('two three.')
+// let arr = doc.splitOn('two')
+// arr.match('three').remove()
+// console.log(arr)
+// arr.debug()
 
+// let doc = nlp('batmobiles')
+// doc.nouns().toSingular()
+// doc.debug()
+
+// let doc = nlp('a bee cee')
+// let b = doc.clone()
+// console.log(doc.document)
+// console.log(b.document)
 
 // let doc = nlp('January the 12th of 2022 at 3pm')
 // let tmp = doc.clone()
 // tmp.remove('(the|of|at)')
 // tmp.numbers().toCardinal()
-// // 'january 12 2022'
+// tmp.debug()
+// // // 'january 12 2022'
 // let tmpYear = tmp.match('#Month #Value [#Value]', 0)
-// // get the match in the original document
+// // // get the match in the original document
 // let year = doc.match(tmpYear)
-// console.log(tmpYear)
+// // console.log(tmpYear)
+// // tmpYear.debug()
 // year.debug()
 
 // let doc = nlp('one two three')
@@ -31,7 +42,9 @@ import nlp from './src/three.js'
 // // mutate the original
 // doc.remove('two')
 // // return a partial
-// return doc.match(tmp).text()
+// doc.match(tmp).debug()
+
+
 
 let txt = ``
 txt = `to see what had happened, threw herself head foremost.`
@@ -76,11 +89,16 @@ txt = `he needed to access`
 //   console.log(str + '|')
 // })
 
+// let doc = nlp(`my finger looked green afterwards`)
+// doc.nouns().debug().toPlural()
+// doc.debug()
+// console.log(doc.model.one.lexicon.swim)
 
+nlp(`Lieutenant general James Baker`).debug()
 // let doc = nlp('i NEED it')
 // console.log(nlp.parseMatch('/NEED/', { caseSensitive: true }))
 // doc.match('/NEED/', null, { caseSensitive: true }).debug()
 
 
-let doc = nlp('i NEED it')
-doc.match('/NEED/', null, { caseSensitive: true }).debug()
+// let doc = nlp('i NEED it')
+// doc.match('/NEED/', null, { caseSensitive: true }).debug()

@@ -66,6 +66,26 @@ test('clone does not leak', function (t) {
   t.end()
 })
 
+
+test('clone share pointer', function (t) {
+  let doc = nlp('one two three')
+  let tmp = doc.clone()
+  let m = tmp.match('(one|three)')
+
+  t.deepEqual(doc.match(m).out('array'), ['one', 'three'], here + 'use cloned pointer')
+
+  // m.append('four')
+  // t.deepEqual(doc.match(m).out('array'), ['one', 'three'], here + 'only found in doc')
+
+  // mutate original
+  doc.remove('three')
+  t.deepEqual(doc.match(m).out('array'), ['one'], here + 'cloned pointer partial')
+
+  t.end()
+})
+
+
+
 // test('partial clone ', function (t) {
 //   let doc = nlp(`one two three. four five six`).tag('Value')
 

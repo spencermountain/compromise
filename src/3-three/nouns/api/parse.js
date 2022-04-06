@@ -6,9 +6,9 @@ const getRoot = function (m) {
   tmp = tmp.match('#Noun+')
   tmp = tmp.remove('(#Adjective|#Preposition|#Determiner|#Value)')
   // team's captain
-  if (tmp.has('#Possessive .? #Noun')) {
-    tmp = tmp.remove('#Possessive')
-  }
+  // if (tmp.has('#Possessive .? #Noun')) {
+  tmp = tmp.not('#Possessive')
+  // }
   return tmp.first()
 }
 

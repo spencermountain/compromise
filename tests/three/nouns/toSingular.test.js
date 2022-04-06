@@ -108,3 +108,18 @@ test('toSingular:', function (t) {
   })
   t.end()
 })
+
+
+
+test('toSingular - longer:', function (t) {
+  let arr = [
+    [`my fingers looked green afterwards`, `my finger looked green afterwards`],
+  ]
+  arr.forEach(function (a) {
+    let doc = nlp(a[0])
+    doc.compute('chunks')
+    doc.nouns().toSingular()
+    t.equal(doc.text(), a[1], here + '[longer] ' + a[0])
+  })
+  t.end()
+})

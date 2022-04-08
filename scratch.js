@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import plg from './plugins/speech/src/plugin.js'
 // nlp.plugin(plg)
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 // nlp.verbose('chunker')
 
 // nlp('it is green and he is friendly.').sentences().toFutureTense().debug()
@@ -65,6 +65,7 @@ txt = `he needed to access`
 // txt = `he swims to`
 // txt = `others`
 // txt = `yours`
+// txt = `baddest`
 
 // let doc = nlp(txt)
 // doc.replace('excuses', 'foo')
@@ -79,9 +80,11 @@ txt = `he needed to access`
 // doc.sentences().toFutureTense()
 // doc.debug()
 
-// let doc = nlp(txt).compute('root').debug()
+let doc = nlp(txt).compute('root')
+doc.normalize('heavy')
 // doc.verbs().toInfinitive()
-// doc.debug()
+doc.debug()
+console.log(doc.text('root'))
 
 // console.log(doc.text('root'))
 // doc.terms().forEach(t => {
@@ -94,7 +97,8 @@ txt = `he needed to access`
 // doc.debug()
 // console.log(doc.model.one.lexicon.swim)
 
-nlp(`Lieutenant general James Baker`).debug()
+
+// nlp(txt).debug()
 // let doc = nlp('i NEED it')
 // console.log(nlp.parseMatch('/NEED/', { caseSensitive: true }))
 // doc.match('/NEED/', null, { caseSensitive: true }).debug()

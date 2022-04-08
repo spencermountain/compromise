@@ -629,5 +629,6 @@ export default [
   'dependent',
   'independent',
   'seated',
+  'modest',
 ]
 

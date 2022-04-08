@@ -254,6 +254,7 @@ export default [
   'photocopier',
   'occupier',
   'drier',
+  'tier',
   'barrier',
   'carrier',
   'courier',
@@ -302,6 +303,7 @@ export default [
   'head start',
   'breakfast',
   'priest',
+  'athiest',
 
   // -ist
   'waist',

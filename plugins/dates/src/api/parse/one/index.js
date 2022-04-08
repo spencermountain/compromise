@@ -3,7 +3,7 @@ import tokenize from './01-tokenize/index.js'
 import parse from './02-parse/index.js'
 import transform from './03-transform/index.js'
 
-const env = typeof process === 'undefined' ? self.env || {} : process.env
+const env = typeof process === 'undefined' || !process.env ? self.env || {} : process.env
 const log = parts => {
   if (env.DEBUG_DATE) {
     console.log(`\n==== '${parts.doc.text()}' =====`) // eslint-disable-line

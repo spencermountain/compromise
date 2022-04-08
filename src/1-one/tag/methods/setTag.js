@@ -83,7 +83,7 @@ const setTag = function (terms, tag, world = {}, isSafe, reason) {
     return
   }
   // some logging for debugging
-  let env = typeof process === 'undefined' ? self.env || {} : process.env
+  const env = typeof process === 'undefined' || !process.env ? self.env || {} : process.env
   if (env && env.DEBUG_TAGS) {
     log(terms[0], tag, reason)
   }

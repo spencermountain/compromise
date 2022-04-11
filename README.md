@@ -343,7 +343,7 @@ It can do <b>~1mb</b> of text a second - or 10 wikipedia pages.
 <i>Infinite jest</i> is takes 3s. 
 
 <div align="right">
-  You can also paralellize, or stream text to it with <a href="https://github.com/spencermountain/compromise/tree/master/plugins/speed">compromise-speed</a>.
+  You can also parallelize, or stream text to it with <a href="https://github.com/spencermountain/compromise/tree/master/plugins/speed">compromise-speed</a>.
 </div>
 
 <!-- spacer -->

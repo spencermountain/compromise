@@ -16,7 +16,7 @@ export default [
   //he disguised the thing
   { match: '#Pronoun [#Adjective] #Determiner #Adjective? #Noun', group: 0, tag: 'Verb', reason: 'he-adj-the' },
   //is eager to go
-  { match: '#Copula [#Adjective] to #Verb', group: 0, tag: 'Verb', reason: 'adj-to' },
+  { match: '#Copula [%Adj|Present%] to #Verb', group: 0, tag: 'Verb', reason: 'adj-to' },
   // rude and insulting
   { match: '#Adjective and [#Gerund] !#Preposition?', group: 0, tag: 'Adjective', reason: 'rude-and-x' },
   // were over cooked

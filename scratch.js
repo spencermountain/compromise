@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import plg from './plugins/speech/src/plugin.js'
 // nlp.plugin(plg)
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 // nlp.verbose('chunker')
 
 // nlp('it is green and he is friendly.').sentences().toFutureTense().debug()
@@ -83,10 +83,32 @@ txt = 'he walks down the street and smells'
 // doc = nlp(`he walks down the street and smells the flowers.`)
 // doc.sentences().toFutureTense()
 // doc.debug()
-txt = `    owner`
-let doc = nlp(txt)
-// doc.sentences().toFutureTense()
-doc.debug()
+txt = "it is eager to forget"
+txt = "it is direct to ciaro"
+
+// let doc = nlp(txt) //add words as a 2nd param
+// doc.debug()
+
+
+
+
+// I would expect this to match, but it does not
+// nlp("#GoJetsGo", { "#GoJetsGo": "SportsTeam" }).debug() // ''
+
+
+const lexicon = {
+  'de armanville': 'City',
+  'az': 'Region',
+  'tx': 'Region'
+}
+
+// const doc = nlp("from Houston AZ", lexicon);
+// const doc = nlp("from Houston AZ and De Armanville, TX FTL", lexicon);
+const doc = nlp("Toronto, Ontario", lexicon);
+doc.places().debug()
+
+
+
 // let doc = nlp(txt).compute('root')
 // doc.normalize('heavy')
 // // doc.verbs().toInfinitive()

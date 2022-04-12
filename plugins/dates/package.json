@@ -1,7 +1,7 @@
 {
   "name": "compromise-dates",
   "description": "plugin for nlp-compromise",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "main": "./src/plugin.js",
   "unpkg": "./builds/compromise-dates.min.js",
@@ -39,7 +39,7 @@
     "compromise": ">=14.0.0"
   },
   "dependencies": {
-    "spacetime": "7.1.2",
+    "spacetime": "7.1.3",
     "spacetime-holiday": "0.2.2"
   },
   "license": "MIT"

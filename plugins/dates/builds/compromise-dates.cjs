@@ -338,7 +338,7 @@
     "3|n|03/27:03->10/30:04": "2/famagusta,2/nicosia,8/athens,8/bucharest,8/helsinki,8/kiev,8/mariehamn,8/riga,8/sofia,8/tallinn,8/uzhgorod,8/vilnius,8/zaporozhye,8/nicosia",
     "3|n|03/27:02->10/30:03": "8/chisinau,8/tiraspol",
     "3|n|03/27:00->10/29:24": "2/beirut",
-    "3|n|03/26:00->10/28:01": "2/gaza,2/hebron",
+    "3|n|03/27:00->10/28:01": "2/gaza,2/hebron",
     "3|n|03/25:02->10/30:02": "2/jerusalem,2/tel_aviv,israel",
     "3|n|03/25:00->10/27:24": "2/damascus",
     "3|n|02/25:00->10/28:01": "2/amman",
@@ -3118,6 +3118,9 @@
 
   const month = function (s, n, goFwd) {
     if (typeof n === 'string') {
+      if (n === 'sept') {
+        n = 'sep';
+      }
       n = mapping$3()[n.toLowerCase()];
     }
     n = validate(n);
@@ -4265,7 +4268,7 @@
   };
   var whereIts$1 = whereIts;
 
-  var version = '7.1.2';
+  var version = '7.1.3';
 
   const main = (input, tz, options) => new Spacetime(input, tz, options);
 
@@ -4983,6 +4986,9 @@
           month: context.today.month(),
           year: context.today.year(),
         };
+      }
+      if (input && input.month === 'sept') {
+        input.month = 'sep';
       }
       // set it to the beginning of the given unit
       let d = spacetime(input, context.timezone, { today: today });
@@ -6423,7 +6429,7 @@
 
   // import spacetime from 'spacetime'
 
-  const env$1 = typeof process === 'undefined' ? self.env || {} : process.env;
+  const env$1 = typeof process === 'undefined' || !process.env ? self.env || {} : process.env;
   const log$1 = parts => {
     if (env$1.DEBUG_DATE) {
       console.log(`\n==== '${parts.doc.text()}' =====`); // eslint-disable-line
@@ -7136,7 +7142,7 @@
 
   const ranges = [].concat(doTwoTimes, doCombos, doDateRange, doOneDate);
 
-  const env = typeof process === 'undefined' ? self.env || {} : process.env;
+  const env = typeof process === 'undefined' || !process.env ? self.env || {} : process.env;
   const log = msg => {
     if (env.DEBUG_DATE) {
       console.log(`\n  \x1b[32m ${msg} \x1b[0m`); // eslint-disable-line

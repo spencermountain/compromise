@@ -66,6 +66,10 @@ txt = `he needed to access`
 // txt = `others`
 // txt = `yours`
 // txt = `baddest`
+txt = 'he is like'
+txt = 'a TV screen like humans do'
+// txt = 'treated them like sons'
+// txt = 'nothing like New York'
 
 // let doc = nlp(txt)
 // doc.replace('excuses', 'foo')
@@ -80,11 +84,13 @@ txt = `he needed to access`
 // doc.sentences().toFutureTense()
 // doc.debug()
 
-let doc = nlp(txt).compute('root')
-doc.normalize('heavy')
-// doc.verbs().toInfinitive()
+let doc = nlp(txt)
 doc.debug()
-console.log(doc.text('root'))
+// let doc = nlp(txt).compute('root')
+// doc.normalize('heavy')
+// // doc.verbs().toInfinitive()
+// doc.debug()
+// console.log(doc.text('root'))
 
 // console.log(doc.text('root'))
 // doc.terms().forEach(t => {

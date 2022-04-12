@@ -25,11 +25,15 @@ export default [
   //work, which has been done.
   { match: '@hasComma [which] (#Pronoun|#Verb)', group: 0, tag: 'Preposition', reason: 'which-copula' },
   //folks like her
-  { match: '#Plural [like] #Noun', group: 0, tag: 'Preposition', reason: 'noun-like' },
+  { match: '#Noun [like] #Noun', group: 0, tag: 'Preposition', reason: 'noun-like' },
   //like the time
   { match: '^[like] #Determiner', group: 0, tag: 'Preposition', reason: 'like-the' },
   // really like
   { match: '#Adverb [like]', group: 0, tag: 'Verb', reason: 'really-like' },
+  // nothing like
+  { match: '(not|nothing|never) [like]', group: 0, tag: 'Preposition', reason: 'nothing-like' },
+  // treat them like
+  { match: '#Verb #Pronoun [like]', group: 0, tag: 'Preposition', reason: 'treat-them-like' },
 
 
 

@@ -1,13 +1,12 @@
 {
   "name": "compromise-speed",
   "description": "plugin for nlp-compromise",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "main": "./src/plugin.js",
   "unpkg": "./builds/compromise-speed.min.js",
   "module": "./builds/compromise-speed.mjs",
   "type": "module",
-  "types": "types/index.d.ts",
   "sideEffects": false,
   "exports": {
     ".": {
@@ -26,8 +25,10 @@
     "watch": "amble ./scratch.js",
     "build": "rollup -c --silent"
   },
-  "eslintIgnore": [
-    "builds/*.js"
+  "files": [
+    "builds/",
+    "src/",
+    "index.d.ts"
   ],
   "peerDependencies": {
     "compromise": ">=14.0.0"

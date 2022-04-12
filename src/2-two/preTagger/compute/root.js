@@ -10,6 +10,10 @@ const toRoot = {
     let str = term.machine || term.normal || term.text
     return world.methods.two.transform.nounToSingular(str, world.model)
   },
+  // ''
+  'Copula': () => {
+    return 'is'
+  },
   // 'walked' -> 'walk'
   'PastTense': (term, world) => {
     let str = term.machine || term.normal || term.text
@@ -23,6 +27,9 @@ const toRoot = {
   // 'walks' -> 'walk'
   'PresentTense': (term, world) => {
     let str = term.machine || term.normal || term.text
+    if (term.tags.has('Infinitive')) {
+      return str
+    }
     return world.methods.two.transform.verbToInfinitive(str, world.model, 'PresentTense')
   },
   // 'quieter' -> 'quiet'

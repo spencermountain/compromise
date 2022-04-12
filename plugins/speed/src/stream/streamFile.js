@@ -1,10 +1,9 @@
 import * as fs from 'fs';
-// import nlp from 'compromise'
-import nlp from '../../../../src/three.js'
 
-const defaults = { highWaterMark: 64 }
+const defaults = { highWaterMark: 64 }//change this for smaller chunks
 
 const streamFile = function (path, fn, opts) {
+  const nlp = this
   opts = Object.assign({}, defaults, opts)
   return new Promise((resolve, reject) => {
     let model = nlp.model()

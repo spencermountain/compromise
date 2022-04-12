@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <script src="https://unpkg.com/compromise"></script>
+  <!-- <script src="https://unpkg.com/compromise-speed"></script> -->
+  <script src="../builds/compromise-speed.min.js"></script>
+
+</head>
+
+<body>
+  <p>compromise-speed demo:</p>
+  <h3>nlp.keypress() demo</h3>
+  <div>avoid re-parsing a full-text on each keystroke</div>
+  <div>open devtools and type more text, to see</div>
+  <ul>
+    <textarea style="width:80%; height:300px;" id="input">
+      Like the time I caught the ferry over to Shelbyville - I needed a new heel for my shoe, so I decided to go to Morganville which is what they called Shelbyville in those days. So, I tied an onion to my belt which was the style at the time. Now, to take the ferry cost a nickel. And in those days, nickels had pictures of bumblebees on em. Give me five bees for a quarter, you'd say. 
+    </textarea>
+    <pre id="res">loading</pre>
+  </ul>
+
+  <script defer>
+    nlp.plugin(compromiseSpeed.keyPress)
+    const opts = { verbose: true }
+    const parse = function (text) {
+      let doc = nlp.keyPress(text, null, opts)
+      document.querySelector('#res').innerHTML = `${doc.length} sentences - only 1 parsed`
+    }
+    let el = document.querySelector('#input')
+    parse(el.value)
+    el.onkeypress = (e) => parse(e.target.value)
+  </script>
+</body>
+
+</html>

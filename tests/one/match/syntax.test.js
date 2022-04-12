@@ -39,6 +39,42 @@ test('start-end parentheses', function (t) {
   t.end()
 })
 
+
+test('case-sensitivity', function (t) {
+  let doc = nlp('i NEED it')
+  let m = doc.match('NEED')
+  t.equal(m.found, true, here + 'who-cares-case')
+
+  m = doc.match('Need')
+  t.equal(m.found, true, here + 'who-cares-titlecase')
+
+  m = doc.match('NEED', { caseSensitive: true })
+  t.equal(m.found, false, here + 'missed-case')
+
+  m = doc.match('Need', { caseSensitive: true })
+  t.equal(m.found, false, here + 'missed-title-case')
+
+  m = doc.match('NEED', null, { caseSensitive: true })
+  t.equal(m.found, true, here + 'right-case')
+  t.end()
+})
+
+test('regex-case-sensitivity', function (t) {
+  let doc = nlp('i NEED it')
+  let m = doc.match('/need/')
+  t.equal(m.found, true, here + 'who-cares-case')
+
+  doc = nlp('i NEED it')
+  m = doc.match('/Need/', null, { caseSensitive: true })
+  t.equal(m.found, false, here + 'case-sensitive-miss')
+
+  doc = nlp('i NEED it')
+  m = doc.match('/NEED/', null, { caseSensitive: true })
+  t.equal(m.found, true, here + 'case-sensitive-hit')
+
+  t.end()
+})
+
 test('regex tokenization', function (t) {
   let arr = [
     ['this/isoneword', 1],

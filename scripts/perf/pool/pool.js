@@ -1,9 +1,10 @@
 import { Worker } from 'worker_threads'
 import os from 'os'
-const cpus = os.cpus().length
+import { fileURLToPath } from 'url'
+import path from 'path'
 
-//eslint-disable-next-line
-let dir = new URL('./', import.meta.url).pathname // eslint-disable-line
+const cpus = os.cpus().length
+const dir = path.dirname(fileURLToPath(import.meta.url))
 
 class Pool {
   constructor() {

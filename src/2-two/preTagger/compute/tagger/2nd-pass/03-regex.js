@@ -1,4 +1,3 @@
-import fastTag from '../_fastTag.js'
 const hasApostrophe = /['‘’‛‵′`´]/
 
 // normal regexes
@@ -24,7 +23,8 @@ const doEndsWith = function (str = '', byEnd) {
   return null
 }
 
-const checkRegex = function (terms, i, model) {
+const checkRegex = function (terms, i, model, world) {
+  const setTag = world.methods.one.setTag
   let { regexText, regexNormal, regexNumbers, endsWith } = model.two
   let term = terms[i]
   let normal = term.machine || term.normal
@@ -43,7 +43,7 @@ const checkRegex = function (terms, i, model) {
     arr = doEndsWith(normal, endsWith)
   }
   if (arr) {
-    fastTag(term, arr[1], `2-regex- '${arr[2] || arr[0]}'`)
+    setTag([term], arr[1], world, null, `2-regex-'${arr[2] || arr[0]}'`)
     term.confidence = 0.6
     return true
   }

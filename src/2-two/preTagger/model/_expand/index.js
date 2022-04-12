@@ -2,6 +2,7 @@ import methods from '../../methods/index.js'
 import expandIrregulars from './irregulars.js'
 import expandModels from './models.js'
 import conjugate from '../../methods/transform/verbs/conjugate/index.js'
+import { adjToSuperlative, adjToComparative } from '../../methods/transform/adjectives/index.js'
 import toInfinitive from '../../methods/transform/verbs/toInfinitive/index.js'
 import models from '../models/index.js'
 let tmpModel = {
@@ -49,7 +50,7 @@ const addUncountables = function (words, model) {
   Object.keys(words).forEach(k => {
     if (words[k] === 'Uncountable') {
       model.two.uncountable[k] = true
-      words[k] = 'Noun'
+      words[k] = 'Uncountable'
     }
   })
   return model
@@ -65,6 +66,13 @@ const expandVerb = function (str, words, doPresent) {
   }
 }
 
+const expandAdjective = function (str, words, model) {
+  let sup = adjToSuperlative(str, model)
+  words[sup] = words[sup] || 'Superlative'
+  let comp = adjToComparative(str, model)
+  words[comp] = words[comp] || 'Comparative'
+}
+
 // harvest ambiguous words for any conjugations
 const expandVariable = function (switchWords, model) {
   let words = {}
@@ -74,11 +82,12 @@ const expandVariable = function (switchWords, model) {
     const name = switchWords[w]
     words[w] = switchDefaults[name]
     // conjugate some verbs
-    if (name === 'Noun|Verb') {
+    if (name === 'Noun|Verb' || name === 'Person|Verb') {
       expandVerb(w, lex, false)
     }
-    if (name === 'Adj|Present' || name === 'Person|Verb') {
+    if (name === 'Adj|Present') {
       expandVerb(w, lex, true)
+      expandAdjective(w, lex, model)
     }
     if (name === 'Adj|Gerund' || name === 'Noun|Gerund') {
       let inf = toInfinitive(w, tmpModel, 'Gerund')

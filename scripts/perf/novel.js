@@ -10,7 +10,7 @@ import fs from 'fs'
     // const txt = await wtf.fetch('Julius and Ethel Rosenberg').then(d => d.text())
     // const txt = corpus.all().slice(0, 10000).join('\n')
     let txt = fs.readFileSync('/Users/spencer/data/infinite-jest/infinite-jest.txt').toString()
-    txt = txt.substring(39390, 80000)
+    // txt = txt.substring(39390, 80000)
     //get filesize
     const bytes = Buffer.byteLength(txt)
     const size = Math.ceil(bytes / 1024)
@@ -22,7 +22,7 @@ import fs from 'fs'
 
     let begin = new Date()
     let doc = nlp(txt)
-    doc.sentences().forEach(s => {
+    doc.chunks().forEach(s => {
       if (s.verbs().length === 2) {
         console.log(s.text())
       }

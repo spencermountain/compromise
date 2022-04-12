@@ -9,16 +9,35 @@ const toFuture = function (s) {
   // force agreement with any 2nd/3rd verbs:
   if (verbs.length > 1) {
     verbs = verbs.slice(1)
-    // remove any sorta infinitive - 'to engage'
-    verbs = verbs.filter((v) => !v.lookBehind('to$').found)
-    // verbs.debug()
-    // otherwise, I guess so?
-    if (verbs.found) {
-      verbs.verbs().toInfinitive()
+    // which following-verbs should we also change?
+    let toChange = verbs.filter((vb) => {
+      // remove any sorta infinitive - 'to engage'
+      if (vb.lookBehind('to$').found) {
+        return false
+      }
+      // is watching
+      if (vb.has('#Copula #Gerund')) {
+        return true
+      }
+      // keep -ing verbs
+      if (vb.has('#Gerund')) {
+        return false
+      }
+      // he is green and he is friendly
+      if (vb.has('#Copula')) {
+        return true
+      }
+      // 'he will see when he watches'
+      if (vb.has('#PresentTense') && s.has('(when|as|how)')) {
+        return false
+      }
+      return true
+    })
+    // otherwise, change em too
+    if (toChange.found) {
+      toChange.toInfinitive()
     }
   }
-  // s = s.fullSentence()
-  // s.compute('chunks')
   return s
 }
 export default toFuture

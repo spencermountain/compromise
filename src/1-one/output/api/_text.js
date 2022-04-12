@@ -8,7 +8,7 @@ const hasSpace = / /
 
 const textFromTerms = function (terms, opts, keepSpace = true) {
   let txt = ''
-  terms.forEach(t => {
+  terms.forEach((t, i) => {
     let pre = t.pre || ''
     let post = t.post || ''
     if (opts.punctuation === 'some') {
@@ -24,6 +24,10 @@ const textFromTerms = function (terms, opts, keepSpace = true) {
       post = post.replace(/\?+/, '?')
       // kill elipses
       post = post.replace(/\.{2,}/, '')
+      // kill abbreviation periods
+      if (t.tags.has('Abbreviation') && terms[i + 1]) {
+        post = post.replace(/\./, '')
+      }
     }
     if (opts.whitespace === 'some') {
       pre = pre.replace(/\s/, '') //remove pre-whitespace
@@ -64,6 +68,9 @@ const textFromTerms = function (terms, opts, keepSpace = true) {
 
 const textFromDoc = function (docs, opts) {
   let text = ''
+  if (!docs || !docs[0] || !docs[0][0]) {
+    return text
+  }
   for (let i = 0; i < docs.length; i += 1) {
     // middle
     text += textFromTerms(docs[i], opts, true)
@@ -72,8 +79,14 @@ const textFromDoc = function (docs, opts) {
     text = text.trim()
   }
   if (opts.keepPunct === false) {
-    text = text.replace(trimStart, '')
-    text = text.replace(trimEnd, '')
+    // don't remove ':)' etc
+    if (!docs[0][0].tags.has('Emoticon')) {
+      text = text.replace(trimStart, '')
+    }
+    let last = docs[docs.length - 1]
+    if (!last[last.length - 1].tags.has('Emoticon')) {
+      text = text.replace(trimEnd, '')
+    }
   }
   if (opts.cleanWhitespace === true) {
     text = text.trim()

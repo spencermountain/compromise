@@ -23,6 +23,7 @@ const suffixes = [
 ]
 
 const exceptions = {
+  cool: 'cooly',
   whole: 'wholly',
   full: 'fully',
   good: 'well',

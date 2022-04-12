@@ -69,7 +69,7 @@ let byGroup = null
 const setChunks = function (todo, document, methods) {
   const { getDoc } = methods.one
   let terms = getDoc([todo.pointer], document)[0]
-  const env = typeof process === 'undefined' ? self.env || {} : process.env
+  const env = typeof process === 'undefined' || !process.env ? self.env || {} : process.env
   terms.forEach(term => {
     if (term.chunk === todo.chunk) {
       return

@@ -365,7 +365,9 @@ export default [
   ['tough', 'toughest'],
   ['weak', 'weakest'],
   ['white', 'whitest'],
-  ['wide', 'widest']
+  ['wide', 'widest'],
+  ['dire', 'direst'],
+  ['polite', 'politest'],
 
 
 ]

@@ -20,6 +20,10 @@ const findNouns = function (doc) {
   m = m.splitOn('[(here|there)] #Noun', 0)
   // put it there
   m = m.splitOn('[#Noun] (here|there)', 0)
+  // its great purposes
+  // m = m.splitAfter('#Possessive')
+  // his excuses
+  // m = m.splitAfter('(his|hers|yours|ours|theirs)')
   //ensure there's actually a noun
   m = m.if('#Noun')
   return m

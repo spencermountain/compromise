@@ -7,7 +7,7 @@ const tagger = function (list, document, world) {
     return list
   }
   // some logging for debugging
-  let env = typeof process === 'undefined' ? self.env || {} : process.env
+  const env = typeof process === 'undefined' || !process.env ? self.env || {} : process.env
   if (env.DEBUG_TAGS) {
     console.log(`\n  \x1b[32m→ ${list.length} corrections:\x1b[0m`) //eslint-disable-line
   }

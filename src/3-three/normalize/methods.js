@@ -45,8 +45,10 @@ export default {
     // trim end
     let docs = doc.docs
     let terms = docs[docs.length - 1]
-    let lastTerm = terms[terms.length - 1]
-    lastTerm.post = lastTerm.post.replace(/ /g, '')
+    if (terms && terms.length > 0) {
+      let lastTerm = terms[terms.length - 1]
+      lastTerm.post = lastTerm.post.replace(/ /g, '')
+    }
   },
 
   // ====== subsets ===
@@ -78,7 +80,7 @@ export default {
   },
   //turn 'Vice Admiral John Smith' to 'John Smith'
   'honorifics': (doc) => {
-    doc.honorifics().remove()
+    doc.match('#Honorific+ #Person').honorifics().remove()
   },
   // remove needless adverbs
   'adverbs': (doc) => {
@@ -93,6 +95,9 @@ export default {
   'verbs': (doc) => {
     doc.verbs().toInfinitive()
   },
-
+  // turn "fifty" into "50"
+  'numbers': (doc) => {
+    doc.numbers().toNumber()
+  },
 
 }

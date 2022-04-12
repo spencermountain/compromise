@@ -17,7 +17,6 @@ export default [
   'billiards',
   'bison',
   'blood',
-  'bowls',
   'bread',
   'bunting',
   'butter',
@@ -38,6 +37,7 @@ export default [
   'cotton',
   'currency',
   'diabetes',
+  'downstairs',
   'draughts',
   'economics',
   'education',
@@ -152,7 +152,6 @@ export default [
   'soap',
   'soccer',
   'spacecraft',
-  'species',
   'speed',
   'statistics',
   'steam',
@@ -169,6 +168,7 @@ export default [
   'trouble',
   'trousers',
   'trout',
+  'troops',
   'true north',
   'tuna',
   'vinegar',
@@ -186,6 +186,10 @@ export default [
   'internet',
   'less',
   'haste',
+
+  'series',
+  'species',
+  'clothes',
 
 
   'skin',

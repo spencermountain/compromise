@@ -1285,10 +1285,6 @@ export default [
     tags: 'NNP, NNP',
   },
   {
-    text: 'looks fine',
-    tags: 'VBZ, JJ',
-  },
-  {
     text: 'Sara Shackleton',
     tags: 'NNP, NNP',
   },
@@ -3434,10 +3430,6 @@ export default [
     tags: 'NNP, NNP, NN',
   },
   {
-    text: "680 - Number of suspected al-Qa'ida members that the United States admits are detained at Guantánamo Bay, Cuba.",
-    tags: 'CD, NN, IN, VBN, NNP, NNP, NNS, WDT, DT, NNP, NNP, VBZ, VBP, VBN, IN, NNP, NNP, NNP',
-  },
-  {
     text: '42 - Number of nationalities of those detainees at Guantanamo.',
     tags: 'CD, NN, IN, NNS, IN, DT, NNS, IN, NNP',
   },
@@ -3715,7 +3707,7 @@ export default [
     tags: 'CC, MD, DT, NN, IN, DT, NN, VB, DT, NN',
   },
   {
-    text: 'Is normal bird food fine?',
+    text: 'Is normal bird food good?',//fine
     tags: 'VBZ, JJ, NN, NN, JJ',
   },
   {
@@ -5088,10 +5080,10 @@ export default [
     text: "I'm really thankful for the folks at HR Office.",
     tags: 'PRP, VBP, RB, JJ, IN, DT, NNS, IN, NNP, NNP',
   },
-  {
-    text: 'Food good, service poor',
-    tags: 'NN, JJ, NN, JJ',
-  },
+  // {
+  //   text: 'Food good, service poor',
+  //   tags: 'NN, JJ, NN, JJ',
+  // },
   {
     text: 'Con Garage',
     tags: 'NN, NN',

@@ -1,4 +1,4 @@
-import { Lexicon, Plugin } from './misc'
+import { Lexicon, Plugin, matchOptions } from './misc'
 import View from './view/two'
 
 /** parse a given text */
@@ -11,7 +11,7 @@ declare module nlp {
   /** mix in a compromise-plugin */
   export function plugin(plugin: Plugin): any
   /** turn a match-string into json */
-  export function parseMatch(): object[]
+  export function parseMatch(match: string, opts?: matchOptions): object[]
   /** grab library internals */
   export function world(): object
   /** grab library metadata */
@@ -21,7 +21,7 @@ declare module nlp {
   /** which compute functions run automatically */
   export function hooks(): string[]
   /**  log our decision-making for debugging */
-  export function verbose(bool?: boolean): any
+  export function verbose(toLog?: boolean | string): any
   /**  current semver version of the library */
   export const version: string
   /** connect new tags to tagset graph */

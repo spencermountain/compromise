@@ -128,6 +128,9 @@ const parseToken = function (w, opts) {
     //regex
     if (start(w) === '/' && end(w) === '/') {
       w = stripBoth(w)
+      if (opts.caseSensitive) {
+        obj.use = 'text'
+      }
       obj.regex = new RegExp(w) //potential vuln - security/detect-non-literal-regexp
       return obj
     }
@@ -203,7 +206,12 @@ const parseToken = function (w, opts) {
     //somehow handle encoded-chars?
     w = w.replace('\\*', '*')
     w = w.replace('\\.', '.')
-    obj.word = w.toLowerCase()
+    if (opts.caseSensitive) {
+      obj.use = 'text'
+    } else {
+      w = w.toLowerCase()
+    }
+    obj.word = w
   }
   return obj
 }

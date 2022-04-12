@@ -43,3 +43,16 @@ test('normalize contractions', function (t) {
   t.equal(doc.text(), ` it is   coöl, (i think) .    He is   cool;  i said .`, here + 'normalize-contractions')
   t.end()
 })
+
+test('normalize numbers', function (t) {
+  let txt = nlp('the so-called group of seven').normalize({ numbers: true }).text()
+  t.equal(txt, 'the so-called group of 7', here + 'norm numbers')
+  t.end()
+})
+
+test('normalize empty', function (t) {
+  let doc = nlp('').none()
+  doc.normalize()
+  t.equal(doc.text(), ``, here + 'normalize-nothing')
+  t.end()
+})

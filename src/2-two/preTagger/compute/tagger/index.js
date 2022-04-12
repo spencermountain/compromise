@@ -34,7 +34,7 @@ const third = {
 
 //
 // these methods don't care about word-neighbours
-const secondPass = function (terms, model) {
+const secondPass = function (terms, model, world) {
   for (let i = 0; i < terms.length; i += 1) {
     // mark Noun|Verb on term metadata
     second.tagSwitch(terms, i, model)
@@ -43,7 +43,7 @@ const secondPass = function (terms, model) {
     // look at word ending
     second.checkSuffix(terms, i, model)
     // try look-like rules
-    second.checkRegex(terms, i, model)
+    second.checkRegex(terms, i, model, world)
     // check for recognized prefix, like 'micro-'
     second.checkPrefix(terms, i, model)
     // turn '1993' into a year
@@ -83,7 +83,7 @@ const preTagger = function (view) {
     let terms = document[n]
     // firstPass(terms, model)
     // guess by the letters
-    secondPass(terms, model)
+    secondPass(terms, model, world)
     // guess by the neighbours
     thirdPass(terms, model, world)
   }

@@ -1,30 +1,30 @@
-import nlp from 'compromise'
-
 let sentenceCache = {}
 
 /** memoize tagger per-sentence */
-const keyPress = function (str, options) {
-  //do a quick-parse on the text
-  let doc = nlp.tokenize(str, options)
-  let arr = doc.json({ terms: false })
+const keyPress = function (text, lex, opts = {}) {
+  const nlp = this
+  const splitSentences = this.methods().one.tokenize.splitSentences
+  let arr = splitSentences(text, this.model())
 
   let list = []
-  arr.forEach(o => {
+  arr.forEach(str => {
     //do we already have it parsed?
-    if (sentenceCache.hasOwnProperty(o.text) === true) {
+    if (sentenceCache.hasOwnProperty(str) === true) {
       //use the cache
-      list.push(sentenceCache[o.text].data)
-      sentenceCache[o.text].used = true
-      // console.log('used cache: ', o.text, '\n')
+      list.push(sentenceCache[str].data)
+      sentenceCache[str].used = true
+      // console.log('used cache: ', str, '\n')
     } else {
       //otherwise, parse it!
-      let json = nlp(o.text, options).json(0)
+      if (opts.verbose) {
+        console.log(`parsing: '${str}'\n`)//eslint-disable-line
+      }
+      let json = nlp(str, lex).json(0)
       //cache it
-      sentenceCache[o.text] = {
+      sentenceCache[str] = {
         data: json,
         used: true,
       }
-      // used[o.text] = true
       list.push(json)
     }
   })
@@ -36,9 +36,14 @@ const keyPress = function (str, options) {
       sentenceCache[k].used = null
     }
   })
-
-  return nlp.fromJSON(list)
+  if (opts.verbose) {
+    console.log(`${Object.keys(sentenceCache).length}' sentences in cache\n`)//eslint-disable-line
+  }
+  return nlp(list)
 }
 
-
-export default keyPress
+export default {
+  lib: {
+    keyPress
+  }
+}

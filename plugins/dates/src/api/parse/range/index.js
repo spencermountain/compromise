@@ -8,7 +8,7 @@ import doOneDate from './03-one-date.js'
 
 const ranges = [].concat(doTwoTimes, doCombos, doDateRange, doOneDate)
 
-const env = typeof process === 'undefined' ? self.env || {} : process.env
+const env = typeof process === 'undefined' || !process.env ? self.env || {} : process.env
 const log = msg => {
   if (env.DEBUG_DATE) {
     console.log(`\n  \x1b[32m ${msg} \x1b[0m`) // eslint-disable-line

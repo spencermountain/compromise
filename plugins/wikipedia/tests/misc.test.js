@@ -1,7 +1,5 @@
 import test from 'tape'
-import nlp from '../../../src/one.js'
-import plugin from '../src/plugin.js'
-nlp.extend(plugin)
+import nlp from './_lib.js'
 
 test('true-positive', function (t) {
   let doc = nlp('i learned css')

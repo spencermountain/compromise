@@ -4,17 +4,17 @@
   <div>nlp statistics plugin for <a href="https://github.com/spencermountain/compromise/">compromise</a></div> 
 
   <!-- npm version -->
-  <a href="https://npmjs.org/package/compromise-plugin-stats">
-    <img src="https://img.shields.io/npm/v/compromise-plugin-stats.svg?style=flat-square" />
+  <a href="https://npmjs.org/package/compromise-stats">
+    <img src="https://img.shields.io/npm/v/compromise-stats.svg?style=flat-square" />
   </a>
   
   <!-- file size -->
-  <a href="https://unpkg.com/compromise-plugin-stats/builds/compromise-plugin-stats.min.js">
-    <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/plugins/plugin-stats/builds/compromise-plugin-stats.min.js" />
+  <a href="https://unpkg.com/compromise-stats/builds/compromise-stats.min.js">
+    <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/plugins/plugin-stats/builds/compromise-stats.min.js" />
   </a>
 
   <div align="center">
-    <code>npm install compromise-plugin-stats</code>
+    <code>npm install compromise-stats</code>
   </div>
 </div>
 

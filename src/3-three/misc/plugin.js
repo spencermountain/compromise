@@ -3,6 +3,7 @@ import addParentheses from './parentheses/index.js'
 import addQuotations from './quotations/index.js'
 import addAcronyms from './acronyms/index.js'
 import addAdverbs from './adverbs/index.js'
+import addAdjectives from './adjectives/index.js'
 import addSelections from './selections/index.js'
 
 export default {
@@ -11,6 +12,7 @@ export default {
     addPossessives(View)
     addParentheses(View)
     addQuotations(View)
+    addAdjectives(View)
     addAdverbs(View)
     addAcronyms(View)
   }

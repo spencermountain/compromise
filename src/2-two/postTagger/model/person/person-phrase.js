@@ -68,21 +68,9 @@ export default [
   //Cliff Clavin
   { match: '%Person|Noun% #ProperNoun', tag: 'Person', reason: 'switch-person', safe: true },
   // john keith jones
-  {
-    match: '#Person [#ProperNoun #ProperNoun]',
-    group: 0,
-    tag: 'Person',
-    reason: 'three-name-person',
-    safe: true,
-  },
+  { match: '#Person [#ProperNoun #ProperNoun]', group: 0, tag: 'Person', ifNo: '#Possessive', reason: 'three-name-person', safe: true },
   //John Foo
-  {
-    match: '#FirstName #Acronym? [#ProperNoun]',
-    group: 0,
-    tag: 'LastName',
-    reason: 'firstname-titlecase',
-    // safe: true,
-  },
+  { match: '#FirstName #Acronym? [#ProperNoun]', group: 0, tag: 'LastName', ifNo: '#Possessive', reason: 'firstname-titlecase' },
   // john stewart
   { match: '#FirstName [#FirstName]', group: 0, tag: 'LastName', reason: 'firstname-firstname' },
   //Joe K. Sombrero
@@ -92,7 +80,7 @@ export default [
   //Joe springer sr
   { match: '#ProperNoun [#Honorific]', group: 0, tag: 'Person', reason: 'last-sr' },
   // dr john foobar
-  { match: '#Honorific #FirstName [#Singular]', group: 0, tag: 'LastName', reason: 'dr-john-foo', safe: true },
+  { match: '#Honorific #FirstName [#Singular]', group: 0, tag: 'LastName', ifNo: '#Possessive', reason: 'dr-john-foo', safe: true },
   //his-excellency
   {
     match: '[(his|her) (majesty|honour|worship|excellency|honorable)] #Person',

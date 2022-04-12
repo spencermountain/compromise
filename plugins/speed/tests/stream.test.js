@@ -5,7 +5,10 @@ import path from 'path'
 import { streamFile } from '../src/plugin.js'
 nlp.plugin(streamFile)
 
-let dir = new URL('./', import.meta.url).pathname
+
+import { fileURLToPath } from 'url'
+const dir = path.dirname(fileURLToPath(import.meta.url))
+
 let file = path.join(dir, `./files/freshPrince.txt`)
 
 test('stream the whole document', function (t) {

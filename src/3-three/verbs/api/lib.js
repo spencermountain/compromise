@@ -51,6 +51,9 @@ const doDoes = function (vb, parsed) {
 }
 
 const getTense = function (m) {
+  if (m.has('#Infinitive')) {
+    return 'Infinitive'
+  }
   if (m.has('#Participle')) {
     return 'Participle'
   }

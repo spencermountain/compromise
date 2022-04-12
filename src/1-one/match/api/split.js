@@ -7,6 +7,9 @@ const getDoc = (reg, view, group) => {
   if (typeof reg === 'string') {
     m = view.match(reg, group)
   }
+  if (!m) {
+    return view.none()
+  }
   return m
 }
 

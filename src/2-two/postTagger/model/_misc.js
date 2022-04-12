@@ -13,7 +13,7 @@ let matches = [
   //swear-words as non-expression POS
   { match: 'holy (shit|fuck|hell)', tag: 'Expression', reason: 'swears-expression' },
   // well..
-  { match: '^(well|so|okay)', tag: 'Expression', reason: 'well-' },
+  { match: '^(well|so|okay|now)', tag: 'Expression', reason: 'well-' },
   // some sort of
   { match: 'some sort of', tag: 'Adjective Noun Conjunction', reason: 'some-sort-of' },
   // of some sort

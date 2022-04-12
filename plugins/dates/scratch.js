@@ -23,7 +23,6 @@ const context = {
 let txt = ''
 txt = 'on the day after next'
 txt = 'next tuesday at 3pm'
-txt = 'december seventh'
 txt = '3pm-3:30'
 txt = ' may to august 1996'
 txt = 'last week of june'
@@ -38,28 +37,24 @@ txt = 'took 76 years to finish'
 txt = 'exercise four to five days per week.'
 txt = 'in a few years'
 txt = 'today in PST'
-txt = '4pm sharp on tuesday' //! <- expand issue
-txt = '130pm' //! <- expand issue
-txt = 'by september 5th'
+txt = '4pm sharp on tuesday'
+txt = '130pm'
 txt = '1 year 9 months from now '
+txt = 'aug. 3'
+// txt = 'lets meet 1 weeks from now '
 // txt = 'on april fools 2020 '
-
-// console.log(nlp.model().one.lexicon['april fools'])
-
 // txt = 'four thirty'
 // txt = 'on april 22nd'
 // txt = 'monday'
 
-// let doc = nlp(txt).debug()
-// let found = doc.dates(context).json()[0]
-// console.log(found.dates)
-// dates.forEach((date) => {
-//   console.log('start: ', fmt(date.start))
-//   console.log('  end: ', fmt(date.end))
-// })
+let doc = nlp(txt)//.debug()
+let found = doc.dates(context).json()
+// console.log(found[0].dates)
+found.forEach((o) => {
+  console.log('start: ', fmt(o.dates.start))
+  console.log('  end: ', fmt(o.dates.end))
+})
 
-// console.log(nlp.parseMatch('#Value (year|month|week|day) and a half'))
-let doc = nlp(txt).debug()
-// doc.match('#Value (year|month|week|day) and a half').debug()
-let m = doc.durations(context)
-console.log(m.get())
+// let doc = nlp(txt).debug()
+// let m = doc.dates(context)
+// console.log(m.get())

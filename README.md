@@ -281,7 +281,7 @@ it's pretty fast. It can run on keypress:
 
 <div align="center">
   <a href="https://observablehq.com/@spencermountain/compromise-performance">
-    <img width="600" src="https://user-images.githubusercontent.com/399657/68234798-0abdc480-ffd0-11e9-9ac5-8875d185a631.png"/>
+    <img width="600" src="https://user-images.githubusercontent.com/399657/159795115-ed62440a-be41-424c-baa4-8dd15c48377d.png"/>
   </a>
 </div>
 
@@ -343,7 +343,7 @@ It can do <b>~1mb</b> of text a second - or 10 wikipedia pages.
 <i>Infinite jest</i> is takes 3s. 
 
 <div align="right">
-  You can also paralellize, or stream text to it with <a href="https://github.com/spencermountain/compromise/tree/master/plugins/speed">compromise-speed</a>.
+  You can also parallelize, or stream text to it with <a href="https://github.com/spencermountain/compromise/tree/master/plugins/speed">compromise-speed</a>.
 </div>
 
 <!-- spacer -->
@@ -516,7 +516,7 @@ _(match methods use the [match-syntax](https://docs.compromise.cool/compromise-m
 - **[.splitBefore('')](https://observablehq.com/@spencermountain/compromise-split)** - partition a phrase before each matching segment
 - **[.splitAfter('')](https://observablehq.com/@spencermountain/compromise-split)** - partition a phrase after each matching segment
 - **[.lookup([])](https://observablehq.com/@spencermountain/compromise-match)** - quick find for an array of string matches
-- **[.autofill()](https://observablehq.com/@spencermountain/compromise-typeahead)** - create type-ahead assumptions on the document
+- **[.autoFill()](https://observablehq.com/@spencermountain/compromise-typeahead)** - create type-ahead assumptions on the document
 
 ##### Tag
 
@@ -682,6 +682,15 @@ _(these methods are on the main `nlp` object)_
   - **[.sentences().isExclamation()](https://observablehq.com/@spencermountain/compromise-sentences)** - return sentences with a `!`
   - **[.sentences().isStatement()](https://observablehq.com/@spencermountain/compromise-sentences)** - return sentences without `?` or `!`
 
+##### Adjectives
+- **[.adjectives()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'quick'`
+- **[.adjectives().json()](https://observablehq.com/@spencermountain/compromise-selections)** - get adjective metadata
+- **[.adjectives().adverbs()](https://observablehq.com/@spencermountain/compromise-selections)** - get adverbs describing this adjective
+- **[.adjectives().toComparative()](https://observablehq.com/@spencermountain/compromise-selections)** - 'quick' -> 'quicker'
+- **[.adjectives().toSuperlative()](https://observablehq.com/@spencermountain/compromise-selections)** - 'quick' -> 'quickest'
+- **[.adjectives().toAdverb()](https://observablehq.com/@spencermountain/compromise-selections)** - 'quick' -> 'quickly'
+- **[.adjectives().toNoun()](https://observablehq.com/@spencermountain/compromise-selections)** - 'quick' -> 'quickness'
+
 ##### Misc selections
 
 - **[.clauses()](https://observablehq.com/@spencermountain/compromise-selections)** - split-up sentences into multi-term phrases
@@ -704,8 +713,6 @@ _(these methods are on the main `nlp` object)_
 - **[.places()](https://observablehq.com/@spencermountain/topics-named-entity-recognition)** - like 'Paris, France'
 - **[.organizations()](https://observablehq.com/@spencermountain/topics-named-entity-recognition)** - like 'Google, Inc'
 - **[.topics()](https://observablehq.com/@spencermountain/topics-named-entity-recognition)** - `people()` + `places()` + `organizations()`
-- **[.adjectives()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'quickly'`
-- **[.adjectives().json()](https://observablehq.com/@spencermountain/compromise-selections)** - get adjective metadata
 - **[.adverbs()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'quickly'`
 - **[.adverbs().json()](https://observablehq.com/@spencermountain/compromise-selections)** - get adverb metadata
 - **[.acronyms()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'FBI'`
@@ -817,7 +824,7 @@ nlp.extend({
 | [Named-Entities](https://observablehq.com/@spencermountain/compromise-topics)         |               [Utils](https://observablehq.com/@spencermountain/compromise-utils)               |            [Penn-tags](https://observablehq.com/@spencermountain/compromise-penn-tags) |
 | [Whitespace](https://observablehq.com/@spencermountain/compromise-whitespace)         |                    [Verbs](https://observablehq.com/@spencermountain/verbs)                     | [Typeahead](https://observablehq.com/@spencermountain/compromise/compromise-typeahead) |
 | [World data](https://observablehq.com/@spencermountain/compromise-world)              |       [Normalization](https://observablehq.com/@spencermountain/compromise-normalization)       |                                                                                        |
-| [Fuzzy-matching](https://observablehq.com/@spencermountain/compromise-fuzzy-matching) |          [Typescript](https://observablehq.com/@spencermountain/compromise-typescript)          |                                                                                        |
+| [Fuzzy-matching](https://observablehq.com/@spencermountain/compromise-fuzzy-matching) |          [Typescript](https://observablehq.com/@spencermountain/compromise-typescript)          | [Mutation](https://observablehq.com/@spencermountain/compromise-mutation)  |
 
 
 <div >

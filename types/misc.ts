@@ -71,3 +71,8 @@ export interface Plugin {
   api?: (fn: (view: any) => {}) => void,  //should be View
   mutate?: (fn: (world: object) => {}) => void,
 }
+
+export interface matchOptions {
+  fuzzy?: number,
+  caseSensitive?: boolean,
+}

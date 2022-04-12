@@ -20,20 +20,31 @@ const toParts = function (str, model) {
   }
 }
 
-const pluralCopula = new Set(['are', 'were', 'been'])
-const singCopula = new Set(['is', 'am', 'was', 'be', 'being'])
+
+// dunno about these..
+const copulaMap = {
+  are: 'be',
+  were: 'be',
+  been: 'be',
+  is: 'be',
+  am: 'be',
+  was: 'be',
+  be: 'be',
+  being: 'be',
+}
 
 const toInfinitive = function (str, model, tense) {
   const { fromPast, fromPresent, fromGerund, fromParticiple } = model.two.models
+  // if (str.length < 3) {
+  //   return str
+  // }
   let { prefix, verb, particle } = toParts(str, model)
   let inf = ''
   if (!tense) {
     tense = getTense(str)
   }
-  if (pluralCopula.has(str)) {
-    inf = 'be'
-  } else if (singCopula.has(str)) {
-    inf = 'be'
+  if (copulaMap.hasOwnProperty(str)) {
+    inf = copulaMap[str]
   } else if (tense === 'Participle') {
     inf = convert(verb, fromParticiple)
   } else if (tense === 'PastTense') {

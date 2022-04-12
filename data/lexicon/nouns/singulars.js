@@ -194,6 +194,7 @@ export default [
   'christmas carol',
   'girl',
   'handful',
+  'bowl',
   'super bowl',
   'team',
   'ham',
@@ -253,6 +254,7 @@ export default [
   'photocopier',
   'occupier',
   'drier',
+  'tier',
   'barrier',
   'carrier',
   'courier',
@@ -301,6 +303,7 @@ export default [
   'head start',
   'breakfast',
   'priest',
+  'athiest',
 
   // -ist
   'waist',
@@ -379,6 +382,9 @@ export default [
   'pie',
   'rerun',
   'bride',
+  'menu',
+
+  'owner'
 ]
 
 

@@ -35,7 +35,7 @@ test('toSingular:', function (t) {
     ['aircraft', 'aircraft'],
     ['bass', 'bass'],
     ['bison', 'bison'],
-    ['fish', 'fish'],
+    ['fishes', 'fish'],
     ['fowl', 'fowl'],
     ['kilos', 'kilo'],
     ['kimonos', 'kimono'],
@@ -57,13 +57,6 @@ test('toSingular:', function (t) {
     ['eyebrows', 'eyebrow'],
     // ['mayors of chicago', 'mayor of chicago'],
     //test that sungular.singularize()==singular..
-    ['mango', 'mango'],
-    ['memento', 'memento'],
-    ['motto', 'motto'],
-    ['tornado', 'tornado'],
-    ['person', 'person'],
-    ['goose', 'goose'],
-    ['mouse', 'mouse'],
     ['calves', 'calf'],
     ['olives', 'olive'],
     ['loaves', 'loaf'],
@@ -74,19 +67,59 @@ test('toSingular:', function (t) {
     ['buses', 'bus'],
     ['tosses', 'toss'],
     ['wishes', 'wish'],
-    ['geniouses', 'genious'],
+    ['the geniouses', 'the genious'],
     ['prognoses', 'prognosis'],
     ['analyses', 'analysis'],
     ['synopses', 'synopsis'],
     ['parentheses', 'parenthesis'],
     ['theses', 'thesis'],
     ['bases', 'base'],
+
+    ['bonuses', 'bonus'],
+    ['buses', 'bus'],
+    ['campuses', 'campus'],
+    ['causes', 'cause'],
+    ['clauses', 'clause'],
+    ['the focuses', 'the focus'],
+    ['houses', 'house'],
+    ['spouses', 'spouse'],
+    ['surpluses', 'surplus'],
+    ['uses', 'use'],
+    ['viruses', 'virus'],
+    ['his excuses', 'his excuse'],
     // ['Isley Brothers members', 'Isley Brothers member'],
   ]
   arr.forEach(function (a) {
-    const r = nlp(a[0]).tag('Noun').compute('chunks').nouns()
-    const str = r.toSingular().text()
-    t.equal(str, a[1], here + a[0])
+    let doc = nlp(a[0])
+    doc.tag('Noun').compute('chunks')
+    let str = doc.nouns().toSingular().text()
+    t.equal(str, a[1], here + '[toSingular] ' + a[0])
+
+    doc = nlp(a[1])
+    doc.tag('Noun').compute('chunks')
+    str = doc.nouns().toPlural().text()
+    t.equal(str, a[0], here + '[toPlural] ' + a[0])
+
+    // doc = nlp(a[0])
+    // doc.tag('Noun').compute('chunks')
+    // str = doc.nouns().toPlural().text()
+    // t.equal(str, a[0], here + '[stay-plural] ' + a[0])
+
+  })
+  t.end()
+})
+
+
+
+test('toSingular - longer:', function (t) {
+  let arr = [
+    [`my fingers looked green afterwards`, `my finger looked green afterwards`],
+  ]
+  arr.forEach(function (a) {
+    let doc = nlp(a[0])
+    doc.compute('chunks')
+    doc.nouns().toSingular()
+    t.equal(doc.text(), a[1], here + '[longer] ' + a[0])
   })
   t.end()
 })

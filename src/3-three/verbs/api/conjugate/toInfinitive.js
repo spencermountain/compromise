@@ -8,7 +8,7 @@ const toInfinitive = function (vb, parsed) {
   let str = root.text('normal')
   str = verbToInfinitive(str, vb.model, getTense(root))
   if (str) {
-    vb.replace(root, str, keep)
+    vb.replace(root, str, keep).tag('Verb').firstTerm().tag('Infinitive')
   }
   // remove any auxiliary terms
   if (auxiliary.found) {

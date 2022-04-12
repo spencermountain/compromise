@@ -40,6 +40,7 @@ const methods = {
   isAcronym: term => term.tags.has('Acronym'),
   isKnown: term => term.tags.size > 0,
   isTitleCase: term => /^[A-Z][a-z'\u00C0-\u00FF]/.test(term.text), //|| /^[A-Z]$/.test(term.text)
+  isUpperCase: term => /^[A-Z]+$/.test(term.text),
 }
 // aliases
 methods.hasQuotation = methods.hasQuote

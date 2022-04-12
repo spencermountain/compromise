@@ -16,7 +16,7 @@ const setTag = function (term, tag, reason) {
     return
   }
   // some logging for debugging
-  let env = typeof process === 'undefined' ? self.env || {} : process.env
+  const env = typeof process === 'undefined' || !process.env ? self.env || {} : process.env
   if (env && env.DEBUG_TAGS) {
     log(term, tag, reason)
   }

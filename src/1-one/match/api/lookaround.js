@@ -1,5 +1,5 @@
 
-const before = function (regs, group) {
+const before = function (regs, group, opts) {
   const { indexN } = this.methods.one.pointer
   let pre = []
   let byN = indexN(this.fullPointer)
@@ -14,10 +14,10 @@ const before = function (regs, group) {
   if (!regs) {
     return preWords
   }
-  return preWords.match(regs, group)
+  return preWords.match(regs, group, opts)
 }
 
-const after = function (regs, group) {
+const after = function (regs, group, opts) {
   const { indexN } = this.methods.one.pointer
   let post = []
   let byN = indexN(this.fullPointer)
@@ -34,7 +34,7 @@ const after = function (regs, group) {
   if (!regs) {
     return postWords
   }
-  return postWords.match(regs, group)
+  return postWords.match(regs, group, opts)
 }
 
 const growLeft = function (regs, group, opts) {
@@ -67,8 +67,8 @@ const growRight = function (regs, group, opts) {
   return this.update(ptrs)
 }
 
-const grow = function (regs, group) {
-  return this.growRight(regs, group).growLeft(regs, group)
+const grow = function (regs, group, opts) {
+  return this.growRight(regs, group, opts).growLeft(regs, group, opts)
 }
 
 export default { before, after, growLeft, growRight, grow }

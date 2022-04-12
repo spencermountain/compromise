@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <script src="https://unpkg.com/compromise"></script>
+  <!-- <script src="https://unpkg.com/compromise-speech"></script> -->
+  <script src="../builds/compromise-speech.min.js"></script>
+
+</head>
+
+<body>
+  <p>compromise-speech demo:</p>
+  <ul>
+    <kbd>chocolate microscopes </kbd>
+    <pre id="res">loading</pre>
+  </ul>
+
+  <script defer>
+    nlp.plugin(compromiseSpeech) // window.compromiseSpeech
+    let txt = document.querySelector('kbd').innerText
+    let doc = nlp(txt)
+    let json = doc.syllables()
+    document.querySelector('#res').innerHTML = JSON.stringify(json, null, 2)
+  </script>
+</body>
+
+</html>

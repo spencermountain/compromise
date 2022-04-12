@@ -23,7 +23,7 @@ const findNouns = function (doc) {
   // its great purposes
   // m = m.splitAfter('#Possessive')
   // his excuses
-  m = m.splitAfter('(his|hers|yours|ours|theirs)')
+  // m = m.splitAfter('(his|hers|yours|ours|theirs)')
   //ensure there's actually a noun
   m = m.if('#Noun')
   return m

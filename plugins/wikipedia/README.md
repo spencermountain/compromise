@@ -4,17 +4,17 @@
   <div>Efficient Named-entity Recognition for <a href="https://github.com/spencermountain/compromise/">compromise</a></div> 
 
   <!-- npm version -->
-  <a href="https://npmjs.org/package/compromise-plugin-wikipedia">
-    <img src="https://img.shields.io/npm/v/compromise-plugin-wikipedia.svg?style=flat-square" />
+  <a href="https://npmjs.org/package/compromise-wikipedia">
+    <img src="https://img.shields.io/npm/v/compromise-wikipedia.svg?style=flat-square" />
   </a>
   
   <!-- file size -->
-  <a href="https://unpkg.com/compromise-plugin-wikipedia/builds/compromise-plugin-wikipedia.min.js">
-    <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/plugins/plugin-wikipedia/builds/compromise-plugin-wikipedia.min.js" />
+  <a href="https://unpkg.com/compromise-wikipedia/builds/compromise-wikipedia.min.js">
+    <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/plugins/plugin-wikipedia/builds/compromise-wikipedia.min.js" />
   </a>
 
   <div align="center">
-    <code>npm install compromise-plugin-wikipedia</code>
+    <code>npm install compromise-wikipedia</code>
   </div>
 </div>
 
@@ -27,7 +27,7 @@ The plugin is approximately 300kb, minified.
 
 ### Wikipedia
 ```js
-import plg from 'compromise-plugin-wikipedia'
+import plg from 'compromise-wikipedia'
 nlp.extend(plg)
 
 let doc = nlp('You could always go to McGill, the Harvard of Canada!')

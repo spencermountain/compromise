@@ -4,17 +4,17 @@
   <div>nlp performance plugin for <a href="https://github.com/spencermountain/compromise/">compromise</a></div> 
 
   <!-- npm version -->
-  <a href="https://npmjs.org/package/compromise-plugin-speed">
-    <img src="https://img.shields.io/npm/v/compromise-plugin-speed.svg?style=flat-square" />
+  <a href="https://npmjs.org/package/compromise-speed">
+    <img src="https://img.shields.io/npm/v/compromise-speed.svg?style=flat-square" />
   </a>
   
   <!-- file size -->
-  <a href="https://unpkg.com/compromise-plugin-speed/builds/compromise-plugin-speed.min.js">
-    <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/plugins/plugin-speed/builds/compromise-plugin-speed.min.js" />
+  <a href="https://unpkg.com/compromise-speed/builds/compromise-speed.min.js">
+    <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/plugins/plugin-speed/builds/compromise-speed.min.js" />
   </a>
 
   <div align="center">
-    <code>npm install compromise-plugin-speed</code>
+    <code>npm install compromise-speed</code>
   </div>
 </div>
 
@@ -24,7 +24,7 @@
 ### StreamFile
 parse and process a file from your filesystem, without loading it all into memory
 ```js
-import {streamFile} from 'compromise-plugin-speed'
+import {streamFile} from 'compromise-speed'
 nlp.extend(streamFile)
 
 nlp.streamFile('./path/to/file.txt', (s)=>{
@@ -44,7 +44,7 @@ This plugin will cache any already-parsed sentences, and combine them in-memory,
 
 it will also un-cache any temporary sentences, to clear-up memory.
 ```js
-import {keyPress} from 'compromise-plugin-speed'
+import {keyPress} from 'compromise-speed'
 nlp.extend(keyPress)
 
 let doc = nlp.keyPress('parsed once. it was the blurst of')

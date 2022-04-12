@@ -481,6 +481,23 @@ let arr = [
   ["not trying", "not #Adjective"],
   // ["wait and see", "#Infinitive and #Infinitive"],
   ["bride and groom", "#Noun and #Noun"],
+
+  ["conditioner", "#Singular"],
+  ["loner", "#Singular"],
+  ["prisoner", "#Singular"],
+  ["sooner", "#Comparative"],
+  ["toner", "#Singular"],
+  ["owner", "#Singular"],
+
+
+  ["diner", "#Singular"],
+  ["dinner", "#Singular"],
+  ["finer", "#Comparative"],
+  ["foreigner", "#Singular"],
+  ["partner", "#Singular"],
+  ["toner", "#Singular"],
+  ["werner", "#Singular"],
+  ["winner", "#Singular"],
 ]
 test('match:', function (t) {
   let res = []

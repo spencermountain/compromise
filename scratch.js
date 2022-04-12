@@ -67,7 +67,7 @@ txt = `he needed to access`
 // txt = `yours`
 // txt = `baddest`
 txt = 'he is like'
-txt = 'a TV screen like humans do'
+txt = 'he walks down the street and smells'
 // txt = 'treated them like sons'
 // txt = 'nothing like New York'
 
@@ -83,8 +83,9 @@ txt = 'a TV screen like humans do'
 // doc = nlp(`he walks down the street and smells the flowers.`)
 // doc.sentences().toFutureTense()
 // doc.debug()
-
+txt = `    owner`
 let doc = nlp(txt)
+// doc.sentences().toFutureTense()
 doc.debug()
 // let doc = nlp(txt).compute('root')
 // doc.normalize('heavy')

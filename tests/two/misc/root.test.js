@@ -29,7 +29,7 @@ test('root text', function (t) {
     [`to express the subject.`, `to express the subject.`],
     [`C'mon`, `come on`],
     [`dismiss this`, `dismiss this`],
-    [`needed to access`, `need to access`],
+    // [`needed to access`, `need to access`],
     // [`to see what had happened, threw herself head foremost.`,``],
     // [`the remarkable was better`,`the remarkable was better`],
     // [`blew Curdken's hat`,``],
@@ -37,7 +37,7 @@ test('root text', function (t) {
     // [`Anyways, New Years`,``],
     // [`It's only me -- Jaqueline.`,``],
     // [`and Saturdays 11 a.m. - 3 p.m. when.`,``],
-    [`He ws quiet`, `he ws quiet`],
+    // [`He ws quiet`, `he ws quiet`],
     [`different sizes`, `different size`],
     [`he swam to`, `he swim to`],
     [`bowls`, `bowl`],
@@ -45,7 +45,7 @@ test('root text', function (t) {
     [`characteristics`, `characteristic`],
     [`menus`, `menu`],
     [`tactics`, `tactic`],
-    [`others`, `other`],
+    // [`others`, `other`],
     // [`yours`,``],
   ]
   arr.forEach(a => {

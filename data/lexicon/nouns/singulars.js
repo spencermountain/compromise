@@ -383,6 +383,8 @@ export default [
   'rerun',
   'bride',
   'menu',
+
+  'owner'
 ]
 
 

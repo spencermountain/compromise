@@ -88,6 +88,7 @@ export default [
     ends: Vb,
     enko: Last,
     ette: Sing,
+    wner: Sing,//owner
     fies: Pres,
     fore: Avb,
     gate: Inf,

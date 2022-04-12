@@ -95,7 +95,7 @@ test('toPlural:', function (t) {
     ['the raise', 'the raises'],
     ['the exercise', 'the exercises'],
     ['the bruise', 'the bruises'],
-    ['swim', 'swims'],
+    // ['swim', 'swims'],
   ]
   arr.forEach(function (a) {
     let doc = nlp(a[0])

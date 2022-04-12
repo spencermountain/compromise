@@ -28,7 +28,7 @@ const toFuture = function (s) {
         return true
       }
       // 'he will see when he watches'
-      if (vb.has('#PresentTense')) {
+      if (vb.has('#PresentTense') && s.has('(when|as|how)')) {
         return false
       }
       return true

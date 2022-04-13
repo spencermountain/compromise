@@ -1,6 +1,6 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/three.js'
-// import plg from './plugins/speech/src/plugin.js'
+import nlp from './src/one.js'
+// import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
 // nlp.verbose('tagger')
@@ -104,9 +104,15 @@ const lexicon = {
 
 // const doc = nlp("from Houston AZ", lexicon);
 // const doc = nlp("from Houston AZ and De Armanville, TX FTL", lexicon);
-const doc = nlp("Toronto, Ontario", lexicon);
-doc.places().debug()
+// const doc = nlp("Toronto, Ontario", lexicon);
+// doc.places().debug()
 
+
+
+let doc = nlp(`won't match`)
+doc.match(`(will|shall) match`).debug()
+
+// console.log(nlp(text).dates().get())
 
 
 // let doc = nlp(txt).compute('root')

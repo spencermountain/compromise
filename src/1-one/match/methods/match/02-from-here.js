@@ -1,6 +1,7 @@
-import { doOrBlock, doAndBlock } from './logic/and-or.js'
 import { getGroup } from './_lib.js'
 import doAstrix from './steps/astrix.js'
+import doOrBlock from './steps/or-block.js'
+import doAndBlock from './steps/and-block.js'
 import { isEndGreedy, getGreedy } from './logic/greedy.js'
 import matchTerm from './term/doesMatch.js'
 
@@ -45,7 +46,7 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
       // log(`✗ |terms done|`)
       return null // die
     }
-    //support 'unspecific greedy' .* properly
+    // support 'unspecific greedy' .* properly
     if (reg.anything === true && reg.greedy === true) {
       let alive = doAstrix(state)
       if (!alive) {
@@ -55,55 +56,19 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
     }
     // support multi-word OR (a|b|foo bar)
     if (reg.choices !== undefined && reg.operator === 'or') {
-      let skipNum = doOrBlock(state)
-      if (skipNum) {
-        // handle 'not' logic
-        if (reg.negative === true) {
-          return null // die
-        }
-        if (state.hasGroup === true) {
-          const g = getGroup(state, state.t)
-          g.length += skipNum
-        }
-        // ensure we're at the end
-        if (reg.end === true) {
-          let end = state.phrase_length - 1
-          if (state.t + state.start_i !== end) {
-            return null
-          }
-        }
-        state.t += skipNum
-        // log(`✓ |found-or|`)
-        continue
-      } else if (!reg.optional) {
-        return null //die
+      let alive = doOrBlock(state)
+      if (!alive) {
+        return null
       }
+      continue
     }
     // support AND (#Noun && foo) blocks
     if (reg.choices !== undefined && reg.operator === 'and') {
-      let skipNum = doAndBlock(state)
-      if (skipNum) {
-        // handle 'not' logic
-        if (reg.negative === true) {
-          return null // die
-        }
-        if (state.hasGroup === true) {
-          const g = getGroup(state, state.t)
-          g.length += skipNum
-        }
-        // ensure we're at the end
-        if (reg.end === true) {
-          let end = state.phrase_length - 1
-          if (state.t + state.start_i !== end) {
-            return null
-          }
-        }
-        state.t += skipNum
-        // log(`✓ |found-and|`)
-        continue
-      } else if (!reg.optional) {
-        return null //die
+      let alive = doAndBlock(state)
+      if (!alive) {
+        return null
       }
+      continue
     }
     // ok, finally test the term/reg
     let term = state.terms[state.t]

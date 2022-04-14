@@ -3,12 +3,15 @@ import doOrBlock from './steps/or-block.js'
 import doAndBlock from './steps/and-block.js'
 import doNegative from './steps/negative.js'
 import simpleMatch from './steps/simple-match.js'
-import { isEndGreedy } from './logic/greedy.js'
+import { isEndGreedy } from './steps/logic/greedy.js'
 import matchTerm from './term/doesMatch.js'
-
-
 // i formally apologize for how complicated this is.
-/** tries to match a sequence of terms, starting from here */
+
+/** 
+ * try a sequence of match tokens ('regs') 
+ * on a sequence of terms, 
+ * starting at this certain term.
+ */
 const tryHere = function (terms, regs, start_i, phrase_length) {
   if (terms.length === 0 || regs.length === 0) {
     return null
@@ -24,9 +27,9 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
     phrase_length: phrase_length,
     inGroup: null,
   }
-  // log('-> [' + terms.map(t => t.implicit || t.normal).join(', ') + ']')
 
-  // we must satisfy each rule in 'regs'
+  // we must satisfy every token in 'regs'
+  // if we get to the end, we have a match.
   for (; state.r < regs.length; state.r += 1) {
     let reg = regs[state.r]
     // Check if this reg has a named capture group
@@ -40,8 +43,8 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
     //have we run-out of terms?
     if (!state.terms[state.t]) {
       //are all remaining regs optional or negative?
-      const haveNeeds = regs.slice(state.r).some(remain => !remain.optional)
-      if (haveNeeds === false) {
+      const alive = regs.slice(state.r).some(remain => !remain.optional)
+      if (alive === false) {
         break //done!
       }
       return null // die
@@ -70,7 +73,7 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
       }
       continue
     }
-    // support '.' any, but single
+    // support '.' as any-single
     if (reg.anything === true) {
       let alive = simpleMatch(state)
       if (!alive) {
@@ -78,29 +81,36 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
       }
       continue
     }
-    // ok, finally test the term/reg
-    let hasMatch = matchTerm(state.terms[state.t], reg, state.start_i + state.t, state.phrase_length)
-    if (hasMatch === true || isEndGreedy(reg, state)) {
+    // support 'foo*$' until the end
+    if (isEndGreedy(reg, state) === true) {
       let alive = simpleMatch(state)
       if (!alive) {
         return null
       }
       continue
     }
-
-    // ok, it doesn't match.
-    // did it *actually match* a negative?
+    // ok, finally test the term-reg
+    let hasMatch = matchTerm(state.terms[state.t], reg, state.start_i + state.t, state.phrase_length)
+    if (hasMatch === true) {
+      let alive = simpleMatch(state)
+      if (!alive) {
+        return null
+      }
+      continue
+    }
+    // ok, it doesn't match - but maybe it wasn't *supposed* to?
     if (reg.negative) {
       let alive = doNegative(state)
       if (!alive) {
         return null
       }
     }
-    //bah, who cares, keep going
+    //ok who cares, keep going
     if (reg.optional === true) {
       continue
     }
 
+    // skip the 2nd part of a contraction?
     if (Boolean(state.terms[state.t].implicit) && regs[state.r - 1] && state.terms[state.t + 1]) {
       // if the last match was implicit too, we're missing a word.
       if (state.terms[state.t - 1] && state.terms[state.t - 1].implicit === regs[state.r - 1].word) {
@@ -117,8 +127,7 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
   //return our results, as pointers
   let pntr = [null, start_i, state.t + start_i]
   if (pntr[1] === pntr[2]) {
-    //found 0 terms
-    return null
+    return null //found 0 terms
   }
   let groups = {}
   Object.keys(state.groups).forEach(k => {

@@ -1,4 +1,4 @@
-import { doOrBlock } from '../logic/and-or.js'
+import { doOrBlock } from './logic/and-or.js'
 import { getGroup } from '../_lib.js'
 
 const orBlock = function (state) {

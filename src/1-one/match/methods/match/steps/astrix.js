@@ -1,4 +1,4 @@
-import { greedyTo } from '../logic/greedy.js'
+import { greedyTo } from './logic/greedy.js'
 import { getGroup } from '../_lib.js'
 
 //support 'unspecific greedy' .* properly

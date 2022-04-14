@@ -1,6 +1,7 @@
-import { doAndBlock } from '../logic/and-or.js'
+import { doAndBlock } from './logic/and-or.js'
 import { getGroup } from '../_lib.js'
 
+// '(foo && #Noun)' - require all matches on the term
 const andBlock = function (state) {
   const { regs } = state
   let reg = regs[state.r]

@@ -1,4 +1,4 @@
-import doesMatch from '../04-doesMatch.js'
+import doesMatch from '../term/doesMatch.js'
 
 const isArray = function (arr) {
   return Object.prototype.toString.call(arr) === '[object Array]'

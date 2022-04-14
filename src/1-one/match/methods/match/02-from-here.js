@@ -1,7 +1,8 @@
 import { doOrBlock, doAndBlock } from './logic/and-or.js'
-import { getGroup } from './03-match-logic.js'
-import { greedyTo, isEndGreedy, getGreedy } from './logic/greedy.js'
-import matchTerm from './04-doesMatch.js'
+import { getGroup } from './_lib.js'
+import doAstrix from './steps/astrix.js'
+import { isEndGreedy, getGreedy } from './logic/greedy.js'
+import matchTerm from './term/doesMatch.js'
 
 
 // i formally apologize for how complicated this is.
@@ -46,27 +47,10 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
     }
     //support 'unspecific greedy' .* properly
     if (reg.anything === true && reg.greedy === true) {
-      let skipto = greedyTo(state, regs[state.r + 1])
-      //maybe we couldn't find it
-      if (skipto === null || skipto === 0) {
+      let alive = doAstrix(state)
+      if (!alive) {
         return null
       }
-      // ensure it's long enough
-      if (reg.min !== undefined && skipto - state.t < reg.min) {
-        return null
-      }
-      // reduce it back, if it's too long
-      if (reg.max !== undefined && skipto - state.t > reg.max) {
-        state.t = state.t + reg.max
-        continue
-      }
-      // set the group result
-      if (state.hasGroup === true) {
-        const g = getGroup(state, state.t)
-        g.length = skipto - state.t
-      }
-      state.t = skipto
-      // log(`✓ |greedy|`)
       continue
     }
     // support multi-word OR (a|b|foo bar)

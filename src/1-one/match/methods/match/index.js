@@ -1,6 +1,6 @@
 import failFast from './01-failFast.js'
 import fromHere from './02-from-here.js'
-import getGroup from './05-getGroup.js'
+import getGroup from './03-getGroup.js'
 
 // make proper pointers
 const addSentence = function (res, n) {

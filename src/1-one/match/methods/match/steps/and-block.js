@@ -2,7 +2,7 @@ import { doAndBlock } from '../logic/and-or.js'
 import { getGroup } from '../_lib.js'
 
 const andBlock = function (state) {
-  let { regs } = state
+  const { regs } = state
   let reg = regs[state.r]
 
   let skipNum = doAndBlock(state)

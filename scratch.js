@@ -110,9 +110,7 @@ const lexicon = {
 
 
 let doc = nlp(`won't match`)
-doc.match(`(will|shall) match`).debug()
-
-// console.log(nlp(text).dates().get())
+doc.match(`(will|shall) match`).debug()//found
 
 
 // let doc = nlp(txt).compute('root')

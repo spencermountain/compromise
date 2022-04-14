@@ -1,12 +1,8 @@
-import { greedyTo, doOrBlock, getGroup, doAndBlock, isEndGreedy, getGreedy } from './03-match-logic.js'
+import { doOrBlock, doAndBlock } from './logic/and-or.js'
+import { getGroup } from './03-match-logic.js'
+import { greedyTo, isEndGreedy, getGreedy } from './logic/greedy.js'
 import matchTerm from './04-doesMatch.js'
 
-// const log = msg => {
-//   const env = typeof process === 'undefined' || !process.env ? self.env || {} : process.env
-//   if (env.DEBUG_MATCH === true) {
-//     console.log(`\n  \x1b[32m ${msg} \x1b[0m`) // eslint-disable-line
-//   }
-// }
 
 // i formally apologize for how complicated this is.
 /** tries to match a sequence of terms, starting from here */

@@ -179,22 +179,3 @@ test('split-contraction', function (t) {
   t.end()
 })
 
-
-test('match-half-contraction', function (t) {
-  let doc = nlp(`We won't match`)
-  let m = doc.match(`we will match`)
-  t.equal(m.found, false, here + 'half-contraction')
-
-  m = doc.match(`we (will|shall) match`)
-  t.equal(m.found, false, here + 'half-contraction fast-or')
-
-  m = doc.match(`we (will|foo bar) match`)
-  t.equal(m.found, false, here + 'half-contraction slow-or')
-
-  m = doc.match(`we will? match`)
-  t.equal(m.found, false, here + 'half-contraction optional')
-
-  m = doc.match(`we will+ match`)
-  t.equal(m.found, false, here + 'half-contraction greedy')
-  t.end()
-})

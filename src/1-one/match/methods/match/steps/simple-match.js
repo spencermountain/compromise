@@ -1,6 +1,8 @@
 import { getGroup } from '../_lib.js'
 import foundOptional from './optional-match.js'
 import greedyMatch from './greedy-match.js'
+import skipContraction from './skip-contraction.js'
+
 
 // '[foo]' should also be logged as a group
 const setGroup = function (state, startAt) {
@@ -19,6 +21,7 @@ const setGroup = function (state, startAt) {
 const simpleMatch = function (state) {
   const { regs } = state
   let reg = regs[state.r]
+  let term = state.terms[state.t]
   let startAt = state.t
   // if it's a negative optional match... :0
   if (reg.optional && regs[state.r + 1] && reg.negative) {
@@ -31,6 +34,13 @@ const simpleMatch = function (state) {
   }
   //advance to the next term!
   state.t += 1
+  // did we match one part of a contraction?
+  if (term.implicit && state.terms[state.t] && state.terms[state.t].implicit) {
+    let alive = skipContraction(state)
+    if (!alive) {
+      return null
+    }
+  }
   //check any ending '$' flags
   //if this isn't the last term, refuse the match
   if (reg.end === true && state.t !== state.terms.length && reg.greedy !== true) {

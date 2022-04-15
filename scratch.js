@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/one.js'
+import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
@@ -108,9 +108,11 @@ const lexicon = {
 // doc.places().debug()
 
 
+nlp(`She's got me`).terms().debug() //one
 
-let doc = nlp(`won't match`)
-doc.match(`won't match`).debug()//found
+// let doc = nlp(`won't`)
+// doc.match(`won't match`).debug()//found
+// doc.match(`will`).debug()//found
 // doc.match(`(won't|will|shall) match`).debug()//found
 
 

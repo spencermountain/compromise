@@ -12,7 +12,10 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 
 -->
 
-#### 14.1.0 [March 2021]
+#### 14.1.1 [April 2021]
+- **[fix]** - main property in package.json #911
+
+#### 14.1.0 [April 2021]
 - **[fix]** - client-side export format for plugins
 - **[new]** - more adjective transformation methods
 - **[new]** - emoji + emoticon tagger

@@ -4268,7 +4268,7 @@
   };
   var whereIts$1 = whereIts;
 
-  var version = '7.1.3';
+  var version = '7.1.4';
 
   const main = (input, tz, options) => new Spacetime(input, tz, options);
 

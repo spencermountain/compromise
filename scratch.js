@@ -6,6 +6,13 @@ import nlp from './src/three.js'
 // nlp.verbose('tagger')
 // nlp.verbose('chunker')
 
+
+let doc = nlp('the weight of the world')
+let reg = '#Noun of the? world'
+reg = nlp.parseMatch(reg)
+doc.has(reg).debug()
+
+
 // nlp('it is green and he is friendly.').sentences().toFutureTense().debug()
 
 // weird remove issue
@@ -108,7 +115,7 @@ const lexicon = {
 // doc.places().debug()
 
 
-nlp(`She's got me`).terms().debug() //one
+// nlp(`She's got me`).terms().debug() //one
 
 // let doc = nlp(`won't`)
 // doc.match(`won't match`).debug()//found

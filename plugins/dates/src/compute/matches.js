@@ -193,8 +193,8 @@ let matches = [
   // in a few weeks
   { match: 'in a (few|couple) of? #Duration', tag: 'DateShift', reason: 'in a few weeks' },
   //two weeks and three days before
-  { match: '#Cardinal #Duration and? #DateShift', tag: 'DateShift', reason: 'three days before' },
-  { match: '#DateShift and #Cardinal #Duration', tag: 'DateShift', reason: 'date-shift' },
+  // { match: '#Cardinal #Duration and? #DateShift', tag: 'DateShift', reason: 'three days before' },
+  // { match: '#DateShift and #Cardinal #Duration', tag: 'DateShift', reason: 'date-shift' },
   // 'day after tomorrow'
   { match: '[#Duration (after|before)] #Date', group: 0, tag: 'DateShift', reason: 'day after tomorrow' },
 

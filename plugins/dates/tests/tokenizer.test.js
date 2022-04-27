@@ -31,7 +31,7 @@ test('date-tokenizer', function (t) {
     ['june and august', 2],
     ['june and august 2020', 1],
     ['june, august 9th', 2],
-    ['15 march 16 march', 2],
+    ['15 march 16 july', 2],
   ]
   arr.forEach((a) => {
     let dates = nlp(a[0]).dates()

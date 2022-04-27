@@ -8,7 +8,7 @@ const api = function (View) {
   class Dates extends View {
     constructor(document, pointer, groups, opts = {}) {
       super(document, pointer, groups)
-      this.viewType = 'Nouns'
+      this.viewType = 'Dates'
       this.opts = opts
     }
 

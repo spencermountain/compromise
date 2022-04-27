@@ -37,7 +37,7 @@ let matches = [
   //7 june
   { match: '#Value (#WeekDay|#Month)', ifNo: '#Money', tag: 'Date', reason: 'value-date' },
   //may twenty five
-  { match: '#TextValue #TextValue', if: '#Date', tag: '#Date', reason: 'textvalue-date' },
+  // { match: '#TextValue #TextValue', if: '#Date', tag: '#Date', reason: 'textvalue-date' },
   //two thursdays back
   { match: '#Value (#WeekDay|#Duration) back', tag: '#Date', reason: '3-back' },
   //for 4 months
@@ -175,6 +175,10 @@ let matches = [
 
   // around four thirty
   { match: '(at|around|near|#Date) [#Cardinal (thirty|fifteen) (am|pm)?]', group: 0, tag: 'Time', reason: 'around four thirty' },
+  // four thirty am
+  { match: '#Cardinal (thirty|fifteen) (am|pm)', tag: 'Time', reason: 'four thirty am' },
+  // four thirty tomorrow
+  { match: '[#Cardinal (thirty|fifteen)] #Date', group: 0, tag: 'Time', reason: 'four thirty tomorrow' },
   //anytime around 3
   { match: '(anytime|sometime) (before|after|near) [#Cardinal]', group: 0, tag: 'Time', reason: 'antime-after-3' },
 

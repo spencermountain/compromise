@@ -36,7 +36,44 @@ test('pre-parse match', function (t) {
   t.equal(doc.match(reg).found, true, here + 'match')
   t.equal(doc.matchOne(reg).found, true, here + 'matchOne')
   t.equal(doc.if(reg).found, true, here + 'if')
+  t.equal(doc.ifNo(reg).found, true, here + 'ifNo')
   t.equal(doc.has(reg), true, here + 'has')
-  // t.equal(doc.not(reg).text(), 'the. foo', here + 'not')
+  t.equal(doc.not(reg).text(), 'the foo', here + 'not')
+  t.end()
+})
+
+test('pre-parse lookaround', function (t) {
+  let doc = nlp(`before match after`)
+  let m = doc.match('match')
+
+  let reg = nlp.parseMatch('before')
+  t.equal(m.before(reg).text(), 'before', here + 'before')
+
+  reg = nlp.parseMatch('after')
+  t.equal(m.after(reg).text(), 'after', here + 'after')
+
+  reg = nlp.parseMatch('before')
+  t.equal(m.growLeft(reg).text(), 'before match', here + 'growLeft')
+
+  reg = nlp.parseMatch('after')
+  t.equal(m.growRight(reg).text(), 'match after', here + 'growRight')
+
+  reg = nlp.parseMatch('after')
+  t.equal(m.grow(reg).text(), 'match after', here + 'grow')
+  t.end()
+})
+
+test('pre-parse split', function (t) {
+  let doc = nlp(`before match after`)
+  let reg = nlp.parseMatch('match')
+  let m = doc.splitOn(reg)
+  t.deepEqual(m.out('array'), ['before', 'match', 'after'], here + 'splitOn')
+
+  m = doc.splitBefore(reg)
+  t.deepEqual(m.out('array'), ['before', 'match after'], here + 'splitBefore')
+
+  m = doc.splitAfter(reg)
+  t.deepEqual(m.out('array'), ['before match', 'after'], here + 'splitAfter')
+
   t.end()
 })

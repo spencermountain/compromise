@@ -2,15 +2,18 @@ const combine = function (left, right) {
   return [left[0], left[1], right[2]]
 }
 
+const isArray = function (arr) {
+  return Object.prototype.toString.call(arr) === '[object Array]'
+}
+
 const getDoc = (reg, view, group) => {
-  let m = reg
-  if (typeof reg === 'string') {
-    m = view.match(reg, group)
+  if (typeof reg === 'string' || isArray(reg)) {
+    return view.match(reg, group)
   }
-  if (!m) {
+  if (!reg) {
     return view.none()
   }
-  return m
+  return reg
 }
 
 const addIds = function (ptr, view) {

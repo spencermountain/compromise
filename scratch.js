@@ -7,16 +7,9 @@ import nlp from './src/three.js'
 // nlp.verbose('chunker')
 
 
-let doc = nlp('i was really being walked')
-let m = doc.match('really being')
-doc.verbs().toInfinitive()
-doc.debug()
-// let doc = nlp('the weight of the world. foo')
-// let reg = '#Noun of the? world'
-// reg = nlp.parseMatch(reg)
-// doc.not(reg).debug()
-// console.log(doc.has(reg))
-
+let doc = nlp(`We won't match`)
+let m = doc.match(`we (will|shall) match`)
+m.debug()
 
 // nlp('it is green and he is friendly.').sentences().toFutureTense().debug()
 

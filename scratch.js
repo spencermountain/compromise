@@ -7,10 +7,11 @@ import nlp from './src/three.js'
 // nlp.verbose('chunker')
 
 
-let doc = nlp(`we ve walked`)
+let doc = nlp(`aug. 3`)
+console.log(doc.match('^.').text('reduced'))
 // console.log(nlp.parseMatch(`we+ walked`))
-let m = doc.match(`foo{1,2} walked`)
-m.debug()
+// let m = doc.match(`foo{1,2} walked`)
+// m.debug()
 
 // nlp('it is green and he is friendly.').sentences().toFutureTense().debug()
 

@@ -9,7 +9,7 @@ nlp.plugin(datePlugin)
 
 const fmt = (iso) => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 
-// process.env.DEBUG_DATE = true
+process.env.DEBUG_DATE = true
 
 const context = {
   // today: '1999-04-17',

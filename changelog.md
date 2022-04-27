@@ -11,6 +11,9 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 <!-- #### [Unreleased]
 - **[new]** - add .harden() .soften()
 - **[fix]** - support pre-parsed matches in .has() .if() and .not()
+- **[fix]** - contraction OR match issue
+- **[fix]** - match-syntax min-max issue
+- **[fix]** - normalized printout of abbreviations
 -->
 
 #### 14.1.1 [April 2021]

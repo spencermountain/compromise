@@ -553,7 +553,7 @@
   }, {});
 
   //try to match these against iana form
-  const normalize$5 = (tz) => {
+  const normalize$7 = (tz) => {
     tz = tz.replace(/ time/g, '');
     tz = tz.replace(/ (standard|daylight|summer)/g, '');
     tz = tz.replace(/\b(east|west|north|south)ern/g, '$1');
@@ -582,7 +582,7 @@
       return tz
     }
     //lookup more loosely..
-    tz = normalize$5(tz);
+    tz = normalize$7(tz);
     if (zones.hasOwnProperty(tz) === true) {
       return tz
     }
@@ -648,7 +648,7 @@
   }
 
   //used mostly for cleanup of unit names, like 'months'
-  function normalize$4(str = '') {
+  function normalize$6(str = '') {
     str = str.toLowerCase().trim();
     str = str.replace(/ies$/, 'y'); //'centuries'
     str = str.replace(/s$/, '');
@@ -806,7 +806,7 @@
   var namedDates = dates$4;
 
   //little cleanup..
-  const normalize$2 = function (str) {
+  const normalize$4 = function (str) {
     // remove all day-names
     str = str.replace(/\b(mon|tues?|wed|wednes|thur?s?|fri|sat|satur|sun)(day)?\b/i, '');
     //remove ordinal ending
@@ -816,7 +816,7 @@
     return str
   };
 
-  var normalize$3 = normalize$2;
+  var normalize$5 = normalize$4;
 
   let o = {
     millisecond: 1
@@ -1649,7 +1649,7 @@
       return s
     }
     //little cleanup..
-    input = normalize$3(input);
+    input = normalize$5(input);
     //try some known-words, like 'now'
     if (namedDates.hasOwnProperty(input) === true) {
       s = namedDates[input](s);
@@ -2091,7 +2091,7 @@
   //how far it is along, from 0-1
   const progress = (s, unit) => {
     if (unit) {
-      unit = normalize$4(unit);
+      unit = normalize$6(unit);
       return doUnit(s, unit)
     }
     let obj = {};
@@ -2107,7 +2107,7 @@
   const nearest = (s, unit) => {
     //how far have we gone?
     let prog = s.progress();
-    unit = normalize$4(unit);
+    unit = normalize$6(unit);
     //fix camel-case for this one
     if (unit === 'quarterhour') {
       unit = 'quarterHour';
@@ -2234,7 +2234,7 @@
     //return just the requested unit
     if (unit) {
       //make sure it's plural-form
-      unit = normalize$4(unit);
+      unit = normalize$6(unit);
       if (/s$/.test(unit) !== true) {
         unit += 's';
       }
@@ -2596,7 +2596,7 @@
 
   const startOf = (a, unit) => {
     let s = a.clone();
-    unit = normalize$4(unit);
+    unit = normalize$6(unit);
     if (units$2[unit]) {
       return units$2[unit](s)
     }
@@ -2610,7 +2610,7 @@
   //piggy-backs off startOf
   const endOf = (a, unit) => {
     let s = a.clone();
-    unit = normalize$4(unit);
+    unit = normalize$6(unit);
     if (units$2[unit]) {
       // go to beginning, go to next one, step back 1ms
       s = units$2[unit](s); // startof
@@ -2639,7 +2639,7 @@
       return []
     }
     //cleanup unit param
-    unit = normalize$4(unit);
+    unit = normalize$6(unit);
     //cleanup to param
     end = start.clone().set(end);
     //swap them, if they're backwards
@@ -3861,7 +3861,7 @@
         return s //don't bother
       }
       let old = this.clone();
-      unit = normalize$4(unit);
+      unit = normalize$6(unit);
       if (unit === 'millisecond') {
         s.epoch += num;
         return s
@@ -4344,6 +4344,8 @@
     night: '8:00pm',
     eod: '10:00pm',
     midnight: '12:00am',
+    am: '9:00am', //tomorow am
+    pm: '5:00pm',
   };
   const minMap = {
     quarter: 15,
@@ -4395,7 +4397,9 @@
     let s = spacetime.now(context.timezone);
     let now = s.clone();
     // check for known-times (like 'today')
-    let timeStr = time.text('reduced');
+    let timeStr = time.not('in the').text('reduced');
+    timeStr = timeStr.replace(/^@/, '');//@4pm
+    // console.log(timeStr)
     if (hardCoded.hasOwnProperty(timeStr)) {
       return { result: hardCoded[timeStr], m: time }
     }
@@ -4960,7 +4964,6 @@
 
     // cleanup remaining doc object
     doc = cleanup(doc);
-
     return {
       shift,
       counter,
@@ -7216,7 +7219,7 @@
   };
   var parseRange = parseRanges;
 
-  const normalize = function (doc) {
+  const normalize$2 = function (doc) {
 
     if (!doc.numbers) {
       console.warn(`\nCompromise warning: compromise/three must be used with compromise-dates plugin\n`); // eslint-disable-line
@@ -7242,7 +7245,7 @@
     return doc
   };
 
-  var normalize$1 = normalize;
+  var normalize$3 = normalize$2;
 
   const parse$3 = function (doc, context) {
     // normalize context
@@ -7253,7 +7256,7 @@
     context.today = context.today || spacetime.now(context.timezone);
     context.today = spacetime(context.today, context.timezone);
 
-    doc = normalize$1(doc);
+    doc = normalize$3(doc);
 
     let res = parseRange(doc, context);
     return res
@@ -7302,7 +7305,7 @@
     class Dates extends View {
       constructor(document, pointer, groups, opts = {}) {
         super(document, pointer, groups);
-        this.viewType = 'Nouns';
+        this.viewType = 'Dates';
         this.opts = opts;
       }
 
@@ -7359,14 +7362,61 @@
 
   var dates$1 = api$3;
 
-  // import normalize from './normalize.js'
+  const normalize = function (doc) {
+    doc = doc.clone();
+    // 'four thirty' -> 4:30
+    let m = doc.match('#Time+').match('[<hour>#Cardinal] [<min>(thirty|fifteen)]');
+    if (m.found) {
+      let hour = m.groups('hour');
+      let min = m.groups('min');
+      let num = hour.values().get()[0];
+      if (num > 0 && num <= 12) {
+        let mins = min.values().get()[0];
+        let str = `${num}:${mins}`;
+        m.replaceWith(str);
+      }
+    }
 
+    if (!doc.numbers) {
+      console.warn(`Warning: compromise-numbers plugin is not loaded.\n   You should load this plugin \n     - https://bit.ly/3t8RfFG`); //eslint-disable-line
+    } else {
+      // doc.numbers().normalize()
+      // convert 'two' to 2
+      let num = doc.numbers();
+      num.toNumber();
+      num.toCardinal(false);
+    }
+    // expand 'aug 20-21'
+    doc.contractions().expand();
+    // remove adverbs
+    doc.adverbs().remove();
+    // 'week-end'
+    doc.replace('week end', 'weekend', true).tag('Date');
+    // 'a up to b'
+    doc.replace('up to', 'upto', true).tag('Date');
+    // 'a year ago'
+    if (doc.has('once (a|an) #Duration') === false) {
+      doc.match('[(a|an)] #Duration', 0).replaceWith('1').compute('lexicon');
+      // tagger(doc)
+    }
+    // 'in a few years'
+    // m = doc.match('in [a few] #Duration')
+    // if (m.found) {
+    //   m.groups('0').replaceWith('2')
+    //   tagger(doc)
+    // }
+    // jan - feb
+    doc.match('@hasDash').insertAfter('to').tag('Date');
+    return doc
+  };
+  var normalize$1 = normalize;
 
   const find = function (doc) {
     return doc.match('#Time+ (am|pm)?')
   };
 
   const parse$2 = function (m, context = {}) {
+    m = normalize$1(m);
     let res = parseTime$1(m, context);
     if (!res.result) {
       return { time: null, '24h': null }
@@ -7387,7 +7437,7 @@
     class Times extends View {
       constructor(document, pointer, groups) {
         super(document, pointer, groups);
-        this.viewType = 'Nouns';
+        this.viewType = 'Times';
       }
 
       get(n) {
@@ -7875,7 +7925,7 @@
     //7 june
     { match: '#Value (#WeekDay|#Month)', ifNo: '#Money', tag: 'Date', reason: 'value-date' },
     //may twenty five
-    { match: '#TextValue #TextValue', if: '#Date', tag: '#Date', reason: 'textvalue-date' },
+    // { match: '#TextValue #TextValue', if: '#Date', tag: '#Date', reason: 'textvalue-date' },
     //two thursdays back
     { match: '#Value (#WeekDay|#Duration) back', tag: '#Date', reason: '3-back' },
     //for 4 months
@@ -8013,6 +8063,10 @@
 
     // around four thirty
     { match: '(at|around|near|#Date) [#Cardinal (thirty|fifteen) (am|pm)?]', group: 0, tag: 'Time', reason: 'around four thirty' },
+    // four thirty am
+    { match: '#Cardinal (thirty|fifteen) (am|pm)', tag: 'Time', reason: 'four thirty am' },
+    // four thirty tomorrow
+    { match: '[#Cardinal (thirty|fifteen)] #Date', group: 0, tag: 'Time', reason: 'four thirty tomorrow' },
     //anytime around 3
     { match: '(anytime|sometime) (before|after|near) [#Cardinal]', group: 0, tag: 'Time', reason: 'antime-after-3' },
 
@@ -8031,8 +8085,8 @@
     // in a few weeks
     { match: 'in a (few|couple) of? #Duration', tag: 'DateShift', reason: 'in a few weeks' },
     //two weeks and three days before
-    { match: '#Cardinal #Duration and? #DateShift', tag: 'DateShift', reason: 'three days before' },
-    { match: '#DateShift and #Cardinal #Duration', tag: 'DateShift', reason: 'date-shift' },
+    // { match: '#Cardinal #Duration and? #DateShift', tag: 'DateShift', reason: 'three days before' },
+    // { match: '#DateShift and #Cardinal #Duration', tag: 'DateShift', reason: 'date-shift' },
     // 'day after tomorrow'
     { match: '[#Duration (after|before)] #Date', group: 0, tag: 'DateShift', reason: 'day after tomorrow' },
 
@@ -8102,6 +8156,12 @@
     timezone(view);
     fixup(view);
     view.uncache();
+
+    // sorry, one more
+    view.match('#Cardinal #Duration and? #DateShift').tag('DateShift', 'three days before');
+    view.match('#DateShift and #Cardinal #Duration').tag('DateShift', 'three days and two weeks');
+    view.match('#Time [(sharp|on the dot)]').tag('Time', '4pm sharp');
+
     return view
   };
 
@@ -8577,15 +8637,19 @@
 
   var regex = [
     // 30sec
-    [/^[0-9]+(min|sec|hr|d)s?$/, 'Duration', '30min'],
+    [/^[0-9]+(min|sec|hr|d)s?$/i, 'Duration', '30min'],
     // 2012-06
     [/^[0-9]{4}-[0-9]{2}$/, 'Date', '2012-06'],
     // 13h30
-    [/^[0-9]{2}h[0-9]{2}$/, 'Time', '13h30'],
+    [/^[0-9]{2}h[0-9]{2}$/i, 'Time', '13h30'],
+    // @4:30
+    [/^@[0-9]+:[0-9]{2}$/, 'Time', '@5:30'],
+    // @4pm
+    [/^@[1-9]+(am|pm)$/, 'Time', '@5pm'],
     // 03/02
     [/^[0-9]{2}\/[0-9]{2}/, 'Date', '03/02'],
     // iso-time
-    [/^[0-9]{4}[:-][0-9]{2}[:-][0-9]{2}T[0-9]/, 'Time', 'iso-time-tag']
+    // [/^[0-9]{4}[:-][0-9]{2}[:-][0-9]{2}T[0-9]/i, 'Time', 'iso-time-tag']
 
   ];
 
@@ -8595,7 +8659,7 @@
     compute: compute$1,
     api: api$1,
     mutate: (world) => {
-      world.model.two.regexNormal = world.model.two.regexNormal.concat(regex);
+      world.model.two.regexText = world.model.two.regexText.concat(regex);
     },
     hooks: ['dates']
   };

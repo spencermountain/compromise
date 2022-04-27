@@ -21,6 +21,33 @@ test('half-contraction', function (t) {
 })
 
 
+test('partial-contraction', function (t) {
+  let doc = nlp(`we've walked`)
+  let m = doc.match('we')
+  t.equal(m.text('implicit'), 'we', h + 'one-half')
+
+  m = doc.match('we\'ve')
+  t.equal(m.text('implicit'), 'we have', h + 'both-halves')
+
+  m = doc.match('we have')
+  t.equal(m.text('implicit'), 'we have', h + 'two-halves')
+
+  m = doc.match('have')
+  t.equal(m.text('implicit'), 'have', h + 'second-half')
+
+  m = doc.match('have walked')
+  t.equal(m.text('implicit'), 'have walked', h + 'second-half+')
+
+  m = doc.match('we\'ve walked')
+  t.equal(m.text('implicit'), 'we have walked', h + 'both-halves+')
+
+  m = doc.match('we walked')
+  t.equal(m.text('implicit'), '', h + 'no-halves+')
+
+  t.end()
+})
+
+
 test('contraction-skip', function (t) {
   let str = `We've matched`
   let doc = nlp(str)
@@ -42,6 +69,9 @@ test('contraction-skip', function (t) {
 
   m = doc.match(`we . matched`)
   t.equal(m.text(), str, h + 'dot end')
+
+  m = doc.match(`@hasContraction matched`)
+  t.equal(m.text(), str, h + '@hasContraction')
 
   t.end()
 })

@@ -7,8 +7,11 @@ import nlp from './src/three.js'
 // nlp.verbose('chunker')
 
 
-let doc = nlp(`We won't match`)
-let m = doc.match(`we (will|shall) match`)
+let doc = nlp(`he's nice`)
+// let m = doc.match(`we won't match`)
+// let m = doc.match(`we will not match`)
+// let m = doc.match(`we (will|shall) match`)
+let m = doc.match(`he's`)
 m.debug()
 
 // nlp('it is green and he is friendly.').sentences().toFutureTense().debug()

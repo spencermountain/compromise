@@ -13,7 +13,7 @@ test('fancy match', function (t) {
     //contractions
     ["he's nice", 'he is', 2],
     ["he's nice", 'is nice', 2],
-    ["he's nice", "he's", 1],
+    ["he's nice", "he's", 2],
     ["he's nice", "he's nice", 3],
     ["he's nice", 'nice', 1],
 

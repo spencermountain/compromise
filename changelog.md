@@ -9,12 +9,17 @@ compromise uses semver, and pushes to npm frequently
 While all _Major_ releases should be reviewed, our only two _large_ releases are **v6** in 2016 and and **v12** in 2019. Others have been mostly incremental, or niche.
 
 <!-- #### [Unreleased]
-- **[new]** - add .harden() .soften()
+
+-->
+
+#### 14.1.2 [April 2021]
+- **[new]** - add .harden() .soften() undocumented methods
 - **[fix]** - support pre-parsed matches in .has() .if() and .not()
 - **[fix]** - contraction OR match issue
 - **[fix]** - match-syntax min-max issue
 - **[fix]** - normalized printout of abbreviations
--->
+- **[update]** - date plugin release
+- **[update]** - dependencies
 
 #### 14.1.1 [April 2021]
 - **[fix]** - main property in package.json #911

@@ -24,6 +24,12 @@ const compute = function (view) {
   timezone(view)
   fixup(view)
   view.uncache()
+
+  // sorry, one more
+  view.match('#Cardinal #Duration and? #DateShift').tag('DateShift', 'three days before')
+  view.match('#DateShift and #Cardinal #Duration').tag('DateShift', 'three days and two weeks')
+  view.match('#Time [(sharp|on the dot)]').tag('Time', '4pm sharp')
+
   return view
 }
 

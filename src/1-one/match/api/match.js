@@ -37,35 +37,37 @@ const matchOne = function (regs, group, opts) {
 
 const has = function (regs, group, opts) {
   const one = this.methods.one
-  let ptrs
+  if (isView(regs)) {
+    let ptrs = regs.fullPointer // support a view object as input
+    return ptrs.length > 0
+  }
   if (typeof regs === 'string') {
     regs = one.parseMatch(regs, opts)
-    let todo = { regs, group, justOne: true }
-    ptrs = one.match(this.docs, todo, this._cache).ptrs
-  } else if (isView(regs)) {
-    ptrs = regs.fullPointer // support a view object as input
   }
+  let todo = { regs, group, justOne: true }
+  let ptrs = one.match(this.docs, todo, this._cache).ptrs
   return ptrs.length > 0
 }
 
 // 'if'
 const ifFn = function (regs, group, opts) {
   const one = this.methods.one
-  if (typeof regs === 'string') {
-    regs = one.parseMatch(regs, opts)
-    let todo = { regs, group, justOne: true }
-    let ptrs = this.fullPointer
-    ptrs = ptrs.filter(ptr => {
-      let m = this.update([ptr])
-      let res = one.match(m.docs, todo, this._cache).ptrs
-      return res.length > 0
-    })
-    return this.update(ptrs)
-  }
   if (isView(regs)) {
     return this.filter(m => m.intersection(regs).found)
   }
-  return this.none()
+  if (typeof regs === 'string') {
+    regs = one.parseMatch(regs, opts)
+  }
+  let todo = { regs, group, justOne: true }
+  let ptrs = this.fullPointer
+  ptrs = ptrs.filter(ptr => {
+    let m = this.update([ptr])
+    let res = one.match(m.docs, todo, this._cache).ptrs
+    return res.length > 0
+  })
+  return this.update(ptrs)
+  // }
+  // return this.none()
 }
 
 const ifNo = function (regs, group, opts) {

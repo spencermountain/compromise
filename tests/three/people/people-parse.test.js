@@ -9,7 +9,7 @@ test('people-parse:', function (t) {
     ['Corey', 'corey', '', ''],
     ['sgt Williams', '', 'williams', 'sgt'],
     ['Mr Springer', '', 'springer', 'mr'],
-    ['Mr. Goobly', '', 'goobly', 'mr.'],
+    ['Mr. Goobly', '', 'goobly', 'mr'],
     ['dr dirk sinkel', 'dirk', 'sinkel', 'dr'],
     ['Dirk M Sinkel', 'dirk', 'sinkel', ''],
     ['john D Springer sr', 'john', 'springer', 'sr'],

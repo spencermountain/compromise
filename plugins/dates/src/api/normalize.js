@@ -2,7 +2,7 @@
 const normalize = function (doc) {
   doc = doc.clone()
   // 'four thirty' -> 4:30
-  let m = doc.match('[<hour>#Cardinal] [<min>(thirty|fifteen)]').match('#Time+')
+  let m = doc.match('#Time+').match('[<hour>#Cardinal] [<min>(thirty|fifteen)]')
   if (m.found) {
     let hour = m.groups('hour')
     let min = m.groups('min')

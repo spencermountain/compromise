@@ -13,6 +13,8 @@ const hardCoded = {
   night: '8:00pm',
   eod: '10:00pm',
   midnight: '12:00am',
+  am: '9:00am', //tomorow am
+  pm: '5:00pm',
 }
 const minMap = {
   quarter: 15,
@@ -64,7 +66,9 @@ const parseTime = function (doc, context) {
   let s = spacetime.now(context.timezone)
   let now = s.clone()
   // check for known-times (like 'today')
-  let timeStr = time.text('reduced')
+  let timeStr = time.not('in the').text('reduced')
+  timeStr = timeStr.replace(/^@/, '')//@4pm
+  // console.log(timeStr)
   if (hardCoded.hasOwnProperty(timeStr)) {
     return { result: hardCoded[timeStr], m: time }
   }

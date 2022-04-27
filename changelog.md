@@ -12,6 +12,15 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 
 -->
 
+#### 14.1.2 [April 2021]
+- **[new]** - add .harden() .soften() undocumented methods
+- **[fix]** - support pre-parsed matches in .has() .if() and .not()
+- **[fix]** - contraction OR match issue
+- **[fix]** - match-syntax min-max issue
+- **[fix]** - normalized printout of abbreviations
+- **[update]** - date plugin release
+- **[update]** - dependencies
+
 #### 14.1.1 [April 2021]
 - **[fix]** - main property in package.json #911
 

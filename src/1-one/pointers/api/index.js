@@ -2,8 +2,19 @@ import getUnion from './lib/union.js'
 import getDifference from './lib/difference.js'
 import getIntersection from './lib/intersection.js'
 
+const isArray = function (arr) {
+  return Object.prototype.toString.call(arr) === '[object Array]'
+}
+
 const getDoc = (m, view) => {
-  return typeof m === 'string' ? view.match(m) : m
+  if (typeof m === 'string' || isArray(m)) {
+    return view.match(m)
+  }
+  if (!m) {
+    return view.none()
+  }
+  // support pre-parsed reg object
+  return m
 }
 
 // 'harden' our json pointers, again

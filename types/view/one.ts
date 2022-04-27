@@ -200,6 +200,10 @@ class View {
   cache: (options?: object) => View
   /** un-freezes the current state of the document, so it may be transformed */
   uncache: (options?: object) => View
+  /* 
+   harden: () => View
+   soften: () => View
+   */
 
   /** quick find for an array of string matches */
   lookup: (trie: object | string[], opts?: object) => View

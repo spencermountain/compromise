@@ -59,7 +59,6 @@ const tokenize = function (doc, context) {
 
   // cleanup remaining doc object
   doc = cleanup(doc)
-
   return {
     shift,
     counter,

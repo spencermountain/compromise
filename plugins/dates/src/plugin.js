@@ -10,7 +10,7 @@ export default {
   compute,
   api,
   mutate: (world) => {
-    world.model.two.regexNormal = world.model.two.regexNormal.concat(regex)
+    world.model.two.regexText = world.model.two.regexText.concat(regex)
   },
   hooks: ['dates']
 }

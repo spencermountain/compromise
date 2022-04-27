@@ -1,4 +1,4 @@
-// import normalize from './normalize.js'
+import normalize from './normalize.js'
 import parseTime from './parse/one/01-tokenize/03-time.js'
 import spacetime from 'spacetime'
 
@@ -8,6 +8,7 @@ const find = function (doc) {
 }
 
 const parse = function (m, context = {}) {
+  m = normalize(m)
   let res = parseTime(m, context)
   if (!res.result) {
     return { time: null, '24h': null }
@@ -28,7 +29,7 @@ const api = function (View) {
   class Times extends View {
     constructor(document, pointer, groups) {
       super(document, pointer, groups)
-      this.viewType = 'Nouns'
+      this.viewType = 'Times'
     }
 
     get(n) {

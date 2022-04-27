@@ -1,3 +1,5 @@
+// support returning a subset of a match
+// like 'foo [bar] baz' -> bar
 const getGroup = function (res, group) {
   let ptrs = []
   let byGroup = {}

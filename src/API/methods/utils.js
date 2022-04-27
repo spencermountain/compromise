@@ -3,9 +3,17 @@ const utils = {
   termList: function () {
     return this.methods.one.termList(this.docs)
   },
-  /** */
+  /** return individual terms*/
   terms: function (n) {
-    let m = this.match('.').toView() //make this faster
+    // this is a bit faster than .match('.') 
+    let ptrs = []
+    this.docs.forEach((terms) => {
+      terms.forEach((term) => {
+        let [y, x] = term.index || []
+        ptrs.push([y, x, x + 1])
+      })
+    })
+    let m = this.update(ptrs)
     return typeof n === 'number' ? m.eq(n) : m
   },
 

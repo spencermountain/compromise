@@ -24,7 +24,7 @@ const checkCase = function (terms, i, model) {
   // assume terms are already indexed
   term.index = term.index || [0, 0]
   let index = term.index[1]
-  let str = term.text //need case info
+  let str = term.text || '' //need case info
   // titlecase and not first word of sentence
   if (index !== 0 && titleCase.test(str) === true && hasNumber.test(str) === false) {
     if (notProper.find(tag => term.tags.has(tag))) {
@@ -38,7 +38,7 @@ const checkCase = function (terms, i, model) {
     return true
   }
   //roman numberals - XVII
-  if (term.text.length >= 2 && romanNumeral.test(str) && romanNumValid.test(str) && !nope[term.normal]) {
+  if (str.length >= 2 && romanNumeral.test(str) && romanNumValid.test(str) && !nope[term.normal]) {
     fastTag(term, 'RomanNumeral', '2-xvii')
     return true
   }

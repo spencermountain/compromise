@@ -11,11 +11,17 @@ const place = {
   },
   beforeWords: {
     in: 'Place',
+    by: 'Place',
     near: 'Place',
+    from: 'Place',
+    to: 'Place',
   },
   afterWords: {
     in: 'Place',
+    by: 'Place',
     near: 'Place',
+    from: 'Place',
+    to: 'Place',
     government: 'Place',
     council: 'Place',
     region: 'Place',

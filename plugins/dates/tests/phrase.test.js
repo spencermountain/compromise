@@ -94,7 +94,7 @@ test('date-phrase tests:', function (t) {
     // [`turn the radio down each weeknight`, `turn`, `radio`, `each weeknight`], //tricky
     [`allow users to create new artifacts`, `allow`, `user`, ``],
     [`by february, tell new users we accept donations`, `tell`, `new user`, `by february`],
-    [`normalize all usernames to the main dataset at some point`, `normalize`, `username`, `at some point`],
+    // [`normalize all usernames to the main dataset at some point`, `normalize`, `username`, `at some point`],
     // [`eat carrots once a week`, `eat`, `carrot`, `once a week`],
     [`tell sam not to engage in insider trading when he calls`, `tell`, `sam`, ``],
     [`set alarm next tuesday`, `set`, `alarm`, `next tuesday`],

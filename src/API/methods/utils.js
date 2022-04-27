@@ -7,9 +7,10 @@ const utils = {
   terms: function (n) {
     // this is a bit faster than .match('.') 
     let ptrs = []
-    this.docs.forEach((terms, x) => {
-      terms.forEach((_term, i) => {
-        ptrs.push([x, i, i + 1])
+    this.docs.forEach((terms, y) => {
+      terms.forEach((term) => {
+        let x = term.index[1] || 0
+        ptrs.push([y, x, x + 1])
       })
     })
     let m = this.update(ptrs)

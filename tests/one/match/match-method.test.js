@@ -30,12 +30,13 @@ test('match @functions', function (t) {
 })
 
 test('pre-parse match', function (t) {
-  let doc = nlp('the weight of the world')
+  let doc = nlp('the weight of the world. foo')
   let reg = 'weight of the? world'
   reg = nlp.parseMatch(reg)
   t.equal(doc.match(reg).found, true, here + 'match')
   t.equal(doc.matchOne(reg).found, true, here + 'matchOne')
   t.equal(doc.if(reg).found, true, here + 'if')
-  t.equal(doc.has(reg).found, true, here + 'has')
+  t.equal(doc.has(reg), true, here + 'has')
+  // t.equal(doc.not(reg).text(), 'the. foo', here + 'not')
   t.end()
 })

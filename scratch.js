@@ -7,10 +7,14 @@ import nlp from './src/three.js'
 // nlp.verbose('chunker')
 
 
-let doc = nlp('the weight of the world')
-let reg = '#Noun of the? world'
-reg = nlp.parseMatch(reg)
-doc.has(reg).debug()
+let doc = nlp('i was really not being walked')
+doc.verbs().toInfinitive()
+doc.debug()
+// let doc = nlp('the weight of the world. foo')
+// let reg = '#Noun of the? world'
+// reg = nlp.parseMatch(reg)
+// doc.not(reg).debug()
+// console.log(doc.has(reg))
 
 
 // nlp('it is green and he is friendly.').sentences().toFutureTense().debug()

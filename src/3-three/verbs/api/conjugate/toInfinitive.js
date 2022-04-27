@@ -13,7 +13,7 @@ const toInfinitive = function (vb, parsed) {
   // remove any auxiliary terms
   if (auxiliary.found) {
     auxiliary.terms().reverse().forEach(m => {
-      vb.remove(m.text())//gross
+      vb.remove(m)
     })
   }
   // there is no real way to do this

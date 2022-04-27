@@ -1,7 +1,7 @@
 const titleCase = /^[A-Z][a-z'’\u00C0-\u00FF]/
 import contract from './contract.js'
 
-const toTitleCase = function (str) {
+const toTitleCase = function (str = '') {
   str = str.replace(/^ *[a-z\u00C0-\u00FF]/, x => x.toUpperCase()) //TODO: support unicode
   return str
 }

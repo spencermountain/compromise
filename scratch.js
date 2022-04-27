@@ -7,7 +7,8 @@ import nlp from './src/three.js'
 // nlp.verbose('chunker')
 
 
-let doc = nlp('i was really not being walked')
+let doc = nlp('i was really being walked')
+let m = doc.match('really being')
 doc.verbs().toInfinitive()
 doc.debug()
 // let doc = nlp('the weight of the world. foo')

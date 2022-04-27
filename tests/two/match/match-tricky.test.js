@@ -89,6 +89,13 @@ test('fancy match', function (t) {
     ['one two three four five', 'one .{0,3} three', 3],
     ['one two three four five', 'one .{1,3} two', 0],
     ['one two three four five six seven', 'one .{0,4} six seven', 7],
+    // unmet min
+    [`bar walked`, `foo{2} walked`, 0],
+    [`foo walked`, `foo{2} walked`, 0],
+    [`we've walked`, `foo{2} walked`, 0],
+    // no min (optional)
+    [`foo walked`, `bar{0,2} walked`, 1],
+    [`foo walked`, `bar{,2} walked`, 1],
     //optional/consecutive
     ['is really walking', 'is #Adverb+? walking', 3],
     ['is walking', 'is #Adverb+? walking', 2],

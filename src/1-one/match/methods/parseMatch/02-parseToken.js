@@ -1,4 +1,4 @@
-const hasMinMax = /\{([0-9]+)(, *[0-9]*)?\}/
+const hasMinMax = /\{([0-9]+)?(, *[0-9]*)?\}/
 const andSign = /&&/
 const captureName = new RegExp(/^<\s*(\S+)\s*>/)
 /* break-down a match expression into this:
@@ -159,7 +159,7 @@ const parseToken = function (w, opts) {
       return obj
     }
   }
-  // support #Tag{1,9}
+  // support foo{1,9}
   if (hasMinMax.test(w) === true) {
     w = w.replace(hasMinMax, (_a, b, c) => {
       if (c === undefined) {
@@ -168,15 +168,23 @@ const parseToken = function (w, opts) {
         obj.max = Number(b)
       } else {
         c = c.replace(/, */, '')
-        // '{2,4}' Two to four times
-        // '{3,}' Three or more times
-        obj.min = Number(b)
-        obj.max = Number(c || 999)
+        if (b === undefined) {
+          // '{,9}' implied zero min
+          obj.min = 0
+          obj.max = Number(c)
+        } else {
+          // '{2,4}' Two to four times
+          obj.min = Number(b)
+          // '{3,}' Three or more times
+          obj.max = Number(c || 999)
+        }
       }
       // use same method as '+'
       obj.greedy = true
       // 0 as min means the same as '?'
-      obj.optional = true
+      if (!obj.min) {
+        obj.optional = true
+      }
       return ''
     })
   }

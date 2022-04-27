@@ -1,7 +1,7 @@
 import { getGroup } from '../_lib.js'
 import foundOptional from './optional-match.js'
 import greedyMatch from './greedy-match.js'
-// import skipContraction from './skip-contraction.js'
+import contractionSkip from './contraction-skip.js'
 
 
 // '[foo]' should also be logged as a group
@@ -35,15 +35,7 @@ const simpleMatch = function (state) {
   // Contraction skip:
   // did we match the first part of a contraction?
   if (term.implicit && state.terms[state.t + 1]) {
-    // we matched "we've" - skip-over [we, have]
-    if (reg.word === term.normal) {
-      state.t += 1
-    }
-    // also skip for @hasContraction
-    if (reg.method === 'hasContraction') {
-      state.t += 1
-    }
-
+    contractionSkip(state)
   }
   //advance to the next term!
   state.t += 1

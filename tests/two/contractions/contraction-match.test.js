@@ -44,6 +44,15 @@ test('partial-contraction', function (t) {
   m = doc.match('we walked')
   t.equal(m.text('implicit'), '', h + 'no-halves+')
 
+  m = doc.match('we{2} have')
+  t.equal(m.text('implicit'), '', h + 'invalid-first')
+
+  m = doc.match('we* walked')
+  t.equal(m.text('implicit'), '', h + 'invalid-greedy')
+
+  m = doc.match('we+? walked')
+  t.equal(m.text('implicit'), 'walked', h + 'half-but-optional')
+
   t.end()
 })
 

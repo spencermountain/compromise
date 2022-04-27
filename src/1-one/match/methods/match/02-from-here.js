@@ -109,20 +109,9 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
     if (reg.optional === true) {
       continue
     }
-    // skip the 2nd part of a contraction?
-    // if (Boolean(state.terms[state.t].implicit) && regs[state.r - 1] && state.terms[state.t + 1]) {
-    // console.log(state.terms[state.t].implicit)
-    //   // if the last match was implicit too, we're missing a word.
-    //   if (state.terms[state.t - 1] && state.terms[state.t - 1].implicit === regs[state.r - 1].word) {
-    //     return null
-    //   }
-    //   // does the next one match?
-    //   if (matchTerm(state.terms[state.t + 1], reg, state.start_i + state.t, state.phrase_length)) {
-    //     state.t += 2
-    //     continue
-    //   }
-    // }
-    return null //die
+
+    // finally, we die
+    return null
   }
   //return our results, as pointers
   let pntr = [null, start_i, state.t + start_i]

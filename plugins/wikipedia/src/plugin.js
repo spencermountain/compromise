@@ -1,4 +1,4 @@
-import nlp from '../../../src/one.js'
+import nlp from '../../../src/one.js' //TODO: fix me
 import { unpack } from 'efrt'
 import model from './_model.js'
 

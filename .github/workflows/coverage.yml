@@ -24,7 +24,6 @@ jobs:
             ${{ runner.os }}-node-
 
       - run: npm ci
-      - run: npm i --no-save c8
-      - run: npm i --no-save codecov
+      - run: npm i c8 codecov
       - run: c8 -r lcov -n 'src/**/*' -n 'plugins/**/*' npm run test && codecov -t 15039ad1-b495-48cd-b4a0-bcf124c9b318
       # - run: npm run codecov

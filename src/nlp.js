@@ -12,7 +12,9 @@ const nlp = function (input, lex) {
     nlp.addWords(lex)
   }
   let doc = handleInputs(input, View, world)
-  doc.compute(world.hooks)
+  if (input) {
+    doc.compute(world.hooks)
+  }
   return doc
 }
 Object.defineProperty(nlp, '_world', {

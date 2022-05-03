@@ -92,10 +92,7 @@ const doesMatch = function (term, reg, index, length) {
   }
   // support optimized (one|two)
   if (reg.fastOr !== undefined) {
-    if (term.implicit && reg.fastOr.has(term.implicit) === true) {
-      return true
-    }
-    return reg.fastOr.has(term.normal) || reg.fastOr.has(term.text)
+    return reg.fastOr.has(term.implicit) || reg.fastOr.has(term.normal) || reg.fastOr.has(term.text) || reg.fastOr.has(term.machine)
   }
   //support slower (one|two)
   if (reg.choices !== undefined) {

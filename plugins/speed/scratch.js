@@ -1,10 +1,15 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from '../../src/three.js'
+import { fileURLToPath } from 'url'
+import path from 'path'
+
+const dir = path.dirname(fileURLToPath(import.meta.url))
 
 import { streamFile } from './src/plugin.js'
 nlp.plugin(streamFile)
 
-nlp.streamFile(`./tests/files/freshPrince.txt`, (s) => {
+let file = path.join(dir, `./tests/files/freshPrince.txt`)
+nlp.streamFile(file, (s) => {
   return s.places()
 }).then(doc => {
   doc.debug()

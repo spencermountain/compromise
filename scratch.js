@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/three.js'
+import nlp from './src/one.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
@@ -7,8 +7,10 @@ import nlp from './src/three.js'
 // nlp.verbose('chunker')
 
 
-let doc = nlp(`aug. 3`)
-console.log(doc.match('^.').text('reduced'))
+let doc = nlp(`spencer's house`)
+doc.match('(spencer|foo)').debug()
+
+
 // console.log(nlp.parseMatch(`we+ walked`))
 // let m = doc.match(`foo{1,2} walked`)
 // m.debug()

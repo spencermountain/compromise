@@ -57,7 +57,7 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
       }
       continue
     }
-    // support multi-word OR (a|b|foo bar)
+    // slow-OR - multi-word OR (a|b|foo bar)
     if (reg.choices !== undefined && reg.operator === 'or') {
       let alive = doOrBlock(state)
       if (!alive) {
@@ -65,7 +65,7 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
       }
       continue
     }
-    // support AND (#Noun && foo) blocks
+    // slow-AND - multi-word AND (#Noun && foo) blocks
     if (reg.choices !== undefined && reg.operator === 'and') {
       let alive = doAndBlock(state)
       if (!alive) {

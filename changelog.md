@@ -13,6 +13,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - **[new]** - add novel tag detection on world.one.tagSet 
 - **[new]** - proof-of-concept nlp.makeNet() method
 - **[fix]** - better regex unicode support
+- **[fix]** - missing matches on cached documents
 -->
 
 #### 14.1.2 [April 2021]

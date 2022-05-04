@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/one.js'
+import nlp from './src/two.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
@@ -9,14 +9,14 @@ import nlp from './src/one.js'
 
 
 
-// let matches = [
-//   // over the years
-//   { match: '(in|over) the #Duration #Date+?', unTag: 'Date', reason: 'over-the-duration' },
-//   // second quarter of 2020
-//   { match: '#Ordinal quarter of? #Year', unTag: 'Fraction' },
-//   // a month from now
-//   { match: '(from|by|before) now', unTag: 'Time', tag: 'Date' },
-// ]
+let matches = [
+  // over the years
+  { match: '(in|over) the #Duration #Date+?', unTag: 'Date', reason: 'over-the-duration' },
+  // second quarter of 2020
+  { match: '#Ordinal quarter of? #Year', unTag: 'Fraction' },
+  // a month from now
+  { match: '(from|by|before) now', unTag: 'Time', tag: 'Date' },
+]
 // const doMatches = function (view) {
 //   let { document, world } = view
 //   const { methods } = world
@@ -25,13 +25,16 @@ import nlp from './src/one.js'
 //   methods.two.bulkTagger(found, document, world)
 // }
 
-// let fishNet = nlp.makeNet(matches)
-// console.log(fishNet)
+let net = nlp.makeNet(matches)
+let doc = nlp(`so good by now`)
+let res = doc.netMatch(net)
+res.debug()
+// console.log(res)
 
-let doc = nlp(`spencer's city`)
-doc.cache()
-console.log(doc._cache)
-doc.match('spencer').debug()
+// let doc = nlp(`spencer's city`)
+// doc.cache()
+// console.log(doc._cache)
+// doc.match('spencer').debug()
 
 
 // let doc = nlp('foo by now. bar by now')

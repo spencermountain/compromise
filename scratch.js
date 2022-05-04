@@ -15,8 +15,8 @@ nlp.plugin({
     }
   }
 })
-console.log(nlp.model().one.tagSet.Farmer)
-console.log(nlp.model().one.tagSet.Person)
+// console.log(nlp.model().one.tagSet.Farmer)
+// console.log(nlp.model().one.tagSet.Person)
 
 
 let matches = [
@@ -37,6 +37,10 @@ let matches = [
 
 let fishNet = nlp.makeNet(matches)
 // console.log(fishNet)
+
+let doc = nlp('Titlecase UPPERCASE notUPPER Èppercasë')
+doc.match('@isTitleCase').debug()
+
 
 // let doc = nlp('foo by now. bar by now')
 // let found = methods.two.bulkMatch(doc.document, net, methods)

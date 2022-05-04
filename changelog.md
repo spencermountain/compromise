@@ -9,7 +9,9 @@ compromise uses semver, and pushes to npm frequently
 While all _Major_ releases should be reviewed, our only two _large_ releases are **v6** in 2016 and and **v12** in 2019. Others have been mostly incremental, or niche.
 
 <!-- #### [Unreleased]
-
+- **[fix]** - bug with fast-or possessive matches
+- **[new]** - add novel tag detection on world.one.tagSet 
+- **[new]** - proof-of-concept nlp.makeNet() method
 -->
 
 #### 14.1.2 [April 2021]

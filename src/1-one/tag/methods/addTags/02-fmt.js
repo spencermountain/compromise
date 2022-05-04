@@ -15,7 +15,7 @@ const getColor = function (node) {
 const fmt = function (nodes) {
   const res = {}
   nodes.forEach(node => {
-    let { not, also, is } = node.props
+    let { not, also, is, novel } = node.props
     let parents = node._cache.parents
     if (also) {
       parents = parents.concat(also)
@@ -23,6 +23,7 @@ const fmt = function (nodes) {
     res[node.id] = {
       is,
       not,
+      novel,
       also,
       parents,
       children: node._cache.children,

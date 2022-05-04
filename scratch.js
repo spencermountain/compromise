@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/one.js'
+import nlp from './src/two.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
@@ -7,8 +7,44 @@ import nlp from './src/one.js'
 // nlp.verbose('chunker')
 
 
-let doc = nlp(`spencer's house`)
-doc.match('(spencer|foo)').debug()
+
+nlp.plugin({
+  tags: {
+    Farmer: {
+      is: 'Person'
+    }
+  }
+})
+console.log(nlp.model().one.tagSet.Farmer)
+console.log(nlp.model().one.tagSet.Person)
+
+
+let matches = [
+  // over the years
+  { match: '(in|over) the #Duration #Date+?', unTag: 'Date', reason: 'over-the-duration' },
+  // second quarter of 2020
+  { match: '#Ordinal quarter of? #Year', unTag: 'Fraction' },
+  // a month from now
+  { match: '(from|by|before) now', unTag: 'Time', tag: 'Date' },
+]
+// const doMatches = function (view) {
+//   let { document, world } = view
+//   const { methods } = world
+//   byGroup = byGroup || methods.two.compile(matches, methods)
+//   let found = methods.two.bulkMatch(document, byGroup, methods)
+//   methods.two.bulkTagger(found, document, world)
+// }
+
+let fishNet = nlp.makeNet(matches)
+// console.log(fishNet)
+
+// let doc = nlp('foo by now. bar by now')
+// let found = methods.two.bulkMatch(doc.document, net, methods)
+// console.log(found)
+
+
+// let doc = nlp(`spencer's house`)
+// doc.match('(spencer|foo)').debug()
 
 
 // console.log(nlp.parseMatch(`we+ walked`))

@@ -11,7 +11,6 @@ const doMatches = function (view) {
   const { methods } = world
   byGroup = byGroup || methods.two.compile(matches, methods)
   let found = methods.two.bulkMatch(document, byGroup, methods)
-  // console.log(found.length, 'found')
   methods.two.bulkTagger(found, document, world)
 }
 

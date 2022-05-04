@@ -1,4 +1,6 @@
 import logger from './_logger.js'
+import canBe from './canBe.js'
+
 
 const tagger = function (list, document, world) {
   const { model, methods } = world
@@ -22,7 +24,7 @@ const tagger = function (list, document, world) {
     // handle 'safe' tag
     if (todo.safe === true) {
       // check for conflicting tags
-      if (methods.two.canBe(terms, todo.tag, model) === false) {
+      if (canBe(terms, todo.tag, model) === false) {
         return
       }
       // dont tag half of a hyphenated word

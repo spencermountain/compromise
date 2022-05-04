@@ -38,8 +38,12 @@ const methods = {
   hasContraction: term => Boolean(term.implicit),
   /** is it an acronym */
   isAcronym: term => term.tags.has('Acronym'),
+  /** does it have any tags */
+  /** does it have any tags */
   isKnown: term => term.tags.size > 0,
-  isTitleCase: term => /^\p{Lu}[a-z'\u00C0-\u00FF]/u.test(term.text), //|| /^[A-Z]$/.test(term.text)
+  /** uppercase first letter, then a lowercase */
+  isTitleCase: term => /^\p{Lu}[a-z'\u00C0-\u00FF]/u.test(term.text),
+  /** uppercase all letters */
   isUpperCase: term => /^\p{Lu}+$/u.test(term.text),
 }
 // aliases

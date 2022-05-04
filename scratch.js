@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/two.js'
+import nlp from './src/one.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
@@ -8,25 +8,15 @@ import nlp from './src/two.js'
 
 
 
-nlp.plugin({
-  tags: {
-    Farmer: {
-      is: 'Person'
-    }
-  }
-})
-// console.log(nlp.model().one.tagSet.Farmer)
-// console.log(nlp.model().one.tagSet.Person)
 
-
-let matches = [
-  // over the years
-  { match: '(in|over) the #Duration #Date+?', unTag: 'Date', reason: 'over-the-duration' },
-  // second quarter of 2020
-  { match: '#Ordinal quarter of? #Year', unTag: 'Fraction' },
-  // a month from now
-  { match: '(from|by|before) now', unTag: 'Time', tag: 'Date' },
-]
+// let matches = [
+//   // over the years
+//   { match: '(in|over) the #Duration #Date+?', unTag: 'Date', reason: 'over-the-duration' },
+//   // second quarter of 2020
+//   { match: '#Ordinal quarter of? #Year', unTag: 'Fraction' },
+//   // a month from now
+//   { match: '(from|by|before) now', unTag: 'Time', tag: 'Date' },
+// ]
 // const doMatches = function (view) {
 //   let { document, world } = view
 //   const { methods } = world
@@ -35,11 +25,13 @@ let matches = [
 //   methods.two.bulkTagger(found, document, world)
 // }
 
-let fishNet = nlp.makeNet(matches)
+// let fishNet = nlp.makeNet(matches)
 // console.log(fishNet)
 
-let doc = nlp('Titlecase UPPERCASE notUPPER Èppercasë')
-doc.match('@isTitleCase').debug()
+let doc = nlp(`spencer's city`)
+doc.cache()
+console.log(doc._cache)
+doc.match('spencer').debug()
 
 
 // let doc = nlp('foo by now. bar by now')

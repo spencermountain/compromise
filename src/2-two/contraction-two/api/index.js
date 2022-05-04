@@ -1,4 +1,4 @@
-const titleCase = /^[A-Z][a-z'’\u00C0-\u00FF]/
+const titleCase = /^\p{Lu}[\p{Ll}'’]/u //upercase, then lowercase
 import contract from './contract.js'
 
 const toTitleCase = function (str = '') {

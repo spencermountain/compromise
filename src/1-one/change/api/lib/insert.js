@@ -1,4 +1,7 @@
-// punctuation we wanna transfer
+// case logic
+const isTitleCase = (str) => /^\p{Lu}[\p{Ll}'’]/u.test(str) || /^\p{Lu}$/u.test(str)
+const toTitleCase = (str) => str.replace(/^\p{Ll}/u, x => x.toUpperCase())
+const toLowerCase = (str) => str.replace(/^\p{Lu}/u, x => x.toLowerCase())
 
 // splice an array into an array
 const spliceArr = (parent, index, child) => {
@@ -38,14 +41,6 @@ const movePunct = (source, end, needle) => {
   }
 }
 
-const isTitleCase = function (str) {
-  return /^[A-Z][a-z'\u00C0-\u00FF]/.test(str) || /^[A-Z]$/.test(str)
-}
-
-const toTitleCase = function (str) {
-  str = str.replace(/^[a-z\u00C0-\u00FF]/, x => x.toUpperCase()) //TODO: support unicode
-  return str
-}
 
 const moveTitleCase = function (home, start, needle) {
   let from = home[start]
@@ -61,7 +56,7 @@ const moveTitleCase = function (home, start, needle) {
     return
   }
   if (isTitleCase(old.text) && old.text.length > 1) {
-    old.text = old.text.replace(/^[A-Z]/, x => x.toLowerCase())
+    old.text = toLowerCase(old.text)
   }
 }
 

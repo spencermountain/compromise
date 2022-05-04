@@ -1,7 +1,7 @@
 import fastTag from '../_fastTag.js'
 
 import fillTags from '../3rd-pass/_fillTags.js'
-const titleCase = /^[A-Z][a-z'\u00C0-\u00FF]/
+const titleCase = /^\p{Lu}[\p{Ll}'’]/u
 const hasNumber = /[0-9]/
 
 const notProper = ['Date', 'Month', 'WeekDay', 'Unit']

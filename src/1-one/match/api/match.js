@@ -60,14 +60,13 @@ const ifFn = function (regs, group, opts) {
   }
   let todo = { regs, group, justOne: true }
   let ptrs = this.fullPointer
-  ptrs = ptrs.filter(ptr => {
+  let cache = this._cache || []
+  ptrs = ptrs.filter((ptr, i) => {
     let m = this.update([ptr])
-    let res = one.match(m.docs, todo, this._cache).ptrs
+    let res = one.match(m.docs, todo, cache[i]).ptrs
     return res.length > 0
   })
   return this.update(ptrs)
-  // }
-  // return this.none()
 }
 
 const ifNo = function (regs, group, opts) {
@@ -81,12 +80,12 @@ const ifNo = function (regs, group, opts) {
   if (typeof regs === 'string') {
     regs = one.parseMatch(regs, opts)
   }
-  return this.filter(m => {
+  let cache = this._cache || []
+  return this.filter((m, i) => {
     let todo = { regs, group, justOne: true }
-    let ptrs = one.match(m.docs, todo, m._cache).ptrs
+    let ptrs = one.match(m.docs, todo, cache[i]).ptrs
     return ptrs.length === 0
   })
-
 }
 
 export default { matchOne, match, has, if: ifFn, ifNo }

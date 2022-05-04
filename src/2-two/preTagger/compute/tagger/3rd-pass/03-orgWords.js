@@ -1,8 +1,6 @@
 import fastTag from '../_fastTag.js'
 
-const isTitleCase = function (str) {
-  return /^[A-Z][a-z'\u00C0-\u00FF]/.test(str)
-}
+const isTitleCase = (str) => /^\p{Lu}[\p{Ll}'’]/u.test(str)
 
 const isOrg = function (term) {
   if (!term) {

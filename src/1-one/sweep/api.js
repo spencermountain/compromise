@@ -12,21 +12,18 @@ const api = function (View) {
     // collect all found results into a View
     let ptrs = found.map(o => o.pointer)
 
-    // 
-    let byIndex = {}
-    found.forEach(obj => {
-      byIndex[obj.index] = byIndex[obj.index] || []
-      byIndex[obj.index].push({
-        match: obj.match,
-        tag: obj.tag,
-        view: this.update([obj.pointer])
-      })
+    // cleanup results a bit
+    found = found.map(obj => {
+      obj.view = this.update([obj.pointer])
+      delete obj.regs
+      delete obj.needs
+      delete obj.pointer
+      delete obj._expanded
+      return obj
     })
-    let matches = Object.values(byIndex)
-
     return {
       view: this.update(ptrs),
-      matches
+      found
     }
   }
 

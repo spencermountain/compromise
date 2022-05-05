@@ -9,26 +9,26 @@ import nlp from './src/two.js'
 
 
 // end-OR match bug
-let doc = nlp(`foo at this point.`)
-doc.match('foo (bar|at this point)$').debug()
+// let doc = nlp(`foo at this point.`)
+// doc.match('foo (bar|at this point)$').debug()
 
 
 
-// let matches = [
-//   // over the years
-//   { match: '(in|over) the #Duration #Date+?', unTag: 'Date', reason: 'over-the-duration' },
-//   // second quarter of 2020
-//   { match: '#Ordinal quarter of? #Year', unTag: 'Fraction' },
-//   // a month from now
-//   { match: '(from|by|before) now', unTag: 'Time', tag: 'Date' },
-// ]
+let matches = [
+  // over the years
+  { match: '(in|over) the #Duration #Date+?', unTag: 'Date', reason: 'over-the-duration' },
+  // second quarter of 2020
+  { match: '#Ordinal quarter of? #Year', unTag: 'Fraction' },
+  // a month from now
+  { match: '(from|by|before) now', unTag: 'Time', tag: 'Date' },
+]
 
-// let doc = nlp(`so good by now. woo`)
+let doc = nlp(`so good by now. woo by now. 2nd quarter 2022`)
 
-
-// let net = nlp.buildNet(matches)
-// let res = doc.sweep(net)
-// console.log(res)
+let net = nlp.buildNet(matches)
+let { view, found } = doc.sweep(net)
+console.log(found)
+view.debug()
 
 
 // let res = doc.netMatch(net)

@@ -17,17 +17,15 @@ let matches = [
   // a month from now
   { match: '(from|by|before) now', unTag: 'Time', tag: 'Date' },
 ]
-// const doMatches = function (view) {
-//   let { document, world } = view
-//   const { methods } = world
-//   byGroup = byGroup || methods.two.compile(matches, methods)
-//   let found = methods.two.bulkMatch(document, byGroup, methods)
-//   methods.two.bulkTagger(found, document, world)
-// }
 
-let net = nlp.makeNet(matches)
 let doc = nlp(`so good by now. woo`)
-console.log(doc.termList())
+
+
+let net = nlp.buildNet(matches)
+let res = doc.sweep(net)
+console.log(res)
+
+
 // let res = doc.netMatch(net)
 // res.debug()
 // console.log(res)

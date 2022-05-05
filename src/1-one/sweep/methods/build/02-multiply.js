@@ -19,6 +19,7 @@ const growSlowOr = function (obj, index) {
   })
 }
 
+// multiply matches with OR options, for cache-purposes
 const buildUp = function (matches) {
   let all = []
   matches.forEach(obj => {

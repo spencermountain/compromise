@@ -1,5 +1,5 @@
 import parse from './01-parse.js'
-import buildUp from './02-build-up.js'
+import buildUp from './02-multiply.js'
 import cache from './03-cache.js'
 import group from './04-group.js'
 

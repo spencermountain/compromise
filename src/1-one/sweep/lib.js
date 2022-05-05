@@ -1,6 +1,6 @@
 export default {
   // compile a list of matches into a match-net
-  makeNet: function (matches) {
+  buildNet: function (matches) {
     const methods = this.methods()
     let index = methods.two.compile(matches, methods)
     return {

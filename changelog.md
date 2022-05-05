@@ -14,6 +14,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - **[new]** - proof-of-concept nlp.makeNet() method
 - **[fix]** - better regex unicode support
 - **[fix]** - missing matches on cached documents
+- **[fix]** - typescript fixes
 -->
 
 #### 14.1.2 [April 2021]

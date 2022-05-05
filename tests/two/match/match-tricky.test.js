@@ -150,9 +150,14 @@ test('tricky-case', function (t) {
 
 // end-OR match bug
 test('multi-word end OR', function (t) {
-  let doc = nlp(`foo at this point.`)
-  let m = doc.match('foo (bar|at this point)$')
-  t.equal(m.text(), 'foo at this point', here + 'end-or')
+  let doc = nlp(`foo at the end.`)
+  let m = doc.match('foo (bar|at the end)$')
+  t.equal(m.text(), 'foo at the end.', here + 'end-or')
+
+  doc = nlp(`not at the end word.`)
+  m = doc.match('foo (bar|at the end)$')
+  t.equal(m.text(), '', here + 'not-end-or')
+
   t.end()
 })
 

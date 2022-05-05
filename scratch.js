@@ -6,9 +6,23 @@ import nlp from './src/three.js'
 // nlp.verbose('tagger')
 // nlp.verbose('chunker')
 
-let doc = nlp(`he was john c reilly. oh yeah`)
-let m = doc.match('john . reilly')
-doc.ifNo(m).debug()
+
+let doc = nlp('before match after. second sentence here.')
+let m = doc.match('match')
+doc.match('sentence').replaceWith(m)
+let id = m.docs[0][0].id
+console.log(doc.termList().filter(t => t.id === id))
+// let doc = nlp(`list one:
+// * a
+// * b
+// list two:
+// * more
+// * even more
+// `)
+// doc.harden()
+// doc.remove('list .')
+// console.log(doc)
+
 
 // nlp('it is green and he is friendly.').sentences().toFutureTense().debug()
 

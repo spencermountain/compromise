@@ -11,9 +11,11 @@ const expand = function (m) {
 
 const isArray = (arr) => Object.prototype.toString.call(arr) === '[object Array]'
 
+// set new ids for each terms
 const addIds = function (terms) {
-  terms.forEach((term) => {
+  terms = terms.map((term) => {
     term.id = uuid(term)
+    return term
   })
   return terms
 }
@@ -26,7 +28,7 @@ const getTerms = function (input, world) {
   }
   //allow a view object
   if (typeof input === 'object' && input.isView) {
-    return input.docs[0] //assume one sentence
+    return input.clone().docs[0] //assume one sentence
   }
   //allow an array of terms, too
   if (isArray(input)) {
@@ -68,7 +70,7 @@ const insert = function (input, view, prepend) {
   // shift our self pointer, if necessary
   view.ptrs = selfPtrs
   // try to tag them, too
-  doc.compute(['index', 'lexicon', 'preTagger'])
+  doc.compute(['id', 'index', 'lexicon', 'preTagger'])
   return doc
 }
 

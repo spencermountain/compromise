@@ -57,8 +57,6 @@ test('if view:', function (t) {
   t.end()
 })
 
-
-
 test('ifNo view:', function (t) {
   let doc = nlp('here one mid two end').terms()
   let m = doc.match('(one|two)')

@@ -21,8 +21,6 @@ test('replace-basic :', function (t) {
   t.end()
 })
 
-
-
 test('match-replace :', function (t) {
   let arr = [
     ['the dog played', 'the dog', 'the cat', 'the cat played'],
@@ -146,7 +144,6 @@ test('replace-case-param', function (t) {
   t.end()
 })
 
-
 test('replace-repair', function (t) {
   let doc = nlp('the cat and the dog')
   doc.replace('#Noun', 'house')
@@ -167,3 +164,19 @@ test('replace-repair', function (t) {
   t.end()
 })
 
+test('replace is cloned', function (t) {
+  let doc = nlp('before match after. second sentence here.')
+  let m = doc.match('match')
+  doc.match('sentence').replace(m)
+  t.equal(doc.text(), 'before match after. second match here.', here + 'replaced-text')
+
+  let id = m.docs[0][0].id
+  let foundIds = doc.termList().filter(term => term.id === id)
+  t.equal(foundIds.length, 1, 'id-different')
+
+  t.equal(m.length, 1, 'match-unchanged')
+  m.tag('NewTag')
+  t.equal(m.match('#NewTag').length, 1, 'tags-are-cloned')
+
+  t.end()
+})

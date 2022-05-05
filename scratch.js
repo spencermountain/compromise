@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/two.js'
+import nlp from './src/one.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
@@ -22,11 +22,11 @@ let matches = [
 
 let doc = nlp(`he was john c reilly`)
 let net = nlp.buildNet(matches)
-doc.match(net).debug()
+// doc.match(net).debug()
 
-// let { view, found } = doc.sweep(net)
+let { view, found } = doc.sweep(net, { matchOne: true })
 // console.log(found)
-// view.debug()
+view.debug()
 
 
 // let res = doc.netMatch(net)

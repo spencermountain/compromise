@@ -35,6 +35,11 @@ test('match-net-basic:', function (t) {
 
   let doc = nlp(`he was john c reilly. oh yeah`)
 
+  // return after the first match
+  let { view, found } = doc.sweep(net, { tagger: false, matchOne: true })
+  t.equal(view.length, 1, here + 'matchOne')
+  t.equal(found[0].match, 'john c .', here + 'matchOne-first')
+
   // .match
   let m = doc.match(net)
   t.equal(m.text(), 'john c reilly', here + 'basic match')

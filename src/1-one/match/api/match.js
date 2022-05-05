@@ -30,7 +30,7 @@ const matchOne = function (regs, group, opts) {
   }
   // support a compiled set of matches
   if (isNet(regs)) {
-    return this.sweep(regs, { tagger: false }).view.first()
+    return this.sweep(regs, { tagger: false, matchOne: true }).view
   }
   if (typeof regs === 'string') {
     regs = one.parseMatch(regs, opts)

@@ -1,10 +1,13 @@
 // finally,
 // actually run these match-statements on the terms
-const runMatch = function (maybeList, document, methods) {
+const runMatch = function (maybeList, document, methods, opts) {
   let results = []
-  maybeList.forEach((allPossible, n) => {
-    allPossible.forEach(m => {
+  for (let n = 0; n < maybeList.length; n += 1) {
+    for (let i = 0; i < maybeList[n].length; i += 1) {
+      let m = maybeList[n][i]
+      // ok, actually do the work.
       let res = methods.one.match([document[n]], m)
+      // found something.
       if (res.ptrs.length > 0) {
         res.ptrs.forEach(ptr => {
           ptr[0] = n // fix the sentence pointer
@@ -14,9 +17,13 @@ const runMatch = function (maybeList, document, methods) {
           }
           results.push(todo)
         })
+        //ok cool, can we stop early?
+        if (opts.matchOne === true) {
+          return [results[0]]
+        }
       }
-    })
-  })
+    }
+  }
   return results
 }
 export default runMatch

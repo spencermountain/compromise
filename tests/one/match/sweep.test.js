@@ -33,11 +33,29 @@ test('match-net-basic:', function (t) {
   ]
   let net = nlp.buildNet(matches)
 
-  let doc = nlp(`he was john c reilly`)
+  let doc = nlp(`he was john c reilly. oh yeah`)
+
+  // .match
   let m = doc.match(net)
   t.equal(m.text(), 'john c reilly', here + 'basic match')
   t.equal(doc.has('(#Actor|#FooBar|#SecondTag)'), false, here + 'match doesnt tag')
   t.equal(m.length, 1, here + 'only one')
+
+  // .has
+  t.equal(doc.has(net), true, here + 'has-basic')
+
+  // .if
+  m = doc.if(net)
+  t.equal(m.text(), 'he was john c reilly.', here + 'if-basic')
+  m = doc.ifNo(net)
+  t.equal(m.text(), 'oh yeah', here + 'if-basic')
+
+
+  doc = nlp(`he was john c reilly. oh yeah john b reilly too`)
+  m = doc.match(net)
+  t.equal(m.length, 2, here + 'only both')
+  m = doc.matchOne(net)
+  t.equal(m.text(), 'john c reilly', here + 'matchOne')
 
   t.end()
 })

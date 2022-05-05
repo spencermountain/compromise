@@ -6,7 +6,7 @@ const match = function (regs, group, opts) {
   if (isView(regs)) {
     return this.intersection(regs)
   }
-  // is it a compiled set of matches?
+  // support a compiled set of matches
   if (isNet(regs)) {
     return this.sweep(regs, { tagger: false }).view.settle()
   }
@@ -28,6 +28,10 @@ const matchOne = function (regs, group, opts) {
   if (isView(regs)) {
     return this.intersection(regs).eq(0)
   }
+  // support a compiled set of matches
+  if (isNet(regs)) {
+    return this.sweep(regs, { tagger: false }).view.first()
+  }
   if (typeof regs === 'string') {
     regs = one.parseMatch(regs, opts)
   }
@@ -41,9 +45,14 @@ const matchOne = function (regs, group, opts) {
 
 const has = function (regs, group, opts) {
   const one = this.methods.one
+  // support view as input
   if (isView(regs)) {
     let ptrs = regs.fullPointer // support a view object as input
     return ptrs.length > 0
+  }
+  // support a compiled set of matches
+  if (isNet(regs)) {
+    return this.sweep(regs, { tagger: false }).view.found
   }
   if (typeof regs === 'string') {
     regs = one.parseMatch(regs, opts)
@@ -56,8 +65,14 @@ const has = function (regs, group, opts) {
 // 'if'
 const ifFn = function (regs, group, opts) {
   const one = this.methods.one
+  // support view as input
   if (isView(regs)) {
     return this.filter(m => m.intersection(regs).found)
+  }
+  // support a compiled set of matches
+  if (isNet(regs)) {
+    let m = this.sweep(regs, { tagger: false }).view.settle()
+    return this.if(m)//recurse with result
   }
   if (typeof regs === 'string') {
     regs = one.parseMatch(regs, opts)
@@ -79,6 +94,11 @@ const ifNo = function (regs, group, opts) {
   // support a view object as input
   if (isView(regs)) {
     return this.difference(regs)
+  }
+  // support a compiled set of matches
+  if (isNet(regs)) {
+    let m = this.sweep(regs, { tagger: false }).view.settle()
+    return this.ifNo(m)//FIXME - not working-well
   }
   // otherwise parse the match string
   if (typeof regs === 'string') {

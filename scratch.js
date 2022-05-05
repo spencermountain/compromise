@@ -26,9 +26,10 @@ let matches = [
 // }
 
 let net = nlp.makeNet(matches)
-let doc = nlp(`so good by now`)
-let res = doc.netMatch(net)
-res.debug()
+let doc = nlp(`so good by now. woo`)
+console.log(doc.termList())
+// let res = doc.netMatch(net)
+// res.debug()
 // console.log(res)
 
 // let doc = nlp(`spencer's city`)

@@ -1,4 +1,4 @@
-import { Document, Pointer, Groups, JsonProps, outMethods, matchOptions } from '../misc'
+import { Document, Pointer, Groups, JsonProps, outMethods, matchOptions, Term } from '../misc'
 
 class View {
   // Utils
@@ -30,7 +30,7 @@ class View {
   /** create a new document */
   fromText: (text: string) => View
   /** .docs [alias] */
-  termList: () => Document
+  termList: () => Term[]
 
   /** run a named operation on the document */
   compute: (method: string | string[]) => View

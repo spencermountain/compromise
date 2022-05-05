@@ -1,19 +1,14 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/one.js'
+import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
 // nlp.verbose('tagger')
 // nlp.verbose('chunker')
 
-
-
-// end-OR match bug
-let doc = nlp(`foo at this point.`)
-doc.match('foo (bar|at this point)$').debug()
-
-
-
+let doc = nlp(`he was john c reilly. oh yeah`)
+let m = doc.match('john . reilly')
+doc.ifNo(m).debug()
 
 // nlp('it is green and he is friendly.').sentences().toFutureTense().debug()
 

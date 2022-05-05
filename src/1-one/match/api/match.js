@@ -93,12 +93,12 @@ const ifNo = function (regs, group, opts) {
   const one = methods.one
   // support a view object as input
   if (isView(regs)) {
-    return this.difference(regs)
+    return this.filter(m => !m.intersection(regs).found)
   }
   // support a compiled set of matches
   if (isNet(regs)) {
     let m = this.sweep(regs, { tagger: false }).view.settle()
-    return this.ifNo(m)//FIXME - not working-well
+    return this.ifNo(m)
   }
   // otherwise parse the match string
   if (typeof regs === 'string') {

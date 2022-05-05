@@ -10,10 +10,11 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 
 <!-- #### [Unreleased]
 - **[fix]** - bug with fast-or possessive matches
-- **[new]** - add novel tag detection on world.one.tagSet 
-- **[new]** - proof-of-concept nlp.makeNet() method
-- **[fix]** - better regex unicode support
-- **[fix]** - missing matches on cached documents
+- **[fix]** - bug with slow-or end-matches
+- **[new]** - flag novel tags in world.one.tagSet 
+- **[new]** - .sweep() and nlp.buildNet() methods
+- **[fix]** - better unicode support with Unicode property escapes 
+- **[fix]** - problems matching on cached documents
 - **[fix]** - typescript fixes
 -->
 

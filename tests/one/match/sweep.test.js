@@ -53,7 +53,7 @@ test('match-net-basic:', function (t) {
   m = doc.if(net)
   t.equal(m.text(), 'he was john c reilly.', here + 'if-basic')
   m = doc.ifNo(net)
-  t.equal(m.text(), 'oh yeah', here + 'if-basic')
+  t.equal(m.text(), 'oh yeah', here + 'ifNo-basic')
 
 
   doc = nlp(`he was john c reilly. oh yeah john b reilly too`)

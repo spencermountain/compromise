@@ -23,3 +23,21 @@ test('sweep-basic:', function (t) {
 
   t.end()
 })
+
+
+test('match-net-basic:', function (t) {
+  let matches = [
+    { match: 'john c .', tag: 'Actor' },
+    { match: 'john foo', tag: 'FooBar' },
+    { match: 'john . reilly', tag: 'SecondTag' },
+  ]
+  let net = nlp.buildNet(matches)
+
+  let doc = nlp(`he was john c reilly`)
+  let m = doc.match(net)
+  t.equal(m.text(), 'john c reilly', here + 'basic match')
+  t.equal(doc.has('(#Actor|#FooBar|#SecondTag)'), false, here + 'match doesnt tag')
+  t.equal(m.length, 1, here + 'only one')
+
+  t.end()
+})

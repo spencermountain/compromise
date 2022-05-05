@@ -1,10 +1,14 @@
-import { fixPointers, isView } from './_lib.js'
+import { fixPointers, isView, isNet } from './_lib.js'
 
 const match = function (regs, group, opts) {
   const one = this.methods.one
   // support param as view object
   if (isView(regs)) {
     return this.intersection(regs)
+  }
+  // is it a compiled set of matches?
+  if (isNet(regs)) {
+    return this.sweep(regs, { tagger: false }).view.settle()
   }
   // support param as string
   if (typeof regs === 'string') {

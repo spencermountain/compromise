@@ -15,20 +15,18 @@ import nlp from './src/two.js'
 
 
 let matches = [
-  // over the years
-  { match: '(in|over) the #Duration #Date+?', unTag: 'Date', reason: 'over-the-duration' },
-  // second quarter of 2020
-  { match: '#Ordinal quarter of? #Year', unTag: 'Fraction' },
-  // a month from now
-  { match: '(from|by|before) now', unTag: 'Time', tag: 'Date' },
+  { match: 'john c .', tag: 'Actor' },
+  { match: 'john foo', tag: 'FooBar' },
+  { match: 'john . reilly', tag: 'SecondTag' },
 ]
 
-let doc = nlp(`so good by now. woo by now. 2nd quarter 2022`)
-
+let doc = nlp(`he was john c reilly`)
 let net = nlp.buildNet(matches)
-let { view, found } = doc.sweep(net)
-console.log(found)
-view.debug()
+doc.match(net).debug()
+
+// let { view, found } = doc.sweep(net)
+// console.log(found)
+// view.debug()
 
 
 // let res = doc.netMatch(net)

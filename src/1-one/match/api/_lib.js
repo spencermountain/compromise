@@ -23,5 +23,11 @@ export const fixPointers = function (res, parent) {
   return { ptrs, byGroup }
 }
 
+const isObject = val => {
+  return Object.prototype.toString.call(val) === '[object Object]'
+}
+
 // did they pass-in a compromise object?
-export const isView = regs => regs && typeof regs === 'object' && regs.isView === true
+export const isView = val => val && isObject(val) && val.isView === true
+
+export const isNet = val => val && isObject(val) && val.isNet === true

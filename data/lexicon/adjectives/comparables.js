@@ -67,7 +67,6 @@ export default [
   'fierce ',
   'fierce',
   'financial',
-  'fine',
   'foamy',
   'formal',
   'foul',

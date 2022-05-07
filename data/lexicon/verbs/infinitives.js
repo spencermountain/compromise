@@ -671,7 +671,6 @@ export default [
   'deduct',
   'decommission',
   'blaze',
-  'merge',
 
   'inform',
   'intoxicate',
@@ -703,7 +702,6 @@ export default [
   'hide',
   'provide',
   'reside',
-  'ride',
   'slide',
   'subside',
 

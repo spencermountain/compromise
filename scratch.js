@@ -7,11 +7,7 @@ nlp.verbose('tagger')
 // nlp.verbose('chunker')
 
 let txt = ''
-txt = 'portal'
-txt = 'hospital'
-txt = 'metal'
-txt = 'rental'
-
+txt = 'quadrillion'
 
 nlp(txt).debug()
 

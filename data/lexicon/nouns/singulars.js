@@ -101,7 +101,6 @@ export default [
   'substrate',
   'acetate',
   'us state',
-  'us state',
   'estate',
   'prostate',
 
@@ -122,7 +121,6 @@ export default [
   'prostitute',
   'plaque',
   'cheque',
-  'cheque',
   'communique',
   'torque',
   'mosque',
@@ -133,9 +131,7 @@ export default [
   'detective',
   'disincentive',
   'motive',
-  'executive',
   'haze',
-  'size',
   'egg',
   'pig',
 
@@ -161,7 +157,6 @@ export default [
   'death',
   'mouth',
   'shack',
-  'luck',
   'question mark',
 
   // -al
@@ -224,7 +219,6 @@ export default [
   'cousin',
   'gelatin',
   'tax return',
-  'gun',
   'home run',
   'bro',
   'burglar',
@@ -322,7 +316,6 @@ export default [
   'soloist',
 
   'bout',
-  'bout',
   'overview',
   'tv show',
   't rex',
@@ -380,7 +373,6 @@ export default [
   'biopsy',
   'autopsy',
   'city',
-  'honesty',
   'guy',
   'school',
   'bar',

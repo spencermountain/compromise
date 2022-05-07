@@ -641,5 +641,6 @@ export default [
   'proximate',
 
   'renowned',
+  'beside',
 ]
 

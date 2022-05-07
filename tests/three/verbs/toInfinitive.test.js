@@ -209,7 +209,6 @@ test('toInfinitive-phrase:', function (t) {
     ["drowned", "drown"],
     ["crowned", "crown"],
     ["browned", "brown"],
-    ["renowned", "renown"],
     ["downed", "down"],
     ["wholly-owned", "wholly-own"],
     ["co-owned", "co-own"],

@@ -709,4 +709,6 @@ export default [
   'gate',
   'graduate',
 
+  'relish',
+  'polish',
 ]

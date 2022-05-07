@@ -234,5 +234,9 @@ export default [
   'fate',
   'karate',
   'senate',
-  'backside',
+  'coral',
+  'vernacular',
+
+  'arithmetic',
+  'static',
 ]

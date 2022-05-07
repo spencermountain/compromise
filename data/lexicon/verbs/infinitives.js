@@ -707,5 +707,5 @@ export default [
   'slide',
   'subside',
 
-
+  'squish'
 ]

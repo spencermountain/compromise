@@ -137,7 +137,7 @@ export default [
     note: Sing,
     cide: Sing,//homicide
     wide: Adj,//nationwide
-    side: Adj,//alongside
+    // side: Adj,//alongside
     vide: Inf,//provide
     ract: Inf,
     duce: Inf,

@@ -8,19 +8,11 @@ nlp.verbose('tagger')
 
 let txt = ''
 txt = 'portal'
-txt = 'parish'
-txt = 'adjective'
-txt = 'attic'
-txt = 'borough'
-txt = 'cathedral'
-txt = 'arithmetic'
-txt = 'constable'
-txt = 'fetish'
-txt = 'conservatory'
-txt = 'mineral'
-txt = 'caterpillar'
-txt = 'fanny'
-txt = 'countryside'
+txt = 'hospital'
+txt = 'metal'
+txt = 'rental'
+
+
 nlp(txt).debug()
 
 // let doc = nlp('before match after. second sentence here.')
